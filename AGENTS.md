@@ -41,7 +41,9 @@
 - 필수 산출물: `output/assets/<slug>-hero-v1~v3.prompt.txt`, `hero-v1~v3.png`, `hero-v1~v3.score.json`, `image-manifest.json`, `selected-image.json`.
 - `image-manifest.json`은 `status: complete`, `generation_method: codex-cli-imagegen`, `generated_with`를 가져야 하며, procedural/Pillow/SVG/placeholder 방식은 실패로 본다.
 - `selected-image.json`은 최소 `slug`, `selected_candidate`, `image_path` 또는 `selected_image`, `reason`, `generated_with`를 포함하고, 경로는 `assets/<file>.png` 또는 `output/assets/<file>.png`처럼 검증기가 찾을 수 있는 값으로 쓴다.
-- 최종 HTML에는 선택된 hero 이미지 1장이 반드시 있어야 하며, 없으면 build를 성공 처리하지 않는다.
+<!-- 2026-09-07 hero 선택 사항 변경 전: - 최종 HTML에는 선택된 hero 이미지 1장이 반드시 있어야 하며, 없으면 build를 성공 처리하지 않는다. -->
+- hero 이미지는 선택 사항이다. Codex CLI를 쓸 수 있으면 위 절차로 반드시 생성하고, 쓸 수 없으면 래퍼가 남긴 `status: blocked` 매니페스트와 프롬프트 파일만 유지한 채 review/build를 hero 카드 없이 진행한다.
+- 다른 도구나 수동으로 만든 이미지에 `codex-cli-imagegen` 출처를 붙여 통과시키지 않는다. 매니페스트가 `complete`이면 선택된 PNG가 실제로 존재해야 하며, 없으면 build를 실패로 본다.
 
 ㅁ
 - `reviews/<slug>.md` frontmatter에는 `status: pass | needs_fix | blocked`, `plan_source`, `research_source`, `draft_source`, `review_type: separate-session-4way`, `review_execution: separate_subagent_sessions`를 둔다.
@@ -49,9 +51,10 @@
 - `needs_fix`이면 generator 단계로 돌아가 수정 후 다시 review한다. 같은 차단 이슈가 3회 반복되거나 외부 데이터/권한 때문에 해결 불가할 때만 `blocked`로 둔다.
 
 ## Build 계약
-- `/stock-build`는 `plan`, `research`, `draft`, `reviews`, 선택된 hero 이미지가 모두 유효할 때만 `output/<slug>.html`을 만든다.
+<!-- 2026-09-07 hero 선택 사항 변경 전: - `/stock-build`는 `plan`, `research`, `draft`, `reviews`, 선택된 hero 이미지가 모두 유효할 때만 `output/<slug>.html`을 만든다. -->
+- `/stock-build`는 `plan`, `research`, `draft`, `reviews`가 모두 유효할 때만 `output/<slug>.html`을 만든다. 선택된 hero 이미지가 있으면 삽입하고, 없으면 hero 카드 없이 렌더링한다.
 - build는 수동 작성이 아니라 `python3 scripts/build_report.py <slug>`로 수행한다.
-- build는 `python3 scripts/validate_report_contract.py <slug> --require-html --require-price-chart`로 pass review, 4-way review metadata, frontmatter 정합성, ticker·기간 일치, 필수 섹션, References, selected image, yfinance price chart를 검증한다.
+- build는 `python3 scripts/validate_report_contract.py <slug> --require-html --require-price-chart`로 pass review, 4-way review metadata, frontmatter 정합성, ticker·기간 일치, 필수 섹션, References, selected image(있을 때), yfinance price chart를 검증한다.
 - 가격 차트는 요청 기간 전체의 실제 yfinance 일봉으로 만들고, 366일 이내·`YYYY-MM-DD` 오름차순 라벨·`ariaLabel`을 만족해야 한다.
 - 최종 HTML 본문에는 `[S1]`, `[N1]` 같은 인라인 참조 표식을 노출하지 말고 References만 남긴다.
 - 최종 HTML에는 투자 유의 문구를 하단 footer note로 포함하고, build 단계에서 새 주장을 추가하지 않는다.

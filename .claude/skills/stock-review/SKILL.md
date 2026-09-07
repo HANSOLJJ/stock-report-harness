@@ -1,6 +1,6 @@
 ---
 name: stock-review
-description: 주식 리포트 4-way 리뷰 게이트를 실행한다. plan, research, draft, 선택된 히어로 이미지가 존재한 뒤 /stock-review <slug>로 사용하며, reviews/<slug>.md에 pass, needs_fix, blocked 결과와 별도 세션 리뷰어 메타데이터를 기록한다.
+description: 주식 리포트 4-way 리뷰 게이트를 실행한다. plan, research, draft가 존재한 뒤 /stock-review <slug>로 사용하며(히어로 이미지는 있으면 함께 검토), reviews/<slug>.md에 pass, needs_fix, blocked 결과와 별도 세션 리뷰어 메타데이터를 기록한다.
 ---
 
 # 주식 리뷰 스킬
@@ -10,7 +10,8 @@ description: 주식 리포트 4-way 리뷰 게이트를 실행한다. plan, rese
 ## 선행 조건
 
 - 필수 파일: `plan/<slug>.md`, `research/<slug>.md`, `drafts/<slug>.md`.
-- 필수 이미지 파일: `output/assets/<slug>-selected-image.json`과 선택된 PNG.
+<!-- 2026-09-07 hero 선택 사항 변경 전: - 필수 이미지 파일: `output/assets/<slug>-selected-image.json`과 선택된 PNG. -->
+- 선택 이미지 파일(있을 때): `output/assets/<slug>-selected-image.json`과 선택된 PNG. 매니페스트가 `blocked`이면 hero 없이 리뷰한다.
 
 ## 절차
 
@@ -24,8 +25,9 @@ description: 주식 리포트 4-way 리뷰 게이트를 실행한다. plan, rese
    - 초안에 H1이 정확히 하나이고 필수 섹션이 있는지.
    - 초안이 내장 가격 배열 대신 `price-chart` 블록을 사용하는지.
    - References가 존재하고 사실 주장에 출처 표식이 있는지.
-   - 선택된 히어로 이미지가 존재하는지.
-   - HTML이 있으면 토스 모바일 셸/디자인 요건을 따르는지 (`main.shell` 560px, 고정 앱바, 토스 블루, 8px 구분선, 히어로 이미지 카드, 토스 차트 렌더러, 하단 면책 문구).
+   <!-- 2026-09-07 hero 선택 사항 변경 전: - 선택된 히어로 이미지가 존재하는지. -->
+   - 선택된 히어로 이미지가 있으면 매니페스트가 `complete`이고 PNG가 존재하는지. 없으면 `blocked` 매니페스트 사유를 기록한다.
+   - HTML이 있으면 토스 모바일 셸/디자인 요건을 따르는지 (`main.shell` 560px, 고정 앱바, 토스 블루, 8px 구분선, 히어로 이미지 카드(선택 이미지가 있을 때), 토스 차트 렌더러, 하단 면책 문구).
    - 금지된 투자 조언 표현이 없는지.
 3. `reviews/<slug>.md` 프론트매터를 작성한다:
    `slug`, `status`, `created_at` 또는 `reviewed_at`, `plan_source`, `research_source`, `draft_source`, `review_type: separate-session-4way`, `review_execution: separate_subagent_sessions`, `reviewers`.

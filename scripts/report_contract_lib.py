@@ -270,6 +270,33 @@ def selected_image_path(slug: str) -> tuple[Path | None, dict[str, Any] | None]:
     return candidates[-1] if candidates else None, payload
 
 
+def hero_image_status(slug: str) -> tuple[str, Path | None, str]:
+    """Return (status, png_path, reason) for the optional hero image.
+
+    The hero image is optional: it is used only when the image manifest says
+    ``status: complete`` and the selected PNG resolves to a real file.  Any
+    other manifest status (blocked, in_progress, missing) means the report is
+    built without a hero card, and ``reason`` explains why.
+    """
+    manifest_path = artifact_paths(slug).image_manifest_json
+    if not manifest_path.is_file():
+        return "missing", None, f"image manifest 없음: {rel(manifest_path)}"
+    try:
+        manifest = load_json(manifest_path)
+    except Exception as exc:
+        return "invalid", None, f"image manifest 파싱 실패: {exc}"
+    if not isinstance(manifest, dict):
+        return "invalid", None, "image manifest JSON은 object여야 함"
+    status = str(manifest.get("status") or "").strip() or "unknown"
+    if status != "complete":
+        reason = str(manifest.get("blocked_reason") or "").strip() or f"status={status!r}"
+        return status, None, reason
+    image_path, _payload = selected_image_path(slug)
+    if image_path is None or not image_path.is_file():
+        return "complete", None, "image manifest는 complete이지만 selected hero PNG를 찾을 수 없음"
+    return "complete", image_path, ""
+
+
 def html_attr(value: Any) -> str:
     return html.escape(str(value), quote=True)
 
