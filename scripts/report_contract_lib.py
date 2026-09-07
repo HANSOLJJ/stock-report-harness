@@ -27,7 +27,10 @@ FRONTMATTER_RE = re.compile(r"\A---\s*\r?\n(?P<frontmatter>.*?)\r?\n---\s*(?:\r?
 H1_RE = re.compile(r"^#(?!#)\s+.+$", re.MULTILINE)
 H2_RE = re.compile(r"^##\s+(?P<title>.+?)\s*$", re.MULTILINE)
 PRICE_CHART_FENCE_RE = re.compile(r"```price-chart\s*\n(?P<body>.*?)\n```", re.DOTALL)
-SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P)\d+\]")
+# SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P)\d+\]")  # 2026-09-07 변경 전
+# 2026-09-07: enforce-citations.sh 훅은 [H1](yfinance 보유자 데이터) 표식도 허용하는데 검증기·빌더는
+# S/N/P만 제거해 최종 HTML에 [H1]이 남았음(tesla 리포트에서도 사용). 훅과 같은 집합으로 맞춤.
+SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P|H)\d+\]")
 
 REQUIRED_PLAN_FRONTMATTER = [
     "slug",
@@ -89,7 +92,10 @@ def artifact_paths(slug: str) -> ArtifactPaths:
 
 def rel(path: Path) -> str:
     try:
-        return str(path.relative_to(ROOT))
+        # return str(path.relative_to(ROOT))  # 2026-09-07 변경 전
+        # 2026-09-07: Windows에서는 relative_to()가 'plan\\slug.md'를 돌려줘 frontmatter의
+        # 'plan/slug.md'와 문자열 비교(_expect_source_path)가 항상 실패했음. POSIX 구분자로 고정함.
+        return path.relative_to(ROOT).as_posix()
     except ValueError:
         return str(path)
 
@@ -194,8 +200,15 @@ def has_source_markers(text: str) -> bool:
 def strip_source_markers(text: str) -> str:
     # Remove adjacent source markers and the extra whitespace they often leave.
     stripped = SOURCE_MARKER_RE.sub("", text)
-    stripped = re.sub(r"\s+([.,;:!?])", r"\1", stripped)
-    stripped = re.sub(r" {2,}", " ", stripped)
+    # stripped = re.sub(r"\s+([.,;:!?])", r"\1", stripped)  # 2026-09-07 변경 전
+    # 2026-09-07: \s+ 가 개행까지 삼켜 "compare: ... [P1]\n::" 이 "compare: ...::" 로 붙어
+    # STAT_CARD_RE(\n:: 필요)가 매칭되지 않아 ::stat-card 블록이 본문에 그대로 노출됐음.
+    # 같은 줄 안의 공백만 정리하도록 개행을 제외함.
+    stripped = re.sub(r"[ \t]+([.,;:!?])", r"\1", stripped)
+    # stripped = re.sub(r" {2,}", " ", stripped)  # 2026-09-07 변경 전
+    # 2026-09-07: 줄 앞 들여쓰기까지 한 칸으로 줄여 "    - 요약:" 같은 중첩 목록이 마크다운에서
+    # 풀려 버렸음. 줄 안쪽(비공백 문자 뒤)의 연속 공백만 정리하도록 제한함.
+    stripped = re.sub(r"(?<=\S) {2,}", " ", stripped)
     return stripped
 
 

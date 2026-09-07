@@ -40,7 +40,9 @@ from validate_report_contract import print_result, validate_contract
 
 CHART_FENCE_RE = re.compile(r"```chart\s*\n(?P<body>.*?)\n```", re.DOTALL)
 STAT_CARD_RE = re.compile(r"::stat-card\s*\n(?P<body>.*?)\n::", re.DOTALL)
-SOURCE_MARKER_PREFIX_RE = re.compile(r"^\s*-\s+(?:\[(?:S|N|P)\d+\]\s*)+", re.MULTILINE)
+# SOURCE_MARKER_PREFIX_RE = re.compile(r"^\s*-\s+(?:\[(?:S|N|P)\d+\]\s*)+", re.MULTILINE)  # 2026-09-07 변경 전
+# 2026-09-07: report_contract_lib.SOURCE_MARKER_RE 와 같이 [H1] 표식도 References 항목 접두에서 제거함.
+SOURCE_MARKER_PREFIX_RE = re.compile(r"^\s*-\s+(?:\[(?:S|N|P|H)\d+\]\s*)+", re.MULTILINE)
 INITIAL_H1_RE = re.compile(r"^#(?!#)\s+.+?\s*$\n?", re.MULTILINE)
 H2_HTML_RE = re.compile(r"<h2>(?P<title>.*?)</h2>")
 DISCLAIMER_SECTION_RE = re.compile(

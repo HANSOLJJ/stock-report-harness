@@ -355,6 +355,10 @@ def run_codex(cmd: list[str], prompt: str, log_path: Path, *, timeout_seconds: i
         cmd,
         input=prompt,
         text=True,
+        # 2026-09-07: Windows 기본 로케일(cp949)에서는 draft의 '−'(U+2212) 같은 문자를
+        # stdin에 쓰지 못해 UnicodeEncodeError가 났음. Codex CLI는 UTF-8을 읽으므로 고정함.
+        encoding="utf-8",
+        errors="replace",
         cwd=ROOT,
         capture_output=True,
         timeout=timeout,
