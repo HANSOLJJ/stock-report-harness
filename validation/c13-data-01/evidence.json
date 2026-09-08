@@ -1,20 +1,20 @@
 {
-  "schema": "scorecard.c13_data_validation/3",
+  "schema": "scorecard.c13_data_validation/4",
   "task_id": "C13-DATA-01",
-  "version": "R7-refined",
-  "collected_at": "2026-09-08T22:47:17.054956",
+  "version": "R8-refined",
+  "collected_at": "2026-09-08T23:01:42.367731",
   "as_of_target": "2026-09-02",
   "automated_observations": {
     "yahoo_tsm": {
       "ticker": "TSM",
       "query_url": "https://finance.yahoo.com/quote/TSM/analysis/",
-      "query_time": "2026-09-08T22:47:18.613196",
-      "price": 435.3,
-      "forwardPE": 19.853956,
+      "query_time": "2026-09-08T23:01:44.244929",
+      "price": 434.26,
+      "forwardPE": 19.806522,
       "forwardEps": 21.9251,
       "plus_1y_eps_avg": 21.86117,
       "diff_forward_and_1y": 0.06392999999999915,
-      "identity_check_price_over_f_eps": 19.85395733656859,
+      "identity_check_price_over_f_eps": 19.806523117340397,
       "period_definition_evidence": "unknown (공급사의 forwardEps 공식 대상기간 정의 문서 미확보)",
       "fulfillment_evaluation": {
         "expected_quarters": [
@@ -39,7 +39,10 @@
           "+1q": 4.95689,
           "+2q": null,
           "+3q": null
-        }
+        },
+        "sum_4q_eps": null,
+        "scoring_eligible": false,
+        "scoring_status": "pending_data_missing_quarters"
       },
       "earnings_estimate_raw": {
         "0q": {
@@ -85,13 +88,13 @@
     "yahoo_baba": {
       "ticker": "BABA",
       "query_url": "https://finance.yahoo.com/quote/BABA/analysis/",
-      "query_time": "2026-09-08T22:47:19.615478",
-      "price": 112.73,
-      "forwardPE": 12.141317,
+      "query_time": "2026-09-08T23:01:45.368305",
+      "price": 112.54,
+      "forwardPE": 12.120854,
       "forwardEps": 9.284824,
       "plus_1y_eps_avg": 62.72889,
       "diff_forward_and_1y": 53.444066,
-      "identity_check_price_over_f_eps": 12.141317918357958,
+      "identity_check_price_over_f_eps": 12.120854417918961,
       "period_definition_evidence": "unknown (공급사의 forwardEps 공식 대상기간 정의 문서 미확보)",
       "fulfillment_evaluation": {
         "expected_quarters": [
@@ -116,7 +119,10 @@
           "+1q": 14.86827,
           "+2q": null,
           "+3q": null
-        }
+        },
+        "sum_4q_eps": null,
+        "scoring_eligible": false,
+        "scoring_status": "pending_data_missing_quarters"
       },
       "earnings_estimate_raw": {
         "0q": {
@@ -287,6 +293,9 @@
         "+2q": null,
         "+3q": null
       },
+      "sum_4q_eps": null,
+      "scoring_eligible": false,
+      "scoring_status": "pending_data_missing_quarters",
       "status": "unobtained_in_investigated_sources"
     },
     "alibaba": {
@@ -320,6 +329,9 @@
         "+2q": null,
         "+3q": null
       },
+      "sum_4q_eps": null,
+      "scoring_eligible": false,
+      "scoring_status": "pending_data_missing_quarters",
       "status": "unobtained_in_investigated_sources"
     }
   },
@@ -335,6 +347,7 @@
     ],
     "findings_within_investigated_scope": {
       "four_quarter_consensus": "조사 대상 6개 공개 출처에서 미발표 4분기 연속 컨센서스 미확보 (Yahoo 2개 분기 관측, 2개 분기 결측; TipRanks 1개 분기 관측).",
+      "separation_of_collection_and_scoring": "4분기 자료 확보 여부(개별 분기 0/음수 허용)와 F6 채점 적격성(4분기 합 > 0)을 엄격히 분리 평가함.",
       "provider_pe_period_nature": "공급사 Forward P/E는 Current Fiscal Year 기준(Zacks F1)이거나 Next Fiscal Year 기준(Finviz)이며, Yahoo Finance와 StockAnalysis는 기간 정의 문서가 미확보(unobtained_definition_document)되어 NTM 적격 여부를 입증할 수 없음.",
       "baba_currency_status": "StockAnalysis BABA는 각주(CNY)와 EPS 수치(5.71) 간 통화·주식단위가 미확인(currency_or_share_basis_unconfirmed) 상태임.",
       "stock_analysis_quarterly_status": "Quarterly 토글 경로는 브라우저 경로 미검증(browser_path_unverified) 상태임.",
