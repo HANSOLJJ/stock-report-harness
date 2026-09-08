@@ -1,6 +1,6 @@
 # AI 기업 분석 framework — 구조 확장 지침
 
-- 작성일 2026-09-08. `design-guideline.md`(도메인 명세)의 짝이다. 이 문서는 요구 ID(D·F·Q·T·C)를 실제 모듈·파일·테스트에 연결한다.
+- 작성일 2026-09-08. `design-guideline.md`(도메인 명세)의 짝이다. 처리하지 않고 남겨둔 항목은 `open-items.md` 에 모은다. 이 문서는 요구 ID(D·F·Q·T·C)를 실제 모듈·파일·테스트에 연결한다.
 - 기준 커밋 `0df7d6e`, 브랜치 `HANSOLJJ/worker`. 원본(`AI_company_analysis_factor/`)은 저장소 밖 읽기 전용이며 SHA-256 은 design-guideline 2.1절과 일치한다.
 
 ## 1. 유형 분기와 공통 진입점

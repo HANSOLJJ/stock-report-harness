@@ -231,7 +231,8 @@ plan → research → calculate → draft → review → (사용자 승인) → 
 - slug 는 `ai-scorecard-` 로 시작하며 plan frontmatter `report_type: ai_scorecard` 로 분기합니다. 기존 stock 리포트 계약은 바뀌지 않습니다.
 - 기준선 v1.5 는 `python scripts/scorecard_cli.py import-baseline` 으로 원본 HTML/MD 에서 이관하며 `scorecard/baseline/v1.5/import-report.md` 에 대조 결과가 남습니다.
 - 미결 규칙 결정(C-03/05/06/13/16)은 `run.json.decisions` 로만 적용하고, 결정 전 기업은 순위에서 제외됩니다.
-- 테스트: `npm run test:scorecard` (T-01~T-12, R01~R06).
+- 테스트: `npm run test:scorecard`.
+- 남은 작업(사용자 결정 대기, 자료·판단 대기, 문서 보완, 미구현 테스트)은 `docs/scorecard/open-items.md` 에 모여 있습니다.
 
 ## 의존 도구
 - Python 3.11+, `requirements.txt`의 yfinance/Markdown/PyYAML, Node.js 18+, Claude/Codex CLI
