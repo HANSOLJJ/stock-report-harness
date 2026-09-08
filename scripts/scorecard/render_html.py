@@ -22,7 +22,8 @@ SHORT = {"F1": "①", "F2": "②", "F3": "③", "F4": "④", "F5": "⑤", "F6": 
 TYPE_CLASS = {"소비자": "consumer", "업무": "work", "거래": "trade", "부품": "part", "소비자·업무": "mix", "혼합": "mix"}
 METHOD_LABELS = {
     "consensus_4q_sum": "미발표 4개 분기 컨센서스 합",
-    "vendor_forward_pe_verified_ntm": "공급사 forward PE 를 NTM 으로 역산 확인",
+    # 이 키 이름은 기준선 이관 코드의 문자열이다. NTM 적격성이 검증됐다는 뜻이 아니므로 라벨로 그렇게 읽히면 안 된다.
+    "vendor_forward_pe_verified_ntm": "공급사 forward PE(이관 코드 명칭 · 기간 미확인 · NTM 적격성 미검증)",
     "annual_weighted_proxy": "연간 EPS 가중 근사(정밀도 열위)",
 }
 OBS_STATUS_LABELS = {
