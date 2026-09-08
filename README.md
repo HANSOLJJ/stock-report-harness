@@ -206,6 +206,33 @@ node server.js samsung-electronics-recent-1y-2026-05
 # Report URL: http://localhost:3000/samsung-electronics-recent-1y-2026-05.html
 ```
 
+## AI 기업 9-factor 채점표 (ai_scorecard)
+
+같은 하네스 안에서 AI 기업 채점표를 규칙·원자료·정성 판단으로부터 결정론적으로 계산합니다. 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md`입니다.
+
+```
+/score-goal 2026-09 기준선 재계산
+```
+
+```
+plan → research → calculate → draft → review → (사용자 승인) → build
+```
+
+| 단계 | 명령 | 산출물 |
+| --- | --- | --- |
+| 실행 생성 | `python scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title ... --request ...` | `plan/<slug>.md`, `scorecard/runs/<slug>/{run,observations,judgments,sources}.json` |
+| 리서치 | `python scripts/scorecard_cli.py research <slug>` | `research/<slug>.md` (입력 해시 결속) |
+| 계산 | `python scripts/scorecard_cli.py calculate <slug>` | `results.json`, `preview.md` (기준선 대비·필요한 규칙 결정) |
+| 초안 | `python scripts/scorecard_cli.py draft <slug>` | `drafts/<slug>.md` |
+| 리뷰 | `python scripts/scorecard_cli.py review-template <slug>` → 4-way 리뷰 | `reviews/<slug>.md` |
+| 승인 | `python scripts/scorecard_cli.py approve <slug> --by <이름>` (사용자 행위) | `approval.json` (해시 결합) |
+| 빌드 | `python scripts/build_report.py <slug>` | `output/<slug>.html` 대시보드, `scorecard/history.csv` |
+
+- slug 는 `ai-scorecard-` 로 시작하며 plan frontmatter `report_type: ai_scorecard` 로 분기합니다. 기존 stock 리포트 계약은 바뀌지 않습니다.
+- 기준선 v1.5 는 `python scripts/scorecard_cli.py import-baseline` 으로 원본 HTML/MD 에서 이관하며 `scorecard/baseline/v1.5/import-report.md` 에 대조 결과가 남습니다.
+- 미결 규칙 결정(C-03/05/06/13/16)은 `run.json.decisions` 로만 적용하고, 결정 전 기업은 순위에서 제외됩니다.
+- 테스트: `npm run test:scorecard` (T-01~T-12, R01~R06).
+
 ## 의존 도구
 - Python 3.11+, `requirements.txt`의 yfinance/Markdown/PyYAML, Node.js 18+, Claude/Codex CLI
 - 선택 도구: jq(수동 JSON 점검용)
