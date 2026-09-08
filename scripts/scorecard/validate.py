@@ -25,6 +25,8 @@ REQUIRED_DRAFT_SECTIONS_SCORECARD = ["개요", "종합 순위표", "기업별 �
 HTML_GENERATOR = "stock-report-harness scorecard-builder"
 DISCLAIMER_TERMS = ("투자 조언", "투자 권유", "투자 자문", "교육 및", "매수", "매도")
 ROW_RE = re.compile(r"^\|(?P<cells>.+)\|\s*$")
+# 렌더러에서 f-string 접두사가 빠지면 파이썬 표현식이 리터럴로 출력된다. 오류가 안 나므로 검증기에서 막는다.
+UNRENDERED_RE = re.compile(r"\{(?:esc|fmt_[a-z_]+|total_class|score_class|trap_class|head|c\[|results\[|run\[)[^{}]*\}")
 
 
 def prel(path: Path) -> str:
@@ -226,6 +228,9 @@ def _validate_html(slug: str, html_path: Path, results: dict[str, Any], require_
         result.error("HTML 이 현재 results.json 해시를 가리키지 않음 — build 를 다시 실행")
     if not any(term in text for term in DISCLAIMER_TERMS):
         result.error("HTML footer 투자 유의 문구 없음")
+    unrendered = UNRENDERED_RE.findall(text)
+    if unrendered:
+        result.error(f"HTML 에 렌더되지 않은 템플릿 표현식 {len(unrendered)}건 (f-string 접두사 누락 의심): {', '.join(sorted(set(unrendered))[:3])}")
     if 'name="viewport"' not in text:
         result.error("HTML viewport 메타 없음")
     for row in results["ranking"]:
