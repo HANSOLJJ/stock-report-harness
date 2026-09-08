@@ -1,0 +1,37 @@
+{
+  "schema": "scorecard.run/1",
+  "run_id": "ai-scorecard-2026-09-baseline",
+  "report_type": "ai_scorecard",
+  "title": "AI 기업 9-factor 채점표 — v1.5 기준선 재계산",
+  "as_of": "2026-09-02",
+  "price_as_of": "2026-09-02",
+  "info_cutoff": "2026-09-02",
+  "rule_version": "v1.5",
+  "rule_hash": "9231b3a05ba5c7661dbc91190c66bcf73ab3617643e274698a2690c4b16de6ba",
+  "baseline_id": "v1.5",
+  "companies": [
+    "alphabet",
+    "amazon",
+    "meta",
+    "microsoft",
+    "tsmc",
+    "alibaba",
+    "anthropic",
+    "apple",
+    "nvidia",
+    "palantir",
+    "spacex-xai",
+    "tesla",
+    "oracle",
+    "openai"
+  ],
+  "reference_companies": [],
+  "decisions": [],
+  "created_at": "2026-09-08",
+  "purpose": "v1.5 기준선을 승계해 자동 산출 factor 를 재계산하고 미결 규칙 결정을 드러낸다",
+  "assumptions": [
+    "원자료와 정성 판단은 기준선 v1.5(2026-09-02)에서 승계했으며 이번 실행에서 재검증되지 않았다(legacy_unverified)",
+    "미결 규칙 결정(C-xx)은 run.json.decisions 에 명시된 것만 적용한다",
+    "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)"
+  ]
+}

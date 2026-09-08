@@ -1,0 +1,36 @@
+{
+  "schema": "scorecard.sources/1",
+  "run_id": "ai-scorecard-2026-09-baseline",
+  "items": [
+    {
+      "source_id": "SRC-v15-html",
+      "title": "AI기업_채점표_v1.5.html (D·VAL·EARN·FIN·BORR·TRIG)",
+      "publisher": "내부 기준선",
+      "url": null,
+      "accessed_at": "2026-09-08",
+      "sha256": "fa66076cbcd675d3f36a11ab2d4f80c3b2242ece84929dcc2765290ff9d71858",
+      "conflict_of_interest": "작성자 Claude=Anthropic (긴장 #4·#11)",
+      "note": "과거 기록"
+    },
+    {
+      "source_id": "SRC-v15-md",
+      "title": "AI기업_채점표_v1.5.md (순위표·원자료)",
+      "publisher": "내부 기준선",
+      "url": null,
+      "accessed_at": "2026-09-08",
+      "sha256": "d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30",
+      "conflict_of_interest": "작성자 Claude=Anthropic (긴장 #4·#11)",
+      "note": "과거 기록"
+    },
+    {
+      "source_id": "SRC-v15-rule",
+      "title": "AI기업_채점규칙_v1.5.md (③ 사다리·별표 G·별표 I·⑨ 적용표·⑥ 비상장)",
+      "publisher": "내부 규칙",
+      "url": null,
+      "accessed_at": "2026-09-08",
+      "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+      "conflict_of_interest": null,
+      "note": "규칙 원문 판정표"
+    }
+  ]
+}
