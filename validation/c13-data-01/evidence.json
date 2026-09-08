@@ -1,0 +1,261 @@
+{
+  "schema": "scorecard.c13_data_validation/1",
+  "task_id": "C13-DATA-01",
+  "collected_at": "2026-09-08T22:00:27.180079",
+  "as_of_target": "2026-09-02",
+  "targets": {
+    "tsmc": {
+      "company_id": "tsmc",
+      "ticker_us": "TSM",
+      "ticker_local": "2330.TW",
+      "exchange_us": "NYSE",
+      "exchange_local": "TWSE",
+      "share_basis": "adr",
+      "adr_ratio": 5,
+      "reporting_currency": "TWD",
+      "price_currency": "USD"
+    },
+    "alibaba": {
+      "company_id": "alibaba",
+      "ticker_us": "BABA",
+      "ticker_local": "9988.HK",
+      "exchange_us": "NYSE",
+      "exchange_local": "HKEX",
+      "share_basis": "ads",
+      "adr_ratio": 8,
+      "reporting_currency": "CNY",
+      "price_currency": "USD"
+    }
+  },
+  "providers_analyzed": {
+    "yahoo_finance": {
+      "TSM": {
+        "price": 428.91,
+        "forwardPE": 19.56251,
+        "forwardEps": 21.9251,
+        "trailingPE": 31.841871,
+        "trailingEps": 13.47,
+        "financialCurrency": "TWD",
+        "earnings_estimate_periods": [
+          "0q",
+          "+1q",
+          "0y",
+          "+1y"
+        ],
+        "earnings_estimate": {
+          "0q": {
+            "avg": 4.45297,
+            "low": 4.26,
+            "high": 4.72,
+            "yearAgoEps": 2.92,
+            "numberOfAnalysts": 9,
+            "growth": 0.525,
+            "currency": "USD"
+          },
+          "+1q": {
+            "avg": 4.95689,
+            "low": 4.76,
+            "high": 5.29,
+            "yearAgoEps": 3.14,
+            "numberOfAnalysts": 9,
+            "growth": 0.5786,
+            "currency": "USD"
+          },
+          "0y": {
+            "avg": 16.91131,
+            "low": 15.23,
+            "high": 17.8,
+            "yearAgoEps": 10.65,
+            "numberOfAnalysts": 13,
+            "growth": 0.5879,
+            "currency": "USD"
+          },
+          "+1y": {
+            "avg": 21.86117,
+            "low": 19.58,
+            "high": 24.1,
+            "yearAgoEps": 16.91131,
+            "numberOfAnalysts": 13,
+            "growth": 0.2927,
+            "currency": "USD"
+          }
+        },
+        "calc_pe_matches_forwardPE": true,
+        "forward_quarters_count": 2,
+        "missing_quarters": [
+          "+2q",
+          "+3q"
+        ],
+        "forward_basis": "FY+1 (Next Fiscal Year annual estimate, not rolling 4-quarter NTM)"
+      },
+      "BABA": {
+        "price": 113.24,
+        "forwardPE": 12.196245,
+        "forwardEps": 9.284824,
+        "trailingPE": 25.61991,
+        "trailingEps": 4.42,
+        "financialCurrency": "CNY",
+        "earnings_estimate_periods": [
+          "0q",
+          "+1q",
+          "0y",
+          "+1y"
+        ],
+        "earnings_estimate": {
+          "0q": {
+            "avg": 10.97892,
+            "low": 8.59,
+            "high": 15.46022,
+            "yearAgoEps": 4.36,
+            "numberOfAnalysts": 17,
+            "growth": 1.5181,
+            "currency": "CNY"
+          },
+          "+1q": {
+            "avg": 14.86827,
+            "low": 10.48,
+            "high": 19.52773,
+            "yearAgoEps": 7.09,
+            "numberOfAnalysts": 15,
+            "growth": 1.0971,
+            "currency": "CNY"
+          },
+          "0y": {
+            "avg": 44.49572,
+            "low": 39.63,
+            "high": 59.30886,
+            "yearAgoEps": 26.8,
+            "numberOfAnalysts": 30,
+            "growth": 0.6603,
+            "currency": "CNY"
+          },
+          "+1y": {
+            "avg": 62.72889,
+            "low": 50.3,
+            "high": 93.43579,
+            "yearAgoEps": 44.49572,
+            "numberOfAnalysts": 30,
+            "growth": 0.4098,
+            "currency": "CNY"
+          }
+        },
+        "calc_pe_matches_forwardPE": true,
+        "forward_quarters_count": 2,
+        "missing_quarters": [
+          "+2q",
+          "+3q"
+        ],
+        "forward_basis": "FY+1 (Next Fiscal Year annual estimate, not rolling 4-quarter NTM)"
+      }
+    },
+    "stock_analysis": {
+      "url_tsm": "https://stockanalysis.com/stocks/tsm/forecast/",
+      "url_baba": "https://stockanalysis.com/stocks/baba/forecast/",
+      "free_tier_quarters_available": 0,
+      "free_tier_annual_available": [
+        "FY 2026 (TSM in TWD)",
+        "FY 2027 (BABA in USD)"
+      ],
+      "subsequent_years_status": "Gated behind 'Stock Analysis Pro' paywall",
+      "quarterly_forecast_status": "Not provided on public forecast page (annual table only)",
+      "forward_pe_definition": "Reported as consensus forward multiple from S&P Global; uses annual weighted proxy or next fiscal year, not validated rolling 4 quarters"
+    },
+    "tipranks": {
+      "url_tsm": "https://www.tipranks.com/stocks/tsm/earnings",
+      "url_baba": "https://www.tipranks.com/stocks/baba/earnings",
+      "tsm_quarters_available": [
+        "2026 (Q3): Forecast $4.39"
+      ],
+      "tsm_future_quarters_count": 1,
+      "baba_quarters_available": [
+        "2027 (Q2): Forecast $1.63"
+      ],
+      "baba_future_quarters_count": 1,
+      "four_quarters_available": false,
+      "access_method": "Web HTML table (public direct scraping blocked by Cloudflare 403 on standard agents, browser UA required)"
+    },
+    "zacks": {
+      "url_tsm": "https://www.zacks.com/stock/quote/TSM/detailed-earning-estimates",
+      "url_baba": "https://www.zacks.com/stock/quote/BABA/detailed-earning-estimates",
+      "metric_name": "P/E (F1)",
+      "metric_definition": "Price / Estimated EPS for Fiscal Year 1 (F1). Not NTM.",
+      "quarters_available": [
+        "Current Qtr",
+        "Next Qtr"
+      ],
+      "annual_available": [
+        "Current Year (F1)",
+        "Next Year (F2)"
+      ],
+      "four_quarters_available": false
+    },
+    "finviz": {
+      "metric_name": "Forward P/E",
+      "metric_definition": "Price / Estimated EPS for the Next Fiscal Year (FY1/FY2). Explicitly not rolling 4 quarters NTM.",
+      "four_quarters_available": false
+    }
+  },
+  "quarterly_fulfillment": {
+    "tsmc": {
+      "Q1_next (Q3 2026)": {
+        "available": true,
+        "value_usd": 4.45,
+        "source": "Yahoo/Zacks"
+      },
+      "Q2_next (Q4 2026)": {
+        "available": true,
+        "value_usd": 4.96,
+        "source": "Yahoo/Zacks"
+      },
+      "Q3_next (Q1 2027)": {
+        "available": false,
+        "value_usd": null,
+        "reason": "No public consensus available"
+      },
+      "Q4_next (Q2 2027)": {
+        "available": false,
+        "value_usd": null,
+        "reason": "No public consensus available"
+      },
+      "all_4q_fulfilled": false
+    },
+    "alibaba": {
+      "Q1_next (Q2 FY27 / Sep 2026)": {
+        "available": true,
+        "value_cny": 10.98,
+        "source": "Yahoo"
+      },
+      "Q2_next (Q3 FY27 / Dec 2026)": {
+        "available": true,
+        "value_cny": 14.87,
+        "source": "Yahoo"
+      },
+      "Q3_next (Q4 FY27 / Mar 2027)": {
+        "available": false,
+        "value_cny": null,
+        "reason": "No public consensus available"
+      },
+      "Q4_next (Q1 FY28 / Jun 2027)": {
+        "available": false,
+        "value_cny": null,
+        "reason": "No public consensus available"
+      },
+      "all_4q_fulfilled": false
+    }
+  },
+  "vendor_forward_pe_analysis": {},
+  "historical_reproducibility_20260902": {
+    "point_in_time_available_freely": false,
+    "reason": "All free public data vendors (Yahoo Finance, StockAnalysis, Finviz, Zacks, TipRanks) provide only live floating snapshots (as of current date 2026-09-08). None offer historical point-in-time EPS consensus snapshots for 2026-09-02 without institutional paid access (Bloomberg, FactSet, LSEG I/B/E/S). Today's estimates cannot be retroactively applied to 2026-09-02.",
+    "retroactive_application_allowed": false
+  },
+  "conclusion": {
+    "consensus_4q_sum_available": false,
+    "vendor_forward_pe_is_true_ntm": false,
+    "vendor_pe_actual_nature": "Next Fiscal Year (FY1 or FY2) forward multiple or annual weighted proxy (annual_weighted_proxy), not true rolling 12 months (NTM)",
+    "c13_policy_implication": {
+      "if_reject_proxy": "TSMC and Alibaba F6 remain pending_data (data blocked) because verified 4-quarter consensus does not exist in any public source.",
+      "if_accept_proxy_with_flag": "Allows using baseline annual_weighted_proxy (TSMC 19.4, Alibaba 16.7) with explicit proxy warning flag as executed in baseline run."
+    }
+  }
+}
