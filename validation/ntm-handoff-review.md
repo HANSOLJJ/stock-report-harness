@@ -55,3 +55,14 @@ REPORT.md 326행은 여전히 네 분기 EPS에 대해 “어느 티어에서도
 - analyze_fy.py는 여전히 corrected JSON만 검사한다. 임시 파일에서 META 관측 수를 2에서 0으로 바꾸고 evidence는 2로 두었는데도 종료 코드 0으로 통과했다. 실제 evidence와의 교차 assertion이 필요하다.
 
 상세 실행 결과는 `ntm-handoff-r2-evidence.json`이다. 후속 요청 `msg_453d99ae2f0c`와 터미널 실행 안내로 REPORT.md·analyze_fy.py 두 파일만 보완하도록 전달했다. 신규 수집이나 정책 변경은 요청하지 않았다.
+
+## 최종 판정 — 9a30db8
+
+후속 완료 회신 `msg_e310ccc065aa`의 scarpper `9a30db8`을 추가 검토해 **pass**로 판정한다. H-01~H-03 및 무결성 범위 보완이 해결됐다. 이 판정은 조사 보고서 정정과 감사 절차의 검토 통과이며, 기업의 NTM 데이터 적격 승인이나 C-13 정책 선택은 아니다.
+
+- REPORT 11절은 현재 정정본 감사와 최초 수집 기록을 분리했다. 현행 순서는 저장된 복사본에서 apply → analyze → compare이며 폐기 생성기와 원자료 재수집을 제외한다.
+- analyze_fy.py가 evidence와 corrected의 기업 집합·기간 판정·적격 상태·관측 수를 교차 검사한다. 기본 입력은 통과했고, 임시 fixture에서 META 관측 수 2→0 변조 및 기업 누락은 각각 비정상 종료로 거절됐다. 컴파일도 통과했다.
+- 원문 HTML 31개는 첫 검토에서 저장한 SHA-256과 모두 일치한다. 최초 인수 전 해시가 없다는 한계와 최초 조사 start/end 참조 8종 비교 범위는 유지한다.
+- 이전 8e00678 검토의 apply 재생성·10개사 독립 교차 검사·과거 해시 비교 결과는 그대로 유효하다. 후속 커밋은 REPORT.md와 analyze_fy.py만 바꿨다.
+
+최종 실행 증거는 `ntm-handoff-r2-evidence.json`의 `final_followup`에 기록했다. worker·기준선·점수·정책·승인·HTML은 변경하지 않았다.

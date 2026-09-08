@@ -43,5 +43,28 @@
     "expected": "audit rejection",
     "actual_exit_code": 0,
     "actual_stdout": "R1 corrected analysis verified: 10 companies period_unknown/unverified; observed and eligible counts separated\n"
+  },
+  "final_followup": {
+    "commit": "9a30db8",
+    "verdict": "pass",
+    "cross_check_cases": {
+      "valid": {
+        "exit_code": 0,
+        "stdout": "R1 corrected analysis verified: 10 companies period_unknown/unverified; observed and eligible counts separated\n",
+        "stderr": ""
+      },
+      "count_mismatch": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\noble\\AppData\\Local\\Temp\\ntm-final-check-5f0f0cfc\\analyze_fy.py\", line 47, in <module>\n    main()\n  File \"C:\\Users\\noble\\AppData\\Local\\Temp\\ntm-final-check-5f0f0cfc\\analyze_fy.py\", line 43, in main\n    validate(args.corrected, args.evidence)\n  File \"C:\\Users\\noble\\AppData\\Local\\Temp\\ntm-final-check-5f0f0cfc\\analyze_fy.py\", line 34, in validate\n    assert forecast.get(\"yahoo_forward_quarters_free\") == corrected[\"quarterly_eps_obtained\"]\nAssertionError\n"
+      },
+      "company_missing": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\noble\\AppData\\Local\\Temp\\ntm-final-check-5f0f0cfc\\analyze_fy.py\", line 47, in <module>\n    main()\n  File \"C:\\Users\\noble\\AppData\\Local\\Temp\\ntm-final-check-5f0f0cfc\\analyze_fy.py\", line 43, in main\n    validate(args.corrected, args.evidence)\n  File \"C:\\Users\\noble\\AppData\\Local\\Temp\\ntm-final-check-5f0f0cfc\\analyze_fy.py\", line 19, in validate\n    assert len(companies) == 10\nAssertionError\n"
+      }
+    },
+    "raw_unchanged_since_first_review": 31,
+    "compile_pass": true
   }
 }
