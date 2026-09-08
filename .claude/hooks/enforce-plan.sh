@@ -155,6 +155,15 @@ elif tool == 'Bash':
     if m:
         paths.append(f'output/{m.group(1)}.html')
 
+def report_type(slug: str) -> str:
+    # plan frontmatter의 report_type 으로 유형을 분기한다. 없으면 stock_report.
+    plan = root / 'plan' / f'{slug}.md'
+    if not plan.is_file():
+        return 'stock_report'
+    head = plan.read_text(encoding='utf-8', errors='ignore')[:3000]
+    m = re.search(r'^report_type:\s*([A-Za-z_]+)\s*$', head, re.M)
+    return m.group(1) if m else 'stock_report'
+
 problems = []
 for path in paths:
     slug, phase, req = required_for_path(path)
@@ -164,10 +173,12 @@ for path in paths:
     if missing:
         problems.append(f'{path}: 선행 산출물 누락({", ".join(missing)})')
         continue
-    if phase == 'review' and not selected_image_exists(slug):
+    # ai_scorecard 는 hero 이미지·뉴스 요건이 없다(설계 지침 9절). review pass 요건은 두 유형 모두 유지한다.
+    scorecard = report_type(slug) == 'ai_scorecard'
+    if phase == 'review' and not scorecard and not selected_image_exists(slug):
         problems.append(f'{path}: review 전 selected hero image 누락(output/assets/{slug}-selected-image.json)')
     if phase == 'build':
-        if not selected_image_exists(slug):
+        if not scorecard and not selected_image_exists(slug):
             problems.append(f'{path}: build 전 selected hero image 누락(output/assets/{slug}-selected-image.json)')
         if not review_is_pass(slug):
             problems.append(f'{path}: build 전 pass 상태의 separate-session-4way review 필요(reviews/{slug}.md)')

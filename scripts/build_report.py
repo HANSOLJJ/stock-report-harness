@@ -31,6 +31,7 @@ from report_contract_lib import (
     price_chart_blocks,
     read_markdown,
     rel,
+    report_type_for,
     selected_image_path,
     strip_source_markers,
 )
@@ -387,7 +388,12 @@ def render_toc(toc: list[tuple[str, str]]) -> str:
     return f'<nav class="toc" aria-label="목차">{links}</nav>'
 
 
-def build_report(slug: str, *, reuse_existing_price_chart: bool = False) -> tuple[Path, list[Path], Path]:
+def build_report(slug: str, *, reuse_existing_price_chart: bool = False) -> tuple[Path, list[Path], Path | None]:
+    # report_type 분기: ai_scorecard 는 승인 해시 검증 → 대시보드 HTML → history.csv 로 이어지는 scorecard 빌더가 담당한다.
+    if report_type_for(slug) == "ai_scorecard":
+        from scorecard.render_html import build_scorecard
+
+        return build_scorecard(slug)
     paths = artifact_paths(slug)
     precheck = validate_contract(
         slug,
@@ -868,10 +874,11 @@ def main(argv: list[str] | None = None) -> int:
     html_path, price_paths, image_path = build_report(args.slug, reuse_existing_price_chart=args.reuse_existing_price_chart)
     print("Build complete")
     print(f"HTML: {rel(html_path)}")
-    print("Price chart JSON:")
+    print("Price chart JSON:" if image_path is not None else "Generated files:")
     for path in price_paths:
         print(f"- {rel(path)}")
-    print(f"Selected hero: {rel(image_path)}")
+    if image_path is not None:
+        print(f"Selected hero: {rel(image_path)}")
     print(f"Preview: http://localhost:3000/{html_path.name}")
     return 0
 

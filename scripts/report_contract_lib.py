@@ -45,6 +45,26 @@ REQUIRED_PLAN_FRONTMATTER = [
     "assumptions",
 ]
 REQUIRED_DRAFT_SECTIONS = ["개요", "배경", "메커니즘", "영향과 적용", "References"]
+
+# report_type 분기. plan frontmatter 에 없으면 기존 문서는 stock_report 로 본다. 알 수 없는 값은 차단한다.
+REPORT_TYPES = ("stock_report", "ai_scorecard")
+DEFAULT_REPORT_TYPE = "stock_report"
+REQUIRED_SCORECARD_PLAN_FRONTMATTER = [
+    "slug",
+    "report_type",
+    "topic",
+    "request",
+    "output_type",
+    "audience",
+    "run_id",
+    "as_of",
+    "rule_version",
+    "rule_hash",
+    "baseline_id",
+    "companies",
+    "created_at",
+    "assumptions",
+]
 CANONICAL_SELECTED_IMAGE_PATH_KEYS = ("image_path", "selected_image")
 SELECTED_IMAGE_PATH_KEYS = (
     "image_path",
@@ -169,6 +189,18 @@ def frontmatter_value(frontmatter: dict[str, Any], key: str) -> str:
     if isinstance(value, (list, dict)):
         return json.dumps(value, ensure_ascii=False, sort_keys=True)
     return str(value).strip()
+
+
+def report_type_for(slug: str) -> str:
+    """plan/<slug>.md 의 report_type. plan 이 없거나 키가 없으면 stock_report. 알 수 없는 값은 ValueError."""
+    plan_path = artifact_paths(slug).plan
+    if not plan_path.is_file():
+        return DEFAULT_REPORT_TYPE
+    frontmatter, _body, _raw, _text = read_markdown(plan_path)
+    value = frontmatter_value(frontmatter, "report_type") or DEFAULT_REPORT_TYPE
+    if value not in REPORT_TYPES:
+        raise ValueError(f"{rel(plan_path)} report_type {value!r} 는 {REPORT_TYPES} 중 하나여야 함")
+    return value
 
 
 def heading_titles(body: str) -> list[str]:

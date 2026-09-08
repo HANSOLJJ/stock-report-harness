@@ -27,6 +27,7 @@ from report_contract_lib import (
     price_chart_blocks,
     read_markdown,
     rel,
+    report_type_for,
     selected_image_path,
     load_json,
     prohibited_image_generation_hits,
@@ -398,6 +399,16 @@ def validate_contract(
     check_price_chart_if_present: bool = True,
 ) -> ValidationResult:
     result = ValidationResult(slug=slug)
+    # report_type 분기: ai_scorecard 는 scorecard 검증기로 위임하고, stock_report 는 아래 기존 검증을 그대로 수행한다.
+    try:
+        report_type = report_type_for(slug)
+    except ValueError as exc:
+        result.error(str(exc))
+        return result
+    if report_type == "ai_scorecard":
+        from scorecard.validate import validate_scorecard
+
+        return validate_scorecard(slug, require_html=require_html, check_html_if_present=check_html_if_present, result=result)
     paths = artifact_paths(slug)
     required = {
         "plan": paths.plan,

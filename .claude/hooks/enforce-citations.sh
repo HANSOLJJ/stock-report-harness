@@ -29,6 +29,15 @@ def relpath(value: str) -> str:
     except Exception:
         return p.resolve().as_posix()
 
+def report_type(slug: str) -> str:
+    # plan frontmatter의 report_type 으로 유형을 분기한다. 없으면 stock_report.
+    plan = root / 'plan' / f'{slug}.md'
+    if not plan.is_file():
+        return 'stock_report'
+    head = plan.read_text(encoding='utf-8', errors='ignore')[:3000]
+    m = re.search(r'^report_type:\s*([A-Za-z_]+)\s*$', head, re.M)
+    return m.group(1) if m else 'stock_report'
+
 paths = []
 path_value = ti.get('file_path') or ti.get('path')
 if isinstance(path_value, str):
@@ -38,6 +47,8 @@ if isinstance(path_value, str):
 if tool == 'Bash':
     # Bounded scan: only existing drafts. This catches generated/rewritten drafts.
     paths.extend(sorted((root / 'drafts').glob('*.md')))
+# ai_scorecard draft 는 results.json 해시로 결속된 생성물이라 scorecard 검증기가 숫자 근거를 확인한다. stock draft 만 마커를 요구한다.
+paths = [p for p in paths if report_type(Path(p).stem) != 'ai_scorecard']
 
 source_marker = re.compile(r'\[(?:S|N|P|H|A|F|R)\d+\]', re.I)
 numberish = re.compile(r'(?<![A-Za-z])(?:[$₩€¥]\s*\d[\d,]*(?:\.\d+)?\s*(?:B|M|K|bn|mn)?|\d[\d,]*(?:\.\d+)?\s*(?:%|원|달러|억원|조원|억|조|만|배|주|건|개|명|분기|B|M|K|bn|mn))(?![A-Za-z])', re.I)
