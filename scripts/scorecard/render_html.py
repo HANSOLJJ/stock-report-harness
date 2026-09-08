@@ -4,6 +4,7 @@ from __future__ import annotations
 import html as html_lib
 import json
 import math
+import re
 from pathlib import Path
 from typing import Any
 
@@ -18,7 +19,19 @@ from .stages import current_hashes, load_baseline
 
 GENERATOR = "stock-report-harness scorecard-builder"
 SHORT = {"F1": "①", "F2": "②", "F3": "③", "F4": "④", "F5": "⑤", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
-TYPE_CLASS = {"소비자": "consumer", "업무": "work", "거래": "trade", "부품": "part", "소비자·업무": "consumer", "혼합": "mix"}
+TYPE_CLASS = {"소비자": "consumer", "업무": "work", "거래": "trade", "부품": "part", "소비자·업무": "mix", "혼합": "mix"}
+METHOD_LABELS = {
+    "consensus_4q_sum": "미발표 4개 분기 컨센서스 합",
+    "vendor_forward_pe_verified_ntm": "공급사 forward PE 를 NTM 으로 역산 확인",
+    "annual_weighted_proxy": "연간 EPS 가중 근사(정밀도 열위)",
+}
+SHARE_LABELS = {"large": "큼", "small": "작음", "unknown": "미확인"}
+YESNO_LABELS = {"yes": "있음", "no": "없음", "unknown": "미확인"}
+GATE_LABELS = {
+    "pass": "통과", "fail": "실패", "positive_stable": "FCF 흑자·추세 안정", "positive_deteriorating": "FCF 흑자·추세 악화",
+    "negative": "FCF 마이너스", "not_disclosed": "미공시", "zero": "0", "pending": "대기", "skipped": "생략",
+    "computed": "산출", "undetermined": "판정 불가", "incompatible": "비교 불가", "no_obligations": "약정 없음",
+}
 
 
 def esc(value: Any) -> str:
@@ -162,6 +175,8 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .fsc{font-weight:900;font-size:var(--fs-base);min-width:22px;white-space:nowrap}
 .fst{color:var(--tx3);font-size:var(--fs-xs);flex:1 1 auto;min-width:0;line-height:1.4}
 .fcalc{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0 4px;overflow-wrap:anywhere}
+.fsrc{color:var(--tx3);font-size:var(--fs-xs);margin:4px 0 2px}
+.figures td.mono,.figures th:not(.name):not(.text){text-align:right}
 .fpts{margin:0;padding-left:16px;color:var(--tx);line-height:1.55}
 .fpts li{margin:2px 0}
 .fpts li.warn{color:var(--warn-text)}
@@ -261,7 +276,8 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
         entries.append({"x": X(moat), "y": Y(trap), "r": r, "color": color, "names": names, "total": group[0]["total"], "group": group})
     placed = [{"x": e["x"], "y": e["y"], "w": e["r"] * 2 + 8, "h": e["r"] * 2 + 8} for e in entries]
     for e in entries:
-        parts.append(f'<circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="{e["r"]:.1f}" style="fill:{e["color"]}" opacity=".18"/><circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="{e["r"]:.1f}" fill="none" style="stroke:{e["color"]}" stroke-width="2" opacity=".9"/>')
+        desc = " · ".join(f'{c["display_name"]} 주채널 {c["type"]} · 과점 {c["moat"]} 함정 {c["trap"]} 조정 {c["total"]}' for c in e["group"])
+        parts.append(f'<g><title>{esc(desc)}</title><circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="{e["r"]:.1f}" style="fill:{e["color"]}" opacity=".18"/><circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="{e["r"]:.1f}" fill="none" style="stroke:{e["color"]}" stroke-width="2" opacity=".9"/></g>')
         if len(e["group"]) > 1:
             for k, c in enumerate(e["group"]):
                 parts.append(f'<circle cx="{e["x"] + (k - (len(e["group"]) - 1) / 2) * 8:.1f}" cy="{e["y"]:.1f}" r="2.6" style="fill:var(--cat-{TYPE_CLASS.get(c["type"], "mix")})"/>')
@@ -372,6 +388,7 @@ def render_incomplete(results: dict[str, Any], rules: Any) -> str:
 
 def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]], observations: list[dict[str, Any]] | None = None) -> str:
     observations = observations or []
+    baseline_n = len((baseline or {}).get("companies", [])) or len(results["companies"])
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
     out = []
@@ -379,7 +396,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         b = base.get(c["company_id"], {})
         cls = TYPE_CLASS.get(c["type"], "mix")
         incompatible_g4 = any(o["company_id"] == c["company_id"] and o["metric"] in ("contracted_revenue", "offbalance_B") and o["status"] == "incompatible_basis" for o in observations)
-        head = f'{c["rank"]}위' if c["rank"] else "미완료"
+        base_rank = f" · 기준선 {results['baseline_id']} {b['rank_raw']}위({baseline_n}사)" if b.get("rank_raw") else ""
+        head = (f"{c['rank']}위(완료 {results['population']['scored']}개사 기준){base_rank}" if c["rank"] else f"미완료{base_rank}") + f" · 과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
         groups = []
         for label, factors, klass, total in (("과점 — 더한다 (각 0~5)", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다 (각 0~-5)", TRAP_FACTORS, "n", c["trap"])):
             rows = []
@@ -393,16 +411,17 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                     pts.append("(원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)")
                 pts += [f'<li class="warn">⚠️ {esc(w)}</li>' for w in fr["warnings"][:4]]
                 calc = factor_calc_text(f, fr)
+                src = ""
                 if evidence:
-                    header = "기준선 근거(승계 판단)" if (fr["status"] == "carried_score" or fr["basis"] in ("manual", "carried")) else "기준선 서술(참고 — 이번 실행은 입력에서 자동 산출)"
-                    calc = (calc + " · " if calc else "") + header
-                body = ("<ul class=\"fpts\">" + "".join(p if p.startswith("<li") else f"<li>{p}</li>" for p in pts) + "</ul>") if pts else ""
+                    header = "아래는 기준선 근거(승계 판단)" if (fr["status"] == "carried_score" or fr["basis"] in ("manual", "carried")) else "아래는 기준선 서술(참고 — 이번 실행은 입력에서 자동 산출)"
+                    src = f'<div class="fsrc">{header}</div>'
+                body = (src + "<ul class=\"fpts\">" + "".join(p if p.startswith("<li") else f"<li>{p}</li>" for p in pts) + "</ul>") if pts else ""
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{esc(STATUS_LABEL.get(fr["status"], fr["status"]))} · {esc(fr["basis"])}</span></div>{f"<div class=\"fcalc\">{esc(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
             + ("" if c["complete"] else '<span class="pill warn">미완료</span>')
-            + f'</div><div class="ctag">' + (f'<span class="pill legacy">기준선 {esc(results["baseline_id"])} 요약 · 과거 기록</span> {esc(b.get("tag", ""))}' if b.get("tag") else "") + '</div></div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{head} · 과점 {fmt_score(c["moat"])} / 함정 {fmt_score(c["trap"])}</div></div></summary>'
+            + f'</div><div class="ctag">' + (f'<span class="pill legacy">기준선 {esc(results["baseline_id"])} 요약 · 과거 기록</span> {esc(b.get("tag", ""))}' if b.get("tag") else "") + f'</div></div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(head)}</div></div></summary>'
             f'<div class="cbody">{"".join(groups)}</div></details>'
         )
     return "".join(out)
@@ -428,19 +447,21 @@ def factor_calc_text(f: str, fr: dict[str, Any]) -> str:
     calc = fr.get("calc") or {}
     text = ""
     if f == "F6" and calc.get("ntm_per") is not None:
-        text = f"NTM PER {fmt_num(calc['ntm_per'])} ({calc.get('method', '')}) → 구간 {calc.get('band', '')}"
+        text = f"NTM PER {fmt_num(calc['ntm_per'])} ({METHOD_LABELS.get(calc.get('method'), calc.get('method', ''))})"
+        if calc.get("band"):
+            text += f" → 구간 {calc['band']}"
         if (calc.get("boundary") or {}).get("flag"):
-            text += " ⚠️ 경계 ±3%"
+            text += " ⚠️ 구간 경계 ±3% 이내"
     elif f == "F6" and "valuation_over_arr" in calc:
         text = f"밸류÷ARR {fmt_num(calc['valuation_over_arr'])}x · ARR÷조달 {fmt_num(calc.get('arr_over_cumulative_raised'), 2)}"
     elif f == "F3" and "pass_points" in calc:
-        text = f"통과점 {calc['pass_points']:g} — {calc.get('ladder_note', '')}"
+        text = str(calc.get("ladder_note") or f"통과점 {calc['pass_points']:g}")
     elif f == "F5" and "A" in calc:
         text = f"3 + A({calc['A']}) + H({calc['H']})"
     elif f == "F7" and "funding_dependent_share" in calc:
-        text = f"조달 의존 비중 {calc['funding_dependent_share']} · 환류 {calc['own_money_returns']}"
+        text = f"조달 의존 고객 비중 {SHARE_LABELS.get(calc['funding_dependent_share'], calc['funding_dependent_share'])} · 내 돈 환류 {YESNO_LABELS.get(calc['own_money_returns'], calc['own_money_returns'])}"
     elif f == "F9" and calc.get("path"):
-        text = " → ".join(f"{p['gate']} {p.get('result') or p.get('adjust') or p.get('mode') or ''}" + (f" {p['runway_years']:.1f}년" if "runway_years" in p else "") + (f" 커버리지 {p['coverage']:.2f}" if p.get("coverage") is not None else "") for p in calc["path"])
+        text = " → ".join(f"{p['gate']} {GATE_LABELS.get(p.get('result'), p.get('result') or '') or p.get('adjust') or p.get('mode') or ''}" + (f" {p['runway_years']:.1f}년" if "runway_years" in p else "") + (f" 커버리지 {p['coverage']:.2f}" if p.get("coverage") is not None else "") for p in calc["path"])
     pending = fr.get("pending") or {}
     if pending:
         text = (text + " · " if text else "") + pending.get("message", "")
@@ -458,7 +479,7 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
             f6 = c["factors"]["F6"]
             flag = "⚠️" if ((f6.get("calc") or {}).get("boundary") or {}).get("flag") else "—"
             nonop = obs.number(cid, "nonop_share")[0]
-            val_rows.append(f'<tr><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "price")[0], 2)}</td><td class="mono">{fmt_usd(obs.number(cid, "market_cap")[0], 2)}</td><td class="mono w8">{fmt_num(per)}</td><td class="text narrow">{esc(method)}</td><td class="mono w8">{fmt_score(f6["score"])}</td><td>{flag}</td><td class="mono">{fmt_num(obs.number(cid, "ttm_per")[0])}</td><td class="mono{" c-g1" if (nonop or 0) >= 0.3 else ""}">{fmt_pct(nonop)}</td><td class="mono">{fmt_num(obs.number(cid, "ps_ratio")[0])}</td></tr>')
+            val_rows.append(f'<tr><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "price")[0], 2)}</td><td class="mono">{fmt_usd(obs.number(cid, "market_cap")[0])}</td><td class="mono w8">{fmt_num(per)}</td><td class="text narrow">{esc(METHOD_LABELS.get(method, method))}</td><td class="mono w8">{fmt_score(f6["score"])}</td><td>{flag}</td><td class="mono">{fmt_num(obs.number(cid, "ttm_per")[0])}</td><td class="mono{" c-g1" if (nonop or 0) >= 0.3 else ""}">{fmt_pct(nonop)}</td><td class="mono">{fmt_num(obs.number(cid, "ps_ratio")[0])}</td></tr>')
         else:
             calc = c["factors"]["F6"].get("calc") or {}
             priv_rows.append(f'<tr><td class="name"><i>{esc(name)}</i></td><td class="mono">{fmt_usd(obs.number(cid, "post_money_valuation")[0])}</td><td class="mono">{fmt_usd(obs.number(cid, "arr")[0])}</td><td class="mono">{fmt_num(calc.get("valuation_over_arr"))}x</td><td class="mono">{fmt_usd(obs.number(cid, "cumulative_raised")[0])}</td><td class="mono">{fmt_num(calc.get("arr_over_cumulative_raised"), 2)}</td><td class="mono w8">{fmt_score(c["factors"]["F6"]["score"])}</td></tr>')
@@ -471,15 +492,17 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
         nb, nb_obs = obs.number(cid, "net_borrowing_ttm")
         if nb_obs is not None:
             borr_rows.append(f'<tr><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(nb) if nb is not None else esc(nb_obs.get("raw") or "—")}</td><td class="mono">{fmt_usd(obs.number(cid, "capex_ttm")[0])}</td></tr>')
+    legacy_n = sum(1 for o in ctx.observations if o["status"] == "legacy_unverified")
     parts = [
-        '<h3>가격 — ⑥ 원자료</h3><div class="tablewrap"><table><thead><tr><th class="name">기업</th><th>주가</th><th>시총</th><th>NTM PER</th><th class="text narrow">산출 방법</th><th>⑥</th><th>경계</th><th>TTM PER</th><th>영업외 비중</th><th>P/S</th></tr></thead><tbody>' + "".join(val_rows) + "</tbody></table></div>",
-        '<div class="notice info">NTM PER 만 ⑥ 점수에 개입한다. TTM PER·P/S·영업외 비중은 참고·왜곡 탐지용이며 영업외 30% 이상이면 TTM PER 은 무효로 본다.</div>',
+        f'<p class="sub mt-8">모든 값은 기준선 {esc(ctx.run["baseline_id"])} 승계 관측(<code>legacy_unverified</code> {legacy_n}건)이며 이번 실행에서 재검증되지 않았다. 상장사 주가는 USD 이고 TSMC 는 ADR(1주 = 보통주 5주, 재무 TWD), Alibaba 는 ADS(재무 CNY) 기준이다. <code>—</code> 는 관측 없음이고 원문 상태(미공시·적자·∞·판정 불가)는 그대로 표기한다.</p>',
+        '<h3>가격 — ⑥ 원자료</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>주가</th><th>시총</th><th>NTM PER</th><th class="text narrow">산출 방법</th><th>⑥</th><th>경계</th><th>TTM PER</th><th>영업외 비중</th><th>P/S</th></tr></thead><tbody>' + "".join(val_rows) + "</tbody></table></div>",
+        '<div class="notice info">NTM PER 만 ⑥ 점수에 개입한다. TTM PER·P/S·영업외 비중은 참고·왜곡 탐지용이며 영업외 30% 이상이면 TTM PER 은 무효로 본다. 경계 열의 ⚠️ 는 구간 경계(20·29·42·62·90)까지 거리가 ±3% 이내라는 표시이며 점수를 바꾸지 않는다.</div>',
     ]
     if priv_rows:
-        parts.append('<h3>비상장 — ⑥ 배수</h3><div class="tablewrap"><table><thead><tr><th class="name">기업</th><th>post-money</th><th>ARR</th><th>밸류÷ARR</th><th>누적 조달</th><th>ARR÷조달</th><th>⑥</th></tr></thead><tbody>' + "".join(priv_rows) + "</tbody></table></div><p class=\"sub\" style=\"margin-top:8px\">비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 정성 예외(C-12)이며 경계 표시를 적용하지 않는다.</p>")
-    parts.append('<h3>재무 — ⑨ 원자료</h3><div class="tablewrap"><table><thead><tr><th class="name">기업</th><th>현금</th><th>TTM FCF</th><th>런웨이(년)</th><th>순현금/순부채</th><th>D/EBITDA</th><th>신용</th><th class="text">부외 약정(원문)</th><th>⑨</th></tr></thead><tbody>' + "".join(fin_rows) + "</tbody></table></div><p class=\"sub\" style=\"margin-top:8px\">신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(별표 J). 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 G4 커버리지에 쓴다.</p>")
+        parts.append('<h3>비상장 — ⑥ 배수</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>post-money</th><th>ARR</th><th>밸류÷ARR</th><th>누적 조달</th><th>ARR÷조달</th><th>⑥</th></tr></thead><tbody>' + "".join(priv_rows) + "</tbody></table></div><p class=\"sub\" style=\"margin-top:8px\">비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 정성 예외(C-12)이며 경계 표시를 적용하지 않는다.</p>")
+    parts.append('<h3>재무 — ⑨ 원자료</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>현금</th><th>TTM FCF</th><th>런웨이(년)</th><th>순현금/순부채</th><th>D/EBITDA</th><th>신용</th><th class="text">부외 약정(원문)</th><th>⑨</th></tr></thead><tbody>' + "".join(fin_rows) + "</tbody></table></div><p class=\"sub\" style=\"margin-top:8px\">신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(별표 J). 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 G4 커버리지에 쓴다.</p>")
     if borr_rows:
-        parts.append('<h3>TTM 순차입</h3><div class="tablewrap"><table><thead><tr><th class="name">기업</th><th>TTM 순차입</th><th>TTM capex</th></tr></thead><tbody>' + "".join(borr_rows) + "</tbody></table></div>")
+        parts.append('<h3>TTM 순차입</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>TTM 순차입</th><th>TTM capex</th></tr></thead><tbody>' + "".join(borr_rows) + "</tbody></table></div>")
     return "".join(parts)
 
 
@@ -490,7 +513,7 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     drows = "".join(f'<tr><td class="mono">{esc(d["id"])}</td><td class="text">{esc(d["summary"])}</td><td class="text">{esc(d.get("recommendation", ""))}</td><td>{esc(next((r["choice"] for r in ctx.run["decisions"] if r["id"] == d["id"]), "미결"))}</td></tr>' for d in pending)
     return (
         f'<ul class="tight"><li>규칙 <b>{esc(rules.version)}</b> · 해시 <code>{esc(rules.hash[:16])}…</code> · 원본 {esc(rules.payload["source"]["file"])}</li>'
-        f'<li>기준일 {esc(ctx.run["as_of"])} · 가격 기준일 {esc(ctx.run.get("price_as_of") or ctx.run["as_of"])} · 정보 컷오프 {esc(ctx.run.get("info_cutoff") or ctx.run["as_of"])}</li>'
+        f'<li>기준일 {esc(ctx.run["as_of"])} · 가격 기준일 {esc(ctx.run.get("price_as_of") or ctx.run["as_of"])} · 정보 컷오프 {esc(ctx.run.get("info_cutoff") or ctx.run["as_of"])} — 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있으며 이번 실행에서 재검증하지 않았다(C-17)</li>'
         f'<li>입력 해시: observations <code>{esc(ctx.hashes["observations"][:12])}…</code> · judgments <code>{esc(ctx.hashes["judgments"][:12])}…</code> · results <code>{esc(results["results_hash"][:12])}…</code></li>'
         f'<li>실행 단위 결정: {esc(", ".join(results["decisions_applied"]) or "없음")}</li></ul>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th><th>자동화</th><th>범위</th><th class="text narrow">관련 결정</th></tr></thead><tbody>{rows}</tbody></table></div>'
@@ -505,7 +528,10 @@ def render_triggers(triggers: list[dict[str, Any]]) -> str:
     if not triggers:
         return '<p class="sub">등록된 트리거 없음</p>'
     rows = "".join(f'<tr><td class="mono">{esc(t["trigger_id"])}</td><td class="text"><b>{esc(t["title"])}</b></td><td class="text">{esc(t["why"])}</td><td class="text">{esc(t["impact_raw"])}</td></tr>' for t in triggers)
-    return f'<div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">항목</th><th class="text">왜 중요한가</th><th class="text">영향(원문)</th></tr></thead><tbody>{rows}</tbody></table></div><p class="sub mt-8">영향 열의 예상 점수는 저장값이 아니라 원문 문장이다(C-14). 사건 확인 후 현재 규칙으로 재계산한다.</p>'
+    return ('<div class="notice"><span class="pill legacy">기준선 원문 · 과거 기록</span> 이 표는 기준선에서 그대로 옮긴 문장이며 이번 실행에서 재검증하지 않았다. '
+            '따라서 표 안의 비교 문장과 경계 언급은 위 04 지표 원자료의 이번 실행 산출과 다를 수 있다.</div>'
+            f'<div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">항목</th><th class="text">왜 중요한가</th><th class="text">영향(원문)</th></tr></thead><tbody>{rows}</tbody></table></div>'
+            '<p class="sub mt-8">영향 열의 예상 점수는 저장값이 아니라 원문 문장이다(C-14). 사건 확인 후 현재 규칙으로 재계산한다.</p>')
 
 
 def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
@@ -521,7 +547,11 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     run = ctx.run
     title = run["title"]
     subtitle = f"규칙 {ctx.rules.version} · 기준일 {run['as_of']} · {results['population']['scored']}개사 순위"
-    legend = "".join(f'<span><i style="background:var(--cat-{cls})"></i>{esc(label)}</span>' for cls, label in (("consumer", "주채널: 소비자"), ("work", "주채널: 업무"), ("trade", "주채널: 거래"), ("part", "부품(① 상한 2점)"), ("mix", "혼합")))
+    present: list[str] = []
+    for c in results["companies"]:
+        if c["complete"] and not c["reference"] and c["type"] not in present:
+            present.append(c["type"])
+    legend = "".join(f'<span><i style="background:var(--cat-{TYPE_CLASS.get(t, "mix")})"></i>{esc(t)}{" (① 상한 2점)" if t == "부품" else ""}</span>' for t in present)
     anthropic_note = ""
     for c in results["companies"]:
         if c["company_id"] == "anthropic":
@@ -545,7 +575,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </head>
 <body>
 <header><div class="wrap">
-  <div class="badge">{esc(ctx.rules.version)} · 기준일 {esc(run["as_of"])} · {len(run["companies"])}개사 · 승인 {esc(approval["approval_id"][:8])}</div>
+  <div class="badge">{esc(ctx.rules.version)} · 기준일 {esc(run["as_of"])} · 채점 {len(run["companies"])}개사 · 순위 {results["population"]["scored"]}개사 · 승인 {esc(approval["approval_id"][:8])}</div>
   <h1>{esc(title)}</h1>
   <p class="lede">AI 시대에 <b>누가 90년 과점을 만들 구조를 갖췄나</b>를 9개 항목으로 채점했다. <b>과점 factor 5개(각 0~5점)</b>에서 더하고 <b>함정 factor 4개(각 0~-5점)</b>에서 뺀다. 점수는 규칙과 입력에서 계산된 결과이며 손으로 고치지 않는다.</p>
   {anthropic_note}
@@ -553,7 +583,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <div class="wrap">
 <div class="kpis" id="kpis">{render_kpis(results)}</div>
 <h2><span class="num">01</span>과점 × 함정 지도</h2>
-<div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div></div>
+<div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
 <h2><span class="num">02</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results)}
@@ -579,7 +609,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </body>
 </html>
 """
-    return document.replace("<th>", '<th scope="col">').replace("<th ", '<th scope="col" ')
+    return re.sub(r"<th(?=[ >])", '<th scope="col"', document)
 
 
 # ------------------------------------------------------------------ 빌드
