@@ -32,3 +32,6 @@ output/
 commit.md
 # Playwright MCP 검증 스크래치 (score-build/stock-build 시각 검증 중 생성)
 .playwright-mcp/
+# 외부 에이전트 CLI 스캐폴딩 (생성 주체 미확인, 2026-09-08 관측)
+.agents/
+.codex/

@@ -18,6 +18,7 @@
 | SCORECARD-REVIEW-03 | `설계진행/validation/cli-doc-recheck.md` | `recheck_cli_doc.py` |
 | SCORECARD-REVIEW-01 | Orca 스레드 `msg_32b69fde6c6f` | `설계진행/validation/test_scorecard_review.py` |
 | SCORECARD-REVIEW-04 | `설계진행/validation/worker-final-recheck.md` (설계진행 커밋 `b827de9`) | `recheck_worker_final.py`, `worker-final-recheck-evidence.json` |
+| NTM 정책 검토 | `설계진행/validation/ntm-policy-review.md` (설계진행 커밋 `32a7ed0`) | — |
 
 ## 1. 사용자 결정 대기 — 규칙
 
@@ -40,6 +41,8 @@
 - **경계값 방향이 factor 마다 반대다.** ⑥ 은 정확히 20 인 값을 더 나쁜 칸(-1)에 붙이고, ⑨ 제안 경계는 정확히 -10% 인 값을 덜 나쁜 칸(-3)에 붙인다. **이것은 Q03 위반이 아니다.** Q03 은 기업 간 동일 잣대를 묻는 항목이고(설계 지침 10.2), 각 factor 의 구간은 전 기업에 일관되게 적용되고 있다. 다만 규칙을 읽는 사람이 경계 처리를 헷갈릴 수 있으므로 방향을 통일할지는 별도로 판단할 값어치가 있다.
 - **C-06 은 다섯 항목의 묶음이다.** `proposed_v15_boundaries` 를 골라도 손실률 경계 하나만 정해진다. FCF 0, 영업손익 0, 완충 잠식 정의, G2 안정·악화 정의는 남는다. 이번 실행에 해당 기업이 없어 드러나지 않을 뿐이다. **선택 하나로 C-06 전체가 해소된 것으로 표시하지 않는다.** 결정을 쪼갤지 판단이 필요하다.
 - **TSMC 근사값 19.4 는 구간 경계 20 에서 3% 안쪽이다.** 산출 방법이 바뀌면 0 과 -1 이 뒤집힌다. 근사 수용은 기준선 재현에는 맞지만 신규 채점에는 위험하다.
+- **`vendor_forward_pe_verified_ntm` 라벨은 이관 시 하드코딩된 것이지 이 파이프라인이 검증한 결과가 아니다.** 기준선의 `ntm_per` 관측 12건은 전부 `legacy_unverified` 이고 `ntm_eps` 관측은 0건이다. `baseline_import` 가 TSMC·Alibaba 만 근사로 보고 나머지 10사에 일괄로 이 라벨을 붙인다. 원문 저자가 손으로 역산해 확인했다고 적었을 뿐, 공급사 정의와 분기값은 이 저장소에서 확인된 바 없다. 그런데 이 라벨이 `accepted_ntm_methods` 에 들어 있어 10사가 자동 채점된다. **과거 재계산이 통과하는 것과 신규 NTM 적격이 검증된 것은 다르다.** C-13 을 정하기 전에 이 구분을 함께 본다.
+- **method 이름만 바꾸는 것은 표시 변경이 아니다.** 검증 담당 재현에서 `vendor_forward_pe_verified_ntm` 을 `period_unverified` 로 바꾸자 Microsoft PER 25.4 가 `ok/-1` 에서 `pending_data/null` 로 바뀌었다. 라벨은 채점 가능 여부를 가르는 입력이므로, 표시만 고친다는 이유로 기준선을 덮어쓰지 않는다.
 
 ## 2. 자료·판단 대기 — 규칙이 아님
 
