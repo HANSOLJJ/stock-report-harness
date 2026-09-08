@@ -69,6 +69,7 @@
 - 참조: `docs/pedagogy.md`, `docs/visual-system.md`, `docs/finance-style-guide.md`, `docs/output-spec.md`, `docs/image-generation-spec.md`, `docs/templates/*.md`.
 
 ## Orca worktree 간 메시지와 작업 실행
+- 이 규칙은 프로젝트의 모든 worktree와 에이전트에 적용한다. 새 worktree 생성 또는 기존 worktree 작업 시작 시 이 절이 있는지 확인하고, 오래된 분기에서 누락됐으면 원본 저장소의 공통 규칙을 반영한다. 실행 중인 에이전트에는 갱신된 AGENTS.md를 읽도록 터미널로 안내한다.
 - 다른 worktree에 신규 작업·보완·재검증 등 추가 실행을 요청할 때는 **메시지 발송과 터미널 실행 안내를 반드시 함께 수행한다.** `orca orchestration send/reply`로 수신함에 저장한 것만으로 요청 처리를 끝내지 않는다.
 - 메시지 발송 후 수신 에이전트의 현재 terminal handle과 입력 상태를 확인하고, `orca terminal send --terminal <handle> --text "<메시지 ID와 수신함 확인·작업 실행 안내>" --enter --json`으로 실행 안내를 제출한다. 기존 입력이나 진행 중인 작업을 지우거나 중단하지 않는다.
 - 실행 안내에는 확인할 메시지 ID, 해야 할 작업, 수신 확인 및 완료 회신 방법을 포함한다. 최초 제출이 처리됐는지 확인하고, 이미 처리 중인 동일 요청은 중복 제출하지 않는다.
