@@ -1,0 +1,16 @@
+{
+  "schema": "scorecard.approval/1",
+  "run_id": "ai-scorecard-2026-09-baseline",
+  "approval_id": "43f6583db9108858",
+  "approved_by": "noble",
+  "approved_at": "2026-09-08",
+  "hashes": {
+    "rules": "9231b3a05ba5c7661dbc91190c66bcf73ab3617643e274698a2690c4b16de6ba",
+    "observations": "37435ae2989236f587b149c7def34c605d140a781965be5a08d4e72ae0cf4f9c",
+    "judgments": "685069767e0cf919387ad3c563d0ccc2b061bd58e8653a88dbc51bfe49db3359",
+    "run": "50b063a5a12e84a67018655950fe248838cdc1562f404d6d7a5693ed966bbfe4",
+    "results": "0942c342f010781ea41f2cec51a5082c5f5f58cdfe76078bb7c3e5b29bbffec0",
+    "draft": "574841bc7c26f225fc34704e0182ba81c1b51e93fb03874b86515c0f846fdd8b"
+  },
+  "note": "사용자 지시로 승인. 미결 규칙 결정 C-06·C-13 이 남아 미완료 5개사는 순위에서 제외된 상태임을 알고 승인함. 출력·가독성 2차 서브에이전트 재검증은 세션 한도로 중단되어 main 세션 Playwright 실측으로 대체했다."
+}

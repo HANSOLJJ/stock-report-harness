@@ -30,3 +30,5 @@ drafts/*
 !drafts/.gitkeep
 output/
 commit.md
+# Playwright MCP 검증 스크래치 (score-build/stock-build 시각 검증 중 생성)
+.playwright-mcp/

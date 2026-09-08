@@ -429,6 +429,11 @@ class TestReviewRegressions(unittest.TestCase):
         self.assertEqual(result["status"], "pending_data")
         diag = self.f9([obs("operating_margin_ttm", -0.05), obs("fcf_ttm", -50.0)], decisions=[decision("C-06", "proposed_v15_boundaries"), decision("C-05", "diagnose_only")])
         self.assertEqual((diag["status"], diag["score"]), ("ok", -3))
+        # 소진율(TTM FCF) 관측 자체가 없거나 수집 실패여도 런웨이 진단을 조용히 건너뛰지 않는다
+        for fcf_obs in ([], [obs("fcf_ttm", None, status="collection_failed")]):
+            result = self.f9([obs("operating_margin_ttm", -0.05), *fcf_obs, obs("cash", 10.0), obs("contracted_revenue", 10.0), obs("offbalance_B", 5.0)],
+                             decisions=dec, coverage_comparable="yes")
+            self.assertEqual(result["status"], "pending_data", fcf_obs)
 
     def test_review2_zero_margin_needs_decision(self):
         result = self.f9([obs("operating_margin_ttm", 0.0), obs("fcf_ttm", 50.0)], fcf_trend="stable")

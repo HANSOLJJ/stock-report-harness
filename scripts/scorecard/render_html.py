@@ -553,7 +553,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <div class="wrap">
 <div class="kpis" id="kpis">{render_kpis(results)}</div>
 <h2><span class="num">01</span>과점 × 함정 지도</h2>
-<div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(승계 관측)</span></div></div>
+<div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div></div>
 <h2><span class="num">02</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results)}

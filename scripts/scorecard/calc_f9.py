@@ -137,11 +137,12 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
         use(cash_obs)
         undrawn, undrawn_obs = obs.number(cid, "undrawn_credit")
         use(undrawn_obs)
-        if fcf is not None and fcf < 0 and cash is None:
-            # 소진 중인데 현금 관측이 없으면 런웨이 진단이 불가능하다. 조용히 건너뛰지 않는다.
-            path.append({"gate": "G3", "mode": "diagnostic", "result": "pending", "reason": "현금 관측 없음"})
+        if fcf is None or (fcf < 0 and cash is None):
+            # 소진율(TTM FCF)이나 완충(현금) 관측이 없으면 런웨이 진단이 불가능하다. 조용히 건너뛰지 않는다.
+            missing = "TTM FCF 관측 " + ((fcf_obs["status"] if fcf_obs else "없음") if fcf is None else "확보") + " / 현금 관측 " + ("없음" if cash is None else "확보")
+            path.append({"gate": "G3", "mode": "diagnostic", "result": "pending", "reason": missing})
             if decision_choice(run, rules, "C-05") != "diagnose_only":
-                return done(None, "pending_data", pending_info("data", "G1 실패 뒤 런웨이 진단에 사용 가능 현금 관측 필요"))
+                return done(None, "pending_data", pending_info("data", f"G1 실패 뒤 런웨이 진단 자료 부족 — {missing}"))
         elif fcf is not None and fcf < 0 and cash is not None:
             runway = _runway(cash, undrawn or 0.0, -fcf)
             step = _runway_step(runway, rules)

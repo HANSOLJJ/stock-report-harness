@@ -9,6 +9,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
 
 1. `python scripts/scorecard_cli.py review-template <slug>` 로 `reviews/<slug>.md` 뼈대를 만든다(이미 있으면 `--force` 는 리뷰를 새로 시작할 때만).
 2. 네 영역을 가급적 별도 Task/서브에이전트 세션에서 수행한다. 각 리뷰어에게 읽을 파일과 출력 형식(RESULT / FINDINGS / CHECKLIST)을 지정한다.
+   - 리뷰어 프롬프트에 "큰 파일은 grep/sed 로 필요한 부분만 읽으라"를 넣는다. 네 개를 동시에 띄우면 세션 사용량 한도(HTTP 429)로 전부 중단되는 일이 있었다(memory/_daily/2026-09-08.md). 한도가 걱정되면 2개씩 나눠 띄우고, 중단된 리뷰어는 같은 agent 에 이어서 진행을 요청한다.
    - 사실·출처: `fact-checker` — 숫자·기업 귀속·기준 시점·출처·부재 주장·이해상충.
    - 재무 계산: EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호. results.json 의 calc.path 대조.
    - 규칙 일관성: 판정 입력↔규칙 판정표, 승계 표시, 미결 결정 처리, 체크리스트 Q01~Q23 전체.
