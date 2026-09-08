@@ -408,6 +408,14 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
     return "".join(out)
 
 
+def runway_text(c: dict[str, Any], obs: ObsLookup) -> str:
+    value = runway_for(c, obs)
+    if value is not None:
+        return fmt_num(value)
+    o = obs.get(c["company_id"], "runway_years")
+    return esc((o.get("raw") or o["status"]) if o and o.get("value") is None else "—")
+
+
 def runway_for(c: dict[str, Any], obs: ObsLookup) -> float | None:
     """G3 계산 런웨이가 있으면 그 값을, 없으면 승계 관측을 쓴다 (표와 계산이 갈라지지 않게)."""
     for p in (c["factors"]["F9"].get("calc") or {}).get("path", []):
@@ -459,7 +467,7 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
         fcf_cls = "c-g1" if (fcf or 0) < 0 else ("c-g5" if fcf else "c-g0")
         rating = (obs.get(cid, "credit_rating") or {}).get("value") or "—"
         note = (obs.get(cid, "offbalance_note") or {}).get("value") or "—"
-        fin_rows.append(f'<tr{"" if c["listed"] else " class=\"priv\""}><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "cash")[0])}</td><td class="mono w8 {fcf_cls}">{fcf_text}</td><td class="mono">{fmt_num(runway_for(c, obs))}</td><td class="mono">{fmt_usd(obs.number(cid, "net_cash")[0])}</td><td class="mono">{fmt_num(obs.number(cid, "debt_ebitda")[0], 2)}</td><td>{esc(rating)}</td><td class="text">{esc(note)}</td><td class="mono w8">{fmt_score(c["factors"]["F9"]["score"])}</td></tr>')
+        fin_rows.append(f'<tr{"" if c["listed"] else " class=\"priv\""}><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "cash")[0])}</td><td class="mono w8 {fcf_cls}">{fcf_text}</td><td class="mono">{runway_text(c, obs)}</td><td class="mono">{fmt_usd(obs.number(cid, "net_cash")[0])}</td><td class="mono">{fmt_num(obs.number(cid, "debt_ebitda")[0], 2)}</td><td>{esc(rating)}</td><td class="text">{esc(note)}</td><td class="mono w8">{fmt_score(c["factors"]["F9"]["score"])}</td></tr>')
         nb, nb_obs = obs.number(cid, "net_borrowing_ttm")
         if nb_obs is not None:
             borr_rows.append(f'<tr><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(nb) if nb is not None else esc(nb_obs.get("raw") or "—")}</td><td class="mono">{fmt_usd(obs.number(cid, "capex_ttm")[0])}</td></tr>')

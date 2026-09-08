@@ -58,6 +58,8 @@
 
 ## 4. 미결 결정의 취급
 
+결정 C-01~C-22 의 **활성 요약·선택지·상태는 `scorecard/rules/v1.5.json` 의 `decisions` 가 원본**이다. `design-guideline.md` 11절은 설계 시점의 발견 기록이며, 이후 보충된 문구(C-06 의 BEP OR 분기 활성, C-08 의 별표 G/H 분류 긴장 등)는 규칙 파일에만 반영한다.
+
 `scorecard/rules/v1.5.json` 의 `decisions[].status == pending` 이고 `blocking: true` 인 항목(C-03, C-05, C-06, C-13, C-16)은 계산기가 해당 분기에서 `needs_rule_decision` 을 반환하고 기업을 공식 순위에서 제외한다. 실행 단위 `run.json.decisions` 에 `{id, choice, rationale, decided_by, decided_at}` 를 기록한 경우에만 그 실행에서 선택이 적용되며 results/preview/HTML 에 "실행 단위 결정"으로 표시된다. 규칙 파일의 status 를 `resolved` 로 바꾸는 것은 규칙 개정(새 버전)이다.
 
 | ID | 계산기 동작 |

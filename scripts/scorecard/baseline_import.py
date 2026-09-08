@@ -537,10 +537,9 @@ def render_import_report(report: dict[str, Any], baseline: dict[str, Any]) -> st
     for row in report["companies"]:
         lines.append(f"| {row['company_id']} | {row['total']} | {row['md']} |")
     lines += ["", "## 불일치·주의", ""]
-    if report["issues"]:
-        lines += [f"- {item}" for item in report["issues"]]
-    else:
-        lines.append("- 없음")
+    notes = list(report["issues"])
+    notes.append("시총: HTML D.cap(표시용 반올림, 예: Alphabet 4.173T)과 3-1a 표(VAL, $4.12T)가 9개사에서 다름 — VAL 값만 관측으로 이관했다(아래 분류 절 참고)")
+    lines += [f"- {item}" for item in notes]
     lines += ["", "## 파싱 실패(원문 보존)", ""]
     if report["parse_failed"]:
         lines += [f"- {item}" for item in report["parse_failed"]]

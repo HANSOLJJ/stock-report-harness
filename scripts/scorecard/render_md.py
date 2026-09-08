@@ -375,6 +375,12 @@ def _pct_or_raw(obs: Any, cid: str, metric: str) -> str:
     return fmt_pct(value) if value is not None else (_raw_if_missing(obs, cid, metric) or "—")
 
 
+def _runway_text(c: dict[str, Any], obs: Any) -> str:
+    """G3 계산값 우선, 없으면 관측값. 값이 없으면 원문 상태(∞·판정 불가)를 그대로 보여준다."""
+    value = _runway(c, obs)
+    return fmt_num(value) if value is not None else (_raw_if_missing(obs, c["company_id"], "runway_years") or "—")
+
+
 def _runway(c: dict[str, Any], obs: Any) -> float | None:
     for p in (c["factors"]["F9"].get("calc") or {}).get("path", []):
         if p.get("gate") == "G3" and p.get("runway_years") is not None:
@@ -406,7 +412,7 @@ def _raw_tables(ctx: Any, results: dict[str, Any]) -> list[str]:
         fcf, fcf_obs = obs.number(cid, "fcf_ttm")
         rating = obs.get(cid, "credit_rating")
         note = obs.get(cid, "offbalance_note")
-        fin_rows.append([name, _usd_or_raw(obs, cid, "cash"), fmt_usd(fcf) if fcf is not None else ((fcf_obs or {}).get("raw") or "—"), fmt_num(_runway(c, obs)), fmt_usd(obs.number(cid, "net_cash")[0]), fmt_num(obs.number(cid, "debt_ebitda")[0], 2), (rating or {}).get("value") or "—", ((note or {}).get("value") or "—")[:60], fmt_score(c["factors"]["F9"]["score"])])
+        fin_rows.append([name, _usd_or_raw(obs, cid, "cash"), fmt_usd(fcf) if fcf is not None else ((fcf_obs or {}).get("raw") or "—"), _runway_text(c, obs), fmt_usd(obs.number(cid, "net_cash")[0]), fmt_num(obs.number(cid, "debt_ebitda")[0], 2), (rating or {}).get("value") or "—", ((note or {}).get("value") or "—")[:60], fmt_score(c["factors"]["F9"]["score"])])
         nb, nb_obs = obs.number(cid, "net_borrowing_ttm")
         if nb_obs is not None:
             borr_rows.append([name, fmt_usd(nb) if nb is not None else (nb_obs.get("raw") or "—"), fmt_usd(obs.number(cid, "capex_ttm")[0])])
