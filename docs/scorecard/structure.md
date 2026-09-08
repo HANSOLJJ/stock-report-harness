@@ -23,7 +23,7 @@
 | `scorecard/rules/v1.5.json` | 규칙 담당 | git | factor 모드·범위, ⑥ 구간, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트 Q01~Q23, 결정 C-01~C-22 상태·선택지 |
 | `scorecard/companies.json` | 통합 담당 | git | 안정 company_id, 표시명·별칭, 유형, 상장, 티커, share_basis, adr_ratio, 통화, 평가 범위 |
 | `scorecard/baseline/v1.5/` | 이관 담당 | git | `scores.json`(점수·근거 불릿), `observations.json`, `triggers.json`, `import-report.md` |
-| `scorecard/runs/<slug>/` | 실행 | git | `run.json`, `observations.json`, `judgments.json`, `sources.json`, `results.json`, `preview.md`, `approval.json` |
+| `scorecard/runs/<slug>/` | 실행 | git | `run.json`, `observations.json`, `judgments.json`, `sources.json`, `results.json`, `preview.md`, `approval.json`, `data_availability.json`(선택) |
 | `scorecard/history.csv` | 빌드 | git | 승인본 이력 (run_id, approval_id, 기업, F1~F9, 합계, 순위, 변동 원인) |
 | `plan/ research/ drafts/ reviews/ output/` | 파이프라인 | ignore(기존 정책) | 생성물. 원본은 `scorecard/` 에만 둔다 (D-09) |
 
@@ -36,6 +36,11 @@
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
+| 자료 확보 현황 | data_availability.json (선택) | schema, surveyed_at, scope, required_quarters, companies_with_full_quarters, headline, score_effect, not_re_surveyed, collection_note, materials[], companies[{company_id, quarter_ends, secured_quarters, missing, survey}], surveys{}, sources[], cautions[], references[] |
+
+`data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `calculate → draft → review → approve` 를 다시 밟아야 한다.
+
+화면에 노출되는 `C-NN` 은 렌더러가 후처리로 `#dec-C-NN` 앵커 링크로 바꾸고, 「C-번호 사전」 항목을 규칙 파일의 `decisions` 에서 생성한다. 치환은 태그 사이 텍스트에만 적용하고 속성·`<style>`·`<script>`·경로 문자열(`C-13/...`)은 건드리지 않는다.
 
 ## 3. 계산 모듈과 요구 ID
 

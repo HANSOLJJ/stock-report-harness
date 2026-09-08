@@ -19,6 +19,7 @@
 | SCORECARD-REVIEW-01 | Orca 스레드 `msg_32b69fde6c6f` | `설계진행/validation/test_scorecard_review.py` |
 | SCORECARD-REVIEW-04 | `설계진행/validation/worker-final-recheck.md` (설계진행 커밋 `b827de9`) | `recheck_worker_final.py`, `worker-final-recheck-evidence.json` |
 | NTM 정책 검토 | `설계진행/validation/ntm-policy-review.md` (설계진행 커밋 `32a7ed0`) | — |
+| 자료 확보 현황 | `설계진행/validation/data-availability-2026-09-08.md` | — |
 
 ## 1. 사용자 결정 대기 — 규칙
 
@@ -45,6 +46,13 @@
 - **method 이름만 바꾸는 것은 표시 변경이 아니다.** 검증 담당 재현에서 `vendor_forward_pe_verified_ntm` 을 `period_unverified` 로 바꾸자 Microsoft PER 25.4 가 `ok/-1` 에서 `pending_data/null` 로 바뀌었다. 라벨은 채점 가능 여부를 가르는 입력이므로, 표시만 고친다는 이유로 기준선을 덮어쓰지 않는다.
 
 ## 2. 자료·판단 대기 — 규칙이 아님
+
+### 2026-09-08 NTM 조사 — 점수에 반영되지 않았다
+
+조사 대상 상장사 12개 모두 미발표 4개 분기 중 2개만 확보해서 4분기 합산 NTM EPS 를 만들 수 없다. 4분기를 채운 기업은 0개다. 따라서 이 실행의 점수는 기준선 v1.5 입력을 규칙 v1.5 로 다시 계산한 결과이며, 이번 조사 자료로 재산출한 값이 아니다. F1~F5·F7~F9 는 이번 조사 범위 밖이라 최신 재조사 완료로 표시하지 않는다.
+
+현황은 `scorecard/runs/<slug>/data_availability.json` 에 기록하고 HTML 「자료 확보 현황」 섹션이 기업별로 보여준다. 조사 결과를 실제 점수에 넣으려면 나머지 2분기와 통화·주식단위 기준 검증을 확보해 관측을 새로 넣고 `calculate → draft → review → approve` 를 다시 밟아야 한다.
+
 
 | 기업 | 막힌 것 | 필요한 것 |
 |---|---|---|

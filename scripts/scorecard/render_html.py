@@ -25,6 +25,14 @@ METHOD_LABELS = {
     "vendor_forward_pe_verified_ntm": "공급사 forward PE 를 NTM 으로 역산 확인",
     "annual_weighted_proxy": "연간 EPS 가중 근사(정밀도 열위)",
 }
+OBS_STATUS_LABELS = {
+    "verified": "검증 완료", "legacy_unverified": "기준선 승계·미검증", "not_applicable": "해당 없음",
+    "not_disclosed": "미공시", "collection_failed": "수집 실패", "source_conflict": "출처 충돌",
+    "incompatible_basis": "기준 비교 불가", "parse_failed": "파싱 실패",
+}
+DECISION_STATUS = {"pending": "미결", "resolved": "확정", "documented": "문서화"}
+CODE_RE = re.compile(r"C-\d{2}(?![\d\w/-])")
+GLOSSARY_SLOT = "<!--scorecard:glossary-->"
 SHARE_LABELS = {"large": "큼", "small": "작음", "unknown": "미확인"}
 YESNO_LABELS = {"yes": "있음", "no": "없음", "unknown": "미확인"}
 GATE_LABELS = {
@@ -89,16 +97,16 @@ def css() -> str:
   --warn-soft:rgba(230,162,60,.10);--warn-line:rgba(230,162,60,.32);--warn-text:#f6d8a3;
   --cat-consumer:#5ea6f6;--cat-work:#4ad39c;--cat-trade:#b195f5;--cat-part:#f0a05c;--cat-mix:#f28cc0;
   --cat-trade-soft:rgba(177,149,245,.14);--cat-part-soft:rgba(240,160,92,.14);--cat-mix-soft:rgba(242,140,192,.14);
-  --fs-xs:11px;--fs-sm:12px;--fs-md:13px;--fs-base:14px;--fs-lg:16px;--fs-xl:18px;--fs-2xl:22px;--fs-3xl:26px;
+  --fs-sm:12px;--fs-md:13px;--fs-base:14px;--fs-lg:16px;--fs-2xl:22px;--fs-3xl:26px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{font-size:var(--fs-base)}
 body{background:var(--bg);color:var(--tx);font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 0 64px;font-variant-numeric:tabular-nums}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
-h1{font-size:clamp(24px,4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
+h1{font-size:clamp(26px,4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
 h2{font-size:clamp(18px,2.4vw,24px);font-weight:700;margin:48px 0 8px;letter-spacing:-.01em}
 h2 .num{color:var(--acc);margin-right:8px}
-h3{font-size:var(--fs-xl);font-weight:700;margin:24px 0 8px}
+h3{font-size:var(--fs-lg);font-weight:700;margin:24px 0 8px}
 p{font-size:var(--fs-base)}
 .sub{color:var(--tx2);font-size:var(--fs-md)}
 .mono{font-variant-numeric:tabular-nums}
@@ -124,12 +132,12 @@ header{background:var(--bg2);border-bottom:1px solid var(--line);padding:32px 0 
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
 table{border-collapse:collapse;width:100%;font-size:var(--fs-md)}
-th,td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
-th{background:var(--bg3);font-weight:700;font-size:var(--fs-sm);color:var(--tx2)}
+th,td{padding:12px 8px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+th{background:var(--bg3);font-weight:700;font-size:var(--fs-sm);line-height:20px;color:var(--tx2)}
 th.sort{cursor:pointer;user-select:none}
 th.sort:hover{color:var(--tx)}
-th[aria-sort="ascending"]::after{content:" ▲";font-size:var(--fs-xs)}
-th[aria-sort="descending"]::after{content:" ▼";font-size:var(--fs-xs)}
+th[aria-sort="ascending"]::after{content:" ▲";font-size:var(--fs-sm)}
+th[aria-sort="descending"]::after{content:" ▼";font-size:var(--fs-sm)}
 th.name,td.name{text-align:left;padding-left:14px}
 td.text,th.text{text-align:left;white-space:normal;min-width:180px;line-height:1.5}
 tbody tr.row{cursor:pointer}
@@ -147,12 +155,14 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:12px;margin-top:14px}
 .card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}
 .card[open]{grid-column:1/-1;border-color:var(--acc-line)}
-.card>summary{padding:14px 16px;cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:12px;min-height:44px}
+.card>summary{padding:14px 16px;cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:8px 12px;min-height:44px;flex-wrap:wrap}
 .card>summary::-webkit-details-marker{display:none}
 .card[open]>summary{border-bottom:1px solid var(--line)}
-.chead{flex:1;min-width:0}
+/* 이름 쪽이 최소 190px 을 요구하게 해서, 점수 칸이 길어져도 기업명이 한두 글자 폭으로 접히지 않고
+   점수 칸이 다음 줄로 내려가게 한다. min-width:0 은 자기 줄에서의 축소만 허용한다. */
+.chead{flex:1 1 190px;min-width:0}
 .cname{font-weight:700;font-size:var(--fs-lg);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.pill{font-size:var(--fs-xs);font-weight:700;padding:2px 7px;border-radius:99px;background:var(--bg3);color:var(--tx2)}
+.pill{font-size:var(--fs-sm);font-weight:700;padding:2px 7px;border-radius:99px;background:var(--bg3);color:var(--tx2)}
 .pill.consumer{background:var(--acc-soft);color:var(--cat-consumer)}
 .pill.work{background:var(--good-soft);color:var(--cat-work)}
 .pill.trade{background:var(--cat-trade-soft);color:var(--cat-trade)}
@@ -160,22 +170,25 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .pill.mix{background:var(--cat-mix-soft);color:var(--cat-mix)}
 .pill.warn{background:var(--warn-soft);color:var(--warn-text)}
 .ctag{font-size:var(--fs-md);color:var(--tx2);margin-top:4px;line-height:1.45}
-.cscore{text-align:right;flex-shrink:0}
+.cscore{text-align:right;flex:1 1 auto;min-width:0}
 .cscore .t{font-size:var(--fs-3xl);font-weight:800;letter-spacing:-.03em;line-height:1}
-.cscore .s{font-size:var(--fs-xs);color:var(--tx3);margin-top:3px;white-space:nowrap}
+.cscore .s{font-size:var(--fs-sm);color:var(--tx3);margin-top:3px}
+.crank{font-size:var(--fs-sm);color:var(--tx3);margin-top:4px;line-height:1.45}
 .cbody{padding:6px 16px 14px}
 .card[open] .cbody{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;align-items:start}
 .cgrp{min-width:0}
-.cgh{font-size:var(--fs-xs);font-weight:800;letter-spacing:.04em;padding:6px 0 2px}
+.cgh{font-size:var(--fs-sm);font-weight:800;letter-spacing:.04em;padding:6px 0 2px}
 .cgh.p{color:var(--g4)}.cgh.n{color:var(--g2)}
 .frow{padding:10px 0;border-bottom:1px solid var(--line);font-size:var(--fs-md)}
 .frow:last-child{border-bottom:none}
 .fhead{display:flex;align-items:baseline;gap:8px;margin-bottom:4px;flex-wrap:wrap}
 .flab{color:var(--tx2);font-weight:700;font-size:var(--fs-md);white-space:nowrap}
 .fsc{font-weight:900;font-size:var(--fs-base);min-width:22px;white-space:nowrap}
-.fst{color:var(--tx3);font-size:var(--fs-xs);flex:1 1 auto;min-width:0;line-height:1.4}
+/* flex:1 1 auto + min-width:0 이면 남은 폭이 20px 이어도 줄바꿈 없이 눌려서 한두 글자씩 접힌다.
+   basis 를 주면 그 폭이 안 나올 때 아예 다음 줄로 내려간다. */
+.fst{color:var(--tx3);font-size:var(--fs-sm);flex:1 1 160px;min-width:0;line-height:1.4}
 .fcalc{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0 4px;overflow-wrap:anywhere}
-.fsrc{color:var(--tx3);font-size:var(--fs-xs);margin:4px 0 2px}
+.fsrc{color:var(--tx3);font-size:var(--fs-sm);margin:4px 0 2px}
 .figures td.mono,.figures th:not(.name):not(.text){text-align:right}
 .fpts{margin:0;padding-left:16px;color:var(--tx);line-height:1.55}
 .fpts li{margin:2px 0}
@@ -194,19 +207,46 @@ footer p{margin:6px 0;font-size:var(--fs-md)}
 .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-14{margin-top:14px}
 tr.priv{opacity:.75}
 .pill.legacy{background:var(--warn-soft);color:var(--warn-text);margin-right:4px}
+.pill.no{background:var(--bad-soft);color:var(--bad-text)}
+/* C-번호는 hover 가 없는 터치에서도 눌러서 뜻을 볼 수 있어야 한다. 앵커 링크라 키보드 Tab 으로도 닿는다. */
+.ccode{display:inline-block;min-height:24px;line-height:24px;padding:0 5px;border-radius:5px;background:var(--acc-soft);border:1px solid var(--acc-line);color:var(--acc-text);font-weight:700;font-variant-numeric:tabular-nums;text-decoration:none;white-space:nowrap}
+.ccode:hover,.ccode:focus-visible{background:var(--acc-line);color:var(--tx);text-decoration:none}
+.cdec{background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden;scroll-margin-top:16px}
+.cdec:target{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc-line)}
+.cdec>summary{padding:12px 14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:44px;font-size:var(--fs-md)}
+.cdec>summary::-webkit-details-marker{display:none}
+.cdec>summary::after{content:'▾';color:var(--tx3);margin-left:auto}
+.cdec[open]>summary::after{content:'▴'}
+.cdec>summary .id{font-weight:800;font-variant-numeric:tabular-nums;color:var(--acc-text)}
+.cdec>summary .ttl{color:var(--tx2);flex:1 1 200px;min-width:0;line-height:1.45}
+.cdec .inner{padding:0 14px 14px;border-top:1px solid var(--line);margin-top:-1px}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:var(--fs-md);margin-top:12px}
+.dl dt{color:var(--tx3);font-weight:700;white-space:nowrap}
+.dl dd{color:var(--tx);min-width:0;overflow-wrap:anywhere;line-height:1.55}
+@media(max-width:520px){.dl{grid-template-columns:1fr;gap:2px}.dl dd{margin-bottom:8px}}
 .m-only{display:none}
 @media(max-width:860px){.card[open] .cbody{grid-template-columns:1fr}}
-@media(max-width:640px){
-  .cards{grid-template-columns:1fr}
-  .kpi .v{font-size:var(--fs-2xl)}
-  .m-only{display:inline}
+@media(max-width:1180px){
+  /* 표가 가로로 스크롤되는 폭이면 행 이름을 놓치지 않게 첫 두 열을 고정한다.
+     sticky 는 border-collapse:collapse 에서 테두리를 못 끌고 오므로 separate 로 바꾼다. */
   #mainTable{border-collapse:separate;border-spacing:0}
-  #mainTable th:not(.keep),#mainTable td:not(.keep){display:none}
-  #mainTable th:first-child,#mainTable td:first-child{position:sticky;left:0;z-index:2;background:var(--bg2)}
+  #mainTable th:first-child,#mainTable td:first-child{position:sticky;left:0;z-index:2;background:var(--bg2);width:48px;min-width:48px}
   #mainTable th:first-child{background:var(--bg3)}
-  #mainTable th.name,#mainTable td.name{position:sticky;left:46px;z-index:2;background:var(--bg2);max-width:132px;overflow:hidden;text-overflow:ellipsis}
+  #mainTable th.name,#mainTable td.name{position:sticky;left:48px;z-index:2;background:var(--bg2)}
   #mainTable th.name{background:var(--bg3)}
   #mainTable tbody tr.row:hover td{background:var(--bg2)}
+  /* 자료 확보 표도 가로로 스크롤되므로 기업명을 고정한다. 열은 숨기지 않는다 — 모든 항목이 그대로 남아야 한다. */
+  #availTable{border-collapse:separate;border-spacing:0}
+  #availTable th.name,#availTable td.name{position:sticky;left:0;z-index:2;background:var(--bg2);max-width:132px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #availTable th.name{background:var(--bg3)}
+  #availTable td.text{min-width:150px}
+}
+@media(max-width:640px){
+  .cards{grid-template-columns:1fr}
+  .kpi .v,.cscore .t{font-size:var(--fs-2xl)}
+  .m-only{display:inline}
+  #mainTable th:not(.keep),#mainTable td:not(.keep){display:none}
+  #mainTable th.name,#mainTable td.name{max-width:132px;overflow:hidden;text-overflow:ellipsis}
 }
 """.strip()
 
@@ -232,6 +272,21 @@ def js() -> str:
     th.addEventListener('click',go); th.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}}); });
   tbody.addEventListener('click',e=>{const tr=e.target.closest('tr.row'); if(!tr) return; const card=document.getElementById('card-'+tr.dataset.company); if(!card) return; card.open=true; card.scrollIntoView({behavior:'smooth',block:'start'});});
   draw();
+})();
+(function(){
+  // C-번호를 누르면 사전 항목으로 이동하는 데서 그치지 않고 그 자리에서 펼친다.
+  // details 는 :target 만으로 열리지 않으므로 open 을 직접 세운다. hover 에는 의존하지 않는다.
+  function openHash(smooth){
+    const id=decodeURIComponent(location.hash.slice(1)); if(!id) return;
+    const el=document.getElementById(id); if(!el||el.tagName!=='DETAILS') return;
+    el.open=true; el.scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'});
+  }
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a.ccode'); if(!a) return;
+    const el=document.getElementById(a.getAttribute('href').slice(1)); if(el) el.open=true;
+  });
+  addEventListener('hashchange',()=>openHash(true));
+  openHash(false);
 })();
 """.strip()
 
@@ -397,7 +452,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         cls = TYPE_CLASS.get(c["type"], "mix")
         incompatible_g4 = any(o["company_id"] == c["company_id"] and o["metric"] in ("contracted_revenue", "offbalance_B") and o["status"] == "incompatible_basis" for o in observations)
         base_rank = f" · 기준선 {results['baseline_id']} {b['rank_raw']}위({baseline_n}사)" if b.get("rank_raw") else ""
-        head = (f"{c['rank']}위(완료 {results['population']['scored']}개사 기준){base_rank}" if c["rank"] else f"미완료{base_rank}") + f" · 과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
+        rank_text = f"{c['rank']}위(완료 {results['population']['scored']}개사 기준){base_rank}" if c["rank"] else f"미완료{base_rank}"
+        score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
         groups = []
         for label, factors, klass, total in (("과점 — 더한다 (각 0~5)", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다 (각 0~-5)", TRAP_FACTORS, "n", c["trap"])):
             rows = []
@@ -421,7 +477,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
             + ("" if c["complete"] else '<span class="pill warn">미완료</span>')
-            + f'</div><div class="ctag">' + (f'<span class="pill legacy">기준선 {esc(results["baseline_id"])} 요약 · 과거 기록</span> {esc(b.get("tag", ""))}' if b.get("tag") else "") + f'</div></div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(head)}</div></div></summary>'
+            + f'</div><div class="ctag">' + (f'<span class="pill legacy">기준선 {esc(results["baseline_id"])} 요약 · 과거 기록</span> {esc(b.get("tag", ""))}' if b.get("tag") else "") + f'</div><div class="crank">{esc(rank_text)}</div></div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(score_text)}</div></div></summary>'
             f'<div class="cbody">{"".join(groups)}</div></details>'
         )
     return "".join(out)
@@ -524,6 +580,137 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     )
 
 
+def load_availability(slug: str) -> dict[str, Any] | None:
+    """실행 디렉터리의 자료 확보 현황 기록을 읽는다. 채점 입력이 아니라 표시용이라 승인 해시 대상이 아니다."""
+    path = run_dir(slug) / "data_availability.json"
+    return load_json_strict(path) if path.is_file() else None
+
+
+def render_availability(avail: dict[str, Any], ctx: Any, results: dict[str, Any]) -> str:
+    obs = ObsLookup(ctx.observations)
+    surveyed_at = avail["surveyed_at"]
+    surveys = avail.get("surveys", {})
+    by_id = {c["company_id"]: c for c in results["companies"]}
+    rows = []
+    reflected_n = 0
+    for entry in avail["companies"]:
+        cid = entry["company_id"]
+        c = by_id.get(cid)
+        if c is None:
+            continue
+        o = obs.get(cid, "ntm_per") or {}
+        # 이번 조사보다 이전 기준일의 관측이면 조사 결과가 점수에 들어가지 않았다는 뜻이다.
+        reflected = bool(o.get("as_of")) and str(o["as_of"]) >= surveyed_at
+        reflected_n += 1 if reflected else 0
+        used = f'{fmt_num(o.get("value"))} · {esc(o.get("as_of") or "—")} · {esc(o.get("source_id") or "—")}' if o else "관측 없음"
+        state = f'{esc(OBS_STATUS_LABELS.get(o.get("status"), o.get("status") or "—"))} · {esc(METHOD_LABELS.get((o.get("basis") or {}).get("method"), (o.get("basis") or {}).get("method") or "—"))}' if o else "—"
+        quarters = " · ".join(esc(q) for q in entry["quarter_ends"])
+        level = f'{entry["secured_quarters"]}/{avail["required_quarters"]}분기'
+        badge = '<span class="pill no">미반영</span>' if not reflected else '<span class="pill">반영</span>'
+        rows.append(
+            f'<tr><td class="name"><b>{esc(c["display_name"])}</b></td><td class="mono">{quarters}</td>'
+            f'<td class="mono w8 c-g2">{esc(level)}</td><td class="text narrow">{esc(entry["missing"])}</td>'
+            f'<td class="text narrow">{esc(surveys.get(entry["survey"], entry["survey"]))}</td>'
+            f'<td class="text narrow">{used}</td><td class="text narrow">{state}</td><td>{badge}</td></tr>'
+        )
+    outside = [c for c in results["companies"] if c["company_id"] not in {e["company_id"] for e in avail["companies"]}]
+    for c in outside:
+        rows.append(
+            f'<tr class="priv"><td class="name"><i>{esc(c["display_name"])}</i></td><td class="mono">—</td><td class="mono">—</td>'
+            f'<td class="text narrow">이번 조사 범위 밖</td><td class="text narrow">{"비상장 — ⑥ 은 정성 예외(C-12)" if not c["listed"] else "조사 대상 아님"}</td>'
+            f'<td class="text narrow">—</td><td class="text narrow">—</td><td><span class="pill">해당 없음</span></td></tr>'
+        )
+    mat = "".join(
+        f'<tr><td class="name"><b>{esc(m["item"])}</b></td><td class="text">{esc(m["secured"])}</td>'
+        f'<td class="text">{esc(m["missing"])}</td><td class="text">{esc(m["usable"])}</td></tr>' for m in avail["materials"]
+    )
+    src = "".join(
+        f'<tr><td class="name"><b>{esc(s["name"])}</b></td><td class="text">{esc(s["secured"])}</td><td class="text">{esc(s["limit"])}</td></tr>'
+        for s in avail["sources"]
+    )
+    cautions = "".join(f"<li>{esc(x)}</li>" for x in avail.get("cautions", []))
+    refs = "".join(f'<li>{esc(r["label"])} — <code>{esc(r["path"])}</code></li>' for r in avail.get("references", []))
+    return "".join([
+        f'<div class="notice bad"><b>이 조사는 점수를 바꾸지 않았다.</b> {esc(avail["headline"])} {esc(avail["score_effect"])}</div>',
+        f'<div class="notice">{esc(avail["not_re_surveyed"])}</div>',
+        f'<p class="sub mt-8">조사일 {esc(surveyed_at)} · 조사 범위 {esc(avail["scope"])} · 4분기 충족 {avail["companies_with_full_quarters"]}개사 · '
+        f'조사 결과가 점수 입력에 반영된 기업 {reflected_n}개사. {esc(avail["collection_note"])}</p>',
+        '<h3>기업별 확보 현황</h3>',
+        '<div class="tablewrap"><table class="figures" id="availTable"><thead><tr><th class="name">기업</th><th>확보 분기(종료월)</th><th>확보 수준</th>'
+        '<th class="text narrow">부족 자료</th><th class="text narrow">조사 원천</th><th class="text narrow">채점에 쓰인 NTM PER 관측</th>'
+        f'<th class="text narrow">관측 상태·산출 방법</th><th>이번 조사 반영</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div>',
+        '<p class="sub mt-8">「채점에 쓰인 NTM PER 관측」은 값 · 관측 기준일 · 원천이다. 이 열의 기준일이 조사일보다 앞서면 점수는 기준선 관측으로 계산된 것이며 이번 조사와 무관하다.</p>',
+        f'<details class="blk"><summary>자료 종류별 확보·부족<span></span></summary><div class="inner"><div class="tablewrap"><table class="figures"><thead><tr>'
+        f'<th class="name">자료</th><th class="text">확보한 것</th><th class="text">부족하거나 미검증인 것</th><th class="text">현재 사용 가능 범위</th></tr></thead><tbody>{mat}</tbody></table></div></div></details>',
+        f'<details class="blk"><summary>원천별 확보 범위와 한계<span></span></summary><div class="inner"><div class="tablewrap"><table class="figures"><thead><tr>'
+        f'<th class="name">원천·접근 방식</th><th class="text">확보 또는 관측</th><th class="text">한계</th></tr></thead><tbody>{src}</tbody></table></div>'
+        + (f'<h3>해석 주의</h3><ul class="tight">{cautions}</ul>' if cautions else "")
+        + (f'<h3>근거 파일</h3><ul class="tight">{refs}</ul>' if refs else "")
+        + '</div></details>',
+    ])
+
+
+def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> str:
+    """화면에 노출된 C-번호마다 제목·의미·현재 결정·점수 영향을 펼쳐 보게 한다 (hover 의존 없음)."""
+    blocks = []
+    for did in used_ids:
+        d = ctx.rules.decision(did)
+        if d is None:
+            continue
+        choice = next((r["choice"] for r in ctx.run.get("decisions", []) if r["id"] == did), None)
+        status = DECISION_STATUS.get(d["status"], d["status"])
+        hits = [(c["display_name"], p["factor"], p["status"]) for c in results["companies"] for p in c["pending"] if p.get("decision_id") == did]
+        if choice:
+            state = f"이번 실행에서 <b>{esc(choice)}</b> 로 결정해 적용했다."
+        elif did in results["pending_rule_decisions"]:
+            state = "이번 실행에서 <b>결정하지 않았다</b>. 해당 factor 는 점수를 만들지 않고 대기 상태로 남는다."
+        elif d["status"] == "pending":
+            state = "규칙 파일에서 미결이지만 이번 실행의 채점 경로에는 걸리지 않았다."
+        else:
+            state = "규칙 파일에 이미 반영된 항목이라 실행 단위 선택이 필요하지 않다."
+        if hits:
+            impact = " · ".join(f"{esc(n)} {esc(FACTOR_LABELS[f])} {esc(STATUS_LABEL.get(s, s))}" for n, f, s in hits)
+            impact = f"{impact} — 이 기업들은 순위에서 제외되며 0 점으로 채우지 않는다."
+        elif choice:
+            impact = "적용한 선택이 채점 경로에 반영되었다."
+        else:
+            impact = "이번 실행의 점수에는 영향을 주지 않았다."
+        rows = [("무엇에 대한 결정인가", esc(d["summary"])), ("권고", esc(d.get("recommendation") or "—")),
+                ("선택지", ", ".join(esc(x) for x in d.get("choices", [])) or "규칙 파일에 선택지 정의 없음"),
+                ("영향 factor", ", ".join(esc(FACTOR_LABELS.get(f, f)) for f in d.get("affects", [])) or "—"),
+                ("이번 실행 상태", state), ("점수 영향", impact)]
+        dl = "".join(f"<dt>{k}</dt><dd>{v}</dd>" for k, v in rows)
+        head = esc(d["summary"][:60] + ("…" if len(d["summary"]) > 60 else ""))
+        blocks.append(
+            f'<details class="cdec" id="dec-{esc(did)}"><summary><span class="id">{esc(did)}</span>'
+            f'<span class="pill{" warn" if d["status"] == "pending" else ""}">{esc(status)}</span>'
+            f'<span class="ttl">{head}</span></summary><div class="inner"><dl class="dl">{dl}</dl></div></details>'
+        )
+    if not blocks:
+        return ""
+    return ('<h3 id="c-glossary">C-번호 사전</h3>'
+            '<p class="sub">본문의 C-번호를 누르면 이 목록의 해당 항목으로 이동한다. 항목을 누르면 뜻과 현재 상태가 펼쳐진다.</p>'
+            + "".join(blocks))
+
+
+def link_decision_codes(document: str, known: set[str], placeholder: str) -> str:
+    """본문 텍스트의 C-번호를 사전 항목 앵커로 바꾼다. 태그 속성·style·script 는 건드리지 않는다."""
+    def sub_text(m: re.Match[str]) -> str:
+        text = m.group(1)
+        if "C-" not in text:
+            return m.group(0)
+        return ">" + CODE_RE.sub(lambda c: f'<a class="ccode" href="#dec-{c.group(0)}">{c.group(0)}</a>' if c.group(0) in known else c.group(0), text) + "<"
+
+    parts = re.split(r"(<style>.*?</style>|<script>.*?</script>)", document, flags=re.S)
+    for i in range(0, len(parts), 2):
+        if placeholder in parts[i]:
+            before, _, after = parts[i].partition(placeholder)
+            parts[i] = re.sub(r">([^<>]*)<", sub_text, before) + placeholder + re.sub(r">([^<>]*)<", sub_text, after)
+        else:
+            parts[i] = re.sub(r">([^<>]*)<", sub_text, parts[i])
+    return "".join(parts)
+
+
 def render_triggers(triggers: list[dict[str, Any]]) -> str:
     if not triggers:
         return '<p class="sub">등록된 트리거 없음</p>'
@@ -543,7 +730,7 @@ def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
 
 # ------------------------------------------------------------------ 문서
 
-def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]], review_fm: dict[str, Any], approval: dict[str, Any]) -> str:
+def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]], review_fm: dict[str, Any], approval: dict[str, Any], avail: dict[str, Any] | None = None) -> str:
     run = ctx.run
     title = run["title"]
     subtitle = f"규칙 {ctx.rules.version} · 기준일 {run['as_of']} · {results['population']['scored']}개사 순위"
@@ -556,6 +743,16 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     for c in results["companies"]:
         if c["company_id"] == "anthropic":
             anthropic_note = f'<div class="notice">⚠️ <b>이해상충 고지</b> — 이 채점표는 Anthropic 이 만든 Claude 가 작성했으며 Anthropic 이 평가 대상에 포함된다(과점 factor {fmt_score(c["moat"])}점). 투자 판단에 사용할 경우 감안할 것.</div>'
+    survey_note = ""
+    if avail:
+        survey_note = (
+            f'<div class="notice info"><b>점수의 출처를 먼저 밝힌다.</b> 이 표의 점수는 기준선 {esc(run["baseline_id"])} 입력을 규칙 '
+            f'{esc(ctx.rules.version)} 로 다시 계산한 결과다. {esc(avail["surveyed_at"])} NTM 자료 조사는 미발표 4개 분기 컨센서스를 채우지 못해'
+            f'(대상 {len(avail["companies"])}개사 모두 {avail["required_quarters"]}분기 미충족) 점수 입력으로 들어가지 않았다. '
+            f'무엇을 확보했고 무엇이 없는지는 <a href="#availability">05 자료 확보 현황</a>에 있다.</div>'
+        )
+    availability = (f'<h2 id="availability"><span class="num">05</span>자료 확보 현황</h2>{render_availability(avail, ctx, results)}') if avail else ""
+    n = 5 if avail else 4
     document = f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -578,6 +775,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
   <div class="badge">{esc(ctx.rules.version)} · 기준일 {esc(run["as_of"])} · 채점 {len(run["companies"])}개사 · 순위 {results["population"]["scored"]}개사 · 승인 {esc(approval["approval_id"][:8])}</div>
   <h1>{esc(title)}</h1>
   <p class="lede">AI 시대에 <b>누가 90년 과점을 만들 구조를 갖췄나</b>를 9개 항목으로 채점했다. <b>과점 factor 5개(각 0~5점)</b>에서 더하고 <b>함정 factor 4개(각 0~-5점)</b>에서 뺀다. 점수는 규칙과 입력에서 계산된 결과이며 손으로 고치지 않는다.</p>
+  {survey_note}
   {anthropic_note}
 </div></header>
 <div class="wrap">
@@ -593,11 +791,13 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations)}</div>
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}
-<h2><span class="num">05</span>방법과 규칙</h2>
+{availability}
+<h2><span class="num">0{n + 1}</span>방법과 규칙</h2>
 {render_method(ctx, results)}
-<h2><span class="num">06</span>다음 재채점 트리거</h2>
+{GLOSSARY_SLOT}
+<h2><span class="num">0{n + 2}</span>다음 재채점 트리거</h2>
 {render_triggers(triggers)}
-<h2><span class="num">07</span>References</h2>
+<h2><span class="num">0{n + 3}</span>References</h2>
 {render_references(ctx, review_fm)}
 <footer id="disclaimer" aria-label="투자 유의사항">
 <p>{esc(DISCLAIMER)}</p>
@@ -609,7 +809,10 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </body>
 </html>
 """
-    return re.sub(r"<th(?=[ >])", '<th scope="col"', document)
+    document = re.sub(r"<th(?=[ >])", '<th scope="col"', document)
+    used = sorted({m.group(0) for m in CODE_RE.finditer(document) if ctx.rules.decision(m.group(0)) is not None})
+    document = link_decision_codes(document, set(used), GLOSSARY_SLOT)
+    return document.replace(GLOSSARY_SLOT, render_glossary(ctx, results, used))
 
 
 # ------------------------------------------------------------------ 빌드
@@ -636,7 +839,7 @@ def build_scorecard(slug: str) -> tuple[Path, list[Path], None]:
     from report_contract_lib import read_markdown
 
     review_fm, _b, _r, _t = read_markdown(paths.review)
-    document = render_document(ctx, results, baseline, triggers, review_fm, approval)
+    document = render_document(ctx, results, baseline, triggers, review_fm, approval, load_availability(slug))
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     paths.html.write_text(document, encoding="utf-8")
     rows = history_rows(results, approval, ctx.rules.hash, str(ctx.run.get("change_type") or "baseline-recompute"))

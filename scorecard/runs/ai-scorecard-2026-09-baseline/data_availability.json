@@ -1,0 +1,89 @@
+{
+  "schema": "scorecard/data-availability@1",
+  "surveyed_at": "2026-09-08",
+  "source_doc": "설계진행/validation/data-availability-2026-09-08.md",
+  "scope": "상장사 F6 의 NTM PER 입력",
+  "required_quarters": 4,
+  "companies_with_full_quarters": 0,
+  "headline": "이번 조사는 상장사 F6 의 NTM PER 입력만 대상으로 했다. 조사 대상 상장사 12개 모두 미발표 4개 분기 중 2개만 확보해 4분기 합산 NTM EPS 를 계산할 수 없다.",
+  "score_effect": "따라서 이 채점표의 점수는 이번 조사 자료로 재산출한 값이 아니라 기준선 v1.5 입력을 framework 규칙으로 다시 계산한 결과다. F6 을 포함해 어떤 점수도 이번 조사로 바뀌지 않았다.",
+  "not_re_surveyed": "F1~F5·F7~F9 는 이번 조사 범위 밖이다. 기준선 입력과 기존 판단을 그대로 쓰며 최신 재조사 완료로 표시하지 않는다.",
+  "collection_note": "이 표는 기존 조사 산출물을 합친 기록이며 작성 시점에 웹을 다시 조회한 결과가 아니다. 0 또는 음수인 개별 분기 EPS 도 확보한 자료로 인정한다. 네 분기 합이 0 이하일 때의 채점 보류는 자료 미확보와 별개다.",
+  "materials": [
+    {
+      "item": "주가·공급사 Forward PE",
+      "secured": "두 조사에서 수치와 원문 스냅샷 수집",
+      "missing": "각 값의 기준일 일치, Forward PE 분모의 공식 기간 정의",
+      "usable": "조사 참고값. 필드 이름만으로 NTM 적격 판정 불가"
+    },
+    {
+      "item": "향후 분기 EPS 컨센서스",
+      "secured": "조사 대상 상장사 12개 모두 기업별 2개 분기 관측",
+      "missing": "다음 4개 미발표 회계분기 중 나머지 2개",
+      "usable": "일부확보. 4분기 합산 NTM EPS 계산 불가"
+    },
+    {
+      "item": "연간 EPS 컨센서스",
+      "secured": "연간 전망 수치 관측",
+      "missing": "다음 4개 미발표 분기의 합과 같은 계산이라는 근거",
+      "usable": "참고값. 자동으로 NTM 분모로 대체 불가"
+    },
+    {
+      "item": "EPS 입력 메타데이터",
+      "secured": "분기 라벨 및 일부 통화·회계 기준",
+      "missing": "기업·원천별 추정치 시점, GAAP/조정 기준, 주식·ADR/ADS 기준 등 계약 충족 확인",
+      "usable": "통화·주식단위가 맞아야 주가와 나눗셈 가능"
+    },
+    {
+      "item": "기존 기준선 점수",
+      "secured": "기존 입력을 framework 로 이관하고 계산한 결과",
+      "missing": "이번 조사 자료로 모든 입력을 교체한 최신 점수",
+      "usable": "역사적 기준선 재계산 결과로 표시"
+    },
+    {
+      "item": "F1~F5·F7~F9 최신성",
+      "secured": "기준선 입력·기존 판단 및 구현 검증 기록",
+      "missing": "이번 NTM 조사로 이 factor 들의 최신 자료까지 검증한 것은 아님",
+      "usable": "최신 재조사 완료 표시 금지"
+    }
+  ],
+  "companies": [
+    {"company_id": "meta", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "nvidia", "quarter_ends": ["2026-10", "2027-01"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "alphabet", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "microsoft", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "amazon", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "apple", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "oracle", "quarter_ends": ["2026-08", "2026-11"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "palantir", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "tesla", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "spacex-xai", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "나머지 2분기 및 입력 기준 검증", "survey": "scarpper-10", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "tsmc", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "2027-03·2027-06 및 입력 기준 검증", "survey": "c13-r8", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"},
+    {"company_id": "alibaba", "quarter_ends": ["2026-09", "2026-12"], "secured_quarters": 2, "missing": "2027-03·2027-06, CNY/USD 및 주식·ADS 단위 검증", "survey": "c13-r8", "ntm_eligibility": "unverified", "vendor_period": "period_unknown"}
+  ],
+  "surveys": {
+    "scarpper-10": "scarpper 조사 10개사 — 설계진행 최종 검토 통과 기록 기준",
+    "c13-r8": "C-13 R8 보고서 v4 의 보고 내용 — R8 보완본 자체에 대한 설계진행 최종 재검증은 별도"
+  },
+  "sources": [
+    {"name": "Yahoo", "secured": "기업별 향후 2분기, 연간 EPS, 주가·Forward PE", "limit": "나머지 2분기와 공급사 Forward PE 기간 정의 미확보"},
+    {"name": "StockAnalysis 정적 HTML", "secured": "연간 EPS·Forward PE 등", "limit": "조사한 정적 경로에서 필요한 4분기를 확보하지 못함"},
+    {"name": "Nasdaq 정적 수집", "secured": "필요한 EPS 자료 수집에 실패", "limit": "브라우저 경로까지 불가능하다고 확정한 것은 아님"},
+    {"name": "TipRanks·Zacks (C-13 조사)", "secured": "TSMC·Alibaba 에 대한 일부 다음 분기 수치", "limit": "필요한 4분기를 채우지 못함. 추정 시점·기준 확인 추가 필요"},
+    {"name": "동적 브라우저·유료 공급사", "secured": "경로별 검증 범위가 제한되거나 미조사", "limit": "무료 전체에서 불가능 또는 유료면 가능하다고 확정하지 않음"}
+  ],
+  "cautions": [
+    "관측의 vendor_forward_pe_verified_ntm 명칭은 이관 코드의 문자열이며 최신 NTM 검증 완료 근거가 아니다.",
+    "공급사 Forward PE 의 기간은 period_unknown 이고 NTM 적격성은 unverified 다. NTM 이 아님을 증명한 것도 아니다.",
+    "회계연도 말일까지 12개월 미만이라는 이유만으로 NTM 불가라고 판정하지 않는다. 철회된 N-04·N-06·N-07 추론과 JSON 에 남은 옛 요약 문구는 재사용하지 않는다.",
+    "끝난 분기라도 아직 실적 미발표이면 다음 미발표 분기 창에 포함될 수 있다."
+  ],
+  "references": [
+    {"label": "scarpper 조사 보고서", "path": "scarpper/validation/qwen-ntm-data-03/REPORT.md"},
+    {"label": "scarpper 증거", "path": "scarpper/validation/qwen-ntm-data-03/evidence.json"},
+    {"label": "정정 회계기간 분석", "path": "scarpper/validation/qwen-ntm-data-03/fy-analysis-corrected.json"},
+    {"label": "설계진행 최종 검토 기록", "path": "설계진행/validation/ntm-handoff-review.md"},
+    {"label": "C-13 R8 보고서", "path": "C-13/validation/c13-data-01/REPORT.md"},
+    {"label": "자료 확보 현황 종합", "path": "설계진행/validation/data-availability-2026-09-08.md"}
+  ]
+}
