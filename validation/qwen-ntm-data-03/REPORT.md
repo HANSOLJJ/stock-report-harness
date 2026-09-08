@@ -370,32 +370,18 @@ Oracle 의 회계연도 종료월은 Yahoo Earnings History 의 실제 기간말
 
 ## 11. 재현 방법
 
+아래는 기존 커밋 산출물 복사본에서 실행하는 현행 검증 절차다. `collect_ntm.py`, `reparse.py`, `collect_yahoo.py`는 최초 조사 기록이며 현재 `evidence.json`을 원시 스키마로 덮어쓰므로 이 절차에서 실행하지 않는다. `inspect_refs.py start/end`도 수집 시점 기록이고, 현행 검증은 저장된 산출물을 대상으로 `compare_hashes.py`를 실행한다.
+
 `fy-analysis-corrected.json`의 `quarterly_eps_obtained`는 조사 경로에서 실제로 관측한 분기 수(현재 Yahoo 2개)이고, `quarterly_eps_eligible`는 §5.1의 다음 4개 분기·기간·스냅샷·기준을 모두 충족해 NTM 계산에 사용할 수 있는 수(현재 0개)다. 두 필드는 서로 다른 계약이므로 관측 수 2와 적격 수 0을 불일치로 해석하지 않는다.
 
 ```powershell
 cd C:\Users\noble\orca\workspaces\stock-report-harness\scarpper\validation\qwen-ntm-data-03
 
-# 1) 로컬 참조 확인 (worker 읽기 전용, 해시 기록)
-python -B -X utf8 inspect_refs.py start          # -> hashes-start.json, refs-start.txt
-
-# 2) StockAnalysis 수집 (30 요청, 원문 HTML 저장)
-python -B -X utf8 probe_fetch.py                 # 연결성 점검 1건
-python -B -X utf8 probe_structure.py             # META forecast 구조 조사 -> meta-forecast-raw.html
-python -B -X utf8 collect_ntm.py                 # -> evidence.json, raw-*-overview.html, raw-*-forecast.html
-python -B -X utf8 reparse.py                     # 주가 파싱 보정 -> evidence.json 갱신
-python -B -X utf8 probe_parser.py                # 파서 검증(원문 문맥 대조)
-python -B -X utf8 probe_fy.py                    # FY 라벨 -> fy-labels.json
-
-# 3) Yahoo 수집 (10 요청, 분기 개수 측정)
-python -B -X utf8 collect_yahoo.py               # -> evidence-yahoo.json, raw-yahoo-*.html
-
-# 4) 판정
+# 현행 정정 산출물 검증
 python -B -X utf8 apply_r1_corrections.py        # -> evidence.json, fy-analysis-corrected.json
-python -B -X utf8 analyze_fy.py                  # corrected JSON assertion
+python -B -X utf8 analyze_fy.py                  # evidence ↔ corrected 교차 검증
 # consolidate.py는 폐기 생성기이며 실행하지 않는다.
-
-# 5) 종료 무결성
-python -B -X utf8 inspect_refs.py end            # -> hashes-end.json
+python -B -X utf8 compare_hashes.py               # 저장된 참조 8종 시작·종료 해시 검증
 ```
 
 산출물:
