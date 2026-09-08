@@ -1,6 +1,6 @@
 # AI Scorecard — 남은 작업
 
-작성일 2026-09-08. 기준 커밋 `7a05b3d`, 브랜치 `HANSOLJJ/worker`.
+작성일 2026-09-08. 기준 커밋 `2e33648`, 브랜치 `HANSOLJJ/worker`.
 
 이 문서는 **처리하지 않고 남겨둔 항목**만 모은다. 처리한 항목은 커밋 메시지와 `reviews/<slug>.md` 에 있고, 설계·구조 계약은 `design-guideline.md` 와 `structure.md` 에 있다.
 
@@ -17,17 +17,20 @@
 | SCORECARD-REVIEW-02 | `설계진행/validation/qwen-recheck.md` | `recheck_qwen.py` |
 | SCORECARD-REVIEW-03 | `설계진행/validation/cli-doc-recheck.md` | `recheck_cli_doc.py` |
 | SCORECARD-REVIEW-01 | Orca 스레드 `msg_32b69fde6c6f` | `설계진행/validation/test_scorecard_review.py` |
+| SCORECARD-REVIEW-04 | `설계진행/validation/worker-final-recheck.md` (설계진행 커밋 `b827de9`) | `recheck_worker_final.py`, `worker-final-recheck-evidence.json` |
 
 ## 1. 사용자 결정 대기 — 규칙
 
 계산기가 막고 있는 항목이다. `scorecard/runs/<slug>/run.json` 의 `decisions` 에 `{id, choice, rationale, decided_by, decided_at}` 를 넣어야 그 실행에서 적용된다.
 
+> **결정이 곧 순위 편입은 아니다.** 규칙 결정을 내려도 그 기업에 자료·판단 대기가 남으면 순위에 들어오지 않는다. 아래 표의 "정하면 달라지는 것" 은 **현재 입력 기준**이며 완료를 보장하지 않는다. 예: `C-13 = reject_proxy` 는 TSMC·Alibaba 를 자료 대기로 확정하고, `C-06 + C-05 = apply` 는 SpaceX 를 여전히 판단 대기로 남긴다.
+
 | ID | 선택지 | 정하면 달라지는 것 |
 |---|---|---|
 | C-06 | `proposed_v15_boundaries` | SpaceX 영업손실률 -14.9% 가 -4 로 확정(기준선 재현). 단독으로는 SpaceX 를 순위에 넣지 못하고 C-05 가 함께 필요 |
-| C-13 | `accept_proxy_with_flag` / `reject_proxy` | 수용하면 TSMC 가 조정 14 로 순위 편입, 거절하면 TSMC·Alibaba 가격이 자료 대기로 확정 |
+| C-13 | `accept_proxy_with_flag` / `reject_proxy` | 수용하면 TSMC 가 조정 14 로 완료된다. Alibaba 는 ⑥ 만 풀리고 ⑨ 가 자료 대기라 여전히 순위 밖이다. 거절하면 둘 다 ⑥ 이 자료 대기로 확정된다 |
 | C-05 | `diagnose_only` / `apply` | **`diagnose_only`** 를 C-06 과 함께 정해야 SpaceX 가 완료된다(조정 6). `apply` 는 G3·G4 를 실제 감점에 쓰므로 SpaceX 의 `coverage_comparable` 이 미확인인 현재 입력에서는 판단 대기로 남는다 |
-| C-16 | `hold` / `downgrade` | 확인된 미공시의 약정 커버리지 처리. 현재 실행에는 걸리는 기업 없음 |
+| C-16 | `hold` / `downgrade` | 확인된 미공시의 약정 커버리지 처리. 현재 실행에는 걸리는 기업이 없어 어느 쪽을 골라도 결과가 같다 |
 | C-03 | `activate_candidate_mapping` | F2 경로 수→점수 환산. 현재 14사 전부 승계 점수라 안 걸림 |
 
 비차단 결정 7건은 `scorecard/rules/v1.5.json` 의 `decisions` 참조: C-04, C-07, C-08, C-09, C-11, C-12, C-20.
