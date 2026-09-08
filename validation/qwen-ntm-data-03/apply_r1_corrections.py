@@ -221,7 +221,10 @@ for rec in ev["companies"]:
         ("official_fiscal_period_evidence", bool(off and "fy_end_month" in off)),
         ("next_4_unreported_quarters", (off or {}).get("next_4_unreported_quarters")),
         ("next_4_window_equals_current_fy", (off or {}).get("next_4_window_equals_fy2027")),
-        ("quarterly_eps_obtained", 0),
+        # 관측 수와 §5.1 적격 수를 분리한다. Yahoo의 향후 2개 관측은 자료로 보존하되
+        # 네 분기 연속·기간·스냅샷 요건을 충족한 적격 분기로 세지 않는다.
+        ("quarterly_eps_obtained", len((rec.get("forecast_period") or {}).get("yahoo_quarter_periods") or [])),
+        ("quarterly_eps_eligible", 0),
         ("quarterly_eps_required", 4),
         ("satisfied", False),
         ("backcalc_reference_only",

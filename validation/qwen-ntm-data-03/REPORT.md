@@ -15,7 +15,7 @@
 
 **Forward PE 의 분모 기간은 10개사 전부 `period_unknown` 이다.** 어느 회사에서도 NTM 임을 입증하지 못했고, **NTM 이 아님을 입증하지도 못했다.** 초판이 microsoft·oracle 에 대해 내린 "FY-current 입증 → NTM 아님" 판정은 철회됐다.
 
-설계 지침 §5.1 이 요구하는 **`다음 4개 미발표 회계분기 EPS 컨센서스`는 조사한 어떤 무료 공개 원천에서도 확보되지 않았다.** 따라서 `NTM EPS = 네 분기 EPS 합` 을 계산할 수 없고, 기준선의 `basis.method = "vendor_forward_pe_verified_ntm"` 는 **10개사 어느 곳에서도 입증되지 않는다.**
+설계 지침 §5.1 이 요구하는 **`다음 4개 미발표 회계분기 EPS 컨센서스`는 이번에 조사한 공개 접근 경로에서 확보되지 않았다.** 따라서 `NTM EPS = 네 분기 EPS 합` 을 계산할 수 없고, 기준선의 `basis.method = "vendor_forward_pe_verified_ntm"` 는 **10개사 어느 곳에서도 입증되지 않는다.**
 
 핵심 판정 근거:
 
@@ -24,7 +24,7 @@
 3. **숫자 일치는 산출방법의 입증이 아니다.** 주가 ÷ Forward PE 역산값이 연간 EPS 와 숫자로 맞아도, 연간 EPS 평균은 분기별 평균의 합과 **표본·주식수·조정 차이**로 달라질 수 있으므로 공급사 공식 산출방법을 증명하지 않는다. §5.1 도 *"`forwardPE`라는 공급사 필드 이름만으로 NTM임을 인정하지 않는다"* 고 명시한다.
 4. **"남은 개월수" 는 올바른 척도가 아니다.** §5.1 의 요건은 '오늘부터 12개월' 이 아니라 **'다음 4개 미발표 회계분기'** 다. 공식 근거로 확인한 결과 microsoft 와 oracle 은 9월 초 기준 다음 미발표 네 분기가 각각 **FY2027 전체와 기간이 같다**(§6.1). 따라서 회계연도 말일까지의 남은 개월수가 12 미만이라는 사실은 비NTM 의 증거가 되지 못한다.
 
-**주의: 이건 "데이터가 없다"는 뜻이 아니다.** §7 참조 — 데이터는 공급사 내부에 존재할 가능성이 높으나 내가 시험한 무료 공개 접근 경로에서는 노출되지 않았고, 유료 경로는 작업 제약상 사용이 금지됐다.
+**주의: 이건 "데이터가 없다"는 뜻이 아니다.** §7 참조 — 데이터는 공급사 내부 또는 조사하지 않은 접근 경로에 존재할 수 있으나, 이번에 시험한 공개 접근 경로에서는 노출되지 않았다.
 
 ## 0.1 개정 이력
 
@@ -150,7 +150,7 @@ spacex-xai   listed=True   ticker=None   type=소비자·업무   SpaceX + xAI
 |---|---|---|---|---|
 | **StockAnalysis** `overview`/`forecast`/`statistics` | 무료, 가입 불필요, HTTP 200 (30/30 요청) | **없음** — `Q# YYYY` 라벨 **0건 (10/10 회사)** | 이번·다음 회계연도 무료. 이후 열은 `Upgrade`(페이지당 65~80건) | **가능** — 서버 렌더 HTML |
 | **Yahoo Finance** `/quote/<T>/analysis/` | 무료, 가입 불필요, HTTP 200 (10/10) | **향후 2개 분기만** (10/10 균일) | Current Year / Next Year 무료 | **가능** — 정적 HTML 에 표 포함 |
-| **Nasdaq.com** `/market-activity/stocks/<t>/earnings` | 무료이나 **JS 렌더링** | 정적 HTML 은 `"Data is currently not available"` | 동일 | **불가(정적 GET)** — 헤드리스 브라우저 필요 |
+| **Nasdaq.com** `/market-activity/stocks/<t>/earnings` | 무료이나 **JS 렌더링** | 정적 HTML 은 `"Data is currently not available"` | 동일 | **정적 GET에서 미확보** — 헤드리스 브라우저 경로 미검증 |
 | **StockAnalysis 정의 문서** `/glossary/`, `/about/data/` | **HTTP 404** — 존재하지 않음 | 해당 없음 | 해당 없음 | 해당 없음 |
 | **StockAnalysis Pro** (유료) | $6.58/월(연간) 또는 $9.99/월 | **작업 제약상 사용 금지** | 가격 페이지에 추정치 기능 목록이 없어 분기 공개 여부 문서 확인 불가 | 해당 없음 |
 
@@ -248,7 +248,7 @@ Oracle 의 회계연도 종료월은 Yahoo Earnings History 의 실제 기간말
 
 ## 6. Forward PE 분모 기간 판정
 
-세 가설을 수치로 대조했다(`analyze_fy.py`, 산출물 `fy-analysis.json`).
+초기 분석의 세 가설 대조표는 감사 추적을 위해 보존한다(`fy-analysis.json`). 현재 판정은 `fy-analysis-corrected.json`과 `analyze_fy.py`의 단정으로 고정한다.
 
 | company | FY 종료 | 개월 | 보고 Forward PE | PE@이번FY | PE@시간가중블렌드 | PE@다음FY | 일치 가설 |
 |---|---|---:|---:|---:|---:|---:|---|
@@ -305,11 +305,11 @@ Oracle 의 회계연도 종료월은 Yahoo Earnings History 의 실제 기간말
 4. **유료 경로는 사용하지 않았다.** 작업 제약상 가입·구매·계정 변경을 하지 않았으며, 유료 티어의 분기 제공 여부는 판단하지 않는다.
 5. **Nasdaq 은 차단이 아니라 렌더링 방식 문제다.** JS 렌더링이라 정적 GET 으로는 빈 표가 온다. 헤드리스 브라우저면 가능할 수 있으나 이번 범위에서 사용하지 않았다.
 
-**따라서 결론은 "NTM 원자료가 세상에 없다"가 아니라 "조사한 무료 공개 원천 3종으로는 §5.1 의 4분기 요건을 충족할 수 없다"이다.**
+**따라서 결론은 "NTM 원자료가 세상에 없다"가 아니라 "이번에 조사한 공개 접근 경로에서 §5.1의 4분기 요건을 충족하지 못했다"이다.**
 
 ### 7.1 시도하지 않은 경로 (다음 담당자가 검토할 것)
 
-- StockAnalysis Pro (유료 — 제약상 불가)
+- StockAnalysis Pro (유료 — 가입·구매 없이 미검증)
 - Nasdaq.com 헤드리스 브라우저 렌더링
 - 공급사 직접 API: S&P Global Market Intelligence(StockAnalysis 의 명시된 데이터 제공자 — 통계 페이지 각주 원문 `"Financial statistics are provided by S&P Global Market Intelligence."`), FactSet, LSEG, Bloomberg — 전부 유료
 - 회사 IR 페이지의 가이던스 (단, 이건 컨센서스가 아니고 회사가 제시한 값이며 §5.1 이 요구하는 "EPS 컨센서스"와 종류가 다르다)
@@ -323,9 +323,9 @@ Oracle 의 회계연도 종료월은 Yahoo Earnings History 의 실제 기간말
 |---|---|---|
 | StockAnalysis 주가·Forward PE·연간 EPS | ✅ 가능 | ❌ **불가** |
 | Yahoo 향후 2분기·연간 EPS | ✅ 가능 | ❌ **불가** |
-| 분기 EPS 4개 | ❌ 어느 티어에서도 불가 | ❌ 불가 |
+| 분기 EPS 4개 | 조사한 경로에서 미확보 | ❌ 과거 스냅샷 미재현 |
 
-**불가 이유**: 두 공급사 모두 **과거 시점 컨센서스 스냅샷을 무료로 제공하지 않는다.** 페이지는 항상 최신값만 보여준다. 따라서 2026-09-02 당시 추정치는 재현할 수 없고, **현재 전망치를 2026-09-02 값으로 소급 기록하지 않았다.**
+**재현 한계**: 현재 조사에서 확인한 페이지는 최신 스냅샷만 제공해 2026-09-02 당시 추정치를 재현하지 못했다. 분기 데이터가 어느 티어에서도 제공되지 않는다고 단정하지 않으며, 현재 전망치를 과거로 소급하지 않았다.
 
 관측 가능한 표류(기준선 2026-09-02 vs 2026-09-08 실측):
 
@@ -363,12 +363,14 @@ Oracle 의 회계연도 종료월은 Yahoo Earnings History 의 실제 기간말
 |---|---|---|
 | StockAnalysis | **가능** | 서버 렌더 HTML, HTTP 200, robots/차단 없음, JSON 페이로드 없어 DOM 파싱 필요. 30개 요청 중 차단 0건. 단 **연간값만** |
 | Yahoo Finance | **가능** | 정적 HTML 에 표 포함, HTTP 200 (10/10), 가입 불필요. 단 **분기 2개만**. 페이지에 무관한 오류 문자열이 상존하므로 성공 판별은 표 존재로 해야 함 |
-| Nasdaq.com | **불가(정적 GET)** | JS 렌더링, 정적 HTML 은 `"Data is currently not available"` |
+| Nasdaq.com | 정적 GET에서 미확보 | JS 렌더링, 정적 응답은 `"Data is currently not available"` |
 | StockAnalysis 정의 문서 | 해당 없음 | 404 |
 
 **요청 간 1.0~1.2초 지연**을 두었고 총 40여 건의 공개 GET 으로 차단·레이트리밋을 겪지 않았다. 단 이건 소량 표본이며 대규모 정기 수집 시의 정책은 각 사 이용약관 확인이 별도로 필요하다(이번 범위 밖).
 
 ## 11. 재현 방법
+
+`fy-analysis-corrected.json`의 `quarterly_eps_obtained`는 조사 경로에서 실제로 관측한 분기 수(현재 Yahoo 2개)이고, `quarterly_eps_eligible`는 §5.1의 다음 4개 분기·기간·스냅샷·기준을 모두 충족해 NTM 계산에 사용할 수 있는 수(현재 0개)다. 두 필드는 서로 다른 계약이므로 관측 수 2와 적격 수 0을 불일치로 해석하지 않는다.
 
 ```powershell
 cd C:\Users\noble\orca\workspaces\stock-report-harness\scarpper\validation\qwen-ntm-data-03
@@ -388,8 +390,9 @@ python -B -X utf8 probe_fy.py                    # FY 라벨 -> fy-labels.json
 python -B -X utf8 collect_yahoo.py               # -> evidence-yahoo.json, raw-yahoo-*.html
 
 # 4) 판정
-python -B -X utf8 consolidate.py                 # -> evidence.json 최종 (분류·요약)
-python -B -X utf8 analyze_fy.py                  # -> fy-analysis.json (회계연도·가설 대조)
+python -B -X utf8 apply_r1_corrections.py        # -> evidence.json, fy-analysis-corrected.json
+python -B -X utf8 analyze_fy.py                  # corrected JSON assertion
+# consolidate.py는 폐기 생성기이며 실행하지 않는다.
 
 # 5) 종료 무결성
 python -B -X utf8 inspect_refs.py end            # -> hashes-end.json
@@ -402,7 +405,8 @@ python -B -X utf8 inspect_refs.py end            # -> hashes-end.json
 | `REPORT.md` | 이 보고서 |
 | `evidence.json` | **최종 증거** — 10개사 전체 필드(URL·조회시각·값·통화·기준·전망기간·스냅샷·역산·판정·분류·재현가능성) |
 | `evidence-yahoo.json` | Yahoo 10개사 원시 파싱 결과 |
-| `fy-analysis.json` | 회계연도 종료·개월 수·3가설 대조 |
+| `fy-analysis-corrected.json` | 정정된 기간 판정과 10개사 NTM 적격 미검증 결과 |
+| `fy-analysis.json` | 폐기된 이전 분석의 감사 추적 보존본 |
 | `fy-labels.json` | StockAnalysis FY 라벨·Upgrade 건수 |
 | `hashes-start.json` / `hashes-end.json` | worker 참조 파일 해시(시작/종료) |
 | `raw-*-overview.html`, `raw-*-forecast.html`, `raw-yahoo-*.html`, `meta-forecast-raw.html` | **원문 스냅샷** (재현·감사용) |
@@ -444,7 +448,7 @@ python -B -X utf8 inspect_refs.py end            # -> hashes-end.json
 | scorecard/baseline/v1.5/scores.json | 67,673 | 1,115 | `daa46f7b26e4ee3c` | 2026-09-08T12:21:14Z |
 | scorecard/rules/v1.5.json | 19,210 | 597 | `9231b3a05ba5c766` | 2026-09-08T12:11:57Z |
 
-### 13.2 종료 비교 — 참조 파일 8종 전부 불변
+### 13.2 종료 비교 — 저장된 참조 파일 시작·종료 비교
 
 `compare_hashes.py` 실측 출력(`integrity-verdict.json`):
 
@@ -488,11 +492,11 @@ c13a293 docs: Orca 추가 작업 요청 시 터미널 실행 안내 의무화
 | 통지문의 HEAD 선언 | worker `c13a293` · scarpper `cc8373b` · C-13 `82892ba` · main `98db4f5` · 설계진행 `a26cf45` |
 | 내 실측 HEAD | worker `c13a293` ✓ · scarpper `cc8373b` ✓ — **통지와 일치** |
 | `worker/AGENTS.md` 해시 | `6afb005d0f42a19e`(QWEN-CLI-DOC-02 시점) → **`5ec8796ad6e89f67`** (현재) |
-| 계산코드·기준선·승인·HTML | 통지문 선언대로 **변경 없음**을 내 해시 비교로도 독립 확인 (참조 8종 UNCHANGED) |
+| 계산코드·기준선·승인·HTML | worker 참조 8종의 저장된 조사 시작·종료 해시는 일치. 조사 중 worker의 AGENTS.md 외부 커밋은 별도로 확인 |
 
-**판정: 이 HEAD·AGENTS.md 변화는 내 작업의 결과가 아니며, 승인된 외부 문서 수정이다.** 내가 근거로 쓴 참조 파일 8종(§5.1 계약문, `baseline_import.py`, `companies.json`, `observations.json`, `rules/v1.5.json` 등)은 **전부 해시 불변**이므로 **이 보고서의 NTM 판정은 영향받지 않았다.** 재확인할 항목은 없다.
+**무결성 범위**: 위 8종은 저장된 조사 시작·종료 시점 비교에서 불변이며 worker HEAD 이동은 승인된 AGENTS.md 변경으로 설명된다. 원문 HTML 스냅샷은 최초 인수 전 해시가 저장되어 있지 않으므로 현재 커밋과의 일치만 확인할 수 있다. 따라서 인수 전후 바이트 불변을 독립적으로 증명했다고 주장하지 않는다.
 
-통지문의 *"계산코드·기준선·승인·HTML은 이 작업에서 변경하지 않았습니다"* 라는 선언은 내 독립 측정과 일치한다.
+저장된 참조 해시 비교 범위에서 계산코드·기준선·승인·HTML 참조 파일의 시작·종료 일치가 확인된다. 원문 스냅샷은 최초 인수 전 해시가 없어 현재 커밋과의 일치만 확인했다.
 
 ### 13.4 내 작업 범위의 변경
 

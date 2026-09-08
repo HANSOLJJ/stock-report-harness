@@ -6,6 +6,7 @@
   - 미충족: 다음 1분기 예상만 있거나 과거 실적 4개인 경우, 또는 분기 수가 4개 미만인 경우
   - 주가/PER 역산은 참고 기록일 뿐 분모 기간의 증명으로 쓰지 않는다
 """
+raise SystemExit("consolidate.py is deprecated; use apply_r1_corrections.py and analyze_fy.py")
 import io
 import json
 import os

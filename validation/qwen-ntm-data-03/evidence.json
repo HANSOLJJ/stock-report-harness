@@ -1469,7 +1469,7 @@
   "revision_id": "QWEN-NTM-DATA-03-R1",
   "requested_by": "msg_2463526bb807 (설계진행, term_a3370266-4d39-4c5c-95a7-38ce1a1b744c)",
   "acknowledged_by": "msg_290a1edb780a",
-  "revised_at_utc": "2026-09-08T14:08:42Z",
+  "revised_at_utc": "2026-09-08T14:21:51Z",
   "scope": "오류 정정에 한정. 재조사 범위 확장 없음. 원본 스냅샷 보존. worker 읽기 전용. 점수·정책 변경 없음.",
   "verdict_change": "microsoft·oracle 의 'FY-current(입증)' → 'period_unknown'. 나머지 8개사는 '불명' 유지. 10개사 전부 NTM 적격 미검증(unverified).",
   "retracted_claims": [

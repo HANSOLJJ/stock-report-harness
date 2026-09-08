@@ -18,7 +18,10 @@ def main() -> None:
     assert all(row.get("forward_pe_period") == "period_unknown" for row in companies.values())
     assert all(row.get("ntm_eligibility") == "unverified" for row in companies.values())
     assert all(row.get("quarterly_eps_required") == 4 for row in companies.values())
-    print("R1 corrected analysis verified: 10 companies period_unknown/unverified")
+    assert all(0 <= row.get("quarterly_eps_obtained", -1) <= 4 for row in companies.values())
+    assert all(row.get("quarterly_eps_eligible") == 0 for row in companies.values())
+    assert all(row.get("quarterly_eps_obtained", 0) >= row.get("quarterly_eps_eligible", 0) for row in companies.values())
+    print("R1 corrected analysis verified: 10 companies period_unknown/unverified; observed and eligible counts separated")
 
 
 if __name__ == "__main__":
