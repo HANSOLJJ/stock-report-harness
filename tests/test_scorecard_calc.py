@@ -142,6 +142,14 @@ class TestF6(unittest.TestCase):
         self.assertEqual(result["score"], 0)
         self.assertTrue(result["calc"]["boundary"]["flag"])
 
+    def test_c13_reject_is_settled_not_undecided(self):
+        # 거절은 내려진 결정이다. 규칙 미결로 남아 계속 결정을 요구하면 안 된다.
+        result = compute_f6(company(), ntm(19.4, "annual_weighted_proxy"), JudgmentLookup([]), RULES, run([decision("C-13", "reject_proxy")]))
+        self.assertEqual(result["status"], "pending_data")
+        self.assertIsNone(result["score"])
+        self.assertNotIn("decision_id", result["pending"])
+        self.assertAlmostEqual(result["calc"]["ntm_per"], 19.4)
+
     def test_private_multiples_and_manual_score(self):
         c = company(listed=False)
         lookup = ObsLookup([obs("post_money_valuation", 965e9), obs("arr", 65e9), obs("cumulative_raised", 125e9)])

@@ -90,11 +90,15 @@ def _listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | 
                              pending=pending_info("data", "NTM PER basis.method 미기재 — forwardPE 필드명만으로 NTM 인정 불가"))
     if method in policy["proxy_methods"]:
         choice = decision_choice(run, rules, "C-13")
+        proxy_calc = {"ntm_per": per_value, "method": method}
         if choice == "accept_proxy_with_flag":
             warnings.append("C-13: 연간 EPS 가중 근사(annual_weighted_proxy)를 실행 단위 결정으로 채점에 사용 — 참고 정밀도")
+        elif choice == "reject_proxy":
+            # 거절은 확정된 선택이다. 규칙 미결이 아니라 정확한 4분기 컨센서스를 확보해야 하는 자료 대기로 남긴다.
+            return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids, calc=proxy_calc,
+                                 pending=pending_info("data", "C-13 결정에 따라 근사 NTM 을 채점에 쓰지 않음 — 미발표 4개 분기 컨센서스(consensus_4q_sum) 관측 필요"))
         else:
-            return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed", observation_ids=obs_ids,
-                                 calc={"ntm_per": per_value, "method": method},
+            return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed", observation_ids=obs_ids, calc=proxy_calc,
                                  pending=pending_info("rule", "NTM PER 이 근사 방법(annual_weighted_proxy)이라 자동 채점 보류", "C-13"))
     elif method not in policy["accepted_ntm_methods"]:
         return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids,

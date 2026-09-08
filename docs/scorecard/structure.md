@@ -58,6 +58,10 @@
 
 ## 4. 미결 결정의 취급
 
+결정을 내린 뒤에도 남는 대기와, 결정 자체가 미결인 대기를 구분한다. 실행 단위 선택이 "적용하지 않는다"(예: C-13 `reject_proxy`, C-16 `hold`)로 끝나면 그 factor 는 `needs_rule_decision` 이 아니라 자료·판단 대기로 표시되고 `pending_rule_decisions` 에서 빠진다. 결정을 내렸는데 산출물이 계속 결정을 요구하면 안 된다.
+
+규칙 파일은 실행에 `rule_hash` 로 고정된다. 문구만 고쳐도 진행 중인 실행이 무효가 되므로, 결정의 운영 해석은 이 문서에 적고 규칙 파일은 규칙 개정(새 버전) 때만 손댄다.
+
 결정 C-01~C-22 의 **활성 요약·선택지·상태는 `scorecard/rules/v1.5.json` 의 `decisions` 가 원본**이다. `design-guideline.md` 11절은 설계 시점의 발견 기록이며, 이후 보충된 문구(C-06 의 BEP OR 분기 활성, C-08 의 별표 G/H 분류 긴장 등)는 규칙 파일에만 반영한다.
 
 `scorecard/rules/v1.5.json` 의 `decisions[].status == pending` 이고 `blocking: true` 인 항목(C-03, C-05, C-06, C-13, C-16)은 계산기가 해당 분기에서 `needs_rule_decision` 을 반환하고 기업을 공식 순위에서 제외한다. 실행 단위 `run.json.decisions` 에 `{id, choice, rationale, decided_by, decided_at}` 를 기록한 경우에만 그 실행에서 선택이 적용되며 results/preview/HTML 에 "실행 단위 결정"으로 표시된다. 규칙 파일의 status 를 `resolved` 로 바꾸는 것은 규칙 개정(새 버전)이다.
@@ -68,7 +72,7 @@
 | C-04 | G3 완충은 현금+확정 미인출 여신(기본 exclude). include_v15 도 숫자 관측만 산입 |
 | C-05 | G1 실패 뒤 진단 점수가 다르면 대기. `diagnose_only`/`apply` 로 해소. 이미 하한 -5 면 불필요 |
 | C-06 | 영업손실률 경계는 `proposed_v15_boundaries` 선택 시만 적용. BEP 후퇴 -5 는 원문 OR 조건 적용 + 경고 |
-| C-13 | NTM proxy(`annual_weighted_proxy`)는 `accept_proxy_with_flag` 선택 시만 채점 |
+| C-13 | NTM proxy(`annual_weighted_proxy`)는 `accept_proxy_with_flag` 선택 시만 채점. `reject_proxy` 는 내려진 결정이므로 규칙 미결이 아니라 `pending_data`(정확한 4분기 컨센서스 확보 필요)로 남고 미결 목록에서 빠진다 |
 | C-16 | G4 판정 불가(자료 없음·비교 가능성 미확인)는 `hold`/`downgrade` 선택 전까지 대기. 비상장 FCF 미공시 사유와는 중복 감점하지 않음 |
 | C-20 | Anthropic 단일 분기 흑자는 TTM 부호로 쓰지 않음 → F9 pending_data |
 
