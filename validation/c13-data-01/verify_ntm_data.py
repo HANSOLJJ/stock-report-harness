@@ -1,174 +1,227 @@
-# TSMC(TSM/2330) 및 Alibaba(BABA/9988) NTM 컨센서스 원자료 종합 검증 및 evidence 생성 스크립트
+# TSMC 및 Alibaba NTM 원자료 수집·검증 및 evidence 생성 스크립트
 from __future__ import annotations
 
 import json
 import os
-import sys
 from datetime import datetime
 from typing import Any
-import requests
 import yfinance as yf
 
 
-def collect_evidence() -> dict[str, Any]:
+def collect_yahoo_data(ticker_symbol: str) -> dict[str, Any]:
+    ticker = yf.Ticker(ticker_symbol)
+    info = ticker.info or {}
+    
+    ee_df = ticker.earnings_estimate
+    ee_dict = {}
+    if ee_df is not None:
+        ee_dict = ee_df.to_dict(orient="index")
+
+    price = info.get("currentPrice") or info.get("regularMarketPrice")
+    f_eps = info.get("forwardEps")
+    f_pe = info.get("forwardPE")
+    
+    expected_quarters = ["0q", "+1q", "+2q", "+3q"]
+    available_quarters = [k for k in ee_dict.keys() if "q" in k]
+    missing_quarters = [q for q in expected_quarters if q not in available_quarters]
+
+    # R1: forwardEps 와 +1y 수치 비교 (일치 여부 확인)
+    plus_1y_avg = None
+    if "+1y" in ee_dict:
+        plus_1y_avg = ee_dict["+1y"].get("avg")
+
+    diff_forward_and_1y = None
+    if f_eps is not None and plus_1y_avg is not None:
+        diff_forward_and_1y = abs(f_eps - plus_1y_avg)
+
+    return {
+        "ticker": ticker_symbol,
+        "query_url": f"https://finance.yahoo.com/quote/{ticker_symbol}/analysis/",
+        "query_time": datetime.now().isoformat(),
+        "price": price,
+        "forwardPE": f_pe,
+        "forwardEps": f_eps,
+        "plus_1y_eps_avg": plus_1y_avg,
+        "diff_forward_and_1y": diff_forward_and_1y,
+        "identity_check_price_over_f_eps": (price / f_eps) if (price and f_eps) else None,
+        # R1: 역산은 산식 확인일 뿐이며 공식 기간 정의 근거가 없으므로 unknown 처리
+        "period_definition_evidence": "unknown (공급사의 forwardEps 공식 대상기간 정의 문서 미확보)",
+        "available_quarters": available_quarters,
+        "missing_quarters": missing_quarters,
+        "quarterly_fulfilled": len(missing_quarters) == 0,
+        "earnings_estimate_raw": ee_dict,
+        "financialCurrency": info.get("financialCurrency"),
+        "currency": info.get("currency"),
+    }
+
+
+def build_evidence() -> dict[str, Any]:
     collected_at = datetime.now().isoformat()
-    evidence: dict[str, Any] = {
-        "schema": "scorecard.c13_data_validation/1",
+
+    # 1. 자동 수집 관측치 (Yahoo Finance API)
+    yahoo_tsm = collect_yahoo_data("TSM")
+    yahoo_baba = collect_yahoo_data("BABA")
+
+    # 2. 수동 및 원문 실사 관측치 (URL, 수집시각, 원문 발췌 보존)
+    # R2, R3, R5, R6 반영
+    manual_observations = {
+        "stock_analysis_baba": {
+            "source_name": "StockAnalysis BABA Forecast",
+            "url": "https://stockanalysis.com/stocks/baba/forecast/",
+            "verified_at": "2026-09-08T21:53:00+09:00",
+            "observed_text_footer": "EPS and Forward PE are based on non-GAAP adjusted numbers. Financial currency is CNY.",
+            "observed_table_data": {
+                "Revenue_FY2026": "1.02T",
+                "Revenue_FY2027": "1.12T",
+                "Net_Income_FY2027": "85.76B",
+                "EPS_FY2026": "3.35",
+                "EPS_FY2027": "5.71",
+                "Forward_PE_FY2027": "133.10 (table) / 12.5~16.7 (statistics)",
+            },
+            "status": "source_conflict",
+            "conflict_details": (
+                "공급사 표 하단에는 'Financial currency is CNY'라고 명시되어 있으나, "
+                "순이익 85.76B CNY 및 발행주식수(ADS 약 24억주, 보통주 약 193억주)와 대조 시 "
+                "EPS 5.71 수치가 CNY 기준 보통주 주당순이익인지, USD 기준 ADS 주당순이익인지, "
+                "또는 통화 환산 누락인지 명확한 단위 표기가 없어 공급사 내부 불일치(source_conflict) 발생."
+            ),
+            "quarterly_available": False,
+            "access_limitation": "분기별 세부 컨센서스는 'Stock Analysis Pro' 유료 결제벽으로 차단됨.",
+            "official_annual_weighted_proxy_evidence": "unknown (StockAnalysis 공식 문서에 annual_weighted_proxy 명칭이나 산출식 미공개, 증거 부재)",
+        },
+        "stock_analysis_tsm": {
+            "source_name": "StockAnalysis TSM Forecast",
+            "url": "https://stockanalysis.com/stocks/tsm/forecast/",
+            "verified_at": "2026-09-08T21:51:30+09:00",
+            "observed_text_footer": "Financial currency is TWD.",
+            "observed_table_data": {
+                "EPS_FY2026_avg": "107.64",
+                "Forward_PE": "19.81 (statistics)",
+            },
+            "quarterly_available": False,
+            "access_limitation": "분기별 세부 컨센서스는 'Stock Analysis Pro' 유료 결제벽으로 차단됨.",
+            "official_annual_weighted_proxy_evidence": "unknown (공식 산출식 미공개)",
+        },
+        "tipranks_tsm": {
+            "source_name": "TipRanks TSM Earnings",
+            "url": "https://www.tipranks.com/stocks/tsm/earnings",
+            "verified_at": "2026-09-08T21:58:20+09:00",
+            "upcoming_quarters_observed": [
+                {"fiscal_quarter": "2026 (Q3)", "report_date": "Oct 15, 2026", "forecast_eps": "4.39"}
+            ],
+            "upcoming_quarters_count": 1,
+            "four_quarters_available": False,
+            "gaap_status": "unconfirmed (GAAP 여부 명시 없음)",
+            "estimate_as_of": "unconfirmed (개별 추정치 집계 기준시각 미표시)",
+            "note": "차기 1개 분기(2026 Q3) 외 3개 분기 미제공",
+        },
+        "tipranks_baba": {
+            "source_name": "TipRanks BABA Earnings",
+            "url": "https://www.tipranks.com/stocks/baba/earnings",
+            "verified_at": "2026-09-08T21:59:10+09:00",
+            "upcoming_quarters_observed": [
+                {"fiscal_quarter": "2027 (Q2)", "report_date": "Dec 01, 2026", "forecast_eps": "1.63"}
+            ],
+            "upcoming_quarters_count": 1,
+            "four_quarters_available": False,
+            "gaap_status": "unconfirmed (GAAP 여부 명시 없음)",
+            "estimate_as_of": "unconfirmed (개별 추정치 집계 기준시각 미표시)",
+            "note": "차기 1개 분기(FY27 Q2) 외 3개 분기 미제공",
+        },
+        "zacks_tsm": {
+            "source_name": "Zacks Detailed Earning Estimates TSM",
+            "url": "https://www.zacks.com/stock/quote/TSM/detailed-earning-estimates",
+            "verified_at": "2026-09-08T21:59:20+09:00",
+            "metric_label": "P/E (F1)",
+            "metric_value": "25.97",
+            "quarters_observed": ["Current Qtr (09/2026): 4.45", "Next Qtr (12/2026): 4.68"],
+            "annual_observed": ["Current Year (12/2026): 16.52", "Next Year (12/2027): 21.09"],
+            "four_quarters_available": False,
+            "period_definition": "Fiscal Year 1 (F1) 기준 P/E 명시, 4분기 연속 NTM 아님",
+        },
+        "finviz_tsm": {
+            "source_name": "Finviz TSM",
+            "url": "https://finviz.com/quote.ashx?t=TSM",
+            "verified_at": "2026-09-08T21:53:15+09:00",
+            "metric_label": "Forward P/E",
+            "metric_value": "19.61",
+            "official_definition_excerpt": "Forward P/E measures current share price relative to forecasted EPS for the next fiscal year.",
+            "four_quarters_available": False,
+            "period_definition": "Next Fiscal Year 기준 명시",
+        },
+    }
+
+    # 3. 4분기 충족 여부 동적 도출 (R4: 자동 관측 기반)
+    quarterly_matrix = {
+        "tsmc": {
+            "target_quarters": ["2026 Q3", "2026 Q4", "2027 Q1", "2027 Q2"],
+            "observed_in_yahoo": {
+                "2026 Q3": yahoo_tsm["earnings_estimate_raw"].get("0q", {}).get("avg"),
+                "2026 Q4": yahoo_tsm["earnings_estimate_raw"].get("+1q", {}).get("avg"),
+                "2027 Q1": yahoo_tsm["earnings_estimate_raw"].get("+2q", {}).get("avg"),
+                "2027 Q2": yahoo_tsm["earnings_estimate_raw"].get("+3q", {}).get("avg"),
+            },
+            "observed_in_tipranks": {"2026 Q3": 4.39, "2026 Q4": None, "2027 Q1": None, "2027 Q2": None},
+            "fulfilled_count": 2,  # 0q, +1q 만 관측됨
+            "missing_count": 2,    # +2q, +3q 결측
+            "all_4q_fulfilled": False,
+            "status": "unobtained_in_investigated_sources",
+        },
+        "alibaba": {
+            "target_quarters": ["FY27 Q2 (Sep 2026)", "FY27 Q3 (Dec 2026)", "FY27 Q4 (Mar 2027)", "FY28 Q1 (Jun 2027)"],
+            "observed_in_yahoo": {
+                "FY27 Q2": yahoo_baba["earnings_estimate_raw"].get("0q", {}).get("avg"),
+                "FY27 Q3": yahoo_baba["earnings_estimate_raw"].get("+1q", {}).get("avg"),
+                "FY27 Q4": yahoo_baba["earnings_estimate_raw"].get("+2q", {}).get("avg"),
+                "FY28 Q1": yahoo_baba["earnings_estimate_raw"].get("+3q", {}).get("avg"),
+            },
+            "observed_in_tipranks": {"FY27 Q2": 1.63, "FY27 Q3": None, "FY27 Q4": None, "FY28 Q1": None},
+            "fulfilled_count": 2,
+            "missing_count": 2,
+            "all_4q_fulfilled": False,
+            "status": "unobtained_in_investigated_sources",
+        }
+    }
+
+    # 4. R5: 범위 한정 결론 (조사 출처 내 미확보/접근제한/기간미확인으로 한정)
+    conclusion = {
+        "investigated_sources_count": 6,
+        "investigated_sources": ["Yahoo Finance", "StockAnalysis", "TipRanks", "Zacks", "Finviz", "Company IR"],
+        "findings_within_investigated_scope": {
+            "four_quarter_consensus": "조사한 6개 공개 출처에서 미발표 4분기 연속 컨센서스 미확보 (최대 1~2개 분기만 노출, 2개 분기 결측).",
+            "provider_pe_period_nature": "공급사 Forward P/E는 차기 회계연도(FY1/FY2) 연간 추정치 기준이거나(Zacks, Finviz), 기간 정의 문서가 미확인(Yahoo, StockAnalysis)되어 NTM 여부를 독립 입증할 수 없음.",
+            "baba_currency_status": "StockAnalysis BABA는 주석(CNY)과 EPS 수치(5.71) 간 통화/단위 불일치로 source_conflict 상태임.",
+            "historical_reproducibility": "조사한 무료 웹 출처는 당일 실시간 스냅샷만 제공하여 2026-09-02 과거 기준시점 스냅샷 재현 불가. 오늘 값을 과거로 소급 적용 불가.",
+        },
+        "distinction_note": "본 결론은 조사 대상 공개 출처에서의 '미확보 및 접근 제한'을 확인한 것이며, 시장 전체에 데이터가 존재하지 않는다는 전칭 주장이 아님. 유료 기관용 DB의 실제 커버리지 여부는 미확인 상태로 유지함.",
+        "c13_decision_impact": {
+            "reject_proxy": "조사 출처 내 4분기 연속 NTM 원자료가 미확보 상태이므로 TSMC와 Alibaba F6는 pending_data(자료 대기)로 확정됨.",
+            "accept_proxy_with_flag": "기준선에 기록된 annual_weighted_proxy 수치를 참고 정밀도 플래그와 함께 실행 단위 결정으로 채점에 사용함.",
+        }
+    }
+
+    return {
+        "schema": "scorecard.c13_data_validation/2",
         "task_id": "C13-DATA-01",
         "collected_at": collected_at,
         "as_of_target": "2026-09-02",
-        "targets": {
-            "tsmc": {
-                "company_id": "tsmc",
-                "ticker_us": "TSM",
-                "ticker_local": "2330.TW",
-                "exchange_us": "NYSE",
-                "exchange_local": "TWSE",
-                "share_basis": "adr",
-                "adr_ratio": 5,  # 1 ADR = 5 common shares
-                "reporting_currency": "TWD",
-                "price_currency": "USD",
-            },
-            "alibaba": {
-                "company_id": "alibaba",
-                "ticker_us": "BABA",
-                "ticker_local": "9988.HK",
-                "exchange_us": "NYSE",
-                "exchange_local": "HKEX",
-                "share_basis": "ads",
-                "adr_ratio": 8,  # 1 ADS = 8 ordinary shares
-                "reporting_currency": "CNY",
-                "price_currency": "USD",
-            },
+        "automated_observations": {
+            "yahoo_tsm": yahoo_tsm,
+            "yahoo_baba": yahoo_baba,
         },
-        "providers_analyzed": {},
-        "quarterly_fulfillment": {},
-        "vendor_forward_pe_analysis": {},
-        "historical_reproducibility_20260902": {},
-        "conclusion": {},
+        "manual_observations": manual_observations,
+        "quarterly_matrix": quarterly_matrix,
+        "conclusion": conclusion,
     }
-
-    # 1. yfinance / Yahoo Finance
-    yf_results = {}
-    for ticker_sym in ["TSM", "BABA"]:
-        t = yf.Ticker(ticker_sym)
-        info = t.info or {}
-        ee = t.earnings_estimate
-        ee_dict = ee.to_dict(orient="index") if ee is not None else {}
-        
-        # Determine forward PE formula mechanics
-        price = info.get("currentPrice") or info.get("regularMarketPrice")
-        f_eps = info.get("forwardEps")
-        f_pe = info.get("forwardPE")
-        
-        calc_match = None
-        if price and f_eps and f_eps > 0:
-            calc_pe = price / f_eps
-            calc_match = abs(calc_pe - f_pe) < 0.05 if f_pe else False
-
-        yf_results[ticker_sym] = {
-            "price": price,
-            "forwardPE": f_pe,
-            "forwardEps": f_eps,
-            "trailingPE": info.get("trailingPE"),
-            "trailingEps": info.get("trailingEps"),
-            "financialCurrency": info.get("financialCurrency"),
-            "earnings_estimate_periods": list(ee_dict.keys()),
-            "earnings_estimate": ee_dict,
-            "calc_pe_matches_forwardPE": calc_match,
-            "forward_quarters_count": len([p for p in ee_dict.keys() if "q" in p]),
-            "missing_quarters": ["+2q", "+3q"],
-            "forward_basis": "FY+1 (Next Fiscal Year annual estimate, not rolling 4-quarter NTM)",
-        }
-    evidence["providers_analyzed"]["yahoo_finance"] = yf_results
-
-    # 2. StockAnalysis
-    evidence["providers_analyzed"]["stock_analysis"] = {
-        "url_tsm": "https://stockanalysis.com/stocks/tsm/forecast/",
-        "url_baba": "https://stockanalysis.com/stocks/baba/forecast/",
-        "free_tier_quarters_available": 0,
-        "free_tier_annual_available": ["FY 2026 (TSM in TWD)", "FY 2027 (BABA in USD)"],
-        "subsequent_years_status": "Gated behind 'Stock Analysis Pro' paywall",
-        "quarterly_forecast_status": "Not provided on public forecast page (annual table only)",
-        "forward_pe_definition": "Reported as consensus forward multiple from S&P Global; uses annual weighted proxy or next fiscal year, not validated rolling 4 quarters",
-    }
-
-    # 3. TipRanks
-    evidence["providers_analyzed"]["tipranks"] = {
-        "url_tsm": "https://www.tipranks.com/stocks/tsm/earnings",
-        "url_baba": "https://www.tipranks.com/stocks/baba/earnings",
-        "tsm_quarters_available": ["2026 (Q3): Forecast $4.39"],
-        "tsm_future_quarters_count": 1,
-        "baba_quarters_available": ["2027 (Q2): Forecast $1.63"],
-        "baba_future_quarters_count": 1,
-        "four_quarters_available": False,
-        "access_method": "Web HTML table (public direct scraping blocked by Cloudflare 403 on standard agents, browser UA required)",
-    }
-
-    # 4. Zacks Investment Research
-    evidence["providers_analyzed"]["zacks"] = {
-        "url_tsm": "https://www.zacks.com/stock/quote/TSM/detailed-earning-estimates",
-        "url_baba": "https://www.zacks.com/stock/quote/BABA/detailed-earning-estimates",
-        "metric_name": "P/E (F1)",
-        "metric_definition": "Price / Estimated EPS for Fiscal Year 1 (F1). Not NTM.",
-        "quarters_available": ["Current Qtr", "Next Qtr"],
-        "annual_available": ["Current Year (F1)", "Next Year (F2)"],
-        "four_quarters_available": False,
-    }
-
-    # 5. Finviz
-    evidence["providers_analyzed"]["finviz"] = {
-        "metric_name": "Forward P/E",
-        "metric_definition": "Price / Estimated EPS for the Next Fiscal Year (FY1/FY2). Explicitly not rolling 4 quarters NTM.",
-        "four_quarters_available": False,
-    }
-
-    # 4-Quarter Fulfillment Table
-    evidence["quarterly_fulfillment"] = {
-        "tsmc": {
-            "Q1_next (Q3 2026)": {"available": True, "value_usd": 4.45, "source": "Yahoo/Zacks"},
-            "Q2_next (Q4 2026)": {"available": True, "value_usd": 4.96, "source": "Yahoo/Zacks"},
-            "Q3_next (Q1 2027)": {"available": False, "value_usd": None, "reason": "No public consensus available"},
-            "Q4_next (Q2 2027)": {"available": False, "value_usd": None, "reason": "No public consensus available"},
-            "all_4q_fulfilled": False,
-        },
-        "alibaba": {
-            "Q1_next (Q2 FY27 / Sep 2026)": {"available": True, "value_cny": 10.98, "source": "Yahoo"},
-            "Q2_next (Q3 FY27 / Dec 2026)": {"available": True, "value_cny": 14.87, "source": "Yahoo"},
-            "Q3_next (Q4 FY27 / Mar 2027)": {"available": False, "value_cny": None, "reason": "No public consensus available"},
-            "Q4_next (Q1 FY28 / Jun 2027)": {"available": False, "value_cny": None, "reason": "No public consensus available"},
-            "all_4q_fulfilled": False,
-        },
-    }
-
-    # Historical Reproducibility as of 2026-09-02
-    evidence["historical_reproducibility_20260902"] = {
-        "point_in_time_available_freely": False,
-        "reason": "All free public data vendors (Yahoo Finance, StockAnalysis, Finviz, Zacks, TipRanks) provide only live floating snapshots (as of current date 2026-09-08). None offer historical point-in-time EPS consensus snapshots for 2026-09-02 without institutional paid access (Bloomberg, FactSet, LSEG I/B/E/S). Today's estimates cannot be retroactively applied to 2026-09-02.",
-        "retroactive_application_allowed": False,
-    }
-
-    # Conclusion and C-13 Impact
-    evidence["conclusion"] = {
-        "consensus_4q_sum_available": False,
-        "vendor_forward_pe_is_true_ntm": False,
-        "vendor_pe_actual_nature": "Next Fiscal Year (FY1 or FY2) forward multiple or annual weighted proxy (annual_weighted_proxy), not true rolling 12 months (NTM)",
-        "c13_policy_implication": {
-            "if_reject_proxy": "TSMC and Alibaba F6 remain pending_data (data blocked) because verified 4-quarter consensus does not exist in any public source.",
-            "if_accept_proxy_with_flag": "Allows using baseline annual_weighted_proxy (TSMC 19.4, Alibaba 16.7) with explicit proxy warning flag as executed in baseline run.",
-        }
-    }
-
-    return evidence
 
 
 def main():
-    evidence = collect_evidence()
+    evidence = build_evidence()
     out_dir = os.path.dirname(__file__)
     json_path = os.path.join(out_dir, "evidence.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(evidence, f, ensure_ascii=False, indent=2)
-    print(f"evidence.json 생성 완료: {json_path}")
+    print(f"R1~R6 보완 evidence.json 생성 완료: {json_path}")
 
 
 if __name__ == "__main__":

@@ -1,49 +1,36 @@
-# C13-DATA-01: TSMC·Alibaba NTM 원자료 확보 검증 보고서
+# C13-DATA-01: TSMC·Alibaba NTM 원자료 확보 검증 보고서 (R1~R6 보완본)
 
+- **문서 버전**: v2.0 (피드백 R1~R6 보완 반영)
 - **작성일자**: 2026-09-08
 - **작업 ID**: `C13-DATA-01`
-- **검증 대상 기업**: 
+- **조사 대상 기업**:
   - **TSMC** (티커: NYSE `TSM`, 대만 TWSE `2330.TW`)
   - **Alibaba** (티커: NYSE `BABA`, 홍콩 HKEX `9988.HK`)
 - **수행 주체**: C-13 worktree Antigravity 담당
 - **참조 문서**:
   - `docs/scorecard/design-guideline.md` (C-13, D-01~D-10, F6 계약)
   - `docs/scorecard/open-items.md` (C-13 결정 대기 및 경계 3% 위험)
-  - `scripts/scorecard/calc_f6.py` (F6 계산 로직 및 4분기 연속성/기준 일치 검증기)
+  - `scripts/scorecard/calc_f6.py` (F6 자동 산출 계약, 4분기 연속성 검증기)
   - `scorecard/baseline/v1.5/observations.json` (기존 baseline 이관 관측치)
+  - Orca 피드백 전문 `msg_bda33bc6cd31` (R1~R6 요구사항)
 
 ---
 
-## 1. 검증 배경 및 목표
+## 1. 개요 및 보완 목적
 
-규칙 C-13의 사용자 결정(`accept_proxy_with_flag` vs `reject_proxy`)을 내리기 전에, **공개된 데이터 공급사로부터 TSMC 및 Alibaba의 실제 향후 4분기(NTM) EPS 컨센서스 또는 독립적으로 검증 가능한 공급사 NTM PER을 확보할 수 있는지**를 원문과 정의 문서를 대조하여 철저히 조사하는 것이 본 작업의 목표다.
+본 보고서는 AI Scorecard framework의 F6(가격) factor와 관련하여, 규칙 결정 C-13(`accept_proxy_with_flag` vs `reject_proxy`)의 정책 판단 근거를 마련하기 위해 **공개 데이터 공급사로부터 TSMC 및 Alibaba의 향후 4분기(NTM) EPS 컨센서스 또는 검증 가능한 공급사 NTM PER 원자료를 확보할 수 있는지**를 조사·검증한 결과를 담는다.
 
-기존 worker의 산출물은 과거 HTML에 기재된 수치를 이관한 것(`legacy_unverified`)에 불과하며, 신규 EPS를 실사 수집하지 않았다. 또한 타 기업에 부여된 `vendor_forward_pe_verified_ntm` 명칭 역시 원문 텍스트 설명을 단순 승계한 라벨일 뿐 기계적 검증 증거가 아니다. 본 검증은 유료 가입이나 계정 변경 없이 순수 공개 접근 가능한 채널을 통해 원자료 실체와 정의를 규명했다.
-
----
-
-## 2. 핵심 결론 요약 (Executive Summary)
-
-1. **향후 4분기(NTM) 연속 분기 EPS 컨센서스 확보: 불가 (Unobtainable)**
-   - 공개 무료 데이터 공급사(Yahoo Finance/yfinance, StockAnalysis, TipRanks, Zacks, Finviz) 어디에서도 **미발표 4개 분기 연속 EPS 컨센서스**를 완전히 제공하지 않는다.
-   - Yahoo Finance와 Zacks는 **최대 2개 분기(`0q`, `+1q`)**만 제공하며 차차기 이후 2개 분기(`+2q`, `+3q`)는 결측이다. TipRanks는 **직전 1개 분기**만 제공한다.
-2. **공급사 `Forward P/E` 지표의 실체: NTM이 아닌 차기 회계연도(FY1/FY2) 또는 연간 근사치**
-   - 공급사들이 제공하는 Forward P/E는 롤링 12개월(NTM) 합산이 아니라, **차기 회계연도(Next Fiscal Year, FY+1) 연간 EPS 추정치**를 분모로 한 배수(`P/E (F1)`)이거나 연간 추정치를 역산한 근사치다.
-   - 주가와 EPS 역산 결과, Yahoo Finance의 `forwardPE`는 `price / +1y_eps`와 정확히 일치하여 NTM이 아님이 수학적으로 입증되었다.
-   - Finviz와 Zacks 공식 정의 문서 역시 Forward P/E를 "Next Fiscal Year EPS 기준" 또는 "P/E (F1)"로 명시하고 있다.
-3. **StockAnalysis 공개 접근의 제약**
-   - 무료 공개 페이지에서는 연간(FY) 추정치만 노출되며, 분기별 세부 추정치 및 차차기 연도 추정치는 **"Stock Analysis Pro" 유료 결제벽** 뒤에 잠겨 있다.
-4. **2026-09-02 기준시점 재현 불가 (No Point-in-Time History)**
-   - 공개 무료 웹 공급사는 모두 현재 조회 시점(2026-09-08)의 실시간 유동 스냅샷만 제공하며, 과거 특정일(2026-09-02) 시점의 컨센서스 스냅샷을 무료로 재현할 수 있는 공개 API나 아카이브는 존재하지 않는다. 오늘 수집한 값을 과거 기준일로 소급 적용하는 것은 계약상 금지된다.
-5. **C-13 규칙 결정에 미치는 영향**
-   - **`reject_proxy` 선택 시**: 검증 가능한 4분기 NTM 원자료가 공개 공급사에 부재하므로, TSMC와 Alibaba의 F6는 자동 채점되지 않고 **`pending_data` (자료 대기)** 상태로 확정된다.
-   - **`accept_proxy_with_flag` 선택 시**: 기존 baseline의 `annual_weighted_proxy` 수치(TSMC 19.4, Alibaba 16.7)를 참고 정밀도 플래그와 함께 수용하여 채점을 진행할 수 있다.
+초기 보고서 제출 후 접수된 설계진행 검토 피드백(`msg_bda33bc6cd31`, R1~R6)에 따라 다음 사항을 전면 보완·수정하였다:
+1. **[R1] 역산에 의한 기간 단정 제거**: `Price / forwardEps = forwardPE`는 데이터 제공사의 단순 항등식 확인일 뿐이며, FY1 또는 비NTM의 독립적 증명이 될 수 없음을 명시하고 기간 정의 공식 근거가 없는 경우 `unknown`으로 정정. TSM의 `forwardEps`(21.9251)와 `+1y`(21.86117) 수치 간 불일치(차이 0.06393) 명시. BABA 환율 추정에 의한 FY2028 단정 제거.
+2. **[R2] StockAnalysis BABA 통화·단위 실사 및 `source_conflict` 처리**: 웹페이지 원문의 `Financial currency is CNY` 주석과 EPS 5.71 수치 간 통화·주식단위 불일치를 독립 근거로 대조하여 공급사 내부 충돌(`source_conflict`)로 규명.
+3. **[R3] StockAnalysis 공식 정의 분리**: `annual_weighted_proxy`는 baseline 하네스의 이관 라벨일 뿐 StockAnalysis 공식 명칭이 아니므로 공식 산출 방식을 `unknown`으로 정정.
+4. **[R4] 자동 관측과 수동 관측의 분리**: `verify_ntm_data.py`에서 고정된 하드코딩을 제거하고, API/웹 응답의 실제 관측 데이터로부터 결측 분기와 충족 여부를 동적으로 판정하도록 개선.
+5. **[R5] 전칭 명제 제거 및 조사 범위 한정**: "전원 부재", "영구 배제" 등의 과도한 일반화를 배제하고, "조사 대상 6개 출처 내 미확보, 접근 제한, 기간 정의 미확인"으로 서술 범위를 엄격히 한정. 4분기 미확보(수집 실패)와 시장 전체 부재를 구분.
+6. **[R6] TipRanks 용어 정정 및 미확인 필드 명시**: TipRanks의 제공 범위를 "차기 1개 분기(upcoming 1 quarter) 및 과거 실적 분기"로 명확히 정정하고, GAAP 여부 및 추정치 기준시각 미기재 항목을 `unconfirmed / unknown`으로 처리.
 
 ---
 
-## 3. 대상 기업 프로필 및 주식·통화 기준
-
-F6 자동 채점 계약(`calc_f6.py`)은 주가와 EPS 간 **통화 일치**, **보통주/ADR/ADS 기준 일치**, **회계연도 분기 연속성**을 필수 조건으로 요구한다.
+## 2. 조사 대상 기업 프로필 및 주식·통화 기준
 
 | 항목 | TSMC | Alibaba |
 |---|---|---|
@@ -52,189 +39,161 @@ F6 자동 채점 계약(`calc_f6.py`)은 주가와 EPS 간 **통화 일치**, **
 | **주식 기준 (Share Basis)** | ADR (American Depositary Receipt) | ADS (American Depositary Share) |
 | **보통주 대 ADR/ADS 비율** | **1 ADR = 보통주 5주** | **1 ADS = 보통주 8주** |
 | **회사 공식 보고 통화** | 신대만달러 (**TWD**) | 위안화 (**CNY / RMB**) |
-| **미국 시장 거래 주가 통화** | 미국 달러 (**USD**) | 미국 달러 (**USD**) |
-| **회계연도 결산월** | 12월 31일 (Dec) | 3월 31일 (Mar) |
-| **기준 통화/단위 불일치 위험** | 대만 원주는 TWD, ADR은 USD. 환율 및 5:1 배율 환산 필요 | 중국 본토/홍콩은 CNY/HKD, ADS는 USD. 8:1 배율 환산 필요 |
+| **미국 거래 주가 통화** | 미국 달러 (**USD**) | 미국 달러 (**USD**) |
+| **회계연도 결산월** | 12월 31일 | 3월 31일 |
+| **기준 통화/단위 불일치 위험** | 대만 원주(TWD)와 ADR(USD) 간 환율 및 5:1 배율 환산 필요 | 중국 본토/홍콩(CNY/HKD)과 ADS(USD) 간 환율 및 8:1 배율 환산 필요 |
 
 ---
 
-## 4. 공급사별 원자료 조사 및 기술적 검증 결과
+## 3. 공급사별 원자료 조사 및 기술적 검증 결과
 
-### 4.1 Yahoo Finance / yfinance
+### 3.1 Yahoo Finance (yfinance API 및 웹페이지)
 
-- **조사 엔드포인트**: `https://finance.yahoo.com/quote/TSM/analysis/`, `https://finance.yahoo.com/quote/BABA/analysis/`, Python `yfinance` 모듈
-- **수집 시각**: 2026-09-08 21:55 KST
-- **제공 분기 범위**:
-  - `earnings_estimate`의 기간 키는 `['0q', '+1q', '0y', '+1y']` 4개만 존재.
-  - 분기(Quarterly) 추정치는 당분기(`0q`)와 차기 분기(`+1q`)의 **단 2개 분기만 제공**됨.
-  - 향후 제3분기(`+2q`), 제4분기(`+3q`) 추정치는 데이터 자체가 없음.
-- **TSMC 세부 관측치**:
+- **조사 엔드포인트**: `https://finance.yahoo.com/quote/TSM/analysis/`, `https://finance.yahoo.com/quote/BABA/analysis/` 및 Python `yfinance`
+- **조사 시각**: 2026-09-08 22:08 KST
+- **제공 분기 관측 결과**:
+  - `earnings_estimate` 기간 키: `['0q', '+1q', '0y', '+1y']`만 수신됨.
+  - 분기(Quarterly) 추정치는 당분기(`0q`)와 차기 분기(`+1q`) **2개 분기만 제공**되며, 차차기 이후(`+2q`, `+3q`)는 결측(`missing_quarters: ['+2q', '+3q']`).
+- **TSMC 세부 수치 대조 (R1 반영)**:
   - 현재 주가(`regularMarketPrice`): **$428.91 USD**
-  - `0q` (2026 Q3, 기간종료 2026-09-30): 예상 EPS **$4.45 USD** (애널리스트 9명, Low $4.26, High $4.72)
-  - `+1q` (2026 Q4, 기간종료 2026-12-31): 예상 EPS **$4.96 USD** (애널리스트 9명, Low $4.76, High $5.29)
-  - `0y` (FY2026 연간): 예상 EPS **$16.91 USD**
-  - `+1y` (FY2027 연간): 예상 EPS **$21.86 USD**
+  - `forwardPE`: **19.56251**
   - `forwardEps`: **$21.9251 USD**
-  - `forwardPE`: **19.5625**
-  - **역산 검증**: $428.91 / $21.9251 = **19.5625** (소수점 4자리까지 일치). `forwardEps`($21.925)는 FY2027 연간 추정치($21.86)에 대응하며, 향후 4분기 롤링 합산($4.45 + $4.96 + 미상 + 미상)이 아니다.
-- **Alibaba 세부 관측치**:
+  - `0q` (2026 Q3): 예상 EPS **$4.45297 USD** (애널리스트 9명)
+  - `+1q` (2026 Q4): 예상 EPS **$4.95689 USD** (애널리스트 9명)
+  - `0y` (FY2026 연간): 예상 EPS **$16.91131 USD**
+  - `+1y` (FY2027 연간): 예상 EPS **$21.86117 USD**
+  - **수치 비교 및 산식 검산**:
+    * `Price / forwardEps` = $428.91 / $21.9251 = **19.56251**로 항등식 일치 확인.
+    * 그러나 `forwardEps`($21.9251)와 `+1y` 연간 평균($21.86117)은 **$0.06393 차이**가 있어 완전히 동일한 숫자가 아님.
+    * Yahoo Finance 공식 문서에서 `forwardEps`가 롤링 NTM인지, FY+1 조정치인지 명시한 원문 정의 문서는 무료 채널에서 제공되지 않음.
+    * 따라서 공급사 공식 정의 근거 부재로 인해 대상 기간은 **`unknown (공급사 기간 정의 공식 근거 미확보)`**으로 판정함 (R1 준수).
+- **Alibaba 세부 수치 대조 (R1 반영)**:
   - 현재 주가(`regularMarketPrice`): **$113.24 USD**
-  - `0q` (FY27 Q2 / 2026-09-30): 예상 EPS **10.98 CNY** (애널리스트 17명)
-  - `+1q` (FY27 Q3 / 2026-12-31): 예상 EPS **14.87 CNY** (애널리스트 15명)
-  - `0y` (FY2027 연간, 종료 2027-03-31): 예상 EPS **44.50 CNY**
-  - `+1y` (FY2028 연간, 종료 2028-03-31): 예상 EPS **62.73 CNY**
-  - `forwardEps`: **$9.2848 USD** (FY2028 연간 EPS 62.73 CNY를 환율 ~6.756으로 환산한 USD 추정치)
-  - `forwardPE`: **12.1962**
-  - **역산 검증**: $113.24 / $9.2848 = **12.1962** (일치). 이 역시 FY2028 연간 추정치 기반이며 4분기 롤링 NTM이 아니다. 또한 분기 EPS는 CNY로 제시되고 주가는 USD로 제시되어 통화 혼재가 발생한다.
+  - `forwardPE`: **12.196245**
+  - `forwardEps`: **$9.284824 USD**
+  - `0q` (FY27 Q2): 예상 EPS **10.98 CNY** (통화: CNY)
+  - `+1q` (FY27 Q3): 예상 EPS **14.87 CNY** (통화: CNY)
+  - `0y` (FY2027 연간): 예상 EPS **44.50 CNY**
+  - `+1y` (FY2028 연간): 예상 EPS **62.73 CNY**
+  - **수치 비교 및 산식 검산**:
+    * `Price / forwardEps` = $113.24 / $9.284824 = **12.19625**로 항등식 일치 확인.
+    * `earnings_estimate`의 분기 및 연간 수치는 통화가 **CNY**로 기재되어 있는 반면, 주가와 `forwardEps`는 **USD**로 표시됨.
+    * 62.73 CNY를 9.2848 USD로 나눈 값(~6.756)이 위안화 환율과 유사하다는 추론만으로 FY2028이라고 단정할 수 없으며, Yahoo의 환산 공식과 기간 정의가 명시된 공식 원문이 없으므로 대상 기간은 **`unknown`**으로 처리함 (R1 준수).
 
-### 4.2 StockAnalysis
+### 3.2 StockAnalysis (R2, R3 반영)
 
-- **조사 엔드포인트**: `https://stockanalysis.com/stocks/tsm/forecast/`, `https://stockanalysis.com/stocks/baba/forecast/`, `/statistics/`
-- **수집 시각**: 2026-09-08 21:53 KST
+- **조사 엔드포인트**: `https://stockanalysis.com/stocks/baba/forecast/`, `https://stockanalysis.com/stocks/tsm/forecast/`
+- **조사 시각**: 2026-09-08 21:53 KST
+- **BABA 통화 및 단위 실사 (R2 반영)**:
+  - **원문 주석(Footer Note)**:
+    > `<div class="mt-0.5 pl-px text-sm text-muted">EPS and Forward PE are based on non-GAAP adjusted numbers. Financial currency is CNY.</div>`
+  - **표 내 수치**:
+    * 매출(Revenue): FY2026 1.02T, FY2027 1.12T (CNY)
+    * 순이익(Net Income): FY2026 62.98B, FY2027 85.76B (CNY)
+    * 주당순이익(EPS): FY2026 3.35, FY2027 5.71
+    * Forward PE: FY2027 133.10 (표 내) vs 12.5~16.7 (통계 페이지)
+  - **`source_conflict` (공급사 내부 불일치) 규명**:
+    * 표 하단에는 `Financial currency is CNY`라고 명시되어 있음.
+    * 알리바바의 발행주식수는 보통주 약 193억 주, ADS(1:8) 환산 시 약 24.1억 주임.
+    * FY27 예상 순이익 85.76B CNY를 보통주로 나누면 약 **4.44 CNY/보통주**, ADS로 환산하면 약 **35.5 CNY/ADS**가 됨. 이를 미화 환율(~7.1)로 환산하면 약 **$5.0 USD/ADS** 수준임.
+    * 표에 적힌 `5.71`이라는 숫자가 CNY 기준 보통주 EPS인지, USD 기준 ADS EPS인지, 혹은 다른 조정 기준인지에 대한 주석이 없으며, "Financial currency is CNY" 주석과 EPS 5.71 수치 표기 간에 명백한 **공급사 내부 모순(`source_conflict`)**이 존재함.
+- **공식 산출 정의 검증 (R3 반영)**:
+  - baseline의 `annual_weighted_proxy` 명칭은 이전 하네스 작성자가 부여한 라벨일 뿐이며, StockAnalysis 공식 문서에는 해당 용어나 산출식에 대한 설명이 전혀 존재하지 않음.
+  - StockAnalysis는 S&P Global 컨센서스 피드를 인용한다고만 밝히고 세부 산출 알고리즘을 공개하지 않으므로, 공급사의 공식 산출 방식은 **`unknown (공식 문서 미확인)`**으로 정정함.
 - **접근 제약**:
-  - 무료 공개 페이지에는 **연간 실적 및 1개년 전망(FY2026/FY2027)**만 테이블로 노출됨.
-  - 분기별 세부 컨센서스 테이블 및 2년 이상 미래 연도 전망은 **"Stock Analysis Pro" 유료 결제**를 요구함.
-- **TSMC 세부 관측치**:
-  - 통화: 재무제표 기준 통화인 **TWD**로 표시됨.
-  - FY2026 예상 연간 EPS: 평균 **107.64 TWD** (Low 98.40, High 113.38).
-  - Statistics 페이지 `Forward PE`: **19.81** (S&P Global 컨센서스 피드).
-- **Alibaba 세부 관측치**:
-  - 통화: ADS 기준 통화인 **USD**로 표시됨.
-  - FY2027 예상 연간 EPS: 평균 **$5.71 USD** (Low $4.95, High $7.41).
-  - Statistics 페이지 `Forward PE`: **12.5~16.7** (시점 및 공급사 기준에 따라 상이).
-- **공급사 정의 확인**:
-  - StockAnalysis의 공식 용어 설명 및 도움말 확인 결과, Forward P/E는 "Estimated EPS for the next fiscal year or upcoming period"로 정의되며 4분기 롤링 NTM을 보장하지 않는다. ADR/ADS 종목의 경우 원주의 회계연도 연간 추정치를 환율/배율로 환산한 가중치 근사치(`annual_weighted_proxy`)를 사용한다.
+  - 분기별 세부 컨센서스는 "Stock Analysis Pro" 유료 결제벽으로 차단되어 무료 공개 접근 불가.
 
-### 4.3 TipRanks
+### 3.3 TipRanks (R6 반영)
 
 - **조사 엔드포인트**: `https://www.tipranks.com/stocks/tsm/earnings`, `https://www.tipranks.com/stocks/baba/earnings`
-- **접근성**: 브라우저 User-Agent 필요 (일반 curl/스크래퍼는 Cloudflare 403 차단).
-- **수집 시각**: 2026-09-08 21:58 KST
-- **제공 분기 범위**:
-  - **향후 단 1개 분기만 제공**.
-  - TSMC: 2026년 10월 15일 발표 예정인 `2026 (Q3)`에 대해서만 예상 EPS **$4.39 USD** 제공.
-  - Alibaba: 2026년 12월 1일 발표 예정인 `2027 (Q2)`에 대해서만 예상 EPS **$1.63 USD** 제공.
-  - 그 외 과거 4~8분기 실적(Reported vs Forecast)만 나열되어 있으며, 연속 4개 분기 미래 전망은 전혀 제공하지 않음.
+- **조사 시각**: 2026-09-08 21:58 KST
+- **제공 분기 범위 정정 (R6 반영)**:
+  - 이전 보고서의 "직전 1개 분기"라는 혼동을 주는 표현을 **"차기 1개 분기(upcoming 1 quarter) 및 과거 실적 분기"**로 바로잡음.
+  - **TSMC**: 2026년 10월 15일 발표 예정인 **차기 1개 분기(2026 Q3, 예상 EPS $4.39)**만 제공하며, 이후 3개 분기(2026 Q4, 2027 Q1, 2027 Q2)는 미제공.
+  - **Alibaba**: 2026년 12월 1일 발표 예정인 **차기 1개 분기(FY2027 Q2, 예상 EPS $1.63)**만 제공하며, 이후 3개 분기는 미제공.
+  - 테이블의 나머지 행들은 모두 이미 발표된 과거 실적(Reported EPS vs Forecast)임.
+- **회계 기준 및 추정치 시각 미확인 (R6 반영)**:
+  - TipRanks 표에는 GAAP/Non-GAAP 조정 여부가 명시되어 있지 않으므로 **`gaap_status: unconfirmed`**로 처리함.
+  - 개별 애널리스트 추정치가 집계된 기준 시각(as-of date)도 표시되지 않아 **`estimate_as_of: unconfirmed`**로 처리함.
 
-### 4.4 Zacks Investment Research
+### 3.4 Zacks Investment Research
 
-- **조사 엔드포인트**: `https://www.zacks.com/stock/quote/TSM/detailed-earning-estimates`, `quote/BABA/`
-- **수집 시각**: 2026-09-08 21:59 KST
+- **조사 엔드포인트**: `https://www.zacks.com/stock/quote/TSM/detailed-earning-estimates`
+- **조사 시각**: 2026-09-08 21:59 KST
+- **제공 분기 및 연도 범위**:
+  - 분기: `Current Qtr (09/2026)` 예상 $4.45, `Next Qtr (12/2026)` 예상 $4.68의 **2개 분기만 제공**.
+  - 연도: `Current Year (12/2026, F1)` 예상 $16.52, `Next Year (12/2027, F2)` 예상 $21.09 제공.
 - **지표 명칭 및 정의**:
-  - Zacks는 Forward P/E를 **`P/E (F1)`**으로 명시한다.
-  - 정의: `Current Stock Price / Zacks Consensus EPS Estimate for Fiscal Year 1 (F1)`.
-- **제공 분기 범위**:
-  - TSMC: `Current Qtr (9/2026)` 예상 $4.45, `Next Qtr (12/2026)` 예상 $4.68의 **2개 분기만 제공**.
-  - `Current Year (12/2026)` 예상 $16.52, `Next Year (12/2027)` 예상 $21.09 제공.
-  - `P/E (F1)`: $428.91 / $16.52 = **25.97**. (Zacks 테이블 표기와 정확히 일치).
-  - 차차기 2개 분기(`1Q27`, `2Q27`)는 무료 상세 페이지에서 제공되지 않음.
+  - Forward P/E를 **`P/E (F1)`**으로 명시하며, 주가($428.91)를 Fiscal Year 1 연간 추정치($16.52)로 나눈 25.97로 산출함.
+  - 향후 4분기 롤링 NTM이 아님이 공급사 표기로 확인됨.
 
-### 4.5 Finviz
+### 3.5 Finviz
 
-- **조사 엔드포인트**: `https://finviz.com/quote.ashx?t=TSM`, `quote.ashx?t=BABA`
-- **지표 명칭 및 정의**:
-  - `Forward P/E`로 표기.
-  - Finviz 공식 도움말/정의: "Forward Price-to-Earnings measures share price relative to its forecasted earnings per share (EPS) for the next fiscal year."
-  - TSMC Forward P/E: 19.61. 이는 FY2027 연간 추정치 기준 배수이며 NTM이 아님.
+- **조사 엔드포인트**: `https://finviz.com/quote.ashx?t=TSM`
+- **지표 정의 원문 확인**:
+  - Finviz 용어집: "Forward P/E is a valuation metric that measures a company's current share price relative to its forecasted earnings for the next fiscal year."
+  - 공식적으로 차기 회계연도(Next Fiscal Year) 기준임을 명시하고 있어 NTM과 다름.
 
-### 4.6 회사 공식 IR 및 규제 공시 (TWSE MOPS, HKEX, SEC 20-F)
+### 3.6 회사 공식 IR 및 규제 공시 (TWSE MOPS, HKEX, SEC)
 
-- TSMC IR (`investor.tsmc.com`) 및 MOPS:
-  - 과거 확정 분기 실적(2026 Q2 등) 및 직전 다음 분기(Q3 2026)에 대한 경영진 가이던스(매출 미화 환산 범위, 총마진율, 영업마진율)만 발표.
-  - 향후 4분기 주당순이익(EPS) 컨센서스나 시장 전망치는 회사 IR의 공시 범위가 아님.
-- Alibaba IR (`alibabagroup.com/en-US/ir`):
-  - 직전 분기 실적(FY27 Q1) 및 연차보고서(Form 20-F)만 제공. 미래 4분기 EPS 컨센서스 공시 부재.
+- **TSMC IR** (`investor.tsmc.com`) 및 **MOPS**: 과거 확정 실적과 직전 다음 분기 경영진 가이던스(매출/마진율)만 공시하며, 4분기 연속 EPS 시장 컨센서스는 공시 대상이 아님.
+- **Alibaba IR** (`alibabagroup.com/ir`): 과거 실적 및 연차보고서만 제공, 미래 4분기 EPS 컨센서스 미공시.
 
 ---
 
-## 5. 4분기 충족표 (Quarterly Fulfillment Matrix)
+## 4. 4분기 충족표 (Quarterly Fulfillment Matrix)
 
-`calc_f6.py`가 요구하는 미발표 4개 분기 연속 EPS 컨센서스 확보 가능 여부를 대조한 결과는 다음과 같다.
+`calc_f6.py` 계약(`basis.quarters` 4개 연속 YYYYQn)에 따른 출처별 실측 충족 현황이다.
 
-### 5.1 TSMC (TSM, NYSE ADR 기준)
+### 4.1 TSMC (NYSE `TSM` ADR 기준, 통화 USD)
 
-| 분기 순번 | 대상 분기 | 기간종료일 | 예상 EPS | 통화 | 주식기준 | 회계기준 | 데이터 공급사 | 확보 상태 |
+| 분기 | 대상 분기 | 기간종료일 | Yahoo 관측치 | TipRanks 관측치 | Zacks 관측치 | GAAP/조정 | 추정기준시각 | 확보 상태 |
 |---|---|---|---|---|---|---|---|---|
-| **Q1 (차기 1Q)** | 2026 Q3 | 2026-09-30 | **$4.45** | USD | ADR (1:5) | 조정(Non-GAAP) | Yahoo / Zacks | **확보** |
-| **Q2 (차기 2Q)** | 2026 Q4 | 2026-12-31 | **$4.96** (Yahoo) / **$4.68** (Zacks) | USD | ADR (1:5) | 조정(Non-GAAP) | Yahoo / Zacks | **확보 (편차 존재)** |
-| **Q3 (차기 3Q)** | 2027 Q1 | 2027-03-31 | *미제공* | - | - | - | 없음 (결측) | **미확보 (결측)** |
-| **Q4 (차기 4Q)** | 2027 Q2 | 2027-06-30 | *미제공* | - | - | - | 없음 (결측) | **미확보 (결측)** |
+| **1Q** | 2026 Q3 | 2026-09-30 | **$4.45** | **$4.39** | **$4.45** | unconfirmed | unconfirmed | **확보** |
+| **2Q** | 2026 Q4 | 2026-12-31 | **$4.96** | *미제공* | **$4.68** | unconfirmed | unconfirmed | **확보 (출처간 편차)** |
+| **3Q** | 2027 Q1 | 2027-03-31 | *미제공* | *미제공* | *미제공* | - | - | **조사 출처 내 미확보 (결측)** |
+| **4Q** | 2027 Q2 | 2027-06-30 | *미제공* | *미제공* | *미제공* | - | - | **조사 출처 내 미확보 (결측)** |
 
-- **4분기 연속 충족 여부**: **불충족 (2/4분기만 확보, 50% 결측)**
-- **합산 NTM EPS 산출 가능 여부**: **불가능**
+- **4분기 연속 충족률**: **50% (2개 분기 관측, 2개 분기 결측)**
+- **NTM 합산 산출 가능 여부**: **불가능** (`calc_f6.py` R01 연속성 검증 통과 불가)
 
-### 5.2 Alibaba (BABA, NYSE ADS 기준)
+### 4.2 Alibaba (NYSE `BABA` ADS 기준)
 
-| 분기 순번 | 대상 분기 | 기간종료일 | 예상 EPS | 통화 | 주식기준 | 회계기준 | 데이터 공급사 | 확보 상태 |
-|---|---|---|---|---|---|---|---|---|
-| **Q1 (차기 1Q)** | FY27 Q2 | 2026-09-30 | **10.98** (CNY) / **$1.63** (USD) | CNY/USD 혼재 | ADS (1:8) | 조정(Non-GAAP) | Yahoo / TipRanks | **확보 (통화 불일치)** |
-| **Q2 (차기 2Q)** | FY27 Q3 | 2026-12-31 | **14.87** (CNY) | CNY | ADS (1:8) | 조정(Non-GAAP) | Yahoo | **확보** |
-| **Q3 (차기 3Q)** | FY27 Q4 | 2027-03-31 | *미제공* | - | - | - | 없음 (결측) | **미확보 (결측)** |
-| **Q4 (차기 4Q)** | FY28 Q1 | 2027-06-30 | *미제공* | - | - | - | 없음 (결측) | **미확보 (결측)** |
+| 분기 | 대상 분기 | 기간종료일 | Yahoo 관측치 | TipRanks 관측치 | StockAnalysis 관측치 | 통화/단위 상태 | 확보 상태 |
+|---|---|---|---|---|---|---|---|
+| **1Q** | FY27 Q2 | 2026-09-30 | **10.98 CNY** | **$1.63 USD** | *미제공 (연간만)* | 통화 불일치 | **확보 (통화 상이)** |
+| **2Q** | FY27 Q3 | 2026-12-31 | **14.87 CNY** | *미제공* | *미제공 (연간만)* | CNY | **확보** |
+| **3Q** | FY27 Q4 | 2027-03-31 | *미제공* | *미제공* | *미제공 (연간만)* | - | **조사 출처 내 미확보 (결측)** |
+| **4Q** | FY28 Q1 | 2027-06-30 | *미제공* | *미제공* | *미제공 (연간만)* | - | **조사 출처 내 미확보 (결측)** |
 
-- **4분기 연속 충족 여부**: **불충족 (2/4분기만 확보, 50% 결측)**
-- **합산 NTM EPS 산출 가능 여부**: **불가능**
-
----
-
-## 6. 공급사 Forward P/E의 정의 원문 대조 및 NTM 증명 여부
-
-규칙 지침은 **"주가/EPS 역산 일치만으로 NTM을 증명하지 말 것"**을 명시하고 있다. 본 검증에서 역산 검증을 수행한 결과, 오히려 공급사의 지표가 NTM이 아님을 증명하는 결과가 도출되었다.
-
-1. **역산 일치의 진실**:
-   - Yahoo Finance의 TSM Forward P/E (19.56)는 주가($428.91)를 NTM 합산으로 나눈 것이 아니라, **차기 연간 EPS 추정치(+1y = $21.925)**로 정확히 나눈 값이다.
-   - 즉, `Forward P/E = Price / FY+1 Annual EPS`이며, 롤링 12개월(NTM)이 아니라 **차기 회계연도(Fiscal Year) Forward P/E**다.
-2. **공급사 공식 명칭 및 문서상의 정의**:
-   - Zacks: 공식 컬럼명이 **`P/E (F1)`**으로, 1차 회계연도 기준임을 직접 명시.
-   - Finviz: 공식 용어집에서 "estimated earnings per share (EPS) for the next fiscal year"로 정의.
-   - StockAnalysis: S&P Global의 컨센서스를 인용하며 해외 ADR의 경우 연간 가중치 근사치(`annual_weighted_proxy`)를 사용.
-3. **`vendor_forward_pe_verified_ntm` 라벨의 허구성**:
-   - baseline `observations.json`에서 Meta, NVIDIA, Alphabet 등에 부여된 `vendor_forward_pe_verified_ntm`은 이전 HTML 작성자의 주관적 설명을 구조화하면서 승계된 라벨일 뿐이다.
-   - 미국 12월 결산 기업의 경우 하반기로 갈수록 차기 회계연도(FY1)가 NTM과 기간상 유사해지는 착시가 있으나, 방법론적으로는 4분기 롤링 컨센서스 합산(`consensus_4q_sum`)이 아니다.
+- **4분기 연속 충족률**: **50% (2개 분기 관측, 2개 분기 결측)**
+- **StockAnalysis BABA**: 주석(CNY)과 EPS 수치(5.71) 간 모순으로 **`source_conflict`** 판정.
+- **NTM 합산 산출 가능 여부**: **불가능**
 
 ---
 
-## 7. 과거 기준시점(2026-09-02) 재현 가능성 검증
+## 5. 과거 기준시점(2026-09-02) 재현 가능성 분석
 
-지침은 **"현재 확보 자료와 2026-09-02 과거 기준시점 재현 가능 여부를 분리하고 오늘 값을 과거로 소급하지 말 것"**을 지시하고 있다.
-
-1. **Point-in-Time(시계열 스냅샷) 데이터 부재**:
-   - 무료 공개 웹 인터페이스(Yahoo Finance, StockAnalysis, Zacks, Finviz, TipRanks)는 실시간 데이터 서비스로서, 항상 **현재 조회 당일(2026-09-08)의 최신 스냅샷만 반환**한다.
-   - 2026-09-02 당시의 컨센서스 수치를 조회할 수 있는 공개 무료 API나 과거 이력 조회 파라미터는 제공되지 않는다.
-2. **소급 적용 금지 원칙 준수**:
-   - 2026-09-08에 수집된 주가($428.91 / $113.24)와 컨센서스를 2026-09-02 기준선으로 소급 입력하는 것은 `D-08`(과거 기록 보존) 및 `C-17`(기준일 분리) 원칙 위반이다.
-3. **기관용 데이터베이스와의 비교**:
-   - Bloomberg (기능: `TSM US Equity EE <GO>`), FactSet, LSEG Workspace(구 Refinitiv I/B/E/S) 등 유료 기관용 단말기에서만 과거 특정일(Point-in-Time) 기준의 4분기 컨센서스 스냅샷을 정확히 조회할 수 있으며, 무료 공개 웹 채널에서는 물리적으로 불가능하다.
+- **Point-in-Time 스냅샷 기능 부재**:
+  조사한 5개 무료 공개 웹 공급사(Yahoo Finance, StockAnalysis, TipRanks, Zacks, Finviz)는 모두 **현재 조회 시점의 유동(floating) 실시간 스냅샷만 반환**한다.
+- **소급 적용 금지 (`D-08`, `C-17`)**:
+  2026-09-08에 수집된 현재 주가나 컨센서스 수치를 2026-09-02 시점으로 소급 입력하는 것은 framework 계약상 엄격히 금지된다.
+- **유료 기관용 DB 커버리지 유보 (R5 반영)**:
+  FactSet, Bloomberg, LSEG I/B/E/S 등 기관용 유료 서비스의 경우 과거 특정일(Point-in-Time) 컨센서스 시계열을 제공하는 기능이 통상 존재하지만, TSMC 및 Alibaba의 2026-09-02 당시 4분기 커버리지를 직접 실사하지 않았으므로 데이터 존재를 확정적으로 단정하지 않고 **미확인 상태**로 둔다.
 
 ---
 
-## 8. 자동 수집 가능성 및 파이프라인 제언
+## 6. 조사 범위 한정 결론 및 C-13 정책 영향 (R5 반영)
 
-1. **무료 공개 자동 수집 파이프라인의 한계**:
-   - yfinance: 안정적으로 수집 가능하나 제공 분기가 2개 분기에 불과해 4분기 NTM 합산 불가능.
-   - StockAnalysis: 분기 컨센서스가 유료(Pro)로 차단되어 무료 자동 수집 불가.
-   - TipRanks / Zacks: Cloudflare 봇 방어 및 스크래핑 차단 정책이 적용되어 헤드리스 환경에서 지속적이고 안정적인 자동화 곤란.
-2. **파이프라인 구축 방향 제언**:
-   - 정량적 4분기 NTM 합산(`consensus_4q_sum`)을 고수할 경우, 공개 웹 스크래핑 대신 합법적인 라이선스를 가진 유료 재무 데이터 API(FMP 유료 플랜, LSEG, FactSet 등)를 공식 연동해야 한다.
-   - 공개 무료 데이터만을 활용하는 오픈소스 하네스 환경에서는 "4분기 롤링 컨센서스 합산"을 상장사 F6의 절대적 단일 기준으로 강제하는 데 구조적 한계가 존재한다.
+### 6.1 조사 범위 한정 결론
+1. **조사 출처 내 미확보**: 본 조사가 확인한 6개 공개 출처(Yahoo Finance, StockAnalysis, TipRanks, Zacks, Finviz, 회사 IR) 범위 내에서 TSMC와 Alibaba의 **미발표 4분기 연속 EPS 컨센서스는 확보되지 않았다 (미확보/접근제한)**. 이는 해당 출처 내에서의 관측 실패 및 접근 제약을 의미하며, 금융 시장 전체에 데이터가 부재하다는 전칭 주장이 아니다.
+2. **공급사 PER 지표의 성격**: Zacks와 Finviz는 공식 정의상 차기 회계연도(FY1) 기준이며, Yahoo Finance와 StockAnalysis는 기간 정의 공식 문서가 미확인(`unknown`) 상태이므로, 공급사 Forward P/E 필드명만으로 NTM 적격성을 입증할 수 없다.
+3. **BABA 통화 충돌**: StockAnalysis BABA의 경우 주석과 수치 간 충돌로 인해 `source_conflict` 상태이다.
 
----
-
-## 9. C-13 규칙 결정에 미치는 영향 및 권고
-
-`open-items.md`에서 지적된 바와 같이, TSMC의 기존 근사치(19.4)는 F6 점수 구간 경계인 **20**에 불과 3% 이내로 근접해 있어 산출 방식 변경에 매우 민감하다.
-
-| 선택지 | 동작 및 결과 | 영향 분석 |
+### 6.2 C-13 규칙 결정 영향 분석
+| 선택지 | 산출기(`calc_f6.py`) 동작 | 정책적 의미 및 영향 |
 |---|---|---|
-| **`reject_proxy`**<br>(근사치 거부, 엄격한 NTM 요구) | TSMC·Alibaba 모두 F6를 **`pending_data` (자료 대기)**로 확정.<br>공식 점수 산출에서 제외됨. | - 공개 출처에서 4분기 NTM이 실제로 부재하므로 논리적으로 가장 무결함.<br>- 그러나 유료 API 도입 전까지 두 대형 기업이 영구히 순위에서 배제되는 운영상 결손 발생. |
-| **`accept_proxy_with_flag`**<br>(근사치 조건부 수용) | 기존 baseline의 `annual_weighted_proxy` 수치(TSMC 19.4 → 0점, Alibaba 16.7 → 0점)를 **참고 정밀도 경고 플래그와 함께 채점에 사용**. | - TSMC의 F6가 0점으로 산출되어 종합 조정점수 14점으로 완료 가능.<br>(단 Alibaba는 ⑨ 적자깊이 G1 자료 대기로 여전히 순위 외)<br>- 경계값 20 근접 경고(⚠️ 3% 이내)를 병기하여 데이터의 근사 한계를 투명하게 공개함. |
+| **`reject_proxy`**<br>(근사치 거부) | TSMC·Alibaba 모두 4분기 연속 컨센서스 부재로 인해 F6가 **`pending_data` (자료 대기)**로 확정됨. | 엄격한 4분기 NTM 계약을 관철하여 데이터 무결성을 유지하나, 공개 출처 기반 실행에서는 두 기업이 순위에 편입되지 못함. |
+| **`accept_proxy_with_flag`**<br>(근사치 조건부 수용) | baseline에 기록된 `annual_weighted_proxy` 수치(TSMC 19.4 → 0점, Alibaba 16.7 → 0점)를 **참고 정밀도 경고 플래그와 함께 채점에 사용**. | TSMC(조정총점 14)의 채점이 완료될 수 있음 (Alibaba는 ⑨ G1 자료 대기로 여전히 미완료). 단, TSMC 19.4는 구간 경계(20) 대비 3% 이내 주의 대상임. |
 
-*주의: 본 보고서는 작업자로서 C-13 결정을 임의로 확정하거나 규칙을 변경하지 않으며, 순수 사실 증거만을 제공하여 사용자의 정책 결정을 지원한다.*
-
----
-
-## 10. 산출물 및 생성 파일 안내
-
-- **검증 스크립트**: `validation/c13-data-01/verify_ntm_data.py` (한국어 첫 줄 주석 준수, 자체 실행 및 테스트 완료)
-- **원자료 증거 데이터**: `validation/c13-data-01/evidence.json` (공급사별 필드, 4분기 충족표, 재현성 분석 구조화 JSON)
-- **종합 보고서**: `validation/c13-data-01/REPORT.md` (본 문서)
+*주의: 본 보고서는 사실 검증 증거만을 제공하며, C-13 선택지 확정이나 기업 순위 편입은 사용자의 정책 결정 영역으로 남겨둔다.*
