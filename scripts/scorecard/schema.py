@@ -275,6 +275,8 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
             _expect_keys(period, ["start", "end"], f"{where}.period")
             _expect_date(period["start"], f"{where}.period.start")
             _expect_date(period["end"], f"{where}.period.end")
+            # 존재만으로는 부족하다. 역전된 기간은 TTM·분기 계산의 분모를 조용히 망가뜨린다.
+            _require(period["start"] <= period["end"], f"{where}.period: start 가 end 보다 뒤임 ({period['start']} > {period['end']})")
         basis = item.get("basis")
         _require(basis is None or isinstance(basis, dict), f"{where}: basis 는 object")
         _require(isinstance(item["source_id"], str) and item["source_id"], f"{where}: source_id 필요")

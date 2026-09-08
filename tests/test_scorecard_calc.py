@@ -480,6 +480,10 @@ class TestReviewRegressions(unittest.TestCase):
         check([{**obs("fcf_ttm", -1.0), "period": {"start": "2025-07-01", "end": "2026-06-30"}}])
         check([obs("fcf_ttm", -1.0, status="legacy_unverified")])
         check([obs("cash", 1.0)])  # 스톡 지표는 as_of 로 충분
+        # 기간이 있기만 하면 안 된다. 역전된 기간은 분모를 조용히 망가뜨린다
+        with self.assertRaises(SchemaError):
+            check([{**obs("fcf_ttm", -1.0), "period": {"start": "2026-06-30", "end": "2025-07-01"}}])
+        check([{**obs("fcf_ttm", -1.0), "period": {"start": "2026-06-30", "end": "2026-06-30"}}])  # 같은 날은 허용
 
     def test_review3_approved_by_must_be_nonblank(self):
         from scorecard.schema import validate_approval
