@@ -16,11 +16,17 @@ COMPANY_TYPES = {"소비자", "업무", "거래", "부품", "소비자·업무",
 OBSERVATION_STATUSES = {
     "verified",
     "legacy_unverified",
+    "not_applicable",   # 산식 적용 대상이 아님(예: FCF 양수라 런웨이 계산 안 함). 사유를 note 에 남긴다
     "not_disclosed",
     "collection_failed",
     "source_conflict",
     "incompatible_basis",
     "parse_failed",
+}
+# B: 기간이 있어야 의미가 서는 흐름(flow) 지표. 신규 verified 관측은 period 를 요구한다.
+PERIOD_REQUIRED_METRICS = {
+    "revenue_ttm", "operating_income_ttm", "operating_margin_ttm",
+    "ocf_ttm", "capex_ttm", "fcf_ttm", "net_borrowing_ttm",
 }
 OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
 JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs"}
@@ -258,8 +264,13 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
             _require(value is None or isinstance(value, str), f"{where}: {metric} 값은 문자열 또는 null")
         if value is None:
             _require(item["status"] != "verified", f"{where}: 값이 null 이면 status 는 verified 일 수 없음")
+        if item["status"] == "not_applicable":
+            _require(value is None, f"{where}: not_applicable 관측은 값을 가지지 않음")
+            _require(str(item.get("note") or "").strip(), f"{where}: not_applicable 은 적용 제외 사유를 note 에 남겨야 함")
         _require(item["unit"] == METRICS[metric]["unit"], f"{where}: unit {item['unit']!r} != {METRICS[metric]['unit']!r}")
         period = item.get("period")
+        if item["status"] == "verified" and metric in PERIOD_REQUIRED_METRICS and period is None:
+            _require(False, f"{where}: {metric} 은 흐름 지표라 verified 관측에 period(start·end)가 필요함 — 과거 이관분은 legacy_unverified 로 두고 날짜를 지어내지 않는다")
         if period is not None:
             _expect_keys(period, ["start", "end"], f"{where}.period")
             _expect_date(period["start"], f"{where}.period.start")
@@ -408,6 +419,8 @@ def validate_approval(payload: Any, run_id: str | None = None) -> dict[str, Any]
     _require(payload["schema"] == "scorecard.approval/1", "approval.json: schema 불일치")
     if run_id is not None:
         _require(payload["run_id"] == run_id, "approval.json: run_id 불일치")
+    _require(isinstance(payload["approved_by"], str) and payload["approved_by"].strip(),
+             f"approval.json: approved_by 는 비어 있지 않은 문자열이어야 함 ({payload['approved_by']!r})")
     _expect_date(payload["approved_at"], "approval.json.approved_at")
     _expect_keys(payload["hashes"], ["rules", "observations", "judgments", "run", "results", "draft"], "approval.hashes")
     return payload

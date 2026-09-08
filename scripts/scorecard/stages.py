@@ -205,6 +205,11 @@ def current_hashes(slug: str) -> dict[str, str]:
 def approve(slug: str, *, approved_by: str, note: str | None = None) -> Path:
     from validate_report_contract import validate_contract
 
+    # 승인자는 사람의 식별자다. 빈 값이나 자동 생성 이름으로 승인 기록을 만들지 않는다 (D-02).
+    if not isinstance(approved_by, str) or not approved_by.strip():
+        raise SchemaError("승인자(--by)는 비어 있지 않은 문자열이어야 한다. 임의의 승인자를 만들지 말고 실제 사용자 식별자를 쓴다")
+    approved_by = approved_by.strip()
+
     result = validate_contract(slug, require_html=False, require_price_chart=False, check_html_if_present=False, check_price_chart_if_present=False)
     if not result.ok:
         raise SchemaError("승인 전 계약 검증 실패: " + "; ".join(result.errors[:5]))

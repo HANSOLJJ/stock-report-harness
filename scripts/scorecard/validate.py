@@ -155,6 +155,7 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     draft_hash = sha256_file(paths.draft)
     if frontmatter_value(vfm, "draft_hash") != draft_hash:
         result.error("review draft_hash 가 현재 draft 와 다름 — 초안이 바뀌었으므로 리뷰 무효")
+    review_errors_before = len(result.errors)
     area_rows = _table_rows(_section(vbody, "검토 영역"))
     area_labels = {label for _, label, _ in REVIEW_AREAS}
     seen_areas: dict[str, str] = {}
@@ -188,7 +189,8 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"체크리스트 {qid} 가 fail 인데 review status 가 pass")
         if status == "pass" and not basis.strip():
             result.error(f"체크리스트 {qid} 근거 없음 (not_applicable 도 사유 필요)")
-    result.check("review 4-area + checklist structure")
+    if len(result.errors) == review_errors_before:
+        result.check("review 4-area + checklist structure")
 
     # approval / html / history (build gate) -------------------------------
     approval_path = d / "approval.json"

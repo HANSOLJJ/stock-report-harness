@@ -31,7 +31,7 @@
 
 | 객체 | 파일 | 필수 필드 |
 |---|---|---|
-| 관측 | observations.json items | observation_id, company_id, metric(카탈로그 `METRICS`), value, unit, as_of, kind, source_id, status(verified/legacy_unverified/not_disclosed/collection_failed/source_conflict/incompatible_basis/parse_failed), basis, raw, note |
+| 관측 | observations.json items | observation_id, company_id, metric(카탈로그 `METRICS`), value, unit, as_of, kind, source_id, status(verified / legacy_unverified / not_applicable / not_disclosed / collection_failed / source_conflict / incompatible_basis / parse_failed), basis, raw, note |
 | 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs), score, inputs, evidence(비어 있으면 안 됨), reviewer, reviewed_at, status(new/carried), carried_from |
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
@@ -49,6 +49,7 @@
 | F6 상장 구간·경계·EPS 4분기·기준 정합 | `calc_f6._listed`, `rules.f6_band/f6_boundary_flag` | T-01, T-02, T-03, R01 |
 | F6 비상장 배수·정성 점수 | `calc_f6._private` | `test_private_multiples_and_manual_score` |
 | F9 G1~G4, 정책·결정 오버라이드 | `calc_f9.compute_f9`, `_g4` | T-07(`baseline_import.standard_fcf`), T-09, T-10, T-11, R02~R04 |
+| 관측 상태 의미(적용 제외 ≠ 미공시), 흐름 지표 period, 승인자 문자열 | `schema.validate_observations`, `validate_approval` | `TestReviewRegressions` |
 | 합산·동점 순위·미완료 제외 | `aggregate` | T-12 |
 | 결정론·해시 | `engine.compute/load_results/recompute_matches` | validator "results deterministic recompute" |
 | 기준선 이관 검산 (T-17) | `baseline_import` + `import-report.md` MD 대조 | 14사 match |
@@ -110,7 +111,8 @@ HTML 검증(`scorecard.validate._validate_html`): generator 메타 `stock-report
 
 | 검증 | 방법 |
 |---|---|
-| T-01~T-12 | `tests/test_scorecard_calc.py` |
+| T-01~T-07, T-09~T-12 | `tests/test_scorecard_calc.py` (35건) |
+| T-08 (YTD·분기 혼재, 정정 공시, 연결/세그먼트 범위) | **미구현.** 이관 자료에 해당 사례가 없어 아직 테스트가 없다. 신규 재무 관측을 직접 수집하기 전에 채운다 |
 | T-13 | 검증기: 체크리스트 23행·4 영역·검토자 없는 pass 차단 |
 | T-14 | 검증기: review results_hash/draft_hash, approval hashes 비교 |
 | T-15 | `render_csv.append_history` 중복 키 건너뜀 |

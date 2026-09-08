@@ -145,8 +145,11 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 
 ## 완료/차단 조건
 
-- 완료: results.json 결정론 검증 통과, draft·review pass, 사용자 승인(approval.json) 해시 일치, HTML·history.csv 생성
-- 차단: 외부 자료 미확보가 반복되거나 규칙 결정이 필요한데 사용자 결정이 없는 경우 `awaiting_user`
+완료는 results.json 결정론 검증 통과, draft 와 review pass, 사용자 승인(approval.json) 해시 일치, HTML·history.csv 생성이다.
+
+기업이 순위에 못 들어가는 사유는 factor 상태로 구분한다. 규칙 결정이 없으면 `needs_rule_decision`, 사람의 판정이 없으면 `needs_judgment`, 관측이 없거나 수집·파싱에 실패했으면 `pending_data` 다. 셋 다 0점으로 채우지 않고 공식 순위에서만 제외한다.
+
+`awaiting_user` 는 이 셋과 다르다. 리뷰가 pass 이고 계산이 끝났는데 사용자 승인이 없거나, 승인 뒤 규칙·자료·판단·결과·초안 중 하나가 바뀌어 승인이 무효가 된 상태를 가리키며 build 단계에서만 나온다.
 """
     return fm + "\n" + body.lstrip("\n")
 

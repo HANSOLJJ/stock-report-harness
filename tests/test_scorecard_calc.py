@@ -456,6 +456,41 @@ class TestReviewRegressions(unittest.TestCase):
         with self.assertRaises(SchemaError):
             validate_observations(dup, {"acme": company()}, "r")
 
+    def test_review3_not_applicable_needs_reason_and_no_value(self):
+        # A: 적용 제외와 실제 미공시를 한 상태로 묶지 않는다
+        from scorecard.schema import validate_observations
+
+        ok = {**obs("runway_years", None, status="not_applicable"), "note": "TTM FCF 흑자라 산식 적용 대상 아님"}
+        validate_observations({"schema": "scorecard.observations/1", "run_id": "r", "items": [ok]}, {"acme": company()}, "r")
+        for bad in ({**ok, "note": ""}, {**ok, "value": 3.0}):
+            with self.assertRaises(SchemaError):
+                validate_observations({"schema": "scorecard.observations/1", "run_id": "r", "items": [bad]}, {"acme": company()}, "r")
+
+    def test_review3_verified_flow_metric_requires_period(self):
+        # B: 신규 재무 흐름 지표는 기간 없이 통과하면 안 된다. 과거 이관분은 예외
+        from scorecard.schema import validate_observations
+
+        def check(items):
+            validate_observations({"schema": "scorecard.observations/1", "run_id": "r", "items": items}, {"acme": company()}, "r")
+
+        with self.assertRaises(SchemaError):
+            check([obs("fcf_ttm", -1.0)])
+        with self.assertRaises(SchemaError):
+            check([obs("operating_margin_ttm", -0.1)])
+        check([{**obs("fcf_ttm", -1.0), "period": {"start": "2025-07-01", "end": "2026-06-30"}}])
+        check([obs("fcf_ttm", -1.0, status="legacy_unverified")])
+        check([obs("cash", 1.0)])  # 스톡 지표는 as_of 로 충분
+
+    def test_review3_approved_by_must_be_nonblank(self):
+        from scorecard.schema import validate_approval
+
+        base = {"schema": "scorecard.approval/1", "run_id": "r", "approval_id": "x", "approved_by": "noble",
+                "approved_at": "2026-09-08", "hashes": {k: "h" for k in ("rules", "observations", "judgments", "run", "results", "draft")}}
+        validate_approval(dict(base), "r")
+        for bad in ("", "   ", None, 7):
+            with self.assertRaises(SchemaError):
+                validate_approval({**base, "approved_by": bad}, "r")
+
     def test_r06_empty_evidence_rejected(self):
         item = judgment("F1", "score", score=5)
         for bad in ([], [""], ["  "]):
