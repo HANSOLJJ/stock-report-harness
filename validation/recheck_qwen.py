@@ -17,7 +17,7 @@ sys.path.insert(0, str(WORKER / "scripts"))
 from scorecard.baseline_import import extract_js_array, strip_html
 from scorecard.inputs import ObsLookup
 from scorecard.rules import load_rules
-from scorecard.schema import OBSERVATION_STATUSES, validate_observations
+from scorecard.schema import OBSERVATION_STATUSES, SchemaError, validate_observations
 
 
 def read_json(path):
@@ -73,7 +73,12 @@ def audit():
     boundary = {str(per): rules.f6_boundary_flag(per) for per in (19.4, 89.0, 27.5)}
     sample = dict(next(o for o in items if o["metric"] == "fcf_ttm" and o["value"] is not None))
     sample["status"] = "verified"
-    accepted = validate_observations({"schema": "scorecard.observations/1", "run_id": "audit", "items": [sample]}, registry, "audit")
+    sample.pop("period", None)
+    try:
+        accepted = bool(validate_observations({"schema": "scorecard.observations/1", "run_id": "audit", "items": [sample]}, registry, "audit"))
+        period_error = None
+    except SchemaError as exc:
+        accepted, period_error = False, str(exc)
     source_map = read_json(WORKER / "scorecard/runs/ai-scorecard-2026-09-baseline/sources.json")
     report = {
         "md_ranking_rows": len(md_rows), "score_mismatches": mismatches,
@@ -81,6 +86,7 @@ def audit():
         "statuses": dict(Counter(o["status"] for o in items)),
         "missing_period": sum(not o.get("period") for o in items),
         "verified_fcf_without_period_accepted": bool(accepted),
+        "verified_fcf_without_period_error": period_error,
         "trigger_keys": sorted(set().union(*(set(t) for t in triggers))),
         "trigger_html_match": all([t["title"], t["why"], t["impact_raw"]] == [strip_html(str(c)) for c in row]
                                   for t, row in zip(triggers, arrays["TRIG"])) and len(triggers) == len(arrays["TRIG"]),
