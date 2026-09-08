@@ -1,0 +1,22 @@
+{
+  "schema": "scorecard.companies/1",
+  "as_of": "2026-09-02",
+  "note": "v1.5 기준선 14개사. company_id 는 안정 키이며 표시명·이모지·별칭은 키로 쓰지 않는다. 상장 여부는 기준일 검증 사실이며 IPO 예정만으로 바꾸지 않는다.",
+  "reference_policy": "참조 기업(Moonshot 등)은 모집단이 아니며 카드·순위에 넣지 않는다(C-18). 필요하면 reference: true 로 등록하고 실행별로 포함 여부를 고정한다.",
+  "companies": [
+    {"company_id": "alphabet", "display_name": "Alphabet / Google", "aliases": ["Alphabet", "Google", "Alphabet/Google"], "type": "소비자", "listed": true, "ticker": "GOOGL", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Alphabet 연결"},
+    {"company_id": "amazon", "display_name": "Amazon / AWS", "aliases": ["Amazon", "AWS", "Amazon/AWS"], "type": "소비자·업무", "listed": true, "ticker": "AMZN", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Amazon 연결"},
+    {"company_id": "microsoft", "display_name": "Microsoft", "aliases": ["MS", "MSFT"], "type": "업무", "listed": true, "ticker": "MSFT", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Microsoft 연결"},
+    {"company_id": "meta", "display_name": "Meta", "aliases": ["Meta Platforms"], "type": "소비자", "listed": true, "ticker": "META", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Meta 연결"},
+    {"company_id": "tsmc", "display_name": "TSMC", "aliases": ["TSMC 🆕", "Taiwan Semiconductor"], "type": "부품", "listed": true, "ticker": "TSM", "exchange": "NYSE", "share_basis": "adr", "adr_ratio": 5, "reporting_currency": "TWD", "scope": "TSMC 연결 (ADR 1주 = 보통주 5주, 재무 TWD)"},
+    {"company_id": "anthropic", "display_name": "Anthropic", "aliases": [], "type": "업무", "listed": false, "ticker": null, "exchange": null, "share_basis": "private", "adr_ratio": null, "reporting_currency": "USD", "scope": "Anthropic 비상장 (2026-10 IPO 예상은 사실 확인 전까지 반영하지 않음)"},
+    {"company_id": "alibaba", "display_name": "Alibaba", "aliases": ["BABA"], "type": "소비자", "listed": true, "ticker": "BABA", "exchange": "NYSE", "share_basis": "ads", "adr_ratio": 8, "reporting_currency": "CNY", "scope": "Alibaba 연결 (ADS, 재무 CNY — EPS 통화 혼재 주의)"},
+    {"company_id": "apple", "display_name": "Apple", "aliases": ["🍎 Apple", "AAPL"], "type": "소비자", "listed": true, "ticker": "AAPL", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Apple 연결"},
+    {"company_id": "nvidia", "display_name": "NVIDIA", "aliases": ["Nvidia", "NVDA"], "type": "부품", "listed": true, "ticker": "NVDA", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "NVIDIA 연결"},
+    {"company_id": "palantir", "display_name": "Palantir", "aliases": ["PLTR"], "type": "업무", "listed": true, "ticker": "PLTR", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Palantir 연결"},
+    {"company_id": "spacex-xai", "display_name": "SpaceX + xAI", "aliases": ["SpaceX", "SpaceX+xAI", "SpaceX 🆕", "xAI"], "type": "소비자·업무", "listed": true, "ticker": null, "exchange": null, "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "SpaceX + xAI 합산 평가 범위. Tesla 와는 분리(관계사). 2026-06 상장 기록이나 티커·거래소는 원문에 없어 미확인", "note": "ticker 는 검증된 출처 확보 후 입력"},
+    {"company_id": "tesla", "display_name": "Tesla", "aliases": ["TSLA"], "type": "소비자", "listed": true, "ticker": "TSLA", "exchange": "NASDAQ", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Tesla 연결 (SpaceX 관계사 자산은 자체 자산으로 세지 않음)"},
+    {"company_id": "oracle", "display_name": "Oracle", "aliases": ["Oracle 🆕", "ORCL"], "type": "업무", "listed": true, "ticker": "ORCL", "exchange": "NYSE", "share_basis": "common", "adr_ratio": null, "reporting_currency": "USD", "scope": "Oracle 연결"},
+    {"company_id": "openai", "display_name": "OpenAI", "aliases": [], "type": "소비자", "listed": false, "ticker": null, "exchange": null, "share_basis": "private", "adr_ratio": null, "reporting_currency": "USD", "scope": "OpenAI 비상장"}
+  ]
+}

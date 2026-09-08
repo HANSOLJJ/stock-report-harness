@@ -1,0 +1,413 @@
+# scorecard 데이터 계약(companies·rules·observations·judgments·run·approval)의 엄격 파서와 정규 해시 유틸
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import re
+from pathlib import Path
+from typing import Any, Iterable
+
+FACTOR_IDS: tuple[str, ...] = ("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9")
+MOAT_FACTORS: tuple[str, ...] = ("F1", "F2", "F3", "F4", "F5")
+TRAP_FACTORS: tuple[str, ...] = ("F6", "F7", "F8", "F9")
+
+COMPANY_TYPES = {"소비자", "업무", "거래", "부품", "소비자·업무", "혼합"}
+OBSERVATION_STATUSES = {
+    "verified",
+    "legacy_unverified",
+    "not_disclosed",
+    "collection_failed",
+    "source_conflict",
+    "incompatible_basis",
+    "parse_failed",
+}
+OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
+JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs"}
+JUDGMENT_STATUSES = {"new", "carried"}
+TRI = {"pass", "partial", "fail", "unknown"}
+YES_NO = {"yes", "no", "unknown"}
+PASS_FAIL = {"pass", "fail", "unknown"}
+
+# factor별 허용 판단 종류. score는 정성 factor와 비상장 F6, 그리고 승계(carried) 전용 예외에만 허용한다.
+FACTOR_JUDGMENT_KINDS: dict[str, set[str]] = {
+    "F1": {"score"},
+    "F2": {"paths", "score"},
+    "F3": {"criteria"},
+    "F4": {"score"},
+    "F5": {"grade"},
+    "F6": {"score"},
+    "F7": {"matrix", "score"},
+    "F8": {"score"},
+    "F9": {"gate_inputs"},
+}
+
+# 지표 카탈로그. unit은 표시·검증용이고 number 지표만 계산에 쓴다.
+METRICS: dict[str, dict[str, str]] = {
+    "price": {"unit": "USD/share", "type": "number"},
+    "market_cap": {"unit": "USD", "type": "number"},
+    "ntm_eps": {"unit": "USD/share", "type": "number"},
+    "ntm_per": {"unit": "ratio", "type": "number"},
+    "ttm_per": {"unit": "ratio", "type": "number"},
+    "nonop_share": {"unit": "ratio", "type": "number"},
+    "ps_ratio": {"unit": "ratio", "type": "number"},
+    "revenue_ttm": {"unit": "USD", "type": "number"},
+    "operating_income_ttm": {"unit": "USD", "type": "number"},
+    "operating_margin_ttm": {"unit": "ratio", "type": "number"},
+    "ocf_ttm": {"unit": "USD", "type": "number"},
+    "capex_ttm": {"unit": "USD", "type": "number"},
+    "fcf_ttm": {"unit": "USD", "type": "number"},
+    "cash": {"unit": "USD", "type": "number"},
+    "undrawn_credit": {"unit": "USD", "type": "number"},
+    "net_cash": {"unit": "USD", "type": "number"},
+    "net_borrowing_ttm": {"unit": "USD", "type": "number"},
+    "debt_ebitda": {"unit": "ratio", "type": "number"},
+    "credit_rating": {"unit": "text", "type": "text"},
+    "cds_5y_bp": {"unit": "bp", "type": "number"},
+    "offbalance_B": {"unit": "USD", "type": "number"},
+    "offbalance_note": {"unit": "text", "type": "text"},
+    "contracted_revenue": {"unit": "USD", "type": "number"},
+    "runway_years": {"unit": "years", "type": "number"},
+    "post_money_valuation": {"unit": "USD", "type": "number"},
+    "arr": {"unit": "USD", "type": "number"},
+    "ttm_revenue_est": {"unit": "USD", "type": "number"},
+    "cumulative_raised": {"unit": "USD", "type": "number"},
+    "quarter_note": {"unit": "text", "type": "text"},
+}
+
+NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
+
+
+class SchemaError(ValueError):
+    """구조화 파일이 계약을 어길 때 발생. 임의 해석으로 통과시키지 않는다."""
+
+
+def canonical_json(obj: Any) -> str:
+    return json.dumps(obj, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def sha256_obj(obj: Any) -> str:
+    return sha256_text(canonical_json(obj))
+
+
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _reject_constant(token: str) -> Any:
+    # json 모듈은 기본적으로 NaN/Infinity 를 받아들인다. 계산 입력에 비유한 값을 허용하지 않는다 (R05).
+    raise SchemaError(f"JSON 에 비유한 숫자 {token} 은 허용하지 않음")
+
+
+def load_json_strict(path: Path) -> Any:
+    if not path.is_file():
+        raise SchemaError(f"파일 없음: {path}")
+    try:
+        return json.loads(path.read_text(encoding="utf-8"), parse_constant=_reject_constant)
+    except json.JSONDecodeError as exc:
+        raise SchemaError(f"JSON 파싱 실패: {path}: {exc}") from exc
+
+
+def write_json(path: Path, obj: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+
+
+def _require(cond: bool, message: str) -> None:
+    if not cond:
+        raise SchemaError(message)
+
+
+def _expect_keys(obj: Any, required: Iterable[str], where: str, optional: Iterable[str] = ()) -> dict[str, Any]:
+    _require(isinstance(obj, dict), f"{where}: object 여야 함")
+    required = list(required)
+    optional = list(optional)
+    missing = [key for key in required if key not in obj]
+    _require(not missing, f"{where}: 필수 키 누락 {missing}")
+    unknown = [key for key in obj if key not in required and key not in optional]
+    _require(not unknown, f"{where}: 알 수 없는 키 {unknown}")
+    return obj
+
+
+def _is_number(value: Any) -> bool:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+    return math.isfinite(value)
+
+
+def _expect_date(value: Any, where: str, allow_none: bool = False) -> None:
+    if value is None and allow_none:
+        return
+    _require(isinstance(value, str) and bool(DATE_RE.match(value)), f"{where}: YYYY-MM-DD 날짜 필요 ({value!r})")
+
+
+# ------------------------------------------------------------------ companies
+
+def validate_companies(payload: Any) -> dict[str, dict[str, Any]]:
+    _expect_keys(payload, ["schema", "as_of", "companies"], "companies.json", optional=["note", "reference_policy"])
+    _require(payload["schema"] == "scorecard.companies/1", "companies.json: schema 불일치")
+    _expect_date(payload["as_of"], "companies.json.as_of")
+    _require(isinstance(payload["companies"], list) and payload["companies"], "companies.json: companies 비어 있음")
+    out: dict[str, dict[str, Any]] = {}
+    for idx, item in enumerate(payload["companies"]):
+        where = f"companies[{idx}]"
+        _expect_keys(
+            item,
+            ["company_id", "display_name", "aliases", "type", "listed", "ticker", "exchange", "share_basis", "adr_ratio", "reporting_currency", "scope"],
+            where,
+            optional=["reference", "note", "status"],
+        )
+        cid = item["company_id"]
+        _require(isinstance(cid, str) and bool(ID_RE.match(cid)), f"{where}: company_id 형식 오류 {cid!r}")
+        _require(cid not in out, f"{where}: company_id 중복 {cid!r}")
+        _require(isinstance(item["display_name"], str) and item["display_name"].strip(), f"{where}: display_name 필요")
+        _require(isinstance(item["aliases"], list) and all(isinstance(a, str) for a in item["aliases"]), f"{where}: aliases 는 문자열 배열")
+        _require(item["type"] in COMPANY_TYPES, f"{where}: type {item['type']!r} 는 {sorted(COMPANY_TYPES)} 중 하나")
+        _require(isinstance(item["listed"], bool), f"{where}: listed 는 bool")
+        _require(item["ticker"] is None or isinstance(item["ticker"], str), f"{where}: ticker 는 문자열 또는 null")
+        _require(item["share_basis"] in {"common", "adr", "ads", "private"}, f"{where}: share_basis 오류")
+        _require(item["adr_ratio"] is None or _is_number(item["adr_ratio"]), f"{where}: adr_ratio 숫자 또는 null")
+        _require(isinstance(item["reporting_currency"], str), f"{where}: reporting_currency 필요")
+        _require(isinstance(item.get("reference", False), bool), f"{where}: reference 는 bool")
+        out[cid] = item
+    return out
+
+
+def resolve_company_id(name: str, companies: dict[str, dict[str, Any]]) -> str | None:
+    key = re.sub(r"\s+", " ", name).strip()
+    for cid, company in companies.items():
+        if key == company["display_name"] or key in company["aliases"]:
+            return cid
+    lowered = key.lower()
+    for cid, company in companies.items():
+        if lowered == company["display_name"].lower() or lowered in {a.lower() for a in company["aliases"]}:
+            return cid
+    return None
+
+
+# ------------------------------------------------------------------ rules
+
+def validate_rules(payload: Any) -> dict[str, Any]:
+    _expect_keys(
+        payload,
+        ["schema", "rule_version", "status", "source", "scoring", "factors", "policies", "checklist", "decisions"],
+        "rules.json",
+        optional=["note"],
+    )
+    _require(payload["schema"] == "scorecard.rules/1", "rules.json: schema 불일치")
+    _require(payload["status"] in {"active", "draft", "retired"}, "rules.json: status 오류")
+    factors = payload["factors"]
+    _require(set(factors.keys()) == set(FACTOR_IDS), f"rules.json: factors 키는 {FACTOR_IDS} 여야 함")
+    for fid, spec in factors.items():
+        _require(isinstance(spec, dict) and "range" in spec and "mode" in spec and "label" in spec, f"rules.json.factors.{fid}: label/range/mode 필요")
+        lo, hi = spec["range"]
+        _require(_is_number(lo) and _is_number(hi) and lo <= hi, f"rules.json.factors.{fid}: range 오류")
+    bands = payload["policies"]["f6"]["bands"]
+    _require(isinstance(bands, list) and bands[-1]["upper"] is None, "rules.json: f6 bands 마지막은 upper null")
+    uppers = [b["upper"] for b in bands[:-1]]
+    _require(uppers == sorted(uppers), "rules.json: f6 bands upper 는 오름차순")
+    for item in payload["checklist"]:
+        _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
+    ids = [d["id"] for d in payload["decisions"]]
+    _require(len(ids) == len(set(ids)), "rules.json: decisions id 중복")
+    for d in payload["decisions"]:
+        _expect_keys(d, ["id", "status", "summary"], f"rules.decisions[{d.get('id')}]", optional=["recommendation", "affects", "choices", "blocking"])
+        _require(d["status"] in {"documented", "pending", "resolved"}, f"rules.decisions[{d['id']}]: status 오류")
+    return payload
+
+
+# ------------------------------------------------------------------ observations
+
+def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], run_id: str | None = None) -> list[dict[str, Any]]:
+    _expect_keys(payload, ["schema", "run_id", "items"], "observations.json", optional=["note", "as_of"])
+    _require(payload["schema"] == "scorecard.observations/1", "observations.json: schema 불일치")
+    if run_id is not None:
+        _require(payload["run_id"] == run_id, f"observations.json: run_id 불일치 {payload['run_id']!r} != {run_id!r}")
+    _require(isinstance(payload["items"], list), "observations.json: items 배열 필요")
+    seen: set[str] = set()
+    items: list[dict[str, Any]] = []
+    for idx, item in enumerate(payload["items"]):
+        where = f"observations[{idx}]"
+        _expect_keys(
+            item,
+            ["observation_id", "company_id", "metric", "value", "unit", "as_of", "kind", "source_id", "status"],
+            where,
+            optional=["period", "basis", "raw", "note"],
+        )
+        oid = item["observation_id"]
+        _require(isinstance(oid, str) and oid and oid not in seen, f"{where}: observation_id 누락/중복 {oid!r}")
+        seen.add(oid)
+        _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
+        metric = item["metric"]
+        _require(metric in METRICS, f"{where}: 알 수 없는 metric {metric!r}")
+        _require(item["status"] in OBSERVATION_STATUSES, f"{where}: status {item['status']!r} 오류")
+        _require(item["kind"] in OBSERVATION_KINDS, f"{where}: kind {item['kind']!r} 오류")
+        _expect_date(item["as_of"], f"{where}.as_of")
+        value = item["value"]
+        if METRICS[metric]["type"] == "number":
+            _require(value is None or _is_number(value), f"{where}: {metric} 값은 숫자 또는 null")
+            if metric in NON_NEGATIVE_METRICS and value is not None:
+                _require(value >= 0, f"{where}: {metric} 은 음수일 수 없음 ({value})")
+        else:
+            _require(value is None or isinstance(value, str), f"{where}: {metric} 값은 문자열 또는 null")
+        if value is None:
+            _require(item["status"] != "verified", f"{where}: 값이 null 이면 status 는 verified 일 수 없음")
+        _require(item["unit"] == METRICS[metric]["unit"], f"{where}: unit {item['unit']!r} != {METRICS[metric]['unit']!r}")
+        period = item.get("period")
+        if period is not None:
+            _expect_keys(period, ["start", "end"], f"{where}.period")
+            _expect_date(period["start"], f"{where}.period.start")
+            _expect_date(period["end"], f"{where}.period.end")
+        basis = item.get("basis")
+        _require(basis is None or isinstance(basis, dict), f"{where}: basis 는 object")
+        _require(isinstance(item["source_id"], str) and item["source_id"], f"{where}: source_id 필요")
+        items.append(item)
+    # 같은 기업·지표·시점에 사용 가능한 값이 둘 이상이면 선택이 파일 순서에 의존한다. 충돌은 source_conflict 로 표시해야 한다.
+    seen_values: dict[tuple[str, str, str], tuple[str, Any]] = {}
+    for item in items:
+        if item["status"] not in ("verified", "legacy_unverified") or item["value"] is None:
+            continue
+        key = (item["company_id"], item["metric"], item["as_of"])
+        if key in seen_values and seen_values[key][1] != item["value"]:
+            raise SchemaError(f"observations: {key} 에 서로 다른 값의 관측이 둘 이상 ({seen_values[key][0]}, {item['observation_id']}) — 하나를 source_conflict 로 표시하거나 제거")
+        seen_values.setdefault(key, (item["observation_id"], item["value"]))
+    return items
+
+
+# ------------------------------------------------------------------ judgments
+
+def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
+    _require(isinstance(inputs, dict), f"{where}: inputs 는 object")
+    if kind == "score":
+        return
+    if kind == "grade":
+        _expect_keys(inputs, ["A", "H"], where)
+        _require(inputs["A"] in (0, 1, 2) and not isinstance(inputs["A"], bool), f"{where}: A 는 0/1/2")
+        _require(inputs["H"] in (0, -1, -2, -3) and not isinstance(inputs["H"], bool), f"{where}: H 는 0/-1/-2/-3")
+        return
+    if kind == "criteria":
+        _expect_keys(inputs, ["imitation", "revenue_model", "acceleration", "door_closed"], where)
+        for key in ("imitation", "revenue_model", "acceleration"):
+            _require(inputs[key] in TRI, f"{where}: {key} 는 {sorted(TRI)}")
+        _require(inputs["door_closed"] in PASS_FAIL, f"{where}: door_closed 는 {sorted(PASS_FAIL)}")
+        return
+    if kind == "matrix":
+        _expect_keys(inputs, ["funding_dependent_share", "own_money_returns"], where)
+        _require(inputs["funding_dependent_share"] in {"large", "small", "unknown"}, f"{where}: funding_dependent_share 오류")
+        _require(inputs["own_money_returns"] in YES_NO, f"{where}: own_money_returns 오류")
+        return
+    if kind == "paths":
+        _expect_keys(inputs, ["performance_leap", "paradigm_adaptation", "standard_capture", "top_rank"], where)
+        for key in ("performance_leap", "paradigm_adaptation", "standard_capture"):
+            _require(inputs[key] in TRI, f"{where}: {key} 는 {sorted(TRI)}")
+        _require(inputs["top_rank"] in YES_NO, f"{where}: top_rank 오류")
+        return
+    if kind == "gate_inputs":
+        _expect_keys(
+            inputs,
+            ["fcf_trend", "bep_retreat", "buffer_erosion", "direction_A", "direction_B", "coverage_comparable"],
+            where,
+            optional=["fcf_not_disclosed_reason", "offbalance_class", "operating_result_reviewed"],
+        )
+        _require(inputs["fcf_trend"] in {"stable", "deteriorating", "unknown"}, f"{where}: fcf_trend 오류")
+        _require(inputs.get("operating_result_reviewed", "unknown") in {"profit", "loss", "unknown"}, f"{where}: operating_result_reviewed 오류")
+        for key in ("bep_retreat", "buffer_erosion", "coverage_comparable"):
+            _require(inputs[key] in YES_NO, f"{where}: {key} 오류")
+        for key in ("direction_A", "direction_B"):
+            _require(inputs[key] in PASS_FAIL, f"{where}: {key} 오류")
+        return
+    raise SchemaError(f"{where}: 알 수 없는 kind {kind!r}")
+
+
+def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules: dict[str, Any], run_id: str | None = None) -> list[dict[str, Any]]:
+    _expect_keys(payload, ["schema", "run_id", "items"], "judgments.json", optional=["note"])
+    _require(payload["schema"] == "scorecard.judgments/1", "judgments.json: schema 불일치")
+    if run_id is not None:
+        _require(payload["run_id"] == run_id, f"judgments.json: run_id 불일치 {payload['run_id']!r} != {run_id!r}")
+    _require(isinstance(payload["items"], list), "judgments.json: items 배열 필요")
+    seen: set[str] = set()
+    pairs: set[tuple[str, str]] = set()
+    items: list[dict[str, Any]] = []
+    for idx, item in enumerate(payload["items"]):
+        where = f"judgments[{idx}]"
+        _expect_keys(
+            item,
+            ["judgment_id", "company_id", "factor", "kind", "score", "inputs", "evidence", "reviewer", "reviewed_at", "status"],
+            where,
+            optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id"],
+        )
+        jid = item["judgment_id"]
+        _require(isinstance(jid, str) and jid and jid not in seen, f"{where}: judgment_id 누락/중복 {jid!r}")
+        seen.add(jid)
+        _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
+        factor = item["factor"]
+        _require(factor in FACTOR_IDS, f"{where}: factor {factor!r} 오류")
+        pair = (item["company_id"], factor)
+        _require(pair not in pairs, f"{where}: {pair} 판단 중복 — 기업·factor 당 하나")
+        pairs.add(pair)
+        kind = item["kind"]
+        _require(kind in FACTOR_JUDGMENT_KINDS[factor], f"{where}: {factor} 에 kind {kind!r} 불허 (허용 {sorted(FACTOR_JUDGMENT_KINDS[factor])})")
+        _require(item["status"] in JUDGMENT_STATUSES, f"{where}: status {item['status']!r} 오류")
+        if item["status"] == "carried":
+            _require(isinstance(item.get("carried_from"), str) and item["carried_from"], f"{where}: carried 판단은 carried_from 필요")
+        _expect_date(item["reviewed_at"], f"{where}.reviewed_at")
+        _require(isinstance(item["reviewer"], str) and item["reviewer"], f"{where}: reviewer 필요")
+        _require(isinstance(item["evidence"], list) and all(isinstance(e, str) for e in item["evidence"]), f"{where}: evidence 는 문자열 배열")
+        # 근거 없는 판단은 점수를 만들 수 없다 (R06). 승계 판단도 원문 근거를 함께 옮겨야 한다.
+        _require(any(e.strip() for e in item["evidence"]), f"{where}: evidence 가 비어 있음 — 근거 없는 판단 불허")
+        lo, hi = rules["factors"][factor]["range"]
+        score = item["score"]
+        if kind == "score":
+            _require(_is_number(score) and float(score).is_integer(), f"{where}: score 는 정수 필요")
+            _require(lo <= score <= hi, f"{where}: score {score} 가 {factor} 범위 [{lo}, {hi}] 밖")
+            if factor == "F6":
+                _require(not companies[item["company_id"]]["listed"], f"{where}: 상장사 F6 는 수동 score 불허 (NTM PER 자동 산출)")
+            if factor in {"F2", "F7"}:
+                _require(item["status"] == "carried", f"{where}: {factor} 의 수동 score 는 승계(carried) 판단에만 허용 — 신규는 paths/matrix 입력 필요")
+        else:
+            _require(score is None, f"{where}: kind {kind!r} 판단의 score 는 null (자동 산출)")
+        _validate_judgment_inputs(kind, item["inputs"], f"{where}.inputs")
+        items.append(item)
+    return items
+
+
+# ------------------------------------------------------------------ run / approval
+
+def validate_run(payload: Any, slug: str | None = None) -> dict[str, Any]:
+    _expect_keys(
+        payload,
+        ["schema", "run_id", "report_type", "title", "as_of", "rule_version", "baseline_id", "companies", "decisions", "created_at", "purpose", "assumptions"],
+        "run.json",
+        optional=["price_as_of", "info_cutoff", "reference_companies", "rule_hash", "note", "sources_file"],
+    )
+    _require(payload["schema"] == "scorecard.run/1", "run.json: schema 불일치")
+    _require(payload["report_type"] == "ai_scorecard", "run.json: report_type 은 ai_scorecard")
+    if slug is not None:
+        _require(payload["run_id"] == slug, f"run.json: run_id {payload['run_id']!r} != slug {slug!r}")
+    _expect_date(payload["as_of"], "run.json.as_of")
+    _expect_date(payload.get("price_as_of"), "run.json.price_as_of", allow_none=True)
+    _expect_date(payload.get("info_cutoff"), "run.json.info_cutoff", allow_none=True)
+    _expect_date(payload["created_at"], "run.json.created_at")
+    _require(isinstance(payload["companies"], list) and payload["companies"], "run.json: companies 비어 있음")
+    _require(isinstance(payload["assumptions"], list), "run.json: assumptions 는 배열")
+    for idx, d in enumerate(payload["decisions"]):
+        _expect_keys(d, ["id", "choice", "rationale", "decided_by", "decided_at"], f"run.decisions[{idx}]")
+        _require(isinstance(d["rationale"], str) and d["rationale"].strip(), f"run.decisions[{idx}]: rationale 필요")
+        _expect_date(d["decided_at"], f"run.decisions[{idx}].decided_at")
+    return payload
+
+
+def validate_approval(payload: Any, run_id: str | None = None) -> dict[str, Any]:
+    _expect_keys(payload, ["schema", "run_id", "approval_id", "approved_by", "approved_at", "hashes"], "approval.json", optional=["note"])
+    _require(payload["schema"] == "scorecard.approval/1", "approval.json: schema 불일치")
+    if run_id is not None:
+        _require(payload["run_id"] == run_id, "approval.json: run_id 불일치")
+    _expect_date(payload["approved_at"], "approval.json.approved_at")
+    _expect_keys(payload["hashes"], ["rules", "observations", "judgments", "run", "results", "draft"], "approval.hashes")
+    return payload
