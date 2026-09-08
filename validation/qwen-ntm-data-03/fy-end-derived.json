@@ -1,0 +1,126 @@
+{
+ "price_date": "2026-09-04",
+ "derivation": "Yahoo 분기 종료월 라벨 Current Qtr. + 9개월 = 회계연도 말일. Yahoo 'Current Year (YYYY)' 라벨 연도와 일치하는지 검증.",
+ "companies": [
+  {
+   "company_id": "meta",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2026",
+   "next_year_label": "2027",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": false,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "nvidia",
+   "current_qtr": "Oct 2026",
+   "next_qtr": "Jan 2027",
+   "current_year_label": "2027",
+   "next_year_label": "2028",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-07-31",
+   "derived_fy_end_matches_yahoo_year_label": true,
+   "months_price_date_to_fy_end": 10.84,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "alphabet",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2026",
+   "next_year_label": "2027",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": false,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "microsoft",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2027",
+   "next_year_label": "2028",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": true,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "amazon",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2026",
+   "next_year_label": "2027",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": false,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "apple",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2026",
+   "next_year_label": "2027",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": false,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "oracle",
+   "current_qtr": "Aug 2026",
+   "next_qtr": "Nov 2026",
+   "current_year_label": "2027",
+   "next_year_label": "2028",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-05-31",
+   "derived_fy_end_matches_yahoo_year_label": true,
+   "months_price_date_to_fy_end": 8.84,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "palantir",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2026",
+   "next_year_label": "2027",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": false,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "tesla",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2026",
+   "next_year_label": "2027",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": false,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  },
+  {
+   "company_id": "spacex-xai",
+   "current_qtr": "Sep 2026",
+   "next_qtr": "Dec 2026",
+   "current_year_label": "2026",
+   "next_year_label": "2027",
+   "quarters_consecutive": true,
+   "derived_fy_end": "2027-06-30",
+   "derived_fy_end_matches_yahoo_year_label": false,
+   "months_price_date_to_fy_end": 9.82,
+   "fy_shorter_than_12m": true
+  }
+ ]
+}
