@@ -43,3 +43,15 @@ REPORT.md 326행은 여전히 네 분기 EPS에 대해 “어느 티어에서도
 `python -X utf8 -B validation/recheck_ntm_handoff.py`를 설계진행 worktree에서 실행했다.
 
 결과는 판정 assertions 10/10 통과, 분기 관측 수 불일치 10건, 과거 참조 해시 일치 8/8, 현재 참조 해시 일치 7/8, 원문 HTML Git 내용 일치 31/31이다. 상세 출력과 해시는 `ntm-handoff-review-evidence.json`에 보존했다. worker·scarpper의 검토 대상 파일과 점수·정책·승인·HTML은 수정하지 않았다.
+
+## 8e00678 재검토
+
+2026-09-08 회신 `msg_dc5e5c3acb33`을 읽고 `8e00678`을 재검토했다. H-02·H-03은 해결됐지만 **H-01은 부분 해결이므로 needs_fix를 유지**한다.
+
+- 임시 복사본에서 apply_r1_corrections.py → analyze_fy.py → compare_hashes.py 실행에 성공했다. 네 스크립트의 py_compile도 통과했다. consolidate.py는 의도한 폐기 오류로 중단됐다.
+- 재생성한 회사별 데이터는 커밋된 evidence 및 corrected JSON과 같았다. 10개사의 period_unknown/unverified, 관측 수 2 및 적격 수 0, 미충족 상태를 독립 교차 검사해 통과했다.
+- 과거 참조 8종 UNCHANGED를 재현했다. 원문 HTML 31개는 이전 검토 때 저장한 SHA-256과 모두 같아 **이번 두 검토 사이의 바이트 불변**도 확인했다. 최초 인수 전 해시 부재라는 한계는 별개로 유지한다.
+- H-01의 남은 문제는 REPORT 11절의 명령 순서와 감사 스크립트다. 새 수집 명령이 먼저 evidence를 원시 수집 형태로 덮어쓰는데, apply는 기존 통합 필드 forecast_period를 기대하고 Yahoo JSON을 통합하지 않는다. 현재 커밋의 정정본 감사 절차와 최초 수집 기록을 분리해야 한다.
+- analyze_fy.py는 여전히 corrected JSON만 검사한다. 임시 파일에서 META 관측 수를 2에서 0으로 바꾸고 evidence는 2로 두었는데도 종료 코드 0으로 통과했다. 실제 evidence와의 교차 assertion이 필요하다.
+
+상세 실행 결과는 `ntm-handoff-r2-evidence.json`이다. 후속 요청 `msg_453d99ae2f0c`와 터미널 실행 안내로 REPORT.md·analyze_fy.py 두 파일만 보완하도록 전달했다. 신규 수집이나 정책 변경은 요청하지 않았다.
