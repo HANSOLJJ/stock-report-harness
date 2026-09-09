@@ -1,0 +1,765 @@
+{
+ "generated_at_utc": "2026-09-09T01:56:55Z",
+ "companies": {
+  "meta": {
+   "ticker": "META",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/META/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:56:56Z",
+    "data": {
+     "symbol": "meta",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 6.61,
+       "earnings": 7.25
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 8.21,
+       "earnings": 8.88
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 6.71,
+       "earnings": 7.31
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": 7.1,
+       "earnings": 6.18
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 6.33,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 8.01,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 7.76,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 8.08,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3AMETA&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:56:57Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 7.187405,
+     "earnings_per_share_forecast_next_fq": 6.745173,
+     "earnings_per_share_forecast_next_fy": 31.398658,
+     "earnings_per_share_fq": 6.18,
+     "earnings_release_date": 1785355260,
+     "earnings_release_next_date": 1793188800,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  },
+  "nvidia": {
+   "ticker": "NVDA",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/NVDA/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:56:59Z",
+    "data": {
+     "symbol": "nvda",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Oct 2025",
+       "consensus": 1.18,
+       "earnings": 1.24
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jan 2026",
+       "consensus": 1.45,
+       "earnings": 1.57
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Apr 2026",
+       "consensus": 1.7,
+       "earnings": 1.87
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jul 2026",
+       "consensus": 2.09,
+       "earnings": 2.22
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Oct 2026",
+       "consensus": 2.47,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jan 2027",
+       "consensus": 2.72,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Apr 2027",
+       "consensus": 3.17,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jul 2027",
+       "consensus": 3.6,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3ANVDA&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:00Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 2.093637,
+     "earnings_per_share_forecast_next_fq": 2.469278,
+     "earnings_per_share_forecast_next_fy": 9.255033,
+     "earnings_per_share_fq": 2.223888,
+     "earnings_release_date": 1787775600,
+     "earnings_release_next_date": 1795608000,
+     "fiscal_period_end_fq": 1785456000
+    }
+   }
+  },
+  "alphabet": {
+   "ticker": "GOOGL",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/GOOGL/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:02Z",
+    "data": {
+     "symbol": "googl",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 2.26,
+       "earnings": 2.87
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 2.57,
+       "earnings": 2.82
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 2.64,
+       "earnings": 5.11
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": 2.88,
+       "earnings": 9.11
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 2.93,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 3.21,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 3.3,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 3.47,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3AGOOGL&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:03Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 2.877414,
+     "earnings_per_share_forecast_next_fq": 3.022013,
+     "earnings_per_share_forecast_next_fy": 20.569445,
+     "earnings_per_share_fq": 9.11,
+     "earnings_release_date": 1784750520,
+     "earnings_release_next_date": 1793102400,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  },
+  "microsoft": {
+   "ticker": "MSFT",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/MSFT/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:05Z",
+    "data": {
+     "symbol": "msft",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 3.65,
+       "earnings": 4.13
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 3.88,
+       "earnings": 4.14
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 4.07,
+       "earnings": 4.27
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": 4.21,
+       "earnings": 4.74
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 4.67,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 4.81,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 4.84,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 5.13,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3AMSFT&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:06Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 4.239277,
+     "earnings_per_share_forecast_next_fq": 4.714623,
+     "earnings_per_share_forecast_next_fy": 19.723885,
+     "earnings_per_share_fq": 4.74,
+     "earnings_release_date": 1785355740,
+     "earnings_release_next_date": 1793102400,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  },
+  "amazon": {
+   "ticker": "AMZN",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/AMZN/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:09Z",
+    "data": {
+     "symbol": "amzn",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 1.58,
+       "earnings": 1.95
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 1.98,
+       "earnings": 1.95
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 1.6,
+       "earnings": 1.56
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": 1.83,
+       "earnings": 1.88
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 2.03,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 2.56,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 2.37,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 2.64,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3AAMZN&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:10Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 1.823301,
+     "earnings_per_share_forecast_next_fq": 1.963037,
+     "earnings_per_share_forecast_next_fy": 12.714129,
+     "earnings_per_share_fq": 5.75,
+     "earnings_release_date": 1785441660,
+     "earnings_release_next_date": 1792670400,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  },
+  "apple": {
+   "ticker": "AAPL",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/AAPL/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:13Z",
+    "data": {
+     "symbol": "aapl",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 1.73,
+       "earnings": 1.85
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 2.65,
+       "earnings": 2.84
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 1.92,
+       "earnings": 2.01
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": 1.88,
+       "earnings": 1.91
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 1.98,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 2.91,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 2.16,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 2.09,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3AAAPL&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:14Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 1.891883,
+     "earnings_per_share_forecast_next_fq": 1.9815,
+     "earnings_per_share_forecast_next_fy": 8.831753,
+     "earnings_per_share_fq": 2.02,
+     "earnings_release_date": 1785443580,
+     "earnings_release_next_date": 1793275200,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  },
+  "oracle": {
+   "ticker": "ORCL",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/ORCL/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:17Z",
+    "data": {
+     "symbol": "orcl",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Aug 2025",
+       "consensus": 1.15,
+       "earnings": 1.2
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Nov 2025",
+       "consensus": 1.29,
+       "earnings": 1.95
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Feb 2026",
+       "consensus": 1.34,
+       "earnings": 1.43
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "May 2026",
+       "consensus": 1.58,
+       "earnings": 1.79
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Aug 2026",
+       "consensus": 1.4,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Nov 2026",
+       "consensus": 1.53,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Feb 2027",
+       "consensus": 1.66,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "May 2027",
+       "consensus": 1.92,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NYSE%3AORCL&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:18Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 1.963787,
+     "earnings_per_share_forecast_next_fq": 1.739499,
+     "earnings_per_share_forecast_next_fy": 8.069372,
+     "earnings_per_share_fq": 2.11,
+     "earnings_release_date": 1781122020,
+     "earnings_release_next_date": 1789070400,
+     "fiscal_period_end_fq": 1780185600
+    }
+   }
+  },
+  "palantir": {
+   "ticker": "PLTR",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/PLTR/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:22Z",
+    "data": {
+     "symbol": "pltr",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 0.12,
+       "earnings": 0.18
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 0.17,
+       "earnings": 0.24
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 0.22,
+       "earnings": 0.25
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": 0.28,
+       "earnings": 0.31
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 0.33,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 0.37,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 0.36,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 0.42,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3APLTR&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:22Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 0.344598,
+     "earnings_per_share_forecast_next_fq": 0.409584,
+     "earnings_per_share_forecast_next_fy": 1.594846,
+     "earnings_per_share_fq": 0.41,
+     "earnings_release_date": 1785787560,
+     "earnings_release_next_date": 1794225600,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  },
+  "tesla": {
+   "ticker": "TSLA",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/TSLA/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:24Z",
+    "data": {
+     "symbol": "tsla",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 0.41,
+       "earnings": 0.37
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 0.34,
+       "earnings": 0.31
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 0.21,
+       "earnings": 0.18
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": 0.32,
+       "earnings": 0.04
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 0.26,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 0.3,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 0.21,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 0.3,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3ATSLA&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:25Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": 0.533334,
+     "earnings_per_share_forecast_next_fq": 0.459948,
+     "earnings_per_share_forecast_next_fy": 1.705422,
+     "earnings_per_share_fq": 0.33,
+     "earnings_release_date": 1784751240,
+     "earnings_release_next_date": 1793188800,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  },
+  "spacex-xai": {
+   "ticker": "SPCX",
+   "nasdaq_eps": {
+    "url": "https://api.nasdaq.com/api/quote/SPCX/eps",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:27Z",
+    "data": {
+     "symbol": "spcx",
+     "earningsPerShare": [
+      {
+       "type": "PreviousQuarter",
+       "period": "Sep 2025",
+       "consensus": 0.0,
+       "earnings": 0.0
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Dec 2025",
+       "consensus": 0.0,
+       "earnings": 0.0
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Mar 2026",
+       "consensus": 0.0,
+       "earnings": 0.0
+      },
+      {
+       "type": "PreviousQuarter",
+       "period": "Jun 2026",
+       "consensus": -0.26,
+       "earnings": -0.09
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Sep 2026",
+       "consensus": 0.09,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Dec 2026",
+       "consensus": 0.29,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Mar 2027",
+       "consensus": 0.37,
+       "earnings": 0.0
+      },
+      {
+       "type": "UpcomingQuarter",
+       "period": "Jun 2027",
+       "consensus": 0.41,
+       "earnings": 0.0
+      }
+     ]
+    }
+   },
+   "tradingview": {
+    "url": "https://scanner.tradingview.com/symbol?symbol=NASDAQ%3ASPCX&fields=earnings_per_share_forecast_fq,earnings_per_share_forecast_next_fq,earnings_per_share_fq,earnings_per_share_forecast_next_fy,earnings_release_next_date,earnings_release_date,currency,fiscal_period_end_fq&no_404=true",
+    "status": 200,
+    "fetched_at_utc": "2026-09-09T01:57:28Z",
+    "data": {
+     "currency": "USD",
+     "earnings_per_share_forecast_fq": -0.229701,
+     "earnings_per_share_forecast_next_fq": 0.137821,
+     "earnings_per_share_forecast_next_fy": null,
+     "earnings_per_share_fq": -0.09,
+     "earnings_release_date": 1785875340,
+     "earnings_release_next_date": 1793880000,
+     "fiscal_period_end_fq": 1782777600
+    }
+   }
+  }
+ }
+}
