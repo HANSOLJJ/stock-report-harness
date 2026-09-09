@@ -170,7 +170,9 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .pill.part{background:var(--cat-part-soft);color:var(--cat-part)}
 .pill.mix{background:var(--cat-mix-soft);color:var(--cat-mix)}
 .pill.warn{background:var(--warn-soft);color:var(--warn-text)}
-.ctag{font-size:var(--fs-md);color:var(--tx2);margin-top:4px;line-height:1.45}
+/* 카드에서 먼저 읽혀야 하는 것은 한 줄 요약이다. 출처 표시는 그 아래 작은 캡션으로 내린다. */
+.cquote{font-size:var(--fs-base);color:var(--tx);margin-top:6px;line-height:1.55}
+.cprov{font-size:var(--fs-sm);color:var(--tx3);margin-top:4px;line-height:1.4}
 .cscore{text-align:right;flex:1 1 auto;min-width:0}
 .cscore .t{font-size:var(--fs-3xl);font-weight:800;letter-spacing:-.03em;line-height:1}
 .cscore .s{font-size:var(--fs-sm);color:var(--tx3);margin-top:3px}
@@ -478,7 +480,11 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
             + ("" if c["complete"] else '<span class="pill warn">미완료</span>')
-            + f'</div><div class="ctag">' + (f'<span class="pill legacy">기준선 {esc(results["baseline_id"])} 요약 · 과거 기록</span> {esc(b.get("tag", ""))}' if b.get("tag") else "") + f'</div><div class="crank">{esc(rank_text)}</div></div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(score_text)}</div></div></summary>'
+            + "</div>"
+            + (f'<div class="cquote">{esc(b["tag"])}</div>' if b.get("tag") else "")
+            + f'<div class="crank">{esc(rank_text)}</div>'
+            + (f'<div class="cprov">요약은 기준선 {esc(results["baseline_id"])} 원문 · 미재검증</div>' if b.get("tag") else "")
+            + f'</div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(score_text)}</div></div></summary>'
             f'<div class="cbody">{"".join(groups)}</div></details>'
         )
     return "".join(out)
@@ -788,7 +794,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_ranking(results)}
 {render_incomplete(results, ctx.rules)}
 <h2><span class="num">03</span>기업별 상세</h2>
-<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. 근거 불릿은 기준선 {esc(run["baseline_id"])} 에서 승계한 과거 기록이다.</p>
+<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. 카드마다 붙은 한 줄 요약과 근거 불릿은 기준선 {esc(run["baseline_id"])} 원문을 그대로 옮긴 과거 기록이며 이번 실행에서 재검증하지 않았다. 점수만 이번 실행에서 규칙으로 다시 계산한 값이다.</p>
 <div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations)}</div>
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}
