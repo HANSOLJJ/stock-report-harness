@@ -1,9 +1,9 @@
 {
-  "schema": "scorecard.consensus_source_validation/2",
+  "schema": "scorecard.consensus_source_validation/3",
   "task_id": "C13-SOURCE-02",
-  "version": "R1_R7_refined",
-  "collected_at": "2026-09-09T11:01:53.007041",
-  "methodology": "Valley 5-stat (Mean, Median, Min, Max, Count) cross-source investigation with strict anomaly checks",
+  "version": "nasdaq_api_integrated",
+  "collected_at": "2026-09-09T11:12:50.973560",
+  "methodology": "Valley 5-stat (Mean, Median, Min, Max, Count) cross-source investigation including Nasdaq public API",
   "listed_companies": {
     "tsmc": {
       "ticker": "TSM / 2330.TW",
@@ -14,11 +14,166 @@
         "2027 Q2"
       ],
       "sources_investigated": {
+        "nasdaq_api": {
+          "source_name": "Nasdaq Public API TSM Earnings Forecast",
+          "url": "https://api.nasdaq.com/api/analyst/TSM/earnings-forecast",
+          "info_url": "https://api.nasdaq.com/api/quote/TSM/info?assetclass=stocks",
+          "verified_at": "2026-09-09T02:11:00Z",
+          "vendor_last_updated_at": "unconfirmed (asOf: null)",
+          "access_condition": "free_public_api",
+          "share_basis": "American Depositary Shares",
+          "stock_type_confirmed": "American Depositary Shares (NYSE 상장)",
+          "currency_status": "unconfirmed (가격 $439.00 USD이나 EPS 필드 명시 코드 부재)",
+          "gaap_status": "unconfirmed (EPS* 표시)",
+          "snapshot_file": "snapshots/nasdaq_tsm_earnings_forecast_2026_09_09.md",
+          "raw_file": "raw/nasdaq-tsm-earnings_forecast.json",
+          "quarters_available": [
+            "2026 Q3",
+            "2026 Q4",
+            "2027 Q1",
+            "2027 Q2"
+          ],
+          "quarters_data": {
+            "2026 Q3": {
+              "mean": 4.45,
+              "min": 4.24,
+              "max": 4.7,
+              "count": 6
+            },
+            "2026 Q4": {
+              "mean": 4.68,
+              "min": 4.22,
+              "max": 4.93,
+              "count": 5
+            },
+            "2027 Q1": {
+              "mean": 4.64,
+              "min": 4.36,
+              "max": 4.97,
+              "count": 4
+            },
+            "2027 Q2": {
+              "mean": 5.1,
+              "min": 4.9,
+              "max": 5.49,
+              "count": 4
+            }
+          },
+          "fifth_quarter_observed": {
+            "fiscalEnd": "Sep 2027",
+            "mean": 5.65,
+            "min": 5.43,
+            "max": 5.94,
+            "count": 4
+          },
+          "yearly_forecast_observed": {
+            "Dec 2026": {
+              "consensus": 16.52,
+              "count": 9
+            },
+            "Dec 2027": {
+              "consensus": 21.09,
+              "count": 9
+            }
+          },
+          "evaluation": {
+            "expected_quarters": [
+              "2026 Q3",
+              "2026 Q4",
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "consecutive_quarters": true,
+            "basis_metadata_verified": false,
+            "fulfilled_quarters": [
+              "2026 Q3",
+              "2026 Q4",
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "missing_quarters": [],
+            "fulfilled_count": 4,
+            "missing_count": 0,
+            "all_4q_fulfilled": true,
+            "stats_by_quarter": {
+              "2026 Q3": {
+                "mean": 4.45,
+                "median": null,
+                "min": 4.24,
+                "max": 4.7,
+                "count": 6,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "2026 Q4": {
+                "mean": 4.68,
+                "median": null,
+                "min": 4.22,
+                "max": 4.93,
+                "count": 5,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "2027 Q1": {
+                "mean": 4.64,
+                "median": null,
+                "min": 4.36,
+                "max": 4.97,
+                "count": 4,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "2027 Q2": {
+                "mean": 5.1,
+                "median": null,
+                "min": 4.9,
+                "max": 5.49,
+                "count": 4,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              }
+            },
+            "mean_by_quarter": {
+              "2026 Q3": 4.45,
+              "2026 Q4": 4.68,
+              "2027 Q1": 4.64,
+              "2027 Q2": 5.1
+            },
+            "sum_4q_mean": 18.87,
+            "arithmetic_sum_calculable": true,
+            "scoring_eligible": false,
+            "scoring_status": "pending_basis_metadata_verification"
+          },
+          "notes": "NTM 팀의 a74c15e 경로를 적용하여 단일 원천 내에서 차기 연속 4분기 수치(4.45, 4.68, 4.64, 5.10)를 최초로 모두 확보함. 산술 합산치는 18.87임. 단, EPS 필드 통화/회계기준 미기재로 채점 적격은 보류 유지."
+        },
         "barchart": {
           "source_name": "Barchart TSM Earnings Estimates",
           "url": "https://www.barchart.com/stocks/quotes/TSM/earnings-estimates",
           "verified_at": "2026-09-09T10:48:10+09:00",
-          "vendor_last_updated_at": "unconfirmed",
           "access_condition": "free_public_direct",
           "share_basis": "ADR (1 ADR = 5 ordinary shares)",
           "currency": "USD",
@@ -42,7 +197,7 @@
               "2027 Q2"
             ],
             "consecutive_quarters": true,
-            "basis_metadata_verified": true,
+            "basis_metadata_verified": false,
             "fulfilled_quarters": [
               "2026 Q3"
             ],
@@ -58,16 +213,19 @@
               "2026 Q3": {
                 "mean": 4.45,
                 "median": null,
-                "min": 4.24,
-                "max": 4.7,
-                "count": 6,
+                "min": null,
+                "max": null,
+                "count": null,
                 "has_mean": true,
                 "has_median": false,
-                "has_range": true,
-                "has_sample_count": true,
+                "has_range": false,
+                "has_sample_count": false,
                 "stat_anomalies": [],
                 "auxiliary_missing": [
-                  "median"
+                  "median",
+                  "min",
+                  "max",
+                  "count"
                 ]
               },
               "2026 Q4": null,
@@ -91,21 +249,16 @@
           "source_name": "MarketBeat TSM Earnings",
           "url": "https://www.marketbeat.com/stocks/NYSE/TSM/earnings/",
           "verified_at": "2026-09-09T10:48:05+09:00",
-          "vendor_last_updated_at": "unconfirmed",
           "access_condition": "free_public_direct",
-          "share_basis": "ADR (1 ADR = 5 ordinary shares)",
+          "share_basis": "ADR",
           "currency": "USD",
           "quarters_data": {
             "2026 Q3": {
               "mean": 2.98,
-              "min": 2.98,
-              "max": 2.98,
               "count": 1
             },
             "2026 Q4": {
               "mean": 3.12,
-              "min": 3.12,
-              "max": 3.12,
               "count": 1
             },
             "2027 Q1": null,
@@ -119,7 +272,7 @@
               "2027 Q2"
             ],
             "consecutive_quarters": true,
-            "basis_metadata_verified": true,
+            "basis_metadata_verified": false,
             "fulfilled_quarters": [
               "2026 Q3",
               "2026 Q4"
@@ -137,16 +290,17 @@
                 "median": null,
                 "min": null,
                 "max": null,
-                "count": 1,
+                "count": null,
                 "has_mean": true,
                 "has_median": false,
                 "has_range": false,
-                "has_sample_count": true,
+                "has_sample_count": false,
                 "stat_anomalies": [],
                 "auxiliary_missing": [
                   "median",
                   "min",
-                  "max"
+                  "max",
+                  "count"
                 ]
               },
               "2026 Q4": {
@@ -154,16 +308,17 @@
                 "median": null,
                 "min": null,
                 "max": null,
-                "count": 1,
+                "count": null,
                 "has_mean": true,
                 "has_median": false,
                 "has_range": false,
-                "has_sample_count": true,
+                "has_sample_count": false,
                 "stat_anomalies": [],
                 "auxiliary_missing": [
                   "median",
                   "min",
-                  "max"
+                  "max",
+                  "count"
                 ]
               },
               "2027 Q1": null,
@@ -181,73 +336,6 @@
             "scoring_status": "pending_data_missing_quarters"
           },
           "notes": "표본 1개 구형 추정치로 편차 심함. 2027 Q1/Q2 결측."
-        },
-        "seeking_alpha": {
-          "source_name": "Seeking Alpha TSM Earnings Estimates",
-          "url": "https://seekingalpha.com/symbol/TSM/earnings/estimates",
-          "verified_at": "2026-09-09T10:47:30+09:00",
-          "access_condition": "anti_bot_blocked_403",
-          "quarters_data": {
-            "2026 Q3": {
-              "mean": 4.46,
-              "notes": "검색 스니펫 Normalized $4.46, GAAP $4.45 확인"
-            }
-          },
-          "evaluation": {
-            "expected_quarters": [
-              "2026 Q3",
-              "2026 Q4",
-              "2027 Q1",
-              "2027 Q2"
-            ],
-            "consecutive_quarters": true,
-            "basis_metadata_verified": false,
-            "fulfilled_quarters": [
-              "2026 Q3"
-            ],
-            "missing_quarters": [
-              "2026 Q4",
-              "2027 Q1",
-              "2027 Q2"
-            ],
-            "fulfilled_count": 1,
-            "missing_count": 3,
-            "all_4q_fulfilled": false,
-            "stats_by_quarter": {
-              "2026 Q3": {
-                "mean": 4.46,
-                "median": null,
-                "min": null,
-                "max": null,
-                "count": null,
-                "has_mean": true,
-                "has_median": false,
-                "has_range": false,
-                "has_sample_count": false,
-                "stat_anomalies": [],
-                "auxiliary_missing": [
-                  "median",
-                  "min",
-                  "max",
-                  "count"
-                ]
-              },
-              "2026 Q4": null,
-              "2027 Q1": null,
-              "2027 Q2": null
-            },
-            "mean_by_quarter": {
-              "2026 Q3": 4.46,
-              "2026 Q4": null,
-              "2027 Q1": null,
-              "2027 Q2": null
-            },
-            "sum_4q_mean": null,
-            "arithmetic_sum_calculable": false,
-            "scoring_eligible": false,
-            "scoring_status": "pending_data_missing_quarters"
-          },
-          "notes": "직접 HTTP fetch 시 403 차단. 미제공이 아니라 접근 차단 상태임."
         },
         "yahoo_finance_c13_link": {
           "source_name": "Yahoo Finance (C13-DATA-01-R8 기수집 연계)",
@@ -276,7 +364,7 @@
               "2027 Q2"
             ],
             "consecutive_quarters": true,
-            "basis_metadata_verified": true,
+            "basis_metadata_verified": false,
             "fulfilled_quarters": [
               "2026 Q3",
               "2026 Q4"
@@ -347,17 +435,20 @@
           "verified_at": "2026-09-09T10:51:05+09:00",
           "access_condition": "commercial_broker_summary",
           "share_basis": "보통주 1주 (Ordinary Common Share)",
-          "currency": "TWD (신대만달러)",
+          "currency": "TWD",
           "annual_data": {
             "FY2026_median": 107.74,
             "FY2027_median": 137.0
           },
-          "conversion_verification_status": "approximate_scale_comparison",
-          "conversion_notes": "대만 보통주 1주당 2026년 중앙값 107.74 TWD. ADR 1:5 배율 및 개략 환율(~32 TWD/USD) 적용 시 107.74*5/32 = 약 $16.83 USD로 미국 연간 전망치($16.45~$16.91 USD)와 대략적 스케일 부합 확인. 단, 이는 환율 변동과 표본 시점 차이가 있는 근사 비교이며 엄밀한 수학적 일치 증명이 아님 (R5 반영)."
+          "conversion_notes": "개략적 스케일 부합 확인 (107.74*5/32 = 약 $16.83 USD vs $16.45~$16.91)."
         }
       },
-      "single_source_4q_fulfilled": false,
-      "summary": "단일 원천 내 2027 Q1/Q2 전원 결측. 대만 원주와 미국 ADR은 환율 변동을 고려한 개략 스케일 부합 확인으로 격하."
+      "single_source_4q_fulfilled": true,
+      "selected_source_for_4q": "nasdaq_api",
+      "nasdaq_4q_sum": 18.87,
+      "scoring_eligible": false,
+      "scoring_status": "pending_basis_metadata_verification",
+      "summary": "Nasdaq 공개 API(api.nasdaq.com)를 통해 TSMC의 차기 연속 4분기 수치(4.45, 4.68, 4.64, 5.10)가 단일 원천에서 모두 확보됨 (합산 18.87). 단, EPS 필드 통화/회계기준 메타데이터 미확인으로 채점 적격은 보류 유지."
     },
     "alibaba": {
       "ticker": "BABA / 9988.HK",
@@ -368,6 +459,162 @@
         "FY28 Q1"
       ],
       "sources_investigated": {
+        "nasdaq_api": {
+          "source_name": "Nasdaq Public API BABA Earnings Forecast",
+          "url": "https://api.nasdaq.com/api/analyst/BABA/earnings-forecast",
+          "info_url": "https://api.nasdaq.com/api/quote/BABA/info?assetclass=stocks",
+          "verified_at": "2026-09-09T02:11:00Z",
+          "vendor_last_updated_at": "unconfirmed (asOf: null)",
+          "access_condition": "free_public_api",
+          "share_basis": "American Depositary Shares each representing 8 Ordinary share",
+          "stock_type_confirmed": "American Depositary Shares each representing 8 Ordinary share (NYSE 상장)",
+          "currency_status": "unconfirmed (가격 $112.66 USD이나 EPS 필드 명시 코드 부재)",
+          "gaap_status": "unconfirmed (EPS* 표시)",
+          "snapshot_file": "snapshots/nasdaq_baba_earnings_forecast_2026_09_09.md",
+          "raw_file": "raw/nasdaq-baba-earnings_forecast.json",
+          "quarters_available": [
+            "FY27 Q2",
+            "FY27 Q3",
+            "FY27 Q4",
+            "FY28 Q1"
+          ],
+          "quarters_data": {
+            "FY27 Q2": {
+              "mean": 1.42,
+              "min": 0.81,
+              "max": 2.16,
+              "count": 3
+            },
+            "FY27 Q3": {
+              "mean": 1.89,
+              "min": 1.31,
+              "max": 2.75,
+              "count": 3
+            },
+            "FY27 Q4": {
+              "mean": 1.81,
+              "min": 1.05,
+              "max": 2.21,
+              "count": 3
+            },
+            "FY28 Q1": {
+              "mean": 2.45,
+              "min": 1.76,
+              "max": 3.13,
+              "count": 2
+            }
+          },
+          "fifth_quarter_observed": {
+            "fiscalEnd": "Sep 2027",
+            "mean": 2.35,
+            "min": 1.57,
+            "max": 3.13,
+            "count": 2
+          },
+          "yearly_forecast_observed": {
+            "Mar 2027": {
+              "consensus": 5.88,
+              "count": 6
+            },
+            "Mar 2028": {
+              "consensus": 8.61,
+              "count": 6
+            }
+          },
+          "evaluation": {
+            "expected_quarters": [
+              "FY27 Q2",
+              "FY27 Q3",
+              "FY27 Q4",
+              "FY28 Q1"
+            ],
+            "consecutive_quarters": true,
+            "basis_metadata_verified": false,
+            "fulfilled_quarters": [
+              "FY27 Q2",
+              "FY27 Q3",
+              "FY27 Q4",
+              "FY28 Q1"
+            ],
+            "missing_quarters": [],
+            "fulfilled_count": 4,
+            "missing_count": 0,
+            "all_4q_fulfilled": true,
+            "stats_by_quarter": {
+              "FY27 Q2": {
+                "mean": 1.42,
+                "median": null,
+                "min": 0.81,
+                "max": 2.16,
+                "count": 3,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "FY27 Q3": {
+                "mean": 1.89,
+                "median": null,
+                "min": 1.31,
+                "max": 2.75,
+                "count": 3,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "FY27 Q4": {
+                "mean": 1.81,
+                "median": null,
+                "min": 1.05,
+                "max": 2.21,
+                "count": 3,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "FY28 Q1": {
+                "mean": 2.45,
+                "median": null,
+                "min": 1.76,
+                "max": 3.13,
+                "count": 2,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "stat_anomalies": [],
+                "auxiliary_missing": [
+                  "median"
+                ]
+              }
+            },
+            "mean_by_quarter": {
+              "FY27 Q2": 1.42,
+              "FY27 Q3": 1.89,
+              "FY27 Q4": 1.81,
+              "FY28 Q1": 2.45
+            },
+            "sum_4q_mean": 7.57,
+            "arithmetic_sum_calculable": true,
+            "scoring_eligible": false,
+            "scoring_status": "pending_basis_metadata_verification"
+          },
+          "notes": "NTM 팀의 a74c15e 경로를 적용하여 단일 원천 내에서 차기 연속 4분기 수치(1.42, 1.89, 1.81, 2.45)를 최초로 모두 확보함. 산술 합산치는 7.57임. 단, 통화/회계기준 미기재로 채점 적격은 보류 유지."
+        },
         "marketbeat": {
           "source_name": "MarketBeat BABA Earnings",
           "url": "https://www.marketbeat.com/stocks/NYSE/BABA/earnings/",
@@ -382,13 +629,6 @@
             }
           },
           "notes": "직전 실적 발표치만 확인되며 차기 4분기 전망치 미제공."
-        },
-        "investing_com": {
-          "source_name": "Investing.com Alibaba Earnings",
-          "url": "https://www.investing.com/equities/alibaba-earnings",
-          "verified_at": "2026-09-09T10:48:50+09:00",
-          "access_condition": "anti_bot_blocked_403",
-          "notes": "직접 HTTP fetch 시 403 차단. 미제공이 아닌 접근 제한 상태."
         },
         "yahoo_finance_c13_link": {
           "source_name": "Yahoo Finance (C13-DATA-01-R8 기수집 연계)",
@@ -480,7 +720,7 @@
             "scoring_eligible": false,
             "scoring_status": "pending_data_missing_quarters"
           },
-          "notes": "FY27 Q4, FY28 Q1 결측. 분기 통화가 CNY이며 USD 주가와의 개별 필드 단위 정합성 미확인."
+          "notes": "FY27 Q4, FY28 Q1 결측. 분기 통화 CNY."
         },
         "hk_china_factset": {
           "source_name": "HK/China Broker FactSet Survey (9988.HK / BABA)",
@@ -488,14 +728,17 @@
           "verified_at": "2026-09-09T10:51:15+09:00",
           "access_condition": "commercial_broker_summary",
           "annual_data": {
-            "FY2027_ADS_median": "6.55 ~ 6.61 USD",
-            "FY2027_Q1_actual": "8.52 CNY/ADS"
+            "FY2027_ADS_median": "6.55 ~ 6.61 USD"
           },
-          "notes": "ADS당 8.52 CNY 실적 후 AI 투자 확대로 컨센서스 하향 추세. 단일원천 연속 4분기는 미확보."
+          "notes": "단일원천 연속 4분기는 미확보."
         }
       },
-      "single_source_4q_fulfilled": false,
-      "summary": "단일 원천 내 FY27 Q4, FY28 Q1 전원 결측. 최근 FY27 Q1 실적 후 컨센서스 하향 추세. ADS USD와 보통주 CNY 구분 확립."
+      "single_source_4q_fulfilled": true,
+      "selected_source_for_4q": "nasdaq_api",
+      "nasdaq_4q_sum": 7.57,
+      "scoring_eligible": false,
+      "scoring_status": "pending_basis_metadata_verification",
+      "summary": "Nasdaq 공개 API(api.nasdaq.com)를 통해 Alibaba의 차기 연속 4분기 수치(1.42, 1.89, 1.81, 2.45)가 단일 원천에서 모두 확보됨 (합산 7.57). 단, EPS 필드 통화/회계기준 메타데이터 미확인으로 채점 적격은 보류 유지."
     }
   },
   "unlisted_companies": {
@@ -515,7 +758,7 @@
           "primary_source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/openai_2026_03_31_accelerating_next_phase.md",
-          "notes": "2026-03-31 공식 발표 기준 사후 기업가치 $852B 확정 (R2 반영)."
+          "notes": "2026-03-31 공식 발표 기준 사후 기업가치 $852B 확정."
         },
         "committed_capital_latest_round": {
           "value": 122.0,
@@ -527,7 +770,7 @@
           "primary_source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/openai_2026_03_31_accelerating_next_phase.md",
-          "notes": "현금 외에 AWS 및 Nvidia 컴퓨트 인프라 약정 포함. 전액 즉시 현금 납입이 아닌 약정 자본임 (R2 반영)."
+          "notes": "현금 외에 AWS 및 Nvidia 컴퓨트 인프라 약정 포함."
         },
         "historical_valuation_2024": {
           "value": 157.0,
@@ -551,7 +794,7 @@
           "primary_source_url": "https://www.theinformation.com",
           "url_valid_direct": true,
           "snapshot_file": null,
-          "notes": "FY2024 실제 인식 매출 $3.7B (The Information 보도). FY2025는 잠정 $13.07B 보도 (영업손실 $20.92B)."
+          "notes": "FY2024 실제 인식 매출 $3.7B (The Information 보도)."
         },
         "arr_annualized_revenue": {
           "value": 40.0,
@@ -563,7 +806,7 @@
           "primary_source_url": "https://www.bloomberg.com",
           "url_valid_direct": true,
           "snapshot_file": null,
-          "notes": "월 매출 연율화 런레이트이며 TTM 실매출이 아님 (R4 반영)."
+          "notes": "월 매출 연율화 런레이트이며 TTM 실매출이 아님."
         },
         "revenue_forecast": {
           "value": 100.0,
@@ -575,7 +818,7 @@
           "primary_source_url": "https://www.nytimes.com",
           "url_valid_direct": true,
           "snapshot_file": null,
-          "notes": "투자 유치 프레젠테이션상 2029년 장기 매출 목표치. 확정 가이던스 아님."
+          "notes": "투자 유치 프레젠테이션상 2029년 장기 매출 목표치."
         },
         "cumulative_funding": {
           "value": 17.9,
@@ -587,7 +830,7 @@
           "primary_source_url": "https://www.crunchbase.com",
           "url_valid_direct": true,
           "snapshot_file": null,
-          "notes": "2024년 10월 완료 기준 약 $17.9B. 2026년 3월 $122B 약정은 인프라/마일스톤 약정 포함 (R4 반영)."
+          "notes": "2024년 10월 완료 기준 약 $17.9B."
         }
       }
     },
@@ -607,7 +850,7 @@
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "2026-05-28 공식 발표 기준 사후 기업가치 $965B (발표일 정확히 기록)."
+          "notes": "2026-05-28 공식 발표 기준 사후 기업가치 $965B."
         },
         "series_h_round_raised": {
           "value": 65.0,
@@ -619,7 +862,7 @@
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "공식 발표상 본 $65B에는 기존 약정 투자금 $15B(Amazon $5B 포함)가 포함되어 있음 (R4 반영)."
+          "notes": "공식 발표상 본 $65B에는 기존 약정 투자금 $15B(Amazon $5B 포함)가 포함되어 있음."
         },
         "target_ipo_valuation": {
           "value": 2000.0,
@@ -631,7 +874,7 @@
           "primary_source_url": "https://www.reuters.com",
           "url_valid_direct": true,
           "snapshot_file": null,
-          "notes": "IPO 목표 시총($2.0T)이며 매출 전망이 아님 (R1 완전 해결)."
+          "notes": "IPO 목표 시총($2.0T)이며 매출 전망이 아님."
         },
         "actual_annual_revenue": {
           "value": null,
@@ -643,7 +886,7 @@
           "primary_source_url": null,
           "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "공식 감사보고서 미공개로 미확보 처리 (R3 반영). 2026 Q2 잠정 분기 매출은 >$11.5B 보도."
+          "notes": "공식 감사보고서 미공개로 미확보 처리."
         },
         "arr_annualized_revenue": {
           "value": 47.0,
@@ -655,7 +898,7 @@
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "2026-05-28 공식 발표문상 >$47B 확인 (이후 2026-07 언론 보도치는 ~$65B, Claude Code >$2.5B)."
+          "notes": "2026-05-28 공식 발표문상 >$47B 확인."
         },
         "revenue_forecast": {
           "value": null,
@@ -667,7 +910,7 @@
           "primary_source_url": null,
           "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "IPO 목표 시총 $2000B를 매출 전망에서 제거하고, 미래 매출 전망은 공식 미공개로 미확보(None) 처리 (R1 완전 해결)."
+          "notes": "감사된 미래 매출 전망은 공식 미공개로 미확보(None) 처리."
         },
         "cumulative_funding": {
           "value": 82.0,
@@ -679,21 +922,16 @@
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "Series H $65B에 기존 약정 $15B가 포함되어 있으므로, 이전 누적 ~$17B(Amazon $8B, Google $2B 등)와 합산 시 약 $82B(순신규 $50B 합산 시 $67B~$82B). 단순 중복 합산 $130B 위험 방지 (R4 반영)."
+          "notes": "Series H $65B에 기존 약정 $15B가 포함되어 있으므로 이전 누적과 합산 시 약 $82B."
         }
       }
     }
   },
   "conclusion": {
+    "nasdaq_4q_discovery_applied": true,
     "single_source_continuity_rule_respected": true,
     "arbitrary_stitching_prevented": true,
     "private_company_per_prohibited": true,
-    "r1_conflation_fixed": true,
-    "r2_openai_852b_officially_recorded": true,
-    "r3_direct_urls_and_snapshots_provided": true,
-    "r4_arr_and_overlap_deduplicated": true,
-    "r5_exchange_rate_claim_downgraded": true,
-    "r6_validator_edge_cases_fixed": true,
-    "r7_stat_anomalies_flagged": true
+    "data_fulfillment_vs_scoring_eligibility_separated": true
   }
 }

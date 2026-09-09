@@ -1,0 +1,492 @@
+{
+  "tsm": {
+    "ticker": "TSM",
+    "collected_at": "2026-09-09T02:10:55Z",
+    "endpoints": {
+      "earnings_forecast": {
+        "url": "https://api.nasdaq.com/api/analyst/TSM/earnings-forecast",
+        "status": 200,
+        "ok": true,
+        "raw_file": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\C-13\\validation\\consensus-source-2026-09-09\\raw\\nasdaq-tsm-earnings_forecast.json",
+        "data": {
+          "symbol": "tsm",
+          "quarterlyForecast": {
+            "asOf": null,
+            "headers": {
+              "fiscalEnd": "Fiscal Quarter End",
+              "consensusEPSForecast": "Consensus EPS* Forecast",
+              "highEPSForecast": "High EPS* Forecast",
+              "lowEPSForecast": "Low EPS* Forecast",
+              "noOfEstimates": "Number of Estimates",
+              "up": "Over the Last 4 Weeks Number of Revisions - Up",
+              "down": "Over the Last 4 Weeks Number of Revisions - Down"
+            },
+            "rows": [
+              {
+                "fiscalEnd": "Sep 2026",
+                "consensusEPSForecast": 4.45,
+                "highEPSForecast": 4.7,
+                "lowEPSForecast": 4.24,
+                "noOfEstimates": 6,
+                "up": 0,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Dec 2026",
+                "consensusEPSForecast": 4.68,
+                "highEPSForecast": 4.93,
+                "lowEPSForecast": 4.22,
+                "noOfEstimates": 5,
+                "up": 0,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Mar 2027",
+                "consensusEPSForecast": 4.64,
+                "highEPSForecast": 4.97,
+                "lowEPSForecast": 4.36,
+                "noOfEstimates": 4,
+                "up": 0,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Jun 2027",
+                "consensusEPSForecast": 5.1,
+                "highEPSForecast": 5.49,
+                "lowEPSForecast": 4.9,
+                "noOfEstimates": 4,
+                "up": 0,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Sep 2027",
+                "consensusEPSForecast": 5.65,
+                "highEPSForecast": 5.94,
+                "lowEPSForecast": 5.43,
+                "noOfEstimates": 4,
+                "up": 0,
+                "down": 0
+              }
+            ]
+          },
+          "yearlyForecast": {
+            "asOf": null,
+            "headers": {
+              "fiscalEnd": "Fiscal Year End",
+              "consensusEPSForecast": "Consensus EPS* Forecast",
+              "highEPSForecast": "High EPS* Forecast",
+              "lowEPSForecast": "Low EPS* Forecast",
+              "noOfEstimates": "Number of Estimates",
+              "up": "Over the Last 4 Weeks Number of Revisions - Up",
+              "down": "Over the Last 4 Weeks Number of Revisions - Down"
+            },
+            "rows": [
+              {
+                "fiscalEnd": "Dec 2026",
+                "consensusEPSForecast": 16.52,
+                "highEPSForecast": 17.38,
+                "lowEPSForecast": 13.08,
+                "noOfEstimates": 9,
+                "up": 1,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Dec 2027",
+                "consensusEPSForecast": 21.09,
+                "highEPSForecast": 23.77,
+                "lowEPSForecast": 16.71,
+                "noOfEstimates": 9,
+                "up": 1,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Dec 2028",
+                "consensusEPSForecast": 25.92,
+                "highEPSForecast": 28.83,
+                "lowEPSForecast": 20.39,
+                "noOfEstimates": 3,
+                "up": 0,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Dec 2029",
+                "consensusEPSForecast": 24.08,
+                "highEPSForecast": 24.08,
+                "lowEPSForecast": 24.08,
+                "noOfEstimates": 1,
+                "up": 0,
+                "down": 0
+              }
+            ]
+          }
+        }
+      },
+      "info": {
+        "url": "https://api.nasdaq.com/api/quote/TSM/info?assetclass=stocks",
+        "status": 200,
+        "ok": true,
+        "raw_file": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\C-13\\validation\\consensus-source-2026-09-09\\raw\\nasdaq-tsm-info.json",
+        "data": {
+          "symbol": "TSM",
+          "companyName": "Taiwan Semiconductor Manufacturing Company Ltd.",
+          "stockType": "American Depositary Shares",
+          "exchange": "NYSE",
+          "isNasdaqListed": false,
+          "isNasdaq100": false,
+          "isHeld": false,
+          "primaryData": {
+            "lastSalePrice": "$439.00",
+            "netChange": "+10.09",
+            "percentageChange": "+2.35%",
+            "deltaIndicator": "up",
+            "lastTradeTimestamp": "Sep 8, 2026",
+            "isRealTime": false,
+            "bidPrice": "N/A",
+            "askPrice": "N/A",
+            "bidSize": "N/A",
+            "askSize": "N/A",
+            "volume": "13,088,956",
+            "currency": null
+          },
+          "secondaryData": null,
+          "marketStatus": "Closed",
+          "assetClass": "STOCKS",
+          "keyStats": {
+            "fiftyTwoWeekHighLow": {
+              "label": "52 Week Range:",
+              "value": "237.90 - 479.00"
+            },
+            "dayrange": {
+              "label": "High/Low:",
+              "value": "NA"
+            }
+          },
+          "notifications": [
+            {
+              "headline": "HIGH TECHNICAL ATTRIBUTE",
+              "eventTypes": [
+                {
+                  "message": "TSM has a High Technical Rating by Nasdaq Dorsey Wright. Discover why technical analysis matters",
+                  "eventName": "High Technical Attribute",
+                  "url": {
+                    "label": "Discover why technical analysis matters",
+                    "value": "https://www.nasdaq.com/solutions/nasdaq-dorsey-wright/technical-analysis"
+                  },
+                  "id": "tech_attribute"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "summary": {
+        "url": "https://api.nasdaq.com/api/quote/TSM/summary?assetclass=stocks",
+        "status": 200,
+        "ok": true,
+        "raw_file": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\C-13\\validation\\consensus-source-2026-09-09\\raw\\nasdaq-tsm-summary.json",
+        "data": {
+          "symbol": "TSM",
+          "summaryData": {
+            "Exchange": {
+              "label": "Exchange",
+              "value": "NYSE"
+            },
+            "Sector": {
+              "label": "Sector",
+              "value": "Technology"
+            },
+            "Industry": {
+              "label": "Industry",
+              "value": "Semiconductors"
+            },
+            "OneYrTarget": {
+              "label": "1 Year Target",
+              "value": "$507.50"
+            },
+            "TodayHighLow": {
+              "label": "Today's High/Low",
+              "value": "N/A"
+            },
+            "ShareVolume": {
+              "label": "Share Volume",
+              "value": "13,088,956"
+            },
+            "AverageVolume": {
+              "label": "Average Volume",
+              "value": "10,483,275"
+            },
+            "PreviousClose": {
+              "label": "Previous Close",
+              "value": "$428.91"
+            },
+            "FiftTwoWeekHighLow": {
+              "label": "52 Week High/Low",
+              "value": "$479/$237.9"
+            },
+            "MarketCap": {
+              "label": "Market Cap",
+              "value": "2,276,875,652,856"
+            },
+            "SpecialDividendDate": {
+              "label": "Special Dividend Date",
+              "value": "N/A"
+            },
+            "SpecialDividendAmount": {
+              "label": "Special Dividend",
+              "value": "N/A"
+            },
+            "SpecialDividendPaymentDate": {
+              "label": "Special Dividend Pay Date",
+              "value": "N/A"
+            }
+          },
+          "assetClass": "STOCKS",
+          "additionalData": null,
+          "bidAsk": {
+            "Bid * Size": {
+              "label": "Bid * Size",
+              "value": "N/A"
+            },
+            "Ask * Size": {
+              "label": "Ask * Size",
+              "value": "N/A"
+            }
+          }
+        }
+      }
+    }
+  },
+  "baba": {
+    "ticker": "BABA",
+    "collected_at": "2026-09-09T02:11:02Z",
+    "endpoints": {
+      "earnings_forecast": {
+        "url": "https://api.nasdaq.com/api/analyst/BABA/earnings-forecast",
+        "status": 200,
+        "ok": true,
+        "raw_file": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\C-13\\validation\\consensus-source-2026-09-09\\raw\\nasdaq-baba-earnings_forecast.json",
+        "data": {
+          "symbol": "baba",
+          "quarterlyForecast": {
+            "asOf": null,
+            "headers": {
+              "fiscalEnd": "Fiscal Quarter End",
+              "consensusEPSForecast": "Consensus EPS* Forecast",
+              "highEPSForecast": "High EPS* Forecast",
+              "lowEPSForecast": "Low EPS* Forecast",
+              "noOfEstimates": "Number of Estimates",
+              "up": "Over the Last 4 Weeks Number of Revisions - Up",
+              "down": "Over the Last 4 Weeks Number of Revisions - Down"
+            },
+            "rows": [
+              {
+                "fiscalEnd": "Sep 2026",
+                "consensusEPSForecast": 1.42,
+                "highEPSForecast": 2.16,
+                "lowEPSForecast": 0.81,
+                "noOfEstimates": 3,
+                "up": 2,
+                "down": 1
+              },
+              {
+                "fiscalEnd": "Dec 2026",
+                "consensusEPSForecast": 1.89,
+                "highEPSForecast": 2.75,
+                "lowEPSForecast": 1.31,
+                "noOfEstimates": 3,
+                "up": 2,
+                "down": 1
+              },
+              {
+                "fiscalEnd": "Mar 2027",
+                "consensusEPSForecast": 1.81,
+                "highEPSForecast": 2.21,
+                "lowEPSForecast": 1.05,
+                "noOfEstimates": 3,
+                "up": 2,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Jun 2027",
+                "consensusEPSForecast": 2.45,
+                "highEPSForecast": 3.13,
+                "lowEPSForecast": 1.76,
+                "noOfEstimates": 2,
+                "up": 0,
+                "down": 0
+              },
+              {
+                "fiscalEnd": "Sep 2027",
+                "consensusEPSForecast": 2.35,
+                "highEPSForecast": 3.13,
+                "lowEPSForecast": 1.57,
+                "noOfEstimates": 2,
+                "up": 1,
+                "down": 0
+              }
+            ]
+          },
+          "yearlyForecast": {
+            "asOf": null,
+            "headers": {
+              "fiscalEnd": "Fiscal Year End",
+              "consensusEPSForecast": "Consensus EPS* Forecast",
+              "highEPSForecast": "High EPS* Forecast",
+              "lowEPSForecast": "Low EPS* Forecast",
+              "noOfEstimates": "Number of Estimates",
+              "up": "Over the Last 4 Weeks Number of Revisions - Up",
+              "down": "Over the Last 4 Weeks Number of Revisions - Down"
+            },
+            "rows": [
+              {
+                "fiscalEnd": "Mar 2027",
+                "consensusEPSForecast": 5.88,
+                "highEPSForecast": 8.26,
+                "lowEPSForecast": 4.92,
+                "noOfEstimates": 6,
+                "up": 1,
+                "down": 2
+              },
+              {
+                "fiscalEnd": "Mar 2028",
+                "consensusEPSForecast": 8.61,
+                "highEPSForecast": 13.29,
+                "lowEPSForecast": 6.8,
+                "noOfEstimates": 6,
+                "up": 1,
+                "down": 3
+              },
+              {
+                "fiscalEnd": "Mar 2029",
+                "consensusEPSForecast": 12.82,
+                "highEPSForecast": 16.01,
+                "lowEPSForecast": 9.62,
+                "noOfEstimates": 2,
+                "up": 2,
+                "down": 0
+              }
+            ]
+          }
+        }
+      },
+      "info": {
+        "url": "https://api.nasdaq.com/api/quote/BABA/info?assetclass=stocks",
+        "status": 200,
+        "ok": true,
+        "raw_file": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\C-13\\validation\\consensus-source-2026-09-09\\raw\\nasdaq-baba-info.json",
+        "data": {
+          "symbol": "BABA",
+          "companyName": "Alibaba Group Holding Limited American Depositary Shares each representing eight Ordinary share",
+          "stockType": "American Depositary Shares each representing 8 Ordinary share",
+          "exchange": "NYSE",
+          "isNasdaqListed": false,
+          "isNasdaq100": false,
+          "isHeld": false,
+          "primaryData": {
+            "lastSalePrice": "$112.66",
+            "netChange": "-0.58",
+            "percentageChange": "-0.51%",
+            "deltaIndicator": "down",
+            "lastTradeTimestamp": "Sep 8, 2026",
+            "isRealTime": false,
+            "bidPrice": "N/A",
+            "askPrice": "N/A",
+            "bidSize": "N/A",
+            "askSize": "N/A",
+            "volume": "6,965,724",
+            "currency": null
+          },
+          "secondaryData": null,
+          "marketStatus": "Closed",
+          "assetClass": "STOCKS",
+          "keyStats": {
+            "fiftyTwoWeekHighLow": {
+              "label": "52 Week Range:",
+              "value": "91.99 - 192.67"
+            },
+            "dayrange": {
+              "label": "High/Low:",
+              "value": "NA"
+            }
+          },
+          "notifications": []
+        }
+      },
+      "summary": {
+        "url": "https://api.nasdaq.com/api/quote/BABA/summary?assetclass=stocks",
+        "status": 200,
+        "ok": true,
+        "raw_file": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\C-13\\validation\\consensus-source-2026-09-09\\raw\\nasdaq-baba-summary.json",
+        "data": {
+          "symbol": "BABA",
+          "summaryData": {
+            "Exchange": {
+              "label": "Exchange",
+              "value": "NYSE"
+            },
+            "Sector": {
+              "label": "Sector",
+              "value": "Consumer Discretionary"
+            },
+            "Industry": {
+              "label": "Industry",
+              "value": "Business Services"
+            },
+            "OneYrTarget": {
+              "label": "1 Year Target",
+              "value": "$190.00"
+            },
+            "TodayHighLow": {
+              "label": "Today's High/Low",
+              "value": "N/A"
+            },
+            "ShareVolume": {
+              "label": "Share Volume",
+              "value": "6,965,724"
+            },
+            "AverageVolume": {
+              "label": "Average Volume",
+              "value": "14,981,030"
+            },
+            "PreviousClose": {
+              "label": "Previous Close",
+              "value": "$113.24"
+            },
+            "FiftTwoWeekHighLow": {
+              "label": "52 Week High/Low",
+              "value": "$192.67/$91.99"
+            },
+            "MarketCap": {
+              "label": "Market Cap",
+              "value": "272,917,274,788"
+            },
+            "SpecialDividendDate": {
+              "label": "Special Dividend Date",
+              "value": "N/A"
+            },
+            "SpecialDividendAmount": {
+              "label": "Special Dividend",
+              "value": "N/A"
+            },
+            "SpecialDividendPaymentDate": {
+              "label": "Special Dividend Pay Date",
+              "value": "N/A"
+            }
+          },
+          "assetClass": "STOCKS",
+          "additionalData": null,
+          "bidAsk": {
+            "Bid * Size": {
+              "label": "Bid * Size",
+              "value": "N/A"
+            },
+            "Ask * Size": {
+              "label": "Ask * Size",
+              "value": "N/A"
+            }
+          }
+        }
+      }
+    }
+  }
+}
