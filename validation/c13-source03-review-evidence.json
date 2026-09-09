@@ -1,0 +1,262 @@
+{
+  "reviewed_commit": "20c7d14",
+  "verdict": "needs_fix",
+  "unit_tests_passed": 11,
+  "unit_test_log": [
+    "[Test 1 PASS] R7: inverted min/max 및 zero count 모순 감지 확인",
+    "[Test 2 PASS] R6: null 분기 입력 시 AttributeError 방어 및 결측 처리 확인",
+    "[Test 3 PASS] R6: 비연속 4분기 입력 시 scoring_eligible=False 거부 확인",
+    "[Test 4 PASS] C13-SOURCE-03: 문자열 'false'의 bool 오평가 방어 확인",
+    "[Test 5 PASS] C13-SOURCE-03: 통계 모순 시 scoring_eligible=False 차단 확인",
+    "[Test 6 PASS] R6: 연속 4분기 + 전 메타데이터 충족 시 F6 적격 판정 확인",
+    "[Test 7 PASS] R6: 0과 음수 분기 EPS 보존 및 합 양수 시 적격 확인",
+    "[Test 8 PASS] R1: Anthropic revenue_forecast None 및 target_ipo_valuation 분리 확인",
+    "[Test 9 PASS] R2, R3: OpenAI 852B 공식 원문 및 직접 URL 확인",
+    "[Test 10 PASS] TSMC Nasdaq API 4분기 확보(18.87) 및 단위미확인 채점보류 분리 확인",
+    "[Test 11 PASS] C13-SOURCE-03: 전 기준 검증 충족 시 F6 적격 전환 확인",
+    ">>> 단위 테스트 11종 전원 통과 <<<"
+  ],
+  "observations": [
+    {
+      "company": "tsmc",
+      "reported_eligible": true,
+      "without_asserted_metadata": {
+        "expected_quarters": [
+          "2026 Q3",
+          "2026 Q4",
+          "2027 Q1",
+          "2027 Q2"
+        ],
+        "consecutive_quarters": true,
+        "basis_metadata_verified": false,
+        "metadata_checks": {
+          "currency_confirmed": false,
+          "share_basis_confirmed": false,
+          "accounting_standard_confirmed": false,
+          "as_of_confirmed": false
+        },
+        "has_stat_anomalies": false,
+        "fulfilled_quarters": [
+          "2026 Q3",
+          "2026 Q4",
+          "2027 Q1",
+          "2027 Q2"
+        ],
+        "missing_quarters": [],
+        "fulfilled_count": 4,
+        "missing_count": 0,
+        "all_4q_fulfilled": true,
+        "stats_by_quarter": {
+          "2026 Q3": {
+            "mean": 4.45,
+            "median": null,
+            "min": 4.24,
+            "max": 4.7,
+            "count": 6,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          },
+          "2026 Q4": {
+            "mean": 4.68,
+            "median": null,
+            "min": 4.22,
+            "max": 4.93,
+            "count": 5,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          },
+          "2027 Q1": {
+            "mean": 4.64,
+            "median": null,
+            "min": 4.36,
+            "max": 4.97,
+            "count": 4,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          },
+          "2027 Q2": {
+            "mean": 5.1,
+            "median": null,
+            "min": 4.9,
+            "max": 5.49,
+            "count": 4,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          }
+        },
+        "mean_by_quarter": {
+          "2026 Q3": 4.45,
+          "2026 Q4": 4.68,
+          "2027 Q1": 4.64,
+          "2027 Q2": 5.1
+        },
+        "sum_4q_mean": 18.87,
+        "arithmetic_sum_calculable": true,
+        "scoring_eligible": false,
+        "scoring_status": "pending_basis_metadata_verification"
+      },
+      "source_as_of": null
+    },
+    {
+      "company": "alibaba",
+      "reported_eligible": true,
+      "without_asserted_metadata": {
+        "expected_quarters": [
+          "FY27 Q2",
+          "FY27 Q3",
+          "FY27 Q4",
+          "FY28 Q1"
+        ],
+        "consecutive_quarters": true,
+        "basis_metadata_verified": false,
+        "metadata_checks": {
+          "currency_confirmed": false,
+          "share_basis_confirmed": false,
+          "accounting_standard_confirmed": false,
+          "as_of_confirmed": false
+        },
+        "has_stat_anomalies": false,
+        "fulfilled_quarters": [
+          "FY27 Q2",
+          "FY27 Q3",
+          "FY27 Q4",
+          "FY28 Q1"
+        ],
+        "missing_quarters": [],
+        "fulfilled_count": 4,
+        "missing_count": 0,
+        "all_4q_fulfilled": true,
+        "stats_by_quarter": {
+          "FY27 Q2": {
+            "mean": 1.42,
+            "median": null,
+            "min": 0.81,
+            "max": 2.16,
+            "count": 3,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          },
+          "FY27 Q3": {
+            "mean": 1.89,
+            "median": null,
+            "min": 1.31,
+            "max": 2.75,
+            "count": 3,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          },
+          "FY27 Q4": {
+            "mean": 1.81,
+            "median": null,
+            "min": 1.05,
+            "max": 2.21,
+            "count": 3,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          },
+          "FY28 Q1": {
+            "mean": 2.45,
+            "median": null,
+            "min": 1.76,
+            "max": 3.13,
+            "count": 2,
+            "has_mean": true,
+            "has_median": false,
+            "has_range": true,
+            "has_sample_count": true,
+            "stat_anomalies": [],
+            "auxiliary_missing": [
+              "median"
+            ]
+          }
+        },
+        "mean_by_quarter": {
+          "FY27 Q2": 1.42,
+          "FY27 Q3": 1.89,
+          "FY27 Q4": 1.81,
+          "FY28 Q1": 2.45
+        },
+        "sum_4q_mean": 7.57,
+        "arithmetic_sum_calculable": true,
+        "scoring_eligible": false,
+        "scoring_status": "pending_basis_metadata_verification"
+      },
+      "source_as_of": null
+    }
+  ],
+  "raw_integrity": [
+    {
+      "file": "validation/consensus-source-2026-09-09/raw/nasdaq-baba-earnings_forecast.json",
+      "sha256": "451f3e86cc86ea0a1422277593a9a0e25919f4c8154c1493f7e2a59f6371832e",
+      "unchanged_from": "5187e92"
+    },
+    {
+      "file": "validation/consensus-source-2026-09-09/raw/nasdaq-baba-info.json",
+      "sha256": "c33b1906f64d61435f29863832f3c660a7e650213c48112230e1b69bbf7ba2a0",
+      "unchanged_from": "5187e92"
+    },
+    {
+      "file": "validation/consensus-source-2026-09-09/raw/nasdaq-baba-summary.json",
+      "sha256": "f3cbc672cdee824c26d4bacfffcfd0b783356d140ee62d93fe8b2aa630793632",
+      "unchanged_from": "5187e92"
+    },
+    {
+      "file": "validation/consensus-source-2026-09-09/raw/nasdaq-tsm-earnings_forecast.json",
+      "sha256": "69961e3e1b98e6cfc6005ec4f720618f76b7a4b0fd84b5da7f115bdcaf5b9970",
+      "unchanged_from": "5187e92"
+    },
+    {
+      "file": "validation/consensus-source-2026-09-09/raw/nasdaq-tsm-info.json",
+      "sha256": "65a14060aee43569e251d5f99322ad5d7cfc5cdf40f121c71e0aa3b0e26df57a",
+      "unchanged_from": "5187e92"
+    },
+    {
+      "file": "validation/consensus-source-2026-09-09/raw/nasdaq-tsm-summary.json",
+      "sha256": "062d3d865582dcb2edc431d4f19f4e82981d2263eb87efd04216580a597208aa",
+      "unchanged_from": "5187e92"
+    }
+  ],
+  "scope": "Frozen commit read only; source unit tests and 8 EPS rows rerun. Metadata booleans do not establish external proof. Raw comparison covers these 6 files only, not worker or entire repository."
+}
