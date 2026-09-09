@@ -18,8 +18,8 @@
 ### 1.1 R2 재검토 4개 잔여 이슈 조치 내역
 
 1. **Anthropic 스냅샷 원문 발췌와 요약 분리 (`snapshots/anthropic_2026_05_28_series_h.md`)**:
-   - 공식 발표문 본문의 실제 영문 원문 발췌문(사후가치 $965B, 조달액 $65B, 기존 약정 $15B 포함 문구, annualized run-rate revenue $47B)을 1절에 직접 인용으로 분리 기록함.
-   - $50B 산술 추론, ARR 산식 미공개, 실현 매출 미확보 등의 해설은 2절 작성자 분석/요약으로 분리함.
+   - 공식 발표문 본문의 실제 영문 원문 발췌문(사후가치 $965B, 조달액 $65B, 기존 약정 $15B 포함 문구, "our run-rate revenue crossed $47 billion earlier this month")을 1절에 직접 인용으로 분리 기록함.
+   - 투자자/파트너 언급 및 $50B 산술 추론, annualized 해석/산식 미공개, 실현 매출 미확보 등은 2절 작성자 요약으로 완전 분리함.
 2. **Anthropic Series A/B/C 홈페이지 루트 링크 철회 및 미확인 정정**:
    - 단순 홈페이지 루트(`anthropic.com`) 링크는 개별 근거로 부적합하므로 철회하고, 개별 공식 릴리스 직접 URL 부재에 따라 과거 라운드를 모두 **미확인 (`unconfirmed / unobtained`)**으로 낮춤.
 3. **OpenAI 스냅샷 미확인 2차 보도 메모 완전 격리 (`snapshots/openai_2026_03_31_accelerating_next_phase.md`)**:
@@ -91,7 +91,7 @@
 |---|---|---|---|---|
 | **사후 기업가치** | **$965.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **공식 발표문 영문 원문 발췌 확인** |
 | **Series H 조달액** | **$65.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **원문: $15B 기존 약정 포함 명시 ($50B는 산술 추론)** |
-| **Run-rate revenue** | **>$47.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **원문 표기 'annualized run-rate revenue' (산식 미공개)** |
+| **Run-rate revenue** | **>$47.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **원문: "our run-rate revenue crossed $47 billion earlier this month" (산식 미공개, annualized는 요약에 격리)** |
 | **과거 Series A~G** | **개별 미상세** | `unconfirmed` | 과거 라운드 | **개별 직접 URL 부재로 미확인 처리 (홈페이지 링크 철회)** |
 | **잠정 IPO 목표 시총** | **$2,000.0B USD** | `unverified_article_url` | 2026-09<br>Reuters 보도 | **직접 URL 부재로 관측치에서 배제 (매출전망 아님)** |
 | **실제 연간 매출** | **미확보 (`None`)** | `unobtained` | unconfirmed | 당사 조사 범위 내 결산 감사보고서 미공개 |

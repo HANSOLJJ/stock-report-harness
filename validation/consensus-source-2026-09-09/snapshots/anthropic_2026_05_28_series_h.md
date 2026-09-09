@@ -18,9 +18,7 @@
   2. **기존 약정 자본 포함 조항 (본문 문구)**:
      > "This round includes $15B of previously committed investments."
   3. **Run-rate Revenue (본문 실적 문구)**:
-     > "In May, Anthropic crossed an annualized run-rate revenue of $47 billion..."
-  4. **주요 참여 투자자 (본문 파트너 문구)**:
-     > "The financing was led by Altimeter, Dragoneer, Greenoaks, and Sequoia, with participation from Capital Group, Coatue, D1 Capital Partners, GIC, ICONIQ, and XN. Anthropic has also entered into strategic hardware partnerships with Micron, Samsung, and SK hynix..."
+     > "Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month."
 
 ---
 
@@ -28,10 +26,14 @@
 
 1. **순 신규 유치 자본 관련**:
    - 원문 문구("$65B 중 기존 약정 $15B 포함")에 따른 $50B는 **단순 산술 추론(arithmetic deduction)**이며, 실제 현금 납입액 실사 결과가 아님.
-2. **지표 명칭 및 산식**:
-   - 공식 발표 원문 문구는 **'annualized run-rate revenue'**임.
-   - 본문에 연율화 산식(월간/분기 곱셈 등)이나 SaaS ARR(연간반복매출)과의 일치 여부는 공개되지 않았으므로 **산식 미공개(`unspecified_formula / unknown`)**로 분류함.
-3. **실현 매출 및 매출 전망**:
+2. **지표 명칭 및 연율화(Annualized) 해석**:
+   - 공식 발표 원문 문구는 **"our run-rate revenue crossed $47 billion earlier this month"**임.
+   - 외부 언론 등에서 이를 연율화(annualized run-rate revenue) 또는 ARR로 지칭하나, 공식 릴리스 본문에는 구체적인 연율화 산식(월간/주간 곱셈 등)이나 SaaS 반복매출 일치 여부가 공개되지 않았으므로 **산식 미공개(`unspecified_formula / unknown`)**로 분류함.
+3. **참여 투자자 및 파트너 (보도자료 내용 요약)**:
+   - 리드 투자자: Altimeter, Dragoneer, Greenoaks, Sequoia.
+   - 참여 투자자: Capital Group, Coatue, D1 Capital Partners, GIC, ICONIQ, XN.
+   - 전략적 하드웨어 파트너: Micron, Samsung, SK hynix.
+4. **실현 매출 및 매출 전망**:
    - 감사된 연간 실현 매출 및 미래 공식 매출 가이던스는 공식 발표문에 포함되어 있지 않으므로 당사 조사 범위 내 **미확보(`None / unobtained`)**로 분류함.
 
 ---
