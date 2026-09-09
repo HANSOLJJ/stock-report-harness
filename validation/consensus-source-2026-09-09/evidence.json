@@ -2,7 +2,7 @@
   "schema": "scorecard.consensus_source_validation/4",
   "task_id": "C13-SOURCE-03",
   "version": "s03_review_refined",
-  "collected_at": "2026-09-09T11:36:35.934206",
+  "collected_at": "2026-09-09T11:40:16.473734",
   "methodology": "Valley 5-stat cross-source with strict metadata separation and unconfirmed hold",
   "listed_companies": {
     "tsmc": {

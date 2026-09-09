@@ -1,45 +1,31 @@
-# C13-SOURCE-03: 컨센서스 기준 검증 및 비상장사 근거 보완 보고서 (v4.1 독립 재검토 반영본)
+# C13-SOURCE-03: 컨센서스 기준 검증 및 비상장사 근거 보완 보고서 (v4.2 R2 재검토 반영본)
 
-- **문서 버전**: v4.1 (설계진행 독립 재검토 `c13-source03-review.md` S03-01~05 요구사항 전면 반영본)
+- **문서 버전**: v4.2 (설계진행 R2 독립 재검토 `c13-source03-r2-review.md` 잔여 이슈 4종 전면 반영본)
 - **작업 ID**: `C13-SOURCE-03` (선행: `C13-SOURCE-02`)
 - **작성일자**: 2026-09-09
 - **수행 주체**: C-13 worktree Antigravity 담당
 - **참조 문서**:
-  - `설계진행` 재검토 통보: `msg_cf996e830c0f` 및 `validation/c13-source03-review.md` (커밋 `48984c8`)
-  - `설계진행` 12개사 원자료 검증: `validation/recheck_nasdaq_12.py`
+  - `설계진행` R2 재검토 통보: `msg_260dee949d61` 및 `validation/c13-source03-r2-review.md`
   - `validation/consensus-source-2026-09-09/verify_sources.py` (12개 단위 테스트 검증기)
   - `validation/consensus-source-2026-09-09/evidence.json` (기계 판독용 정합성 데이터)
 
 ---
 
-## 1. 개요 및 S03-01~05 재검토 보완 핵심
+## 1. 개요 및 R2 재검토 보완 핵심
 
-본 보고서는 설계진행의 독립 재검토(`c13-source03-review.md`) 지적사항(S03-01~05)에 따라, 연구자의 주관적 추정이나 과도한 단정을 배제하고 **자료 확보(Data Fulfillment: 4/4 완료)**와 **메타데이터 검증(Metadata Verification: 미확인)**을 명확히 분리하여, **TSMC와 Alibaba의 채점 적격성을 보류(`scoring_eligible: False`)로 유지**하며 **비상장사(Anthropic, OpenAI)의 원문 명칭 및 출처 범위를 원칙에 맞게 정정한 최종 보고서**이다.
+본 보고서는 설계진행의 R2 독립 재검토(`c13-source03-r2-review.md`) 지적사항에 따라, **공식 원문 직접 발췌(Verbatim Quotes)**와 **작성자 분석 요약 및 미확인 2차 보도 메모**를 명확히 분리하고, 직접 근거가 없는 홈페이지 루트 링크 철회 및 비상장 미확인 수치의 관측 배제를 완결한 최종 보고서이다.
 
-### 1.1 S03-01~05 조치 내역 요약
+### 1.1 R2 재검토 4개 잔여 이슈 조치 내역
 
-1. **S03-01: Zacks 계열(BNRI vs Street) 및 회계 기준 추정 단정 철회**:
-   - Zacks 공식 FAQ(`https://zacksdata.com/consensus/faq/`)에 따르면 Zacks는 BNRI(Before Non-Recurring Items)와 Street 두 계열의 컨센서스를 모두 제공함.
-   - Nasdaq Earnings Forecast API 응답상 `EPS*` 필드가 BNRI인지 Street인지, 희석 여부 및 세부 조정 항목이 무엇인지 직결하는 원문 URL이나 각주 보존본이 부재함.
-   - 따라서 추측으로 BNRI 또는 Street로 단정하지 않고 **회계 기준 미확인(`unconfirmed_series / unconfirmed_standard`)**으로 명시함.
-2. **S03-02: `asOf: null` 일일 동적갱신 단정 철회 및 시점 분리**:
-   - Nasdaq JSON의 `asOf: null` 발생 원인을 일일 동적 갱신으로 단정하던 서술을 철회하고 **원인 미확인(`unknown`)**으로 기록함.
-   - 공급사 기준시각(`unknown`), 당사 수집시각(`2026-09-09T02:11:00Z`), 파일 생성시각을 엄격히 분리함.
-3. **S03-03: 주가 통화 기반 EPS 단위 확정 철회 및 채점 보류 유지**:
-   - 미국 거래소 직상장 증서(ADR/ADS) 및 주가 거래 통화(USD)가 확인되었으나, 이것만으로 EPS 필드 자체의 통화와 분모 단위(주당)까지 입증되지 않음을 인정함.
-   - 직접적인 필드 메타데이터 부재에 따라 `currency_confirmed=False`, `share_basis_confirmed=False`로 정정함.
-   - 이에 따라 TSMC ($18.87) 및 Alibaba ($7.57) 모두 **채점 보류 (`scoring_eligible: False`, `scoring_status: "pending_basis_metadata_verification"`)를 확고히 유지함.**
-4. **S03-04: Anthropic 공식 표현 'run-rate revenue' 보존 및 임의 산식 삭제**:
-   - 공식 발표문 본문의 지표명은 **"run-rate revenue"** (> $47B in May)이며, SaaS 연간반복매출(ARR)로 단정하지 않음.
-   - 기존의 "주간/월간 매출에 12를 곱한다"는 임의 산식 설명을 전면 삭제하고, **"연율화 산식 미공개 (`unspecified_formula` / `unknown`)"**로 명시함.
-   - 연간 실현 매출, TTM, 미래 매출 전망과 엄격히 분리하며, 조사 범위 내 미확보(`None / unobtained`)로 기록함.
-5. **S03-05: Anthropic 원장 미완성 범위 명시, SEC draft S-1 실사 철회, 2차 보도 관측 배제**:
-   - Anthropic 자금조달 원장 중 세부 중간 라운드(Series D~G 등)의 개별 공식 출처 부재 및 미상세 공시 범위를 명시함.
-   - 확인된 주요 라운드(A, B, C, H)만 개별 출처와 함께 표기하고, 누적 합계는 **`unconfirmed_ledger`** 유지.
-   - 이전 작성본의 "SEC draft S-1 공시 대조 실사" 표기는 직접 accession/URL 부재로 공식 철회 및 삭제함.
-   - Series H $65B 중 기존 약정 $15B 차감액 $50B는 본문 문구에 기반한 **"단순 산술 추론(arithmetic deduction)"**이며 현금 납입액 검증과 구별함.
-   - 직접 기사 URL이 없는 수치(OpenAI $40B, $3.7B, $100B, Anthropic IPO 목표 시총 $2.0T)는 공식 검증된 관측치로 사용하지 않음(`unverified_article_url`).
-   - 실현 매출 및 전망치 미확보는 당사 조사 범위 내에서의 확인 결과이며, 전 세계적 자료 부재로 확대 단정하지 않음.
+1. **Anthropic 스냅샷 원문 발췌와 요약 분리 (`snapshots/anthropic_2026_05_28_series_h.md`)**:
+   - 공식 발표문 본문의 실제 영문 원문 발췌문(사후가치 $965B, 조달액 $65B, 기존 약정 $15B 포함 문구, annualized run-rate revenue $47B)을 1절에 직접 인용으로 분리 기록함.
+   - $50B 산술 추론, ARR 산식 미공개, 실현 매출 미확보 등의 해설은 2절 작성자 분석/요약으로 분리함.
+2. **Anthropic Series A/B/C 홈페이지 루트 링크 철회 및 미확인 정정**:
+   - 단순 홈페이지 루트(`anthropic.com`) 링크는 개별 근거로 부적합하므로 철회하고, 개별 공식 릴리스 직접 URL 부재에 따라 과거 라운드를 모두 **미확인 (`unconfirmed / unobtained`)**으로 낮춤.
+3. **OpenAI 스냅샷 미확인 2차 보도 메모 완전 격리 (`snapshots/openai_2026_03_31_accelerating_next_phase.md`)**:
+   - 직접 기사 URL이 없는 $12B 및 인프라 약정 비중 보도를 "검증에 사용하지 않는 미확인 참고 메모"로 완전히 격리하고 공식 관측치에서 배제함 (`unverified_article_url`).
+4. **REPORT.md 원문 발췌와 작성자 요약의 엄격한 분리**:
+   - 본문 서술 및 요약표에서 실제 공식 발표문 직접 발췌 수치와 관측 배제 미확인 메모를 분리 표기함.
 
 ---
 
@@ -87,29 +73,30 @@
 
 ## 3. 비상장사 지표 조사 및 근거 범위 상세
 
-### 3.1 OpenAI 지표 체계 및 분류 상태
+### 3.1 OpenAI 지표 체계 (원문 발췌 vs 미확인 메모 분리)
 
-| 지표 항목 | 값 및 통화 | 분류 상태 | 기준 시점 및 근거 원천 | 검증 비고 |
+| 지표 항목 | 값 및 통화 | 분류 상태 | 기준 시점 및 근거 원천 | 검증 및 분리 비고 |
 |---|---|---|---|---|
-| **사후 기업가치** | **$852.0B USD** | `confirmed` | 2026-03-31<br>[OpenAI 공식 발표](https://openai.com/index/accelerating-the-next-phase-ai/) | 공식 발표문 본문 직접 확인 |
-| **약정 자본 총액** | **$122.0B USD** | `confirmed` | 2026-03-31<br>[OpenAI 공식 발표](https://openai.com/index/accelerating-the-next-phase-ai/) | 공식 본문 약정 자본 (전액 현금/컴퓨팅 단정 배제) |
+| **사후 기업가치** | **$852.0B USD** | `confirmed` | 2026-03-31<br>[OpenAI 공식 발표](https://openai.com/index/accelerating-the-next-phase-ai/) | **공식 발표문 영문 원문 발췌 확인** |
+| **약정 자본 총액** | **$122.0B USD** | `confirmed` | 2026-03-31<br>[OpenAI 공식 발표](https://openai.com/index/accelerating-the-next-phase-ai/) | **공식 본문 약정 자본 확인 (단정 배제)** |
 | *과거 기업가치* | *$157.0B USD* | `confirmed` | 2024-10-02<br>[OpenAI 공식 발표](https://openai.com/index/scale-next-frontier/) | Thrive Capital 주도 라운드 이력 보존 |
 | **누적 투자유치액** | **$17.9B USD** | `confirmed` | 2024-10-02<br>[Crunchbase](https://www.crunchbase.com) | 2024년 10월 라운드 완료 기준 |
-| **ARR (연율화 런레이트)** | **$40.0B USD** | `unverified_article_url` | 2026-08-31<br>Bloomberg 보도 | **직접 URL 부재로 검증된 관측치로 미사용** |
-| **과거 연간 실매출** | **$3.7B USD** | `unverified_article_url` | FY2024<br>The Information 보도 | **직접 URL 부재로 검증된 관측치로 미사용** |
-| **장기 매출 목표** | **$100.0B USD** | `unverified_article_url` | 2029년 목표<br>New York Times 보도 | **직접 URL 부재로 검증된 관측치로 미사용** |
+| **ARR (연율화 런레이트)** | **$40.0B USD** | `unverified_article_url` | 2026-08-31<br>Bloomberg 보도 | **직접 URL 부재로 관측치에서 완전 배제** |
+| **과거 연간 실매출** | **$3.7B USD** | `unverified_article_url` | FY2024<br>The Information 보도 | **직접 URL 부재로 관측치에서 완전 배제** |
+| **장기 매출 목표** | **$100.0B USD** | `unverified_article_url` | 2029년 목표<br>New York Times 보도 | **직접 URL 부재로 관측치에서 완전 배제** |
 
-### 3.2 Anthropic 지표 체계 및 원장 범위
+### 3.2 Anthropic 지표 체계 (원문 발췌 vs 미확인 메모 분리)
 
-| 지표 항목 | 값 및 통화 | 분류 상태 | 기준 시점 및 근거 원천 | 검증 비고 |
+| 지표 항목 | 값 및 통화 | 분류 상태 | 기준 시점 및 근거 원천 | 검증 및 분리 비고 |
 |---|---|---|---|---|
-| **사후 기업가치** | **$965.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | Series H 공식 발표문 본문 직접 확인 |
-| **Series H 조달액** | **$65.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **기존 약정 $15B 포함 명시 (산술 추론 순신규 약 $50B)** |
-| **Run-rate revenue** | **>$47.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **공식 표현 run-rate revenue 보존 (산식 미공개)** |
-| **잠정 IPO 목표 시총** | **$2,000.0B USD** | `unverified_article_url` | 2026-09<br>Reuters 보도 | **직접 URL 부재로 검증된 관측치로 미사용 (매출전망 아님)** |
+| **사후 기업가치** | **$965.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **공식 발표문 영문 원문 발췌 확인** |
+| **Series H 조달액** | **$65.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **원문: $15B 기존 약정 포함 명시 ($50B는 산술 추론)** |
+| **Run-rate revenue** | **>$47.0B USD** | `confirmed` | 2026-05-28<br>[Anthropic 공식 발표](https://www.anthropic.com/news/series-h) | **원문 표기 'annualized run-rate revenue' (산식 미공개)** |
+| **과거 Series A~G** | **개별 미상세** | `unconfirmed` | 과거 라운드 | **개별 직접 URL 부재로 미확인 처리 (홈페이지 링크 철회)** |
+| **잠정 IPO 목표 시총** | **$2,000.0B USD** | `unverified_article_url` | 2026-09<br>Reuters 보도 | **직접 URL 부재로 관측치에서 배제 (매출전망 아님)** |
 | **실제 연간 매출** | **미확보 (`None`)** | `unobtained` | unconfirmed | 당사 조사 범위 내 결산 감사보고서 미공개 |
 | **미래 매출 전망치** | **미확보 (`None`)** | `unobtained` | unconfirmed | 당사 조사 범위 내 미래 공식 가이던스 부재 |
-| **누적 조달액 합계** | **`unconfirmed_ledger`** | `unconfirmed_ledger` | 2026-05-28 | **D~G 라운드 출처 미비 및 전환사채 중복으로 미확인 유지** |
+| **누적 조달액 합계** | **`unconfirmed_ledger`** | `unconfirmed_ledger` | 2026-05-28 | **과거 라운드 직접 URL 미비 및 전환사채 중복으로 미확인 유지** |
 
 ---
 

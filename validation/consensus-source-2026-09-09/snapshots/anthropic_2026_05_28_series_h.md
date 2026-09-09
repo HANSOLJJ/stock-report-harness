@@ -8,48 +8,44 @@
 
 ---
 
-## 1. 공식 발표문 직접 인용 (Verbatim Official Announcement)
+## 1. 공식 발표 원문 발췌 (Verbatim Excerpts from Official Release)
 
-- **공식 발표 URL**: `https://www.anthropic.com/news/series-h`
+- **출처 URL**: `https://www.anthropic.com/news/series-h`
 - **발표 일자**: 2026-05-28
-- **공식 사후 기업가치(Post-money Valuation)**: **$965 billion ($965B USD)**
-- **Series H 총 조달액**: **$65 billion ($65B USD)**
-  * **기존 약정 자본 포함 조항 (Critical Clause)**:
-    - 공식 릴리스 본문 명시: "This round includes $15B of previously committed investments."
-    - 비고: $65B에서 기존 약정 $15B를 차감한 **$50B는 본문 문구에 기반한 단순 산술 추론(arithmetic deduction)**이며 실제 현금 납입액 검증 결과와 엄격히 구분함.
-- **공식 지표 명칭: Run-rate revenue (연율화 런레이트 매출)**:
-  * 발표 시점(2026-05 중) 공식 본문 명시: **>$47 billion ($47B USD)**.
-  * (주의: 본문의 표현은 'run-rate revenue'이며, 반복매출(ARR) 여부 및 주간/월간 배수 산식은 일체 명시되지 않았음).
-- **참여 투자자 명단**:
-  * 리드: Altimeter, Dragoneer, Greenoaks, Sequoia.
-  * 공동 리드: Capital Group, Coatue, D1, GIC, ICONIQ, XN.
-  * 파트너십: Micron, Samsung, SK hynix 메모리/로직 공급 협력.
+- **원문 인용 (Direct Verbatim Quotes)**:
+  1. **사후 기업가치 및 조달액 (리드문)**:
+     > "Anthropic today announced it has raised $65 billion in Series H funding at a $965 billion post-money valuation."
+  2. **기존 약정 자본 포함 조항 (본문 문구)**:
+     > "This round includes $15B of previously committed investments."
+  3. **Run-rate Revenue (본문 실적 문구)**:
+     > "In May, Anthropic crossed an annualized run-rate revenue of $47 billion..."
+  4. **주요 참여 투자자 (본문 파트너 문구)**:
+     > "The financing was led by Altimeter, Dragoneer, Greenoaks, and Sequoia, with participation from Capital Group, Coatue, D1 Capital Partners, GIC, ICONIQ, and XN. Anthropic has also entered into strategic hardware partnerships with Micron, Samsung, and SK hynix..."
 
 ---
 
-## 2. 투자 원장 및 출처 범위 (Historical Funding Ledger & Source Scope)
+## 2. 작성자 분석 및 요약 해설 (Analysis & Context Notes)
 
-> **원장 미완성 범위 고지**:
-> 공식 발표로 확인된 주요 라운드 외에 세부 중간 라운드(Series D~G 등)는 개별 공식 릴리스 URL 및 감사된 내역이 부재함. 따라서 근거가 확인된 주요 라운드만 개별 출처와 함께 표기하며, 누적 합계는 **`unconfirmed_ledger`**로 처리함.
+1. **순 신규 유치 자본 관련**:
+   - 원문 문구("$65B 중 기존 약정 $15B 포함")에 따른 $50B는 **단순 산술 추론(arithmetic deduction)**이며, 실제 현금 납입액 실사 결과가 아님.
+2. **지표 명칭 및 산식**:
+   - 공식 발표 원문 문구는 **'annualized run-rate revenue'**임.
+   - 본문에 연율화 산식(월간/분기 곱셈 등)이나 SaaS ARR(연간반복매출)과의 일치 여부는 공개되지 않았으므로 **산식 미공개(`unspecified_formula / unknown`)**로 분류함.
+3. **실현 매출 및 매출 전망**:
+   - 감사된 연간 실현 매출 및 미래 공식 매출 가이던스는 공식 발표문에 포함되어 있지 않으므로 당사 조사 범위 내 **미확보(`None / unobtained`)**로 분류함.
 
-| 라운드 | 발표 시점 | 조달 금액 | 확인된 개별 출처 및 검증 상태 | 비고 |
+---
+
+## 3. 과거 라운드 이력 및 원장 범위 (Historical Funding Ledger & Scope)
+
+> **과거 라운드 미확인 고지**:
+> 2026-05-28 Series H 공식 보도자료 외에, 과거 Series A~G 라운드는 개별 공식 발표 직접 URL이 확보되지 않았음 (단순 홈페이지 루트 `anthropic.com` 링크는 개별 근거로 부적합하여 철회함). 따라서 과거 라운드는 모두 **미확인(`unconfirmed / unobtained`)**으로 처리함.
+
+| 라운드 | 발표 시점 | 조달 금액 | 개별 출처 및 검증 상태 | 비고 |
 | :--- | :--- | :--- | :--- | :--- |
-| Series A | 2021-05 | $124M | [Anthropic A 발표](https://www.anthropic.com) (확인) | 초기 설립 라운드 |
-| Series B | 2022-04 | $580M | [FTX 파산 공시/보도](https://www.anthropic.com) (확인) | FTX 파산 후 지분 정리 완료 |
-| Series C | 2023-05 | $450M | [Spark Capital 보도자료](https://www.anthropic.com) (확인) | Spark Capital 주도 |
-| Series D~G / 전략약정 | 2023~2025 | 개별 미상세 | **출처 미확보 (unobtained)** | Amazon/Google 등 클라우드 약정 포함되나 라운드별 세부 분리 불가 |
-| Series H | 2026-05-28 | $65.0B | [Anthropic Series H 공식 발표](https://www.anthropic.com/news/series-h) (직접 확인) | **기존 약정 $15B 포함 (산술 추론 순신규 약 $50B)** |
-| **누적 조달액 합계** | - | **`unconfirmed_ledger`** | **미확인 (unconfirmed_ledger)** | **전환사채 전환 여부 및 이전 약정 중복 포함으로 공식 감사 원장 확인 전까지 확정 불가** |
-
----
-
-## 3. 지표 정의 및 분류 원칙 (S03-04, S03-05 준수)
-
-1. **Run-rate Revenue의 정의 및 산식 미공개 명시**:
-   - 공식 발표 표현은 **'run-rate revenue'** (5월 중 >$47B)임.
-   - SaaS의 연간반복매출(ARR)과의 일치 여부 및 연율화 산식(월간 또는 분기 곱셈 등)은 본문에 공개되지 않았으므로 **산식 미공개 (`unspecified_formula` / `unknown`)**로 명시함. (기존 주간x12 등의 임의 설명은 삭제함).
-2. **실현 매출(Actual Historical Revenue) 및 매출 전망(Revenue Forecast) 분리**:
-   - 비상장사로서 감사 결산 손익계산서가 공개되지 않았으므로, 당사 조사 범위 내에서 **외부 미확보 (`None / unobtained`)**로 명시함.
-   - 미래 공식 매출 전망치 역시 당사 조사 범위 내에서 미확보(`None / unobtained`)로 기록함.
-3. **잠정 IPO 목표 시가총액 ($2.0T)**:
-   - 언론 보도의 $2.0T는 잠정 IPO 목표 시총일 뿐이며, 직접 기사 URL이 결합되지 않아 검증된 관측치로 사용하지 않음.
+| Series A | 2021-05 | $124M (보도) | **미확인 (`unconfirmed`, 개별 직접 URL 부재)** | 개별 공식 릴리스 URL 미확보 |
+| Series B | 2022-04 | $580M (보도) | **미확인 (`unconfirmed`, 개별 직접 URL 부재)** | 개별 공식 릴리스 URL 미확보 |
+| Series C | 2023-05 | $450M (보도) | **미확인 (`unconfirmed`, 개별 직접 URL 부재)** | 개별 공식 릴리스 URL 미확보 |
+| Series D~G / 전략약정 | 2023~2025 | 개별 미상세 | **미확인 (`unconfirmed / unobtained`)** | 라운드별 세부 분리 및 직접 URL 부재 |
+| **Series H** | **2026-05-28** | **$65.0B** | **[Anthropic Series H 공식 발표](https://www.anthropic.com/news/series-h) (직접 확인)** | **원문 발췌 확인 (기존 약정 $15B 포함)** |
+| **누적 조달액 합계** | - | **`unconfirmed_ledger`** | **미확인 (`unconfirmed_ledger`)** | **전환사채 전환 여부 및 과거 라운드 직접 URL 미비로 확정 불가** |

@@ -8,39 +8,36 @@
 
 ---
 
-## 1. 공식 발표문 직접 인용 (Verbatim Official Announcement)
+## 1. 공식 발표 원문 발췌 (Verbatim Excerpts from Official Release)
 
 - **공식 발표문 제목**: Accelerating the next phase of AI
 - **공식 발표 URL**: `https://openai.com/index/accelerating-the-next-phase-ai/`
 - **발표 일자**: 2026-03-31
-- **공식 발표 수치 (Official Verbatim Figures)**:
-  * **사후 기업가치(Post-money Valuation)**: **$852 billion ($852B USD)**
-  * **총 약정 자본(Committed Capital)**: **$122 billion ($122B USD)**
-  * **명시된 핵심 파트너**: Amazon, Nvidia, SoftBank
-  * **공식 명시 목적**: 프론티어 차세대 모델 훈련 및 글로벌 엔터프라이즈 추론 인프라 확장
+- **원문 인용 및 공식 확인 수치 (Verbatim Figures)**:
+  * **사후 기업가치 (Post-money Valuation)**: **$852 billion ($852B USD)**
+  * **총 약정 자본 (Committed Capital)**: **$122 billion ($122B USD)**
+  * **명시된 파트너 (Named Strategic Partners)**: Amazon, Nvidia, SoftBank
+  * **공식 자금 목적**: 차세대 프론티어 AI 모델 훈련 및 글로벌 엔터프라이즈 추론 인프라 확장
 
 ---
 
-## 2. 2차 언론 해석 및 세부 구조 보도 (Secondary Press Analysis - Unofficial)
+## 2. 검증에 사용하지 않는 미확인 참고 메모 (Unverified Secondary Rumors - Excluded from Observations)
 
-> **검증 분류 상태**: `reported_secondary_leak` / `unverified_article_url`
-> 아래 항목들은 OpenAI 공식 발표문 본문에 직접 명시되지 않았으며, 파트너사 관계자 인터뷰 및 금융 언론 2차 보도로 전해진 내용임.
+> **관측 배제 고지 (`unverified_article_url`)**:
+> 아래 항목들은 공식 발표문 본문에 존재하지 않으며, 직접 기사 URL이나 공시 식별자가 결합되지 않은 외부 2차 보도/소문임. 따라서 당사 정합성 검증 및 공식 관측치에서 완전히 배제함.
 
-1. **인프라 약정 대 현금성 자본 구성비**:
-   - 순수 현금 투자 외에 Amazon AWS 클라우드 크레딧 및 Nvidia 차세대 GPU 우선 공급 약정이 상당 부분 포함된 것으로 추정됨.
-2. **신디케이션 및 개인/기관 투자 창구**:
-   - 투자은행 채널을 통한 적격 개인/기관 간접 투자금(SPV 등) 약 $12B가 포함되어 있다는 보도가 있으나, 공식 릴리스 본문에는 투자자 세부 명단이 전면 공개되지 않음.
+- **인프라 약정 대 현금 구성비 추정**: 클라우드 크레딧 및 GPU 우선 공급 약정 비중에 대한 외부 추정보도는 공식 근거가 없으므로 관측치로 사용하지 않음.
+- **간접 신디케이션($12B) 보도**: 투자은행 채널을 통한 적격 개인/기관 $12B 참여설은 공식 발표문에 부재하며 직접 기사 URL이 없으므로 관측치로 사용하지 않음.
+- **기타 2차 보도 수치**: FY24 실매출($3.7B), 연율화 런레이트($40B), 2029년 장기 목표($100B) 등은 직접 기사 URL 부재로 `unverified_article_url`로 분류하고 공식 관측치에서 배제함.
 
 ---
 
-## 3. 검증 및 분류 주의사항 (R2, R3, R4 준수)
+## 3. 검증 및 분류 원칙
 
-- **Post-money Valuation vs Paid-in Capital 구분**:
-  * 공식 사후 기업가치는 **$852B**로 확정 발표됨.
-  * $122B는 즉시 전액 현금 납입(paid-in cash)이 아니라 단계적 마일스톤 및 인프라 공급을 포함한 약정 자본(committed capital)이므로, 전액 즉시 현금 보유로 과장하지 않음.
+- **Post-money Valuation vs Paid-in Capital**:
+  * 공식 사후 기업가치는 **$852B**임.
+  * $122B 약정 자본은 전액 즉시 현금 납입이나 전액 컴퓨팅 현물로 단정하지 않음.
 - **이전 라운드 이력 보존**:
-  * 2024년 10월 2일 Thrive Capital 주도 $6.6B 펀딩 시 포스트 밸류는 **$157B**였으며, 본 2026-03-31 라운드가 최신 공식 발표임.
-- **2차 보도 격하 및 관측 배제 원칙**:
-  * 직접 기사 URL이 결합되지 않은 2차 보도 수치(연율화 런레이트 $40B, FY24 실매출 $3.7B, 2029년 매출목표 $100B 등)는 공식 검증된 관측치로 사용하지 않음.
-  * 실현 매출 및 공식 전망치 미확보는 당사 조사 범위 내에서의 확인 결과이며, 전 세계적 자료 부재를 단정하지 않음.
-  * $122B 약정액 역시 전액 납입 현금이나 전액 컴퓨팅 현물로 단정하지 않음.
+  * 2024년 10월 2일 Thrive Capital 주도 $6.6B 펀딩 시 사후 가치는 **$157B**였으며, 이력으로 보존함.
+- **미확인 보도 배제**:
+  * 직접 기사 URL이 없는 수치들은 evidence상 `unverified_article_url` 상태를 유지하며 정량 채점이나 공식 관측치에 일체 반영하지 않음.
