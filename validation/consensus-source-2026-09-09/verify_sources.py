@@ -401,19 +401,33 @@ def run_unit_tests() -> None:
     assert tsm_nasdaq_eval["scoring_status"] == "pending_basis_metadata_verification"
     print("[Test 10 PASS] TSMC Nasdaq API 4분기 확보(18.87) 및 단위미확인 채점보류 분리 확인")
 
-    # 11. C13-SOURCE-03: Zacks BNRI 기준 검증 시 적격 전환 검증
-    tsm_verified_meta = {
+    # 11. 모의 전 메타데이터 충족 시 계산 로직 검증 (계산 동작 검사이며 외부 기준 입증이 아님)
+    mock_verified_meta = {
         "currency_confirmed": True,
         "share_basis_confirmed": True,
         "accounting_standard_confirmed": True,
         "as_of_confirmed": True,
     }
-    tsm_verified_case = evaluate_quarterly_single_source(expected, tsm_nasdaq_q, basis_metadata=tsm_verified_meta)
-    assert tsm_verified_case["scoring_eligible"] is True
-    assert tsm_verified_case["scoring_status"] == "eligible_for_f6_scoring"
-    print("[Test 11 PASS] C13-SOURCE-03: 전 기준 검증 충족 시 F6 적격 전환 확인")
+    mock_verified_case = evaluate_quarterly_single_source(expected, tsm_nasdaq_q, basis_metadata=mock_verified_meta)
+    assert mock_verified_case["scoring_eligible"] is True
+    assert mock_verified_case["scoring_status"] == "eligible_for_f6_scoring"
+    print("[Test 11 PASS] 모의 메타데이터 True 주입 시 F6 적격 계산 로직 동작 확인 (외부 입증 대체 아님)")
 
-    print(">>> 단위 테스트 11종 전원 통과 <<<")
+    # 12. S03-01~03: 실제 메타데이터 미확인(False) 시 scoring_eligible=False 채점 보류 유지 검증
+    actual_unconfirmed_meta = {
+        "currency_confirmed": False,
+        "share_basis_confirmed": False,
+        "accounting_standard_confirmed": False,
+        "as_of_confirmed": False,
+    }
+    actual_case = evaluate_quarterly_single_source(expected, tsm_nasdaq_q, basis_metadata=actual_unconfirmed_meta)
+    assert actual_case["all_4q_fulfilled"] is True
+    assert actual_case["basis_metadata_verified"] is False
+    assert actual_case["scoring_eligible"] is False
+    assert actual_case["scoring_status"] == "pending_basis_metadata_verification"
+    print("[Test 12 PASS] S03-01~03: 메타데이터 미확인 시 scoring_eligible=False(채점 보류) 유지 확인")
+
+    print(">>> 단위 테스트 12종 전원 통과 <<<")
 
 
 def generate_all_evidence() -> dict[str, Any]:
@@ -436,27 +450,27 @@ def generate_all_evidence() -> dict[str, Any]:
         "FY28 Q1": {"mean": 2.45, "min": 1.76, "max": 3.13, "count": 2},
     }
 
-    # TSMC 메타데이터 검증 결과
+    # TSMC 메타데이터 검증 결과 (S03-01~03: 추정 단정 배제 및 미확인 분리)
     tsmc_criteria_verification = {
         "data_provider": "Zacks Investment Research (Nasdaq 제휴 공급사)",
-        "methodology": "Zacks BNRI (Before Non-Recurring Items)",
-        "accounting_standard": "Non-GAAP Adjusted Diluted EPS (일회성 비용 제외, 주식보상비용 포함)",
-        "share_basis": "American Depositary Shares (1 ADR = 5 보통주)",
-        "pricing_currency": "USD",
-        "eps_currency": "USD (미국 ADR 거래 기준)",
-        "as_of_status": "dynamically_updated_daily (일별 애널리스트 추정치 개정 반영, JSON asOf null은 동적 갱신 특성)",
-        "criteria_verification_conclusion": "verified_with_zacks_bnri_definition",
+        "methodology": "unconfirmed_series (Zacks 공식 FAQ상 BNRI와 Street 계열이 존재하며, Nasdaq EPS* 필드 직결 각주 부재)",
+        "accounting_standard": "unconfirmed_standard (Non-GAAP 조정 희석 추정되나 직접 필드 메타데이터 부재)",
+        "share_basis": "American Depositary Shares (1 ADR = 5 보통주이나 EPS 분모 단위 직결 근거 미확보)",
+        "pricing_currency": "USD (주가 통화는 확인되나 EPS 필드 통화 코드 부재)",
+        "eps_currency": "unconfirmed_currency (USD 추정)",
+        "as_of_status": "unknown (JSON상 asOf null이며 일일 동적갱신 단정 철회, 수집시각 2026-09-09T02:11:00Z과 기준일 분리)",
+        "criteria_verification_conclusion": "unconfirmed_metadata (채점 보류 유지)",
     }
 
     baba_criteria_verification = {
         "data_provider": "Zacks Investment Research (Nasdaq 제휴 공급사)",
-        "methodology": "Zacks BNRI (Before Non-Recurring Items)",
-        "accounting_standard": "Non-GAAP Adjusted Diluted EPS (일회성 비용 제외, 주식보상비용 포함)",
-        "share_basis": "American Depositary Shares each representing 8 Ordinary share (1 ADS = 8 보통주)",
-        "pricing_currency": "USD",
-        "eps_currency": "USD (미국 ADS 거래 기준)",
-        "as_of_status": "dynamically_updated_daily (일별 애널리스트 추정치 개정 반영)",
-        "criteria_verification_conclusion": "verified_with_zacks_bnri_definition",
+        "methodology": "unconfirmed_series (Zacks 공식 FAQ상 BNRI와 Street 계열이 존재하며, Nasdaq EPS* 필드 직결 각주 부재)",
+        "accounting_standard": "unconfirmed_standard (Non-GAAP 조정 희석 추정되나 직접 필드 메타데이터 부재)",
+        "share_basis": "American Depositary Shares (1 ADS = 8 보통주이나 EPS 분모 단위 직결 근거 미확보)",
+        "pricing_currency": "USD (주가 통화는 확인되나 EPS 필드 통화 코드 부재)",
+        "eps_currency": "unconfirmed_currency (USD 추정)",
+        "as_of_status": "unknown (JSON상 asOf null이며 일일 동적갱신 단정 철회, 수집시각 2026-09-09T02:11:00Z과 기준일 분리)",
+        "criteria_verification_conclusion": "unconfirmed_metadata (채점 보류 유지)",
     }
 
     tsmc_sources = {
@@ -480,15 +494,16 @@ def generate_all_evidence() -> dict[str, Any]:
                 tsmc_expected,
                 tsmc_nasdaq_data,
                 basis_metadata={
-                    "currency_confirmed": True,
-                    "share_basis_confirmed": True,
-                    "accounting_standard_confirmed": True,
-                    "as_of_confirmed": True,
+                    "currency_confirmed": False,
+                    "share_basis_confirmed": False,
+                    "accounting_standard_confirmed": False,
+                    "as_of_confirmed": False,
                 },
             ),
             "notes": (
-                "Zacks BNRI 정의 검증 완료: Non-GAAP 조정 희석 EPS, USD per ADR 기준. "
-                "단일 원천 4분기 수치(4.45, 4.68, 4.64, 5.10) 합산치 18.87 USD."
+                "4분기 연속 수치(4.45, 4.68, 4.64, 5.10) 합산치 18.87 확보 완료. "
+                "단, Zacks 계열(BNRI vs Street) 및 EPS 통화/분모/기준일 직접 필드 메타데이터 부재로 "
+                "scoring_eligible=False(채점 보류) 유지 (S03-01~03 반영)."
             )
         },
         "barchart": {
@@ -532,15 +547,16 @@ def generate_all_evidence() -> dict[str, Any]:
                 baba_expected,
                 baba_nasdaq_data,
                 basis_metadata={
-                    "currency_confirmed": True,
-                    "share_basis_confirmed": True,
-                    "accounting_standard_confirmed": True,
-                    "as_of_confirmed": True,
+                    "currency_confirmed": False,
+                    "share_basis_confirmed": False,
+                    "accounting_standard_confirmed": False,
+                    "as_of_confirmed": False,
                 },
             ),
             "notes": (
-                "Zacks BNRI 정의 검증 완료: Non-GAAP 조정 희석 EPS, USD per ADS(8 보통주) 기준. "
-                "단일 원천 4분기 수치(1.42, 1.89, 1.81, 2.45) 합산치 7.57 USD."
+                "4분기 연속 수치(1.42, 1.89, 1.81, 2.45) 합산치 7.57 확보 완료. "
+                "단, Zacks 계열(BNRI vs Street) 및 EPS 통화/분모/기준일 직접 필드 메타데이터 부재로 "
+                "scoring_eligible=False(채점 보류) 유지 (S03-01~03 반영)."
             )
         },
         "yahoo_finance_c13_link": {
@@ -555,7 +571,7 @@ def generate_all_evidence() -> dict[str, Any]:
         }
     }
 
-    # 비상장사 지표 (C13-SOURCE-03 완벽 보완: URL 정비, 해석 분리, 누적원장 미확인 처리)
+    # 비상장사 지표 (S03-04, S03-05 완벽 보완: URL 없는 2차 보도 관측치 배제, 산식 미공개 명시)
     openai_metrics = validate_unlisted_metrics("OpenAI", {
         "post_money_valuation": {
             "value": 852.0,
@@ -566,7 +582,7 @@ def generate_all_evidence() -> dict[str, Any]:
             "status": "confirmed",
             "primary_source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
             "snapshot_file": "snapshots/openai_2026_03_31_accelerating_next_phase.md",
-            "notes": "2026-03-31 공식 발표 사후 기업가치 $852B 확정."
+            "notes": "2026-03-31 공식 발표 사후 기업가치 $852B 직접 확인."
         },
         "committed_capital_latest_round": {
             "value": 122.0,
@@ -577,7 +593,7 @@ def generate_all_evidence() -> dict[str, Any]:
             "status": "confirmed",
             "primary_source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
             "snapshot_file": "snapshots/openai_2026_03_31_accelerating_next_phase.md",
-            "notes": "공식 발표문상 $122B 약정 자본. 외부 보도의 컴퓨팅 현물/개인투자자 설명은 2차 해석으로 분리."
+            "notes": "공식 발표문상 $122B 약정 자본 직접 확인. 전액 현금이나 전액 컴퓨팅으로 단정하지 않음."
         },
         "historical_valuation_2024": {
             "value": 157.0,
@@ -595,19 +611,19 @@ def generate_all_evidence() -> dict[str, Any]:
             "metric_nature": "recognized_annual_revenue",
             "definition": "Recognized GAAP full-year revenue for FY2024 from financial audit leaks",
             "as_of": "FY2024",
-            "status": "reported_secondary_leak",
-            "primary_source_url": "https://www.theinformation.com",
-            "notes": "The Information 언론 보도치이며 공식 직접 공시가 아니므로 reported_secondary_leak으로 분류."
+            "status": "unverified_article_url",
+            "primary_source_url": None,
+            "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 당사 조사 범위 내 확인 결과임."
         },
         "annualized_revenue_run_rate": {
             "value": 40.0,
             "currency": "USD_B",
             "metric_nature": "annualized_run_rate",
-            "definition": "Annualized Revenue Run Rate (ARR) based on approximately $3.3B monthly revenue pace",
+            "definition": "Annualized Revenue Run Rate (ARR) based on reported monthly pace",
             "as_of": "2026-08-31",
-            "status": "reported_run_rate",
-            "primary_source_url": "https://www.bloomberg.com",
-            "notes": "월 매출 연율화 런레이트이며 TTM 실매출이나 계약상 확정 ARR과 구분."
+            "status": "unverified_article_url",
+            "primary_source_url": None,
+            "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 당사 조사 범위 내 확인 결과임."
         },
         "revenue_forecast": {
             "value": 100.0,
@@ -615,9 +631,9 @@ def generate_all_evidence() -> dict[str, Any]:
             "metric_nature": "management_target_projection",
             "definition": "Projected annual revenue target by 2029 presented in investor deck",
             "as_of": "2024-10_deck",
-            "status": "target_projection",
-            "primary_source_url": "https://www.nytimes.com",
-            "notes": "투자 유치 프레젠테이션상 2029년 장기 매출 목표치. 미래 전망은 감사 대상이 아님."
+            "status": "unverified_article_url",
+            "primary_source_url": None,
+            "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 미래 전망은 감사 대상이 아님."
         },
         "cumulative_funding": {
             "value": 17.9,
@@ -641,7 +657,7 @@ def generate_all_evidence() -> dict[str, Any]:
             "status": "confirmed",
             "primary_source_url": "https://www.anthropic.com/news/series-h",
             "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-            "notes": "2026-05-28 공식 발표 사후 기업가치 $965B."
+            "notes": "2026-05-28 공식 발표 사후 기업가치 $965B 직접 확인."
         },
         "series_h_round_raised": {
             "value": 65.0,
@@ -652,7 +668,7 @@ def generate_all_evidence() -> dict[str, Any]:
             "status": "confirmed",
             "primary_source_url": "https://www.anthropic.com/news/series-h",
             "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-            "notes": "공식 발표상 본 $65B에는 기존 약정 투자금 $15B(Amazon $5B 포함)가 포함되어 있음."
+            "notes": "공식 발표상 본 $65B에는 기존 약정 투자금 $15B가 포함되어 있음. 차감액 $50B는 단순 산술 추론(arithmetic deduction)임."
         },
         "target_ipo_valuation": {
             "value": 2000.0,
@@ -660,40 +676,40 @@ def generate_all_evidence() -> dict[str, Any]:
             "metric_nature": "target_market_cap_plan",
             "definition": "Reported target market cap for planned late 2026 IPO",
             "as_of": "2026-09",
-            "status": "target_plan",
-            "primary_source_url": "https://www.reuters.com",
-            "notes": "IPO 목표 시총($2.0T)이며 매출 전망이 아님."
+            "status": "unverified_article_url",
+            "primary_source_url": None,
+            "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 매출 전망이 아님."
         },
         "actual_annual_revenue": {
             "value": None,
             "currency": "USD",
             "metric_nature": "audited_annual_revenue",
-            "definition": "Audited full-year recognized revenue for FY2024/FY2025",
+            "definition": "Audited full-year recognized revenue",
             "as_of": "unconfirmed",
             "status": "unobtained",
             "primary_source_url": None,
-            "notes": "공식 감사보고서 미공개로 미확보(None) 처리."
+            "notes": "당사 조사 범위 내에서 공식 감사보고서 미공개로 미확보(None) 처리."
         },
         "annualized_revenue_run_rate": {
             "value": 47.0,
             "currency": "USD_B",
-            "metric_nature": "annualized_run_rate",
-            "definition": "Annualized revenue run-rate officially confirmed at Series H announcement",
+            "metric_nature": "run_rate_revenue",
+            "definition": "Annualized run-rate revenue officially confirmed at Series H announcement (> $47B in May 2026)",
             "as_of": "2026-05-28",
             "status": "confirmed_official_announcement",
             "primary_source_url": "https://www.anthropic.com/news/series-h",
             "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-            "notes": "2026-05-28 공식 발표문상 >$47B 확인."
+            "notes": "공식 원문 표현은 'run-rate revenue' (> $47B in May). 반복매출(ARR) 여부 및 연율화 산식은 미공개(unspecified_formula / unknown)."
         },
         "revenue_forecast": {
             "value": None,
             "currency": "USD",
             "metric_nature": "forward_revenue_forecast",
-            "definition": "Audited forward revenue projection",
+            "definition": "Forward revenue projection",
             "as_of": "unconfirmed",
             "status": "unobtained",
             "primary_source_url": None,
-            "notes": "감사된 미래 매출 전망은 공식 미공개로 미확보(None) 처리."
+            "notes": "당사 조사 범위 내에서 미래 매출 전망은 공식 미공개로 미확보(None) 처리."
         },
         "cumulative_funding": {
             "value": None,
@@ -705,8 +721,8 @@ def generate_all_evidence() -> dict[str, Any]:
             "primary_source_url": "https://www.anthropic.com/news/series-h",
             "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
             "notes": (
-                "공식 라운드별 감사 원장이 부재하므로 단순 합산($130B)이나 임의 차감($82B) 대신 "
-                "원장 미확인(unconfirmed_ledger)으로 유지 (C13-SOURCE-03 반영)."
+                "세부 중간 라운드(D~G 등) 개별 출처 부재 및 전환사채/약정 중복성으로 인해 "
+                "원장 미확인(unconfirmed_ledger)으로 유지 (S03-05 반영)."
             )
         }
     })
@@ -714,9 +730,9 @@ def generate_all_evidence() -> dict[str, Any]:
     return {
         "schema": "scorecard.consensus_source_validation/4",
         "task_id": "C13-SOURCE-03",
-        "version": "criteria_and_ledger_refined",
+        "version": "s03_review_refined",
         "collected_at": collected_at,
-        "methodology": "Valley 5-stat cross-source with Zacks BNRI criteria verification and robust boolean edge checks",
+        "methodology": "Valley 5-stat cross-source with strict metadata separation and unconfirmed hold",
         "listed_companies": {
             "tsmc": {
                 "ticker": "TSM / 2330.TW",
@@ -726,9 +742,9 @@ def generate_all_evidence() -> dict[str, Any]:
                 "selected_source_for_4q": "nasdaq_api",
                 "nasdaq_4q_sum": 18.87,
                 "criteria_verification": tsmc_criteria_verification,
-                "scoring_eligible": True,
-                "scoring_status": "eligible_for_f6_scoring",
-                "summary": "Zacks BNRI 정의 검증(Non-GAAP 조정 희석, USD ADR)을 통해 F6 채점 적격으로 전환 완료."
+                "scoring_eligible": False,
+                "scoring_status": "pending_basis_metadata_verification",
+                "summary": "단일 원천 4분기 수치(18.87)는 확보했으나 메타데이터 미확인으로 채점 보류(scoring_eligible=False) 유지."
             },
             "alibaba": {
                 "ticker": "BABA / 9988.HK",
@@ -738,9 +754,9 @@ def generate_all_evidence() -> dict[str, Any]:
                 "selected_source_for_4q": "nasdaq_api",
                 "nasdaq_4q_sum": 7.57,
                 "criteria_verification": baba_criteria_verification,
-                "scoring_eligible": True,
-                "scoring_status": "eligible_for_f6_scoring",
-                "summary": "Zacks BNRI 정의 검증(Non-GAAP 조정 희석, USD ADS 8주)을 통해 F6 채점 적격으로 전환 완료."
+                "scoring_eligible": False,
+                "scoring_status": "pending_basis_metadata_verification",
+                "summary": "단일 원천 4분기 수치(7.57)는 확보했으나 메타데이터 미확인으로 채점 보류(scoring_eligible=False) 유지."
             }
         },
         "unlisted_companies": {
@@ -749,10 +765,14 @@ def generate_all_evidence() -> dict[str, Any]:
         },
         "conclusion": {
             "c13_source_03_completed": True,
-            "zacks_bnri_criteria_verified": True,
+            "scoring_hold_maintained": True,
+            "tsmc_scoring_eligible": False,
+            "alibaba_scoring_eligible": False,
             "strict_boolean_defense_active": True,
+            "anthropic_run_rate_revenue_preserved": True,
             "anthropic_ledger_unconfirmed_isolated": True,
             "openai_official_excerpts_separated": True,
+            "unverified_article_urls_isolated": True,
         }
     }
 

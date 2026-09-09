@@ -1,9 +1,9 @@
 {
   "schema": "scorecard.consensus_source_validation/4",
   "task_id": "C13-SOURCE-03",
-  "version": "criteria_and_ledger_refined",
-  "collected_at": "2026-09-09T11:27:09.555597",
-  "methodology": "Valley 5-stat cross-source with Zacks BNRI criteria verification and robust boolean edge checks",
+  "version": "s03_review_refined",
+  "collected_at": "2026-09-09T11:36:35.934206",
+  "methodology": "Valley 5-stat cross-source with strict metadata separation and unconfirmed hold",
   "listed_companies": {
     "tsmc": {
       "ticker": "TSM / 2330.TW",
@@ -22,13 +22,13 @@
           "access_condition": "free_public_api",
           "criteria_verification": {
             "data_provider": "Zacks Investment Research (Nasdaq 제휴 공급사)",
-            "methodology": "Zacks BNRI (Before Non-Recurring Items)",
-            "accounting_standard": "Non-GAAP Adjusted Diluted EPS (일회성 비용 제외, 주식보상비용 포함)",
-            "share_basis": "American Depositary Shares (1 ADR = 5 보통주)",
-            "pricing_currency": "USD",
-            "eps_currency": "USD (미국 ADR 거래 기준)",
-            "as_of_status": "dynamically_updated_daily (일별 애널리스트 추정치 개정 반영, JSON asOf null은 동적 갱신 특성)",
-            "criteria_verification_conclusion": "verified_with_zacks_bnri_definition"
+            "methodology": "unconfirmed_series (Zacks 공식 FAQ상 BNRI와 Street 계열이 존재하며, Nasdaq EPS* 필드 직결 각주 부재)",
+            "accounting_standard": "unconfirmed_standard (Non-GAAP 조정 희석 추정되나 직접 필드 메타데이터 부재)",
+            "share_basis": "American Depositary Shares (1 ADR = 5 보통주이나 EPS 분모 단위 직결 근거 미확보)",
+            "pricing_currency": "USD (주가 통화는 확인되나 EPS 필드 통화 코드 부재)",
+            "eps_currency": "unconfirmed_currency (USD 추정)",
+            "as_of_status": "unknown (JSON상 asOf null이며 일일 동적갱신 단정 철회, 수집시각 2026-09-09T02:11:00Z과 기준일 분리)",
+            "criteria_verification_conclusion": "unconfirmed_metadata (채점 보류 유지)"
           },
           "snapshot_file": "snapshots/nasdaq_tsm_earnings_forecast_2026_09_09.md",
           "raw_file": "raw/nasdaq-tsm-earnings_forecast.json",
@@ -89,12 +89,12 @@
               "2027 Q2"
             ],
             "consecutive_quarters": true,
-            "basis_metadata_verified": true,
+            "basis_metadata_verified": false,
             "metadata_checks": {
-              "currency_confirmed": true,
-              "share_basis_confirmed": true,
-              "accounting_standard_confirmed": true,
-              "as_of_confirmed": true
+              "currency_confirmed": false,
+              "share_basis_confirmed": false,
+              "accounting_standard_confirmed": false,
+              "as_of_confirmed": false
             },
             "has_stat_anomalies": false,
             "fulfilled_quarters": [
@@ -177,10 +177,10 @@
             },
             "sum_4q_mean": 18.87,
             "arithmetic_sum_calculable": true,
-            "scoring_eligible": true,
-            "scoring_status": "eligible_for_f6_scoring"
+            "scoring_eligible": false,
+            "scoring_status": "pending_basis_metadata_verification"
           },
-          "notes": "Zacks BNRI 정의 검증 완료: Non-GAAP 조정 희석 EPS, USD per ADR 기준. 단일 원천 4분기 수치(4.45, 4.68, 4.64, 5.10) 합산치 18.87 USD."
+          "notes": "4분기 연속 수치(4.45, 4.68, 4.64, 5.10) 합산치 18.87 확보 완료. 단, Zacks 계열(BNRI vs Street) 및 EPS 통화/분모/기준일 직접 필드 메타데이터 부재로 scoring_eligible=False(채점 보류) 유지 (S03-01~03 반영)."
         },
         "barchart": {
           "source_name": "Barchart TSM Earnings Estimates",
@@ -364,17 +364,17 @@
       "nasdaq_4q_sum": 18.87,
       "criteria_verification": {
         "data_provider": "Zacks Investment Research (Nasdaq 제휴 공급사)",
-        "methodology": "Zacks BNRI (Before Non-Recurring Items)",
-        "accounting_standard": "Non-GAAP Adjusted Diluted EPS (일회성 비용 제외, 주식보상비용 포함)",
-        "share_basis": "American Depositary Shares (1 ADR = 5 보통주)",
-        "pricing_currency": "USD",
-        "eps_currency": "USD (미국 ADR 거래 기준)",
-        "as_of_status": "dynamically_updated_daily (일별 애널리스트 추정치 개정 반영, JSON asOf null은 동적 갱신 특성)",
-        "criteria_verification_conclusion": "verified_with_zacks_bnri_definition"
+        "methodology": "unconfirmed_series (Zacks 공식 FAQ상 BNRI와 Street 계열이 존재하며, Nasdaq EPS* 필드 직결 각주 부재)",
+        "accounting_standard": "unconfirmed_standard (Non-GAAP 조정 희석 추정되나 직접 필드 메타데이터 부재)",
+        "share_basis": "American Depositary Shares (1 ADR = 5 보통주이나 EPS 분모 단위 직결 근거 미확보)",
+        "pricing_currency": "USD (주가 통화는 확인되나 EPS 필드 통화 코드 부재)",
+        "eps_currency": "unconfirmed_currency (USD 추정)",
+        "as_of_status": "unknown (JSON상 asOf null이며 일일 동적갱신 단정 철회, 수집시각 2026-09-09T02:11:00Z과 기준일 분리)",
+        "criteria_verification_conclusion": "unconfirmed_metadata (채점 보류 유지)"
       },
-      "scoring_eligible": true,
-      "scoring_status": "eligible_for_f6_scoring",
-      "summary": "Zacks BNRI 정의 검증(Non-GAAP 조정 희석, USD ADR)을 통해 F6 채점 적격으로 전환 완료."
+      "scoring_eligible": false,
+      "scoring_status": "pending_basis_metadata_verification",
+      "summary": "단일 원천 4분기 수치(18.87)는 확보했으나 메타데이터 미확인으로 채점 보류(scoring_eligible=False) 유지."
     },
     "alibaba": {
       "ticker": "BABA / 9988.HK",
@@ -393,13 +393,13 @@
           "access_condition": "free_public_api",
           "criteria_verification": {
             "data_provider": "Zacks Investment Research (Nasdaq 제휴 공급사)",
-            "methodology": "Zacks BNRI (Before Non-Recurring Items)",
-            "accounting_standard": "Non-GAAP Adjusted Diluted EPS (일회성 비용 제외, 주식보상비용 포함)",
-            "share_basis": "American Depositary Shares each representing 8 Ordinary share (1 ADS = 8 보통주)",
-            "pricing_currency": "USD",
-            "eps_currency": "USD (미국 ADS 거래 기준)",
-            "as_of_status": "dynamically_updated_daily (일별 애널리스트 추정치 개정 반영)",
-            "criteria_verification_conclusion": "verified_with_zacks_bnri_definition"
+            "methodology": "unconfirmed_series (Zacks 공식 FAQ상 BNRI와 Street 계열이 존재하며, Nasdaq EPS* 필드 직결 각주 부재)",
+            "accounting_standard": "unconfirmed_standard (Non-GAAP 조정 희석 추정되나 직접 필드 메타데이터 부재)",
+            "share_basis": "American Depositary Shares (1 ADS = 8 보통주이나 EPS 분모 단위 직결 근거 미확보)",
+            "pricing_currency": "USD (주가 통화는 확인되나 EPS 필드 통화 코드 부재)",
+            "eps_currency": "unconfirmed_currency (USD 추정)",
+            "as_of_status": "unknown (JSON상 asOf null이며 일일 동적갱신 단정 철회, 수집시각 2026-09-09T02:11:00Z과 기준일 분리)",
+            "criteria_verification_conclusion": "unconfirmed_metadata (채점 보류 유지)"
           },
           "snapshot_file": "snapshots/nasdaq_baba_earnings_forecast_2026_09_09.md",
           "raw_file": "raw/nasdaq-baba-earnings_forecast.json",
@@ -460,12 +460,12 @@
               "FY28 Q1"
             ],
             "consecutive_quarters": true,
-            "basis_metadata_verified": true,
+            "basis_metadata_verified": false,
             "metadata_checks": {
-              "currency_confirmed": true,
-              "share_basis_confirmed": true,
-              "accounting_standard_confirmed": true,
-              "as_of_confirmed": true
+              "currency_confirmed": false,
+              "share_basis_confirmed": false,
+              "accounting_standard_confirmed": false,
+              "as_of_confirmed": false
             },
             "has_stat_anomalies": false,
             "fulfilled_quarters": [
@@ -548,10 +548,10 @@
             },
             "sum_4q_mean": 7.57,
             "arithmetic_sum_calculable": true,
-            "scoring_eligible": true,
-            "scoring_status": "eligible_for_f6_scoring"
+            "scoring_eligible": false,
+            "scoring_status": "pending_basis_metadata_verification"
           },
-          "notes": "Zacks BNRI 정의 검증 완료: Non-GAAP 조정 희석 EPS, USD per ADS(8 보통주) 기준. 단일 원천 4분기 수치(1.42, 1.89, 1.81, 2.45) 합산치 7.57 USD."
+          "notes": "4분기 연속 수치(1.42, 1.89, 1.81, 2.45) 합산치 7.57 확보 완료. 단, Zacks 계열(BNRI vs Street) 및 EPS 통화/분모/기준일 직접 필드 메타데이터 부재로 scoring_eligible=False(채점 보류) 유지 (S03-01~03 반영)."
         },
         "yahoo_finance_c13_link": {
           "source_name": "Yahoo Finance (C13-DATA-01-R8 기수집 연계)",
@@ -657,17 +657,17 @@
       "nasdaq_4q_sum": 7.57,
       "criteria_verification": {
         "data_provider": "Zacks Investment Research (Nasdaq 제휴 공급사)",
-        "methodology": "Zacks BNRI (Before Non-Recurring Items)",
-        "accounting_standard": "Non-GAAP Adjusted Diluted EPS (일회성 비용 제외, 주식보상비용 포함)",
-        "share_basis": "American Depositary Shares each representing 8 Ordinary share (1 ADS = 8 보통주)",
-        "pricing_currency": "USD",
-        "eps_currency": "USD (미국 ADS 거래 기준)",
-        "as_of_status": "dynamically_updated_daily (일별 애널리스트 추정치 개정 반영)",
-        "criteria_verification_conclusion": "verified_with_zacks_bnri_definition"
+        "methodology": "unconfirmed_series (Zacks 공식 FAQ상 BNRI와 Street 계열이 존재하며, Nasdaq EPS* 필드 직결 각주 부재)",
+        "accounting_standard": "unconfirmed_standard (Non-GAAP 조정 희석 추정되나 직접 필드 메타데이터 부재)",
+        "share_basis": "American Depositary Shares (1 ADS = 8 보통주이나 EPS 분모 단위 직결 근거 미확보)",
+        "pricing_currency": "USD (주가 통화는 확인되나 EPS 필드 통화 코드 부재)",
+        "eps_currency": "unconfirmed_currency (USD 추정)",
+        "as_of_status": "unknown (JSON상 asOf null이며 일일 동적갱신 단정 철회, 수집시각 2026-09-09T02:11:00Z과 기준일 분리)",
+        "criteria_verification_conclusion": "unconfirmed_metadata (채점 보류 유지)"
       },
-      "scoring_eligible": true,
-      "scoring_status": "eligible_for_f6_scoring",
-      "summary": "Zacks BNRI 정의 검증(Non-GAAP 조정 희석, USD ADS 8주)을 통해 F6 채점 적격으로 전환 완료."
+      "scoring_eligible": false,
+      "scoring_status": "pending_basis_metadata_verification",
+      "summary": "단일 원천 4분기 수치(7.57)는 확보했으나 메타데이터 미확인으로 채점 보류(scoring_eligible=False) 유지."
     }
   },
   "unlisted_companies": {
@@ -687,7 +687,7 @@
           "primary_source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/openai_2026_03_31_accelerating_next_phase.md",
-          "notes": "2026-03-31 공식 발표 사후 기업가치 $852B 확정."
+          "notes": "2026-03-31 공식 발표 사후 기업가치 $852B 직접 확인."
         },
         "committed_capital_latest_round": {
           "value": 122.0,
@@ -699,7 +699,7 @@
           "primary_source_url": "https://openai.com/index/accelerating-the-next-phase-ai/",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/openai_2026_03_31_accelerating_next_phase.md",
-          "notes": "공식 발표문상 $122B 약정 자본. 외부 보도의 컴퓨팅 현물/개인투자자 설명은 2차 해석으로 분리."
+          "notes": "공식 발표문상 $122B 약정 자본 직접 확인. 전액 현금이나 전액 컴퓨팅으로 단정하지 않음."
         },
         "historical_valuation_2024": {
           "value": 157.0,
@@ -719,23 +719,23 @@
           "metric_nature": "recognized_annual_revenue",
           "definition": "Recognized GAAP full-year revenue for FY2024 from financial audit leaks",
           "as_of": "FY2024",
-          "status": "reported_secondary_leak",
-          "primary_source_url": "https://www.theinformation.com",
-          "url_valid_direct": true,
+          "status": "unverified_article_url",
+          "primary_source_url": null,
+          "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "The Information 언론 보도치이며 공식 직접 공시가 아니므로 reported_secondary_leak으로 분류."
+          "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 당사 조사 범위 내 확인 결과임."
         },
         "annualized_revenue_run_rate": {
           "value": 40.0,
           "currency": "USD_B",
           "metric_nature": "annualized_run_rate",
-          "definition": "Annualized Revenue Run Rate (ARR) based on approximately $3.3B monthly revenue pace",
+          "definition": "Annualized Revenue Run Rate (ARR) based on reported monthly pace",
           "as_of": "2026-08-31",
-          "status": "reported_run_rate",
-          "primary_source_url": "https://www.bloomberg.com",
-          "url_valid_direct": true,
+          "status": "unverified_article_url",
+          "primary_source_url": null,
+          "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "월 매출 연율화 런레이트이며 TTM 실매출이나 계약상 확정 ARR과 구분."
+          "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 당사 조사 범위 내 확인 결과임."
         },
         "revenue_forecast": {
           "value": 100.0,
@@ -743,11 +743,11 @@
           "metric_nature": "management_target_projection",
           "definition": "Projected annual revenue target by 2029 presented in investor deck",
           "as_of": "2024-10_deck",
-          "status": "target_projection",
-          "primary_source_url": "https://www.nytimes.com",
-          "url_valid_direct": true,
+          "status": "unverified_article_url",
+          "primary_source_url": null,
+          "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "투자 유치 프레젠테이션상 2029년 장기 매출 목표치. 미래 전망은 감사 대상이 아님."
+          "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 미래 전망은 감사 대상이 아님."
         },
         "cumulative_funding": {
           "value": 17.9,
@@ -779,7 +779,7 @@
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "2026-05-28 공식 발표 사후 기업가치 $965B."
+          "notes": "2026-05-28 공식 발표 사후 기업가치 $965B 직접 확인."
         },
         "series_h_round_raised": {
           "value": 65.0,
@@ -791,7 +791,7 @@
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "공식 발표상 본 $65B에는 기존 약정 투자금 $15B(Amazon $5B 포함)가 포함되어 있음."
+          "notes": "공식 발표상 본 $65B에는 기존 약정 투자금 $15B가 포함되어 있음. 차감액 $50B는 단순 산술 추론(arithmetic deduction)임."
         },
         "target_ipo_valuation": {
           "value": 2000.0,
@@ -799,47 +799,47 @@
           "metric_nature": "target_market_cap_plan",
           "definition": "Reported target market cap for planned late 2026 IPO",
           "as_of": "2026-09",
-          "status": "target_plan",
-          "primary_source_url": "https://www.reuters.com",
-          "url_valid_direct": true,
+          "status": "unverified_article_url",
+          "primary_source_url": null,
+          "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "IPO 목표 시총($2.0T)이며 매출 전망이 아님."
+          "notes": "직접 기사 URL 부재로 검증된 관측치로 사용하지 않음. 매출 전망이 아님."
         },
         "actual_annual_revenue": {
           "value": null,
           "currency": "USD",
           "metric_nature": "audited_annual_revenue",
-          "definition": "Audited full-year recognized revenue for FY2024/FY2025",
+          "definition": "Audited full-year recognized revenue",
           "as_of": "unconfirmed",
           "status": "unobtained",
           "primary_source_url": null,
           "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "공식 감사보고서 미공개로 미확보(None) 처리."
+          "notes": "당사 조사 범위 내에서 공식 감사보고서 미공개로 미확보(None) 처리."
         },
         "annualized_revenue_run_rate": {
           "value": 47.0,
           "currency": "USD_B",
-          "metric_nature": "annualized_run_rate",
-          "definition": "Annualized revenue run-rate officially confirmed at Series H announcement",
+          "metric_nature": "run_rate_revenue",
+          "definition": "Annualized run-rate revenue officially confirmed at Series H announcement (> $47B in May 2026)",
           "as_of": "2026-05-28",
           "status": "confirmed_official_announcement",
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "2026-05-28 공식 발표문상 >$47B 확인."
+          "notes": "공식 원문 표현은 'run-rate revenue' (> $47B in May). 반복매출(ARR) 여부 및 연율화 산식은 미공개(unspecified_formula / unknown)."
         },
         "revenue_forecast": {
           "value": null,
           "currency": "USD",
           "metric_nature": "forward_revenue_forecast",
-          "definition": "Audited forward revenue projection",
+          "definition": "Forward revenue projection",
           "as_of": "unconfirmed",
           "status": "unobtained",
           "primary_source_url": null,
           "url_valid_direct": false,
           "snapshot_file": null,
-          "notes": "감사된 미래 매출 전망은 공식 미공개로 미확보(None) 처리."
+          "notes": "당사 조사 범위 내에서 미래 매출 전망은 공식 미공개로 미확보(None) 처리."
         },
         "cumulative_funding": {
           "value": null,
@@ -851,16 +851,20 @@
           "primary_source_url": "https://www.anthropic.com/news/series-h",
           "url_valid_direct": true,
           "snapshot_file": "snapshots/anthropic_2026_05_28_series_h.md",
-          "notes": "공식 라운드별 감사 원장이 부재하므로 단순 합산($130B)이나 임의 차감($82B) 대신 원장 미확인(unconfirmed_ledger)으로 유지 (C13-SOURCE-03 반영)."
+          "notes": "세부 중간 라운드(D~G 등) 개별 출처 부재 및 전환사채/약정 중복성으로 인해 원장 미확인(unconfirmed_ledger)으로 유지 (S03-05 반영)."
         }
       }
     }
   },
   "conclusion": {
     "c13_source_03_completed": true,
-    "zacks_bnri_criteria_verified": true,
+    "scoring_hold_maintained": true,
+    "tsmc_scoring_eligible": false,
+    "alibaba_scoring_eligible": false,
     "strict_boolean_defense_active": true,
+    "anthropic_run_rate_revenue_preserved": true,
     "anthropic_ledger_unconfirmed_isolated": true,
-    "openai_official_excerpts_separated": true
+    "openai_official_excerpts_separated": true,
+    "unverified_article_urls_isolated": true
   }
 }
