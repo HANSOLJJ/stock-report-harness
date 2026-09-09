@@ -4,7 +4,17 @@ import os
 import sys
 import json
 import glob
+import re
 import math
+
+def parse_price(val):
+    if not val:
+        return None
+    s = re.sub(r'[^\d.]', '', str(val))
+    try:
+        return float(s)
+    except Exception:
+        return None
 
 def load_data():
     base_ntm = "C:/Users/noble/orca/workspaces/stock-report-harness/NTM-전망치조사/validation/consensus-source-2026-09-09/raw"
@@ -12,32 +22,75 @@ def load_data():
     
     # 14 scorecard companies
     company_meta = {
-        "apple": {"ticker": "AAPL", "currency": "USD", "basis": "common", "listed": True, "type": "소비자"},
-        "microsoft": {"ticker": "MSFT", "currency": "USD", "basis": "common", "listed": True, "type": "업무"},
-        "alphabet": {"ticker": "GOOGL", "currency": "USD", "basis": "common", "listed": True, "type": "소비자"},
-        "amazon": {"ticker": "AMZN", "currency": "USD", "basis": "common", "listed": True, "type": "소비자·업무"},
-        "meta": {"ticker": "META", "currency": "USD", "basis": "common", "listed": True, "type": "소비자"},
-        "nvidia": {"ticker": "NVDA", "currency": "USD", "basis": "common", "listed": True, "type": "부품"},
-        "tesla": {"ticker": "TSLA", "currency": "USD", "basis": "common", "listed": True, "type": "소비자"},
-        "oracle": {"ticker": "ORCL", "currency": "USD", "basis": "common", "listed": True, "type": "업무"},
-        "palantir": {"ticker": "PLTR", "currency": "USD", "basis": "common", "listed": True, "type": "업무"},
-        "spacex-xai": {"ticker": "SPCX", "currency": "USD", "basis": "common", "listed": True, "type": "소비자·업무"},
-        "tsmc": {"ticker": "TSM", "currency": "TWD", "basis": "adr", "listed": True, "type": "부품", "adr_ratio": 5},
-        "alibaba": {"ticker": "BABA", "currency": "CNY", "basis": "ads", "listed": True, "type": "소비자", "adr_ratio": 8},
-        "anthropic": {"ticker": None, "currency": "USD", "basis": "private", "listed": False, "type": "업무"},
-        "openai": {"ticker": None, "currency": "USD", "basis": "private", "listed": False, "type": "소비자"}
+        "apple": {"ticker": "AAPL", "currency": "USD", "basis": "common", "listed": True, "type": "소비자", "file_prefix": "apple"},
+        "microsoft": {"ticker": "MSFT", "currency": "USD", "basis": "common", "listed": True, "type": "업무", "file_prefix": "microsoft"},
+        "alphabet": {"ticker": "GOOGL", "currency": "USD", "basis": "common", "listed": True, "type": "소비자", "file_prefix": "alphabet"},
+        "amazon": {"ticker": "AMZN", "currency": "USD", "basis": "common", "listed": True, "type": "소비자·업무", "file_prefix": "amazon"},
+        "meta": {"ticker": "META", "currency": "USD", "basis": "common", "listed": True, "type": "소비자", "file_prefix": "meta"},
+        "nvidia": {"ticker": "NVDA", "currency": "USD", "basis": "common", "listed": True, "type": "부품", "file_prefix": "nvidia"},
+        "tesla": {"ticker": "TSLA", "currency": "USD", "basis": "common", "listed": True, "type": "소비자", "file_prefix": "tesla"},
+        "oracle": {"ticker": "ORCL", "currency": "USD", "basis": "common", "listed": True, "type": "업무", "file_prefix": "oracle"},
+        "palantir": {"ticker": "PLTR", "currency": "USD", "basis": "common", "listed": True, "type": "업무", "file_prefix": "palantir"},
+        "spacex-xai": {"ticker": "SPCX", "currency": "USD", "basis": "common", "listed": True, "type": "소비자·업무", "file_prefix": "spacex-xai"},
+        "tsmc": {"ticker": "TSM", "currency": "TWD", "basis": "adr", "listed": True, "type": "부품", "adr_ratio": 5, "file_prefix": "tsm"},
+        "alibaba": {"ticker": "BABA", "currency": "CNY", "basis": "ads", "listed": True, "type": "소비자", "adr_ratio": 8, "file_prefix": "baba"},
+        "anthropic": {"ticker": None, "currency": "USD", "basis": "private", "listed": False, "type": "업무", "file_prefix": None},
+        "openai": {"ticker": None, "currency": "USD", "basis": "private", "listed": False, "type": "소비자", "file_prefix": None}
     }
     
     raw_data = {}
     for cid, meta in company_meta.items():
-        raw_data[cid] = {"meta": meta, "eps_history": [], "forecast_quarters": []}
+        raw_data[cid] = {
+            "meta": meta,
+            "verified_price": None,
+            "price_source": None,
+            "price_timestamp": None,
+            "eps_history": [],
+            "forecast_quarters": []
+        }
         if not meta["listed"]:
             continue
             
-        # Try loading eps json
-        eps_path = os.path.join(base_ntm, f"nasdaq-{cid}-eps.json")
+        pfx = meta["file_prefix"]
+        
+        # 1. Load Verified Price from info.json or summary.json
+        info_path = os.path.join(base_ntm, f"nasdaq-{pfx}-info.json")
+        if not os.path.exists(info_path):
+            info_path = os.path.join(base_c13, f"nasdaq-{pfx}-info.json")
+            
+        sum_path = os.path.join(base_ntm, f"nasdaq-{pfx}-summary.json")
+        if not os.path.exists(sum_path):
+            sum_path = os.path.join(base_c13, f"nasdaq-{pfx}-summary.json")
+            
+        if os.path.exists(info_path):
+            try:
+                with open(info_path, "r", encoding="utf-8") as fp:
+                    d = json.load(fp)
+                    prim = d.get("data", {}).get("primaryData", {})
+                    p = parse_price(prim.get("lastSalePrice"))
+                    if p is not None:
+                        raw_data[cid]["verified_price"] = p
+                        raw_data[cid]["price_source"] = f"nasdaq-{pfx}-info.json:primaryData.lastSalePrice"
+                        raw_data[cid]["price_timestamp"] = prim.get("lastTradeTimestamp")
+            except Exception as e:
+                raw_data[cid]["price_error"] = str(e)
+                
+        if raw_data[cid]["verified_price"] is None and os.path.exists(sum_path):
+            try:
+                with open(sum_path, "r", encoding="utf-8") as fp:
+                    d = json.load(fp)
+                    sdata = d.get("data", {}).get("summaryData", {})
+                    p = parse_price(sdata.get("PreviousClose", {}).get("value"))
+                    if p is not None:
+                        raw_data[cid]["verified_price"] = p
+                        raw_data[cid]["price_source"] = f"nasdaq-{pfx}-summary.json:PreviousClose"
+            except Exception as e:
+                raw_data[cid]["price_summary_error"] = str(e)
+                
+        # 2. Load EPS History (has PreviousQuarter and UpcomingQuarter)
+        eps_path = os.path.join(base_ntm, f"nasdaq-{pfx}-eps.json")
         if not os.path.exists(eps_path):
-            eps_path = os.path.join(base_c13, f"nasdaq-{cid}-eps.json")
+            eps_path = os.path.join(base_c13, f"nasdaq-{pfx}-eps.json")
             
         if os.path.exists(eps_path):
             try:
@@ -47,10 +100,10 @@ def load_data():
             except Exception as e:
                 raw_data[cid]["eps_error"] = str(e)
                 
-        # Try loading forecast json
-        fc_path = os.path.join(base_ntm, f"nasdaq-{cid}-earnings_forecast.json")
+        # 3. Load Forecast Quarters
+        fc_path = os.path.join(base_ntm, f"nasdaq-{pfx}-earnings_forecast.json")
         if not os.path.exists(fc_path):
-            fc_path = os.path.join(base_c13, f"nasdaq-{cid}-earnings_forecast.json")
+            fc_path = os.path.join(base_c13, f"nasdaq-{pfx}-earnings_forecast.json")
             
         if os.path.exists(fc_path):
             try:
@@ -66,8 +119,10 @@ def run_analysis():
     data = load_data()
     results = {
         "analysis_date": "2026-09-09",
+        "methodology_note": "F6-H(2A+2E) aggregate error and verified price re-evaluation",
         "companies": {},
         "backtest_t0": {},
+        "backtest_error_summary": {},
         "comparison_f6h_vs_f6n": {},
         "rankings": {},
         "bias_metrics": {},
@@ -89,12 +144,13 @@ def run_analysis():
         prev = [x for x in eps_list if x.get("type") == "PreviousQuarter"]
         up = [x for x in eps_list if x.get("type") == "UpcomingQuarter"]
         
-        # 2A: most recent 2 completed actuals
-        # 2E: next 2 consensus
-        # 4E: next 4 consensus
         can_f6h = (len(prev) >= 2 and (len(up) >= 2 or len(fc_list) >= 2))
         can_f6n = (len(fc_list) >= 4 or len(up) >= 4)
         
+        # Unit consistency check for ADRs
+        if meta.get("basis") in ["adr", "ads"]:
+            can_f6h = False  # requires explicit conversion gate
+            
         if can_f6h:
             has_2a_2e += 1
         if can_f6n:
@@ -102,6 +158,9 @@ def run_analysis():
             
         results["companies"][cid] = {
             "meta": meta,
+            "verified_price": d.get("verified_price"),
+            "price_source": d.get("price_source"),
+            "price_timestamp": d.get("price_timestamp"),
             "prev_quarters_count": len(prev),
             "up_quarters_count": len(up),
             "forecast_quarters_count": len(fc_list),
@@ -118,124 +177,172 @@ def run_analysis():
         "f6h_coverage_rate_listed": round(has_2a_2e / listed_comps * 100, 1),
         "f6n_available_count": has_4e,
         "f6n_coverage_rate_total": round(has_4e / total_comps * 100, 1),
-        "f6n_coverage_rate_listed": round(has_4e / listed_comps * 100, 1)
+        "f6n_coverage_rate_listed": round(has_4e / listed_comps * 100, 1),
+        "unlisted_deficit_rate": 100.0,
+        "notes": "TSMC/Alibaba are held as pending due to ADR/currency unconfirmed metadata"
     }
     
-    # 2. Backtest at T0 (Simulating 2 quarters ago)
-    # For the 10 companies with 4 previous quarters:
-    # Q-4, Q-3, Q-2, Q-1
-    # At T0 (after Q-3 reported):
-    # 2A = Q-4 actual + Q-3 actual
-    # 2E = Q-2 consensus + Q-1 consensus (as forecasted for those quarters)
-    # F6-H(T0) = 2A + 2E = Actual(Q-4) + Actual(Q-3) + Consensus(Q-2) + Consensus(Q-1)
-    # Realized Future 4 Quarters at T0: Actual(Q-2) + Actual(Q-1) + Actual(Q0/Q1)...
-    # Or Realized 2E quarters: Actual(Q-2) + Actual(Q-1)
-    # Realized Error of 2E vs Actuals of those 2 quarters:
-    # Error of F6-H as estimate of True Realized 4 Quarters:
-    # True Realized 4Q from T0 = Actual(Q-4) + Actual(Q-3) + Actual(Q-2) + Actual(Q-1) [Trailing]
-    # vs Forward Realized 4Q = Actual(Q-2) + Actual(Q-1) + Upcoming Actuals...
+    # 2. Backtest at T0 (Simulating 4-Quarter Evaluation with 2A+2E vs True 4Q Actual)
+    # Q1, Q2, Q3, Q4 from PreviousQuarter
+    # 2A = Actual(Q1) + Actual(Q2)
+    # 2E_con = Consensus(Q3) + Consensus(Q4)
+    # 2E_act = Actual(Q3) + Actual(Q4)
+    # F6-H = 2A + 2E_con
+    # True 4Q Actual = 2A + 2E_act
+    # Component 2E Error = 2E_con - 2E_act
+    # Aggregate Error = F6-H - True 4Q Actual = 2E_con - 2E_act
+    # Aggregate APE = |Aggregate Error| / True 4Q Actual (if True 4Q Actual > 0)
     
-    bt_errors = []
-    comp_metrics = {}
+    q3_apes, q4_apes = [], []
+    e2_maes, e2_apes = [], []
+    agg_maes, agg_apes = [], []
     
     for cid, d in data.items():
         eps_list = d["eps_history"]
         prev = [x for x in eps_list if x.get("type") == "PreviousQuarter"]
         if len(prev) >= 4:
-            # prev has 4 quarters in ascending order: e.g. Sep 25, Dec 25, Mar 26, Jun 26
             q1, q2, q3, q4 = prev[0], prev[1], prev[2], prev[3]
             
-            # Historical 2A (Q1, Q2)
-            act_2a = q1.get("earnings", 0.0) + q2.get("earnings", 0.0)
+            # Historical 2A
+            act_q1 = q1.get("earnings", 0.0)
+            act_q2 = q2.get("earnings", 0.0)
+            act_2a = act_q1 + act_q2
+            
             # Historical 2E (Consensus for Q3, Q4)
-            con_2e = q3.get("consensus", 0.0) + q4.get("consensus", 0.0)
+            con_q3 = q3.get("consensus", 0.0)
+            con_q4 = q4.get("consensus", 0.0)
+            con_2e = con_q3 + con_q4
+            
+            # Realized Actuals for Q3, Q4
+            act_q3 = q3.get("earnings", 0.0)
+            act_q4 = q4.get("earnings", 0.0)
+            act_2e = act_q3 + act_q4
+            
+            # Full 4Q sums
             f6h_t0 = act_2a + con_2e
+            true_4q_actual = act_2a + act_2e
             
-            # True actual realized for Q3, Q4
-            act_2e_realized = q3.get("earnings", 0.0) + q4.get("earnings", 0.0)
-            # Total 4 quarters actual over the entire window
-            true_full_4q = act_2a + act_2e_realized
+            # Component Errors
+            err_q3 = con_q3 - act_q3
+            mae_q3 = abs(err_q3)
+            ape_q3 = (mae_q3 / act_q3 * 100) if act_q3 > 0 else None
             
-            # Prediction error of 2E consensus component
-            err_2e = con_2e - act_2e_realized
-            ape_2e = abs(err_2e) / act_2e_realized if act_2e_realized > 0 else 0.0
+            err_q4 = con_q4 - act_q4
+            mae_q4 = abs(err_q4)
+            ape_q4 = (mae_q4 / act_q4 * 100) if act_q4 > 0 else None
             
-            # Growth from 2A to 2E(realized)
-            growth_2a_to_2e = (act_2e_realized - act_2a) / act_2a if act_2a > 0 else 0.0
+            err_2e = con_2e - act_2e
+            mae_2e = abs(err_2e)
+            ape_2e = (mae_2e / act_2e * 100) if act_2e > 0 else None
             
-            # Lag error of using 2A instead of forward quarters:
-            # If 2A is used as half of forward 4Q, how much does it lag true forward growth?
-            lag_bias = (act_2a - act_2e_realized) / true_full_4q if true_full_4q > 0 else 0.0
+            # Aggregate Errors
+            err_agg = f6h_t0 - true_4q_actual
+            mae_agg = abs(err_agg)
+            
+            # Non-positive denominator check
+            ape_agg = None
+            exclusion_reason = None
+            if true_4q_actual <= 0:
+                exclusion_reason = f"NON_POSITIVE_DENOMINATOR (True 4Q Actual = {true_4q_actual} <= 0)"
+            else:
+                ape_agg = (mae_agg / true_4q_actual * 100)
+                
+            if ape_q3 is not None: q3_apes.append(ape_q3)
+            if ape_q4 is not None: q4_apes.append(ape_q4)
+            e2_maes.append(mae_2e)
+            if ape_2e is not None: e2_apes.append(ape_2e)
+            agg_maes.append(mae_agg)
+            if ape_agg is not None: agg_apes.append(ape_agg)
+            
+            growth_2a_to_2e = (act_2e - act_2a) / act_2a * 100 if act_2a > 0 else None
             
             bt_info = {
-                "q1": {"period": q1.get("period"), "actual": q1.get("earnings")},
-                "q2": {"period": q2.get("period"), "actual": q2.get("earnings")},
-                "q3": {"period": q3.get("period"), "consensus": q3.get("consensus"), "actual": q3.get("earnings")},
-                "q4": {"period": q4.get("period"), "consensus": q4.get("consensus"), "actual": q4.get("earnings")},
-                "2a_actual": round(act_2a, 4),
-                "2e_consensus": round(con_2e, 4),
-                "f6h_simulated_t0": round(f6h_t0, 4),
-                "2e_actual_realized": round(act_2e_realized, 4),
-                "true_full_4q_actual": round(true_full_4q, 4),
-                "2e_consensus_error": round(err_2e, 4),
-                "2e_consensus_ape_pct": round(ape_2e * 100, 2),
-                "growth_2a_to_2e_pct": round(growth_2a_to_2e * 100, 2),
-                "f6h_lag_underestimation_pct": round(-lag_bias * 100, 2)
+                "point_in_time": False,
+                "as_of_status": "retrospective_snapshot_on_earnings_page (asOf: null)",
+                "quarters": {
+                    "q1": {"period": q1.get("period"), "actual": act_q1},
+                    "q2": {"period": q2.get("period"), "actual": act_q2},
+                    "q3": {"period": q3.get("period"), "consensus": con_q3, "actual": act_q3, "mae": round(mae_q3, 4), "ape_pct": round(ape_q3, 2) if ape_q3 is not None else None},
+                    "q4": {"period": q4.get("period"), "consensus": con_q4, "actual": act_q4, "mae": round(mae_q4, 4), "ape_pct": round(ape_q4, 2) if ape_q4 is not None else None}
+                },
+                "2a_actual_sum": round(act_2a, 4),
+                "2e_consensus_sum": round(con_2e, 4),
+                "2e_actual_realized_sum": round(act_2e, 4),
+                "f6h_aggregate_t0": round(f6h_t0, 4),
+                "true_4q_actual_sum": round(true_4q_actual, 4),
+                "component_2e_mae": round(mae_2e, 4),
+                "component_2e_ape_pct": round(ape_2e, 2) if ape_2e is not None else None,
+                "aggregate_mae": round(mae_agg, 4),
+                "aggregate_ape_pct": round(ape_agg, 2) if ape_agg is not None else None,
+                "exclusion_reason": exclusion_reason,
+                "growth_2a_to_2e_pct": round(growth_2a_to_2e, 2) if growth_2a_to_2e is not None else None
             }
             results["backtest_t0"][cid] = bt_info
-            bt_errors.append(ape_2e * 100)
-            
-    if bt_errors:
-        bt_errors.sort()
-        n = len(bt_errors)
-        med_err = bt_errors[n // 2] if n % 2 == 1 else (bt_errors[n // 2 - 1] + bt_errors[n // 2]) / 2.0
-        results["backtest_error_summary"] = {
-            "sample_count": n,
-            "mean_ape_pct": round(sum(bt_errors) / n, 2),
-            "median_ape_pct": round(med_err, 2),
-            "min_ape_pct": round(min(bt_errors), 2),
-            "max_ape_pct": round(max(bt_errors), 2)
+
+    def calc_stats(arr):
+        if not arr: return {"mean": None, "median": None, "min": None, "max": None, "count": 0}
+        s = sorted(arr)
+        n = len(s)
+        med = s[n // 2] if n % 2 == 1 else (s[n // 2 - 1] + s[n // 2]) / 2.0
+        return {
+            "count": n,
+            "mean": round(sum(s) / n, 2),
+            "median": round(med, 2),
+            "min": round(min(s), 2),
+            "max": round(max(s), 2)
         }
 
-    # 3. Current Comparison: F6-H (Current 2A+2E) vs F6-N (Current 4E)
-    # For currently evaluated companies:
-    # 2A = Q3 actual + Q4 actual (most recent 2 completed)
-    # 2E = Next 2 quarters from forecast (F1 + F2)
-    # 4E = Next 4 quarters from forecast (F1 + F2 + F3 + F4)
+    results["backtest_error_summary"] = {
+        "quarterly_q3_ape": calc_stats(q3_apes),
+        "quarterly_q4_ape": calc_stats(q4_apes),
+        "component_2e_mae": calc_stats(e2_maes),
+        "component_2e_ape": calc_stats(e2_apes),
+        "aggregate_f6h_mae": calc_stats(agg_maes),
+        "aggregate_f6h_ape": calc_stats(agg_apes),
+        "notes": "Aggregate APE dilutes error across the full 4Q base, whereas component 2E APE reflects pure forecast error."
+    }
+
+    # 3. Current Comparison: F6-H vs F6-N with Verified Market Prices
     f6_comparison = {}
-    f6h_ranks = []
-    f6n_ranks = []
+    per_h_list = []
+    per_n_list = []
+    cids_scored = []
     
     for cid, d in data.items():
+        meta = d["meta"]
+        price = d.get("verified_price")
         eps_list = d["eps_history"]
         fc_list = d["forecast_quarters"]
         prev = [x for x in eps_list if x.get("type") == "PreviousQuarter"]
         
+        # Exclude if no verified price or ADR pending
+        if price is None or meta.get("basis") in ["adr", "ads"]:
+            continue
+            
         if len(prev) >= 2 and len(fc_list) >= 4:
-            # 2A from most recent 2 completed
             p1, p2 = prev[-2], prev[-1]
             act_2a = p1.get("earnings", 0.0) + p2.get("earnings", 0.0)
             
-            # 2E from first 2 forecast rows
             f1, f2 = fc_list[0], fc_list[1]
             con_2e = f1.get("consensusEPSForecast", 0.0) + f2.get("consensusEPSForecast", 0.0)
-            
             f6h_eps = act_2a + con_2e
             
-            # 4E from all 4 forecast rows
             f3, f4 = fc_list[2], fc_list[3]
             f6n_eps = con_2e + f3.get("consensusEPSForecast", 0.0) + f4.get("consensusEPSForecast", 0.0)
             
             diff_eps = f6h_eps - f6n_eps
-            diff_pct = (diff_eps / f6n_eps * 100) if f6n_eps > 0 else 0.0
+            diff_pct = (diff_eps / f6n_eps * 100) if f6n_eps > 0 else None
             
-            # Approximate P/E ratio divergence assuming constant stock price P
-            # PER_H = P / EPS_H, PER_N = P / EPS_N
-            # PER_H / PER_N = EPS_N / EPS_H
-            per_ratio = f6n_eps / f6h_eps if f6h_eps > 0 else None
-            per_inflated_pct = ((f6n_eps / f6h_eps) - 1.0) * 100 if (f6h_eps and f6h_eps > 0) else None
+            per_h = (price / f6h_eps) if f6h_eps > 0 else None
+            per_n = (price / f6n_eps) if f6n_eps > 0 else None
             
+            per_distortion = None
+            if per_h is not None and per_n is not None and per_n > 0:
+                per_distortion = ((per_h - per_n) / per_n) * 100
+                
             comp_res = {
+                "verified_price": price,
+                "price_source": d.get("price_source"),
                 "2a_periods": [p1.get("period"), p2.get("period")],
                 "2a_actual_sum": round(act_2a, 4),
                 "2e_periods": [f1.get("fiscalEnd"), f2.get("fiscalEnd")],
@@ -244,43 +351,23 @@ def run_analysis():
                 "4e_periods": [f1.get("fiscalEnd"), f2.get("fiscalEnd"), f3.get("fiscalEnd"), f4.get("fiscalEnd")],
                 "f6n_eps": round(f6n_eps, 4),
                 "diff_eps": round(diff_eps, 4),
-                "diff_pct_vs_f6n": round(diff_pct, 2),
-                "per_distortion_pct": round(per_inflated_pct, 2) if per_inflated_pct is not None else None
+                "diff_pct_vs_f6n": round(diff_pct, 2) if diff_pct is not None else None,
+                "verified_per_f6h": round(per_h, 2) if per_h is not None else None,
+                "verified_per_f6n": round(per_n, 2) if per_n is not None else None,
+                "per_distortion_pct": round(per_distortion, 2) if per_distortion is not None else None
             }
             f6_comparison[cid] = comp_res
-            f6h_ranks.append((cid, f6h_eps))
-            f6n_ranks.append((cid, f6n_eps))
             
+            if per_h is not None and per_n is not None:
+                per_h_list.append(per_h)
+                per_n_list.append(per_n)
+                cids_scored.append(cid)
+                
     results["comparison_f6h_vs_f6n"] = f6_comparison
     
-    # 4. Rank Correlation Analysis (Spearman rho)
-    if len(f6h_ranks) >= 5:
-        # Sort by EPS descending (or P/E ascending)
-        # Note: True P/E requires price, but within company EPS scale, let's see EPS rank or if we have price
-        # To evaluate rank correlation of Forward PER:
-        # Let's check stock prices from previous snapshots or info
-        prices = {
-            "apple": 224.23, "microsoft": 410.34, "alphabet": 162.80, "amazon": 178.50,
-            "meta": 510.60, "nvidia": 108.50, "tesla": 215.00, "oracle": 138.50,
-            "palantir": 31.20, "spacex-xai": 100.00
-        }
-        
-        per_h_list = []
-        per_n_list = []
-        cids_scored = []
-        for cid, info in f6_comparison.items():
-            p = prices.get(cid, 100.0)
-            per_h = p / info["f6h_eps"] if info["f6h_eps"] > 0 else 999.0
-            per_n = p / info["f6n_eps"] if info["f6n_eps"] > 0 else 999.0
-            per_h_list.append(per_h)
-            per_n_list.append(per_n)
-            cids_scored.append(cid)
-            info["simulated_price"] = p
-            info["simulated_per_f6h"] = round(per_h, 2)
-            info["simulated_per_f6n"] = round(per_n, 2)
-            
+    # 4. Rank Correlation on Verified Prices
+    if len(cids_scored) >= 5:
         def get_ranks(vals):
-            # Rank 1 is lowest PER (cheapest), ascending
             sorted_pairs = sorted(enumerate(vals), key=lambda x: x[1])
             ranks = [0] * len(vals)
             for r, (idx, _) in enumerate(sorted_pairs):
@@ -298,9 +385,12 @@ def run_analysis():
         for i in range(n_scored):
             rank_table.append({
                 "company_id": cids_scored[i],
-                "per_f6h": per_h_list[i],
+                "verified_price": f6_comparison[cids_scored[i]]["verified_price"],
+                "f6h_eps": f6_comparison[cids_scored[i]]["f6h_eps"],
+                "f6n_eps": f6_comparison[cids_scored[i]]["f6n_eps"],
+                "per_f6h": round(per_h_list[i], 2),
                 "rank_f6h": ranks_h[i],
-                "per_f6n": per_n_list[i],
+                "per_f6n": round(per_n_list[i], 2),
                 "rank_f6n": ranks_n[i],
                 "rank_shift": ranks_h[i] - ranks_n[i]
             })
@@ -312,29 +402,7 @@ def run_analysis():
             "rank_shifts": rank_table
         }
 
-    # 5. Seasonality & Sector Bias Analysis
-    # Check Apple holiday seasonality: Dec quarter vs Mar/Jun/Sep
-    seasonality_data = {}
-    for cid, d in data.items():
-        eps_list = d["eps_history"]
-        prev = [x for x in eps_list if x.get("type") == "PreviousQuarter"]
-        if len(prev) >= 4:
-            vals = [x.get("earnings", 0.0) for x in prev]
-            avg_eps = sum(vals) / len(vals) if len(vals) > 0 else 1.0
-            max_eps = max(vals)
-            min_eps = min(vals)
-            seasonality_ratio = max_eps / min_eps if min_eps > 0 else 1.0
-            seasonality_data[cid] = {
-                "quarterly_actuals": vals,
-                "max_to_min_ratio": round(seasonality_ratio, 2),
-                "peak_quarter": prev[vals.index(max_eps)].get("period")
-            }
-    results["bias_metrics"]["seasonality"] = seasonality_data
-
-    # 6. Dedicated Scoring Curve Simulation
-    # Compare Candidate 1: Fixed PER Band (Standard [20, 29, 42, 62, 90])
-    # vs Candidate 2: F6-H Shifted PER Band (Adjusted for backward growth lag ~15-25% shift)
-    # vs Candidate 3: Empirical Quantiles (Percentile cutoffs)
+    # 5. Dedicated Scoring Curve Re-evaluation
     if "rankings" in results and "rank_shifts" in results["rankings"]:
         all_per_h = sorted([x["per_f6h"] for x in results["rankings"]["rank_shifts"]])
         n = len(all_per_h)
@@ -344,12 +412,24 @@ def run_analysis():
             "p60": round(all_per_h[int(0.6 * n)], 2),
             "p80": round(all_per_h[int(0.8 * n)], 2)
         }
+        
+        # Calculate empirical growth lag factor from the peer group
+        lag_factors = []
+        for x in results["rankings"]["rank_shifts"]:
+            cinfo = f6_comparison[x["company_id"]]
+            if cinfo["f6h_eps"] > 0 and cinfo["f6n_eps"] > 0:
+                lag_factors.append(cinfo["f6n_eps"] / cinfo["f6h_eps"])
+        mean_lag = (sum(lag_factors) / len(lag_factors)) if lag_factors else 1.20
+        
+        shifted_band = [round(20.0 * mean_lag, 1), round(29.0 * mean_lag, 1), round(42.0 * mean_lag, 1), round(62.0 * mean_lag, 1), round(90.0 * mean_lag, 1)]
+        
         results["scoring_curves"] = {
             "f6n_standard_band": [20.0, 29.0, 42.0, 62.0, 90.0],
-            "candidate_1_fixed_standard": "동일 기준선 적용 시 고성장 기업 PER이 인위적으로 부풀려져 0~1점 구간으로 하향 편향",
-            "candidate_2_shifted_band": [24.0, 35.0, 50.0, 75.0, 110.0],
+            "mean_growth_lag_multiplier": round(mean_lag, 4),
+            "candidate_1_fixed_standard": "고성장주 PER 할증으로 인한 0~1점 하향 편향 발생 (부적합)",
+            "candidate_2_growth_lag_shifted_band": shifted_band,
             "candidate_3_empirical_quantiles": quantiles,
-            "recommendation": "단일 모드 전환 시 최소 20~25% 상향 이동된 전용 밴드(Candidate 2) 또는 백테스트 분위수(Candidate 3) 도입 필수"
+            "recommendation": f"F6-H 채택 시 평균 성장 지연율({round((mean_lag - 1.0)*100, 1)}%)을 반영한 Candidate 2 전용 밴드 {shifted_band} 적용 권고"
         }
 
     return results
@@ -362,8 +442,10 @@ if __name__ == "__main__":
     with open(out_file, "w", encoding="utf-8") as fp:
         json.dump(res, fp, ensure_ascii=False, indent=2)
     print(f"Analysis complete. Saved to {out_file}")
-    print(f"F6-H Coverage: {res['scarcity_summary']['f6h_available_count']}/{res['scarcity_summary']['total_universe']} ({res['scarcity_summary']['f6h_coverage_rate_total']}%)")
-    if "backtest_error_summary" in res:
-        print(f"2E Error (MAPE): {res['backtest_error_summary']['mean_ape_pct']}%, Median: {res['backtest_error_summary']['median_ape_pct']}%, Max: {res['backtest_error_summary']['max_ape_pct']}%")
+    
+    es = res.get("backtest_error_summary", {})
+    print(f"Component 2E Error (APE): mean={es.get('component_2e_ape',{}).get('mean')}%, median={es.get('component_2e_ape',{}).get('median')}%")
+    print(f"Aggregate F6-H Error (APE): mean={es.get('aggregate_f6h_ape',{}).get('mean')}%, median={es.get('aggregate_f6h_ape',{}).get('median')}%")
+    print(f"Aggregate F6-H Error (MAE): mean={es.get('aggregate_f6h_mae',{}).get('mean')}, median={es.get('aggregate_f6h_mae',{}).get('median')}")
     if "rankings" in res:
-        print(f"Spearman Rank Correlation (F6-H vs F6-N): {res['rankings'].get('spearman_rho')}")
+        print(f"Spearman Rank Correlation (Verified Prices): {res['rankings'].get('spearman_rho')}")
