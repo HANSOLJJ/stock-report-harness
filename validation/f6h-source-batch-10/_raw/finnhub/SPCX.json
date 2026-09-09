@@ -1,0 +1,10 @@
+{
+ "past": {
+  "http": 200,
+  "body": "[{\"symbol\":\"SPCX\",\"estimate\":-0.2635,\"actual\":-0.09,\"period\":\"2026-06-30\",\"surprise\":0.1735,\"surprisePercent\":65.8444,\"year\":2026,\"quarter\":2}]"
+ },
+ "future": {
+  "http": 200,
+  "body": "{\"earningsCalendar\":[]}"
+ }
+}

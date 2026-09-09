@@ -1,0 +1,10 @@
+{
+ "past": {
+  "http": 200,
+  "body": "[{\"symbol\":\"PLTR\",\"estimate\":0.3544,\"actual\":0.41,\"period\":\"2026-06-30\",\"surprise\":0.0556,\"surprisePercent\":15.6885,\"year\":2026,\"quarter\":2},{\"symbol\":\"PLTR\",\"estimate\":0.2849,\"actual\":0.33,\"period\":\"2026-03-31\",\"surprise\":0.0451,\"surprisePercent\":15.8301,\"year\":2026,\"quarter\":1},{\"symbol\":\"PLTR\",\"estimate\":0.2348,\"actual\":0.25,\"period\":\"2025-12-31\",\"surprise\":0.0152,\"surprisePercent\":6.4736,\"year\":2025,\"quarter\":4},{\"symbol\":\"PLTR\",\"estimate\":0.1718,\"actual\":0.21,\"period\":\"2025-09-30\",\"surprise\":0.0382,\"surprisePercent\":22.2352,\"year\":2025,\"quarter\":3}]"
+ },
+ "future": {
+  "http": 200,
+  "body": "{\"earningsCalendar\":[{\"symbol\":\"PLTR\",\"date\":\"2027-05-03\",\"hour\":\"\",\"quarter\":1,\"year\":2027,\"epsEstimate\":0.4962,\"epsActual\":null,\"revenueEstimate\":2610096237,\"revenueActual\":null},{\"symbol\":\"PLTR\",\"date\":\"2027-02-01\",\"hour\":\"amc\",\"quarter\":4,\"year\":2026,\"epsEstimate\":0.477,\"epsActual\":null,\"revenueEstimate\":2508628565,\"revenueActual\":null},{\"symbol\":\"PLTR\",\"date\":\"2026-11-02\",\"hour\":\"\",\"quarter\":3,\"year\":2026,\"epsEstimate\":0.4277,\"epsActual\":null,\"revenueEstimate\":2220416029,\"revenueActual\":null}]}"
+ }
+}

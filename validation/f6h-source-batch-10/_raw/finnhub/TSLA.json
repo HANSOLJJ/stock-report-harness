@@ -1,0 +1,10 @@
+{
+ "past": {
+  "http": 200,
+  "body": "[{\"symbol\":\"TSLA\",\"estimate\":0.5191,\"actual\":0.33,\"period\":\"2026-06-30\",\"surprise\":-0.1891,\"surprisePercent\":-36.4284,\"year\":2026,\"quarter\":2},{\"symbol\":\"TSLA\",\"estimate\":0.3773,\"actual\":0.41,\"period\":\"2026-03-31\",\"surprise\":0.0327,\"surprisePercent\":8.6668,\"year\":2026,\"quarter\":1},{\"symbol\":\"TSLA\",\"estimate\":0.4541,\"actual\":0.5,\"period\":\"2025-12-31\",\"surprise\":0.0459,\"surprisePercent\":10.1079,\"year\":2025,\"quarter\":4},{\"symbol\":\"TSLA\",\"estimate\":0.5586,\"actual\":0.5,\"period\":\"2025-09-30\",\"surprise\":-0.0586,\"surprisePercent\":-10.4905,\"year\":2025,\"quarter\":3}]"
+ },
+ "future": {
+  "http": 200,
+  "body": "{\"earningsCalendar\":[{\"symbol\":\"TSLA\",\"date\":\"2027-04-20\",\"hour\":\"\",\"quarter\":1,\"year\":2027,\"epsEstimate\":0.4499,\"epsActual\":null,\"revenueEstimate\":26573659231,\"revenueActual\":null},{\"symbol\":\"TSLA\",\"date\":\"2027-01-26\",\"hour\":\"amc\",\"quarter\":4,\"year\":2026,\"epsEstimate\":0.4755,\"epsActual\":null,\"revenueEstimate\":28873088959,\"revenueActual\":null},{\"symbol\":\"TSLA\",\"date\":\"2026-10-20\",\"hour\":\"amc\",\"quarter\":3,\"year\":2026,\"epsEstimate\":0.4451,\"epsActual\":null,\"revenueEstimate\":28290861820,\"revenueActual\":null}]}"
+ }
+}

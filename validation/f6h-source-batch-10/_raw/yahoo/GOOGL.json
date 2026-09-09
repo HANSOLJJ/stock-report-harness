@@ -1,0 +1,200 @@
+{
+ "allowlisted": false,
+ "note": "상류 Yahoo API 가 personal use only — 채택 후보 아님",
+ "earnings_estimate": {
+  "0q": {
+   "avg": 3.00586,
+   "low": 2.64,
+   "high": 3.68,
+   "yearAgoEps": 2.87,
+   "numberOfAnalysts": 42,
+   "growth": 0.0473,
+   "currency": "USD"
+  },
+  "+1q": {
+   "avg": 3.33268,
+   "low": 2.99,
+   "high": 4.09232,
+   "yearAgoEps": 2.82,
+   "numberOfAnalysts": 39,
+   "growth": 0.18180001,
+   "currency": "USD"
+  },
+  "0y": {
+   "avg": 20.60295,
+   "low": 19.7,
+   "high": 21.92,
+   "yearAgoEps": 10.81,
+   "numberOfAnalysts": 53,
+   "growth": 0.90589994,
+   "currency": "USD"
+  },
+  "+1y": {
+   "avg": 14.8641,
+   "low": 13.67302,
+   "high": 17.21393,
+   "yearAgoEps": 20.60295,
+   "numberOfAnalysts": 54,
+   "growth": -0.2785,
+   "currency": "USD"
+  }
+ },
+ "earnings_dates": [
+  {
+   "Earnings Date": "2026-10-28T20:00:00.000Z",
+   "EPS Estimate": 3.01,
+   "Reported EPS": null,
+   "Surprise(%)": null
+  },
+  {
+   "Earnings Date": "2026-07-22T20:00:00.000Z",
+   "EPS Estimate": 2.9,
+   "Reported EPS": 9.11,
+   "Surprise(%)": 214.23
+  },
+  {
+   "Earnings Date": "2026-04-29T20:00:00.000Z",
+   "EPS Estimate": 2.67,
+   "Reported EPS": 5.11,
+   "Surprise(%)": 91.59
+  },
+  {
+   "Earnings Date": "2026-02-04T21:00:00.000Z",
+   "EPS Estimate": 2.64,
+   "Reported EPS": 2.82,
+   "Surprise(%)": 7.01
+  },
+  {
+   "Earnings Date": "2025-10-29T20:00:00.000Z",
+   "EPS Estimate": 2.26,
+   "Reported EPS": 2.87,
+   "Surprise(%)": 26.88
+  },
+  {
+   "Earnings Date": "2025-07-23T20:00:00.000Z",
+   "EPS Estimate": 2.19,
+   "Reported EPS": 2.31,
+   "Surprise(%)": 5.67
+  },
+  {
+   "Earnings Date": "2025-04-24T20:00:00.000Z",
+   "EPS Estimate": 2.01,
+   "Reported EPS": 2.81,
+   "Surprise(%)": 40.1
+  },
+  {
+   "Earnings Date": "2025-02-04T21:00:00.000Z",
+   "EPS Estimate": 2.13,
+   "Reported EPS": 2.15,
+   "Surprise(%)": 1.18
+  },
+  {
+   "Earnings Date": "2024-10-29T20:00:00.000Z",
+   "EPS Estimate": 1.85,
+   "Reported EPS": 2.12,
+   "Surprise(%)": 14.83
+  },
+  {
+   "Earnings Date": "2024-07-23T20:00:00.000Z",
+   "EPS Estimate": 1.85,
+   "Reported EPS": 1.89,
+   "Surprise(%)": 2.4
+  },
+  {
+   "Earnings Date": "2024-04-25T20:00:00.000Z",
+   "EPS Estimate": 1.51,
+   "Reported EPS": 1.89,
+   "Surprise(%)": 25.58
+  },
+  {
+   "Earnings Date": "2024-01-30T21:00:00.000Z",
+   "EPS Estimate": 1.6,
+   "Reported EPS": 1.64,
+   "Surprise(%)": 2.75
+  },
+  {
+   "Earnings Date": "2023-10-24T20:00:00.000Z",
+   "EPS Estimate": 1.45,
+   "Reported EPS": 1.55,
+   "Surprise(%)": 6.74
+  },
+  {
+   "Earnings Date": "2023-07-25T20:00:00.000Z",
+   "EPS Estimate": 1.34,
+   "Reported EPS": 1.44,
+   "Surprise(%)": 7.23
+  },
+  {
+   "Earnings Date": "2023-04-25T20:00:00.000Z",
+   "EPS Estimate": 1.07,
+   "Reported EPS": 1.17,
+   "Surprise(%)": 9.52
+  },
+  {
+   "Earnings Date": "2023-02-02T21:00:00.000Z",
+   "EPS Estimate": 1.19,
+   "Reported EPS": 1.05,
+   "Surprise(%)": -11.87
+  },
+  {
+   "Earnings Date": "2022-10-25T20:00:00.000Z",
+   "EPS Estimate": 1.25,
+   "Reported EPS": 1.06,
+   "Surprise(%)": -15.27
+  },
+  {
+   "Earnings Date": "2022-07-26T20:00:00.000Z",
+   "EPS Estimate": 1.27,
+   "Reported EPS": 1.21,
+   "Surprise(%)": -5.05
+  },
+  {
+   "Earnings Date": "2022-04-26T20:00:00.000Z",
+   "EPS Estimate": 1.29,
+   "Reported EPS": 1.23,
+   "Surprise(%)": -4.43
+  },
+  {
+   "Earnings Date": "2022-02-01T21:00:00.000Z",
+   "EPS Estimate": 1.36,
+   "Reported EPS": 1.53,
+   "Surprise(%)": 12.65
+  },
+  {
+   "Earnings Date": "2021-10-26T20:00:00.000Z",
+   "EPS Estimate": 1.17,
+   "Reported EPS": 1.4,
+   "Surprise(%)": 20.02
+  },
+  {
+   "Earnings Date": "2021-07-27T20:00:00.000Z",
+   "EPS Estimate": 0.96,
+   "Reported EPS": 1.36,
+   "Surprise(%)": 41.37
+  },
+  {
+   "Earnings Date": "2021-04-27T20:00:00.000Z",
+   "EPS Estimate": 0.78,
+   "Reported EPS": 1.31,
+   "Surprise(%)": 67.76
+  },
+  {
+   "Earnings Date": "2021-02-02T21:00:00.000Z",
+   "EPS Estimate": 0.79,
+   "Reported EPS": 1.12,
+   "Surprise(%)": 41.85
+  },
+  {
+   "Earnings Date": "2020-10-29T20:00:00.000Z",
+   "EPS Estimate": 0.56,
+   "Reported EPS": 0.82,
+   "Surprise(%)": 46.24
+  }
+ ],
+ "basis": {
+  "currency": "USD",
+  "financialCurrency": "USD",
+  "quoteType": "EQUITY",
+  "exchange": "NMS"
+ }
+}

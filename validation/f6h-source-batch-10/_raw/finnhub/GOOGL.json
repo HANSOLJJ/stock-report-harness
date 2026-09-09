@@ -1,0 +1,10 @@
+{
+ "past": {
+  "http": 200,
+  "body": "[{\"symbol\":\"GOOGL\",\"estimate\":2.9798,\"actual\":2.85,\"period\":\"2026-06-30\",\"surprise\":-0.1298,\"surprisePercent\":-4.356,\"year\":2026,\"quarter\":2},{\"symbol\":\"GOOGL\",\"estimate\":2.7051,\"actual\":2.62,\"period\":\"2026-03-31\",\"surprise\":-0.0851,\"surprisePercent\":-3.1459,\"year\":2026,\"quarter\":1},{\"symbol\":\"GOOGL\",\"estimate\":2.7063,\"actual\":2.82,\"period\":\"2025-12-31\",\"surprise\":0.1137,\"surprisePercent\":4.2013,\"year\":2025,\"quarter\":4},{\"symbol\":\"GOOGL\",\"estimate\":2.3954,\"actual\":3.1,\"period\":\"2025-09-30\",\"surprise\":0.7046,\"surprisePercent\":29.4147,\"year\":2025,\"quarter\":3}]"
+ },
+ "future": {
+  "http": 200,
+  "body": "{\"earningsCalendar\":[{\"symbol\":\"GOOGL\",\"date\":\"2027-04-27\",\"hour\":\"\",\"quarter\":1,\"year\":2027,\"epsEstimate\":3.4358,\"epsActual\":null,\"revenueEstimate\":141212921926,\"revenueActual\":null},{\"symbol\":\"GOOGL\",\"date\":\"2027-02-02\",\"hour\":\"amc\",\"quarter\":4,\"year\":2026,\"epsEstimate\":3.4401,\"epsActual\":null,\"revenueEstimate\":145459265001,\"revenueActual\":null},{\"symbol\":\"GOOGL\",\"date\":\"2026-10-27\",\"hour\":\"amc\",\"quarter\":3,\"year\":2026,\"epsEstimate\":3.1057,\"epsActual\":null,\"revenueEstimate\":130958734142,\"revenueActual\":null}]}"
+ }
+}

@@ -1,0 +1,67 @@
+==============================================================================================================
+F6-H 공급원별 일괄 확보 조사 — 조회 시점(UTC) 2026-09-09T14:13:54.798221+00:00
+대상 12개사 · 전망 창 2026-09-01~2029-12-31
+제외: api.nasdaq.com — v1.6 rules.sources denied — 생산 배제이므로 호출하지 않음
+==============================================================================================================
+
+[A] Finnhub — stock/earnings(2A) + calendar/earnings(2E)
+티커         실적수    전망수   2A   2E     판정  비고
+META         4      3    O    O     통과  
+NVDA         4      3    O    O     통과  
+GOOGL        4      3    O    O     통과  
+MSFT         4      3    O    O     통과  
+AMZN         4      3    O    O     통과  
+AAPL         4      3    O    O     통과  
+ORCL         4      4    O    O     통과  
+PLTR         4      3    O    O     통과  
+TSLA         4      3    O    O     통과  
+SPCX         1      0    X    X     미달  음수 실적 1건
+TSM          4      3    O    O     통과  
+BABA         4      3    O    O     통과  
+  → 12개사 중 통과 11개사
+
+[B] FMP — stable/analyst-estimates?period=quarter
+META    HTTP 402 — Premium Query Parameter: 'Special Endpoint : This value set for 'period' is not 
+NVDA    HTTP 402 — Premium Query Parameter: 'Special Endpoint : This value set for 'period' is not 
+GOOGL   HTTP 402 — Premium Query Parameter: 'Special Endpoint : This value set for 'period' is not 
+  → 12개사 응답 코드 집합 {402} · 통과 0개사
+
+[C] SEC XBRL — 실적 전용
+  분기 EPS 조회 가능 10/12 (20-F 제출사 TSM·BABA 제외)
+  전망 필드 없음 → 2E 확보 0개사 · 통과 0개사
+
+[D] Yahoo (yfinance) - earnings_estimate(2E) + earnings_dates(2A)  * allowlist 미등재
+티커         실적수    전망수   2A   2E     전망통화     매매통화    표본n  min/max     판정  비고
+META        24      2    O    O      USD      USD      O        O     통과  
+NVDA        24      2    O    O      USD      USD      O        O     통과  
+GOOGL       24      2    O    O      USD      USD      O        O     통과  
+MSFT        24      2    O    O      USD      USD      O        O     통과  
+AMZN        24      2    O    O      USD      USD      O        O     통과  음수 실적 2건
+AAPL        24      2    O    O      USD      USD      O        O     통과  
+ORCL        24      2    O    O      USD      USD      O        O     통과  
+PLTR        24      2    O    O      USD      USD      O        O     통과  음수 실적 1건
+TSLA        24      2    O    O      USD      USD      O        O     통과  
+SPCX         1      2    X    O      USD      USD      O        O     미달  음수 실적 1건
+TSM         24      2    O    O      USD      USD      O        O     통과  
+BABA        24      2    O    O      CNY      USD      O        O     통과  전망 통화 CNY != 매매 통화 USD
+  -> 12개사 중 통과 11개사
+
+[E] 기준 항목 비교 - 공급원이 무엇을 명시하는가
+항목                        Finnhub     FMP(무료)         SEC      Yahoo
+2A 확보(12개사)                    11           0         10*         11
+2E 확보(12개사)                    11           0           0         12
+asOf/추정시각                      없음           -    filed 있음         없음
+회계기준 명시                        없음           -     us-gaap         없음
+통화 필드                          없음           -      단위에 포함         있음
+ADR/ADS 기준 명시                  없음           -          없음         없음
+표본 수                           없음           -        해당없음         있음
+min/max                        없음           -        해당없음         있음
+  * SEC 는 실적만. 20-F 제출사(TSM·BABA) 제외 10개사이며 회계 4분기는 연간에서 복원해야 한다.
+
+==============================================================================================================
+종합 — 한 공급원이 12개사 전체를 커버하는가
+==============================================================================================================
+  Finnhub  11/12   (allowlist 등재)
+  FMP      0/12    (allowlist 등재 · 무료 등급에서 분기 파라미터·심볼 차단)
+  SEC      0/12    (allowlist 등재 · 전망 필드 자체가 없음)
+  Yahoo    11/12   (allowlist 미등재 — 채택 후보 아님)

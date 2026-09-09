@@ -1,0 +1,62 @@
+{
+ "allowlisted": false,
+ "note": "상류 Yahoo API 가 personal use only — 채택 후보 아님",
+ "earnings_estimate": {
+  "0q": {
+   "avg": 0.14582,
+   "low": -0.11,
+   "high": 0.28833,
+   "numberOfAnalysts": 12,
+   "yearAgoEps": null,
+   "growth": null,
+   "currency": "USD"
+  },
+  "+1q": {
+   "avg": 0.44758,
+   "low": -0.14,
+   "high": 0.8,
+   "numberOfAnalysts": 14,
+   "yearAgoEps": null,
+   "growth": null,
+   "currency": "USD"
+  },
+  "0y": {
+   "avg": 0.11869,
+   "low": -1.52,
+   "high": 1.0,
+   "numberOfAnalysts": 17,
+   "yearAgoEps": -8.44,
+   "growth": 1.0141001,
+   "currency": "USD"
+  },
+  "+1y": {
+   "avg": 1.74665,
+   "low": -0.68,
+   "high": 3.19,
+   "numberOfAnalysts": 18,
+   "yearAgoEps": 0.11869,
+   "growth": 13.7161,
+   "currency": "USD"
+  }
+ },
+ "earnings_dates": [
+  {
+   "Earnings Date": "2026-11-03T20:00:00.000Z",
+   "EPS Estimate": 0.15,
+   "Reported EPS": null,
+   "Surprise(%)": null
+  },
+  {
+   "Earnings Date": "2026-08-04T20:00:00.000Z",
+   "EPS Estimate": -0.29,
+   "Reported EPS": -0.09,
+   "Surprise(%)": 68.89
+  }
+ ],
+ "basis": {
+  "currency": "USD",
+  "financialCurrency": "USD",
+  "quoteType": "EQUITY",
+  "exchange": "NMS"
+ }
+}

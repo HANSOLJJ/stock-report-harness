@@ -1,0 +1,10 @@
+{
+ "past": {
+  "http": 200,
+  "body": "[{\"symbol\":\"NVDA\",\"estimate\":2.1384,\"actual\":2.22,\"period\":\"2026-09-30\",\"surprise\":0.0816,\"surprisePercent\":3.8159,\"year\":2027,\"quarter\":2},{\"symbol\":\"NVDA\",\"estimate\":1.7922,\"actual\":1.87,\"period\":\"2026-06-30\",\"surprise\":0.0778,\"surprisePercent\":4.341,\"year\":2027,\"quarter\":1},{\"symbol\":\"NVDA\",\"estimate\":1.5634,\"actual\":1.62,\"period\":\"2026-03-31\",\"surprise\":0.0566,\"surprisePercent\":3.6203,\"year\":2026,\"quarter\":4},{\"symbol\":\"NVDA\",\"estimate\":1.2746,\"actual\":1.3,\"period\":\"2025-12-31\",\"surprise\":0.0254,\"surprisePercent\":1.9928,\"year\":2026,\"quarter\":3}]"
+ },
+ "future": {
+  "http": 200,
+  "body": "{\"earningsCalendar\":[{\"symbol\":\"NVDA\",\"date\":\"2027-05-18\",\"hour\":\"\",\"quarter\":1,\"year\":2028,\"epsEstimate\":3.0781,\"epsActual\":null,\"revenueEstimate\":137360218263,\"revenueActual\":null},{\"symbol\":\"NVDA\",\"date\":\"2027-02-23\",\"hour\":\"amc\",\"quarter\":4,\"year\":2027,\"epsEstimate\":2.7718,\"epsActual\":null,\"revenueEstimate\":122673685533,\"revenueActual\":null},{\"symbol\":\"NVDA\",\"date\":\"2026-11-17\",\"hour\":\"amc\",\"quarter\":3,\"year\":2027,\"epsEstimate\":2.4659,\"epsActual\":null,\"revenueEstimate\":108129157692,\"revenueActual\":null}]}"
+ }
+}

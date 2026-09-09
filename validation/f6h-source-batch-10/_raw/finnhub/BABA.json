@@ -1,0 +1,10 @@
+{
+ "past": {
+  "http": 200,
+  "body": "[{\"symbol\":\"BABA\",\"estimate\":10.7426,\"actual\":8.52,\"period\":\"2026-06-30\",\"surprise\":-2.2226,\"surprisePercent\":-20.6896,\"year\":2027,\"quarter\":1},{\"symbol\":\"BABA\",\"estimate\":5.9052,\"actual\":0.62,\"period\":\"2026-03-31\",\"surprise\":-5.2852,\"surprisePercent\":-89.5008,\"year\":2026,\"quarter\":4},{\"symbol\":\"BABA\",\"estimate\":11.5227,\"actual\":7.09,\"period\":\"2025-12-31\",\"surprise\":-4.4327,\"surprisePercent\":-38.4693,\"year\":2026,\"quarter\":3},{\"symbol\":\"BABA\",\"estimate\":5.5963,\"actual\":4.36,\"period\":\"2025-09-30\",\"surprise\":-1.2363,\"surprisePercent\":-22.0914,\"year\":2026,\"quarter\":2}]"
+ },
+ "future": {
+  "http": 200,
+  "body": "{\"earningsCalendar\":[{\"symbol\":\"BABA\",\"date\":\"2027-05-11\",\"hour\":\"amc\",\"quarter\":4,\"year\":2027,\"epsEstimate\":11.7374,\"epsActual\":null,\"revenueEstimate\":278609291790,\"revenueActual\":null},{\"symbol\":\"BABA\",\"date\":\"2027-03-17\",\"hour\":\"\",\"quarter\":3,\"year\":2027,\"epsEstimate\":15.363,\"epsActual\":null,\"revenueEstimate\":318286628494,\"revenueActual\":null},{\"symbol\":\"BABA\",\"date\":\"2026-11-23\",\"hour\":\"\",\"quarter\":2,\"year\":2027,\"epsEstimate\":11.1893,\"epsActual\":null,\"revenueEstimate\":276688436164,\"revenueActual\":null}]}"
+ }
+}

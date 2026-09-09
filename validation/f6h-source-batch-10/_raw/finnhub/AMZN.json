@@ -1,0 +1,10 @@
+{
+ "past": {
+  "http": 200,
+  "body": "[{\"symbol\":\"AMZN\",\"estimate\":1.8563,\"actual\":1.97,\"period\":\"2026-06-30\",\"surprise\":0.1137,\"surprisePercent\":6.1251,\"year\":2026,\"quarter\":2},{\"symbol\":\"AMZN\",\"estimate\":1.6679,\"actual\":1.61,\"period\":\"2026-03-31\",\"surprise\":-0.0579,\"surprisePercent\":-3.4714,\"year\":2026,\"quarter\":1},{\"symbol\":\"AMZN\",\"estimate\":1.6703,\"actual\":1.61,\"period\":\"2025-12-31\",\"surprise\":-0.0603,\"surprisePercent\":-3.6101,\"year\":2025,\"quarter\":4},{\"symbol\":\"AMZN\",\"estimate\":1.605,\"actual\":1.95,\"period\":\"2025-09-30\",\"surprise\":0.345,\"surprisePercent\":21.4953,\"year\":2025,\"quarter\":3}]"
+ },
+ "future": {
+  "http": 200,
+  "body": "{\"earningsCalendar\":[{\"symbol\":\"AMZN\",\"date\":\"2027-04-27\",\"hour\":\"\",\"quarter\":1,\"year\":2027,\"epsEstimate\":2.43,\"epsActual\":null,\"revenueEstimate\":212531571036,\"revenueActual\":null},{\"symbol\":\"AMZN\",\"date\":\"2027-02-03\",\"hour\":\"amc\",\"quarter\":4,\"year\":2026,\"epsEstimate\":2.4901,\"epsActual\":null,\"revenueEstimate\":249689019507,\"revenueActual\":null},{\"symbol\":\"AMZN\",\"date\":\"2026-10-28\",\"hour\":\"amc\",\"quarter\":3,\"year\":2026,\"epsEstimate\":1.9928,\"epsActual\":null,\"revenueEstimate\":206371169979,\"revenueActual\":null}]}"
+ }
+}

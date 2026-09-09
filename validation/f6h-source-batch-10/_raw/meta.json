@@ -1,0 +1,25 @@
+{
+ "collected_at_utc": "2026-09-09T14:13:54.798221+00:00",
+ "finished_at_utc": "2026-09-09T14:15:04.553556+00:00",
+ "tickers": [
+  "META",
+  "NVDA",
+  "GOOGL",
+  "MSFT",
+  "AMZN",
+  "AAPL",
+  "ORCL",
+  "PLTR",
+  "TSLA",
+  "SPCX",
+  "TSM",
+  "BABA"
+ ],
+ "forecast_window": [
+  "2026-09-01",
+  "2029-12-31"
+ ],
+ "excluded": {
+  "api.nasdaq.com": "v1.6 rules.sources denied — 생산 배제이므로 호출하지 않음"
+ }
+}
