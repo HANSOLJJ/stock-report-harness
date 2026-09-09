@@ -19,3 +19,7 @@ Anthropic 공식 발표문(https://www.anthropic.com/news/series-h)의 문장을
 - 2번은 `It also includes 15 billion dollars of previously committed investments from hyperscalers, including 5 billion dollars from Amazon.`에 해당하는 원문으로 교체한다.
 
 수정 후 원문 스냅샷의 직접 인용과 요약 분리를 유지하고 `verify_sources.py` 12개 테스트를 다시 실행한다. 수정 전까지 C13 관련 점수는 보류한다.
+
+## 최종 보완 확인
+
+커밋 `342b0c8`에서 1번과 2번 인용이 공식 발표문 실제 문장으로 교체되었고, 12개 테스트를 독립 실행해 전부 통과했다. 따라서 잔여 지적은 해소되었으며 최종 판정은 `pass`다. TSMC·Alibaba의 채점 보류 정책은 그대로 유지한다.
