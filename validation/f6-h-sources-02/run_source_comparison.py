@@ -26,17 +26,20 @@ def run_comparison():
     # 6 Candidate Sources evaluated independently (Strictly NO cherry-picking / mixing)
     sources = {
         "nasdaq": {
-            "name": "Nasdaq (api.nasdaq.com / Zacks Consensus)",
+            "name": "Nasdaq (api.nasdaq.com - 비생산 참고용 검증 증거)",
             "vendor": "Zacks Investment Research",
             "accounting": "Zacks BNRI (Non-GAAP Adjusted Diluted EPS, excludes non-recurring, includes SBC)",
             "endpoint_type": "JSON Web Backend (REST)",
-            "can_batch_query": True,
+            "production_status": "denied_non_production_reference",
+            "production_eligible": False,
+            "can_batch_query": False,  # 생산 추가 쿼리 금지
             "has_as_of": False,  # asOf: null on public endpoint
             "point_in_time": False,
             "has_sample_size": True,  # noOfEstimates provided
             "has_min_max": True,  # highEPSForecast, lowEPSForecast
-            "tos_status": "스크래핑 금지 (약관 제2조 위반 위험, 공식 연동 시 Data Link B2B 유료 구독 필요)",
-            "redistribution_terms": "원천 수치 HTML 공개 배포 시 Redistribution Rider 필수",
+            "tos_status": "생산 원천 배제 (robots.txt Disallow / 및 약관상 자동 수집 금지, 공식 연동 시 Data Link B2B 서면 계약 필수)",
+            "redistribution_terms": "생산 채택 제외 (기존 샘플은 비생산 참고용 검증 증거로만 보존)",
+            "note": "api.nasdaq.com 생산 배제 정책에 따라 생산 입력·관측 등록·점수 계산 불가, 참고용 검증 증거(non-production reference)로만 보존",
             "coverage_eval": {}
         },
         "stockanalysis": {
@@ -238,7 +241,8 @@ def run_comparison():
             "as_of_point_in_time": s_info["has_as_of"] and s_info["point_in_time"],
             "sample_size_provided": s_info["has_sample_size"],
             "tos_compliance": s_info["tos_status"],
-            "single_source_f6h_viable": cov["eligible_for_f6h_count"] == 12
+            "production_status": s_info.get("production_status", "not_approved"),
+            "single_source_f6h_viable": False  # 전 공급원 단일 채택 불가
         })
         
     return {
@@ -249,7 +253,8 @@ def run_comparison():
         "summary_matrix": summary_matrix,
         "key_findings": {
             "universal_100_percent_viable": False,
-            "best_coverage_source": "nasdaq (9/12 for US common, but 0/12 for full uniform ADR/SPCX)",
+            "nasdaq_policy_status": "api.nasdaq.com 생산 배제 확정. 기존 표본은 비생산 참고용 검증 증거(non-production reference)로만 보존되며, 생산 입력·관측 등록·점수 계산에 사용 불가. Nasdaq 9/12 수치는 채택 후보가 아님.",
+            "best_coverage_source": "finnhub (9/12, 단 403 차단 및 단위 왜곡으로 불가) / nasdaq (비생산 참고용 9/12, 생산 후보에서 전면 제외)",
             "adr_bottleneck": "모든 무료/공개 공급원에서 TSMC(TWD) 및 Alibaba(CNY)의 ADR/ADS 단위가 통일되지 않고 왜곡됨",
             "spcx_bottleneck": "신규 상장(2026-06)으로 인해 2A 확정 실적이 전 공급원에서 결측되거나 왜곡됨",
             "recommendation": "단일 무료 공급원으로 12개사 100% F6-H 통일은 기술적으로 불가능하며, F6를 정식 채점 입력으로 열기 위해서는 상용 B2B 유료 라이선스(Data Link 또는 S&P Global) 체결 및 ADR 단위 변환 게이트 정립이 선행되어야 함"

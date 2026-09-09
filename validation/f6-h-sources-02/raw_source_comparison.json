@@ -4,17 +4,20 @@
   "rule_strictness": "종목별 사이트 체리피킹(혼합) 배제, 단일 공급원 일괄 12개사 확보 검증",
   "sources": {
     "nasdaq": {
-      "name": "Nasdaq (api.nasdaq.com / Zacks Consensus)",
+      "name": "Nasdaq (api.nasdaq.com - 비생산 참고용 검증 증거)",
       "vendor": "Zacks Investment Research",
       "accounting": "Zacks BNRI (Non-GAAP Adjusted Diluted EPS, excludes non-recurring, includes SBC)",
       "endpoint_type": "JSON Web Backend (REST)",
-      "can_batch_query": true,
+      "production_status": "denied_non_production_reference",
+      "production_eligible": false,
+      "can_batch_query": false,
       "has_as_of": false,
       "point_in_time": false,
       "has_sample_size": true,
       "has_min_max": true,
-      "tos_status": "스크래핑 금지 (약관 제2조 위반 위험, 공식 연동 시 Data Link B2B 유료 구독 필요)",
-      "redistribution_terms": "원천 수치 HTML 공개 배포 시 Redistribution Rider 필수",
+      "tos_status": "생산 원천 배제 (robots.txt Disallow / 및 약관상 자동 수집 금지, 공식 연동 시 Data Link B2B 서면 계약 필수)",
+      "redistribution_terms": "생산 채택 제외 (기존 샘플은 비생산 참고용 검증 증거로만 보존)",
+      "note": "api.nasdaq.com 생산 배제 정책에 따라 생산 입력·관측 등록·점수 계산 불가, 참고용 검증 증거(non-production reference)로만 보존",
       "coverage_eval": {
         "2a_available_count": 9,
         "2e_available_count": 12,
@@ -793,7 +796,7 @@
   "summary_matrix": [
     {
       "source_key": "nasdaq",
-      "source_name": "Nasdaq (api.nasdaq.com / Zacks Consensus)",
+      "source_name": "Nasdaq (api.nasdaq.com - 비생산 참고용 검증 증거)",
       "vendor": "Zacks Investment Research",
       "accounting": "Zacks BNRI (Non-GAAP Adjusted Diluted EPS, excludes non-recurring, includes SBC)",
       "eligible_count_12": "9/12",
@@ -803,7 +806,8 @@
       "unit_consistent_count": "10/12",
       "as_of_point_in_time": false,
       "sample_size_provided": true,
-      "tos_compliance": "스크래핑 금지 (약관 제2조 위반 위험, 공식 연동 시 Data Link B2B 유료 구독 필요)",
+      "tos_compliance": "생산 원천 배제 (robots.txt Disallow / 및 약관상 자동 수집 금지, 공식 연동 시 Data Link B2B 서면 계약 필수)",
+      "production_status": "denied_non_production_reference",
       "single_source_f6h_viable": false
     },
     {
@@ -819,6 +823,7 @@
       "as_of_point_in_time": false,
       "sample_size_provided": true,
       "tos_compliance": "스크래핑 금지, S&P Global 지재권 보호, 자동화 파이프라인 차단 위험",
+      "production_status": "not_approved",
       "single_source_f6h_viable": false
     },
     {
@@ -834,6 +839,7 @@
       "as_of_point_in_time": false,
       "sample_size_provided": false,
       "tos_compliance": "무료 분당 60콜 허용, 단 전용 컨센서스(stock/eps-estimate) 403 차단",
+      "production_status": "not_approved",
       "single_source_f6h_viable": false
     },
     {
@@ -849,6 +855,7 @@
       "as_of_point_in_time": false,
       "sample_size_provided": true,
       "tos_compliance": "무료 등급 period=quarter 호출 차단 (HTTP 402 / ACCESS DENIED)",
+      "production_status": "not_approved",
       "single_source_f6h_viable": false
     },
     {
@@ -864,6 +871,7 @@
       "as_of_point_in_time": false,
       "sample_size_provided": false,
       "tos_compliance": "내부 엔드포인트 무단 스크래핑 금지",
+      "production_status": "not_approved",
       "single_source_f6h_viable": false
     },
     {
@@ -879,12 +887,14 @@
       "as_of_point_in_time": false,
       "sample_size_provided": true,
       "tos_compliance": "Yahoo 공식 API 차단 (401), yfinance 사용 금지, Valley는 v1.5 보존용",
+      "production_status": "not_approved",
       "single_source_f6h_viable": false
     }
   ],
   "key_findings": {
     "universal_100_percent_viable": false,
-    "best_coverage_source": "nasdaq (9/12 for US common, but 0/12 for full uniform ADR/SPCX)",
+    "nasdaq_policy_status": "api.nasdaq.com 생산 배제 확정. 기존 표본은 비생산 참고용 검증 증거(non-production reference)로만 보존되며, 생산 입력·관측 등록·점수 계산에 사용 불가. Nasdaq 9/12 수치는 채택 후보가 아님.",
+    "best_coverage_source": "finnhub (9/12, 단 403 차단 및 단위 왜곡으로 불가) / nasdaq (비생산 참고용 9/12, 생산 후보에서 전면 제외)",
     "adr_bottleneck": "모든 무료/공개 공급원에서 TSMC(TWD) 및 Alibaba(CNY)의 ADR/ADS 단위가 통일되지 않고 왜곡됨",
     "spcx_bottleneck": "신규 상장(2026-06)으로 인해 2A 확정 실적이 전 공급원에서 결측되거나 왜곡됨",
     "recommendation": "단일 무료 공급원으로 12개사 100% F6-H 통일은 기술적으로 불가능하며, F6를 정식 채점 입력으로 열기 위해서는 상용 B2B 유료 라이선스(Data Link 또는 S&P Global) 체결 및 ADR 단위 변환 게이트 정립이 선행되어야 함"
