@@ -171,7 +171,7 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .pill.mix{background:var(--cat-mix-soft);color:var(--cat-mix)}
 .pill.warn{background:var(--warn-soft);color:var(--warn-text)}
 /* 카드에서 먼저 읽혀야 하는 것은 한 줄 요약이다. 출처 표시는 그 아래 작은 캡션으로 내린다. */
-.cquote{font-size:var(--fs-base);color:var(--tx);margin-top:6px;line-height:1.55}
+.cquote{font-size:var(--fs-base);color:var(--tx2);margin-top:6px;padding-left:10px;border-left:2px solid var(--acc-line);line-height:1.55}
 .cprov{font-size:var(--fs-sm);color:var(--tx3);margin-top:4px;line-height:1.4}
 .cscore{text-align:right;flex:1 1 auto;min-width:0}
 .cscore .t{font-size:var(--fs-3xl);font-weight:800;letter-spacing:-.03em;line-height:1}
