@@ -1,6 +1,7 @@
 # 설계 지침 12.1 계산 검증(T-01~T-12)을 표준 unittest 로 고정한 계산기 테스트
 from __future__ import annotations
 
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -14,7 +15,8 @@ from scorecard.calc_f9 import compute_f9  # noqa: E402
 from scorecard.calc_qual import compute_f2, compute_f3, compute_f5, compute_f7, compute_manual  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
-from scorecard.schema import SchemaError, validate_judgments  # noqa: E402
+from scorecard.schema import SchemaError, validate_judgments, validate_rules  # noqa: E402
+from scorecard.validate import check_source_allowlist  # noqa: E402
 
 RULES = load_rules("v1.5")
 
@@ -661,3 +663,146 @@ class TestSpacexSingleEntity(unittest.TestCase):
     def test_us_common_share_basis(self):
         self.assertEqual(self.entry["share_basis"], "common")
         self.assertEqual(self.entry["reporting_currency"], "USD")
+
+
+# ------------------------------------------------------------------ 원천 allowlist (F6-SOURCE-07)
+
+RULES_V16 = load_rules("v1.6")
+
+
+class TestSourceAllowlist(unittest.TestCase):
+    """api.nasdaq.com 생산 배제와 조건부 후보 취급을 고정한다."""
+
+    def test_v15_has_no_policy_so_existing_runs_are_untouched(self):
+        self.assertIsNone(RULES.source_policy)
+        self.assertIsNone(RULES.source_violation("https://api.nasdaq.com/api/analyst/AAPL/earnings-forecast"))
+
+    def test_v16_denies_nasdaq_public_endpoint(self):
+        v = RULES_V16.source_violation("https://api.nasdaq.com/api/analyst/AAPL/earnings-forecast")
+        self.assertIsNotNone(v)
+        self.assertIn("배제", v)
+        self.assertIn("robots.txt", v)
+
+    def test_denied_host_matches_subdomains(self):
+        self.assertIsNotNone(RULES_V16.source_violation("https://x.api.nasdaq.com/y"))
+
+    def test_data_nasdaq_is_candidate_not_approved(self):
+        v = RULES_V16.source_violation("https://data.nasdaq.com/api/v3/datasets/ZACKS/EE")
+        self.assertIsNotNone(v)
+        self.assertIn("미승인 후보", v)
+        for need in ("정식 계약", "자동 수집 허용", "derived data 허용", "외부 배포 허용", "보관 조건"):
+            self.assertIn(need, v)
+
+    def test_allowed_hosts_pass(self):
+        for url in ("https://data.sec.gov/submissions/CIK0000320193.json",
+                    "https://www.sec.gov/files/company_tickers.json",
+                    "https://finnhub.io/api/v1/quote",
+                    "https://financialmodelingprep.com/stable/analyst-estimates"):
+            self.assertIsNone(RULES_V16.source_violation(url), url)
+
+    def test_unlisted_host_is_rejected(self):
+        v = RULES_V16.source_violation("https://example.com/data.json")
+        self.assertIn("allowlist 에 없음", v)
+
+    def test_null_url_is_not_a_violation(self):
+        # 내부 기준선 원천은 url 이 없다. 검사 대상이 아니다.
+        self.assertIsNone(RULES_V16.source_violation(None))
+
+    def test_v16_keeps_v15_scoring_untouched(self):
+        """원천 정책만 더한 초안이다. 채점 규칙이 바뀌면 점수가 달라진다."""
+        for key in ("scoring", "factors", "policies", "checklist", "decisions"):
+            self.assertEqual(RULES_V16.payload[key], RULES.payload[key], key)
+        self.assertEqual(RULES_V16.payload["status"], "draft")
+
+
+class TestSourcePolicySchema(unittest.TestCase):
+    """정책 자체가 모순되게 쓰이는 것을 막는다."""
+
+    def _rules_with(self, sources: dict) -> dict:
+        payload = json.loads(json.dumps(RULES.payload))
+        payload["sources"] = sources
+        return payload
+
+    def _base(self) -> dict:
+        return {"policy_note": "n", "enforcement": "e",
+                "allowed": [{"host": "a.example", "note": "n"}],
+                "denied": [{"host": "b.example", "reason": "r"}]}
+
+    def test_valid_policy_passes(self):
+        validate_rules(self._rules_with(self._base()))
+
+    def test_host_cannot_be_allowed_and_denied(self):
+        s = self._base()
+        s["denied"].append({"host": "a.example", "reason": "r"})
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    def test_denied_requires_reason(self):
+        s = self._base()
+        s["denied"] = [{"host": "b.example", "reason": "  "}]
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    def test_candidate_cannot_claim_approved_status(self):
+        s = self._base()
+        s["conditional_candidates"] = [{"name": "x", "host": "c.example", "status": "approved",
+                                        "required_written_conditions": ["계약"]}]
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    def test_candidate_conditions_cannot_be_empty(self):
+        s = self._base()
+        s["conditional_candidates"] = [{"name": "x", "host": "c.example",
+                                        "status": "candidate_not_approved", "required_written_conditions": []}]
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    def test_candidate_host_cannot_overlap_allowed(self):
+        s = self._base()
+        s["conditional_candidates"] = [{"name": "x", "host": "a.example",
+                                        "status": "candidate_not_approved", "required_written_conditions": ["계약"]}]
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+
+class TestSourceAllowlistEnforcement(unittest.TestCase):
+    """검증기 배선까지 확인한다. 규칙에 정책이 있으면 위반 원천이 오류로 잡혀야 한다."""
+
+    class Recorder:
+        def __init__(self):
+            self.errors: list[str] = []
+            self.checks: list[str] = []
+
+        def error(self, msg): self.errors.append(msg)
+
+        def check(self, label): self.checks.append(label)
+
+    def _sources(self, *urls):
+        return {"items": [{"source_id": f"SRC-{i}", "url": u} for i, u in enumerate(urls)]}
+
+    def test_v15_skips_check_entirely(self):
+        rec = self.Recorder()
+        ran = check_source_allowlist(RULES, self._sources("https://api.nasdaq.com/x"), rec)
+        self.assertFalse(ran)
+        self.assertEqual(rec.errors, [])
+        self.assertEqual(rec.checks, [])
+
+    def test_v16_flags_denied_source(self):
+        rec = self.Recorder()
+        ran = check_source_allowlist(RULES_V16, self._sources("https://api.nasdaq.com/api/analyst/AAPL/earnings-forecast"), rec)
+        self.assertTrue(ran)
+        self.assertEqual(len(rec.errors), 1)
+        self.assertIn("SRC-0", rec.errors[0])
+        self.assertIn("배제", rec.errors[0])
+
+    def test_v16_passes_allowed_and_null_urls(self):
+        rec = self.Recorder()
+        check_source_allowlist(RULES_V16, self._sources("https://data.sec.gov/x", None), rec)
+        self.assertEqual(rec.errors, [])
+        self.assertIn("자료 원천 allowlist", rec.checks)
+
+    def test_v16_flags_conditional_candidate(self):
+        rec = self.Recorder()
+        check_source_allowlist(RULES_V16, self._sources("https://data.nasdaq.com/api/v3/datasets/ZACKS/EEH"), rec)
+        self.assertEqual(len(rec.errors), 1)
+        self.assertIn("미승인 후보", rec.errors[0])

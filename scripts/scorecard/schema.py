@@ -208,7 +208,7 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         payload,
         ["schema", "rule_version", "status", "source", "scoring", "factors", "policies", "checklist", "decisions"],
         "rules.json",
-        optional=["note"],
+        optional=["note", "sources"],
     )
     _require(payload["schema"] == "scorecard.rules/1", "rules.json: schema 불일치")
     _require(payload["status"] in {"active", "draft", "retired"}, "rules.json: status 오류")
@@ -229,7 +229,35 @@ def validate_rules(payload: Any) -> dict[str, Any]:
     for d in payload["decisions"]:
         _expect_keys(d, ["id", "status", "summary"], f"rules.decisions[{d.get('id')}]", optional=["recommendation", "affects", "choices", "blocking"])
         _require(d["status"] in {"documented", "pending", "resolved"}, f"rules.decisions[{d['id']}]: status 오류")
+    if "sources" in payload:
+        _validate_source_policy(payload["sources"])
     return payload
+
+
+def _validate_source_policy(policy: Any) -> None:
+    """자료 원천 allowlist. 같은 host 가 allowed 와 denied 에 동시에 있으면 판정이 갈린다."""
+    _require(isinstance(policy, dict), "rules.sources: object 여야 함")
+    _expect_keys(policy, ["policy_note", "enforcement", "allowed", "denied"], "rules.sources", optional=["conditional_candidates"])
+    hosts: dict[str, str] = {}
+    for group, required in (("allowed", ["host", "note"]), ("denied", ["host", "reason"])):
+        entries = policy[group]
+        _require(isinstance(entries, list), f"rules.sources.{group}: 배열이어야 함")
+        for idx, entry in enumerate(entries):
+            where = f"rules.sources.{group}[{idx}]"
+            _require(isinstance(entry, dict), f"{where}: object 여야 함")
+            for key in required:
+                _require(str(entry.get(key) or "").strip(), f"{where}: {key} 필요")
+            host = entry["host"]
+            _require(host not in hosts, f"{where}: host {host!r} 가 {hosts.get(host)} 에도 있음 — 한쪽에만 둔다")
+            hosts[host] = group
+    for idx, entry in enumerate(policy.get("conditional_candidates") or []):
+        where = f"rules.sources.conditional_candidates[{idx}]"
+        _expect_keys(entry, ["name", "host", "status", "required_written_conditions"], where, optional=["note"])
+        # 승인 전 후보를 승인된 상태로 표기할 수 없다.
+        _require(entry["status"] == "candidate_not_approved", f"{where}: 미승인 후보는 status 가 candidate_not_approved 여야 함")
+        _require(isinstance(entry["required_written_conditions"], list) and entry["required_written_conditions"],
+                 f"{where}: 서면 확정이 필요한 조건을 비워 둘 수 없음")
+        _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
 
 
 # ------------------------------------------------------------------ observations

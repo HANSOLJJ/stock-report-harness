@@ -52,6 +52,18 @@ def _section(body: str, title: str) -> str:
     return m.group(1) if m else ""
 
 
+def check_source_allowlist(rules: Any, sources: dict[str, Any], result: Any) -> bool:
+    """규칙에 원천 정책이 있는 버전에서만 검사한다. 정책이 없는 v1.5 실행은 그대로 통과한다."""
+    if not rules.source_policy:
+        return False
+    for item in sources.get("items", []):
+        violation = rules.source_violation(item.get("url"))
+        if violation:
+            result.error(f"sources.json {item.get('source_id')}: {violation}")
+    result.check("자료 원천 allowlist")
+    return True
+
+
 def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_present: bool = True, result: Any) -> Any:
     paths = artifact_paths(slug)
     d = run_dir(slug)
@@ -83,6 +95,9 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     if frontmatter_value(plan_fm, "as_of") != ctx.run["as_of"]:
         result.error("plan as_of 와 run.json as_of 불일치")
     result.check("run.json/observations/judgments strict schema")
+
+    # 자료 원천 allowlist --------------------------------------------------
+    check_source_allowlist(ctx.rules, ctx.sources, result)
 
     # research ------------------------------------------------------------
     if not paths.research.is_file():

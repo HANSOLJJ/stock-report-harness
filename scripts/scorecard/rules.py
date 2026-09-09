@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlsplit
 
 from report_contract_lib import ROOT
 
@@ -33,6 +34,30 @@ class RuleSet:
     @property
     def f9(self) -> dict[str, Any]:
         return self.payload["policies"]["f9"]
+
+    @property
+    def source_policy(self) -> dict[str, Any] | None:
+        """자료 원천 allowlist. 정책이 없는 규칙 버전(v1.5)은 None 이라 기존 실행에 영향이 없다."""
+        return self.payload.get("sources")
+
+    def source_violation(self, url: str | None) -> str | None:
+        """생산 원천 url 하나를 검사한다. 위반이면 사유, 통과면 None."""
+        policy = self.source_policy
+        if not policy or not url:
+            return None
+        host = urlsplit(url).hostname or ""
+        host = host.lower()
+        for entry in policy.get("denied", []):
+            if host == entry["host"] or host.endswith("." + entry["host"]):
+                return f"{host} 는 생산 원천에서 배제됨 — {entry['reason']}"
+        for entry in policy.get("conditional_candidates", []):
+            if host == entry["host"] or host.endswith("." + entry["host"]):
+                need = ", ".join(entry["required_written_conditions"])
+                return f"{host} 는 미승인 후보 — 서면 확정 필요: {need}"
+        allowed = [e["host"] for e in policy.get("allowed", [])]
+        if any(host == a or host.endswith("." + a) for a in allowed):
+            return None
+        return f"{host} 는 원천 allowlist 에 없음 — 약관 확인 후 규칙에 등재하고 쓴다"
 
     def decision(self, decision_id: str) -> dict[str, Any] | None:
         for item in self.payload["decisions"]:
