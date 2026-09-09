@@ -1,0 +1,432 @@
+{
+  "schema": "scorecard.consensus_source_validation/1",
+  "task_id": "C13-SOURCE-02",
+  "collected_at": "2026-09-09T10:52:46.683004",
+  "methodology": "Valley 5-stat (Mean, Median, Min, Max, Count) cross-source investigation",
+  "listed_companies": {
+    "tsmc": {
+      "ticker": "TSM / 2330.TW",
+      "mapping_quarters": [
+        "2026 Q3",
+        "2026 Q4",
+        "2027 Q1",
+        "2027 Q2"
+      ],
+      "sources_investigated": {
+        "barchart": {
+          "source_name": "Barchart TSM Earnings Estimates",
+          "url": "https://www.barchart.com/stocks/quotes/TSM/earnings-estimates",
+          "verified_at": "2026-09-09T10:48:10+09:00",
+          "access_condition": "free_public",
+          "share_basis": "ADR (1 ADR = 5 ordinary shares)",
+          "currency": "USD",
+          "quarters_available": [
+            "2026 Q3"
+          ],
+          "quarters_data": {
+            "2026 Q3": {
+              "mean": 4.45,
+              "min": 4.24,
+              "max": 4.7,
+              "count": 6
+            },
+            "2026 Q4": null,
+            "2027 Q1": null,
+            "2027 Q2": null
+          },
+          "evaluation": {
+            "expected_quarters": [
+              "2026 Q3",
+              "2026 Q4",
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "fulfilled_quarters": [
+              "2026 Q3"
+            ],
+            "missing_quarters": [
+              "2026 Q4",
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "fulfilled_count": 1,
+            "missing_count": 3,
+            "all_4q_fulfilled": false,
+            "stats_by_quarter": {
+              "2026 Q3": {
+                "mean": 4.45,
+                "median": null,
+                "min": 4.24,
+                "max": 4.7,
+                "count": 6,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "2026 Q4": null,
+              "2027 Q1": null,
+              "2027 Q2": null
+            },
+            "mean_by_quarter": {
+              "2026 Q3": 4.45,
+              "2026 Q4": null,
+              "2027 Q1": null,
+              "2027 Q2": null
+            },
+            "sum_4q_mean": null,
+            "scoring_eligible": false,
+            "scoring_status": "pending_data_missing_quarters"
+          },
+          "notes": "현재 분기(2026 Q3)만 5종 통계(평균/최소/최대/표본수 6) 제공. 차기 이후 3분기 상세 미제공."
+        },
+        "marketbeat": {
+          "source_name": "MarketBeat TSM Earnings",
+          "url": "https://www.marketbeat.com/stocks/NYSE/TSM/earnings/",
+          "verified_at": "2026-09-09T10:48:05+09:00",
+          "access_condition": "free_public",
+          "share_basis": "ADR (1 ADR = 5 ordinary shares)",
+          "currency": "USD",
+          "quarters_available": [
+            "2026 Q3",
+            "2026 Q4"
+          ],
+          "quarters_data": {
+            "2026 Q3": {
+              "mean": 2.98,
+              "min": 2.98,
+              "max": 2.98,
+              "count": 1
+            },
+            "2026 Q4": {
+              "mean": 3.12,
+              "min": 3.12,
+              "max": 3.12,
+              "count": 1
+            },
+            "2027 Q1": null,
+            "2027 Q2": null
+          },
+          "evaluation": {
+            "expected_quarters": [
+              "2026 Q3",
+              "2026 Q4",
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "fulfilled_quarters": [
+              "2026 Q3",
+              "2026 Q4"
+            ],
+            "missing_quarters": [
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "fulfilled_count": 2,
+            "missing_count": 2,
+            "all_4q_fulfilled": false,
+            "stats_by_quarter": {
+              "2026 Q3": {
+                "mean": 2.98,
+                "median": null,
+                "min": 2.98,
+                "max": 2.98,
+                "count": 1,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "2026 Q4": {
+                "mean": 3.12,
+                "median": null,
+                "min": 3.12,
+                "max": 3.12,
+                "count": 1,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": true,
+                "has_sample_count": true,
+                "auxiliary_missing": [
+                  "median"
+                ]
+              },
+              "2027 Q1": null,
+              "2027 Q2": null
+            },
+            "mean_by_quarter": {
+              "2026 Q3": 2.98,
+              "2026 Q4": 3.12,
+              "2027 Q1": null,
+              "2027 Q2": null
+            },
+            "sum_4q_mean": null,
+            "scoring_eligible": false,
+            "scoring_status": "pending_data_missing_quarters"
+          },
+          "notes": "표본수 1개의 구형/비정규 추정치로 타 플랫폼($4.45)과 큰 편차. 2027 Q1/Q2 미제공."
+        },
+        "seeking_alpha": {
+          "source_name": "Seeking Alpha TSM Earnings Estimates",
+          "url": "https://seekingalpha.com/symbol/TSM/earnings/estimates",
+          "verified_at": "2026-09-09T10:47:30+09:00",
+          "access_condition": "anti_bot_blocked_403_or_paywall",
+          "share_basis": "ADR",
+          "currency": "USD",
+          "quarters_available": [
+            "2026 Q3"
+          ],
+          "quarters_data": {
+            "2026 Q3": {
+              "mean": 4.46,
+              "median": null,
+              "min": null,
+              "max": null,
+              "count": null
+            },
+            "2026 Q4": null,
+            "2027 Q1": null,
+            "2027 Q2": null
+          },
+          "evaluation": {
+            "expected_quarters": [
+              "2026 Q3",
+              "2026 Q4",
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "fulfilled_quarters": [
+              "2026 Q3"
+            ],
+            "missing_quarters": [
+              "2026 Q4",
+              "2027 Q1",
+              "2027 Q2"
+            ],
+            "fulfilled_count": 1,
+            "missing_count": 3,
+            "all_4q_fulfilled": false,
+            "stats_by_quarter": {
+              "2026 Q3": {
+                "mean": 4.46,
+                "median": null,
+                "min": null,
+                "max": null,
+                "count": null,
+                "has_mean": true,
+                "has_median": false,
+                "has_range": false,
+                "has_sample_count": false,
+                "auxiliary_missing": [
+                  "median",
+                  "min",
+                  "max",
+                  "count"
+                ]
+              },
+              "2026 Q4": null,
+              "2027 Q1": null,
+              "2027 Q2": null
+            },
+            "mean_by_quarter": {
+              "2026 Q3": 4.46,
+              "2026 Q4": null,
+              "2027 Q1": null,
+              "2027 Q2": null
+            },
+            "sum_4q_mean": null,
+            "scoring_eligible": false,
+            "scoring_status": "pending_data_missing_quarters"
+          },
+          "notes": "직접 HTTP fetch 시 403 차단. 웹 스니펫상 2026 Q3 Normalized EPS $4.46, GAAP $4.45 확인."
+        },
+        "taiwan_domestic_factset": {
+          "source_name": "Taiwan Domestic Broker / FactSet Consensus (2330.TW)",
+          "url": "https://www.twse.com.tw / FactSet Consensus Summary",
+          "verified_at": "2026-09-09T10:51:05+09:00",
+          "access_condition": "commercial_terminal_or_broker_summary",
+          "share_basis": "보통주 1주 (Ordinary Common Share)",
+          "currency": "TWD (신대만달러)",
+          "quarters_available": [],
+          "annual_data": {
+            "FY2026_median": 107.74,
+            "FY2026_range": "107 ~ 108 TWD",
+            "FY2027_median": 137.0,
+            "FY2027_range": "130 ~ 142 TWD"
+          },
+          "notes": "대만 원주(2330) 기준 컨센서스는 TWD 보통주 1주 단위로 연간 추정치만 주로 발표(2026년 ~107.74 TWD, 2027년 ~137 TWD). ADR 환산 배율 1:5 및 환율 32 적용 시 107.74*5/32 = 약 $16.8 USD로 미국 연간 추정치와 일치 확인."
+        }
+      },
+      "single_source_4q_fulfilled": false,
+      "summary": "공개 무료 웹 원천에서 2026 Q3(4.45)는 복수 확보되었으나, 2027 Q1/Q2(+2q/+3q)는 전원 결측. 대만 원주는 1:5 배율 및 TWD 기준(2026년 107.74 TWD)."
+    },
+    "alibaba": {
+      "ticker": "BABA / 9988.HK",
+      "mapping_quarters": [
+        "FY27 Q2 (Sep 2026)",
+        "FY27 Q3 (Dec 2026)",
+        "FY27 Q4 (Mar 2027)",
+        "FY28 Q1 (Jun 2027)"
+      ],
+      "sources_investigated": {
+        "marketbeat": {
+          "source_name": "MarketBeat BABA Earnings",
+          "url": "https://www.marketbeat.com/stocks/NYSE/BABA/earnings/",
+          "verified_at": "2026-09-09T10:48:25+09:00",
+          "access_condition": "free_public",
+          "share_basis": "ADS (1 ADS = 8 ordinary shares)",
+          "currency": "USD",
+          "quarters_available": [
+            "FY27 Q1 (Reported)"
+          ],
+          "notes": "직전 실적(FY27 Q1) $1.26 보고(예상 $1.94 하회). 차기 분기 컨센서스는 상세 수치 미제공."
+        },
+        "investing_com": {
+          "source_name": "Investing.com Alibaba Earnings",
+          "url": "https://www.investing.com/equities/alibaba-earnings",
+          "verified_at": "2026-09-09T10:48:50+09:00",
+          "access_condition": "anti_bot_blocked_403",
+          "share_basis": "ADS",
+          "currency": "USD / CNY 혼재",
+          "quarters_available": [],
+          "notes": "직접 HTTP fetch 시 403 차단."
+        },
+        "hk_china_factset_futu": {
+          "source_name": "HK/China Broker & FactSet Survey (9988.HK / BABA)",
+          "url": "https://www.futunn.com / FactSet Consensus Survey",
+          "verified_at": "2026-09-09T10:51:15+09:00",
+          "access_condition": "broker_research_summary",
+          "share_basis": "ADS (1 ADS = 8 보통주) / 보통주 (홍콩 9988)",
+          "currency": "CNY (홍콩/본사) / USD (미국 ADS)",
+          "quarters_available": [],
+          "annual_data": {
+            "FY2027_ADS_median": "6.55 ~ 6.61 USD (FactSet)",
+            "FY2027_Q1_actual_ADS": "8.52 CNY (예상 11.28 CNY 하회)"
+          },
+          "notes": "FY27 Q1 실적 발표(ADS당 8.52 CNY) 후 AI 인프라 투자 확대로 인해 컨센서스 하향 조정 중. 단일 출처 연속 4분기 수치는 공개 무료 웹에서 미확보."
+        }
+      },
+      "single_source_4q_fulfilled": false,
+      "summary": "직전 FY27 Q1 실적(8.52 CNY/ADS) 후 컨센서스 하향 조정 중. 공개 무료 웹에서 단일 원천 차기 4분기 EPS 미확보."
+    }
+  },
+  "unlisted_companies": {
+    "openai": {
+      "company": "OpenAI",
+      "listing_status": "unlisted_private",
+      "pe_scoring_applicable": false,
+      "ntm_eps_applicable": false,
+      "metrics": {
+        "post_money_valuation": {
+          "value": 157.0,
+          "currency": "USD_B",
+          "definition": "Post-money valuation confirmed in Series funding led by Thrive Capital ($6.6B raised)",
+          "as_of": "2024-10-02",
+          "status": "confirmed",
+          "primary_source_url": "https://openai.com/index/scale-next-frontier/",
+          "notes": "공식 발표 기준 $157B 확정. 2026년 3월 $122B 조달 및 $852B 밸류에이션 보도가 있으나 이는 약정/단계적 자본 유치 계약(committed capital)으로 공식 감사보고서 확정 여부 추가 검증 필요."
+        },
+        "actual_annual_revenue": {
+          "value": 3.7,
+          "currency": "USD_B",
+          "definition": "Recognized GAAP full-year revenue for FY2024",
+          "as_of": "FY2024 (2024-12-31)",
+          "status": "confirmed",
+          "primary_source_url": "https://www.theinformation.com / Financial audit leaks",
+          "notes": "2024 회계연도 실제 인식 매출은 $3.7B임. 2025 회계연도는 $13.07B 잠정 집계 보도(영업손실 $20.92B)."
+        },
+        "arr_annualized_revenue": {
+          "value": 40.0,
+          "currency": "USD_B",
+          "definition": "Annualized Revenue Run Rate (ARR) based on approx $3.3B/month revenue pace",
+          "as_of": "2026-08-31",
+          "status": "confirmed",
+          "primary_source_url": "Bloomberg / Reuters / Internal metric leak",
+          "notes": "월 매출 약 $3.3B 기준 연율화 수치임. 실제 과거 12개월(TTM) 실매출이 아니며, 엔터프라이즈 도입 가속화에 따른 연율화 추정치임."
+        },
+        "revenue_forecast": {
+          "value": 100.0,
+          "currency": "USD_B",
+          "definition": "Projected annual revenue target by 2029 presented to investors",
+          "as_of": "2024-10 Investor Deck",
+          "status": "target",
+          "primary_source_url": "The New York Times / Reuters reporting investor presentation",
+          "notes": "투자자 유치용 사업계획서 상의 목표치(Target)이며, 확정 실적이나 법적 구속력 있는 가이던스가 아님."
+        },
+        "cumulative_funding": {
+          "value": 17.9,
+          "currency": "USD_B",
+          "definition": "Total cumulative raised capital after October 2024 $6.6B round",
+          "as_of": "2024-10-02",
+          "status": "confirmed",
+          "primary_source_url": "Crunchbase / PitchBook / SEC Form D filings",
+          "notes": "Microsoft 초기 투자($13B 약정 포함) 및 Thrive 주도 $6.6B 합산 기준 누적 조달액 약 $17.9B."
+        }
+      }
+    },
+    "anthropic": {
+      "company": "Anthropic",
+      "listing_status": "unlisted_private",
+      "pe_scoring_applicable": false,
+      "ntm_eps_applicable": false,
+      "metrics": {
+        "post_money_valuation": {
+          "value": 965.0,
+          "currency": "USD_B",
+          "definition": "Post-money valuation in Series H funding round ($65B raised)",
+          "as_of": "2026-05-31",
+          "status": "confirmed",
+          "primary_source_url": "Reuters / Bloomberg / Series H investor disclosures",
+          "notes": "2026년 5월 Series H 조달 후 가치평가 $965B 기록. 2024년 말 Menlo Ventures 등 투자 유치 시기에는 $18B~$40B 수준이었음. IPO 목표 가치는 $2T로 보도됨(계획)."
+        },
+        "actual_annual_revenue": {
+          "value": null,
+          "currency": "USD",
+          "definition": "Audited full-year recognized revenue for FY2024/FY2025",
+          "as_of": "unconfirmed",
+          "status": "unobtained",
+          "primary_source_url": null,
+          "notes": "비상장사로 감사받은 연간 공식 매출액은 외부 공시되지 않음(미확보). 2026 Q2 예비 분기 매출이 $11.5B 초과했다는 보도만 존재."
+        },
+        "arr_annualized_revenue": {
+          "value": 65.0,
+          "currency": "USD_B",
+          "definition": "Annualized Revenue Run Rate (ARR) as of July 2026",
+          "as_of": "2026-07-31",
+          "status": "confirmed",
+          "primary_source_url": "Reuters / The Information reporting investor updates",
+          "notes": "2025년 말 $9B -> 2026년 5월 $47B -> 2026년 7월 $65B로 급성장. Claude Code 단독 ARR이 $2.5B 초과한 것으로 보고됨. 실매출이 아닌 월 매출 연율화 수치임."
+        },
+        "revenue_forecast": {
+          "value": 2000.0,
+          "currency": "USD_B",
+          "definition": "Target valuation / long-term revenue run-rate for planned late 2026 IPO",
+          "as_of": "2026-09",
+          "status": "target",
+          "primary_source_url": "IPO planning reports",
+          "notes": "상장 추진 과정에서 제시된 목표치이며 확정 실적이 아님."
+        },
+        "cumulative_funding": {
+          "value": 130.0,
+          "currency": "USD_B",
+          "definition": "Total cumulative capital raised including Amazon commitments and Series H",
+          "as_of": "2026-05-31",
+          "status": "confirmed",
+          "primary_source_url": "Crunchbase / SEC filings / Amazon 10-Q disclosures",
+          "notes": "Amazon 총 투자 약정($8B~$13B), Google 투자($2B), Series H($65B) 등 합산 시 누적 약 $130B~$132B."
+        }
+      }
+    }
+  },
+  "conclusion": {
+    "single_source_continuity_rule_respected": true,
+    "arbitrary_stitching_prevented": true,
+    "private_company_per_prohibited": true
+  }
+}
