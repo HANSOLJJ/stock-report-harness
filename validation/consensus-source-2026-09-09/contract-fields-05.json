@@ -1,0 +1,982 @@
+{
+ "contract": "worker docs/scorecard/design-guideline.md 5.1: (1) 기준 시점과 시장별 실제 가격 시점 고정 (2) 다음 4개 미발표 회계분기 EPS 컨센서스 + 각 분기 기간 + 추정치 스냅샷 시점 (3) 주가와 EPS 의 통화·보통주/ADR·분할 조정·GAAP/조정 기준 일치, 4분기 중복 없이 연속 (4) NTM EPS = 4분기 합, NTM PER = 주가 / NTM EPS",
+ "reference_date": "2026-09-09",
+ "companies": {
+  "meta": {
+   "sec_entity": "Meta Platforms, Inc.",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $613.48, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 1231, 직전 분기 공식 기간 2026-04-01~2026-06-30. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(1231)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-04T05:05:51Z",
+      "last_checked_utc": "2026-09-01T19:30:21Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 Meta Platforms, Inc., 티커 ['META'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (6.18 vs 6.18, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 6.18,
+     "sec_gaap_basic": 6.23,
+     "nasdaq_actual": 6.18,
+     "nasdaq_minus_gaap_diluted": 0.0,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 30.18"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "nvidia": {
+   "sec_entity": "NVIDIA CORP",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $225.73, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Oct 2026, Jan 2027, Apr 2027, Jul 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 0131, 직전 분기 공식 기간 2026-04-27~2026-07-26. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(0131)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-04T08:45:32Z",
+      "last_checked_utc": "2026-09-04T12:40:35Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 NVIDIA CORP, 티커 ['NVDA'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (2.46 vs 2.46, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(불일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 2.46,
+     "sec_gaap_basic": 2.47,
+     "nasdaq_actual": 2.22,
+     "nasdaq_minus_gaap_diluted": -0.24,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 11.96"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "alphabet": {
+   "sec_entity": "Alphabet Inc.",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $338.36, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 1231, 직전 분기 공식 기간 2026-04-01~2026-06-30. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(1231)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-08T00:00:00Z",
+      "last_checked_utc": "2026-09-08T10:50:43Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 Alphabet Inc., 티커 ['GOOGL', 'GOOG', 'GOOGM', 'GOOGN'], 거래소 ['Nasdaq', 'Nasdaq', 'Nasdaq', 'Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (9.107726 vs 9.11, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 9.11,
+     "sec_gaap_basic": 9.23,
+     "nasdaq_actual": 9.11,
+     "nasdaq_minus_gaap_diluted": 0.0,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 12.91"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "microsoft": {
+   "sec_entity": "MICROSOFT CORP",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $493.95, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 0630, 직전 분기 공식 기간 유도. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(0630)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-08T00:00:00Z",
+      "last_checked_utc": "2026-09-08T10:50:27Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 MICROSOFT CORP, 티커 ['MSFT'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (4.8094 vs 4.81, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(불일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 4.81,
+     "sec_gaap_basic": null,
+     "nasdaq_actual": 4.74,
+     "nasdaq_minus_gaap_diluted": -0.07,
+     "derived_q4": {
+      "method": "FY 희석 EPS - 같은 회계연도 9개월 누적 희석 EPS",
+      "fy_period": "2025-07-01~2026-06-30",
+      "fy_value": 17.95,
+      "ninem_period": "2025-07-01~2026-03-31",
+      "ninem_value": 13.14,
+      "derived_q4_gaap_diluted": 4.81,
+      "caveat": "EPS 는 주식수 변동 때문에 분기 단순차가 실제 분기 EPS 와 다를 수 있다. 유도값이며 공시된 분기 태그가 아니다."
+     },
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 19.45"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "amazon": {
+   "sec_entity": "AMAZON COM INC",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $256.97, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 1231, 직전 분기 공식 기간 2026-04-01~2026-06-30. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(1231)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-04T00:00:00Z",
+      "last_checked_utc": "2026-09-04T14:40:01Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 AMAZON COM INC, 티커 ['AMZN'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (5.75 vs 5.75, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(불일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 5.75,
+     "sec_gaap_basic": 5.82,
+     "nasdaq_actual": 1.88,
+     "nasdaq_minus_gaap_diluted": -3.87,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 9.6"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "apple": {
+   "sec_entity": "Apple Inc.",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $316.22, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 0926, 직전 분기 공식 기간 2026-03-29~2026-06-27. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(0926)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-08T11:15:07Z",
+      "last_checked_utc": "2026-09-08T15:55:01Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 Apple Inc., 티커 ['AAPL'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (2.02 vs 2.02, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(불일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 2.02,
+     "sec_gaap_basic": 2.03,
+     "nasdaq_actual": 1.91,
+     "nasdaq_minus_gaap_diluted": -0.11,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 9.14"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "oracle": {
+   "sec_entity": "ORACLE CORP",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $162.52, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Aug 2026, Nov 2026, Feb 2027, May 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 0531, 직전 분기 공식 기간 유도. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(0531)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-08T10:35:42Z",
+      "last_checked_utc": "2026-09-08T13:50:01Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 ORACLE CORP, 티커 ['ORCL', 'ORCL-PD'], 거래소 ['NYSE', 'NYSE']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (1.449502 vs 1.45, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(불일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 1.45,
+     "sec_gaap_basic": null,
+     "nasdaq_actual": 1.79,
+     "nasdaq_minus_gaap_diluted": 0.34,
+     "derived_q4": {
+      "method": "FY 희석 EPS - 같은 회계연도 9개월 누적 희석 EPS",
+      "fy_period": "2025-06-01~2026-05-31",
+      "fy_value": 5.83,
+      "ninem_period": "2025-06-01~2026-02-28",
+      "ninem_value": 4.38,
+      "derived_q4_gaap_diluted": 1.45,
+      "caveat": "EPS 는 주식수 변동 때문에 분기 단순차가 실제 분기 EPS 와 다를 수 있다. 유도값이며 공시된 분기 태그가 아니다."
+     },
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 6.51"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "palantir": {
+   "sec_entity": "Palantir Technologies Inc.",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $170.30, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 1231, 직전 분기 공식 기간 2026-04-01~2026-06-30. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(1231)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-03T00:00:00Z",
+      "last_checked_utc": "2026-09-03T10:35:21Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 Palantir Technologies Inc., 티커 ['PLTR'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (0.41 vs 0.41, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(불일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 0.41,
+     "sec_gaap_basic": 0.44,
+     "nasdaq_actual": 0.31,
+     "nasdaq_minus_gaap_diluted": -0.1,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 1.48"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "tesla": {
+   "sec_entity": "Tesla, Inc.",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $368.16, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 1231, 직전 분기 공식 기간 2026-04-01~2026-06-30. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(1231)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-08T09:21:03Z",
+      "last_checked_utc": "2026-09-08T09:50:19Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 Tesla, Inc., 티커 ['TSLA'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (0.32 vs 0.32, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(불일치)도 기본(불일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": 0.32,
+     "sec_gaap_basic": 0.34,
+     "nasdaq_actual": 0.04,
+     "nasdaq_minus_gaap_diluted": -0.28,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 1.07"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  },
+  "spacex-xai": {
+   "sec_entity": "SPACE EXPLORATION TECHNOLOGIES CORP",
+   "fields": {
+    "price_valid_positive": {
+     "status": "충족",
+     "evidence": "Nasdaq 종목정보 lastSalePrice $153.47, lastTradeTimestamp Sep 8, 2026"
+    },
+    "price_timestamp_fixed": {
+     "status": "충족",
+     "evidence": "공급사가 거래일 라벨(Sep 8, 2026)을 제시한다. 기준일 2026-09-09 직전 거래일 종가이며 휴장일 처리 규칙과 일치한다."
+    },
+    "four_quarters_obtained": {
+     "status": "충족",
+     "evidence": "Nasdaq 단일 원천 4/4"
+    },
+    "quarters_no_dup_consecutive": {
+     "status": "충족",
+     "evidence": "라벨 Sep 2026, Dec 2026, Mar 2027, Jun 2027, 3개월 간격 연속 확인"
+    },
+    "quarter_period_defined": {
+     "status": "충족",
+     "evidence": "SEC 공시 회계연도 말 1231, 직전 분기 공식 기간 2026-04-01~2026-06-30. 공급사 월 라벨을 SEC 공식 기간과 대조했다.",
+     "caveat": "공급사 라벨은 월 단위로 달력화돼 있어 Apple 처럼 실제 분기말(1231)과 며칠 차이가 날 수 있다."
+    },
+    "estimate_snapshot_time": {
+     "status": "원천별 분리",
+     "nasdaq_4q_source": {
+      "status": "미확인",
+      "evidence": "earnings-forecast 의 asOf 가 null 이고 /eps 에도 갱신시각 필드가 없다."
+     },
+     "stockanalysis_2q_source": {
+      "status": "충족",
+      "declared_sources": [
+       "S&P Global Market Intelligence",
+       "TipRanks"
+      ],
+      "freshness_lag": "hours",
+      "last_updated_utc": "2026-09-08T10:30:06Z",
+      "last_checked_utc": "2026-09-08T12:45:02Z",
+      "evidence": "공급사가 trust.lastUpdated / lastChecked / freshnessLag 를 명시한다. a74c15e 스냅샷에서 복원했다."
+     },
+     "tried": [
+      "Nasdaq earnings-forecast asOf",
+      "Nasdaq /eps",
+      "Nasdaq 종목 earnings 페이지",
+      "Zacks 페이지 last-modified",
+      "StockAnalysis trust 블록"
+     ],
+     "minimum_decision_needed": "4분기를 제공하는 Nasdaq 에는 스냅샷 시점이 없고, 스냅샷 시점을 제공하는 StockAnalysis 는 무료로 2분기만 준다. 조회시각을 스냅샷 시점 대용으로 허용할지, 아니면 스냅샷 시점이 명시된 원천만 채점에 쓸지(=현재 4/4 불가) 결정 필요."
+    },
+    "currency_match": {
+     "status": "충족",
+     "evidence": "SEC XBRL 단위 ['USD/shares'], StockAnalysis 선언 통화 USD, 주가 통화 USD. 세 원천이 USD 로 일치한다.",
+     "caveat": "Nasdaq 은 통화를 명시하지 않는다(quote info currency=null). 미국 상장·USD 공시로 보완했다."
+    },
+    "common_vs_adr": {
+     "status": "충족",
+     "evidence": "SEC 등록 법인 SPACE EXPLORATION TECHNOLOGIES CORP, 티커 ['SPCX'], 거래소 ['Nasdaq']. StockAnalysis adrPriceDivisor 가 미설정이라 ADR 환산 대상이 아니다. 보통주 기준이다."
+    },
+    "split_adjustment": {
+     "status": "충족(관측 범위 내)",
+     "evidence": "SEC 공시에서 같은 분기 기간이 서로 다른 값으로 재보고된 사례 0건. 조사 구간에 분할에 따른 소급 재작성이 관측되지 않았고, 주가와 추정치가 같은 2026-09 시점이라 분할 기준이 어긋날 구간이 없다.",
+     "caveat": "장래 발표될 분할은 이 관측으로 배제되지 않는다."
+    },
+    "gaap_or_adjusted_basis": {
+     "status": "부분 확인",
+     "resolved": [
+      "StockAnalysis eps 열 = SEC GAAP 희석 (-0.092257 vs -0.09, 일치)",
+      "Nasdaq 실적 열은 SEC GAAP 희석(일치)도 기본(일치)도 아니다"
+     ],
+     "unresolved": "Nasdaq 이 쓰는 조정 규칙의 공식 정의를 확인하지 못했다. 'Consensus EPS*' 의 별표 정의 문서가 공개 경로에 없다. 조정 계열로 보이나 무엇을 가감하는지는 미확인이다.",
+     "sec_gaap_diluted": -0.09,
+     "sec_gaap_basic": -0.09,
+     "nasdaq_actual": -0.09,
+     "nasdaq_minus_gaap_diluted": 0.0,
+     "derived_q4": null,
+     "estimate_column_basis": "확정 실적 열의 기준을 추정 열이 그대로 쓰는지는 공급사 문서로 확인되지 않았다. 같은 표에 병기된다는 점은 정황이며 증명이 아니다.",
+     "minimum_decision_needed": "채점이 GAAP 희석 기준을 요구하면 Nasdaq 4분기 값은 기준 불일치가 되고, '공급사 조정 기준 일관 사용'을 허용하면 사용 가능하다. 어느 쪽인지 결정 필요."
+    },
+    "price_eps_basis_alignment": {
+     "status": "미확인",
+     "evidence": "주가는 시장 실거래가이고 EPS 는 Nasdaq 조정 기준이다. 두 값의 주식 기준(희석/기본)이 같은지 공급사가 밝히지 않는다.",
+     "minimum_decision_needed": "주가/EPS 주식 기준 일치를 어떤 근거로 인정할지 결정 필요."
+    },
+    "eps_sum_positive": {
+     "status": "충족",
+     "evidence": "4분기 평균 합 1.16"
+    }
+   },
+   "summary": {
+    "fields_total": 12,
+    "fields_met": 9,
+    "fields_partial": 1,
+    "fields_unverified": 1
+   }
+  }
+ }
+}

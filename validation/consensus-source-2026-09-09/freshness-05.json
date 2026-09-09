@@ -1,0 +1,142 @@
+{
+ "meta": {
+  "snapshot_file": "raw/sa-meta-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788498351257,
+  "last_checked_epoch_ms": 1788291021273,
+  "last_updated_utc": "2026-09-04T05:05:51Z",
+  "last_checked_utc": "2026-09-01T19:30:21Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "nvidia": {
+  "snapshot_file": "raw/sa-nvidia-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788511532990,
+  "last_checked_epoch_ms": 1788525635484,
+  "last_updated_utc": "2026-09-04T08:45:32Z",
+  "last_checked_utc": "2026-09-04T12:40:35Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "alphabet": {
+  "snapshot_file": "raw/sa-alphabet-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788825600000,
+  "last_checked_epoch_ms": 1788864643799,
+  "last_updated_utc": "2026-09-08T00:00:00Z",
+  "last_checked_utc": "2026-09-08T10:50:43Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "microsoft": {
+  "snapshot_file": "raw/sa-microsoft-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788825600000,
+  "last_checked_epoch_ms": 1788864627223,
+  "last_updated_utc": "2026-09-08T00:00:00Z",
+  "last_checked_utc": "2026-09-08T10:50:27Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "amazon": {
+  "snapshot_file": "raw/sa-amazon-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788480000000,
+  "last_checked_epoch_ms": 1788532801471,
+  "last_updated_utc": "2026-09-04T00:00:00Z",
+  "last_checked_utc": "2026-09-04T14:40:01Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "apple": {
+  "snapshot_file": "raw/sa-apple-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788866107983,
+  "last_checked_epoch_ms": 1788882901781,
+  "last_updated_utc": "2026-09-08T11:15:07Z",
+  "last_checked_utc": "2026-09-08T15:55:01Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "oracle": {
+  "snapshot_file": "raw/sa-oracle-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788863742323,
+  "last_checked_epoch_ms": 1788875401900,
+  "last_updated_utc": "2026-09-08T10:35:42Z",
+  "last_checked_utc": "2026-09-08T13:50:01Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "palantir": {
+  "snapshot_file": "raw/sa-palantir-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788393600000,
+  "last_checked_epoch_ms": 1788431721886,
+  "last_updated_utc": "2026-09-03T00:00:00Z",
+  "last_checked_utc": "2026-09-03T10:35:21Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "tesla": {
+  "snapshot_file": "raw/sa-tesla-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788859263897,
+  "last_checked_epoch_ms": 1788861019347,
+  "last_updated_utc": "2026-09-08T09:21:03Z",
+  "last_checked_utc": "2026-09-08T09:50:19Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ },
+ "spacex-xai": {
+  "snapshot_file": "raw/sa-spacex-xai-forecast-data.json",
+  "freshness_lag": "hours",
+  "last_updated_epoch_ms": 1788863406880,
+  "last_checked_epoch_ms": 1788871502536,
+  "last_updated_utc": "2026-09-08T10:30:06Z",
+  "last_checked_utc": "2026-09-08T12:45:02Z",
+  "topic": "forecast",
+  "declared_sources": [
+   "S&P Global Market Intelligence",
+   "TipRanks"
+  ],
+  "summary_text": "Price targets, consensus ratings and financial forecasts are provided by S&P Global Market Intelligence. Individual analyst data is provided by TipRanks. Price targets and consensus ratings update every hour to every three days, while individual analyst data updates in near real-time."
+ }
+}
