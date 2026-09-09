@@ -45,7 +45,7 @@
 - hero 이미지는 선택 사항이다. Codex CLI를 쓸 수 있으면 위 절차로 반드시 생성하고, 쓸 수 없으면 래퍼가 남긴 `status: blocked` 매니페스트와 프롬프트 파일만 유지한 채 review/build를 hero 카드 없이 진행한다.
 - 다른 도구나 수동으로 만든 이미지에 `codex-cli-imagegen` 출처를 붙여 통과시키지 않는다. 매니페스트가 `complete`이면 선택된 PNG가 실제로 존재해야 하며, 없으면 build를 실패로 본다.
 
-ㅁ
+## Review 계약
 - `reviews/<slug>.md` frontmatter에는 `status: pass | needs_fix | blocked`, `plan_source`, `research_source`, `draft_source`, `review_type: separate-session-4way`, `review_execution: separate_subagent_sessions`를 둔다.
 - 리뷰 작성 후 `python3 scripts/validate_report_contract.py <slug>`를 반드시 실행하고, 실패하면 `needs_fix`로 되돌린다.
 - `needs_fix`이면 generator 단계로 돌아가 수정 후 다시 review한다. 같은 차단 이슈가 3회 반복되거나 외부 데이터/권한 때문에 해결 불가할 때만 `blocked`로 둔다.
