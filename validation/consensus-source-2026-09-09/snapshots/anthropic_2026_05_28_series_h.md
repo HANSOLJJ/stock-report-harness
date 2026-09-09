@@ -14,9 +14,9 @@
 - **발표 일자**: 2026-05-28
 - **원문 인용 (Direct Verbatim Quotes)**:
   1. **사후 기업가치 및 조달액 (리드문)**:
-     > "Anthropic today announced it has raised $65 billion in Series H funding at a $965 billion post-money valuation."
+     > "Anthropic has raised $65 billion in Series H funding led by Altimeter Capital, Dragoneer, Greenoaks, and Sequoia Capital, valuing the company at $965 billion post-money."
   2. **기존 약정 자본 포함 조항 (본문 문구)**:
-     > "This round includes $15B of previously committed investments."
+     > "It also includes $15 billion of previously committed investments from hyperscalers, including $5 billion from Amazon."
   3. **Run-rate Revenue (본문 실적 문구)**:
      > "Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month."
 

@@ -1,11 +1,11 @@
-# C13-SOURCE-03: 컨센서스 기준 검증 및 비상장사 근거 보완 보고서 (v4.2 R2 재검토 반영본)
+# C13-SOURCE-03: 컨센서스 기준 검증 및 비상장사 근거 보완 보고서 (v4.3 R2 최종보완 재검토 반영본)
 
-- **문서 버전**: v4.2 (설계진행 R2 독립 재검토 `c13-source03-r2-review.md` 잔여 이슈 4종 전면 반영본)
+- **문서 버전**: v4.3 (설계진행 R2 최종 재검토 `c13-source03-r2-final-final-review.md` 인용 1·2 원문 교체 반영본)
 - **작업 ID**: `C13-SOURCE-03` (선행: `C13-SOURCE-02`)
 - **작성일자**: 2026-09-09
 - **수행 주체**: C-13 worktree Antigravity 담당
 - **참조 문서**:
-  - `설계진행` R2 재검토 통보: `msg_260dee949d61` 및 `validation/c13-source03-r2-review.md`
+  - `설계진행` 재검토 통보: `msg_da6f8f57a507` 및 `validation/c13-source03-r2-final-final-review.md`
   - `validation/consensus-source-2026-09-09/verify_sources.py` (12개 단위 테스트 검증기)
   - `validation/consensus-source-2026-09-09/evidence.json` (기계 판독용 정합성 데이터)
 
@@ -13,12 +13,14 @@
 
 ## 1. 개요 및 R2 재검토 보완 핵심
 
-본 보고서는 설계진행의 R2 독립 재검토(`c13-source03-r2-review.md`) 지적사항에 따라, **공식 원문 직접 발췌(Verbatim Quotes)**와 **작성자 분석 요약 및 미확인 2차 보도 메모**를 명확히 분리하고, 직접 근거가 없는 홈페이지 루트 링크 철회 및 비상장 미확인 수치의 관측 배제를 완결한 최종 보고서이다.
+본 보고서는 설계진행의 R2 최종 재검토(`c13-source03-r2-final-final-review.md`) 지적사항에 따라, **Anthropic 공식 발표문의 1번 및 2번 인용문을 공식 보도자료 실제 문장으로 100% 원문 일치 교체**하고, 작성자 요약과의 엄격한 분리를 완결한 최종 보고서이다.
 
-### 1.1 R2 재검토 4개 잔여 이슈 조치 내역
+### 1.1 R2 최종보완 조치 내역
 
-1. **Anthropic 스냅샷 원문 발췌와 요약 분리 (`snapshots/anthropic_2026_05_28_series_h.md`)**:
-   - 공식 발표문 본문의 실제 영문 원문 발췌문(사후가치 $965B, 조달액 $65B, 기존 약정 $15B 포함 문구, "our run-rate revenue crossed $47 billion earlier this month")을 1절에 직접 인용으로 분리 기록함.
+1. **Anthropic 스냅샷 원문 발췌문 1·2·3 공식 발표문 원문 완전 일치화 (`snapshots/anthropic_2026_05_28_series_h.md`)**:
+   - 인용 1: `"Anthropic has raised $65 billion in Series H funding led by Altimeter Capital, Dragoneer, Greenoaks, and Sequoia Capital, valuing the company at $965 billion post-money."`
+   - 인용 2: `"It also includes $15 billion of previously committed investments from hyperscalers, including $5 billion from Amazon."`
+   - 인용 3: `"Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month."`
    - 투자자/파트너 언급 및 $50B 산술 추론, annualized 해석/산식 미공개, 실현 매출 미확보 등은 2절 작성자 요약으로 완전 분리함.
 2. **Anthropic Series A/B/C 홈페이지 루트 링크 철회 및 미확인 정정**:
    - 단순 홈페이지 루트(`anthropic.com`) 링크는 개별 근거로 부적합하므로 철회하고, 개별 공식 릴리스 직접 URL 부재에 따라 과거 라운드를 모두 **미확인 (`unconfirmed / unobtained`)**으로 낮춤.
