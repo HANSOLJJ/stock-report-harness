@@ -27,6 +27,8 @@ OBSERVATION_STATUSES = {
 PERIOD_REQUIRED_METRICS = {
     "revenue_ttm", "operating_income_ttm", "operating_margin_ttm",
     "ocf_ttm", "capex_ttm", "fcf_ttm", "net_borrowing_ttm",
+    # 분기 EPS 는 어느 분기인지가 값의 일부다. 기간 없이는 4분기 연속 판정을 할 수 없다.
+    "ntm_eps_quarter",
 }
 OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
 JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs"}
@@ -53,6 +55,8 @@ METRICS: dict[str, dict[str, str]] = {
     "price": {"unit": "USD/share", "type": "number"},
     "market_cap": {"unit": "USD", "type": "number"},
     "ntm_eps": {"unit": "USD/share", "type": "number"},
+    # 미발표 회계분기별 EPS 컨센서스. 4개가 모여야 NTM 이 되며 부분 확보는 점수를 만들지 않는다 (F6 정책).
+    "ntm_eps_quarter": {"unit": "USD/share", "type": "number"},
     "ntm_per": {"unit": "ratio", "type": "number"},
     "ttm_per": {"unit": "ratio", "type": "number"},
     "nonop_share": {"unit": "ratio", "type": "number"},
@@ -282,11 +286,13 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
         _require(isinstance(item["source_id"], str) and item["source_id"], f"{where}: source_id 필요")
         items.append(item)
     # 같은 기업·지표·시점에 사용 가능한 값이 둘 이상이면 선택이 파일 순서에 의존한다. 충돌은 source_conflict 로 표시해야 한다.
-    seen_values: dict[tuple[str, str, str], tuple[str, Any]] = {}
+    seen_values: dict[tuple[str, str, str, str | None, str | None], tuple[str, Any]] = {}
     for item in items:
         if item["status"] not in ("verified", "legacy_unverified") or item["value"] is None:
             continue
-        key = (item["company_id"], item["metric"], item["as_of"])
+        # 같은 지표·같은 조회일이라도 회계기간이 다르면 서로 다른 값이다(분기 EPS). 기간을 키에 넣어야 오탐이 없다.
+        period = item.get("period") or {}
+        key = (item["company_id"], item["metric"], item["as_of"], period.get("start"), period.get("end"))
         if key in seen_values and seen_values[key][1] != item["value"]:
             raise SchemaError(f"observations: {key} 에 서로 다른 값의 관측이 둘 이상 ({seen_values[key][0]}, {item['observation_id']}) — 하나를 source_conflict 로 표시하거나 제거")
         seen_values.setdefault(key, (item["observation_id"], item["value"]))

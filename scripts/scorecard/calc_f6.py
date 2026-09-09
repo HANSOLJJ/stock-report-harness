@@ -38,8 +38,114 @@ def _basis_alignment(company: dict[str, Any], price_basis: dict[str, Any], eps_b
     return None
 
 
+REQUIRED_QUARTERS = 4
+QUARTER_METRIC = "ntm_eps_quarter"
+
+
+def _quarter_label(period: dict[str, Any] | None) -> str | None:
+    """회계분기 종료일에서 YYYYQn 라벨을 만든다. 종료 월이 분기를 정한다(3·6·9·12 로 맞추지 않는다)."""
+    end = (period or {}).get("end")
+    if not isinstance(end, str) or len(end) < 7:
+        return None
+    year, month = int(end[:4]), int(end[5:7])
+    return f"{year}Q{(month - 1) // 3 + 1}"
+
+
+def _quarterly_gates(company: dict[str, Any], rows: list[dict[str, Any]], price_obs: dict[str, Any] | None) -> str | None:
+    """4분기 후보를 정식 NTM 으로 올리기 전의 관문. 하나라도 걸리면 사유를 돌려준다."""
+    if any(o["status"] != "verified" for o in rows):
+        bad = sorted({o["status"] for o in rows if o["status"] != "verified"})
+        return f"분기 관측 상태가 verified 가 아님({', '.join(bad)})"
+    sources = {o["source_id"] for o in rows}
+    if len(sources) != 1:
+        # 서로 다른 공급사의 분기를 이어 붙여 검증된 NTM 을 만들지 않는다.
+        return f"공급사 혼합 금지 — 분기별 source_id 가 {len(sources)}종({', '.join(sorted(sources))})"
+    currencies = {(o.get("basis") or {}).get("currency") for o in rows}
+    shares = {(o.get("basis") or {}).get("share_basis") for o in rows}
+    if len(currencies) != 1 or None in currencies:
+        return f"분기별 통화가 하나로 확정되지 않음({sorted(str(c) for c in currencies)})"
+    if len(shares) != 1 or None in shares:
+        return f"분기별 주식 기준이 하나로 확정되지 않음({sorted(str(s) for s in shares)})"
+    currency, share_basis = currencies.pop(), shares.pop()
+    if company.get("share_basis") and share_basis != company["share_basis"]:
+        return f"주식 기준 {share_basis!r} 가 기업 레지스트리({company['share_basis']!r})와 다름"
+    pb = price_obs.get("basis") or {}
+    if pb.get("currency") != currency or pb.get("share_basis") != share_basis:
+        return f"주가 기준(currency={pb.get('currency')!r}, share_basis={pb.get('share_basis')!r})과 EPS 기준({currency!r}, {share_basis!r})이 다름"
+    accounting = {(o.get("basis") or {}).get("accounting") for o in rows}
+    if len(accounting) != 1 or accounting == {None}:
+        # GAAP 과 조정치를 섞으면 실적과 추정이 다른 잣대가 된다. 정의가 확인되기 전에는 점수를 만들지 않는다.
+        return f"회계 기준(GAAP/비GAAP)이 확정되지 않음({sorted(str(a) for a in accounting)})"
+    if company.get("share_basis") in ("adr", "ads") and not all((o.get("basis") or {}).get("basis_verified") for o in rows):
+        # ADR/ADS 는 공급사마다 통화·주식 단위가 갈린다. 순이익÷EPS 역산 검산 기록이 있어야 한다.
+        return "ADR/ADS 종목은 basis 검산(basis_verified)이 기록된 관측만 채점에 쓴다"
+    return None
+
+
+def _quarterly(company: dict[str, Any], obs: ObsLookup, rules: RuleSet) -> dict[str, Any] | None:
+    """분기 EPS 관측이 있으면 이 경로가 F6 를 결정한다. 4분기 미만은 점수를 만들지 않는다."""
+    cid = company["company_id"]
+    rows = [o for o in obs.all(cid, QUARTER_METRIC) if o["status"] != "not_applicable"]
+    if not rows:
+        return None
+    by_label: dict[str, dict[str, Any]] = {}
+    for o in rows:
+        label = _quarter_label(o.get("period"))
+        if label and o["value"] is not None:
+            by_label.setdefault(label, o)
+    labels = sorted(by_label)
+    obs_ids = [by_label[x]["observation_id"] for x in labels]
+    coverage = {"secured": len(labels), "required": REQUIRED_QUARTERS, "quarters": labels,
+                "sources": sorted({by_label[x]["source_id"] for x in labels})}
+    if len(labels) < REQUIRED_QUARTERS:
+        # 부분 확보는 보존하되 합산·배수 근사로 점수를 만들지 않는다 (2Q×2 금지).
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids,
+                             calc={"coverage": coverage},
+                             pending=pending_info("data", f"NTM EPS {REQUIRED_QUARTERS}개 분기 중 {len(labels)}개 확보 — 나머지 {REQUIRED_QUARTERS - len(labels)}개 필요. 부분 합계를 배수로 늘려 쓰지 않는다"))
+    if len(labels) > REQUIRED_QUARTERS:
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids,
+                             calc={"coverage": coverage},
+                             pending=pending_info("data", f"분기 관측이 {len(labels)}개로 {REQUIRED_QUARTERS}개를 넘음 — 채점 대상 창을 하나로 확정해야 함"))
+    problem = _quarters_problem(labels)
+    if problem:
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids,
+                             calc={"coverage": coverage}, pending=pending_info("data", f"분기 구성 오류: {problem}"))
+    price, price_obs = obs.number(cid, "price")
+    if price is None or price_obs is None:
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids,
+                             calc={"coverage": coverage}, pending=pending_info("data", "주가 관측 없음 — PER 산출 불가"))
+    rows4 = [by_label[x] for x in labels]
+    gate = _quarterly_gates(company, rows4, price_obs)
+    if gate:
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
+                             observation_ids=obs_ids + [price_obs["observation_id"]], calc={"coverage": coverage},
+                             pending=pending_info("data", f"4분기 확보했으나 채점 관문 미통과: {gate}"))
+    eps = sum(float(o["value"]) for o in rows4)
+    calc: dict[str, Any] = {"coverage": coverage, "ntm_eps": eps, "method": "consensus_4q_sum",
+                            "requires_reapproval": True}
+    if eps <= 0:
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
+                             observation_ids=obs_ids + [price_obs["observation_id"]], calc=calc,
+                             pending=pending_info("data", "NTM EPS 합이 0 이하 — 낮은 PER·0점으로 대체하지 않음"))
+    per = price / eps
+    score, band = rules.f6_band(per)
+    boundary = rules.f6_boundary_flag(per)
+    calc.update({"ntm_per": per, "band": band, "boundary": boundary})
+    warnings = [f"분기 컨센서스 {REQUIRED_QUARTERS}개 합산({coverage['sources'][0]}) — 입력이 바뀐 실행이므로 재계산·재검토·재승인을 거쳐야 확정된다"]
+    for o in rows4:
+        warnings.extend(obs_note(o))
+    if boundary["flag"]:
+        warnings.append(f"경계 ⚠️ {boundary['nearest_boundary']:g} 선까지 {boundary['distance_ratio'] * 100:+.1f}% — 점수는 그대로")
+    return factor_result(FACTOR, score=score, status="ok", basis="computed",
+                         observation_ids=obs_ids + [price_obs["observation_id"]], calc=calc, warnings=warnings)
+
+
 def _listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | None, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
     cid = company["company_id"]
+    # 분기 EPS 관측이 있으면 그 경로가 F6 를 결정한다. 없으면 기존 승계 경로를 그대로 쓴다.
+    quarterly = _quarterly(company, obs, rules)
+    if quarterly is not None:
+        return quarterly
     warnings: list[str] = []
     obs_ids: list[str] = []
     if judgment is not None:
@@ -92,7 +198,9 @@ def _listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | 
         choice = decision_choice(run, rules, "C-13")
         proxy_calc = {"ntm_per": per_value, "method": method}
         if choice == "accept_proxy_with_flag":
-            warnings.append("C-13: 연간 EPS 가중 근사(annual_weighted_proxy)를 실행 단위 결정으로 채점에 사용 — 참고 정밀도")
+            # 승인된 F6 정책: 근사 방법은 정식 점수를 만들지 않는다. 결정은 기록으로 남고 값은 참고로만 보존한다.
+            return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids, calc=proxy_calc,
+                                 pending=pending_info("data", "C-13 을 accept_proxy_with_flag 로 두었으나 F6 정책상 근사(annual_weighted_proxy)는 점수를 만들지 않는다 — 미발표 4개 분기 컨센서스(consensus_4q_sum) 필요"))
         elif choice == "reject_proxy":
             # 거절은 확정된 선택이다. 규칙 미결이 아니라 정확한 4분기 컨센서스를 확보해야 하는 자료 대기로 남긴다.
             return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids, calc=proxy_calc,

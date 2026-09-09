@@ -509,6 +509,26 @@ def runway_for(c: dict[str, Any], obs: ObsLookup) -> float | None:
 def factor_calc_text(f: str, fr: dict[str, Any]) -> str:
     calc = fr.get("calc") or {}
     text = ""
+    cov = calc.get("coverage") if f == "F6" else None
+    if cov:
+        # 부분 확보를 숨기지 않는다. 몇 개를 확보했고 어느 분기가 있는지 그대로 보여준다.
+        text = f"분기 컨센서스 {cov['secured']}/{cov['required']} 확보"
+        if cov.get("quarters"):
+            text += f" ({', '.join(cov['quarters'])})"
+        if cov.get("sources"):
+            text += f" · 원천 {', '.join(cov['sources'])}"
+        if calc.get("ntm_per") is not None:
+            text += f" → NTM PER {fmt_num(calc['ntm_per'])}"
+            if calc.get("band"):
+                text += f" · 구간 {calc['band']}"
+            if (calc.get("boundary") or {}).get("flag"):
+                text += " ⚠️ 구간 경계 ±3% 이내"
+        if calc.get("requires_reapproval"):
+            text += " · 재승인 필요"
+        pending = fr.get("pending") or {}
+        if pending:
+            text += " · " + pending.get("message", "")
+        return text
     if f == "F6" and calc.get("ntm_per") is not None:
         text = f"NTM PER {fmt_num(calc['ntm_per'])} ({METHOD_LABELS.get(calc.get('method'), calc.get('method', ''))})"
         if calc.get("band"):

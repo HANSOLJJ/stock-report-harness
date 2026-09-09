@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from scorecard.render_html import (  # noqa: E402
     GLOSSARY_SLOT,
+    factor_calc_text,
     link_decision_codes,
     load_availability,
     render_availability,
@@ -176,3 +177,36 @@ class TestBuiltDocument(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestF6CoverageRender(unittest.TestCase):
+    """분기 확보 현황이 화면 문구로 나오는지 고정한다 (F6-IMPLEMENT-06)."""
+
+    def test_partial_coverage_shows_counts_and_reason(self):
+        fr = {"status": "pending_data", "score": None,
+              "calc": {"coverage": {"secured": 2, "required": 4, "quarters": ["2026Q3", "2026Q4"], "sources": ["SRC-q"]}},
+              "pending": {"kind": "data", "message": "나머지 2개 필요"}, "warnings": []}
+        text = factor_calc_text("F6", fr)
+        self.assertIn("2/4 확보", text)
+        self.assertIn("2026Q3, 2026Q4", text)
+        self.assertIn("원천 SRC-q", text)
+        self.assertIn("나머지 2개 필요", text)
+        self.assertNotIn("NTM PER", text)
+
+    def test_full_coverage_shows_per_and_reapproval(self):
+        fr = {"status": "ok", "score": -1,
+              "calc": {"coverage": {"secured": 4, "required": 4, "quarters": ["2026Q3", "2026Q4", "2027Q1", "2027Q2"], "sources": ["SRC-q"]},
+                       "ntm_per": 25.0, "band": "20~29", "boundary": {"flag": False}, "requires_reapproval": True},
+              "pending": {}, "warnings": []}
+        text = factor_calc_text("F6", fr)
+        self.assertIn("4/4 확보", text)
+        self.assertIn("NTM PER", text)
+        self.assertIn("재승인 필요", text)
+
+    def test_legacy_path_unchanged_without_coverage(self):
+        fr = {"status": "ok", "score": -1,
+              "calc": {"ntm_per": 25.3, "method": "vendor_forward_pe_verified_ntm", "band": "20~29", "boundary": {"flag": False}},
+              "pending": {}, "warnings": []}
+        text = factor_calc_text("F6", fr)
+        self.assertIn("NTM PER", text)
+        self.assertNotIn("확보", text)

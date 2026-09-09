@@ -138,9 +138,15 @@ class TestF6(unittest.TestCase):
         result = compute_f6(company(), ntm(19.4, "annual_weighted_proxy"), JudgmentLookup([]), RULES, run())
         self.assertEqual(result["status"], "needs_rule_decision")
         self.assertEqual(result["pending"]["decision_id"], "C-13")
+
+    def test_c13_accept_proxy_no_longer_scores(self):
+        """F6 정책: 근사는 정식 점수를 만들지 않는다. 결정은 기록으로 남고 값은 참고로만 보존한다."""
         result = compute_f6(company(), ntm(19.4, "annual_weighted_proxy"), JudgmentLookup([]), RULES, run([decision("C-13", "accept_proxy_with_flag")]))
-        self.assertEqual(result["score"], 0)
-        self.assertTrue(result["calc"]["boundary"]["flag"])
+        self.assertEqual(result["status"], "pending_data")
+        self.assertIsNone(result["score"])
+        self.assertAlmostEqual(result["calc"]["ntm_per"], 19.4)
+        self.assertEqual(result["calc"]["method"], "annual_weighted_proxy")
+        self.assertNotIn("decision_id", result["pending"])
 
     def test_c13_reject_is_settled_not_undecided(self):
         # 거절은 내려진 결정이다. 규칙 미결로 남아 계속 결정을 요구하면 안 된다.
@@ -505,3 +511,153 @@ class TestReviewRegressions(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# ------------------------------------------------------------------ F6 정책 구현 (F6-IMPLEMENT-06)
+
+def qobs(label: str, value: float, cid: str = "acme", source: str = "SRC-q", status: str = "verified",
+         currency: str = "USD", share_basis: str = "common", accounting: str = "gaap",
+         basis_verified: bool | None = None) -> dict:
+    """분기 EPS 관측 하나. label 은 YYYYQn 이며 period 종료월이 분기를 정한다."""
+    year, q = int(label[:4]), int(label[5])
+    end_month = q * 3
+    start_month = end_month - 2
+    last_day = {3: 31, 6: 30, 9: 30, 12: 31}[end_month]
+    basis = {"currency": currency, "share_basis": share_basis, "accounting": accounting}
+    if basis_verified is not None:
+        basis["basis_verified"] = basis_verified
+    o = obs("ntm_eps_quarter", value, cid=cid, status=status, basis=basis, kind="estimate")
+    o["observation_id"] = f"{cid}.q.{label}"
+    o["source_id"] = source
+    o["period"] = {"start": f"{year}-{start_month:02d}-01", "end": f"{year}-{end_month:02d}-{last_day}"}
+    return o
+
+
+PRICE_BASIS = {"share_basis": "common", "currency": "USD"}
+FOUR = ["2026Q3", "2026Q4", "2027Q1", "2027Q2"]
+
+
+class TestF6QuarterlyPolicy(unittest.TestCase):
+    """승인된 F6 정책: 부분 확보는 점수를 만들지 않고, 4분기는 관문을 통과해야 한다."""
+
+    def _lookup(self, quarters, price: float = 100.0, **kw):
+        rows = [qobs(lbl, val, **kw) for lbl, val in quarters]
+        return ObsLookup([obs("price", price, basis=PRICE_BASIS), *rows])
+
+    def test_two_quarters_pending_no_score(self):
+        lookup = self._lookup([("2026Q3", 1.0), ("2026Q4", 1.0)])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIsNone(r["score"])
+        self.assertEqual(r["calc"]["coverage"]["secured"], 2)
+        self.assertEqual(r["calc"]["coverage"]["required"], 4)
+
+    def test_two_quarters_never_doubled(self):
+        """2Q×2 금지. 합계·PER 이 계산되어서는 안 된다."""
+        lookup = self._lookup([("2026Q3", 1.0), ("2026Q4", 1.0)])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertNotIn("ntm_eps", r["calc"])
+        self.assertNotIn("ntm_per", r["calc"])
+
+    def test_three_quarters_pending(self):
+        lookup = self._lookup([("2026Q3", 1.0), ("2026Q4", 1.0), ("2027Q1", 1.0)])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertEqual(r["calc"]["coverage"]["secured"], 3)
+
+    def test_four_quarters_scores_and_flags_reapproval(self):
+        lookup = self._lookup([(q, 1.0) for q in FOUR])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "ok")
+        self.assertAlmostEqual(r["calc"]["ntm_eps"], 4.0)
+        self.assertAlmostEqual(r["calc"]["ntm_per"], 25.0)
+        self.assertEqual(r["calc"]["method"], "consensus_4q_sum")
+        self.assertTrue(r["calc"]["requires_reapproval"])
+        self.assertEqual(r["score"], -1)
+
+    def test_vendor_mixing_blocked(self):
+        rows = [qobs(q, 1.0, source="SRC-a" if i < 2 else "SRC-b") for i, q in enumerate(FOUR)]
+        lookup = ObsLookup([obs("price", 100.0, basis=PRICE_BASIS), *rows])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("공급사 혼합 금지", r["pending"]["message"])
+
+    def test_non_consecutive_quarters_blocked(self):
+        lookup = self._lookup([("2026Q3", 1.0), ("2026Q4", 1.0), ("2027Q1", 1.0), ("2027Q3", 1.0)])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("연속", r["pending"]["message"])
+
+    def test_unverified_quarter_blocked(self):
+        rows = [qobs(q, 1.0, status="legacy_unverified" if i == 0 else "verified") for i, q in enumerate(FOUR)]
+        lookup = ObsLookup([obs("price", 100.0, basis=PRICE_BASIS), *rows])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("verified", r["pending"]["message"])
+
+    def test_accounting_basis_required(self):
+        rows = [qobs(q, 1.0) for q in FOUR]
+        for o in rows:
+            o["basis"].pop("accounting")
+        lookup = ObsLookup([obs("price", 100.0, basis=PRICE_BASIS), *rows])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("회계 기준", r["pending"]["message"])
+
+    def test_currency_mismatch_with_price_blocked(self):
+        lookup = self._lookup([(q, 1.0) for q in FOUR], currency="CNY")
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("기준", r["pending"]["message"])
+
+    def test_adr_company_requires_basis_verification(self):
+        c = company(cid="tsmc")
+        c["share_basis"] = "adr"
+        c["adr_ratio"] = 5
+        price = obs("price", 100.0, cid="tsmc", basis={"share_basis": "adr", "currency": "USD"})
+        rows = [qobs(q, 1.0, cid="tsmc", share_basis="adr") for q in FOUR]
+        r = compute_f6(c, ObsLookup([price, *rows]), JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("basis 검산", r["pending"]["message"])
+        rows_ok = [qobs(q, 1.0, cid="tsmc", share_basis="adr", basis_verified=True) for q in FOUR]
+        r2 = compute_f6(c, ObsLookup([price, *rows_ok]), JudgmentLookup([]), RULES, run())
+        self.assertEqual(r2["status"], "ok")
+
+    def test_zero_or_negative_sum_not_scored(self):
+        lookup = self._lookup([("2026Q3", -1.0), ("2026Q4", 0.5), ("2027Q1", 0.2), ("2027Q2", 0.3)])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIsNone(r["score"])
+
+    def test_quarterly_path_overrides_legacy_ntm_per(self):
+        """분기 관측이 있으면 승계 ntm_per 로 우회 채점되지 않는다."""
+        rows = [qobs(q, 1.0) for q in FOUR[:2]]
+        lookup = ObsLookup([obs("price", 100.0, basis=PRICE_BASIS),
+                            obs("ntm_per", 25.0, basis={"method": "vendor_forward_pe_verified_ntm"}), *rows])
+        r = compute_f6(company(), lookup, JudgmentLookup([]), RULES, run())
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIsNone(r["score"])
+
+
+class TestSpacexSingleEntity(unittest.TestCase):
+    """SPCX 단일 법인 범위가 기업 레지스트리에 반영돼 있는지 고정한다."""
+
+    def setUp(self):
+        import json
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[1]
+        data = json.loads((root / "scorecard" / "companies.json").read_text(encoding="utf-8"))
+        self.entry = next(c for c in data["companies"] if c["company_id"].startswith("spacex"))
+
+    def test_ticker_and_exchange_recorded(self):
+        self.assertEqual(self.entry["ticker"], "SPCX")
+        self.assertEqual(self.entry["exchange"], "NASDAQ")
+        self.assertTrue(self.entry["listed"])
+
+    def test_scope_is_single_entity_not_sum(self):
+        self.assertIn("단일 법인", self.entry["scope"])
+        self.assertNotIn("합산 평가 범위", self.entry["scope"])
+
+    def test_us_common_share_basis(self):
+        self.assertEqual(self.entry["share_basis"], "common")
+        self.assertEqual(self.entry["reporting_currency"], "USD")
