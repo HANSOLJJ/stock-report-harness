@@ -1,23 +1,28 @@
 # F6-H(최근 확정 2분기 + 향후 2분기)와 F6-N(향후 4분기)의 창 차이를 SEC 실적으로 백테스트한다
-"""SEC XBRL 분기 EPS 로 F6-H 와 F6-N 의 차이를 측정한다.
+"""F6-H 를 두 축으로 나눠 측정한다. 둘은 서로 다른 질문이다.
 
-두 창은 모두 4개 분기지만 기준점이 다르다.
+축 A — **추정 정확도**: F6-H 가 *자기 창*(k-1..k+2)의 실현 합을 얼마나 맞히는가.
+    F6-H = A(k-1) + A(k) + E(k+1) + E(k+2)   를   A(k-1)+A(k)+A(k+1)+A(k+2) 와 비교.
+    앞 2개가 확정값이라 전망 오차가 절반으로 희석된다. 공급사 컨센서스와 실적을
+    같은 원천에서 가져와 기준을 맞춘다.
 
-    분기 인덱스 :  k-1   k   k+1  k+2  k+3  k+4
-    F6-H        :  ■    ■    ■    ■
-    F6-N        :             ■    ■    ■    ■
+축 B — **창 이동**: F6-H 창과 F6-N 창이 애초에 다른 12개월을 덮는다는 사실.
+    F6-H(k-1..k+2) 를 F6-N(k+1..k+4) 과 비교. 이건 정확도가 아니라 **무엇을 재는가**
+    의 차이이며, 기존 F6 구간표를 그대로 쓸 수 있는지를 가른다.
 
-F6-H 는 뒤쪽 2개가 확정 실적이고 앞쪽 2개가 전망이다. 이 스크립트는 **전망 자리에도
-실적을 넣어** 추정 오차를 0 으로 만든 뒤 창 차이만 분리해 측정한다. 따라서 결과는
-F6-H 오차의 **하한**이다. 실제로는 여기에 2개 분기의 추정 오차가 더 얹힌다.
+첫 보고서는 축 B 를 축 A 로 오독해 "F6-H 가 부정확하다" 고 결론냈다. 틀렸다.
+축 A 로 보면 F6-H 는 자기 창을 정확히 맞힌다. 보완 지시(msg_6f18a5cb31aa)에 따라
+두 축을 분리한다.
 
-입력  : SEC companyconcept us-gaap/EarningsPerShareDiluted (allowlist 등재 원천)
-출력  : 기업별 오차 분포, 밴드 전환 확률, 순위 안정성
+입력
+    SEC XBRL us-gaap/EarningsPerShareDiluted   (축 B, allowlist 등재)
+    Finnhub stock/earnings estimate·actual     (축 A, 같은 원천 쌍)
 
-사용:
-    export SEC_UA="your-app research contact:you@example.com"
-    python backtest_f6h.py fetch     # SEC 원본을 ./_raw 에 내려받는다
-    python backtest_f6h.py report    # 분석 결과를 출력한다
+한계
+    - 공급사 estimate 는 **발표 직전 컨센서스**다. 실제 F6-H 의 E(k+2) 는 2분기 앞
+      추정이라 오차가 더 크다. 축 A 결과는 하한이다.
+    - 컨센서스에 asOf 가 없어 point-in-time 무결성을 검증하지 못한다.
+    - 시점별 검증 가격을 allowlist 원천에서 얻지 못해 순위 비교는 수행하지 않는다.
 """
 from __future__ import annotations
 
@@ -125,6 +130,37 @@ def windows(series: list[tuple[date, float]]) -> list[dict]:
     return out
 
 
+VENDOR = RAW / "vendor"
+
+
+def vendor_quarters(ticker: str) -> list[dict]:
+    """공급사(Finnhub) stock/earnings 의 (period, estimate, actual). 추정과 실적이 같은 기준이다."""
+    path = VENDOR / f"pe_{ticker}.json"
+    if not path.is_file():
+        return []
+    rows = json.loads(path.read_text(encoding="utf-8"))
+    rows = [r for r in rows if r.get("estimate") is not None and r.get("actual") is not None]
+    return sorted(rows, key=lambda r: r["period"])
+
+
+def axis_a(ticker: str) -> dict | None:
+    """축 A — F6-H 가 자기 창의 실현 합을 얼마나 맞히는가."""
+    rows = vendor_quarters(ticker)
+    if len(rows) < 4:
+        return None
+    a1, a2, q3, q4 = rows[-4:]
+    f6h = a1["actual"] + a2["actual"] + q3["estimate"] + q4["estimate"]
+    realized = a1["actual"] + a2["actual"] + q3["actual"] + q4["actual"]
+    out = {"ticker": ticker, "f6h": f6h, "realized": realized,
+           "q3_err": (q3["estimate"] - q3["actual"]) / abs(q3["actual"]) if q3["actual"] else None,
+           "q4_err": (q4["estimate"] - q4["actual"]) / abs(q4["actual"]) if q4["actual"] else None,
+           "window": f"{a1['period']}~{q4['period']}"}
+    # 실현 합이 0 이하이면 비율 오차가 의미를 잃는다. APE 를 0 으로 두지 않고 별도로 남긴다.
+    out["total_err"] = (f6h - realized) / abs(realized) if realized > 0 else None
+    out["nonpositive_realized"] = realized <= 0
+    return out
+
+
 def band_flip_probability(err: float) -> float:
     """EPS 오차가 PER 을 1/(1+e) 배로 옮긴다. 밴드 안에서 로그균등이라고 볼 때의 전환 확률."""
     return min(1.0, abs(math.log(1 + err)) / math.log(BAND_RATIO)) if err > -1 else 1.0
@@ -137,10 +173,48 @@ def band_of(per: float) -> int:
     return -5
 
 
+TICKERS_VENDOR = ["META", "NVDA", "GOOGL", "MSFT", "AMZN", "AAPL", "ORCL", "PLTR", "TSLA", "TSM", "BABA"]
+
+
+def report_axis_a() -> None:
+    print("=" * 100)
+    print("축 A — F6-H 가 자기 창의 실현 합을 맞히는 정확도 (공급사 추정·실적 동일 원천)")
+    print("=" * 100)
+    print(f"{'티커':6} {'창':>24} {'F6-H':>9} {'실현합':>9} {'합산오차':>9} | {'Q3 2E':>9} {'Q4 2E':>9}")
+    totals, perq, skipped = [], [], []
+    for ticker in TICKERS_VENDOR:
+        r = axis_a(ticker)
+        if not r:
+            continue
+        if r["nonpositive_realized"]:
+            skipped.append((ticker, r["realized"]))
+            tot = "  실현합<=0"
+        else:
+            totals.append(abs(r["total_err"]))
+            tot = f"{r['total_err']:+8.2%}"
+        for key in ("q3_err", "q4_err"):
+            if r[key] is not None:
+                perq.append(abs(r[key]))
+        q3 = f"{r['q3_err']:+8.1%}" if r["q3_err"] is not None else "       —"
+        q4 = f"{r['q4_err']:+8.1%}" if r["q4_err"] is not None else "       —"
+        print(f"{ticker:6} {r['window']:>24} {r['f6h']:>9.3f} {r['realized']:>9.3f} {tot} | {q3:>9} {q4:>9}")
+    for label, sample in (("합산 오차(축 A)", sorted(totals)), ("분기별 2E 오차", sorted(perq))):
+        if sample:
+            med = sample[len(sample) // 2]
+            print(f"\n{label}: n={len(sample)} · 중앙값 {med:.2%} · 최대 {sample[-1]:.2%}"
+                  f" → PER {med/(1+med):.1%} 이동 → 밴드 전환 확률 {band_flip_probability(med):.0%}")
+    if skipped:
+        print("\n실현 합이 0 이하라 APE 를 계산하지 않은 종목:", ", ".join(f"{t}({v:.3f})" for t, v in skipped))
+    print("\n한계: 공급사 estimate 는 발표 직전 컨센서스라 2분기 앞 추정보다 정확하다. 축 A 결과는 하한이다.")
+    print("      컨센서스에 asOf 가 없어 point-in-time 무결성은 검증하지 못했다.")
+
+
 def report() -> None:
-    print("=" * 96)
-    print("F6-H(2A+2E) 대 F6-N(4E) — 창 차이만 측정 (추정 오차 0 가정, 따라서 하한)")
-    print("=" * 96)
+    report_axis_a()
+    print()
+    print("=" * 100)
+    print("축 B — F6-H 창과 F6-N 창의 차이 (정확도가 아니라 '무엇을 재는가'. 구간표 재조정 필요성 판단용)")
+    print("=" * 100)
     all_err: list[float] = []
     latest: dict[str, dict] = {}
     print(f"{'티커':6} {'분기수':>5} {'표본':>4} {'중앙오차':>9} {'최소':>8} {'최대':>8}   최근 창 F6-H / F6-N")
@@ -181,26 +255,10 @@ def report() -> None:
         neg = sum(1 for e in signed if e < 0)
         print(f"\n부호: 음수 {neg}/{len(signed)} ({neg/len(signed):.0%}) — 음수는 F6-H 가 F6-N 보다 작다는 뜻이고 PER 을 키워 점수를 낮춘다")
 
-    # 순위 안정성 — 같은 주가로 두 지표의 PER 순위를 비교한다 (단면 민감도)
-    prices = json.loads((HERE / "prices.json").read_text(encoding="utf-8")) if (HERE / "prices.json").is_file() else {}
-    rows = [(t, w, prices.get(t)) for t, w in latest.items() if prices.get(t) and w["f6h"] > 0 and w["f6n"] > 0]
-    if rows:
-        print("\n순위 안정성 (같은 주가, 최근 창 기준 — 시점 정렬이 아닌 단면 민감도)")
-        print(f"{'티커':6} {'주가':>9} {'PER(F6-H)':>10} {'PER(F6-N)':>10} {'밴드H':>6} {'밴드N':>6} {'밴드차':>6}")
-        per_h, per_n = {}, {}
-        flips = 0
-        for t, w, p in rows:
-            ph, pn = p / w["f6h"], p / w["f6n"]
-            per_h[t], per_n[t] = ph, pn
-            bh, bn = band_of(ph), band_of(pn)
-            flips += bh != bn
-            print(f"{t:6} {p:>9.2f} {ph:>10.1f} {pn:>10.1f} {bh:>6} {bn:>6} {bh-bn:>+6}")
-        rank_h = {t: i for i, t in enumerate(sorted(per_h, key=per_h.get))}
-        rank_n = {t: i for i, t in enumerate(sorted(per_n, key=per_n.get))}
-        inv = sum(1 for a in rank_h for b in rank_h
-                  if a < b and (rank_h[a] - rank_h[b]) * (rank_n[a] - rank_n[b]) < 0) // 1
-        pairs = len(rows) * (len(rows) - 1) // 2
-        print(f"\n밴드가 달라지는 기업 {flips}/{len(rows)} · 순위 역전 쌍 {inv}/{pairs}")
+    # 순위 안정성은 수행하지 않는다.
+    # 시점별 검증 가격이 allowlist 원천에서 나오지 않는다(Finnhub stock/candle 은 무료 등급 403).
+    # 과거 창에 현재 주가를 붙이면 시점이 어긋나므로 하드코딩 스냅샷을 쓰지 않는다.
+    print("\n순위 안정성: 미수행 — 검증된 시점별 가격을 allowlist 원천에서 확보하지 못했다(보고서 3.4.3)")
 
 
 if __name__ == "__main__":
