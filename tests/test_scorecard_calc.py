@@ -690,8 +690,10 @@ class TestSourceAllowlist(unittest.TestCase):
         v = RULES_V16.source_violation("https://data.nasdaq.com/api/v3/datasets/ZACKS/EE")
         self.assertIsNotNone(v)
         self.assertIn("미승인 후보", v)
-        for need in ("정식 계약", "자동 수집 허용", "derived data 허용", "외부 배포 허용", "보관 조건"):
+        for need in ("정식 계약", "자동 수집 허용", "derived data 허용", "보관 조건"):
             self.assertIn(need, v)
+        # POLICY-12. 사용 범위가 personal/internal only 로 확정돼 외부 배포 허용은 승격 조건이 아니다.
+        self.assertNotIn("외부 배포 허용", v)
 
     def test_allowed_hosts_pass(self):
         for url in ("https://data.sec.gov/submissions/CIK0000320193.json",
@@ -763,6 +765,101 @@ class TestSourcePolicySchema(unittest.TestCase):
                                         "status": "candidate_not_approved", "required_written_conditions": ["계약"]}]
         with self.assertRaises(SchemaError):
             validate_rules(self._rules_with(s))
+
+    # -------------------------------------------------- 사용 범위 선언 (POLICY-12)
+    def _scope(self, **over) -> dict:
+        base = {"scope": "personal_internal_only", "decided_at": "2026-09-10",
+                "statement": "개인·내부 용도로만 쓴다", "condition": "외부 배포 시 재배포 라이선스 필요"}
+        base.update(over)
+        return base
+
+    def test_usage_scope_is_optional(self):
+        validate_rules(self._rules_with(self._base()))
+
+    def test_usage_scope_valid_passes(self):
+        s = self._base()
+        s["usage_scope"] = self._scope()
+        validate_rules(self._rules_with(s))
+
+    def test_usage_scope_requires_condition(self):
+        """조건 없는 범위 선언은 범위가 바뀔 때 무엇을 다시 볼지 남기지 않는다."""
+        s = self._base()
+        s["usage_scope"] = self._scope(condition="   ")
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    def test_usage_scope_requires_statement(self):
+        s = self._base()
+        s["usage_scope"] = self._scope(statement="")
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    # -------------------------------------------------- 미등재 사유 (POLICY-12)
+    def _unlisted(self, **over) -> dict:
+        base = {"host": "u.example", "reason_type": "technical",
+                "reason": "회계분기 창 특정 0/12", "decided_at": "2026-09-10"}
+        base.update(over)
+        return base
+
+    def test_unlisted_valid_passes(self):
+        s = self._base()
+        s["unlisted"] = [self._unlisted()]
+        validate_rules(self._rules_with(s))
+
+    def test_unlisted_reason_type_must_be_known(self):
+        """기술적 부적격과 약관 미확인을 뭉뚱그리지 않는다."""
+        s = self._base()
+        s["unlisted"] = [self._unlisted(reason_type="사유없음")]
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    def test_unlisted_requires_reason(self):
+        s = self._base()
+        s["unlisted"] = [self._unlisted(reason=" ")]
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+    def test_unlisted_host_cannot_overlap_allowed(self):
+        s = self._base()
+        s["unlisted"] = [self._unlisted(host="a.example")]
+        with self.assertRaises(SchemaError):
+            validate_rules(self._rules_with(s))
+
+
+class TestV16SourcePolicy(unittest.TestCase):
+    """실제 v1.6 정책 파일의 POLICY-12 개정 내용을 고정한다."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.rules = load_rules("v1.6")
+        cls.sources = cls.rules.payload["sources"]
+
+    def test_usage_scope_is_personal_internal_only(self):
+        self.assertEqual(self.sources["usage_scope"]["scope"], "personal_internal_only")
+        self.assertTrue(self.sources["usage_scope"]["condition"].strip())
+
+    def test_zacks_no_longer_requires_external_distribution(self):
+        zacks = next(c for c in self.sources["conditional_candidates"] if c["host"] == "data.nasdaq.com")
+        self.assertNotIn("외부 배포 허용", zacks["required_written_conditions"])
+        self.assertEqual(zacks["required_written_conditions"],
+                         ["정식 계약", "자동 수집 허용", "derived data 허용", "보관 조건"])
+        self.assertEqual(zacks["status"], "candidate_not_approved")
+
+    def test_nasdaq_stays_denied(self):
+        """개인 사용이라는 사실이 robots.txt 전면 Disallow 를 무르지 않는다."""
+        hosts = [d["host"] for d in self.sources["denied"]]
+        self.assertIn("api.nasdaq.com", hosts)
+
+    def test_yahoo_is_unlisted_for_technical_reason(self):
+        y = next(u for u in self.sources["unlisted"] if u["host"].endswith("finance.yahoo.com"))
+        self.assertEqual(y["reason_type"], "technical")
+        self.assertNotIn("query1.finance.yahoo.com", [a["host"] for a in self.sources["allowed"]])
+
+    def test_yahoo_unlisted_does_not_change_enforcement(self):
+        """unlisted 는 문서 항목이다. 판정은 그대로 allowlist 미등재로 걸려야 한다."""
+        msg = self.rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbols=NVDA")
+        self.assertIsNotNone(msg)
+        self.assertIn("allowlist 에 없음", msg)
 
 
 class TestSourceAllowlistEnforcement(unittest.TestCase):

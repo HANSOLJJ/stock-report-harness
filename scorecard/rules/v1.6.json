@@ -595,6 +595,13 @@
   ],
   "sources": {
     "policy_note": "생산 원천은 여기 등재된 host 만 쓴다. 무료로 응답한다는 사실은 이용 허가가 아니다. robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다.",
+    "usage_scope": {
+      "scope": "personal_internal_only",
+      "decided_at": "2026-09-10",
+      "statement": "이 저장소의 산출물(점수·판정·HTML 리포트·파생 자료)은 개인 및 내부 용도로만 쓴다. 외부 일반 대중 배포를 전제하지 않는다.",
+      "condition": "산출물을 외부에 배포하면 이 전제가 깨진다. 그때는 원천별로 재배포 라이선스를 다시 확보해야 하고 allowed·denied·conditional_candidates 를 전부 재검토해야 한다. 배포 여부가 바뀌면 이 선언을 먼저 고친다.",
+      "note": "이 선언은 원천별 이용 조건을 대체하지 않는다. 각 host 의 robots.txt 와 이용약관이 여전히 우선한다. 개인 사용이라는 사실이 robots.txt 의 전면 Disallow 를 무르지 않는다 — denied 의 api.nasdaq.com 을 보라."
+    },
     "enforcement": "sources.json 의 url 이 있는 항목은 host 가 allowed 에 있어야 하고 denied 에 있으면 안 된다",
     "allowed": [
       {
@@ -629,14 +636,23 @@
         "name": "Nasdaq Data Link ZACKS/EE·EEH",
         "host": "data.nasdaq.com",
         "status": "candidate_not_approved",
-        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 다섯이 모두 서면 확정될 때만 후보로 승격한다",
+        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 personal/internal only 이므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다.",
         "required_written_conditions": [
           "정식 계약",
           "자동 수집 허용",
           "derived data 허용",
-          "외부 배포 허용",
           "보관 조건"
         ]
+      }
+    ],
+    "unlisted": [
+      {
+        "host": "query1.finance.yahoo.com",
+        "reason_type": "technical",
+        "reason": "F6 원천으로 기술적 부적격. 회계분기 창 특정 0/12 이고 향후 전망이 2개 분기뿐이라 미발표 4개 분기를 만들 수 없다.",
+        "decided_at": "2026-09-10",
+        "evidence": "C-13 2026-09-10 검증 결과",
+        "note": "query2.finance.yahoo.com 도 같은 서비스로 같은 판정이다. 약관 미검토(상류 Yahoo API 가 personal use only)는 별개의 미해결 항목이며 미등재의 주된 사유가 아니다. 기술적 사유만으로 이미 F6 원천이 되지 못한다. 가격 용도의 기존 yfinance 사용은 AGENTS.md 관행이고 이 정책은 sources.json 에 등재되는 생산 원천을 대상으로 한다. 이 항목은 문서용이며 source_violation() 판정에는 쓰이지 않는다 — 등재되지 않은 host 는 그대로 allowlist 미등재로 걸린다."
       }
     ]
   }

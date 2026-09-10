@@ -237,7 +237,8 @@ def validate_rules(payload: Any) -> dict[str, Any]:
 def _validate_source_policy(policy: Any) -> None:
     """자료 원천 allowlist. 같은 host 가 allowed 와 denied 에 동시에 있으면 판정이 갈린다."""
     _require(isinstance(policy, dict), "rules.sources: object 여야 함")
-    _expect_keys(policy, ["policy_note", "enforcement", "allowed", "denied"], "rules.sources", optional=["conditional_candidates"])
+    _expect_keys(policy, ["policy_note", "enforcement", "allowed", "denied"], "rules.sources",
+                 optional=["conditional_candidates", "usage_scope", "unlisted"])
     hosts: dict[str, str] = {}
     for group, required in (("allowed", ["host", "note"]), ("denied", ["host", "reason"])):
         entries = policy[group]
@@ -257,6 +258,22 @@ def _validate_source_policy(policy: Any) -> None:
         _require(entry["status"] == "candidate_not_approved", f"{where}: 미승인 후보는 status 가 candidate_not_approved 여야 함")
         _require(isinstance(entry["required_written_conditions"], list) and entry["required_written_conditions"],
                  f"{where}: 서면 확정이 필요한 조건을 비워 둘 수 없음")
+        _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
+    if "usage_scope" in policy:
+        scope = policy["usage_scope"]
+        _expect_keys(scope, ["scope", "decided_at", "statement", "condition"], "rules.sources.usage_scope",
+                     optional=["note"])
+        # 범위 선언은 조건과 짝이어야 한다. 조건 없는 선언은 범위가 바뀔 때 무엇을 다시 봐야 하는지를 남기지 않는다.
+        for key in ("scope", "decided_at", "statement", "condition"):
+            _require(str(scope.get(key) or "").strip(), f"rules.sources.usage_scope: {key} 를 비워 둘 수 없음")
+    for idx, entry in enumerate(policy.get("unlisted") or []):
+        where = f"rules.sources.unlisted[{idx}]"
+        _expect_keys(entry, ["host", "reason_type", "reason", "decided_at"], where, optional=["note", "evidence"])
+        for key in ("host", "reason", "decided_at"):
+            _require(str(entry.get(key) or "").strip(), f"{where}: {key} 필요")
+        # 미등재 사유를 뭉뚱그리지 않는다. 기술적 부적격과 약관 미확인은 다른 판단이다.
+        _require(entry["reason_type"] in ("technical", "terms", "both"),
+                 f"{where}: reason_type 은 technical/terms/both 중 하나여야 함")
         _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
 
 
