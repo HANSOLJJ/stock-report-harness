@@ -1,12 +1,13 @@
 {
   "summary": {
     "task_id": "F6H-SOURCES-02-R1",
-    "description": "Yahoo 저장 원자료 12개사 4단계 정밀 검증 (R2 보완: 통화 파싱·유한수치·중복행·동적판정 반영)",
+    "description": "Yahoo 저장 원자료 12개사 4단계 정밀 검증 (R3 보완: 통화 충돌·financialCurrency·전 행 분기창·동적notes 반영)",
     "raw_source_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo",
     "total_companies": 12,
     "stage1_raw_value_pass_count": "11/12",
     "stage2_quarter_window_pass_count": "0/12",
-    "stage3_currency_match_count": "11/12",
+    "stage3_currency_match_count": "10/12",
+    "stage3_estimate_currency_match_count": "11/12",
     "stage4_scoring_eligible_count": "0/12",
     "spcx_details": {
       "actual_count": 1,
@@ -14,7 +15,7 @@
       "estimate_count": 2,
       "duplicate_rows": 0,
       "stage1_pass": false,
-      "status": "유효 실적 분기 부족 (총 1행, 중복제외 1분기, 2A 요건 미달); 음수 실적 1건 ([-0.09])"
+      "status": "이력 내 확정 실적 분기 부족 (총 1행, 중복제외 1분기, 2A 최소 2분기 요건 미달); 음수 실적 1건 ([-0.09])"
     },
     "baba_details": {
       "stage1_pass": true,
@@ -22,7 +23,7 @@
       "raw_trade_currency": "USD",
       "ref_trade_currency": "USD",
       "currency_match": false,
-      "status": "전망 통화(CNY)와 거래 통화(USD) 불일치 (환율/ADR 변환 근거 부재); ADS 8:1 보통주 변환 비율 설명 및 본사 통화(CNY) 매핑 미표기"
+      "status": "본사 재무통화(CNY)와 거래통화(USD) 불일치 및 환산 근거 미확인; 전망 통화(CNY)와 거래 통화(USD) 불일치; earnings_dates Reported EPS 통화 필드 부재(미표기); ADS 8:1 보통주 변환 비율 및 본사 통화(CNY) 환산 근거 미확인"
     },
     "retraction_confirmations": [
       "Yahoo 전면 401 차단 및 0/12 단정 공식 철회 (저장자료에서 11/12 값 존재 확인)",
@@ -49,32 +50,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 42명, +1q: 41명",
         "min_max_provided": true,
         "min_max_details": "0q: [3.13, 7.64], +1q: [6.84, 9.12]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -83,7 +91,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -102,32 +111,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 42명, +1q: 39명",
         "min_max_provided": true,
         "min_max_details": "0q: [2.34, 2.7], +1q: [2.56, 3.117]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -136,7 +152,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -155,32 +172,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 42명, +1q: 39명",
         "min_max_provided": true,
         "min_max_details": "0q: [2.64, 3.68], +1q: [2.99, 4.09232]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -189,7 +213,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -208,32 +233,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 25명, +1q: 25명",
         "min_max_provided": true,
         "min_max_details": "0q: [4.43, 4.83363], +1q: [4.72, 5.02]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -242,7 +274,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -261,32 +294,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "음수 실적 2건 ([-0.2, -0.38])"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족; 음수 실적 2건 ([-0.2, -0.38])"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 44명, +1q: 42명",
         "min_max_provided": true,
         "min_max_details": "0q: [1.72, 2.32], +1q: [2.0, 2.75]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -295,7 +335,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -314,32 +355,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 27명, +1q: 21명",
         "min_max_provided": true,
         "min_max_details": "0q: [1.93, 2.07], +1q: [2.58395, 3.42]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -348,7 +396,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -367,32 +416,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 34명, +1q: 33명",
         "min_max_provided": true,
         "min_max_details": "0q: [1.64, 1.80736], +1q: [1.77, 2.02]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -401,7 +457,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -420,32 +477,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "음수 실적 1건 ([-0.01])"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족; 음수 실적 1건 ([-0.01])"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 23명, +1q: 23명",
         "min_max_provided": true,
         "min_max_details": "0q: [0.38, 0.48], +1q: [0.43, 0.55]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -454,7 +518,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -473,32 +538,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 26명, +1q: 26명",
         "min_max_provided": true,
         "min_max_details": "0q: [0.27, 0.6], +1q: [0.24, 0.82]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -507,7 +579,8 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -526,32 +599,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": false,
+        "has_2a_in_history": false,
         "has_2e": true,
         "pass": false,
-        "notes": "유효 실적 분기 부족 (총 1행, 중복제외 1분기, 2A 요건 미달); 음수 실적 1건 ([-0.09])"
+        "notes": "이력 내 확정 실적 분기 부족 (총 1행, 중복제외 1분기, 2A 최소 2분기 요건 미달); 음수 실적 1건 ([-0.09])"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "insufficient_actual_rows",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "확정 실적행 부족(1건)으로 회계분기창 특정 불가; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "USD",
+        "financial_currency_status": "matched",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 12명, +1q: 14명",
         "min_max_provided": true,
         "min_max_details": "0q: [-0.11, 0.28833], +1q: [-0.14, 0.8]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
+        "notes": "earnings_dates Reported EPS 통화 필드 부재(미표기); 일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -561,7 +641,8 @@
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "값 행수 요건 미달 (실적 1분기, 전망 2분기)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -580,32 +661,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "USD",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
-        "currency_match": true,
+        "raw_financial_currency": "TWD",
+        "financial_currency_status": "differs_unverified_conversion",
+        "estimate_currency": "USD",
+        "estimate_currency_match": true,
+        "actual_currency_status": "unspecified_in_payload",
+        "currency_match": false,
         "sample_size_provided": true,
         "sample_size_details": "0q: 9명, +1q: 9명",
         "min_max_provided": true,
         "min_max_details": "0q: [4.26, 4.72], +1q: [4.76, 5.29]",
         "pass": false,
-        "notes": "ADR 5:1 보통주 변환 비율 설명 및 본사 통화(TWD) 매핑 미표기"
+        "notes": "본사 재무통화(TWD)와 거래통화(USD) 불일치 및 환산 근거 미확인; earnings_dates Reported EPS 통화 필드 부재(미표기); ADR 5:1 보통주 변환 비율 및 본사 통화(TWD) 환산 근거 미확인"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -614,7 +702,9 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "본사 재무통화 환산 근거 미확인 (TWD != USD)",
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     },
@@ -633,32 +723,39 @@
         "estimate_count": 2,
         "duplicate_row_count": 0,
         "has_2a": true,
+        "has_2a_in_history": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
+        "notes": "이력 내 확정 실적 24개 분기(2개 이상 존재) 및 전망 2E 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
         "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "actual_period_status": "missing",
+        "estimate_period_status": "missing",
         "has_explicit_fiscal_period": false,
         "specific_fiscal_quarters_identifiable": false,
         "pass": false,
-        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+        "notes": "earnings_dates는 실적 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
       },
       "stage3_basis_metadata": {
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
-        "estimate_currency": "CNY",
         "raw_trade_currency": "USD",
         "ref_trade_currency": "USD",
         "trade_currency_status": "matched",
+        "raw_financial_currency": "CNY",
+        "financial_currency_status": "differs_unverified_conversion",
+        "estimate_currency": "CNY",
+        "estimate_currency_match": false,
+        "actual_currency_status": "unspecified_in_payload",
         "currency_match": false,
         "sample_size_provided": true,
         "sample_size_details": "0q: 17명, +1q: 15명",
         "min_max_provided": true,
         "min_max_details": "0q: [8.59, 15.46022], +1q: [10.48, 19.52773]",
         "pass": false,
-        "notes": "전망 통화(CNY)와 거래 통화(USD) 불일치 (환율/ADR 변환 근거 부재); ADS 8:1 보통주 변환 비율 설명 및 본사 통화(CNY) 매핑 미표기"
+        "notes": "본사 재무통화(CNY)와 거래통화(USD) 불일치 및 환산 근거 미확인; 전망 통화(CNY)와 거래 통화(USD) 불일치; earnings_dates Reported EPS 통화 필드 부재(미표기); ADS 8:1 보통주 변환 비율 및 본사 통화(CNY) 환산 근거 미확인"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
@@ -667,8 +764,10 @@
         "blocking_reasons": [
           "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "통화 불일치 또는 미확인 (CNY != USD)",
-          "회계기준(GAAP/Non-GAAP) 미표기"
+          "본사 재무통화 환산 근거 미확인 (CNY != USD)",
+          "전망 통화 불일치 (CNY != USD)",
+          "회계기준(GAAP/Non-GAAP) 미표기",
+          "asOf 시점 타임스탬프 부재"
         ]
       }
     }
