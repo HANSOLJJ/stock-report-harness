@@ -1,0 +1,279 @@
+{
+  "target_commit": "c9ce4d1",
+  "deterministic": true,
+  "reads_financial_currency": false,
+  "summary_counts": {
+    "stage1_raw_value_pass_count": "11/12",
+    "stage2_quarter_window_pass_count": "0/12",
+    "stage3_currency_match_count": "11/12",
+    "stage4_scoring_eligible_count": "0/12"
+  },
+  "currency_fields": {
+    "META": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "NVDA": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "GOOGL": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "MSFT": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "AMZN": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "AAPL": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "ORCL": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "PLTR": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "TSLA": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "SPCX": {
+      "currency": "USD",
+      "financialCurrency": "USD",
+      "est_currency": "USD"
+    },
+    "TSM": {
+      "currency": "USD",
+      "financialCurrency": "TWD",
+      "est_currency": "USD"
+    },
+    "BABA": {
+      "currency": "USD",
+      "financialCurrency": "CNY",
+      "est_currency": "CNY"
+    }
+  },
+  "probes": [
+    {
+      "ticker": "META",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P0 META 무변경(대조군)"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "KRW",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "conflict",
+      "estimate_currency": "USD",
+      "currency_match": false,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P1 META basis.currency=KRW"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "UNKNOWN",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "missing",
+      "estimate_currency": "USD",
+      "currency_match": false,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P2 META basis.currency 삭제"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "KRW",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "conflict",
+      "estimate_currency": "KRW",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P3 META 거래·전망 통화 동시 KRW"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": false,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 1,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P4 META 0q.avg 문자열"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": false,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 1,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P5 META 0q.avg bool True"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": false,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 1,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P6 META 0q.avg NaN"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": true,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P7 META 회계기간 필드 첫 행에만"
+    },
+    {
+      "ticker": "META",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P8 META 회계기간 필드 둘째 행에만"
+    },
+    {
+      "ticker": "SPCX",
+      "s1_pass": false,
+      "actual_count": 2,
+      "unique_quarters": 1,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P9 SPCX 실적행 복제"
+    },
+    {
+      "ticker": "TSM",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "USD",
+      "currency_match": true,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P10 TSM 무변경"
+    },
+    {
+      "ticker": "BABA",
+      "s1_pass": true,
+      "actual_count": 24,
+      "unique_quarters": 24,
+      "estimate_count": 2,
+      "s2_pass": false,
+      "s2_notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가",
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "trade_currency_status": "matched",
+      "estimate_currency": "CNY",
+      "currency_match": false,
+      "s3_pass": false,
+      "scoring_eligible": false,
+      "probe": "P11 BABA 무변경"
+    }
+  ]
+}
