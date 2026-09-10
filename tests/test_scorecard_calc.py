@@ -834,9 +834,18 @@ class TestV16SourcePolicy(unittest.TestCase):
         cls.rules = load_rules("v1.6")
         cls.sources = cls.rules.payload["sources"]
 
-    def test_usage_scope_is_personal_internal_only(self):
-        self.assertEqual(self.sources["usage_scope"]["scope"], "personal_internal_only")
-        self.assertTrue(self.sources["usage_scope"]["condition"].strip())
+    def test_usage_scope_is_corporate_internal(self):
+        """약관 분류는 신고가 아니라 실제 사용을 따른다. 산출물이 회사 업무에 쓰이므로 법인 내부 사용이다."""
+        scope = self.sources["usage_scope"]
+        self.assertEqual(scope["scope"], "corporate_internal_only")
+        self.assertTrue(scope["condition"].strip())
+        self.assertIn("법인 내부 사용이 구속 기준", scope["statement"])
+
+    def test_usage_scope_note_records_alpha_vantage_consequence(self):
+        """범위 변경의 결과를 선언 옆에 남긴다. AV 무료 티어 적격이 사라진다."""
+        note = self.sources["usage_scope"]["note"]
+        self.assertIn("2.a.ii", note)
+        self.assertIn("commercial use", note)
 
     def test_zacks_no_longer_requires_external_distribution(self):
         zacks = next(c for c in self.sources["conditional_candidates"] if c["host"] == "data.nasdaq.com")
@@ -876,6 +885,26 @@ class TestV16SourcePolicy(unittest.TestCase):
         self.assertEqual(with_entry, without)
         self.assertIn("allowlist 에 없음", with_entry)
 
+    def test_unlisted_key_is_never_touched(self):
+        """결과 동일성이 아니라 **키를 읽지 않는다**를 직접 증명한다.
+
+        결과만 비교하면 나중에 누가 unlisted 를 읽어 문구를 덧붙이되 이 케이스의 결과만
+        유지하도록 고쳐도 통과한다. 접근하면 터지는 값을 넣어 두면 그 경로가 생기는 순간 실패한다.
+        """
+        class Explodes:
+            def __iter__(self): raise AssertionError("source_violation() 이 unlisted 를 읽었다")
+            def __getitem__(self, k): raise AssertionError("source_violation() 이 unlisted 를 읽었다")
+            def __len__(self): raise AssertionError("source_violation() 이 unlisted 를 읽었다")
+
+        payload = json.loads(json.dumps(self.rules.payload))
+        rules = RuleSet(payload, self.rules.path)          # 검증을 통과시킨 뒤에 오염시킨다
+        rules.payload["sources"]["unlisted"] = Explodes()
+        for url in ("https://zz.example/a.json",                        # 미등재
+                    "https://api.nasdaq.com/api/quote",                 # denied
+                    "https://data.nasdaq.com/api/v3/datasets/ZACKS/EE",  # 미승인 후보
+                    "https://data.sec.gov/submissions/CIK0000320193.json"):  # allowed
+            rules.source_violation(url)                                  # 터지면 실패다
+
     def test_policy_note_separates_unreviewed_from_reviewed_unlisted(self):
         """'목록에 없다' 가 미검토와 검토 후 미등재 두 뜻으로 갈리지 않게 한다."""
         note = self.sources["policy_note"]
@@ -886,8 +915,13 @@ class TestV16SourcePolicy(unittest.TestCase):
     def test_zacks_note_separates_robots_from_licensed_access(self):
         """robots.txt 를 기계적으로 적용하면 라이선스 경로까지 막힌다. 그 구분이 정책에 있어야 한다."""
         zacks = next(c for c in self.sources["conditional_candidates"] if c["host"] == "data.nasdaq.com")
-        for need in ("인증 없는 크롤러", "Order Form", "계약이 규율한다"):
-            self.assertIn(need, zacks["note"])
+        note = zacks["note"]
+        self.assertIn("인증 없는 크롤러", note)
+        # 3요건 연언. '유료 상품이 존재한다' 로 느슨해지면 유료 상품이 있는 모든 무료 endpoint 가 정당화된다.
+        for need in ("자격증명", "체결된 계약", "계약이 지목한", "모두"):
+            self.assertIn(need, note)
+        self.assertIn("인증 없는 크롤링", note)
+        self.assertIn("Yahoo", note)
         # 구분을 적었다고 승격한 것이 아니다.
         self.assertEqual(zacks["status"], "candidate_not_approved")
 

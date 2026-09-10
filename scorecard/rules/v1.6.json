@@ -596,11 +596,11 @@
   "sources": {
     "policy_note": "생산 원천은 여기 등재된 host 만 쓴다. 무료로 응답한다는 사실은 이용 허가가 아니다. robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다. unlisted 는 **검토를 마치고 안 넣기로 한 host** 만 담는다. 아직 검토하지 않은 host 는 담지 않는다. 그래서 '목록에 없다' 는 '미검토' 를 뜻하며 '검토 후 미등재' 와 다르다. unlisted 는 문서 항목이고 source_violation() 은 읽지 않는다 — 등재되지 않은 host 는 그대로 allowlist 미등재로 걸린다.",
     "usage_scope": {
-      "scope": "personal_internal_only",
+      "scope": "corporate_internal_only",
       "decided_at": "2026-09-10",
-      "statement": "이 저장소의 산출물(점수·판정·HTML 리포트·파생 자료)은 개인 및 내부 용도로만 쓴다. 외부 일반 대중 배포를 전제하지 않는다.",
+      "statement": "이 저장소의 산출물(점수·판정·HTML 리포트·파생 자료)은 사용자가 대표로 있는 회사의 업무에 쓰인다. 개인 투자 참고 열람이 병행되더라도 약관상 분류는 신고가 아니라 실제 사용을 따르므로 법인 내부 사용이 구속 기준이다. 외부 일반 대중 배포는 여전히 전제하지 않는다.",
       "condition": "산출물을 외부에 배포하면 이 전제가 깨진다. 그때는 원천별로 재배포 라이선스를 다시 확보해야 하고 allowed·denied·conditional_candidates 를 전부 재검토해야 한다. 배포 여부가 바뀌면 이 선언을 먼저 고친다.",
-      "note": "이 선언은 원천별 이용 조건을 대체하지 않는다. 각 host 의 robots.txt 와 이용약관이 여전히 우선한다. 개인 사용이라는 사실이 robots.txt 의 전면 Disallow 를 무르지 않는다 — denied 의 api.nasdaq.com 을 보라."
+      "note": "2026-09-10 에 personal_internal_only 에서 바뀌었다. 개인 사용이 아니라 법인 내부 사용이다. 결과 하나를 먼저 적는다. Alpha Vantage 무료 티어 적격이 사라진다 — ToS 2.a.ii 가 법인 또는 법인 대리 사용을 commercial use 로 분류하므로 무료 라이선스(2.a 의 personal, non-commercial use) 밖이다. 쓰려면 premium@alphavantage.co 상업 계약 경로다. 다만 Alpha Vantage 는 향후 분기 전망이 2개뿐이라 이미 F6 부적격이므로 실질 손실은 없다(validation/av-source-11/REPORT.md). 이 선언은 원천별 이용 조건을 대체하지 않는다. 각 host 의 robots.txt 와 이용약관이 여전히 우선하고, 법인이든 개인이든 robots.txt 의 전면 Disallow 를 무르지 않는다 — denied 의 api.nasdaq.com 을 보라. 원천을 새로 검토할 때는 '개인 사용 허용' 조항이 우리에게 적용되지 않는다는 점부터 확인한다."
     },
     "enforcement": "sources.json 의 url 이 있는 항목은 host 가 allowed 에 있어야 하고 denied 에 있으면 안 된다",
     "allowed": [
@@ -636,7 +636,7 @@
         "name": "Nasdaq Data Link ZACKS/EE·EEH",
         "host": "data.nasdaq.com",
         "status": "candidate_not_approved",
-        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 personal/internal only 이므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다. robots.txt 와 라이선스 접근을 구분한다. data.nasdaq.com robots.txt 에 Disallow /api/*.json* 과 Disallow /api/v3/databases/*/data 가 있으나, robots.txt 는 **인증 없는 크롤러**를 대상으로 한 지시이고 Order Form 과 API 키로 접근하는 **라이선스 클라이언트는 계약이 규율한다.** denied 의 api.nasdaq.com 과 다른 점이 여기다. 그쪽은 계약 경로 자체가 없어 robots.txt 와 약관이 유일한 규율이고, 이쪽은 정식 계약이 그 자리를 대신한다. 이 구분은 승격 시 서면으로 확정해야 하며 지금 승격 근거가 아니다(2026-09-10, DATALINK-14 검토).",
+        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 외부 일반 대중 배포를 전제하지 않으므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다. robots.txt 와 라이선스 접근을 구분한다. data.nasdaq.com robots.txt 에 Disallow /api/*.json* 과 Disallow /api/v3/databases/*/data 가 있으나, robots.txt 는 인증 없는 크롤러를 대상으로 한 지시다. 계약이 robots.txt 를 대신하는 것은 아래 셋을 **모두** 만족할 때뿐이다. (1) 그 공급사가 우리에게 발급한 자격증명으로 접근하고, (2) 그 데이터와 그 접근 방식을 포괄하는 체결된 계약이 있으며, (3) 호출하는 host·경로가 그 계약이 지목한 것일 것. 하나라도 없으면 robots.txt 와 약관이 규율한다. 계약이 있어도 같은 host 에 대한 인증 없는 크롤링에는 robots.txt 가 그대로 적용된다 — 예외는 host 전체가 아니라 인증된 라이선스 호출에만 걸린다. '세상에 유료 상품이 존재한다'는 사실은 이 셋 중 어느 것도 아니다. 그 논리를 쓰면 유료 상품이 있는 모든 공급사의 무료 endpoint 가 정당화된다. Yahoo 도 유료 데이터 상품이 있지만 그것이 query1.finance.yahoo.com 스크래핑을 정당화하지 않는다. 이 구분은 승격 시 서면으로 확정해야 하며 지금 승격 근거가 아니다(2026-09-10, DATALINK-14 검토).",
         "required_written_conditions": [
           "정식 계약",
           "자동 수집 허용",
