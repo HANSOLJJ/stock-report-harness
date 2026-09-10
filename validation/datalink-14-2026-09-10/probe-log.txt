@@ -1,0 +1,13 @@
+조회 시각 UTC 2026-09-10T02:52:37Z
+robots           200   358       https://data.nasdaq.com/robots.txt  
+terms            200   6530      https://data.nasdaq.com/terms  
+terms_of_use     404   2633      https://data.nasdaq.com/terms-of-use  HTTPError 404
+tos              404   2633      https://data.nasdaq.com/tos  HTTPError 404
+privacy          404   2633      https://data.nasdaq.com/privacy  HTTPError 404
+zacks_ee         404   2633      https://data.nasdaq.com/databases/ZACKSE  HTTPError 404
+zacks_ee_alt     404   2633      https://data.nasdaq.com/databases/ZACKS/EE  HTTPError 404
+zacks_eeh_alt    404   2633      https://data.nasdaq.com/databases/ZACKS/EEH  HTTPError 404
+zacks_vendor     404   2633      https://data.nasdaq.com/vendors/ZACKS  HTTPError 404
+search_zacks     200   6530      https://data.nasdaq.com/search?query=zacks  
+pricing          404   2633      https://data.nasdaq.com/pricing  HTTPError 404
+home             200   6530      https://data.nasdaq.com/  
