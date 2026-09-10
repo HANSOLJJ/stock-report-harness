@@ -26,8 +26,18 @@ UNKNOWN = "unknown"
 BASIS_KEYS = ("currency", "share_basis", "shareBasis", "accounting", "asOf", "as_of", "last_updated")
 
 
+def normalized(path: Path) -> bytes:
+    """CRLF 를 LF 로 맞춘 바이트.
+
+    파일 바이트를 그대로 해싱하면 체크아웃의 개행 처리에 따라 같은 내용이 다른 값이 된다
+    (`documentation.html` 이 작업 트리 1,059,116 B · 커밋 트리 1,079,968 B 로 갈렸다).
+    재현자가 '원자료가 바뀌었나' 로 오해하지 않도록 지문은 정규화한 바이트로 낸다.
+    """
+    return path.read_bytes().replace(b"\r\n", b"\n")
+
+
 def sha(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
+    return hashlib.sha256(normalized(path)).hexdigest()[:16]
 
 
 def _d(s: str) -> date:
@@ -47,10 +57,11 @@ def main() -> int:
     print(f"AV-SOURCE-11 — Alpha Vantage EARNINGS_ESTIMATES 저장 자료 판정 (기준일 {BASE.isoformat()})")
     print("=" * 100)
 
-    print("\n[0] 저장 원자료 지문")
+    print("\n[0] 저장 원자료 지문 — 크기·해시 모두 개행 정규화(CRLF→LF) 기준이다")
+    print("    파일 바이트 그대로 재면 체크아웃마다 값이 갈린다. 승인 해시에 파일 바이트를 쓰지 않는 것과 같은 이유다.")
     for p in sorted(RAW.iterdir()):
         if p.is_file():
-            print(f"  {p.name:38} {p.stat().st_size:>8} B  sha256:{sha(p)}")
+            print(f"  {p.name:38} {len(normalized(p)):>8} B  sha256:{sha(p)}")
 
     print("\n[1] demo 키의 사정거리 — HTTP 200 은 커버리지 증거가 아니다")
     print(f"  IBM  : estimates {len(rows)} 행 (fiscal quarter {len(quarters)} · fiscal year {len(years)})")

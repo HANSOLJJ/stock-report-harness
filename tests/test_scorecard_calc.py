@@ -14,7 +14,7 @@ from scorecard.calc_f6 import compute_f6  # noqa: E402
 from scorecard.calc_f9 import compute_f9  # noqa: E402
 from scorecard.calc_qual import compute_f2, compute_f3, compute_f5, compute_f7, compute_manual  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
-from scorecard.rules import load_rules  # noqa: E402
+from scorecard.rules import RuleSet, load_rules  # noqa: E402
 from scorecard.schema import SchemaError, validate_judgments, validate_rules  # noqa: E402
 from scorecard.validate import check_source_allowlist  # noqa: E402
 
@@ -860,6 +860,36 @@ class TestV16SourcePolicy(unittest.TestCase):
         msg = self.rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbols=NVDA")
         self.assertIsNotNone(msg)
         self.assertIn("allowlist 에 없음", msg)
+
+    def test_unlisted_is_never_read_by_enforcement(self):
+        """Yahoo 한 종목이 아니라 unlisted 라는 개념 자체가 집행 경로에 없다는 것을 고정한다.
+
+        임의의 host 를 unlisted 에 넣어도 판정 문구가 미등재 그대로여야 한다. 들어갔다고
+        허용되지도, 새로운 배제 사유가 붙지도 않는다.
+        """
+        payload = json.loads(json.dumps(self.rules.payload))
+        payload["sources"]["unlisted"] = [{"host": "zz.example", "reason_type": "terms",
+                                           "reason": "검토 후 미등재", "decided_at": "2026-09-10"}]
+        rules = RuleSet(payload, self.rules.path)
+        with_entry = rules.source_violation("https://zz.example/a.json")
+        without = self.rules.source_violation("https://zz.example/a.json")
+        self.assertEqual(with_entry, without)
+        self.assertIn("allowlist 에 없음", with_entry)
+
+    def test_policy_note_separates_unreviewed_from_reviewed_unlisted(self):
+        """'목록에 없다' 가 미검토와 검토 후 미등재 두 뜻으로 갈리지 않게 한다."""
+        note = self.sources["policy_note"]
+        self.assertIn("검토를 마치고 안 넣기로 한 host", note)
+        self.assertIn("아직 검토하지 않은 host 는 담지 않는다", note)
+        self.assertIn("source_violation() 은 읽지 않는다", note)
+
+    def test_zacks_note_separates_robots_from_licensed_access(self):
+        """robots.txt 를 기계적으로 적용하면 라이선스 경로까지 막힌다. 그 구분이 정책에 있어야 한다."""
+        zacks = next(c for c in self.sources["conditional_candidates"] if c["host"] == "data.nasdaq.com")
+        for need in ("인증 없는 크롤러", "Order Form", "계약이 규율한다"):
+            self.assertIn(need, zacks["note"])
+        # 구분을 적었다고 승격한 것이 아니다.
+        self.assertEqual(zacks["status"], "candidate_not_approved")
 
 
 class TestSourceAllowlistEnforcement(unittest.TestCase):

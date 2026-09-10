@@ -42,7 +42,7 @@ Content-Type: text/html; charset=utf-8
 
 ## 2. 이용약관 — 원문 인용
 
-전문은 `_raw/terms_of_service.pdf`(sha256:88ed3d22fe0f3624, 4 쪽)와 추출본 `_raw/terms_of_service.txt` 다.
+전문은 `_raw/terms_of_service.pdf`(4 쪽, 개행 정규화 sha256:56c3a9eaa55baa7b)와 추출본 `_raw/terms_of_service.txt`(9,945 자) 다.
 
 ### 2.1 §2.a Grant of License — 개인·비상업 사용은 명시적 허가다
 
@@ -75,6 +75,8 @@ Content-Type: text/html; charset=utf-8
 ## 3. 요청하신 네 항목 판정
 
 **부재 주장을 근거로 쓰기 전에 검색 공간의 완전성을 먼저 확인했다.** 약관 4 쪽 전문을 텍스트로 추출해(9,945 자) 키워드를 기계로 셌다. 결과는 아래 괄호 안 숫자다.
+
+**다만 검색 공간 자체가 좁다는 점을 먼저 적는다. 약관 전문이 4 쪽 9,945 자로 짧다.** 조항이 없는 것과 문서가 얇은 것은 다르다. 아래 (c)·(d) 의 `unknown` 은 **"이 문서에 없다"** 는 뜻이지 **"어디에도 허용·금지 조건이 없다"** 는 뜻이 아니다. 별도 EULA·프리미엄 약관·Privacy Policy 에 조항이 따로 있을 수 있고, 이번 범위는 robots.txt 와 이 ToS 였다(7.2-7). 채택 판단은 그 확인 뒤에 한다.
 
 | # | 항목 | 판정 | 근거 |
 |---|---|---|---|
@@ -242,7 +244,7 @@ F6 는 미발표 4 개 분기를 요구한다. **2 개는 절반이다.** F6-H(2
 3. **분기 전망 2 개가 함수 전체의 성질인지 IBM 한 종목의 특성인지.** 무료 키 필요.
 4. **currency·share_basis·accounting·asOf.** 응답에 없다. 공급사 문의 사항이며 Finnhub 과 같은 상태다.
 5. **약관 기준 ii(법인 명의·대리 여부)와 iv(금융업 종사·제휴).** 사용자 사실관계다.
-6. **파생 데이터와 저장·보존.** 약관이 침묵한다. 채택하려면 서면 확인이 필요하다.
+6. **파생 데이터와 저장·보존.** 이 약관이 침묵한다. 전문이 9,945 자로 짧아 별도 EULA·프리미엄 약관에 조항이 따로 있을 수 있다. **"이 문서에는 없다" 이지 "허용 조건이 없다" 가 아니다.** 채택하려면 서면 확인이 필요하다.
 7. **Privacy Policy 본문.** 이번 범위는 robots.txt 와 ToS 였다. 읽지 않았다.
 8. **TSM·BABA 같은 ADR/ADS 종목의 단위.** `share_basis` 가 없으므로 다른 원천과 같은 미해결 상태다.
 
@@ -280,4 +282,4 @@ python analyze_demo.py        # analysis-output.txt 와 같은 결과
 | `_raw/EARNINGS_ESTIMATES.NVDA.demo.json` | demo 키 제한 안내문 |
 | `analyze_demo.py` · `analysis-output.txt` | 판정 스크립트와 결과 |
 
-각 파일의 sha256 앞 16 자는 `analysis-output.txt` `[0]` 절에 있다.
+각 파일의 크기와 sha256 앞 16 자는 `analysis-output.txt` `[0]` 절에 있다. **크기·해시 모두 개행 정규화(CRLF→LF) 기준이다.** 파일 바이트를 그대로 재면 체크아웃마다 값이 갈린다 — `documentation.html` 이 작업 트리 1,059,116 B, 커밋 트리 1,079,968 B 로 갈렸다. 같은 내용이다. 승인 해시에 파일 바이트를 쓰지 않는 것과 같은 이유다(`../policy-12/REPORT.md` 5.1).

@@ -12,7 +12,18 @@ C-13 담당인 공문 초안 폐기와 Yahoo 판정 기록은 다루지 않았�
 
 이 전제는 지금까지 정책 판단의 근거 중 **하나만** 무효화한다. 배포를 전제로 만든 조건이 그것이다. 나머지는 배포와 무관한 근거 위에 서 있어 그대로 남는다. 아래 네 항목이 그 구분이다.
 
-## 2. 개정 넷
+## 1.1 수집 개시의 선을 어디에 긋는가
+
+`AV-SOURCE-11` 에서 "약관 확인이 수집보다 먼저" 라는 순서를 지킬 때 실제로 갈린 질문이다. 공급사가 문서에 게시한 예시 URL 을 눌러 응답 스키마를 보는 것은 수집인가.
+
+**아니다. 수집 개시는 유니버스 종목을 대상으로 한 반복 호출의 개시다.**
+
+- 문서 예시 URL 로 응답 스키마·필드 목록을 확인하는 것은 **약관 검토의 일부**다. 무엇을 수집하게 되는지 모르면 파생 데이터·보존 조항을 판단할 수 없다.
+- **우리 12 개사를 돌기 시작하는 순간이 수집이다.** 거기서부터는 약관 판정이 먼저 끝나 있어야 한다.
+
+예시 URL 호출이 검토 범위로 인정되려면 넷이 함께 성립해야 한다. ① robots.txt 와 약관 확인이 **선행**됐고 ② robots.txt 가 이를 막지 않으며 ③ 호출 대상이 **공급사가 문서에 게시한 예시 URL** 이고 ④ 유니버스 종목 수집이 아니다. `AV-SOURCE-11` 은 넷을 모두 만족했다(robots.txt 404, 예시 심볼 IBM, 2 회).
+
+## 2. 개정 여섯
 
 ### 2.1 사용 범위 선언 추가 — `sources.usage_scope`
 
@@ -77,6 +88,24 @@ C-13 담당인 공문 초안 폐기와 Yahoo 판정 기록은 다루지 않았�
 
 Yahoo 판정 자체의 기록은 C-13 담당이라 손대지 않았다. 이 정책 파일에는 **판정 결과와 그 출처만** 적었다.
 
+### 2.5 `unlisted` 는 "검토 후 미등재" 만 담는다
+
+목록에 없다는 사실이 두 뜻으로 갈리면 안 된다. `policy_note` 에 정의를 못박았다.
+
+> unlisted 는 **검토를 마치고 안 넣기로 한 host** 만 담는다. 아직 검토하지 않은 host 는 담지 않는다. 그래서 '목록에 없다' 는 '미검토' 를 뜻하며 '검토 후 미등재' 와 다르다. unlisted 는 문서 항목이고 source_violation() 은 읽지 않는다 — 등재되지 않은 host 는 그대로 allowlist 미등재로 걸린다.
+
+이 정의가 6 절의 Alpha Vantage 처리와 직결된다. AV 는 검토를 마쳤지만 **판정이 사용자 결정에 걸려 있어** 아직 "안 넣기로 함" 이 아니다. 그래서 `unlisted` 에 넣지 않았다.
+
+### 2.6 robots.txt 와 라이선스 접근을 구분한다
+
+`DATALINK-14` 검토에서 나온 정책 일관성 문제다. `data.nasdaq.com` 의 robots.txt 에 `Disallow /api/*.json*` 과 `Disallow /api/v3/databases/*/data` 가 있다. **우리가 `api.nasdaq.com` 을 robots.txt 근거로 denied 했으므로, 같은 규칙을 기계적으로 적용하면 정식 라이선스를 사도 정책이 자기 발목을 잡는다.**
+
+ZACKS 후보의 `note` 에 구분을 명문화했다.
+
+> robots.txt 와 라이선스 접근을 구분한다. … robots.txt 는 **인증 없는 크롤러**를 대상으로 한 지시이고 Order Form 과 API 키로 접근하는 **라이선스 클라이언트는 계약이 규율한다.** denied 의 api.nasdaq.com 과 다른 점이 여기다. 그쪽은 계약 경로 자체가 없어 robots.txt 와 약관이 유일한 규율이고, 이쪽은 정식 계약이 그 자리를 대신한다. 이 구분은 승격 시 서면으로 확정해야 하며 지금 승격 근거가 아니다.
+
+**두 host 를 가르는 것은 계약 경로의 유무다.** `api.nasdaq.com` 은 무료 공개 endpoint 라 우리가 맺을 계약이 없고, 그래서 robots.txt 와 약관이 유일한 규율이다. `data.nasdaq.com` 은 Order Form 이 있는 유료 상품이라 계약이 그 자리를 대신한다. **`api.nasdaq.com` 의 denied 를 무르는 근거가 아니다.** `status` 는 `candidate_not_approved` 그대로이고 테스트로 고정했다.
+
 ## 3. `unlisted` 는 판정에 쓰이지 않는다 — 배선을 확인했다
 
 새 항목이 집행 경로를 바꾸면 안 된다. `RuleSet.source_violation()` 은 denied → conditional_candidates → allowed 순으로만 보고 `unlisted` 를 읽지 않는다. 따라서 Yahoo host 는 **여전히 "allowlist 에 없음" 으로 걸린다.**
@@ -86,7 +115,9 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 # → "query1.finance.yahoo.com 는 원천 allowlist 에 없음 — 약관 확인 후 규칙에 등재하고 쓴다"
 ```
 
-이 동작을 `test_yahoo_unlisted_does_not_change_enforcement` 로 고정했다. `unlisted` 는 **왜 안 넣었는지를 남기는 문서 항목**이지 새로운 허용 등급이 아니다.
+이 동작을 테스트 둘로 고정했다. `test_yahoo_unlisted_does_not_change_enforcement` 는 실제 Yahoo host 를 보고, `test_unlisted_is_never_read_by_enforcement` 는 **임의의 host 를 `unlisted` 에 넣어도 판정 문구가 그대로**임을 본다. 뒤엣것은 Yahoo 한 종목이 아니라 `unlisted` 라는 개념 자체가 집행 경로에 없다는 것을 고정한다 — 넣었다고 허용되지도, 새로운 배제 사유가 붙지도 않는다.
+
+`unlisted` 는 **왜 안 넣었는지를 남기는 문서 항목**이지 새로운 허용 등급이 아니다.
 
 ## 4. 스키마와 회귀 테스트
 
@@ -101,7 +132,7 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 | `unlisted[].reason_type` 은 `technical`/`terms`/`both` | 기술적 부적격과 약관 미확인을 뭉뚱그리지 않는다. 2.4 가 정확히 이 구분의 문제였다 |
 | `unlisted[].host` 는 allowed/denied 와 겹칠 수 없다 | 같은 host 가 두 판정을 갖는 것을 막는다 |
 
-테스트는 91 → **104 건**이다. 추가 13 건 중 하나는 기존 테스트 수정이다.
+테스트는 91 → **107 건**이다. 추가 16 건 중 하나는 기존 테스트 수정이다.
 
 | 테스트 | 고정하는 것 |
 |---|---|
@@ -116,12 +147,15 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 | `test_zacks_no_longer_requires_external_distribution` | 조건 4 개 정확히 일치, status 는 미승인 유지 |
 | `test_nasdaq_stays_denied` | denied 유지 |
 | `test_yahoo_is_unlisted_for_technical_reason` | 사유 유형이 technical, allowed 에 없음 |
-| `test_yahoo_unlisted_does_not_change_enforcement` | 집행 경로 불변 |
+| `test_yahoo_unlisted_does_not_change_enforcement` | 집행 경로 불변(실제 host) |
+| `test_unlisted_is_never_read_by_enforcement` | 집행 경로 불변(임의 host — 개념 자체가 경로에 없음) |
+| `test_policy_note_separates_unreviewed_from_reviewed_unlisted` | '미검토' 와 '검토 후 미등재' 의 구분이 정의로 남아 있음 |
+| `test_zacks_note_separates_robots_from_licensed_access` | robots.txt 와 라이선스 접근의 구분이 명문화돼 있고 status 는 미승인 유지 |
 
 **기존 테스트 수정 1 건.** `test_data_nasdaq_is_candidate_not_approved` 가 승격 조건 5 개를 문자열로 고정하고 있었다. 승인된 정책 변경에 맞춰 4 개로 고치고, `"외부 배포 허용"` 이 **더 이상 나오지 않는다**는 단언을 추가했다. 조건을 줄인 것이 조용히 통과하지 않도록 양방향으로 고정했다.
 
 ```
-Ran 104 tests in 0.022s
+Ran 107 tests in 0.022s
 OK
 ```
 
@@ -133,7 +167,7 @@ OK
 |---|---|---|
 | `v1.5.json` | `git diff` | **변경 없음** |
 | 승인 해시 6 종 | `approval.json` 과 현재 값 대조 | **6/6 일치** |
-| `results.json` | 파일 바이트 sha256 | **`4eb8c7d7…`** (요청서가 인용한 값 그대로) |
+| `results.json` | **`results_hash` 필드**(승인 대조 기준) | **`0942c342…`** · `approval.json` 과 일치 |
 | HTML 바이트 | `git diff` + sha256 | **변경 없음** · 213,851 B · `e6cc960c1c50f412` |
 
 ```
@@ -145,18 +179,25 @@ results        일치  0942c342f010781e
 draft          파일 미변경             574841bc7c26f225
 ```
 
-### 5.1 해시 두 값에 대한 주의 — 둘 다 정상이다
+### 5.1 승인 불변의 기준값은 `results_hash` 다
 
-요청서는 `results.json` 해시를 `4eb8c7d7` 로 인용했고 `approval.json` 은 `0942c342…` 를 적고 있다. **다른 값이지만 둘 다 맞다. 서로 다른 것을 재는 값이다.**
+`results.json` 을 두고 값이 셋 돌아다녔다. **셋 다 같은 내용이고 재는 대상이 다를 뿐이다.**
 
-- `4eb8c7d7…` — `results.json` **파일 바이트**의 sha256. 작업 트리 기준이다.
-- `0942c342…` — `results.json` **안의 `results_hash` 필드**. `current_hashes()` 가 승인 대조에 쓰는 값이다(`scripts/scorecard/stages.py` `results` 항목이 `load_results(slug)["results_hash"]` 를 읽는다).
+| 값 | 무엇을 재나 | 승인 대조에 쓰나 |
+|---|---|---|
+| **`0942c342…`** | `results.json` **안의 `results_hash` 필드** | **그렇다 — 이것이 기준이다** |
+| `4eb8c7d7…` | 파일 바이트 sha256 · 작업 트리(CRLF) | 아니다 |
+| `6182cdb1…` | 파일 바이트 sha256 · 커밋 blob(LF) | 아니다 |
 
-파일 바이트 해시는 체크아웃의 개행 처리에 따라 달라진다. 실제로 이 저장소에서 커밋된 blob(LF)은 `6182cdb1…`, 작업 트리(CRLF)는 `4eb8c7d7…` 로 같은 내용에 값이 둘이다. **승인 대조에는 파일 바이트를 쓰면 안 된다.** 이번 확인은 두 방식 모두로 했고 둘 다 불변이다.
+근거는 `scripts/scorecard/stages.py` `current_hashes()` 다. `results` 항목이 `load_results(slug)["results_hash"]` 를 읽는다. 파일 바이트가 아니다.
+
+**파일 바이트 해시를 승인 기준으로 인용하면 체크아웃마다 어긋난다.** 개행 처리가 값을 바꾸기 때문이다. 앞으로 승인 불변은 `results_hash` 로 인용한다.
+
+같은 함정이 이 팀의 산출물에도 있었다. `../av-source-11/analyze_demo.py` 가 `_raw/` 지문을 파일 바이트로 찍고 있어서, 커밋 트리에서 돌리면 `documentation.html` 이 1,059,116 → 1,079,968 바이트로 갈렸다. 재현자가 "원자료가 바뀌었나" 로 오해할 값이다. **크기·해시를 개행 정규화(CRLF→LF) 기준으로 바꿨다.**
 
 ## 6. 하지 않은 것
 
-- **Alpha Vantage 를 정책 파일에 넣지 않았다.** `AV-SOURCE-11` 의 권고는 "지금 채택하지 않는다" 이지만, 무료 키 발급 여부가 사용자 결정으로 열려 있다. 지금 `unlisted` 에 적으면 그 결정을 앞질러 못박는 셈이다. 결정이 나온 뒤 별도 과제로 처리하는 것이 맞다고 본다.
+- **Alpha Vantage 를 정책 파일에 넣지 않았다.** **Yahoo 는 `unlisted` 인데 AV 는 없는 이유는 하나다. Yahoo 는 판정이 끝났고 AV 는 사용자 결정이 열려 있다.** Yahoo 의 기술적 부적격(회계분기 창 특정 0/12 · 전망 2 분기)은 더 확인할 것이 없는 확정 사실이라 "검토 후 미등재" 다. AV 는 무료 키 발급 여부가 사용자 결정으로 남아 있고 키 하나면 미확인 3 건이 풀린다 — 지금 `unlisted` 에 적으면 그 결정을 앞질러 못박는 셈이다. `unlisted` 가 **검토를 마치고 안 넣기로 한 host 만** 담는다는 정의(2.5)와도 어긋난다. 결정이 나온 뒤 별도 과제로 처리한다.
 - **C-13 담당 범위.** 공문 초안 폐기, Yahoo 판정 기록 자체는 손대지 않았다.
 - **v1.6 활성화.** `status` 는 `draft` 그대로다. 활성화 시점은 별도 결정 사항이다.
 - **`../source-allowlist-07/REPORT.md` 3.3 의 Yahoo 서술.** 그 문서는 Yahoo 판정 기록에 해당해 C-13 담당이다. 정정된 사유는 정책 파일과 이 문서에만 적었다.
@@ -165,7 +206,7 @@ draft          파일 미변경             574841bc7c26f225
 
 ```bash
 cd worker
-python -m unittest discover -s tests -q       # 104건 통과
+python -m unittest discover -s tests -q       # 107건 통과
 python -c "import sys,json,pathlib; sys.path.insert(0,'scripts'); \
   from scorecard.schema import validate_rules; \
   validate_rules(json.loads(pathlib.Path('scorecard/rules/v1.6.json').read_text(encoding='utf-8')))"
@@ -175,6 +216,6 @@ python -c "import sys,json,pathlib; sys.path.insert(0,'scripts'); \
 
 | 파일 | 내용 |
 |---|---|
-| `scorecard/rules/v1.6.json` | `usage_scope` 추가 · ZACKS 조건 4 개 · `unlisted` 추가 |
+| `scorecard/rules/v1.6.json` | `usage_scope` 추가 · ZACKS 조건 4 개 · `unlisted` 추가 · `policy_note` 와 ZACKS `note` 보강 |
 | `scripts/scorecard/schema.py` | 두 새 키의 optional 허용과 값 검사 |
-| `tests/test_scorecard_calc.py` | 회귀 12 건 추가 · 기존 1 건 수정 |
+| `tests/test_scorecard_calc.py` | 회귀 15 건 추가 · 기존 1 건 수정 |

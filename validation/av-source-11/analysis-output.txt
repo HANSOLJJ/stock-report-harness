@@ -2,21 +2,22 @@
 AV-SOURCE-11 — Alpha Vantage EARNINGS_ESTIMATES 저장 자료 판정 (기준일 2026-09-10)
 ====================================================================================================
 
-[0] 저장 원자료 지문
-  demo.headers.txt                            922 B  sha256:a342d80e7d4904c6
-  docs.headers.txt                            900 B  sha256:caeff25ac9e2fdcf
+[0] 저장 원자료 지문 — 크기·해시 모두 개행 정규화(CRLF→LF) 기준이다
+    파일 바이트 그대로 재면 체크아웃마다 값이 갈린다. 승인 해시에 파일 바이트를 쓰지 않는 것과 같은 이유다.
+  demo.headers.txt                            903 B  sha256:063f61f8dcdeea3d
+  docs.headers.txt                            882 B  sha256:a2885ce7401c7d3c
   documentation.html                      1059116 B  sha256:33ac225f1ce73f69
   EARNINGS_ESTIMATES.IBM.demo.json          40980 B  sha256:3491498f5fad6083
   EARNINGS_ESTIMATES.NVDA.demo.json           220 B  sha256:e8ddc218d89ff77a
   premium.html                              37729 B  sha256:d20708054de46b4d
-  robots.apex.headers.txt                     263 B  sha256:90ffb293de037200
-  robots.apex.txt                             167 B  sha256:446a6087825fa73e
-  robots.headers.txt                          941 B  sha256:4969b1c62a7b7db1
+  robots.apex.headers.txt                     254 B  sha256:7a3ef51b89a7c124
+  robots.apex.txt                             160 B  sha256:5e1c6052e209b19e
+  robots.headers.txt                          922 B  sha256:5f30f1ca5f7a7652
   robots.txt                                  179 B  sha256:5547992afdadb597
   support.html                              23670 B  sha256:4a28d7c95d420605
-  terms.headers.txt                           891 B  sha256:547a8eb8786d57a6
-  terms_of_service.pdf                     156583 B  sha256:88ed3d22fe0f3624
-  terms_of_service.txt                      10180 B  sha256:28faa85c873b155a
+  terms.headers.txt                           873 B  sha256:915c91e548b323c2
+  terms_of_service.pdf                     156546 B  sha256:56c3a9eaa55baa7b
+  terms_of_service.txt                      10029 B  sha256:3320cbb90297b46c
 
 [1] demo 키의 사정거리 — HTTP 200 은 커버리지 증거가 아니다
   IBM  : estimates 41 행 (fiscal quarter 39 · fiscal year 2)

@@ -594,7 +594,7 @@
     }
   ],
   "sources": {
-    "policy_note": "생산 원천은 여기 등재된 host 만 쓴다. 무료로 응답한다는 사실은 이용 허가가 아니다. robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다.",
+    "policy_note": "생산 원천은 여기 등재된 host 만 쓴다. 무료로 응답한다는 사실은 이용 허가가 아니다. robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다. unlisted 는 **검토를 마치고 안 넣기로 한 host** 만 담는다. 아직 검토하지 않은 host 는 담지 않는다. 그래서 '목록에 없다' 는 '미검토' 를 뜻하며 '검토 후 미등재' 와 다르다. unlisted 는 문서 항목이고 source_violation() 은 읽지 않는다 — 등재되지 않은 host 는 그대로 allowlist 미등재로 걸린다.",
     "usage_scope": {
       "scope": "personal_internal_only",
       "decided_at": "2026-09-10",
@@ -636,7 +636,7 @@
         "name": "Nasdaq Data Link ZACKS/EE·EEH",
         "host": "data.nasdaq.com",
         "status": "candidate_not_approved",
-        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 personal/internal only 이므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다.",
+        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 personal/internal only 이므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다. robots.txt 와 라이선스 접근을 구분한다. data.nasdaq.com robots.txt 에 Disallow /api/*.json* 과 Disallow /api/v3/databases/*/data 가 있으나, robots.txt 는 **인증 없는 크롤러**를 대상으로 한 지시이고 Order Form 과 API 키로 접근하는 **라이선스 클라이언트는 계약이 규율한다.** denied 의 api.nasdaq.com 과 다른 점이 여기다. 그쪽은 계약 경로 자체가 없어 robots.txt 와 약관이 유일한 규율이고, 이쪽은 정식 계약이 그 자리를 대신한다. 이 구분은 승격 시 서면으로 확정해야 하며 지금 승격 근거가 아니다(2026-09-10, DATALINK-14 검토).",
         "required_written_conditions": [
           "정식 계약",
           "자동 수집 허용",
