@@ -10,11 +10,11 @@
 
 > ## 보완 고지 (2026-09-10, `msg_ca637f412da9`)
 >
-> **이 문서의 Finnhub 판정은 `REPORT-R1.md` 가 대체한다.** 아래의 "통과 11/12" 는 행 개수 확인이지 창 검증이 아니었다. 보완 검증 결과는 **raw-availability 11/12 · window-verified 11/12 · basis-verified 0/12 · score-ready 0/12** 다.
+> **이 문서의 Finnhub 판정은 `REPORT-R1.md` 와 그 재검토 보완인 `REPORT-R2.md` 가 대체한다.** 아래의 "통과 11/12" 는 행 개수 확인이지 창 검증이 아니었다. 보완 검증 결과는 **raw-availability 11/12 · label-continuity 11/12 · asof-anchored 11/12 · basis-verified 0/12 · score-ready 0/12** 다(R2 기준. R1 의 `window-verified` 는 날짜를 쓰지 않았음이 재검토에서 드러나 `label-continuity` 로 이름이 좁혀졌고 기준일 검사가 분리·추가됐다).
 >
 > 철회하는 서술 둘. (1) "IPO 직후라 확정 분기가 1 개뿐" — SEC 에 상장 전 분기 EPS 가 존재한다. (2) "막히는 종목은 넷 다 SPCX 하나" — FMP·SEC 는 SPCX 와 무관한 이유로 막힌다.
 >
-> 또한 `period` 를 회계기간 종료일로 읽어서는 안 된다. 자세한 내용은 `REPORT-R1.md` 3 절.
+> 또한 `period` 를 회계기간 종료일로 읽어서는 안 된다. 자세한 내용은 `REPORT-R1.md` 3 절과 `REPORT-R2.md` 6 절.
 
 ## 1. 결론
 
