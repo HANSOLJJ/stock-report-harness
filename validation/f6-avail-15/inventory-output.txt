@@ -1,0 +1,205 @@
+======================================================================================================================
+F6-AVAIL-15 — SEC companyfacts 태그 가용성 인벤토리 (수집 2026-09-10T06:38:50.852031+00:00, 신규 호출 없음)
+======================================================================================================================
+
+[0] 수집 결과
+티커            CIK  HTTP  entityName
+META      1326801   200  Meta Platforms, Inc.
+NVDA      1045810   200  NVIDIA CORP
+GOOGL     1652044   200  Alphabet Inc.
+MSFT       789019   200  MICROSOFT CORPORATION
+AMZN      1018724   200  AMAZON COM INC
+AAPL       320193   200  Apple Inc.
+ORCL      1341439   200  Oracle Corporation
+PLTR      1321655   200  Palantir Technologies Inc.
+TSLA      1318605   200  Tesla, Inc.
+SPCX      1181412   200  SPACE EXPLORATION TECHNOLOGIES CORP.
+TSM       1046179   200  Taiwan Semiconductor Manufacturing Company Limited
+BABA      1577552   200  Alibaba Group Holding Limited
+
+[1] 매출 — 회사별 실제 사용 개념 (값이 있는 것만)
+티커     taxonomy   개념                                                   unit      분기    연간  연도 구간
+META   us-gaap    Revenues                                             USD       23     8  2010~2018
+META   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       29    10  2016~2026
+NVDA   us-gaap    Revenues                                             USD       65    18  2008~2026
+NVDA   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       12     6  2017~2022
+GOOGL  us-gaap    Revenues                                             USD       25    12  2013~2026
+GOOGL  us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       25     9  2016~2025
+MSFT   us-gaap    Revenues                                             USD       14     3  2007~2010
+MSFT   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       34    11  2016~2026
+MSFT   us-gaap    SalesRevenueNet                                      USD       35     9  2009~2018
+MSFT   us-gaap    SalesRevenueGoodsNet                                 USD        9     4  2014~2018
+AMZN   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       33    10  2016~2026
+AMZN   us-gaap    SalesRevenueNet                                      USD       40    11  2007~2018
+AMZN   us-gaap    SalesRevenueGoodsNet                                 USD       23     9  2009~2018
+AMZN   us-gaap    SalesRevenueServicesNet                              USD       23     9  2009~2018
+AAPL   us-gaap    Revenues                                             USD        8     3  2016~2018
+AAPL   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       30     9  2017~2026
+AAPL   us-gaap    SalesRevenueNet                                      USD       40    11  2007~2018
+ORCL   us-gaap    Revenues                                             USD       35    18  2008~2026
+ORCL   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       27    10  2017~2026
+ORCL   us-gaap    SalesRevenueNet                                      USD        7     4  2008~2011
+ORCL   us-gaap    SalesRevenueGoodsNet                                 USD        7     4  2008~2011
+ORCL   us-gaap    SalesRevenueServicesNet                              USD       28    11  2008~2018
+PLTR   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       20     8  2018~2026
+PLTR   us-gaap    RevenueFromContractWithCustomerIncludingAssessedTax  USD        2     0  2019~2020
+TSLA   us-gaap    Revenues                                             USD       61    17  2009~2026
+TSLA   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD       15     6  2018~2026
+TSLA   us-gaap    SalesRevenueGoodsNet                                 USD       25     9  2009~2018
+TSLA   us-gaap    SalesRevenueServicesNet                              USD       14     5  2010~2014
+SPCX   us-gaap    RevenueFromContractWithCustomerExcludingAssessedTax  USD        2     0  2025~2026
+TSM    ifrs-full  Revenue                                              TWD        0    10  2015~2024
+TSM    ifrs-full  Revenue                                              USD        0     8  2017~2024
+BABA   us-gaap    Revenues                                             CNY        0    14  2013~2026
+BABA   us-gaap    Revenues                                             USD        0    12  2015~2026
+
+[1b] 후보 목록 밖 매출류 태그 — 놓친 개념이 없는지 보는 표시 항목 (판정 아님)
+  META   us-gaap:AdvertisingRevenue, us-gaap:OtherSalesRevenueNet
+  NVDA   us-gaap:BusinessAcquisitionProFormaRevenue, us-gaap:BusinessAcquisitionsProFormaRevenue
+  GOOGL  (없음)
+  MSFT   us-gaap:BusinessAcquisitionsProFormaRevenue, us-gaap:EntityWideDisclosureOnGeographicAreasRevenueFromExternalCustomersAttributedToEntitysCountryOfDomicile, us-gaap:EntityWideDisclosureOnGeographicAreasRevenueFromExternalCustomersAttributedToForeignCountries
+  AMZN   us-gaap:BusinessAcquisitionsProFormaRevenue, us-gaap:BusinessCombinationProFormaInformationRevenueOfAcquireeSinceAcquisitionDateActual, us-gaap:EquityMethodInvestmentSummarizedFinancialInformationRevenue, us-gaap:NewAccountingPronouncementOrChangeInAccountingPrincipleEffectOfChangeOnNetRevenue, us-gaap:RevenueRecognitionSalesReturnsReserveForSalesReturns, us-gaap:SalesReturnsAndAllowancesGoods
+  AAPL   us-gaap:SalesRevenueServicesGross
+  ORCL   us-gaap:BusinessAcquisitionProFormaRevenue, us-gaap:BusinessAcquisitionsProFormaRevenue, us-gaap:LicenseAndMaintenanceRevenue, us-gaap:LicensesRevenue, us-gaap:MaintenanceRevenue, us-gaap:OperatingLeasesIncomeStatementSubleaseRevenue, us-gaap:SegmentReportingInformationRevenue, us-gaap:TechnologyServicesRevenue
+  PLTR   (없음)
+  TSLA   us-gaap:OperatingLeasesIncomeStatementLeaseRevenue, us-gaap:SalesRevenueEnergyServices, us-gaap:SalesTypeLeaseNetInvestmentInLease, us-gaap:SalesTypeLeaseNetInvestmentInLeaseAfterAllowanceForCreditLoss, us-gaap:SalesTypeLeaseNetInvestmentInLeaseAfterAllowanceForCreditLossCurrent, us-gaap:SalesTypeLeaseNetInvestmentInLeaseAfterAllowanceForCreditLossNoncurrent, us-gaap:SalesTypeLeaseNetInvestmentInLeaseAllowanceForCreditLoss, us-gaap:SalesTypeLeaseRevenue
+  SPCX   (없음)
+  TSM    ifrs-full:InterestRevenueForFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome, ifrs-full:RevenueFromDividends, ifrs-full:RevenueFromGovernmentGrants, ifrs-full:RevenueFromInterest, ifrs-full:RevenueFromRoyalties, ifrs-full:RevenueFromSaleOfGoods, ifrs-full:RevenueFromSaleOfGoodsRelatedPartyTransactions
+  BABA   us-gaap:EquityMethodInvestmentSummarizedFinancialInformationRevenue
+
+[2] 순이익 · [3] 영업이익
+티커     NetIncomeLoss 계열                                               OperatingIncomeLoss 계열
+META   NetIncomeLoss[USD] n=93 Q=46 FY=16                             OperatingIncomeLoss[USD] n=93 Q=46 FY=16
+NVDA   NetIncomeLoss[USD] n=124 Q=67 FY=19                            OperatingIncomeLoss[USD] n=112 Q=55 FY=19
+GOOGL  NetIncomeLoss[USD] n=73 Q=36 FY=13                             OperatingIncomeLoss[USD] n=73 Q=36 FY=13
+MSFT   NetIncomeLoss[USD] n=126 Q=71 FY=19                            OperatingIncomeLoss[USD] n=117 Q=62 FY=19
+AMZN   NetIncomeLoss[USD] n=178 Q=67 FY=74                            OperatingIncomeLoss[USD] n=120 Q=64 FY=19
+AAPL   NetIncomeLoss[USD] n=123 Q=67 FY=19                            OperatingIncomeLoss[USD] n=111 Q=55 FY=19
+ORCL   NetIncomeLoss[USD] n=94 Q=45 FY=19                             OperatingIncomeLoss[USD] n=109 Q=54 FY=19
+PLTR   NetIncomeLoss[USD] n=43 Q=21 FY=8                              OperatingIncomeLoss[USD] n=43 Q=21 FY=8
+TSLA   NetIncomeLoss[USD] n=111 Q=61 FY=17                            OperatingIncomeLoss[USD] n=99 Q=49 FY=17
+SPCX   NetIncomeLoss[USD] n=4 Q=2 FY=0                                OperatingIncomeLoss[USD] n=4 Q=2 FY=0
+TSM    ProfitLoss[TWD] n=12 Q=0 FY=10 / ProfitLoss[USD] n=9 Q=0 FY=8  ProfitLossFromOperatingActivities[TWD] n=12 Q=0 FY=10 / Prof
+BABA   NetIncomeLoss[CNY] n=16 Q=0 FY=14 / NetIncomeLoss[USD] n=13 Q= OperatingIncomeLoss[CNY] n=16 Q=0 FY=14 / OperatingIncomeLos
+
+[4] 전년 동기를 **같은 개념으로** 뽑을 수 있는가 — 매출 주 개념 기준
+티커     주 개념                                                   전년동기     최근4Q연속    FY-3Q복원
+META   RevenueFromContractWithCustomerExcludingAssessedTa      4/4          X          O
+NVDA   Revenues                                                4/4          X          O
+GOOGL  Revenues                                                4/4          X          O
+MSFT   RevenueFromContractWithCustomerExcludingAssessedTa      4/4          X          O
+AMZN   RevenueFromContractWithCustomerExcludingAssessedTa      4/4          X          O
+AAPL   RevenueFromContractWithCustomerExcludingAssessedTa      4/4          X          O
+ORCL   RevenueFromContractWithCustomerExcludingAssessedTa      4/4          X          O
+PLTR   RevenueFromContractWithCustomerExcludingAssessedTa      4/4          X          O
+TSLA   Revenues                                                4/4          X          O
+SPCX   RevenueFromContractWithCustomerExcludingAssessedTa      1/2          X          X
+TSM    Revenue                                                 0/0          X          X
+BABA   Revenues                                                0/0          X          X
+
+[4a] 매출 개념별 마지막 보고 시점 — 개념이 바뀐 회사가 여기서 드러난다
+     현행은 **마지막 분기 종료일**로 고른다. 사실 개수로 고르면 폐기된 개념이,
+     마지막 연간으로 고르면 분기가 끊긴 개념이 뽑힌다(ORCL Revenues).
+티커     개념                                                   unit       마지막 분기      마지막 연간  상태
+META   Revenues                                             USD    2018-09-30  2018-09-30  폐기
+META   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-06-30  2026-06-30  **현행**
+NVDA   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2020-01-26  2022-01-30  폐기
+NVDA   Revenues                                             USD    2026-07-26  2026-07-26  **현행**
+GOOGL  RevenueFromContractWithCustomerExcludingAssessedTax  USD    2025-03-31  2025-03-31  폐기
+GOOGL  Revenues                                             USD    2026-06-30  2026-06-30  **현행**
+MSFT   Revenues                                             USD    2010-12-31  2010-12-31  폐기
+MSFT   SalesRevenueNet                                      USD    2018-03-31  2018-03-31  폐기
+MSFT   SalesRevenueGoodsNet                                 USD    2018-03-31  2018-03-31  폐기
+MSFT   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-03-31  2026-06-30  **현행**
+AMZN   SalesRevenueNet                                      USD    2018-06-30  2018-06-30  폐기
+AMZN   SalesRevenueGoodsNet                                 USD    2018-06-30  2018-06-30  폐기
+AMZN   SalesRevenueServicesNet                              USD    2018-06-30  2018-06-30  폐기
+AMZN   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-06-30  2026-06-30  **현행**
+AAPL   SalesRevenueNet                                      USD    2018-06-30  2018-06-30  폐기
+AAPL   Revenues                                             USD    2018-09-29  2018-09-29  폐기
+AAPL   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-06-27  2026-06-27  **현행**
+ORCL   SalesRevenueNet                                      USD    2011-02-28  2011-05-31  폐기
+ORCL   SalesRevenueGoodsNet                                 USD    2011-02-28  2011-05-31  폐기
+ORCL   SalesRevenueServicesNet                              USD    2018-02-28  2018-05-31  폐기
+ORCL   Revenues                                             USD    2022-05-31  2026-05-31  연간만 최신(분기 끊김)
+ORCL   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-02-28  2026-05-31  **현행**
+PLTR   RevenueFromContractWithCustomerIncludingAssessedTax  USD    2020-09-30  2020-09-30  폐기
+PLTR   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-06-30  2026-06-30  **현행**
+TSLA   SalesRevenueServicesNet                              USD    2014-09-30  2014-12-31  폐기
+TSLA   SalesRevenueGoodsNet                                 USD    2018-06-30  2018-06-30  폐기
+TSLA   Revenues                                             USD    2026-06-30  2026-06-30  **현행**
+TSLA   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-06-30  2026-06-30  병행(같은 기간 함께 태깅)
+SPCX   RevenueFromContractWithCustomerExcludingAssessedTax  USD    2026-06-30  2026-06-30  **현행**
+TSM    Revenue                                              TWD          None  2024-12-31  **현행**
+TSM    Revenue                                              USD          None  2024-12-31  병행(같은 기간 함께 태깅)
+BABA   Revenues                                             CNY          None  2026-03-31  **현행**
+BABA   Revenues                                             USD          None  2026-03-31  병행(같은 기간 함께 태깅)
+
+[4b] 전년 동기 대조 상세 — 최근 4개 분기 각각
+  META   2025-06-30  전년 기대 2024-06-30  →  2024-06-30
+  META   2025-09-30  전년 기대 2024-09-30  →  2024-09-30
+  META   2026-03-31  전년 기대 2025-03-31  →  2025-03-31
+  META   2026-06-30  전년 기대 2025-06-30  →  2025-06-30
+  NVDA   2025-07-27  전년 기대 2024-07-27  →  2024-07-28
+  NVDA   2025-10-26  전년 기대 2024-10-26  →  2024-10-27
+  NVDA   2026-04-26  전년 기대 2025-04-26  →  2025-04-27
+  NVDA   2026-07-26  전년 기대 2025-07-26  →  2025-07-27
+  GOOGL  2025-06-30  전년 기대 2024-06-30  →  2024-06-30
+  GOOGL  2025-09-30  전년 기대 2024-09-30  →  2024-09-30
+  GOOGL  2026-03-31  전년 기대 2025-03-31  →  2025-03-31
+  GOOGL  2026-06-30  전년 기대 2025-06-30  →  2025-06-30
+  MSFT   2025-03-31  전년 기대 2024-03-31  →  2024-03-31
+  MSFT   2025-09-30  전년 기대 2024-09-30  →  2024-09-30
+  MSFT   2025-12-31  전년 기대 2024-12-31  →  2024-12-31
+  MSFT   2026-03-31  전년 기대 2025-03-31  →  2025-03-31
+  AMZN   2025-06-30  전년 기대 2024-06-30  →  2024-06-30
+  AMZN   2025-09-30  전년 기대 2024-09-30  →  2024-09-30
+  AMZN   2026-03-31  전년 기대 2025-03-31  →  2025-03-31
+  AMZN   2026-06-30  전년 기대 2025-06-30  →  2025-06-30
+  AAPL   2025-06-28  전년 기대 2024-06-28  →  2024-06-29
+  AAPL   2025-12-27  전년 기대 2024-12-27  →  2024-12-28
+  AAPL   2026-03-28  전년 기대 2025-03-28  →  2025-03-29
+  AAPL   2026-06-27  전년 기대 2025-06-27  →  2025-06-28
+  ORCL   2025-02-28  전년 기대 2024-02-28  →  2024-02-29
+  ORCL   2025-08-31  전년 기대 2024-08-31  →  2024-08-31
+  ORCL   2025-11-30  전년 기대 2024-11-30  →  2024-11-30
+  ORCL   2026-02-28  전년 기대 2025-02-28  →  2025-02-28
+  PLTR   2025-06-30  전년 기대 2024-06-30  →  2024-06-30
+  PLTR   2025-09-30  전년 기대 2024-09-30  →  2024-09-30
+  PLTR   2026-03-31  전년 기대 2025-03-31  →  2025-03-31
+  PLTR   2026-06-30  전년 기대 2025-06-30  →  2025-06-30
+  TSLA   2025-06-30  전년 기대 2024-06-30  →  2024-06-30
+  TSLA   2025-09-30  전년 기대 2024-09-30  →  2024-09-30
+  TSLA   2026-03-31  전년 기대 2025-03-31  →  2025-03-31
+  TSLA   2026-06-30  전년 기대 2025-06-30  →  2025-06-30
+  SPCX   2025-06-30  전년 기대 2024-06-30  →  없음
+  SPCX   2026-06-30  전년 기대 2025-06-30  →  2025-06-30
+  TSM    분기 사실 없음
+  BABA   분기 사실 없음
+
+[4c] TTM 구성 근거 — 최근 4분기 종료일과 연간 구간 안의 분기 수
+  META   최근4Q ['2025-06-30', '2025-09-30', '2026-03-31', '2026-06-30']  연간 2025-01-01~2025-12-31 안의 분기 3개
+  NVDA   최근4Q ['2025-07-27', '2025-10-26', '2026-04-26', '2026-07-26']  연간 2025-01-27~2026-01-25 안의 분기 3개
+  GOOGL  최근4Q ['2025-06-30', '2025-09-30', '2026-03-31', '2026-06-30']  연간 2025-01-01~2025-12-31 안의 분기 3개
+  MSFT   최근4Q ['2025-03-31', '2025-09-30', '2025-12-31', '2026-03-31']  연간 2025-07-01~2026-06-30 안의 분기 3개
+  AMZN   최근4Q ['2025-06-30', '2025-09-30', '2026-03-31', '2026-06-30']  연간 2025-01-01~2025-12-31 안의 분기 3개
+  AAPL   최근4Q ['2025-06-28', '2025-12-27', '2026-03-28', '2026-06-27']  연간 2024-09-29~2025-09-27 안의 분기 3개
+  ORCL   최근4Q ['2025-02-28', '2025-08-31', '2025-11-30', '2026-02-28']  연간 2025-06-01~2026-05-31 안의 분기 3개
+  PLTR   최근4Q ['2025-06-30', '2025-09-30', '2026-03-31', '2026-06-30']  연간 2025-01-01~2025-12-31 안의 분기 3개
+  TSLA   최근4Q ['2025-06-30', '2025-09-30', '2026-03-31', '2026-06-30']  연간 2025-01-01~2025-12-31 안의 분기 3개
+  SPCX   최근4Q ['2025-06-30', '2026-06-30']  연간 없음 안의 분기 0개
+  TSM    분기 사실 없음
+  BABA   분기 사실 없음
+
+======================================================================================================================
+  매출 개념 존재                     12/12
+  순이익 존재(계열 포함)                12/12
+    그중 us-gaap:NetIncomeLoss   11/12
+  영업이익 존재(계열 포함)               12/12
+    그중 us-gaap:OperatingIncomeLoss 11/12
+  전년 동기 4/4                    9/12
+  최근 4분기 연속(직접)                0/12
+  FY-(Q1+Q2+Q3) 복원 가능          9/12
+======================================================================================================================
+
+_derived/inventory.json 저장
