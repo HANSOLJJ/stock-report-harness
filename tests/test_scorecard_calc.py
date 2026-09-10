@@ -869,6 +869,20 @@ class TestV16SourcePolicy(unittest.TestCase):
                          ["정식 계약", "자동 수집 허용", "derived data 허용", "보관 조건"])
         self.assertEqual(zacks["status"], "candidate_not_approved")
 
+    def test_framework_origin_is_not_read_as_external_constraint(self):
+        """framework_origin 을 외부 구속으로 읽어 잘못된 제약을 제시한 사례가 있었다.
+
+        셋을 모두 요구한다. 개념의 출처라는 것, 점수화·지표·밴드가 사용자 설계라는 것,
+        **그래서 F6 측정 방식 변경이 기준 위반이 아니라는 것**이다. 셋째가 실제 결론이다.
+        """
+        note = self.rules.payload["note"]
+        self.assertIn("개념의 출처", note)
+        self.assertIn("사용자 본인 설계", note)
+        self.assertIn("외부 기준 위반이 아니다", note)
+        # 오해가 난 자리(source.framework_origin 옆)에도 결론이 붙어 있어야 한다.
+        adjacent = self.rules.payload["source"]["framework_origin_note"]
+        self.assertIn("외부 기준 위반이 아니다", adjacent)
+
     def test_nasdaq_stays_denied(self):
         """개인 사용이라는 사실이 robots.txt 전면 Disallow 를 무르지 않는다."""
         hosts = [d["host"] for d in self.sources["denied"]]
@@ -947,6 +961,8 @@ class TestV16SourcePolicy(unittest.TestCase):
         # 3요건 연언. '유료 상품이 존재한다' 로 느슨해지면 유료 상품이 있는 모든 무료 endpoint 가 정당화된다.
         for need in ("자격증명", "체결된 계약", "계약이 지목한", "모두"):
             self.assertIn(need, note)
+        # policy_note 와 문면이 갈리지 않아야 한다. 둘째 조건의 '명시적으로' 가 여기에도 있어야 한다.
+        self.assertIn("명시적으로 포괄하는", note)
         self.assertIn("인증 없는 크롤링", note)
         self.assertIn("Yahoo", note)
         # 구분을 적었다고 승격한 것이 아니다.

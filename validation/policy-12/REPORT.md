@@ -52,7 +52,7 @@ C-13 담당인 공문 초안 폐기와 Yahoo 판정 기록은 다루지 않았�
 
 `api.nasdaq.com` 이 정확히 그랬다. 웹사이트 UI 를 그리는 내부 백엔드였고 문서가 없었다. **문서가 없으면 위의 "1 회 호출" 로 내려가는 것이 아니라 배제 쪽을 본다.** 예외 문장 자체가 그 조건을 담고 있으므로 이 문단은 **근거 설명**이지 예외의 유일한 방어선이 아니다.
 
-## 2. 개정 여섯
+## 2. 개정 일곱
 
 ### 2.1 사용 범위 선언 추가 — `sources.usage_scope`
 
@@ -158,7 +158,13 @@ ZACKS 후보의 `note` 에 구분을 명문화했다.
 우리는 조항이 없으면 `unknown` 으로 두는 기준을 써 왔고 Alpha Vantage 에도 그렇게 적용했다(`../av-source-11/REPORT.md` 3 절). **Data Link 는 다르다. 계약이 직접 말하기 때문이다.**
 
 > **All rights not granted hereunder are expressly reserved by Licensor and/or its third party provider(s).**
-> — Nasdaq Data Link 이용약관 1.2 마지막 문장. 설계진행 `d86d05e` 가 확인·인용한 문언이다.
+> — Nasdaq Data Link 이용약관 1.2 마지막 문장.
+>
+> **1 차 자료** `NTM-전망치조사/validation/datalink-14-2026-09-10/raw/dl-terms-clean.txt` (커밋 `95b97a7`)
+> **확인 주체** 설계진행 — 위 파일에서 직접 대조해 원문 일치를 확인했다(`29fbc6f`)
+> **인용 주체** worker — 원문을 직접 열지 않았고 위 확인을 받아 인용한다
+
+**1 차 자료 위치·확인 주체·인용 주체 셋을 함께 적는다.** 이번 라운드에서 관행으로 정했다. 남이 확인한 문언을 인용할 때 확인과 인용을 구분하지 않으면, 다음 세션이 이 문장을 우리가 직접 확인한 것으로 읽는다.
 
 명시적으로 부여되지 않은 권리는 유보된다고 계약이 스스로 규정한다. 따라서 **데이터는 포괄하되 대량 자동 조회에 침묵하는 Order Form 은 자동 조회를 허가하지 않은 것이다. `unknown` 이 아니라 미부여다.**
 
@@ -176,9 +182,29 @@ ZACKS 후보의 `note` 에 구분을 명문화했다.
 
 > 이 셋이 이 파일의 기준이며, 다른 항목의 note 에 더 느슨한 표현이 남아 있으면 여기가 우선한다.
 
-ZACKS 항목을 손댈 수 있게 되면 그때 문면을 맞추는 것이 맞다. **표현이 두 곳에 갈려 있는 상태 자체는 조율에 보고했다.**
+**해소됐다(2026-09-10, 설계진행 `29fbc6f`).** 조율이 "손대지 말라" 의 의도는 `status`·승격 조건 넷·판정 근거였고 낡은 상호참조 문구를 최신 규칙에 맞추는 것까지 막을 뜻은 아니었다고 밝히며 한 줄 수정을 허가했다. **ZACKS `note` 의 둘째 조건에 "명시적으로" 를 넣었다.** `status`·승격 조건 넷·`candidate_not_approved` 는 그대로다.
+
+`policy_note` 의 우선 문구와 그 테스트는 **지우지 않았다.** 앞으로의 표현 드리프트를 막는 장치라 값이 있다. 여기에 더해 `test_zacks_note_separates_robots_from_licensed_access` 가 ZACKS `note` 에도 "명시적으로 포괄하는" 이 있는지 보게 해 **두 곳이 갈리면 테스트가 잡는다.**
 
 이 셋으로 좁히면 `api.nasdaq.com` 은 어느 것도 만족하지 못한다. 자격증명도, 계약도, 계약이 지목한 host 도 없다. **denied 를 무르는 근거가 아니다.** `data.nasdaq.com` 도 지금은 셋 다 없다 — 그래서 `candidate_not_approved` 이고, 이 구분은 **승격 시 서면으로 확정할 항목**이지 지금 승격 근거가 아니다. `status` 는 그대로이며 테스트로 고정했다.
+
+### 2.7 `framework_origin` 을 외부 구속으로 읽지 않게 한다
+
+정책 개정은 아니지만 **같은 파일 안에서 실제로 오해를 만든 문자열**이라 여기서 함께 끊는다.
+
+`source.framework_origin` 은 강의를 가리킨다. **그 문자열 때문에 9-factor 구조가 외부에서 정해진 것으로 읽혔고, 그 오해 위에서 잘못된 제약이 사용자에게 제시됐다가 정정됐다**(2026-09-10, 설계진행 `29fbc6f`).
+
+사용자 확인은 이렇다. **강의는 개념을 주었고, 점수화는 사용자 설계다.** 최상위 `note` 에 세 요지를 적었다.
+
+1. `framework_origin` 은 **개념의 출처**다.
+2. 9-factor 점수화 구조와 F6 의 측정 지표(NTM PER) 선택, 밴드 구간은 **사용자 본인 설계**다.
+3. **따라서 F6 측정 방식을 바꾸는 것은 외부 기준 위반이 아니다.**
+
+**셋째가 실제 결론이다.** 앞의 둘만 적으면 다음 세션이 다시 "그럼 바꿔도 되나" 를 묻는다. `test_framework_origin_is_not_read_as_external_constraint` 가 셋 모두를 고정한다.
+
+오해가 난 자리는 `source.framework_origin` 옆이므로 **거기에도 결론을 붙였다**(`source.framework_origin_note`). 전문은 최상위 `note` 하나에만 두어 표현이 갈리지 않게 했고, 옆 자리에는 결론과 포인터만 뒀다.
+
+**`v1.5.json` 은 건드리지 않았다.** 승인 해시 대상이다. 같은 문자열이 거기에도 있지만 v1.5 는 이미 승인된 실행의 입력이고, 오해가 살아 있는 파일은 앞으로 쓸 v1.6 이다.
 
 ## 3. `unlisted` 는 판정에 쓰이지 않는다 — 배선을 확인했다
 
@@ -209,7 +235,7 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 | `unlisted[].reason_type` 은 `technical`/`terms`/`both` | 기술적 부적격과 약관 미확인을 뭉뚱그리지 않는다. 2.4 가 정확히 이 구분의 문제였다 |
 | `unlisted[].host` 는 allowed/denied 와 겹칠 수 없다 | 같은 host 가 두 판정을 갖는 것을 막는다 |
 
-테스트는 91 → **112 건**이다. 추가 21 건 중 하나는 기존 테스트 수정이다.
+테스트는 91 → **113 건**이다. 추가 22 건 중 하나는 기존 테스트 수정이다.
 
 | 테스트 | 고정하는 것 |
 |---|---|
@@ -232,12 +258,13 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 | `test_unlisted_is_never_read_by_enforcement` | 집행 경로 불변(임의 host — 개념 자체가 경로에 없음) |
 | `test_unlisted_key_is_never_touched` | **키를 읽지 않음을 직접 증명** — 접근 시 터지는 값을 넣고 네 경로 모두 통과 |
 | `test_policy_note_separates_unreviewed_from_reviewed_unlisted` | '미검토' 와 '검토 후 미등재' 의 구분이 정의로 남아 있음 |
-| `test_zacks_note_separates_robots_from_licensed_access` | 3 요건 연언(자격증명·체결된 계약·계약이 지목한 host)과 인증 없는 크롤링 단서가 남아 있고 status 는 미승인 유지 |
+| `test_zacks_note_separates_robots_from_licensed_access` | 3 요건 연언과 인증 없는 크롤링 단서, **둘째 조건의 `명시적으로`** 가 남아 있고 status 는 미승인 유지 |
+| `test_framework_origin_is_not_read_as_external_constraint` | 세 요지 — 개념의 출처·사용자 본인 설계·**F6 측정 방식 변경은 기준 위반이 아님** |
 
 **기존 테스트 수정 1 건.** `test_data_nasdaq_is_candidate_not_approved` 가 승격 조건 5 개를 문자열로 고정하고 있었다. 승인된 정책 변경에 맞춰 4 개로 고치고, `"외부 배포 허용"` 이 **더 이상 나오지 않는다**는 단언을 추가했다. 조건을 줄인 것이 조용히 통과하지 않도록 양방향으로 고정했다.
 
 ```
-Ran 112 tests in 0.024s
+Ran 113 tests in 0.023s
 OK
 ```
 
@@ -288,7 +315,7 @@ draft          파일 미변경             574841bc7c26f225
 
 ```bash
 cd worker
-python -m unittest discover -s tests -q       # 112건 통과
+python -m unittest discover -s tests -q       # 113건 통과
 python -c "import sys,json,pathlib; sys.path.insert(0,'scripts'); \
   from scorecard.schema import validate_rules; \
   validate_rules(json.loads(pathlib.Path('scorecard/rules/v1.6.json').read_text(encoding='utf-8')))"
@@ -298,6 +325,6 @@ python -c "import sys,json,pathlib; sys.path.insert(0,'scripts'); \
 
 | 파일 | 내용 |
 |---|---|
-| `scorecard/rules/v1.6.json` | `usage_scope`(법인) · ZACKS 조건 4 개 · `unlisted` · `policy_note` 에 3 요건과 unlisted 정의 |
+| `scorecard/rules/v1.6.json` | `usage_scope`(법인) · ZACKS 조건 4 개 · `unlisted` · `policy_note` 에 3 요건과 unlisted 정의 · `note` 에 framework_origin 세 요지 |
 | `scripts/scorecard/schema.py` | 두 새 키의 optional 허용과 값 검사 · `USAGE_SCOPES` 열거 |
-| `tests/test_scorecard_calc.py` | 회귀 20 건 추가 · 기존 1 건 수정 |
+| `tests/test_scorecard_calc.py` | 회귀 21 건 추가 · 기존 1 건 수정 |

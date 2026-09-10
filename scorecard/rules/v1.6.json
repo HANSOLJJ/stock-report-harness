@@ -2,12 +2,13 @@
   "schema": "scorecard.rules/1",
   "rule_version": "v1.6",
   "status": "draft",
-  "note": "AI기업_채점규칙_v1.5.md(2026-09-02)의 기계 적용 부분을 구조화한 원본. 정성 정의·별표 본문은 docs/scorecard/design-guideline.md 와 원문을 참조한다. decisions 의 pending 항목은 승인 전 활성화하지 않으며, 실행 단위 run.json.decisions 로만 명시적으로 선택한다. | v1.6 초안: 자료 원천 allowlist 도입(F6-SOURCE-07). 채점 규칙·구간표·결정 목록은 v1.5 와 동일하며 승인된 v1.5 실행에 영향을 주지 않는다.",
+  "note": "AI기업_채점규칙_v1.5.md(2026-09-02)의 기계 적용 부분을 구조화한 원본. 정성 정의·별표 본문은 docs/scorecard/design-guideline.md 와 원문을 참조한다. decisions 의 pending 항목은 승인 전 활성화하지 않으며, 실행 단위 run.json.decisions 로만 명시적으로 선택한다. | v1.6 초안: 자료 원천 allowlist 도입(F6-SOURCE-07). 채점 규칙·구간표·결정 목록은 v1.5 와 동일하며 승인된 v1.5 실행에 영향을 주지 않는다. | framework_origin 에 대하여. 그 항목은 **개념의 출처**다. 9-factor 점수화 구조와 F6 의 측정 지표(NTM PER) 선택과 밴드 구간은 **사용자 본인 설계**이며 강의가 정한 것이 아니다. **따라서 F6 측정 방식을 바꾸는 것은 외부 기준 위반이 아니다.** 이 서술이 없어 9-factor 를 외부 구속으로 읽고 잘못된 제약을 제시한 사례가 있었다(2026-09-10 사용자 확인, 설계진행 29fbc6f).",
   "source": {
     "file": "AI기업_채점규칙_v1.5.md",
     "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
     "rule_date": "2026-09-02",
-    "framework_origin": "박종훈 「Part 5 — 8강 다섯 가지 승리공식」(2026-07)"
+    "framework_origin": "박종훈 「Part 5 — 8강 다섯 가지 승리공식」(2026-07)",
+    "framework_origin_note": "개념의 출처다. 점수화 구조·F6 측정 지표·밴드는 사용자 본인 설계이므로 F6 측정 방식 변경은 외부 기준 위반이 아니다. 전문은 최상위 note."
   },
   "scoring": {
     "moat_factors": [
@@ -636,7 +637,7 @@
         "name": "Nasdaq Data Link ZACKS/EE·EEH",
         "host": "data.nasdaq.com",
         "status": "candidate_not_approved",
-        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 외부 일반 대중 배포를 전제하지 않으므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다. robots.txt 와 라이선스 접근을 구분한다. data.nasdaq.com robots.txt 에 Disallow /api/*.json* 과 Disallow /api/v3/databases/*/data 가 있으나, robots.txt 는 인증 없는 크롤러를 대상으로 한 지시다. 계약이 robots.txt 를 대신하는 것은 아래 셋을 **모두** 만족할 때뿐이다. (1) 그 공급사가 우리에게 발급한 자격증명으로 접근하고, (2) 그 데이터와 그 접근 방식을 포괄하는 체결된 계약이 있으며, (3) 호출하는 host·경로가 그 계약이 지목한 것일 것. 하나라도 없으면 robots.txt 와 약관이 규율한다. 계약이 있어도 같은 host 에 대한 인증 없는 크롤링에는 robots.txt 가 그대로 적용된다 — 예외는 host 전체가 아니라 인증된 라이선스 호출에만 걸린다. '세상에 유료 상품이 존재한다'는 사실은 이 셋 중 어느 것도 아니다. 그 논리를 쓰면 유료 상품이 있는 모든 공급사의 무료 endpoint 가 정당화된다. Yahoo 도 유료 데이터 상품이 있지만 그것이 query1.finance.yahoo.com 스크래핑을 정당화하지 않는다. 이 구분은 승격 시 서면으로 확정해야 하며 지금 승격 근거가 아니다(2026-09-10, DATALINK-14 검토).",
+        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 외부 일반 대중 배포를 전제하지 않으므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다. robots.txt 와 라이선스 접근을 구분한다. data.nasdaq.com robots.txt 에 Disallow /api/*.json* 과 Disallow /api/v3/databases/*/data 가 있으나, robots.txt 는 인증 없는 크롤러를 대상으로 한 지시다. 계약이 robots.txt 를 대신하는 것은 아래 셋을 **모두** 만족할 때뿐이다. (1) 그 공급사가 우리에게 발급한 자격증명으로 접근하고, (2) 그 데이터와 그 접근 방식을 **명시적으로 포괄하는** 체결된 계약이 있으며(접근 방식에 침묵하는 계약은 이 조건을 만족하지 못한다 — 이용약관 1.2 가 'All rights not granted hereunder are expressly reserved' 라고 직접 규정하므로 unknown 이 아니라 미부여다), (3) 호출하는 host·경로가 그 계약이 지목한 것일 것. 하나라도 없으면 robots.txt 와 약관이 규율한다. 계약이 있어도 같은 host 에 대한 인증 없는 크롤링에는 robots.txt 가 그대로 적용된다 — 예외는 host 전체가 아니라 인증된 라이선스 호출에만 걸린다. '세상에 유료 상품이 존재한다'는 사실은 이 셋 중 어느 것도 아니다. 그 논리를 쓰면 유료 상품이 있는 모든 공급사의 무료 endpoint 가 정당화된다. Yahoo 도 유료 데이터 상품이 있지만 그것이 query1.finance.yahoo.com 스크래핑을 정당화하지 않는다. 이 구분은 승격 시 서면으로 확정해야 하며 지금 승격 근거가 아니다(2026-09-10, DATALINK-14 검토).",
         "required_written_conditions": [
           "정식 계약",
           "자동 수집 허용",
