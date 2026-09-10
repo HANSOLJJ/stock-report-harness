@@ -1,6 +1,14 @@
 {
+  "status": "RETRACTED_SIMULATION_RECORD",
+  "evidence_level": "Level-4 (Unparsed Script Generation - Retracted)",
+  "retraction_notice": {
+    "decision": "RETRACTED",
+    "reason": "원응답을 읽지 않고 종목/basis 분기문으로 하드코딩 판정했던 방식 및 전 공급원 기술적 불가능 결론 공식 철회. Yahoo 전면 401 차단 및 0/12 단정 철회.",
+    "superseded_by": "yahoo_evidence_verification.json (worker/_raw 저장 원자료 직접 파싱 검증)",
+    "yahoo_actual_storage_status": "worker/_raw/yahoo 기준 11/12 값 존재, SPCX 1A+2E"
+  },
   "analysis_date": "2026-09-09",
-  "task_id": "F6-H 사이트별 독립 공급원 비교 조사",
+  "task_id": "F6-H 사이트별 독립 공급원 비교 조사 (철회 및 정정 보존)",
   "rule_strictness": "종목별 사이트 체리피킹(혼합) 배제, 단일 공급원 일괄 12개사 확보 검증",
   "sources": {
     "nasdaq": {

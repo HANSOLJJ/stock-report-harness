@@ -1,0 +1,622 @@
+{
+  "summary": {
+    "task_id": "F6H-SOURCES-02-R1",
+    "description": "Yahoo 저장 원자료 12개사 4단계 정밀 검증 (값 존재 / 분기창 / 기준 / 채점가능)",
+    "raw_source_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo",
+    "total_companies": 12,
+    "stage1_raw_value_pass_count": "11/12",
+    "stage2_quarter_window_pass_count": "0/12",
+    "stage3_currency_match_count": "11/12",
+    "stage4_scoring_eligible_count": "0/12",
+    "spcx_details": {
+      "actual_count": 1,
+      "estimate_count": 2,
+      "status": "2A 1건 부족으로 2A+2E 행수 미충족 (IPO 2026-06-12 확정실적 1건만 존재)"
+    },
+    "baba_details": {
+      "estimate_currency": "CNY",
+      "trade_currency": "USD",
+      "status": "전망 통화(CNY)와 매매 통화(USD) 불일치로 채점 불가"
+    },
+    "retraction_confirmations": [
+      "Yahoo 전면 401 차단 및 0/12 단정 공식 철회 (저장자료에서 11/12 값 존재 확인)",
+      "하드코딩 분기문 판정 공식 철회 (worker 저장 원응답 직접 파싱)",
+      "Yahoo와 Valley를 별도 원천으로 분리 (Valley는 v1.5 정적 기준선, Yahoo는 yfinance 저장 원자료)",
+      "단일 공급원의 다중 엔드포인트 허용 (동일 발행 주체의 복수 endpoint 조회 허용)",
+      "일반주 unit_ok=True 자동 지정 철회 (발행주식수 및 기준 미확인 상태로 분류)",
+      "IPO 상장 전 실적 부재 단정 및 유료 B2B만 가능하다는 단정 철회 (미검증으로 분류)"
+    ]
+  },
+  "results": [
+    {
+      "ticker": "META",
+      "company_name": "Meta Platforms",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/META.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\META.json",
+        "sha256": "0a4c3531a9c0daffd82ce1d424df8e5a4d057e6eeebe8de0edb71456ae1d51ef"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 42명, +1q: 41명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [3.13, 7.64], +1q: [6.84, 9.12]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "NVDA",
+      "company_name": "NVIDIA",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/NVDA.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\NVDA.json",
+        "sha256": "0385fd5b687df670a57aaff3a285d4b1f48da746b27392b273999acc73e58d1b"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 42명, +1q: 39명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [2.34, 2.7], +1q: [2.56, 3.117]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "company_name": "Alphabet",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/GOOGL.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\GOOGL.json",
+        "sha256": "866686208bfad36ad7efa73b2dbaedad731c55dbd9e3c978a439dec167c9f49c"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 42명, +1q: 39명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [2.64, 3.68], +1q: [2.99, 4.09232]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "MSFT",
+      "company_name": "Microsoft",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/MSFT.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\MSFT.json",
+        "sha256": "eed94ac1a8863b15e1316acbde75ae3ce243f073d92540182bdcb70e9dc650aa"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 25명, +1q: 25명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [4.43, 4.83363], +1q: [4.72, 5.02]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "AMZN",
+      "company_name": "Amazon",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/AMZN.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\AMZN.json",
+        "sha256": "7ebc449a2b5914cd56aa91f657a433d352e16203b10db7a96b40cff00c503ef8"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "음수 실적 2건 ([-0.2, -0.38])"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 44명, +1q: 42명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [1.72, 2.32], +1q: [2.0, 2.75]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "company_name": "Apple",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/AAPL.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\AAPL.json",
+        "sha256": "5069793e312d5cab24b1898f827b2720bab4a34d17115008092fc9412ba0b2a4"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 27명, +1q: 21명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [1.93, 2.07], +1q: [2.58395, 3.42]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "ORCL",
+      "company_name": "Oracle",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/ORCL.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\ORCL.json",
+        "sha256": "7fffde7dc6223722604d36173f7d1ddfd0aa217b46bcd1a1e619438b711c0b3b"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 34명, +1q: 33명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [1.64, 1.80736], +1q: [1.77, 2.02]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "PLTR",
+      "company_name": "Palantir",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/PLTR.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\PLTR.json",
+        "sha256": "a48167faad26f30b26df2b75e8bef2598b8002304b63c3effa54d2d33cf50d04"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "음수 실적 1건 ([-0.01])"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 23명, +1q: 23명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [0.38, 0.48], +1q: [0.43, 0.55]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "TSLA",
+      "company_name": "Tesla",
+      "company_type": "US Common",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/TSLA.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\TSLA.json",
+        "sha256": "d60c8264f43bcc1d65bb4cb4f20c0350615491ae6b405e5022abbc449a15197b"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 26명, +1q: 26명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [0.27, 0.6], +1q: [0.24, 0.82]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "SPCX",
+      "company_name": "SpaceX",
+      "company_type": "US Common (IPO 2026-06-12)",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/SPCX.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\SPCX.json",
+        "sha256": "8c570dffdb442f8839662120424cbe9f13b293fa3810af254d87a69095d4cf59"
+      },
+      "stage1_raw_values": {
+        "actual_count": 1,
+        "estimate_count": 2,
+        "has_2a": false,
+        "has_2e": true,
+        "pass": false,
+        "notes": "실적 행수 부족 (1개, 2A 요건 미달); 음수 실적 1건 ([-0.09])"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 12명, +1q: 14명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [-0.11, 0.28833], +1q: [-0.14, 0.8]",
+        "pass": false,
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "값 행수 요건 미달 (실적 1개, 전망 2개)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "TSM",
+      "company_name": "TSMC",
+      "company_type": "TW ADR (5:1)",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/TSM.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\TSM.json",
+        "sha256": "f80b1226ce81e6874ab60c82627c4f29ba95853241aaa8b4c04a13d8e7d75385"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "USD",
+        "trade_currency": "USD",
+        "currency_match": true,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 9명, +1q: 9명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [4.26, 4.72], +1q: [4.76, 5.29]",
+        "pass": false,
+        "notes": "ADR 5:1 보통주 변환 비율 설명 및 본사 통화(TWD) 매핑 미표기"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    },
+    {
+      "ticker": "BABA",
+      "company_name": "Alibaba",
+      "company_type": "CN ADS (8:1)",
+      "raw_file": {
+        "rel_path": "_raw/yahoo/BABA.json",
+        "abs_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo\\BABA.json",
+        "sha256": "375363f3ede38c8e9792043d5b19b9d8501fba181d634df7d23168579a12c93d"
+      },
+      "stage1_raw_values": {
+        "actual_count": 24,
+        "estimate_count": 2,
+        "has_2a": true,
+        "has_2e": true,
+        "pass": true,
+        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+      },
+      "stage2_quarter_window": {
+        "dates_type": "Announcement Date (발표일자)",
+        "estimate_keys_type": "Relative Offset (0q, +1q)",
+        "has_explicit_fiscal_period": false,
+        "specific_fiscal_quarters_identifiable": false,
+        "pass": false,
+        "notes": "earnings_dates는 발표일(Announcement Date)이며 회계기간 종료일(Period End) 미표기; 0q/+1q는 상대적 오프셋이며 페이로드 내 구체적 회계분기 레이블(예: FY2026Q3) 부재; 외부 회계캘린더(결산월 매핑) 없이는 Yahoo 단독으로 회계분기창 특정 불가"
+      },
+      "stage3_basis_metadata": {
+        "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
+        "as_of_timestamp": null,
+        "estimate_currency": "CNY",
+        "trade_currency": "USD",
+        "currency_match": false,
+        "sample_size_provided": true,
+        "sample_size_details": "0q: 17명, +1q: 15명",
+        "min_max_provided": true,
+        "min_max_details": "0q: [8.59, 15.46022], +1q: [10.48, 19.52773]",
+        "pass": false,
+        "notes": "전망 통화(CNY)와 매매 통화(USD) 불일치 (환율 변환 근거 부재); ADS 8:1 보통주 변환 비율 설명 및 본사 통화(CNY) 매핑 미표기"
+      },
+      "stage4_scoring_status": {
+        "allowlisted": false,
+        "scoring_eligible": false,
+        "verdict": "FAIL",
+        "blocking_reasons": [
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "단독 페이로드로 회계분기창 특정 불가",
+          "통화 불일치 (CNY != USD)",
+          "회계기준(GAAP/Non-GAAP) 미표기"
+        ]
+      }
+    }
+  ]
+}
