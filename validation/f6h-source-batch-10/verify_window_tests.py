@@ -12,6 +12,7 @@
     T2c 2A 와 2E 사이 basis 가 어긋나면 conflict 다           (W2)
     T3  실적 값이 비수치 문자열이면 막는다                    (W3 · 이전에는 통과했다)
     T3b NaN·inf 도 막는다                                     (W3)
+    T3c 원문 경로 키가 없는 행에서 죽지 않는다                (R2 재검토 지적)
     T4  음수 EPS 는 결측이 아니다                             (W3 · SPCX -0.09)
     T5  변형이 없으면 저장 자료 판정이 그대로다               (검증기가 상수 출력이 아님)
 
@@ -28,9 +29,12 @@ from verify_window import BASIS_KEYS, load_finnhub, verify_rows
 
 BASE = date(2026, 9, 9)          # 저장 원자료의 수집일(UTC)
 FAILURES: list[str] = []
+RAN = 0
 
 
 def check(name: str, cond: bool, detail: str = "") -> None:
+    global RAN
+    RAN += 1
     mark = "PASS" if cond else "FAIL"
     print(f"  [{mark}] {name}{('  — ' + detail) if detail else ''}")
     if not cond:
@@ -131,6 +135,20 @@ def t3b_nan_inf() -> None:
     check("T3b inf 가 막힌다", not verify_rows("META", past, fut, BASE)["raw_availability"])
 
 
+def t3c_row_without_src() -> None:
+    """호출자가 원문 경로 키를 채우지 않아도 죽지 않는다(R2 재검토 지적)."""
+    past, fut = rows("META")
+    row = next(r for r in past if (r["year"], r["quarter"]) == (2026, 2))
+    row.pop("_src", None)
+    row["actual"] = "NOT_A_NUMBER"
+    try:
+        r = verify_rows("META", past, fut, BASE)
+    except KeyError as e:
+        check("T3c _src 없는 행에서 죽지 않는다", False, f"KeyError: {e}")
+        return
+    check("T3c _src 없는 행에서 죽지 않는다", not r["raw_availability"], "; ".join(r["issues"]))
+
+
 def t4_negative_is_not_missing() -> None:
     """음수 EPS 는 정상 값이다. SPCX -0.09 로 확인한다."""
     past, fut, _ = load_finnhub("SPCX")
@@ -174,15 +192,15 @@ def main() -> int:
     print("=" * 78)
     for fn in (t1_moved_actual_into_forecast, t1b_reported_missing_from_actuals,
                t2_single_row_basis, t2b_conflicting_rows, t2c_cross_endpoint_conflict,
-               t3_non_numeric_actual, t3b_nan_inf, t4_negative_is_not_missing,
+               t3_non_numeric_actual, t3b_nan_inf, t3c_row_without_src, t4_negative_is_not_missing,
                t5_unmodified_matches_stored):
         print(f"\n{fn.__name__}")
         fn()
     print("\n" + "=" * 78)
     if FAILURES:
-        print(f"실패 {len(FAILURES)}건: {FAILURES}")
+        print(f"검사 {RAN}건 중 실패 {len(FAILURES)}건: {FAILURES}")
         return 1
-    print("전부 통과")
+    print(f"검사 {RAN}건 전부 통과")
     return 0
 
 

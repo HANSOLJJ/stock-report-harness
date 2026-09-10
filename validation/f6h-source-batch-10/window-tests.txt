@@ -34,6 +34,9 @@ t3b_nan_inf
   [PASS] T3b NaN 이 막힌다
   [PASS] T3b inf 가 막힌다
 
+t3c_row_without_src
+  [PASS] T3c _src 없는 행에서 죽지 않는다  — 2026Q2 값이 수가 아님('NOT_A_NUMBER') ?
+
 t4_negative_is_not_missing
   [PASS] T4 SPCX -0.09 가 실적으로 잡힌다  — ['2026Q2']
   [PASS] T4 전부 음수여도 raw·label·asof 는 통과한다
@@ -47,4 +50,4 @@ t5_unmodified_matches_stored
   [PASS] T5 BABA 자릿수 표시가 켜진다(판정 아님)  — 배수 24.78
 
 ==============================================================================
-전부 통과
+검사 27건 전부 통과

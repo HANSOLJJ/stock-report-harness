@@ -234,7 +234,8 @@ def verify_rows(ticker: str, past: list[dict], fut: list[dict], base: date,
     bad = [x for x in a2 + e2 if not x["ok"]]
     res["numeric_ok"] = not bad
     for x in bad:
-        res["issues"].append(f"{x['y']}Q{x['q']} 값이 수가 아님({x['val']!r}) {x['raw']['_src']}")
+        # _src 는 load_finnhub 이 붙인다. 테스트가 직접 만든 행에는 없을 수 있어 죽지 않게 둔다.
+        res["issues"].append(f"{x['y']}Q{x['q']} 값이 수가 아님({x['val']!r}) {x['raw'].get('_src', '?')}")
     res["raw_availability"] = len(a2) == 2 and len(e2) == 2 and res["numeric_ok"]
     if len(a2) != 2 or len(e2) != 2:
         res["issues"].append(f"행 부족(실적 {len(w['actual_all'])}·전망 {len(w['forecast_all'])})")
@@ -372,7 +373,7 @@ def main() -> None:
                 per = raw.get("period") if "period" in raw else UNKNOWN
                 dt = raw.get("date") if "date" in raw else UNKNOWN
                 print(f"{r['ticker']:6} {tag:4} {x['y']}Q{x['q']:<7} {str(per):>12} {str(dt):>12} "
-                      f"{str(x['val']):>9}  {raw['_src']}")
+                      f"{str(x['val']):>9}  {raw.get('_src', '?')}")
 
     print()
     print("[3] period 필드 의미 - 저장된 SEC 근거와 대조")

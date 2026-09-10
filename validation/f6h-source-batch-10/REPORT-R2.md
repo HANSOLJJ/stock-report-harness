@@ -23,7 +23,7 @@
 | **W5** | 3 절 SEC 대조가 커밋만으로 재현 불가 | 파생 종료일만 `_derived/sec_quarter_ends.json` 으로 **커밋** | 아래 6 절 |
 | **W6** | cp949 콘솔에서 `UnicodeEncodeError` | 출력 인코딩을 **코드에서 UTF-8 로 고정** | 아래 7 절 |
 
-재현 검사는 `verify_window_tests.py` 21 건이고 결과는 `window-tests.txt` 다. **전부 통과한다.** 검사는 저장 원자료를 읽어 **메모리 사본을 변형**하므로 `_raw/` 에 쓰지 않는다.
+재현 검사는 `verify_window_tests.py` 27 건이고 결과는 `window-tests.txt` 다. **전부 통과한다.** 검사는 저장 원자료를 읽어 **메모리 사본을 변형**하므로 `_raw/` 에 쓰지 않는다.
 
 ## 2. W1 — 기준일 고정. 이름 변경과 검사 추가를 **둘 다** 했다
 
@@ -148,7 +148,7 @@ T4  SPCX -0.09 가 실적으로 잡힌다        ['2026Q2']
 
 검증기는 이 파일을 **먼저** 읽고, 없을 때만 비커밋 원본으로 떨어진다. 어느 쪽을 썼는지 `[3]` 절 각 행에 `근거` 로 찍는다(`_derived(커밋)` / `비커밋 원본` / `근거 부재`). 머리글에도 한 줄 남긴다.
 
-검증했다. `git archive 54c71bf validation/f6h-source-batch-10` 로 **커밋 트리만** 임시 경로에 풀어 실행한 출력이 `window-verification.txt` 와 **바이트 동일**했고, 재현 검사 21 건도 전부 통과했다. 3 절 결론(NVDA·AAPL·ORCL 은 SEC 회계종료일 일치 0 건·달력분기말 일치 3 건)이 이제 저장소 안의 근거만으로 선다.
+검증했다. `git archive 54c71bf validation/f6h-source-batch-10` 로 **커밋 트리만** 임시 경로에 풀어 실행한 출력이 `window-verification.txt` 와 **바이트 동일**했고, 재현 검사도 전부 통과했다. 3 절 결론(NVDA·AAPL·ORCL 은 SEC 회계종료일 일치 0 건·달력분기말 일치 3 건)이 이제 저장소 안의 근거만으로 선다.
 
 TSM·BABA 는 20-F 제출사라 여전히 `unknown` 이다. 이것은 근거 부재가 아니라 **SEC 에 분기 개념이 없다**는 사실이고 그대로 남긴다.
 
@@ -190,12 +190,16 @@ R1 7.2 의 1·2·3·5·6·7 은 그대로다. **4 번을 고쳐 쓴다.**
 
 **8 (신규). 회계 라벨과 기업 공시의 대조.** `asof-anchored` 는 공급사가 준 발표 예정일을 기준일과 비교할 뿐, 그 라벨이 기업 공식 회계연도 표기와 맞는지는 보지 않는다. R1 7.2-7 과 같은 항목이며 여전히 미확인이다.
 
+**9 (신규). `asof-anchored` 의 원리적 잔여 한계.** 이미 발표된 분기가 **미래 날짜의 전망으로** 실려 있으면 두 검사 모두 통과한다. 저장 페이로드 어디에도 그 분기가 이미 발표됐다는 신호가 없어 판별할 근거 자체가 없다. 검사 (a)(2E 발표일 > 기준일)와 (b)(기준일 전 발표분 누락 없음)로 막을 수 있는 것은 막았고, 나머지는 공급사 응답에 발표 완료 표시가 생기거나 외부 대조가 있어야 풀린다.
+
+**10 (신규). 2A 쪽은 기준일을 직접 보지 못한다.** `stock/earnings` 응답에 발표일 필드가 없다(R1 4.3). `asof-anchored` 가 날짜로 직접 검사하는 것은 2E 뿐이고, 2A 가 "최근 확정 2 개"인지는 검사 (b)의 **간접 확인**에만 의존한다. 즉 전망 목록에 기준일 전 발표분이 남아 있지 않다는 사실로 미루어 보는 것이지, 2A 두 행 자체의 발표 시점을 확인한 것이 아니다.
+
 ## 10. 재현 방법
 
 ```bash
 cd worker/validation/f6h-source-batch-10
 python verify_window.py         # window-verification.txt 와 같은 결과
-python verify_window_tests.py   # window-tests.txt 와 같은 결과 · 21건 전부 통과
+python verify_window_tests.py   # window-tests.txt 와 같은 결과 · 27건 전부 통과
 ```
 
 **네트워크를 쓰지 않는다.** 출력 인코딩은 코드가 UTF-8 로 고정하므로 `PYTHONIOENCODING` 이 필요 없다.
@@ -212,7 +216,19 @@ python verify_window_tests.py   # window-tests.txt 와 같은 결과 · 21건 �
 | 파일 | 내용 |
 |---|---|
 | `verify_window.py` | 창 검증기. 5 단계 판정 + 표시 항목 |
-| `verify_window_tests.py` | 재현 검사 21 건 (W1~W4) |
+| `verify_window_tests.py` | 재현 검사 27 건 (W1~W4 · 검사 수는 스크립트가 직접 센다) |
 | `derive_sec_quarter_ends.py` | SEC 분기 종료일 파생 |
 | `window-verification.txt` · `window-tests.txt` | 실행 결과 |
 | `REPORT-R2.md` | 이 문서 |
+
+## 11. R2 재검토 결과 (2026-09-10, 설계진행 `0ac5e66` · 회신 `msg_fe538fca1a41`)
+
+판정 **pass**. 커밋 트리만으로 `window-verification.txt`·`window-tests.txt` 와 바이트 동일하고 cp949 콘솔에서 `PYTHONIOENCODING` 없이 종료 코드 0 임을 확인해 **W5·W6 해소**로 인정됐다. W1~W4 도 각각 위장 시나리오·네 상태 주입·`None` 대조로 재현됐고, 4 행 전부에 같은 basis 를 주면 `score-ready` 까지 True 로 넘어가는 **양성 대조**가 확인돼 `basis 0/12` 가 고정값이 아님이 함께 검증됐다.
+
+이 회신을 받아 반영한 것 셋이다.
+
+1. **9.2-9·9.2-10 추가.** 재검토가 요청한 두 줄이다. `asof-anchored` 의 원리적 잔여 한계(미래 날짜로 위장한 발표 완료 분기)와, 2A 쪽은 발표일 필드가 없어 검사 (b)의 간접 확인에만 의존한다는 점이다.
+2. **`_src` KeyError 수정.** `verify_rows()` 에 넘긴 행에 원문 경로 키가 없고 값이 비수치이면 `KeyError: '_src'` 로 죽었다. `raw.get("_src", "?")` 로 바꾸고 회귀 검사 **T3c** 를 더했다(27 건). 재검토가 차단 사유가 아니라고 했으나 같은 파일을 손대는 김에 함께 처리했다. 검증기 출력은 바이트 동일하다.
+3. **W4 는 재검토 쪽이 서술을 철회했다.** R1 회신의 "나머지 11 개사는 0 근처에서 부호가 오간다"가 사실이 아니고(NVDA·MSFT·PLTR·TSM 도 4 분기 전부 양수), BABA 를 가르는 것은 **전부 음수이면서 네 분기 모두 |20%| 이상**이라는 조합이라는 5 절 서술이 정확하다고 확인됐다.
+
+**pass 는 F6-H 채택이 아니다.** `basis 0/12`·`score-ready 0/12` 이고 F6-H 산식·밴드·새 점수는 승인되지 않았다. 다음 병목은 Finnhub 회계기준과 두 endpoint 기준 일치이며, **공급사 문의 없이는 저장 자료로 풀리지 않는다**(9.2-4). 문의 진행 여부는 사용자 결정 사항이다.
