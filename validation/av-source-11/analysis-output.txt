@@ -1,0 +1,64 @@
+====================================================================================================
+AV-SOURCE-11 — Alpha Vantage EARNINGS_ESTIMATES 저장 자료 판정 (기준일 2026-09-10)
+====================================================================================================
+
+[0] 저장 원자료 지문
+  demo.headers.txt                            922 B  sha256:a342d80e7d4904c6
+  docs.headers.txt                            900 B  sha256:caeff25ac9e2fdcf
+  documentation.html                      1059116 B  sha256:33ac225f1ce73f69
+  EARNINGS_ESTIMATES.IBM.demo.json          40980 B  sha256:3491498f5fad6083
+  EARNINGS_ESTIMATES.NVDA.demo.json           220 B  sha256:e8ddc218d89ff77a
+  premium.html                              37729 B  sha256:d20708054de46b4d
+  robots.apex.headers.txt                     263 B  sha256:90ffb293de037200
+  robots.apex.txt                             167 B  sha256:446a6087825fa73e
+  robots.headers.txt                          941 B  sha256:4969b1c62a7b7db1
+  robots.txt                                  179 B  sha256:5547992afdadb597
+  support.html                              23670 B  sha256:4a28d7c95d420605
+  terms.headers.txt                           891 B  sha256:547a8eb8786d57a6
+  terms_of_service.pdf                     156583 B  sha256:88ed3d22fe0f3624
+  terms_of_service.txt                      10180 B  sha256:28faa85c873b155a
+
+[1] demo 키의 사정거리 — HTTP 200 은 커버리지 증거가 아니다
+  IBM  : estimates 41 행 (fiscal quarter 39 · fiscal year 2)
+  NVDA : 최상위 키 ['Information']
+         The **demo** API key is for demo purposes only. Please claim your free API key at (https://www.alphavantage.co/support/#
+  → 문서 예시 심볼 외에는 안내문만 온다. HTTP 200 이지만 자료가 아니다.
+
+[2] 향후 분기 수 — F6 은 4개를 요구한다
+  기준일 이후 분기 행 2 개
+    2026-09-30  avg     2.8881  n   20.0000  low     2.7800  high     3.1200
+    2026-12-31  avg     4.6017  n   19.0000  low     4.4100  high     4.7680
+  기준일 이후 연간 행 2 개: ['2026-12-31', '2027-12-31']
+  → 분기 전망은 2 개. F6 요구 4개에 미달한다.
+     연간은 2개 나오는데 분기는 그렇지 않다. 분기 지평이 짧은 것이지 자료가 없는 것이 아니다.
+
+[3] 회계분기 식별 필드
+  horizon 값 집합: ['fiscal quarter', 'fiscal year']
+  date 형식: 절대 날짜(YYYY-MM-DD). 예 ['2026-12-31', '2026-09-30', '2026-06-30', '2026-03-31']
+  → Yahoo 식 상대 오프셋(0q/+1q)이 아니라 **절대 날짜**다. 이 점은 Finnhub·Yahoo 보다 낫다.
+  IBM 분기 종료 월 집합: ['03', '06', '09', '12']
+  → IBM 은 달력연도 결산사라 '회계분기 말' 과 '달력분기 말' 두 가설이 갈리지 않는다.
+     NVDA(1월)·MSFT(6월)·AAPL(9월)·ORCL(5월) 같은 비달력 결산사로만 확정되는데
+     demo 키가 응답하지 않는다. 따라서 판정은 unknown 이다.
+
+[4] basis 필드 — 응답 행에 키가 있는가
+  currency       unknown
+  share_basis    unknown
+  shareBasis     unknown
+  accounting     unknown
+  asOf           unknown
+  as_of          unknown
+  last_updated   unknown
+  응답 행 필드 전체(18개): ['date', 'eps_estimate_analyst_count', 'eps_estimate_average', 'eps_estimate_average_30_days_ago', 'eps_estimate_average_60_days_ago', 'eps_estimate_average_7_days_ago', 'eps_estimate_average_90_days_ago', 'eps_estimate_high', 'eps_estimate_low', 'eps_estimate_revision_down_trailing_30_days', 'eps_estimate_revision_down_trailing_7_days', 'eps_estimate_revision_up_trailing_30_days', 'eps_estimate_revision_up_trailing_7_days', 'horizon', 'revenue_estimate_analyst_count', 'revenue_estimate_average', 'revenue_estimate_high', 'revenue_estimate_low']
+
+[5] 표본수 · min/max · 과거 시점 재현
+  표본수   : eps_estimate_analyst_count · revenue_estimate_analyst_count — 있음
+  min/max  : eps_estimate_low / eps_estimate_high — 있음
+  개정 이력: ['eps_estimate_average_30_days_ago', 'eps_estimate_average_60_days_ago', 'eps_estimate_average_7_days_ago', 'eps_estimate_average_90_days_ago', 'eps_estimate_revision_down_trailing_30_days', 'eps_estimate_revision_down_trailing_7_days', 'eps_estimate_revision_up_trailing_30_days', 'eps_estimate_revision_up_trailing_7_days']
+  → 평균만 7·30·60·90일 전 값을 준다. low/high/표본수의 과거 값은 없고,
+     임의 시점을 지정하는 파라미터도 문서에 없다. 과거 시점 재현은 부분적이다.
+
+[6] 무료/premium 구분 — 문서 마크업 근거
+  문서 제목 마크업: <h4 id="earnings-estimates">Earnings Estimates <span class="popular-label">Trending</span></h4>
+  premium-label 부착 여부: 없음
+  → popular-label(Trending) 만 붙어 있고 premium-label 이 없다. 무료 함수다.

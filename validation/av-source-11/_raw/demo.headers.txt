@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+Date: Thu, 10 Sep 2026 02:53:23 GMT
+Content-Type: application/json
+Content-Length: 40980
+Connection: keep-alive
+allow: GET, HEAD, OPTIONS
+cross-origin-opener-policy: same-origin
+nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+referrer-policy: same-origin
+report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=7GCMITg0Vokk3fAesbPJ6O6Uj7Jzus1CeRLg0kHuudY%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1789008803"}],"max_age":3600}
+reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=7GCMITg0Vokk3fAesbPJ6O6Uj7Jzus1CeRLg0kHuudY%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1789008803"
+Server: cloudflare
+vary: Cookie, Origin
+via: 2.0 heroku-router
+x-content-type-options: nosniff
+x-frame-options: DENY
+cf-cache-status: DYNAMIC
+CF-RAY: a38b245c2ba68388-KIX
+
