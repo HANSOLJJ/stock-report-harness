@@ -118,6 +118,20 @@ def evaluate_estimates_data(data: dict, reference_date_str: str = "2026-09-10") 
     # API 파라미터 수준에서 as_of 쿼리 파라미터 부재 및 고정 시계열만 제공
     point_in_time_reproducible = False
 
+    # 11. 단기 컨센서스 이동 및 리비전 데이터 (7/30/60/90일 전 평균치 및 7/30일 리비전)
+    has_consensus_drift_90d = False
+    drift_keys = [
+        "eps_estimate_average_7_days_ago",
+        "eps_estimate_average_30_days_ago",
+        "eps_estimate_average_60_days_ago",
+        "eps_estimate_average_90_days_ago"
+    ]
+    drift_found = 0
+    for e in quarterly_entries:
+        if all(k in e and e[k] is not None for k in drift_keys):
+            drift_found += 1
+    has_consensus_drift_90d = (drift_found > 0)
+
     return {
         "symbol": symbol,
         "total_estimates": len(estimates),
@@ -134,6 +148,7 @@ def evaluate_estimates_data(data: dict, reference_date_str: str = "2026-09-10") 
         "has_analyst_count": has_analyst_count,
         "has_min_max": has_min_max,
         "point_in_time_reproducible": point_in_time_reproducible,
+        "has_consensus_drift_90d": has_consensus_drift_90d,
         "coverage_status": coverage_status,
     }
 
@@ -174,6 +189,7 @@ def main():
     assert res["has_as_of"] is False, "asOf timestamp should be missing"
     assert res["has_analyst_count"] is True, "Analyst count should be present"
     assert res["has_min_max"] is True, "Min/max estimates should be present"
+    assert res["has_consensus_drift_90d"] is True, "90d consensus drift fields should be present"
     print("PASS: Test 1 (Real IBM Raw Evaluation passed all assertions)\n")
 
     print("[TEST 2] Positive Control (Synthetic Ideal Response)")
@@ -190,6 +206,10 @@ def main():
                 "eps_estimate_low": "0.90",
                 "eps_estimate_high": "1.10",
                 "eps_estimate_analyst_count": "15",
+                "eps_estimate_average_7_days_ago": "1.00",
+                "eps_estimate_average_30_days_ago": "0.98",
+                "eps_estimate_average_60_days_ago": "0.95",
+                "eps_estimate_average_90_days_ago": "0.90",
                 "share_basis": "diluted",
                 "accounting": "non-gaap"
             },
@@ -201,6 +221,10 @@ def main():
                 "eps_estimate_low": "1.00",
                 "eps_estimate_high": "1.20",
                 "eps_estimate_analyst_count": "15",
+                "eps_estimate_average_7_days_ago": "1.10",
+                "eps_estimate_average_30_days_ago": "1.08",
+                "eps_estimate_average_60_days_ago": "1.05",
+                "eps_estimate_average_90_days_ago": "1.00",
                 "share_basis": "diluted",
                 "accounting": "non-gaap"
             },
@@ -212,6 +236,10 @@ def main():
                 "eps_estimate_low": "1.10",
                 "eps_estimate_high": "1.30",
                 "eps_estimate_analyst_count": "15",
+                "eps_estimate_average_7_days_ago": "1.20",
+                "eps_estimate_average_30_days_ago": "1.18",
+                "eps_estimate_average_60_days_ago": "1.15",
+                "eps_estimate_average_90_days_ago": "1.10",
                 "share_basis": "diluted",
                 "accounting": "non-gaap"
             },
@@ -223,6 +251,10 @@ def main():
                 "eps_estimate_low": "1.20",
                 "eps_estimate_high": "1.40",
                 "eps_estimate_analyst_count": "15",
+                "eps_estimate_average_7_days_ago": "1.30",
+                "eps_estimate_average_30_days_ago": "1.28",
+                "eps_estimate_average_60_days_ago": "1.25",
+                "eps_estimate_average_90_days_ago": "1.20",
                 "share_basis": "diluted",
                 "accounting": "non-gaap"
             }
@@ -236,18 +268,21 @@ def main():
     assert ideal_res["has_share_basis"] is True, "Ideal should pass has_share_basis"
     assert ideal_res["has_accounting"] is True, "Ideal should pass has_accounting"
     assert ideal_res["has_as_of"] is True, "Ideal should pass has_as_of"
+    assert ideal_res["has_consensus_drift_90d"] is True, "Ideal should pass has_consensus_drift_90d"
     print("PASS: Test 2 (Positive Control passed all assertions)\n")
 
-    print("[TEST 3] Negative Mutation Control (Removing analyst count and min/max)")
+    print("[TEST 3] Negative Mutation Control (Removing analyst count, min/max, and drift)")
     mutated = json.loads(json.dumps(synthetic_ideal))
     for q in mutated["estimates"]:
         del q["eps_estimate_analyst_count"]
         del q["eps_estimate_low"]
         del q["eps_estimate_high"]
+        del q["eps_estimate_average_7_days_ago"]
 
     mutated_res = evaluate_estimates_data(mutated, reference_date_str="2026-09-10")
     assert mutated_res["has_analyst_count"] is False, "Mutated should detect missing analyst count"
     assert mutated_res["has_min_max"] is False, "Mutated should detect missing min/max"
+    assert mutated_res["has_consensus_drift_90d"] is False, "Mutated should detect missing drift fields"
     print("PASS: Test 3 (Negative Mutation Control passed all assertions)\n")
 
     print("ALL 3 VALIDATION TESTS PASSED DYNAMICALLY.")
