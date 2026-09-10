@@ -1,0 +1,4 @@
+# Allows all robots to visit all files.
+User-agent: *
+Crawl-delay: 2
+Disallow:

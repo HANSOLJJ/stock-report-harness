@@ -1,0 +1,49 @@
+조회 시각 UTC 2026-09-10T09:05:19Z
+
+== api.stlouisfed.org-robots  200   79       
+   https://api.stlouisfed.org/robots.txt
+# Allows all robots to visit all files.
+User-agent: *
+Crawl-delay: 2
+Disallow:
+
+
+== fred-api-terms             None  0        TimeoutError: The read operation timed out
+   https://fred.stlouisfed.org/docs/api/terms_of_use.html
+
+== fred-legal                 None  0        TimeoutError: The read operation timed out
+   https://fred.stlouisfed.org/legal/
+
+== frb-legal                  404   11721    HTTPError 404
+   https://www.federalreserve.gov/legal.htm
+
+== frb-privacy-terms          404   11671    HTTPError 404
+   https://www.federalreserve.gov/privacy-terms.htm
+
+== fmp-terms                  200   83749    
+   https://site.financialmodelingprep.com/terms-of-service
+   [non-?commercial] ...sassemble, reverse engineer or otherwise make unauthorized use of the Services. 2.2.1 Personal Use: This license may only be used by a Customer who is an individual, and strictly for their own personal, non-business and non-commercial purposes. In no event may the Customer use this licence on behalf of a company, partnership, organization, group, entity or any other third party. This license is personal to the Customer, and the Customer may not share FMP Services or Data, resell, permit other users access to our Services through the C...
+   [public domain] ... will also ensure that the persons it authorizes to access Confidential information have committed themselves to confidentiality. Confidential Information does not include information that: (a) is or becomes part of the public domain through no fault of the receiving party; and (b) was already in possession of the receiving party without restriction. The receiving party may disclose Confidential Information if it is required to do so by law, so long as the receiving party provides the disclosing party with prompt notice and complies w...
+   [copyright] ...ervices or otherwise attempt to discover any source code or trade secrets related to The Services; or (iii) use the trademarks, trade names, service marks, logos, domain names and other distinctive brand features or any copyright or other proprietary rights associated with The Services for any purpose without the express written consent of FMP. 2.6.2 Acceptable Data Use Policy. Customer shall comply with the FMP Acceptable Data Use Policy (“ADUP”), posted here financialmodelingprep.com/acceptable-data-use-policy at all times. Violatio...
+   [may not] ...ion, including FMP Data, and otherwise use the Services to the extent intended and permitted by the functionality thereof in sections 2.2.1 and 2.2.2. Furthermore, without the prior written approval of FMP, the Customer may not distribute, publicly perform or display, lease, sell, transmit, transfer, publish, edit, copy, create derivative works from, rent, sub-license, distribute, decompile, disassemble, reverse engineer or otherwise make unauthorized use of the Services. 2.2.1 Personal Use: This license may only be used by a Customer...
+   [prohibit] ...ata for commercial purposes or to support commercial activities, including market research, business intelligence, or data-driven decision-making. 2.2.2 Data Display: Without a specific agreement with FMP, customers are prohibited from showcasing FMP Services or Data on platforms including but not limited to websites, blogs, software products, or applications designed for utilization by multiple individuals, irrespective of whether such usage is complimentary or paid, and whether it pertains to internal or external organizational purp...
+   [restrict] ...e FMP Services, you will need to create a FMP account. During the process of creating your account, you will be required to furnish your name, email address, and establish a password. Your access to the FMP APIs will be restricted to the public features until you successfully register for a FMP account. When enrolling for a FMP account, it is mandatory that you provide accurate, up-to-date, and complete information about yourself as stipulated during the account creation procedure. You are responsible for maintaining the accuracy of t...
+   (키워드 매치 6)
+
+== bis-terms                  200   127719   
+   https://www.bis.org/terms_conditions.htm
+   [non-?commercial] ..., all rights are reserved. Users may use BIS Material on the following conditions without obtaining written permission from the BIS: Users may download, display, print out, photocopy or redistribute any BIS Material for non-commercial purposes. Users may reproduce a limited extract of BIS Material (other than the statistics published in the BIS Data Portal ) in other publications or products free of charge, provided the BIS is cited as the source. With respect to translations, Users must include a statement that the translation is not...
+   [redistribut] ... the BIS. Except as outlined below, all rights are reserved. Users may use BIS Material on the following conditions without obtaining written permission from the BIS: Users may download, display, print out, photocopy or redistribute any BIS Material for non-commercial purposes. Users may reproduce a limited extract of BIS Material (other than the statistics published in the BIS Data Portal ) in other publications or products free of charge, provided the BIS is cited as the source. With respect to translations, Users must include a sta...
+   [copyright] ...th the following terms and conditions. © Bank for International Settlements ("BIS") On this page Copyright and permissions Disclaimers General Copyright and permissions Except where expressly stated to the contrary, all copyright and other intellectual property rights in the publications and statistical data available on this website (together " BIS Material "), in the names, acronyms and logos of the BIS, and with respect to the "look and feel" of this website, are owned by the BIS. Except as outlined below, all rights are reserved. ...
+   [free of charge] ...otocopy or redistribute any BIS Material for non-commercial purposes. Users may reproduce a limited extract of BIS Material (other than the statistics published in the BIS Data Portal ) in other publications or products free of charge, provided the BIS is cited as the source. With respect to translations, Users must include a statement that the translation is not an official BIS translation, and that the BIS does not guarantee its accuracy or completeness. Users must also add a note that "the original content can be found at [link to ...
+   (키워드 매치 4)
+
+== exchangerate-terms         200   202790   
+   https://exchangerate.host/terms
+   [personal use] ...eby permitted to receive, process, and display exchangeratehost API Data & Services to individual end-users of your application(s), provided such end users use exchangeratehost API Data & Services strictly for their own personal use, You do not permit Your end users to store, distribute, or otherwise exploit exchangeratehost API Data & Services for any other purposes. For clarity, and without limiting the forgoing, You are permitted solely to use exchangeratehost API Data & Services for reference by Your end users. Except as expressly...
+   [copyright] ...wsletters, radio, television, or internet; remove, obscure, or alter any required notice or any notice of apilayer’s intellectual property rights present on or in the exchangeratehost API, including, but not limited to, copyright, trademark, and/or patent notices; disassemble, translate, reverse engineer or otherwise decompile exchangeratehost API Data & Services or the exchangeratehost API; knowingly cause or permit anything that will impair, jeopardize, violate, or infringe the intellectual property rights of apilayer in exchangerat...
+   [may not] ...eratehost API pages from time to time for any updates or amendments to the terms and conditions of this Agreement; and, have the power and authority to enter into this Agreement. If You do not acknowledge the above, You may not access or use the exchangeratehost API. If You are dissatisfied with the terms, conditions, rules, policies, guidelines, or practices of apilayer, Your sole and exclusive remedy is to discontinue accessing or otherwise using the exchangeratehost API. Company Information www.exchangeratehost.com is a site operat...
+   (키워드 매치 3)
+
+== frankfurter-terms          404   5251     HTTPError 404
+   https://frankfurter.dev/legal/
