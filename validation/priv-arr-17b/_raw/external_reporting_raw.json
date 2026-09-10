@@ -1,0 +1,200 @@
+{
+  "schema": "priv-arr-raw-v1",
+  "collected_at": "2026-09-10T16:39:00+09:00",
+  "companies": {
+    "anthropic": {
+      "name": "Anthropic, PBC",
+      "status": "unlisted_private",
+      "baseline_observations": {
+        "arr": {
+          "value": 65000000000.0,
+          "unit": "USD",
+          "raw": "ARR $65B(7월 런레이트)",
+          "kind": "run_rate",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "규칙 v1.5 ⑥ 비상장 절"
+        },
+        "quarter_note": {
+          "value": "Q2 | $10.9B · 런레이트 $65B(7월) | 첫 영업흑자 $559M | 외부 조달 의존 · FCF 미공시",
+          "unit": null,
+          "raw": null,
+          "kind": "text",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지"
+        },
+        "post_money_valuation": {
+          "value": 965000000000.0,
+          "unit": "USD",
+          "raw": "$965B",
+          "kind": "actual",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "규칙 v1.5 ⑥ 비상장 절"
+        },
+        "cumulative_raised": {
+          "value": 125000000000.0,
+          "unit": "USD",
+          "raw": "약 $125B(2021년~)",
+          "kind": "actual",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "규칙 v1.5 ⑥ 비상장 절"
+        }
+      },
+      "identified_financial_events": [
+        {
+          "event_id": "anth-01-series-h",
+          "date": "2026-05-28",
+          "tier": "Tier 1",
+          "source": "Anthropic Official Newsroom (https://www.anthropic.com/news/series-h)",
+          "metric_name": "run-rate revenue",
+          "value": 47000000000.0,
+          "value_raw": "crossed $47 billion earlier this month",
+          "post_money_valuation": 965000000000.0,
+          "round_raised": 65000000000.0,
+          "note": "공식 발표문 원문: 'Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month.' 공식 명칭은 run-rate revenue이며 ARR 또는 기간매출이 아님."
+        },
+        {
+          "event_id": "anth-02-q2-deck-leak",
+          "date": "2026-05-30",
+          "tier": "Tier 3",
+          "source": "Financial Media / IR Pitch Deck Leak (The Information, Bloomberg)",
+          "metric_name": "projected Q2 revenue / projected operating profit",
+          "projected_q2_revenue": 10900000000.0,
+          "projected_q2_operating_income": 559000000.0,
+          "value_raw": "Q2 revenue $10.9B, operating profit $559M",
+          "note": "5월 Series H 펀딩 당시 투자자 IR 덱에 수록된 2026년 2분기 가이던스/전망치. 확정 공시 분기 매출이 아님."
+        },
+        {
+          "event_id": "anth-03-july-runrate",
+          "date": "2026-08-05",
+          "tier": "Tier 3",
+          "source": "Financial Media Investigative Reports (Bloomberg, GraniteShares, The Information)",
+          "metric_name": "annualized revenue run-rate",
+          "value": 65000000000.0,
+          "value_raw": "annualized run rate reached $65 billion by end of July 2026",
+          "note": "7월 말 단일 월 매출 페이스에 기초한 연율화 런레이트. 회계상 ARR 또는 결산 매출이 아님."
+        },
+        {
+          "event_id": "anth-04-q2-preliminary-leak",
+          "date": "2026-08-15",
+          "tier": "Tier 3",
+          "source": "Financial Media (Forbes, AlphaMatch)",
+          "metric_name": "preliminary Q2 revenue",
+          "value": 11500000000.0,
+          "value_raw": "preliminary Q2 revenue exceeding $11.5B",
+          "note": "언론 유출 잠정치로 5월 전망치($10.9B)를 초과 달성했다고 보도됨."
+        },
+        {
+          "event_id": "anth-05-prior-yoy-q2-2025",
+          "date": "2025-06-30",
+          "tier": "Tier 3",
+          "source": "Historical financial leak reports",
+          "metric_name": "Q2 2025 quarterly revenue",
+          "value": 787000000.0,
+          "value_raw": "$787M in Q2 2025",
+          "note": "언론에 보도된 1년 전 분기 매출 수치이나, 현재 지표(런레이트 $65B)와 성격(지표 정의)이 달라 직접 비교 불가."
+        }
+      ]
+    },
+    "openai": {
+      "name": "OpenAI, LLC / Inc.",
+      "status": "unlisted_private",
+      "baseline_observations": {
+        "arr": {
+          "value": 40000000000.0,
+          "unit": "USD",
+          "raw": "런레이트 $40B+(8/20)",
+          "kind": "run_rate",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "규칙 v1.5 ⑥ 비상장 절"
+        },
+        "quarter_note": {
+          "value": "— | 런레이트 $40B+ (8/20) | 2026 GAAP 손실 ~$60B 전망 | BEP 2030",
+          "unit": null,
+          "raw": null,
+          "kind": "text",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지"
+        },
+        "post_money_valuation": {
+          "value": 852000000000.0,
+          "unit": "USD",
+          "raw": "$852B",
+          "kind": "actual",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "규칙 v1.5 ⑥ 비상장 절"
+        },
+        "cumulative_raised": {
+          "value": 185000000000.0,
+          "unit": "USD",
+          "raw": "약 $180~190B(중간값)",
+          "kind": "actual",
+          "period": null,
+          "as_of": "2026-09-02",
+          "note": "규칙 v1.5 ⑥ 비상장 절"
+        }
+      },
+      "identified_financial_events": [
+        {
+          "event_id": "oai-01-accelerating-round",
+          "date": "2026-03-31",
+          "tier": "Tier 1",
+          "source": "OpenAI Official Newsroom (https://openai.com/index/accelerating-the-next-phase-ai/)",
+          "metric_name": "post_money_valuation / committed_capital",
+          "post_money_valuation": 852000000000.0,
+          "committed_capital": 122000000000.0,
+          "value_raw": "post-money valuation $852B, committed capital $122B",
+          "note": "공식 발표문에는 매출, ARR, 런레이트 수치가 일체 포함되어 있지 않음."
+        },
+        {
+          "event_id": "oai-02-august-runrate",
+          "date": "2026-08-20",
+          "tier": "Tier 3",
+          "source": "Financial Media (Bloomberg, ValueAddVC)",
+          "metric_name": "annualized revenue run-rate",
+          "value": 40000000000.0,
+          "value_raw": "annualized run rate surpassed $40B (monthly revenue pace ~$3.3B)",
+          "note": "2026년 8월 20일 기준 월간 매출 페이스에 기초한 연율화 런레이트. 공식 1차 발표치 부재."
+        },
+        {
+          "event_id": "oai-03-fy2025-audit-leak",
+          "date": "2026-05-15",
+          "tier": "Tier 3",
+          "source": "Financial Media Leak (The Information, NYT)",
+          "metric_name": "2025 recognized revenue / operating loss",
+          "revenue_2025": 13070000000.0,
+          "operating_loss_2025": 20920000000.0,
+          "net_loss_2025": 38500000000.0,
+          "value_raw": "2025 revenue $13.07B, operating loss $20.92B, net loss $38.5B",
+          "note": "감사자료 유출 보도이나 비상장사 내부 자료로 SEC 공시 대상 아님."
+        },
+        {
+          "event_id": "oai-04-2026-quarterly-leak",
+          "date": "2026-08-10",
+          "tier": "Tier 3",
+          "source": "Financial Media Leak",
+          "metric_name": "2026 quarterly recognized revenue",
+          "q1_2026_revenue": 5700000000.0,
+          "q2_2026_revenue": 6700000000.0,
+          "projected_fy2026_revenue": 30000000000.0,
+          "note": "유출 수치이나 OpenAI 공식 발표문에 부재하며 observations.json quarter_note에는 '—'로 결측 처리됨."
+        },
+        {
+          "event_id": "oai-05-prior-yoy-comparison",
+          "date": "2025-08-20",
+          "tier": "Tier 3",
+          "source": "Historical financial leak reports",
+          "metric_name": "annualized run rate in mid-2025",
+          "value_raw": "approx $10B~$13B run-rate (unverified media reports)",
+          "note": "산정 기준 불일치 및 공식 1차 출처 부재로 현재 런레이트 $40B+와 엄밀한 YoY 비교 불가."
+        }
+      ]
+    }
+  }
+}
