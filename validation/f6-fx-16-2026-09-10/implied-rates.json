@@ -1,0 +1,370 @@
+{
+ "TSM/Revenue": [
+  {
+   "period": "2017-01-01~2017-12-31",
+   "local_val": 977447200000,
+   "usd_val": 32977300000,
+   "implied_rate_local_per_usd": 29.640001,
+   "usd_from_accession": "0001193125-18-121866",
+   "usd_filed": "2018-04-19",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2018-01-01~2018-12-31",
+   "local_val": 1031473600000,
+   "usd_val": 33697300000,
+   "implied_rate_local_per_usd": 30.609978,
+   "usd_from_accession": "0001193125-19-108390",
+   "usd_filed": "2019-04-17",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2019-01-01~2019-12-31",
+   "local_val": 1069985400000,
+   "usd_val": 35773500000,
+   "implied_rate_local_per_usd": 29.91,
+   "usd_from_accession": "0001193125-20-107579",
+   "usd_filed": "2020-04-15",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2020-01-01~2020-12-31",
+   "local_val": 1339254800000,
+   "usd_val": 47694300000,
+   "implied_rate_local_per_usd": 28.079976,
+   "usd_from_accession": "0001193125-21-118512",
+   "usd_filed": "2021-04-16",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2021-01-01~2021-12-31",
+   "local_val": 1587415000000,
+   "usd_val": 57224800000,
+   "implied_rate_local_per_usd": 27.739983,
+   "usd_from_accession": "0001193125-22-104891",
+   "usd_filed": "2022-04-14",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2022-01-01~2022-12-31",
+   "local_val": 2263891300000,
+   "usd_val": 73670400000,
+   "implied_rate_local_per_usd": 30.729999,
+   "usd_from_accession": "0001193125-23-107214",
+   "usd_filed": "2023-04-20",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2023-01-01~2023-12-31",
+   "local_val": 2161735800000,
+   "usd_val": 70598800000,
+   "implied_rate_local_per_usd": 30.620008,
+   "usd_from_accession": "0001193125-24-099840",
+   "usd_filed": "2024-04-18",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2024-01-01~2024-12-31",
+   "local_val": 2894307700000,
+   "usd_val": 88268000000,
+   "implied_rate_local_per_usd": 32.79,
+   "usd_from_accession": "0001193125-25-083423",
+   "usd_filed": "2025-04-17",
+   "usd_form": "20-F"
+  }
+ ],
+ "TSM/ProfitLoss": [
+  {
+   "period": "2017-01-01~2017-12-31",
+   "local_val": 345039000000,
+   "usd_val": 11641000000,
+   "implied_rate_local_per_usd": 29.639979,
+   "usd_from_accession": "0001193125-18-121866",
+   "usd_filed": "2018-04-19",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2018-01-01~2018-12-31",
+   "local_val": 363106200000,
+   "usd_val": 11862300000,
+   "implied_rate_local_per_usd": 30.610101,
+   "usd_from_accession": "0001193125-19-108390",
+   "usd_filed": "2019-04-17",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2019-01-01~2019-12-31",
+   "local_val": 354027000000,
+   "usd_val": 11836400000,
+   "implied_rate_local_per_usd": 29.910023,
+   "usd_from_accession": "0001193125-20-107579",
+   "usd_filed": "2020-04-15",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2020-01-01~2020-12-31",
+   "local_val": 511008000000,
+   "usd_val": 18198300000,
+   "implied_rate_local_per_usd": 28.079985,
+   "usd_from_accession": "0001193125-21-118512",
+   "usd_filed": "2021-04-16",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2021-01-01~2021-12-31",
+   "local_val": 592880600000,
+   "usd_val": 21372800000,
+   "implied_rate_local_per_usd": 27.739959,
+   "usd_from_accession": "0001193125-22-104891",
+   "usd_filed": "2022-04-14",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2022-01-01~2022-12-31",
+   "local_val": 993294700000,
+   "usd_val": 32323300000,
+   "implied_rate_local_per_usd": 30.72999,
+   "usd_from_accession": "0001193125-23-107214",
+   "usd_filed": "2023-04-20",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2023-01-01~2023-12-31",
+   "local_val": 851027700000,
+   "usd_val": 27793200000,
+   "implied_rate_local_per_usd": 30.619997,
+   "usd_from_accession": "0001193125-24-099840",
+   "usd_filed": "2024-04-18",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2024-01-01~2024-12-31",
+   "local_val": 1157523900000,
+   "usd_val": 35301100000,
+   "implied_rate_local_per_usd": 32.790024,
+   "usd_from_accession": "0001193125-25-083423",
+   "usd_filed": "2025-04-17",
+   "usd_form": "20-F"
+  }
+ ],
+ "BABA/Revenues": [
+  {
+   "period": "2014-04-01~2015-03-31",
+   "local_val": 76204000000,
+   "usd_val": 12293000000,
+   "implied_rate_local_per_usd": 6.198975,
+   "usd_from_accession": "0001047469-15-005768",
+   "usd_filed": "2015-06-25",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2015-04-01~2016-03-31",
+   "local_val": 101143000000,
+   "usd_val": 15686000000,
+   "implied_rate_local_per_usd": 6.447979,
+   "usd_from_accession": "0001047469-16-013400",
+   "usd_filed": "2016-05-24",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2016-04-01~2017-03-31",
+   "local_val": 158273000000,
+   "usd_val": 22994000000,
+   "implied_rate_local_per_usd": 6.88323,
+   "usd_from_accession": "0001047469-17-007286",
+   "usd_filed": "2017-11-24",
+   "usd_form": "6-K"
+  },
+  {
+   "period": "2017-04-01~2018-03-31",
+   "local_val": 250266000000,
+   "usd_val": 39898000000,
+   "implied_rate_local_per_usd": 6.272645,
+   "usd_from_accession": "0001047469-18-005257",
+   "usd_filed": "2018-07-27",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2018-04-01~2019-03-31",
+   "local_val": 376844000000,
+   "usd_val": 56152000000,
+   "implied_rate_local_per_usd": 6.711141,
+   "usd_from_accession": "0001047469-19-006257",
+   "usd_filed": "2019-11-13",
+   "usd_form": "6-K"
+  },
+  {
+   "period": "2019-04-01~2020-03-31",
+   "local_val": 509711000000,
+   "usd_val": 71985000000,
+   "implied_rate_local_per_usd": 7.080795,
+   "usd_from_accession": "0001104659-21-010913",
+   "usd_filed": "2021-02-02",
+   "usd_form": "6-K"
+  },
+  {
+   "period": "2020-04-01~2021-03-31",
+   "local_val": 717289000000,
+   "usd_val": 109480000000,
+   "implied_rate_local_per_usd": 6.551781,
+   "usd_from_accession": "0001104659-21-096092",
+   "usd_filed": "2021-07-27",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2021-04-01~2022-03-31",
+   "local_val": 853062000000,
+   "usd_val": 134567000000,
+   "implied_rate_local_per_usd": 6.339311,
+   "usd_from_accession": "0001104659-22-082622",
+   "usd_filed": "2022-07-26",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2022-04-01~2023-03-31",
+   "local_val": 868687000000,
+   "usd_val": 126491000000,
+   "implied_rate_local_per_usd": 6.86758,
+   "usd_from_accession": "0000950170-23-033752",
+   "usd_filed": "2023-07-21",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2023-04-01~2024-03-31",
+   "local_val": 941168000000,
+   "usd_val": 130350000000,
+   "implied_rate_local_per_usd": 7.220315,
+   "usd_from_accession": "0000950170-24-063767",
+   "usd_filed": "2024-05-23",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2024-04-01~2025-03-31",
+   "local_val": 996347000000,
+   "usd_val": 137300000000,
+   "implied_rate_local_per_usd": 7.256715,
+   "usd_from_accession": "0000950170-25-090161",
+   "usd_filed": "2025-06-26",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2025-04-01~2026-03-31",
+   "local_val": 1023670000000,
+   "usd_val": 148401000000,
+   "implied_rate_local_per_usd": 6.897999,
+   "usd_from_accession": "0001193125-26-231755",
+   "usd_filed": "2026-05-20",
+   "usd_form": "20-F"
+  }
+ ],
+ "BABA/NetIncomeLoss": [
+  {
+   "period": "2014-04-01~2015-03-31",
+   "local_val": 24261000000,
+   "usd_val": 3914000000,
+   "implied_rate_local_per_usd": 6.198518,
+   "usd_from_accession": "0001047469-15-005768",
+   "usd_filed": "2015-06-25",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2015-04-01~2016-03-31",
+   "local_val": 71460000000,
+   "usd_val": 11083000000,
+   "implied_rate_local_per_usd": 6.447713,
+   "usd_from_accession": "0001047469-16-013400",
+   "usd_filed": "2016-05-24",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2016-04-01~2017-03-31",
+   "local_val": 43675000000,
+   "usd_val": 6345000000,
+   "implied_rate_local_per_usd": 6.883373,
+   "usd_from_accession": "0001047469-17-007286",
+   "usd_filed": "2017-11-24",
+   "usd_form": "6-K"
+  },
+  {
+   "period": "2017-04-01~2018-03-31",
+   "local_val": 64093000000,
+   "usd_val": 10218000000,
+   "implied_rate_local_per_usd": 6.272558,
+   "usd_from_accession": "0001047469-18-005257",
+   "usd_filed": "2018-07-27",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2018-04-01~2019-03-31",
+   "local_val": 87886000000,
+   "usd_val": 13095000000,
+   "implied_rate_local_per_usd": 6.711417,
+   "usd_from_accession": "0001047469-19-006257",
+   "usd_filed": "2019-11-13",
+   "usd_form": "6-K"
+  },
+  {
+   "period": "2019-04-01~2020-03-31",
+   "local_val": 149433000000,
+   "usd_val": 21104000000,
+   "implied_rate_local_per_usd": 7.08079,
+   "usd_from_accession": "0001104659-21-010913",
+   "usd_filed": "2021-02-02",
+   "usd_form": "6-K"
+  },
+  {
+   "period": "2020-04-01~2021-03-31",
+   "local_val": 150578000000,
+   "usd_val": 22983000000,
+   "implied_rate_local_per_usd": 6.551712,
+   "usd_from_accession": "0001104659-21-096092",
+   "usd_filed": "2021-07-27",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2021-04-01~2022-03-31",
+   "local_val": 62249000000,
+   "usd_val": 9820000000,
+   "implied_rate_local_per_usd": 6.339002,
+   "usd_from_accession": "0001104659-22-082622",
+   "usd_filed": "2022-07-26",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2022-04-01~2023-03-31",
+   "local_val": 72783000000,
+   "usd_val": 10598000000,
+   "implied_rate_local_per_usd": 6.867617,
+   "usd_from_accession": "0000950170-23-033752",
+   "usd_filed": "2023-07-21",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2023-04-01~2024-03-31",
+   "local_val": 80009000000,
+   "usd_val": 11081000000,
+   "implied_rate_local_per_usd": 7.220377,
+   "usd_from_accession": "0000950170-24-063767",
+   "usd_filed": "2024-05-23",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2024-04-01~2025-03-31",
+   "local_val": 130109000000,
+   "usd_val": 17929000000,
+   "implied_rate_local_per_usd": 7.256902,
+   "usd_from_accession": "0000950170-25-090161",
+   "usd_filed": "2025-06-26",
+   "usd_form": "20-F"
+  },
+  {
+   "period": "2025-04-01~2026-03-31",
+   "local_val": 103592000000,
+   "usd_val": 15018000000,
+   "implied_rate_local_per_usd": 6.897856,
+   "usd_from_accession": "0001193125-26-231755",
+   "usd_filed": "2026-05-20",
+   "usd_form": "20-F"
+  }
+ ]
+}
