@@ -41,7 +41,9 @@ allow: /*sitemap.xml*
 
 ## 2. 이용약관 원문 보존과 4개 항목
 
-전문은 `raw/dl-terms-clean.txt` (32,827자). 출처는 푸터 "DATA LICENSE TERMS AND CONDITIONS" 링크인 `https://data.nasdaq.com/terms` 다.
+전문은 `raw/dl-terms-rendered.txt` (32,827자). 출처는 푸터 "DATA LICENSE TERMS AND CONDITIONS" 링크인 `https://data.nasdaq.com/terms` 다.
+
+> 초판에는 `dl-terms-clean.txt` 가 함께 있었으나 `dl-terms-rendered.txt` 와 **바이트 단위로 동일**했다(md5 `de6e912f5dfe00f3a7a6ea1b42bf59d9`). 원본이 이미 실제 개행을 담고 있어 정규화 처리가 무효과였던 탓이다. 같은 파일 2부를 남길 이유가 없어 `dl-terms-clean.txt` 를 삭제하고 조회 원문 그대로인 `dl-terms-rendered.txt` 만 남겼다.
 
 **페이지 최상단 고지 (원문)**
 
@@ -122,8 +124,8 @@ F6(설계 5.1)이 요구하는 항목별로 맞췄다. 출처는 `raw/dl-ZEE-ren
 |---|---|---|---|
 | 향후 4개 분기 제공 | `per_type`="Q" + `per_end_date` 로 분기 행 제공 | 미래 기간 **최대 4년**분 제공 | **충족** |
 | 회계분기 종료일 | `per_end_date` (Date, 필터·PK) | `per_end_date` (Date, 필터·PK) | **충족** |
-| 회계 vs 역년 구분 | `per_fisc_year`/`per_fisc_qtr` 와 `per_cal_year`/`per_cal_qtr` 분리 | 동일 4필드 | **충족** |
-| currency | `currency_code` | `currency_code` | **충족** |
+| **회계분기 vs 역분기 분리** | `per_fisc_year`/`per_fisc_qtr` 와 `per_cal_year`/`per_cal_qtr` 를 **별도 컬럼으로 동시 제공** | **동일 4필드가 EEH 테이블 자체에 존재.** 원문 정의: `per_fisc_qtr` = "The fiscal quarter to which this estimate applies", `per_cal_qtr` = "The calendar quarter to which this estimate applies" | **충족 — Finnhub `period` 문제의 해답** (§4.2) |
+| currency | `currency_code` (ZACKS/EE 테이블) | **`currency_code` 가 ZACKS/EEH 테이블 컬럼 목록 안에 직접 존재** (MT 를 조인하지 않아도 됨). 원문: `currency_code String Currency code` | **충족 — 백테스트에서도 통화 유지** (§4.3) |
 | share_basis | 방법론에 **diluted** 명시 | 동일 | **충족** |
 | ADR/ADS 구분 | ZACKS/MT `asset_type` (ADR/CDN/COM/CEF/ETF/MLP) | 동일 MT 테이블 포함 | **충족** |
 | accounting | **BNRI** 문서화 | **BNRI** 문서화 | **충족** |
@@ -148,7 +150,28 @@ FAQ 보충 원문이다.
 
 또 Zacks 는 **Street 방법론 상품을 따로 판다**(ZSEE North American Street Earnings Estimates, ZSES Street Earnings Surprises). 즉 조정 기준이 상품 선택 사항이다.
 
-### 4.2 NTM EPS 를 공급사가 이미 계산해 준다 (ZACKS/LTG)
+### 4.2 회계분기와 역분기의 분리 — Finnhub `period` 문제의 해답
+
+ZACKS/EEH 는 같은 행에 네 개의 기간 식별자를 동시에 준다.
+
+| 컬럼 | 원문 정의 |
+|---|---|
+| `per_fisc_year` | "The fiscal year to which this estimate applies." |
+| `per_fisc_qtr` | "The fiscal quarter to which this estimate applies." |
+| `per_cal_year` | "The calendar year to which this estimate applies." |
+| `per_cal_qtr` | "The calendar quarter to which this estimate applies." |
+
+여기에 `per_end_date`(Date, 필터·PK)와 `per_type`("Q"/"A")가 더해진다.
+
+**이것이 그동안 막혀 있던 지점을 푼다.** 기존 조사에서 Finnhub 의 `period` 필드가 회계분기인지 역분기인지 끝내 확정하지 못했고, 무료 `api.nasdaq.com` 은 `Oct 2026` 같은 **월 라벨 하나만** 줘서 NTM-SOURCE-05 에서 "공급사 라벨은 달력화돼 있어 Apple 처럼 실제 분기말(09-26)과 며칠 어긋날 수 있다" 는 단서를 달아야 했다. EEH 는 회계 기준과 역년 기준을 **추론이 아니라 별도 컬럼으로 구분해 주므로** 그 애매함이 사라진다. Apple(회계연도 말 09-26)이나 NVIDIA(01-31), Oracle(05-31)처럼 역년과 어긋나는 기업에서 특히 값이 크다.
+
+### 4.3 EEH 의 통화 필드 — 백테스트 경로에서도 유지된다
+
+과거 시점 재현은 EE 가 아니라 **EEH** 로 하므로, EEH 쪽에 통화 필드가 없으면 백테스트에서 통화가 다시 미확인이 된다. 원문을 다시 확인한 결과 `currency_code`(String, "Currency code")는 **ZACKS/EEH 테이블의 컬럼 목록 안에 직접 들어 있다.** ZACKS/MT 를 조인해야만 얻는 값이 아니다. 방법론의 "denominated in U.S. and/or Canadian dollars" 표기와 함께 보면, 행 단위 통화 식별과 상품 단위 통화 범위가 모두 확보된다.
+
+근거 위치는 `raw/dl-ZEEH-rendered.txt` 의 `EARNINGS ESTIMATES HISTORY (ZACKS/EEH)` 블록(문자 오프셋 3101~5232, `MASTER TABLE (ZACKS/MT)` 블록 시작 전)이며, 그 구간 안에서 `currency_code` 가 1회 출현한다.
+
+### 4.4 NTM EPS 를 공급사가 이미 계산해 준다 (ZACKS/LTG)
 
 > `eps_mean_est_fwd12m` — "Earnings per share (EPS) mean estimate for the next 12 months. **This is the sum of the individual mean estimates for the next four quarters.**"
 > `eps_high_est_fwd12m`, `eps_low_est_fwd12m` — 동일 방식의 high/low 합
@@ -198,7 +221,7 @@ F6 의 `NTM EPS = 네 분기 EPS 합` 과 정의가 일치한다. LTG 는 ZEE �
 |---|---|
 | `REPORT.md` | 이 보고서 |
 | `raw/dl-robots.txt` | robots.txt 원문 |
-| `raw/dl-terms-clean.txt`, `dl-terms-rendered.txt` | 약관 전문 (32,827자) |
+| `raw/dl-terms-rendered.txt` | 약관 전문 (32,827자) |
 | `raw/dl-ZEE-rendered.txt` | ZEE 상품 페이지 전문 (데이터 사전 포함) |
 | `raw/dl-ZEEH-rendered.txt` | ZEEH 상품 페이지 전문 (데이터 사전·방법론 포함) |
 | `raw/third-party-terms.pdf`, `.txt` | §1.3 이 참조하는 third party 약관 v1.8 (Zacks 미포함 확인용) |
