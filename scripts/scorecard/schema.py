@@ -27,6 +27,7 @@ OBSERVATION_STATUSES = {
 PERIOD_REQUIRED_METRICS = {
     "revenue_ttm", "operating_income_ttm", "operating_margin_ttm",
     "ocf_ttm", "capex_ttm", "fcf_ttm", "net_borrowing_ttm",
+    "net_income_ttm", "revenue_ttm_prior",
     # 분기 EPS 는 어느 분기인지가 값의 일부다. 기간 없이는 4분기 연속 판정을 할 수 없다.
     "ntm_eps_quarter",
 }
@@ -63,6 +64,10 @@ METRICS: dict[str, dict[str, str]] = {
     "ps_ratio": {"unit": "ratio", "type": "number"},
     "revenue_ttm": {"unit": "USD", "type": "number"},
     "operating_income_ttm": {"unit": "USD", "type": "number"},
+    # F6 v1.7 신규 3종. revenue_ttm·operating_income_ttm 은 이미 있어 다시 만들지 않는다.
+    "net_income_ttm": {"unit": "USD", "type": "number"},
+    "revenue_ttm_prior": {"unit": "USD", "type": "number"},
+    "arr_prior": {"unit": "USD", "type": "number"},
     "operating_margin_ttm": {"unit": "ratio", "type": "number"},
     "ocf_ttm": {"unit": "USD", "type": "number"},
     "capex_ttm": {"unit": "USD", "type": "number"},
@@ -218,10 +223,7 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         _require(isinstance(spec, dict) and "range" in spec and "mode" in spec and "label" in spec, f"rules.json.factors.{fid}: label/range/mode 필요")
         lo, hi = spec["range"]
         _require(_is_number(lo) and _is_number(hi) and lo <= hi, f"rules.json.factors.{fid}: range 오류")
-    bands = payload["policies"]["f6"]["bands"]
-    _require(isinstance(bands, list) and bands[-1]["upper"] is None, "rules.json: f6 bands 마지막은 upper null")
-    uppers = [b["upper"] for b in bands[:-1]]
-    _require(uppers == sorted(uppers), "rules.json: f6 bands upper 는 오름차순")
+    _validate_f6_policy(payload["policies"]["f6"], factors["F6"])
     for item in payload["checklist"]:
         _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
     ids = [d["id"] for d in payload["decisions"]]
@@ -285,6 +287,88 @@ def _validate_source_policy(policy: Any) -> None:
         _require(entry["reason_type"] in ("technical", "terms", "both"),
                  f"{where}: reason_type 은 technical/terms/both 중 하나여야 함")
         _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
+
+
+# F6 는 두 모드가 공존한다. v1.5·v1.6 은 NTM PER 단일 구간표(bands), v1.7 은 네 파라미터(parameters)다.
+# 과거 규칙 파일을 계속 읽을 수 있어야 하므로 한쪽을 지우지 않고 둘 다 검증한다.
+P4_CONDITION_IDS = {"nonop_share", "period_basis_not_ttm", "short_history", "stale_asof"}
+F6_COMPARISONS = {"upper_exclusive", "lower_inclusive"}
+
+
+def _validate_f6_bands(bands: Any, where: str, comparison: str) -> None:
+    """반개방 구간표. upper 는 오름차순·마지막 null, lower 는 내림차순·마지막 null 이다."""
+    _require(isinstance(bands, list) and bands, f"{where}: bands 배열 필요")
+    key = "upper" if comparison == "upper_exclusive" else "lower"
+    for idx, b in enumerate(bands):
+        _expect_keys(b, [key, "score"], f"{where}[{idx}]")
+        _require(_is_number(b["score"]), f"{where}[{idx}]: score 는 숫자")
+    _require(bands[-1][key] is None, f"{where}: 마지막 구간의 {key} 는 null (열린 끝)")
+    edges = [b[key] for b in bands[:-1]]
+    _require(all(_is_number(e) for e in edges), f"{where}: 경계는 숫자")
+    ordered = sorted(edges) if key == "upper" else sorted(edges, reverse=True)
+    _require(edges == ordered, f"{where}: {key} 경계 정렬 오류 — {'오름차순' if key == 'upper' else '내림차순'} 이어야 함")
+
+
+def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
+    _require(isinstance(f6, dict), "rules.policies.f6: object 여야 함")
+    mode = f6.get("mode", "per_band")
+    if mode != "parameters":
+        # v1.5·v1.6 경로. 기존 검증을 그대로 유지한다.
+        bands = f6["bands"]
+        _require(isinstance(bands, list) and bands[-1]["upper"] is None, "rules.json: f6 bands 마지막은 upper null")
+        uppers = [b["upper"] for b in bands[:-1]]
+        _require(uppers == sorted(uppers), "rules.json: f6 bands upper 는 오름차순")
+        return
+
+    params = f6.get("parameters")
+    _require(isinstance(params, dict) and params, "rules.policies.f6.parameters: 비어 있을 수 없음")
+    total_min = 0
+    for pid, spec in params.items():
+        where = f"rules.policies.f6.parameters.{pid}"
+        _expect_keys(spec, ["label", "question", "score_range", "comparison", "unit", "formula", "inputs", "bands"],
+                     where, optional=["requires_positive", "currency_note"])
+        _require(spec["comparison"] in F6_COMPARISONS, f"{where}: comparison 은 {sorted(F6_COMPARISONS)} 중 하나")
+        lo, hi = spec["score_range"]
+        _require(_is_number(lo) and _is_number(hi) and lo <= hi <= 0, f"{where}: score_range 는 음수 구간이어야 함")
+        _validate_f6_bands(spec["bands"], f"{where}.bands", spec["comparison"])
+        scores = [b["score"] for b in spec["bands"]]
+        _require(min(scores) == lo and max(scores) == hi, f"{where}: bands 점수가 score_range {spec['score_range']} 를 덮지 않음")
+        # 입력 지표가 카탈로그에 있어야 한다. 없는 metric 을 산식에 적어 두면 영원히 pending 이 된다.
+        for m in spec["inputs"]:
+            _require(m in METRICS, f"{where}.inputs: 알 수 없는 metric {m!r}")
+        for m in spec.get("requires_positive", []):
+            _require(m in spec["inputs"], f"{where}.requires_positive: inputs 에 없는 {m!r}")
+        total_min += lo
+
+    p4 = f6.get("p4")
+    _expect_keys(p4, ["label", "question", "mode", "cap_steps", "note", "conditions"], "rules.policies.f6.p4")
+    _require(p4["mode"] == "subtotal_demotion", "rules.policies.f6.p4: mode 는 subtotal_demotion")
+    _require(isinstance(p4["cap_steps"], int) and p4["cap_steps"] >= 1, "rules.policies.f6.p4: cap_steps 는 1 이상 정수")
+    seen: set[str] = set()
+    for idx, cond in enumerate(p4["conditions"]):
+        where = f"rules.policies.f6.p4.conditions[{idx}]"
+        _expect_keys(cond, ["id", "note"], where, optional=["threshold"])
+        # 코드가 구현하지 않은 조건 id 를 규칙에 적어 두면 선언만 있고 걸리지 않는 조건이 생긴다.
+        _require(cond["id"] in P4_CONDITION_IDS, f"{where}: 구현되지 않은 조건 id {cond['id']!r}")
+        _require(cond["id"] not in seen, f"{where}: 조건 id 중복 {cond['id']!r}")
+        seen.add(cond["id"])
+
+    tracks = f6.get("tracks")
+    _require(isinstance(tracks, dict) and tracks, "rules.policies.f6.tracks: 비어 있을 수 없음")
+    factor_min = factor["range"][0]
+    for tid, spec in tracks.items():
+        where = f"rules.policies.f6.tracks.{tid}"
+        _expect_keys(spec, ["label", "parameters", "floor", "select"], where,
+                     optional=["auto_p4_conditions", "note"])
+        _require(_is_number(spec["floor"]) and factor_min <= spec["floor"] <= 0,
+                 f"{where}: floor 가 factor range {factor['range']} 밖")
+        for pid in spec["parameters"]:
+            _require(pid in params or pid == "P4", f"{where}.parameters: 알 수 없는 파라미터 {pid!r}")
+        for cid in spec.get("auto_p4_conditions", []):
+            _require(cid in seen, f"{where}.auto_p4_conditions: p4 에 없는 조건 {cid!r}")
+    # 파라미터 합계 하한이 factor range 하한과 맞아야 배점 재배분이 규칙 안에서 검산된다.
+    _require(total_min == factor_min,
+             f"rules.policies.f6: 파라미터 합계 하한 {total_min} 이 factors.F6.range 하한 {factor_min} 과 다름")
 
 
 # ------------------------------------------------------------------ observations

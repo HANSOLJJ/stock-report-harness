@@ -1,0 +1,59 @@
+====================================================================================================================
+F6-SPEC-18 — SEC companyfacts 에서 TTM 4종 복원 (저장 원자료 재사용, 신규 호출 없음)
+====================================================================================================================
+
+회사             기준                    revenue_ttm              prior       net_income        operating
+meta           ttm               228,248,000,000    178,805,000,000   68,098,000,000   86,927,000,000
+nvidia         ttm               302,969,000,000    165,218,000,000  192,879,000,000  197,579,000,000
+alphabet       ttm               445,866,000,000    371,399,000,000  244,205,000,000  147,628,000,000
+microsoft      ttm               331,839,000,000    281,724,000,000  133,749,000,000  155,237,000,000
+amazon         ttm               775,680,000,000    670,038,000,000  135,281,000,000   93,712,000,000
+apple          ttm               466,823,000,000    408,625,000,000  128,930,000,000  154,859,000,000
+oracle         ttm                67,357,000,000     57,399,000,000   17,087,000,000   20,606,000,000
+palantir       ttm                 6,155,941,000      3,440,587,000    3,016,692,000    2,634,652,000
+tesla          ttm               103,619,000,000     92,720,000,000    3,804,000,000    4,372,000,000
+spacex-xai     quarterly_yoy       7,814,000,000      4,071,000,000     -541,000,000     -143,000,000
+tsmc           annual          2,894,307,700,000  2,161,735,800,000 1,157,523,900,000 1,322,053,000,000
+alibaba        annual          1,023,670,000,000    996,347,000,000  103,592,000,000   50,150,000,000
+
+[혼합·검산] 개념을 섞었는가, 겹치는 기간의 값이 맞는가
+  meta           혼합   ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  nvidia         혼합   ['Revenues', 'RevenueFromContractWithCustomerExcludingAssessedTax']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  alphabet       혼합   ['Revenues', 'RevenueFromContractWithCustomerExcludingAssessedTax']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  microsoft      혼합   ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  amazon         단일   ['RevenueFromContractWithCustomerExcludingAssessedTax']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  apple          혼합   ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  oracle         혼합   ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues']
+                 겹침 불일치 3건 · 2019년 이후 0건 · 최대 상대오차 0.00982
+  palantir       단일   ['RevenueFromContractWithCustomerExcludingAssessedTax']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  tesla          단일   ['Revenues']
+                 겹침 불일치 4건 · 2019년 이후 0건 · 최대 상대오차 0.00007
+  spacex-xai     단일   ['RevenueFromContractWithCustomerExcludingAssessedTax']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  tsmc           단일   ['Revenue']
+                 겹침 불일치 0건 · 2019년 이후 0건
+  alibaba        단일   ['Revenues']
+                 겹침 불일치 0건 · 2019년 이후 0건
+
+[개념·기간] 어느 태그를 어느 기간으로 썼는가
+  meta           us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2025-07-01~2026-06-30
+  nvidia         us-gaap:Revenues+RevenueFromContractWithCustomerExclud [USD] 2025-07-28~2026-07-26
+  alphabet       us-gaap:Revenues+RevenueFromContractWithCustomerExclud [USD] 2025-07-01~2026-06-30
+  microsoft      us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2025-07-01~2026-06-30
+  amazon         us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2025-07-01~2026-06-30
+  apple          us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2025-06-28~2026-06-27
+  oracle         us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2025-06-01~2026-05-31
+  palantir       us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2025-07-01~2026-06-30
+  tesla          us-gaap:Revenues                                       [USD] 2025-07-01~2026-06-30
+  spacex-xai     us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2026-04-01~2026-06-30
+  tsmc           ifrs-full:Revenue                                        [TWD] 2024-01-01~2024-12-31
+  alibaba        us-gaap:Revenues                                       [CNY] 2025-04-01~2026-03-31
+
+_derived/ttm_inputs.json 저장 — 복원 근거(FY·Q1·Q2·Q3)를 함께 담았다

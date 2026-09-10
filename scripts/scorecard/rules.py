@@ -98,6 +98,71 @@ class RuleSet:
             "tolerance": tol,
         }
 
+    # ------------------------------------------------------------ F6 v1.7 파라미터
+    @property
+    def f6_mode(self) -> str:
+        """per_band(v1.5·v1.6) 인지 parameters(v1.7) 인지. 과거 규칙 파일도 계속 읽는다."""
+        return self.f6.get("mode", "per_band")
+
+    def f6_parameters(self) -> dict[str, Any]:
+        return self.f6.get("parameters") or {}
+
+    def f6_parameter_band(self, pid: str, value: float) -> tuple[int, str]:
+        """파라미터 값을 반개방 구간에 넣어 (점수, 구간 라벨) 반환. 표시 반올림은 개입하지 않는다."""
+        spec = self.f6_parameters().get(pid)
+        if spec is None:
+            raise SchemaError(f"F6 파라미터 {pid!r} 가 규칙에 없음")
+        if spec["comparison"] == "upper_exclusive":
+            lower = 0.0
+            for band in spec["bands"]:
+                upper = band["upper"]
+                if upper is None or value < upper:
+                    label = f"{lower:g}~{upper:g}" if upper is not None else f"{lower:g}+"
+                    return int(band["score"]), label
+                lower = float(upper)
+        else:                                     # lower_inclusive — 큰 값이 좋다
+            upper = None
+            for band in spec["bands"]:
+                low = band["lower"]
+                if low is None or value >= low:
+                    label = f"{low:g}~{upper:g}" if (low is not None and upper is not None) else (
+                        f"{low:g}+" if low is not None else f"~{upper:g}")
+                    return int(band["score"]), label
+                upper = float(low)
+        raise SchemaError(f"F6 파라미터 {pid} 구간표가 값을 덮지 못함: {value!r}")
+
+    def f6_parameter_boundaries(self, pid: str) -> list[float]:
+        spec = self.f6_parameters().get(pid) or {}
+        key = "upper" if spec.get("comparison") == "upper_exclusive" else "lower"
+        return [float(b[key]) for b in spec.get("bands", []) if b.get(key) is not None]
+
+    def f6_parameter_boundary_flag(self, pid: str, value: float) -> dict[str, Any]:
+        """경계 ±tolerance 표시. 점수를 바꾸지 않는다."""
+        tol = float(self.f6["boundary_tolerance"])
+        edges = self.f6_parameter_boundaries(pid)
+        if not edges:
+            return {"flag": False, "nearest_boundary": None, "distance_ratio": None, "tolerance": tol}
+        nearest = min(edges, key=lambda b: abs(value - b) / abs(b) if b else abs(value - b))
+        distance = (value - nearest) / nearest if nearest else 0.0
+        return {
+            "flag": round(abs(distance), 12) <= tol,
+            "nearest_boundary": nearest,
+            "distance_ratio": distance,
+            "tolerance": tol,
+        }
+
+    def f6_tracks(self) -> dict[str, Any]:
+        return self.f6.get("tracks") or {}
+
+    def f6_track(self, track_id: str) -> dict[str, Any]:
+        spec = self.f6_tracks().get(track_id)
+        if spec is None:
+            raise SchemaError(f"F6 트랙 {track_id!r} 가 규칙에 없음")
+        return spec
+
+    def f6_p4(self) -> dict[str, Any]:
+        return self.f6.get("p4") or {}
+
     # ------------------------------------------------------------ F3 ladder
     def f3_ladder(self, points: float, imitation_pass: bool, door_closed_pass: bool) -> tuple[int, str]:
         spec = self.factor("F3")

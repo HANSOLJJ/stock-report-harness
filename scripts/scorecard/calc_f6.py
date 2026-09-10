@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from . import calc_f6_params
 from .inputs import JudgmentLookup, ObsLookup, carried_note, factor_result, obs_note, pending_info
 from .rules import RuleSet, decision_choice
 
@@ -265,6 +266,11 @@ def _private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] |
 
 def compute_f6(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
     judgment = judgments.get(company["company_id"], FACTOR)
+    # v1.7 은 F6 를 네 파라미터로 분해한다. v1.5·v1.6 실행은 아래 per_band 경로를 그대로 쓴다.
+    if rules.f6_mode == "parameters":
+        if company["listed"]:
+            return calc_f6_params.compute_listed(company, obs, judgment, rules)
+        return calc_f6_params.compute_private(company, obs, judgment, rules)
     if company["listed"]:
         return _listed(company, obs, judgment, rules, run)
     return _private(company, obs, judgment, rules)
