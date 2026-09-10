@@ -1,7 +1,7 @@
 {
   "summary": {
     "task_id": "F6H-SOURCES-02-R1",
-    "description": "Yahoo 저장 원자료 12개사 4단계 정밀 검증 (값 존재 / 분기창 / 기준 / 채점가능)",
+    "description": "Yahoo 저장 원자료 12개사 4단계 정밀 검증 (R2 보완: 통화 파싱·유한수치·중복행·동적판정 반영)",
     "raw_source_path": "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\validation\\f6h-source-batch-10\\_raw\\yahoo",
     "total_companies": 12,
     "stage1_raw_value_pass_count": "11/12",
@@ -10,13 +10,19 @@
     "stage4_scoring_eligible_count": "0/12",
     "spcx_details": {
       "actual_count": 1,
+      "unique_actual_quarters": 1,
       "estimate_count": 2,
-      "status": "2A 1건 부족으로 2A+2E 행수 미충족 (IPO 2026-06-12 확정실적 1건만 존재)"
+      "duplicate_rows": 0,
+      "stage1_pass": false,
+      "status": "유효 실적 분기 부족 (총 1행, 중복제외 1분기, 2A 요건 미달); 음수 실적 1건 ([-0.09])"
     },
     "baba_details": {
+      "stage1_pass": true,
       "estimate_currency": "CNY",
-      "trade_currency": "USD",
-      "status": "전망 통화(CNY)와 매매 통화(USD) 불일치로 채점 불가"
+      "raw_trade_currency": "USD",
+      "ref_trade_currency": "USD",
+      "currency_match": false,
+      "status": "전망 통화(CNY)와 거래 통화(USD) 불일치 (환율/ADR 변환 근거 부재); ADS 8:1 보통주 변환 비율 설명 및 본사 통화(CNY) 매핑 미표기"
     },
     "retraction_confirmations": [
       "Yahoo 전면 401 차단 및 0/12 단정 공식 철회 (저장자료에서 11/12 값 존재 확인)",
@@ -39,11 +45,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -57,21 +65,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 42명, +1q: 41명",
         "min_max_provided": true,
         "min_max_details": "0q: [3.13, 7.64], +1q: [6.84, 9.12]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -88,11 +98,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -106,21 +118,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 42명, +1q: 39명",
         "min_max_provided": true,
         "min_max_details": "0q: [2.34, 2.7], +1q: [2.56, 3.117]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -137,11 +151,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -155,21 +171,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 42명, +1q: 39명",
         "min_max_provided": true,
         "min_max_details": "0q: [2.64, 3.68], +1q: [2.99, 4.09232]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -186,11 +204,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -204,21 +224,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 25명, +1q: 25명",
         "min_max_provided": true,
         "min_max_details": "0q: [4.43, 4.83363], +1q: [4.72, 5.02]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -235,7 +257,9 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
@@ -253,21 +277,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 44명, +1q: 42명",
         "min_max_provided": true,
         "min_max_details": "0q: [1.72, 2.32], +1q: [2.0, 2.75]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -284,11 +310,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -302,21 +330,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 27명, +1q: 21명",
         "min_max_provided": true,
         "min_max_details": "0q: [1.93, 2.07], +1q: [2.58395, 3.42]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -333,11 +363,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -351,21 +383,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 34명, +1q: 33명",
         "min_max_provided": true,
         "min_max_details": "0q: [1.64, 1.80736], +1q: [1.77, 2.02]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -382,7 +416,9 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
@@ -400,21 +436,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 23명, +1q: 23명",
         "min_max_provided": true,
         "min_max_details": "0q: [0.38, 0.48], +1q: [0.43, 0.55]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -431,11 +469,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -449,21 +489,23 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 26명, +1q: 26명",
         "min_max_provided": true,
         "min_max_details": "0q: [0.27, 0.6], +1q: [0.24, 0.82]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -480,11 +522,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 1,
+        "unique_actual_quarters": 1,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": false,
         "has_2e": true,
         "pass": false,
-        "notes": "실적 행수 부족 (1개, 2A 요건 미달); 음수 실적 1건 ([-0.09])"
+        "notes": "유효 실적 분기 부족 (총 1행, 중복제외 1분기, 2A 요건 미달); 음수 실적 1건 ([-0.09])"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -498,22 +542,24 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 12명, +1q: 14명",
         "min_max_provided": true,
         "min_max_details": "0q: [-0.11, 0.28833], +1q: [-0.14, 0.8]",
         "pass": false,
-        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 기준 미확인)"
+        "notes": "일반주 unit_ok 자동 참 지정 금지 (발행주식수 및 기준 미확인)"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
-          "값 행수 요건 미달 (실적 1개, 전망 2개)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
+          "값 행수 요건 미달 (실적 1분기, 전망 2분기)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -530,11 +576,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -548,7 +596,9 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "USD",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": true,
         "sample_size_provided": true,
         "sample_size_details": "0q: 9명, +1q: 9명",
@@ -562,7 +612,7 @@
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
@@ -579,11 +629,13 @@
       },
       "stage1_raw_values": {
         "actual_count": 24,
+        "unique_actual_quarters": 24,
         "estimate_count": 2,
+        "duplicate_row_count": 0,
         "has_2a": true,
         "has_2e": true,
         "pass": true,
-        "notes": "2A(2개 이상) 및 2E(2개) 값 행수 충족"
+        "notes": "2A(2개 이상) 및 2E(2개) 유효 수치 충족"
       },
       "stage2_quarter_window": {
         "dates_type": "Announcement Date (발표일자)",
@@ -597,23 +649,25 @@
         "accounting_standard": "Unspecified (GAAP/Non-GAAP 미표기)",
         "as_of_timestamp": null,
         "estimate_currency": "CNY",
-        "trade_currency": "USD",
+        "raw_trade_currency": "USD",
+        "ref_trade_currency": "USD",
+        "trade_currency_status": "matched",
         "currency_match": false,
         "sample_size_provided": true,
         "sample_size_details": "0q: 17명, +1q: 15명",
         "min_max_provided": true,
         "min_max_details": "0q: [8.59, 15.46022], +1q: [10.48, 19.52773]",
         "pass": false,
-        "notes": "전망 통화(CNY)와 매매 통화(USD) 불일치 (환율 변환 근거 부재); ADS 8:1 보통주 변환 비율 설명 및 본사 통화(CNY) 매핑 미표기"
+        "notes": "전망 통화(CNY)와 거래 통화(USD) 불일치 (환율/ADR 변환 근거 부재); ADS 8:1 보통주 변환 비율 설명 및 본사 통화(CNY) 매핑 미표기"
       },
       "stage4_scoring_status": {
         "allowlisted": false,
         "scoring_eligible": false,
         "verdict": "FAIL",
         "blocking_reasons": [
-          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 미검토)",
+          "Yahoo는 v1.6 allowlist 미등재 원천 (Personal use only, 상용 약관 선행 검토 미완료)",
           "단독 페이로드로 회계분기창 특정 불가",
-          "통화 불일치 (CNY != USD)",
+          "통화 불일치 또는 미확인 (CNY != USD)",
           "회계기준(GAAP/Non-GAAP) 미표기"
         ]
       }
