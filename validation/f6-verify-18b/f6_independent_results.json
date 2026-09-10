@@ -1,0 +1,423 @@
+{
+  "generated_at": "2026-09-10T18:07:22.589848",
+  "task": "F6-VERIFY-18B",
+  "verification_status": "PASS",
+  "match_summary": {
+    "total_companies_checked": 12,
+    "ttm_companies": 9,
+    "special_companies": 3,
+    "total_matches": 12,
+    "total_mismatches": 0,
+    "match_rate": 1.0
+  },
+  "checkpoints": {
+    "cp1_ttm_reconstruction": {
+      "q4_direct_tagging_latest": "0/12",
+      "ttm_reconstructed_path": "9/12",
+      "calendar_tolerances": {
+        "nvidia": "1-day shift (2026-07-26 vs 2025-07-27)",
+        "apple_quarters": "1-day shift (2026-06-27 vs 2025-06-28)",
+        "apple_fy": "1-day shift (2025-09-27 vs 2024-09-28)"
+      },
+      "formula": "TTM = Anchor_Cumulative + (Prior_FY - Prior_Anchor_Cumulative)"
+    },
+    "cp2_concept_selection_invariance": {
+      "tsla": {
+        "period": "2026-06-30 Q2",
+        "Revenues": 50623000000,
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 50623000000,
+        "is_identical": true
+      },
+      "orcl": {
+        "period": "2026-05-31 FY",
+        "Revenues": 67357000000,
+        "RevenueFromContractWithCustomerExcludingAssessedTax": 67357000000,
+        "is_identical": true,
+        "note": "Revenues tag lacks 2026 Q3 row in SEC filing, contract revenue tag is strictly required for quarterly TTM reconstruction"
+      }
+    },
+    "cp3_local_currency_vs_usd": {
+      "company": "alibaba",
+      "cny": {
+        "fy2026": 1023666000000,
+        "fy2025": 996347000000,
+        "growth": 0.027419,
+        "p3_score": -3
+      },
+      "usd": {
+        "fy2026": 148404000000,
+        "fy2025": 137302000000,
+        "growth": 0.080858,
+        "p3_score": -2
+      },
+      "band_step_difference": -1,
+      "conclusion": "Using local currency CNY places Alibaba in -3 band (<5%), whereas as-reported USD distorts growth to +8.1% (-2 band), shifting the band by exactly 1 step"
+    },
+    "cp4_capital_structure_ev_outlier": {
+      "company": "oracle",
+      "market_cap": 443700000000.0,
+      "net_cash": -135500000000.0,
+      "net_debt": 135500000000.0,
+      "ev": 579200000000.0,
+      "ev_mc_ratio": 1.305386,
+      "ttm_revenue": 64076000000.0,
+      "ps_ratio": 6.924589,
+      "ev_sales": 9.039266,
+      "p2_score": -1,
+      "conclusion": "Oracle net debt of $135.5B pushes EV/Sales from 6.9 to 9.0, crossing the 8.0 threshold into P2=-1 band"
+    }
+  },
+  "companies": {
+    "tesla": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-06-30",
+      "revenue_ttm": 103619000000,
+      "revenue_ttm_prior": 92720000000,
+      "net_income_ttm": 3804000000,
+      "growth_yoy": 0.11754745470232963,
+      "market_cap": 1410000000000.0,
+      "net_cash": 27400000000.0,
+      "ev": 1382600000000.0,
+      "per": 370.66246056782336,
+      "ev_sales": 13.343112749592256,
+      "nonop_share": 0.18,
+      "scores": {
+        "p1": -2,
+        "p2": -1,
+        "p3": -2,
+        "p4": 0,
+        "f6_total": -5
+      },
+      "coordinator_baseline": {
+        "p1": -2,
+        "p2": -1,
+        "p3": -2,
+        "p4": 0,
+        "f6": -5,
+        "growth": 0.118,
+        "ref": "TTM 26-06"
+      },
+      "exact_match": true
+    },
+    "oracle": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-02-28",
+      "revenue_ttm": 64076000000,
+      "revenue_ttm_prior": 55783000000,
+      "net_income_ttm": 16210000000,
+      "growth_yoy": 0.1486653639997848,
+      "market_cap": 443700000000.0,
+      "net_cash": -135500000000.0,
+      "ev": 579200000000.0,
+      "per": 27.371992597162244,
+      "ev_sales": 9.039265871777264,
+      "nonop_share": -0.15,
+      "scores": {
+        "p1": -1,
+        "p2": -1,
+        "p3": -2,
+        "p4": 0,
+        "f6_total": -4
+      },
+      "coordinator_baseline": {
+        "p1": -1,
+        "p2": -1,
+        "p3": -2,
+        "p4": 0,
+        "f6": -4,
+        "growth": 0.149,
+        "ref": "TTM 26-02"
+      },
+      "exact_match": true
+    },
+    "apple": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-06-27",
+      "revenue_ttm": 466823000000,
+      "revenue_ttm_prior": 408625000000,
+      "net_income_ttm": 128930000000,
+      "growth_yoy": 0.14242398286937896,
+      "market_cap": 4740000000000.0,
+      "net_cash": 62200000000.0,
+      "ev": 4677800000000.0,
+      "per": 36.764135577445124,
+      "ev_sales": 10.02050027526493,
+      "nonop_share": 0.01,
+      "scores": {
+        "p1": -1,
+        "p2": -1,
+        "p3": -2,
+        "p4": 0,
+        "f6_total": -4
+      },
+      "coordinator_baseline": {
+        "p1": -1,
+        "p2": -1,
+        "p3": -2,
+        "p4": 0,
+        "f6": -4,
+        "growth": 0.142,
+        "ref": "TTM 26-06"
+      },
+      "exact_match": true
+    },
+    "palantir": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-06-30",
+      "revenue_ttm": 6155941000,
+      "revenue_ttm_prior": 3440587000,
+      "net_income_ttm": 3016692000,
+      "growth_yoy": 0.7892124221826102,
+      "market_cap": 407000000000.0,
+      "net_cash": 9200000000.0,
+      "ev": 397800000000.0,
+      "per": 134.91599407562987,
+      "ev_sales": 64.62050237323587,
+      "nonop_share": 0.14,
+      "scores": {
+        "p1": -2,
+        "p2": -2,
+        "p3": 0,
+        "p4": 0,
+        "f6_total": -4
+      },
+      "coordinator_baseline": {
+        "p1": -2,
+        "p2": -2,
+        "p3": 0,
+        "p4": 0,
+        "f6": -4,
+        "growth": 0.789,
+        "ref": "TTM 26-06"
+      },
+      "exact_match": true
+    },
+    "alphabet": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-06-30",
+      "revenue_ttm": 445866000000,
+      "revenue_ttm_prior": 371399000000,
+      "net_income_ttm": 244205000000,
+      "growth_yoy": 0.20050404012934875,
+      "market_cap": 4120000000000.0,
+      "net_cash": 121700000000.0,
+      "ev": 3998300000000.0,
+      "per": 16.871071435883785,
+      "ev_sales": 8.967492475317696,
+      "nonop_share": 0.51,
+      "scores": {
+        "p1": 0,
+        "p2": -1,
+        "p3": -1,
+        "p4": -1,
+        "f6_total": -3
+      },
+      "coordinator_baseline": {
+        "p1": 0,
+        "p2": -1,
+        "p3": -1,
+        "p4": -1,
+        "f6": -3,
+        "growth": 0.201,
+        "ref": "TTM 26-06"
+      },
+      "exact_match": true
+    },
+    "microsoft": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-03-31",
+      "revenue_ttm": 318273000000,
+      "revenue_ttm_prior": 270010000000,
+      "net_income_ttm": 125216000000,
+      "growth_yoy": 0.17874523165808665,
+      "market_cap": 3690000000000.0,
+      "net_cash": -52000000000.0,
+      "ev": 3742000000000.0,
+      "per": 29.469077434193714,
+      "ev_sales": 11.757202150355198,
+      "nonop_share": 0.06,
+      "scores": {
+        "p1": -1,
+        "p2": -1,
+        "p3": -1,
+        "p4": 0,
+        "f6_total": -3
+      },
+      "coordinator_baseline": {
+        "p1": -1,
+        "p2": -1,
+        "p3": -1,
+        "p4": 0,
+        "f6": -3,
+        "growth": 0.179,
+        "ref": "TTM 26-03"
+      },
+      "exact_match": true
+    },
+    "amazon": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-06-30",
+      "revenue_ttm": 775680000000,
+      "revenue_ttm_prior": 670038000000,
+      "net_income_ttm": 142328000000,
+      "growth_yoy": 0.15766568463281194,
+      "market_cap": 2750000000000.0,
+      "net_cash": -128699999999.99998,
+      "ev": 2878700000000.0,
+      "per": 19.321567084480918,
+      "ev_sales": 3.7111953382838285,
+      "nonop_share": 0.46,
+      "scores": {
+        "p1": 0,
+        "p2": 0,
+        "p3": -1,
+        "p4": -1,
+        "f6_total": -2
+      },
+      "coordinator_baseline": {
+        "p1": 0,
+        "p2": 0,
+        "p3": -1,
+        "p4": -1,
+        "f6": -2,
+        "growth": 0.158,
+        "ref": "TTM 26-06"
+      },
+      "exact_match": true
+    },
+    "nvidia": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-07-26",
+      "revenue_ttm": 302970000000,
+      "revenue_ttm_prior": 165218000000,
+      "net_income_ttm": 192880000000,
+      "growth_yoy": 0.8337590335193501,
+      "market_cap": 5420000000000.0,
+      "net_cash": 23600000000.0,
+      "ev": 5396400000000.0,
+      "per": 28.100373289091664,
+      "ev_sales": 17.811664521239727,
+      "nonop_share": 0.14,
+      "scores": {
+        "p1": -1,
+        "p2": -1,
+        "p3": 0,
+        "p4": 0,
+        "f6_total": -2
+      },
+      "coordinator_baseline": {
+        "p1": -1,
+        "p2": -1,
+        "p3": 0,
+        "p4": 0,
+        "f6": -2,
+        "growth": 0.834,
+        "ref": "TTM 26-07"
+      },
+      "exact_match": true
+    },
+    "meta": {
+      "basis_type": "TTM",
+      "anchor_period": "2026-06-30",
+      "revenue_ttm": 228247000000,
+      "revenue_ttm_prior": 178804000000,
+      "net_income_ttm": 68098000000,
+      "growth_yoy": 0.27652065949307625,
+      "market_cap": 1510000000000.0,
+      "net_cash": -22100000000.0,
+      "ev": 1532100000000.0,
+      "per": 22.1739258127992,
+      "ev_sales": 6.712465005016496,
+      "nonop_share": 0.01,
+      "scores": {
+        "p1": 0,
+        "p2": 0,
+        "p3": -1,
+        "p4": 0,
+        "f6_total": -1
+      },
+      "coordinator_baseline": {
+        "p1": 0,
+        "p2": 0,
+        "p3": -1,
+        "p4": 0,
+        "f6": -1,
+        "growth": 0.277,
+        "ref": "TTM 26-06"
+      },
+      "exact_match": true
+    },
+    "tsmc": {
+      "basis_type": "Annual (2024)",
+      "anchor_period": "2024-12-31",
+      "revenue_annual": 2894307700000,
+      "revenue_annual_prior": 2161735800000,
+      "growth_yoy": 0.3388813286063912,
+      "scores": {
+        "p1": -1,
+        "p2": -1,
+        "p3": 0,
+        "p4": -1,
+        "f6_total": -3
+      },
+      "coordinator_baseline": {
+        "p1": -1,
+        "p2": -1,
+        "p3": 0,
+        "p4": -1,
+        "f6": -3,
+        "growth": 0.339,
+        "ref": "연간 2024"
+      },
+      "exact_match": true
+    },
+    "alibaba": {
+      "basis_type": "Annual (2026)",
+      "anchor_period": "2026-03-31",
+      "revenue_annual_cny": 1023670000000,
+      "revenue_annual_cny_prior": 996347000000,
+      "growth_yoy": 0.027423176865088106,
+      "scores": {
+        "p1": -1,
+        "p2": 0,
+        "p3": -3,
+        "p4": -1,
+        "f6_total": -5
+      },
+      "coordinator_baseline": {
+        "p1": -1,
+        "p2": 0,
+        "p3": -3,
+        "p4": -1,
+        "f6": -5,
+        "growth": 0.027,
+        "ref": "연간 2026"
+      },
+      "exact_match": true
+    },
+    "spacex-xai": {
+      "basis_type": "Quarterly Only (2026 Q2)",
+      "anchor_period": "2026-06-30",
+      "revenue_q2": 7814000000,
+      "revenue_q2_prior": 4071000000,
+      "growth_yoy": 0.9194301154507492,
+      "scores": {
+        "p1": null,
+        "p2": null,
+        "p3": 0,
+        "p4": -1,
+        "f6_total": null
+      },
+      "coordinator_baseline": {
+        "p1": null,
+        "p2": null,
+        "p3": 0,
+        "p4": -1,
+        "f6": null,
+        "growth": 0.919,
+        "ref": "분기만"
+      },
+      "exact_match": true
+    }
+  }
+}
