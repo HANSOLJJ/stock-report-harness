@@ -1,0 +1,103 @@
+======================================================================================================================
+F6-H 창 검증 — Finnhub 저장 원자료만 사용 (수집 시점 UTC 2026-09-09T14:13:54.798221+00:00, 신규 호출 없음)
+======================================================================================================================
+
+[1] 선택된 2A / 2E 와 창 판정
+티커                    2A                2E   raw  window   basis   score  문제
+META       2026Q1 2026Q2     2026Q3 2026Q4     O       O       X       X  
+NVDA       2027Q1 2027Q2     2027Q3 2027Q4     O       O       X       X  
+GOOGL      2026Q1 2026Q2     2026Q3 2026Q4     O       O       X       X  
+MSFT       2026Q3 2026Q4     2027Q1 2027Q2     O       O       X       X  
+AMZN       2026Q1 2026Q2     2026Q3 2026Q4     O       O       X       X  
+AAPL       2026Q2 2026Q3     2026Q4 2027Q1     O       O       X       X  
+ORCL       2026Q3 2026Q4     2027Q1 2027Q2     O       O       X       X  
+PLTR       2026Q1 2026Q2     2026Q3 2026Q4     O       O       X       X  
+TSLA       2026Q1 2026Q2     2026Q3 2026Q4     O       O       X       X  
+SPCX              2026Q2                 -     X       X       X       X  행 부족(실적 1·전망 0)
+TSM        2026Q1 2026Q2     2026Q3 2026Q4     O       O       X       X  
+BABA       2026Q4 2027Q1     2027Q2 2027Q3     O       O       X       X  
+
+[2] 선택 행의 원문 경로·라벨·period·발표일·값
+티커     구분        회계라벨       period          발표일         값  원문 경로
+META   2A   2026Q1         2026-03-31      unknown      7.31  _raw/finnhub/META.json:past.body[1]
+META   2A   2026Q2         2026-06-30      unknown      6.18  _raw/finnhub/META.json:past.body[0]
+META   2E   2026Q3            unknown   2026-10-27    6.6602  _raw/finnhub/META.json:future.body.earningsCalendar[2]
+META   2E   2026Q4            unknown   2027-01-26    8.4023  _raw/finnhub/META.json:future.body.earningsCalendar[1]
+NVDA   2A   2027Q1         2026-06-30      unknown      1.87  _raw/finnhub/NVDA.json:past.body[1]
+NVDA   2A   2027Q2         2026-09-30      unknown      2.22  _raw/finnhub/NVDA.json:past.body[0]
+NVDA   2E   2027Q3            unknown   2026-11-17    2.4659  _raw/finnhub/NVDA.json:future.body.earningsCalendar[2]
+NVDA   2E   2027Q4            unknown   2027-02-23    2.7718  _raw/finnhub/NVDA.json:future.body.earningsCalendar[1]
+GOOGL  2A   2026Q1         2026-03-31      unknown      2.62  _raw/finnhub/GOOGL.json:past.body[1]
+GOOGL  2A   2026Q2         2026-06-30      unknown      2.85  _raw/finnhub/GOOGL.json:past.body[0]
+GOOGL  2E   2026Q3            unknown   2026-10-27    3.1057  _raw/finnhub/GOOGL.json:future.body.earningsCalendar[2]
+GOOGL  2E   2026Q4            unknown   2027-02-02    3.4401  _raw/finnhub/GOOGL.json:future.body.earningsCalendar[1]
+MSFT   2A   2026Q3         2026-03-31      unknown      4.27  _raw/finnhub/MSFT.json:past.body[1]
+MSFT   2A   2026Q4         2026-06-30      unknown      4.74  _raw/finnhub/MSFT.json:past.body[0]
+MSFT   2E   2027Q1            unknown   2026-10-27    4.8236  _raw/finnhub/MSFT.json:future.body.earningsCalendar[2]
+MSFT   2E   2027Q2            unknown   2027-01-26    4.9486  _raw/finnhub/MSFT.json:future.body.earningsCalendar[1]
+AMZN   2A   2026Q1         2026-03-31      unknown      1.61  _raw/finnhub/AMZN.json:past.body[1]
+AMZN   2A   2026Q2         2026-06-30      unknown      1.97  _raw/finnhub/AMZN.json:past.body[0]
+AMZN   2E   2026Q3            unknown   2026-10-28    1.9928  _raw/finnhub/AMZN.json:future.body.earningsCalendar[2]
+AMZN   2E   2026Q4            unknown   2027-02-03    2.4901  _raw/finnhub/AMZN.json:future.body.earningsCalendar[1]
+AAPL   2A   2026Q2         2026-03-31      unknown      2.01  _raw/finnhub/AAPL.json:past.body[1]
+AAPL   2A   2026Q3         2026-06-30      unknown      1.91  _raw/finnhub/AAPL.json:past.body[0]
+AAPL   2E   2026Q4            unknown   2026-10-28    2.0202  _raw/finnhub/AAPL.json:future.body.earningsCalendar[2]
+AAPL   2E   2027Q1            unknown   2027-01-27    2.9585  _raw/finnhub/AAPL.json:future.body.earningsCalendar[1]
+ORCL   2A   2026Q3         2026-03-31      unknown      1.79  _raw/finnhub/ORCL.json:past.body[1]
+ORCL   2A   2026Q4         2026-06-30      unknown      2.03  _raw/finnhub/ORCL.json:past.body[0]
+ORCL   2E   2027Q1            unknown   2026-09-10    1.7766  _raw/finnhub/ORCL.json:future.body.earningsCalendar[3]
+ORCL   2E   2027Q2            unknown   2026-12-08    1.9334  _raw/finnhub/ORCL.json:future.body.earningsCalendar[2]
+PLTR   2A   2026Q1         2026-03-31      unknown      0.33  _raw/finnhub/PLTR.json:past.body[1]
+PLTR   2A   2026Q2         2026-06-30      unknown      0.41  _raw/finnhub/PLTR.json:past.body[0]
+PLTR   2E   2026Q3            unknown   2026-11-02    0.4277  _raw/finnhub/PLTR.json:future.body.earningsCalendar[2]
+PLTR   2E   2026Q4            unknown   2027-02-01     0.477  _raw/finnhub/PLTR.json:future.body.earningsCalendar[1]
+TSLA   2A   2026Q1         2026-03-31      unknown      0.41  _raw/finnhub/TSLA.json:past.body[1]
+TSLA   2A   2026Q2         2026-06-30      unknown      0.33  _raw/finnhub/TSLA.json:past.body[0]
+TSLA   2E   2026Q3            unknown   2026-10-20    0.4451  _raw/finnhub/TSLA.json:future.body.earningsCalendar[2]
+TSLA   2E   2026Q4            unknown   2027-01-26    0.4755  _raw/finnhub/TSLA.json:future.body.earningsCalendar[1]
+SPCX   2A   2026Q2         2026-06-30      unknown     -0.09  _raw/finnhub/SPCX.json:past.body[0]
+TSM    2A   2026Q1         2026-03-31      unknown    22.077  _raw/finnhub/TSM.json:past.body[1]
+TSM    2A   2026Q2         2026-06-30      unknown     27.25  _raw/finnhub/TSM.json:past.body[0]
+TSM    2E   2026Q3            unknown   2026-10-14   28.9619  _raw/finnhub/TSM.json:future.body.earningsCalendar[2]
+TSM    2E   2026Q4            unknown   2027-01-13   31.7014  _raw/finnhub/TSM.json:future.body.earningsCalendar[1]
+BABA   2A   2026Q4         2026-03-31      unknown      0.62  _raw/finnhub/BABA.json:past.body[1]
+BABA   2A   2027Q1         2026-06-30      unknown      8.52  _raw/finnhub/BABA.json:past.body[0]
+BABA   2E   2027Q2            unknown   2026-11-23   11.1893  _raw/finnhub/BABA.json:future.body.earningsCalendar[2]
+BABA   2E   2027Q3            unknown   2027-03-17    15.363  _raw/finnhub/BABA.json:future.body.earningsCalendar[1]
+
+[3] period 필드 의미 — 저장된 SEC 근거와 대조
+티커       period수         SEC회계종료일과 일치          달력분기말과 일치  판정
+META           4                    3                  3  판정 보류 — 두 가설이 갈리지 않는다
+NVDA           4                    0                  3  period 가 회계종료일 자체와는 다르고 그 종료일이 속한 달력분기 말과 맞는다
+GOOGL          4                    3                  3  판정 보류 — 두 가설이 갈리지 않는다
+MSFT           4                    3                  3  판정 보류 — 두 가설이 갈리지 않는다
+AMZN           4                    3                  3  판정 보류 — 두 가설이 갈리지 않는다
+AAPL           4                    0                  3  period 가 회계종료일 자체와는 다르고 그 종료일이 속한 달력분기 말과 맞는다
+ORCL           4                    0                  3  period 가 회계종료일 자체와는 다르고 그 종료일이 속한 달력분기 말과 맞는다
+PLTR           4                    3                  3  판정 보류 — 두 가설이 갈리지 않는다
+TSLA           4                    3                  3  판정 보류 — 두 가설이 갈리지 않는다
+SPCX           1                    1                  1  판정 보류 — 두 가설이 갈리지 않는다
+TSM            -                    -                  -  unknown — 저장된 SEC 분기 근거 없음 — 대조 불가
+BABA           -                    -                  -  unknown — 저장된 SEC 분기 근거 없음 — 대조 불가
+
+[4] basis 필드 — Finnhub 응답에 존재하는가
+티커       currency  share_basis  accounting     asOf
+META      unknown      unknown     unknown  unknown
+NVDA      unknown      unknown     unknown  unknown
+GOOGL     unknown      unknown     unknown  unknown
+MSFT      unknown      unknown     unknown  unknown
+AMZN      unknown      unknown     unknown  unknown
+AAPL      unknown      unknown     unknown  unknown
+ORCL      unknown      unknown     unknown  unknown
+PLTR      unknown      unknown     unknown  unknown
+TSLA      unknown      unknown     unknown  unknown
+SPCX      unknown      unknown     unknown  unknown
+TSM       unknown      unknown     unknown  unknown
+BABA      unknown      unknown     unknown  unknown
+
+======================================================================================================================
+  raw-availability   11/12
+  window-verified    11/12
+  basis-verified     0/12
+  score-ready        0/12
+======================================================================================================================
