@@ -1,6 +1,7 @@
 # 비상장 2사(Anthropic, OpenAI)의 ARR 정의 및 기간 가용성을 검증하는 단위 테스트
 import os
 import json
+import hashlib
 import unittest
 
 class TestUnlistedArrDefinitions(unittest.TestCase):
@@ -181,6 +182,35 @@ class TestUnlistedArrDefinitions(unittest.TestCase):
             fpath = os.path.join(self.raw_dir, fname)
             self.assertTrue(os.path.exists(fpath), f"File missing: {fname}")
             self.assertGreater(os.path.getsize(fpath), 0, f"File empty: {fname}")
+
+    def test_13_non_production_reference_tagging(self):
+        """Test 13 (B1 Compliance): Downloaded external HTMLs are strictly tagged as non_production_reference."""
+        policy = self.ext_data.get('collection_policy', {})
+        self.assertEqual(policy.get('downloaded_content_status'), 'non_production_reference')
+        self.assertEqual(policy.get('primary_evidence_source'), 'internal_v15_original')
+        
+        events_anth = self.ext_data['companies']['anthropic']['identified_financial_events']
+        anth_h = next(e for e in events_anth if e['event_id'] == 'anth-01-series-h')
+        self.assertEqual(anth_h.get('usage_status'), 'non_production_reference')
+        
+        events_oai = self.ext_data['companies']['openai']['identified_financial_events']
+        oai_acc = next(e for e in events_oai if e['event_id'] == 'oai-01-accelerating-round')
+        self.assertEqual(oai_acc.get('usage_status'), 'non_production_reference')
+
+    def test_14_internal_v15_rules_hash_verification(self):
+        """Test 14 (B1 Compliance): Internal v1.5 rules file exists and SHA256 matches v1.5.json declaration."""
+        v15_ref = self.ext_data.get('internal_v15_reference', {})
+        src_path = v15_ref.get('source_path')
+        rule_file = v15_ref.get('rule_file')
+        expected_hash = v15_ref.get('rule_sha256')
+        
+        self.assertEqual(expected_hash, "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb")
+        target_rule_path = os.path.join(src_path, rule_file)
+        self.assertTrue(os.path.exists(target_rule_path), f"v1.5 rules file missing at: {target_rule_path}")
+        
+        with open(target_rule_path, 'rb') as f:
+            actual_hash = hashlib.sha256(f.read()).hexdigest()
+        self.assertEqual(actual_hash, expected_hash)
 
 if __name__ == '__main__':
     unittest.main()

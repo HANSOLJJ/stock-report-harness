@@ -1,6 +1,21 @@
 {
-  "schema": "priv-arr-raw-v1",
+  "schema": "priv-arr-raw-v2",
   "collected_at": "2026-09-10T16:39:00+09:00",
+  "reviewed_at": "2026-09-10T17:00:00+09:00",
+  "collection_policy": {
+    "standard": "robots.txt Allow여도 약관이 자동 추출을 금지하면 배제. 무료 응답 != 이용 허가.",
+    "inspection_rule": "robots.txt 및 약관·정책 문서는 준수 확인 목적으로만 조회 허용. 내용 페이지는 약관 확인 후에만 조회하며 약관이 금지하면 조회 불가.",
+    "downloaded_content_status": "non_production_reference",
+    "primary_evidence_source": "internal_v15_original"
+  },
+  "internal_v15_reference": {
+    "source_path": "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor",
+    "rule_file": "AI기업_채점규칙_v1.5.md",
+    "rule_sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+    "scores_file": "AI기업_채점표_v1.5.md",
+    "html_file": "AI기업_채점표_v1.5.html",
+    "verified_against_v15_json": true
+  },
   "companies": {
     "anthropic": {
       "name": "Anthropic, PBC",
@@ -49,12 +64,14 @@
           "date": "2026-05-28",
           "tier": "Tier 1",
           "source": "Anthropic Official Newsroom (https://www.anthropic.com/news/series-h)",
+          "downloaded_file": "_raw/anthropic_series_h_official_2026-05-28.html",
+          "usage_status": "non_production_reference",
           "metric_name": "run-rate revenue",
           "value": 47000000000.0,
           "value_raw": "crossed $47 billion earlier this month",
           "post_money_valuation": 965000000000.0,
           "round_raised": 65000000000.0,
-          "note": "공식 발표문 원문: 'Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month.' 공식 명칭은 run-rate revenue이며 ARR 또는 기간매출이 아님."
+          "note": "수집된 HTML은 약관 원칙에 따라 비생산 참고(non_production_reference)로만 보존하며 판정 근거에서 배제함. 실제 생산 근거 사슬은 v1.5 내부 원본 문서로 대체함."
         },
         {
           "event_id": "anth-02-q2-deck-leak",
@@ -71,11 +88,11 @@
           "event_id": "anth-03-july-runrate",
           "date": "2026-08-05",
           "tier": "Tier 3",
-          "source": "Financial Media Investigative Reports (Bloomberg, GraniteShares, The Information)",
+          "source": "Financial Media Investigative Reports (Bloomberg, GraniteShares, The Information) / v1.5 원본",
           "metric_name": "annualized revenue run-rate",
           "value": 65000000000.0,
           "value_raw": "annualized run rate reached $65 billion by end of July 2026",
-          "note": "7월 말 단일 월 매출 페이스에 기초한 연율화 런레이트. 회계상 ARR 또는 결산 매출이 아님."
+          "note": "7월 말 단일 월 매출 페이스에 기초한 연율화 런레이트. v1.5 원본 채점표에 'ARR이 $47B→$65B로 늘며 배수가 내려왔다' 및 'ARR $65B(7월)'로 등재됨."
         },
         {
           "event_id": "anth-04-q2-preliminary-leak",
@@ -146,21 +163,23 @@
           "date": "2026-03-31",
           "tier": "Tier 1",
           "source": "OpenAI Official Newsroom (https://openai.com/index/accelerating-the-next-phase-ai/)",
+          "downloaded_file": "_raw/openai_accelerating_official_2026-03-31.html",
+          "usage_status": "non_production_reference",
           "metric_name": "post_money_valuation / committed_capital",
           "post_money_valuation": 852000000000.0,
           "committed_capital": 122000000000.0,
           "value_raw": "post-money valuation $852B, committed capital $122B",
-          "note": "공식 발표문에는 매출, ARR, 런레이트 수치가 일체 포함되어 있지 않음."
+          "note": "수집된 HTML은 약관 원칙에 따라 비생산 참고(non_production_reference)로만 보존함. 생산 판정 근거는 v1.5 내부 원본 문서($852B)로 대체함."
         },
         {
           "event_id": "oai-02-august-runrate",
           "date": "2026-08-20",
           "tier": "Tier 3",
-          "source": "Financial Media (Bloomberg, ValueAddVC)",
+          "source": "Financial Media (Bloomberg, ValueAddVC) / v1.5 원본",
           "metric_name": "annualized revenue run-rate",
           "value": 40000000000.0,
           "value_raw": "annualized run rate surpassed $40B (monthly revenue pace ~$3.3B)",
-          "note": "2026년 8월 20일 기준 월간 매출 페이스에 기초한 연율화 런레이트. 공식 1차 발표치 부재."
+          "note": "2026년 8월 20일 기준 월간 매출 페이스에 기초한 연율화 런레이트. v1.5 원본에 'post-money $852B ÷ ARR $40B = 21.3배'로 수록됨."
         },
         {
           "event_id": "oai-03-fy2025-audit-leak",
