@@ -40,13 +40,17 @@ C-13 담당인 공문 초안 폐기와 Yahoo 판정 기록은 다루지 않았�
 - OpenAPI·Swagger 명세
 - 파라미터까지 문서화된 endpoint
 
-**초판은 이 조건을 "문서 게시 예시 URL" 하나로 적어 보호 조건과 동등한 연언에 묶었다.** 그러면 예시를 안 싣는 공급사에서 보호 조건 셋이 다 성립해도 스키마 확인이 막힌다 — **보호와 무관한 이유로 막히는 것이다.** 위 넷 중 무엇도 없으면 **유니버스 밖 종목 하나로 1 회 호출**을 허용하고 목적을 기록에 남긴다.
+**초판은 이 조건을 "문서 게시 예시 URL" 하나로 적어 보호 조건과 동등한 연언에 묶었다.** 그러면 예시를 안 싣는 공급사에서 보호 조건 셋이 다 성립해도 스키마 확인이 막힌다 — **보호와 무관한 이유로 막히는 것이다.**
+
+> **예외.** 위 넷 중 무엇도 없되 **문서 자체는 존재하는 경우에 한해**, 유니버스 밖 종목 하나로 **1 회 호출**을 허용하고 목적을 기록에 남긴다. **문서가 아예 없으면 이 예외는 열리지 않는다.**
+
+이 예외는 한 줄로 완결돼 있다. 규칙 문서는 한 줄씩 인용돼 쓰이므로 뒤 문단이 덮어 주는 데 기대지 않는다.
 
 ### 단서 — 문서 부재는 우회 대상이 아니라 배제 신호다
 
 **예시가 없는 것과 문서가 없는 것은 다르다.** 파라미터 명세도 SDK 도 어떤 문서도 없는 endpoint 라면, 그것은 예시만 없는 공개 상품이 아니라 **애초에 공개 상품이 아니라는 신호**다.
 
-`api.nasdaq.com` 이 정확히 그랬다. 웹사이트 UI 를 그리는 내부 백엔드였고 문서가 없었다. **문서가 없으면 위의 "1 회 호출" 로 내려가는 것이 아니라 배제 쪽을 본다.** 이 단서를 빼면 일반화한 증거 조건이 나중에 "문서가 없으니 1 회 호출로 확인하자" 는 근거로 뒤집혀 쓰인다.
+`api.nasdaq.com` 이 정확히 그랬다. 웹사이트 UI 를 그리는 내부 백엔드였고 문서가 없었다. **문서가 없으면 위의 "1 회 호출" 로 내려가는 것이 아니라 배제 쪽을 본다.** 예외 문장 자체가 그 조건을 담고 있으므로 이 문단은 **근거 설명**이지 예외의 유일한 방어선이 아니다.
 
 ## 2. 개정 여섯
 
@@ -144,10 +148,35 @@ ZACKS 후보의 `note` 에 구분을 명문화했다.
 가르는 사실은 **세상에 계약 경로가 존재하는가**가 아니라 **우리가 지금 그 계약 아래에서 접근하고 있는가**다. 계약이 robots.txt 를 대신하는 것은 아래 셋을 **모두** 만족할 때뿐이다.
 
 1. 그 공급사가 **우리에게 발급한 자격증명**으로 접근하고,
-2. 그 데이터와 그 접근 방식을 포괄하는 **체결된 계약**이 있으며,
+2. 그 데이터와 **그 접근 방식을 명시적으로 포괄하는** **체결된 계약**이 있으며,
 3. 호출하는 **host·경로가 그 계약이 지목한 것**일 것.
 
 **하나라도 없으면 robots.txt 와 약관이 규율한다.** 그리고 계약이 있어도 **같은 host 에 대한 인증 없는 크롤링에는 robots.txt 가 그대로 적용된다** — 예외는 host 전체가 아니라 인증된 라이선스 호출에만 걸린다.
+
+#### 2 번의 "명시적으로" — 침묵은 unknown 이 아니라 미부여다
+
+우리는 조항이 없으면 `unknown` 으로 두는 기준을 써 왔고 Alpha Vantage 에도 그렇게 적용했다(`../av-source-11/REPORT.md` 3 절). **Data Link 는 다르다. 계약이 직접 말하기 때문이다.**
+
+> **All rights not granted hereunder are expressly reserved by Licensor and/or its third party provider(s).**
+> — Nasdaq Data Link 이용약관 1.2 마지막 문장. 설계진행 `d86d05e` 가 확인·인용한 문언이다.
+
+명시적으로 부여되지 않은 권리는 유보된다고 계약이 스스로 규정한다. 따라서 **데이터는 포괄하되 대량 자동 조회에 침묵하는 Order Form 은 자동 조회를 허가하지 않은 것이다. `unknown` 이 아니라 미부여다.**
+
+실무적으로는 오히려 다루기 쉽다. 협상 항목이 하나 느는 것뿐이고, Order Form 에 접근 방식을 명시적으로 적어 넣으면 된다.
+
+### 2.6.1 이 규칙이 어디에 적힌 상태인가
+
+**`sources.policy_note` 에 넣었다.** 세 가지 이유다.
+
+1. 3 요건은 **파일 차원의 일반 규칙**이지 특정 후보의 사정이 아니다. 한 후보의 `note` 안에 두면 다른 host 를 볼 때 안 읽힌다.
+2. 원 지시(`DATALINK-14`)가 `policy_note` 를 위치로 **명시적으로 허용**했다.
+3. 조율이 "ZACKS 구독가 1,200 달러 확인으로 채택을 접었으니 `conditional_candidates` 의 ZACKS 항목은 지금 손대지 말라" 고 지시했다. **그 항목을 한 바이트도 바꾸지 않았다.**
+
+결과로 ZACKS `note` 에는 이전 라운드의 3 요건 표현이 남아 있고, 2 번 조건에 "명시적으로" 가 빠져 있다. **그래서 `policy_note` 말미에 어느 쪽이 기준인지 못박았다.**
+
+> 이 셋이 이 파일의 기준이며, 다른 항목의 note 에 더 느슨한 표현이 남아 있으면 여기가 우선한다.
+
+ZACKS 항목을 손댈 수 있게 되면 그때 문면을 맞추는 것이 맞다. **표현이 두 곳에 갈려 있는 상태 자체는 조율에 보고했다.**
 
 이 셋으로 좁히면 `api.nasdaq.com` 은 어느 것도 만족하지 못한다. 자격증명도, 계약도, 계약이 지목한 host 도 없다. **denied 를 무르는 근거가 아니다.** `data.nasdaq.com` 도 지금은 셋 다 없다 — 그래서 `candidate_not_approved` 이고, 이 구분은 **승격 시 서면으로 확정할 항목**이지 지금 승격 근거가 아니다. `status` 는 그대로이며 테스트로 고정했다.
 
@@ -175,11 +204,12 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 | 검사 | 이유 |
 |---|---|
 | `usage_scope` 는 `scope`·`decided_at`·`statement`·`condition` 필수 | 조건 없는 범위 선언은 범위가 바뀔 때 무엇을 다시 볼지 남기지 않는다 |
+| `usage_scope.scope` 는 `USAGE_SCOPES` 열거값만 | **판정을 가르는 스위치**다. 이 값 하나로 Alpha Vantage 적격이 사라졌다. 자유 문자열이면 `corporate_internal`·`company_internal` 같은 표기 흔들림이 생기고 `==` 비교가 조용히 빗나간다. 폐기된 `personal_internal_only` 는 과거 파일을 읽으려 남긴다 |
 | 네 값 모두 공백 불가 | 빈 문자열로 형식만 맞추는 것을 막는다 |
 | `unlisted[].reason_type` 은 `technical`/`terms`/`both` | 기술적 부적격과 약관 미확인을 뭉뚱그리지 않는다. 2.4 가 정확히 이 구분의 문제였다 |
 | `unlisted[].host` 는 allowed/denied 와 겹칠 수 없다 | 같은 host 가 두 판정을 갖는 것을 막는다 |
 
-테스트는 91 → **109 건**이다. 추가 18 건 중 하나는 기존 테스트 수정이다.
+테스트는 91 → **112 건**이다. 추가 21 건 중 하나는 기존 테스트 수정이다.
 
 | 테스트 | 고정하는 것 |
 |---|---|
@@ -192,6 +222,9 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 | `test_unlisted_host_cannot_overlap_allowed` | host 중복 거부 |
 | `test_usage_scope_is_corporate_internal` | 실제 v1.6 의 범위 값이 법인이고 조건이 있음 |
 | `test_usage_scope_note_records_alpha_vantage_consequence` | 범위 변경의 결과(AV 2.a.ii)가 선언 옆에 남아 있음 |
+| `test_usage_scope_value_must_be_enumerated` | 표기 흔들림 거부 — `corporate_internal`·`internal_only` 등 |
+| `test_usage_scope_accepts_all_three_values` | 폐기값 포함 셋 모두 읽힘 |
+| `test_policy_note_carries_the_licensed_access_test` | 3 요건·`명시적으로 포괄하는`·1.2 문언·우선 순위가 파일 차원에 남아 있음 |
 | `test_zacks_no_longer_requires_external_distribution` | 조건 4 개 정확히 일치, status 는 미승인 유지 |
 | `test_nasdaq_stays_denied` | denied 유지 |
 | `test_yahoo_is_unlisted_for_technical_reason` | 사유 유형이 technical, allowed 에 없음 |
@@ -204,7 +237,7 @@ rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbol
 **기존 테스트 수정 1 건.** `test_data_nasdaq_is_candidate_not_approved` 가 승격 조건 5 개를 문자열로 고정하고 있었다. 승인된 정책 변경에 맞춰 4 개로 고치고, `"외부 배포 허용"` 이 **더 이상 나오지 않는다**는 단언을 추가했다. 조건을 줄인 것이 조용히 통과하지 않도록 양방향으로 고정했다.
 
 ```
-Ran 109 tests in 0.027s
+Ran 112 tests in 0.024s
 OK
 ```
 
@@ -255,7 +288,7 @@ draft          파일 미변경             574841bc7c26f225
 
 ```bash
 cd worker
-python -m unittest discover -s tests -q       # 109건 통과
+python -m unittest discover -s tests -q       # 112건 통과
 python -c "import sys,json,pathlib; sys.path.insert(0,'scripts'); \
   from scorecard.schema import validate_rules; \
   validate_rules(json.loads(pathlib.Path('scorecard/rules/v1.6.json').read_text(encoding='utf-8')))"
@@ -265,6 +298,6 @@ python -c "import sys,json,pathlib; sys.path.insert(0,'scripts'); \
 
 | 파일 | 내용 |
 |---|---|
-| `scorecard/rules/v1.6.json` | `usage_scope` 추가 · ZACKS 조건 4 개 · `unlisted` 추가 · `policy_note` 와 ZACKS `note` 보강 |
-| `scripts/scorecard/schema.py` | 두 새 키의 optional 허용과 값 검사 |
-| `tests/test_scorecard_calc.py` | 회귀 17 건 추가 · 기존 1 건 수정 |
+| `scorecard/rules/v1.6.json` | `usage_scope`(법인) · ZACKS 조건 4 개 · `unlisted` · `policy_note` 에 3 요건과 unlisted 정의 |
+| `scripts/scorecard/schema.py` | 두 새 키의 optional 허용과 값 검사 · `USAGE_SCOPES` 열거 |
+| `tests/test_scorecard_calc.py` | 회귀 20 건 추가 · 기존 1 건 수정 |

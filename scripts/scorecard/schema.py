@@ -234,6 +234,12 @@ def validate_rules(payload: Any) -> dict[str, Any]:
     return payload
 
 
+# 산출물 사용 범위. 원천 약관의 '개인 사용 허용' 조항이 우리에게 적용되는지를 가르는 값이라
+# 자유 문자열로 두지 않는다. personal_internal_only 는 2026-09-10 에 폐기됐으나 과거 규칙
+# 파일을 읽을 수 있어야 하므로 남긴다.
+USAGE_SCOPES = frozenset({"personal_internal_only", "corporate_internal_only", "external_distribution"})
+
+
 def _validate_source_policy(policy: Any) -> None:
     """자료 원천 allowlist. 같은 host 가 allowed 와 denied 에 동시에 있으면 판정이 갈린다."""
     _require(isinstance(policy, dict), "rules.sources: object 여야 함")
@@ -266,6 +272,10 @@ def _validate_source_policy(policy: Any) -> None:
         # 범위 선언은 조건과 짝이어야 한다. 조건 없는 선언은 범위가 바뀔 때 무엇을 다시 봐야 하는지를 남기지 않는다.
         for key in ("scope", "decided_at", "statement", "condition"):
             _require(str(scope.get(key) or "").strip(), f"rules.sources.usage_scope: {key} 를 비워 둘 수 없음")
+        # 이 값은 판정을 가르는 스위치다(법인 사용이면 '개인 사용 허용' 조항이 우리에게 적용되지 않는다).
+        # 자유 문자열로 두면 표기가 흔들리고 == 비교가 조용히 빗나간다.
+        _require(scope["scope"] in USAGE_SCOPES,
+                 f"rules.sources.usage_scope: scope 는 {sorted(USAGE_SCOPES)} 중 하나여야 함 — {scope['scope']!r}")
     for idx, entry in enumerate(policy.get("unlisted") or []):
         where = f"rules.sources.unlisted[{idx}]"
         _expect_keys(entry, ["host", "reason_type", "reason", "decided_at"], where, optional=["note", "evidence"])

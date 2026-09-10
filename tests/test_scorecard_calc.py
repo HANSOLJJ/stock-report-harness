@@ -794,6 +794,21 @@ class TestSourcePolicySchema(unittest.TestCase):
         with self.assertRaises(SchemaError):
             validate_rules(self._rules_with(s))
 
+    def test_usage_scope_value_must_be_enumerated(self):
+        """판정을 가르는 스위치라 표기 흔들림을 스키마가 막는다. == 비교가 조용히 빗나가지 않게."""
+        s = self._base()
+        for bad in ("corporate_internal", "internal_only", "company_internal", "CORPORATE_INTERNAL_ONLY", ""):
+            s["usage_scope"] = self._scope(scope=bad)
+            with self.assertRaises(SchemaError, msg=f"{bad!r} 가 통과했다"):
+                validate_rules(self._rules_with(s))
+
+    def test_usage_scope_accepts_all_three_values(self):
+        """폐기된 personal_internal_only 도 읽을 수 있어야 한다. 과거 규칙 파일이 있다."""
+        s = self._base()
+        for ok in ("personal_internal_only", "corporate_internal_only", "external_distribution"):
+            s["usage_scope"] = self._scope(scope=ok)
+            validate_rules(self._rules_with(s))
+
     # -------------------------------------------------- 미등재 사유 (POLICY-12)
     def _unlisted(self, **over) -> dict:
         base = {"host": "u.example", "reason_type": "technical",
@@ -911,6 +926,18 @@ class TestV16SourcePolicy(unittest.TestCase):
         self.assertIn("검토를 마치고 안 넣기로 한 host", note)
         self.assertIn("아직 검토하지 않은 host 는 담지 않는다", note)
         self.assertIn("source_violation() 은 읽지 않는다", note)
+
+    def test_policy_note_carries_the_licensed_access_test(self):
+        """robots.txt 를 대신하는 3요건은 후보 하나의 note 가 아니라 파일 차원의 기준이다."""
+        note = self.sources["policy_note"]
+        for need in ("자격증명", "명시적으로 포괄하는", "계약이 지목한", "모두 만족할 때뿐"):
+            self.assertIn(need, note)
+        # 침묵을 unknown 이 아니라 미부여로 보는 근거는 해석이 아니라 계약 문언이다.
+        self.assertIn("All rights not granted hereunder are expressly reserved", note)
+        self.assertIn("미부여", note)
+        self.assertIn("인증 없는 크롤링", note)
+        # 같은 파일 안에 더 느슨한 표현이 남아 있어도 어느 쪽이 기준인지 분명해야 한다.
+        self.assertIn("여기가 우선한다", note)
 
     def test_zacks_note_separates_robots_from_licensed_access(self):
         """robots.txt 를 기계적으로 적용하면 라이선스 경로까지 막힌다. 그 구분이 정책에 있어야 한다."""
