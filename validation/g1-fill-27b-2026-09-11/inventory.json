@@ -1,0 +1,338 @@
+{
+ "tsmc": {
+  "company_id": "tsmc",
+  "entity": "Taiwan Semiconductor Manufacturing Company Limited",
+  "cik": 1046179,
+  "source_file": "..\\f6-fx-16-2026-09-10\\raw\\sec-TSM-companyfacts.json",
+  "source_origin": "내 워크트리 F6-FX-16",
+  "currency": "TWD",
+  "taxonomies": {
+   "dei": 1,
+   "ifrs-full": 334,
+   "srt": 1
+  },
+  "counts": {
+   "revenue_quarterly": 0,
+   "revenue_annual": 10,
+   "operating_quarterly": 0,
+   "operating_annual": 10
+  },
+  "concepts_used": {
+   "revenue": [
+    "ifrs-full:Revenue",
+    "ifrs-full:RevenueFromContractsWithCustomers"
+   ],
+   "operating": [
+    "ifrs-full:ProfitLossFromOperatingActivities"
+   ]
+  }
+ },
+ "alibaba": {
+  "company_id": "alibaba",
+  "entity": "Alibaba Group Holding Limited",
+  "cik": 1577552,
+  "source_file": "..\\f6-fx-16-2026-09-10\\raw\\sec-BABA-companyfacts.json",
+  "source_origin": "내 워크트리 F6-FX-16",
+  "currency": "CNY",
+  "taxonomies": {
+   "dei": 2,
+   "us-gaap": 358
+  },
+  "counts": {
+   "revenue_quarterly": 0,
+   "revenue_annual": 14,
+   "operating_quarterly": 0,
+   "operating_annual": 14
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "apple": {
+  "company_id": "apple",
+  "entity": "Apple Inc.",
+  "cik": 320193,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0000320193_AAPL.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 2,
+   "us-gaap": 503
+  },
+  "counts": {
+   "revenue_quarterly": 34,
+   "revenue_annual": 10,
+   "operating_quarterly": 55,
+   "operating_annual": 19
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "microsoft": {
+  "company_id": "microsoft",
+  "entity": "MICROSOFT CORPORATION",
+  "cik": 789019,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0000789019_MSFT.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 3,
+   "us-gaap": 562
+  },
+  "counts": {
+   "revenue_quarterly": 48,
+   "revenue_annual": 14,
+   "operating_quarterly": 62,
+   "operating_annual": 19
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "amazon": {
+  "company_id": "amazon",
+  "entity": "AMAZON COM INC",
+  "cik": 1018724,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001018724_AMZN.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 2,
+   "us-gaap": 545,
+   "ecd": 3,
+   "ffd": 6
+  },
+  "counts": {
+   "revenue_quarterly": 33,
+   "revenue_annual": 10,
+   "operating_quarterly": 64,
+   "operating_annual": 19
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "nvidia": {
+  "company_id": "nvidia",
+  "entity": "NVIDIA CORP",
+  "cik": 1045810,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001045810_NVDA.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 2,
+   "invest": 1,
+   "us-gaap": 627,
+   "srt": 1,
+   "ecd": 7,
+   "ffd": 6
+  },
+  "counts": {
+   "revenue_quarterly": 67,
+   "revenue_annual": 19,
+   "operating_quarterly": 55,
+   "operating_annual": 19
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "spacex-xai": {
+  "company_id": "spacex-xai",
+  "entity": "SPACE EXPLORATION TECHNOLOGIES CORP.",
+  "cik": "0001181412",
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001181412_SPCX.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "ffd": 5,
+   "us-gaap": 174
+  },
+  "counts": {
+   "revenue_quarterly": 2,
+   "revenue_annual": 0,
+   "operating_quarterly": 2,
+   "operating_annual": 0
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "tesla": {
+  "company_id": "tesla",
+  "entity": "Tesla, Inc.",
+  "cik": 1318605,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001318605_TSLA.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 2,
+   "us-gaap": 643,
+   "ffd": 4
+  },
+  "counts": {
+   "revenue_quarterly": 61,
+   "revenue_annual": 17,
+   "operating_quarterly": 49,
+   "operating_annual": 17
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "palantir": {
+  "company_id": "palantir",
+  "entity": "Palantir Technologies Inc.",
+  "cik": 1321655,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001321655_PLTR.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 1,
+   "us-gaap": 356,
+   "srt": 1,
+   "ecd": 6
+  },
+  "counts": {
+   "revenue_quarterly": 21,
+   "revenue_annual": 8,
+   "operating_quarterly": 21,
+   "operating_annual": 8
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "meta": {
+  "company_id": "meta",
+  "entity": "Meta Platforms, Inc.",
+  "cik": 1326801,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001326801_META.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 1,
+   "us-gaap": 458,
+   "srt": 1,
+   "ecd": 7,
+   "ffd": 6
+  },
+  "counts": {
+   "revenue_quarterly": 46,
+   "revenue_annual": 16,
+   "operating_quarterly": 46,
+   "operating_annual": 16
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "oracle": {
+  "company_id": "oracle",
+  "entity": "Oracle Corporation",
+  "cik": 1341439,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001341439_ORCL.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 2,
+   "us-gaap": 535
+  },
+  "counts": {
+   "revenue_quarterly": 59,
+   "revenue_annual": 19,
+   "operating_quarterly": 54,
+   "operating_annual": 19
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ },
+ "alphabet": {
+  "company_id": "alphabet",
+  "entity": "Alphabet Inc.",
+  "cik": 1652044,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001652044_GOOGL.json",
+  "source_origin": "C-13 _raw (SEC 원본)",
+  "currency": "USD",
+  "taxonomies": {
+   "dei": 1,
+   "us-gaap": 543,
+   "ecd": 7,
+   "ffd": 6
+  },
+  "counts": {
+   "revenue_quarterly": 36,
+   "revenue_annual": 13,
+   "operating_quarterly": 36,
+   "operating_annual": 13
+  },
+  "concepts_used": {
+   "revenue": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues"
+   ],
+   "operating": [
+    "us-gaap:OperatingIncomeLoss"
+   ]
+  }
+ }
+}
