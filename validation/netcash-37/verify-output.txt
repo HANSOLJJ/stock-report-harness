@@ -1,0 +1,95 @@
+====================================================================================================================
+NETCASH-37 — MCAP-36 차입금 실측 재검증 · net_cash 정의 근거
+====================================================================================================================
+
+[1] MCAP-36 수치를 각 사 개념으로 재계산 — 재현되는가
+  OK   alphabet    operating_lease  18037000000.0
+  OK   alphabet    finance_lease    2590000000.0
+  OK   alphabet    debt_ex_lease    내 100164000000.0 / MCAP-36 100164000000
+  OK   amazon      operating_lease  96320000000.0
+  OK   amazon      finance_lease    13451000000.0
+  OK   amazon      debt_ex_lease    내 132549000000.0 / MCAP-36 132224000000
+  OK   apple       operating_lease  None
+  OK   apple       finance_lease    None
+  OK   apple       debt_ex_lease    내 84344000000.0 / MCAP-36 84344000000
+  OK   meta        operating_lease  28654000000.0
+  OK   meta        finance_lease    None
+  OK   meta        debt_ex_lease    내 83664000000.0 / MCAP-36 83664000000
+  OK   microsoft   operating_lease  21925000000.0
+  OK   microsoft   finance_lease    66594000000.0
+  OK   microsoft   debt_ex_lease    내 40294000000.0 / MCAP-36 40294000000
+  OK   nvidia      operating_lease  5494000000.0
+  OK   nvidia      finance_lease    None
+  OK   nvidia      debt_ex_lease    내 33366000000.0 / MCAP-36 33366000000
+  OK   oracle      operating_lease  30190000000.0
+  OK   oracle      finance_lease    7701000000.0
+  OK   oracle      debt_ex_lease    내 129541000000.0 / MCAP-36 129541000000
+  OK   palantir    operating_lease  211400000.0
+  OK   palantir    finance_lease    None
+  OK   palantir    debt_ex_lease    내 None / MCAP-36 None
+  OK   spacex-xai  operating_lease  344000000.0
+  OK   spacex-xai  debt_ex_lease    내 39364000000.0 / MCAP-36 39364000000
+  OK   tesla       operating_lease  6738000000.0
+  OK   tesla       finance_lease    281000000.0
+  OK   tesla       debt_ex_lease    내 9061000000.0 / MCAP-36 9061000000
+
+[2] MCAP-36 이 놓친 것 — **셋을 찾았다**
+  OK   amazon: ShortTermBorrowings 325M 누락
+         MCAP-36 의 단기차입 후보군이 **우선순위 fallback** 이라 LongTermDebtCurrent 가 먼저 걸리면 그 뒤를 안 본다. 같은 10-Q 에 별도 태깅된 항목이라 합산 대상이다. 132,224 → 132,549
+  OK   spacex-xai: 금융리스 1,079M **이중계상**
+         LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities 39,364,000,000 - LongTermDebt 38,285,000,000 = 1,079,000,000 = FinanceLeaseLiability. 총액 태그가 자본리스를 이미 포함한다. MCAP-36 40,787 → 39,708
+  OK   alibaba: 차입금 103,311 → **259,996** RMB 백만 (누락 156,685)
+         MCAP-36 은 전환사채와 은행차입만 잡았다. 보존 20-F 대차대조표에 무담보 선순위채 117,485 · 교환사채 10,976 · 유동 은행차입 28,224 가 더 있다. 전부 문면과 US$ 칸 환산으로 확인
+
+[3] '결측' 과 '0' 을 갈랐는가 — palantir
+  OK   2026-06-30 시점에 차입 부채 태그가 **한 건도 없다**
+         검사한 태그 8종 전부 결측
+  OK   비유동부채 258,098,000 가 리스+이연수익+기타로 **전액 설명된다**
+         OperatingLeaseLiabilityNoncurrent 211,400,000 + DeferredRevenueNoncurrent 33,722,000 + OtherLiabilitiesNoncurrent 12,439,000 = 257,561,000. **차입금은 결측이 아니라 0 이다.**
+  OK   차입금 0 으로 두면 net_cash 9,197,699,000 가 legacy 9,200,000,000 과 맞는다 — **정의 D 의 6번째 일치**
+         다만 **유동 리스부채가 미태깅**(OperatingLeaseLiabilityCurrent 없음)이라 리스 총액이 불완전하다. 근거로는 쓰고 관측으로는 등록하지 않는다
+
+[4] '실측 불가' 가 진짜 불가인가
+  OK   apple: 리스부채를 **10-K 에만 태깅**한다 — 기준일 2026-06-27 에 값이 없다
+         태깅된 일자는 전부 회계연도 말이다 — 최근 6개 ['2020-09-26', '2021-09-25', '2022-09-24', '2023-09-30', '2024-09-28', '2025-09-27']. 가장 최근 2025-09-27 은 9개월 전 다른 시점이라 대차대조 합산에 섞지 않는다
+  OK   apple: 리스를 빼면 62,173,000,000 가 legacy 62,200,000,000 과 맞는다
+         **legacy 도 같은 공백 때문에 리스를 못 뺐다는 정황이다.** 정의가 달라서가 아니다
+  OK   tsmc: 보존 companyfacts 에 2025-12-31 시점 **금액** 사실이 0건
+         IFRS 태그가 2024-12-31 까지만 있고 이 날짜에는 주식 수 한 건뿐이다. 구조화 원천으로는 불가하고 **보존 20-F 로 간다**
+  OK   tsmc: 보존 20-F 에서 실측 — 현금+금융자산 3,262,634.8 · 차입+리스 1,068,415.7 NT$백만
+         13개 행을 전부 문면에서 찾고 US$ 칸을 발행사 선언 환율 31.37 로 역검산했다. net_cash = 69,946,416,959 USD
+
+[5] legacy 역산 정의 D 의 근거 집계 — 규칙에 적은 것과 같은가
+    일치 6개사
+      alphabet    실측      121,683 / legacy      121,700 백만 USD
+      meta        실측      -22,058 / legacy      -22,100 백만 USD
+      microsoft   실측      -51,970 / legacy      -52,000 백만 USD
+      oracle      실측     -135,538 / legacy     -135,500 백만 USD
+      palantir    실측        9,198 / legacy        9,200 백만 USD
+      tesla       실측       27,444 / legacy       27,400 백만 USD
+    차이 4개사
+      amazon      실측     -119,332 / legacy     -128,700 백만 USD  (+9,368)
+      nvidia      실측       24,583 / legacy       23,600 백만 USD  (+983)
+      spacex-xai  실측       54,644 / legacy       60,300 백만 USD  (-5,656)
+      tsmc        실측       69,946 / legacy       77,000 백만 USD  (-7,054)
+  OK   규칙 evidence.matched.count 6 = 실제 일치 6개사
+  OK   일치 목록이 규칙과 같다
+         alphabet, meta, microsoft, oracle, palantir, tesla
+  OK   규칙 evidence.differs.count 4 = 실제 차이 4개사
+         amazon, nvidia, spacex-xai, tsmc
+  OK   규칙이 이 정의를 **역산 작업 정의**로 선언한다 — 확정 정의가 나오면 대체된다
+  OK   **왜 안 맞는지 모른다는 것을 규칙이 말한다** — 모르는 것을 아는 척하지 않는다
+
+[6] 설계 지침 6.4 를 P2 로 옮기면 — alphabet 재현
+  OK   P2 net_cash 121,683,000,000 → 6.4 를 옮기면 -64,880,000,000 — **부호가 뒤집힌다**
+         차이 186,563,000,000 = 순수현금 55,911,000,000 와 전체증권 242,474,000,000 의 간격
+  OK   EV/Sales 8.968 → 9.386 · 밴드는 둘 다 -1
+         **밴드가 안 갈린다고 안전한 것이 아니다.** 8·20 선 근처 회사에서는 갈린다. 여기서 드러나는 것은 EV 가 1,865.6억 달러 과대 계상된다는 사실 자체다
+  OK   규칙이 두 자리를 **서로 다른 지표**로 명시한다 — cash(6.4 런웨이) 대 net_cash(P2 EV 조정)
+  OK   F9 쪽에도 상호 참조를 뒀다 — 어느 쪽에서 들어와도 걸린다
+
+[7] 승인 대상 보존
+  OK   승인 대상 6종 전부 보존 · 기존 실행 불변
+
+====================================================================================================================
+대조 49건 · 불일치 0건

@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 7157f3846d8d346d36b54dda164b67b1ac4ff05aa6c86d61fc3b083f8ce1b728
+observations_hash: d696e0c1a0b17933c37d26db25ddfd9a8252118807242defd908ba9c085770aa
 judgments_hash: 5a28676508f6a6877dc046137c074f0b2a4a4c41d75dece6d9fce8727c2105ec
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 323건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 332건, 판단 114건.
 
 ## 원자료
 
@@ -28,7 +28,8 @@ created_at: 2026-09-11
 | fcf_ttm | $53.3B | legacy_unverified | actual | SRC-v15-html | +$53.3B | [CASH-FCF-35 대체됨 → alphabet.fcf_ttm.cashfcf35]  |
 | market_cap | $4.12T | legacy_unverified | actual | SRC-v15-html | $4.12T |  |
 | net_borrowing_ttm | $70.1B | legacy_unverified | actual | SRC-v15-html | +$70.1B | 차환 제외 순증 |
-| net_cash | $121.7B | legacy_unverified | actual | SRC-v15-html | +$121.7B |  |
+| net_cash | $121.7B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 242.5B − 차입 100.2B − 리스 20.6B = 121.7B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | $121.7B | legacy_unverified | actual | SRC-v15-html | +$121.7B | [NETCASH-37 대체됨 → alphabet.net_cash.nc37]  |
 | net_income_ttm | $244.2B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 244,205,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 51% | legacy_unverified | actual | SRC-v15-html | 51% ⚠️ |  |
 | ntm_per | 25.3 | legacy_unverified | estimate | SRC-v15-html | 25.3 |  |
@@ -57,7 +58,8 @@ created_at: 2026-09-11
 | fcf_ttm | -$11.6B | legacy_unverified | actual | SRC-v15-html | -$11.6B | [CASH-FCF-35 대체됨 → amazon.fcf_ttm.cashfcf35]  |
 | market_cap | $2.75T | legacy_unverified | actual | SRC-v15-html | $2.75T |  |
 | net_borrowing_ttm | $75.2B | legacy_unverified | actual | SRC-v15-html | +$75.2B | 차환 제외 순증 |
-| net_cash | -$128.7B | legacy_unverified | actual | SRC-v15-html | -$128.7B |  |
+| net_cash | -$119.3B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 123.0B − 차입 132.5B − 리스 109.8B = -119.3B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | -$128.7B | legacy_unverified | actual | SRC-v15-html | -$128.7B | [NETCASH-37 대체됨 → amazon.net_cash.nc37]  |
 | net_income_ttm | $135.3B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 135,281,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 46% | legacy_unverified | actual | SRC-v15-html | 46% ⚠️ |  |
 | ntm_per | 27.5 | legacy_unverified | estimate | SRC-v15-html | 27.5 |  |
@@ -86,7 +88,8 @@ created_at: 2026-09-11
 | fcf_ttm | $41.0B | legacy_unverified | actual | SRC-v15-html | +$41.0B | [CASH-FCF-35 대체됨 → meta.fcf_ttm.cashfcf35]  |
 | market_cap | $1.51T | legacy_unverified | actual | SRC-v15-html | $1.51T |  |
 | net_borrowing_ttm | $51.7B | legacy_unverified | actual | SRC-v15-html | +$51.7B | 차환 제외 순증 |
-| net_cash | -$22.1B | legacy_unverified | actual | SRC-v15-html | -$22.1B |  |
+| net_cash | -$22.1B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 90.3B − 차입 83.7B − 리스 28.7B = -22.1B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | -$22.1B | legacy_unverified | actual | SRC-v15-html | -$22.1B | [NETCASH-37 대체됨 → meta.net_cash.nc37]  |
 | net_income_ttm | $68.1B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 68,098,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 1% | legacy_unverified | actual | SRC-v15-html | 1% |  |
 | ntm_per | 17.9 | legacy_unverified | estimate | SRC-v15-html | 17.9 |  |
@@ -113,7 +116,8 @@ created_at: 2026-09-11
 | fcf_ttm | $67.0B | legacy_unverified | actual | SRC-v15-html | +$67.0B | [CASH-FCF-35 대체됨 → microsoft.fcf_ttm.cashfcf35]  |
 | market_cap | $3.69T | legacy_unverified | actual | SRC-v15-html | $3.69T |  |
 | net_borrowing_ttm | -$3.0B | legacy_unverified | actual | SRC-v15-html | -$3.0B | 차환 제외 순증 |
-| net_cash | -$52.0B | legacy_unverified | actual | SRC-v15-html | -$52.0B |  |
+| net_cash | -$52.0B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 76.8B − 차입 40.3B − 리스 88.5B = -52.0B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | -$52.0B | legacy_unverified | actual | SRC-v15-html | -$52.0B | [NETCASH-37 대체됨 → microsoft.net_cash.nc37]  |
 | net_income_ttm | $133.7B | verified | actual | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 133,749,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 6% | legacy_unverified | actual | SRC-v15-html | 6% |  |
 | ntm_per | 25.4 | legacy_unverified | estimate | SRC-v15-html | 25.4 |  |
@@ -140,7 +144,8 @@ created_at: 2026-09-11
 | fcf_ttm | $36.0B | legacy_unverified | actual | SRC-v15-html | +$36.0B | [CASH-FCF-35 대체됨 → tsmc.fcf_ttm.cashfcf35]  |
 | market_cap | $2.15T | legacy_unverified | actual | SRC-v15-html | $2.15T ✱ |  |
 | net_borrowing_ttm | $100M | legacy_unverified | actual | SRC-v15-html | +$0.1B | 차환 제외 순증 |
-| net_cash | $77.0B | legacy_unverified | actual | SRC-v15-html | +$77.0B |  |
+| net_cash | $69.9B | verified | derived | SRC-SEC-TSM-20F-FY2025 | NT$백만 3,262,634.8 − 1,032,987.7 − 35,428.0 = 2,194,219.1 ÷ 31.37 = 69.9B USD | NETCASH-37. **보존 20-F 문면 실측** — companyfacts 에 이 기준일 금액 사실이 없다 |
+| net_cash | $77.0B | legacy_unverified | actual | SRC-v15-html | +$77.0B | [NETCASH-37 대체됨 → tsmc.net_cash.nc37]  |
 | net_income_ttm | $54.0B | verified | actual | SRC-SEC-TSM-20F-FY2025 | FY2025 순이익 NT$1,695,124.9백만 | F6-REG-28 / TSM-EDGAR-29. 손익계산서 NET INCOME 행 |
 | nonop_share | 7% | legacy_unverified | actual | SRC-v15-html | 7% |  |
 | ntm_per | 19.4 | legacy_unverified | estimate | SRC-v15-html | 19.4 ✱ |  |
@@ -253,7 +258,8 @@ created_at: 2026-09-11
 | fcf_ttm | $127.0B | legacy_unverified | actual | SRC-v15-html | +$127.0B | [CASH-FCF-35 대체됨 → nvidia.fcf_ttm.cashfcf35]  |
 | market_cap | $5.42T | legacy_unverified | actual | SRC-v15-html | $5.42T |  |
 | net_borrowing_ttm | $24.9B | legacy_unverified | actual | SRC-v15-html | +$24.9B | 차환 제외 순증 |
-| net_cash | $23.6B | legacy_unverified | actual | SRC-v15-html | +$23.6B |  |
+| net_cash | $24.6B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 63.4B − 차입 33.4B − 리스 5.5B = 24.6B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | $23.6B | legacy_unverified | actual | SRC-v15-html | +$23.6B | [NETCASH-37 대체됨 → nvidia.net_cash.nc37]  |
 | net_income_ttm | $192.9B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-28~2026-07-26 192,879,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 14% | legacy_unverified | actual | SRC-v15-html | 14% ᵃ |  |
 | ntm_per | 18.0 | legacy_unverified | estimate | SRC-v15-html | 18.0 |  |
@@ -309,7 +315,8 @@ created_at: 2026-09-11
 | fcf_ttm | -$32.5B | legacy_unverified | actual | SRC-v15-html | -$32.5B | [CASH-FCF-35 대체됨 → spacex-xai.fcf_ttm.cashfcf35]  |
 | market_cap | $1.91T | legacy_unverified | actual | SRC-v15-html | $1.91T |  |
 | net_borrowing_ttm | $102.0B | legacy_unverified | actual | SRC-v15-html | +$102.0B | 차환 제외 순증 |
-| net_cash | $60.3B | legacy_unverified | actual | SRC-v15-html | +$60.3B |  |
+| net_cash | $54.6B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 94.4B − 차입 39.4B − 리스 0.3B = 54.6B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | $60.3B | legacy_unverified | actual | SRC-v15-html | +$60.3B | [NETCASH-37 대체됨 → spacex-xai.net_cash.nc37]  |
 | net_income_ttm | -$8.2B | verified | derived | SRC-SEC-FACTS-F6 | TTM -8,218백만 | F6-REG-28. S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준 |
 | nonop_share | — | not_disclosed | actual | SRC-v15-html | 적자 |  |
 | ntm_per | 111.0 | legacy_unverified | estimate | SRC-v15-html | 111 |  |
@@ -340,7 +347,8 @@ created_at: 2026-09-11
 | fcf_ttm | $5.8B | legacy_unverified | actual | SRC-v15-html | +$5.8B | [CASH-FCF-35 대체됨 → tesla.fcf_ttm.cashfcf35]  |
 | market_cap | $1.41T | legacy_unverified | actual | SRC-v15-html | $1.41T |  |
 | net_borrowing_ttm | $1.8B | legacy_unverified | actual | SRC-v15-html | +$1.8B | 차환 제외 순증 |
-| net_cash | $27.4B | legacy_unverified | actual | SRC-v15-html | +$27.4B |  |
+| net_cash | $27.4B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 43.5B − 차입 9.1B − 리스 7.0B = 27.4B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | $27.4B | legacy_unverified | actual | SRC-v15-html | +$27.4B | [NETCASH-37 대체됨 → tesla.net_cash.nc37]  |
 | net_income_ttm | $3.8B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 3,804,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 18% | legacy_unverified | actual | SRC-v15-html | 18% ᵇ |  |
 | ntm_per | 187.5 | legacy_unverified | estimate | SRC-v15-html | 187.5 |  |
@@ -368,7 +376,8 @@ created_at: 2026-09-11
 | fcf_ttm | -$23.7B | legacy_unverified | actual | SRC-v15-html | -$23.7B | [CASH-FCF-35 대체됨 → oracle.fcf_ttm.cashfcf35]  |
 | market_cap | $443.7B | legacy_unverified | actual | SRC-v15-html | $443.7B |  |
 | net_borrowing_ttm | $40.2B | legacy_unverified | actual | SRC-v15-html | +$40.2B | 차환 제외 순증 |
-| net_cash | -$135.5B | legacy_unverified | actual | SRC-v15-html | -$135.5B |  |
+| net_cash | -$135.5B | verified | derived | SRC-SEC-FACTS-F6 | 현금+증권 31.9B − 차입 129.5B − 리스 37.9B = -135.5B | NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다** |
+| net_cash | -$135.5B | legacy_unverified | actual | SRC-v15-html | -$135.5B | [NETCASH-37 대체됨 → oracle.net_cash.nc37]  |
 | net_income_ttm | $17.1B | verified | actual | SRC-SEC-FACTS-F6 | 2025-06-01~2026-05-31 17,087,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | -15% | legacy_unverified | actual | SRC-v15-html | -15% ᶜ |  |
 | ntm_per | 19.1 | legacy_unverified | estimate | SRC-v15-html | 19.1 |  |

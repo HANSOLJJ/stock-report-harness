@@ -195,6 +195,23 @@ class RuleSet:
     def f6_fx(self) -> dict[str, Any]:
         return self.f6.get("fx") or {}
 
+    def f6_net_cash(self) -> dict[str, Any]:
+        """P2 의 `net_cash` 가 **무엇을 세는가**. 규칙에 정의가 없던 자리를 채운 작업 정의다 (NETCASH-37).
+
+        두 가지를 같이 들고 있다.
+
+        1. **작업 정의** — `현금 + 유가증권 전체 − 총차입금 − 리스부채`. 출처는 v1.5 legacy 역산이지
+           설계가 의도한 정의라는 증거가 아니다. 12개사 중 6개사가 반올림 이내로 맞고 4개사가 다르며
+           2개사는 판정 자체가 안 된다. `evidence` 가 그 셋을 각각 적어 둔다.
+        2. **적용 범위 구분** (`scope_separation`) — 설계 지침 6.4 는 **런웨이** 절이라 즉시 쓸 수 있는
+           현금만 세고, 여기 P2 는 **EV 조정**이라 재무적 자산 전체를 센다. 같은 '현금' 이라는 말이
+           두 자리에서 다른 것을 가리키므로 한쪽 논거를 다른 쪽으로 옮기면 조용히 틀린다. alphabet
+           한 회사에서만 1,865.6억 달러가 갈리고 부호까지 뒤집힌다.
+
+        `status` 가 `working_definition` 인 동안은 **확정 정의가 나오면 대체된다**는 뜻이다.
+        """
+        return self.f6.get("net_cash") or {}
+
     # ------------------------------------------------------------ F6 비상장 (C-12)
     def f6_private_bands(self) -> dict[str, Any]:
         return self.f6.get("private_bands") or {}

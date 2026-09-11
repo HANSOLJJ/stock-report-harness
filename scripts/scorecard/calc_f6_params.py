@@ -224,6 +224,20 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
             if boundary["flag"]:
                 warnings.append(f"{pid} 경계 ⚠️ {boundary['nearest_boundary']:g} 선까지 "
                                 f"{boundary['distance_ratio'] * 100:+.1f}% — 점수는 그대로")
+        # P2 의 net_cash 는 **정의가 확정되지 않은 입력**이다. 값만 남기면 다음 사람이 어느 정의로
+        # 뺀 순현금인지 알 수 없고, 설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮겨 오기 쉽다.
+        # 그래서 산식 옆에 정의와 상태를 같이 찍는다(NETCASH-37).
+        if pid == "P2":
+            spec = rules.f6_net_cash()
+            if spec:
+                entry["net_cash_definition"] = {
+                    "status": spec.get("status"),
+                    "definition": spec.get("definition"),
+                    "provenance": (spec.get("provenance") or {}).get("kind"),
+                }
+                if spec.get("status") == "working_definition":
+                    warnings.append("net_cash 작업 정의 ⚠️ legacy 역산으로 세운 정의 위에서 P2 를 계산한다 — "
+                                    "확정 정의가 나오면 재계산 대상 (policies.f6.net_cash)")
         calc["parameters"][pid] = entry
 
     # 미검증 입력을 드러낸다. **점수에는 개입하지 않는다** — 우리 수집 공백을 기업 위험으로 바꾸지 않는다.

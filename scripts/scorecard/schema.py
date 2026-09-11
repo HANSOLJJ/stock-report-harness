@@ -474,9 +474,63 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
         _require(str(correction.get("weakness") or "").strip(),
                  f"{where}: weakness 를 비워 둘 수 없음 — 이 보정이 답을 먼저 알고 정해졌다는 사실을 남긴다")
 
+    net_cash = f6.get("net_cash")
+    if net_cash:
+        _validate_net_cash(net_cash)
+
     # 파라미터 합계 하한이 factor range 하한과 맞아야 배점 재배분이 규칙 안에서 검산된다.
     _require(total_min == factor_min,
              f"rules.policies.f6: 파라미터 합계 하한 {total_min} 이 factors.F6.range 하한 {factor_min} 과 다름")
+
+
+NET_CASH_STATUSES = ("working_definition", "confirmed")
+
+
+def _validate_net_cash(spec: Any) -> None:
+    """`policies.f6.net_cash` — 역산으로 세운 정의는 **대체 가능하다고 스스로 말해야** 통과한다.
+
+    이 검사가 지키는 것 셋.
+
+    1. 역산 출처(`legacy_reverse_engineered`)면 `provenance.warning` 과 `supersede` 가 비어 있을 수 없다.
+       근거 없는 정의가 확정 정의처럼 굳는 것을 막는다.
+    2. `evidence.matched.count` 가 실제 회사 수와 같아야 한다. 일치 개수를 손으로 적고 목록을 나중에
+       고치면 숫자만 남아 거짓말이 된다.
+    3. `scope_separation.sites` 가 **서로 다른 지표 둘 이상**을 가리켜야 한다. 이 블록의 존재 이유가
+       `cash` 와 `net_cash` 를 가르는 것이라 하나로 접히면 의미가 사라진다.
+    """
+    where = "rules.policies.f6.net_cash"
+    _require(spec.get("status") in NET_CASH_STATUSES,
+             f"{where}.status: {NET_CASH_STATUSES} 중 하나여야 함 — {spec.get('status')!r}")
+    _require(str(spec.get("definition") or "").strip(), f"{where}.definition: 비워 둘 수 없음")
+
+    prov = spec.get("provenance") or {}
+    _require(str(prov.get("kind") or "").strip(), f"{where}.provenance.kind: 비워 둘 수 없음")
+    if prov.get("kind") == "legacy_reverse_engineered":
+        _require(str(prov.get("warning") or "").strip(),
+                 f"{where}.provenance.warning: 역산 정의는 원본 사양이 아니라는 경고가 필요함")
+        _require(str(spec.get("supersede") or "").strip(),
+                 f"{where}.supersede: 역산 정의는 확정 정의가 나오면 대체된다는 것을 적어야 함")
+
+    matched = ((spec.get("evidence") or {}).get("matched")) or {}
+    if matched:
+        companies = matched.get("companies") or {}
+        _require(matched.get("count") == len(companies),
+                 f"{where}.evidence.matched: count {matched.get('count')!r} 가 목록 {len(companies)}개와 다름")
+
+    sep = spec.get("scope_separation") or {}
+    if sep:
+        sites = sep.get("sites")
+        _require(isinstance(sites, list) and len(sites) >= 2,
+                 f"{where}.scope_separation.sites: 자리 둘 이상이 필요함")
+        metrics = []
+        for idx, site in enumerate(sites):
+            sw = f"{where}.scope_separation.sites[{idx}]"
+            _require(site.get("metric") in METRICS, f"{sw}.metric: 알 수 없는 지표 {site.get('metric')!r}")
+            for key in ("site", "question", "counts", "why"):
+                _require(str(site.get(key) or "").strip(), f"{sw}.{key}: 비워 둘 수 없음")
+            metrics.append(site["metric"])
+        _require(len(set(metrics)) >= 2,
+                 f"{where}.scope_separation.sites: 서로 다른 지표 둘 이상을 가리켜야 함 — {metrics}")
 
 
 # F9 도 F6 와 같은 형태로 정책과 factor range 를 로드 시점에 맞춘다.
