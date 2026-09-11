@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "90b41988ef5282fc1ab05dfb729e57fe990db7850d1fc9c62d81283408daa84b",
+    "run": "96818ce9e20d54777d539757033ca46443b5c648ae40ee414927239660583290",
     "observations": "1a69763e1819e7b9d026823b52f50f27c23697f63e1ec5aa576a73c50a1088a6",
-    "judgments": "5dc79ac34c6172670ab8a0480156d34bf15a40b599b5198c2b101e641f76bec6",
+    "judgments": "1c0dbfbcd3567732f9db5124cf97c970f113ac6e68de2904d4a0ca529002a5fa",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
-    "rules": "2cddd4948388fb4ae5f993c50373851de79c774980c412929f9357ab863b247d"
+    "rules": "3dafe5ae8ba4a9671e8ac18c126e0602ba59feee52e246d515a57d82cdbf6f6b"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -1895,14 +1895,12 @@
         "F8": {
           "factor": "F8",
           "score": -3,
-          "status": "carried_score",
+          "status": "ok",
           "basis": "manual",
-          "judgment_id": "anthropic.F8",
+          "judgment_id": "anthropic.F8.f8anth33",
           "observation_ids": [],
           "calc": {},
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F9": {
@@ -1974,8 +1972,7 @@
         "F3",
         "F4",
         "F5",
-        "F7",
-        "F8"
+        "F7"
       ],
       "rank": 5
     },
@@ -4004,6 +4001,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 169,
-  "results_hash": "d413fdbae633a762b001bbece0a475e13a20d132de7b2b95531ad0fc7e414b15"
+  "warnings_count": 168,
+  "results_hash": "45f5bd8c0102134691a8251b64ff21b06a2ee02942964364e3074cef76259426"
 }

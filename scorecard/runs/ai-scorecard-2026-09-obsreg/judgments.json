@@ -1364,29 +1364,34 @@
       ]
     },
     {
-      "judgment_id": "anthropic.F8",
+      "judgment_id": "anthropic.F8.f8anth33",
       "company_id": "anthropic",
       "factor": "F8",
       "kind": "score",
       "score": -3,
       "inputs": {},
       "evidence": [
-        "컴퓨트 100% 외부 + 공급자 3사가 전부 경쟁자(Gemini·Nova·OpenAI 27%)",
-        "🔧 컴퓨트 약정 $300B(Google Cloud $200B/5년 + AWS $100B/10년) (v1.5 정정: ⑨는 고쳤는데 ⑧에 $80B가 남아 있었음)",
-        "🆕 ⚠️ 성능의 원천이 AWS 한 곳에 몰려 있다는 증언 — DS투자증권(9/7): Fable 계열의 빠른 성능 향상 배경에 AWS Project Rainier(2025-11 Trainium2 50만개 → 2026-04부터 100만개+). -3의 전제가 \"3사 분산\"인데 돈은 Google이 연 $40B로 AWS($10B)의 4배면서 성능 원천은 AWS — 훈련/서빙 구분으로 설명될 수 있으나 미확인 → 긴장 #10",
-        "FTC가 계약 배타성 검토",
-        "자체 칩이 이 항목의 구조적 해법이지만 2028~2030년 양산이라 당분간 -3 유지",
+        "컴퓨트 100% 외부 + 공급자 3사가 전부 경쟁자 — Google(Gemini) · Amazon(Nova) · Microsoft(OpenAI 지분 27% 보유). **OpenAI 27% 는 Microsoft 의 OpenAI 지분율**이지 Anthropic 의 컴퓨트 배분이 아니다(v1.5 원본 188·198·217·350행에서 확인).",
+        "🔧 컴퓨트 약정 $300B — Google Cloud $200B/5년(연 ~$40B) + AWS $100B/10년(연 ~$10B) + Azure $30B. AWS 분은 **Amazon 10-Q Note 1 에 직접 공시돼 있다**: \"In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.\" (보존 원문 C-13 3cf9799:validation/offb-24/_raw/amzn-20260630.htm 에서 worker 직접 대조)",
+        "📐 **[근거 교체 2026-09-11] AWS 훈련 집중은 증권사 2차 증언이 아니라 Amazon 의 1차 공시다.** 승계 근거란은 이것을 DS투자증권 9/7 자료로 적고 있었으나, 실제로는 Amazon 이 SEC Form 8-K (Ex 99.1) 네 건으로 직접 공시한 사실이다(C-13 F8-ANTH-33, 8ddb0ae). 0001018724-25-000002(2025-02-06) · 0001018724-25-000121(2025-10-30) · 0001018724-26-000002(2026-02-05) · 0001018724-26-000012(2026-04-29). 2026-02-05 공시 원문: \"Trainium2 powers Project Rainier, the world's largest operational AI compute cluster with 500,000+ Trainium2 chips, which Anthropic is using to train its industry-leading AI model, Claude.\" 증권사 자료는 이 공시 사실에 질적 해석을 얹은 2차 출처였다.",
+        "✅ **확인된 것** — (1) Project Rainier 의 실체와 규모(2025-10 nearly 500,000 → 2026-02 500,000+ Trainium2). (2) Anthropic 이 그 클러스터로 Claude 를 **훈련(train)** 한다는 Amazon 의 명시. (3) 2026-04-29 공시의 최대 5GW Trainium 확보와 train and power 문면. (4) AWS 약정 $100B/10년과 칩 성능 연계 의무(10-Q Note 1).",
+        "❓ **확인되지 않은 것** — (1) **Google 몫의 훈련/서빙 구분.** Alphabet 10-K(FY2025)·10-Q(2026 Q1·Q2) 본문에 'Anthropic' 이 **0건**이다. 계약 존재·금액·기간·용도가 전부 회사 미공시다. Google Cloud 는 고객사 다중 기가와트 TPU 계약을 백로그로 포괄 기술할 뿐이다. (2) AWS $100B+ 안의 훈련용/서빙용 금액 구분도 미공시다. (3) 따라서 **돈은 Google 이 4배인데 성능 원천은 AWS** 라는 긴장(#10)은 해소되지 않고 실증 상태만 갱신됐다.",
+        "⚖️ **점수 −3 유지.** 하향하지 않는 이유는 **Google 몫이 훈련이 아니라는 증거가 있는 것이 아니라 공시가 없을 뿐**이기 때문이다. 미공시를 '아니다' 로 읽으면 우리가 못 찾은 것을 그 기업의 구조로 둔갑시키게 된다(MISS-LABEL-23 이 세운 원칙). 장부상 3사 분산은 성립하고, 물리적 훈련 집중은 AWS 쪽에서만 1차 확인됐다.",
+        "🔁 **재판정 조건 (−4 재검토)** — 셋 중 **하나라도** 1차 자료로 확인되면 −4 를 재검토한다. (1) Alphabet 이 고객사별로 분리 공시해 Anthropic 계약의 규모·용도가 드러나거나, (2) Anthropic 이 훈련 컴퓨트 구성을 공시하거나, (3) Google 몫이 **서빙 전용**임이 1차 자료로 확인되는 경우. 셋 다 '미공시가 해소되는' 방향이고, 추측으로는 재판정하지 않는다.",
+        "FTC 가 계약 배타성 검토",
+        "자체 칩이 이 항목의 구조적 해법이지만 2028~2030년 양산이라 당분간 −3 유지",
         "🆕 제로 데이터 보존 약속(9/2) — 기업 고객의 규제 의존 완화 방향, 단 \"고객이 직접 검증해야\" 조건부"
       ],
       "counter_evidence": [],
-      "note": null,
-      "reviewer": "legacy:v1.5",
-      "reviewed_at": "2026-09-02",
-      "status": "carried",
-      "carried_from": "baseline:v1.5",
+      "note": "F8-ANTH-33 반영(2026-09-11). **점수 -3 은 바뀌지 않았고 근거란만 바뀌었다.** 2차 증언(증권사 자료)을 1차 공시(Amazon SEC 8-K 4건 + 10-Q Note 1)로 교체하고, 확인된 것과 확인되지 않은 것을 나누고, 재판정 조건을 등재했다. Google 몫의 훈련/서빙 구분은 Alphabet 공시에 Anthropic 이 0건이라 확인 불가이며, **미공시를 '아니다' 로 읽지 않기 때문에** 하향하지 않는다.",
+      "reviewer": "worker(HANSOLJJ) — C-13 F8-ANTH-33 8ddb0ae 기반",
+      "reviewed_at": "2026-09-11",
+      "status": "new",
       "source_ids": [
-        "SRC-v15-html"
-      ]
+        "SRC-v15-html",
+        "SRC-SEC-AMZN-10Q-2026Q2"
+      ],
+      "previous_judgment_id": "anthropic.F8.f8anth33"
     },
     {
       "judgment_id": "anthropic.F9",

@@ -29,6 +29,8 @@ SRC_DIR = Path(r"E:\sourcecode\01_side_project\stock-report-harness\AI_company_a
 RULE_MD = SRC_DIR / "AI기업_채점규칙_v1.5.md"
 CARD_MD = SRC_DIR / "AI기업_채점표_v1.5.md"
 RUN = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-obsreg"
+# 보존 원문. C-13 3cf9799 의 AMZN 10-Q 로 F8 근거 한 줄을 직접 대조한다.
+BLOBS = {"AMZN_10Q": ("3cf9799", "validation/offb-24/_raw/amzn-20260630.htm")}
 
 
 class Check:
@@ -44,11 +46,30 @@ class Check:
         return [r for r in self.rows if not r[0]]
 
 
+def blob(key: str) -> bytes:
+    import subprocess
+    commit, path = BLOBS[key]
+    out = subprocess.run(["git", "show", f"{commit}:{path}"], capture_output=True)
+    if out.returncode != 0:
+        raise SystemExit(f"git show {commit}:{path} 실패")
+    return out.stdout
+
+
 def flat(text: str) -> str:
     return re.sub(r"[\s\u00a0]+", " ", text)
 
 
+def plain(data: bytes) -> str:
+    """보존 HTML 원문을 문장으로 편다. 태그를 지우고 공백을 접는다."""
+    import html as _h
+    t = data.decode("utf-8", "replace")
+    t = re.sub(r"(?is)<(script|style)\b.*?</\1>", " ", t)
+    t = re.sub(r"(?s)<[^>]+>", " ", t)
+    return flat(_h.unescape(t))
+
+
 def main() -> int:
+    sys.path.insert(0, str(ROOT / "scripts"))
     chk = Check()
     bar = "=" * 112
     print(bar)
@@ -168,6 +189,77 @@ def main() -> int:
         "**F9 경로에 '판정 보류(통과 아님)' 가 남았다**", "통과로 적지 않았다")
     chk(results["population"]["scored"] == 14 and not results["pending_rule_decisions"],
         f"14/14 완주 · 미결 결정 {results['pending_rule_decisions'] or '없음'}")
+
+    print()
+    print("[8] 검토 보완 넷 (2026-09-11 라운드2)")
+    v17 = json.loads((ROOT / "scorecard" / "rules" / "v1.7.json").read_text(encoding="utf-8"))
+    f6, src = v17["policies"]["f6"], v17["sources"]
+
+    chk("P2 가 점수를 내고" in f6["private_note"] and "확정 전" in f6["private_note"],
+        "① private_note 가 지금 규칙과 맞고 확정 전 서술임을 함께 남긴다",
+        "선언이 사실과 반대이던 상태를 고쳤다 — 코드가 하는 일과 선언이 같아야 한다")
+    chk(f6["private_multiples"][0].startswith("ps_ratio") and "arr 이 아니다" in f6["private_multiples"][0],
+        "① private_multiples 첫 항목이 ps_ratio 이고 arr 이 아님을 명시")
+    chk(any("점수에 쓰지 않는다" in m for m in f6["private_multiples"]),
+        "① 버린 배수(post_money_valuation/arr)를 지우지 않고 참고용으로 남겼다")
+
+    chk(src["usage_scope"]["scopes"] == ["personal_internal_only", "corporate_internal_only"],
+        "② usage_scope 가 개인·법인 합집합")
+    chk("합집합" in src["usage_scope"]["evaluation_rule"] and "조이는" in src["usage_scope"]["evaluation_rule"],
+        "② 합집합 평가 규칙이 선언돼 있다 — 범위를 넓히는 것이 제약을 조인다")
+    allowed_hosts = [e["host"] for e in src["allowed"]]
+    na = {e["host"]: e for e in src.get("not_adopted", [])}
+    for host in ("finnhub.io", "financialmodelingprep.com", "www.alphavantage.co"):
+        chk(host not in allowed_hosts and host in na, f"② {host} 가 allowed 에서 내려가 not_adopted 에 있다")
+        chk(na[host]["reason_type"] == "terms" and "personal_internal_only" in na[host]["reopen_condition"],
+            f"② {host} 재개 조건에 개인 전용으로 좁히는 것이 적혀 있다")
+    chk("서면 승인" in na["finnhub.io"]["reopen_condition"] and "둘 다 필요" in na["finnhub.io"]["reopen_condition"],
+        "② **Finnhub 만 조건이 둘이다** — 개인 범위로 좁히는 것에 더해 파생 결과 공유 서면 승인까지 필요하다")
+    chk("conditional_candidates" not in src and "data.nasdaq.com" in na,
+        "③ data.nasdaq.com 이 conditional_candidates 에서 not_adopted 로 옮겨졌다")
+    chk(na["data.nasdaq.com"]["reason_type"] == "cost", "③ 사유가 비용이다 — 약관 위반이나 기술 부적격이 아니다")
+
+    from scorecard.rules import load_rules
+    r17 = load_rules("v1.7")
+    msg = r17.source_violation("https://data.nasdaq.com/api/v3/datasets/ZACKS/EE.json") or ""
+    chk("채택하지 않기로 결정된 원천" in msg and "재조사 불필요" in msg,
+        "③ **source_violation 이 not_adopted 를 읽는다**", msg[:150])
+    chk("약관 확인 후 규칙에 등재하고 쓴다" not in msg,
+        "③ 마지막 fallback 안내로 떨어지지 않는다 — 그 문구가 재조사를 지시하게 된다")
+    old_msg = load_rules("v1.6").source_violation("https://data.nasdaq.com/api/v3/x.json") or ""
+    chk("미승인 후보" in old_msg, "③ v1.6 은 옛 키(conditional_candidates)로 그대로 읽힌다",
+        "과거 규칙 파일을 깨지 않는다")
+
+    jud = {(j["company_id"], j["factor"]): j for j in json.loads(
+        (RUN / "judgments.json").read_text(encoding="utf-8"))["items"]}
+    f8 = jud[("anthropic", "F8")]
+    chk(f8["score"] == -3, "④ F8 점수 -3 유지")
+    claims = [e for e in f8["evidence"] if "DS투자증권" in e and "근거 교체" not in e]
+    chk(not claims, "④ 증권사 2차 증언을 근거로 쓰는 항목이 없다")
+    for accn in ("0001018724-25-000002", "0001018724-25-000121",
+                 "0001018724-26-000002", "0001018724-26-000012"):
+        chk(any(accn in e for e in f8["evidence"]), f"④ 8-K 접수번호 {accn} 등재")
+    chk(any("Anthropic is using to train its industry-leading AI model, Claude" in e
+            for e in f8["evidence"]), "④ 2026-02-05 공시 원문이 근거란에 있다")
+    chk(any("확인된 것" in e for e in f8["evidence"]) and any("확인되지 않은 것" in e for e in f8["evidence"]),
+        "④ 확인된 것과 확인되지 않은 것이 나뉘어 있다")
+    chk(any("재판정 조건" in e for e in f8["evidence"]), "④ 재판정 조건이 등재돼 있다")
+    chk(any("공시가 없을 뿐" in e for e in f8["evidence"]),
+        "④ **미공시를 '아니다' 로 읽지 않는다는 근거가 남아 있다**",
+        "Google 몫이 훈련이 아니라는 증거가 있는 것이 아니다")
+
+    print()
+    print("[8b] AMZN 10-Q Note 1 — C-13 인용을 보존 원문에서 직접 대조")
+    amzn = plain(blob("AMZN_10Q"))
+    quote = ("In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and "
+             "existing multi-year commitment by more than $ 100.0 billion over 10.0 years")
+    chk(quote in amzn, "AWS·Anthropic $100.0B/10.0년 확대 문면 확인",
+        "8-K 네 건은 원문이 이 워크트리에 보존돼 있지 않아 C-13 의 SEC 읽기를 인용했고 그 사실을 적었다")
+    chk("Anthropic Series H nonvoting preferred stock" in amzn,
+        "**덤으로 찾은 것 — 같은 10-Q 가 Series H 를 직접 언급한다**",
+        "Amazon 이 Q2 2026 에 Anthropic Series H 우선주에 $5.0B 를 투자했다고 공시한다. "
+        "라운드 총액은 말하지 않아 30B/65B 모순을 해소하지는 못하나, **Series H 의 존재와 시점은 "
+        "1차 자료로 확정된다**")
 
     print()
     print(bar)

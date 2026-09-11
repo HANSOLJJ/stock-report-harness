@@ -248,16 +248,40 @@ def validate_rules(payload: Any) -> dict[str, Any]:
 
 
 # 산출물 사용 범위. 원천 약관의 '개인 사용 허용' 조항이 우리에게 적용되는지를 가르는 값이라
-# 자유 문자열로 두지 않는다. personal_internal_only 는 2026-09-10 에 폐기됐으나 과거 규칙
-# 파일을 읽을 수 있어야 하므로 남긴다.
+# 자유 문자열로 두지 않는다. 2026-09-11 에 단일값에서 **허용 범위(집합)** 로 바뀌었다 — 개인 사용과
+# 법인 내부 사용이 둘 다 실제 사용이기 때문이다(SRC-POLICY-32).
 USAGE_SCOPES = frozenset({"personal_internal_only", "corporate_internal_only", "external_distribution"})
+
+
+def normalize_usage_scopes(scope: dict[str, Any]) -> set[str]:
+    """`scopes`(신규 배열)와 `scope`(과거 단일값)를 모두 받아 집합으로 정규화한다.
+
+    과거 규칙 파일(v1.6·v1.7 초판)이 단일 문자열이므로 한쪽을 지우지 않는다. v1.5 는 sources
+    블록 자체가 없어 이 경로를 타지 않는다.
+
+    **집합은 합집합이다.** 어떤 원천이 적격이려면 라이선스가 원소를 **전부** 허용해야 하고
+    하나라도 금지하면 부적격이다. 범위를 넓히는 것은 제약을 푸는 것이 아니라 조이는 것이다.
+    """
+    if "scopes" in scope:
+        values = scope["scopes"]
+        _require(isinstance(values, list) and values,
+                 "rules.sources.usage_scope.scopes: 비어 있지 않은 배열이어야 함")
+        _require(len(set(values)) == len(values),
+                 "rules.sources.usage_scope.scopes: 중복은 허용하지 않음")
+    else:
+        _require("scope" in scope, "rules.sources.usage_scope: scopes 또는 scope 중 하나가 필요함")
+        values = [scope["scope"]]
+    unknown = [v for v in values if v not in USAGE_SCOPES]
+    _require(not unknown,
+             f"rules.sources.usage_scope: 알 수 없는 값 {unknown!r} — {sorted(USAGE_SCOPES)} 중에서 쓴다")
+    return set(values)
 
 
 def _validate_source_policy(policy: Any) -> None:
     """자료 원천 allowlist. 같은 host 가 allowed 와 denied 에 동시에 있으면 판정이 갈린다."""
     _require(isinstance(policy, dict), "rules.sources: object 여야 함")
     _expect_keys(policy, ["policy_note", "enforcement", "allowed", "denied"], "rules.sources",
-                 optional=["conditional_candidates", "usage_scope", "unlisted"])
+                 optional=["conditional_candidates", "not_adopted", "usage_scope", "unlisted"])
     hosts: dict[str, str] = {}
     for group, required in (("allowed", ["host", "note"]), ("denied", ["host", "reason"])):
         entries = policy[group]
@@ -280,15 +304,34 @@ def _validate_source_policy(policy: Any) -> None:
         _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
     if "usage_scope" in policy:
         scope = policy["usage_scope"]
-        _expect_keys(scope, ["scope", "decided_at", "statement", "condition"], "rules.sources.usage_scope",
-                     optional=["note"])
+        # scope(과거)와 scopes(신규) 중 **정확히 하나**만 둔다. 둘 다 두면 어느 쪽이 정본인지 모르게 되고,
+        # 그것이 '값을 좁혔는데 좁혔다는 사실이 안 남는' 이 프로젝트의 반복 실패 형태다.
+        _require(("scope" in scope) != ("scopes" in scope),
+                 "rules.sources.usage_scope: scope 와 scopes 중 정확히 하나만 둔다")
+        _expect_keys(scope, ["decided_at", "statement", "condition"], "rules.sources.usage_scope",
+                     optional=["scope", "scopes", "note", "evaluation_rule"])
         # 범위 선언은 조건과 짝이어야 한다. 조건 없는 선언은 범위가 바뀔 때 무엇을 다시 봐야 하는지를 남기지 않는다.
-        for key in ("scope", "decided_at", "statement", "condition"):
+        for key in ("decided_at", "statement", "condition"):
             _require(str(scope.get(key) or "").strip(), f"rules.sources.usage_scope: {key} 를 비워 둘 수 없음")
         # 이 값은 판정을 가르는 스위치다(법인 사용이면 '개인 사용 허용' 조항이 우리에게 적용되지 않는다).
         # 자유 문자열로 두면 표기가 흔들리고 == 비교가 조용히 빗나간다.
-        _require(scope["scope"] in USAGE_SCOPES,
-                 f"rules.sources.usage_scope: scope 는 {sorted(USAGE_SCOPES)} 중 하나여야 함 — {scope['scope']!r}")
+        normalize_usage_scopes(scope)
+    # 채택 안 함. denied 와 가르는 이유는 사유의 종류가 다르기 때문이다 —
+    # denied 는 **쓸 자격이 없는** 것이고 not_adopted 는 **자격은 있으나 안 쓰기로 한** 것이다.
+    for idx, entry in enumerate(policy.get("not_adopted") or []):
+        where = f"rules.sources.not_adopted[{idx}]"
+        _expect_keys(entry, ["host", "status", "reason_type", "reason", "decided_at",
+                             "decided_by", "reopen_condition"], where,
+                     optional=["name", "note", "prior_investigation"])
+        for key in ("host", "reason", "decided_at", "decided_by", "reopen_condition"):
+            _require(str(entry.get(key) or "").strip(), f"{where}: {key} 필요")
+        _require(entry["status"] == "not_adopted", f"{where}: status 는 not_adopted 여야 함")
+        # 사유를 뭉뚱그리지 않는다. 비용 판단과 약관 배제는 다른 결정이다.
+        _require(entry["reason_type"] in ("cost", "technical", "terms", "redundant"),
+                 f"{where}: reason_type 은 cost/technical/terms/redundant 중 하나여야 함")
+        _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
+        hosts[entry["host"]] = "not_adopted"
+
     for idx, entry in enumerate(policy.get("unlisted") or []):
         where = f"rules.sources.unlisted[{idx}]"
         _expect_keys(entry, ["host", "reason_type", "reason", "decided_at"], where, optional=["note", "evidence"])

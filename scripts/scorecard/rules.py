@@ -50,6 +50,14 @@ class RuleSet:
         for entry in policy.get("denied", []):
             if host == entry["host"] or host.endswith("." + entry["host"]):
                 return f"{host} 는 생산 원천에서 배제됨 — {entry['reason']}"
+        # 채택 안 함이 먼저다. 이 블록이 없으면 not_adopted host 가 마지막 fallback 으로 떨어져
+        # "약관 확인 후 규칙에 등재하고 쓴다" 는 안내가 나온다 — **우리가 막으려는 행동을 지시하게 된다.**
+        for entry in policy.get("not_adopted", []):
+            if host == entry["host"] or host.endswith("." + entry["host"]):
+                return (f"{host} 는 검토를 마치고 채택하지 않기로 결정된 원천 — "
+                        f"{entry['reason']} (결정 {entry['decided_at']}, {entry['decided_by']}). "
+                        f"재조사 불필요. 재개 조건: {entry['reopen_condition']}")
+        # 과거 규칙 파일 호환. v1.6·v1.7 초판은 conditional_candidates 를 쓴다. 지우지 않는다.
         for entry in policy.get("conditional_candidates", []):
             if host == entry["host"] or host.endswith("." + entry["host"]):
                 need = ", ".join(entry["required_written_conditions"])

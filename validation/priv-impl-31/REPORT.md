@@ -2,6 +2,7 @@
 
 작성일 2026-09-11. 담당 worker(HANSOLJJ/worker). 요청 `msg_73ec5d058e4c`.
 선행 설계진행 `d57e70e` `validation/c12-c20-decision.md` (사용자 확정). 원본 `AI기업_채점규칙_v1.5.md`·`AI기업_채점표_v1.5.md`.
+**2026-09-11 라운드2** — 검토 회신(`e291e21`) 보완 넷을 반영했다. **10~13절**이 새로 붙었다.
 
 ## 결론
 
@@ -17,7 +18,8 @@
 | 원본 대조 | **58건 · 불일치 0건.** v1.5 원본 sha256 이 `v1.5.json` 선언값과 일치 |
 | **경고 1건** | **Series H 모순이 보정 임계 0.50 을 가로지릅니다.** 한 시나리오에서 anthropic F6 가 −4 가 됩니다 (5절) |
 | 승인 실행 | **6종 해시 전부 불변** |
-| 테스트 | 191 → **217건** · skip 0 |
+| 테스트 | 191 → **220건** · skip 0 (라운드2 +3) |
+| 보완 넷 | 선언 정정 · 원천 정책 개정 · `source_violation` 동반 수정 · F8 근거란 교체 (10~13절) |
 
 신규 네트워크 호출 없음. `v1.5`·승인 실행 파일 미변경. **승인은 하지 않았습니다.**
 
@@ -291,3 +293,143 @@ python -m unittest discover -s tests                   # 217건
 | `scripts/scorecard/calc_f9.py` | `_private_undisclosed_operating` · G1 판정 보류 분기 |
 | `scripts/scorecard/rules.py` · `schema.py` | 비상장 밴드 접근자 · 밴드·보정·천장 검증 |
 | `tests/test_scorecard_private.py` | 신규 26건 |
+
+
+---
+
+# 라운드2 — 검토 보완 넷 (2026-09-11)
+
+**점수 변동 0건. 순위 동일. 14/14 완주 유지.** 상태 변화가 딱 하나 있고 의도된 것이다(13.3).
+
+원본 대조가 58 → **87건**으로 늘었고 불일치 0건이다.
+
+## 10. ① `private_note`·`private_multiples` 를 지금 규칙과 맞췄습니다
+
+지적하신 그대로였습니다. `private_note` 가 **"밴드는 미정이고 점수는 만들지 않는다"** 로 남아 있었는데 바로 옆 `private_bands` 가 점수를 만들고 있었습니다. **선언이 사실과 반대**였습니다.
+
+고치되 **C-12 확정 전 서술이었다는 사실을 함께 남겼습니다.**
+
+> 비상장 F6 는 **P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다**(C-12 확정, 2026-09-11, 사용자). … | C-12 확정 전(2026-09-11 이전) 서술은 '밴드는 미정이고 … 점수는 만들지 않는다' 였다. 확정 뒤에도 그 문장이 남아 있어 **선언이 사실과 반대**인 상태가 있었고 설계진행 검토에서 잡혔다. 오늘 `not_disclosed` 네 뜻과 `stale_asof` 미소비로 고친 것과 같은 종류다 — **선언은 코드가 하는 일과 같아야 하고, 다르면 다음 사람이 선언을 믿는다.**
+
+`private_multiples` 도 넷으로 다시 적었습니다. 첫 항목이 `ps_ratio` 이고 **`arr` 이 아님을 명시**했으며, 버린 `post_money_valuation/arr` 은 **지우지 않고** "참고용. 점수에 쓰지 않는다" 로 남겼습니다.
+
+## 11. ② 원천 정책 — 세 원천을 내렸습니다
+
+`usage_scope` 를 단일값에서 **합집합**으로 바꿨습니다.
+
+```json
+"scopes": ["personal_internal_only", "corporate_internal_only"],
+"evaluation_rule": "scopes 는 합집합이다. 어떤 원천이 적격이려면 그 라이선스가 scopes 의 모든
+                    원소를 허용해야 한다. … 범위를 넓히는 것은 제약을 푸는 것이 아니라 조이는 것이다."
+```
+
+**그 결과 셋이 `allowed` 에서 내려갑니다.** 셋 다 라이선스가 법인 사용을 배제하는데, 합집합에 `corporate_internal_only` 가 남아 있어 **개인 사용을 더해도 배제가 철회되지 않습니다.**
+
+| host | 배제 조항 | 재개 조건 |
+|---|---|---|
+| `www.alphavantage.co` | ToS 2.a.ii — 법인·법인 대리 사용은 commercial use | 개인 전용으로 좁히거나 상업 계약. **다만 전망 2개 분기라는 기술적 사유는 그대로 남습니다** |
+| `financialmodelingprep.com` | §2.2.1 — "In no event may the Customer use this licence on behalf of a company" | 개인 전용으로 좁히거나 유료 등급 서면 조건 확인 |
+| `finnhub.io` | "Personal plan can't be used by any business **even internally**" | **둘 다 필요** — 개인 전용으로 좁히고 **+ 파생 결과 공유 서면 승인** |
+
+Finnhub 만 조건이 둘인 이유는 같은 절이 `"not redistribute or share access to data or **derived results** from the data … without written approval"` 로 **파생 결과의 공유까지** 제한하기 때문입니다. 우리 산출물이 파생 결과인 한 개인 범위로 좁히는 것만으로는 부족합니다. 그 사실을 `reopen_condition` 에 적었습니다.
+
+**셋 다 실제로 쓰이지 않습니다** — F6·F9 는 SEC 만 씁니다. 그래서 점수 영향이 0입니다.
+
+`not_adopted` 를 신설해 `denied` 와 갈랐습니다 — **`denied` 는 쓸 자격이 없는 것이고 `not_adopted` 는 자격은 있으나 안 쓰기로 한 것**입니다. `reopen_condition` 을 스키마 **필수**로 두어 "영구 배제" 와 "지금은 안 함" 이 섞이지 않게 했습니다.
+
+**2026-09-10 의 "강등하지 마십시오" 와 판단이 바뀐 것**이라 그 사실을 `reason` 과 테스트 docstring 양쪽에 남겼습니다.
+
+## 12. ③ `source_violation` 을 같이 고쳤습니다
+
+지적하신 함정이 실재했습니다. 키만 바꾸고 코드를 안 고치면 `data.nasdaq.com` 이 **마지막 fallback** 으로 떨어집니다.
+
+```
+"data.nasdaq.com 는 원천 allowlist 에 없음 — 약관 확인 후 규칙에 등재하고 쓴다"
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                              우리가 막으려는 행동을 지시한다
+```
+
+`not_adopted` 를 **먼저** 읽게 하고 옛 블록은 지우지 않았습니다.
+
+```
+data.nasdaq.com 는 검토를 마치고 채택하지 않기로 결정된 원천 — 구독가 연 1,200 달러가
+확인돼 사용자가 채택을 접었다 … (결정 2026-09-11, 사용자). 재조사 불필요.
+재개 조건: 가격이 바뀌거나 사용자가 예산을 승인하면 …
+```
+
+| host | 판정 |
+|---|---|
+| `data.nasdaq.com` | **채택 안 함(비용)** · 재조사 불필요 |
+| `finnhub.io`·`www.alphavantage.co`·`financialmodelingprep.com` | **채택 안 함(약관)** · 재개 조건 명시 |
+| `api.nasdaq.com` | **생산 원천 영구 배제**(robots.txt 전면 Disallow) — 성격이 다르다 |
+| `data.sec.gov` | 통과 |
+| v1.6 으로 읽으면 | "미승인 후보 — 서면 확정 필요…" — **과거 규칙 파일이 안 깨진다** |
+
+## 13. ④ anthropic F8 근거란을 1차 공시로 교체했습니다
+
+### 13.1 무엇을 바꿨나
+
+승계 근거란이 AWS 훈련 집중을 **증권사 2차 증언**으로 적고 있었는데, 실제로는 **Amazon 이 SEC Form 8-K 로 직접 공시한 사실**이었습니다. 네 건을 접수번호와 함께 등재했습니다.
+
+| 접수번호 | 일자 | 핵심 |
+|---|---|---|
+| `0001018724-25-000002` | 2025-02-06 | Project Rainier — hundreds of thousands of Trainium2 |
+| `0001018724-25-000121` | 2025-10-30 | nearly 500,000 Trainium2 |
+| `0001018724-26-000002` | 2026-02-05 | **"which Anthropic is using to train its industry-leading AI model, Claude"** |
+| `0001018724-26-000012` | 2026-04-29 | 최대 5GW Trainium — "train and power" |
+
+**확인된 것과 확인되지 않은 것을 나눴습니다.**
+
+- ✅ Project Rainier 의 실체·규모, Anthropic 이 그것으로 Claude 를 **훈련**한다는 Amazon 의 명시, 5GW 확보, AWS $100B/10년과 칩 성능 연계 의무.
+- ❓ **Google 몫의 훈련/서빙 구분.** Alphabet 10-K·10-Q 본문에 `Anthropic` 이 **0건**입니다. 계약 존재·금액·기간·용도가 전부 회사 미공시입니다. AWS $100B+ 안의 훈련/서빙 금액 구분도 미공시입니다.
+
+**점수는 −3 유지입니다.** 하향하지 않는 이유는 **Google 몫이 훈련이 아니라는 증거가 있는 것이 아니라 공시가 없을 뿐**이기 때문입니다. 미공시를 '아니다' 로 읽으면 우리가 못 찾은 것을 그 기업의 구조로 둔갑시킵니다 — MISS-LABEL-23 이 세운 원칙 그대로입니다.
+
+**재판정 조건**을 근거란에 등재했습니다. 셋 중 하나라도 1차 자료로 확인되면 −4 를 재검토합니다 — (1) Alphabet 의 고객사별 분리 공시, (2) Anthropic 의 훈련 컴퓨트 구성 공시, (3) Google 몫이 **서빙 전용**임의 1차 확인.
+
+`OpenAI 27%` 가 **Microsoft 의 OpenAI 지분율**이라는 것도 v1.5 원본 188·198·217·350행에서 확인해 근거란에 명시했습니다 — Anthropic 의 컴퓨트 배분이 아닙니다.
+
+### 13.2 8-K 는 인용이고, 10-Q 한 줄은 직접 대조했습니다
+
+8-K 네 건의 원문은 이 워크트리에 보존돼 있지 않아 **C-13 의 SEC 읽기를 인용**했고 그 사실을 적었습니다. 대신 보존된 AMZN 10-Q 에서 한 줄을 **직접 대조**했습니다.
+
+> "In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips." ✅
+
+**그 과정에서 하나를 더 찾았습니다.** 같은 10-Q 가 **Anthropic Series H 를 직접 언급**합니다 — Amazon 이 Q2 2026 에 `Anthropic Series H nonvoting preferred stock` 에 **$5.0B** 를 투자했고, 별도로 최대 $20.0B 금융 약정(이 투자로 $15.0B 로 감액)을 맺었다고 공시합니다.
+
+**이것은 5.1 의 Series H 모순(30B/65B)을 해소하지 못합니다** — 라운드 **총액**을 말하지 않기 때문입니다. 다만 **Series H 의 존재와 시점(2026 Q2)이 1차 자료로 확정**되고, Amazon 참여분이 $5.0B 라는 하한이 생깁니다. 30B 와 65B 어느 쪽도 이 사실과 모순되지 않습니다. 그래서 판정은 그대로 두되 **1차 자료 앵커가 하나 생겼다**는 것을 적어 둡니다.
+
+### 13.3 상태 변화 하나 — 의도된 것입니다
+
+```
+anthropic F8  (-3, carried_score) → (-3, ok)
+```
+
+**점수는 그대로이고 상태만 바뀝니다.** 근거란을 우리 1차 자료로 다시 쓴 이상 이 판단은 더는 v1.5 기준선에서 **승계된 것이 아닙니다.** `carried` 로 두면 `carried_from: baseline:v1.5` 가 거짓이 됩니다. `status: new` 로 바꾸고 `previous_judgment_id` 로 이전 판단을 가리킵니다.
+
+두 상태 다 `COMPLETE_STATUSES` 라 **총점·순위는 동일**합니다.
+
+## 14. 라운드2 결과 확인
+
+| 확인 | 결과 |
+|---|---|
+| 14개사 factor 변동 | **1건** — anthropic F8 상태만(`carried_score`→`ok`), 점수 −3 동일 |
+| 순위 | **완전 동일** |
+| 완주 | 14/14 · 미결 규칙 결정 없음 |
+| 원천 하향의 점수 영향 | **0** — F6·F9 는 SEC 만 씁니다 |
+| 원본 대조 | 58 → **87건 · 불일치 0건** |
+| 테스트 | 217 → **220건** · skip 0 |
+| 승인 대상 6종 | **전부 보존** |
+
+`results_hash` 는 `d413fdba…` → `45f5bd8c…` 로 바뀝니다 — F8 근거란과 판단 id·상태가 결과에 들어가기 때문입니다.
+
+### 14.1 갱신된 파일
+
+| 파일 | 내용 |
+|---|---|
+| `scorecard/rules/v1.7.json` | `private_note`·`private_multiples` 정정 · `usage_scope.scopes` · `not_adopted` 4건 |
+| `scripts/scorecard/schema.py` | `normalize_usage_scopes()` · `not_adopted` 검증(`reopen_condition` 필수) |
+| `scripts/scorecard/rules.py` | `source_violation()` 이 `not_adopted` 를 먼저 읽음 |
+| `validation/priv-impl-31/apply_followups.py` · `followup-output.txt` | F8 근거란 교체 |
+| `validation/priv-impl-31/verify_private.py` | `[8]`·`[8b]` 절 추가 — 보완 넷 검사 29건 |
+| `tests/test_scorecard_f6_v17.py` | 원천 정책 테스트를 새 결정으로 갱신 + 3건 추가 |

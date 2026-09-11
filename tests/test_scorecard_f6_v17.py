@@ -460,18 +460,43 @@ class TestF6FixRoundSpec(unittest.TestCase):
         # 같은 20-F 안에서도 항목마다 환율이 다르다는 단서
         self.assertIn("31.11", note)
 
-    def test_fmp_and_finnhub_stay_allowed_with_status_note(self):
-        """사용자 결정이다. 강등하지 않고 상태만 적는다."""
-        allowed = {e["host"]: e["note"] for e in self.sources["allowed"]}
+    def test_fmp_and_finnhub_moved_to_not_adopted(self):
+        """**2026-09-10 에는 '강등하지 말고 상태만 기록' 이었다. 2026-09-11 에 판단이 바뀌었다.**
+
+        SRC-POLICY-32 가 `usage_scope.scopes` 를 **합집합**으로 확정하면서 — 라이선스가 원소를
+        전부 허용해야 적격이므로 — 개인 사용을 더해도 법인 배제가 철회되지 않는다는 것이
+        분명해졌다. 셋 다 실제로 쓰이지 않아 점수 영향은 없다(F6·F9 는 SEC 만 쓴다).
+        **판단이 바뀐 것을 지우지 않고 여기에 남긴다.**
+        """
+        allowed = {e["host"] for e in self.sources["allowed"]}
         denied = {e["host"] for e in self.sources["denied"]}
-        unlisted = {e["host"] for e in self.sources.get("unlisted", [])}
-        for host in ("financialmodelingprep.com", "finnhub.io"):
-            self.assertIn(host, allowed)
-            self.assertNotIn(host, denied)
-            self.assertNotIn(host, unlisted)
-            self.assertIn("상태 고지", allowed[host])
-        self.assertIn("무료 등급 전제가 깨진 상태", allowed["financialmodelingprep.com"])
-        self.assertIn("약관 확인이 불가능", allowed["finnhub.io"])
+        not_adopted = {e["host"]: e for e in self.sources.get("not_adopted", [])}
+        for host in ("financialmodelingprep.com", "finnhub.io", "www.alphavantage.co"):
+            self.assertNotIn(host, allowed)
+            self.assertNotIn(host, denied, "쓸 자격이 없는 것이 아니라 안 쓰기로 한 것이다")
+            self.assertIn(host, not_adopted)
+            self.assertEqual(not_adopted[host]["reason_type"], "terms")
+            self.assertIn("personal_internal_only", not_adopted[host]["reopen_condition"])
+
+    def test_finnhub_needs_two_conditions_to_reopen(self):
+        """Finnhub 만 조건이 둘이다 — 파생 결과 공유까지 서면 승인이 필요하다."""
+        entry = {e["host"]: e for e in self.sources["not_adopted"]}["finnhub.io"]
+        self.assertIn("둘 다 필요", entry["reopen_condition"])
+        self.assertIn("서면 승인", entry["reopen_condition"])
+
+    def test_usage_scope_is_a_union(self):
+        """**범위를 넓히는 것이 제약을 조인다.** 그 규칙이 선언에 있어야 한다."""
+        scope = self.sources["usage_scope"]
+        self.assertEqual(scope["scopes"], ["personal_internal_only", "corporate_internal_only"])
+        self.assertNotIn("scope", scope, "scope 와 scopes 를 동시에 두지 않는다")
+        self.assertIn("합집합", scope["evaluation_rule"])
+
+    def test_not_adopted_replaces_conditional_candidates(self):
+        """`data.nasdaq.com` 은 비용 판단이라 약관 배제(denied)와 다르다."""
+        self.assertNotIn("conditional_candidates", self.sources)
+        entry = {e["host"]: e for e in self.sources["not_adopted"]}["data.nasdaq.com"]
+        self.assertEqual(entry["reason_type"], "cost")
+        self.assertIn("결정이 끝났다", entry["reopen_condition"])
 
     def test_private_band_decided_by_c12(self):
         """C-12 확정(2026-09-11) 전에는 `private_bands` 가 null 이고 모드가 pending 이었다.

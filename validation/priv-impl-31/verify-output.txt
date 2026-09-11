@@ -89,5 +89,44 @@ PRIV-IMPL-31 — 비상장 등록값 대 v1.5 원본 대조
          통과로 적지 않았다
   OK   14/14 완주 · 미결 결정 없음
 
+[8] 검토 보완 넷 (2026-09-11 라운드2)
+  OK   ① private_note 가 지금 규칙과 맞고 확정 전 서술임을 함께 남긴다
+         선언이 사실과 반대이던 상태를 고쳤다 — 코드가 하는 일과 선언이 같아야 한다
+  OK   ① private_multiples 첫 항목이 ps_ratio 이고 arr 이 아님을 명시
+  OK   ① 버린 배수(post_money_valuation/arr)를 지우지 않고 참고용으로 남겼다
+  OK   ② usage_scope 가 개인·법인 합집합
+  OK   ② 합집합 평가 규칙이 선언돼 있다 — 범위를 넓히는 것이 제약을 조인다
+  OK   ② finnhub.io 가 allowed 에서 내려가 not_adopted 에 있다
+  OK   ② finnhub.io 재개 조건에 개인 전용으로 좁히는 것이 적혀 있다
+  OK   ② financialmodelingprep.com 가 allowed 에서 내려가 not_adopted 에 있다
+  OK   ② financialmodelingprep.com 재개 조건에 개인 전용으로 좁히는 것이 적혀 있다
+  OK   ② www.alphavantage.co 가 allowed 에서 내려가 not_adopted 에 있다
+  OK   ② www.alphavantage.co 재개 조건에 개인 전용으로 좁히는 것이 적혀 있다
+  OK   ② **Finnhub 만 조건이 둘이다** — 개인 범위로 좁히는 것에 더해 파생 결과 공유 서면 승인까지 필요하다
+  OK   ③ data.nasdaq.com 이 conditional_candidates 에서 not_adopted 로 옮겨졌다
+  OK   ③ 사유가 비용이다 — 약관 위반이나 기술 부적격이 아니다
+  OK   ③ **source_violation 이 not_adopted 를 읽는다**
+         data.nasdaq.com 는 검토를 마치고 채택하지 않기로 결정된 원천 — 구독가 연 1,200 달러가 확인돼 사용자가 채택을 접었다. **약관 위반이나 기술적 부적격이 아니라 비용 대비 효용 판단이다.** denied 와 성격이 다르다 — denied 는 우리가 
+  OK   ③ 마지막 fallback 안내로 떨어지지 않는다 — 그 문구가 재조사를 지시하게 된다
+  OK   ③ v1.6 은 옛 키(conditional_candidates)로 그대로 읽힌다
+         과거 규칙 파일을 깨지 않는다
+  OK   ④ F8 점수 -3 유지
+  OK   ④ 증권사 2차 증언을 근거로 쓰는 항목이 없다
+  OK   ④ 8-K 접수번호 0001018724-25-000002 등재
+  OK   ④ 8-K 접수번호 0001018724-25-000121 등재
+  OK   ④ 8-K 접수번호 0001018724-26-000002 등재
+  OK   ④ 8-K 접수번호 0001018724-26-000012 등재
+  OK   ④ 2026-02-05 공시 원문이 근거란에 있다
+  OK   ④ 확인된 것과 확인되지 않은 것이 나뉘어 있다
+  OK   ④ 재판정 조건이 등재돼 있다
+  OK   ④ **미공시를 '아니다' 로 읽지 않는다는 근거가 남아 있다**
+         Google 몫이 훈련이 아니라는 증거가 있는 것이 아니다
+
+[8b] AMZN 10-Q Note 1 — C-13 인용을 보존 원문에서 직접 대조
+  OK   AWS·Anthropic $100.0B/10.0년 확대 문면 확인
+         8-K 네 건은 원문이 이 워크트리에 보존돼 있지 않아 C-13 의 SEC 읽기를 인용했고 그 사실을 적었다
+  OK   **덤으로 찾은 것 — 같은 10-Q 가 Series H 를 직접 언급한다**
+         Amazon 이 Q2 2026 에 Anthropic Series H 우선주에 $5.0B 를 투자했다고 공시한다. 라운드 총액은 말하지 않아 30B/65B 모순을 해소하지는 못하나, **Series H 의 존재와 시점은 1차 자료로 확정된다**
+
 ================================================================================================================
-대조 58건 · 불일치 0건
+대조 87건 · 불일치 0건

@@ -400,9 +400,10 @@
         }
       },
       "private_multiples": [
-        "post_money_valuation/arr",
-        "arr/arr_prior - 1",
-        "arr/cumulative_raised"
+        "ps_ratio  (P2 입력 — post_money_valuation ÷ TTM 보정 매출. **arr 이 아니다**)",
+        "arr/arr_prior - 1  (P3 보정 조건)",
+        "arr/cumulative_raised  (P4 보정 조건)",
+        "post_money_valuation/arr  (참고용. 점수에 쓰지 않는다 — ARR 은 런레이트라 TTM 보다 과대하고 이 배수를 쓰면 anthropic 이 14.85x 로 NVIDIA 17.9 보다 싸 보인다. 버린 수지만 지우지 않고 남긴다)"
       ],
       "private_bands": {
         "label": "밸류 ÷ TTM 보정 매출 (비상장 구간표)",
@@ -439,7 +440,7 @@
         "range_guard": "관측이 구간 추정(basis.estimate_range)을 선언하면 **양 끝이 같은 밴드에 드는지 확인한다.** 갈리면 값을 고르지 않고 보류한다. anthropic 의 30~39 는 양 끝이 모두 '30x+' 라 갈리지 않는다."
       },
       "private_score_mode": "p2_with_capped_promotion",
-      "private_note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다.",
+      "private_note": "비상장 F6 는 **P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다**(C-12 확정, 2026-09-11, 사용자). 밴드는 private_bands(v1.5 비상장 구간표), 보정은 private_correction 에 있다. 천장 -2 · 하한 -5 다. 배수는 셋 다 계산해 근거로 남기되 **점수를 만드는 것은 P2 하나**이고 나머지 둘은 보정 조건이다. | C-12 확정 전(2026-09-11 이전) 서술은 '밴드는 미정이고 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다' 였다. 확정 뒤에도 그 문장이 남아 있어 **선언이 사실과 반대**인 상태가 있었고 설계진행 검토에서 잡혔다. 오늘 not_disclosed 네 뜻과 stale_asof 미소비로 고친 것과 같은 종류다 — 선언은 코드가 하는 일과 같아야 하고, 다르면 다음 사람이 선언을 믿는다.",
       "fx": {
         "status": "rule_revised_2026_09_11",
         "priority": [
@@ -922,13 +923,17 @@
     }
   ],
   "sources": {
-    "policy_note": "생산 원천은 여기 등재된 host 만 쓴다. 무료로 응답한다는 사실은 이용 허가가 아니다. robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다. robots.txt 와 라이선스 접근을 구분한다. robots.txt 는 인증 없는 크롤러를 대상으로 한 지시이고, 계약이 그것을 대신하는 것은 아래 셋을 모두 만족할 때뿐이다. (1) 그 공급사가 우리에게 발급한 자격증명으로 접근하고, (2) 그 데이터와 **그 접근 방식을 명시적으로 포괄하는** 체결된 계약이 있으며, (3) 호출하는 host·경로가 그 계약이 지목한 것일 것. 접근 방식에 침묵하는 계약은 (2)를 만족하지 못한다. 이것은 해석이 아니라 계약 문언이다 — Nasdaq Data Link 이용약관 1.2 마지막 문장이 'All rights not granted hereunder are expressly reserved by Licensor and/or its third party provider(s)' 다. 명시적으로 부여되지 않은 권리는 유보되므로, 데이터는 포괄하되 대량 자동 조회에 침묵하는 Order Form 은 자동 조회를 허가하지 않은 것이다. unknown 이 아니라 미부여다. 하나라도 없으면 robots.txt 와 약관이 규율한다. 계약이 있어도 같은 host 에 대한 인증 없는 크롤링에는 robots.txt 가 그대로 적용된다 — 예외는 host 전체가 아니라 인증된 라이선스 호출에만 걸린다. '세상에 유료 상품이 존재한다'는 사실은 이 셋 중 어느 것도 아니다. 이 셋이 이 파일의 기준이며, 다른 항목의 note 에 더 느슨한 표현이 남아 있으면 여기가 우선한다. unlisted 는 **검토를 마치고 안 넣기로 한 host** 만 담는다. 아직 검토하지 않은 host 는 담지 않는다. 그래서 '목록에 없다' 는 '미검토' 를 뜻하며 '검토 후 미등재' 와 다르다. unlisted 는 문서 항목이고 source_violation() 은 읽지 않는다 — 등재되지 않은 host 는 그대로 allowlist 미등재로 걸린다.",
+    "policy_note": "생산 원천은 여기 등재된 host 만 쓴다. 무료로 응답한다는 사실은 이용 허가가 아니다. robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다. robots.txt 와 라이선스 접근을 구분한다. robots.txt 는 인증 없는 크롤러를 대상으로 한 지시이고, 계약이 그것을 대신하는 것은 아래 셋을 모두 만족할 때뿐이다. (1) 그 공급사가 우리에게 발급한 자격증명으로 접근하고, (2) 그 데이터와 **그 접근 방식을 명시적으로 포괄하는** 체결된 계약이 있으며, (3) 호출하는 host·경로가 그 계약이 지목한 것일 것. 접근 방식에 침묵하는 계약은 (2)를 만족하지 못한다. 이것은 해석이 아니라 계약 문언이다 — Nasdaq Data Link 이용약관 1.2 마지막 문장이 'All rights not granted hereunder are expressly reserved by Licensor and/or its third party provider(s)' 다. 명시적으로 부여되지 않은 권리는 유보되므로, 데이터는 포괄하되 대량 자동 조회에 침묵하는 Order Form 은 자동 조회를 허가하지 않은 것이다. unknown 이 아니라 미부여다. 하나라도 없으면 robots.txt 와 약관이 규율한다. 계약이 있어도 같은 host 에 대한 인증 없는 크롤링에는 robots.txt 가 그대로 적용된다 — 예외는 host 전체가 아니라 인증된 라이선스 호출에만 걸린다. '세상에 유료 상품이 존재한다'는 사실은 이 셋 중 어느 것도 아니다. 이 셋이 이 파일의 기준이며, 다른 항목의 note 에 더 느슨한 표현이 남아 있으면 여기가 우선한다. unlisted 는 **검토를 마치고 안 넣기로 한 host** 만 담는다. 아직 검토하지 않은 host 는 담지 않는다. 그래서 '목록에 없다' 는 '미검토' 를 뜻하며 '검토 후 미등재' 와 다르다. not_adopted 는 **검토를 마치고 안 쓰기로 결정한 host** 다. conditional_candidates 를 대체한다 — 조건만 갖추면 쓸 수 있다로 읽혀 같은 조사가 반복됐기 때문이다. 결정 일자·결정 주체·재개 조건을 함께 적는다. denied 와 다르다 — denied 는 자격이 없는 것이고 not_adopted 는 자격은 있으나 안 쓰기로 한 것이다. **source_violation() 이 not_adopted 를 먼저 읽는다** — 안 읽으면 마지막 fallback 으로 떨어져 약관 확인 후 등재하고 쓴다는 안내가 나오고 그것이 우리가 막으려는 행동을 지시하게 된다. usage_scope.scopes 는 **합집합**이라 라이선스가 원소를 전부 허용해야 적격이다 — 범위를 넓히는 것이 제약을 조이는 것이다. unlisted 는 문서 항목이고 source_violation() 은 읽지 않는다 — 등재되지 않은 host 는 그대로 allowlist 미등재로 걸린다.",
     "usage_scope": {
-      "scope": "corporate_internal_only",
-      "decided_at": "2026-09-10",
-      "statement": "이 저장소의 산출물(점수·판정·HTML 리포트·파생 자료)은 사용자가 대표로 있는 회사의 업무에 쓰인다. 개인 투자 참고 열람이 병행되더라도 약관상 분류는 신고가 아니라 실제 사용을 따르므로 법인 내부 사용이 구속 기준이다. 외부 일반 대중 배포는 여전히 전제하지 않는다.",
-      "condition": "산출물을 외부에 배포하면 이 전제가 깨진다. 그때는 원천별로 재배포 라이선스를 다시 확보해야 하고 allowed·denied·conditional_candidates 를 전부 재검토해야 한다. 배포 여부가 바뀌면 이 선언을 먼저 고친다.",
-      "note": "2026-09-10 에 personal_internal_only 에서 바뀌었다. 개인 사용이 아니라 법인 내부 사용이다. 결과 하나를 먼저 적는다. Alpha Vantage 무료 티어 적격이 사라진다 — ToS 2.a.ii 가 법인 또는 법인 대리 사용을 commercial use 로 분류하므로 무료 라이선스(2.a 의 personal, non-commercial use) 밖이다. 쓰려면 premium@alphavantage.co 상업 계약 경로다. 다만 Alpha Vantage 는 향후 분기 전망이 2개뿐이라 이미 F6 부적격이므로 실질 손실은 없다(validation/av-source-11/REPORT.md). 이 선언은 원천별 이용 조건을 대체하지 않는다. 각 host 의 robots.txt 와 이용약관이 여전히 우선하고, 법인이든 개인이든 robots.txt 의 전면 Disallow 를 무르지 않는다 — denied 의 api.nasdaq.com 을 보라. 원천을 새로 검토할 때는 '개인 사용 허용' 조항이 우리에게 적용되지 않는다는 점부터 확인한다."
+      "scopes": [
+        "personal_internal_only",
+        "corporate_internal_only"
+      ],
+      "decided_at": "2026-09-11",
+      "statement": "이 저장소의 산출물(점수·판정·HTML 리포트·파생 자료)은 개인 투자 참고 열람과 사용자가 대표로 있는 회사의 내부 업무에 모두 쓰인다. 둘 다 실제 사용이므로 둘 다 선언한다. 외부 일반 대중 배포는 여전히 전제하지 않는다.",
+      "condition": "산출물을 외부에 배포하면 이 전제가 깨진다. 그때는 원천별로 재배포 라이선스를 다시 확보해야 하고 allowed·denied·not_adopted 를 전부 재검토해야 한다. 배포 여부가 바뀌면 이 선언을 먼저 고친다.",
+      "evaluation_rule": "**scopes 는 합집합이다.** 어떤 원천이 적격이려면 그 라이선스가 scopes 의 **모든** 원소를 허용해야 한다. 하나라도 금지하면 부적격이다. 따라서 **범위를 넓히는 것은 제약을 푸는 것이 아니라 조이는 것이다.** 개인 사용을 더해도 corporate_internal_only 가 범위에 남아 있는 한 법인 금지 조항은 그대로 적용된다.",
+      "note": "2026-09-11 에 단일 scope 에서 scopes 배열로 바꿨다(NTM SRC-POLICY-32, 사용자 확정). 이전 값은 corporate_internal_only 단일이었다. 과거 파일 호환을 위해 단일 scope 키도 계속 읽는다 — normalize_usage_scopes() 가 1원소 집합으로 승격한다. v1.5 는 sources 블록이 없어 영향이 없다. | **결과: allowed 에서 셋이 내려갔다**(www.alphavantage.co · financialmodelingprep.com · finnhub.io). 셋 다 라이선스가 법인 사용을 배제하는데 합집합에 corporate_internal_only 가 남아 있어 개인 사용을 더해도 배제가 철회되지 않는다. 셋 다 현재 실제로 쓰이지 않는다 — F6·F9 는 SEC 만 쓴다. | 이전 note 보존: 2026-09-10 에 personal_internal_only 에서 바뀌었다. 개인 사용이 아니라 법인 내부 사용이다. 결과 하나를 먼저 적는다. Alpha Vantage 무료 티어 적격이 사라진다 — ToS 2.a.ii 가 법인 또는 법인 대리 사용을 commercial use 로 분류하므로 무료 라이선스(2.a 의 personal, non-commercial use) 밖이다. 쓰려면 premium@alphavantage.co 상업 계약 경로다. 다만 Alpha Vantage 는 향후 분기 전망이 2개뿐이라 이미 F6 부적격이므로 실질 손실은 없다(validation/av-source-11/REPORT.md). 이 선언은 원천별 이용 조건을 대체하지 않는다. 각 host 의 robots.txt 와 이용약관이 여전히 우선하고, 법인이든 개인이든 robots.txt 의 전면 Disallow 를 무르지 않는다 — denied 의 api.nasdaq.com 을 보라. 원천을 새로 검토할 때는 '개인 사용 허용' 조항이 우리에게 적용되지 않는다는 점부터 확인한다."
     },
     "enforcement": "sources.json 의 url 이 있는 항목은 host 가 allowed 에 있어야 하고 denied 에 있으면 안 된다",
     "allowed": [
@@ -939,14 +944,6 @@
       {
         "host": "www.sec.gov",
         "note": "SEC 공개 파일(company_tickers 등). 같은 조건"
-      },
-      {
-        "host": "finnhub.io",
-        "note": "API 키 발급 기반. 무료 등급 분당 60콜 | 상태 고지(2026-09-11, NTM FX-SOURCE-19 4.2). robots.txt 가 'Disallow: /terms-of-service' 라 **규정대로는 약관 확인이 불가능**하다. 우리 policy_note 는 'robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다' 인데 이 host 는 그 확인을 robots.txt 가 막는 구조다. **약관 확인 없이 등재된 상태**라는 사실을 기록한다. NTM 이 그 경로를 조회하지 않은 판단은 옳다. 강등하지 않고 상태만 기록한다(사용자 결정). 현재 F6 재정의에서는 쓰지 않는다 — SEC 만 쓴다."
-      },
-      {
-        "host": "financialmodelingprep.com",
-        "note": "API 키 발급 기반. 무료 등급 250콜/일 | 상태 고지(2026-09-11, NTM FX-SOURCE-19 4.1). 약관 §2.2.1 이 'This license may only be used by a Customer who is an individual... In no event may the Customer use this licence on behalf of a company' 로 법인 대리 사용을 배제한다. usage_scope 가 corporate_internal_only 이므로 **무료 등급 전제가 깨진 상태**다. §2.2 본문이 Order Form·계정에 명시된 라이선스를 말하므로 유료 등급은 다른 조건일 수 있어 host 자체가 부적격이라는 뜻은 아니다. 강등하지 않고 상태만 기록한다(사용자 결정). 현재 F6 재정의에서는 쓰지 않는다 — SEC 만 쓴다."
       },
       {
         "host": "www.federalreserve.gov",
@@ -963,20 +960,6 @@
         "evidence": "validation/nasdaq-eps-expansion-04/REPORT.md 3절"
       }
     ],
-    "conditional_candidates": [
-      {
-        "name": "Nasdaq Data Link ZACKS/EE·EEH",
-        "host": "data.nasdaq.com",
-        "status": "candidate_not_approved",
-        "note": "무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 외부 일반 대중 배포를 전제하지 않으므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다. robots.txt 와 라이선스 접근을 구분한다. data.nasdaq.com robots.txt 에 Disallow /api/*.json* 과 Disallow /api/v3/databases/*/data 가 있으나, robots.txt 는 인증 없는 크롤러를 대상으로 한 지시다. 계약이 robots.txt 를 대신하는 것은 아래 셋을 **모두** 만족할 때뿐이다. (1) 그 공급사가 우리에게 발급한 자격증명으로 접근하고, (2) 그 데이터와 그 접근 방식을 **명시적으로 포괄하는** 체결된 계약이 있으며(접근 방식에 침묵하는 계약은 이 조건을 만족하지 못한다 — 이용약관 1.2 가 'All rights not granted hereunder are expressly reserved' 라고 직접 규정하므로 unknown 이 아니라 미부여다), (3) 호출하는 host·경로가 그 계약이 지목한 것일 것. 하나라도 없으면 robots.txt 와 약관이 규율한다. 계약이 있어도 같은 host 에 대한 인증 없는 크롤링에는 robots.txt 가 그대로 적용된다 — 예외는 host 전체가 아니라 인증된 라이선스 호출에만 걸린다. '세상에 유료 상품이 존재한다'는 사실은 이 셋 중 어느 것도 아니다. 그 논리를 쓰면 유료 상품이 있는 모든 공급사의 무료 endpoint 가 정당화된다. Yahoo 도 유료 데이터 상품이 있지만 그것이 query1.finance.yahoo.com 스크래핑을 정당화하지 않는다. 이 구분은 승격 시 서면으로 확정해야 하며 지금 승격 근거가 아니다(2026-09-10, DATALINK-14 검토).",
-        "required_written_conditions": [
-          "정식 계약",
-          "자동 수집 허용",
-          "derived data 허용",
-          "보관 조건"
-        ]
-      }
-    ],
     "unlisted": [
       {
         "host": "query1.finance.yahoo.com",
@@ -985,6 +968,56 @@
         "decided_at": "2026-09-10",
         "evidence": "C-13 2026-09-10 검증 결과",
         "note": "query2.finance.yahoo.com 도 같은 서비스로 같은 판정이다. 약관 미검토(상류 Yahoo API 가 personal use only)는 별개의 미해결 항목이며 미등재의 주된 사유가 아니다. 기술적 사유만으로 이미 F6 원천이 되지 못한다. 가격 용도의 기존 yfinance 사용은 AGENTS.md 관행이고 이 정책은 sources.json 에 등재되는 생산 원천을 대상으로 한다. 이 항목은 문서용이며 source_violation() 판정에는 쓰이지 않는다 — 등재되지 않은 host 는 그대로 allowlist 미등재로 걸린다."
+      }
+    ],
+    "not_adopted": [
+      {
+        "name": "Alpha Vantage",
+        "host": "www.alphavantage.co",
+        "status": "not_adopted",
+        "decided_at": "2026-09-11",
+        "decided_by": "사용자",
+        "reason_type": "terms",
+        "reason": "무료 티어 라이선스가 법인 사용을 배제한다. ToS 2.a 가 personal, non-commercial use 를 무료 라이선스 범위로 두고 2.a.ii 가 법인 또는 법인 대리 사용을 commercial use 로 분류한다. **usage_scope.scopes 가 합집합이라 개인 사용을 더해도 이 배제는 철회되지 않는다.** 더해서 EARNINGS_ESTIMATES 가 향후 분기 전망을 2개만 주어 F6 의 4개 분기 요건에 기술적으로도 미달한다. 약관과 기술 양쪽에서 부적격이라 allowed 에 두지 않는다.",
+        "reopen_condition": "usage_scope 를 personal_internal_only 단독으로 좁히거나 상업 계약(premium 문의 경로)을 체결하면 약관 사유가 해소된다. 다만 **전망 2개 분기라는 기술적 사유는 그대로 남으므로 F6 원천으로 쓰려면 그것까지 해소돼야 한다.**",
+        "prior_investigation": "validation/av-source-11/REPORT.md (AV-SOURCE-11, 2026-09-10)",
+        "note": "robots.txt 와 이용약관 원문을 확인하고 보존했다. 무료로 응답한다는 사실은 이용 허가가 아니다. 이전에는 allowlist 에 등재된 적이 없고 조사 결과만 보고서에 있었다 — 이번에 결정 상태를 규칙 파일에 남긴다."
+      },
+      {
+        "name": "Financial Modeling Prep",
+        "host": "financialmodelingprep.com",
+        "status": "not_adopted",
+        "decided_at": "2026-09-11",
+        "decided_by": "사용자",
+        "reason_type": "terms",
+        "reason": "약관 2.2.1 이 “This license may only be used by a Customer who is an individual… In no event may the Customer use this licence on behalf of a company” 로 법인 대리 사용을 배제한다. **usage_scope.scopes 가 합집합이라 개인 사용을 더해도 In no event 조항이 그대로 적용된다.** 실제로 쓰이지 않는다 — F6·F9 는 SEC 만 쓴다. 2026-09-10 에는 강등하지 말고 상태만 기록이었으나 SRC-POLICY-32 가 합집합 평가 규칙을 확정하면서 판단이 바뀌었다(사용자).",
+        "reopen_condition": "usage_scope 를 personal_internal_only 단독으로 좁히면 2.2.1 사유가 해소된다. 또는 2.2 본문이 Order Form·계정 라이선스를 말하므로 **유료 등급의 서면 조건을 확인하면** 다른 판단이 가능하다 — host 자체가 부적격이라는 뜻은 아니다.",
+        "prior_investigation": "validation/fmp-estimates-02/REPORT.md",
+        "note": "이전 allowed note 보존: API 키 발급 기반. 무료 등급 250콜/일 | 상태 고지(2026-09-11, NTM FX-SOURCE-19 4.1). 약관 §2.2.1 이 'This license may only be used by a Customer who is an individual... In no event may the Customer use this licence on behalf of a company' 로 법인 대리 사용을 배제한다. usage_scope 가 corporate_internal_only 이므로 **무료 등급 전제가 깨진 상태**다. §2.2 본문이 Order Form·계정에 명시된 라이선스를 말하므로 유료 등급은 다른 조건일 수 있어 host 자체가 부적격이라는 뜻은 아니다. 강등하지 않고 상태만 기록한다"
+      },
+      {
+        "name": "Finnhub",
+        "host": "finnhub.io",
+        "status": "not_adopted",
+        "decided_at": "2026-09-11",
+        "decided_by": "사용자",
+        "reason_type": "terms",
+        "reason": "ToS “Redistribution Rights and Personal Use” 가 “All plan listed on Finnhub website is strictly for personal use unless explicitly stated otherwise. Personal plan can’t be used by any business even internally without a written approval.” 로 **법인 내부 사용을 명시적으로 배제한다**(even internally). **usage_scope.scopes 가 합집합이라 개인 사용을 더해도 철회되지 않는다.** 실제로 쓰이지 않는다 — F6·F9 는 SEC 만 쓴다.",
+        "reopen_condition": "**둘 다 필요하다.** (1) usage_scope 를 personal_internal_only 단독으로 좁히고, (2) 같은 절이 “not redistribute or share access to data or derived results from the data … without written approval” 로 **파생 결과의 공유까지** 제한한다. 우리 산출물이 파생 결과에 해당하는 한 **서면 승인**을 받아야 한다. 개인 범위로 좁히는 것만으로는 부족하다.",
+        "prior_investigation": "validation/finnhub-earnings-03/REPORT.md · NTM validation/src-policy-32-2026-09-11/ (약관 원문 보존)",
+        "note": "robots.txt 가 Disallow: /terms-of-service 이나 약관 확인 목적 조회로 열람하고 원문을 보존했다(PRIV-ARR-17 표준). | 이전 allowed note 보존: API 키 발급 기반. 무료 등급 분당 60콜 | 상태 고지(2026-09-11, NTM FX-SOURCE-19 4.2). robots.txt 가 'Disallow: /terms-of-service' 라 **규정대로는 약관 확인이 불가능**하다. 우리 policy_note 는 'robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다' 인데 이 host 는 그 확인을 robots.txt 가 막는 구조다. **약관 확인 없이 등재된 상태**라는 사실을 기록한다. NTM 이 그 경로를 조회하지 않은 판단은 옳다. 강등하지 않고 상태만 기록한다(사용자 결정). 현재 F6 재정의에서는 쓰지 않는다 — SEC 만 쓴다."
+      },
+      {
+        "name": "Nasdaq Data Link ZACKS/EE·EEH",
+        "host": "data.nasdaq.com",
+        "status": "not_adopted",
+        "decided_at": "2026-09-11",
+        "decided_by": "사용자",
+        "reason_type": "cost",
+        "reason": "구독가 연 1,200 달러가 확인돼 사용자가 채택을 접었다. **약관 위반이나 기술적 부적격이 아니라 비용 대비 효용 판단이다.** denied 와 성격이 다르다 — denied 는 우리가 쓸 자격이 없는 것이고 not_adopted 는 쓸 수 있으나 안 쓰기로 한 것이다.",
+        "reopen_condition": "가격이 바뀌거나 사용자가 예산을 승인하면 그때 다시 연다. 그 전에는 D1~D5 를 다시 조사하지 않는다 — **조건이 미충족인 것이 아니라 결정이 끝났다.**",
+        "prior_investigation": "NTM validation/datalink-14-2026-09-10/REPORT.md (DATALINK-14, 2026-09-10)",
+        "note": "conditional_candidates 에서 옮겨 왔다. 그 이름은 조건만 갖추면 쓸 수 있다로 읽혀 같은 조사가 반복됐다. | 이전 승격 조건 보존: 정식 계약, 자동 수집 허용, derived data 허용, 보관 조건 | 이전 note 보존: 무료 api.nasdaq.com 과 다른 별도 상품·별도 약관이다. 아래 넷이 모두 서면 확정될 때만 후보로 승격한다. 사용 범위는 usage_scope 대로 외부 일반 대중 배포를 전제하지 않으므로 '외부 배포 허용'은 승격 조건에서 제외했다(2026-09-10). 외부 배포로 범위가 바뀌면 그 조건을 되살려야 한다. robots.txt 와 라이선스 접근을 구분한다. data.nasdaq.com robots.txt 에 Disallow /api/*.json* 과 Disallow /api/v3/databases/*/data 가 있으나, robots.txt 는 인증 없는 크롤러를 대상으로 한 지시다. 계약이 robots.txt 를 대신하는 것은 아래 셋을 **모두** 만족할 때뿐이다. (1) 그 공급사가 우리에게 발급한 자격증명으로 접근하고, (2) 그 데이터와 그 접근 방식을 **명시적으로 포괄하는** 체결된 계약이 있으며(접근 방식에 침묵하는 계약은 이 조건을 만족하지 못한다 — 이용약관 1.2 가 'All rights not granted hereunder are expressly reserved' 라고 직접 규정하므로 unknown 이 아니라 미부여다), (3) 호출하는 host·경로가 그 계약이 지목한 것일 것. 하나라도 없으면 robots.txt 와 약관이 규율한다. 계약이 있어도 같은 host 에 대한 인증 없는 크롤링에는 "
       }
     ]
   }
