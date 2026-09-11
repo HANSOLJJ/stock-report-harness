@@ -2020,7 +2020,7 @@
       "status": "legacy_unverified",
       "basis": null,
       "raw": "+$17.5B",
-      "note": null
+      "note": "[NETCASH-37 대체됨 → alibaba.net_cash.nc37] "
     },
     {
       "observation_id": "alibaba.debt_ebitda.v15",
@@ -6856,16 +6856,37 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 242474000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 55911000000,
-            "short_term_marketable_securities": 186563000000,
-            "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
-            "liquid_cash_buffer": 242474000000,
-            "total_cash_and_all_securities": 242474000000,
-            "restricted_cash": 0
+          "cash_and_marketable_securities": 242474000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 55911000000.0
+            },
+            {
+              "tag": "us-gaap:MarketableSecuritiesCurrent",
+              "value": 186563000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
+              "value": 124259000000.0,
+              "why": "비상장 지분 — 시장가가 없다"
+            },
+            "us-gaap:OtherLongTermInvestments": {
+              "value": 131461000000.0,
+              "why": "지분 투자가 섞인 합계 줄"
+            },
+            "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": {
+              "value": 55911000000.0,
+              "why": "제한 현금 포함 합계"
+            },
+            "us-gaap:AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": {
+              "value": 16699000000.0,
+              "why": "**만기 버킷 공시다.** 현금성자산으로 분류된 증권까지 포함하므로 현금에 더하면 이중계상된다"
+            }
           },
           "debt_ex_lease": 100164000000.0,
           "debt_concepts": [
@@ -6874,13 +6895,7 @@
             "us-gaap:CommercialPaper"
           ],
           "operating_lease": 18037000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiability"
-          ],
           "finance_lease": 2590000000.0,
-          "finance_lease_concepts": [
-            "us-gaap:FinanceLeaseLiability"
-          ],
           "lease_total": 20627000000.0,
           "debt_incl_lease": 120791000000.0
         },
@@ -6890,8 +6905,8 @@
           "matched": true
         }
       },
-      "raw": "현금+증권 242.5B − 차입 100.2B − 리스 20.6B = 121.7B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 242.5B − 차입 100.2B − 리스 20.6B = 121.7B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "amazon.net_cash.nc37",
@@ -6912,16 +6927,41 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 122988000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 78213000000,
-            "short_term_marketable_securities": 44775000000,
-            "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
-            "liquid_cash_buffer": 122988000000,
-            "total_cash_and_all_securities": 122988000000,
-            "restricted_cash": 0
+          "cash_and_marketable_securities": 122988000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 78213000000.0
+            },
+            {
+              "tag": "us-gaap:MarketableSecuritiesCurrent",
+              "value": 44775000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquityMethodInvestments": {
+              "value": 395000000.0,
+              "why": "지분법 투자 — 영업적 보유"
+            },
+            "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
+              "value": 122300000000.0,
+              "why": "비상장 지분 — 시장가가 없다"
+            },
+            "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": {
+              "value": 80927000000.0,
+              "why": "제한 현금 포함 합계"
+            },
+            "us-gaap:RestrictedCashCurrent": {
+              "value": 283000000.0,
+              "why": "제한 현금"
+            },
+            "us-gaap:AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": {
+              "value": 96471000000.0,
+              "why": "**만기 버킷 공시다.** 현금성자산으로 분류된 증권까지 포함하므로 현금에 더하면 이중계상된다"
+            }
           },
           "debt_ex_lease": 132549000000.0,
           "debt_concepts": [
@@ -6930,13 +6970,7 @@
             "us-gaap:ShortTermBorrowings"
           ],
           "operating_lease": 96320000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiability"
-          ],
           "finance_lease": 13451000000.0,
-          "finance_lease_concepts": [
-            "us-gaap:FinanceLeaseLiability"
-          ],
           "lease_total": 109771000000.0,
           "debt_incl_lease": 242320000000.0
         },
@@ -6945,15 +6979,17 @@
           "diff": 9367999999.999985,
           "matched": false
         },
-        "correction_vs_mcap36": {
-          "what": "ShortTermBorrowings 325M 추가",
-          "detail": "MCAP-36 의 단기차입 후보군이 우선순위 fallback 이라 LongTermDebtCurrent 가 먼저 걸리면 그 뒤를 안 본다. 같은 10-Q 에 별도 태깅된 항목이라 합산 대상이다.",
-          "mcap36_value": 241995000000,
-          "corrected": 242320000000.0
-        }
+        "corrections": [
+          {
+            "what": "ShortTermBorrowings 325M 추가",
+            "why": "MCAP-36 의 단기차입 후보군이 우선순위 fallback 이라 LongTermDebtCurrent 가 먼저 걸리면 그 뒤를 안 본다.",
+            "mcap36_value": 241995000000,
+            "corrected": 242320000000.0
+          }
+        ]
       },
-      "raw": "현금+증권 123.0B − 차입 132.5B − 리스 109.8B = -119.3B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 123.0B − 차입 132.5B − 리스 109.8B = -119.3B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "meta.net_cash.nc37",
@@ -6974,28 +7010,44 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 90260000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 15462000000,
-            "short_term_marketable_securities": 74798000000,
-            "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
-            "liquid_cash_buffer": 90260000000,
-            "total_cash_and_all_securities": 90260000000,
-            "restricted_cash": 0
+          "cash_and_marketable_securities": 90260000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 15462000000.0
+            },
+            {
+              "tag": "us-gaap:MarketableSecuritiesCurrent",
+              "value": 74798000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquityMethodInvestments": {
+              "value": 9406000000.0,
+              "why": "지분법 투자 — 영업적 보유"
+            },
+            "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
+              "value": 20751000000.0,
+              "why": "비상장 지분 — 시장가가 없다"
+            },
+            "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": {
+              "value": 29271000000.0,
+              "why": "제한 현금 포함 합계"
+            },
+            "us-gaap:AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": {
+              "value": 44551000000.0,
+              "why": "**만기 버킷 공시다.** 현금성자산으로 분류된 증권까지 포함하므로 현금에 더하면 이중계상된다"
+            }
           },
           "debt_ex_lease": 83664000000.0,
           "debt_concepts": [
             "us-gaap:LongTermDebtNoncurrent"
           ],
           "operating_lease": 28654000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiabilityNoncurrent",
-            "us-gaap:OperatingLeaseLiabilityCurrent"
-          ],
           "finance_lease": null,
-          "finance_lease_concepts": [],
           "lease_total": 28654000000.0,
           "debt_incl_lease": 112318000000.0
         },
@@ -7005,8 +7057,8 @@
           "matched": true
         }
       },
-      "raw": "현금+증권 90.3B − 차입 83.7B − 리스 28.7B = -22.1B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 90.3B − 차입 83.7B − 리스 28.7B = -22.1B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "microsoft.net_cash.nc37",
@@ -7027,16 +7079,37 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 76843000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 20935000000,
-            "short_term_marketable_securities": 55908000000,
-            "sti_concept": "us-gaap:ShortTermInvestments",
-            "liquid_cash_buffer": 76843000000,
-            "total_cash_and_all_securities": 76843000000,
-            "restricted_cash": 0
+          "cash_and_marketable_securities": 76843000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 20935000000.0
+            },
+            {
+              "tag": "us-gaap:ShortTermInvestments",
+              "value": 55908000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquityMethodInvestments": {
+              "value": 12000000000.0,
+              "why": "지분법 투자 — 영업적 보유"
+            },
+            "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
+              "value": 12400000000.0,
+              "why": "비상장 지분 — 시장가가 없다"
+            },
+            "us-gaap:LongTermInvestments": {
+              "value": 36348000000.0,
+              "why": "지분 투자가 섞인 합계 줄"
+            },
+            "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": {
+              "value": 20935000000.0,
+              "why": "제한 현금 포함 합계"
+            }
           },
           "debt_ex_lease": 40294000000.0,
           "debt_concepts": [
@@ -7044,13 +7117,7 @@
             "us-gaap:LongTermDebtCurrent"
           ],
           "operating_lease": 21925000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiability"
-          ],
           "finance_lease": 66594000000.0,
-          "finance_lease_concepts": [
-            "us-gaap:FinanceLeaseLiability"
-          ],
           "lease_total": 88519000000.0,
           "debt_incl_lease": 128813000000.0
         },
@@ -7060,14 +7127,14 @@
           "matched": true
         }
       },
-      "raw": "현금+증권 76.8B − 차입 40.3B − 리스 88.5B = -52.0B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 76.8B − 차입 40.3B − 리스 88.5B = -52.0B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "nvidia.net_cash.nc37",
       "company_id": "nvidia",
       "metric": "net_cash",
-      "value": 24583000000.0,
+      "value": 17726000000.0,
       "unit": "USD",
       "as_of": "2026-07-26",
       "observed_at": "2026-09-11",
@@ -7082,16 +7149,33 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 63443000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 22443000000,
-            "short_term_marketable_securities": 34143000000,
-            "sti_concept": "us-gaap:DebtSecuritiesCurrent",
-            "liquid_cash_buffer": 56586000000,
-            "total_cash_and_all_securities": 63443000000,
-            "restricted_cash": 0
+          "cash_and_marketable_securities": 56586000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 22443000000.0
+            },
+            {
+              "tag": "us-gaap:DebtSecuritiesCurrent",
+              "value": 34143000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
+              "value": 47898000000.0,
+              "why": "비상장 지분 — 시장가가 없다"
+            },
+            "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": {
+              "value": 22443000000.0,
+              "why": "제한 현금 포함 합계"
+            },
+            "us-gaap:AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": {
+              "value": 41000000000.0,
+              "why": "**만기 버킷 공시다.** 현금성자산으로 분류된 증권까지 포함하므로 현금에 더하면 이중계상된다"
+            }
           },
           "debt_ex_lease": 33366000000.0,
           "debt_concepts": [
@@ -7099,22 +7183,26 @@
             "us-gaap:LongTermDebtCurrent"
           ],
           "operating_lease": 5494000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiability"
-          ],
           "finance_lease": null,
-          "finance_lease_concepts": [],
           "lease_total": 5494000000.0,
           "debt_incl_lease": 38860000000.0
         },
         "legacy_comparison": {
           "legacy_net_cash": 23600000000.0,
-          "diff": 983000000.0,
+          "diff": -5874000000.0,
           "matched": false
-        }
+        },
+        "corrections": [
+          {
+            "what": "현금+증권 총계를 대차대조표 줄로 재계산",
+            "c13_value": 63443000000,
+            "corrected": 56586000000.0,
+            "why": "C-13 이 만기 1년 이내 공정가치 버킷 41,000 을 현금에 더해 현금성자산 안의 증권 6,857 이 이중계상됐다. 만기 버킷은 대차대조표 줄이 아니다."
+          }
+        ]
       },
-      "raw": "현금+증권 63.4B − 차입 33.4B − 리스 5.5B = 24.6B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 56.6B − 차입 33.4B − 리스 5.5B = 17.7B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "oracle.net_cash.nc37",
@@ -7135,29 +7223,32 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 31894000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 31289000000,
-            "short_term_marketable_securities": 605000000,
-            "sti_concept": "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
-            "liquid_cash_buffer": 31894000000,
-            "total_cash_and_all_securities": 31894000000,
-            "restricted_cash": 0
+          "cash_and_marketable_securities": 31894000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 31289000000.0
+            },
+            {
+              "tag": "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+              "value": 605000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
+              "value": 605000000.0,
+              "why": "비상장 지분 — 시장가가 없다"
+            }
           },
           "debt_ex_lease": 129541000000.0,
           "debt_concepts": [
             "us-gaap:DebtLongtermAndShorttermCombinedAmount"
           ],
           "operating_lease": 30190000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiability"
-          ],
           "finance_lease": 7701000000.0,
-          "finance_lease_concepts": [
-            "us-gaap:FinanceLeaseLiability"
-          ],
           "lease_total": 37891000000.0,
           "debt_incl_lease": 167432000000.0
         },
@@ -7167,14 +7258,14 @@
           "matched": true
         }
       },
-      "raw": "현금+증권 31.9B − 차입 129.5B − 리스 37.9B = -135.5B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 31.9B − 차입 129.5B − 리스 37.9B = -135.5B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "spacex-xai.net_cash.nc37",
       "company_id": "spacex-xai",
       "metric": "net_cash",
-      "value": 54644000000.0,
+      "value": 60301000000.0,
       "unit": "USD",
       "as_of": "2026-06-30",
       "observed_at": "2026-09-11",
@@ -7189,47 +7280,67 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 94352000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 93522000000,
-            "short_term_marketable_securities": 0,
-            "sti_concept": null,
-            "liquid_cash_buffer": 93522000000,
-            "total_cash_and_all_securities": 94352000000,
-            "restricted_cash": 830000000
+          "cash_and_marketable_securities": 100009000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 93522000000.0
+            },
+            {
+              "tag": "us-gaap:MarketableSecuritiesCurrent",
+              "value": 6487000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
+              "value": 237000000.0,
+              "why": "비상장 지분 — 시장가가 없다"
+            },
+            "us-gaap:CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": {
+              "value": 94352000000.0,
+              "why": "제한 현금 포함 합계"
+            },
+            "us-gaap:RestrictedCashCurrent": {
+              "value": 210000000.0,
+              "why": "제한 현금"
+            }
           },
           "debt_ex_lease": 39364000000.0,
           "debt_concepts": [
             "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities"
           ],
           "operating_lease": 344000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiabilityCurrent"
-          ],
           "finance_lease": null,
-          "finance_lease_concepts": [
-            "us-gaap:FinanceLeaseLiability"
-          ],
           "lease_total": 344000000.0,
           "debt_incl_lease": 39708000000.0
         },
         "legacy_comparison": {
           "legacy_net_cash": 60300000000.0,
-          "diff": -5656000000.0,
-          "matched": false
+          "diff": 1000000.0,
+          "matched": true
         },
-        "correction_vs_mcap36": {
-          "what": "금융리스 이중계상 제거",
-          "detail": "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities 39,364,000,000 - LongTermDebt 38,285,000,000 = 1,079,000,000 = FinanceLeaseLiability. 총액 태그가 자본리스를 이미 포함한다.",
-          "excluded": 1079000000.0,
-          "mcap36_value": 40787000000,
-          "corrected": 39708000000.0
-        }
+        "corrections": [
+          {
+            "what": "현금+증권 총계를 대차대조표 줄로 재계산",
+            "c13_value": 94352000000,
+            "corrected": 100009000000.0,
+            "why": "C-13 이 제한현금 830 을 포함한 합계 태그를 쓰고 시장성 증권 6,487 을 빠뜨렸다. 제한현금은 팔아서 청구권을 상환할 수 있는 자산이 아니고 시장성 증권은 대상이다."
+          },
+          {
+            "what": "금융리스 이중계상 제거",
+            "detail": "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities 39,364,000,000 - LongTermDebt 38,285,000,000 = 1,079,000,000 = FinanceLeaseLiability. 총액 태그가 자본리스를 이미 포함한다.",
+            "excluded": 1079000000.0,
+            "mcap36_value": 40787000000,
+            "corrected": 39708000000.0
+          }
+        ],
+        "why_this_match_matters": "**이 일치가 유가증권 경계의 가장 강한 증거다.** 두 정정이 동시에 들어가야 나온다 — (1) 총액 태그가 이미 포함한 금융리스 1,079 를 빼고 (2) C-13 이 넣은 제한현금 830 을 빼고 빠뜨린 시장성 증권 6,487 을 넣는다. 그러면 100,009 - 39,708 = 60,301 이고 legacy 60,300 과 100만 달러 차이다. **서로 독립인 두 정정이 legacy 값 하나로 수렴한다.**"
       },
-      "raw": "현금+증권 94.4B − 차입 39.4B − 리스 0.3B = 54.6B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 100.0B − 차입 39.4B − 리스 0.3B = 60.3B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "tesla.net_cash.nc37",
@@ -7250,16 +7361,25 @@
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_all_securities": 43524000000.0,
-          "cash_all_securities_breakdown": {
-            "cash_and_cash_equivalents": 15219000000,
-            "short_term_marketable_securities": 28305000000,
-            "sti_concept": "us-gaap:ShortTermInvestments",
-            "liquid_cash_buffer": 43524000000,
-            "total_cash_and_all_securities": 43524000000,
-            "restricted_cash": 1206000000
+          "cash_and_marketable_securities": 43524000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 15219000000.0
+            },
+            {
+              "tag": "us-gaap:ShortTermInvestments",
+              "value": 28305000000.0
+            }
+          ],
+          "excluded_nonmarketable_present": {
+            "us-gaap:RestrictedCashCurrent": {
+              "value": 496000000.0,
+              "why": "제한 현금"
+            }
           },
           "debt_ex_lease": 9061000000.0,
           "debt_concepts": [
@@ -7267,15 +7387,7 @@
             "us-gaap:DebtCurrent"
           ],
           "operating_lease": 6738000000.0,
-          "operating_lease_concepts": [
-            "us-gaap:OperatingLeaseLiabilityNoncurrent",
-            "us-gaap:OperatingLeaseLiabilityCurrent"
-          ],
           "finance_lease": 281000000.0,
-          "finance_lease_concepts": [
-            "us-gaap:FinanceLeaseLiabilityNoncurrent",
-            "us-gaap:FinanceLeaseLiabilityCurrent"
-          ],
           "lease_total": 7019000000.0,
           "debt_incl_lease": 16080000000.0
         },
@@ -7285,14 +7397,14 @@
           "matched": true
         }
       },
-      "raw": "현금+증권 43.5B − 차입 9.1B − 리스 7.0B = 27.4B",
-      "note": "NETCASH-37. SEC 보존 원자료 실측. **정의는 legacy 역산 작업 정의다**"
+      "raw": "현금+시장성증권 43.5B − 차입 9.1B − 리스 7.0B = 27.4B",
+      "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
       "observation_id": "tsmc.net_cash.nc37",
       "company_id": "tsmc",
       "metric": "net_cash",
-      "value": 69946416958.87788,
+      "value": 69224963340.77142,
       "unit": "USD",
       "as_of": "2025-12-31",
       "observed_at": "2026-09-11",
@@ -7303,21 +7415,22 @@
         "measured_as_of": "2025-12-31",
         "form": "20-F",
         "original_currency": "TWD",
-        "unit_scale": "NT$ 백만",
+        "unit_scale": "NT$백만",
         "fx_rate": 31.37,
         "fx_rate_source": "20-F 자체 선언 편의환산 환율 (F6-REG-28 등록값과 동일)",
         "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
         "definition_status": "working_definition",
         "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
-        "why_not_companyfacts": "보존 companyfacts 에 2025-12-31 시점 **금액 사실이 0건**이다. IFRS 태그가 2024-12-31 까지만 있어 구조화 원천으로는 실측이 불가하다.",
-        "how_columns_were_pinned": "표를 파싱해 열을 세지 않았다. 13개 행을 **문면에서 값 순서로 찾고** US$ 칸을 31.37 로 역검산했다. 예: Bonds payable 856,227.5 / 31.37 = 27,294.5 로 원문 US$ 칸과 일치한다. 값 하나가 틀리면 줄을 못 찾는다.",
+        "how_columns_were_pinned": "표를 파싱해 열을 세지 않았다. 각 행을 **문면에서 값 순서로 찾고** 원문 US$ 칸을 발행사 선언 환율로 역검산했다. 값 하나가 틀리면 줄을 못 찾는다.",
         "components": {
-          "cash_all_securities_ntd_million": 3262634.8,
-          "debt_ex_lease_ntd_million": 1032987.7,
-          "lease_total_ntd_million": 35428.0,
-          "debt_incl_lease_ntd_million": 1068415.7,
-          "net_cash_ntd_million": 2194219.0999999996,
+          "cash_and_marketable_securities": 3240002.8,
+          "excluded_nonmarketable": 22632.0,
+          "debt_ex_lease": 1032987.7,
+          "lease_total": 35428.0,
+          "debt_incl_lease": 1068415.7,
+          "net_cash_native": 2171587.0999999996,
           "rows": [
             {
               "kind": "cash",
@@ -7328,10 +7441,31 @@
             },
             {
               "kind": "sec",
-              "label": "Financial assets at fair value through profit or loss",
+              "label": "Mutual funds",
+              "ntd_million": 1297.5,
+              "usd_million": null,
+              "line": "Mutual funds | 886.9 | 1,297.5 |"
+            },
+            {
+              "kind": "skip",
+              "label": "Convertible preferred stocks",
+              "ntd_million": 13608.8,
+              "usd_million": null,
+              "line": "Convertible preferred stocks | $ 14,181.8 | $ 13,608.8 |"
+            },
+            {
+              "kind": "skip",
+              "label": "Simple agreement for future equity",
+              "ntd_million": 125.8,
+              "usd_million": null,
+              "line": "Simple agreement for future equity | 131.1 | 125.8 |"
+            },
+            {
+              "kind": "skip",
+              "label": "Forward exchange contracts",
               "ntd_million": 100.2,
-              "usd_million": 3.2,
-              "line": "Financial assets at fair value through profit or loss | 8 | 207.7 | 100.2 | 3.2 |"
+              "usd_million": null,
+              "line": "Forward exchange contracts | 207.7 | 100.2 |"
             },
             {
               "kind": "sec",
@@ -7339,6 +7473,13 @@
               "ntd_million": 175692.7,
               "usd_million": 5600.7,
               "line": "Financial assets at fair value through other comprehensive income | 9 | 192,202.7 | 175,692.7 | 5,600.7 |"
+            },
+            {
+              "kind": "skip",
+              "label": "Non-publicly traded equity investments",
+              "ntd_million": 8797.2,
+              "usd_million": null,
+              "line": "Non-publicly traded equity investments | $ 7,822.9 | $ 8,797.2 |"
             },
             {
               "kind": "sec",
@@ -7349,31 +7490,17 @@
             },
             {
               "kind": "sec",
-              "label": "Other financial assets",
-              "ntd_million": 59702.9,
-              "usd_million": 1903.2,
-              "line": "Other financial assets | 30, 31, 35 | 63,138.3 | 59,702.9 | 1,903.2 |"
-            },
-            {
-              "kind": "sec",
-              "label": "Financial assets at fair value through profit or loss",
-              "ntd_million": 15032.1,
-              "usd_million": 479.2,
-              "line": "Financial assets at fair value through profit or loss | 8 | 15,199.8 | 15,032.1 | 479.2 |"
-            },
-            {
-              "kind": "sec",
-              "label": "Financial assets at fair value through other comprehensive income",
-              "ntd_million": 8797.2,
-              "usd_million": 280.5,
-              "line": "Financial assets at fair value through other comprehensive income | 9 | 7,822.9 | 8,797.2 | 280.5 |"
-            },
-            {
-              "kind": "sec",
               "label": "Financial assets at amortized cost",
               "ntd_million": 110507.8,
               "usd_million": 3522.7,
               "line": "Financial assets at amortized cost | 10 | 88,596.5 | 110,507.8 | 3,522.7 |"
+            },
+            {
+              "kind": "sec",
+              "label": "Other financial assets",
+              "ntd_million": 59702.9,
+              "usd_million": 1903.2,
+              "line": "Other financial assets | 30, 31, 35 | 63,138.3 | 59,702.9 | 1,903.2 |"
             },
             {
               "kind": "debt",
@@ -7412,16 +7539,203 @@
             }
           ]
         },
-        "lease_note": "유동 리스부채 3,833.0 은 대차대조표 면에 없고 '미지급비용 및 기타유동부채' 에 들어간다. 주석 16 이 유동·비유동을 나눠 주므로 합계 35,428.0 을 쓴다. **차입금 유동분(136,925.7)에는 리스가 없다** — 주석 18·19 이고 리스는 주석 16 이다.",
-        "excluded": "지분법 투자 37,851.9 는 제외했다. 환금 목적 보유가 아니다.",
         "legacy_comparison": {
           "legacy_net_cash": 77000000000.0,
-          "diff": -7053583041.122116,
+          "diff": -7775036659.228577,
           "matched": false
-        }
+        },
+        "why_not_companyfacts": "보존 companyfacts 에 2025-12-31 시점 **금액 사실이 0건**이다. IFRS 태그가 2024-12-31 까지만 있다.",
+        "lease_note": "유동 리스부채 3,833.0 은 대차대조표 면에 없고 '미지급비용 및 기타유동부채' 에 들어간다. 주석 16 이 유동·비유동을 나눈다. **차입금 유동분(136,925.7)에는 리스가 없다** — 주석 18·19 다.",
+        "open_item": "`Other financial assets` 59,702.9(US$1,903.2M)를 **넣어 두었다.** 대차대조표가 주석 35(담보제공 자산)를 참조하므로 일부가 제한돼 있을 수 있으나 20-F 가 내역을 주지 않는다. 다른 회사의 자금운용 예금을 시장성 증권으로 세면서 tsmc 만 빼면 기준이 어긋난다."
       },
-      "raw": "NT$백만 3,262,634.8 − 1,032,987.7 − 35,428.0 = 2,194,219.1 ÷ 31.37 = 69.9B USD",
-      "note": "NETCASH-37. **보존 20-F 문면 실측** — companyfacts 에 이 기준일 금액 사실이 없다"
+      "raw": "NT$백만 3,240,002.8 − 1,068,415.7 = 2,171,587.1 ÷ 31.37 = 69.2B USD",
+      "note": "NETCASH-37. **보존 20-F 문면 실측** · 유가증권은 시장성 있는 것만"
+    },
+    {
+      "observation_id": "alibaba.net_cash.nc37",
+      "company_id": "alibaba",
+      "metric": "net_cash",
+      "value": 49838648883.73442,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-20F-FY2026",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-03-31",
+        "form": "20-F",
+        "original_currency": "CNY",
+        "unit_scale": "RMB백만",
+        "fx_rate": 6.898,
+        "fx_rate_source": "20-F 자체 선언 편의환산 환율 (F6-REG-28 등록값과 동일)",
+        "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+        "definition_status": "working_definition",
+        "definition_warning": "**legacy 역산으로 세운 작업 정의다.** 확정 정의가 나오면 이 값도 재계산 대상이다 (policies.f6.net_cash.supersede).",
+        "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
+        "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
+        "how_columns_were_pinned": "표를 파싱해 열을 세지 않았다. 각 행을 **문면에서 값 순서로 찾고** 원문 US$ 칸을 발행사 선언 환율로 역검산했다. 값 하나가 틀리면 줄을 못 찾는다.",
+        "components": {
+          "cash_and_marketable_securities": 625509.0,
+          "excluded_nonmarketable": 390168.0,
+          "debt_ex_lease": 259996.0,
+          "lease_total": 21726.0,
+          "debt_incl_lease": 281722.0,
+          "net_cash_native": 343787.0,
+          "rows": [
+            {
+              "kind": "debt",
+              "label": "Current bank borrowings",
+              "rmb_million": 28224.0,
+              "usd_million": 4092.0,
+              "line": "Current bank borrowings | 21 | 22,562 | 28,224 | 4,092"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current bank borrowings",
+              "rmb_million": 47450.0,
+              "usd_million": 6879.0,
+              "line": "Non-current bank borrowings | 21 | 49,909 | 47,450 | 6,879"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current unsecured senior notes",
+              "rmb_million": 117485.0,
+              "usd_million": 17032.0,
+              "line": "Non-current unsecured senior notes | 22 | 122,398 | 117,485 | 17,032"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current convertible unsecured senior notes",
+              "rmb_million": 55861.0,
+              "usd_million": 8098.0,
+              "line": "Non-current convertible unsecured senior notes | 23 | 35,834 | 55,861 | 8,098"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current exchangeable bonds",
+              "rmb_million": 10976.0,
+              "usd_million": 1591.0,
+              "line": "Non-current exchangeable bonds | 24 | 10,976 | 1,591"
+            },
+            {
+              "kind": "marketable",
+              "label": "Cash and cash equivalents",
+              "rmb_million": 131530.0,
+              "usd_million": 19068.0,
+              "line": "Cash and cash equivalents | 145,487 | 131,530 | 19,068"
+            },
+            {
+              "kind": "marketable",
+              "label": "Short-term investments",
+              "rmb_million": 155310.0,
+              "usd_million": 22515.0,
+              "line": "Short-term investments | 228,826 | 155,310 | 22,515"
+            },
+            {
+              "kind": "marketable",
+              "label": "Listed equity securities",
+              "rmb_million": 100594.0,
+              "usd_million": null,
+              "line": "Listed equity securities | 70,647 | 29,947 | 100,594"
+            },
+            {
+              "kind": "marketable",
+              "label": "Other treasury investments",
+              "rmb_million": 238075.0,
+              "usd_million": null,
+              "line": "Other treasury investments | 238,353 | ( 278 | 238,075 | 442,731 | 37,265 | 479,996"
+            },
+            {
+              "kind": "excluded",
+              "label": "Investments in privately held companies",
+              "rmb_million": 130447.0,
+              "usd_million": null,
+              "why": "비상장 지분 — 시장가가 없고 팔아서 청구권을 상환할 수 없다",
+              "line": "Investments in privately held companies | 117,826 | 12,621 | 130,447"
+            },
+            {
+              "kind": "excluded",
+              "label": "Debt securities and loan investments",
+              "rmb_million": 10880.0,
+              "usd_million": null,
+              "why": "채무증권과 **대출**이 한 줄에 섞여 있다. 대출은 시장성이 없는데 20-F 가 나누지 않는다. 시장성을 증명하지 못한 줄은 넣지 않는다",
+              "line": "Debt securities and loan investments | 15,905 | ( 5,025 | 10,880"
+            },
+            {
+              "kind": "excluded",
+              "label": "Investments in equity method investees",
+              "rmb_million": 206803.0,
+              "usd_million": 29980.0,
+              "why": "지분법 투자 — 영업적 보유",
+              "line": "Investments in equity method investees | 14 | 210,169 | 206,803 | 29,980"
+            },
+            {
+              "kind": "excluded",
+              "label": "Restricted cash and escrow receivables",
+              "rmb_million": 42038.0,
+              "usd_million": 6094.0,
+              "why": "제한 현금. 주석에 따르면 35,965 가 판매자 구매자보호기금 예치금이라 **우리 돈이 아니다.** 유가증권이 아니라 현금이지만 같은 논리로 제외한다",
+              "line": "Restricted cash and escrow receivables | 10 | 43,781 | 42,038 | 6,094"
+            }
+          ]
+        },
+        "legacy_comparison": {
+          "legacy_net_cash": 17500000000.0,
+          "diff": 32338648883.73442,
+          "matched": false
+        },
+        "how_securities_were_split": "대차대조표의 `Equity securities and other investments` 두 줄(30,054 + 449,942 = 479,996)이 **주석 11 에서 그대로 쪼개진다** — 상장주식 100,594 · 비상장 130,447 · 채무증권및대출 10,880 · 기타 자금운용 238,075. 앞의 둘만 시장성이다. 비상장 130,447 이 공정가치 계층표에 아예 없는 것이 시장가가 없다는 증거다.",
+        "open_item": "`Debt securities and loan investments` 10,880(US$1,577M)을 통째로 **뺐다.** 채무증권과 대출이 한 줄에 섞여 있고 20-F 가 나누지 않는다. 시장성 있는 것에 **한한다**는 기준이라 증명하지 못한 줄은 넣지 않는다. 넣어도 P2 밴드는 안 갈린다."
+      },
+      "raw": "RMB백만 625,509.0 − 281,722.0 = 343,787.0 ÷ 6.898 = 49.8B USD",
+      "note": "NETCASH-37. **보존 20-F 문면 실측** · 유가증권은 시장성 있는 것만"
+    },
+    {
+      "observation_id": "apple.lease_liabilities.nc37",
+      "company_id": "apple",
+      "metric": "lease_liabilities",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-06-27",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "not_disclosed",
+      "missing_type": "not_disclosed_confirmed",
+      "basis": {
+        "measured_as_of": "2026-06-27",
+        "why": "리스 관련 태그 39종이 모두 존재하나 값이 붙은 일자는 전부 회계연도 말이다(최근 2020-09-26 · 2021-09-25 · 2022-09-24 · 2023-09-30 · 2024-09-28 · 2025-09-27). **발행사가 분기에는 공시하지 않는다** — 우리가 못 찾은 것이 아니라 그 시점에 없다. 가장 최근 값 2025-09-27 은 9개월 전 다른 시점이라 대차대조 합산에 섞지 않는다.",
+        "why_not_unverified": "`unverified` 는 우리가 아직 실측하지 못했다는 뜻인데 여기서는 보존 companyfacts 전수를 확인했고 그 시점에 값 자체가 없다. 수집 공백이 아니라 공시 주기의 문제다.",
+        "impact": "net_cash 실측이 막힌다. legacy 62,200 백만 USD 가 그대로 P2 에 쓰인다. 리스를 빼고 계산하면 146,517 - 84,344 = 62,173 으로 legacy 와 맞는데, **legacy 도 같은 공백을 겪었다는 정황이지 정의가 다르다는 뜻이 아니다.**",
+        "blocks_metric": "net_cash",
+        "definition_ref": "policies.f6.net_cash"
+      },
+      "raw": "2026-06-27 기준 리스부채 없음 — 10-K 에만 태깅",
+      "note": "NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "palantir.lease_liabilities.nc37",
+      "company_id": "palantir",
+      "metric": "lease_liabilities",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "not_disclosed",
+      "missing_type": "not_disclosed_confirmed",
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "why": "`OperatingLeaseLiabilityNoncurrent` 211,400천은 있으나 `...Current` 도 상위 합계 `OperatingLeaseLiability` 도 없다. 유동 리스부채는 대차대조표 면에 별도 줄이 없고 `AccruedLiabilitiesCurrent` 504,070천에 묻혀 있다. **발행사가 따로 공시하지 않는다.**",
+        "why_not_unverified": "보존 companyfacts 의 2026-06-30 시점 사실 44건을 전수 확인했다. 유동 리스부채를 가리키는 개념이 없다.",
+        "impact": "리스 총액이 불완전해 net_cash 실측이 막힌다. 비유동분만 빼면 9,197,699천이고 legacy 9,200,000천과 맞아 **정의의 근거로는 쓰지만 관측으로는 등록하지 않는다.** apple 과 같은 결함이므로 같게 다룬다.",
+        "blocks_metric": "net_cash",
+        "definition_ref": "policies.f6.net_cash"
+      },
+      "raw": "2026-06-30 기준 리스부채 유동분 없음 — 비유동분 211,400천만 태깅",
+      "note": "NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed"
     }
   ]
 }

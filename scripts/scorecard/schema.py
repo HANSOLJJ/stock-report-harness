@@ -85,6 +85,9 @@ METRICS: dict[str, dict[str, str]] = {
     "cash": {"unit": "USD", "type": "number"},
     "undrawn_credit": {"unit": "USD", "type": "number"},
     "net_cash": {"unit": "USD", "type": "number"},
+    # net_cash 의 구성요소. 값 자체는 P2 가 읽지 않고 **없을 때 왜 없는지**를 기록하려고 둔다.
+    # apple 은 리스를 10-K 에만, palantir 는 유동분을 태깅하지 않아 net_cash 실측이 막힌다(NETCASH-37).
+    "lease_liabilities": {"unit": "USD", "type": "number"},
     "net_borrowing_ttm": {"unit": "USD", "type": "number"},
     "debt_ebitda": {"unit": "ratio", "type": "number"},
     "credit_rating": {"unit": "text", "type": "text"},
@@ -516,6 +519,20 @@ def _validate_net_cash(spec: Any) -> None:
         companies = matched.get("companies") or {}
         _require(matched.get("count") == len(companies),
                  f"{where}.evidence.matched: count {matched.get('count')!r} 가 목록 {len(companies)}개와 다름")
+
+    scope = spec.get("securities_scope") or {}
+    if scope:
+        sw = f"{where}.securities_scope"
+        _require(str(scope.get("criterion") or "").strip(), f"{sw}.criterion: 비워 둘 수 없음")
+        _require(isinstance(scope.get("include"), list) and scope["include"],
+                 f"{sw}.include: 무엇을 넣는지 비어 있을 수 없음")
+        excl = scope.get("exclude")
+        _require(isinstance(excl, list) and excl, f"{sw}.exclude: 무엇을 빼는지 비어 있을 수 없음")
+        for idx, item in enumerate(excl):
+            iw = f"{sw}.exclude[{idx}]"
+            # **뺀 이유가 없으면 다음 사람이 되돌린다.** 경계는 값이 아니라 논거로 서 있어야 한다.
+            for key in ("what", "why"):
+                _require(str(item.get(key) or "").strip(), f"{iw}.{key}: 비워 둘 수 없음")
 
     sep = spec.get("scope_separation") or {}
     if sep:

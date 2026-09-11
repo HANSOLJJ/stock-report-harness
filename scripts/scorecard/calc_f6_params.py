@@ -177,6 +177,42 @@ def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
     return None, f"{pid} 산식이 구현되지 않음", raw
 
 
+# net_cash 처럼 **여러 관측을 합쳐 만드는 입력**은 구성요소 하나가 없으면 통째로 막힌다.
+# 그 사실이 결과에 안 나타나면 다음 사람은 "왜 아직 legacy 인가" 를 처음부터 다시 조사한다.
+# 구성요소 관측에 붙인 `missing_type` 을 여기서 읽어 올려 준다(NETCASH-37).
+NET_CASH_COMPONENTS = ("lease_liabilities",)
+MISSING_TYPE_LABEL = {
+    "unverified": "아직 실측하지 못함",
+    "not_disclosed_confirmed": "확인된 미공시 — 발행사가 그 시점에 공시하지 않는다",
+    "not_applicable": "해당 없음",
+    "indeterminate": "미공시인지 수집 실패인지 가리지 못함",
+}
+
+
+def _blocked_reasons(cid: str, obs: ObsLookup, rules: RuleSet,
+                     metrics: list[str]) -> dict[str, Any]:
+    """미검증 입력마다 **구성요소 쪽에 남긴 결측 라벨**을 찾아 붙인다. 점수는 건드리지 않는다."""
+    out: dict[str, Any] = {}
+    if "net_cash" not in metrics:
+        return out
+    blockers = []
+    for metric in NET_CASH_COMPONENTS:
+        o = obs.get(cid, metric)
+        mtype = (o or {}).get("missing_type")
+        if o is not None and o.get("value") is None and mtype:
+            blockers.append({"metric": metric, "missing_type": mtype,
+                             "label": MISSING_TYPE_LABEL.get(mtype, mtype),
+                             "observation_id": o["observation_id"],
+                             "note": o.get("note")})
+    if blockers:
+        out["net_cash"] = {
+            "reason": "; ".join(f"{b['metric']} = {b['label']}" for b in blockers),
+            "components": blockers,
+            "definition_ref": "policies.f6.net_cash",
+        }
+    return out
+
+
 def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | None,
                    rules: RuleSet, run: dict[str, Any] | None = None) -> dict[str, Any]:
     cid = company["company_id"]
@@ -243,12 +279,17 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
     # 미검증 입력을 드러낸다. **점수에는 개입하지 않는다** — 우리 수집 공백을 기업 위험으로 바꾸지 않는다.
     if unverified:
         calc["unverified_inputs"] = {m: sorted(set(p)) for m, p in sorted(unverified.items())}
+        blocked = _blocked_reasons(cid, obs, rules, sorted(unverified))
+        if blocked:
+            calc["unverified_blocked_by"] = blocked
         calc["unverified_inputs_note"] = (
             "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — "
             "자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.")
         for metric, pids in sorted(unverified.items()):
+            why = (calc.get("unverified_blocked_by") or {}).get(metric)
+            tail = f" — 실측이 막힌 이유: {why['reason']}" if why else " — 점수는 그대로"
             warnings.append(f"미검증 입력 ⚠️ {metric} 이 legacy_unverified 인데 "
-                            f"{', '.join(sorted(set(pids)))} 가 그 위에 선다 — 점수는 그대로")
+                            f"{', '.join(sorted(set(pids)))} 가 그 위에 선다{tail}")
 
     if missing:
         return factor_result(FACTOR, score=None, status="pending_data", basis="computed",

@@ -78,11 +78,17 @@ class NetCashDefinitionTest(unittest.TestCase):
         self.assertIn("count", str(cm.exception))
 
     def test_matched_list_is_what_we_actually_measured(self):
-        """규칙이 주장하는 6개사가 실제 검증 결과와 같아야 한다."""
+        """규칙이 주장하는 7개사가 실제 검증 결과와 같아야 한다.
+
+        라운드 1 에서는 여섯이었다. **유가증권 경계를 적용하자 spacex-xai 가 일치 쪽으로 넘어왔다** —
+        독립인 두 정정(금융리스 이중계상 제거·제한현금 대신 시장성 증권)이 legacy 값 하나로 수렴한다.
+        """
         self.assertEqual(set(self.spec["evidence"]["matched"]["companies"]),
-                         {"microsoft", "tesla", "meta", "oracle", "alphabet", "palantir"})
+                         {"microsoft", "tesla", "meta", "oracle", "alphabet", "palantir",
+                          "spacex-xai"})
         self.assertEqual(set(self.spec["evidence"]["differs"]["companies"]),
-                         {"amazon", "nvidia", "spacex-xai", "tsmc"})
+                         {"amazon", "nvidia", "tsmc", "alibaba"})
+        self.assertEqual(set(self.spec["evidence"]["undecidable"]), {"apple"})
 
     def test_unknown_cause_is_stated_not_hidden(self):
         """**왜 안 맞는지 모른다는 것을 적어 둔다.** 모르는 것을 아는 척하면 다음 사람이 조사하지 않는다."""
@@ -162,35 +168,70 @@ class P2EmitsDefinitionTest(unittest.TestCase):
         self.assertEqual(p2["score"], 0)                            # 8 미만이라 0 칸. 경고가 있어도 그대로다
 
 
+class SecuritiesScopeTest(unittest.TestCase):
+    """유가증권 경계(설계진행 2026-09-11). **EV 조정은 팔아서 청구권을 상환할 수 있는 자산만 뺀다.**"""
+
+    def setUp(self) -> None:
+        self.scope = RULES.f6_net_cash()["securities_scope"]
+
+    def test_criterion_is_stated_not_implied(self):
+        self.assertIn("시장성", self.scope["criterion"])
+        self.assertIn("청구권", self.scope["criterion"])
+
+    def test_every_exclusion_carries_a_reason(self):
+        """**뺀 이유가 없으면 다음 사람이 되돌린다.** 경계는 값이 아니라 논거로 서 있어야 한다."""
+        self.assertGreaterEqual(len(self.scope["exclude"]), 5)
+        for item in self.scope["exclude"]:
+            with self.subTest(what=item.get("what")):
+                self.assertTrue(str(item.get("why") or "").strip())
+
+    def test_named_exclusions_cover_the_four_traps(self):
+        what = " ".join(e["what"] for e in self.scope["exclude"])
+        for trap in ("지분법", "비상장", "제한 현금", "만기 버킷"):
+            self.assertIn(trap, what)
+
+    def test_exclusion_without_reason_is_rejected(self):
+        def drop(spec, _payload):
+            spec["securities_scope"]["exclude"][0].pop("why")
+        with self.assertRaises(SchemaError) as cm:
+            validate_rules(mutated_rules(drop))
+        self.assertIn("securities_scope", str(cm.exception))
+
+    def test_empty_exclude_is_rejected(self):
+        with self.assertRaises(SchemaError):
+            validate_rules(mutated_rules(lambda s, p: s["securities_scope"].update(exclude=[])))
+
+
 class RegisteredObservationsTest(unittest.TestCase):
-    """실행에 등록된 실측 관측의 계약. **등록한 9개사와 안 한 3개사가 뒤섞이면 안 된다.**"""
+    """실행에 등록된 실측 관측의 계약. **등록한 10개사와 안 한 2개사가 뒤섞이면 안 된다.**"""
 
     @classmethod
     def setUpClass(cls) -> None:
         cls.obs = json.loads((RUN_DIR / "observations.json").read_text(encoding="utf-8"))["items"]
         cls.results = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
+        cls.by_id = {o["observation_id"]: o for o in cls.obs}
 
-    def test_nine_measured_registrations(self):
+    def test_ten_measured_registrations(self):
         got = {o["company_id"] for o in self.obs if o["observation_id"].endswith(".net_cash.nc37")}
         self.assertEqual(got, {"microsoft", "amazon", "nvidia", "spacex-xai", "tesla", "meta",
-                               "oracle", "alphabet", "tsmc"})
+                               "oracle", "alphabet", "tsmc", "alibaba"})
 
-    def test_measured_observations_are_verified_and_carry_components(self):
+    def test_measured_observations_carry_the_criterion(self):
         for o in self.obs:
             if not o["observation_id"].endswith(".net_cash.nc37"):
                 continue
             with self.subTest(cid=o["company_id"]):
                 self.assertEqual(o["status"], "verified")
                 self.assertEqual(o["basis"]["definition_status"], "working_definition")
+                self.assertIn("시장성", o["basis"]["securities_criterion"])
                 self.assertIn("scope_warning", o["basis"])
-                self.assertIn("components", o["basis"])
 
-    def test_three_companies_keep_legacy_and_stay_flagged(self):
-        """등록하지 못한 셋은 **legacy 그대로 남고 미검증 표시가 유지돼야** 한다."""
+    def test_two_companies_keep_legacy_and_stay_flagged(self):
+        """등록하지 못한 둘은 **legacy 그대로 남고 미검증 표시가 유지돼야** 한다."""
         flagged = {c["company_id"] for c in self.results["companies"]
                    if "net_cash" in ((c["factors"]["F6"].get("calc") or {})
                                      .get("unverified_inputs") or {})}
-        self.assertEqual(flagged, {"apple", "palantir", "alibaba"})
+        self.assertEqual(flagged, {"apple", "palantir"})
 
     def test_market_cap_still_flagged_on_every_listed_company(self):
         """net_cash 를 실측해도 **P2 는 여전히 미검증 시총 위에 선다.** 그 사실이 사라지면 안 된다."""
@@ -199,22 +240,109 @@ class RegisteredObservationsTest(unittest.TestCase):
                                        .get("unverified_inputs") or {})}
         self.assertEqual(len(flagged), 11)
 
-    def test_spacex_correction_is_recorded(self):
-        """금융리스 이중계상을 뺐다는 것이 관측에 남아야 재검토가 가능하다."""
-        o = next(o for o in self.obs if o["observation_id"] == "spacex-xai.net_cash.nc37")
-        self.assertEqual(o["basis"]["correction_vs_mcap36"]["excluded"], 1_079_000_000)
-        self.assertEqual(o["basis"]["components"]["finance_lease"], None)
+    def test_nvidia_maturity_bucket_double_count_removed(self):
+        """**만기 버킷은 대차대조표 줄이 아니다.** 현금에 더하면 현금성자산 안의 증권이 두 번 세어진다."""
+        o = self.by_id["nvidia.net_cash.nc37"]
+        comp = o["basis"]["components"]
+        self.assertEqual(comp["cash_and_marketable_securities"], 56_586_000_000)
+        fix = next(f for f in o["basis"]["corrections"] if "총계" in f["what"])
+        self.assertEqual(fix["c13_value"], 63_443_000_000)
+        self.assertIn("만기", fix["why"])
 
-    def test_amazon_correction_is_recorded(self):
-        o = next(o for o in self.obs if o["observation_id"] == "amazon.net_cash.nc37")
+    def test_spacex_two_corrections_converge_on_legacy(self):
+        """**이 일치가 경계의 가장 강한 증거다.** 독립인 두 정정이 legacy 값 하나로 수렴한다."""
+        o = self.by_id["spacex-xai.net_cash.nc37"]
+        self.assertEqual(o["basis"]["components"]["cash_and_marketable_securities"], 100_009_000_000)
+        self.assertEqual(o["basis"]["components"]["finance_lease"], None)   # 총액 태그에 이미 포함
+        self.assertAlmostEqual(o["value"], 60_301_000_000, delta=1)
+        self.assertTrue(o["basis"]["legacy_comparison"]["matched"])
+        self.assertIn("수렴", o["basis"]["why_this_match_matters"])
+
+    def test_amazon_short_term_borrowings_added(self):
+        o = self.by_id["amazon.net_cash.nc37"]
         self.assertEqual(o["basis"]["components"]["debt_ex_lease"], 132_549_000_000)
         self.assertIn("us-gaap:ShortTermBorrowings", o["basis"]["components"]["debt_concepts"])
 
-    def test_tsmc_measured_from_preserved_20f_not_companyfacts(self):
-        o = next(o for o in self.obs if o["observation_id"] == "tsmc.net_cash.nc37")
+    def test_no_registration_contains_an_excluded_concept(self):
+        """배제 개념이 총계에 섞이면 EV 가 과소계상된다."""
+        excluded_names = {"EquityMethodInvestments",
+                          "EquitySecuritiesWithoutReadilyDeterminableFairValueAmount"}
+        for o in self.obs:
+            if not o["observation_id"].endswith(".net_cash.nc37"):
+                continue
+            used = {c["tag"].split(":")[-1]
+                    for c in o["basis"]["components"].get("cash_and_marketable_securities_concepts", [])}
+            with self.subTest(cid=o["company_id"]):
+                self.assertFalse(used & excluded_names)
+
+    def test_tsmc_excludes_private_equity_from_the_notes(self):
+        """대차대조표 줄만 보면 비상장 지분이 FVTPL·FVOCI 비유동에 통째로 숨는다."""
+        o = self.by_id["tsmc.net_cash.nc37"]
         self.assertEqual(o["source_id"], "SRC-SEC-TSM-20F-FY2025")
+        self.assertAlmostEqual(o["basis"]["components"]["excluded_nonmarketable"], 22_632.0, places=1)
         self.assertIn("금액 사실이 0건", o["basis"]["why_not_companyfacts"])
-        self.assertEqual(o["basis"]["fx_rate"], 31.37)
+
+    def test_alibaba_registered_with_note11_split(self):
+        o = self.by_id["alibaba.net_cash.nc37"]
+        self.assertEqual(o["source_id"], "SRC-SEC-BABA-20F-FY2026")
+        self.assertAlmostEqual(o["basis"]["components"]["cash_and_marketable_securities"],
+                               625_509.0, places=1)
+        self.assertAlmostEqual(o["basis"]["components"]["debt_ex_lease"], 259_996.0, places=1)
+        self.assertIn("주석 11", o["basis"]["how_securities_were_split"])
+
+    def test_alibaba_excludes_equity_method_and_private_stakes(self):
+        o = self.by_id["alibaba.net_cash.nc37"]
+        excluded = {r["label"]: r for r in o["basis"]["components"]["rows"] if r["kind"] == "excluded"}
+        self.assertEqual(excluded["Investments in equity method investees"]["rmb_million"], 206_803.0)
+        self.assertEqual(excluded["Investments in privately held companies"]["rmb_million"], 130_447.0)
+        for row in excluded.values():
+            self.assertTrue(str(row.get("why") or "").strip())
+
+
+class LeaseGapMissingTypeTest(unittest.TestCase):
+    """리스 태깅 공백에 **정확한 결측 유형**을 달고, 그 라벨이 엔진에 닿는지 본다."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.by_id = {o["observation_id"]: o for o in
+                     json.loads((RUN_DIR / "observations.json").read_text(encoding="utf-8"))["items"]}
+        cls.results = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
+
+    def test_value_is_not_invented(self):
+        for cid in ("apple", "palantir"):
+            o = self.by_id[f"{cid}.lease_liabilities.nc37"]
+            with self.subTest(cid=cid):
+                self.assertIsNone(o["value"])
+                self.assertEqual(o["status"], "not_disclosed")
+
+    def test_missing_type_is_confirmed_nondisclosure_not_our_gap(self):
+        """**`unverified` 가 아니다.** 우리가 못 찾은 것이 아니라 발행사가 그 시점에 공시하지 않는다."""
+        for cid in ("apple", "palantir"):
+            o = self.by_id[f"{cid}.lease_liabilities.nc37"]
+            with self.subTest(cid=cid):
+                self.assertEqual(o["missing_type"], "not_disclosed_confirmed")
+                # **전수 확인했다는 근거가 있어야** 수집 공백(unverified)과 갈린다.
+                self.assertIn("전수", o["basis"]["why_not_unverified"])
+                self.assertEqual(o["basis"]["blocks_metric"], "net_cash")
+
+    def test_label_reaches_the_output(self):
+        """선언한 라벨은 읽는 코드가 있어야 한다. F6 calc 과 경고 양쪽에 나와야 한다."""
+        for c in self.results["companies"]:
+            if c["company_id"] not in ("apple", "palantir"):
+                continue
+            calc = c["factors"]["F6"]["calc"]
+            with self.subTest(cid=c["company_id"]):
+                blocked = calc["unverified_blocked_by"]["net_cash"]
+                self.assertIn("lease_liabilities", blocked["reason"])
+                self.assertEqual(blocked["components"][0]["missing_type"], "not_disclosed_confirmed")
+                self.assertTrue(any("실측이 막힌 이유" in w for w in c["factors"]["F6"]["warnings"]))
+
+    def test_other_companies_have_no_blocked_entry(self):
+        for c in self.results["companies"]:
+            if c["company_id"] in ("apple", "palantir"):
+                continue
+            with self.subTest(cid=c["company_id"]):
+                self.assertNotIn("unverified_blocked_by", c["factors"]["F6"].get("calc") or {})
 
 
 if __name__ == "__main__":

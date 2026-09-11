@@ -84,7 +84,9 @@ def main() -> int:
         nb = (pb or {}).get("inputs", {}).get("net_cash")
         na = pa["inputs"].get("net_cash")
         vb, va = (pb or {}).get("value"), pa.get("value")
-        state = "실측" if (pa.get("net_cash_definition") and na != nb) else "legacy 유지"
+        state = "실측" if (pa.get("net_cash_definition") and na != nb) else (
+            "실측(불변)" if abs((na or 0) - (nb or 0)) < 1 and cid not in ("apple", "palantir")
+            else "legacy 유지")
         print(f"  {cid:12} {(nb or 0)/1e9:>13,.1f}B {(na or 0)/1e9:>13,.1f}B "
               f"{(vb or 0):>9.3f} {(va or 0):>9.3f} {pa.get('score'):>+5d} {state:>10}")
 
@@ -97,7 +99,13 @@ def main() -> int:
         print(f"  {label}: " + ", ".join(f"{m} {n}개사" for m, n in sorted(tally.items())))
     left = sorted(c["company_id"] for c in after_doc["companies"]
                   if "net_cash" in ((c["factors"]["F6"].get("calc") or {}).get("unverified_inputs") or {}))
-    print(f"  남은 net_cash 미검증: {', '.join(left) or '없음'} — 등록하지 못한 3개사와 같아야 한다")
+    print(f"  남은 net_cash 미검증: {', '.join(left) or '없음'} — 등록하지 못한 2개사와 같아야 한다")
+    print()
+    print("  **왜 막혔는지가 결과에 남는가** (missing_type 이 엔진에 닿는지)")
+    for c in after_doc["companies"]:
+        blocked = ((c["factors"]["F6"].get("calc") or {}).get("unverified_blocked_by") or {}).get("net_cash")
+        if blocked:
+            print(f"    {c['company_id']:11} {blocked['reason']}")
 
     print("\n[4] 완주·해시")
     pop = after_doc["population"]
@@ -116,8 +124,10 @@ def main() -> int:
 
     print()
     print(bar)
-    ok = not changed and same and left == ["alibaba", "apple", "palantir"]
-    print(f"판정: {'점수 불변 · 승인 보존 · 미검증 잔여가 미등록 3개사와 일치' if ok else '확인 필요'}")
+    blocked_ok = all(((c["factors"]["F6"].get("calc") or {}).get("unverified_blocked_by") or {}).get("net_cash")
+                     for c in after_doc["companies"] if c["company_id"] in left)
+    ok = not changed and same and left == ["apple", "palantir"] and blocked_ok
+    print(f"판정: {'점수 불변 · 승인 보존 · 미검증 잔여 2개사에 결측 사유가 붙음' if ok else '확인 필요'}")
     return 0 if ok else 1
 
 
