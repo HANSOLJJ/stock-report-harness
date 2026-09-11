@@ -56,58 +56,61 @@ def review_is_pass(slug: str) -> bool:
     text = path.read_text(encoding='utf-8', errors='ignore')[:2000]
     return bool(re.search(r'^status:\s*pass\s*$', text, re.M)) and 'review_type: separate-session-4way' in text and 'review_execution: separate_subagent_sessions' in text
 
-def selected_image_exists(slug: str) -> bool:
-    def has_prohibited_generation_marker(value) -> bool:
-        terms = ('pillow', 'procedural', 'programmatic', 'svg', 'placeholder', 'blank')
-        if isinstance(value, str):
-            lowered = value.lower()
-            return any(term in lowered for term in terms)
-        if isinstance(value, dict):
-            return any(has_prohibited_generation_marker(child) for child in value.values())
-        if isinstance(value, list):
-            return any(has_prohibited_generation_marker(child) for child in value)
-        return False
-
-    manifest = root / 'output' / 'assets' / f'{slug}-image-manifest.json'
-    if not manifest.is_file():
-        return False
-    try:
-        manifest_payload = json.loads(manifest.read_text(encoding='utf-8'))
-    except Exception:
-        return False
-    if not isinstance(manifest_payload, dict):
-        return False
-    if manifest_payload.get('status') != 'complete':
-        return False
-    if manifest_payload.get('generation_method') != 'codex-cli-imagegen':
-        return False
-    if not str(manifest_payload.get('generated_with') or '').strip():
-        return False
-    if has_prohibited_generation_marker(manifest_payload):
-        return False
-    selected = root / 'output' / 'assets' / f'{slug}-selected-image.json'
-    if not selected.is_file():
-        return False
-    try:
-        payload = json.loads(selected.read_text(encoding='utf-8'))
-    except Exception:
-        return False
-    if not isinstance(payload, dict) or has_prohibited_generation_marker(payload):
-        return False
-    image = (
-        payload.get('image_path') or payload.get('selected_image') or payload.get('selectedImage')
-        or payload.get('image') or payload.get('path') or payload.get('file')
-        or payload.get('selected_path') or payload.get('selected_file')
-    )
-    if isinstance(image, str):
-        p = Path(image)
-        if not p.is_absolute():
-            candidates = [root / p, root / 'output' / p, root / 'output' / 'assets' / p]
-            if image.startswith('assets/'):
-                candidates.append(root / 'output' / p)
-            return any(candidate.is_file() for candidate in candidates)
-        return p.is_file()
-    return False
+# 2026-09-07: hero 이미지를 선택 사항으로 변경. Codex CLI를 쓸 수 없는 환경에서도 review/build가
+# 진행되도록 selected_image_exists()와 그 호출부를 비활성화함. complete 매니페스트의 출처 검증은
+# validate_report_contract.py가 계속 수행함. 원복이 필요하면 아래 주석을 해제하면 됨.
+# def selected_image_exists(slug: str) -> bool:
+#     def has_prohibited_generation_marker(value) -> bool:
+#         terms = ('pillow', 'procedural', 'programmatic', 'svg', 'placeholder', 'blank')
+#         if isinstance(value, str):
+#             lowered = value.lower()
+#             return any(term in lowered for term in terms)
+#         if isinstance(value, dict):
+#             return any(has_prohibited_generation_marker(child) for child in value.values())
+#         if isinstance(value, list):
+#             return any(has_prohibited_generation_marker(child) for child in value)
+#         return False
+#
+#     manifest = root / 'output' / 'assets' / f'{slug}-image-manifest.json'
+#     if not manifest.is_file():
+#         return False
+#     try:
+#         manifest_payload = json.loads(manifest.read_text(encoding='utf-8'))
+#     except Exception:
+#         return False
+#     if not isinstance(manifest_payload, dict):
+#         return False
+#     if manifest_payload.get('status') != 'complete':
+#         return False
+#     if manifest_payload.get('generation_method') != 'codex-cli-imagegen':
+#         return False
+#     if not str(manifest_payload.get('generated_with') or '').strip():
+#         return False
+#     if has_prohibited_generation_marker(manifest_payload):
+#         return False
+#     selected = root / 'output' / 'assets' / f'{slug}-selected-image.json'
+#     if not selected.is_file():
+#         return False
+#     try:
+#         payload = json.loads(selected.read_text(encoding='utf-8'))
+#     except Exception:
+#         return False
+#     if not isinstance(payload, dict) or has_prohibited_generation_marker(payload):
+#         return False
+#     image = (
+#         payload.get('image_path') or payload.get('selected_image') or payload.get('selectedImage')
+#         or payload.get('image') or payload.get('path') or payload.get('file')
+#         or payload.get('selected_path') or payload.get('selected_file')
+#     )
+#     if isinstance(image, str):
+#         p = Path(image)
+#         if not p.is_absolute():
+#             candidates = [root / p, root / 'output' / p, root / 'output' / 'assets' / p]
+#             if image.startswith('assets/'):
+#                 candidates.append(root / 'output' / p)
+#             return any(candidate.is_file() for candidate in candidates)
+#         return p.is_file()
+#     return False
 
 def required_for_path(path: str):
     path = path.replace('\\', '/')
@@ -156,6 +159,7 @@ elif tool == 'Bash':
         paths.append(f'output/{m.group(1)}.html')
 
 def report_type(slug: str) -> str:
+    # 2026-09-11 main 머지로 hero 분기가 사라져 현재 미사용. hero 요건이 되살아나면 다시 쓴다.
     # plan frontmatter의 report_type 으로 유형을 분기한다. 없으면 stock_report.
     plan = root / 'plan' / f'{slug}.md'
     if not plan.is_file():
@@ -173,15 +177,16 @@ for path in paths:
     if missing:
         problems.append(f'{path}: 선행 산출물 누락({", ".join(missing)})')
         continue
-    # ai_scorecard 는 hero 이미지·뉴스 요건이 없다(설계 지침 9절). review pass 요건은 두 유형 모두 유지한다.
-    scorecard = report_type(slug) == 'ai_scorecard'
-    if phase == 'review' and not scorecard and not selected_image_exists(slug):
-        problems.append(f'{path}: review 전 selected hero image 누락(output/assets/{slug}-selected-image.json)')
-    if phase == 'build':
-        if not scorecard and not selected_image_exists(slug):
-            problems.append(f'{path}: build 전 selected hero image 누락(output/assets/{slug}-selected-image.json)')
-        if not review_is_pass(slug):
-            problems.append(f'{path}: build 전 pass 상태의 separate-session-4way review 필요(reviews/{slug}.md)')
+    # 2026-09-07: hero 이미지 선택 사항 변경으로 review/build의 selected hero image 요구를 비활성화함.
+    # if phase == 'review' and not selected_image_exists(slug):
+    #     problems.append(f'{path}: review 전 selected hero image 누락(output/assets/{slug}-selected-image.json)')
+    # if phase == 'build':
+    #     if not selected_image_exists(slug):
+    #         problems.append(f'{path}: build 전 selected hero image 누락(output/assets/{slug}-selected-image.json)')
+    #     if not review_is_pass(slug):
+    #         problems.append(f'{path}: build 전 pass 상태의 separate-session-4way review 필요(reviews/{slug}.md)')
+    if phase == 'build' and not review_is_pass(slug):
+        problems.append(f'{path}: build 전 pass 상태의 separate-session-4way review 필요(reviews/{slug}.md)')
 
 if problems:
     reason = '파이프라인 순서(/plan → /research → /draft → /image → /review → /build)를 위반해 차단합니다. ' + '; '.join(problems[:6])

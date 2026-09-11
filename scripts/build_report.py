@@ -4,7 +4,8 @@
 The builder intentionally performs no research and adds no new market claims. It
 only renders the approved draft, refreshes the requested yfinance price chart,
 removes inline verification markers from the final body, inserts the selected
-hero image, and runs the same contract validator used by review/build gates.
+hero image when one exists (hero is optional), and runs the same contract
+validator used by review/build gates.
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ from report_contract_lib import (
     ROOT,
     artifact_paths,
     frontmatter_value,
+    hero_image_status,
     html_attr,
     html_text,
     parse_key_value_block,
@@ -32,14 +34,16 @@ from report_contract_lib import (
     read_markdown,
     rel,
     report_type_for,
-    selected_image_path,
+    # selected_image_path,  # 2026-09-07 hero 선택 사항 변경으로 hero_image_status()로 대체함
     strip_source_markers,
 )
 from validate_report_contract import print_result, validate_contract
 
 CHART_FENCE_RE = re.compile(r"```chart\s*\n(?P<body>.*?)\n```", re.DOTALL)
 STAT_CARD_RE = re.compile(r"::stat-card\s*\n(?P<body>.*?)\n::", re.DOTALL)
-SOURCE_MARKER_PREFIX_RE = re.compile(r"^\s*-\s+(?:\[(?:S|N|P)\d+\]\s*)+", re.MULTILINE)
+# SOURCE_MARKER_PREFIX_RE = re.compile(r"^\s*-\s+(?:\[(?:S|N|P)\d+\]\s*)+", re.MULTILINE)  # 2026-09-07 변경 전
+# 2026-09-07: report_contract_lib.SOURCE_MARKER_RE 와 같이 [H1] 표식도 References 항목 접두에서 제거함.
+SOURCE_MARKER_PREFIX_RE = re.compile(r"^\s*-\s+(?:\[(?:S|N|P|H)\d+\]\s*)+", re.MULTILINE)
 INITIAL_H1_RE = re.compile(r"^#(?!#)\s+.+?\s*$\n?", re.MULTILINE)
 H2_HTML_RE = re.compile(r"<h2>(?P<title>.*?)</h2>")
 DISCLAIMER_SECTION_RE = re.compile(
@@ -410,9 +414,17 @@ def build_report(slug: str, *, reuse_existing_price_chart: bool = False) -> tupl
     _plan_fm, _plan_body, _plan_raw, _plan_text = read_markdown(paths.plan)
     _research_fm, _research_body, _research_raw, _research_text = read_markdown(paths.research)
     draft_fm, draft_body, _draft_raw, _draft_text = read_markdown(paths.draft)
-    image_path, _image_payload = selected_image_path(slug)
-    if image_path is None or not image_path.is_file():
-        raise SystemExit(f"selected hero image missing for {slug}")
+    # 2026-09-07 hero 선택 사항 변경 전에는 selected hero가 없으면 빌드를 중단했음:
+    # image_path, _image_payload = selected_image_path(slug)
+    # if image_path is None or not image_path.is_file():
+    #     raise SystemExit(f"selected hero image missing for {slug}")
+    # Hero image is optional: a complete manifest must resolve to a real PNG,
+    # while a blocked/missing manifest builds the report without a hero card.
+    hero_status, image_path, hero_reason = hero_image_status(slug)
+    if hero_status == "complete" and image_path is None:
+        raise SystemExit(f"selected hero image missing for {slug}: {hero_reason}")
+    if image_path is None:
+        print(f"hero 이미지 없이 빌드 (선택 사항): {hero_reason}")
 
     ticker = frontmatter_value(draft_fm, "ticker")
     period_start = frontmatter_value(draft_fm, "period_start")
@@ -790,7 +802,7 @@ def render_html_document(
     draft_fm: dict[str, Any],
     body_html: str,
     toc: list[tuple[str, str]],
-    selected_image: Path,
+    selected_image: Path | None,
     chart_scripts: list[tuple[str, dict[str, Any]]],
 ) -> str:
     title = frontmatter_value(draft_fm, "title") or slug
@@ -805,7 +817,14 @@ def render_html_document(
     logo_from, logo_to = logo_gradient(ticker)
     hero = hero_price_summary(slug)
     change_class = "price-change price-change--down" if hero.get("tone") == "down" else "price-change"
-    hero_src = f"assets/{selected_image.name}"
+    # 2026-09-07 hero 선택 사항 변경 전에는 템플릿 안에 무조건 hero figure를 넣었음:
+    # hero_src = f"assets/{selected_image.name}"
+    # <figure class="hero-image"><img src="{html_attr(hero_src)}" alt="{html_attr(title)} hero image" loading="eager"></figure>
+    hero_figure = (
+        f'<figure class="hero-image"><img src="{html_attr(f"assets/{selected_image.name}")}" alt="{html_attr(title)} hero image" loading="eager"></figure>'
+        if selected_image is not None
+        else ""
+    )
     tags = extract_topic_tags(title, subtitle, body_html, ticker, period)
     tag_html = "".join(f'<span class="tag{" tag--blue" if is_blue else ""}">{html_text(label)}</span>' for label, is_blue in tags)
     scripts = "\n".join(
@@ -839,7 +858,7 @@ def render_html_document(
     <div class="price-block"><div class="price-now">{html_text(hero.get("price", "-"))}</div><div class="{html_attr(change_class)}"><span class="price-change__pill">{html_text(hero.get("change_pct", "-"))}</span><span>{html_text(hero.get("delta", "-"))}</span><span class="price-period">· {html_text(period)}</span></div></div>
     {f'<p class="subtitle-line">{html_text(subtitle)}</p>' if subtitle else ''}
     {f'<div class="tag-row">{tag_html}</div>' if tag_html else ''}
-    <figure class="hero-image"><img src="{html_attr(hero_src)}" alt="{html_attr(title)} hero image" loading="eager"></figure>
+    {hero_figure}
   </header>
   {body_html}
   <footer id="disclaimer" aria-label="투자 유의사항"><p>{html_text(DEFAULT_DISCLAIMER)}</p><p>작성일 {html_text(created_at or generated_at[:10])} · 분석 기간 {html_text(period_start)} ~ {html_text(period_end)}</p><p>Price data: yfinance ({html_text(ticker)}, daily)</p></footer>
@@ -874,11 +893,16 @@ def main(argv: list[str] | None = None) -> int:
     html_path, price_paths, image_path = build_report(args.slug, reuse_existing_price_chart=args.reuse_existing_price_chart)
     print("Build complete")
     print(f"HTML: {rel(html_path)}")
-    print("Price chart JSON:" if image_path is not None else "Generated files:")
+    # 라벨도 유형으로 가른다. hero 가 선택 사항이 된 뒤로 `image_path is not None` 은 유형 판별이
+    # 아니라 hero 유무만 말한다 — hero 없는 stock_report 가 가격 차트 JSON 을 "Generated files:" 로 찍었다.
+    print("Generated files:" if report_type_for(args.slug) == "ai_scorecard" else "Price chart JSON:")
     for path in price_paths:
         print(f"- {rel(path)}")
-    if image_path is not None:
-        print(f"Selected hero: {rel(image_path)}")
+    # print(f"Selected hero: {rel(image_path)}")  # 2026-09-07 hero 선택 사항 변경 전
+    # ai_scorecard 는 hero 이미지 계약 자체가 없다. hero 가 선택 사항이 된 뒤로는
+    # `image_path is not None` 이 유형 판별의 대리값으로 쓰이지 못한다 — stock_report 도 None 일 수 있다.
+    if report_type_for(args.slug) != "ai_scorecard":
+        print(f"Selected hero: {rel(image_path) if image_path else '없음 (hero 이미지 선택 사항, image manifest 미완료)'}")
     print(f"Preview: http://localhost:3000/{html_path.name}")
     return 0
 

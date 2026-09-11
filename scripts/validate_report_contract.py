@@ -24,6 +24,7 @@ from report_contract_lib import (
     frontmatter_value,
     has_required_section,
     has_source_markers,
+    hero_image_status,
     price_chart_blocks,
     read_markdown,
     rel,
@@ -34,6 +35,8 @@ from report_contract_lib import (
 )
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# Hero image is optional; this card is required only when a selected hero exists.
+HERO_CARD_RE = re.compile(r'<figure\s+class=["\']hero-image["\'][^>]*>\s*<img\s+', re.I | re.S)
 
 
 TOSS_HTML_CHECKS: tuple[tuple[str, re.Pattern[str]], ...] = (
@@ -65,10 +68,12 @@ TOSS_HTML_CHECKS: tuple[tuple[str, re.Pattern[str]], ...] = (
         "8px gray section divider",
         re.compile(r"\.divider\s*\{[^}]*height\s*:\s*8px[^}]*background\s*:\s*var\(--gray-50\)", re.I | re.S),
     ),
-    (
-        "Toss hero image card",
-        re.compile(r'<figure\s+class=["\']hero-image["\'][^>]*>\s*<img\s+', re.I | re.S),
-    ),
+    # 2026-09-07: hero 이미지 선택 사항 변경. 무조건 검사 목록에서 빼고, selected hero가 있을 때만
+    # _validate_html()에서 HERO_CARD_RE로 조건 검사함.
+    # (
+    #     "Toss hero image card",
+    #     re.compile(r'<figure\s+class=["\']hero-image["\'][^>]*>\s*<img\s+', re.I | re.S),
+    # ),
     (
         "Chart.js script",
         re.compile(r'<script\s+src=["\'][^"\']*chart\.js@4[^"\']*["\']', re.I),
@@ -231,38 +236,44 @@ def _validate_review(paths, review_fm: dict[str, Any], result: ValidationResult)
 
 
 def _validate_selected_image(slug: str, result: ValidationResult) -> None:
+    # Hero image is optional. A missing or non-complete (blocked) manifest means
+    # the report is built without a hero card. A complete manifest is validated strictly.
     paths = artifact_paths(slug)
     if not paths.image_manifest_json.is_file():
-        result.error(f"image manifest JSON 없음: {rel(paths.image_manifest_json)}")
-    else:
-        try:
-            manifest_payload = load_json(paths.image_manifest_json)
-        except Exception as exc:
-            result.error(f"image manifest JSON 파싱 실패: {rel(paths.image_manifest_json)}: {exc}")
-        else:
-            if not isinstance(manifest_payload, dict):
-                result.error(f"image manifest JSON은 object여야 함: {rel(paths.image_manifest_json)}")
-            else:
-                status = manifest_payload.get("status")
-                if status != "complete":
-                    reason = manifest_payload.get("blocked_reason") or f"status={status!r}"
-                    result.error(f"image manifest가 complete 상태가 아님: {rel(paths.image_manifest_json)}: {reason}")
-                else:
-                    result.check("image manifest status complete")
-                generation_method = str(manifest_payload.get("generation_method") or "").strip()
-                if generation_method != "codex-cli-imagegen":
-                    result.error(
-                        f"image manifest `generation_method`는 codex-cli-imagegen 이어야 함: "
-                        f"{generation_method!r} ({rel(paths.image_manifest_json)})"
-                    )
-                if not str(manifest_payload.get("generated_with") or "").strip():
-                    result.error(f"image manifest `generated_with` 누락: {rel(paths.image_manifest_json)}")
-                prohibited_hits = prohibited_image_generation_hits(manifest_payload)
-                if prohibited_hits:
-                    result.error(
-                        f"image manifest에 금지된 절차적 이미지 생성 흔적: "
-                        f"{'; '.join(prohibited_hits[:5])} ({rel(paths.image_manifest_json)})"
-                    )
+        # 2026-09-07 hero 선택 사항 변경 전에는 error였음:
+        # result.error(f"image manifest JSON 없음: {rel(paths.image_manifest_json)}")
+        result.warn(f"hero 이미지 없음 (선택 사항): image manifest 없음 {rel(paths.image_manifest_json)}; hero 카드 없이 진행")
+        return
+    try:
+        manifest_payload = load_json(paths.image_manifest_json)
+    except Exception as exc:
+        result.error(f"image manifest JSON 파싱 실패: {rel(paths.image_manifest_json)}: {exc}")
+        return
+    if not isinstance(manifest_payload, dict):
+        result.error(f"image manifest JSON은 object여야 함: {rel(paths.image_manifest_json)}")
+        return
+    status = manifest_payload.get("status")
+    if status != "complete":
+        reason = manifest_payload.get("blocked_reason") or f"status={status!r}"
+        # 2026-09-07 hero 선택 사항 변경 전에는 error였음:
+        # result.error(f"image manifest가 complete 상태가 아님: {rel(paths.image_manifest_json)}: {reason}")
+        result.warn(f"hero 이미지 없음 (선택 사항): image manifest {status!r}: {reason}; hero 카드 없이 진행")
+        return
+    result.check("image manifest status complete")
+    generation_method = str(manifest_payload.get("generation_method") or "").strip()
+    if generation_method != "codex-cli-imagegen":
+        result.error(
+            f"image manifest `generation_method`는 codex-cli-imagegen 이어야 함: "
+            f"{generation_method!r} ({rel(paths.image_manifest_json)})"
+        )
+    if not str(manifest_payload.get("generated_with") or "").strip():
+        result.error(f"image manifest `generated_with` 누락: {rel(paths.image_manifest_json)}")
+    prohibited_hits = prohibited_image_generation_hits(manifest_payload)
+    if prohibited_hits:
+        result.error(
+            f"image manifest에 금지된 절차적 이미지 생성 흔적: "
+            f"{'; '.join(prohibited_hits[:5])} ({rel(paths.image_manifest_json)})"
+        )
 
     if not paths.selected_image_json.is_file():
         result.error(f"selected-image JSON 없음: {rel(paths.selected_image_json)}")
@@ -374,11 +385,20 @@ def _validate_html(slug: str, require_html: bool, result: ValidationResult) -> N
     disclaimer_terms = ("투자 조언", "투자 권유", "투자 자문", "교육용", "교육 및", "매수", "매도")
     if not any(term in text for term in disclaimer_terms):
         result.error(f"최종 HTML footer 투자 유의 문구를 찾을 수 없음: {rel(paths.html)}")
-    image_path, _ = selected_image_path(slug)
-    if image_path and image_path.is_file():
-        image_name = image_path.name
-        if image_name not in text:
-            result.error(f"최종 HTML에 selected hero 이미지 참조 없음: {image_name}")
+    # 2026-09-07 hero 선택 사항 변경 전 (selected image가 있으면 무조건 HTML 참조를 요구했음):
+    # image_path, _ = selected_image_path(slug)
+    # if image_path and image_path.is_file():
+    #     image_name = image_path.name
+    #     if image_name not in text:
+    #         result.error(f"최종 HTML에 selected hero 이미지 참조 없음: {image_name}")
+    hero_status, hero_path, _hero_reason = hero_image_status(slug)
+    if hero_status == "complete" and hero_path is not None:
+        if hero_path.name not in text:
+            result.error(f"최종 HTML에 selected hero 이미지 참조 없음: {hero_path.name}")
+        if not HERO_CARD_RE.search(text):
+            result.error(f"최종 HTML에 Toss hero image card 없음: {rel(paths.html)}")
+    else:
+        result.check("hero image optional: HTML built without hero card")
     missing_toss_checks = [label for label, pattern in TOSS_HTML_CHECKS if not pattern.search(text)]
     if missing_toss_checks:
         result.error(
