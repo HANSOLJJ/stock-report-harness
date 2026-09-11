@@ -1,0 +1,593 @@
+{
+ "alphabet": {
+  "factor": "F9",
+  "score": -1,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "alphabet.F9",
+  "observation_ids": [
+   "alphabet.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_deteriorating",
+     "fcf_ttm": 53300000000.0,
+     "score": -1
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "deteriorating",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "alphabet.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "amazon": {
+  "factor": "F9",
+  "score": null,
+  "status": "needs_judgment",
+  "basis": "computed",
+  "judgment_id": "amazon.F9",
+  "observation_ids": [
+   "amazon.cash.v15",
+   "amazon.contracted_revenue.v15",
+   "amazon.fcf_ttm.v15",
+   "amazon.offbalance_B.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "negative",
+     "fcf_ttm": -11600000000.0,
+     "score": -2
+    },
+    {
+     "gate": "G3",
+     "runway_years": 10.60344827586207,
+     "buffer": 123000000000.0,
+     "annual_burn": 11600000000.0,
+     "step": 0,
+     "score": -2
+    },
+    {
+     "gate": "G4",
+     "result": "undetermined",
+     "reason": "coverage_comparable 미확인",
+     "contracted_revenue": null,
+     "offbalance_B": 106000000000.0
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "unknown",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "amazon.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+   "amazon.cash.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+   "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)",
+   "amazon.offbalance_B.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": {
+   "kind": "judgment",
+   "message": "G4: 계약 수입과 B종 약정이 같은 범위·기간인지(coverage_comparable) 검토 입력 필요"
+  }
+ },
+ "meta": {
+  "factor": "F9",
+  "score": -1,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "meta.F9",
+  "observation_ids": [
+   "meta.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_deteriorating",
+     "fcf_ttm": 41000000000.0,
+     "score": -1
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "deteriorating",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "meta.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "microsoft": {
+  "factor": "F9",
+  "score": 0,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "microsoft.F9",
+  "observation_ids": [
+   "microsoft.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_stable",
+     "fcf_ttm": 67000000000.0,
+     "score": 0
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "stable",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "microsoft.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "tsmc": {
+  "factor": "F9",
+  "score": 0,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "tsmc.F9",
+  "observation_ids": [
+   "tsmc.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_stable",
+     "fcf_ttm": 36000000000.0,
+     "score": 0
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "stable",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "tsmc.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "alibaba": {
+  "factor": "F9",
+  "score": null,
+  "status": "pending_data",
+  "basis": "computed",
+  "judgment_id": "alibaba.F9",
+  "observation_ids": [],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pending",
+     "reason": "TTM 영업손익·손실률 관측 없음(단일 분기·조정 손익으로 대체하지 않음, C-20)"
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "unknown",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "unknown"
+   }
+  },
+  "warnings": [],
+  "pending": {
+   "kind": "data",
+   "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
+  }
+ },
+ "anthropic": {
+  "factor": "F9",
+  "score": null,
+  "status": "pending_data",
+  "basis": "computed",
+  "judgment_id": "anthropic.F9",
+  "observation_ids": [],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pending",
+     "reason": "TTM 영업손익·손실률 관측 없음(단일 분기·조정 손익으로 대체하지 않음, C-20)"
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "unknown",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "no",
+    "operating_result_reviewed": "unknown",
+    "fcf_not_disclosed_reason": "anthropic.fcf_not_disclosed"
+   }
+  },
+  "warnings": [],
+  "pending": {
+   "kind": "data",
+   "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
+  }
+ },
+ "apple": {
+  "factor": "F9",
+  "score": 0,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "apple.F9",
+  "observation_ids": [
+   "apple.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_stable",
+     "fcf_ttm": 136699999999.99998,
+     "score": 0
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "stable",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "apple.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "nvidia": {
+  "factor": "F9",
+  "score": 0,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "nvidia.F9",
+  "observation_ids": [
+   "nvidia.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_stable",
+     "fcf_ttm": 127000000000.0,
+     "score": 0
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "stable",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "nvidia.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "palantir": {
+  "factor": "F9",
+  "score": 0,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "palantir.F9",
+  "observation_ids": [
+   "palantir.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_stable",
+     "fcf_ttm": 3400000000.0,
+     "score": 0
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "stable",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "palantir.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "spacex-xai": {
+  "factor": "F9",
+  "score": null,
+  "status": "needs_rule_decision",
+  "basis": "computed",
+  "judgment_id": "spacex-xai.F9",
+  "observation_ids": [
+   "spacex-xai.operating_margin_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "fail",
+     "operating_margin_ttm": -0.149,
+     "band": "미결(C-06)"
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "unknown",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "loss"
+   }
+  },
+  "warnings": [
+   "spacex-xai.operating_margin_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": {
+   "kind": "rule",
+   "message": "영업손실률 구간 경계(-10%·-30%)가 미확정이라 G1 점수 보류",
+   "decision_id": "C-06"
+  }
+ },
+ "tesla": {
+  "factor": "F9",
+  "score": -1,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "tesla.F9",
+  "observation_ids": [
+   "tesla.fcf_ttm.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "positive_deteriorating",
+     "fcf_ttm": 5800000000.0,
+     "score": -1
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "deteriorating",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "unknown",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "tesla.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "oracle": {
+  "factor": "F9",
+  "score": -3,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "oracle.F9",
+  "observation_ids": [
+   "oracle.cash.v15",
+   "oracle.contracted_revenue.v15",
+   "oracle.fcf_ttm.v15",
+   "oracle.offbalance_B.v15"
+  ],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "pass",
+     "operating_margin_ttm": null,
+     "basis": "operating_result_reviewed=profit"
+    },
+    {
+     "gate": "G2",
+     "result": "negative",
+     "fcf_ttm": -23700000000.0,
+     "score": -2
+    },
+    {
+     "gate": "G3",
+     "runway_years": 1.3459915611814346,
+     "buffer": 31900000000.0,
+     "annual_burn": 23700000000.0,
+     "step": -1,
+     "score": -3
+    },
+    {
+     "gate": "G4",
+     "result": "computed",
+     "coverage": 2.552,
+     "contracted_revenue": 638000000000.0,
+     "offbalance_B": 250000000000.0,
+     "step": 0,
+     "score": -3
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "unknown",
+    "bep_retreat": "no",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "yes",
+    "operating_result_reviewed": "profit"
+   }
+  },
+  "warnings": [
+   "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+   "oracle.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+   "oracle.cash.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+   "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)",
+   "oracle.contracted_revenue.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+   "oracle.offbalance_B.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+  ],
+  "pending": null
+ },
+ "openai": {
+  "factor": "F9",
+  "score": -5,
+  "status": "ok",
+  "basis": "computed",
+  "judgment_id": "openai.F9",
+  "observation_ids": [],
+  "calc": {
+   "path": [
+    {
+     "gate": "G1",
+     "result": "fail",
+     "operating_margin_ttm": null,
+     "band": "BEP 후퇴 → -5",
+     "score": -5
+    },
+    {
+     "gate": "G1",
+     "adjust": "방향 완화 판정 불가 → 유지"
+    },
+    {
+     "gate": "G3/G4",
+     "result": "skipped",
+     "reason": "G1 점수가 이미 하한(-5)이라 추가 감점 불가"
+    }
+   ],
+   "inputs": {
+    "fcf_trend": "unknown",
+    "bep_retreat": "yes",
+    "buffer_erosion": "no",
+    "direction_A": "unknown",
+    "direction_B": "unknown",
+    "coverage_comparable": "no",
+    "operating_result_reviewed": "loss",
+    "fcf_not_disclosed_reason": "openai.fcf_not_disclosed"
+   },
+   "gate1_fail": true
+  },
+  "warnings": [
+   "C-06: BEP 후퇴 -5 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)"
+  ],
+  "pending": null
+ }
+}
