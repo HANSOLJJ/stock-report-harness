@@ -66,6 +66,8 @@ NTM 은 "이 문서에 없다까지만" 적고 `uncertain` 으로 뒀다. **기�
 
 > "Practical expedients and exemptions — The Company applies the practical expedient **to not disclose the value of unsatisfied performance obligations** for contracts with an original expected duration of one year or less and contracts for which revenue is recognized at the amount to which the Company has the right to invoice for services performed."
 
+> **정정(2026-09-11).** 주석 번호는 `2(t)` 가 아니라 **`2(g) Revenue recognition`** 이다. `2(t)` 는 `Equity securities and other investments` 로 무관하다. C-13 표기를 문언만 확인하고 위치를 대조하지 않은 채 옮겨 적었다. worker `OBS-REG-25` 가 잡았다.
+
 **공시하지 않겠다고 회사가 명시적으로 선언한 회계정책이다.** 이것은 "이 문서에 없다" 와 다르다. **찾아도 없을 것이 선언돼 있다.** `not_disclosed_by_company` 가 맞다.
 
 ### 다만 BABA 미개시 리스는 한 칸 과하다
