@@ -81,6 +81,26 @@
       "sha256": "66f5eb1c036515728219ec6983e6d74be34201eb5abbeb4d5120b0aa5dd5ff9f",
       "conflict_of_interest": null,
       "note": "원문 보존 C-13 HANSOLJJ/C-13:validation/f6-avail-15b/_raw/CIK0001577552_BABA.json. 신규 네트워크 호출 없음"
+    },
+    {
+      "source_id": "SRC-SEC-FACTS-F6",
+      "title": "SEC XBRL companyfacts 12개사 (F6 TTM 입력 재구성)",
+      "publisher": "SEC EDGAR",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/",
+      "accessed_at": "2026-09-10",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "원문 보존 validation/f6-avail-15/_raw/*.companyfacts.json (2026-09-10 수집). 이번 과제에서 신규 호출 없음. 재구성 절차는 validation/f6-spec-18/collect_ttm.py"
+    },
+    {
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "title": "TSMC Form 20-F (FY2025, 2025-12-31) — 연결손익계산서 F-6 · 환율 Note 3 (F-13)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+      "accessed_at": "2026-09-11",
+      "sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
+      "conflict_of_interest": null,
+      "note": "접수번호 0001628280-26-025362(2026-04-16). **companyfacts 미등재 우회 건**이다 — F6-FX-16 3조건 충족. 원문 보존 C-13 f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm"
     }
   ]
 }

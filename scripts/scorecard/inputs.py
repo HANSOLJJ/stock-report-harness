@@ -6,8 +6,22 @@ from typing import Any
 USABLE_STATUSES = ("verified", "legacy_unverified")
 
 
+def recency_key(obs: dict[str, Any]) -> str:
+    """관측을 **언제 잡았는가**. 자료가 **언제 기준인가**(`as_of`)와 다른 축이다 (F6-REG-28).
+
+    두 뜻이 `as_of` 한 필드에 얹혀 있었다. 승계 관측에서는 기준선 날짜였고 새 관측에서는
+    접근일이었다. 그래서 **값이 없는 교체 관측**이 문제가 됐다 — 등급이 0 이라 `as_of` 로만
+    승계를 이겨야 하는데, 거기에 공시 기준일(더 이른 날짜)을 적으면 승계가 이긴다.
+    `missing_type` 처럼 라벨만 바꾸는 교체에서 새 라벨이 엔진에 닿지 않는다.
+
+    `observed_at` 이 있으면 그것이 최신성 키이고, 없으면 `as_of` 로 물러선다. 승계 관측에는
+    이 필드가 없으므로 과거 실행의 선택 결과가 바뀌지 않는다.
+    """
+    return obs.get("observed_at") or obs["as_of"]
+
+
 class ObsLookup:
-    """기업별 관측을 지표로 조회한다. 같은 지표가 여럿이면 verified 를 우선하고, 그다음 as_of 최신을 고른다."""
+    """기업별 관측을 지표로 조회한다. 같은 지표가 여럿이면 verified 를 우선하고, 그다음 관측 시점이 최신인 것을 고른다."""
 
     def __init__(self, observations: list[dict[str, Any]]):
         self._by_company: dict[str, dict[str, list[dict[str, Any]]]] = {}
@@ -23,7 +37,7 @@ class ObsLookup:
             return None
         def key(obs: dict[str, Any]) -> tuple[int, str]:
             rank = 2 if obs["status"] == "verified" else 1 if obs["status"] == "legacy_unverified" else 0
-            return rank, obs["as_of"]
+            return rank, recency_key(obs)
         return sorted(items, key=key, reverse=True)[0]
 
     def number(self, company_id: str, metric: str) -> tuple[float | None, dict[str, Any] | None]:

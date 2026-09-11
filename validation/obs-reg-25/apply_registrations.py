@@ -16,11 +16,12 @@ USD 로 넣고 원화폐·원금액·환율·환율 출처를 `basis` 에 남긴
 20-F 가 "RMB6.8980 to US$1.00, 2026-03-31, 연준 H.10" 이라고 문서 안에 적어 두었고, 같은 문서가
 자본약정 RMB54,136M 을 US$7,848M 으로 환산해 두어 **환산을 문서 자체로 검산할 수 있다.**
 
-**셋. `as_of` 는 기준일이 아니라 관측 시점이다.**
-`ObsLookup.get()` 은 `(status 등급, as_of)` 로 정렬해 하나를 고른다 — `as_of` 는 **최신성 키**다.
-여기에 공시 기준일(2026-06-30 등)을 넣었더니 승계 관측(2026-09-02)이 더 최신으로 뽑혀
-`alibaba.contracted_revenue` 의 새 `missing_type` 이 엔진에 닿지 않았다(실제로 한 번 겪었다).
-그래서 `as_of` 는 **원문을 연 날(2026-09-11)** 로 두고 공시 기준일은 `basis.measured_as_of` 에 적는다.
+**셋. 자료 기준일과 관측 시점을 각자의 필드에 둔다.**
+`ObsLookup.get()` 은 `(status 등급, 최신성)` 으로 하나를 고른다. 그 최신성 키가 `as_of` 하나에
+얹혀 있어서, 여기에 공시 기준일(2026-06-30 등)을 넣었더니 승계 관측(2026-09-02)이 더 최신으로
+뽑혀 `alibaba.contracted_revenue` 의 새 `missing_type` 이 엔진에 닿지 않았다(실제로 한 번 겪었다).
+처음에는 `as_of` 에 접근일을 넣어 피했으나 그것은 한 필드에 두 뜻을 얹은 채로 두는 것이었다.
+**F6-REG-28 에서 `observed_at` 을 분리했다** — `as_of` 는 자료 기준일, `observed_at` 은 관측 시점이다.
 자료 자체는 전부 정보 컷오프(2026-09-02) 이전에 접수된 것이다(10-Q 2026-08-04 · 20-F 2026-05-20 · S-1/A 2026-06-03).
 
 **넷. 기존 관측을 지우지 않는다.**
@@ -42,7 +43,7 @@ ROOT = HERE.parent.parent
 RUN_ID = "ai-scorecard-2026-09-obsreg"
 RUN = ROOT / "scorecard" / "runs" / RUN_ID
 
-FILED = "2026-09-11"          # 우리가 원문을 열어 확인한 날
+FILED = "2026-09-11"          # 우리가 원문을 열어 확인한 날 — 관측 시점(observed_at)
 CNY_PER_USD = 6.8980          # 20-F "Exchange Rate Information" 선언값(2026-03-31, 연준 H.10)
 
 # ------------------------------------------------------------------ 출처
@@ -86,8 +87,8 @@ BABA_OFFB_USD = 36_851_000_000          # 254,198 / 6.8980 = 36,850.97 → 백�
 NEW_OBS = [
     # ---------- SPCX
     {"observation_id": "spacex-xai.contracted_revenue.obsreg25", "company_id": "spacex-xai",
-     "metric": "contracted_revenue", "value": 47_461_000_000.0, "unit": "USD", "as_of": FILED,
-     "kind": "actual", "source_id": "SRC-SEC-SPCX-10Q-2026Q2", "status": "verified",
+     "metric": "contracted_revenue", "value": 47_461_000_000.0, "unit": "USD", "as_of": "2026-06-30",
+     "observed_at": FILED, "kind": "actual", "source_id": "SRC-SEC-SPCX-10Q-2026Q2", "status": "verified",
      "basis": {"measured_as_of": "2026-06-30",
                "statement": "Backlog totaled $ 47,461 million as of June 30, 2026",
                "location": "10-Q Note 3 - Revenue (p.13)",
@@ -98,8 +99,8 @@ NEW_OBS = [
      "raw": "Backlog $47,461M (2026-06-30)",
      "note": "OBS-REG-25. 승계 관측 spacex-xai.contracted_revenue.v15($47.5B, legacy_unverified)를 대체한다 — 반올림값이 아니라 원문 수치다"},
     {"observation_id": "spacex-xai.offbalance_B.obsreg25", "company_id": "spacex-xai",
-     "metric": "offbalance_B", "value": 29_582_000_000.0, "unit": "USD", "as_of": FILED,
-     "kind": "derived", "source_id": "SRC-SEC-SPCX-10Q-2026Q2", "status": "verified",
+     "metric": "offbalance_B", "value": 29_582_000_000.0, "unit": "USD", "as_of": "2026-06-30",
+     "observed_at": FILED, "kind": "derived", "source_id": "SRC-SEC-SPCX-10Q-2026Q2", "status": "verified",
      "basis": {"measured_as_of": "2026-06-30", "aggregation": "sum_of_components", "mixed_as_of": True,
                "components": [
                    {"label": "미개시 운용리스", "value": 1_627_000_000, "as_of": "2025-12-31",
@@ -119,8 +120,8 @@ NEW_OBS = [
              "관측을 둘로 쪼개지 않은 이유는 ObsLookup 이 지표당 값을 하나만 돌려줘 한쪽이 조용히 버려지기 때문이다"},
     # ---------- AMZN
     {"observation_id": "amazon.contracted_revenue.obsreg25", "company_id": "amazon",
-     "metric": "contracted_revenue", "value": 496_000_000_000.0, "unit": "USD", "as_of": FILED,
-     "kind": "actual", "source_id": "SRC-SEC-AMZN-10Q-2026Q2", "status": "verified",
+     "metric": "contracted_revenue", "value": 496_000_000_000.0, "unit": "USD", "as_of": "2026-06-30",
+     "observed_at": FILED, "kind": "actual", "source_id": "SRC-SEC-AMZN-10Q-2026Q2", "status": "verified",
      "basis": {"measured_as_of": "2026-06-30",
                "statement": "those commitments not yet recognized were approximately $ 496 billion as of June 30, 2026",
                "location": "10-Q Note 1 — ACCOUNTING POLICIES AND SUPPLEMENTAL DISCLOSURES",
@@ -133,8 +134,8 @@ NEW_OBS = [
      "note": "OBS-REG-25. 승계 관측 amazon.contracted_revenue.v15(parse_failed)를 대체한다. "
              "**parse_failed 는 정직한 라벨이었다** — XBRL 전용 파서로는 구조적으로 못 읽는다"},
     {"observation_id": "amazon.offbalance_B.obsreg25", "company_id": "amazon",
-     "metric": "offbalance_B", "value": 267_279_000_000.0, "unit": "USD", "as_of": FILED,
-     "kind": "derived", "source_id": "SRC-SEC-AMZN-10Q-2026Q2", "status": "verified",
+     "metric": "offbalance_B", "value": 267_279_000_000.0, "unit": "USD", "as_of": "2026-06-30",
+     "observed_at": FILED, "kind": "derived", "source_id": "SRC-SEC-AMZN-10Q-2026Q2", "status": "verified",
      "basis": {"measured_as_of": "2026-06-30", "aggregation": "sum_of_components", "mixed_as_of": False,
                "location": "10-Q Commitments 표 (2026-06-30)",
                "components": [
@@ -157,8 +158,8 @@ NEW_OBS = [
              "**106,000 은 2026Q2 약정표의 어느 행과도 일치하지 않는다** — 역산해 맞추지 않고 실측값으로 교체했다"},
     # ---------- BABA
     {"observation_id": "alibaba.offbalance_B.obsreg25", "company_id": "alibaba",
-     "metric": "offbalance_B", "value": float(BABA_OFFB_USD), "unit": "USD", "as_of": FILED,
-     "kind": "derived", "source_id": "SRC-SEC-BABA-20F-FY2026", "status": "verified",
+     "metric": "offbalance_B", "value": float(BABA_OFFB_USD), "unit": "USD", "as_of": "2026-03-31",
+     "observed_at": FILED, "kind": "derived", "source_id": "SRC-SEC-BABA-20F-FY2026", "status": "verified",
      "basis": {"measured_as_of": "2026-03-31", "aggregation": "sum_of_components", "mixed_as_of": False,
                "original_currency": "CNY", "original_value": BABA_OFFB_CNY,
                "fx_rate": CNY_PER_USD, "fx_quote": "CNY per USD", "fx_rate_as_of": "2026-03-31",
@@ -193,8 +194,8 @@ NEW_OBS = [
              "20-F 가 스스로 선언한 환율로 환산하고 원화폐·원금액·환율·환율 출처를 basis 에 남겼다. "
              "외부 환율 출처를 쓰지 않았다 — 환산 근거가 문서 안에 있고 문서 자체로 검산된다"},
     {"observation_id": "alibaba.contracted_revenue.obsreg25", "company_id": "alibaba",
-     "metric": "contracted_revenue", "value": None, "unit": "USD", "as_of": FILED,
-     "kind": "actual", "source_id": "SRC-SEC-BABA-20F-FY2026", "status": "not_disclosed",
+     "metric": "contracted_revenue", "value": None, "unit": "USD", "as_of": "2026-03-31",
+     "observed_at": FILED, "kind": "actual", "source_id": "SRC-SEC-BABA-20F-FY2026", "status": "not_disclosed",
      "missing_type": "not_disclosed_confirmed",
      "basis": {"measured_as_of": "2026-03-31",
                "statement": "The Company applies the practical expedient to not disclose the value of "
@@ -213,8 +214,8 @@ NEW_OBS = [
              "'이 문서에 없다' 와 다르다 — 찾아도 없을 것이 선언돼 있다. C-16 의 유일한 대상이다"},
     # ---------- alibaba FY2026 연간 영업손익 (G1-TTM-26)
     {"observation_id": "alibaba.revenue_ttm.obsreg25", "company_id": "alibaba",
-     "metric": "revenue_ttm", "value": 148_401_000_000.0, "unit": "USD", "as_of": FILED,
-     "kind": "actual", "source_id": "SRC-SEC-BABA-FACTS", "status": "verified",
+     "metric": "revenue_ttm", "value": 148_401_000_000.0, "unit": "USD", "as_of": "2026-03-31",
+     "observed_at": FILED, "kind": "actual", "source_id": "SRC-SEC-BABA-FACTS", "status": "verified",
      "period": {"start": "2025-04-01", "end": "2026-03-31"},
      "basis": {"measured_as_of": "2026-03-31", "period_basis": "annual",
                "why_not_ttm": "FY2026 회계연도 전체다. TTM 이 아니다 — metric 이름이 _ttm 인 것은 "
@@ -228,8 +229,8 @@ NEW_OBS = [
      "note": "OBS-REG-25 / G1-TTM-26. **연간 기준이다.** F6 P4 가 기간 단위 TTM 아님으로 한 칸 내린다. "
              "같은 한계를 F9 에서 또 세지 않는다"},
     {"observation_id": "alibaba.operating_income_ttm.obsreg25", "company_id": "alibaba",
-     "metric": "operating_income_ttm", "value": 7_270_000_000.0, "unit": "USD", "as_of": FILED,
-     "kind": "actual", "source_id": "SRC-SEC-BABA-FACTS", "status": "verified",
+     "metric": "operating_income_ttm", "value": 7_270_000_000.0, "unit": "USD", "as_of": "2026-03-31",
+     "observed_at": FILED, "kind": "actual", "source_id": "SRC-SEC-BABA-FACTS", "status": "verified",
      "period": {"start": "2025-04-01", "end": "2026-03-31"},
      "basis": {"measured_as_of": "2026-03-31", "period_basis": "annual",
                "original_currency": "CNY", "original_value": 50_150_000_000,
@@ -240,7 +241,7 @@ NEW_OBS = [
      "note": "OBS-REG-25 / G1-TTM-26. 연간 기준."},
     {"observation_id": "alibaba.operating_margin_ttm.obsreg25", "company_id": "alibaba",
      "metric": "operating_margin_ttm", "value": round(50_150 / 1_023_670, 6), "unit": "ratio",
-     "as_of": FILED, "kind": "derived", "source_id": "SRC-SEC-BABA-FACTS", "status": "verified",
+     "as_of": "2026-03-31", "observed_at": FILED, "kind": "derived", "source_id": "SRC-SEC-BABA-FACTS", "status": "verified",
      "period": {"start": "2025-04-01", "end": "2026-03-31"},
      "basis": {"measured_as_of": "2026-03-31", "period_basis": "annual",
                "formula": "OperatingIncomeLoss / Revenues (같은 기간·같은 통화)",

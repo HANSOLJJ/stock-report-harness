@@ -426,8 +426,15 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
             item,
             ["observation_id", "company_id", "metric", "value", "unit", "as_of", "kind", "source_id", "status"],
             where,
-            optional=["period", "basis", "raw", "note", "missing_type"],
+            optional=["period", "basis", "raw", "note", "missing_type", "observed_at"],
         )
+        # as_of 는 **자료 기준일**이고 observed_at 은 **관측 시점**이다. 두 뜻이 한 필드에 얹혀 있었고
+        # 그 결과 값 없는 교체 관측이 승계 관측에 밀렸다 (F6-REG-28). 최신성 판정은 inputs.recency_key 가 한다.
+        if "observed_at" in item:
+            _expect_date(item["observed_at"], f"{where}.observed_at")
+            _require(item["observed_at"] >= item["as_of"],
+                     f"{where}: observed_at({item['observed_at']}) 이 as_of({item['as_of']}) 보다 앞섬 — "
+                     f"자료 기준일보다 먼저 관측할 수는 없다")
         if "missing_type" in item:
             _require(item["missing_type"] in MISSING_TYPES,
                      f"{where}: missing_type 는 {sorted(MISSING_TYPES)} 중 하나 ({item['missing_type']!r})")

@@ -408,7 +408,21 @@
         "decided_at": "2026-09-11",
         "rule": "TTM 창의 끝점은 복원 Q4 를 포함한 최신 확보 분기다. 가장 최신의 완결된 12개월을 쓴다.",
         "why_not_latest_tagged_quarter": "끝점을 '직접 태깅된 최신 분기'로 두면 회계 Q4 가 막 닫힌 회사에서 구조적으로 3개월 뒤처진다. 10-K 가 나와 FY 가 공시됐는데도 그 분기를 버리기 때문이다. ORCL 은 FY2026(2026-05-31)이 이미 공시됐는데 최신 태깅 분기는 2026-02-28 이고, 그 차이가 성장률 +17.35% 대 +14.87% 로 밴드 한 칸을 가른다. MSFT 도 같은 구조(+17.79% 대 +17.87%)이나 밴드를 넘지 않아 점수가 갈리지 않았을 뿐이다. 우연히 안 걸린 것을 규약의 근거로 삼지 않는다.",
-        "verification": "복원 Q4 를 포함한 4분기 합이 같은 기간 FY 태깅값과 일치하면 그 TTM 은 복원값이 아니라 공시값 자체다. ORCL 67,357,000,000 이 그 사례다. 수집기는 이 일치를 매번 확인해 근거로 남긴다."
+        "verification": "복원 Q4 를 포함한 4분기 합이 같은 기간 FY 태깅값과 일치하면 그 TTM 은 복원값이 아니라 공시값 자체다. ORCL 67,357,000,000 이 그 사례다. 수집기는 이 일치를 매번 확인해 근거로 남긴다.",
+        "restatement_generation": {
+          "rule": "FY - (Q1+Q2+Q3) 로 Q4 를 복원하는 것은 네 성분이 **같은 회계기준·같은 재작성 세대**에서 왔을 때만 유효하다. 각 성분의 accession 을 관측 근거에 보존하고, 성분이 서로 다른 세대에 걸치면 복원하지 않고 보류한다.",
+          "generation_key": [
+            "restated",
+            "tag_values_agree_on_overlap"
+          ],
+          "on_mixed": "hold",
+          "decided_at": "2026-09-11",
+          "why": "MSFT FY2016(2015-07-01~2016-06-30) 이 그 사례다. companyfacts 에 같은 기간 매출이 두 값으로 있다. us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax 91,154,000,000 은 accession 0001564590-18-019062 즉 FY2018 10-K 에서 온 ASC 606 재작성치이고, us-gaap:SalesRevenueNet 85,320,000,000 은 accession 0001193125-16-662209 즉 FY2016 10-K 의 원래 ASC 605 공시다. 둘의 차가 5,834,000,000(6.84%) 이다. 재작성 FY 에서 원래 기준의 9개월 누계 64,706,000,000 을 빼면 Q4 가 26,448,000,000 로 나오는데 같은 세대끼리 빼면 20,614,000,000 이다. 오차 5,834,000,000, 28.3% 다. 회계기준이 다른 두 수를 뺀 결과이고 어느 분기에도 존재한 적 없는 값이다.",
+          "verification": "collect_ttm.py 가 복원 때마다 네 성분의 accession·tag 를 모아 rules.f6_q4_restatement_check() 에 넘긴다. 섞이면 그 FY 의 Q4 를 만들지 않고 사유를 남긴다.",
+          "note": "why_not_latest_tagged_quarter 가 ORCL 사례를 근거로 끝점을 정한 것과 같은 형태다. 규약은 사례에서 나오고 사례는 자료에 남는다.",
+          "generation_key_note": "세대 키를 두 번 좁혔다. **accession 은 키가 아니다** — 정상 복원도 FY 는 10-K, 분기는 10-Q 라 accession 이 늘 다르고, 키로 쓰면 모든 복원이 막힌다(F6-REG-28 에서 실제로 겪었다). **개념 이름(tag)도 키가 아니다** — alphabet 은 Revenues 에서 RevenueFromContractWithCustomerExcludingAssessedTax 로 태그가 바뀌었을 뿐이고 겹치는 기간의 값이 일치한다. 이름이 다른 것과 기준이 다른 것은 다르다. **값으로 가른다.** (1) 성분의 개념들이 겹치는 기간에서 값이 어긋나면 다른 세대다 — 수집기의 overlap_conflicts 가 그 증거다. (2) 같은 개념 안에서도 같은 기간에 값이 여럿이었던 성분(restated)과 아닌 성분이 섞이면 다른 세대다. accession 은 키가 아니라 **근거로 보존**한다.",
+          "accession_role": "세대 판정 키가 아니라 감사 근거다. 각 성분의 accession 을 관측 basis 에 남겨 나중에 추적할 수 있게 한다."
+        }
       },
       "revenue_coalesce": {
         "mode": "per_period_fallback",

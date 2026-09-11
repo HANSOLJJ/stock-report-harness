@@ -37,6 +37,7 @@ from datetime import date
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent.parent
 AVAIL_RAW = HERE.parent / "f6-avail-15" / "_raw"
 RAW = HERE / "_raw"
 OUT = HERE / "_derived"
@@ -86,13 +87,16 @@ def periods(doc: dict, taxonomy: str, tag: str) -> dict[str, list[dict]]:
     out: dict[str, list[dict]] = {}
     for unit, rows in node.get("units", {}).items():
         best: dict[tuple[str, str], dict] = {}
+        seen_vals: dict[tuple[str, str], set] = {}
         for r in rows:
             s, e = r.get("start"), r.get("end")
             if not s or not e:
                 continue
             key = (s, e)
+            seen_vals.setdefault(key, set()).add(r["val"])
             prev = best.get(key)
-            # 재작성이 있으면 같은 기간에 값이 여럿이다. 가장 최근 filed 하나만 남긴다.
+            # 재작성이 있으면 같은 기간에 값이 여럿이다. 가장 최근 filed 하나만 남기되
+            # **재작성됐다는 사실 자체**를 잃지 않는다 — 세대 판정의 키다 (F6-REG-28).
             if prev is None or str(r.get("filed", "")) >= str(prev.get("filed", "")):
                 best[key] = r
         rows2 = []
@@ -100,7 +104,9 @@ def periods(doc: dict, taxonomy: str, tag: str) -> dict[str, list[dict]]:
             days = (_d(e) - _d(s)).days
             kind = "Q" if 80 <= days <= 100 else ("FY" if 350 <= days <= 380 else "other")
             rows2.append({"start": s, "end": e, "val": r["val"], "days": days, "kind": kind,
-                          "form": r.get("form"), "filed": r.get("filed")})
+                          "form": r.get("form"), "filed": r.get("filed"),
+                          # accession 은 세대 키가 아니라 감사 근거다. 세대는 (tag, restated) 로 가른다.
+                          "accn": r.get("accn"), "restated": len(seen_vals[(s, e)]) > 1})
         out[unit] = sorted(rows2, key=lambda r: r["end"])
     return out
 
@@ -163,8 +169,12 @@ def coalesce_series(doc: dict, tags: list[tuple[str, str]], unit: str) -> tuple[
     return series, meta
 
 
-def quarter_series(rows: list[dict]) -> tuple[list[dict], list[dict]]:
-    """(분기 시계열, 복원 근거). 회계 Q4 는 FY − (Q1+Q2+Q3) 로 만든다."""
+def quarter_series(rows: list[dict], rules=None, mix: dict | None = None) -> tuple[list[dict], list[dict]]:
+    """(분기 시계열, 복원 근거). 회계 Q4 는 FY − (Q1+Q2+Q3) 로 만든다.
+
+    `rules` 를 주면 v1.7 의 `ttm_window.restatement_generation` 을 적용한다 — 네 성분이 서로 다른
+    재작성 세대에서 왔으면 **그 FY 의 Q4 를 만들지 않는다**. 선언만 두지 않고 여기서 읽는다.
+    """
     q = [r for r in rows if r["kind"] == "Q"]
     fy = [r for r in rows if r["kind"] == "FY"]
     derived: list[dict] = []
@@ -180,12 +190,25 @@ def quarter_series(rows: list[dict]) -> tuple[list[dict], list[dict]]:
             continue                       # 이미 Q4 가 태깅돼 있으면 복원하지 않는다
         # 복원값도 어느 개념에서 왔는지 남긴다. FY 와 분기가 서로 다른 개념일 수 있다(기간별 fallback).
         tags = sorted({f.get("tag", "?")} | {r.get("tag", "?") for r in inside})
+        gen = None
+        if rules is not None:
+            parts = [{"label": f"FY {f['start']}~{f['end']}", "accn": f.get("accn"), "tag": f.get("tag"),
+                      "restated": bool(f.get("restated"))}]
+            parts += [{"label": f"Q~{r['end']}", "accn": r.get("accn"), "tag": r.get("tag"),
+                       "restated": bool(r.get("restated"))} for r in inside]
+            gen = rules.f6_q4_restatement_check(parts, (mix or {}).get("overlap_conflicts"))
+            if not gen["ok"]:
+                # 회계기준이 다른 두 수를 빼지 않는다. 어느 분기에도 존재한 적 없는 값이 나온다.
+                derived.append({"fy": f"{f['start']}~{f['end']}", "fy_val": f["val"], "fy_tag": f.get("tag"),
+                                "q4_derived": None, "restatement": gen, "held": True})
+                continue
         item = {"start": last_end.isoformat(), "end": f["end"], "val": f["val"] - covered,
                 "days": (fe - last_end).days, "kind": "Q4_derived", "form": f["form"], "filed": f["filed"],
                 "taxonomy": f.get("taxonomy"), "tag": "+".join(tags) if len(tags) > 1 else tags[0]}
         derived.append({"fy": f"{f['start']}~{f['end']}", "fy_val": f["val"], "fy_tag": f.get("tag"),
                         "quarters_used": [{"end": r["end"], "val": r["val"], "tag": r.get("tag")} for r in inside],
-                        "q4_derived": item["val"], "mixed_concepts": len(tags) > 1})
+                        "q4_derived": item["val"], "mixed_concepts": len(tags) > 1,
+                        "restatement": gen})
         series.append(item)
     return sorted(series, key=lambda r: r["end"]), derived
 
@@ -218,7 +241,7 @@ def fy_agreement(rows: list[dict], window: dict) -> dict | None:
     return None
 
 
-def build(ticker: str) -> dict:
+def build(ticker: str, rules=None) -> dict:
     doc = load_facts(ticker)
     if doc is None:
         return {"ticker": ticker, "loaded": False}
@@ -237,7 +260,7 @@ def build(ticker: str) -> dict:
             continue
         tax = rows[-1]["taxonomy"]
         tag = "+".join(mix["concepts_used"]) if mix["mixed"] else rows[-1]["tag"]
-        series, derived = quarter_series(rows)
+        series, derived = quarter_series(rows, rules, mix)
         fy = [r for r in rows if r["kind"] == "FY"]
         common = {"taxonomy": tax, "tag": tag, "unit": unit}
         cur = trailing(series)
@@ -281,7 +304,11 @@ def build(ticker: str) -> dict:
 def main(argv: list[str]) -> int:
     if "--fetch" in argv:
         print("--fetch 는 저장 원자료가 없을 때만 쓴다. 지금은 f6-avail-15/_raw 재사용을 먼저 시도한다.")
-    rows = [build(t) for t in TICKER_TO_ID]
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from scorecard.rules import load_rules
+    # 재작성 세대 조건은 v1.7 이 선언한다. 선언만 두지 않고 여기서 읽는다 (F6-REG-28).
+    rules = load_rules("v1.7")
+    rows = [build(t, rules) for t in TICKER_TO_ID]
     print("=" * 116)
     print("F6-SPEC-18 — SEC companyfacts 에서 TTM 4종 복원 (저장 원자료 재사용, 신규 호출 없음)")
     print("=" * 116)

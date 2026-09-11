@@ -2986,7 +2986,7 @@
       "status": "legacy_unverified",
       "basis": null,
       "raw": "-$0.09 (컨센 -$0.26 상회) · 영업적자 -14.9%",
-      "note": "EARN 열의 영업적자율. 규칙 ⑨ 표는 -14.9% 를 TTM 손실률로 사용"
+      "note": "[F6-REG-28 대체됨 → spacex-xai.operating_margin_ttm.f6reg28] EARN 열의 영업적자율. 규칙 ⑨ 표는 -14.9% 를 TTM 손실률로 사용"
     },
     {
       "observation_id": "openai.quarter_note.v15",
@@ -3260,7 +3260,8 @@
       "metric": "contracted_revenue",
       "value": 47461000000.0,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
       "kind": "actual",
       "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
       "status": "verified",
@@ -3286,7 +3287,8 @@
       "metric": "offbalance_B",
       "value": 29582000000.0,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
       "kind": "derived",
       "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
       "status": "verified",
@@ -3338,7 +3340,8 @@
       "metric": "contracted_revenue",
       "value": 496000000000.0,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
       "kind": "actual",
       "source_id": "SRC-SEC-AMZN-10Q-2026Q2",
       "status": "verified",
@@ -3361,7 +3364,8 @@
       "metric": "offbalance_B",
       "value": 267279000000.0,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
       "kind": "derived",
       "source_id": "SRC-SEC-AMZN-10Q-2026Q2",
       "status": "verified",
@@ -3384,9 +3388,14 @@
           {
             "label": "Other commitments",
             "value": 18366000000,
-            "reason": "설계진행 지시로 제외. 지시 사유는 '각주 3 내용 미확인' 이었으나 각주 3 본문은 원문에 있다 — REPORT.md 4.1 참조",
+            "reason": "제외 확정(설계진행 2026-09-11). 사유 셋이다. (1) 자산제거의무는 **이미 인식된 부채**라 G4 분모에 넣으면 재무제표에 이미 선 것을 다시 센다. (2) build-to-suit 임차료는 각주 1 의 Leases not yet commenced 137,214 와 **겹칠 수 있다**. (3) 디지털 콘텐츠 약정은 각주 2 의 license digital media content 와 **겹칠 수 있다**. 설계 지침 6.4 가 겹치지 않도록 계약 식별자를 남기라고 하는데 이 항목은 성격이 섞여 있고 **공시가 분해를 주지 않는다**.",
             "footnote_3": "asset retirement obligations, rent and tenant improvements for build-to-suit lease arrangements under construction, digital media content agreements with initial terms greater than one year",
-            "if_included": 285645000000
+            "if_included": 285645000000,
+            "if_included_coverage": {
+              "denominator": 285645000000,
+              "coverage": 1.736,
+              "note": "포함해도 1 이상이라 **G4 판정은 갈리지 않는다**. 제외 결정이 점수를 만들지 않는다는 뜻이다"
+            }
           }
         ],
         "table_total": 650034000000,
@@ -3406,7 +3415,8 @@
       "metric": "offbalance_B",
       "value": 36851000000.0,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-11",
       "kind": "derived",
       "source_id": "SRC-SEC-BABA-20F-FY2026",
       "status": "verified",
@@ -3479,7 +3489,8 @@
       "metric": "contracted_revenue",
       "value": null,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-11",
       "kind": "actual",
       "source_id": "SRC-SEC-BABA-20F-FY2026",
       "status": "not_disclosed",
@@ -3507,7 +3518,8 @@
       "metric": "revenue_ttm",
       "value": 148401000000.0,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-11",
       "kind": "actual",
       "source_id": "SRC-SEC-BABA-FACTS",
       "status": "verified",
@@ -3536,7 +3548,8 @@
       "metric": "operating_income_ttm",
       "value": 7270000000.0,
       "unit": "USD",
-      "as_of": "2026-09-11",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-11",
       "kind": "actual",
       "source_id": "SRC-SEC-BABA-FACTS",
       "status": "verified",
@@ -3564,7 +3577,8 @@
       "metric": "operating_margin_ttm",
       "value": 0.04899,
       "unit": "ratio",
-      "as_of": "2026-09-11",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-11",
       "kind": "derived",
       "source_id": "SRC-SEC-BABA-FACTS",
       "status": "verified",
@@ -3589,6 +3603,1649 @@
       },
       "raw": "FY2026 영업이익률 +4.899%",
       "note": "OBS-REG-25 / G1-TTM-26. **양수다** — G1 을 통과한다. **연간 기준이라는 한계는 F6 P4 가 이미 한 칸 내린다. F9 에서 또 깎지 않는다.**"
+    },
+    {
+      "observation_id": "alibaba.net_income_ttm.f6reg28",
+      "company_id": "alibaba",
+      "metric": "net_income_ttm",
+      "value": 15017686286.0,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-FACTS",
+      "status": "verified",
+      "period": {
+        "start": "2025-04-01",
+        "end": "2026-03-31"
+      },
+      "basis": {
+        "period_basis": "annual",
+        "tag": "NetIncomeLoss",
+        "accession": "0001193125-26-231755",
+        "form": "20-F",
+        "original_currency": "CNY",
+        "original_value": 103592000000,
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
+        "cross_check_filed_usd": {
+          "filed": 15018000000,
+          "recomputed": 15017686286.0,
+          "rel_diff": 2.088920761974059e-05
+        }
+      },
+      "raw": "2025-04-01~2026-03-31 103,592,000,000 CNY",
+      "note": "F6-REG-28. **당해와 같은 환율 6.8980 으로 환산**했다"
+    },
+    {
+      "observation_id": "alibaba.revenue_ttm_prior.f6reg28",
+      "company_id": "alibaba",
+      "metric": "revenue_ttm_prior",
+      "value": 144439982604.0,
+      "unit": "USD",
+      "as_of": "2025-03-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-FACTS",
+      "status": "verified",
+      "period": {
+        "start": "2024-04-01",
+        "end": "2025-03-31"
+      },
+      "basis": {
+        "period_basis": "annual",
+        "tag": "Revenues",
+        "accession": "0001193125-26-231755",
+        "form": "20-F",
+        "original_currency": "CNY",
+        "original_value": 996347000000,
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
+        "same_rate_as_current": true,
+        "why_not_filed_usd": "FY2025 20-F 의 공시 USD 137,300 은 그 해 환율 7.2567 로 환산된 값이다. 그대로 쓰면 성장률이 +2.74% 대신 +8.09% 가 되어 밴드가 한 칸 뜬다."
+      },
+      "raw": "2024-04-01~2025-03-31 996,347,000,000 CNY",
+      "note": "F6-REG-28. **당해와 같은 환율 6.8980 으로 환산**했다"
+    },
+    {
+      "observation_id": "alphabet.revenue_ttm.f6reg28",
+      "company_id": "alphabet",
+      "metric": "revenue_ttm",
+      "value": 445866000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 402836000000,
+          "revenue_prior_ytd": 186662000000,
+          "revenue_tail_derived": 216174000000,
+          "revenue_curr_ytd": 229692000000,
+          "operating_income_prior_fy": 129039000000,
+          "operating_income_prior_ytd": 61877000000,
+          "operating_income_tail_derived": 67162000000,
+          "operating_income_curr_ytd": 80466000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 445866000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 445,866,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "alphabet.operating_income_ttm.f6reg28",
+      "company_id": "alphabet",
+      "metric": "operating_income_ttm",
+      "value": 147628000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 402836000000,
+          "revenue_prior_ytd": 186662000000,
+          "revenue_tail_derived": 216174000000,
+          "revenue_curr_ytd": 229692000000,
+          "operating_income_prior_fy": 129039000000,
+          "operating_income_prior_ytd": 61877000000,
+          "operating_income_tail_derived": 67162000000,
+          "operating_income_curr_ytd": 80466000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 147628000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 147,628,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "alphabet.net_income_ttm.f6reg28",
+      "company_id": "alphabet",
+      "metric": "net_income_ttm",
+      "value": 244205000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-07-01~2026-06-30 244,205,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "alphabet.revenue_ttm_prior.f6reg28",
+      "company_id": "alphabet",
+      "metric": "revenue_ttm_prior",
+      "value": 371399000000.0,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "Revenues+RevenueFromContractWithCustomerExcludingAssessedTax",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-07-01~2025-06-30 371,399,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "amazon.revenue_ttm.f6reg28",
+      "company_id": "amazon",
+      "metric": "revenue_ttm",
+      "value": 775680000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 716924000000,
+          "revenue_prior_ytd": 323369000000,
+          "revenue_tail_derived": 393555000000,
+          "revenue_curr_ytd": 382125000000,
+          "operating_income_prior_fy": 79975000000,
+          "operating_income_prior_ytd": 37576000000,
+          "operating_income_tail_derived": 42399000000,
+          "operating_income_curr_ytd": 51313000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 775680000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 775,680,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "amazon.operating_income_ttm.f6reg28",
+      "company_id": "amazon",
+      "metric": "operating_income_ttm",
+      "value": 93712000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 716924000000,
+          "revenue_prior_ytd": 323369000000,
+          "revenue_tail_derived": 393555000000,
+          "revenue_curr_ytd": 382125000000,
+          "operating_income_prior_fy": 79975000000,
+          "operating_income_prior_ytd": 37576000000,
+          "operating_income_tail_derived": 42399000000,
+          "operating_income_curr_ytd": 51313000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 93712000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 93,712,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "amazon.net_income_ttm.f6reg28",
+      "company_id": "amazon",
+      "metric": "net_income_ttm",
+      "value": 135281000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-07-01~2026-06-30 135,281,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "amazon.revenue_ttm_prior.f6reg28",
+      "company_id": "amazon",
+      "metric": "revenue_ttm_prior",
+      "value": 670038000000.0,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-07-01~2025-06-30 670,038,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "apple.revenue_ttm.f6reg28",
+      "company_id": "apple",
+      "metric": "revenue_ttm",
+      "value": 466823000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-27",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-28",
+        "end": "2026-06-27"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-27",
+          "anchor_prior": "2025-06-28",
+          "fy_prior": "2025-09-27",
+          "revenue_prior_fy": 416161000000,
+          "revenue_prior_ytd": 313695000000,
+          "revenue_tail_derived": 102466000000,
+          "revenue_curr_ytd": 364357000000,
+          "operating_income_prior_fy": 133050000000,
+          "operating_income_prior_ytd": 100623000000,
+          "operating_income_tail_derived": 32427000000,
+          "operating_income_curr_ytd": 122432000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 466823000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-06-28~2026-06-27 466,823,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "apple.operating_income_ttm.f6reg28",
+      "company_id": "apple",
+      "metric": "operating_income_ttm",
+      "value": 154859000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-27",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-28",
+        "end": "2026-06-27"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-27",
+          "anchor_prior": "2025-06-28",
+          "fy_prior": "2025-09-27",
+          "revenue_prior_fy": 416161000000,
+          "revenue_prior_ytd": 313695000000,
+          "revenue_tail_derived": 102466000000,
+          "revenue_curr_ytd": 364357000000,
+          "operating_income_prior_fy": 133050000000,
+          "operating_income_prior_ytd": 100623000000,
+          "operating_income_tail_derived": 32427000000,
+          "operating_income_curr_ytd": 122432000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 154859000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-06-28~2026-06-27 154,859,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "apple.net_income_ttm.f6reg28",
+      "company_id": "apple",
+      "metric": "net_income_ttm",
+      "value": 128930000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-27",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-28",
+        "end": "2026-06-27"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-06-28~2026-06-27 128,930,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "apple.revenue_ttm_prior.f6reg28",
+      "company_id": "apple",
+      "metric": "revenue_ttm_prior",
+      "value": 408625000000.0,
+      "unit": "USD",
+      "as_of": "2025-06-28",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-06-29",
+        "end": "2025-06-28"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-06-29~2025-06-28 408,625,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "meta.revenue_ttm.f6reg28",
+      "company_id": "meta",
+      "metric": "revenue_ttm",
+      "value": 228247000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 200966000000,
+          "revenue_prior_ytd": 89830000000,
+          "revenue_tail_derived": 111136000000,
+          "revenue_curr_ytd": 117111000000,
+          "operating_income_prior_fy": 83276000000,
+          "operating_income_prior_ytd": 37997000000,
+          "operating_income_tail_derived": 45279000000,
+          "operating_income_curr_ytd": 41647000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 228248000000,
+          "diff": -1000000,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 228,247,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "meta.operating_income_ttm.f6reg28",
+      "company_id": "meta",
+      "metric": "operating_income_ttm",
+      "value": 86926000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 200966000000,
+          "revenue_prior_ytd": 89830000000,
+          "revenue_tail_derived": 111136000000,
+          "revenue_curr_ytd": 117111000000,
+          "operating_income_prior_fy": 83276000000,
+          "operating_income_prior_ytd": 37997000000,
+          "operating_income_tail_derived": 45279000000,
+          "operating_income_curr_ytd": 41647000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 86927000000,
+          "diff": -1000000,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 86,926,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "meta.net_income_ttm.f6reg28",
+      "company_id": "meta",
+      "metric": "net_income_ttm",
+      "value": 68098000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-07-01~2026-06-30 68,098,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "meta.revenue_ttm_prior.f6reg28",
+      "company_id": "meta",
+      "metric": "revenue_ttm_prior",
+      "value": 178805000000.0,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-07-01~2025-06-30 178,805,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "microsoft.revenue_ttm.f6reg28",
+      "company_id": "microsoft",
+      "metric": "revenue_ttm",
+      "value": 331839000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "공시값 자체 (full_fy_filed_is_ttm)",
+        "method": "direct_fy_is_ttm",
+        "components": {
+          "method": "direct_fy_is_ttm",
+          "fy_end": "2026-06-30",
+          "q3_ytd_end": "2026-03-31",
+          "revenue_fy": 331839000000,
+          "revenue_q3_ytd": 241832000000,
+          "revenue_q4_derived": 90007000000,
+          "operating_income_fy": 155237000000,
+          "operating_income_q3_ytd": 114634000000,
+          "operating_income_q4_derived": 40603000000,
+          "sum_4q_matches_fy": true
+        },
+        "cross_check_f6_spec_18": {
+          "value": 331839000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 331,839,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "microsoft.operating_income_ttm.f6reg28",
+      "company_id": "microsoft",
+      "metric": "operating_income_ttm",
+      "value": 155237000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "공시값 자체 (full_fy_filed_is_ttm)",
+        "method": "direct_fy_is_ttm",
+        "components": {
+          "method": "direct_fy_is_ttm",
+          "fy_end": "2026-06-30",
+          "q3_ytd_end": "2026-03-31",
+          "revenue_fy": 331839000000,
+          "revenue_q3_ytd": 241832000000,
+          "revenue_q4_derived": 90007000000,
+          "operating_income_fy": 155237000000,
+          "operating_income_q3_ytd": 114634000000,
+          "operating_income_q4_derived": 40603000000,
+          "sum_4q_matches_fy": true
+        },
+        "cross_check_f6_spec_18": {
+          "value": 155237000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 155,237,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "microsoft.net_income_ttm.f6reg28",
+      "company_id": "microsoft",
+      "metric": "net_income_ttm",
+      "value": 133749000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-07-01~2026-06-30 133,749,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "microsoft.revenue_ttm_prior.f6reg28",
+      "company_id": "microsoft",
+      "metric": "revenue_ttm_prior",
+      "value": 281724000000.0,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-07-01~2025-06-30 281,724,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "nvidia.revenue_ttm.f6reg28",
+      "company_id": "nvidia",
+      "metric": "revenue_ttm",
+      "value": 302970000000.0,
+      "unit": "USD",
+      "as_of": "2026-07-26",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-28",
+        "end": "2026-07-26"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-07-26",
+          "anchor_prior": "2025-07-27",
+          "fy_prior": "2026-01-25",
+          "revenue_prior_fy": 215938000000,
+          "revenue_prior_ytd": 90805000000,
+          "revenue_tail_derived": 125133000000,
+          "revenue_curr_ytd": 177837000000,
+          "operating_income_prior_fy": 130387000000,
+          "operating_income_prior_ytd": 50078000000,
+          "operating_income_tail_derived": 80309000000,
+          "operating_income_curr_ytd": 117270000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 302969000000,
+          "diff": 1000000,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-28~2026-07-26 302,970,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "nvidia.operating_income_ttm.f6reg28",
+      "company_id": "nvidia",
+      "metric": "operating_income_ttm",
+      "value": 197579000000.0,
+      "unit": "USD",
+      "as_of": "2026-07-26",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-28",
+        "end": "2026-07-26"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-07-26",
+          "anchor_prior": "2025-07-27",
+          "fy_prior": "2026-01-25",
+          "revenue_prior_fy": 215938000000,
+          "revenue_prior_ytd": 90805000000,
+          "revenue_tail_derived": 125133000000,
+          "revenue_curr_ytd": 177837000000,
+          "operating_income_prior_fy": 130387000000,
+          "operating_income_prior_ytd": 50078000000,
+          "operating_income_tail_derived": 80309000000,
+          "operating_income_curr_ytd": 117270000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 197579000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-28~2026-07-26 197,579,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "nvidia.net_income_ttm.f6reg28",
+      "company_id": "nvidia",
+      "metric": "net_income_ttm",
+      "value": 192879000000.0,
+      "unit": "USD",
+      "as_of": "2026-07-26",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-28",
+        "end": "2026-07-26"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-07-28~2026-07-26 192,879,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "nvidia.revenue_ttm_prior.f6reg28",
+      "company_id": "nvidia",
+      "metric": "revenue_ttm_prior",
+      "value": 165218000000.0,
+      "unit": "USD",
+      "as_of": "2025-07-27",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-29",
+        "end": "2025-07-27"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "Revenues+RevenueFromContractWithCustomerExcludingAssessedTax",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-07-29~2025-07-27 165,218,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "oracle.revenue_ttm.f6reg28",
+      "company_id": "oracle",
+      "metric": "revenue_ttm",
+      "value": 67357000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-01",
+        "end": "2026-05-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "공시값 자체 (full_fy_filed_is_ttm)",
+        "method": "direct_fy_is_ttm",
+        "components": {
+          "method": "direct_fy_is_ttm",
+          "fy_end": "2026-05-31",
+          "q3_ytd_end": "2026-02-28",
+          "revenue_fy": 67357000000,
+          "revenue_q3_ytd": 48173000000,
+          "revenue_q4_derived": 19184000000,
+          "operating_income_fy": 20606000000,
+          "operating_income_q3_ytd": 14473000000,
+          "operating_income_q4_derived": 6133000000,
+          "sum_4q_matches_fy": true
+        },
+        "cross_check_f6_spec_18": {
+          "value": 67357000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-06-01~2026-05-31 67,357,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "oracle.operating_income_ttm.f6reg28",
+      "company_id": "oracle",
+      "metric": "operating_income_ttm",
+      "value": 20606000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-01",
+        "end": "2026-05-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "공시값 자체 (full_fy_filed_is_ttm)",
+        "method": "direct_fy_is_ttm",
+        "components": {
+          "method": "direct_fy_is_ttm",
+          "fy_end": "2026-05-31",
+          "q3_ytd_end": "2026-02-28",
+          "revenue_fy": 67357000000,
+          "revenue_q3_ytd": 48173000000,
+          "revenue_q4_derived": 19184000000,
+          "operating_income_fy": 20606000000,
+          "operating_income_q3_ytd": 14473000000,
+          "operating_income_q4_derived": 6133000000,
+          "sum_4q_matches_fy": true
+        },
+        "cross_check_f6_spec_18": {
+          "value": 20606000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-06-01~2026-05-31 20,606,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "oracle.net_income_ttm.f6reg28",
+      "company_id": "oracle",
+      "metric": "net_income_ttm",
+      "value": 17087000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-01",
+        "end": "2026-05-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-06-01~2026-05-31 17,087,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "oracle.revenue_ttm_prior.f6reg28",
+      "company_id": "oracle",
+      "metric": "revenue_ttm_prior",
+      "value": 57399000000.0,
+      "unit": "USD",
+      "as_of": "2025-05-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-06-01",
+        "end": "2025-05-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-06-01~2025-05-31 57,399,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "palantir.revenue_ttm.f6reg28",
+      "company_id": "palantir",
+      "metric": "revenue_ttm",
+      "value": 6155941000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 4475446000,
+          "revenue_prior_ytd": 1887552000,
+          "revenue_tail_derived": 2587894000,
+          "revenue_curr_ytd": 3568047000,
+          "operating_income_prior_fy": 1414015000,
+          "operating_income_prior_ytd": 445365000,
+          "operating_income_tail_derived": 968650000,
+          "operating_income_curr_ytd": 1666002000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 6155941000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 6,155,941,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "palantir.operating_income_ttm.f6reg28",
+      "company_id": "palantir",
+      "metric": "operating_income_ttm",
+      "value": 2634652000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 4475446000,
+          "revenue_prior_ytd": 1887552000,
+          "revenue_tail_derived": 2587894000,
+          "revenue_curr_ytd": 3568047000,
+          "operating_income_prior_fy": 1414015000,
+          "operating_income_prior_ytd": 445365000,
+          "operating_income_tail_derived": 968650000,
+          "operating_income_curr_ytd": 1666002000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 2634652000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 2,634,652,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "palantir.net_income_ttm.f6reg28",
+      "company_id": "palantir",
+      "metric": "net_income_ttm",
+      "value": 3016692000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-07-01~2026-06-30 3,016,692,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "palantir.revenue_ttm_prior.f6reg28",
+      "company_id": "palantir",
+      "metric": "revenue_ttm_prior",
+      "value": 3440587000.0,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-07-01~2025-06-30 3,440,587,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "spacex-xai.revenue_ttm.f6reg28",
+      "company_id": "spacex-xai",
+      "metric": "revenue_ttm",
+      "value": 7814000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "quarterly_yoy",
+        "why_not_ttm": "전년 TTM(2024-07-01~2025-06-30)은 복원되지 않는다 — FY2024 + H1'25 - H1'24 인데 **H1'24 사실이 어느 문서에도 없다**(S-1/A 는 연간 3개년과 1분기만, 10-Q 는 2025·2026 상반기만 준다). P3 는 전년이 있어야 성립하므로 분기 전년 동기로 간다 — listed_newly 트랙이 정확히 이 상황을 위해 있고 short_history 로 한 칸 내린다.",
+        "ttm_is_constructible": {
+          "value": 23044000000,
+          "method": "S-1/A FY2025 18,674 + 10-Q H1'26 12,508 - H1'25 8,138",
+          "note": "당해 TTM 은 만들 수 있으나 전년이 없어 P3 가 성립하지 않는다"
+        },
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "accession": "0001628280-26-052535",
+        "form": "10-Q"
+      },
+      "raw": "2026 Q2 매출 $7,814M",
+      "note": "F6-REG-28. **분기 전년 동기 기준이다**"
+    },
+    {
+      "observation_id": "spacex-xai.revenue_ttm_prior.f6reg28",
+      "company_id": "spacex-xai",
+      "metric": "revenue_ttm_prior",
+      "value": 4071000000.0,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-04-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "quarterly_yoy",
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "accession": "0001628280-26-052535",
+        "form": "10-Q"
+      },
+      "raw": "2025 Q2 매출 $4,071M",
+      "note": "F6-REG-28. 같은 분기 전년 동기"
+    },
+    {
+      "observation_id": "spacex-xai.operating_income_ttm.f6reg28",
+      "company_id": "spacex-xai",
+      "metric": "operating_income_ttm",
+      "value": -3732000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "method": "FY2025 + H1'2026 - H1'2025",
+        "components": {
+          "fy2025_s1a": -2589000000,
+          "h1_2026_10q": -2086000000,
+          "h1_2025_10q": -943000000
+        },
+        "sources": {
+          "fy2025": "S-1/A 0001628280-26-040364 연결손익계산서",
+          "half_years": "10-Q 0001628280-26-052535 companyfacts"
+        },
+        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
+      },
+      "raw": "TTM -3,732백만",
+      "note": "F6-REG-28. S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
+    },
+    {
+      "observation_id": "spacex-xai.net_income_ttm.f6reg28",
+      "company_id": "spacex-xai",
+      "metric": "net_income_ttm",
+      "value": -8218000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "method": "FY2025 + H1'2026 - H1'2025",
+        "components": {
+          "fy2025_s1a": -4937000000,
+          "h1_2026_10q": -4817000000,
+          "h1_2025_10q": -1536000000
+        },
+        "sources": {
+          "fy2025": "S-1/A 0001628280-26-040364 연결손익계산서",
+          "half_years": "10-Q 0001628280-26-052535 companyfacts"
+        },
+        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
+      },
+      "raw": "TTM -8,218백만",
+      "note": "F6-REG-28. S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
+    },
+    {
+      "observation_id": "spacex-xai.operating_margin_ttm.f6reg28",
+      "company_id": "spacex-xai",
+      "metric": "operating_margin_ttm",
+      "value": -0.161951,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "TTM 영업손익 / TTM 매출",
+        "numerator": -3732000000,
+        "denominator": 23044000000,
+        "method": "FY2025 + H1'2026 - H1'2025 (양쪽 다)",
+        "replaces": "spacex-xai.operating_margin_ttm.v15 (-0.149, legacy_unverified)",
+        "delta_vs_legacy_pp": -1.3
+      },
+      "raw": "TTM 영업손실률 -16.195%",
+      "note": "F6-REG-28. 승계 legacy -14.9% 를 실측 -16.195% 로 교체한다. 재척도 밴드에서 둘 다 -3 이라 점수는 안 바뀌고 근거가 legacy 에서 실측으로 바뀐다"
+    },
+    {
+      "observation_id": "tesla.revenue_ttm.f6reg28",
+      "company_id": "tesla",
+      "metric": "revenue_ttm",
+      "value": 103619000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 94827000000,
+          "revenue_prior_ytd": 41831000000,
+          "revenue_tail_derived": 52996000000,
+          "revenue_curr_ytd": 50623000000,
+          "operating_income_prior_fy": 4355000000,
+          "operating_income_prior_ytd": 1322000000,
+          "operating_income_tail_derived": 3033000000,
+          "operating_income_curr_ytd": 1339000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 103619000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 103,619,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "tesla.operating_income_ttm.f6reg28",
+      "company_id": "tesla",
+      "metric": "operating_income_ttm",
+      "value": 4372000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction": "복원값 (q4_reconstructed_ttm)",
+        "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+        "components": {
+          "method": "ttm_formula: Q_curr + (FY_prior - Q_prior)",
+          "anchor_curr": "2026-06-30",
+          "anchor_prior": "2025-06-30",
+          "fy_prior": "2025-12-31",
+          "revenue_prior_fy": 94827000000,
+          "revenue_prior_ytd": 41831000000,
+          "revenue_tail_derived": 52996000000,
+          "revenue_curr_ytd": 50623000000,
+          "operating_income_prior_fy": 4355000000,
+          "operating_income_prior_ytd": 1322000000,
+          "operating_income_tail_derived": 3033000000,
+          "operating_income_curr_ytd": 1339000000
+        },
+        "cross_check_f6_spec_18": {
+          "value": 4372000000,
+          "diff": 0,
+          "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        }
+      },
+      "raw": "2025-07-01~2026-06-30 4,372,000,000",
+      "note": "F6-REG-28. G1-FILL-27 기준값"
+    },
+    {
+      "observation_id": "tesla.net_income_ttm.f6reg28",
+      "company_id": "tesla",
+      "metric": "net_income_ttm",
+      "value": 3804000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "NetIncomeLoss",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2025-07-01~2026-06-30 3,804,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "tesla.revenue_ttm_prior.f6reg28",
+      "company_id": "tesla",
+      "metric": "revenue_ttm_prior",
+      "value": 92720000000.0,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "tag": "Revenues",
+        "taxonomy": "us-gaap",
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+      },
+      "raw": "2024-07-01~2025-06-30 92,720,000,000",
+      "note": "F6-REG-28. F6-SPEC-18 수집기"
+    },
+    {
+      "observation_id": "tsmc.revenue_ttm.f6reg28",
+      "company_id": "tsmc",
+      "metric": "revenue_ttm",
+      "value": 121423471470.0,
+      "unit": "USD",
+      "as_of": "2025-12-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "status": "verified",
+      "period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "basis": {
+        "statement": "CONSOLIDATED STATEMENTS OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME (F-6)",
+        "column": "표는 2023·2024·2025 **오름차순**이고 최신은 **셋째 NT$ 열**이다(그 오른쪽이 US$ (Note 3) 열). 열을 잘못 읽으면 FY2023 값을 최신으로 등록하게 된다.",
+        "accession": "0001628280-26-025362",
+        "form": "20-F",
+        "filed": "2026-04-16",
+        "bypass": {
+          "why": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 재무 사실이 미등재다. **회사 미공시가 아니라 데이터셋 결측이다** — 20-F 는 2026-04-16 에 제출됐다.",
+          "authorized_by": "F6-FX-16 우회 3조건",
+          "conditions_met": [
+            "(1) 우회 사실을 관측에 기록한다 — 이 basis.bypass 가 그것이다",
+            "(2) FY2024 를 두 경로로 검산해 일치를 확인한다 — companyfacts 2,894,307,700,000 / 1,322,053,000,000 과 원문 2,894,307.7 / 1,322,053.0 백만이 정확히 일치한다(C-13 재현, 나 자신도 원문 F-6 표에서 재확인)",
+            "(3) companyfacts 에 반영되면 원천을 되돌린다 — 아래 rollback"
+          ],
+          "rollback": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 태그가 반영되면 이 관측을 companyfacts 원천으로 다시 뽑아 교체한다. 값이 다르면 보고한다.",
+          "raw_sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
+          "raw_preserved": "C-13 f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm"
+        },
+        "period_basis": "annual",
+        "months_since_period_end": 8,
+        "staleness_note": "기준일 2026-09-02 대비 8개월 경과. FY2024 를 쓰면 20개월이었다.",
+        "original_currency": "TWD",
+        "original_value": 3809054300000,
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
+        "cross_check_filed_usd": {
+          "filed": 121423500000,
+          "recomputed": 121423471470.0,
+          "rel_diff": 2.3496640353782904e-07
+        }
+      },
+      "raw": "FY2025 매출 NT$3,809,054.3백만 (US$121,423.5백만)",
+      "note": "F6-REG-28 / TSM-EDGAR-29. **EDGAR 원문 우회 건**이다 — basis.bypass 에 사유·검산·복귀 조건을 남겼다"
+    },
+    {
+      "observation_id": "tsmc.revenue_ttm_prior.f6reg28",
+      "company_id": "tsmc",
+      "metric": "revenue_ttm_prior",
+      "value": 92263554351.0,
+      "unit": "USD",
+      "as_of": "2024-12-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "status": "verified",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "basis": {
+        "statement": "CONSOLIDATED STATEMENTS OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME (F-6)",
+        "column": "표는 2023·2024·2025 **오름차순**이고 최신은 **셋째 NT$ 열**이다(그 오른쪽이 US$ (Note 3) 열). 열을 잘못 읽으면 FY2023 값을 최신으로 등록하게 된다.",
+        "accession": "0001628280-26-025362",
+        "form": "20-F",
+        "filed": "2026-04-16",
+        "bypass": {
+          "why": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 재무 사실이 미등재다. **회사 미공시가 아니라 데이터셋 결측이다** — 20-F 는 2026-04-16 에 제출됐다.",
+          "authorized_by": "F6-FX-16 우회 3조건",
+          "conditions_met": [
+            "(1) 우회 사실을 관측에 기록한다 — 이 basis.bypass 가 그것이다",
+            "(2) FY2024 를 두 경로로 검산해 일치를 확인한다 — companyfacts 2,894,307,700,000 / 1,322,053,000,000 과 원문 2,894,307.7 / 1,322,053.0 백만이 정확히 일치한다(C-13 재현, 나 자신도 원문 F-6 표에서 재확인)",
+            "(3) companyfacts 에 반영되면 원천을 되돌린다 — 아래 rollback"
+          ],
+          "rollback": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 태그가 반영되면 이 관측을 companyfacts 원천으로 다시 뽑아 교체한다. 값이 다르면 보고한다.",
+          "raw_sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
+          "raw_preserved": "C-13 f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm"
+        },
+        "period_basis": "annual",
+        "months_since_period_end": 8,
+        "staleness_note": "기준일 2026-09-02 대비 8개월 경과. FY2024 를 쓰면 20개월이었다.",
+        "original_currency": "TWD",
+        "original_value": 2894307700000,
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
+        "same_rate_as_current": true,
+        "why_not_filed_usd": "FY2024 20-F 의 공시 USD 70,598.8 은 그 해 환율 30.62 로 환산된 값이다. 그대로 쓰면 성장률이 +33.89% 대신 +25.03% 가 되어 밴드가 한 칸 뜬다."
+      },
+      "raw": "FY2024 매출 NT$2,894,307.7백만 (같은 표 둘째 열)",
+      "note": "F6-REG-28. **당해와 같은 환율 31.37 로 환산**했다. 공시 USD 를 그대로 쓰지 않았다"
+    },
+    {
+      "observation_id": "tsmc.net_income_ttm.f6reg28",
+      "company_id": "tsmc",
+      "metric": "net_income_ttm",
+      "value": 54036496653.0,
+      "unit": "USD",
+      "as_of": "2025-12-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "status": "verified",
+      "period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "basis": {
+        "statement": "CONSOLIDATED STATEMENTS OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME (F-6)",
+        "column": "표는 2023·2024·2025 **오름차순**이고 최신은 **셋째 NT$ 열**이다(그 오른쪽이 US$ (Note 3) 열). 열을 잘못 읽으면 FY2023 값을 최신으로 등록하게 된다.",
+        "accession": "0001628280-26-025362",
+        "form": "20-F",
+        "filed": "2026-04-16",
+        "bypass": {
+          "why": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 재무 사실이 미등재다. **회사 미공시가 아니라 데이터셋 결측이다** — 20-F 는 2026-04-16 에 제출됐다.",
+          "authorized_by": "F6-FX-16 우회 3조건",
+          "conditions_met": [
+            "(1) 우회 사실을 관측에 기록한다 — 이 basis.bypass 가 그것이다",
+            "(2) FY2024 를 두 경로로 검산해 일치를 확인한다 — companyfacts 2,894,307,700,000 / 1,322,053,000,000 과 원문 2,894,307.7 / 1,322,053.0 백만이 정확히 일치한다(C-13 재현, 나 자신도 원문 F-6 표에서 재확인)",
+            "(3) companyfacts 에 반영되면 원천을 되돌린다 — 아래 rollback"
+          ],
+          "rollback": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 태그가 반영되면 이 관측을 companyfacts 원천으로 다시 뽑아 교체한다. 값이 다르면 보고한다.",
+          "raw_sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
+          "raw_preserved": "C-13 f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm"
+        },
+        "period_basis": "annual",
+        "months_since_period_end": 8,
+        "staleness_note": "기준일 2026-09-02 대비 8개월 경과. FY2024 를 쓰면 20개월이었다.",
+        "original_currency": "TWD",
+        "original_value": 1695124900000,
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
+        "cross_check_filed_usd": {
+          "filed": 54036500000,
+          "recomputed": 54036496653.0,
+          "rel_diff": 6.194233448497702e-08
+        }
+      },
+      "raw": "FY2025 순이익 NT$1,695,124.9백만",
+      "note": "F6-REG-28 / TSM-EDGAR-29. 손익계산서 NET INCOME 행"
+    },
+    {
+      "observation_id": "tsmc.operating_income_ttm.f6reg28",
+      "company_id": "tsmc",
+      "metric": "operating_income_ttm",
+      "value": 61717937520.0,
+      "unit": "USD",
+      "as_of": "2025-12-31",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "status": "verified",
+      "period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "basis": {
+        "statement": "CONSOLIDATED STATEMENTS OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME (F-6)",
+        "column": "표는 2023·2024·2025 **오름차순**이고 최신은 **셋째 NT$ 열**이다(그 오른쪽이 US$ (Note 3) 열). 열을 잘못 읽으면 FY2023 값을 최신으로 등록하게 된다.",
+        "accession": "0001628280-26-025362",
+        "form": "20-F",
+        "filed": "2026-04-16",
+        "bypass": {
+          "why": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 재무 사실이 미등재다. **회사 미공시가 아니라 데이터셋 결측이다** — 20-F 는 2026-04-16 에 제출됐다.",
+          "authorized_by": "F6-FX-16 우회 3조건",
+          "conditions_met": [
+            "(1) 우회 사실을 관측에 기록한다 — 이 basis.bypass 가 그것이다",
+            "(2) FY2024 를 두 경로로 검산해 일치를 확인한다 — companyfacts 2,894,307,700,000 / 1,322,053,000,000 과 원문 2,894,307.7 / 1,322,053.0 백만이 정확히 일치한다(C-13 재현, 나 자신도 원문 F-6 표에서 재확인)",
+            "(3) companyfacts 에 반영되면 원천을 되돌린다 — 아래 rollback"
+          ],
+          "rollback": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 태그가 반영되면 이 관측을 companyfacts 원천으로 다시 뽑아 교체한다. 값이 다르면 보고한다.",
+          "raw_sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
+          "raw_preserved": "C-13 f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm"
+        },
+        "period_basis": "annual",
+        "months_since_period_end": 8,
+        "staleness_note": "기준일 2026-09-02 대비 8개월 경과. FY2024 를 쓰면 20개월이었다.",
+        "original_currency": "TWD",
+        "original_value": 1936091700000,
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
+        "cross_check_filed_usd": {
+          "filed": 61717900000,
+          "recomputed": 61717937520.0,
+          "rel_diff": 6.07926120176345e-07
+        }
+      },
+      "raw": "FY2025 영업이익 NT$1,936,091.7백만",
+      "note": "F6-REG-28 / TSM-EDGAR-29. INCOME FROM OPERATIONS 행. MD&A 반올림 1,936,092 가 아니라 **감사 손익계산서 본문 1,936,091.7** 이다"
+    },
+    {
+      "observation_id": "tsmc.operating_margin_ttm.f6reg28",
+      "company_id": "tsmc",
+      "metric": "operating_margin_ttm",
+      "value": 0.508287,
+      "unit": "ratio",
+      "as_of": "2025-12-31",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "status": "verified",
+      "period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "basis": {
+        "statement": "CONSOLIDATED STATEMENTS OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME (F-6)",
+        "column": "표는 2023·2024·2025 **오름차순**이고 최신은 **셋째 NT$ 열**이다(그 오른쪽이 US$ (Note 3) 열). 열을 잘못 읽으면 FY2023 값을 최신으로 등록하게 된다.",
+        "accession": "0001628280-26-025362",
+        "form": "20-F",
+        "filed": "2026-04-16",
+        "bypass": {
+          "why": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 재무 사실이 미등재다. **회사 미공시가 아니라 데이터셋 결측이다** — 20-F 는 2026-04-16 에 제출됐다.",
+          "authorized_by": "F6-FX-16 우회 3조건",
+          "conditions_met": [
+            "(1) 우회 사실을 관측에 기록한다 — 이 basis.bypass 가 그것이다",
+            "(2) FY2024 를 두 경로로 검산해 일치를 확인한다 — companyfacts 2,894,307,700,000 / 1,322,053,000,000 과 원문 2,894,307.7 / 1,322,053.0 백만이 정확히 일치한다(C-13 재현, 나 자신도 원문 F-6 표에서 재확인)",
+            "(3) companyfacts 에 반영되면 원천을 되돌린다 — 아래 rollback"
+          ],
+          "rollback": "SEC companyfacts 에 accession 0001628280-26-025362 의 ifrs-full 태그가 반영되면 이 관측을 companyfacts 원천으로 다시 뽑아 교체한다. 값이 다르면 보고한다.",
+          "raw_sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
+          "raw_preserved": "C-13 f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm"
+        },
+        "period_basis": "annual",
+        "months_since_period_end": 8,
+        "staleness_note": "기준일 2026-09-02 대비 8개월 경과. FY2024 를 쓰면 20개월이었다.",
+        "formula": "INCOME FROM OPERATIONS / NET REVENUE (같은 통화·같은 기간)",
+        "numerator_twd": 1936091700000,
+        "denominator_twd": 3809054300000,
+        "currency_note": "비율이라 통화가 상쇄된다"
+      },
+      "raw": "FY2025 영업이익률 +50.83%",
+      "note": "F6-REG-28 / TSM-EDGAR-29. FY2024 45.68% 에서 +5.15%p"
     }
   ]
 }

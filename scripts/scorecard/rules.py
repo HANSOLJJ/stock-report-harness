@@ -163,6 +163,59 @@ class RuleSet:
     def f6_p4(self) -> dict[str, Any]:
         return self.f6.get("p4") or {}
 
+    def f6_ttm_window(self) -> dict[str, Any]:
+        return self.f6.get("ttm_window") or {}
+
+    def f6_q4_restatement_check(self, components: list[dict[str, Any]],
+                                overlap_conflicts: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+        """`FY - (Q1+Q2+Q3)` 의 네 성분이 **같은 재작성 세대**에서 왔는지 본다 (F6-REG-28).
+
+        같은 기간의 같은 지표라도 나중 보고서가 회계기준 변경으로 다시 낸 값이 있다. 그 값과
+        원래 기준의 분기 누계를 빼면 **어느 분기에도 존재한 적 없는 수**가 나온다. MSFT FY2016 이
+        그 사례이고 규칙 파일 `policies.f6.ttm_window.restatement_generation.why` 에 적어 두었다.
+
+        ## 세대를 무엇으로 가르는가 — 두 번 좁혔다
+
+        처음에는 `accession` 으로 갈랐다. **모든 복원이 막혔다** — 정상 복원도 FY 는 10-K, 분기는
+        10-Q 에서 오므로 accession 이 늘 다르다. 다음에는 개념 이름(`tag`)으로 갈랐다. **alphabet 이
+        막혔다** — `Revenues` 에서 `RevenueFromContractWithCustomerExcludingAssessedTax` 로 태그가
+        바뀌었을 뿐이고 겹치는 기간의 값은 일치한다. 이름이 다른 것과 기준이 다른 것은 다르다.
+
+        그래서 **값으로 가른다.** 성분들의 태그가 여럿이어도 겹치는 기간에서 값이 일치하면 같은
+        세대이고, 어긋나면 다른 세대다. 그 증거는 수집기가 이미 `overlap_conflicts` 로 모아 둔다.
+        `restated`(같은 태그 안에서 같은 기간에 값이 여럿이었는가)가 성분마다 다른 것도 섞임이다.
+
+        `components` 는 `{"label", "tag", "restated"}` 들이고, `overlap_conflicts` 는
+        `{"period", "kept": {"tag", "val"}, "other": {"tag", "val"}, "rel_diff"}` 들이다.
+        규칙에 `restatement_generation` 선언이 없으면(v1.5·v1.6) 검사를 건너뛴다.
+        """
+        spec = self.f6_ttm_window().get("restatement_generation")
+        if not spec:
+            return {"checked": False, "ok": True, "reason": "규칙에 restatement_generation 선언 없음"}
+        tags = {c.get("tag") for c in components}
+        restated = {bool(c.get("restated")) for c in components}
+        action = spec.get("on_mixed", "hold")
+        if len(restated) > 1:
+            who = [c.get("label", "?") for c in components if c.get("restated")]
+            return {"checked": True, "ok": False, "action": action, "tags": sorted(t for t in tags if t),
+                    "reason": f"재작성된 성분과 아닌 성분이 섞였다 — 재작성: {', '.join(who)}"}
+        hits = []
+        for conflict in overlap_conflicts or []:
+            pair = {(conflict.get("kept") or {}).get("tag"), (conflict.get("other") or {}).get("tag")}
+            if len(pair & tags) == 2:
+                hits.append(conflict)
+        if hits:
+            worst = max(hits, key=lambda c: c.get("rel_diff", 0))
+            return {"checked": True, "ok": False, "action": action, "tags": sorted(t for t in tags if t),
+                    "conflicts": hits,
+                    "reason": f"성분의 개념들이 겹치는 기간에서 값이 어긋난다 — {worst['period']} "
+                              f"{worst['kept']['tag']} {worst['kept']['val']:,} 대 "
+                              f"{worst['other']['tag']} {worst['other']['val']:,} "
+                              f"(상대차 {worst.get('rel_diff', 0) * 100:.2f}%). 회계기준이 다르다"}
+        return {"checked": True, "ok": True, "tags": sorted(t for t in tags if t),
+                "reason": ("한 개념에서 왔다" if len(tags) == 1 else
+                           "개념이 여럿이나 겹치는 기간의 값이 일치한다 — 태그 이름만 바뀐 것이다")}
+
     # ------------------------------------------------------------ F3 ladder
     def f3_ladder(self, points: float, imitation_pass: bool, door_closed_pass: bool) -> tuple[int, str]:
         spec = self.factor("F3")

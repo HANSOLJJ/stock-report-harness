@@ -101,7 +101,15 @@
        }
       ],
       "q4_derived": 48386000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -125,7 +133,15 @@
        }
       ],
       "q4_derived": 59894000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -208,7 +224,15 @@
        }
       ],
       "q4_derived": 20838000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -232,7 +256,15 @@
        }
       ],
       "q4_derived": 22768000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -287,7 +319,15 @@
        }
       ],
       "q4_derived": 23365000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -311,7 +351,15 @@
        }
       ],
       "q4_derived": 24745000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -457,7 +505,15 @@
        }
       ],
       "q4_derived": 39331000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "Revenues"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-27~2026-01-25",
@@ -481,7 +537,15 @@
        }
       ],
       "q4_derived": 68127000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "Revenues"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -564,7 +628,15 @@
        }
       ],
       "q4_derived": 22091000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-27~2026-01-25",
@@ -588,7 +660,15 @@
        }
       ],
       "q4_derived": 42960000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -643,7 +723,15 @@
        }
       ],
       "q4_derived": 24033000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-27~2026-01-25",
@@ -667,7 +755,15 @@
        }
       ],
       "q4_derived": 44299000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -813,7 +909,16 @@
        }
       ],
       "q4_derived": 96469000000,
-      "mixed_concepts": true
+      "mixed_concepts": true,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "Revenues"
+       ],
+       "reason": "개념이 여럿이나 겹치는 기간의 값이 일치한다 — 태그 이름만 바뀐 것이다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -837,7 +942,15 @@
        }
       ],
       "q4_derived": 113828000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "Revenues"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -920,7 +1033,15 @@
        }
       ],
       "q4_derived": 26536000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -944,7 +1065,15 @@
        }
       ],
       "q4_derived": 34455000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -999,7 +1128,15 @@
        }
       ],
       "q4_derived": 30972000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -1023,7 +1160,15 @@
        }
       ],
       "q4_derived": 35934000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -1169,7 +1314,15 @@
        }
       ],
       "q4_derived": 76441000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-07-01~2026-06-30",
@@ -1193,7 +1346,15 @@
        }
       ],
       "q4_derived": 90007000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": {
@@ -1281,7 +1442,15 @@
        }
       ],
       "q4_derived": 27233000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-07-01~2026-06-30",
@@ -1305,7 +1474,15 @@
        }
       ],
       "q4_derived": 35766000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": {
@@ -1365,7 +1542,15 @@
        }
       ],
       "q4_derived": 34323000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-07-01~2026-06-30",
@@ -1389,7 +1574,15 @@
        }
       ],
       "q4_derived": 40603000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": {
@@ -1540,7 +1733,15 @@
        }
       ],
       "q4_derived": 187792000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -1564,7 +1765,15 @@
        }
       ],
       "q4_derived": 213386000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -1647,7 +1856,15 @@
        }
       ],
       "q4_derived": 20004000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -1671,7 +1888,15 @@
        }
       ],
       "q4_derived": 21192000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": {
@@ -1731,7 +1956,15 @@
        }
       ],
       "q4_derived": 21203000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -1755,7 +1988,15 @@
        }
       ],
       "q4_derived": 24977000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -1899,7 +2140,15 @@
        }
       ],
       "q4_derived": 94930000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2024-09-29~2025-09-27",
@@ -1923,7 +2172,15 @@
        }
       ],
       "q4_derived": 102466000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -2006,7 +2263,15 @@
        }
       ],
       "q4_derived": 14736000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2024-09-29~2025-09-27",
@@ -2030,7 +2295,15 @@
        }
       ],
       "q4_derived": 27466000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -2085,7 +2358,15 @@
        }
       ],
       "q4_derived": 29591000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2024-09-29~2025-09-27",
@@ -2109,7 +2390,15 @@
        }
       ],
       "q4_derived": 32427000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -2255,7 +2544,15 @@
        }
       ],
       "q4_derived": 15903000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-06-01~2026-05-31",
@@ -2279,7 +2576,15 @@
        }
       ],
       "q4_derived": 19183000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": {
@@ -2367,7 +2672,15 @@
        }
       ],
       "q4_derived": 3427000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-06-01~2026-05-31",
@@ -2391,7 +2704,15 @@
        }
       ],
       "q4_derived": 4304000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": {
@@ -2451,7 +2772,15 @@
        }
       ],
       "q4_derived": 5109000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-06-01~2026-05-31",
@@ -2475,7 +2804,15 @@
        }
       ],
       "q4_derived": 6134000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": {
@@ -2663,7 +3000,15 @@
        }
       ],
       "q4_derived": 827519000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -2687,7 +3032,15 @@
        }
       ],
       "q4_derived": 1406802000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -2770,7 +3123,15 @@
        }
       ],
       "q4_derived": 79009000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -2794,7 +3155,15 @@
        }
       ],
       "q4_derived": 608676000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -2849,7 +3218,15 @@
        }
       ],
       "q4_derived": 11043000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -2873,7 +3250,15 @@
        }
       ],
       "q4_derived": 575394000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -3017,7 +3402,15 @@
        }
       ],
       "q4_derived": 25707000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "Revenues"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -3041,7 +3434,15 @@
        }
       ],
       "q4_derived": 24901000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "Revenues"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -3106,25 +3507,17 @@
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 7091000000,
       "fy_tag": "NetIncomeLoss",
-      "quarters_used": [
-       {
-        "end": "2024-03-31",
-        "val": 1390000000,
-        "tag": "NetIncomeLoss"
-       },
-       {
-        "end": "2024-06-30",
-        "val": 1400000000,
-        "tag": "NetIncomeLoss"
-       },
-       {
-        "end": "2024-09-30",
-        "val": 2173000000,
-        "tag": "NetIncomeLoss"
-       }
-      ],
-      "q4_derived": 2128000000,
-      "mixed_concepts": false
+      "q4_derived": null,
+      "restatement": {
+       "checked": true,
+       "ok": false,
+       "action": "hold",
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "재작성된 성분과 아닌 성분이 섞였다 — 재작성: Q~2024-03-31, Q~2024-06-30, Q~2024-09-30"
+      },
+      "held": true
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -3148,7 +3541,15 @@
        }
       ],
       "q4_derived": 840000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "NetIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -3203,7 +3604,15 @@
        }
       ],
       "q4_derived": 1583000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      },
      {
       "fy": "2025-01-01~2025-12-31",
@@ -3227,7 +3636,15 @@
        }
       ],
       "q4_derived": 1409000000,
-      "mixed_concepts": false
+      "mixed_concepts": false,
+      "restatement": {
+       "checked": true,
+       "ok": true,
+       "tags": [
+        "OperatingIncomeLoss"
+       ],
+       "reason": "한 개념에서 왔다"
+      }
      }
     ],
     "fy_agreement": null
@@ -3380,6 +3797,8 @@
      "kind": "Q",
      "form": "10-Q",
      "filed": "2026-08-04",
+     "accn": "0001628280-26-052535",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
     }
@@ -3393,6 +3812,8 @@
      "kind": "Q",
      "form": "10-Q",
      "filed": "2026-08-04",
+     "accn": "0001628280-26-052535",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
     }
@@ -3406,6 +3827,8 @@
      "kind": "Q",
      "form": "10-Q",
      "filed": "2026-08-04",
+     "accn": "0001628280-26-052535",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "NetIncomeLoss"
     }
@@ -3419,6 +3842,8 @@
      "kind": "Q",
      "form": "10-Q",
      "filed": "2026-08-04",
+     "accn": "0001628280-26-052535",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "OperatingIncomeLoss"
     }
@@ -3521,6 +3946,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2025-04-17",
+     "accn": "0001193125-25-083423",
+     "restated": false,
      "taxonomy": "ifrs-full",
      "tag": "Revenue"
     }
@@ -3534,6 +3961,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2025-04-17",
+     "accn": "0001193125-25-083423",
+     "restated": false,
      "taxonomy": "ifrs-full",
      "tag": "Revenue"
     }
@@ -3547,6 +3976,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2025-04-17",
+     "accn": "0001193125-25-083423",
+     "restated": false,
      "taxonomy": "ifrs-full",
      "tag": "ProfitLoss"
     }
@@ -3560,6 +3991,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2025-04-17",
+     "accn": "0001193125-25-083423",
+     "restated": false,
      "taxonomy": "ifrs-full",
      "tag": "ProfitLossFromOperatingActivities"
     }
@@ -3663,6 +4096,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "Revenues"
     }
@@ -3676,6 +4111,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "Revenues"
     }
@@ -3689,6 +4126,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "NetIncomeLoss"
     }
@@ -3702,6 +4141,8 @@
      "kind": "FY",
      "form": "20-F",
      "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "restated": false,
      "taxonomy": "us-gaap",
      "tag": "OperatingIncomeLoss"
     }
