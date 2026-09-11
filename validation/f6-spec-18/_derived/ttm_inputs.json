@@ -56,86 +56,105 @@
      {
       "end": "2025-09-30",
       "val": 51242000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-12-31",
       "val": 59894000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-03-31",
       "val": 56311000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-06-30",
       "val": 60801000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 164501000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 36455000000
+        "val": 36455000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-06-30",
-        "val": 39071000000
+        "val": 39071000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-09-30",
-        "val": 40589000000
+        "val": 40589000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 48386000000
+      "q4_derived": 48386000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 200966000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 42314000000
+        "val": 42314000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-06-30",
-        "val": 47516000000
+        "val": 47516000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-09-30",
-        "val": 51242000000
+        "val": 51242000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 59894000000
+      "q4_derived": 59894000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-09-30",
       "val": 40589000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2024-12-31",
       "val": 48386000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-03-31",
       "val": 42314000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-06-30",
       "val": 47516000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ]
    },
@@ -144,128 +163,158 @@
      {
       "end": "2025-09-30",
       "val": 2709000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 22768000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 26773000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 15848000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 62360000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 12369000000
+        "val": 12369000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 13465000000
+        "val": 13465000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 15688000000
+        "val": 15688000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 20838000000
+      "q4_derived": 20838000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 60458000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 16644000000
+        "val": 16644000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 18337000000
+        "val": 18337000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 2709000000
+        "val": 2709000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 22768000000
+      "q4_derived": 22768000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-09-30",
       "val": 20535000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 24745000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 22872000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 18775000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 69380000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 13818000000
+        "val": 13818000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 14847000000
+        "val": 14847000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 17350000000
+        "val": 17350000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 23365000000
+      "q4_derived": 23365000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 83276000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 17555000000
+        "val": 17555000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 20441000000
+        "val": 20441000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 20535000000
+        "val": 20535000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 24745000000
+      "q4_derived": 24745000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    }
   },
   "coalesce": {
@@ -363,86 +412,105 @@
      {
       "end": "2025-10-26",
       "val": 57006000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2026-01-25",
       "val": 68127000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "Revenues"
      },
      {
       "end": "2026-04-26",
       "val": 81615000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2026-07-26",
       "val": 96221000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-29~2025-01-26",
       "fy_val": 130497000000,
+      "fy_tag": "Revenues",
       "quarters_used": [
        {
         "end": "2024-04-28",
-        "val": 26044000000
+        "val": 26044000000,
+        "tag": "Revenues"
        },
        {
         "end": "2024-07-28",
-        "val": 30040000000
+        "val": 30040000000,
+        "tag": "Revenues"
        },
        {
         "end": "2024-10-27",
-        "val": 35082000000
+        "val": 35082000000,
+        "tag": "Revenues"
        }
       ],
-      "q4_derived": 39331000000
+      "q4_derived": 39331000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-27~2026-01-25",
       "fy_val": 215938000000,
+      "fy_tag": "Revenues",
       "quarters_used": [
        {
         "end": "2025-04-27",
-        "val": 44062000000
+        "val": 44062000000,
+        "tag": "Revenues"
        },
        {
         "end": "2025-07-27",
-        "val": 46743000000
+        "val": 46743000000,
+        "tag": "Revenues"
        },
        {
         "end": "2025-10-26",
-        "val": 57006000000
+        "val": 57006000000,
+        "tag": "Revenues"
        }
       ],
-      "q4_derived": 68127000000
+      "q4_derived": 68127000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-10-27",
       "val": 35082000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2025-01-26",
       "val": 39331000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "Revenues"
      },
      {
       "end": "2025-04-27",
       "val": 44062000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2025-07-27",
       "val": 46743000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      }
     ]
    },
@@ -451,128 +519,158 @@
      {
       "end": "2025-10-26",
       "val": 31910000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-01-25",
       "val": 42960000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-04-26",
       "val": 58321000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-07-26",
       "val": 59688000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-29~2025-01-26",
       "fy_val": 72880000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-04-28",
-        "val": 14881000000
+        "val": 14881000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-07-28",
-        "val": 16599000000
+        "val": 16599000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-10-27",
-        "val": 19309000000
+        "val": 19309000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 22091000000
+      "q4_derived": 22091000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-27~2026-01-25",
       "fy_val": 120067000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-04-27",
-        "val": 18775000000
+        "val": 18775000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-07-27",
-        "val": 26422000000
+        "val": 26422000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-10-26",
-        "val": 31910000000
+        "val": 31910000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 42960000000
+      "q4_derived": 42960000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-10-26",
       "val": 36010000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-01-25",
       "val": 44299000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-04-26",
       "val": 53536000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-07-26",
       "val": 63734000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-29~2025-01-26",
       "fy_val": 81453000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-04-28",
-        "val": 16909000000
+        "val": 16909000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-07-28",
-        "val": 18642000000
+        "val": 18642000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-10-27",
-        "val": 21869000000
+        "val": 21869000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 24033000000
+      "q4_derived": 24033000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-27~2026-01-25",
       "fy_val": 130387000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-04-27",
-        "val": 21638000000
+        "val": 21638000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-07-27",
-        "val": 28440000000
+        "val": 28440000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-10-26",
-        "val": 36010000000
+        "val": 36010000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 44299000000
+      "q4_derived": 44299000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    }
   },
   "coalesce": {
@@ -670,86 +768,105 @@
      {
       "end": "2025-09-30",
       "val": 102346000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2025-12-31",
       "val": 113828000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "Revenues"
      },
      {
       "end": "2026-03-31",
       "val": 109896000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2026-06-30",
       "val": 119796000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 350018000000,
+      "fy_tag": "Revenues",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 80539000000
+        "val": 80539000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-06-30",
-        "val": 84742000000
+        "val": 84742000000,
+        "tag": "Revenues"
        },
        {
         "end": "2024-09-30",
-        "val": 88268000000
+        "val": 88268000000,
+        "tag": "Revenues"
        }
       ],
-      "q4_derived": 96469000000
+      "q4_derived": 96469000000,
+      "mixed_concepts": true
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 402836000000,
+      "fy_tag": "Revenues",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 90234000000
+        "val": 90234000000,
+        "tag": "Revenues"
        },
        {
         "end": "2025-06-30",
-        "val": 96428000000
+        "val": 96428000000,
+        "tag": "Revenues"
        },
        {
         "end": "2025-09-30",
-        "val": 102346000000
+        "val": 102346000000,
+        "tag": "Revenues"
        }
       ],
-      "q4_derived": 113828000000
+      "q4_derived": 113828000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-09-30",
       "val": 88268000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2024-12-31",
       "val": 96469000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues"
      },
      {
       "end": "2025-03-31",
       "val": 90234000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2025-06-30",
       "val": 96428000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      }
     ]
    },
@@ -758,128 +875,158 @@
      {
       "end": "2025-09-30",
       "val": 34979000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 34455000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 62578000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 112193000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 100118000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 23662000000
+        "val": 23662000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 23619000000
+        "val": 23619000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 26301000000
+        "val": 26301000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 26536000000
+      "q4_derived": 26536000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 132170000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 34540000000
+        "val": 34540000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 28196000000
+        "val": 28196000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 34979000000
+        "val": 34979000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 34455000000
+      "q4_derived": 34455000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-09-30",
       "val": 31228000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 35934000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 39696000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 40770000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 112390000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 25472000000
+        "val": 25472000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 27425000000
+        "val": 27425000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 28521000000
+        "val": 28521000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 30972000000
+      "q4_derived": 30972000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 129039000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 30606000000
+        "val": 30606000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 31271000000
+        "val": 31271000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 31228000000
+        "val": 31228000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 35934000000
+      "q4_derived": 35934000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    }
   },
   "coalesce": {
@@ -977,86 +1124,110 @@
      {
       "end": "2025-09-30",
       "val": 77673000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-12-31",
       "val": 81273000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-03-31",
       "val": 82886000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-06-30",
       "val": 90007000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-07-01~2025-06-30",
       "fy_val": 281724000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2024-09-30",
-        "val": 65585000000
+        "val": 65585000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-12-31",
-        "val": 69632000000
+        "val": 69632000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-03-31",
-        "val": 70066000000
+        "val": 70066000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 76441000000
+      "q4_derived": 76441000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-07-01~2026-06-30",
       "fy_val": 331839000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2025-09-30",
-        "val": 77673000000
+        "val": 77673000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-12-31",
-        "val": 81273000000
+        "val": 81273000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2026-03-31",
-        "val": 82886000000
+        "val": 82886000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 90007000000
+      "q4_derived": 90007000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": {
+     "fy_val": 331839000000,
+     "diff": 0,
+     "matches": true,
+     "period": "2025-07-01~2026-06-30"
+    }
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-09-30",
       "val": 65585000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2024-12-31",
       "val": 69632000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-03-31",
       "val": 70066000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-06-30",
       "val": 76441000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ]
    },
@@ -1065,128 +1236,168 @@
      {
       "end": "2025-09-30",
       "val": 27747000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 38458000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 31778000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 35766000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-07-01~2025-06-30",
       "fy_val": 101832000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-09-30",
-        "val": 24667000000
+        "val": 24667000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-12-31",
-        "val": 24108000000
+        "val": 24108000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-03-31",
-        "val": 25824000000
+        "val": 25824000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 27233000000
+      "q4_derived": 27233000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-07-01~2026-06-30",
       "fy_val": 133749000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-09-30",
-        "val": 27747000000
+        "val": 27747000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-12-31",
-        "val": 38458000000
+        "val": 38458000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2026-03-31",
-        "val": 31778000000
+        "val": 31778000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 35766000000
+      "q4_derived": 35766000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": {
+     "fy_val": 133749000000,
+     "diff": 0,
+     "matches": true,
+     "period": "2025-07-01~2026-06-30"
+    }
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-09-30",
       "val": 37961000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 38275000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 38398000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 40603000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-07-01~2025-06-30",
       "fy_val": 128528000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-09-30",
-        "val": 30552000000
+        "val": 30552000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-12-31",
-        "val": 31653000000
+        "val": 31653000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-03-31",
-        "val": 32000000000
+        "val": 32000000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 34323000000
+      "q4_derived": 34323000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-07-01~2026-06-30",
       "fy_val": 155237000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-09-30",
-        "val": 37961000000
+        "val": 37961000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-12-31",
-        "val": 38275000000
+        "val": 38275000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2026-03-31",
-        "val": 38398000000
+        "val": 38398000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 40603000000
+      "q4_derived": 40603000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": {
+     "fy_val": 155237000000,
+     "diff": 0,
+     "matches": true,
+     "period": "2025-07-01~2026-06-30"
+    }
    }
   },
   "coalesce": {
@@ -1284,86 +1495,105 @@
      {
       "end": "2025-09-30",
       "val": 180169000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-12-31",
       "val": 213386000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-03-31",
       "val": 181519000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-06-30",
       "val": 200606000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 637959000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 143313000000
+        "val": 143313000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-06-30",
-        "val": 147977000000
+        "val": 147977000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-09-30",
-        "val": 158877000000
+        "val": 158877000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 187792000000
+      "q4_derived": 187792000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 716924000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 155667000000
+        "val": 155667000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-06-30",
-        "val": 167702000000
+        "val": 167702000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-09-30",
-        "val": 180169000000
+        "val": 180169000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 213386000000
+      "q4_derived": 213386000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-09-30",
       "val": 158877000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2024-12-31",
       "val": 187792000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-03-31",
       "val": 155667000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-06-30",
       "val": 167702000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ]
    },
@@ -1372,128 +1602,163 @@
      {
       "end": "2025-09-30",
       "val": 21187000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 21192000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 30255000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 62647000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 59248000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 10431000000
+        "val": 10431000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 13485000000
+        "val": 13485000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 15328000000
+        "val": 15328000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 20004000000
+      "q4_derived": 20004000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 77670000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 17127000000
+        "val": 17127000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 18164000000
+        "val": 18164000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 21187000000
+        "val": 21187000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 21192000000
+      "q4_derived": 21192000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": {
+     "fy_val": 135281000000,
+     "diff": 0,
+     "matches": true,
+     "period": "2025-07-01~2026-06-30"
+    }
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-09-30",
       "val": 17422000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 24977000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 23852000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 27461000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 68593000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 15307000000
+        "val": 15307000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 14672000000
+        "val": 14672000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 17411000000
+        "val": 17411000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 21203000000
+      "q4_derived": 21203000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 79975000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 18405000000
+        "val": 18405000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 19171000000
+        "val": 19171000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 17422000000
+        "val": 17422000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 24977000000
+      "q4_derived": 24977000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    }
   },
   "coalesce": {
@@ -1589,86 +1854,105 @@
      {
       "end": "2025-09-27",
       "val": 102466000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-12-27",
       "val": 143756000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-03-28",
       "val": 111184000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-06-27",
       "val": 109417000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2023-10-01~2024-09-28",
       "fy_val": 391035000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2023-12-30",
-        "val": 119575000000
+        "val": 119575000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-03-30",
-        "val": 90753000000
+        "val": 90753000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-06-29",
-        "val": 85777000000
+        "val": 85777000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 94930000000
+      "q4_derived": 94930000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2024-09-29~2025-09-27",
       "fy_val": 416161000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2024-12-28",
-        "val": 124300000000
+        "val": 124300000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-03-29",
-        "val": 95359000000
+        "val": 95359000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-06-28",
-        "val": 94036000000
+        "val": 94036000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 102466000000
+      "q4_derived": 102466000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-09-28",
       "val": 94930000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2024-12-28",
       "val": 124300000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-03-29",
       "val": 95359000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-06-28",
       "val": 94036000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ]
    },
@@ -1677,128 +1961,158 @@
      {
       "end": "2025-09-27",
       "val": 27466000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-12-27",
       "val": 42097000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-03-28",
       "val": 29578000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-06-27",
       "val": 29789000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2023-10-01~2024-09-28",
       "fy_val": 93736000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2023-12-30",
-        "val": 33916000000
+        "val": 33916000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-03-30",
-        "val": 23636000000
+        "val": 23636000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-06-29",
-        "val": 21448000000
+        "val": 21448000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 14736000000
+      "q4_derived": 14736000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2024-09-29~2025-09-27",
       "fy_val": 112010000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-12-28",
-        "val": 36330000000
+        "val": 36330000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-03-29",
-        "val": 24780000000
+        "val": 24780000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-06-28",
-        "val": 23434000000
+        "val": 23434000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 27466000000
+      "q4_derived": 27466000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-09-27",
       "val": 32427000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-12-27",
       "val": 50852000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-03-28",
       "val": 35885000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-06-27",
       "val": 35695000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2023-10-01~2024-09-28",
       "fy_val": 123216000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2023-12-30",
-        "val": 40373000000
+        "val": 40373000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-03-30",
-        "val": 27900000000
+        "val": 27900000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-06-29",
-        "val": 25352000000
+        "val": 25352000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 29591000000
+      "q4_derived": 29591000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2024-09-29~2025-09-27",
       "fy_val": 133050000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-12-28",
-        "val": 42832000000
+        "val": 42832000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-03-29",
-        "val": 29589000000
+        "val": 29589000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-06-28",
-        "val": 28202000000
+        "val": 28202000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 32427000000
+      "q4_derived": 32427000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    }
   },
   "coalesce": {
@@ -1896,86 +2210,110 @@
      {
       "end": "2025-08-31",
       "val": 14926000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-11-30",
       "val": 16058000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-02-28",
       "val": 17190000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-05-31",
       "val": 19183000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-06-01~2025-05-31",
       "fy_val": 57399000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2024-08-31",
-        "val": 13307000000
+        "val": 13307000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-11-30",
-        "val": 14059000000
+        "val": 14059000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-02-28",
-        "val": 14130000000
+        "val": 14130000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 15903000000
+      "q4_derived": 15903000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-06-01~2026-05-31",
       "fy_val": 67357000000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2025-08-31",
-        "val": 14926000000
+        "val": 14926000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-11-30",
-        "val": 16058000000
+        "val": 16058000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2026-02-28",
-        "val": 17190000000
+        "val": 17190000000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 19183000000
+      "q4_derived": 19183000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": {
+     "fy_val": 67357000000,
+     "diff": 0,
+     "matches": true,
+     "period": "2025-06-01~2026-05-31"
+    }
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-08-31",
       "val": 13307000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2024-11-30",
       "val": 14059000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-02-28",
       "val": 14130000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-05-31",
       "val": 15903000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ]
    },
@@ -1984,128 +2322,168 @@
      {
       "end": "2025-08-31",
       "val": 2927000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-11-30",
       "val": 6135000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-02-28",
       "val": 3721000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-05-31",
       "val": 4304000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-06-01~2025-05-31",
       "fy_val": 12443000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-08-31",
-        "val": 2929000000
+        "val": 2929000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-11-30",
-        "val": 3151000000
+        "val": 3151000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-02-28",
-        "val": 2936000000
+        "val": 2936000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 3427000000
+      "q4_derived": 3427000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-06-01~2026-05-31",
       "fy_val": 17087000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-08-31",
-        "val": 2927000000
+        "val": 2927000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-11-30",
-        "val": 6135000000
+        "val": 6135000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2026-02-28",
-        "val": 3721000000
+        "val": 3721000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 4304000000
+      "q4_derived": 4304000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": {
+     "fy_val": 17087000000,
+     "diff": 0,
+     "matches": true,
+     "period": "2025-06-01~2026-05-31"
+    }
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-08-31",
       "val": 4277000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-11-30",
       "val": 4731000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-02-28",
       "val": 5464000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-05-31",
       "val": 6134000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-06-01~2025-05-31",
       "fy_val": 17678000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-08-31",
-        "val": 3991000000
+        "val": 3991000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-11-30",
-        "val": 4220000000
+        "val": 4220000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-02-28",
-        "val": 4358000000
+        "val": 4358000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 5109000000
+      "q4_derived": 5109000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-06-01~2026-05-31",
       "fy_val": 20606000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-08-31",
-        "val": 4277000000
+        "val": 4277000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-11-30",
-        "val": 4731000000
+        "val": 4731000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2026-02-28",
-        "val": 5464000000
+        "val": 5464000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 6134000000
+      "q4_derived": 6134000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": {
+     "fy_val": 20606000000,
+     "diff": 0,
+     "matches": true,
+     "period": "2025-06-01~2026-05-31"
+    }
    }
   },
   "coalesce": {
@@ -2240,86 +2618,105 @@
      {
       "end": "2025-09-30",
       "val": 1181092000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-12-31",
       "val": 1406802000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-03-31",
       "val": 1632583000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2026-06-30",
       "val": 1935464000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 2865507000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 634338000
+        "val": 634338000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-06-30",
-        "val": 678134000
+        "val": 678134000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2024-09-30",
-        "val": 725516000
+        "val": 725516000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 827519000
+      "q4_derived": 827519000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 4475446000,
+      "fy_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 883855000
+        "val": 883855000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-06-30",
-        "val": 1003697000
+        "val": 1003697000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        },
        {
         "end": "2025-09-30",
-        "val": 1181092000
+        "val": 1181092000,
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
        }
       ],
-      "q4_derived": 1406802000
+      "q4_derived": 1406802000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-09-30",
       "val": 725516000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2024-12-31",
       "val": 827519000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-03-31",
       "val": 883855000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      },
      {
       "end": "2025-06-30",
       "val": 1003697000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
      }
     ]
    },
@@ -2328,128 +2725,158 @@
      {
       "end": "2025-09-30",
       "val": 475599000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 608676000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 870527000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 1061890000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 462190000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 105530000
+        "val": 105530000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 134126000
+        "val": 134126000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 143525000
+        "val": 143525000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 79009000
+      "q4_derived": 79009000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 1625033000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 214031000
+        "val": 214031000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 326727000
+        "val": 326727000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 475599000
+        "val": 475599000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 608676000
+      "q4_derived": 608676000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-09-30",
       "val": 393256000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 575394000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 753998000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 912004000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 310403000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 80881000
+        "val": 80881000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 105339000
+        "val": 105339000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 113140000
+        "val": 113140000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 11043000
+      "q4_derived": 11043000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 1414015000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 176048000
+        "val": 176048000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 269317000
+        "val": 269317000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 393256000
+        "val": 393256000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 575394000
+      "q4_derived": 575394000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    }
   },
   "coalesce": {
@@ -2545,86 +2972,105 @@
      {
       "end": "2025-09-30",
       "val": 28095000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2025-12-31",
       "val": 24901000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "Revenues"
      },
      {
       "end": "2026-03-31",
       "val": 22387000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2026-06-30",
       "val": 28236000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 97690000000,
+      "fy_tag": "Revenues",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 21301000000
+        "val": 21301000000,
+        "tag": "Revenues"
        },
        {
         "end": "2024-06-30",
-        "val": 25500000000
+        "val": 25500000000,
+        "tag": "Revenues"
        },
        {
         "end": "2024-09-30",
-        "val": 25182000000
+        "val": 25182000000,
+        "tag": "Revenues"
        }
       ],
-      "q4_derived": 25707000000
+      "q4_derived": 25707000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 94827000000,
+      "fy_tag": "Revenues",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 19335000000
+        "val": 19335000000,
+        "tag": "Revenues"
        },
        {
         "end": "2025-06-30",
-        "val": 22496000000
+        "val": 22496000000,
+        "tag": "Revenues"
        },
        {
         "end": "2025-09-30",
-        "val": 28095000000
+        "val": 28095000000,
+        "tag": "Revenues"
        }
       ],
-      "q4_derived": 24901000000
+      "q4_derived": 24901000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "revenue_ttm_prior": {
     "quarters": [
      {
       "end": "2024-09-30",
       "val": 25182000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2024-12-31",
       "val": 25707000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "Revenues"
      },
      {
       "end": "2025-03-31",
       "val": 19335000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      },
      {
       "end": "2025-06-30",
       "val": 22496000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "Revenues"
      }
     ]
    },
@@ -2633,128 +3079,158 @@
      {
       "end": "2025-09-30",
       "val": 1373000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 840000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 477000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 1114000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "NetIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 7091000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 1390000000
+        "val": 1390000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 1400000000
+        "val": 1400000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 2173000000
+        "val": 2173000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 2128000000
+      "q4_derived": 2128000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 3794000000,
+      "fy_tag": "NetIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 409000000
+        "val": 409000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 1172000000
+        "val": 1172000000,
+        "tag": "NetIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 1373000000
+        "val": 1373000000,
+        "tag": "NetIncomeLoss"
        }
       ],
-      "q4_derived": 840000000
+      "q4_derived": 840000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    },
    "operating_income_ttm": {
     "quarters": [
      {
       "end": "2025-09-30",
       "val": 1624000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2025-12-31",
       "val": 1409000000,
-      "kind": "Q4_derived"
+      "kind": "Q4_derived",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-03-31",
       "val": 941000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      },
      {
       "end": "2026-06-30",
       "val": 398000000,
-      "kind": "Q"
+      "kind": "Q",
+      "tag": "OperatingIncomeLoss"
      }
     ],
     "q4_reconstruction": [
      {
       "fy": "2024-01-01~2024-12-31",
       "fy_val": 7076000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2024-03-31",
-        "val": 1171000000
+        "val": 1171000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-06-30",
-        "val": 1605000000
+        "val": 1605000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2024-09-30",
-        "val": 2717000000
+        "val": 2717000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 1583000000
+      "q4_derived": 1583000000,
+      "mixed_concepts": false
      },
      {
       "fy": "2025-01-01~2025-12-31",
       "fy_val": 4355000000,
+      "fy_tag": "OperatingIncomeLoss",
       "quarters_used": [
        {
         "end": "2025-03-31",
-        "val": 399000000
+        "val": 399000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-06-30",
-        "val": 923000000
+        "val": 923000000,
+        "tag": "OperatingIncomeLoss"
        },
        {
         "end": "2025-09-30",
-        "val": 1624000000
+        "val": 1624000000,
+        "tag": "OperatingIncomeLoss"
        }
       ],
-      "q4_derived": 1409000000
+      "q4_derived": 1409000000,
+      "mixed_concepts": false
      }
-    ]
+    ],
+    "fy_agreement": null
    }
   },
   "coalesce": {

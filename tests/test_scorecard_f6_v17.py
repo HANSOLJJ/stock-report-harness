@@ -241,3 +241,72 @@ class TestF6LegacyModeUnaffected(unittest.TestCase):
         self.assertEqual(r["status"], "ok")
         self.assertEqual(r["calc"]["ntm_per"], 25.0)
         self.assertNotIn("parameters", r["calc"])
+
+
+class TestF6FixRoundSpec(unittest.TestCase):
+    """F6-FIX-21 로 확정된 규약이 규칙 파일에 남아 있는지 고정한다."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.f6 = RULES_V17.f6
+        cls.sources = RULES_V17.payload["sources"]
+
+    def test_ttm_anchor_is_latest_available_quarter(self):
+        w = self.f6["ttm_window"]
+        self.assertEqual(w["anchor"], "latest_available_quarter_including_derived_q4")
+        # 왜 다른 쪽이 아닌지가 남아야 다음 세션이 다시 흔들지 않는다.
+        self.assertIn("3개월", w["why_not_latest_tagged_quarter"])
+        self.assertIn("ORCL", w["why_not_latest_tagged_quarter"])
+        self.assertIn("우연", w["why_not_latest_tagged_quarter"])
+
+    def test_ttm_verification_rule_is_recorded(self):
+        """4분기 합이 FY 태깅값과 같으면 복원값이 아니라 공시값이다 — 이것이 [A] 의 근거다."""
+        self.assertIn("공시값", self.f6["ttm_window"]["verification"])
+
+    def test_coalesce_is_per_period_not_per_company(self):
+        c = self.f6["revenue_coalesce"]
+        self.assertEqual(c["mode"], "per_period_fallback")
+        self.assertTrue(c["record_provenance"])
+        self.assertIn("기간마다", c["note"])
+        self.assertGreaterEqual(len(c["priority"]), 3)
+
+    def test_fx_separates_price_date_and_rate_date(self):
+        fx = self.f6["fx"]
+        self.assertEqual(fx["rate_source_host"], "www.federalreserve.gov")
+        for key in ("price_date", "fx_rate_date", "fx_backfill_days"):
+            self.assertIn(key, fx["date_fields"])
+
+    def test_fx_backfill_limit_is_pending(self):
+        """한도 없이 두면 무한 후퇴가 된다. 잠정값을 두되 확정이 아님을 표시한다."""
+        fx = self.f6["fx"]
+        self.assertEqual(fx["backfill_limit_status"], "pending")
+        self.assertIsInstance(fx["backfill_limit_days"], int)
+        self.assertIn("잠정", fx["backfill_limit_note"])
+
+    def test_h10_listed_with_permission_distinction(self):
+        entry = next(e for e in self.sources["allowed"] if e["host"] == "www.federalreserve.gov")
+        # 금지 없음과 명시 허가는 다르다. 그 구분이 note 에 남아야 한다.
+        self.assertIn("금지 없음", entry["note"])
+        self.assertIn("명시 허가", entry["note"])
+        # 연방정부 저작물 원칙은 사이트 문서로 확인한 사실이 아니므로 근거로 쓰지 않는다.
+        self.assertIn("등재 근거로 쓰지 않는다", entry["note"])
+
+    def test_fmp_and_finnhub_stay_allowed_with_status_note(self):
+        """사용자 결정이다. 강등하지 않고 상태만 적는다."""
+        allowed = {e["host"]: e["note"] for e in self.sources["allowed"]}
+        denied = {e["host"] for e in self.sources["denied"]}
+        unlisted = {e["host"] for e in self.sources.get("unlisted", [])}
+        for host in ("financialmodelingprep.com", "finnhub.io"):
+            self.assertIn(host, allowed)
+            self.assertNotIn(host, denied)
+            self.assertNotIn(host, unlisted)
+            self.assertIn("상태 고지", allowed[host])
+        self.assertIn("무료 등급 전제가 깨진 상태", allowed["financialmodelingprep.com"])
+        self.assertIn("약관 확인이 불가능", allowed["finnhub.io"])
+
+    def test_private_band_still_pending(self):
+        self.assertIsNone(self.f6["private_bands"])
+        self.assertEqual(self.f6["private_score_mode"], "pending_rule_decision")
+
+    def test_v17_is_still_draft(self):
+        self.assertEqual(RULES_V17.payload["status"], "draft")

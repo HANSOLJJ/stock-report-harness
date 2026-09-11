@@ -389,10 +389,38 @@
       "private_score_mode": "pending_rule_decision",
       "private_note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다.",
       "fx": {
-        "status": "pending_source_allowlist",
-        "note": "P1·P2 의 ADR/FPI 환산에 필요한 환율 출처가 아직 sources.allowed 에 없다. 하드코딩하지 않는다. NTM-전망치조사가 조사 중이며 등재 전에는 해당 트랙의 P1·P2 를 산출하지 않는다.",
-        "rate_source_host": null,
-        "basis": "시총 기준일 현물환율. 공시 환산치는 교차 검증용으로만 둔다(F6-FX-16)"
+        "status": "source_listed_pending_backfill_limit",
+        "rate_source_host": "www.federalreserve.gov",
+        "release": "H.10 Foreign Exchange Rates — 일별 뉴욕 정오 매입률, 주간 게시",
+        "basis": "시총 기준일 현물환율. 공시 환산치는 교차 검증용으로만 둔다(F6-FX-16)",
+        "date_fields": {
+          "price_date": "시총 기준일",
+          "fx_rate_date": "실제로 쓴 환율의 게시 일자",
+          "fx_backfill_days": "price_date 와 fx_rate_date 의 차이(일)",
+          "note": "H.10 이 주간 게시라 시총 기준일 당일 값이 없을 수 있다. 두 날짜가 다를 수 있다는 사실 자체를 자료에 남긴다. 하나로 합치면 어느 날 환율을 썼는지 사후에 알 수 없다."
+        },
+        "backfill_limit_days": 7,
+        "backfill_limit_status": "pending",
+        "backfill_limit_note": "잠정값이다. NTM FX-SOURCE-19 가 7일을 제안했고 실제 게시 지연 분포를 보고 정하는 편이 낫다. 다만 한도 없이 두면 무한 후퇴가 되므로 잠정값을 두고 pending 으로 표시한다. 실측 후 확정한다."
+      },
+      "ttm_window": {
+        "anchor": "latest_available_quarter_including_derived_q4",
+        "decided_at": "2026-09-11",
+        "rule": "TTM 창의 끝점은 복원 Q4 를 포함한 최신 확보 분기다. 가장 최신의 완결된 12개월을 쓴다.",
+        "why_not_latest_tagged_quarter": "끝점을 '직접 태깅된 최신 분기'로 두면 회계 Q4 가 막 닫힌 회사에서 구조적으로 3개월 뒤처진다. 10-K 가 나와 FY 가 공시됐는데도 그 분기를 버리기 때문이다. ORCL 은 FY2026(2026-05-31)이 이미 공시됐는데 최신 태깅 분기는 2026-02-28 이고, 그 차이가 성장률 +17.35% 대 +14.87% 로 밴드 한 칸을 가른다. MSFT 도 같은 구조(+17.79% 대 +17.87%)이나 밴드를 넘지 않아 점수가 갈리지 않았을 뿐이다. 우연히 안 걸린 것을 규약의 근거로 삼지 않는다.",
+        "verification": "복원 Q4 를 포함한 4분기 합이 같은 기간 FY 태깅값과 일치하면 그 TTM 은 복원값이 아니라 공시값 자체다. ORCL 67,357,000,000 이 그 사례다. 수집기는 이 일치를 매번 확인해 근거로 남긴다."
+      },
+      "revenue_coalesce": {
+        "mode": "per_period_fallback",
+        "note": "매출 개념은 회사별로 하나를 고르는 것이 아니라 **기간마다** 우선순위대로 채운다. 같은 회사 안에서도 기간에 따라 태그 유무가 다르다 — ORCL 은 FY 연간치가 두 개념에서 같은데 최신 10-Q 에 Revenues 태그가 없다(C-13 F6-VERIFY-18B). 회사별로 고르면 그 분기가 비어 TTM 이 성립하지 않는다.",
+        "priority": [
+          "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "us-gaap:Revenues",
+          "ifrs-full:Revenue",
+          "ifrs-full:RevenueFromContractsWithCustomers"
+        ],
+        "record_provenance": true,
+        "overlap_check": "겹치는 기간이 두 개념에 모두 있으면 값 일치를 검산하고 상대오차를 남긴다(F6-AVAIL-15 4.4)"
       }
     },
     "f9": {
@@ -769,11 +797,15 @@
       },
       {
         "host": "finnhub.io",
-        "note": "API 키 발급 기반. 무료 등급 분당 60콜"
+        "note": "API 키 발급 기반. 무료 등급 분당 60콜 | 상태 고지(2026-09-11, NTM FX-SOURCE-19 4.2). robots.txt 가 'Disallow: /terms-of-service' 라 **규정대로는 약관 확인이 불가능**하다. 우리 policy_note 는 'robots.txt 와 이용약관을 확인하고 등재한 뒤에 수집한다' 인데 이 host 는 그 확인을 robots.txt 가 막는 구조다. **약관 확인 없이 등재된 상태**라는 사실을 기록한다. NTM 이 그 경로를 조회하지 않은 판단은 옳다. 강등하지 않고 상태만 기록한다(사용자 결정). 현재 F6 재정의에서는 쓰지 않는다 — SEC 만 쓴다."
       },
       {
         "host": "financialmodelingprep.com",
-        "note": "API 키 발급 기반. 무료 등급 250콜/일"
+        "note": "API 키 발급 기반. 무료 등급 250콜/일 | 상태 고지(2026-09-11, NTM FX-SOURCE-19 4.1). 약관 §2.2.1 이 'This license may only be used by a Customer who is an individual... In no event may the Customer use this licence on behalf of a company' 로 법인 대리 사용을 배제한다. usage_scope 가 corporate_internal_only 이므로 **무료 등급 전제가 깨진 상태**다. §2.2 본문이 Order Form·계정에 명시된 라이선스를 말하므로 유료 등급은 다른 조건일 수 있어 host 자체가 부적격이라는 뜻은 아니다. 강등하지 않고 상태만 기록한다(사용자 결정). 현재 F6 재정의에서는 쓰지 않는다 — SEC 만 쓴다."
+      },
+      {
+        "host": "www.federalreserve.gov",
+        "note": "연준 H.10 Foreign Exchange Rates. P1·P2 의 USD 환산 환율 출처. 일별 뉴욕 정오 매입률이며 TAIWAN DOLLAR·CHINA P.R. YUAN 을 모두 수록한다(2026-09-10 현재 릴리스에서 확인). 과거는 Release Dates 아카이브와 Data Download Program(/datadownload/choose.aspx?rel=h10)으로 조회한다. API 키 불필요. robots.txt 가 404 로 존재하지 않아 크롤러 제한이 게시돼 있지 않다. 다만 Board 자체 콘텐츠의 재사용을 명시적으로 허가하는 문구는 확인한 경로(/legal.htm·/website-terms-of-use.htm·/privacy-program.htm 은 404, /website-linking-policies.htm 은 200)에서 찾지 못했다. 즉 '금지 없음'이지 '명시 허가'가 아니다. 미국 연방정부 저작물 원칙(17 U.S.C. §105)은 사이트 문서로 확인한 사실이 아니므로 등재 근거로 쓰지 않는다. TSM·BABA 20-F 가 convenience translation 환율의 출처로 H.10 을 명시하므로 발행사 공시 관행과 같은 기준을 쓰게 된다. 값을 대량 수집하지 않고 필요한 일자만 조회하며 요청 간격을 둔다."
       }
     ],
     "denied": [

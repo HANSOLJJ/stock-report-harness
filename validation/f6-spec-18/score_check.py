@@ -18,11 +18,12 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 RUN = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-baseline"
 
-# 설계진행이 SEC 원자료로 직접 계산한 값. 대조용이지 정답이 아니다.
-EXPECTED = {"tesla": -5, "oracle": -4, "apple": -4, "palantir": -4, "alphabet": -3,
+# 검산 기준. 2026-09-11 재검토(F6-FIX-21)에서 oracle 이 -4 에서 **-3 으로 정정**됐다.
+# TTM 창 끝점을 [A](복원 Q4 포함 최신 확보 분기)로 확정했고 설계진행 기준표와 C-13 검증기가 둘 다 틀렸다.
+EXPECTED = {"tesla": -5, "oracle": -3, "apple": -4, "palantir": -4, "alphabet": -3,
             "microsoft": -3, "amazon": -2, "nvidia": -2, "meta": -1}
 EXPECTED_P3 = {"nvidia": 0.834, "palantir": 0.789, "tsmc": 0.339, "meta": 0.277, "alphabet": 0.201,
-               "microsoft": 0.179, "amazon": 0.158, "oracle": 0.149, "apple": 0.142, "tesla": 0.118,
+               "microsoft": 0.179, "amazon": 0.158, "oracle": 0.1735, "apple": 0.142, "tesla": 0.118,
                "alibaba": 0.027}
 
 

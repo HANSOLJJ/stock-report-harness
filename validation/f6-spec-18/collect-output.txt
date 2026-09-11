@@ -42,6 +42,31 @@ alibaba        annual          1,023,670,000,000    996,347,000,000  103,592,000
   alibaba        단일   ['Revenues']
                  겹침 불일치 0건 · 2019년 이후 0건
 
+[끝점 검산] 4분기 합이 같은 기간 FY 태깅값과 맞는가 — 맞으면 복원값이 아니라 공시값이다
+  meta           대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  nvidia         대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  alphabet       대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  microsoft      2025-07-01~2026-06-30 FY    331,839,000,000  일치
+  amazon         대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  apple          대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  oracle         2025-06-01~2026-05-31 FY     67,357,000,000  일치
+  palantir       대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  tesla          대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  spacex-xai     대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  tsmc           대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+  alibaba        대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)
+
+[기간별 fallback] 창 4개 분기를 어느 태그가 공급했는가
+  meta           2025-09-30:RFCW | 2025-12-31:RFCW | 2026-03-31:RFCW | 2026-06-30:RFCW
+  nvidia         2025-10-26:Revenues | 2026-01-25:Revenues | 2026-04-26:Revenues | 2026-07-26:Revenues
+  alphabet       2025-09-30:Revenues | 2025-12-31:Revenues | 2026-03-31:Revenues | 2026-06-30:Revenues
+  microsoft      2025-09-30:RFCW | 2025-12-31:RFCW | 2026-03-31:RFCW | 2026-06-30:RFCW
+  amazon         2025-09-30:RFCW | 2025-12-31:RFCW | 2026-03-31:RFCW | 2026-06-30:RFCW
+  apple          2025-09-27:RFCW | 2025-12-27:RFCW | 2026-03-28:RFCW | 2026-06-27:RFCW
+  oracle         2025-08-31:RFCW | 2025-11-30:RFCW | 2026-02-28:RFCW | 2026-05-31:RFCW
+  palantir       2025-09-30:RFCW | 2025-12-31:RFCW | 2026-03-31:RFCW | 2026-06-30:RFCW
+  tesla          2025-09-30:Revenues | 2025-12-31:Revenues | 2026-03-31:Revenues | 2026-06-30:Revenues
+
 [개념·기간] 어느 태그를 어느 기간으로 썼는가
   meta           us-gaap:RevenueFromContractWithCustomerExcludingAssess [USD] 2025-07-01~2026-06-30
   nvidia         us-gaap:Revenues+RevenueFromContractWithCustomerExclud [USD] 2025-07-28~2026-07-26

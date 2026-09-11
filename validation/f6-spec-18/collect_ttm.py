@@ -178,11 +178,14 @@ def quarter_series(rows: list[dict]) -> tuple[list[dict], list[dict]]:
         last_end = max(_d(r["end"]) for r in inside)
         if any(_d(r["end"]) == fe for r in inside):
             continue                       # 이미 Q4 가 태깅돼 있으면 복원하지 않는다
+        # 복원값도 어느 개념에서 왔는지 남긴다. FY 와 분기가 서로 다른 개념일 수 있다(기간별 fallback).
+        tags = sorted({f.get("tag", "?")} | {r.get("tag", "?") for r in inside})
         item = {"start": last_end.isoformat(), "end": f["end"], "val": f["val"] - covered,
-                "days": (fe - last_end).days, "kind": "Q4_derived", "form": f["form"], "filed": f["filed"]}
-        derived.append({"fy": f"{f['start']}~{f['end']}", "fy_val": f["val"],
-                        "quarters_used": [{"end": r["end"], "val": r["val"]} for r in inside],
-                        "q4_derived": item["val"]})
+                "days": (fe - last_end).days, "kind": "Q4_derived", "form": f["form"], "filed": f["filed"],
+                "taxonomy": f.get("taxonomy"), "tag": "+".join(tags) if len(tags) > 1 else tags[0]}
+        derived.append({"fy": f"{f['start']}~{f['end']}", "fy_val": f["val"], "fy_tag": f.get("tag"),
+                        "quarters_used": [{"end": r["end"], "val": r["val"], "tag": r.get("tag")} for r in inside],
+                        "q4_derived": item["val"], "mixed_concepts": len(tags) > 1})
         series.append(item)
     return sorted(series, key=lambda r: r["end"]), derived
 
@@ -198,7 +201,21 @@ def trailing(series: list[dict], offset: int = 0) -> dict | None:
         if not -2 <= gap <= 5:             # 경계일 포함/제외 표기 차이만 허용한다
             return None
     return {"value": sum(r["val"] for r in win), "start": win[0]["start"], "end": win[-1]["end"],
-            "quarters": [{"end": r["end"], "val": r["val"], "kind": r["kind"]} for r in win]}
+            "quarters": [{"end": r["end"], "val": r["val"], "kind": r["kind"], "tag": r.get("tag")} for r in win]}
+
+
+def fy_agreement(rows: list[dict], window: dict) -> dict | None:
+    """4분기 합이 같은 기간 FY 태깅값과 맞는지 본다.
+
+    맞으면 그 TTM 은 **복원값이 아니라 공시값 그 자체**다(v1.7 `f6.ttm_window.verification`).
+    끝점 규약 [A] 가 옳다는 근거가 이 일치다. 매번 확인해 근거로 남긴다.
+    """
+    for f in rows:
+        if f["kind"] == "FY" and f["start"] == window["start"] and f["end"] == window["end"]:
+            diff = window["value"] - f["val"]
+            return {"fy_val": f["val"], "diff": diff, "matches": diff == 0,
+                    "period": f"{f['start']}~{f['end']}"}
+    return None
 
 
 def build(ticker: str) -> dict:
@@ -228,7 +245,8 @@ def build(ticker: str) -> dict:
         if cur is not None:
             res["metrics"][metric] = {"value": cur["value"], "period_basis": "ttm",
                                       "period": {"start": cur["start"], "end": cur["end"]}, **common}
-            res["evidence"][metric] = {"quarters": cur["quarters"], "q4_reconstruction": derived[-2:]}
+            res["evidence"][metric] = {"quarters": cur["quarters"], "q4_reconstruction": derived[-2:],
+                                       "fy_agreement": fy_agreement(rows, cur)}
             if metric == "revenue_ttm" and prev is not None:
                 res["metrics"]["revenue_ttm_prior"] = {"value": prev["value"], "period_basis": "ttm",
                                                        "period": {"start": prev["start"], "end": prev["end"]}, **common}
@@ -291,6 +309,27 @@ def main(argv: list[str]) -> int:
         worst = f" · 최대 상대오차 {max(c['rel_diff'] for c in conf):.5f}" if conf else ""
         print(f"  {r['company_id']:14} {'혼합' if mix.get('mixed') else '단일':4} {used}")
         print(f"                 겹침 불일치 {len(conf)}건 · 2019년 이후 {len(recent)}건{worst}")
+
+    print("\n[끝점 검산] 4분기 합이 같은 기간 FY 태깅값과 맞는가 — 맞으면 복원값이 아니라 공시값이다")
+    for r in rows:
+        if not r.get("loaded"):
+            continue
+        agree = ((r.get("evidence") or {}).get("revenue_ttm") or {}).get("fy_agreement")
+        if agree is None:
+            print(f"  {r['company_id']:14} 대조할 FY 없음 (창이 회계연도와 겹치지 않거나 연간·분기 트랙)")
+        else:
+            mark = "일치" if agree["matches"] else f"차이 {agree['diff']:,}"
+            print(f"  {r['company_id']:14} {agree['period']} FY {agree['fy_val']:>18,}  {mark}")
+
+    print("\n[기간별 fallback] 창 4개 분기를 어느 태그가 공급했는가")
+    for r in rows:
+        if not r.get("loaded"):
+            continue
+        qs = ((r.get("evidence") or {}).get("revenue_ttm") or {}).get("quarters") or []
+        if not qs:
+            continue
+        tags = [f"{q['end']}:{(q.get('tag') or '?').replace('RevenueFromContractWithCustomerExcludingAssessedTax', 'RFCW')}" for q in qs]
+        print(f"  {r['company_id']:14} {' | '.join(tags)}")
 
     print("\n[개념·기간] 어느 태그를 어느 기간으로 썼는가")
     for r in rows:
