@@ -25,8 +25,9 @@ Claude Code를 열고 위 명령을 입력하면, 계획 → 리서치 → 원�
 /stock-build <slug>    → scripts/build_report.py가 output/<slug>.html + price-chart JSON 생성
 ```
 
-빌드는 `review status: pass`, 선택된 hero 이미지, yfinance 가격 차트, frontmatter/섹션 정합성을
-`scripts/validate_report_contract.py`로 모두 통과해야 성공합니다.
+<!-- 2026-09-07 hero 선택 사항 변경 전: 빌드는 `review status: pass`, 선택된 hero 이미지, yfinance 가격 차트, frontmatter/섹션 정합성을 -->
+빌드는 `review status: pass`, yfinance 가격 차트, frontmatter/섹션 정합성을
+`scripts/validate_report_contract.py`로 모두 통과해야 성공합니다. hero 이미지는 선택 사항이며 있을 때만 함께 검증합니다.
 
 ### End-to-end skill: `stock-goal`
 
@@ -122,7 +123,8 @@ server.js              output 미리보기 서버
 
 ### Build
 
-- 필수 입력: plan, research, draft, pass review, selected hero image
+<!-- 2026-09-07 hero 선택 사항 변경 전: - 필수 입력: plan, research, draft, pass review, selected hero image -->
+- 필수 입력: plan, research, draft, pass review (selected hero image는 선택 사항)
 - 필수 출력: `output/<slug>.html`, `output/assets/<slug>-price-chart-v*.json`
 - 빌드는 수동 HTML 작성이 아니라 `python3 scripts/build_report.py <slug>`로 수행합니다.
 - 빌더는 yfinance 1일봉 가격 JSON을 생성/갱신하고, Markdown/frontmatter를 파싱해 HTML 템플릿을 렌더링합니다.
