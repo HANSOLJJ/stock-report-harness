@@ -21,7 +21,7 @@
     "declared_period_basis": "annual",
     "form_10q_count_in_sec": 0,
     "quarterly_fps_in_recent_years": 0,
-    "structural_constraint": "FPI 보고 규정에 따라 BABA는 연차보고서(Form 20-F)만 정기 재무제표로 제출하며 분기보고서(Form 10-Q)는 제출하지 않음. SEC XBRL facts 전수 조사 결과 FY2024~FY2026 정기 분기(Q1, Q2, Q3) XBRL 행은 0건으로 확인됨. 따라서 4분기 합산 TTM은 구조적으로 불가능하며 연간(annual) 기준 적용이 필수적임."
+    "structural_constraint": "현재 FPI 지위 기준 보고 규정에 따라 BABA는 연차보고서(Form 20-F)만 정기 재무제표로 제출하며 분기보고서(Form 10-Q)는 제출하지 않음 (FPI 지위는 매년 재판정됨). SEC XBRL facts 전수 조사 결과 FY2024~FY2026 정기 분기(Q1, Q2, Q3) XBRL 행은 0건으로 확인됨. 따라서 4분기 합산 TTM은 현재 FPI 상태에서 조립 불가하며 연간(annual) 기준 적용이 필수적임."
   },
   "operating_income": {
     "concept": "us-gaap:OperatingIncomeLoss",

@@ -34,7 +34,7 @@ SEC EDGAR 공식 호스트(`data.sec.gov`, `www.sec.gov`)의 원본 정기보고
    - `us-gaap:OperatingIncomeLoss` 및 `us-gaap:Revenues`의 모든 회계연도 정기 보고 행은 예외 없이 `form: 20-F`, `fp: FY`로만 구성되어 있다.
    - 최근 3개년(FY2024, FY2025, FY2026) 중 정기 분기(`fp: Q1`, `fp: Q2`, `fp: Q3`) XBRL 데이터는 **0건**이다.
 3. **결론 및 period_basis 선언**.
-   - 따라서 4개 분기를 합산하여 TTM(Trailing Twelve Months)을 조립하는 것은 외부 수집의 문제가 아니라 공시 체계상 영구적·구조적으로 불가능하다.
+   - 따라서 4개 분기를 합산하여 TTM(Trailing Twelve Months)을 조립하는 것은 외부 수집 누락의 문제가 아니라, 현재 FPI(외국 민간 발행인) 지위에 따라 분기 10-Q 제출 의무가 면제되어 있는 공시 체계에 따른 것이다 (단, FPI 지위는 매 사업연도 2분기말 등에 지분율 및 사업실질 요건에 따라 매년 재판정되므로 현재 지위 기준임).
    - 이에 따라 BABA의 실적 관측 기준은 TTM 대신 연간 실적을 사용하는 **`period_basis: annual`**로 공식 선언하며, 최신 감사 완료 회계연도인 FY2026(2025-04-01 ~ 2026-03-31) 수치를 확정값으로 적용한다.
 
 ---

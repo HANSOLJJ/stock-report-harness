@@ -133,7 +133,7 @@ C-06을 `proposed_v15_boundaries`로 고정하고, C-05와 C-16의 조합에 따
 | **amazon** | **차단** (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | AWS 백로그 정성 확인 규칙 명시 시 **-2** 확정 가능 (C-16 대상 제외) |
 | **anthropic** | **차단** (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 비상장 영업손익 판정 규칙 명시 시 완료 가능 |
 
-`*` Alibaba는 현행 baseline 자료 기준 네 조합 모두 pending_data(보류)임. SEC 20-F 공시상 연간 영업이익 1,134억 위안 흑자 기반 `operating_result_reviewed = profit`과 `coverage_comparable = yes` 2대 검토 입력이 충족될 경우 C-16에 따라 -2(hold) 또는 -3(downgrade)으로 분기됨.
+`*` Alibaba는 현행 baseline 자료 기준 네 조합 모두 pending_data(보류)임. SEC 20-F 공시상 연간 영업이익 501.5억 위안(RMB 50,150M / US$ 7,270M; 종전 각주의 1,134억 위안은 3개년 비교표의 맨 왼쪽 칸인 FY2024 수치를 잘못 읽은 오기였으며 G1-TTM-26에서 정정됨) 흑자 기반 `operating_result_reviewed = profit`과 `coverage_comparable = yes` 2대 검토 입력이 충족될 경우 C-16에 따라 -2(hold) 또는 -3(downgrade)으로 분기됨.
 
 ---
 

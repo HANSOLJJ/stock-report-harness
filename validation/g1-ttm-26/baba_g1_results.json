@@ -29,7 +29,7 @@
   },
   "period_basis": {
     "declared_basis": "annual",
-    "structural_reason": "BABA는 Foreign Private Issuer(FPI)로서 분기 10-Q를 제출하지 않고 연차보고서 20-F만 제출함. SEC EDGAR facts 전수 조사 결과 FY2024~FY2026 정기 분기(Q1, Q2, Q3) 행이 0건이며 4분기 합산 TTM 조립이 구조적·영구적으로 불가능함. 따라서 period_basis는 annual로 확정됨."
+    "structural_reason": "BABA는 Foreign Private Issuer(FPI)로서 분기 10-Q를 제출하지 않고 연차보고서 20-F만 제출함. SEC EDGAR facts 전수 조사 결과 FY2024~FY2026 정기 분기(Q1, Q2, Q3) 행이 0건이며, 현재 FPI 지위 기준 분기 10-Q 제출 의무 부재로 4분기 합산 TTM 조립이 불가함 (FPI 지위는 매년 재판정됨). 따라서 period_basis는 annual로 확정됨."
   },
   "taxonomy": {
     "used": "us-gaap",
