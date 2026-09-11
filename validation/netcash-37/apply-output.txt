@@ -26,5 +26,5 @@ NETCASH-37 라운드 2 — 유가증권 경계 적용 · alibaba 등록 · 결�
 [4] 관측 12건 추가 · 승계 대체 표시
   legacy 관측 10건에 대체 표시
 
-[5] 저장 — 관측 335건 · run.rule_hash 343f1b8930d8…
+[5] 저장 — 관측 335건 · run.rule_hash fffe31a2cd9c…
     다음: python scripts/scorecard_cli.py calculate ai-scorecard-2026-09-obsreg

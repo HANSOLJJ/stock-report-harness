@@ -558,6 +558,44 @@ def _validate_net_cash(spec: Any) -> None:
             metrics.append(site["metric"])
         _require(len(set(metrics)) >= 2,
                  f"{where}.scope_separation.sites: 서로 다른 지표 둘 이상을 가리켜야 함 — {metrics}")
+        _check_banned_word(sep, where)
+
+
+def _strings(node: Any, path: str):
+    """중첩 구조 안의 모든 문자열을 경로와 함께 내놓는다."""
+    if isinstance(node, dict):
+        for key, value in node.items():
+            yield from _strings(value, f"{path}.{key}")
+    elif isinstance(node, list):
+        for idx, value in enumerate(node):
+            yield from _strings(value, f"{path}[{idx}]")
+    elif isinstance(node, str):
+        yield path, node
+
+
+def _check_banned_word(sep: dict[str, Any], where: str) -> None:
+    """`two_axes.banned_word` 가 선언한 낱말을 **실제로 막는다.**
+
+    선언만 하면 아무것도 막지 못한다. `전체·모두·전부` 는 테스트가 막는데 `환금성` 만 선언에
+    그쳐 다른 자리에 다시 써도 통과했다(설계진행 2026-09-11 지적). 예외 경로는 규칙이 데이터로
+    들고 있다 — 6.4 원문을 인용하는 자리와 금지 규정 자신은 그 낱말을 담아야 하기 때문이다.
+    """
+    spec = (sep.get("two_axes") or {}).get("banned_word")
+    if not isinstance(spec, dict):
+        return
+    word = str(spec.get("word") or "").strip()
+    _require(word, f"{where}.scope_separation.two_axes.banned_word.word: 비워 둘 수 없음")
+    _require(str(spec.get("why") or "").strip(),
+             f"{where}.scope_separation.two_axes.banned_word.why: 왜 금지하는지 적어야 함")
+    # 금지 규정 블록 자신은 **구조적으로** 제외한다. 그 낱말을 담아야 규정이 성립하므로
+    # 스스로를 예외 목록에 적게 하면 순환이다. 내용 쪽 예외(6.4 원문 인용)만 데이터로 받는다.
+    own = "scope_separation.two_axes.banned_word"
+    allowed = set(spec.get("exceptions") or [])
+    offenders = [p for p, text in _strings(sep, "scope_separation")
+                 if word in text and p not in allowed and not p.startswith(own)]
+    _require(not offenders,
+             f"{where}.scope_separation: 금지어 {word!r} 가 예외 밖에서 쓰임 — {offenders}. "
+             f"두 축(즉시성·시장성)을 한 낱말로 덮으면 어느 쪽을 묻는지 흐려진다")
 
 
 # F9 도 F6 와 같은 형태로 정책과 factor range 를 로드 시점에 맞춘다.

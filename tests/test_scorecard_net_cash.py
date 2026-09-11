@@ -144,11 +144,41 @@ class ScopeSeparationTest(unittest.TestCase):
             validate_rules(mutated_rules(drop))
         self.assertIn("marketability", str(cm.exception))
 
-    def test_blanket_word_is_banned_with_its_own_reason(self):
+    def test_banned_word_is_declared_with_its_own_reason(self):
         """같은 결함이 세 번 나왔다. **금지한 낱말과 왜 금지했는지를 규칙이 들고 있어야** 한다."""
         banned = self.sep["two_axes"]["banned_word"]
-        self.assertIn("환금성", banned)
-        self.assertIn("987", banned)      # 잘못 읽었을 때의 값까지 적혀 있어야 한다
+        self.assertEqual(banned["word"], "환금성")
+        self.assertIn("987", banned["why"])      # 잘못 읽었을 때의 값까지 적혀 있어야 한다
+        self.assertEqual(banned["exceptions"], ["scope_separation.sites[0].counts"])
+
+    def test_banned_word_is_actually_enforced_not_just_declared(self):
+        """**선언만 하면 아무것도 막지 못한다.** 다른 자리에 다시 쓰면 로드가 거부돼야 한다.
+
+        `전체·모두·전부` 는 테스트가 막는데 `환금성` 만 선언에 그쳐 있었다(설계진행 지적).
+        금지어를 세운 자리가 그 금지를 강제하는지를 여기서 검사한다.
+        """
+        for path, mutate in (
+            ("sites[1].why", lambda s: s["sites"][1].__setitem__(
+                "why", s["sites"][1]["why"] + " 환금성은 여기서 묻지 않는다.")),
+            ("rule", lambda s: s.__setitem__("rule", s["rule"] + " 환금성 기준으로 본다.")),
+        ):
+            with self.subTest(path=path), self.assertRaises(SchemaError) as cm:
+                validate_rules(mutated_rules(lambda spec, _p: mutate(spec["scope_separation"])))
+            self.assertIn("환금성", str(cm.exception))
+
+    def test_six_four_quote_keeps_the_word(self):
+        """6.4 원문을 인용하는 자리는 그 낱말이 문면에 있어야 한다 — 예외가 실제로 쓰인다."""
+        runway = next(s for s in self.sep["sites"] if s["metric"] == "cash")
+        self.assertIn("환금성", runway["counts"])
+
+    def test_two_axes_comes_before_the_sites(self):
+        """**순서가 이 블록에서는 내용이다.** '어느 축을 묻는지 먼저 보라' 가 뒤에 있으면 안 된다.
+
+        이 건의 결함 기제가 블록을 위에서 읽다가 틀린 줄을 먼저 만나는 것이었다.
+        """
+        keys = list(self.sep)
+        self.assertLess(keys.index("two_axes"), keys.index("sites"))
+        self.assertLess(keys.index("warning"), keys.index("two_axes"))
 
     def test_no_unqualified_blanket_claim_in_the_ev_site(self):
         """EV 자리 문장에 한정 없는 '전체·모두·전부' 가 남아 있으면 안 된다."""
