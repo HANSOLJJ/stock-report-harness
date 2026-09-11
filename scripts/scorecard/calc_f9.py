@@ -176,8 +176,10 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     fcf, fcf_obs = obs.number(cid, "fcf_ttm")
     use(fcf_obs)
     if fcf is None:
-        # 확인된 비공개(status=not_disclosed 관측)와 미수집(관측 없음·collection_failed)을 구분한다 (R04).
-        if not company["listed"] and fcf_obs is not None and fcf_obs["status"] == "not_disclosed":
+        # 확인된 비공개와 미수집(관측 없음·collection_failed·미확인)을 구분한다 (R04).
+        # G4 와 같은 라벨을 읽는다 — status 는 네 뜻을 담고 있어 "우리가 안 찾은 것"을 비공개로 둔갑시킨다 (MISS-LABEL-23).
+        if (not company["listed"] and fcf_obs is not None
+                and fcf_obs.get("missing_type") == MISSING_TYPE_FOR_DISCLOSURE_POLICY):
             score = int(pol["g2_private_not_disclosed"])
             reason_id = gi.get("fcf_not_disclosed_reason") or f"{cid}.fcf_not_disclosed"
             path.append({"gate": "G2", "result": "not_disclosed", "score": score, "reason_id": reason_id,
@@ -191,10 +193,11 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
                 path.append({"gate": "G4", **{k: v for k, v in g4.items() if k != "pending"}})
                 score = _clamp(score + g4["step"], floor)
             return done(score, "ok")
-        status_text = fcf_obs["status"] if fcf_obs else "없음"
-        path.append({"gate": "G2", "result": "pending", "reason": f"TTM FCF 관측 {status_text}"})
-        hint = "비상장이면 확인된 비공개는 status=not_disclosed 관측으로 기록" if not company["listed"] else "상장사 TTM FCF 관측 필요"
-        return done(None, "pending_data", pending_info("data", f"TTM FCF 관측 {status_text} — 미수집과 확인된 비공개를 구분한다. {hint}"))
+        mtype_text = (fcf_obs or {}).get("missing_type") or ((fcf_obs["status"] if fcf_obs else "없음") + "/결측유형 미분류")
+        path.append({"gate": "G2", "result": "pending", "reason": f"TTM FCF 관측 {mtype_text}"})
+        hint = (f"비상장이면 확인된 비공개는 missing_type={MISSING_TYPE_FOR_DISCLOSURE_POLICY} 로 기록"
+                if not company["listed"] else "상장사 TTM FCF 관측 필요")
+        return done(None, "pending_data", pending_info("data", f"TTM FCF 관측 {mtype_text} — 미수집과 확인된 비공개를 구분한다. {hint}"))
     if fcf > 0:
         trend = gi["fcf_trend"]
         if trend == "stable":

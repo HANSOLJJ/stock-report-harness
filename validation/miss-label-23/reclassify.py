@@ -32,6 +32,30 @@ OUT = HERE / "_derived"
 NOT_APPLICABLE_RAW = {"∞", "적자"}
 CONFIRMED_RAW = {"미공시"}
 UNVERIFIED_RAW = {"미확인"}
+
+# 공시 의무가 없는 기업(비상장)에 적용하는 **구조 기준** (MISS-LABEL-23 보완, 설계진행 확정 문구).
+#
+#   "공시 의무가 없는 기업의 지표가 감사 재무제표 항목이거나 그로부터만 도출되는 값이면
+#    not_disclosed_confirmed 로 두고 그 외에는 raw 문구를 따른다."
+#
+# 근거는 우리의 탐색량이 아니라 **구조**다. 감사 재무제표를 제출할 의무가 없는 기업의
+# 재무제표 항목은 정의상 공개된 적이 없다. 그래서 '우리가 안 찾아서' 가 아니라
+# '있을 수 없어서' 없는 것이고, 승격 금지 원칙(문서 상단)에 걸리지 않는다.
+#
+# 반대로 **상장사에는 이 논거가 성립하지 않는다.** 정기보고서에 있을 수 있으므로
+# palantir.net_borrowing_ttm(raw='없음') 같은 것은 계속 unverified 로 남는다.
+AUDITED_STATEMENT_METRICS = {
+    # 재무제표 본문 항목
+    "revenue_ttm", "revenue_ttm_prior", "operating_income_ttm", "net_income_ttm",
+    "ocf_ttm", "capex_ttm", "cash", "undrawn_credit", "net_borrowing_ttm",
+    # 본문 항목에서만 도출되는 값
+    "fcf_ttm", "net_cash", "debt_ebitda", "operating_margin_ttm", "nonop_share", "runway_years",
+    # 감사 재무제표의 **주석** 공시 항목 (ASC 606 잔여 수행의무·부외 약정)
+    "contracted_revenue", "offbalance_B",
+}
+# 제외 — 시장가·컨센서스·자금조달 발표가 섞여 재무제표에서만 도출되지 않는다.
+#   price, market_cap, ttm_per, ps_ratio, ntm_*, credit_rating, cds_5y_bp,
+#   post_money_valuation, arr, ttm_revenue_est, cumulative_raised
 G4_METRICS = {"contracted_revenue", "offbalance_B"}
 # NTM 조사(OFFB-24) 결과가 아직 미검증이라 이 셋은 **잠정**이다. 설계진행 회신 전까지 확정하지 않는다.
 PROVISIONAL = {("spacex-xai", "offbalance_B"), ("alibaba", "offbalance_B"),
@@ -43,17 +67,25 @@ def classify(o: dict, company: dict) -> tuple[str, str]:
     raw = (o.get("raw") or "").strip()
     status = o["status"]
 
-    if raw in UNVERIFIED_RAW:
-        return "unverified", "raw 가 '미확인' — 우리가 확인하지 않았다. 승격 금지 대상"
+    # (1) 개념상 값이 없는 것이 먼저다. 구조 기준은 '미공시냐 미확인이냐' 를 가르는 규칙이지,
+    #     '정의되지 않음'·'산출 불가' 를 미공시로 바꾸는 규칙이 아니다.
+    #     그래서 비상장 runway_years(raw='판정 불가') 는 구조 기준 대상 지표여도 indeterminate 로 남는다.
     if raw == "∞":
         return "not_applicable", "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)"
     if raw == "적자":
         return "not_applicable", "적자라 PER·영업외 비중이 개념상 정의되지 않는다"
     if raw == "판정 불가":
         return "indeterminate", "선행 입력(현금·FCF)이 결측이라 산출할 수 없다"
+
+    # (2) 구조 기준 — 공시 의무 자체가 없으면 재무제표 항목은 정의상 공개된 적이 없다.
+    if not company["listed"] and o["metric"] in AUDITED_STATEMENT_METRICS:
+        return "not_disclosed_confirmed", ("비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 "
+                                           f"항목이거나 그로부터만 도출된다(raw={raw!r}) — 구조적으로 확인된 미공시")
+
+    # (3) 그 외에는 raw 문구를 따른다.
+    if raw in UNVERIFIED_RAW:
+        return "unverified", "raw 가 '미확인' — 우리가 확인하지 않았다. 승격 금지 대상"
     if raw in CONFIRMED_RAW:
-        if not company["listed"]:
-            return "not_disclosed_confirmed", "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시"
         return "unverified", "raw 는 '미공시' 이나 상장사라 정기보고서에 있을 수 있다 — 확인 전까지 보류"
     if status == "parse_failed":
         return "unverified", "파싱 실패는 확인이 아니다 — 재파싱 대상(C-13 담당)"
@@ -119,6 +151,8 @@ def main() -> int:
 
     print()
     print("[3] C-16 진입 대상 — 확인된 미공시만 들어간다")
+    print("    **가정: coverage_comparable = yes.** _g4() 는 그 판단이 yes 가 아니면 결측 유형을 보기 전에")
+    print("    먼저 undetermined 로 빠져나간다. 아래 숫자는 그 관문을 통과했다고 놓았을 때의 수다.")
     before_c16: set[str] = set()
     after_c16: set[str] = set()
     by_company: dict[str, list] = {}
@@ -133,10 +167,25 @@ def main() -> int:
         if new_ok:
             after_c16.add(cid)
         marks = ", ".join(f"{o['metric']}={proposal[o['observation_id']]['missing_type']}" for o in items)
-        print(f"  {cid:12} 전 {'진입' if old_ok else '제외':4} -> 후 {'진입' if new_ok else '제외':4}  ({marks})")
+        cov = (judgments.get(cid, "F9") or {}).get("inputs", {}).get("coverage_comparable")
+        print(f"  {cid:12} 전 {'진입' if old_ok else '제외':4} -> 후 {'진입' if new_ok else '제외':4}"
+              f"  (coverage_comparable={cov})  ({marks})")
     dropped = sorted(before_c16 - after_c16)
-    print(f"  -> C-16 진입 대상 {len(before_c16)}개사 -> {len(after_c16)}개사"
+    print(f"  -> 가정하의 C-16 진입 대상 {len(before_c16)}개사 -> {len(after_c16)}개사"
           + (f" · 빠짐: {dropped}" if dropped else ""))
+
+    # 실제로 이번 실행에서 C-16 에 도달한 기업 수 — 가정을 걷어낸 숫자다.
+    cov_counts: dict[str, int] = {}
+    real_before = []
+    for cid in sorted(companies):
+        cov = (judgments.get(cid, "F9") or {}).get("inputs", {}).get("coverage_comparable")
+        cov_counts[str(cov)] = cov_counts.get(str(cov), 0) + 1
+        if cov == "yes" and cid in before_c16:
+            real_before.append(cid)
+    print(f"  -> 실제 도달: {len(real_before)}개사 (coverage_comparable 분포 "
+          + ", ".join(f"{k}={v}" for k, v in sorted(cov_counts.items())) + ")")
+    print("     이 변경 이전에도 C-16 에 실제로 닿는 기업은 0개사였다. 2 -> 0 은 '2개사가 빠졌다' 가 아니라")
+    print("     '검토 입력이 채워졌을 때 들어갔을 2개사가 이제는 들어가지 않는다' 는 뜻이다.")
 
     print()
     print("[3b] 잠정 표시 — NTM OFFB-24 조사 결과가 미검증인 셋")

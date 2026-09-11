@@ -360,13 +360,32 @@ class TestF9(unittest.TestCase):
         self.assertEqual(zero_b["score"], -2)
 
     def test_private_not_disclosed_dedupe(self):
-        result = self.gates(obs("operating_margin_ttm", 0.05), obs("fcf_ttm", None, status="not_disclosed"), listed=False)
+        result = self.gates(obs("operating_margin_ttm", 0.05),
+                            obs("fcf_ttm", None, status="not_disclosed", missing_type="not_disclosed_confirmed"),
+                            listed=False)
         self.assertEqual(result["score"], -2)
         self.assertEqual(result["status"], "ok")
         gates = [p["gate"] for p in result["calc"]["path"]]
         self.assertIn("G4", gates)
         g4 = [p for p in result["calc"]["path"] if p["gate"] == "G4"][0]
         self.assertEqual(g4["result"], "undetermined")
+
+    def test_g2_reads_missing_type_not_status(self):
+        """G2 도 G4 와 같은 라벨을 읽는다. 한쪽만 고친 상태를 고정으로 막는다 (MISS-LABEL-23 보완).
+
+        status 는 미확인·미공시·대상 아님·없음 네 뜻을 담고 있어 분기 근거가 되지 못한다.
+        """
+        unlabeled = self.gates(obs("operating_margin_ttm", 0.05), obs("fcf_ttm", None, status="not_disclosed"),
+                               listed=False)
+        self.assertEqual((unlabeled["status"], unlabeled["score"]), ("pending_data", None))
+        self.assertIn("결측유형 미분류", unlabeled["pending"]["message"])
+        unver = self.gates(obs("operating_margin_ttm", 0.05),
+                           obs("fcf_ttm", None, status="not_disclosed", missing_type="unverified"), listed=False)
+        self.assertEqual((unver["status"], unver["score"]), ("pending_data", None))
+        # 상장사는 이 분기에 애초에 들어가지 않는다. 라벨이 붙어도 마찬가지다.
+        listed = self.gates(obs("operating_margin_ttm", 0.05),
+                            obs("fcf_ttm", None, status="not_disclosed", missing_type="not_disclosed_confirmed"))
+        self.assertEqual(listed["status"], "pending_data")
 
     def test_missing_ttm_margin_is_pending(self):
         result = self.gates(obs("fcf_ttm", -1e9), obs("cash", 10e9))
@@ -433,7 +452,9 @@ class TestReviewRegressions(unittest.TestCase):
     def test_r04_absent_private_fcf_is_pending(self):
         result = self.f9([obs("operating_margin_ttm", 0.05)], listed=False)
         self.assertEqual(result["status"], "pending_data")
-        confirmed = self.f9([obs("operating_margin_ttm", 0.05), obs("fcf_ttm", None, status="not_disclosed")], listed=False)
+        confirmed = self.f9([obs("operating_margin_ttm", 0.05),
+                             obs("fcf_ttm", None, status="not_disclosed", missing_type="not_disclosed_confirmed")],
+                            listed=False)
         self.assertEqual((confirmed["status"], confirmed["score"]), ("ok", -2))
 
     def test_r05_non_finite_rejected(self):

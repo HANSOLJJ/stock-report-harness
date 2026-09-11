@@ -50,7 +50,7 @@
    "status": "not_disclosed",
    "raw": "미공시",
    "missing_type": "not_disclosed_confirmed",
-   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='미공시') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
@@ -59,8 +59,8 @@
    "metric": "debt_ebitda",
    "status": "not_disclosed",
    "raw": "—",
-   "missing_type": "unverified",
-   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='—') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
@@ -70,7 +70,7 @@
    "status": "not_disclosed",
    "raw": "미공시",
    "missing_type": "not_disclosed_confirmed",
-   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='미공시') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
@@ -79,8 +79,8 @@
    "metric": "net_cash",
    "status": "not_disclosed",
    "raw": "—",
-   "missing_type": "unverified",
-   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='—') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
@@ -140,7 +140,7 @@
    "status": "not_disclosed",
    "raw": "미공시",
    "missing_type": "not_disclosed_confirmed",
-   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='미공시') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
@@ -149,8 +149,8 @@
    "metric": "debt_ebitda",
    "status": "not_disclosed",
    "raw": "—",
-   "missing_type": "unverified",
-   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='—') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
@@ -160,7 +160,7 @@
    "status": "not_disclosed",
    "raw": "미공시",
    "missing_type": "not_disclosed_confirmed",
-   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='미공시') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
@@ -169,8 +169,8 @@
    "metric": "net_cash",
    "status": "not_disclosed",
    "raw": "—",
-   "missing_type": "unverified",
-   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 감사 재무제표 제출 의무가 없고 이 지표는 그 재무제표 항목이거나 그로부터만 도출된다(raw='—') — 구조적으로 확인된 미공시",
    "provisional": false,
    "provisional_reason": null
   },
