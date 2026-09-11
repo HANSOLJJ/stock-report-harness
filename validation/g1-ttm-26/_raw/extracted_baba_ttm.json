@@ -1,0 +1,104 @@
+{
+  "entity": {
+    "entity_name": "Alibaba Group Holding Limited",
+    "cik": "0001577552",
+    "ticker": "BABA",
+    "exchange": "NYSE",
+    "filer_status": "Foreign Private Issuer (FPI)"
+  },
+  "filing": {
+    "form": "20-F",
+    "accession_number": "0001193125-26-231755",
+    "filing_date": "2026-05-20",
+    "fiscal_year_ended": "2026-03-31",
+    "url": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm"
+  },
+  "taxonomy": {
+    "standard": "us-gaap",
+    "version": "2026"
+  },
+  "period_basis_evaluation": {
+    "declared_period_basis": "annual",
+    "form_10q_count_in_sec": 0,
+    "quarterly_fps_in_recent_years": 0,
+    "structural_constraint": "FPI 보고 규정에 따라 BABA는 연차보고서(Form 20-F)만 정기 재무제표로 제출하며 분기보고서(Form 10-Q)는 제출하지 않음. SEC XBRL facts 전수 조사 결과 FY2024~FY2026 정기 분기(Q1, Q2, Q3) XBRL 행은 0건으로 확인됨. 따라서 4분기 합산 TTM은 구조적으로 불가능하며 연간(annual) 기준 적용이 필수적임."
+  },
+  "operating_income": {
+    "concept": "us-gaap:OperatingIncomeLoss",
+    "label": "Operating Income (Loss)",
+    "statement_line": "Income from operations",
+    "statement_name": "ALIBABA GROUP HOLDING LIMITED CONSOLIDATED INCOME STATEMENTS",
+    "values": {
+      "rmb": {
+        "amount": 50150000000,
+        "amount_millions": 50150,
+        "amount_formatted": "RMB 50,150 million (RMB 50.150B)",
+        "unit": "CNY / RMB"
+      },
+      "usd_convenience_translation": {
+        "amount": 7270000000,
+        "amount_millions": 7270,
+        "amount_formatted": "US$ 7,270 million ($7.270B)",
+        "unit": "USD"
+      }
+    },
+    "prior_years_rmb": {
+      "FY2024": 113350000000,
+      "FY2025": 140905000000
+    }
+  },
+  "revenue": {
+    "concept": "us-gaap:Revenues",
+    "label": "Revenues",
+    "statement_line": "Revenue",
+    "statement_name": "ALIBABA GROUP HOLDING LIMITED CONSOLIDATED INCOME STATEMENTS",
+    "values": {
+      "rmb": {
+        "amount": 1023670000000,
+        "amount_millions": 1023670,
+        "amount_formatted": "RMB 1,023,670 million (RMB 1,023.670B)",
+        "unit": "CNY / RMB"
+      },
+      "usd_convenience_translation": {
+        "amount": 148401000000,
+        "amount_millions": 148401,
+        "amount_formatted": "US$ 148,401 million ($148.401B)",
+        "unit": "USD"
+      }
+    },
+    "prior_years_rmb": {
+      "FY2024": 941168000000,
+      "FY2025": 996347000000
+    }
+  },
+  "operating_margin": {
+    "rmb_basis": {
+      "formula": "50,150M RMB / 1,023,670M RMB",
+      "ratio": 0.04898998691,
+      "percentage": 4.898998691,
+      "percentage_formatted": "4.90%"
+    },
+    "usd_basis": {
+      "formula": "7,270M USD / 148,401M USD",
+      "ratio": 0.04898888821,
+      "percentage": 4.898888821,
+      "percentage_formatted": "4.90%"
+    },
+    "currency_effect_note": "분자와 분모가 동일한 편의 환산 환율(US$1.00 = RMB 6.8980)로 환산되므로 환율 효과가 분자·분모에서 완전 상쇄(약분)됨. 미세한 차이는 백만 달러 단위 반올림에 기인함."
+  },
+  "convenience_translation_note": {
+    "source_note": "Note 2(a) - Summary of significant accounting policies: Basis of presentation (p. F-15)",
+    "exchange_rate": "US$1.00 = RMB 6.8980",
+    "rate_source": "Federal Reserve Board H.10 statistical release as of March 31, 2026",
+    "quote": "Translations of balances in the consolidated balance sheet, consolidated income statement, consolidated statement of comprehensive income and consolidated statement of cash flows from RMB into the US$ as of and for the year ended March 31, 2026 are solely for the convenience of the readers and are calculated at the rate of US$1.00=RMB 6.8980, representing the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on March 31, 2026."
+  },
+  "three_way_classification": {
+    "operating_income": "공시되어 있었고 확인됨 (disclosed_and_found)",
+    "revenue": "공시되어 있었고 확인됨 (disclosed_and_found)",
+    "quarterly_ttm": "회사가 공시하지 않았다 (not_disclosed_by_company) — FPI 제도상 10-Q 미제출"
+  },
+  "f9_g1_gate_impact": {
+    "operating_result_reviewed": "profit",
+    "rationale": "FY2026 영업손익이 RMB 50,150M(US$ 7,270M)으로 양수(흑자)이므로 G1 판정값은 profit으로 확정됨."
+  }
+}
