@@ -65,3 +65,16 @@ NTM 은 성격이 다르다. `f9-simulation.json` 원본에 amazon 이 `"blocked
 | C-13 완료 조건 추가 | **보고서 단정을 자기 산출물 JSON 과 대조** |
 | NTM 완료 조건 | 출하 엔진 호출 대조 (라운드1 그대로) |
 | 라운드1 진단 정정 | 이 문서로 대체 |
+
+---
+
+## 라운드3 확인 — C-13 `14ced80`
+
+**닫혔다.** 요청한 한 줄만 고쳤다. `REPORT.md` 2줄 변경이고 다른 파일은 건드리지 않았다.
+
+- alibaba 네 칸 → `보류 (G1·G4 입력)`. 조건부 −2/−3 은 비고로 이동.
+- 각주도 "네 조합 모두 `pending_data`(보류)" 로 앞세우고 조건부를 뒤로 뺐다.
+- `verify_f9_independent.py` **11건 통과** 유지.
+- **4절 표와 `f9_decision_simulation_results.json` 을 기계로 대조했다. 14행 × 4칸 = 56칸, 불일치 0건.** 표가 말하는 보류/점수 구분이 산출물과 완전히 일치한다.
+
+**F9-DECIDE-20 종료.** 남은 F9 작업은 규칙 결정이 아니라 입력 확보다 — `coverage_comparable` 11개사, `operating_result_reviewed` alibaba·anthropic, amazon `contracted_revenue` 재파싱.
