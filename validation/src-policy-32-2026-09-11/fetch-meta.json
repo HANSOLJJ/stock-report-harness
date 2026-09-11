@@ -1,0 +1,39 @@
+{
+ "accessed_at": "2026-09-11",
+ "standard": "PRIV-ARR-17 — robots.txt 와 약관·정책 문서는 확인 목적 조회 허용",
+ "items": [
+  {
+   "file": "finnhub-robots.txt",
+   "url": "https://finnhub.io/robots.txt",
+   "status": 200,
+   "final_url": "https://finnhub.io/robots.txt",
+   "bytes": 65,
+   "ctype": "text/plain; charset=utf-8",
+   "error": null,
+   "accessed_at": "2026-09-11",
+   "saved": true
+  },
+  {
+   "file": "finnhub-terms-of-service.html",
+   "url": "https://finnhub.io/terms-of-service",
+   "status": 200,
+   "final_url": "https://finnhub.io/terms-of-service",
+   "bytes": 16106,
+   "ctype": "text/html; charset=utf-8",
+   "error": null,
+   "accessed_at": "2026-09-11",
+   "saved": true
+  },
+  {
+   "file": "finnhub-privacy-policy.html",
+   "url": "https://finnhub.io/privacy-policy",
+   "status": 200,
+   "final_url": "https://finnhub.io/",
+   "bytes": 6593,
+   "ctype": "text/html; charset=utf-8",
+   "error": null,
+   "accessed_at": "2026-09-11",
+   "saved": true
+  }
+ ]
+}

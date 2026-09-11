@@ -1,0 +1,148 @@
+Finnhub Stock API - Terms of Service
+Terms of Service - Finnhub Stock API
+Introduction
+By using Finnhub, you are agreeing to be legally bound by the Terms. We may change the Terms from time
+to
+time
+without notice, so be sure to check this page regularly. If you do not agree to any Terms, you should
+not
+use the
+Website.
+If you are entering into this agreement on behalf of a legal entity, you represent that you have the
+authority to
+bind
+such entity, in which case the terms “you” or “your” shall refer to such entity.
+Overview about the service
+Finnhub provides fundamental data, market data, estimates and alternative data for global stock
+markets.
+Finnhub is not engaged in rendering legal, accounting, investment advising, or other professional
+service.
+Your use
+of
+the Website and of any content, information or data accessed on or through the Website is at your own
+risk.
+We do
+not
+guarantee or make any warranties about the accuracy or completeness of any content, information or data
+accessed on
+or
+through the Website. Some content, information or data accessed on or through the Website may be
+inaccurate,
+incomplete
+or unfit for a particular purpose.
+Intellectual Property
+Using the Website does not give you ownership or license of any intellectual property rights in the
+website
+or in
+any
+content, information or data accessed on or through the Website, including content, information and data
+obtained
+from a
+third-party website.
+All data must be deleted should your subscription to that data ends.
+It is your responsibility to comply with any copyright laws that govern the content, information or data
+accessed on
+or
+through the Website. Neither these Terms nor your use of the Website grant you any right to use any
+trademark or
+service-mark accessed on or through the Website. By making a query on the Website, you agree that we can
+store the
+query
+in log files, and use it to generate the results given back to you. You also agree that we may use your
+queries to
+evaluate and enhance performance of the Website and to study usage patterns.
+Redistribution Rights and Personal Use
+You hereby agree to not redistribute or share access to data or derived results from the data obtained
+from
+Finnhub
+with
+anyone or any 3rd party without written approval from Finnhub. All plan listed on Finnhub website is
+strictly for
+personal use unless explicitly stated otherwise. Personal plan can’t be used by any business even
+internally
+without
+a
+written approval.
+You are also not qualified for any personal use plans if you fall into ONE of the following
+categories:
+You are securities professional (registered with FINRA, SEC, CFTC or relevant regulatory bodies)
+You are using this data for your business or registering under your business name regardless of the
+industry
+You are going to deduct this expense as a business expense
+For more information, please refer to Page 23-24 of
+UTP
+plan data policies
+Your signature if signed up as for personal use will be used in the form
+Subscriber
+Agreement
+to certify that you are Non-Professional individual subscriber. You hereby authorize
+us and our data partners to use your name and email information to furnish this form on your behalf. To
+request a copy of this signed form, please email
+[email&#160;protected]
+.
+Refund Policy
+We do not offer refund for any plans on our website. It’s your duty to cancel the subscription on time.
+You
+hereby
+agree
+to not use chargeback against our company in case of a dispute without reaching out to our support
+first.
+If requesting cancellation via emails, you would need to give us a minimum of 30-day advance notice for the
+cancellation to take effect and any new invoices generated during that 30 days will still need to be
+paid in full.
+API Limit and Access
+You will have 1 API limit for Fundamental data and 1 API limit for Market data API. Subscribing to
+multiple data plans will not increase your API limit.
+There is a 30 API calls/second limit on top of all plan's limit
+Your access to API will be revoked immediately should you choose to cancel your subscription.
+Privacy
+The Website collects some personal information from its users, which we may use to operate the Website,
+to
+evaluate
+and
+enhance performance of the Website and to study usage patterns. We will not share any of your personal
+information
+with
+any third party, except we may share personal information with another company in the event that we
+merge
+with or
+are
+acquired by that company. We may send you announcements, messages or other information, but you may
+choose
+to
+opt-out of
+these communications.
+Finnhub will automatically delete inactive users from time to time. If you wish to resume the service,
+please create a new account.
+Limitation of Liability
+You agree to defend, indemnify and hold Finnhub and its affiliates harmless from any and all claims,
+liabilities,
+costs
+and expenses, including reasonable attorneys' fees, arising in any way from your use of the Service or
+the
+placement
+or
+transmission of any message, information, Software and/or Service or other materials through the
+Software
+and/or
+Service
+by you or users of your account or related to any violation of these Terms and Conditions by you or
+users of
+your
+account.
+Failure to Comply with Terms and Conditions and Termination
+Subscription to this Software and/or Service may be terminated at any time, and without cause, by either
+Finnhub or
+the
+Owner and/or Subscriber, upon notification by telephone or e-mail. You acknowledge and agree that we may
+terminate
+your
+password or account or deny you access to all or part of the Service without prior notice if you engage
+in
+any
+conduct
+or activities that we, in our sole discretion, believe violate any of these Terms and Conditions,
+violate
+the rights
+of
+Finnhub or is otherwise inappropriate for continued access.
