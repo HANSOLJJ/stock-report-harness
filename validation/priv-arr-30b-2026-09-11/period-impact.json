@@ -1,0 +1,20 @@
+{
+ "p3_rows": [
+  {
+   "company_id": "anthropic",
+   "arr_prior": 47000000000.0,
+   "arr": 65000000000.0,
+   "growth": 0.38297872340425543,
+   "prior_period": null,
+   "arr_period": "7월"
+  },
+  {
+   "company_id": "openai",
+   "arr_prior": 25000000000.0,
+   "arr": 40000000000.0,
+   "growth": 0.6000000000000001,
+   "prior_period": "2~4월(정체 구간)",
+   "arr_period": "7월 과 8/20 이 원문에서 갈림"
+  }
+ ]
+}
