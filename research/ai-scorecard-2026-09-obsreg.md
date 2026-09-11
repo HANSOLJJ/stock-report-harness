@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 1a69763e1819e7b9d026823b52f50f27c23697f63e1ec5aa576a73c50a1088a6
+observations_hash: 7157f3846d8d346d36b54dda164b67b1ac4ff05aa6c86d61fc3b083f8ce1b728
 judgments_hash: 5a28676508f6a6877dc046137c074f0b2a4a4c41d75dece6d9fce8727c2105ec
 created_at: 2026-09-11
 ---
-# 리서치 — AI 기업 9-factor 채점표 — OFFB 실측 관측 + F6 입력 + 비상장 확정(v1.7)
+# 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 299건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 323건, 판단 114건.
 
 ## 원자료
 
@@ -20,10 +20,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $132.4B | legacy_unverified | actual | SRC-v15-html | $132.4B |  |
-| cash | $242.5B | legacy_unverified | actual | SRC-v15-html | $242.5B |  |
+| cash | $55.9B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 55.9B (버퍼 242.5B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $242.5B | legacy_unverified | actual | SRC-v15-html | $242.5B | [CASH-FCF-35 대체됨 → alphabet.cash.cashfcf35]  |
 | credit_rating | AA급 | legacy_unverified | text | SRC-v15-html | AA급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 0.7 | legacy_unverified | actual | SRC-v15-html | 0.68 |  |
-| fcf_ttm | $53.3B | legacy_unverified | actual | SRC-v15-html | +$53.3B |  |
+| fcf_ttm | $53.3B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 53.3B = OCF 185.7B - CapEx 132.4B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $53.3B | legacy_unverified | actual | SRC-v15-html | +$53.3B | [CASH-FCF-35 대체됨 → alphabet.fcf_ttm.cashfcf35]  |
 | market_cap | $4.12T | legacy_unverified | actual | SRC-v15-html | $4.12T |  |
 | net_borrowing_ttm | $70.1B | legacy_unverified | actual | SRC-v15-html | +$70.1B | 차환 제외 순증 |
 | net_cash | $121.7B | legacy_unverified | actual | SRC-v15-html | +$121.7B |  |
@@ -45,12 +47,14 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $173.0B | legacy_unverified | actual | SRC-v15-html | $173.0B |  |
-| cash | $123.0B | legacy_unverified | actual | SRC-v15-html | $123.0B |  |
+| cash | $78.2B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 78.2B (버퍼 123.0B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $123.0B | legacy_unverified | actual | SRC-v15-html | $123.0B | [CASH-FCF-35 대체됨 → amazon.cash.cashfcf35]  |
 | contracted_revenue | $496.0B | verified | actual | SRC-SEC-AMZN-10Q-2026Q2 | RPO approximately $496 billion (2026-06-30) | OBS-REG-25. 승계 관측 amazon.contracted_revenue.v15(parse_failed)를 대체한다. **parse_fai |
 | contracted_revenue | — | parse_failed | actual | SRC-v15-rule | AWS 백로그(수백 $B급) — 숫자 미공시 | [OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | AA급 | legacy_unverified | text | SRC-v15-html | AA급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 1.4 | legacy_unverified | actual | SRC-v15-html | 1.35 |  |
-| fcf_ttm | -$11.6B | legacy_unverified | actual | SRC-v15-html | -$11.6B |  |
+| fcf_ttm | -$11.6B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF -11.6B = OCF 161.4B - CapEx 173.0B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | -$11.6B | legacy_unverified | actual | SRC-v15-html | -$11.6B | [CASH-FCF-35 대체됨 → amazon.fcf_ttm.cashfcf35]  |
 | market_cap | $2.75T | legacy_unverified | actual | SRC-v15-html | $2.75T |  |
 | net_borrowing_ttm | $75.2B | legacy_unverified | actual | SRC-v15-html | +$75.2B | 차환 제외 순증 |
 | net_cash | -$128.7B | legacy_unverified | actual | SRC-v15-html | -$128.7B |  |
@@ -74,10 +78,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $89.3B | legacy_unverified | actual | SRC-v15-html | $89.3B |  |
-| cash | $90.3B | legacy_unverified | actual | SRC-v15-html | $90.3B |  |
+| cash | $15.5B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 15.5B (버퍼 90.3B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $90.3B | legacy_unverified | actual | SRC-v15-html | $90.3B | [CASH-FCF-35 대체됨 → meta.cash.cashfcf35]  |
 | credit_rating | AA- | legacy_unverified | text | SRC-v15-html | AA- | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 1.0 | legacy_unverified | actual | SRC-v15-html | 0.99 |  |
-| fcf_ttm | $41.0B | legacy_unverified | actual | SRC-v15-html | +$41.0B |  |
+| fcf_ttm | $41.0B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 41.0B = OCF 130.3B - CapEx 89.3B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $41.0B | legacy_unverified | actual | SRC-v15-html | +$41.0B | [CASH-FCF-35 대체됨 → meta.fcf_ttm.cashfcf35]  |
 | market_cap | $1.51T | legacy_unverified | actual | SRC-v15-html | $1.51T |  |
 | net_borrowing_ttm | $51.7B | legacy_unverified | actual | SRC-v15-html | +$51.7B | 차환 제외 순증 |
 | net_cash | -$22.1B | legacy_unverified | actual | SRC-v15-html | -$22.1B |  |
@@ -99,10 +105,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $116.0B | legacy_unverified | actual | SRC-v15-html | $116.0B |  |
-| cash | $76.8B | legacy_unverified | actual | SRC-v15-html | $76.8B |  |
+| cash | $20.9B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 20.9B (버퍼 76.8B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $76.8B | legacy_unverified | actual | SRC-v15-html | $76.8B | [CASH-FCF-35 대체됨 → microsoft.cash.cashfcf35]  |
 | credit_rating | AAA급 | legacy_unverified | text | SRC-v15-html | AAA급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 0.6 | legacy_unverified | actual | SRC-v15-html | 0.64 |  |
-| fcf_ttm | $67.0B | legacy_unverified | actual | SRC-v15-html | +$67.0B |  |
+| fcf_ttm | $67.0B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 67.0B = OCF 182.9B - CapEx 115.9B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $67.0B | legacy_unverified | actual | SRC-v15-html | +$67.0B | [CASH-FCF-35 대체됨 → microsoft.fcf_ttm.cashfcf35]  |
 | market_cap | $3.69T | legacy_unverified | actual | SRC-v15-html | $3.69T |  |
 | net_borrowing_ttm | -$3.0B | legacy_unverified | actual | SRC-v15-html | -$3.0B | 차환 제외 순증 |
 | net_cash | -$52.0B | legacy_unverified | actual | SRC-v15-html | -$52.0B |  |
@@ -124,10 +132,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $46.9B | legacy_unverified | actual | SRC-v15-html | $46.9B |  |
-| cash | $110.6B | legacy_unverified | actual | SRC-v15-html | $110.6B |  |
+| cash | $88.2B | verified | actual | SRC-SEC-TSM-20F-FY2025 | 현금및현금성자산 88.2B (버퍼 99.7B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $110.6B | legacy_unverified | actual | SRC-v15-html | $110.6B | [CASH-FCF-35 대체됨 → tsmc.cash.cashfcf35]  |
 | credit_rating | AA-급 | legacy_unverified | text | SRC-v15-html | AA-급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 0.3 | legacy_unverified | actual | SRC-v15-html | 0.34 |  |
-| fcf_ttm | $36.0B | legacy_unverified | actual | SRC-v15-html | +$36.0B |  |
+| fcf_ttm | $32.0B | verified | derived | SRC-SEC-TSM-20F-FY2025 | TTM FCF 32.0B = OCF 72.5B - CapEx 40.6B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $36.0B | legacy_unverified | actual | SRC-v15-html | +$36.0B | [CASH-FCF-35 대체됨 → tsmc.fcf_ttm.cashfcf35]  |
 | market_cap | $2.15T | legacy_unverified | actual | SRC-v15-html | $2.15T ✱ |  |
 | net_borrowing_ttm | $100M | legacy_unverified | actual | SRC-v15-html | +$0.1B | 차환 제외 순증 |
 | net_cash | $77.0B | legacy_unverified | actual | SRC-v15-html | +$77.0B |  |
@@ -150,12 +160,14 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $23.1B | legacy_unverified | actual | SRC-v15-html | $23.1B |  |
-| cash | $56.8B | legacy_unverified | actual | SRC-v15-html | $56.8B |  |
+| cash | $19.1B | verified | actual | SRC-SEC-BABA-20F-FY2026 | 현금및현금성자산 19.1B (버퍼 41.6B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $56.8B | legacy_unverified | actual | SRC-v15-html | $56.8B | [CASH-FCF-35 대체됨 → alibaba.cash.cashfcf35]  |
 | contracted_revenue | — | not_disclosed | actual | SRC-SEC-BABA-20F-FY2026 | 미공시 — ASC 606 실무적 간편법 선언 | OBS-REG-25. **회사가 공시하지 않겠다고 선언한 회계정책이다.** '이 문서에 없다' 와 다르다 — 찾아도 없을 것이 선언돼 있다. C |
 | contracted_revenue | — | not_disclosed | actual | SRC-v15-rule | — | [OBS-REG-25 대체됨 → alibaba.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | A급 | legacy_unverified | text | SRC-v15-html | A급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 2.7 | legacy_unverified | actual | SRC-v15-html | 2.68 |  |
-| fcf_ttm | -$11.4B | legacy_unverified | actual | SRC-v15-html | -$11.4B |  |
+| fcf_ttm | -$7.2B | verified | derived | SRC-SEC-BABA-20F-FY2026 | TTM FCF -7.2B = OCF 11.0B - CapEx 18.3B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | -$11.4B | legacy_unverified | actual | SRC-v15-html | -$11.4B | [CASH-FCF-35 대체됨 → alibaba.fcf_ttm.cashfcf35]  |
 | market_cap | $270.0B | legacy_unverified | actual | SRC-v15-html | $270B |  |
 | net_borrowing_ttm | $7.5B | legacy_unverified | actual | SRC-v15-html | +$7.5B | 차환 제외 순증 |
 | net_cash | $17.5B | legacy_unverified | actual | SRC-v15-html | +$17.5B |  |
@@ -206,10 +218,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $10.0B | legacy_unverified | actual | SRC-v15-html | $10.0B |  |
-| cash | $146.5B | legacy_unverified | actual | SRC-v15-html | $146.5B |  |
+| cash | $39.5B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 39.5B (버퍼 62.4B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $146.5B | legacy_unverified | actual | SRC-v15-html | $146.5B | [CASH-FCF-35 대체됨 → apple.cash.cashfcf35]  |
 | credit_rating | AA급 | legacy_unverified | text | SRC-v15-html | AA급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 0.5 | legacy_unverified | actual | SRC-v15-html | 0.45 |  |
-| fcf_ttm | $136.7B | legacy_unverified | actual | SRC-v15-html | +$136.7B |  |
+| fcf_ttm | $136.7B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 136.7B = OCF 146.7B - CapEx 10.0B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $136.7B | legacy_unverified | actual | SRC-v15-html | +$136.7B | [CASH-FCF-35 대체됨 → apple.fcf_ttm.cashfcf35]  |
 | market_cap | $4.74T | legacy_unverified | actual | SRC-v15-html | $4.74T |  |
 | net_borrowing_ttm | -$17.3B | legacy_unverified | actual | SRC-v15-html | -$17.3B | 차환 제외 순증 |
 | net_cash | $62.2B | legacy_unverified | actual | SRC-v15-html | +$62.2B |  |
@@ -231,10 +245,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $7.4B | legacy_unverified | actual | SRC-v15-html | $7.4B |  |
-| cash | $62.5B | legacy_unverified | actual | SRC-v15-html | $62.5B |  |
+| cash | $22.4B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 22.4B (버퍼 56.6B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $62.5B | legacy_unverified | actual | SRC-v15-html | $62.5B | [CASH-FCF-35 대체됨 → nvidia.cash.cashfcf35]  |
 | credit_rating | AA~A급 | legacy_unverified | text | SRC-v15-html | AA~A급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 0.2 | legacy_unverified | actual | SRC-v15-html | 0.19 |  |
-| fcf_ttm | $127.0B | legacy_unverified | actual | SRC-v15-html | +$127.0B |  |
+| fcf_ttm | $127.0B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 127.0B = OCF 134.4B - CapEx 7.4B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $127.0B | legacy_unverified | actual | SRC-v15-html | +$127.0B | [CASH-FCF-35 대체됨 → nvidia.fcf_ttm.cashfcf35]  |
 | market_cap | $5.42T | legacy_unverified | actual | SRC-v15-html | $5.42T |  |
 | net_borrowing_ttm | $24.9B | legacy_unverified | actual | SRC-v15-html | +$24.9B | 차환 제외 순증 |
 | net_cash | $23.6B | legacy_unverified | actual | SRC-v15-html | +$23.6B |  |
@@ -256,10 +272,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $40M | legacy_unverified | actual | SRC-v15-html | $0.04B |  |
-| cash | $9.4B | legacy_unverified | actual | SRC-v15-html | $9.4B |  |
+| cash | $2.0B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 2.0B (버퍼 9.4B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $9.4B | legacy_unverified | actual | SRC-v15-html | $9.4B | [CASH-FCF-35 대체됨 → palantir.cash.cashfcf35]  |
 | credit_rating | 무차입 | legacy_unverified | text | SRC-v15-html | 무차입 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 0.1 | legacy_unverified | actual | SRC-v15-html | 0.08 |  |
-| fcf_ttm | $3.4B | legacy_unverified | actual | SRC-v15-html | +$3.4B |  |
+| fcf_ttm | $3.4B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 3.4B = OCF 3.4B - CapEx 0.0B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $3.4B | legacy_unverified | actual | SRC-v15-html | +$3.4B | [CASH-FCF-35 대체됨 → palantir.fcf_ttm.cashfcf35]  |
 | market_cap | $407.0B | legacy_unverified | actual | SRC-v15-html | $407B |  |
 | net_borrowing_ttm | — | not_disclosed | actual | SRC-v15-html | 없음 | 차환 제외 순증 |
 | net_cash | $9.2B | legacy_unverified | actual | SRC-v15-html | +$9.2B |  |
@@ -281,12 +299,14 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $42.4B | legacy_unverified | actual | SRC-v15-html | $42.4B |  |
-| cash | $100.0B | legacy_unverified | actual | SRC-v15-html | $100.0B |  |
+| cash | $93.5B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 93.5B (버퍼 93.5B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $100.0B | legacy_unverified | actual | SRC-v15-html | $100.0B | [CASH-FCF-35 대체됨 → spacex-xai.cash.cashfcf35]  |
 | contracted_revenue | $47.5B | verified | actual | SRC-SEC-SPCX-10Q-2026Q2 | Backlog $47,461M (2026-06-30) | OBS-REG-25. 승계 관측 spacex-xai.contracted_revenue.v15($47.5B, legacy_unverified)를  |
 | contracted_revenue | $47.5B | legacy_unverified | actual | SRC-v15-rule | 백로그 $47.5B | [OBS-REG-25 대체됨 → spacex-xai.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | 무등급 | legacy_unverified | text | SRC-v15-html | 무등급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 5.8 | legacy_unverified | actual | SRC-v15-html | 5.78 ⚠️ |  |
-| fcf_ttm | -$32.5B | legacy_unverified | actual | SRC-v15-html | -$32.5B |  |
+| fcf_ttm | -$32.3B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF -32.3B = OCF 9.9B - CapEx 42.2B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | -$32.5B | legacy_unverified | actual | SRC-v15-html | -$32.5B | [CASH-FCF-35 대체됨 → spacex-xai.fcf_ttm.cashfcf35]  |
 | market_cap | $1.91T | legacy_unverified | actual | SRC-v15-html | $1.91T |  |
 | net_borrowing_ttm | $102.0B | legacy_unverified | actual | SRC-v15-html | +$102.0B | 차환 제외 순증 |
 | net_cash | $60.3B | legacy_unverified | actual | SRC-v15-html | +$60.3B |  |
@@ -312,10 +332,12 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $12.9B | legacy_unverified | actual | SRC-v15-html | $12.9B |  |
-| cash | $43.5B | legacy_unverified | actual | SRC-v15-html | $43.5B |  |
+| cash | $15.2B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 15.2B (버퍼 43.5B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $43.5B | legacy_unverified | actual | SRC-v15-html | $43.5B | [CASH-FCF-35 대체됨 → tesla.cash.cashfcf35]  |
 | credit_rating | 투자등급 | legacy_unverified | text | SRC-v15-html | 투자등급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 1.3 | legacy_unverified | actual | SRC-v15-html | 1.27 |  |
-| fcf_ttm | $5.8B | legacy_unverified | actual | SRC-v15-html | +$5.8B |  |
+| fcf_ttm | $5.8B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 5.8B = OCF 18.7B - CapEx 12.9B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $5.8B | legacy_unverified | actual | SRC-v15-html | +$5.8B | [CASH-FCF-35 대체됨 → tesla.fcf_ttm.cashfcf35]  |
 | market_cap | $1.41T | legacy_unverified | actual | SRC-v15-html | $1.41T |  |
 | net_borrowing_ttm | $1.8B | legacy_unverified | actual | SRC-v15-html | +$1.8B | 차환 제외 순증 |
 | net_cash | $27.4B | legacy_unverified | actual | SRC-v15-html | +$27.4B |  |
@@ -337,11 +359,13 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $55.7B | legacy_unverified | actual | SRC-v15-html | $55.7B |  |
-| cash | $31.9B | legacy_unverified | actual | SRC-v15-html | $31.9B |  |
+| cash | $31.3B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 31.3B (버퍼 31.9B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $31.9B | legacy_unverified | actual | SRC-v15-html | $31.9B | [CASH-FCF-35 대체됨 → oracle.cash.cashfcf35]  |
 | contracted_revenue | $638.0B | legacy_unverified | actual | SRC-v15-rule | RPO $638B | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | BBB- ⚠️ | legacy_unverified | text | SRC-v15-html | BBB- ⚠️ | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 5.0 | legacy_unverified | actual | SRC-v15-html | 5.03 ⚠️ |  |
-| fcf_ttm | -$23.7B | legacy_unverified | actual | SRC-v15-html | -$23.7B |  |
+| fcf_ttm | -$23.7B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF -23.7B = OCF 32.0B - CapEx 55.7B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | -$23.7B | legacy_unverified | actual | SRC-v15-html | -$23.7B | [CASH-FCF-35 대체됨 → oracle.fcf_ttm.cashfcf35]  |
 | market_cap | $443.7B | legacy_unverified | actual | SRC-v15-html | $443.7B |  |
 | net_borrowing_ttm | $40.2B | legacy_unverified | actual | SRC-v15-html | +$40.2B | 차환 제외 순증 |
 | net_cash | -$135.5B | legacy_unverified | actual | SRC-v15-html | -$135.5B |  |

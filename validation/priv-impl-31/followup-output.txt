@@ -2,10 +2,10 @@
 PRIV-IMPL-31 보완 — ai-scorecard-2026-09-obsreg anthropic F8 근거란 교체 (승인 실행 미변경)
 ================================================================================================================
 
-[1] 교체 전 — score -3 · evidence 10건
-  제거: 📐 **[근거 교체 2026-09-11] AWS 훈련 집중은 증권사 2차 증언이 아니라 Amazon 의 1차 공시다.** 승계 근거란은 이것을 DS투자증권 9/7 자료로 적고 있었으나, 실제로는 A…
+[1] 교체 전 — score -3 · evidence 6건
+  제거: 🆕 ⚠️ 성능의 원천이 AWS 한 곳에 몰려 있다는 증언 — DS투자증권(9/7): Fable 계열의 빠른 성능 향상 배경에 AWS Project Rainier(2025-11 Trainium2 50…
 
-[2] 교체 후 — score -3 · evidence 10건 · status new · previous anthropic.F8.f8anth33
+[2] 교체 후 — score -3 · evidence 10건 · status new · previous anthropic.F8
   증권사 2차 증언을 근거로 쓰는 항목: 0건 (0 이어야 한다)
   교체 이력으로만 언급하는 항목: 1건
   8-K 접수번호 등재: 1건

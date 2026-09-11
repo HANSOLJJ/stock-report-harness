@@ -496,18 +496,35 @@ class TestF6FixRoundSpec(unittest.TestCase):
         self.assertIn("corporate_internal_only", scope["supersedes"])
         self.assertIn("개인 사용조차 막는", scope["evaluation_rule"])
 
-    def test_yahoo_not_promoted_and_reason_replaced(self):
-        """SCOPE-34 는 yahoo 를 allowed 로 올리는 과제였고 **약관 확인 결과 올리지 못했다.**"""
+    def test_yahoo_is_denied_not_unlisted(self):
+        """**SCOPE-34 검토에서 denied 로 확정됐다**(설계진행 2026-09-11).
+
+        처음에는 `unlisted` 에 사유만 교체해 뒀다 — 지시가 `allowed` 로 올리는 것이었으므로
+        `denied` 로 옮기는 것은 내가 정할 일이 아니라고 봤다. 검토에서 "제 지시가 잘못됐습니다"
+        와 함께 `denied` 이전을 지시받았다. **판단 경위를 지우지 않고 여기 남긴다.**
+        """
+        denied = {e["host"]: e for e in self.sources["denied"]}
         allowed = {e["host"] for e in self.sources["allowed"]}
-        unlisted = {e["host"]: e for e in self.sources["unlisted"]}
+        unlisted = {e["host"] for e in self.sources.get("unlisted", [])}
         for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
+            self.assertIn(host, denied, "query2 도 별도 항목이어야 source_violation 이 잡는다")
             self.assertNotIn(host, allowed)
-            self.assertIn(host, unlisted, "query2 도 별도 항목이어야 검사가 걸린다")
-        entry = unlisted["query1.finance.yahoo.com"]
-        self.assertEqual(entry["reason_type"], "both")
-        self.assertIn("소멸한 사유", entry["reason"], "기존 기술 사유가 소멸했다는 것을 적는다")
+            self.assertNotIn(host, unlisted)
+        entry = denied["query1.finance.yahoo.com"]
+        # 사유가 둘 다 적혀 있어야 한다. 하나만 적으면 나머지가 해소됐을 때 오독된다.
         self.assertIn("Disallow: /", entry["reason"])
-        self.assertIn("for any purpose", entry["reason"], "개인 사용 예외가 없다는 문면")
+        self.assertIn("for any purpose", entry["reason"])
+        self.assertIn("api.nasdaq.com", entry["note"], "같은 형태의 선례를 가리켜야 한다")
+
+    def test_denied_note_records_the_pipeline_contradiction(self):
+        """**정책은 금지하는데 프로젝트는 이미 쓴다.** 그 모순이 적혀 있어야 한다.
+
+        다음 사람이 '왜 stock 은 쓰는데 scorecard 는 안 쓰나' 를 되묻지 않게 한다.
+        """
+        entry = {e["host"]: e for e in self.sources["denied"]}["query1.finance.yahoo.com"]
+        self.assertIn("stock-research", entry["note"])
+        self.assertIn("사용자 사안", entry["note"])
+        self.assertIn("ClaudeBot", entry["note"], "우리 계열 에이전트를 이름으로 지목한 금지도 남긴다")
 
     def test_no_price_source_in_allowlist(self):
         """**결과를 숨기지 않는다.** F6 의 P1·P2 분자를 만들 가격 원천이 아직 없다."""

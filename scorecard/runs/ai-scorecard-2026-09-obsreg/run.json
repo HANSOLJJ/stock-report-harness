@@ -2,12 +2,12 @@
   "schema": "scorecard.run/1",
   "run_id": "ai-scorecard-2026-09-obsreg",
   "report_type": "ai_scorecard",
-  "title": "AI 기업 9-factor 채점표 — OFFB 실측 관측 + F6 입력 + 비상장 확정(v1.7)",
+  "title": "AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)",
   "as_of": "2026-09-02",
   "price_as_of": "2026-09-02",
   "info_cutoff": "2026-09-02",
   "rule_version": "v1.7",
-  "rule_hash": "6c6664de352b3cfb49e6938739a3aae144875bc5d3ab42acbe7a3c6d6b8bc57d",
+  "rule_hash": "64fb45557c9d40eb0ca9bfd3ed9e18cc53e6ff064dba43458bca25be2744d926",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
@@ -64,7 +64,7 @@
     }
   ],
   "created_at": "2026-09-11",
-  "purpose": "v1.7 파라미터 모드로 14개사 전부를 산출하고 확정된 규칙 결정과 원천 정책을 반영한다",
+  "purpose": "v1.7 파라미터 모드로 14개사 전부를 산출하고 확정된 규칙 결정과 SEC 실측 관측을 반영한다",
   "assumptions": [
     "원자료와 정성 판단은 기준선 v1.5(2026-09-02)에서 승계했으며 이번 실행에서 재검증되지 않았다(legacy_unverified)",
     "미결 규칙 결정(C-xx)은 run.json.decisions 에 명시된 것만 적용한다",
@@ -82,6 +82,9 @@
     "anthropic Series H 조달액이 원본 안에서 $30B·$65B 로 갈린다. 값을 고르지 않았고 자본효율 민감도(0.41~0.72)를 관측 basis 에 남겼다. 이 구간이 보정 임계 0.50 을 가로지른다",
     "비상장 2사의 결측 유형은 MISS-LABEL-23 구조 기준으로 등록했다. 값은 그대로 없고 라벨만 붙였다",
     "anthropic F8 근거란은 2026-09-11 에 2차 증언에서 1차 공시로 교체했다(C-13 F8-ANTH-33). 점수 -3 은 바뀌지 않았고, Google 몫의 훈련/서빙 구분은 Alphabet 공시에 Anthropic 이 0건이라 확인 불가다. 미공시를 아니다로 읽지 않아 하향하지 않았고 재판정 조건을 근거란에 등재했다",
-    "원천 정책을 SRC-POLICY-32 결론으로 개정했다. usage_scope 는 개인·법인 내부 사용의 합집합이고, 라이선스가 원소를 전부 허용해야 적격이라 alphavantage·financialmodelingprep·finnhub 셋이 allowed 에서 not_adopted 로 내려갔다. 셋 다 실제로 쓰이지 않아 점수 영향이 없다(F6·F9 는 SEC 만 쓴다)"
+    "원천 정책을 SRC-POLICY-32 결론으로 개정했다. usage_scope 는 개인·법인 내부 사용의 합집합이고, 라이선스가 원소를 전부 허용해야 적격이라 alphavantage·financialmodelingprep·finnhub 셋이 allowed 에서 not_adopted 로 내려갔다. 셋 다 실제로 쓰이지 않아 점수 영향이 없다(F6·F9 는 SEC 만 쓴다)",
+    "cash 는 **순수 현금**(현금및현금성자산)으로 등록했다. 설계 지침 6.4 가 단기 투자자산을 포함하려면 환금성 기준을 먼저 정하라고 하는데 그 기준이 아직 없다. 유동성 버퍼·총계·제한현금은 관측 basis.preserved_wider_definitions 에 보존했고 기준이 정해지면 그대로 쓸 수 있다",
+    "legacy cash 의 정의는 12개사 안에서 세 갈래였다 — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다",
+    "F6 의 P1·P2 는 여전히 legacy_unverified 인 market_cap 위에 선다. 점수를 깎지 않고 calc.unverified_inputs 와 경고로 드러낸다 — 우리 수집 공백을 기업 위험으로 바꾸지 않는다"
   ]
 }

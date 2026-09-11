@@ -144,14 +144,24 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
 
 
 def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
-                     obs_ids: list[str]) -> tuple[float | None, str | None, dict[str, Any]]:
-    """(값, 미산출 사유, 입력 상세). **입력이 없으면 값을 만들지 않는다.**"""
+                     obs_ids: list[str],
+                     unverified: dict[str, list[str]] | None = None
+                     ) -> tuple[float | None, str | None, dict[str, Any]]:
+    """(값, 미산출 사유, 입력 상세). **입력이 없으면 값을 만들지 않는다.**
+
+    입력 중 `legacy_unverified` 가 있으면 `unverified` 에 모은다. **점수는 바꾸지 않는다** —
+    자료를 우리가 아직 못 구한 것이지 그 기업의 성질이 아니기 때문이다(MISS-LABEL-23 원칙).
+    다만 **그 사실이 산출물에 보여야** 한다. 지금 market_cap 12건이 전부 legacy 이고
+    P1·P2 가 그 위에 서는데 결과 어디에도 안 나타나던 상태를 고친다(SCOPE-34 검토, 설계진행).
+    """
     spec = rules.f6_parameters()[pid]
     raw: dict[str, Any] = {}
     for metric in spec["inputs"]:
         value, o = obs.number(cid, metric)
         if o is not None:
             obs_ids.append(o["observation_id"])
+            if unverified is not None and o.get("status") == "legacy_unverified":
+                unverified.setdefault(metric, []).append(pid)
         raw[metric] = value
         if value is None:
             return None, f"{pid} 입력 {metric} 관측 없음", raw
@@ -196,10 +206,11 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
 
     subtotal = 0
     missing: list[str] = []
+    unverified: dict[str, list[str]] = {}
     for pid in track["parameters"]:
         if pid == "P4":
             continue
-        value, reason, raw = _parameter_value(pid, cid, obs, rules, obs_ids)
+        value, reason, raw = _parameter_value(pid, cid, obs, rules, obs_ids, unverified)
         entry: dict[str, Any] = {"inputs": raw}
         if value is None:
             entry["value"] = None
@@ -214,6 +225,16 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
                 warnings.append(f"{pid} 경계 ⚠️ {boundary['nearest_boundary']:g} 선까지 "
                                 f"{boundary['distance_ratio'] * 100:+.1f}% — 점수는 그대로")
         calc["parameters"][pid] = entry
+
+    # 미검증 입력을 드러낸다. **점수에는 개입하지 않는다** — 우리 수집 공백을 기업 위험으로 바꾸지 않는다.
+    if unverified:
+        calc["unverified_inputs"] = {m: sorted(set(p)) for m, p in sorted(unverified.items())}
+        calc["unverified_inputs_note"] = (
+            "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — "
+            "자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.")
+        for metric, pids in sorted(unverified.items()):
+            warnings.append(f"미검증 입력 ⚠️ {metric} 이 legacy_unverified 인데 "
+                            f"{', '.join(sorted(set(pids)))} 가 그 위에 선다 — 점수는 그대로")
 
     if missing:
         return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
