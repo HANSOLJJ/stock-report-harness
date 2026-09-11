@@ -147,3 +147,70 @@ worker 가 민감도를 냈다.
 | **`reviews/…obsreg.md`** | **설계진행이 작성** |
 | `cumulative_raised` 실측 | Series H 모순 해소 시 재판정. `basis` 에 민감도 있음 |
 | 승인 | 위 둘 끝나면 사용자 |
+
+---
+
+## 라운드2 확인 — worker `c2796c6`
+
+**보완 넷 다 닫혔다.** 테스트 **220건**, 승인 실행 diff 공집합, **순위·점수 변동 0건**, 원본 대조 `58 → 87건` 불일치 0.
+
+```
+allowed        data.sec.gov · www.sec.gov · www.federalreserve.gov      ← 셋만 남았다
+denied         api.nasdaq.com
+not_adopted    alphavantage · financialmodelingprep · finnhub · data.nasdaq
+usage_scope    ["personal_internal_only", "corporate_internal_only"]
+```
+
+### anthropic F8 상태 변경이 정확하다
+
+```
+carried_score → ok      점수 -3 그대로
+```
+
+> 근거란을 1차 자료로 다시 쓴 이상 v1.5 승계가 아니라 **`carried` 로 두면 `carried_from` 이 거짓이 됩니다.**
+
+**요구하지 않았는데 스스로 찾았다.** 점수가 안 바뀌었다고 `carried` 로 두면 **출처가 거짓말을 한다.** 오늘 `not_disclosed`·`stale_asof`·`private_note` 에서 세 번 나온 것과 같은 형태다.
+
+### 덤으로 찾은 1차 자료
+
+AMZN 10-Q 원문에서 확인했다.
+
+> we exercised our option to participate in subsequent Anthropic equity financings by **investing $5.0 billion in Anthropic Series H nonvoting preferred stock**, which reduced the amount available under the facility to $15.0 billion
+
+**Series H 의 존재와 시점(Q2 2026)이 1차 자료로 확정된다.** 라운드 총액이 없어 `$30B`/`$65B` 는 못 풀지만 **facility 총 $20B 중 $5B 소진**이라는 구조가 새로 나왔다. 못 푼다는 것을 정확히 적고 **참고가 될 것** 이라고만 한 선이 옳다.
+
+### 8-K 원문 미보존을 적은 것
+
+> 8-K 원문은 워크트리에 없어 **C-13 읽기를 인용**했고 그 사실을 적었습니다. 대신 보존 AMZN 10-Q 의 `$100.0B/10.0년` 한 줄은 **직접 대조**했습니다.
+
+**인용과 직접 대조를 갈라 적었다.** 오늘 내가 두 번 틀린 자리가 인용을 대조 없이 옮긴 것이었다.
+
+---
+
+# 승인 보류 — 사용자 결정
+
+**계약이 요구하는 검토를 지금 만들 수 없다.**
+
+```python
+validate.py 164~167행
+  review_type      != "separate-session-4way"      → error
+  review_execution != "separate_subagent_sessions" → error
+  검토자 칸이 비면  → "수행하지 않은 검토를 pass 로 표시할 수 없음"
+```
+
+**기준선은 서브에이전트 넷을 별도 세션에서 돌렸다**(`fact-checker`·`general-purpose`×2·`report-designer`). **설계진행이 한 것은 한 명의 검토다.** 충실했으나 4영역 별도 세션이 아니고, **`separate_subagent_sessions` 라고 적으면 안 한 검토를 했다고 적는 것**이다. worker 가 거부한 것과 같은 행동이다.
+
+**그리고 출력·가독성은 대상 자체가 없다** — `output/ai-scorecard-2026-09-obsreg.html` 이 없다.
+
+## 사용자 결정 — **승인하지 않고 다음 작업으로 간다**
+
+**근거는 순서다.** `legacy_unverified` 가 **198건** 남아 있고 거기에 `market_cap`·`price`·`cash`·`fcf_ttm` 이 들어 있다. **그 기초 입력을 실측하면 F6·F9 점수가 다시 움직인다.** 지금 승인하면 **검토 4영역을 두 번 돌리게 된다.**
+
+**실행은 커밋돼 있으므로 사라지지 않는다.** 승인 도장만 안 찍힌 상태로 남고, 기초 입력 실측이 끝난 뒤 **한 번에** 받는다.
+
+| | |
+|---|---|
+| 실행 | `ai-scorecard-2026-09-obsreg` — 커밋 `c2796c6` 에 보존 |
+| 상태 | **승인 전.** 14/14 완주, 220건 통과, 승인 대상 6종 해시 보존 |
+| 승인 조건 | HTML 빌드 + 4영역 별도 세션 검토 + `reviews/` 작성 |
+| 시점 | **`legacy_unverified` 198건 실측 후** |
