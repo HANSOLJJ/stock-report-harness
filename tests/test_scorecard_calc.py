@@ -37,10 +37,11 @@ def company(cid: str = "acme", listed: bool = True, ctype: str = "업무") -> di
     }
 
 
-def obs(metric: str, value, cid: str = "acme", status: str = "verified", basis: dict | None = None, kind: str = "actual") -> dict:
+def obs(metric: str, value, cid: str = "acme", status: str = "verified", basis: dict | None = None,
+        kind: str = "actual", missing_type: str | None = None) -> dict:
     from scorecard.schema import METRICS
 
-    return {
+    item = {
         "observation_id": f"{cid}.{metric}.{status}",
         "company_id": cid,
         "metric": metric,
@@ -52,6 +53,9 @@ def obs(metric: str, value, cid: str = "acme", status: str = "verified", basis: 
         "status": status,
         "basis": basis,
     }
+    if missing_type is not None:
+        item["missing_type"] = missing_type
+    return item
 
 
 def judgment(factor: str, kind: str, inputs: dict | None = None, score: int | None = None, cid: str = "acme", status: str = "new") -> dict:
@@ -331,14 +335,27 @@ class TestF9(unittest.TestCase):
         self.assertEqual(absent["status"], "pending_data")
         failed = self.gates(*base, obs("contracted_revenue", None, status="parse_failed"), obs("offbalance_B", 250e9), gi={"coverage_comparable": "yes"})
         self.assertEqual(failed["status"], "pending_data")
-        # 확인된 미공시만 C-16 정책 대상
-        nd = [obs("contracted_revenue", None, status="not_disclosed"), obs("offbalance_B", None, status="not_disclosed")]
+        # 확인된 미공시만 C-16 정책 대상 — status 가 아니라 **missing_type** 이 가른다 (MISS-LABEL-23).
+        # status=not_disclosed 는 미확인·미공시·계산 대상 아님을 다 담고 있어 이 구분을 못 한다.
+        nd = [obs("contracted_revenue", None, status="not_disclosed", missing_type="not_disclosed_confirmed"),
+              obs("offbalance_B", None, status="not_disclosed", missing_type="not_disclosed_confirmed")]
         pending = self.gates(*base, *nd, gi={"coverage_comparable": "yes"})
         self.assertEqual((pending["status"], pending["pending"]["decision_id"]), ("needs_rule_decision", "C-16"))
         hold = self.gates(*base, *nd, gi={"coverage_comparable": "yes"}, decisions=[decision("C-16", "hold")])
         self.assertEqual(hold["score"], -2)
         down = self.gates(*base, *nd, gi={"coverage_comparable": "yes"}, decisions=[decision("C-16", "downgrade")])
         self.assertEqual(down["score"], -3)
+        # 결측 유형이 없으면 C-16 으로 보내지 않는다. 우리가 안 찾은 것을 그 기업의 위험으로 둔갑시키지 않는다.
+        unlabeled = [obs("contracted_revenue", None, status="not_disclosed"),
+                     obs("offbalance_B", None, status="not_disclosed")]
+        r = self.gates(*base, *unlabeled, gi={"coverage_comparable": "yes"})
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("결측 유형이 분류되지 않아", r["pending"]["message"])
+        # 미확인으로 분류된 것도 마찬가지다. 조사를 더 하게 만드는 방향이다.
+        unver = [obs("contracted_revenue", None, status="not_disclosed", missing_type="not_disclosed_confirmed"),
+                 obs("offbalance_B", None, status="not_disclosed", missing_type="unverified")]
+        r2 = self.gates(*base, *unver, gi={"coverage_comparable": "yes"})
+        self.assertEqual(r2["status"], "pending_data")
         zero_b = self.gates(*base, obs("contracted_revenue", 10e9), obs("offbalance_B", 0.0), gi={"coverage_comparable": "yes"})
         self.assertEqual(zero_b["score"], -2)
 

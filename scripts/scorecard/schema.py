@@ -32,6 +32,16 @@ PERIOD_REQUIRED_METRICS = {
     "ntm_eps_quarter",
 }
 OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
+# 결측 유형. status=not_disclosed 하나가 네 뜻(미확인·미공시·계산 대상 아님·산출 불가)으로 쓰여
+# calc_f9._g4 의 C-16 진입 판별이 무너졌다(MISS-LABEL-23). 값이 없는 이유를 라벨이 직접 말하게 한다.
+#
+#   unverified              우리가 확인하지 않았다. 조사하면 값이 있을 수 있다
+#   not_disclosed_confirmed 확인된 미공시. 회사가 내지 않는다 — **C-16 은 여기에만 걸린다**
+#   not_applicable          산식 적용 대상이 아니다. 개념상 정의되지 않는다(FCF 양수의 런웨이, 적자의 PER)
+#   indeterminate           산출 대상이나 선행 입력이 결측이라 만들 수 없다
+MISSING_TYPES = {"unverified", "not_disclosed_confirmed", "not_applicable", "indeterminate"}
+# C-16(약정 커버리지 결측 정책)이 걸리는 유일한 유형. 우리가 안 찾은 것을 그 기업의 위험으로 둔갑시키지 않는다.
+MISSING_TYPE_FOR_DISCLOSURE_POLICY = "not_disclosed_confirmed"
 JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs"}
 JUDGMENT_STATUSES = {"new", "carried"}
 TRI = {"pass", "partial", "fail", "unknown"}
@@ -224,6 +234,7 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         lo, hi = spec["range"]
         _require(_is_number(lo) and _is_number(hi) and lo <= hi, f"rules.json.factors.{fid}: range 오류")
     _validate_f6_policy(payload["policies"]["f6"], factors["F6"])
+    _validate_f9_policy(payload["policies"]["f9"], factors["F9"])
     for item in payload["checklist"]:
         _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
     ids = [d["id"] for d in payload["decisions"]]
@@ -371,6 +382,34 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
              f"rules.policies.f6: 파라미터 합계 하한 {total_min} 이 factors.F6.range 하한 {factor_min} 과 다름")
 
 
+# F9 도 F6 와 같은 형태로 정책과 factor range 를 로드 시점에 맞춘다.
+# F6 는 파라미터 하한 합계를 맞추는데 F9 는 그런 검사가 없어 범위 밖 점수가 조용히 지나갔다(MISS-LABEL-23).
+# 검사 대상은 **점수를 만들어 내는 값**이다. 임계치(연 수·배수)는 점수가 아니라 제외한다.
+F9_SCORE_KEYS = ("floor", "g1_bep_retreat_score", "g1_buffer_erosion_min_score", "g1_direction_relief_cap",
+                 "g2_fcf_positive_stable", "g2_fcf_positive_deteriorating", "g2_fcf_negative",
+                 "g2_private_not_disclosed")
+
+
+def _validate_f9_policy(f9: Any, factor: dict[str, Any]) -> None:
+    _require(isinstance(f9, dict), "rules.policies.f9: object 여야 함")
+    lo, hi = factor["range"]
+    bad: list[str] = []
+    for key in F9_SCORE_KEYS:
+        if key not in f9:
+            continue
+        value = f9[key]
+        if _is_number(value) and not (lo <= value <= hi):
+            bad.append(f"{key}={value}")
+    # 제안 밴드도 점수를 만드는 값이다. status 가 proposed 여도 범위를 벗어나면 채택 시 바로 깨진다.
+    for idx, band in enumerate(f9.get("g1_bands_proposed") or []):
+        score = band.get("score")
+        if _is_number(score) and not (lo <= score <= hi):
+            bad.append(f"g1_bands_proposed[{idx}].score={score}")
+    _require(not bad,
+             f"rules.policies.f9: factors.F9.range {factor['range']} 를 벗어나는 점수 — {', '.join(bad)}. "
+             f"밴드 재척도는 C-06 결정 사항이므로 임의로 고쳐 통과시키지 않는다")
+
+
 # ------------------------------------------------------------------ observations
 
 def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], run_id: str | None = None) -> list[dict[str, Any]]:
@@ -387,8 +426,13 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
             item,
             ["observation_id", "company_id", "metric", "value", "unit", "as_of", "kind", "source_id", "status"],
             where,
-            optional=["period", "basis", "raw", "note"],
+            optional=["period", "basis", "raw", "note", "missing_type"],
         )
+        if "missing_type" in item:
+            _require(item["missing_type"] in MISSING_TYPES,
+                     f"{where}: missing_type 는 {sorted(MISSING_TYPES)} 중 하나 ({item['missing_type']!r})")
+            # 값이 있는데 결측 유형을 다는 것은 모순이다.
+            _require(item["value"] is None, f"{where}: value 가 있는데 missing_type 이 붙어 있음")
         oid = item["observation_id"]
         _require(isinstance(oid, str) and oid and oid not in seen, f"{where}: observation_id 누락/중복 {oid!r}")
         seen.add(oid)

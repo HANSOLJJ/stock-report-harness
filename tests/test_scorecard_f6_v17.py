@@ -11,10 +11,23 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from scorecard.calc_f6 import compute_f6  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
+from scorecard.schema import SchemaError  # noqa: E402
 
 RULES_V15 = load_rules("v1.5")
 RULES_V16 = load_rules("v1.6")
-RULES_V17 = load_rules("v1.7")
+
+# v1.7 은 지금 F9 정책-range 정합 검사에 걸려 로드되지 않는다(MISS-LABEL-23 과제 3).
+# factors.F9.range 를 [-4,0] 으로 바꾸면서 policies.f9 를 그대로 둔 F6-SPEC-18 의 결함이다.
+# **밴드를 임의로 고쳐 통과시키지 않는다** — 재척도는 C-06 결정 사항이다.
+# 그래서 F6 회귀는 막힌 동안 skip 하고, 막혔다는 사실 자체를 아래에서 테스트로 고정한다.
+try:
+    RULES_V17 = load_rules("v1.7")
+    V17_BLOCK: str | None = None
+except SchemaError as exc:
+    RULES_V17 = None
+    V17_BLOCK = str(exc)
+
+_SKIP = f"v1.7 이 F9 정책-range 검사에 걸려 로드 불가 (C-06 결정 대기): {V17_BLOCK}"
 
 
 def company(cid: str = "acme", listed: bool = True, share_basis: str | None = None) -> dict:
@@ -61,6 +74,7 @@ def f6obs(cid: str = "acme", *, market_cap=1000.0, net_income=50.0, net_cash=0.0
     return ObsLookup(items)
 
 
+@unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6ParameterBands(unittest.TestCase):
     """반개방 구간. P1·P2 는 upper 미만, P3 는 lower 이상이다."""
 
@@ -90,6 +104,7 @@ class TestF6ParameterBands(unittest.TestCase):
         self.assertEqual(traps, RULES_V17.payload["scoring"]["trap_min_active"])
 
 
+@unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6Tracks(unittest.TestCase):
     """트랙은 선언된 기간 기준으로 정한다. 자료가 없다고 무른 트랙으로 내려보내지 않는다."""
 
@@ -133,6 +148,7 @@ class TestF6Tracks(unittest.TestCase):
         self.assertIn("net_income_ttm", r["pending"]["message"])
 
 
+@unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6ParameterGuards(unittest.TestCase):
 
     def test_non_positive_net_income_is_pending_not_low_per(self):
@@ -161,6 +177,7 @@ class TestF6ParameterGuards(unittest.TestCase):
         self.assertEqual(p1["score"], 0)
 
 
+@unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6P4(unittest.TestCase):
     """P4 는 소계에 한 칸만 걸린다. 여럿 걸려도 한 칸이다."""
 
@@ -202,6 +219,7 @@ class TestF6P4(unittest.TestCase):
         self.assertEqual(r["score"], -3)
 
 
+@unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6Private(unittest.TestCase):
     """비상장은 배수만 계산하고 점수를 만들지 않는다. 밴드가 미정이다."""
 
@@ -233,7 +251,8 @@ class TestF6LegacyModeUnaffected(unittest.TestCase):
     def test_mode_dispatch(self):
         self.assertEqual(RULES_V15.f6_mode, "per_band")
         self.assertEqual(RULES_V16.f6_mode, "per_band")
-        self.assertEqual(RULES_V17.f6_mode, "parameters")
+        if RULES_V17 is not None:
+            self.assertEqual(RULES_V17.f6_mode, "parameters")
 
     def test_v15_still_scores_by_ntm_per(self):
         lookup = ObsLookup([obs("ntm_per", 25.0, basis={"method": "consensus_4q_sum"})])
@@ -243,6 +262,7 @@ class TestF6LegacyModeUnaffected(unittest.TestCase):
         self.assertNotIn("parameters", r["calc"])
 
 
+@unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6FixRoundSpec(unittest.TestCase):
     """F6-FIX-21 로 확정된 규약이 규칙 파일에 남아 있는지 고정한다."""
 
@@ -329,3 +349,45 @@ class TestF6FixRoundSpec(unittest.TestCase):
 
     def test_v17_is_still_draft(self):
         self.assertEqual(RULES_V17.payload["status"], "draft")
+
+
+class TestV17F9Rescaled(unittest.TestCase):
+    """C-06 재척도(2026-09-11)로 v1.7 이 풀렸다는 것을 고정한다.
+
+    MISS-LABEL-23 진행 중 v1.7 은 F9 정책-range 검사에 걸려 있었다. C-05·C-06 확정으로
+    고칠 값이 정해져 제약이 해제됐고 이제 로드된다. **레벨은 올리고 스텝은 그대로**가 원칙이다.
+    """
+
+    def test_v17_loads_again(self):
+        self.assertIsNone(V17_BLOCK, f"v1.7 이 아직 막혀 있다: {V17_BLOCK}")
+        self.assertIsNotNone(RULES_V17)
+
+    def test_levels_moved_up_one_notch(self):
+        f9 = RULES_V17.f9
+        self.assertEqual(f9["floor"], -4)
+        self.assertEqual(f9["g1_bep_retreat_score"], -4)
+        self.assertEqual(f9["g1_buffer_erosion_min_score"], -3)
+        self.assertEqual(f9["g1_direction_relief_cap"], -2)
+        self.assertEqual([b["score"] for b in f9["g1_bands_proposed"]], [-2, -3, -4])
+
+    def test_steps_unchanged(self):
+        """몇 칸 내리는지를 지정하는 값은 건드리지 않는다."""
+        f9 = RULES_V17.f9
+        self.assertEqual(f9["g1_direction_relief_step"], 1)
+        self.assertEqual(f9["g2_fcf_negative"], -2)
+        self.assertEqual(f9["g2_private_not_disclosed"], -2)
+        self.assertEqual(f9["g2_fcf_positive_deteriorating"], -1)
+        self.assertEqual((f9["g3_runway_keep_years"], f9["g3_runway_one_step_years"]), (3, 1))
+        self.assertEqual(f9["g4_coverage_keep"], 1.0)
+
+    def test_all_f9_scores_inside_range(self):
+        """재척도가 끝났으니 정합 검사를 다시 통과해야 한다."""
+        lo, hi = RULES_V17.factor_range("F9")
+        self.assertEqual((lo, hi), (-4, 0))
+        for b in RULES_V17.f9["g1_bands_proposed"]:
+            self.assertTrue(lo <= b["score"] <= hi)
+
+    def test_v15_untouched(self):
+        """v1.5 는 승인 대상이라 재척도하지 않는다."""
+        self.assertEqual(RULES_V15.f9["floor"], -5)
+        self.assertEqual([b["score"] for b in RULES_V15.f9["g1_bands_proposed"]], [-3, -4, -5])

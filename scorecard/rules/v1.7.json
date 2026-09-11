@@ -424,26 +424,26 @@
       }
     },
     "f9": {
-      "floor": -5,
+      "floor": -4,
       "g1_bands_proposed": [
         {
           "min_margin": -0.1,
-          "score": -3
+          "score": -2
         },
         {
           "min_margin": -0.3,
-          "score": -4
+          "score": -3
         },
         {
           "min_margin": null,
-          "score": -5
+          "score": -4
         }
       ],
-      "g1_bands_status": "proposed (C-06) — 손실률 m: -10% <= m < 0 → -3, -30% <= m < -10% → -4, m < -30% → -5",
-      "g1_bep_retreat_score": -5,
-      "g1_buffer_erosion_min_score": -4,
+      "g1_bands_status": "confirmed (C-06, 2026-09-11) — 손실률 m: -10% <= m < 0 → -2, -30% <= m < -10% → -3, m < -30% → -4. v1.5 의 -3/-4/-5 를 F9 하한 -4 에 맞춰 한 칸 올린 재척도다.",
+      "g1_bep_retreat_score": -4,
+      "g1_buffer_erosion_min_score": -3,
       "g1_direction_relief_step": 1,
-      "g1_direction_relief_cap": -3,
+      "g1_direction_relief_cap": -2,
       "g2_fcf_positive_stable": 0,
       "g2_fcf_positive_deteriorating": -1,
       "g2_fcf_negative": -2,
@@ -452,7 +452,8 @@
       "g3_runway_one_step_years": 1,
       "g3_rating_capacity": "exclude",
       "g4_coverage_keep": 1.0,
-      "g4_undetermined": null
+      "g4_undetermined": null,
+      "rescale_note": "C-06 재척도 원칙 — **레벨은 올리고 스텝은 그대로 둔다.** 점수 자리를 지정하는 값(floor·밴드 3종·bep_retreat·buffer_erosion_min·relief_cap)만 한 칸 올렸고, 몇 칸 내리는지를 지정하는 값(G2·G3·G4 감점폭, relief_step)은 건드리지 않았다. buffer_erosion_min 과 relief_cap 을 같이 올린 것은 둘이 밴드 위에 정의된 경계라 밴드가 움직이면 같이 움직여야 같은 뜻을 유지하기 때문이다. 절대값을 고정하면 재척도 후 뜻이 바뀐다. '하한만 -4' 안은 기각됐다 — -4 칸과 -5 칸이 합쳐져 적자 깊이가 3단계에서 2단계로 줄어든다."
     }
   },
   "checklist": [

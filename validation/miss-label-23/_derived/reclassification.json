@@ -1,0 +1,258 @@
+{
+ "note": "제안이다. observations.json 은 승인 해시 대상이라 반영은 새 실행·승인을 거친다.",
+ "run_id": "ai-scorecard-2026-09-baseline",
+ "count": 25,
+ "score_changes": [],
+ "items": {
+  "alibaba.contracted_revenue.v15": {
+   "company_id": "alibaba",
+   "metric": "contracted_revenue",
+   "status": "not_disclosed",
+   "raw": "—",
+   "missing_type": "unverified",
+   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "alibaba.offbalance_B.v15": {
+   "company_id": "alibaba",
+   "metric": "offbalance_B",
+   "status": "not_disclosed",
+   "raw": "미확인",
+   "missing_type": "unverified",
+   "reason": "raw 가 '미확인' — 우리가 확인하지 않았다. 승격 금지 대상",
+   "provisional": true,
+   "provisional_reason": "NTM OFFB-24 조사 결과 미검증 — 설계진행 회신 대기"
+  },
+  "alphabet.runway_years.v15": {
+   "company_id": "alphabet",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "amazon.contracted_revenue.v15": {
+   "company_id": "amazon",
+   "metric": "contracted_revenue",
+   "status": "parse_failed",
+   "raw": "AWS 백로그(수백 $B급) — 숫자 미공시",
+   "missing_type": "unverified",
+   "reason": "파싱 실패는 확인이 아니다 — 재파싱 대상(C-13 담당)",
+   "provisional": true,
+   "provisional_reason": "NTM OFFB-24 조사 결과 미검증 — 설계진행 회신 대기"
+  },
+  "anthropic.cash.v15": {
+   "company_id": "anthropic",
+   "metric": "cash",
+   "status": "not_disclosed",
+   "raw": "미공시",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "anthropic.debt_ebitda.v15": {
+   "company_id": "anthropic",
+   "metric": "debt_ebitda",
+   "status": "not_disclosed",
+   "raw": "—",
+   "missing_type": "unverified",
+   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "anthropic.fcf_ttm.v15": {
+   "company_id": "anthropic",
+   "metric": "fcf_ttm",
+   "status": "not_disclosed",
+   "raw": "미공시",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "anthropic.net_cash.v15": {
+   "company_id": "anthropic",
+   "metric": "net_cash",
+   "status": "not_disclosed",
+   "raw": "—",
+   "missing_type": "unverified",
+   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "anthropic.runway_years.v15": {
+   "company_id": "anthropic",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "판정 불가",
+   "missing_type": "indeterminate",
+   "reason": "선행 입력(현금·FCF)이 결측이라 산출할 수 없다",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "apple.runway_years.v15": {
+   "company_id": "apple",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "meta.runway_years.v15": {
+   "company_id": "meta",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "microsoft.runway_years.v15": {
+   "company_id": "microsoft",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "nvidia.runway_years.v15": {
+   "company_id": "nvidia",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "openai.cash.v15": {
+   "company_id": "openai",
+   "metric": "cash",
+   "status": "not_disclosed",
+   "raw": "미공시",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "openai.debt_ebitda.v15": {
+   "company_id": "openai",
+   "metric": "debt_ebitda",
+   "status": "not_disclosed",
+   "raw": "—",
+   "missing_type": "unverified",
+   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "openai.fcf_ttm.v15": {
+   "company_id": "openai",
+   "metric": "fcf_ttm",
+   "status": "not_disclosed",
+   "raw": "미공시",
+   "missing_type": "not_disclosed_confirmed",
+   "reason": "비상장이라 공시 의무가 없다 — 구조적으로 확인된 미공시",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "openai.net_cash.v15": {
+   "company_id": "openai",
+   "metric": "net_cash",
+   "status": "not_disclosed",
+   "raw": "—",
+   "missing_type": "unverified",
+   "reason": "raw='—' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "openai.runway_years.v15": {
+   "company_id": "openai",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "판정 불가",
+   "missing_type": "indeterminate",
+   "reason": "선행 입력(현금·FCF)이 결측이라 산출할 수 없다",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "palantir.net_borrowing_ttm.v15": {
+   "company_id": "palantir",
+   "metric": "net_borrowing_ttm",
+   "status": "not_disclosed",
+   "raw": "없음",
+   "missing_type": "unverified",
+   "reason": "raw='없음' 로는 미공시인지 미확인인지 갈리지 않는다 — 보수적으로 미확인",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "palantir.runway_years.v15": {
+   "company_id": "palantir",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "spacex-xai.nonop_share.v15": {
+   "company_id": "spacex-xai",
+   "metric": "nonop_share",
+   "status": "not_disclosed",
+   "raw": "적자",
+   "missing_type": "not_applicable",
+   "reason": "적자라 PER·영업외 비중이 개념상 정의되지 않는다",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "spacex-xai.offbalance_B.v15": {
+   "company_id": "spacex-xai",
+   "metric": "offbalance_B",
+   "status": "not_disclosed",
+   "raw": "미확인",
+   "missing_type": "unverified",
+   "reason": "raw 가 '미확인' — 우리가 확인하지 않았다. 승격 금지 대상",
+   "provisional": true,
+   "provisional_reason": "NTM OFFB-24 조사 결과 미검증 — 설계진행 회신 대기"
+  },
+  "spacex-xai.ttm_per.v15": {
+   "company_id": "spacex-xai",
+   "metric": "ttm_per",
+   "status": "not_disclosed",
+   "raw": "적자",
+   "missing_type": "not_applicable",
+   "reason": "적자라 PER·영업외 비중이 개념상 정의되지 않는다",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "tesla.runway_years.v15": {
+   "company_id": "tesla",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  },
+  "tsmc.runway_years.v15": {
+   "company_id": "tsmc",
+   "metric": "runway_years",
+   "status": "not_disclosed",
+   "raw": "∞",
+   "missing_type": "not_applicable",
+   "reason": "FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2)",
+   "provisional": false,
+   "provisional_reason": null
+  }
+ }
+}

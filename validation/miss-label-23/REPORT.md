@@ -1,0 +1,256 @@
+# MISS-LABEL-23 — 결측 라벨 분리와 F9 정합 검사
+
+작성일 2026-09-11. 담당 worker(HANSOLJJ/worker). 요청 `msg_e7165378d135`. 근거 설계진행 `583af3f` `validation/missing-label-finding.md`.
+
+## 결론
+
+**세 과제 전부 완료했다. 핵심은 C-16 진입 대상이 2개사에서 0개사가 되는 것이다.**
+
+| | 결과 |
+|---|---|
+| 결측 유형 스키마 | **4종** — `unverified` · `not_disclosed_confirmed` · `not_applicable` · `indeterminate` |
+| 재분류 | 25건. 한 라벨이 **4갈래**로 갈렸다 |
+| **C-16 진입 대상** | **2개사 → 0개사** (alibaba · spacex-xai). 관련 셋은 **잠정**(2.3) |
+| F9 정합 검사 | **v1.7 을 잡았다.** C-05·C-06 확정으로 재척도해 **해소** |
+| 점수 | **14개사 전 factor 불변** |
+| 테스트 | 147 → **164건** · skip 0 (C-06 확정으로 F6 회귀 복귀) |
+
+승인 대상 6종 전부 불변이다. 신규 네트워크 수집 없음. `offbalance_B` 실제 조사는 C-13·NTM 담당이라 라벨만 다뤘다.
+
+## 1. 결측 유형 스키마
+
+`status` 하나가 네 뜻을 담고 있었다. **값이 없는 이유를 라벨이 직접 말하게 한다.**
+
+| `missing_type` | 뜻 | C-16 | 판단 기준 |
+|---|---|---|---|
+| `unverified` | **우리가 확인하지 않았다.** 찾으면 있을 수 있다 | ✗ | 애매하면 전부 여기 |
+| `not_disclosed_confirmed` | **확인된 미공시.** 회사가 내지 않는다 | **○ 여기에만** | 구조적으로 확정될 때만 |
+| `not_applicable` | 산식 적용 대상이 아니다. **개념상 정의되지 않는다** | ✗ | FCF 양수의 런웨이, 적자의 PER |
+| `indeterminate` | 산출 대상이나 **선행 입력이 결측**이라 만들 수 없다 | ✗ | 비상장 런웨이 |
+
+네 종으로 나눈 이유는 **뒤 둘이 서로 다르기 때문**이다. `not_applicable` 은 아무리 찾아도 값이 생기지 않는다(개념상 없다). `indeterminate` 는 선행 입력이 생기면 값이 생긴다. 둘을 합치면 "더 찾을 가치가 있는가" 를 못 가린다.
+
+### 1.1 스키마 제약
+
+- `missing_type` 은 **optional** 이다. 기존 관측에 없어도 로드된다 — 과거 실행이 계속 열려야 한다.
+- **값이 있는데 `missing_type` 이 붙으면 거부**한다. 모순이다.
+- 알 수 없는 값은 거부한다.
+
+## 2. 재분류 25건
+
+`reclassify.py` 가 낸 결과다. 전수는 `reclassify-output.txt` `[1]` 절, 제안은 `_derived/reclassification.json` 이다.
+
+| 전 (status) | 후 (missing_type) |
+|---|---|
+| `not_disclosed` 24 · `parse_failed` 1 | `not_applicable` **10** · `unverified` **9** · `not_disclosed_confirmed` **4** · `indeterminate` **2** |
+
+### 2.1 보수 원칙을 어떻게 적용했나
+
+**`raw` 가 '미확인' 인 것을 '미공시' 로 승격하지 않았다.** 그리고 그보다 더 넓게 잡았다 — **뜻이 모호한 것도 전부 `unverified`** 로 뒀다.
+
+| `raw` | 판정 | 사유 |
+|---|---|---|
+| `미확인` | `unverified` | 승격 금지 대상. alibaba·spacex-xai `offbalance_B` |
+| `∞` | `not_applicable` | FCF 양수라 런웨이가 개념상 정의되지 않는다(설계 지침 6.2) |
+| `적자` | `not_applicable` | 적자라 PER·영업외 비중이 정의되지 않는다 |
+| `판정 불가` | `indeterminate` | 선행 입력(현금·FCF)이 결측 |
+| `미공시` + **비상장** | `not_disclosed_confirmed` | 공시 의무가 없다 — 구조적으로 확정 |
+| `—` · `없음` | **`unverified`** | 미공시인지 미확인인지 **갈리지 않는다** |
+| `parse_failed` | `unverified` | **파싱 실패는 확인이 아니다** |
+
+**틀리는 방향의 비용이 다르다.**
+
+- `unverified` 로 잘못 두면 → 안 찾아도 될 것을 더 찾는다. **점수는 틀리지 않는다.**
+- 미공시로 잘못 올리면 → **우리가 안 찾은 것이 그 기업의 위험으로 둔갑한다.**
+
+그래서 `—`·`없음` 5건을 전부 `unverified` 로 내렸다. anthropic·openai 의 `net_cash`·`debt_ebitda` 는 비상장이라 실제로는 미공시일 가능성이 높지만, **`raw` 가 그 말을 하지 않아 확정하지 않았다.** 같은 회사의 `cash`·`fcf_ttm` 은 `raw` 가 명시적으로 `미공시` 라 `not_disclosed_confirmed` 로 뒀다 — **같은 회사 안에서도 라벨이 말하는 만큼만 인정했다.**
+
+### 2.2 amazon `contracted_revenue`
+
+`raw` 가 `AWS 백로그(수백 $B급) — 숫자 미공시` 이고 `status` 는 `parse_failed` 다. 문면만 보면 "회사가 숫자를 안 낸다" 로 읽히지만 **확인된 바가 없어 `unverified` 로 뒀다.** 재파싱은 C-13 담당이라 건드리지 않았다.
+
+### 2.3 세 관측은 잠정이다 (2026-09-11 지시)
+
+`OFFB-24` 의 NTM 조사 결과가 **아직 미검증**이라 다음 셋을 **잠정**으로 표시했다. 설계진행 회신 전까지 확정하지 않는다.
+
+| 회사 | metric | 잠정 분류 |
+|---|---|---|
+| spacex-xai | `offbalance_B` | `unverified` |
+| alibaba | `offbalance_B` | `unverified` |
+| amazon | `contracted_revenue` | `unverified` |
+
+`_derived/reclassification.json` 의 각 항목에 `provisional: true` 와 사유를 넣었고 출력 `[3b]` 절에 따로 낸다. **조사에서 '확인했는데 없다' 가 나오면 `not_disclosed_confirmed` 로 올라가고, 그때 C-16 이 묻는 상황이 된다.** 지금 올리지 않는 이유는 2.1 의 보수 원칙 그대로다.
+
+셋 다 현재 분류가 `unverified` 라 **C-16 진입은 어느 쪽으로든 0개사다**(3 절). 잠정이 확정으로 바뀌면 그때 다시 센다.
+
+## 3. C-16 진입 대상 — 2개사 → 0개사
+
+**이번 과제의 핵심 결과다.**
+
+| 회사 | 전 | 후 | 근거 |
+|---|---|---|---|
+| **alibaba** | **진입** | **제외** | `offbalance_B`=미확인 · `contracted_revenue`=`—` |
+| **spacex-xai** | **진입** | **제외** | `offbalance_B`=미확인 |
+| amazon | 제외 | 제외 | `parse_failed` 라 원래 제외 |
+
+**둘 다 '우리가 안 찾아서' 들어가고 있었다.** 설계 지침 6.4 가 금지하는 그 일이다.
+
+### 3.1 `_g4` 를 어떻게 고쳤나
+
+`status == "not_disclosed"` 판별을 `missing_type == "not_disclosed_confirmed"` 로 바꿨다. 그리고 **미분류(`missing_type` 없음)도 C-16 에 보내지 않는다.**
+
+> 확인된 미공시라는 **증거가 없으면** 보내지 않는다. 라벨이 없다는 것은 "모른다" 이지 "미공시" 가 아니다.
+
+pending 사유에 `결측 유형이 분류되지 않아 확인된 미공시인지 판별 불가` 를 적어 **무엇을 해야 풀리는지**가 보이게 했다.
+
+이 엄격화가 **지금 점수를 바꾸지 않는 이유**는 4.4 에 적었다.
+
+## 4. F9 정책 ↔ range 정합 검사
+
+F6 와 같은 형태로 **로드 시점**에 막는다. 점수를 만들어 내는 값만 검사하고 임계치(연 수·배수)는 제외한다.
+
+### 4.1 검사가 잡은 것
+
+```
+v1.5  OK
+v1.6  OK
+v1.7  BLOCKED: rules.policies.f9: factors.F9.range [-4, 0] 를 벗어나는 점수 —
+      floor=-5, g1_bep_retreat_score=-5, g1_bands_proposed[2].score=-5.
+      밴드 재척도는 C-06 결정 사항이므로 임의로 고쳐 통과시키지 않는다
+```
+
+발견 문서가 예고한 **정확히 그 셋**이다.
+
+**이것은 내 결함이다.** `F6-SPEC-18`(`0821c83`)에서 함정 재배분을 반영하며 `factors.F9.range` 를 `[-4,0]` 으로 바꿨는데 `policies.f9` 는 v1.6 에서 그대로 복사해 두었다. F6 에는 같은 검사를 넣어 놓고 F9 에는 안 넣어서 내 손으로 만든 불일치를 내가 못 잡았다.
+
+### 4.2 그리고 C-05·C-06 확정으로 해소됐다 (2026-09-11, 진행 중 반영)
+
+작업 중 **C-05 `apply`·C-06 재척도가 확정**됐다(설계진행 `19625ba`). "밴드를 고치지 말라" 던 제약이 해제돼 고칠 값이 정해졌고, **임의로 고친 것이 아니라 결정된 값을 반영했다.**
+
+| 값 | v1.5 | **v1.7 확정** |
+|---|---|---|
+| `g1_bands_proposed` | −3 / −4 / −5 | **−2 / −3 / −4** |
+| `floor` | −5 | **−4** |
+| `g1_bep_retreat_score` | −5 | **−4** |
+| `g1_buffer_erosion_min_score` | −4 | **−3** |
+| `g1_direction_relief_cap` | −3 | **−2** |
+
+**원칙은 "레벨은 올리고 스텝은 그대로" 다.** 점수 자리를 지정하는 값만 한 칸 올렸고, 몇 칸 내리는지를 지정하는 값(G2·G3·G4 감점폭, `relief_step`)은 건드리지 않았다. `rescale_note` 에 그 구분과 `buffer_erosion_min`·`relief_cap` 을 같이 올린 이유를 적었다.
+
+**v1.7 이 다시 로드되고 F6 회귀 32건이 돌아왔다.** 테스트 164건, skip 0 이다. 차단을 고정하던 `TestV17BlockedByF9Range` 는 `TestV17F9Rescaled` 로 바꿔 **재척도가 유지되는지**를 고정한다 — 되돌리면 다시 걸리는 것까지 본다(`test_v17_would_be_blocked_if_rescale_reverted`).
+
+**`v1.5` 는 재척도하지 않았다.** 승인 대상이다.
+
+### 4.2.1 확정안의 점수 영향 — 독립 검산
+
+결정문이 예측한 것(openai −5→−4, spacex-xai G4 대기)을 **실제 엔진으로 직접 돌려 확인했다**(`c05-c06-impact.txt`).
+
+| 회사 | 현행 v1.5 | 확정 v1.7+결정 |
+|---|---|---|
+| **openai** | −5 / ok | **−4 / ok** |
+| **spacex-xai** | None / `needs_rule_decision` | **None / `needs_judgment`** |
+| 나머지 12개사 | | **불변** |
+
+**예측과 정확히 일치한다.** spacex-xai 가 `needs_judgment` 인 것은 G4 가 `coverage_comparable` 검토 입력에서 멈추기 때문이고, 결정문의 "G4 대기" 와 같은 상태다.
+
+이 영향은 **v1.7 을 쓰는 새 실행에서 나타난다.** 승인된 v1.5 실행의 점수는 그대로다(4.4).
+
+### 4.3 v1.7 을 걸린 상태로 두려던 계획과 그 대가 *(해소됨 — 4.2 참조)*
+
+**밴드를 고쳐 통과시키지 않았다.** 두 쪽 다 움직일 수 없다.
+
+| 방향 | 왜 못 하나 |
+|---|---|
+| 밴드를 `[-4,0]` 에 맞춰 재척도 | **C-06 결정 사항**이고 사용자 확정 대기 중 |
+| `factors.F9.range` 를 `[-5,0]` 으로 되돌림 | 함정 합이 −19 가 되어 **확정된 −18 보존이 깨진다** |
+
+**아래는 C-05·C-06 확정 전의 상태다. 기록으로 남긴다.** 당시 대가는 v1.7 이 로드되지 않아 F6 회귀 32건이 skip 되는 것이었고, 숨기지 않고 두 가지로 드러냈다.
+
+1. skip 사유에 차단 메시지 전문을 넣었다 — 테스트 출력에 이유가 보인다.
+2. **`TestV17BlockedByF9Range` 로 "지금 막혀 있다" 를 회귀로 고정했다.** C-06 이 재척도하면 이 테스트가 실패하고 skip 도 자동으로 풀린다.
+
+조용히 통과시키지도, 깨진 채 방치하지도 않는 형태다. **다만 C-06 이 정해질 때까지 F6 회귀 32건이 실제로 돌지 않는다는 점은 비용이다.** 검사를 로드 시점이 아니라 `validate.py` 쪽(`check_source_allowlist` 와 같은 자리)에 두면 v1.7 을 로드는 하되 검증에서 잡을 수 있다. **지시가 "F6 와 같은 형태" 였으므로 로드 시점으로 구현했고, 다른 배치를 원하면 옮기겠다.**
+
+### 4.4 점수 불변 — 왜 안 바뀌나
+
+`reclassify.py` `[4]` 절이 **실제 엔진(`compute_company`)** 으로 재분류 전후를 돌려 비교한다. 손으로 다시 계산하지 않는다.
+
+```
+14개사 전 factor 점수·상태 불변
+```
+
+이유는 **지금 `_g4` 의 C-16 분기에 도달하는 기업이 없기 때문**이다. 확인해 보니 G4 에 닿는 기업은 둘뿐이고 둘 다 그 분기 앞에서 멈춘다.
+
+| 회사 | G4 결과 |
+|---|---|
+| oracle | `computed` — 커버리지 2.552 로 계산된다 |
+| amazon | `coverage_comparable 미확인` 에서 멈춘다(판단 대기) |
+
+alibaba·spacex-xai 는 **G4 이전 단계에서 이미 `pending_data`·`needs_rule_decision`** 이다. 그래서 C-16 진입 판별이 2→0 으로 바뀌어도 **현재 점수에는 나타나지 않는다.**
+
+**이것이 "지금은 안 중요하다" 는 뜻이 아니다.** C-05 `apply` 나 선행 게이트가 풀리는 순간 그 분기에 도달하고, 그때 라벨이 옳지 않으면 감점이 잘못 붙는다. **지금 고쳐야 그때 맞는다.**
+
+## 5. 범위 밖이지만 보고할 것 — `_g2` 에 같은 패턴이 있다
+
+`calc_f9` 의 G2 가 같은 형태로 `status` 를 본다.
+
+```python
+if not company["listed"] and fcf_obs["status"] == "not_disclosed":
+    score = int(pol["g2_private_not_disclosed"])     # -2
+```
+
+**고치지 않았다.** 셋 때문이다.
+
+1. 과제가 지목한 것은 `_g4` 의 C-16 진입이다.
+2. F9 게이트 로직은 `F9-DECIDE-20` 이 C-13·NTM 에 배정돼 있어 **겹치지 말라는 지시**를 받았다.
+3. 바꾸면 **점수가 바뀔 수 있다** — anthropic·openai 의 G2 −2 가 걸린 자리다.
+
+**지금은 결과적으로 옳다.** 재분류에서 두 회사의 `fcf_ttm` 이 `not_disclosed_confirmed` 로 확정됐으므로 `status` 로 판별해도 같은 답이 나온다. 그러나 **판별 근거가 여전히 과부하된 라벨**이라 다른 회사·다른 지표에서 같은 사고가 날 수 있다. 마이그레이션 대상으로 남긴다.
+
+## 6. 확인된 것과 미확인인 것
+
+### 6.1 확인된 것
+
+1. 값이 없는 관측은 **25건**이고 `status` 는 `not_disclosed` 24 · `parse_failed` 1 이다.
+2. 그 25건이 **4갈래**로 갈린다 — `not_applicable` 10 · `unverified` 9 · `not_disclosed_confirmed` 4 · `indeterminate` 2.
+3. **C-16 진입 대상이 2개사에서 0개사**가 된다(alibaba · spacex-xai).
+4. 재분류를 적용해도 **14개사 전 factor 점수·상태가 불변**이다.
+5. 지금 `_g4` 의 C-16 분기에 **도달하는 기업이 없다**(oracle 은 computed, amazon 은 판단 대기).
+6. F9 정합 검사가 v1.7 의 **세 값**(`floor`·`g1_bep_retreat_score`·`g1_bands_proposed[2].score`)을 잡는다.
+7. v1.5·v1.6 은 통과한다. **검사가 과거 규칙 파일을 깨지 않는다.**
+8. 승인 대상 6종(`rules`·`observations`·`judgments`·`run`·`results`·`draft`)이 전부 불변이다.
+
+### 6.2 미확인 — 추측하지 않고 남긴다
+
+1. **`—`·`없음` 5건의 실제 성격.** 비상장사 항목이라 미공시일 가능성이 높지만 자료가 말하지 않아 `unverified` 로 뒀다. **조사 대상이다.**
+2. **`offbalance_B` 가 실제로 있는지.** C-13·NTM 담당이라 건드리지 않았다.
+3. **amazon `contracted_revenue` 의 재파싱 결과.** C-13 담당.
+4. **`_g2` 마이그레이션의 점수 영향.** 5 절대로 측정하지 않았다.
+5. **C-06 재척도 후 v1.7 이 어떤 값을 가질지.** 결정 사항이다.
+
+## 7. 남은 결정
+
+1. **C-06 밴드 재척도.** 이것이 정해져야 v1.7 이 로드되고 F6 회귀 32건이 돌아온다.
+2. **F9 정합 검사의 배치** — 로드 시점(현재) vs 검증 시점(4.2).
+3. **재분류 반영 시점.** 지금은 제안이다. `observations.json` 이 승인 해시 대상이라 반영은 새 실행과 승인을 거쳐야 하고 **그것은 사용자 결정**이다.
+4. **`_g2` 마이그레이션** — `F9-DECIDE-20` 과 묶을지.
+
+## 8. 재현 방법
+
+```bash
+cd worker/validation/miss-label-23
+python reclassify.py                                  # reclassify-output.txt 와 같은 결과
+cd ../.. && python -m unittest discover -s tests -q   # 128건 통과 · 32건 skip
+```
+
+**네트워크를 쓰지 않는다.**
+
+| 파일 | 내용 |
+|---|---|
+| `scripts/scorecard/schema.py` | `MISSING_TYPES` · 관측 `missing_type` 검증 · `_validate_f9_policy` |
+| `scripts/scorecard/calc_f9.py` | `_g4` 의 C-16 진입 판별을 `missing_type` 으로 |
+| `tests/test_scorecard_missing_type.py` | 신규 11건 |
+| `tests/test_scorecard_f6_v17.py` | v1.7 차단 고정 + skip 처리 |
+| `tests/test_scorecard_calc.py` | T-11 을 새 계약으로 갱신 |
+| `reclassify.py` · `reclassify-output.txt` | 재분류와 점수 불변 확인 |
+| `_derived/reclassification.json` | 25건 제안 |

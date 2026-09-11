@@ -5,6 +5,7 @@ from typing import Any
 
 from .inputs import JudgmentLookup, ObsLookup, factor_result, obs_note, pending_info
 from .rules import RuleSet, decision_choice
+from .schema import MISSING_TYPE_FOR_DISCLOSURE_POLICY
 
 FACTOR = "F9"
 UNKNOWN_INPUTS = {
@@ -266,17 +267,24 @@ def _g4(cid: str, obs: ObsLookup, gi: dict[str, Any], rules: RuleSet, run: dict[
         return out
     # 결측 유형을 구분한다: 수집 실패·파싱 실패·관측 부재는 자료 대기, 확인된 미공시만 C-16 정책 대상이다 (설계 지침 6.4).
     missing = []
-    statuses = []
+    types = []
     for name, value, o in (("contracted_revenue", contracted, c_obs), ("offbalance_B", offb, b_obs)):
         if value is None:
-            status = o["status"] if o else "없음"
-            missing.append(f"{name}({status})")
-            statuses.append(status)
-    if any(st != "not_disclosed" for st in statuses):
+            # status 하나로는 갈리지 않는다. not_disclosed 가 미확인·미공시·계산 대상 아님을 다 담고 있었다.
+            mtype = (o or {}).get("missing_type")
+            label = mtype or ((o["status"] if o else "관측 없음") + "/결측유형 미분류")
+            missing.append(f"{name}({label})")
+            types.append(mtype)
+    if any(mt != MISSING_TYPE_FOR_DISCLOSURE_POLICY for mt in types):
+        # 미분류(None)도 여기로 온다. 확인된 미공시라는 증거가 없으면 C-16 으로 보내지 않는다 (설계 지침 6.4).
+        unlabeled = [m for m, mt in zip(missing, types) if mt is None]
+        extra = " — 결측 유형이 분류되지 않아 확인된 미공시인지 판별 불가" if unlabeled else ""
         out.update({"result": "undetermined", "missing": missing, "step": None,
-                    "pending": pending_info("data", "G4 자료 미수집/파싱 실패: " + ", ".join(missing) + " — 수집 실패를 미공시 위험으로 둔갑시키지 않음")})
+                    "pending": pending_info("data", "G4 자료 미수집/파싱 실패: " + ", ".join(missing)
+                                            + " — 수집 실패를 미공시 위험으로 둔갑시키지 않음" + extra)})
         return out
-    out.update({"result": "undetermined", "missing": missing, "reason": "확인된 미공시(not_disclosed)"})
+    out.update({"result": "undetermined", "missing": missing,
+                "reason": f"확인된 미공시({MISSING_TYPE_FOR_DISCLOSURE_POLICY})"})
     choice = decision_choice(run, rules, "C-16")
     if choice == "downgrade":
         out["step"] = -1
