@@ -1,0 +1,308 @@
+{
+ "classes": {
+  "alphabet": {
+   "scale": 1000000,
+   "rows": [
+    {
+     "class_label": "Class A Common Stock",
+     "shares": 5868000000.0
+    },
+    {
+     "class_label": "Class C share repurchases",
+     "shares": 5527000000.0
+    },
+    {
+     "class_label": "Class B Common Stock",
+     "shares": 835000000.0
+    }
+   ],
+   "total": 12230000000.0
+  },
+  "meta": {
+   "scale": 1,
+   "rows": [
+    {
+     "class_label": "Common Class A",
+     "shares": 2205128509.0
+    },
+    {
+     "class_label": "Common Class B",
+     "shares": 342377716.0
+    }
+   ],
+   "total": 2547506225.0
+  },
+  "palantir": {
+   "scale": 1,
+   "rows": [
+    {
+     "class_label": "Class A Common Stock",
+     "shares": 2300713329.0
+    },
+    {
+     "class_label": "Class B Common Stock",
+     "shares": 101340151.0
+    },
+    {
+     "class_label": "Class F Common Stock",
+     "shares": 1005000.0
+    }
+   ],
+   "total": 2403058480.0
+  }
+ },
+ "netcash_tags": {
+  "tsmc": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 0,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 0,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 54,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 0,
+    "us-gaap:LongTermDebtCurrent": 0,
+    "us-gaap:LongTermDebt": 0,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 0,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 0,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 0,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 15
+   }
+  },
+  "alibaba": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 63,
+    "us-gaap:ShortTermInvestments": 2,
+    "us-gaap:MarketableSecuritiesCurrent": 15,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 0,
+    "us-gaap:LongTermDebtCurrent": 0,
+    "us-gaap:LongTermDebt": 0,
+    "us-gaap:ShortTermBorrowings": 6,
+    "us-gaap:DebtCurrent": 15,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 16,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 0,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "apple": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 228,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 62,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 90,
+    "us-gaap:LongTermDebtCurrent": 90,
+    "us-gaap:LongTermDebt": 54,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 0,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 11,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 11,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "microsoft": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 266,
+    "us-gaap:ShortTermInvestments": 66,
+    "us-gaap:MarketableSecuritiesCurrent": 0,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 142,
+    "us-gaap:LongTermDebtCurrent": 116,
+    "us-gaap:LongTermDebt": 130,
+    "us-gaap:ShortTermBorrowings": 56,
+    "us-gaap:DebtCurrent": 0,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 74,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 0,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "amazon": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 270,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 138,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 126,
+    "us-gaap:LongTermDebtCurrent": 111,
+    "us-gaap:LongTermDebt": 111,
+    "us-gaap:ShortTermBorrowings": 30,
+    "us-gaap:DebtCurrent": 0,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 55,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 55,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "nvidia": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 219,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 132,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 48,
+    "us-gaap:LongTermDebtCurrent": 40,
+    "us-gaap:LongTermDebt": 98,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 42,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 60,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 0,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "spacex-xai": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 2,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 2,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 0,
+    "us-gaap:LongTermDebtCurrent": 0,
+    "us-gaap:LongTermDebt": 2,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 0,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 0,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 0,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "tesla": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 242,
+    "us-gaap:ShortTermInvestments": 30,
+    "us-gaap:MarketableSecuritiesCurrent": 18,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 28,
+    "us-gaap:LongTermDebtCurrent": 15,
+    "us-gaap:LongTermDebt": 80,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 77,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 56,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 56,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "palantir": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 72,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 38,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 10,
+    "us-gaap:LongTermDebtCurrent": 0,
+    "us-gaap:LongTermDebt": 0,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 0,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 45,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 0,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "meta": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 194,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 84,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 42,
+    "us-gaap:LongTermDebtCurrent": 0,
+    "us-gaap:LongTermDebt": 16,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 0,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 58,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 19,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "oracle": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 211,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 0,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 0,
+    "us-gaap:LongTermDebtCurrent": 0,
+    "us-gaap:LongTermDebt": 1,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 66,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 18,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 9,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  },
+  "alphabet": {
+   "cash": {
+    "us-gaap:CashAndCashEquivalentsAtCarryingValue": 121,
+    "us-gaap:ShortTermInvestments": 0,
+    "us-gaap:MarketableSecuritiesCurrent": 66,
+    "us-gaap:OtherShortTermInvestments": 0,
+    "ifrs-full:CashAndCashEquivalents": 0,
+    "ifrs-full:OtherFinancialAssets": 0
+   },
+   "debt": {
+    "us-gaap:LongTermDebtNoncurrent": 56,
+    "us-gaap:LongTermDebtCurrent": 40,
+    "us-gaap:LongTermDebt": 13,
+    "us-gaap:ShortTermBorrowings": 0,
+    "us-gaap:DebtCurrent": 16,
+    "us-gaap:OperatingLeaseLiabilityNoncurrent": 59,
+    "us-gaap:FinanceLeaseLiabilityNoncurrent": 22,
+    "ifrs-full:Borrowings": 0,
+    "ifrs-full:LeaseLiabilities": 0
+   }
+  }
+ }
+}

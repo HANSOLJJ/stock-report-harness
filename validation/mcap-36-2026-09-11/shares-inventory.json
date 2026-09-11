@@ -1,0 +1,1369 @@
+{
+ "tsmc": {
+  "entity": "Taiwan Semiconductor Manufacturing Company Limited",
+  "cik": 1046179,
+  "source_file": "..\\f6-fx-16-2026-09-10\\raw\\sec-TSM-companyfacts.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 9,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2025-12-31",
+     "start": null,
+     "val": 25932524521,
+     "form": "20-F",
+     "filed": "2026-04-16",
+     "accn": "0001628280-26-025362",
+     "frame": "CY2025Q4I"
+    },
+    "ends": [
+     "2023-12-31",
+     "2024-12-31",
+     "2025-12-31"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "ifrs-full:AdjustedWeightedAverageShares",
+   "ifrs-full:DilutiveEffectOfShareOptionsOnNumberOfOrdinaryShares",
+   "ifrs-full:NumberOfShareOptionsExercisableInSharebasedPaymentArrangement",
+   "ifrs-full:NumberOfSharesAuthorised",
+   "ifrs-full:NumberOfSharesIssuedAndFullyPaid",
+   "ifrs-full:SharesReservedForIssueUnderOptionsAndContractsForSaleOfShares",
+   "ifrs-full:WeightedAverageShares",
+   "srt:StockRepurchaseProgramNumberOfSharesAuthorizedToBeRepurchased"
+  ]
+ },
+ "alibaba": {
+  "entity": "Alibaba Group Holding Limited",
+  "cik": 1577552,
+  "source_file": "..\\f6-fx-16-2026-09-10\\raw\\sec-BABA-companyfacts.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 13,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-03-31",
+     "start": null,
+     "val": 1858037427,
+     "form": "20-F",
+     "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "frame": "CY2026Q1I"
+    },
+    "ends": [
+     "2024-03-31",
+     "2025-03-31",
+     "2026-03-31"
+    ]
+   },
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 32,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-03-31",
+     "start": null,
+     "val": 18580374278,
+     "form": "20-F",
+     "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "frame": "CY2026Q1I"
+    },
+    "ends": [
+     "2024-03-31",
+     "2025-03-31",
+     "2026-03-31"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 32,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-03-31",
+     "start": null,
+     "val": 18580374278,
+     "form": "20-F",
+     "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "frame": "CY2026Q1I"
+    },
+    "ends": [
+     "2024-03-31",
+     "2025-03-31",
+     "2026-03-31"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 47,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-03-31",
+     "start": "2025-04-01",
+     "val": 18568000000,
+     "form": "20-F",
+     "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "frame": "CY2025"
+    },
+    "ends": [
+     "2024-03-31",
+     "2025-03-31",
+     "2026-03-31"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 47,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-03-31",
+     "start": "2025-04-01",
+     "val": 19235000000,
+     "form": "20-F",
+     "filed": "2026-05-20",
+     "accn": "0001193125-26-231755",
+     "frame": "CY2025"
+    },
+    "ends": [
+     "2024-03-31",
+     "2025-03-31",
+     "2026-03-31"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:IncrementalCommonSharesAttributableToConversionOfPreferredStock",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresAndExpirationsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestOutstandingNumber",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:TemporaryEquitySharesAuthorized",
+   "us-gaap:TemporaryEquitySharesIssued",
+   "us-gaap:TemporaryEquitySharesOutstanding",
+   "us-gaap:TreasuryStockNumberOfSharesHeld",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "apple": {
+  "entity": "Apple Inc.",
+  "cik": 320193,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0000320193_AAPL.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 70,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-07-17",
+     "start": null,
+     "val": 14594180000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0000320193-26-000020",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2026-01-16",
+     "2026-04-17",
+     "2026-07-17"
+    ]
+   },
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 144,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-27",
+     "start": null,
+     "val": 14608963000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0000320193-26-000020",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-27",
+     "2026-03-28",
+     "2026-06-27"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 144,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-27",
+     "start": null,
+     "val": 14608963000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0000320193-26-000020",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-27",
+     "2026-03-28",
+     "2026-06-27"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 234,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-27",
+     "start": "2026-03-29",
+     "val": 14656110000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0000320193-26-000020",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-27",
+     "2026-03-28",
+     "2026-06-27"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 234,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-27",
+     "start": "2026-03-29",
+     "val": 14714676000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0000320193-26-000020",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-27",
+     "2026-03-28",
+     "2026-06-27"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOtherIncreasesDecreasesInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestOutstandingNumber",
+   "us-gaap:SharesPaidForTaxWithholdingForShareBasedCompensation",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:StockRepurchasedAndRetiredDuringPeriodShares",
+   "us-gaap:WeightedAverageNumberDilutedSharesOutstandingAdjustment",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "microsoft": {
+  "entity": "MICROSOFT CORPORATION",
+  "cik": 789019,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0000789019_MSFT.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 68,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-07-23",
+     "start": null,
+     "val": 7425545491,
+     "form": "10-K",
+     "filed": "2026-07-29",
+     "accn": "0001193125-26-323660",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2026-01-22",
+     "2026-04-23",
+     "2026-07-23"
+    ]
+   },
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 182,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 7427000000,
+     "form": "10-K",
+     "filed": "2026-07-29",
+     "accn": "0001193125-26-323660",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 6,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 7427000000,
+     "form": "10-K",
+     "filed": "2026-07-29",
+     "accn": "0001193125-26-323660",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 230,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2025-07-01",
+     "val": 7429000000,
+     "form": "10-K",
+     "filed": "2026-07-29",
+     "accn": "0001193125-26-323660",
+     "frame": "CY2026"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 232,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2025-07-01",
+     "val": 7453000000,
+     "form": "10-K",
+     "filed": "2026-07-29",
+     "accn": "0001193125-26-323660",
+     "frame": "CY2026"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExpirationsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresAndExpirationsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationSharesAuthorizedUnderStockOptionPlansExercisePriceRangeNumberOfExercisableOptions",
+   "us-gaap:StockIssuedDuringPeriodSharesEmployeeStockPurchasePlans",
+   "us-gaap:StockIssuedDuringPeriodSharesNewIssues",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:StockRepurchasedDuringPeriodShares",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "amazon": {
+  "entity": "AMAZON COM INC",
+  "cik": 1018724,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001018724_AMZN.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 69,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-07-22",
+     "start": null,
+     "val": 10786313572,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0001018724-26-000026",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2026-01-28",
+     "2026-04-22",
+     "2026-07-22"
+    ]
+   },
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 138,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 10783000000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0001018724-26-000026",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 138,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 11298000000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0001018724-26-000026",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 313,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 10769000000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0001018724-26-000026",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 313,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 10903000000,
+     "form": "10-Q",
+     "filed": "2026-07-31",
+     "accn": "0001018724-26-000026",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:CommonStockCapitalSharesReservedForFutureIssuance",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:StockIssuedDuringPeriodSharesEmployeeBenefitPlan",
+   "us-gaap:StockRepurchaseProgramNumberOfSharesAuthorizedToBeRepurchased",
+   "us-gaap:StockRepurchasedDuringPeriodShares",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "nvidia": {
+  "entity": "NVIDIA CORP",
+  "cik": 1045810,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001045810_NVDA.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 69,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-08-21",
+     "start": null,
+     "val": 24100000000,
+     "form": "10-Q",
+     "filed": "2026-08-26",
+     "accn": "0001045810-26-000075",
+     "frame": "CY2026Q3I"
+    },
+    "ends": [
+     "2026-02-20",
+     "2026-05-15",
+     "2026-08-21"
+    ]
+   },
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 34,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-01-25",
+     "start": null,
+     "val": 24304000000,
+     "form": "10-K",
+     "filed": "2026-02-25",
+     "accn": "0001045810-26-000021",
+     "frame": "CY2025Q4I"
+    },
+    "ends": [
+     "2024-01-28",
+     "2025-01-26",
+     "2026-01-25"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 34,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-01-25",
+     "start": null,
+     "val": 24304000000,
+     "form": "10-K",
+     "filed": "2026-02-25",
+     "accn": "0001045810-26-000021",
+     "frame": "CY2025Q4I"
+    },
+    "ends": [
+     "2024-01-28",
+     "2025-01-26",
+     "2026-01-25"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 225,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-07-26",
+     "start": "2026-04-27",
+     "val": 24190000000,
+     "form": "10-Q",
+     "filed": "2026-08-26",
+     "accn": "0001045810-26-000075",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2026-01-25",
+     "2026-04-26",
+     "2026-07-26"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 231,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-07-26",
+     "start": "2026-04-27",
+     "val": 24285000000,
+     "form": "10-Q",
+     "filed": "2026-08-26",
+     "accn": "0001045810-26-000075",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2026-01-25",
+     "2026-04-26",
+     "2026-07-26"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:ClassOfWarrantOrRightNumberOfSecuritiesCalledByEachWarrantOrRight",
+   "us-gaap:ClassOfWarrantOrRightNumberOfSecuritiesCalledByWarrantsOrRights",
+   "us-gaap:ClassOfWarrantOrRightOutstanding",
+   "us-gaap:CommonStockCapitalSharesReservedForFutureIssuance",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:DebtConversionConvertedInstrumentSharesIssued1",
+   "us-gaap:DebtInstrumentConvertibleConversionRatio",
+   "us-gaap:IncrementalCommonSharesAttributableToCallOptionsAndWarrants",
+   "us-gaap:IncrementalCommonSharesAttributableToConversionOfDebtSecurities",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNonOptionEquityInstrumentsOther",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNonOptionEquityInstrumentsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOtherIncreasesDecreasesInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestOutstandingNumber",
+   "us-gaap:SharebasedCompensationSharesAuthorizedUnderStockOptionPlansExercisePriceRangeExercisableOptionsWeightedAverageRemainingContractualTerm1",
+   "us-gaap:SharesPaidForTaxWithholdingForShareBasedCompensation",
+   "us-gaap:StockIssuedDuringPeriodSharesEmployeeStockPurchasePlans",
+   "us-gaap:StockIssuedDuringPeriodSharesNewIssues",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:StockRepurchasedAndRetiredDuringPeriodShares",
+   "us-gaap:StockRepurchasedDuringPeriodShares",
+   "us-gaap:TreasuryStockShares",
+   "us-gaap:TreasuryStockSharesAcquired",
+   "us-gaap:TreasuryStockSharesRetired",
+   "us-gaap:WeightedAverageNumberDilutedSharesOutstandingAdjustment",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "spacex-xai": {
+  "entity": "SPACE EXPLORATION TECHNOLOGIES CORP.",
+  "cik": "0001181412",
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001181412_SPCX.json",
+  "concepts": {
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 4,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 5864000000,
+     "form": "10-Q",
+     "filed": "2026-08-04",
+     "accn": "0001628280-26-052535",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-06-30",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 4,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 5864000000,
+     "form": "10-Q",
+     "filed": "2026-08-04",
+     "accn": "0001628280-26-052535",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-06-30",
+     "2026-06-30"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:StockRepurchasedAndRetiredDuringPeriodShares",
+   "us-gaap:TemporaryEquitySharesIssued",
+   "us-gaap:TemporaryEquitySharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "tesla": {
+  "entity": "Tesla, Inc.",
+  "cik": 1318605,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001318605_TSLA.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 67,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-07-16",
+     "start": null,
+     "val": 3949547394,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001628280-26-049270",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2026-01-23",
+     "2026-04-16",
+     "2026-07-16"
+    ]
+   },
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 124,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 3949000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001628280-26-049270",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 144,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 3949000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001628280-26-049270",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 125,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 3237000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001628280-26-049270",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 125,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 3540000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001628280-26-049270",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:CapitalUnitsAuthorized",
+   "us-gaap:ClassOfWarrantOrRightNumberOfSecuritiesCalledByWarrantsOrRights",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:DebtConversionConvertedInstrumentSharesIssued1",
+   "us-gaap:IncrementalCommonSharesAttributableToCallOptionsAndWarrants",
+   "us-gaap:IncrementalCommonSharesAttributableToConversionOfDebtSecurities",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationSharesAuthorizedUnderStockOptionPlansExercisePriceRangeNumberOfExercisableOptions",
+   "us-gaap:ShareBasedCompensationSharesAuthorizedUnderStockOptionPlansExercisePriceRangeNumberOfOutstandingOptions",
+   "us-gaap:StockIssuedDuringPeriodSharesEmployeeStockPurchasePlans",
+   "us-gaap:StockIssuedDuringPeriodSharesNewIssues",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:StockRepurchaseProgramNumberOfSharesAuthorizedToBeRepurchased",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfShareOutstandingBasicAndDiluted",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "palantir": {
+  "entity": "Palantir Technologies Inc.",
+  "cik": 1321655,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001321655_PLTR.json",
+  "concepts": {
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 48,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 2402897000,
+     "form": "10-Q",
+     "filed": "2026-08-04",
+     "accn": "0001321655-26-000041",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 48,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 2402897000,
+     "form": "10-Q",
+     "filed": "2026-08-04",
+     "accn": "0001321655-26-000041",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 78,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 2399820000,
+     "form": "10-Q",
+     "filed": "2026-08-04",
+     "accn": "0001321655-26-000041",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 78,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 2568694000,
+     "form": "10-Q",
+     "filed": "2026-08-04",
+     "accn": "0001321655-26-000041",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:InvestmentOwnedBalanceShares",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNonOptionEquityInstrumentsExercised",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNonOptionEquityInstrumentsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresAndExpirationsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestExercisableNumber",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:StockRepurchasedDuringPeriodShares",
+   "us-gaap:TreasuryStockShares",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "meta": {
+  "entity": "Meta Platforms, Inc.",
+  "cik": 1326801,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001326801_META.json",
+  "concepts": {
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 186,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 2543000000,
+     "form": "10-Q",
+     "filed": "2026-07-30",
+     "accn": "0001628280-26-050705",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 189,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 2566000000,
+     "form": "10-Q",
+     "filed": "2026-07-30",
+     "accn": "0001628280-26-050705",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:BusinessAcquisitionEquityInterestsIssuedOrIssuableNumberOfSharesIssued",
+   "us-gaap:ConversionOfStockSharesConverted1",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNonOptionEquityInstrumentsExercised",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfAdditionalSharesAuthorized",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresAndExpirationsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestOutstandingNumber",
+   "us-gaap:ShareBasedCompensationSharesAuthorizedUnderStockOptionPlansExercisePriceRangeNumberOfExercisableOptions",
+   "us-gaap:SharesPaidForTaxWithholdingForShareBasedCompensation",
+   "us-gaap:StockIssuedDuringPeriodSharesShareBasedCompensationGross",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:StockRepurchasedAndRetiredDuringPeriodShares",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "oracle": {
+  "entity": "Oracle Corporation",
+  "cik": 1341439,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001341439_ORCL.json",
+  "concepts": {
+   "dei:EntityCommonStockSharesOutstanding": {
+    "count": 68,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-12",
+     "start": null,
+     "val": 2880471000,
+     "form": "10-K",
+     "filed": "2026-06-22",
+     "accn": "0001193125-26-277521",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-05",
+     "2026-03-05",
+     "2026-06-12"
+    ]
+   },
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 155,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-05-31",
+     "start": null,
+     "val": 2880000000,
+     "form": "10-K",
+     "filed": "2026-06-22",
+     "accn": "0001193125-26-277521",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-11-30",
+     "2026-02-28",
+     "2026-05-31"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 221,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-05-31",
+     "start": "2025-06-01",
+     "val": 2860000000,
+     "form": "10-K",
+     "filed": "2026-06-22",
+     "accn": "0001193125-26-277521",
+     "frame": "CY2025"
+    },
+    "ends": [
+     "2025-11-30",
+     "2026-02-28",
+     "2026-05-31"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 221,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-05-31",
+     "start": "2025-06-01",
+     "val": 2914000000,
+     "form": "10-K",
+     "filed": "2026-06-22",
+     "accn": "0001193125-26-277521",
+     "frame": "CY2025"
+    },
+    "ends": [
+     "2025-11-30",
+     "2026-02-28",
+     "2026-05-31"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "dei:EntityCommonStockSharesOutstanding",
+   "us-gaap:AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresAndExpirationsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardSharesIssuedInPeriod",
+   "us-gaap:SharesPaidForTaxWithholdingForShareBasedCompensation",
+   "us-gaap:StockIssuedDuringPeriodSharesAcquisitions",
+   "us-gaap:StockIssuedDuringPeriodSharesEmployeeStockPurchasePlans",
+   "us-gaap:StockIssuedDuringPeriodSharesShareBasedCompensation",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:StockRepurchasedAndRetiredDuringPeriodShares",
+   "us-gaap:StockholdersEquityOtherShares",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ },
+ "alphabet": {
+  "entity": "Alphabet Inc.",
+  "cik": 1652044,
+  "source_file": "..\\..\\..\\C-13\\validation\\f6-avail-15b\\_raw\\CIK0001652044_GOOGL.json",
+  "concepts": {
+   "us-gaap:CommonStockSharesOutstanding": {
+    "count": 88,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 12230000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001652044-26-000071",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:CommonStockSharesIssued": {
+    "count": 88,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": null,
+     "val": 12230000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001652044-26-000071",
+     "frame": "CY2026Q2I"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic": {
+    "count": 30,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 12151000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001652044-26-000071",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   },
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding": {
+    "count": 30,
+    "units": [
+     "shares"
+    ],
+    "latest": {
+     "unit": "shares",
+     "end": "2026-06-30",
+     "start": "2026-04-01",
+     "val": 12309000000,
+     "form": "10-Q",
+     "filed": "2026-07-23",
+     "accn": "0001652044-26-000071",
+     "frame": "CY2026Q2"
+    },
+    "ends": [
+     "2025-12-31",
+     "2026-03-31",
+     "2026-06-30"
+    ]
+   }
+  },
+  "all_shares_unit_concepts": [
+   "us-gaap:CommonStockCapitalSharesReservedForFutureIssuance",
+   "us-gaap:CommonStockSharesAuthorized",
+   "us-gaap:CommonStockSharesIssued",
+   "us-gaap:CommonStockSharesOutstanding",
+   "us-gaap:IncrementalCommonSharesAttributableToConversionOfPreferredStock",
+   "us-gaap:IncrementalCommonSharesAttributableToShareBasedPaymentArrangements",
+   "us-gaap:PreferredStockSharesAuthorized",
+   "us-gaap:PreferredStockSharesIssued",
+   "us-gaap:PreferredStockSharesOutstanding",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisableNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsForfeituresAndExpirationsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriod",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber",
+   "us-gaap:ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsVestedAndExpectedToVestExercisableNumber",
+   "us-gaap:StockIssuedDuringPeriodSharesNewIssues",
+   "us-gaap:StockIssuedDuringPeriodSharesStockOptionsExercised",
+   "us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding",
+   "us-gaap:WeightedAverageNumberOfSharesOutstandingBasic"
+  ]
+ }
+}
