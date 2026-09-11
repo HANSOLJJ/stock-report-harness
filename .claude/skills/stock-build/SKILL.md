@@ -1,6 +1,6 @@
 ---
 name: stock-build
-description: 최종 주식 리포트 HTML을 빌드한다. 리뷰 pass와 선택된 히어로 이미지가 존재한 뒤에만 /stock-build <slug>로 사용하며, 계약 검증, yfinance 가격 차트 JSON 생성, output/<slug>.html 렌더링, 인라인 출처 표식 제거, 하단 투자 면책 문구 추가를 수행한다.
+description: 최종 주식 리포트 HTML을 빌드한다. 리뷰 pass 이후에만 /stock-build <slug>로 사용하며(히어로 이미지는 있으면 삽입), 계약 검증, yfinance 가격 차트 JSON 생성, output/<slug>.html 렌더링, 인라인 출처 표식 제거, 하단 투자 면책 문구 추가를 수행한다.
 ---
 
 # 주식 빌드 스킬
@@ -16,11 +16,14 @@ description: 최종 주식 리포트 HTML을 빌드한다. 리뷰 pass와 선택
 - `research/<slug>.md`
 - `drafts/<slug>.md`
 - `reviews/<slug>.md` (`status: pass`)
+<!-- 2026-09-07 hero 선택 사항 변경 전 (필수였음):
 - `output/assets/<slug>-image-manifest.json` (`status: complete`, `generation_method: codex-cli-imagegen`, `generated_with` 포함)
 - `output/assets/<slug>-selected-image.json`
 - selected-image JSON이 참조하는 선택된 히어로 PNG
+-->
+- (선택) `output/assets/<slug>-image-manifest.json`이 `status: complete`이면 `generation_method: codex-cli-imagegen`, `generated_with`, selected-image JSON, 선택된 히어로 PNG가 모두 유효해야 한다. 매니페스트가 없거나 `blocked`이면 hero 카드 없이 빌드한다.
 
-하나라도 없거나 리뷰가 pass가 아니면 중단하고 필요한 `/stock-*` 단계로 안내한다.
+plan/research/draft/review 중 하나라도 없거나 리뷰가 pass가 아니면 중단하고 필요한 `/stock-*` 단계로 안내한다.
 
 ## 절차
 
@@ -36,7 +39,7 @@ description: 최종 주식 리포트 HTML을 빌드한다. 리뷰 pass와 선택
    `python3 scripts/validate_report_contract.py <slug> --require-html --require-price-chart`
 4. 생성된 HTML은 반드시:
    - 토스 스타일 모바일 셸 사용: `max-width: 560px`, 고정 앱바, 티커 히어로 카드, Pretendard, 토스 블루 강조색, 회색 8px 섹션 구분선, 한국 주식 색상 규칙 (상승=빨강, 하락=파랑)
-   - 선택된 히어로 이미지를 상단 근처에 한 번, 조용한 토스 카드로 스타일링해 리포트 에셋 계약을 충족
+   - 선택된 히어로 이미지가 있으면 상단 근처에 한 번, 조용한 토스 카드로 스타일링해 리포트 에셋 계약을 충족 (없으면 히어로 카드 생략)
    - `price-chart` 블록을 토스 라인 스타일링과 우측 Y축의 접근성 Chart.js 호환 차트로 렌더링
    - draft/research에 급등/급락 이벤트 메타데이터가 있으면 가격 차트에서 해당 날짜를 강조하고 차트 근처에 짧은 이벤트 카드를 렌더링
    - 펜스드 `chart` JSON이 있으면 차트로 렌더링
@@ -58,11 +61,12 @@ description: 최종 주식 리포트 HTML을 빌드한다. 리뷰 pass와 선택
 ## 제약 조건
 
 - 리뷰 pass 없이 빌드하지 않는다.
-- 선택된 히어로 이미지 없이 빌드하지 않는다.
+<!-- 2026-09-07 hero 선택 사항 변경 전: - 선택된 히어로 이미지 없이 빌드하지 않는다. -->
+- image manifest가 `complete`인데 선택된 히어로 PNG가 없으면 빌드하지 않는다.
 - 절차적/Pillow/SVG/플레이스홀더 히어로 출처로 빌드하지 않는다.
 - 가짜 가격이나 플레이스홀더 차트를 사용하지 않는다.
 - 빌드 중 새로운 시장 주장을 추가하지 않는다. research/draft를 먼저 수정한다.
 
 ## 완료 보고
 
-최종 HTML 경로, 가격 차트 JSON 경로, 선택된 히어로 경로, 프리뷰 URL, 검증 증거를 보고한다.
+최종 HTML 경로, 가격 차트 JSON 경로, 선택된 히어로 경로(없으면 미생성 사유), 프리뷰 URL, 검증 증거를 보고한다.

@@ -27,7 +27,10 @@ FRONTMATTER_RE = re.compile(r"\A---\s*\r?\n(?P<frontmatter>.*?)\r?\n---\s*(?:\r?
 H1_RE = re.compile(r"^#(?!#)\s+.+$", re.MULTILINE)
 H2_RE = re.compile(r"^##\s+(?P<title>.+?)\s*$", re.MULTILINE)
 PRICE_CHART_FENCE_RE = re.compile(r"```price-chart\s*\n(?P<body>.*?)\n```", re.DOTALL)
-SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P)\d+\]")
+# SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P)\d+\]")  # 2026-09-07 변경 전
+# 2026-09-07: enforce-citations.sh 훅은 [H1](yfinance 보유자 데이터) 표식도 허용하는데 검증기·빌더는
+# S/N/P만 제거해 최종 HTML에 [H1]이 남았음(tesla 리포트에서도 사용). 훅과 같은 집합으로 맞춤.
+SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P|H)\d+\]")
 
 REQUIRED_PLAN_FRONTMATTER = [
     "slug",
@@ -89,7 +92,10 @@ def artifact_paths(slug: str) -> ArtifactPaths:
 
 def rel(path: Path) -> str:
     try:
-        return str(path.relative_to(ROOT))
+        # return str(path.relative_to(ROOT))  # 2026-09-07 변경 전
+        # 2026-09-07: Windows에서는 relative_to()가 'plan\\slug.md'를 돌려줘 frontmatter의
+        # 'plan/slug.md'와 문자열 비교(_expect_source_path)가 항상 실패했음. POSIX 구분자로 고정함.
+        return path.relative_to(ROOT).as_posix()
     except ValueError:
         return str(path)
 
@@ -194,8 +200,15 @@ def has_source_markers(text: str) -> bool:
 def strip_source_markers(text: str) -> str:
     # Remove adjacent source markers and the extra whitespace they often leave.
     stripped = SOURCE_MARKER_RE.sub("", text)
-    stripped = re.sub(r"\s+([.,;:!?])", r"\1", stripped)
-    stripped = re.sub(r" {2,}", " ", stripped)
+    # stripped = re.sub(r"\s+([.,;:!?])", r"\1", stripped)  # 2026-09-07 변경 전
+    # 2026-09-07: \s+ 가 개행까지 삼켜 "compare: ... [P1]\n::" 이 "compare: ...::" 로 붙어
+    # STAT_CARD_RE(\n:: 필요)가 매칭되지 않아 ::stat-card 블록이 본문에 그대로 노출됐음.
+    # 같은 줄 안의 공백만 정리하도록 개행을 제외함.
+    stripped = re.sub(r"[ \t]+([.,;:!?])", r"\1", stripped)
+    # stripped = re.sub(r" {2,}", " ", stripped)  # 2026-09-07 변경 전
+    # 2026-09-07: 줄 앞 들여쓰기까지 한 칸으로 줄여 "    - 요약:" 같은 중첩 목록이 마크다운에서
+    # 풀려 버렸음. 줄 안쪽(비공백 문자 뒤)의 연속 공백만 정리하도록 제한함.
+    stripped = re.sub(r"(?<=\S) {2,}", " ", stripped)
     return stripped
 
 
@@ -268,6 +281,33 @@ def selected_image_path(slug: str) -> tuple[Path | None, dict[str, Any] | None]:
             return candidate, payload
     # Return the most likely path for helpful diagnostics even when missing.
     return candidates[-1] if candidates else None, payload
+
+
+def hero_image_status(slug: str) -> tuple[str, Path | None, str]:
+    """Return (status, png_path, reason) for the optional hero image.
+
+    The hero image is optional: it is used only when the image manifest says
+    ``status: complete`` and the selected PNG resolves to a real file.  Any
+    other manifest status (blocked, in_progress, missing) means the report is
+    built without a hero card, and ``reason`` explains why.
+    """
+    manifest_path = artifact_paths(slug).image_manifest_json
+    if not manifest_path.is_file():
+        return "missing", None, f"image manifest 없음: {rel(manifest_path)}"
+    try:
+        manifest = load_json(manifest_path)
+    except Exception as exc:
+        return "invalid", None, f"image manifest 파싱 실패: {exc}"
+    if not isinstance(manifest, dict):
+        return "invalid", None, "image manifest JSON은 object여야 함"
+    status = str(manifest.get("status") or "").strip() or "unknown"
+    if status != "complete":
+        reason = str(manifest.get("blocked_reason") or "").strip() or f"status={status!r}"
+        return status, None, reason
+    image_path, _payload = selected_image_path(slug)
+    if image_path is None or not image_path.is_file():
+        return "complete", None, "image manifest는 complete이지만 selected hero PNG를 찾을 수 없음"
+    return "complete", image_path, ""
 
 
 def html_attr(value: Any) -> str:

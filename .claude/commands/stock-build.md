@@ -1,5 +1,5 @@
 ---
-description: pass review와 선택된 hero 이미지를 검증한 뒤 최종 HTML 리포트를 빌드합니다.
+description: pass review를 검증한 뒤 최종 HTML 리포트를 빌드합니다. hero 이미지는 있으면 함께 검증합니다.
 argument-hint: "<slug>"
 ---
 
