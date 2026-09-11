@@ -145,5 +145,63 @@ class TestPrivArrExtraction(unittest.TestCase):
         self.assertIn("0.52", l666)
 
 
+    def test_13_v15_unlisted_tier_table(self):
+        """채점규칙 v1.5의 비상장 점수 구간표(Line 609-616) 내용 검증"""
+        with open(RULES_FILE, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        table_text = "".join(lines[608:616])
+        self.assertIn("NTM PER", table_text)
+        self.assertIn("밸류÷ARR", table_text)
+        self.assertIn("~20x", table_text)
+        self.assertIn("20x대", table_text)
+        self.assertIn("30x+", table_text)
+        self.assertIn("100x+", table_text)
+
+        tier_data = self.data.get("v15_rules_unlisted_provisions", {}).get("unlisted_tier_table", {})
+        self.assertEqual(tier_data.get("line_start"), 609)
+        self.assertEqual(tier_data.get("line_end"), 616)
+
+    def test_14_v15_three_tier_principle(self):
+        """채점규칙 v1.5의 상장/비상장 3층 원칙(Line 633-643) 검증"""
+        with open(RULES_FILE, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        rule_text = "".join(lines[632:644])
+        self.assertIn("3층 원칙", rule_text)
+        self.assertIn("1차", rule_text)
+        self.assertIn("2차", rule_text)
+        self.assertIn("3차", rule_text)
+        self.assertIn("정밀도 열위", rule_text)
+        self.assertIn("경계 규칙 미적용", rule_text)
+
+    def test_15_v15_unlisted_judgments_table(self):
+        """채점규칙 v1.5의 비상장 3사 판정 표(Line 673-676) 및 불일치 사실 검증"""
+        with open(RULES_FILE, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        judge_text = "".join(lines[670:677])
+        self.assertIn("Anthropic", judge_text)
+        self.assertIn("14.8", judge_text)
+        self.assertIn("흑자 전환", judge_text)
+        self.assertIn("0.52", judge_text)
+        self.assertIn("-3", judge_text)
+
+        self.assertIn("OpenAI", judge_text)
+        self.assertIn("21.3", judge_text)
+        self.assertIn("적자", judge_text)
+        self.assertIn("0.22", judge_text)
+        self.assertIn("-4", judge_text)
+
+    def test_16_c12_recommendation_rationale(self):
+        """C-12 권고 근거 정정 검증: 밴드 부재가 아닌 v1.5의 구간표 미준수/정성 조정 선례 계승"""
+        c12 = self.data.get("c12_recommendation", {})
+        rationale = c12.get("rationale", "")
+        self.assertIn("밴드가 없어서", rationale)
+        self.assertIn("v1.5", rationale)
+        self.assertIn("흑자", rationale)
+        self.assertIn("자본효율", rationale)
+
+
 if __name__ == "__main__":
     unittest.main()
