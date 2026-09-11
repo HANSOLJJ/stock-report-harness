@@ -208,6 +208,18 @@ G3 에 실제로 도달하는 기업은 FCF 음수인 amazon·alibaba·spacex-xa
 | `verify_and_c06.py`, `verify-output.txt` | 양성 대조·입력 변경 테스트·C-06 다섯 공백 실측 |
 | **`engine_matrix.py`, `engine-matrix.json`, `engine-matrix-output.txt`** | **R1 정정 근거 — 출하 엔진 `compute_f9()` 직접 호출 16조합** |
 
+## 11. 조건 준수
+
+- **결정하지 않았다.** 선택지별 영향만 실측으로 제시했다
+- **기존 F9 점수를 정답 fixture 로 쓰지 않았다.** `f9-current-state.json` 은 보류 사유와 검토 입력을 읽는 데만 썼고, 시뮬레이터는 계약 문서(6.1~6.4)와 `policies.f9` 에서 독립적으로 구성했다. S-HAND 검산 사례(Oracle −3, SpaceX −4, OpenAI −5, Amazon −2)를 기준으로 삼지 않았다
+- 판정 변수를 계산해 놓고 출력에 안 쓰지 않았다. 한 행·한 필드 표본으로 전체를 판정하지 않았고 14개사 전수로 집계했다
+- 없는 것은 없다고 적었다. `revenue_ttm` 0/14, `operating_income_ttm` 0/14, `undrawn_credit_facility` 0/14 가 결론의 일부다
+- 입력 변경 테스트와 통과 방향 양성 대조를 남겼다
+- **점수·규칙·승인·원자료를 변경하지 않았다.** `worker/` 는 읽기 전용으로만 읽었고 `v1.5`·`v1.7.json`·`scripts/scorecard/` 를 건드리지 않았다
+- `api.nasdaq.com` 호출 0건. 신규 네트워크 수집 0건
+- C-13 의 결과를 참조하거나 기다리지 않았다
+- **R1 에서 worker 의 `scripts/scorecard/` 를 `import` 로 읽기만 했고 수정하지 않았다.** `v1.5`·`v1.7.json`·승인 해시·`results_hash` 불변
+
 ## 12. 수정 이력 (R1, 2026-09-11)
 
 설계진행 재검토 `f2a92a1` 의 `needs_fix` 3건을 반영했다. **판정 근거는 자체 시뮬레이터가 아니라 출하 엔진 직접 호출이다.**
@@ -225,15 +237,3 @@ G3 에 실제로 도달하는 기업은 FCF 음수인 amazon·alibaba·spacex-xa
 **초판에서 유지되는 것** — 지시서 전제 정정(F9 `None` 4개사, spacex-xai 누락), G1 입력 공백 발견(`operating_margin_ttm` 1/14, `revenue_ttm` 0/14, `operating_income_ttm` 0/14), C-06 다섯 공백 실측, 규약 R3. 설계진행이 전수 재현해 확인했고 R3 은 구현과 정확히 일치한다고 확인받았다.
 
 **작은 정정 둘.** 초판이 적은 지표명 `undrawn_credit_facility` 는 엔진이 실제로 읽는 이름이 **`undrawn_credit`** 이다. 이름과 무관하게 관측은 **0건**이므로 C-04 = 0개사 결론은 유지된다. 그리고 §4 표의 spacex-xai 행이 "하한 도달" 이라 적었던 것은 정정 2에 따라 "관문 1(`coverage_comparable`)에서 막힘" 이 맞다.
-
-## 11. 조건 준수
-
-- **결정하지 않았다.** 선택지별 영향만 실측으로 제시했다
-- **기존 F9 점수를 정답 fixture 로 쓰지 않았다.** `f9-current-state.json` 은 보류 사유와 검토 입력을 읽는 데만 썼고, 시뮬레이터는 계약 문서(6.1~6.4)와 `policies.f9` 에서 독립적으로 구성했다. S-HAND 검산 사례(Oracle −3, SpaceX −4, OpenAI −5, Amazon −2)를 기준으로 삼지 않았다
-- 판정 변수를 계산해 놓고 출력에 안 쓰지 않았다. 한 행·한 필드 표본으로 전체를 판정하지 않았고 14개사 전수로 집계했다
-- 없는 것은 없다고 적었다. `revenue_ttm` 0/14, `operating_income_ttm` 0/14, `undrawn_credit_facility` 0/14 가 결론의 일부다
-- 입력 변경 테스트와 통과 방향 양성 대조를 남겼다
-- **점수·규칙·승인·원자료를 변경하지 않았다.** `worker/` 는 읽기 전용으로만 읽었고 `v1.5`·`v1.7.json`·`scripts/scorecard/` 를 건드리지 않았다
-- `api.nasdaq.com` 호출 0건. 신규 네트워크 수집 0건
-- C-13 의 결과를 참조하거나 기다리지 않았다
-- **R1 에서 worker 의 `scripts/scorecard/` 를 `import` 로 읽기만 했고 수정하지 않았다.** `v1.5`·`v1.7.json`·승인 해시·`results_hash` 불변
