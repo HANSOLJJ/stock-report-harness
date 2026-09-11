@@ -144,3 +144,24 @@ def normalize_usage_scopes(scope: dict) -> set[str]:
 ```
 
 `reopen_condition` 을 **필수**로 둔 것이 이 제안의 요점이다. 닫되 **어떤 조건에서 다시 여는지**를 적게 강제하면 "영구 배제" 와 "지금은 안 함" 이 섞이지 않는다.
+
+---
+
+## P4. `schema.py` — `unlisted` 에 `relist_condition` (검토 확정 반영, v2)
+
+확정 처리로 Alpha Vantage·FMP·Finnhub 세 원천이 `allowed` 에서 `unlisted` 로 내려간다. 설계진행이 "되살리려면 무엇이 필요한지를 등재 사유란에 적는다" 를 요구했으므로 전용 필드를 둔다.
+
+```python
+    for idx, entry in enumerate(policy.get("unlisted") or []):
+        where = f"rules.sources.unlisted[{idx}]"
+        _expect_keys(entry, ["host", "reason_type", "reason", "decided_at"], where,
+                     optional=["note", "evidence", "relist_condition"])
+```
+
+`optional` 에 `relist_condition` 한 항목을 더하는 것이 전부다. 필수가 아닌 이유는 **되살릴 길이 없는 미등재도 있기 때문**이다(기술적으로 영구 부적격인 경우). 조건이 있으면 적고 없으면 비운다.
+
+`not_adopted` 의 `reopen_condition` 과 이름을 다르게 둔 것은 의도적이다. **`unlisted` 는 애초에 등재된 적이 없으니 `relist`(등재) 이고, `not_adopted` 는 후보였다가 닫힌 것이니 `reopen`(재개) 이다.** 같은 이름을 쓰면 두 상태의 차이가 흐려진다.
+
+### 적용 순서 주의
+
+`proposal-sources-v1.7-v2.json` 의 `unlisted` 항목 셋은 `relist_condition` 을 갖는다. **P4 를 먼저 넣지 않으면 `_expect_keys` 가 알 수 없는 키로 거부한다.** 규칙 파일보다 스키마를 먼저 고친다.

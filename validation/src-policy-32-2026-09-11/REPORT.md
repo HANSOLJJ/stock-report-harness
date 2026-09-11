@@ -240,3 +240,57 @@ scripts/scorecard/schema.py:282-291   (형태 검증만)
 | `proposal-code.md` | **schema.py·rules.py 패치 3건 (적용 안 함)** |
 | `fetch-meta.json` | 조회 메타 + 일자 |
 | `raw/finnhub-*` | 약관·정책·robots 원문 보존 |
+
+## 11. 검토 확정 반영 (2026-09-11, 판정 pass)
+
+설계진행 커밋 `e291e21`. **§0-2 의 판정이 채택됐고 지시서 전제가 정정됐다.** 결론 문장은 "범위를 넓히는 것은 제약을 푸는 것이 아니라 조이는 것이다" 다.
+
+### 11-1. 확정된 처리 — 세 원천을 `allowed` 에서 내린다
+
+| host | 이동 | 사유 종류 |
+|---|---|---|
+| `www.alphavantage.co` | (미등재 유지) → `unlisted` 명시 | 기술 + 약관 |
+| `financialmodelingprep.com` | `allowed` → `unlisted` | 기술 + 약관 |
+| `finnhub.io` | `allowed` → `unlisted` | 기술 + 약관 |
+
+셋 다 **실제로 아무 데도 쓰이지 않는다.** 현재 F6·F9 가 먹는 것은 SEC·연준 H.10·프로젝트 내 v1.5 원본뿐이다(§6-2 실측과 일치).
+
+**사용자에게 "개인 전용으로 선언할까요" 를 되묻지 않는다.** 쓰지도 않는 원천 때문에 `usage_scope` 를 좁히는 것은 꼬리가 몸통을 흔드는 것이다. `usage_scope` 를 개인+법인 합집합으로 넓히는 것은 사용자 확정대로 간다 — 세 원천을 안 쓰는 이상 그것 때문에 잃는 것이 없다.
+
+§9 에 열어 둔 판단 셋 중 1·2 가 이렇게 닫혔다. 3(`rules.py` 를 누가 넣나)은 worker 로 간다.
+
+### 11-2. ★ 초판 제안 파일이 확정과 어긋난다 — v2 를 만들었다
+
+**자체 발견이다.** `proposal-sources-v1.7.json` 은 이 결정 **이전에** 만들어져 `finnhub.io`·`financialmodelingprep.com` 을 `allowed` 에 남긴 채 note 만 갱신한 형태다. 그대로 적용하면 확정과 정반대가 된다.
+
+| | 초판 `allowed` | v2 `allowed` |
+|---|---|---|
+| | sec×2, **finnhub**, **fmp**, 연준 | sec×2, 연준 |
+
+`proposal-sources-v1.7-v2.json` 을 만들고 초판 최상단에 `_SUPERSEDED` 표식을 달았다. **적용은 v2 를 쓴다.**
+
+제안을 넘기는 시점과 결정이 내려진 시점이 어긋나면 이런 일이 생긴다. 제안 파일은 만들어진 순간의 전제를 그대로 굳혀 들고 있으므로, **전제가 바뀌면 제안도 같이 갱신하거나 최소한 낡았다는 표식을 달아야 한다.** 표식 없이 넘기면 받는 쪽이 확정된 내용인 줄 알고 적용한다.
+
+### 11-3. 되살릴 조건을 `relist_condition` 에 적었다
+
+설계진행 요구대로 "되살리려면 무엇이 필요한지" 를 각 항목에 적었다. **Finnhub 만 조건이 셋**이다.
+
+| host | 조건 |
+|---|---|
+| Alpha Vantage | (1) 향후 분기 4개 + basis 4필드 (2) 범위를 개인 전용으로 좁히거나 상업 계약 |
+| FMP | (1) `period=quarter` 접근권 (2) 범위를 개인 전용으로 좁히거나 법인 라이선스 |
+| **Finnhub** | (1) basis 확인 (2) 범위를 좁히거나 written approval (3) **파생 결과 공유에 대한 별도 written approval** |
+
+**(3)은 다른 둘에 없다.** 다른 두 원천은 *사용 주체*만 제한하는데 Finnhub 은 **산출물의 유통까지** 제한한다(`derived results from the data`). 그래서 `usage_scope` 를 개인 전용으로 좁히는 것만으로는 Finnhub 이 해소되지 않는다. 이 비대칭을 조건란에 명시했다.
+
+`unlisted` 에 `relist_condition` 을 optional 로 추가하는 스키마 패치가 `proposal-code.md` **P4** 다. 필수가 아닌 이유는 되살릴 길이 없는 영구 부적격도 있기 때문이고, `not_adopted` 의 `reopen_condition` 과 이름을 다르게 둔 것은 **등재된 적 없음(relist)과 후보였다 닫힘(reopen)의 차이**를 이름이 지키게 하려는 것이다.
+
+### 11-4. 적용 순서
+
+worker 가 적용할 때 순서가 있다.
+
+1. `schema.py` — P1(`scopes`) · P3(`not_adopted`) · **P4(`relist_condition`)**
+2. `rules.py` — P2(`source_violation` 의 `not_adopted` 분기)
+3. `v1.7.json` — `proposal-sources-v1.7-v2.json` 의 `sources` 블록
+
+**스키마를 먼저 고치지 않으면 규칙 파일이 알 수 없는 키로 거부된다.** 그리고 2를 빼면 §5 대로 닫으려던 것이 다시 열리는 안내가 나온다.
