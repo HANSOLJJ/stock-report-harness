@@ -1,0 +1,19 @@
+[
+  {
+    "ticker": "TSM",
+    "cik": "0001046179",
+    "accession": "0001628280-26-025362",
+    "form": "20-F",
+    "period_end": "2025-12-31",
+    "filing_date": "2026-04-16",
+    "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+    "timestamp": "2026-09-11T02:19:42.159511+00:00",
+    "status": 200,
+    "content_type": "text/html",
+    "content_encoding": "gzip",
+    "compressed_bytes": 536712,
+    "saved_bytes": 10355816,
+    "sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
+    "saved_filename": "tsm-20251231.htm"
+  }
+]
