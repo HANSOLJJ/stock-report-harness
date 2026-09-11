@@ -91,6 +91,14 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             # 손실률 수치는 없지만 검토된 TTM 영업흑자 부호만으로 G1 통과. 수치 확보 전까지 경고를 남긴다.
             path.append({"gate": "G1", "result": "pass", "operating_margin_ttm": None, "basis": "operating_result_reviewed=profit"})
             warnings.append("G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고")
+        elif _private_undisclosed_operating(company, obs, rules, run):
+            # C-20. **통과가 아니라 판정 보류다.** 단일 분기 영업흑자를 G1 통과 근거로 쓰지 않되,
+            # 비상장이고 구조적으로 미공시면 영구 보류로 두지도 않고 G2 비상장 조항으로 보낸다.
+            path.append({"gate": "G1", "result": "undetermined",
+                         "reason": "비상장이라 TTM 영업손익이 구조적 미공시 — 판정 보류(통과 아님). "
+                                   "단일 분기 영업흑자를 통과 근거로 쓰지 않는다",
+                         "route": "G2 비상장 경로", "decision_id": "C-20"})
+            warnings.append("C-20: G1 판정 보류 후 비상장 경로 — 통과로 읽지 않는다")
         else:
             path.append({"gate": "G1", "result": "pending", "reason": "TTM 영업손익·손실률 관측 없음(단일 분기·조정 손익으로 대체하지 않음, C-20)"})
             return done(None, "pending_data", pending_info("data", "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"))
@@ -98,10 +106,14 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     if margin is not None and margin == 0 and not bep_retreat:
         path.append({"gate": "G1", "result": "zero", "reason": "영업손익 0 처리 미결(C-06)"})
         return done(None, "needs_rule_decision", pending_info("rule", "영업손익 0 의 처리 규칙 미확정(FCF 0 과 동일)", "C-06"))
+    # 판정 보류(C-20)는 통과가 아니다. 다만 G1 실패 경로로도 보내지 않고 아래 G2 로 흘려보낸다.
+    g1_deferred = any(p.get("gate") == "G1" and p.get("result") == "undetermined" for p in path)
     g1_pass = (not bep_retreat) and (margin is None or margin > 0)
-    if g1_pass:
+    if g1_pass and not g1_deferred:
         if margin is not None:
             path.append({"gate": "G1", "result": "pass", "operating_margin_ttm": margin})
+    elif g1_deferred:
+        pass                                    # 이미 경로 기록을 남겼다. G2 로 내려간다
     else:
         # 영업적자 구간
         if bep_retreat:
@@ -241,6 +253,28 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     path.append({"gate": "G4", **{k: v for k, v in g4.items() if k != "pending"}, "score": score})
     return done(score, "ok")
 
+
+
+def _private_undisclosed_operating(company: dict[str, Any], obs: ObsLookup, rules: RuleSet,
+                                   run: dict[str, Any]) -> bool:
+    """비상장 + TTM 영업손익이 **구조적 미공시** 인가 (C-20).
+
+    **자료가 없다는 것만으로는 부족하다.** `missing_type == not_disclosed_confirmed` 라는 라벨이
+    관측에 있어야 한다 — 우리가 안 찾은 것과 회사가 낼 의무가 없는 것을 가르는 장치이고
+    MISS-LABEL-23 이 세운 것이다. 규칙에 경로 선언이 없거나 실행이 C-20 을 선택하지 않으면 False.
+    """
+    if company["listed"]:
+        return False
+    spec = (rules.f9 or {}).get("g1_private_undisclosed_route")
+    if not spec:
+        return False
+    if decision_choice(run, rules, "C-20") != spec.get("choice_required"):
+        return False
+    for metric in ("operating_margin_ttm", "operating_income_ttm"):
+        o = obs.get(company["company_id"], metric)
+        if o is not None and o.get("missing_type") == MISSING_TYPE_FOR_DISCLOSURE_POLICY:
+            return True
+    return False
 
 def _g4(cid: str, obs: ObsLookup, gi: dict[str, Any], rules: RuleSet, run: dict[str, Any], use) -> dict[str, Any]:
     """약정 커버리지. step: 0 유지 / -1 하향 / None 미결(pending 포함)."""

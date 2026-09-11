@@ -382,13 +382,55 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
     for tid, spec in tracks.items():
         where = f"rules.policies.f6.tracks.{tid}"
         _expect_keys(spec, ["label", "parameters", "floor", "select"], where,
-                     optional=["auto_p4_conditions", "note"])
+                     optional=["auto_p4_conditions", "note", "ceiling"])
         _require(_is_number(spec["floor"]) and factor_min <= spec["floor"] <= 0,
                  f"{where}: floor 가 factor range {factor['range']} 밖")
+        # 비상장은 0·-1 칸이 없다(v1.5 구간표). 천장을 선언하면 floor 와 factor range 안이어야 한다.
+        if "ceiling" in spec:
+            _require(_is_number(spec["ceiling"]) and spec["floor"] <= spec["ceiling"] <= 0,
+                     f"{where}: ceiling {spec['ceiling']!r} 이 floor {spec['floor']} 와 0 사이가 아님")
         for pid in spec["parameters"]:
             _require(pid in params or pid == "P4", f"{where}.parameters: 알 수 없는 파라미터 {pid!r}")
         for cid in spec.get("auto_p4_conditions", []):
             _require(cid in seen, f"{where}.auto_p4_conditions: p4 에 없는 조건 {cid!r}")
+    private_bands = f6.get("private_bands")
+    if private_bands:
+        where = "rules.policies.f6.private_bands"
+        _require(isinstance(private_bands.get("bands"), list) and private_bands["bands"],
+                 f"{where}.bands: 비어 있을 수 없음")
+        scores = [b.get("score") for b in private_bands["bands"]]
+        for sc in scores:
+            _require(_is_number(sc) and factor_min <= sc <= 0, f"{where}: 점수 {sc!r} 가 factor range 밖")
+        lowers = [b.get("lower") for b in private_bands["bands"]]
+        _require(lowers[-1] is None, f"{where}: 마지막 밴드의 lower 는 null(전 구간 덮기)이어야 함")
+        prev = None
+        for low in lowers[:-1]:
+            _require(_is_number(low) and (prev is None or low < prev),
+                     f"{where}: lower 가 내림차순이어야 함 — {lowers}")
+            prev = low
+        _require(private_bands.get("input") in METRICS,
+                 f"{where}.input: 알 수 없는 지표 {private_bands.get('input')!r}")
+    correction = f6.get("private_correction")
+    if correction:
+        where = "rules.policies.f6.private_correction"
+        _require(isinstance(correction.get("cap_steps"), int) and correction["cap_steps"] >= 1,
+                 f"{where}.cap_steps: 1 이상 정수")
+        conds = correction.get("conditions")
+        _require(isinstance(conds, list) and conds, f"{where}.conditions: 비어 있을 수 없음")
+        for idx, cond in enumerate(conds):
+            cw = f"{where}.conditions[{idx}]"
+            _require(str(cond.get("id") or "").strip(), f"{cw}: id 필요")
+            _require(_is_number(cond.get("threshold")), f"{cw}: threshold 는 숫자")
+            _require(isinstance(cond.get("inputs"), list) and len(cond["inputs"]) == 2,
+                     f"{cw}.inputs: 지표 둘이 필요")
+            for metric in cond["inputs"]:
+                _require(metric in METRICS, f"{cw}.inputs: 알 수 없는 지표 {metric!r}")
+            # 답을 먼저 알고 정한 보정이라는 사실이 규칙 파일에 남아 있어야 한다(C-12).
+            _require(str(cond.get("threshold_source") or "").strip(),
+                     f"{cw}: threshold_source 를 비워 둘 수 없음 — 임계를 어디서 가져왔는지 적는다")
+        _require(str(correction.get("weakness") or "").strip(),
+                 f"{where}: weakness 를 비워 둘 수 없음 — 이 보정이 답을 먼저 알고 정해졌다는 사실을 남긴다")
+
     # 파라미터 합계 하한이 factor range 하한과 맞아야 배점 재배분이 규칙 안에서 검산된다.
     _require(total_min == factor_min,
              f"rules.policies.f6: 파라미터 합계 하한 {total_min} 이 factors.F6.range 하한 {factor_min} 과 다름")

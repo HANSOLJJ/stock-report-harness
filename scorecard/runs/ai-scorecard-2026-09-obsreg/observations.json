@@ -2272,7 +2272,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "미공시",
-      "note": null
+      "note": "[PRIV-IMPL-31 대체됨 → anthropic.cash.priv31] "
     },
     {
       "observation_id": "anthropic.fcf_ttm.v15",
@@ -2286,7 +2286,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "미공시",
-      "note": "비상장 FCF 미공시"
+      "note": "[PRIV-IMPL-31 대체됨 → anthropic.fcf_ttm.priv31] 비상장 FCF 미공시"
     },
     {
       "observation_id": "anthropic.runway_years.v15",
@@ -2314,7 +2314,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "—",
-      "note": null
+      "note": "[PRIV-IMPL-31 대체됨 → anthropic.net_cash.priv31] "
     },
     {
       "observation_id": "anthropic.debt_ebitda.v15",
@@ -2328,7 +2328,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "—",
-      "note": null
+      "note": "[PRIV-IMPL-31 대체됨 → anthropic.debt_ebitda.priv31] "
     },
     {
       "observation_id": "anthropic.credit_rating.v15",
@@ -2370,7 +2370,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "미공시",
-      "note": null
+      "note": "[PRIV-IMPL-31 대체됨 → openai.cash.priv31] "
     },
     {
       "observation_id": "openai.fcf_ttm.v15",
@@ -2384,7 +2384,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "미공시",
-      "note": "비상장 FCF 미공시"
+      "note": "[PRIV-IMPL-31 대체됨 → openai.fcf_ttm.priv31] 비상장 FCF 미공시"
     },
     {
       "observation_id": "openai.runway_years.v15",
@@ -2412,7 +2412,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "—",
-      "note": null
+      "note": "[PRIV-IMPL-31 대체됨 → openai.net_cash.priv31] "
     },
     {
       "observation_id": "openai.debt_ebitda.v15",
@@ -2426,7 +2426,7 @@
       "status": "not_disclosed",
       "basis": null,
       "raw": "—",
-      "note": null
+      "note": "[PRIV-IMPL-31 대체됨 → openai.debt_ebitda.priv31] "
     },
     {
       "observation_id": "openai.credit_rating.v15",
@@ -3210,7 +3210,7 @@
       "status": "legacy_unverified",
       "basis": null,
       "raw": "약 $125B(2021년~)",
-      "note": "규칙 v1.5 ⑥ 비상장 절"
+      "note": "[PRIV-IMPL-31 대체됨 → anthropic.cumulative_raised.priv31] 규칙 v1.5 ⑥ 비상장 절"
     },
     {
       "observation_id": "openai.post_money_valuation.v15",
@@ -5321,6 +5321,387 @@
       },
       "raw": "FY2025 영업이익률 +50.83%",
       "note": "F6-REG-28 / TSM-EDGAR-29. FY2024 45.68% 에서 +5.15%p"
+    },
+    {
+      "observation_id": "anthropic.ps_ratio.priv31",
+      "company_id": "anthropic",
+      "metric": "ps_ratio",
+      "value": 30.0,
+      "unit": "ratio",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "estimate",
+      "source_id": "SRC-v15-md",
+      "status": "legacy_unverified",
+      "basis": {
+        "formula": "post_money_valuation ÷ TTM 보정 매출",
+        "estimate_range": [
+          30.0,
+          39.0
+        ],
+        "range_is_source_given": true,
+        "derivation": "v1.5 원본이 TTM 추정 배수를 직접 준다 — '분모를 TTM으로 맞추면 약 30~39배(Q2 매출 $10.9B 역산)'. 우리가 만든 값이 아니다.",
+        "anchor": "Q2 매출 $10.9B. ARR $65B 런레이트를 그대로 나눈 14.8배가 아니라 분기 실적에서 TTM 을 역산한 값이다.",
+        "why_not_arr": "밸류÷ARR 은 14.8x 로 NVIDIA(17.9)보다 싸 보인다. 분모를 맞추면 30~39x 로 Palantir(TTM P/S 66.2, ⑥-4)의 절반 수준이다(v1.5 654행).",
+        "band_check": "30 과 39 가 모두 '30x+' 구간이라 범위가 판정을 가르지 않는다. 값으로는 낮은 끝 30 을 썼다 — 기업에 가장 덜 불리한 끝에서도 -4 라는 뜻이다.",
+        "precision": "⚠️ 정밀도 열위. 비상장이라 NTM PER 산출 불가이고 경계 규칙도 미적용이다(v1.5 678행).",
+        "source_lines": "AI기업_채점표_v1.5.md ⑥가격 항목 · AI기업_채점규칙_v1.5.md 649~654행"
+      },
+      "raw": "TTM 보정 ~30~39배 (밸류 $965B, Q2 매출 $10.9B 역산)",
+      "note": "PRIV-IMPL-31 / C-12. **P2 분모는 arr 이 아니라 TTM 보정 매출이다.** 구간 추정이라 estimate_range 를 함께 남겼고 계산기가 양 끝의 밴드를 확인한다"
+    },
+    {
+      "observation_id": "openai.ps_ratio.priv31",
+      "company_id": "openai",
+      "metric": "ps_ratio",
+      "value": 39.0,
+      "unit": "ratio",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "estimate",
+      "source_id": "SRC-v15-md",
+      "status": "legacy_unverified",
+      "basis": {
+        "formula": "post_money_valuation ÷ TTM 보정 매출",
+        "estimate_range": [
+          39.0,
+          39.0
+        ],
+        "range_is_source_given": true,
+        "derivation": "v1.5 원본 — 'post-money $852B ÷ ARR $40B = 21.3배 — TTM 보정 시 약 39배'. 원본이 단일값으로 준다.",
+        "why_not_arr": "밸류÷ARR 21.3x 는 런레이트 기준이라 과대 평가된다.",
+        "precision": "⚠️ 정밀도 열위 · 경계 규칙 미적용.",
+        "source_lines": "AI기업_채점표_v1.5.md ⑥가격 항목 · AI기업_채점규칙_v1.5.md 652행"
+      },
+      "raw": "TTM 보정 약 39배 (밸류 $852B)",
+      "note": "PRIV-IMPL-31 / C-12. P2 분모는 TTM 보정 매출"
+    },
+    {
+      "observation_id": "anthropic.arr_prior.priv31",
+      "company_id": "anthropic",
+      "metric": "arr_prior",
+      "value": 47000000000.0,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "run_rate",
+      "source_id": "SRC-v15-md",
+      "status": "legacy_unverified",
+      "basis": {
+        "period_label": null,
+        "period_label_missing": "**원문에 직전 시점 라벨이 없다.** v1.5 는 'ARR이 $47B→$65B로 늘며 배수가 내려왔다' 고만 적고 $47B 가 언제 기준인지 말하지 않는다. 지어내지 않고 null 로 둔다.",
+        "current_label": "$65B 는 7월 기준이라고 원문이 적는다",
+        "kind_note": "kind=run_rate. **ARR 이 아니라 런레이트다**(PRIV-ARR-17). 이름이 arr_prior 인 것은 기존 12개사 관측·스키마와 얽혀 이름을 바꾸지 않기로 한 결과다.",
+        "growth_implied": 0.38297872340425543,
+        "source_lines": "AI기업_채점표_v1.5.md anthropic ⑥가격 항목"
+      },
+      "raw": "ARR $47B → $65B (직전 런레이트)",
+      "note": "PRIV-IMPL-31 / C-12. P3 입력. 시점 라벨이 원문에 없어 null 이다"
+    },
+    {
+      "observation_id": "openai.arr_prior.priv31",
+      "company_id": "openai",
+      "metric": "arr_prior",
+      "value": 25000000000.0,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "run_rate",
+      "source_id": "SRC-v15-md",
+      "status": "legacy_unverified",
+      "basis": {
+        "period_label": "2~4월 정체 구간",
+        "current_label": "$40B 는 8/20 기준 — 다만 원문 안에서 시점 표기가 갈린다(아래 contradiction)",
+        "kind_note": "kind=run_rate. ARR 이 아니라 런레이트다.",
+        "growth_implied": 0.6000000000000001,
+        "contradiction": {
+          "field": "openai arr 시점 라벨",
+          "values": [
+            "7월(2회 표기)",
+            "8/20(2회 표기)"
+          ],
+          "value_agrees": "금액 $40B 는 네 표기가 모두 같다",
+          "not_resolved": "**시점을 고르지 않는다.** 값이 같아 P3·P2 에는 영향이 없고, 영향이 없다는 사실까지 적어 둔다."
+        },
+        "source_lines": "AI기업_채점표_v1.5.md openai ⑥가격 항목"
+      },
+      "raw": "ARR $25B → $40B (2~4월 정체 구간)",
+      "note": "PRIV-IMPL-31 / C-12. P3 입력. arr 시점 표기가 원문 안에서 갈리나 금액은 같아 점수 영향 없음"
+    },
+    {
+      "observation_id": "anthropic.fcf_ttm.priv31",
+      "company_id": "anthropic",
+      "metric": "fcf_ttm",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "anthropic.fcf_ttm.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "미공시"
+      },
+      "raw": "미공시",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 anthropic.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "anthropic.cash.priv31",
+      "company_id": "anthropic",
+      "metric": "cash",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "anthropic.cash.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "미공시"
+      },
+      "raw": "미공시",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 anthropic.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "anthropic.net_cash.priv31",
+      "company_id": "anthropic",
+      "metric": "net_cash",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "anthropic.net_cash.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "—"
+      },
+      "raw": "—",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 anthropic.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "anthropic.debt_ebitda.priv31",
+      "company_id": "anthropic",
+      "metric": "debt_ebitda",
+      "value": null,
+      "unit": "ratio",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "anthropic.debt_ebitda.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "—"
+      },
+      "raw": "—",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 anthropic.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "anthropic.operating_margin_ttm.priv31",
+      "company_id": "anthropic",
+      "metric": "operating_margin_ttm",
+      "value": null,
+      "unit": "ratio",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준",
+        "why_registered": "C-20 의 판정 근거다. **자료가 없다는 것만으로는 부족하고** 구조적 미공시라는 라벨이 관측에 있어야 G1 이 판정 보류 후 비상장 경로로 보낸다. 라벨이 없으면 단순 pending 이다.",
+        "not_a_loss_claim": "**적자라고 단정하는 것이 아니다.** TTM 영업손익을 모른다는 뜻이고 단일 분기 영업흑자를 통과 근거로도 쓰지 않는다.",
+        "single_quarter_known": "anthropic Q2 첫 영업흑자 $559M(매출 $10.9B, 마진 5%) — **분기 하나이고 TTM 이 아니다**"
+      },
+      "raw": "미공시 — 비상장이라 TTM 영업손익 공시 의무 없음",
+      "note": "PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "openai.fcf_ttm.priv31",
+      "company_id": "openai",
+      "metric": "fcf_ttm",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "openai.fcf_ttm.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "미공시"
+      },
+      "raw": "미공시",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 openai.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "openai.cash.priv31",
+      "company_id": "openai",
+      "metric": "cash",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "openai.cash.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "미공시"
+      },
+      "raw": "미공시",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 openai.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "openai.net_cash.priv31",
+      "company_id": "openai",
+      "metric": "net_cash",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "openai.net_cash.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "—"
+      },
+      "raw": "—",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 openai.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "openai.debt_ebitda.priv31",
+      "company_id": "openai",
+      "metric": "debt_ebitda",
+      "value": null,
+      "unit": "ratio",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "reclassification_of": "openai.debt_ebitda.v15",
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준 (validation/miss-label-23/reclassify.py AUDITED_STATEMENT_METRICS)",
+        "why_now": "재분류를 제안으로만 내고 관측에 등록하지 않아 _g2 와 _g1 이 '결측유형 미분류' 로 떨어졌다. C-20 이 그 자리에서 막혔다.",
+        "raw_was": "—"
+      },
+      "raw": "—",
+      "note": "PRIV-IMPL-31 / C-20. 승계 관측 openai.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "openai.operating_margin_ttm.priv31",
+      "company_id": "openai",
+      "metric": "operating_margin_ttm",
+      "value": null,
+      "unit": "ratio",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "derived",
+      "source_id": "SRC-v15-md",
+      "status": "not_disclosed",
+      "basis": {
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 항목이거나 그로부터만 도출된다 — 구조적으로 확인된 미공시",
+        "criterion_source": "MISS-LABEL-23 구조 기준",
+        "why_registered": "C-20 의 판정 근거다. **자료가 없다는 것만으로는 부족하고** 구조적 미공시라는 라벨이 관측에 있어야 G1 이 판정 보류 후 비상장 경로로 보낸다. 라벨이 없으면 단순 pending 이다.",
+        "not_a_loss_claim": "**적자라고 단정하는 것이 아니다.** TTM 영업손익을 모른다는 뜻이고 단일 분기 영업흑자를 통과 근거로도 쓰지 않는다.",
+        "single_quarter_known": "openai 2026 GAAP 손실 약 $60B 전망 · BEP 2030 — 전망이지 실적이 아니다"
+      },
+      "raw": "미공시 — 비상장이라 TTM 영업손익 공시 의무 없음",
+      "note": "PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다",
+      "missing_type": "not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "anthropic.cumulative_raised.priv31",
+      "company_id": "anthropic",
+      "metric": "cumulative_raised",
+      "value": 125000000000.0,
+      "unit": "USD",
+      "as_of": "2026-09-02",
+      "observed_at": "2026-09-11",
+      "kind": "actual",
+      "source_id": "SRC-v15-md",
+      "status": "legacy_unverified",
+      "basis": {
+        "contradiction": {
+          "field": "anthropic Series H 조달액",
+          "values": [
+            {
+              "value": 30000000000,
+              "location": "AI기업_채점표_v1.5.md ⑨적자깊이 — '완충이 외부 조달뿐이다 … Series H $30B($965B 밸류)에 기댄다'"
+            },
+            {
+              "value": 65000000000,
+              "location": "AI기업_채점표_v1.5.md 비상장 ⑥ 표 — '$965B (2026/5 Series H $65B)'"
+            }
+          ],
+          "same_document": true,
+          "not_resolved": "**어느 쪽이 맞는지 정하지 않는다.** 두 표기가 같은 문서 안에서 갈리고 외부 확인 경로가 이번 과제 범위 밖이다. $65B 는 anthropic 의 ARR 값과 같아 표 작성 중 옮겨 적혔을 가능성도 있으나 그것도 추측이라 단정하지 않는다."
+        },
+        "impact": "이 값이 P4 자본효율(arr ÷ cumulative_raised)의 분모다.",
+        "sensitivity": [
+          {
+            "assumption": "원본 표기 그대로",
+            "cumulative_raised": 125000000000.0,
+            "capital_efficiency": 0.52,
+            "meets_threshold_0_50": true
+          },
+          {
+            "assumption": "125B 가 Series H 를 65B 로 포함했다면 → 30B 로 교체",
+            "cumulative_raised": 90000000000.0,
+            "capital_efficiency": 0.7222,
+            "meets_threshold_0_50": true
+          },
+          {
+            "assumption": "125B 가 Series H 를 30B 로 포함했다면 → 65B 로 교체",
+            "cumulative_raised": 160000000000.0,
+            "capital_efficiency": 0.4062,
+            "meets_threshold_0_50": false
+          }
+        ],
+        "straddles_threshold": true,
+        "straddle_note": "**모순 구간이 보정 임계 0.50 을 가로지른다.** 세 시나리오의 자본효율이 0.41~0.72 이고 그중 하나(65B 포함 가정)만 임계 미달이다. 그 경우 보정이 붙지 않아 anthropic F6 가 -3 이 아니라 -4 가 된다. **값을 고르지 않았고, 갈린다는 사실과 그 결과를 여기 남긴다.**",
+        "registered_value_is": "원본이 자본효율 0.52 를 계산할 때 쓴 값(약 $125B, 2021년~) 그대로다. 우리가 조정하지 않았다."
+      },
+      "raw": "약 $125B(2021년~)",
+      "note": "PRIV-IMPL-31 / C-12. 승계 관측 anthropic.cumulative_raised.v15 를 대체한다 — **값은 같고 모순 기록과 민감도만 추가한다**"
     }
   ]
 }

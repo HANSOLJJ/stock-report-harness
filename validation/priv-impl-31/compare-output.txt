@@ -1,0 +1,75 @@
+==============================================================================================================
+PRIV-IMPL-31 — 14개사 전 factor 대조
+==============================================================================================================
+  A 승인 실행(v1.5)   B C-12·C-20 이전   C 새 실행   — 셀은 A>B>C, 같으면 하나만
+
+alphabet     F1:+5c  F2:+4c  F3:+3c  F4:+5c  F5:+4c  F6:-1>-3>-3  F7:-1c  F8:-1c  F9:-1
+amazon       F1:+5c  F2:+4c  F3:+3c  F4:+5c  F5:+4c  F6:-1>-2>-2  F7:-1c  F8:-1c  F9:judg>-2>-2
+meta         F1:+5c  F2:+4c  F3:+3c  F4:+3c  F5:+3c  F6:+0>-1>-1  F7:+0c  F8:-1c  F9:-1
+microsoft    F1:+5c  F2:+3c  F3:+3c  F4:+4c  F5:+4c  F6:-1>-3>-3  F7:-1c  F8:-1c  F9:+0
+tsmc         F1:+2c  F2:+5c  F3:+3c  F4:+4c  F5:+4c  F6:rule(C-13)>-3>-3  F7:+0c  F8:-4c  F9:+0
+alibaba      F1:+4c  F2:+4c  F3:+3c  F4:+4c  F5:+3c  F6:rule(C-13)>-4>-4  F7:+0c  F8:-4c  F9:pend>-3>-3
+anthropic    F1:+4c  F2:+5c  F3:+3c  F4:+4c  F5:+5c  F6:-3c>pend>-3  F7:-1c  F8:-3c  F9:pend>pend>-2
+apple        F1:+5c  F2:+2c  F3:+2c  F4:+3c  F5:+3c  F6:-2>-4>-4  F7:+0c  F8:-3c  F9:+0
+nvidia       F1:+2c  F2:+5c  F3:+2c  F4:+5c  F5:+2c  F6:+0>-2>-2  F7:-3c  F8:-3c  F9:+0
+palantir     F1:+2c  F2:+3c  F3:+3c  F4:+3c  F5:+2c  F6:-4  F7:+0c  F8:-3c  F9:+0
+spacex-xai   F1:+3c  F2:+4c  F3:+3c  F4:+5c  F5:+3c  F6:-5>-1>-1  F7:+0c  F8:-3c  F9:rule(C-06)>-3>-3
+tesla        F1:+2c  F2:+3c  F3:+3c  F4:+4c  F5:+2c  F6:-5  F7:-1c  F8:-2c  F9:-1
+oracle       F1:+3c  F2:+2c  F3:+3c  F4:+3c  F5:+3c  F6:+0>-3>-3  F7:-3c  F8:-4c  F9:-3
+openai       F1:+4c  F2:+4c  F3:+2c  F4:+4c  F5:+2c  F6:-4c>pend>-4  F7:-1c  F8:-4c  F9:-5>-4>-4
+
+[1] B→C — C-12·C-20 과 비상장 관측 등록의 효과 *(이번 과제의 몫)*
+
+  anthropic   F6                    pend -> -3
+  anthropic   F9                    pend -> -2
+  openai      F6                    pend -> -4
+
+[2] 비상장 2사 산출 근거
+  anthropic
+    P2  ps_ratio 30.0  →  30x+  -4   (구간 30.0~39.0, 밴드 갈림 False)
+    arr_growth           0.3830  임계 0.3  충족 True
+    capital_efficiency   0.5200  임계 0.5  충족 True
+    보정 +1  →  F6 -3   F9 -2
+    F9 첫 관문: undetermined
+  openai
+    P2  ps_ratio 39.0  →  30x+  -4   (구간 39.0~39.0, 밴드 갈림 False)
+    arr_growth           0.6000  임계 0.3  충족 True
+    capital_efficiency   0.2162  임계 0.5  충족 False
+    보정 +0  →  F6 -4   F9 -4
+    F9 첫 관문: fail
+
+[3] 총점·순위
+  A  승인 실행(v1.5) — 완주 9/14개사
+     1 Alphabet / Google    과점  21 함정  -4 조정  17
+     2 Microsoft            과점  19 함정  -3 조정  16
+     2 Meta                 과점  18 함정  -2 조정  16
+     4 NVIDIA               과점  16 함정  -6 조정  10
+     4 Apple                과점  15 함정  -5 조정  10
+     6 Palantir             과점  13 함정  -7 조정   6
+     7 Tesla                과점  14 함정  -9 조정   5
+     8 Oracle               과점  14 함정 -10 조정   4
+     9 OpenAI               과점  16 함정 -14 조정   2
+  C  새 실행(v1.7) — 완주 14/14개사
+     1 Alphabet / Google    과점  21 함정  -6 조정  15
+     1 Amazon / AWS         과점  21 함정  -6 조정  15
+     1 Meta                 과점  18 함정  -3 조정  15
+     4 Microsoft            과점  19 함정  -5 조정  14
+     5 Anthropic            과점  21 함정  -9 조정  12
+     6 SpaceX + xAI         과점  18 함정  -7 조정  11
+     6 TSMC                 과점  18 함정  -7 조정  11
+     8 NVIDIA               과점  16 함정  -8 조정   8
+     8 Apple                과점  15 함정  -7 조정   8
+    10 Alibaba              과점  18 함정 -11 조정   7
+    11 Palantir             과점  13 함정  -7 조정   6
+    12 Tesla                과점  14 함정  -9 조정   5
+    13 OpenAI               과점  16 함정 -13 조정   3
+    14 Oracle               과점  14 함정 -13 조정   1
+
+[4] 승인 실행 보존
+  대상                    승인 baseline        현재 baseline               새 실행  보존
+  rules            9231b3a05ba5c766   9231b3a05ba5c766   2cddd4948388fb4a  예
+  observations     37435ae2989236f5   37435ae2989236f5   1a69763e1819e7b9  예
+  judgments        685069767e0cf919   685069767e0cf919   5dc79ac34c617267  예
+  run              50b063a5a12e84a6   50b063a5a12e84a6   90b41988ef5282fc  예
+  results          0942c342f010781e   0942c342f010781e   d413fdbae633a762  예
+  draft            574841bc7c26f225   574841bc7c26f225   24a31aad9feb9075  예

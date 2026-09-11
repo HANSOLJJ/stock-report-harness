@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 98ff63bceae713933531d5c3bd0ac489bfc43d9ce67f17cb3abae318f480da31
+observations_hash: 1a69763e1819e7b9d026823b52f50f27c23697f63e1ec5aa576a73c50a1088a6
 judgments_hash: 5dc79ac34c6172670ab8a0480156d34bf15a40b599b5198c2b101e641f76bec6
 created_at: 2026-09-11
 ---
-# 리서치 — AI 기업 9-factor 채점표 — OFFB 실측 관측 + F6 입력 반영(v1.7)
+# 리서치 — AI 기업 9-factor 채점표 — OFFB 실측 관측 + F6 입력 + 비상장 확정(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 284건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 299건, 판단 114건.
 
 ## 원자료
 
@@ -180,16 +180,24 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | arr | $65.0B | legacy_unverified | run_rate | SRC-v15-rule | ARR $65B(7월 런레이트) | 규칙 v1.5 ⑥ 비상장 절 |
-| cash | — | not_disclosed | actual | SRC-v15-html | 미공시 |  |
+| arr_prior | $47.0B | legacy_unverified | run_rate | SRC-v15-md | ARR $47B → $65B (직전 런레이트) | PRIV-IMPL-31 / C-12. P3 입력. 시점 라벨이 원문에 없어 null 이다 |
+| cash | — | not_disclosed | actual | SRC-v15-md | 미공시 | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 |
+| cash | — | not_disclosed | actual | SRC-v15-html | 미공시 | [PRIV-IMPL-31 대체됨 → anthropic.cash.priv31]  |
 | contracted_revenue | $65.0B | incompatible_basis | actual | SRC-v15-rule | ARR $65B — 계약 수입 아님(C-07) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | 비상장 | legacy_unverified | text | SRC-v15-html | 비상장 | 별표 J 교차검증 전용 — 점수 입력 아님 |
-| cumulative_raised | $125.0B | legacy_unverified | actual | SRC-v15-rule | 약 $125B(2021년~) | 규칙 v1.5 ⑥ 비상장 절 |
-| debt_ebitda | — | not_disclosed | actual | SRC-v15-html | — |  |
-| fcf_ttm | — | not_disclosed | actual | SRC-v15-html | 미공시 | 비상장 FCF 미공시 |
-| net_cash | — | not_disclosed | actual | SRC-v15-html | — |  |
+| cumulative_raised | $125.0B | legacy_unverified | actual | SRC-v15-md | 약 $125B(2021년~) | PRIV-IMPL-31 / C-12. 승계 관측 anthropic.cumulative_raised.v15 를 대체한다 — **값은 같고 모순 기 |
+| cumulative_raised | $125.0B | legacy_unverified | actual | SRC-v15-rule | 약 $125B(2021년~) | [PRIV-IMPL-31 대체됨 → anthropic.cumulative_raised.priv31] 규칙 v1.5 ⑥ 비상장 절 |
+| debt_ebitda | — | not_disclosed | actual | SRC-v15-md | — | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다* |
+| debt_ebitda | — | not_disclosed | actual | SRC-v15-html | — | [PRIV-IMPL-31 대체됨 → anthropic.debt_ebitda.priv31]  |
+| fcf_ttm | — | not_disclosed | actual | SRC-v15-md | 미공시 | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** —  |
+| fcf_ttm | — | not_disclosed | actual | SRC-v15-html | 미공시 | [PRIV-IMPL-31 대체됨 → anthropic.fcf_ttm.priv31] 비상장 FCF 미공시 |
+| net_cash | — | not_disclosed | actual | SRC-v15-md | — | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — |
+| net_cash | — | not_disclosed | actual | SRC-v15-html | — | [PRIV-IMPL-31 대체됨 → anthropic.net_cash.priv31]  |
 | offbalance_B | $300.0B | incompatible_basis | actual | SRC-v15-rule | 컴퓨트 약정 $300B(연 ~$50B) — 기간·범위가 RPO 와 다름(C-07) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | offbalance_note | 컴퓨트 $300B | legacy_unverified | text | SRC-v15-html | 컴퓨트 $300B | 부외 약정 원문(A/B/C 분류 전) |
+| operating_margin_ttm | — | not_disclosed | derived | SRC-v15-md | 미공시 — 비상장이라 TTM 영업손익 공시 의무 없음 | PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다 |
 | post_money_valuation | $965.0B | legacy_unverified | actual | SRC-v15-rule | $965B | 규칙 v1.5 ⑥ 비상장 절 |
+| ps_ratio | 30.0 | legacy_unverified | estimate | SRC-v15-md | TTM 보정 ~30~39배 (밸류 $965B, Q2 매출 $10.9B 역산) | PRIV-IMPL-31 / C-12. **P2 분모는 arr 이 아니라 TTM 보정 매출이다.** 구간 추정이라 estimate_range 를  |
 | quarter_note | Q2 \| $10.9B · 런레이트 $65B(7월) \| 첫 영업흑자 $559M \| 외부 조달 의존 · FCF 미공시 | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
 | runway_years | — | not_disclosed | derived | SRC-v15-html | 판정 불가 | FCF 미공시로 소진율을 만들 수 없음(원문 판정 불가) |
 
@@ -356,16 +364,23 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | arr | $40.0B | legacy_unverified | run_rate | SRC-v15-rule | 런레이트 $40B+(8/20) | 규칙 v1.5 ⑥ 비상장 절 |
-| cash | — | not_disclosed | actual | SRC-v15-html | 미공시 |  |
+| arr_prior | $25.0B | legacy_unverified | run_rate | SRC-v15-md | ARR $25B → $40B (2~4월 정체 구간) | PRIV-IMPL-31 / C-12. P3 입력. arr 시점 표기가 원문 안에서 갈리나 금액은 같아 점수 영향 없음 |
+| cash | — | not_disclosed | actual | SRC-v15-md | 미공시 | PRIV-IMPL-31 / C-20. 승계 관측 openai.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인 |
+| cash | — | not_disclosed | actual | SRC-v15-html | 미공시 | [PRIV-IMPL-31 대체됨 → openai.cash.priv31]  |
 | contracted_revenue | $40.0B | incompatible_basis | actual | SRC-v15-rule | ARR $40B — 계약 수입 아님(C-07) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | 비상장 | legacy_unverified | text | SRC-v15-html | 비상장 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | cumulative_raised | $185.0B | legacy_unverified | actual | SRC-v15-rule | 약 $180~190B(중간값) | 규칙 v1.5 ⑥ 비상장 절 |
-| debt_ebitda | — | not_disclosed | actual | SRC-v15-html | — |  |
-| fcf_ttm | — | not_disclosed | actual | SRC-v15-html | 미공시 | 비상장 FCF 미공시 |
-| net_cash | — | not_disclosed | actual | SRC-v15-html | — |  |
+| debt_ebitda | — | not_disclosed | actual | SRC-v15-md | — | PRIV-IMPL-31 / C-20. 승계 관측 openai.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — |
+| debt_ebitda | — | not_disclosed | actual | SRC-v15-html | — | [PRIV-IMPL-31 대체됨 → openai.debt_ebitda.priv31]  |
+| fcf_ttm | — | not_disclosed | actual | SRC-v15-md | 미공시 | PRIV-IMPL-31 / C-20. 승계 관측 openai.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 |
+| fcf_ttm | — | not_disclosed | actual | SRC-v15-html | 미공시 | [PRIV-IMPL-31 대체됨 → openai.fcf_ttm.priv31] 비상장 FCF 미공시 |
+| net_cash | — | not_disclosed | actual | SRC-v15-md | — | PRIV-IMPL-31 / C-20. 승계 관측 openai.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨 |
+| net_cash | — | not_disclosed | actual | SRC-v15-html | — | [PRIV-IMPL-31 대체됨 → openai.net_cash.priv31]  |
 | offbalance_B | $338.0B | incompatible_basis | actual | SRC-v15-rule | 컴퓨트 약정 $338B+(연 ~$60B) (C-07) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | offbalance_note | 컴퓨트 $338B+ | legacy_unverified | text | SRC-v15-html | 컴퓨트 $338B+ | 부외 약정 원문(A/B/C 분류 전) |
+| operating_margin_ttm | — | not_disclosed | derived | SRC-v15-md | 미공시 — 비상장이라 TTM 영업손익 공시 의무 없음 | PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다 |
 | post_money_valuation | $852.0B | legacy_unverified | actual | SRC-v15-rule | $852B | 규칙 v1.5 ⑥ 비상장 절 |
+| ps_ratio | 39.0 | legacy_unverified | estimate | SRC-v15-md | TTM 보정 약 39배 (밸류 $852B) | PRIV-IMPL-31 / C-12. P2 분모는 TTM 보정 매출 |
 | quarter_note | — \| 런레이트 $40B+ (8/20) \| 2026 GAAP 손실 ~$60B 전망 \| BEP 2030 | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
 | runway_years | — | not_disclosed | derived | SRC-v15-html | 판정 불가 | FCF 미공시로 소진율을 만들 수 없음(원문 판정 불가) |
 
@@ -584,16 +599,16 @@ created_at: 2026-09-11
 | tsmc | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | tesla | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | palantir | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
-| anthropic | cash | not_disclosed | 미공시 |
-| anthropic | fcf_ttm | not_disclosed | 비상장 FCF 미공시 |
+| anthropic | cash | not_disclosed | [PRIV-IMPL-31 대체됨 → anthropic.cash.priv31]  |
+| anthropic | fcf_ttm | not_disclosed | [PRIV-IMPL-31 대체됨 → anthropic.fcf_ttm.priv31] 비상장 FCF 미공시 |
 | anthropic | runway_years | not_disclosed | FCF 미공시로 소진율을 만들 수 없음(원문 판정 불가) |
-| anthropic | net_cash | not_disclosed | — |
-| anthropic | debt_ebitda | not_disclosed | — |
-| openai | cash | not_disclosed | 미공시 |
-| openai | fcf_ttm | not_disclosed | 비상장 FCF 미공시 |
+| anthropic | net_cash | not_disclosed | [PRIV-IMPL-31 대체됨 → anthropic.net_cash.priv31]  |
+| anthropic | debt_ebitda | not_disclosed | [PRIV-IMPL-31 대체됨 → anthropic.debt_ebitda.priv31]  |
+| openai | cash | not_disclosed | [PRIV-IMPL-31 대체됨 → openai.cash.priv31]  |
+| openai | fcf_ttm | not_disclosed | [PRIV-IMPL-31 대체됨 → openai.fcf_ttm.priv31] 비상장 FCF 미공시 |
 | openai | runway_years | not_disclosed | FCF 미공시로 소진율을 만들 수 없음(원문 판정 불가) |
-| openai | net_cash | not_disclosed | — |
-| openai | debt_ebitda | not_disclosed | — |
+| openai | net_cash | not_disclosed | [PRIV-IMPL-31 대체됨 → openai.net_cash.priv31]  |
+| openai | debt_ebitda | not_disclosed | [PRIV-IMPL-31 대체됨 → openai.debt_ebitda.priv31]  |
 | palantir | net_borrowing_ttm | not_disclosed | 차환 제외 순증 |
 | amazon | contracted_revenue | parse_failed | [OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | alibaba | offbalance_B | not_disclosed | [OBS-REG-25 대체됨 → alibaba.offbalance_B.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
@@ -604,6 +619,16 @@ created_at: 2026-09-11
 | openai | offbalance_B | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | openai | contracted_revenue | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | alibaba | contracted_revenue | not_disclosed | OBS-REG-25. **회사가 공시하지 않겠다고 선언한 회계정책이다.** '이 문서에 없다' 와 다르다 — 찾아도 없을 것이 선언돼 있다. C-16 의 유일한 대상이다 |
+| anthropic | fcf_ttm | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| anthropic | cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| anthropic | net_cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| anthropic | debt_ebitda | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| anthropic | operating_margin_ttm | not_disclosed | PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다 |
+| openai | fcf_ttm | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 openai.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| openai | cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 openai.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| openai | net_cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 openai.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| openai | debt_ebitda | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 openai.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
+| openai | operating_margin_ttm | not_disclosed | PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다 |
 | alphabet | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
 | amazon | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 | meta | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
@@ -619,5 +644,5 @@ created_at: 2026-09-11
 | oracle | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 | openai | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 
-- legacy_unverified 관측 198건은 기준선 열람용이며 이번 실행에서 재검증되지 않았다.
-- 미결 규칙 결정: C-03, C-05, C-06, C-13, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade)
+- legacy_unverified 관측 203건은 기준선 열람용이며 이번 실행에서 재검증되지 않았다.
+- 미결 규칙 결정: C-03, C-05, C-06, C-13, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2)

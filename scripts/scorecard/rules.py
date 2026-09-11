@@ -180,6 +180,25 @@ class RuleSet:
     def f6_fx(self) -> dict[str, Any]:
         return self.f6.get("fx") or {}
 
+    # ------------------------------------------------------------ F6 비상장 (C-12)
+    def f6_private_bands(self) -> dict[str, Any]:
+        return self.f6.get("private_bands") or {}
+
+    def f6_private_correction(self) -> dict[str, Any]:
+        return self.f6.get("private_correction") or {}
+
+    def f6_private_band(self, value: float) -> tuple[int, str]:
+        """비상장 배수를 v1.5 구간표에 넣어 (점수, 구간 라벨). 상장 밴드와 표가 다르다."""
+        spec = self.f6_private_bands()
+        bands = spec.get("bands") or []
+        if not bands:
+            raise SchemaError("F6 비상장 밴드가 규칙에 없음 — C-12 미확정")
+        for band in bands:
+            lower = band.get("lower")
+            if lower is None or value >= float(lower):
+                return int(band["score"]), str(band.get("label") or lower)
+        raise SchemaError(f"F6 비상장 밴드가 값 {value!r} 를 덮지 않음")
+
     def f6_ttm_window(self) -> dict[str, Any]:
         return self.f6.get("ttm_window") or {}
 

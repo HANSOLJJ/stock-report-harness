@@ -238,19 +238,32 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
 
 def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | None,
                     rules: RuleSet) -> dict[str, Any]:
-    """비상장 배수는 자동 계산하되 **밴드가 미정이라 점수를 만들지 않는다.**"""
+    """비상장 F6 — **P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다** (C-12, 2026-09-11 확정).
+
+    상장 P4 와 같은 장치이고 방향만 반대다. 밴드는 `private_bands`(v1.5 구간표), 보정은
+    `private_correction` 에 선언돼 있고 **조건 둘이 다 성립해야** 한 칸이다 — 하나만으로 올리면
+    성장률이 더 높고 자본효율이 나쁜 쪽이 보상받는다.
+
+    분모는 `arr` 이 아니라 **TTM 보정 매출**이다. ARR 은 런레이트라 TTM 보다 과대하고, 보정 없이
+    쓰면 비상장사가 부당하게 싸 보인다(v1.5 645~647행). 그래서 `ps_ratio` 를 읽는다.
+    """
     cid = company["company_id"]
     track = rules.f6_track("private")
+    spec = rules.f6_private_bands()
     calc: dict[str, Any] = {"mode": "parameters", "track": "private", "track_label": track["label"],
-                            "floor": track["floor"], "multiples": {}}
+                            "floor": track["floor"], "ceiling": track.get("ceiling"),
+                            "multiples": {}, "parameters": {}}
     obs_ids: list[str] = []
     warnings: list[str] = []
     if judgment is not None:
-        warnings.append(f"{judgment['judgment_id']}: 밴드가 정해지기 전에는 정성 점수도 받지 않는다")
+        warnings.append(f"{judgment['judgment_id']}: 비상장 F6 도 자동 산출이라 수동 판단을 무시함")
+
     values: dict[str, float | None] = {}
-    for metric in ("post_money_valuation", "arr", "arr_prior", "cumulative_raised"):
+    obs_by_metric: dict[str, dict[str, Any] | None] = {}
+    for metric in ("post_money_valuation", "arr", "arr_prior", "cumulative_raised", "ps_ratio"):
         value, o = obs.number(cid, metric)
         values[metric] = value
+        obs_by_metric[metric] = o
         if o is not None:
             obs_ids.append(o["observation_id"])
             warnings.extend(obs_note(o))
@@ -264,7 +277,86 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
         calc["multiples"]["arr_growth"] = values["arr"] / values["arr_prior"] - 1
     if values["arr"] is not None and values["cumulative_raised"]:
         calc["multiples"]["arr_over_cumulative_raised"] = values["arr"] / values["cumulative_raised"]
-    calc["note"] = rules.f6.get("private_note")
-    return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
-                         observation_ids=obs_ids, calc=calc, warnings=warnings,
-                         pending=pending_info("rule", "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다", "C-12"))
+
+    if not spec.get("bands"):
+        return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
+                             observation_ids=obs_ids, calc=calc, warnings=warnings,
+                             pending=pending_info("rule", "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다", "C-12"))
+
+    # ---------------- P2 — 점수를 내는 파라미터
+    multiple = values["ps_ratio"]
+    p2_obs = obs_by_metric["ps_ratio"]
+    if multiple is None:
+        calc["parameters"]["P2"] = {"value": None, "reason": "P2 입력 ps_ratio 관측 없음"}
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
+                             observation_ids=obs_ids, calc=calc, warnings=warnings,
+                             pending=pending_info("data", "비상장 P2 입력 ps_ratio(밸류÷TTM 보정 매출) 관측 없음 — "
+                                                          "arr 로 대체하지 않는다"))
+    score, label = rules.f6_private_band(multiple)
+    entry: dict[str, Any] = {"value": multiple, "score": score, "band": label,
+                             "input": "ps_ratio", "formula": spec.get("input")}
+    # 구간 추정이면 양 끝이 같은 밴드에 드는지 본다. 갈리면 값을 고르지 않는다.
+    rng = ((p2_obs or {}).get("basis") or {}).get("estimate_range")
+    if isinstance(rng, (list, tuple)) and len(rng) == 2:
+        lo_score, lo_label = rules.f6_private_band(float(rng[0]))
+        hi_score, hi_label = rules.f6_private_band(float(rng[1]))
+        entry["estimate_range"] = {"low": rng[0], "high": rng[1],
+                                   "low_band": lo_label, "high_band": hi_label,
+                                   "spans_bands": lo_score != hi_score}
+        if lo_score != hi_score:
+            calc["parameters"]["P2"] = entry
+            return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
+                                 observation_ids=obs_ids, calc=calc, warnings=warnings,
+                                 pending=pending_info("data", f"P2 구간 추정 {rng[0]}~{rng[1]} 이 밴드를 가른다"
+                                                              f"({lo_label} 대 {hi_label}) — 값을 고르지 않는다"))
+        entry["range_note"] = f"구간 추정 {rng[0]}~{rng[1]} 의 양 끝이 모두 {lo_label} 라 판정이 갈리지 않는다"
+    calc["parameters"]["P2"] = entry
+
+    # ---------------- P3·P4 — 합쳐서 상한 1칸 보정
+    corr = rules.f6_private_correction()
+    detail: dict[str, Any] = {"mode": corr.get("mode"), "cap_steps": int(corr.get("cap_steps", 1)),
+                              "require_all": bool(corr.get("require_all")), "conditions": {}}
+    met: list[str] = []
+    missing: list[str] = []
+    for cond in corr.get("conditions", []):
+        inputs = {m: values.get(m) for m in cond.get("inputs", [])}
+        row: dict[str, Any] = {"formula": cond.get("formula"), "inputs": inputs,
+                               "threshold": cond.get("threshold")}
+        names = cond.get("inputs", [])
+        if any(inputs.get(m) is None for m in names) or not inputs.get(names[-1]):
+            row.update({"value": None, "met": None, "reason": "입력 관측 없음"})
+            missing.append(cond["id"])
+        else:
+            value = inputs[names[0]] / inputs[names[1]] - (1 if cond["id"] == "arr_growth" else 0)
+            row["value"] = value
+            row["met"] = value >= float(cond["threshold"])
+            if row["met"]:
+                met.append(cond["id"])
+        detail["conditions"][cond["id"]] = row
+    declared = [c["id"] for c in corr.get("conditions", [])]
+    if detail["require_all"]:
+        applied = bool(declared) and len(met) == len(declared)
+    else:
+        applied = bool(met)
+    detail.update({"conditions_met": met, "conditions_missing": missing,
+                   "promotion_steps": detail["cap_steps"] if applied else 0})
+    if missing:
+        warnings.append(f"비상장 보정 입력 부족 — {', '.join(missing)} 관측 없음. 보정을 적용하지 않는다")
+    calc["correction"] = detail
+    calc["subtotal_before_correction"] = score
+
+    total = score + detail["promotion_steps"]
+    floor, ceiling = int(track["floor"]), track.get("ceiling")
+    if ceiling is not None and total > int(ceiling):
+        calc["ceiling_applied"] = True
+        warnings.append(f"비상장 천장 {ceiling} 로 절단 (보정 후 {total}) — 비상장에는 0·-1 칸이 없다")
+        total = int(ceiling)
+    if total < floor:
+        calc["floor_applied"] = True
+        total = floor
+    calc["score"] = total
+    if detail["promotion_steps"]:
+        warnings.append(f"비상장 보정 한 칸 — 조건 {', '.join(met)} 충족")
+    calc["boundary_rule"] = spec.get("boundary_rule")
+    return factor_result(FACTOR, score=total, status="ok", basis="computed",
+                         observation_ids=obs_ids, calc=calc, warnings=warnings)

@@ -6,16 +6,18 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "a4a0dc9e3947ee9f21bbc2cf972e456a241bd3ae6fc88415bf717aa744cba68e",
-    "observations": "98ff63bceae713933531d5c3bd0ac489bfc43d9ce67f17cb3abae318f480da31",
+    "run": "90b41988ef5282fc1ab05dfb729e57fe990db7850d1fc9c62d81283408daa84b",
+    "observations": "1a69763e1819e7b9d026823b52f50f27c23697f63e1ec5aa576a73c50a1088a6",
     "judgments": "5dc79ac34c6172670ab8a0480156d34bf15a40b599b5198c2b101e641f76bec6",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
-    "rules": "b6dad5435d7ed21cd799424c0ffac5e6a01779ceb5925912a83c25c5d1ed5768"
+    "rules": "2cddd4948388fb4ae5f993c50373851de79c774980c412929f9357ab863b247d"
   },
   "decisions_applied": [
     "C-05:apply",
     "C-06:proposed_v15_boundaries",
-    "C-16:downgrade"
+    "C-16:downgrade",
+    "C-12:p2_with_capped_promotion",
+    "C-20:defer_to_private_g2"
   ],
   "companies": [
     {
@@ -1392,7 +1394,7 @@
         "F7",
         "F8"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "alibaba",
@@ -1688,7 +1690,7 @@
         "F7",
         "F8"
       ],
-      "rank": 9
+      "rank": 10
     },
     {
       "company_id": "anthropic",
@@ -1778,46 +1780,103 @@
         },
         "F6": {
           "factor": "F6",
-          "score": null,
-          "status": "needs_rule_decision",
+          "score": -3,
+          "status": "ok",
           "basis": "computed",
           "judgment_id": null,
           "observation_ids": [
             "anthropic.arr.v15",
-            "anthropic.cumulative_raised.v15",
-            "anthropic.post_money_valuation.v15"
+            "anthropic.arr_prior.priv31",
+            "anthropic.cumulative_raised.priv31",
+            "anthropic.post_money_valuation.v15",
+            "anthropic.ps_ratio.priv31"
           ],
           "calc": {
             "mode": "parameters",
             "track": "private",
             "track_label": "비상장",
             "floor": -5,
+            "ceiling": -2,
             "multiples": {
               "post_money_over_arr": 14.846153846153847,
+              "arr_growth": 0.38297872340425543,
               "arr_over_cumulative_raised": 0.52
             },
+            "parameters": {
+              "P2": {
+                "value": 30.0,
+                "score": -4,
+                "band": "30x+",
+                "input": "ps_ratio",
+                "formula": "ps_ratio",
+                "estimate_range": {
+                  "low": 30.0,
+                  "high": 39.0,
+                  "low_band": "30x+",
+                  "high_band": "30x+",
+                  "spans_bands": false
+                },
+                "range_note": "구간 추정 30.0~39.0 의 양 끝이 모두 30x+ 라 판정이 갈리지 않는다"
+              }
+            },
             "kind_notes": [
-              "arr kind=run_rate — ARR 이 아니라 런레이트"
+              "arr kind=run_rate — ARR 이 아니라 런레이트",
+              "arr_prior kind=run_rate — ARR 이 아니라 런레이트"
             ],
             "inputs": {
               "post_money_valuation": 965000000000.0,
               "arr": 65000000000.0,
-              "arr_prior": null,
-              "cumulative_raised": 125000000000.0
+              "arr_prior": 47000000000.0,
+              "cumulative_raised": 125000000000.0,
+              "ps_ratio": 30.0
             },
-            "note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다."
+            "correction": {
+              "mode": "subtotal_promotion",
+              "cap_steps": 1,
+              "require_all": true,
+              "conditions": {
+                "arr_growth": {
+                  "formula": "arr / arr_prior - 1",
+                  "inputs": {
+                    "arr": 65000000000.0,
+                    "arr_prior": 47000000000.0
+                  },
+                  "threshold": 0.3,
+                  "value": 0.38297872340425543,
+                  "met": true
+                },
+                "capital_efficiency": {
+                  "formula": "arr / cumulative_raised",
+                  "inputs": {
+                    "arr": 65000000000.0,
+                    "cumulative_raised": 125000000000.0
+                  },
+                  "threshold": 0.5,
+                  "value": 0.52,
+                  "met": true
+                }
+              },
+              "conditions_met": [
+                "arr_growth",
+                "capital_efficiency"
+              ],
+              "conditions_missing": [],
+              "promotion_steps": 1
+            },
+            "subtotal_before_correction": -4,
+            "score": -3,
+            "boundary_rule": "미적용. v1.5 678행이 '비상장에는 적용하지 않는다 — 밸류가 반년~1년에 한 번 갱신되므로 하루 변동폭이라는 3% 의 논리가 성립하지 않는다' 고 명시한다."
           },
           "warnings": [
-            "anthropic.F6: 밴드가 정해지기 전에는 정성 점수도 받지 않는다",
+            "anthropic.F6: 비상장 F6 도 자동 산출이라 수동 판단을 무시함",
             "anthropic.post_money_valuation.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
             "anthropic.arr.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
-            "anthropic.cumulative_raised.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+            "anthropic.arr_prior.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "anthropic.cumulative_raised.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "anthropic.ps_ratio.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "비상장 보정 한 칸 — 조건 arr_growth, capital_efficiency 충족"
           ],
-          "pending": {
-            "kind": "rule",
-            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
-            "decision_id": "C-12"
-          }
+          "pending": null
         },
         "F7": {
           "factor": "F7",
@@ -1848,17 +1907,43 @@
         },
         "F9": {
           "factor": "F9",
-          "score": null,
-          "status": "pending_data",
+          "score": -2,
+          "status": "ok",
           "basis": "computed",
           "judgment_id": "anthropic.F9",
-          "observation_ids": [],
+          "observation_ids": [
+            "anthropic.contracted_revenue.v15",
+            "anthropic.fcf_ttm.priv31",
+            "anthropic.offbalance_B.v15",
+            "anthropic.operating_margin_ttm.priv31"
+          ],
           "calc": {
             "path": [
               {
                 "gate": "G1",
-                "result": "pending",
-                "reason": "TTM 영업손익·손실률 관측 없음(단일 분기·조정 손익으로 대체하지 않음, C-20)"
+                "result": "undetermined",
+                "reason": "비상장이라 TTM 영업손익이 구조적 미공시 — 판정 보류(통과 아님). 단일 분기 영업흑자를 통과 근거로 쓰지 않는다",
+                "route": "G2 비상장 경로",
+                "decision_id": "C-20"
+              },
+              {
+                "gate": "G2",
+                "result": "not_disclosed",
+                "score": -2,
+                "reason_id": "anthropic.fcf_not_disclosed",
+                "note": "비상장 FCF 미공시 + 완충이 외부 조달뿐 → 보수적으로 -2"
+              },
+              {
+                "gate": "G3",
+                "result": "skipped",
+                "reason": "FCF 미공시라 소진율 없음"
+              },
+              {
+                "gate": "G4",
+                "result": "incompatible",
+                "dedupe": "anthropic.fcf_not_disclosed",
+                "note": "같은 미공시 사유를 G2·G4 에서 두 번 세지 않음",
+                "reason": "계약 수입과 B종 약정의 기간·범위가 달라 비교 불가(C-07) — 동일 범위 자료 확보 전 미완료"
               }
             ],
             "inputs": {
@@ -1872,32 +1957,17 @@
               "fcf_not_disclosed_reason": "anthropic.fcf_not_disclosed"
             }
           },
-          "warnings": [],
-          "pending": {
-            "kind": "data",
-            "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
-          }
+          "warnings": [
+            "C-20: G1 판정 보류 후 비상장 경로 — 통과로 읽지 않는다"
+          ],
+          "pending": null
         }
       },
       "moat": 21,
-      "trap": null,
-      "total": null,
-      "complete": false,
-      "pending": [
-        {
-          "factor": "F6",
-          "status": "needs_rule_decision",
-          "kind": "rule",
-          "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
-          "decision_id": "C-12"
-        },
-        {
-          "factor": "F9",
-          "status": "pending_data",
-          "kind": "data",
-          "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
-        }
-      ],
+      "trap": -9,
+      "total": 12,
+      "complete": true,
+      "pending": [],
       "carried_factors": [
         "F1",
         "F2",
@@ -1907,7 +1977,7 @@
         "F7",
         "F8"
       ],
-      "rank": null
+      "rank": 5
     },
     {
       "company_id": "apple",
@@ -2176,7 +2246,7 @@
         "F7",
         "F8"
       ],
-      "rank": 7
+      "rank": 8
     },
     {
       "company_id": "nvidia",
@@ -2446,7 +2516,7 @@
         "F7",
         "F8"
       ],
-      "rank": 7
+      "rank": 8
     },
     {
       "company_id": "palantir",
@@ -2715,7 +2785,7 @@
         "F7",
         "F8"
       ],
-      "rank": 10
+      "rank": 11
     },
     {
       "company_id": "spacex-xai",
@@ -2975,7 +3045,7 @@
         "F7",
         "F8"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "tesla",
@@ -3244,7 +3314,7 @@
         "F7",
         "F8"
       ],
-      "rank": 11
+      "rank": 12
     },
     {
       "company_id": "oracle",
@@ -3537,7 +3607,7 @@
         "F7",
         "F8"
       ],
-      "rank": 12
+      "rank": 14
     },
     {
       "company_id": "openai",
@@ -3627,46 +3697,101 @@
         },
         "F6": {
           "factor": "F6",
-          "score": null,
-          "status": "needs_rule_decision",
+          "score": -4,
+          "status": "ok",
           "basis": "computed",
           "judgment_id": null,
           "observation_ids": [
             "openai.arr.v15",
+            "openai.arr_prior.priv31",
             "openai.cumulative_raised.v15",
-            "openai.post_money_valuation.v15"
+            "openai.post_money_valuation.v15",
+            "openai.ps_ratio.priv31"
           ],
           "calc": {
             "mode": "parameters",
             "track": "private",
             "track_label": "비상장",
             "floor": -5,
+            "ceiling": -2,
             "multiples": {
               "post_money_over_arr": 21.3,
+              "arr_growth": 0.6000000000000001,
               "arr_over_cumulative_raised": 0.21621621621621623
             },
+            "parameters": {
+              "P2": {
+                "value": 39.0,
+                "score": -4,
+                "band": "30x+",
+                "input": "ps_ratio",
+                "formula": "ps_ratio",
+                "estimate_range": {
+                  "low": 39.0,
+                  "high": 39.0,
+                  "low_band": "30x+",
+                  "high_band": "30x+",
+                  "spans_bands": false
+                },
+                "range_note": "구간 추정 39.0~39.0 의 양 끝이 모두 30x+ 라 판정이 갈리지 않는다"
+              }
+            },
             "kind_notes": [
-              "arr kind=run_rate — ARR 이 아니라 런레이트"
+              "arr kind=run_rate — ARR 이 아니라 런레이트",
+              "arr_prior kind=run_rate — ARR 이 아니라 런레이트"
             ],
             "inputs": {
               "post_money_valuation": 852000000000.0,
               "arr": 40000000000.0,
-              "arr_prior": null,
-              "cumulative_raised": 185000000000.0
+              "arr_prior": 25000000000.0,
+              "cumulative_raised": 185000000000.0,
+              "ps_ratio": 39.0
             },
-            "note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다."
+            "correction": {
+              "mode": "subtotal_promotion",
+              "cap_steps": 1,
+              "require_all": true,
+              "conditions": {
+                "arr_growth": {
+                  "formula": "arr / arr_prior - 1",
+                  "inputs": {
+                    "arr": 40000000000.0,
+                    "arr_prior": 25000000000.0
+                  },
+                  "threshold": 0.3,
+                  "value": 0.6000000000000001,
+                  "met": true
+                },
+                "capital_efficiency": {
+                  "formula": "arr / cumulative_raised",
+                  "inputs": {
+                    "arr": 40000000000.0,
+                    "cumulative_raised": 185000000000.0
+                  },
+                  "threshold": 0.5,
+                  "value": 0.21621621621621623,
+                  "met": false
+                }
+              },
+              "conditions_met": [
+                "arr_growth"
+              ],
+              "conditions_missing": [],
+              "promotion_steps": 0
+            },
+            "subtotal_before_correction": -4,
+            "score": -4,
+            "boundary_rule": "미적용. v1.5 678행이 '비상장에는 적용하지 않는다 — 밸류가 반년~1년에 한 번 갱신되므로 하루 변동폭이라는 3% 의 논리가 성립하지 않는다' 고 명시한다."
           },
           "warnings": [
-            "openai.F6: 밴드가 정해지기 전에는 정성 점수도 받지 않는다",
+            "openai.F6: 비상장 F6 도 자동 산출이라 수동 판단을 무시함",
             "openai.post_money_valuation.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
             "openai.arr.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
-            "openai.cumulative_raised.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+            "openai.arr_prior.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "openai.cumulative_raised.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "openai.ps_ratio.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
           ],
-          "pending": {
-            "kind": "rule",
-            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
-            "decision_id": "C-12"
-          }
+          "pending": null
         },
         "F7": {
           "factor": "F7",
@@ -3701,7 +3826,9 @@
           "status": "ok",
           "basis": "computed",
           "judgment_id": "openai.F9",
-          "observation_ids": [],
+          "observation_ids": [
+            "openai.operating_margin_ttm.priv31"
+          ],
           "calc": {
             "path": [
               {
@@ -3740,18 +3867,10 @@
         }
       },
       "moat": 16,
-      "trap": null,
-      "total": null,
-      "complete": false,
-      "pending": [
-        {
-          "factor": "F6",
-          "status": "needs_rule_decision",
-          "kind": "rule",
-          "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
-          "decision_id": "C-12"
-        }
-      ],
+      "trap": -13,
+      "total": 3,
+      "complete": true,
+      "pending": [],
       "carried_factors": [
         "F1",
         "F2",
@@ -3761,7 +3880,7 @@
         "F7",
         "F8"
       ],
-      "rank": null
+      "rank": 13
     }
   ],
   "ranking": [
@@ -3799,6 +3918,14 @@
     },
     {
       "rank": 5,
+      "company_id": "anthropic",
+      "display_name": "Anthropic",
+      "moat": 21,
+      "trap": -9,
+      "total": 12
+    },
+    {
+      "rank": 6,
       "company_id": "spacex-xai",
       "display_name": "SpaceX + xAI",
       "moat": 18,
@@ -3806,7 +3933,7 @@
       "total": 11
     },
     {
-      "rank": 5,
+      "rank": 6,
       "company_id": "tsmc",
       "display_name": "TSMC",
       "moat": 18,
@@ -3814,7 +3941,7 @@
       "total": 11
     },
     {
-      "rank": 7,
+      "rank": 8,
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "moat": 16,
@@ -3822,7 +3949,7 @@
       "total": 8
     },
     {
-      "rank": 7,
+      "rank": 8,
       "company_id": "apple",
       "display_name": "Apple",
       "moat": 15,
@@ -3830,7 +3957,7 @@
       "total": 8
     },
     {
-      "rank": 9,
+      "rank": 10,
       "company_id": "alibaba",
       "display_name": "Alibaba",
       "moat": 18,
@@ -3838,7 +3965,7 @@
       "total": 7
     },
     {
-      "rank": 10,
+      "rank": 11,
       "company_id": "palantir",
       "display_name": "Palantir",
       "moat": 13,
@@ -3846,7 +3973,7 @@
       "total": 6
     },
     {
-      "rank": 11,
+      "rank": 12,
       "company_id": "tesla",
       "display_name": "Tesla",
       "moat": 14,
@@ -3854,7 +3981,15 @@
       "total": 5
     },
     {
-      "rank": 12,
+      "rank": 13,
+      "company_id": "openai",
+      "display_name": "OpenAI",
+      "moat": 16,
+      "trap": -13,
+      "total": 3
+    },
+    {
+      "rank": 14,
       "company_id": "oracle",
       "display_name": "Oracle",
       "moat": 14,
@@ -3863,51 +3998,12 @@
     }
   ],
   "population": {
-    "scored": 12,
-    "incomplete": [
-      {
-        "company_id": "anthropic",
-        "display_name": "Anthropic",
-        "reasons": [
-          {
-            "factor": "F6",
-            "status": "needs_rule_decision",
-            "kind": "rule",
-            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
-            "decision_id": "C-12"
-          },
-          {
-            "factor": "F9",
-            "status": "pending_data",
-            "kind": "data",
-            "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
-          }
-        ],
-        "moat": 21,
-        "trap": null
-      },
-      {
-        "company_id": "openai",
-        "display_name": "OpenAI",
-        "reasons": [
-          {
-            "factor": "F6",
-            "status": "needs_rule_decision",
-            "kind": "rule",
-            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
-            "decision_id": "C-12"
-          }
-        ],
-        "moat": 16,
-        "trap": null
-      }
-    ],
+    "scored": 14,
+    "incomplete": [],
     "reference_excluded": [],
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
-  "pending_rule_decisions": [
-    "C-12"
-  ],
-  "warnings_count": 163,
-  "results_hash": "f26d89ac478dab0b23f91ccbb001fe5cbd770a520eb2597c1efcb73ac8423cd4"
+  "pending_rule_decisions": [],
+  "warnings_count": 169,
+  "results_hash": "d413fdbae633a762b001bbece0a475e13a20d132de7b2b95531ad0fc7e414b15"
 }

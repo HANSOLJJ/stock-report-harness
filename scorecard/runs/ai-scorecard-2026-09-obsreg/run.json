@@ -2,12 +2,12 @@
   "schema": "scorecard.run/1",
   "run_id": "ai-scorecard-2026-09-obsreg",
   "report_type": "ai_scorecard",
-  "title": "AI 기업 9-factor 채점표 — OFFB 실측 관측 + F6 입력 반영(v1.7)",
+  "title": "AI 기업 9-factor 채점표 — OFFB 실측 관측 + F6 입력 + 비상장 확정(v1.7)",
   "as_of": "2026-09-02",
   "price_as_of": "2026-09-02",
   "info_cutoff": "2026-09-02",
   "rule_version": "v1.7",
-  "rule_hash": "b6dad5435d7ed21cd799424c0ffac5e6a01779ceb5925912a83c25c5d1ed5768",
+  "rule_hash": "2cddd4948388fb4ae5f993c50373851de79c774980c412929f9357ab863b247d",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
@@ -47,10 +47,24 @@
       "rationale": "확인된 미공시(not_disclosed_confirmed)로 G4 가 판정 불가면 한 칸 내린다. G2 가 이미 g2_private_not_disclosed -2 로 같은 성질을 벌하고 있어 G4 에서 안 벌하면 규칙이 어긋난다. hold 는 공시하고 커버리지가 나쁜 쪽만 깎고 아예 안 하는 쪽은 안 깎아 불투명을 보상한다. MISS-LABEL-23 이 _g4 를 not_disclosed_confirmed 하나만 C-16 으로 보내게 만든 뒤라 근거 없는 감점이 생기지 않는다. 설계진행 2026-09-11 확정(1d39409).",
       "decided_by": "설계진행",
       "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-12",
+      "choice": "p2_with_capped_promotion",
+      "rationale": "비상장 F6 는 P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다. P2 는 밸류÷TTM 보정 매출에 v1.5 비상장 구간표를 그대로 쓰고, 보정은 ARR 성장률 0.30 이상과 자본효율 0.50 이상을 둘 다 요구한다. 결과가 v1.5 발표 점수와 같다는 약점을 규칙 파일 private_correction.weakness 에 적어 두었다. 설계진행 2026-09-11 사용자 확정(d57e70e).",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-20",
+      "choice": "defer_to_private_g2",
+      "rationale": "비상장이고 TTM 영업손익이 구조적 미공시면 G1 을 통과시키지 않고 판정 보류로 둔 뒤 G2 비상장 경로로 보낸다. 단일 분기 영업흑자를 통과 근거로 쓰지 않고, 동시에 F9 를 영구 미완료로도 두지 않는다. 설계진행 2026-09-11 사용자 확정(d57e70e).",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-11"
     }
   ],
   "created_at": "2026-09-11",
-  "purpose": "v1.7 F6 파라미터 모드가 요구하는 입력을 갖춰 순위를 만들고 C-05·C-06·C-16 확정을 반영한다",
+  "purpose": "v1.7 파라미터 모드로 14개사 전부를 산출하고 확정된 규칙 결정을 반영한다",
   "assumptions": [
     "원자료와 정성 판단은 기준선 v1.5(2026-09-02)에서 승계했으며 이번 실행에서 재검증되지 않았다(legacy_unverified)",
     "미결 규칙 결정(C-xx)은 run.json.decisions 에 명시된 것만 적용한다",
@@ -62,6 +76,10 @@
     "F6 v1.7 입력 4종은 보존된 companyfacts 재구성(F6-SPEC-18)과 G1-FILL-27 을 대조해 등록했다. 신규 네트워크 수집 없음",
     "TSM·alibaba 는 현지통화 공시라 20-F 가 스스로 선언한 환율로 환산했고 **당해와 전년에 같은 환율**을 썼다. 공시 USD 환산치를 두 해 그대로 쓰면 P3 밴드가 한 칸 뜬다(F6-REG-28 verify_inputs.py [3])",
     "TSM FY2025 는 companyfacts 미등재로 EDGAR 원문을 우회해 읽었다. F6-FX-16 3조건을 충족했고 복귀 조건을 관측에 남겼다",
-    "SPCX 매출 쌍만 분기 전년 동기 기준이다. 전년 TTM 이 복원되지 않기 때문이며 손익은 TTM 으로 등록했다"
+    "SPCX 매출 쌍만 분기 전년 동기 기준이다. 전년 TTM 이 복원되지 않기 때문이며 손익은 TTM 으로 등록했다",
+    "비상장 2사의 F6·F9 입력은 v1.5 원본(AI기업_채점규칙_v1.5.md sha256 57beb84a… · AI기업_채점표_v1.5.md)에서 직접 읽었다. 선행 조사가 준 값도 원문 문장으로 다시 대조했다(validation/priv-impl-31/verify_private.py)",
+    "anthropic 의 P2 배수는 원본이 구간(~30~39)으로 주므로 낮은 끝을 값으로 두고 estimate_range 를 남겼다. 양 끝이 같은 밴드라 판정이 갈리지 않으며, 갈리는 경우 계산기가 값을 고르지 않고 보류한다",
+    "anthropic Series H 조달액이 원본 안에서 $30B·$65B 로 갈린다. 값을 고르지 않았고 자본효율 민감도(0.41~0.72)를 관측 basis 에 남겼다. 이 구간이 보정 임계 0.50 을 가로지른다",
+    "비상장 2사의 결측 유형은 MISS-LABEL-23 구조 기준으로 등록했다. 값은 그대로 없고 라벨만 붙였다"
   ]
 }

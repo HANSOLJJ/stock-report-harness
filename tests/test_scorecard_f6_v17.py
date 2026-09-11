@@ -319,21 +319,28 @@ class TestF6StaleAsOf(unittest.TestCase):
 
 @unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6Private(unittest.TestCase):
-    """비상장은 배수만 계산하고 점수를 만들지 않는다. 밴드가 미정이다."""
+    """비상장은 배수를 계산하고, **C-12 확정 뒤로는 P2 로 점수도 낸다.**
 
-    def test_private_has_no_score(self):
+    C-12 이전에는 밴드가 미정이라 점수를 만들지 않았다. 그 상태는
+    `TestPrivateP2Guards.test_undecided_c12_still_pends`(test_scorecard_private.py)가
+    밴드 선언을 지운 규칙으로 계속 고정한다.
+    """
+
+    def test_private_multiples_are_computed(self):
         items = [obs("post_money_valuation", 965e9, cid="anthropic"),
                  obs("arr", 65e9, cid="anthropic", kind="run_rate"),
                  obs("arr_prior", 47e9, cid="anthropic", kind="run_rate"),
                  obs("cumulative_raised", 125e9, cid="anthropic")]
         r = compute_f6(company(cid="anthropic", listed=False), ObsLookup(items),
                        JudgmentLookup([]), RULES_V17, run())
-        self.assertIsNone(r["score"])
-        self.assertEqual(r["status"], "needs_rule_decision")
         m = r["calc"]["multiples"]
         self.assertAlmostEqual(m["post_money_over_arr"], 965 / 65)
         self.assertAlmostEqual(m["arr_growth"], 65 / 47 - 1)
         self.assertAlmostEqual(m["arr_over_cumulative_raised"], 65 / 125)
+        # P2 입력(ps_ratio)이 없으므로 점수는 만들지 않는다 — arr 로 대체하지 않는다.
+        self.assertIsNone(r["score"])
+        self.assertEqual(r["status"], "pending_data")
+        self.assertIn("arr 로 대체하지 않는다", r["pending"]["message"])
 
     def test_run_rate_kind_is_surfaced(self):
         """이름은 arr 인데 종류는 run_rate 다. 소비하는 쪽이 그 사실을 보게 한다."""
@@ -466,9 +473,16 @@ class TestF6FixRoundSpec(unittest.TestCase):
         self.assertIn("무료 등급 전제가 깨진 상태", allowed["financialmodelingprep.com"])
         self.assertIn("약관 확인이 불가능", allowed["finnhub.io"])
 
-    def test_private_band_still_pending(self):
-        self.assertIsNone(self.f6["private_bands"])
-        self.assertEqual(self.f6["private_score_mode"], "pending_rule_decision")
+    def test_private_band_decided_by_c12(self):
+        """C-12 확정(2026-09-11) 전에는 `private_bands` 가 null 이고 모드가 pending 이었다.
+
+        **밴드를 임의로 채워 통과시킨 것이 아니라 사용자 확정 뒤에 반영했다.** 밴드 값이
+        v1.5 구간표와 같은지는 `test_scorecard_private.py` 가 원본 대조로 고정한다.
+        """
+        self.assertIsNotNone(self.f6["private_bands"])
+        self.assertEqual(self.f6["private_score_mode"], "p2_with_capped_promotion")
+        self.assertEqual(self.f6["private_correction"]["cap_steps"], 1)
+        self.assertTrue(self.f6["private_correction"]["require_all"])
 
     def test_v17_is_still_draft(self):
         self.assertEqual(RULES_V17.payload["status"], "draft")

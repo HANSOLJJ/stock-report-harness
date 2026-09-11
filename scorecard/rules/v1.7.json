@@ -395,7 +395,8 @@
           ],
           "floor": -5,
           "select": "listed 가 false",
-          "note": "P1 은 주가가 없어 불가. P2 는 post_money_valuation/arr, P3 는 직전 대비 arr 증가율, P4 는 자본효율 arr/cumulative_raised 다. 밴드가 미정이라 점수를 만들지 않는다."
+          "note": "P1 은 주가가 없어 불가. **P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다**(C-12 확정, 2026-09-11). P2 는 post_money_valuation ÷ TTM 보정 매출(ps_ratio), P3 는 직전 대비 arr 증가율, P4 는 자본효율 arr ÷ cumulative_raised 다. 밴드는 private_bands, 보정은 private_correction 에 있다.",
+          "ceiling": -2
         }
       },
       "private_multiples": [
@@ -403,8 +404,41 @@
         "arr/arr_prior - 1",
         "arr/cumulative_raised"
       ],
-      "private_bands": null,
-      "private_score_mode": "pending_rule_decision",
+      "private_bands": {
+        "label": "밸류 ÷ TTM 보정 매출 (비상장 구간표)",
+        "source": "AI기업_채점규칙_v1.5.md 609~616행 비상장 열 (sha256 57beb84a… 확인)",
+        "input": "ps_ratio",
+        "input_note": "**분모는 arr 이 아니라 TTM 보정 매출이다.** 구간표 -2 칸 괄호가 'ARR 배수 — TTM 보정 필수' 라고 명시한다. ARR 은 특정 시점 월매출 ×12 런레이트라 TTM 보다 과대하고, 보정 없이 비교하면 비상장사가 부당하게 싸 보인다(v1.5 645~647행). 그래서 ps_ratio(밸류÷TTM 매출)를 읽는다.",
+        "comparison": "lower_inclusive",
+        "bands": [
+          {
+            "lower": 100,
+            "score": -5,
+            "label": "100x+"
+          },
+          {
+            "lower": 30,
+            "score": -4,
+            "label": "30x+"
+          },
+          {
+            "lower": 20,
+            "score": -3,
+            "label": "20x대"
+          },
+          {
+            "lower": null,
+            "score": -2,
+            "label": "~20x"
+          }
+        ],
+        "ceiling": -2,
+        "floor": -5,
+        "ceiling_note": "**비상장에는 0 과 -1 칸이 없다.** 구간표 비상장 열이 그 두 칸을 '—' 로 비워 두었다. 정밀도 열위를 점수 천장으로 표현한 것이고 임의로 만든 제한이 아니다.",
+        "boundary_rule": "미적용. v1.5 678행이 '비상장에는 적용하지 않는다 — 밸류가 반년~1년에 한 번 갱신되므로 하루 변동폭이라는 3% 의 논리가 성립하지 않는다' 고 명시한다.",
+        "range_guard": "관측이 구간 추정(basis.estimate_range)을 선언하면 **양 끝이 같은 밴드에 드는지 확인한다.** 갈리면 값을 고르지 않고 보류한다. anthropic 의 30~39 는 양 끝이 모두 '30x+' 라 갈리지 않는다."
+      },
+      "private_score_mode": "p2_with_capped_promotion",
       "private_note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다.",
       "fx": {
         "status": "rule_revised_2026_09_11",
@@ -474,6 +508,44 @@
         ],
         "record_provenance": true,
         "overlap_check": "겹치는 기간이 두 개념에 모두 있으면 값 일치를 검산하고 상대오차를 남긴다(F6-AVAIL-15 4.4)"
+      },
+      "private_correction": {
+        "label": "비상장 보정",
+        "mode": "subtotal_promotion",
+        "cap_steps": 1,
+        "direction": "up",
+        "require_all": true,
+        "decision_id": "C-12",
+        "note": "**상장 P4 와 같은 장치이고 방향만 반대다.** P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다. 조건이 둘 다 성립해야 한다 — 하나만으로 올리면 openai 가 성장률 +60% 로 걸린다.",
+        "why_require_all": "표본 둘에서 P3 는 openai(+60.0%)가 anthropic(+38.3%)보다 높다. 어느 하나로 올리는 규칙이면 **성장률이 더 높은 쪽이 보정을 받고 자본효율이 나쁜 쪽이 보상받는다.** 둘 다 요구해야 '빠르게 크면서 돈을 덜 태웠는가' 라는 한 문장이 된다.",
+        "conditions": [
+          {
+            "id": "arr_growth",
+            "formula": "arr / arr_prior - 1",
+            "inputs": [
+              "arr",
+              "arr_prior"
+            ],
+            "threshold": 0.3,
+            "comparison": "gte",
+            "threshold_source": "**상장 P3 의 최상단 밴드 경계(0.30)를 그대로 재사용한다.** 그 선은 통상 시장 기준에서 정했고 이 표본 둘에서 뽑지 않았다(f6-band-decision.md).",
+            "note": "arr 은 kind=run_rate 다. ARR 이 아니라 런레이트이고 그 사실이 관측에 남아 있다(PRIV-ARR-17)."
+          },
+          {
+            "id": "capital_efficiency",
+            "formula": "arr / cumulative_raised",
+            "inputs": [
+              "arr",
+              "cumulative_raised"
+            ],
+            "threshold": 0.5,
+            "comparison": "gte",
+            "threshold_source": "**이 선만 새로 정했다.** 0.50 은 '조달한 돈의 절반 이상을 연매출 런레이트로 만들었다' 는 해석 가능한 값이고 표본 중간값이 아니다. 다만 anthropic 이 0.52 로 선 위 4% 에 있어 여유가 작다. 비상장에는 경계 규칙이 미적용이라 ⚠️ 표기는 하지 않으나 관측 basis 에 민감도를 남긴다.",
+            "note": "v1.5 656~669행의 '자본효율 = ARR ÷ 누적 조달액'. 원본은 anthropic 0.52 · openai 0.22 로 '2.4배 차이가 같은 배수 구간에서도 점수를 가른다' 고 적는다."
+          }
+        ],
+        "weakness": "**이 보정의 결과가 v1.5 발표 점수 -3·-4 와 정확히 같다.** f6-band-decision.md 에서 상장 밴드를 정할 때 '경계를 정한 근거가 표본이면 그 점수는 표본 밖에서 의미가 없다' 고 적어 두었는데, 여기서는 **답을 먼저 알고 보정 방향을 정했다.** 완화 요소는 둘이다 — P2 밴드는 v1.5 구간표라는 외부 기준을 그대로 쓰고 표본에서 뽑지 않았고, 상한 1칸 보정은 상장 P4 에서 이미 쓰는 장치라 새로 만든 것이 아니다. 그래도 보정이 어느 방향으로 갈지는 답을 보고 정한 셈이고 숨기지 않는다. 다음 사람이 이 보정을 볼 때 어디서 왔는지 알아야 한다(설계진행 c12-c20-decision.md, 사용자 확정).",
+        "rejected_alternative": "안1(P2 만 쓰고 P3·P4 를 읽지 않음)은 표본에서 아무것도 끌어오지 않는 장점이 있었다. 기각 이유는 **트랙이 parameters 로 P3·P4 를 선언해 놓고 안 읽는 것이 결함**이기 때문이다(F6-FIX-21 의 '소비자가 있는데 안 읽는 선언은 결함'). 같은 날 stale_asof 에서 잡은 것과 같은 형태다."
       }
     },
     "f9": {
@@ -506,7 +578,17 @@
       "g3_rating_capacity": "exclude",
       "g4_coverage_keep": 1.0,
       "g4_undetermined": null,
-      "rescale_note": "C-06 재척도 원칙 — **레벨은 올리고 스텝은 그대로 둔다.** 점수 자리를 지정하는 값(floor·밴드 3종·bep_retreat·buffer_erosion_min·relief_cap)만 한 칸 올렸고, 몇 칸 내리는지를 지정하는 값(G2·G3·G4 감점폭, relief_step)은 건드리지 않았다. buffer_erosion_min 과 relief_cap 을 같이 올린 것은 둘이 밴드 위에 정의된 경계라 밴드가 움직이면 같이 움직여야 같은 뜻을 유지하기 때문이다. 절대값을 고정하면 재척도 후 뜻이 바뀐다. '하한만 -4' 안은 기각됐다 — -4 칸과 -5 칸이 합쳐져 적자 깊이가 3단계에서 2단계로 줄어든다."
+      "rescale_note": "C-06 재척도 원칙 — **레벨은 올리고 스텝은 그대로 둔다.** 점수 자리를 지정하는 값(floor·밴드 3종·bep_retreat·buffer_erosion_min·relief_cap)만 한 칸 올렸고, 몇 칸 내리는지를 지정하는 값(G2·G3·G4 감점폭, relief_step)은 건드리지 않았다. buffer_erosion_min 과 relief_cap 을 같이 올린 것은 둘이 밴드 위에 정의된 경계라 밴드가 움직이면 같이 움직여야 같은 뜻을 유지하기 때문이다. 절대값을 고정하면 재척도 후 뜻이 바뀐다. '하한만 -4' 안은 기각됐다 — -4 칸과 -5 칸이 합쳐져 적자 깊이가 3단계에서 2단계로 줄어든다.",
+      "g1_private_undisclosed_route": {
+        "decision_id": "C-20",
+        "choice_required": "defer_to_private_g2",
+        "rule": "**비상장이고 TTM 영업손익이 구조적 미공시면 G1 을 통과시키지 않고 판정 보류로 둔 뒤 G2 비상장 경로로 보낸다.** 단일 분기 영업흑자를 G1 통과 근거로 쓰지 않는다. 경로 기록에 '통과' 가 아니라 '판정 보류' 가 남아야 한다.",
+        "detection": "company.listed 가 false 이고 operating_margin_ttm 또는 operating_income_ttm 관측의 missing_type 이 not_disclosed_confirmed 일 때. **자료가 없다는 것만으로는 부족하다** — 구조적 미공시라는 라벨이 관측에 있어야 한다(MISS-LABEL-23).",
+        "result": "G2 g2_private_not_disclosed -2 · G3 생략(FCF 미공시라 소진율 없음) · G4 같은 미공시 사유 중복 방지 → F9 -2",
+        "why_not_permanent_pending": "F6 에 비상장 트랙이 있고 G2 에 비상장 조항이 있는데 F9 만 영구 보류로 두면 설계가 어긋난다.",
+        "why_not_assume_loss": "TTM 영업손익을 모르는데 적자라고 단정하는 것이다. **오늘 하루 종일 고친 것이 그런 단정이다.**",
+        "decided_at": "2026-09-11"
+      }
     }
   },
   "checklist": [
@@ -747,7 +829,11 @@
         "F6"
       ],
       "summary": "비상장 F6 가 배수만 vs TTM 보정·이익·자본효율로 점수를 가름이 공존",
-      "recommendation": "비상장 최종 점수는 정성 예외(manual_with_rationale)"
+      "recommendation": "비상장 최종 점수는 정성 예외(manual_with_rationale)",
+      "choices": [
+        "p2_with_capped_promotion",
+        "manual_with_rationale"
+      ]
     },
     {
       "id": "C-13",
@@ -815,7 +901,12 @@
         "F9"
       ],
       "summary": "Anthropic 단일 분기 영업흑자를 TTM 원칙과 달리 G1 통과 근거로 씀",
-      "recommendation": "연결 TTM 재확보. 단일 분기로 G1 통과를 자동 복원하지 않음"
+      "recommendation": "연결 TTM 재확보. 단일 분기로 G1 통과를 자동 복원하지 않음",
+      "choices": [
+        "defer_to_private_g2",
+        "permanent_pending",
+        "assume_loss"
+      ]
     },
     {
       "id": "C-21",
