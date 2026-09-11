@@ -23,23 +23,23 @@ NETCASH-37 — net_cash 실측 등록 전후 대조 (앞=커밋된 결과, 뒤=�
 
 [2] P2 내부값 — **점수가 같아도 분자는 바뀌었다**
   회사               net_cash 전     net_cash 후    EV/S 전    EV/S 후    P2       상태
-  alibaba               17.5B          49.8B     1.701     1.484    +0         실측
+  alibaba               49.8B          49.8B     1.484     1.484    +0     실측(불변)
   alphabet             121.7B         121.7B     8.968     8.968    -1     실측(불변)
   amazon              -119.3B        -119.3B     3.699     3.699    +0     실측(불변)
   anthropic                 —              —         —         —     — P2 미산출
   apple                 62.2B          62.2B    10.021    10.021    -1  legacy 유지
   meta                 -22.1B         -22.1B     6.712     6.712    +0     실측(불변)
   microsoft            -52.0B         -52.0B    11.276    11.276    -1     실측(불변)
-  nvidia                24.6B          17.7B    17.808    17.831    -1         실측
+  nvidia                17.7B          17.7B    17.831    17.831    -1     실측(불변)
   openai                    —              —         —         —     — P2 미산출
   oracle              -135.5B        -135.5B     8.600     8.600    -1     실측(불변)
   palantir               9.2B           9.2B    64.621    64.621    -2  legacy 유지
   spacex-xai                —              —         —         —     — P2 미산출
   tesla                 27.4B          27.4B    13.343    13.343    -1     실측(불변)
-  tsmc                  69.9B          69.2B    17.131    17.137    -1         실측
+  tsmc                  69.2B          69.2B    17.137    17.137    -1     실측(불변)
 
 [3] 미검증 입력이 어떻게 줄었는가
-  전: market_cap 11개사, net_cash 3개사
+  전: market_cap 11개사, net_cash 2개사
   후: market_cap 11개사, net_cash 2개사
   남은 net_cash 미검증: apple, palantir — 등록하지 못한 2개사와 같아야 한다
 

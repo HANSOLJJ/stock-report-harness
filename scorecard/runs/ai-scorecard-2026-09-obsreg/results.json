@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "e7dfffe3d68a9e17f0b00f36e3574312109aee0c8332228a242177321281047b",
-    "observations": "34f8027310e96c05c37345ea6753b22f862454fe0a82e2a68269582694539a61",
+    "run": "2f3502109674a5d187669c7b12c309f399591ff6163379666514066241b68404",
+    "observations": "2329c8f5edb7241dbb97a220a2622179b8525054a3558411608268df03b91a57",
     "judgments": "5a28676508f6a6877dc046137c074f0b2a4a4c41d75dece6d9fce8727c2105ec",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
-    "rules": "8c5f04b77905bbf41da1a1acc3cd75600c53d0541cdfc14396112c4516f223d1"
+    "rules": "cc323009fd58c288ff74ae9e8be0cd28d73f9ac7b2cae1562300e1664a9a68bd"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -160,7 +160,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -444,7 +444,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -750,7 +750,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -1031,7 +1031,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -1313,7 +1313,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -1596,7 +1596,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -2188,7 +2188,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -2489,7 +2489,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -2770,7 +2770,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -3328,7 +3328,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -3609,7 +3609,7 @@
                 },
                 "net_cash_definition": {
                   "status": "working_definition",
-                  "definition": "현금및현금성자산 + 유가증권 전체(단기·비유동) − 총차입금 − 리스부채(유동+비유동)",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
                   "provenance": "legacy_reverse_engineered"
                 }
               },
@@ -4170,5 +4170,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 176,
-  "results_hash": "a47e5b383acfba332b91d22d2f7ea3c62750af4ee83be905389caa9a43dbeac0"
+  "results_hash": "57745a625c5e6f7cf2d196b35b56262c233df85c11f5449310e7f5d04b2b5ee9"
 }
