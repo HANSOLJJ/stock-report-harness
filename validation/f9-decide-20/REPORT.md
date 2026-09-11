@@ -129,11 +129,11 @@ C-06을 `proposed_v15_boundaries`로 고정하고, C-05와 C-16의 조합에 따
 | **oracle** | ok (-3) | **−3** | **−3** | **−3** | **−3** | G1 통과, FCF 적자, 런웨이 1.35년, 커버리지 통과 (불변) |
 | **openai** | ok (-5) | **−5** | **−5** | **−5** | **−5** | G1 BEP 후퇴로 이미 바닥(-5), G3/G4 생략 (불변) |
 | **spacex-xai** | **차단** (C-06 미결) | **−4** (ok) | **−4** (ok) | **판단대기** (G4) | **판단대기** (G4) | **C-06 + C-05 diagnose_only가 현행 자료에서 점수를 움직이는 유일한 조합(-4 완료). apply이면 G4 판단 필요** |
-| **alibaba** | **차단** (G1 미결) | **−2** (ok)* | **−3** (ok)* | **−2** (ok)* | **−3** (ok)* | **G1 profit 및 G4 coverage_comparable=yes 2대 입력 충족 시 C-16에 의해 -2와 -3 분기 (현행 자료는 0개사 영향)** |
+| **alibaba** | **차단** (G1 미결) | 보류 (G1·G4 입력) | 보류 (G1·G4 입력) | 보류 (G1·G4 입력) | 보류 (G1·G4 입력) | 현행 자료는 pending_data(0개사 영향). G1 profit 및 G4 coverage_comparable=yes 2대 입력 충족 시 C-16에 의해 **-2(hold) 또는 -3(downgrade)** 분기 |
 | **amazon** | **차단** (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | AWS 백로그 정성 확인 규칙 명시 시 **-2** 확정 가능 (C-16 대상 제외) |
 | **anthropic** | **차단** (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 비상장 영업손익 판정 규칙 명시 시 완료 가능 |
 
-`*` Alibaba는 현행 baseline 자료 기준으로는 G1 미결 및 `coverage_comparable: unknown`으로 인해 C-16 영향이 0개사임. SEC 20-F 공시상 연간 영업이익 1,134억 위안 흑자 기반 `operating_result_reviewed = profit`과 `coverage_comparable = yes`의 2대 검토 입력이 모두 충족되었을 때 비로소 C-16에 따라 -2(hold) 또는 -3(downgrade)으로 분기됨.
+`*` Alibaba는 현행 baseline 자료 기준 네 조합 모두 pending_data(보류)임. SEC 20-F 공시상 연간 영업이익 1,134억 위안 흑자 기반 `operating_result_reviewed = profit`과 `coverage_comparable = yes` 2대 검토 입력이 충족될 경우 C-16에 따라 -2(hold) 또는 -3(downgrade)으로 분기됨.
 
 ---
 
