@@ -1,0 +1,3232 @@
+{
+  "schema": "scorecard.results/1",
+  "engine": "scorecard/1",
+  "run_id": "ai-scorecard-2026-09-obsreg",
+  "as_of": "2026-09-02",
+  "rule_version": "v1.7",
+  "baseline_id": "v1.5",
+  "input_hashes": {
+    "run": "6107eea3b0cedf626c8eb411535757f18963693733a9db87fae3eaacb2504835",
+    "observations": "9b84660fc5c4b1ea3b20445e28e8de992f32fa4018754f07c538b7325cedc475",
+    "judgments": "5dc79ac34c6172670ab8a0480156d34bf15a40b599b5198c2b101e641f76bec6",
+    "sources": "a190d04073eb41963c06317aebb8f83ce31ae83029c527a07a4b66cf97e3ebe5",
+    "rules": "cc820f2dfa629498afae4ed96d74cd4f75a41691217ea782ac1d10214ad0f02c"
+  },
+  "decisions_applied": [
+    "C-05:apply",
+    "C-06:proposed_v15_boundaries"
+  ],
+  "companies": [
+    {
+      "company_id": "alphabet",
+      "display_name": "Alphabet / Google",
+      "type": "소비자",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "alphabet.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "alphabet.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "alphabet.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "partial"
+            },
+            "door_closed": "fail",
+            "pass_points": 1.5,
+            "ladder_note": "통과점 1.5 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "alphabet.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "alphabet.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 2,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "alphabet.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "yes"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "alphabet.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": -1,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "alphabet.F9",
+          "observation_ids": [
+            "alphabet.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_deteriorating",
+                "fcf_ttm": 53300000000.0,
+                "score": -1
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "deteriorating",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "alphabet.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 21,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "amazon",
+      "display_name": "Amazon / AWS",
+      "type": "소비자·업무",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "amazon.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "amazon.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "amazon.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.0,
+            "ladder_note": "통과점 2 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "amazon.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "amazon.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 2,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "amazon.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "yes"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "amazon.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": -2,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "amazon.F9.obsreg25",
+          "observation_ids": [
+            "amazon.cash.v15",
+            "amazon.contracted_revenue.obsreg25",
+            "amazon.fcf_ttm.v15",
+            "amazon.offbalance_B.obsreg25"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "negative",
+                "fcf_ttm": -11600000000.0,
+                "score": -2
+              },
+              {
+                "gate": "G3",
+                "runway_years": 10.60344827586207,
+                "buffer": 123000000000.0,
+                "annual_burn": 11600000000.0,
+                "step": 0,
+                "score": -2
+              },
+              {
+                "gate": "G4",
+                "result": "computed",
+                "coverage": 1.8557387598726425,
+                "contracted_revenue": 496000000000.0,
+                "offbalance_B": 267279000000.0,
+                "step": 0,
+                "score": -2
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "unknown",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "yes",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "amazon.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "amazon.cash.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 21,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "meta",
+      "display_name": "Meta",
+      "type": "소비자",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "meta.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "meta.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "meta.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "partial",
+              "revenue_model": "pass",
+              "acceleration": "partial"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.0,
+            "ladder_note": "통과점 2 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "meta.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "meta.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 1,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": 0,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "meta.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "no"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "meta.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": -1,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "meta.F9",
+          "observation_ids": [
+            "meta.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_deteriorating",
+                "fcf_ttm": 41000000000.0,
+                "score": -1
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "deteriorating",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "meta.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 18,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "microsoft",
+      "display_name": "Microsoft",
+      "type": "업무",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "microsoft.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "microsoft.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "microsoft.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.0,
+            "ladder_note": "통과점 2 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "microsoft.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "microsoft.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 2,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "microsoft.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "yes"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "microsoft.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": 0,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "microsoft.F9",
+          "observation_ids": [
+            "microsoft.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_stable",
+                "fcf_ttm": 67000000000.0,
+                "score": 0
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "stable",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "microsoft.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 19,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "tsmc",
+      "display_name": "TSMC",
+      "type": "부품",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "tsmc.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "F1 부품 상한 2 적용 대상(실질 소비자·업무 채널 없음)",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "tsmc.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "tsmc.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "pass",
+              "revenue_model": "fail",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.0,
+            "ladder_note": "통과점 2 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "tsmc.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "tsmc.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 2,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_annual",
+            "track_label": "ADR/FPI 연간",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": 0,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "tsmc.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "no"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "tsmc.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": 0,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "tsmc.F9",
+          "observation_ids": [
+            "tsmc.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_stable",
+                "fcf_ttm": 36000000000.0,
+                "score": 0
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "stable",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "tsmc.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 18,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "alibaba",
+      "display_name": "Alibaba",
+      "type": "소비자",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "alibaba.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "alibaba.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "alibaba.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "partial",
+              "revenue_model": "pass",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.5,
+            "ladder_note": "통과점 2.5 → 4 (모방불가 완전 pass 아님 → 상한 3)"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "alibaba.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "alibaba.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 1,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [
+            "alibaba.market_cap.v15",
+            "alibaba.market_cap.v15",
+            "alibaba.net_cash.v15",
+            "alibaba.revenue_ttm.obsreg25",
+            "alibaba.revenue_ttm.obsreg25"
+          ],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_annual",
+            "track_label": "ADR/FPI 연간",
+            "period_basis": "annual",
+            "floor": -7,
+            "parameters": {
+              "P1": {
+                "inputs": {
+                  "market_cap": 270000000000.0,
+                  "net_income_ttm": null
+                },
+                "value": null,
+                "reason": "P1 입력 net_income_ttm 관측 없음"
+              },
+              "P2": {
+                "inputs": {
+                  "market_cap": 270000000000.0,
+                  "net_cash": 17500000000.0,
+                  "revenue_ttm": 148401000000.0
+                },
+                "value": 1.7014710143462646,
+                "score": 0,
+                "band": "0~8",
+                "boundary": {
+                  "flag": false,
+                  "nearest_boundary": 8.0,
+                  "distance_ratio": -0.787316123206717,
+                  "tolerance": 0.03
+                }
+              },
+              "P3": {
+                "inputs": {
+                  "revenue_ttm": 148401000000.0,
+                  "revenue_ttm_prior": null
+                },
+                "value": null,
+                "reason": "P3 입력 revenue_ttm_prior 관측 없음"
+              }
+            }
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "P1 입력 net_income_ttm 관측 없음; P3 입력 revenue_ttm_prior 관측 없음"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": 0,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "alibaba.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "no"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "alibaba.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": null,
+          "status": "needs_rule_decision",
+          "basis": "computed",
+          "judgment_id": "alibaba.F9.obsreg25",
+          "observation_ids": [
+            "alibaba.cash.v15",
+            "alibaba.contracted_revenue.obsreg25",
+            "alibaba.fcf_ttm.v15",
+            "alibaba.offbalance_B.obsreg25",
+            "alibaba.operating_margin_ttm.obsreg25"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": 0.04899
+              },
+              {
+                "gate": "G2",
+                "result": "negative",
+                "fcf_ttm": -11400000000.0,
+                "score": -2
+              },
+              {
+                "gate": "G3",
+                "runway_years": 4.982456140350878,
+                "buffer": 56800000000.0,
+                "annual_burn": 11400000000.0,
+                "step": 0,
+                "score": -2
+              },
+              {
+                "gate": "G4",
+                "result": "undetermined",
+                "missing": [
+                  "contracted_revenue(not_disclosed_confirmed)"
+                ],
+                "reason": "확인된 미공시(not_disclosed_confirmed)"
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "unknown",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "yes",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "alibaba.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "alibaba.cash.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)"
+          ],
+          "pending": {
+            "kind": "rule",
+            "message": "약정 커버리지 판정 불가 시 하향/유지 규칙 미확정",
+            "decision_id": "C-16"
+          }
+        }
+      },
+      "moat": 18,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "P1 입력 net_income_ttm 관측 없음; P3 입력 revenue_ttm_prior 관측 없음"
+        },
+        {
+          "factor": "F9",
+          "status": "needs_rule_decision",
+          "kind": "rule",
+          "message": "약정 커버리지 판정 불가 시 하향/유지 규칙 미확정",
+          "decision_id": "C-16"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "anthropic",
+      "display_name": "Anthropic",
+      "type": "업무",
+      "listed": false,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "anthropic.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "anthropic.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "anthropic.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "partial",
+              "revenue_model": "pass",
+              "acceleration": "fail"
+            },
+            "door_closed": "fail",
+            "pass_points": 1.5,
+            "ladder_note": "통과점 1.5 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "anthropic.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "anthropic.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 2,
+            "H": 0,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "needs_rule_decision",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [
+            "anthropic.arr.v15",
+            "anthropic.cumulative_raised.v15",
+            "anthropic.post_money_valuation.v15"
+          ],
+          "calc": {
+            "mode": "parameters",
+            "track": "private",
+            "track_label": "비상장",
+            "floor": -5,
+            "multiples": {
+              "post_money_over_arr": 14.846153846153847,
+              "arr_over_cumulative_raised": 0.52
+            },
+            "kind_notes": [
+              "arr kind=run_rate — ARR 이 아니라 런레이트"
+            ],
+            "inputs": {
+              "post_money_valuation": 965000000000.0,
+              "arr": 65000000000.0,
+              "arr_prior": null,
+              "cumulative_raised": 125000000000.0
+            },
+            "note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다."
+          },
+          "warnings": [
+            "anthropic.F6: 밴드가 정해지기 전에는 정성 점수도 받지 않는다",
+            "anthropic.post_money_valuation.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "anthropic.arr.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "anthropic.cumulative_raised.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": {
+            "kind": "rule",
+            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
+            "decision_id": "C-12"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "anthropic.F7",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-09: 매트릭스 입력이 복원되지 않아 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "anthropic.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": "anthropic.F9",
+          "observation_ids": [],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pending",
+                "reason": "TTM 영업손익·손실률 관측 없음(단일 분기·조정 손익으로 대체하지 않음, C-20)"
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "unknown",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "no",
+              "operating_result_reviewed": "unknown",
+              "fcf_not_disclosed_reason": "anthropic.fcf_not_disclosed"
+            }
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
+          }
+        }
+      },
+      "moat": 21,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "needs_rule_decision",
+          "kind": "rule",
+          "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
+          "decision_id": "C-12"
+        },
+        {
+          "factor": "F9",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "apple",
+      "display_name": "Apple",
+      "type": "소비자",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "apple.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "apple.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "apple.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "fail"
+            },
+            "door_closed": "fail",
+            "pass_points": 1.0,
+            "ladder_note": "통과점 1 → 2"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "apple.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "apple.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 1,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": 0,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "apple.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "no"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "apple.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": 0,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "apple.F9",
+          "observation_ids": [
+            "apple.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_stable",
+                "fcf_ttm": 136699999999.99998,
+                "score": 0
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "stable",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "apple.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 15,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "type": "부품",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "nvidia.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "F1 부품 상한 2 적용 대상(실질 소비자·업무 채널 없음)",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "nvidia.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "nvidia.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "fail"
+            },
+            "door_closed": "fail",
+            "pass_points": 1.0,
+            "ladder_note": "통과점 1 → 2"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "nvidia.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "nvidia.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 1,
+            "H": -2,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -3,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "nvidia.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "large",
+            "own_money_returns": "yes"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "nvidia.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": 0,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "nvidia.F9",
+          "observation_ids": [
+            "nvidia.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_stable",
+                "fcf_ttm": 127000000000.0,
+                "score": 0
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "stable",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "nvidia.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 16,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "palantir",
+      "display_name": "Palantir",
+      "type": "업무",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "palantir.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "palantir.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "palantir.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "partial",
+              "revenue_model": "partial",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.0,
+            "ladder_note": "통과점 2 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "palantir.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "palantir.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 1,
+            "H": -2,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": 0,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "palantir.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "no"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "palantir.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": 0,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "palantir.F9",
+          "observation_ids": [
+            "palantir.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_stable",
+                "fcf_ttm": 3400000000.0,
+                "score": 0
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "stable",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "palantir.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 13,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "spacex-xai",
+      "display_name": "SpaceX + xAI",
+      "type": "소비자·업무",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "spacex-xai.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "spacex-xai.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "spacex-xai.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "partial",
+              "revenue_model": "pass",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.5,
+            "ladder_note": "통과점 2.5 → 4 (모방불가 완전 pass 아님 → 상한 3)"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 5,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "spacex-xai.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "spacex-xai.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 1,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": 0,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "spacex-xai.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "no"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "spacex-xai.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": -3,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "spacex-xai.F9.obsreg25",
+          "observation_ids": [
+            "spacex-xai.cash.v15",
+            "spacex-xai.contracted_revenue.obsreg25",
+            "spacex-xai.fcf_ttm.v15",
+            "spacex-xai.offbalance_B.obsreg25",
+            "spacex-xai.operating_margin_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "fail",
+                "operating_margin_ttm": -0.149,
+                "band": "proposed_v15_boundaries",
+                "score": -3
+              },
+              {
+                "gate": "G1",
+                "adjust": "방향 완화 판정 불가 → 유지"
+              },
+              {
+                "gate": "G3",
+                "mode": "diagnostic",
+                "runway_years": 3.076923076923077,
+                "step": 0
+              },
+              {
+                "gate": "G4",
+                "mode": "diagnostic",
+                "result": "computed",
+                "coverage": 1.6043878033939558,
+                "contracted_revenue": 47461000000.0,
+                "offbalance_B": 29582000000.0
+              },
+              {
+                "gate": "G1-after",
+                "applied": true,
+                "score": -3
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "unknown",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "yes",
+              "operating_result_reviewed": "loss"
+            },
+            "gate1_fail": true
+          },
+          "warnings": [
+            "spacex-xai.operating_margin_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "C-06: 손실률 경계는 제안값(proposed)을 실행 단위 결정으로 적용",
+            "spacex-xai.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "spacex-xai.cash.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 18,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "tesla",
+      "display_name": "Tesla",
+      "type": "소비자",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "tesla.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "tesla.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "tesla.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.0,
+            "ladder_note": "통과점 2 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "tesla.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "tesla.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 0,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "tesla.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "yes"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -2,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "tesla.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": -1,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "tesla.F9",
+          "observation_ids": [
+            "tesla.fcf_ttm.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "positive_deteriorating",
+                "fcf_ttm": 5800000000.0,
+                "score": -1
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "deteriorating",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "unknown",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "tesla.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 14,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "oracle",
+      "display_name": "Oracle",
+      "type": "업무",
+      "listed": true,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "oracle.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "oracle.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "oracle.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 2.0,
+            "ladder_note": "통과점 2 → 3"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "oracle.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 3,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "oracle.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 1,
+            "H": -1,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "pending_data",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [],
+          "calc": {
+            "mode": "parameters",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": null,
+            "floor": -7,
+            "parameters": {}
+          },
+          "warnings": [],
+          "pending": {
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -3,
+          "status": "carried_score",
+          "basis": "matrix",
+          "judgment_id": "oracle.F7",
+          "observation_ids": [],
+          "calc": {
+            "funding_dependent_share": "large",
+            "own_money_returns": "yes"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "oracle.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": -3,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "oracle.F9",
+          "observation_ids": [
+            "oracle.cash.v15",
+            "oracle.contracted_revenue.v15",
+            "oracle.fcf_ttm.v15",
+            "oracle.offbalance_B.v15"
+          ],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "pass",
+                "operating_margin_ttm": null,
+                "basis": "operating_result_reviewed=profit"
+              },
+              {
+                "gate": "G2",
+                "result": "negative",
+                "fcf_ttm": -23700000000.0,
+                "score": -2
+              },
+              {
+                "gate": "G3",
+                "runway_years": 1.3459915611814346,
+                "buffer": 31900000000.0,
+                "annual_burn": 23700000000.0,
+                "step": -1,
+                "score": -3
+              },
+              {
+                "gate": "G4",
+                "result": "computed",
+                "coverage": 2.552,
+                "contracted_revenue": 638000000000.0,
+                "offbalance_B": 250000000000.0,
+                "step": 0,
+                "score": -3
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "unknown",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "yes",
+              "operating_result_reviewed": "profit"
+            }
+          },
+          "warnings": [
+            "G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고",
+            "oracle.fcf_ttm.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "oracle.cash.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)",
+            "oracle.contracted_revenue.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "oracle.offbalance_B.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 14,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "pending_data",
+          "kind": "data",
+          "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    },
+    {
+      "company_id": "openai",
+      "display_name": "OpenAI",
+      "type": "소비자",
+      "listed": false,
+      "reference": false,
+      "factors": {
+        "F1": {
+          "factor": "F1",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "openai.F1",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F2": {
+          "factor": "F2",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "openai.F2",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F3": {
+          "factor": "F3",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "criteria",
+          "judgment_id": "openai.F3",
+          "observation_ids": [],
+          "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "fail",
+              "acceleration": "pass"
+            },
+            "door_closed": "fail",
+            "pass_points": 1.0,
+            "ladder_note": "통과점 1 → 2"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F4": {
+          "factor": "F4",
+          "score": 4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "openai.F4",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F5": {
+          "factor": "F5",
+          "score": 2,
+          "status": "carried_score",
+          "basis": "grade",
+          "judgment_id": "openai.F5",
+          "observation_ids": [],
+          "calc": {
+            "A": 2,
+            "H": -3,
+            "formula": "3 + A + H"
+          },
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F6": {
+          "factor": "F6",
+          "score": null,
+          "status": "needs_rule_decision",
+          "basis": "computed",
+          "judgment_id": null,
+          "observation_ids": [
+            "openai.arr.v15",
+            "openai.cumulative_raised.v15",
+            "openai.post_money_valuation.v15"
+          ],
+          "calc": {
+            "mode": "parameters",
+            "track": "private",
+            "track_label": "비상장",
+            "floor": -5,
+            "multiples": {
+              "post_money_over_arr": 21.3,
+              "arr_over_cumulative_raised": 0.21621621621621623
+            },
+            "kind_notes": [
+              "arr kind=run_rate — ARR 이 아니라 런레이트"
+            ],
+            "inputs": {
+              "post_money_valuation": 852000000000.0,
+              "arr": 40000000000.0,
+              "arr_prior": null,
+              "cumulative_raised": 185000000000.0
+            },
+            "note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다."
+          },
+          "warnings": [
+            "openai.F6: 밴드가 정해지기 전에는 정성 점수도 받지 않는다",
+            "openai.post_money_valuation.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "openai.arr.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
+            "openai.cumulative_raised.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+          ],
+          "pending": {
+            "kind": "rule",
+            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
+            "decision_id": "C-12"
+          }
+        },
+        "F7": {
+          "factor": "F7",
+          "score": -1,
+          "status": "carried_score",
+          "basis": "carried",
+          "judgment_id": "openai.F7",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "C-09: 매트릭스 입력이 복원되지 않아 승계 점수를 기준선 표시로 사용",
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F8": {
+          "factor": "F8",
+          "score": -4,
+          "status": "carried_score",
+          "basis": "manual",
+          "judgment_id": "openai.F8",
+          "observation_ids": [],
+          "calc": {},
+          "warnings": [
+            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
+          ],
+          "pending": null
+        },
+        "F9": {
+          "factor": "F9",
+          "score": -4,
+          "status": "ok",
+          "basis": "computed",
+          "judgment_id": "openai.F9",
+          "observation_ids": [],
+          "calc": {
+            "path": [
+              {
+                "gate": "G1",
+                "result": "fail",
+                "operating_margin_ttm": null,
+                "band": "BEP 후퇴 → -5",
+                "score": -4
+              },
+              {
+                "gate": "G1",
+                "adjust": "방향 완화 판정 불가 → 유지"
+              },
+              {
+                "gate": "G3/G4",
+                "result": "skipped",
+                "reason": "G1 점수가 이미 하한(-5)이라 추가 감점 불가"
+              }
+            ],
+            "inputs": {
+              "fcf_trend": "unknown",
+              "bep_retreat": "yes",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "no",
+              "operating_result_reviewed": "loss",
+              "fcf_not_disclosed_reason": "openai.fcf_not_disclosed"
+            },
+            "gate1_fail": true
+          },
+          "warnings": [
+            "C-06: BEP 후퇴 -5 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)"
+          ],
+          "pending": null
+        }
+      },
+      "moat": 16,
+      "trap": null,
+      "total": null,
+      "complete": false,
+      "pending": [
+        {
+          "factor": "F6",
+          "status": "needs_rule_decision",
+          "kind": "rule",
+          "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
+          "decision_id": "C-12"
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "rank": null
+    }
+  ],
+  "ranking": [],
+  "population": {
+    "scored": 0,
+    "incomplete": [
+      {
+        "company_id": "alphabet",
+        "display_name": "Alphabet / Google",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 21,
+        "trap": null
+      },
+      {
+        "company_id": "amazon",
+        "display_name": "Amazon / AWS",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 21,
+        "trap": null
+      },
+      {
+        "company_id": "meta",
+        "display_name": "Meta",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 18,
+        "trap": null
+      },
+      {
+        "company_id": "microsoft",
+        "display_name": "Microsoft",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 19,
+        "trap": null
+      },
+      {
+        "company_id": "tsmc",
+        "display_name": "TSMC",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 18,
+        "trap": null
+      },
+      {
+        "company_id": "alibaba",
+        "display_name": "Alibaba",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "P1 입력 net_income_ttm 관측 없음; P3 입력 revenue_ttm_prior 관측 없음"
+          },
+          {
+            "factor": "F9",
+            "status": "needs_rule_decision",
+            "kind": "rule",
+            "message": "약정 커버리지 판정 불가 시 하향/유지 규칙 미확정",
+            "decision_id": "C-16"
+          }
+        ],
+        "moat": 18,
+        "trap": null
+      },
+      {
+        "company_id": "anthropic",
+        "display_name": "Anthropic",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "needs_rule_decision",
+            "kind": "rule",
+            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
+            "decision_id": "C-12"
+          },
+          {
+            "factor": "F9",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"
+          }
+        ],
+        "moat": 21,
+        "trap": null
+      },
+      {
+        "company_id": "apple",
+        "display_name": "Apple",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 15,
+        "trap": null
+      },
+      {
+        "company_id": "nvidia",
+        "display_name": "NVIDIA",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 16,
+        "trap": null
+      },
+      {
+        "company_id": "palantir",
+        "display_name": "Palantir",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 13,
+        "trap": null
+      },
+      {
+        "company_id": "spacex-xai",
+        "display_name": "SpaceX + xAI",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 18,
+        "trap": null
+      },
+      {
+        "company_id": "tesla",
+        "display_name": "Tesla",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 14,
+        "trap": null
+      },
+      {
+        "company_id": "oracle",
+        "display_name": "Oracle",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "pending_data",
+            "kind": "data",
+            "message": "revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다"
+          }
+        ],
+        "moat": 14,
+        "trap": null
+      },
+      {
+        "company_id": "openai",
+        "display_name": "OpenAI",
+        "reasons": [
+          {
+            "factor": "F6",
+            "status": "needs_rule_decision",
+            "kind": "rule",
+            "message": "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다",
+            "decision_id": "C-12"
+          }
+        ],
+        "moat": 16,
+        "trap": null
+      }
+    ],
+    "reference_excluded": [],
+    "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
+  },
+  "pending_rule_decisions": [
+    "C-12",
+    "C-16"
+  ],
+  "warnings_count": 158,
+  "results_hash": "9bb47f1c5d463185f86cabe8222f76a1e1172c48cce26c426123575c0489598a"
+}

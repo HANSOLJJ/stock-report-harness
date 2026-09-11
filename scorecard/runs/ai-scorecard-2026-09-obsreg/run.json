@@ -1,0 +1,56 @@
+{
+  "schema": "scorecard.run/1",
+  "run_id": "ai-scorecard-2026-09-obsreg",
+  "report_type": "ai_scorecard",
+  "title": "AI 기업 9-factor 채점표 — OFFB 실측 관측 반영(v1.7)",
+  "as_of": "2026-09-02",
+  "price_as_of": "2026-09-02",
+  "info_cutoff": "2026-09-02",
+  "rule_version": "v1.7",
+  "rule_hash": "cc820f2dfa629498afae4ed96d74cd4f75a41691217ea782ac1d10214ad0f02c",
+  "baseline_id": "v1.5",
+  "companies": [
+    "alphabet",
+    "amazon",
+    "meta",
+    "microsoft",
+    "tsmc",
+    "alibaba",
+    "anthropic",
+    "apple",
+    "nvidia",
+    "palantir",
+    "spacex-xai",
+    "tesla",
+    "oracle",
+    "openai"
+  ],
+  "reference_companies": [],
+  "decisions": [
+    {
+      "id": "C-05",
+      "choice": "apply",
+      "rationale": "G1 실패 뒤 G3·G4 를 실제로 적용한다. 설계진행 2026-09-11 확정.",
+      "decided_by": "설계진행",
+      "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-06",
+      "choice": "proposed_v15_boundaries",
+      "rationale": "G1 밴드를 -2/-3/-4 로 재척도하고 floor -4, bep_retreat -4, buffer_erosion_min -3, relief_cap -2 로 둔다. 함정 재배분 -18 보존. 스텝 값은 그대로. 설계진행 2026-09-11 확정.",
+      "decided_by": "설계진행",
+      "decided_at": "2026-09-11"
+    }
+  ],
+  "created_at": "2026-09-11",
+  "purpose": "미개시 약정·계약 수입 실측값을 관측으로 등록하고 C-05·C-06 확정을 반영해 F9 를 푼다",
+  "assumptions": [
+    "원자료와 정성 판단은 기준선 v1.5(2026-09-02)에서 승계했으며 이번 실행에서 재검증되지 않았다(legacy_unverified)",
+    "미결 규칙 결정(C-xx)은 run.json.decisions 에 명시된 것만 적용한다",
+    "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
+    "OFFB-24/24B 실측 관측 6건은 보존된 SEC 원문에서 직접 재확인했다(validation/obs-reg-25/verify_values.py, 대조 34건 불일치 0건)",
+    "alibaba 의 B종 약정과 연간 영업손익은 원 통화가 CNY 이고 20-F 가 스스로 선언한 환율(RMB6.8980/US$1.00, 2026-03-31, 연준 H.10)로 환산했다. 원화폐·원금액·환율은 관측 basis 에 남겼다",
+    "alibaba 영업손익은 FY2026 연간이며 TTM 이 아니다. 기간 단위 한계는 F6 P4 가 한 칸 내리고 F9 에서는 다시 세지 않는다",
+    "alibaba 의 fcf_ttm·cash 는 여전히 legacy_unverified 이고 기간 정의가 없다. 영업손익을 연간으로 선언한 이상 이 둘도 같은 연간 기준으로 다시 뽑아야 한다(후속)"
+  ]
+}

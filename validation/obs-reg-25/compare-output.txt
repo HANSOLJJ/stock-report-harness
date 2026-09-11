@@ -1,0 +1,120 @@
+======================================================================================================================
+OBS-REG-25 — 14개사 전 factor 대조
+======================================================================================================================
+  A 승인 실행 · A' 결정만 · B 관측까지 · C 규칙까지(v1.7).  셀은 A>A'>B>C, 변화가 있으면 * 표시
+
+alphabet       F1:+5c>+5c>+5c>+5c   F2:+4c>+4c>+4c>+4c   F3:+3c>+3c>+3c>+3c   F4:+5c>+5c>+5c>+5c   F5:+4c>+4c>+4c>+4c  *F6:-1>-1>-1>pend   F7:-1c>-1c>-1c>-1c   F8:-1c>-1c>-1c>-1c   F9:-1>-1>-1>-1
+amazon         F1:+5c>+5c>+5c>+5c   F2:+4c>+4c>+4c>+4c   F3:+3c>+3c>+3c>+3c   F4:+5c>+5c>+5c>+5c   F5:+4c>+4c>+4c>+4c  *F6:-1>-1>-1>pend   F7:-1c>-1c>-1c>-1c   F8:-1c>-1c>-1c>-1c  *F9:judg>judg>-2>-2
+meta           F1:+5c>+5c>+5c>+5c   F2:+4c>+4c>+4c>+4c   F3:+3c>+3c>+3c>+3c   F4:+3c>+3c>+3c>+3c   F5:+3c>+3c>+3c>+3c  *F6:+0>+0>+0>pend   F7:+0c>+0c>+0c>+0c   F8:-1c>-1c>-1c>-1c   F9:-1>-1>-1>-1
+microsoft      F1:+5c>+5c>+5c>+5c   F2:+3c>+3c>+3c>+3c   F3:+3c>+3c>+3c>+3c   F4:+4c>+4c>+4c>+4c   F5:+4c>+4c>+4c>+4c  *F6:-1>-1>-1>pend   F7:-1c>-1c>-1c>-1c   F8:-1c>-1c>-1c>-1c   F9:+0>+0>+0>+0
+tsmc           F1:+2c>+2c>+2c>+2c   F2:+5c>+5c>+5c>+5c   F3:+3c>+3c>+3c>+3c   F4:+4c>+4c>+4c>+4c   F5:+4c>+4c>+4c>+4c  *F6:rule(C-13)>rule(C-13)>rule(C-13)>pend   F7:+0c>+0c>+0c>+0c   F8:-4c>-4c>-4c>-4c   F9:+0>+0>+0>+0
+alibaba        F1:+4c>+4c>+4c>+4c   F2:+4c>+4c>+4c>+4c   F3:+3c>+3c>+3c>+3c   F4:+4c>+4c>+4c>+4c   F5:+3c>+3c>+3c>+3c  *F6:rule(C-13)>rule(C-13)>rule(C-13)>pend   F7:+0c>+0c>+0c>+0c   F8:-4c>-4c>-4c>-4c  *F9:pend>pend>rule(C-16)>rule(C-16)
+anthropic      F1:+4c>+4c>+4c>+4c   F2:+5c>+5c>+5c>+5c   F3:+3c>+3c>+3c>+3c   F4:+4c>+4c>+4c>+4c   F5:+5c>+5c>+5c>+5c  *F6:-3c>-3c>-3c>rule(C-12)   F7:-1c>-1c>-1c>-1c   F8:-3c>-3c>-3c>-3c   F9:pend>pend>pend>pend
+apple          F1:+5c>+5c>+5c>+5c   F2:+2c>+2c>+2c>+2c   F3:+2c>+2c>+2c>+2c   F4:+3c>+3c>+3c>+3c   F5:+3c>+3c>+3c>+3c  *F6:-2>-2>-2>pend   F7:+0c>+0c>+0c>+0c   F8:-3c>-3c>-3c>-3c   F9:+0>+0>+0>+0
+nvidia         F1:+2c>+2c>+2c>+2c   F2:+5c>+5c>+5c>+5c   F3:+2c>+2c>+2c>+2c   F4:+5c>+5c>+5c>+5c   F5:+2c>+2c>+2c>+2c  *F6:+0>+0>+0>pend   F7:-3c>-3c>-3c>-3c   F8:-3c>-3c>-3c>-3c   F9:+0>+0>+0>+0
+palantir       F1:+2c>+2c>+2c>+2c   F2:+3c>+3c>+3c>+3c   F3:+3c>+3c>+3c>+3c   F4:+3c>+3c>+3c>+3c   F5:+2c>+2c>+2c>+2c  *F6:-4>-4>-4>pend   F7:+0c>+0c>+0c>+0c   F8:-3c>-3c>-3c>-3c   F9:+0>+0>+0>+0
+spacex-xai     F1:+3c>+3c>+3c>+3c   F2:+4c>+4c>+4c>+4c   F3:+3c>+3c>+3c>+3c   F4:+5c>+5c>+5c>+5c   F5:+3c>+3c>+3c>+3c  *F6:-5>-5>-5>pend   F7:+0c>+0c>+0c>+0c   F8:-3c>-3c>-3c>-3c  *F9:rule(C-06)>judg>-4>-3
+tesla          F1:+2c>+2c>+2c>+2c   F2:+3c>+3c>+3c>+3c   F3:+3c>+3c>+3c>+3c   F4:+4c>+4c>+4c>+4c   F5:+2c>+2c>+2c>+2c  *F6:-5>-5>-5>pend   F7:-1c>-1c>-1c>-1c   F8:-2c>-2c>-2c>-2c   F9:-1>-1>-1>-1
+oracle         F1:+3c>+3c>+3c>+3c   F2:+2c>+2c>+2c>+2c   F3:+3c>+3c>+3c>+3c   F4:+3c>+3c>+3c>+3c   F5:+3c>+3c>+3c>+3c  *F6:+0>+0>+0>pend   F7:-3c>-3c>-3c>-3c   F8:-4c>-4c>-4c>-4c   F9:-3>-3>-3>-3
+openai         F1:+4c>+4c>+4c>+4c   F2:+4c>+4c>+4c>+4c   F3:+2c>+2c>+2c>+2c   F4:+4c>+4c>+4c>+4c   F5:+2c>+2c>+2c>+2c  *F6:-4c>-4c>-4c>rule(C-12)   F7:-1c>-1c>-1c>-1c   F8:-4c>-4c>-4c>-4c  *F9:-5>-5>-5>-4
+
+[1] A→A'  C-05·C-06 확정의 효과 (관측·규칙 동일)
+  spacex-xai   F9              rule(C-06) -> judg
+
+[2] A'→B  관측 등록·coverage_comparable 판정의 효과 (규칙·결정 동일)
+  amazon       F9                    judg -> -2
+  alibaba      F9                    pend -> rule(C-16)
+  spacex-xai   F9                    judg -> -4
+
+[3] B→C   규칙 v1.7 전환의 효과 (관측·결정 동일)
+  alphabet     F6                      -1 -> pend
+  amazon       F6                      -1 -> pend
+  meta         F6                      +0 -> pend
+  microsoft    F6                      -1 -> pend
+  tsmc         F6              rule(C-13) -> pend
+  alibaba      F6              rule(C-13) -> pend
+  anthropic    F6                     -3c -> rule(C-12)
+  apple        F6                      -2 -> pend
+  nvidia       F6                      +0 -> pend
+  palantir     F6                      -4 -> pend
+  spacex-xai   F6                      -5 -> pend
+  spacex-xai   F9                      -4 -> -3
+  tesla        F6                      -5 -> pend
+  oracle       F6                      +0 -> pend
+  openai       F6                     -4c -> rule(C-12)
+  openai       F9                      -5 -> -4
+
+[4] 총점·순위
+  A  승인 실행(v1.5·승계·결정 없음) — 완주 9/14개사
+     1 Alphabet / Google    과점  21 함정  -4 조정  17
+     2 Microsoft            과점  19 함정  -3 조정  16
+     3 Meta                 과점  18 함정  -2 조정  16
+     4 NVIDIA               과점  16 함정  -6 조정  10
+     5 Apple                과점  15 함정  -5 조정  10
+     6 Palantir             과점  13 함정  -7 조정   6
+     7 Tesla                과점  14 함정  -9 조정   5
+     8 Oracle               과점  14 함정 -10 조정   4
+     9 OpenAI               과점  16 함정 -14 조정   2
+  A' 결정만(v1.5·승계·C-05·C-06) — 완주 9/14개사
+     1 Alphabet / Google    과점  21 함정  -4 조정  17
+     2 Microsoft            과점  19 함정  -3 조정  16
+     3 Meta                 과점  18 함정  -2 조정  16
+     4 NVIDIA               과점  16 함정  -6 조정  10
+     5 Apple                과점  15 함정  -5 조정  10
+     6 Palantir             과점  13 함정  -7 조정   6
+     7 Tesla                과점  14 함정  -9 조정   5
+     8 Oracle               과점  14 함정 -10 조정   4
+     9 OpenAI               과점  16 함정 -14 조정   2
+  B  관측까지(v1.5·새 관측) — 완주 11/14개사
+     1 Alphabet / Google    과점  21 함정  -4 조정  17
+     2 Amazon / AWS         과점  21 함정  -5 조정  16
+     3 Microsoft            과점  19 함정  -3 조정  16
+     4 Meta                 과점  18 함정  -2 조정  16
+     5 NVIDIA               과점  16 함정  -6 조정  10
+     6 Apple                과점  15 함정  -5 조정  10
+     7 SpaceX + xAI         과점  18 함정 -12 조정   6
+     8 Palantir             과점  13 함정  -7 조정   6
+     9 Tesla                과점  14 함정  -9 조정   5
+    10 Oracle               과점  14 함정 -10 조정   4
+    11 OpenAI               과점  16 함정 -14 조정   2
+  C  새 실행(v1.7·새 관측) — 완주 0/14개사
+    (완주 0개사 — 순위를 만들지 않는다)
+
+[5] 미완료 사유 — C 새 실행
+  alphabet     F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  amazon       F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  meta         F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  microsoft    F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  tsmc         F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  alibaba      F6 pending_data; F9 needs_rule_decision(C-16)
+               F6: P1 입력 net_income_ttm 관측 없음; P3 입력 revenue_ttm_prior 관측 없음
+               F9: 약정 커버리지 판정 불가 시 하향/유지 규칙 미확정
+  anthropic    F6 needs_rule_decision(C-12); F9 pending_data
+               F6: 비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다
+               F9: TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)
+  apple        F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  nvidia       F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  palantir     F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  spacex-xai   F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  tesla        F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  oracle       F6 pending_data
+               F6: revenue_ttm 관측에 basis.period_basis 가 없음 — 기간 기준이 선언돼야 트랙이 정해진다
+  openai       F6 needs_rule_decision(C-12)
+               F6: 비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다
+
+[6] 승인 실행 보존 확인
+  baseline/observations.json    sha256(LF)=5eb132200d46cc0736df3b51c73ab8b1…
+  baseline/judgments.json       sha256(LF)=630c2fb8d140317bc4e712c599c0c246…
+  baseline/run.json             sha256(LF)=39981ac12a27ca44f0968eb7a89f1ba6…
+  baseline/results.json         sha256(LF)=6182cdb148e50ea14524d9d18579b676…
+  baseline results_hash 필드 = 0942c342f010781e…  (승인 해시 0942c342… 와 대조)

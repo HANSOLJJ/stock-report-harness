@@ -1,0 +1,86 @@
+{
+  "schema": "scorecard.sources/1",
+  "run_id": "ai-scorecard-2026-09-obsreg",
+  "items": [
+    {
+      "source_id": "SRC-v15-html",
+      "title": "AI기업_채점표_v1.5.html (D·VAL·EARN·FIN·BORR·TRIG)",
+      "publisher": "내부 기준선",
+      "url": null,
+      "accessed_at": "2026-09-11",
+      "sha256": "fa66076cbcd675d3f36a11ab2d4f80c3b2242ece84929dcc2765290ff9d71858",
+      "conflict_of_interest": "작성자 Claude=Anthropic (긴장 #4·#11)",
+      "note": "과거 기록"
+    },
+    {
+      "source_id": "SRC-v15-md",
+      "title": "AI기업_채점표_v1.5.md (순위표·원자료)",
+      "publisher": "내부 기준선",
+      "url": null,
+      "accessed_at": "2026-09-11",
+      "sha256": "d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30",
+      "conflict_of_interest": "작성자 Claude=Anthropic (긴장 #4·#11)",
+      "note": "과거 기록"
+    },
+    {
+      "source_id": "SRC-v15-rule",
+      "title": "AI기업_채점규칙_v1.5.md (③ 사다리·별표 G·별표 I·⑨ 적용표·⑥ 비상장)",
+      "publisher": "내부 규칙",
+      "url": null,
+      "accessed_at": "2026-09-11",
+      "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+      "conflict_of_interest": null,
+      "note": "규칙 원문 판정표"
+    },
+    {
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "title": "SpaceX/xAI Form 10-Q (2026-06-30) — Note 3 Revenue · Note 16 Commitments",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm",
+      "accessed_at": "2026-09-11",
+      "sha256": "2b6762e149c2af81f1f840acb7541e0df8b420cb18e0058d59b451721418ff88",
+      "conflict_of_interest": null,
+      "note": "접수번호 0001628280-26-052535(2026-08-04). 원문 보존 C-13 3cf9799:validation/offb-24/_raw/spcx-20260630.htm"
+    },
+    {
+      "source_id": "SRC-SEC-SPCX-S1A-2026",
+      "title": "SpaceX/xAI Form S-1/A (2026-06-03) — Note 11 Leases (F-36)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026040364/",
+      "accessed_at": "2026-09-11",
+      "sha256": "fd8aea349e7f8550e4e3ccc4c72b06796ee27d2bfa2bff4891c6a21d11404a88",
+      "conflict_of_interest": null,
+      "note": "접수번호 0001628280-26-040364. 미개시 리스는 10-Q 가 아니라 이 문서에만 있다. url 은 접수 디렉터리 — 문서명은 보존 파일 spcx_s1a_20260603.htm"
+    },
+    {
+      "source_id": "SRC-SEC-AMZN-10Q-2026Q2",
+      "title": "Amazon Form 10-Q (2026-06-30) — Note 1 Accounting Policies · Commitments 표",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "accessed_at": "2026-09-11",
+      "sha256": "d07b8a88fa442c2c55bd65b3f1d336ca16e7d1e9fda831e1063d24adea60e4eb",
+      "conflict_of_interest": null,
+      "note": "원문 보존 C-13 3cf9799:validation/offb-24/_raw/amzn-20260630.htm"
+    },
+    {
+      "source_id": "SRC-SEC-BABA-20F-FY2026",
+      "title": "Alibaba Form 20-F (FY2026, 2026-03-31) — Note 2(g) · Note 27 · Exchange Rate Information",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm",
+      "accessed_at": "2026-09-11",
+      "sha256": "7be73cb49925934f89e0a9f4bb1f91c64474a2695c6f357735b39609401e02da",
+      "conflict_of_interest": null,
+      "note": "접수번호 0001193125-26-231755. 원문 보존 C-13 3cf9799:validation/offb-24/_raw/baba-20260331.htm"
+    },
+    {
+      "source_id": "SRC-SEC-BABA-FACTS",
+      "title": "SEC XBRL companyfacts CIK0001577552 (Alibaba) — us-gaap Revenues · OperatingIncomeLoss",
+      "publisher": "SEC EDGAR",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001577552.json",
+      "accessed_at": "2026-09-11",
+      "sha256": "66f5eb1c036515728219ec6983e6d74be34201eb5abbeb4d5120b0aa5dd5ff9f",
+      "conflict_of_interest": null,
+      "note": "원문 보존 C-13 HANSOLJJ/C-13:validation/f6-avail-15b/_raw/CIK0001577552_BABA.json. 신규 네트워크 호출 없음"
+    }
+  ]
+}
