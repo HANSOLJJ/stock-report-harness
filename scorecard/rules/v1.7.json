@@ -329,7 +329,25 @@
           },
           {
             "id": "stale_asof",
-            "note": "기준 시점 경과. 최신 회계기간이 확보되지 않음"
+            "note": "기준 시점 경과. **창 종료일이 실행 기준일(run.as_of)로부터 임계를 넘으면** 걸린다. 관측 basis.period_basis 로 임계를 고른다.",
+            "thresholds_months": {
+              "ttm": 6,
+              "quarterly": 6,
+              "annual": 16
+            },
+            "basis_map": {
+              "ttm": "ttm",
+              "quarterly_yoy": "quarterly",
+              "quarterly": "quarterly",
+              "annual": "annual"
+            },
+            "measured_from": "관측 period.end (없으면 as_of)",
+            "why_not_single_threshold": "**보고 주기에 상대적으로 둔다.** 6 하나로 두면 연간 신고자가 상시 걸려 period_basis_not_ttm 과 중복되고, FPI 라는 사실 하나로 두 번 깎게 된다(G1-TTM-26 이 금지한 것). 16 하나로 두면 분기 신고자가 10개월 묵어도 안 걸린다.",
+            "why_16": "연간은 12 + 4 다. 다음 회계연도가 닫히고 20-F 가 제출될 때까지 최신 FY 가 자연히 나이 드는 최대치이고, 그 밖은 제출 지연이거나 수집 공백이다.",
+            "why_6": "분기는 3 + 여유다.",
+            "decided_at": "2026-09-11",
+            "decided_by": "설계진행",
+            "why_it_exists": "**이 조건의 존재 이유가 TSM 이었다.** F6-REG-28 직전까지 TSM 의 최신 회계기간은 FY2024 로 기준일 대비 20개월이었는데 조건이 한 번도 걸리지 않았다 — 선언만 있고 `_p4()` 가 읽지 않았기 때문이다. 임계값도 선언돼 있지 않았다. TSM FY2025 로 8개월이 되며 현재 12개사는 1~8개월이라 아무도 걸리지 않지만, **걸릴 일이 없다는 것과 검사가 없다는 것은 다르다.**"
           }
         ]
       },
@@ -389,19 +407,40 @@
       "private_score_mode": "pending_rule_decision",
       "private_note": "비상장 밴드는 미정이다(C-12: 상장사 PER 구간 재사용 금지). 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다. 밴드가 정해지기 전에 정성 점수를 받는 것도 하지 않는다 — 자리를 만들어 두되 비워 둔다.",
       "fx": {
-        "status": "source_listed_pending_backfill_limit",
-        "rate_source_host": "www.federalreserve.gov",
-        "release": "H.10 Foreign Exchange Rates — 일별 뉴욕 정오 매입률, 주간 게시",
-        "basis": "시총 기준일 현물환율. 공시 환산치는 교차 검증용으로만 둔다(F6-FX-16)",
-        "date_fields": {
-          "price_date": "시총 기준일",
-          "fx_rate_date": "실제로 쓴 환율의 게시 일자",
-          "fx_backfill_days": "price_date 와 fx_rate_date 의 차이(일)",
-          "note": "H.10 이 주간 게시라 시총 기준일 당일 값이 없을 수 있다. 두 날짜가 다를 수 있다는 사실 자체를 자료에 남긴다. 하나로 합치면 어느 날 환율을 썼는지 사후에 알 수 없다."
+        "status": "rule_revised_2026_09_11",
+        "priority": [
+          "issuer_declared_convenience_rate",
+          "h10_spot_at_price_date"
+        ],
+        "rule": "P1·P2 의 USD 환산은 **발행사가 20-F 에 선언한 편의환산 환율**을 우선하고, 선언 환율이 없는 발행사에만 연준 H.10 현물환율을 쓴다. 어느 쪽이든 **당해와 전년을 같은 환율로 환산**하고, 다른 환율을 썼을 때 밴드가 갈리는지 확인해 근거란에 남긴다.",
+        "same_rate_for_both_periods": {
+          "rule": "P3 의 분자·분모는 같은 환율로 환산한다. 그래야 환율이 상쇄돼 성장률이 현지통화와 같아진다.",
+          "why": "**공시 USD 환산치를 두 해 그대로 쓰면 안 된다.** 두 해의 편의환산 환율이 서로 다른 20-F 에서 오기 때문이다. alibaba 는 6.8980 대 7.2567 이라 성장률이 +2.742% 대신 +8.085% 가 되어 밴드가 -3 에서 -2 로 뜨고, tsmc(FY2024 기준)는 32.79 대 30.62 라 +33.888% 대신 +25.028% 가 되어 0 에서 -1 로 뜬다. **둘 다 한 칸이다**(F6-REG-28 verify_inputs.py [3])."
         },
-        "backfill_limit_days": 7,
-        "backfill_limit_status": "pending",
-        "backfill_limit_note": "잠정값이다. NTM FX-SOURCE-19 가 7일을 제안했고 실제 게시 지연 분포를 보고 정하는 편이 낫다. 다만 한도 없이 두면 무한 후퇴가 되므로 잠정값을 두고 pending 으로 표시한다. 실측 후 확정한다."
+        "why_issuer_declared_first": [
+          "시총은 시점값이고 매출은 기간값이다. 기간값을 그 기간보다 여러 달 뒤의 현물환율로 환산하는 것이 더 정합적이라는 근거가 없고, 발행사가 쓰는 기말환율이 오히려 그 기간에 가깝다.",
+          "발행사 자체 USD 공시와 맞아떨어져 **우리 수치를 20-F 에 대조할 수 있다.** TSM 세 항목이 상대오차 0.0001% 이내, BABA 세 항목이 0.0031% 이내로 맞는다.",
+          "환율 수집기가 아직 없는데 **선언 환율은 그 자체가 H.10 값**이다. TSM·BABA 20-F 가 둘 다 H.10 을 출처로 명시한다. 외부 출처를 새로 끌어오지 않고도 같은 기준을 쓰게 된다.",
+          "환율 선택이 점수를 가르는지도 확인했다. TSM P2 는 32.79 로 23.485, 31.37 로 22.468 이고 **둘 다 -2** 다."
+        ],
+        "band_sensitivity_note": "환율을 달리 잡았을 때 밴드가 갈리면 그 사실을 관측 basis 에 남긴다. 갈리지 않으면 환율 선택이 점수를 만들지 않았다는 뜻이고 그것도 남긴다.",
+        "no_conversion_breaks_p2": "**환산 자체를 빼면 P2 가 무너진다.** P2 는 USD 시총을 매출로 나누므로 TWD 를 그대로 넣으면 TSM 의 EV/Sales 가 23.485 대신 0.716 이 되어 밴드가 -2 에서 0 으로 **두 칸** 뜬다. 31배다.",
+        "fallback_h10": {
+          "rate_source_host": "www.federalreserve.gov",
+          "release": "H.10 Foreign Exchange Rates — 일별 뉴욕 정오 매입률, 주간 게시",
+          "when": "발행사가 편의환산 환율을 선언하지 않은 경우에만",
+          "date_fields": {
+            "price_date": "시총 기준일",
+            "fx_rate_date": "실제로 쓴 환율의 게시 일자",
+            "fx_backfill_days": "price_date 와 fx_rate_date 의 차이(일)",
+            "note": "H.10 이 주간 게시라 시총 기준일 당일 값이 없을 수 있다. 두 날짜가 다를 수 있다는 사실 자체를 자료에 남긴다. 하나로 합치면 어느 날 환율을 썼는지 사후에 알 수 없다."
+          },
+          "backfill_limit_days": 7,
+          "backfill_limit_status": "pending",
+          "backfill_limit_note": "잠정값이다. NTM FX-SOURCE-19 가 7일을 제안했고 실제 게시 지연 분포를 보고 정하는 편이 낫다. 다만 한도 없이 두면 무한 후퇴가 되므로 잠정값을 두고 pending 으로 표시한다. 실측 후 확정한다."
+        },
+        "supersedes": "f6-status-2026-09-10 의 '시총 기준일 현물환율. 공시 환산치는 교차 검증용으로만 둔다' 를 대체한다(설계진행 2026-09-11 확정). 교차 검증은 반대 방향으로 유지된다 — 우리가 쓴 선언 환율이 H.10 같은 일자 값과 맞는지 본다.",
+        "decided_at": "2026-09-11"
       },
       "ttm_window": {
         "anchor": "latest_available_quarter_including_derived_q4",

@@ -269,7 +269,7 @@ def compute_f6(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     # v1.7 은 F6 를 네 파라미터로 분해한다. v1.5·v1.6 실행은 아래 per_band 경로를 그대로 쓴다.
     if rules.f6_mode == "parameters":
         if company["listed"]:
-            return calc_f6_params.compute_listed(company, obs, judgment, rules)
+            return calc_f6_params.compute_listed(company, obs, judgment, rules, run)
         return calc_f6_params.compute_private(company, obs, judgment, rules)
     if company["listed"]:
         return _listed(company, obs, judgment, rules, run)

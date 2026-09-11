@@ -3537,7 +3537,25 @@
         "implied_rate": 6.898,
         "xbrl_tag": "us-gaap:Revenues",
         "accession": "0001193125-26-231755",
-        "form": "20-F"
+        "form": "20-F",
+        "band_sensitivity": {
+          "parameter": "P2",
+          "used": {
+            "rate": 6.898,
+            "value": 1.701,
+            "band": 0
+          },
+          "alternative": {
+            "rate": 7.2567,
+            "label": "FY2025 20-F 선언 환율",
+            "value": 1.79,
+            "band": 0
+          },
+          "band_differs": false,
+          "note": "**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다.",
+          "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."
+        },
+        "fx_rule": "발행사 선언 편의환산 환율 우선 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)"
       },
       "raw": "FY2026 매출 RMB1,023,670M (US$148,401M)",
       "note": "OBS-REG-25 / G1-TTM-26. **연간 기준이다.** F6 P4 가 기간 단위 TTM 아님으로 한 칸 내린다. 같은 한계를 F9 에서 또 세지 않는다"
@@ -3630,11 +3648,29 @@
         "fx_quote": "CNY per USD",
         "fx_rate_as_of": "2026-03-31",
         "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
         "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
         "cross_check_filed_usd": {
           "filed": 15018000000,
           "recomputed": 15017686286.0,
           "rel_diff": 2.088920761974059e-05
+        },
+        "band_sensitivity": {
+          "parameter": "P1",
+          "used": {
+            "rate": 6.898,
+            "value": 17.979,
+            "band": 0
+          },
+          "alternative": {
+            "rate": 7.2567,
+            "label": "FY2025 20-F 선언 환율",
+            "value": 18.914,
+            "band": 0
+          },
+          "band_differs": false,
+          "note": "**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다.",
+          "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."
         }
       },
       "raw": "2025-04-01~2026-03-31 103,592,000,000 CNY",
@@ -3666,6 +3702,7 @@
         "fx_quote": "CNY per USD",
         "fx_rate_as_of": "2026-03-31",
         "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
         "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
         "same_rate_as_current": true,
         "why_not_filed_usd": "FY2025 20-F 의 공시 USD 137,300 은 그 해 환율 7.2567 로 환산된 값이다. 그대로 쓰면 성장률이 +2.74% 대신 +8.09% 가 되어 밴드가 한 칸 뜬다."
@@ -5040,11 +5077,29 @@
         "fx_quote": "TWD per USD",
         "fx_rate_as_of": "2025-12-31",
         "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
         "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
         "cross_check_filed_usd": {
           "filed": 121423500000,
           "recomputed": 121423471470.0,
           "rel_diff": 2.3496640353782904e-07
+        },
+        "band_sensitivity": {
+          "parameter": "P2",
+          "used": {
+            "rate": 31.37,
+            "value": 17.072,
+            "band": -1
+          },
+          "alternative": {
+            "rate": 32.79,
+            "label": "FY2024 20-F 선언 환율",
+            "value": 17.845,
+            "band": -1
+          },
+          "band_differs": false,
+          "note": "**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다.",
+          "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."
         }
       },
       "raw": "FY2025 매출 NT$3,809,054.3백만 (US$121,423.5백만)",
@@ -5092,6 +5147,7 @@
         "fx_quote": "TWD per USD",
         "fx_rate_as_of": "2025-12-31",
         "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
         "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
         "same_rate_as_current": true,
         "why_not_filed_usd": "FY2024 20-F 의 공시 USD 70,598.8 은 그 해 환율 30.62 로 환산된 값이다. 그대로 쓰면 성장률이 +33.89% 대신 +25.03% 가 되어 밴드가 한 칸 뜬다."
@@ -5141,11 +5197,29 @@
         "fx_quote": "TWD per USD",
         "fx_rate_as_of": "2025-12-31",
         "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
         "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
         "cross_check_filed_usd": {
           "filed": 54036500000,
           "recomputed": 54036496653.0,
           "rel_diff": 6.194233448497702e-08
+        },
+        "band_sensitivity": {
+          "parameter": "P1",
+          "used": {
+            "rate": 31.37,
+            "value": 39.788,
+            "band": -1
+          },
+          "alternative": {
+            "rate": 32.79,
+            "label": "FY2024 20-F 선언 환율",
+            "value": 41.589,
+            "band": -1
+          },
+          "band_differs": false,
+          "note": "**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다.",
+          "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."
         }
       },
       "raw": "FY2025 순이익 NT$1,695,124.9백만",
@@ -5193,6 +5267,7 @@
         "fx_quote": "TWD per USD",
         "fx_rate_as_of": "2025-12-31",
         "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
         "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
         "cross_check_filed_usd": {
           "filed": 61717900000,

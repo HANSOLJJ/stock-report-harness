@@ -358,11 +358,23 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
     seen: set[str] = set()
     for idx, cond in enumerate(p4["conditions"]):
         where = f"rules.policies.f6.p4.conditions[{idx}]"
-        _expect_keys(cond, ["id", "note"], where, optional=["threshold"])
+        _expect_keys(cond, ["id", "note"], where,
+                     optional=["threshold", "thresholds_months", "basis_map", "measured_from",
+                               "why_not_single_threshold", "why_16", "why_6", "why_it_exists",
+                               "decided_at", "decided_by"])
         # 코드가 구현하지 않은 조건 id 를 규칙에 적어 두면 선언만 있고 걸리지 않는 조건이 생긴다.
         _require(cond["id"] in P4_CONDITION_IDS, f"{where}: 구현되지 않은 조건 id {cond['id']!r}")
         _require(cond["id"] not in seen, f"{where}: 조건 id 중복 {cond['id']!r}")
         seen.add(cond["id"])
+        # 임계가 선언되면 읽을 수 있는 형태여야 한다. stale_asof 는 보고 주기마다 임계가 다르다.
+        if "thresholds_months" in cond:
+            tm = cond["thresholds_months"]
+            _require(isinstance(tm, dict) and tm, f"{where}.thresholds_months: 비어 있을 수 없음")
+            for key, months in tm.items():
+                _require(isinstance(months, int) and months > 0,
+                         f"{where}.thresholds_months.{key}: 양의 정수 필요 ({months!r})")
+            for src, dst in (cond.get("basis_map") or {}).items():
+                _require(dst in tm, f"{where}.basis_map.{src}: thresholds_months 에 없는 기준 {dst!r}")
 
     tracks = f6.get("tracks")
     _require(isinstance(tracks, dict) and tracks, "rules.policies.f6.tracks: 비어 있을 수 없음")

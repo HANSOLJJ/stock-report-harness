@@ -220,6 +220,104 @@ class TestF6P4(unittest.TestCase):
 
 
 @unittest.skipIf(RULES_V17 is None, _SKIP)
+class TestF6StaleAsOf(unittest.TestCase):
+    """기준 시점 경과. **임계는 보고 주기에 상대적이다** — ttm·quarterly 6개월, annual 16개월.
+
+    이 조건은 v1.7 에 선언돼 있었으나 `_p4()` 가 읽지 않았고 임계값도 없었다. 그래서 F6-REG-28
+    직전까지 TSM 이 20개월 묵어 있는 동안 한 번도 걸리지 않았다. 선언에 소비자를 붙이고 여기서 고정한다.
+    """
+
+    def build(self, *, period_basis: str, end: str, as_of: str = "2026-09-02", cid: str = "acme",
+              share_basis: str | None = None, **over):
+        items = []
+
+        def add(metric, value, basis=None, period=None):
+            o = obs(metric, value, cid=cid, basis=basis)
+            o["period"] = period
+            items.append(o)
+
+        add("market_cap", over.get("market_cap", 1000.0))
+        add("net_cash", over.get("net_cash", 0.0))
+        add("net_income_ttm", over.get("net_income", 50.0))
+        add("operating_income_ttm", over.get("operating_income", 49.0))
+        per = {"start": "2025-01-01", "end": end}
+        add("revenue_ttm", over.get("revenue", 100.0), {"period_basis": period_basis}, per)
+        add("revenue_ttm_prior", over.get("revenue_prior", 80.0), {"period_basis": period_basis}, per)
+        r = dict(run())
+        r["as_of"] = as_of
+        return compute_f6(company(cid=cid, share_basis=share_basis), ObsLookup(items),
+                          JudgmentLookup([]), RULES_V17, r)
+
+    def stale(self, result):
+        return result["calc"]["p4"]["stale_asof"]
+
+    def test_thresholds_are_declared_per_reporting_cycle(self):
+        cond = {c["id"]: c for c in RULES_V17.f6_p4()["conditions"]}["stale_asof"]
+        self.assertEqual(cond["thresholds_months"], {"ttm": 6, "quarterly": 6, "annual": 16})
+        self.assertEqual(RULES_V17.f6_stale_months("ttm"), 6)
+        self.assertEqual(RULES_V17.f6_stale_months("quarterly_yoy"), 6)   # basis_map 을 탄다
+        self.assertEqual(RULES_V17.f6_stale_months("annual"), 16)
+
+    def test_ttm_hits_over_six_months(self):
+        ok = self.build(period_basis="ttm", end="2026-03-31")        # 5개월
+        self.assertNotIn("stale_asof", ok["calc"]["p4"]["conditions_hit"])
+        self.assertEqual(self.stale(ok)["months_elapsed"], 5)
+        bad = self.build(period_basis="ttm", end="2026-01-31")       # 7개월
+        self.assertIn("stale_asof", bad["calc"]["p4"]["conditions_hit"])
+        self.assertTrue(any("기준 시점 경과" in w for w in bad["warnings"]))
+
+    def test_boundary_is_strictly_greater(self):
+        """'초과' 다. 정확히 6개월이면 걸리지 않는다."""
+        six = self.build(period_basis="ttm", end="2026-03-02")
+        self.assertEqual(self.stale(six)["months_elapsed"], 6)
+        self.assertFalse(self.stale(six)["hit"])
+
+    def test_annual_uses_sixteen_not_six(self):
+        """**단일 임계는 안 된다.** 6 으로 두면 연간 신고자가 상시 걸려 FPI 를 두 번 깎는다."""
+        r = self.build(period_basis="annual", end="2025-12-31", share_basis="adr")   # 8개월
+        self.assertEqual(self.stale(r)["months_elapsed"], 8)
+        self.assertEqual(self.stale(r)["limit_months"], 16)
+        self.assertNotIn("stale_asof", r["calc"]["p4"]["conditions_hit"])
+        # 같은 8개월을 ttm 기준으로 신고했다면 걸린다 — 임계가 주기에 상대적이라는 뜻이다.
+        t = self.build(period_basis="ttm", end="2025-12-31")
+        self.assertIn("stale_asof", t["calc"]["p4"]["conditions_hit"])
+
+    def test_tsm_fy2024_would_have_been_caught(self):
+        """**이 조건의 존재 이유다.** FY2024 였다면 20개월로 걸렸다."""
+        r = self.build(period_basis="annual", end="2024-12-31", share_basis="adr")
+        self.assertEqual(self.stale(r)["months_elapsed"], 20)
+        self.assertTrue(self.stale(r)["hit"])
+        # 그래도 P4 는 한 칸이다. period_basis_not_ttm 과 겹쳐도 두 번 깎지 않는다.
+        self.assertEqual(set(r["calc"]["p4"]["conditions_hit"]), {"stale_asof", "period_basis_not_ttm"})
+        self.assertEqual(r["calc"]["p4"]["demotion_steps"], 1)
+
+    def test_skips_when_run_has_no_as_of(self):
+        """기준일을 모르면 지어내지 않는다."""
+        items = [obs(m, v, basis={"period_basis": "ttm"} if m == "revenue_ttm" else None)
+                 for m, v in (("market_cap", 1000.0), ("net_cash", 0.0), ("net_income_ttm", 50.0),
+                              ("revenue_ttm", 100.0), ("revenue_ttm_prior", 80.0))]
+        r = compute_f6(company(), ObsLookup(items), JudgmentLookup([]), RULES_V17, run())
+        self.assertFalse(r["calc"]["p4"]["stale_asof"]["checked"])
+        self.assertNotIn("stale_asof", r["calc"]["p4"]["conditions_hit"])
+
+    def test_current_run_has_nobody_stale(self):
+        """현재 실행에서는 아무도 안 걸린다. **걸릴 일이 없는 것과 검사가 없는 것은 다르다.**"""
+        import json
+        run_dir = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-obsreg"
+        results = json.loads((run_dir / "results.json").read_text(encoding="utf-8"))
+        checked, hit = 0, []
+        for c in results["companies"]:
+            stale = ((c["factors"]["F6"].get("calc") or {}).get("p4") or {}).get("stale_asof") or {}
+            if stale.get("checked"):
+                checked += 1
+                self.assertLessEqual(stale["months_elapsed"], 8)
+                if stale.get("hit"):
+                    hit.append(c["company_id"])
+        self.assertEqual(checked, 12, "상장 12개사 전부 검사돼야 한다 — 선언만 있고 안 읽히면 안 된다")
+        self.assertEqual(hit, [])
+
+
+@unittest.skipIf(RULES_V17 is None, _SKIP)
 class TestF6Private(unittest.TestCase):
     """비상장은 배수만 계산하고 점수를 만들지 않는다. 밴드가 미정이다."""
 
@@ -291,17 +389,42 @@ class TestF6FixRoundSpec(unittest.TestCase):
         self.assertGreaterEqual(len(c["priority"]), 3)
 
     def test_fx_separates_price_date_and_rate_date(self):
-        fx = self.f6["fx"]
-        self.assertEqual(fx["rate_source_host"], "www.federalreserve.gov")
+        """H.10 을 쓸 때는 시총 기준일과 환율 게시일을 나눠 남긴다.
+
+        **F6-REG-28 에서 H.10 은 대체 경로가 됐다**(발행사 선언 환율 우선). 그래서 이 계약은
+        `fallback_h10` 아래로 옮겨졌고, 옮겨졌을 뿐 없어지지 않았다는 것을 여기서 고정한다.
+        """
+        fb = self.f6["fx"]["fallback_h10"]
+        self.assertEqual(fb["rate_source_host"], "www.federalreserve.gov")
         for key in ("price_date", "fx_rate_date", "fx_backfill_days"):
-            self.assertIn(key, fx["date_fields"])
+            self.assertIn(key, fb["date_fields"])
 
     def test_fx_backfill_limit_is_pending(self):
         """한도 없이 두면 무한 후퇴가 된다. 잠정값을 두되 확정이 아님을 표시한다."""
+        fb = self.f6["fx"]["fallback_h10"]
+        self.assertEqual(fb["backfill_limit_status"], "pending")
+        self.assertIsInstance(fb["backfill_limit_days"], int)
+        self.assertIn("잠정", fb["backfill_limit_note"])
+
+    def test_fx_prefers_issuer_declared_rate(self):
+        """**발행사 선언 환율이 먼저다.** H.10 은 선언이 없는 발행사에만 쓴다 (F6-REG-28 확정)."""
         fx = self.f6["fx"]
-        self.assertEqual(fx["backfill_limit_status"], "pending")
-        self.assertIsInstance(fx["backfill_limit_days"], int)
-        self.assertIn("잠정", fx["backfill_limit_note"])
+        self.assertEqual(fx["priority"], ["issuer_declared_convenience_rate", "h10_spot_at_price_date"])
+        self.assertIn("발행사", fx["rule"])
+        self.assertIn("f6-status-2026-09-10", fx["supersedes"])
+
+    def test_fx_requires_same_rate_for_both_periods(self):
+        """두 해에 서로 다른 환율을 쓰면 P3 성장률 밴드가 뜬다. 그 사례가 근거에 남아야 한다."""
+        same = self.f6["fx"]["same_rate_for_both_periods"]
+        self.assertIn("같은 환율", same["rule"])
+        for token in ("6.8980", "7.2567", "32.79", "30.62", "한 칸"):
+            self.assertIn(token, same["why"], f"{token} 근거가 빠졌다")
+
+    def test_fx_records_that_skipping_conversion_breaks_p2(self):
+        """P3 만의 문제가 아니라는 것을 규칙이 기억해야 한다."""
+        note = self.f6["fx"]["no_conversion_breaks_p2"]
+        self.assertIn("0.716", note)
+        self.assertIn("두 칸", note)
 
     def test_h10_listed_with_permission_distinction(self):
         entry = next(e for e in self.sources["allowed"] if e["host"] == "www.federalreserve.gov")

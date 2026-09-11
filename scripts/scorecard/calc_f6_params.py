@@ -17,6 +17,7 @@
 """
 from __future__ import annotations
 
+from datetime import date
 from typing import Any
 
 from .inputs import ObsLookup, factor_result, obs_note, pending_info
@@ -78,8 +79,40 @@ def _nonop_share(cid: str, obs: ObsLookup, warnings: list[str]) -> tuple[float |
     return None, detail
 
 
+def _months_elapsed(end: str, as_of: str) -> int:
+    """**완결된 개월 수**다. 달 번호 차로 세면 한 달 더 나온다(2024-12-31→2026-09-02 은 20 이지 21 이 아니다)."""
+    e, a = date.fromisoformat(end), date.fromisoformat(as_of)
+    months = (a.year - e.year) * 12 + (a.month - e.month)
+    return months - (1 if a.day < e.day else 0)
+
+
+def _stale_asof(rev_obs: dict[str, Any] | None, period_basis: str | None, rules: RuleSet,
+                run: dict[str, Any] | None) -> dict[str, Any]:
+    """기준 시점 경과. **임계는 보고 주기에 상대적이다**(ttm·quarterly 6개월, annual 16개월).
+
+    이 조건은 v1.7 에 선언돼 있었으나 읽는 코드가 없었다 — 임계값도 없었다. 그래서 F6-REG-28 직전까지
+    TSM 이 20개월 묵어 있는 동안 한 번도 걸리지 않았다(F6-REG-28 에서 보고). 여기가 그 소비자다.
+    """
+    out: dict[str, Any] = {"checked": False}
+    limit = rules.f6_stale_months(period_basis)
+    as_of = (run or {}).get("as_of")
+    if limit is None or not as_of or rev_obs is None:
+        out["reason"] = ("임계 선언 없음" if limit is None else
+                         "run.as_of 없음" if not as_of else "매출 관측 없음")
+        return out
+    end = ((rev_obs.get("period") or {}).get("end")) or rev_obs.get("as_of")
+    if not end:
+        out["reason"] = "창 종료일을 알 수 없음"
+        return out
+    months = _months_elapsed(end, as_of)
+    out.update({"checked": True, "period_end": end, "as_of": as_of, "months_elapsed": months,
+                "limit_months": limit, "period_basis": period_basis, "hit": months > limit})
+    return out
+
+
 def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
-        warnings: list[str]) -> dict[str, Any]:
+        warnings: list[str], rev_obs: dict[str, Any] | None = None,
+        period_basis: str | None = None, run: dict[str, Any] | None = None) -> dict[str, Any]:
     spec = rules.f6_p4()
     declared = {c["id"]: c for c in spec.get("conditions", [])}
     hit: list[str] = []
@@ -91,6 +124,14 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
         detail.update(d)
         if value is not None and abs(value) >= float(cond.get("threshold", 0.30)):
             hit.append("nonop_share")
+
+    if "stale_asof" in declared:
+        stale = _stale_asof(rev_obs, period_basis, rules, run)
+        detail["stale_asof"] = stale
+        if stale.get("hit"):
+            hit.append("stale_asof")
+            warnings.append(f"기준 시점 경과 ⚠️ 창 종료 {stale['period_end']} 이 기준일 {stale['as_of']} "
+                            f"로부터 {stale['months_elapsed']}개월 — {period_basis} 임계 {stale['limit_months']}개월 초과")
 
     # 트랙이 구조적으로 지는 조건(연간 대체·이력 부족)은 규칙이 선언한 대로 자동 적용한다.
     for auto in track.get("auto_p4_conditions", []):
@@ -127,7 +168,7 @@ def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
 
 
 def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | None,
-                   rules: RuleSet) -> dict[str, Any]:
+                   rules: RuleSet, run: dict[str, Any] | None = None) -> dict[str, Any]:
     cid = company["company_id"]
     warnings: list[str] = []
     obs_ids: list[str] = []
@@ -179,7 +220,7 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
                              observation_ids=obs_ids, calc=calc, warnings=warnings,
                              pending=pending_info("data", "; ".join(missing)))
 
-    p4 = _p4(cid, obs, rules, track, warnings)
+    p4 = _p4(cid, obs, rules, track, warnings, rev_obs=rev_obs, period_basis=basis, run=run)
     calc["p4"] = p4
     calc["subtotal_before_p4"] = subtotal
     total = subtotal - p4["demotion_steps"]

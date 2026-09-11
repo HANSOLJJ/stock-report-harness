@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "c8590f84792a98e326bbe2e8d6a45b5584ed44a66fb0488586bb2e5a8e4c22b5",
-    "observations": "151426ae829b91e44a5f2413f63ce47df68ef96e45c7ee3490f22924330d860a",
+    "run": "a4a0dc9e3947ee9f21bbc2cf972e456a241bd3ae6fc88415bf717aa744cba68e",
+    "observations": "98ff63bceae713933531d5c3bd0ac489bfc43d9ce67f17cb3abae318f480da31",
     "judgments": "5dc79ac34c6172670ab8a0480156d34bf15a40b599b5198c2b101e641f76bec6",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
-    "rules": "58ad94e4e966bf61c27ef5e06da3074b8c7fe5fb12fe7d35c952d0fe9ecf7fb6"
+    "rules": "b6dad5435d7ed21cd799424c0ffac5e6a01779ceb5925912a83c25c5d1ed5768"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -180,6 +180,15 @@
               "nonop_share_inputs": {
                 "net_income_ttm": 244205000000.0,
                 "operating_income_ttm": 147628000000.0
+              },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-30",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
               },
               "conditions_hit": [
                 "nonop_share"
@@ -443,6 +452,15 @@
               "nonop_share_inputs": {
                 "net_income_ttm": 135281000000.0,
                 "operating_income_ttm": 93712000000.0
+              },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-30",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
               },
               "conditions_hit": [
                 "nonop_share"
@@ -729,6 +747,15 @@
                 "net_income_ttm": 68098000000.0,
                 "operating_income_ttm": 86926000000.0
               },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-30",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
+              },
               "conditions_hit": [],
               "demotion_steps": 0
             },
@@ -988,6 +1015,15 @@
               "nonop_share_inputs": {
                 "net_income_ttm": 133749000000.0,
                 "operating_income_ttm": 155237000000.0
+              },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-30",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
               },
               "conditions_hit": [],
               "demotion_steps": 0
@@ -1250,6 +1286,15 @@
                 "net_income_ttm": 54036496653.0,
                 "operating_income_ttm": 61717937520.0
               },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2025-12-31",
+                "as_of": "2026-09-02",
+                "months_elapsed": 8,
+                "limit_months": 16,
+                "period_basis": "annual",
+                "hit": false
+              },
               "conditions_hit": [
                 "period_basis_not_ttm"
               ],
@@ -1511,6 +1556,15 @@
               "nonop_share_inputs": {
                 "net_income_ttm": 15017686286.0,
                 "operating_income_ttm": 7270000000.0
+              },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-03-31",
+                "as_of": "2026-09-02",
+                "months_elapsed": 5,
+                "limit_months": 16,
+                "period_basis": "annual",
+                "hit": false
               },
               "conditions_hit": [
                 "nonop_share",
@@ -2018,6 +2072,15 @@
                 "net_income_ttm": 128930000000.0,
                 "operating_income_ttm": 154859000000.0
               },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-27",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
+              },
               "conditions_hit": [],
               "demotion_steps": 0
             },
@@ -2279,6 +2342,15 @@
                 "net_income_ttm": 192879000000.0,
                 "operating_income_ttm": 197579000000.0
               },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-07-26",
+                "as_of": "2026-09-02",
+                "months_elapsed": 1,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
+              },
               "conditions_hit": [],
               "demotion_steps": 0
             },
@@ -2539,6 +2611,15 @@
                 "net_income_ttm": 3016692000.0,
                 "operating_income_ttm": 2634652000.0
               },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-30",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
+              },
               "conditions_hit": [],
               "demotion_steps": 0
             },
@@ -2762,6 +2843,15 @@
               "nonop_share_inputs": {
                 "net_income_ttm": -8218000000.0,
                 "operating_income_ttm": -3732000000.0
+              },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-30",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "quarterly_yoy",
+                "hit": false
               },
               "conditions_hit": [
                 "nonop_share",
@@ -3050,6 +3140,15 @@
                 "net_income_ttm": 3804000000.0,
                 "operating_income_ttm": 4372000000.0
               },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-06-30",
+                "as_of": "2026-09-02",
+                "months_elapsed": 2,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
+              },
               "conditions_hit": [],
               "demotion_steps": 0
             },
@@ -3309,6 +3408,15 @@
               "nonop_share_inputs": {
                 "net_income_ttm": 17087000000.0,
                 "operating_income_ttm": 20606000000.0
+              },
+              "stale_asof": {
+                "checked": true,
+                "period_end": "2026-05-31",
+                "as_of": "2026-09-02",
+                "months_elapsed": 3,
+                "limit_months": 6,
+                "period_basis": "ttm",
+                "hit": false
               },
               "conditions_hit": [],
               "demotion_steps": 0
@@ -3801,5 +3909,5 @@
     "C-12"
   ],
   "warnings_count": 163,
-  "results_hash": "18c317885b45d1e3dd7eb60a1b647b3d5d2438b769c590fc19f52ff0a1e5a8a7"
+  "results_hash": "f26d89ac478dab0b23f91ccbb001fe5cbd770a520eb2597c1efcb73ac8423cd4"
 }

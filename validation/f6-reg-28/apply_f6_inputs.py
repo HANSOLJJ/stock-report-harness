@@ -125,11 +125,59 @@ def usd(value: float, cid: str) -> float:
     return round(value / FX[cid]["rate"], 0)
 
 
-def fx_basis(cid: str, local_value: float, cross_check: float | None = None) -> dict:
+# 밴드 민감도 대조에 쓸 대안 환율. 같은 발행사가 다른 연도 20-F 에서 선언한 값이다.
+ALT_RATE = {"tsmc": (32.79, "FY2024 20-F 선언 환율"), "alibaba": (7.2567, "FY2025 20-F 선언 환율")}
+# P1·P2 밴드 (v1.7)
+P1_BANDS = ((25, 0), (45, -1))
+P2_BANDS = ((8, 0), (20, -1))
+
+
+def _upper_band(value: float, bands) -> int:
+    for upper, score in bands:
+        if value < upper:
+            return score
+    return -2
+
+
+def band_sensitivity(cid: str, metric: str, local_value: float, obs_items: list[dict]) -> dict | None:
+    """**다른 환율을 썼다면 밴드가 갈렸는가.** 개정된 fx 규칙이 근거란에 남기라고 한 것이다.
+
+    P3 는 분자·분모가 같은 환율이라 상쇄돼 환율과 무관하다. 갈릴 수 있는 것은 P2(매출)와 P1(순이익)이다.
+    """
+    if metric not in ("revenue_ttm", "net_income_ttm") or cid not in ALT_RATE:
+        return None
+    got = {(o["company_id"], o["metric"]): o["value"] for o in obs_items if o["value"] is not None}
+    mc, nc = got.get((cid, "market_cap")), got.get((cid, "net_cash"))
+    if mc is None or nc is None:
+        return None
+    alt_rate, alt_label = ALT_RATE[cid]
+    rate = FX[cid]["rate"]
+    if metric == "revenue_ttm":
+        used, alt = (mc - nc) / (local_value / rate), (mc - nc) / (local_value / alt_rate)
+        bands, pid = P2_BANDS, "P2"
+    else:
+        used, alt = mc / (local_value / rate), mc / (local_value / alt_rate)
+        bands, pid = P1_BANDS, "P1"
+    b_used, b_alt = _upper_band(used, bands), _upper_band(alt, bands)
+    return {"parameter": pid,
+            "used": {"rate": rate, "value": round(used, 3), "band": b_used},
+            "alternative": {"rate": alt_rate, "label": alt_label, "value": round(alt, 3), "band": b_alt},
+            "band_differs": b_used != b_alt,
+            "note": ("**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다."
+                     if b_used == b_alt else
+                     "**환율 선택이 밴드를 가른다.** 어느 환율을 쓸지가 점수를 만든다는 뜻이므로 "
+                     "선언 환율 우선 원칙의 근거를 다시 확인해야 한다."),
+            "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."}
+
+
+def fx_basis(cid: str, local_value: float, cross_check: float | None = None,
+             metric: str | None = None, obs_items: list[dict] | None = None) -> dict:
     f = FX[cid]
     out = {"original_currency": f["currency"], "original_value": local_value,
            "fx_rate": f["rate"], "fx_quote": f"{f['currency']} per USD", "fx_rate_as_of": f["as_of"],
            "fx_rate_source": f["declared_in"],
+           "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 "
+                      "(v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
            "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 "
                                    "20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다"
                                    "(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 "
@@ -138,6 +186,10 @@ def fx_basis(cid: str, local_value: float, cross_check: float | None = None) -> 
         got = local_value / f["rate"]
         out["cross_check_filed_usd"] = {"filed": cross_check, "recomputed": round(got, 0),
                                         "rel_diff": abs(got - cross_check) / abs(cross_check)}
+    if metric and obs_items is not None:
+        sens = band_sensitivity(cid, metric, local_value, obs_items)
+        if sens:
+            out["band_sensitivity"] = sens
     return out
 
 
@@ -155,6 +207,8 @@ def main() -> int:
     print(f"F6-REG-28 — {RUN_ID} 에 F6 입력 등록 (승인 실행 미변경 · 신규 네트워크 없음)")
     print(bar)
 
+    # 밴드 민감도 대조에 시총·순현금이 필요해 관측을 먼저 읽는다.
+    obs = load_json_strict(RUN / "observations.json")
     new_obs: list[dict] = []
 
     def add(cid: str, metric: str, value, *, as_of: str, period: dict | None, basis: dict,
@@ -188,7 +242,8 @@ def main() -> int:
                       "months_since_period_end": 8,
                       "staleness_note": "기준일 2026-09-02 대비 8개월 경과. FY2024 를 쓰면 20개월이었다."}
             add(cid, "revenue_ttm", usd(t["revenue_twd"], cid), as_of=period["end"], period=period,
-                basis={**common, **fx_basis(cid, t["revenue_twd"], t["filed_usd"]["revenue"])},
+                basis={**common, **fx_basis(cid, t["revenue_twd"], t["filed_usd"]["revenue"],
+                                            "revenue_ttm", obs["items"])},
                 source_id=src, raw=f"FY2025 매출 NT${t['revenue_twd']/1e6:,.1f}백만 (US${t['filed_usd']['revenue']/1e6:,.1f}백만)",
                 note="F6-REG-28 / TSM-EDGAR-29. **EDGAR 원문 우회 건**이다 — basis.bypass 에 사유·검산·복귀 조건을 남겼다")
             add(cid, "revenue_ttm_prior", usd(t["prior_revenue_twd"], cid),
@@ -200,7 +255,8 @@ def main() -> int:
                 source_id=src, raw=f"FY2024 매출 NT${t['prior_revenue_twd']/1e6:,.1f}백만 (같은 표 둘째 열)",
                 note="F6-REG-28. **당해와 같은 환율 31.37 로 환산**했다. 공시 USD 를 그대로 쓰지 않았다")
             add(cid, "net_income_ttm", usd(t["net_income_twd"], cid), as_of=period["end"], period=period,
-                basis={**common, **fx_basis(cid, t["net_income_twd"], t["filed_usd"]["net_income"])},
+                basis={**common, **fx_basis(cid, t["net_income_twd"], t["filed_usd"]["net_income"],
+                                            "net_income_ttm", obs["items"])},
                 source_id=src, raw=f"FY2025 순이익 NT${t['net_income_twd']/1e6:,.1f}백만",
                 note="F6-REG-28 / TSM-EDGAR-29. 손익계산서 NET INCOME 행")
             add(cid, "operating_income_ttm", usd(t["operating_income_twd"], cid), as_of=period["end"],
@@ -280,7 +336,7 @@ def main() -> int:
                                                   "한 칸 뜬다."}
                 add(cid, metric, usd(mm["value"], cid), as_of=mm["period"]["end"], period=mm["period"],
                     basis={"period_basis": "annual", "tag": mm["tag"], "accession": "0001193125-26-231755",
-                           "form": "20-F", **fx_basis(cid, mm["value"], filed), **extra},
+                           "form": "20-F", **fx_basis(cid, mm["value"], filed, metric, obs["items"]), **extra},
                     source_id="SRC-SEC-BABA-FACTS",
                     raw=f"{mm['period']['start']}~{mm['period']['end']} {mm['value']:,} CNY",
                     note="F6-REG-28. **당해와 같은 환율 6.8980 으로 환산**했다")
@@ -314,7 +370,6 @@ def main() -> int:
                                       else "F6-SPEC-18 수집기"))
 
     # ---------------------------------------------------------------- 반영
-    obs = load_json_strict(RUN / "observations.json")
     by_id = {o["observation_id"]: o for o in obs["items"]}
     superseded = {
         "spacex-xai.operating_margin_ttm.v15": "spacex-xai.operating_margin_ttm.f6reg28",
@@ -333,6 +388,22 @@ def main() -> int:
 
     # TSM 은 OBS-REG-25 에서 등록한 것이 없다. alibaba 의 revenue_ttm 은 그대로 쓴다(같은 20-F·같은 환율).
     validate_observations(obs, registry, RUN_ID)
+
+    # ---------------------------------------------------------------- 앞 차수 관측에도 밴드 민감도
+    # alibaba revenue_ttm 은 OBS-REG-25 에서 등록됐다. 개정된 fx 규칙이 "다른 환율을 썼을 때 밴드가
+    # 갈리는지 근거란에 남기라"고 하므로 P2 입력인 이 관측에도 같은 기록을 붙인다.
+    prior = by_id.get("alibaba.revenue_ttm.obsreg25")
+    if prior is not None and "band_sensitivity" not in (prior.get("basis") or {}):
+        sens = band_sensitivity("alibaba", "revenue_ttm", 1_023_670_000_000, obs["items"])
+        if sens:
+            prior["basis"]["band_sensitivity"] = sens
+            prior["basis"]["fx_rule"] = ("발행사 선언 편의환산 환율 우선 "
+                                         "(v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)")
+            print()
+            print(f"[2a] alibaba revenue_ttm 에 밴드 민감도 추가 — {sens['parameter']} "
+                  f"{sens['used']['value']}({sens['used']['band']:+d}) 대 "
+                  f"{sens['alternative']['value']}({sens['alternative']['band']:+d}), "
+                  f"밴드 차이 {sens['band_differs']}")
 
     # ---------------------------------------------------------------- AMZN 근거 보강
     amzn = by_id.get("amazon.offbalance_B.obsreg25")

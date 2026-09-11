@@ -54,6 +54,8 @@ F6-REG-28 — ai-scorecard-2026-09-obsreg 에 F6 입력 등록 (승인 실행 �
   tsmc        operating_margin_ttm                      1 annual         2025-12-31
   대체  spacex-xai.operating_margin_ttm.v15 → spacex-xai.operating_margin_ttm.f6reg28
 
+[2a] alibaba revenue_ttm 에 밴드 민감도 추가 — P2 1.701(+0) 대 1.79(+0), 밴드 차이 False
+
 [2] AMZN offbalance_B 근거란 보강 — 제외 사유 셋과 포함 시 커버리지 1.736
 [3] run.decisions 에 C-16 downgrade 추가
 

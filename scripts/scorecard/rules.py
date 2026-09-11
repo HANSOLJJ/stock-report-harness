@@ -163,6 +163,23 @@ class RuleSet:
     def f6_p4(self) -> dict[str, Any]:
         return self.f6.get("p4") or {}
 
+    def f6_stale_months(self, period_basis: str | None) -> int | None:
+        """`stale_asof` 임계(개월). 선언이 없거나 기준을 모르면 `None` — 검사를 건너뛴다.
+
+        **보고 주기에 상대적으로 둔다.** 단일 임계는 안 된다 — 6 하나면 연간 신고자가 상시 걸려
+        `period_basis_not_ttm` 과 중복되고, 16 하나면 분기 신고자가 10개월 묵어도 안 걸린다.
+        """
+        cond = {c["id"]: c for c in self.f6_p4().get("conditions", [])}.get("stale_asof") or {}
+        thresholds = cond.get("thresholds_months")
+        if not thresholds or period_basis is None:
+            return None
+        key = (cond.get("basis_map") or {}).get(period_basis, period_basis)
+        value = thresholds.get(key)
+        return None if value is None else int(value)
+
+    def f6_fx(self) -> dict[str, Any]:
+        return self.f6.get("fx") or {}
+
     def f6_ttm_window(self) -> dict[str, Any]:
         return self.f6.get("ttm_window") or {}
 

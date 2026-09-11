@@ -86,12 +86,12 @@ openai        F1:+4c>+4c>+4c>+4c   F2:+4c>+4c>+4c>+4c   F3:+2c>+2c>+2c>+2c   F4:
 
 [7] 승인 실행 보존
   대상                    승인 baseline        현재 baseline               새 실행  보존
-  rules            9231b3a05ba5c766   9231b3a05ba5c766   58ad94e4e966bf61  예
-  observations     37435ae2989236f5   37435ae2989236f5   151426ae829b91e4  예
+  rules            9231b3a05ba5c766   9231b3a05ba5c766   b6dad5435d7ed21c  예
+  observations     37435ae2989236f5   37435ae2989236f5   98ff63bceae71393  예
   judgments        685069767e0cf919   685069767e0cf919   5dc79ac34c617267  예
-  run              50b063a5a12e84a6   50b063a5a12e84a6   c8590f84792a98e3  예
-  results          0942c342f010781e   0942c342f010781e   18c317885b45d1e3  예
-  draft            574841bc7c26f225   574841bc7c26f225   50d65d44d6097773  예
+  run              50b063a5a12e84a6   50b063a5a12e84a6   a4a0dc9e3947ee9f  예
+  results          0942c342f010781e   0942c342f010781e   f26d89ac478dab0b  예
+  draft            574841bc7c26f225   574841bc7c26f225   1eb1cec6640e58dd  예
   baseline/observations.json    sha256(LF)=5eb132200d46cc0736df3b51…
   baseline/judgments.json       sha256(LF)=630c2fb8d140317bc4e712c5…
   baseline/run.json             sha256(LF)=39981ac12a27ca44f0968eb7…

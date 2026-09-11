@@ -2,6 +2,7 @@
 
 작성일 2026-09-11. 담당 worker(HANSOLJJ/worker). 요청 `msg_cb9705ec6520` + `msg_1513da37c138`(C-16·TSM FY2025) + TSM 영업손익 정정.
 선행 설계진행 `5a0252a`. 원자료 C-13 `1badc57`·`f14a235`·`3cf9799`, NTM `795ed3d`.
+**2026-09-11 라운드2** — 검토 회신(`27b1589` `validation/f6-reg-28-review.md`) 후속 둘을 반영했다. **12절·13절**이 새로 붙었다.
 
 ## 결론
 
@@ -19,7 +20,8 @@
 | TSM FY2025 | 합쳐 등록하고 효과는 따로 떼어 보였습니다. F6 **−5 → −3** (7절) |
 | C-16 | `downgrade` 반영. alibaba F9 **−2 → −3** — 예상과 같습니다 |
 | 승인 실행 | **6종 해시 전부 불변** |
-| 테스트 | 165 → **181건** · skip 0 |
+| 테스트 | 165 → **191건** · skip 0 (라운드2 +10) |
+| 후속 둘 | `stale_asof` 구현 · P1·P2 환율 규칙 개정 (12·13절) |
 
 신규 네트워크 호출 없음. `api.nasdaq.com` 미호출. `v1.5`·승인 실행 파일 미변경. **승인은 하지 않았습니다.**
 
@@ -358,7 +360,7 @@ v1.7 의 `rules` 해시가 OBS-REG-25 때(`cc820f2d…`)와 다릅니다 — 이
 
 ### 10.2 미확인 — 추측하지 않습니다
 
-1. **`stale_asof` 는 선언만 있고 읽는 코드가 없습니다.** `p4.conditions` 에 있으나 `_p4()` 는 `nonop_share` 와 트랙의 `auto_p4_conditions` 만 봅니다. 임계값도 선언돼 있지 않습니다. TSM 이 8개월이라 지금은 걸릴 일이 없지만 **선언에 소비자가 없는 상태**이고 후속으로 남깁니다.
+1. ~~**`stale_asof` 는 선언만 있고 읽는 코드가 없습니다.**~~ *라운드2 에서 구현 — 12절 참조.*
 2. **alibaba `fcf_ttm` −11.4B·`cash` 56.8B 가 여전히 `legacy_unverified`** 이고 기간 정의가 없습니다. OBS-REG-25 에서 남긴 그대로입니다.
 3. **anthropic F9** 는 TTM 영업손익 미확보(C-20)로 남습니다. 비상장 2사의 F6 는 C-12 결정 사항입니다.
 4. **TSM FY2025 의 순이익은 제가 원문에서 직접 뽑았습니다** — TSM-EDGAR-29 결과에는 매출·영업손익만 있었습니다. 손익계산서 `NET INCOME` 행 NT$1,695,124.9백만이고 같은 행 US$ 열 54,036.5 와 31.37 로 맞습니다.
@@ -391,3 +393,75 @@ python -m unittest discover -s tests                         # 181건
 | `scorecard/rules/v1.7.json` | `ttm_window.restatement_generation` |
 | `validation/f6-spec-18/collect_ttm.py` | 세대 검사 소비 · `accn`·`restated` 보존 |
 | `tests/test_scorecard_obs_recency.py` | 신규 16건 |
+
+
+---
+
+# 라운드2 — 후속 둘 (2026-09-11)
+
+## 12. `stale_asof` 구현
+
+**선언에 소비자를 붙였습니다.** `_p4()` 가 읽고, 임계는 **보고 주기에 상대적**입니다.
+
+| `period_basis` | 임계 | 근거 |
+|---|---|---|
+| `ttm` · `quarterly`(`quarterly_yoy` 포함) | **6개월 초과** | 분기는 3 + 여유 |
+| `annual` | **16개월 초과** | 12 + 4. 다음 회계연도가 닫히고 20-F 가 제출될 때까지 최신 FY 가 자연히 나이 드는 최대치이고, 그 밖은 제출 지연이거나 수집 공백 |
+
+**단일 임계는 안 됩니다.** 6 하나면 연간 신고자가 상시 걸려 `period_basis_not_ttm` 과 중복되고 FPI 라는 사실 하나로 두 번 깎게 됩니다(G1-TTM-26 이 금지한 것). 16 하나면 분기 신고자가 10개월 묵어도 안 걸립니다. 그 이유를 `why_not_single_threshold` 에 적었습니다.
+
+### 12.1 구현
+
+- `rules.f6_stale_months(period_basis)` — `basis_map` 으로 `quarterly_yoy` → `quarterly` 를 태웁니다. 선언이 없으면 `None` 이고 검사를 건너뜁니다(v1.5·v1.6 무영향).
+- `calc_f6_params._stale_asof()` — 창 종료일(`period.end`, 없으면 `as_of`)과 `run.as_of` 의 **완결 개월 수**. 달 번호 차로 세면 한 달 더 나옵니다.
+- `compute_f6` → `compute_listed(..., run)` 로 `run` 을 흘려보냈습니다. 기준일을 모르면 지어내지 않고 건너뜁니다.
+- 스키마가 `thresholds_months` 의 형태와 `basis_map` 의 대상 존재를 검증합니다.
+
+### 12.2 실측 분포 — 지금은 아무도 안 걸립니다
+
+```
+검사 12개사 · 걸린 곳 0개사
+  tsmc        annual           8개월 / 임계 16  통과
+  alibaba     annual           5개월 / 임계 16  통과
+  oracle      ttm              3개월 / 임계  6  통과
+  ... 나머지 9개사 1~2개월
+```
+
+**점수·순위 변동 0건**입니다(14개사 × 9 factor 대조). `results_hash` 만 바뀝니다 — `calc.p4.stale_asof` 에 판정 근거가 들어갔기 때문입니다.
+
+**걸릴 일이 없다는 것과 검사가 없다는 것은 다릅니다.** F6-REG-28 직전까지 TSM 이 20개월 묵어 있었고 조건은 한 번도 걸리지 않았습니다. 그 사실을 `why_it_exists` 에 남겼고, `test_tsm_fy2024_would_have_been_caught` 이 FY2024 였다면 20개월로 걸렸다는 것을 고정합니다. 그때도 `period_basis_not_ttm` 과 겹쳐 **P4 는 한 칸**입니다.
+
+## 13. P1·P2 환율 규칙 개정
+
+v1.7 `policies.f6.fx` 를 개정했습니다.
+
+> P1·P2 의 USD 환산은 **발행사가 20-F 에 선언한 편의환산 환율**을 우선하고, 선언 환율이 없는 발행사에만 연준 H.10 현물환율을 쓴다. 어느 쪽이든 **당해와 전년을 같은 환율로 환산**하고, 다른 환율을 썼을 때 밴드가 갈리는지 확인해 근거란에 남긴다.
+
+`priority` 를 `["issuer_declared_convenience_rate", "h10_spot_at_price_date"]` 로 두고 H.10 계약(`price_date`·`fx_rate_date`·`fx_backfill_days`·`backfill_limit_days`)은 **`fallback_h10` 아래로 옮겼습니다** — 대체 경로가 됐을 뿐 없어지지 않았다는 것을 테스트로 고정했습니다.
+
+### 13.1 밴드 민감도를 근거란에 남겼습니다
+
+규칙이 요구한 "다른 환율을 썼을 때 밴드가 갈리는지 확인해 근거란에 남긴다"를 **데이터로** 만족시켰습니다. 대안 환율은 같은 발행사가 다른 연도 20-F 에서 선언한 값입니다.
+
+| 관측 | 파라미터 | 쓴 환율 | 대안 환율 | 밴드 차이 |
+|---|---|---|---|---|
+| tsmc `revenue_ttm` | P2 | 31.37 → 17.072 (**−1**) | 32.79 → 17.845 (**−1**) | 없음 |
+| tsmc `net_income_ttm` | P1 | 31.37 → 39.788 (**−1**) | 32.79 → 41.589 (**−1**) | 없음 |
+| alibaba `revenue_ttm` | P2 | 6.8980 → 1.701 (**0**) | 7.2567 → 1.790 (**0**) | 없음 |
+| alibaba `net_income_ttm` | P1 | 6.8980 → 17.979 (**0**) | 7.2567 → 18.914 (**0**) | 없음 |
+
+**네 건 다 갈리지 않습니다.** 환율 선택이 점수를 만들지 않았다는 뜻이고 그것도 `note` 에 남겼습니다. P3 는 분자·분모가 같은 환율이라 **구조적으로 환율과 무관**합니다.
+
+### 13.2 `f6-status-2026-09-10` 은 설계진행 워크트리 파일입니다
+
+제 워크트리에 없어 고치지 않았습니다. v1.7 의 `fx.supersedes` 가 그 문서를 명시적으로 가리키게 해 두었고, 대체할 문면은 회신에 그대로 넣었습니다. P4 표의 "기준 시점 경과 — 없음" 도 12.2 의 실측 분포로 바꿔야 합니다.
+
+### 13.3 테스트
+
+| 테스트 | 고정하는 것 |
+|---|---|
+| `test_fx_prefers_issuer_declared_rate` | `priority` 와 `supersedes` |
+| `test_fx_requires_same_rate_for_both_periods` | 6.8980/7.2567·32.79/30.62 사례가 근거에 남아 있는가 |
+| `test_fx_records_that_skipping_conversion_breaks_p2` | 0.716·두 칸이 규칙에 남아 있는가 |
+| `test_fx_separates_price_date_and_rate_date` | H.10 계약이 `fallback_h10` 로 옮겨졌을 뿐 살아 있는가 |
+| `TestF6StaleAsOf` 7건 | 임계·경계(초과)·주기별 분기·TSM 사례·기준일 부재·현재 실행 실측 |
