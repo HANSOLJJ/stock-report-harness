@@ -4978,6 +4978,30 @@
         "filed": "2026-08-04",
         "frame": "CY2026Q2"
       }
-    ]
+    ],
+    "s1a_filing": {
+      "form": "S-1/A",
+      "accession_number": "0001193125-26-235805",
+      "filing_date": "2026-06-03",
+      "statement": "CONSOLIDATED STATEMENTS OF OPERATIONS (p. F-5)",
+      "period_end": "2025-12-31",
+      "revenue_fy2025": 18674000000,
+      "operating_loss_fy2025": -2589000000,
+      "source_file": "validation/offb-24/_raw/spcx_s1a_20260603.htm"
+    },
+    "ten_q_filing": {
+      "form": "10-Q",
+      "accession_number": "0001181412-26-000004",
+      "filing_date": "2026-08-04",
+      "statement": "CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (unaudited)",
+      "six_months_ended_2026_06_30": {
+        "revenue": 12508000000,
+        "operating_loss": -2086000000
+      },
+      "six_months_ended_2025_06_30": {
+        "revenue": 8138000000,
+        "operating_loss": -943000000
+      }
+    }
   }
 }

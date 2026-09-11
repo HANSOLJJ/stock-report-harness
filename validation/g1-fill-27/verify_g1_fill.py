@@ -25,6 +25,7 @@ class TestG1FillVerification(unittest.TestCase):
         self.assertEqual(len(self.results["items"]), 12)
         for t in expected_tickers:
             self.assertIn(t, self.items_by_ticker, f"Ticker {t} missing from results")
+        self.assertEqual(self.results["summary_metrics"]["not_disclosed_ttm_count"], 0)
 
     def test_02_reconstructed_7_companies_math_and_margin(self):
         """Test 2: Verify TTM formula Q_curr + (FY_prior - Q_prior) and operating margin for 7 reconstructed companies."""
@@ -35,19 +36,16 @@ class TestG1FillVerification(unittest.TestCase):
             self.assertIn("q4_reconstructed_ttm", it["reconstruction_status"])
             
             comp = it["components"]
-            # Math check for Revenue: curr_ytd + (prior_fy - prior_ytd) == revenue_ttm
             expected_rev_tail = comp["revenue_prior_fy"] - comp["revenue_prior_ytd"]
             self.assertEqual(comp["revenue_tail_derived"], expected_rev_tail)
             expected_rev_ttm = comp["revenue_curr_ytd"] + expected_rev_tail
             self.assertEqual(it["revenue_ttm"], expected_rev_ttm)
             
-            # Math check for Operating Income: curr_ytd + (prior_fy - prior_ytd) == opinc_ttm
             expected_op_tail = comp["operating_income_prior_fy"] - comp["operating_income_prior_ytd"]
             self.assertEqual(comp["operating_income_tail_derived"], expected_op_tail)
             expected_op_ttm = comp["operating_income_curr_ytd"] + expected_op_tail
             self.assertEqual(it["operating_income_ttm"], expected_op_ttm)
             
-            # Operating margin percentage check
             calc_margin = round((expected_op_ttm / expected_rev_ttm) * 100.0, 4)
             self.assertEqual(it["operating_margin_ttm_pct"], calc_margin)
             self.assertGreater(it["operating_margin_ttm_pct"], 0.0)
@@ -65,7 +63,6 @@ class TestG1FillVerification(unittest.TestCase):
             self.assertEqual(it["revenue_ttm"], comp["revenue_fy"])
             self.assertEqual(it["operating_income_ttm"], comp["operating_income_fy"])
             
-            # Sum of Q3 YTD + derived Q4 must equal FY
             self.assertEqual(comp["revenue_q3_ytd"] + comp["revenue_q4_derived"], comp["revenue_fy"])
             self.assertEqual(comp["operating_income_q3_ytd"] + comp["operating_income_q4_derived"], comp["operating_income_fy"])
             
@@ -77,7 +74,8 @@ class TestG1FillVerification(unittest.TestCase):
         """Test 4: TSM and BABA declare period_basis annual under FPI regulations with positive margins."""
         # TSM
         tsm = self.items_by_ticker["TSM"]
-        self.assertEqual(tsm["period_basis"], "annual")
+        self.assertIn("annual", tsm["period_basis"])
+        self.assertEqual(tsm["components"]["elapsed_months_from_baseline"], 20)
         self.assertEqual(tsm["taxonomy"], "ifrs-full")
         self.assertEqual(tsm["currency"], "TWD")
         self.assertEqual(tsm["revenue_ttm"], 2894307700000)
@@ -87,7 +85,7 @@ class TestG1FillVerification(unittest.TestCase):
         
         # BABA
         baba = self.items_by_ticker["BABA"]
-        self.assertEqual(baba["period_basis"], "annual")
+        self.assertIn("annual", baba["period_basis"])
         self.assertEqual(baba["taxonomy"], "us-gaap")
         self.assertEqual(baba["currency"], "CNY")
         self.assertEqual(baba["revenue_ttm"], 1023670000000)
@@ -95,29 +93,30 @@ class TestG1FillVerification(unittest.TestCase):
         self.assertAlmostEqual(baba["operating_margin_ttm_pct"], 4.8989, places=3)
         self.assertEqual(baba["operating_result"], "profit")
 
-    def test_05_spacex_not_disclosed_classification(self):
-        """Test 5: SPCX TTM is classified as not_disclosed_by_company due to recent listing, preserving quarterly loss."""
+    def test_05_spacex_s1a_and_10q_ttm_reconstruction(self):
+        """Test 5: SPCX TTM reconstructed from S-1/A FY2025 and 10-Q H1, showing -16.195% margin and 1.30%p diff."""
         spcx = self.items_by_ticker["SPCX"]
-        self.assertEqual(spcx["period_basis"], "quarterly_only")
-        self.assertIsNone(spcx["revenue_ttm"])
-        self.assertIsNone(spcx["operating_income_ttm"])
-        self.assertIsNone(spcx["operating_margin_ttm_pct"])
+        self.assertEqual(spcx["period_basis"], "TTM")
+        self.assertEqual(spcx["revenue_ttm"], 23044000000)
+        self.assertEqual(spcx["operating_income_ttm"], -3732000000)
+        self.assertAlmostEqual(spcx["operating_margin_ttm_pct"], -16.1951, places=3)
         self.assertEqual(spcx["operating_result"], "loss")
         
         comp = spcx["components"]
-        self.assertEqual(comp["three_way_distinction"], "회사가 공시하지 않았다 (not_disclosed_by_company)")
-        self.assertIn("10-K(FY) 행이 0건", comp["reason"])
+        sources = comp["sources"]
+        self.assertEqual(sources["fy_prior_source"]["document"], "Form S-1/A")
+        self.assertEqual(sources["fy_prior_source"]["accession_number"], "0001193125-26-235805")
+        self.assertEqual(sources["fy_prior_source"]["revenue"], 18674000000)
+        self.assertEqual(sources["fy_prior_source"]["operating_loss"], -2589000000)
         
-        # Check preserved latest quarter and 6 months numbers
-        latest_q = comp["latest_quarter"]
-        self.assertEqual(latest_q["revenue"], 7814000000)
-        self.assertEqual(latest_q["operating_income"], -143000000)
-        self.assertAlmostEqual(latest_q["margin_pct"], -1.8300, places=3)
+        self.assertEqual(sources["h1_prior_source"]["revenue"], 8138000000)
+        self.assertEqual(sources["h1_prior_source"]["operating_loss"], -943000000)
         
-        latest_6m = comp["latest_six_months"]
-        self.assertEqual(latest_6m["revenue"], 12508000000)
-        self.assertEqual(latest_6m["operating_income"], -2086000000)
-        self.assertAlmostEqual(latest_6m["margin_pct"], -16.6773, places=3)
+        self.assertEqual(sources["h1_curr_source"]["revenue"], 12508000000)
+        self.assertEqual(sources["h1_curr_source"]["operating_loss"], -2086000000)
+        
+        legacy_diff = comp["legacy_comparison"]["difference_pp_rounded"]
+        self.assertEqual(legacy_diff, 1.30)
 
     def test_06_taxonomy_and_concept_exact_matches(self):
         """Test 6: Verify Taxonomy classification (TSM is ifrs-full, 11 companies us-gaap) and exact concepts."""
