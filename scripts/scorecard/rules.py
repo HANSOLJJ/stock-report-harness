@@ -65,6 +65,13 @@ class RuleSet:
         allowed = [e["host"] for e in policy.get("allowed", [])]
         if any(host == a or host.endswith("." + a) for a in allowed):
             return None
+        # 검토를 마치고 안 넣기로 한 host 는 그 사유를 돌려준다. 판정(위반)은 같지만 **안내가 다르다** —
+        # 아래 fallback 은 "약관 확인 후 등재하고 쓴다" 라서 이미 확인하고 막은 host 에 재조사를 지시한다
+        # (not_adopted 에서 고친 것과 같은 함정, SCOPE-34).
+        for entry in policy.get("unlisted", []):
+            if host == entry["host"] or host.endswith("." + entry["host"]):
+                return (f"{host} 는 검토를 마치고 등재하지 않은 host — {entry['reason']} "
+                        f"(검토 {entry['decided_at']}). 재조사 전에 이 사유부터 본다.")
         return f"{host} 는 원천 allowlist 에 없음 — 약관 확인 후 규칙에 등재하고 쓴다"
 
     def decision(self, decision_id: str) -> dict[str, Any] | None:

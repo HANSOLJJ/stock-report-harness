@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
 observations_hash: 1a69763e1819e7b9d026823b52f50f27c23697f63e1ec5aa576a73c50a1088a6
-judgments_hash: 1c0dbfbcd3567732f9db5124cf97c970f113ac6e68de2904d4a0ca529002a5fa
+judgments_hash: 5a28676508f6a6877dc046137c074f0b2a4a4c41d75dece6d9fce8727c2105ec
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — OFFB 실측 관측 + F6 입력 + 비상장 확정(v1.7)

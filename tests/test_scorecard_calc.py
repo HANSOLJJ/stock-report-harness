@@ -931,17 +931,24 @@ class TestV16SourcePolicy(unittest.TestCase):
         self.assertEqual(y["reason_type"], "technical")
         self.assertNotIn("query1.finance.yahoo.com", [a["host"] for a in self.sources["allowed"]])
 
-    def test_yahoo_unlisted_does_not_change_enforcement(self):
-        """unlisted 는 문서 항목이다. 판정은 그대로 allowlist 미등재로 걸려야 한다."""
+    def test_yahoo_unlisted_is_still_a_violation(self):
+        """**판정은 그대로 위반이다.** unlisted 에 있다고 허용되지 않는다.
+
+        2026-09-11 SCOPE-34 에서 **안내 문구만** 바뀌었다 — 이미 검토하고 막은 host 에
+        "약관 확인 후 등재하고 쓴다" 가 나가면 재조사를 지시하게 되기 때문이다.
+        `not_adopted` 에서 고친 것과 같은 함정이고 같은 방향으로 고쳤다.
+        **지켜야 할 불변식은 '허용되지 않는다' 이고 그것은 그대로다.**
+        """
         msg = self.rules.source_violation("https://query1.finance.yahoo.com/v7/finance/quote?symbols=NVDA")
-        self.assertIsNotNone(msg)
-        self.assertIn("allowlist 에 없음", msg)
+        self.assertIsNotNone(msg, "unlisted 는 통과가 아니다")
+        self.assertIn("등재하지 않은 host", msg)
 
-    def test_unlisted_is_never_read_by_enforcement(self):
-        """Yahoo 한 종목이 아니라 unlisted 라는 개념 자체가 집행 경로에 없다는 것을 고정한다.
+    def test_unlisted_never_grants_permission(self):
+        """**unlisted 는 어떤 경우에도 허용으로 바뀌지 않는다.**
 
-        임의의 host 를 unlisted 에 넣어도 판정 문구가 미등재 그대로여야 한다. 들어갔다고
-        허용되지도, 새로운 배제 사유가 붙지도 않는다.
+        SCOPE-34 이전에는 '집행 경로가 unlisted 를 아예 읽지 않는다' 를 고정했다. 그 계약을
+        바꾼 것이므로 **무엇을 지키려던 검사였는지**를 여기 남긴다 — 목적은 'unlisted 가
+        허용으로 바뀌지 않는다' 였고 그 불변식은 지금도 유효하다.
         """
         payload = json.loads(json.dumps(self.rules.payload))
         payload["sources"]["unlisted"] = [{"host": "zz.example", "reason_type": "terms",
@@ -949,28 +956,24 @@ class TestV16SourcePolicy(unittest.TestCase):
         rules = RuleSet(payload, self.rules.path)
         with_entry = rules.source_violation("https://zz.example/a.json")
         without = self.rules.source_violation("https://zz.example/a.json")
-        self.assertEqual(with_entry, without)
-        self.assertIn("allowlist 에 없음", with_entry)
+        self.assertIsNotNone(with_entry, "unlisted 에 넣었다고 통과가 되면 안 된다")
+        self.assertIsNotNone(without)
+        self.assertNotEqual(with_entry, without, "검토한 사유가 있으면 안내가 달라야 한다")
+        self.assertIn("검토 후 미등재", with_entry, "기록된 사유가 안내에 나와야 한다")
+        self.assertIn("allowlist 에 없음", without, "미검토 host 는 기존 안내 그대로다")
 
-    def test_unlisted_key_is_never_touched(self):
-        """결과 동일성이 아니라 **키를 읽지 않는다**를 직접 증명한다.
+    def test_unlisted_message_does_not_order_a_recheck(self):
+        """**이미 검토한 host 에 재조사를 지시하지 않는다.** 이것이 문구를 바꾼 이유다."""
+        msg = self.rules.source_violation("https://query1.finance.yahoo.com/v7/x")
+        self.assertNotIn("약관 확인 후 규칙에 등재하고 쓴다", msg)
+        self.assertIn("재조사 전에 이 사유부터 본다", msg)
 
-        결과만 비교하면 나중에 누가 unlisted 를 읽어 문구를 덧붙이되 이 케이스의 결과만
-        유지하도록 고쳐도 통과한다. 접근하면 터지는 값을 넣어 두면 그 경로가 생기는 순간 실패한다.
-        """
-        class Explodes:
-            def __iter__(self): raise AssertionError("source_violation() 이 unlisted 를 읽었다")
-            def __getitem__(self, k): raise AssertionError("source_violation() 이 unlisted 를 읽었다")
-            def __len__(self): raise AssertionError("source_violation() 이 unlisted 를 읽었다")
+    def test_unlisted_does_not_shadow_other_verdicts(self):
+        """denied·not_adopted·allowed 판정이 unlisted 때문에 가려지지 않는다."""
+        self.assertIn("생산 원천에서 배제", self.rules.source_violation("https://api.nasdaq.com/api/quote"))
+        self.assertIsNone(self.rules.source_violation("https://data.sec.gov/submissions/CIK0000320193.json"))
+        self.assertIn("allowlist 에 없음", self.rules.source_violation("https://zz.example/a.json"))
 
-        payload = json.loads(json.dumps(self.rules.payload))
-        rules = RuleSet(payload, self.rules.path)          # 검증을 통과시킨 뒤에 오염시킨다
-        rules.payload["sources"]["unlisted"] = Explodes()
-        for url in ("https://zz.example/a.json",                        # 미등재
-                    "https://api.nasdaq.com/api/quote",                 # denied
-                    "https://data.nasdaq.com/api/v3/datasets/ZACKS/EE",  # 미승인 후보
-                    "https://data.sec.gov/submissions/CIK0000320193.json"):  # allowed
-            rules.source_violation(url)                                  # 터지면 실패다
 
     def test_policy_note_separates_unreviewed_from_reviewed_unlisted(self):
         """'목록에 없다' 가 미검토와 검토 후 미등재 두 뜻으로 갈리지 않게 한다."""

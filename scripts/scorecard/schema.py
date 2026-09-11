@@ -309,7 +309,7 @@ def _validate_source_policy(policy: Any) -> None:
         _require(("scope" in scope) != ("scopes" in scope),
                  "rules.sources.usage_scope: scope 와 scopes 중 정확히 하나만 둔다")
         _expect_keys(scope, ["decided_at", "statement", "condition"], "rules.sources.usage_scope",
-                     optional=["scope", "scopes", "note", "evaluation_rule"])
+                     optional=["scope", "scopes", "note", "evaluation_rule", "supersedes"])
         # 범위 선언은 조건과 짝이어야 한다. 조건 없는 선언은 범위가 바뀔 때 무엇을 다시 봐야 하는지를 남기지 않는다.
         for key in ("decided_at", "statement", "condition"):
             _require(str(scope.get(key) or "").strip(), f"rules.sources.usage_scope: {key} 를 비워 둘 수 없음")

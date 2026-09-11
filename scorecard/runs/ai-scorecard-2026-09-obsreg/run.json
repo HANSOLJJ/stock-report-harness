@@ -7,7 +7,7 @@
   "price_as_of": "2026-09-02",
   "info_cutoff": "2026-09-02",
   "rule_version": "v1.7",
-  "rule_hash": "3dafe5ae8ba4a9671e8ac18c126e0602ba59feee52e246d515a57d82cdbf6f6b",
+  "rule_hash": "6c6664de352b3cfb49e6938739a3aae144875bc5d3ab42acbe7a3c6d6b8bc57d",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
@@ -81,8 +81,6 @@
     "anthropic 의 P2 배수는 원본이 구간(~30~39)으로 주므로 낮은 끝을 값으로 두고 estimate_range 를 남겼다. 양 끝이 같은 밴드라 판정이 갈리지 않으며, 갈리는 경우 계산기가 값을 고르지 않고 보류한다",
     "anthropic Series H 조달액이 원본 안에서 $30B·$65B 로 갈린다. 값을 고르지 않았고 자본효율 민감도(0.41~0.72)를 관측 basis 에 남겼다. 이 구간이 보정 임계 0.50 을 가로지른다",
     "비상장 2사의 결측 유형은 MISS-LABEL-23 구조 기준으로 등록했다. 값은 그대로 없고 라벨만 붙였다",
-    "anthropic F8 근거란은 2026-09-11 에 2차 증언에서 1차 공시로 교체했다(C-13 F8-ANTH-33). 점수 -3 은 바뀌지 않았고, Google 몫의 훈련/서빙 구분은 Alphabet 공시에 Anthropic 이 0건이라 확인 불가다. 미공시를 아니다로 읽지 않아 하향하지 않았고 재판정 조건을 근거란에 등재했다",
-    "원천 정책을 SRC-POLICY-32 결론으로 개정했다. usage_scope 는 개인·법인 내부 사용의 합집합이고, 라이선스가 원소를 전부 허용해야 적격이라 alphavantage·financialmodelingprep·finnhub 셋이 allowed 에서 not_adopted 로 내려갔다. 셋 다 실제로 쓰이지 않아 점수 영향이 없다(F6·F9 는 SEC 만 쓴다)",
     "anthropic F8 근거란은 2026-09-11 에 2차 증언에서 1차 공시로 교체했다(C-13 F8-ANTH-33). 점수 -3 은 바뀌지 않았고, Google 몫의 훈련/서빙 구분은 Alphabet 공시에 Anthropic 이 0건이라 확인 불가다. 미공시를 아니다로 읽지 않아 하향하지 않았고 재판정 조건을 근거란에 등재했다",
     "원천 정책을 SRC-POLICY-32 결론으로 개정했다. usage_scope 는 개인·법인 내부 사용의 합집합이고, 라이선스가 원소를 전부 허용해야 적격이라 alphavantage·financialmodelingprep·finnhub 셋이 allowed 에서 not_adopted 로 내려갔다. 셋 다 실제로 쓰이지 않아 점수 영향이 없다(F6·F9 는 SEC 만 쓴다)"
   ]
