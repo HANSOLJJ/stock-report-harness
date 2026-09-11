@@ -2,20 +2,23 @@
 
 ## 1. 핵심 결론
 
-F9 적자 깊이 미결 규칙 5건(C-04, C-05, C-06, C-07, C-16)에 대해 14개사 전원의 관측치와 채점 엔진 로직을 기반으로 실측 조사를 수행한 결과, **실제로 점수를 움직이는 규칙은 C-05와 C-16 두 건이며, 차단을 해제하는 핵심 규칙은 C-06**이다.
+F9 적자 깊이 미결 규칙 5건(C-04, C-05, C-06, C-07, C-16)에 대해 14개사 전원의 관측치와 채점 엔진 로직을 기반으로 실측 조사를 수행한 결과, **현재 보유 자료(baseline data)를 기준으로 실제로 점수를 움직이는 규칙 조합은 C-06(`proposed_v15_boundaries`) + C-05(`diagnose_only`) 1건뿐이며, C-16은 현행 자료에서 0개사를 움직인다.**
 
-- **점수를 직접 움직이는 규칙**.
-  - **C-05 (G1 실패 뒤 G3·G4 추가 감점 여부)**: `spacex-xai` 1개사의 점수를 직접 좌우한다. `diagnose_only` 선택 시 G1 점수 **-4 (status: ok)**로 즉시 확정·완료되며, `apply` 선택 시 G4 약정 검토 입력 대기(`needs_judgment`)로 넘어가고 C-16 결정에 따라 **-4 또는 -5**로 강등된다. 반면 `openai`는 G1에서 이미 하한(-5)에 도달하여 G3·G4가 자동 생략되므로 C-05의 영향을 전혀 받지 않는다.
-  - **C-16 (G4 약정 커버리지 미공시 시 처리)**: `alibaba` 1개사의 점수를 직접 가른다. Alibaba의 TTM 영업흑자가 확인된 상태에서, C-16이 `hold`이면 **-2 (status: ok)**, `downgrade`이면 **-3 (status: ok)**으로 정확히 1칸 차이가 발생한다.
-- **차단을 해제(Unblocking)하는 규칙**.
-  - **C-06 (손실률 경계 명문화)**: `proposed_v15_boundaries`를 채택해야만 `spacex-xai`의 규칙 미결(`needs_rule_decision`) 차단이 해제된다.
-- **점수 변동이 전혀 없는 규칙 (0건)**.
+- **현행 자료에서 실제로 점수를 움직이고 차단을 해제(Unblocking)하는 유일한 규칙 조합**.
+  - **C-06 (`proposed_v15_boundaries`) + C-05 (`diagnose_only`)**: `spacex-xai` 1개사를 규칙 미결(`needs_rule_decision`) 차단에서 **-4 (status: ok)**로 즉시 해제·완료시키는 유일한 조합이다. C-06만 채택하면 `needs_judgment`(G4 판단 대기)로 이동할 뿐 완료되지 않으며, C-05가 `diagnose_only`여야 G1 점수 -4로 즉시 확정된다. 반면 `openai`는 G1에서 이미 하한(-5)에 도달하여 G3·G4가 자동 생략되므로 C-05의 영향을 전혀 받지 않는다.
+- **현행 자료 기준 점수 변동이 0개사인 규칙 (C-16 포함)**.
+  - **C-16 (G4 약정 커버리지 미공시 시 처리)**: **현재 baseline 자료 기준으로는 움직이는 기업이 0개사다.** `coverage_comparable`이 `yes`인 기업은 수치 커버리지(2.552 >= 1.0)를 만족한 `oracle` 1개사뿐이며, 나머지 11개사는 모두 `coverage_comparable: unknown` 상태로 C-16에 도달하기 전 `needs_judgment`에서 멈춘다.
+    - 특히 `alibaba`의 경우 점수가 갈리기 위해서는 `operating_result_reviewed = profit`(G1 통과)뿐만 아니라 **`coverage_comparable = yes`** 검토 입력까지 **두 가지 검토 입력이 모두 선행 충족**되어야만 비로소 C-16에 도달하여 **-2 (hold)**와 **-3 (downgrade)**으로 1칸 분기된다.
+    - `spacex-xai` 역시 C-05가 `apply`이고 `coverage_comparable = yes`가 입력되어야 C-16에 도달하여 **-4 (hold)**와 **-5 (downgrade)**로 갈린다.
+    - `amazon`은 `contracted_revenue`가 `parse_failed`이므로 C-16 대상이 아닌 자료 미수집(`pending_data`)으로 격리된다.
+    - 따라서 C-16은 검토 입력(`coverage_comparable = yes`)이 확보된 이후에 비로소 효력을 발휘하는 규칙이며, 현행 자료 기준으로는 0개사를 움직인다.
   - **C-04 (신용등급 조달여력 산입)**: 현재 14개사 관측치 데이터베이스에 미인출 여신(`undrawn_credit`) 또는 신용등급 기반 추정 조달액 관측치가 **0건**이다. 엔진 로직상 추정치는 산입하지 않고 관측치만 받도록 설계되어 있어, `exclude`와 `include_v15` 간 점수 차이는 **0개사**다. 자료에 입력이 없다는 사실 자체가 본 조사의 결론이다.
   - **C-07 (ARR의 G4 대체 금지)**: Anthropic과 OpenAI의 ARR 대체 금지(`incompatible_basis`) 원칙을 재확인하는 항목이며, 이미 두 기업의 G4 관측 상태가 격리되어 있어 신규 점수 변동을 일으키지 않는다.
-- **풀리는 기업 현황**.
-  - `spacex-xai`: C-06 채택 및 C-05 `diagnose_only` 선택 시 **-4 (ok)**로 즉시 완료된다.
-  - `alibaba`: SEC 20-F 공시로 입증된 TTM 영업흑자 부호 확인 및 C-16 결정 시 **-2(hold) 또는 -3(downgrade)**으로 즉시 완료된다.
-  - `amazon`: AWS 백로그의 미개시 리스 상회 사실을 정성적으로 인정하여 G4를 유지(step 0)하는 규칙을 명문화하면 **-2 (ok)**로 즉시 완료된다.
+- **채점 미완료 4개사 현황 (3개사가 아닌 4개사)**.
+  - 지시서 전제의 3개사(amazon, alibaba, anthropic) 외에 `spacex-xai`(`needs_rule_decision`)를 포함하여 총 **4개사**가 미완료 상태다.
+  - `spacex-xai`: C-06 채택 및 C-05 `diagnose_only` 선택 시 **-4 (ok)**로 즉시 완료된다 (유일하게 현행 자료에서 즉시 풀리는 기업).
+  - `alibaba`: SEC 20-F 공시 기반 G1 `operating_result_reviewed = profit` 및 G4 `coverage_comparable = yes` 두 가지 검토 입력이 선행되고 C-16 결정 시 **-2(hold) 또는 -3(downgrade)**으로 완료된다.
+  - `amazon`: AWS 백로그의 미개시 리스 상회 사실을 정성적으로 인정하여 G4를 유지(step 0)하는 규칙을 명문화하거나 파싱 재수집 시 **-2 (ok)**로 완료 가능하다.
   - `anthropic`: 비상장사의 TTM 영업손익 미공시 처리 규칙(단위경제 흑자 인정 시 -2, 적자 간주 시 -4/-5)을 정하면 완료된다.
 
 ---
@@ -72,18 +75,22 @@ F9 적자 깊이 미결 규칙 5건(C-04, C-05, C-06, C-07, C-16)에 대해 14�
 
 - **규칙 배경**. G4 산출에 필요한 지표가 확인된 미공시(`status: not_disclosed`)일 때, 점수를 유지(`hold`, step 0)할 것인가, 1단계 하향(`downgrade`, step -1)할 것인가의 문제다. 수집 실패(`parse_failed`, `없음`)는 C-16 대상이 아니며 자료 대기(`pending_data`)로 분리된다.
 - **실측 결과**.
-  - **Alibaba (결정적 영향)**.
-    - 계약 수입과 B종 약정 모두 `status: not_disclosed`이다.
-    - Alibaba의 TTM 영업흑자가 확인되면 G2 FCF(-11.4B) -2점, G3 런웨이(4.98년) 0점으로 G4에 도달한다.
-    - 여기서 **C-16이 `hold`이면 최종 점수는 -2 (status: ok)**가 된다.
-    - 반면 **C-16이 `downgrade`이면 최종 점수는 -3 (status: ok)**이 된다.
-    - 즉, C-16은 Alibaba의 점수를 정확히 1칸 가른다.
-  - **SpaceX**.
-    - C-05가 `diagnose_only`이면 C-16의 영향을 받지 않고 -4로 끝난다.
-    - C-05가 `apply`이고 G4 비교 가능성이 `yes`로 판정될 때만 C-16에 의해 -4(hold) 또는 -5(downgrade)로 갈린다.
-  - **Amazon (적용 불가)**.
-    - Amazon의 계약 수입은 `parse_failed` 상태이다. `not_disclosed`가 아니므로 C-16 정책의 적용 대상이 되지 못하고 자료 대기(`pending_data`)로 빠진다.
-- **결론**. **C-16은 `alibaba`의 점수를 -2와 -3 사이에서 직접 결정한다.**
+  - **현행 baseline 자료 기준: 점수 변동 0개사**.
+    - baseline 관측치에서 `coverage_comparable`의 분포는 `yes` 1개사(`oracle`), `no` 2개사(`anthropic`, `openai`), `unknown` 11개사(그 외 전원)이다.
+    - `oracle`은 수치 커버리지(2.552 >= 1.0)를 이미 충족하여 만점(step 0)으로 산출 완료된다.
+    - 나머지 11개사는 C-16 미공시 정책 분기에 도달하기 전, `coverage_comparable != 'yes'` 게이트에서 먼저 차단되어 `needs_judgment`("coverage_comparable 검토 입력 필요")로 멈춘다.
+    - 엔진 주석에도 명시되어 있듯이, 비교 가능성이 미확인(`unknown`)된 기업은 결측 정책(C-16)으로 보내지 않고 판단 대기로 멈춘다. 따라서 현행 자료 기준으로는 C-16 어느 쪽을 선택하더라도 점수가 움직이는 기업이 **0개사**다.
+  - **입력 보완 후 영향 분석**.
+    - **Alibaba (2대 검토 입력 선행 필수)**.
+      - Alibaba의 계약 수입과 B종 약정은 모두 `status: not_disclosed`이므로 C-16 적용 대상 지표 조건을 갖추고 있다.
+      - 그러나 Alibaba가 C-16에 도달하여 점수가 갈리기 위해서는 ① G1 TTM 영업흑자 확인(`operating_result_reviewed = profit`)과 ② G4 약정 비교 가능성 확인(`coverage_comparable = yes`)이라는 **2대 검토 입력이 모두 선행 충족**되어야 한다.
+      - 2대 검토 입력이 완료된 후, **C-16이 `hold`이면 최종 점수는 F9 = −2 (status: ok)**가 되고, **C-16이 `downgrade`이면 최종 점수는 F9 = −3 (status: ok)**이 되어 정확히 1칸 분기된다.
+    - **SpaceX**.
+      - C-05가 `diagnose_only`이면 G1 점수(-4)로 확정되어 C-16의 영향을 받지 않는다.
+      - C-05가 `apply`이고 `coverage_comparable = yes`가 입력될 때만 C-16에 의해 -4(hold) 또는 -5(downgrade)로 갈린다.
+    - **Amazon (C-16 적용 불가 - 파싱 실패)**.
+      - Amazon의 계약 수입은 `parse_failed` 상태이다. `not_disclosed`가 아니므로 C-16 정책의 적용 대상이 되지 못하고 자료 대기(`pending_data`)로 분리된다 (`coverage_comparable = yes`를 넣더라도 미수집 오류로 차단됨).
+- **결론**. **C-16은 현행 baseline 자료 기준으로는 0개사를 움직이며, 향후 Alibaba에 대해 `operating_result_reviewed = profit` 및 `coverage_comparable = yes` 2대 검토 입력이 확보된 후에 비로소 -2와 -3을 가르는 규칙이다.**
 
 ---
 
@@ -121,30 +128,39 @@ C-06을 `proposed_v15_boundaries`로 고정하고, C-05와 C-16의 조합에 따
 | **tesla** | ok (-1) | **−1** | **−1** | **−1** | **−1** | G1 통과, FCF 양수 악화 (불변) |
 | **oracle** | ok (-3) | **−3** | **−3** | **−3** | **−3** | G1 통과, FCF 적자, 런웨이 1.35년, 커버리지 통과 (불변) |
 | **openai** | ok (-5) | **−5** | **−5** | **−5** | **−5** | G1 BEP 후퇴로 이미 바닥(-5), G3/G4 생략 (불변) |
-| **spacex-xai** | **차단** (C-06 미결) | **−4** (ok) | **−4** (ok) | **판단대기** (G4) | **판단대기** (G4) | **C-05가 diagnose_only이면 즉시 -4 완료. apply이면 G4 판단 필요(hold -4, down -5)** |
-| **alibaba** | **차단** (G1 미결) | **−2** (ok)* | **−3** (ok)* | **−2** (ok)* | **−3** (ok)* | **G1 흑자 확인 시 C-16에 의해 -2와 -3으로 정확히 1칸 분기** |
-| **amazon** | **차단** (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | AWS 백로그 정성 확인 규칙 명시 시 **-2** 확정 가능 |
+| **spacex-xai** | **차단** (C-06 미결) | **−4** (ok) | **−4** (ok) | **판단대기** (G4) | **판단대기** (G4) | **C-06 + C-05 diagnose_only가 현행 자료에서 점수를 움직이는 유일한 조합(-4 완료). apply이면 G4 판단 필요** |
+| **alibaba** | **차단** (G1 미결) | **−2** (ok)* | **−3** (ok)* | **−2** (ok)* | **−3** (ok)* | **G1 profit 및 G4 coverage_comparable=yes 2대 입력 충족 시 C-16에 의해 -2와 -3 분기 (현행 자료는 0개사 영향)** |
+| **amazon** | **차단** (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | 보류 (G4 판단) | AWS 백로그 정성 확인 규칙 명시 시 **-2** 확정 가능 (C-16 대상 제외) |
 | **anthropic** | **차단** (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 보류 (G1 자료) | 비상장 영업손익 판정 규칙 명시 시 완료 가능 |
 
-`*` Alibaba는 SEC 20-F 공시상 연간 영업이익 1,134억 위안 흑자가 명백하므로, G1 검토 부호(profit)가 입력되었을 때의 산출치임.
+`*` Alibaba는 현행 baseline 자료 기준으로는 G1 미결 및 `coverage_comparable: unknown`으로 인해 C-16 영향이 0개사임. SEC 20-F 공시상 연간 영업이익 1,134억 위안 흑자 기반 `operating_result_reviewed = profit`과 `coverage_comparable = yes`의 2대 검토 입력이 모두 충족되었을 때 비로소 C-16에 따라 -2(hold) 또는 -3(downgrade)으로 분기됨.
 
 ---
 
-## 5. 채점 미완료 3개사의 구체적 해소 경로
+## 5. 채점 미완료 기업들의 구체적 해소 경로
 
-### 1. Amazon (`needs_judgment` 해소 방안)
+### 1. SpaceX-xAI (`needs_rule_decision` 해소)
+- **차단 원인**: 적자 손실률(-14.9%)에 대한 C-06 구간 경계 미확정.
+- **해소 규칙**: C-06 `proposed_v15_boundaries` 채택 및 C-05 `diagnose_only` 선택.
+- **결과**: **현행 보유 자료에서 즉시 점수가 산출·완료되는 유일한 사례 (F9 = −4, status: ok)**.
+
+### 2. Amazon (`needs_judgment` 해소 방안)
 - **차단 원인**: G4에서 미개시 리스 $106B 대비 AWS 백로그가 "수백 $B급"이라는 정성적 사실은 있으나, 숫자로 파싱되지 않아(`parse_failed`) 비교 가능성이 `unknown`으로 남아 있다.
-- **해소 규칙안**: "상장사의 주석 공시상 백로그 규모가 미개시 리스 총액을 명백히 상회함이 확인되는 경우, `coverage_comparable = yes`로 간주하고 G4 step 0(유지)을 적용한다."
-- **결과**: 규칙 명시 즉시 G1(흑자) -> G2(-2) -> G3(런웨이 10.6년, step 0) -> G4(유지, step 0)로 이어져 **F9 = −2 (status: ok)**로 완료된다.
+- **해소 규칙안**. "상장사의 주석 공시상 백로그 규모가 미개시 리스 총액을 명백히 상회함이 확인되는 경우, `coverage_comparable = yes`로 간주하고 G4 step 0(유지)을 적용한다."
+- **결과**. 규칙 명시 즉시 G1(흑자) -> G2(-2) -> G3(런웨이 10.6년, step 0) -> G4(유지, step 0)로 이어져 **F9 = −2 (status: ok)**로 완료된다. 단, `contracted_revenue`가 `parse_failed`이므로 C-16 결측 정책의 대상은 아니다.
 
-### 2. Alibaba (`pending_data` 해소 방안)
-- **차단 원인**: SEC 20-F에 연간 영업이익이 명시되어 있음에도 baseline 관측치에 TTM 영업손익 관측치가 누락되었고 `operating_result_reviewed`가 `unknown`으로 남아 있다.
-- **해소 규칙안**: Apple, Microsoft, NVIDIA 등과 동일하게 SEC 공시 기반 `operating_result_reviewed = profit`을 확인 적용하고, C-16을 결정한다.
+### 3. Alibaba (`pending_data` 및 `needs_judgment` 해소 방안)
+- **차단 원인**: SEC 20-F에 연간 영업이익이 명시되어 있음에도 baseline 관측치에 TTM 영업손익 관측치가 누락되었고 `operating_result_reviewed`가 `unknown`으로 남아 있으며, G4 역시 `coverage_comparable`이 `unknown` 상태이다.
+- **해소 요건 (2대 검토 입력 선행 필수)**.
+  1. G1 영업손익 검토 부호: SEC 공시 기반 `operating_result_reviewed = profit` 입력.
+  2. G4 비교 가능성 검토: `coverage_comparable = yes` 입력.
+  3. C-16 결정: `hold` 또는 `downgrade` 선택.
 - **결과**.
-  - C-16 `hold` 선택 시: **F9 = −2 (status: ok)**
-  - C-16 `downgrade` 선택 시: **F9 = −3 (status: ok)**
+  - 현행 자료 기준: 2대 검토 입력 없이는 C-16을 어떻게 선택하든 점수가 움직이지 않는다(0개사).
+  - 2대 검토 입력 충족 후 C-16 `hold` 선택 시: **F9 = −2 (status: ok)**.
+  - 2대 검토 입력 충족 후 C-16 `downgrade` 선택 시: **F9 = −3 (status: ok)**.
 
-### 3. Anthropic (`pending_data` 해소 방안)
+### 4. Anthropic (`pending_data` 해소 방안)
 - **차단 원인**: 비상장사로서 TTM 영업손익 공시가 없고 단일 분기 조정 흑자($559M)만 보고되어 C-20에 의해 G1 통과가 차단되어 있다.
 - **해소 규칙안**.
   - 대안 A (단위경제/단일분기 흑자 참작): G1을 조건부 통과시키면 비상장 FCF 미공시 특별 규칙(G2 -2, G3 생략, G4 중복방지)이 작동하여 **F9 = −2 (status: ok)**가 된다.

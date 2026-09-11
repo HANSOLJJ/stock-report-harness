@@ -343,12 +343,27 @@ class TestF9DecideIndependent(unittest.TestCase):
         self.assertIsNone(g4_openai["step"])
 
     def test_06_c16_alibaba_score_split(self):
-        """Test 6: For Alibaba (with reviewed profit), C-16 hold gives -2, while downgrade gives -3."""
+        """Test 6: C-16 changes 0 companies in baseline data. Alibaba requires BOTH profit and coverage_comparable=yes to reach C-16."""
+        # 1. In baseline data as-is (no judgment overrides), C-16 moves 0 companies
+        baseline_diffs = []
+        for cid in self.companies_info.keys():
+            sc_h, st_h, _ = self.run_f9(cid, {"C-04": "exclude", "C-05": "diagnose_only", "C-06": "proposed_v15_boundaries", "C-16": "hold"})
+            sc_d, st_d, _ = self.run_f9(cid, {"C-04": "exclude", "C-05": "diagnose_only", "C-06": "proposed_v15_boundaries", "C-16": "downgrade"})
+            if (sc_h, st_h) != (sc_d, st_d):
+                baseline_diffs.append(cid)
+        self.assertEqual(len(baseline_diffs), 0, "C-16 must change 0 companies in baseline data")
+
+        # 2. For Alibaba, profit alone is NOT enough: it stops at needs_judgment due to coverage_comparable: unknown
+        sc_profit_only, st_profit_only, _ = self.run_f9("alibaba", {"C-06": "proposed_v15_boundaries", "C-16": "hold"},
+                                                        override_inputs={"operating_result_reviewed": "profit"})
+        self.assertIsNone(sc_profit_only)
+        self.assertEqual(st_profit_only, "needs_judgment")
+
+        # 3. When BOTH profit and coverage_comparable=yes are provided, C-16 splits Alibaba between -2 and -3
         dec_hold = {"C-04": "exclude", "C-05": "diagnose_only", "C-06": "proposed_v15_boundaries", "C-16": "hold"}
         dec_down = {"C-04": "exclude", "C-05": "diagnose_only", "C-06": "proposed_v15_boundaries", "C-16": "downgrade"}
         dec_none = {"C-04": "exclude", "C-05": "diagnose_only", "C-06": "proposed_v15_boundaries", "C-16": None}
 
-        # Override operating_result_reviewed to profit (from SEC 20-F) and coverage_comparable to yes
         inputs = {"operating_result_reviewed": "profit", "coverage_comparable": "yes"}
         sc_hold, st_hold, _ = self.run_f9("alibaba", dec_hold, override_inputs=inputs)
         sc_down, st_down, _ = self.run_f9("alibaba", dec_down, override_inputs=inputs)
@@ -356,7 +371,7 @@ class TestF9DecideIndependent(unittest.TestCase):
 
         self.assertEqual(sc_hold, -2)
         self.assertEqual(sc_down, -3)
-        self.assertEqual(sc_hold - sc_down, 1, "C-16 must create exactly 1 step difference for Alibaba")
+        self.assertEqual(sc_hold - sc_down, 1, "C-16 must create exactly 1 step difference for Alibaba when both inputs are provided")
         self.assertEqual(st_hold, "ok")
         self.assertEqual(st_down, "ok")
         self.assertEqual(st_none, "needs_rule_decision")
