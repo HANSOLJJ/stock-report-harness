@@ -110,10 +110,54 @@ class ScopeSeparationTest(unittest.TestCase):
         self.assertIn("6.4", site["site"])
         self.assertIn("환금성", site["counts"])
 
-    def test_ev_site_counts_all_financial_assets(self):
+    def test_ev_site_counts_marketable_assets_only(self):
+        """EV 자리는 **시장성 있는** 재무적 자산만 센다.
+
+        원래 이 테스트는 `환금성은 여기서 묻는 질문이 아니다` 라는 문장을 고정하고 있었다. 그 문장이
+        지키려던 것은 **6.4 의 즉시성 제약이 P2 로 상속되지 않는다**는 것이고 그 뜻은 지금도 유효하다.
+        문제는 낱말이었다 — `환금성` 이 즉시성과 시장성을 한꺼번에 덮어, 시장성까지 안 묻는 것으로
+        읽혔다. 그 줄만 읽고 지분법 투자를 넣으면 alibaba net_cash 가 498억에서 987억 달러가 된다.
+        그래서 같은 불변식을 **두 축으로 갈라서** 고정한다.
+        """
         site = next(s for s in self.sep["sites"] if s["metric"] == "net_cash")
         self.assertIn("EV", site["site"])
-        self.assertIn("환금성은 여기서 묻는 질문이 아니다", site["why"])
+        self.assertIn("시장성", site["counts"])
+        self.assertIn("묻지 않고", site["why"])       # 즉시성
+        self.assertIn("팔 시장이 있는지는 묻는다", site["why"])   # 시장성
+
+    def test_each_site_answers_both_axes(self):
+        """**두 축은 서로를 함의하지 않는다.** 자리마다 각각 답해야 포괄어로 뭉개지지 않는다."""
+        for site in self.sep["sites"]:
+            with self.subTest(metric=site["metric"]):
+                for axis in ("immediacy", "marketability"):
+                    self.assertTrue(str(site["axes"].get(axis) or "").strip())
+        runway = next(s for s in self.sep["sites"] if s["metric"] == "cash")
+        ev = next(s for s in self.sep["sites"] if s["metric"] == "net_cash")
+        self.assertIn("묻는다", runway["axes"]["immediacy"])
+        self.assertIn("묻지 않는다", ev["axes"]["immediacy"])
+        self.assertIn("묻는다", ev["axes"]["marketability"])
+
+    def test_missing_axis_is_rejected(self):
+        def drop(spec, _payload):
+            spec["scope_separation"]["sites"][1]["axes"].pop("marketability")
+        with self.assertRaises(SchemaError) as cm:
+            validate_rules(mutated_rules(drop))
+        self.assertIn("marketability", str(cm.exception))
+
+    def test_blanket_word_is_banned_with_its_own_reason(self):
+        """같은 결함이 세 번 나왔다. **금지한 낱말과 왜 금지했는지를 규칙이 들고 있어야** 한다."""
+        banned = self.sep["two_axes"]["banned_word"]
+        self.assertIn("환금성", banned)
+        self.assertIn("987", banned)      # 잘못 읽었을 때의 값까지 적혀 있어야 한다
+
+    def test_no_unqualified_blanket_claim_in_the_ev_site(self):
+        """EV 자리 문장에 한정 없는 '전체·모두·전부' 가 남아 있으면 안 된다."""
+        ev = next(s for s in self.sep["sites"] if s["metric"] == "net_cash")
+        for key in ("counts", "why", *(f"axes.{a}" for a in ("immediacy", "marketability"))):
+            text = ev["axes"][key.split(".")[1]] if key.startswith("axes.") else ev[key]
+            with self.subTest(key=key):
+                for word in ("전체", "모두", "전부"):
+                    self.assertNotIn(word, text)
 
     def test_collapsing_to_one_metric_is_rejected(self):
         """두 자리가 같은 지표를 가리키면 이 블록은 아무것도 구분하지 않는다."""

@@ -487,6 +487,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
 
 
 NET_CASH_STATUSES = ("working_definition", "confirmed")
+# net_cash 적용 범위를 가르는 두 축. **서로를 함의하지 않는다** — 만기 3년 회사채는 즉시성이
+# 없어도 시장성이 있고, 비상장 지분은 만기가 없어도 시장성이 없다.
+NET_CASH_AXES = ("immediacy", "marketability")
 
 
 def _validate_net_cash(spec: Any) -> None:
@@ -545,6 +548,13 @@ def _validate_net_cash(spec: Any) -> None:
             _require(site.get("metric") in METRICS, f"{sw}.metric: 알 수 없는 지표 {site.get('metric')!r}")
             for key in ("site", "question", "counts", "why"):
                 _require(str(site.get(key) or "").strip(), f"{sw}.{key}: 비워 둘 수 없음")
+            # **자리마다 두 축을 각각 답해야 한다.** 즉시성과 시장성은 서로를 함의하지 않는데
+            # '환금성' 같은 포괄어로 뭉치면 어느 축을 묻는지 흐려지고 문장이 실제 기준과 반대로
+            # 읽힌다 — 2026-09-11 에 EV 자리에서 실제로 그랬다(NETCASH-37 3차 검토).
+            axes = site.get("axes") or {}
+            for axis in NET_CASH_AXES:
+                _require(str(axes.get(axis) or "").strip(),
+                         f"{sw}.axes.{axis}: 이 자리가 그 축을 묻는지 답해야 함")
             metrics.append(site["metric"])
         _require(len(set(metrics)) >= 2,
                  f"{where}.scope_separation.sites: 서로 다른 지표 둘 이상을 가리켜야 함 — {metrics}")
