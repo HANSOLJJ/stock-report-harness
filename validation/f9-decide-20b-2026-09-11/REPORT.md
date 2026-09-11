@@ -6,19 +6,26 @@
 - 대상 자료: `worker/scorecard/runs/ai-scorecard-2026-09-baseline/` (읽기 전용)
 - C-13 에 같은 과제가 독립 배정됐다. **상대 결과를 참조하지 않고 각자 산출했다**
 
+> **2026-09-11 개정 (R1).** 설계진행 재검토(`f2a92a1`, `needs_fix`)를 반영했다. 초판의 0절 표·3절·7절 세 곳이 **틀렸다.** 원인은 자체 시뮬레이터가 출하 엔진과 어긋난 것이다. **이번 개정은 자체 시뮬레이터를 쓰지 않고 출하 엔진 `scripts/scorecard/calc_f9.py` 의 `compute_f9()` 를 직접 호출해 16개 조합을 돌린 결과다**(`engine_matrix.py`, `engine-matrix-output.txt`). 개정 내역은 §12 에 있다.
+
 ## 0. 결론 — 무엇이 점수를 움직이고 누가 풀리는가
 
-**다섯 중 점수를 실제로 움직이는 것은 셋이고, 그중 기업을 푸는 것은 둘뿐이다.**
+**다섯 중 점수를 움직이는 것은 둘뿐이고, 기업을 푸는 것은 하나뿐이다.**
 
-| 결정 | 점수 변동 | 미완료를 푸는가 | 영향 기업 |
+| 결정 | 점수 변동 | 미완료를 푸는가 | 영향 기업 (출하 엔진 실측) |
 |---|---|---|---|
 | **C-06** 밴드 확정 | **있음** | **푼다** | **spacex-xai** `None(needs_rule_decision)` → **−4** |
-| **C-16** `hold`→`downgrade` | **있음** | **푼다** | **amazon** `None(needs_judgment)` → **−3** |
-| **C-05** `diagnose_only`→`apply` | **있음** | 풀지 못함 | **spacex-xai** −4 → **−5** (이미 C-06 이 푼 뒤의 점수만 바뀜) |
+| **C-05** `diagnose_only`→`apply` | **있음** | **되레 막는다** | **spacex-xai** −4 → **`None(needs_judgment)`** |
+| **C-16** `hold`→`downgrade` | **없음** | 못 푼다 | **0개사** |
 | **C-04** `exclude`→`include_v15` | **없음** | 못 푼다 | **0개사** |
 | **C-07** `ARR 대체 금지` 확정 | 없음 | 못 푼다 | 이미 `incompatible_basis` 반영됨 |
 
-**푸는 기업은 spacex-xai 와 amazon 둘이다. alibaba·anthropic 은 어떤 조합에서도 풀리지 않는다.** 둘은 규칙 공백이 아니라 **입력 부재**로 막혀 있다(`operating_result_reviewed: unknown`). 규칙을 다섯 개 다 확정해도 그대로 `pending_data` 다.
+**지금 자료에서 미완료를 푸는 조합은 `C-06 확정 + C-05 diagnose_only` 하나뿐이고, 그때 풀리는 기업은 spacex-xai 하나다.**
+
+**amazon·alibaba·anthropic 은 16개 조합 전부에서 풀리지 않는다.** 엔진을 16회 돌려 확인했다(`never resolved: amazon, alibaba, anthropic`).
+
+- alibaba·anthropic: G1 에서 `operating_result_reviewed: unknown` → `pending_data`
+- **amazon: 관문이 둘이다.** `coverage_comparable: unknown` 이라 C-16 에 닿기 전에 `needs_judgment` 로 멈추고, 그 관문을 `yes` 로 강제로 넘겨도 **`contracted_revenue` 의 status 가 `parse_failed`** 라 `pending_data` 로 빠진다. **C-16 은 amazon 을 풀지 못한다** (엔진으로 양쪽 다 확인).
 
 **지시서의 전제 하나를 정정한다.** "미완료 5개사 중 3개가 F9 에서 막혀 있고 amazon 은 needs_judgment, alibaba·anthropic 은 pending" 이라고 하셨는데, 실측하면 **F9 점수가 `None` 인 기업은 4개**다. amazon(`needs_judgment`), alibaba·anthropic(`pending_data`), 그리고 **spacex-xai(`needs_rule_decision`, 사유가 바로 C-06)** 이다. spacex-xai 가 누락돼 있었고, 공교롭게 **이번 결정으로 가장 확실히 풀리는 기업**이다.
 
@@ -37,7 +44,9 @@
 | R5 | `direction_A`·`B` 가 모두 unknown 이면 방향 완화 미적용 | 6.3 "자료 부족으로 완화 요건을 입증하지 못한 경우 완화를 적용하지 않는다" |
 | R6 | 값이 없으면 추정하지 않고 pending | 지시 조건 |
 
-**R3 이 결과를 크게 가른다.** G4 가 FCF 양수 기업까지 도달한다고 읽으면 C-16 의 영향 범위가 10개사로 늘어난다. 나는 6.2 의 문언이 양수 경로의 G3 진행을 규정하지 않는다는 점을 근거로 도달하지 않는 것으로 읽었다. **이 독해가 C-16 영향 범위를 1개사로 좁히는 직접 원인이므로, 다르게 읽으면 결론이 달라진다는 점을 명시한다.**
+**R3 은 출하 엔진 구현과 정확히 일치한다**(설계진행 재검토 확인). `fcf > 0` 이면 G2 에서 즉시 반환하고 G3·G4 로 가지 않는다.
+
+> **R1 정정.** 초판은 여기에 "다르게 읽으면 C-16 영향 범위가 10개사로 늘어난다" 고 적었는데 틀렸다. `_g4()` 는 `coverage_comparable == "yes"` 여야만 결측 유형 분기(C-16)에 닿는다. 그 11개사는 전부 `unknown` 이라 **어느 독해에서도 C-16 에 닿지 않는다.** R3 을 다르게 읽으면 그 기업들이 C-16 영향권에 들어오는 것이 아니라, 지금 `ok` 인 점수가 `needs_judgment` 로 후퇴할 뿐이다. **R3 은 결론을 가르지 않는다.**
 
 ## 2. C-06 다섯 공백의 실측
 
@@ -45,7 +54,7 @@
 |---|---|---|
 | 손실률 −10%·−30% 경계 중첩 | **정확히 경계값인 기업 0개.** 손실률 보유 자체가 1/14(spacex-xai −0.149) | **아니오** (단, 밴드가 `proposed` 라 spacex-xai 가 보류 중) |
 | FCF·영업손익 0 | `fcf_ttm == 0` **0개사**. `operating_income_ttm` 지표 자체가 **0/14** | **아니오** |
-| 완충 잠식 | `buffer_erosion` 이 **14/14 전부 `no`**. `undrawn_credit_facility` **0/14** | **아니오** |
+| 완충 잠식 | `buffer_erosion` 이 **14/14 전부 `no`**. 엔진이 읽는 `undrawn_credit` 관측 **0건** | **아니오** |
 | G2 안정/악화 기계 정의 | `fcf_ttm` 이 기업당 **1개 시점뿐**이라 전기 대비도 추세도 계산 불가 | **아니오** (현재 값은 검토 입력이지 계산 결과가 아님) |
 | BEP 후퇴 × 손실률 우선순위 | `bep_retreat=yes` 는 **openai 1개사뿐**이고, 그 openai 는 손실률 수치가 **없다** | **아니오** — 충돌이 실제로 발생하는 기업 **0개** |
 
@@ -74,31 +83,56 @@
 
 | 기업 | G1 | `diagnose_only` | `apply` |
 |---|---|---|---|
-| **spacex-xai** | fail (m=−0.149 → −4) | **−4** | **−5** |
+| **spacex-xai** | fail (m=−0.149 → −4) | **−4** | **`None` (needs_judgment)** |
 | openai | fail (BEP 후퇴 → −5) | −5 | −5 (이미 하한, G3/G4 skip) |
 | alibaba·anthropic | pending (입력 없음) | `pending_data` | `pending_data` |
 | 나머지 10개사 | pass (profit) | 해당 없음 | 해당 없음 |
 
-**G1 이 실패하는 기업 자체가 2개뿐이고, 그중 openai 는 이미 하한 −5 라 추가 감점이 불가능하다.** 그래서 C-05 의 실질 영향은 spacex-xai 한 칸이다.
+**G1 이 실패하는 기업 자체가 2개뿐이고, 그중 openai 는 이미 하한 −5 라 추가 감점이 불가능하다**(엔진이 `G3/G4 skipped: G1 점수가 이미 하한(-5)이라 추가 감점 불가` 를 남긴다). 그래서 C-05 의 실질 영향은 spacex-xai 하나다.
 
-`apply` 경로의 상세는 이렇다. G1 −4 → G2 FCF −32.5B 음수 −2 → 누계 −5 → 하한에서 멈춘다. 즉 **spacex-xai 는 `apply` 를 고르면 G3·G4 를 보기도 전에 하한에 닿는다.** 런웨이 3.1년(완충 100B ÷ 소진 32.5B)이 G3 무감점 구간인데도 그 앞에서 이미 바닥이다.
+**`apply` 경로의 실제 동작 (출하 엔진 기준).** 초판은 여기서 틀렸다. **G1 실패 분기는 G2 를 다시 세지 않는다.** 엔진은 G1 실패 시 G2 를 건너뛰고 곧바로 G3·G4 **진단**으로 간다.
 
-**이 점이 결정에 중요하다.** `apply` 는 "적자 기업은 현금·약정을 더 봐서 차등한다" 는 취지인데, 실제로는 **차등이 생기기 전에 하한이 먹는다.** 지금 자료에서 `apply` 의 효과는 차등이 아니라 일괄 −5 다.
+```
+G1  m=-0.149 → proposed 밴드 → -4
+G3  진단: runway = 100B / 32.5B = 3.0769년 ≥ 3 → step 0 → -4 유지
+G4  진단: coverage_comparable=unknown → step=None, pending(judgment)
+C-05=apply  → g4_pending 이 있으므로 done(None, needs_judgment)
+```
+
+즉 **`apply` 는 spacex-xai 를 −5 로 만들지 않는다. `None(needs_judgment)` 로 되돌린다.** 초판이 적은 "G2 −2 를 더해 −5" 는 엔진에 없는 경로였다.
+
+**이 점이 결정에 중요하다.** `apply` 는 "적자 기업을 현금·약정으로 차등한다" 는 취지인데, 지금 자료에서는 **차등을 만들기는커녕 이미 풀려 있던 기업을 다시 미완료로 되돌린다.** G4 판정 입력(`coverage_comparable`)이 없기 때문이다.
+
+**조건부로는 차등이 생긴다.** `coverage_comparable` 을 `yes` 로 가정하고 엔진을 돌리면 이렇게 갈린다.
+
+| spacex-xai (`coverage_comparable=yes` 가정) | C-16=`hold` | C-16=`downgrade` |
+|---|---|---|
+| C-05=`diagnose_only` | −4 | −4 |
+| C-05=`apply` | −4 | **−5** |
+
+**`apply` × `downgrade` 조합에서만 −5 가 된다.** 다만 이것은 현재 자료에 없는 입력을 가정한 결과이므로 **지금 점수가 아니라 조건부 전망**이다.
 
 ## 4. C-16 — `hold` 대 `downgrade`
 
-**점수가 달라지는 기업은 amazon 하나다.**
+**점수가 달라지는 기업이 0개다.** 초판은 amazon 이 풀린다고 적었으나 틀렸다.
 
-| 기업 | G4 상태 | `hold` | `downgrade` |
-|---|---|---|---|
-| **amazon** | 판정 불가 (`coverage_comparable: unknown`, `contracted_revenue` 없음, `offbalance_B` 106B) | **`None` (needs_judgment)** | **−3** |
-| oracle | 판정 가능 (`yes`, coverage 2.552 ≥ 1) | −3 | −3 |
-| spacex-xai | C-05=`apply` 라도 그 전에 하한 도달 | 해당 없음 | 해당 없음 |
-| alibaba·anthropic | G1 에서 이미 pending | 해당 없음 | 해당 없음 |
+이유는 엔진의 `_g4()` 가 **C-16 에 닿기 전에 관문을 둘 두기 때문이다.**
 
-**amazon 이 유일하게 C-16 으로 풀린다.** `hold` 를 고르면 amazon 은 계속 미완료로 남고, `downgrade` 를 고르면 −3 으로 확정된다.
+1. `coverage_comparable != "yes"` 이면 곧바로 `undetermined` + `pending(judgment)` 로 반환한다. 코드 주석이 명시한다 — *"숫자가 있어도 확정하지 않고, **결측 정책(C-16)으로도 보내지 않는다**"*.
+2. `yes` 를 통과해도, 값이 비었을 때 **status 가 `not_disclosed` 인 경우에만** C-16 분기에 닿는다. `parse_failed`·수집 실패·관측 부재는 `pending(data)` 다. 주석이 *"수집 실패를 미공시 위험으로 둔갑시키지 않음"* 이라고 적는다.
 
-다만 **`downgrade` 는 "자료 수집 실패를 기업의 미공시 위험으로 둔갑" 시킬 소지가 있다.** 6.4 마지막 문장이 정확히 그걸 경계한다. amazon 의 `coverage_comparable` 이 `unknown` 인 이유는 **기업이 공시하지 않아서인지 우리가 확인하지 않아서인지 자료에 구분돼 있지 않다.** anthropic·openai 는 `fcf_not_disclosed_reason` 처럼 사유 ID 를 갖는데 amazon 의 G4 에는 그런 사유 필드가 없다. **결측 유형을 구분하지 않은 채 `downgrade` 를 전역 적용하면 이 구분이 사라진다.**
+| 기업 | `coverage_comparable` | 값 상태 | C-16 에 닿는가 | `hold` | `downgrade` |
+|---|---|---|---|---|---|
+| **amazon** | `unknown` | `contracted_revenue` = **`parse_failed`** | **아니오 (관문 2개 다 막힘)** | `None` | `None` |
+| oracle | `yes` | 양쪽 값 있음 (coverage 2.552) | 아니오 (계산됨) | −3 | −3 |
+| spacex-xai | `unknown` | `offbalance_B` = `not_disclosed` | 아니오 (관문 1 에서 막힘) | 해당 없음 | 해당 없음 |
+| anthropic·openai | `no` | `incompatible_basis` | 아니오 (C-07 경로) | 해당 없음 | 해당 없음 |
+
+**amazon 을 엔진으로 직접 확인했다.** `coverage_comparable` 을 `yes` 로 강제해도 `contracted_revenue` 가 `parse_failed` 라 `hold`·`downgrade` 양쪽 모두 `None(pending_data)` 다. **C-16 은 어느 쪽을 골라도 amazon 을 풀지 못한다.**
+
+**즉 C-16 은 지금 자료에서 적용 대상이 0개다.** 규칙이 나쁜 것이 아니라 **엔진이 이미 결측 유형을 구분하고 있어서** `not_disclosed` 가 아닌 결측은 C-16 으로 가지 않는다. 초판이 우려한 "자료 수집 실패를 미공시 위험으로 둔갑" 문제는 **엔진이 이미 막아 두었다.**
+
+다만 §9 에 적었던 관찰은 유효하다. amazon 의 `coverage_comparable` 이 `unknown` 인 이유가 미공시인지 미확인인지 자료에 구분이 없다. **초판의 잘못은 이 단서를 §9 에 적어 놓고 0절 결론에서는 amazon 을 C-16 대상으로 다룬 것이다.** 자기가 찾은 단서를 자기 결론에 반영하지 않았다.
 
 ## 5. C-04 — 영향 0
 
@@ -130,7 +164,13 @@ G3 에 실제로 도달하는 기업은 FCF 음수인 amazon·alibaba·spacex-xa
 
 **얽힘 2 — BEP 우선순위는 C-05 요약과 C-06 다섯째가 같은 사안이다.** 두 곳에 나뉘어 적혀 있는데 실제로는 하나의 규칙이다. 다행히 **현재 충돌 기업이 0개**라 지금 어긋나도 점수는 안 갈린다. 그러나 `design-guideline.md` 의 T-10 이 "C-05/C-06 결정표와 일치" 를 요구하므로, **두 곳에 따로 쓰면 T-10 이 깨진다.** 한 곳에 쓰고 다른 곳이 참조하는 형태를 권한다.
 
-**얽힘 3 — C-05=`apply` 가 C-16 을 무력화한다.** spacex-xai 는 `apply` 를 고르면 G2 에서 이미 하한에 닿아 G4 에 도달하지 못한다. 즉 **C-05 를 `apply` 로 정하면 spacex-xai 에 대한 C-16 선택은 의미를 잃는다.** C-16 이 실제로 작동하는 기업은 amazon 하나로 줄어든다.
+**얽힘 3 — 방향이 반대다. `apply` 라야 C-16 이 spacex-xai 에 닿는다.** 초판은 "`apply` 가 C-16 을 무력화한다" 고 적었는데 정반대였다.
+
+`diagnose_only` 면 엔진이 G1 점수 −4 로 확정하고 G3·G4 는 진단 기록만 남긴다(`G1-after applied=False`). **G4 결과가 점수에 반영되지 않으므로 C-16 선택이 아예 걸리지 않는다.** `apply` 를 골라야 G4 가 점수 경로에 들어오고, 그래야 C-16 이 의미를 갖는다.
+
+`coverage_comparable=yes` 를 가정한 엔진 실행이 이를 보인다 — `apply`+`downgrade` 에서만 −5 가 되고 나머지 셋은 −4 다(§3 표).
+
+**따라서 C-05 와 C-16 의 선후는 이렇다.** C-06 이 밴드를 확정해야 C-05 가 대상을 갖고, C-05 가 `apply` 여야 C-16 이 대상을 갖는다. **셋이 순차 의존이다.** 다만 현재 자료에서는 `coverage_comparable` 이 없어 `apply` 가 차등이 아니라 `needs_judgment` 를 낳으므로, **세 번째 고리는 아직 작동하지 않는다.**
 
 ## 8. 검증
 
@@ -164,8 +204,27 @@ G3 에 실제로 도달하는 기업은 FCF 음수인 amazon·alibaba·spacex-xa
 | `REPORT.md` | 이 보고서 |
 | `extract_f9_inputs.py`, `f9-input-inventory.json` | F9 필수 입력 보유 현황 (G1 입력 부재의 근거) |
 | `extract_f9_state.py`, `f9-current-state.json` | 현재 게이트 경로·보류 사유 (정답이 아니라 상태로만 사용) |
-| `simulate_f9.py`, `f9-simulation.json` | 선택지 16개 조합 시뮬레이션 |
+| `simulate_f9.py`, `f9-simulation.json` | 초판 자체 시뮬레이션. **구현과 어긋나 R1 에서 대체됨. 이력 보존용이며 결론 근거가 아니다** |
 | `verify_and_c06.py`, `verify-output.txt` | 양성 대조·입력 변경 테스트·C-06 다섯 공백 실측 |
+| **`engine_matrix.py`, `engine-matrix.json`, `engine-matrix-output.txt`** | **R1 정정 근거 — 출하 엔진 `compute_f9()` 직접 호출 16조합** |
+
+## 12. 수정 이력 (R1, 2026-09-11)
+
+설계진행 재검토 `f2a92a1` 의 `needs_fix` 3건을 반영했다. **판정 근거는 자체 시뮬레이터가 아니라 출하 엔진 직접 호출이다.**
+
+| # | 초판 | 정정 | 근거 |
+|---|---|---|---|
+| 1 | 0절·4절: C-16 `downgrade` 가 amazon 을 −3 으로 푼다 | **C-16 은 0개사.** amazon 은 `coverage_comparable=unknown` 에서 먼저 막히고, `yes` 로 강제해도 `contracted_revenue=parse_failed` 라 `pending_data` | 엔진 16조합 + `yes` 강제 실행 |
+| 2 | 3절: `apply` 시 spacex-xai 가 G2 −2 를 더해 −5 | **G1 실패 분기는 G2 를 다시 세지 않는다.** G3 런웨이 3.0769년 step 0 → −4 유지, G4 pending → **`None(needs_judgment)`** | `calc_f9.py` G1 실패 분기 + 엔진 실행 |
+| 3 | 7절 얽힘 3: `apply` 가 C-16 을 무력화 | **반대다.** `diagnose_only` 면 G4 가 점수에 안 들어와 C-16 이 안 걸린다. `apply` 라야 C-16 이 닿는다 | 엔진 `G1-after applied=False` 경로 |
+
+**근본 원인.** 초판은 계약 문서에서 자체 시뮬레이터를 구성했는데, 그것이 구현과 어긋났다. 특히 (a) G1 실패 뒤 G2 재계산 여부, (b) `_g4()` 의 결측 유형 분기를 잘못 모델링했다. **독립 시뮬레이터는 규칙 해석을 검증하지만 구현과의 일치는 검증하지 않는다.**
+
+보조 원인이 하나 더 있다. `extract_f9_inputs.py` 가 관측의 `value` 만 읽고 **`status` 를 버렸다.** 그래서 amazon 의 `contracted_revenue` 가 `parse_failed` 인 것을 초판이 `-`(없음)로만 보았다. §9 에 "미공시인지 미확인인지 구분이 없다" 고 적어 놓고 결론에 반영하지 못한 것도 같은 뿌리다.
+
+**초판에서 유지되는 것** — 지시서 전제 정정(F9 `None` 4개사, spacex-xai 누락), G1 입력 공백 발견(`operating_margin_ttm` 1/14, `revenue_ttm` 0/14, `operating_income_ttm` 0/14), C-06 다섯 공백 실측, 규약 R3. 설계진행이 전수 재현해 확인했고 R3 은 구현과 정확히 일치한다고 확인받았다.
+
+**작은 정정 둘.** 초판이 적은 지표명 `undrawn_credit_facility` 는 엔진이 실제로 읽는 이름이 **`undrawn_credit`** 이다. 이름과 무관하게 관측은 **0건**이므로 C-04 = 0개사 결론은 유지된다. 그리고 §4 표의 spacex-xai 행이 "하한 도달" 이라 적었던 것은 정정 2에 따라 "관문 1(`coverage_comparable`)에서 막힘" 이 맞다.
 
 ## 11. 조건 준수
 
@@ -177,3 +236,4 @@ G3 에 실제로 도달하는 기업은 FCF 음수인 amazon·alibaba·spacex-xa
 - **점수·규칙·승인·원자료를 변경하지 않았다.** `worker/` 는 읽기 전용으로만 읽었고 `v1.5`·`v1.7.json`·`scripts/scorecard/` 를 건드리지 않았다
 - `api.nasdaq.com` 호출 0건. 신규 네트워크 수집 0건
 - C-13 의 결과를 참조하거나 기다리지 않았다
+- **R1 에서 worker 의 `scripts/scorecard/` 를 `import` 로 읽기만 했고 수정하지 않았다.** `v1.5`·`v1.7.json`·승인 해시·`results_hash` 불변
