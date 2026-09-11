@@ -15,7 +15,7 @@
   "classification_criteria": {
     "category_1": "회사가 공시하지 않았다 (not_disclosed_by_company)",
     "category_2": "공시했는데 우리가 못 찾았다 (disclosed_but_not_parsed)",
-    "category_3": "어느 쪽인지 모르겠다 (uncertain_unknown)"
+    "category_3": "공시 없음(중요성 미달 가능) 또는 어느 쪽인지 불확실 (uncertain_unknown)"
   },
   "survey_findings": {
     "SPCX": {
@@ -70,6 +70,19 @@
         },
         "deferred_revenue_included_usd": 14286000000,
         "conclusion": "SPCX는 백로그 총액 $47.461B를 SEC 10-Q Note 3 및 XBRL 태그에 공시하고 있음."
+      },
+      "provisional_coverage": {
+        "status": "provisional",
+        "ratio": 1.604,
+        "ratio_formatted": "1.604 (잠정)",
+        "formula": "Backlog ($47.461B) / Total Offbalance-B ($29.582B)",
+        "caveats": [
+          "미개시 리스는 2025-12-31 기준(Form S-1/A Note 11)",
+          "구매약정 중 Spectrum 거래 대금 등에 현금 및 보통주(Class A common stock) 혼합 지급 조건 미분해",
+          "2027년 지출($22,244M)이 전체 약정의 약 80%로 편중됨",
+          "백로그 내 이연수익 $14,286M 포함에 따른 중복 산입 주의"
+        ],
+        "note": "비교 가능성(coverage_comparable) 최종 판정 전의 잠정 계산값임."
       }
     },
     "BABA": {
@@ -80,11 +93,11 @@
       "offbalance_B": {
         "baseline_status": "not_disclosed",
         "baseline_raw": "미확인",
-        "survey_status": "not_disclosed_by_company_for_uncommenced_leases",
-        "three_way_classification": "회사가 공시하지 않았다 (not_disclosed_by_company)",
+        "survey_status": "no_disclosure_immateriality_possible",
+        "three_way_classification": "공시 없음 (중요성 미달 가능) (no_disclosure_immateriality_possible)",
         "found_value": null,
         "disclosed_commitments_detail": {
-          "uncommenced_leases": "미공시 (Note 6 Leases에 미개시 리스 기재 없음)",
+          "uncommenced_leases": "미기재 (Note 6 Leases에 미개시 리스 기재 없음 — 중요하지 않아 미기재되었을 가능성 존재)",
           "capital_commitments_contracted": {
             "amount_rmb": 54136000000,
             "amount_formatted": "RMB 54,136 million",
@@ -98,10 +111,13 @@
           "investment_commitments": {
             "amount_rmb": 14501000000,
             "amount_formatted": "RMB 14,501 million",
-            "sec_source": "Form 20-F (filed 2026-05-20), Note 27(b) (Commitments, p. F-73)"
+            "sec_source": "Form 20-F (filed 2026-05-20), Note 27(b) (Commitments, p. F-73)",
+            "excluded_from_offbalance_B": true,
+            "excluded_reason": "투자약정(지분투자/M&A)은 영업 지출이 아니며 계약수입과 대응되지 않으므로 B종 확정 약정에서 제외"
           }
         },
-        "conclusion": "BABA는 Note 6에 온밸런스 리스 부채(RMB 21,726M)만 공시하고 미개시 리스는 공시하지 않음(회사가 공시 안 함). 다만 Note 27에 자본 약정 RMB 54.1B 및 대역폭 등 기타 약정 RMB 200.1B를 확정 약정으로 공시함."
+        "confirmed_offbalance_B_total_rmb": 254198000000,
+        "conclusion": "BABA는 Note 6에 온밸런스 리스 부채(RMB 21,726M)만 공시하고 미개시 리스는 기재하지 않음. 이는 고의적 미공시라기보다는 중요하지 않아 기재 대상이 아닐 가능성(immaterial)이 있음. 다만 Note 27에 타사와 동일한 성격인 B종 확정 약정(자본 약정 RMB 54.1B 및 기타 약정 RMB 200.1B, 합계 RMB 254.2B)을 공시함."
       },
       "contracted_revenue": {
         "baseline_status": "not_disclosed",
@@ -111,7 +127,19 @@
         "found_value": null,
         "sec_source": "Form 20-F (filed 2026-05-20), Note 2(t) (p. F-21) and Note 5 (p. F-39)",
         "practical_expedient_quote": "The Company applies the practical expedient to not disclose the value of unsatisfied performance obligations for contracts with an original expected duration of one year or less and contracts for which revenue is recognized at the amount to which the Company has the right to invoice for services performed.",
-        "conclusion": "BABA는 ASC 606 실무적 간편법을 공식 채택하여 잔여 성능의무(RPO)를 공시하지 않음. 이는 수집 실패가 아니라 회사의 회계기준 면제 적용에 따른 합법적 미공시임."
+        "conclusion": "BABA는 ASC 606 실무적 간편법을 공식 채택하여 1년 이하 및 청구권 기준 계약 잔여 성능의무(RPO)를 공시하지 않음(면제로 대부분 설명됨). 1년 초과 계약의 경우 Note 5에 인식액이 중요하지 않다고 기재함. 이는 회사의 공식 회계정책에 따른 진정한 미공시임."
+      },
+      "provisional_coverage": {
+        "status": "not_computable_due_to_missing_numerator",
+        "numerator": null,
+        "numerator_note": "RPO 미공시(ASC 606 실무적 간편법 적용)",
+        "denominator_rmb": 254198000000,
+        "denominator_formatted": "RMB 254,198 million (자본약정 RMB 54,136M + 기타약정 RMB 200,062M)",
+        "caveats": [
+          "통화가 RMB이며 기준일(2026-03-31)이 타사(2026-06-30)보다 3개월 이름",
+          "분자(RPO) 부재로 수치 산출 불가"
+        ],
+        "note": "비교 가능성(coverage_comparable) 판정 대상으로 남김."
       }
     },
     "AMZN": {
@@ -144,6 +172,20 @@
         "survey_status_20260630_uncommenced_leases_usd": 137214000000,
         "survey_status_20260630_purchase_obligations_usd": 130065000000,
         "sec_source": "Form 10-Q (filed 2026-07-31), Note 4 (Commitments and Contingencies, p. 13)"
+      },
+      "provisional_coverage": {
+        "status": "provisional",
+        "ratio_uncommenced_leases_only": 3.615,
+        "ratio_uncommenced_leases_formatted": "3.615 (잠정)",
+        "formula_uncommenced_leases": "AWS Backlog ($496.0B) / Uncommenced Leases ($137.214B)",
+        "ratio_total_commitments": 1.856,
+        "ratio_total_commitments_formatted": "1.856 (잠정)",
+        "formula_total_commitments": "AWS Backlog ($496.0B) / Total Commitments ($267.279B = 미개시 리스 $137.214B + 구매약정 $130.065B)",
+        "caveats": [
+          "약정은 Thereafter(5년 초과)까지 포함하는 반면 수입은 1년 초과 장기 계약 기준(가중평균 6.4년)",
+          "구매약정 $130.065B 합산 여부에 따라 분모 범위 변동"
+        ],
+        "note": "비교 가능성(coverage_comparable) 최종 판정 전의 잠정 계산값임."
       }
     }
   }

@@ -8,8 +8,9 @@ import re
 class TestOffBSurvey(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw_dir = os.path.join("validation", "offb-24", "_raw")
-        cls.results_file = os.path.join("validation", "offb-24", "offb_survey_results.json")
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        cls.raw_dir = os.path.join(base_dir, "_raw")
+        cls.results_file = os.path.join(base_dir, "offb_survey_results.json")
         cls.excerpts_file = os.path.join(cls.raw_dir, "extracted_excerpts.json")
         
         with open(cls.results_file, "r", encoding="utf-8") as f:
@@ -76,7 +77,7 @@ class TestOffBSurvey(unittest.TestCase):
         self.assertNotIn("uncommenced lease", content.lower())
         
         baba_offb = self.results["survey_findings"]["BABA"]["offbalance_B"]
-        self.assertIn("not_disclosed_by_company", baba_offb["three_way_classification"])
+        self.assertIn("공시 없음 (중요성 미달 가능)", baba_offb["three_way_classification"])
 
     def test_05_baba_commitments_disclosed_20f(self):
         """Test 5: BABA 20-F Note 27 discloses capital commitments of RMB 54,136M and other commitments of RMB 200,062M."""
@@ -162,9 +163,18 @@ class TestOffBSurvey(unittest.TestCase):
         amzn_rev_class = self.results["survey_findings"]["AMZN"]["contracted_revenue"]["three_way_classification"]
 
         self.assertIn("공시했는데 우리가 못 찾았다", spcx_offb_class)
-        self.assertIn("회사가 공시하지 않았다", baba_offb_class)
+        self.assertIn("공시 없음 (중요성 미달 가능)", baba_offb_class)
         self.assertIn("회사가 공시하지 않았다", baba_rev_class)
         self.assertIn("공시했는데 우리가 못 찾았다", amzn_rev_class)
+
+        # Provisional coverage checks
+        spcx_cov = self.results["survey_findings"]["SPCX"]["provisional_coverage"]
+        self.assertEqual(spcx_cov["status"], "provisional")
+        self.assertEqual(spcx_cov["ratio"], 1.604)
+
+        amzn_cov = self.results["survey_findings"]["AMZN"]["provisional_coverage"]
+        self.assertEqual(amzn_cov["status"], "provisional")
+        self.assertEqual(amzn_cov["ratio_uncommenced_leases_only"], 3.615)
 
 
 if __name__ == "__main__":
