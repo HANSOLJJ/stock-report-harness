@@ -291,6 +291,25 @@ class TestF6FixRoundSpec(unittest.TestCase):
         # 연방정부 저작물 원칙은 사이트 문서로 확인한 사실이 아니므로 근거로 쓰지 않는다.
         self.assertIn("등재 근거로 쓰지 않는다", entry["note"])
 
+    def test_h10_note_records_why_and_crosscheck(self):
+        """왜 이 출처인가와 교차 검증 대상이 남아야 한다.
+
+        발행사가 실제로 쓰는 환율이라는 것이 채택 근거이고, 공시 환산치가 우리 조회를
+        검산하는 기준이다. 둘 다 없으면 다음 세션이 출처를 다시 고르려 든다.
+        """
+        entry = next(e for e in self.sources["allowed"] if e["host"] == "www.federalreserve.gov")
+        note = entry["note"]
+        self.assertIn("왜 이 출처인가", note)
+        self.assertIn("발행사가 실제로 쓰는 환율", note)
+        self.assertIn("교차 검증 대상", note)
+        # 공시 환산치 두 값과 각각의 기준일
+        self.assertIn("31.37", note)
+        self.assertIn("2025-12-31", note)
+        self.assertIn("6.8980", note)
+        self.assertIn("2026-03-31", note)
+        # 같은 20-F 안에서도 항목마다 환율이 다르다는 단서
+        self.assertIn("31.11", note)
+
     def test_fmp_and_finnhub_stay_allowed_with_status_note(self):
         """사용자 결정이다. 강등하지 않고 상태만 적는다."""
         allowed = {e["host"]: e["note"] for e in self.sources["allowed"]}
