@@ -59,6 +59,20 @@
 - 최종 HTML 본문에는 `[S1]`, `[N1]` 같은 인라인 참조 표식을 노출하지 말고 References만 남긴다.
 - 최종 HTML에는 투자 유의 문구를 하단 footer note로 포함하고, build 단계에서 새 주장을 추가하지 않는다.
 
+## AI Scorecard 계약 (report_type: ai_scorecard)
+- 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md`.
+- 판별: `plan/<slug>.md` frontmatter `report_type: ai_scorecard`, slug 는 `ai-scorecard-` 접두. 없으면 기존 stock_report 계약을 그대로 적용한다.
+- 명령: `/score-plan`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal`. 실행기는 `python scripts/scorecard_cli.py <stage> <slug>`, 빌드는 `python scripts/build_report.py <slug>`.
+- 단일 진실은 `scorecard/`(rules, companies, baseline, runs/<slug>, history.csv)에 두고 추적한다. plan/research/drafts/reviews/output 은 생성물이며 손으로 고치지 않는다.
+- 원자료·판단·규칙이 입력이고 점수는 결과다. 자동 산출 점수를 직접 수정하지 않는다. 모르는 값은 0으로 치환하지 않는다(unknown ≠ 0).
+- 정성 판정(③ criteria, ⑤ A/H, ⑦ 매트릭스, ⑨ gate_inputs, ①④⑧ score)은 근거·검토자·검토일이 있어야 하고, 산식·사다리·구간 적용은 프로그램이 한다.
+- 미결 규칙 결정(C-03, C-05, C-06, C-13, C-16)은 `run.json.decisions` 로만 실행 단위에서 선택한다. 기본값을 조용히 채택하지 않으며 해당 기업은 순위에서 제외된다.
+- 리뷰는 4 영역(사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성) + 체크리스트 Q01~Q23. hero 이미지·뉴스 100건 요건은 적용하지 않는다.
+- 승인(`approve`)은 사용자 행위다. 승인 해시(rules/observations/judgments/run/results/draft)가 현재와 다르면 build 는 `awaiting_user` 로 멈춘다.
+- 새 실행에서 상장사 ⑥은 NTM PER(4개 연속 미발표 분기 YYYYQn, 통화·주식 기준 일치)만 채점하고 근사치는 대기한다. ⑨ G4 는 `coverage_comparable: yes` 일 때만 계산한다.
+- 테스트: `python -X utf8 -m unittest discover -s tests -t .`(T-01~T-12, R01~R06). 코드 변경 후 반드시 실행한다.
+- 구현은 scorecard 작업 브랜치에서 진행 중이며 `scorecard/`·`scripts/scorecard_cli.py`·`docs/scorecard/`는 그 브랜치가 머지될 때 들어온다. 이 절은 그때까지 계약 선언으로만 유효하다.
+
 ## 금지·주의
 - plan 없이 research/draft/build 산출물을 만들지 않는다.
 - research 없이 draft를 만들지 않고, review 없이 build하지 않는다.
