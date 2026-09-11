@@ -152,3 +152,64 @@ TSLA TTM 순이익 = FY2025 3,794 + H1'26 1,591 − H1'25 1,581 = 3,804 백만
 | C-12 비상장 F6 밴드 | anthropic·openai — 미정 |
 | C-20 anthropic F9 | 미정 |
 | anthropic F8 재판정 | 오래 미뤄 둔 별건 |
+
+---
+
+## 라운드2 확인 — worker `9dacac5`
+
+**둘 다 닫혔다.** 테스트 **191건**(181 → 191), 승인 실행 diff 공집합, **승인 대상 6종 해시 전부 보존**(`compare_scores.py` 출력에서 승인 baseline 과 현재 baseline 이 여섯 칸 다 같다).
+
+**점수·순위 변동 0건이고 `results_hash` 만 바뀐다.** `calc` 에 판정 근거가 들어갔기 때문이라는 설명이 맞다.
+
+### `stale_asof` 가 실제로 읽힌다
+
+`calc.p4` 출력을 직접 열었다.
+
+```json
+"stale_asof": {"checked": true, "period_end": "2025-12-31", "as_of": "2026-09-02",
+               "months_elapsed": 8, "limit_months": 16, "period_basis": "annual", "hit": false}
+```
+
+**`checked: true` 와 `limit_months` 가 산출물에 남는다.** 걸리지 않았다는 사실과 **무엇과 비교해서 안 걸렸는지**가 같이 있다. `hit: false` 만 있으면 "검사를 했는지" 를 알 수 없다.
+
+`quarterly_yoy` 를 `basis_map` 으로 `quarterly` 에 태운 처리도 맞다. **SPCX 는 분기 신고자이므로 연간 임계 16개월을 주면 안 된다.**
+
+### 환율 — 기존 계약을 지우지 않았다
+
+`priority` 를 `issuer_declared_convenience_rate` → `h10_spot_at_price_date` 로 두고, **H.10 계약(`price_date`·`fx_rate_date`·`backfill` pending)을 삭제하지 않고 `fallback_h10` 아래로 옮겼다.**
+
+**옳다.** NTM 이 `FX-SOURCE-19` 에서 세운 `price_date`/`fx_rate_date` 분리와 후퇴 한도 논의가 **선언 환율이 없는 발행사에는 그대로 필요하다.** 우선순위가 바뀌었다고 계약을 버리면 그 작업이 사라진다.
+
+**밴드 민감도를 문장이 아니라 데이터로 남긴 것이 특히 좋다.**
+
+```
+tsmc   P2  17.072(-1) 대 17.845(-1)      P1  39.788(-1) 대 41.589(-1)
+alibaba P2  1.701( 0) 대  1.790( 0)      P1  17.979( 0) 대 18.914( 0)
+```
+
+**넷 다 안 갈린다.** "환율 선택이 점수를 가르지 않는다" 를 주장이 아니라 수치로 보인다.
+
+### 워크트리 경계를 지킨 판단
+
+> `f6-status-2026-09-10.md` 는 **설계진행 워크트리 파일이라 안 고쳤습니다.** `v1.7 fx.supersedes` 가 가리키게 뒀고 고칠 두 군데 문면을 회신에 넣었습니다.
+
+**맞다. 남의 워크트리 파일을 고치지 않는 것이 규율이고, 대신 `supersedes` 로 연결해 두었으니 끊기지도 않았다.** 내가 고쳤다.
+
+## 부수 관찰 — TSM P3 가 경계에 가장 가깝다
+
+```
+tsmc P3   value 0.31605   nearest_boundary 0.30   distance_ratio 0.0535   tolerance 0.03
+```
+
+**경계 허용오차 3% 밖이라 판정은 안전하지만 여유가 5.35% 다.** 현재 파라미터 중 경계에 가장 가깝다. **다음 회계연도에 성장이 30% 아래로 내려오면 바로 한 칸 움직인다.**
+
+## 승인 준비 완료
+
+| | |
+|---|---|
+| 완주 | **12/14** (anthropic·openai 는 C-12) |
+| 테스트 | 191건 skip 0 |
+| 승인 대상 6종 | **전부 보존** |
+| 실행 | `ai-scorecard-2026-09-obsreg`, 승인 직전 상태 |
+
+**사용자 승인만 남았다.**
