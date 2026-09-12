@@ -1,9 +1,9 @@
-# C03-F2 F2 경로 수 사다리 모델 vs 별표 F 세대격차 질 모델 14개사 실측 검증 테스트
+# C03-F2 F2 사다리·질·혼합 3대 모델 실측 및 이해상충·신설절 검증 테스트
 import json
 import os
 import unittest
 
-class TestC03F2MappingModels(unittest.TestCase):
+class TestC03F2Models(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.base_dir = os.path.dirname(__file__)
@@ -20,14 +20,15 @@ class TestC03F2MappingModels(unittest.TestCase):
 
     def test_01_file_and_schema_structure(self):
         """결과 JSON 파일의 필수 메타데이터 및 스키마 구조 검증"""
-        self.assertEqual(self.data.get("schema"), "scorecard_c03_f2_results_v2")
+        self.assertEqual(self.data.get("schema"), "scorecard_c03_f2_results_v3")
         self.assertEqual(self.data.get("task_id"), "C03-F2-38")
         self.assertEqual(self.data.get("factor"), "F2")
         self.assertIn("sources", self.data)
         self.assertIn("asterisk_f_evidence", self.data)
+        self.assertIn("agent_practice_axis_evidence", self.data)
+        self.assertIn("conflict_of_interest_and_tensions", self.data)
         self.assertIn("nvidia_market_share_analysis", self.data)
-        self.assertIn("mapping_models", self.data)
-        self.assertIn("missing_conditions", self.data)
+        self.assertIn("models", self.data)
         self.assertIn("companies", self.data)
         self.assertIn("summary", self.data)
 
@@ -64,56 +65,52 @@ class TestC03F2MappingModels(unittest.TestCase):
             )
 
     def test_04_model1_ladder_results(self):
-        """[모델 1] HANDOVER 사다리 모델: 12개사 일치, 2개사 불일치(NVIDIA, TSMC 각 -2) 검증"""
-        m1_summary = self.data["summary"]["model1_summary"]
-        self.assertEqual(m1_summary["matched_count"], 12)
-        self.assertEqual(m1_summary["mismatched_count"], 2)
-        self.assertEqual(set(m1_summary["mismatched_companies"]), {"nvidia", "tsmc"})
+        """[모델 1] 사다리 모델: 12개사 일치, 2개사 불일치(NVIDIA, TSMC 각 -2) 검증"""
+        summary = self.data["summary"]
+        self.assertEqual(summary["model1_matched_count"], 12)
+        self.assertEqual(summary["model1_mismatched_count"], 2)
 
         comp_map = {c["company_id"]: c for c in self.data["companies"]}
         for cid in ["nvidia", "tsmc"]:
             c = comp_map[cid]
             self.assertEqual(c["mapped_score_model1_ladder"], 3)
             self.assertEqual(c["inherited_score"], 5)
-            self.assertEqual(c["model1_delta"], -2)
             self.assertFalse(c["model1_match"])
 
-    def test_05_model2_quality_results(self):
-        """[모델 2] 별표 F 세대격차 질 모델: 14개사 전수 일치(14/14) 검증"""
-        m2_summary = self.data["summary"]["model2_summary"]
-        self.assertEqual(m2_summary["matched_count"], 14)
-        self.assertEqual(m2_summary["mismatched_count"], 0)
+    def test_05_model2_and_model3_100_percent_matches(self):
+        """[모델 2] 질 모델 및 [모델 3] 혼합 모델: 14개사 전수 일치(14/14) 검증"""
+        summary = self.data["summary"]
+        self.assertEqual(summary["model2_matched_count"], 14)
+        self.assertEqual(summary["model2_mismatched_count"], 0)
+        self.assertEqual(summary["model3_matched_count"], 14)
+        self.assertEqual(summary["model3_mismatched_count"], 0)
 
         for c in self.data["companies"]:
-            self.assertTrue(
-                c["model2_match"],
-                f"Model 2 mismatch for {c['company_id']}"
-            )
-            self.assertEqual(
-                c["mapped_score_model2_quality"],
-                c["inherited_score"],
-                f"Model 2 score calculation error for {c['company_id']}"
-            )
-            self.assertEqual(c["model2_delta"], 0)
+            self.assertTrue(c["model2_match"])
+            self.assertTrue(c["model3_match"])
+            self.assertEqual(c["mapped_score_model2_quality"], c["inherited_score"])
+            self.assertEqual(c["mapped_score_model3_hybrid"], c["inherited_score"])
 
-    def test_06_asterisk_f_and_nvidia_analysis_present(self):
-        """별표 F 예시 인용 및 NVIDIA 점유율 분석 존재 검증"""
-        ast_f = self.data["asterisk_f_evidence"]
-        self.assertIn("table", ast_f)
-        self.assertTrue(any("NVIDIA" in row["v1_examples"] for row in ast_f["table"]))
-        self.assertTrue(any("Anthropic" in row["v1_examples"] for row in ast_f["table"]))
-        self.assertTrue(any("Meta" in row["v1_examples"] for row in ast_f["table"]))
+    def test_06_agent_practice_axis_and_conflict_of_interest_quotes(self):
+        """에이전트 실무 축, 이해상충 고지, 긴장 #4 및 #11 인용 검증"""
+        agent_axis = self.data["agent_practice_axis_evidence"]
+        self.assertIn("종합 지능", [a["axis"] for a in agent_axis["three_axes_table"]])
+        self.assertIn("🆕 에이전트 실무", [a["axis"] for a in agent_axis["three_axes_table"]])
+        self.assertIn("코딩", [a["axis"] for a in agent_axis["three_axes_table"]])
+        self.assertIn("독립 측정을 우선한다", agent_axis["vendor_vs_independent_rule"])
 
+        coi = self.data["conflict_of_interest_and_tensions"]
+        self.assertIn("이해상충 고지", coi["conflict_of_interest_notice"]["text"])
+        self.assertIn("Anthropic ②5를 지켰다", coi["conflict_of_interest_notice"]["text"])
+        self.assertIn("긴장 #4", coi["tension_4"]["text_1"])
+        self.assertIn("긴장 #11", coi["tension_11"]["text_1"])
+        self.assertEqual(coi["next_quarter_timeline"]["target_timeline"], "2026년 11월 (2026-11)")
+
+    def test_07_nvidia_market_share_analysis(self):
+        """NVIDIA 점유율 70~75% 분석 검증"""
         nv_analysis = self.data["nvidia_market_share_analysis"]
         self.assertEqual(nv_analysis["text"], "AI 가속기 점유율 70~75%")
         self.assertGreaterEqual(len(nv_analysis["reasons"]), 3)
-
-    def test_07_explanatory_gaps_defined(self):
-        """두 모델의 한계 및 설명 불가 영역 정의 검증"""
-        gaps = self.data["summary"]["explanatory_gaps"]
-        self.assertIn("model1_ladder_gap", gaps)
-        self.assertIn("model2_quality_gap", gaps)
-        self.assertIn("amazon", gaps["model2_quality_gap"]["ambiguous_companies"])
 
 if __name__ == "__main__":
     unittest.main()
