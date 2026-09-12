@@ -1,9 +1,9 @@
-# C03-F2 F2 경로 수→점수 매핑 재현 및 14개사 실측 대조 단위 테스트
+# C03-F2 F2 경로 수 사다리 모델 vs 별표 F 세대격차 질 모델 14개사 실측 검증 테스트
 import json
 import os
 import unittest
 
-class TestC03F2Mapping(unittest.TestCase):
+class TestC03F2MappingModels(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.base_dir = os.path.dirname(__file__)
@@ -20,13 +20,14 @@ class TestC03F2Mapping(unittest.TestCase):
 
     def test_01_file_and_schema_structure(self):
         """결과 JSON 파일의 필수 메타데이터 및 스키마 구조 검증"""
-        self.assertEqual(self.data.get("schema"), "scorecard_c03_f2_results_v1")
+        self.assertEqual(self.data.get("schema"), "scorecard_c03_f2_results_v2")
         self.assertEqual(self.data.get("task_id"), "C03-F2-38")
         self.assertEqual(self.data.get("factor"), "F2")
         self.assertIn("sources", self.data)
-        self.assertIn("mapping_ladder", self.data)
+        self.assertIn("asterisk_f_evidence", self.data)
+        self.assertIn("nvidia_market_share_analysis", self.data)
+        self.assertIn("mapping_models", self.data)
         self.assertIn("missing_conditions", self.data)
-        self.assertIn("aa_definition", self.data)
         self.assertIn("companies", self.data)
         self.assertIn("summary", self.data)
 
@@ -44,15 +45,7 @@ class TestC03F2Mapping(unittest.TestCase):
         }
         self.assertEqual(set(cids), expected_cids)
 
-    def test_03_mapping_ladder_values(self):
-        """HANDOVER 22행 기반 매핑 사다리 수치 검증"""
-        ladder = self.data["mapping_ladder"]
-        self.assertEqual(ladder["0"], 2)
-        self.assertEqual(ladder["1"], 3)
-        self.assertEqual(ladder["2"], 4)
-        self.assertEqual(ladder["aa_top1"], 5)
-
-    def test_04_baseline_inherited_scores_match(self):
+    def test_03_baseline_inherited_scores_match(self):
         """결과 JSON의 승계 점수가 baseline_judgments.json과 100% 일치하는지 검증"""
         baseline_items = {
             it["company_id"]: it["score"]
@@ -70,61 +63,57 @@ class TestC03F2Mapping(unittest.TestCase):
                 f"Inherited score mismatch for {cid}"
             )
 
-    def test_05_path_counting_and_mapping_arithmetic(self):
-        """각 기업의 경로 수 및 매핑 산식 계산 일관성 검증"""
-        for c in self.data["companies"]:
-            cnt = c["path_count"]
-            aa_top = c["aa_top1_qualified"]
-            
-            if aa_top:
-                expected_mapped = 5
-            elif cnt == 0:
-                expected_mapped = 2
-            elif cnt == 1:
-                expected_mapped = 3
-            elif cnt >= 2:
-                expected_mapped = 4
-            else:
-                self.fail(f"Invalid path count {cnt} for {c['company_id']}")
-                
-            self.assertEqual(
-                c["mapped_score"],
-                expected_mapped,
-                f"Mapped score calculation error for {c['company_id']}"
-            )
-            self.assertEqual(
-                c["delta"],
-                c["mapped_score"] - c["inherited_score"],
-                f"Delta mismatch for {c['company_id']}"
-            )
-            self.assertEqual(
-                c["match"],
-                (c["mapped_score"] == c["inherited_score"]),
-                f"Match boolean flag error for {c['company_id']}"
-            )
+    def test_04_model1_ladder_results(self):
+        """[모델 1] HANDOVER 사다리 모델: 12개사 일치, 2개사 불일치(NVIDIA, TSMC 각 -2) 검증"""
+        m1_summary = self.data["summary"]["model1_summary"]
+        self.assertEqual(m1_summary["matched_count"], 12)
+        self.assertEqual(m1_summary["mismatched_count"], 2)
+        self.assertEqual(set(m1_summary["mismatched_companies"]), {"nvidia", "tsmc"})
 
-    def test_06_mismatches_exactly_nvidia_and_tsmc(self):
-        """불일치 기업이 정확히 NVIDIA와 TSMC 2개사이며 각각 3 vs 5(-2)인지 검증"""
-        mismatches = self.data["summary"]["mismatched_companies"]
-        self.assertEqual(set(mismatches), {"nvidia", "tsmc"})
-        self.assertEqual(self.data["summary"]["mismatched_count"], 2)
-        self.assertEqual(self.data["summary"]["matched_count"], 12)
-        
         comp_map = {c["company_id"]: c for c in self.data["companies"]}
-        for target in ["nvidia", "tsmc"]:
-            info = comp_map[target]
-            self.assertEqual(info["mapped_score"], 3)
-            self.assertEqual(info["inherited_score"], 5)
-            self.assertEqual(info["delta"], -2)
-            self.assertFalse(info["match"])
-            self.assertIsNotNone(info["mismatch_reason"])
+        for cid in ["nvidia", "tsmc"]:
+            c = comp_map[cid]
+            self.assertEqual(c["mapped_score_model1_ladder"], 3)
+            self.assertEqual(c["inherited_score"], 5)
+            self.assertEqual(c["model1_delta"], -2)
+            self.assertFalse(c["model1_match"])
 
-    def test_07_missing_conditions_defined(self):
-        """0점, 1점, 하드웨어 5점 결측 확인 검증"""
-        missing = self.data["missing_conditions"]
-        self.assertIn("score_0", missing)
-        self.assertIn("score_1", missing)
-        self.assertIn("hardware_foundry_5", missing)
+    def test_05_model2_quality_results(self):
+        """[모델 2] 별표 F 세대격차 질 모델: 14개사 전수 일치(14/14) 검증"""
+        m2_summary = self.data["summary"]["model2_summary"]
+        self.assertEqual(m2_summary["matched_count"], 14)
+        self.assertEqual(m2_summary["mismatched_count"], 0)
+
+        for c in self.data["companies"]:
+            self.assertTrue(
+                c["model2_match"],
+                f"Model 2 mismatch for {c['company_id']}"
+            )
+            self.assertEqual(
+                c["mapped_score_model2_quality"],
+                c["inherited_score"],
+                f"Model 2 score calculation error for {c['company_id']}"
+            )
+            self.assertEqual(c["model2_delta"], 0)
+
+    def test_06_asterisk_f_and_nvidia_analysis_present(self):
+        """별표 F 예시 인용 및 NVIDIA 점유율 분석 존재 검증"""
+        ast_f = self.data["asterisk_f_evidence"]
+        self.assertIn("table", ast_f)
+        self.assertTrue(any("NVIDIA" in row["v1_examples"] for row in ast_f["table"]))
+        self.assertTrue(any("Anthropic" in row["v1_examples"] for row in ast_f["table"]))
+        self.assertTrue(any("Meta" in row["v1_examples"] for row in ast_f["table"]))
+
+        nv_analysis = self.data["nvidia_market_share_analysis"]
+        self.assertEqual(nv_analysis["text"], "AI 가속기 점유율 70~75%")
+        self.assertGreaterEqual(len(nv_analysis["reasons"]), 3)
+
+    def test_07_explanatory_gaps_defined(self):
+        """두 모델의 한계 및 설명 불가 영역 정의 검증"""
+        gaps = self.data["summary"]["explanatory_gaps"]
+        self.assertIn("model1_ladder_gap", gaps)
+        self.assertIn("model2_quality_gap", gaps)
+        self.assertIn("amazon", gaps["model2_quality_gap"]["ambiguous_companies"])
 
 if __name__ == "__main__":
     unittest.main()

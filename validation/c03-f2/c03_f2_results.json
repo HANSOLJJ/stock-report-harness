@@ -1,5 +1,5 @@
 {
-  "schema": "scorecard_c03_f2_results_v1",
+  "schema": "scorecard_c03_f2_results_v2",
   "task_id": "C03-F2-38",
   "factor": "F2",
   "factor_name": "신기술 게임체인저",
@@ -18,12 +18,12 @@
         370,
         387
       ],
-      "note": "세 경로(성능 도약·패러다임 적응·표준 선점)만 정성 정의, 수치 사다리 매핑 누락"
+      "note": "별표 F(27~37행)에서 성능 도약 5점 예시(NVIDIA, Anthropic)와 4점 예시(Meta) 및 프론티어 미달(Alibaba) 명시"
     },
     "scoring_table_md": {
       "file": "AI기업_채점표_v1.5.md",
       "lines": "63~740",
-      "note": "개별 기업 근거란에 파편화(0개→2, 1개→3, 2개→4, AA 1위→5)"
+      "note": "개별 기업 근거란에 사다리 언어('두 경로 = 4', '통과 없음 → 2', '적응 ✅ → 3')와 질 언어('AA 1위가 5의 기준', '프론티어 진입') 혼재"
     },
     "rules_json": {
       "file": "validation/f9-decide-20/_raw/rules_v15.json",
@@ -35,24 +35,57 @@
       "summary": "F2 경로 수→점수 매핑(0→2, 1→3, 2→4, AA 1위→5)이 완결되지 않았고 NVIDIA·TSMC 5점을 재현하지 못함"
     }
   },
-  "mapping_ladder": {
-    "0": 2,
-    "1": 3,
-    "2": 4,
-    "aa_top1": 5
+  "asterisk_f_evidence": {
+    "title": "별표 F — ②는 표준만이 아니다: 세 경로",
+    "intro": "산업 인터페이스를 새로 정의했는가는 세 경로 중 하나일 뿐이다. 표준 없이도 게임체인저는 성립한다 — 강의 사례인 구글-Excite부터가 표준이 아니라 성능 격차였다.",
+    "table": [
+      {
+        "path": "성능 도약",
+        "meaning": "벤치마크에서 세대 격차를 만든다",
+        "v1_examples": "NVIDIA ②5 (Vera Rubin 추론 5배) · Anthropic ②5 (Opus 5 ARC-AGI 8%→30.2%) · Meta ②4 (Muse 텍스트 4위)"
+      },
+      {
+        "path": "패러다임 적응",
+        "meaning": "남이 바꾼 판(에이전트·추론·코딩)에 빨리 올라탄다",
+        "v1_examples": "Alibaba ②4 (R&D·적응속도 최상위)"
+      },
+      {
+        "path": "표준 선점",
+        "meaning": "MCP처럼 인터페이스를 정의한다",
+        "v1_examples": "Anthropic (MCP)"
+      }
+    ],
+    "conclusion": "세 경로 모두 막혀 있을 때만 낮은 점수를 준다. '표준이 없다'는 단독 감점 사유가 아니라, 다른 두 경로도 약할 때 5점을 막는 사유다(Alibaba ②4가 그 예 — 성능·적응은 되지만 프론티어 미달 + 표준 부재)."
+  },
+  "nvidia_market_share_analysis": {
+    "text": "AI 가속기 점유율 70~75%",
+    "interpreted_as": "상업적 시장 지배력/과점 지표 (표준 선점 불인정)",
+    "reasons": [
+      "원문 정의(별표 F 35행, HTML 423행)상 '표준 선점'은 MCP나 AWS Interconnect처럼 '산업 인터페이스/프로토콜/오픈 규격을 정의하고 선점'하는 것을 뜻함",
+      "점유율 70~75%는 하드웨어 칩 판매량의 독점적 시장 점유율이며, 프로토콜이나 인터페이스 표준 규격을 공표해 타사가 채택하도록 한 것이 아님(CUDA는 독점적 락인)",
+      "채점표 및 rules_v15.json 체계상 점유율은 ① 네트워크(락인) 또는 ④ 호황 이후(다각화/지배력)의 지표에 해당함",
+      "가령 점유율을 '사실상의 표준 선점'으로 넓게 인정하더라도 유효 경로는 2개가 되어 사다리 모델상 4점에 불과하므로, 여전히 5점을 설명하지 못함(괴리 -1)"
+    ]
+  },
+  "mapping_models": {
+    "model1_ladder": {
+      "name": "HANDOVER 경로 수 사다리 모델",
+      "formula": "0개→2, 1개→3, 2개→4, AA 종합 1위→5",
+      "origin": "AI기업_채점표_HANDOVER.md 22행",
+      "characteristics": "경로 개수를 기계적으로 세어 사다리에 대입, 5점은 오직 AA 1위만 허용"
+    },
+    "model2_quality": {
+      "name": "별표 F 세대 격차 및 성능 질 모델",
+      "formula": "세대 격차(하드웨어/소프트웨어)→5, 프론티어 순위/2경로→4, 적응 1개→3, 3경로 모두 막힘→2",
+      "origin": "AI기업_채점규칙_v1.5.md 별표 F (27~37행)",
+      "characteristics": "경로 수가 아닌 성능 도약의 '질'(세대 격차 vs 프론티어 순위)에 따라 단일 경로로도 5점 인정"
+    }
   },
   "missing_conditions": {
-    "score_0": "원문에 조건 부재 (결측, 최하위 기업 Apple·Oracle도 2점 부여)",
-    "score_1": "원문에 조건 부재 (결측)",
-    "hardware_foundry_5": "원문에 조건 부재 (AA 1위는 모델 전용이라 하드웨어/파운드리 5점 자격 공백)"
-  },
-  "aa_definition": {
-    "acronym": "Artificial Analysis",
-    "metric": "AA Intelligence Index (종합 지능 지수)",
-    "url": "artificialanalysis.ai",
-    "population": "Artificial Analysis에 등재·측정되는 프론티어 파운데이션 모델(LLM/멀티모달)군",
-    "top1_holder": "Anthropic (Claude 3.5 Sonnet / Fable 5.1 66점으로 Astra 61점, Sol 61점 등을 제치고 1위)",
-    "hardware_status": "NVIDIA, TSMC 등 하드웨어·파운드리 기업은 모집단 자체에 포함되지 않음"
+    "score_0": "두 모델 모두 원문에 조건 부재 (결측, 최하위 기업 Apple·Oracle도 2점 부여)",
+    "score_1": "두 모델 모두 원문에 조건 부재 (결측, 실질 하한선은 2점)",
+    "model1_hardware_5": "사다리 모델에는 하드웨어 5점 자격 부재",
+    "model2_score_3_definition": "별표 F 원문에는 3점에 대한 질적 정의 부재"
   },
   "companies": [
     {
@@ -71,13 +104,15 @@
       ],
       "path_count": 2,
       "aa_top1_qualified": false,
-      "mapped_score": 4,
+      "mapped_score_model1_ladder": 4,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 4,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "영상 1위 및 TPU 있으나 텍스트 9위로 프론티어 세대 격차 미달, 적응 유효하여 4점",
       "inherited_score": 4,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 63~67행",
-      "note": "원문에 명시적 경로 체크박스(✅)는 없으나 텍스트 영상 1위(성능)와 Flash 출시(적응) 인정"
+      "citations": "AI기업_채점표_v1.5.md 63~67행"
     },
     {
       "company_id": "amazon",
@@ -95,13 +130,15 @@
       ],
       "path_count": 2,
       "aa_top1_qualified": false,
-      "mapped_score": 4,
+      "mapped_score_model1_ladder": 4,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 4,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "Interconnect 표준 및 Trainium3 성능 있으나 자체 Nova 모델 부진으로 세대 격차 미달, 4점 유지",
       "inherited_score": 4,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 114~118행",
-      "note": "원문 '두 경로 = 4' 명시"
+      "citations": "AI기업_채점표_v1.5.md 114~118행"
     },
     {
       "company_id": "microsoft",
@@ -117,13 +154,15 @@
       ],
       "path_count": 1,
       "aa_top1_qualified": false,
-      "mapped_score": 3,
+      "mapped_score_model1_ladder": 3,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 3,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "자체 모델 부재 및 세대 격차 전무, 조달 기반 패러다임 적응 1개 경로로 3점",
       "inherited_score": 3,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 171~174행",
-      "note": "자체 모델 부재, 조달 기반 적응 1개 경로 인정 시 3점 일치"
+      "citations": "AI기업_채점표_v1.5.md 171~174행"
     },
     {
       "company_id": "tsmc",
@@ -136,17 +175,19 @@
         "도전자: Intel 14A 2028 양산 목표, Samsung SF2P 수율 70% — 동급 아님"
       ],
       "passed_paths": [
-        "성능 경로 ✅ (N2 첨단 공정 양산, CoWoS 첨단 패키징)"
+        "성능 경로 ✅ (N2 첨단 공정 선제 양산, CoWoS 첨단 패키징 독점)"
       ],
       "path_count": 1,
       "aa_top1_qualified": false,
-      "mapped_score": 3,
+      "mapped_score_model1_ladder": 3,
+      "model1_match": false,
+      "model1_delta": -2,
+      "mapped_score_model2_quality": 5,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "N2 양산 및 CoWoS 독점 등 반도체 제조 영역에서 압도적 '세대 격차' 달성으로 5점 일치",
       "inherited_score": 5,
-      "match": false,
-      "delta": -2,
-      "mismatch_reason": "파운드리 기업으로 AA 종합 1위 대상 아님. 성능 경로 1개만 유효하여 매핑 시 3점이나, v1.5에서 독점적 제조 우위로 5점 부여",
-      "citations": "AI기업_채점표_v1.5.md 215~219행",
-      "note": "매핑 적용값(3점)과 승계 점수(5점) 간 2점 괴리 발생"
+      "citations": "AI기업_채점표_v1.5.md 215~219행"
     },
     {
       "company_id": "meta",
@@ -166,13 +207,15 @@
       ],
       "path_count": 2,
       "aa_top1_qualified": false,
-      "mapped_score": 4,
+      "mapped_score_model1_ladder": 4,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 4,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "별표 F 33행 예시 'Meta ②4 (Muse 텍스트 4위)'와 같이 세대 격차가 아닌 프론티어 순위 진입(3위)이므로 4점",
       "inherited_score": 4,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 262~270행",
-      "note": "원문 '두 경로 = 4' 및 'AA 종합 1위가 5의 기준' 명시"
+      "citations": "AI기업_채점표_v1.5.md 262~270행, 규칙 별표 F 33행"
     },
     {
       "company_id": "anthropic",
@@ -190,13 +233,15 @@
       ],
       "path_count": 2,
       "aa_top1_qualified": true,
-      "mapped_score": 5,
+      "mapped_score_model1_ladder": 5,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 5,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "별표 F 33행 예시 'Opus 5 ARC-AGI 8%→30.2%' 세대 격차 및 AA Index 1위, MCP 표준 선점으로 5점 완전 충족",
       "inherited_score": 5,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 315~319행",
-      "note": "AA 종합 1위 및 MCP 표준 선점으로 5점 완전 충족"
+      "citations": "AI기업_채점표_v1.5.md 315~319행, 규칙 별표 F 33행"
     },
     {
       "company_id": "alibaba",
@@ -213,13 +258,15 @@
       ],
       "path_count": 2,
       "aa_top1_qualified": false,
-      "mapped_score": 4,
+      "mapped_score_model1_ladder": 4,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 4,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "별표 F 37행 '성능·적응은 되지만 프론티어 미달 + 표준 부재'로 4점 예시 명시",
       "inherited_score": 4,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 373~376행, 규칙 별표 F 37행",
-      "note": "규칙 별표 F에서 '성능·적응은 되지만 프론티어 미달 + 표준 부재'로 4점 예시 명시"
+      "citations": "AI기업_채점표_v1.5.md 373~376행, 규칙 별표 F 37행"
     },
     {
       "company_id": "apple",
@@ -236,13 +283,15 @@
       "passed_paths": [],
       "path_count": 0,
       "aa_top1_qualified": false,
-      "mapped_score": 2,
+      "mapped_score_model1_ladder": 2,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 2,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "세 경로 모두 막힘(별표 F 37행 '세 경로 모두 막혀 있을 때 낮은 점수'), 최저 2점",
       "inherited_score": 2,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 429~435행",
-      "note": "세 경로 통과 없음(0개), 14사 공동 최저 2점 일치"
+      "citations": "AI기업_채점표_v1.5.md 429~435행"
     },
     {
       "company_id": "nvidia",
@@ -257,13 +306,15 @@
       ],
       "path_count": 1,
       "aa_top1_qualified": false,
-      "mapped_score": 3,
+      "mapped_score_model1_ladder": 3,
+      "model1_match": false,
+      "model1_delta": -2,
+      "mapped_score_model2_quality": 5,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "별표 F 33행 대표 예시 'NVIDIA ②5 (Vera Rubin 추론 5배)' 명시대로 하드웨어 '세대 격차'로 5점 일치",
       "inherited_score": 5,
-      "match": false,
-      "delta": -2,
-      "mismatch_reason": "가속기 하드웨어 기업으로 AA 종합 1위 대상 아님. 성능 도약 1개만 유효하여 매핑 시 3점이나, v1.5에서 하드웨어 세대 격차로 5점 부여",
-      "citations": "AI기업_채점표_v1.5.md 482~484행, 규칙 별표 F 33행",
-      "note": "매핑 적용값(3점)과 승계 점수(5점) 간 2점 괴리 발생"
+      "citations": "AI기업_채점표_v1.5.md 482~484행, 규칙 별표 F 33행"
     },
     {
       "company_id": "oracle",
@@ -279,13 +330,15 @@
       "passed_paths": [],
       "path_count": 0,
       "aa_top1_qualified": false,
-      "mapped_score": 2,
+      "mapped_score_model1_ladder": 2,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 2,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "세 경로 모두 막힘(통과 없음), 2점 일치",
       "inherited_score": 2,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 536~538행",
-      "note": "원문 '세 경로 중 통과 없음 → 2' 명시"
+      "citations": "AI기업_채점표_v1.5.md 536~538행"
     },
     {
       "company_id": "palantir",
@@ -301,13 +354,15 @@
       ],
       "path_count": 1,
       "aa_top1_qualified": false,
-      "mapped_score": 3,
+      "mapped_score_model1_ladder": 3,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 3,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "파운데이션 모델 세대 격차 없음, AIP 온톨로지 워크플로 적응 1개 경로로 3점",
       "inherited_score": 3,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 586~589행",
-      "note": "온톨로지 워크플로 적응 1개 경로 인정 시 3점 일치"
+      "citations": "AI기업_채점표_v1.5.md 586~589행"
     },
     {
       "company_id": "spacex-xai",
@@ -325,13 +380,15 @@
       ],
       "path_count": 2,
       "aa_top1_qualified": false,
-      "mapped_score": 4,
+      "mapped_score_model1_ladder": 4,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 4,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "Grok 4.6 6위(프론티어 상위권이나 세대격차 미달) + Cursor 적응으로 4점",
       "inherited_score": 4,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 633~637행",
-      "note": "원문 '두 경로 = 4' 명시"
+      "citations": "AI기업_채점표_v1.5.md 633~637행"
     },
     {
       "company_id": "tesla",
@@ -348,13 +405,15 @@
       ],
       "path_count": 1,
       "aa_top1_qualified": false,
-      "mapped_score": 3,
+      "mapped_score_model1_ladder": 3,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 3,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "로보택시 성능 판정 불가(Waymo 선도), 자체 칩/Optimus 내재화 적응으로 3점",
       "inherited_score": 3,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 683~687행",
-      "note": "원문 '성능 판정 불가 · 적응 ✅ → 3' 명시"
+      "citations": "AI기업_채점표_v1.5.md 683~687행"
     },
     {
       "company_id": "openai",
@@ -374,54 +433,101 @@
       ],
       "path_count": 2,
       "aa_top1_qualified": false,
-      "mapped_score": 4,
+      "mapped_score_model1_ladder": 4,
+      "model1_match": true,
+      "model1_delta": 0,
+      "mapped_score_model2_quality": 4,
+      "model2_match": true,
+      "model2_delta": 0,
+      "model2_rationale": "ARC-AGI SOTA 있으나 AA 61 전작 동점(세대 격차 미달) 및 반대 증거(GDPval 퇴행)로 4점",
       "inherited_score": 4,
-      "match": true,
-      "delta": 0,
-      "mismatch_reason": null,
-      "citations": "AI기업_채점표_v1.5.md 731~740행",
-      "note": "원문 '세 경로 중 둘 통과 = 4' 및 AA 1위 미달로 5 불가 명시"
+      "citations": "AI기업_채점표_v1.5.md 731~740행"
     }
   ],
   "summary": {
     "total_companies": 14,
-    "matched_count": 12,
-    "mismatched_count": 2,
-    "matched_companies": [
-      "alphabet",
-      "amazon",
-      "microsoft",
-      "meta",
-      "anthropic",
-      "alibaba",
-      "apple",
-      "oracle",
-      "palantir",
-      "spacex-xai",
-      "tesla",
-      "openai"
-    ],
-    "mismatched_companies": [
-      "tsmc",
-      "nvidia"
-    ],
-    "mismatch_details": [
-      {
-        "company_id": "tsmc",
-        "company_name": "TSMC",
-        "mapped_score": 3,
-        "inherited_score": 5,
-        "delta": -2,
-        "reason": "파운드리 기업으로 AA 종합 1위 대상 아님. 성능 경로 1개만 유효하여 매핑 시 3점이나, v1.5에서 독점적 제조 우위로 5점 부여"
+    "model1_summary": {
+      "matched_count": 12,
+      "mismatched_count": 2,
+      "matched_companies": [
+        "alphabet",
+        "amazon",
+        "microsoft",
+        "meta",
+        "anthropic",
+        "alibaba",
+        "apple",
+        "oracle",
+        "palantir",
+        "spacex-xai",
+        "tesla",
+        "openai"
+      ],
+      "mismatched_companies": [
+        "tsmc",
+        "nvidia"
+      ],
+      "mismatch_details": [
+        {
+          "company_id": "nvidia",
+          "mapped_score": 3,
+          "inherited_score": 5,
+          "delta": -2,
+          "reason": "소프트웨어 AA 1위 대상 아님, 경로 수 1개로 3점만 도출"
+        },
+        {
+          "company_id": "tsmc",
+          "mapped_score": 3,
+          "inherited_score": 5,
+          "delta": -2,
+          "reason": "파운드리 기업으로 AA 1위 대상 아님, 경로 수 1개로 3점만 도출"
+        }
+      ]
+    },
+    "model2_summary": {
+      "matched_count": 14,
+      "mismatched_count": 0,
+      "matched_companies": [
+        "alphabet",
+        "amazon",
+        "microsoft",
+        "tsmc",
+        "meta",
+        "anthropic",
+        "alibaba",
+        "apple",
+        "nvidia",
+        "oracle",
+        "palantir",
+        "spacex-xai",
+        "tesla",
+        "openai"
+      ],
+      "mismatched_companies": []
+    },
+    "explanatory_gaps": {
+      "model1_ladder_gap": {
+        "mismatch_count": 2,
+        "companies": [
+          "nvidia",
+          "tsmc"
+        ],
+        "core_failure": "소프트웨어 AA 1위만 5점으로 인정하여, 하드웨어·파운드리에서 압도적 세대 격차(추론 5배, N2 공정 독점)를 낸 기업을 3점에 가두는 구조적 결함"
       },
-      {
-        "company_id": "nvidia",
-        "company_name": "NVIDIA",
-        "mapped_score": 3,
-        "inherited_score": 5,
-        "delta": -2,
-        "reason": "가속기 하드웨어 기업으로 AA 종합 1위 대상 아님. 성능 도약 1개만 유효하여 매핑 시 3점이나, v1.5에서 하드웨어 세대 격차로 5점 부여"
+      "model2_quality_gap": {
+        "ambiguous_companies": [
+          "amazon",
+          "microsoft",
+          "palantir",
+          "tesla",
+          "openai"
+        ],
+        "core_vulnerabilities": [
+          "Amazon의 경우 Trainium3(첫 3nm 하드웨어)와 Interconnect(오픈 표준)가 있음에도 Nova 모델 부진으로 4점 처리되었는데, 카드 원문은 '두 경로 = 4'라는 사다리 수치 논리로 정당화함(질 모델로는 Trainium3가 왜 세대 격차가 아닌지 객관적 경계선이 모호함)",
+          "별표 F에는 3점에 대한 질적 정의가 전혀 없음(5점은 세대 격차, 4점은 프론티어/2경로, 2점은 전면 부재만 기술). 따라서 Microsoft, Palantir, Tesla의 3점은 사다리 모델의 '1개 경로=3'을 빌려와야만 정당화됨",
+          "OpenAI의 경우 ARC-AGI-3 SOTA(인간 성능 96% 상회)가 질적으로 세대 격차로 읽힐 여지가 있으나, 원문은 'AA 1위 미달'이라는 사다리/지표 요건으로 5점을 차단함"
+        ]
       }
-    ]
+    }
   }
 }
