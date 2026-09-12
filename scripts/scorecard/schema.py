@@ -407,7 +407,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
         _expect_keys(cond, ["id", "note"], where,
                      optional=["threshold", "thresholds_months", "basis_map", "measured_from",
                                "why_not_single_threshold", "why_16", "why_6", "why_it_exists",
-                               "decided_at", "decided_by"])
+                               "decided_at", "decided_by",
+                               # 임계 경계 표시와, 입력 정의가 갈렸다는 기록(NETCASH-37 재고 검산).
+                               "boundary_display", "stored_vs_recomputed"])
         # 코드가 구현하지 않은 조건 id 를 규칙에 적어 두면 선언만 있고 걸리지 않는 조건이 생긴다.
         _require(cond["id"] in P4_CONDITION_IDS, f"{where}: 구현되지 않은 조건 id {cond['id']!r}")
         _require(cond["id"] not in seen, f"{where}: 조건 id 중복 {cond['id']!r}")

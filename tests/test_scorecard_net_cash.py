@@ -419,5 +419,105 @@ class LeaseGapMissingTypeTest(unittest.TestCase):
                 self.assertNotIn("unverified_blocked_by", c["factors"]["F6"].get("calc") or {})
 
 
+class P4ThresholdBoundaryTest(unittest.TestCase):
+    """P4 임계에도 경계를 표시한다. **점수는 건드리지 않는다.**
+
+    `boundary_note` 가 '파라미터마다 각자의 경계에 대해 계산한다' 고 말하는데 P1·P2·P3 에만 있고
+    P4 임계에는 없었다. amazon 의 `nonop_share` 가 임계에서 2.4% 인데 표시가 없었고, 그 한 칸이
+    총점 15 공동 1위를 만든다(설계진행 2026-09-11 발견).
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.results = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
+        cls.p4 = {c["company_id"]: (c["factors"]["F6"].get("calc") or {}).get("p4") or {}
+                  for c in cls.results["companies"]}
+
+    def test_same_tolerance_as_the_other_parameters(self):
+        """자리마다 다른 관대함을 두지 않는다."""
+        tol = RULES.f6["boundary_tolerance"]
+        for cid, p4 in self.p4.items():
+            if "nonop_share_boundary" in p4:
+                with self.subTest(cid=cid):
+                    self.assertEqual(p4["nonop_share_boundary"]["tolerance"], tol)
+
+    def test_boundary_is_measured_on_magnitude(self):
+        """비교가 `abs(value) >= threshold` 라 경계도 크기로 잰다 — 부호로 재면 음수가 늘 멀어진다."""
+        p4 = self.p4["meta"]
+        self.assertLess(p4["nonop_share"], 0)
+        got = p4["nonop_share_boundary"]["distance_ratio"]
+        self.assertAlmostEqual(got, (abs(p4["nonop_share"]) - 0.30) / 0.30, places=9)
+
+    def test_amazon_flags_inside_the_band(self):
+        b = self.p4["amazon"]["nonop_share_boundary"]
+        self.assertTrue(b["flag"])
+        self.assertAlmostEqual(b["distance_ratio"], 0.0243, places=3)
+
+    def test_flag_does_not_move_the_score(self):
+        """**표시는 점수를 바꾸지 않는다.** amazon 은 경계 안이지만 임계 위라 그대로 걸린다."""
+        p4 = self.p4["amazon"]
+        self.assertIn("nonop_share", p4["conditions_hit"])
+        self.assertEqual(p4["demotion_steps"], 1)
+        amazon = next(c for c in self.results["companies"] if c["company_id"] == "amazon")
+        self.assertEqual(amazon["factors"]["F6"]["score"], -2)
+        self.assertEqual(amazon["total"], 15)
+
+    def test_sole_cause_marks_where_the_condition_decides(self):
+        """조건이 둘이면 하나가 빠져도 강등은 그대로다. **혼자 정하는 자리만 표시한다.**"""
+        sole = {cid: p4.get("demotion_sole_cause") for cid, p4 in self.p4.items()}
+        self.assertEqual({cid for cid, v in sole.items() if v == "nonop_share"},
+                         {"amazon", "alphabet"})
+        self.assertIsNone(sole["alibaba"])      # period_basis_not_ttm 이 같이 걸림
+        self.assertIsNone(sole["spacex-xai"])   # short_history 가 같이 걸림
+
+    def test_warning_reaches_the_output(self):
+        amazon = next(c for c in self.results["companies"] if c["company_id"] == "amazon")
+        self.assertTrue(any("P4 경계" in w for w in amazon["factors"]["F6"]["warnings"]))
+
+
+class NonopShareDivergenceTest(unittest.TestCase):
+    """저장값과 재계산값이 갈린 것이 **규칙에 기록돼 있어야** 한다. 값을 고르는 것이 아니다."""
+
+    def setUp(self) -> None:
+        conds = {c["id"]: c for c in RULES.f6_p4()["conditions"]}
+        self.spec = conds["nonop_share"]["stored_vs_recomputed"]
+
+    def test_divergence_is_recorded_not_resolved(self):
+        self.assertEqual(self.spec["status"], "divergent_unresolved")
+        self.assertIn("재계산값을 쓴다", self.spec["which_is_used"])
+
+    def test_sign_flips_are_listed_with_their_cause(self):
+        self.assertEqual(set(self.spec["sign_flipped"]),
+                         {"apple", "meta", "microsoft", "nvidia", "tesla", "tsmc"})
+        # **왜 뒤집히는지**가 있어야 다음 사람이 값을 다시 세지 않는다.
+        self.assertIn("세금", self.spec["why_signs_flip"])
+
+    def test_table_matches_the_engine(self):
+        """규칙에 적은 재계산값이 실제 산출과 같아야 한다 — 표만 뒤처지면 거짓말이 된다."""
+        results = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
+        for c in results["companies"]:
+            p4 = (c["factors"]["F6"].get("calc") or {}).get("p4") or {}
+            row = self.spec["table"].get(c["company_id"])
+            if row is None or "nonop_share" not in p4:
+                continue
+            with self.subTest(cid=c["company_id"]):
+                self.assertAlmostEqual(p4["nonop_share"], row[1], places=4)
+
+    def test_it_says_where_the_condition_actually_decides(self):
+        self.assertIn("amazon", self.spec["where_it_does_decide"])
+        self.assertIn("alphabet", self.spec["where_it_does_decide"])
+        self.assertIn("2.4%", self.spec["where_it_does_decide"])
+
+    def test_stored_provenance_is_recorded_including_what_is_missing(self):
+        """**복원 불가라는 것도 사실이다.** 없는 것을 없다고 적어야 다음 사람이 다시 찾지 않는다."""
+        prov = self.spec["stored_provenance"]
+        self.assertIn("SRC-v15-html", prov)
+        self.assertIn("null", prov)
+        self.assertIn("복원 불가", prov)
+
+    def test_it_refuses_to_pick_silently(self):
+        self.assertIn("조용히 고르지 않는다", self.spec["do_not"])
+
+
 if __name__ == "__main__":
     unittest.main()

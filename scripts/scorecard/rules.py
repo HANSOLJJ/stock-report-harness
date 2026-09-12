@@ -166,6 +166,21 @@ class RuleSet:
             "tolerance": tol,
         }
 
+    def f6_threshold_boundary_flag(self, value: float, threshold: float) -> dict[str, Any]:
+        """**단일 임계**에 대한 경계 표시. 점수를 바꾸지 않는다.
+
+        `boundary_note` 가 '파라미터마다 각자의 경계에 대해 계산한다' 고 말하는데 P1·P2·P3 만
+        경계를 달고 P4 임계에는 없었다. amazon 의 `nonop_share` 가 임계에서 2.4% 인데 아무 표시가
+        없었고, 그 한 칸이 총점 15 공동 1위를 만든다(설계진행 2026-09-11 지적). 같은 `tolerance` 를
+        쓴다 — 자리마다 다른 관대함을 두지 않는다.
+        """
+        tol = float(self.f6["boundary_tolerance"])
+        if not threshold:
+            return {"flag": False, "nearest_boundary": None, "distance_ratio": None, "tolerance": tol}
+        distance = (value - threshold) / threshold
+        return {"flag": round(abs(distance), 12) <= tol, "nearest_boundary": threshold,
+                "distance_ratio": distance, "tolerance": tol}
+
     def f6_tracks(self) -> dict[str, Any]:
         return self.f6.get("tracks") or {}
 

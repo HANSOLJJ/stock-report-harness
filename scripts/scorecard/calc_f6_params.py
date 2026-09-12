@@ -122,8 +122,18 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
     if cond is not None:
         value, d = _nonop_share(cid, obs, warnings)
         detail.update(d)
-        if value is not None and abs(value) >= float(cond.get("threshold", 0.30)):
-            hit.append("nonop_share")
+        if value is not None:
+            threshold = float(cond.get("threshold", 0.30))
+            # **P4 임계에도 경계를 표시한다.** P1·P2·P3 에만 있고 여기만 없었다. 비교 대상은
+            # 부호가 아니라 크기(`abs`)라 경계도 크기로 잰다. 점수는 건드리지 않는다.
+            boundary = rules.f6_threshold_boundary_flag(abs(value), threshold)
+            detail["nonop_share_boundary"] = boundary
+            if abs(value) >= threshold:
+                hit.append("nonop_share")
+            if boundary["flag"]:
+                warnings.append(
+                    f"P4 경계 ⚠️ nonop_share |{value:.4f}| 이 임계 {threshold:g} 에서 "
+                    f"{boundary['distance_ratio'] * 100:+.1f}% — 점수는 그대로")
 
     if "stale_asof" in declared:
         stale = _stale_asof(rev_obs, period_basis, rules, run)
@@ -140,6 +150,9 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
 
     detail["conditions_hit"] = hit
     detail["demotion_steps"] = int(spec.get("cap_steps", 1)) if hit else 0
+    # **한 조건만 걸렸으면 그 조건이 강등을 혼자 정한 것이다.** 경계 표시가 실제로 점수를
+    # 가르는 자리인지 여기서 갈린다 — 조건이 둘이면 하나가 빠져도 강등은 그대로다.
+    detail["demotion_sole_cause"] = hit[0] if len(hit) == 1 else None
     return detail
 
 
