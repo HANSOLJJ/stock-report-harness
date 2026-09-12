@@ -224,10 +224,26 @@ class TestC20PrivateRoute(unittest.TestCase):
         self.assertEqual(r["score"], -2)
         self.assertEqual(r["status"], "ok")
 
-    def test_path_records_g3_skip_and_g4_dedupe(self):
+    def test_path_records_g3_skip_and_no_extra_g4_penalty(self):
+        """G4 에서 또 깎지 않는다는 것이 경로에 남아야 한다.
+
+        원래 이 테스트는 `dedupe` 키의 존재만 봤다. 그 키가 지키려던 것은 **G2 에서 깎은 것을 G4 에서
+        또 깎지 않는다**는 것이고 그 뜻은 지금도 유효하다. 문제는 그 키에 붙어 있던 문구가 **G4 가
+        막힌 사유까지 G2 와 같다고 단정**한 것이었다 — G2 는 회사가 공시하지 않은 것이고 G4 는 우리가
+        같은 범위 자료를 못 구한 것이라 다를 수 있다. 오늘 세운 missing_type 구분과 같은 자리다.
+        """
         gates = {p["gate"]: p for p in self.f9()["calc"]["path"]}
         self.assertEqual(gates["G3"]["result"], "skipped")
-        self.assertIn("dedupe", gates["G4"])
+        g4 = gates["G4"]
+        self.assertIn("no_extra_penalty_because", g4)
+        self.assertEqual(g4["g2_reason"], "fcf_not_disclosed(확인된 미공시)")
+
+    def test_g4_reason_is_not_conflated_with_g2(self):
+        """**두 사유가 다르면 다르다고 적어야 한다.** 여기서 G4 는 coverage_comparable 미확인이다."""
+        g4 = {p["gate"]: p for p in self.f9()["calc"]["path"]}["G4"]
+        self.assertFalse(g4["g4_reason_same_as_g2"])
+        self.assertIn("coverage_comparable", g4["reason"])
+        self.assertIn("다른 사유", g4["note"])
 
     def test_label_is_required_not_just_absence(self):
         """**자료가 없다는 것만으로는 부족하다.** 구조적 미공시 라벨이 있어야 한다."""

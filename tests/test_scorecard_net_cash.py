@@ -519,5 +519,82 @@ class NonopShareDivergenceTest(unittest.TestCase):
         self.assertIn("조용히 고르지 않는다", self.spec["do_not"])
 
 
+class NonopShareHypothesisTest(unittest.TestCase):
+    """가설 검정 결과가 규칙에 남아야 한다. **정의를 확정한 것이 아니다.**"""
+
+    def setUp(self) -> None:
+        conds = {c["id"]: c for c in RULES.f6_p4()["conditions"]}
+        self.h = conds["nonop_share"]["stored_vs_recomputed"]["hypothesis_test"]
+
+    def test_both_variants_are_recorded_with_the_winner(self):
+        self.assertIn("A", self.h["variants"])
+        self.assertIn("B", self.h["variants"])
+        self.assertIn("B 가 이긴다", self.h["result"])
+
+    def test_numerator_is_the_same_in_both(self):
+        """**다른 것은 분모뿐이다.** 이것을 안 적으면 다음 사람이 둘을 별개 산식으로 본다."""
+        self.assertIn("분자는 둘이 같다", self.h["variants"]["note"])
+
+    def test_it_names_the_two_deviations(self):
+        """현재 산식이 두 군데 벗어난다 — 부호를 바꾸는 것은 분자 쪽이다."""
+        what = self.h["what_it_means"]
+        self.assertIn("법인세를 되더하지 않는다", what)
+        self.assertIn("부호가 뒤집히는 원인", what)
+
+    def test_score_impact_is_stated_as_none(self):
+        """확정해도 판정이 안 바뀐다는 것과, **amazon 의 경계 위험이 사라진다**는 것이 핵심이다."""
+        s = self.h["score_impact_if_confirmed"]
+        self.assertIn("하나도 안 바뀐다", s)
+        self.assertIn("+54.7%", s)
+
+    def test_it_refuses_to_call_the_hypothesis_confirmed(self):
+        self.assertIn("가설이지 확정이 아니다", self.h["still_open"])
+        self.assertEqual(set(self.h["unmatched_B"]), {"alibaba", "oracle", "tesla"})
+
+    def test_tsmc_tax_came_from_the_preserved_20f(self):
+        """companyfacts 에 2025 금액 사실이 0건이라 20-F 로 갔다는 것이 적혀 있어야 한다."""
+        self.assertIn("20-F", self.h["method"])
+        self.assertIn("346,529.8", self.h["method"])
+
+
+class PendingDecisionImplementationTest(unittest.TestCase):
+    """**미결이어도 권고안이 이미 코드에 서 있을 수 있다.** 그 구분을 규칙이 들고 있어야 한다."""
+
+    def setUp(self) -> None:
+        self.dec = {x["id"]: x for x in RULES.payload["decisions"]}
+
+    def test_c04_c07_are_marked_implemented_while_still_pending(self):
+        for did in ("C-04", "C-07"):
+            with self.subTest(did=did):
+                self.assertEqual(self.dec[did]["status"], "pending")   # 결정은 안 적었다
+                self.assertEqual(self.dec[did]["implementation_status"]["verdict"],
+                                 "already_implemented")
+                self.assertIn("결정은 적지 않았다",
+                              self.dec[did]["implementation_status"]["not_decided_here"])
+
+    def test_c04_carries_the_source_text_and_where_it_lives(self):
+        """원문이 워크트리에 없다는 사실까지 적어야 다음 사람이 다시 찾지 않는다."""
+        st = self.dec["C-04"]["implementation_status"]
+        self.assertIn("어느 factor의 입력으로도 쓸 수 없다", st["source_text"])
+        self.assertIn("worker 워크트리에 없다", st["source_location"])
+
+    def test_c04_records_that_include_v15_is_forbidden_by_the_source(self):
+        st = self.dec["C-04"]["implementation_status"]
+        self.assertIn("원문이 금지한 것을 선택지로 둔 것이다",
+                      st["include_v15_is_not_a_valid_choice"])
+
+    def test_c04_distinguishes_unread_from_read_but_unused(self):
+        """**안 읽는 것과 읽고 안 쓰는 것은 다른 결함이다.** 후자가 더 나쁘다."""
+        st = self.dec["C-04"]["implementation_status"]["include_v15_reads_but_does_not_use"]
+        self.assertIn("읽기는 읽는다", st)
+        self.assertIn("후자가 더 나쁘다", st)
+
+    def test_c07_records_the_double_block(self):
+        st = self.dec["C-07"]["implementation_status"]
+        self.assertEqual(len(st["double_block"]), 3)
+        self.assertEqual(st["incompatible_basis_observations"]["count"], 4)
+        self.assertIn("G4 에 아예 닿지 않는다", st["routes"]["openai"])
+
+
 if __name__ == "__main__":
     unittest.main()

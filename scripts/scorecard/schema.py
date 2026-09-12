@@ -243,7 +243,11 @@ def validate_rules(payload: Any) -> dict[str, Any]:
     ids = [d["id"] for d in payload["decisions"]]
     _require(len(ids) == len(set(ids)), "rules.json: decisions id 중복")
     for d in payload["decisions"]:
-        _expect_keys(d, ["id", "status", "summary"], f"rules.decisions[{d.get('id')}]", optional=["recommendation", "affects", "choices", "blocking"])
+        # implementation_status: 결정은 미결이어도 **권고안이 이미 코드에 서 있는지**는 따로 기록한다.
+        # 미결 목록만 보고 "아직 아무것도 안 됐다" 고 읽는 것을 막는다(F9-PEND-40).
+        _expect_keys(d, ["id", "status", "summary"], f"rules.decisions[{d.get('id')}]",
+                     optional=["recommendation", "affects", "choices", "blocking",
+                               "implementation_status"])
         _require(d["status"] in {"documented", "pending", "resolved"}, f"rules.decisions[{d['id']}]: status 오류")
     if "sources" in payload:
         _validate_source_policy(payload["sources"])

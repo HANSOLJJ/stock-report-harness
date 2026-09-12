@@ -199,8 +199,17 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             path.append({"gate": "G3", "result": "skipped", "reason": "FCF 미공시라 소진율 없음"})
             g4 = _g4(cid, obs, gi, rules, run, use)
             if g4["step"] is None:
-                path.append({"gate": "G4", "result": "undetermined", "dedupe": reason_id,
-                             "note": "같은 미공시 사유를 G2·G4 에서 두 번 세지 않음", **{k: v for k, v in g4.items() if k not in ("step", "pending")}})
+                # **G4 가 막힌 사유와 G2 가 깎은 사유는 같을 수도 다를 수도 있다.** 둘을 한 문구로
+                # 묶으면 오늘 세운 missing_type 구분(회사가 공시 안 함 / 우리가 못 구함)이 지워진다.
+                # anthropic 이 그 경우다 — G2 는 FCF 확인된 미공시, G4 는 C-07 기준 비교 불가다.
+                same_reason = g4.get("result") == "undetermined" and "미공시" in str(g4.get("reason", ""))
+                note = ("같은 미공시 사유를 G2·G4 에서 두 번 세지 않음" if same_reason else
+                        "G4 는 **다른 사유**로 막혔으나 추가 감점하지 않는다 — G2 에서 이미 깎았고 "
+                        "G4 는 계산 자체가 불가해 더 깎을 근거가 없다")
+                path.append({"gate": "G4", "no_extra_penalty_because": reason_id,
+                             "g2_reason": "fcf_not_disclosed(확인된 미공시)",
+                             "g4_reason_same_as_g2": same_reason,
+                             "note": note, **{k: v for k, v in g4.items() if k not in ("step", "pending")}})
             else:
                 path.append({"gate": "G4", **{k: v for k, v in g4.items() if k != "pending"}})
                 score = _clamp(score + g4["step"], floor)

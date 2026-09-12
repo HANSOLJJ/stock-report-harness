@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "320a918f95db5b0c2df9b1f66ae37e9084ad70601de8520fe93de7b0ff760590",
+    "run": "f6fb5349c3308c82d267cd24d57a604875835d638833ea3e501a367b8164d342",
     "observations": "2329c8f5edb7241dbb97a220a2622179b8525054a3558411608268df03b91a57",
     "judgments": "5a28676508f6a6877dc046137c074f0b2a4a4c41d75dece6d9fce8727c2105ec",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
-    "rules": "23fa81f7e24abde3e614358d6146439208951d023f299c45a1f5934007e877fc"
+    "rules": "521692661b6b4b59268cd4c6edb230bf46cf3e598029f06dfaa6d88977d46a81"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -2053,9 +2053,11 @@
               },
               {
                 "gate": "G4",
+                "no_extra_penalty_because": "anthropic.fcf_not_disclosed",
+                "g2_reason": "fcf_not_disclosed(확인된 미공시)",
+                "g4_reason_same_as_g2": false,
+                "note": "G4 는 **다른 사유**로 막혔으나 추가 감점하지 않는다 — G2 에서 이미 깎았고 G4 는 계산 자체가 불가해 더 깎을 근거가 없다",
                 "result": "incompatible",
-                "dedupe": "anthropic.fcf_not_disclosed",
-                "note": "같은 미공시 사유를 G2·G4 에서 두 번 세지 않음",
                 "reason": "계약 수입과 B종 약정의 기간·범위가 달라 비교 불가(C-07) — 동일 범위 자료 확보 전 미완료"
               }
             ],
@@ -4255,5 +4257,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 177,
-  "results_hash": "069ab39cb55cce6c74df1807b903204794ad3be9a47d6a72dcc03e43afb7aafa"
+  "results_hash": "a117914857fc1df53640ea85762e0f37431da5583c4cc4f7b63da7edab3ea897"
 }
