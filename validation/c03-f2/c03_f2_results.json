@@ -1,0 +1,427 @@
+{
+  "schema": "scorecard_c03_f2_results_v1",
+  "task_id": "C03-F2-38",
+  "factor": "F2",
+  "factor_name": "신기술 게임체인저",
+  "sources": {
+    "handover": {
+      "file": "AI기업_채점표_HANDOVER.md",
+      "line": 22,
+      "text": "경로 0개→2, 1개→3, 2개→4, **AA 종합 1위**→5"
+    },
+    "rules": {
+      "file": "AI기업_채점규칙_v1.5.md",
+      "lines": [
+        22,
+        27,
+        37,
+        370,
+        387
+      ],
+      "note": "세 경로(성능 도약·패러다임 적응·표준 선점)만 정성 정의, 수치 사다리 매핑 누락"
+    },
+    "scoring_table_md": {
+      "file": "AI기업_채점표_v1.5.md",
+      "lines": "63~740",
+      "note": "개별 기업 근거란에 파편화(0개→2, 1개→3, 2개→4, AA 1위→5)"
+    },
+    "rules_json": {
+      "file": "validation/f9-decide-20/_raw/rules_v15.json",
+      "lines": [
+        57,
+        62,
+        412
+      ],
+      "summary": "F2 경로 수→점수 매핑(0→2, 1→3, 2→4, AA 1위→5)이 완결되지 않았고 NVIDIA·TSMC 5점을 재현하지 못함"
+    }
+  },
+  "mapping_ladder": {
+    "0": 2,
+    "1": 3,
+    "2": 4,
+    "aa_top1": 5
+  },
+  "missing_conditions": {
+    "score_0": "원문에 조건 부재 (결측, 최하위 기업 Apple·Oracle도 2점 부여)",
+    "score_1": "원문에 조건 부재 (결측)",
+    "hardware_foundry_5": "원문에 조건 부재 (AA 1위는 모델 전용이라 하드웨어/파운드리 5점 자격 공백)"
+  },
+  "aa_definition": {
+    "acronym": "Artificial Analysis",
+    "metric": "AA Intelligence Index (종합 지능 지수)",
+    "url": "artificialanalysis.ai",
+    "population": "Artificial Analysis에 등재·측정되는 프론티어 파운데이션 모델(LLM/멀티모달)군",
+    "top1_holder": "Anthropic (Claude 3.5 Sonnet / Fable 5.1 66점으로 Astra 61점, Sol 61점 등을 제치고 1위)",
+    "hardware_status": "NVIDIA, TSMC 등 하드웨어·파운드리 기업은 모집단 자체에 포함되지 않음"
+  },
+  "companies": [
+    {
+      "company_id": "alphabet",
+      "company_name": "Alphabet (Google)",
+      "category": "model_and_infra",
+      "f2_bullets": [
+        "Arena 텍스트 최고 9위로 Anthropic에 명확히 밀림",
+        "단 Text-to-Video 1위(gemini-omni-flash)",
+        "Ironwood TPU 7세대, 8세대 TSMC 2nm",
+        "Gemini 3.8 Flash(9/2) — 속도·가격 경쟁력 확인, 프론티어 순위는 미변"
+      ],
+      "passed_paths": [
+        "성능 도약 (Text-to-Video 1위, TPU 7/8세대)",
+        "패러다임 적응 (Gemini 3.8 Flash 속도·가격 경쟁력)"
+      ],
+      "path_count": 2,
+      "aa_top1_qualified": false,
+      "mapped_score": 4,
+      "inherited_score": 4,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 63~67행",
+      "note": "원문에 명시적 경로 체크박스(✅)는 없으나 텍스트 영상 1위(성능)와 Flash 출시(적응) 인정"
+    },
+    {
+      "company_id": "amazon",
+      "company_name": "Amazon (AWS)",
+      "category": "infra_and_model",
+      "f2_bullets": [
+        "(v1.5: 별표 F 표준 경로 성립 — Anthropic의 MCP와 같은 잣대) 표준 경로 ✅ — AWS Interconnect 오픈 API 규격 채택",
+        "성능 경로 ✅ — Trainium3에서 OpenAI·Anthropic 실제 학습",
+        "적응 ⚠️ — Nova는 기여 못 함, Arena 텍스트 99위",
+        "두 경로 = 4 (OpenAI ②4와 정합)"
+      ],
+      "passed_paths": [
+        "표준 경로 ✅ (AWS Interconnect 오픈 API 규격 사실상 표준)",
+        "성능 경로 ✅ (Trainium3 채택으로 입증된 하드웨어 성능)"
+      ],
+      "path_count": 2,
+      "aa_top1_qualified": false,
+      "mapped_score": 4,
+      "inherited_score": 4,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 114~118행",
+      "note": "원문 '두 경로 = 4' 명시"
+    },
+    {
+      "company_id": "microsoft",
+      "company_name": "Microsoft",
+      "category": "infra_and_platform",
+      "f2_bullets": [
+        "Maia 200 발표했으나 배포 물량 미확인",
+        "Arena 상위권에 자체 모델 없음",
+        "OpenAI·Anthropic 양쪽 조달"
+      ],
+      "passed_paths": [
+        "패러다임 적응 (자체 모델 부재 속 외부 모델 양방향 조달·서비스 탑재)"
+      ],
+      "path_count": 1,
+      "aa_top1_qualified": false,
+      "mapped_score": 3,
+      "inherited_score": 3,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 171~174행",
+      "note": "자체 모델 부재, 조달 기반 적응 1개 경로 인정 시 3점 일치"
+    },
+    {
+      "company_id": "tsmc",
+      "company_name": "TSMC",
+      "category": "foundry",
+      "f2_bullets": [
+        "성능 경로 ✅ — N2 양산 시작(Q2 웨이퍼 매출 3%, 하반기 가파른 램프) · N3 30%, 7nm 이하 77%",
+        "순수 파운드리 점유 73%(Q1 2026) · GM 67.7%·영업마진 60.3% 역대 최고 = 가격 결정력",
+        "CoWoS 5.5배 레티클 양산 계획, 14배 레티클 2028(컴퓨트 다이 10개·HBM 20스택)",
+        "도전자: Intel 14A 2028 양산 목표, Samsung SF2P 수율 70% — 동급 아님"
+      ],
+      "passed_paths": [
+        "성능 경로 ✅ (N2 첨단 공정 양산, CoWoS 첨단 패키징)"
+      ],
+      "path_count": 1,
+      "aa_top1_qualified": false,
+      "mapped_score": 3,
+      "inherited_score": 5,
+      "match": false,
+      "delta": -2,
+      "mismatch_reason": "파운드리 기업으로 AA 종합 1위 대상 아님. 성능 경로 1개만 유효하여 매핑 시 3점이나, v1.5에서 독점적 제조 우위로 5점 부여",
+      "citations": "AI기업_채점표_v1.5.md 215~219행",
+      "note": "매핑 적용값(3점)과 승계 점수(5점) 간 2점 괴리 발생"
+    },
+    {
+      "company_id": "meta",
+      "company_name": "Meta",
+      "category": "model_and_platform",
+      "f2_bullets": [
+        "AA Intelligence Index — Muse Spark 1.3(max) 62, 프론티어 진입(3위)",
+        "Tau3-Bench Banking 52% 전 모델 1위 · GDPval-AA v2 1,754 Elo",
+        "가격 $1.25/$4.25 유지, 59점 이상 중 태스크당 최저 비용($0.55)",
+        "②5는 불가 — AA 종합 1위(Anthropic)가 5의 기준이고 Spark 1.3은 3위",
+        "성능 경로 ✅(하드 벤치 등재) + 적응 경로 ✅(9개월 재구축) · 표준 ❌ → 두 경로 = 4",
+        "8/10 Spark 1.2 오픈웨이트 공언(미출시)"
+      ],
+      "passed_paths": [
+        "성능 경로 ✅ (Muse Spark 1.3 하드 벤치 등재)",
+        "적응 경로 ✅ (9개월 재구축, 전 모달리티)"
+      ],
+      "path_count": 2,
+      "aa_top1_qualified": false,
+      "mapped_score": 4,
+      "inherited_score": 4,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 262~270행",
+      "note": "원문 '두 경로 = 4' 및 'AA 종합 1위가 5의 기준' 명시"
+    },
+    {
+      "company_id": "anthropic",
+      "company_name": "Anthropic",
+      "category": "frontier_model",
+      "f2_bullets": [
+        "Arena 텍스트·에이전트·웹개발·문서·비전·검색 6개 카테고리 1위 + Artificial Analysis Index 1위",
+        "GPT-6 Astra 출시 후에도 1위 방어 (Intelligence Index Fable 5.1 66 > Astra 61)",
+        "MCP 표준 선점",
+        "Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%)"
+      ],
+      "passed_paths": [
+        "성능 도약 (AA Index 1위, Arena 6개 카테고리 1위, ARC-AGI-3 30.2%)",
+        "표준 선점 (MCP 사실상 산업 표준 채택)"
+      ],
+      "path_count": 2,
+      "aa_top1_qualified": true,
+      "mapped_score": 5,
+      "inherited_score": 5,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 315~319행",
+      "note": "AA 종합 1위 및 MCP 표준 선점으로 5점 완전 충족"
+    },
+    {
+      "company_id": "alibaba",
+      "company_name": "Alibaba",
+      "category": "model_and_cloud",
+      "f2_bullets": [
+        "R&D·적응속도 최상위, Arena WebDev 3위·Vision 2위",
+        "단 표준 주도력이 비어 있고 HLE 43.6%로 프론티어 미달",
+        "Anthropic 증류 의혹 미반박"
+      ],
+      "passed_paths": [
+        "성능 도약 (Arena WebDev 3위, Vision 2위)",
+        "패러다임 적응 (R&D·적응속도 최상위)"
+      ],
+      "path_count": 2,
+      "aa_top1_qualified": false,
+      "mapped_score": 4,
+      "inherited_score": 4,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 373~376행, 규칙 별표 F 37행",
+      "note": "규칙 별표 F에서 '성능·적응은 되지만 프론티어 미달 + 표준 부재'로 4점 예시 명시"
+    },
+    {
+      "company_id": "apple",
+      "company_name": "Apple",
+      "category": "hardware_and_consumer",
+      "f2_bullets": [
+        "Siri 개편 2년 연기(2026년 9월 iOS 27로)",
+        "고난도 추론을 Gemini 커스텀 모델에 연 $1B 주고 외주",
+        "자체 AFM 3는 Arena·하드벤치마크에 등장조차 안 함",
+        "분기 CapEx $3.5B — 자릿수 열세",
+        "인재 유출(팀장 Ruoming Pang→Meta, AI총괄 Giannandrea 은퇴)",
+        "단 Baltra 실리콘 역량은 별개이나 모델·표준 공백"
+      ],
+      "passed_paths": [],
+      "path_count": 0,
+      "aa_top1_qualified": false,
+      "mapped_score": 2,
+      "inherited_score": 2,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 429~435행",
+      "note": "세 경로 통과 없음(0개), 14사 공동 최저 2점 일치"
+    },
+    {
+      "company_id": "nvidia",
+      "company_name": "NVIDIA",
+      "category": "hardware_accelerator",
+      "f2_bullets": [
+        "Vera Rubin 양산(R100 3,360억 트랜지스터, Blackwell 대비 추론 5배·토큰당 비용 1/10)",
+        "AI 가속기 점유율 70~75%"
+      ],
+      "passed_paths": [
+        "성능 도약 (Vera Rubin 추론 5배 세대 격차 양산)"
+      ],
+      "path_count": 1,
+      "aa_top1_qualified": false,
+      "mapped_score": 3,
+      "inherited_score": 5,
+      "match": false,
+      "delta": -2,
+      "mismatch_reason": "가속기 하드웨어 기업으로 AA 종합 1위 대상 아님. 성능 도약 1개만 유효하여 매핑 시 3점이나, v1.5에서 하드웨어 세대 격차로 5점 부여",
+      "citations": "AI기업_채점표_v1.5.md 482~484행, 규칙 별표 F 33행",
+      "note": "매핑 적용값(3점)과 승계 점수(5점) 간 2점 괴리 발생"
+    },
+    {
+      "company_id": "oracle",
+      "company_name": "Oracle",
+      "category": "cloud_infra",
+      "f2_bullets": [
+        "자체 모델 없음",
+        "성능 도약 ❌",
+        "패러다임 적응 ⚠️(OCI를 싸게 파는 것)",
+        "표준 선점 ❌",
+        "세 경로 중 통과 없음 → 2"
+      ],
+      "passed_paths": [],
+      "path_count": 0,
+      "aa_top1_qualified": false,
+      "mapped_score": 2,
+      "inherited_score": 2,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 536~538행",
+      "note": "원문 '세 경로 중 통과 없음 → 2' 명시"
+    },
+    {
+      "company_id": "palantir",
+      "company_name": "Palantir",
+      "category": "enterprise_software",
+      "f2_bullets": [
+        "AIP 온톨로지는 차별적",
+        "Nvidia Nemotron 소버린 구동 제휴",
+        "표준 주도는 못 함"
+      ],
+      "passed_paths": [
+        "패러다임 적응 (AIP 온톨로지 워크플로 박힘)"
+      ],
+      "path_count": 1,
+      "aa_top1_qualified": false,
+      "mapped_score": 3,
+      "inherited_score": 3,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 586~589행",
+      "note": "온톨로지 워크플로 적응 1개 경로 인정 시 3점 일치"
+    },
+    {
+      "company_id": "spacex-xai",
+      "company_name": "SpaceX + xAI",
+      "category": "model_and_compute",
+      "f2_bullets": [
+        "(v1.5: AI 귀속만 — 로켓은 ④로) 성능 경로 ✅ — Grok 4.6 AA Index 61, 전체 6위",
+        "적응 경로 ✅ — Cursor 인수 · Colossus GPU 20만 · Grok 배포",
+        "표준 ❌ → 두 경로 = 4 (Meta·Amazon과 같은 잣대)",
+        "재사용 로켓·Starship은 AI 게임체인저가 아니다 — ④(다각화)에서만 센다"
+      ],
+      "passed_paths": [
+        "성능 경로 ✅ (Grok 4.6 AA Index 61)",
+        "적응 경로 ✅ (Cursor 인수, Colossus 가동)"
+      ],
+      "path_count": 2,
+      "aa_top1_qualified": false,
+      "mapped_score": 4,
+      "inherited_score": 4,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 633~637행",
+      "note": "원문 '두 경로 = 4' 명시"
+    },
+    {
+      "company_id": "tesla",
+      "company_name": "Tesla",
+      "category": "robotics_and_chips",
+      "f2_bullets": [
+        "AI5 칩 4월 테이프아웃(AI4 대비 5배), 소량생산 2026, 양산 2027",
+        "Optimus 1세대 라인 설치 중 · Cortex 205MW",
+        "Terafab 건설·장비 조달 진행 — 실측 전",
+        "성능 판정 불가(로보택시 Waymo가 앞) · 적응 ✅ → 3"
+      ],
+      "passed_paths": [
+        "적응 경로 ✅ (자체 칩/로봇/팹 내재화 적응)"
+      ],
+      "path_count": 1,
+      "aa_top1_qualified": false,
+      "mapped_score": 3,
+      "inherited_score": 3,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 683~687행",
+      "note": "원문 '성능 판정 불가 · 적응 ✅ → 3' 명시"
+    },
+    {
+      "company_id": "openai",
+      "company_name": "OpenAI",
+      "category": "frontier_model",
+      "f2_bullets": [
+        "성능 경로 ✅ — Arena T2I·Image Edit 1위 2관왕, ARC-AGI-3 SOTA 62.7% 등",
+        "적응 경로 ✅ — GPT-5.5→5.6→6 출시 속도, 광고 파일럿 6주 ARR $100M",
+        "표준 ❌(MCP 실패)",
+        "세 경로 중 둘 통과 = 4 (Meta·Alibaba ②4와 동급 증거)",
+        "5로 못 올리는 이유 — AA Intelligence Index 61 (Fable 5.1 66에 뒤짐, 1위 아님)",
+        "반대 증거 — GDPval-AA v2 -80 Elo, 가격 2.5배 인상"
+      ],
+      "passed_paths": [
+        "성능 경로 ✅ (ARC-AGI-3 SOTA, Arena 이미지 1위)",
+        "적응 경로 ✅ (출시 속도, 파일럿 상용화)"
+      ],
+      "path_count": 2,
+      "aa_top1_qualified": false,
+      "mapped_score": 4,
+      "inherited_score": 4,
+      "match": true,
+      "delta": 0,
+      "mismatch_reason": null,
+      "citations": "AI기업_채점표_v1.5.md 731~740행",
+      "note": "원문 '세 경로 중 둘 통과 = 4' 및 AA 1위 미달로 5 불가 명시"
+    }
+  ],
+  "summary": {
+    "total_companies": 14,
+    "matched_count": 12,
+    "mismatched_count": 2,
+    "matched_companies": [
+      "alphabet",
+      "amazon",
+      "microsoft",
+      "meta",
+      "anthropic",
+      "alibaba",
+      "apple",
+      "oracle",
+      "palantir",
+      "spacex-xai",
+      "tesla",
+      "openai"
+    ],
+    "mismatched_companies": [
+      "tsmc",
+      "nvidia"
+    ],
+    "mismatch_details": [
+      {
+        "company_id": "tsmc",
+        "company_name": "TSMC",
+        "mapped_score": 3,
+        "inherited_score": 5,
+        "delta": -2,
+        "reason": "파운드리 기업으로 AA 종합 1위 대상 아님. 성능 경로 1개만 유효하여 매핑 시 3점이나, v1.5에서 독점적 제조 우위로 5점 부여"
+      },
+      {
+        "company_id": "nvidia",
+        "company_name": "NVIDIA",
+        "mapped_score": 3,
+        "inherited_score": 5,
+        "delta": -2,
+        "reason": "가속기 하드웨어 기업으로 AA 종합 1위 대상 아님. 성능 도약 1개만 유효하여 매핑 시 3점이나, v1.5에서 하드웨어 세대 격차로 5점 부여"
+      }
+    ]
+  }
+}
