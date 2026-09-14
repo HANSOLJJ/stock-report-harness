@@ -512,17 +512,25 @@ class NonopShareDivergenceTest(unittest.TestCase):
         self.assertIn("영업외손익 ÷ 세전이익", self.spec["resolution"]["definition"])
 
     def test_exceptions_sit_right_next_to_the_resolved_status(self):
-        """**resolved 가 "다 맞는 줄" 로 읽히면 안 된다.** 예외를 상태 바로 다음 키에 이름으로 둔다."""
+        """**resolved 가 "다 맞는 줄" 로 읽히면 안 된다.** 예외를 상태 바로 다음 키에 이름으로 둔다.
+
+        처음에는 oracle·alibaba 둘 다 미해결로 두었다. oracle 이 풀려 **설명됨과 미설명**으로 갈랐다 —
+        풀렸어도 엔진 값과 저장값은 여전히 다르므로 예외 목록에서 빼지 않는다.
+        """
         keys = list(self.spec)
         self.assertEqual(keys[keys.index("status") + 1], "exceptions")
-        self.assertEqual(set(self.spec["exceptions"]["companies"]), {"oracle", "alibaba"})
-        self.assertIn("12개 중 11개가 아니다", self.spec["exceptions"]["matched"])
+        ex = self.spec["exceptions"]
+        self.assertEqual(set(ex["companies"]), {"oracle", "alibaba"})
+        self.assertEqual(set(ex["explained"]), {"oracle"})
+        self.assertEqual(set(ex["unexplained"]), {"alibaba"})
+        self.assertIn("alibaba 는 안 풀렸다", ex["warning"])
 
     def test_oracle_window_was_checked_and_ruled_out(self):
+        """창 네 개로는 -0.15 가 안 나온다. **두 회계연도 평균 관찰은 우연이었다고 스스로 정정한다.**"""
         w = self.spec["remaining_mismatch"]["oracle"]["window_check"]
         self.assertEqual(len(w["results"]), 4)
         self.assertIn("-0.15 가 나오지 않는다", w["verdict"])
-        self.assertIn("근거가 없다", w["observation_not_conclusion"])
+        self.assertIn("우연이었다", w["observation_not_conclusion"])
 
     def test_both_errors_of_the_old_formula_are_named(self):
         errs = self.spec["resolution"]["two_errors_in_the_old_formula"]
@@ -530,12 +538,26 @@ class NonopShareDivergenceTest(unittest.TestCase):
         self.assertIn("법인세가 섞여", errs[0])
         self.assertIn("세전이익이 아니라 순이익", errs[1])
 
-    def test_oracle_mismatch_is_pinned_to_the_stored_side(self):
-        """**복원 쪽이 아니라 저장값 쪽이 어긋난다** — 세전이익이 두 경로로 확인된다."""
+    def test_oracle_is_explained_by_the_operating_income_definition(self):
+        """**영업이익 정의 차이다.** 원천이 구조조정비를 되더한 조정 영업이익을 썼다.
+
+        원래 이 자리는 `저장값 쪽이 어긋난다` 를 고정했다. 세전이익이 두 경로로 확인돼 복원이 옳다는 것까지는
+        맞았으나, 채점표 각주 ᶜ 의 `영업이익($22.39B)` 을 찾으면서 **어긋남의 원인이 영업이익 쪽**이라는 게
+        드러났다. GAAP 20,606 + 구조조정비 1,779 = 22,385.
+        """
         o = self.spec["remaining_mismatch"]["oracle"]
-        self.assertIn("저장값 쪽이 어긋난다", o["verdict"])
-        self.assertIn("분기 태깅 문제가 아니다", o["what_would_be_needed"])
-        self.assertEqual(len(o["candidates_tried"]), 4)
+        self.assertIn("영업이익 정의 차이다", o["verdict"])
+        a = o["resolution"]["arithmetic"]
+        self.assertEqual(a["gaap_operating_income"] + a["restructuring_charges"], a["sum"])
+        self.assertLess(abs(a["sum"] - a["author_operating_income"]), 10_000_000)
+        self.assertIn("−0.15", o["resolution"]["stored_value_reproduced"])
+        self.assertEqual(len(o["candidates_tried"]), 4)                  # 산식 후보 넷은 기록으로 남는다
+
+    def test_engine_keeps_gaap_operating_income(self):
+        """원천마다 조정 항목이 달라 **엔진은 GAAP 을 유지한다.** 판정도 같다."""
+        o = self.spec["remaining_mismatch"]["oracle"]
+        self.assertIn("GAAP 영업이익을 유지한다", o["resolution"]["engine_keeps_gaap"])
+        self.assertIn("판정도 같다", o["resolution"]["engine_keeps_gaap"])
 
     def test_boundary_risk_resolution_is_recorded(self):
         s = self.spec["score_impact_of_the_fix"]
