@@ -7,7 +7,7 @@
   "price_as_of": "2026-09-02",
   "info_cutoff": "2026-09-02",
   "rule_version": "v1.7",
-  "rule_hash": "a71dc1c4e7f43ef708e04fb3436d37384bc74e0b769e0d4a4be3ea12a3528f86",
+  "rule_hash": "12fd0de854c02e4d4aff904371f541718f5540d9a941e846aa29b856a37a4555",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
