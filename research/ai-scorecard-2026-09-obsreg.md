@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
 observations_hash: e89744320655eecc83dfbac2d646a08caabd05e76ef4a6b6914fa2512b3d2483
-judgments_hash: 95b5ee1a575aa27860b1e41b3bf1224976bf59d2a9108d495316dd8926a6353e
+judgments_hash: 8ab61c01b243b6c5b4b68fd670e46ed57d562dbf53b7b5aecbd368592884bd76
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -519,7 +519,7 @@ created_at: 2026-09-11
 | ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
 | ③ Last Mover | criteria | — | imitation=partial, revenue_model=pass, acceleration=fail, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑤ 아군 | grade | — | A=2, H=0 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
+| ⑤ 아군 | grade | — | A=1, H=0 | new | 설계진행(C-13 A-GRADE-45 · NTM A-GRADE-45B 독립 일치) 2026-09-14 | [F5-IMPL-48] 체크리스트 19 적용 재판정(사용자 결정 ①). A +2→+1, F5 5→4. 두 모델 독립 일치 — C-13(Gemin |
 | ⑥ 가격 | score | -3 | private=True | carried | legacy:v1.5 2026-09-02 | C-12: 비상장 정성 예외(TTM 보정·자본효율 근거는 원문) |
 | ⑦ 순환금융 | score | -1 | — | carried | legacy:v1.5 2026-09-02 | C-09: 매트릭스 입력(환류 여부) 원문 없음 — 승계 점수 |
 | ⑧ 비대칭 의존 | score | -3 | — | new | worker(HANSOLJJ) — C-13 F8-ANTH-33 8ddb0ae 기반 2026-09-11 | F8-ANTH-33 반영(2026-09-11). **점수 -3 은 바뀌지 않았고 근거란만 바뀌었다.** 2차 증언(증권사 자료)을 1차 공시(A |
@@ -611,7 +611,7 @@ created_at: 2026-09-11
 | ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=fail, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑤ 아군 | grade | — | A=2, H=-3 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 \| [IMPL-46] **별표 G 조달 배제를 적용했다(사용자 확정 2026-09-14).** A=+2 근거에서  |
+| ⑤ 아군 | grade | — | A=1, H=-3 | new | 설계진행(C-13 A-GRADE-45 · NTM A-GRADE-45B 독립 일치) 2026-09-14 | [F5-IMPL-48] 체크리스트 19 적용 재판정(사용자 결정 ①). A +2→+1, F5 2→1. 두 모델 독립 일치 — C-13(Gemin |
 | ⑥ 가격 | score | -4 | private=True | carried | legacy:v1.5 2026-09-02 | C-12: 비상장 정성 예외(TTM 보정·자본효율 근거는 원문) |
 | ⑦ 순환금융 | score | -1 | — | carried | legacy:v1.5 2026-09-02 | C-09: 매트릭스 입력(환류 여부) 원문 없음 — 승계 점수 |
 | ⑧ 비대칭 의존 | score | -4 | — | carried | legacy:v1.5 2026-09-02 |  |

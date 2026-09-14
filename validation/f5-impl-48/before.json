@@ -1,0 +1,336 @@
+{
+  "ranking": [
+    {
+      "rank": 1,
+      "company_id": "alphabet",
+      "display_name": "Alphabet / Google",
+      "moat": 21,
+      "trap": -6,
+      "total": 15
+    },
+    {
+      "rank": 1,
+      "company_id": "amazon",
+      "display_name": "Amazon / AWS",
+      "moat": 21,
+      "trap": -6,
+      "total": 15
+    },
+    {
+      "rank": 1,
+      "company_id": "meta",
+      "display_name": "Meta",
+      "moat": 18,
+      "trap": -3,
+      "total": 15
+    },
+    {
+      "rank": 4,
+      "company_id": "microsoft",
+      "display_name": "Microsoft",
+      "moat": 19,
+      "trap": -5,
+      "total": 14
+    },
+    {
+      "rank": 5,
+      "company_id": "anthropic",
+      "display_name": "Anthropic",
+      "moat": 21,
+      "trap": -9,
+      "total": 12
+    },
+    {
+      "rank": 6,
+      "company_id": "tsmc",
+      "display_name": "TSMC",
+      "moat": 18,
+      "trap": -7,
+      "total": 11
+    },
+    {
+      "rank": 7,
+      "company_id": "spacex-xai",
+      "display_name": "SpaceX + xAI",
+      "moat": 18,
+      "trap": -8,
+      "total": 10
+    },
+    {
+      "rank": 8,
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "moat": 16,
+      "trap": -8,
+      "total": 8
+    },
+    {
+      "rank": 8,
+      "company_id": "apple",
+      "display_name": "Apple",
+      "moat": 15,
+      "trap": -7,
+      "total": 8
+    },
+    {
+      "rank": 10,
+      "company_id": "alibaba",
+      "display_name": "Alibaba",
+      "moat": 18,
+      "trap": -12,
+      "total": 6
+    },
+    {
+      "rank": 10,
+      "company_id": "palantir",
+      "display_name": "Palantir",
+      "moat": 13,
+      "trap": -7,
+      "total": 6
+    },
+    {
+      "rank": 12,
+      "company_id": "tesla",
+      "display_name": "Tesla",
+      "moat": 14,
+      "trap": -9,
+      "total": 5
+    },
+    {
+      "rank": 13,
+      "company_id": "openai",
+      "display_name": "OpenAI",
+      "moat": 16,
+      "trap": -13,
+      "total": 3
+    },
+    {
+      "rank": 14,
+      "company_id": "oracle",
+      "display_name": "Oracle",
+      "moat": 14,
+      "trap": -13,
+      "total": 1
+    }
+  ],
+  "companies": {
+    "alphabet": {
+      "total": 15,
+      "rank": 1,
+      "factors": {
+        "F1": 5,
+        "F2": 4,
+        "F3": 3,
+        "F4": 5,
+        "F5": 4,
+        "F6": -3,
+        "F7": -1,
+        "F8": -1,
+        "F9": -1
+      }
+    },
+    "amazon": {
+      "total": 15,
+      "rank": 1,
+      "factors": {
+        "F1": 5,
+        "F2": 4,
+        "F3": 3,
+        "F4": 5,
+        "F5": 4,
+        "F6": -2,
+        "F7": -1,
+        "F8": -1,
+        "F9": -2
+      }
+    },
+    "meta": {
+      "total": 15,
+      "rank": 1,
+      "factors": {
+        "F1": 5,
+        "F2": 4,
+        "F3": 3,
+        "F4": 3,
+        "F5": 3,
+        "F6": -1,
+        "F7": 0,
+        "F8": -1,
+        "F9": -1
+      }
+    },
+    "microsoft": {
+      "total": 14,
+      "rank": 4,
+      "factors": {
+        "F1": 5,
+        "F2": 3,
+        "F3": 3,
+        "F4": 4,
+        "F5": 4,
+        "F6": -3,
+        "F7": -1,
+        "F8": -1,
+        "F9": 0
+      }
+    },
+    "tsmc": {
+      "total": 11,
+      "rank": 6,
+      "factors": {
+        "F1": 2,
+        "F2": 5,
+        "F3": 3,
+        "F4": 4,
+        "F5": 4,
+        "F6": -3,
+        "F7": 0,
+        "F8": -4,
+        "F9": 0
+      }
+    },
+    "alibaba": {
+      "total": 6,
+      "rank": 10,
+      "factors": {
+        "F1": 4,
+        "F2": 4,
+        "F3": 3,
+        "F4": 4,
+        "F5": 3,
+        "F6": -4,
+        "F7": 0,
+        "F8": -4,
+        "F9": -4
+      }
+    },
+    "anthropic": {
+      "total": 12,
+      "rank": 5,
+      "factors": {
+        "F1": 4,
+        "F2": 5,
+        "F3": 3,
+        "F4": 4,
+        "F5": 5,
+        "F6": -3,
+        "F7": -1,
+        "F8": -3,
+        "F9": -2
+      }
+    },
+    "apple": {
+      "total": 8,
+      "rank": 8,
+      "factors": {
+        "F1": 5,
+        "F2": 2,
+        "F3": 2,
+        "F4": 3,
+        "F5": 3,
+        "F6": -4,
+        "F7": 0,
+        "F8": -3,
+        "F9": 0
+      }
+    },
+    "nvidia": {
+      "total": 8,
+      "rank": 8,
+      "factors": {
+        "F1": 2,
+        "F2": 5,
+        "F3": 2,
+        "F4": 5,
+        "F5": 2,
+        "F6": -2,
+        "F7": -3,
+        "F8": -3,
+        "F9": 0
+      }
+    },
+    "palantir": {
+      "total": 6,
+      "rank": 10,
+      "factors": {
+        "F1": 2,
+        "F2": 3,
+        "F3": 3,
+        "F4": 3,
+        "F5": 2,
+        "F6": -4,
+        "F7": 0,
+        "F8": -3,
+        "F9": 0
+      }
+    },
+    "spacex-xai": {
+      "total": 10,
+      "rank": 7,
+      "factors": {
+        "F1": 3,
+        "F2": 4,
+        "F3": 3,
+        "F4": 5,
+        "F5": 3,
+        "F6": -1,
+        "F7": 0,
+        "F8": -3,
+        "F9": -4
+      }
+    },
+    "tesla": {
+      "total": 5,
+      "rank": 12,
+      "factors": {
+        "F1": 2,
+        "F2": 3,
+        "F3": 3,
+        "F4": 4,
+        "F5": 2,
+        "F6": -5,
+        "F7": -1,
+        "F8": -2,
+        "F9": -1
+      }
+    },
+    "oracle": {
+      "total": 1,
+      "rank": 14,
+      "factors": {
+        "F1": 3,
+        "F2": 2,
+        "F3": 3,
+        "F4": 3,
+        "F5": 3,
+        "F6": -3,
+        "F7": -3,
+        "F8": -4,
+        "F9": -3
+      }
+    },
+    "openai": {
+      "total": 3,
+      "rank": 13,
+      "factors": {
+        "F1": 4,
+        "F2": 4,
+        "F3": 2,
+        "F4": 4,
+        "F5": 2,
+        "F6": -4,
+        "F7": -1,
+        "F8": -4,
+        "F9": -4
+      }
+    }
+  },
+  "input_hashes": {
+    "run": "c15196d739aa223cdab25f6249ab98f6facf54823fea4ada9ebcf269b15939b8",
+    "observations": "e89744320655eecc83dfbac2d646a08caabd05e76ef4a6b6914fa2512b3d2483",
+    "judgments": "95b5ee1a575aa27860b1e41b3bf1224976bf59d2a9108d495316dd8926a6353e",
+    "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
+    "rules": "7ef3f1679c6af926e76053a8f941fa1199a8231d4c6f5b4a7e4b4d94fb850dc9"
+  },
+  "results_hash": "d100bd377f4956cac1f82bc89a17ef512eda9c99ef2c19eec977b53ce18fa02d"
+}

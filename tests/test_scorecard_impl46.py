@@ -82,24 +82,36 @@ class NtmPerVendorTest(unittest.TestCase):
 
 
 class OpenaiF5Test(unittest.TestCase):
+    """IMPL-46 의 조달 배제는 F5-IMPL-48 교체 뒤에도 **새 판단에 승계돼** 있어야 한다.
+
+    원래 이 클래스는 `judgment_id == "openai.F5"` 를 찾아 A=+2 · 점수 2 · `체크리스트 19 는 반영하지 않았다` 를
+    고정했다. F5-IMPL-48 이 체크리스트 19 를 적용해 판단을 `openai.F5.impl48`(A=+1, 점수 1)로 교체했으므로
+    기업·factor 로 찾고, IMPL-46 당시 문언은 `superseded` 에서 확인한다.
+    """
+
     @classmethod
     def setUpClass(cls) -> None:
         jud = json.loads((RUN_DIR / "judgments.json").read_text(encoding="utf-8"))["items"]
-        cls.j = next(x for x in jud if x["judgment_id"] == "openai.F5")
+        cls.j = next(x for x in jud if x["company_id"] == "openai" and x["factor"] == "F5")
         res = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
         cls.score = next(c for c in res["companies"] if c["company_id"] == "openai")["factors"]["F5"]["score"]
 
-    def test_oracle_300b_excluded_but_score_unchanged(self):
-        self.assertIn("Oracle $300B 컴퓨트 계약을 뺀다", self.j["note"])
-        self.assertEqual(self.j["inputs"], {"A": 2, "H": -3})
-        self.assertEqual(self.score, 2)
+    def test_oracle_300b_exclusion_is_carried_into_the_new_judgment(self):
+        self.assertIn("Oracle $300B 컴퓨트", self.j["note"])
+        self.assertIn("A 근거에서 뺀다", self.j["note"])
+        self.assertEqual(self.j["inputs"], {"A": 1, "H": -3})            # F5-IMPL-48 로 A +2→+1
+        self.assertEqual(self.score, 1)
 
     def test_stargate_equity_is_not_confused_with_the_contract(self):
         """빠지는 것은 $300B 계약이지 Oracle 전체가 아니다."""
         self.assertIn("Stargate $7B 지분은 동맹으로 남는다", self.j["note"])
 
-    def test_checklist_19_is_explicitly_not_applied(self):
-        self.assertIn("체크리스트 19(받은 투자)는 반영하지 않았다", self.j["note"])
+    def test_impl46_wording_survives_in_superseded(self):
+        """IMPL-46 당시 `체크리스트 19 는 반영하지 않았다` 는 그때 사실이었다 — 지우지 않고 superseded 에 둔다."""
+        old = self.j["superseded"]
+        self.assertEqual(old["judgment_id"], "openai.F5")
+        self.assertIn("체크리스트 19(받은 투자)는 반영하지 않았다", old["note"])
+        self.assertIn("점수는 그대로 2 다", old["note"])
 
 
 if __name__ == "__main__":

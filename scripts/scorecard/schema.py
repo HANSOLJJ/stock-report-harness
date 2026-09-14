@@ -794,8 +794,22 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
             item,
             ["judgment_id", "company_id", "factor", "kind", "score", "inputs", "evidence", "reviewer", "reviewed_at", "status"],
             where,
-            optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id"],
+            optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id", "superseded"],
         )
+        if "superseded" in item:
+            # 2026-09-14 F5-IMPL-48: 기업·factor 당 판단이 하나라 옛 판단을 별도 항목으로 둘 수 없다.
+            # 교체된 판단의 문언은 지우지 않고 새 판단 안에 그대로 싣는다.
+            sup = _expect_keys(
+                item["superseded"],
+                ["judgment_id", "inputs", "evidence", "reviewer", "reviewed_at", "superseded_at", "why"],
+                f"{where}.superseded",
+                optional=["score", "status", "carried_from", "note", "counter_evidence", "source_ids"],
+            )
+            _require(item.get("previous_judgment_id") == sup["judgment_id"],
+                     f"{where}: superseded.judgment_id 가 previous_judgment_id 와 일치해야 함")
+            _require(isinstance(sup["evidence"], list) and any(isinstance(e, str) and e.strip() for e in sup["evidence"]),
+                     f"{where}.superseded: 옛 근거 문언이 비어 있음")
+            _expect_date(sup["superseded_at"], f"{where}.superseded.superseded_at")
         jid = item["judgment_id"]
         _require(isinstance(jid, str) and jid and jid not in seen, f"{where}: judgment_id 누락/중복 {jid!r}")
         seen.add(jid)

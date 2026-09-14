@@ -1,0 +1,16 @@
+  ok  anthropic  F5    5 -> 4
+  ok  anthropic  total 12 -> 11
+  ok  openai     F5    2 -> 1
+  ok  openai     total 3 -> 2
+  ok  tsmc       rank  6 -> 5
+바뀐 칸 5 · 예상 5 · 어긋남 0
+anthropic 순위 5 · tsmc 순위 5 · openai 순위 13
+baseline 승인 해시 6종 보존: True
+obsreg 해시 (승인 전 실행 — 바뀌는 것이 예상):
+  rules        12fd0de854c0 -> 12fd0de854c02e4d4aff904371f541718f5540d9a941e846aa29b856a37a4555  (불변)
+  observations e89744320655 -> e89744320655eecc83dfbac2d646a08caabd05e76ef4a6b6914fa2512b3d2483  (불변)
+  judgments    95b5ee1a575a -> 8ab61c01b243b6c5b4b68fd670e46ed57d562dbf53b7b5aecbd368592884bd76
+  run          dcacfa30f1c2 -> dcacfa30f1c2b3a302288ae10d29cae27813e5b8c5f9259bb315d32332657824  (불변)
+  results      61ed8291cefb -> 7a87a91c44726826898cab2eeca69a3b2ef97c1424785790a3ce39b1652f11b4
+  draft        08e4101fd26e -> 629877d93e719ef08d219aca324dd93f7fa6f0296116b88d4182d21ea27efe6d
+판정: 예상과 일치
