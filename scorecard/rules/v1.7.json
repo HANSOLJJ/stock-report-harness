@@ -56,12 +56,14 @@
       "decision_ids": [
         "C-03"
       ],
-      "path_mapping_candidate": {
+      "note": "세 경로(성능 도약·패러다임 적응·표준 선점) 통과 수 → 0개 2 · 1개 3 · 2개 4, **단 성능 도약이 '세대 격차' 수준이면 5**(C-03 확정, 2026-09-14). 5점 칸은 `AA 종합 1위` 가 아니다 — HANDOVER 사다리가 판단을 조회로 바꾸면서 nvidia·tsmc 를 놓쳤다. **F2 는 여전히 carried_score 다** — 이 결정은 규칙 확정이고 자동 산출 전환은 별건이다. 세대 격차가 세 축 중 몇 개에서 서야 하는지는 원문 미규정이다(decisions C-03).",
+      "path_mapping": {
         "0": 2,
         "1": 3,
         "2": 4
       },
-      "note": "세 경로(성능 도약·패러다임 적응·표준 선점) 통과 수 → 점수 매핑은 개정 후보(C-03). 확정 전에는 승계 score 만 허용"
+      "score5_requires_generation_gap": true,
+      "range_note": "range 하한 0 은 채점규칙 17행 `과점 factor 5개 — 각 0~5점` 의 일괄 선언에서 왔고 **경로 수 모델이 만들 수 있는 최저는 2 다**(경로 0개). 0·1 은 경로 수가 아닌 다른 축이 있어야 나온다. F3 만 범위를 사다리에 맞춰 `1~5` 로 적었다(설계 지침 87행 `현행 사다리 1~5`). 신설안은 validation/c03-impl-43/PROPOSAL.md 이고 **규칙에 적용하지 않았다.**"
     },
     "F3": {
       "label": "③ Last Mover",
@@ -1054,7 +1056,7 @@
     },
     {
       "id": "C-03",
-      "status": "pending",
+      "status": "resolved",
       "blocking": true,
       "affects": [
         "F2"
@@ -1062,8 +1064,47 @@
       "summary": "F2 경로 수→점수 매핑(0→2, 1→3, 2→4, AA 1위→5)이 완결되지 않았고 NVIDIA·TSMC 5점을 재현하지 못함",
       "recommendation": "기업 유형별 최고점 자격과 3경로 통과·0/1점 조건을 확정. 확정 전 신규 F2 는 승계 score 만",
       "choices": [
+        "paths_with_generation_gap_5",
         "activate_candidate_mapping"
-      ]
+      ],
+      "chosen": "paths_with_generation_gap_5",
+      "decided_at": "2026-09-14",
+      "decided_by": "사용자 (설계진행 제안)",
+      "superseded_choice": {
+        "name": "activate_candidate_mapping",
+        "what": "경로 0개→2, 1개→3, 2개→4, **AA 종합 1위**→5 (HANDOVER 22행 사다리 그대로)",
+        "why_not": "5점 칸이 `AA 종합 1위` 라 **AA 지수에 모델이 올라가 있는 회사만** 5점을 받을 수 있다. nvidia(Vera Rubin 추론 5배)와 tsmc(N2 양산)는 모델 제조사가 아니라 순위가 없다. 14개사 중 12개만 재현된다. 옛 이름을 남겨 둔다 — 무엇이 왜 밀렸는지가 사라지면 안 된다."
+      },
+      "confirmed_model": {
+        "mapping": "경로 0개→2, 1개→3, 2개→4, **단 성능 도약이 '세대 격차' 수준이면 5**",
+        "what_changed": "**사다리의 5점 칸 하나만 교체한다.** `AA 종합 1위`(조회) → `성능 도약 세대 격차`(판단). 0·1·2개 칸은 그대로다.",
+        "reproduces": "14/14. 사다리 단독은 12/14 이고 어긋나는 둘이 nvidia·tsmc 다.",
+        "verified_by": "C-13 과 설계진행이 독립 확인, worker 가 승인 실행 근거란에서 재현(C03-IMPL-43)"
+      },
+      "why_the_source_wins_over_handover": {
+        "handover_is_not_the_rule": "HANDOVER 22행은 규칙이 아니라 **기계화 재고표**다. 표 머리글이 `factor | 기계화 정도 | 지표 | 산식·사다리 | 사람이 판정할 것` 이다.",
+        "it_records_its_own_loss": "같은 행의 마지막 칸이 `경로 통과 여부 (**성능 경로는 AA 순위로 기계화 가능**)` 라고 적는다. **사다리가 `세대 격차`(판단)를 `AA 종합 1위`(조회)로 바꾼 경위가 그 행에 스스로 기록돼 있다.** 손실이 정확히 5점 칸에서 났다.",
+        "source_gives_one_path_five": "별표 F 가 `성능 도약 | 벤치마크에서 세대 격차를 만든다 | NVIDIA ②5 · Anthropic ②5 · Meta ②4` 로 **경로 하나에 5점을 주는 예시를 직접 든다.** 규칙 문서 자신이 대표 예시로 NVIDIA 를 쓴다.",
+        "source_location": "AI기업_채점규칙_v1.5.md 27~37행(별표 F) · AI기업_채점표_HANDOVER.md 22행. **두 파일 모두 worker 워크트리에 없다** — 원본은 E:/sourcecode/01_side_project/stock-report-harness/AI_company_analysis_factor/ 에 있다."
+      },
+      "generation_gap_constraints": {
+        "two_axes_must_both_be_written": "`두 축이 갈리면 둘 다 적는다. 한쪽만 인용해 '도약했다/안 했다'로 단정하지 않는다` (채점규칙 380행).",
+        "vendor_benchmark_is_not_primary": "`벤더 발표 벤치마크는 1차 근거가 아니다 — 독립 측정을 우선한다` (채점규칙 382행). 벤더 발표는 방증으로만 적고 **불일치 자체를 긴장으로 등록**한다.",
+        "axes": "종합 지능(AA Intelligence Index·HLE·ARC-AGI) · 에이전트 실무(AutomationBench·Agents' Last Exam·OSWorld·Terminal-Bench) · 코딩(SWE-bench 계열·AA Coding Agent Index).",
+        "unspecified": "**`세대 격차` 가 세 축 중 몇 개에서 서야 하는지는 원문이 정하지 않는다.** C-13 실측이고 worker 가 재확인했다. 원문은 축을 열거하고 갈릴 때 둘 다 적으라고만 한다. **임의로 채우지 않는다** — 채우려면 별도 결정이 필요하다.",
+        "why_it_matters": "이 미규정이 5점 칸의 판정 폭을 정한다. 한 축이면 관대하고 세 축이면 사실상 아무도 5점을 못 받는다. 지금은 사람이 판정하므로 드러나지 않지만 자동 산출로 바꾸면 **제일 먼저 막히는 자리**다."
+      },
+      "scope": {
+        "what_this_is": "**규칙을 확정하는 것이지 F2 를 자동 산출로 바꾸는 것이 아니다.** F2 는 14개사 전부 `carried_score` 로 남는다. 자동 산출 전환은 별건이다.",
+        "score_impact": "없다. 혼합 모델이 14개사 전부에서 승계 점수와 같다."
+      },
+      "pending_recheck": {
+        "what": "anthropic ②5 재검토가 C-13 에서 돌고 있다. **결과에 따라 anthropic F2 가 5→4 가 될 수 있다.**",
+        "why": "원문 작성자(Claude)가 Anthropic 모델이라는 이해상충을 스스로 고지하며 요청한 재검토다. 긴장 #4·#11.",
+        "trigger": "독립 기관의 에이전트 실무 축 측정 (HANDOVER 118행)",
+        "when": "2026-11 재채점 (채점표 1100행 · HANDOVER 120행)",
+        "note": "이 결정은 그 재검토와 독립이다 — 5점 **칸의 기준**을 정하는 것이고 anthropic 이 그 기준을 충족하는지는 별개 판정이다."
+      }
     },
     {
       "id": "C-04",

@@ -683,4 +683,4 @@ created_at: 2026-09-11
 | openai | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 
 - legacy_unverified 관측 203건은 기준선 열람용이며 이번 실행에서 재검증되지 않았다.
-- 미결 규칙 결정: C-03, C-05, C-06, C-13, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2)
+- 미결 규칙 결정: C-05, C-06, C-13, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2)

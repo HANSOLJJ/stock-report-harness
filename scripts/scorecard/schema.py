@@ -247,7 +247,19 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         # 미결 목록만 보고 "아직 아무것도 안 됐다" 고 읽는 것을 막는다(F9-PEND-40).
         _expect_keys(d, ["id", "status", "summary"], f"rules.decisions[{d.get('id')}]",
                      optional=["recommendation", "affects", "choices", "blocking",
-                               "implementation_status"])
+                               "implementation_status",
+                               # 확정된 결정이 **무엇을 왜 골랐고 무엇을 밀어냈는지**를 같이 든다.
+                               # 고른 것만 남기면 다음 사람이 밀린 안을 다시 들고 온다(C03-IMPL-43).
+                               "chosen", "decided_at", "decided_by", "superseded_choice",
+                               "confirmed_model", "why_the_source_wins_over_handover",
+                               "generation_gap_constraints", "scope", "pending_recheck"])
+        # 고른 것을 적었으면 **선택지 목록 안에 있어야** 한다. 밀린 안을 지우고 고른 것만 남기면
+        # 다음 사람이 그 안을 다시 들고 온다 — 그래서 choices 에 둘 다 남긴다(C03-IMPL-43).
+        if d.get("chosen"):
+            _require(d["chosen"] in (d.get("choices") or []),
+                     f"rules.decisions[{d.get('id')}]: chosen {d.get('chosen')!r} 이 choices 에 없음")
+            _require(d["status"] == "resolved",
+                     f"rules.decisions[{d.get('id')}]: chosen 이 있으면 status 는 resolved 여야 함")
         _require(d["status"] in {"documented", "pending", "resolved"}, f"rules.decisions[{d['id']}]: status 오류")
     if "sources" in payload:
         _validate_source_policy(payload["sources"])
