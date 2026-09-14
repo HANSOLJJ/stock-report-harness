@@ -1,0 +1,84 @@
+{
+  "task": "A-GRADE-45",
+  "checklist_item": 19,
+  "checklist_text": "⑤에서 '받은 투자'를 곧바로 동맹 +2로 셌나? — 아군 확보는 능동태다. 피투자 관계는 ⑦⑧에서도 세므로 이중 계상 위험 — 별표 G의 A 기준으로 판정",
+  "criterion_table": {
+    "+2": "지분이 걸린 동맹이 복수이거나, 경쟁사까지 내 매대·공정·플랫폼에 편입했다",
+    "+1": "의미 있는 상업 동맹이 있으나 소수이거나 한 방향이다",
+    "0": "확인되는 독립 상업 동맹이 없다 — 공짜 사용자뿐이거나 관계사뿐"
+  },
+  "reassessments": {
+    "anthropic": {
+      "legacy_f5": 5,
+      "legacy_A": 2,
+      "legacy_H": 0,
+      "legacy_basis": "Amazon·Google·MS 3사 전원 투자+유통 (별표 G 214행, 별표 H 288행)",
+      "excluded_items": [
+        "Amazon 투자 (누적 약 , 지분 피투자)",
+        "Google 투자 (누적 약 , 지분 피투자)",
+        "MS 투자/클라우드 약정 (지분 피투자)"
+      ],
+      "retained_items": [
+        "3대 하이퍼스케일러 클라우드 유통 (AWS Bedrock, Google Vertex AI, MS Azure Foundry를 통한 Claude 배포 및 재판매)",
+        "미 국방부 CDAO 프론티어 AI 계약 ( 상한, 4사 공통)"
+      ],
+      "analysis": {
+        "question_1_equity_alliance": {
+          "question": "투자를 뺀 유통이 '지분이 걸린 동맹'으로 세지는가?",
+          "answer": "불가 (순환 논법)",
+          "detail": "체크리스트 19에 따라 피투자 지분을 배제하였음에도, 유통 파트너십을 '지분이 걸린 동맹'으로 인정하는 것은 제거한 지분을 다시 유통의 성격으로 전용하는 순환 논법(Circular Logic)이다. Anthropic이 상대방 지분을 취득한 능동적 지분 동맹이 존재하지 않으므로 성립하지 않는다."
+        },
+        "question_2_platform_inclusion": {
+          "question": "유통만으로 '복수' 또는 '경쟁사까지 내 매대·공정·플랫폼에 편입'이 성립하는가?",
+          "answer": "불성립 (벡터 방향 반대)",
+          "detail": "별표 G +2 문언은 '내 매대·공정·플랫폼에 경쟁사를 편입'한 주체(예: Alphabet의 TPU 경쟁사 판매, Amazon Bedrock 18개사 매대, TSMC 공정)를 요구한다. Anthropic은 경쟁사(Amazon, Google, MS)의 매대에 Claude를 입점시킨 공급자일 뿐, 자신의 플랫폼에 경쟁사를 편입시킨 것이 아니므로 문언의 방향이 정반대이다."
+        },
+        "question_3_double_counting_vs_two_sided": {
+          "question": "⑤와 ⑧-3이 같은 관계의 양면일 때 이중 계상인가 정당한 양면 평가인가?",
+          "answer": "정당한 양면 평가이나, 피투자 지분을 ⑤ 가점에 중복 반영하는 것은 이중 계상",
+          "detail": "원문 채점규칙 253~267행 및 체크리스트 21에 따르면 동일 관계라도 서로 다른 속성(⑤ 유통을 통한 확산 이익 vs ⑧ 컴퓨트 100% 외주 의존)을 각각 한 번씩 평가하는 것은 정당한 양면 평가로 허용된다. 그러나 '받은 투자'라는 단일 속성을 ⑤ 가점, ⑦ 순환금융, ⑧ 지분 종속에 중복 반영하는 것은 체크리스트 19가 금지한 이중 계상이다. 따라서 피투자를 제거하고 순수 유통에 대해서만 ⑤를 평가해야 한다."
+        }
+      },
+      "reassessed_A": 1,
+      "reassessed_H": 0,
+      "reassessed_f5": 4,
+      "grade_delta": -1,
+      "verdict_summary": "피투자를 제외한 3사 유통은 지분 동맹이 될 수 없고(순환 오류), 경쟁사 매대 입점이라 '내 매대 편입'에도 부합하지 않는다. 그러나 전 세계 클라우드 상위 3사의 재판매 채널 확보는 의미 있는 상업 동맹이므로 '소수이거나 한 방향'인 +1에 해당한다. 따라서 A=+1, ⑤=4점으로 -1점 하향된다."
+    },
+    "openai": {
+      "legacy_f5": 2,
+      "legacy_A": 2,
+      "legacy_H": -3,
+      "legacy_basis": "Oracle ·Amazon ·SoftBank·DoD (별표 G 224행, 채점표 759행)",
+      "excluded_items": [
+        "Amazon  투자 (피투자 제외)",
+        "SoftBank 투자 (피투자 제외)",
+        "MS 27% 지분 (피투자 제외)",
+        "NVIDIA  투자 (⑦ 순환금융 피투자 제외)",
+        "Oracle  컴퓨트 임차 (별표 H 1문 조달 제외)"
+      ],
+      "retained_items": [
+        "Stargate LLC 공동 지분 (OpenAI 40%, Oracle , SoftBank 40%, MGX 합작법인)",
+        "Broadcom 추론 ASIC Jalapeño 공동개발 (별표 H 1문 공동개발 상업 동맹)",
+        "미 국방부 CDAO 프론티어 AI 계약 ( 상한, 4사 공통)"
+      ],
+      "analysis": {
+        "question_1_reassessment_against_appendix_g": {
+          "question": "남은 3개 항목(DoD, Stargate, Broadcom)을 별표 G A 기준표에 대입하면 몇 점인가?",
+          "answer": "+1",
+          "detail": "별표 G +2 기준은 '지분이 걸린 동맹이 복수'이거나 '경쟁사까지 내 매대에 편입'할 것을 요구한다. Stargate LLC는 지분이 걸린 JV이나 단수(1건)에 불과하여 '복수' 요건을 충족하지 못하며, Broadcom은 칩 공동개발(비지분 상업 동맹), DoD는 정부 조달이다. 또한 경쟁사를 내 매대에 편입한 사실이 없다. 따라서 '의미 있는 상업 동맹이 있으나 소수이거나 한 방향이다'에 해당하는 +1이 타당하다."
+        },
+        "question_2_comparison_with_ntm": {
+          "question": "NTM의 +1 판정과 독립 재검토 결과가 일치하는가?",
+          "answer": "일치 (동일 결론)",
+          "detail": "독립적으로 별표 G A 기준표 문언을 엄격 적용한 결과, 지분 동맹 단수(Stargate 1건) 및 비지분 공동개발로 인해 +2 기준에 미달하고 +1 기준에 완전 부합하므로 NTM의 +1 판정과 정확히 일치한다."
+        }
+      },
+      "reassessed_A": 1,
+      "reassessed_H": -3,
+      "reassessed_f5": 1,
+      "grade_delta": -1,
+      "verdict_summary": "받은 투자와 조달을 제외하면 Stargate LLC(지분 JV 1건), Broadcom(ASIC 공동개발), DoD가 남는다. 지분 동맹이 단수(1건)라 '복수' 요건에 미달하고 경쟁사 편입도 없으므로 +2는 불성립하며, 소수/한방향 상업 동맹인 +1에 해당한다. 적대 H=-3과 결합 시 ⑤=1점으로 -1점 하향된다."
+    }
+  }
+}
