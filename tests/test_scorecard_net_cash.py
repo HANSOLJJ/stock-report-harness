@@ -511,6 +511,19 @@ class NonopShareDivergenceTest(unittest.TestCase):
         self.assertIn("저장값이 옳고", self.spec["resolution"]["verdict"])
         self.assertIn("영업외손익 ÷ 세전이익", self.spec["resolution"]["definition"])
 
+    def test_exceptions_sit_right_next_to_the_resolved_status(self):
+        """**resolved 가 "다 맞는 줄" 로 읽히면 안 된다.** 예외를 상태 바로 다음 키에 이름으로 둔다."""
+        keys = list(self.spec)
+        self.assertEqual(keys[keys.index("status") + 1], "exceptions")
+        self.assertEqual(set(self.spec["exceptions"]["companies"]), {"oracle", "alibaba"})
+        self.assertIn("12개 중 11개가 아니다", self.spec["exceptions"]["matched"])
+
+    def test_oracle_window_was_checked_and_ruled_out(self):
+        w = self.spec["remaining_mismatch"]["oracle"]["window_check"]
+        self.assertEqual(len(w["results"]), 4)
+        self.assertIn("-0.15 가 나오지 않는다", w["verdict"])
+        self.assertIn("근거가 없다", w["observation_not_conclusion"])
+
     def test_both_errors_of_the_old_formula_are_named(self):
         errs = self.spec["resolution"]["two_errors_in_the_old_formula"]
         self.assertEqual(len(errs), 2)
