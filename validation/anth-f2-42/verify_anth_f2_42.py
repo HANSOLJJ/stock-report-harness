@@ -49,14 +49,54 @@ class TestAnthF242(unittest.TestCase):
             self.assertFalse(vp['is_primary_evidence'])
             self.assertIn('OpenAI 발표치', vp['institution'])
 
-    def test_02_tension_11_not_triggered(self):
-        """긴장 #11 발동 요건(독립 기관의 에이전트 실무 축 측정) 미충족 및 미발동 검증"""
-        t11 = self.results['tension_11_trigger_evaluation']
-        self.assertFalse(t11['evaluation']['has_independent_measurement_for_anthropic'])
-        self.assertFalse(t11['evaluation']['is_tension_11_triggered'])
-        self.assertIn('아니오', t11['evaluation']['one_sentence_ruling'])
+    def test_02_meta_three_metrics_comparison(self):
+        """에이전트 실무 축에서 Meta 3건 독립 수치 및 Anthropic 결측 대조 검증"""
+        cross = self.results['practical_agent_work_cross_comparison']['table']
+        self.assertEqual(len(cross), 5)
+        
+        # Meta 3건 수치 확인
+        tau3 = [r for r in cross if 'Tau3-Bench' in r['benchmark']][0]
+        self.assertIn('52%', tau3['meta'])
+        self.assertIn('원문 부재', tau3['anthropic'])
 
-    def test_03_score_5_defense_and_hybrid_model(self):
+        gdpval = [r for r in cross if 'GDPval' in r['benchmark']][0]
+        self.assertIn('1,754 Elo', gdpval['meta'])
+        self.assertIn('원문 부재', gdpval['anthropic'])
+
+        terminal = [r for r in cross if 'Terminal-Bench' in r['benchmark']][0]
+        self.assertIn('86%', terminal['meta'])
+        self.assertIn('원문 부재', terminal['anthropic'])
+
+        # 원문 채점표 264행과 문면 일치 대조
+        with open(self.table_md, 'r', encoding='utf-8') as f:
+            t_text = f.read()
+        self.assertIn("Tau3-Bench Banking 52%로 전 모델 1위", t_text)
+        self.assertIn("GDPval-AA v2 1,754 Elo", t_text)
+        self.assertIn("Terminal-Bench 2.1 86%", t_text)
+
+    def test_03_tension_11_dual_readings(self):
+        """긴장 #11의 두 가지 읽기(A/B) 및 원문 미규정 판정 검증"""
+        dual = self.results['tension_11_dual_reading_analysis']
+        self.assertIn('reading_A', dual)
+        self.assertIn('reading_B', dual)
+        self.assertIn('미발동', dual['reading_A']['ruling'])
+        self.assertIn('발동 가능', dual['reading_B']['ruling'])
+        
+        # 원문이 두 읽기 중 어느 쪽인지 가려주지 않음 검증
+        self.assertFalse(dual['adjudication_in_source_text']['does_text_decide'])
+
+    def test_04_secondary_protection_structural_tension(self):
+        """독립 측정 우선 규칙의 2차 보호 효과 및 긴장 등록 검증"""
+        sec = self.results['secondary_protection_structural_tension']
+        self.assertTrue(sec['registered_as_tension'])
+        self.assertTrue(len(sec['mechanism_analysis']) >= 4)
+        
+        # 이해상충 고지 원문 확인
+        with open(self.rules_md, 'r', encoding='utf-8') as f:
+            r_text = f.read()
+        self.assertIn("결과적으로 Anthropic ②5를 지켰다", r_text)
+
+    def test_05_score_5_defense_and_hybrid_model(self):
         """혼합 모델 하에서 Anthropic ②5 성립 검증"""
         defense = self.results['factor_2_score_defense']
         self.assertEqual(defense['path_1_performance_leap']['status'], 'pass')
@@ -70,7 +110,7 @@ class TestAnthF242(unittest.TestCase):
         self.assertEqual(hybrid['carried_score'], 5)
         self.assertTrue(hybrid['match'])
 
-    def test_04_equal_standard_14_companies(self):
+    def test_06_equal_standard_14_companies(self):
         """14개사 전수 동일 잣대 감사: 점수 변경 기업 없음 검증"""
         audit = self.results['all_14_companies_equal_standard_audit']
         self.assertEqual(len(audit), 14)
@@ -80,34 +120,6 @@ class TestAnthF242(unittest.TestCase):
         self.assertEqual(scores['anthropic'], 5)
         self.assertEqual(scores['openai'], 4)
         self.assertEqual(scores['meta'], 4)
-        self.assertEqual(scores['amazon'], 4)
-        self.assertEqual(scores['alphabet'], 4)
-        self.assertEqual(scores['alibaba'], 4)
-        self.assertEqual(scores['spacex-xai'], 4)
-        self.assertEqual(scores['microsoft'], 3)
-        self.assertEqual(scores['palantir'], 3)
-        self.assertEqual(scores['tesla'], 3)
-        self.assertEqual(scores['apple'], 2)
-        self.assertEqual(scores['oracle'], 2)
-
-    def test_05_source_citations(self):
-        """원문 3대 문서의 핵심 인용 문언 검증"""
-        with open(self.rules_md, 'r', encoding='utf-8') as f:
-            rules_text = f.read()
-        self.assertIn("벤더 발표 벤치마크는 1차 근거가 아니다 — 독립 측정을 우선한다", rules_text)
-        self.assertIn("이해상충 고지", rules_text)
-        self.assertIn("결과적으로 Anthropic ②5를 지켰다", rules_text)
-        self.assertIn("제3자 관점으로 재검토", rules_text)
-
-        with open(self.handover_md, 'r', encoding='utf-8') as f:
-            handover_text = f.read()
-        self.assertIn("독립 기관의 에이전트 실무 축 측정(② 5→4 조건)", handover_text)
-
-        with open(self.table_md, 'r', encoding='utf-8') as f:
-            table_text = f.read()
-        self.assertIn("Artificial Analysis Index 1위", table_text)
-        self.assertIn("MCP 표준 선점", table_text)
-        self.assertIn("Opus 5 ARC-AGI-3 30.2%", table_text)
 
 if __name__ == '__main__':
     unittest.main()

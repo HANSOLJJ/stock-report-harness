@@ -2,7 +2,7 @@
   "metadata": {
     "task_id": "ANTH-F2-42",
     "factor": "F2",
-    "topic": "anthropic ②5 제3자 재검토 — 긴장 #11 발동 조사",
+    "topic": "anthropic ②5 제3자 재검토 — 긴장 #11 발동 조사 (보완 2차)",
     "reviewer_perspective": "third_party_gemini",
     "conflict_of_interest_context": {
       "originator": "Claude (Anthropic)",
@@ -122,7 +122,7 @@
         "benchmark": "Terminal-Bench",
         "model": "Anthropic models",
         "score": "원문 부재 (없음)",
-        "comparison": "Meta 2.1 86%만 기재",
+        "comparison": "Meta 2.1 86% 수록",
         "source_type": "missing",
         "institution": "원문 미기재",
         "is_primary_evidence": false
@@ -131,25 +131,90 @@
         "benchmark": "GDPval-AA v2",
         "model": "Anthropic models",
         "score": "원문 부재 (없음)",
-        "comparison": "OpenAI -80 Elo 퇴행, Meta 1,754 Elo 5위만 기재",
+        "comparison": "OpenAI -80 Elo 퇴행, Meta 1,754 Elo 5위 수록",
         "source_type": "missing",
         "institution": "Artificial Analysis (AA)",
         "is_primary_evidence": false
       }
     ]
   },
-  "tension_11_trigger_evaluation": {
-    "condition_text": "HANDOVER 118행: 독립 기관의 에이전트 실무 축 측정(② 5→4 조건)",
-    "evaluation": {
-      "has_independent_measurement_for_anthropic": false,
-      "available_figures": [
-        "AutomationBench 31.4%: OpenAI 발표치 (경쟁사 벤더 발표)",
-        "Agents' Last Exam 55.5%: OpenAI 발표치 (경쟁사 벤더 발표)"
-      ],
-      "rule_application_rule_382": "벤더 발표 벤치마크는 1차 근거가 아니다 — 독립 측정을 우선한다. 벤더 발표는 방증으로만 적으며, 불일치 자체를 긴장으로 등록한다.",
-      "is_tension_11_triggered": false,
-      "one_sentence_ruling": "아니오 — 긴장 #11의 발동 요건인 '독립 기관의 에이전트 실무 축 측정'이 원문에 0건(부재)이므로 현재 긴장 #11은 발동하지 않습니다."
+  "practical_agent_work_cross_comparison": {
+    "description": "에이전트 실무 축에서 Anthropic의 결측(0건)과 타사(Meta 3건) 수치 대조",
+    "table": [
+      {
+        "benchmark": "Tau3-Bench Banking",
+        "category": "에이전트 실무 / 금융 도메인",
+        "anthropic": "원문 부재 (0건)",
+        "meta": "52% (전 모델 1위, 264행)",
+        "openai": "2~3점 퇴행 (946행)",
+        "source_institution": "독립 기관 측정"
+      },
+      {
+        "benchmark": "GDPval-AA v2",
+        "category": "44개 직군 경제적 가치 완결",
+        "anthropic": "원문 부재 (0건)",
+        "meta": "1,754 Elo (전체 5위, 264행)",
+        "openai": "-80 Elo 퇴행 (946행)",
+        "source_institution": "Artificial Analysis (독립)"
+      },
+      {
+        "benchmark": "Terminal-Bench 2.1",
+        "category": "터미널 명령 완결",
+        "anthropic": "원문 부재 (0건)",
+        "meta": "86% (264행)",
+        "openai": "원문 부재",
+        "source_institution": "독립 벤치마크"
+      },
+      {
+        "benchmark": "AutomationBench",
+        "category": "전문 업무 자동화",
+        "anthropic": "31.4% (OpenAI 발표치)",
+        "meta": "원문 부재",
+        "openai": "41.4% (자사 발표치)",
+        "source_institution": "OpenAI (벤더 발표)"
+      },
+      {
+        "benchmark": "Agents' Last Exam",
+        "category": "전문 SW 도메인 완수",
+        "anthropic": "55.5% (OpenAI 발표치)",
+        "meta": "원문 부재",
+        "openai": "59.3% (자사 발표치)",
+        "source_institution": "OpenAI (벤더 발표)"
+      }
+    ],
+    "key_takeaway": "에이전트 실무 축은 지표 자체가 부재한 것이 아니라 이미 독립 측정(Meta 3건)으로 가동 중이며, Anthropic만 독립 측정 수치에서 결측 상태다."
+  },
+  "tension_11_dual_reading_analysis": {
+    "text_verbatim": "HANDOVER 118행: 미결 판단 (긴장 #10·#11) — … 독립 기관의 에이전트 실무 축 측정(② 5→4 조건)",
+    "reading_A": {
+      "title": "대상 한정 읽기 (Anthropic 측정 부재설)",
+      "interpretation": "'독립 기관의 에이전트 실무 축 측정'을 'Anthropic 모델에 대한 독립 기관의 측정'으로 좁게 해석한다.",
+      "logic": "Anthropic 모델을 독립 기관이 측정한 데이터가 0건이므로, 감점 요건 사건이 아직 발생하지 않았다.",
+      "ruling": "긴장 #11 미발동 (5점 유지)"
+    },
+    "reading_B": {
+      "title": "축 중심 읽기 (축 측정 진행 중 및 Anthropic 결측설)",
+      "interpretation": "'독립 기관의 에이전트 실무 축 측정'을 '에이전트 실무 축 자체가 독립 기관에 의해 측정되는 상황'으로 넓게 해석한다.",
+      "logic": "Meta가 Tau3-Bench 52%(1위), GDPval 1,754 Elo, Terminal-Bench 86%로 3건이나 독립 측정되었으므로 축 측정 사건은 이미 발생했다. Anthropic은 이 축에서 독립 수치가 결측되어 있고 유일한 수치인 벤더 발표 2종에서 모두 Astra에 밀리고 있으므로, 축의 선도성을 상실했다.",
+      "ruling": "긴장 #11 발동 가능 (② 5→4 하향 검토)"
+    },
+    "adjudication_in_source_text": {
+      "does_text_decide": false,
+      "analysis": "원문은 '독립 기관의 에이전트 실무 축 측정'이라고만 적었을 뿐, 이것이 'Anthropic 모델 대상의 측정'을 뜻하는지 '축 전반의 측정 개시'를 뜻하는지 가려주지 않는다 (원문 미규정). 따라서 두 읽기가 모두 문면상 성립한다."
     }
+  },
+  "secondary_protection_structural_tension": {
+    "summary": "독립 측정 우선 규칙에 의한 2차 보호 효과 및 이해상충 고지 구조의 재현",
+    "verbatim_conflict_warning": "채점규칙 384행: 이 규칙은 OpenAI의 ARC-AGI 하네스 문제를 다루다 나왔고 OpenAI의 99.9%도 같이 무효화했지만, 결과적으로 Anthropic ②5를 지켰다. 작성자(Claude)가 Anthropic 모델이므로 운영이력 긴장 #4·#11에 기록하고, 다음 분기에 제3자 관점으로 재검토한다.",
+    "mechanism_analysis": [
+      "에이전트 실무 축에서 Anthropic이 포함된 수치는 오직 2건(AutomationBench 31.4%, Agents' Last Exam 55.5%)뿐이다.",
+      "이 2건은 모두 경쟁사 OpenAI(41.4%, 59.3%)에 뒤지는 수치로, Anthropic에 불리한 유일한 증거다.",
+      "채점규칙 382행(독립 측정 우선, 벤더 발표 배제)은 객관적 규칙이지만, 이를 엄격히 적용하면 Anthropic에 불리한 유일한 두 증거가 합법적으로 배제된다.",
+      "그 결과, 벤더 발표 배제 규칙이 다시 한 번 Anthropic의 ② 5점을 지키는 보호벽으로 작동하게 된다.",
+      "이것은 규칙 384행이 경고한 '규칙 적용의 결과가 Anthropic 5점을 지키는 구조'가 2차 재검토에서도 정확히 재현된 것이다."
+    ],
+    "registered_as_tension": true,
+    "tension_note": "규칙대로 적법하게 처리했음에도 결과적으로 특정 대상이 연속 보호되는 현상 자체를 규칙 382행의 지침('불일치 자체를 긴장으로 등록한다')에 따라 긴장으로 공식 등록한다."
   },
   "factor_2_score_defense": {
     "path_1_performance_leap": {
@@ -191,7 +256,7 @@
       "name": "Anthropic",
       "score": 5,
       "path": "성능(AA 1위 세대격차) + 표준(MCP)",
-      "impact_of_independent_rule": "5점 유지 (실무축 독립측정 부재로 긴장 #11 미발동)"
+      "impact_of_independent_rule": "5점 유지 (읽기 A 기준) / 긴장 등록 (읽기 B 및 2차 보호 구조)"
     },
     {
       "company_id": "openai",
@@ -205,7 +270,7 @@
       "name": "Meta",
       "score": 4,
       "path": "성능(AA 3위) + 적응",
-      "impact_of_independent_rule": "변동 없음 (AA 3위 독립측정으로 4점 유지)"
+      "impact_of_independent_rule": "변동 없음 (AA 3위 및 실무축 3건 독립측정으로 4점 유지)"
     },
     {
       "company_id": "amazon",
@@ -253,7 +318,7 @@
       "company_id": "tesla",
       "name": "Tesla",
       "score": 3,
-      "path": "AI5 테이프아웃, 양산 전",
+      "path": "AI5 테이프아웃, Optimus 라인",
       "impact_of_independent_rule": "변동 없음"
     },
     {
