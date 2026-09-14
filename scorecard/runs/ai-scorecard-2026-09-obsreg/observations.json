@@ -31,7 +31,19 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "author_computed",
+        "author_computed": "직접 계산, 주가 입력은 같은 절 (L822·L823)",
+        "author_computed_citation": "채점표 L823",
+        "author_computed_text": "`시총은 8/26 증자(710M주) 완료 반영, ADS 24.2억 주.` (같은 ✱ 각주 안 — 앞 문장이 `Alibaba NTM은 직접 계산`)",
+        "author_computed_arithmetic": "24.2억 ADS × $111.76 = $270.5B → 표기 $270B",
+        "author_computed_narrowing": "**원문은 시총을 `직접 계산` 이라고 적지 않는다.** 같은 각주가 NTM 을 `직접 계산` 이라 적고 시총은 `증자 완료 반영, ADS 24.2억 주` 라고만 적는다. 표 L809 시총 칸에는 ✱ 가 없다(TSMC L812 는 있다). 주식 수 × 주가 산술이 표기값과 맞아 직접 계산으로 읽었다 — StockAnalysis 가 어떤 값을 줬는지는 원문에 없다.",
+        "price_input_vendor": "StockAnalysis",
+        "price_input_citation": "채점표 L794 절 제목 · 주가 L809",
+        "source_citation": "채점표 L794 절 제목 · 행 L809",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$270B",
       "note": null
     },
@@ -54,7 +66,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "16.7 ✱",
       "note": null
@@ -128,7 +141,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L810",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$1.51T",
       "note": null
     },
@@ -150,7 +168,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "17.9",
       "note": null
@@ -224,7 +243,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L811",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$5.42T",
       "note": null
     },
@@ -246,7 +270,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "18.0",
       "note": null
@@ -320,7 +345,19 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "author_computed",
+        "author_computed": "직접 계산, 주가 입력은 같은 절 (L822·L823)",
+        "author_computed_citation": "채점표 L822",
+        "author_computed_text": "`TSMC는 전부 직접 계산 — ADR 1주 = 보통주 5주, 재무는 TWD. StockAnalysis가 시총 $1.95T·PER 27.9 등 환산이 섞여 있어 ADR 5.19B주 × $415.5 = $2.15T`",
+        "author_computed_arithmetic": "5.19B × $415.50 = $2,156.4B → 표기 $2.15T",
+        "vendor_value_rejected": "StockAnalysis 시총 $1.95T (ADR·TWD 환산 혼재)",
+        "price_input_vendor": "StockAnalysis",
+        "price_input_citation": "채점표 L794 절 제목 · 주가 L812",
+        "source_citation": "채점표 L794 절 제목 · 행 L812",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$2.15T ✱",
       "note": null
     },
@@ -343,7 +380,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "19.4 ✱",
       "note": null
@@ -417,7 +455,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L813",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$4.12T",
       "note": null
     },
@@ -439,7 +482,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "25.3",
       "note": null
@@ -513,7 +557,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L814",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$3.69T",
       "note": null
     },
@@ -535,7 +584,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "25.4",
       "note": null
@@ -609,7 +659,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L815",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$2.75T",
       "note": null
     },
@@ -631,7 +686,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "27.5",
       "note": null
@@ -705,7 +761,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L816",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$4.74T",
       "note": null
     },
@@ -727,7 +788,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "35.5",
       "note": null
@@ -801,7 +863,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L817",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$443.7B",
       "note": null
     },
@@ -823,7 +890,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "19.1",
       "note": null
@@ -897,7 +965,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L818",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$407B",
       "note": null
     },
@@ -919,7 +992,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "89.0",
       "note": null
@@ -993,7 +1067,13 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L819",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "on_score_path": "**점수 경로 밖.** spacex-xai 는 F6 `listed_newly` 트랙이라 P3 만 읽고 P1·P2 가 이 값을 쓰지 않는다. SRC-TRACE-47 의 점수 경로 11건에 안 들고 이 12번째 건이다. 상류는 같은 절(L819)이라 같이 표시한다."
+      },
       "raw": "$1.91T",
       "note": null
     },
@@ -1015,7 +1095,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "111",
       "note": null
@@ -1089,7 +1170,12 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_vendor": "StockAnalysis",
+        "source_citation": "채점표 L794 절 제목 · 행 L820",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "$1.41T",
       "note": null
     },
@@ -1111,7 +1197,8 @@
         "vendor_not_in_source_policy": true,
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
-        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
       },
       "raw": "187.5",
       "note": null
@@ -1210,7 +1297,13 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_mixed": "StockAnalysis 9/2 + 공시 (채점표 L848 · HANDOVER L41)",
+        "source_mixed_text": "채점표 L848 절 제목 `3-1a-3. 통합 재무 전수표 — ⑨ 게이트 원자료 (StockAnalysis 9/2 + 공시)` · 행 L854 · HANDOVER L41 `TTM FCF · 현금 · 순차입 · D/EBITDA | StockAnalysis Financials | … Cash & ST Inv …`",
+        "not_sec": "**SEC 관측이 아니다.** 어느 칸이 StockAnalysis 이고 어느 칸이 공시인지 원문이 행 단위로 가르지 않는다.",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "+$62.2B",
       "note": null
     },
@@ -1896,7 +1989,13 @@
       "kind": "actual",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "source_mixed": "StockAnalysis 9/2 + 공시 (채점표 L848 · HANDOVER L41)",
+        "source_mixed_text": "채점표 L848 절 제목 `3-1a-3. 통합 재무 전수표 — ⑨ 게이트 원자료 (StockAnalysis 9/2 + 공시)` · 행 L861 · HANDOVER L41 `TTM FCF · 현금 · 순차입 · D/EBITDA | StockAnalysis Financials | … Cash & ST Inv …`",
+        "not_sec": "**SEC 관측이 아니다.** 어느 칸이 StockAnalysis 이고 어느 칸이 공시인지 원문이 행 단위로 가르지 않는다.",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+      },
       "raw": "+$9.2B",
       "note": null
     },

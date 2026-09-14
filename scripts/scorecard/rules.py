@@ -54,6 +54,12 @@ class RuleSet:
         # "약관 확인 후 규칙에 등재하고 쓴다" 는 안내가 나온다 — **우리가 막으려는 행동을 지시하게 된다.**
         for entry in policy.get("not_adopted", []):
             if host == entry["host"] or host.endswith("." + entry["host"]):
+                # legacy 상류로만 올린 원천은 검토를 마친 적이 없다. 아래 문구의 "검토를 마치고" 가 거짓이 되고,
+                # 그렇다고 "약관 확인 후 등재" 로 읽혀도 안 된다 — 새로 쓰지 않는다는 것만 말한다 (SRC-FLAG-49).
+                if entry["reason_type"] == "legacy_upstream":
+                    return (f"{host} 는 legacy 관측의 상류로만 장부에 올린 원천 — 채택 검토를 하지 않았고 새 수집에 "
+                            f"쓰지 않는다. {entry['reason']} (등재 {entry['decided_at']}, {entry['decided_by']}). "
+                            f"재개 조건: {entry['reopen_condition']}")
                 return (f"{host} 는 검토를 마치고 채택하지 않기로 결정된 원천 — "
                         f"{entry['reason']} (결정 {entry['decided_at']}, {entry['decided_by']}). "
                         f"재조사 불필요. 재개 조건: {entry['reopen_condition']}")

@@ -5,7 +5,7 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: e89744320655eecc83dfbac2d646a08caabd05e76ef4a6b6914fa2512b3d2483
+observations_hash: 0fcef847b46766e83cee425603324d664349b41287967740a84e88cf0ff42095
 judgments_hash: 8ab61c01b243b6c5b4b68fd670e46ed57d562dbf53b7b5aecbd368592884bd76
 created_at: 2026-09-11
 ---

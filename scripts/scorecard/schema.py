@@ -305,7 +305,7 @@ def _validate_source_policy(policy: Any) -> None:
     """자료 원천 allowlist. 같은 host 가 allowed 와 denied 에 동시에 있으면 판정이 갈린다."""
     _require(isinstance(policy, dict), "rules.sources: object 여야 함")
     _expect_keys(policy, ["policy_note", "enforcement", "allowed", "denied"], "rules.sources",
-                 optional=["conditional_candidates", "not_adopted", "usage_scope", "unlisted"])
+                 optional=["conditional_candidates", "not_adopted", "usage_scope", "unlisted", "note"])
     hosts: dict[str, str] = {}
     for group, required in (("allowed", ["host", "note"]), ("denied", ["host", "reason"])):
         entries = policy[group]
@@ -351,8 +351,10 @@ def _validate_source_policy(policy: Any) -> None:
             _require(str(entry.get(key) or "").strip(), f"{where}: {key} 필요")
         _require(entry["status"] == "not_adopted", f"{where}: status 는 not_adopted 여야 함")
         # 사유를 뭉뚱그리지 않는다. 비용 판단과 약관 배제는 다른 결정이다.
-        _require(entry["reason_type"] in ("cost", "technical", "terms", "redundant"),
-                 f"{where}: reason_type 은 cost/technical/terms/redundant 중 하나여야 함")
+        # legacy_upstream(2026-09-14 SRC-FLAG-49): 채택 검토를 한 적 없이 **legacy 관측의 상류라서 장부에만 올린** 원천.
+        # 약관을 보고 안 쓰기로 한 것(terms)과 같은 칸에 두면 검토를 마친 것처럼 읽힌다.
+        _require(entry["reason_type"] in ("cost", "technical", "terms", "redundant", "legacy_upstream"),
+                 f"{where}: reason_type 은 cost/technical/terms/redundant/legacy_upstream 중 하나여야 함")
         _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
         hosts[entry["host"]] = "not_adopted"
 

@@ -62,12 +62,24 @@ class NtmPerVendorTest(unittest.TestCase):
                 self.assertIsNotNone(o["value"])                             # 삭제하지 않는다
                 self.assertTrue(o["basis"]["vendor_not_in_source_policy"])
 
-    def test_stockanalysis_is_in_none_of_the_four_policy_lists(self):
+    def test_stockanalysis_is_listed_only_as_legacy_upstream(self):
+        """**허용 목록 밖이라는 사실은 그대로이고, 장부에는 legacy 상류로만 올라 있다.**
+
+        원래 이 자리는 `네 목록(allowed·denied·not_adopted·unlisted) 어디에도 없다` 를 고정했다. IMPL-46 시점에는
+        사실이었다. SRC-FLAG-49 가 관측이 어디서 왔는지 가리키려고 not_adopted 에 `legacy_upstream` 으로 올렸다 —
+        되살린 것이 아니므로 allowed·denied·unlisted 에는 여전히 없다.
+        """
         src = RULES.payload["sources"]
-        for key in ("allowed", "denied", "not_adopted", "unlisted"):
+        for key in ("allowed", "denied", "unlisted"):
             with self.subTest(list=key):
                 hosts = " ".join(str(e.get("host", "")) for e in src.get(key, []))
                 self.assertNotIn("stockanalysis", hosts.lower())
+        na = [e for e in src["not_adopted"] if "stockanalysis" in e["host"]]
+        self.assertEqual(len(na), 1)
+        self.assertEqual(na[0]["reason_type"], "legacy_upstream")
+        for cid, o in self.ntm.items():
+            with self.subTest(cid=cid):
+                self.assertIn("IMPL-46 시점 기록", o["basis"]["vendor_policy_status"])
 
     def test_alibaba_and_tsmc_are_author_computed_not_vendor_values(self):
         """**원문이 StockAnalysis 값을 버리고 직접 계산했다** — 12건 전부 StockAnalysis 가 아니다."""
