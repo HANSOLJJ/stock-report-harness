@@ -7736,6 +7736,344 @@
       },
       "raw": "2026-06-30 기준 리스부채 유동분 없음 — 비유동분 211,400천만 태깅",
       "note": "NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed"
+    },
+    {
+      "observation_id": "alibaba.pretax_income_ttm.nonop44",
+      "company_id": "alibaba",
+      "metric": "pretax_income_ttm",
+      "value": 18757175993.041462,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-FACTS",
+      "status": "verified",
+      "period": {
+        "start": "2025-04-01",
+        "end": "2026-03-31"
+      },
+      "basis": {
+        "measured_as_of": "2026-03-31",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "단일 12개월 2025-04-01~2026-03-31",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 4355610321.832416,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": 0.03284719485595929,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_rate_source": "20-F 자체 선언 편의환산 환율 (F6-REG-28 등록값과 동일)",
+        "pretax_native": 129387000000
+      },
+      "raw": "세전이익 TTM 18.8B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "alphabet.pretax_income_ttm.nonop44",
+      "company_id": "alphabet",
+      "metric": "pretax_income_ttm",
+      "value": 299269000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "당기누계 2026-06-30 + 전기연간 2025-12-31 − 전기동일누계 2025-06-30",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 55064000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": 0.0,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 299.3B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "amazon.pretax_income_ttm.nonop44",
+      "company_id": "amazon",
+      "metric": "pretax_income_ttm",
+      "value": 175466000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+        "how_reconstructed": "당기누계 2026-06-30 + 전기연간 2025-12-31 − 전기동일누계 2025-06-30",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 39615000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": -0.0032484925854581515,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 175.5B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "apple.pretax_income_ttm.nonop44",
+      "company_id": "apple",
+      "metric": "pretax_income_ttm",
+      "value": 155906000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-27",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-28",
+        "end": "2026-06-27"
+      },
+      "basis": {
+        "measured_as_of": "2026-06-27",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "당기누계 2026-06-27 + 전기연간 2025-09-27 − 전기동일누계 2025-06-28",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 26976000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": 0.0,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 155.9B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "meta.pretax_income_ttm.nonop44",
+      "company_id": "meta",
+      "metric": "pretax_income_ttm",
+      "value": 87524000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "당기누계 2026-06-30 + 전기연간 2025-12-31 − 전기동일누계 2025-06-30",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 19426000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": 0.0,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 87.5B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "microsoft.pretax_income_ttm.nonop44",
+      "company_id": "microsoft",
+      "metric": "pretax_income_ttm",
+      "value": 165934000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "단일 12개월 2025-07-01~2026-06-30",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 32185000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": 0.0,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 165.9B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "nvidia.pretax_income_ttm.nonop44",
+      "company_id": "nvidia",
+      "metric": "pretax_income_ttm",
+      "value": 229743000000.0,
+      "unit": "USD",
+      "as_of": "2026-07-26",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-28",
+        "end": "2026-07-26"
+      },
+      "basis": {
+        "measured_as_of": "2026-07-26",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "당기누계 2026-07-26 + 전기연간 2026-01-25 − 전기동일누계 2025-07-27",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 36863000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": -4.352689744627693e-06,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 229.7B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "oracle.pretax_income_ttm.nonop44",
+      "company_id": "oracle",
+      "metric": "pretax_income_ttm",
+      "value": 19554000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-31",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-06-01",
+        "end": "2026-05-31"
+      },
+      "basis": {
+        "measured_as_of": "2026-05-31",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic + IncomeLossFromContinuingOperationsBeforeIncomeTaxesForeign",
+        "how_reconstructed": "국내·해외 세전이익 합 — Domestic 8,693,000,000 / Foreign 10,861,000,000",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 2467000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": 0.0,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 19.6B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "palantir.pretax_income_ttm.nonop44",
+      "company_id": "palantir",
+      "metric": "pretax_income_ttm",
+      "value": 3071830000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "당기누계 2026-06-30 + 전기연간 2025-12-31 − 전기동일누계 2025-06-30",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 41111000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": -0.004566333423399081,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 3.1B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "tesla.pretax_income_ttm.nonop44",
+      "company_id": "tesla",
+      "metric": "pretax_income_ttm",
+      "value": 5217000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "당기누계 2026-06-30 + 전기연간 2025-12-31 − 전기동일누계 2025-06-30",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 1353000000.0,
+          "tax_concept": "IncomeTaxExpenseBenefit",
+          "relative_gap": -0.011500862564692352,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        }
+      },
+      "raw": "세전이익 TTM 5.2B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "tsmc.pretax_income_ttm.nonop44",
+      "company_id": "tsmc",
+      "metric": "pretax_income_ttm",
+      "value": 65083031558.81415,
+      "unit": "USD",
+      "as_of": "2025-12-31",
+      "observed_at": "2026-09-14",
+      "kind": "derived",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "status": "verified",
+      "period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "basis": {
+        "measured_as_of": "2025-12-31",
+        "concept": "20-F 손익계산서",
+        "how_reconstructed": "보존 20-F 916행 INCOME BEFORE INCOME TAX 2,041,654.7 NT$백만",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_usd": 11046534905.96111,
+          "tax_concept": null,
+          "relative_gap": 2.2579986509714936e-12,
+          "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "original_currency": "TWD",
+        "fx_rate": 31.37,
+        "fx_rate_source": "20-F 자체 선언 편의환산 환율 (F6-REG-28 등록값과 동일)",
+        "pretax_native": 2041654700000.0
+      },
+      "raw": "세전이익 TTM 65.1B USD",
+      "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
     }
   ]
 }

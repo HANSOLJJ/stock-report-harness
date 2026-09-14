@@ -54,9 +54,14 @@ def run() -> dict:
 
 
 def f6obs(cid: str = "acme", *, market_cap=1000.0, net_income=50.0, net_cash=0.0,
-          revenue=100.0, revenue_prior=80.0, operating_income=None,
+          revenue=100.0, revenue_prior=80.0, operating_income=None, pretax="auto",
           period_basis: str | None = "ttm", nonop_share=None) -> ObsLookup:
-    """v1.7 F6 입력. None 을 넘기면 그 관측을 아예 만들지 않는다."""
+    """v1.7 F6 입력. None 을 넘기면 그 관측을 아예 만들지 않는다.
+
+    `pretax` 를 안 주면 `operating_income` 이 있을 때만 `net_income` 과 같게 둔다 —
+    세금이 0 인 회사를 뜻하고, 그러면 `nonop_share` 가 정정 전 산식과 같은 값이 나와
+    기존 케이스의 의도가 유지된다.
+    """
     items = []
 
     def add(metric, value, basis=None):
@@ -67,6 +72,9 @@ def f6obs(cid: str = "acme", *, market_cap=1000.0, net_income=50.0, net_cash=0.0
     add("net_cash", net_cash)
     add("net_income_ttm", net_income)
     add("operating_income_ttm", operating_income)
+    # "auto" 는 안 준 것이고 None 은 **일부러 없앤 것**이다. 둘을 가른다.
+    add("pretax_income_ttm",
+        (net_income if operating_income is not None else None) if pretax == "auto" else pretax)
     add("nonop_share", nonop_share)
     rev_basis = {"period_basis": period_basis} if period_basis else {}
     add("revenue_ttm", revenue, rev_basis)
@@ -181,30 +189,61 @@ class TestF6ParameterGuards(unittest.TestCase):
 class TestF6P4(unittest.TestCase):
     """P4 는 소계에 한 칸만 걸린다. 여럿 걸려도 한 칸이다."""
 
-    def test_nonop_share_recomputed_from_raw(self):
-        r = compute_f6(company(), f6obs(net_income=100.0, operating_income=40.0),
+    def test_nonop_share_is_nonoperating_over_pretax(self):
+        """**영업외손익 ÷ 세전이익** 이다.
+
+        정정 전에는 `(순이익 − 영업이익) / 순이익` 이었다. 그 산식은 분자에서 법인세를 안 되더해
+        영업외 항목이 없는 흑자 납세 기업의 부호를 뒤집었고, 분모도 세전이 아니었다. 저장값 12건을
+        보존 원자료로 역산해 **저장값이 옳고 재계산이 틀렸다**는 것이 확인됐다(NONOP-44).
+        """
+        r = compute_f6(company(), f6obs(pretax=100.0, operating_income=40.0),
                        JudgmentLookup([]), RULES_V17, run())
         p4 = r["calc"]["p4"]
-        self.assertAlmostEqual(p4["nonop_share"], 0.60)
+        self.assertAlmostEqual(p4["nonop_share"], 0.60)      # (100 - 40) / 100
         self.assertEqual(p4["nonop_share_source"], "recomputed")
         self.assertIn("nonop_share", p4["conditions_hit"])
 
+    def test_tax_no_longer_leaks_into_the_numerator(self):
+        """세금만 있고 영업외 항목이 없는 회사는 **0 이어야** 한다. 옛 산식은 음수를 냈다."""
+        r = compute_f6(company(), f6obs(net_income=70.0, pretax=100.0, operating_income=100.0),
+                       JudgmentLookup([]), RULES_V17, run())
+        self.assertAlmostEqual(r["calc"]["p4"]["nonop_share"], 0.0)
+        self.assertNotIn("nonop_share", r["calc"]["p4"]["conditions_hit"])
+        # 옛 산식이었다면 (70-100)/70 = -0.4286 으로 임계를 넘어 강등됐다.
+
     def test_recompute_disagreement_is_warned_not_hidden(self):
-        r = compute_f6(company(), f6obs(net_income=100.0, operating_income=40.0, nonop_share=0.10),
+        r = compute_f6(company(), f6obs(pretax=100.0, operating_income=40.0, nonop_share=0.10),
                        JudgmentLookup([]), RULES_V17, run())
         self.assertTrue(any("저장값" in w for w in r["warnings"]))
         self.assertEqual(r["calc"]["p4"]["nonop_share_source"], "recomputed")
 
+    def test_no_pretax_means_no_value_not_the_old_formula(self):
+        """**세전이익이 없으면 값을 만들지 않는다.** 틀린 산식으로 되돌아가지 않는다."""
+        r = compute_f6(company(), f6obs(net_income=100.0, operating_income=40.0, pretax=None,
+                                        nonop_share=0.55), JudgmentLookup([]), RULES_V17, run())
+        p4 = r["calc"]["p4"]
+        self.assertIsNone(p4["nonop_share"])
+        self.assertEqual(p4["nonop_share_source"], "unavailable")
+        self.assertNotIn("nonop_share", p4["conditions_hit"])
+        self.assertTrue(any("쓰지 않는다" in w for w in r["warnings"]))
+
+    def test_negative_pretax_warns_that_the_sign_is_undefined(self):
+        """적자 기업은 분모가 음수라 **정정해도 부호 규약이 서지 않는다.**"""
+        r = compute_f6(company(), f6obs(pretax=-100.0, operating_income=-40.0),
+                       JudgmentLookup([]), RULES_V17, run())
+        self.assertTrue(any("부호 규약" in w for w in r["warnings"]))
+
     def test_multiple_conditions_still_one_step(self):
         c = company(cid="tsmc", share_basis="adr")
-        r = compute_f6(c, f6obs("tsmc", period_basis="annual", net_income=100.0, operating_income=40.0),
+        r = compute_f6(c, f6obs("tsmc", period_basis="annual", pretax=100.0, operating_income=40.0),
                        JudgmentLookup([]), RULES_V17, run())
         self.assertEqual(len(r["calc"]["p4"]["conditions_hit"]), 2)
         self.assertEqual(r["calc"]["p4"]["demotion_steps"], 1)
 
     def test_floor_clamps_after_demotion(self):
         """P1 -2, P2 -2, P3 -3 에 P4 한 칸이면 -8 이지만 트랙 하한 -7 로 절단된다."""
-        r = compute_f6(company(), f6obs(market_cap=1e6, net_income=100.0, operating_income=10.0,
+        r = compute_f6(company(), f6obs(market_cap=1e6, net_income=100.0, pretax=100.0,
+                                        operating_income=10.0,
                                         net_cash=0.0, revenue=100.0, revenue_prior=200.0),
                        JudgmentLookup([]), RULES_V17, run())
         self.assertEqual(r["calc"]["subtotal_before_p4"], -7)

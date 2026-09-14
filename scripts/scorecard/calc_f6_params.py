@@ -48,34 +48,52 @@ def track_id_for(company: dict[str, Any], period_basis: str | None) -> str:
 
 
 def _nonop_share(cid: str, obs: ObsLookup, warnings: list[str]) -> tuple[float | None, dict[str, Any]]:
-    """영업외 비중을 **원자료에서 재계산**한다. 완제품 `nonop_share` 관측은 대조용으로만 쓴다.
+    """영업외 비중 = **영업외손익 ÷ 세전이익** = `(세전 − 영업이익) / 세전`.
 
-    `ttm_per`·`ps_ratio`·`nonop_share` 가 원자료 없이 완제품으로만 들어와 재계산도 검증도
-    안 되던 상태를 반복하지 않는다.
+    원자료에서 재계산한다. 완제품 `nonop_share` 관측은 대조용으로만 쓴다.
+
+    ## 산식이 두 군데 틀려 있었다 (NONOP-44 에서 정정)
+
+        정정 전  (순이익 − 영업이익) / 순이익
+        정정 후  (세전이익 − 영업이익) / 세전이익
+
+    1. **분자에 법인세가 섞여 있었다.** `순이익 − 영업이익` 은 영업외손익에서 세금을 뺀 값이라
+       영업외 항목이 없는 흑자 납세 기업은 늘 음수가 된다. **12개사 중 여섯의 부호가 뒤집혀 있었다.**
+    2. **분모가 세전이익이 아니라 순이익이었다.** 크기만 바꾸지만 정의와 어긋난다.
+
+    **저장값이 옳고 재계산이 틀렸다.** 보존 companyfacts 로 역산해 11개사 중 9개가 저장값과
+    맞는 것을 확인했다(±0.02). 안 맞는 둘은 alibaba·oracle 이고 규칙에 사유와 함께 적어 두었다.
     """
     detail: dict[str, Any] = {}
-    ni, _ = obs.number(cid, "net_income_ttm")
     oi, _ = obs.number(cid, "operating_income_ttm")
+    pretax, pretax_obs = obs.number(cid, "pretax_income_ttm")
+    ni, _ = obs.number(cid, "net_income_ttm")
     stored, stored_obs = obs.number(cid, "nonop_share")
     if stored_obs is not None:
         detail["nonop_share_stored"] = stored
-    if ni is not None and oi is not None and ni != 0:
-        value = (ni - oi) / ni
+    if pretax is not None and oi is not None and pretax != 0:
+        value = (pretax - oi) / pretax
         detail["nonop_share"] = value
         detail["nonop_share_source"] = "recomputed"
-        detail["nonop_share_inputs"] = {"net_income_ttm": ni, "operating_income_ttm": oi}
-        if stored is not None and abs(stored - value) > 0.01:
-            # 두 값이 다르면 조용히 고르지 않는다. 재계산값을 쓰되 차이를 남긴다.
-            warnings.append(f"nonop_share 재계산 {value:.4f} 과 저장값 {stored:.4f} 이 다름 — 재계산값을 쓴다")
+        detail["nonop_share_formula"] = "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm"
+        detail["nonop_share_inputs"] = {"pretax_income_ttm": pretax, "operating_income_ttm": oi,
+                                        "net_income_ttm": ni}
+        if pretax < 0:
+            # 적자 기업은 분모가 음수라 **부호 규약이 정의되지 않는다.** 정정해도 서지 않는다.
+            warnings.append(f"nonop_share 부호 규약 ⚠️ 세전이익 {pretax:,.0f} 이 음수라 비율의 뜻이 "
+                            "정의되지 않는다 — 흑자 기업의 같은 값과 같은 뜻이 아니다")
+        if stored is not None and abs(stored - value) > 0.02:
+            warnings.append(f"nonop_share 재계산 {value:.4f} 과 저장값 {stored:.4f} 이 다름 — "
+                            "산식은 정정됐고 이 둘은 남은 불일치다(policies.f6.p4 nonop_share)")
         return value, detail
-    if stored is not None:
-        detail["nonop_share"] = stored
-        detail["nonop_share_source"] = "stored_only"
-        warnings.append("nonop_share 를 재계산하지 못해 저장된 완제품 값을 썼다 — "
-                        "원자료(net_income_ttm·operating_income_ttm) 필요")
-        return stored, detail
+    # 세전이익이 없으면 **값을 만들지 않는다.** 옛 산식으로 되돌아가지 않는다 — 틀린 값이기 때문이다.
     detail["nonop_share"] = None
     detail["nonop_share_source"] = "unavailable"
+    detail["nonop_share_missing"] = ("pretax_income_ttm 관측 없음" if pretax is None else
+                                     "operating_income_ttm 관측 없음" if oi is None else "세전이익 0")
+    if stored is not None:
+        warnings.append(f"nonop_share 산출 불가 ⚠️ {detail['nonop_share_missing']} — 저장값 "
+                        f"{stored:.4f} 이 있으나 **쓰지 않는다**. 저장값은 완제품이라 검증되지 않는다")
     return None, detail
 
 

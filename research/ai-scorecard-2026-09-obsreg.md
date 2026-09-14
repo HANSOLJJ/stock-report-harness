@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 2329c8f5edb7241dbb97a220a2622179b8525054a3558411608268df03b91a57
+observations_hash: 4a4e440f08f9ef603386e0292933f2bf0bead32be3096383e439df27eba1201e
 judgments_hash: 5a28676508f6a6877dc046137c074f0b2a4a4c41d75dece6d9fce8727c2105ec
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 335건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 346건, 판단 114건.
 
 ## 원자료
 
@@ -35,6 +35,7 @@ created_at: 2026-09-11
 | ntm_per | 25.3 | legacy_unverified | estimate | SRC-v15-html | 25.3 |  |
 | offbalance_note | 총 약정 $707B | legacy_unverified | text | SRC-v15-html | 총 약정 $707B | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $147.6B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 147,628,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $299.3B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 299.3B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 337.12 | legacy_unverified | actual | SRC-v15-html | $337.12 |  |
 | ps_ratio | 9.3 | legacy_unverified | actual | SRC-v15-html | 9.3 |  |
 | quarter_note | Q2 (7/22) \| $119.8B (+24%) · GCP $24.8B(+82%) 영업이익 $8.8B \| 조정 $2.85 (컨센 $2.89 하회) \| Q2 사상 첫 마이너스 · TTM +$53B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -67,6 +68,7 @@ created_at: 2026-09-11
 | offbalance_B | $106.0B | legacy_unverified | actual | SRC-v15-rule | 미개시 리스 $106B(3/31) | [OBS-REG-25 대체됨 → amazon.offbalance_B.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | offbalance_note | 미개시 리스 $106B | legacy_unverified | text | SRC-v15-html | 미개시 리스 $106B | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $93.7B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 93,712,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $175.5B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 175.5B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 254.98 | legacy_unverified | actual | SRC-v15-html | $254.98 |  |
 | ps_ratio | 3.6 | legacy_unverified | actual | SRC-v15-html | 3.6 |  |
 | quarter_note | Q2 (7/30) \| $200.61B (+20%) · AWS $42.2B(+37%) 18분기 최고 \| $5.75 ⚠️ 평가익 포함 \| TTM -$11.6B 실측 확정 | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -95,6 +97,7 @@ created_at: 2026-09-11
 | ntm_per | 17.9 | legacy_unverified | estimate | SRC-v15-html | 17.9 |  |
 | offbalance_note | 리스 $279B + 계약 $349B = $628B | legacy_unverified | text | SRC-v15-html | 리스 $279B + 계약 $349B = $628B | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $86.9B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 86,926,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $87.5B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 87.5B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 592.85 | legacy_unverified | actual | SRC-v15-html | $592.85 |  |
 | ps_ratio | 6.6 | legacy_unverified | actual | SRC-v15-html | 6.6 |  |
 | quarter_note | Q2 (7/29) \| $60.80B (+28%) \| $6.18 (컨센 $7.14 하회) \| Q2 +$0.78B (-91%) · TTM +$41B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -123,6 +126,7 @@ created_at: 2026-09-11
 | ntm_per | 25.4 | legacy_unverified | estimate | SRC-v15-html | 25.4 |  |
 | offbalance_note | 미분리 (QTS $3.9B만 확인) | legacy_unverified | text | SRC-v15-html | 미분리 (QTS $3.9B만 확인) | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $155.2B | verified | actual | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 155,237,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $165.9B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 165.9B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 496.82 | legacy_unverified | actual | SRC-v15-html | $496.82 |  |
 | ps_ratio | 11.1 | legacy_unverified | actual | SRC-v15-html | 11.1 |  |
 | quarter_note | Q4 FY26 (7/29) \| $90B (+18%) · 🆕 Azure $29.42B(+42%) 최초 달러 공시 \| non-GAAP $4.74 (컨센 $4.24 상회) \| TTM +$67B · capex 감축 | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -152,6 +156,7 @@ created_at: 2026-09-11
 | offbalance_note | 미확인 | legacy_unverified | text | SRC-v15-html | 미확인 | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $61.7B | verified | actual | SRC-SEC-TSM-20F-FY2025 | FY2025 영업이익 NT$1,936,091.7백만 | F6-REG-28 / TSM-EDGAR-29. INCOME FROM OPERATIONS 행. MD&A 반올림 1,936,092 가 아니라 **감 |
 | operating_margin_ttm | 51% | verified | derived | SRC-SEC-TSM-20F-FY2025 | FY2025 영업이익률 +50.83% | F6-REG-28 / TSM-EDGAR-29. FY2024 45.68% 에서 +5.15%p |
+| pretax_income_ttm | $65.1B | verified | derived | SRC-SEC-TSM-20F-FY2025 | 세전이익 TTM 65.1B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 415.5 | legacy_unverified | actual | SRC-v15-html | $415.50 |  |
 | ps_ratio | 15.4 | legacy_unverified | actual | SRC-v15-html | 15.4 |  |
 | quarter_note | Q2 (7/16) \| $40.2B (+36%) · HPC 66% \| GM 67.7% / OpM 60.3% 역대 최고 · 2026 가이던스 +30%→+40% 이상 \| TTM +$36B · capex $60~64B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -185,6 +190,7 @@ created_at: 2026-09-11
 | offbalance_note | 미확인 (증자 $10.2B) | legacy_unverified | text | SRC-v15-html | 미확인 (증자 $10.2B) | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $7.3B | verified | actual | SRC-SEC-BABA-FACTS | FY2026 영업이익 RMB50,150M (US$7,270M) | OBS-REG-25 / G1-TTM-26. 연간 기준. |
 | operating_margin_ttm | 5% | verified | derived | SRC-SEC-BABA-FACTS | FY2026 영업이익률 +4.899% | OBS-REG-25 / G1-TTM-26. **양수다** — G1 을 통과한다. **연간 기준이라는 한계는 F6 P4 가 이미 한 칸 내린다.  |
+| pretax_income_ttm | $18.8B | verified | derived | SRC-SEC-BABA-FACTS | 세전이익 TTM 18.8B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 111.76 | legacy_unverified | actual | SRC-v15-html | $111.76 |  |
 | ps_ratio | 1.8 | legacy_unverified | actual | SRC-v15-html | 1.8 |  |
 | quarter_note | 6월 분기 (8/20) \| $39.64B (+9%) · 클라우드 +26% \| non-GAAP $1.26 (컨센 $1.51 하회) · 영업흑자 복귀 \| 분기 -$6.6B · TTM -$11.4B · 완충 $41B+$10.2B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -239,6 +245,7 @@ created_at: 2026-09-11
 | ntm_per | 35.5 | legacy_unverified | estimate | SRC-v15-html | 35.5 |  |
 | offbalance_note | 미확인 | legacy_unverified | text | SRC-v15-html | 미확인 | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $154.9B | verified | derived | SRC-SEC-FACTS-F6 | 2025-06-28~2026-06-27 154,859,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $155.9B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 155.9B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 324.96 | legacy_unverified | actual | SRC-v15-html | $324.96 |  |
 | ps_ratio | 10.2 | legacy_unverified | actual | SRC-v15-html | 10.2 |  |
 | quarter_note | 6월 분기 (7/30) \| $109.4B (+16%) \| $2.02 상회 (Services 하회) \| TTM +$137B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -267,6 +274,7 @@ created_at: 2026-09-11
 | ntm_per | 18.0 | legacy_unverified | estimate | SRC-v15-html | 18.0 |  |
 | offbalance_note | 보증 $105B + 잔존가치 25% + 백스톱 + $6.3B (우발·C종) | legacy_unverified | text | SRC-v15-html | 보증 $105B + 잔존가치 25% + 백스톱 + $6.3B (우발·C종) | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $197.6B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-28~2026-07-26 197,579,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $229.7B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 229.7B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 224.41 | legacy_unverified | actual | SRC-v15-html | $224.41 |  |
 | ps_ratio | 17.9 | legacy_unverified | actual | SRC-v15-html | 17.9 |  |
 | quarter_note | Q2 FY27 (8/26) \| $96.2B (+106%) · DC $89.0B (+117%) \| GAAP $2.46 / non-GAAP $2.22 · DC 컨센 $86.3B 상회 \| TTM +$127B · 환원 $26B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -295,6 +303,7 @@ created_at: 2026-09-11
 | ntm_per | 89.0 | legacy_unverified | estimate | SRC-v15-html | 89.0 |  |
 | offbalance_note | 없음 | legacy_unverified | text | SRC-v15-html | 없음 | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $2.6B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 2,634,652,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $3.1B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 3.1B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 169.46 | legacy_unverified | actual | SRC-v15-html | $169.46 |  |
 | ps_ratio | 66.2 | legacy_unverified | actual | SRC-v15-html | 66.2 |  |
 | quarter_note | Q2 (8/3) \| $1.94B (+92.8%) · 4분기 연속 상회 \| $0.41 (컨센 $0.35 상회) \| TTM +$3.4B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -357,6 +366,7 @@ created_at: 2026-09-11
 | ntm_per | 187.5 | legacy_unverified | estimate | SRC-v15-html | 187.5 |  |
 | offbalance_note | 미확인 | legacy_unverified | text | SRC-v15-html | 미확인 | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $4.4B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 4,372,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $5.2B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 5.2B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 357.01 | legacy_unverified | actual | SRC-v15-html | $357.01 |  |
 | ps_ratio | 13.6 | legacy_unverified | actual | SRC-v15-html | 13.6 |  |
 | quarter_note | Q2 (7/22) \| $28.24B (+26%) \| $0.33 (컨센 $0.53 하회) · 영업흑자 마진 4% \| TTM +$5.8B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
@@ -387,6 +397,7 @@ created_at: 2026-09-11
 | offbalance_B | $250.0B | legacy_unverified | actual | SRC-v15-rule | 리스 $250B(15~20년) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | offbalance_note | 리스 $250B(15~20년) | legacy_unverified | text | SRC-v15-html | 리스 $250B(15~20년) | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $20.6B | verified | actual | SRC-SEC-FACTS-F6 | 2025-06-01~2026-05-31 20,606,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| pretax_income_ttm | $19.6B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 19.6B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 154.04 | legacy_unverified | actual | SRC-v15-html | $154.04 |  |
 | ps_ratio | 6.6 | legacy_unverified | actual | SRC-v15-html | 6.6 |  |
 | quarter_note | Q4 FY26 (3~5월) \| $19.2B (+21%) · OCI $5.8B (+93%) \| 영업마진 33.2% \| TTM -$23.7B · 현금 $31.9B · 런웨이 1.3년 | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |

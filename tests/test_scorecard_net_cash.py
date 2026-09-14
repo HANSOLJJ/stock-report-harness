@@ -442,19 +442,32 @@ class P4ThresholdBoundaryTest(unittest.TestCase):
                     self.assertEqual(p4["nonop_share_boundary"]["tolerance"], tol)
 
     def test_boundary_is_measured_on_magnitude(self):
-        """비교가 `abs(value) >= threshold` 라 경계도 크기로 잰다 — 부호로 재면 음수가 늘 멀어진다."""
-        p4 = self.p4["meta"]
+        """비교가 `abs(value) >= threshold` 라 경계도 크기로 잰다 — 부호로 재면 음수가 늘 멀어진다.
+
+        표본을 meta 에서 oracle 로 바꿨다. 산식 정정으로 meta 가 양수(0.0068)가 되면서 음수 표본이
+        oracle 하나만 남았다. **검사하려던 것은 음수에서도 크기로 재는가** 이고 그 뜻은 그대로다.
+        """
+        p4 = self.p4["oracle"]
         self.assertLess(p4["nonop_share"], 0)
         got = p4["nonop_share_boundary"]["distance_ratio"]
         self.assertAlmostEqual(got, (abs(p4["nonop_share"]) - 0.30) / 0.30, places=9)
 
-    def test_amazon_flags_inside_the_band(self):
-        b = self.p4["amazon"]["nonop_share_boundary"]
-        self.assertTrue(b["flag"])
-        self.assertAlmostEqual(b["distance_ratio"], 0.0243, places=3)
+    def test_no_company_is_near_the_threshold_after_the_fix(self):
+        """**경계 우려가 산식 정정으로 해소됐다.**
+
+        원래 이 자리는 `amazon 이 임계에서 +2.4% 라 플래그가 뜬다` 를 고정하고 있었다. 그 표시를
+        붙인 이유가 `저장값과 재계산이 갈리는데 어느 쪽이 옳은지 모른다` 였고, 저장값이 옳은 것으로
+        밝혀지면서 amazon 이 +55.3% 로 멀어졌다. **표시 장치는 그대로 두고** 지금 아무도 경계에 없다는
+        것을 고정한다 — 다음에 또 붙을 수 있다.
+        """
+        flagged = [cid for cid, p4 in self.p4.items()
+                   if (p4.get("nonop_share_boundary") or {}).get("flag")]
+        self.assertEqual(flagged, [])
+        amazon = self.p4["amazon"]["nonop_share_boundary"]
+        self.assertGreater(amazon["distance_ratio"], 0.5)
 
     def test_flag_does_not_move_the_score(self):
-        """**표시는 점수를 바꾸지 않는다.** amazon 은 경계 안이지만 임계 위라 그대로 걸린다."""
+        """**표시는 점수를 바꾸지 않는다.** amazon 은 임계 위라 그대로 걸린다."""
         p4 = self.p4["amazon"]
         self.assertIn("nonop_share", p4["conditions_hit"])
         self.assertEqual(p4["demotion_steps"], 1)
@@ -467,12 +480,17 @@ class P4ThresholdBoundaryTest(unittest.TestCase):
         sole = {cid: p4.get("demotion_sole_cause") for cid, p4 in self.p4.items()}
         self.assertEqual({cid for cid, v in sole.items() if v == "nonop_share"},
                          {"amazon", "alphabet"})
-        self.assertIsNone(sole["alibaba"])      # period_basis_not_ttm 이 같이 걸림
-        self.assertIsNone(sole["spacex-xai"])   # short_history 가 같이 걸림
+        self.assertIsNone(sole["alibaba"])                       # period_basis_not_ttm 이 같이 걸림
+        self.assertEqual(sole["spacex-xai"], "short_history")    # 정정으로 nonop 이 빠져 단독이 됐다
 
-    def test_warning_reaches_the_output(self):
-        amazon = next(c for c in self.results["companies"] if c["company_id"] == "amazon")
-        self.assertTrue(any("P4 경계" in w for w in amazon["factors"]["F6"]["warnings"]))
+    def test_spacex_loses_the_condition_but_keeps_the_demotion(self):
+        """세전이익을 복원 못 해 조건이 빠지지만 `short_history` 가 강등을 유지한다 — 점수 불변."""
+        p4 = self.p4["spacex-xai"]
+        self.assertIsNone(p4["nonop_share"])
+        self.assertNotIn("nonop_share", p4["conditions_hit"])
+        self.assertEqual(p4["demotion_steps"], 1)
+        spx = next(c for c in self.results["companies"] if c["company_id"] == "spacex-xai")
+        self.assertEqual(spx["factors"]["F6"]["score"], -1)
 
 
 class NonopShareDivergenceTest(unittest.TestCase):
@@ -482,9 +500,39 @@ class NonopShareDivergenceTest(unittest.TestCase):
         conds = {c["id"]: c for c in RULES.f6_p4()["conditions"]}
         self.spec = conds["nonop_share"]["stored_vs_recomputed"]
 
-    def test_divergence_is_recorded_not_resolved(self):
-        self.assertEqual(self.spec["status"], "divergent_unresolved")
-        self.assertIn("재계산값을 쓴다", self.spec["which_is_used"])
+    def test_divergence_is_now_resolved_in_favour_of_the_stored_value(self):
+        """**저장값이 옳고 재계산이 틀렸다.**
+
+        원래 이 자리는 `divergent_unresolved` 와 `재계산값을 쓴다` 를 고정하고 있었다. 그때는 어느
+        쪽이 옳은지 몰랐고 재계산이 검증 가능하다는 이유로 그쪽을 썼다. 보존 companyfacts 로
+        세전이익을 복원해 맞춰 보니 **저장값 쪽이 표준 정의**였다(NONOP-44).
+        """
+        self.assertEqual(self.spec["status"], "resolved_stored_was_right")
+        self.assertIn("저장값이 옳고", self.spec["resolution"]["verdict"])
+        self.assertIn("영업외손익 ÷ 세전이익", self.spec["resolution"]["definition"])
+
+    def test_both_errors_of_the_old_formula_are_named(self):
+        errs = self.spec["resolution"]["two_errors_in_the_old_formula"]
+        self.assertEqual(len(errs), 2)
+        self.assertIn("법인세가 섞여", errs[0])
+        self.assertIn("세전이익이 아니라 순이익", errs[1])
+
+    def test_oracle_mismatch_is_pinned_to_the_stored_side(self):
+        """**복원 쪽이 아니라 저장값 쪽이 어긋난다** — 세전이익이 두 경로로 확인된다."""
+        o = self.spec["remaining_mismatch"]["oracle"]
+        self.assertIn("저장값 쪽이 어긋난다", o["verdict"])
+        self.assertIn("분기 태깅 문제가 아니다", o["what_would_be_needed"])
+        self.assertEqual(len(o["candidates_tried"]), 4)
+
+    def test_boundary_risk_resolution_is_recorded(self):
+        s = self.spec["score_impact_of_the_fix"]
+        self.assertIn("한 곳도 안 바뀐다", s["hits_unchanged"])
+        self.assertIn("+55.3%", s["boundary_risk_gone"])
+
+    def test_the_lesson_is_written_down(self):
+        """`basis 없음` 이 `알아낼 수 없음` 이 아니라는 것."""
+        self.assertIn("알아낼 수 없다", self.spec["lesson"])
+        self.assertIn("net_cash", self.spec["lesson"])
 
     def test_sign_flips_are_listed_with_their_cause(self):
         self.assertEqual(set(self.spec["sign_flipped"]),
@@ -492,16 +540,26 @@ class NonopShareDivergenceTest(unittest.TestCase):
         # **왜 뒤집히는지**가 있어야 다음 사람이 값을 다시 세지 않는다.
         self.assertIn("세금", self.spec["why_signs_flip"])
 
-    def test_table_matches_the_engine(self):
-        """규칙에 적은 재계산값이 실제 산출과 같아야 한다 — 표만 뒤처지면 거짓말이 된다."""
+    def test_table_is_marked_as_the_old_formula(self):
+        """`table` 은 **정정 전** 값이다. 그대로 두되 무엇인지 알 수 있어야 한다.
+
+        원래 이 테스트는 표의 둘째 열이 엔진 산출과 같은지를 검사했다. 산식이 정정돼 더 이상 같지
+        않으므로, 검사 대상을 **표가 무엇의 기록인지**로 옮긴다. 표를 지우지 않는 이유는 부호가
+        뒤집혀 있던 상태를 남겨 두기 위해서다.
+        """
+        self.assertIn("정의가 갈린 것", self.spec["what"])
+        self.assertEqual(set(self.spec["sign_flipped"]),
+                         {"apple", "meta", "microsoft", "nvidia", "tesla", "tsmc"})
+
+    def test_corrected_values_no_longer_flip_sign(self):
+        """정정 후 그 여섯은 전부 0 근처 양수가 된다 — 부호 뒤집힘이 사라졌다."""
         results = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
-        for c in results["companies"]:
-            p4 = (c["factors"]["F6"].get("calc") or {}).get("p4") or {}
-            row = self.spec["table"].get(c["company_id"])
-            if row is None or "nonop_share" not in p4:
-                continue
-            with self.subTest(cid=c["company_id"]):
-                self.assertAlmostEqual(p4["nonop_share"], row[1], places=4)
+        by = {c["company_id"]: (c["factors"]["F6"].get("calc") or {}).get("p4") or {}
+              for c in results["companies"]}
+        for cid in self.spec["sign_flipped"]:
+            with self.subTest(cid=cid):
+                self.assertGreater(by[cid]["nonop_share"], 0)
+                self.assertLess(by[cid]["nonop_share"], 0.30)
 
     def test_it_says_where_the_condition_actually_decides(self):
         self.assertIn("amazon", self.spec["where_it_does_decide"])

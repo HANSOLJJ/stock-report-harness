@@ -27,7 +27,7 @@ OBSERVATION_STATUSES = {
 PERIOD_REQUIRED_METRICS = {
     "revenue_ttm", "operating_income_ttm", "operating_margin_ttm",
     "ocf_ttm", "capex_ttm", "fcf_ttm", "net_borrowing_ttm",
-    "net_income_ttm", "revenue_ttm_prior",
+    "net_income_ttm", "revenue_ttm_prior", "pretax_income_ttm",
     # 분기 EPS 는 어느 분기인지가 값의 일부다. 기간 없이는 4분기 연속 판정을 할 수 없다.
     "ntm_eps_quarter",
 }
@@ -74,6 +74,9 @@ METRICS: dict[str, dict[str, str]] = {
     "ps_ratio": {"unit": "ratio", "type": "number"},
     "revenue_ttm": {"unit": "USD", "type": "number"},
     "operating_income_ttm": {"unit": "USD", "type": "number"},
+    # 세전이익. `nonop_share = (세전 − 영업이익) / 세전` 의 분모이자 분자 구성요소다.
+    # 법인세를 순이익에 되더하는 대신 이것을 직접 들이면 지표 하나로 끝난다(NONOP-44).
+    "pretax_income_ttm": {"unit": "USD", "type": "number"},
     # F6 v1.7 신규 3종. revenue_ttm·operating_income_ttm 은 이미 있어 다시 만들지 않는다.
     "net_income_ttm": {"unit": "USD", "type": "number"},
     "revenue_ttm_prior": {"unit": "USD", "type": "number"},
@@ -425,7 +428,11 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
                                "why_not_single_threshold", "why_16", "why_6", "why_it_exists",
                                "decided_at", "decided_by",
                                # 임계 경계 표시와, 입력 정의가 갈렸다는 기록(NETCASH-37 재고 검산).
-                               "boundary_display", "stored_vs_recomputed"])
+                               "boundary_display", "stored_vs_recomputed",
+                               # 조건이 읽는 산식과 입력. 선언한 입력은 METRICS 에 있어야 한다(NONOP-44).
+                               "formula", "inputs"])
+        for metric in cond.get("inputs", []):
+            _require(metric in METRICS, f"{where}.inputs: 알 수 없는 지표 {metric!r}")
         # 코드가 구현하지 않은 조건 id 를 규칙에 적어 두면 선언만 있고 걸리지 않는 조건이 생긴다.
         _require(cond["id"] in P4_CONDITION_IDS, f"{where}: 구현되지 않은 조건 id {cond['id']!r}")
         _require(cond["id"] not in seen, f"{where}: 조건 id 중복 {cond['id']!r}")
