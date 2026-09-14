@@ -96,6 +96,8 @@ build_report.py ──► 승인 해시 == 현재 해시 검증 → output/<slug
 
 상태 이름: 자료 부족 `pending_data`, 판단 부족 `needs_judgment`, 규칙 미결 `needs_rule_decision`, 승인 필요 `awaiting_user`(빌더 메시지), 검토 미완 `needs_fix`(리뷰 frontmatter). 해시가 하나라도 바뀌면 검증기가 리뷰·승인을 무효로 판정한다(T-14). 같은 승인본 재빌드는 history.csv 에 행을 추가하지 않는다(T-15). 사전 검증 실패 시 HTML 을 쓰지 않으므로 최신 MD/HTML/CSV 가 갈라지지 않는다(T-16).
 
+> **해시는 파일 바이트에 걸린다(`sha256_file` = `read_bytes`).** 이 저장소는 `.gitattributes` 가 없고 `core.autocrlf=true`(Git for Windows 시스템 설정)라 checkout·재기록 때 LF/CRLF 가 바뀌면 **내용이 같아도** `rule_hash` 와 승인 해시 6종이 갈린다. 2026-09-14 bfb4fbd 가 LF 바이트로 `rule_hash` 를 고정해 CRLF 작업 트리에서 research·calculate 가 멈췄고 5209311 에서 재고정했다. 지금은 고치지 않는다 — [open-items.md](open-items.md) 4절 HASH-EOL 참조.
+
 ## 6. 산출물 렌더러
 
 | 산출물 | 모듈 | 요구 |
