@@ -5,8 +5,8 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 4a4e440f08f9ef603386e0292933f2bf0bead32be3096383e439df27eba1201e
-judgments_hash: 5a28676508f6a6877dc046137c074f0b2a4a4c41d75dece6d9fce8727c2105ec
+observations_hash: e89744320655eecc83dfbac2d646a08caabd05e76ef4a6b6914fa2512b3d2483
+judgments_hash: 95b5ee1a575aa27860b1e41b3bf1224976bf59d2a9108d495316dd8926a6353e
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -611,7 +611,7 @@ created_at: 2026-09-11
 | ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=fail, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑤ 아군 | grade | — | A=2, H=-3 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
+| ⑤ 아군 | grade | — | A=2, H=-3 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 \| [IMPL-46] **별표 G 조달 배제를 적용했다(사용자 확정 2026-09-14).** A=+2 근거에서  |
 | ⑥ 가격 | score | -4 | private=True | carried | legacy:v1.5 2026-09-02 | C-12: 비상장 정성 예외(TTM 보정·자본효율 근거는 원문) |
 | ⑦ 순환금융 | score | -1 | — | carried | legacy:v1.5 2026-09-02 | C-09: 매트릭스 입력(환류 여부) 원문 없음 — 승계 점수 |
 | ⑧ 비대칭 의존 | score | -4 | — | carried | legacy:v1.5 2026-09-02 |  |
@@ -694,4 +694,4 @@ created_at: 2026-09-11
 | openai | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 
 - legacy_unverified 관측 203건은 기준선 열람용이며 이번 실행에서 재검증되지 않았다.
-- 미결 규칙 결정: C-05, C-06, C-13, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2)
+- 미결 규칙 결정: C-05, C-06, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2)

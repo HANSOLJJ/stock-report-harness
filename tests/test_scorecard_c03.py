@@ -109,26 +109,52 @@ class F2StaysCarriedTest(unittest.TestCase):
 
 
 class F2RangeNoteTest(unittest.TestCase):
-    """범위 하한 0 이 장치가 만들 수 있는 값이 아니라는 것을 규칙이 알고 있어야 한다."""
+    """F2 범위가 **장치가 만들 수 있는 값**에 맞춰졌다는 것을 규칙이 근거와 함께 들고 있어야 한다."""
 
-    def test_range_note_names_where_the_zero_came_from(self):
+    def test_f2_range_is_two_to_five(self):
+        """**`[2,5]` 로 확정됐다(사용자, IMPL-46).**
+
+        원래 이 자리는 `range_note` 가 `[0,5]` 의 하한 0 이 어디서 왔는지(채점규칙 17행 일괄 선언)를
+        적는지 검사했다. 그 기록은 이전 값의 출처로 note 에 남아 있고, 이제 범위 자체가 바뀌었다.
+        """
+        self.assertEqual(RULES.payload["factors"]["F2"]["range"], [2, 5])
         note = RULES.payload["factors"]["F2"]["range_note"]
-        self.assertIn("채점규칙 17행", note)
+        self.assertIn("채점규칙 17행", note)       # 이전 값의 출처는 지우지 않는다
         self.assertIn("경로 0개", note)
-        self.assertIn("다른 축", note)
 
-    def test_it_points_at_the_proposal_and_says_it_is_not_applied(self):
+    def test_rationale_is_the_ladder_floor_and_zero_observations_not_f3(self):
+        """**근거는 사다리 바닥 2 와 0·1 실측 0회다. F3 전례가 아니다.**
+
+        원래 이 자리는 `신설안이 규칙에 적용되지 않았다` 를 검사했다. 사용자가 안1 을 확정해 적용됐으므로
+        검사 대상을 **근거가 무엇인지**로 옮긴다. F3 를 근거로 쓰면 같은 미정리 상태를 전례로 삼게 된다.
+        """
         note = RULES.payload["factors"]["F2"]["range_note"]
-        self.assertIn("PROPOSAL.md", note)
-        self.assertIn("규칙에 적용하지 않았다", note)
+        self.assertIn("사다리 바닥이 2", note)
+        self.assertIn("한 번도", note)
+        self.assertIn("F3 전례가 근거가 아니다", note)
 
-    def test_f3_is_the_one_matched_to_its_ladder(self):
-        """**예외는 F2 가 아니라 F3 다.** 넷은 일괄 선언에서, F3 만 사다리에서 왔다."""
+    def test_f3_stays_as_is_and_the_other_three_keep_zero(self):
+        """F3 `[1,5]` 는 별건이라 손대지 않는다. F1·F4·F5 는 `[0,5]` 그대로다.
+
+        원래 이 테스트는 `F1·F2·F4·F5 가 전부 [0,5]` 를 고정했다. F2 만 빠졌다.
+        """
         f = RULES.payload["factors"]
         self.assertEqual(f["F3"]["range"], [1, 5])
-        self.assertEqual(f["F3"]["ladder"][0]["score"], 1)      # 사다리 최저 칸 = 범위 하한
-        for fid in ("F1", "F2", "F4", "F5"):
+        self.assertEqual(f["F3"]["ladder"][0]["score"], 1)
+        for fid in ("F1", "F4", "F5"):
             self.assertEqual(f[fid]["range"], [0, 5])
+
+    def test_range_change_is_recorded_on_the_decision(self):
+        rc = decision()["range_change"]
+        self.assertEqual((rc["from"], rc["to"]), ([0, 5], [2, 5]))
+        self.assertIn("F3 전례가 아니다", rc["why"])
+
+    def test_every_carried_f2_score_fits_the_new_range(self):
+        """범위를 좁혀도 판단 검증이 막는 점수가 없어야 한다 — 승계 점수가 전부 2~5 다."""
+        results = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
+        for c in results["companies"]:
+            with self.subTest(cid=c["company_id"]):
+                self.assertTrue(2 <= c["factors"]["F2"]["score"] <= 5)
 
     def test_f5_is_the_only_device_that_reaches_zero(self):
         """F5 는 3 + A + H 로 0 에 정확히 닿는다. F2 의 장치는 2 가 최저다."""

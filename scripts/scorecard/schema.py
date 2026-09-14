@@ -255,7 +255,9 @@ def validate_rules(payload: Any) -> dict[str, Any]:
                                # 고른 것만 남기면 다음 사람이 밀린 안을 다시 들고 온다(C03-IMPL-43).
                                "chosen", "decided_at", "decided_by", "superseded_choice",
                                "confirmed_model", "why_the_source_wins_over_handover",
-                               "generation_gap_constraints", "scope", "pending_recheck"])
+                               "generation_gap_constraints", "scope", "pending_recheck",
+                               # 결정에 딸린 범위 변경. 무엇에서 무엇으로 왜 바꿨는지(IMPL-46).
+                               "range_change"])
         # 고른 것을 적었으면 **선택지 목록 안에 있어야** 한다. 밀린 안을 지우고 고른 것만 남기면
         # 다음 사람이 그 안을 다시 들고 온다 — 그래서 choices 에 둘 다 남긴다(C03-IMPL-43).
         if d.get("chosen"):
@@ -366,7 +368,9 @@ def _validate_source_policy(policy: Any) -> None:
 
 
 # F6 는 두 모드가 공존한다. v1.5·v1.6 은 NTM PER 단일 구간표(bands), v1.7 은 네 파라미터(parameters)다.
-# 과거 규칙 파일을 계속 읽을 수 있어야 하므로 한쪽을 지우지 않고 둘 다 검증한다.
+# **정본은 parameters 다(사용자 확정 2026-09-14, IMPL-46).** bands 는 구버전이고 run.json.rule_version 으로
+# v1.5·v1.6 을 고른 실행에서만 선택된다. 승인된 v1.5 실행이 bands 로 계산됐고 해시가 그 결과에 묶여
+# 있으므로 한쪽을 지우지 않고 둘 다 검증한다.
 P4_CONDITION_IDS = {"nonop_share", "period_basis_not_ttm", "short_history", "stale_asof"}
 F6_COMPARISONS = {"upper_exclusive", "lower_inclusive"}
 
@@ -817,7 +821,8 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
             _require(_is_number(score) and float(score).is_integer(), f"{where}: score 는 정수 필요")
             _require(lo <= score <= hi, f"{where}: score {score} 가 {factor} 범위 [{lo}, {hi}] 밖")
             if factor == "F6":
-                _require(not companies[item["company_id"]]["listed"], f"{where}: 상장사 F6 는 수동 score 불허 (NTM PER 자동 산출)")
+                # 2026-09-14 IMPL-46: 문구가 bands 시절 'NTM PER 자동 산출' 이었다. 정본은 parameters 다.
+                _require(not companies[item["company_id"]]["listed"], f"{where}: 상장사 F6 는 수동 score 불허 (parameters 자동 산출)")
             if factor in {"F2", "F7"}:
                 _require(item["status"] == "carried", f"{where}: {factor} 의 수동 score 는 승계(carried) 판단에만 허용 — 신규는 paths/matrix 입력 필요")
         else:

@@ -1,0 +1,16 @@
+1. policies.f6.canonical_mode = parameters
+2. C-13 resolved · reject_proxy · ntm_per 관측 12 건 basis 표시
+     alibaba     author_computed
+     meta        StockAnalysis
+     nvidia      StockAnalysis
+     tsmc        author_computed
+     alphabet    StockAnalysis
+     microsoft   StockAnalysis
+     amazon      StockAnalysis
+     apple       StockAnalysis
+     oracle      StockAnalysis
+     palantir    StockAnalysis
+     spacex-xai  StockAnalysis
+     tesla       StockAnalysis
+3. F2 range = [2, 5]
+4. openai.F5 note 추가 (inputs A/H 불변: {'A': 2, 'H': -3} )

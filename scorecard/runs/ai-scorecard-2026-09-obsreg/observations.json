@@ -46,8 +46,15 @@
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
       "basis": {
-        "method": "annual_weighted_proxy",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "method": "annual_eps_weighted_proxy",
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "author_computed",
+        "vendor_value_rejected": "StockAnalysis 값(13.92)이 CNY/USD 혼재라 버리고 FY27 $5.71·FY28 $8.03 을 7:5 가중해 직접 계산 (HANDOVER 39행 · 채점표 400행)",
+        "is_the_proxy_c13_rejects": "**C-13 이 거부한 바로 그 근사다.** 연간 EPS 둘을 남은 개월로 안분했다. 값은 남기되 NTM 으로 쓰지 않는다.",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "16.7 ✱",
       "note": null
@@ -137,7 +144,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "17.9",
       "note": null
@@ -227,7 +240,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "18.0",
       "note": null
@@ -316,8 +335,15 @@
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
       "basis": {
-        "method": "annual_weighted_proxy",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "method": "annual_eps_weighted_proxy",
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "author_computed",
+        "vendor_value_rejected": "StockAnalysis 가 TWD/USD 혼재라 버리고 NTM EPS 653 TWD ÷ 30.5 로 직접 계산 (HANDOVER 39행 · 채점표 239행)",
+        "is_the_proxy_c13_rejects": "**C-13 이 거부한 바로 그 근사다.** 연간 EPS 둘을 남은 개월로 안분했다. 값은 남기되 NTM 으로 쓰지 않는다.",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "19.4 ✱",
       "note": null
@@ -407,7 +433,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "25.3",
       "note": null
@@ -497,7 +529,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "25.4",
       "note": null
@@ -587,7 +625,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "27.5",
       "note": null
@@ -677,7 +721,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "35.5",
       "note": null
@@ -767,7 +817,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "19.1",
       "note": null
@@ -857,7 +913,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "89.0",
       "note": null
@@ -947,7 +1009,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "111",
       "note": null
@@ -1037,7 +1105,13 @@
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
-        "vendor": "StockAnalysis Forward PE (2026-09-02)"
+        "vendor": "StockAnalysis Forward PE (2026-09-02)",
+        "source_vendor": "StockAnalysis",
+        "source_field": "Forward PE",
+        "vendor_not_in_source_policy": true,
+        "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
+        "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
+        "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다."
       },
       "raw": "187.5",
       "note": null
