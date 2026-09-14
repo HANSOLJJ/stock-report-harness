@@ -1,0 +1,274 @@
+{
+  "metadata": {
+    "task_id": "ANTH-F2-42",
+    "factor": "F2",
+    "topic": "anthropic ②5 제3자 재검토 — 긴장 #11 발동 조사",
+    "reviewer_perspective": "third_party_gemini",
+    "conflict_of_interest_context": {
+      "originator": "Claude (Anthropic)",
+      "coordinator": "Claude (설계진행)",
+      "workers": "Claude (worker, NTM)",
+      "reviewer_agent": "Gemini (Antigravity CLI)",
+      "rationale": "원문 작성자 및 코디네이터와 다른 제3자 독립 모델로 Anthropic ②5 재검토 수행"
+    },
+    "governing_rules": [
+      "채점규칙 370~387행: 두 축이 갈리면 둘 다 적는다 / 벤더 발표는 1차 근거 아님, 독립 측정 우선",
+      "HANDOVER 118행: 미결 판단 (긴장 #10·#11) — 독립 기관의 에이전트 실무 축 측정(② 5→4 조건)",
+      "혼합 모델: 경로 0개→2, 1개→3, 2개→4, 단 성능 도약이 '세대 격차' 수준이면 5"
+    ]
+  },
+  "three_axes_census_for_anthropic": {
+    "1_general_intelligence": [
+      {
+        "benchmark": "AA Intelligence Index v4.1.1",
+        "model": "Fable 5.1 (max)",
+        "score": "66 (1위)",
+        "comparison": "Astra 61, Sol 61, Muse Spark 1.3 62",
+        "source_type": "independent",
+        "institution": "Artificial Analysis (AA)",
+        "is_primary_evidence": true
+      },
+      {
+        "benchmark": "AA Intelligence Index v4.2",
+        "model": "Fable 5.1",
+        "score": "57 (1위)",
+        "comparison": "Astra max 55, Astra xhigh 54",
+        "source_type": "independent",
+        "institution": "Artificial Analysis (AA)",
+        "is_primary_evidence": true
+      },
+      {
+        "benchmark": "ARC-AGI-3",
+        "model": "Opus 5",
+        "score": "30.2%",
+        "comparison": "직전 최고 약 8%에서 3.7배 도약",
+        "source_type": "independent",
+        "institution": "ARC Prize",
+        "is_primary_evidence": true
+      },
+      {
+        "benchmark": "HLE (Humanity's Last Exam)",
+        "model": "Fable 5.1",
+        "score": "Astra 상회 (수치 미기재)",
+        "comparison": "Astra 패배, Kimi K3 최하위권",
+        "source_type": "independent",
+        "institution": "Center for AI Safety / Scale AI",
+        "is_primary_evidence": true
+      },
+      {
+        "benchmark": "LMSYS Chatbot Arena",
+        "model": "Opus 5 / Fable 5",
+        "score": "6개 카테고리 1위 (Text 1506, Agent 12.29%, WebDev 1692, Vision 1315, Doc 1520, Search 1253)",
+        "comparison": "전 부문 최상위",
+        "source_type": "independent_crowdsourced",
+        "institution": "LMSYS",
+        "is_primary_evidence": false,
+        "note": "채점표 963행 명시: The Leaderboard Illusion 편향으로 1차 근거 사용 금지"
+      }
+    ],
+    "2_coding_agent": [
+      {
+        "benchmark": "AA Coding Agent Index",
+        "model": "Fable 5.1 (Claude Code)",
+        "score": "70 (1위)",
+        "comparison": "Astra Codex 67, Opus 5, Fable 5, Muse Spark 1.3",
+        "source_type": "independent",
+        "institution": "Artificial Analysis (AA)",
+        "is_primary_evidence": true,
+        "note": "전원 자기 하네스 비교(체크리스트 23 통과)"
+      },
+      {
+        "benchmark": "DeepSWE v1.1 (SWE-bench)",
+        "model": "Fable 5.1",
+        "score": "67.4%",
+        "comparison": "Muse Spark 1.3 75.4%, Astra 74.1%",
+        "source_type": "independent",
+        "institution": "DeepSWE / SWE-bench",
+        "is_primary_evidence": true,
+        "note": "Anthropic이 1위 아님 (3위)"
+      }
+    ],
+    "3_practical_agent_work": [
+      {
+        "benchmark": "AutomationBench",
+        "model": "Fable 5.1",
+        "score": "31.4%",
+        "comparison": "Astra 41.4%",
+        "source_type": "vendor_announcement",
+        "institution": "OpenAI 발표치 (경쟁사 발표)",
+        "is_primary_evidence": false,
+        "rule_status": "규칙 382행에 따라 1차 근거 아님 (방증으로만 분류)"
+      },
+      {
+        "benchmark": "Agents' Last Exam",
+        "model": "Opus 5",
+        "score": "55.5%",
+        "comparison": "Astra 59.3%",
+        "source_type": "vendor_announcement",
+        "institution": "OpenAI 발표치 (경쟁사 발표)",
+        "is_primary_evidence": false,
+        "rule_status": "규칙 382행에 따라 1차 근거 아님 (방증으로만 분류)"
+      },
+      {
+        "benchmark": "OSWorld",
+        "model": "Anthropic models",
+        "score": "원문 부재 (없음)",
+        "comparison": "Astra 수행시간 47% 단축만 기재",
+        "source_type": "missing",
+        "institution": "원문 미기재",
+        "is_primary_evidence": false
+      },
+      {
+        "benchmark": "Terminal-Bench",
+        "model": "Anthropic models",
+        "score": "원문 부재 (없음)",
+        "comparison": "Meta 2.1 86%만 기재",
+        "source_type": "missing",
+        "institution": "원문 미기재",
+        "is_primary_evidence": false
+      },
+      {
+        "benchmark": "GDPval-AA v2",
+        "model": "Anthropic models",
+        "score": "원문 부재 (없음)",
+        "comparison": "OpenAI -80 Elo 퇴행, Meta 1,754 Elo 5위만 기재",
+        "source_type": "missing",
+        "institution": "Artificial Analysis (AA)",
+        "is_primary_evidence": false
+      }
+    ]
+  },
+  "tension_11_trigger_evaluation": {
+    "condition_text": "HANDOVER 118행: 독립 기관의 에이전트 실무 축 측정(② 5→4 조건)",
+    "evaluation": {
+      "has_independent_measurement_for_anthropic": false,
+      "available_figures": [
+        "AutomationBench 31.4%: OpenAI 발표치 (경쟁사 벤더 발표)",
+        "Agents' Last Exam 55.5%: OpenAI 발표치 (경쟁사 벤더 발표)"
+      ],
+      "rule_application_rule_382": "벤더 발표 벤치마크는 1차 근거가 아니다 — 독립 측정을 우선한다. 벤더 발표는 방증으로만 적으며, 불일치 자체를 긴장으로 등록한다.",
+      "is_tension_11_triggered": false,
+      "one_sentence_ruling": "아니오 — 긴장 #11의 발동 요건인 '독립 기관의 에이전트 실무 축 측정'이 원문에 0건(부재)이므로 현재 긴장 #11은 발동하지 않습니다."
+    }
+  },
+  "factor_2_score_defense": {
+    "path_1_performance_leap": {
+      "status": "pass",
+      "evidence": "AA Intelligence Index 1위(v4.1.1 66, v4.2 57), AA Coding Agent Index 1위(70), ARC-AGI-3 8%->30.2% 세대 격차 도약. 모두 독립 기관 측정.",
+      "is_generation_leap": true
+    },
+    "path_2_standard_preemption": {
+      "status": "pass",
+      "evidence": "MCP(Model Context Protocol) 사실상 업계 표준 선점 및 경쟁사 채택 사실.",
+      "is_preemption": true
+    },
+    "hybrid_model_evaluation": {
+      "formula": "경로 0개→2, 1개→3, 2개→4, 단 성능 도약이 '세대 격차' 수준이면 5",
+      "anthropic_paths_count": 2,
+      "has_generation_leap": true,
+      "calculated_score": 5,
+      "carried_score": 5,
+      "match": true
+    }
+  },
+  "all_14_companies_equal_standard_audit": [
+    {
+      "company_id": "nvidia",
+      "name": "NVIDIA",
+      "score": 5,
+      "path": "하드웨어 성능(Vera Rubin 양산 실측)",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "tsmc",
+      "name": "TSMC",
+      "score": 5,
+      "path": "하드웨어 성능(N2 양산 실측, 점유율 73%)",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "anthropic",
+      "name": "Anthropic",
+      "score": 5,
+      "path": "성능(AA 1위 세대격차) + 표준(MCP)",
+      "impact_of_independent_rule": "5점 유지 (실무축 독립측정 부재로 긴장 #11 미발동)"
+    },
+    {
+      "company_id": "openai",
+      "name": "OpenAI",
+      "score": 4,
+      "path": "성능 + 적응 (표준 실패)",
+      "impact_of_independent_rule": "이미 적용됨 (AA 61 동점, GDPval -80 Elo 퇴행으로 4점 제한)"
+    },
+    {
+      "company_id": "meta",
+      "name": "Meta",
+      "score": 4,
+      "path": "성능(AA 3위) + 적응",
+      "impact_of_independent_rule": "변동 없음 (AA 3위 독립측정으로 4점 유지)"
+    },
+    {
+      "company_id": "amazon",
+      "name": "Amazon",
+      "score": 4,
+      "path": "표준(Interconnect API) + 성능(Trainium3 채택)",
+      "impact_of_independent_rule": "변동 없음 (하드웨어 실측)"
+    },
+    {
+      "company_id": "alphabet",
+      "name": "Alphabet",
+      "score": 4,
+      "path": "성능(비디오 1위) + 적응(Ironwood TPU)",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "alibaba",
+      "name": "Alibaba",
+      "score": 4,
+      "path": "성능 + 적응 (표준 부재, HLE 미달)",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "spacex-xai",
+      "name": "SpaceX + xAI",
+      "score": 4,
+      "path": "성능(AA 6위) + 적응(Cursor)",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "microsoft",
+      "name": "Microsoft",
+      "score": 3,
+      "path": "자체 프론티어 모델 부재",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "palantir",
+      "name": "Palantir",
+      "score": 3,
+      "path": "온톨로지 차별적이나 표준 미주도",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "tesla",
+      "name": "Tesla",
+      "score": 3,
+      "path": "AI5 테이프아웃, 양산 전",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "apple",
+      "name": "Apple",
+      "score": 2,
+      "path": "Siri 연기, 자체 모델 벤치 부재",
+      "impact_of_independent_rule": "변동 없음"
+    },
+    {
+      "company_id": "oracle",
+      "name": "Oracle",
+      "score": 2,
+      "path": "자체 모델 없음, 세 경로 미통과",
+      "impact_of_independent_rule": "변동 없음"
+    }
+  ]
+}
