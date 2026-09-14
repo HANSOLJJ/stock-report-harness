@@ -436,7 +436,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
                                # 임계 경계 표시와, 입력 정의가 갈렸다는 기록(NETCASH-37 재고 검산).
                                "boundary_display", "stored_vs_recomputed",
                                # 조건이 읽는 산식과 입력. 선언한 입력은 METRICS 에 있어야 한다(NONOP-44).
-                               "formula", "inputs"])
+                               "formula", "inputs",
+                               # 이 조건의 값이 어느 factor 에 속하는지. 다른 factor 로 이월하지 않는다는 선언(IMPL-50 C-11).
+                               "scope", "scope_why"])
         for metric in cond.get("inputs", []):
             _require(metric in METRICS, f"{where}.inputs: 알 수 없는 지표 {metric!r}")
         # 코드가 구현하지 않은 조건 id 를 규칙에 적어 두면 선언만 있고 걸리지 않는 조건이 생긴다.

@@ -319,7 +319,7 @@
           {
             "id": "nonop_share",
             "threshold": 0.3,
-            "note": "|영업외 비중| >= 0.30. 영업외손익 = net_income_ttm - operating_income_ttm",
+            "note": "|영업외 비중| >= 0.30. 영업외손익 = pretax_income_ttm − operating_income_ttm (formula 참조) | ~~영업외손익 = net_income_ttm - operating_income_ttm~~ — NONOP-44(2026-09-14) 이전 산식. formula 는 고쳤으나 이 note 가 남아 있었다(IMPL-50 에서 발견).",
             "boundary_display": "임계에 대해 `boundary_tolerance` 로 경계를 표시한다(`calc.p4.nonop_share_boundary`). P1·P2·P3 에만 있고 여기만 없었다. 비교가 `abs(value) >= threshold` 라 경계도 **크기**로 잰다. **점수를 바꾸지 않는다.**",
             "stored_vs_recomputed": {
               "status": "resolved_stored_was_right",
@@ -411,7 +411,7 @@
                 "alibaba 의 어느 순이익·세전이익인지를 가른다 — 지분법·비지배지분·ADR 환산·원천의 CNY/USD 혼재 네 겹이다",
                 "원천(StockAnalysis)이 다른 회사에서도 조정 영업이익을 썼는지 본다 — tesla(-0.018)·tsmc(-0.018) 의 작은 차이가 같은 원인일 수 있다. **확인 안 했다**",
                 "적자 기업의 부호 규약을 정한다 — spacex-xai 는 정정해도 서지 않는다",
-                "C-11(영업외 비중을 F7 근거로 이월하는 것이 별표 I 와 충돌)과 같은 지표다. 따로 정하지 않는다"
+                "C-11(영업외 비중을 F7 근거로 이월하는 것이 별표 I 와 충돌)과 같은 지표다. 따로 정하지 않는다 — [IMPL-50] **해소: block_carryover(설계진행 제안 · 사용자 확인 전).** ⑦ 으로 이월하지 않는다"
               ],
               "do_not": "**값을 조용히 고르지 않는다.** 저장값과 재계산값 중 하나를 근거 없이 채택하면 오늘 `cash` 가 세 뜻이었고 `net_cash` 는 정의가 아예 없던 것과 같은 자리로 돌아간다.",
               "hypothesis_test": {
@@ -544,7 +544,9 @@
             "inputs": [
               "pretax_income_ttm",
               "operating_income_ttm"
-            ]
+            ],
+            "scope": "F6 P4 전용. ⑦ 으로 이월하지 않는다",
+            "scope_why": "별표 I 351~356행(평가이익은 ⑦ 증거가 아니고 ⑥ TTM PER 무효 처리) · 채점규칙 438행(⑦ `쓰지 않는 것` 지분 평가이익 ⑥ 소관). C-11 block_carryover."
           },
           {
             "id": "period_basis_not_ttm",
@@ -1356,13 +1358,37 @@
     },
     {
       "id": "C-11",
-      "status": "pending",
+      "status": "resolved",
       "blocking": false,
       "affects": [
         "F7"
       ],
       "summary": "영업외 비중을 F7 근거로 이월한다는 설명이 별표 I 와 충돌",
-      "recommendation": "손익의 질 참고로만 유지"
+      "recommendation": "손익의 질 참고로만 유지",
+      "choices": [
+        "block_carryover",
+        "allow_carryover"
+      ],
+      "chosen": "block_carryover",
+      "decided_at": "2026-09-14",
+      "decided_by": "설계진행 제안 · 사용자 확인 전",
+      "confirmed_model": {
+        "rule": "영업외 비중은 **F6 P4 전용**이다. ⑦ 근거로 이월하지 않는다.",
+        "blocked_text": "채점표 3-1a 범례 L804 `| **영업외 비중** | (세전이익 − 영업이익) ÷ 세전이익. **30% 넘으면 TTM 무효** | ❌ → ⑦ 근거로 이월 |` 의 `→ ⑦ 근거로 이월`",
+        "reasons": [
+          "별표 I 351~356행 `🔑 평가이익은 ⑦의 증거가 아니다` — 평가이익은 `⑥ — TTM PER 무효 처리`, 순환금융은 `⑦`. 영업외 비중이 잡는 것의 큰 몫이 이 평가이익이다(채점표 각주 ᵃ NVIDIA 랩 지분 평가익)",
+          "채점규칙 438행 ⑦ 행 `쓰지 않는 것` 에 `지분 평가이익(⑥ 소관)` · 437행 ⑥ 행이 `TTM PER(영업외 비중 30%+면 무효)` 로 이 지표를 ⑥ 에 둔다",
+          "⑦ 판정은 별표 I 2축(319~322행: 조달 의존 고객 비중 × 내 돈이 돌아오는가)이다. 영업외 비중은 어느 축의 입력도 아니다. 같은 값을 ⑥ P4 와 ⑦ 에 둘 다 넣으면 별표 J 가 금지한 이중 계상 구조다(C-13 C09-C11-F7-41 판정)"
+        ],
+        "source_text_against": "**원문에 반대로 읽힐 수 있는 자리가 하나 있다.** 별표 I 347행 `측정 가능 / 불가` 표의 `측정 가능 (재무제표·공시)` 칸이 `RPO ÷ 연매출 · 단일 고객 집중도 · 실행된 투자액 · 영업외 이익 비중` 을 ⑦ 절 안에 적는다. 이 표는 **측정 가능성 분류**이고 판정 입력 지정이 아니다 — 판정은 2축 표(319~322행)이고 바로 아래 351~356행이 평가이익을 ⑥ 으로 보낸다. 그래서 차단 판정은 서지만, 347행이 그 지표를 ⑦ 절에 적는다는 사실은 숨기지 않는다.",
+        "what_changed": "문서·규칙 note 만. 차단 전에도 이 경로를 읽는 코드가 없었다."
+      },
+      "scope": {
+        "what_this_is": "**문서와 규칙 note 의 차단이다.** F7 은 14개사 전부 carried(승계) 판단이고 C-11 을 읽는 코드가 없어 이월 경로가 구현된 적이 없다.",
+        "score_impact": "없다.",
+        "user_confirmation": "**사용자 확인 전.** 점수 무영향이라 설계진행 제안으로 미리 넣었다. 사용자가 allow_carryover 를 고르면 되돌린다.",
+        "v15_untouched": "v1.5.json 의 C-11 은 pending 그대로다 — v1.5 는 불변."
+      }
     },
     {
       "id": "C-12",
