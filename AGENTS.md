@@ -69,7 +69,8 @@
 - 미결 규칙 결정(C-03, C-05, C-06, C-13, C-16)은 `run.json.decisions` 로만 실행 단위에서 선택한다. 기본값을 조용히 채택하지 않으며 해당 기업은 순위에서 제외된다.
 - 리뷰는 4 영역(사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성) + 체크리스트 Q01~Q23. hero 이미지·뉴스 100건 요건은 적용하지 않는다.
 - 승인(`approve`)은 사용자 행위다. 승인 해시(rules/observations/judgments/run/results/draft)가 현재와 다르면 build 는 `awaiting_user` 로 멈춘다.
-- 새 실행에서 상장사 ⑥은 NTM PER(4개 연속 미발표 분기 YYYYQn, 통화·주식 기준 일치)만 채점하고 근사치는 대기한다. ⑨ G4 는 `coverage_comparable: yes` 일 때만 계산한다.
+- 상장사 ⑥은 v1.7 `parameters` 모드가 정본이다 — P1 TTM PER · P2 (시총−순현금)/매출 · P3 매출 성장 · P4 입력 신뢰도 보정. `bands` 모드(v1.5·v1.6, NTM PER 단일 구간표)는 구버전이며 실행 단위로만 선택한다. ⑨ G4 는 `coverage_comparable: yes` 일 때만 계산한다.
+  <!-- 2026-09-14 전: "새 실행에서 상장사 ⑥은 NTM PER(4개 연속 미발표 분기 YYYYQn, 통화·주식 기준 일치)만 채점하고 근사치는 대기한다." — NTMPER-39 가 미발표 분기 컨센서스는 SEC 제출물에 구조적으로 없어 허용 원천으로 지킬 수 없는 계약임을 실증했고, 사용자가 parameters 를 정본으로 확정했다. -->
 - 테스트: `python -X utf8 -m unittest discover -s tests -t .`(T-01~T-12, R01~R06). 코드 변경 후 반드시 실행한다.
 - 구현은 scorecard 작업 브랜치에서 진행 중이며 `scorecard/`·`scripts/scorecard_cli.py`·`docs/scorecard/`는 그 브랜치가 머지될 때 들어온다. 이 절은 그때까지 계약 선언으로만 유효하다.
 
