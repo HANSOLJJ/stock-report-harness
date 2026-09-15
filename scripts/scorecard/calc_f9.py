@@ -40,6 +40,17 @@ def _runway(cash: float, undrawn: float, burn: float) -> float:
     return (cash + undrawn) / burn
 
 
+def _runway_boundary(runway: float, rules: RuleSet) -> dict[str, Any]:
+    """G3 런웨이 임계(keep·one_step 년수) 중 가장 가까운 것에 대한 경계 표시. **점수를 바꾸지 않는다.**
+
+    2026-09-15 FIX-53 2단계: P1~P4 에는 경계 표시가 있는데 G3 에는 없었다. alibaba 런웨이가 미인출 여신 등록으로
+    3년 임계 바로 위(+3.3%)가 되어 드러났다. F6 와 **같은 tolerance** 를 쓴다 — 자리마다 다른 관대함을 두지 않는다.
+    """
+    marks = [float(rules.f9["g3_runway_keep_years"]), float(rules.f9["g3_runway_one_step_years"])]
+    nearest = min(marks, key=lambda b: abs(runway - b) / b)
+    return rules.f6_threshold_boundary_flag(runway, nearest)
+
+
 def _runway_step(runway: float, rules: RuleSet) -> int:
     if runway >= float(rules.f9["g3_runway_keep_years"]):
         return 0
@@ -161,7 +172,10 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             runway = _runway(cash, undrawn or 0.0, -fcf)
             step = _runway_step(runway, rules)
             diag_score = _clamp(diag_score + step, floor)
-            path.append({"gate": "G3", "mode": "diagnostic", "runway_years": runway, "step": step})
+            boundary = _runway_boundary(runway, rules)
+            path.append({"gate": "G3", "mode": "diagnostic", "runway_years": runway, "step": step, "boundary": boundary})
+            if boundary["flag"]:
+                warnings.append(f"⚠️ G3 런웨이 {runway:.2f}년이 임계 {boundary['nearest_boundary']:g}년의 ±{boundary['tolerance']:.0%} 안 — 점수는 그대로")
         g4 = _g4(cid, obs, gi, rules, run, use)
         path.append({"gate": "G4", "mode": "diagnostic", **{k: v for k, v in g4.items() if k != "step"}})
         if g4["step"] is None:
@@ -252,7 +266,11 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     runway = _runway(cash, undrawn or 0.0, -fcf)
     step = _runway_step(runway, rules)
     score = _clamp(score + step, floor)
-    path.append({"gate": "G3", "runway_years": runway, "buffer": cash + (undrawn or 0.0), "annual_burn": -fcf, "step": step, "score": score})
+    boundary = _runway_boundary(runway, rules)
+    path.append({"gate": "G3", "runway_years": runway, "buffer": cash + (undrawn or 0.0), "annual_burn": -fcf, "step": step, "score": score,
+                 "boundary": boundary})
+    if boundary["flag"]:
+        warnings.append(f"⚠️ G3 런웨이 {runway:.2f}년이 임계 {boundary['nearest_boundary']:g}년의 ±{boundary['tolerance']:.0%} 안 — 점수는 그대로")
 
     # ------------------------------------------------------------------ G4 미래 지출이 덮이는가
     g4 = _g4(cid, obs, gi, rules, run, use)

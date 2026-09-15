@@ -216,6 +216,16 @@ def render_research(ctx: Any, *, hashes: dict[str, str]) -> str:
 
 # ------------------------------------------------------------------ draft
 
+def _f9_gate_text(p: dict[str, Any]) -> str:
+    text = f"{p['gate']}:{p.get('result') or p.get('adjust') or p.get('mode') or ''}"
+    # 2026-09-15 FIX-53 2단계: G3 런웨이와 가장 가까운 임계까지의 거리를 보인다. 경계 표시(⚠️)는 F6 와 같은 허용폭 안일 때만.
+    boundary = p.get("boundary") or {}
+    if p.get("gate") == "G3" and p.get("runway_years") is not None and boundary.get("nearest_boundary"):
+        text += (" " if not text.endswith(":") else "") + (f"런웨이 {p['runway_years']:.2f}년(임계 {boundary['nearest_boundary']:g}년 대비 {boundary['distance_ratio']:+.1%}"
+                 f"{' ⚠️ 경계' if boundary.get('flag') else ''})")
+    return text
+
+
 def _factor_row(f: str, fr: dict[str, Any]) -> list[Any]:
     calc = fr.get("calc") or {}
     detail = ""
@@ -232,7 +242,7 @@ def _factor_row(f: str, fr: dict[str, Any]) -> list[Any]:
     elif f == "F7" and "funding_dependent_share" in calc:
         detail = f"{calc['funding_dependent_share']} / {calc['own_money_returns']}"
     elif f == "F9" and calc.get("path"):
-        detail = " → ".join(f"{p['gate']}:{p.get('result') or p.get('adjust') or p.get('mode') or ''}" for p in calc["path"])
+        detail = " → ".join(_f9_gate_text(p) for p in calc["path"])
     pending = fr.get("pending") or {}
     if pending:
         detail = (detail + " · " if detail else "") + pending.get("message", "")
