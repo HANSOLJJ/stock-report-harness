@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
 observations_hash: a26be50869ff0be61a5868928c9372dc11e4826336e80d3d639920ae72e29a43
-judgments_hash: ab8c96667e37dbcbc3b8aae9780ee2381346474c108d452a04c12d3cbfb6019b
+judgments_hash: a485bfd5db0ff07581730b1c6b7926b68aa6d6120485c730347278045a79e2a0
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -575,7 +575,7 @@ created_at: 2026-09-11
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
 | ⑦ 순환금융 | matrix | — | funding_dependent_share=small, own_money_returns=no | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
 | ⑧ 비대칭 의존 | score | -3 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=yes, operating_result_reviewed=loss | new | 설계진행 2026-09-11 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
+| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=yes, operating_result_reviewed=loss | new | 설계진행 2026-09-11 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) \| [FIX-52 2026-09-15] v1.5 수치 줄에 인용 라벨, verifi |
 
 ### Tesla
 

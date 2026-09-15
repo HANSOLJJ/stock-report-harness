@@ -329,20 +329,28 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         f"- 실행 단위 결정: {', '.join(results['decisions_applied']) or '없음'}",
         f"- 미결 결정: {', '.join(results['pending_rule_decisions']) or '없음'}",
         "- 정책 기본값 적용: C-04 완충 산정은 exclude(설계 권고). " + ("이번 실행에는 undrawn_credit 관측이 없어 include 를 골라도 결과가 같다." if not any(o["metric"] == "undrawn_credit" for o in ctx.observations) else "undrawn_credit 관측이 있어 선택에 따라 런웨이가 달라질 수 있다."),
-        "- C-06 중 BEP 후퇴→-5 는 원문 OR 조건 그대로 적용하며(경고 표시), 손실률 경계·우선순위 명문화만 미결이다.",
+        f"- C-06 중 BEP 후퇴→{_f9_policy(ctx, 'g1_bep_retreat_score')} 는 원문 OR 조건 그대로 적용하며(경고 표시), 손실률 경계·우선순위 명문화만 미결이다.",
         "",
         table(["Factor", "자동화", "범위"], [[FACTOR_LABELS[f], ctx.rules.factor(f)["mode"], f"{ctx.rules.factor(f)['range'][0]}~{ctx.rules.factor(f)['range'][1]}"] for f in FACTOR_IDS]),
         "",
-        "- ⑥ 상장: NTM PER 20·29·42·62·90 반개방 구간, 경계 ±3% 는 표시만. 비상장: 배수 자동 계산·점수는 정성 예외.",
-        "- ⑨: G1 본업(TTM 영업손익) → G2 현금(TTM FCF) → G3 런웨이(현금+확정 여신 ÷ 연 소진) → G4 약정 커버리지(계약 수입 ÷ B종). 하한 -5.",
+        # 2026-09-15 FIX-52: 두 줄이 v1.5 문구(NTM PER 구간표 · 하한 -5)로 박혀 v1.7 결과와 모순됐다. 규칙에서 읽는다.
+        ("- ⑥ 상장: P1 TTM PER · P2 (시총−순현금)/매출 · P3 매출 성장 · P4 입력 신뢰도 보정(parameters 정본). "
+         "비상장: P2 밸류÷TTM 보정 매출에 P3·P4 합쳐 최대 한 칸 보정(C-12)."
+         if ctx.rules.f6_mode == "parameters" else
+         "- ⑥ 상장: NTM PER 20·29·42·62·90 반개방 구간, 경계 ±3% 는 표시만. 비상장: 배수 자동 계산·점수는 정성 예외."),
+        f"- ⑨: G1 본업(TTM 영업손익) → G2 현금(TTM FCF) → G3 런웨이(현금+확정 여신 ÷ 연 소진) → G4 약정 커버리지(계약 수입 ÷ B종). 하한 {_f9_policy(ctx, 'floor')}.",
         "- ③ 사다리, ⑤ `3 + A + H`, ⑦ 2×2 매트릭스는 판정 입력에서 자동 환산. ①④⑧은 정성 점수.",
         "",
     ]
     # 트리거
     lines += ["## 트리거", ""]
     if triggers:
-        lines += [table(["ID", "항목", "왜 중요한가", "영향(원문)"], [[t["trigger_id"], t["title"], t["why"], t["impact_raw"]] for t in triggers]), "",
-                  "- 트리거의 예상 점수는 저장값이 아니라 원문 문장이다(C-14). 사건 확인 후 현재 규칙으로 재계산한다.", ""]
+        replaced = _trigger_replacements(ctx, triggers)
+        lines += [table(["ID", "항목", "왜 중요한가(v1.5 원문)", "영향(원문)"],
+                        [[t["trigger_id"], t["title"], t["why"] + replaced.get(t["trigger_id"], ""), t["impact_raw"]] for t in triggers]), "",
+                  "- 트리거의 예상 점수는 저장값이 아니라 원문 문장이다(C-14). 사건 확인 후 현재 규칙으로 재계산한다.",
+                  f"- `왜 중요한가` 의 날짜·금액·수치는 기준선 {ctx.run['baseline_id']} 원문(2026-09-02 기준)이다. 이번 실행이 실측으로 "
+                  "대체한 수치는 그 칸 끝에 ⚠️ 로 적었다. 사건 사실 자체의 뉴스 출처는 sources.json 에 등재돼 있지 않다.", ""]
     else:
         lines += ["- 등록된 트리거 없음", ""]
     # References
@@ -354,6 +362,59 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         lines.append(f"- {src.get('source_id')} — {src.get('title')} · {src.get('publisher') or ''} · {src.get('accessed_at') or ''} · {url}{sha}{coi}")
     lines += ["", f"_{DISCLAIMER}_", ""]
     return fm + "\n" + "\n".join(lines)
+
+
+def _f9_policy(ctx: Any, key: str) -> Any:
+    return (ctx.rules.payload.get("policies", {}).get("f9") or {}).get(key)
+
+
+def _status_summary(obs: Any, cids: list[str], columns: list[tuple[str, str]]) -> str:
+    """열마다 엔진이 고르는 관측(ObsLookup 우선순위)의 status 를 센다. 관측이 없으면 `관측 없음`."""
+    parts = []
+    for label, metric in columns:
+        counts: dict[str, int] = {}
+        for cid in cids:
+            o = obs.get(cid, metric)
+            key = o["status"] if o is not None else "관측 없음"
+            counts[key] = counts.get(key, 0) + 1
+        order = ["verified", "legacy_unverified"]
+        items = sorted(counts.items(), key=lambda kv: (order.index(kv[0]) if kv[0] in order else 9, kv[0]))
+        parts.append(f"{label} " + " · ".join(f"{k} {v}" for k, v in items))
+    return " | ".join(parts)
+
+
+def _cash_definition_note(ctx: Any) -> str:
+    """`현금` 열과 `순현금/순부채` 열은 다른 것을 센다 — 같은 행에서 맞춰 볼 수 없다는 사실을 규칙 블록으로 적는다."""
+    sep = ((ctx.rules.payload.get("policies", {}).get("f6") or {}).get("net_cash") or {}).get("scope_separation") or {}
+    sites = {s.get("metric"): s for s in sep.get("sites", [])}
+    cash, net = sites.get("cash", {}), sites.get("net_cash", {})
+    return ("- **현금 두 정의** — `현금` 열은 `cash` 관측(" + (cash.get("site") or "런웨이") + ", 질문 `" + (cash.get("question") or "") +
+            "`)이고, `순현금/순부채` 열은 `net_cash` 관측(" + (net.get("site") or "EV 조정") + ", 질문 `" + (net.get("question") or "") +
+            "`)으로 시장성 유가증권을 포함한다. **같은 행의 두 열은 서로 맞춰 볼 수 없다** — 순현금은 현금 열에서 차입을 뺀 값이 아니다"
+            "(규칙 policies.f6.net_cash.scope_separation). 비상장·일부 기업은 원문 기준이 달라 제한현금 포함 여부도 다를 수 있다.")
+
+
+def _trigger_replacements(ctx: Any, triggers: list[dict[str, Any]]) -> dict[str, str]:
+    """이번 실행의 verified 관측이 `basis.replaces` 로 대체한 legacy 비율 값이 트리거 원문에 그대로 있으면 표시한다."""
+    by_id = {o["observation_id"]: o for o in ctx.observations}
+    notes: dict[str, str] = {}
+    for o in ctx.observations:
+        rep = (o.get("basis") or {}).get("replaces")
+        if o["status"] != "verified" or not isinstance(rep, str):
+            continue
+        legacy = by_id.get(rep.split(" ")[0])
+        if legacy is None or legacy.get("value") is None or legacy.get("unit") != "ratio":
+            continue
+        company = ctx.companies.get(o["company_id"]) or {}
+        names = [company.get("display_name", "")] + list(company.get("aliases") or [])
+        old_text = f"{legacy['value'] * 100:.1f}%"
+        for t in triggers:
+            text = t["title"] + " " + t["why"]
+            if old_text in t["why"] and any(n and n in text for n in names if len(n) > 2):
+                notes[t["trigger_id"]] = notes.get(t["trigger_id"], "") + (
+                    f" ⚠️ 원문 {old_text} 는 이번 실행 실측 {o['value'] * 100:.3f}%({o['observation_id']}, verified, "
+                    f"{(o.get('period') or {}).get('start', '')}~{(o.get('period') or {}).get('end', o['as_of'])})로 대체됐다.")
+    return notes
 
 
 def _raw_if_missing(obs: Any, cid: str, metric: str) -> str | None:
@@ -420,11 +481,18 @@ def _raw_tables(ctx: Any, results: dict[str, Any]) -> list[str]:
         if nb_obs is not None:
             borr_rows.append([name, fmt_usd(nb) if nb is not None else (nb_obs.get("raw") or "—"), fmt_usd(obs.number(cid, "capex_ttm")[0])])
     legacy_n = sum(1 for o in ctx.observations if o["status"] == "legacy_unverified")
-    lines += [f"모든 값은 기준선 {ctx.run['baseline_id']} 승계 관측(`legacy_unverified` {legacy_n}건, SRC-v15-html·SRC-v15-rule)이며 이번 실행에서 재검증되지 않았다(D-08). 상장사 주가는 USD 이고 TSMC 는 ADR(1주=보통주 5주, 재무 TWD), Alibaba 는 ADS(재무 CNY) 기준이다. `—` 는 관측 없음, 원문 상태(미공시·적자·∞)는 그대로 표기한다.", ""]
-    lines += ["### 가격 — ⑥ 원자료", "", table(["기업", "주가", "시총", "NTM PER", "산출 방법", "⑥", "경계", "TTM PER", "영업외 비중", "P/S"], val_rows), ""]
+    # 2026-09-15 FIX-52: '모든 값은 legacy_unverified' 라고 적었는데 재무 표의 현금·TTM FCF·순현금은 verified 였다(리뷰 A).
+    # 표마다 열별로 엔진이 실제로 고른 관측의 status 를 센다.
+    cids = [c["company_id"] for c in results["companies"]]
+    listed = [c["company_id"] for c in results["companies"] if c["listed"]]
+    lines += [f"기준선 {ctx.run['baseline_id']} 승계 관측(`legacy_unverified` {legacy_n}건, SRC-v15-html·SRC-v15-md·SRC-v15-rule)은 이번 실행에서 재검증되지 않았다(D-08). **표마다 실측(verified)과 승계가 섞여 있다** — 각 표 아래에 열별 관측 상태를 적는다. 상장사 주가는 USD 이고 TSMC 는 ADR(1주=보통주 5주, 재무 TWD), Alibaba 는 ADS(재무 CNY) 기준이다. `—` 는 관측 없음, 원문 상태(미공시·적자·∞)는 그대로 표기한다.", ""]
+    lines += ["### 가격 — ⑥ 원자료", "", table(["기업", "주가", "시총", "NTM PER", "산출 방법", "⑥", "경계", "TTM PER", "영업외 비중", "P/S"], val_rows), "",
+              "- 열별 관측 상태: " + _status_summary(obs, listed, [("주가", "price"), ("시총", "market_cap"), ("NTM PER", "ntm_per"), ("TTM PER", "ttm_per"), ("영업외 비중", "nonop_share"), ("P/S", "ps_ratio")]), ""]
     if priv_rows:
         lines += ["### 비상장 — ⑥ 배수", "", table(["기업", "post-money", "ARR", "밸류÷ARR", "누적 조달", "ARR÷조달", "⑥"], priv_rows), "", "- 비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 정성 예외(C-12).", ""]
     lines += ["### 재무 — ⑨ 원자료", "", table(["기업", "현금", "TTM FCF", "런웨이(년)", "순현금/순부채", "D/EBITDA", "신용", "부외 약정(원문)", "⑨"], fin_rows), "",
+              "- 열별 관측 상태: " + _status_summary(obs, cids, [("현금", "cash"), ("TTM FCF", "fcf_ttm"), ("순현금/순부채", "net_cash"), ("D/EBITDA", "debt_ebitda"), ("신용", "credit_rating")]),
+              _cash_definition_note(ctx),
               "- 신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(별표 J).", ""]
     if borr_rows:
         lines += ["### TTM 순차입", "", table(["기업", "TTM 순차입", "TTM capex"], borr_rows), ""]
