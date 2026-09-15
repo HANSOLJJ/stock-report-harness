@@ -294,6 +294,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     lines += ["## 기업별 상세", ""]
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
     baseline_scores = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
+    judgments_by_pair = {(j["company_id"], j["factor"]): j for j in ctx.judgments}
     for c in ordered:
         b = baseline_scores.get(c["company_id"])
         base_rank = f" · 기준선 {run['baseline_id']} {b['rank_raw']}위(14사)" if b and b.get("rank_raw") else ""
@@ -305,14 +306,18 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         incompatible_g4 = any(o["company_id"] == c["company_id"] and o["metric"] in ("contracted_revenue", "offbalance_B") and o["status"] == "incompatible_basis" for o in ctx.observations)
         for f in FACTOR_IDS:
             fr = c["factors"][f]
-            evidence = (b or {}).get("evidence", {}).get(f, []) if b else []
-            if evidence:
-                if fr["status"] == "carried_score" or fr["basis"] in ("manual", "carried"):
-                    header = f"근거(기준선 {run['baseline_id']}, 승계 판단)"
-                else:
-                    header = f"기준선 {run['baseline_id']} 서술(참고 — 이번 실행은 입력에서 자동 산출, 원문 판단은 미적용)"
+            base_evidence = (b or {}).get("evidence", {}).get(f, []) if b else []
+            # 2026-09-15 FIX-53 RC-06: 원래 기준선 v1.5 근거만 찍어서 이번 실행이 갱신한 판단(impl48·fix52 등)의 근거가
+            # 초안에 나오지 않았다. 활성 판단이 있으면 그 evidence 를 먼저 찍고, 기준선 서술은 '과거 기록' 으로 따로 둔다.
+            judgment = judgments_by_pair.get((c["company_id"], f))
+            if judgment is not None:
+                lines += _judgment_evidence_lines(f, judgment, base_evidence, run["baseline_id"])
+                if f == "F9" and incompatible_g4:
+                    lines.append("  - (원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)")
+            elif base_evidence:
+                header = f"기준선 {run['baseline_id']} 서술(참고 — 이번 실행은 입력에서 자동 산출, 원문 판단은 미적용)"
                 lines += [f"- **{FACTOR_LABELS[f]}** {header}:"]
-                lines += [f"  - {e}" for e in evidence[:6]]
+                lines += [f"  - {e}" for e in base_evidence[:6]]
                 if f == "F9" and incompatible_g4:
                     lines.append("  - (원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)")
             for w in fr["warnings"][:4]:
@@ -362,6 +367,41 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         lines.append(f"- {src.get('source_id')} — {src.get('title')} · {src.get('publisher') or ''} · {src.get('accessed_at') or ''} · {url}{sha}{coi}")
     lines += ["", f"_{DISCLAIMER}_", ""]
     return fm + "\n" + "\n".join(lines)
+
+
+def _struck(text: str) -> str:
+    """취소선. 본문에 `~` 가 있으면 마크다운 취소선이 깨지므로 표시어로 대신한다."""
+    return f"~~{text}~~ (superseded)" if "~" not in text else f"(superseded) {text}"
+
+
+def _judgment_evidence_lines(f: str, judgment: dict[str, Any], base_evidence: list[str], baseline_id: str) -> list[str]:
+    """활성 판단 근거를 먼저, 대체된 판단·기준선 서술을 뒤에 따로 찍는다.
+
+    - 승계 판단(carried): 근거란 자체가 기준선 문면이다. 이번 실행이 근거란에 붙인 superseded 표시·추가 문장까지
+      그대로 보이도록 **판단 파일의 evidence** 를 찍는다.
+    - 이번 실행 판단(new): 새 근거를 먼저 찍고, 대체된 옛 판단(superseded)과 기준선 서술을 과거 기록으로 따로 찍는다.
+    """
+    label = FACTOR_LABELS[f]
+    jid = judgment["judgment_id"]
+    evidence = list(judgment.get("evidence") or [])
+    if judgment["status"] == "carried":
+        out = [f"- **{label}** 근거(승계 판단 `{jid}` · 기준선 {baseline_id} · 검토 {judgment['reviewed_at']}):"]
+        out += [f"  - {e}" for e in evidence]
+        return out
+    out = [f"- **{label}** 근거(이번 실행 판단 `{jid}` · {judgment['reviewer']} · {judgment['reviewed_at']}):"]
+    out += [f"  - {e}" for e in evidence]
+    sup = judgment.get("superseded")
+    if sup:
+        out.append(f"  - 대체된 판단 `{sup['judgment_id']}` (superseded {sup['superseded_at']}) — {sup['why']}")
+        out += [f"    - {_struck(e)}" for e in sup.get("evidence", [])[:6]]
+        if len(sup.get("evidence", [])) > 6:
+            out.append(f"    - (외 {len(sup['evidence']) - 6}줄은 judgments.json superseded 에 있다)")
+    elif base_evidence and base_evidence != evidence:
+        old = [e for e in base_evidence if e not in evidence]
+        if old:
+            out.append(f"  - 과거 기록(기준선 {baseline_id} 서술 — 이번 실행 판단으로 대체):")
+            out += [f"    - {_struck(e)}" for e in old[:6]]
+    return out
 
 
 def _f9_policy(ctx: Any, key: str) -> Any:
@@ -513,7 +553,8 @@ def render_review_template(ctx: Any, results: dict[str, Any], *, draft_hash: str
              "각 영역은 가능하면 독립 세션에서 검토하고 실제 수행자·결과를 남긴다. 수행하지 않은 검토를 pass 로 표시하지 않는다.", "",
              "## 검토 영역", "",
              table(["영역", "검토 대상", "검토자", "결과", "요약"], [[label, scope, "", "pending", ""] for _, label, scope in REVIEW_AREAS]), "",
-             "결과는 pass / needs_fix / blocked 중 하나. 네 영역이 모두 pass 이고 체크리스트에 fail 이 없을 때만 frontmatter `status: pass`.", "",
+             "결과는 pass / needs_fix / blocked 중 하나. 네 영역이 모두 pass 이고 체크리스트에 fail 이 없을 때만 frontmatter `status: pass`.",
+             "**승계 판단 예외(AGENTS.md 리뷰 범위)** — 체크리스트 fail 의 사유가 `carried_score` 로 승계한 판단의 기존 논리이고, 이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며, 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 이때 해당 fail 과 **긴장 번호**(예: `TEN-RC-02`)를 근거 칸에 그대로 적는다. 이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다 — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(Q03).", "",
              "## 체크리스트", "",
              table(["ID", "검사 초점", "결과", "근거"], [[q["id"], q["focus"], "pending", ""] for q in ctx.rules.checklist()]), "",
              "결과는 pass / fail / not_applicable. not_applicable 도 근거가 필요하다.", "",
