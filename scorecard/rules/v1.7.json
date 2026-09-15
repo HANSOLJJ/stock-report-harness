@@ -1649,6 +1649,6 @@
         "note": "**되살리는 것이 아니다.** 관측이 어디서 왔는지 가리키려고 이름을 올린다. 올리기 전에는 네 목록 어디에도 없어 IMPL-46 이 ntm_per 12건에 `vendor_not_in_source_policy` 를 달았다. 걸리는 legacy 관측: market_cap 12건(점수 경로 11 + spacex-xai) · ntm_per 10건(tsmc·alibaba 는 직접 계산) · net_cash apple·palantir 2건(공시 혼합)."
       }
     ],
-    "note": "[SRC-FLAG-49 2026-09-14] **관측 source_id 는 원천 정책 검사를 받지 않는다.** `source_violation(url)` 은 `validate.check_source_allowlist` 가 sources.json 항목의 url 을 볼 때만 불린다. SRC-v15-html·md·rule 세 항목은 url 이 null 이라 검사를 그대로 통과하고, 그 source_id 를 단 이관 관측 242건(obsreg 기준 209+18+15)은 정책 검사 밖이다. 상류는 관측 basis(source_vendor·source_mixed)로만 추적한다. | 지시서 문구는 `fetch 시점 URL 검사` 였다 — 코드상 호출 지점은 fetch 가 아니라 sources.json 검증이라 그렇게 적었다."
+    "note": "[SRC-FLAG-49 2026-09-14] **관측 source_id 는 원천 정책 검사를 받지 않는다.** `source_violation(url)` 은 `validate.check_source_allowlist` 가 sources.json 항목의 url 을 볼 때만 불린다. SRC-v15-html·md·rule 세 항목은 url 이 null 이라 검사를 그대로 통과하고, 그 source_id 를 단 이관 관측 242건(obsreg 기준 html 183 + rule 18 + md 41)은 정책 검사 밖이다. 상류는 관측 basis(source_vendor·source_mixed)로만 추적한다. | 지시서 문구는 `fetch 시점 URL 검사` 였다 — 코드상 호출 지점은 fetch 가 아니라 sources.json 검증이라 그렇게 적었다. | [FIX-52] 관측 26건의 source_id 를 html → md 로 바로잡아 내역이 209+18+15 에서 바뀌었다(합계 불변)."
   }
 }

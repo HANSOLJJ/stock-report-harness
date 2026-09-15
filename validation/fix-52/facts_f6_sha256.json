@@ -1,0 +1,62 @@
+{
+  "META": {
+    "sha256": "7518e76d6dac2d016e1a3d1dec1cc55ff9ea3bdd58a151b16fcaa067a6c9d94e",
+    "bytes": 2746680,
+    "identical_to_15b": true
+  },
+  "NVDA": {
+    "sha256": "19ef503a5770f5660964b3c3aea6937579d9b359da344afe6a9adf59c63d26ff",
+    "bytes": 4092966,
+    "identical_to_15b": true
+  },
+  "GOOGL": {
+    "sha256": "a017f26ee88cb4a639d1c1ddb06d53b4afe22f0ac89cabec7cd67c88919fe1c5",
+    "bytes": 3164517,
+    "identical_to_15b": true
+  },
+  "MSFT": {
+    "sha256": "f8aae2965b20ad0df44bdf7ccbedf797d275b6b8dc030154a7a311361bb7246f",
+    "bytes": 4881196,
+    "identical_to_15b": true
+  },
+  "AMZN": {
+    "sha256": "e6aadb0da7384597dbd78f74d1379ffb7fd0829a4d2e797b6d7e442b5e1da0d7",
+    "bytes": 4477763,
+    "identical_to_15b": true
+  },
+  "AAPL": {
+    "sha256": "73a86c6aedc31f77cac2ea4df5f80f0b3bd7e6eb58bb4e01444fbedf3afb9c43",
+    "bytes": 3789099,
+    "identical_to_15b": true
+  },
+  "ORCL": {
+    "sha256": "60e4f8db39c9a84106bd02677f578db14a54c8bccabcdba2b828e595c32edeca",
+    "bytes": 3914974,
+    "identical_to_15b": true
+  },
+  "PLTR": {
+    "sha256": "43014a2e04fa2784dd669d337a65c9eac9374ea638dacb292ecf19905408651f",
+    "bytes": 1247305,
+    "identical_to_15b": true
+  },
+  "TSLA": {
+    "sha256": "d0c2b9288d027a6d735039a6fe874a348b65a7fdbc6c133130666c777c885204",
+    "bytes": 3641344,
+    "identical_to_15b": true
+  },
+  "SPCX": {
+    "sha256": "cd3b109b3790272e1bce6153d0b183476ea23a377c26132f1d7449e4e722de7f",
+    "bytes": 124544,
+    "identical_to_15b": true
+  },
+  "TSM": {
+    "sha256": "d3ebb91e3ad78c9482e238c4db36df60b295a3b49ca137774706f4f5e526044a",
+    "bytes": 911248,
+    "identical_to_15b": true
+  },
+  "BABA": {
+    "sha256": "66f5eb1c036515728219ec6983e6d74be34201eb5abbeb4d5120b0aa5dd5ff9f",
+    "bytes": 1397371,
+    "identical_to_15b": true
+  }
+}

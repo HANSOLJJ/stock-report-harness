@@ -29,7 +29,7 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "author_computed",
@@ -42,7 +42,17 @@
         "price_input_citation": "채점표 L794 절 제목 · 주가 L809",
         "source_citation": "채점표 L794 절 제목 · 행 L809",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$270B",
       "note": null
@@ -55,7 +65,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "annual_eps_weighted_proxy",
@@ -67,7 +77,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "16.7 ✱",
       "note": null
@@ -139,13 +161,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L810",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$1.51T",
       "note": null
@@ -158,7 +190,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -169,7 +201,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "17.9",
       "note": null
@@ -241,13 +285,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L811",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$5.42T",
       "note": null
@@ -260,7 +314,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -271,7 +325,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "18.0",
       "note": null
@@ -343,7 +409,7 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "author_computed",
@@ -356,7 +422,17 @@
         "price_input_citation": "채점표 L794 절 제목 · 주가 L812",
         "source_citation": "채점표 L794 절 제목 · 행 L812",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$2.15T ✱",
       "note": null
@@ -369,7 +445,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "annual_eps_weighted_proxy",
@@ -381,7 +457,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "19.4 ✱",
       "note": null
@@ -453,13 +541,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L813",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$4.12T",
       "note": null
@@ -472,7 +570,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -483,7 +581,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "25.3",
       "note": null
@@ -555,13 +665,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L814",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$3.69T",
       "note": null
@@ -574,7 +694,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -585,7 +705,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "25.4",
       "note": null
@@ -657,13 +789,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L815",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$2.75T",
       "note": null
@@ -676,7 +818,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -687,7 +829,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "27.5",
       "note": null
@@ -759,13 +913,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L816",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$4.74T",
       "note": null
@@ -778,7 +942,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -789,7 +953,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "35.5",
       "note": null
@@ -861,13 +1037,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L817",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$443.7B",
       "note": null
@@ -880,7 +1066,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -891,7 +1077,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "19.1",
       "note": null
@@ -963,13 +1161,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L818",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$407B",
       "note": null
@@ -982,7 +1190,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -993,7 +1201,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "89.0",
       "note": null
@@ -1065,14 +1285,24 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L819",
         "vendor_not_in_source_policy": true,
         "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
-        "on_score_path": "**점수 경로 밖.** spacex-xai 는 F6 `listed_newly` 트랙이라 P3 만 읽고 P1·P2 가 이 값을 쓰지 않는다. SRC-TRACE-47 의 점수 경로 11건에 안 들고 이 12번째 건이다. 상류는 같은 절(L819)이라 같이 표시한다."
+        "on_score_path": "**점수 경로 밖.** spacex-xai 는 F6 `listed_newly` 트랙이라 P3 만 읽고 P1·P2 가 이 값을 쓰지 않는다. SRC-TRACE-47 의 점수 경로 11건에 안 들고 이 12번째 건이다. 상류는 같은 절(L819)이라 같이 표시한다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$1.91T",
       "note": null
@@ -1085,7 +1315,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -1096,7 +1326,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "111",
       "note": null
@@ -1168,13 +1410,23 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_vendor": "StockAnalysis",
         "source_citation": "채점표 L794 절 제목 · 행 L820",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "$1.41T",
       "note": null
@@ -1187,7 +1439,7 @@
       "unit": "ratio",
       "as_of": "2026-09-02",
       "kind": "estimate",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "method": "vendor_forward_pe_verified_ntm",
@@ -1198,7 +1450,19 @@
         "vendor_policy_check": "StockAnalysis 는 v1.7 원천 정책 **네 목록**(allowed · denied · not_adopted · unlisted) 어디에도 없다. 허용도 금지도 미채택도 미등재 검토도 된 적 없는 원천이다(IMPL-46, 2026-09-14 확인).",
         "vendor_source_text": "채점규칙 629행 · HANDOVER 39행 · 채점표 794행",
         "not_read_by_engine": "F6 정본 parameters 가 ntm_per 를 읽지 않는다 — 점수에 닿지 않는다.",
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다. 위 vendor_policy_check 는 IMPL-46 시점 기록이다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-rule",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "187.5",
       "note": null
@@ -1295,14 +1559,25 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_mixed": "StockAnalysis 9/2 + 공시 (채점표 L848 · HANDOVER L41)",
         "source_mixed_text": "채점표 L848 절 제목 `3-1a-3. 통합 재무 전수표 — ⑨ 게이트 원자료 (StockAnalysis 9/2 + 공시)` · 행 L854 · HANDOVER L41 `TTM FCF · 현금 · 순차입 · D/EBITDA | StockAnalysis Financials | … Cash & ST Inv …`",
         "not_sec": "**SEC 관측이 아니다.** 어느 칸이 StockAnalysis 이고 어느 칸이 공시인지 원문이 행 단위로 가르지 않는다.",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "+$62.2B",
       "note": null
@@ -1987,14 +2262,25 @@
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
-      "source_id": "SRC-v15-html",
+      "source_id": "SRC-v15-md",
       "status": "legacy_unverified",
       "basis": {
         "source_mixed": "StockAnalysis 9/2 + 공시 (채점표 L848 · HANDOVER L41)",
         "source_mixed_text": "채점표 L848 절 제목 `3-1a-3. 통합 재무 전수표 — ⑨ 게이트 원자료 (StockAnalysis 9/2 + 공시)` · 행 L861 · HANDOVER L41 `TTM FCF · 현금 · 순차입 · D/EBITDA | StockAnalysis Financials | … Cash & ST Inv …`",
         "not_sec": "**SEC 관측이 아니다.** 어느 칸이 StockAnalysis 이고 어느 칸이 공시인지 원문이 행 단위로 가르지 않는다.",
         "vendor_not_in_source_policy": true,
-        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다."
+        "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
+        "cited_source_ids": [
+          "SRC-v15-md",
+          "SRC-v15-handover"
+        ],
+        "source_id_correction": {
+          "from": "SRC-v15-html",
+          "to": "SRC-v15-md",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        }
       },
       "raw": "+$9.2B",
       "note": null
@@ -5890,7 +6176,7 @@
       "basis": {
         "measured_as_of": "2026-06-27",
         "form": "10-Q",
-        "accession": "0000320193-26-000070",
+        "accession": "0000320193-26-000020",
         "taxonomy": "us-gaap",
         "period_basis": "ttm",
         "definition": "사용 가능한 현금 및 현금성자산만(설계 지침 6.4). 단기 투자자산을 넣지 않는다.",
@@ -5916,6 +6202,14 @@
           "legacy_equaled": "총계(비유동 포함)",
           "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -73.0075
+        },
+        "accession_correction": {
+          "wrong": "0000320193-26-000070",
+          "right": "0000320193-26-000020",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "evidence": "보존 AAPL companyfacts 에 283건, form 10-Q · fy 2026 Q3 · filed 2026-07-31 · CashAndCashEquivalentsAtCarryingValue 2026-06-27 = 39,544,000,000. 틀린 번호는 0건",
+          "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
         }
       },
       "raw": "현금및현금성자산 39.5B (버퍼 62.4B 는 basis 에 보존)",
@@ -5939,7 +6233,7 @@
       "basis": {
         "measured_as_of": "2026-06-27",
         "form": "10-Q",
-        "accession": "0000320193-26-000070",
+        "accession": "0000320193-26-000020",
         "taxonomy": "us-gaap",
         "period_basis": "ttm",
         "formula": "ocf_ttm - capex_ttm",
@@ -5966,6 +6260,14 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": 136700000000.0,
           "diff_pct": -0.0124
+        },
+        "accession_correction": {
+          "wrong": "0000320193-26-000070",
+          "right": "0000320193-26-000020",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "evidence": "보존 AAPL companyfacts 에 283건, form 10-Q · fy 2026 Q3 · filed 2026-07-31 · CashAndCashEquivalentsAtCarryingValue 2026-06-27 = 39,544,000,000. 틀린 번호는 0건",
+          "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
         }
       },
       "raw": "TTM FCF 136.7B = OCF 146.7B - CapEx 10.0B",
@@ -6727,7 +7029,7 @@
       "basis": {
         "measured_as_of": "2026-06-30",
         "form": "10-Q / S-1/A",
-        "accession": "0001628280-26-052535 (10-Q), 0001193125-26-235805 (S-1/A)",
+        "accession": "0001628280-26-052535 (10-Q), 0001628280-26-040364 (S-1/A)",
         "taxonomy": "us-gaap",
         "period_basis": "ttm",
         "definition": "사용 가능한 현금 및 현금성자산만(설계 지침 6.4). 단기 투자자산을 넣지 않는다.",
@@ -6752,6 +7054,14 @@
           "legacy_equaled": "어느 쪽도 아님",
           "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -6.478
+        },
+        "accession_correction": {
+          "wrong": "0001193125-26-235805",
+          "right": "0001628280-26-040364",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "evidence": "보존 SPCX companyfacts 에 5건, form S-1/A · filed 2026-06-03. sources.json SRC-SEC-SPCX-S1A-2026 과 같은 런 f6reg28 관측도 이 번호다. 틀린 번호는 0건",
+          "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
         }
       },
       "raw": "현금및현금성자산 93.5B (버퍼 93.5B 는 basis 에 보존)",
@@ -6775,7 +7085,7 @@
       "basis": {
         "measured_as_of": "2026-06-30",
         "form": "10-Q / S-1/A",
-        "accession": "0001628280-26-052535 (10-Q), 0001193125-26-235805 (S-1/A)",
+        "accession": "0001628280-26-052535 (10-Q), 0001628280-26-040364 (S-1/A)",
         "taxonomy": "us-gaap",
         "period_basis": "ttm",
         "formula": "ocf_ttm - capex_ttm",
@@ -6802,6 +7112,14 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": -32500000000.0,
           "diff_pct": -0.4677
+        },
+        "accession_correction": {
+          "wrong": "0001193125-26-235805",
+          "right": "0001628280-26-040364",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "evidence": "보존 SPCX companyfacts 에 5건, form S-1/A · filed 2026-06-03. sources.json SRC-SEC-SPCX-S1A-2026 과 같은 런 f6reg28 관측도 이 번호다. 틀린 번호는 0건",
+          "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
         }
       },
       "raw": "TTM FCF -32.3B = OCF 9.9B - CapEx 42.2B",
@@ -7448,7 +7766,7 @@
       "basis": {
         "measured_as_of": "2026-06-30",
         "form": "10-Q / S-1/A",
-        "accession": "0001628280-26-052535 (10-Q), 0001193125-26-235805 (S-1/A)",
+        "accession": "0001628280-26-052535 (10-Q), 0001628280-26-040364 (S-1/A)",
         "taxonomy": "us-gaap",
         "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
         "definition_status": "working_definition",
@@ -7510,7 +7828,15 @@
             "corrected": 39708000000.0
           }
         ],
-        "why_this_match_matters": "**이 일치가 유가증권 경계의 가장 강한 증거다.** 두 정정이 동시에 들어가야 나온다 — (1) 총액 태그가 이미 포함한 금융리스 1,079 를 빼고 (2) C-13 이 넣은 제한현금 830 을 빼고 빠뜨린 시장성 증권 6,487 을 넣는다. 그러면 100,009 - 39,708 = 60,301 이고 legacy 60,300 과 100만 달러 차이다. **서로 독립인 두 정정이 legacy 값 하나로 수렴한다.**"
+        "why_this_match_matters": "**이 일치가 유가증권 경계의 가장 강한 증거다.** 두 정정이 동시에 들어가야 나온다 — (1) 총액 태그가 이미 포함한 금융리스 1,079 를 빼고 (2) C-13 이 넣은 제한현금 830 을 빼고 빠뜨린 시장성 증권 6,487 을 넣는다. 그러면 100,009 - 39,708 = 60,301 이고 legacy 60,300 과 100만 달러 차이다. **서로 독립인 두 정정이 legacy 값 하나로 수렴한다.**",
+        "accession_correction": {
+          "wrong": "0001193125-26-235805",
+          "right": "0001628280-26-040364",
+          "corrected_at": "2026-09-15",
+          "task": "FIX-52 (리뷰 A qwen 발견)",
+          "evidence": "보존 SPCX companyfacts 에 5건, form S-1/A · filed 2026-06-03. sources.json SRC-SEC-SPCX-S1A-2026 과 같은 런 f6reg28 관측도 이 번호다. 틀린 번호는 0건",
+          "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
+        }
       },
       "raw": "현금+시장성증권 100.0B − 차입 39.4B − 리스 0.3B = 60.3B",
       "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"

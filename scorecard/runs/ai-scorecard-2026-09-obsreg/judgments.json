@@ -125,7 +125,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -150,7 +151,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -246,7 +249,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -326,7 +330,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -351,7 +356,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -526,7 +533,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -549,7 +557,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -719,7 +729,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -742,7 +753,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -914,7 +927,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -937,7 +951,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -1112,7 +1128,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -1135,7 +1152,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -1321,7 +1340,7 @@
       "reviewed_at": "2026-09-14",
       "status": "new",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-rule"
       ],
       "previous_judgment_id": "anthropic.F5",
       "superseded": {
@@ -1395,7 +1414,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -1424,6 +1445,7 @@
       "status": "new",
       "source_ids": [
         "SRC-v15-html",
+        "SRC-v15-md",
         "SRC-SEC-AMZN-10Q-2026Q2"
       ],
       "previous_judgment_id": "anthropic.F8"
@@ -1584,7 +1606,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -1607,7 +1630,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -1780,7 +1805,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -1820,7 +1846,9 @@
       "reviewed_at": "2026-09-15",
       "status": "new",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ],
       "previous_judgment_id": "nvidia.F7",
       "superseded": {
@@ -1884,7 +1912,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2026,7 +2055,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2049,7 +2079,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -2230,7 +2262,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2256,7 +2289,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -2397,7 +2432,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2446,7 +2482,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2470,7 +2507,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {
@@ -2646,7 +2685,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2672,7 +2712,9 @@
       "reviewed_at": "2026-09-15",
       "status": "new",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ],
       "previous_judgment_id": "oracle.F7",
       "superseded": {
@@ -2721,7 +2763,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2815,7 +2858,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2869,7 +2913,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2903,7 +2948,8 @@
       "reviewed_at": "2026-09-14",
       "status": "new",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ],
       "previous_judgment_id": "openai.F5",
       "superseded": {
@@ -2984,7 +3030,9 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule",
+        "SRC-v15-md"
       ]
     },
     {

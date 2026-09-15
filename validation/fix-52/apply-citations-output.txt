@@ -1,0 +1,11 @@
+1. 판단 source_ids 변경 35건
+      79 × SRC-v15-html
+      18 × SRC-v15-html + SRC-v15-rule
+      14 × SRC-v15-html + SRC-v15-rule + SRC-v15-md
+       1 × SRC-v15-rule
+       1 × SRC-v15-html + SRC-v15-md + SRC-SEC-AMZN-10Q-2026Q2
+       1 × SRC-v15-rule + SRC-v15-md
+2. 관측 source_id html → md 26건
+3. sources.json HANDOVER 등재 · rule COI · FACTS-F6/BABA 경로 규약
+4. 접수번호 정정 5건: apple.cash.cashfcf35, apple.fcf_ttm.cashfcf35, spacex-xai.cash.cashfcf35, spacex-xai.fcf_ttm.cashfcf35, spacex-xai.net_cash.nc37
+5. run.json alibaba assumption 낡음 표시: True

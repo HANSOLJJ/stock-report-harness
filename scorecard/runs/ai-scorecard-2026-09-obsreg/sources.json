@@ -29,8 +29,18 @@
       "url": null,
       "accessed_at": "2026-09-11",
       "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
-      "conflict_of_interest": null,
-      "note": "규칙 원문 판정표"
+      "conflict_of_interest": "작성자 Claude=Anthropic — 채점규칙 384행 이해상충 고지(ARC-AGI 하네스 규칙이 결과적으로 Anthropic ②5 를 지켰다, 운영이력 긴장 #4·#11, 제3자 재검토 예정)",
+      "note": "규칙 원문 판정표 | [FIX-52] 이해상충 칸이 null 이었다(리뷰 A 발견)."
+    },
+    {
+      "source_id": "SRC-v15-handover",
+      "title": "AI기업_채점표_HANDOVER.md (자동화 핸드오버 — 원자료 출처표·기계화 재고·작성자 이해상충)",
+      "publisher": "내부 기준선",
+      "url": null,
+      "accessed_at": "2026-09-14",
+      "sha256": "3e5190c2cb4a4f8ebee2f72d4599929b79a5d4625b1d046c346627edf63b7cc1",
+      "conflict_of_interest": "작성자 Claude=Anthropic — HANDOVER 75행 `3-7. 작성자 이해상충. Claude=Anthropic` (긴장 #4·#11)",
+      "note": "2026-09-07 작성 · v1.5 기준(문서 2행). 이 실행이 IMPL-46(2026-09-14)부터 행 번호로 인용했는데 항목이 없었다 (리뷰 A 발견, FIX-52 등재). 인용 행 33~45·75. 보존 위치는 v1.5 원본 셋과 같은 E:/sourcecode/01_side_project/stock-report-harness/AI_company_analysis_factor/ 이고 저장소에 커밋되지 않았다. accessed_at 은 이 실행이 처음 인용한 날이다."
     },
     {
       "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
@@ -80,7 +90,7 @@
       "accessed_at": "2026-09-11",
       "sha256": "66f5eb1c036515728219ec6983e6d74be34201eb5abbeb4d5120b0aa5dd5ff9f",
       "conflict_of_interest": null,
-      "note": "원문 보존 C-13 HANSOLJJ/C-13:validation/f6-avail-15b/_raw/CIK0001577552_BABA.json. 신규 네트워크 호출 없음"
+      "note": "원문 보존 cbada75:validation/f6-avail-15b/_raw/CIK0001577552_BABA.json (HANSOLJJ/C-13). SRC-SEC-FACTS-F6 과 같은 경로 규약. 신규 네트워크 호출 없음"
     },
     {
       "source_id": "SRC-SEC-FACTS-F6",
@@ -90,7 +100,7 @@
       "accessed_at": "2026-09-10",
       "sha256": null,
       "conflict_of_interest": null,
-      "note": "원문 보존 validation/f6-avail-15/_raw/*.companyfacts.json (2026-09-10 수집). 이번 과제에서 신규 호출 없음. 재구성 절차는 validation/f6-spec-18/collect_ttm.py"
+      "note": "원문 보존 cbada75:validation/f6-avail-15b/_raw/CIK{10자리}_{TICKER}.json (HANSOLJJ/C-13 브랜치, 12개사, http_metadata.json timestamp 2026-09-10T15:37). **원자료 경로 규약(FIX-52)** — 커밋된 사본을 `<커밋>:<경로>` 로 적고 브랜치를 괄호에 둔다. 작업 트리에만 있는 경로(gitignore)는 다른 워크트리·브랜치에서 재현되지 않으므로 규약 경로로 쓰지 않는다. | **이 원자료는 이 브랜치와 main 에 커밋되지 않았다.** worker 작업 트리의 validation/f6-avail-15/_raw/{TICKER}.companyfacts.json 은 gitignore 로 막혀 있고(수집 2026-09-10T06:38Z), 12개 파일 전부 15b 사본과 **바이트 단위로 같다** — sha256 12건은 validation/fix-52/facts_f6_sha256.json. 재구성 스크립트(validation/f6-spec-18/collect_ttm.py 등)는 작업 트리 경로를 읽으므로 이 워크트리 밖에서는 15b 사본으로 대체해야 돈다. 이번 과제에서 신규 호출 없음."
     },
     {
       "source_id": "SRC-SEC-TSM-20F-FY2025",
