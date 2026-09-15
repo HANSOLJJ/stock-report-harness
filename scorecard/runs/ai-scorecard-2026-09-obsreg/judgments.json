@@ -1460,10 +1460,10 @@
       "inputs": {},
       "evidence": [
         "컴퓨트 100% 외부 + 공급자 3사가 전부 경쟁자 — Google(Gemini) · Amazon(Nova) · Microsoft(OpenAI 지분 27% 보유). **OpenAI 27% 는 Microsoft 의 OpenAI 지분율**이지 Anthropic 의 컴퓨트 배분이 아니다(채점표_v1.5.md 188·198·350행 · 채점규칙_v1.5.md 217행에서 확인 — FIX-53 3단계 문서명 분리).",
-        "🔧 컴퓨트 약정 $300B — Google Cloud $200B/5년(연 ~$40B) + AWS $100B/10년(연 ~$10B) [FIX-53 3단계 라벨 정정: 10-Q Note 1 문면은 `expansion of … existing multi-year commitment by more than $100.0 billion over 10.0 years` — 기존 다년 약정 **위의 증액**이고 `more than` 이라 **하한**이다. $100B/10년은 약정 총액이 아니다. $300B 합계는 v1.5 기준선 값(HANDOVER 51행)] + Azure $30B. AWS 분은 **Amazon 10-Q Note 1 에 직접 공시돼 있다**: \"In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.\" (보존 원문 C-13 3cf9799:validation/offb-24/_raw/amzn-20260630.htm 에서 worker 직접 대조)",
+        "🔧 컴퓨트 약정 $300B — Google Cloud $200B/5년(연 ~$40B) + AWS $100B/10년(연 ~$10B) [FIX-53 3단계 라벨 정정: 10-Q Note 1 문면은 `expansion of … existing multi-year commitment by more than $100.0 billion over 10.0 years` — 기존 다년 약정 **위의 증액**이고 `more than` 이라 **하한**이다. $100B/10년은 약정 총액이 아니다. $300B 합계는 v1.5 기준선 값(HANDOVER 51행). `(연 ~$10B)` 는 이 라벨에서 나온 **약정 하한 기준 환산**이다] + Azure $30B. AWS 분은 **Amazon 10-Q Note 1 에 직접 공시돼 있다**: \"In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.\" (보존 원문 C-13 3cf9799:validation/offb-24/_raw/amzn-20260630.htm 에서 worker 직접 대조)",
         "📐 **[근거 교체 2026-09-11] AWS 훈련 집중은 증권사 2차 증언이 아니라 Amazon 의 1차 공시다.** 승계 근거란은 이것을 DS투자증권 9/7 자료로 적고 있었으나, 실제로는 Amazon 이 SEC Form 8-K (Ex 99.1) 네 건으로 직접 공시한 사실이다(C-13 F8-ANTH-33, 8ddb0ae). 0001018724-25-000002(2025-02-06) · 0001018724-25-000121(2025-10-30) · 0001018724-26-000002(2026-02-05) · 0001018724-26-000012(2026-04-29). 2026-02-05 공시 원문: \"Trainium2 powers Project Rainier, the world's largest operational AI compute cluster with 500,000+ Trainium2 chips, which Anthropic is using to train its industry-leading AI model, Claude.\" 증권사 자료는 이 공시 사실에 질적 해석을 얹은 2차 출처였다.",
         "✅ **확인된 것** — (1) Project Rainier 의 실체와 규모(2025-10 nearly 500,000 → 2026-02 500,000+ Trainium2). (2) Anthropic 이 그 클러스터로 Claude 를 **훈련(train)** 한다는 Amazon 의 명시. (3) 2026-04-29 공시의 최대 5GW Trainium 확보와 train and power 문면. (4) AWS 약정 $100B/10년과 칩 성능 연계 의무(10-Q Note 1).",
-        "❓ **확인되지 않은 것** — (1) **Google 몫의 훈련/서빙 구분.** Alphabet 10-K(FY2025)·10-Q(2026 Q1·Q2) 본문에 'Anthropic' 이 **0건**이다. 계약 존재·금액·기간·용도가 전부 회사 미공시다. Google Cloud 는 고객사 다중 기가와트 TPU 계약을 백로그로 포괄 기술할 뿐이다. (2) AWS $100B+ 안의 훈련용/서빙용 금액 구분도 미공시다. (3) 따라서 **돈은 Google 이 4배인데 성능 원천은 AWS** 라는 긴장(#10)은 해소되지 않고 실증 상태만 갱신됐다.",
+        "❓ **확인되지 않은 것** — (1) **Google 몫의 훈련/서빙 구분.** Alphabet 10-K(FY2025)·10-Q(2026 Q1·Q2) 본문에 'Anthropic' 이 **0건**이다. 계약 존재·금액·기간·용도가 전부 회사 미공시다. Google Cloud 는 고객사 다중 기가와트 TPU 계약을 백로그로 포괄 기술할 뿐이다. (2) AWS $100B+ 안의 훈련용/서빙용 금액 구분도 미공시다. (3) 따라서 **돈은 Google 이 4배인데 성능 원천은 AWS**(4배는 AWS 약정 하한 $100B 기준 환산 — AWS 증액이 더 크면 배수는 줄어든다, FIX-53 3단계 라벨 정정) 라는 긴장(#10)은 해소되지 않고 실증 상태만 갱신됐다.",
         "⚖️ **점수 −3 유지.** 하향하지 않는 이유는 **Google 몫이 훈련이 아니라는 증거가 있는 것이 아니라 공시가 없을 뿐**이기 때문이다. 미공시를 '아니다' 로 읽으면 우리가 못 찾은 것을 그 기업의 구조로 둔갑시키게 된다(MISS-LABEL-23 이 세운 원칙). 장부상 3사 분산은 성립하고, 물리적 훈련 집중은 AWS 쪽에서만 1차 확인됐다.",
         "🔁 **재판정 조건 (−4 재검토)** — 셋 중 **하나라도** 1차 자료로 확인되면 −4 를 재검토한다. (1) Alphabet 이 고객사별로 분리 공시해 Anthropic 계약의 규모·용도가 드러나거나, (2) Anthropic 이 훈련 컴퓨트 구성을 공시하거나, (3) Google 몫이 **서빙 전용**임이 1차 자료로 확인되는 경우. 셋 다 '미공시가 해소되는' 방향이고, 추측으로는 재판정하지 않는다.",
         "FTC 가 계약 배타성 검토",
@@ -1505,18 +1505,19 @@
         "게이트 1 ✅ Q2 첫 영업흑자 $559M(매출 $10.9B, 마진 5%)",
         "게이트 2 판정 불가 — 비상장이라 FCF 미공시. 없는 데이터를 유리하게 해석하지 않는다",
         "완충이 외부 조달뿐 — Series H $30B($965B 밸류)에 기댄다",
-        "게이트 4 🔧 컴퓨트 약정 $300B(Google Cloud $200B/5년 + AWS $100B/10년, 4/20 5GW) — 연 환산 약 $50B로 ARR $65B의 77%, 커버리지 1.3배로 통과 (v1.5 정정: 기존 $80B는 3.75배 낡은 수치)",
+        "게이트 4 🔧 컴퓨트 약정 $300B(Google Cloud $200B/5년 + AWS $100B/10년, 4/20 5GW) — 연 환산 약 $50B로 ARR $65B의 77%, 커버리지 1.3배로 통과 (v1.5 정정: 기존 $80B는 3.75배 낡은 수치) [FIX-53 3단계 라벨 정정: 10-Q Note 1 문면은 `expansion of … existing multi-year commitment by more than $100.0 billion over 10.0 years` — 기존 다년 약정 **위의 증액**이고 `more than` 이라 **하한**이다. $100B/10년은 약정 총액이 아니다. $300B 합계는 v1.5 기준선 값(HANDOVER 51행). `연 환산 약 $50B`·`ARR $65B 의 77%`·`커버리지 1.3배` 는 이 라벨에서 나온 **약정 하한 기준 환산**이다 — 약정이 더 크면 연 환산은 $50B 보다 크고 커버리지는 1.3배보다 낮다. 게이트 4 판정은 승계 그대로다]",
         "⚠️ 게이트 2의 '미공시 보수 처리'와 게이트 4의 '판정 불가 하향'은 같은 미공시라 중복 적용하지 않는다",
         "'상장 때까지 증시가 버텨주느냐'가 곧 이 항목"
       ],
       "counter_evidence": [],
-      "note": "규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성)",
+      "note": "규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) | [FIX-53 3단계 라벨 정정] AWS $100B 라벨을 공시 문면(기존 약정 위 증액·하한)에 맞추고 파생 환산을 하한 기준으로 표시했다. 점수·게이트 불변.",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-handover"
       ]
     },
     {

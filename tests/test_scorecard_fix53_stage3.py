@@ -144,7 +144,9 @@ class JudgmentCorrectionsTest(unittest.TestCase):
         text = " ".join(self.j["anthropic.F8.f8anth33"]["evidence"])
         self.assertIn("more than $100.0 billion", text)
         self.assertIn("채점표_v1.5.md 188·198·350행 · 채점규칙_v1.5.md 217행", text)
-        self.assertEqual(text.count("FIX-53 3단계 라벨 정정"), 1)
+        # 3단계 보완에서 `4배` 줄에도 같은 표식을 붙였다 — 라벨 줄 자체에는 한 번만 붙는지 본다.
+        label_line = next(e for e in self.j["anthropic.F8.f8anth33"]["evidence"] if "AWS $100B/10년" in e)
+        self.assertEqual(label_line.count("FIX-53 3단계 라벨 정정"), 1)
 
     def test_nvidia_f2_tension(self):
         n = self.j["nvidia.F2"]

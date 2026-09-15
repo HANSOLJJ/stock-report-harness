@@ -1,0 +1,2 @@
+판단 변경: ['anthropic.F9 evidence[4]', 'anthropic.F8.f8anth33 evidence[1] (환산 표시)', 'anthropic.F8.f8anth33 evidence[4] (4배 하한 기준)']
+rules.source_text_corrections STC-AWS-100B · rule_hash bd0371a2ff51

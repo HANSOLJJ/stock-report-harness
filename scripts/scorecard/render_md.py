@@ -364,7 +364,8 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     if triggers:
         replaced = _trigger_replacements(ctx, triggers)
         lines += [table(["ID", "항목", "왜 중요한가(v1.5 원문)", "영향(원문)"],
-                        [[t["trigger_id"], t["title"], t["why"] + replaced.get(t["trigger_id"], ""), t["impact_raw"]] for t in triggers]), "",
+                        [[t["trigger_id"], t["title"], _apply_text_corrections(ctx, t["why"] + replaced.get(t["trigger_id"], ""), "triggers"),
+                          t["impact_raw"]] for t in triggers]), "",
                   "- 트리거의 예상 점수는 저장값이 아니라 원문 문장이다(C-14). 사건 확인 후 현재 규칙으로 재계산한다.",
                   f"- `왜 중요한가` 의 날짜·금액·수치는 기준선 {ctx.run['baseline_id']} 원문(2026-09-02 기준)이다. 이번 실행이 실측으로 "
                   "대체한 수치는 그 칸 끝에 ⚠️ 로 적었다. 사건 사실 자체의 뉴스 출처는 sources.json 에 등재돼 있지 않다.", ""]
@@ -513,6 +514,14 @@ def _annotate_replaced(text: str, company_id: str, reps: list[dict[str, Any]]) -
                 new = fmt_usd(o["value"], 3)            # 반올림 표기가 원문과 같으면 자릿수를 늘려 차이를 보인다
             notes.append(f"⚠️ 원문 {hit} 는 이번 실행 실측 {new}({o['observation_id']}, verified, {when})로 대체됐다")
     return text + ("".join(f" {n}." for n in notes))
+
+
+def _apply_text_corrections(ctx: Any, text: str, target: str) -> str:
+    """rules.source_text_corrections 중 target 에 해당하는 것을 줄 끝에 붙인다. 이미 marker 가 있으면 건너뛴다."""
+    for c in ctx.rules.payload.get("source_text_corrections") or []:
+        if target in c["applies_to"] and c["match"] in text and c["marker"] not in text:
+            text = f"{text} {c['correction']}"
+    return text
 
 
 def _trigger_replacements(ctx: Any, triggers: list[dict[str, Any]]) -> dict[str, str]:

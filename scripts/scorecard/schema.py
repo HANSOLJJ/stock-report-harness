@@ -231,7 +231,7 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         payload,
         ["schema", "rule_version", "status", "source", "scoring", "factors", "policies", "checklist", "decisions"],
         "rules.json",
-        optional=["note", "sources", "open_tensions"],
+        optional=["note", "sources", "open_tensions", "source_text_corrections"],
     )
     _require(payload["schema"] == "scorecard.rules/1", "rules.json: schema 불일치")
     _require(payload["status"] in {"active", "draft", "retired"}, "rules.json: status 오류")
@@ -277,7 +277,29 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         _validate_source_policy(payload["sources"])
     if "open_tensions" in payload:
         _validate_open_tensions(payload["open_tensions"], {d["id"] for d in payload["decisions"]})
+    if "source_text_corrections" in payload:
+        _validate_source_text_corrections(payload["source_text_corrections"])
     return payload
+
+
+def _validate_source_text_corrections(items: Any) -> None:
+    """불변 원천(v1.5 기준선 트리거 등) 문구에 렌더러가 덧붙이는 정정 목록(FIX-53 3단계 보완).
+
+    원천 파일은 고치지 않는다. `match` 가 들어 있는 줄 끝에 `correction` 을 붙이고, 이미 `marker` 가 있는 줄은 건너뛴다.
+    """
+    _require(isinstance(items, list), "rules.source_text_corrections: 배열이어야 함")
+    seen: set[str] = set()
+    for idx, c in enumerate(items):
+        where = f"rules.source_text_corrections[{idx}]"
+        _expect_keys(c, ["id", "match", "correction", "marker", "applies_to", "why", "decided_at"], where, optional=["note"])
+        _require(c["id"] not in seen, f"{where}.id: 중복 {c['id']}")
+        seen.add(c["id"])
+        for key in ("match", "correction", "marker", "why"):
+            _require(isinstance(c[key], str) and c[key].strip(), f"{where}.{key}: 비워 둘 수 없음")
+        _require(c["marker"] in c["correction"], f"{where}: correction 안에 marker 가 있어야 재적용을 막는다")
+        _require(isinstance(c["applies_to"], list) and set(c["applies_to"]) <= {"triggers"} and c["applies_to"],
+                 f"{where}.applies_to: 지금 소비자는 트리거 렌더러 하나다 — triggers 만 받는다")
+        _expect_date(c["decided_at"], f"{where}.decided_at")
 
 
 TENSION_ID_RE = re.compile(r"^TEN-[A-Z0-9-]+$")
