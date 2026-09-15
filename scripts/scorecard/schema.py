@@ -229,7 +229,7 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         payload,
         ["schema", "rule_version", "status", "source", "scoring", "factors", "policies", "checklist", "decisions"],
         "rules.json",
-        optional=["note", "sources"],
+        optional=["note", "sources", "open_tensions"],
     )
     _require(payload["schema"] == "scorecard.rules/1", "rules.json: schema 불일치")
     _require(payload["status"] in {"active", "draft", "retired"}, "rules.json: status 오류")
@@ -273,7 +273,39 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         _require(d["status"] in {"documented", "pending", "resolved"}, f"rules.decisions[{d['id']}]: status 오류")
     if "sources" in payload:
         _validate_source_policy(payload["sources"])
+    if "open_tensions" in payload:
+        _validate_open_tensions(payload["open_tensions"], {d["id"] for d in payload["decisions"]})
     return payload
+
+
+TENSION_ID_RE = re.compile(r"^TEN-[A-Z0-9-]+$")
+RECHECK_RE = re.compile(r"^\d{4}-\d{2}$")
+
+
+def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
+    """긴장 목록 — AGENTS.md 리뷰 범위의 승계 판단 예외가 기대는 장부다(FIX-53).
+
+    예외는 **재검토 시점과 함께 등록된** 긴장에만 걸리므로 시점·관련 판단·리뷰 발견·방향이 비어 있으면 거부한다.
+    리뷰 파일은 여기 id(TEN-…)를 근거 칸에 적는다.
+    """
+    _require(isinstance(items, list), "rules.open_tensions: 배열이어야 함")
+    seen: set[str] = set()
+    for idx, t in enumerate(items):
+        where = f"rules.open_tensions[{idx}]"
+        _expect_keys(t, ["id", "status", "recheck_at", "review_finding", "judgment_ids", "subject", "tension", "direction"],
+                     where, optional=["decision_id", "rechecker", "why_carried_exception", "score_impact_now", "source_lines", "note"])
+        _require(isinstance(t["id"], str) and TENSION_ID_RE.match(t["id"]), f"{where}.id: TEN- 로 시작해야 함 — {t['id']!r}")
+        _require(t["id"] not in seen, f"{where}.id: 중복 {t['id']}")
+        seen.add(t["id"])
+        _require(t["status"] in {"open", "resolved"}, f"{where}.status: open/resolved")
+        _require(isinstance(t["recheck_at"], str) and RECHECK_RE.match(t["recheck_at"]),
+                 f"{where}.recheck_at: YYYY-MM 재검토 시점이 필요함 — {t['recheck_at']!r}")
+        _require(isinstance(t["judgment_ids"], list) and t["judgment_ids"] and all(isinstance(j, str) and j for j in t["judgment_ids"]),
+                 f"{where}.judgment_ids: 관련 판단 id 가 하나 이상 필요함")
+        for key in ("review_finding", "subject", "tension", "direction"):
+            _require(isinstance(t[key], str) and t[key].strip(), f"{where}.{key}: 비워 둘 수 없음")
+        if "decision_id" in t:
+            _require(t["decision_id"] in decision_ids, f"{where}.decision_id: 규칙에 없는 결정 {t['decision_id']!r}")
 
 
 # 산출물 사용 범위. 원천 약관의 '개인 사용 허용' 조항이 우리에게 적용되는지를 가르는 값이라
@@ -521,6 +553,12 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
                  f"{where}: weakness 를 비워 둘 수 없음 — 이 보정이 답을 먼저 알고 정해졌다는 사실을 남긴다")
 
     net_cash = f6.get("net_cash")
+    # 2026-09-15 FIX-53 RC-01: `if net_cash:` 아래에서만 검사해서 블록을 통째로 지우면 통과했다(2차 리뷰 C).
+    # 파라미터가 net_cash 를 입력으로 쓰는 한 그 정의 블록은 필수다. 소비자가 있는 선언을 지울 수 없게 한다.
+    consumers = sorted(pid for pid, spec in (f6.get("parameters") or {}).items() if "net_cash" in (spec.get("inputs") or []))
+    if consumers:
+        _require(isinstance(net_cash, dict) and net_cash,
+                 f"rules.policies.f6.net_cash: {', '.join(consumers)} 가 net_cash 를 입력으로 쓰므로 정의 블록이 반드시 있어야 함")
     if net_cash:
         _validate_net_cash(net_cash)
 

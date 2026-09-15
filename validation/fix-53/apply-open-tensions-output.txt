@@ -1,0 +1,1 @@
+open_tensions: ['TEN-RC-02', 'TEN-RC-03', 'TEN-RC-05'] rule_hash 266823ef3aad -> ee31da3bf23d

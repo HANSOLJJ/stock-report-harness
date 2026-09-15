@@ -1,0 +1,601 @@
+{
+  "companies": {
+    "alphabet": {
+      "total": 15,
+      "rank": 1,
+      "factors": {
+        "F1": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -3,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -1,
+          "status": "ok"
+        }
+      }
+    },
+    "amazon": {
+      "total": 15,
+      "rank": 1,
+      "factors": {
+        "F1": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -2,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -2,
+          "status": "ok"
+        }
+      }
+    },
+    "meta": {
+      "total": 15,
+      "rank": 1,
+      "factors": {
+        "F1": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -1,
+          "status": "ok"
+        },
+        "F7": {
+          "score": 0,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -1,
+          "status": "ok"
+        }
+      }
+    },
+    "microsoft": {
+      "total": 14,
+      "rank": 4,
+      "factors": {
+        "F1": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -3,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": 0,
+          "status": "ok"
+        }
+      }
+    },
+    "tsmc": {
+      "total": 11,
+      "rank": 5,
+      "factors": {
+        "F1": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -3,
+          "status": "ok"
+        },
+        "F7": {
+          "score": 0,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -4,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": 0,
+          "status": "ok"
+        }
+      }
+    },
+    "alibaba": {
+      "total": 6,
+      "rank": 10,
+      "factors": {
+        "F1": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -4,
+          "status": "ok"
+        },
+        "F7": {
+          "score": 0,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -4,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -4,
+          "status": "ok"
+        }
+      }
+    },
+    "anthropic": {
+      "total": 10,
+      "rank": 6,
+      "factors": {
+        "F1": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 4,
+          "status": "ok"
+        },
+        "F6": {
+          "score": -4,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -3,
+          "status": "ok"
+        },
+        "F9": {
+          "score": -2,
+          "status": "ok"
+        }
+      }
+    },
+    "apple": {
+      "total": 8,
+      "rank": 9,
+      "factors": {
+        "F1": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -4,
+          "status": "ok"
+        },
+        "F7": {
+          "score": 0,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -3,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": 0,
+          "status": "ok"
+        }
+      }
+    },
+    "nvidia": {
+      "total": 9,
+      "rank": 8,
+      "factors": {
+        "F1": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -2,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -2,
+          "status": "ok"
+        },
+        "F8": {
+          "score": -3,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": 0,
+          "status": "ok"
+        }
+      }
+    },
+    "palantir": {
+      "total": 6,
+      "rank": 10,
+      "factors": {
+        "F1": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -4,
+          "status": "ok"
+        },
+        "F7": {
+          "score": 0,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -3,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": 0,
+          "status": "ok"
+        }
+      }
+    },
+    "spacex-xai": {
+      "total": 10,
+      "rank": 6,
+      "factors": {
+        "F1": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 5,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -1,
+          "status": "ok"
+        },
+        "F7": {
+          "score": 0,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -3,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -4,
+          "status": "ok"
+        }
+      }
+    },
+    "tesla": {
+      "total": 5,
+      "rank": 12,
+      "factors": {
+        "F1": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -5,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -2,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -1,
+          "status": "ok"
+        }
+      }
+    },
+    "oracle": {
+      "total": 2,
+      "rank": 13,
+      "factors": {
+        "F1": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 3,
+          "status": "carried_score"
+        },
+        "F6": {
+          "score": -3,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -2,
+          "status": "ok"
+        },
+        "F8": {
+          "score": -4,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -3,
+          "status": "ok"
+        }
+      }
+    },
+    "openai": {
+      "total": 2,
+      "rank": 13,
+      "factors": {
+        "F1": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F2": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F3": {
+          "score": 2,
+          "status": "carried_score"
+        },
+        "F4": {
+          "score": 4,
+          "status": "carried_score"
+        },
+        "F5": {
+          "score": 1,
+          "status": "ok"
+        },
+        "F6": {
+          "score": -4,
+          "status": "ok"
+        },
+        "F7": {
+          "score": -1,
+          "status": "carried_score"
+        },
+        "F8": {
+          "score": -4,
+          "status": "carried_score"
+        },
+        "F9": {
+          "score": -4,
+          "status": "ok"
+        }
+      }
+    }
+  },
+  "results_hash": "5e8ce6fcf3b812a29ada6b51d89e822f5923da436e887f23431b75ebc709fe79",
+  "hashes": {
+    "rules": "266823ef3aad207da01358047828e159bd554c4392433bea052678bffc3e2f69",
+    "observations": "a26be50869ff0be61a5868928c9372dc11e4826336e80d3d639920ae72e29a43",
+    "judgments": "a485bfd5db0ff07581730b1c6b7926b68aa6d6120485c730347278045a79e2a0",
+    "run": "19fad69d0681fd340353721ea47c040b2c4d148680d520fef47f6abe65d7721e",
+    "results": "5e8ce6fcf3b812a29ada6b51d89e822f5923da436e887f23431b75ebc709fe79",
+    "draft": "931f5632affd4742cb35e46f9798598ef1e6d246be282bc3386da009b75f6490"
+  }
+}
