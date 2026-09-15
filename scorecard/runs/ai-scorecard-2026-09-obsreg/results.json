@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "7852f2bce705998cc7559b8e38013704ece22391ee53452ac5c66edff2ad2005",
-    "observations": "4c28a7937a7ba49398dd07fed99bbaa864e786bae003980f272c16fca6c9d6fb",
-    "judgments": "db117f2a2f24ad1064f2f54cd347057de2b280ef877ca5361306fdc61814a082",
+    "run": "580def6da16dcc2290ebc96846321efd3284fea9d1769cfbbea13c6ae3132825",
+    "observations": "f2e2337f0459920adc67dd99a457f8a25e189e2509338fefa3c84ed433d64f04",
+    "judgments": "2d04facff94f8567476cec351861d9b6190cbab3a147f49c844cc9591b361cf3",
     "sources": "5821c65dff255c4b2dff257acfa85a037053cefaa6c1af3e51c994c70706ea6d",
-    "rules": "64045c2a84bf40b85a401beb8de3f511a7f92db6a551e13f612d50dae852e2ce"
+    "rules": "0cae4a14eb20cf6bd0211763fc71adead15ee0e7fe305665ae412bccce595dab"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -3142,8 +3142,13 @@
             "p4": {
               "nonop_share_stored": null,
               "nonop_share": null,
-              "nonop_share_source": "unavailable",
-              "nonop_share_missing": "pretax_income_ttm 관측 없음",
+              "nonop_share_source": "incompatible_basis",
+              "nonop_share_missing": "세전이익 -7,623,000,000 이 음수 — 부호 규약이 서지 않아 산출하지 않는다",
+              "nonop_share_inputs": {
+                "pretax_income_ttm": -7623000000.0,
+                "operating_income_ttm": -3732000000.0,
+                "net_income_ttm": -8218000000.0
+              },
               "stale_asof": {
                 "checked": true,
                 "period_end": "2026-06-30",
@@ -3163,6 +3168,7 @@
             "score": -1
           },
           "warnings": [
+            "nonop_share 산출 안 함 ⚠️ 세전이익 -7,623,000,000 이 음수 — 부호 규약이 서지 않아 산출하지 않는다",
             "P4 보정 한 칸 — 조건 short_history"
           ],
           "pending": null
@@ -4287,6 +4293,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 161,
-  "results_hash": "f1d9767fcd2ec0b513a70c17cd17ba5185b0a7d908d0f8e73e8f2a666e05f7e7"
+  "warnings_count": 162,
+  "results_hash": "f22b2014012bf1e393560025b2510800820e2b3da9a3f39a1d34d8d1bf89c06d"
 }

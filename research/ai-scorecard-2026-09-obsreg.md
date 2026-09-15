@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 4c28a7937a7ba49398dd07fed99bbaa864e786bae003980f272c16fca6c9d6fb
-judgments_hash: db117f2a2f24ad1064f2f54cd347057de2b280ef877ca5361306fdc61814a082
+observations_hash: f2e2337f0459920adc67dd99a457f8a25e189e2509338fefa3c84ed433d64f04
+judgments_hash: 2d04facff94f8567476cec351861d9b6190cbab3a147f49c844cc9591b361cf3
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 348건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 349건, 판단 114건.
 
 ## 원자료
 
@@ -172,7 +172,7 @@ created_at: 2026-09-11
 | capex_ttm | $23.1B | legacy_unverified | actual | SRC-v15-html | $23.1B |  |
 | cash | $19.1B | verified | actual | SRC-SEC-BABA-20F-FY2026 | 현금및현금성자산 19.1B (버퍼 41.6B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
 | cash | $56.8B | legacy_unverified | actual | SRC-v15-html | $56.8B | [CASH-FCF-35 대체됨 → alibaba.cash.cashfcf35]  |
-| contracted_revenue | — | not_disclosed | actual | SRC-SEC-BABA-20F-FY2026 | 미공시 — ASC 606 실무적 간편법 선언 | OBS-REG-25. **회사가 공시하지 않겠다고 선언한 회계정책이다.** '이 문서에 없다' 와 다르다 — 찾아도 없을 것이 선언돼 있다. C |
+| contracted_revenue | — | not_disclosed | actual | SRC-SEC-BABA-20F-FY2026 | 미공시 — ASC 606 실무적 간편법 선언 | OBS-REG-25 · [FIX-53 3단계] **확인된 미공시.** 20-F 가 두 갈래(1년 이하 계약 · right-to-invoice 계 |
 | contracted_revenue | — | not_disclosed | actual | SRC-v15-rule | — | [OBS-REG-25 대체됨 → alibaba.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | A급 | legacy_unverified | text | SRC-v15-html | A급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 2.7 | legacy_unverified | actual | SRC-v15-html | 2.68 |  |
@@ -332,7 +332,7 @@ created_at: 2026-09-11
 | net_cash | $60.3B | verified | derived | SRC-SEC-FACTS-F6 | 현금+시장성증권 100.0B − 차입 39.4B − 리스 0.3B = 60.3B | NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만** |
 | net_cash | $60.3B | legacy_unverified | actual | SRC-v15-html | +$60.3B | [NETCASH-37 대체됨 → spacex-xai.net_cash.nc37]  |
 | net_income_ttm | -$8.2B | verified | derived | SRC-SEC-FACTS-F6 | TTM -8,218백만 | F6-REG-28. S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준 |
-| nonop_share | — | not_disclosed | actual | SRC-v15-html | 적자 |  |
+| nonop_share | — | incompatible_basis | actual | SRC-v15-html | 적자 | FIX-53 3단계. 세전이익 음수 — 부호 규약 미정이라 산출 안 함. P4 강등은 short_history 한 칸으로 이미 걸려 점수 불변. |
 | ntm_per | 111.0 | legacy_unverified | estimate | SRC-v15-md | 111 |  |
 | offbalance_B | $29.6B | verified | derived | SRC-SEC-SPCX-10Q-2026Q2 | 미개시 리스 $1,627M(2025-12-31) + 무조건 구매약정 $27,955M(2026-06-30) = $29,582M | OBS-REG-25. **기준일이 섞인 합계다.** 구성요소별 기준일·출처를 basis.components 에 남겼다. 관측을 둘로 쪼개지 않은 |
 | offbalance_B | — | not_disclosed | actual | SRC-v15-rule | 미확인 | [OBS-REG-25 대체됨 → spacex-xai.offbalance_B.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
@@ -340,10 +340,11 @@ created_at: 2026-09-11
 | operating_income_ttm | -$3.7B | verified | derived | SRC-SEC-FACTS-F6 | TTM -3,732백만 | F6-REG-28. S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준 |
 | operating_margin_ttm | -16% | verified | derived | SRC-SEC-FACTS-F6 | TTM 영업손실률 -16.195% | F6-REG-28. 승계 legacy -14.9% 를 실측 -16.195% 로 교체한다. 재척도 밴드에서 둘 다 -3 이라 점수는 안 바뀌고 근 |
 | operating_margin_ttm | -15% | legacy_unverified | actual | SRC-v15-html | -$0.09 (컨센 -$0.26 상회) · 영업적자 -14.9% | [F6-REG-28 대체됨 → spacex-xai.operating_margin_ttm.f6reg28] EARN 열의 영업적자율. 규칙 ⑨ 표는 |
+| pretax_income_ttm | -$7.6B | verified | derived | SRC-SEC-SPCX-10Q-2026Q2 | TTM 세전손실 -7,623M | FIX-53 3단계. S-1/A FY2025 + 10-Q 반기 복원. 순이익과 세금으로 닫힌다. |
 | price | 140.71 | legacy_unverified | actual | SRC-v15-html | $140.71 |  |
 | ps_ratio | 82.9 | legacy_unverified | actual | SRC-v15-html | 82.9 |  |
 | quarter_note | Q2 (8/4) \| $7.8B (+92%) · Starlink 1,200만 · AI 세그먼트 $2.56B(+247%) \| -$0.09 (컨센 -$0.26 상회) · 영업적자 -14.9% \| TTM -$32.5B · 현금 $100B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
-| revenue_ttm | $7.8B | verified | actual | SRC-SEC-FACTS-F6 | 2026 Q2 매출 $7,814M | F6-REG-28. **분기 전년 동기 기준이다** |
+| revenue_ttm | $7.8B | verified | actual | SRC-SEC-FACTS-F6 | 2026Q2 분기 매출 7,814M (TTM 아님) | F6-REG-28. **분기 전년 동기 기준이다** \| [FIX-53 3단계] **분기값(2026Q2) — TTM 아님.** P3 분기 YoY  |
 | revenue_ttm_prior | $4.1B | verified | actual | SRC-SEC-FACTS-F6 | 2025 Q2 매출 $4,071M | F6-REG-28. 같은 분기 전년 동기 |
 | runway_years | 3.1 | legacy_unverified | derived | SRC-v15-html | 3.1년 | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | — | not_disclosed | actual | SRC-v15-html | 적자 | 적자 |
@@ -440,7 +441,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=partial, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=2, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -453,7 +454,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=2, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -466,7 +467,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 \| [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=partial, revenue_model=pass, acceleration=partial, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -479,7 +480,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 3 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 3 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=2, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -492,7 +493,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 2 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=pass, revenue_model=fail, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | new | 설계진행(A-STRICT-54 codex·Gemini 독립 일치) 2026-09-15 | [A-STRICT-54] 비 Claude 두 판정 일치 — codex(GPT) validation/a2-strict-54/codex.md · G |
@@ -505,7 +506,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=partial, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -518,7 +519,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=partial, revenue_model=pass, acceleration=fail, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=0 | new | 설계진행(C-13 A-GRADE-45 · NTM A-GRADE-45B 독립 일치) 2026-09-14 | [F5-IMPL-48] 체크리스트 19 적용 재판정(사용자 결정 ①). A +2→+1, F5 5→4. 두 모델 독립 일치 — C-13(Gemin |
@@ -532,7 +533,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 2 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 2 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=fail, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -545,7 +546,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 2 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=fail, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-2 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -558,7 +559,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 2 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 3 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 3 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=partial, revenue_model=partial, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-2 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -571,7 +572,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=partial, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -584,7 +585,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 2 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 3 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 3 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=0, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -597,7 +598,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 2 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 2 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -610,7 +611,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 \| [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=fail, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-3 | new | 설계진행(C-13 A-GRADE-45 · NTM A-GRADE-45B 독립 일치) 2026-09-14 | [F5-IMPL-48] 체크리스트 19 적용 재판정(사용자 결정 ①). A +2→+1, F5 2→1. 두 모델 독립 일치 — C-13(Gemin |
@@ -640,7 +641,7 @@ created_at: 2026-09-11
 | 기업 | 항목 | 상태 | 내용 |
 | --- | --- | --- | --- |
 | spacex-xai | ttm_per | not_disclosed | 적자 |
-| spacex-xai | nonop_share | not_disclosed | 적자 |
+| spacex-xai | nonop_share | incompatible_basis | FIX-53 3단계. 세전이익 음수 — 부호 규약 미정이라 산출 안 함. P4 강등은 short_history 한 칸으로 이미 걸려 점수 불변. |
 | apple | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | nvidia | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | microsoft | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
@@ -668,7 +669,7 @@ created_at: 2026-09-11
 | anthropic | contracted_revenue | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | openai | offbalance_B | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | openai | contracted_revenue | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
-| alibaba | contracted_revenue | not_disclosed | OBS-REG-25. **회사가 공시하지 않겠다고 선언한 회계정책이다.** '이 문서에 없다' 와 다르다 — 찾아도 없을 것이 선언돼 있다. C-16 의 유일한 대상이다 |
+| alibaba | contracted_revenue | not_disclosed | OBS-REG-25 · [FIX-53 3단계] **확인된 미공시.** 20-F 가 두 갈래(1년 이하 계약 · right-to-invoice 계약) 면제를 선언하고, 문서 전문 검 |
 | anthropic | fcf_ttm | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
 | anthropic | cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
 | anthropic | net_cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |

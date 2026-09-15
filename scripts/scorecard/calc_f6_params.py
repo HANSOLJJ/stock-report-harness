@@ -71,6 +71,15 @@ def _nonop_share(cid: str, obs: ObsLookup, warnings: list[str]) -> tuple[float |
     stored, stored_obs = obs.number(cid, "nonop_share")
     if stored_obs is not None:
         detail["nonop_share_stored"] = stored
+    if pretax is not None and oi is not None and pretax < 0:
+        # 2026-09-15 FIX-53 3단계: 전에는 경고만 붙이고 값을 돌려줘 P4 조건이 걸릴 수 있었다. 적자 기업은 분모가
+        # 음수라 **부호 규약이 정의되지 않으므로 산출하지 않는다.** spacex-xai 세전이익을 등록하며 드러났다.
+        detail["nonop_share"] = None
+        detail["nonop_share_source"] = "incompatible_basis"
+        detail["nonop_share_missing"] = f"세전이익 {pretax:,.0f} 이 음수 — 부호 규약이 서지 않아 산출하지 않는다"
+        detail["nonop_share_inputs"] = {"pretax_income_ttm": pretax, "operating_income_ttm": oi, "net_income_ttm": ni}
+        warnings.append(f"nonop_share 산출 안 함 ⚠️ {detail['nonop_share_missing']}")
+        return None, detail
     if pretax is not None and oi is not None and pretax != 0:
         value = (pretax - oi) / pretax
         detail["nonop_share"] = value
@@ -78,10 +87,6 @@ def _nonop_share(cid: str, obs: ObsLookup, warnings: list[str]) -> tuple[float |
         detail["nonop_share_formula"] = "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm"
         detail["nonop_share_inputs"] = {"pretax_income_ttm": pretax, "operating_income_ttm": oi,
                                         "net_income_ttm": ni}
-        if pretax < 0:
-            # 적자 기업은 분모가 음수라 **부호 규약이 정의되지 않는다.** 정정해도 서지 않는다.
-            warnings.append(f"nonop_share 부호 규약 ⚠️ 세전이익 {pretax:,.0f} 이 음수라 비율의 뜻이 "
-                            "정의되지 않는다 — 흑자 기업의 같은 값과 같은 뜻이 아니다")
         if stored is not None and abs(stored - value) > 0.02:
             warnings.append(f"nonop_share 재계산 {value:.4f} 과 저장값 {stored:.4f} 이 다름 — "
                             "산식은 정정됐고 이 둘은 남은 불일치다(policies.f6.p4 nonop_share)")

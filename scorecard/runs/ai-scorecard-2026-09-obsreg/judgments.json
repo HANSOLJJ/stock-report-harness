@@ -39,7 +39,7 @@
         "🆕 Gemini 3.8 Flash(9/2) — 속도·가격 경쟁력 확인, 프론티어 순위는 미변"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -243,7 +243,7 @@
         "두 경로 = 4"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -454,7 +454,7 @@
         "📐 [FIX-52 2026-09-15] **C-03 확정 기준(혼합 모델)** — 5점은 `AA 종합 1위` 가 아니라 **성능 도약이 세대 격차 수준일 때**다. 경로 수 0·1·2 → 2·3·4. 위 근거의 `AA 종합 1위가 5의 기준` 문장은 C-03 확정 전 잣대라 superseded 다. 점수 4 는 승계 그대로이고, 세대 격차 판정은 이번 실행에서 하지 않았다."
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수 | [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded 표시, C-03 확정 기준 문장 추가. 점수·status 불변.",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계] | [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded 표시, C-03 확정 기준 문장 추가. 점수·status 불변.",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -648,7 +648,7 @@
         "OpenAI·Anthropic 양쪽 조달"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -843,7 +843,7 @@
         "도전자: Intel 14A 2028 목표(고객 2곳 협의), Samsung SF2P 수율 70% — 동급 아님"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -1074,7 +1074,7 @@
         "Anthropic이 가짜계정 25,000개·대화 2,880만 건 증류 주장, 기술적 반박 없음"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -1276,13 +1276,14 @@
       "score": 5,
       "inputs": {},
       "evidence": [
-        "Arena 텍스트·에이전트·웹개발·문서·비전·검색 6개 카테고리 1위 + Artificial Analysis Index 1위",
-        "🆕 GPT-6 Astra 출시 후에도 1위 방어 — Intelligence Index Fable 5.1(max) 66 > Astra 61(v4.2 개편 후에도 57 > 55), Coding Agent Index Fable 5.1 70 > Astra 67(전원 자기 하네스라 유효한 비교)",
+        "Arena 텍스트·에이전트·웹개발·문서·비전·검색 6개 카테고리 1위 ~~+ Artificial Analysis Index 1위~~ (superseded [FIX-53 3단계] — C-03 확정 전 잣대)",
+        "(superseded [FIX-53 3단계] — `AA 종합 1위` 방어는 C-03 확정 전 5점 잣대) 🆕 GPT-6 Astra 출시 후에도 1위 방어 — Intelligence Index Fable 5.1(max) 66 > Astra 61(v4.2 개편 후에도 57 > 55), Coding Agent Index Fable 5.1 70 > Astra 67(전원 자기 하네스라 유효한 비교)",
         "MCP 표준 선점",
-        "Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%)"
+        "Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%)",
+        "📐 [FIX-53 3단계] **C-03 확정 기준(혼합 모델)** — 5점은 `AA 종합 1위` 가 아니라 **성능 도약이 세대 격차 수준일 때**다. 경로 수 0·1·2 → 2·3·4. openai.F2 가 `Anthropic 이 AA 종합 1위로 받은 점수` 라고 지목한 잣대가 이 근거란 첫 두 줄이라 같은 방식으로 superseded 표시했다. 점수 5 는 승계 그대로이고 세대 격차 판정은 이번 실행에서 하지 않았다(긴장 #11)."
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계] | [FIX-53 3단계] 근거란의 AA 종합 1위 잣대에 superseded 표시(meta·openai 와 같은 방식). 점수·status 불변.",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -1458,8 +1459,8 @@
       "score": -3,
       "inputs": {},
       "evidence": [
-        "컴퓨트 100% 외부 + 공급자 3사가 전부 경쟁자 — Google(Gemini) · Amazon(Nova) · Microsoft(OpenAI 지분 27% 보유). **OpenAI 27% 는 Microsoft 의 OpenAI 지분율**이지 Anthropic 의 컴퓨트 배분이 아니다(v1.5 원본 188·198·217·350행에서 확인).",
-        "🔧 컴퓨트 약정 $300B — Google Cloud $200B/5년(연 ~$40B) + AWS $100B/10년(연 ~$10B) + Azure $30B. AWS 분은 **Amazon 10-Q Note 1 에 직접 공시돼 있다**: \"In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.\" (보존 원문 C-13 3cf9799:validation/offb-24/_raw/amzn-20260630.htm 에서 worker 직접 대조)",
+        "컴퓨트 100% 외부 + 공급자 3사가 전부 경쟁자 — Google(Gemini) · Amazon(Nova) · Microsoft(OpenAI 지분 27% 보유). **OpenAI 27% 는 Microsoft 의 OpenAI 지분율**이지 Anthropic 의 컴퓨트 배분이 아니다(채점표_v1.5.md 188·198·350행 · 채점규칙_v1.5.md 217행에서 확인 — FIX-53 3단계 문서명 분리).",
+        "🔧 컴퓨트 약정 $300B — Google Cloud $200B/5년(연 ~$40B) + AWS $100B/10년(연 ~$10B) [FIX-53 3단계 라벨 정정: 10-Q Note 1 문면은 `expansion of … existing multi-year commitment by more than $100.0 billion over 10.0 years` — 기존 다년 약정 **위의 증액**이고 `more than` 이라 **하한**이다. $100B/10년은 약정 총액이 아니다. $300B 합계는 v1.5 기준선 값(HANDOVER 51행)] + Azure $30B. AWS 분은 **Amazon 10-Q Note 1 에 직접 공시돼 있다**: \"In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.\" (보존 원문 C-13 3cf9799:validation/offb-24/_raw/amzn-20260630.htm 에서 worker 직접 대조)",
         "📐 **[근거 교체 2026-09-11] AWS 훈련 집중은 증권사 2차 증언이 아니라 Amazon 의 1차 공시다.** 승계 근거란은 이것을 DS투자증권 9/7 자료로 적고 있었으나, 실제로는 Amazon 이 SEC Form 8-K (Ex 99.1) 네 건으로 직접 공시한 사실이다(C-13 F8-ANTH-33, 8ddb0ae). 0001018724-25-000002(2025-02-06) · 0001018724-25-000121(2025-10-30) · 0001018724-26-000002(2026-02-05) · 0001018724-26-000012(2026-04-29). 2026-02-05 공시 원문: \"Trainium2 powers Project Rainier, the world's largest operational AI compute cluster with 500,000+ Trainium2 chips, which Anthropic is using to train its industry-leading AI model, Claude.\" 증권사 자료는 이 공시 사실에 질적 해석을 얹은 2차 출처였다.",
         "✅ **확인된 것** — (1) Project Rainier 의 실체와 규모(2025-10 nearly 500,000 → 2026-02 500,000+ Trainium2). (2) Anthropic 이 그 클러스터로 Claude 를 **훈련(train)** 한다는 Amazon 의 명시. (3) 2026-04-29 공시의 최대 5GW Trainium 확보와 train and power 문면. (4) AWS 약정 $100B/10년과 칩 성능 연계 의무(10-Q Note 1).",
         "❓ **확인되지 않은 것** — (1) **Google 몫의 훈련/서빙 구분.** Alphabet 10-K(FY2025)·10-Q(2026 Q1·Q2) 본문에 'Anthropic' 이 **0건**이다. 계약 존재·금액·기간·용도가 전부 회사 미공시다. Google Cloud 는 고객사 다중 기가와트 TPU 계약을 백로그로 포괄 기술할 뿐이다. (2) AWS $100B+ 안의 훈련용/서빙용 금액 구분도 미공시다. (3) 따라서 **돈은 Google 이 4배인데 성능 원천은 AWS** 라는 긴장(#10)은 해소되지 않고 실증 상태만 갱신됐다.",
@@ -1470,13 +1471,15 @@
         "🆕 제로 데이터 보존 약속(9/2) — 기업 고객의 규제 의존 완화 방향, 단 \"고객이 직접 검증해야\" 조건부"
       ],
       "counter_evidence": [],
-      "note": "F8-ANTH-33 반영(2026-09-11). **점수 -3 은 바뀌지 않았고 근거란만 바뀌었다.** 2차 증언(증권사 자료)을 1차 공시(Amazon SEC 8-K 4건 + 10-Q Note 1)로 교체하고, 확인된 것과 확인되지 않은 것을 나누고, 재판정 조건을 등재했다. Google 몫의 훈련/서빙 구분은 Alphabet 공시에 Anthropic 이 0건이라 확인 불가이며, **미공시를 '아니다' 로 읽지 않기 때문에** 하향하지 않는다.",
+      "note": "F8-ANTH-33 반영(2026-09-11). **점수 -3 은 바뀌지 않았고 근거란만 바뀌었다.** 2차 증언(증권사 자료)을 1차 공시(Amazon SEC 8-K 4건 + 10-Q Note 1)로 교체하고, 확인된 것과 확인되지 않은 것을 나누고, 재판정 조건을 등재했다. Google 몫의 훈련/서빙 구분은 Alphabet 공시에 Anthropic 이 0건이라 확인 불가이며, **미공시를 '아니다' 로 읽지 않기 때문에** 하향하지 않는다. | [FIX-53 3단계] AWS $100B 라벨을 공시 문면(기존 약정 위 증액·하한)에 맞추고 v1.5 인용 행을 문서별로 나눴다. 점수 불변.",
       "reviewer": "worker(HANSOLJJ) — C-13 F8-ANTH-33 8ddb0ae 기반",
       "reviewed_at": "2026-09-11",
       "status": "new",
       "source_ids": [
         "SRC-v15-html",
+        "SRC-v15-rule",
         "SRC-v15-md",
+        "SRC-v15-handover",
         "SRC-SEC-AMZN-10Q-2026Q2"
       ],
       "previous_judgment_id": "anthropic.F8"
@@ -1554,7 +1557,7 @@
         "단 실리콘 역량은 별개다 — Baltra와 M시리즈는 14사 중에서도 상위권. 애플의 약점은 칩을 못 만드는 게 아니라 모델을 못 만드는 것이며, ②2점은 모델·표준 주도력의 공백 때문이지 하드웨어 때문이 아니다"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -1747,17 +1750,18 @@
       "score": 5,
       "inputs": {},
       "evidence": [
-        "Vera Rubin 양산(R100 3,360억 트랜지스터, Blackwell 대비 추론 5배·토큰당 비용 1/10)",
-        "AI 가속기 점유율 70~75%"
+        "(발표 — NVIDIA 보도자료) Vera Rubin 양산(R100 3,360억 트랜지스터, Blackwell 대비 추론 5배·토큰당 비용 1/10)",
+        "(출처 없음) AI 가속기 점유율 70~75%"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계] | [FIX-53 3단계] TEN-RA-02 등록. **Rubin 줄은 발표다** — 출처가 NVIDIA 자체 보도자료(research/nvidia-recent-4m-2026-05.md 12·15·36·39행, 2026-01-05 공개·2026-03-16 GTC 공개)이고 저장소 어느 자료도 2026-09-02 기준 양산을 말하지 않는다. 같은 실행 초안 TRIG-016 은 `Vera Rubin 출하가 Blackwell 담보 가치를 깎는` 것을 **미발동 미래 사건**으로 둬 시점이 모순된다. 채점규칙 382행 `벤더 발표 벤치마크는 1차 근거가 아니다` · 349행 `(실측)/(발표)를 표기` 가 지켜지지 않았다. 점유율 70~75% 는 구간만 있고 출처가 없다. 점수 5 는 승계 그대로.",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {
@@ -2008,7 +2012,7 @@
         "표준 주도는 못 함"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -2205,7 +2209,7 @@
         "재사용 로켓·Starship은 AI 게임체인저가 아니다 — 궤도 데이터센터가 실현되기 전까지는 ④에서만 센다"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -2429,7 +2433,7 @@
         "성능 판정 불가(로보택시 Waymo가 앞), 적응 ✅ → 3"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -2635,7 +2639,7 @@
         "세 경로 중 통과 없음 → 2"
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -2885,7 +2889,7 @@
         "📐 [FIX-52 2026-09-15] **C-03 확정 기준(혼합 모델)** — 5점은 `AA 종합 1위` 가 아니라 **성능 도약이 세대 격차 수준일 때**다. 경로 수 0·1·2 → 2·3·4. 위 근거의 `AA 종합 1위로 받은 점수라 같은 잣대로 불가` 문장은 C-03 확정 전 잣대라 superseded 다. 점수 4 는 승계 그대로이고, 세대 격차 판정은 이번 실행에서 하지 않았다."
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수 | [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded 표시, C-03 확정 기준 문장 추가. 점수·status 불변.",
+      "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계] | [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded 표시, C-03 확정 기준 문장 추가. 점수·status 불변.",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",

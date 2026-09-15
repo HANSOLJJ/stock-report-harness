@@ -1366,10 +1366,18 @@
       "as_of": "2026-09-02",
       "kind": "actual",
       "source_id": "SRC-v15-html",
-      "status": "not_disclosed",
-      "basis": null,
+      "status": "incompatible_basis",
+      "basis": {
+        "why": "세전이익(-7,623M, spacex-xai.pretax_income_ttm.fix53)이 음수라 `(세전 − 영업이익) / 세전` 의 **부호 규약이 서지 않는다.** 산출하지 않는다. 전에는 `not_disclosed` 였으나 세전이익은 공시돼 있어 미공시가 아니다.",
+        "status_correction": {
+          "from": "not_disclosed",
+          "to": "incompatible_basis",
+          "at": "2026-09-15",
+          "task": "FIX-53 3단계"
+        }
+      },
       "raw": "적자",
-      "note": null
+      "note": "FIX-53 3단계. 세전이익 음수 — 부호 규약 미정이라 산출 안 함. P4 강등은 short_history 한 칸으로 이미 걸려 점수 불변."
     },
     {
       "observation_id": "spacex-xai.ps_ratio.v15",
@@ -3966,10 +3974,18 @@
           "scope": "20-F 전문"
         },
         "limit": "선언된 면제는 1년 이하 계약과 청구권 기준 계약만 덮는다. 1년 초과 계약분은 면제로 설명되지 않으며 Note 5 의 '중요하지 않다' 서술이 그 자리를 메운다",
-        "unchecked": "6-K 361건은 확인하지 않았다. RPO 는 연차 주석 항목이고 면제가 선언돼 있어 개연성이 낮다"
+        "unchecked": "6-K 361건은 확인하지 않았다. RPO 는 연차 주석 항목이고 면제가 선언돼 있어 개연성이 낮다",
+        "note_superseded": {
+          "text": "OBS-REG-25. **회사가 공시하지 않겠다고 선언한 회계정책이다.** '이 문서에 없다' 와 다르다 — 찾아도 없을 것이 선언돼 있다. C-16 의 유일한 대상이다",
+          "superseded_at": "2026-09-15",
+          "why": "면제 선언의 범위를 실제 문면보다 넓게 적었다(리뷰 A 2차 high)."
+        },
+        "exemption_scope": "20-F `Practical expedients and exemptions` 문단의 면제는 **두 갈래뿐**이다 — (1) 원래 예상 기간 1년 이하 계약, (2) right-to-invoice 금액으로 수익을 인식하는 계약. 원문: `The Company applies the practical expedient to not disclose the value of unsatisfied performance obligations for contracts with an original expected duration of one year or less and contracts for which revenue is recognized at the amount to which the Company has the right to invoice for services performed`. **1년 초과 계약 전부가 여기 든다는 근거는 없다.**",
+        "absence_by_full_text_search": "문서 전문 검색으로 RPO 수치 부재를 확인했다 — `unsatisfied performance obligation` 은 위 면제 문장 1건뿐, `remaining performance obligation`·`backlog` 0건. 잔여 수행의무 금액은 20-F 어디에도 없다(3cf9799:validation/offb-24/_raw/baba-20260331.htm).",
+        "classification_basis": "`not_disclosed_confirmed` 는 **면제 선언(두 갈래) + 전문 검색으로 확인한 수치 부재** 위에 선다. C-16 강등 한 칸이 이 분류에 걸리므로 근거 문장을 이 둘로 한정한다."
       },
       "raw": "미공시 — ASC 606 실무적 간편법 선언",
-      "note": "OBS-REG-25. **회사가 공시하지 않겠다고 선언한 회계정책이다.** '이 문서에 없다' 와 다르다 — 찾아도 없을 것이 선언돼 있다. C-16 의 유일한 대상이다"
+      "note": "OBS-REG-25 · [FIX-53 3단계] **확인된 미공시.** 20-F 가 두 갈래(1년 이하 계약 · right-to-invoice 계약) 면제를 선언하고, 문서 전문 검색에서 잔여 수행의무 금액이 없다. 1년 초과 계약이 전부 면제에 든다는 근거는 없으므로 '찾아도 없을 것이 선언돼 있다' 가 아니라 '선언된 면제 + 전문에서 수치 부재 확인' 이다. C-16 대상."
     },
     {
       "observation_id": "alibaba.revenue_ttm.obsreg25",
@@ -5242,10 +5258,12 @@
         },
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
         "accession": "0001628280-26-052535",
-        "form": "10-Q"
+        "form": "10-Q",
+        "period_label": "**2026Q2 단일 분기(2026-04-01~2026-06-30) — TTM 아님.** metric 이름은 revenue_ttm 이지만 값은 분기다.",
+        "same_company_other_revenue": "같은 회사 spacex-xai.operating_margin_ttm.f6reg28 의 분모는 TTM 매출 23,044M(FY2025 18,674 + H1'26 12,508 − H1'25 8,138)이다. 관측 id 는 다른 참조가 있어 바꾸지 않았다."
       },
-      "raw": "2026 Q2 매출 $7,814M",
-      "note": "F6-REG-28. **분기 전년 동기 기준이다**"
+      "raw": "2026Q2 분기 매출 7,814M (TTM 아님)",
+      "note": "F6-REG-28. **분기 전년 동기 기준이다** | [FIX-53 3단계] **분기값(2026Q2) — TTM 아님.** P3 분기 YoY 전용."
     },
     {
       "observation_id": "spacex-xai.revenue_ttm_prior.f6reg28",
@@ -6156,8 +6174,13 @@
           }
         ],
         "straddles_threshold": true,
-        "straddle_note": "**모순 구간이 보정 임계 0.50 을 가로지른다.** 세 시나리오의 자본효율이 0.41~0.72 이고 그중 하나(65B 포함 가정)만 임계 미달이다. 그 경우 보정이 붙지 않아 anthropic F6 가 -3 이 아니라 -4 가 된다. **값을 고르지 않았고, 갈린다는 사실과 그 결과를 여기 남긴다.**",
-        "registered_value_is": "원본이 자본효율 0.52 를 계산할 때 쓴 값(약 $125B, 2021년~) 그대로다. 우리가 조정하지 않았다."
+        "straddle_note": "**모순 구간이 보정 임계 0.50 을 가로지르지만 지금은 점수를 가르지 않는다.** 세 시나리오의 자본효율이 0.41~0.72 이고 그중 하나(65B 포함 가정)만 임계 미달이다. 그러나 FIX-52 S2 로 arr_growth 가 kind=run_rate 라 불충족이고 보정은 require_all 이라 **세 시나리오 모두 anthropic F6 = -4** 다. 진짜 ARR(kind=actual)이 들어오면 이 갈림이 다시 점수를 가를 수 있다. 값을 고르지 않았다.",
+        "registered_value_is": "원본이 자본효율 0.52 를 계산할 때 쓴 값(약 $125B, 2021년~) 그대로다. 우리가 조정하지 않았다.",
+        "straddle_note_superseded": {
+          "text": "**모순 구간이 보정 임계 0.50 을 가로지른다.** 세 시나리오의 자본효율이 0.41~0.72 이고 그중 하나(65B 포함 가정)만 임계 미달이다. 그 경우 보정이 붙지 않아 anthropic F6 가 -3 이 아니라 -4 가 된다. **값을 고르지 않았고, 갈린다는 사실과 그 결과를 여기 남긴다.**",
+          "superseded_at": "2026-09-15",
+          "why": "FIX-52 S2 이후 사실이 아니다 — arr_growth 가 run_rate 로 불충족이라 보정이 어떤 시나리오에서도 붙지 않는다."
+        }
       },
       "raw": "약 $125B(2021년~)",
       "note": "PRIV-IMPL-31 / C-12. 승계 관측 anthropic.cumulative_raised.v15 를 대체한다 — **값은 같고 모순 기록과 민감도만 추가한다**"
@@ -6200,7 +6223,7 @@
         "legacy_comparison": {
           "legacy_cash": 146500000000.0,
           "legacy_equaled": "총계(비유동 포함)",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -73.0075
         },
         "accession_correction": {
@@ -6310,7 +6333,7 @@
         "legacy_comparison": {
           "legacy_cash": 76800000000.0,
           "legacy_equaled": "유동성 버퍼",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -72.7409
         }
       },
@@ -6398,7 +6421,7 @@
         "legacy_comparison": {
           "legacy_cash": 123000000000.0,
           "legacy_equaled": "유동성 버퍼",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -36.4122
         }
       },
@@ -6494,7 +6517,7 @@
         "legacy_comparison": {
           "legacy_cash": 62500000000.0,
           "legacy_equaled": "어느 쪽도 아님",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -64.0912
         }
       },
@@ -6588,7 +6611,7 @@
         "legacy_comparison": {
           "legacy_cash": 43500000000.0,
           "legacy_equaled": "유동성 버퍼",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -65.0138
         }
       },
@@ -6682,7 +6705,7 @@
         "legacy_comparison": {
           "legacy_cash": 9400000000.0,
           "legacy_equaled": "유동성 버퍼",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -78.4038
         }
       },
@@ -6776,7 +6799,7 @@
         "legacy_comparison": {
           "legacy_cash": 90300000000.0,
           "legacy_equaled": "유동성 버퍼",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -82.8771
         }
       },
@@ -6870,7 +6893,7 @@
         "legacy_comparison": {
           "legacy_cash": 31900000000.0,
           "legacy_equaled": "유동성 버퍼",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -1.9154
         }
       },
@@ -6958,7 +6981,7 @@
         "legacy_comparison": {
           "legacy_cash": 242500000000.0,
           "legacy_equaled": "유동성 버퍼",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -76.9439
         }
       },
@@ -7036,24 +7059,33 @@
         "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
         "why_pure_cash": "설계 지침 6.4 가 단기 투자자산을 포함하려면 **환금성 기준을 먼저 정하라**고 하는데 그 기준이 아직 없다. 기준 없이 넓은 정의를 쓰면 완충이 과대계상되고 런웨이가 길어진다.",
         "preserved_wider_definitions": {
-          "liquid_cash_buffer": 93522000000.0,
+          "liquid_cash_buffer": 100009000000.0,
           "liquid_cash_buffer_note": "현금 + 단기 투자자산. **환금성 기준이 정해지면 이 값을 쓴다.**",
-          "total_including_noncurrent": 94352000000,
+          "total_including_noncurrent": 100009000000,
           "restricted_cash": 830000000,
           "components": {
             "cash_and_cash_equivalents": 93522000000,
-            "short_term_marketable_securities": 0,
-            "sti_concept": null,
-            "liquid_cash_buffer": 93522000000,
-            "total_cash_and_all_securities": 94352000000,
-            "restricted_cash": 830000000
+            "short_term_marketable_securities": 6487000000,
+            "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
+            "liquid_cash_buffer": 100009000000,
+            "total_cash_and_all_securities": 100009000000,
+            "restricted_cash": 830000000,
+            "cash_plus_restricted": 94352000000,
+            "total_note": "유동성 버퍼 + 비유동 증권. SPCX companyfacts 에 2026-06-30 `MarketableSecuritiesNoncurrent` 이 없어 버퍼와 같다. 이전 값 94,352M 은 현금 93,522 + 제한현금 830(RestrictedCashCurrent 210 + Noncurrent 620)이라 필드 정의와 달랐다 — cash_plus_restricted 로 옮겼다."
+          },
+          "correction": {
+            "at": "2026-09-15",
+            "task": "FIX-53 3단계 (리뷰 A 2차)",
+            "what": "시장성 증권 6,487M(us-gaap:MarketableSecuritiesCurrent, 10-Q 0001628280-26-052535)을 0 으로 적었다. 같은 실행 spacex-xai.net_cash.nc37 은 이 값을 넣는다. 등록된 cash 93,522M 은 순수 현금이라 맞다."
           }
         },
         "legacy_comparison": {
           "legacy_cash": 100000000000.0,
-          "legacy_equaled": "어느 쪽도 아님",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
-          "diff_pct": -6.478
+          "legacy_equaled": "유동성 버퍼",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "diff_pct": -6.478,
+          "diff_vs_buffer_pct": -0.009,
+          "equaled_correction": "이전 판정 `어느 쪽도 아님` 은 버퍼를 93,522M 으로 잘못 둔 결과였다. legacy $100.0B 는 버퍼 100,009M 과 0.009% 차."
         },
         "accession_correction": {
           "wrong": "0001193125-26-235805",
@@ -7167,7 +7199,7 @@
         "legacy_comparison": {
           "legacy_cash": 110600000000.0,
           "legacy_equaled": "총계(비유동 포함)",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -20.2237
         },
         "cross_check_recomputed_usd": {
@@ -7267,7 +7299,7 @@
         "legacy_comparison": {
           "legacy_cash": 56800000000.0,
           "legacy_equaled": "총계(비유동 포함)",
-          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 7개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 2개사는 어느 쪽도 아니다. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
+          "note": "**legacy cash 의 정의가 12개사 안에서 세 갈래였다** — 8개사는 유동성 버퍼, 3개사는 비유동 증권까지 포함한 총계, 1개사(nvidia)는 어느 쪽도 아니다 [FIX-53 3단계 정정: 전에는 7/3/2 — spacex-xai 버퍼를 시장성 증권 누락으로 잘못 계산했다]. 단일 정의가 아니었다는 것이 순수 현금으로 통일해야 할 이유다.",
           "diff_pct": -66.4296
         },
         "cross_check_recomputed_usd": {
@@ -7452,6 +7484,14 @@
             "us-gaap:AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": {
               "value": 96471000000.0,
               "why": "**만기 버킷 공시다.** 현금성자산으로 분류된 증권까지 포함하므로 현금에 더하면 이중계상된다"
+            },
+            "us-gaap:RestrictedCashNoncurrent": {
+              "value": 2431000000.0,
+              "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
+            },
+            "us-gaap:RestrictedCashAndInvestments": {
+              "value": 2714000000.0,
+              "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
             }
           },
           "debt_ex_lease": 132549000000.0,
@@ -7463,7 +7503,8 @@
           "operating_lease": 96320000000.0,
           "finance_lease": 13451000000.0,
           "lease_total": 109771000000.0,
-          "debt_incl_lease": 242320000000.0
+          "debt_incl_lease": 242320000000.0,
+          "excluded_completeness": "**`전부 남겼다` 는 성립하지 않았다.** 같은 기준일 제한현금 태그 일부가 빠져 있어 채웠다. 제한현금은 어차피 빼므로 net_cash 값은 그대로다. 이 목록은 제외 판단에 쓴 개념이며 companyfacts 전 개념의 전수 목록은 아니다."
         },
         "legacy_comparison": {
           "legacy_net_cash": -128699999999.99998,
@@ -7531,6 +7572,14 @@
             "us-gaap:AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": {
               "value": 44551000000.0,
               "why": "**만기 버킷 공시다.** 현금성자산으로 분류된 증권까지 포함하므로 현금에 더하면 이중계상된다"
+            },
+            "us-gaap:RestrictedCashAndCashEquivalentsAtCarryingValue": {
+              "value": 702000000.0,
+              "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
+            },
+            "us-gaap:RestrictedCashAndCashEquivalentsNoncurrent": {
+              "value": 13107000000.0,
+              "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
             }
           },
           "debt_ex_lease": 83664000000.0,
@@ -7540,7 +7589,8 @@
           "operating_lease": 28654000000.0,
           "finance_lease": null,
           "lease_total": 28654000000.0,
-          "debt_incl_lease": 112318000000.0
+          "debt_incl_lease": 112318000000.0,
+          "excluded_completeness": "**`전부 남겼다` 는 성립하지 않았다.** 같은 기준일 제한현금 태그 일부가 빠져 있어 채웠다. 제한현금은 어차피 빼므로 net_cash 값은 그대로다. 이 목록은 제외 판단에 쓴 개념이며 companyfacts 전 개념의 전수 목록은 아니다."
         },
         "legacy_comparison": {
           "legacy_net_cash": -22100000000.0,
@@ -7731,7 +7781,8 @@
           "excluded_nonmarketable_present": {
             "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": {
               "value": 605000000.0,
-              "why": "비상장 지분 — 시장가가 없다"
+              "why": "**이중 태깅으로 보인다 — `비상장 지분` 설명은 확인되지 않는다.** 포함 쪽 `us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent` 605,000,000 과 값·접수번호(0001193125-26-277521, 10-K)·직전 회계연도 값(2025-05-31 둘 다 417,000,000)이 같다. 같은 대차대조표 줄에 두 개념이 붙은 것으로 보이며 원문 대차대조표가 보존돼 있지 않아 어느 개념이 맞는지 확정하지 못한다. net_cash 는 605 를 포함 쪽으로 한 번만 더하므로 값 -135,538M 은 그대로다.",
+              "why_superseded": "비상장 지분 — 시장가가 없다 (FIX-53 3단계 전 설명)"
             }
           },
           "debt_ex_lease": 129541000000.0,
@@ -7797,6 +7848,10 @@
             "us-gaap:RestrictedCashCurrent": {
               "value": 210000000.0,
               "why": "제한 현금"
+            },
+            "us-gaap:RestrictedCashNoncurrent": {
+              "value": 620000000.0,
+              "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
             }
           },
           "debt_ex_lease": 39364000000.0,
@@ -7806,7 +7861,8 @@
           "operating_lease": 344000000.0,
           "finance_lease": null,
           "lease_total": 344000000.0,
-          "debt_incl_lease": 39708000000.0
+          "debt_incl_lease": 39708000000.0,
+          "excluded_completeness": "**`전부 남겼다` 는 성립하지 않았다.** 같은 기준일 제한현금 태그 일부가 빠져 있어 채웠다. 제한현금은 어차피 빼므로 net_cash 값은 그대로다. 이 목록은 제외 판단에 쓴 개념이며 companyfacts 전 개념의 전수 목록은 아니다."
         },
         "legacy_comparison": {
           "legacy_net_cash": 60300000000.0,
@@ -7878,6 +7934,10 @@
             "us-gaap:RestrictedCashCurrent": {
               "value": 496000000.0,
               "why": "제한 현금"
+            },
+            "us-gaap:RestrictedCashNoncurrent": {
+              "value": 710000000.0,
+              "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
             }
           },
           "debt_ex_lease": 9061000000.0,
@@ -7888,7 +7948,8 @@
           "operating_lease": 6738000000.0,
           "finance_lease": 281000000.0,
           "lease_total": 7019000000.0,
-          "debt_incl_lease": 16080000000.0
+          "debt_incl_lease": 16080000000.0,
+          "excluded_completeness": "**`전부 남겼다` 는 성립하지 않았다.** 같은 기준일 제한현금 태그 일부가 빠져 있어 채웠다. 제한현금은 어차피 빼므로 net_cash 값은 그대로다. 이 목록은 제외 판단에 쓴 개념이며 companyfacts 전 개념의 전수 목록은 아니다."
         },
         "legacy_comparison": {
           "legacy_net_cash": 27400000000.0,
@@ -8239,10 +8300,16 @@
       "basis": {
         "measured_as_of": "2026-06-30",
         "why": "`OperatingLeaseLiabilityNoncurrent` 211,400천은 있으나 `...Current` 도 상위 합계 `OperatingLeaseLiability` 도 없다. 유동 리스부채는 대차대조표 면에 별도 줄이 없고 `AccruedLiabilitiesCurrent` 504,070천에 묻혀 있다. **발행사가 따로 공시하지 않는다.**",
-        "why_not_unverified": "보존 companyfacts 의 2026-06-30 시점 사실 44건을 전수 확인했다. 유동 리스부채를 가리키는 개념이 없다.",
+        "why_not_unverified": "보존 PLTR companyfacts 에서 end=2026-06-30 인 사실 **148건**(시점형 52건·52개 태그, 기간형 96건)을 전수 확인했다. 유동 리스부채를 가리키는 시점 사실이 없다 — `OperatingLeaseLiabilityNoncurrent` 211,400,000 은 있고 `OperatingLeaseLiabilityCurrent`·상위 합계 `OperatingLeaseLiability` 의 최근값은 2025-12-31 이다.",
         "impact": "리스 총액이 불완전해 net_cash 실측이 막힌다. 비유동분만 빼면 9,197,699천이고 legacy 9,200,000천과 맞아 **정의의 근거로는 쓰지만 관측으로는 등록하지 않는다.** apple 과 같은 결함이므로 같게 다룬다.",
         "blocks_metric": "net_cash",
-        "definition_ref": "policies.f6.net_cash"
+        "definition_ref": "policies.f6.net_cash",
+        "count_correction": {
+          "at": "2026-09-15",
+          "was": "2026-06-30 시점 사실 44건",
+          "is": "end=2026-06-30 사실 148건(시점형 52)",
+          "why": "44 는 재현되지 않았다(리뷰 A 2차). 결론은 같다."
+        }
       },
       "raw": "2026-06-30 기준 리스부채 유동분 없음 — 비유동분 211,400천만 태깅",
       "note": "NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed"
@@ -8569,7 +8636,7 @@
       "basis": {
         "measured_as_of": "2025-12-31",
         "concept": "20-F 손익계산서",
-        "how_reconstructed": "보존 20-F 916행 INCOME BEFORE INCOME TAX 2,041,654.7 NT$백만",
+        "how_reconstructed": "보존 20-F(f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm) 감사 재무제표 `CONSOLIDATED STATEMENTS OF PROFIT OR LOSS AND OTHER COMPREHENSIVE INCOME` 표의 `INCOME BEFORE INCOME TAX` 행 — `979,316.5 1,405,840.0 2,041,654.7 65,083.0` 에서 2025 열 2,041,654.7 NT$백만",
         "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 고치기 위한 입력이다. 법인세를 순이익에 되더하는 대신 세전이익을 직접 들이면 지표 하나로 끝난다.",
         "cross_check_ni_plus_tax": {
           "tax_ttm_usd": 11046534905.96111,
@@ -8580,7 +8647,9 @@
         "original_currency": "TWD",
         "fx_rate": 31.37,
         "fx_rate_source": "20-F 자체 선언 편의환산 환율 (F6-REG-28 등록값과 동일)",
-        "pretax_native": 2041654700000.0
+        "pretax_native": 2041654700000.0,
+        "how_reconstructed_superseded": "보존 20-F 916행 INCOME BEFORE INCOME TAX 2,041,654.7 NT$백만",
+        "location_correction": "`916행` 은 재현되지 않는다 — 보존 htm 은 6줄이다(리뷰 A 2차). 행 번호 대신 표 제목과 행 이름으로 적는다."
       },
       "raw": "세전이익 TTM 65.1B USD",
       "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
@@ -8650,6 +8719,45 @@
       },
       "raw": "미사용 약정 approximately US$2.6B (3.17B 시설, 런웨이 제외)",
       "note": "FIX-53 2단계. 근사치라 런웨이 분자에서 뺀다. 결론 민감도는 basis.sensitivity."
+    },
+    {
+      "observation_id": "spacex-xai.pretax_income_ttm.fix53",
+      "company_id": "spacex-xai",
+      "metric": "pretax_income_ttm",
+      "value": -7623000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-15",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "kind": "derived",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "basis": {
+        "period_basis": "ttm",
+        "method": "FY2025 + H1'2026 - H1'2025 (net_income_ttm·operating_income_ttm 과 같은 방식)",
+        "components": {
+          "fy2025_s1a": -4219000000,
+          "h1_2026_10q": -4788000000,
+          "h1_2025_10q": -1384000000
+        },
+        "sources": {
+          "fy2025": "S-1/A 0001628280-26-040364 감사 연결손익계산서 `Income (loss) before income taxes (4,219)` — 3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm",
+          "half_years": "10-Q 0001628280-26-052535 companyfacts `IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest`"
+        },
+        "cross_check_tax": {
+          "fy2025_s1a": 718000000,
+          "h1_2026": 29000000,
+          "h1_2025": 152000000,
+          "tax_ttm": 595000000,
+          "closes_to_net_income_ttm": "-7,623 − 595 = -8,218 = spacex-xai.net_income_ttm.f6reg28"
+        },
+        "why_now": "run.json 이 `세전이익을 복원하지 못해` 라고 적었는데 세전이익은 공시돼 있었다(리뷰 A 2차). 복원 가능해서 등록한다. nonop_share 는 세전이익이 음수라 부호 규약이 서지 않아 여전히 산출하지 않는다."
+      },
+      "raw": "TTM 세전손실 -7,623M",
+      "note": "FIX-53 3단계. S-1/A FY2025 + 10-Q 반기 복원. 순이익과 세금으로 닫힌다."
     }
   ]
 }

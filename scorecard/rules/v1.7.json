@@ -1766,6 +1766,27 @@
       "rechecker": "2026-11 재채점 때 판단자.",
       "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 F3 가속도 잣대를 바꾸지 않았다.",
       "score_impact_now": "없다."
+    },
+    {
+      "id": "TEN-RA-02",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RA-02 · obsreg 2차 리뷰 A(qwen) · 체크리스트 Q05·Q09 fail",
+      "judgment_ids": [
+        "nvidia.F2"
+      ],
+      "subject": "nvidia F2 5점의 성능 근거가 벤더 발표이고 같은 실행 안에서 시점이 반증된다",
+      "tension": "nvidia.F2 근거 `Vera Rubin 양산(R100 3,360억 트랜지스터, Blackwell 대비 추론 5배·토큰당 비용 1/10)` 의 출처가 NVIDIA 자체 보도자료다. 저장소 어느 자료도 2026-09-02 기준 양산을 말하지 않고, 초안 TRIG-016 은 Rubin 출하를 미발동 미래 사건으로 둔다. 채점규칙 382행 `벤더 발표 벤치마크는 1차 근거가 아니다 — 독립 측정을 우선한다` · 349행 `근거마다 (실측)/(발표)를 표기한다` 를 어긴다. 점유율 70~75% 는 출처가 없다.",
+      "direction": "하향 가능(5 → 4 검토). 세대 격차의 독립 측정 근거가 확인되면 유지.",
+      "rechecker": "2026-11 재채점 때 판단자.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 F2 잣대를 새로 대지 않았다 — anthropic F2 의 독립 측정 재검토도 점수 변경 없이 넘어갔다. 재검토 시점과 함께 등록했으므로 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 349행",
+        "채점규칙 382행",
+        "research/nvidia-recent-4m-2026-05.md 12·15·36·39행"
+      ],
+      "note": "관련 긴장 #11 — 세대 격차가 몇 축에서 서야 하는지와 독립 측정 요건이 원문 미규정이다(decisions C-03 generation_gap_constraints)."
     }
   ]
 }
