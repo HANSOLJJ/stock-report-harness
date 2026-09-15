@@ -116,7 +116,7 @@ def init_run(
     plan_text = render_plan(run, rules, registry, request=request, baseline_note=f"기준선 `{baseline_id}` ({scores['as_of']}, HTML `{scores['source']['html_sha256'][:12]}…`)의 점수·판정표·원자료를 승계")
     PLAN_DIR.mkdir(parents=True, exist_ok=True)
     plan_path = PLAN_DIR / f"{slug}.md"
-    plan_path.write_text(plan_text, encoding="utf-8")
+    plan_path.write_text(plan_text, encoding="utf-8", newline="\n")
     return {"plan": plan_path, "run": d / "run.json", "observations": d / "observations.json", "judgments": d / "judgments.json", "sources": d / "sources.json"}
 
 
@@ -128,7 +128,7 @@ def research(slug: str) -> Path:
     text = render_research(ctx, hashes=ctx.hashes)
     RESEARCH_DIR.mkdir(parents=True, exist_ok=True)
     path = RESEARCH_DIR / f"{slug}.md"
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
     return path
 
 
@@ -142,7 +142,7 @@ def calculate(slug: str) -> tuple[Path, Path, dict[str, Any]]:
     path = write_results(slug, results)
     scores, _obs, _trig = load_baseline(ctx.run["baseline_id"])
     preview_path = run_dir(slug) / "preview.md"
-    preview_path.write_text(render_preview(ctx, results, scores), encoding="utf-8")
+    preview_path.write_text(render_preview(ctx, results, scores), encoding="utf-8", newline="\n")
     stale_approval = run_dir(slug) / "approval.json"
     if stale_approval.exists():
         approval = load_json_strict(stale_approval)
@@ -165,7 +165,7 @@ def draft(slug: str) -> Path:
     text = render_draft(ctx, results, scores, triggers)
     DRAFT_DIR.mkdir(parents=True, exist_ok=True)
     path = DRAFT_DIR / f"{slug}.md"
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
     return path
 
 
@@ -181,7 +181,7 @@ def review_template(slug: str, *, force: bool = False) -> Path:
     results = load_results(slug)
     text = render_review_template(ctx, results, draft_hash=sha256_file(draft_path))
     REVIEW_DIR.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
     return path
 
 

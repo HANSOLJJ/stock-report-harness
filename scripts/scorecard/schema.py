@@ -147,7 +147,9 @@ def load_json_strict(path: Path) -> Any:
 
 def write_json(path: Path, obj: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+    # 2026-09-15 FIX-53 RC-07: 텍스트 모드 기본값은 Windows 에서 줄바꿈을 CRLF 로 바꿔 써서 해시가 플랫폼마다 갈렸다.
+    # .gitattributes 가 이 파일들을 LF 로 고정하므로 생성기도 LF 로 쓴다.
+    path.write_text(json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=False) + "\n", encoding="utf-8", newline="\n")
 
 
 def _require(cond: bool, message: str) -> None:
