@@ -6,8 +6,8 @@ created_at: 2026-09-11
 plan_source: plan/ai-scorecard-2026-09-obsreg.md
 research_source: research/ai-scorecard-2026-09-obsreg.md
 draft_source: drafts/ai-scorecard-2026-09-obsreg.md
-results_hash: 5e8ce6fcf3b812a29ada6b51d89e822f5923da436e887f23431b75ebc709fe79
-draft_hash: 931f5632affd4742cb35e46f9798598ef1e6d246be282bc3386da009b75f6490
+results_hash: f22b2014012bf1e393560025b2510800820e2b3da9a3f39a1d34d8d1bf89c06d
+draft_hash: a3e4654e6da067c3a6336b9628687b5ca4a95109cb9a64edfc6edd5ca0309ce1
 review_type: separate-session-4way
 review_execution: separate_subagent_sessions
 reviewers:
@@ -30,6 +30,7 @@ reviewers:
 | 출력·가독성 | 표·카드·근거·차트·이력 일치, 낡은 비교 문장, 모바일·단일 HTML |  | pending |  |
 
 결과는 pass / needs_fix / blocked 중 하나. 네 영역이 모두 pass 이고 체크리스트에 fail 이 없을 때만 frontmatter `status: pass`.
+**승계 판단 예외(AGENTS.md 리뷰 범위)** — 체크리스트 fail 의 사유가 `carried_score` 로 승계한 판단의 기존 논리이고, 이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며, 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 이때 해당 fail 과 **긴장 번호**(예: `TEN-RC-02`)를 근거 칸에 그대로 적는다. 이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다 — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(Q03).
 
 ## 체크리스트
 
@@ -67,4 +68,4 @@ reviewers:
 
 ## 판정
 
-- results_hash `5e8ce6fcf3b812a2…` · draft_hash `931f5632affd4742…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
+- results_hash `f22b2014012bf1e3…` · draft_hash `a3e4654e6da067c3…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
