@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "1c2988f1c55b886e45e6837484e24b3b0d11860ccd8f2b3df988a11f256e4536",
+    "run": "88f76c0796a37942fbbf951654668ad90ba36ddac8d58be7733f6adcd4ea07ac",
     "observations": "0fcef847b46766e83cee425603324d664349b41287967740a84e88cf0ff42095",
-    "judgments": "19074b8a4e3116aebad13364249700514fa51712e0d37dd910fad84a650fbf75",
+    "judgments": "d86e6919b310a2e66785c22e63c7d0bb176f866eebe4b4941216138aab87b27c",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
-    "rules": "90c6b4da1b91cd0c9b87fbd14ae44fce9e93c3737566bec0681fdfbdd6c5850d"
+    "rules": "f41244b86cf01ba141cfb2af56936c1fa963875d82bda70129dc9e876e6c31c9"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -2402,7 +2402,7 @@
         "F7",
         "F8"
       ],
-      "rank": 8
+      "rank": 9
     },
     {
       "company_id": "nvidia",
@@ -2612,18 +2612,16 @@
         },
         "F7": {
           "factor": "F7",
-          "score": -3,
-          "status": "carried_score",
+          "score": -2,
+          "status": "ok",
           "basis": "matrix",
-          "judgment_id": "nvidia.F7",
+          "judgment_id": "nvidia.F7.fix52",
           "observation_ids": [],
           "calc": {
             "funding_dependent_share": "large",
             "own_money_returns": "yes"
           },
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F8": {
@@ -2679,8 +2677,8 @@
         }
       },
       "moat": 16,
-      "trap": -8,
-      "total": 8,
+      "trap": -7,
+      "total": 9,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -2689,7 +2687,6 @@
         "F3",
         "F4",
         "F5",
-        "F7",
         "F8"
       ],
       "rank": 8
@@ -3754,18 +3751,16 @@
         },
         "F7": {
           "factor": "F7",
-          "score": -3,
-          "status": "carried_score",
+          "score": -2,
+          "status": "ok",
           "basis": "matrix",
-          "judgment_id": "oracle.F7",
+          "judgment_id": "oracle.F7.fix52",
           "observation_ids": [],
           "calc": {
             "funding_dependent_share": "large",
             "own_money_returns": "yes"
           },
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F8": {
@@ -3845,8 +3840,8 @@
         }
       },
       "moat": 14,
-      "trap": -13,
-      "total": 1,
+      "trap": -12,
+      "total": 2,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3855,10 +3850,9 @@
         "F3",
         "F4",
         "F5",
-        "F7",
         "F8"
       ],
-      "rank": 14
+      "rank": 13
     },
     {
       "company_id": "openai",
@@ -4193,11 +4187,11 @@
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "moat": 16,
-      "trap": -8,
-      "total": 8
+      "trap": -7,
+      "total": 9
     },
     {
-      "rank": 8,
+      "rank": 9,
       "company_id": "apple",
       "display_name": "Apple",
       "moat": 15,
@@ -4237,12 +4231,12 @@
       "total": 2
     },
     {
-      "rank": 14,
+      "rank": 13,
       "company_id": "oracle",
       "display_name": "Oracle",
       "moat": 14,
-      "trap": -13,
-      "total": 1
+      "trap": -12,
+      "total": 2
     }
   ],
   "population": {
@@ -4252,6 +4246,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 165,
-  "results_hash": "cc696e35b4a66e408a866ee8bad69b25a07b1d971b487cc49f80b93e10b8a40c"
+  "warnings_count": 163,
+  "results_hash": "5e728029eb8987ee1dd1881d70e06b0e687b820f8a724195f29ae5cb775bdae6"
 }

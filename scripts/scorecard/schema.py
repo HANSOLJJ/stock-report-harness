@@ -239,6 +239,11 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         _require(isinstance(spec, dict) and "range" in spec and "mode" in spec and "label" in spec, f"rules.json.factors.{fid}: label/range/mode 필요")
         lo, hi = spec["range"]
         _require(_is_number(lo) and _is_number(hi) and lo <= hi, f"rules.json.factors.{fid}: range 오류")
+        # 2026-09-15 FIX-52: 매트릭스가 만드는 점수도 range 안이어야 한다. v1.7 함정 재배분에서 F7 range 가
+        # [-2,0] 으로 줄었는데 `large|yes` 가 -3 에 남아 범위 밖 점수가 조용히 나갔다(리뷰 C codex 발견).
+        for key, value in (spec.get("matrix") or {}).items():
+            _require(_is_number(value) and lo <= value <= hi,
+                     f"rules.json.factors.{fid}.matrix[{key}]: {value} 가 range [{lo}, {hi}] 밖")
     _validate_f6_policy(payload["policies"]["f6"], factors["F6"])
     _validate_f9_policy(payload["policies"]["f9"], factors["F9"])
     for item in payload["checklist"]:
@@ -570,6 +575,18 @@ def _validate_net_cash(spec: Any) -> None:
             for key in ("what", "why"):
                 _require(str(item.get(key) or "").strip(), f"{iw}.{key}: 비워 둘 수 없음")
 
+    # 2026-09-15 FIX-52: 아래 검사는 블록이 **있을 때만** 돌아서, 블록을 통째로 지우면 검사도 같이 사라졌다
+    # (리뷰 C codex 발견, 설계진행 메모리 변조로 재현). 작업 정의인 동안에는 세 블록이 반드시 있어야 한다.
+    if spec.get("status") == "working_definition":
+        sep_required = spec.get("scope_separation")
+        _require(isinstance(sep_required, dict) and sep_required,
+                 f"{where}.scope_separation: 작업 정의(working_definition)는 적용 범위 구분 블록이 반드시 있어야 함")
+        axes_required = sep_required.get("two_axes")
+        _require(isinstance(axes_required, dict) and axes_required,
+                 f"{where}.scope_separation.two_axes: 작업 정의는 두 축(즉시성·시장성) 블록이 반드시 있어야 함")
+        _require(isinstance(axes_required.get("banned_word"), dict),
+                 f"{where}.scope_separation.two_axes.banned_word: 작업 정의는 금지어 블록이 반드시 있어야 함")
+
     sep = spec.get("scope_separation") or {}
     if sep:
         sites = sep.get("sites")
@@ -846,6 +863,13 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
         else:
             _require(score is None, f"{where}: kind {kind!r} 판단의 score 는 null (자동 산출)")
         _validate_judgment_inputs(kind, item["inputs"], f"{where}.inputs")
+        if kind == "matrix":
+            # 매트릭스 판단은 score 를 들지 않으므로 **입력이 가리키는 칸**의 점수를 range 와 대조한다(FIX-52).
+            key = f"{item['inputs'].get('funding_dependent_share')}|{item['inputs'].get('own_money_returns')}"
+            cell = (rules["factors"][factor].get("matrix") or {}).get(key)
+            if cell is not None:
+                _require(lo <= cell <= hi,
+                         f"{where}: {item['company_id']} {factor} 매트릭스 출력 {key}={cell} 가 range [{lo}, {hi}] 밖")
         items.append(item)
     return items
 

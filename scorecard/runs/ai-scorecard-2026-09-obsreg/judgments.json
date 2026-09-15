@@ -1783,7 +1783,7 @@
       ]
     },
     {
-      "judgment_id": "nvidia.F7",
+      "judgment_id": "nvidia.F7.fix52",
       "company_id": "nvidia",
       "factor": "F7",
       "kind": "matrix",
@@ -1793,6 +1793,7 @@
         "own_money_returns": "yes"
       },
       "evidence": [
+        "📐 **[FIX-52 재척도 2026-09-15] F7 = -2.** 매트릭스 `large|yes` 칸이 -3 → -2 로 바뀌었다(v1.7 range [-2,0], 사용자 결정). 두 축 판정(조달 의존 고객 비중 큼 · 내 돈이 돌아옴)은 바뀌지 않았다. 아래 첫 줄의 `-3` 은 v1.5 문면이며 재척도 전 점수다.",
         "-3 — Oracle과 공동 최심 (별표 I: 조달 의존 고객 비중 큼 + 내 돈이 돌아옴)",
         "조달 의존 고객 비중이 크다 — OpenAI·네오클라우드·xAI가 투자받은 돈·빚으로 GPU를 산다",
         "내 돈이 돌아온다 — 🆕 (실측) 2026년 5개월간 AI 지분 $40B+: OpenAI $30B",
@@ -1813,14 +1814,53 @@
         "(경계) 이 보증들은 우발채무(C종)라 ⑨에 넣지 않는다 — 확정 지출이 아니고 여기 ⑦에서 이미 셌다"
       ],
       "counter_evidence": [],
-      "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전).",
-      "reviewer": "legacy:v1.5",
-      "reviewed_at": "2026-09-02",
-      "status": "carried",
-      "carried_from": "baseline:v1.5",
+      "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전). | [FIX-52] 매트릭스 재척도로 -3 → -2. **large 쪽에서 세로축이 점수를 가르지 못한다** — factors.F7.matrix_rescale 참조. 옛 판단은 superseded 에 있다.",
+      "reviewer": "설계진행(리뷰 C codex 발견 · 사용자 결정)",
+      "reviewed_at": "2026-09-15",
+      "status": "new",
       "source_ids": [
         "SRC-v15-html"
-      ]
+      ],
+      "previous_judgment_id": "nvidia.F7",
+      "superseded": {
+        "judgment_id": "nvidia.F7",
+        "score": null,
+        "inputs": {
+          "funding_dependent_share": "large",
+          "own_money_returns": "yes"
+        },
+        "evidence": [
+          "-3 — Oracle과 공동 최심 (별표 I: 조달 의존 고객 비중 큼 + 내 돈이 돌아옴)",
+          "조달 의존 고객 비중이 크다 — OpenAI·네오클라우드·xAI가 투자받은 돈·빚으로 GPU를 산다",
+          "내 돈이 돌아온다 — 🆕 (실측) 2026년 5개월간 AI 지분 $40B+: OpenAI $30B",
+          "Anthropic Series G(최대 $10B)",
+          "xAI Series E",
+          "CoreWeave $2B",
+          "Nebius $2B",
+          "공급망(Corning $3.2B·Marvell·Lumentum·Coherent 각 $2B·IREN $2.1B). 그 돈이 GPU 대금으로 회수되고 매출이 피투자사 밸류를 올려 지분 평가익까지 늘리는 이중 루프",
+          "(발표) Q2 콜 '생태계 커밋 약 $500B' 분해 대기",
+          "(발표) 3월 약정 $100B→$30B 축소, 8/18 계약 보도 대비 $145B 하향",
+          "(실측) TTM 영업외 $32B(14%) — ⑥ 소관이나 출처가 고객사라 방증",
+          "🆕 돈이 아니라 신용을 댄다 — GPU 잔존가치 보증 최대 25%(담보 가치가 안 남으면 차액 부담 → 은행 LTV 70~80% 대출이 가능해진다)",
+          "SB Energy 보증 $105B 상한(8/17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 토지·전력·셸)",
+          "CoreWeave 미판매 캐파 매입 보증(2032-04-13까지)",
+          "rent-back $6.3B",
+          "월가와 $500B AI 인프라 금융 조성",
+          "⚠️ 자기모순 구조 — 잔존가치를 보증했는데 그 가치를 떨어뜨리는 것이 NVIDIA 자신의 신제품이다(Vera Rubin이 Grace Blackwell 담보 가치를 깎는다)",
+          "(경계) 이 보증들은 우발채무(C종)라 ⑨에 넣지 않는다 — 확정 지출이 아니고 여기 ⑦에서 이미 셌다"
+        ],
+        "reviewer": "legacy:v1.5",
+        "reviewed_at": "2026-09-02",
+        "status": "carried",
+        "carried_from": "baseline:v1.5",
+        "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전).",
+        "counter_evidence": [],
+        "source_ids": [
+          "SRC-v15-html"
+        ],
+        "superseded_at": "2026-09-15",
+        "why": "F7 매트릭스 재척도(사용자 결정, FIX-52). 두 축 입력(large|yes)은 그대로이고 그 칸의 점수가 -3 → -2 로 바뀌었다. 옛 근거 첫 줄의 `-3` 은 재척도 전 점수다."
+      }
     },
     {
       "judgment_id": "nvidia.F8",
@@ -2609,7 +2649,7 @@
       ]
     },
     {
-      "judgment_id": "oracle.F7",
+      "judgment_id": "oracle.F7.fix52",
       "company_id": "oracle",
       "factor": "F7",
       "kind": "matrix",
@@ -2619,20 +2659,46 @@
         "own_money_returns": "yes"
       },
       "evidence": [
+        "📐 **[FIX-52 재척도 2026-09-15] F7 = -2.** 매트릭스 `large|yes` 칸이 -3 → -2 로 바뀌었다(v1.7 range [-2,0], 사용자 결정). 두 축 판정(조달 의존 고객 비중 큼 · 내 돈이 돌아옴)은 바뀌지 않았다. 아래 첫 줄의 `-3` 은 v1.5 문면이며 재척도 전 점수다.",
         "-3 (v1.5 정정: Stargate 지분 확인 — 세로축 ✅)",
         "RPO $638B 중 OpenAI가 약 절반 = 연매출($67.36B)의 약 4.7년치",
         "🆕 Stargate LLC에 지분 $7B(SoftBank $19B·OpenAI $19B·MGX $7B와 공동 equity funder) — Oracle 돈이 Stargate로 들어가 DC가 되고 그 DC 매출이 Oracle에 돌아온다",
         "자체 부채 $167B로 지은 DC는 세로축이 아니다(설비로 갔지 고객 주머니로 안 감) — 그 선투자 위험은 ⑧-4·⑨-3·별표 J에서 센다"
       ],
       "counter_evidence": [],
-      "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전).",
-      "reviewer": "legacy:v1.5",
-      "reviewed_at": "2026-09-02",
-      "status": "carried",
-      "carried_from": "baseline:v1.5",
+      "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전). | [FIX-52] 매트릭스 재척도로 -3 → -2. **large 쪽에서 세로축이 점수를 가르지 못한다** — factors.F7.matrix_rescale 참조. 옛 판단은 superseded 에 있다.",
+      "reviewer": "설계진행(리뷰 C codex 발견 · 사용자 결정)",
+      "reviewed_at": "2026-09-15",
+      "status": "new",
       "source_ids": [
         "SRC-v15-html"
-      ]
+      ],
+      "previous_judgment_id": "oracle.F7",
+      "superseded": {
+        "judgment_id": "oracle.F7",
+        "score": null,
+        "inputs": {
+          "funding_dependent_share": "large",
+          "own_money_returns": "yes"
+        },
+        "evidence": [
+          "-3 (v1.5 정정: Stargate 지분 확인 — 세로축 ✅)",
+          "RPO $638B 중 OpenAI가 약 절반 = 연매출($67.36B)의 약 4.7년치",
+          "🆕 Stargate LLC에 지분 $7B(SoftBank $19B·OpenAI $19B·MGX $7B와 공동 equity funder) — Oracle 돈이 Stargate로 들어가 DC가 되고 그 DC 매출이 Oracle에 돌아온다",
+          "자체 부채 $167B로 지은 DC는 세로축이 아니다(설비로 갔지 고객 주머니로 안 감) — 그 선투자 위험은 ⑧-4·⑨-3·별표 J에서 센다"
+        ],
+        "reviewer": "legacy:v1.5",
+        "reviewed_at": "2026-09-02",
+        "status": "carried",
+        "carried_from": "baseline:v1.5",
+        "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전).",
+        "counter_evidence": [],
+        "source_ids": [
+          "SRC-v15-html"
+        ],
+        "superseded_at": "2026-09-15",
+        "why": "F7 매트릭스 재척도(사용자 결정, FIX-52). 두 축 입력(large|yes)은 그대로이고 그 칸의 점수가 -3 → -2 로 바뀌었다. 옛 근거 첫 줄의 `-3` 은 재척도 전 점수다."
+      }
     },
     {
       "judgment_id": "oracle.F8",

@@ -72,7 +72,10 @@ class BothSidesTest(unittest.TestCase):
             with self.subTest(jid=j["judgment_id"]):
                 self.assertIn("영업외 비중은 F7 입력이 아니다", j["note"])
                 self.assertEqual(j["note"].count("[IMPL-50]"), 1)          # 재실행해도 한 번
-                self.assertEqual(j["status"], "carried")                    # 판단 자체는 승계 그대로
+                # 원래 14건 전부 carried 를 고정했다. FIX-52 가 매트릭스를 재척도하며 nvidia·oracle 을 새 판단으로
+                # 교체했다 — IMPL-50 문장은 그 둘에도 승계돼 있어야 하고 나머지 12건은 carried 그대로다.
+                expected = "new" if j["company_id"] in ("nvidia", "oracle") else "carried"
+                self.assertEqual(j["status"], expected)
 
     def test_guideline_row_is_marked_stale(self):
         text = (ROOT / "docs" / "scorecard" / "design-guideline.md").read_text(encoding="utf-8")
@@ -83,10 +86,16 @@ class BothSidesTest(unittest.TestCase):
 
 class NoScoreImpactTest(unittest.TestCase):
     def test_f7_scores_are_carried(self):
+        """IMPL-50 자체는 점수를 바꾸지 않는다.
+
+        원래 14개사 F7 전부 carried_score 를 고정했다. FIX-52 S1 재척도로 nvidia·oracle 이 이번 실행 검토(ok)가
+        되었고 그 변경은 IMPL-50 이 아니라 FIX-52 의 것이다.
+        """
         res = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
         for c in res["companies"]:
             with self.subTest(cid=c["company_id"]):
-                self.assertEqual(c["factors"]["F7"]["status"], "carried_score")
+                expected = "ok" if c["company_id"] in ("nvidia", "oracle") else "carried_score"
+                self.assertEqual(c["factors"]["F7"]["status"], expected)
 
 
 if __name__ == "__main__":

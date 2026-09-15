@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
 observations_hash: 0fcef847b46766e83cee425603324d664349b41287967740a84e88cf0ff42095
-judgments_hash: 19074b8a4e3116aebad13364249700514fa51712e0d37dd910fad84a650fbf75
+judgments_hash: d86e6919b310a2e66785c22e63c7d0bb176f866eebe4b4941216138aab87b27c
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -547,7 +547,7 @@ created_at: 2026-09-11
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=fail, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-2 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
-| ⑦ 순환금융 | matrix | — | funding_dependent_share=large, own_money_returns=yes | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
+| ⑦ 순환금융 | matrix | — | funding_dependent_share=large, own_money_returns=yes | new | 설계진행(리뷰 C codex 발견 · 사용자 결정) 2026-09-15 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
 | ⑧ 비대칭 의존 | score | -3 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=stable, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=unknown, operating_result_reviewed=profit | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
 
@@ -599,7 +599,7 @@ created_at: 2026-09-11
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
-| ⑦ 순환금융 | matrix | — | funding_dependent_share=large, own_money_returns=yes | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
+| ⑦ 순환금융 | matrix | — | funding_dependent_share=large, own_money_returns=yes | new | 설계진행(리뷰 C codex 발견 · 사용자 결정) 2026-09-15 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
 | ⑧ 비대칭 의존 | score | -4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=yes, operating_result_reviewed=profit | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
 
