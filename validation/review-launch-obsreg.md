@@ -58,3 +58,9 @@ Claude 에이전트 넷은 "session limit" 으로 한 줄도 쓰지 못하고 �
 ### 조율자 핸들 변경
 
 세션 재시작으로 `term_025d0953-…` 은 소멸. 현재 `term_8e8d834d-48ff-4ba6-a9f7-3c3d1a0ef4a8`. worker·C-13·NTM 터미널은 목록에 없다(재시작 전 것). 다시 열리면 새 핸들을 통지해야 한다.
+
+### 진행 (2026-09-15 12:xx)
+
+- **qwen A 착수 확인.** 초기 401(`Incorrect API key`) 두 건은 Base URL 이 `dashscope-intl`(deepseek-v4-flash)이던 때 — Token Plan 키(`token-plan.ap-southeast-1`)와 서버 불일치. `qwen3.8-max`(token-plan) 로 바꾼 뒤 A 가 프롬프트·템플릿을 읽고 **해시 일치를 확인**한 뒤 run.json·sources.json 읽기로 진행. 화면은 `orca terminal read --terminal <h> --json` 으로 읽는다(`list` 의 preview 는 이 창에서 비어 있었다).
+- **codex C** 는 모델 변경 확인 대화상자가 떠 있는 동안 `agent_prompt_blocked` 로 두 번 막혔다. 대화상자가 닫힌 뒤 재시도 토큰으로 재발송.
+- 조율자 실수 하나. `settings.json` 을 읽을 때 중첩 필드 가림이 빠져 API 키가 도구 출력에 찍혔다. 사용자에게 알렸고 저장하지 않았다. **설정 파일은 키 필드를 통째로 제외하고 읽는다.**
