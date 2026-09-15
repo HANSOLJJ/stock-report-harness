@@ -6,8 +6,8 @@ created_at: 2026-09-11
 plan_source: plan/ai-scorecard-2026-09-obsreg.md
 research_source: research/ai-scorecard-2026-09-obsreg.md
 draft_source: drafts/ai-scorecard-2026-09-obsreg.md
-results_hash: 598055f51c4b02fe1e8bccb0e34f16d6a43ed12f5ed4aa429e874b5dca9db3f8
-draft_hash: 2cbc0eac338ccf2bad8ed05f488279a6400177a82fa914923cf99f1843651709
+results_hash: 66493509c00acf01b3e6a4db20c825bc1dec6afe26393f68057b72924118807d
+draft_hash: 9dcaebc89826a7deb107b7e227ee0f80af4b7ebe387b8882731b380d0f18c607
 review_type: separate-session-4way
 review_execution: separate_subagent_sessions
 reviewers:
@@ -68,4 +68,4 @@ reviewers:
 
 ## 판정
 
-- results_hash `598055f51c4b02fe…` · draft_hash `2cbc0eac338ccf2b…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
+- results_hash `66493509c00acf01…` · draft_hash `9dcaebc89826a7de…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
