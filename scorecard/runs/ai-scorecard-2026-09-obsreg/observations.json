@@ -4146,7 +4146,9 @@
           "band_differs": false,
           "note": "**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다.",
           "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."
-        }
+        },
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss(companyfacts label `Net Income (Loss) Attributable to Parent`) 103,592,000,000 CNY — 20-F 0001193125-26-231755"
       },
       "raw": "2025-04-01~2026-03-31 103,592,000,000 CNY",
       "note": "F6-REG-28. **당해와 같은 환율 6.8980 으로 환산**했다"
@@ -4222,6 +4224,50 @@
           "value": 445866000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:Revenues",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 229692000000,
+              "accession": "0001652044-26-000071",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 402836000000,
+              "accession": "0001652044-26-000018",
+              "form": "10-K",
+              "filed": "2026-02-05"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 186662000000,
+              "accession": "0001652044-25-000062",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001652044-26-000071"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 445866000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 445,866,000,000",
@@ -4264,6 +4310,50 @@
           "value": 147628000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 80466000000,
+              "accession": "0001652044-26-000071",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 129039000000,
+              "accession": "0001652044-26-000018",
+              "form": "10-K",
+              "filed": "2026-02-05"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 61877000000,
+              "accession": "0001652044-25-000062",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001652044-26-000071"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 147628000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 147,628,000,000",
@@ -4288,7 +4378,112 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2025-09-30",
+              "val": 34979000000,
+              "accession": "0001652044-25-000091",
+              "form": "10-Q",
+              "filed": "2025-10-30"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-10-01",
+              "end": "2025-12-31",
+              "val": 34455000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-12-31",
+                  "val": 132170000000,
+                  "accession": "0001652044-26-000018",
+                  "form": "10-K",
+                  "filed": "2026-02-05",
+                  "also_filed_in": [
+                    "0001308179-26-000342"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-03-31",
+                  "val": 34540000000,
+                  "accession": "0001652044-25-000043",
+                  "form": "10-Q",
+                  "filed": "2025-04-25",
+                  "also_filed_in": [
+                    "0001652044-26-000048"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-04-01",
+                  "end": "2025-06-30",
+                  "val": 28196000000,
+                  "accession": "0001652044-25-000062",
+                  "form": "10-Q",
+                  "filed": "2025-07-24",
+                  "also_filed_in": [
+                    "0001652044-26-000071"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-01",
+                  "end": "2025-09-30",
+                  "val": 34979000000,
+                  "accession": "0001652044-25-000091",
+                  "form": "10-Q",
+                  "filed": "2025-10-30"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 34455000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-03-31",
+              "val": 62578000000,
+              "accession": "0001652044-26-000048",
+              "form": "10-Q",
+              "filed": "2026-04-30"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 112193000000,
+              "accession": "0001652044-26-000071",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 244205000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-07-01~2026-06-30 244,205,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4312,7 +4507,122 @@
         "period_basis": "ttm",
         "tag": "Revenues+RevenueFromContractWithCustomerExcludingAssessedTax",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-07-01",
+              "end": "2024-09-30",
+              "val": 88268000000,
+              "accession": "0001652044-24-000118",
+              "form": "10-Q",
+              "filed": "2024-10-30",
+              "also_filed_in": [
+                "0001652044-25-000091"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2024-10-01",
+              "end": "2024-12-31",
+              "val": 96469000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-12-31",
+                  "val": 350018000000,
+                  "accession": "0001652044-25-000014",
+                  "form": "10-K",
+                  "filed": "2025-02-05",
+                  "also_filed_in": [
+                    "0001652044-26-000018"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-03-31",
+                  "val": 80539000000,
+                  "accession": "0001652044-24-000053",
+                  "form": "10-Q",
+                  "filed": "2024-04-26",
+                  "also_filed_in": [
+                    "0001652044-25-000043"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-04-01",
+                  "end": "2024-06-30",
+                  "val": 84742000000,
+                  "accession": "0001652044-24-000079",
+                  "form": "10-Q",
+                  "filed": "2024-07-24",
+                  "also_filed_in": [
+                    "0001652044-25-000062"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-07-01",
+                  "end": "2024-09-30",
+                  "val": 88268000000,
+                  "accession": "0001652044-24-000118",
+                  "form": "10-Q",
+                  "filed": "2024-10-30",
+                  "also_filed_in": [
+                    "0001652044-25-000091"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 96469000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-03-31",
+              "val": 90234000000,
+              "accession": "0001652044-25-000043",
+              "form": "10-Q",
+              "filed": "2025-04-25",
+              "also_filed_in": [
+                "0001652044-26-000048"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 96428000000,
+              "accession": "0001652044-25-000062",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001652044-26-000071"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 371399000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-07-01~2025-06-30 371,399,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4354,6 +4664,50 @@
           "value": 775680000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 382125000000,
+              "accession": "0001018724-26-000026",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 716924000000,
+              "accession": "0001018724-26-000004",
+              "form": "10-K",
+              "filed": "2026-02-06"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 323369000000,
+              "accession": "0001018724-25-000086",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0001018724-26-000026"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 775680000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 775,680,000,000",
@@ -4396,6 +4750,50 @@
           "value": 93712000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 51313000000,
+              "accession": "0001018724-26-000026",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 79975000000,
+              "accession": "0001018724-26-000004",
+              "form": "10-K",
+              "filed": "2026-02-06"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 37576000000,
+              "accession": "0001018724-25-000086",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0001018724-26-000026"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 93712000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 93,712,000,000",
@@ -4420,7 +4818,112 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2025-09-30",
+              "val": 21187000000,
+              "accession": "0001018724-25-000123",
+              "form": "10-Q",
+              "filed": "2025-10-31"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-10-01",
+              "end": "2025-12-31",
+              "val": 21192000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-12-31",
+                  "val": 77670000000,
+                  "accession": "0001018724-26-000004",
+                  "form": "10-K",
+                  "filed": "2026-02-06",
+                  "also_filed_in": [
+                    "0001104659-26-041026"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-03-31",
+                  "val": 17127000000,
+                  "accession": "0001018724-25-000036",
+                  "form": "10-Q",
+                  "filed": "2025-05-02",
+                  "also_filed_in": [
+                    "0001018724-26-000014"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-04-01",
+                  "end": "2025-06-30",
+                  "val": 18164000000,
+                  "accession": "0001018724-25-000086",
+                  "form": "10-Q",
+                  "filed": "2025-08-01",
+                  "also_filed_in": [
+                    "0001018724-26-000026"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-01",
+                  "end": "2025-09-30",
+                  "val": 21187000000,
+                  "accession": "0001018724-25-000123",
+                  "form": "10-Q",
+                  "filed": "2025-10-31"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 21192000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-03-31",
+              "val": 30255000000,
+              "accession": "0001018724-26-000014",
+              "form": "10-Q",
+              "filed": "2026-04-30"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 62647000000,
+              "accession": "0001018724-26-000026",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 135281000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-07-01~2026-06-30 135,281,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4444,7 +4947,122 @@
         "period_basis": "ttm",
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-07-01",
+              "end": "2024-09-30",
+              "val": 158877000000,
+              "accession": "0001018724-24-000161",
+              "form": "10-Q",
+              "filed": "2024-11-01",
+              "also_filed_in": [
+                "0001018724-25-000123"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2024-10-01",
+              "end": "2024-12-31",
+              "val": 187792000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-12-31",
+                  "val": 637959000000,
+                  "accession": "0001018724-25-000004",
+                  "form": "10-K",
+                  "filed": "2025-02-07",
+                  "also_filed_in": [
+                    "0001018724-26-000004"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-03-31",
+                  "val": 143313000000,
+                  "accession": "0001018724-24-000083",
+                  "form": "10-Q",
+                  "filed": "2024-05-01",
+                  "also_filed_in": [
+                    "0001018724-25-000036"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-04-01",
+                  "end": "2024-06-30",
+                  "val": 147977000000,
+                  "accession": "0001018724-24-000130",
+                  "form": "10-Q",
+                  "filed": "2024-08-02",
+                  "also_filed_in": [
+                    "0001018724-25-000086"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-07-01",
+                  "end": "2024-09-30",
+                  "val": 158877000000,
+                  "accession": "0001018724-24-000161",
+                  "form": "10-Q",
+                  "filed": "2024-11-01",
+                  "also_filed_in": [
+                    "0001018724-25-000123"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 187792000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-03-31",
+              "val": 155667000000,
+              "accession": "0001018724-25-000036",
+              "form": "10-Q",
+              "filed": "2025-05-02",
+              "also_filed_in": [
+                "0001018724-26-000014"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 167702000000,
+              "accession": "0001018724-25-000086",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0001018724-26-000026"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 670038000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-07-01~2025-06-30 670,038,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4461,7 +5079,7 @@
       "source_id": "SRC-SEC-FACTS-F6",
       "status": "verified",
       "period": {
-        "start": "2025-06-28",
+        "start": "2025-06-29",
         "end": "2026-06-27"
       },
       "basis": {
@@ -4486,9 +5104,61 @@
           "value": 466823000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "period_correction": {
+          "corrected_at": "2026-09-15",
+          "task": "FIX-54 1단계 S5 (3차 리뷰 B FC-05)",
+          "was": "2025-06-28",
+          "is": "2025-06-29",
+          "why": "복원 Q4 는 직전 누계 종료일(2025-06-28) **다음 날** 시작한다. 시작일을 누계 종료일로 적어 하루가 겹쳤다. 값은 같다 — 기간 표기만 틀렸다. 원인은 validation/f6-spec-18/collect_ttm.py 복원 Q4 시작일이라 그 줄도 고쳤다.",
+          "same_company_fcf": "apple.fcf_ttm.cashfcf35 는 이미 2025-06-29 시작이었다 — F6·F9 창이 이제 같다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-09-28",
+              "end": "2026-06-27",
+              "val": 364357000000,
+              "accession": "0000320193-26-000020",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "val": 416161000000,
+              "accession": "0000320193-25-000079",
+              "form": "10-K",
+              "filed": "2025-10-31"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-09-29",
+              "end": "2025-06-28",
+              "val": 313695000000,
+              "accession": "0000320193-25-000073",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0000320193-26-000020"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 466823000000,
+            "matches_value": true
+          }
         }
       },
-      "raw": "2025-06-28~2026-06-27 466,823,000,000",
+      "raw": "2025-06-29~2026-06-27 466,823,000,000",
       "note": "F6-REG-28. G1-FILL-27 기준값"
     },
     {
@@ -4503,7 +5173,7 @@
       "source_id": "SRC-SEC-FACTS-F6",
       "status": "verified",
       "period": {
-        "start": "2025-06-28",
+        "start": "2025-06-29",
         "end": "2026-06-27"
       },
       "basis": {
@@ -4528,9 +5198,61 @@
           "value": 154859000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "period_correction": {
+          "corrected_at": "2026-09-15",
+          "task": "FIX-54 1단계 S5 (3차 리뷰 B FC-05)",
+          "was": "2025-06-28",
+          "is": "2025-06-29",
+          "why": "복원 Q4 는 직전 누계 종료일(2025-06-28) **다음 날** 시작한다. 시작일을 누계 종료일로 적어 하루가 겹쳤다. 값은 같다 — 기간 표기만 틀렸다. 원인은 validation/f6-spec-18/collect_ttm.py 복원 Q4 시작일이라 그 줄도 고쳤다.",
+          "same_company_fcf": "apple.fcf_ttm.cashfcf35 는 이미 2025-06-29 시작이었다 — F6·F9 창이 이제 같다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-09-28",
+              "end": "2026-06-27",
+              "val": 122432000000,
+              "accession": "0000320193-26-000020",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "val": 133050000000,
+              "accession": "0000320193-25-000079",
+              "form": "10-K",
+              "filed": "2025-10-31"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2024-09-29",
+              "end": "2025-06-28",
+              "val": 100623000000,
+              "accession": "0000320193-25-000073",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0000320193-26-000020"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 154859000000,
+            "matches_value": true
+          }
         }
       },
-      "raw": "2025-06-28~2026-06-27 154,859,000,000",
+      "raw": "2025-06-29~2026-06-27 154,859,000,000",
       "note": "F6-REG-28. G1-FILL-27 기준값"
     },
     {
@@ -4545,16 +5267,129 @@
       "source_id": "SRC-SEC-FACTS-F6",
       "status": "verified",
       "period": {
-        "start": "2025-06-28",
+        "start": "2025-06-29",
         "end": "2026-06-27"
       },
       "basis": {
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "period_correction": {
+          "corrected_at": "2026-09-15",
+          "task": "FIX-54 1단계 S5 (3차 리뷰 B FC-05)",
+          "was": "2025-06-28",
+          "is": "2025-06-29",
+          "why": "복원 Q4 는 직전 누계 종료일(2025-06-28) **다음 날** 시작한다. 시작일을 누계 종료일로 적어 하루가 겹쳤다. 값은 같다 — 기간 표기만 틀렸다. 원인은 validation/f6-spec-18/collect_ttm.py 복원 Q4 시작일이라 그 줄도 고쳤다.",
+          "same_company_fcf": "apple.fcf_ttm.cashfcf35 는 이미 2025-06-29 시작이었다 — F6·F9 창이 이제 같다."
+        },
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "q4_derived",
+              "start": "2025-06-29",
+              "end": "2025-09-27",
+              "val": 27466000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2024-09-29",
+                  "end": "2025-09-27",
+                  "val": 112010000000,
+                  "accession": "0000320193-25-000079",
+                  "form": "10-K",
+                  "filed": "2025-10-31"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2024-09-29",
+                  "end": "2024-12-28",
+                  "val": 36330000000,
+                  "accession": "0000320193-25-000008",
+                  "form": "10-Q",
+                  "filed": "2025-01-31",
+                  "also_filed_in": [
+                    "0000320193-26-000006"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2024-12-29",
+                  "end": "2025-03-29",
+                  "val": 24780000000,
+                  "accession": "0000320193-25-000057",
+                  "form": "10-Q",
+                  "filed": "2025-05-02",
+                  "also_filed_in": [
+                    "0000320193-26-000013"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-03-30",
+                  "end": "2025-06-28",
+                  "val": 23434000000,
+                  "accession": "0000320193-25-000073",
+                  "form": "10-Q",
+                  "filed": "2025-08-01",
+                  "also_filed_in": [
+                    "0000320193-26-000020"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 27466000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-09-28",
+              "end": "2025-12-27",
+              "val": 42097000000,
+              "accession": "0000320193-26-000006",
+              "form": "10-Q",
+              "filed": "2026-01-30"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-12-28",
+              "end": "2026-03-28",
+              "val": 29578000000,
+              "accession": "0000320193-26-000013",
+              "form": "10-Q",
+              "filed": "2026-05-01"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-03-29",
+              "end": "2026-06-27",
+              "val": 29789000000,
+              "accession": "0000320193-26-000020",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            }
+          ],
+          "arithmetic": {
+            "formula": "q4_derived + quarter + quarter + quarter",
+            "sum": 128930000000,
+            "matches_value": true
+          }
+        }
       },
-      "raw": "2025-06-28~2026-06-27 128,930,000,000",
+      "raw": "2025-06-29~2026-06-27 128,930,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
     },
     {
@@ -4569,16 +5404,139 @@
       "source_id": "SRC-SEC-FACTS-F6",
       "status": "verified",
       "period": {
-        "start": "2024-06-29",
+        "start": "2024-06-30",
         "end": "2025-06-28"
       },
       "basis": {
         "period_basis": "ttm",
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "period_correction": {
+          "corrected_at": "2026-09-15",
+          "task": "FIX-54 1단계 S5 (3차 리뷰 B FC-05)",
+          "was": "2024-06-29",
+          "is": "2024-06-30",
+          "why": "복원 Q4 는 직전 누계 종료일(2024-06-29) **다음 날** 시작한다. 시작일을 누계 종료일로 적어 하루가 겹쳤다. 값은 같다 — 기간 표기만 틀렸다. 원인은 validation/f6-spec-18/collect_ttm.py 복원 Q4 시작일이라 그 줄도 고쳤다.",
+          "same_company_fcf": "apple.fcf_ttm.cashfcf35 는 이미 2025-06-29 시작이었다 — F6·F9 창이 이제 같다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "q4_derived",
+              "start": "2024-06-30",
+              "end": "2024-09-28",
+              "val": 94930000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2023-10-01",
+                  "end": "2024-09-28",
+                  "val": 391035000000,
+                  "accession": "0000320193-24-000123",
+                  "form": "10-K",
+                  "filed": "2024-11-01",
+                  "also_filed_in": [
+                    "0000320193-25-000079"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2023-10-01",
+                  "end": "2023-12-30",
+                  "val": 119575000000,
+                  "accession": "0000320193-24-000006",
+                  "form": "10-Q",
+                  "filed": "2024-02-02",
+                  "also_filed_in": [
+                    "0000320193-25-000008"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2023-12-31",
+                  "end": "2024-03-30",
+                  "val": 90753000000,
+                  "accession": "0000320193-24-000069",
+                  "form": "10-Q",
+                  "filed": "2024-05-03",
+                  "also_filed_in": [
+                    "0000320193-25-000057"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-03-31",
+                  "end": "2024-06-29",
+                  "val": 85777000000,
+                  "accession": "0000320193-24-000081",
+                  "form": "10-Q",
+                  "filed": "2024-08-02",
+                  "also_filed_in": [
+                    "0000320193-25-000073"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 94930000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-09-29",
+              "end": "2024-12-28",
+              "val": 124300000000,
+              "accession": "0000320193-25-000008",
+              "form": "10-Q",
+              "filed": "2025-01-31",
+              "also_filed_in": [
+                "0000320193-26-000006"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-12-29",
+              "end": "2025-03-29",
+              "val": 95359000000,
+              "accession": "0000320193-25-000057",
+              "form": "10-Q",
+              "filed": "2025-05-02",
+              "also_filed_in": [
+                "0000320193-26-000013"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-03-30",
+              "end": "2025-06-28",
+              "val": 94036000000,
+              "accession": "0000320193-25-000073",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0000320193-26-000020"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "q4_derived + quarter + quarter + quarter",
+            "sum": 408625000000,
+            "matches_value": true
+          }
+        }
       },
-      "raw": "2024-06-29~2025-06-28 408,625,000,000",
+      "raw": "2024-06-30~2025-06-28 408,625,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
     },
     {
@@ -4618,6 +5576,50 @@
           "value": 228248000000,
           "diff": -1000000,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 117111000000,
+              "accession": "0001628280-26-050705",
+              "form": "10-Q",
+              "filed": "2026-07-30"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 200966000000,
+              "accession": "0001628280-26-003942",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 89830000000,
+              "accession": "0001628280-25-036791",
+              "form": "10-Q",
+              "filed": "2025-07-31",
+              "also_filed_in": [
+                "0001628280-26-050705"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 228247000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 228,247,000,000",
@@ -4660,6 +5662,50 @@
           "value": 86927000000,
           "diff": -1000000,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 41647000000,
+              "accession": "0001628280-26-050705",
+              "form": "10-Q",
+              "filed": "2026-07-30"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 83276000000,
+              "accession": "0001628280-26-003942",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 37997000000,
+              "accession": "0001628280-25-036791",
+              "form": "10-Q",
+              "filed": "2025-07-31",
+              "also_filed_in": [
+                "0001628280-26-050705"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 86926000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 86,926,000,000",
@@ -4684,7 +5730,112 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2025-09-30",
+              "val": 2709000000,
+              "accession": "0001628280-25-047240",
+              "form": "10-Q",
+              "filed": "2025-10-30"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-10-01",
+              "end": "2025-12-31",
+              "val": 22768000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-12-31",
+                  "val": 60458000000,
+                  "accession": "0001628280-26-003942",
+                  "form": "10-K",
+                  "filed": "2026-01-29",
+                  "also_filed_in": [
+                    "0001628280-26-025532"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-03-31",
+                  "val": 16644000000,
+                  "accession": "0001326801-25-000054",
+                  "form": "10-Q",
+                  "filed": "2025-05-01",
+                  "also_filed_in": [
+                    "0001628280-26-028526"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-04-01",
+                  "end": "2025-06-30",
+                  "val": 18337000000,
+                  "accession": "0001628280-25-036791",
+                  "form": "10-Q",
+                  "filed": "2025-07-31",
+                  "also_filed_in": [
+                    "0001628280-26-050705"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-01",
+                  "end": "2025-09-30",
+                  "val": 2709000000,
+                  "accession": "0001628280-25-047240",
+                  "form": "10-Q",
+                  "filed": "2025-10-30"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 22768000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-03-31",
+              "val": 26773000000,
+              "accession": "0001628280-26-028526",
+              "form": "10-Q",
+              "filed": "2026-04-30"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 15848000000,
+              "accession": "0001628280-26-050705",
+              "form": "10-Q",
+              "filed": "2026-07-30"
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 68098000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-07-01~2026-06-30 68,098,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4708,7 +5859,122 @@
         "period_basis": "ttm",
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-07-01",
+              "end": "2024-09-30",
+              "val": 40589000000,
+              "accession": "0001326801-24-000081",
+              "form": "10-Q",
+              "filed": "2024-10-31",
+              "also_filed_in": [
+                "0001628280-25-047240"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2024-10-01",
+              "end": "2024-12-31",
+              "val": 48386000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-12-31",
+                  "val": 164501000000,
+                  "accession": "0001326801-25-000017",
+                  "form": "10-K",
+                  "filed": "2025-01-30",
+                  "also_filed_in": [
+                    "0001628280-26-003942"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-03-31",
+                  "val": 36455000000,
+                  "accession": "0001326801-24-000049",
+                  "form": "10-Q",
+                  "filed": "2024-04-25",
+                  "also_filed_in": [
+                    "0001326801-25-000054"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-04-01",
+                  "end": "2024-06-30",
+                  "val": 39071000000,
+                  "accession": "0001326801-24-000069",
+                  "form": "10-Q",
+                  "filed": "2024-08-01",
+                  "also_filed_in": [
+                    "0001628280-25-036791"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-07-01",
+                  "end": "2024-09-30",
+                  "val": 40589000000,
+                  "accession": "0001326801-24-000081",
+                  "form": "10-Q",
+                  "filed": "2024-10-31",
+                  "also_filed_in": [
+                    "0001628280-25-047240"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 48386000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-03-31",
+              "val": 42314000000,
+              "accession": "0001326801-25-000054",
+              "form": "10-Q",
+              "filed": "2025-05-01",
+              "also_filed_in": [
+                "0001628280-26-028526"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 47516000000,
+              "accession": "0001628280-25-036791",
+              "form": "10-Q",
+              "filed": "2025-07-31",
+              "also_filed_in": [
+                "0001628280-26-050705"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 178805000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-07-01~2025-06-30 178,805,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4748,6 +6014,37 @@
           "value": 331839000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 공시 FY 가 TTM 과 같은 기간. 3분기 누계는 복원 Q4 교차 확인용. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "val": 331839000000,
+              "accession": "0001193125-26-323660",
+              "form": "10-K",
+              "filed": "2026-07-29"
+            },
+            {
+              "role": "q3_ytd(교차 확인)",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-07-01",
+              "end": "2026-03-31",
+              "val": 241832000000,
+              "accession": "0001193125-26-191507",
+              "form": "10-Q",
+              "filed": "2026-04-29"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy",
+            "sum": 331839000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 331,839,000,000",
@@ -4788,6 +6085,37 @@
           "value": 155237000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 공시 FY 가 TTM 과 같은 기간. 3분기 누계는 복원 Q4 교차 확인용. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "val": 155237000000,
+              "accession": "0001193125-26-323660",
+              "form": "10-K",
+              "filed": "2026-07-29"
+            },
+            {
+              "role": "q3_ytd(교차 확인)",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2026-03-31",
+              "val": 114634000000,
+              "accession": "0001193125-26-191507",
+              "form": "10-Q",
+              "filed": "2026-04-29"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy",
+            "sum": 155237000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 155,237,000,000",
@@ -4812,7 +6140,103 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2025-09-30",
+              "val": 27747000000,
+              "accession": "0001193125-25-256321",
+              "form": "10-Q",
+              "filed": "2025-10-29"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-10-01",
+              "end": "2025-12-31",
+              "val": 38458000000,
+              "accession": "0001193125-26-027207",
+              "form": "10-Q",
+              "filed": "2026-01-28"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-03-31",
+              "val": 31778000000,
+              "accession": "0001193125-26-191507",
+              "form": "10-Q",
+              "filed": "2026-04-29"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 35766000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-01",
+                  "end": "2026-06-30",
+                  "val": 133749000000,
+                  "accession": "0001193125-26-323660",
+                  "form": "10-K",
+                  "filed": "2026-07-29"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-01",
+                  "end": "2025-09-30",
+                  "val": 27747000000,
+                  "accession": "0001193125-25-256321",
+                  "form": "10-Q",
+                  "filed": "2025-10-29"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-10-01",
+                  "end": "2025-12-31",
+                  "val": 38458000000,
+                  "accession": "0001193125-26-027207",
+                  "form": "10-Q",
+                  "filed": "2026-01-28"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2026-01-01",
+                  "end": "2026-03-31",
+                  "val": 31778000000,
+                  "accession": "0001193125-26-191507",
+                  "form": "10-Q",
+                  "filed": "2026-04-29"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 35766000000,
+                "matches_value": true
+              }
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + quarter + quarter + q4_derived",
+            "sum": 133749000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-07-01~2026-06-30 133,749,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4836,7 +6260,122 @@
         "period_basis": "ttm",
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-07-01",
+              "end": "2024-09-30",
+              "val": 65585000000,
+              "accession": "0000950170-24-118967",
+              "form": "10-Q",
+              "filed": "2024-10-30",
+              "also_filed_in": [
+                "0001193125-25-256321"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-10-01",
+              "end": "2024-12-31",
+              "val": 69632000000,
+              "accession": "0000950170-25-010491",
+              "form": "10-Q",
+              "filed": "2025-01-29",
+              "also_filed_in": [
+                "0001193125-26-027207"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-03-31",
+              "val": 70066000000,
+              "accession": "0000950170-25-061046",
+              "form": "10-Q",
+              "filed": "2025-04-30",
+              "also_filed_in": [
+                "0001193125-26-191507"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 76441000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-07-01",
+                  "end": "2025-06-30",
+                  "val": 281724000000,
+                  "accession": "0000950170-25-100235",
+                  "form": "10-K",
+                  "filed": "2025-07-30",
+                  "also_filed_in": [
+                    "0001193125-26-323660"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-07-01",
+                  "end": "2024-09-30",
+                  "val": 65585000000,
+                  "accession": "0000950170-24-118967",
+                  "form": "10-Q",
+                  "filed": "2024-10-30",
+                  "also_filed_in": [
+                    "0001193125-25-256321"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-10-01",
+                  "end": "2024-12-31",
+                  "val": 69632000000,
+                  "accession": "0000950170-25-010491",
+                  "form": "10-Q",
+                  "filed": "2025-01-29",
+                  "also_filed_in": [
+                    "0001193125-26-027207"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2025-01-01",
+                  "end": "2025-03-31",
+                  "val": 70066000000,
+                  "accession": "0000950170-25-061046",
+                  "form": "10-Q",
+                  "filed": "2025-04-30",
+                  "also_filed_in": [
+                    "0001193125-26-191507"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 76441000000,
+                "matches_value": true
+              }
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + quarter + quarter + q4_derived",
+            "sum": 281724000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-07-01~2025-06-30 281,724,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4878,6 +6417,50 @@
           "value": 302969000000,
           "diff": 1000000,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:Revenues",
+              "start": "2026-01-26",
+              "end": "2026-07-26",
+              "val": 177837000000,
+              "accession": "0001045810-26-000075",
+              "form": "10-Q",
+              "filed": "2026-08-26"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-01-27",
+              "end": "2026-01-25",
+              "val": 215938000000,
+              "accession": "0001045810-26-000021",
+              "form": "10-K",
+              "filed": "2026-02-25"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-01-27",
+              "end": "2025-07-27",
+              "val": 90805000000,
+              "accession": "0001045810-25-000209",
+              "form": "10-Q",
+              "filed": "2025-08-27",
+              "also_filed_in": [
+                "0001045810-26-000075"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 302970000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-28~2026-07-26 302,970,000,000",
@@ -4920,6 +6503,50 @@
           "value": 197579000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2026-01-26",
+              "end": "2026-07-26",
+              "val": 117270000000,
+              "accession": "0001045810-26-000075",
+              "form": "10-Q",
+              "filed": "2026-08-26"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-27",
+              "end": "2026-01-25",
+              "val": 130387000000,
+              "accession": "0001045810-26-000021",
+              "form": "10-K",
+              "filed": "2026-02-25"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-27",
+              "end": "2025-07-27",
+              "val": 50078000000,
+              "accession": "0001045810-25-000209",
+              "form": "10-Q",
+              "filed": "2025-08-27",
+              "also_filed_in": [
+                "0001045810-26-000075"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 197579000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-28~2026-07-26 197,579,000,000",
@@ -4944,7 +6571,112 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-07-28",
+              "end": "2025-10-26",
+              "val": 31910000000,
+              "accession": "0001045810-25-000230",
+              "form": "10-Q",
+              "filed": "2025-11-19"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-10-27",
+              "end": "2026-01-25",
+              "val": 42960000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-27",
+                  "end": "2026-01-25",
+                  "val": 120067000000,
+                  "accession": "0001045810-26-000021",
+                  "form": "10-K",
+                  "filed": "2026-02-25",
+                  "also_filed_in": [
+                    "0001045810-26-000036"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-27",
+                  "end": "2025-04-27",
+                  "val": 18775000000,
+                  "accession": "0001045810-25-000116",
+                  "form": "10-Q",
+                  "filed": "2025-05-28",
+                  "also_filed_in": [
+                    "0001045810-26-000052"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-04-28",
+                  "end": "2025-07-27",
+                  "val": 26422000000,
+                  "accession": "0001045810-25-000209",
+                  "form": "10-Q",
+                  "filed": "2025-08-27",
+                  "also_filed_in": [
+                    "0001045810-26-000075"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-28",
+                  "end": "2025-10-26",
+                  "val": 31910000000,
+                  "accession": "0001045810-25-000230",
+                  "form": "10-Q",
+                  "filed": "2025-11-19"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 42960000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-01-26",
+              "end": "2026-04-26",
+              "val": 58321000000,
+              "accession": "0001045810-26-000052",
+              "form": "10-Q",
+              "filed": "2026-05-20"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-04-27",
+              "end": "2026-07-26",
+              "val": 59688000000,
+              "accession": "0001045810-26-000075",
+              "form": "10-Q",
+              "filed": "2026-08-26"
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 192879000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-07-28~2026-07-26 192,879,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -4968,7 +6700,122 @@
         "period_basis": "ttm",
         "tag": "Revenues+RevenueFromContractWithCustomerExcludingAssessedTax",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:Revenues",
+              "start": "2024-07-29",
+              "end": "2024-10-27",
+              "val": 35082000000,
+              "accession": "0001045810-24-000316",
+              "form": "10-Q",
+              "filed": "2024-11-20",
+              "also_filed_in": [
+                "0001045810-25-000230"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2024-10-28",
+              "end": "2025-01-26",
+              "val": 39331000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:Revenues",
+                  "start": "2024-01-29",
+                  "end": "2025-01-26",
+                  "val": 130497000000,
+                  "accession": "0001045810-25-000023",
+                  "form": "10-K",
+                  "filed": "2025-02-26",
+                  "also_filed_in": [
+                    "0001045810-26-000021"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:Revenues",
+                  "start": "2024-01-29",
+                  "end": "2024-04-28",
+                  "val": 26044000000,
+                  "accession": "0001045810-24-000124",
+                  "form": "10-Q",
+                  "filed": "2024-05-29",
+                  "also_filed_in": [
+                    "0001045810-25-000116"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:Revenues",
+                  "start": "2024-04-29",
+                  "end": "2024-07-28",
+                  "val": 30040000000,
+                  "accession": "0001045810-24-000264",
+                  "form": "10-Q",
+                  "filed": "2024-08-28",
+                  "also_filed_in": [
+                    "0001045810-25-000209"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:Revenues",
+                  "start": "2024-07-29",
+                  "end": "2024-10-27",
+                  "val": 35082000000,
+                  "accession": "0001045810-24-000316",
+                  "form": "10-Q",
+                  "filed": "2024-11-20",
+                  "also_filed_in": [
+                    "0001045810-25-000230"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 39331000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-01-27",
+              "end": "2025-04-27",
+              "val": 44062000000,
+              "accession": "0001045810-25-000116",
+              "form": "10-Q",
+              "filed": "2025-05-28",
+              "also_filed_in": [
+                "0001045810-26-000052"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-04-28",
+              "end": "2025-07-27",
+              "val": 46743000000,
+              "accession": "0001045810-25-000209",
+              "form": "10-Q",
+              "filed": "2025-08-27",
+              "also_filed_in": [
+                "0001045810-26-000075"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 165218000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-07-29~2025-07-27 165,218,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -5008,6 +6855,37 @@
           "value": 67357000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 공시 FY 가 TTM 과 같은 기간. 3분기 누계는 복원 Q4 교차 확인용. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 67357000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22"
+            },
+            {
+              "role": "q3_ytd(교차 확인)",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-06-01",
+              "end": "2026-02-28",
+              "val": 48173000000,
+              "accession": "0001193125-26-101045",
+              "form": "10-Q",
+              "filed": "2026-03-11"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy",
+            "sum": 67357000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-06-01~2026-05-31 67,357,000,000",
@@ -5048,6 +6926,37 @@
           "value": 20606000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 공시 FY 가 TTM 과 같은 기간. 3분기 누계는 복원 Q4 교차 확인용. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 20606000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22"
+            },
+            {
+              "role": "q3_ytd(교차 확인)",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-06-01",
+              "end": "2026-02-28",
+              "val": 14473000000,
+              "accession": "0001193125-26-101045",
+              "form": "10-Q",
+              "filed": "2026-03-11"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy",
+            "sum": 20606000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-06-01~2026-05-31 20,606,000,000",
@@ -5072,7 +6981,103 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 이 회사는 ProfitLoss·NetIncomeLossAttributableToNoncontrollingInterest 도 태깅해 연결 전체와 귀속분이 갈린다 — 귀속분을 썼다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 2927000000,
+              "accession": "0001193125-25-200095",
+              "form": "10-Q",
+              "filed": "2025-09-10"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-09-01",
+              "end": "2025-11-30",
+              "val": 6135000000,
+              "accession": "0001193125-25-315925",
+              "form": "10-Q",
+              "filed": "2025-12-11"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-12-01",
+              "end": "2026-02-28",
+              "val": 3721000000,
+              "accession": "0001193125-26-101045",
+              "form": "10-Q",
+              "filed": "2026-03-11"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2026-03-01",
+              "end": "2026-05-31",
+              "val": 4304000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-06-01",
+                  "end": "2026-05-31",
+                  "val": 17087000000,
+                  "accession": "0001193125-26-277521",
+                  "form": "10-K",
+                  "filed": "2026-06-22"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-06-01",
+                  "end": "2025-08-31",
+                  "val": 2927000000,
+                  "accession": "0001193125-25-200095",
+                  "form": "10-Q",
+                  "filed": "2025-09-10"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-09-01",
+                  "end": "2025-11-30",
+                  "val": 6135000000,
+                  "accession": "0001193125-25-315925",
+                  "form": "10-Q",
+                  "filed": "2025-12-11"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-12-01",
+                  "end": "2026-02-28",
+                  "val": 3721000000,
+                  "accession": "0001193125-26-101045",
+                  "form": "10-Q",
+                  "filed": "2026-03-11"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 4304000000,
+                "matches_value": true
+              }
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + quarter + quarter + q4_derived",
+            "sum": 17087000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-06-01~2026-05-31 17,087,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -5096,7 +7101,122 @@
         "period_basis": "ttm",
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax+Revenues",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-06-01",
+              "end": "2024-08-31",
+              "val": 13307000000,
+              "accession": "0000950170-24-104905",
+              "form": "10-Q",
+              "filed": "2024-09-10",
+              "also_filed_in": [
+                "0001193125-25-200095"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-09-01",
+              "end": "2024-11-30",
+              "val": 14059000000,
+              "accession": "0000950170-24-134973",
+              "form": "10-Q",
+              "filed": "2024-12-10",
+              "also_filed_in": [
+                "0001193125-25-315925"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-12-01",
+              "end": "2025-02-28",
+              "val": 14130000000,
+              "accession": "0000950170-25-037143",
+              "form": "10-Q",
+              "filed": "2025-03-11",
+              "also_filed_in": [
+                "0001193125-26-101045"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-03-01",
+              "end": "2025-05-31",
+              "val": 15903000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-06-01",
+                  "end": "2025-05-31",
+                  "val": 57399000000,
+                  "accession": "0000950170-25-087926",
+                  "form": "10-K",
+                  "filed": "2025-06-18",
+                  "also_filed_in": [
+                    "0001193125-26-277521"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-06-01",
+                  "end": "2024-08-31",
+                  "val": 13307000000,
+                  "accession": "0000950170-24-104905",
+                  "form": "10-Q",
+                  "filed": "2024-09-10",
+                  "also_filed_in": [
+                    "0001193125-25-200095"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-09-01",
+                  "end": "2024-11-30",
+                  "val": 14059000000,
+                  "accession": "0000950170-24-134973",
+                  "form": "10-Q",
+                  "filed": "2024-12-10",
+                  "also_filed_in": [
+                    "0001193125-25-315925"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-12-01",
+                  "end": "2025-02-28",
+                  "val": 14130000000,
+                  "accession": "0000950170-25-037143",
+                  "form": "10-Q",
+                  "filed": "2025-03-11",
+                  "also_filed_in": [
+                    "0001193125-26-101045"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 15903000000,
+                "matches_value": true
+              }
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + quarter + quarter + q4_derived",
+            "sum": 57399000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-06-01~2025-05-31 57,399,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -5138,6 +7258,50 @@
           "value": 6155941000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 3568047000,
+              "accession": "0001321655-26-000041",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 4475446000,
+              "accession": "0001321655-26-000011",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 1887552000,
+              "accession": "0001321655-25-000106",
+              "form": "10-Q",
+              "filed": "2025-08-05",
+              "also_filed_in": [
+                "0001321655-26-000041"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 6155941000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 6,155,941,000",
@@ -5180,6 +7344,50 @@
           "value": 2634652000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 1666002000,
+              "accession": "0001321655-26-000041",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1414015000,
+              "accession": "0001321655-26-000011",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 445365000,
+              "accession": "0001321655-25-000106",
+              "form": "10-Q",
+              "filed": "2025-08-05",
+              "also_filed_in": [
+                "0001321655-26-000041"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 2634652000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 2,634,652,000",
@@ -5204,7 +7412,112 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 이 회사는 ProfitLoss·NetIncomeLossAttributableToNoncontrollingInterest 도 태깅해 연결 전체와 귀속분이 갈린다 — 귀속분을 썼다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2025-09-30",
+              "val": 475599000,
+              "accession": "0001321655-25-000131",
+              "form": "10-Q",
+              "filed": "2025-11-04"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-10-01",
+              "end": "2025-12-31",
+              "val": 608676000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-12-31",
+                  "val": 1625033000,
+                  "accession": "0001321655-26-000011",
+                  "form": "10-K",
+                  "filed": "2026-02-17",
+                  "also_filed_in": [
+                    "0001321655-26-000019"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-03-31",
+                  "val": 214031000,
+                  "accession": "0001321655-25-000066",
+                  "form": "10-Q",
+                  "filed": "2025-05-06",
+                  "also_filed_in": [
+                    "0001321655-26-000028"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-04-01",
+                  "end": "2025-06-30",
+                  "val": 326727000,
+                  "accession": "0001321655-25-000106",
+                  "form": "10-Q",
+                  "filed": "2025-08-05",
+                  "also_filed_in": [
+                    "0001321655-26-000041"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-01",
+                  "end": "2025-09-30",
+                  "val": 475599000,
+                  "accession": "0001321655-25-000131",
+                  "form": "10-Q",
+                  "filed": "2025-11-04"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 608676000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-03-31",
+              "val": 870527000,
+              "accession": "0001321655-26-000028",
+              "form": "10-Q",
+              "filed": "2026-05-05"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 1061890000,
+              "accession": "0001321655-26-000041",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 3016692000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-07-01~2026-06-30 3,016,692,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -5228,7 +7541,122 @@
         "period_basis": "ttm",
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-07-01",
+              "end": "2024-09-30",
+              "val": 725516000,
+              "accession": "0001321655-24-000209",
+              "form": "10-Q",
+              "filed": "2024-11-05",
+              "also_filed_in": [
+                "0001321655-25-000131"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2024-10-01",
+              "end": "2024-12-31",
+              "val": 827519000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-12-31",
+                  "val": 2865507000,
+                  "accession": "0001321655-25-000022",
+                  "form": "10-K",
+                  "filed": "2025-02-18",
+                  "also_filed_in": [
+                    "0001321655-26-000011"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-03-31",
+                  "val": 634338000,
+                  "accession": "0001321655-24-000071",
+                  "form": "10-Q",
+                  "filed": "2024-05-07",
+                  "also_filed_in": [
+                    "0001321655-25-000066"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-04-01",
+                  "end": "2024-06-30",
+                  "val": 678134000,
+                  "accession": "0001321655-24-000135",
+                  "form": "10-Q",
+                  "filed": "2024-08-06",
+                  "also_filed_in": [
+                    "0001321655-25-000106"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-07-01",
+                  "end": "2024-09-30",
+                  "val": 725516000,
+                  "accession": "0001321655-24-000209",
+                  "form": "10-Q",
+                  "filed": "2024-11-05",
+                  "also_filed_in": [
+                    "0001321655-25-000131"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 827519000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-03-31",
+              "val": 883855000,
+              "accession": "0001321655-25-000066",
+              "form": "10-Q",
+              "filed": "2025-05-06",
+              "also_filed_in": [
+                "0001321655-26-000028"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 1003697000,
+              "accession": "0001321655-25-000106",
+              "form": "10-Q",
+              "filed": "2025-08-05",
+              "also_filed_in": [
+                "0001321655-26-000041"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 3440587000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-07-01~2025-06-30 3,440,587,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -5348,7 +7776,9 @@
           "fy2025": "S-1/A 0001628280-26-040364 연결손익계산서",
           "half_years": "10-Q 0001628280-26-052535 companyfacts"
         },
-        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
+        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다.",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음"
       },
       "raw": "TTM -8,218백만",
       "note": "F6-REG-28. S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
@@ -5417,6 +7847,50 @@
           "value": 103619000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 50623000000,
+              "accession": "0001628280-26-049270",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 94827000000,
+              "accession": "0001628280-26-003952",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 41831000000,
+              "accession": "0001628280-25-035806",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001628280-26-049270"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 103619000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 103,619,000,000",
@@ -5459,6 +7933,50 @@
           "value": 4372000000,
           "diff": 0,
           "note": "두 조사의 복원 방법이 다르다. meta·nvidia 는 회사 자체 XBRL 의 분기 합과 YTD 태그가 1백만 어긋나 그만큼 갈린다(0.0004%). 밴드를 가르지 않는다"
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 1339000000,
+              "accession": "0001628280-26-049270",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 4355000000,
+              "accession": "0001628280-26-003952",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 1322000000,
+              "accession": "0001628280-25-035806",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001628280-26-049270"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 4372000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "2025-07-01~2026-06-30 4,372,000,000",
@@ -5483,7 +8001,109 @@
         "period_basis": "ttm",
         "tag": "NetIncomeLoss",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 이 회사는 ProfitLoss·NetIncomeLossAttributableToNoncontrollingInterest 도 태깅해 연결 전체와 귀속분이 갈린다 — 귀속분을 썼다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-07-01",
+              "end": "2025-09-30",
+              "val": 1373000000,
+              "accession": "0001628280-25-045968",
+              "form": "10-Q",
+              "filed": "2025-10-23"
+            },
+            {
+              "role": "q4_derived",
+              "start": "2025-10-01",
+              "end": "2025-12-31",
+              "val": 840000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-12-31",
+                  "val": 3794000000,
+                  "accession": "0001628280-26-003952",
+                  "form": "10-K",
+                  "filed": "2026-01-29"
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-01-01",
+                  "end": "2025-03-31",
+                  "val": 409000000,
+                  "accession": "0001628280-25-018911",
+                  "form": "10-Q",
+                  "filed": "2025-04-23",
+                  "also_filed_in": [
+                    "0001628280-26-026673"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-04-01",
+                  "end": "2025-06-30",
+                  "val": 1172000000,
+                  "accession": "0001628280-25-035806",
+                  "form": "10-Q",
+                  "filed": "2025-07-24",
+                  "also_filed_in": [
+                    "0001628280-26-049270"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:NetIncomeLoss",
+                  "start": "2025-07-01",
+                  "end": "2025-09-30",
+                  "val": 1373000000,
+                  "accession": "0001628280-25-045968",
+                  "form": "10-Q",
+                  "filed": "2025-10-23"
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 840000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-01-01",
+              "end": "2026-03-31",
+              "val": 477000000,
+              "accession": "0001628280-26-026673",
+              "form": "10-Q",
+              "filed": "2026-04-23"
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 1114000000,
+              "accession": "0001628280-26-049270",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 3804000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2025-07-01~2026-06-30 3,804,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -5507,7 +8127,122 @@
         "period_basis": "ttm",
         "tag": "Revenues",
         "taxonomy": "us-gaap",
-        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다"
+        "source_procedure": "validation/f6-spec-18/collect_ttm.py — 분기 시계열 복원 후 4분기 합. 복원 Q4 는 재작성 세대 검사를 통과한 것만 쓴다",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 수집기(collect_ttm) 창의 네 분기. 복원 Q4 는 FY − 세 분기의 성분을 derived_from 에 둔다. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-07-01",
+              "end": "2024-09-30",
+              "val": 25182000000,
+              "accession": "0001628280-24-043486",
+              "form": "10-Q",
+              "filed": "2024-10-24",
+              "also_filed_in": [
+                "0001628280-25-045968"
+              ]
+            },
+            {
+              "role": "q4_derived",
+              "start": "2024-10-01",
+              "end": "2024-12-31",
+              "val": 25707000000,
+              "derived_from": [
+                {
+                  "role": "fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-12-31",
+                  "val": 97690000000,
+                  "accession": "0001628280-25-003063",
+                  "form": "10-K",
+                  "filed": "2025-01-30",
+                  "also_filed_in": [
+                    "0001628280-26-003952"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-01-01",
+                  "end": "2024-03-31",
+                  "val": 21301000000,
+                  "accession": "0001628280-24-017503",
+                  "form": "10-Q",
+                  "filed": "2024-04-24",
+                  "also_filed_in": [
+                    "0001628280-25-018911"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-04-01",
+                  "end": "2024-06-30",
+                  "val": 25500000000,
+                  "accession": "0001628280-24-032662",
+                  "form": "10-Q",
+                  "filed": "2024-07-24",
+                  "also_filed_in": [
+                    "0001628280-25-035806"
+                  ]
+                },
+                {
+                  "role": "quarter_in_fy",
+                  "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "start": "2024-07-01",
+                  "end": "2024-09-30",
+                  "val": 25182000000,
+                  "accession": "0001628280-24-043486",
+                  "form": "10-Q",
+                  "filed": "2024-10-24",
+                  "also_filed_in": [
+                    "0001628280-25-045968"
+                  ]
+                }
+              ],
+              "arithmetic": {
+                "formula": "fy − quarter_in_fy − quarter_in_fy − quarter_in_fy",
+                "sum": 25707000000,
+                "matches_value": true
+              }
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-01-01",
+              "end": "2025-03-31",
+              "val": 19335000000,
+              "accession": "0001628280-25-018911",
+              "form": "10-Q",
+              "filed": "2025-04-23",
+              "also_filed_in": [
+                "0001628280-26-026673"
+              ]
+            },
+            {
+              "role": "quarter",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 22496000000,
+              "accession": "0001628280-25-035806",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001628280-26-049270"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "quarter + q4_derived + quarter + quarter",
+            "sum": 92720000000,
+            "matches_value": true
+          }
+        }
       },
       "raw": "2024-07-01~2025-06-30 92,720,000,000",
       "note": "F6-REG-28. F6-SPEC-18 수집기"
@@ -5636,7 +8371,7 @@
       "observation_id": "tsmc.net_income_ttm.f6reg28",
       "company_id": "tsmc",
       "metric": "net_income_ttm",
-      "value": 54036496653.0,
+      "value": 54115524386.356,
       "unit": "USD",
       "as_of": "2025-12-31",
       "observed_at": "2026-09-11",
@@ -5669,7 +8404,7 @@
         "months_since_period_end": 8,
         "staleness_note": "기준일 2026-09-02 대비 8개월 경과. FY2024 를 쓰면 20개월이었다.",
         "original_currency": "TWD",
-        "original_value": 1695124900000,
+        "original_value": 1697604000000.0,
         "fx_rate": 31.37,
         "fx_quote": "TWD per USD",
         "fx_rate_as_of": "2025-12-31",
@@ -5677,29 +8412,51 @@
         "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (v1.7 policies.f6.fx, 설계진행 2026-09-11 개정)",
         "fx_uniform_rate_note": "**당해와 전년에 같은 환율을 쓴다.** 공시 USD 환산치는 두 해가 서로 다른 20-F 에서 와 환율이 다르고, 그대로 쓰면 P3 성장률 밴드가 한 칸 뜬다(verify_inputs.py [3]). 같은 환율이면 분자·분모에서 상쇄돼 현지통화 성장률과 같아진다.",
         "cross_check_filed_usd": {
-          "filed": 54036500000,
-          "recomputed": 54036496653.0,
-          "rel_diff": 6.194233448497702e-08
+          "filed": 54115500000,
+          "recomputed": 54115524386.356,
+          "rel_diff": 4.5063532634471854e-07
         },
         "band_sensitivity": {
           "parameter": "P1",
           "used": {
             "rate": 31.37,
-            "value": 39.788,
+            "value": 39.73,
             "band": -1
           },
           "alternative": {
             "rate": 32.79,
             "label": "FY2024 20-F 선언 환율",
-            "value": 41.589,
+            "value": 41.528,
             "band": -1
           },
           "band_differs": false,
           "note": "**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다.",
           "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."
-        }
+        },
+        "ownership_correction": {
+          "corrected_at": "2026-09-15",
+          "task": "FIX-54 1단계 S5 (3차 리뷰 B FC-04)",
+          "was": {
+            "original_value": 1695124900000.0,
+            "value_usd": 54036496652.853,
+            "scope": "consolidated_incl_nci",
+            "p1": 39.787924
+          },
+          "is": {
+            "original_value": 1697604000000.0,
+            "value_usd": 54115524386.356,
+            "scope": "parent_attributable",
+            "p1": 39.729819
+          },
+          "quote": "F-6 `NET INCOME (LOSS) ATTRIBUTABLE TO: Shareholders of the parent $ 851,740.0 $ 1,158,380.2 $ 1,697,604.0 $ 54,115.5 Non-controlling interests ( 712.3 ) ( 856.3 ) ( 2,479.1 ) ( 79.0 ) $ 851,027.7 $ 1,157,523.9 $ 1,695,124.9 $ 54,036.5` · 주석 27 EPS `Net income available to common shareholders of the parent (in millions) … $ 1,697,604.0`",
+          "location": "f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm — 연결손익계산서(F-6) 귀속 구분 · 주석 27 EARNINGS PER SHARE",
+          "why": "시총·EPS 는 모회사 보통주 범위다. 같은 범위의 순이익으로 나눠야 PER 이다. 비지배지분 손실(−2,479.1)이 있어 연결 전체가 귀속분보다 작았다.",
+          "score_impact": "P1 39.788 → 39.730, 밴드 25~45 그대로(-1)."
+        },
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "F-6 `Shareholders of the parent 1,697,604.0` — basis.ownership_correction"
       },
-      "raw": "FY2025 순이익 NT$1,695,124.9백만",
+      "raw": "FY2025 모회사 귀속 순이익 NT$1,697,604.0백만 (연결 1,695,124.9 · 비지배 −2,479.1)",
       "note": "F6-REG-28 / TSM-EDGAR-29. 손익계산서 NET INCOME 행"
     },
     {
@@ -6291,6 +9048,83 @@
           "task": "FIX-52 (리뷰 A qwen 발견)",
           "evidence": "보존 AAPL companyfacts 에 283건, form 10-Q · fy 2026 Q3 · filed 2026-07-31 · CashAndCashEquivalentsAtCarryingValue 2026-06-27 = 39,544,000,000. 틀린 번호는 0건",
           "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_curr_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-09-28",
+              "end": "2026-06-27",
+              "val": 116996000000,
+              "accession": "0000320193-26-000020",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "ocf_prior_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "val": 111482000000,
+              "accession": "0000320193-25-000079",
+              "form": "10-K",
+              "filed": "2025-10-31"
+            },
+            {
+              "role": "ocf_prior_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2024-09-29",
+              "end": "2025-06-28",
+              "val": 81754000000,
+              "accession": "0000320193-25-000073",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0000320193-26-000020"
+              ]
+            },
+            {
+              "role": "capex_curr_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-09-28",
+              "end": "2026-06-27",
+              "val": 6799000000,
+              "accession": "0000320193-26-000020",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "capex_prior_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "val": 12715000000,
+              "accession": "0000320193-25-000079",
+              "form": "10-K",
+              "filed": "2025-10-31"
+            },
+            {
+              "role": "capex_prior_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2024-09-29",
+              "end": "2025-06-28",
+              "val": 9473000000,
+              "accession": "0000320193-25-000073",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0000320193-26-000020"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": 136683000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF 136.7B = OCF 146.7B - CapEx 10.0B",
@@ -6379,6 +9213,37 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": 67000000000.0,
           "diff_pct": -0.0194
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "val": 182935000000,
+              "accession": "0001193125-26-323660",
+              "form": "10-K",
+              "filed": "2026-07-29"
+            },
+            {
+              "role": "capex_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "val": 115948000000,
+              "accession": "0001193125-26-323660",
+              "form": "10-K",
+              "filed": "2026-07-29"
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": 66987000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF 67.0B = OCF 182.9B - CapEx 115.9B",
@@ -6475,6 +9340,37 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": -11600000000.0,
           "diff_pct": 0.2155
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_ttm_disclosed",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "val": 161403000000,
+              "accession": "0001018724-26-000026",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "capex_ttm_disclosed",
+              "tag": "us-gaap:PaymentsToAcquireProductiveAssets",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "val": 173028000000,
+              "accession": "0001018724-26-000026",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": -11625000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF -11.6B = OCF 161.4B - CapEx 173.0B",
@@ -6569,6 +9465,83 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": 127000000000.0,
           "diff_pct": 0.0047
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_curr_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2026-01-26",
+              "end": "2026-07-26",
+              "val": 74421000000,
+              "accession": "0001045810-26-000075",
+              "form": "10-Q",
+              "filed": "2026-08-26"
+            },
+            {
+              "role": "ocf_prior_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-27",
+              "end": "2026-01-25",
+              "val": 102718000000,
+              "accession": "0001045810-26-000021",
+              "form": "10-K",
+              "filed": "2026-02-25"
+            },
+            {
+              "role": "ocf_prior_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-27",
+              "end": "2025-07-27",
+              "val": 42779000000,
+              "accession": "0001045810-25-000209",
+              "form": "10-Q",
+              "filed": "2025-08-27",
+              "also_filed_in": [
+                "0001045810-26-000075"
+              ]
+            },
+            {
+              "role": "capex_curr_ytd",
+              "tag": "us-gaap:PaymentsToAcquireProductiveAssets",
+              "start": "2026-01-26",
+              "end": "2026-07-26",
+              "val": 4434000000,
+              "accession": "0001045810-26-000075",
+              "form": "10-Q",
+              "filed": "2026-08-26"
+            },
+            {
+              "role": "capex_prior_fy",
+              "tag": "us-gaap:PaymentsToAcquireProductiveAssets",
+              "start": "2025-01-27",
+              "end": "2026-01-25",
+              "val": 6042000000,
+              "accession": "0001045810-26-000021",
+              "form": "10-K",
+              "filed": "2026-02-25"
+            },
+            {
+              "role": "capex_prior_ytd",
+              "tag": "us-gaap:PaymentsToAcquireProductiveAssets",
+              "start": "2025-01-27",
+              "end": "2025-07-27",
+              "val": 3122000000,
+              "accession": "0001045810-25-000209",
+              "form": "10-Q",
+              "filed": "2025-08-27",
+              "also_filed_in": [
+                "0001045810-26-000075"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": 127006000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF 127.0B = OCF 134.4B - CapEx 7.4B",
@@ -6663,6 +9636,83 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": 5800000000.0,
           "diff_pct": -0.6552
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_curr_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 8634000000,
+              "accession": "0001628280-26-049270",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "ocf_prior_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 14747000000,
+              "accession": "0001628280-26-003952",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "ocf_prior_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 4696000000,
+              "accession": "0001628280-25-035806",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001628280-26-049270"
+              ]
+            },
+            {
+              "role": "capex_curr_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 8282000000,
+              "accession": "0001628280-26-049270",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "capex_prior_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 8527000000,
+              "accession": "0001628280-26-003952",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "capex_prior_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 3886000000,
+              "accession": "0001628280-25-035806",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001628280-26-049270"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": 5762000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF 5.8B = OCF 18.7B - CapEx 12.9B",
@@ -6757,6 +9807,83 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": 3400000000.0,
           "diff_pct": -1.2273
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_curr_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 2115332000,
+              "accession": "0001321655-26-000041",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "role": "ocf_prior_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 2134473000,
+              "accession": "0001321655-26-000011",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            },
+            {
+              "role": "ocf_prior_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 849514000,
+              "accession": "0001321655-25-000106",
+              "form": "10-Q",
+              "filed": "2025-08-05",
+              "also_filed_in": [
+                "0001321655-26-000041"
+              ]
+            },
+            {
+              "role": "capex_curr_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 21955000,
+              "accession": "0001321655-26-000041",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "role": "capex_prior_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 33882000,
+              "accession": "0001321655-26-000011",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            },
+            {
+              "role": "capex_prior_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 13818000,
+              "accession": "0001321655-25-000106",
+              "form": "10-Q",
+              "filed": "2025-08-05",
+              "also_filed_in": [
+                "0001321655-26-000041"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": 3358272000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF 3.4B = OCF 3.4B - CapEx 0.0B",
@@ -6851,6 +9978,83 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": 41000000000.0,
           "diff_pct": -0.0585
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_curr_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 64088000000,
+              "accession": "0001628280-26-050705",
+              "form": "10-Q",
+              "filed": "2026-07-30"
+            },
+            {
+              "role": "ocf_prior_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 115800000000,
+              "accession": "0001628280-26-003942",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "ocf_prior_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 49587000000,
+              "accession": "0001628280-25-036791",
+              "form": "10-Q",
+              "filed": "2025-07-31",
+              "also_filed_in": [
+                "0001628280-26-050705"
+              ]
+            },
+            {
+              "role": "capex_curr_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 49113000000,
+              "accession": "0001628280-26-050705",
+              "form": "10-Q",
+              "filed": "2026-07-30"
+            },
+            {
+              "role": "capex_prior_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 69691000000,
+              "accession": "0001628280-26-003942",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "capex_prior_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 29479000000,
+              "accession": "0001628280-25-036791",
+              "form": "10-Q",
+              "filed": "2025-07-31",
+              "also_filed_in": [
+                "0001628280-26-050705"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": 40976000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF 41.0B = OCF 130.3B - CapEx 89.3B",
@@ -6939,6 +10143,37 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": -23700000000.0,
           "diff_pct": -0.0591
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 31977000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22"
+            },
+            {
+              "role": "capex_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 55663000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22"
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": -23686000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF -23.7B = OCF 32.0B - CapEx 55.7B",
@@ -7033,6 +10268,83 @@
         "legacy_comparison": {
           "legacy_fcf_ttm": 53300000000.0,
           "diff_pct": -0.0507
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_curr_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 84859000000,
+              "accession": "0001652044-26-000071",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "ocf_prior_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 164713000000,
+              "accession": "0001652044-26-000018",
+              "form": "10-K",
+              "filed": "2026-02-05"
+            },
+            {
+              "role": "ocf_prior_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 63897000000,
+              "accession": "0001652044-25-000062",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001652044-26-000071"
+              ]
+            },
+            {
+              "role": "capex_curr_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 80598000000,
+              "accession": "0001652044-26-000071",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "capex_prior_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 91447000000,
+              "accession": "0001652044-26-000018",
+              "form": "10-K",
+              "filed": "2026-02-05"
+            },
+            {
+              "role": "capex_prior_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 39643000000,
+              "accession": "0001652044-25-000062",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001652044-26-000071"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": 53273000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF 53.3B = OCF 185.7B - CapEx 132.4B",
@@ -7152,6 +10464,81 @@
           "task": "FIX-52 (리뷰 A qwen 발견)",
           "evidence": "보존 SPCX companyfacts 에 5건, form S-1/A · filed 2026-06-03. sources.json SRC-SEC-SPCX-S1A-2026 과 같은 런 f6reg28 관측도 이 번호다. 틀린 번호는 0건",
           "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — OCF·CapEx 각각의 누계·FY 성분. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "ocf_curr_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 3466000000,
+              "accession": "0001628280-26-052535",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "tag": "S-1/A 연결현금흐름표(companyfacts 미등재)",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 6785000000,
+              "accession": "0001628280-26-040364",
+              "form": "S-1/A",
+              "filed": "2026-06-03",
+              "quote": "Net cash provided by operating activities ........................ $ 6,785 $ 5,776 $ 4,520",
+              "location": "3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm — CONSOLIDATED STATEMENTS OF CASH FLOWS",
+              "role": "ocf_prior_fy"
+            },
+            {
+              "role": "ocf_prior_ytd",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 351000000,
+              "accession": "0001628280-26-052535",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "role": "capex_curr_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 28476000000,
+              "accession": "0001628280-26-052535",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "tag": "S-1/A 연결현금흐름표(companyfacts 미등재)",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 20737000000,
+              "accession": "0001628280-26-040364",
+              "form": "S-1/A",
+              "filed": "2026-06-03",
+              "quote": "Purchases of property, plant, and equipment (related party of $666, $171, and $11 …) … (20,737) (11,163) (4,415)",
+              "location": "3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm — CONSOLIDATED STATEMENTS OF CASH FLOWS",
+              "role": "capex_prior_fy"
+            },
+            {
+              "role": "capex_prior_ytd",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 6965000000,
+              "accession": "0001628280-26-052535",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            }
+          ],
+          "arithmetic": {
+            "formula": "ocf − capex (각 쪽은 role 접두어의 성분 산식)",
+            "sum": -32348000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "TTM FCF -32.3B = OCF 9.9B - CapEx 42.2B",
@@ -7892,9 +11279,20 @@
           "task": "FIX-52 (리뷰 A qwen 발견)",
           "evidence": "보존 SPCX companyfacts 에 5건, form S-1/A · filed 2026-06-03. sources.json SRC-SEC-SPCX-S1A-2026 과 같은 런 f6reg28 관측도 이 번호다. 틀린 번호는 0건",
           "value_unchanged": "값·성분·산식은 맞았고 접수번호 인용만 틀렸다."
+        },
+        "completeness": {
+          "complete_sum": false,
+          "what": "**리스부채가 완전 합산이 아니다.** 2026-06-30 운용리스는 유동 344M(10-Q `Accrued expenses and other current liabilities` 표의 `Operating lease liabilities, current 344`)만 있고 비유동분 개념(`OperatingLeaseLiabilityNoncurrent`)과 합계 개념이 이 기준일에 없다. 10-Q 는 기타 비유동부채를 나누지 않는다.",
+          "not_substituted": "S-1/A 감사 주석의 2025-12-31 `Operating lease liabilities, net of current 1,136`(3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)은 다른 시점이라 **대신 빼지 않았다.** 비유동분이 0 이라는 근거도 아니다.",
+          "direction": "비유동 운용리스만큼 순현금이 **과대**다. 크기는 확인하지 못했다.",
+          "why_value_kept": "listed_newly 트랙은 P2 를 계산하지 않아 이 값이 점수에 들어가는 자리가 없다(results F6 parameters 에 P2 없음). 지우지 않고 한계를 적어 둔다. palantir 는 같은 결함(유동분 결측)으로 관측 등록 자체를 하지 않았다 — 두 회사의 처리가 다르다는 사실도 여기 남긴다.",
+          "legacy_match_caveat": "basis.why_this_match_matters 의 legacy 60,300 일치는 이 부분 합 기준이다. 비유동분이 0 이 아니면 그 일치는 성립하지 않는다 — legacy 도 같은 공백을 가졌을 가능성이 있으나 확인할 수 없다.",
+          "code_fix": "validation/netcash-37/measure.py _lease 가 구성요소 결측을 0 으로 합산하던 것을 고쳤다 — 이제 합계를 만들지 않고 빠진 개념을 돌려준다.",
+          "review": "3차 리뷰 B FC-03",
+          "recorded_at": "2026-09-15"
         }
       },
-      "raw": "현금+시장성증권 100.0B − 차입 39.4B − 리스 0.3B = 60.3B",
+      "raw": "현금+시장성증권 100.0B − 차입 39.4B − 리스 0.3B(운용리스 유동분만 — 비유동 결측) = 60.3B",
       "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
@@ -8373,6 +11771,50 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": 0.0,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 216165000000,
+              "accession": "0001652044-26-000071",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 158826000000,
+              "accession": "0001652044-26-000018",
+              "form": "10-K",
+              "filed": "2026-02-05"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 75722000000,
+              "accession": "0001652044-25-000062",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001652044-26-000071"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 299269000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 299.3B USD",
@@ -8403,6 +11845,50 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": -0.0032484925854581515,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 120691000000,
+              "accession": "0001018724-26-000026",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 97311000000,
+              "accession": "0001018724-26-000004",
+              "form": "10-K",
+              "filed": "2026-02-06"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 42536000000,
+              "accession": "0001018724-25-000086",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0001018724-26-000026"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 175466000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 175.5B USD",
@@ -8420,7 +11906,7 @@
       "source_id": "SRC-SEC-FACTS-F6",
       "status": "verified",
       "period": {
-        "start": "2025-06-28",
+        "start": "2025-06-29",
         "end": "2026-06-27"
       },
       "basis": {
@@ -8433,6 +11919,58 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": 0.0,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "period_correction": {
+          "corrected_at": "2026-09-15",
+          "task": "FIX-54 1단계 S5 (3차 리뷰 B FC-05)",
+          "was": "2025-06-28",
+          "is": "2025-06-29",
+          "why": "복원 Q4 는 직전 누계 종료일(2025-06-28) **다음 날** 시작한다. 시작일을 누계 종료일로 적어 하루가 겹쳤다. 값은 같다 — 기간 표기만 틀렸다. 원인은 validation/f6-spec-18/collect_ttm.py 복원 Q4 시작일이라 그 줄도 고쳤다.",
+          "same_company_fcf": "apple.fcf_ttm.cashfcf35 는 이미 2025-06-29 시작이었다 — F6·F9 창이 이제 같다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-09-28",
+              "end": "2026-06-27",
+              "val": 123102000000,
+              "accession": "0000320193-26-000020",
+              "form": "10-Q",
+              "filed": "2026-07-31"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2024-09-29",
+              "end": "2025-09-27",
+              "val": 132729000000,
+              "accession": "0000320193-25-000079",
+              "form": "10-K",
+              "filed": "2025-10-31"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2024-09-29",
+              "end": "2025-06-28",
+              "val": 99925000000,
+              "accession": "0000320193-25-000073",
+              "form": "10-Q",
+              "filed": "2025-08-01",
+              "also_filed_in": [
+                "0000320193-26-000020"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 155906000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 155.9B USD",
@@ -8463,6 +12001,50 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": 0.0,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 40508000000,
+              "accession": "0001628280-26-050705",
+              "form": "10-Q",
+              "filed": "2026-07-30"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 85932000000,
+              "accession": "0001628280-26-003942",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 38916000000,
+              "accession": "0001628280-25-036791",
+              "form": "10-Q",
+              "filed": "2025-07-31",
+              "also_filed_in": [
+                "0001628280-26-050705"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 87524000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 87.5B USD",
@@ -8493,6 +12075,27 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": 0.0,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 단일 12개월 사실. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "direct_12m",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-07-01",
+              "end": "2026-06-30",
+              "val": 165934000000,
+              "accession": "0001193125-26-323660",
+              "form": "10-K",
+              "filed": "2026-07-29"
+            }
+          ],
+          "arithmetic": {
+            "formula": "direct_12m",
+            "sum": 165934000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 165.9B USD",
@@ -8523,6 +12126,50 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": -4.352689744627693e-06,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2026-01-26",
+              "end": "2026-07-26",
+              "val": 141410000000,
+              "accession": "0001045810-26-000075",
+              "form": "10-Q",
+              "filed": "2026-08-26"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-27",
+              "end": "2026-01-25",
+              "val": 141450000000,
+              "accession": "0001045810-26-000021",
+              "form": "10-K",
+              "filed": "2026-02-25"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-27",
+              "end": "2025-07-27",
+              "val": 53117000000,
+              "accession": "0001045810-25-000209",
+              "form": "10-Q",
+              "filed": "2025-08-27",
+              "also_filed_in": [
+                "0001045810-26-000075"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 229743000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 229.7B USD",
@@ -8553,6 +12200,37 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": 0.0,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 국내 + 해외 12개월 사실. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "domestic_12m",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 8693000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22"
+            },
+            {
+              "role": "foreign_12m",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesForeign",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 10861000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22"
+            }
+          ],
+          "arithmetic": {
+            "formula": "domestic_12m + foreign_12m",
+            "sum": 19554000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 19.6B USD",
@@ -8583,6 +12261,50 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": -0.004566333423399081,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 1969946000,
+              "accession": "0001321655-26-000041",
+              "form": "10-Q",
+              "filed": "2026-08-04"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1657368000,
+              "accession": "0001321655-26-000011",
+              "form": "10-K",
+              "filed": "2026-02-17"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 555484000,
+              "accession": "0001321655-25-000106",
+              "form": "10-Q",
+              "filed": "2025-08-05",
+              "also_filed_in": [
+                "0001321655-26-000041"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 3071830000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 3.1B USD",
@@ -8613,6 +12335,50 @@
           "tax_concept": "IncomeTaxExpenseBenefit",
           "relative_gap": -0.011500862564692352,
           "note": "`세전 = 순이익 + 법인세` 가 성립해야 한다. 지분법 손익·비지배지분이 세전 **아래**에 오는 회사는 어긋나고 그 크기가 여기 남는다."
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "validation/fix-54/apply_obs_fixes.py (FIX-54 1단계, 3차 리뷰 B FC-06) — 당기 누계 + 전기 FY − 전기 동일 누계. 같은 사실을 여러 제출본이 실으면 그 기간을 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "curr_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 2077000000,
+              "accession": "0001628280-26-049270",
+              "form": "10-Q",
+              "filed": "2026-07-23"
+            },
+            {
+              "role": "prior_fy",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 5278000000,
+              "accession": "0001628280-26-003952",
+              "form": "10-K",
+              "filed": "2026-01-29"
+            },
+            {
+              "role": "prior_ytd",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 2138000000,
+              "accession": "0001628280-25-035806",
+              "form": "10-Q",
+              "filed": "2025-07-24",
+              "also_filed_in": [
+                "0001628280-26-049270"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "curr_ytd + prior_fy − prior_ytd",
+            "sum": 5217000000,
+            "matches_value": true
+          }
         }
       },
       "raw": "세전이익 TTM 5.2B USD",

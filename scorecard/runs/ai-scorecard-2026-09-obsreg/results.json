@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "a2683311ae128b07fc957d8d4a9de166e90ec973996bbb38ddc9d0e118d2edb5",
-    "observations": "0f3df99fd3891c7a1625d9595ab3d210878c35692e95f176e3f7ad3d30a7007f",
+    "run": "c3d3aed294042aaae7945dd712d81a0caca25e85ac4d75d1025c1531be9417fb",
+    "observations": "d01d453116667688e3eecd558388701247f3c7580af175add866a5bf99eb0ca1",
     "judgments": "8e25b85283f89fa8d827b91233f0843c1a222c46921d56806dbe3b999ed035bb",
     "sources": "5821c65dff255c4b2dff257acfa85a037053cefaa6c1af3e51c994c70706ea6d",
-    "rules": "8e8562436f88ed2fb4af431fb520a12ff49208cb25cc98699238517aa42ebba7"
+    "rules": "0745b75846087f311fa3bbece15c7e29df1bca0b3d0419e2ec99d35916f039d2"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -1324,15 +1324,15 @@
               "P1": {
                 "inputs": {
                   "market_cap": 2150000000000.0,
-                  "net_income_ttm": 54036496653.0
+                  "net_income_ttm": 54115524386.356
                 },
-                "value": 39.78792359183478,
+                "value": 39.72981920400782,
                 "score": -1,
                 "band": "25~45",
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 45.0,
-                  "distance_ratio": -0.11582392018144927,
+                  "distance_ratio": -0.11711512879982627,
                   "tolerance": 0.03
                 }
               },
@@ -1388,7 +1388,7 @@
               "nonop_share_inputs": {
                 "pretax_income_ttm": 65083031558.81415,
                 "operating_income_ttm": 61717937520.0,
-                "net_income_ttm": 54036496653.0
+                "net_income_ttm": 54115524386.356
               },
               "nonop_share_boundary": {
                 "flag": false,
@@ -4298,5 +4298,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 163,
-  "results_hash": "0613504378bfa83c837066b3c4f75d872b09b63dac000fa3ff0b4427ad1ad8fb"
+  "results_hash": "1be5ceb34c7a4cc7df5771019ab52dad7b0c501463a81b39e54354e69564ab90"
 }

@@ -145,6 +145,10 @@ def main() -> int:  # noqa: C901
         m = measure.measure_us(cid, end)
         src = cash13[cid]
         c13_total = src["cash"].get("total_cash_and_all_securities")
+        if m["debt_incl_lease"] is None:
+            # 2026-09-15 FIX-54 FC-03: 리스 구성요소가 빠지면 합계가 없다. 부분 합으로 등록하지 않는다.
+            raise SystemExit(f"{cid}: 리스 구성요소 결측 {m['operating_lease_missing'] + m['finance_lease_missing']} — "
+                             "net_cash 를 완전 합산할 수 없다. 재실행하려면 이 회사를 먼저 정리할 것")
         value = cm["total"] - m["debt_incl_lease"]
         basis: dict[str, Any] = {
             "measured_as_of": end, "form": src["latest_form"],

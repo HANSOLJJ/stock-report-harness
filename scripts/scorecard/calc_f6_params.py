@@ -201,6 +201,12 @@ def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
         raw[metric] = value
         if value is None:
             return None, f"{pid} 입력 {metric} 관측 없음", raw
+        # 2026-09-15 FIX-54 1단계 FC-04: tsmc 는 연결 전체 순이익, alibaba 는 모회사 귀속분이라 같은 P1 의 분자 범위가 달랐다.
+        # 규칙이 범위를 정하면 verified 관측은 basis.ownership_scope 로 그 범위를 밝혀야 한다. 다르면 값을 만들지 않는다.
+        want = (spec.get("input_scope") or {}).get(metric)
+        if want and o is not None and o.get("status") == "verified" and (o.get("basis") or {}).get("ownership_scope") != want:
+            return None, (f"{pid} 입력 {metric} 의 소유 범위 {(o.get('basis') or {}).get('ownership_scope')!r} 가 규칙 {want!r} 와 다름 "
+                          f"— {o['observation_id']}"), raw
     for metric in spec.get("requires_positive", []):
         if raw[metric] <= 0:
             return None, f"{pid} 입력 {metric} 이 0 이하({raw[metric]!r}) — 대체값으로 채우지 않음", raw

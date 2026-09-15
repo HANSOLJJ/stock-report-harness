@@ -24,10 +24,10 @@ NETCASH-37 — 차입금·현금·유가증권 재검증 · net_cash 정의 근�
   OK   oracle      operating_lease 30190000000.0
   OK   oracle      finance_lease   7701000000.0
   OK   oracle      debt_ex_lease   내 129541000000.0 / MCAP-36 129541000000
-  OK   palantir    operating_lease 211400000.0
+  OK   palantir    operating_lease 합계 없음 — 부분 합 211400000.0 만 있고 빠진 개념 ['OperatingLeaseLiabilityCurrent']
   OK   palantir    finance_lease   None
   OK   palantir    debt_ex_lease   내 None / MCAP-36 None
-  OK   spacex-xai  operating_lease 344000000.0
+  OK   spacex-xai  operating_lease 합계 없음 — 부분 합 344000000.0 만 있고 빠진 개념 ['OperatingLeaseLiabilityNoncurrent']
   OK   spacex-xai  debt_ex_lease   내 39364000000.0 / MCAP-36 39364000000
   OK   tesla       operating_lease 6738000000.0
   OK   tesla       finance_lease   281000000.0
@@ -122,6 +122,8 @@ NETCASH-37 — 차입금·현금·유가증권 재검증 · net_cash 정의 근�
   OK   규칙 evidence.differs.count 4 = 실제 차이 4개사
          alibaba, amazon, nvidia, tsmc
   OK   판정 불가 목록이 규칙과 같다
+  OK   **부분 리스 기준 일치**가 규칙에 적혀 있다 — palantir, spacex-xai
+         리스 구성요소 하나가 빠진 채로 legacy 와 맞았다. 완전 합산 기준의 일치가 아니다(FIX-54 FC-03)
   OK   규칙이 이 정의를 **역산 작업 정의**로 선언한다 — 확정 정의가 나오면 대체된다
   OK   **왜 안 맞는지 모른다는 것을 규칙이 말한다** — 모르는 것을 아는 척하지 않는다
 
@@ -135,4 +137,4 @@ NETCASH-37 — 차입금·현금·유가증권 재검증 · net_cash 정의 근�
   OK   승인 대상 6종 전부 보존 · 기존 실행 불변
 
 ====================================================================================================================
-대조 78건 · 불일치 0건
+대조 79건 · 불일치 0건

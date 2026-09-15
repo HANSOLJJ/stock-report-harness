@@ -33,7 +33,7 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -202,7 +202,10 @@ def quarter_series(rows: list[dict], rules=None, mix: dict | None = None) -> tup
                 derived.append({"fy": f"{f['start']}~{f['end']}", "fy_val": f["val"], "fy_tag": f.get("tag"),
                                 "q4_derived": None, "restatement": gen, "held": True})
                 continue
-        item = {"start": last_end.isoformat(), "end": f["end"], "val": f["val"] - covered,
+        # 2026-09-15 FIX-54 1단계 S5(3차 리뷰 B FC-05): 시작일을 직전 누계 종료일로 둬서 하루가 겹쳤다(apple 2025-06-28).
+        # 복원 Q4 는 누계 종료 **다음 날** 시작한다.
+        q4_start = last_end + timedelta(days=1)
+        item = {"start": q4_start.isoformat(), "end": f["end"], "val": f["val"] - covered,
                 "days": (fe - last_end).days, "kind": "Q4_derived", "form": f["form"], "filed": f["filed"],
                 "taxonomy": f.get("taxonomy"), "tag": "+".join(tags) if len(tags) > 1 else tags[0]}
         derived.append({"fy": f"{f['start']}~{f['end']}", "fy_val": f["val"], "fy_tag": f.get("tag"),

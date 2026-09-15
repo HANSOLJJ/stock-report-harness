@@ -40,6 +40,9 @@ def company(cid: str = "acme", listed: bool = True, share_basis: str | None = No
     }
 
 
+PARENT = {"ownership_scope": "parent_attributable"}
+
+
 def obs(metric: str, value, cid: str = "acme", basis: dict | None = None, kind: str = "actual") -> dict:
     return {
         "observation_id": f"{cid}.{metric}.t", "company_id": cid, "metric": metric,
@@ -70,7 +73,8 @@ def f6obs(cid: str = "acme", *, market_cap=1000.0, net_income=50.0, net_cash=0.0
 
     add("market_cap", market_cap)
     add("net_cash", net_cash)
-    add("net_income_ttm", net_income)
+    # 2026-09-15 FIX-54 1단계 FC-04: P1 분자는 모회사 귀속 순이익이어야 한다 — verified 관측은 범위를 밝힌다.
+    add("net_income_ttm", net_income, PARENT)
     add("operating_income_ttm", operating_income)
     # "auto" 는 안 준 것이고 None 은 **일부러 없앤 것**이다. 둘을 가른다.
     add("pretax_income_ttm",
@@ -277,7 +281,7 @@ class TestF6StaleAsOf(unittest.TestCase):
 
         add("market_cap", over.get("market_cap", 1000.0))
         add("net_cash", over.get("net_cash", 0.0))
-        add("net_income_ttm", over.get("net_income", 50.0))
+        add("net_income_ttm", over.get("net_income", 50.0), PARENT)
         add("operating_income_ttm", over.get("operating_income", 49.0))
         per = {"start": "2025-01-01", "end": end}
         add("revenue_ttm", over.get("revenue", 100.0), {"period_basis": period_basis}, per)
@@ -332,7 +336,7 @@ class TestF6StaleAsOf(unittest.TestCase):
 
     def test_skips_when_run_has_no_as_of(self):
         """기준일을 모르면 지어내지 않는다."""
-        items = [obs(m, v, basis={"period_basis": "ttm"} if m == "revenue_ttm" else None)
+        items = [obs(m, v, basis={"period_basis": "ttm"} if m == "revenue_ttm" else (PARENT if m == "net_income_ttm" else None))
                  for m, v in (("market_cap", 1000.0), ("net_cash", 0.0), ("net_income_ttm", 50.0),
                               ("revenue_ttm", 100.0), ("revenue_ttm_prior", 80.0))]
         r = compute_f6(company(), ObsLookup(items), JudgmentLookup([]), RULES_V17, run())

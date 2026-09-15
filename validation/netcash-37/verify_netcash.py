@@ -85,8 +85,14 @@ def main() -> int:  # noqa: C901
     print("[1] MCAP-36 차입금·리스를 각 사 개념으로 재계산 — 재현되는가")
     for cid in sorted(US_DATES):
         m, n = mine[cid], ntm[cid]
-        chk(close(m["operating_lease"], n["operating_lease"]),
-            f"{cid:11} operating_lease {m['operating_lease']}")
+        if m["operating_lease_missing"]:
+            # 2026-09-15 FIX-54 FC-03: 구성요소가 빠지면 measure 가 합계를 만들지 않는다. MCAP-36 값은 있는 쪽만 더한 부분 합이다.
+            part = sum(measure.at(measure.facts(cid), t, US_DATES[cid], "USD") for t in m["operating_lease_concepts"])
+            chk(m["operating_lease"] is None and close(part, n["operating_lease"]),
+                f"{cid:11} operating_lease 합계 없음 — 부분 합 {part} 만 있고 빠진 개념 {m['operating_lease_missing']}")
+        else:
+            chk(close(m["operating_lease"], n["operating_lease"]),
+                f"{cid:11} operating_lease {m['operating_lease']}")
         if not m["finance_lease_already_in_debt"]:
             chk(close(m["finance_lease"], n["finance_lease"]),
                 f"{cid:11} finance_lease   {m['finance_lease']}")
@@ -205,14 +211,21 @@ def main() -> int:  # noqa: C901
     print("[7] legacy 역산 정의 D 의 근거 집계 — 규칙에 적은 것과 같은가")
     legacy = {o["company_id"]: o["value"] for o in obs_items
               if o["metric"] == "net_cash" and o["status"] == "legacy_unverified"}
-    matched, differs, undecidable = [], [], []
+    matched, differs, undecidable, partial_lease = [], [], [], []
     for cid in sorted(US_DATES):
         m = mine[cid]
         if cid == "apple":
             undecidable.append(cid)
             continue
         debt = 0.0 if cid == "palantir" else m["debt_ex_lease"]
-        value = cashm[cid]["total"] - debt - (m["lease_total"] or 0)
+        lease = m["lease_total"] or 0
+        if m["lease_incomplete"]:
+            # 2026-09-15 FIX-54 FC-03: 리스 구성요소가 빠진 회사는 **있는 쪽만 뺀 부분 합**으로 legacy 와 대조한다.
+            # 결측을 0 으로 접은 것과 산술은 같으므로 그 사실을 따로 모아 규칙 evidence 와 맞춘다.
+            f_ = measure.facts(cid)
+            lease = sum(measure.at(f_, t, US_DATES[cid], "USD") for t in m["operating_lease_concepts"]) + (m["finance_lease"] or 0)
+            partial_lease.append(cid)
+        value = cashm[cid]["total"] - debt - lease
         lg = legacy[cid]
         (matched if abs(value - lg) <= max(abs(lg) * 0.002, 5e7) else differs).append((cid, value, lg))
     for cid, v in (("tsmc", tsm["net_cash_usd"]), ("alibaba", baba["net_cash_usd"])):
@@ -240,6 +253,9 @@ def main() -> int:  # noqa: C901
         f"규칙 evidence.differs.count {ev['differs']['count']} = 실제 차이 {len(differs)}개사",
         ", ".join(sorted(c for c, _, _ in differs)))
     chk(set(ev["undecidable"]) == set(undecidable), "판정 불가 목록이 규칙과 같다")
+    chk(set((ev["matched"].get("partial_lease_basis") or {}).get("companies", [])) == set(partial_lease),
+        f"**부분 리스 기준 일치**가 규칙에 적혀 있다 — {', '.join(partial_lease)}",
+        "리스 구성요소 하나가 빠진 채로 legacy 와 맞았다. 완전 합산 기준의 일치가 아니다(FIX-54 FC-03)")
     chk(spec["status"] == "working_definition" and spec["provenance"]["kind"] == "legacy_reverse_engineered",
         "규칙이 이 정의를 **역산 작업 정의**로 선언한다 — 확정 정의가 나오면 대체된다")
     chk("아직 모른다" in ev["differs"]["note"],

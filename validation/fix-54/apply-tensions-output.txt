@@ -1,0 +1,3 @@
+alibaba F3 불변 확인: partial 2.5→3 · fail 2.0→3
+판단 변경: 없음(이미 반영)
+긴장: TEN-RC3-01, TEN-RC3-03, TEN-RC3-04, TEN-RC3-05 + TEN-RB-Q10 보강 · C-09 pending_recheck · rule_hash 0745b7584608

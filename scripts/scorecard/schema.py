@@ -441,6 +441,9 @@ def _validate_source_policy(policy: Any) -> None:
         _require(entry["host"] not in hosts, f"{where}: host {entry['host']!r} 는 allowed/denied 와 겹칠 수 없음")
 
 
+# 순이익의 소유 범위. P1 분자는 시총·EPS 와 같은 모회사 보통주 범위여야 한다(FIX-54 1단계 FC-04).
+OWNERSHIP_SCOPES = frozenset({"parent_attributable", "consolidated_incl_nci"})
+
 # F6 는 두 모드가 공존한다. v1.5·v1.6 은 NTM PER 단일 구간표(bands), v1.7 은 네 파라미터(parameters)다.
 # **정본은 parameters 다(사용자 확정 2026-09-14, IMPL-46).** bands 는 구버전이고 run.json.rule_version 으로
 # v1.5·v1.6 을 고른 실행에서만 선택된다. 승인된 v1.5 실행이 bands 로 계산됐고 해시가 그 결과에 묶여
@@ -480,7 +483,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
     for pid, spec in params.items():
         where = f"rules.policies.f6.parameters.{pid}"
         _expect_keys(spec, ["label", "question", "score_range", "comparison", "unit", "formula", "inputs", "bands"],
-                     where, optional=["requires_positive", "currency_note"])
+                     where, optional=["requires_positive", "currency_note",
+                                      # 입력 관측이 가져야 할 소유 범위(FIX-54 1단계 FC-04). calc_f6_params._parameter_value 가 읽는다.
+                                      "input_scope", "input_scope_note"])
         _require(spec["comparison"] in F6_COMPARISONS, f"{where}: comparison 은 {sorted(F6_COMPARISONS)} 중 하나")
         lo, hi = spec["score_range"]
         _require(_is_number(lo) and _is_number(hi) and lo <= hi <= 0, f"{where}: score_range 는 음수 구간이어야 함")
@@ -492,6 +497,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
             _require(m in METRICS, f"{where}.inputs: 알 수 없는 metric {m!r}")
         for m in spec.get("requires_positive", []):
             _require(m in spec["inputs"], f"{where}.requires_positive: inputs 에 없는 {m!r}")
+        for m, scope in (spec.get("input_scope") or {}).items():
+            _require(m in spec["inputs"], f"{where}.input_scope: inputs 에 없는 {m!r}")
+            _require(scope in OWNERSHIP_SCOPES, f"{where}.input_scope.{m}: {sorted(OWNERSHIP_SCOPES)} 중 하나")
         total_min += lo
 
     p4 = f6.get("p4")

@@ -64,17 +64,24 @@ def at(f: dict[str, Any], tag: str, end: str, unit: str) -> float | None:
     return None if best is None else float(best["val"])
 
 
-def _lease(f: dict[str, Any], spec: list[Any], end: str, unit: str) -> tuple[float | None, list[str]]:
+def _lease(f: dict[str, Any], spec: list[Any], end: str, unit: str) -> tuple[float | None, list[str], list[str]]:
+    """(합계, 쓴 개념, 빠진 개념). 구성요소 쌍 중 하나라도 없으면 **합계를 만들지 않는다.**
+
+    2026-09-15 FIX-54 1단계 S5(3차 리뷰 B FC-03): 원래 `sum(v or 0 ...)` 이라 spacex-xai 는 비유동 운용리스가 없는데
+    유동 344M 만으로 합계가 나왔다. 결측을 0 으로 접은 것이다. 빠진 개념을 돌려주고 합계는 None 으로 둔다.
+    """
     for item in spec:
         if isinstance(item, str):
             v = at(f, item, end, unit)
             if v is not None:
-                return v, [item]
+                return v, [item], []
         else:
             parts = [(t, at(f, t, end, unit)) for t in item]
             if any(v is not None for _, v in parts):
-                return sum(v or 0 for _, v in parts), [t for t, v in parts if v is not None]
-    return None, []
+                present = [t for t, v in parts if v is not None]
+                missing = [t for t, v in parts if v is None]
+                return (None if missing else sum(v for _, v in parts)), present, missing
+    return None, [], []
 
 
 def measure_us(cid: str, end: str, unit: str = "USD") -> dict[str, Any]:
@@ -95,8 +102,8 @@ def measure_us(cid: str, end: str, unit: str = "USD") -> dict[str, Any]:
             if tag in DEBT_TOTAL_TAGS:
                 total_hit = True
             break
-    op, op_tags = _lease(f, OP_LEASE, end, unit)
-    fin, fin_tags = _lease(f, FIN_LEASE, end, unit)
+    op, op_tags, op_missing = _lease(f, OP_LEASE, end, unit)
+    fin, fin_tags, fin_missing = _lease(f, FIN_LEASE, end, unit)
 
     # 총액 태그가 자본리스를 이미 포함하면 금융리스를 다시 더하지 않는다.
     fin_in_debt = None
@@ -107,10 +114,13 @@ def measure_us(cid: str, end: str, unit: str = "USD") -> dict[str, Any]:
                                      f"= FinanceLeaseLiability. 총액 태그가 자본리스를 이미 포함한다.",
                            "excluded": fin}
             fin = None
-    lease = None if (op is None and fin is None) else (op or 0) + (fin or 0)
+    # 구성요소가 빠진 리스는 합계에 넣지 않는다 — 부분 합을 총 리스로 쓰면 결측을 0 으로 센 것과 같다(FIX-54 FC-03).
+    incomplete = bool(op_missing or fin_missing)
+    lease = None if (incomplete or (op is None and fin is None)) else (op or 0) + (fin or 0)
     return {"debt_ex_lease": debt, "debt_concepts": used,
-            "operating_lease": op, "operating_lease_concepts": op_tags,
-            "finance_lease": fin, "finance_lease_concepts": fin_tags,
+            "operating_lease": op, "operating_lease_concepts": op_tags, "operating_lease_missing": op_missing,
+            "finance_lease": fin, "finance_lease_concepts": fin_tags, "finance_lease_missing": fin_missing,
+            "lease_incomplete": incomplete,
             "finance_lease_already_in_debt": fin_in_debt,
             "lease_total": lease,
             "debt_incl_lease": None if (debt is None or lease is None) else debt + lease}
