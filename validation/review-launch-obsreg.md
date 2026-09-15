@@ -70,3 +70,11 @@ Claude 에이전트 넷은 "session limit" 으로 한 줄도 쓰지 못하고 �
 `orca terminal send --text … --enter` 를 codex 창에 보내면 화면 상태와 무관하게 `agent_prompt_blocked` 가 났다(재시도 토큰도 무효). **텍스트만 먼저(`--text`, Enter 없이) → 빈 텍스트 + `--enter`** 두 단계로 나누니 둘 다 accepted 되고 C 가 착수했다(`Working · Running hooks`). 원인은 미상 — 도움말에 이 코드가 없다. qwen·claude·antigravity 창은 한 번에 보내도 된다.
 
 **1차 착수 완료.** A → qwen `qwen3.8-max`(token-plan) · C → codex `gpt-5.6-sol high`. 둘 다 해시 일치 확인 후 진행 중. 2차(D → qwen, B → codex)는 각 창이 idle 로 돌아온 뒤 새 대화로.
+
+### 설계진행 codex 창 확인 (12:33) — 라벨은 codex, 실제는 pwsh
+
+사용자 허가로 한 번에(텍스트+Enter) 확인용 문장을 보냈다. `accepted: true` 이나 **`provider: "unsupported"`** — orca 가 에이전트 TUI 로 인식하지 않았다. `read --screen` 을 보니 **PowerShell 프롬프트**이고, 앞서 보낸 C 프롬프트 텍스트가 pwsh 명령으로 파싱돼 `Unexpected token '…/C-rule-consistency.md'` 파서 오류를 낸 흔적이 있다(실행된 것 없음).
+
+**결론.** `agent_prompt_blocked` 는 **살아 있는 codex TUI 를 orca 가 인식한 창**에서만 난다. 이 창은 codex 프로세스가 빠져나간 뒤라 원시 입력으로 통과했을 뿐이다. "로딩 중 첫 발송이 걸린 요청을 남겼다" 는 가설은 확인되지 않았다.
+
+**교훈.** `list` 의 `agentIdentity` 는 띄울 때 붙은 라벨이라 낡을 수 있다. **보내기 전에 `read --screen` 으로 그 창에 에이전트가 실제로 떠 있는지 본다.** 안 그러면 프롬프트가 셸 명령으로 실행된다 — 이번엔 하이픈 경로 덕에 파서 오류로 끝났지만 늘 무해하다는 보장이 없다.
