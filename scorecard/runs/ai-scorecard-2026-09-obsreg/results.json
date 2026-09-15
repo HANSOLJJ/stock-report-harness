@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "f493d2bbdddf4143835917177676c45c8f6f5cc7755b31ba3cc69f5246f51ed0",
-    "observations": "7f937cebc208833224c61f6ac61b9dd38dfda36ac0f60f90e21ff1e1a0bd4e7a",
-    "judgments": "a485bfd5db0ff07581730b1c6b7926b68aa6d6120485c730347278045a79e2a0",
+    "run": "7852f2bce705998cc7559b8e38013704ece22391ee53452ac5c66edff2ad2005",
+    "observations": "4c28a7937a7ba49398dd07fed99bbaa864e786bae003980f272c16fca6c9d6fb",
+    "judgments": "db117f2a2f24ad1064f2f54cd347057de2b280ef877ca5361306fdc61814a082",
     "sources": "5821c65dff255c4b2dff257acfa85a037053cefaa6c1af3e51c994c70706ea6d",
-    "rules": "82f81dbc2a5a03ae3870adccef2d31f7f7ae57429b4c6f87622a5d0eeaad64cc"
+    "rules": "64045c2a84bf40b85a401beb8de3f511a7f92db6a551e13f612d50dae852e2ce"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -585,7 +585,13 @@
                 "buffer": 78213000000.0,
                 "annual_burn": 11625000000.0,
                 "step": 0,
-                "score": -2
+                "score": -2,
+                "boundary": {
+                  "flag": false,
+                  "nearest_boundary": 3.0,
+                  "distance_ratio": 1.2426666666666666,
+                  "tolerance": 0.03
+                }
               },
               {
                 "gate": "G4",
@@ -1279,19 +1285,17 @@
         },
         "F5": {
           "factor": "F5",
-          "score": 4,
-          "status": "carried_score",
+          "score": 3,
+          "status": "ok",
           "basis": "grade",
-          "judgment_id": "tsmc.F5",
+          "judgment_id": "tsmc.F5.strict54",
           "observation_ids": [],
           "calc": {
-            "A": 2,
+            "A": 1,
             "H": -1,
             "formula": "3 + A + H"
           },
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F6": {
@@ -1483,9 +1487,9 @@
           "pending": null
         }
       },
-      "moat": 18,
+      "moat": 17,
       "trap": -7,
-      "total": 11,
+      "total": 10,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -1493,7 +1497,6 @@
         "F2",
         "F3",
         "F4",
-        "F5",
         "F7",
         "F8"
       ],
@@ -1740,7 +1743,7 @@
         },
         "F9": {
           "factor": "F9",
-          "score": -4,
+          "score": -3,
           "status": "ok",
           "basis": "computed",
           "judgment_id": "alibaba.F9.obsreg25",
@@ -1749,7 +1752,8 @@
             "alibaba.contracted_revenue.obsreg25",
             "alibaba.fcf_ttm.cashfcf35",
             "alibaba.offbalance_B.obsreg25",
-            "alibaba.operating_margin_ttm.obsreg25"
+            "alibaba.operating_margin_ttm.obsreg25",
+            "alibaba.undrawn_credit.fix53"
           ],
           "calc": {
             "path": [
@@ -1766,11 +1770,17 @@
               },
               {
                 "gate": "G3",
-                "runway_years": 2.638804317741489,
-                "buffer": 19068000000.0,
+                "runway_years": 3.0996401882092446,
+                "buffer": 22398000000.0,
                 "annual_burn": 7226000000.0,
-                "step": -1,
-                "score": -3
+                "step": 0,
+                "score": -2,
+                "boundary": {
+                  "flag": false,
+                  "nearest_boundary": 3.0,
+                  "distance_ratio": 0.03321339606974819,
+                  "tolerance": 0.03
+                }
               },
               {
                 "gate": "G4",
@@ -1781,7 +1791,7 @@
                 "reason": "확인된 미공시(not_disclosed_confirmed)",
                 "step": -1,
                 "policy": "downgrade (C-16 실행 결정)",
-                "score": -4
+                "score": -3
               }
             ],
             "inputs": {
@@ -1801,8 +1811,8 @@
         }
       },
       "moat": 18,
-      "trap": -12,
-      "total": 6,
+      "trap": -11,
+      "total": 7,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -2105,7 +2115,7 @@
         "F4",
         "F7"
       ],
-      "rank": 6
+      "rank": 5
     },
     {
       "company_id": "apple",
@@ -3008,7 +3018,7 @@
         "F7",
         "F8"
       ],
-      "rank": 10
+      "rank": 11
     },
     {
       "company_id": "spacex-xai",
@@ -3216,7 +3226,13 @@
                 "gate": "G3",
                 "mode": "diagnostic",
                 "runway_years": 2.8911215531099295,
-                "step": -1
+                "step": -1,
+                "boundary": {
+                  "flag": false,
+                  "nearest_boundary": 3.0,
+                  "distance_ratio": -0.03629281563002351,
+                  "tolerance": 0.03
+                }
               },
               {
                 "gate": "G4",
@@ -3263,7 +3279,7 @@
         "F7",
         "F8"
       ],
-      "rank": 6
+      "rank": 5
     },
     {
       "company_id": "tesla",
@@ -3820,7 +3836,13 @@
                 "buffer": 31289000000.0,
                 "annual_burn": 23686000000.0,
                 "step": -1,
-                "score": -3
+                "score": -3,
+                "boundary": {
+                  "flag": false,
+                  "nearest_boundary": 1.0,
+                  "distance_ratio": 0.3209913028793381,
+                  "tolerance": 0.03
+                }
               },
               {
                 "gate": "G4",
@@ -4179,14 +4201,6 @@
     },
     {
       "rank": 5,
-      "company_id": "tsmc",
-      "display_name": "TSMC",
-      "moat": 18,
-      "trap": -7,
-      "total": 11
-    },
-    {
-      "rank": 6,
       "company_id": "anthropic",
       "display_name": "Anthropic",
       "moat": 20,
@@ -4194,11 +4208,19 @@
       "total": 10
     },
     {
-      "rank": 6,
+      "rank": 5,
       "company_id": "spacex-xai",
       "display_name": "SpaceX + xAI",
       "moat": 18,
       "trap": -8,
+      "total": 10
+    },
+    {
+      "rank": 5,
+      "company_id": "tsmc",
+      "display_name": "TSMC",
+      "moat": 17,
+      "trap": -7,
       "total": 10
     },
     {
@@ -4222,11 +4244,11 @@
       "company_id": "alibaba",
       "display_name": "Alibaba",
       "moat": 18,
-      "trap": -12,
-      "total": 6
+      "trap": -11,
+      "total": 7
     },
     {
-      "rank": 10,
+      "rank": 11,
       "company_id": "palantir",
       "display_name": "Palantir",
       "moat": 13,
@@ -4265,6 +4287,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 162,
-  "results_hash": "31652692afc2a16fe63a0ef70b2425fb97d22223543d28cbd7cd70eb0adb2fda"
+  "warnings_count": 161,
+  "results_hash": "f1d9767fcd2ec0b513a70c17cd17ba5185b0a7d908d0f8e73e8f2a666e05f7e7"
 }

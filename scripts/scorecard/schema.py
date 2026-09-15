@@ -295,7 +295,12 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
     for idx, t in enumerate(items):
         where = f"rules.open_tensions[{idx}]"
         _expect_keys(t, ["id", "status", "recheck_at", "review_finding", "judgment_ids", "subject", "tension", "direction"],
-                     where, optional=["decision_id", "rechecker", "why_carried_exception", "score_impact_now", "source_lines", "note"])
+                     where, optional=["decision_id", "rechecker", "why_carried_exception", "score_impact_now", "source_lines", "note",
+                                      # 긴장에 기대는 회사별 모호함(FIX-53 2단계 A+2 재판정에서 드러난 것)
+                                      "affected"])
+        for aidx, a in enumerate(t.get("affected") or []):
+            _expect_keys(a, ["company_id", "why"], f"{where}.affected[{aidx}]", optional=["source_lines", "judgment_id"])
+            _require(str(a["why"]).strip(), f"{where}.affected[{aidx}].why: 비워 둘 수 없음")
         _require(isinstance(t["id"], str) and TENSION_ID_RE.match(t["id"]), f"{where}.id: TEN- 로 시작해야 함 — {t['id']!r}")
         _require(t["id"] not in seen, f"{where}.id: 중복 {t['id']}")
         seen.add(t["id"])

@@ -8045,7 +8045,18 @@
         },
         "why_not_companyfacts": "보존 companyfacts 에 2025-12-31 시점 **금액 사실이 0건**이다. IFRS 태그가 2024-12-31 까지만 있다.",
         "lease_note": "유동 리스부채 3,833.0 은 대차대조표 면에 없고 '미지급비용 및 기타유동부채' 에 들어간다. 주석 16 이 유동·비유동을 나눈다. **차입금 유동분(136,925.7)에는 리스가 없다** — 주석 18·19 다.",
-        "open_item": "`Other financial assets` 59,702.9(US$1,903.2M)를 **넣어 두었다.** 대차대조표가 주석 35(담보제공 자산)를 참조하므로 일부가 제한돼 있을 수 있으나 20-F 가 내역을 주지 않는다. 다른 회사의 자금운용 예금을 시장성 증권으로 세면서 tsmc 만 빼면 기준이 어긋난다."
+        "open_item": "~~`Other financial assets` 59,702.9(US$1,903.2M)를 **넣어 두었다.** 대차대조표가 주석 35(담보제공 자산)를 참조하므로 일부가 제한돼 있을 수 있으나 20-F 가 내역을 주지 않는다. 다른 회사의 자금운용 예금을 시장성 증권으로 세면서 tsmc 만 빼면 기준이 어긋난다.~~ → open_item_correction 참조",
+        "open_item_correction": {
+          "corrected_at": "2026-09-15",
+          "task": "FIX-53 2단계 (2차 리뷰 B 발견)",
+          "pledged_assets_note_35": "NT$ 129.40 million 예금증서 담보(주로 건물 임대차 계약) — 2025-12-31",
+          "sensitivity": {
+            "excluding_pledged_usd": 69220838381,
+            "current_usd": 69224963340.77142,
+            "p2_band_unchanged": true
+          },
+          "scope": "P2 시장성 기준의 설명. G3 즉시성 제약을 P2 로 상속하지 않는다."
+        }
       },
       "raw": "NT$백만 3,240,002.8 − 1,068,415.7 = 2,171,587.1 ÷ 31.37 = 69.2B USD",
       "note": "NETCASH-37. **보존 20-F 문면 실측** · 유가증권은 시장성 있는 것만"
@@ -8573,6 +8584,72 @@
       },
       "raw": "세전이익 TTM 65.1B USD",
       "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
+    },
+    {
+      "observation_id": "alibaba.undrawn_credit.fix53",
+      "company_id": "alibaba",
+      "metric": "undrawn_credit",
+      "value": 3330000000.0,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-15",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-20F-FY2026",
+      "status": "verified",
+      "basis": {
+        "form": "20-F",
+        "accession": "0001193125-26-231755",
+        "measured_as_of": "2026-03-31",
+        "original_currency": "USD",
+        "definition": "설계 지침 6.4 런웨이 분자의 `조건이 확인된 확정 미인출 여신`",
+        "primary": {
+          "location": "감사 연결재무제표 주석 21 Bank borrowings — (iii) 항 뒤 문단",
+          "raw_line": 25431,
+          "quote": "As of March 31, 2026, the Company is in compliance with all covenants in relation to bank borrowings. As of March 31, 2025 and 2026, the Company had a revolving credit facility provided by certain financial institutions which has not yet been drawn down. In September 2025, the Company amended the terms of the revolving credit facility agreement. The size of the credit facility was amended from US$ 6.5 billion to US$ 3.33 billion"
+        },
+        "cross_check": {
+          "location": "Item 5 MD&A 유동성",
+          "raw_line": 4274,
+          "quote": "as well as a US$3.33 billion revolving credit facility which we have not yet drawn as of March 31, 2026"
+        },
+        "conditions_confirmed": "미인출(주석·MD&A 둘 다) · 약정 준수(`in compliance with all covenants in relation to bank borrowings`) · 만기 2028-09-30(연장 옵션) · 금리 SOFR/HIBOR +66bp. 원문 보존 3cf9799:validation/offb-24/_raw/baba-20260331.htm",
+        "statement_body_first": "감사 재무제표 주석을 1차 근거로, MD&A 를 교차 확인으로 둔다.",
+        "excluded_other_facility": "US$3.17B 회전여신(주석 21 (ii))의 미사용 약정 `approximately US$ 2.6 billion` 은 합산하지 않았다 — alibaba.undrawn_credit_approx.fix53 참조.",
+        "runway_effect": "런웨이 (19,068 + 3,330) / 7,226 = 3.0996년 (등록 전 19,068 / 7,226 = 2.6388년). G3 step -1 → 0.",
+        "why_now": "설계 지침 6.4 가 런웨이 분자에 확정 미인출 여신을 넣으라고 정해 두었는데 alibaba 에 undrawn_credit 관측이 없었다(2차 리뷰 B 발견). 새 결정이 아니라 빠진 관측의 등록이다."
+      },
+      "raw": "미인출 회전여신 US$3.33B (2026-03-31, 20-F 주석 21)",
+      "note": "FIX-53 2단계. 감사 주석 1차 · MD&A 교차. 런웨이 분자에 들어간다."
+    },
+    {
+      "observation_id": "alibaba.undrawn_credit_approx.fix53",
+      "company_id": "alibaba",
+      "metric": "undrawn_credit",
+      "value": 2600000000.0,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "observed_at": "2026-09-15",
+      "kind": "estimate",
+      "source_id": "SRC-SEC-BABA-20F-FY2026",
+      "status": "incompatible_basis",
+      "basis": {
+        "form": "20-F",
+        "accession": "0001193125-26-231755",
+        "facility": "US$3.17B 회전여신(부수 시설 포함) — 3.33B 시설과 **별개**",
+        "primary": {
+          "location": "감사 연결재무제표 주석 21 Bank borrowings (ii)",
+          "raw_line": 25431,
+          "quote": "As of March 31, 2026, the Company had a total outstanding borrowing amount of RMB 3.9 billion under the ancillary facility arrangement by way of short-term loan facilities, and the unutilized commitment of this revolving credit facility was approximately US$ 2.6 billion."
+        },
+        "cross_check": {
+          "location": "Item 5 MD&A",
+          "quote": "unutilised commitment of approximately US$2.6 billion"
+        },
+        "why_not_in_runway": "**런웨이에 넣지 않는다.** 원문이 `approximately` 라 확정 수치가 아니다. status 를 사용 가능 상태가 아닌 incompatible_basis(확정 금액 기준과 맞지 않음), kind 를 estimate 로 두어 엔진이 읽지 않게 했다.",
+        "sensitivity": "넣었다면 런웨이 (19,068 + 3,330 + 2,600) / 7,226 = 3.4595년 — 3년 이상이라 G3 step 0 으로 결론은 같다."
+      },
+      "raw": "미사용 약정 approximately US$2.6B (3.17B 시설, 런웨이 제외)",
+      "note": "FIX-53 2단계. 근사치라 런웨이 분자에서 뺀다. 결론 민감도는 basis.sensitivity."
     }
   ]
 }

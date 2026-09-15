@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 7f937cebc208833224c61f6ac61b9dd38dfda36ac0f60f90e21ff1e1a0bd4e7a
-judgments_hash: a485bfd5db0ff07581730b1c6b7926b68aa6d6120485c730347278045a79e2a0
+observations_hash: 4c28a7937a7ba49398dd07fed99bbaa864e786bae003980f272c16fca6c9d6fb
+judgments_hash: db117f2a2f24ad1064f2f54cd347057de2b280ef877ca5361306fdc61814a082
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 346건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 348건, 판단 114건.
 
 ## 원자료
 
@@ -198,6 +198,8 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $144.4B | verified | actual | SRC-SEC-BABA-FACTS | 2024-04-01~2025-03-31 996,347,000,000 CNY | F6-REG-28. **당해와 같은 환율 6.8980 으로 환산**했다 |
 | runway_years | 5.0 | legacy_unverified | derived | SRC-v15-html | 5.0년 | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | 25.8 | legacy_unverified | actual | SRC-v15-html | 25.8 |  |
+| undrawn_credit | $3.3B | verified | actual | SRC-SEC-BABA-20F-FY2026 | 미인출 회전여신 US$3.33B (2026-03-31, 20-F 주석 21) | FIX-53 2단계. 감사 주석 1차 · MD&A 교차. 런웨이 분자에 들어간다. |
+| undrawn_credit | $2.6B | incompatible_basis | estimate | SRC-SEC-BABA-20F-FY2026 | 미사용 약정 approximately US$2.6B (3.17B 시설, 런웨이 제외) | FIX-53 2단계. 근사치라 런웨이 분자에서 뺀다. 결론 민감도는 basis.sensitivity. |
 
 ### Anthropic
 
@@ -493,7 +495,7 @@ created_at: 2026-09-11
 | ② 게임체인저 | score | 5 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
 | ③ Last Mover | criteria | — | imitation=pass, revenue_model=fail, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑤ 아군 | grade | — | A=2, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
+| ⑤ 아군 | grade | — | A=1, H=-1 | new | 설계진행(A-STRICT-54 codex·Gemini 독립 일치) 2026-09-15 | [A-STRICT-54] 비 Claude 두 판정 일치 — codex(GPT) validation/a2-strict-54/codex.md · G |
 | ⑦ 순환금융 | matrix | — | funding_dependent_share=small, own_money_returns=no | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
 | ⑧ 비대칭 의존 | score | -4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=stable, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=unknown, operating_result_reviewed=profit | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
@@ -679,6 +681,7 @@ created_at: 2026-09-11
 | openai | operating_margin_ttm | not_disclosed | PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다 |
 | apple | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
 | palantir | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
+| alibaba | undrawn_credit | incompatible_basis | FIX-53 2단계. 근사치라 런웨이 분자에서 뺀다. 결론 민감도는 basis.sensitivity. |
 | alphabet | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
 | amazon | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 | meta | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |

@@ -1,0 +1,2 @@
+S3 tsmc.F5 → tsmc.F5.strict54 A=1 · S4 alibaba.undrawn_credit 3.33B verified + 2.6B incompatible_basis
+TSMC net_cash open_question 정정 · TEN-RC-03 affected · TEN-RB-Q10 등록 · rule_hash 64045c2a84bf

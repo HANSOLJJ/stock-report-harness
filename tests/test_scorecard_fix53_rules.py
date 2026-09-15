@@ -42,7 +42,9 @@ class OpenTensionsTest(unittest.TestCase):
         self.t = {x["id"]: x for x in RULES.payload["open_tensions"]}
 
     def test_three_registered_for_2026_11(self):
-        self.assertEqual(set(self.t), {"TEN-RC-02", "TEN-RC-03", "TEN-RC-05"})
+        # 1단계는 셋이었다. FIX-53 2단계가 TEN-RB-Q10(리뷰 B)을 더했다 — 1단계 셋이 그대로 있는지를 본다.
+        self.assertLessEqual({"TEN-RC-02", "TEN-RC-03", "TEN-RC-05"}, set(self.t))
+        self.assertIn("TEN-RB-Q10", self.t)
         for t in self.t.values():
             with self.subTest(tid=t["id"]):
                 self.assertEqual(t["recheck_at"], "2026-11")
