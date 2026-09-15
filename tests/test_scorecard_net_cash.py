@@ -389,14 +389,15 @@ class LeaseGapMissingTypeTest(unittest.TestCase):
                 self.assertIsNone(o["value"])
                 self.assertEqual(o["status"], "not_disclosed")
 
-    def test_missing_type_is_confirmed_nondisclosure_not_our_gap(self):
-        """**`unverified` 가 아니다.** 우리가 못 찾은 것이 아니라 발행사가 그 시점에 공시하지 않는다."""
+    def test_missing_type_matches_data_scope(self):
+        """2026-09-15 FIX-54 2단계(3차 리뷰 A codex): 원래 `not_disclosed_confirmed` 였다. 전수 확인한 것은 companyfacts 표준 태그뿐이고
+        10-Q 전문은 보존·검색하지 않았으므로 발행사 미공시로 올릴 수 없다 — `unverified` 로 내렸다. 옛 논거는 superseded 키에 남는다."""
         for cid in ("apple", "palantir"):
             o = self.by_id[f"{cid}.lease_liabilities.nc37"]
             with self.subTest(cid=cid):
-                self.assertEqual(o["missing_type"], "not_disclosed_confirmed")
-                # **전수 확인했다는 근거가 있어야** 수집 공백(unverified)과 갈린다.
-                self.assertIn("전수", o["basis"]["why_not_unverified"])
+                self.assertEqual(o["missing_type"], "unverified")
+                self.assertIn("전수", o["basis"]["why_not_unverified_superseded"])
+                self.assertIn("10-Q 전문", o["basis"]["label_correction"]["why"])
                 self.assertEqual(o["basis"]["blocks_metric"], "net_cash")
 
     def test_label_reaches_the_output(self):
@@ -408,7 +409,7 @@ class LeaseGapMissingTypeTest(unittest.TestCase):
             with self.subTest(cid=c["company_id"]):
                 blocked = calc["unverified_blocked_by"]["net_cash"]
                 self.assertIn("lease_liabilities", blocked["reason"])
-                self.assertEqual(blocked["components"][0]["missing_type"], "not_disclosed_confirmed")
+                self.assertEqual(blocked["components"][0]["missing_type"], "unverified")   # FIX-54 2단계 라벨 정정
                 self.assertTrue(any("실측이 막힌 이유" in w for w in c["factors"]["F6"]["warnings"]))
 
     def test_other_companies_have_no_blocked_entry(self):

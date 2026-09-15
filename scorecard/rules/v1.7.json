@@ -551,7 +551,65 @@
                 "ranking_unchanged": "14개사 9 factor 126칸 중 0칸 변동.",
                 "boundary_risk_gone": "**amazon 이 임계 +2.4% 에서 +55.3% 로 멀어진다.** 경계 표시를 붙이라고 한 이유가 산식 정정으로 해소됐다. alphabet 은 +31.8% → +68.9%. **정정 후 경계 플래그가 12개사 어디에도 없다.** 표시 장치는 그대로 둔다 — 다음에 또 붙을 수 있다."
               },
-              "lesson": "`basis` 가 없다는 것은 **저장값이 무엇인지 적혀 있지 않다**는 뜻이지 **무엇인지 알아낼 수 없다**는 뜻이 아니다. 값이 12개 있고 후보 산식이 유한하면 맞춰 볼 수 있다. `net_cash` 에서 후보 다섯을 대 정의를 역산한 것과 같은 방법인데, 이 자리에는 그 방법을 쓰지 않고 `확인할 수 없다` 로 닫았다(설계진행 지적, 2026-09-14)."
+              "lesson": "`basis` 가 없다는 것은 **저장값이 무엇인지 적혀 있지 않다**는 뜻이지 **무엇인지 알아낼 수 없다**는 뜻이 아니다. 값이 12개 있고 후보 산식이 유한하면 맞춰 볼 수 있다. `net_cash` 에서 후보 다섯을 대 정의를 역산한 것과 같은 방법인데, 이 자리에는 그 방법을 쓰지 않고 `확인할 수 없다` 로 닫았다(설계진행 지적, 2026-09-14).",
+              "current": {
+                "formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
+                "since": "2026-09-14 resolution",
+                "table": {
+                  "unit": "저장값, 엔진 재계산값(세전 기준)",
+                  "alphabet": [
+                    0.51,
+                    0.5067
+                  ],
+                  "amazon": [
+                    0.46,
+                    0.4659
+                  ],
+                  "meta": [
+                    0.01,
+                    0.0068
+                  ],
+                  "microsoft": [
+                    0.06,
+                    0.0645
+                  ],
+                  "tsmc": [
+                    0.07,
+                    0.0517
+                  ],
+                  "alibaba": [
+                    0.54,
+                    0.6124
+                  ],
+                  "apple": [
+                    0.01,
+                    0.0067
+                  ],
+                  "nvidia": [
+                    0.14,
+                    0.14
+                  ],
+                  "palantir": [
+                    0.14,
+                    0.1423
+                  ],
+                  "spacex-xai": [
+                    null,
+                    null
+                  ],
+                  "tesla": [
+                    0.18,
+                    0.162
+                  ],
+                  "oracle": [
+                    -0.15,
+                    -0.0538
+                  ]
+                },
+                "table_source": "results.json F6 calc.p4 (nonop_share_stored · nonop_share) — 이 실행의 엔진 값",
+                "note": "**아래 최상위 키 중 recomputed_formula · table · which_is_used · why_signs_flip · sign_flipped · negative_denominator · score_impact_today · where_it_does_decide 는 2026-09-11 옛 순이익 기준 산식 `(NI − OI) / NI` 의 기록이다.** 엔진은 2026-09-14 부터 세전 기준 산식을 쓴다(resolution). 옛 기록은 왜 틀렸는지 남기려고 지우지 않는다. spacex-xai 는 세전이익이 음수라 산출하지 않는다(incompatible_basis).",
+                "recorded_by": "FIX-54 2단계 (3차 리뷰 D 후속, 1단계 회신에서 남긴 항목)"
+              }
             },
             "formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
             "inputs": [
@@ -1909,6 +1967,30 @@
         "채점규칙 102행",
         "채점표 380행"
       ]
+    },
+    {
+      "id": "TEN-RA3-01",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RA3-01(qwen medium) · obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) · 체크리스트 Q05·Q09 fail",
+      "judgment_ids": [
+        "openai.F4"
+      ],
+      "subject": "openai F4 4점의 3→4 상향 근거가 이해당사자 발표이고 배치 계획이 섞였다",
+      "tension": "openai.F4(승계 4점) 근거 첫 줄 `OpenAI 공개 InferenceX 결과에서 GB300 대비 Peak Throughput/kW …`(채점표 751행)가 상향의 1차 근거인데 OpenAI 자신의 발표다. 채점규칙 382행 `벤더 발표 벤치마크는 1차 근거가 아니다 — 독립 측정을 우선한다` · 349행 `가점은 실측만 … 근거마다 (실측)/(발표)를 표기한다` 를 어긴다. 머리줄(750행)의 `초기 출하` 는 `2026년 0.1GW 미만이라도 출하는 출하` 로 서 있는데 752행 `배치 계획(Broadcom): 2026년 0.1GW 미만 → 2027년 1.3GW → 2028년 … 5GW+` 는 계획이고, 출하 실적의 방증은 저장소에 없다(research/ 0건).",
+      "direction": "하향 가능(4 → 3). openai 총점이 2 → 1 이 되면 oracle(2)과의 13위 동률이 갈린다.",
+      "rechecker": "2026-11 재채점 때 판단자(비 Claude 세션 권장 — OpenAI 는 Anthropic 경쟁사라 하향 판정에 이해상충이 있다).",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 F4 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 349행",
+        "채점규칙 382행",
+        "채점표 750~752행"
+      ],
+      "related_tensions": [
+        "TEN-RA-02"
+      ],
+      "note": "[FIX-54 2단계] 근거란에 `(발표 — OpenAI)`·`(계획)` 표기를 붙였다. 사용자 결정(2026-09-15) — 라운드마다 새로 나오는 승계 판단 모순은 발견분만 긴장으로 등록한다."
     }
   ],
   "source_text_corrections": [

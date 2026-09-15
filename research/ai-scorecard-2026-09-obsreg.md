@@ -5,8 +5,8 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: d01d453116667688e3eecd558388701247f3c7580af175add866a5bf99eb0ca1
-judgments_hash: 8e25b85283f89fa8d827b91233f0843c1a222c46921d56806dbe3b999ed035bb
+observations_hash: 64aace00d8150ac9007e523bba9b9f0497ef21a9a2ae3430eaf41e5359516518
+judgments_hash: 112f5059cc901c8a2007b1713b070354520fa6a402559c960afb045a1e594cae
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -243,7 +243,7 @@ created_at: 2026-09-11
 | debt_ebitda | 0.5 | legacy_unverified | actual | SRC-v15-html | 0.45 |  |
 | fcf_ttm | $136.7B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 136.7B = OCF 146.7B - CapEx 10.0B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
 | fcf_ttm | $136.7B | legacy_unverified | actual | SRC-v15-html | +$136.7B | [CASH-FCF-35 대체됨 → apple.fcf_ttm.cashfcf35]  |
-| lease_liabilities | — | not_disclosed | actual | SRC-SEC-FACTS-F6 | 2026-06-27 기준 리스부채 없음 — 10-K 에만 태깅 | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
+| lease_liabilities | — | not_disclosed | actual | SRC-SEC-FACTS-F6 | 2026-06-27 기준 리스부채 없음 — 10-K 에만 태깅 | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — [FIX-54 2단계] unverified(표준 태그 결측, 10-Q  |
 | market_cap | $4.74T | legacy_unverified | actual | SRC-v15-md | $4.74T |  |
 | net_borrowing_ttm | -$17.3B | legacy_unverified | actual | SRC-v15-html | -$17.3B | 차환 제외 순증 |
 | net_cash | $62.2B | legacy_unverified | actual | SRC-v15-md | +$62.2B |  |
@@ -303,7 +303,7 @@ created_at: 2026-09-11
 | debt_ebitda | 0.1 | legacy_unverified | actual | SRC-v15-html | 0.08 |  |
 | fcf_ttm | $3.4B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF 3.4B = OCF 3.4B - CapEx 0.0B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
 | fcf_ttm | $3.4B | legacy_unverified | actual | SRC-v15-html | +$3.4B | [CASH-FCF-35 대체됨 → palantir.fcf_ttm.cashfcf35]  |
-| lease_liabilities | — | not_disclosed | actual | SRC-SEC-FACTS-F6 | 2026-06-30 기준 리스부채 유동분 없음 — 비유동분 211,400천만 태깅 | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
+| lease_liabilities | — | not_disclosed | actual | SRC-SEC-FACTS-F6 | 2026-06-30 기준 리스부채 유동분 없음 — 비유동분 211,400천만 태깅 | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — [FIX-54 2단계] unverified(표준 태그 결측, 10-Q  |
 | market_cap | $407.0B | legacy_unverified | actual | SRC-v15-md | $407B |  |
 | net_borrowing_ttm | — | not_disclosed | actual | SRC-v15-html | 없음 | 차환 제외 순증 |
 | net_cash | $9.2B | legacy_unverified | actual | SRC-v15-md | +$9.2B |  |
@@ -353,9 +353,9 @@ created_at: 2026-09-11
 | ps_ratio | 82.9 | legacy_unverified | actual | SRC-v15-html | 82.9 |  |
 | quarter_note | Q2 (8/4) \| $7.8B (+92%) · Starlink 1,200만 · AI 세그먼트 $2.56B(+247%) \| -$0.09 (컨센 -$0.26 상회) · 영업적자 -14.9% \| TTM -$32.5B · 현금 $100B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
 | revenue_ttm | $7.8B | verified | actual | SRC-SEC-FACTS-F6 | 2026Q2 분기 매출 7,814M (TTM 아님) | F6-REG-28. **분기 전년 동기 기준이다** \| [FIX-53 3단계] **분기값(2026Q2) — TTM 아님.** P3 분기 YoY  |
-| revenue_ttm_prior | $4.1B | verified | actual | SRC-SEC-FACTS-F6 | 2025 Q2 매출 $4,071M | F6-REG-28. 같은 분기 전년 동기 |
+| revenue_ttm_prior | $4.1B | verified | actual | SRC-SEC-FACTS-F6 | 2025 Q2 분기 매출 $4,071M (TTM 아님) | F6-REG-28. 같은 분기 전년 동기 \| [FIX-54 2단계] **분기값(2025Q2) — TTM 아님.** P3 분기 YoY 전용. |
 | runway_years | 3.1 | legacy_unverified | derived | SRC-v15-html | 3.1년 | 원본 계산값(현금 ÷ 연 소진) |
-| ttm_per | — | not_disclosed | actual | SRC-v15-html | 적자 | 적자 |
+| ttm_per | — | not_applicable | actual | SRC-v15-html | 적자 | 적자 |
 | undrawn_credit | $4.4B | verified | actual | SRC-SEC-SPCX-10Q-2026Q2 | 미인출 회전여신 확인 하한 US$4,355M (한도 5,000 − 신용장 645, 2026-06-30) | FIX-54 1단계 S1. 보수적 하한. 신용장이 시설 밖이면 5,000M — 결론 같음(basis.sensitivity). |
 
 ### Tesla
@@ -651,7 +651,7 @@ created_at: 2026-09-11
 
 | 기업 | 항목 | 상태 | 내용 |
 | --- | --- | --- | --- |
-| spacex-xai | ttm_per | not_disclosed | 적자 |
+| spacex-xai | ttm_per | not_applicable | 적자 |
 | spacex-xai | nonop_share | incompatible_basis | FIX-53 3단계. 세전이익 음수 — 부호 규약 미정이라 산출 안 함. P4 강등은 short_history 한 칸으로 이미 걸려 점수 불변. |
 | apple | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | nvidia | runway_years | not_applicable | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
@@ -691,8 +691,8 @@ created_at: 2026-09-11
 | openai | net_cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 openai.net_cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
 | openai | debt_ebitda | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 openai.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
 | openai | operating_margin_ttm | not_disclosed | PRIV-IMPL-31 / C-20. G1 판정 보류의 근거 라벨. 통과도 실패도 아니다 |
-| apple | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
-| palantir | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
+| apple | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — [FIX-54 2단계] unverified(표준 태그 결측, 10-Q 전문 미검색) |
+| palantir | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — [FIX-54 2단계] unverified(표준 태그 결측, 10-Q 전문 미검색) |
 | alibaba | undrawn_credit | incompatible_basis | FIX-53 2단계. 근사치라 런웨이 분자에서 뺀다. 결론 민감도는 basis.sensitivity. |
 | apple | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 | microsoft | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |

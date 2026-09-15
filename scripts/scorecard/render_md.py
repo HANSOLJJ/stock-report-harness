@@ -289,7 +289,8 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         f"- 입력 해시: observations `{ctx.hashes['observations'][:16]}…`, judgments `{ctx.hashes['judgments'][:16]}…`, results `{results['results_hash'][:16]}…`",
         f"- 실행 단위 결정: {', '.join(results['decisions_applied']) or '없음'}",
         f"- 미결 결정: {', '.join(results['pending_rule_decisions']) or '없음'}",
-        "- 정책 기본값 적용: C-04 완충 산정은 exclude(설계 권고). " + ("이번 실행에는 undrawn_credit 관측이 없어 include 를 골라도 결과가 같다." if not any(o["metric"] == "undrawn_credit" for o in ctx.observations) else "undrawn_credit 관측이 있어 선택에 따라 런웨이가 달라질 수 있다."),
+        # 2026-09-15 FIX-54 2단계: 'undrawn_credit 관측이 있어 선택에 따라 런웨이가 달라질 수 있다' 는 실제 동작과 달랐다(RC3-06).
+        f"- {rc.c04_line(ctx)}",
         "",
         table(["Factor", "자동화", "범위"], [[FACTOR_LABELS[f], ctx.rules.factor(f)["mode"], f"{ctx.rules.factor(f)['range'][0]}~{ctx.rules.factor(f)['range'][1]}"] for f in FACTOR_IDS]),
         "",
@@ -397,8 +398,9 @@ def _raw_tables(ctx: Any, results: dict[str, Any]) -> list[str]:
         lines += ["### 비상장 — ⑥ 배수", "", table(["기업", "post-money", "ARR", "밸류÷ARR", "누적 조달", "ARR÷조달", "⑥"], priv_rows), "", f"- {rc.private_notice(ctx)}", ""]
     lines += ["### 재무 — ⑨ 원자료", "", table(["기업", "현금", "TTM FCF", "런웨이(년)", "순현금/순부채", "D/EBITDA", "신용", rc.OFFBALANCE_HEADER, "⑨"], fin_rows), "",
               "- 열별 관측 상태: " + rc.status_summary(obs, cids, rc.FIN_STATUS_COLUMNS),
-              f"- {rc.cash_definition_note(ctx)}",
-              f"- {rc.CREDIT_NOTE}", ""]
+              f"- {rc.cash_definition_note(ctx)}"]
+    lines += [f"- {x}" for x in rc.credit_lines(ctx, results)]
+    lines += [f"- {rc.CREDIT_NOTE}", ""]
     if borr_rows:
         lines += ["### TTM 순차입", "", table(["기업", "TTM 순차입", "TTM capex"], borr_rows), ""]
     return lines

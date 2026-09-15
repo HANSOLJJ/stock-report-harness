@@ -535,6 +535,7 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
     parts.append(f'<h3>재무 — ⑨ 원자료</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>현금</th><th>TTM FCF</th><th>런웨이(년)</th><th>순현금/순부채</th><th>D/EBITDA</th><th>신용</th><th class="text">{esc(rc.OFFBALANCE_HEADER)}</th><th>⑨</th></tr></thead><tbody>' + "".join(fin_rows) + "</tbody></table></div>"
                  f'<p class="sub mt-8">열별 관측 상태: {esc(rc.status_summary(obs, cids, rc.FIN_STATUS_COLUMNS))}</p>'
                  f'<div class="notice info">{inline_html(rc.cash_definition_note(ctx))}</div>'
+                 + "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in rc.credit_lines(ctx, results)) +
                  f'<p class="sub mt-8">{esc(rc.CREDIT_NOTE)} 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 G4 커버리지에 쓴다.</p>')
     if borr_rows:
         parts.append('<h3>TTM 순차입</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>TTM 순차입</th><th>TTM capex</th></tr></thead><tbody>' + "".join(borr_rows) + "</tbody></table></div>")
@@ -553,7 +554,7 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
         f'<li>실행 단위 결정: {esc(", ".join(results["decisions_applied"]) or "없음")}</li></ul>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th><th>자동화</th><th>범위</th><th class="text narrow">관련 결정</th></tr></thead><tbody>{rows}</tbody></table></div>'
         # 2026-09-15 FIX-54 1단계 S3: v1.5 문구(NTM PER 구간 · 하한 -5)가 박혀 있었다. 초안과 같은 목록을 쓴다.
-        '<ul class="tight">' + "".join(f"<li>{inline_html(x)}</li>" for x in rc.method_lines(ctx)) + '</ul>'
+        '<ul class="tight">' + "".join(f"<li>{inline_html(x)}</li>" for x in [rc.c04_line(ctx)] + rc.method_lines(ctx)) + '</ul>'
         '<h3>알려진 한계</h3>' + render_limitations(ctx)
         + (f'<h3>미결 규칙 결정</h3><div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">요약</th><th class="text">권고</th><th>이번 실행</th></tr></thead><tbody>{drows}</tbody></table></div>' if drows else "")
     )

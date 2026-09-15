@@ -66,14 +66,14 @@ NETCASH-37 — 차입금·현금·유가증권 재검증 · net_cash 정의 근�
 [5] '실측 불가' 가 진짜 불가인가 — 그리고 결측 유형이 붙었는가
   OK   apple: 리스부채를 **10-K 에만 태깅**한다 — 기준일 2026-06-27 에 값이 없다
          태깅된 일자는 전부 회계연도 말이다 — 최근 6개 ['2020-09-26', '2021-09-25', '2022-09-24', '2023-09-30', '2024-09-28', '2025-09-27']
-  OK   palantir: 유동 리스부채가 **별도 공시되지 않는다** — 비유동분만 태깅
+  OK   palantir: 유동 리스부채가 **표준 태그로 없다** — 비유동분만 태깅
          유동분은 AccruedLiabilitiesCurrent 504,070천에 묻혀 있다
   OK   결측 관측 2건이 등록됐다
          apple, palantir
-  OK   apple       value=null · missing_type=not_disclosed_confirmed
-         **`unverified` 가 아니다** — 우리 수집 공백이 아니라 발행사가 그 시점에 공시하지 않는다
-  OK   palantir    value=null · missing_type=not_disclosed_confirmed
-         **`unverified` 가 아니다** — 우리 수집 공백이 아니라 발행사가 그 시점에 공시하지 않는다
+  OK   apple       value=null · missing_type=unverified
+         표준 태그 결측이지 발행사 미공시 확인이 아니다 — 10-Q 전문 미검색(basis.label_correction)
+  OK   palantir    value=null · missing_type=unverified
+         표준 태그 결측이지 발행사 미공시 확인이 아니다 — 10-Q 전문 미검색(basis.label_correction)
   OK   tsmc: 보존 companyfacts 에 2025-12-31 시점 **금액** 사실이 0건
          구조화 원천으로는 불가하고 **보존 20-F 로 간다**
 

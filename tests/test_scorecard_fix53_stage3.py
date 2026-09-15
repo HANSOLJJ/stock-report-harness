@@ -119,7 +119,8 @@ class ObservationCorrectionsTest(unittest.TestCase):
         self.assertIn("이중 태깅", self.o["oracle.net_cash.nc37"]["basis"]["components"]["excluded_nonmarketable_present"]
                       ["us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount"]["why"])
         self.assertIn("TTM 아님", self.o["spacex-xai.revenue_ttm.f6reg28"]["basis"]["period_label"])
-        self.assertIn("148건", self.o["palantir.lease_liabilities.nc37"]["basis"]["why_not_unverified"])
+        # FIX-54 2단계: 라벨을 unverified 로 내리며 옛 논거 키를 why_not_unverified_superseded 로 옮겼다(148건 정정은 그대로 보존).
+        self.assertIn("148건", self.o["palantir.lease_liabilities.nc37"]["basis"]["why_not_unverified_superseded"])
         self.assertNotIn("916행", self.o["tsmc.pretax_income_ttm.nonop44"]["basis"]["how_reconstructed"])
         self.assertIn("RestrictedCashNoncurrent",
                       json.dumps(self.o["tesla.net_cash.nc37"]["basis"]["components"]["excluded_nonmarketable_present"]))

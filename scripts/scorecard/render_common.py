@@ -400,6 +400,42 @@ def cash_definition_note(ctx: Any) -> str:
             "(규칙 policies.f6.net_cash.scope_separation). 비상장·일부 기업은 원문 기준이 달라 제한현금 포함 여부도 다를 수 있다.")
 
 
+def credit_lines(ctx: Any, results: dict[str, Any]) -> list[str]:
+    """확정 미인출 여신 설명. 2026-09-15 FIX-54 2단계: amazon 지연인출 $17.5B 가 기준일 28일 뒤 소멸한다는 조건이 초안에 없었다.
+
+    런웨이 분자에 들어간 verified `undrawn_credit` 만 적는다. 구성요소에 `undrawn_terminates_on`(미인출분 소멸일) ·
+    `matures_on_month`(만기 월)가 있으면 실행 기준일에서 며칠·몇 달 뒤인지 붙인다.
+    """
+    from datetime import date
+
+    as_of = date.fromisoformat(ctx.run["as_of"])
+    names = {c["company_id"]: c["display_name"] for c in results["companies"]}
+    out = []
+    for o in ctx.observations:
+        if o["metric"] != "undrawn_credit" or o["status"] != "verified" or o.get("value") is None:
+            continue
+        notes = []
+        for comp in (o.get("basis") or {}).get("components") or []:
+            label = f"{comp.get('facility', '')} {fmt_usd(comp.get('capacity'))}".strip()
+            if comp.get("undrawn_terminates_on"):
+                end = date.fromisoformat(comp["undrawn_terminates_on"])
+                notes.append(f"{label} 는 {end.isoformat()} 까지 인출하지 않으면 미인출분이 소멸한다 — 기준일({as_of.isoformat()}) {(end - as_of).days}일 뒤")
+            elif comp.get("matures_on_month"):
+                notes.append(f"{label} 는 {comp['matures_on_month']} 만기다(연장은 대주 승인 조건)")
+        tail = (" " + " · ".join(notes) + ". 런웨이는 기준일 현재 유효한 약정으로 계산했다.") if notes else ""
+        out.append(f"확정 미인출 여신 — {names.get(o['company_id'], o['company_id'])} {fmt_usd(o['value'])}({o['observation_id']}, {o['as_of']}).{tail}")
+    return out
+
+
+def c04_line(ctx: Any) -> str:
+    """C-04 가 실제로 무엇을 바꾸는지. 선택을 조회해도 G3 산술은 같다(calc_f9, 3차 리뷰 C RC3-06)."""
+    has_credit = any(o["metric"] == "undrawn_credit" and o["status"] == "verified" for o in ctx.observations)
+    return ("정책 기본값 적용: C-04 완충 산정은 exclude(설계 권고) — 완충은 현금 + 조건이 확인된 확정 미인출 여신(`undrawn_credit` 관측)뿐이다. "
+            "include_v15 를 골라도 경고 문구만 바뀌고 G3 산술은 같다(등급 기반 조달 여력은 숫자 관측으로만 들어오고 추정치는 넣지 않는다). "
+            "G1 실패 진단 경로에서는 이 선택을 조회하지 않는다."
+            + (" 이번 실행의 여신 관측은 선택과 무관하게 런웨이에 들어간다." if has_credit else ""))
+
+
 def offbalance_cell(obs: Any, cid: str) -> str:
     """2026-09-15 FIX-53 3단계: 엔진이 G4 에 쓰는 verified offbalance_B 가 있으면 그 값을 찍는다.
 

@@ -162,16 +162,18 @@ def main() -> int:  # noqa: C901
         f"태깅된 일자는 전부 회계연도 말이다 — 최근 6개 {ends[-6:]}")
     chk(measure.at(measure.facts("palantir"), "OperatingLeaseLiabilityCurrent", "2026-06-30", "USD") is None
         and measure.at(measure.facts("palantir"), "OperatingLeaseLiability", "2026-06-30", "USD") is None,
-        "palantir: 유동 리스부채가 **별도 공시되지 않는다** — 비유동분만 태깅",
+        "palantir: 유동 리스부채가 **표준 태그로 없다** — 비유동분만 태깅",
         "유동분은 AccruedLiabilitiesCurrent 504,070천에 묻혀 있다")
     obs_items = json.loads((RUN / "observations.json").read_text(encoding="utf-8"))["items"]
     gaps = {o["company_id"]: o for o in obs_items
             if o["metric"] == "lease_liabilities" and o["observation_id"].endswith(".nc37")}
     chk(set(gaps) == {"apple", "palantir"}, "결측 관측 2건이 등록됐다", ", ".join(sorted(gaps)))
     for cid, o in sorted(gaps.items()):
-        chk(o["value"] is None and o["missing_type"] == "not_disclosed_confirmed",
-            f"{cid:11} value=null · missing_type=not_disclosed_confirmed",
-            "**`unverified` 가 아니다** — 우리 수집 공백이 아니라 발행사가 그 시점에 공시하지 않는다")
+        # 2026-09-15 FIX-54 2단계(3차 리뷰 A codex): companyfacts 표준 태그 결측만 확인했고 10-Q 전문은 보존·검색하지 않았다.
+        # 발행사 미공시(not_disclosed_confirmed)로 올리지 않고 자료 범위에 맞게 unverified 로 둔다.
+        chk(o["value"] is None and o["missing_type"] == "unverified",
+            f"{cid:11} value=null · missing_type=unverified",
+            "표준 태그 결측이지 발행사 미공시 확인이 아니다 — 10-Q 전문 미검색(basis.label_correction)")
     tsm_facts = measure.facts("tsmc")
     n_money = sum(1 for tags in tsm_facts.values() for node2 in tags.values()
                   for unit, rows in node2["units"].items() if unit in ("TWD", "USD")
