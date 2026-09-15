@@ -63,9 +63,14 @@ class ReassessedGradeTest(unittest.TestCase):
                 self.assertEqual(j["reviewed_at"], "2026-09-14")
 
     def test_expected_ranking(self):
-        """지시서 예상 — anthropic 11 로 tsmc 와 공동 5위, openai 2 로 13위."""
-        self.assertEqual((self.res["anthropic"]["total"], self.res["anthropic"]["rank"]), (11, 5))
-        self.assertEqual((self.res["tsmc"]["total"], self.res["tsmc"]["rank"]), (11, 5))
+        """F5-IMPL-48 이 만든 칸은 F5 한 칸씩이다.
+
+        원래 이 자리는 그 시점 총점·순위(anthropic 11 로 tsmc 와 공동 5위 · openai 2 로 13위)를 고정했다.
+        FIX-52 S2 가 anthropic F6 를 -3 → -4 로 바꿔 총점이 10 이 됐으므로, 48 의 몫인 F5 점수와
+        그 뒤에도 유지되는 openai 총점만 본다.
+        """
+        self.assertEqual(self.res["anthropic"]["factors"]["F5"]["score"], 4)
+        self.assertEqual(self.res["openai"]["factors"]["F5"]["score"], 1)
         self.assertEqual((self.res["openai"]["total"], self.res["openai"]["rank"]), (2, 13))
 
 

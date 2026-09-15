@@ -45,12 +45,17 @@ def run(decisions=("C-12",)) -> dict:
 
 
 def f6obs(cid="acme", *, ps_ratio=30.0, arr=65e9, arr_prior=47e9, raised=125e9,
-          valuation=965e9, estimate_range=None) -> ObsLookup:
+          valuation=965e9, estimate_range=None, arr_kind="run_rate") -> ObsLookup:
+    """기본 arr_kind 는 실제 데이터와 같은 run_rate 다.
+
+    FIX-52 S2 로 arr_growth 가 kind=actual 만 받게 되어 run_rate 로는 보정 장치가 돌지 않는다. 보정 **장치**
+    자체를 보는 테스트는 arr_kind="actual" 을 넘긴다.
+    """
     items = []
     if ps_ratio is not None:
         items.append(obs("ps_ratio", ps_ratio, cid, unit="ratio", kind="estimate",
                          basis={"estimate_range": estimate_range} if estimate_range else None))
-    for metric, value, kind in (("arr", arr, "run_rate"), ("arr_prior", arr_prior, "run_rate"),
+    for metric, value, kind in (("arr", arr, arr_kind), ("arr_prior", arr_prior, arr_kind),
                                 ("cumulative_raised", raised, "actual"),
                                 ("post_money_valuation", valuation, "actual")):
         if value is not None:
@@ -85,13 +90,43 @@ class TestPrivateCorrection(unittest.TestCase):
     """P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다."""
 
     def score(self, **kw):
+        # 원래 이 헬퍼는 run_rate arr 로 보정 장치를 시험했다. FIX-52 S2 이후 run_rate 는 arr_growth 를 충족하지 못해
+        # 장치가 돌지 않으므로 **장치 시험은 진짜 ARR(kind=actual) 로** 한다. run_rate 경로는 아래 두 테스트가 본다.
+        kw.setdefault("arr_kind", "actual")
         return compute_f6(company(), f6obs(**kw), JudgmentLookup([]), RULES, run())
 
     def test_anthropic_shape_gets_one_step(self):
+        """진짜 ARR 이면 anthropic 모양(성장 0.383 · 자본효율 0.52)은 한 칸 오른다."""
         r = self.score()
         self.assertEqual(r["calc"]["subtotal_before_correction"], -4)
         self.assertEqual(r["calc"]["correction"]["promotion_steps"], 1)
         self.assertEqual(r["score"], -3)
+
+    def test_run_rate_arr_does_not_promote(self):
+        """**FIX-52 S2 — 런레이트는 ARR 이 아니다.** 같은 숫자라도 kind=run_rate 면 arr_growth 불충족이다(사용자 결정)."""
+        r = self.score(arr_kind="run_rate")
+        row = r["calc"]["correction"]["conditions"]["arr_growth"]
+        self.assertFalse(row["met"])
+        self.assertTrue(row["value_met_threshold"])                 # 값은 임계를 넘었지만 kind 로 막힌다
+        self.assertIn("kind 불인정", row["reason"])
+        self.assertEqual(row["input_kinds"], {"arr": "run_rate", "arr_prior": "run_rate"})
+        self.assertEqual(r["calc"]["correction"]["promotion_steps"], 0)
+        self.assertEqual(r["score"], -4)
+
+    def test_one_run_rate_input_is_enough_to_block(self):
+        items = [obs("ps_ratio", 30.0, unit="ratio", kind="estimate"), obs("arr", 65e9, kind="actual"),
+                 obs("arr_prior", 47e9, kind="run_rate"), obs("cumulative_raised", 125e9),
+                 obs("post_money_valuation", 965e9)]
+        r = compute_f6(company(), ObsLookup(items), JudgmentLookup([]), RULES, run())
+        self.assertFalse(r["calc"]["correction"]["conditions"]["arr_growth"]["met"])
+
+    def test_accepted_kinds_must_be_observation_kinds(self):
+        payload = json.loads((ROOT / "scorecard" / "rules" / "v1.7.json").read_text(encoding="utf-8"))
+        cond = {c["id"]: c for c in payload["policies"]["f6"]["private_correction"]["conditions"]}["arr_growth"]
+        self.assertEqual(cond["accepted_kinds"], ["actual"])
+        cond["accepted_kinds"] = ["arr"]                 # 지표 이름은 kind 가 아니다 — 충족 불가능한 선언
+        with self.assertRaises(SchemaError):
+            validate_rules(payload)
 
     def test_openai_shape_gets_none(self):
         """**성장률이 더 높은데도 보정이 없다.** 자본효율이 임계 미달이기 때문이다."""
@@ -149,7 +184,8 @@ class TestPrivateP2Guards(unittest.TestCase):
         self.assertIn("arr 로 대체하지 않는다", r["pending"]["message"])
 
     def test_estimate_range_within_one_band_is_used(self):
-        r = compute_f6(company(), f6obs(estimate_range=[30.0, 39.0]), JudgmentLookup([]), RULES, run())
+        # 보정까지 포함한 점수를 본다 — FIX-52 S2 이후 보정은 진짜 ARR 에서만 붙으므로 arr_kind="actual".
+        r = compute_f6(company(), f6obs(estimate_range=[30.0, 39.0], arr_kind="actual"), JudgmentLookup([]), RULES, run())
         rng = r["calc"]["parameters"]["P2"]["estimate_range"]
         self.assertFalse(rng["spans_bands"])
         self.assertEqual(r["score"], -3)
@@ -274,7 +310,8 @@ class TestRunIsComplete(unittest.TestCase):
 
     def test_private_scores(self):
         got = {c["company_id"]: c["factors"] for c in self.results["companies"]}
-        self.assertEqual(got["anthropic"]["F6"]["score"], -3)
+        # 원래 -3(런레이트 arr 로 한 칸 승격)이었다. FIX-52 S2 로 승격이 막혀 -4 다.
+        self.assertEqual(got["anthropic"]["F6"]["score"], -4)
         self.assertEqual(got["anthropic"]["F9"]["score"], -2)
         self.assertEqual(got["openai"]["F6"]["score"], -4)
 

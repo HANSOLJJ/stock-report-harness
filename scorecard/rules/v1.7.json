@@ -768,7 +768,20 @@
             "threshold": 0.3,
             "comparison": "gte",
             "threshold_source": "**상장 P3 의 최상단 밴드 경계(0.30)를 그대로 재사용한다.** 그 선은 통상 시장 기준에서 정했고 이 표본 둘에서 뽑지 않았다(f6-band-decision.md).",
-            "note": "arr 은 kind=run_rate 다. ARR 이 아니라 런레이트이고 그 사실이 관측에 남아 있다(PRIV-ARR-17)."
+            "note": "arr 은 kind=run_rate 다. ARR 이 아니라 런레이트이고 그 사실이 관측에 남아 있다(PRIV-ARR-17). | [FIX-52] accepted_kinds 로 kind 를 제한한다 — 런레이트는 이 조건을 충족하지 못한다.",
+            "accepted_kinds": [
+              "actual"
+            ],
+            "accepted_kinds_decision": {
+              "decided_at": "2026-09-15",
+              "decided_by": "사용자 (리뷰 C codex Q02 발견 · FIX-52)",
+              "rule": "**진짜 ARR 만 인정한다.** 입력 arr·arr_prior 중 하나라도 kind 가 actual 이 아니면 조건 불충족이다.",
+              "why": "엔진이 arr 관측의 kind=run_rate 를 kind_notes 에 적고도 이 조건에 그대로 써서 anthropic 이 0.383 ≥ 0.30 으로 F6 -4 → -3 승격을 받았다. 이름은 arr 이지만 런레이트는 ARR 이 아니다(PRIV-ARR-17).",
+              "wording_vs_instruction": "지시서 문구는 `accepted_kinds: [\"arr\"]` 였다. `arr` 은 관측 kind 어휘가 아니라 지표 이름이라 그대로 두면 어떤 관측도 충족할 수 없는 선언이 된다. 공시된 ARR 은 `metric=arr · kind=actual` 로 등록되므로 `[\"actual\"]` 로 옮겼다. 현재 결과는 같다.",
+              "consumer": "calc_f6_params.compute_private — 불충족이면 calc.correction.conditions.arr_growth.reason 에 사유를 남긴다.",
+              "effect": "anthropic F6 -3 → -4. openai 는 capital_efficiency 0.22 로 이미 미충족이라 변동 없다.",
+              "not_changed": "capital_efficiency(arr / cumulative_raised)도 같은 run_rate arr 을 읽는다. 사용자 결정 범위가 arr_growth 라 이 조건에는 kind 제한을 두지 않았다. require_all 이라 지금은 arr_growth 불충족만으로 승격이 막힌다."
+            }
           },
           {
             "id": "capital_efficiency",

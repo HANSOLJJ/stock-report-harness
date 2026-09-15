@@ -1,0 +1,2 @@
+arr_growth.accepted_kinds = ['actual']
+rule_hash f41244b86cf0 -> 73d42a1185ab

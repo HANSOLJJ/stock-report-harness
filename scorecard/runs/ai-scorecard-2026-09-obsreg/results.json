@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "88f76c0796a37942fbbf951654668ad90ba36ddac8d58be7733f6adcd4ea07ac",
+    "run": "6ded4fe462670536b27369eb3596926d3e79e3382c58f1031e6784e97f734968",
     "observations": "0fcef847b46766e83cee425603324d664349b41287967740a84e88cf0ff42095",
     "judgments": "d86e6919b310a2e66785c22e63c7d0bb176f866eebe4b4941216138aab87b27c",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
-    "rules": "f41244b86cf01ba141cfb2af56936c1fa963875d82bda70129dc9e876e6c31c9"
+    "rules": "73d42a1185abc6eba87e56036747241a8867d24cda823bc5c59b371d44f4974b"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -1899,7 +1899,7 @@
         },
         "F6": {
           "factor": "F6",
-          "score": -3,
+          "score": -4,
           "status": "ok",
           "basis": "computed",
           "judgment_id": null,
@@ -1962,7 +1962,16 @@
                   },
                   "threshold": 0.3,
                   "value": 0.38297872340425543,
-                  "met": true
+                  "met": false,
+                  "accepted_kinds": [
+                    "actual"
+                  ],
+                  "input_kinds": {
+                    "arr": "run_rate",
+                    "arr_prior": "run_rate"
+                  },
+                  "value_met_threshold": true,
+                  "reason": "입력 kind 불인정 — arr=run_rate, arr_prior=run_rate. 이 조건은 kind ['actual'] 만 받는다(런레이트는 ARR 이 아니다)"
                 },
                 "capital_efficiency": {
                   "formula": "arr / cumulative_raised",
@@ -1976,14 +1985,13 @@
                 }
               },
               "conditions_met": [
-                "arr_growth",
                 "capital_efficiency"
               ],
               "conditions_missing": [],
-              "promotion_steps": 1
+              "promotion_steps": 0
             },
             "subtotal_before_correction": -4,
-            "score": -3,
+            "score": -4,
             "boundary_rule": "미적용. v1.5 678행이 '비상장에는 적용하지 않는다 — 밸류가 반년~1년에 한 번 갱신되므로 하루 변동폭이라는 3% 의 논리가 성립하지 않는다' 고 명시한다."
           },
           "warnings": [
@@ -1992,8 +2000,7 @@
             "anthropic.arr.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
             "anthropic.arr_prior.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
             "anthropic.cumulative_raised.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
-            "anthropic.ps_ratio.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
-            "비상장 보정 한 칸 — 조건 arr_growth, capital_efficiency 충족"
+            "anthropic.ps_ratio.priv31: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
           ],
           "pending": null
         },
@@ -2083,8 +2090,8 @@
         }
       },
       "moat": 20,
-      "trap": -9,
-      "total": 11,
+      "trap": -10,
+      "total": 10,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -2094,7 +2101,7 @@
         "F4",
         "F7"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "apple",
@@ -3252,7 +3259,7 @@
         "F7",
         "F8"
       ],
-      "rank": 7
+      "rank": 6
     },
     {
       "company_id": "tesla",
@@ -4003,7 +4010,16 @@
                   },
                   "threshold": 0.3,
                   "value": 0.6000000000000001,
-                  "met": true
+                  "met": false,
+                  "accepted_kinds": [
+                    "actual"
+                  ],
+                  "input_kinds": {
+                    "arr": "run_rate",
+                    "arr_prior": "run_rate"
+                  },
+                  "value_met_threshold": true,
+                  "reason": "입력 kind 불인정 — arr=run_rate, arr_prior=run_rate. 이 조건은 kind ['actual'] 만 받는다(런레이트는 ARR 이 아니다)"
                 },
                 "capital_efficiency": {
                   "formula": "arr / cumulative_raised",
@@ -4016,9 +4032,7 @@
                   "met": false
                 }
               },
-              "conditions_met": [
-                "arr_growth"
-              ],
+              "conditions_met": [],
               "conditions_missing": [],
               "promotion_steps": 0
             },
@@ -4160,14 +4174,6 @@
     },
     {
       "rank": 5,
-      "company_id": "anthropic",
-      "display_name": "Anthropic",
-      "moat": 20,
-      "trap": -9,
-      "total": 11
-    },
-    {
-      "rank": 5,
       "company_id": "tsmc",
       "display_name": "TSMC",
       "moat": 18,
@@ -4175,7 +4181,15 @@
       "total": 11
     },
     {
-      "rank": 7,
+      "rank": 6,
+      "company_id": "anthropic",
+      "display_name": "Anthropic",
+      "moat": 20,
+      "trap": -10,
+      "total": 10
+    },
+    {
+      "rank": 6,
       "company_id": "spacex-xai",
       "display_name": "SpaceX + xAI",
       "moat": 18,
@@ -4246,6 +4260,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 163,
-  "results_hash": "5e728029eb8987ee1dd1881d70e06b0e687b820f8a724195f29ae5cb775bdae6"
+  "warnings_count": 162,
+  "results_hash": "2fca03c6d739634fbd6114d2c71175d38843defba96924a598deed5da076aedd"
 }

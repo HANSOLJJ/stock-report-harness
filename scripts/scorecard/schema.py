@@ -509,6 +509,11 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
                      f"{cw}.inputs: 지표 둘이 필요")
             for metric in cond["inputs"]:
                 _require(metric in METRICS, f"{cw}.inputs: 알 수 없는 지표 {metric!r}")
+            # 2026-09-15 FIX-52: 입력 관측의 kind 를 제한한다. 엔진이 읽으므로 관측이 실제로 가질 수 있는 값만 받는다.
+            if "accepted_kinds" in cond:
+                kinds = cond["accepted_kinds"]
+                _require(isinstance(kinds, list) and kinds and all(k in OBSERVATION_KINDS for k in kinds),
+                         f"{cw}.accepted_kinds: {sorted(OBSERVATION_KINDS)} 중에서 하나 이상 — {kinds!r}")
             # 답을 먼저 알고 정한 보정이라는 사실이 규칙 파일에 남아 있어야 한다(C-12).
             _require(str(cond.get("threshold_source") or "").strip(),
                      f"{cw}: threshold_source 를 비워 둘 수 없음 — 임계를 어디서 가져왔는지 적는다")

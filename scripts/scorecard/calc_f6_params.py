@@ -437,6 +437,19 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
             value = inputs[names[0]] / inputs[names[1]] - (1 if cond["id"] == "arr_growth" else 0)
             row["value"] = value
             row["met"] = value >= float(cond["threshold"])
+            # 2026-09-15 FIX-52 S2: 조건이 받는 관측 종류를 선언했으면 읽는다. 런레이트를 ARR 로 쓰면 성장률이
+            # 과대해질 수 있어 사용자가 **진짜 ARR 만 인정**하기로 했다. 값은 표시용으로 남기고 조건은 불충족이다.
+            accepted = cond.get("accepted_kinds")
+            if accepted:
+                kinds = {m: (obs_by_metric.get(m) or {}).get("kind") for m in names}
+                rejected = {m: k for m, k in kinds.items() if k not in accepted}
+                row["accepted_kinds"] = list(accepted)
+                row["input_kinds"] = kinds
+                if rejected:
+                    row["met"] = False
+                    row["value_met_threshold"] = value >= float(cond["threshold"])
+                    row["reason"] = (f"입력 kind 불인정 — {', '.join(f'{m}={k}' for m, k in rejected.items())}. "
+                                     f"이 조건은 kind {accepted} 만 받는다(런레이트는 ARR 이 아니다)")
             if row["met"]:
                 met.append(cond["id"])
         detail["conditions"][cond["id"]] = row
