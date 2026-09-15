@@ -1,17 +1,14 @@
 # 실행 원본(run·observations·judgments·results)에서 plan/research/draft/review 템플릿/preview Markdown 을 생성하는 렌더러
 from __future__ import annotations
 
-import re
 from typing import Any
 
 from report_contract_lib import rel
 
+from . import render_common as rc
+from .render_common import FACTOR_LABELS, fmt_num, fmt_usd
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS
 
-FACTOR_LABELS = {
-    "F1": "① 네트워크", "F2": "② 게임체인저", "F3": "③ Last Mover", "F4": "④ 호황 이후", "F5": "⑤ 아군",
-    "F6": "⑥ 가격", "F7": "⑦ 순환금융", "F8": "⑧ 비대칭 의존", "F9": "⑨ 적자 깊이",
-}
 STATUS_LABEL = {
     "ok": "산출", "carried_score": "승계", "needs_judgment": "판단 대기", "needs_rule_decision": "규칙 결정 대기",
     "pending_data": "자료 대기", "error": "오류",
@@ -29,26 +26,6 @@ DISCLAIMER = (
 
 
 # ------------------------------------------------------------------ 포맷
-
-def fmt_usd(value: float | None, digits: int = 1) -> str:
-    if value is None:
-        return "—"
-    sign = "-" if value < 0 else ""
-    v = abs(value)
-    if v >= 1e12:
-        return f"{sign}${v / 1e12:.{max(digits, 2)}f}T"
-    if v >= 1e9:
-        return f"{sign}${v / 1e9:.{digits}f}B"
-    if v >= 1e6:
-        return f"{sign}${v / 1e6:.0f}M"
-    return f"{sign}${v:,.2f}"
-
-
-def fmt_num(value: float | None, digits: int = 1) -> str:
-    if value is None:
-        return "—"
-    return f"{value:.{digits}f}"
-
 
 def fmt_pct(value: float | None) -> str:
     if value is None:
@@ -217,37 +194,9 @@ def render_research(ctx: Any, *, hashes: dict[str, str]) -> str:
 
 # ------------------------------------------------------------------ draft
 
-def _f9_gate_text(p: dict[str, Any]) -> str:
-    text = f"{p['gate']}:{p.get('result') or p.get('adjust') or p.get('mode') or ''}"
-    # 2026-09-15 FIX-53 2단계: G3 런웨이와 가장 가까운 임계까지의 거리를 보인다. 경계 표시(⚠️)는 F6 와 같은 허용폭 안일 때만.
-    boundary = p.get("boundary") or {}
-    if p.get("gate") == "G3" and p.get("runway_years") is not None and boundary.get("nearest_boundary"):
-        text += (" " if not text.endswith(":") else "") + (f"런웨이 {p['runway_years']:.2f}년(임계 {boundary['nearest_boundary']:g}년 대비 {boundary['distance_ratio']:+.1%}"
-                 f"{' ⚠️ 경계' if boundary.get('flag') else ''})")
-    return text
-
-
 def _factor_row(f: str, fr: dict[str, Any]) -> list[Any]:
-    calc = fr.get("calc") or {}
-    detail = ""
-    if f == "F6" and calc.get("ntm_per") is not None:
-        detail = f"NTM PER {fmt_num(calc['ntm_per'])} → 구간 {calc.get('band', '')}"
-        if (calc.get("boundary") or {}).get("flag"):
-            detail += " ⚠️ 경계"
-    elif f == "F6" and "valuation_over_arr" in calc:
-        detail = f"밸류÷ARR {fmt_num(calc['valuation_over_arr'])}x"
-    elif f == "F3" and "pass_points" in calc:
-        detail = f"통과점 {calc['pass_points']:g}"
-    elif f == "F5" and "A" in calc:
-        detail = f"3 + {calc['A']} + {calc['H']}"
-    elif f == "F7" and "funding_dependent_share" in calc:
-        detail = f"{calc['funding_dependent_share']} / {calc['own_money_returns']}"
-    elif f == "F9" and calc.get("path"):
-        detail = " → ".join(_f9_gate_text(p) for p in calc["path"])
-    pending = fr.get("pending") or {}
-    if pending:
-        detail = (detail + " · " if detail else "") + pending.get("message", "")
-    return [FACTOR_LABELS[f], fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), fr["basis"], detail]
+    # 2026-09-15 FIX-54 1단계 S3: 산식 텍스트를 HTML 과 같은 함수로. v1.7 parameters(P1~P4)가 초안에서도 비어 있었다.
+    return [FACTOR_LABELS[f], fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), fr["basis"], rc.factor_calc_text(f, fr)]
 
 
 def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]]) -> str:
@@ -305,8 +254,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     lines += ["## 기업별 상세", ""]
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
     baseline_scores = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
-    judgments_by_pair = {(j["company_id"], j["factor"]): j for j in ctx.judgments}
-    reps = _replacements(ctx)
+    # 2026-09-15 FIX-54 1단계 S4: (회사, factor) 쌍으로 찾아 자동 산출 F6(anthropic·openai)에 승계 판단 문구가 찍혔다.
+    judgments_by_id = {j["judgment_id"]: j for j in ctx.judgments}
+    reps = rc.replacements(ctx)
+    lines += [f"- {rc.card_evidence_note(run['baseline_id'])}", ""]
     for c in ordered:
         b = baseline_scores.get(c["company_id"])
         base_rank = f" · 기준선 {run['baseline_id']} {b['rank_raw']}위(14사)" if b and b.get("rank_raw") else ""
@@ -315,23 +266,16 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         if b and b.get("tag"):
             lines += [f"> 기준선 {run['baseline_id']} 한 줄 요약(과거 기록): {b['tag']}", ""]
         lines += [table(["Factor", "점수", "상태", "근거 종류", "산식·경로"], [_factor_row(f, c["factors"][f]) for f in FACTOR_IDS]), ""]
-        incompatible_g4 = any(o["company_id"] == c["company_id"] and o["metric"] in ("contracted_revenue", "offbalance_B") and o["status"] == "incompatible_basis" for o in ctx.observations)
+        incompatible_g4 = rc.g4_incompatible(ctx.observations, c["company_id"])
         for f in FACTOR_IDS:
             fr = c["factors"][f]
             base_evidence = (b or {}).get("evidence", {}).get(f, []) if b else []
-            # 2026-09-15 FIX-53 RC-06: 원래 기준선 v1.5 근거만 찍어서 이번 실행이 갱신한 판단(impl48·fix52 등)의 근거가
-            # 초안에 나오지 않았다. 활성 판단이 있으면 그 evidence 를 먼저 찍고, 기준선 서술은 '과거 기록' 으로 따로 둔다.
-            judgment = judgments_by_pair.get((c["company_id"], f))
-            if judgment is not None:
-                lines += _judgment_evidence_lines(f, judgment, base_evidence, run["baseline_id"], reps)
+            block = rc.evidence_block(fr, judgments_by_id, base_evidence, run["baseline_id"], c["company_id"], reps)
+            if block is not None:
+                lines.append(f"- **{FACTOR_LABELS[f]}** {block['header']}:")
+                lines += [("  " * depth) + f"- {text}" for depth, text in block["lines"]]
                 if f == "F9" and incompatible_g4:
-                    lines.append("  - (원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)")
-            elif base_evidence:
-                header = f"기준선 {run['baseline_id']} 서술(참고 — 이번 실행은 입력에서 자동 산출, 원문 판단은 미적용)"
-                lines += [f"- **{FACTOR_LABELS[f]}** {header}:"]
-                lines += [f"  - {_annotate_replaced(e, c['company_id'], reps)}" for e in base_evidence[:6]]
-                if f == "F9" and incompatible_g4:
-                    lines.append("  - (원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)")
+                    lines.append(f"  - {rc.G4_INCOMPATIBLE_NOTE}")
             for w in fr["warnings"][:4]:
                 lines.append(f"  - ⚠️ {w}")
         lines.append("")
@@ -346,29 +290,21 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         f"- 실행 단위 결정: {', '.join(results['decisions_applied']) or '없음'}",
         f"- 미결 결정: {', '.join(results['pending_rule_decisions']) or '없음'}",
         "- 정책 기본값 적용: C-04 완충 산정은 exclude(설계 권고). " + ("이번 실행에는 undrawn_credit 관측이 없어 include 를 골라도 결과가 같다." if not any(o["metric"] == "undrawn_credit" for o in ctx.observations) else "undrawn_credit 관측이 있어 선택에 따라 런웨이가 달라질 수 있다."),
-        f"- C-06 중 BEP 후퇴→{_f9_policy(ctx, 'g1_bep_retreat_score')} 는 원문 OR 조건 그대로 적용하며(경고 표시), 손실률 경계·우선순위 명문화만 미결이다.",
         "",
         table(["Factor", "자동화", "범위"], [[FACTOR_LABELS[f], ctx.rules.factor(f)["mode"], f"{ctx.rules.factor(f)['range'][0]}~{ctx.rules.factor(f)['range'][1]}"] for f in FACTOR_IDS]),
         "",
-        # 2026-09-15 FIX-52: 두 줄이 v1.5 문구(NTM PER 구간표 · 하한 -5)로 박혀 v1.7 결과와 모순됐다. 규칙에서 읽는다.
-        ("- ⑥ 상장: P1 TTM PER · P2 (시총−순현금)/매출 · P3 매출 성장 · P4 입력 신뢰도 보정(parameters 정본). "
-         "비상장: P2 밸류÷TTM 보정 매출에 P3·P4 합쳐 최대 한 칸 보정(C-12)."
-         if ctx.rules.f6_mode == "parameters" else
-         "- ⑥ 상장: NTM PER 20·29·42·62·90 반개방 구간, 경계 ±3% 는 표시만. 비상장: 배수 자동 계산·점수는 정성 예외."),
-        f"- ⑨: G1 본업(TTM 영업손익) → G2 현금(TTM FCF) → G3 런웨이(현금+확정 여신 ÷ 연 소진) → G4 약정 커버리지(계약 수입 ÷ B종). 하한 {_f9_policy(ctx, 'floor')}.",
-        "- ③ 사다리, ⑤ `3 + A + H`, ⑦ 2×2 매트릭스는 판정 입력에서 자동 환산. ①④⑧은 정성 점수.",
-        "",
+        # 2026-09-15 FIX-52: v1.5 문구(NTM PER 구간표 · 하한 -5)가 박혀 있었다. FIX-54 에서 HTML 과 같은 목록(render_common)으로 옮겼다.
     ]
+    lines += [f"- {x}" for x in rc.method_lines(ctx)] + [""]
+    # 한계 — 2026-09-15 FIX-54 1단계 S4
+    lines += ["## 알려진 한계", ""] + [x if x.startswith("  - ") else f"- {x}" for x in rc.limitations(ctx)] + [""]
     # 트리거
     lines += ["## 트리거", ""]
     if triggers:
-        replaced = _trigger_replacements(ctx, triggers)
+        reps = rc.replacements(ctx)
         lines += [table(["ID", "항목", "왜 중요한가(v1.5 원문)", "영향(원문)"],
-                        [[t["trigger_id"], t["title"], _apply_text_corrections(ctx, t["why"] + replaced.get(t["trigger_id"], ""), "triggers"),
-                          t["impact_raw"]] for t in triggers]), "",
-                  "- 트리거의 예상 점수는 저장값이 아니라 원문 문장이다(C-14). 사건 확인 후 현재 규칙으로 재계산한다.",
-                  f"- `왜 중요한가` 의 날짜·금액·수치는 기준선 {ctx.run['baseline_id']} 원문(2026-09-02 기준)이다. 이번 실행이 실측으로 "
-                  "대체한 수치는 그 칸 끝에 ⚠️ 로 적었다. 사건 사실 자체의 뉴스 출처는 sources.json 에 등재돼 있지 않다.", ""]
+                        [[t["trigger_id"], t["title"], rc.trigger_why(ctx, t, reps), t["impact_raw"]] for t in triggers]), ""]
+        lines += [f"- {x}" for x in rc.trigger_notes(ctx)] + [""]
     else:
         lines += ["- 등록된 트리거 없음", ""]
     # References
@@ -380,177 +316,6 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         lines.append(f"- {src.get('source_id')} — {src.get('title')} · {src.get('publisher') or ''} · {src.get('accessed_at') or ''} · {url}{sha}{coi}")
     lines += ["", f"_{DISCLAIMER}_", ""]
     return fm + "\n" + "\n".join(lines)
-
-
-def _struck(text: str) -> str:
-    """취소선. 본문에 `~` 가 있으면 마크다운 취소선이 깨지므로 표시어로 대신한다."""
-    return f"~~{text}~~ (superseded)" if "~" not in text else f"(superseded) {text}"
-
-
-def _judgment_evidence_lines(f: str, judgment: dict[str, Any], base_evidence: list[str], baseline_id: str,
-                             reps: list[dict[str, Any]] | None = None) -> list[str]:
-    """활성 판단 근거를 먼저, 대체된 판단·기준선 서술을 뒤에 따로 찍는다.
-
-    - 승계 판단(carried): 근거란 자체가 기준선 문면이다. 이번 실행이 근거란에 붙인 superseded 표시·추가 문장까지
-      그대로 보이도록 **판단 파일의 evidence** 를 찍는다.
-    - 이번 실행 판단(new): 새 근거를 먼저 찍고, 대체된 옛 판단(superseded)과 기준선 서술을 과거 기록으로 따로 찍는다.
-    """
-    label = FACTOR_LABELS[f]
-    jid = judgment["judgment_id"]
-    evidence = [_annotate_replaced(e, judgment["company_id"], reps) for e in (judgment.get("evidence") or [])]
-    if judgment["status"] == "carried":
-        out = [f"- **{label}** 근거(승계 판단 `{jid}` · 기준선 {baseline_id} · 검토 {judgment['reviewed_at']}):"]
-        out += [f"  - {e}" for e in evidence]
-        return out
-    out = [f"- **{label}** 근거(이번 실행 판단 `{jid}` · {judgment['reviewer']} · {judgment['reviewed_at']}):"]
-    out += [f"  - {e}" for e in evidence]
-    sup = judgment.get("superseded")
-    if sup:
-        out.append(f"  - 대체된 판단 `{sup['judgment_id']}` (superseded {sup['superseded_at']}) — {sup['why']}")
-        out += [f"    - {_struck(e)}" for e in sup.get("evidence", [])[:6]]
-        if len(sup.get("evidence", [])) > 6:
-            out.append(f"    - (외 {len(sup['evidence']) - 6}줄은 judgments.json superseded 에 있다)")
-    elif base_evidence and base_evidence != list(judgment.get("evidence") or []):
-        old = [e for e in base_evidence if e not in (judgment.get("evidence") or [])]
-        if old:
-            out.append(f"  - 과거 기록(기준선 {baseline_id} 서술 — 이번 실행 판단으로 대체):")
-            out += [f"    - {_struck(e)}" for e in old[:6]]
-    return out
-
-
-def _f9_policy(ctx: Any, key: str) -> Any:
-    return (ctx.rules.payload.get("policies", {}).get("f9") or {}).get(key)
-
-
-def _status_summary(obs: Any, cids: list[str], columns: list[tuple[str, str]]) -> str:
-    """열마다 엔진이 고르는 관측(ObsLookup 우선순위)의 status 를 센다. 관측이 없으면 `관측 없음`."""
-    parts = []
-    for label, metric in columns:
-        counts: dict[str, int] = {}
-        for cid in cids:
-            o = obs.get(cid, metric)
-            key = o["status"] if o is not None else "관측 없음"
-            counts[key] = counts.get(key, 0) + 1
-        order = ["verified", "legacy_unverified"]
-        items = sorted(counts.items(), key=lambda kv: (order.index(kv[0]) if kv[0] in order else 9, kv[0]))
-        parts.append(f"{label} " + " · ".join(f"{k} {v}" for k, v in items))
-    return " | ".join(parts)
-
-
-def _cash_definition_note(ctx: Any) -> str:
-    """`현금` 열과 `순현금/순부채` 열은 다른 것을 센다 — 같은 행에서 맞춰 볼 수 없다는 사실을 규칙 블록으로 적는다."""
-    sep = ((ctx.rules.payload.get("policies", {}).get("f6") or {}).get("net_cash") or {}).get("scope_separation") or {}
-    sites = {s.get("metric"): s for s in sep.get("sites", [])}
-    cash, net = sites.get("cash", {}), sites.get("net_cash", {})
-    return ("- **현금 두 정의** — `현금` 열은 `cash` 관측(" + (cash.get("site") or "런웨이") + ", 질문 `" + (cash.get("question") or "") +
-            "`)이고, `순현금/순부채` 열은 `net_cash` 관측(" + (net.get("site") or "EV 조정") + ", 질문 `" + (net.get("question") or "") +
-            "`)으로 시장성 유가증권을 포함한다. **같은 행의 두 열은 서로 맞춰 볼 수 없다** — 순현금은 현금 열에서 차입을 뺀 값이 아니다"
-            "(규칙 policies.f6.net_cash.scope_separation). 비상장·일부 기업은 원문 기준이 달라 제한현금 포함 여부도 다를 수 있다.")
-
-
-LEGACY_ID_RE = re.compile(r"[a-z-]+\.[A-Za-z_]+\.v15\b")
-
-
-def _legacy_texts(legacy: dict[str, Any]) -> list[str]:
-    """legacy 값이 원문 서술에 적혔을 법한 표기들. 비율은 소수 첫째 자리 %, 달러는 $NB·$N.NB·$NT 형태."""
-    v = float(legacy["value"])
-    if legacy.get("unit") == "ratio":
-        return [f"{v * 100:.1f}%"]
-    if legacy.get("unit") == "USD" and abs(v) >= 1e9:
-        b = abs(v) / 1e9
-        sign = "-" if v < 0 else ""
-        forms = {f"{sign}${b:.1f}B", f"{sign}${b:.2f}B"}
-        if float(b).is_integer():
-            forms.add(f"{sign}${b:.0f}B")
-        if abs(v) >= 1e12:
-            forms.add(f"{sign}${abs(v) / 1e12:.2f}T")
-        return sorted(forms, key=len, reverse=True)
-    return []
-
-
-def _replacements(ctx: Any) -> list[dict[str, Any]]:
-    """이번 실행의 verified 관측이 대체한 legacy 관측(basis.replaces 또는 note 에 id 로 적힘, 같은 지표)을 모은다.
-
-    2026-09-15 FIX-53 3단계: 트리거에만 붙이던 대체 표시를 기준선 서술·승계 근거에도 붙이려고 떼어 냈다. note 만 보는
-    관측(amazon.offbalance_B.obsreg25 ← .v15 $106B)이 있어 basis.replaces 만으로는 모자랐다.
-    """
-    by_id = {o["observation_id"]: o for o in ctx.observations}
-    out = []
-    for o in ctx.observations:
-        if o["status"] != "verified" or o.get("value") is None:
-            continue
-        text = " ".join(str(x) for x in ((o.get("basis") or {}).get("replaces"), o.get("note")) if x)
-        for lid in sorted(set(LEGACY_ID_RE.findall(text))):
-            legacy = by_id.get(lid)
-            if legacy is None or legacy["metric"] != o["metric"] or legacy.get("value") is None:
-                continue
-            olds = [t for t in _legacy_texts(legacy) if t]
-            if olds:
-                out.append({"company_id": o["company_id"], "old_texts": olds, "obs": o, "legacy_id": lid})
-    return out
-
-
-def _new_value_text(o: dict[str, Any]) -> str:
-    if o.get("unit") == "ratio":
-        return f"{o['value'] * 100:.3f}%"
-    return fmt_usd(o["value"])
-
-
-def _annotate_replaced(text: str, company_id: str, reps: list[dict[str, Any]]) -> str:
-    """서술 한 줄에 대체된 legacy 수치가 그대로 있으면 끝에 ⚠️ 와 실측값을 붙인다. 원문 문장은 고치지 않는다."""
-    notes = []
-    if text.startswith("📐"):
-        return text                                     # 이번 실행이 붙인 설명 줄은 이미 대체 사실을 적는다
-    for r in reps:
-        if r["company_id"] != company_id:
-            continue
-        hit = next((t for t in r["old_texts"] if t in text), None)
-        if hit:
-            o = r["obs"]
-            period = o.get("period") or {}
-            when = f"{period['start']}~{period['end']}" if period else o["as_of"]
-            new = _new_value_text(o)
-            if new == hit and o.get("unit") == "USD":
-                new = fmt_usd(o["value"], 3)            # 반올림 표기가 원문과 같으면 자릿수를 늘려 차이를 보인다
-            notes.append(f"⚠️ 원문 {hit} 는 이번 실행 실측 {new}({o['observation_id']}, verified, {when})로 대체됐다")
-    return text + ("".join(f" {n}." for n in notes))
-
-
-def _apply_text_corrections(ctx: Any, text: str, target: str) -> str:
-    """rules.source_text_corrections 중 target 에 해당하는 것을 줄 끝에 붙인다. 이미 marker 가 있으면 건너뛴다."""
-    for c in ctx.rules.payload.get("source_text_corrections") or []:
-        if target in c["applies_to"] and c["match"] in text and c["marker"] not in text:
-            text = f"{text} {c['correction']}"
-    return text
-
-
-def _trigger_replacements(ctx: Any, triggers: list[dict[str, Any]]) -> dict[str, str]:
-    """이번 실행의 verified 관측이 대체한 legacy 값이 트리거 원문에 그대로 있으면 표시한다(회사 이름이 트리거에 있을 때)."""
-    reps = _replacements(ctx)
-    notes: dict[str, str] = {}
-    for t in triggers:
-        text = t["title"] + " " + t["why"]
-        for cid, company in ctx.companies.items():
-            names = [company.get("display_name", "")] + list(company.get("aliases") or [])
-            if not any(n and len(n) > 2 and n in text for n in names):
-                continue
-            annotated = _annotate_replaced(t["why"], cid, reps)
-            if annotated != t["why"]:
-                notes[t["trigger_id"]] = notes.get(t["trigger_id"], "") + annotated[len(t["why"]):]
-    return notes
-
-
-def _offbalance_cell(obs: Any, cid: str, note: dict[str, Any] | None) -> str:
-    """2026-09-15 FIX-53 3단계: 엔진이 G4 에 쓰는 verified offbalance_B 가 있으면 그 값을 찍는다.
-
-    legacy `offbalance_note` 는 v1.5 원문 문구라 amazon 이 `미개시 리스 $106B` 로 나왔는데 엔진은 267,279M 을 썼다.
-    원문 문구는 지우지 않고 대체 표시로 뒤에 둔다.
-    """
-    legacy = ((note or {}).get("value") or "—")[:60]
-    b = obs.get(cid, "offbalance_B")
-    if b is not None and b["status"] == "verified" and b.get("value") is not None:
-        return f"{fmt_usd(b['value'])} B종(verified) · 원문 {_struck(legacy)}"
-    return legacy
 
 
 def _raw_if_missing(obs: Any, cid: str, metric: str) -> str | None:
@@ -604,32 +369,36 @@ def _raw_tables(ctx: Any, results: dict[str, Any]) -> list[str]:
             if f6["status"] == "needs_rule_decision":
                 flag = f"보류({(f6.get('pending') or {}).get('decision_id', '')})"
             else:
-                flag = "⚠️" if ((f6.get("calc") or {}).get("boundary") or {}).get("flag") else "—"
-            val_rows.append([name, fmt_usd(obs.number(cid, "price")[0], 2), fmt_usd(obs.number(cid, "market_cap")[0], 2), fmt_num(per), method or "—", fmt_score(f6["score"]), flag, _num_or_raw(obs, cid, "ttm_per"), _pct_or_raw(obs, cid, "nonop_share"), fmt_num(obs.number(cid, "ps_ratio")[0])])
+                flag = "⚠️" if rc.f6_boundary_flag(f6.get("calc") or {}) else "—"
+            val_rows.append([name, fmt_usd(obs.number(cid, "price")[0], 2), fmt_usd(obs.number(cid, "market_cap")[0], 2) + rc.vendor_mark(obs, cid, "market_cap"),
+                             fmt_num(per) + rc.vendor_mark(obs, cid, "ntm_per"), method or "—", fmt_score(f6["score"]), flag, _num_or_raw(obs, cid, "ttm_per"),
+                             _pct_or_raw(obs, cid, "nonop_share"), fmt_num(obs.number(cid, "ps_ratio")[0])])
         else:
             calc = c["factors"]["F6"].get("calc") or {}
-            priv_rows.append([name, fmt_usd(obs.number(cid, "post_money_valuation")[0]), fmt_usd(obs.number(cid, "arr")[0]), fmt_num(calc.get("valuation_over_arr")), fmt_usd(obs.number(cid, "cumulative_raised")[0]), fmt_num(calc.get("arr_over_cumulative_raised"), 2), fmt_score(c["factors"]["F6"]["score"])])
+            v_arr, arr_raised = rc.private_multiples(calc)
+            priv_rows.append([name, fmt_usd(obs.number(cid, "post_money_valuation")[0]), fmt_usd(obs.number(cid, "arr")[0]), fmt_num(v_arr), fmt_usd(obs.number(cid, "cumulative_raised")[0]), fmt_num(arr_raised, 2), fmt_score(c["factors"]["F6"]["score"])])
         fcf, fcf_obs = obs.number(cid, "fcf_ttm")
         rating = obs.get(cid, "credit_rating")
-        note = obs.get(cid, "offbalance_note")
-        fin_rows.append([name, _usd_or_raw(obs, cid, "cash"), fmt_usd(fcf) if fcf is not None else ((fcf_obs or {}).get("raw") or "—"), _runway_text(c, obs), fmt_usd(obs.number(cid, "net_cash")[0]), fmt_num(obs.number(cid, "debt_ebitda")[0], 2), (rating or {}).get("value") or "—", _offbalance_cell(obs, cid, note), fmt_score(c["factors"]["F9"]["score"])])
+        fin_rows.append([name, _usd_or_raw(obs, cid, "cash"), fmt_usd(fcf) if fcf is not None else ((fcf_obs or {}).get("raw") or "—"), _runway_text(c, obs),
+                         fmt_usd(obs.number(cid, "net_cash")[0]) + rc.vendor_mark(obs, cid, "net_cash"), fmt_num(obs.number(cid, "debt_ebitda")[0], 2),
+                         (rating or {}).get("value") or "—", rc.offbalance_cell(obs, cid), fmt_score(c["factors"]["F9"]["score"])])
         nb, nb_obs = obs.number(cid, "net_borrowing_ttm")
         if nb_obs is not None:
             borr_rows.append([name, fmt_usd(nb) if nb is not None else (nb_obs.get("raw") or "—"), fmt_usd(obs.number(cid, "capex_ttm")[0])])
-    legacy_n = sum(1 for o in ctx.observations if o["status"] == "legacy_unverified")
-    # 2026-09-15 FIX-52: '모든 값은 legacy_unverified' 라고 적었는데 재무 표의 현금·TTM FCF·순현금은 verified 였다(리뷰 A).
-    # 표마다 열별로 엔진이 실제로 고른 관측의 status 를 센다.
     cids = [c["company_id"] for c in results["companies"]]
     listed = [c["company_id"] for c in results["companies"] if c["listed"]]
-    lines += [f"기준선 {ctx.run['baseline_id']} 승계 관측(`legacy_unverified` {legacy_n}건, SRC-v15-html·SRC-v15-md·SRC-v15-rule)은 이번 실행에서 재검증되지 않았다(D-08). **표마다 실측(verified)과 승계가 섞여 있다** — 각 표 아래에 열별 관측 상태를 적는다. 상장사 주가는 USD 이고 TSMC 는 ADR(1주=보통주 5주, 재무 TWD), Alibaba 는 ADS(재무 CNY) 기준이다. `—` 는 관측 없음, 원문 상태(미공시·적자·∞)는 그대로 표기한다.", ""]
+    lines += [rc.raw_caption(ctx), ""]
     lines += ["### 가격 — ⑥ 원자료", "", table(["기업", "주가", "시총", "NTM PER", "산출 방법", "⑥", "경계", "TTM PER", "영업외 비중", "P/S"], val_rows), "",
-              "- 열별 관측 상태: " + _status_summary(obs, listed, [("주가", "price"), ("시총", "market_cap"), ("NTM PER", "ntm_per"), ("TTM PER", "ttm_per"), ("영업외 비중", "nonop_share"), ("P/S", "ps_ratio")]), ""]
+              "- 열별 관측 상태: " + rc.status_summary(obs, listed, rc.PRICE_STATUS_COLUMNS),
+              f"- {rc.price_notice(ctx)}"]
+    vendor = rc.vendor_policy_note(ctx)
+    lines += ([f"- {vendor}"] if vendor else []) + [""]
     if priv_rows:
-        lines += ["### 비상장 — ⑥ 배수", "", table(["기업", "post-money", "ARR", "밸류÷ARR", "누적 조달", "ARR÷조달", "⑥"], priv_rows), "", "- 비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 정성 예외(C-12).", ""]
-    lines += ["### 재무 — ⑨ 원자료", "", table(["기업", "현금", "TTM FCF", "런웨이(년)", "순현금/순부채", "D/EBITDA", "신용", "부외 약정(B종 실측 · 없으면 v1.5 원문)", "⑨"], fin_rows), "",
-              "- 열별 관측 상태: " + _status_summary(obs, cids, [("현금", "cash"), ("TTM FCF", "fcf_ttm"), ("순현금/순부채", "net_cash"), ("D/EBITDA", "debt_ebitda"), ("신용", "credit_rating")]),
-              _cash_definition_note(ctx),
-              "- 신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(별표 J).", ""]
+        lines += ["### 비상장 — ⑥ 배수", "", table(["기업", "post-money", "ARR", "밸류÷ARR", "누적 조달", "ARR÷조달", "⑥"], priv_rows), "", f"- {rc.private_notice(ctx)}", ""]
+    lines += ["### 재무 — ⑨ 원자료", "", table(["기업", "현금", "TTM FCF", "런웨이(년)", "순현금/순부채", "D/EBITDA", "신용", rc.OFFBALANCE_HEADER, "⑨"], fin_rows), "",
+              "- 열별 관측 상태: " + rc.status_summary(obs, cids, rc.FIN_STATUS_COLUMNS),
+              f"- {rc.cash_definition_note(ctx)}",
+              f"- {rc.CREDIT_NOTE}", ""]
     if borr_rows:
         lines += ["### TTM 순차입", "", table(["기업", "TTM 순차입", "TTM capex"], borr_rows), ""]
     return lines

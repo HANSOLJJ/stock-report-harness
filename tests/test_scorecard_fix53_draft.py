@@ -56,9 +56,16 @@ class CurrentJudgmentEvidenceTest(unittest.TestCase):
         self.assertIn("이 실행의 verified 값", self.text)
 
     def test_every_active_judgment_header_is_present(self):
+        # 2026-09-15 FIX-54 1단계 S4: 결과에 연결된 판단만 헤더를 찍는다. anthropic.F6·openai.F6 은 판단 파일에 있지만
+        # F6 가 자동 산출이라 results 의 judgment_id 가 없다 — 그 헤더가 찍힌 것이 3차 리뷰 D 가 짚은 결함이었다.
+        linked = {fr["judgment_id"] for c in self.results["companies"] for fr in c["factors"].values() if fr.get("judgment_id")}
         for j in self.ctx.judgments:
             with self.subTest(jid=j["judgment_id"]):
-                self.assertIn(f"`{j['judgment_id']}`", self.text)
+                if j["judgment_id"] in linked:
+                    self.assertIn(f"`{j['judgment_id']}`", self.text)
+                else:
+                    self.assertNotIn(f"`{j['judgment_id']}`", self.text)
+        self.assertEqual({j["judgment_id"] for j in self.ctx.judgments} - linked, {"anthropic.F6", "openai.F6"})
 
     def test_auto_factor_keeps_baseline_reference_label(self):
         self.assertIn("기준선 v1.5 서술(참고 — 이번 실행은 입력에서 자동 산출", self.text)

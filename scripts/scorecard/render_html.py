@@ -13,6 +13,8 @@ from report_contract_lib import OUTPUT_DIR, artifact_paths, rel
 from .engine import HISTORY_CSV, load_context, load_results, run_dir
 from .inputs import ObsLookup
 from .render_csv import append_history, history_rows
+from . import render_common as rc
+from .render_common import GATE_LABELS, METHOD_LABELS, SHARE_LABELS, YESNO_LABELS, factor_calc_text, inline_html  # noqa: F401 — 테스트·호환용 재노출
 from .render_md import DISCLAIMER, FACTOR_LABELS, REVIEW_AREAS, STATUS_LABEL, fmt_num, fmt_pct, fmt_score, fmt_usd
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS, SchemaError, load_json_strict, sha256_file, validate_approval
 from .stages import current_hashes, load_baseline
@@ -20,12 +22,6 @@ from .stages import current_hashes, load_baseline
 GENERATOR = "stock-report-harness scorecard-builder"
 SHORT = {"F1": "①", "F2": "②", "F3": "③", "F4": "④", "F5": "⑤", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
 TYPE_CLASS = {"소비자": "consumer", "업무": "work", "거래": "trade", "부품": "part", "소비자·업무": "mix", "혼합": "mix"}
-METHOD_LABELS = {
-    "consensus_4q_sum": "미발표 4개 분기 컨센서스 합",
-    # 이 키 이름은 기준선 이관 코드의 문자열이다. NTM 적격성이 검증됐다는 뜻이 아니므로 라벨로 그렇게 읽히면 안 된다.
-    "vendor_forward_pe_verified_ntm": "공급사 forward PE(이관 코드 명칭 · 기간 미확인 · NTM 적격성 미검증)",
-    "annual_weighted_proxy": "연간 EPS 가중 근사(정밀도 열위)",
-}
 OBS_STATUS_LABELS = {
     "verified": "검증 완료", "legacy_unverified": "기준선 승계·미검증", "not_applicable": "해당 없음",
     "not_disclosed": "미공시", "collection_failed": "수집 실패", "source_conflict": "출처 충돌",
@@ -34,15 +30,6 @@ OBS_STATUS_LABELS = {
 DECISION_STATUS = {"pending": "미결", "resolved": "확정", "documented": "문서화"}
 CODE_RE = re.compile(r"C-\d{2}(?![\d\w/-])")
 GLOSSARY_SLOT = "<!--scorecard:glossary-->"
-SHARE_LABELS = {"large": "큼", "small": "작음", "unknown": "미확인"}
-YESNO_LABELS = {"yes": "있음", "no": "없음", "unknown": "미확인"}
-GATE_LABELS = {
-    "pass": "통과", "fail": "실패", "positive_stable": "FCF 흑자·추세 안정", "positive_deteriorating": "FCF 흑자·추세 악화",
-    "negative": "FCF 마이너스", "not_disclosed": "미공시", "zero": "0", "pending": "대기", "skipped": "생략",
-    "computed": "산출", "undetermined": "판정 불가", "incompatible": "비교 불가", "no_obligations": "약정 없음",
-}
-
-
 def esc(value: Any) -> str:
     return html_lib.escape(str(value), quote=True)
 
@@ -196,6 +183,8 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .fpts{margin:0;padding-left:16px;color:var(--tx);line-height:1.55}
 .fpts li{margin:2px 0}
 .fpts li.warn{color:var(--warn-text)}
+.fpts li.d2{margin-left:14px;color:var(--tx2);list-style:circle}
+.fpts del{color:var(--tx3)}
 details.blk{background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin:10px 0;overflow:hidden}
 details.blk>summary{padding:12px 16px;cursor:pointer;font-weight:700;font-size:var(--fs-base);list-style:none;display:flex;justify-content:space-between;min-height:44px;align-items:center}
 details.blk>summary::-webkit-details-marker{display:none}
@@ -444,8 +433,12 @@ def render_incomplete(results: dict[str, Any], rules: Any) -> str:
             + (f'<h3>필요한 규칙 결정</h3><ul class="tight">{decisions}</ul>' if decisions else ""))
 
 
-def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]], observations: list[dict[str, Any]] | None = None) -> str:
+def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]],
+                 observations: list[dict[str, Any]] | None = None, judgments: list[dict[str, Any]] | None = None,
+                 reps: list[dict[str, Any]] | None = None) -> str:
+    """2026-09-15 FIX-54 1단계 S3: 기준선 evidence 만 읽던 카드를 초안과 같은 근거 블록(render_common.evidence_block)으로."""
     observations = observations or []
+    judgments_by_id = {j["judgment_id"]: j for j in (judgments or [])}
     baseline_n = len((baseline or {}).get("companies", [])) or len(results["companies"])
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
@@ -453,7 +446,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
     for c in ordered:
         b = base.get(c["company_id"], {})
         cls = TYPE_CLASS.get(c["type"], "mix")
-        incompatible_g4 = any(o["company_id"] == c["company_id"] and o["metric"] in ("contracted_revenue", "offbalance_B") and o["status"] == "incompatible_basis" for o in observations)
+        incompatible_g4 = rc.g4_incompatible(observations, c["company_id"])
         base_rank = f" · 기준선 {results['baseline_id']} {b['rank_raw']}위({baseline_n}사)" if b.get("rank_raw") else ""
         rank_text = f"{c['rank']}위(완료 {results['population']['scored']}개사 기준){base_rank}" if c["rank"] else f"미완료{base_rank}"
         score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
@@ -464,17 +457,14 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 fr = c["factors"][f]
                 score = fr["score"]
                 color = f"c-{score_class(score) if f in MOAT_FACTORS else trap_class(score)}"
-                evidence = b.get("evidence", {}).get(f, [])[:6]
-                pts = [esc(e) for e in evidence]
-                if evidence and f == "F9" and incompatible_g4:
-                    pts.append("(원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)")
+                block = rc.evidence_block(fr, judgments_by_id, b.get("evidence", {}).get(f, []), results["baseline_id"], c["company_id"], reps)
+                pts = [f'<li{" class=\"d2\"" if depth > 1 else ""}>{inline_html(text)}</li>' for depth, text in (block or {}).get("lines", [])]
+                if block is not None and f == "F9" and incompatible_g4:
+                    pts.append(f"<li>{esc(rc.G4_INCOMPATIBLE_NOTE)}</li>")
                 pts += [f'<li class="warn">⚠️ {esc(w)}</li>' for w in fr["warnings"][:4]]
                 calc = factor_calc_text(f, fr)
-                src = ""
-                if evidence:
-                    header = "아래는 기준선 근거(승계 판단)" if (fr["status"] == "carried_score" or fr["basis"] in ("manual", "carried")) else "아래는 기준선 서술(참고 — 이번 실행은 입력에서 자동 산출)"
-                    src = f'<div class="fsrc">{header}</div>'
-                body = (src + "<ul class=\"fpts\">" + "".join(p if p.startswith("<li") else f"<li>{p}</li>" for p in pts) + "</ul>") if pts else ""
+                src = f'<div class="fsrc">{inline_html(block["header"])}</div>' if block is not None else ""
+                body = (src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else ""
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{esc(STATUS_LABEL.get(fr["status"], fr["status"]))} · {esc(fr["basis"])}</span></div>{f"<div class=\"fcalc\">{esc(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
@@ -506,52 +496,8 @@ def runway_for(c: dict[str, Any], obs: ObsLookup) -> float | None:
     return obs.number(c["company_id"], "runway_years")[0]
 
 
-def factor_calc_text(f: str, fr: dict[str, Any]) -> str:
-    calc = fr.get("calc") or {}
-    text = ""
-    cov = calc.get("coverage") if f == "F6" else None
-    if cov:
-        # 부분 확보를 숨기지 않는다. 몇 개를 확보했고 어느 분기가 있는지 그대로 보여준다.
-        text = f"분기 컨센서스 {cov['secured']}/{cov['required']} 확보"
-        if cov.get("quarters"):
-            text += f" ({', '.join(cov['quarters'])})"
-        if cov.get("sources"):
-            text += f" · 원천 {', '.join(cov['sources'])}"
-        if calc.get("ntm_per") is not None:
-            text += f" → NTM PER {fmt_num(calc['ntm_per'])}"
-            if calc.get("band"):
-                text += f" · 구간 {calc['band']}"
-            if (calc.get("boundary") or {}).get("flag"):
-                text += " ⚠️ 구간 경계 ±3% 이내"
-        if calc.get("requires_reapproval"):
-            text += " · 재승인 필요"
-        pending = fr.get("pending") or {}
-        if pending:
-            text += " · " + pending.get("message", "")
-        return text
-    if f == "F6" and calc.get("ntm_per") is not None:
-        text = f"NTM PER {fmt_num(calc['ntm_per'])} ({METHOD_LABELS.get(calc.get('method'), calc.get('method', ''))})"
-        if calc.get("band"):
-            text += f" → 구간 {calc['band']}"
-        if (calc.get("boundary") or {}).get("flag"):
-            text += " ⚠️ 구간 경계 ±3% 이내"
-    elif f == "F6" and "valuation_over_arr" in calc:
-        text = f"밸류÷ARR {fmt_num(calc['valuation_over_arr'])}x · ARR÷조달 {fmt_num(calc.get('arr_over_cumulative_raised'), 2)}"
-    elif f == "F3" and "pass_points" in calc:
-        text = str(calc.get("ladder_note") or f"통과점 {calc['pass_points']:g}")
-    elif f == "F5" and "A" in calc:
-        text = f"3 + A({calc['A']}) + H({calc['H']})"
-    elif f == "F7" and "funding_dependent_share" in calc:
-        text = f"조달 의존 고객 비중 {SHARE_LABELS.get(calc['funding_dependent_share'], calc['funding_dependent_share'])} · 내 돈 환류 {YESNO_LABELS.get(calc['own_money_returns'], calc['own_money_returns'])}"
-    elif f == "F9" and calc.get("path"):
-        text = " → ".join(f"{p['gate']} {GATE_LABELS.get(p.get('result'), p.get('result') or '') or p.get('adjust') or p.get('mode') or ''}" + (f" {p['runway_years']:.1f}년" if "runway_years" in p else "") + (f" 커버리지 {p['coverage']:.2f}" if p.get("coverage") is not None else "") for p in calc["path"])
-    pending = fr.get("pending") or {}
-    if pending:
-        text = (text + " · " if text else "") + pending.get("message", "")
-    return text
-
-
 def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
+    """2026-09-15 FIX-54 1단계 S3: 초안 `_raw_tables` 와 같은 캡션·경계·부외 칸·관측 상태·현금 정의를 render_common 에서 읽는다."""
     obs = ObsLookup(ctx.observations)
     val_rows, priv_rows, fin_rows, borr_rows = [], [], [], []
     for c in results["companies"]:
@@ -560,30 +506,36 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
             per, per_obs = obs.number(cid, "ntm_per")
             method = ((per_obs or {}).get("basis") or {}).get("method", "—")
             f6 = c["factors"]["F6"]
-            flag = "⚠️" if ((f6.get("calc") or {}).get("boundary") or {}).get("flag") else "—"
+            flag = "⚠️" if rc.f6_boundary_flag(f6.get("calc") or {}) else "—"
             nonop = obs.number(cid, "nonop_share")[0]
-            val_rows.append(f'<tr><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "price")[0], 2)}</td><td class="mono">{fmt_usd(obs.number(cid, "market_cap")[0])}</td><td class="mono w8">{fmt_num(per)}</td><td class="text narrow">{esc(METHOD_LABELS.get(method, method))}</td><td class="mono w8">{fmt_score(f6["score"])}</td><td>{flag}</td><td class="mono">{fmt_num(obs.number(cid, "ttm_per")[0])}</td><td class="mono{" c-g1" if (nonop or 0) >= 0.3 else ""}">{fmt_pct(nonop)}</td><td class="mono">{fmt_num(obs.number(cid, "ps_ratio")[0])}</td></tr>')
+            val_rows.append(f'<tr><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "price")[0], 2)}</td><td class="mono">{fmt_usd(obs.number(cid, "market_cap")[0])}{rc.vendor_mark(obs, cid, "market_cap")}</td><td class="mono w8">{fmt_num(per)}{rc.vendor_mark(obs, cid, "ntm_per")}</td><td class="text narrow">{esc(METHOD_LABELS.get(method, method))}</td><td class="mono w8">{fmt_score(f6["score"])}</td><td>{flag}</td><td class="mono">{fmt_num(obs.number(cid, "ttm_per")[0])}</td><td class="mono{" c-g1" if (nonop or 0) >= 0.3 else ""}">{fmt_pct(nonop)}</td><td class="mono">{fmt_num(obs.number(cid, "ps_ratio")[0])}</td></tr>')
         else:
-            calc = c["factors"]["F6"].get("calc") or {}
-            priv_rows.append(f'<tr><td class="name"><i>{esc(name)}</i></td><td class="mono">{fmt_usd(obs.number(cid, "post_money_valuation")[0])}</td><td class="mono">{fmt_usd(obs.number(cid, "arr")[0])}</td><td class="mono">{fmt_num(calc.get("valuation_over_arr"))}x</td><td class="mono">{fmt_usd(obs.number(cid, "cumulative_raised")[0])}</td><td class="mono">{fmt_num(calc.get("arr_over_cumulative_raised"), 2)}</td><td class="mono w8">{fmt_score(c["factors"]["F6"]["score"])}</td></tr>')
+            v_arr, arr_raised = rc.private_multiples(c["factors"]["F6"].get("calc") or {})
+            priv_rows.append(f'<tr><td class="name"><i>{esc(name)}</i></td><td class="mono">{fmt_usd(obs.number(cid, "post_money_valuation")[0])}</td><td class="mono">{fmt_usd(obs.number(cid, "arr")[0])}</td><td class="mono">{fmt_num(v_arr)}x</td><td class="mono">{fmt_usd(obs.number(cid, "cumulative_raised")[0])}</td><td class="mono">{fmt_num(arr_raised, 2)}</td><td class="mono w8">{fmt_score(c["factors"]["F6"]["score"])}</td></tr>')
         fcf, fcf_obs = obs.number(cid, "fcf_ttm")
         fcf_text = fmt_usd(fcf) if fcf is not None else esc((fcf_obs or {}).get("raw") or "—")
         fcf_cls = "c-g1" if (fcf or 0) < 0 else ("c-g5" if fcf else "c-g0")
         rating = (obs.get(cid, "credit_rating") or {}).get("value") or "—"
-        note = (obs.get(cid, "offbalance_note") or {}).get("value") or "—"
-        fin_rows.append(f'<tr{"" if c["listed"] else " class=\"priv\""}><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "cash")[0])}</td><td class="mono w8 {fcf_cls}">{fcf_text}</td><td class="mono">{runway_text(c, obs)}</td><td class="mono">{fmt_usd(obs.number(cid, "net_cash")[0])}</td><td class="mono">{fmt_num(obs.number(cid, "debt_ebitda")[0], 2)}</td><td>{esc(rating)}</td><td class="text">{esc(note)}</td><td class="mono w8">{fmt_score(c["factors"]["F9"]["score"])}</td></tr>')
+        fin_rows.append(f'<tr{"" if c["listed"] else " class=\"priv\""}><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(obs.number(cid, "cash")[0])}</td><td class="mono w8 {fcf_cls}">{fcf_text}</td><td class="mono">{runway_text(c, obs)}</td><td class="mono">{fmt_usd(obs.number(cid, "net_cash")[0])}{rc.vendor_mark(obs, cid, "net_cash")}</td><td class="mono">{fmt_num(obs.number(cid, "debt_ebitda")[0], 2)}</td><td>{esc(rating)}</td><td class="text">{inline_html(rc.offbalance_cell(obs, cid))}</td><td class="mono w8">{fmt_score(c["factors"]["F9"]["score"])}</td></tr>')
         nb, nb_obs = obs.number(cid, "net_borrowing_ttm")
         if nb_obs is not None:
             borr_rows.append(f'<tr><td class="name"><b>{esc(name)}</b></td><td class="mono">{fmt_usd(nb) if nb is not None else esc(nb_obs.get("raw") or "—")}</td><td class="mono">{fmt_usd(obs.number(cid, "capex_ttm")[0])}</td></tr>')
-    legacy_n = sum(1 for o in ctx.observations if o["status"] == "legacy_unverified")
+    cids = [c["company_id"] for c in results["companies"]]
+    listed = [c["company_id"] for c in results["companies"] if c["listed"]]
+    vendor = rc.vendor_policy_note(ctx)
     parts = [
-        f'<p class="sub mt-8">모든 값은 기준선 {esc(ctx.run["baseline_id"])} 승계 관측(<code>legacy_unverified</code> {legacy_n}건)이며 이번 실행에서 재검증되지 않았다. 상장사 주가는 USD 이고 TSMC 는 ADR(1주 = 보통주 5주, 재무 TWD), Alibaba 는 ADS(재무 CNY) 기준이다. <code>—</code> 는 관측 없음이고 원문 상태(미공시·적자·∞·판정 불가)는 그대로 표기한다.</p>',
+        f'<p class="sub mt-8">{inline_html(rc.raw_caption(ctx))}</p>',
         '<h3>가격 — ⑥ 원자료</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>주가</th><th>시총</th><th>NTM PER</th><th class="text narrow">산출 방법</th><th>⑥</th><th>경계</th><th>TTM PER</th><th>영업외 비중</th><th>P/S</th></tr></thead><tbody>' + "".join(val_rows) + "</tbody></table></div>",
-        '<div class="notice info">NTM PER 만 ⑥ 점수에 개입한다. TTM PER·P/S·영업외 비중은 참고·왜곡 탐지용이며 영업외 30% 이상이면 TTM PER 은 무효로 본다. 경계 열의 ⚠️ 는 구간 경계(20·29·42·62·90)까지 거리가 ±3% 이내라는 표시이며 점수를 바꾸지 않는다.</div>',
+        f'<p class="sub mt-8">열별 관측 상태: {esc(rc.status_summary(obs, listed, rc.PRICE_STATUS_COLUMNS))}</p>',
+        f'<div class="notice info">{inline_html(rc.price_notice(ctx))}</div>',
+        f'<div class="notice">{inline_html(vendor)}</div>' if vendor else "",
     ]
     if priv_rows:
-        parts.append('<h3>비상장 — ⑥ 배수</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>post-money</th><th>ARR</th><th>밸류÷ARR</th><th>누적 조달</th><th>ARR÷조달</th><th>⑥</th></tr></thead><tbody>' + "".join(priv_rows) + "</tbody></table></div><p class=\"sub\" style=\"margin-top:8px\">비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 정성 예외(C-12)이며 경계 표시를 적용하지 않는다.</p>")
-    parts.append('<h3>재무 — ⑨ 원자료</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>현금</th><th>TTM FCF</th><th>런웨이(년)</th><th>순현금/순부채</th><th>D/EBITDA</th><th>신용</th><th class="text">부외 약정(원문)</th><th>⑨</th></tr></thead><tbody>' + "".join(fin_rows) + "</tbody></table></div><p class=\"sub\" style=\"margin-top:8px\">신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(별표 J). 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 G4 커버리지에 쓴다.</p>")
+        parts.append('<h3>비상장 — ⑥ 배수</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>post-money</th><th>ARR</th><th>밸류÷ARR</th><th>누적 조달</th><th>ARR÷조달</th><th>⑥</th></tr></thead><tbody>' + "".join(priv_rows) + f'</tbody></table></div><p class="sub mt-8">{inline_html(rc.private_notice(ctx))}</p>')
+    parts.append(f'<h3>재무 — ⑨ 원자료</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>현금</th><th>TTM FCF</th><th>런웨이(년)</th><th>순현금/순부채</th><th>D/EBITDA</th><th>신용</th><th class="text">{esc(rc.OFFBALANCE_HEADER)}</th><th>⑨</th></tr></thead><tbody>' + "".join(fin_rows) + "</tbody></table></div>"
+                 f'<p class="sub mt-8">열별 관측 상태: {esc(rc.status_summary(obs, cids, rc.FIN_STATUS_COLUMNS))}</p>'
+                 f'<div class="notice info">{inline_html(rc.cash_definition_note(ctx))}</div>'
+                 f'<p class="sub mt-8">{esc(rc.CREDIT_NOTE)} 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 G4 커버리지에 쓴다.</p>')
     if borr_rows:
         parts.append('<h3>TTM 순차입</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>TTM 순차입</th><th>TTM capex</th></tr></thead><tbody>' + "".join(borr_rows) + "</tbody></table></div>")
     return "".join(parts)
@@ -600,11 +552,24 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
         f'<li>입력 해시: observations <code>{esc(ctx.hashes["observations"][:12])}…</code> · judgments <code>{esc(ctx.hashes["judgments"][:12])}…</code> · results <code>{esc(results["results_hash"][:12])}…</code></li>'
         f'<li>실행 단위 결정: {esc(", ".join(results["decisions_applied"]) or "없음")}</li></ul>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th><th>자동화</th><th>범위</th><th class="text narrow">관련 결정</th></tr></thead><tbody>{rows}</tbody></table></div>'
-        '<ul class="tight"><li>⑥ 상장: NTM PER 20·29·42·62·90 반개방 구간, 경계 ±3% 는 표시만. 비상장: 배수 자동 계산·점수는 정성 예외.</li>'
-        '<li>⑨: G1 본업(TTM 영업손익) → G2 현금(TTM FCF) → G3 런웨이(현금+확정 여신 ÷ 연 소진) → G4 약정 커버리지(계약 수입 ÷ B종). 하한 -5.</li>'
-        '<li>③ 사다리, ⑤ 3 + A + H, ⑦ 2×2 매트릭스는 판정 입력에서 자동 환산. ①④⑧은 정성 점수. 모르는 값은 0으로 치환하지 않는다.</li></ul>'
+        # 2026-09-15 FIX-54 1단계 S3: v1.5 문구(NTM PER 구간 · 하한 -5)가 박혀 있었다. 초안과 같은 목록을 쓴다.
+        '<ul class="tight">' + "".join(f"<li>{inline_html(x)}</li>" for x in rc.method_lines(ctx)) + '</ul>'
+        '<h3>알려진 한계</h3>' + render_limitations(ctx)
         + (f'<h3>미결 규칙 결정</h3><div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">요약</th><th class="text">권고</th><th>이번 실행</th></tr></thead><tbody>{drows}</tbody></table></div>' if drows else "")
     )
+
+
+def render_limitations(ctx: Any) -> str:
+    """2026-09-15 FIX-54 1단계 S4: 초안 `## 알려진 한계` 와 같은 목록. 들여쓴 줄은 바로 앞 항목의 하위 목록이다."""
+    groups: list[tuple[str, list[str]]] = []
+    for x in rc.limitations(ctx):
+        if x.startswith("  - ") and groups:
+            groups[-1][1].append(x[4:])
+        else:
+            groups.append((x, []))
+    lis = "".join(f"<li>{inline_html(t)}" + (f'<ul class="tight">{"".join(f"<li>{inline_html(q)}</li>" for q in subs)}</ul>' if subs else "") + "</li>"
+                  for t, subs in groups)
+    return f'<ul class="tight">{lis}</ul>'
 
 
 def load_availability(slug: str) -> dict[str, Any] | None:
@@ -738,14 +703,16 @@ def link_decision_codes(document: str, known: set[str], placeholder: str) -> str
     return "".join(parts)
 
 
-def render_triggers(triggers: list[dict[str, Any]]) -> str:
+def render_triggers(ctx: Any, triggers: list[dict[str, Any]]) -> str:
+    """2026-09-15 FIX-54 1단계 S3: 초안과 같은 `왜 중요한가` 칸(대체 수치 ⚠️ · source_text_corrections)과 각주."""
     if not triggers:
         return '<p class="sub">등록된 트리거 없음</p>'
-    rows = "".join(f'<tr><td class="mono">{esc(t["trigger_id"])}</td><td class="text"><b>{esc(t["title"])}</b></td><td class="text">{esc(t["why"])}</td><td class="text">{esc(t["impact_raw"])}</td></tr>' for t in triggers)
+    reps = rc.replacements(ctx)
+    rows = "".join(f'<tr><td class="mono">{esc(t["trigger_id"])}</td><td class="text"><b>{esc(t["title"])}</b></td><td class="text">{inline_html(rc.trigger_why(ctx, t, reps))}</td><td class="text">{esc(t["impact_raw"])}</td></tr>' for t in triggers)
     return ('<div class="notice"><span class="pill legacy">기준선 원문 · 과거 기록</span> 이 표는 기준선에서 그대로 옮긴 문장이며 이번 실행에서 재검증하지 않았다. '
             '따라서 표 안의 비교 문장과 경계 언급은 위 04 지표 원자료의 이번 실행 산출과 다를 수 있다.</div>'
-            f'<div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">항목</th><th class="text">왜 중요한가</th><th class="text">영향(원문)</th></tr></thead><tbody>{rows}</tbody></table></div>'
-            '<p class="sub mt-8">영향 열의 예상 점수는 저장값이 아니라 원문 문장이다(C-14). 사건 확인 후 현재 규칙으로 재계산한다.</p>')
+            f'<div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">항목</th><th class="text">왜 중요한가(v1.5 원문)</th><th class="text">영향(원문)</th></tr></thead><tbody>{rows}</tbody></table></div>'
+            + "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in rc.trigger_notes(ctx)))
 
 
 def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
@@ -814,8 +781,8 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_ranking(results)}
 {render_incomplete(results, ctx.rules)}
 <h2><span class="num">03</span>기업별 상세</h2>
-<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. 카드마다 붙은 한 줄 요약과 근거 불릿은 기준선 {esc(run["baseline_id"])} 원문을 그대로 옮긴 과거 기록이며 이번 실행에서 재검증하지 않았다. 점수만 이번 실행에서 규칙으로 다시 계산한 값이다.</p>
-<div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations)}</div>
+<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"]))}</p>
+<div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx))}</div>
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}
 {availability}
@@ -823,7 +790,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_method(ctx, results)}
 {GLOSSARY_SLOT}
 <h2><span class="num">0{n + 2}</span>다음 재채점 트리거</h2>
-{render_triggers(triggers)}
+{render_triggers(ctx, triggers)}
 <h2><span class="num">0{n + 3}</span>References</h2>
 {render_references(ctx, review_fm)}
 <footer id="disclaimer" aria-label="투자 유의사항">
