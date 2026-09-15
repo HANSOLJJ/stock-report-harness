@@ -7,7 +7,7 @@
   "baseline_id": "v1.5",
   "input_hashes": {
     "run": "052844a96e86f1c4ff0188445d77e9236501dc16a35b70eab585d811f52b5f4a",
-    "observations": "f2e2337f0459920adc67dd99a457f8a25e189e2509338fefa3c84ed433d64f04",
+    "observations": "0f3df99fd3891c7a1625d9595ab3d210878c35692e95f176e3f7ad3d30a7007f",
     "judgments": "e1b2dca8607e45cb7016eb523f53b6c4b877496c14292a501fdd952f5e5db25e",
     "sources": "5821c65dff255c4b2dff257acfa85a037053cefaa6c1af3e51c994c70706ea6d",
     "rules": "bd0371a2ff51b6b5326d86ca8c6fb30ae46381c821c7319140146e4c3031adc9"
@@ -564,7 +564,8 @@
             "amazon.fcf_ttm.cashfcf35",
             "amazon.offbalance_B.obsreg25",
             "amazon.operating_income_ttm.f6reg28",
-            "amazon.revenue_ttm.f6reg28"
+            "amazon.revenue_ttm.f6reg28",
+            "amazon.undrawn_credit.fix54"
           ],
           "calc": {
             "path": [
@@ -581,15 +582,15 @@
               },
               {
                 "gate": "G3",
-                "runway_years": 6.728,
-                "buffer": 78213000000.0,
+                "runway_years": 9.953806451612904,
+                "buffer": 115713000000.0,
                 "annual_burn": 11625000000.0,
                 "step": 0,
                 "score": -2,
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 3.0,
-                  "distance_ratio": 1.2426666666666666,
+                  "distance_ratio": 2.317935483870968,
                   "tolerance": 0.03
                 }
               },
@@ -1500,7 +1501,7 @@
         "F7",
         "F8"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "alibaba",
@@ -2115,7 +2116,7 @@
         "F4",
         "F7"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "apple",
@@ -3204,7 +3205,7 @@
         },
         "F9": {
           "factor": "F9",
-          "score": -4,
+          "score": -3,
           "status": "ok",
           "basis": "computed",
           "judgment_id": "spacex-xai.F9.obsreg25",
@@ -3213,7 +3214,8 @@
             "spacex-xai.contracted_revenue.obsreg25",
             "spacex-xai.fcf_ttm.cashfcf35",
             "spacex-xai.offbalance_B.obsreg25",
-            "spacex-xai.operating_margin_ttm.f6reg28"
+            "spacex-xai.operating_margin_ttm.f6reg28",
+            "spacex-xai.undrawn_credit.fix54"
           ],
           "calc": {
             "path": [
@@ -3231,12 +3233,12 @@
               {
                 "gate": "G3",
                 "mode": "diagnostic",
-                "runway_years": 2.8911215531099295,
-                "step": -1,
+                "runway_years": 3.0257512056386795,
+                "step": 0,
                 "boundary": {
-                  "flag": false,
+                  "flag": true,
                   "nearest_boundary": 3.0,
-                  "distance_ratio": -0.03629281563002351,
+                  "distance_ratio": 0.008583735212893165,
                   "tolerance": 0.03
                 }
               },
@@ -3251,7 +3253,7 @@
               {
                 "gate": "G1-after",
                 "applied": true,
-                "score": -4
+                "score": -3
               }
             ],
             "inputs": {
@@ -3266,14 +3268,15 @@
             "gate1_fail": true
           },
           "warnings": [
-            "C-06: 손실률 경계는 제안값(proposed)을 실행 단위 결정으로 적용"
+            "C-06: 손실률 경계는 제안값(proposed)을 실행 단위 결정으로 적용",
+            "⚠️ G3 런웨이 3.03년이 임계 3년의 ±3% 안 — 점수는 그대로"
           ],
           "pending": null
         }
       },
       "moat": 18,
-      "trap": -8,
-      "total": 10,
+      "trap": -7,
+      "total": 11,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3821,7 +3824,8 @@
             "oracle.fcf_ttm.cashfcf35",
             "oracle.offbalance_B.v15",
             "oracle.operating_income_ttm.f6reg28",
-            "oracle.revenue_ttm.f6reg28"
+            "oracle.revenue_ttm.f6reg28",
+            "oracle.undrawn_credit.fix54"
           ],
           "calc": {
             "path": [
@@ -4207,6 +4211,14 @@
     },
     {
       "rank": 5,
+      "company_id": "spacex-xai",
+      "display_name": "SpaceX + xAI",
+      "moat": 18,
+      "trap": -7,
+      "total": 11
+    },
+    {
+      "rank": 6,
       "company_id": "anthropic",
       "display_name": "Anthropic",
       "moat": 20,
@@ -4214,15 +4226,7 @@
       "total": 10
     },
     {
-      "rank": 5,
-      "company_id": "spacex-xai",
-      "display_name": "SpaceX + xAI",
-      "moat": 18,
-      "trap": -8,
-      "total": 10
-    },
-    {
-      "rank": 5,
+      "rank": 6,
       "company_id": "tsmc",
       "display_name": "TSMC",
       "moat": 17,
@@ -4293,6 +4297,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 162,
-  "results_hash": "598055f51c4b02fe1e8bccb0e34f16d6a43ed12f5ed4aa429e874b5dca9db3f8"
+  "warnings_count": 163,
+  "results_hash": "adb5b42a122213d9e30339ed663bb79a8e587e5ebff4ebc6b28e95a40d761e69"
 }

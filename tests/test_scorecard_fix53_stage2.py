@@ -21,9 +21,10 @@ def load(name: str) -> dict:
 
 class ExpectedTotalsTest(unittest.TestCase):
     def test_totals_match_instruction(self):
+        # FIX-54 1단계 S1 로 spacex-xai 가 10 → 11(확정 미인출 여신 등록). 이 단계의 다른 칸은 그대로다.
         res = {c["company_id"]: c["total"] for c in load("results.json")["companies"]}
         self.assertEqual(res, {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
-                               "spacex-xai": 10, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
+                               "spacex-xai": 11, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
                                "openai": 2, "oracle": 2})
 
 

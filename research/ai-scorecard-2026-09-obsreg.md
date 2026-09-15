@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: f2e2337f0459920adc67dd99a457f8a25e189e2509338fefa3c84ed433d64f04
+observations_hash: 0f3df99fd3891c7a1625d9595ab3d210878c35692e95f176e3f7ad3d30a7007f
 judgments_hash: e1b2dca8607e45cb7016eb523f53b6c4b877496c14292a501fdd952f5e5db25e
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 349건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 360건, 판단 114건.
 
 ## 원자료
 
@@ -43,6 +43,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $371.4B | verified | derived | SRC-SEC-FACTS-F6 | 2024-07-01~2025-06-30 371,399,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 16.9 | legacy_unverified | actual | SRC-v15-html | 16.9 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### Amazon / AWS
 
@@ -76,6 +77,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $670.0B | verified | derived | SRC-SEC-FACTS-F6 | 2024-07-01~2025-06-30 670,038,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | 10.6 | legacy_unverified | derived | SRC-v15-html | 10.6년 | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | 20.5 | legacy_unverified | actual | SRC-v15-html | 20.5 |  |
+| undrawn_credit | $37.5B | verified | actual | SRC-SEC-AMZN-10Q-2026Q2 | 미인출 약정 US$37.5B (회전 15.0 + 364일 5.0 + 지연인출 17.5, 2026-06-30) | FIX-54 1단계 S2. 점수 불변(런웨이 3년 이상 구간). |
 
 ### Meta
 
@@ -105,6 +107,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $178.8B | verified | derived | SRC-SEC-FACTS-F6 | 2024-07-01~2025-06-30 178,805,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 21.8 | legacy_unverified | actual | SRC-v15-html | 21.8 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### Microsoft
 
@@ -134,6 +137,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $281.7B | verified | actual | SRC-SEC-FACTS-F6 | 2024-07-01~2025-06-30 281,724,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 27.9 | legacy_unverified | actual | SRC-v15-html | 27.9 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### TSMC
 
@@ -164,6 +168,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $92.3B | verified | actual | SRC-SEC-TSM-20F-FY2025 | FY2024 매출 NT$2,894,307.7백만 (같은 표 둘째 열) | F6-REG-28. **당해와 같은 환율 31.37 로 환산**했다. 공시 USD 를 그대로 쓰지 않았다 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 30.9 | legacy_unverified | actual | SRC-v15-html | 30.9 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### Alibaba
 
@@ -255,6 +260,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $408.6B | verified | derived | SRC-SEC-FACTS-F6 | 2024-06-29~2025-06-28 408,625,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 37.3 | legacy_unverified | actual | SRC-v15-html | 37.3 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### NVIDIA
 
@@ -284,6 +290,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $165.2B | verified | derived | SRC-SEC-FACTS-F6 | 2024-07-29~2025-07-27 165,218,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 27.5 | legacy_unverified | actual | SRC-v15-html | 27.5 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### Palantir
 
@@ -313,6 +320,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $3.4B | verified | derived | SRC-SEC-FACTS-F6 | 2024-07-01~2025-06-30 3,440,587,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 144.9 | legacy_unverified | actual | SRC-v15-html | 144.9 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### SpaceX + xAI
 
@@ -348,6 +356,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $4.1B | verified | actual | SRC-SEC-FACTS-F6 | 2025 Q2 매출 $4,071M | F6-REG-28. 같은 분기 전년 동기 |
 | runway_years | 3.1 | legacy_unverified | derived | SRC-v15-html | 3.1년 | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | — | not_disclosed | actual | SRC-v15-html | 적자 | 적자 |
+| undrawn_credit | $4.4B | verified | actual | SRC-SEC-SPCX-10Q-2026Q2 | 미인출 회전여신 확인 하한 US$4,355M (한도 5,000 − 신용장 645, 2026-06-30) | FIX-54 1단계 S1. 보수적 하한. 신용장이 시설 밖이면 5,000M — 결론 같음(basis.sensitivity). |
 
 ### Tesla
 
@@ -377,6 +386,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $92.7B | verified | derived | SRC-SEC-FACTS-F6 | 2024-07-01~2025-06-30 92,720,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 370.5 | legacy_unverified | actual | SRC-v15-html | 370.5 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### Oracle
 
@@ -408,6 +418,7 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $57.4B | verified | actual | SRC-SEC-FACTS-F6 | 2024-06-01~2025-05-31 57,399,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | 1.3 | legacy_unverified | derived | SRC-v15-html | 1.3년 ⚠️ | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | 26.4 | legacy_unverified | actual | SRC-v15-html | 26.4 |  |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 
 ### OpenAI
 
@@ -683,6 +694,15 @@ created_at: 2026-09-11
 | apple | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
 | palantir | lease_liabilities | not_disclosed | NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — not_disclosed_confirmed |
 | alibaba | undrawn_credit | incompatible_basis | FIX-53 2단계. 근사치라 런웨이 분자에서 뺀다. 결론 민감도는 basis.sensitivity. |
+| apple | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| microsoft | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| nvidia | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| alphabet | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| meta | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| oracle | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| palantir | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| tesla | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| tsmc | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 | alphabet | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
 | amazon | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 | meta | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
