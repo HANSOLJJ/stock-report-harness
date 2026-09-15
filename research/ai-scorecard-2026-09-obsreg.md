@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
 observations_hash: 0f3df99fd3891c7a1625d9595ab3d210878c35692e95f176e3f7ad3d30a7007f
-judgments_hash: e1b2dca8607e45cb7016eb523f53b6c4b877496c14292a501fdd952f5e5db25e
+judgments_hash: 8e25b85283f89fa8d827b91233f0843c1a222c46921d56806dbe3b999ed035bb
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -627,7 +627,7 @@ created_at: 2026-09-11
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-3 | new | 설계진행(C-13 A-GRADE-45 · NTM A-GRADE-45B 독립 일치) 2026-09-14 | [F5-IMPL-48] 체크리스트 19 적용 재판정(사용자 결정 ①). A +2→+1, F5 2→1. 두 모델 독립 일치 — C-13(Gemin |
 | ⑥ 가격 | score | -4 | private=True | carried | legacy:v1.5 2026-09-02 | C-12: 비상장 정성 예외(TTM 보정·자본효율 근거는 원문) |
-| ⑦ 순환금융 | score | -1 | — | carried | legacy:v1.5 2026-09-02 | C-09: 매트릭스 입력(환류 여부) 원문 없음 — 승계 점수 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이 |
+| ⑦ 순환금융 | score | -1 | — | carried | legacy:v1.5 2026-09-02 | C-09: 매트릭스 입력(환류 여부)이 판단에 복원되지 않았다 — 승계 점수. **[FIX-54 1단계 정정] 원문 부재가 아니다** — 채점표 |
 | ⑧ 비대칭 의존 | score | -4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=yes, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=no, operating_result_reviewed=loss, fcf_not_disclosed_reason=openai.fcf_not_disclosed | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
 

@@ -1370,7 +1370,14 @@
         "F7"
       ],
       "summary": "Anthropic·OpenAI F7 -1 의 매트릭스 입력(환류 여부)이 원문에 없음",
-      "recommendation": "두 축의 실제 입력 복원·검토. 기존 점수에 맞추려고 환류를 추정하지 않음. 승계 score 는 경고와 함께 허용"
+      "recommendation": "두 축의 실제 입력 복원·검토. 기존 점수에 맞추려고 환류를 추정하지 않음. 승계 score 는 경고와 함께 허용",
+      "pending_recheck": {
+        "what": "anthropic.F7·openai.F7 의 두 축 입력 복원 또는 재판정 — TEN-RC3-01.",
+        "why": "v1.5 매트릭스(채점규칙 321~322행)와 판정표 338행이 어긋나 승계 -1 을 매트릭스로 재현할 수 없다. openai 는 채점표 662행이 원문 후보다.",
+        "trigger": "2026-11 재채점",
+        "when": "2026-11",
+        "note": "anthropic 점수라 비 Claude 세션이 판정한다. 기존 점수에 맞추려고 환류를 추정하지 않는다(이 결정의 recommendation)."
+      }
     },
     {
       "id": "C-10",
@@ -1765,7 +1772,19 @@
       "direction": "하향 가능(가속도 pass → partial·fail 검토). 판정하지 않는다.",
       "rechecker": "2026-11 재채점 때 판단자.",
       "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 F3 가속도 잣대를 바꾸지 않았다.",
-      "score_impact_now": "없다."
+      "score_impact_now": "없다.",
+      "affected": [
+        {
+          "company_id": "oracle",
+          "judgment_id": "oracle.F3",
+          "why": "FC-07 — acceleration=pass 근거가 `OCI 분기 $5.8B(+93%), FY26 연 $18.1B(+77%) · RPO $553B→$638B` 다. 분기 성장률과 연간 성장률은 기간 길이가 달라 비교 쌍이 아니고 RPO 는 잔고 차이다. 같은 길이·같은 지표의 직전 성장률이 없어 가속을 재현할 수 없다.",
+          "source_lines": [
+            "채점표 543행",
+            "채점규칙 110행"
+          ]
+        }
+      ],
+      "note": "[FIX-54 1단계] obsreg 3차 리뷰 B(Codex 독립 세션, 기준 커밋 04439f7 · review 2c56e9f) FC-07 로 oracle.F3 을 affected 에 넣었다. obsreg 3차 리뷰 C(Codex 독립 세션, 기준 커밋 04439f7 · review 169ca10) RC3-10 — microsoft 는 보존 원문 안에 비교 후보가 있다: 채점규칙 163행 `Azure +39→40→43% · Copilot 유료 시트 순증 +500만→+1,000만 · 단 AI 런레이트 YoY는 175%→123%로 둔화 | ✅ 가속`. 활성 근거(시트 분기 +50% 하나)에는 이 비교가 빠져 있다. 기간·정의 일치와 순증을 성장률 변화로 읽는 검토 없이 pass·fail 을 바꾸지 않았고, 재검토 자료를 외부에서만 찾아야 하는 상황은 아니다."
     },
     {
       "id": "TEN-RA-02",
@@ -1787,6 +1806,98 @@
         "research/nvidia-recent-4m-2026-05.md 12·15·36·39행"
       ],
       "note": "관련 긴장 #11 — 세대 격차가 몇 축에서 서야 하는지와 독립 측정 요건이 원문 미규정이다(decisions C-03 generation_gap_constraints)."
+    },
+    {
+      "id": "TEN-RC3-01",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC3-01(high)·RC3-02(medium) · obsreg 3차 리뷰 C(Codex 독립 세션, 기준 커밋 04439f7 · review 169ca10) · 체크리스트 Q02·Q03 fail",
+      "judgment_ids": [
+        "anthropic.F7",
+        "openai.F7"
+      ],
+      "decision_id": "C-09",
+      "subject": "anthropic·openai F7 — 매트릭스 입력 없이 -1 을 승계했고 v1.5 매트릭스와 판정표가 서로 어긋난다",
+      "tension": "v1.5 매트릭스(채점규칙 321~322행)는 `조달 의존 고객 비중 작음 × 내 돈이 안 돌아옴` 을 0, `작음 × 돌아옴` 을 -1 로 준다. v1.5 판정표 338행은 OpenAI·Anthropic 에 `매출은 일반 사용자·기업이 낸 진짜 돈 … AI 스타트업 고객 일부만 조달 의존` 이라는 근거로 -1 을 주는데 이 문장은 환류(세로축)를 적지 않아 매트릭스로는 0 이다. **v1.5 내부 모순을 그대로 승계했다.** 두 판단 모두 inputs 가 비어 있어 엔진은 score -1 을 쓴다(C-09). openai 는 채점표 662행 `자기 Startup Fund가 API 고객에 투자하는 루프` 가 `small|yes` 입력의 원문 후보이나 openai.F7 근거란에는 옮겨지지 않았다. anthropic 근거란에는 그런 루프 문장이 없다.",
+      "direction": "anthropic 상향 가능(-1 → 0). openai 는 662행을 입력으로 복원하면 -1 유지, 복원하지 못하면 anthropic 과 같은 문제. 이 등록은 입력을 복원하거나 판정하지 않는다 — 기존 -1 에 맞추려고 환류를 추정하지 않는다(C-09 권고).",
+      "rechecker": "**비 Claude 세션이 재판정한다.** anthropic 점수이고 조율자·worker 가 Claude 라 이해상충이다(TEN-RC-02 와 같은 사유). openai 는 Anthropic 경쟁사라 같은 세션에서 함께 본다.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 321~322행",
+        "채점규칙 338행",
+        "채점표 662행"
+      ],
+      "note": "지시서 행 번호(322~323·336)와 보존 원문이 달라 원문 행을 적었다 — 321행 `내 돈이 안 돌아옴 | 0 | -2`, 322행 `내 돈이 돌아옴 | -1 | -3`, 336행은 0 점 행(Meta·Alibaba·…·SpaceX), 338행이 `-1 | OpenAI · Anthropic` 행이다. spacex-xai.F7 근거란이 662행을 승계하고 있다."
+    },
+    {
+      "id": "TEN-RC3-03",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC3-03(high) · obsreg 3차 리뷰 C(Codex 독립 세션, 기준 커밋 04439f7 · review 169ca10) · 체크리스트 Q02·Q03 fail",
+      "judgment_ids": [
+        "palantir.F1",
+        "oracle.F1"
+      ],
+      "subject": "palantir·oracle F1 — 업무 채널 전환비용을 한쪽은 가짜 해자로 빼고 한쪽은 락인으로 인정한다",
+      "tension": "채점규칙 407행 업무 채널 지표가 `유료 시트 · 기업 고객 수 · 전환비용` 이다. palantir.F1(2) 은 423행 `업무지만 스노우볼 없음(가짜 해자) → 2` 와 채점표 584행 `정부·기업 계약의 전환비용은 실재하나 네트워크 효과가 아니다 … 가짜 해자(전환비용)` 로 전환비용을 배제한다. oracle.F1(3) 은 채점표 533행 `엔터프라이즈 DB 락인은 수십 년째 강력 — 기간계 시스템 전환비용은 표에서 최상위급` 으로 같은 지표를 근거로 쓴다. 전환비용을 업무 채널 지표로 인정하는 조건과 palantir 에만 붙은 스노우볼 필요조건을 함께 세우는 설명이 없다. oracle 은 채점규칙 14개사 채널 매핑표(413~426행)에 없다.",
+      "direction": "방향 미정 — 공통 정의를 세운 뒤 palantir 상향 또는 oracle 하향이 가능하다. 2 대 3 자체가 틀렸다는 판정이 아니다.",
+      "rechecker": "2026-11 재채점 때 판단자(비 Claude 세션 권장). TEN-RC-02(anthropic F1 업무 채널)와 같은 F1 채널 기준 계열이라 함께 본다.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 407행",
+        "채점규칙 423행",
+        "채점표 533행",
+        "채점표 584행"
+      ],
+      "related_tensions": [
+        "TEN-RC-02"
+      ]
+    },
+    {
+      "id": "TEN-RC3-04",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC3-04(high) · obsreg 3차 리뷰 C(Codex 독립 세션, 기준 커밋 04439f7 · review 169ca10) · 체크리스트 Q01·Q21 fail",
+      "judgment_ids": [
+        "tesla.F5",
+        "tesla.F8"
+      ],
+      "subject": "tesla F5·F8 — NHTSA 조사라는 같은 속성이 F5 H -1 과 F8 -2 에 반복된다",
+      "tension": "tesla.F5(H -1) 근거 `NHTSA FSD 조사 EA26002 격상(320만 대)`(채점표 703행)와 tesla.F8(-2) 근거 `NHTSA 조사`(채점표 714행)가 같은 규제 위험이다. 채점규칙 262행 금지선은 `같은 관계` 가 아니라 `같은 속성` 이다. F5 는 적대세력, F8 은 대체 불가·사업 중단 위험으로 갈라 설명돼 있지 않다. 두 factor 모두 다른 근거(F5 머스크 소송, F8 머스크 개인 의존·중국)가 함께 있어 NHTSA 가 몇 점을 만들었는지 **중복 폭을 확인하지 못했다.**",
+      "direction": "속성 분리 설명 또는 한쪽 감점 축소(상향 가능). 판정하지 않는다.",
+      "rechecker": "2026-11 재채점 때 판단자. TEN-RC-05(nvidia F5·F8 자체 칩 이탈 반복)와 같은 형태라 같은 잣대로 함께 본다.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점표 703행",
+        "채점표 714행",
+        "채점규칙 262행"
+      ],
+      "related_tensions": [
+        "TEN-RC-05"
+      ]
+    },
+    {
+      "id": "TEN-RC3-05",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC3-05(medium) · obsreg 3차 리뷰 C(Codex 독립 세션, 기준 커밋 04439f7 · review 169ca10) · 체크리스트 Q02 fail",
+      "judgment_ids": [
+        "alibaba.F3"
+      ],
+      "subject": "alibaba F3 — 경쟁사 두 곳이 이미 오픈웨이트를 내는데 모방 불가능성이 partial 이다",
+      "tension": "채점규칙 75행 모방 불가능성은 `경쟁사 2곳 이상이 이미 하고 있으면 불인정` 이다. alibaba.F3 근거(채점표 380행)가 `메타(Glimmer)·구글(Gemma)도 오픈웨이트를 내므로 유일하지 않고` 라고 스스로 두 곳을 적는데 입력은 partial 이다. 원문 판정표 102행도 `⚠️ 회수장치 없음 … 2.5` 로 partial 이라 원천 내부 모순을 승계했다.",
+      "direction": "하향 입력 가능(partial → fail). **점수는 바뀌지 않는다** — 아래 score_impact_now.",
+      "rechecker": "2026-11 재채점 때 판단자.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다. imitation 을 fail 로 읽어도 revenue_model·acceleration 두 pass 로 통과점 2 → F3 3 이다(지금은 2.5 → 모방불가 완전 pass 아님 상한 3). calc_qual.compute_f3 에 fail 입력을 넣어 확인했다(apply_tensions.py).",
+      "source_lines": [
+        "채점규칙 75행",
+        "채점규칙 102행",
+        "채점표 380행"
+      ]
     }
   ],
   "source_text_corrections": [
@@ -1800,7 +1911,7 @@
       ],
       "why": "TRIG-015 원천은 scorecard/baseline/v1.5/triggers.json(v1.5 불변)이라 고치지 않는다. anthropic F8·F9 근거란은 판단 파일에서 고쳤고 트리거만 원천이 불변이라 렌더러가 덧붙인다. 같은 초안 안에서 두 표기가 갈리지 않게 한다.",
       "decided_at": "2026-09-15",
-      "note": "FIX-53 3단계 보완(msg_da0ec25d3846). 소비자: render_md._apply_text_corrections(트리거 표)."
+      "note": "FIX-53 3단계 보완(msg_da0ec25d3846). 소비자: render_common.apply_text_corrections(트리거 표 — 초안·HTML 공통, FIX-54 1단계에서 render_md 에서 옮김)."
     }
   ]
 }

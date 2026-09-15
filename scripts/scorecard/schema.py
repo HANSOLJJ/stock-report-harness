@@ -319,7 +319,9 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
         _expect_keys(t, ["id", "status", "recheck_at", "review_finding", "judgment_ids", "subject", "tension", "direction"],
                      where, optional=["decision_id", "rechecker", "why_carried_exception", "score_impact_now", "source_lines", "note",
                                       # 긴장에 기대는 회사별 모호함(FIX-53 2단계 A+2 재판정에서 드러난 것)
-                                      "affected"])
+                                      "affected",
+                                      # 같은 잣대 계열의 다른 긴장 — 재검토 때 함께 본다(FIX-54 1단계 S6, RC3-03·04)
+                                      "related_tensions"])
         for aidx, a in enumerate(t.get("affected") or []):
             _expect_keys(a, ["company_id", "why"], f"{where}.affected[{aidx}]", optional=["source_lines", "judgment_id"])
             _require(str(a["why"]).strip(), f"{where}.affected[{aidx}].why: 비워 둘 수 없음")
@@ -335,6 +337,10 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
             _require(isinstance(t[key], str) and t[key].strip(), f"{where}.{key}: 비워 둘 수 없음")
         if "decision_id" in t:
             _require(t["decision_id"] in decision_ids, f"{where}.decision_id: 규칙에 없는 결정 {t['decision_id']!r}")
+    all_ids = {t["id"] for t in items}
+    for idx, t in enumerate(items):
+        for rid in t.get("related_tensions") or []:
+            _require(rid in all_ids and rid != t["id"], f"rules.open_tensions[{idx}].related_tensions: 없는 긴장이거나 자기 자신 {rid!r}")
 
 
 # 산출물 사용 범위. 원천 약관의 '개인 사용 허용' 조항이 우리에게 적용되는지를 가르는 값이라
