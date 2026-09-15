@@ -270,7 +270,7 @@ def compute_f6(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     if rules.f6_mode == "parameters":
         if company["listed"]:
             return calc_f6_params.compute_listed(company, obs, judgment, rules, run)
-        return calc_f6_params.compute_private(company, obs, judgment, rules)
+        return calc_f6_params.compute_private(company, obs, judgment, rules, run)
     if company["listed"]:
         return _listed(company, obs, judgment, rules, run)
     return _private(company, obs, judgment, rules)

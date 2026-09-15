@@ -61,6 +61,27 @@
       "rationale": "비상장이고 TTM 영업손익이 구조적 미공시면 G1 을 통과시키지 않고 판정 보류로 둔 뒤 G2 비상장 경로로 보낸다. 단일 분기 영업흑자를 통과 근거로 쓰지 않고, 동시에 F9 를 영구 미완료로도 두지 않는다. 설계진행 2026-09-11 사용자 확정(d57e70e).",
       "decided_by": "사용자",
       "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-03",
+      "choice": "paths_with_generation_gap_5",
+      "rationale": "F2 경로 수 0·1·2 → 2·3·4, 성능 도약이 세대 격차 수준이면 5(혼합 모델). 규칙 v1.7 decisions C-03 resolved 를 실행 단위로 옮긴다. 14개사 F2 는 승계 score 판단이라 이 선택으로 점수가 바뀌지 않는다 — 세대 격차는 판단 입력이라 경로 판정이 들어올 때 compute_f2 가 이 선택으로 산출한다. FIX-52.",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-14"
+    },
+    {
+      "id": "C-11",
+      "choice": "block_carryover",
+      "rationale": "영업외 비중은 F6 P4 전용이고 ⑦ 로 이월하지 않는다. 규칙 v1.7 decisions C-11 resolved 를 실행 단위로 옮긴다. 이 선택을 읽는 코드 분기는 없다 — F7 엔진은 두 축만 읽어 원래 이월 경로가 없다. 결정자는 규칙과 같게 사용자 확인 전이다. FIX-52.",
+      "decided_by": "설계진행 제안 · 사용자 확인 전",
+      "decided_at": "2026-09-14"
+    },
+    {
+      "id": "C-13",
+      "choice": "reject_proxy",
+      "rationale": "근사 NTM PER 을 받지 않는다. **bands 모드에서만 효력이 있다** — 이 실행은 v1.7 parameters 모드라 calc_f6 가 per-band 경로에 들어가지 않고 NTM 을 점수에 쓰지 않으므로 결과에 영향이 없다. 규칙 v1.7 decisions C-13 resolved 를 실행 단위로 옮긴다. FIX-52.",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-14"
     }
   ],
   "created_at": "2026-09-11",

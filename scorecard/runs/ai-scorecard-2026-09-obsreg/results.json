@@ -6,7 +6,7 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "6ded4fe462670536b27369eb3596926d3e79e3382c58f1031e6784e97f734968",
+    "run": "cfc8b9c06afbcda3375539e1043b13da1c3b7a0c9d22d96b513a95d5ff4d2a17",
     "observations": "0fcef847b46766e83cee425603324d664349b41287967740a84e88cf0ff42095",
     "judgments": "d86e6919b310a2e66785c22e63c7d0bb176f866eebe4b4941216138aab87b27c",
     "sources": "b934c92fd5d18cabeaababca45edd856e8fa5830ecd54ca52b2bbc21c6b30c6a",
@@ -17,7 +17,10 @@
     "C-06:proposed_v15_boundaries",
     "C-16:downgrade",
     "C-12:p2_with_capped_promotion",
-    "C-20:defer_to_private_g2"
+    "C-20:defer_to_private_g2",
+    "C-03:paths_with_generation_gap_5",
+    "C-11:block_carryover",
+    "C-13:reject_proxy"
   ],
   "companies": [
     {
@@ -49,7 +52,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -341,7 +344,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -655,7 +658,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -944,7 +947,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -1234,7 +1237,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -1525,7 +1528,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -1842,7 +1845,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -1949,6 +1952,7 @@
               "cumulative_raised": 125000000000.0,
               "ps_ratio": 30.0
             },
+            "c12_choice": "p2_with_capped_promotion",
             "correction": {
               "mode": "subtotal_promotion",
               "cap_steps": 1,
@@ -2132,7 +2136,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -2441,7 +2445,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -2727,7 +2731,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -3035,7 +3039,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -3290,7 +3294,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -3579,7 +3583,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -3890,7 +3894,7 @@
           "observation_ids": [],
           "calc": {},
           "warnings": [
-            "C-03: 경로→점수 매핑 미확정이라 승계 점수를 기준선 표시로 사용",
+            "C-03 확정(paths_with_generation_gap_5)이나 세대 격차는 판단 입력이라 경로 판정 전까지 승계 점수를 사용",
             "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
           ],
           "pending": null
@@ -3997,6 +4001,7 @@
               "cumulative_raised": 185000000000.0,
               "ps_ratio": 39.0
             },
+            "c12_choice": "p2_with_capped_promotion",
             "correction": {
               "mode": "subtotal_promotion",
               "cap_steps": 1,
@@ -4092,7 +4097,7 @@
                 "gate": "G1",
                 "result": "fail",
                 "operating_margin_ttm": null,
-                "band": "BEP 후퇴 → -5",
+                "band": "BEP 후퇴 → -4",
                 "score": -4
               },
               {
@@ -4102,7 +4107,7 @@
               {
                 "gate": "G3/G4",
                 "result": "skipped",
-                "reason": "G1 점수가 이미 하한(-5)이라 추가 감점 불가"
+                "reason": "G1 점수가 이미 하한(-4)이라 추가 감점 불가"
               }
             ],
             "inputs": {
@@ -4118,7 +4123,7 @@
             "gate1_fail": true
           },
           "warnings": [
-            "C-06: BEP 후퇴 -5 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)"
+            "C-06: BEP 후퇴 -4 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)"
           ],
           "pending": null
         }
@@ -4261,5 +4266,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 162,
-  "results_hash": "2fca03c6d739634fbd6114d2c71175d38843defba96924a598deed5da076aedd"
+  "results_hash": "6252a9357b6630fa48c3d92c7ce8cb7776e798a0bebea61647e6d4d9dcc58de9"
 }

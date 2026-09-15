@@ -1,0 +1,1 @@
+run.decisions: ['C-05:apply', 'C-06:proposed_v15_boundaries', 'C-16:downgrade', 'C-12:p2_with_capped_promotion', 'C-20:defer_to_private_g2', 'C-03:paths_with_generation_gap_5', 'C-11:block_carryover', 'C-13:reject_proxy']

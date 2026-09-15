@@ -783,10 +783,13 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
         _require(inputs["own_money_returns"] in YES_NO, f"{where}: own_money_returns 오류")
         return
     if kind == "paths":
-        _expect_keys(inputs, ["performance_leap", "paradigm_adaptation", "standard_capture", "top_rank"], where)
+        # generation_gap: C-03 확정 모델(v1.7)의 5점 조건. top_rank(AA 종합 1위)는 v1.5·v1.6 후보 매핑의 입력이다.
+        _expect_keys(inputs, ["performance_leap", "paradigm_adaptation", "standard_capture", "top_rank"], where,
+                     optional=["generation_gap"])
         for key in ("performance_leap", "paradigm_adaptation", "standard_capture"):
             _require(inputs[key] in TRI, f"{where}: {key} 는 {sorted(TRI)}")
         _require(inputs["top_rank"] in YES_NO, f"{where}: top_rank 오류")
+        _require(inputs.get("generation_gap", "unknown") in YES_NO, f"{where}: generation_gap 오류")
         return
     if kind == "gate_inputs":
         _expect_keys(

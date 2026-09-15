@@ -21,7 +21,7 @@ from datetime import date
 from typing import Any
 
 from .inputs import ObsLookup, factor_result, obs_note, pending_info
-from .rules import RuleSet
+from .rules import RuleSet, decision_choice
 
 FACTOR = "F6"
 
@@ -343,8 +343,11 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
                          observation_ids=obs_ids, calc=calc, warnings=warnings)
 
 
+C12_IMPLEMENTED_CHOICE = "p2_with_capped_promotion"
+
+
 def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | None,
-                    rules: RuleSet) -> dict[str, Any]:
+                    rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
     """비상장 F6 — **P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다** (C-12, 2026-09-11 확정).
 
     상장 P4 와 같은 장치이고 방향만 반대다. 밴드는 `private_bands`(v1.5 구간표), 보정은
@@ -389,6 +392,15 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
         return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
                              observation_ids=obs_ids, calc=calc, warnings=warnings,
                              pending=pending_info("rule", "비상장 F6 밴드 미정 — 배수는 계산해 두고 점수는 만들지 않는다", "C-12"))
+    # 2026-09-15 FIX-52: 결과의 decisions_applied 에 C-12 가 찍히는데 이 함수가 run 을 받지 않아 선택을 읽지 않았다.
+    # 구현된 경로는 p2_with_capped_promotion 하나다. 다른 선택이거나 선택이 없으면 기본값으로 채우지 않는다.
+    choice = decision_choice(run, rules, "C-12")
+    calc["c12_choice"] = choice
+    if choice != C12_IMPLEMENTED_CHOICE:
+        return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
+                             observation_ids=obs_ids, calc=calc, warnings=warnings,
+                             pending=pending_info("rule", f"C-12 선택 {choice!r} 는 구현된 경로가 없다 — 구현된 선택은 "
+                                                          f"{C12_IMPLEMENTED_CHOICE} 하나", "C-12"))
 
     # ---------------- P2 — 점수를 내는 파라미터
     multiple = values["ps_ratio"]

@@ -370,8 +370,12 @@ class TestF6Private(unittest.TestCase):
                  obs("arr", 65e9, cid="anthropic", kind="run_rate"),
                  obs("arr_prior", 47e9, cid="anthropic", kind="run_rate"),
                  obs("cumulative_raised", 125e9, cid="anthropic")]
+        # FIX-52 로 compute_private 가 C-12 선택을 읽는다. 선택이 없으면 P2 검사 전에 needs_rule_decision 이라
+        # 이 테스트가 보려는 'ps_ratio 없음 → arr 로 대체하지 않음' 에 닿으려면 구현된 선택을 넘겨야 한다.
+        c12 = {**run(), "decisions": [{"id": "C-12", "choice": "p2_with_capped_promotion", "rationale": "t",
+                                        "decided_by": "t", "decided_at": "2026-09-11"}]}
         r = compute_f6(company(cid="anthropic", listed=False), ObsLookup(items),
-                       JudgmentLookup([]), RULES_V17, run())
+                       JudgmentLookup([]), RULES_V17, c12)
         m = r["calc"]["multiples"]
         self.assertAlmostEqual(m["post_money_over_arr"], 965 / 65)
         self.assertAlmostEqual(m["arr_growth"], 65 / 47 - 1)

@@ -118,8 +118,9 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
         # 영업적자 구간
         if bep_retreat:
             base = int(pol["g1_bep_retreat_score"])
-            path.append({"gate": "G1", "result": "fail", "operating_margin_ttm": margin, "band": "BEP 후퇴 → -5", "score": base})
-            warnings.append("C-06: BEP 후퇴 -5 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)")
+            # 2026-09-15 FIX-52: 문자열이 -5 로 박혀 있어 C-06 재척도(-4) 결과와 모순됐다. 정책 값을 읽는다.
+            path.append({"gate": "G1", "result": "fail", "operating_margin_ttm": margin, "band": f"BEP 후퇴 → {base}", "score": base})
+            warnings.append(f"C-06: BEP 후퇴 {base} 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)")
         else:
             choice = decision_choice(run, rules, "C-06")
             if choice != "proposed_v15_boundaries":
@@ -130,17 +131,17 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             warnings.append("C-06: 손실률 경계는 제안값(proposed)을 실행 단위 결정으로 적용")
         if gi["buffer_erosion"] == "yes":
             base = min(base, int(pol["g1_buffer_erosion_min_score"]))
-            path.append({"gate": "G1", "adjust": "완충 잠식 → 최소 -4", "score": base})
+            path.append({"gate": "G1", "adjust": f"완충 잠식 → 최소 {int(pol['g1_buffer_erosion_min_score'])}", "score": base})
         if gi["direction_A"] == "pass" and gi["direction_B"] == "pass":
             relieved = min(base + int(pol["g1_direction_relief_step"]), int(pol["g1_direction_relief_cap"]))
-            path.append({"gate": "G1", "adjust": "방향 완화 A·B 충족 → 한 단계(상한 -3)", "score": relieved})
+            path.append({"gate": "G1", "adjust": f"방향 완화 A·B 충족 → 한 단계(상한 {int(pol['g1_direction_relief_cap'])})", "score": relieved})
             base = relieved
         elif "unknown" in (gi["direction_A"], gi["direction_B"]):
             path.append({"gate": "G1", "adjust": "방향 완화 판정 불가 → 유지"})
         score = _clamp(base, floor)
         if score <= floor:
             # 이미 하한이면 G3·G4 를 적용하든 진단만 하든 결과가 같다 — C-05 결정을 요구하지 않는다.
-            path.append({"gate": "G3/G4", "result": "skipped", "reason": "G1 점수가 이미 하한(-5)이라 추가 감점 불가"})
+            path.append({"gate": "G3/G4", "result": "skipped", "reason": f"G1 점수가 이미 하한({floor})이라 추가 감점 불가"})
             return done(score, "ok", extra={"gate1_fail": True})
         # G3·G4 진단 (C-05: 추가 감점 여부 미결)
         diag_score = score
