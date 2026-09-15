@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
 observations_hash: 0fcef847b46766e83cee425603324d664349b41287967740a84e88cf0ff42095
-judgments_hash: d86e6919b310a2e66785c22e63c7d0bb176f866eebe4b4941216138aab87b27c
+judgments_hash: b326a3bab3f98f60906315503bc61d8133d113d8a61acd51b4e086398a7b0135
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -464,7 +464,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 5 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 \| [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded |
 | ③ Last Mover | criteria | — | imitation=partial, revenue_model=pass, acceleration=partial, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
@@ -608,7 +608,7 @@ created_at: 2026-09-11
 | Factor | 종류 | 점수 | 입력 | 상태 | 검토 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | ① 네트워크 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 |
+| ② 게임체인저 | score | 4 | — | carried | legacy:v1.5 2026-09-02 | C-03: 경로 매핑 미확정 — 승계 점수 \| [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=fail, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑤ 아군 | grade | — | A=1, H=-3 | new | 설계진행(C-13 A-GRADE-45 · NTM A-GRADE-45B 독립 일치) 2026-09-14 | [F5-IMPL-48] 체크리스트 19 적용 재판정(사용자 결정 ①). A +2→+1, F5 2→1. 두 모델 독립 일치 — C-13(Gemin |

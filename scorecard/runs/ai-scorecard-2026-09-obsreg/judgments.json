@@ -443,10 +443,11 @@
       "score": 4,
       "inputs": {},
       "evidence": [
-        "(v1.5: v1.4 하향 철회 — \"AA 미등재\"가 사실이 아니었다) 🆕 AA Intelligence Index — Muse Spark 1.3(max) 62, 프론티어 진입(9/2, AA 기사 제목 \"Meta reaches the frontier\"). Fable 5.1(66)·Opus 5(63) 다음 3위, Fable 5(62)와 동점 · xhigh 61은 Sol·Grok 4.6·Opus 5(high)와 동점 · 궤적 1.0 43 → 1.1 53 → 1.2 57 → 1.3 62 · 🆕 Tau3-Bench Banking 52%로 전 모델 1위 · GDPval-AA v2 1,754 Elo · 🆕 가격 $1.25/$4.25 그대로 → 59점 이상 중 태스크당 최저 비용($0.55), 동급 대비 70%+ 저렴 — ③의 저가 공세가 실측으로 확인 · ②5는 불가 — AA 종합 1위(Anthropic)가 5의 기준이고 Spark 1.3은 3위 · GDPval-AA v2 5위 · Arena 텍스트 4위 · 성능 경로 ✅ + 적응 경로 ✅, 표준 ❌ → 두 경로 = 4 · 8/10 Spark 1.2 오픈웨이트 공언(미출시)"
+        "(v1.5: v1.4 하향 철회 — \"AA 미등재\"가 사실이 아니었다) 🆕 AA Intelligence Index — Muse Spark 1.3(max) 62, 프론티어 진입(9/2, AA 기사 제목 \"Meta reaches the frontier\"). Fable 5.1(66)·Opus 5(63) 다음 3위, Fable 5(62)와 동점 · xhigh 61은 Sol·Grok 4.6·Opus 5(high)와 동점 · 궤적 1.0 43 → 1.1 53 → 1.2 57 → 1.3 62 · 🆕 Tau3-Bench Banking 52%로 전 모델 1위 · GDPval-AA v2 1,754 Elo · 🆕 가격 $1.25/$4.25 그대로 → 59점 이상 중 태스크당 최저 비용($0.55), 동급 대비 70%+ 저렴 — ③의 저가 공세가 실측으로 확인 · ~~②5는 불가 — AA 종합 1위(Anthropic)가 5의 기준이고 Spark 1.3은 3위~~ (superseded [FIX-52 2026-09-15] — C-03 확정 전 잣대) · GDPval-AA v2 5위 · Arena 텍스트 4위 · 성능 경로 ✅ + 적응 경로 ✅, 표준 ❌ → 두 경로 = 4 · 8/10 Spark 1.2 오픈웨이트 공언(미출시)",
+        "📐 [FIX-52 2026-09-15] **C-03 확정 기준(혼합 모델)** — 5점은 `AA 종합 1위` 가 아니라 **성능 도약이 세대 격차 수준일 때**다. 경로 수 0·1·2 → 2·3·4. 위 근거의 `AA 종합 1위가 5의 기준` 문장은 C-03 확정 전 잣대라 superseded 다. 점수 4 는 승계 그대로이고, 세대 격차 판정은 이번 실행에서 하지 않았다."
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "C-03: 경로 매핑 미확정 — 승계 점수 | [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded 표시, C-03 확정 기준 문장 추가. 점수·status 불변.",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
@@ -2799,15 +2800,16 @@
         "적응 경로 ✅ GPT-5.5→5.6→6 출시 속도, 광고 파일럿 6주 ARR $100M",
         "표준 ❌(MCP 실패)",
         "세 경로 중 둘 통과 = 4",
-        "🔴 5로 못 올리는 이유 — 종합 지능이 전작과 동점이다: 🆕 AA Intelligence Index 61 = GPT-5.6 Sol 61, Fable 5.1(max) 66에 5점 뒤지고 Muse Spark 1.3에도 밀린다(v4.2 개편 후에도 Fable 5.1 57 > Astra 55). ②5는 Anthropic이 \"AA 종합 1위\"로 받은 점수라 같은 잣대로 불가",
+        "🔴 5로 못 올리는 이유 — 종합 지능이 전작과 동점이다: 🆕 AA Intelligence Index 61 = GPT-5.6 Sol 61, Fable 5.1(max) 66에 5점 뒤지고 Muse Spark 1.3에도 밀린다(v4.2 개편 후에도 Fable 5.1 57 > Astra 55). ~~②5는 Anthropic이 \"AA 종합 1위\"로 받은 점수라 같은 잣대로 불가~~ (superseded [FIX-52 2026-09-15] — C-03 확정 전 잣대)",
         "🔴 반대 증거: GDPval-AA v2 -80 Elo(44개 직군의 경제적 가치 태스크에서 퇴행), τ³-Banking·SciCode·AA-LCR 2~3점 퇴행, 가격 2.5배 인상($4/$20→$10/$50)으로 태스크당 75% 더 비싸짐",
         "⚠️ (체크리스트 23) OpenAI 발표 ARC-AGI-3 99.9%는 자사 제공 어댑터 하네스 점수다. ARC Prize가 같은 모델을 표준 하네스로 재니 62.7% — 37점 차이는 메모리 처리(턴 사이 추론 흔적 보존·기록 절삭)이지 지능이 아니라고 ARC Prize가 명시했고 스스로 \"AGI 아니다\"라고 밝혔다. 다른 모델은 표준 하네스로 쟀으므로 표준 점수를 쓴다",
         "(같은 하네스 비교) AA Coding Agent Index는 전원 자기 하네스라 유효 — Astra(Codex) 67로 Opus 5·Fable 5와 동급이나 1위는 Fable 5.1(Claude Code) 70. 단 토큰 3배 효율로 Fable 5 대비 태스크당 절반 이하 비용",
         "(반응) Gary Marcus조차 \"진짜 진보\"로 인정 — 기호적 세계모델을 명시적으로 구축한다는 점. 다만 \"그 능력이 얼마나 견고한가가 THE key question\"이고 \"검증 가능한 도메인에서만 잘할 것으로 의심\"",
-        "이전 모델보다 모니터 가능성이 낮아졌다는 안전 지적"
+        "이전 모델보다 모니터 가능성이 낮아졌다는 안전 지적",
+        "📐 [FIX-52 2026-09-15] **C-03 확정 기준(혼합 모델)** — 5점은 `AA 종합 1위` 가 아니라 **성능 도약이 세대 격차 수준일 때**다. 경로 수 0·1·2 → 2·3·4. 위 근거의 `AA 종합 1위로 받은 점수라 같은 잣대로 불가` 문장은 C-03 확정 전 잣대라 superseded 다. 점수 4 는 승계 그대로이고, 세대 격차 판정은 이번 실행에서 하지 않았다."
       ],
       "counter_evidence": [],
-      "note": "C-03: 경로 매핑 미확정 — 승계 점수",
+      "note": "C-03: 경로 매핑 미확정 — 승계 점수 | [FIX-52 2026-09-15] 근거란의 `AA 종합 1위 = 5` 잣대에 superseded 표시, C-03 확정 기준 문장 추가. 점수·status 불변.",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "status": "carried",
