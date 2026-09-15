@@ -29,3 +29,32 @@
 ## 훅 주의
 
 `enforce-plan.sh` 가 Bash 명령 문자열을 훑는다. 프롬프트 본문의 `build_report.py <slug>` 인용문에 걸려 첫 발송이 통째로 차단됐다. 긴 본문은 Write 로.
+
+---
+
+## 재착수 (2026-09-15) — Claude 세션 넷 전부 429 로 시작 전 종료 → codex·qwen 으로 이관
+
+Claude 에이전트 넷은 "session limit" 으로 한 줄도 쓰지 못하고 죽었다. `_parts` 는 비어 있었다(확인). 사용자가 codex·qwen 으로 옮기기로 했다. **Claude 가 아닌 모델이 별도 세션 요건을 채우므로 anthropic 관련 항목의 이해상충이 리뷰 단계에서 사라진다.**
+
+### 리뷰 전용 워크트리
+
+```
+경로     C:/Users/noble/orca/workspaces/stock-report-harness/review-obsreg
+브랜치   HANSOLJJ/review-obsreg
+커밋     af6d2f7  ← worker 동결 커밋으로 reset --hard (처음엔 0df7d6e 에서 생성돼 scorecard 가 없었다)
+```
+
+이유 셋. 리뷰어가 worker 트리에 쓰지 않는다(워크트리 간 읽기 전용). 리뷰어 cwd 가 조율자 워크트리가 아니다(독립성). 스냅샷이라 기준 해시가 고정된다.
+
+### 세션 배정
+
+| 터미널 | 모델 | 1차 | 2차(1차 끝나고 새 대화) |
+|---|---|---|---|
+| `term_90bd1c50-…` | codex | C 규칙 일관성 | B 재무 계산 |
+| `term_693d7c4b-…` | qwen | A 사실·출처 | D 출력·가독성 |
+
+프롬프트 네 개의 읽기·쓰기 경로를 전부 `review-obsreg/` 로 바꿨다. 리뷰어가 만지는 모든 것이 자기 워크트리 안이다.
+
+### 조율자 핸들 변경
+
+세션 재시작으로 `term_025d0953-…` 은 소멸. 현재 `term_8e8d834d-48ff-4ba6-a9f7-3c3d1a0ef4a8`. worker·C-13·NTM 터미널은 목록에 없다(재시작 전 것). 다시 열리면 새 핸들을 통지해야 한다.
