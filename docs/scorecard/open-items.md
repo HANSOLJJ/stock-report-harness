@@ -83,6 +83,8 @@
 | REVIEW-02/P6 | 재현성을 더 올릴 때 | 관측별 원문 행·열 위치(locator)를 구조화한다. 현재도 출처 ID·문서 제목·해시는 있어 추적이 끊기지는 않는다 |
 | REVIEW-02/P7 | F2 를 신규 판정할 때 | 설계 지침 4.3 의 평가기관·평가일·모델/제품 버전·지수 버전·하네스·모집단·순위·측정값을 관측으로 받는다. 현재 F2 는 전부 승계 점수이고 신규 경로 매핑은 C-03 미결로 차단돼 있다 |
 | HASH-EOL | 해시 계산이나 승인 흐름을 다음에 손볼 때 | **줄끝 정규화 검토.** `sha256_file` 이 원시 바이트를 해시하고 저장소에 `.gitattributes` 가 없어 `core.autocrlf` 가 LF/CRLF 를 바꾸면 내용 불변이어도 `rule_hash`·승인 해시가 갈린다(2026-09-14 bfb4fbd → 5209311). 선택지 — `.gitattributes` 로 JSON·MD 줄끝 고정 / 해시 전에 줄끝 정규화. **어느 쪽이든 승인된 baseline 해시가 바뀌므로** 기존 approval 과의 호환(재승인 또는 이중 계산)을 함께 정한다. F5-IMPL-48 검토에서 지금 고치지 말라는 지시로 등재만 한다. **[해소 2026-09-15 FIX-53 RC-07]** `.gitattributes` 로 scorecard 해시 대상 파일을 LF 고정(승인된 baseline·v1.5 규칙은 CRLF 고정 — 재승인 없이 모든 checkout 에서 재현), 생성기 `write_json`·`stages` 도 LF 로 쓴다. autocrlf true·false 새 checkout 두 개에서 입력·승인 해시 재현 확인(validation/fix-53). **남은 제안** — 해시 함수를 줄끝 정규화 기반으로 바꾸는 것은 적용하지 않았다(바이트 고정으로 충분하고, 바꾸면 기존 승인 해시가 전부 달라진다). |
+| RC3-06 | `decisions_applied` 를 근거로 무엇을 주장할 때 | **소비 증명이 아니다.** `results.decisions_applied` 는 run.json `decisions` 를 `id:choice` 로 옮긴 목록일 뿐이다(engine.py). 선택을 읽는 분기가 없거나(C-11) 현재 모드에서 효력이 없는(C-13 은 bands 모드 전용) 선택도 들어 있다. C-04 `include_v15` 는 조회돼도 경고만 바꾸고 G3 산술을 바꾸지 않으며 G1 실패 진단 경로에서는 조회조차 없다. 적용 여부는 factor 산식·경고에서 확인한다. 초안·HTML 방법 절에 같은 문장을 적었다(FIX-54 1단계, 3차 리뷰 C). 소비 추적(선택마다 읽은 factor 기록)은 구현하지 않았다 |
+| RC3-08 | 관측 kind·metric 의미를 스키마로 막으려 할 때 | **단어 의미는 스키마가 아니라 소비 코드가 막는다.** `metric=arr` 에 `kind=run_rate` 를 `actual` 로 바꿔도 스키마는 통과한다. 비상장 P2 보정의 `arr_growth` 는 `accepted_kinds: ["actual"]` 을 calc_f6_params 가 읽어 run_rate 를 거부하고, G4 는 status 와 `coverage_comparable` 로 차단한다. kind 를 새로 쓰는 소비자를 만들면 그 코드에 같은 거부를 넣어야 한다(FIX-54 1단계 문서화, 3차 리뷰 C) |
 
 ## 5. 테스트 미구현
 

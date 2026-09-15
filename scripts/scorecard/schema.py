@@ -672,6 +672,10 @@ def _validate_net_cash(spec: Any) -> None:
                  f"{where}.scope_separation.two_axes: 작업 정의는 두 축(즉시성·시장성) 블록이 반드시 있어야 함")
         _require(isinstance(axes_required.get("banned_word"), dict),
                  f"{where}.scope_separation.two_axes.banned_word: 작업 정의는 금지어 블록이 반드시 있어야 함")
+        # 2026-09-15 FIX-54 1단계 S7(3차 리뷰 C RC3-07): 금지어만 남긴 사전도 통과했다. 두 축의 정의 문장 자체를 요구한다.
+        for axis in NET_CASH_AXES:
+            _require(str(axes_required.get(axis) or "").strip(),
+                     f"{where}.scope_separation.two_axes.{axis}: 작업 정의는 이 축의 정의 문장이 반드시 있어야 함")
 
     sep = spec.get("scope_separation") or {}
     if sep:

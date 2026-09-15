@@ -58,6 +58,12 @@ def compute_f2(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSe
     if choice != "activate_candidate_mapping":
         return factor_result(fid, score=None, status="needs_rule_decision", basis="paths", judgment=judgment, calc=calc,
                              pending=pending_info("rule", "경로 수→점수 매핑(3경로·0/1점·5점 자격)이 미확정", "C-03"))
+    # 2026-09-15 FIX-54 1단계 S7(3차 리뷰 C RC3-09): v1.7 F2 에는 path_mapping_candidate 가 없어 옛 선택지로 오면 KeyError 였다.
+    # 규칙이 이 선택을 받칠 매핑을 갖고 있지 않다는 사실을 오류 상태로 드러낸다 — 다른 매핑으로 대신 채우지 않는다.
+    if "path_mapping_candidate" not in rules.factor(fid):
+        return factor_result(fid, score=None, status="error", basis="paths", judgment=judgment, calc=calc,
+                             pending=pending_info("error", f"C-03 선택 activate_candidate_mapping 은 규칙 {rules.version} 에서 쓸 수 없다 — "
+                                                           "factor 에 path_mapping_candidate 가 없다(superseded 선택지)", "C-03"))
     mapping = rules.factor(fid)["path_mapping_candidate"]
     calc["mapping"] = mapping
     if str(passed) not in mapping and inputs["top_rank"] != "yes":
