@@ -282,7 +282,13 @@
               "upper": null,
               "score": -2
             }
-          ]
+          ],
+          "input_alternatives": {
+            "revenue_ttm": [
+              "revenue_ttm_full"
+            ]
+          },
+          "input_alternatives_note": "[FIX-56 1단계] `revenue_ttm` 은 신규 상장 트랙에서 **분기값**으로 등록된다 — P3 의 전년 동기 대조를 세우려고 그렇게 쓴다(spacex-xai.revenue_ttm.f6reg28). P2 는 12개월 매출이라야 하므로 `revenue_ttm_full` 관측이 있으면 그것을 **먼저** 읽는다. 지표 이름 하나에 두 뜻을 담지 않는다. 단위가 같은 지표만 대체로 선언할 수 있다(schema 가 검사한다)."
         },
         "P3": {
           "label": "매출 성장률",
@@ -677,13 +683,19 @@
         "listed_newly": {
           "label": "신규 상장",
           "parameters": [
+            "P2",
             "P3"
           ],
           "floor": -3,
           "auto_p4_conditions": [
             "short_history"
           ],
-          "select": "listed 이나 연간 기간 사실이 없어 P1·P2 입력이 성립하지 않는 기업. 티커가 아니라 자료로 판정한다"
+          "select": "listed 이나 **전년 TTM 을 복원할 기간 사실이 없어 P3 를 분기 전년 동기로 계산하는 기업**. 티커가 아니라 `revenue_ttm` 관측의 basis.period_basis 로 판정한다. **P1·P2 가 성립하지 않는다는 뜻이 아니다** — P2 는 입력이 있으면 계산하고(optional_parameters), P1 은 parameters_excluded_note 를 본다.",
+          "optional_parameters": [
+            "P2"
+          ],
+          "optional_parameters_note": "[FIX-56 1단계] P2 는 시총·순현금·12개월 매출이 다 있을 때만 만든다. 하나라도 없으면 지금까지처럼 만들지 않고 결과 `calc.parameters_optional_unmet` 에 사유를 적는다 — 없다고 F6 전체를 pending 으로 세우지 않는다.",
+          "parameters_excluded_note": "[FIX-56 1단계] **P1 은 트랙에 두지 않았다.** 이 트랙에 든 기업의 순이익이 음수라 `requires_positive` 를 넘지 못한다(spacex-xai 순이익 TTM -8,218M). 트랙에서 뺀 것과 입력이 없어 못 만드는 것은 다르므로, 회사마다 어느 쪽인지를 결과 `calc.parameters_not_in_track.P1` 이 다시 적는다 — 흑자로 돌아서면 그 칸이 `would_compute=true` 로 바뀌고 트랙을 다시 볼 신호가 된다."
         },
         "private": {
           "label": "비상장",
@@ -1639,6 +1651,59 @@
         "when": "2026-11",
         "note": "등재만 하고 기준은 바꾸지 않았다. 오늘은 amazon 세 경우 모두 G3 step 0 이라 점수가 갈리지 않는다."
       }
+    },
+    {
+      "id": "C-24",
+      "status": "resolved",
+      "blocking": false,
+      "affects": [
+        "F6"
+      ],
+      "summary": "신규 상장 트랙이 P2 를 만들지 않는데 P2 입력은 실행 안에 다 있다 — 계산할 것인가",
+      "recommendation": "계산한다. 상장사 열두 곳에 같은 잣대를 대는 쪽이다.",
+      "choices": [
+        "p3_only_v17",
+        "compute_p2_when_inputs_exist"
+      ],
+      "chosen": "compute_p2_when_inputs_exist",
+      "decided_at": "2026-09-16",
+      "decided_by": "사용자",
+      "scope": {
+        "what_changed": "`listed_newly.parameters` 에 P2 를 넣고 `optional_parameters` 로 입력이 있을 때만 만들게 했다. P2 는 `input_alternatives` 로 12개월 매출 지표(`revenue_ttm_full`)를 먼저 읽는다.",
+        "score_impact": "**spacex-xai F6 -1 → -3, 총점 11 → 9.** P2 = (1,910,000 − 60,301) ÷ 23,044 = 80.27 → 밴드 -2, P3 0, 소계 -2, P4 short_history 한 칸 → -3, 트랙 바닥 -3. 다른 13개사는 불변이다.",
+        "why_not_p1": "순이익이 음수라 requires_positive 를 넘지 못한다 — 트랙 정의의 parameters_excluded_note 참조.",
+        "review": "obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) high"
+      }
+    },
+    {
+      "id": "C-25",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F6"
+      ],
+      "summary": "신규 상장 트랙의 바닥 -3 이 P2 를 계산하게 된 뒤에도 맞는지",
+      "recommendation": "이번 실행은 바닥을 건드리지 않는다. 바닥 -3 은 P3 하나(범위 -3~0)로만 점수를 내던 트랙의 값인데, C-24 로 P2(-2~0)가 더해져 소계 범위가 -5 까지 넓어졌다. spacex-xai 는 소계 -2 에 P4 한 칸이라 -3 이고 **바닥에 정확히 닿지만 절단되지는 않는다**(floor_applied 없음). 다음 라운드에서 정한다.",
+      "choices": [
+        "keep_minus_3",
+        "widen_to_minus_5_like_listed_tracks",
+        "recompute_from_parameter_ranges"
+      ],
+      "implementation_status": {
+        "verdict": "not_implemented",
+        "checked_at": "2026-09-16",
+        "checked_by": "worker (FIX-56 1단계)",
+        "evidence": [
+          "calc_f6_params.compute_listed 는 track['floor'] 를 그대로 읽는다 — 파라미터 구성에서 역산하지 않는다",
+          "이번 실행에서 floor 로 절단된 회사는 없다(spacex-xai 는 보정 후 -3 으로 바닥과 같다)"
+        ]
+      },
+      "pending_recheck": {
+        "what": "listed_newly 바닥을 -3 으로 둘지, 파라미터 범위에 맞춰 넓힐지.",
+        "why": "FIX-56 1단계 지시 — 바닥 자체는 별도 사안이라 미결로 등재한다.",
+        "trigger": "신규 상장 트랙에서 소계가 -3 아래로 내려가 실제로 절단이 발생할 때, 또는 다음 라운드",
+        "when": "2026-11"
+      }
     }
   ],
   "sources": {
@@ -1882,7 +1947,9 @@
       "judgment_ids": [
         "microsoft.F3",
         "spacex-xai.F3",
-        "tesla.F3"
+        "tesla.F3",
+        "amazon.F3",
+        "palantir.F3"
       ],
       "subject": "F3 가속도가 단일 성장률 하나로 pass — 성장률의 변화(가속)를 재현할 수 없다",
       "tension": "microsoft.F3 `Copilot 유료 시트 3,000만, 분기 +50%` · spacex-xai.F3 `AI 세그먼트 Q2 $2.56B, +247% YoY` · tesla.F3 `FSD 활성 구독 148만(+56% YoY)` 가 각각 성장률 하나로 가속도 pass 다. 같은 정의의 비교 쌍(직전 기간의 성장률)이 없어 **가속**인지 **성장**인지 가를 수 없다.",
@@ -1899,9 +1966,27 @@
             "채점표 543행",
             "채점규칙 110행"
           ]
+        },
+        {
+          "company_id": "amazon",
+          "judgment_id": "amazon.F3",
+          "why": "근거란의 가속도 줄이 `✅후발 가속도` 한 줄뿐이고 **수치가 없다.** 채점규칙 145행이 요구하는 것은 실측 성장률의 변화인데 성장률 하나조차 적혀 있지 않아 가속도 pass 를 재현할 수 없다.",
+          "source_lines": [
+            "채점규칙 145행",
+            "채점규칙 153행"
+          ]
+        },
+        {
+          "company_id": "palantir",
+          "judgment_id": "palantir.F3",
+          "why": "근거란 두 줄(`온톨로지는 모방 난이도 높음` · `AI가 데이터 이전을 자동화하면 전환비용 해자가 약화`)에 **가속도를 말하는 줄이 아예 없다.** acceleration=pass 를 받치는 문장이 판단 기록에 없다.",
+          "source_lines": [
+            "채점규칙 145행",
+            "채점규칙 153행"
+          ]
         }
       ],
-      "note": "[FIX-54 1단계] obsreg 3차 리뷰 B(Codex 독립 세션, 기준 커밋 04439f7 · review 2c56e9f) FC-07 로 oracle.F3 을 affected 에 넣었다. obsreg 3차 리뷰 C(Codex 독립 세션, 기준 커밋 04439f7 · review 169ca10) RC3-10 — microsoft 는 보존 원문 안에 비교 후보가 있다: 채점규칙 163행 `Azure +39→40→43% · Copilot 유료 시트 순증 +500만→+1,000만 · 단 AI 런레이트 YoY는 175%→123%로 둔화 | ✅ 가속`. 활성 근거(시트 분기 +50% 하나)에는 이 비교가 빠져 있다. 기간·정의 일치와 순증을 성장률 변화로 읽는 검토 없이 pass·fail 을 바꾸지 않았고, 재검토 자료를 외부에서만 찾아야 하는 상황은 아니다."
+      "note": "[FIX-54 1단계] obsreg 3차 리뷰 B(Codex 독립 세션, 기준 커밋 04439f7 · review 2c56e9f) FC-07 로 oracle.F3 을 affected 에 넣었다. obsreg 3차 리뷰 C(Codex 독립 세션, 기준 커밋 04439f7 · review 169ca10) RC3-10 — microsoft 는 보존 원문 안에 비교 후보가 있다: 채점규칙 163행 `Azure +39→40→43% · Copilot 유료 시트 순증 +500만→+1,000만 · 단 AI 런레이트 YoY는 175%→123%로 둔화 | ✅ 가속`. 활성 근거(시트 분기 +50% 하나)에는 이 비교가 빠져 있다. 기간·정의 일치와 순증을 성장률 변화로 읽는 검토 없이 pass·fail 을 바꾸지 않았고, 재검토 자료를 외부에서만 찾아야 하는 상황은 아니다. [FIX-56 1단계] obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) medium — amazon.F3·palantir.F3 을 같은 성질로 넣었다."
     },
     {
       "id": "TEN-RA-02",

@@ -56,8 +56,9 @@ class TensionRegistryTest(unittest.TestCase):
 
     def test_q10_gets_oracle_and_microsoft_candidate(self):
         q10 = self.t["TEN-RB-Q10"]
-        self.assertEqual(q10["judgment_ids"], ["microsoft.F3", "spacex-xai.F3", "tesla.F3"])
-        self.assertEqual([a["judgment_id"] for a in q10["affected"]], ["oracle.F3"])
+        # 2026-09-16 FIX-56 1단계에서 amazon.F3·palantir.F3 이 붙었다 — 이 단계가 세운 oracle.F3 이 첫 affected 로 남아 있는지 본다.
+        self.assertEqual(q10["judgment_ids"][:3], ["microsoft.F3", "spacex-xai.F3", "tesla.F3"])
+        self.assertEqual([a["judgment_id"] for a in q10["affected"]][0], "oracle.F3")
         self.assertIn("+77%", q10["affected"][0]["why"])
         self.assertIn("채점규칙 163행", q10["note"])
         self.assertIn("+500만→+1,000만", q10["note"])

@@ -23,8 +23,9 @@ class ExpectedTotalsTest(unittest.TestCase):
     def test_totals_match_instruction(self):
         # FIX-54 1단계 S1 로 spacex-xai 가 10 → 11(확정 미인출 여신 등록). 이 단계의 다른 칸은 그대로다.
         res = {c["company_id"]: c["total"] for c in load("results.json")["companies"]}
+        # 2026-09-16 FIX-56 1단계: spacex-xai 11 → 9 (C-24 로 listed_newly 트랙이 P2 를 계산 — F6 -1 → -3). 다른 13개사는 불변이다.
         self.assertEqual(res, {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
-                               "spacex-xai": 11, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
+                               "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
                                "openai": 2, "oracle": 2})
 
 
@@ -109,7 +110,9 @@ class TsmcNetCashAndTensionsTest(unittest.TestCase):
 
     def test_rb_q10_registered(self):
         t = {x["id"]: x for x in RULES.payload["open_tensions"]}["TEN-RB-Q10"]
-        self.assertEqual(t["judgment_ids"], ["microsoft.F3", "spacex-xai.F3", "tesla.F3"])
+        # 2026-09-16 FIX-56 1단계에서 amazon.F3·palantir.F3 이 같은 성질로 들어왔다 — 이 단계가 넣은 셋이 남아 있는지만 본다.
+        for jid in ("microsoft.F3", "spacex-xai.F3", "tesla.F3"):
+            self.assertIn(jid, t["judgment_ids"])
         self.assertEqual(t["recheck_at"], "2026-11")
         self.assertIn("하향 가능", t["direction"])
 

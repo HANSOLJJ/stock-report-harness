@@ -27,7 +27,7 @@ OBSERVATION_STATUSES = {
 PERIOD_REQUIRED_METRICS = {
     "revenue_ttm", "operating_income_ttm", "operating_margin_ttm",
     "ocf_ttm", "capex_ttm", "fcf_ttm", "net_borrowing_ttm",
-    "net_income_ttm", "revenue_ttm_prior", "pretax_income_ttm",
+    "net_income_ttm", "revenue_ttm_prior", "pretax_income_ttm", "revenue_ttm_full",
     # 분기 EPS 는 어느 분기인지가 값의 일부다. 기간 없이는 4분기 연속 판정을 할 수 없다.
     "ntm_eps_quarter",
 }
@@ -73,6 +73,9 @@ METRICS: dict[str, dict[str, str]] = {
     "nonop_share": {"unit": "ratio", "type": "number"},
     "ps_ratio": {"unit": "ratio", "type": "number"},
     "revenue_ttm": {"unit": "USD", "type": "number"},
+    # 2026-09-16 FIX-56 1단계: `revenue_ttm` 이 신규 상장사에서 **분기값**으로 등록된다(P3 의 전년 동기 대조를 세우려고).
+    # P2 는 12개월 매출이 필요하므로 같은 이름에 두 뜻을 담지 않고 지표를 나눈다.
+    "revenue_ttm_full": {"unit": "USD", "type": "number"},
     "operating_income_ttm": {"unit": "USD", "type": "number"},
     # 세전이익. `nonop_share = (세전 − 영업이익) / 세전` 의 분모이자 분자 구성요소다.
     # 법인세를 순이익에 되더하는 대신 이것을 직접 들이면 지표 하나로 끝난다(NONOP-44).
@@ -106,7 +109,7 @@ METRICS: dict[str, dict[str, str]] = {
     "quarter_note": {"unit": "text", "type": "text"},
 }
 
-NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
+NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "revenue_ttm_full", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 
@@ -487,7 +490,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
         _expect_keys(spec, ["label", "question", "score_range", "comparison", "unit", "formula", "inputs", "bands"],
                      where, optional=["requires_positive", "currency_note",
                                       # 입력 관측이 가져야 할 소유 범위(FIX-54 1단계 FC-04). calc_f6_params._parameter_value 가 읽는다.
-                                      "input_scope", "input_scope_note"])
+                                      "input_scope", "input_scope_note",
+                                      # 같은 뜻의 다른 지표로 대체해 읽는다(FIX-56 1단계). 신규 상장사의 revenue_ttm 이 분기값일 때 P2 가 12개월 매출을 찾는 길.
+                                      "input_alternatives", "input_alternatives_note"])
         _require(spec["comparison"] in F6_COMPARISONS, f"{where}: comparison 은 {sorted(F6_COMPARISONS)} 중 하나")
         lo, hi = spec["score_range"]
         _require(_is_number(lo) and _is_number(hi) and lo <= hi <= 0, f"{where}: score_range 는 음수 구간이어야 함")
@@ -499,6 +504,13 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
             _require(m in METRICS, f"{where}.inputs: 알 수 없는 metric {m!r}")
         for m in spec.get("requires_positive", []):
             _require(m in spec["inputs"], f"{where}.requires_positive: inputs 에 없는 {m!r}")
+        for m, alts in (spec.get("input_alternatives") or {}).items():
+            _require(m in spec["inputs"], f"{where}.input_alternatives: inputs 에 없는 {m!r}")
+            _require(isinstance(alts, list) and alts, f"{where}.input_alternatives.{m}: 비어 있지 않은 배열이어야 함")
+            for alt in alts:
+                _require(alt in METRICS, f"{where}.input_alternatives.{m}: 알 수 없는 metric {alt!r}")
+                _require(METRICS[alt]["unit"] == METRICS[m]["unit"],
+                         f"{where}.input_alternatives.{m}: {alt!r} 의 단위가 {m!r} 과 다름 — 대체할 수 없다")
         for m, scope in (spec.get("input_scope") or {}).items():
             _require(m in spec["inputs"], f"{where}.input_scope: inputs 에 없는 {m!r}")
             _require(scope in OWNERSHIP_SCOPES, f"{where}.input_scope.{m}: {sorted(OWNERSHIP_SCOPES)} 중 하나")
@@ -546,7 +558,11 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
     for tid, spec in tracks.items():
         where = f"rules.policies.f6.tracks.{tid}"
         _expect_keys(spec, ["label", "parameters", "floor", "select"], where,
-                     optional=["auto_p4_conditions", "note", "ceiling", "p4_note"])
+                     optional=["auto_p4_conditions", "note", "ceiling", "p4_note",
+                               # 트랙이 쓰지 않는 파라미터와 그 사유(FIX-56 1단계). 빠진 이유를 결과가 말하게 한다.
+                               "parameters_excluded_note",
+                               # 입력이 있을 때만 만드는 파라미터(FIX-56 1단계). 없으면 pending 이 아니라 미산출로 적는다.
+                               "optional_parameters", "optional_parameters_note"])
         # 2026-09-16 FIX-55 1단계: 관측에서 판정한다고 선언한 조건을 트랙 자동 목록에도 두면 두 경로가 갈린다.
         for auto in spec.get("auto_p4_conditions", []):
             _require(auto not in judged_from_observation,
@@ -559,6 +575,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                      f"{where}: ceiling {spec['ceiling']!r} 이 floor {spec['floor']} 와 0 사이가 아님")
         for pid in spec["parameters"]:
             _require(pid in params or pid == "P4", f"{where}.parameters: 알 수 없는 파라미터 {pid!r}")
+        for pid in spec.get("optional_parameters", []):
+            _require(pid in spec["parameters"],
+                     f"{where}.optional_parameters: parameters 에 없는 {pid!r} — 선택 여부는 쓰는 파라미터에만 붙는다")
         for cid in spec.get("auto_p4_conditions", []):
             _require(cid in seen, f"{where}.auto_p4_conditions: p4 에 없는 조건 {cid!r}")
     private_bands = f6.get("private_bands")

@@ -52,6 +52,27 @@
           "corrected_at": "2026-09-15",
           "task": "FIX-52 (리뷰 A qwen 발견)",
           "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        },
+        "p2_asof_mismatch": {
+          "what": "**시총과 순현금의 기준일이 다르다.** 시총은 2026-09-02 이고 8월 증자(710M주, 약 $10.2B)를 이미 반영했는데, P2 의 순현금은 20-F 기준일 2026-03-31 이라 그 조달 대금이 들어 있지 않다. EV 가 그만큼 과대다.",
+          "sensitivity": {
+            "as_reported": {
+              "net_cash_usd": 49838648883.73442,
+              "ev_sales": 1.4835570590243028,
+              "band": "0~8",
+              "score": 0
+            },
+            "plus_august_raise_10_2b": {
+              "net_cash_usd": 60038648883.73442,
+              "ev_sales": 1.4148506697030425,
+              "band": "0~8",
+              "score": 0
+            },
+            "conclusion": "1.4836 → 1.4149 로 움직이고 **밴드 0 은 그대로다.** 첫 경계가 8 배라 멀다."
+          },
+          "why_not_corrected": "증자 후 순현금을 실측한 자료가 보존 원문에 없다(다음 20-F 는 FY2027). 추정치를 관측으로 세우지 않고 사실과 민감도만 남긴다.",
+          "recorded_at": "2026-09-16",
+          "review": "obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) medium"
         }
       },
       "raw": "$270B",
@@ -7845,7 +7866,8 @@
         "ttm_is_constructible": {
           "value": 23044000000,
           "method": "S-1/A FY2025 18,674 + 10-Q H1'26 12,508 - H1'25 8,138",
-          "note": "당해 TTM 은 만들 수 있으나 전년이 없어 P3 가 성립하지 않는다"
+          "note": "당해 TTM 은 만들 수 있으나 전년이 없어 P3 가 성립하지 않는다",
+          "registered_as": "[FIX-56 1단계] 이 TTM 을 관측으로 등록했다 — `spacex-xai.revenue_ttm_full.fix56`. P2 가 그 지표를 읽는다."
         },
         "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
         "accession": "0001628280-26-052535",
@@ -7973,6 +7995,71 @@
       },
       "raw": "TTM 영업손실률 -16.195%",
       "note": "F6-REG-28. 승계 legacy -14.9% 를 실측 -16.195% 로 교체한다. 재척도 밴드에서 둘 다 -3 이라 점수는 안 바뀌고 근거가 legacy 에서 실측으로 바뀐다"
+    },
+    {
+      "observation_id": "spacex-xai.revenue_ttm_full.fix56",
+      "company_id": "spacex-xai",
+      "metric": "revenue_ttm_full",
+      "value": 23044000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-16",
+      "kind": "derived",
+      "source_id": "SRC-SEC-SPCX-S1A-2026",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "why_separate_metric": "같은 회사의 `spacex-xai.revenue_ttm.f6reg28` 은 **분기값(2026Q2)** 이다 — P3 의 전년 동기 대조를 세우려고 그렇게 등록했다. P2 는 12개월 매출이 필요하므로 지표 이름 하나에 두 뜻을 담지 않고 갈랐다. `revenue_ttm` 이 트랙을 정하는 관측이라 id·metric 을 바꾸지 않고 새 지표를 옆에 둔다.",
+        "formula": "FY2025 + H1'2026 − H1'2025",
+        "components": [
+          {
+            "label": "FY2025 (2025-01-01~2025-12-31)",
+            "value": 18674000000.0,
+            "sign": "+",
+            "source_id": "SRC-SEC-SPCX-S1A-2026",
+            "accession": "0001628280-26-040364",
+            "form": "S-1/A",
+            "where": "감사 연결손익계산서 F-5 `Revenue … $ 18,674`(같은 값이 MD&A 연도 비교표·세그먼트 주석·지역별 주석에도 있다)",
+            "quote": "In 2025, we generated revenue on a consolidated basis of $18,674 million",
+            "preserved": "3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm",
+            "why_not_companyfacts": "보존 SPCX companyfacts 의 `RevenueFromContractWithCustomerExcludingAssessedTax` 에는 연간 사실이 없다(분기·반기 4건뿐). 연간 값은 S-1/A 문면에서 읽었다."
+          },
+          {
+            "label": "H1'2026 (2026-01-01~2026-06-30)",
+            "value": 12508000000.0,
+            "sign": "+",
+            "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+            "accession": "0001628280-26-052535",
+            "form": "10-Q",
+            "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "preserved": "validation/f6-avail-15/_raw/SPCX.companyfacts.json"
+          },
+          {
+            "label": "H1'2025 (2025-01-01~2025-06-30)",
+            "value": 8138000000.0,
+            "sign": "-",
+            "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+            "accession": "0001628280-26-052535",
+            "form": "10-Q",
+            "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "preserved": "validation/f6-avail-15/_raw/SPCX.companyfacts.json"
+          }
+        ],
+        "arithmetic": "18,674 + 12,508 − 8,138 = 23,044 (백만 USD)",
+        "cited_source_ids": [
+          "SRC-SEC-SPCX-S1A-2026",
+          "SRC-SEC-SPCX-10Q-2026Q2"
+        ],
+        "same_value_elsewhere": "`spacex-xai.operating_margin_ttm.f6reg28` 의 분모(basis.denominator)가 같은 23,044M 이다. 그 관측은 이 값을 비율 안에 숨겨 두었을 뿐이라 P2 가 읽을 수 없었다 — 여기서 **값 자체를 관측으로 세운다.**",
+        "consumed_by": "policies.f6.parameters.P2.input_alternatives.revenue_ttm — P2 가 `revenue_ttm` 대신 이 지표를 먼저 읽는다.",
+        "why_now": "[FIX-56 1단계] obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) high — `listed_newly` 트랙이 P2 를 만들지 않는데 P2 입력은 이 실행 안에 다 있었다. 사용자 결정 2026-09-16(C-24)."
+      },
+      "raw": "TTM 매출 23,044M (FY2025 18,674 + H1'26 12,508 − H1'25 8,138)",
+      "note": "FIX-56 1단계. 12개월 매출 — P2 전용. 분기값 `revenue_ttm` 과 다른 지표다."
     },
     {
       "observation_id": "tesla.revenue_ttm.f6reg28",
@@ -11508,6 +11595,14 @@
             "us-gaap:RestrictedCashNoncurrent": {
               "value": 620000000.0,
               "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
+            },
+            "us-gaap:CryptoAssetFairValueNoncurrent": {
+              "value": 1098000000.0,
+              "as_of": "2026-06-30",
+              "why": "**암호자산은 유가증권이 아니다.** 정의가 더하는 것은 `현금및현금성자산 + 시장성 유가증권` 이고 암호자산은 ASU 2023-08 이후 재무제표에 따로 세우는 별개 자산군이다. 회사도 **비유동**으로만 태그했다(`CryptoAssetFairValueNoncurrent` 1,098 · 유동 태그 0건 · 원가 661 · 보유 18,712 단위). 단기 처분 의도를 가리키는 표시가 없다.",
+              "if_included": "넣으면 순현금이 60,301 → 61,399M 이 되어 legacy 60,300 과의 수렴(basis.why_this_match_matters)이 깨진다. P2 는 80.27 → 80.22 로 움직이고 **밴드 -2 는 그대로다.**",
+              "decided_at": "2026-09-16",
+              "review": "obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) medium — 포함·제외 어느 목록에도 없었다."
             }
           },
           "debt_ex_lease": 39364000000.0,
@@ -11554,7 +11649,7 @@
           "what": "**리스부채가 완전 합산이 아니다.** 2026-06-30 운용리스는 유동 344M(10-Q `Accrued expenses and other current liabilities` 표의 `Operating lease liabilities, current 344`)만 있고 비유동분 개념(`OperatingLeaseLiabilityNoncurrent`)과 합계 개념이 이 기준일에 없다. 10-Q 는 기타 비유동부채를 나누지 않는다.",
           "not_substituted": "S-1/A 감사 주석의 2025-12-31 `Operating lease liabilities, net of current 1,136`(3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)은 다른 시점이라 **대신 빼지 않았다.** 비유동분이 0 이라는 근거도 아니다.",
           "direction": "비유동 운용리스만큼 순현금이 **과대**다. 크기는 확인하지 못했다.",
-          "why_value_kept": "listed_newly 트랙은 P2 를 계산하지 않아 이 값이 점수에 들어가는 자리가 없다(results F6 parameters 에 P2 없음). 지우지 않고 한계를 적어 둔다. palantir 는 같은 결함(유동분 결측)으로 관측 등록 자체를 하지 않았다 — 두 회사의 처리가 다르다는 사실도 여기 남긴다.",
+          "why_value_kept": "[FIX-56 1단계 갱신] **이제 점수에 닿는다.** `listed_newly` 트랙이 P2 를 계산하게 바뀌어(C-24) 이 값이 EV 조정 분모로 들어간다. 비유동 운용리스 결측만큼 순현금이 **과대**라는 방향은 그대로이고, 크기는 여전히 확인하지 못했다. 다만 P2 밴드가 -2 에서 -1 로 갈리려면 순현금이 1,449,120M 이상이어야 한다((1,910,000 − 20 × 23,044)) — 리스 비유동분 규모로는 어떤 값이든 밴드가 바뀌지 않는다. **값을 고치지 않고 한계를 남긴다.** palantir 는 같은 결함(유동분 결측)으로 관측 등록 자체를 하지 않았다 — 두 회사의 처리가 다르다는 사실도 여기 남긴다.",
           "legacy_match_caveat": "basis.why_this_match_matters 의 legacy 60,300 일치는 이 부분 합 기준이다. 비유동분이 0 이 아니면 그 일치는 성립하지 않는다 — legacy 도 같은 공백을 가졌을 가능성이 있으나 확인할 수 없다.",
           "code_fix": "validation/netcash-37/measure.py _lease 가 구성요소 결측을 0 으로 합산하던 것을 고쳤다 — 이제 합계를 만들지 않고 빠진 개념을 돌려준다.",
           "review": "3차 리뷰 B FC-03",
@@ -11916,6 +12011,23 @@
               "usd_million": 6094.0,
               "why": "제한 현금. 주석에 따르면 35,965 가 판매자 구매자보호기금 예치금이라 **우리 돈이 아니다.** 유가증권이 아니라 현금이지만 같은 논리로 제외한다",
               "line": "Restricted cash and escrow receivables | 10 | 43,781 | 42,038 | 6,094"
+            },
+            {
+              "kind": "lease",
+              "label": "Total operating lease liabilities",
+              "rmb_million": 21726.0,
+              "usd_million": null,
+              "line": "Total operating lease liabilities (Note 19) | 21,726",
+              "quote": "Total operating lease liabilities (Note 19) 21,726",
+              "where": "주석 6 리스 — 만기 스케줄 하단 합계(F-40). 5,346 + 4,397 + 3,609 + 3,017 + 2,497 + 7,971 = 26,837, `Less: imputed interest (5,111)` → 21,726",
+              "cross_check": {
+                "note_19": "주석 19 `Accrued expenses, accounts payable and other liabilities` — 유동 `Operating lease liabilities (Note 6) 4,318` + 비유동 `Operating lease liabilities (Note 6) 17,408` = 21,726",
+                "matched": true
+              },
+              "why": "차입 5행과 같은 기준으로 줄·인용문을 채웠다. 값은 바뀌지 않는다.",
+              "preserved": "3cf9799:validation/offb-24/_raw/baba-20260331.htm",
+              "recorded_at": "2026-09-16",
+              "review": "obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) medium — 리스 21,726 만 rows 에 줄·인용문이 없었다."
             }
           ]
         },
@@ -12932,7 +13044,11 @@
             "runway_years": 6.728,
             "g3_step": 0
           },
-          "conclusion": "어느 경우든 3년 이상이라 F9 -2 는 같다."
+          "conclusion": "어느 경우든 3년 이상이라 F9 -2 는 같다.",
+          "ex_364_day_only": {
+            "runway_years": 9.523698924731182,
+            "g3_step": 0
+          }
         },
         "excluded": [
           {
@@ -12945,7 +13061,8 @@
           }
         ],
         "why_now": "3차 리뷰 B FC-02. alibaba·spacex-xai 와 같은 기준으로 원문에 있는 시설을 등록한다.",
-        "residual_term_open_item": "[FIX-55 1단계 · obsreg 4차 리뷰 B(NTM Claude 독립 세션, 기준 ab5a053 · review 8e58a46) low] 37,500M 중 22,500M(364일 5,000M · 지연인출 17,500M)이 실행 기준일 2026-09-02 로부터 4주 안에 만기·소멸한다. 설계 지침 6.4 는 잔존 기간 요건을 두지 않아 규칙 위반은 아니고, 이번에 기준을 바꾸지 않았다. **미결로 등재했다 — 규칙 decisions C-23.** 세 경우(37.5B·15.0B·0) 모두 G3 step 0 이라 오늘 점수는 갈리지 않는다(basis.sensitivity)."
+        "residual_term_open_item": "[FIX-55 1단계 · obsreg 4차 리뷰 B(NTM Claude 독립 세션, 기준 ab5a053 · review 8e58a46) low] 37,500M 중 22,500M(364일 5,000M · 지연인출 17,500M)이 실행 기준일 2026-09-02 로부터 4주 안에 만기·소멸한다. 설계 지침 6.4 는 잔존 기간 요건을 두지 않아 규칙 위반은 아니고, 이번에 기준을 바꾸지 않았다. **미결로 등재했다 — 규칙 decisions C-23.** 세 경우(37.5B·15.0B·0) 모두 G3 step 0 이라 오늘 점수는 갈리지 않는다(basis.sensitivity).",
+        "short_term_facility_note": "[FIX-56 1단계] obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) medium — 364일 여신 5,000M 은 **2026-10 만기**이고 연장은 `may be extended for one additional period of 364 days subject to approval by the lenders` 라 회사가 단독으로 늘릴 수 없다. 이 시설만 빼면 런웨이 9.95 → 9.52년이고, **미인출 여신 37,500M 을 전부 빼도 6.73년**(현금 78,213M ÷ 연 소진 11,625M)이라 G3 step 0 과 F9 -2 가 그대로다. 잔존 기간 요건 자체는 미결 C-23 이다."
       },
       "raw": "미인출 약정 US$37.5B (회전 15.0 + 364일 5.0 + 지연인출 17.5, 2026-06-30)",
       "note": "FIX-54 1단계 S2. 점수 불변(런웨이 3년 이상 구간)."

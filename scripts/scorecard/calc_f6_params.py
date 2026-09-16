@@ -47,7 +47,8 @@ def track_id_for(company: dict[str, Any], period_basis: str | None) -> str:
     return "listed_ttm"
 
 
-def _nonop_share(cid: str, obs: ObsLookup, warnings: list[str]) -> tuple[float | None, dict[str, Any]]:
+def _nonop_share(cid: str, obs: ObsLookup, warnings: list[str],
+                 obs_ids: list[str] | None = None) -> tuple[float | None, dict[str, Any]]:
     """영업외 비중 = **영업외손익 ÷ 세전이익** = `(세전 − 영업이익) / 세전`.
 
     원자료에서 재계산한다. 완제품 `nonop_share` 관측은 대조용으로만 쓴다.
@@ -65,12 +66,18 @@ def _nonop_share(cid: str, obs: ObsLookup, warnings: list[str]) -> tuple[float |
     맞는 것을 확인했다(±0.02). 안 맞는 둘은 alibaba·oracle 이고 규칙에 사유와 함께 적어 두었다.
     """
     detail: dict[str, Any] = {}
-    oi, _ = obs.number(cid, "operating_income_ttm")
+    oi, oi_obs = obs.number(cid, "operating_income_ttm")
     pretax, pretax_obs = obs.number(cid, "pretax_income_ttm")
-    ni, _ = obs.number(cid, "net_income_ttm")
+    ni, ni_obs = obs.number(cid, "net_income_ttm")
     stored, stored_obs = obs.number(cid, "nonop_share")
     if stored_obs is not None:
         detail["nonop_share_stored"] = stored
+    # 2026-09-16 FIX-56 1단계(5차 리뷰 B): 이 조건이 alphabet·amazon 을 혼자 한 칸 끌어내리는데 입력 관측 id 가
+    # F6 observation_ids 에 없었다. **점수를 만드는 입력은 감사 경로에 남아야 한다** — 관측이 교체되면 무엇을
+    # 다시 계산해야 하는지 결과만 보고 알 수 있어야 한다.
+    if obs_ids is not None:
+        detail["nonop_share_observation_ids"] = [o["observation_id"] for o in (pretax_obs, oi_obs, ni_obs, stored_obs) if o is not None]
+        obs_ids.extend(detail["nonop_share_observation_ids"])
     if pretax is not None and oi is not None and pretax < 0:
         # 2026-09-15 FIX-53 3단계: 전에는 경고만 붙이고 값을 돌려줘 P4 조건이 걸릴 수 있었다. 적자 기업은 분모가
         # 음수라 **부호 규약이 정의되지 않으므로 산출하지 않는다.** spacex-xai 세전이익을 등록하며 드러났다.
@@ -135,7 +142,8 @@ def _stale_asof(rev_obs: dict[str, Any] | None, period_basis: str | None, rules:
 
 def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
         warnings: list[str], rev_obs: dict[str, Any] | None = None,
-        period_basis: str | None = None, run: dict[str, Any] | None = None) -> dict[str, Any]:
+        period_basis: str | None = None, run: dict[str, Any] | None = None,
+        obs_ids: list[str] | None = None) -> dict[str, Any]:
     spec = rules.f6_p4()
     declared = {c["id"]: c for c in spec.get("conditions", [])}
     hit: list[str] = []
@@ -143,7 +151,7 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
 
     cond = declared.get("nonop_share")
     if cond is not None:
-        value, d = _nonop_share(cid, obs, warnings)
+        value, d = _nonop_share(cid, obs, warnings, obs_ids)
         detail.update(d)
         if value is not None:
             threshold = float(cond.get("threshold", 0.30))
@@ -187,6 +195,31 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
     return detail
 
 
+def _excluded_reason(pid: str, cid: str, obs: ObsLookup, rules: RuleSet) -> dict[str, Any]:
+    """트랙에 없는 파라미터가 **자료로도 성립하지 않는지** 확인해 사유를 남긴다(FIX-56 1단계).
+
+    트랙에서 빼는 것과 입력이 없어서 못 만드는 것은 다르다. 둘을 갈라 적지 않으면 다음 사람이
+    "트랙만 고치면 계산된다" 고 읽는다 — spacex-xai 의 P2 가 실제로 그런 경우였다.
+    """
+    spec = rules.f6_parameters()[pid]
+    inputs: dict[str, Any] = {}
+    for metric in spec["inputs"]:
+        value, _o = obs.number(cid, metric)
+        for alt in (spec.get("input_alternatives") or {}).get(metric, []):
+            if value is None:
+                value, _o = obs.number(cid, alt)
+        inputs[metric] = value
+    missing = [m for m, v in inputs.items() if v is None]
+    if missing:
+        return {"inputs": inputs, "would_compute": False, "why": f"입력 관측 없음 — {', '.join(missing)}"}
+    nonpositive = [m for m in spec.get("requires_positive", []) if inputs[m] is not None and inputs[m] <= 0]
+    if nonpositive:
+        return {"inputs": inputs, "would_compute": False,
+                "why": f"{', '.join(nonpositive)} 이 0 이하 — requires_positive 를 넘지 못한다(대체값으로 채우지 않음)"}
+    return {"inputs": inputs, "would_compute": True,
+            "why": "입력은 성립한다. 트랙이 이 파라미터를 쓰지 않는다 — 트랙 정의를 다시 볼 자리다"}
+
+
 def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
                      obs_ids: list[str],
                      unverified: dict[str, list[str]] | None = None
@@ -200,13 +233,25 @@ def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
     """
     spec = rules.f6_parameters()[pid]
     raw: dict[str, Any] = {}
+    used_alternatives: dict[str, str] = {}
     for metric in spec["inputs"]:
         value, o = obs.number(cid, metric)
+        # 2026-09-16 FIX-56 1단계: 신규 상장사의 `revenue_ttm` 은 P3 의 전년 동기 대조를 세우려고 **분기값**으로 등록된다.
+        # P2 는 12개월 매출이 필요하므로 규칙이 선언한 대체 지표를 먼저 본다. 없으면 원래 지표를 그대로 쓴다.
+        for alt in (spec.get("input_alternatives") or {}).get(metric, []):
+            alt_value, alt_obs = obs.number(cid, alt)
+            if alt_value is not None:
+                value, o = alt_value, alt_obs
+                used_alternatives[metric] = alt
+                break
         if o is not None:
             obs_ids.append(o["observation_id"])
             if unverified is not None and o.get("status") == "legacy_unverified":
                 unverified.setdefault(metric, []).append(pid)
         raw[metric] = value
+        if used_alternatives.get(metric):
+            raw.setdefault("input_alternatives_used", {})[metric] = {"metric": used_alternatives[metric],
+                                                                     "observation_id": (o or {}).get("observation_id")}
         if value is None:
             return None, f"{pid} 입력 {metric} 관측 없음", raw
         # 2026-09-15 FIX-54 1단계 FC-04: tsmc 는 연결 전체 순이익, alibaba 는 모회사 귀속분이라 같은 P1 의 분자 범위가 달랐다.
@@ -293,10 +338,16 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
     subtotal = 0
     missing: list[str] = []
     unverified: dict[str, list[str]] = {}
+    # 2026-09-16 FIX-56 1단계: 트랙이 쓰되 **입력이 있을 때만** 만드는 파라미터다. 입력이 없으면 지금까지처럼
+    # 만들지 않고, 그 사실을 미산출로 적는다 — 없다고 F6 전체를 pending 으로 세우지 않는다.
+    optional_pids = set(track.get("optional_parameters") or [])
     for pid in track["parameters"]:
         if pid == "P4":
             continue
         value, reason, raw = _parameter_value(pid, cid, obs, rules, obs_ids, unverified)
+        if value is None and pid in optional_pids:
+            calc.setdefault("parameters_optional_unmet", {})[pid] = {"inputs": raw, "why": reason}
+            continue
         entry: dict[str, Any] = {"inputs": raw}
         if value is None:
             entry["value"] = None
@@ -326,6 +377,16 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
                                     "확정 정의가 나오면 재계산 대상 (policies.f6.net_cash)")
         calc["parameters"][pid] = entry
 
+    # 2026-09-16 FIX-56 1단계: 트랙이 쓰지 않는 파라미터는 **왜 빠졌는지**를 결과가 말해야 한다.
+    # spacex-xai 는 P1 이 빠지는데(순이익 음수) 그 사실이 calc 어디에도 없어 "트랙이 그래서" 로만 읽혔다.
+    excluded = {}
+    for pid in rules.f6_parameters():
+        if pid in track["parameters"]:
+            continue
+        excluded[pid] = _excluded_reason(pid, cid, obs, rules)
+    if excluded:
+        calc["parameters_not_in_track"] = excluded
+
     # 미검증 입력을 드러낸다. **점수에는 개입하지 않는다** — 우리 수집 공백을 기업 위험으로 바꾸지 않는다.
     if unverified:
         calc["unverified_inputs"] = {m: sorted(set(p)) for m, p in sorted(unverified.items())}
@@ -346,7 +407,7 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
                              observation_ids=obs_ids, calc=calc, warnings=warnings,
                              pending=pending_info("data", "; ".join(missing)))
 
-    p4 = _p4(cid, obs, rules, track, warnings, rev_obs=rev_obs, period_basis=basis, run=run)
+    p4 = _p4(cid, obs, rules, track, warnings, rev_obs=rev_obs, period_basis=basis, run=run, obs_ids=obs_ids)
     calc["p4"] = p4
     calc["subtotal_before_p4"] = subtotal
     total = subtotal - p4["demotion_steps"]

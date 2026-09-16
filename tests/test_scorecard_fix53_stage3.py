@@ -33,8 +33,9 @@ class TotalsUnchangedTest(unittest.TestCase):
     def test_totals_same_as_stage2(self):
         # FIX-54 1단계 S1 로 spacex-xai 가 10 → 11(확정 미인출 여신 등록). 3단계의 다른 칸은 그대로다.
         res = {c["company_id"]: c["total"] for c in load("results.json")["companies"]}
+        # 2026-09-16 FIX-56 1단계: spacex-xai 11 → 9 (C-24 로 listed_newly 트랙이 P2 를 계산 — F6 -1 → -3). 다른 13개사는 불변이다.
         self.assertEqual(res, {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
-                               "spacex-xai": 11, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
+                               "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
                                "openai": 2, "oracle": 2})
 
 
@@ -90,7 +91,10 @@ class ObservationCorrectionsTest(unittest.TestCase):
         self.assertIsNone(p4["nonop_share"])
         self.assertEqual(p4["nonop_share_source"], "incompatible_basis")
         self.assertEqual(p4["conditions_hit"], ["period_basis_not_ttm", "short_history"])
-        self.assertEqual((p4["demotion_steps"], c["factors"]["F6"]["score"]), (1, -1))
+        # 2026-09-16 FIX-56 1단계: P2 가 붙어 소계가 0 → -2 로 내려가 F6 는 -3 이다. **P4 는 여전히 한 칸**이고
+        # nonop 이 빠진다는 이 검사의 뜻도 그대로다.
+        self.assertEqual((p4["demotion_steps"], c["factors"]["F6"]["calc"]["subtotal_before_p4"],
+                          c["factors"]["F6"]["score"]), (1, -2, -3))
 
     def test_negative_pretax_is_not_computed_in_engine(self):
         """세전이익이 음수면 값을 돌려주지 않는다 — 전에는 경고만 붙이고 값을 줘 P4 조건이 걸릴 수 있었다."""

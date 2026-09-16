@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "5b21bf38c6656e2962ad053d27eef5dcff7d49491a7eff76307f353aa07f5edf",
-    "observations": "ca0212abb8c5ca0991220d3dec8a2c8bc85e8896600c088deff0660b82446192",
-    "judgments": "0b4fdb2c9ee71990dc834ba864ba9d3f4ff7bec1c3fa4a6c9e1dccce5b6cf2f8",
+    "run": "253926e19cf0bdb845cc10d920c6563cd45212c2cb765ba8a0e8fc7ce8e3c607",
+    "observations": "3733a89a461e73070c31088b3f86871916d7a130a5357a389f8a399c9bdc33eb",
+    "judgments": "145ba38f2546ea0a7e2f27f3dfe83fae19276dcc736866d7a8c47ecd130ddaa8",
     "sources": "14ec0e8083d82e5321d1b38e1e7fc8dd66c2ebac683d56e85772a46c3a1c3663",
-    "rules": "a7e63f185ddc49229d50d0c628dd5609a101166633c53f6978344c197b9715ac"
+    "rules": "08f6a69521620e5f885d6cb42c369c4827f9e7a355f539a2a3eeb26aff301bd0"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -20,7 +20,8 @@
     "C-20:defer_to_private_g2",
     "C-03:paths_with_generation_gap_5",
     "C-11:block_carryover",
-    "C-13:reject_proxy"
+    "C-13:reject_proxy",
+    "C-24:compute_p2_when_inputs_exist"
   ],
   "companies": [
     {
@@ -117,10 +118,11 @@
           "judgment_id": null,
           "observation_ids": [
             "alphabet.market_cap.v15",
-            "alphabet.market_cap.v15",
             "alphabet.net_cash.nc37",
             "alphabet.net_income_ttm.f6reg28",
-            "alphabet.revenue_ttm.f6reg28",
+            "alphabet.nonop_share.v15",
+            "alphabet.operating_income_ttm.f6reg28",
+            "alphabet.pretax_income_ttm.nonop44",
             "alphabet.revenue_ttm.f6reg28",
             "alphabet.revenue_ttm_prior.f6reg28"
           ],
@@ -192,6 +194,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.51,
+              "nonop_share_observation_ids": [
+                "alphabet.pretax_income_ttm.nonop44",
+                "alphabet.operating_income_ttm.f6reg28",
+                "alphabet.net_income_ttm.f6reg28",
+                "alphabet.nonop_share.v15"
+              ],
               "nonop_share": 0.5067046703801596,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -410,10 +418,11 @@
           "judgment_id": null,
           "observation_ids": [
             "amazon.market_cap.v15",
-            "amazon.market_cap.v15",
             "amazon.net_cash.nc37",
             "amazon.net_income_ttm.f6reg28",
-            "amazon.revenue_ttm.f6reg28",
+            "amazon.nonop_share.v15",
+            "amazon.operating_income_ttm.f6reg28",
+            "amazon.pretax_income_ttm.nonop44",
             "amazon.revenue_ttm.f6reg28",
             "amazon.revenue_ttm_prior.f6reg28"
           ],
@@ -485,6 +494,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.46,
+              "nonop_share_observation_ids": [
+                "amazon.pretax_income_ttm.nonop44",
+                "amazon.operating_income_ttm.f6reg28",
+                "amazon.net_income_ttm.f6reg28",
+                "amazon.nonop_share.v15"
+              ],
               "nonop_share": 0.4659250225114837,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -732,10 +747,11 @@
           "judgment_id": null,
           "observation_ids": [
             "meta.market_cap.v15",
-            "meta.market_cap.v15",
             "meta.net_cash.nc37",
             "meta.net_income_ttm.f6reg28",
-            "meta.revenue_ttm.f6reg28",
+            "meta.nonop_share.v15",
+            "meta.operating_income_ttm.f6reg28",
+            "meta.pretax_income_ttm.nonop44",
             "meta.revenue_ttm.f6reg28",
             "meta.revenue_ttm_prior.f6reg28"
           ],
@@ -807,6 +823,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.01,
+              "nonop_share_observation_ids": [
+                "meta.pretax_income_ttm.nonop44",
+                "meta.operating_income_ttm.f6reg28",
+                "meta.net_income_ttm.f6reg28",
+                "meta.nonop_share.v15"
+              ],
               "nonop_share": 0.006832411681367397,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -1022,10 +1044,11 @@
           "judgment_id": null,
           "observation_ids": [
             "microsoft.market_cap.v15",
-            "microsoft.market_cap.v15",
             "microsoft.net_cash.nc37",
             "microsoft.net_income_ttm.f6reg28",
-            "microsoft.revenue_ttm.f6reg28",
+            "microsoft.nonop_share.v15",
+            "microsoft.operating_income_ttm.f6reg28",
+            "microsoft.pretax_income_ttm.nonop44",
             "microsoft.revenue_ttm.f6reg28",
             "microsoft.revenue_ttm_prior.f6reg28"
           ],
@@ -1097,6 +1120,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.06,
+              "nonop_share_observation_ids": [
+                "microsoft.pretax_income_ttm.nonop44",
+                "microsoft.operating_income_ttm.f6reg28",
+                "microsoft.net_income_ttm.f6reg28",
+                "microsoft.nonop_share.v15"
+              ],
               "nonop_share": 0.0644653898537973,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -1311,10 +1340,11 @@
           "judgment_id": null,
           "observation_ids": [
             "tsmc.market_cap.v15",
-            "tsmc.market_cap.v15",
             "tsmc.net_cash.nc37",
             "tsmc.net_income_ttm.f6reg28",
-            "tsmc.revenue_ttm.f6reg28",
+            "tsmc.nonop_share.v15",
+            "tsmc.operating_income_ttm.f6reg28",
+            "tsmc.pretax_income_ttm.nonop44",
             "tsmc.revenue_ttm.f6reg28",
             "tsmc.revenue_ttm_prior.f6reg28"
           ],
@@ -1386,6 +1416,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.07,
+              "nonop_share_observation_ids": [
+                "tsmc.pretax_income_ttm.nonop44",
+                "tsmc.operating_income_ttm.f6reg28",
+                "tsmc.net_income_ttm.f6reg28",
+                "tsmc.nonop_share.v15"
+              ],
               "nonop_share": 0.05170462958187779,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -1506,7 +1542,7 @@
         "F7",
         "F8"
       ],
-      "rank": 6
+      "rank": 5
     },
     {
       "company_id": "alibaba",
@@ -1602,10 +1638,11 @@
           "judgment_id": null,
           "observation_ids": [
             "alibaba.market_cap.v15",
-            "alibaba.market_cap.v15",
             "alibaba.net_cash.nc37",
             "alibaba.net_income_ttm.f6reg28",
-            "alibaba.revenue_ttm.obsreg25",
+            "alibaba.nonop_share.v15",
+            "alibaba.operating_income_ttm.obsreg25",
+            "alibaba.pretax_income_ttm.nonop44",
             "alibaba.revenue_ttm.obsreg25",
             "alibaba.revenue_ttm_prior.f6reg28"
           ],
@@ -1677,6 +1714,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.54,
+              "nonop_share_observation_ids": [
+                "alibaba.pretax_income_ttm.nonop44",
+                "alibaba.operating_income_ttm.obsreg25",
+                "alibaba.net_income_ttm.f6reg28",
+                "alibaba.nonop_share.v15"
+              ],
               "nonop_share": 0.6124150030528569,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -2122,7 +2165,7 @@
         "F4",
         "F7"
       ],
-      "rank": 6
+      "rank": 5
     },
     {
       "company_id": "apple",
@@ -2218,10 +2261,11 @@
           "judgment_id": null,
           "observation_ids": [
             "apple.market_cap.v15",
-            "apple.market_cap.v15",
             "apple.net_cash.v15",
             "apple.net_income_ttm.f6reg28",
-            "apple.revenue_ttm.f6reg28",
+            "apple.nonop_share.v15",
+            "apple.operating_income_ttm.f6reg28",
+            "apple.pretax_income_ttm.nonop44",
             "apple.revenue_ttm.f6reg28",
             "apple.revenue_ttm_prior.f6reg28"
           ],
@@ -2311,6 +2355,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.01,
+              "nonop_share_observation_ids": [
+                "apple.pretax_income_ttm.nonop44",
+                "apple.operating_income_ttm.f6reg28",
+                "apple.net_income_ttm.f6reg28",
+                "apple.nonop_share.v15"
+              ],
               "nonop_share": 0.006715585032006466,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -2528,10 +2578,11 @@
           "judgment_id": null,
           "observation_ids": [
             "nvidia.market_cap.v15",
-            "nvidia.market_cap.v15",
             "nvidia.net_cash.nc37",
             "nvidia.net_income_ttm.f6reg28",
-            "nvidia.revenue_ttm.f6reg28",
+            "nvidia.nonop_share.v15",
+            "nvidia.operating_income_ttm.f6reg28",
+            "nvidia.pretax_income_ttm.nonop44",
             "nvidia.revenue_ttm.f6reg28",
             "nvidia.revenue_ttm_prior.f6reg28"
           ],
@@ -2603,6 +2654,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.14,
+              "nonop_share_observation_ids": [
+                "nvidia.pretax_income_ttm.nonop44",
+                "nvidia.operating_income_ttm.f6reg28",
+                "nvidia.net_income_ttm.f6reg28",
+                "nvidia.nonop_share.v15"
+              ],
               "nonop_share": 0.13999991294620512,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -2719,7 +2776,7 @@
         "F5",
         "F8"
       ],
-      "rank": 8
+      "rank": 7
     },
     {
       "company_id": "palantir",
@@ -2815,10 +2872,11 @@
           "judgment_id": null,
           "observation_ids": [
             "palantir.market_cap.v15",
-            "palantir.market_cap.v15",
             "palantir.net_cash.v15",
             "palantir.net_income_ttm.f6reg28",
-            "palantir.revenue_ttm.f6reg28",
+            "palantir.nonop_share.v15",
+            "palantir.operating_income_ttm.f6reg28",
+            "palantir.pretax_income_ttm.nonop44",
             "palantir.revenue_ttm.f6reg28",
             "palantir.revenue_ttm_prior.f6reg28"
           ],
@@ -2908,6 +2966,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.14,
+              "nonop_share_observation_ids": [
+                "palantir.pretax_income_ttm.nonop44",
+                "palantir.operating_income_ttm.f6reg28",
+                "palantir.net_income_ttm.f6reg28",
+                "palantir.nonop_share.v15"
+              ],
               "nonop_share": 0.14231842256895727,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -3118,12 +3182,19 @@
         },
         "F6": {
           "factor": "F6",
-          "score": -1,
+          "score": -3,
           "status": "ok",
           "basis": "computed",
           "judgment_id": null,
           "observation_ids": [
+            "spacex-xai.market_cap.v15",
+            "spacex-xai.net_cash.nc37",
+            "spacex-xai.net_income_ttm.f6reg28",
+            "spacex-xai.nonop_share.v15",
+            "spacex-xai.operating_income_ttm.f6reg28",
+            "spacex-xai.pretax_income_ttm.fix53",
             "spacex-xai.revenue_ttm.f6reg28",
+            "spacex-xai.revenue_ttm_full.fix56",
             "spacex-xai.revenue_ttm_prior.f6reg28"
           ],
           "calc": {
@@ -3133,6 +3204,33 @@
             "period_basis": "quarterly_yoy",
             "floor": -3,
             "parameters": {
+              "P2": {
+                "inputs": {
+                  "market_cap": 1910000000000.0,
+                  "net_cash": 60301000000.0,
+                  "revenue_ttm": 23044000000.0,
+                  "input_alternatives_used": {
+                    "revenue_ttm": {
+                      "metric": "revenue_ttm_full",
+                      "observation_id": "spacex-xai.revenue_ttm_full.fix56"
+                    }
+                  }
+                },
+                "value": 80.26813921194237,
+                "score": -2,
+                "band": "20+",
+                "boundary": {
+                  "flag": false,
+                  "nearest_boundary": 20.0,
+                  "distance_ratio": 3.0134069605971185,
+                  "tolerance": 0.03
+                },
+                "net_cash_definition": {
+                  "status": "working_definition",
+                  "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
+                  "provenance": "legacy_reverse_engineered"
+                }
+              },
               "P3": {
                 "inputs": {
                   "revenue_ttm": 7814000000.0,
@@ -3149,8 +3247,30 @@
                 }
               }
             },
+            "parameters_not_in_track": {
+              "P1": {
+                "inputs": {
+                  "market_cap": 1910000000000.0,
+                  "net_income_ttm": -8218000000.0
+                },
+                "would_compute": false,
+                "why": "net_income_ttm 이 0 이하 — requires_positive 를 넘지 못한다(대체값으로 채우지 않음)"
+              }
+            },
+            "unverified_inputs": {
+              "market_cap": [
+                "P2"
+              ]
+            },
+            "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": null,
+              "nonop_share_observation_ids": [
+                "spacex-xai.pretax_income_ttm.fix53",
+                "spacex-xai.operating_income_ttm.f6reg28",
+                "spacex-xai.net_income_ttm.f6reg28",
+                "spacex-xai.nonop_share.v15"
+              ],
               "nonop_share": null,
               "nonop_share_source": "incompatible_basis",
               "nonop_share_missing": "세전이익 -7,623,000,000 이 음수 — 부호 규약이 서지 않아 산출하지 않는다",
@@ -3176,10 +3296,12 @@
               "demotion_steps": 1,
               "demotion_sole_cause": null
             },
-            "subtotal_before_p4": 0,
-            "score": -1
+            "subtotal_before_p4": -2,
+            "score": -3
           },
           "warnings": [
+            "net_cash 작업 정의 ⚠️ legacy 역산으로 세운 정의 위에서 P2 를 계산한다 — 확정 정의가 나오면 재계산 대상 (policies.f6.net_cash)",
+            "미검증 입력 ⚠️ market_cap 이 legacy_unverified 인데 P2 가 그 위에 선다 — 점수는 그대로",
             "nonop_share 산출 안 함 ⚠️ 세전이익 -7,623,000,000 이 음수 — 부호 규약이 서지 않아 산출하지 않는다",
             "P4 보정 한 칸 — 조건 period_basis_not_ttm, short_history"
           ],
@@ -3286,8 +3408,8 @@
         }
       },
       "moat": 18,
-      "trap": -7,
-      "total": 11,
+      "trap": -9,
+      "total": 9,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3299,7 +3421,7 @@
         "F7",
         "F8"
       ],
-      "rank": 5
+      "rank": 7
     },
     {
       "company_id": "tesla",
@@ -3395,10 +3517,11 @@
           "judgment_id": null,
           "observation_ids": [
             "tesla.market_cap.v15",
-            "tesla.market_cap.v15",
             "tesla.net_cash.nc37",
             "tesla.net_income_ttm.f6reg28",
-            "tesla.revenue_ttm.f6reg28",
+            "tesla.nonop_share.v15",
+            "tesla.operating_income_ttm.f6reg28",
+            "tesla.pretax_income_ttm.nonop44",
             "tesla.revenue_ttm.f6reg28",
             "tesla.revenue_ttm_prior.f6reg28"
           ],
@@ -3470,6 +3593,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": 0.18,
+              "nonop_share_observation_ids": [
+                "tesla.pretax_income_ttm.nonop44",
+                "tesla.operating_income_ttm.f6reg28",
+                "tesla.net_income_ttm.f6reg28",
+                "tesla.nonop_share.v15"
+              ],
               "nonop_share": 0.16197048111941728,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -3685,10 +3814,11 @@
           "judgment_id": null,
           "observation_ids": [
             "oracle.market_cap.v15",
-            "oracle.market_cap.v15",
             "oracle.net_cash.nc37",
             "oracle.net_income_ttm.f6reg28",
-            "oracle.revenue_ttm.f6reg28",
+            "oracle.nonop_share.v15",
+            "oracle.operating_income_ttm.f6reg28",
+            "oracle.pretax_income_ttm.nonop44",
             "oracle.revenue_ttm.f6reg28",
             "oracle.revenue_ttm_prior.f6reg28"
           ],
@@ -3760,6 +3890,12 @@
             "unverified_inputs_note": "이 파라미터들은 status=legacy_unverified 관측 위에 서 있다. **점수를 깎지 않는다** — 자료를 아직 실측하지 못한 것이지 그 기업의 성질이 아니다. 실측으로 교체되면 이 표시가 사라진다.",
             "p4": {
               "nonop_share_stored": -0.15,
+              "nonop_share_observation_ids": [
+                "oracle.pretax_income_ttm.nonop44",
+                "oracle.operating_income_ttm.f6reg28",
+                "oracle.net_income_ttm.f6reg28",
+                "oracle.nonop_share.v15"
+              ],
               "nonop_share": -0.05379973406975555,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
@@ -4224,14 +4360,6 @@
     },
     {
       "rank": 5,
-      "company_id": "spacex-xai",
-      "display_name": "SpaceX + xAI",
-      "moat": 18,
-      "trap": -7,
-      "total": 11
-    },
-    {
-      "rank": 6,
       "company_id": "anthropic",
       "display_name": "Anthropic",
       "moat": 20,
@@ -4239,7 +4367,7 @@
       "total": 10
     },
     {
-      "rank": 6,
+      "rank": 5,
       "company_id": "tsmc",
       "display_name": "TSMC",
       "moat": 17,
@@ -4247,7 +4375,15 @@
       "total": 10
     },
     {
-      "rank": 8,
+      "rank": 7,
+      "company_id": "spacex-xai",
+      "display_name": "SpaceX + xAI",
+      "moat": 18,
+      "trap": -9,
+      "total": 9
+    },
+    {
+      "rank": 7,
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "moat": 16,
@@ -4310,6 +4446,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 163,
-  "results_hash": "bf46e0288a3c33aa68ad04db3472c99ae0fb4fed3f62ba7639b2482e03262f2b"
+  "warnings_count": 165,
+  "results_hash": "bbff8b39ab334ad98cc5ef4a912e0768eb1505db88906d2c22aba7ba20a55965"
 }

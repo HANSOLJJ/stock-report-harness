@@ -48,8 +48,9 @@ class Stage1Test(unittest.TestCase):
         cls.run_json = load("run.json")   # TestCase.run 을 가리지 않게 이름을 다르게 둔다
 
     def test_totals_unchanged(self):
+        # 2026-09-16 FIX-56 1단계: spacex-xai 11 → 9 (C-24 로 listed_newly 트랙이 P2 를 계산 — F6 -1 → -3). 다른 13개사는 불변이다.
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
-                         {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "spacex-xai": 11, "tsmc": 10, "anthropic": 10,
+                         {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "spacex-xai": 9, "tsmc": 10, "anthropic": 10,
                           "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5, "openai": 2, "oracle": 2})
 
     # S1 — 긴장 다섯
@@ -106,7 +107,8 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual(p4["spacex-xai"]["conditions_hit"], ["period_basis_not_ttm", "short_history"])
         self.assertIsNone(p4["spacex-xai"]["demotion_sole_cause"])
         self.assertEqual(p4["spacex-xai"]["demotion_steps"], 1)
-        self.assertEqual(self.res["spacex-xai"]["factors"]["F6"]["score"], -1)          # 한 칸 상한이라 점수 불변
+        # 2026-09-16 FIX-56 1단계: P2 가 붙어 소계가 -2 라 F6 는 -3 이다. **P4 는 두 조건에도 한 칸 상한 그대로**다.
+        self.assertEqual(self.res["spacex-xai"]["factors"]["F6"]["score"], -3)
         self.assertEqual(p4["tsmc"]["conditions_hit"], ["period_basis_not_ttm"])        # 연간 트랙은 관측으로도 같은 결과
         self.assertEqual(p4["tsmc"]["demotion_sole_cause"], "period_basis_not_ttm")
         self.assertEqual(p4["alphabet"]["period_basis"], "ttm")

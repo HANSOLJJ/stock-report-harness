@@ -32,7 +32,8 @@ class UndrawnCreditCensusTest(unittest.TestCase):
         self.assertAlmostEqual(g3["runway_years"], (93522 + 4355) / 32348, places=6)
         self.assertEqual(g3["step"], 0)
         self.assertTrue(g3["boundary"]["flag"])
-        self.assertEqual((self.res["spacex-xai"]["factors"]["F9"]["score"], self.res["spacex-xai"]["total"]), (-3, 11))
+        # 2026-09-16 FIX-56 1단계: 총점이 11 → 9 로 바뀐 것은 F6(P2 산출) 때문이고 **이 관측이 서는 F9 는 -3 그대로**다.
+        self.assertEqual((self.res["spacex-xai"]["factors"]["F9"]["score"], self.res["spacex-xai"]["total"]), (-3, 9))
 
     def test_amazon_registered_score_unchanged(self):
         o = self.obs["amazon.undrawn_credit.fix54"]

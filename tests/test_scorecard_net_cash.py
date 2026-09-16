@@ -321,7 +321,8 @@ class RegisteredObservationsTest(unittest.TestCase):
         flagged = {c["company_id"] for c in self.results["companies"]
                    if "market_cap" in ((c["factors"]["F6"].get("calc") or {})
                                        .get("unverified_inputs") or {})}
-        self.assertEqual(len(flagged), 11)
+        # 2026-09-16 FIX-56 1단계: spacex-xai 가 P2 를 계산하게 되면서 12번째로 들어왔다(시총 v15 는 여전히 legacy_unverified).
+        self.assertEqual(len(flagged), 12)
 
     def test_nvidia_maturity_bucket_double_count_removed(self):
         """**만기 버킷은 대차대조표 줄이 아니다.** 현금에 더하면 현금성자산 안의 증권이 두 번 세어진다."""
@@ -501,7 +502,8 @@ class P4ThresholdBoundaryTest(unittest.TestCase):
         self.assertNotIn("nonop_share", p4["conditions_hit"])
         self.assertEqual(p4["demotion_steps"], 1)
         spx = next(c for c in self.results["companies"] if c["company_id"] == "spacex-xai")
-        self.assertEqual(spx["factors"]["F6"]["score"], -1)
+        # 2026-09-16 FIX-56 1단계: P2 가 붙어 F6 는 -3 이다. **이 검사의 뜻(조건은 빠지고 강등 한 칸은 남는다)은 그대로**다.
+        self.assertEqual(spx["factors"]["F6"]["score"], -3)
 
 
 class NonopShareDivergenceTest(unittest.TestCase):

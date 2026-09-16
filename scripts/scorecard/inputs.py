@@ -80,7 +80,8 @@ def factor_result(
         "status": status,
         "basis": basis,
         "judgment_id": judgment["judgment_id"] if judgment else None,
-        "observation_ids": sorted(observation_ids or []),
+        # 2026-09-16 FIX-56 1단계: P4 입력을 감사 경로에 넣으며 같은 관측이 두 번 들어올 수 있다(net_income_ttm 은 P1 과 P4 둘 다 읽는다).
+        "observation_ids": sorted(set(observation_ids or [])),
         "calc": calc or {},
         "warnings": list(warnings or []),
         "pending": pending,

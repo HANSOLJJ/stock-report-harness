@@ -480,10 +480,12 @@ def conflict_lines(ctx: Any) -> list[str]:
     문장을 손으로 적지 않고 출처·규칙에서 읽는다 — 규칙이 바뀌면 이 절도 따라 바뀌어야 한다.
     """
     out = []
-    conflicts = sorted({s["conflict_of_interest"] for s in ctx.sources.get("items", []) if s.get("conflict_of_interest")})
-    if conflicts:
+    # 2026-09-16 FIX-56 1단계(5차 리뷰 B): 문구 집합의 크기를 세어 문구가 같은 두 출처가 하나로 합쳐졌다(6건 → 5종).
+    # 읽는 사람이 세고 싶은 것은 **표기된 출처의 수**이므로 출처 건수로 센다.
+    flagged = [s for s in ctx.sources.get("items", []) if s.get("conflict_of_interest")]
+    if flagged:
         out.append(f"**이해상충** — 이 채점표는 Anthropic 이 만든 Claude 가 작성했고 Anthropic 이 채점 대상에 들어 있다. 이해상충이 표기된 출처가 "
-                   f"{len(conflicts)}종이고 문장은 References 의 각 출처 줄에 있다. 비상장 2사의 수치는 회사 자체 발표(이해당사자 1차 자료)에서 온다.")
+                   f"{len(flagged)}건이고 문장은 References 의 각 출처 줄에 있다. 비상장 2사의 수치는 회사 자체 발표(이해당사자 1차 자료)에서 온다.")
     third = [t for t in (ctx.rules.payload.get("open_tensions") or []) if "비 Claude" in (t.get("rechecker") or "")]
     if third:
         ids = " · ".join(f"{t['id']}({', '.join(t['judgment_ids'])}, {t['recheck_at']})" for t in sorted(third, key=lambda x: x["id"]))

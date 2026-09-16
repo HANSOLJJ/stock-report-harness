@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: ca0212abb8c5ca0991220d3dec8a2c8bc85e8896600c088deff0660b82446192
-judgments_hash: 0b4fdb2c9ee71990dc834ba864ba9d3f4ff7bec1c3fa4a6c9e1dccce5b6cf2f8
+observations_hash: 3733a89a461e73070c31088b3f86871916d7a130a5357a389f8a399c9bdc33eb
+judgments_hash: 145ba38f2546ea0a7e2f27f3dfe83fae19276dcc736866d7a8c47ecd130ddaa8
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 361건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 362건, 판단 114건.
 
 ## 원자료
 
@@ -353,6 +353,7 @@ created_at: 2026-09-11
 | ps_ratio | 82.9 | legacy_unverified | actual | SRC-v15-html | 82.9 |  |
 | quarter_note | Q2 (8/4) \| $7.8B (+92%) · Starlink 1,200만 · AI 세그먼트 $2.56B(+247%) \| -$0.09 (컨센 -$0.26 상회) · 영업적자 -14.9% \| TTM -$32.5B · 현금 $100B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
 | revenue_ttm | $7.8B | verified | actual | SRC-SEC-FACTS-F6 | 2026Q2 분기 매출 7,814M (TTM 아님) | F6-REG-28. **분기 전년 동기 기준이다** \| [FIX-53 3단계] **분기값(2026Q2) — TTM 아님.** P3 분기 YoY  |
+| revenue_ttm_full | $23.0B | verified | derived | SRC-SEC-SPCX-S1A-2026 | TTM 매출 23,044M (FY2025 18,674 + H1'26 12,508 − H1'25 8,138) | FIX-56 1단계. 12개월 매출 — P2 전용. 분기값 `revenue_ttm` 과 다른 지표다. |
 | revenue_ttm_prior | $4.1B | verified | actual | SRC-SEC-FACTS-F6 | 2025 Q2 분기 매출 $4,071M (TTM 아님) | F6-REG-28. 같은 분기 전년 동기 \| [FIX-54 2단계] **분기값(2025Q2) — TTM 아님.** P3 분기 YoY 전용. |
 | runway_years | 3.1 | legacy_unverified | derived | SRC-v15-html | 3.1년 | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | — | not_applicable | actual | SRC-v15-html | 적자 | 적자 |
@@ -722,4 +723,4 @@ created_at: 2026-09-11
 | openai | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 
 - legacy_unverified 관측 203건은 기준선 열람용이며 이번 실행에서 재검증되지 않았다.
-- 미결 규칙 결정: C-05, C-06, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2, C-03=paths_with_generation_gap_5, C-11=block_carryover, C-13=reject_proxy)
+- 미결 규칙 결정: C-05, C-06, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2, C-03=paths_with_generation_gap_5, C-11=block_carryover, C-13=reject_proxy, C-24=compute_p2_when_inputs_exist)
