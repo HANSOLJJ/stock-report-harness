@@ -7,7 +7,7 @@
   "price_as_of": "2026-09-02",
   "info_cutoff": "2026-09-02",
   "rule_version": "v1.7",
-  "rule_hash": "7e0e92144fbcc9909f7508a05b9fc7b992b4b2b9b576439b7bf50bbc60c838a3",
+  "rule_hash": "d51e1cbda85aa59c6073e15142c1064eac3cc571f7a73d747b77f3ed5591fc69",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
@@ -127,6 +127,7 @@
     "확정 미인출 여신(FIX-54 S2)은 **상장 12개사만 관측으로 남겼다.** 비상장 anthropic·openai 는 관측을 만들지 않았다. [FIX-56 2단계 사유 정정 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) high] 전에 적은 `인용할 보존 원문·source_id 가 없어서` 는 **더 이상 성립하지 않는다** — FIX-55 2단계가 두 회사의 보도자료를 `SRC-ANTHROPIC-SERIESH-2026`·`SRC-OPENAI-FUNDING-2026` 으로 등재했다. **실제 사유는 자료의 성질이다.** anthropic 보도자료에는 여신 관련 표현이 광역 검색으로도 0건이고, openai 보도자료에는 `expanded our existing revolving credit facility to approximately $4.7 billion … The facility remains undrawn at close` 가 있으나 (1) 금액이 `approximately` 이고 (2) `at close` 는 대차대조 기준일이 아니라 측정 시점을 세울 수 없으며 (3) 약정 조건이 적혀 있지 않고 (4) 감사받지 않은 회사 자체 발표다. 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 요건을 채우지 못한다 — 상장 12개사는 전부 기준일이 붙은 공시 사실이라 같은 잣대가 아니다. 두 회사는 C-20 경로라 G3 가 생략돼 어차피 점수에 닿지 않는다. 근거는 validation/fix-54/undrawn-credit-census.md · validation/fix-55/credit-tag-sweep.md 에 있다 [FIX-55 1단계 · 4차 리뷰 B low — 처리 통일]",
     "[FIX-56 1단계] spacex-xai 의 12개월 매출은 `spacex-xai.revenue_ttm_full.fix56` 23,044M 이다 (S-1/A FY2025 18,674 + 10-Q H1'26 12,508 − H1'25 8,138). 같은 회사의 `revenue_ttm` 은 **분기값**이며 P3 전용이다 — 두 지표를 섞지 않는다.",
     "[FIX-56 2단계 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] openai 보도자료에 회전여신 문장이 있다 — `We have also expanded our existing revolving credit facility to approximately $4.7 billion … The facility is supported by a global syndicate including JPMorgan Chase, Citi, Goldman Sachs, … The facility remains undrawn at close.` **관측으로 등록하지 않았다.** 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니라 측정 시점을 세울 수 없으며, 약정 조건이 없고 감사받지 않은 회사 자체 발표다. openai 는 C-20 경로라 F9 가 G2 에서 G4 로 건너뛰고 **G3(런웨이)를 계산하지 않으므로** 이 값이 들어갈 자리 자체가 없다. 부재 주장 5건의 checked_scope 검색 범위를 여신 어휘까지 넓혀 이 문장을 적었다",
-    "[FIX-57 1단계 · obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) medium] **상장 12개사의 시총 관측 12건이 전부 점수 경로이고 전부 `legacy_unverified` 다.** FIX-56 1단계(C-24)가 spacex-xai 의 P2 를 켜면서 11건에서 12건이 됐다. P1·P2 가 그 위에 서고 상류는 StockAnalysis(원천 장부 `not_adopted · legacy_upstream`)다. 점수를 깎지 않고 calc.unverified_inputs 와 경고로 드러낸다 — 수집 공백을 기업 위험으로 바꾸지 않는다."
+    "[FIX-57 1단계 · obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) medium] **상장 12개사의 시총 관측 12건이 전부 점수 경로이고 전부 `legacy_unverified` 다.** FIX-56 1단계(C-24)가 spacex-xai 의 P2 를 켜면서 11건에서 12건이 됐다. P1·P2 가 그 위에 서고 상류는 StockAnalysis(원천 장부 `not_adopted · legacy_upstream`)다. 점수를 깎지 않고 calc.unverified_inputs 와 경고로 드러낸다 — 수집 공백을 기업 위험으로 바꾸지 않는다.",
+    "[FIX-57 2단계 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium] 비상장 2사의 **계약 수입은 부재**다(`not_disclosed_confirmed`, 구조 기준). 전에는 그 칸에 ARR 이 값으로 들어 있어 지표와 값이 어긋났다 — ARR 은 `anthropic.arr.v15`·`openai.arr.v15` 에 그대로 있고 F6 비상장 P2 가 그것을 읽는다. G4 는 anthropic 이 C-07 비교 불가·C-20 중복 방지로, openai 가 G1 하한으로 막혀 **두 회사 모두 C-16 한 칸 강등에 닿지 않는다.** 점수 불변."
   ]
 }

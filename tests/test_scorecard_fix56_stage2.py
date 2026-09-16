@@ -123,15 +123,17 @@ class Stage2Test(unittest.TestCase):
         for t in RULES.payload["open_tensions"]:
             if t.get("third_party_recheck"):
                 kinds.setdefault(t["third_party_recheck"], []).append(t["id"])
-        self.assertEqual(sorted(kinds["committed"]), ["TEN-RA4-01", "TEN-RC-02", "TEN-RC-03", "TEN-RC3-01"])
-        self.assertEqual(kinds["partial"], ["TEN-RC4-01"])
+        # 2026-09-16 FIX-57 2단계: TEN-RA4-01 이 meta·alibaba·openai 의 F2 를 받으면서 partial 로 옮겨 갔다
+        # — 비 Claude 재판정 약속은 anthropic.F2 하나에만 걸린다. 갈래가 사실을 따라 움직인다는 것이 요점이다.
+        self.assertEqual(sorted(kinds["committed"]), ["TEN-RC-02", "TEN-RC-03", "TEN-RC3-01"])
+        self.assertEqual(sorted(kinds["partial"]), ["TEN-RA4-01", "TEN-RC4-01"])
         self.assertEqual(sorted(kinds["recommended"]), ["TEN-RA3-01", "TEN-RC-05", "TEN-RC3-03"])
         lines = rc.conflict_lines(self.ctx)
         head = next(x for x in lines if "제3자 재검토 약속" in x)
-        self.assertIn("**확정**된 긴장 4건", head)
-        self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", head)
+        self.assertIn("**확정**된 긴장 3건", head)
         partial = next(x for x in lines if "일부만 확정" in x)
         self.assertIn("TEN-RC4-01(anthropic.F3, 2026-11)", partial)        # 셋 중 anthropic 만
+        self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", partial)        # 넷 중 anthropic 만
         rec = next(x for x in lines if "권장일 뿐 약속이 아닌 것" in x)
         self.assertIn("3건", rec)
         for line in lines:

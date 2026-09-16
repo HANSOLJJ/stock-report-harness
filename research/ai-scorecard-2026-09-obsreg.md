@@ -5,7 +5,7 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 4a2f29787dd9700a0bd6e773afd28373c1b90e48dc2faf1a0732b253bdd6b61c
+observations_hash: 94d618f9cdd091c126291aca149f50ae540b886d4e2cd13b103b5d4f8790439d
 judgments_hash: 6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6
 created_at: 2026-09-11
 ---
@@ -214,7 +214,7 @@ created_at: 2026-09-11
 | arr_prior | $47.0B | legacy_unverified | run_rate | SRC-ANTHROPIC-SERIESH-2026 | ARR $47B → $65B (직전 런레이트) | PRIV-IMPL-31 / C-12. P3 입력. 시점 라벨이 원문에 없어 null 이다 |
 | cash | — | not_disclosed | actual | SRC-v15-md | 미공시 | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 |
 | cash | — | not_disclosed | actual | SRC-v15-html | 미공시 | [PRIV-IMPL-31 대체됨 → anthropic.cash.priv31]  |
-| contracted_revenue | $65.0B | incompatible_basis | actual | SRC-v15-rule | ARR $65B — 계약 수입 아님(C-07) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
+| contracted_revenue | — | not_disclosed | actual | SRC-v15-rule | 미공시 — 비상장이라 계약 수입(ASC 606 잔여 수행의무)을 제출할 의무가 없다 | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | 비상장 | legacy_unverified | text | SRC-v15-html | 비상장 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | cumulative_raised | $125.0B | legacy_unverified | actual | SRC-v15-md | 약 $125B(2021년~) | PRIV-IMPL-31 / C-12. 승계 관측 anthropic.cumulative_raised.v15 를 대체한다 — **값은 같고 모순 기 |
 | cumulative_raised | $125.0B | legacy_unverified | actual | SRC-v15-rule | 약 $125B(2021년~) | [PRIV-IMPL-31 대체됨 → anthropic.cumulative_raised.priv31] 규칙 v1.5 ⑥ 비상장 절 |
@@ -431,7 +431,7 @@ created_at: 2026-09-11
 | arr_prior | $25.0B | legacy_unverified | run_rate | SRC-v15-md | ARR $25B → $40B (2~4월 정체 구간) | PRIV-IMPL-31 / C-12. P3 입력. arr 시점 표기가 원문 안에서 갈리나 금액은 같아 점수 영향 없음 |
 | cash | — | not_disclosed | actual | SRC-v15-md | 미공시 | PRIV-IMPL-31 / C-20. 승계 관측 openai.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인 |
 | cash | — | not_disclosed | actual | SRC-v15-html | 미공시 | [PRIV-IMPL-31 대체됨 → openai.cash.priv31]  |
-| contracted_revenue | $40.0B | incompatible_basis | actual | SRC-v15-rule | ARR $40B — 계약 수입 아님(C-07) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
+| contracted_revenue | — | not_disclosed | actual | SRC-v15-rule | 미공시 — 비상장이라 계약 수입(ASC 606 잔여 수행의무)을 제출할 의무가 없다 | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | 비상장 | legacy_unverified | text | SRC-v15-html | 비상장 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | cumulative_raised | $185.0B | legacy_unverified | actual | SRC-v15-rule | 약 $180~190B(중간값) | 규칙 v1.5 ⑥ 비상장 절 |
 | debt_ebitda | — | not_disclosed | actual | SRC-v15-md | — | PRIV-IMPL-31 / C-20. 승계 관측 openai.debt_ebitda.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — |
@@ -682,9 +682,9 @@ created_at: 2026-09-11
 | alibaba | contracted_revenue | not_disclosed | [OBS-REG-25 대체됨 → alibaba.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | spacex-xai | offbalance_B | not_disclosed | [OBS-REG-25 대체됨 → spacex-xai.offbalance_B.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | anthropic | offbalance_B | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
-| anthropic | contracted_revenue | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
+| anthropic | contracted_revenue | not_disclosed | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | openai | offbalance_B | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
-| openai | contracted_revenue | incompatible_basis | 규칙 v1.5 ⑨ 게이트 4 적용표 |
+| openai | contracted_revenue | not_disclosed | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | alibaba | contracted_revenue | not_disclosed | OBS-REG-25 · [FIX-53 3단계] **확인된 미공시.** 20-F 가 두 갈래(1년 이하 계약 · right-to-invoice 계약) 면제를 선언하고, 문서 전문 검 |
 | anthropic | fcf_ttm | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.fcf_ttm.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |
 | anthropic | cash | not_disclosed | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 붙인다 |

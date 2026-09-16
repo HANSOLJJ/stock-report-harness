@@ -79,7 +79,9 @@ def load_context(slug: str) -> RunContext:
     unknown = [cid for cid in run["companies"] if cid not in companies]
     if unknown:
         raise SchemaError(f"run.json companies 에 알 수 없는 기업 {unknown}")
-    observations = validate_observations(load_json_strict(d / "observations.json"), companies, slug)
+    # 2026-09-16 FIX-57 2단계: `확인된 미공시` 라벨이 규칙이 선언한 경로를 채우는지 여기서 함께 본다.
+    observations = validate_observations(load_json_strict(d / "observations.json"), companies, slug,
+                                         missing_policy=rules.payload["policies"].get("missing_types"))
     judgments = validate_judgments(load_json_strict(d / "judgments.json"), companies, rules.payload, slug)
     sources = load_json_strict(d / "sources.json") if (d / "sources.json").is_file() else {"schema": "scorecard.sources/1", "items": []}
     hashes = input_hashes(slug)

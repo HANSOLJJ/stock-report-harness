@@ -3827,15 +3827,37 @@
       "observation_id": "anthropic.contracted_revenue.v15",
       "company_id": "anthropic",
       "metric": "contracted_revenue",
-      "value": 65000000000.0,
+      "value": null,
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
       "source_id": "SRC-v15-rule",
-      "status": "incompatible_basis",
-      "basis": null,
-      "raw": "ARR $65B — 계약 수입 아님(C-07)",
-      "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
+      "status": "not_disclosed",
+      "basis": {
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 주석 항목이다 — 구조적으로 확인된 미공시",
+        "criterion_source": "rules.policies.missing_types.not_disclosed_confirmed.routes.structural",
+        "label_meaning": "**구조적 미공시**다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니라 `제출 의무가 없어 이 형태의 수치가 존재한 적이 없다` 는 뜻이다.",
+        "value_moved": {
+          "was": {
+            "status": "incompatible_basis",
+            "value": 65000000000.0,
+            "raw": "ARR $65B — 계약 수입 아님(C-07)"
+          },
+          "why": "[FIX-57 2단계 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium] **계약 수입 칸에 ARR 이 들어 있었다.** 지표와 값이 어긋나고, `incompatible_basis` 라벨이 부재 판정 앞에서 멈춰 결측 유형이 붙지 않았다. 같은 값은 `anthropic.arr.v15` 에 이미 있으므로 여기서는 지우고 부재로 세운다.",
+          "same_value_lives_in": "anthropic.arr.v15",
+          "c07_still_holds": "ARR 과 컴퓨트 약정의 기간·범위가 다르다는 C-07 판정은 그대로다 — 그 사실은 판단 입력 `anthropic.F9.inputs.coverage_comparable = no` 와 `anthropic.offbalance_B.v15` 가 담는다. 이 관측이 값을 들고 있을 이유가 아니었다."
+        },
+        "score_path": "G4 는 `coverage_comparable=no` 로 **C-07 비교 불가**에서 먼저 멈춘다(계약 수입과 컴퓨트 약정의 기간·범위가 다르다). 그 뒤 C-20 경로가 `no_extra_penalty_because` 로 G2 에서 이미 깎은 같은 미공시 사유의 중복 감점을 막는다. **C-16 한 칸 강등에 닿지 않는다.**",
+        "checked_scope": {
+          "preserved_release": "보존 보도자료 전문(태그를 걷은 본문)에서 `remaining performance obligation` · `performance obligation` · `unsatisfied performance` · `backlog` · `contracted` · `committed revenue` **전부 0건**이고 `RPO` 도 단어 경계로 0건이다(부분 문자열 `rpo` 는 `purpose`·`corporation` 안에서만 잡힌다 — 단어로는 없다). ffaf318:validation/priv-arr-17b/_raw/. 공개된 수치는 조달액·밸류·run-rate·매출뿐이다.",
+          "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 — 새로 받지 않았다(외부 조회 규칙)."
+        },
+        "recorded_at": "2026-09-16",
+        "review": "obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium"
+      },
+      "raw": "미공시 — 비상장이라 계약 수입(ASC 606 잔여 수행의무)을 제출할 의무가 없다",
+      "note": "규칙 v1.5 ⑨ 게이트 4 적용표",
+      "missing_type": "not_disclosed_confirmed"
     },
     {
       "observation_id": "openai.offbalance_B.v15",
@@ -3855,15 +3877,37 @@
       "observation_id": "openai.contracted_revenue.v15",
       "company_id": "openai",
       "metric": "contracted_revenue",
-      "value": 40000000000.0,
+      "value": null,
       "unit": "USD",
       "as_of": "2026-09-02",
       "kind": "actual",
       "source_id": "SRC-v15-rule",
-      "status": "incompatible_basis",
-      "basis": null,
-      "raw": "ARR $40B — 계약 수입 아님(C-07)",
-      "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
+      "status": "not_disclosed",
+      "basis": {
+        "criterion": "비상장이라 공시 의무가 없고 이 지표는 감사 재무제표 주석 항목이다 — 구조적으로 확인된 미공시",
+        "criterion_source": "rules.policies.missing_types.not_disclosed_confirmed.routes.structural",
+        "label_meaning": "**구조적 미공시**다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니라 `제출 의무가 없어 이 형태의 수치가 존재한 적이 없다` 는 뜻이다.",
+        "value_moved": {
+          "was": {
+            "status": "incompatible_basis",
+            "value": 40000000000.0,
+            "raw": "ARR $40B — 계약 수입 아님(C-07)"
+          },
+          "why": "[FIX-57 2단계 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium] **계약 수입 칸에 ARR 이 들어 있었다.** 지표와 값이 어긋나고, `incompatible_basis` 라벨이 부재 판정 앞에서 멈춰 결측 유형이 붙지 않았다. 같은 값은 `openai.arr.v15` 에 이미 있으므로 여기서는 지우고 부재로 세운다.",
+          "same_value_lives_in": "openai.arr.v15",
+          "c07_still_holds": "ARR 과 컴퓨트 약정의 기간·범위가 다르다는 C-07 판정은 그대로다 — 그 사실은 판단 입력 `openai.F9.inputs.coverage_comparable = no` 와 `openai.offbalance_B.v15` 가 담는다. 이 관측이 값을 들고 있을 이유가 아니었다."
+        },
+        "score_path": "G1 이 BEP 후퇴로 이미 하한 -4 라 **G3·G4 를 통째로 건너뛴다.** 이 라벨이 읽히는 자리가 없다.",
+        "checked_scope": {
+          "preserved_release": "보존 보도자료 전문(태그를 걷은 본문)에서 `remaining performance obligation` · `performance obligation` · `unsatisfied performance` · `backlog` · `contracted` · `committed revenue` **전부 0건**이고 `RPO` 도 단어 경계로 0건이다(부분 문자열 `rpo` 는 `purpose`·`corporation` 안에서만 잡힌다 — 단어로는 없다). ffaf318:validation/priv-arr-17b/_raw/. 공개된 수치는 조달액·밸류·run-rate·매출뿐이다.",
+          "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 — 새로 받지 않았다(외부 조회 규칙)."
+        },
+        "recorded_at": "2026-09-16",
+        "review": "obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium"
+      },
+      "raw": "미공시 — 비상장이라 계약 수입(ASC 606 잔여 수행의무)을 제출할 의무가 없다",
+      "note": "규칙 v1.5 ⑨ 게이트 4 적용표",
+      "missing_type": "not_disclosed_confirmed"
     },
     {
       "observation_id": "anthropic.post_money_valuation.v15",
@@ -4261,7 +4305,8 @@
           "text": "선언된 면제는 1년 이하 계약과 청구권 기준 계약만 덮는다. 1년 초과 계약분은 면제로 설명되지 않으며 Note 5 의 '중요하지 않다' 서술이 그 자리를 메운다",
           "superseded_at": "2026-09-15",
           "why": "FIX-54 2단계 — Note 5 문장을 잔여 의무 설명으로 잘못 읽었다(obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium)."
-        }
+        },
+        "label_route": "[FIX-57 2단계 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) low] 이 라벨은 **발행사 선언 경로**로 선다(`rules.policies.missing_types.not_disclosed_confirmed.routes.issuer_declared`). 상장사는 구조 기준이 성립하지 않으므로 이 경로뿐이고, 요건인 `statement`·`location` 이 이 basis 에 있다. 요건이 규칙 밖(수집 스크립트)에만 있던 것을 이번에 규칙으로 옮겼고 스키마가 관측마다 검사한다."
       },
       "raw": "미공시 — ASC 606 실무적 간편법 선언",
       "note": "OBS-REG-25 · [FIX-53 3단계] **확인된 미공시.** 20-F 가 두 갈래(1년 이하 계약 · right-to-invoice 계약) 면제를 선언하고, 문서 전문 검색에서 잔여 수행의무 금액이 없다. 1년 초과 계약이 전부 면제에 든다는 근거는 없으므로 '찾아도 없을 것이 선언돼 있다' 가 아니라 '선언된 면제 + 전문에서 수치 부재 확인' 이다. C-16 대상."
@@ -8025,7 +8070,7 @@
           "fy2025": "S-1/A 0001628280-26-040364 연결손익계산서",
           "half_years": "10-Q 0001628280-26-052535 companyfacts"
         },
-        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
+        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** [FIX-57 2단계 사유 갱신 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) low] 전에는 `listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로` 라고 적었는데 **C-24 가 그 트랙에 P2 를 넣었다.** 결론은 그대로다 — P2 의 입력은 시총·순현금·**매출**이라 손익을 읽지 않고(`policies.f6.parameters.P2.inputs`), 손익을 읽는 P1 은 순이익이 음수라 이 트랙에서 성립하지 않는다(`calc.parameters_not_in_track.P1`). P4 의 `nonop_share` 도 세전이익이 음수라 산출되지 않는다. **기준이 섞여 계산되는 자리는 여전히 없다.**"
       },
       "raw": "TTM -3,732백만",
       "note": "F6-REG-28. S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다."
@@ -8057,7 +8102,7 @@
           "fy2025": "S-1/A 0001628280-26-040364 연결손익계산서",
           "half_years": "10-Q 0001628280-26-052535 companyfacts"
         },
-        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로 기준이 섞여 계산되는 자리는 없다.",
+        "basis_mismatch_note": "S-1/A 감사 손익계산서 FY2025 + 10-Q 2026 상반기 - 10-Q 2025 상반기. **매출 쌍(분기)과 기준이 다르다.** [FIX-57 2단계 사유 갱신 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) low] 전에는 `listed_newly 트랙은 매출과 손익을 함께 쓰는 계산(P2)을 하지 않으므로` 라고 적었는데 **C-24 가 그 트랙에 P2 를 넣었다.** 결론은 그대로다 — P2 의 입력은 시총·순현금·**매출**이라 손익을 읽지 않고(`policies.f6.parameters.P2.inputs`), 손익을 읽는 P1 은 순이익이 음수라 이 트랙에서 성립하지 않는다(`calc.parameters_not_in_track.P1`). P4 의 `nonop_share` 도 세전이익이 음수라 산출되지 않는다. **기준이 섞여 계산되는 자리는 여전히 없다.**",
         "ownership_scope": "parent_attributable",
         "ownership_evidence": "us-gaap NetIncomeLoss — companyfacts label `Net Income (Loss) Attributable to Parent`; 비지배지분 개념 태깅 없음"
       },

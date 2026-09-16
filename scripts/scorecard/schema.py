@@ -251,6 +251,8 @@ def validate_rules(payload: Any) -> dict[str, Any]:
                      f"rules.json.factors.{fid}.matrix[{key}]: {value} 가 range [{lo}, {hi}] 밖")
     _validate_f6_policy(payload["policies"]["f6"], factors["F6"], f9=payload["policies"].get("f9"))
     _validate_f9_policy(payload["policies"]["f9"], factors["F9"])
+    if "missing_types" in payload["policies"]:
+        _validate_missing_types_policy(payload["policies"]["missing_types"])
     for item in payload["checklist"]:
         _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
     ids = [d["id"] for d in payload["decisions"]]
@@ -487,6 +489,32 @@ def _validate_f6_bands(bands: Any, where: str, comparison: str) -> None:
     _require(all(_is_number(e) for e in edges), f"{where}: 경계는 숫자")
     ordered = sorted(edges) if key == "upper" else sorted(edges, reverse=True)
     _require(edges == ordered, f"{where}: {key} 경계 정렬 오류 — {'오름차순' if key == 'upper' else '내림차순'} 이어야 함")
+
+
+def _validate_missing_types_policy(spec: Any) -> None:
+    """`not_disclosed_confirmed` 가 성립하는 경로를 규칙이 선언한다(FIX-57 2단계, 6차 리뷰 A 분담).
+
+    전에는 이 요건이 `validation/miss-label-23/reclassify.py` 안에만 있었다. 그 라벨은 C-16 으로 **한 칸 강등**을
+    만드는데 근거가 규칙 밖에 있어 리뷰가 같은 질문을 되풀이했다. 여기 선언하고 `validate_observations` 가 읽는다 —
+    선언만 두고 읽는 코드를 두지 않으면 C-11 과 같은 형태가 된다.
+    """
+    where = "rules.policies.missing_types"
+    _expect_keys(spec, ["not_disclosed_confirmed"], where, optional=["note"])
+    ndc = spec["not_disclosed_confirmed"]
+    _expect_keys(ndc, ["routes", "otherwise"], f"{where}.not_disclosed_confirmed", optional=["why", "source", "consumers"])
+    routes = ndc["routes"]
+    _require(isinstance(routes, dict) and set(routes) == {"structural", "issuer_declared"},
+             f"{where}.not_disclosed_confirmed.routes: structural·issuer_declared 둘을 선언해야 함")
+    st = routes["structural"]
+    _expect_keys(st, ["applies_to", "metrics", "why"], f"{where}...structural")
+    _require(st["applies_to"] == "unlisted", f"{where}...structural.applies_to: 지금 성립하는 것은 비상장뿐이다")
+    _require(isinstance(st["metrics"], list) and st["metrics"], f"{where}...structural.metrics: 비어 있을 수 없음")
+    for m in st["metrics"]:
+        _require(m in METRICS, f"{where}...structural.metrics: 알 수 없는 지표 {m!r}")
+    isd = routes["issuer_declared"]
+    _expect_keys(isd, ["applies_to", "required_basis_keys", "why"], f"{where}...issuer_declared", optional=["example"])
+    _require(isinstance(isd["required_basis_keys"], list) and isd["required_basis_keys"],
+             f"{where}...issuer_declared.required_basis_keys: 비어 있을 수 없음")
 
 
 def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None:
@@ -824,7 +852,21 @@ def _validate_f9_policy(f9: Any, factor: dict[str, Any]) -> None:
 
 # ------------------------------------------------------------------ observations
 
-def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], run_id: str | None = None) -> list[dict[str, Any]]:
+def _require_ndc_route(item: dict[str, Any], company: dict[str, Any], policy: dict[str, Any], where: str) -> None:
+    routes = policy["not_disclosed_confirmed"]["routes"]
+    basis = item.get("basis") or {}
+    if not company["listed"] and item["metric"] in routes["structural"]["metrics"]:
+        return
+    need = routes["issuer_declared"]["required_basis_keys"]
+    if all(str(basis.get(k) or "").strip() for k in need):
+        return
+    _require(False, f"{where}: not_disclosed_confirmed 가 규칙이 선언한 두 경로 어느 쪽도 채우지 못함 — "
+                    f"비상장 구조 기준이 아니고(listed={company['listed']}, metric={item['metric']!r}) "
+                    f"발행사 선언 경로의 basis 키 {need} 도 비어 있다 (rules.policies.missing_types)")
+
+
+def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], run_id: str | None = None,
+                          missing_policy: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     _expect_keys(payload, ["schema", "run_id", "items"], "observations.json", optional=["note", "as_of"])
     _require(payload["schema"] == "scorecard.observations/1", "observations.json: schema 불일치")
     if run_id is not None:
@@ -852,6 +894,10 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
                      f"{where}: missing_type 는 {sorted(MISSING_TYPES)} 중 하나 ({item['missing_type']!r})")
             # 값이 있는데 결측 유형을 다는 것은 모순이다.
             _require(item["value"] is None, f"{where}: value 가 있는데 missing_type 이 붙어 있음")
+            # 2026-09-16 FIX-57 2단계: `확인된 미공시` 는 C-16 으로 한 칸을 깎는다. 규칙이 선언한 두 경로 중
+            # 하나를 실제로 채우는지 여기서 확인한다 — 라벨만 붙이면 근거 없이 점수가 깎인다.
+            if item["missing_type"] == MISSING_TYPE_FOR_DISCLOSURE_POLICY and missing_policy is not None:
+                _require_ndc_route(item, companies[item["company_id"]], missing_policy, where)
         oid = item["observation_id"]
         _require(isinstance(oid, str) and oid and oid not in seen, f"{where}: observation_id 누락/중복 {oid!r}")
         seen.add(oid)

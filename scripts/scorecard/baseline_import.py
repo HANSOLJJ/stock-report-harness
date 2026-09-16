@@ -18,6 +18,11 @@ FACTORS = ("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9")
 SRC_HTML = "SRC-v15-html"
 SRC_MD = "SRC-v15-md"
 SRC_RULE = "SRC-v15-rule"
+# 2026-09-16 FIX-57 2단계(6차 리뷰 A 분담): 판단이 HANDOVER 행 번호를 인용하는데 생성 코드가 이 출처를 만들지 않아
+# 새 실행에서는 인용 대상이 사라졌다. 파일은 저장소에 커밋되지 않고 v1.5 원본 셋과 같은 곳에 보존돼 있어
+# 해시를 여기 상수로 둔다 — 다른 셋처럼 기준선·규칙 payload 에서 읽어 올 자리가 없다.
+SRC_HANDOVER = "SRC-v15-handover"
+SRC_HANDOVER_SHA256 = "3e5190c2cb4a4f8ebee2f72d4599929b79a5d4625b1d046c346627edf63b7cc1"
 
 # 규칙 v1.5 ⑨ 게이트 3·4 적용표(별표)에서 읽은 B종 약정·계약 수입. HTML 배열에는 숫자 분리가 없어 규칙 원문 값으로 이관하며 상태를 명시한다.
 LEGACY_GATE4: dict[str, dict[str, Any]] = {

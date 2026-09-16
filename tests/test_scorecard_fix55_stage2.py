@@ -98,8 +98,11 @@ class Stage2Test(unittest.TestCase):
 
     def test_anthropic_f2_tension(self):
         t = {x["id"]: x for x in RULES.payload["open_tensions"]}["TEN-RA4-01"]
-        self.assertEqual((t["judgment_ids"], t["recheck_at"], t["decision_id"]), (["anthropic.F2"], "2026-11", "C-03"))
-        self.assertIn("하향 가능(5 → 4", t["direction"])
+        # 2026-09-16 FIX-57 2단계: 같은 잣대를 댄 meta·alibaba·openai 의 F2 도 이 긴장에 들어왔다(judgment_ids 넷).
+        # **anthropic.F2 가 등록돼 있고 시점·결정·방향이 그대로인지**가 이 검사의 뜻이라 그것을 본다.
+        self.assertIn("anthropic.F2", t["judgment_ids"])
+        self.assertEqual((t["recheck_at"], t["decision_id"]), ("2026-11", "C-03"))
+        self.assertIn("5 → 4", t["direction"])
         self.assertIn("비 Claude 세션", t["rechecker"])
         self.assertIn("독립 기관", t["trigger"])
         j = self.j["anthropic.F2"]
@@ -111,8 +114,12 @@ class Stage2Test(unittest.TestCase):
     def test_limitations_carry_conflict_and_recheck(self):
         lines = rc.conflict_lines(self.ctx)
         self.assertTrue(any("이해상충" in x for x in lines))
+        # 2026-09-16 FIX-57 2단계: TEN-RA4-01 의 judgment_ids 가 넷이 되고 비 Claude 재판정은 anthropic.F2 하나뿐이라
+        # 갈래가 committed → partial 로 바뀌었다. **그 줄에 시점과 함께 나오는지**가 이 검사의 뜻이다.
         third = [x for x in lines if "제3자 재검토 약속" in x][0]
-        self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", third)
+        self.assertIn("제3자 재검토 약속", third)
+        partial = [x for x in lines if "일부만 확정" in x][0]
+        self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", partial)
         self.assertTrue(any("발동 조건" in x for x in lines))
         for line in lines:
             self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)

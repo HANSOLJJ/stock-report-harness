@@ -234,7 +234,13 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     lines += [f"- 모집단: 완료 {population['scored']}개사 순위 / 미완료 {len(population['incomplete'])}개사 제외 (미완료는 0점으로 채우지 않는다). 모집단이 다르므로 기준선 {run['baseline_id']} 의 14사 순위와 직접 비교하지 않는다(기업별 상세에 기준선 순위를 병기)."]
     lines += [f"- 기준 시점: 분석 기준일 {run['as_of']} · 가격 기준일 {run.get('price_as_of') or run['as_of']} · 정보 컷오프 {run.get('info_cutoff') or run['as_of']} (C-17). 승계 근거·트리거 일부는 원문에 컷오프 이후 사건이 그대로 있으며 이번 실행에서 재검증하지 않았다."]
     if conflicts:
-        lines += [f"- 이해상충 고지: {' / '.join(conflicts)}. 채점 대상에 Anthropic 이 포함된다. 투자 판단에 사용할 경우 감안할 것."]
+        # 2026-09-16 FIX-57 2단계(6차 리뷰 A 분담): 출처별 문구 다섯을 ` / ` 로 이어 붙여 **실행 차원 고지가 맨 끝에 묻혔다.**
+        # 읽는 사람이 먼저 알아야 하는 것은 채점자와 채점 대상이 같은 곳이라는 사실이다. 출처별 문구는 References 에 그대로 있다.
+        flagged = len([s for s in ctx.sources.get("items", []) if s.get("conflict_of_interest")])
+        lines += [f"- **이해상충 고지 — 채점 대상에 Anthropic 이 포함되고, 이 채점표를 Anthropic 이 만든 Claude 가 작성했다**"
+                  f"(채점규칙 384행 · HANDOVER 75행 · 운영이력 긴장 #4·#11). 투자 판단에 사용할 경우 감안할 것. "
+                  f"비상장 2사의 수치는 이해당사자 1차 발표에서 온다. 이해상충이 표기된 출처 {flagged}건의 개별 문구는 "
+                  f"References 의 각 출처 줄에 있고, `알려진 한계` 절이 제3자 재검토 약속을 함께 적는다."]
     if results["pending_rule_decisions"]:
         lines.append(f"- 미결 규칙 결정: {', '.join(results['pending_rule_decisions'])} — 사용자 결정 전에는 해당 기업을 순위에 넣지 않는다")
     lines += ["", "과점 = ①~⑤ 합, 함정 = ⑥~⑨ 합(음수 또는 0), 조정총점 = 과점 + 함정. 순위는 1 + (조정총점이 더 높은 완료 기업 수)이며 동점은 공동 순위다.", ""]

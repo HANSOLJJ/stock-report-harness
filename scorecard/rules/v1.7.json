@@ -1185,6 +1185,53 @@
         "see": "policies.f6.net_cash.scope_separation",
         "why_here": "6.4 를 고치러 온 사람이 P2 를 같이 고치는 것과, P2 를 고치러 온 사람이 6.4 를 끌어오는 것 **양쪽**을 막아야 해서 두 자리에 모두 적는다."
       }
+    },
+    "missing_types": {
+      "note": "[FIX-57 2단계 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium] `not_disclosed_confirmed` 는 C-16 으로 **G4 에서 한 칸을 깎는다.** 그런데 성립 요건이 `validation/miss-label-23/reclassify.py` 안에만 있어 규칙만 읽어서는 확인할 수 없었다. 여기 선언하고 `schema.validate_observations` 가 관측마다 검사한다 — 선언만 두면 C-11 과 같은 형태가 된다.",
+      "not_disclosed_confirmed": {
+        "why": "`우리가 못 찾았다` 와 `공개된 적이 없다` 는 다르다. 뒤의 것만 기업 위험으로 셀 수 있다. 애매하면 `unverified` 다 — 승격 금지.",
+        "source": "MISS-LABEL-23 구조 기준(설계진행 확정 문구) · validation/miss-label-23/reclassify.py classify()",
+        "routes": {
+          "structural": {
+            "applies_to": "unlisted",
+            "metrics": [
+              "revenue_ttm",
+              "revenue_ttm_prior",
+              "operating_income_ttm",
+              "net_income_ttm",
+              "ocf_ttm",
+              "capex_ttm",
+              "cash",
+              "undrawn_credit",
+              "net_borrowing_ttm",
+              "fcf_ttm",
+              "net_cash",
+              "debt_ebitda",
+              "operating_margin_ttm",
+              "nonop_share",
+              "runway_years",
+              "contracted_revenue",
+              "offbalance_B"
+            ],
+            "why": "감사 재무제표를 제출할 의무가 없는 기업의 재무제표 항목(과 그로부터만 도출되는 값)은 **정의상 공개된 적이 없다.** 근거는 우리의 탐색량이 아니라 구조다. **상장사에는 이 논거가 성립하지 않는다** — 정기보고서에 있을 수 있다."
+          },
+          "issuer_declared": {
+            "applies_to": "any",
+            "required_basis_keys": [
+              "statement",
+              "location"
+            ],
+            "why": "발행사가 제출본에서 **공시하지 않는다고 스스로 밝힌** 경우다(예: ASC 606 실무적 간편법 선언). 그 문면(`statement`)과 위치(`location`)를 관측 basis 에 인용해야 한다. 상장사가 이 라벨을 받을 수 있는 유일한 길이다.",
+            "example": "alibaba.contracted_revenue.obsreg25 — 20-F Note 2(g) 실무적 간편법 선언"
+          }
+        },
+        "otherwise": "unverified — 개념상 값이 없으면 not_applicable, 선행 입력 결측이면 indeterminate 가 먼저다.",
+        "consumers": [
+          "calc_f9._g4 → C-16 한 칸 강등",
+          "calc_f9._g2 비상장 경로(C-20)",
+          "calc_f6_params._blocked_reasons 표시"
+        ]
+      }
     }
   },
   "checklist": [
@@ -2400,13 +2447,16 @@
       "recheck_at": "2026-11",
       "review_finding": "RA4-01(medium) · obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) · 체크리스트 Q23 관련",
       "judgment_ids": [
-        "anthropic.F2"
+        "anthropic.F2",
+        "meta.F2",
+        "alibaba.F2",
+        "openai.F2"
       ],
       "decision_id": "C-03",
-      "subject": "anthropic F2 5점의 성능 근거에 하네스 표기가 없고 저장소에 받치는 자료가 없다",
+      "subject": "F2 근거란이 모델 간 성능을 비교하면서 어느 하네스로 잰 값인지 적지 않는다 — 채점규칙 22행 `비교는 같은 하네스끼리만` 을 확인할 수 없다",
       "tension": "anthropic.F2(승계 5점) 근거 `Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%)` 에 어느 하네스로 잰 값인지 적혀 있지 않고 저장소에 그 측정을 받치는 자료가 없다. 같은 실행의 openai.F2 는 `ARC-AGI-3 SOTA(표준 하네스 62.7%)` 로 하네스를 명시하고 벤더 어댑터 99.9% 를 배제한 이유까지 적는다. 채점규칙 22행 `비교는 같은 하네스끼리만(체크리스트 23)` · 731행 체크리스트 23 · 384행 이해상충 고지(`이 규칙은 OpenAI의 ARC-AGI 하네스 문제를 다루다 나왔고 … 결과적으로 Anthropic ②5를 지켰다 … 다음 분기에 제3자 관점으로 재검토한다`)와 어긋난다.",
-      "direction": "하향 가능(5 → 4 검토). 같은 하네스의 독립 측정이 확인되면 5 유지. **이 등록은 점수를 바꾸지 않는다.**",
-      "rechecker": "**비 Claude 세션이 재판정한다** — Anthropic 점수이고 채점규칙 384행이 제3자 재검토를 약속한 바로 그 자리다.",
+      "direction": "하향 가능. anthropic 은 `Opus 5 ARC-AGI-3 30.2%` 가 ②5 를 받치는 자리라 **5 → 4** 가 걸린다(C-03 세대 격차 기준). [FIX-57 2단계 범위 확대] meta·alibaba·openai 는 해당 줄이 경로 판정의 유일한 근거가 아니라 점수 경로가 더 멀지만, 같은 잣대를 댄 이상 재검토 대상도 같아야 한다. **이 등록은 재판정하지 않는다** — 점수 넷 다 그대로다.",
+      "rechecker": "**anthropic.F2 는 비 Claude 세션이 재판정한다** — Anthropic 점수이고 채점규칙 384행이 제3자 재검토를 약속한 바로 그 자리다. [FIX-57 2단계 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium] **나머지 셋은 그 제약이 필요 없다** — meta·alibaba 는 Anthropic 과 이해관계가 없고, openai 는 경쟁사라 하향 판정에 이해상충이 있으나 이 긴장의 방향이 하향이라 자사 유리로 기울 여지가 없다(TEN-RA3-01 이 openai.F4 를 권장으로 둔 것과 같은 판단이다). 셋은 2026-11 재채점 때 판단자가 본다.",
       "trigger": "독립 기관이 같은 하네스로 잰 ARC-AGI-3(또는 대체 에이전트 실무 축) 측정이 확보될 때. C-03 pending_recheck 의 발동 조건과 같다.",
       "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 F2 의 잣대를 바꾸지 않았다(C-03 확정 뒤에도 세대 격차 판정은 하지 않았다). 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
       "score_impact_now": "없다.",
@@ -2419,8 +2469,41 @@
         "TEN-RA-02",
         "TEN-RA3-01"
       ],
-      "note": "[FIX-55 2단계] 재검토 약속 자체는 decisions C-03.pending_recheck 에 있었으나 리뷰 계약이 예외 요건으로 지목하는 자리는 open_tensions 다. 같은 고지의 다른 축인 anthropic.F5.impl48 은 TEN-RC-03 에 이미 있다. 근거란에 하네스 미표기 사실을 적었다.",
-      "third_party_recheck": "committed"
+      "note": "[FIX-55 2단계] 재검토 약속 자체는 decisions C-03.pending_recheck 에 있었으나 리뷰 계약이 예외 요건으로 지목하는 자리는 open_tensions 다. 같은 고지의 다른 축인 anthropic.F5.impl48 은 TEN-RC-03 에 이미 있다. 근거란에 하네스 미표기 사실을 적었다. [FIX-57 2단계 · obsreg 6차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수·Q23) medium] **근거란 표기만으로는 AGENTS.md 71행의 승계 판단 예외가 서지 않는다** — 예외는 `규칙 파일 open_tensions 에 재검토 시점과 함께 등록` 을 요구한다. FIX-56 2단계가 meta·alibaba·openai 의 F2 근거란에 같은 표기를 대고도 긴장에는 anthropic 하나만 두어 재검토 시점 없는 fail 이 셋 남았다. 셋을 이 긴장의 judgment_ids 에 넣고 회사별 사유를 affected 에 적는다. 재판정 주체의 차이는 rechecker 에 있다.",
+      "third_party_recheck": "partial",
+      "affected": [
+        {
+          "company_id": "meta",
+          "judgment_id": "meta.F2",
+          "why": "`Tau3-Bench Banking 52%로 전 모델 1위` 가 여러 모델을 한 줄에 세우는데 채점표 264행 원문에 하네스 표기가 없다. 성능 경로 ✅ 를 받치는 여러 줄 중 하나라 이 줄 하나로 경로가 뒤집히지는 않는다.",
+          "source_lines": [
+            "채점표 264행",
+            "채점규칙 22행"
+          ]
+        },
+        {
+          "company_id": "alibaba",
+          "judgment_id": "alibaba.F2",
+          "why": "`HLE 43.6%로 프론티어 미달` 이 프론티어 모델과의 비교인데 채점표 375행 원문에 하네스 표기가 없다. **미달 판정 쪽이라 방향이 자사에 유리하지 않다.** 943행 지표 표도 모델별 수치만 적는다.",
+          "source_lines": [
+            "채점표 375행",
+            "채점표 943행",
+            "채점규칙 22행"
+          ]
+        },
+        {
+          "company_id": "openai",
+          "judgment_id": "openai.F2",
+          "why": "`FrontierMath Tier 4 v2 97.6%(Fable 5.1 87.8%)` 는 **한 줄에서 두 모델을 직접 비교**하는데 채점표 732행 원문에 하네스 표기가 없다. 같은 근거란의 ARC-AGI-3 줄은 `표준 하네스 62.7%` 로 적어 두 줄의 기준이 다르다.",
+          "source_lines": [
+            "채점표 732행",
+            "채점규칙 22행"
+          ]
+        }
+      ],
+      "third_party_scope": [
+        "anthropic.F2"
+      ]
     }
   ],
   "source_text_corrections": [
