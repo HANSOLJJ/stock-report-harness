@@ -328,7 +328,12 @@ class RegisteredObservationsTest(unittest.TestCase):
         """**만기 버킷은 대차대조표 줄이 아니다.** 현금에 더하면 현금성자산 안의 증권이 두 번 세어진다."""
         o = self.by_id["nvidia.net_cash.nc37"]
         comp = o["basis"]["components"]
-        self.assertEqual(comp["cash_and_marketable_securities"], 56_586_000_000)
+        # 2026-09-16 FIX-58 1단계: 시장성 지분증권 42,783M 을 넣어 합계가 99,369M 이 됐다.
+        # **만기 버킷을 쓰지 않는다**는 이 검사의 뜻은 그대로다 — 더한 것은 대차대조표 성격의 주석 분할이다.
+        self.assertEqual(comp["cash_and_marketable_securities"], 56_586_000_000 + 42_783_000_000)
+        self.assertEqual(comp["marketable_equity_added"]["value"], 42_783_000_000)
+        tags = {c["tag"] for c in comp["cash_and_marketable_securities_concepts"]}
+        self.assertNotIn("us-gaap:AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue", tags)
         fix = next(f for f in o["basis"]["corrections"] if "총계" in f["what"])
         self.assertEqual(fix["c13_value"], 63_443_000_000)
         self.assertIn("만기", fix["why"])

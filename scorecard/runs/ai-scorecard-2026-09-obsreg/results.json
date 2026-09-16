@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "91a16baf90d8e4dd1b038d7b1539f826675ef5dae21d26ada3a54bfa8e0466a7",
-    "observations": "94d618f9cdd091c126291aca149f50ae540b886d4e2cd13b103b5d4f8790439d",
+    "run": "d5401b92bf86c4b3fdbf5e7d77e0e926d2d3ddc7887932e306dc2aaae77f07e8",
+    "observations": "fed8e184ba1444c7b4942291a482e5581d7ed90de40624cd1a94cbc0618d7c30",
     "judgments": "6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6",
     "sources": "14ec0e8083d82e5321d1b38e1e7fc8dd66c2ebac683d56e85772a46c3a1c3663",
-    "rules": "d51e1cbda85aa59c6073e15142c1064eac3cc571f7a73d747b77f3ed5591fc69"
+    "rules": "738037a7f435477dfd3153caf9501a9def04559c9ff0de15b0a8e588fd2c70b7"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -2612,16 +2612,16 @@
               "P2": {
                 "inputs": {
                   "market_cap": 5420000000000.0,
-                  "net_cash": 17726000000.0,
+                  "net_cash": 60509000000.0,
                   "revenue_ttm": 302970000000.0
                 },
-                "value": 17.831052579463314,
+                "value": 17.689840578275078,
                 "score": -1,
                 "band": "8~20",
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 20.0,
-                  "distance_ratio": -0.10844737102683429,
+                  "distance_ratio": -0.11550797108624611,
                   "tolerance": 0.03
                 },
                 "net_cash_definition": {
@@ -3248,6 +3248,13 @@
                 }
               }
             },
+            "c24_choice": {
+              "choice": "compute_p2_when_inputs_exist",
+              "effect": "입력이 성립하면 선택 파라미터를 만든다",
+              "optional": [
+                "P2"
+              ]
+            },
             "parameters_not_in_track": {
               "P1": {
                 "inputs": {
@@ -3368,7 +3375,10 @@
                 "gate": "G3",
                 "mode": "diagnostic",
                 "runway_years": 3.0257512056386795,
+                "buffer": 97877000000.0,
+                "annual_burn": 32348000000.0,
                 "step": 0,
+                "score": -3,
                 "boundary": {
                   "flag": true,
                   "nearest_boundary": 3.0,
@@ -3382,7 +3392,8 @@
                 "result": "computed",
                 "coverage": 1.6043878033939558,
                 "contracted_revenue": 47461000000.0,
-                "offbalance_B": 29582000000.0
+                "offbalance_B": 29582000000.0,
+                "step": 0
               },
               {
                 "gate": "G1-after",
@@ -4447,5 +4458,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 164,
-  "results_hash": "e075d236d9b93e0dc7481c4804c52d080ca415fe418a1226fc662354d048d076"
+  "results_hash": "0e38bf5af375844c4d466e52d012c827d7ab45166f42cfcb8733578fff44fbe1"
 }

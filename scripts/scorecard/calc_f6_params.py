@@ -340,7 +340,16 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
     unverified: dict[str, list[str]] = {}
     # 2026-09-16 FIX-56 1단계: 트랙이 쓰되 **입력이 있을 때만** 만드는 파라미터다. 입력이 없으면 지금까지처럼
     # 만들지 않고, 그 사실을 미산출로 적는다 — 없다고 F6 전체를 pending 으로 세우지 않는다.
+    # 2026-09-16 FIX-58 1단계(7차 리뷰 C): 규칙의 `optional_parameters` 만 읽어 run.json 의 C-24 선택을 감지하지 못했다.
+    # 실행이 `p3_only_v17` 을 고르면 선택 파라미터를 만들지 않는다 — 선언에 소비자가 없는 형태(C-11 계열)를 없앤다.
+    c24 = decision_choice(run, rules, "C-24")
     optional_pids = set(track.get("optional_parameters") or [])
+    if c24 == "p3_only_v17" and optional_pids:
+        calc["c24_choice"] = {"choice": c24, "effect": "선택 파라미터를 만들지 않는다", "suppressed": sorted(optional_pids)}
+        optional_pids = set()
+    elif optional_pids:
+        calc["c24_choice"] = {"choice": c24 or "compute_p2_when_inputs_exist(규칙 기본)",
+                              "effect": "입력이 성립하면 선택 파라미터를 만든다", "optional": sorted(optional_pids)}
     for pid in track["parameters"]:
         if pid == "P4":
             continue

@@ -95,12 +95,28 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     if margin is None:
         op_income, op_obs = obs.number(cid, "operating_income_ttm")
         revenue, rev_obs = obs.number(cid, "revenue_ttm")
+        # 2026-09-16 FIX-58 1단계(7차 리뷰 B): **12개월 매출 지표를 먼저 본다.** 신규 상장 트랙에서 `revenue_ttm` 은
+        # P3 의 전년 동기 대조를 세우려고 분기값으로 등록된다 — F6 P2 가 `input_alternatives` 로 하는 것과 같은 처리다.
+        full, full_obs = obs.number(cid, "revenue_ttm_full")
+        if full is not None:
+            revenue, rev_obs = full, full_obs
         use(op_obs)
         use(rev_obs)
         if op_income is not None and revenue is not None:
-            if revenue <= 0:
+            # 기간 기준이 다르면 **비율을 만들지 않는다.** 12개월 손익을 한 분기 매출로 나누면 뜻이 없는 수가 나오고
+            # 그 수가 G1 밴드를 정한다. 값을 만들지 않고 사유를 남겨 아래 `margin is None` 경로가 받게 한다.
+            op_basis = ((op_obs or {}).get("basis") or {}).get("period_basis")
+            rev_basis = ((rev_obs or {}).get("basis") or {}).get("period_basis")
+            if op_basis != rev_basis:
+                path.append({"gate": "G1", "result": "not_computed", "reason": "영업손익과 매출의 기간 기준이 다르다 — 대체 산출 생략",
+                             "operating_income_period_basis": op_basis, "revenue_period_basis": rev_basis,
+                             "revenue_observation_id": (rev_obs or {}).get("observation_id")})
+                warnings.append(f"G1 대체 산출 생략 ⚠️ 영업손익 기간 기준 {op_basis!r} 과 매출 {rev_basis!r} 이 달라 "
+                                "손실률을 만들지 않는다(기간이 섞인 비율이 밴드를 정하지 않게 한다)")
+            elif revenue <= 0:
                 return done(None, "pending_data", pending_info("data", "TTM 매출 0 이하 — 손실률 산식 무효"))
-            margin = op_income / revenue
+            else:
+                margin = op_income / revenue
     bep_retreat = gi["bep_retreat"] == "yes"
     reviewed_sign = gi.get("operating_result_reviewed", "unknown")
     if margin is None and not bep_retreat:
@@ -179,11 +195,16 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             step = _runway_step(runway, rules)
             diag_score = _clamp(diag_score + step, floor)
             boundary = _runway_boundary(runway, rules)
-            path.append({"gate": "G3", "mode": "diagnostic", "runway_years": runway, "step": step, "boundary": boundary})
+            # 2026-09-16 FIX-58 1단계(7차 리뷰 B): C-05 `apply` 면 이 진단값이 그대로 점수가 된다. 본경로와 같은 키를
+            # 남기지 않으면 게이트별 기여를 경로만 보고 읽을 수 없다.
+            path.append({"gate": "G3", "mode": "diagnostic", "runway_years": runway,
+                         "buffer": cash + (undrawn or 0.0), "annual_burn": -fcf,
+                         "step": step, "score": diag_score, "boundary": boundary})
             if boundary["flag"]:
                 warnings.append(f"⚠️ G3 런웨이 {runway:.2f}년이 임계 {boundary['nearest_boundary']:g}년의 ±{boundary['tolerance']:.0%} 안 — 점수는 그대로")
         g4 = _g4(cid, obs, gi, rules, run, use)
-        path.append({"gate": "G4", "mode": "diagnostic", **{k: v for k, v in g4.items() if k != "step"}})
+        # `step` 을 떼고 저장하면 G4 가 진단 점수에 얼마를 보탰는지 경로에 남지 않는다 — 본경로와 같이 남긴다.
+        path.append({"gate": "G4", "mode": "diagnostic", **g4})
         if g4["step"] is None:
             g4_pending = g4.get("pending")
         else:

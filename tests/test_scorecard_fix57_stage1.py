@@ -87,10 +87,13 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual(self.o["oracle.offbalance_B.v15"]["value"], 250000000000.0)   # 값을 지어내지 않는다
         self.assertIn("어느 공시 사실과도 맞지 않는다", b["why_kept"])
         tags = {a["tag"]: a["value"] for a in b["disclosed_alternatives"]}
+        tags_what = {a["tag"]: a["what"] for a in b["disclosed_alternatives"]}
         self.assertEqual(tags, {"us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue": 41867000000.0,
                                 "us-gaap:LesseeOperatingLeaseLiabilityUndiscountedExcessAmount": 11677000000.0,
                                 "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount": 13309000000.0})
-        self.assertEqual(b["alternatives_sum"], sum(tags.values()))
+        # 2026-09-16 FIX-58 1단계: 셋의 합은 더 이상 B종 후보 합이 아니다 — 41,867 은 개시분, 11,677 은 그 할인차금이다.
+        self.assertIn("더 이상 B종 후보 합이 아니다", b["alternatives_caveat"])
+        self.assertIn("할인차금", tags_what["us-gaap:LesseeOperatingLeaseLiabilityUndiscountedExcessAmount"])
         facts = json.loads((RAW / "ORCL.companyfacts.json").read_text(encoding="utf-8"))["facts"]
         seen = {tag: r["val"] for tax, tg in facts.items() for tag, node in tg.items()
                 for unit, rs in node["units"].items() for r in rs
@@ -102,13 +105,16 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual((g4["coverage"], g4["step"]), (2.552, 0))
         keep = float(RULES.f9["g4_coverage_keep"])
         self.assertEqual(keep, 1.0)
-        alt = 638000000000.0 / 66853000000.0
-        self.assertAlmostEqual(alt, 9.543326, places=5)
+        # 2026-09-16 FIX-58 1단계: 대안 분모가 66,853M(할인차금·개시분을 섞어 센 값)에서 구매 약정 13,309M 으로 바뀌었다.
+        # **어느 분모든 커버리지가 임계 1.0 을 넘어 step 0** 이라는 이 검사의 뜻은 그대로다.
+        alt = 638000000000.0 / 13309000000.0
+        self.assertAlmostEqual(alt, 47.937486, places=5)
         self.assertGreaterEqual(min(2.552, alt), keep)                 # 어느 쪽이든 step 0
         rec = self.o["oracle.offbalance_B.v15"]["basis"]["coverage_either_way"]
         self.assertEqual(rec["legacy_250000"]["g4_step"], 0)
-        self.assertEqual(rec["disclosed_sum_66853"]["g4_step"], 0)
-        self.assertAlmostEqual(rec["disclosed_sum_66853"]["coverage"], alt, places=5)
+        self.assertEqual(rec["purchase_obligation_13309"]["g4_step"], 0)
+        self.assertAlmostEqual(rec["purchase_obligation_13309"]["coverage"], alt, places=5)
+        self.assertNotIn("disclosed_sum_66853", rec)
         self.assertEqual(self.res["oracle"]["factors"]["F9"]["score"], -3)
 
     # ---------------------------------------------------------------- S3 경계·의존

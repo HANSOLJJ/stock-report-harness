@@ -48,13 +48,30 @@ TICKER_TO_ID = {
     "TSLA": "tesla", "SPCX": "spacex-xai", "TSM": "tsmc", "BABA": "alibaba",
 }
 
-# 회사마다 쓰는 개념이 다르다. F6-AVAIL-15 에서 확인한 현행 개념을 coalesce 순서로 둔다.
-REVENUE_TAGS = [
+# 회사마다 쓰는 개념이 다르다. 순서는 **규칙이 정한다** — `policies.f6.revenue_coalesce.priority`.
+#
+# 2026-09-16 FIX-58 1단계(7차 리뷰 B): 전에는 같은 넷을 여기 상수로 따로 적어 두고 규칙을 읽지 않았다.
+# 규칙에 선언만 있고 행동을 바꾸는 소비자가 없는 형태였다(C-11 계열). 이제 규칙에서 읽고, 규칙을 못 읽는
+# 환경에서는 아래 기본값으로 떨어지되 **다르면 멈춘다** — 두 목록이 조용히 갈리는 것이 원래 문제였다.
+_REVENUE_TAGS_FALLBACK = [
     ("us-gaap", "RevenueFromContractWithCustomerExcludingAssessedTax"),
     ("us-gaap", "Revenues"),
     ("ifrs-full", "Revenue"),
     ("ifrs-full", "RevenueFromContractsWithCustomers"),
 ]
+
+
+def _revenue_tags_from_rules() -> list[tuple[str, str]]:
+    import sys
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from scorecard.rules import load_rules
+    priority = load_rules("v1.7").payload["policies"]["f6"]["revenue_coalesce"]["priority"]
+    tags = [tuple(x.split(":", 1)) for x in priority]
+    assert tags == _REVENUE_TAGS_FALLBACK, f"규칙의 coalesce 순서가 수집기 기본값과 다름: {tags}"
+    return tags
+
+
+REVENUE_TAGS = _revenue_tags_from_rules()
 NET_INCOME_TAGS = [("us-gaap", "NetIncomeLoss"), ("ifrs-full", "ProfitLoss")]
 OPERATING_TAGS = [("us-gaap", "OperatingIncomeLoss"), ("ifrs-full", "ProfitLossFromOperatingActivities")]
 

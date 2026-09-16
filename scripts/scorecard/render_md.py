@@ -12,6 +12,8 @@ from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS
 STATUS_LABEL = {
     "ok": "산출", "carried_score": "승계", "needs_judgment": "판단 대기", "needs_rule_decision": "규칙 결정 대기",
     "pending_data": "자료 대기", "error": "오류",
+    # 2026-09-16 FIX-58 1단계(7차 리뷰 D): factor status 에 쓰일 수 있는 키인데 라벨이 없었다.
+    "unavailable": "산출 불가",
 }
 REVIEW_AREAS = [
     ("fact-sources", "사실·출처", "숫자·기업 귀속·기준 시점·공시·뉴스·부재 주장·이해상충"),

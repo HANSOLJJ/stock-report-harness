@@ -5,7 +5,7 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 94d618f9cdd091c126291aca149f50ae540b886d4e2cd13b103b5d4f8790439d
+observations_hash: fed8e184ba1444c7b4942291a482e5581d7ed90de40624cd1a94cbc0618d7c30
 judgments_hash: 6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6
 created_at: 2026-09-11
 ---
@@ -275,7 +275,7 @@ created_at: 2026-09-11
 | fcf_ttm | $127.0B | legacy_unverified | actual | SRC-v15-html | +$127.0B | [CASH-FCF-35 대체됨 → nvidia.fcf_ttm.cashfcf35]  |
 | market_cap | $5.42T | legacy_unverified | actual | SRC-v15-md | $5.42T |  |
 | net_borrowing_ttm | $24.9B | legacy_unverified | actual | SRC-v15-html | +$24.9B | 차환 제외 순증 |
-| net_cash | $17.7B | verified | derived | SRC-SEC-FACTS-F6 | 현금+시장성증권 56.6B − 차입 33.4B − 리스 5.5B = 17.7B | NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만** |
+| net_cash | $60.5B | verified | derived | SRC-SEC-FACTS-F6 | 현금 22.4B + 채무증권 34.1B + 시장성 지분증권 42.8B = 99.4B − 차입 38.9B = 60.5B | NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만** |
 | net_cash | $23.6B | legacy_unverified | actual | SRC-v15-html | +$23.6B | [NETCASH-37 대체됨 → nvidia.net_cash.nc37]  |
 | net_income_ttm | $192.9B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-28~2026-07-26 192,879,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 14% | legacy_unverified | actual | SRC-v15-html | 14% ᵃ |  |

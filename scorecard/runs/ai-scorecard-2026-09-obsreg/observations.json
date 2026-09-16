@@ -3610,7 +3610,7 @@
             "tag": "us-gaap:LesseeOperatingLeaseLiabilityUndiscountedExcessAmount",
             "value": 11677000000.0,
             "as_of": "2026-05-31",
-            "what": "**미개시** 리스 약정. B종(미개시 약정)의 성격에 가장 가깝다."
+            "what": "**미개시 약정이 아니다 — 이미 인식된 운용리스부채의 내재이자(할인차금)다.** [FIX-58 1단계 정정 · obsreg 7차 리뷰 B(financial-calc, review-obsreg 4906a27) medium] 보존 원자료가 관계를 정확히 준다: 할인 전 지급총액 `LesseeOperatingLeaseLiabilityPaymentsDue` 41,867 − 대차대조표 리스부채 `OperatingLeaseLiability` 30,190 = **11,677**. 금융리스도 같은 관계다(11,460 − 7,701 = 3,759). 따라서 **B종(미개시 약정) 후보가 아니다** — 장래 유출이 아니라 이미 인식된 부채의 할인 요소다. 전에 `미개시 리스 약정 … B종 성격에 가장 가깝다` 고 적은 것은 개념 이름의 `Excess` 를 미개시분으로 잘못 읽은 것이다."
           },
           {
             "tag": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
@@ -3620,18 +3620,18 @@
           }
         ],
         "alternatives_sum": 66853000000.0,
-        "alternatives_caveat": "셋의 합 66,853M 을 대체값으로 **등록하지 않았다.** 41,867 은 개시분이라 이미 FCF·대차대조표에 있고(채점규칙 546행 `개시된 리스는 이미 FCF 에 있고 더하면 이중 계상`), B종 정의와 범위가 다르다. 범위를 정하는 것은 규칙 결정이지 이 관측의 일이 아니다.",
+        "alternatives_caveat": "[FIX-58 1단계 정정] 셋의 합 66,853M 은 **더 이상 B종 후보 합이 아니다.** 41,867 은 개시분 지급총액이라 대차대조표 30,190 과 겹치고, 11,677 은 그 둘의 차인 할인차금이라 셋을 더하면 같은 부채를 두 번 세는 셈이다. **남는 B종 후보는 구매 약정 `UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount` 13,309M 계열 하나다.** 그래도 250,000M 의 출처는 여전히 확인되지 않는다 — 범위를 정하는 것은 규칙 결정이다(C-26).",
         "coverage_either_way": {
           "legacy_250000": {
             "coverage": 2.552,
             "g4_step": 0
           },
-          "disclosed_sum_66853": {
-            "coverage": 9.543326,
-            "g4_step": 0
-          },
           "threshold": "policies.f9.g4_coverage_keep = 1.0",
-          "conclusion": "**어느 쪽이든 커버리지가 1 을 넘어 G4 step 0 이다.** oracle F9 -3 · 총점 2 는 갈리지 않는다."
+          "conclusion": "**어느 쪽이든 커버리지가 1 을 넘어 G4 step 0 이다.** legacy 250,000M 기준 2.552, 남는 B종 후보 13,309M 기준 47.937. oracle F9 -3 · 총점 2 는 갈리지 않는다. [FIX-58 1단계] 전에 적은 66,853M(9.543)은 할인차금·개시분을 섞어 센 값이라 뺐다.",
+          "purchase_obligation_13309": {
+            "coverage": 47.937486,
+            "g4_step": 0
+          }
         },
         "open_item": "규칙 decisions C-26 — oracle B종 약정의 출처와 범위를 정한다.",
         "recorded_at": "2026-09-16"
@@ -11480,6 +11480,76 @@
           "legacy_net_cash": -22100000000.0,
           "diff": 42000000.0,
           "matched": true
+        },
+        "marketable_equity_sweep": {
+          "checked_at": "2026-09-16",
+          "review": "obsreg 7차 리뷰 B(financial-calc, review-obsreg 4906a27) medium — 같은 잣대",
+          "how": "보존 companyfacts 12개사에서 `EquitySecurit|MarketableEquity|TradingSecurities|CryptoAsset` 정규식으로 **각 회사의 측정 기준일 시점 사실**을 전부 훑었다(가격 조정 누계 태그는 제외). 회사마다 기준일이 다르므로 회사별 기준일로 본다 — nvidia 2026-07-26 · oracle 2026-05-31 · alibaba 2026-03-31 · tsmc 2025-12-31 · 나머지 6월 말.",
+          "rule": "policies.f6.net_cash.securities_scope.include 의 `상장 지분증권` 을 그대로 적용하되, **시장성을 증명한 금액만** 넣는다.",
+          "companies": {
+            "alphabet": {
+              "verdict": "already_included",
+              "why": "시장성 지분증권이 대차대조표 줄 `MarketableSecuritiesCurrent` 186,563M 안에 이미 있다 — 186,563 − AFS 채무증권 99,500(`AvailableForSaleSecuritiesDebtSecurities`) = 87,063 이 지분 쪽이다. `EquitySecuritiesFvNi` 는 **기준일 2026-06-30 사실이 없다**(최신 2025-09-30 7,093M) — 9개월 전 값이라 대차대조 합산에 섞지 않는다.",
+              "delta": 0
+            },
+            "meta": {
+              "verdict": "already_included",
+              "why": "`EquitySecuritiesFvNi` 3,543M 이 이미 `MarketableSecuritiesCurrent` 74,798M **안에 있다.** 검산: AFS 채무증권(미수이자 제외) 71,255 + 지분 3,543 = **74,798** 로 정확히 맞는다. 따로 더하면 이중 계상이다.",
+              "delta": 0
+            },
+            "nvidia": {
+              "verdict": "added",
+              "why": "**빠져 있었다.** 이 회사가 쓰는 줄은 `DebtSecuritiesCurrent` 34,143M 이라 채무증권만 담고, 시장성 지분증권 `EquitySecuritiesFvNi` 42,783M(2026-07-26)은 어느 쪽에도 없었다. 비시장성 `EquitySecuritiesWithoutReadilyDeterminableFairValueAmount` 47,898M 과 별개 태그라 주석이 둘을 갈라 준다 — alibaba 가 상장주식 100,594 를 주석 분할로 넣은 것과 같은 처리다.",
+              "delta": 42783000000.0
+            },
+            "oracle": {
+              "verdict": "excluded_mixed",
+              "why": "`EquitySecuritiesFvNiAndWithoutReadilyDeterminableFairValue` **2,300M 하나뿐이고 시장성과 비시장성을 한 수에 담는다.** 비시장성분 605M 을 빼면 1,695M 이 나오지만 그 뺄셈을 쓰지 않는다 — 같은 파일의 시계열이 어긋난다(2025-05-31 combined 2,100 대 비시장성 417 · 2025-11-30 combined 416). **시장성을 증명하지 못한 혼합 줄**이라 넣지 않는다(securities_scope.exclude 의 alibaba `Debt securities and loan investments` 10,880 과 같은 사유).",
+              "delta": 0
+            },
+            "alibaba": {
+              "verdict": "already_included",
+              "why": "주석 11 분할로 `Listed equity securities` 100,594 RMB백만을 이미 포함하고 있다.",
+              "delta": 0
+            },
+            "tesla": {
+              "verdict": "crypto_excluded",
+              "why": "시장성 지분증권은 없다. 대신 `CryptoAssetFairValueNoncurrent` **674M(2026-06-30)** 이 포함·제외 어느 목록에도 없었다 — spacex-xai 가 FIX-56 1단계에서 받은 것과 같은 판단을 댄다(암호자산은 유가증권이 아니고 회사가 비유동으로만 태그했다). **제외.**",
+              "delta": 0
+            },
+            "apple": {
+              "verdict": "none",
+              "why": "기준일 2026-06-27 에 지분증권·암호자산 태그가 없다(net_cash 는 리스 결측으로 미등록).",
+              "delta": 0
+            },
+            "amazon": {
+              "verdict": "none",
+              "why": "비시장성 `EquitySecuritiesWithoutReadilyDeterminableFairValueAmount` 122,300M 뿐이고 이미 제외 목록에 있다.",
+              "delta": 0
+            },
+            "microsoft": {
+              "verdict": "none",
+              "why": "비시장성 12,400M 뿐이고 이미 제외 목록에 있다.",
+              "delta": 0
+            },
+            "palantir": {
+              "verdict": "none",
+              "why": "비시장성 167M 뿐이다(net_cash 는 리스 결측으로 미등록).",
+              "delta": 0
+            },
+            "spacex-xai": {
+              "verdict": "none",
+              "why": "비시장성 237M 과 암호자산 1,098M 둘 다 이미 제외 목록에 있다(FIX-56 1단계).",
+              "delta": 0
+            },
+            "tsmc": {
+              "verdict": "none",
+              "why": "IFRS 제출사. 비공개거래 지분·전환우선주·SAFE 를 이미 제외 목록에 적었고 시장성 지분 줄은 없다.",
+              "delta": 0
+            }
+          },
+          "score_effect": "**밴드가 갈리는 회사가 없다.** nvidia P2 17.8311 → 17.6898(둘 다 `8~20`, -1). 나머지 11개사는 값이 바뀌지 않는다. 14개사 총점 불변.",
+          "meta_note": "[FIX-58 1단계] 지시서는 meta 도 3,543 을 더해 P2 6.7123 → 6.6968 이 된다고 봤다. **더하면 이중 계상이다** — 71,255 + 3,543 = 74,798 로 이미 쓰는 줄 안에 있다. 산술은 맞지만 사실이 아니라 더하지 않았다."
         }
       },
       "raw": "현금+시장성증권 90.3B − 차입 83.7B − 리스 28.7B = -22.1B",
@@ -11559,7 +11629,7 @@
       "observation_id": "nvidia.net_cash.nc37",
       "company_id": "nvidia",
       "metric": "net_cash",
-      "value": 17726000000.0,
+      "value": 60509000000.0,
       "unit": "USD",
       "as_of": "2026-07-26",
       "observed_at": "2026-09-11",
@@ -11577,7 +11647,7 @@
         "securities_criterion": "**팔아서 기업 청구권을 상환할 수 있는 자산만 뺀다.** 유가증권은 시장성 있는 것에 한한다.",
         "scope_warning": "설계 지침 6.4 의 '사용 가능한 현금' 을 여기로 옮기지 말 것. 6.4 는 런웨이 절이고 여기는 EV 조정이다 (policies.f6.net_cash.scope_separation).",
         "components": {
-          "cash_and_marketable_securities": 56586000000.0,
+          "cash_and_marketable_securities": 99369000000.0,
           "cash_and_marketable_securities_concepts": [
             {
               "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
@@ -11586,6 +11656,10 @@
             {
               "tag": "us-gaap:DebtSecuritiesCurrent",
               "value": 34143000000.0
+            },
+            {
+              "tag": "us-gaap:EquitySecuritiesFvNi",
+              "value": 42783000000.0
             }
           ],
           "excluded_nonmarketable_present": {
@@ -11610,12 +11684,23 @@
           "operating_lease": 5494000000.0,
           "finance_lease": null,
           "lease_total": 5494000000.0,
-          "debt_incl_lease": 38860000000.0
+          "debt_incl_lease": 38860000000.0,
+          "marketable_equity_added": {
+            "tag": "us-gaap:EquitySecuritiesFvNi",
+            "value": 42783000000.0,
+            "as_of": "2026-07-26",
+            "what": "시장성 지분증권(공정가치-당기손익). 규칙 `securities_scope.include` 의 `상장 지분증권` 이다. 이 회사의 대차대조표 증권 줄은 `DebtSecuritiesCurrent` 34,143M 로 채무증권만 담아 이 금액이 빠져 있었다.",
+            "not_double_counted": "`DebtSecuritiesCurrent` 34,143 은 정의상 채무증권만이고, 비시장성 지분 47,898 은 별개 태그로 제외 목록에 있다. 만기 버킷 `AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue` 41,000 은 예전처럼 쓰지 않는다(대차대조표 줄이 아니다).",
+            "asof_difference": "이 회사의 기준일은 **2026-07-26** 으로 다른 회사(2026-06-30)와 다르다. 회계분기 끝이 달라서이고 net_cash 의 다른 성분도 전부 같은 2026-07-26 이라 관측 안에서는 기준이 섞이지 않는다. 회사 간 비교에서는 한 달 차가 남는다.",
+            "added_at": "2026-09-16",
+            "review": "obsreg 7차 리뷰 B(financial-calc, review-obsreg 4906a27) medium"
+          }
         },
         "legacy_comparison": {
           "legacy_net_cash": 23600000000.0,
-          "diff": -5874000000.0,
-          "matched": false
+          "diff": 36909000000.0,
+          "matched": false,
+          "note": "[FIX-58 1단계] 전에도 맞지 않았다(17,726 대 23,600, 차 -5,874M). 시장성 지분증권을 넣어 60,509M 이 되면서 차가 +36,909M 으로 더 커진다. **legacy 와 맞추려고 규칙을 좁히지 않는다** — 규칙이 상장 지분증권을 포함으로 적고 주석이 금액을 갈라 준다. legacy 가 이 줄을 어떻게 다뤘는지는 basis 가 없어 알 수 없다."
         },
         "corrections": [
           {
@@ -11624,9 +11709,79 @@
             "corrected": 56586000000.0,
             "why": "C-13 이 만기 1년 이내 공정가치 버킷 41,000 을 현금에 더해 현금성자산 안의 증권 6,857 이 이중계상됐다. 만기 버킷은 대차대조표 줄이 아니다."
           }
-        ]
+        ],
+        "marketable_equity_sweep": {
+          "checked_at": "2026-09-16",
+          "review": "obsreg 7차 리뷰 B(financial-calc, review-obsreg 4906a27) medium — 같은 잣대",
+          "how": "보존 companyfacts 12개사에서 `EquitySecurit|MarketableEquity|TradingSecurities|CryptoAsset` 정규식으로 **각 회사의 측정 기준일 시점 사실**을 전부 훑었다(가격 조정 누계 태그는 제외). 회사마다 기준일이 다르므로 회사별 기준일로 본다 — nvidia 2026-07-26 · oracle 2026-05-31 · alibaba 2026-03-31 · tsmc 2025-12-31 · 나머지 6월 말.",
+          "rule": "policies.f6.net_cash.securities_scope.include 의 `상장 지분증권` 을 그대로 적용하되, **시장성을 증명한 금액만** 넣는다.",
+          "companies": {
+            "alphabet": {
+              "verdict": "already_included",
+              "why": "시장성 지분증권이 대차대조표 줄 `MarketableSecuritiesCurrent` 186,563M 안에 이미 있다 — 186,563 − AFS 채무증권 99,500(`AvailableForSaleSecuritiesDebtSecurities`) = 87,063 이 지분 쪽이다. `EquitySecuritiesFvNi` 는 **기준일 2026-06-30 사실이 없다**(최신 2025-09-30 7,093M) — 9개월 전 값이라 대차대조 합산에 섞지 않는다.",
+              "delta": 0
+            },
+            "meta": {
+              "verdict": "already_included",
+              "why": "`EquitySecuritiesFvNi` 3,543M 이 이미 `MarketableSecuritiesCurrent` 74,798M **안에 있다.** 검산: AFS 채무증권(미수이자 제외) 71,255 + 지분 3,543 = **74,798** 로 정확히 맞는다. 따로 더하면 이중 계상이다.",
+              "delta": 0
+            },
+            "nvidia": {
+              "verdict": "added",
+              "why": "**빠져 있었다.** 이 회사가 쓰는 줄은 `DebtSecuritiesCurrent` 34,143M 이라 채무증권만 담고, 시장성 지분증권 `EquitySecuritiesFvNi` 42,783M(2026-07-26)은 어느 쪽에도 없었다. 비시장성 `EquitySecuritiesWithoutReadilyDeterminableFairValueAmount` 47,898M 과 별개 태그라 주석이 둘을 갈라 준다 — alibaba 가 상장주식 100,594 를 주석 분할로 넣은 것과 같은 처리다.",
+              "delta": 42783000000.0
+            },
+            "oracle": {
+              "verdict": "excluded_mixed",
+              "why": "`EquitySecuritiesFvNiAndWithoutReadilyDeterminableFairValue` **2,300M 하나뿐이고 시장성과 비시장성을 한 수에 담는다.** 비시장성분 605M 을 빼면 1,695M 이 나오지만 그 뺄셈을 쓰지 않는다 — 같은 파일의 시계열이 어긋난다(2025-05-31 combined 2,100 대 비시장성 417 · 2025-11-30 combined 416). **시장성을 증명하지 못한 혼합 줄**이라 넣지 않는다(securities_scope.exclude 의 alibaba `Debt securities and loan investments` 10,880 과 같은 사유).",
+              "delta": 0
+            },
+            "alibaba": {
+              "verdict": "already_included",
+              "why": "주석 11 분할로 `Listed equity securities` 100,594 RMB백만을 이미 포함하고 있다.",
+              "delta": 0
+            },
+            "tesla": {
+              "verdict": "crypto_excluded",
+              "why": "시장성 지분증권은 없다. 대신 `CryptoAssetFairValueNoncurrent` **674M(2026-06-30)** 이 포함·제외 어느 목록에도 없었다 — spacex-xai 가 FIX-56 1단계에서 받은 것과 같은 판단을 댄다(암호자산은 유가증권이 아니고 회사가 비유동으로만 태그했다). **제외.**",
+              "delta": 0
+            },
+            "apple": {
+              "verdict": "none",
+              "why": "기준일 2026-06-27 에 지분증권·암호자산 태그가 없다(net_cash 는 리스 결측으로 미등록).",
+              "delta": 0
+            },
+            "amazon": {
+              "verdict": "none",
+              "why": "비시장성 `EquitySecuritiesWithoutReadilyDeterminableFairValueAmount` 122,300M 뿐이고 이미 제외 목록에 있다.",
+              "delta": 0
+            },
+            "microsoft": {
+              "verdict": "none",
+              "why": "비시장성 12,400M 뿐이고 이미 제외 목록에 있다.",
+              "delta": 0
+            },
+            "palantir": {
+              "verdict": "none",
+              "why": "비시장성 167M 뿐이다(net_cash 는 리스 결측으로 미등록).",
+              "delta": 0
+            },
+            "spacex-xai": {
+              "verdict": "none",
+              "why": "비시장성 237M 과 암호자산 1,098M 둘 다 이미 제외 목록에 있다(FIX-56 1단계).",
+              "delta": 0
+            },
+            "tsmc": {
+              "verdict": "none",
+              "why": "IFRS 제출사. 비공개거래 지분·전환우선주·SAFE 를 이미 제외 목록에 적었고 시장성 지분 줄은 없다.",
+              "delta": 0
+            }
+          },
+          "score_effect": "**밴드가 갈리는 회사가 없다.** nvidia P2 17.8311 → 17.6898(둘 다 `8~20`, -1). 나머지 11개사는 값이 바뀌지 않는다. 14개사 총점 불변.",
+          "meta_note": "[FIX-58 1단계] 지시서는 meta 도 3,543 을 더해 P2 6.7123 → 6.6968 이 된다고 봤다. **더하면 이중 계상이다** — 71,255 + 3,543 = 74,798 로 이미 쓰는 줄 안에 있다. 산술은 맞지만 사실이 아니라 더하지 않았다."
+        }
       },
-      "raw": "현금+시장성증권 56.6B − 차입 33.4B − 리스 5.5B = 17.7B",
+      "raw": "현금 22.4B + 채무증권 34.1B + 시장성 지분증권 42.8B = 99.4B − 차입 38.9B = 60.5B",
       "note": "NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만**"
     },
     {
@@ -11682,6 +11837,76 @@
           "legacy_net_cash": -135500000000.0,
           "diff": -38000000.0,
           "matched": true
+        },
+        "marketable_equity_sweep": {
+          "checked_at": "2026-09-16",
+          "review": "obsreg 7차 리뷰 B(financial-calc, review-obsreg 4906a27) medium — 같은 잣대",
+          "how": "보존 companyfacts 12개사에서 `EquitySecurit|MarketableEquity|TradingSecurities|CryptoAsset` 정규식으로 **각 회사의 측정 기준일 시점 사실**을 전부 훑었다(가격 조정 누계 태그는 제외). 회사마다 기준일이 다르므로 회사별 기준일로 본다 — nvidia 2026-07-26 · oracle 2026-05-31 · alibaba 2026-03-31 · tsmc 2025-12-31 · 나머지 6월 말.",
+          "rule": "policies.f6.net_cash.securities_scope.include 의 `상장 지분증권` 을 그대로 적용하되, **시장성을 증명한 금액만** 넣는다.",
+          "companies": {
+            "alphabet": {
+              "verdict": "already_included",
+              "why": "시장성 지분증권이 대차대조표 줄 `MarketableSecuritiesCurrent` 186,563M 안에 이미 있다 — 186,563 − AFS 채무증권 99,500(`AvailableForSaleSecuritiesDebtSecurities`) = 87,063 이 지분 쪽이다. `EquitySecuritiesFvNi` 는 **기준일 2026-06-30 사실이 없다**(최신 2025-09-30 7,093M) — 9개월 전 값이라 대차대조 합산에 섞지 않는다.",
+              "delta": 0
+            },
+            "meta": {
+              "verdict": "already_included",
+              "why": "`EquitySecuritiesFvNi` 3,543M 이 이미 `MarketableSecuritiesCurrent` 74,798M **안에 있다.** 검산: AFS 채무증권(미수이자 제외) 71,255 + 지분 3,543 = **74,798** 로 정확히 맞는다. 따로 더하면 이중 계상이다.",
+              "delta": 0
+            },
+            "nvidia": {
+              "verdict": "added",
+              "why": "**빠져 있었다.** 이 회사가 쓰는 줄은 `DebtSecuritiesCurrent` 34,143M 이라 채무증권만 담고, 시장성 지분증권 `EquitySecuritiesFvNi` 42,783M(2026-07-26)은 어느 쪽에도 없었다. 비시장성 `EquitySecuritiesWithoutReadilyDeterminableFairValueAmount` 47,898M 과 별개 태그라 주석이 둘을 갈라 준다 — alibaba 가 상장주식 100,594 를 주석 분할로 넣은 것과 같은 처리다.",
+              "delta": 42783000000.0
+            },
+            "oracle": {
+              "verdict": "excluded_mixed",
+              "why": "`EquitySecuritiesFvNiAndWithoutReadilyDeterminableFairValue` **2,300M 하나뿐이고 시장성과 비시장성을 한 수에 담는다.** 비시장성분 605M 을 빼면 1,695M 이 나오지만 그 뺄셈을 쓰지 않는다 — 같은 파일의 시계열이 어긋난다(2025-05-31 combined 2,100 대 비시장성 417 · 2025-11-30 combined 416). **시장성을 증명하지 못한 혼합 줄**이라 넣지 않는다(securities_scope.exclude 의 alibaba `Debt securities and loan investments` 10,880 과 같은 사유).",
+              "delta": 0
+            },
+            "alibaba": {
+              "verdict": "already_included",
+              "why": "주석 11 분할로 `Listed equity securities` 100,594 RMB백만을 이미 포함하고 있다.",
+              "delta": 0
+            },
+            "tesla": {
+              "verdict": "crypto_excluded",
+              "why": "시장성 지분증권은 없다. 대신 `CryptoAssetFairValueNoncurrent` **674M(2026-06-30)** 이 포함·제외 어느 목록에도 없었다 — spacex-xai 가 FIX-56 1단계에서 받은 것과 같은 판단을 댄다(암호자산은 유가증권이 아니고 회사가 비유동으로만 태그했다). **제외.**",
+              "delta": 0
+            },
+            "apple": {
+              "verdict": "none",
+              "why": "기준일 2026-06-27 에 지분증권·암호자산 태그가 없다(net_cash 는 리스 결측으로 미등록).",
+              "delta": 0
+            },
+            "amazon": {
+              "verdict": "none",
+              "why": "비시장성 `EquitySecuritiesWithoutReadilyDeterminableFairValueAmount` 122,300M 뿐이고 이미 제외 목록에 있다.",
+              "delta": 0
+            },
+            "microsoft": {
+              "verdict": "none",
+              "why": "비시장성 12,400M 뿐이고 이미 제외 목록에 있다.",
+              "delta": 0
+            },
+            "palantir": {
+              "verdict": "none",
+              "why": "비시장성 167M 뿐이다(net_cash 는 리스 결측으로 미등록).",
+              "delta": 0
+            },
+            "spacex-xai": {
+              "verdict": "none",
+              "why": "비시장성 237M 과 암호자산 1,098M 둘 다 이미 제외 목록에 있다(FIX-56 1단계).",
+              "delta": 0
+            },
+            "tsmc": {
+              "verdict": "none",
+              "why": "IFRS 제출사. 비공개거래 지분·전환우선주·SAFE 를 이미 제외 목록에 적었고 시장성 지분 줄은 없다.",
+              "delta": 0
+            }
+          },
+          "score_effect": "**밴드가 갈리는 회사가 없다.** nvidia P2 17.8311 → 17.6898(둘 다 `8~20`, -1). 나머지 11개사는 값이 바뀌지 않는다. 14개사 총점 불변.",
+          "meta_note": "[FIX-58 1단계] 지시서는 meta 도 3,543 을 더해 P2 6.7123 → 6.6968 이 된다고 봤다. **더하면 이중 계상이다** — 71,255 + 3,543 = 74,798 로 이미 쓰는 줄 안에 있다. 산술은 맞지만 사실이 아니라 더하지 않았다."
         }
       },
       "raw": "현금+시장성증권 31.9B − 차입 129.5B − 리스 37.9B = -135.5B",
@@ -11754,7 +11979,10 @@
           "finance_lease": null,
           "lease_total": 344000000.0,
           "debt_incl_lease": 39708000000.0,
-          "excluded_completeness": "**`전부 남겼다` 는 성립하지 않았다.** 같은 기준일 제한현금 태그 일부가 빠져 있어 채웠다. 제한현금은 어차피 빼므로 net_cash 값은 그대로다. 이 목록은 제외 판단에 쓴 개념이며 companyfacts 전 개념의 전수 목록은 아니다."
+          "excluded_completeness": "**`전부 남겼다` 는 성립하지 않았다.** 같은 기준일 제한현금 태그 일부가 빠져 있어 채웠다. 제한현금은 어차피 빼므로 net_cash 값은 그대로다. 이 목록은 제외 판단에 쓴 개념이며 companyfacts 전 개념의 전수 목록은 아니다.",
+          "debt_ex_lease_label": "**이름과 달리 금융리스를 이미 포함한다.** 39,364 는 `LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities` 총액 태그이고 `LongTermDebt` 38,285 와의 차 1,079 가 금융리스다(basis.corrections 참조). [FIX-58 1단계 라벨 정정 · obsreg 7차 리뷰 B(financial-calc, review-obsreg 4906a27) low] 키 이름이 `_ex_lease` 라 리스를 뺀 값으로 읽혔다.",
+          "lease_total_label": "**운용리스 유동분만이다.** 344 는 10-Q `Operating lease liabilities, current` 이고 비유동분 개념이 이 기준일에 없다(basis.completeness). 금융리스는 위 39,364 에 이미 들어 있다.",
+          "sum_is_right": "라벨과 무관하게 합계는 맞는다 — 39,364 + 344 = 39,708 이고 100,009 − 39,708 = 60,301 이다. 값 불변."
         },
         "legacy_comparison": {
           "legacy_net_cash": 60300000000.0,
@@ -11841,6 +12069,14 @@
             "us-gaap:RestrictedCashNoncurrent": {
               "value": 710000000.0,
               "why": "제한 현금 — FIX-53 3단계에서 누락을 채웠다(리뷰 A 2차, 같은 기준일 companyfacts)"
+            },
+            "us-gaap:CryptoAssetFairValueNoncurrent": {
+              "value": 674000000.0,
+              "as_of": "2026-06-30",
+              "why": "**암호자산은 유가증권이 아니다.** 정의가 더하는 것은 `현금및현금성자산 + 시장성 유가증권` 이고 암호자산은 ASU 2023-08 이후 따로 세우는 별개 자산군이다. 회사도 **비유동**으로만 태그했다(`CryptoAssetFairValueNoncurrent` 674 · 유동 태그 0건). spacex-xai 1,098M 과 같은 판단이다(FIX-56 1단계).",
+              "if_included": "넣으면 순현금이 27,444 → 28,118M 이 되고 P2 는 13.3427 → 13.3161 로 움직인다. **밴드 `8~20` 은 그대로다.**",
+              "decided_at": "2026-09-16",
+              "review": "obsreg 7차 리뷰 B(financial-calc, review-obsreg 4906a27) medium — 같은 잣대 전수에서 드러났다"
             }
           },
           "debt_ex_lease": 9061000000.0,

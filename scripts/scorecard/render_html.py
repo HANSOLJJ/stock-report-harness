@@ -26,6 +26,8 @@ OBS_STATUS_LABELS = {
     "verified": "검증 완료", "legacy_unverified": "기준선 승계·미검증", "not_applicable": "해당 없음",
     "not_disclosed": "미공시", "collection_failed": "수집 실패", "source_conflict": "출처 충돌",
     "incompatible_basis": "기준 비교 불가", "parse_failed": "파싱 실패",
+    # 2026-09-16 FIX-58 1단계(7차 리뷰 D): 스키마에 있는데 라벨 사전에만 없어 원문 키가 그대로 나왔다.
+    "unavailable": "산출 불가",
 }
 DECISION_STATUS = {"pending": "미결", "resolved": "확정", "documented": "문서화"}
 CODE_RE = re.compile(r"C-\d{2}(?![\d\w/-])")
@@ -421,13 +423,15 @@ def render_ranking(results: dict[str, Any]) -> str:
 
 def render_incomplete(results: dict[str, Any], rules: Any) -> str:
     items = results["population"]["incomplete"]
+    decisions = "".join(f'<li><b>{esc(d)}</b> {esc((rules.decision(d) or {}).get("summary", ""))}</li>' for d in results["pending_rule_decisions"])
+    # 2026-09-16 FIX-58 1단계(7차 리뷰 D): 미완료가 0건이면 조기 반환해 **미결 규칙 결정이 HTML 에서 사라졌다.**
+    # 둘은 다른 사실이다 — 미완료 기업이 없어도 미결 결정은 남을 수 있다.
     if not items:
-        return ""
+        return (f'<h3>필요한 규칙 결정</h3><ul class="tight">{decisions}</ul>') if decisions else ""
     lis = []
     for i in items:
         reasons = "; ".join(f"{FACTOR_LABELS[p['factor']]} {STATUS_LABEL.get(p['status'], p['status'])}" + (f" ({p['decision_id']})" if p.get("decision_id") else "") for p in i["reasons"])
         lis.append(f'<li><b>{esc(i["display_name"])}</b> — {esc(reasons)}</li>')
-    decisions = "".join(f'<li><b>{esc(d)}</b> {esc((rules.decision(d) or {}).get("summary", ""))}</li>' for d in results["pending_rule_decisions"])
     return (f'<div class="notice bad mt-14"><b>미완료 {len(items)}개사는 순위에서 제외했다.</b> 0점으로 채우지 않는다.</div>'
             f'<ul class="pending-list">{"".join(lis)}</ul>'
             + (f'<h3>필요한 규칙 결정</h3><ul class="tight">{decisions}</ul>' if decisions else ""))
