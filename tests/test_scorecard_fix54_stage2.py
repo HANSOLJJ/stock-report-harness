@@ -115,7 +115,8 @@ class Stage2Test(unittest.TestCase):
         self.assertAlmostEqual(cur["table"]["alibaba"][1], 0.6124, places=4)
         self.assertIn("옛 순이익 기준 산식", cur["note"])
         self.assertIn("Term Loan (unsecured delayed draw) $17.5B 는 2026-09-30 까지 인출하지 않으면 미인출분이 소멸한다 — 기준일(2026-09-02) 28일 뒤", self.md)
-        self.assertEqual(len(rc.credit_lines(self.ctx, load("results.json"))), 3)
+        # 2026-09-16 FIX-55 2단계: tesla 5,000M 이 등록돼 여신 줄이 넷이 됐다(alibaba·spacex-xai·amazon·tesla).
+        self.assertEqual(len(rc.credit_lines(self.ctx, load("results.json"))), 4)
 
 
 if __name__ == "__main__":

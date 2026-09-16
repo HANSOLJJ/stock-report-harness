@@ -2341,13 +2341,22 @@
       "observation_id": "palantir.offbalance_note.v15",
       "company_id": "palantir",
       "metric": "offbalance_note",
-      "value": "없음",
+      "value": "미확인 — v1.5 원표기 `없음`",
       "unit": "text",
       "as_of": "2026-09-02",
       "kind": "text",
       "source_id": "SRC-v15-html",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "label_correction": {
+          "was": "없음",
+          "is": "미확인 — v1.5 원표기 `없음`",
+          "corrected_at": "2026-09-16",
+          "review": "obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) medium",
+          "why": "다른 회사는 같은 자료 상태를 `미확인` 으로 적는데 palantir 만 확정 부재로 적혀 있었다. 보존 PLTR companyfacts 에는 기준일 2026-06-30 의 부외 약정 태그 사실이 없고 최신값은 2024-12-31 의 0 이다. HANDOVER 69행 `\"미등재·없음\"은 검색 없이 쓰면 틀린다` · AGENTS.md 117행 `0 이 나오면 부재인지 탐색 실패인지 가른다`.",
+          "score_path": "offbalance_note 는 표시용 텍스트다. palantir 의 coverage_comparable 은 unknown 이라 G4 도 판정하지 않는다 — 점수에 닿지 않는다."
+        }
+      },
       "raw": "없음",
       "note": "부외 약정 원문(A/B/C 분류 전)"
     },
@@ -3962,9 +3971,16 @@
         "precision": "원문이 approximately 이고 십억 단위로만 적는다 — 유효숫자 3자리",
         "scope": "원계약 1년 초과 계약만(primarily AWS). 1년 이하 계약은 빠져 있어 과소계상 방향",
         "weighted_average_remaining_years": 6.4,
-        "xbrl": "us-gaap:RevenueRemainingPerformanceObligation 태깅은 2020-06 에서 끊겼다 — 본문 서술로만 공시된다"
+        "xbrl": "us-gaap:RevenueRemainingPerformanceObligation 태깅은 2020-06 에서 끊겼다 — 본문 서술로만 공시된다",
+        "raw_correction": {
+          "was": "RPO approximately $496 billion (2026-06-30)",
+          "is": "those commitments not yet recognized were approximately $496 billion (2026-06-30)",
+          "corrected_at": "2026-09-16",
+          "review": "obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low",
+          "why": "`RPO` 는 우리가 붙인 이름이다. 보존 10-Q 문면은 `those commitments not yet recognized were approximately $ 496 billion as of June 30, 2026` 이고 `remaining performance obligation` 은 전문에서 0건이다. 값·기준일은 그대로다."
+        }
       },
-      "raw": "RPO approximately $496 billion (2026-06-30)",
+      "raw": "those commitments not yet recognized were approximately $496 billion (2026-06-30)",
       "note": "OBS-REG-25. 승계 관측 amazon.contracted_revenue.v15(parse_failed)를 대체한다. **parse_failed 는 정직한 라벨이었다** — XBRL 전용 파서로는 구조적으로 못 읽는다"
     },
     {
@@ -8772,7 +8788,7 @@
       "as_of": "2026-09-02",
       "observed_at": "2026-09-11",
       "kind": "run_rate",
-      "source_id": "SRC-v15-md",
+      "source_id": "SRC-ANTHROPIC-SERIESH-2026",
       "status": "legacy_unverified",
       "basis": {
         "period_label": null,
@@ -8780,7 +8796,16 @@
         "current_label": "$65B 는 7월 기준이라고 원문이 적는다",
         "kind_note": "kind=run_rate. **ARR 이 아니라 런레이트다**(PRIV-ARR-17). 이름이 arr_prior 인 것은 기존 12개사 관측·스키마와 얽혀 이름을 바꾸지 않기로 한 결과다.",
         "growth_implied": 0.38297872340425543,
-        "source_lines": "AI기업_채점표_v1.5.md anthropic ⑥가격 항목"
+        "source_lines": "AI기업_채점표_v1.5.md anthropic ⑥가격 항목",
+        "source_correction": {
+          "was": "SRC-v15-md",
+          "is": "SRC-ANTHROPIC-SERIESH-2026",
+          "corrected_at": "2026-09-16",
+          "review": "obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) medium",
+          "why": "값 $47B 를 받치는 1차 문면이 회사 보도자료다 — `Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month.` v1.5 서술은 이 발표를 옮긴 것이다. 출처가 등재되지 않아 이해당사자 발표라는 성격이 References 에 드러나지 않았다.",
+          "quote": "our run-rate revenue crossed $47 billion earlier this month",
+          "still_legacy": "status 는 legacy_unverified 그대로다 — 값 자체를 이번 실행이 재측정한 것이 아니다."
+        }
       },
       "raw": "ARR $47B → $65B (직전 런레이트)",
       "note": "PRIV-IMPL-31 / C-12. P3 입력. 시점 라벨이 원문에 없어 null 이다"
@@ -8838,7 +8863,8 @@
           "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건(`profit` 1건은 메뉴의 Nonprofits). 수치는 조달액·밸류·run-rate 뿐이다",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
         }
       },
       "raw": "미공시",
@@ -8868,7 +8894,8 @@
           "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건(`profit` 1건은 메뉴의 Nonprofits). 수치는 조달액·밸류·run-rate 뿐이다",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
         }
       },
       "raw": "미공시",
@@ -8898,7 +8925,8 @@
           "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건(`profit` 1건은 메뉴의 Nonprofits). 수치는 조달액·밸류·run-rate 뿐이다",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
         }
       },
       "raw": "—",
@@ -8928,7 +8956,8 @@
           "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건(`profit` 1건은 메뉴의 Nonprofits). 수치는 조달액·밸류·run-rate 뿐이다",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
         }
       },
       "raw": "—",
@@ -8958,7 +8987,8 @@
           "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건(`profit` 1건은 메뉴의 Nonprofits). 수치는 조달액·밸류·run-rate 뿐이다",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
         }
       },
       "raw": "미공시 — 비상장이라 TTM 영업손익 공시 의무 없음",
@@ -8985,10 +9015,11 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. 수치는 조달액 중심이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`) — 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정만 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
         }
       },
       "raw": "미공시",
@@ -9015,10 +9046,11 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. 수치는 조달액 중심이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`) — 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정만 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
         }
       },
       "raw": "미공시",
@@ -9045,10 +9077,11 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. 수치는 조달액 중심이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`) — 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정만 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
         }
       },
       "raw": "—",
@@ -9075,10 +9108,11 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. 수치는 조달액 중심이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`) — 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정만 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
         }
       },
       "raw": "—",
@@ -9105,10 +9139,11 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. 수치는 조달액 중심이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 1건은 `more revenue and more cashflow` 서술로 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`) — 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정만 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
-          "recorded_at": "2026-09-15"
+          "recorded_at": "2026-09-15",
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
         }
       },
       "raw": "미공시 — 비상장이라 TTM 영업손익 공시 의무 없음",
@@ -12831,7 +12866,8 @@
             "why": "`In February 2025, X Corp. … amended … and reduced the Secured First Lien Revolving Credit Facility commitment to $ 0` — 약정 한도가 0 이다. 합산하지 않는다."
           }
         ],
-        "why_now": "3차 리뷰 B FC-01. alibaba(FIX-53 2단계)와 같은 기준의 누락이었다."
+        "why_now": "3차 리뷰 B FC-01. alibaba(FIX-53 2단계)와 같은 기준의 누락이었다.",
+        "no_double_count_with_restricted_cash": "[FIX-55 2단계 · obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) 확인 못 한 것] **이중 계산이 아니다.** 신용장 645M 은 `collateralized by restricted cash` 이지만 런웨이 분자의 현금 관측 spacex-xai.cash.cashfcf35 93,522M 은 `us-gaap:CashAndCashEquivalentsAtCarryingValue` **순수 현금**이고 제한현금 830M(RestrictedCashCurrent 210 + Noncurrent 620)은 거기서 빠져 있다(그 관측 basis 의 제외 목록). 따라서 신용장 전액 차감은 같은 돈을 두 번 빼는 것이 아니라 미인출액 쪽만 보수적으로 좁힌 하한이다. 다음 리뷰가 같은 질문을 반복하지 않게 여기 적는다."
       },
       "raw": "미인출 회전여신 확인 하한 US$4,355M (한도 5,000 − 신용장 645, 2026-06-30)",
       "note": "FIX-54 1단계 S1. 보수적 하한. 신용장이 시설 밖이면 5,000M — 결론 같음(basis.sensitivity)."
@@ -13030,7 +13066,8 @@
         "why": "보존된 10-K 본문이 없다. companyfacts 에 최근 기준일의 여신 태그가 없다. **oracle 은 FCF 음수라 G3 가 점수에 닿는다** — 런웨이 3년(step 0)에 닿으려면 현금 31,289M 에 약 39,770M 이상의 확정 미인출 여신이 더해져야 한다. 확인하지 못했다.",
         "not_fetched": "외부 조회 규칙상 새로 받지 않았다. 원문이 보존되면 다시 본다.",
         "engine_effect": "숫자가 아니라 G3 분자에 들어가지 않는다(이전과 같음).",
-        "next_collection_priority": "[FIX-55 1단계 · obsreg 4차 리뷰 B(NTM Claude 독립 세션, 기준 ab5a053 · review 8e58a46) low] **다음 수집 1순위다.** 미등록 아홉 곳 중 oracle 만 FCF 음수라 G3 가 점수를 낸다(런웨이 1.32년, step -1). 10-K 본문이 보존되면 이 한 건을 먼저 채운다. 이번에 값을 만들지 않았다 — 외부 조회 금지이고 원문이 없다."
+        "next_collection_priority": "[FIX-55 1단계 · obsreg 4차 리뷰 B(NTM Claude 독립 세션, 기준 ab5a053 · review 8e58a46) low] **다음 수집 1순위다.** 미등록 아홉 곳 중 oracle 만 FCF 음수라 G3 가 점수를 낸다(런웨이 1.32년, step -1). 10-K 본문이 보존되면 이 한 건을 먼저 채운다. 이번에 값을 만들지 않았다 — 외부 조회 금지이고 원문이 없다.",
+        "broad_tag_sweep": "[FIX-55 2단계] 광역 정규식 주사(`Unused|Undrawn|RemainingBorrowingCapacity|LineOfCreditFacility`)를 보존 companyfacts 12개 파일에 다시 돌렸다. oracle 은 해당 태그 사실이 **0건**이다. 기준일 이후 값이 있는 회사는 tesla 하나뿐이었다 — oracle 은 그대로 미등록이고 점수도 그대로다."
       },
       "raw": null,
       "note": "FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다)."
@@ -13070,10 +13107,15 @@
       "basis": {
         "why": "보존된 10-Q 본문이 없다. companyfacts 의 여신 한도 태그 최신값이 2016-12-31 이다.",
         "not_fetched": "외부 조회 규칙상 새로 받지 않았다. 원문이 보존되면 다시 본다.",
-        "engine_effect": "숫자가 아니라 G3 분자에 들어가지 않는다(이전과 같음)."
+        "engine_effect": "숫자가 아니라 G3 분자에 들어가지 않는다(이전과 같음).",
+        "superseded_by": {
+          "by": "tesla.undrawn_credit.fix55",
+          "at": "2026-09-16",
+          "why": "보존 companyfacts 에 기준일 값이 있었다 — us-gaap:DebtInstrumentUnusedBorrowingCapacityAmount 2026-06-30 5,000M. `미확인` 은 고정 후보 목록만 훑은 결과였다(obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) high)."
+        }
       },
       "raw": null,
-      "note": "FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다)."
+      "note": "FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). | [FIX-55 2단계 대체됨 → tesla.undrawn_credit.fix55] 광역 태그 주사에서 실측값을 찾았다."
     },
     {
       "observation_id": "tsmc.undrawn_credit.fix54",
@@ -13090,10 +13132,47 @@
       "basis": {
         "why": "보존 20-F(f14a235)는 있으나 `credit facilit`·`unused credit`·`lines of credit`·`unutilized` 전문 검색 0건이다. FCF 양수라 G3 에 닿지 않는다.",
         "not_fetched": "외부 조회 규칙상 새로 받지 않았다. 원문이 보존되면 다시 본다.",
-        "engine_effect": "숫자가 아니라 G3 분자에 들어가지 않는다(이전과 같음)."
+        "engine_effect": "숫자가 아니라 G3 분자에 들어가지 않는다(이전과 같음).",
+        "period_mismatch": "[FIX-55 2단계 · obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low] **기간이 어긋난다.** as_of 는 2026-06-30 인데 부재를 확인한 원문은 FY2025(2025-12-31 기준) 20-F 다. 그 사이 분기 보고가 없어(20-F 제출사) 더 최신 원문이 없다. 라벨은 `unverified` 라 과장은 없다.",
+        "next_collection_guide": "다음 수집 지침 — 같은 20-F 에 `unused letters of credit … NT$ 438.7 million` 이 있다. **신용장은 약정 여신이 아니다** — 지급 보증 수단이고 인출 가능한 한도가 아니다. spacex-xai 에서는 신용장 645M 을 미인출액에서 **빼는** 방향으로 썼다(보수적 하한). 수집할 때 (1) 회전여신·기간대출 약정 한도와 인출액, (2) 신용장·보증 잔액을 따로 적고 (2)를 (1)의 미인출액에 더하지 않는다."
       },
       "raw": null,
       "note": "FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다)."
+    },
+    {
+      "observation_id": "tesla.undrawn_credit.fix55",
+      "company_id": "tesla",
+      "metric": "undrawn_credit",
+      "value": 5000000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-09-16",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "taxonomy": "us-gaap",
+        "tag": "DebtInstrumentUnusedBorrowingCapacityAmount",
+        "tag_definition": "Amount of unused borrowing capacity under the long-term financing arrangement that is available to the entity as of the balance sheet date.",
+        "why_no_arithmetic": "**태그 자체가 미인출액이다.** 한도 − 인출액을 우리가 계산하지 않았다 — 발행사가 `unused … available to the entity` 를 그대로 태깅한다. 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 에 그대로 대응한다.",
+        "form": "10-Q",
+        "accession": "0001628280-26-049270",
+        "filed": "2026-07-23",
+        "series": {
+          "2025-09-30": 7387000000,
+          "2025-12-31": 6429000000,
+          "2026-03-31": 5000000000,
+          "2026-06-30": 5000000000,
+          "note": "직전 분기(2026-03-31)도 같은 5,000M 이다. 값이 한 분기만 튀는 것이 아니다."
+        },
+        "why_missed_before": "FIX-54 S2 가 `LineOfCreditFacilityMaximumBorrowingCapacity` 계열 고정 후보만 훑어 체계가 다른 이 태그를 놓쳤다(obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) high). AGENTS.md 117행 `고정 후보 목록으로 태그를 찾으면 체계가 다른 발행사가 0 으로 나온다` 가 그대로 재현됐다.",
+        "engine_effect": "**점수에 닿지 않는다** — tesla 는 TTM FCF +5,762M 로 G2 에서 끝나고 G3(런웨이)가 계산되지 않는다. F9 -1(G1 통과 → G2 흑자·추세 악화)은 그대로다.",
+        "supersedes": "tesla.undrawn_credit.fix54(미확인). 그 관측은 지우지 않고 대체 표시만 남긴다.",
+        "sweep": "광역 정규식 주사 결과는 validation/fix-55/credit-tag-sweep.md"
+      },
+      "raw": "us-gaap:DebtInstrumentUnusedBorrowingCapacityAmount 2026-06-30 = 5,000,000,000 USD",
+      "note": "FIX-55 2단계 · obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) high. 확정 미인출 여신 실측 등록 — 태그 정의가 미인출액이라 별도 계산이 없다."
     }
   ]
 }

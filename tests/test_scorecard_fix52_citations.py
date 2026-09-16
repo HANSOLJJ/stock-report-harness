@@ -59,8 +59,11 @@ class ObservationSourceIdTest(unittest.TestCase):
         self.assertEqual(ntm["basis"]["cited_source_ids"], ["SRC-v15-md", "SRC-v15-rule", "SRC-v15-handover"])
 
     def test_v15_total_unchanged(self):
+        # 2026-09-16 FIX-55 2단계: anthropic.arr_prior.priv31 의 $47B 는 회사 보도자료가 1차 문면이라 그 출처로 옮겼다 — 242 → 241.
         n = sum(o["source_id"].startswith("SRC-v15-") for o in load("observations.json")["items"])
-        self.assertEqual(n, 242)
+        self.assertEqual(n, 241)
+        moved = {o["observation_id"]: o["source_id"] for o in load("observations.json")["items"]}["anthropic.arr_prior.priv31"]
+        self.assertEqual(moved, "SRC-ANTHROPIC-SERIESH-2026")
 
 
 class SourcesRegistryTest(unittest.TestCase):

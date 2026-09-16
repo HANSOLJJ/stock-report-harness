@@ -1280,7 +1280,7 @@
         "Arena 텍스트·에이전트·웹개발·문서·비전·검색 6개 카테고리 1위 ~~+ Artificial Analysis Index 1위~~ (superseded [FIX-53 3단계] — C-03 확정 전 잣대)",
         "(superseded [FIX-53 3단계] — `AA 종합 1위` 방어는 C-03 확정 전 5점 잣대) 🆕 GPT-6 Astra 출시 후에도 1위 방어 — Intelligence Index Fable 5.1(max) 66 > Astra 61(v4.2 개편 후에도 57 > 55), Coding Agent Index Fable 5.1 70 > Astra 67(전원 자기 하네스라 유효한 비교)",
         "MCP 표준 선점",
-        "Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%)",
+        "Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%) ⚠️ [FIX-55 2단계] **하네스 미표기** — 어느 하네스로 잰 값인지 원문이 적지 않고 저장소에 이 측정을 받치는 자료가 없다(채점규칙 22행 `비교는 같은 하네스끼리만`). 같은 실행의 openai.F2 는 `표준 하네스 62.7%` 로 표기한다. 점수 5 는 승계 그대로이고 재검토는 TEN-RA4-01(2026-11).",
         "📐 [FIX-53 3단계] **C-03 확정 기준(혼합 모델)** — 5점은 `AA 종합 1위` 가 아니라 **성능 도약이 세대 격차 수준일 때**다. 경로 수 0·1·2 → 2·3·4. openai.F2 가 `Anthropic 이 AA 종합 1위로 받은 점수` 라고 지목한 잣대가 이 근거란 첫 두 줄이라 같은 방식으로 superseded 표시했다. 점수 5 는 승계 그대로이고 세대 격차 판정은 이번 실행에서 하지 않았다(긴장 #11)."
       ],
       "counter_evidence": [],
@@ -1290,7 +1290,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     },
     {

@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: cfaaeb93f143e2fc4acc62aef17f510036f39c8899d8f8657953b96bcaa795aa
-judgments_hash: 2a6d7e7a5bae123b8f55e76b8fab96b2afd9fc7554ab77b71c1c20581a4070f7
+observations_hash: ca0212abb8c5ca0991220d3dec8a2c8bc85e8896600c088deff0660b82446192
+judgments_hash: 0b4fdb2c9ee71990dc834ba864ba9d3f4ff7bec1c3fa4a6c9e1dccce5b6cf2f8
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 360건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 361건, 판단 114건.
 
 ## 원자료
 
@@ -52,7 +52,7 @@ created_at: 2026-09-11
 | capex_ttm | $173.0B | legacy_unverified | actual | SRC-v15-html | $173.0B |  |
 | cash | $78.2B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 78.2B (버퍼 123.0B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
 | cash | $123.0B | legacy_unverified | actual | SRC-v15-html | $123.0B | [CASH-FCF-35 대체됨 → amazon.cash.cashfcf35]  |
-| contracted_revenue | $496.0B | verified | actual | SRC-SEC-AMZN-10Q-2026Q2 | RPO approximately $496 billion (2026-06-30) | OBS-REG-25. 승계 관측 amazon.contracted_revenue.v15(parse_failed)를 대체한다. **parse_fai |
+| contracted_revenue | $496.0B | verified | actual | SRC-SEC-AMZN-10Q-2026Q2 | those commitments not yet recognized were approximately $496 billion (2026-06-30 | OBS-REG-25. 승계 관측 amazon.contracted_revenue.v15(parse_failed)를 대체한다. **parse_fai |
 | contracted_revenue | — | parse_failed | actual | SRC-v15-rule | AWS 백로그(수백 $B급) — 숫자 미공시 | [OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | AA급 | legacy_unverified | text | SRC-v15-html | AA급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 1.4 | legacy_unverified | actual | SRC-v15-html | 1.35 |  |
@@ -211,7 +211,7 @@ created_at: 2026-09-11
 | 지표 | 값 | 상태 | 종류 | 출처 | 원문 | 비고 |
 | --- | --- | --- | --- | --- | --- | --- |
 | arr | $65.0B | legacy_unverified | run_rate | SRC-v15-rule | ARR $65B(7월 런레이트) | 규칙 v1.5 ⑥ 비상장 절 |
-| arr_prior | $47.0B | legacy_unverified | run_rate | SRC-v15-md | ARR $47B → $65B (직전 런레이트) | PRIV-IMPL-31 / C-12. P3 입력. 시점 라벨이 원문에 없어 null 이다 |
+| arr_prior | $47.0B | legacy_unverified | run_rate | SRC-ANTHROPIC-SERIESH-2026 | ARR $47B → $65B (직전 런레이트) | PRIV-IMPL-31 / C-12. P3 입력. 시점 라벨이 원문에 없어 null 이다 |
 | cash | — | not_disclosed | actual | SRC-v15-md | 미공시 | PRIV-IMPL-31 / C-20. 승계 관측 anthropic.cash.v15 의 결측 유형을 등록한다. **값은 그대로 없다** — 라벨만 |
 | cash | — | not_disclosed | actual | SRC-v15-html | 미공시 | [PRIV-IMPL-31 대체됨 → anthropic.cash.priv31]  |
 | contracted_revenue | $65.0B | incompatible_basis | actual | SRC-v15-rule | ARR $65B — 계약 수입 아님(C-07) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
@@ -310,7 +310,7 @@ created_at: 2026-09-11
 | net_income_ttm | $3.0B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 3,016,692,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | nonop_share | 14% | legacy_unverified | actual | SRC-v15-html | 14% ᵇ |  |
 | ntm_per | 89.0 | legacy_unverified | estimate | SRC-v15-md | 89.0 |  |
-| offbalance_note | 없음 | legacy_unverified | text | SRC-v15-html | 없음 | 부외 약정 원문(A/B/C 분류 전) |
+| offbalance_note | 미확인 — v1.5 원표기 `없음` | legacy_unverified | text | SRC-v15-html | 없음 | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $2.6B | verified | derived | SRC-SEC-FACTS-F6 | 2025-07-01~2026-06-30 2,634,652,000 | F6-REG-28. G1-FILL-27 기준값 |
 | pretax_income_ttm | $3.1B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 3.1B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
 | price | 169.46 | legacy_unverified | actual | SRC-v15-html | $169.46 |  |
@@ -386,7 +386,8 @@ created_at: 2026-09-11
 | revenue_ttm_prior | $92.7B | verified | derived | SRC-SEC-FACTS-F6 | 2024-07-01~2025-06-30 92,720,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 370.5 | legacy_unverified | actual | SRC-v15-html | 370.5 |  |
-| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). \| [FIX-55 2단계 대체됨 → tesla.undraw |
+| undrawn_credit | $5.0B | verified | actual | SRC-SEC-FACTS-F6 | us-gaap:DebtInstrumentUnusedBorrowingCapacityAmount 2026-06-30 = 5,000,000,000 U | FIX-55 2단계 · obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) hi |
 
 ### Oracle
 
@@ -646,6 +647,8 @@ created_at: 2026-09-11
 | SRC-SEC-BABA-FACTS | SEC XBRL companyfacts CIK0001577552 (Alibaba) — us-gaap Revenues · OperatingIncomeLoss | SEC EDGAR | https://data.sec.gov/api/xbrl/companyfacts/CIK0001577552.json | 2026-09-11 | — |
 | SRC-SEC-FACTS-F6 | SEC XBRL companyfacts 12개사 (F6 TTM 입력 재구성) | SEC EDGAR | https://data.sec.gov/api/xbrl/companyfacts/ | 2026-09-10 | — |
 | SRC-SEC-TSM-20F-FY2025 | TSMC Form 20-F (FY2025, 2025-12-31) — 연결손익계산서 F-6 · 환율 Note 3 (F-13) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm | 2026-09-11 | — |
+| SRC-ANTHROPIC-SERIESH-2026 | Anthropic 보도자료 `Anthropic raises $65B in Series H funding at $965B post-money valuation` (2026-05-28) | Anthropic (회사 뉴스룸) | (URL 없음 — 만들지 않음) | 2026-09-10 | **회사 자체 발표다** — 이해당사자 1차 발표치이고 감사받지 않는다. 채점규칙 382행 `벤더 발표 벤치마크는 1차 근거가 아니다` 와 같은 성격이라 수치는 방증·부재 확인 범위로만 쓴다. 더해 이 실행의 작성자(Claude)가 Anthropic 모델이다(채점규칙 384행 · 긴장 #4·#11). |
+| SRC-OPENAI-FUNDING-2026 | OpenAI 보도자료 `OpenAI raises $122 billion to accelerate the next phase of AI` (2026-03-31) | OpenAI (회사 뉴스룸) | (URL 없음 — 만들지 않음) | 2026-09-10 | **회사 자체 발표다** — 이해당사자 1차 발표치이고 감사받지 않는다. 채점규칙 382행과 같은 성격이라 수치는 방증·부재 확인 범위로만 쓴다. 이 실행의 작성자(Claude)는 Anthropic 모델이고 OpenAI 는 그 경쟁사다 — 하향·상향 어느 쪽으로도 이해상충이 있다. |
 
 ## 미결 항목
 
@@ -701,7 +704,7 @@ created_at: 2026-09-11
 | meta | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 | oracle | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 | palantir | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
-| tesla | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| tesla | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). \| [FIX-55 2단계 대체됨 → tesla.undrawn_credit.fix55] 광역 태 |
 | tsmc | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 | alphabet | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
 | amazon | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |

@@ -1,6 +1,7 @@
 # FIX-54 1단계 S2 — 확정 미인출 여신 14개사 전수
 
 보존 원문만 봤다(3cf9799 offb-24 · f14a235 tsm-edgar-29 · validation/f6-avail-15 companyfacts). 새로 받지 않았다.
+**[정정 2026-09-16 FIX-55 2단계]** 이 표의 `전수` 는 **고정 후보 태그 목록** 기준이었다. 광역 정규식 주사(`Unused|Undrawn|RemainingBorrowingCapacity|LineOfCreditFacility`)를 다시 돌려 **tesla 5,000M**(us-gaap:DebtInstrumentUnusedBorrowingCapacityAmount, 2026-06-30, 10-Q 0001628280-26-049270)을 찾았다 — 아래 tesla 행을 고쳤다. 주사 결과는 validation/fix-55/credit-tag-sweep.md 에 있고, 기준일 이후 값이 있는 회사는 tesla 하나였다(oracle 은 없다).
 런웨이는 G3 가 계산되는 FCF 음수 회사만 의미가 있다(나머지는 G2 에서 끝남).
 
 | 회사 | 보존 원문 | 시설 · 한도 | 미인출(기준일) | 조건 확인 | 등록 | 런웨이(년) 전 → 후 | F9 |
@@ -16,7 +17,7 @@
 | alphabet | 본문 없음 | 여신 한도 태그 최신 2015-09-30 | — | — | not_disclosed · unverified | FCF 양수 | -1 |
 | meta | 본문 없음 | 여신 태그 최신 2013-09-30 | — | — | not_disclosed · unverified | FCF 양수 | -1 |
 | palantir | 본문 없음 | 여신 한도 태그 최신 2021-12-31 | — | — | not_disclosed · unverified | FCF 양수 | 0 |
-| tesla | 본문 없음 | 여신 한도 태그 최신 2016-12-31 · 신용장 556M(2025-12-31) | — | — | not_disclosed · unverified | FCF 양수 | -1 |
+| tesla | companyfacts 태그 | `DebtInstrumentUnusedBorrowingCapacityAmount` 2026-06-30 — 태그 자체가 미인출액 | 5,000M | 태그 정의가 `unused … available to the entity` | **verified 5,000M**(FIX-55 2단계) | FCF 양수 — G3 없음 | -1 불변 |
 | anthropic | 비상장 · 원문 없음 | — | — | — | **관측 등록 안 함**(인용할 source_id 가 없다) | G3 건너뜀(FCF 미공시) | -2 |
 | openai | 비상장 · 원문 없음 | — | — | — | **관측 등록 안 함** | G3 건너뜀(FCF 미공시) | -4 |
 

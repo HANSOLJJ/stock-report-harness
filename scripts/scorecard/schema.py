@@ -321,7 +321,9 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
                                       # 긴장에 기대는 회사별 모호함(FIX-53 2단계 A+2 재판정에서 드러난 것)
                                       "affected",
                                       # 같은 잣대 계열의 다른 긴장 — 재검토 때 함께 본다(FIX-54 1단계 S6, RC3-03·04)
-                                      "related_tensions"])
+                                      "related_tensions",
+                                      # 재검토를 **무엇이 오면** 시작하는지. 시점(recheck_at)만으로는 조건이 남지 않는다(FIX-55 2단계).
+                                      "trigger"])
         for aidx, a in enumerate(t.get("affected") or []):
             _expect_keys(a, ["company_id", "why"], f"{where}.affected[{aidx}]", optional=["source_lines", "judgment_id"])
             _require(str(a["why"]).strip(), f"{where}.affected[{aidx}].why: 비워 둘 수 없음")

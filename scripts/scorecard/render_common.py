@@ -474,6 +474,28 @@ def method_lines(ctx: Any) -> list[str]:
     ]
 
 
+def conflict_lines(ctx: Any) -> list[str]:
+    """이해상충과 제3자 재검토 약속. 2026-09-16 FIX-55 2단계(4차 리뷰 A 분담): 재검토 대상·시점·발동 조건이 산출물 어디에도 없었다.
+
+    문장을 손으로 적지 않고 출처·규칙에서 읽는다 — 규칙이 바뀌면 이 절도 따라 바뀌어야 한다.
+    """
+    out = []
+    conflicts = sorted({s["conflict_of_interest"] for s in ctx.sources.get("items", []) if s.get("conflict_of_interest")})
+    if conflicts:
+        out.append(f"**이해상충** — 이 채점표는 Anthropic 이 만든 Claude 가 작성했고 Anthropic 이 채점 대상에 들어 있다. 이해상충이 표기된 출처가 "
+                   f"{len(conflicts)}종이고 문장은 References 의 각 출처 줄에 있다. 비상장 2사의 수치는 회사 자체 발표(이해당사자 1차 자료)에서 온다.")
+    third = [t for t in (ctx.rules.payload.get("open_tensions") or []) if "비 Claude" in (t.get("rechecker") or "")]
+    if third:
+        ids = " · ".join(f"{t['id']}({', '.join(t['judgment_ids'])}, {t['recheck_at']})" for t in sorted(third, key=lambda x: x["id"]))
+        out.append(f"**제3자 재검토 약속**(채점규칙 384행) — 비 Claude 세션이 재판정하기로 등록된 긴장 {len(third)}건: {ids}.")
+    c03 = next((d for d in ctx.rules.payload.get("decisions", []) if d["id"] == "C-03"), None)
+    recheck = (c03 or {}).get("pending_recheck") or {}
+    if recheck:
+        out.append(f"  - anthropic ②5 재검토 — {recheck.get('what', '')} 시점 {recheck.get('when', '')} · 발동 조건 `{recheck.get('trigger', '')}`"
+                   "(C-03 pending_recheck). 이번 실행은 이 판단을 재판정하지 않았다.")
+    return out
+
+
 def limitations(ctx: Any) -> list[str]:
     """2026-09-15 FIX-54 1단계 S4: 한 줄 경고로만 있던 한계를 짧은 절 하나로. 문장은 규칙 파일에서 읽는다."""
     out = []
@@ -495,4 +517,5 @@ def limitations(ctx: Any) -> list[str]:
             # 취소한 문장은 빼고, 자를 때 강조·코드 표시가 반쯤 남지 않게 기호를 걷어 낸 뒤 자른다.
             q = re.sub(r"~~.*?~~\s*", "", q).replace("**", "").replace("`", "").strip()
             out.append("  - " + (q if len(q) <= 160 else q[:157] + "…"))
+    out += conflict_lines(ctx)
     return out

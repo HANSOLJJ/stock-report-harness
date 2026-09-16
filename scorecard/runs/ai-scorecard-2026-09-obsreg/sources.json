@@ -111,6 +111,26 @@
       "sha256": "c3ebd05cd8fb383f53fc21a0ac497ee12cf908b709c380f9bec4f39c4916647b",
       "conflict_of_interest": null,
       "note": "접수번호 0001628280-26-025362(2026-04-16). **companyfacts 미등재 우회 건**이다 — F6-FX-16 3조건 충족. 원문 보존 C-13 f14a235:validation/tsm-edgar-29/_raw/tsm-20251231.htm"
+    },
+    {
+      "source_id": "SRC-ANTHROPIC-SERIESH-2026",
+      "title": "Anthropic 보도자료 `Anthropic raises $65B in Series H funding at $965B post-money valuation` (2026-05-28)",
+      "publisher": "Anthropic (회사 뉴스룸)",
+      "url": null,
+      "accessed_at": "2026-09-10",
+      "sha256": "cf15b1bb07faef65e7838aea5d292dc6075b842ec4c0b40922cbd24e42f65e82",
+      "conflict_of_interest": "**회사 자체 발표다** — 이해당사자 1차 발표치이고 감사받지 않는다. 채점규칙 382행 `벤더 발표 벤치마크는 1차 근거가 아니다` 와 같은 성격이라 수치는 방증·부재 확인 범위로만 쓴다. 더해 이 실행의 작성자(Claude)가 Anthropic 모델이다(채점규칙 384행 · 긴장 #4·#11).",
+      "note": "원문 위치 ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html (주소 https://www.anthropic.com/news/series-h, PRIV-ARR-17B 에서 1회 수집·보존, robots.txt `Allow: /` 도 같은 커밋에 보존). **새로 받지 않는다** — host 는 생산 원천 정책에 등재되지 않았다(rules.sources.unlisted). 쓰임: anthropic.arr_prior.priv31 의 run-rate $47B 와 비상장 부재 주장 5건의 검색 범위. [FIX-55 2단계]"
+    },
+    {
+      "source_id": "SRC-OPENAI-FUNDING-2026",
+      "title": "OpenAI 보도자료 `OpenAI raises $122 billion to accelerate the next phase of AI` (2026-03-31)",
+      "publisher": "OpenAI (회사 뉴스룸)",
+      "url": null,
+      "accessed_at": "2026-09-10",
+      "sha256": "060fcb9d8ca3c2a6f1be13bea033d9d02c7f21f4c14ef74bed8d27680a36d174",
+      "conflict_of_interest": "**회사 자체 발표다** — 이해당사자 1차 발표치이고 감사받지 않는다. 채점규칙 382행과 같은 성격이라 수치는 방증·부재 확인 범위로만 쓴다. 이 실행의 작성자(Claude)는 Anthropic 모델이고 OpenAI 는 그 경쟁사다 — 하향·상향 어느 쪽으로도 이해상충이 있다.",
+      "note": "원문 위치 ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html (주소 https://openai.com/index/accelerating-the-next-phase-ai/, PRIV-ARR-17B 에서 1회 수집·보존, robots.txt 도 같은 커밋에 보존). **새로 받지 않는다**(rules.sources.unlisted). 쓰임: 비상장 부재 주장 5건의 검색 범위. [FIX-55 2단계]"
     }
   ]
 }

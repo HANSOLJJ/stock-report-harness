@@ -157,7 +157,8 @@ class SharedRenderTest(unittest.TestCase):
         for line in rc.limitations(self.ctx):
             with self.subTest(line=line[:30]):
                 self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)
-                self.assertIn(rc.inline_html(line.removeprefix("  - ")), self.html)
+                # HTML 은 본문의 C-번호를 사전 링크로 바꾼다(`TEN-RC-02` 안의 `C-02` 도 걸린다) — 태그를 걷고 비교한다.
+                self.assertIn(plain(rc.inline_html(line.removeprefix("  - "))), self.html_text)
         self.assertIn("alibaba — 가리지 못했다", self.md)
 
     def test_decisions_applied_is_not_consumption_proof(self):

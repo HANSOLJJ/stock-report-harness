@@ -112,9 +112,10 @@ class LedgerEntryTest(unittest.TestCase):
     def test_source_id_scope_note(self):
         note = RULES.payload["sources"]["note"]
         self.assertIn("관측 source_id 는 원천 정책 검사를 받지 않는다", note)
-        self.assertIn("242건", note)
+        self.assertIn("242건", note)          # SRC-FLAG-49 당시 수는 기록으로 남는다
+        self.assertIn("241건", note)          # FIX-55 2단계에서 한 건이 회사 보도자료 출처로 옮겨졌다
         src_v15 = sum(o["source_id"].startswith("SRC-v15-") for o in observations())
-        self.assertEqual(src_v15, 242)
+        self.assertEqual(src_v15, 241)
 
 
 if __name__ == "__main__":

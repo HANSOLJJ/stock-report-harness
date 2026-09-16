@@ -1695,7 +1695,22 @@
         "note": "**별도 항목으로 둔다.** note 로만 적으면 `source_violation()` 이 이 host 를 못 잡고 마지막 fallback 으로 떨어진다. yfinance 는 두 host 를 번갈아 쓰므로 한쪽만 막으면 나머지가 샌다. | **기존 unlisted 사유는 소멸했고 이 둘이 그것을 대체한다.** 소멸한 사유('회계분기 창 특정 0/12 · 향후 전망 2개 분기')는 NTM PER 컨센서스 용도 판정이었고, F6 가 v1.7 에서 네 파라미터로 재정의돼 컨센서스를 쓰지 않으므로 사라진다. **주가는 애초에 그 판정 대상이 아니었다.** | 이 결정은 새 판단이 아니다 — policy_note 가 '법인이든 개인이든 robots.txt 의 전면 Disallow 를 무르지 않는다' 고 이미 규정하고 `api.nasdaq.com` 이 같은 형태로 denied 에 있다. | 덧붙여 `finance.yahoo.com/robots.txt` 는 `ClaudeBot`·`Claude-Web`·`anthropic-ai` 를 포함한 AI 크롤러 블록에 `Disallow: /` 를 건다(2026-09-11 확인). API host 의 전면 금지와 별개로 **우리 계열 에이전트를 이름으로 지목한 금지**가 같은 사이트에 있다. | **모순 하나를 적어 둔다. 기존 stock 파이프라인은 yfinance 를 쓴다** — `stock-research`·`stock-build`·`stock-plan`·`stock-goal` 스킬이 일봉을 거기서 받는다. **정책은 금지하는데 프로젝트는 이미 쓰고 있다.** 이 모순을 어떻게 할지는 사용자 사안이고 이 정책은 `sources.json` 에 등재되는 생산 원천만 규율한다. 다음 사람이 '왜 stock 은 쓰는데 scorecard 는 안 쓰나' 를 되묻지 않도록 여기 남긴다(설계진행 2026-09-11)."
       }
     ],
-    "unlisted": [],
+    "unlisted": [
+      {
+        "host": "www.anthropic.com",
+        "reason_type": "terms",
+        "reason": "PRIV-ARR-17B(2026-09-10)에서 보도자료 1건과 robots.txt 를 보존 목적으로 한 번 받았고 그 보존본만 쓴다. **생산 원천으로 등재 검토를 한 적이 없다** — 약관의 개인 내부 사용 허용 여부를 확인하지 않았다. robots.txt 는 `Allow: /` 이지만 robots 와 라이선스는 다르다(policy_note).",
+        "decided_at": "2026-09-16",
+        "note": "[FIX-55 2단계] 회사 자체 발표라 이해당사자 자료다. 새 수집 없이 보존본만 참조한다 — sources.json SRC-ANTHROPIC-SERIESH-2026."
+      },
+      {
+        "host": "openai.com",
+        "reason_type": "terms",
+        "reason": "PRIV-ARR-17B(2026-09-10)에서 보도자료 1건과 robots.txt 를 보존 목적으로 한 번 받았고 그 보존본만 쓴다. 생산 원천 등재 검토는 하지 않았다 — 약관 확인 전이다.",
+        "decided_at": "2026-09-16",
+        "note": "[FIX-55 2단계] 같은 사유. sources.json SRC-OPENAI-FUNDING-2026."
+      }
+    ],
     "not_adopted": [
       {
         "name": "Alpha Vantage",
@@ -1758,7 +1773,7 @@
         "note": "**되살리는 것이 아니다.** 관측이 어디서 왔는지 가리키려고 이름을 올린다. 올리기 전에는 네 목록 어디에도 없어 IMPL-46 이 ntm_per 12건에 `vendor_not_in_source_policy` 를 달았다. 걸리는 legacy 관측: market_cap 12건(점수 경로 11 + spacex-xai) · ntm_per 10건(tsmc·alibaba 는 직접 계산) · net_cash apple·palantir 2건(공시 혼합)."
       }
     ],
-    "note": "[SRC-FLAG-49 2026-09-14] **관측 source_id 는 원천 정책 검사를 받지 않는다.** `source_violation(url)` 은 `validate.check_source_allowlist` 가 sources.json 항목의 url 을 볼 때만 불린다. SRC-v15-html·md·rule 세 항목은 url 이 null 이라 검사를 그대로 통과하고, 그 source_id 를 단 이관 관측 242건(obsreg 기준 html 183 + rule 18 + md 41)은 정책 검사 밖이다. 상류는 관측 basis(source_vendor·source_mixed)로만 추적한다. | 지시서 문구는 `fetch 시점 URL 검사` 였다 — 코드상 호출 지점은 fetch 가 아니라 sources.json 검증이라 그렇게 적었다. | [FIX-52] 관측 26건의 source_id 를 html → md 로 바로잡아 내역이 209+18+15 에서 바뀌었다(합계 불변)."
+    "note": "[SRC-FLAG-49 2026-09-14] **관측 source_id 는 원천 정책 검사를 받지 않는다.** `source_violation(url)` 은 `validate.check_source_allowlist` 가 sources.json 항목의 url 을 볼 때만 불린다. SRC-v15-html·md·rule 세 항목은 url 이 null 이라 검사를 그대로 통과하고, 그 source_id 를 단 이관 관측 242건(obsreg 기준 html 183 + rule 18 + md 41)은 정책 검사 밖이다. 상류는 관측 basis(source_vendor·source_mixed)로만 추적한다. | 지시서 문구는 `fetch 시점 URL 검사` 였다 — 코드상 호출 지점은 fetch 가 아니라 sources.json 검증이라 그렇게 적었다. | [FIX-52] 관측 26건의 source_id 를 html → md 로 바로잡아 내역이 209+18+15 에서 바뀌었다(합계 불변). | [FIX-55 2단계] anthropic.arr_prior.priv31 의 source_id 를 회사 보도자료(SRC-ANTHROPIC-SERIESH-2026)로 옮겨 SRC-v15-* 관측이 241건이 됐다(html 183 + rule 18 + md 40). 새 출처 둘은 url 이 null 이라 정책 검사 밖인 것은 같고, host 는 sources.unlisted 에 적었다."
   },
   "open_tensions": [
     {
@@ -2123,6 +2138,33 @@
         "TEN-RB-Q10"
       ],
       "note": "[FIX-55 1단계] TEN-RB-Q10 은 `성장률 하나로 가속 판정` 계열이고 이 건은 `계획을 실측으로 세움` 이라 따로 등록하되 같은 가속도 계열로 묶는다."
+    },
+    {
+      "id": "TEN-RA4-01",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RA4-01(medium) · obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) · 체크리스트 Q23 관련",
+      "judgment_ids": [
+        "anthropic.F2"
+      ],
+      "decision_id": "C-03",
+      "subject": "anthropic F2 5점의 성능 근거에 하네스 표기가 없고 저장소에 받치는 자료가 없다",
+      "tension": "anthropic.F2(승계 5점) 근거 `Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%)` 에 어느 하네스로 잰 값인지 적혀 있지 않고 저장소에 그 측정을 받치는 자료가 없다. 같은 실행의 openai.F2 는 `ARC-AGI-3 SOTA(표준 하네스 62.7%)` 로 하네스를 명시하고 벤더 어댑터 99.9% 를 배제한 이유까지 적는다. 채점규칙 22행 `비교는 같은 하네스끼리만(체크리스트 23)` · 731행 체크리스트 23 · 384행 이해상충 고지(`이 규칙은 OpenAI의 ARC-AGI 하네스 문제를 다루다 나왔고 … 결과적으로 Anthropic ②5를 지켰다 … 다음 분기에 제3자 관점으로 재검토한다`)와 어긋난다.",
+      "direction": "하향 가능(5 → 4 검토). 같은 하네스의 독립 측정이 확인되면 5 유지. **이 등록은 점수를 바꾸지 않는다.**",
+      "rechecker": "**비 Claude 세션이 재판정한다** — Anthropic 점수이고 채점규칙 384행이 제3자 재검토를 약속한 바로 그 자리다.",
+      "trigger": "독립 기관이 같은 하네스로 잰 ARC-AGI-3(또는 대체 에이전트 실무 축) 측정이 확보될 때. C-03 pending_recheck 의 발동 조건과 같다.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 F2 의 잣대를 바꾸지 않았다(C-03 확정 뒤에도 세대 격차 판정은 하지 않았다). 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 22행",
+        "채점규칙 384행",
+        "채점규칙 731행"
+      ],
+      "related_tensions": [
+        "TEN-RA-02",
+        "TEN-RA3-01"
+      ],
+      "note": "[FIX-55 2단계] 재검토 약속 자체는 decisions C-03.pending_recheck 에 있었으나 리뷰 계약이 예외 요건으로 지목하는 자리는 open_tensions 다. 같은 고지의 다른 축인 anthropic.F5.impl48 은 TEN-RC-03 에 이미 있다. 근거란에 하네스 미표기 사실을 적었다."
     }
   ],
   "source_text_corrections": [
