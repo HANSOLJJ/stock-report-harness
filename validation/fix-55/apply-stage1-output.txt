@@ -1,0 +1,11 @@
+F3 단일 입력 변경 산술(판정 아님):
+  meta.F3        imitation fail → F3 3 → 3 (통과점 2.0 → 1.5)
+  anthropic.F3   imitation fail → F3 3 → 2 (통과점 1.5 → 1.0)
+  spacex-xai.F3  imitation fail → F3 3 → 3 (통과점 2.5 → 2.0)
+  tsmc.F3        acceleration fail → F3 3 → 2 (통과점 2.0 → 1.0)
+  alibaba.F3     imitation fail → F3 3 → 3 (통과점 2.5 → 2.0)
+판단 변경 0
+관측 변경 0
+규칙 변경 0
+실행 변경 0
+rule_hash 0fedadc19629

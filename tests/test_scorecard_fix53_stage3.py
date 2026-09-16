@@ -82,12 +82,15 @@ class ObservationCorrectionsTest(unittest.TestCase):
         self.assertEqual(p["value"] - p["basis"]["cross_check_tax"]["tax_ttm"], ni)
         self.assertEqual(self.o["spacex-xai.nonop_share.v15"]["status"], "incompatible_basis")
 
-    def test_spacex_p4_short_history_only(self):
+    def test_spacex_p4_without_nonop(self):
+        # 2026-09-16 FIX-55 1단계: period_basis_not_ttm 을 관측(quarterly_yoy)에서 판정하게 고쳐 조건이 둘이 됐다.
+        # nonop 이 빠진다는 이 검사의 뜻은 그대로이고, P4 는 한 칸 상한이라 점수도 그대로다.
         c = next(x for x in load("results.json")["companies"] if x["company_id"] == "spacex-xai")
         p4 = c["factors"]["F6"]["calc"]["p4"]
         self.assertIsNone(p4["nonop_share"])
         self.assertEqual(p4["nonop_share_source"], "incompatible_basis")
-        self.assertEqual(p4["conditions_hit"], ["short_history"])
+        self.assertEqual(p4["conditions_hit"], ["period_basis_not_ttm", "short_history"])
+        self.assertEqual((p4["demotion_steps"], c["factors"]["F6"]["score"]), (1, -1))
 
     def test_negative_pretax_is_not_computed_in_engine(self):
         """세전이익이 음수면 값을 돌려주지 않는다 — 전에는 경고만 붙이고 값을 줘 P4 조건이 걸릴 수 있었다."""

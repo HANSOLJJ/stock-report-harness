@@ -190,13 +190,22 @@ class ScopeSeparationTest(unittest.TestCase):
                     self.assertNotIn(word, text)
 
     def test_collapsing_to_one_metric_is_rejected(self):
-        """두 자리가 같은 지표를 가리키면 이 블록은 아무것도 구분하지 않는다."""
-        def collapse(spec, _payload):
-            for site in spec["scope_separation"]["sites"]:
-                site["metric"] = "cash"
+        """두 자리가 같은 지표를 가리키면 이 블록은 아무것도 구분하지 않는다.
+
+        2026-09-16 FIX-55 1단계(4차 리뷰 C low): 이제 **소비자와도 묶어서** 본다 — 한 자리는 F9 G3 분자,
+        한 자리는 net_cash 를 읽는 F6 파라미터를 가리켜야 한다. 그래서 한쪽으로 뭉개면 빠진 소비자 이름이 먼저 나온다.
+        """
+        def collapse_to(metric):
+            def mutate(spec, _payload):
+                for site in spec["scope_separation"]["sites"]:
+                    site["metric"] = metric
+            return mutate
         with self.assertRaises(SchemaError) as cm:
-            validate_rules(mutated_rules(collapse))
-        self.assertIn("서로 다른 지표", str(cm.exception))
+            validate_rules(mutated_rules(collapse_to("cash")))
+        self.assertIn("net_cash 를 가리키는 자리가 없음", str(cm.exception))
+        with self.assertRaises(SchemaError) as cm:
+            validate_rules(mutated_rules(collapse_to("net_cash")))
+        self.assertIn("G3 분자 지표", str(cm.exception))
 
     def test_unknown_metric_rejected(self):
         def bad(spec, _payload):
@@ -482,7 +491,8 @@ class P4ThresholdBoundaryTest(unittest.TestCase):
         self.assertEqual({cid for cid, v in sole.items() if v == "nonop_share"},
                          {"amazon", "alphabet"})
         self.assertIsNone(sole["alibaba"])                       # period_basis_not_ttm 이 같이 걸림
-        self.assertEqual(sole["spacex-xai"], "short_history")    # 정정으로 nonop 이 빠져 단독이 됐다
+        # 2026-09-16 FIX-55 1단계: period_basis_not_ttm 을 관측에서 판정하게 고쳐 spacex-xai 는 조건이 둘이 됐다 — 단독 원인이 없다.
+        self.assertIsNone(sole["spacex-xai"])
 
     def test_spacex_loses_the_condition_but_keeps_the_demotion(self):
         """세전이익을 복원 못 해 조건이 빠지지만 `short_history` 가 강등을 유지한다 — 점수 불변."""

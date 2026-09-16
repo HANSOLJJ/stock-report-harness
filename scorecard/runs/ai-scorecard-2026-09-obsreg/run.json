@@ -7,7 +7,7 @@
   "price_as_of": "2026-09-02",
   "info_cutoff": "2026-09-02",
   "rule_version": "v1.7",
-  "rule_hash": "4219f7cce7158a76ab1b716514b837a3b484babf70666ca7bb1d204ee647dcf3",
+  "rule_hash": "0fedadc19629e8acfc312511ecac8ffc33c7a2cdad9eba0e12bbee8230942f3b",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
@@ -116,6 +116,7 @@
     "[NETCASH-37] 설계 지침 6.4(런웨이 절, metric `cash`)와 F6 P2(EV 조정, metric `net_cash`)는 **다른 것을 센다**. alphabet 기준 1,865.6억 달러가 갈리고 부호까지 뒤집힌다. 한쪽 논거를 다른 쪽으로 옮기지 않는다",
     "[NONOP-44] `nonop_share` 는 **영업외손익 ÷ 세전이익** 이다. 엔진이 쓰던 `(순이익 − 영업이익) ÷ 순이익` 은 분자에서 법인세를 안 되더하고 분모가 세전이 아니라 두 군데가 틀렸다. **저장값이 옳고 재계산이 틀렸다** — 보존 companyfacts 12건으로 역산해 11개사 중 9개가 맞는 것을 확인했다",
     "[NONOP-44] 정정해도 P4 조건의 hit 여부가 한 곳도 안 바뀐다. 다만 amazon 이 임계 +2.4% 에서 +55.3% 로 멀어져 **경계 우려가 산식 정정으로 해소된다** — 경계 표시 자체는 유지한다",
-    "[NONOP-44 → FIX-53 3단계 정정] spacex-xai 는 세전이익이 **음수**(-7,623M, S-1/A FY2025 + 10-Q 반기 복원)라 `(세전 − 영업이익) / 세전` 의 부호 규약이 서지 않아 nonop_share 를 산출하지 않는다(incompatible_basis). 전에 적은 `세전이익을 복원하지 못해` 는 사실이 아니었다. 강등은 short_history 가 유지하므로 점수는 그대로다"
+    "[NONOP-44 → FIX-53 3단계 정정] spacex-xai 는 세전이익이 **음수**(-7,623M, S-1/A FY2025 + 10-Q 반기 복원)라 `(세전 − 영업이익) / 세전` 의 부호 규약이 서지 않아 nonop_share 를 산출하지 않는다(incompatible_basis). 전에 적은 `세전이익을 복원하지 못해` 는 사실이 아니었다. 강등은 short_history 가 유지하므로 점수는 그대로다",
+    "확정 미인출 여신(FIX-54 S2)은 **상장 12개사만 관측으로 남겼다.** 비상장 anthropic·openai 는 관측을 만들지 않았다 — 인용할 보존 원문·source_id 가 없어 `미확인` 조차 어느 자료를 봤는지 적을 수 없기 때문이다. 두 회사는 C-20 경로라 G3 가 생략돼 점수에 닿지 않는다. 근거는 validation/fix-54/undrawn-credit-census.md 에 있다 [FIX-55 1단계 · 4차 리뷰 B low — 처리 통일]"
   ]
 }

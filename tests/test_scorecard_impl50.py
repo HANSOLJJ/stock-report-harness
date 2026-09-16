@@ -55,7 +55,9 @@ class C11DecisionTest(unittest.TestCase):
 class BothSidesTest(unittest.TestCase):
     def test_f6_side_says_no_carryover(self):
         cond = {c["id"]: c for c in RULES.payload["policies"]["f6"]["p4"]["conditions"]}["nonop_share"]
-        self.assertEqual(cond["scope"], "F6 P4 전용. ⑦ 으로 이월하지 않는다")
+        # 2026-09-16 FIX-55 1단계(4차 리뷰 C RC4-06): 금지 범위를 C-11 의 문언과 맞추며 뒤에 참조를 붙였다.
+        self.assertTrue(cond["scope"].startswith("F6 P4 전용. ⑦ 으로 이월하지 않는다"))
+        self.assertIn("carryover_scope", cond["scope"])
         self.assertIn("438행", cond["scope_why"])
 
     def test_f6_note_no_longer_states_the_old_formula_as_current(self):

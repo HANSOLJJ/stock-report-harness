@@ -258,6 +258,9 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
         steps = p4.get("demotion_steps") or 0
         hit = ", ".join(p4.get("conditions_hit") or []) or "해당 없음"
         text += f" = 소계 {calc['subtotal_before_p4']} · P4 {-steps if steps else 0}({hit})"
+        # 2026-09-16 FIX-55 1단계(4차 리뷰 D): 조건 하나가 강등을 혼자 정했다는 사실이 이름으로 보이지 않았다.
+        if p4.get("demotion_sole_cause"):
+            text += f" — `{p4['demotion_sole_cause']}` 하나가 강등을 정한다"
         if ((p4.get("nonop_share_boundary") or {}).get("flag")):
             text += " ⚠️ 영업외 비중 경계"
     if "subtotal_before_correction" in calc:

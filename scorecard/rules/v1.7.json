@@ -616,12 +616,13 @@
               "pretax_income_ttm",
               "operating_income_ttm"
             ],
-            "scope": "F6 P4 전용. ⑦ 으로 이월하지 않는다",
+            "scope": "F6 P4 전용. ⑦ 으로 이월하지 않는다 — 금지 범위는 C-11 confirmed_model.carryover_scope(산술 입력·증거 사용 금지, Q22 고객사 방증 문구는 허용)",
             "scope_why": "별표 I 351~356행(평가이익은 ⑦ 증거가 아니고 ⑥ TTM PER 무효 처리) · 채점규칙 438행(⑦ `쓰지 않는 것` 지분 평가이익 ⑥ 소관). C-11 block_carryover."
           },
           {
             "id": "period_basis_not_ttm",
-            "note": "기간 단위가 TTM 이 아님(연간 대체 등). 관측 basis.period_basis 로 판정한다"
+            "note": "기간 단위가 TTM 이 아님(연간 대체 등). **관측 basis.period_basis 로 판정한다** — 트랙 자동 목록이 아니라 자료가 정한다. [FIX-55 1단계 · obsreg 4차 리뷰 B(NTM Claude 독립 세션, 기준 ab5a053 · review 8e58a46)] 선언만 있고 `_p4()` 가 읽지 않아 listed_newly 인 spacex-xai 가 quarterly_yoy 인데도 빠졌다. 이제 모든 트랙에서 관측으로 판정하므로 listed_annual 의 auto_p4_conditions 에서 뺐다(연간 관측이 스스로 annual 이라 결과는 같다).",
+            "judged_from": "observation.basis.period_basis (calc_f6_params._p4)"
           },
           {
             "id": "short_history",
@@ -670,10 +671,8 @@
             "P3"
           ],
           "floor": -7,
-          "auto_p4_conditions": [
-            "period_basis_not_ttm"
-          ],
-          "select": "listed 이고 share_basis 가 adr 또는 ads. 20-F 제출사라 분기 기간 사실이 없어 연간으로 계산한다"
+          "select": "listed 이고 share_basis 가 adr 또는 ads. 20-F 제출사라 분기 기간 사실이 없어 연간으로 계산한다",
+          "p4_note": "[FIX-55 1단계] period_basis_not_ttm 은 관측 basis.period_basis 로 판정한다 — 트랙 자동 목록에 두지 않는다."
         },
         "listed_newly": {
           "label": "신규 상장",
@@ -1241,7 +1240,7 @@
     {
       "id": "Q22",
       "focus": "지분 평가이익을 ⑦ 순환금융 증거로 셌나?",
-      "case": "평가익은 손익의 질(⑥ 소관). 출처가 내 고객사일 때만 방증 (별표 I)"
+      "case": "평가익은 손익의 질(⑥ 소관). 출처가 내 고객사일 때만 방증 (별표 I) | [FIX-55 1단계] 방증은 근거란 문구만이고 두 축 입력·점수에는 넣지 않는다 — C-11 confirmed_model.carryover_scope 와 같은 뜻이다."
     },
     {
       "id": "Q23",
@@ -1479,7 +1478,9 @@
           "⑦ 판정은 별표 I 2축(319~322행: 조달 의존 고객 비중 × 내 돈이 돌아오는가)이다. 영업외 비중은 어느 축의 입력도 아니다. 같은 값을 ⑥ P4 와 ⑦ 에 둘 다 넣으면 별표 J 가 금지한 이중 계상 구조다(C-13 C09-C11-F7-41 판정)"
         ],
         "source_text_against": "**원문에 반대로 읽힐 수 있는 자리가 하나 있다.** 별표 I 347행 `측정 가능 / 불가` 표의 `측정 가능 (재무제표·공시)` 칸이 `RPO ÷ 연매출 · 단일 고객 집중도 · 실행된 투자액 · 영업외 이익 비중` 을 ⑦ 절 안에 적는다. 이 표는 **측정 가능성 분류**이고 판정 입력 지정이 아니다 — 판정은 2축 표(319~322행)이고 바로 아래 351~356행이 평가이익을 ⑥ 으로 보낸다. 그래서 차단 판정은 서지만, 347행이 그 지표를 ⑦ 절에 적는다는 사실은 숨기지 않는다.",
-        "what_changed": "문서·규칙 note 만. 차단 전에도 이 경로를 읽는 코드가 없었다."
+        "what_changed": "문서·규칙 note 만. 차단 전에도 이 경로를 읽는 코드가 없었다.",
+        "carryover_scope": "**이월 금지의 범위** — 막는 것은 (1) 영업외 비중을 ⑦ 두 축 입력이나 점수 산술에 넣는 것, (2) 비중 지표 자체를 순환금융의 증거로 세는 것이다. 체크리스트 Q22 가 허용하는 `출처가 내 고객사일 때의 방증` 은 이월이 아니다 — 근거란에 `⑥ 소관이나 출처가 고객사라 방증` 처럼 소관과 방증 성격을 함께 적는 문구만이고, 두 축 입력·점수는 그대로다(amazon.F7·nvidia.F7.fix52 근거란이 이 형태다). 두 문언은 충돌하지 않으며 F7 코드는 두 축만 읽는다.",
+        "carryover_scope_recorded": "2026-09-16 FIX-55 1단계 — obsreg 4차 리뷰 C(codex 독립 세션, 기준 ab5a053 · review 4e9071c) RC4-06(문언 불일치)."
       },
       "scope": {
         "what_this_is": "**문서와 규칙 note 의 차단이다.** F7 은 14개사 전부 carried(승계) 판단이고 C-11 을 읽는 코드가 없어 이월 경로가 구현된 적이 없다.",
@@ -1606,6 +1607,38 @@
       "status": "documented",
       "summary": "총점 설명이 음수 함정을 빼는 것처럼 읽히고 명목 -20 은 F7 하한 -3 과 다름",
       "recommendation": "합산은 과점 + 음수 함정. 활성 범위는 규칙에서 도출(trap_min_active -18)"
+    },
+    {
+      "id": "C-23",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F9"
+      ],
+      "summary": "런웨이 분자의 확정 미인출 여신에 잔존 기간 요건이 없다 — amazon 37.5B 중 22.5B 이 기준일 4주 뒤 소멸·만기",
+      "recommendation": "이번 실행은 기준을 바꾸지 않는다(설계 지침 6.4 는 `조건이 확인된 확정 미인출 여신` 만 요구하고 잔존 기간 요건이 없다). 다음 라운드에서 요건을 정한다 — 정하기 전까지 관측 basis.sensitivity 로 영향을 남긴다.",
+      "choices": [
+        "no_requirement_v15",
+        "require_min_residual_term",
+        "exclude_if_expires_before_next_recheck"
+      ],
+      "implementation_status": {
+        "verdict": "not_implemented",
+        "checked_at": "2026-09-16",
+        "checked_by": "worker (FIX-55 1단계)",
+        "evidence": [
+          "calc_f9._runway 는 undrawn_credit 관측값을 그대로 더한다 — 만기·소멸일을 읽지 않는다",
+          "amazon.undrawn_credit.fix54 basis.components 에 undrawn_terminates_on 2026-09-30 · matures_on_month 2026-10 이 있으나 표시용이다",
+          "amazon 은 15.0B 만 세도 런웨이 8.02년이라 세 경우 모두 G3 step 0 — 오늘 점수는 갈리지 않는다"
+        ]
+      },
+      "pending_recheck": {
+        "what": "런웨이 분자의 확정 미인출 여신에 잔존 기간 요건을 둘지.",
+        "why": "obsreg 4차 리뷰 B(NTM Claude 독립 세션, 기준 ab5a053 · review 8e58a46) low — amazon 37,500M 중 22,500M 이 실행 기준일 2026-09-02 로부터 4주 안에 만기·소멸한다.",
+        "trigger": "다음 라운드 또는 여신 관측이 점수를 가르는 사례가 나올 때",
+        "when": "2026-11",
+        "note": "등재만 하고 기준은 바꾸지 않았다. 오늘은 amazon 세 경우 모두 G3 step 0 이라 점수가 갈리지 않는다."
+      }
     }
   ],
   "sources": {
@@ -1957,14 +1990,15 @@
         "alibaba.F3"
       ],
       "subject": "alibaba F3 — 경쟁사 두 곳이 이미 오픈웨이트를 내는데 모방 불가능성이 partial 이다",
-      "tension": "채점규칙 75행 모방 불가능성은 `경쟁사 2곳 이상이 이미 하고 있으면 불인정` 이다. alibaba.F3 근거(채점표 380행)가 `메타(Glimmer)·구글(Gemma)도 오픈웨이트를 내므로 유일하지 않고` 라고 스스로 두 곳을 적는데 입력은 partial 이다. 원문 판정표 102행도 `⚠️ 회수장치 없음 … 2.5` 로 partial 이라 원천 내부 모순을 승계했다.",
+      "tension": "채점규칙 75행 모방 불가능성은 `경쟁사 2곳 이상이 이미 하고 있으면 불인정` 이다. alibaba.F3 근거(채점표 380행)가 `메타(Glimmer)·구글(Gemma)도 오픈웨이트를 내므로 유일하지 않고` 라고 스스로 두 곳을 적는데 입력은 partial 이다. 원문 판정표 102행도 `⚠️ 회수장치 없음 … 2.5` 로 partial 이라 원천 내부 모순을 승계했다. **[FIX-55 1단계 · RC4-05]** 같은 판단에 두 번째 사유가 있다 — 채점규칙 70행 `\"공짜로 뿌린다\" 자체는 카운터 포지셔닝이 아니다 — 회수 장치가 있어야 한다` 이고 근거란 스스로 `오픈웨이트에는 회수 장치가 없다 … SiliconFlow·Novita·AWS Bedrock이 호스팅해 그쪽이 매출을 가져간다` 고 적는다. v1.5 판정표 102행도 `⚠️ 회수장치 없음` 으로 같은 칸에 partial 을 준다. 재검토는 75행(경쟁사 둘)과 70행(회수 장치) 두 사유를 함께 본다.",
       "direction": "하향 입력 가능(partial → fail). **점수는 바뀌지 않는다** — 아래 score_impact_now.",
       "rechecker": "2026-11 재채점 때 판단자.",
       "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
-      "score_impact_now": "없다. imitation 을 fail 로 읽어도 revenue_model·acceleration 두 pass 로 통과점 2 → F3 3 이다(지금은 2.5 → 모방불가 완전 pass 아님 상한 3). calc_qual.compute_f3 에 fail 입력을 넣어 확인했다(apply_tensions.py).",
+      "score_impact_now": "없다. imitation 을 fail 로 읽어도 revenue_model·acceleration 두 pass 로 통과점 2 → F3 3 이다(지금은 2.5 → 모방불가 완전 pass 아님 상한 3). calc_qual.compute_f3 에 fail 입력을 넣어 확인했다(apply_tensions.py · apply_stage1.py). 회수 장치 사유로 읽어도 같다.",
       "source_lines": [
-        "채점규칙 75행",
         "채점규칙 102행",
+        "채점규칙 70행",
+        "채점규칙 75행",
         "채점표 380행"
       ]
     },
@@ -1991,6 +2025,104 @@
         "TEN-RA-02"
       ],
       "note": "[FIX-54 2단계] 근거란에 `(발표 — OpenAI)`·`(계획)` 표기를 붙였다. 사용자 결정(2026-09-15) — 라운드마다 새로 나오는 승계 판단 모순은 발견분만 긴장으로 등록한다."
+    },
+    {
+      "id": "TEN-RC4-01",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC4-01(high) · obsreg 4차 리뷰 C(codex 독립 세션, 기준 ab5a053 · review 4e9071c) · 체크리스트 Q12·Q13 fail",
+      "judgment_ids": [
+        "meta.F3",
+        "anthropic.F3",
+        "spacex-xai.F3"
+      ],
+      "subject": "meta·anthropic·spacex-xai 의 F3 `imitation=partial` 이 partial 의 정의를 채우지 못한다",
+      "tension": "채점규칙 81행은 `⚠️(0.5)` 를 **자산은 있으나 아직 앞서지 못한 경우**로 정의한다 — `(1) 경쟁사가 구조적으로 못 베끼는 자산이 있고, (2) 그 자산 덕에 실제로 앞서 있다 … 자산만 있고 아직 앞서지 못하면 ⚠️(0.5), 자산 자체가 없거나 ①의 재탕이면 ❌`. 세 판단의 근거는 자산 자체가 복제 가능하다고 적는다 — meta `구글도 광고로 같은 걸 가능(Gemini Flash 저가) → 불인정`, anthropic `MCP는 개방 표준이라 이미 경쟁사들이 채택했다`, spacex-xai `Colossus 규모는 자본이면 복제 가능(Stargate·Hyperion), 궤도 DC 미실현`. 같은 성질의 사유로 amazon(97행)·microsoft(98행)·alphabet(99행)·apple(104행)·oracle(110행)은 ❌ 를 받았다. v1.5 판정표 100·101·106행이 셋에 ⚠️ 를 주므로 **원천 내부 모순을 승계한 것**이다.",
+      "direction": "하향 가능. imitation 만 fail 로 읽으면 엔진 산술로 **anthropic 은 통과점 1.5 → 1.0 이라 F3 3 → 2**(총점 10 → 9), meta 는 2.0 → 1.5, spacex-xai 는 2.5 → 2.0 이라 둘은 F3 3 그대로다. 이 등록은 재판정하지 않는다.",
+      "rechecker": "**anthropic 은 비 Claude 세션이 재판정한다** — Anthropic 점수이고 조율자·worker 가 Claude 라 이해상충이다(TEN-RC-02 와 같은 사유). meta·spacex-xai 는 2026-11 재채점 때 판단자.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 81행",
+        "채점규칙 97~110행(판정표)",
+        "채점규칙 100행",
+        "채점규칙 101행",
+        "채점규칙 106행"
+      ],
+      "related_tensions": [
+        "TEN-RC3-05"
+      ],
+      "note": "[FIX-55 1단계] 점수 가능성은 calc_qual.compute_f3 에 입력 하나만 바꿔 넣어 확인한 산술이다(validation/fix-55/apply_stage1.py). 판정이 아니다."
+    },
+    {
+      "id": "TEN-RC4-02",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC4-02(medium) · obsreg 4차 리뷰 C(codex 독립 세션, 기준 ab5a053 · review 4e9071c) · 체크리스트 Q02·Q16 fail",
+      "judgment_ids": [
+        "openai.F1"
+      ],
+      "subject": "openai F1 — 주채널은 소비자라고 적고 4점을 막는 근거는 거래 채널이다",
+      "tension": "openai.F1(승계 4점) 근거는 `[주채널: 소비자 — MAU·구독 / 보조: 거래 — OpenRouter] … ①을 결정한 건 이 소비자 채널이다` 로 시작하는데, 점수를 제한하는 두 줄은 `OpenRouter 평균 $0.74/M로 Anthropic($6.36)의 1/8.6` · `쓴 만큼 내고 언제든 갈아탈 수 있어 락인이 약함` 으로 **거래 채널 지표**(채점규칙 408행 `OpenRouter 매출 점유율 · 평균 $/M(가격 결정력)`)다. 400행은 `락인은 채널별로 재고, ① 점수는 그중 가장 강한 채널이 결정한다` 이고 406행의 소비자 지표는 `설치기반 · MAU · 구독 유지율 · 가격 인상 후 이탈 여부` 다. 얕은 채널로 깊은 채널을 깎은 형태이고, anthropic F1 의 같은 계열 문제는 TEN-RC-02 로 등록돼 있다.",
+      "direction": "방향 미정 — 소비자 채널 지표로 다시 재면 4 가 유지될 수도, 오르내릴 수도 있다. 4 가 틀렸다는 판정이 아니다.",
+      "rechecker": "2026-11 재채점 때 판단자. TEN-RC-02(anthropic F1)·TEN-RC3-03(palantir·oracle F1)과 같은 F1 채널 기준 계열이라 함께 본다.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 400행",
+        "채점규칙 406행",
+        "채점규칙 408행"
+      ],
+      "related_tensions": [
+        "TEN-RC-02",
+        "TEN-RC3-03"
+      ]
+    },
+    {
+      "id": "TEN-RC4-03",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC4-03(medium) · obsreg 4차 리뷰 C(codex 독립 세션, 기준 ab5a053 · review 4e9071c) · 체크리스트 Q03 fail",
+      "judgment_ids": [
+        "spacex-xai.F5"
+      ],
+      "subject": "spacex-xai F5 H=-1 의 근거가 적대의 종류가 아니라 수 비교다",
+      "tension": "spacex-xai.F5(A=+1, H=-1, 점수 3) 근거가 `동맹이 적보다 확실히 많지 않음 → 3` 이다. 채점규칙 201행 별표 C·G 는 `적대 등급 H — 적대의 크기가 아니라 종류를 본다` 이고 205행은 `0 | 최소 | 규제 조사·소송·시장 차단이 눈에 띄지 않는다` 처럼 종류로 칸을 나눈다. 열거된 적대(EU X DSA 벌금 · Amazon Kuiper · Blue Origin · OpenAI 머스크 소송 · 정치적 적대)를 비용형·구조형·다발형 중 어디에 놓았는지 근거란이 적지 않는다.",
+      "direction": "방향 미정 — 종류로 다시 대면 H 가 -1 에 머물 수도, 달라질 수도 있다. A 나 최종 3점을 이 등록이 판정하지 않는다.",
+      "rechecker": "2026-11 재채점 때 판단자.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 201행",
+        "채점규칙 205행",
+        "채점표 653행"
+      ]
+    },
+    {
+      "id": "TEN-RC4-04",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RC4-04(medium) · obsreg 4차 리뷰 C(codex 독립 세션, 기준 ab5a053 · review 4e9071c) · 체크리스트 Q10 fail",
+      "judgment_ids": [
+        "tsmc.F3"
+      ],
+      "subject": "tsmc F3 가속도 pass 의 근거가 가이던스(계획)다",
+      "tension": "tsmc.F3 근거가 `✅후발 가속도 — 매출 +31.6%(FY25) → +42.7%(FY26 가이던스), EPS +62%` 다. 채점규칙 77행은 `후발 가속도 … 계획·포지션은 0점` 이고 145·153행은 **실측 성장률의 변화**(직전 분기 대비 성장률이 오르면 가속)를 요구한다. 가이던스는 다음 기간에 실제로 빨라졌다는 관측이 아니다. v1.5 판정표 109행도 `+30→40%↑ 가이던스` 로 pass 를 주므로 원천 내부 모순을 승계했다.",
+      "direction": "하향 가능. acceleration 만 fail 로 읽으면 통과점 2.0 → 1.0 이라 **F3 3 → 2**(tsmc 총점 10 → 9)다. 이 등록은 재판정하지 않는다.",
+      "rechecker": "2026-11 재채점 때 판단자. 실측 성장률 쌍(FY26 실적)이 나오면 그 값으로 다시 잰다.",
+      "why_carried_exception": "승계 판단의 기존 논리이고 이번 실행이 이 factor 의 잣대를 바꾸지 않았다. 재검토 시점과 함께 등록했으므로 AGENTS.md 리뷰 범위 — 승계 판단 예외에 해당한다.",
+      "score_impact_now": "없다.",
+      "source_lines": [
+        "채점규칙 77행",
+        "채점규칙 145행",
+        "채점규칙 153행",
+        "채점규칙 109행",
+        "채점표 224행"
+      ],
+      "related_tensions": [
+        "TEN-RB-Q10"
+      ],
+      "note": "[FIX-55 1단계] TEN-RB-Q10 은 `성장률 하나로 가속 판정` 계열이고 이 건은 `계획을 실측으로 세움` 이라 따로 등록하되 같은 가속도 계열로 묶는다."
     }
   ],
   "source_text_corrections": [

@@ -246,7 +246,7 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         for key, value in (spec.get("matrix") or {}).items():
             _require(_is_number(value) and lo <= value <= hi,
                      f"rules.json.factors.{fid}.matrix[{key}]: {value} 가 range [{lo}, {hi}] 밖")
-    _validate_f6_policy(payload["policies"]["f6"], factors["F6"])
+    _validate_f6_policy(payload["policies"]["f6"], factors["F6"], f9=payload["policies"].get("f9"))
     _validate_f9_policy(payload["policies"]["f9"], factors["F9"])
     for item in payload["checklist"]:
         _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
@@ -466,7 +466,7 @@ def _validate_f6_bands(bands: Any, where: str, comparison: str) -> None:
     _require(edges == ordered, f"{where}: {key} 경계 정렬 오류 — {'오름차순' if key == 'upper' else '내림차순'} 이어야 함")
 
 
-def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
+def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None:
     _require(isinstance(f6, dict), "rules.policies.f6: object 여야 함")
     mode = f6.get("mode", "per_band")
     if mode != "parameters":
@@ -518,7 +518,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
                                # 조건이 읽는 산식과 입력. 선언한 입력은 METRICS 에 있어야 한다(NONOP-44).
                                "formula", "inputs",
                                # 이 조건의 값이 어느 factor 에 속하는지. 다른 factor 로 이월하지 않는다는 선언(IMPL-50 C-11).
-                               "scope", "scope_why"])
+                               "scope", "scope_why",
+                               # 조건을 무엇에서 판정하는지. 관측에서 판정하는 조건은 트랙 자동 목록에 두지 않는다(FIX-55 1단계).
+                               "judged_from"])
         for metric in cond.get("inputs", []):
             _require(metric in METRICS, f"{where}.inputs: 알 수 없는 지표 {metric!r}")
         # 코드가 구현하지 않은 조건 id 를 규칙에 적어 두면 선언만 있고 걸리지 않는 조건이 생긴다.
@@ -535,13 +537,18 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
             for src, dst in (cond.get("basis_map") or {}).items():
                 _require(dst in tm, f"{where}.basis_map.{src}: thresholds_months 에 없는 기준 {dst!r}")
 
+    judged_from_observation = {c["id"] for c in p4["conditions"] if c.get("judged_from")}
     tracks = f6.get("tracks")
     _require(isinstance(tracks, dict) and tracks, "rules.policies.f6.tracks: 비어 있을 수 없음")
     factor_min = factor["range"][0]
     for tid, spec in tracks.items():
         where = f"rules.policies.f6.tracks.{tid}"
         _expect_keys(spec, ["label", "parameters", "floor", "select"], where,
-                     optional=["auto_p4_conditions", "note", "ceiling"])
+                     optional=["auto_p4_conditions", "note", "ceiling", "p4_note"])
+        # 2026-09-16 FIX-55 1단계: 관측에서 판정한다고 선언한 조건을 트랙 자동 목록에도 두면 두 경로가 갈린다.
+        for auto in spec.get("auto_p4_conditions", []):
+            _require(auto not in judged_from_observation,
+                     f"{where}.auto_p4_conditions: {auto!r} 는 관측에서 판정한다고 선언된 조건이라 트랙 자동 목록에 둘 수 없음")
         _require(_is_number(spec["floor"]) and factor_min <= spec["floor"] <= 0,
                  f"{where}: floor 가 factor range {factor['range']} 밖")
         # 비상장은 0·-1 칸이 없다(v1.5 구간표). 천장을 선언하면 floor 와 factor range 안이어야 한다.
@@ -603,7 +610,10 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any]) -> None:
         _require(isinstance(net_cash, dict) and net_cash,
                  f"rules.policies.f6.net_cash: {', '.join(consumers)} 가 net_cash 를 입력으로 쓰므로 정의 블록이 반드시 있어야 함")
     if net_cash:
-        _validate_net_cash(net_cash)
+        # 2026-09-16 FIX-55 1단계(4차 리뷰 C low): 전에는 "서로 다른 등록 지표 둘" 만 봐서 cash/net_cash 를 arr/nonop_share 로
+        # 바꿔도 통과했다. **선언된 자리의 지표가 실제 소비자가 읽는 지표인지**까지 본다 — 하나는 F9 G3 분자(policies.f9.g3_cash_scope.metric),
+        # 하나는 net_cash 를 읽는 F6 파라미터의 입력이어야 한다. 스키마가 볼 수 있는 것은 여기까지다(코드를 직접 읽지는 못한다).
+        _validate_net_cash(net_cash, g3_metric=((f9 or {}).get("g3_cash_scope") or {}).get("metric"), parameter_consumers=consumers)
 
     # 파라미터 합계 하한이 factor range 하한과 맞아야 배점 재배분이 규칙 안에서 검산된다.
     _require(total_min == factor_min,
@@ -616,7 +626,7 @@ NET_CASH_STATUSES = ("working_definition", "confirmed")
 NET_CASH_AXES = ("immediacy", "marketability")
 
 
-def _validate_net_cash(spec: Any) -> None:
+def _validate_net_cash(spec: Any, *, g3_metric: str | None = None, parameter_consumers: list[str] | None = None) -> None:
     """`policies.f6.net_cash` — 역산으로 세운 정의는 **대체 가능하다고 스스로 말해야** 통과한다.
 
     이 검사가 지키는 것 셋.
@@ -696,6 +706,13 @@ def _validate_net_cash(spec: Any) -> None:
                 _require(str(axes.get(axis) or "").strip(),
                          f"{sw}.axes.{axis}: 이 자리가 그 축을 묻는지 답해야 함")
             metrics.append(site["metric"])
+        # 소비자와 묶는다. 자리 이름만 다르고 지표가 소비 경로와 무관하면 이 블록은 아무것도 지키지 못한다.
+        if g3_metric:
+            _require(g3_metric in metrics,
+                     f"{where}.scope_separation.sites: F9 G3 분자 지표 {g3_metric!r} 를 가리키는 자리가 없음 — policies.f9.g3_cash_scope 와 갈린다")
+        if parameter_consumers:
+            _require("net_cash" in metrics,
+                     f"{where}.scope_separation.sites: {', '.join(parameter_consumers)} 가 읽는 net_cash 를 가리키는 자리가 없음")
         _require(len(set(metrics)) >= 2,
                  f"{where}.scope_separation.sites: 서로 다른 지표 둘 이상을 가리켜야 함 — {metrics}")
         _check_banned_word(sep, where)

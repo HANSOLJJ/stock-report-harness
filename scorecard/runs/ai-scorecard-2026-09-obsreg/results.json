@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "9df92b8cc5670bf214b2e84379f023e17298ae94447905283fefce6b498d71d9",
-    "observations": "64aace00d8150ac9007e523bba9b9f0497ef21a9a2ae3430eaf41e5359516518",
-    "judgments": "112f5059cc901c8a2007b1713b070354520fa6a402559c960afb045a1e594cae",
+    "run": "5229a2ca2d3180481168391d3ac46036e904f000970d398efb02b87165d1f1a9",
+    "observations": "cfaaeb93f143e2fc4acc62aef17f510036f39c8899d8f8657953b96bcaa795aa",
+    "judgments": "2a6d7e7a5bae123b8f55e76b8fab96b2afd9fc7554ab77b71c1c20581a4070f7",
     "sources": "5821c65dff255c4b2dff257acfa85a037053cefaa6c1af3e51c994c70706ea6d",
-    "rules": "4219f7cce7158a76ab1b716514b837a3b484babf70666ca7bb1d204ee647dcf3"
+    "rules": "0fedadc19629e8acfc312511ecac8ffc33c7a2cdad9eba0e12bbee8230942f3b"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -215,6 +215,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [
                 "nonop_share"
               ],
@@ -507,6 +508,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [
                 "nonop_share"
               ],
@@ -828,6 +830,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [],
               "demotion_steps": 0,
               "demotion_sole_cause": null
@@ -1117,6 +1120,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [],
               "demotion_steps": 0,
               "demotion_sole_cause": null
@@ -1405,6 +1409,7 @@
                 "period_basis": "annual",
                 "hit": false
               },
+              "period_basis": "annual",
               "conditions_hit": [
                 "period_basis_not_ttm"
               ],
@@ -1695,6 +1700,7 @@
                 "period_basis": "annual",
                 "hit": false
               },
+              "period_basis": "annual",
               "conditions_hit": [
                 "nonop_share",
                 "period_basis_not_ttm"
@@ -2328,6 +2334,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [],
               "demotion_steps": 0,
               "demotion_sole_cause": null
@@ -2619,6 +2626,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [],
               "demotion_steps": 0,
               "demotion_sole_cause": null
@@ -2923,6 +2931,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [],
               "demotion_steps": 0,
               "demotion_sole_cause": null
@@ -3159,18 +3168,20 @@
                 "period_basis": "quarterly_yoy",
                 "hit": false
               },
+              "period_basis": "quarterly_yoy",
               "conditions_hit": [
+                "period_basis_not_ttm",
                 "short_history"
               ],
               "demotion_steps": 1,
-              "demotion_sole_cause": "short_history"
+              "demotion_sole_cause": null
             },
             "subtotal_before_p4": 0,
             "score": -1
           },
           "warnings": [
             "nonop_share 산출 안 함 ⚠️ 세전이익 -7,623,000,000 이 음수 — 부호 규약이 서지 않아 산출하지 않는다",
-            "P4 보정 한 칸 — 조건 short_history"
+            "P4 보정 한 칸 — 조건 period_basis_not_ttm, short_history"
           ],
           "pending": null
         },
@@ -3482,6 +3493,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [],
               "demotion_steps": 0,
               "demotion_sole_cause": null
@@ -3771,6 +3783,7 @@
                 "period_basis": "ttm",
                 "hit": false
               },
+              "period_basis": "ttm",
               "conditions_hit": [],
               "demotion_steps": 0,
               "demotion_sole_cause": null
@@ -4298,5 +4311,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 163,
-  "results_hash": "66493509c00acf01b3e6a4db20c825bc1dec6afe26393f68057b72924118807d"
+  "results_hash": "e3b0632accf15c9d073cb0dbc0ba8ec1b52c2dc3a612a398fcf0dabdbaea71ee"
 }

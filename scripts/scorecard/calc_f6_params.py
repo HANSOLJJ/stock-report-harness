@@ -166,7 +166,15 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
             warnings.append(f"기준 시점 경과 ⚠️ 창 종료 {stale['period_end']} 이 기준일 {stale['as_of']} "
                             f"로부터 {stale['months_elapsed']}개월 — {period_basis} 임계 {stale['limit_months']}개월 초과")
 
-    # 트랙이 구조적으로 지는 조건(연간 대체·이력 부족)은 규칙이 선언한 대로 자동 적용한다.
+    # 2026-09-16 FIX-55 1단계(4차 리뷰 B): 규칙은 이 조건을 "관측 basis.period_basis 로 판정한다" 고 선언하는데
+    # 트랙의 auto 목록으로만 붙고 있었다. 그래서 listed_newly 인 spacex-xai 는 관측이 스스로 quarterly_yoy 라고
+    # 적는데도 빠졌다. 선언대로 **관측에서** 판정한다 — 트랙이 아니라 자료가 정한다.
+    if "period_basis_not_ttm" in declared:
+        detail["period_basis"] = period_basis
+        if period_basis is not None and period_basis != "ttm":
+            hit.append("period_basis_not_ttm")
+
+    # 트랙이 구조적으로 지는 조건(이력 부족 등)은 규칙이 선언한 대로 자동 적용한다.
     for auto in track.get("auto_p4_conditions", []):
         if auto in declared and auto not in hit:
             hit.append(auto)

@@ -5,8 +5,8 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 64aace00d8150ac9007e523bba9b9f0497ef21a9a2ae3430eaf41e5359516518
-judgments_hash: 112f5059cc901c8a2007b1713b070354520fa6a402559c960afb045a1e594cae
+observations_hash: cfaaeb93f143e2fc4acc62aef17f510036f39c8899d8f8657953b96bcaa795aa
+judgments_hash: 2a6d7e7a5bae123b8f55e76b8fab96b2afd9fc7554ab77b71c1c20581a4070f7
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
