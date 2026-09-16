@@ -5,13 +5,13 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 955e686571831cfb2e58afb8ed4860b625bca393530e4ace0f9600f7ecac2a8e
+observations_hash: 4a2f29787dd9700a0bd6e773afd28373c1b90e48dc2faf1a0732b253bdd6b61c
 judgments_hash: 6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
-실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 362건, 판단 114건.
+실행 `ai-scorecard-2026-09-obsreg` 의 원자료·판단 입력·출처를 정리한다. 관측 363건, 판단 114건.
 
 ## 원자료
 
@@ -397,6 +397,7 @@ created_at: 2026-09-11
 | capex_ttm | $55.7B | legacy_unverified | actual | SRC-v15-html | $55.7B |  |
 | cash | $31.3B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 31.3B (버퍼 31.9B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
 | cash | $31.9B | legacy_unverified | actual | SRC-v15-html | $31.9B | [CASH-FCF-35 대체됨 → oracle.cash.cashfcf35]  |
+| contracted_revenue | $638.0B | verified | actual | SRC-SEC-FACTS-F6 | RPO 638,000M (2026-05-31, 10-K) | FIX-57 1단계. G4 분자 실측 등록. 값·커버리지·step 불변. |
 | contracted_revenue | $638.0B | legacy_unverified | actual | SRC-v15-rule | RPO $638B | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | BBB- ⚠️ | legacy_unverified | text | SRC-v15-html | BBB- ⚠️ | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 5.0 | legacy_unverified | actual | SRC-v15-html | 5.03 ⚠️ |  |

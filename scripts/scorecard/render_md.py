@@ -426,7 +426,10 @@ def render_review_template(ctx: Any, results: dict[str, Any], *, draft_hash: str
              table(["ID", "검사 초점", "결과", "근거"], [[q["id"], q["focus"], "pending", ""] for q in ctx.rules.checklist()]), "",
              "결과는 pass / fail / not_applicable. not_applicable 도 근거가 필요하다.", "",
              "## 발견 사항", "", "- (파일·섹션 단위로 기록)", "",
-             "## 판정", "", f"- results_hash `{results['results_hash'][:16]}…` · draft_hash `{draft_hash[:16]}…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).", ""]
+             "## 판정", "", f"- results_hash `{results['results_hash'][:16]}…` · draft_hash `{draft_hash[:16]}…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).",
+             # 2026-09-16 FIX-57 1단계(6차 리뷰 A): 리뷰어가 results_hash 를 파일 바이트 해시로 알고 대조하다 어긋났다.
+             "- **두 해시의 뜻이 다르다.** `results_hash` 는 `results.json` 에서 `results_hash` 키를 뺀 내용의 정렬 JSON 해시이고(`engine.sha256_obj`) "
+             "**파일 바이트 sha256 과 다르다.** `draft_hash` 는 초안 **파일 바이트 sha256** 이다. 대조할 때 섞지 않는다.", ""]
     return fm + "\n" + "\n".join(lines)
 
 

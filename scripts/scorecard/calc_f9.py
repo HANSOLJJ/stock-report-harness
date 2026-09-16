@@ -44,7 +44,13 @@ def _runway_boundary(runway: float, rules: RuleSet) -> dict[str, Any]:
     """G3 런웨이 임계(keep·one_step 년수) 중 가장 가까운 것에 대한 경계 표시. **점수를 바꾸지 않는다.**
 
     2026-09-15 FIX-53 2단계: P1~P4 에는 경계 표시가 있는데 G3 에는 없었다. alibaba 런웨이가 미인출 여신 등록으로
-    3년 임계 바로 위(+3.3%)가 되어 드러났다. F6 와 **같은 tolerance** 를 쓴다 — 자리마다 다른 관대함을 두지 않는다.
+    3년 임계 바로 위가 되어 드러났다. F6 와 **같은 tolerance** 를 쓴다 — 자리마다 다른 관대함을 두지 않는다.
+
+    2026-09-16 FIX-57 1단계(6차 리뷰 B): **그 도입 사례 자체에는 표시가 붙지 않는다.** alibaba 는 임계 3년 대비
+    +3.3213% 라 허용폭 3% 밖이고 `flag` 는 false 다. 장치는 설계대로 동작하며 주석이 그것을 `+3.3%` 로 적어
+    "잡혔다" 고 읽히게 했다. **허용폭은 이번에 바꾸지 않았다** — 표시 폭은 점수와 무관하지만 기준을 손대면
+    같은 잣대 문제가 된다. 거리 자체는 초안이 `임계 3년 대비 +3.3%` 로 늘 보여 주므로 읽는 사람이 놓치지 않는다.
+    폭 적정성은 미결 C-27 이다.
     """
     marks = [float(rules.f9["g3_runway_keep_years"]), float(rules.f9["g3_runway_one_step_years"])]
     nearest = min(marks, key=lambda b: abs(runway - b) / b)

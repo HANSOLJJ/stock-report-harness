@@ -1313,7 +1313,7 @@
         "source_citation": "채점표 L794 절 제목 · 행 L819",
         "vendor_not_in_source_policy": true,
         "vendor_policy_status": "**not_adopted 에 legacy_upstream 으로 올라 있다(SRC-FLAG-49, 2026-09-14).** 채택 검토를 거친 등재가 아니라 이 관측이 어디서 왔는지 가리키려고 장부에 이름을 올린 것이다. allowed 에는 없다.",
-        "on_score_path": "**점수 경로 밖.** spacex-xai 는 F6 `listed_newly` 트랙이라 P3 만 읽고 P1·P2 가 이 값을 쓰지 않는다. SRC-TRACE-47 의 점수 경로 11건에 안 들고 이 12번째 건이다. 상류는 같은 절(L819)이라 같이 표시한다.",
+        "on_score_path": "**점수 경로 안.** [FIX-57 1단계 정정 · obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) medium] 전에는 `점수 경로 밖 … P1·P2 가 이 값을 쓰지 않는다` 였다. FIX-56 1단계(C-24)가 `listed_newly` 트랙의 P2 를 켜면서 **이 값이 P2 의 분자로 들어간다** — P2 = (시총 1,910,000M − 순현금 60,301M) ÷ TTM 매출 23,044M = 80.27, 밴드 -2. 같은 실행의 results.json 이 `parameters.P2.inputs.market_cap` 과 `unverified_inputs: {\"market_cap\": [\"P2\"]}` 로 그것을 적는다. SRC-TRACE-47 의 점수 경로 market_cap 은 11건이 아니라 **12건이고 이 관측이 그 12번째**다. **그리고 12건 전부가 `legacy_unverified` 다** — 상장 12개사의 시총이 하나도 실측되지 않은 채 P1·P2 밑에 있다. 점수를 깎지는 않는다(calc.unverified_inputs 로 드러낸다). 상류는 같은 절(L819)이라 같이 표시한다.",
         "cited_source_ids": [
           "SRC-v15-md"
         ],
@@ -1323,6 +1323,25 @@
           "corrected_at": "2026-09-15",
           "task": "FIX-52 (리뷰 A qwen 발견)",
           "why": "basis 가 인용하는 행 번호(채점표 L794·L8xx 등)는 AI기업_채점표_v1.5.md 의 행이고 .html 의 같은 행에는 그 내용이 없다. 값이 실린 표 행이 .md 에 있으므로 source_id 를 .md 로 옮긴다. 채점규칙·HANDOVER 인용은 cited_source_ids 에 함께 적는다."
+        },
+        "p2_asof_mismatch": {
+          "what": "**P2 입력의 기준일이 갈린다.** 시총은 2026-09-02(실행 기준일)이고 순현금·TTM 매출은 2026-06-30(10-Q 결산일)이다. 그 사이 두 달의 주가 변동과 현금 흐름이 한 비율 안에 섞여 있다.",
+          "sensitivity": {
+            "as_reported": {
+              "market_cap": 1910000000000.0,
+              "net_cash": 60301000000.0,
+              "revenue_ttm_full": 23044000000.0,
+              "ev_sales": 80.26813921194237,
+              "band": "20+",
+              "score": -2
+            },
+            "band_change_needs": "밴드가 -2 에서 -1 이 되려면 EV/매출이 20 미만이어야 한다. 시총이 그대로면 **순현금이 1,449,120M 을 넘어야** 하고(1,910,000 − 20 × 23,044), 순현금이 그대로면 **시총이 521,181M 아래로** 내려와야 한다(60,301 + 20 × 23,044). 둘 다 현재 값과 자릿수가 다르다.",
+            "conclusion": "기준일 차이로 밴드가 갈리지 않는다. 사실만 남긴다."
+          },
+          "same_form_as": "alibaba.market_cap.v15.basis.p2_asof_mismatch — 같은 형식으로 적는다.",
+          "why_not_corrected": "기준일을 맞춘 시총 실측이 보존 자료에 없다. 추정치를 관측으로 세우지 않는다.",
+          "recorded_at": "2026-09-16",
+          "review": "obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) low"
         }
       },
       "raw": "$1.91T",
@@ -3576,7 +3595,47 @@
       "kind": "actual",
       "source_id": "SRC-v15-rule",
       "status": "legacy_unverified",
-      "basis": null,
+      "basis": {
+        "legacy_only": true,
+        "why_kept": "[FIX-57 1단계 · obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) medium] **이 수가 어느 공시 사실과도 맞지 않는다.** 보존 ORCL companyfacts 에서 2.30e11~2.70e11 구간의 USD 사실은 `Assets`·`LiabilitiesAndStockholdersEquity`(총자산 261,759M) 둘뿐이고 리스·약정 계열에는 250,000M 이 없다. **값을 지어내지 않고 legacy 를 그대로 둔다.**",
+        "v15_wording": "v1.5 자신도 이 수를 공시 인용으로 적지 않는다 — 채점표 871행이 부외 약정 칸을 두고 `셀사이드 추정이 공개되지 않아서` 라고 적으며 `Meta $628B·Alphabet $707B·Oracle $250B` 를 같은 줄에 든다. 다만 alphabet 의 $707B 는 공시 태그(`LongTermPurchaseCommitmentAmount` end=2026-06-30)와 정확히 맞는데 oracle 의 $250B 는 대응하는 사실이 없다. 채점규칙 564·579행 · 채점표 549·575행이 같은 수를 쓴다.",
+        "disclosed_alternatives": [
+          {
+            "tag": "us-gaap:LesseeOperatingLeaseLiabilityPaymentsDue",
+            "value": 41867000000.0,
+            "as_of": "2026-05-31",
+            "what": "개시된 운용리스의 **할인 전** 지급 총액. 같은 기준일 대차대조표 리스부채(`OperatingLeaseLiability` 30,190M)의 할인 전 판본이라 부외가 아니다."
+          },
+          {
+            "tag": "us-gaap:LesseeOperatingLeaseLiabilityUndiscountedExcessAmount",
+            "value": 11677000000.0,
+            "as_of": "2026-05-31",
+            "what": "**미개시** 리스 약정. B종(미개시 약정)의 성격에 가장 가깝다."
+          },
+          {
+            "tag": "us-gaap:UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+            "value": 13309000000.0,
+            "as_of": "2026-05-31",
+            "what": "장부 미기재 무조건 구매 약정."
+          }
+        ],
+        "alternatives_sum": 66853000000.0,
+        "alternatives_caveat": "셋의 합 66,853M 을 대체값으로 **등록하지 않았다.** 41,867 은 개시분이라 이미 FCF·대차대조표에 있고(채점규칙 546행 `개시된 리스는 이미 FCF 에 있고 더하면 이중 계상`), B종 정의와 범위가 다르다. 범위를 정하는 것은 규칙 결정이지 이 관측의 일이 아니다.",
+        "coverage_either_way": {
+          "legacy_250000": {
+            "coverage": 2.552,
+            "g4_step": 0
+          },
+          "disclosed_sum_66853": {
+            "coverage": 9.543326,
+            "g4_step": 0
+          },
+          "threshold": "policies.f9.g4_coverage_keep = 1.0",
+          "conclusion": "**어느 쪽이든 커버리지가 1 을 넘어 G4 step 0 이다.** oracle F9 -3 · 총점 2 는 갈리지 않는다."
+        },
+        "open_item": "규칙 decisions C-26 — oracle B종 약정의 출처와 범위를 정한다.",
+        "recorded_at": "2026-09-16"
+      },
       "raw": "리스 $250B(15~20년)",
       "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
     },
@@ -3593,6 +3652,42 @@
       "basis": null,
       "raw": "RPO $638B",
       "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
+    },
+    {
+      "observation_id": "oracle.contracted_revenue.fix57",
+      "company_id": "oracle",
+      "metric": "contracted_revenue",
+      "value": 638000000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-31",
+      "observed_at": "2026-09-16",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-F6",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-05-31",
+        "tag": "us-gaap:RevenueRemainingPerformanceObligation",
+        "accession": "0001193125-26-277521",
+        "form": "10-K",
+        "preserved": "validation/f6-avail-15/_raw/ORCL.companyfacts.json",
+        "matches_legacy": {
+          "legacy_id": "oracle.contracted_revenue.v15",
+          "legacy_value": 638000000000.0,
+          "diff": 0,
+          "note": "v1.5 의 `RPO $638B` 와 **정확히 같다.** 승계값이 맞았음을 실측이 확인한 것이고 점수는 바뀌지 않는다."
+        },
+        "time_series": {
+          "2025-08-31": 455300000000,
+          "2025-11-30": 523300000000,
+          "2026-02-28": 552600000000,
+          "2026-05-31": 638000000000
+        },
+        "asof_gap": "실행 기준일은 2026-09-02 이고 이 사실은 FY2026 결산일 2026-05-31 이다. oracle 은 회계연도가 한 달 어긋나 이것이 보존 자료의 최신 공시다.",
+        "replaces": "oracle.contracted_revenue.v15 — 같은 값을 공시 사실로 세운다",
+        "why_now": "[FIX-57 1단계] obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) medium — G4 를 가르는 분자가 basis 도 없는 legacy 로 남아 있었다."
+      },
+      "raw": "RPO 638,000M (2026-05-31, 10-K)",
+      "note": "FIX-57 1단계. G4 분자 실측 등록. 값·커버리지·step 불변."
     },
     {
       "observation_id": "amazon.offbalance_B.v15",
@@ -8551,18 +8646,19 @@
           "parameter": "P2",
           "used": {
             "rate": 31.37,
-            "value": 17.072,
+            "value": 17.1365,
             "band": -1
           },
           "alternative": {
             "rate": 32.79,
             "label": "FY2024 20-F 선언 환율",
-            "value": 17.845,
+            "value": 17.938,
             "band": -1
           },
           "band_differs": false,
           "note": "**환율 선택이 밴드를 가르지 않는다** — 두 환율 다 같은 구간이다.",
-          "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다."
+          "p3_is_rate_invariant": "P3 는 분자·분모에 같은 환율을 쓰므로 상쇄된다 — 환율과 무관하다.",
+          "net_cash_basis": "[FIX-57 1단계 정정 · obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) low] 전 값(17.072 · 17.845)은 **legacy 순현금 77,000M** 기준이라 엔진이 쓰는 검증 순현금과 달랐다. 엔진 P2 는 `tsmc.net_cash.nc37` 69,224.96M(NT$2,171,587.1M ÷ 31.37)을 쓴다. 대체 환율 칸도 **매출과 순현금을 같은 32.79 로** 환산해 다시 계산했다 — 둘 다 TWD 원값이라 한쪽만 바꾸면 섞인 기준이 된다(32.79 기준 매출 116,165.12M · 순현금 66,227.11M)."
         }
       },
       "raw": "FY2025 매출 NT$3,809,054.3백만 (US$121,423.5백만)",
@@ -12141,7 +12237,23 @@
         "original_currency": "CNY",
         "fx_rate": 6.898,
         "fx_rate_source": "20-F 자체 선언 편의환산 환율 (F6-REG-28 등록값과 동일)",
-        "pretax_native": 129387000000
+        "pretax_native": 129387000000,
+        "fx_path_mismatch": {
+          "what": "**분자와 분모가 서로 다른 환율을 거쳐 왔다.** 세전이익은 CNY 원값을 20-F 선언 환율 6.8980 으로 환산했고(`alibaba.pretax_income_ttm.nonop44`), 영업이익은 20-F 가 실은 USD 환산치를 그대로 썼다(`alibaba.operating_income_ttm.obsreg25` — RMB50,150M / US$7,270M 이라 **내재 환율 6.8982**).",
+          "cause": "공시 USD 칸이 백만 단위로 반올림돼 있어 역산 환율이 선언 환율과 소수 넷째 자리에서 갈린다(상대차 2.9e-5).",
+          "effect": {
+            "nonop_share_as_computed": 0.6124150030528569,
+            "nonop_share_if_both_at_6_898": 0.6124031007823914,
+            "abs_diff": 1.1902270465e-05,
+            "rel_diff": 1.943e-05,
+            "threshold": 0.3,
+            "condition_hit": true,
+            "conclusion": "두 값 다 임계 0.30 의 두 배를 넘어 P4 `nonop_share` 조건이 **걸린다.** 2e-5 의 차이로는 그 판정이 뒤집히지 않는다 — 뒤집히려면 0.31 배로 줄어야 한다. 점수 불변."
+          },
+          "why_not_corrected": "공시 USD 를 쓰는 것은 **발행사 자신의 환산을 우선한다**는 규칙(policies.f6.fx)과 맞는다. 두 입력의 환산 경로가 다르다는 사실만 남긴다.",
+          "recorded_at": "2026-09-16",
+          "review": "obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) low"
+        }
       },
       "raw": "세전이익 TTM 18.8B USD",
       "note": "NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다"
@@ -12858,7 +12970,8 @@
         "statement_body_first": "감사 재무제표 주석을 1차 근거로, MD&A 를 교차 확인으로 둔다.",
         "excluded_other_facility": "US$3.17B 회전여신(주석 21 (ii))의 미사용 약정 `approximately US$ 2.6 billion` 은 합산하지 않았다 — alibaba.undrawn_credit_approx.fix53 참조.",
         "runway_effect": "런웨이 (19,068 + 3,330) / 7,226 = 3.0996년 (등록 전 19,068 / 7,226 = 2.6388년). G3 step -1 → 0.",
-        "why_now": "설계 지침 6.4 가 런웨이 분자에 확정 미인출 여신을 넣으라고 정해 두었는데 alibaba 에 undrawn_credit 관측이 없었다(2차 리뷰 B 발견). 새 결정이 아니라 빠진 관측의 등록이다."
+        "why_now": "설계 지침 6.4 가 런웨이 분자에 확정 미인출 여신을 넣으라고 정해 두었는데 alibaba 에 undrawn_credit 관측이 없었다(2차 리뷰 B 발견). 새 결정이 아니라 빠진 관측의 등록이다.",
+        "score_dependence": "[FIX-57 1단계 · obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) medium] **alibaba 총점 7 이 이 관측 하나에 달려 있다.** 이 3,330M 을 완충에서 빼면 런웨이가 3.0996년 → **2.6388년**(19,068M ÷ 7,226M)이 되어 G3 step 0 → **-1**, F9 -3 → **-4**(하한), 총점 7 → **6** 이다. 엔진으로 재계산해 확인했다. 등록 그대로 두는 근거는 관측 basis 의 조건 확인이고, 이 의존을 여기 드러낸다."
       },
       "raw": "미인출 회전여신 US$3.33B (2026-03-31, 20-F 주석 21)",
       "note": "FIX-53 2단계. 감사 주석 1차 · MD&A 교차. 런웨이 분자에 들어간다."

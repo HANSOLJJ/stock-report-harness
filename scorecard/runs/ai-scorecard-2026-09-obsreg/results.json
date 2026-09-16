@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "0439ee2b105f30bcee6d3d20bf299042e18f26483e31723f494c87a494fecbc8",
-    "observations": "955e686571831cfb2e58afb8ed4860b625bca393530e4ace0f9600f7ecac2a8e",
+    "run": "cf7ee8142c7b4fd97efdb262c162b1e2145ac91f38569fc5b4529933799b2c6e",
+    "observations": "4a2f29787dd9700a0bd6e773afd28373c1b90e48dc2faf1a0732b253bdd6b61c",
     "judgments": "6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6",
     "sources": "14ec0e8083d82e5321d1b38e1e7fc8dd66c2ebac683d56e85772a46c3a1c3663",
-    "rules": "da72e0147332ed640741f8f86c59e4e6778c04c997f63b431a3a569f1fac92cf"
+    "rules": "7e0e92144fbcc9909f7508a05b9fc7b992b4b2b9b576439b7bf50bbc60c838a3"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -3970,7 +3970,7 @@
           "judgment_id": "oracle.F9",
           "observation_ids": [
             "oracle.cash.cashfcf35",
-            "oracle.contracted_revenue.v15",
+            "oracle.contracted_revenue.fix57",
             "oracle.fcf_ttm.cashfcf35",
             "oracle.offbalance_B.v15",
             "oracle.operating_income_ttm.f6reg28",
@@ -4026,7 +4026,6 @@
           },
           "warnings": [
             "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)",
-            "oracle.contracted_revenue.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)",
             "oracle.offbalance_B.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
           ],
           "pending": null
@@ -4447,6 +4446,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 165,
-  "results_hash": "20945e2af302fc047415ec0ebe6620949b9c7e4cd576e49da39b00ea19e8cbe5"
+  "warnings_count": 164,
+  "results_hash": "ae1c60868d40b2b045945b3ebee40d836eefada560a0f63b77b86d95facea9f6"
 }
