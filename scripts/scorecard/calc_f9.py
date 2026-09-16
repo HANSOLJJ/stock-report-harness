@@ -208,8 +208,11 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
         if (not company["listed"] and fcf_obs is not None
                 and fcf_obs.get("missing_type") == MISSING_TYPE_FOR_DISCLOSURE_POLICY):
             score = int(pol["g2_private_not_disclosed"])
-            reason_id = gi.get("fcf_not_disclosed_reason") or f"{cid}.fcf_not_disclosed"
+            # 2026-09-16 FIX-56 2단계(5차 리뷰 A 분담 low): `anthropic.fcf_not_disclosed` 는 관측 id 와 생김새가 같아
+            # **없는 관측을 가리키는 것처럼** 보였다. 표시용 라벨은 `reason:` 을 달아 구별하고, 실재 관측은 따로 찍는다.
+            reason_id = gi.get("fcf_not_disclosed_reason") or f"reason:{cid}.fcf_not_disclosed"
             path.append({"gate": "G2", "result": "not_disclosed", "score": score, "reason_id": reason_id,
+                         "reason_observation_id": fcf_obs["observation_id"],
                          "note": "비상장 FCF 미공시 + 완충이 외부 조달뿐 → 보수적으로 -2"})
             path.append({"gate": "G3", "result": "skipped", "reason": "FCF 미공시라 소진율 없음"})
             g4 = _g4(cid, obs, gi, rules, run, use)
@@ -258,6 +261,9 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
         return done(None, "pending_data", pending_info("data", "사용 가능 현금 관측 필요(런웨이)"))
     undrawn, undrawn_obs = obs.number(cid, "undrawn_credit")
     use(undrawn_obs)
+    # 2026-09-16 FIX-56 2단계(5차 리뷰 C low): **두 갈래가 같은 산식을 쓴다.** 아래 runway 는 선택과 무관하게
+    # `현금 + 확정 미인출 여신` 만 센다 — include_v15 도 등급 기반 조달 여력을 추정치로 넣지 않기 때문이다.
+    # 갈리는 것은 경고 문구뿐이고 점수는 어느 쪽을 골라도 같다(rules.decisions C-04 implementation_status).
     capacity_choice = decision_choice(run, rules, "C-04") or str(pol["g3_rating_capacity"])
     if capacity_choice == "include_v15":
         warnings.append("C-04: include_v15 선택 — 등급 기반 조달 여력은 숫자 관측(undrawn_credit)으로만 산입되며 추정치는 넣지 않음")

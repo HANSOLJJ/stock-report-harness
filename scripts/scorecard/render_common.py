@@ -486,10 +486,29 @@ def conflict_lines(ctx: Any) -> list[str]:
     if flagged:
         out.append(f"**이해상충** — 이 채점표는 Anthropic 이 만든 Claude 가 작성했고 Anthropic 이 채점 대상에 들어 있다. 이해상충이 표기된 출처가 "
                    f"{len(flagged)}건이고 문장은 References 의 각 출처 줄에 있다. 비상장 2사의 수치는 회사 자체 발표(이해당사자 1차 자료)에서 온다.")
-    third = [t for t in (ctx.rules.payload.get("open_tensions") or []) if "비 Claude" in (t.get("rechecker") or "")]
-    if third:
-        ids = " · ".join(f"{t['id']}({', '.join(t['judgment_ids'])}, {t['recheck_at']})" for t in sorted(third, key=lambda x: x["id"]))
-        out.append(f"**제3자 재검토 약속**(채점규칙 384행) — 비 Claude 세션이 재판정하기로 등록된 긴장 {len(third)}건: {ids}.")
+    # 2026-09-16 FIX-56 2단계(5차 리뷰 D low): 전에는 `비 Claude` 가 든 긴장을 통째로 세어 **권장까지 약속으로** 읽혔다.
+    # 이제 긴장이 스스로 선언한 갈래(third_party_recheck)를 읽는다.
+    tensions = sorted((ctx.rules.payload.get("open_tensions") or []), key=lambda x: x["id"])
+    by_kind: dict[str, list[dict[str, Any]]] = {}
+    for t in tensions:
+        kind = t.get("third_party_recheck")
+        if kind:
+            by_kind.setdefault(kind, []).append(t)
+
+    def _ids(items: list[dict[str, Any]], scope_key: str | None = None) -> str:
+        return " · ".join(f"{t['id']}({', '.join(t.get(scope_key) or t['judgment_ids'])}, {t['recheck_at']})" for t in items)
+
+    committed = by_kind.get("committed") or []
+    if committed:
+        out.append(f"**제3자 재검토 약속**(채점규칙 384행) — 비 Claude 세션 재판정이 **확정**된 긴장 {len(committed)}건: {_ids(committed)}.")
+    partial = by_kind.get("partial") or []
+    if partial:
+        out.append(f"  - **일부만 확정** {len(partial)}건 — {_ids(partial, 'third_party_scope')} 만 비 Claude 세션이 본다. "
+                   "같은 긴장의 나머지 판단은 재채점 때 판단자가 본다.")
+    recommended = by_kind.get("recommended") or []
+    if recommended:
+        out.append(f"  - **권장일 뿐 약속이 아닌 것** {len(recommended)}건 — {_ids(recommended)}. "
+                   "규칙이 `비 Claude 세션 권장` 으로 적은 자리이고 재판정자를 정해 두지 않았다.")
     c03 = next((d for d in ctx.rules.payload.get("decisions", []) if d["id"] == "C-03"), None)
     recheck = (c03 or {}).get("pending_recheck") or {}
     if recheck:

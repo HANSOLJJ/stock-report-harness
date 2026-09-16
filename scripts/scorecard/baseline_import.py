@@ -49,9 +49,11 @@ LEGACY_GATE_INPUTS: dict[str, dict[str, str]] = {
     "alibaba": {"fcf_trend": "unknown", "operating_result_reviewed": "unknown", "coverage_comparable": "unknown"},  # 6월 분기 흑자 복귀는 단일 분기 → TTM 부호 미확인(C-20, Anthropic 과 같은 잣대)
     "oracle": {"fcf_trend": "unknown", "operating_result_reviewed": "profit", "coverage_comparable": "yes"},
     "spacex-xai": {"fcf_trend": "unknown", "operating_result_reviewed": "loss", "coverage_comparable": "unknown"},
-    "anthropic": {"fcf_trend": "unknown", "operating_result_reviewed": "unknown", "coverage_comparable": "no", "fcf_not_disclosed_reason": "anthropic.fcf_not_disclosed"},
-    "openai": {"fcf_trend": "unknown", "operating_result_reviewed": "loss", "bep_retreat": "yes", "coverage_comparable": "no", "fcf_not_disclosed_reason": "openai.fcf_not_disclosed"},
+    "anthropic": {"fcf_trend": "unknown", "operating_result_reviewed": "unknown", "coverage_comparable": "no", "fcf_not_disclosed_reason": "reason:anthropic.fcf_not_disclosed"},
+    "openai": {"fcf_trend": "unknown", "operating_result_reviewed": "loss", "bep_retreat": "yes", "coverage_comparable": "no", "fcf_not_disclosed_reason": "reason:openai.fcf_not_disclosed"},
 }
+# 2026-09-16 FIX-56 2단계: `fcf_not_disclosed_reason` 은 **표시용 라벨**이고 관측 id 가 아니다.
+# `reason:` 접두사로 구별한다 — 실재 관측 id 는 calc_f9 가 reason_observation_id 로 따로 찍는다.
 # ③ 사다리 판정표(규칙 ③ 절) — ✅ pass / ⚠️ partial / ❌ fail
 LEGACY_F3: dict[str, tuple[str, str, str]] = {
     "amazon": ("fail", "pass", "pass"), "microsoft": ("fail", "pass", "pass"), "alphabet": ("fail", "pass", "partial"),

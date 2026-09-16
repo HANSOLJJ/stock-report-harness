@@ -306,6 +306,8 @@ def _validate_source_text_corrections(items: Any) -> None:
 
 
 TENSION_ID_RE = re.compile(r"^TEN-[A-Z0-9-]+$")
+# 제3자(비 Claude) 재검토의 갈래. committed 는 약속, partial 은 일부 판단만, recommended 는 권장일 뿐이다.
+THIRD_PARTY_RECHECK = {"committed", "partial", "recommended"}
 RECHECK_RE = re.compile(r"^\d{4}-\d{2}$")
 
 
@@ -326,7 +328,9 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
                                       # 같은 잣대 계열의 다른 긴장 — 재검토 때 함께 본다(FIX-54 1단계 S6, RC3-03·04)
                                       "related_tensions",
                                       # 재검토를 **무엇이 오면** 시작하는지. 시점(recheck_at)만으로는 조건이 남지 않는다(FIX-55 2단계).
-                                      "trigger"])
+                                      "trigger",
+                                      # 제3자(비 Claude) 재검토가 **약속인지 권장인지**. 문장을 훑어 세면 둘이 한 덩어리가 된다(FIX-56 2단계).
+                                      "third_party_recheck", "third_party_scope"])
         for aidx, a in enumerate(t.get("affected") or []):
             _expect_keys(a, ["company_id", "why"], f"{where}.affected[{aidx}]", optional=["source_lines", "judgment_id"])
             _require(str(a["why"]).strip(), f"{where}.affected[{aidx}].why: 비워 둘 수 없음")
@@ -338,6 +342,20 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
                  f"{where}.recheck_at: YYYY-MM 재검토 시점이 필요함 — {t['recheck_at']!r}")
         _require(isinstance(t["judgment_ids"], list) and t["judgment_ids"] and all(isinstance(j, str) and j for j in t["judgment_ids"]),
                  f"{where}.judgment_ids: 관련 판단 id 가 하나 이상 필요함")
+        # 2026-09-16 FIX-56 2단계(5차 리뷰 D low): `rechecker` 문장에 `비 Claude` 가 있으면 산출물이 그것을 세는데,
+        # **약속(committed)·부분(partial)·권장(recommended)** 이 한 문장으로 합쳐져 8건이 모두 약속처럼 보였다.
+        # 문장을 훑지 말고 갈래를 선언하게 한다 — 선언이 없으면 거부한다.
+        tp = t.get("third_party_recheck")
+        mentions_third_party = "비 Claude" in (t.get("rechecker") or "")
+        if mentions_third_party or tp is not None:
+            _require(tp in THIRD_PARTY_RECHECK,
+                     f"{where}.third_party_recheck: rechecker 가 비 Claude 세션을 말하면 {sorted(THIRD_PARTY_RECHECK)} 중 하나를 선언해야 함 ({tp!r})")
+            scope = t.get("third_party_scope")
+            if tp == "partial":
+                _require(isinstance(scope, list) and scope and set(scope) < set(t["judgment_ids"]),
+                         f"{where}.third_party_scope: partial 이면 judgment_ids 의 **진부분집합**이어야 함 — 전부면 committed 다")
+            else:
+                _require(scope is None, f"{where}.third_party_scope: {tp!r} 에는 범위를 적지 않는다 — 전체가 대상이다")
         for key in ("review_finding", "subject", "tension", "direction"):
             _require(isinstance(t[key], str) and t[key].strip(), f"{where}.{key}: 비워 둘 수 없음")
         if "decision_id" in t:

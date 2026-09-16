@@ -196,6 +196,9 @@ def _listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | 
         return factor_result(FACTOR, score=None, status="pending_data", basis="computed", observation_ids=obs_ids,
                              pending=pending_info("data", "NTM PER basis.method 미기재 — forwardPE 필드명만으로 NTM 인정 불가"))
     if method in policy["proxy_methods"]:
+        # 2026-09-16 FIX-56 2단계(5차 리뷰 C low): 이 갈래는 **bands 모드에서만 실행된다.** 규칙의
+        # `policies.f6.mode` 가 `parameters` 면 위에서 calc_f6_params 로 갈라져 여기까지 오지 않는다 —
+        # 그래서 이번 실행의 C-13 선택은 점수에 닿지 않는다(rules.decisions C-13 implementation_status).
         choice = decision_choice(run, rules, "C-13")
         proxy_calc = {"ntm_per": per_value, "method": method}
         if choice == "accept_proxy_with_flag":

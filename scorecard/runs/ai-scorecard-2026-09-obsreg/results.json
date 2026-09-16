@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "253926e19cf0bdb845cc10d920c6563cd45212c2cb765ba8a0e8fc7ce8e3c607",
-    "observations": "3733a89a461e73070c31088b3f86871916d7a130a5357a389f8a399c9bdc33eb",
-    "judgments": "145ba38f2546ea0a7e2f27f3dfe83fae19276dcc736866d7a8c47ecd130ddaa8",
+    "run": "0439ee2b105f30bcee6d3d20bf299042e18f26483e31723f494c87a494fecbc8",
+    "observations": "955e686571831cfb2e58afb8ed4860b625bca393530e4ace0f9600f7ecac2a8e",
+    "judgments": "6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6",
     "sources": "14ec0e8083d82e5321d1b38e1e7fc8dd66c2ebac683d56e85772a46c3a1c3663",
-    "rules": "08f6a69521620e5f885d6cb42c369c4827f9e7a355f539a2a3eeb26aff301bd0"
+    "rules": "da72e0147332ed640741f8f86c59e4e6778c04c997f63b431a3a569f1fac92cf"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -2118,7 +2118,8 @@
                 "gate": "G2",
                 "result": "not_disclosed",
                 "score": -2,
-                "reason_id": "anthropic.fcf_not_disclosed",
+                "reason_id": "reason:anthropic.fcf_not_disclosed",
+                "reason_observation_id": "anthropic.fcf_ttm.priv31",
                 "note": "비상장 FCF 미공시 + 완충이 외부 조달뿐 → 보수적으로 -2"
               },
               {
@@ -2128,7 +2129,7 @@
               },
               {
                 "gate": "G4",
-                "no_extra_penalty_because": "anthropic.fcf_not_disclosed",
+                "no_extra_penalty_because": "reason:anthropic.fcf_not_disclosed",
                 "g2_reason": "fcf_not_disclosed(확인된 미공시)",
                 "g4_reason_same_as_g2": false,
                 "note": "G4 는 **다른 사유**로 막혔으나 추가 감점하지 않는다 — G2 에서 이미 깎았고 G4 는 계산 자체가 불가해 더 깎을 근거가 없다",
@@ -2144,7 +2145,7 @@
               "direction_B": "unknown",
               "coverage_comparable": "no",
               "operating_result_reviewed": "unknown",
-              "fcf_not_disclosed_reason": "anthropic.fcf_not_disclosed"
+              "fcf_not_disclosed_reason": "reason:anthropic.fcf_not_disclosed"
             }
           },
           "warnings": [
@@ -4299,7 +4300,7 @@
               "direction_B": "unknown",
               "coverage_comparable": "no",
               "operating_result_reviewed": "loss",
-              "fcf_not_disclosed_reason": "openai.fcf_not_disclosed"
+              "fcf_not_disclosed_reason": "reason:openai.fcf_not_disclosed"
             },
             "gate1_fail": true
           },
@@ -4447,5 +4448,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 165,
-  "results_hash": "bbff8b39ab334ad98cc5ef4a912e0768eb1505db88906d2c22aba7ba20a55965"
+  "results_hash": "20945e2af302fc047415ec0ebe6620949b9c7e4cd576e49da39b00ea19e8cbe5"
 }

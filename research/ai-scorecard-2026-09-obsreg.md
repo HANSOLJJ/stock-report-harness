@@ -5,8 +5,8 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 3733a89a461e73070c31088b3f86871916d7a130a5357a389f8a399c9bdc33eb
-judgments_hash: 145ba38f2546ea0a7e2f27f3dfe83fae19276dcc736866d7a8c47ecd130ddaa8
+observations_hash: 955e686571831cfb2e58afb8ed4860b625bca393530e4ace0f9600f7ecac2a8e
+judgments_hash: 6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -539,7 +539,7 @@ created_at: 2026-09-11
 | ⑥ 가격 | score | -3 | private=True | carried | legacy:v1.5 2026-09-02 | C-12: 비상장 정성 예외(TTM 보정·자본효율 근거는 원문) |
 | ⑦ 순환금융 | score | -1 | — | carried | legacy:v1.5 2026-09-02 | C-09: 매트릭스 입력(환류 여부) 원문 없음 — 승계 점수 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이 |
 | ⑧ 비대칭 의존 | score | -3 | — | new | worker(HANSOLJJ) — C-13 F8-ANTH-33 8ddb0ae 기반 2026-09-11 | F8-ANTH-33 반영(2026-09-11). **점수 -3 은 바뀌지 않았고 근거란만 바뀌었다.** 2차 증언(증권사 자료)을 1차 공시(A |
-| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=no, operating_result_reviewed=unknown, fcf_not_disclosed_reason=anthropic.fcf_not_disclosed | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) \| [FIX-53 3단계 라벨 정정] AWS $100B 라벨을 공시 문면(기존 약정 |
+| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=no, operating_result_reviewed=unknown, fcf_not_disclosed_reason=reason:anthropic.fcf_not_disclosed | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) \| [FIX-53 3단계 라벨 정정] AWS $100B 라벨을 공시 문면(기존 약정 |
 
 ### Apple
 
@@ -631,7 +631,7 @@ created_at: 2026-09-11
 | ⑥ 가격 | score | -4 | private=True | carried | legacy:v1.5 2026-09-02 | C-12: 비상장 정성 예외(TTM 보정·자본효율 근거는 원문) |
 | ⑦ 순환금융 | score | -1 | — | carried | legacy:v1.5 2026-09-02 | C-09: 매트릭스 입력(환류 여부)이 판단에 복원되지 않았다 — 승계 점수. **[FIX-54 1단계 정정] 원문 부재가 아니다** — 채점표 |
 | ⑧ 비대칭 의존 | score | -4 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=yes, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=no, operating_result_reviewed=loss, fcf_not_disclosed_reason=openai.fcf_not_disclosed | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
+| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=yes, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=no, operating_result_reviewed=loss, fcf_not_disclosed_reason=reason:openai.fcf_not_disclosed | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
 
 ## 출처
 
