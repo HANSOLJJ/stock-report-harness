@@ -682,7 +682,11 @@ def _decision_chips(ctx: Any, text: str) -> str:
         if d is None:
             continue
         pick = next((r["choice"] for r in ctx.run["decisions"] if r["id"] == code), None)
-        picked = f'<span class="pick">이번 실행 선택: <b>{esc(pick)}</b></span>' if pick else ""
+        # 2026-09-17 FIX-73: 선택지 식별자가 그대로 나왔다. 이름을 앞세우고 식별자는 대조용으로 남긴다.
+        pick_name = rc.CHOICE_NAMES.get(pick, pick)
+        picked = (f'<span class="pick">이번 실행 선택: <b>{esc(pick_name)}</b>'
+                  + (f' <code>{esc(pick)}</code>' if pick_name != pick else "")
+                  + '</span>') if pick else ""
         out.append(f'<details class="mdec"><summary><span class="id">{esc(code)}</span>'
                    f'<span class="gist">{inline_html(_decision_gist(d["summary"]))}</span></summary>'
                    f'<div class="full">{inline_html(d["summary"])}{picked}</div></details>')

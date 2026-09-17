@@ -95,6 +95,39 @@ TERM_NAMES = {
     # `verified` 는 낱말 하나라 아래 정규식(밑줄이 있는 이름)에 걸리지 않는다. 상태 요약에서만 쓴다.
     "verified": "검증 완료",
 }
+# 2026-09-17 FIX-73: 결정 선택지 이름이 경고 문구에 영어로 실렸다(`results.json` 의 warnings 안이라
+# 데이터를 고칠 수 없다). **뜻은 규칙 `decisions` 의 해당 항목에서 가져왔고 여기서 새로 짓지 않았다.**
+# 식별자는 감사 기록과 결정 사전에 그대로 남아 대조할 수 있다.
+CHOICE_NAMES = {
+    # C-03 — 경로 수 매핑을 쓰되 세대 격차면 최고점(recommendation·note)
+    "paths_with_generation_gap_5": "경로 수 매핑 + 세대 격차 최고점",
+    "activate_candidate_mapping": "후보 매핑 적용",
+    # C-05 — G1 실패 뒤 추가 감점인가 진단만인가(summary)
+    "apply": "뒤 관문 값을 점수에 반영", "diagnose_only": "진단만 하고 점수는 유지",
+    # C-06 — 제안된 손실률 구간을 쓴다(recommendation: g1_bands_proposed)
+    "proposed_v15_boundaries": "제안된 손실률 구간 적용",
+    # C-11 — 영업외 비중을 ⑦ 로 이월하지 않는다(confirmed_model.rule)
+    "block_carryover": "⑦ 로 이월 금지", "allow_carryover": "⑦ 로 이월 허용",
+    # C-12 — 비상장은 배수 구간표에 한 칸 상한 보정(choices)
+    "p2_with_capped_promotion": "배수 구간표 + 한 칸 상한 보정",
+    "manual_with_rationale": "근거를 적은 정성 판단",
+    # C-13 — 연간 EPS 가중 근사를 NTM 으로 받지 않는다(summary)
+    "reject_proxy": "근사값 불인정", "accept_proxy_with_flag": "근사값을 표시와 함께 인정",
+    # C-16 — 판정 불가를 하향할 것인가 유지할 것인가(summary)
+    "downgrade": "판정 불가면 한 칸 하향", "hold": "판정 불가면 유지",
+    # C-20 — 비상장 미공시는 G2 비상장 조항으로(choices·rule)
+    "defer_to_private_g2": "비상장 경로로 보냄", "permanent_pending": "영구 보류",
+    "assume_loss": "적자로 단정",
+    # C-24 — 입력이 있으면 P2 를 계산한다(recommendation)
+    "compute_p2_when_inputs_exist": "입력이 있으면 계산", "p3_only_v17": "매출 성장만 계산",
+    # C-28 — 상장 트랙에 선택 파라미터를 둔다(recommendation)
+    "optional_parameters_for_all_listed_tracks": "상장 트랙에 선택 파라미터",
+    "keep_pending_data": "자료 대기로 유지", "explicit_loss_track": "순손실 트랙 신설",
+    # C-29 — 비상장 경로가 BEP 후퇴보다 앞선다(recommendation)
+    "c20_private_route_first": "비상장 경로 우선", "bep_retreat_first": "흑자 전환 후퇴 우선",
+}
+TERM_NAMES.update(CHOICE_NAMES)
+
 _TERM_RE = re.compile(r"(?<![A-Za-z0-9_./-])(" + "|".join(
     sorted((re.escape(k) for k in TERM_NAMES), key=len, reverse=True))
     + r")(?![A-Za-z0-9_])(\s*)([가-힣]+)?")
