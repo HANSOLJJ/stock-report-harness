@@ -346,6 +346,51 @@ _SUPERSEDED_RE = re.compile(r"\bsuperseded\b(?=\s*다)")
 _SUPERSEDED_ANY = re.compile(r"\bsuperseded\b")
 
 
+# 2026-09-17 FIX-78 S2: 엔진이 찍은 경고가 코드 쓰는 사람의 말로 남아 있었다
+# (`승계 점수를 사용` · `legacy 역산` · `policies.f6.net_cash`). 데이터(`results.json` 의
+# `warnings`)는 고치지 않고 **표시할 때** 옮겨 그린다. 긴 구절이라 낱말 이름표와 따로 둔다.
+WARNING_PHRASES = {
+    "승계 점수를 기준선 표시로 사용": "앞서 매긴 점수를 참고 표시로만 쓴다",
+    "승계 점수를 사용": "앞서 매긴 점수를 그대로 쓴다",
+    "legacy 역산으로 세운 정의": "기준선에서 거꾸로 세운 정의",
+    "legacy_unverified": "기준선 승계·미검증",
+    "제안값(proposed)": "제안값",
+    "이번 실행 재검토 아님": "이번 실행에서 다시 매기지 않았다",
+    "수동 판단을 무시함": "사람이 적어 둔 점수를 쓰지 않는다",
+}
+# 규칙 파일 안의 경로 표기. 어디를 보라는 뜻이라 **읽을 수 있는 이름**으로 바꾼다.
+# 2026-09-17 FIX-78 S3: `HANDOVER 120행` 은 파일 이름과 행 번호라 읽는 사람에게 뜻이 서지 않는다.
+# 문서 이름으로 옮기고 행 번호는 감사 기록으로 보낸다(`split_worknote` 가 그 일을 한다).
+SOURCE_NAMES = {
+    "HANDOVER": "인수인계 문서",
+    "채점표": "사용자 원본 채점표",
+    "채점규칙": "채점규칙 원문",
+    "구현계획": "자동화 구현계획",
+}
+RULE_PATHS = {
+    "policies.f6.p4 nonop_share": "⑥ 입력 신뢰도 규칙의 영업외 비중 항목",
+    "policies.f6.net_cash": "⑥ 순현금 정의 규칙",
+    "policies.f6.p4": "⑥ 입력 신뢰도 규칙",
+    "policies.f6": "⑥ 가격 규칙",
+    "policies.f9": "⑨ 적자 깊이 규칙",
+}
+_WARN_RE = re.compile("|".join(
+    re.escape(k) for k in sorted(list(WARNING_PHRASES) + list(RULE_PATHS), key=len, reverse=True)))
+
+
+def source_names(text: str) -> str:
+    """출처 표기를 읽을 수 있는 문서 이름으로 옮긴다. 행 번호는 `split_worknote` 가 이력으로 보낸다."""
+    out = re.sub(r"\b(HANDOVER|채점표|채점규칙|구현계획)\s*\d+행",
+                 lambda m: SOURCE_NAMES[m.group(1)], text)
+    return re.sub(r"\b(HANDOVER)\b", lambda m: SOURCE_NAMES[m.group(1)], out)
+
+
+def readable_warning(text: str) -> str:
+    """경고문을 읽는 사람의 말로 옮긴다. 뜻은 바꾸지 않고 표현만 바꾼다."""
+    both = {**WARNING_PHRASES, **RULE_PATHS}
+    return _WARN_RE.sub(lambda m: both[m.group(0)], text)
+
+
 def split_worknote(text: str) -> tuple[str, str]:
     """근거 문장을 `(본문, 이력)` 으로 가른다. 이력이 없으면 둘째 값이 빈 문자열이다.
 
@@ -382,7 +427,7 @@ def split_worknote(text: str) -> tuple[str, str]:
     return body, " ".join(notes)
 
 
-def reviewer_label(judgment: dict[str, Any]) -> str:
+def reviewer_label(judgment: dict[str, Any], with_owner: bool = True) -> str:
     """판단을 **누가 언제** 매겼는지. 검토자 칸의 작업 표기는 떼고 이름과 날짜만 남긴다.
 
     2026-09-17 FIX-77: `승계된 판단 — 원검토일 …, 이번 실행 재검토 아님` 은 읽는 사람에게
@@ -395,7 +440,9 @@ def reviewer_label(judgment: dict[str, Any]) -> str:
         who = "작업자"
     when = judgment.get("reviewed_at") or ""
     if judgment.get("status") == "carried":
-        return f"사용자의 판단 · {when}"
+        # 2026-09-17 FIX-78 S1: 상태 칸이 `사용자의 판단` 을 말하는 자리에서는 같은 말을 되풀이하지
+        # 않는다. 근거 머리줄은 **언제 매겼는지**만 더한다.
+        return f"사용자의 판단 · {when}" if with_owner else f"원검토 {when}"
     return f"이번 실행에서 다시 매김 · {who or '검토자 미기재'} · {when}"
 
 
@@ -443,7 +490,7 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
     jid = judgment["judgment_id"]
     evidence = [annotate_replaced(e, company_id, reps) for e in (judgment.get("evidence") or [])]
     if judgment["status"] == "carried":
-        return _split_block({"kind": "carried", "header": f"근거 · {reviewer_label(judgment)} · 판단 기록 `{jid}`",
+        return _split_block({"kind": "carried", "header": f"근거 · {reviewer_label(judgment, with_owner=False)} · 판단 기록 `{jid}`",
                              "lines": [(1, e) for e in evidence]})
     lines = [(1, e) for e in evidence]
     sup = judgment.get("superseded")
@@ -457,7 +504,7 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
         if old:
             lines.append((1, f"과거 기록(기준선 {baseline_id} 서술 — 이번 실행 판단으로 대체):"))
             lines += [(2, struck(e)) for e in old[:6]]
-    return _split_block({"kind": "new", "header": f"근거 · {reviewer_label(judgment)} · 판단 기록 `{jid}`",
+    return _split_block({"kind": "new", "header": f"근거 · {reviewer_label(judgment, with_owner=False)} · 판단 기록 `{jid}`",
                          "lines": lines})
 
 
@@ -1174,8 +1221,13 @@ def conflict_lines(ctx: Any) -> list[str]:
     c03 = next((d for d in ctx.rules.payload.get("decisions", []) if d["id"] == "C-03"), None)
     recheck = (c03 or {}).get("pending_recheck") or {}
     if recheck:
-        out.append(f"  - anthropic ②5 재검토 — {recheck.get('what', '')} 시점 {recheck.get('when', '')} · 발동 조건 `{recheck.get('trigger', '')}`"
-                   "(C-03 pending_recheck). 이번 실행은 이 판단을 재판정하지 않았다.")
+        # 2026-09-17 FIX-78 S3: `HANDOVER 120행`·`pending_recheck` 가 그대로 실렸다. 출처는 문서 이름으로
+        # 적고 행 번호와 내부 상태값은 감사 기록으로 보낸다.
+        what = source_names(str(recheck.get("what", "")))
+        trigger = source_names(str(recheck.get("trigger", "")))
+        when = source_names(str(recheck.get("when", "")))
+        out.append(f"  - anthropic ②5 재검토 — {what} 시점 {when} · 발동 조건 `{trigger}` "
+                   "(C-03 이 재검토 대기로 걸어 둔 항목이다). 이번 실행은 이 판단을 재판정하지 않았다.")
     return out
 
 

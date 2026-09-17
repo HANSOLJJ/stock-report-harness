@@ -653,7 +653,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 for w in fr["warnings"][:4]:
                     if str(w).startswith("승계된 판단 — 원검토일"):
                         continue
-                    wbody, wnote = rc.split_worknote(str(w))
+                    wbody, wnote = rc.split_worknote(rc.readable_warning(str(w)))
                     if wnote:
                         history.append((f, wnote))
                     if wbody:
@@ -765,9 +765,10 @@ def _decision_chips(ctx: Any, text: str) -> str:
         picked = (f'<span class="pick">이번 실행 선택: <b>{esc(pick_name)}</b>'
                   + (f' <code>{esc(pick)}</code>' if pick_name != pick else "")
                   + '</span>') if pick else ""
+        summary = rc.source_names(str(d["summary"]))
         out.append(f'<details class="mdec"><summary><span class="id">{esc(code)}</span>'
-                   f'<span class="gist">{inline_html(_decision_gist(d["summary"]))}</span></summary>'
-                   f'<div class="full">{inline_html(d["summary"])}{picked}</div></details>')
+                   f'<span class="gist">{inline_html(_decision_gist(summary))}</span></summary>'
+                   f'<div class="full">{inline_html(summary)}{picked}</div></details>')
     if not out:
         return ""
     return '<div class="mdecs"><span class="lbl">관련 결정</span>' + "".join(out) + "</div>"
@@ -1297,10 +1298,11 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     gates = [(name, f"{i+1}번째 관문", note, "", code)
              for i, (code, name, note) in enumerate(_gate_docs(ctx))]
     statuses = [(k, v, d) for k, v, d in [
-        ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다. 사람이 다시 매긴 칸은 카드에 "
-         "<b>이번 실행에서 다시 매김</b> 으로 나온다"),
-        ("carried_score", STATUS_LABEL["carried_score"], "<b>사용자가 앞서 매긴 판단</b>을 그대로 이어받았고 "
-         "이번 실행에서 다시 매기지 않았다. 카드에는 <b>사용자의 판단 · 원검토일</b> 로 나온다"),
+        ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다. 관측에서 계산한 칸과 사람이 "
+         "다시 매긴 칸이 여기 든다 — 어느 쪽인지는 **근거** 칸과 근거 머리줄이 말한다"),
+        ("carried_score", STATUS_LABEL["carried_score"], "**사용자가 앞서 매긴 판단**을 그대로 이어받았고 "
+         "이번 실행에서 다시 매기지 않았다. 근거 머리줄에 **사용자의 판단 · 원검토일** 이 함께 나온다. "
+         "판정 입력까지 남아 있는지는 **근거** 칸이 갈라 말한다 — **숫자만 승계** 면 그 입력이 없다는 뜻이다"),
         ("needs_judgment", STATUS_LABEL["needs_judgment"], "사람의 판정 입력이 없어 점수를 만들지 않았다"),
         ("needs_rule_decision", STATUS_LABEL["needs_rule_decision"], "미결 규칙 결정(C-번호)이 걸려 점수를 만들지 않았다"),
     ] if k in {c["factors"][f]["status"] for c in results["companies"] for f in FACTOR_IDS} or k in {"ok", "carried_score"}]
@@ -1309,7 +1311,8 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
              for k in BASIS_DOC if k in used_basis]
     used_modes = [m for m in MODE_DOC if any(rules.factor(f)["mode"] == m for f in FACTOR_IDS)]
     modes = [(rc.MODE_LABELS.get(m, m), MODE_DOC[m][0], MODE_DOC[m][1], MODE_DOC[m][2], m) for m in used_modes]
-    tensions = [(x["id"], x.get("subject", ""), f"재검토 {x.get('recheck_at', '—')}"
+    # 2026-09-17 FIX-78 S3: 긴장 제목에 `HANDOVER` 가 그대로 들어 있었다. 문서 이름으로 옮긴다.
+    tensions = [(x["id"], rc.source_names(str(x.get("subject", ""))), f"재검토 {x.get('recheck_at', '—')}"
                  f"{' · 해소됨' if x.get('status') == 'resolved' else ''}")
                 for x in sorted(rules.payload.get("open_tensions") or [], key=lambda x: x["id"])]
     groups = [

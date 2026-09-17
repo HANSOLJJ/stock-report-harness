@@ -9,8 +9,11 @@ from . import render_common as rc
 from .render_common import FACTOR_LABELS, fmt_num, fmt_usd
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS
 
+# 2026-09-17 FIX-78 S1: `승계` 가 근거 머리줄의 `사용자의 판단` 과 **같은 화면에** 있어 둘이
+# 다른 것처럼 읽혔다(사용자 지적). 같은 것은 같은 말로 부른다. `status` 값은 그대로이고 표시만 바꾼다.
 STATUS_LABEL = {
-    "ok": "산출", "carried_score": "승계", "needs_judgment": "판단 대기", "needs_rule_decision": "규칙 결정 대기",
+    "ok": "이번 실행 산출", "carried_score": "사용자의 판단", "needs_judgment": "판단 대기",
+    "needs_rule_decision": "규칙 결정 대기",
     "pending_data": "자료 대기", "error": "오류",
     # 2026-09-16 FIX-58 1단계(7차 리뷰 D): factor status 에 쓰일 수 있는 키인데 라벨이 없었다.
     "unavailable": "산출 불가",
@@ -291,7 +294,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             for w in fr["warnings"][:4]:
                 if str(w).startswith("승계된 판단 — 원검토일"):
                     continue
-                wbody, _note = rc.split_worknote(str(w))
+                wbody, _note = rc.split_worknote(rc.readable_warning(str(w)))
                 if wbody:
                     # HTML 카드가 `주의` 배지를 다는 자리다. 초안도 같은 말로 밝힌다.
                     head = "" if wbody.startswith("주의 —") else "주의 — "
