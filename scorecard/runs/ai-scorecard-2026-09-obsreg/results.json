@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "e3d3f85fb12c6f72826bafd1f3395219a2bcbabe9d9cc25bfd3526c8bafc6633",
-    "observations": "35ed299bff427aebef71b592c9bb047aef68aed0d065b28881848912b851e987",
+    "run": "8a641980d33714e04e5ca36df60faa497c45437ff9f579d2ca15df3768bddc4a",
+    "observations": "02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05",
     "judgments": "07518de46740233642e0ff8474edc87af5167e019c1f9a6ed2ff2de5bd9dff6b",
     "sources": "14ec0e8083d82e5321d1b38e1e7fc8dd66c2ebac683d56e85772a46c3a1c3663",
-    "rules": "2fc704bff291655c3b96f0b9f49a510ea6e9c32868bdadae1397c5f629a6368d"
+    "rules": "7447b2685c9dc136b7d0e36795b4c1c93469f5cd85b8687dcef2cccc0d75c8c4"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -21,7 +21,8 @@
     "C-03:paths_with_generation_gap_5",
     "C-11:block_carryover",
     "C-13:reject_proxy",
-    "C-24:compute_p2_when_inputs_exist"
+    "C-24:compute_p2_when_inputs_exist",
+    "C-28:optional_parameters_for_all_listed_tracks"
   ],
   "companies": [
     {
@@ -4315,7 +4316,7 @@
             "gate1_fail": true
           },
           "warnings": [
-            "C-06: BEP 후퇴 -4 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)"
+            "C-06: BEP 후퇴 -4 는 원문 OR 조건을 적용. **우선순위는 확정됐다** — policies.f9.g1_bep_retreat_precedence(사용자 결정 2026-09-17). C-06 의 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세 정의다"
           ],
           "pending": null
         }
@@ -4458,5 +4459,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 164,
-  "results_hash": "a5b80e711160594507d765f4084f62b3a0a2aec13e956ffdc7a876691f284d46"
+  "results_hash": "6604a2f8af7e37c7e402cd40b18c16b9ea5a2bd07b1bf7f1e19efe8f0cbc16c2"
 }

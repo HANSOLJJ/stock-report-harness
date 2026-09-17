@@ -174,11 +174,13 @@ class Stage1Test(unittest.TestCase):
         self.assertIn("p2_asof_mismatch", self.o["alibaba.market_cap.v15"]["basis"])    # 같은 형식이 둘 다 있다
 
     def test_loss_making_listed_track_is_an_open_item(self):
+        # 2026-09-17 FIX-61: 9차 재판정 지적으로 C-28 을 구현해 닫았다 — 여기서 든 권고가 그대로 채택됐다.
         c28 = {d["id"]: d for d in RULES.payload["decisions"]}["C-28"]
-        self.assertEqual(c28["status"], "pending")
+        self.assertEqual(c28["status"], "resolved")
         self.assertIn("optional_parameters", c28["recommendation"])
         for track in ("listed_ttm", "listed_annual"):
-            self.assertNotIn("optional_parameters", RULES.payload["policies"]["f6"]["tracks"][track])
+            # FIX-61 이후에는 P1 이 선택 파라미터다(사유는 requires_positive 하나로 좁혔다).
+            self.assertEqual(RULES.payload["policies"]["f6"]["tracks"][track]["optional_parameters"], ["P1"])
         self.assertIn("optional_parameters", RULES.payload["policies"]["f6"]["tracks"]["listed_newly"])
         # 오늘 해당 기업이 없다는 사실도 결과에서 확인한다.
         for c in self.results["companies"]:

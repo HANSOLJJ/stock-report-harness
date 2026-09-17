@@ -7,7 +7,7 @@
   "price_as_of": "2026-09-02",
   "info_cutoff": "2026-09-02",
   "rule_version": "v1.7",
-  "rule_hash": "2fc704bff291655c3b96f0b9f49a510ea6e9c32868bdadae1397c5f629a6368d",
+  "rule_hash": "7447b2685c9dc136b7d0e36795b4c1c93469f5cd85b8687dcef2cccc0d75c8c4",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
@@ -89,6 +89,13 @@
       "rationale": "신규 상장 트랙도 입력이 성립하면 P2 를 계산한다. 상장사 열두 곳에 같은 잣대를 대는 쪽이다. spacex-xai 는 P2 80.27(밴드 -2)이 붙어 F6 -1 → -3, 총점 11 → 9 가 된다. 규칙 v1.7 decisions C-24 를 실행 단위로 옮긴다. FIX-56 1단계.",
       "decided_by": "사용자",
       "decided_at": "2026-09-16"
+    },
+    {
+      "id": "C-28",
+      "choice": "optional_parameters_for_all_listed_tracks",
+      "rationale": "순손실 상장사의 F6 경로를 세 트랙에서 같게 한다 — `listed_ttm`·`listed_annual` 도 P1 을 선택 파라미터로 두어 순이익이 음수면 P1 을 만들지 않고 P2·P3 로 소계를 낸다. 사유는 `requires_positive` 하나로 좁혔다(결측은 예전처럼 pending). 규칙 v1.7 decisions C-28 resolved 를 실행 단위로 옮긴다. 이번 실행 11개사는 순이익이 전부 양수라 점수 불변. FIX-61.",
+      "decided_by": "obsreg 9차 재무 계산 재판정(Claude 독립 세션) 지적 · 설계진행 지시",
+      "decided_at": "2026-09-17"
     }
   ],
   "created_at": "2026-09-11",
@@ -133,6 +140,7 @@
     "[FIX-58 2단계 · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium] 비상장 2사의 부재 주장을 **상대방 제출본까지 넓혀** 다시 봤다. 보존 제출본에서 `Anthropic` 은 Amazon 10-Q 31건·10-K 12건·SpaceX S-1/A 9건, `OpenAI` 는 Amazon 10-Q 15건·S-1/A 2건 나온다. 여기서 **여신·컴퓨트 약정·전환사채·조달**은 확인되지만 **현금·TTM FCF·TTM 영업손익·EBITDA 는 상대방 제출본에도 없다** — 부재 판정 다섯의 결론은 그대로다. 확인된 사실은 관측 basis.checked_scope.counterparty_filings 에 적었고 어느 것도 관측으로 등록하지 않았다(사유는 각 항목의 why_not). **Alphabet·Microsoft 제출본이 보존돼 있지 않아** anthropic 의 최대 공급자와 openai 의 최대 주주 쪽은 같은 방식으로 볼 수 없다 — 다음 수집 1순위이고 긴장 TEN-RA5-01 의 발동 조건이다.",
     "[FIX-58 2단계 · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) low] **작성자 이해상충** — 이 채점표를 Anthropic 이 만든 Claude 가 작성했고 Anthropic 이 채점 대상에 들어 있다(채점규칙 384행 · HANDOVER 75행 · 운영이력 긴장 #4·#11). 실행 기록만 읽는 독자에게도 보이도록 여기 적는다 — 출처별 문구는 sources.json 의 `conflict_of_interest` 에, 제3자 재검토 약속은 초안 `알려진 한계` 절에 있다. Anthropic 점수에 걸린 긴장은 비 Claude 세션이 재판정한다(TEN-RC-02 · TEN-RC3-01 · TEN-RA4-01 · TEN-RA5-01).",
     "[FIX-59 · 사용자 결정 2026-09-17] **openai.F9 경로를 현행 유지**했다. 비 Claude 판정자(Gemini)가 C-20 우선(F9 -2 · 총점 4)으로 판정했으나 사용자가 현행 -4 유지 + 긴장 등록을 골랐다. 우선순위 문면은 `policies.f9.g1_bep_retreat_precedence`(채점규칙 470·494·603행), 반대 의견과 상향 가능성은 **TEN-RA5-02**(2026-11 · 비 Claude 세션)에 있다. anthropic 과의 차이는 회사 성질이 아니라 판단 입력 한 칸(`bep_retreat` no 대 yes)이다.",
-    "[FIX-59] **이 라운드는 여기서 끝난다.** 사용자가 2026-09-17 에 선택지 넷 중 `FIX-59 만 하고 승인` 을 골랐다 — 6·7·8차 연속 점수 변경이 0 이고 남은 발견이 전부 기록 수준이라는 근거다. 9차 리뷰는 하지 않고 조율자 검증 뒤 사용자 승인으로 간다. 남은 기록성 지적은 미결(C-23·C-25~C-28)과 긴장(TEN-RA5-01·TEN-RA5-02 포함)으로 옮겨 **2026-11 재채점의 입력**으로 쓴다."
+    "[FIX-59] **이 라운드는 여기서 끝난다.** 사용자가 2026-09-17 에 선택지 넷 중 `FIX-59 만 하고 승인` 을 골랐다 — 6·7·8차 연속 점수 변경이 0 이고 남은 발견이 전부 기록 수준이라는 근거다. 9차 리뷰는 하지 않고 조율자 검증 뒤 사용자 승인으로 간다. 남은 기록성 지적은 미결(C-23·C-25~C-28)과 긴장(TEN-RA5-01·TEN-RA5-02 포함)으로 옮겨 **2026-11 재채점의 입력**으로 쓴다.",
+    "[FIX-61 · obsreg 9차 재무 계산 재판정(Claude 독립 세션)] 순손실 상장사의 F6 경로를 세 트랙에서 같게 했다 — `listed_ttm`·`listed_annual` 도 P1 을 선택 파라미터로 두어, 순이익이 음수면 P1 을 만들지 않고 사유를 적은 뒤 P2·P3 로 소계를 낸다(미결 C-28 닫음). **이번 실행 점수는 불변이다** — 두 트랙 상장 11개사의 순이익이 전부 양수라 P1 이 그대로 산출된다."
   ]
 }

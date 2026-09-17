@@ -470,7 +470,12 @@ def method_lines(ctx: Any) -> list[str]:
           if ctx.rules.f6_mode == "parameters" else
           "⑥ 상장: NTM PER 20·29·42·62·90 반개방 구간, 경계 ±3% 는 표시만. 비상장: 배수 자동 계산·점수는 정성 예외.")
     return [
-        f"C-06 중 BEP 후퇴→{f9_policy(ctx, 'g1_bep_retreat_score')} 는 원문 OR 조건 그대로 적용하며(경고 표시), 손실률 경계·우선순위 명문화만 미결이다.",
+        # 2026-09-17 FIX-61(9차 재판정): 확정된 것을 미결이라고 적어 초안·HTML 까지 흘렀다.
+        f"C-06 중 BEP 후퇴→{f9_policy(ctx, 'g1_bep_retreat_score')} 는 원문 OR 조건 그대로 적용한다(경고 표시). "
+        f"**우선순위는 확정됐다** — BEP 후퇴가 기록되면 손실률 밴드나 C-20 비상장 경로보다 앞서 그 점수를 준다"
+        f"(policies.f9.g1_bep_retreat_precedence, 사용자 결정 2026-09-17). 두 경로가 만나도 결과는 같다 — "
+        f"BEP 점수 {f9_policy(ctx, 'g1_bep_retreat_score')} 가 이미 하한이라 어느 밴드도 그보다 깊지 않다. "
+        "C-06 의 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세의 기계 정의다.",
         f6,
         f"⑨: G1 본업(TTM 영업손익) → G2 현금(TTM FCF) → G3 런웨이(현금+확정 여신 ÷ 연 소진, 임계 ±3% 는 경계 표시만) → G4 약정 커버리지(계약 수입 ÷ B종). 하한 {f9_policy(ctx, 'floor')}.",
         "③ 사다리, ⑤ `3 + A + H`, ⑦ 2×2 매트릭스는 판정 입력에서 자동 환산. ①④⑧은 정성 점수. 모르는 값은 0으로 치환하지 않는다.",

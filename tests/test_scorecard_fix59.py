@@ -232,7 +232,9 @@ class Fix59Test(unittest.TestCase):
         self.assertIn("2026-11 재채점의 입력", closing)
         # 미결과 긴장이 실제로 그만큼 있다.
         pending = {d["id"] for d in RULES.payload["decisions"] if d["status"] == "pending"}
-        self.assertLessEqual({"C-23", "C-25", "C-26", "C-27", "C-28"}, pending)
+        # 2026-09-17 FIX-61 이 C-28 을 구현해 닫았다 — 나머지 넷은 그대로 미결이다.
+        self.assertLessEqual({"C-23", "C-25", "C-26", "C-27"}, pending)
+        self.assertNotIn("C-28", pending)
         tensions = {t["id"] for t in RULES.payload["open_tensions"]}
         self.assertLessEqual({"TEN-RA5-01", "TEN-RA5-02"}, tensions)
         self.assertTrue(all(t["recheck_at"] == "2026-11" for t in RULES.payload["open_tensions"]))

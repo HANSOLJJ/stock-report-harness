@@ -157,7 +157,10 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             base = int(pol["g1_bep_retreat_score"])
             # 2026-09-15 FIX-52: 문자열이 -5 로 박혀 있어 C-06 재척도(-4) 결과와 모순됐다. 정책 값을 읽는다.
             path.append({"gate": "G1", "result": "fail", "operating_margin_ttm": margin, "band": f"BEP 후퇴 → {base}", "score": base})
-            warnings.append(f"C-06: BEP 후퇴 {base} 는 원문 OR 조건을 적용(우선순위 명문화는 결정 대기)")
+            # 2026-09-17 FIX-61(9차 재판정): FIX-59 가 우선순위를 확정했는데 이 문구가 아직 `결정 대기` 라고 말했다.
+            warnings.append(f"C-06: BEP 후퇴 {base} 는 원문 OR 조건을 적용. **우선순위는 확정됐다** — "
+                            "policies.f9.g1_bep_retreat_precedence(사용자 결정 2026-09-17). "
+                            "C-06 의 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세 정의다")
         else:
             choice = decision_choice(run, rules, "C-06")
             if choice != "proposed_v15_boundaries":

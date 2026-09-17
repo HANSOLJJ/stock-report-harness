@@ -164,10 +164,18 @@ class TestF6Tracks(unittest.TestCase):
 class TestF6ParameterGuards(unittest.TestCase):
 
     def test_non_positive_net_income_is_pending_not_low_per(self):
-        """적자면 PER 이 음수가 된다. 낮은 PER·0 점으로 대체하지 않는다."""
+        """적자면 PER 이 음수가 된다. **낮은 PER·0 점으로 대체하지 않는다** — 이 검사의 뜻은 그대로다.
+
+        2026-09-17 FIX-61: 순손실 상장사가 P1 을 못 만들어도 P2·P3 로 소계를 내게 바뀌었다(C-28).
+        factor 는 더 이상 pending 이 아니지만 **P1 자체는 만들지 않고** 사유를 남긴다.
+        """
         r = compute_f6(company(), f6obs(net_income=-10.0), JudgmentLookup([]), RULES_V17, run())
-        self.assertIsNone(r["score"])
-        self.assertIn("0 이하", r["pending"]["message"])
+        calc = r["calc"]
+        self.assertNotIn("P1", calc["parameters"])
+        self.assertEqual(calc["parameters_optional_unmet"]["P1"]["cause"], "requires_positive")
+        self.assertIn("0 이하", calc["parameters_optional_unmet"]["P1"]["why"])
+        self.assertEqual(calc["subtotal_before_p4"],
+                         calc["parameters"]["P2"]["score"] + calc["parameters"]["P3"]["score"])
 
     def test_ev_subtracts_net_cash_from_market_cap(self):
         """차입이 있으면(순현금 음수) EV 가 시총보다 크다. oracle 이 그 사례다."""

@@ -271,7 +271,9 @@ def validate_rules(payload: Any) -> dict[str, Any]:
                                # 결정에 딸린 범위 변경. 무엇에서 무엇으로 왜 바꿨는지(IMPL-46).
                                "range_change",
                                # 이 결정이 잣대를 바꿔 승계 예외 요건을 못 채우게 된 자리(FIX-59). 점수는 그대로 두고 기록으로 메운다.
-                               "succession_exception_gap"])
+                               "succession_exception_gap",
+                               # 결정을 닫으면서 **남는 물음**. 닫혔다고 다 풀린 것처럼 읽히지 않게 따로 적는다(FIX-61).
+                               "remaining_question"])
         # 고른 것을 적었으면 **선택지 목록 안에 있어야** 한다. 밀린 안을 지우고 고른 것만 남기면
         # 다음 사람이 그 안을 다시 들고 온다 — 그래서 choices 에 둘 다 남긴다(C03-IMPL-43).
         if d.get("chosen"):
@@ -312,6 +314,8 @@ def _validate_source_text_corrections(items: Any) -> None:
 TENSION_ID_RE = re.compile(r"^TEN-[A-Z0-9-]+$")
 # 제3자(비 Claude) 재검토의 갈래. committed 는 약속, partial 은 일부 판단만, recommended 는 권장일 뿐이다.
 THIRD_PARTY_RECHECK = {"committed", "partial", "recommended"}
+# 선택 파라미터를 못 만든 사유 중 factor 를 pending 으로 세우지 않는 것(FIX-61). calc_f6_params.OPTIONAL_CAUSES 와 같다.
+OPTIONAL_CAUSES = {"missing_input", "requires_positive"}
 RECHECK_RE = re.compile(r"^\d{4}-\d{2}$")
 
 
@@ -610,7 +614,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                                # 트랙이 쓰지 않는 파라미터와 그 사유(FIX-56 1단계). 빠진 이유를 결과가 말하게 한다.
                                "parameters_excluded_note",
                                # 입력이 있을 때만 만드는 파라미터(FIX-56 1단계). 없으면 pending 이 아니라 미산출로 적는다.
-                               "optional_parameters", "optional_parameters_note"])
+                               "optional_parameters", "optional_parameters_note",
+                               # 그 파라미터를 **어느 사유일 때** 넘길지(FIX-61). 선언이 없으면 scope_mismatch 만 뺀다.
+                               "optional_parameters_causes"])
         # 2026-09-16 FIX-55 1단계: 관측에서 판정한다고 선언한 조건을 트랙 자동 목록에도 두면 두 경로가 갈린다.
         for auto in spec.get("auto_p4_conditions", []):
             _require(auto not in judged_from_observation,
@@ -626,6 +632,12 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
         for pid in spec.get("optional_parameters", []):
             _require(pid in spec["parameters"],
                      f"{where}.optional_parameters: parameters 에 없는 {pid!r} — 선택 여부는 쓰는 파라미터에만 붙는다")
+        for pid, causes in (spec.get("optional_parameters_causes") or {}).items():
+            _require(pid in spec.get("optional_parameters", []),
+                     f"{where}.optional_parameters_causes: optional_parameters 에 없는 {pid!r}")
+            _require(isinstance(causes, list) and causes and set(causes) <= OPTIONAL_CAUSES,
+                     f"{where}.optional_parameters_causes.{pid}: {sorted(OPTIONAL_CAUSES)} 의 비어 있지 않은 부분집합이어야 함 "
+                     f"— `scope_mismatch` 는 자료 결함이라 넘길 수 없다 ({causes!r})")
         for cid in spec.get("auto_p4_conditions", []):
             _require(cid in seen, f"{where}.auto_p4_conditions: p4 에 없는 조건 {cid!r}")
     private_bands = f6.get("private_bands")

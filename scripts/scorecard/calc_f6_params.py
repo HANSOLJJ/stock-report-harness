@@ -24,6 +24,9 @@ from .inputs import ObsLookup, factor_result, obs_note, pending_info
 from .rules import RuleSet, decision_choice
 
 FACTOR = "F6"
+# 선택 파라미터를 만들지 못한 사유 중 **factor 를 pending 으로 세우지 않는 것**(FIX-61).
+# `scope_mismatch` 는 일부러 뺐다 — 소유 범위가 어긋난 것은 자료 결함이라 드러나야 한다(FC-04).
+OPTIONAL_CAUSES = {"missing_input", "requires_positive"}
 
 # 트랙마다 기대하는 기간 기준. 관측이 다른 기준을 선언하면 조용히 넘기지 않고 pending 으로 세운다.
 TRACK_EXPECTED_BASIS = {
@@ -253,15 +256,22 @@ def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
             raw.setdefault("input_alternatives_used", {})[metric] = {"metric": used_alternatives[metric],
                                                                      "observation_id": (o or {}).get("observation_id")}
         if value is None:
+            raw["not_computed_cause"] = "missing_input"
             return None, f"{pid} 입력 {metric} 관측 없음", raw
         # 2026-09-15 FIX-54 1단계 FC-04: tsmc 는 연결 전체 순이익, alibaba 는 모회사 귀속분이라 같은 P1 의 분자 범위가 달랐다.
         # 규칙이 범위를 정하면 verified 관측은 basis.ownership_scope 로 그 범위를 밝혀야 한다. 다르면 값을 만들지 않는다.
         want = (spec.get("input_scope") or {}).get(metric)
         if want and o is not None and o.get("status") == "verified" and (o.get("basis") or {}).get("ownership_scope") != want:
+            # 2026-09-17 FIX-61: **이 사유는 선택 파라미터로도 넘기지 않는다.** 범위가 어긋난 것은 자료 결함이라
+            # 조용히 빠지면 FC-04 가 세운 가드가 무력해진다 — 예전처럼 factor 를 pending 으로 세운다.
+            raw["not_computed_cause"] = "scope_mismatch"
             return None, (f"{pid} 입력 {metric} 의 소유 범위 {(o.get('basis') or {}).get('ownership_scope')!r} 가 규칙 {want!r} 와 다름 "
                           f"— {o['observation_id']}"), raw
     for metric in spec.get("requires_positive", []):
         if raw[metric] <= 0:
+            # 2026-09-17 FIX-61: 이 사유만 **선택 파라미터 경로**로 보낸다. 관측 없음·소유 범위 불일치는
+            # 자료 결함이라 조용히 넘기면 안 된다 — 사유를 기계가 읽게 raw 에 원인을 적는다.
+            raw["not_computed_cause"] = "requires_positive"
             return None, f"{pid} 입력 {metric} 이 0 이하({raw[metric]!r}) — 대체값으로 채우지 않음", raw
     if pid == "P1":
         return raw["market_cap"] / raw["net_income_ttm"], None, raw
@@ -342,20 +352,30 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
     # 만들지 않고, 그 사실을 미산출로 적는다 — 없다고 F6 전체를 pending 으로 세우지 않는다.
     # 2026-09-16 FIX-58 1단계(7차 리뷰 C): 규칙의 `optional_parameters` 만 읽어 run.json 의 C-24 선택을 감지하지 못했다.
     # 실행이 `p3_only_v17` 을 고르면 선택 파라미터를 만들지 않는다 — 선언에 소비자가 없는 형태(C-11 계열)를 없앤다.
-    c24 = decision_choice(run, rules, "C-24")
+    # 2026-09-17 FIX-61(9차 재판정 S2): 선택 파라미터가 세 트랙으로 넓어졌다. **C-24 는 신규 상장 트랙의 P2 만
+    # 가리키는 결정**이므로 그 범위 밖(예: listed_ttm 의 P1)까지 끄지 않도록 트랙·파라미터를 함께 본다.
     optional_pids = set(track.get("optional_parameters") or [])
-    if c24 == "p3_only_v17" and optional_pids:
-        calc["c24_choice"] = {"choice": c24, "effect": "선택 파라미터를 만들지 않는다", "suppressed": sorted(optional_pids)}
-        optional_pids = set()
-    elif optional_pids:
-        calc["c24_choice"] = {"choice": c24 or "compute_p2_when_inputs_exist(규칙 기본)",
-                              "effect": "입력이 성립하면 선택 파라미터를 만든다", "optional": sorted(optional_pids)}
+    c24 = decision_choice(run, rules, "C-24")
+    if tid == "listed_newly" and "P2" in optional_pids:
+        if c24 == "p3_only_v17":
+            calc["c24_choice"] = {"choice": c24, "effect": "선택 파라미터 P2 를 만들지 않는다", "suppressed": ["P2"]}
+            optional_pids.discard("P2")
+        else:
+            calc["c24_choice"] = {"choice": c24 or "compute_p2_when_inputs_exist(규칙 기본)",
+                                  "effect": "입력이 성립하면 선택 파라미터를 만든다", "optional": ["P2"]}
     for pid in track["parameters"]:
         if pid == "P4":
             continue
         value, reason, raw = _parameter_value(pid, cid, obs, rules, obs_ids, unverified)
-        if value is None and pid in optional_pids:
-            calc.setdefault("parameters_optional_unmet", {})[pid] = {"inputs": raw, "why": reason}
+        # 선택 파라미터라도 **모든 사유를 넘기지는 않는다.** 입력이 없는 것(missing_input)과 그 기업의 성질인
+        # 순손실(requires_positive)은 넘기지만, **소유 범위 불일치는 자료 결함**이라 예전처럼 factor 를 pending 으로
+        # 세운다(FC-04 가드). 사유를 문자열로 재지 않고 _parameter_value 가 적은 원인을 읽는다.
+        cause = raw.get("not_computed_cause")
+        # 트랙이 사유를 좁힐 수 있다 — `listed_ttm` 의 P1 은 순손실일 때만 넘긴다. 순이익 관측이 아예 없는 것은
+        # 수집 공백이라 예전처럼 pending 이다. 선언이 없으면 scope_mismatch 를 뺀 둘 다 허용한다(FIX-56 그대로).
+        allowed = set((track.get("optional_parameters_causes") or {}).get(pid) or OPTIONAL_CAUSES)
+        if value is None and pid in optional_pids and cause in allowed:
+            calc.setdefault("parameters_optional_unmet", {})[pid] = {"inputs": raw, "why": reason, "cause": cause}
             continue
         entry: dict[str, Any] = {"inputs": raw}
         if value is None:

@@ -5,7 +5,7 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: 35ed299bff427aebef71b592c9bb047aef68aed0d065b28881848912b851e987
+observations_hash: 02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05
 judgments_hash: 07518de46740233642e0ff8474edc87af5167e019c1f9a6ed2ff2de5bd9dff6b
 created_at: 2026-09-11
 ---
@@ -724,4 +724,4 @@ created_at: 2026-09-11
 | openai | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 
 - legacy_unverified 관측 203건은 기준선 열람용이며 이번 실행에서 재검증되지 않았다.
-- 미결 규칙 결정: C-05, C-06, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2, C-03=paths_with_generation_gap_5, C-11=block_carryover, C-13=reject_proxy, C-24=compute_p2_when_inputs_exist)
+- 미결 규칙 결정: C-05, C-06, C-16 (실행 선택: C-05=apply, C-06=proposed_v15_boundaries, C-16=downgrade, C-12=p2_with_capped_promotion, C-20=defer_to_private_g2, C-03=paths_with_generation_gap_5, C-11=block_carryover, C-13=reject_proxy, C-24=compute_p2_when_inputs_exist, C-28=optional_parameters_for_all_listed_tracks)

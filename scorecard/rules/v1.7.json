@@ -671,7 +671,16 @@
             "P3"
           ],
           "floor": -7,
-          "select": "listed 이고 share_basis 가 common 이며 TTM 입력이 확보된 기업"
+          "select": "listed 이고 share_basis 가 common 이며 TTM 입력이 확보된 기업",
+          "optional_parameters": [
+            "P1"
+          ],
+          "optional_parameters_note": "[FIX-61 · obsreg 9차 재무 계산 재판정(Claude 독립 세션) low · C-28 닫음] P1 은 **입력이 성립할 때만** 만든다. 순이익이 `requires_positive` 를 넘지 못하면 만들지 않고 결과 `calc.parameters_optional_unmet.P1` 에 사유를 적으며, **P2·P3 로 소계를 낸다.** 전에는 P1 이 `missing` 으로 떨어져 이미 산출한 P2·P3 를 버리고 F6 전체가 `pending_data` 가 됐다 — 같은 순손실이 `listed_newly` 에서는 소계가 나오고 여기서는 미완료가 되는 비대칭이었다. **이번 실행 점수는 바뀌지 않는다** — 두 트랙 상장 11개사의 순이익이 전부 양수다. **사유는 `requires_positive` 하나로 좁혔다**(`optional_parameters_causes`) — 순이익 관측이 아예 없는 것은 우리 수집 공백이라 예전처럼 factor 를 pending 으로 세운다. 순손실은 그 기업의 성질이고 결측은 우리 문제다.",
+          "optional_parameters_causes": {
+            "P1": [
+              "requires_positive"
+            ]
+          }
         },
         "listed_annual": {
           "label": "ADR/FPI 연간",
@@ -682,7 +691,16 @@
           ],
           "floor": -7,
           "select": "listed 이고 share_basis 가 adr 또는 ads. 20-F 제출사라 분기 기간 사실이 없어 연간으로 계산한다",
-          "p4_note": "[FIX-55 1단계] period_basis_not_ttm 은 관측 basis.period_basis 로 판정한다 — 트랙 자동 목록에 두지 않는다."
+          "p4_note": "[FIX-55 1단계] period_basis_not_ttm 은 관측 basis.period_basis 로 판정한다 — 트랙 자동 목록에 두지 않는다.",
+          "optional_parameters": [
+            "P1"
+          ],
+          "optional_parameters_note": "[FIX-61 · obsreg 9차 재무 계산 재판정(Claude 독립 세션) low · C-28 닫음] P1 은 **입력이 성립할 때만** 만든다. 순이익이 `requires_positive` 를 넘지 못하면 만들지 않고 결과 `calc.parameters_optional_unmet.P1` 에 사유를 적으며, **P2·P3 로 소계를 낸다.** 전에는 P1 이 `missing` 으로 떨어져 이미 산출한 P2·P3 를 버리고 F6 전체가 `pending_data` 가 됐다 — 같은 순손실이 `listed_newly` 에서는 소계가 나오고 여기서는 미완료가 되는 비대칭이었다. **이번 실행 점수는 바뀌지 않는다** — 두 트랙 상장 11개사의 순이익이 전부 양수다. **사유는 `requires_positive` 하나로 좁혔다**(`optional_parameters_causes`) — 순이익 관측이 아예 없는 것은 우리 수집 공백이라 예전처럼 factor 를 pending 으로 세운다. 순손실은 그 기업의 성질이고 결측은 우리 문제다.",
+          "optional_parameters_causes": {
+            "P1": [
+              "requires_positive"
+            ]
+          }
         },
         "listed_newly": {
           "label": "신규 상장",
@@ -1233,7 +1251,8 @@
         "why_openai_differs_from_anthropic": "**판단 입력 기록의 차이다.** `openai.F9.inputs.bep_retreat = yes` 이고 `anthropic.F9.inputs.bep_retreat = no` 다. 둘 다 비상장이고 TTM 영업손익이 구조적 미공시(`not_disclosed_confirmed`)인데, openai 만 BEP 후퇴가 기록돼 있어 경로가 갈린다. 회사 성질이 아니라 **입력 한 칸**이 경로를 정한다.",
         "decided_at": "2026-09-17",
         "decided_by": "사용자 (2026-09-17)",
-        "user_choice": "비 Claude 판정자(Gemini)가 `C-20 우선`(openai F9 -2 · 총점 4)으로 판정했으나 **사용자가 현행 -4 유지 + 긴장 등록**을 골랐다. 판정 원문 `review-obsreg validation/openai-f9-route/gemini.md` · 조율자 기록 `설계진행 validation/openai-f9-route-decision.md`."
+        "user_choice": "비 Claude 판정자(Gemini)가 `C-20 우선`(openai F9 -2 · 총점 4)으로 판정했으나 **사용자가 현행 -4 유지 + 긴장 등록**을 골랐다. 판정 원문 `review-obsreg validation/openai-f9-route/gemini.md` · 조율자 기록 `설계진행 validation/openai-f9-route-decision.md`.",
+        "also_precedes_loss_band": "[FIX-61 · obsreg 9차 재무 계산 재판정(Claude 독립 세션) medium] **손실률 밴드보다도 앞선다.** FIX-59 는 C-20 과의 순서를 적었지만 코드는 그 전에 `bep_retreat` 를 먼저 본다 — `margin` 값이 있어도 BEP 후퇴가 기록되면 밴드를 고르지 않는다. **다만 두 경로가 만나도 결과는 같다**: `g1_bep_retreat_score` -4 가 이미 `floor` 이고 `g1_bands_proposed` 의 가장 깊은 칸도 -4 라 어느 쪽을 먼저 보든 점수가 -4 다. 순서가 관측되지 않는다는 사실까지 적어 두어야 다음 사람이 이것을 열린 문제로 다시 들지 않는다."
       }
     },
     "missing_types": {
@@ -1538,7 +1557,7 @@
       "affects": [
         "F9"
       ],
-      "summary": "손실률 -10%·-30% 경계 중첩, FCF/영업손익 0, 완충 잠식, G2 안정/악화의 기계 정의 부재. BEP 후퇴→-5 는 원문 OR 조건 그대로 활성(경고 표시)이며 손실률 경계와의 우선순위 명문화만 미결",
+      "summary": "손실률 -10%·-30% 경계 중첩, FCF/영업손익 0, 완충 잠식, G2 안정/악화의 기계 정의 부재. [FIX-61 정정 · obsreg 9차 재무 계산 재판정(Claude 독립 세션) medium] **BEP 후퇴의 우선순위는 더 이상 미결이 아니다** — 사용자 결정 2026-09-17 로 `policies.f9.g1_bep_retreat_precedence` 에 명문화했다(BEP 후퇴가 기록되면 손실률 밴드·C-20 비상장 경로보다 앞서 `g1_bep_retreat_score` 를 준다). 점수도 -5 가 아니라 **-4** 다(C-06 재척도). 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세의 기계 정의다",
       "recommendation": "policies.f9.g1_bands_proposed 와 BEP 우선 규칙을 검토해 전 구간 명문화",
       "choices": [
         "proposed_v15_boundaries"
@@ -1925,7 +1944,7 @@
         "F9"
       ],
       "summary": "경계 표시 허용폭 3% 가 적정한지 — 도입 계기였던 alibaba 사례(+3.32%)가 폭 밖이라 표시되지 않는다",
-      "recommendation": "이번 실행은 폭을 바꾸지 않는다. **표시 폭은 점수와 무관하지만 기준을 손대면 같은 잣대 문제가 된다** — F6 P1~P4 와 F9 G3 가 같은 tolerance 를 쓰고 있어 한 자리만 넓힐 수 없다. 거리 자체는 초안이 늘 보여 주므로(`임계 3년 대비 +3.3%`) 읽는 사람이 놓치지 않는다. 다음 라운드에서 폭을 정한다.",
+      "recommendation": "이번 실행은 폭을 바꾸지 않는다. **표시 폭은 점수와 무관하지만 기준을 손대면 같은 잣대 문제가 된다** — F6 P1~P4 와 F9 G3 가 같은 tolerance 를 쓰고 있어 한 자리만 넓힐 수 없다. 거리 자체는 초안이 늘 보여 주므로(`임계 3년 대비 +3.3%`) 읽는 사람이 놓치지 않는다. 다음 라운드에서 폭을 정한다. [FIX-61 · obsreg 9차 재무 계산 재판정(Claude 독립 세션) low] **표본이 둘이 됐다.** oracle F6 P1 = 25.967109 로 밴드 경계 25 에서 **+3.87%** 이고, 허용폭 3% 밖이라 경계 표시가 붙지 않는다. **이 한 칸이 oracle 총점 2 와 3 을 가른다** — P1 이 -1 대신 0 이면 F6 -3 → -2 이고 총점이 3 이 된다. alibaba G3(+3.32%)와 같은 성질이고 방향도 같다(둘 다 폭 바로 밖). 폭을 정할 때 이 둘을 함께 본다.",
       "choices": [
         "keep_0_03",
         "widen_to_0_05",
@@ -1950,34 +1969,34 @@
     },
     {
       "id": "C-28",
-      "status": "pending",
+      "status": "resolved",
       "blocking": false,
       "affects": [
         "F6"
       ],
       "summary": "listed_ttm·listed_annual 에서 순손실 기업이 나오면 P2·P3 를 산출해 놓고도 F6 가 pending_data 가 된다",
-      "recommendation": "이번 실행은 고치지 않는다. P1 이 `requires_positive`(net_income_ttm > 0)를 못 넘으면 `missing` 에 들어가고, `missing` 이 하나라도 있으면 compute_listed 가 P2·P3 점수를 버리고 `pending_data` 를 돌려준다. `listed_newly` 는 C-24 가 넣은 `optional_parameters` 로 이 경로를 피한다. **오늘 상장 적자 기업이 listed_ttm·listed_annual 에 없어 점수가 갈리지 않는다** — 12개사 전부 P1 이 성립한다. 다음 라운드에서 두 트랙에도 같은 장치를 둘지 정한다. 체크리스트 Q11 이 경고하는 자리다.",
+      "recommendation": "`listed_ttm`·`listed_annual` 에도 `optional_parameters: [\"P1\"]` 을 두어 `listed_newly` 와 같은 경로로 만든다. 순이익이 음수여서 P1 이 성립하지 않으면 사유를 `calc.parameters_optional_unmet.P1` 에 적고 P2·P3 로 소계를 낸다.",
       "choices": [
         "keep_pending_data",
         "optional_parameters_for_all_listed_tracks",
         "explicit_loss_track"
       ],
       "implementation_status": {
-        "verdict": "not_implemented",
-        "checked_at": "2026-09-16",
-        "checked_by": "worker (FIX-57 1단계)",
+        "verdict": "implemented",
+        "checked_at": "2026-09-17",
+        "checked_by": "worker (FIX-61)",
         "evidence": [
-          "calc_f6_params.compute_listed: value is None 이고 optional 이 아니면 missing 에 넣고 pending_data 로 끝낸다",
-          "listed_ttm·listed_annual 에는 optional_parameters 가 없다",
-          "이번 실행 12개 상장사 전부 net_income_ttm > 0 이라 해당 기업이 없다(spacex-xai 는 listed_newly)"
-        ]
+          "policies.f6.tracks.listed_ttm.optional_parameters = [P1] · listed_annual 도 같다",
+          "calc_f6_params.compute_listed 의 선택 파라미터 경로가 그대로 P1 을 받는다(FIX-56 1단계 장치)",
+          "합성 순손실 상장사 입력으로 소계가 P2·P3 로 나오고 pending_data 가 아닌 것을 단위 테스트로 고정했다",
+          "이번 실행 11개사는 순이익이 전부 양수라 P1 이 그대로 산출된다 — 점수·상태 불변"
+        ],
+        "c24_scope_fix": "선택 파라미터가 세 트랙으로 넓어지면서 C-24 분기가 범위 밖까지 끌 수 있었다. C-24 는 신규 상장 트랙의 P2 만 가리키는 결정이므로 트랙·파라미터를 함께 보게 좁혔다."
       },
-      "pending_recheck": {
-        "what": "순손실 상장사가 listed_ttm·listed_annual 에 들어올 때 P2·P3 를 살릴지.",
-        "why": "obsreg 6차 리뷰 B(financial-calc, review-obsreg b6b8a3a) low — C-24 가 한 트랙에만 장치를 둬 트랙별로 잣대가 다르다.",
-        "trigger": "listed_ttm·listed_annual 트랙에 순손실 기업이 들어올 때",
-        "when": "2026-11"
-      }
+      "chosen": "optional_parameters_for_all_listed_tracks",
+      "decided_at": "2026-09-17",
+      "decided_by": "obsreg 9차 재무 계산 재판정(Claude 독립 세션) 지적 · 설계진행 지시(FIX-61)",
+      "remaining_question": "**하나 남는다** — 순손실 상장사의 트랙 하한이다. `listed_ttm`·`listed_annual` 의 `floor` 는 -7 이고 P1 이 빠지면 소계 범위가 -5 까지로 좁아진다(P2 -2 + P3 -3). 하한이 그대로여도 절단이 일어나지 않아 점수는 같지만, `listed_newly` 가 P3 하나일 때 -3 이었던 것과 같은 성질의 물음이다 — **C-25 와 함께 본다.**"
     }
   ],
   "sources": {
