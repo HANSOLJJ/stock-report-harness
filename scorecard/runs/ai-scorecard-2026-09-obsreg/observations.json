@@ -2393,7 +2393,7 @@
           "is": "미확인 — v1.5 원표기 `없음`",
           "corrected_at": "2026-09-16",
           "review": "obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) medium",
-          "why": "다른 회사는 같은 자료 상태를 `미확인` 으로 적는데 palantir 만 확정 부재로 적혀 있었다. 보존 PLTR companyfacts 에는 기준일 2026-06-30 의 부외 약정 태그 사실이 없다. [FIX-56 2단계 근거 확대] `최신값은 2024-12-31 의 0` 은 **한 태그(`UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount`, 시점형 2건) 기준**이었다. 같은 파일에 `LongTermPurchaseCommitmentAmount` 가 있고 값은 US$1,950,000,000(10-K `0001321655-25-000022`)인데 **기간형 사실(start 2023-09-01 · end 2023-09-30)이라 기준일 잔고가 아니다.** 같은 태그가 alphabet 에서는 end=2026-06-30 US$707,000,000,000 으로 `alphabet.offbalance_note.v15` 의 `총 약정 $707B` 와 정확히 맞는다 — 태그가 부외 약정을 담는다는 뜻이다. **결론은 그대로 `미확인` 이다**: 두 태그 어느 쪽도 palantir 의 2026-06-30 잔고를 주지 않는다. HANDOVER 69행 `\"미등재·없음\"은 검색 없이 쓰면 틀린다` · AGENTS.md 117행 `0 이 나오면 부재인지 탐색 실패인지 가른다`.",
+          "why": "다른 회사는 같은 자료 상태를 `미확인` 으로 적는데 palantir 만 확정 부재로 적혀 있었다. 보존 PLTR companyfacts 에는 기준일 2026-06-30 의 부외 약정 태그 사실이 없다. [FIX-56 2단계 근거 확대] `최신값은 2024-12-31 의 0` 은 **한 태그(`UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount`, 시점형 2건) 기준**이었다. 같은 파일에 `LongTermPurchaseCommitmentAmount` 가 있고 값은 US$1,950,000,000(10-K `0001321655-25-000022`)인데 **기간형 사실(start 2023-09-01 · end 2023-09-30)이라 기준일 잔고가 아니다.** 같은 태그가 alphabet 에서는 end=2026-06-30 US$707,000,000,000 으로 `alphabet.offbalance_note.v15` 의 `총 약정 $707B` 와 정확히 맞는다 — 태그가 부외 약정을 담는다는 뜻이다. **결론은 그대로 `미확인` 이다**: 두 태그 어느 쪽도 palantir 의 2026-06-30 잔고를 주지 않는다. HANDOVER 69행 `\"미등재·없음\"은 검색 없이 쓰면 틀린다` · AGENTS.md 117행 `0 이 나오면 부재인지 탐색 실패인지 가른다`. [FIX-58 2단계 태그 확대 · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) low] 재검색 태그가 둘뿐이었다. 같은 파일에 `LesseeOperatingLeaseLiabilityUndiscountedExcessAmount` 63,201천(2025-12-31)이 더 있으나 **1단계 S2 에서 확인했듯 이 개념은 미개시 약정이 아니라 인식된 리스부채의 내재이자(할인차금)다** — 부외 약정 후보가 아니다. 셋 어느 쪽도 palantir 의 2026-06-30 부외 약정 잔고를 주지 않으므로 결론 `미확인` 은 그대로다.",
           "score_path": "offbalance_note 는 표시용 텍스트다. palantir 의 coverage_comparable 은 unknown 이라 G4 도 판정하지 않는다 — 점수에 닿지 않는다."
         }
       },
@@ -3712,10 +3712,29 @@
       "as_of": "2026-09-02",
       "kind": "actual",
       "source_id": "SRC-v15-rule",
-      "status": "parse_failed",
-      "basis": null,
+      "status": "not_disclosed",
+      "basis": {
+        "label_correction": {
+          "was": {
+            "status": "parse_failed",
+            "missing_type": null
+          },
+          "is": {
+            "status": "not_disclosed",
+            "missing_type": "unverified"
+          },
+          "corrected_at": "2026-09-17",
+          "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+          "why": "raw 문면 `AWS 백로그(수백 $B급) — 숫자 미공시` 가 **확정 부재를 단정**하는데 같은 실행의 `amazon.contracted_revenue.obsreg25`(496,000M, verified)가 보존 10-Q 문면 `those commitments not yet recognized were approximately $ 496 billion as of June 30, 2026` 를 인용한다. **숫자는 공시돼 있다** — v1.5 작성자가 찾지 못했을 뿐이다. alibaba·spacex-xai 의 옛 B종 관측을 `미확인` 계열로 내린 것과 같은 처리다.",
+          "raw_kept": "raw 는 v1.5 원문이라 고치지 않는다. 라벨만 사실에 맞춘다.",
+          "status_note": "status 에 `미확인` 값이 없어 not_disclosed 를 두고 missing_type 이 이유를 말한다 — alibaba.offbalance_B.v15 와 같은 방식이다.",
+          "superseded_enough": "대체된 관측이라 엔진은 읽지 않는다(ObsLookup 이 verified 를 먼저 고른다). 라벨이 미공시의 증거처럼 읽히므로 고쳤다.",
+          "score_path": "점수 경로에 닿지 않는다 — amazon G4 는 verified 대체 관측 496,000M 을 읽고 커버리지 1.8557 · step 0 이다. 값·점수 불변."
+        }
+      },
       "raw": "AWS 백로그(수백 $B급) — 숫자 미공시",
-      "note": "[OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표"
+      "note": "[OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표",
+      "missing_type": "unverified"
     },
     {
       "observation_id": "alibaba.offbalance_B.v15",
@@ -3819,7 +3838,9 @@
       "kind": "actual",
       "source_id": "SRC-v15-rule",
       "status": "incompatible_basis",
-      "basis": null,
+      "basis": {
+        "fourth_supplier_not_counted": "[FIX-58 2단계 · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium] **네 번째 공급자가 이 값에 빠져 있다.** 보존 SpaceX S-1/A 가 `in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` 를 공시한다(3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm). 이 값 300,000M 은 v1.5 가 든 Google Cloud $200B/5년 + AWS $100B/10년 둘만 센다. **그래도 값을 늘리지 않았다** — 같은 문단이 `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice` 라고 적어 **무조건 약정이 아니다.** B종은 미개시 **무조건** 약정이고, 해지 가능한 계약의 잔여 총액(약 36개월 × $1.25B ≈ $45B)을 확정 의무로 세지 않는다. 이 관측은 어차피 `incompatible_basis`(C-07)라 G4 가 비교하지 않는다 — 점수에 닿지 않는다."
+      },
       "raw": "컴퓨트 약정 $300B(연 ~$50B) — 기간·범위가 RPO 와 다름(C-07)",
       "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
     },
@@ -9063,7 +9084,15 @@
           "value_agrees": "금액 $40B 는 네 표기가 모두 같다",
           "not_resolved": "**시점을 고르지 않는다.** 값이 같아 P3·P2 에는 영향이 없고, 영향이 없다는 사실까지 적어 둔다."
         },
-        "source_lines": "AI기업_채점표_v1.5.md openai ⑥가격 항목"
+        "source_lines": "AI기업_채점표_v1.5.md openai ⑥가격 항목",
+        "primary_source_link": {
+          "source_id_kept": "SRC-v15-md",
+          "why_not_moved": "[FIX-58 2단계 · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium] anthropic 쪽은 보존 보도자료가 값을 **그대로 인용**해서(`our run-rate revenue crossed $47 billion`) source_id 를 그 발표로 옮겼다. openai 는 다르다 — 같은 날짜 발표문에 매출 수치가 여럿 있지만(`We are now generating $2B in revenue per month` = 연환산 약 $24B · `$1B in revenue` · `$1B per quarter` · `enterprise … more than 40% of our revenue`) **이 관측의 값 25,000M 을 그대로 적은 문장이 없다.** 근사치가 비슷하다는 이유로 출처를 옮기지 않는다.",
+          "related_primary_source": "SRC-OPENAI-FUNDING-2026",
+          "what_it_says": "2026-03-31 발표문 `We are now generating $2B in revenue per month` — 연환산 약 $24B. 이 관측의 `2~4월 정체 구간` 과 시점이 겹친다.",
+          "absence_claim_that_was_wrong": "보존 `ffaf318:validation/priv-arr-17b/_raw/external_reporting_raw.json` 의 `openai.identified_financial_events[oai-01].note` 가 `공식 발표문에는 매출, ARR, 런레이트 수치가 일체 포함되어 있지 않음` 이라고 적고 `oai-02` 도 `공식 1차 발표치 부재` 라고 적는다. **둘 다 사실이 아니다.** 그 파일은 보존 원자료라 고치지 않고, **이번 실행은 그 주장을 어디에서도 인용하지 않는다**(저장소 전체 검색 0건). openai 1차 출처 연결이 비어 있던 이유는 그 주장이 아니라 위 `why_not_moved` 다.",
+          "recorded_at": "2026-09-17"
+        }
       },
       "raw": "ARR $25B → $40B (2~4월 정체 구간)",
       "note": "PRIV-IMPL-31 / C-12. P3 입력. arr 시점 표기가 원문 안에서 갈리나 금액은 같아 점수 영향 없음"
@@ -9092,7 +9121,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "미공시",
@@ -9123,7 +9224,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "미공시",
@@ -9154,7 +9327,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "—",
@@ -9185,7 +9430,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "—",
@@ -9216,7 +9533,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026"
+          "preserved_release_source_id": "SRC-ANTHROPIC-SERIESH-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "미공시 — 비상장이라 TTM 영업손익 공시 의무 없음",
@@ -9247,7 +9636,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "미공시",
@@ -9278,7 +9739,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "미공시",
@@ -9309,7 +9842,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "—",
@@ -9340,7 +9945,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "—",
@@ -9371,7 +10048,79 @@
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
-          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026"
+          "preserved_release_source_id": "SRC-OPENAI-FUNDING-2026",
+          "counterparty_filings": {
+            "checked_at": "2026-09-17",
+            "review": "obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) medium",
+            "why": "비상장 2사의 부재 주장을 **회사 자체 발표로만** 세운 자리가 있었다. 비상장사는 제출 의무가 없지만 **거래 상대방이 상장사면 그 제출본에 나온다** — 부재를 세우기 전에 보존된 상대방 제출본을 봐야 한다.",
+            "scope": "저장소에 보존된 제출본·발표문 전수(htm 기준 8건 · companyfacts 12건)에서 `Anthropic`·`OpenAI`·`xAI` 를 태그를 걷은 본문으로 훑었다. 보존된 제출본은 Amazon 10-K/10-Q · Alibaba 20-F · SpaceX S-1/A·10-Q · TSMC 20-F 뿐이다 — Alphabet·Microsoft·Oracle·NVIDIA 제출본은 어느 커밋에도 없다.",
+            "hits": {
+              "amzn-20260630.htm": {
+                "Anthropic": 31,
+                "OpenAI": 15
+              },
+              "amzn-20251231.htm": {
+                "Anthropic": 12,
+                "OpenAI": 0
+              },
+              "spcx_s1a_20260603.htm": {
+                "Anthropic": 9,
+                "OpenAI": 2
+              },
+              "spcx-20260630.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "baba-20260331.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              },
+              "tsm-20251231.htm": {
+                "Anthropic": 0,
+                "OpenAI": 0
+              }
+            },
+            "found": [
+              {
+                "what": "anthropic 미인출 여신",
+                "where": "Amazon 10-Q Note 4 Non-Marketable Investments (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`we entered into a financing arrangement to make available to Anthropic an aggregate facility not to exceed $ 20.0 billion that will expire 30 months after an Anthropic liquidity event` · `in Q2 2026, we exercised our option … investing $ 5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $ 15.0 billion`",
+                "registered": false,
+                "why_not": "run.json 전제 참조 — 설계 지침 6.4 의 `조건이 확인된 확정 미인출 여신` 과 성격이 다르다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(네 번째 공급자)",
+                "where": "SpaceX S-1/A (3cf9799:validation/offb-24/_raw/spcx_s1a_20260603.htm)",
+                "fact": "`in May 2026, we entered into Cloud Services Agreements with Anthropic PBC … approximately 325,000 NVIDIA GPUs … the customer has agreed to pay us $1.25 billion per month through May 2029` · `After the initial three-month period, the agreements may be terminated by either party upon 90 days' notice.`",
+                "registered": false,
+                "why_not": "**무조건 약정이 아니다** — 90일 통지로 어느 쪽이든 해지할 수 있어 B종(미개시 **무조건** 약정)의 요건을 채우지 못한다. 잔여 기간 전액(2026-05~2029-05 약 36개월 × $1.25B ≈ $45B)을 약정으로 세면 해지 가능한 계약을 확정 의무로 읽는 것이다. 사실은 관측 basis 에 적고 값은 만들지 않는다.",
+                "affects": "anthropic.offbalance_B.v15 (300,000M) 은 Google Cloud·AWS 둘만 센다 — 이 네 번째가 빠져 있다."
+              },
+              {
+                "what": "anthropic 전환사채(부채 존재)",
+                "where": "Amazon 10-K·10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`From Q3 2023 to Q4 2025, we invested $ 8.0 billion in convertible notes from Anthropic` · 2026-06-30 Amazon 장부상 전환사채 공정가치 `approximately … $ 97.9 billion`",
+                "registered": false,
+                "why_not": "Anthropic **자신의** 부채 잔액이 아니다 — Amazon 한 곳이 보유한 몫의 공정가치이고 전환분·미전환분이 섞여 있다. `debt_ebitda` 는 부채와 EBITDA 가 둘 다 있어야 하고 EBITDA 는 어느 제출본에도 없다. **다만 `부채 공시가 전혀 없다` 는 서술은 더 이상 쓰지 않는다.**"
+              },
+              {
+                "what": "openai 컴퓨트 약정(AWS 몫)",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q1 2026, AWS and OpenAI Group PBC (\"OpenAI\") announced an expansion of the existing $ 38.0 billion multi-year commitment and commercial arrangement with OpenAI by $ 100.0 billion over 8.0 years`",
+                "registered": false,
+                "why_not": "`openai.offbalance_B.v15` 이 이미 같은 구성으로 338,000M+ 를 담고 있다(Oracle $300B+ · AWS $38B · 증액 $100B). **상대방 제출본이 AWS 몫을 확인해 준다** — 값은 바뀌지 않고 근거가 회사 발표에서 제출본으로 올라간다."
+              },
+              {
+                "what": "openai 조달",
+                "where": "Amazon 10-Q (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
+                "registered": false,
+                "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              }
+            ],
+            "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+          }
         }
       },
       "raw": "미공시 — 비상장이라 TTM 영업손익 공시 의무 없음",
@@ -12446,7 +13195,7 @@
           "score_path": "이 라벨을 읽는 곳은 calc_f6_params._blocked_reasons(F6 P2 net_cash 가 legacy 인 사유 표시)뿐이다. C-16(G4)·C-20(G1)은 contracted_revenue·offbalance_B·operating_margin_ttm·operating_income_ttm 만 읽는다. 점수 경로에 닿지 않는다."
         },
         "why_not_unverified_superseded": "`unverified` 는 우리가 아직 실측하지 못했다는 뜻인데 여기서는 보존 companyfacts 전수를 확인했고 그 시점에 값 자체가 없다. 수집 공백이 아니라 공시 주기의 문제다.",
-        "why_superseded": "리스 관련 태그 39종이 모두 존재하나 값이 붙은 일자는 전부 회계연도 말이다(최근 2020-09-26 · 2021-09-25 · 2022-09-24 · 2023-09-30 · 2024-09-28 · 2025-09-27). **발행사가 분기에는 공시하지 않는다** — 우리가 못 찾은 것이 아니라 그 시점에 없다. 가장 최근 값 2025-09-27 은 9개월 전 다른 시점이라 대차대조 합산에 섞지 않는다."
+        "why_superseded": "~~리스 관련 태그 39종이 모두 존재하나 값이 붙은 일자는 전부 회계연도 말이다(최근 2020-09-26 · 2021-09-25 · 2022-09-24 · 2023-09-30 · 2024-09-28 · 2025-09-27). **발행사가 분기에는 공시하지 않는다** — 우리가 못 찾은 것이 아니라 그 시점에 없다. 가장 최근 값 2025-09-27 은 9개월 전 다른 시점이라 대차대조 합산에 섞지 않는다.~~ (superseded [FIX-58 2단계] · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) low — 같은 관측의 label_correction 이 `not_disclosed_confirmed` 를 `unverified` 로 내리며 `발행사가 분기에는 공시하지 않는다` 는 단정을 이미 철회했는데 이 줄만 단정형으로 남아 있었다. palantir 쪽은 FIX-56 2단계에서 같은 형태로 고쳐졌다. 확인한 것은 보존 companyfacts 의 표준 태그뿐이고 10-Q 전문은 보존하지도 검색하지도 않았다.)"
       },
       "raw": "2026-06-27 기준 리스부채 없음 — 10-K 에만 태깅",
       "note": "NETCASH-37. net_cash 실측이 막힌 이유를 여기 남긴다 — [FIX-54 2단계] unverified(표준 태그 결측, 10-Q 전문 미검색)"
@@ -13579,7 +14328,7 @@
         "not_fetched": "외부 조회 규칙상 새로 받지 않았다. 원문이 보존되면 다시 본다.",
         "engine_effect": "숫자가 아니라 G3 분자에 들어가지 않는다(이전과 같음).",
         "next_collection_priority": "[FIX-55 1단계 · obsreg 4차 리뷰 B(NTM Claude 독립 세션, 기준 ab5a053 · review 8e58a46) low] **다음 수집 1순위다.** 미등록 아홉 곳 중 oracle 만 FCF 음수라 G3 가 점수를 낸다(런웨이 1.32년, step -1). 10-K 본문이 보존되면 이 한 건을 먼저 채운다. 이번에 값을 만들지 않았다 — 외부 조회 금지이고 원문이 없다.",
-        "broad_tag_sweep": "[FIX-55 2단계] 광역 정규식 주사(`Unused|Undrawn|RemainingBorrowingCapacity|LineOfCreditFacility`)를 보존 companyfacts 12개 파일에 다시 돌렸다. oracle 은 해당 태그 사실이 **0건**이다. 기준일 이후 값이 있는 회사는 tesla 하나뿐이었다 — oracle 은 그대로 미등록이고 점수도 그대로다."
+        "broad_tag_sweep": "[FIX-55 2단계] 광역 정규식 주사(`Unused|Undrawn|RemainingBorrowingCapacity|LineOfCreditFacility`)를 보존 companyfacts 12개 파일에 다시 돌렸다. oracle 은 **그 정규식 기준 0건**이다. [FIX-58 2단계 문면 정정 · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수) low] `0건` 은 **선언한 정규식 기준**이라는 뜻이고 여신 태그가 하나도 없다는 뜻이 아니다 — 같은 파일에 `us-gaap:LineOfCredit`(2011-03-14, 값 0)이 있고 정규식의 `LineOfCreditFacility` 에 걸리지 않는다. **결론은 그대로다**: 실행 기준일 근처에 인출 가능한 확정 한도를 가리키는 사실이 없다(2011년 값은 15년 전이고 0 이다). oracle 은 미등록 아홉 곳 중 **유일하게 G3 가 점수를 내는 회사**라 이 문면을 좁혀 둔다 — 런웨이 1.32년 · F9 -3 은 그대로다."
       },
       "raw": null,
       "note": "FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다)."

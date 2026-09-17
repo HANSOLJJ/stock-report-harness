@@ -2519,6 +2519,27 @@
       "third_party_scope": [
         "anthropic.F2"
       ]
+    },
+    {
+      "id": "TEN-RA5-01",
+      "status": "open",
+      "recheck_at": "2026-11",
+      "review_finding": "RA5-01(7차 리뷰 A 분담 medium) · obsreg 7차 리뷰 A 분담(Claude 독립 세션 · 부재 주장 전수)",
+      "judgment_ids": [
+        "anthropic.F8"
+      ],
+      "subject": "anthropic.F8 이 -4 로 내려가지 않는 유일한 근거(`Alphabet 제출본에 Anthropic 0건`)를 확인할 수 없다",
+      "tension": "`anthropic.F8.f8anth33` 은 Google 몫의 훈련/서빙 구분이 미공시라 하향하지 않았고, 그 미공시의 근거로 `Alphabet 10-K(FY2025)·10-Q(2026 Q1·Q2) 본문에 Anthropic 이 0건` 을 든다. **그런데 알파벳 제출본이 어느 커밋에도 보존돼 있지 않다** — 저장소의 보존 제출본은 Amazon·Alibaba·SpaceX·TSMC 넷뿐이다. 0건이라는 부재 주장 자체를 재현할 수 없다.",
+      "direction": "하향 가능(-3 → -4). 다만 **이번 실행은 하향하지 않는다** — 확인하지 못한 부재로 하향하면 `미공시를 아니다로 읽지 않는다` 는 원칙을 그 자리에서 어긴다. 방향만 등록한다.",
+      "rechecker": "**비 Claude 세션이 재판정한다** — Anthropic 점수이고 조율자·worker 가 Claude 라 이해상충이다(TEN-RC-02 와 같은 사유).",
+      "third_party_recheck": "committed",
+      "why_carried_exception": "승계 판단이 아니라 **이번 실행이 만든 판단**이다(F8-ANTH-33). 그래서 예외가 아니라 정식 긴장으로 등록하고 근거란에도 확인 불가를 적었다.",
+      "score_impact_now": "없다. -3 그대로다.",
+      "trigger": "알파벳 제출본(10-K FY2025 · 10-Q 2026 Q1·Q2)이 `_raw` 에 보존되면 그 즉시 재검토한다. **다음 수집 1순위다.** 보존되면 (1) `Anthropic` 출현 여부를 재현하고 (2) 출현하면 훈련/서빙 구분을 읽어 F8 판정을 다시 댄다.",
+      "related_tensions": [
+        "TEN-RC-02"
+      ],
+      "note": "[FIX-58 2단계] 7차 리뷰 A 분담이 보존 `_raw` 11곳을 전수 확인해 알파벳 제출본이 없다는 것을 밝혔다. 같은 전수에서 **Amazon 제출본에는 Anthropic 이 31건** 있고 AWS 약정·전환사채·여신을 공시한다 — 공급자마다 보존 여부가 갈려 한쪽만 볼 수 있는 상태다(관측 basis.counterparty_sweep)."
     }
   ],
   "source_text_corrections": [

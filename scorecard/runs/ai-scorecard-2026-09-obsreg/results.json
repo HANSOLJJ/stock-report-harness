@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "d5401b92bf86c4b3fdbf5e7d77e0e926d2d3ddc7887932e306dc2aaae77f07e8",
-    "observations": "fed8e184ba1444c7b4942291a482e5581d7ed90de40624cd1a94cbc0618d7c30",
-    "judgments": "6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6",
+    "run": "60fa8cb9634ce0c321685a54d1199b46d3ee8e4b6fa29ee0631b16209149a5f3",
+    "observations": "2ce1c5849f16af04a377cc33105c14b2763f72da61cce240b72144b60dec1eeb",
+    "judgments": "1c99cf880861b0b777a7f0ca2688a7e5ca0adece0de18054781f750a4f93c56d",
     "sources": "14ec0e8083d82e5321d1b38e1e7fc8dd66c2ebac683d56e85772a46c3a1c3663",
-    "rules": "738037a7f435477dfd3153caf9501a9def04559c9ff0de15b0a8e588fd2c70b7"
+    "rules": "198dc4aebb2b524ac259c664b4068cd295f3fc3957f696b7287610902baf29de"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -4458,5 +4458,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 164,
-  "results_hash": "0e38bf5af375844c4d466e52d012c827d7ab45166f42cfcb8733578fff44fbe1"
+  "results_hash": "d41598800167ccd61b915b486535f3abb2d4bdc0af04305acf0c54fa8c4572be"
 }

@@ -5,8 +5,8 @@ plan_source: plan/ai-scorecard-2026-09-obsreg.md
 run_id: ai-scorecard-2026-09-obsreg
 as_of: 2026-09-02
 rule_version: v1.7
-observations_hash: fed8e184ba1444c7b4942291a482e5581d7ed90de40624cd1a94cbc0618d7c30
-judgments_hash: 6af3f7a5bd9cd90847dc7c6fd38f9d557c359f833e2612369d9d39f897123fe6
+observations_hash: 2ce1c5849f16af04a377cc33105c14b2763f72da61cce240b72144b60dec1eeb
+judgments_hash: 1c99cf880861b0b777a7f0ca2688a7e5ca0adece0de18054781f750a4f93c56d
 created_at: 2026-09-11
 ---
 # 리서치 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
@@ -53,7 +53,7 @@ created_at: 2026-09-11
 | cash | $78.2B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 78.2B (버퍼 123.0B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
 | cash | $123.0B | legacy_unverified | actual | SRC-v15-html | $123.0B | [CASH-FCF-35 대체됨 → amazon.cash.cashfcf35]  |
 | contracted_revenue | $496.0B | verified | actual | SRC-SEC-AMZN-10Q-2026Q2 | those commitments not yet recognized were approximately $496 billion (2026-06-30 | OBS-REG-25. 승계 관측 amazon.contracted_revenue.v15(parse_failed)를 대체한다. **parse_fai |
-| contracted_revenue | — | parse_failed | actual | SRC-v15-rule | AWS 백로그(수백 $B급) — 숫자 미공시 | [OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
+| contracted_revenue | — | not_disclosed | actual | SRC-v15-rule | AWS 백로그(수백 $B급) — 숫자 미공시 | [OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | AA급 | legacy_unverified | text | SRC-v15-html | AA급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 1.4 | legacy_unverified | actual | SRC-v15-html | 1.35 |  |
 | fcf_ttm | -$11.6B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF -11.6B = OCF 161.4B - CapEx 173.0B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
@@ -677,7 +677,7 @@ created_at: 2026-09-11
 | openai | net_cash | not_disclosed | [PRIV-IMPL-31 대체됨 → openai.net_cash.priv31]  |
 | openai | debt_ebitda | not_disclosed | [PRIV-IMPL-31 대체됨 → openai.debt_ebitda.priv31]  |
 | palantir | net_borrowing_ttm | not_disclosed | 차환 제외 순증 |
-| amazon | contracted_revenue | parse_failed | [OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
+| amazon | contracted_revenue | not_disclosed | [OBS-REG-25 대체됨 → amazon.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | alibaba | offbalance_B | not_disclosed | [OBS-REG-25 대체됨 → alibaba.offbalance_B.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | alibaba | contracted_revenue | not_disclosed | [OBS-REG-25 대체됨 → alibaba.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | spacex-xai | offbalance_B | not_disclosed | [OBS-REG-25 대체됨 → spacex-xai.offbalance_B.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
