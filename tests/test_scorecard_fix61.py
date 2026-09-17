@@ -56,7 +56,9 @@ class Fix61Test(unittest.TestCase):
                 self.assertNotIn("손실률 경계·우선순위 명문화만 미결", text)
                 self.assertIn("우선순위는 확정됐다", text)
         c06 = {d["id"]: d for d in RULES.payload["decisions"]}["C-06"]
-        self.assertIn("우선순위는 더 이상 미결이 아니다", c06["summary"])
+        # 2026-09-17 FIX-63: 같은 문장이 뒤집힌 순서를 반대로 적고 있어 다시 썼다. 요지는 같다.
+        self.assertIn("우선순위는 미결이 아니다", c06["summary"])
+        self.assertIn("C-20 비상장 경로가 먼저 서고", c06["summary"])
         self.assertNotIn("BEP 후퇴→-5", c06["summary"])
         # C-06 의 나머지 미결은 그대로다.
         self.assertEqual(c06["status"], "pending")
@@ -66,7 +68,9 @@ class Fix61Test(unittest.TestCase):
     def test_corrected_sentence_reaches_the_draft(self):
         line = next(x for x in rc.method_lines(self.ctx) if "BEP 후퇴" in x)
         self.assertIn("우선순위는 확정됐다", line)
-        self.assertIn("두 경로가 만나도 결과는 같다", line)
+        # 2026-09-17 FIX-63: `두 경로가 만나도 결과는 같다` 가 사실이 아니어서 빠졌다.
+        self.assertIn("순서가 결과를 가른다", line)
+        self.assertNotIn("두 경로가 만나도 결과는 같다", line)
         self.assertNotIn("미결이다", line)
         self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)
         # 경고 문구도 같이 고쳤다. 2026-09-17 FIX-62 로 openai 가 C-20 경로로 옮겨가 이 실행에서는
@@ -78,17 +82,24 @@ class Fix61Test(unittest.TestCase):
         self.assertIn("C-20 이 앞선다", w)
         self.assertNotIn("결정 대기", w)
 
-    def test_precedence_records_that_the_order_is_unobservable(self):
+    def test_precedence_records_that_it_precedes_the_loss_band(self):
+        """2026-09-17 FIX-63: 이 테스트는 `순서가 관측되지 않는다` 를 이름으로 걸고 **전제만** 확인했다.
+        전제(`bep_retreat 점수 == 최심 밴드 == floor`)는 참이지만 결론은 거짓이다 — 두 순서가 실제로
+        같은 점수를 내는지는 아무 테스트도 대지 않았다. 사실 확인은 test_scorecard_fix63.py 가 한다."""
         prec = RULES.payload["policies"]["f9"]["g1_bep_retreat_precedence"]
         note = prec["also_precedes_loss_band"]
-        self.assertIn("손실률 밴드보다도 앞선다", note)
-        self.assertIn("결과는 같다", note)
+        self.assertIn("손실률 밴드보다 앞선다", note)
         # 2026-09-17 FIX-62: C-20 과의 순서만 뒤집혔고 손실률 밴드와의 순서는 그대로다.
         self.assertIn("C-20 자체보다는 뒤로 밀렸다", note)
+        # 2026-09-17 FIX-63: 틀린 닫음을 되살리지 않는다.
+        self.assertNotIn("어느 쪽을 먼저 보든 점수가 -4 다", note)
+        self.assertIn("이 닫음은 틀렸다", note)
         f9 = RULES.payload["policies"]["f9"]
         deepest = min(b["score"] for b in f9["g1_bands_proposed"])
-        self.assertEqual(f9["g1_bep_retreat_score"], deepest)       # 그래서 순서가 관측되지 않는다
+        self.assertEqual(f9["g1_bep_retreat_score"], deepest)
         self.assertEqual(f9["g1_bep_retreat_score"], f9["floor"])
+        # 전제가 참이어도 순서가 관측되지 않는다는 결론은 서지 않는다 — 밴드가 더 얕을 수 있다.
+        self.assertTrue(any(b["score"] > deepest for b in f9["g1_bands_proposed"]))
 
     # ---------------------------------------------------------------- S2 순손실 상장사 트랙
     def test_loss_making_listed_company_keeps_p2_p3(self):
@@ -207,8 +218,9 @@ class Fix61Test(unittest.TestCase):
     def test_q11_untouched(self):
         review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
         q11 = next(x for x in review.splitlines() if x.startswith("| Q11 "))
-        self.assertIn("| fail |", q11)
-        self.assertIn("예외 아님", q11)
+        # 2026-09-17 FIX-63: 리뷰어가 9차 재판정 2회에서 pass 로 바꿨다 — 우리가 고쳐 적은 것이 아니다.
+        self.assertIn("**pass** (9차 fail 에서 바뀜)", q11)
+        self.assertIn("근거 둘이 다 닫혔다", q11)
         self.assertFalse((RUN_DIR / "approval.json").exists())
 
 

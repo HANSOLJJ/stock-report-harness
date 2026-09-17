@@ -340,7 +340,9 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
                                       # 제3자(비 Claude) 재검토가 **약속인지 권장인지**. 문장을 훑어 세면 둘이 한 덩어리가 된다(FIX-56 2단계).
                                       "third_party_recheck", "third_party_scope",
                                       # 해소된 긴장의 결론·시점·남는 질문(FIX-62 — TEN-RA5-02 가 첫 사례다).
-                                      "resolution", "resolved_at", "what_remains"])
+                                      "resolution", "resolved_at", "what_remains",
+                                      # 같은 충돌이 다른 조건(상장·비상장)에도 걸릴 때 그 범위(FIX-63 S2).
+                                      "also_covers_listed"])
         for aidx, a in enumerate(t.get("affected") or []):
             _expect_keys(a, ["company_id", "why"], f"{where}.affected[{aidx}]", optional=["source_lines", "judgment_id"])
             _require(str(a["why"]).strip(), f"{where}.affected[{aidx}].why: 비워 둘 수 없음")

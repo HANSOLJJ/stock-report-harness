@@ -110,23 +110,34 @@ class ContractTest(unittest.TestCase):
         # 2026-09-17 FIX-61: 반영이 더 있으면 리뷰 파일의 results_hash·draft_hash 가 낡는다 — 템플릿을 다시
         # 만들 때까지는 그 둘이 더 뜬다. **뿌리는 아래 둘**이고 그것만 남는지를 본다.
         roots = [e for e in r.errors if "hash 가" not in e]
-        self.assertEqual(len(roots), 2, r.errors)
-        self.assertTrue(any("재무 계산 결과가 pass 가 아님" in e for e in roots))
-        # Q11 은 예외가 아니다 — 이번 실행이 그 자리의 잣대를 문면으로 확정했다(FIX-59).
-        self.assertTrue(any("체크리스트 Q11" in e for e in roots))
+        # 2026-09-17 FIX-63: 리뷰어가 Q11 을 pass 로 재판정했고 템플릿을 재생성해 해시도 맞췄다.
+        # 남은 뿌리는 **재무 계산 영역이 아직 pass 가 아니라는 사실** 하나다.
+        self.assertEqual(len(roots), 1, r.errors)
+        self.assertIn("review status 가 pass 가 아님: 'needs_fix'", roots[0])
+        self.assertFalse(any("체크리스트 Q11" in e for e in r.errors))
         self.assertFalse(any("plan rule_hash" in e for e in r.errors))
 
     def test_carried_exceptions_are_counted_in_a_warning(self):
-        """조용히 넘어가지 않는다 — 몇 건을 어느 긴장으로 통과시켰는지 남긴다."""
+        """조용히 넘어가지 않는다 — 몇 건을 어느 긴장으로 통과시켰는지 남긴다.
+
+        2026-09-17 FIX-63: 이 검사는 `status: pass` 일 때만 돈다. 리뷰 파일이 `needs_fix` 인 동안에는
+        경고가 서지 않으므로, 여기서는 **파일이 예외를 세울 준비가 돼 있는지**를 대신 본다.
+        """
         r = validate_contract(SLUG, require_html=False, require_price_chart=False,
                               check_html_if_present=False, check_price_chart_if_present=False)
-        warn = next(w for w in r.warnings if "승계 예외로 통과한 체크리스트 fail" in w)
-        self.assertIn("12건", warn)
-        for qid in ("Q01", "Q02", "Q03", "Q05", "Q08", "Q09", "Q10", "Q12", "Q13", "Q16", "Q20", "Q21"):
-            self.assertIn(qid, warn)
-        self.assertNotIn("Q11", warn)
-        # 이 검사가 무엇을 확인하지 **않는지**도 남긴다.
-        self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 71행)" in w for w in r.warnings))
+        review = REVIEW.read_text(encoding="utf-8")
+        self.assertIn("status: needs_fix", review)
+        self.assertEqual([w for w in r.warnings if "승계 예외로 통과한" in w], [])
+        fails = [x for x in review.splitlines() if re.match(r"^\| Q\d\d \| [^|]+ \| fail \|", x)]
+        self.assertEqual(len(fails), 11)                     # Q11 이 pass 로 바뀌어 12 → 11
+        for row in fails:
+            with self.subTest(qid=row.split(" | ")[0]):
+                excepted, cited, why = _carried_exception(row, tensions())
+                self.assertTrue(excepted, why)
+                self.assertTrue(cited)
+        # 이 검사가 무엇을 확인하지 **않는지**는 검증기 소스에 남아 있다.
+        self.assertIn("리뷰어가 판정한다(AGENTS.md 71행)",
+                      (ROOT / "scripts" / "scorecard" / "validate.py").read_text(encoding="utf-8"))
 
     def test_review_area_requirement_untouched(self):
         """검토 영역 pass 요건은 건드리지 않았다 — 재무 계산은 리뷰어가 재판정한다."""

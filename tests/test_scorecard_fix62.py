@@ -110,7 +110,7 @@ class Fix62Test(unittest.TestCase):
         self.assertIn("**C-20 이 앞선다.**", prec["what_is_true_now"])
         self.assertIn("세 번째로 같은 길을 돌지 않는다", prec["kept_why"])
         # 손실률 밴드와의 순서는 뒤집히지 않아 최상위에 남는다.
-        self.assertIn("손실률 밴드보다도 앞선다", prec["also_precedes_loss_band"])
+        self.assertIn("손실률 밴드보다 앞선다", prec["also_precedes_loss_band"])
         self.assertNotIn("also_precedes_loss_band", old)
 
     def test_ra5_02_is_resolved_with_a_conclusion(self):
@@ -202,8 +202,9 @@ class Fix62Test(unittest.TestCase):
     def test_q11_and_approval_untouched(self):
         review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
         q11 = next(x for x in review.splitlines() if x.startswith("| Q11 "))
-        self.assertIn("| fail |", q11)
-        self.assertIn("예외 아님", q11)
+        # 2026-09-17 FIX-63: 리뷰어가 9차 재판정 2회에서 pass 로 바꿨다 — 우리가 고쳐 적은 것이 아니다.
+        self.assertIn("**pass** (9차 fail 에서 바뀜)", q11)
+        self.assertIn("근거 둘이 다 닫혔다", q11)
         self.assertFalse((RUN_DIR / "approval.json").exists())
 
 
