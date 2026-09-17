@@ -43,7 +43,7 @@ class Stage2Test(unittest.TestCase):
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
                          {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                          "openai": 2, "oracle": 2})
+                          "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 하네스 표기
     def test_harness_mark_is_applied_to_every_model_comparison(self):
@@ -127,13 +127,18 @@ class Stage2Test(unittest.TestCase):
         # — 비 Claude 재판정 약속은 anthropic.F2 하나에만 걸린다. 갈래가 사실을 따라 움직인다는 것이 요점이다.
         # 2026-09-17 FIX-58 2단계: TEN-RA5-01(anthropic.F8 근거 확인 불가)이 committed 로 들어왔다 — Anthropic 점수다.
         # 2026-09-17 FIX-59: TEN-RA5-02(openai.F9 경로)가 committed 로 들어왔다 — 비 Claude 판정자가 이미 반대 의견을 냈다.
+        # 2026-09-17 FIX-62: TEN-RA5-02 가 해소됐고 남은 충돌을 TEN-RA6-01 이 잇는다. 규칙에는 둘 다 남지만
+        # 초안의 `약속` 건수에서는 해소분이 빠진다.
         self.assertEqual(sorted(kinds["committed"]),
-                         ["TEN-RA5-01", "TEN-RA5-02", "TEN-RC-02", "TEN-RC-03", "TEN-RC3-01"])
+                         ["TEN-RA5-01", "TEN-RA5-02", "TEN-RA6-01", "TEN-RC-02", "TEN-RC-03", "TEN-RC3-01"])
         self.assertEqual(sorted(kinds["partial"]), ["TEN-RA4-01", "TEN-RC4-01"])
         self.assertEqual(sorted(kinds["recommended"]), ["TEN-RA3-01", "TEN-RC-05", "TEN-RC3-03"])
         lines = rc.conflict_lines(self.ctx)
         head = next(x for x in lines if "제3자 재검토 약속" in x)
         self.assertIn("**확정**된 긴장 5건", head)
+        self.assertNotIn("TEN-RA5-02", head)
+        done = next(x for x in lines if "이미 해소된 긴장" in x)
+        self.assertIn("TEN-RA5-02(openai.F9, 2026-09-17)", done)
         partial = next(x for x in lines if "일부만 확정" in x)
         self.assertIn("TEN-RC4-01(anthropic.F3, 2026-11)", partial)        # 셋 중 anthropic 만
         self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", partial)        # 넷 중 anthropic 만

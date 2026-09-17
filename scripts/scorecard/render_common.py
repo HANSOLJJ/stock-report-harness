@@ -471,9 +471,11 @@ def method_lines(ctx: Any) -> list[str]:
           "⑥ 상장: NTM PER 20·29·42·62·90 반개방 구간, 경계 ±3% 는 표시만. 비상장: 배수 자동 계산·점수는 정성 예외.")
     return [
         # 2026-09-17 FIX-61(9차 재판정): 확정된 것을 미결이라고 적어 초안·HTML 까지 흘렀다.
+        # 2026-09-17 FIX-62: 같은 날 사용자가 순서를 뒤집었다(C-29). C-20 이 앞선다.
         f"C-06 중 BEP 후퇴→{f9_policy(ctx, 'g1_bep_retreat_score')} 는 원문 OR 조건 그대로 적용한다(경고 표시). "
-        f"**우선순위는 확정됐다** — BEP 후퇴가 기록되면 손실률 밴드나 C-20 비상장 경로보다 앞서 그 점수를 준다"
-        f"(policies.f9.g1_bep_retreat_precedence, 사용자 결정 2026-09-17). 두 경로가 만나도 결과는 같다 — "
+        f"**우선순위는 확정됐다** — **C-20 비상장 경로가 먼저 선다**(C-29, 사용자 결정 2026-09-17으로 앞선 결정을 뒤집음). "
+        f"비상장이고 TTM 영업손익이 구조적 미공시면 BEP 후퇴가 기록돼 있어도 비상장 조항으로 간다. "
+        f"상장사이거나 미공시가 아닌 경우에만 BEP 후퇴가 서고, 그때는 손실률 밴드보다 앞선다 — 두 경로가 만나도 결과는 같다. "
         f"BEP 점수 {f9_policy(ctx, 'g1_bep_retreat_score')} 가 이미 하한이라 어느 밴드도 그보다 깊지 않다. "
         "C-06 의 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세의 기계 정의다.",
         f6,
@@ -500,9 +502,11 @@ def conflict_lines(ctx: Any) -> list[str]:
     # 이제 긴장이 스스로 선언한 갈래(third_party_recheck)를 읽는다.
     tensions = sorted((ctx.rules.payload.get("open_tensions") or []), key=lambda x: x["id"])
     by_kind: dict[str, list[dict[str, Any]]] = {}
+    # 2026-09-17 FIX-62: 해소된 긴장은 아직 남은 약속이 아니다. 건수에서 빼되 이행된 사실은 아래에 따로 적는다.
+    done = [t for t in tensions if t.get("status") == "resolved"]
     for t in tensions:
         kind = t.get("third_party_recheck")
-        if kind:
+        if kind and t.get("status") != "resolved":
             by_kind.setdefault(kind, []).append(t)
 
     def _ids(items: list[dict[str, Any]], scope_key: str | None = None) -> str:
@@ -519,6 +523,10 @@ def conflict_lines(ctx: Any) -> list[str]:
     if recommended:
         out.append(f"  - **권장일 뿐 약속이 아닌 것** {len(recommended)}건 — {_ids(recommended)}. "
                    "규칙이 `비 Claude 세션 권장` 으로 적은 자리이고 재판정자를 정해 두지 않았다.")
+    if done:
+        out.append(f"  - **이미 해소된 긴장** {len(done)}건 — " +
+                   " · ".join(f"{t['id']}({', '.join(t['judgment_ids'])}, {t['resolved_at']})" for t in done) +
+                   ". 재판정이 끝나 남은 약속에서 뺐다. 결론은 규칙 `open_tensions` 의 `resolution` 에 있다.")
     c03 = next((d for d in ctx.rules.payload.get("decisions", []) if d["id"] == "C-03"), None)
     recheck = (c03 or {}).get("pending_recheck") or {}
     if recheck:

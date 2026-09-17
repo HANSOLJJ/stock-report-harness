@@ -47,7 +47,7 @@ class Stage2Test(unittest.TestCase):
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
                          {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                          "openai": 2, "oracle": 2})
+                          "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 amazon 계약 수입
     def test_amazon_carried_row_no_longer_asserts_non_disclosure(self):

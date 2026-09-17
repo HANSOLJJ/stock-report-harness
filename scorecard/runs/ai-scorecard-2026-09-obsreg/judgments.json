@@ -3123,7 +3123,7 @@
         "fcf_not_disclosed_reason": "reason:openai.fcf_not_disclosed"
       },
       "evidence": [
-        "📐 **[FIX-56 1단계 재척도 표시 2026-09-16] 현재 척도는 -4 다.** C-06 `proposed_v15_boundaries` 로 ⑨ G1 밴드가 -2/-3/-4 로 바뀌고 하한도 -5 → -4 가 됐다(bep_retreat -4). 엔진 경로는 `G1 BEP 후퇴 → -4` → `G3/G4 생략(이미 하한)` 이고 **F9 = -4** 다. 아래 게이트 1·마지막 줄의 `-5` 는 v1.5 문면이며 재척도 전 점수다. 판정 입력(bep_retreat=yes)은 바뀌지 않았다. obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) medium.",
+        "📐 **[FIX-56 1단계 재척도 표시 2026-09-16] 현재 척도는 -4 다.** C-06 `proposed_v15_boundaries` 로 ⑨ G1 밴드가 -2/-3/-4 로 바뀌고 하한도 -5 → -4 가 됐다(bep_retreat -4). ~~엔진 경로는 `G1 BEP 후퇴 → -4` → `G3/G4 생략(이미 하한)` 이고 **F9 = -4** 다.~~ **[FIX-62 2026-09-17] 경로가 바뀌었다** — 사용자가 C-29 로 앞선 결정을 뒤집어 `G1 판정 보류(C-20 비상장 경로)` → `G2 비상장 FCF 미공시 -2` → `G3 생략` → `G4 비교 불가(추가 감점 없음)` 이고 **F9 = -2** 다. BEP 후퇴 기록은 그대로이나 경로를 가르지 않는다(전망·목표는 별표 D 388~390행에서 0점). 아래 게이트 1·마지막 줄의 `-5` 는 v1.5 문면이며 재척도 전 점수다. 판정 입력(bep_retreat=yes)은 바뀌지 않았다. obsreg 5차 리뷰 B(financial-calc, review-obsreg 8b98b56) medium · 9차 재판정 Q11.",
         "2026년 적자 $14~33B",
         "GAAP 손실 전망 ~$60B",
         "게이트 1 ❌ 손익분기 목표가 2030년으로 후퇴 — 손실률 구간과 무관하게 BEP 후퇴만으로 ~~-5~~ (superseded [FIX-56 1단계] — C-06 재척도 전 척도다. 현재 척도는 **-4**) (방향이 악화라 완화 조건 A 실패)",
@@ -3138,7 +3138,8 @@
       "status": "carried",
       "carried_from": "baseline:v1.5",
       "source_ids": [
-        "SRC-v15-html"
+        "SRC-v15-html",
+        "SRC-v15-rule"
       ]
     }
   ]

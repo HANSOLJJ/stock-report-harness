@@ -338,7 +338,9 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
                                       # 재검토를 **무엇이 오면** 시작하는지. 시점(recheck_at)만으로는 조건이 남지 않는다(FIX-55 2단계).
                                       "trigger",
                                       # 제3자(비 Claude) 재검토가 **약속인지 권장인지**. 문장을 훑어 세면 둘이 한 덩어리가 된다(FIX-56 2단계).
-                                      "third_party_recheck", "third_party_scope"])
+                                      "third_party_recheck", "third_party_scope",
+                                      # 해소된 긴장의 결론·시점·남는 질문(FIX-62 — TEN-RA5-02 가 첫 사례다).
+                                      "resolution", "resolved_at", "what_remains"])
         for aidx, a in enumerate(t.get("affected") or []):
             _expect_keys(a, ["company_id", "why"], f"{where}.affected[{aidx}]", optional=["source_lines", "judgment_id"])
             _require(str(a["why"]).strip(), f"{where}.affected[{aidx}].why: 비워 둘 수 없음")
@@ -346,6 +348,16 @@ def _validate_open_tensions(items: Any, decision_ids: set[str]) -> None:
         _require(t["id"] not in seen, f"{where}.id: 중복 {t['id']}")
         seen.add(t["id"])
         _require(t["status"] in {"open", "resolved"}, f"{where}.status: open/resolved")
+        # 2026-09-17 FIX-62: `resolved` 로 바꾸면서 결론을 적지 않으면 긴장이 조용히 사라진다.
+        # 무엇으로 닫혔는지와 언제 닫혔는지를 같이 요구한다.
+        if t["status"] == "resolved":
+            _require(isinstance(t.get("resolution"), str) and t["resolution"].strip(),
+                     f"{where}.resolution: 해소된 긴장은 결론을 적어야 함")
+            _require(isinstance(t.get("resolved_at"), str) and DATE_RE.match(t.get("resolved_at") or ""),
+                     f"{where}.resolved_at: 해소 시점(YYYY-MM-DD)이 필요함 — {t.get('resolved_at')!r}")
+        else:
+            _require("resolution" not in t and "resolved_at" not in t,
+                     f"{where}: 열린 긴장에는 결론·해소 시점을 적지 않는다")
         _require(isinstance(t["recheck_at"], str) and RECHECK_RE.match(t["recheck_at"]),
                  f"{where}.recheck_at: YYYY-MM 재검토 시점이 필요함 — {t['recheck_at']!r}")
         _require(isinstance(t["judgment_ids"], list) and t["judgment_ids"] and all(isinstance(j, str) and j for j in t["judgment_ids"]),

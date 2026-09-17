@@ -44,7 +44,7 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
                          {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                          "openai": 2, "oracle": 2})
+                          "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 TTM 매출 · P2
     def test_ttm_revenue_registered_as_its_own_metric(self):
@@ -210,10 +210,13 @@ class Stage1Test(unittest.TestCase):
 
     def test_openai_f9_evidence_reads_the_current_scale(self):
         ev = self.j["openai.F9"]["evidence"]
-        self.assertIn("현재 척도는 -4 다", ev[0])
+        self.assertIn("현재 척도는 -4 다", ev[0])            # 하한 재척도는 그대로다
         self.assertTrue(any("~~-5~~" in e for e in ev))
         self.assertTrue(any("~~-5(바닥)~~" in e for e in ev))
-        self.assertEqual(self.res["openai"]["factors"]["F9"]["score"], -4)
+        # 2026-09-17 FIX-62: 경로가 C-20 으로 바뀌어 하한을 받지 않는다. 표시 줄이 그 사실까지 말해야 한다.
+        self.assertIn("**F9 = -2** 다", ev[0])
+        self.assertIn("~~엔진 경로는 `G1 BEP 후퇴 → -4`", ev[0])
+        self.assertEqual(self.res["openai"]["factors"]["F9"]["score"], -2)
         self.assertEqual(self.j["openai.F9"]["inputs"]["bep_retreat"], "yes")       # 판정 입력은 그대로
         self.assertIn("현재 척도는 -4 다", self.md)
 

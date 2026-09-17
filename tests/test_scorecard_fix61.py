@@ -44,7 +44,7 @@ class Fix61Test(unittest.TestCase):
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
                          {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                          "openai": 2, "oracle": 2})
+                          "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 문면 모순 셋
     def test_no_place_still_calls_the_precedence_undecided(self):
@@ -69,10 +69,13 @@ class Fix61Test(unittest.TestCase):
         self.assertIn("두 경로가 만나도 결과는 같다", line)
         self.assertNotIn("미결이다", line)
         self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)
-        # 경고 문구도 같이 고쳤다.
-        warns = self.res["openai"]["factors"]["F9"]["warnings"]
-        w = next(x for x in warns if "BEP 후퇴" in x)
-        self.assertIn("우선순위는 확정됐다", w)
+        # 경고 문구도 같이 고쳤다. 2026-09-17 FIX-62 로 openai 가 C-20 경로로 옮겨가 이 실행에서는
+        # C-06 경고가 서지 않는다 — 문면은 코드에서 확인하고, 실행에는 뒤집기 경고가 대신 선다.
+        code = (SRC / "calc_f9.py").read_text(encoding="utf-8")
+        self.assertIn("**우선순위는 확정됐다**", code)
+        self.assertNotIn("우선순위 명문화는 결정 대기", code)
+        w = next(x for x in self.res["openai"]["factors"]["F9"]["warnings"] if "BEP 후퇴" in x)
+        self.assertIn("C-20 이 앞선다", w)
         self.assertNotIn("결정 대기", w)
 
     def test_precedence_records_that_the_order_is_unobservable(self):
@@ -80,6 +83,8 @@ class Fix61Test(unittest.TestCase):
         note = prec["also_precedes_loss_band"]
         self.assertIn("손실률 밴드보다도 앞선다", note)
         self.assertIn("결과는 같다", note)
+        # 2026-09-17 FIX-62: C-20 과의 순서만 뒤집혔고 손실률 밴드와의 순서는 그대로다.
+        self.assertIn("C-20 자체보다는 뒤로 밀렸다", note)
         f9 = RULES.payload["policies"]["f9"]
         deepest = min(b["score"] for b in f9["g1_bands_proposed"])
         self.assertEqual(f9["g1_bep_retreat_score"], deepest)       # 그래서 순서가 관측되지 않는다

@@ -26,7 +26,7 @@ class ExpectedTotalsTest(unittest.TestCase):
         # 2026-09-16 FIX-56 1단계: spacex-xai 11 → 9 (C-24 로 listed_newly 트랙이 P2 를 계산 — F6 -1 → -3). 다른 13개사는 불변이다.
         self.assertEqual(res, {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                                "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                               "openai": 2, "oracle": 2})
+                               "openai": 4, "oracle": 2})
 
 
 class TsmcStrictReadingTest(unittest.TestCase):

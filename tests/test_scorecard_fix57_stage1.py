@@ -38,7 +38,7 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
                          {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                          "openai": 2, "oracle": 2})
+                          "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 점수 경로
     def test_market_cap_on_score_path_is_twelve_and_all_unverified(self):

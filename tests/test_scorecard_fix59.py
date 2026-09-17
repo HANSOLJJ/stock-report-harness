@@ -51,17 +51,18 @@ class Fix59Test(unittest.TestCase):
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
                          {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                          "openai": 2, "oracle": 2})
+                          "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 openai.F9 경로
-    def test_bep_retreat_precedence_is_written_in_the_rules(self):
+    # 2026-09-17 FIX-62: 사용자가 같은 날 이 결정을 뒤집었다(C-29). 아래 둘은 **당시 결정이 지워지지 않고
+    # 보존 기록으로 남았는지**를 본다. 뒤집힌 뒤의 사실은 tests/test_scorecard_fix62.py 가 고정한다.
+    def test_bep_retreat_precedence_is_kept_as_a_superseded_record(self):
         spec = RULES.payload["policies"]["f9"]["g1_bep_retreat_precedence"]
-        self.assertIn("C-20 비상장 판정보다 앞선다", spec["rule"])
-        self.assertIn("and not bep_retreat", spec["where_in_code"])
-        self.assertEqual(spec["decided_by"], "사용자 (2026-09-17)")
-        code = (SRC / "calc_f9.py").read_text(encoding="utf-8")
-        self.assertIn("가 C-20 판정보다 앞선다", code)
-        self.assertIn("g1_bep_retreat_precedence", code)
+        self.assertEqual(spec["status"], "superseded")
+        old = spec["superseded_record"]
+        self.assertIn("C-20 비상장 판정보다 앞선다", old["rule"])
+        self.assertIn("and not bep_retreat", old["where_in_code"])
+        self.assertEqual(old["decided_by"], "사용자 (2026-09-17)")
         # 인용한 v1.5 행이 실제로 그 문장인지 원문에서 확인한다.
         if V15.is_file():
             lines = V15.read_text(encoding="utf-8").splitlines()
@@ -70,23 +71,24 @@ class Fix59Test(unittest.TestCase):
             self.assertIn("BEP 자체가 후퇴", lines[602])
             self.assertIn("계획·발표·포지션은 0점", lines[389])
 
-    def test_openai_route_kept_with_a_tension(self):
+    def test_the_tension_that_predicted_the_reversal(self):
         t = {x["id"]: x for x in RULES.payload["open_tensions"]}["TEN-RA5-02"]
-        self.assertEqual((t["judgment_ids"], t["recheck_at"], t["decision_id"]), (["openai.F9"], "2026-11", "C-20"))
-        self.assertIn("상향 가능", t["direction"])
-        self.assertIn("총점 2 → **4**", t["direction"])
+        self.assertEqual((t["judgment_ids"], t["recheck_at"]), (["openai.F9"], "2026-11"))
         self.assertIn("별표 D 388~390행", t["tension"])
         self.assertIn("assume_loss", t["tension"])
         self.assertEqual(t["third_party_recheck"], "committed")
-        # 현행 경로가 실제로 그대로다.
-        path = self.res["openai"]["factors"]["F9"]["calc"]["path"]
-        self.assertEqual(path[0]["band"], "BEP 후퇴 → -4")
-        self.assertEqual(self.res["openai"]["factors"]["F9"]["score"], -4)
-        self.assertEqual(self.res["openai"]["total"], 2)
-        # anthropic 과의 차이는 입력 한 칸이다.
+        # FIX-59 가 예고한 상향이 그대로 일어났다.
+        self.assertIn("총점 2 → **4**", t["direction"])
+        self.assertEqual(t["status"], "resolved")
+        self.assertEqual(self.res["openai"]["factors"]["F9"]["score"], -2)
+        self.assertEqual(self.res["openai"]["total"], 4)
+        # anthropic 과의 차이를 만들던 입력 한 칸은 그대로이나 이제 경로를 가르지 않는다.
         self.assertEqual(self.j["openai.F9"]["inputs"]["bep_retreat"], "yes")
         self.assertEqual(self.j["anthropic.F9"]["inputs"]["bep_retreat"], "no")
         self.assertTrue(any("bep_retreat` no 대 yes" in a for a in self.run_json["assumptions"]))
+        for cid in ("openai", "anthropic"):
+            with self.subTest(cid=cid):
+                self.assertEqual(self.res[cid]["factors"]["F9"]["calc"]["path"][0]["decision_id"], "C-20")
 
     # ---------------------------------------------------------------- S2 B 8차
     def test_how_to_measure_no_longer_contradicts_the_note_split(self):

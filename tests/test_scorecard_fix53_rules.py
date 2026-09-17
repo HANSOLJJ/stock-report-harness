@@ -48,7 +48,10 @@ class OpenTensionsTest(unittest.TestCase):
         for t in self.t.values():
             with self.subTest(tid=t["id"]):
                 self.assertEqual(t["recheck_at"], "2026-11")
-                self.assertEqual(t["status"], "open")
+                # 2026-09-17 FIX-62: TEN-RA5-02 가 첫 해소 사례다. 닫힌 것은 결론과 시점을 갖는다.
+                self.assertIn(t["status"], ("open", "resolved"))
+                if t["status"] == "resolved":
+                    self.assertTrue(t["resolution"].strip() and t["resolved_at"])
                 self.assertIn(t["id"].replace("TEN-", ""), t["review_finding"])
 
     def test_rc02_anthropic_f1_upward_and_non_claude(self):

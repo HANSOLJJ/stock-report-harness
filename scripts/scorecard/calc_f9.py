@@ -119,26 +119,36 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
                 margin = op_income / revenue
     bep_retreat = gi["bep_retreat"] == "yes"
     reviewed_sign = gi.get("operating_result_reviewed", "unknown")
-    # 2026-09-17 FIX-59 S1(사용자 결정 2026-09-17): **`bep_retreat: yes` 가 C-20 판정보다 앞선다.** 이 `and not
-    # bep_retreat` 가 그 우선순위이고, 그래서 openai 는 비상장 미공시여도 C-20 경로로 가지 않고 G1 실패(-4)로 간다.
-    # 근거는 채점규칙 470행(`-5 | 손실률 -30% 초과 · 또는 BEP 목표가 후퇴`)과 494·603행(v1.5 가 OpenAI 에 이름으로
-    # 적용). 규칙 문면은 policies.f9.g1_bep_retreat_precedence, 반대 의견과 상향 가능성은 긴장 TEN-RA5-02 다.
-    if margin is None and not bep_retreat:
-        if reviewed_sign == "profit":
-            # 손실률 수치는 없지만 검토된 TTM 영업흑자 부호만으로 G1 통과. 수치 확보 전까지 경고를 남긴다.
-            path.append({"gate": "G1", "result": "pass", "operating_margin_ttm": None, "basis": "operating_result_reviewed=profit"})
-            warnings.append("G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고")
-        elif _private_undisclosed_operating(company, obs, rules, run):
+    # 2026-09-17 FIX-62(사용자 결정 2026-09-17, **앞선 결정을 뒤집음**): **C-20 탐지가 `bep_retreat` 보다 먼저 선다.**
+    # 비상장이고 영업손익 관측이 구조적 미공시면 BEP 후퇴가 기록돼 있어도 C-20 경로로 간다.
+    #
+    # 뒤집은 근거는 판정 둘이다 — 비 Claude 판정(Gemini, `validation/openai-f9-route/gemini.md`)과 9차 재무 계산
+    # 재판정(체크리스트 Q11 fail · 승계 예외 불성립). 둘 다 **BEP 목표 후퇴는 전망이지 측정된 실적이 아니라는**
+    # 같은 이유를 든다(채점규칙 별표 D 388~390행 `계획·발표·포지션은 0점`). 밀린 쪽(채점규칙 470·494·603행이
+    # BEP 후퇴를 독립 조건으로 적고 OpenAI 에 이름으로 적용)은 규칙 decisions C-29 에 사유와 함께 남아 있다.
+    # FIX-59 가 넣었던 반대 문면은 policies.f9.g1_bep_retreat_precedence 에 **뒤집힌 기록**으로 보존한다.
+    if margin is None:
+        if _private_undisclosed_operating(company, obs, rules, run):
             # C-20. **통과가 아니라 판정 보류다.** 단일 분기 영업흑자를 G1 통과 근거로 쓰지 않되,
             # 비상장이고 구조적으로 미공시면 영구 보류로 두지도 않고 G2 비상장 조항으로 보낸다.
             path.append({"gate": "G1", "result": "undetermined",
                          "reason": "비상장이라 TTM 영업손익이 구조적 미공시 — 판정 보류(통과 아님). "
                                    "단일 분기 영업흑자를 통과 근거로 쓰지 않는다",
-                         "route": "G2 비상장 경로", "decision_id": "C-20"})
+                         "route": "G2 비상장 경로", "decision_id": "C-20",
+                         **({"bep_retreat_not_applied": "C-29 — BEP 후퇴가 기록돼 있으나 전망이라 이 경로를 막지 않는다"}
+                            if bep_retreat else {})})
             warnings.append("C-20: G1 판정 보류 후 비상장 경로 — 통과로 읽지 않는다")
-        else:
-            path.append({"gate": "G1", "result": "pending", "reason": "TTM 영업손익·손실률 관측 없음(단일 분기·조정 손익으로 대체하지 않음, C-20)"})
-            return done(None, "pending_data", pending_info("data", "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"))
+            if bep_retreat:
+                warnings.append("C-29: BEP 후퇴가 기록돼 있으나 **C-20 이 앞선다**(사용자 결정 2026-09-17, 앞선 결정 뒤집음) "
+                                "— 전망·목표로 손실을 단정하지 않는다(별표 D 388~390행)")
+        elif not bep_retreat:
+            if reviewed_sign == "profit":
+                # 손실률 수치는 없지만 검토된 TTM 영업흑자 부호만으로 G1 통과. 수치 확보 전까지 경고를 남긴다.
+                path.append({"gate": "G1", "result": "pass", "operating_margin_ttm": None, "basis": "operating_result_reviewed=profit"})
+                warnings.append("G1: TTM 영업손익 수치 없이 검토된 부호(profit)로 통과 — TTM 수치 확보 권고")
+            else:
+                path.append({"gate": "G1", "result": "pending", "reason": "TTM 영업손익·손실률 관측 없음(단일 분기·조정 손익으로 대체하지 않음, C-20)"})
+                return done(None, "pending_data", pending_info("data", "TTM 영업손익 관측 필요(손실이면 손실률 수치 필요)"))
 
     if margin is not None and margin == 0 and not bep_retreat:
         path.append({"gate": "G1", "result": "zero", "reason": "영업손익 0 처리 미결(C-06)"})
@@ -159,7 +169,8 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             path.append({"gate": "G1", "result": "fail", "operating_margin_ttm": margin, "band": f"BEP 후퇴 → {base}", "score": base})
             # 2026-09-17 FIX-61(9차 재판정): FIX-59 가 우선순위를 확정했는데 이 문구가 아직 `결정 대기` 라고 말했다.
             warnings.append(f"C-06: BEP 후퇴 {base} 는 원문 OR 조건을 적용. **우선순위는 확정됐다** — "
-                            "policies.f9.g1_bep_retreat_precedence(사용자 결정 2026-09-17). "
+                            "**C-20 비상장 경로가 앞서고**(C-29, 사용자 결정 2026-09-17으로 앞선 결정 뒤집음) "
+                            "이 자리는 상장사이거나 구조적 미공시가 아닌 경우에만 선다. 그때는 손실률 밴드보다 앞선다. "
                             "C-06 의 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세 정의다")
         else:
             choice = decision_choice(run, rules, "C-06")

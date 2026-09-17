@@ -46,7 +46,7 @@ class Stage2Test(unittest.TestCase):
         self.assertEqual({c: r["total"] for c, r in self.res.items()},
                          {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
                           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
-                          "openai": 2, "oracle": 2})
+                          "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 긴장 등록 범위
     def test_every_judgment_with_the_harness_mark_is_registered_in_a_tension(self):
@@ -126,9 +126,13 @@ class Stage2Test(unittest.TestCase):
         self.assertIn("no_extra_penalty_because", g4)
         self.assertNotIn("step", g4)
         self.assertEqual(ant["score"], -2)
+        # 2026-09-17 FIX-62: openai 가 C-20 비상장 경로로 옮겨 가 anthropic 과 같은 네 게이트를 밟는다.
         oai = self.res["openai"]["factors"]["F9"]
-        self.assertEqual([p["gate"] for p in oai["calc"]["path"]], ["G1", "G1", "G3/G4"])
-        self.assertEqual(oai["score"], -4)
+        self.assertEqual([p["gate"] for p in oai["calc"]["path"]], ["G1", "G2", "G3", "G4"])
+        self.assertEqual(oai["score"], -2)
+        oai_g4 = next(p for p in oai["calc"]["path"] if p["gate"] == "G4")
+        self.assertEqual(oai_g4["result"], "incompatible")
+        self.assertNotIn("step", oai_g4)
         self.assertTrue(any("C-16 한 칸 강등에 닿지 않는다" in a for a in self.run_json["assumptions"]))
 
     # ---------------------------------------------------------------- S4 결측 요건 · 낡은 이유 · 표시
