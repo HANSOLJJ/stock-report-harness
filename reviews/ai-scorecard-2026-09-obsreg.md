@@ -1,20 +1,20 @@
 ---
 slug: ai-scorecard-2026-09-obsreg
 report_type: ai_scorecard
-status: needs_fix
+status: pass
 created_at: 2026-09-11
 plan_source: plan/ai-scorecard-2026-09-obsreg.md
 research_source: research/ai-scorecard-2026-09-obsreg.md
 draft_source: drafts/ai-scorecard-2026-09-obsreg.md
-results_hash: d41598800167ccd61b915b486535f3abb2d4bdc0af04305acf0c54fa8c4572be
-draft_hash: 16d842d102300eb68eab9e45af6d4aba5ecaffe25068fd34ff9339f4c61669a1
+results_hash: a5b80e711160594507d765f4084f62b3a0a2aec13e956ffdc7a876691f284d46
+draft_hash: 1bf1408291a0d34bf3580d556279bc0e4fe6caef8dda7720584bdfa6e6f30c5e
 review_type: separate-session-4way
 review_execution: separate_subagent_sessions
 reviewers:
-  - "fact-sources: pending"
-  - "financial-calc: pending"
-  - "rule-consistency: pending"
-  - "output-readability: pending"
+  - "fact-sources: pass (8차 · Gemini 독립 세션)"
+  - "financial-calc: 8차 needs_fix — FIX-59 로 반영 완료. 남은 지적은 미결·긴장으로 이관 (재계산에서 점수·소계·밴드·게이트 경로 불일치 0)"
+  - "rule-consistency: pass (8차 · Gemini 독립 세션)"
+  - "output-readability: pass (8차 · Gemini 독립 세션, low 둘 반영)"
 ---
 # 리뷰 — AI 기업 9-factor 채점표 — SEC 실측 관측 반영(v1.7)
 
@@ -24,15 +24,20 @@ reviewers:
 
 | 영역 | 검토 대상 | 검토자 | 결과 | 요약 |
 | --- | --- | --- | --- | --- |
-| 사실·출처 | 숫자·기업 귀속·기준 시점·공시·뉴스·부재 주장·이해상충 |  | pending |  |
-| 재무 계산 | EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호 |  | pending |  |
-| 규칙 일관성 | factor 정의·상하한·예외·중복 속성·정성 승계·전 기업 동일 기준 |  | pending |  |
-| 출력·가독성 | 표·카드·근거·차트·이력 일치, 낡은 비교 문장, 모바일·단일 HTML |  | pending |  |
+| 사실·출처 | 숫자·기업 귀속·기준 시점·공시·뉴스·부재 주장·이해상충 | 8차 Gemini 독립 세션 | pass | 발견 사항 없음. 분담(부재 주장 전수, Claude 독립 세션)은 needs_fix 였고 FIX-58 2단계·FIX-59 로 전부 반영했다 — 상대방 제출본까지 범위를 넓혀 다시 훑었고 등록할 사실은 없었다. |
+| 재무 계산 | EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호 | 8차 독립 세션 | **needs_fix — FIX-59 로 반영** | **pass 가 아니다.** 8차 재계산에서 점수·소계·밴드·경계·게이트 경로가 한 칸도 어긋나지 않았고 지적은 전부 기록 수준이었다. 셋을 이번에 반영했고(순현금 측정 문면 · 잔여분 민감도 · C-26 기준일) 남은 것은 미결 C-26·C-27·C-28 과 긴장으로 옮겼다. |
+| 규칙 일관성 | factor 정의·상하한·예외·중복 속성·정성 승계·전 기업 동일 기준 | 8차 Gemini 독립 세션 | pass | 발견 사항 없음. 7차에서 든 `선언에 소비자 없음` 세 건(C-11·C-13·C-24)은 FIX-57·FIX-58 에서 정리했다. |
+| 출력·가독성 | 표·카드·근거·차트·이력 일치, 낡은 비교 문장, 모바일·단일 HTML | 8차 Gemini 독립 세션 | pass | low 둘. 자동 산출 factor 의 기준선 참고 블록이 옛 점수로 시작하던 것을 FIX-59 에서 현재 점수가 첫 줄에 오게 고쳤다. HTML 이해상충 문구의 동적 연산은 정상 동작 확인(조치 없음). |
 
 결과는 pass / needs_fix / blocked 중 하나. 네 영역이 모두 pass 이고 체크리스트에 fail 이 없을 때만 frontmatter `status: pass`.
 **승계 판단 예외(AGENTS.md 리뷰 범위)** — 체크리스트 fail 의 사유가 `carried_score` 로 승계한 판단의 기존 논리이고, 이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며, 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 이때 해당 fail 과 **긴장 번호**(예: `TEN-RC-02`)를 근거 칸에 그대로 적는다. 이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다 — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(Q03).
 
 ## 체크리스트
+
+**Q01~Q23 은 이 파일에서 다시 돌리지 않았다.** 여덟 라운드 동안 네 영역의 독립 세션이 라운드마다 체크리스트를 적용했고
+**질문별 기록은 `review-obsreg` 저장소의 part 파일에 있다**(최종 라운드는 커밋 `e5a47d3`). 이 템플릿은 라운드 결과를
+싣는 자리이고, 아래 표를 `pass` 로 채우면 수행하지 않은 검토를 수행한 것으로 적는 것이 된다 — 그래서 `pending` 으로 둔다.
+`status: pass` 는 아래 `## 판정` 의 종료 결정에 근거한 것이지 이 표를 다시 채워서가 아니다.
 
 | ID | 검사 초점 | 결과 | 근거 |
 | --- | --- | --- | --- |
@@ -64,9 +69,18 @@ reviewers:
 
 ## 발견 사항
 
-- (파일·섹션 단위로 기록)
+- **8차 발견은 전부 FIX-59 에서 반영했다.** 점수를 바꾼 것은 하나도 없다.
+  - 재무 계산 — `policies.f6.net_cash.securities_scope.how_to_measure` 의 `대차대조표 줄만 쓴다` 가 주석 분할 처리와 어긋나던 것을 좁혔고, 시장성 증권 잔여분 민감도 네 회사를 규칙에 적었다(밴드 이동 0). `C-26` 에 G4 분자·분모의 기준일·성질 차이를 합쳤다.
+  - 사실·출처 분담 — `spacex-xai.F7` 의 계약 동일성 단정을 철회하고 관계자 거래 문면을 주석대로 고쳤다. 보존 원문 전수를 밑줄 없는 `raw/` 폴더까지 넓혀 다시 훑었고 **새로 나오는 사실은 없다**. alphabet 은 10-Q 표지 조각만 보존돼 있어 `anthropic.F8` 서술을 `본문이 없다` 로 좁혔다. C-03 이 F2 잣대를 교체해 승계 예외 요건을 엄밀히는 못 채운다는 사실을 `decisions C-03` 과 `TEN-RA4-01` 에 적었다.
+  - 출력·가독성 — 자동 산출 factor 의 근거 블록 첫 줄에 이번 실행 점수를 세웠다.
+- **openai.F9 경로** — 비 Claude 판정자(Gemini)가 `C-20 우선`(F9 -2 · 총점 4)으로 판정했고, **사용자가 현행 -4 유지 + 긴장 등록**을 골랐다(2026-09-17). 우선순위 문면은 `policies.f9.g1_bep_retreat_precedence`(채점규칙 470·494·603행), 반대 의견과 상향 가능성은 **TEN-RA5-02**(2026-11 · 비 Claude 세션)에 있다.
+- **남은 기록성 지적은 미결·긴장으로 옮겼다** — 미결 C-23·C-25·C-26·C-27·C-28, 긴장 TEN-RA5-01(anthropic.F8 근거 확인 불가)·TEN-RA5-02(openai.F9 경로) 포함. 전부 재검토 시점 2026-11 이 붙어 있고 **2026-11 재채점의 입력**으로 쓴다.
 
 ## 판정
 
-- results_hash `d41598800167ccd6…` · draft_hash `16d842d102300eb6…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
+- **이 라운드는 여기서 끝난다(사용자 결정 2026-09-17).** 선택지 넷 — ①9차로 마무리 ②FIX-59 만 하고 승인 ③지금 바로 승인 ④B·A분담 pass 때까지 — 중 **②**를 골랐다. 근거는 **6·7·8차 연속으로 점수 변경이 0** 이고 남은 발견이 전부 기록 수준이라는 것이다. **9차 리뷰는 하지 않는다.**
+- `status: pass` 가 뜻하는 것과 뜻하지 않는 것.
+  - 뜻하는 것 — 네 영역 중 셋이 8차에서 pass 이고, 재무 계산의 8차 지적은 이번 반영으로 닫혔거나 재검토 시점이 붙은 미결·긴장으로 옮겨졌다. 14개사 총점은 6차 이후 한 칸도 바뀌지 않았다.
+  - **뜻하지 않는 것** — 재무 계산 영역의 8차 결과 자체는 `needs_fix` 였고 이 표에 그대로 적었다. 체크리스트 Q01~Q23 을 이 파일에서 다시 돌린 것도 아니다. **사실을 pass 로 바꿔 적지 않았다.**
+- results_hash `a5b80e7111605945…` · draft_hash `1bf1408291a0d34b…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
 - **두 해시의 뜻이 다르다.** `results_hash` 는 `results.json` 에서 `results_hash` 키를 뺀 내용의 정렬 JSON 해시이고(`engine.sha256_obj`) **파일 바이트 sha256 과 다르다.** `draft_hash` 는 초안 **파일 바이트 sha256** 이다. 대조할 때 섞지 않는다.
