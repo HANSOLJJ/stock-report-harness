@@ -42,6 +42,13 @@ class SharedRenderTest(unittest.TestCase):
         i = self.html.index(f'id="card-{cid}"')
         return self.html[i:self.html.index("</details>", i)]
 
+    @staticmethod
+    def unlink(html: str) -> str:
+        """2026-09-17 FIX-66: 본문 코드에 색인 링크가 붙었다. **문장은 그대로**라는 것이 이 검사의 요지이므로
+        비교 전에 표시 장치만 벗긴다(`<a class="tcode">P1<span class="tname">…</span></a>` → `P1`)."""
+        html = re.sub(r'<span class="tname">[^<]*</span>', "", html)
+        return re.sub(r'<a class="tcode(?: first)?" href="#idx-[^"]+">([^<]*)</a>', lambda m: m.group(1), html)
+
     def frow(self, cid: str, label: str) -> str:
         card = self.card(cid)
         i = card.index(f'<span class="flab">{label}</span>')
@@ -98,7 +105,7 @@ class SharedRenderTest(unittest.TestCase):
                 self.assertIn(text, self.md)
                 # 2026-09-17 FIX-65 S3: HTML 은 같은 문장을 표시 변환(백틱 → <code>)만 거쳐 싣는다.
                 # 초안은 마크다운 원문 그대로다 — 둘이 같은 출처에서 온다는 것이 이 검사의 요지다.
-                self.assertIn(rc.inline_html(text), self.frow(c["company_id"], "⑥ 가격"))
+                self.assertIn(rc.inline_html(text), self.unlink(self.frow(c["company_id"], "⑥ 가격")))
         tsmc = rc.factor_calc_text("F6", {c["company_id"]: c for c in self.results["companies"]}["tsmc"]["factors"]["F6"])
         self.assertIn("P1 PER", tsmc)
         self.assertIn("P4 -1(period_basis_not_ttm)", tsmc)
@@ -115,7 +122,7 @@ class SharedRenderTest(unittest.TestCase):
     def test_g3_boundary_in_both(self):
         text = "G3 런웨이 3.03년(임계 3년 대비 +0.9% ⚠️ 경계)"
         self.assertIn(text, self.md)
-        self.assertIn(text, self.frow("spacex-xai", "⑨ 적자 깊이"))
+        self.assertIn(text, self.unlink(self.frow("spacex-xai", "⑨ 적자 깊이")))
 
     # ---------------------------------------------------------------- S3 원자료·방법·트리거
     def test_raw_tables_share_v17_wording(self):
@@ -125,7 +132,8 @@ class SharedRenderTest(unittest.TestCase):
                 self.assertNotIn(stale, self.html)
         for shared in (rc.raw_caption(self.ctx), rc.price_notice(self.ctx), rc.cash_definition_note(self.ctx), rc.vendor_policy_note(self.ctx)):
             self.assertIn(shared, self.md)
-            self.assertIn(rc.inline_html(shared), self.html)
+            # 2026-09-17 FIX-66: HTML 쪽은 코드에 색인 링크가 붙는다. 문장이 같다는 것이 요지다.
+            self.assertIn(rc.inline_html(shared), self.unlink(self.html))
         self.assertEqual(self.html_text.count("열별 관측 상태:"), 2)
         self.assertIn(f"하한 {rc.f9_policy(self.ctx, 'floor')}.", self.html_text)
 

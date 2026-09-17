@@ -238,6 +238,35 @@ tr.priv{opacity:.75}
 .mdec>summary .gist{color:var(--tx2);flex:1 1 200px;min-width:0;line-height:1.6}
 .mdec .full{padding:0 12px 12px;font-size:var(--fs-sm);line-height:1.75;color:var(--tx);border-top:1px solid var(--line);padding-top:10px;overflow-wrap:anywhere}
 .mdec .full .pick{display:block;margin-top:8px;color:var(--tx3)}
+/* 2026-09-17 FIX-66: 본문 코드 → 색인. 절마다 첫 등장에만 이름을 같이 보인다. */
+/* 문장 속 링크라 WCAG 2.5.8 의 inline 예외에 들지만, 좁은 화면에서 실제로 누를 수 있어야 한다.
+   좌우 여백으로 24px 를 채우고 음수 마진으로 글줄 간격은 그대로 둔다. */
+.tcode{display:inline-block;min-width:24px;min-height:24px;line-height:20px;padding:2px 5px;margin:0 -3px;text-align:center;border-radius:4px;border-bottom:1px dotted var(--tx3);color:inherit;text-decoration:none;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tcode:hover,.tcode:focus-visible{background:var(--acc-soft);border-bottom-color:var(--acc);color:var(--acc-text);text-decoration:none}
+.tcode.first{border-bottom:none}
+.tcode .tname{margin-left:4px;padding:1px 6px;border-radius:5px;background:var(--bg3);color:var(--tx2);font-size:.85em;font-weight:600}
+.ixblk{background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin:10px 0;overflow:hidden}
+.ixblk>summary{padding:14px 16px;cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:6px 12px;flex-wrap:wrap;min-height:44px;font-size:var(--fs-md)}
+.ixblk>summary::-webkit-details-marker{display:none}
+.ixblk>summary::after{content:'▾';color:var(--tx3);margin-left:auto}
+.ixblk[open]>summary::after{content:'▴'}
+.ixblk .ixlead{color:var(--tx2);flex:1 1 260px;min-width:0;line-height:1.6;font-size:var(--fs-sm)}
+.ixbody{border-top:1px solid var(--line);padding:6px 16px 14px}
+.ixrow{display:grid;grid-template-columns:minmax(118px,max-content) minmax(110px,24ch) 1fr;gap:4px 16px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);scroll-margin-top:16px}
+.ixrow:last-child{border-bottom:none}
+.ixrow:target{background:var(--acc-soft);border-radius:8px;padding-left:8px;padding-right:8px}
+.ixid{font-weight:800;color:var(--acc-text);font-variant-numeric:tabular-nums;word-break:keep-all}
+.ixname{font-weight:700;color:var(--tx);min-width:0}
+.ixnote{color:var(--tx2);line-height:1.7;min-width:0;overflow-wrap:anywhere;font-size:var(--fs-sm)}
+.ixsrc{display:block;margin-top:4px;color:var(--tx3);font-size:.9em}
+/* 결정 요약이 내부 메모일 때 이 실행에서 무엇을 뜻하는지 덧붙이는 자리(FIX-66 S3). */
+.runnote{display:block;margin-top:8px;padding-left:10px;border-left:2px solid var(--acc-line);color:var(--tx2);line-height:1.7}
+@media(max-width:640px){.ixrow{grid-template-columns:1fr;gap:2px}.ixrow .ixnote{margin-top:4px}}
+/* 상태와 근거는 다른 정보인데 붙어 한 단어처럼 읽혔다(`승계 manual`). 라벨을 달아 가른다. */
+.fst{display:inline-flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.fst .k{color:var(--tx3);font-size:.88em}
+.fst .sep{color:var(--line)}
+.fst .weak{color:var(--warn-text)}
 /* 2026-09-17 FIX-65 S4: 14행짜리 막대를 폰 폭에 비율로 욱여넣으면 글자가 6px 로 줄어 읽히지 않는다.
    좌표계를 720 으로 좁게 잡고 여기서 아래 하한·상한을 준다 — 좁은 화면은 이 칸 안에서만 가로로 스크롤된다. */
 .mtwrap{overflow-x:auto}
@@ -510,6 +539,19 @@ def render_incomplete(results: dict[str, Any], rules: Any) -> str:
             + (f'<h3>필요한 규칙 결정</h3><ul class="tight">{decisions}</ul>' if decisions else ""))
 
 
+def status_basis(fr: dict[str, Any]) -> str:
+    """상태와 근거를 **다른 정보**로 보이게 한다. 붙여 쓰면 `승계 manual` 이 한 단어로 읽힌다(FIX-66 S2).
+
+    `carried` 는 기준선에서 숫자만 넘어와 입력이 복원되지 않은 칸이라 근거가 가장 약하다 — 그것이 보여야 한다.
+    """
+    status, basis = fr["status"], fr["basis"]
+    weak = ' weak' if basis == "carried" else ""
+    tip = " 숫자만 승계" if basis == "carried" else ""
+    return (f'<span class="k">상태</span>{esc(STATUS_LABEL.get(status, status))}'
+            f'<span class="sep">|</span><span class="k">근거</span>'
+            f'<span class="{("b" + weak).strip()}">{esc(basis)}{tip}</span>')
+
+
 def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]],
                  observations: list[dict[str, Any]] | None = None, judgments: list[dict[str, Any]] | None = None,
                  reps: list[dict[str, Any]] | None = None) -> str:
@@ -543,7 +585,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 calc = factor_calc_text(f, fr)
                 src = f'<div class="fsrc">{inline_html(block["header"])}</div>' if block is not None else ""
                 body = (src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else ""
-                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{esc(STATUS_LABEL.get(fr["status"], fr["status"]))} · {esc(fr["basis"])}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
+                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
@@ -663,6 +705,22 @@ def method_block(ctx: Any, text: str) -> str:
     return f'<div class="mblk">{head}<p class="mtext">{inline_html(body)}</p>{_decision_chips(ctx, text)}</div>'
 
 
+def _asof_dates(ctx: Any) -> tuple[str, str, str]:
+    run = getattr(ctx, "run", None) or {}
+    base = run.get("as_of") or ""
+    return base, run.get("price_as_of") or base, run.get("info_cutoff") or base
+
+
+def _asof_line(ctx: Any) -> str:
+    """C-17 은 세 날짜를 **분리 기록**하라는 권고다. 값이 같으면 세 번 반복하지 말고 같다는 사실을 적는다."""
+    base, price, cutoff = _asof_dates(ctx)
+    if base == price == cutoff:
+        return (f'기준일 · 가격 기준일 · 정보 컷오프가 모두 <b>{esc(base)}</b> 로 같다'
+                f'(C-17 은 셋을 따로 기록하라는 권고이고, 이번 실행은 값이 같아 한 번만 적는다)')
+    return (f'기준일 {esc(base)} · 가격 기준일 {esc(price)} · 정보 컷오프 {esc(cutoff)}'
+            f'(C-17 권고대로 셋을 따로 기록했고 이번 실행은 값이 다르다)')
+
+
 def render_method(ctx: Any, results: dict[str, Any]) -> str:
     rules = ctx.rules
     rows = "".join(f'<tr><td class="name">{esc(FACTOR_LABELS[f])}</td><td>{esc(rules.factor(f)["mode"])}</td><td class="mono">{rules.factor(f)["range"][0]}~{rules.factor(f)["range"][1]}</td><td class="text narrow">{esc(", ".join(rules.factor(f).get("decision_ids", [])) or "—")}</td></tr>' for f in FACTOR_IDS)
@@ -670,7 +728,7 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     drows = "".join(f'<tr><td class="mono">{esc(d["id"])}</td><td class="text">{inline_html(d["summary"])}</td><td class="text">{inline_html(d.get("recommendation", ""))}</td><td>{esc(next((r["choice"] for r in ctx.run["decisions"] if r["id"] == d["id"]), "미결"))}</td></tr>' for d in pending)
     return (
         f'<ul class="tight"><li>규칙 <b>{esc(rules.version)}</b> · 해시 <code>{esc(rules.hash[:16])}…</code> · 원본 {esc(rules.payload["source"]["file"])}</li>'
-        f'<li>기준일 {esc(ctx.run["as_of"])} · 가격 기준일 {esc(ctx.run.get("price_as_of") or ctx.run["as_of"])} · 정보 컷오프 {esc(ctx.run.get("info_cutoff") or ctx.run["as_of"])} — 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있으며 이번 실행에서 재검증하지 않았다(C-17)</li>'
+        f'<li>{_asof_line(ctx)} — 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있으며 이번 실행에서 재검증하지 않았다(C-17)</li>'
         f'<li>입력 해시: observations <code>{esc(ctx.hashes["observations"][:12])}…</code> · judgments <code>{esc(ctx.hashes["judgments"][:12])}…</code> · results <code>{esc(results["results_hash"][:12])}…</code></li>'
         f'<li>실행 단위 결정: {esc(", ".join(results["decisions_applied"]) or "없음")}</li></ul>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th><th>자동화</th><th>범위</th><th class="text narrow">관련 결정</th></tr></thead><tbody>{rows}</tbody></table></div>'
@@ -767,6 +825,123 @@ def render_availability(avail: dict[str, Any], ctx: Any, results: dict[str, Any]
     ])
 
 
+# 2026-09-17 FIX-66: F·G·P 번호와 상태·근거 어휘에 뜻이 없어 읽는 사람이 코드를 해독할 수 없었다.
+# **문구는 전부 규칙 파일이나 코드가 실제로 하는 일에서 끌어온다** — 여기서 새로 짓지 않는다.
+GATE_LINE_RE = re.compile(r"(G[1-4])\s+([^(→]+?)\(([^)]*)\)")
+
+# `basis` 는 그 점수를 만든 방식이다. 각 설명 옆의 파일·행이 값을 붙이는 자리다.
+BASIS_DOC = {
+    "computed": ("관측에서 산식으로 계산", "등록된 관측값을 규칙의 산식·구간에 넣어 엔진이 만든 점수다. "
+                 "⑥ 는 P1~P4, ⑨ 는 G1~G4 를 차례로 태운다.", "calc_f6.py:140 · calc_f9.py:89"),
+    "manual": ("사람이 매긴 점수", "규칙이 `mode: manual` 로 둔 칸이다(①④⑧). 엔진이 계산할 산식이 없고 "
+               "판단자가 적은 점수와 근거 문장을 그대로 쓴다.", "calc_qual.py:30"),
+    "carried": ("입력이 복원되지 않아 숫자만 승계", "**근거가 가장 약한 칸이다.** 기준선에서 점수 숫자만 넘어왔고 "
+                "그 점수를 만든 판정 입력이 남아 있지 않아 엔진이 다시 계산하지 못한다. ② 는 C-03(경로 판정), "
+                "⑦ 는 C-09(매트릭스 입력)가 그 자리다. 같은 `승계` 라도 `manual` 은 근거 문장이 남아 있고 "
+                "이쪽은 숫자뿐이다.", "calc_qual.py:45 (F2·C-03) · calc_qual.py:157 (F7·C-09)"),
+    "grade": ("등급 산식", "⑤ 아군 확보의 `3 + A + H` 처럼 판정 입력을 정해진 산식에 넣어 환산한 점수다.",
+              "calc_qual.py:146"),
+    "matrix": ("2×2 매트릭스", "⑦ 순환금융처럼 두 축의 판정(조달 의존 고객 비중 · 자기 자금 환류)을 표에서 찾아 "
+               "고른 점수다.", "calc_qual.py:171"),
+    "criteria": ("기준 사다리", "③ Last Mover 처럼 기준을 순서대로 통과해야 다음 칸으로 올라가는 사다리를 태운 "
+                 "점수다.", "calc_qual.py:134"),
+}
+
+
+def _gate_docs(ctx: Any) -> list[tuple[str, str, str]]:
+    """G1~G4 의 이름. **규칙 파일에는 게이트 이름 키가 없어** ⑨ 설명 줄에서 읽는다(문자열은 바꾸지 않는다)."""
+    line = next((x for x in rc.method_lines(ctx) if x.startswith("⑨")), "")
+    return [(m.group(1), m.group(2).strip(), m.group(3).strip()) for m in GATE_LINE_RE.finditer(line)]
+
+
+def _index_rows(rows: list[tuple[str, ...]], anchor: str = "idx") -> str:
+    out = []
+    for row in rows:
+        code, name, note = row[0], row[1], row[2]
+        src = row[3] if len(row) > 3 else ""
+        srcpart = f'<span class="ixsrc">근거 {esc(src)}</span>' if src else ""
+        out.append(f'<div class="ixrow" id="{anchor}-{esc(code)}"><span class="ixid">{esc(code)}</span>'
+                   f'<span class="ixname">{inline_html(name)}</span>'
+                   f'<span class="ixnote">{inline_html(note)}{srcpart}</span></div>')
+    return "".join(out)
+
+
+def index_terms(ctx: Any) -> dict[str, str]:
+    """본문 코드 → (첫 등장에 덧붙일 이름). 빈 문자열이면 링크만 걸고 이름은 붙이지 않는다.
+
+    ⑥ 파라미터는 본문이 이미 `P1 PER` 처럼 이름을 달고 나오므로 덧붙이면 겹친다(P4 만 이름이 없다).
+    factor 는 `alphabet.F9` 같은 판단 id 가 아닌 자리에서도 문맥이 factor 임을 알려 주므로 링크만 건다.
+    **G1~G4 는 이름이 어디에도 없어** 첫 등장에 붙인다.
+    """
+    terms: dict[str, str] = {f: "" for f in FACTOR_IDS}
+    terms.update({pid: "" for pid in ("P1", "P2", "P3")})
+    p4 = (ctx.rules.payload["policies"]["f6"].get("p4") or {}).get("label")
+    terms["P4"] = p4 or ""
+    for code, name, _note in _gate_docs(ctx):
+        terms[code] = name
+    for x in ctx.rules.payload.get("open_tensions") or []:
+        terms[x["id"]] = ""
+    return terms
+
+
+def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
+    """본문의 F·G·P·상태·근거 코드를 한자리에 모은다. 본문 코드가 여기로 이어진다."""
+    rules = ctx.rules
+    factors = [(f, f"{rules.factor(f)['label']}", f"자동화 {rules.factor(f)['mode']} · 범위 "
+                f"{rules.factor(f)['range'][0]}~{rules.factor(f)['range'][1]}") for f in FACTOR_IDS]
+    f6 = rules.payload["policies"]["f6"]
+    params = [(pid, f"{spec['label']}", spec.get("question", "")) for pid, spec in sorted(f6["parameters"].items())]
+    p4 = f6.get("p4") or {}
+    if p4.get("label"):
+        params.append(("P4", p4["label"], f"{p4.get('question', '')} — 개별 파라미터가 아니라 ⑥ 소계에 적용한다"))
+    gates = [(g, name, note) for g, name, note in _gate_docs(ctx)]
+    statuses = [(k, v, d) for k, v, d in [
+        ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다"),
+        ("carried_score", STATUS_LABEL["carried_score"], "기준선 v1.5 의 점수를 그대로 이어받았고 이번 실행에서 재검토하지 않았다"),
+        ("needs_judgment", STATUS_LABEL["needs_judgment"], "사람의 판정 입력이 없어 점수를 만들지 않았다"),
+        ("needs_rule_decision", STATUS_LABEL["needs_rule_decision"], "미결 규칙 결정(C-번호)이 걸려 점수를 만들지 않았다"),
+    ] if k in {c["factors"][f]["status"] for c in results["companies"] for f in FACTOR_IDS} or k in {"ok", "carried_score"}]
+    used_basis = {c["factors"][f]["basis"] for c in results["companies"] for f in FACTOR_IDS}
+    bases = [(k, BASIS_DOC[k][0], BASIS_DOC[k][1], BASIS_DOC[k][2]) for k in BASIS_DOC if k in used_basis]
+    tensions = [(x["id"], x.get("subject", ""), f"재검토 {x.get('recheck_at', '—')}"
+                 f"{' · 해소됨' if x.get('status') == 'resolved' else ''}")
+                for x in sorted(rules.payload.get("open_tensions") or [], key=lambda x: x["id"])]
+    groups = [
+        ("factor", "Factor F1~F9", "점수를 내는 9개 항목이다. 본문에서는 ①~⑨ 로도 쓴다.", factors),
+        ("param", "⑥ 파라미터 P1~P4", "⑥ 가격을 만드는 네 칸이다. P1~P3 을 더해 소계를 내고 P4 가 소계를 한 칸 내린다.", params),
+        ("gate", "⑨ 게이트 G1~G4", "⑨ 적자 깊이는 이 순서대로 통과·실패를 판정한다. 앞에서 막히면 뒤는 생략하거나 진단만 한다.", gates),
+        ("status", "상태(status)", "그 칸이 <b>이번 실행에서 어떻게 처리됐는지</b>를 말한다.", statuses),
+        ("basis", "근거(basis)", "그 점수를 <b>무엇으로 만들었는지</b>를 말한다. 상태와 근거는 다른 정보이고 카드에서 나란히 보인다.", bases),
+        ("ten", "긴장 TEN-번호", "이번 실행에서 판정하지 않고 재검토 시점과 함께 등록해 둔 자리다.", tensions),
+    ]
+    out = ['<h3 id="code-index">용어 색인</h3>',
+           '<p class="sub">본문의 코드를 누르면 여기로 온다. 아래 뜻은 규칙 파일과 계산 코드에서 가져온 것이고 이 자리에서 새로 쓰지 않았다.</p>']
+    for key, title, lead, rows in groups:
+        if not rows:
+            continue
+        out.append(f'<details class="ixblk" id="ix-{key}" open><summary><b>{title}</b>'
+                   f'<span class="ixlead">{lead}</span></summary><div class="ixbody">{_index_rows(rows)}</div></details>')
+    return "".join(out)
+
+
+def _decision_run_note(ctx: Any, did: str) -> str:
+    """결정 요약이 내부 메모라서 그대로는 뜻이 통하지 않는 자리에, 이 실행의 값을 덧붙인다.
+
+    **규칙 파일의 문면은 건드리지 않는다.** 여기서 만드는 문장은 표시용이고 실행값에서만 끌어온다.
+    """
+    if did != "C-17":
+        return ""
+    base, price, cutoff = _asof_dates(ctx)
+    if not base:
+        return ""
+    same = base == price == cutoff
+    return ("요약은 이 결정이 만들어진 계기를 적은 기록이다. 권고대로 세 날짜를 따로 기록하며, "
+            + (f"이번 실행에서는 기준일·가격 기준일·정보 컷오프가 모두 <b>{esc(base)}</b> 로 같다."
+               if same else
+               f"이번 실행에서는 기준일 <b>{esc(base)}</b> · 가격 기준일 <b>{esc(price)}</b> · "
+               f"정보 컷오프 <b>{esc(cutoff)}</b> 로 다르다."))
+
+
 def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> str:
     """화면에 노출된 C-번호마다 제목·의미·현재 결정·점수 영향을 펼쳐 보게 한다 (hover 의존 없음)."""
     blocks = []
@@ -792,7 +967,14 @@ def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> s
             impact = "적용한 선택이 채점 경로에 반영되었다."
         else:
             impact = "이번 실행의 점수에는 영향을 주지 않았다."
-        rows = [("무엇에 대한 결정인가", inline_html(d["summary"])), ("권고", inline_html(d.get("recommendation") or "—")),
+        # 2026-09-17 FIX-66 S3: 요약이 **결정을 만든 계기를 적은 내부 메모**인 경우가 있다(C-17 의
+        # `기준일 9/2 인데 9/3~9/7 사건이 섞임`). 규칙 파일은 고칠 수 없으므로(승인이 깨진다) 원문을 그대로
+        # 두고 이 실행에서 무엇을 뜻하는지를 옆에 덧붙인다.
+        summary_html = inline_html(d["summary"])
+        note = _decision_run_note(ctx, did)
+        if note:
+            summary_html += f'<span class="runnote">{note}</span>'
+        rows = [("무엇에 대한 결정인가", summary_html), ("권고", inline_html(d.get("recommendation") or "—")),
                 ("선택지", ", ".join(esc(x) for x in d.get("choices", [])) or "규칙 파일에 선택지 정의 없음"),
                 ("영향 factor", ", ".join(esc(FACTOR_LABELS.get(f, f)) for f in d.get("affects", [])) or "—"),
                 ("이번 실행 상태", state), ("점수 영향", impact)]
@@ -811,21 +993,66 @@ def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> s
             + "".join(blocks))
 
 
-def link_decision_codes(document: str, known: set[str], placeholder: str) -> str:
-    """본문 텍스트의 C-번호를 사전 항목 앵커로 바꾼다. 태그 속성·style·script 는 건드리지 않는다."""
+# 2026-09-17 FIX-66: F·G·P 도 색인으로 잇는다. 다만 셋은 본문에 수백 번 나와 **전부 링크하면 문장이 묻힌다**
+# (F 201 · G 111 · P 152회). **절마다 첫 등장 한 번만** 링크하고, 그 한 번에 이름을 같이 보인다.
+# 앞에 `.` 이 붙으면 판단 id(`alphabet.F9`), 뒤에 `-` 가 붙으면 작업 코드(`F5-IMPL-48`)라 건드리지 않는다.
+TERM_RE = re.compile(r"(?<![.\w가-힣])(F[1-9]|G[1-4]|P[1-4]|TEN-[A-Z0-9-]+)(?![\w.-])")
+
+
+def link_decision_codes(document: str, known: set[str], placeholder: str,
+                        terms: dict[str, str] | None = None) -> str:
+    """본문 텍스트의 코드를 색인 항목 앵커로 바꾼다. 태그 속성·style·script 는 건드리지 않는다."""
+    terms = terms or {}
+    # 링크는 **기업 카드마다 한 번**, 이름은 **절마다 한 번**이다. 전부 걸면 문장이 묻히고(F 201 · P 152회),
+    # 절마다 한 번만 걸면 접힌 카드를 펼친 사람이 통로를 못 만난다.
+    seen_link: set[str] = set()
+    seen_name: set[str] = set()
+
+    def one_term(m: re.Match[str]) -> str:
+        code = m.group(1)
+        if code not in terms or code in seen_link:
+            return code
+        seen_link.add(code)
+        name = terms[code] if code not in seen_name else ""
+        seen_name.add(code)
+        tail = f'<span class="tname">{name}</span>' if name else ""
+        cls = "tcode first" if tail else "tcode"
+        return f'<a class="{cls}" href="#idx-{code}">{code}{tail}</a>'
+
     def sub_text(m: re.Match[str]) -> str:
         text = m.group(1)
-        if "C-" not in text:
-            return m.group(0)
-        return ">" + CODE_RE.sub(lambda c: f'<a class="ccode" href="#dec-{c.group(0)}">{c.group(0)}</a>' if c.group(0) in known else c.group(0), text) + "<"
+        out = text
+        if "C-" in out:
+            out = CODE_RE.sub(lambda c: f'<a class="ccode" href="#dec-{c.group(0)}">{c.group(0)}</a>'
+                              if c.group(0) in known else c.group(0), out)
+        if terms:
+            out = TERM_RE.sub(one_term, out)
+        return m.group(0) if out == text else ">" + out + "<"
+
+    def run(chunk: str) -> str:
+        # 절(`<h2`)에서 둘 다 비우고, 기업 카드(`<details class="card"`)에서는 링크 기록만 비운다.
+        pieces = re.split(r'(<h2[\s>]|<details class="card")', chunk)
+        done = []
+        for piece in pieces:
+            if piece.startswith("<h2"):
+                seen_link.clear()
+                seen_name.clear()
+                done.append(piece)
+            elif piece.startswith('<details class="card"'):
+                seen_link.clear()
+                done.append(piece)
+            else:
+                done.append(re.sub(r">([^<>]*)<", sub_text, piece))
+        return "".join(done)
 
     parts = re.split(r"(<style>.*?</style>|<script>.*?</script>)", document, flags=re.S)
     for i in range(0, len(parts), 2):
         if placeholder in parts[i]:
             before, _, after = parts[i].partition(placeholder)
-            parts[i] = re.sub(r">([^<>]*)<", sub_text, before) + placeholder + re.sub(r">([^<>]*)<", sub_text, after)
+            # 색인 절 자체는 자기 자신을 가리키지 않게 둔다.
+            parts[i] = run(before) + placeholder + run(after)
         else:
-            parts[i] = re.sub(r">([^<>]*)<", sub_text, parts[i])
+            parts[i] = run(parts[i])
     return "".join(parts)
 
 
@@ -933,8 +1160,8 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 """
     document = re.sub(r"<th(?=[ >])", '<th scope="col"', document)
     used = sorted({m.group(0) for m in CODE_RE.finditer(document) if ctx.rules.decision(m.group(0)) is not None})
-    document = link_decision_codes(document, set(used), GLOSSARY_SLOT)
-    return document.replace(GLOSSARY_SLOT, render_glossary(ctx, results, used))
+    document = link_decision_codes(document, set(used), GLOSSARY_SLOT, index_terms(ctx))
+    return document.replace(GLOSSARY_SLOT, render_code_index(ctx, results) + render_glossary(ctx, results, used))
 
 
 # ------------------------------------------------------------------ 빌드
