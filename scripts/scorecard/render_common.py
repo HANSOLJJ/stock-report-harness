@@ -144,7 +144,7 @@ def rename_codes(text: str) -> str:
     def one(m: re.Match[str]) -> str:
         name = CODE_NAMES[m.group(1)]
         gap, nxt = m.group(2) or "", m.group(3) or ""
-        if nxt and nxt == name.split()[-1]:
+        if nxt and nxt == (name.split() or [""])[-1]:
             return name          # 뒤 공백은 매치 밖에 남아 있다 — 여기서 더하면 두 칸이 된다
         if nxt in JOSA_ALT or nxt in JOSA_GLUE:
             return fix_josa(name, gap, nxt)
@@ -589,17 +589,24 @@ def f9_policy(ctx: Any, key: str) -> Any:
     return (ctx.rules.payload.get("policies", {}).get("f9") or {}).get(key)
 
 
+# 2026-09-17 FIX-72 M2: 칸 수를 세는 표가 두 곳에 있었고 한쪽이 인라인 인덱싱이라 값이 표를 벗어나면
+# 방법 절 렌더가 IndexError 로 죽었다(`cap_steps=4`). **표는 한 벌만 두고 범위 밖은 숫자로 적는다.**
+_COUNT_WORDS = ("", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉")
+
+
+def _count(n: int) -> str:
+    """칸 수를 세는 말. 표 범위를 벗어나면 숫자를 그대로 쓴다 — 죽지 않는다."""
+    n = abs(int(n))
+    return _COUNT_WORDS[n] if 0 < n < len(_COUNT_WORDS) else str(n)
+
+
 def _steps(step: int) -> str:
     """감점 칸 수를 한국어 구로. 문장에 숫자를 박지 않고 계산 코드가 돌려준 값을 옮긴다.
 
     2026-09-17 FIX-71 R2: 전에는 0 일 때 `감점이 없고` 를 돌려줘 뒤에 `을 깎는다` 를 이어 붙이면
     문장이 깨졌다. **서술을 통째로** 돌려줘 이어 붙일 일이 없게 한다.
     """
-    n = abs(int(step))
-    if n == 0:
-        return "감점이 없다"
-    word = ["", "한", "두", "세", "네", "다섯"][n] if n < 6 else str(n)
-    return f"{word} 칸을 깎는다"
+    return "감점이 없다" if int(step) == 0 else f"{_count(step)} 칸을 깎는다"
 
 
 def _band_text(bands: list[dict[str, Any]], unit: str = "%") -> str:
@@ -639,6 +646,11 @@ def method_lines(ctx: Any) -> list[str]:
     mid = next((b for b in bands if b["score"] == deep + 1), None)
     shallow = next((b for b in bands if b["score"] == deep + 2), None)
     params = f6p["parameters"]
+    # 2026-09-17 FIX-72 M1: 신규 상장 트랙은 P3 를 분기 대 전년 동기 분기로 잰다. 판정 기준도 규칙에서 읽는다.
+    newly = f6p["tracks"].get("listed_newly") or {}
+    newly_params = newly.get("parameters") or []
+    newly_by_basis = "period_basis" in str(newly.get("select", ""))
+    newly_names = [rc_name for pid, rc_name in F6_PARAM_LABELS.items() if pid in newly_params]
     p4 = f6p["p4"]
     nonop = next(c for c in p4["conditions"] if c["id"] == "nonop_share")
     # 비상장 승격 조건 — 실측만 받는 제한이 있는지 규칙에서 읽는다(FIX-69 H2).
@@ -659,17 +671,23 @@ def method_lines(ctx: Any) -> list[str]:
     f6 = ([
         "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 아래 잣대를 각각 재서 더하고, 마지막에 입력을 "
         "믿을 수 있는지로 한 칸을 조정한다.",
-        "  - **다만 상장한 지 얼마 안 돼 비교할 전년 실적이 갖춰지지 않은 회사는 PER 을 재지 않고 나머지 둘로만 "
-        "소계를 낸다.** 이번 14개사 중 한 곳이 그 경우다.",
         f"  - **PER** — 시가총액을 최근 1년 순이익으로 나눈다. {_band_text(params['P1']['bands'], '배')}.",
         f"  - **EV/매출** — 시가총액에서 순현금을 뺀 값을 최근 1년 매출로 나눈다. {_band_text(params['P2']['bands'], '배')}.",
         f"  - **매출 성장** — 최근 1년 매출을 그 전 1년과 견준다. "
         + " · ".join(f"{b['lower']:.0%} 이상이면 {b['score']}" if b.get("lower") is not None else f"그 아래는 {b['score']}"
-                     for b in params["P3"]["bands"]) + ".",
+                     for b in params["P3"]["bands"]) + ". "
+        + ("**아래 신규 상장 트랙에서는 1년치가 없어 가장 최근 분기를 전년 같은 분기와 견준다.** "
+           "구간은 같은 것을 쓴다." if "P3" in newly_params else ""),
         f"  - **입력 신뢰도** — 앞의 것들을 더한 값에서 한 칸을 더 깎는 자리다. **영업외 손익의 크기가** 세전이익의 "
         f"{float(nonop['threshold']):.0%} **이상**이거나(마이너스 쪽으로 큰 경우도 걸린다), 최근 1년이 아닌 기간"
-        "(회계연도 값이나 전년 동기 대비 분기 값)을 썼거나, 비교할 전년이 없거나, 자료가 너무 오래됐을 때 걸린다. "
-        f"여러 개가 걸려도 {['', '한', '두', '세'][int(p4['cap_steps'])]} 칸까지만 깎는다.",
+        "(회계연도 값이나 전년 동기 대비 분기 값)을 썼거나, 비교할 전년이 없거나, 자료가 너무 오래됐을 때 걸린다."
+        + (f" 여러 개가 걸려도 {_count(p4['cap_steps'])} 칸까지만 깎는다."
+           if int(p4["cap_steps"]) else " 다만 이번 규칙에서는 이 자리로 깎지 않는다."),
+        "  - **다만 상장한 지 얼마 안 돼 전년 1년치 매출을 복원할 수 없는 회사는 "
+        + "·".join(newly_names) + " 둘로만 소계를 낸다.** PER 은 재지 않고, 매출 성장은 앞서 적은 대로 "
+        "분기끼리 견준다. 이번 14개사 중 한 곳이 그 경우다."
+        + (" 어느 회사가 여기 드는지는 상장 시점이 아니라 **그 회사 매출 관측이 어느 기간 단위인지**로 가른다."
+           if newly_by_basis else ""),
         f"  - 구간 경계에서 {tol:.0%} 안에 든 값에는 표시를 달지만 **점수는 바꾸지 않는다.**",
         # 2026-09-17 FIX-71 R1: 한 문단 안에서 `매출` 이 세 가지를 가리켰다(P2 의 매출 · P3 의 매출 · ARR).
         "  - **비상장사는 다르게 본다.** 기업가치를 **연 매출**로 나눈 배수 하나로 점수를 내고, "
@@ -713,6 +731,9 @@ def method_lines(ctx: Any) -> list[str]:
         "    - 다만 **우리가 수집하지 못했거나 미공시인지 확인되지 않은 경우**는 여기로 보내지 않고 자료 대기로 "
         "남긴다. 수집 공백을 기업의 위험으로 바꾸지 않기 위해서다.",
         f"  - 이 항목의 최저점은 {floor} 이며 그보다 더 내려가지 않는다.",
+        f"    - 적자로 판정돼도 **적자 폭이 줄고 있다는 판정이 둘 다 서면 {_count(f9['g1_direction_relief_step'])} 칸을 "
+        f"되돌려 준다**(되돌려도 {f9['g1_direction_relief_cap']} 보다 위로는 못 간다). 이번 실행에서는 그 판정이 "
+        "서지 않아 점수가 바뀐 회사가 없다. 기업 카드에는 `방향 완화` 로 나온다.",
         "  - **첫째 관문에서 막힌 회사는 둘째 관문을 건너뛰고 셋째·넷째만 따로 계산한다.** 본업이 이미 "
         "적자로 판정됐으므로 현금흐름의 방향을 다시 묻지 않는다. 기업 카드에는 `진단` 으로 나온다. "
         + c05_text
