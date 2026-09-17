@@ -35,6 +35,9 @@ GATE_LABELS = {
 F6_PARAM_LABELS = {"P1": "PER", "P2": "EV/매출", "P3": "매출 성장"}
 F6_P4_LABEL = "입력 신뢰도"
 F9_GATE_LABELS = {"G1": "본업", "G2": "현금", "G3": "런웨이", "G4": "약정 커버리지"}
+# 2026-09-17 FIX-71 N1: `G1-after` 라는 내부 코드가 카드에 그대로 나왔다. 관문이 아니라 **첫째 관문 실패 뒤
+# 진단값을 점수로 확정하는 자리**다. `G3/G4` 는 둘을 한꺼번에 건너뛸 때 쓰는 합성 키다.
+F9_STAGE_LABELS = {"G1-after": "본업 실패 뒤 정리", "G3/G4": "런웨이·약정 커버리지"}
 VENDOR_MARK = "†"
 
 
@@ -330,16 +333,22 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
 def f9_gate_text(p: dict[str, Any]) -> str:
     label = (GATE_LABELS.get(p.get("result"), p.get("result") or "") or p.get("adjust")
              or (f"적용 → {p['score']}" if p.get("applied") and p.get("score") is not None else ""))
-    text = f"{F9_GATE_LABELS.get(p['gate'], p['gate'])} {label}".rstrip()
+    gate = p["gate"]
+    name = F9_STAGE_LABELS.get(gate) or F9_GATE_LABELS.get(gate, gate)
+    # 2026-09-17 FIX-71 N1: 경로의 `mode` 를 읽지 않아 진단으로 계산한 칸이 본경로처럼 보였다.
+    if p.get("mode") == "diagnostic":
+        name += " 진단"
+    text = f"{name} {label}".rstrip()
     # 2026-09-15 FIX-53 2단계: G3 런웨이와 가장 가까운 임계까지의 거리를 보인다. 경계 표시(⚠️)는 F6 와 같은 허용폭 안일 때만.
     if p.get("runway_years") is not None:
-        text += f" 런웨이 {p['runway_years']:.2f}년"
+        # 관문 이름이 이미 `런웨이` 라 그대로 붙이면 말이 겹친다.
+        text += f" {p['runway_years']:.2f}년" if name.startswith("런웨이") else f" 런웨이 {p['runway_years']:.2f}년"
         boundary = p.get("boundary") or {}
         if boundary.get("nearest_boundary"):
             text += (f"(임계 {boundary['nearest_boundary']:g}년 대비 {boundary['distance_ratio']:+.1%}"
                      f"{' ⚠️ 경계' if boundary.get('flag') else ''})")
     if p.get("coverage") is not None:
-        text += f" 커버리지 {p['coverage']:.2f}"
+        text += f" {p['coverage']:.2f}배" if "커버리지" in name else f" 커버리지 {p['coverage']:.2f}"
     return text
 
 
@@ -581,9 +590,16 @@ def f9_policy(ctx: Any, key: str) -> Any:
 
 
 def _steps(step: int) -> str:
-    """감점 칸 수를 한국어로. 문장에 숫자를 박지 않고 계산 코드가 돌려준 값을 옮긴다."""
+    """감점 칸 수를 한국어 구로. 문장에 숫자를 박지 않고 계산 코드가 돌려준 값을 옮긴다.
+
+    2026-09-17 FIX-71 R2: 전에는 0 일 때 `감점이 없고` 를 돌려줘 뒤에 `을 깎는다` 를 이어 붙이면
+    문장이 깨졌다. **서술을 통째로** 돌려줘 이어 붙일 일이 없게 한다.
+    """
     n = abs(int(step))
-    return "감점이 없고" if n == 0 else f"{['', '한', '두', '세', '네', '다섯'][n] if n < 6 else str(n)} 칸"
+    if n == 0:
+        return "감점이 없다"
+    word = ["", "한", "두", "세", "네", "다섯"][n] if n < 6 else str(n)
+    return f"{word} 칸을 깎는다"
 
 
 def _band_text(bands: list[dict[str, Any]], unit: str = "%") -> str:
@@ -606,7 +622,7 @@ def method_lines(ctx: Any) -> list[str]:
     2026-09-17 FIX-67 전면 재작성 → FIX-68·69 정정. **문장이 규칙을 잘못 말하지 않게** 숫자와 칸 수를
     규칙·계산 코드에서 읽어 쓴다(FIX-69 L1). 결정 번호는 문장에서 빼 `관련 결정` 줄로 보낸다.
     """
-    from .calc_f9 import _coverage_step, _runway_step
+    from .calc_f9 import G4_MISSING_DOWNGRADE_STEP, _coverage_step, _runway_step
     f9 = ctx.rules.payload["policies"]["f9"]
     f6p = ctx.rules.payload["policies"]["f6"]
     floor = f9_policy(ctx, "floor")
@@ -631,7 +647,8 @@ def method_lines(ctx: Any) -> list[str]:
     actual_only = "actual" in (growth_cond.get("accepted_kinds") or [])
     # C-16 이 판정 불가를 어떻게 처리하는지(FIX-69 H1).
     c16 = next((r["choice"] for r in ctx.run.get("decisions", []) if r["id"] == "C-16"), None)
-    c16_text = ("한 칸 깎는다" if c16 == "downgrade" else
+    # 2026-09-17 FIX-71 R3: `한 칸` 이 박혀 있어 `_g4` 의 감점과 서로를 읽지 않았다. 코드에서 읽는다.
+    c16_text = (_steps(G4_MISSING_DOWNGRADE_STEP) if c16 == "downgrade" else
                 "그대로 둔다" if c16 == "hold" else "아직 정해지지 않아 점수를 만들지 않는다")
     # 2026-09-17 FIX-70: 첫째 관문에서 막힌 뒤 계산한 값을 점수에 넣는지(C-05). 선택을 읽어 쓴다.
     c05 = next((r["choice"] for r in ctx.run.get("decisions", []) if r["id"] == "C-05"), None)
@@ -640,22 +657,27 @@ def method_lines(ctx: Any) -> list[str]:
                 "**점수에 넣을지가 정해지지 않아 그 회사는 점수를 만들지 않는다.**")
 
     f6 = ([
-        "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 세 가지를 각각 재서 더하고, 마지막에 입력을 믿을 수 있는지로 한 칸을 조정한다.",
+        "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 아래 잣대를 각각 재서 더하고, 마지막에 입력을 "
+        "믿을 수 있는지로 한 칸을 조정한다.",
+        "  - **다만 상장한 지 얼마 안 돼 비교할 전년 실적이 갖춰지지 않은 회사는 PER 을 재지 않고 나머지 둘로만 "
+        "소계를 낸다.** 이번 14개사 중 한 곳이 그 경우다.",
         f"  - **PER** — 시가총액을 최근 1년 순이익으로 나눈다. {_band_text(params['P1']['bands'], '배')}.",
         f"  - **EV/매출** — 시가총액에서 순현금을 뺀 값을 최근 1년 매출로 나눈다. {_band_text(params['P2']['bands'], '배')}.",
         f"  - **매출 성장** — 최근 1년 매출을 그 전 1년과 견준다. "
         + " · ".join(f"{b['lower']:.0%} 이상이면 {b['score']}" if b.get("lower") is not None else f"그 아래는 {b['score']}"
                      for b in params["P3"]["bands"]) + ".",
-        f"  - **입력 신뢰도** — 위 셋을 더한 값에서 한 칸을 더 깎는 자리다. **영업외 손익의 크기가** 세전이익의 "
+        f"  - **입력 신뢰도** — 앞의 것들을 더한 값에서 한 칸을 더 깎는 자리다. **영업외 손익의 크기가** 세전이익의 "
         f"{float(nonop['threshold']):.0%} **이상**이거나(마이너스 쪽으로 큰 경우도 걸린다), 최근 1년이 아닌 기간"
         "(회계연도 값이나 전년 동기 대비 분기 값)을 썼거나, 비교할 전년이 없거나, 자료가 너무 오래됐을 때 걸린다. "
-        f"여러 개가 걸려도 {_steps(p4['cap_steps'])}까지만 깎는다.",
+        f"여러 개가 걸려도 {['', '한', '두', '세'][int(p4['cap_steps'])]} 칸까지만 깎는다.",
         f"  - 구간 경계에서 {tol:.0%} 안에 든 값에는 표시를 달지만 **점수는 바꾸지 않는다.**",
-        "  - **비상장사는 다르게 본다.** 기업가치를 최근 1년 매출로 나눈 배수 하나로 점수를 내고, "
-        "매출 성장과 자본 효율이 **둘 다** 좋을 때만 한 칸 올려 준다. "
-        + ("**성장은 실제로 번 매출로만 따진다** — 연 환산 런레이트는 받지 않아, 수치가 기준을 넘어도 그것이 "
-           "런레이트면 올려 주지 않는다. " if actual_only else " ")
-        + "상장사의 PER과 직접 견줄 수 없는 수치다.",
+        # 2026-09-17 FIX-71 R1: 한 문단 안에서 `매출` 이 세 가지를 가리켰다(P2 의 매출 · P3 의 매출 · ARR).
+        "  - **비상장사는 다르게 본다.** 기업가치를 **연 매출**로 나눈 배수 하나로 점수를 내고, "
+        "**연 매출 성장**과 자본 효율이 **둘 다** 좋을 때만 한 칸 올려 준다. "
+        + ("여기서 성장을 재는 값은 매출액이 아니라 **연간 반복 매출(ARR)** 이고, **실제로 거둔 ARR 만 센다** — "
+           "최근 실적을 열두 달로 늘려 잡은 런레이트는 받지 않아, 수치가 기준을 넘어도 그것이 런레이트면 "
+           "올려 주지 않는다. " if actual_only else " ")
+        + "이 배수는 상장사의 PER과 직접 견줄 수 없는 수치다.",
     ] if ctx.rules.f6_mode == "parameters" else [
         "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 예상 PER 구간으로, 비상장사는 배수를 계산하되 점수는 정성 예외로 정한다.",
     ])
@@ -676,22 +698,23 @@ def method_lines(ctx: Any) -> list[str]:
         + (f"{mid['min_margin']:.0%} 까지는 {mid['score']}, " if mid else "")
         + f"그보다 깊으면 {deep} 다. 영업이익이 나면 이 관문을 통과한다.",
         f"  - **둘째 관문은 현금이다.** 최근 1년 잉여현금흐름을 본다. 흑자이고 추세가 안정이면 "
-        f"{_steps(f9['g2_fcf_positive_stable'])}, 흑자라도 나빠지고 있으면 {_steps(f9['g2_fcf_positive_deteriorating'])}, "
-        f"마이너스면 {_steps(f9['g2_fcf_negative'])} 깎는다. 비상장사가 공시하지 않으면 "
-        f"{_steps(f9['g2_private_not_disclosed'])}을 깎는다.",
+        f"{_steps(f9['g2_fcf_positive_stable'])}. 흑자라도 나빠지고 있으면 {_steps(f9['g2_fcf_positive_deteriorating'])}. "
+        f"마이너스면 {_steps(f9['g2_fcf_negative'])}. 비상장사가 공시하지 않으면 "
+        f"{_steps(f9['g2_private_not_disclosed'])}.",
         f"  - **셋째 관문은 런웨이다.** 현금과 조건이 확인된 확정 미인출 여신을 더해 한 해 소진액으로 나눈다. "
-        f"{keep:g}년 이상이면 {_steps(0)}, {one_step:g}년 이상 {keep:g}년 미만이면 {_steps(runway_mid)}, "
-        f"{one_step:g}년 밑이면 {_steps(runway_deep)} 깎는다. 여기서도 경계 {tol:.0%} 안은 표시만 한다. "
+        f"{keep:g}년 이상이면 {_steps(0)}. {one_step:g}년 이상 {keep:g}년 미만이면 {_steps(runway_mid)}. "
+        f"{one_step:g}년 밑이면 {_steps(runway_deep)}. 여기서도 경계 {tol:.0%} 안은 표시만 한다. "
         "**앞 관문에서 현금흐름이 흑자로 판정되면 이 관문에 닿지 않는다** — 버틸 기간을 물을 일이 없기 때문이다.",
         f"  - **넷째 관문은 약정 커버리지다.** 계약으로 확보한 수입을 갚기로 한 약정으로 나눈다.",
-        f"    - 숫자가 둘 다 있으면 {cover:g}배 이상일 때 {_steps(0)}, 그 아래면 {_steps(coverage_short)}을 깎는다.",
+        f"    - 숫자가 둘 다 있으면 {cover:g}배 이상일 때 {_steps(0)}. 그 아래면 {_steps(coverage_short)}.",
         "    - 기간이나 범위가 서로 달라 견줄 수 없으면 숫자를 만들지 않는다.",
         f"    - **회사가 공시하지 않았다는 것이 확인되면** 숫자가 없어도 {c16_text}. 이 처리는 아직 확정되지 않은 "
         "규칙이고 이번 실행에서 고른 선택이다.",
         "    - 다만 **우리가 수집하지 못했거나 미공시인지 확인되지 않은 경우**는 여기로 보내지 않고 자료 대기로 "
         "남긴다. 수집 공백을 기업의 위험으로 바꾸지 않기 위해서다.",
         f"  - 이 항목의 최저점은 {floor} 이며 그보다 더 내려가지 않는다.",
-        "  - **첫째 관문에서 막힌 회사는 뒤 관문을 따로 계산한다.** 기업 카드에는 `진단` 으로 나온다. "
+        "  - **첫째 관문에서 막힌 회사는 둘째 관문을 건너뛰고 셋째·넷째만 따로 계산한다.** 본업이 이미 "
+        "적자로 판정됐으므로 현금흐름의 방향을 다시 묻지 않는다. 기업 카드에는 `진단` 으로 나온다. "
         + c05_text
         + " 기록만 남기는 쪽도 선택지에 있고 **어느 쪽이 맞는지는 아직 정해지지 않았다.** "
         "다만 이미 최저점이면 더 내려갈 곳이 없어 계산하지 않는다.",
@@ -700,12 +723,17 @@ def method_lines(ctx: Any) -> list[str]:
     ]
 
     rest = [
-        "**나머지 항목은 이렇게 매긴다.** ② 게임체인저는 조건을 몇 개 통과했는지 세어 점수로 바꾸고"
-        f"({', '.join(f'{k}개 {v}점' for k, v in sorted(ctx.rules.factor('F2')['path_mapping'].items()))}. "
-        "최고점은 통과 수만으로 닿지 않고 세대 격차를 따로 채워야 한다), ③ Last Mover 는 기준을 채운 만큼 "
-        "사다리를 오르며, ⑤ 아군 확보는 기본 3점에 동맹을 더하고 적대를 빼고, ⑦ 순환금융은 두 축의 조합표에서 꺼낸다. "
+        "**나머지 항목은 이렇게 매긴다.** ③ Last Mover 는 기준을 채운 만큼 사다리를 오르고, "
+        "⑤ 아군 확보는 기본 3점에 동맹을 더하고 적대를 빼며, ⑦ 순환금융은 두 축의 조합표에서 꺼낸다. "
         "**① 네트워크 효과 · ④ 호황 이후 비전 · ⑧ 비대칭 의존 셋은 사람이 직접 매긴다** — 산식이 없으므로 "
         "점수보다 근거 문장을 읽어야 한다.",
+        # 2026-09-17 FIX-71 N3: 규칙이 정한 방식을 적었으나 **이번 실행에서 그 방식으로 매겨진 회사가 없다.**
+        # 둘이 다르면 둘 다 드러나야 한다.
+        "**② 게임체인저는 이번 실행에서 계산하지 않았다.** 규칙은 조건을 몇 개 통과했는지 세어 점수로 바꾸도록 "
+        f"정해 두었고({', '.join(f'{k}개 {v}점' for k, v in sorted(ctx.rules.factor('F2')['path_mapping'].items()))}, "
+        "최고점은 통과 수만으로 닿지 않고 세대 격차를 따로 채워야 한다), **그런데 어느 경로를 통과했는지가 "
+        "기준선에서 넘어오지 않아 14개사 모두 기준선 점수를 그대로 쓴다.** 카드의 ② 점수를 보고 통과 수를 "
+        "거꾸로 셈하면 안 된다.",
         "**모르는 값을 0 으로 바꾸지 않는다.** 자료가 없으면 그 항목은 점수를 만들지 않고 대기 상태로 남으며, "
         "그 회사는 공식 순위에서 빠진다. **예외가 하나 있다** — 런웨이를 잴 때 미인출 여신이 확인되지 않으면 "
         "0 으로 센다. 완충은 확인된 것만 세기로 했기 때문이고, 없는 여신을 있다고 보지 않으려는 처리다.",

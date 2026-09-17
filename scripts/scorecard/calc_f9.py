@@ -57,6 +57,10 @@ def _runway_boundary(runway: float, rules: RuleSet) -> dict[str, Any]:
     return rules.f6_threshold_boundary_flag(runway, nearest)
 
 
+# 2026-09-17 FIX-71 R3: 확인된 미공시일 때 C-16 `downgrade` 가 깎는 칸. 설명 문장이 이 값을 읽는다.
+G4_MISSING_DOWNGRADE_STEP = -1
+
+
 def _coverage_step(coverage: float, rules: RuleSet) -> int:
     """약정 커버리지 감점. 2026-09-17 FIX-68 S2: 설명 문장이 이 값을 읽어 쓰도록 함수로 뽑았다."""
     return 0 if coverage >= float(rules.f9["g4_coverage_keep"]) else -1
@@ -410,7 +414,7 @@ def _g4(cid: str, obs: ObsLookup, gi: dict[str, Any], rules: RuleSet, run: dict[
                 "reason": f"확인된 미공시({MISSING_TYPE_FOR_DISCLOSURE_POLICY})"})
     choice = decision_choice(run, rules, "C-16")
     if choice == "downgrade":
-        out["step"] = -1
+        out["step"] = G4_MISSING_DOWNGRADE_STEP
         out["policy"] = "downgrade (C-16 실행 결정)"
     elif choice == "hold":
         out["step"] = 0

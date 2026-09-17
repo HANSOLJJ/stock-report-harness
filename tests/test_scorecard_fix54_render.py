@@ -123,9 +123,11 @@ class SharedRenderTest(unittest.TestCase):
         self.assertTrue(rc.f6_boundary_flag({"boundary": {"flag": True}}))   # v1.5 bands 경로
 
     def test_g3_boundary_in_both(self):
-        text = "G3 런웨이 3.03년(임계 3년 대비 +0.9% ⚠️ 경계)"
-        self.assertIn(rc.rename_codes(text), self.md)
-        self.assertIn(rc.rename_codes(text), self.unlink(self.frow("spacex-xai", "⑨ 적자 깊이")))
+        # 2026-09-17 FIX-71 N1: 관문 이름이 `런웨이` 라 `런웨이 런웨이 3.03년` 으로 겹치던 것을 없앴고,
+        # 진단으로 계산한 칸은 `진단` 이 붙는다. 경계 표시가 두 산출물에 같이 나온다는 것이 이 검사의 요지다.
+        text = "런웨이 진단 3.03년(임계 3년 대비 +0.9% ⚠️ 경계)"
+        self.assertIn(text, self.md)
+        self.assertIn(text, self.unlink(self.frow("spacex-xai", "⑨ 적자 깊이")))
 
     # ---------------------------------------------------------------- S3 원자료·방법·트리거
     def test_raw_tables_share_v17_wording(self):
