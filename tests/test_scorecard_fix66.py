@@ -71,17 +71,19 @@ class Fix66Test(unittest.TestCase):
             with self.subTest(fid=fid):
                 row = self._row(fid)
                 self.assertIn(RULES.factor(fid)["label"], row)
-                self.assertIn(RULES.factor(fid)["mode"], row)
+                # 2026-09-17 FIX-68 S3: `자동화 manual` 로 나가던 것을 한국어 이름으로 옮겼다.
+                self.assertIn(rc.MODE_LABELS[RULES.factor(fid)["mode"]], row)
+                self.assertNotIn(f"자동화 {RULES.factor(fid)['mode']}", row)
         params = RULES.payload["policies"]["f6"]["parameters"]
         for pid, spec in params.items():
             with self.subTest(pid=pid):
-                row = self._row(rc.F6_PARAM_LABELS[pid])      # 색인 행은 이름으로 선다
+                row = self._row(rc.F6_PARAM_LABELS[pid], "param")   # 색인 행은 이름으로 선다
                 self.assertIn(spec["label"], row)
                 self.assertIn(spec["question"], row)
                 self.assertIn(f"<code>{pid}</code>", row)     # 번호는 내부 표기로만
         p4 = RULES.payload["policies"]["f6"]["p4"]
-        self.assertIn(p4["label"], self._row(rc.F6_P4_LABEL))
-        self.assertIn(p4["question"], self._row(rc.F6_P4_LABEL))
+        self.assertIn(p4["label"], self._row(rc.F6_P4_LABEL, "param"))
+        self.assertIn(p4["question"], self._row(rc.F6_P4_LABEL, "param"))
 
     def test_gate_names_come_from_the_method_line(self):
         """규칙 파일에 게이트 이름 키가 **없어서** ⑨ 설명 줄에서 읽는다. 그 줄은 바꾸지 않는다."""
@@ -96,7 +98,7 @@ class Fix66Test(unittest.TestCase):
             with self.subTest(code=code):
                 self.assertTrue(note, f"{code} 설명이 비었다")
                 self.assertTrue(any(note in x for x in lines))   # 문장에서 그대로 떼 왔다
-                self.assertIn(f"<code>{code}</code>", self._row(name))
+                self.assertIn(f"<code>{code}</code>", self._row(name, "gate"))
 
     def test_body_codes_link_into_the_index_without_burying_the_text(self):
         links = re.findall(r'<a class="tcode(?: first)?" href="#idx-([^"]+)">', self.html)
@@ -118,10 +120,10 @@ class Fix66Test(unittest.TestCase):
         # 2026-09-17 FIX-67: P·G 는 이름으로 바뀌어 링크 대상에서 빠졌다. 이름을 붙이는 자리는
         # Factor 표의 `점수를 만드는 방식` 칸뿐이다 — 영어 값을 내부 표기로 달고 한국어를 앞세운다.
         codes = {c for c, _n in named}
-        self.assertEqual(codes, {rh._anchor_id(rh.MODE_DOC[m][0]) for m in rh.MODE_DOC
+        self.assertEqual(codes, {rh._anchor_id(rc.MODE_LABELS[m]) for m in rh.MODE_DOC
                                  if any(RULES.factor(f)["mode"] == m for f in rh.FACTOR_IDS)})
         for _code, name in named:
-            self.assertIn(name, rh.MODE_DOC)
+            self.assertIn(name, set(rc.MODE_LABELS.values()))
 
     def test_work_codes_and_judgment_ids_are_not_linked(self):
         """`F5-IMPL-48`(작업 코드)과 `alphabet.F9`(판단 id)는 factor 코드가 아니다."""
@@ -138,12 +140,14 @@ class Fix66Test(unittest.TestCase):
         self.assertEqual(self.html.count('<span class="fst">'), 14 * 9)
 
     def test_carried_is_marked_as_the_weakest_basis(self):
-        self.assertIn('<span class="b weak">carried 숫자만 승계</span>', self.html)
+        # 2026-09-17 FIX-68 S3: 근거 값도 한국어로 옮겼다. `carried` 는 이름 자체가 근거의 약함을 말한다.
+        mark = f'<span class="b weak">{rc.BASIS_LABELS["carried"]}</span>'
+        self.assertIn(mark, self.html)
         n = sum(1 for c in self.results["companies"] for f in rh.FACTOR_IDS
                 if c["factors"][f]["basis"] == "carried")
-        self.assertEqual(self.html.count('<span class="b weak">carried 숫자만 승계</span>'), n)
+        self.assertEqual(self.html.count(mark), n)
         self.assertEqual(n, 16)
-        row = self._row("carried")
+        row = self._row(rc.BASIS_LABELS["carried"], "basis")
         self.assertIn("근거가 가장 약한 칸이다", row)
         self.assertIn("calc_qual.py:45", row)
         self.assertIn("calc_qual.py:157", row)
@@ -153,8 +157,9 @@ class Fix66Test(unittest.TestCase):
         self.assertEqual(used, {"computed", "manual", "carried", "grade", "matrix", "criteria"})
         for basis in used:
             with self.subTest(basis=basis):
-                row = self._row(basis)
+                row = self._row(rc.BASIS_LABELS.get(basis, basis), "basis")
                 self.assertIn(rh.BASIS_DOC[basis][0], row)
+                self.assertIn(f"<code>{basis}</code>", row)     # 영어 값은 내부 표기로만
                 self.assertIn("근거 ", row)                     # 파일·행이 붙는다
                 self.assertRegex(row, r"calc_\w+\.py:\d+")
 
@@ -162,7 +167,7 @@ class Fix66Test(unittest.TestCase):
         used = {c["factors"][f]["status"] for c in self.results["companies"] for f in rh.FACTOR_IDS}
         for status in used:
             with self.subTest(status=status):
-                self.assertIn(STATUS_LABEL[status], self._row(status))
+                self.assertIn(STATUS_LABEL[status], self._row(status, "status"))
 
     # ---------------------------------------------------------------- S3 C-17
     def test_identical_dates_are_written_once(self):
@@ -202,8 +207,10 @@ class Fix66Test(unittest.TestCase):
         # 문장 속 링크도 24px 를 채운다.
         self.assertIn("min-width:24px;min-height:24px", re.search(r"\.tcode\{[^}]*\}", self.html).group(0))
 
-    def _row(self, code: str) -> str:
-        m = re.search(rf'<div class="ixrow" id="idx-{re.escape(rh._anchor_id(code))}">(.*?)</div>\s*(?=<div class="ixrow"|</div>)',
+    def _row(self, code: str, group: str = "") -> str:
+        # 2026-09-17 FIX-68: `조합표`·`사람 판단` 처럼 방식과 근거가 같은 이름을 쓴다 — 묶음으로 가른다.
+        prefix = f"idx-{group}" if group else r"idx(?:-\w+)?"
+        m = re.search(rf'<div class="ixrow" id="{prefix}-{re.escape(rh._anchor_id(code))}">(.*?)</div>\s*(?=<div class="ixrow"|</div>)',
                       self.index, re.S)
         self.assertIsNotNone(m, f"색인에 {code} 행이 없다")
         return m.group(1)

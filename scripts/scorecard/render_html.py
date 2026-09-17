@@ -546,10 +546,11 @@ def status_basis(fr: dict[str, Any]) -> str:
     """
     status, basis = fr["status"], fr["basis"]
     weak = ' weak' if basis == "carried" else ""
-    tip = " 숫자만 승계" if basis == "carried" else ""
+    # 2026-09-17 FIX-68 S3: 값도 한국어로 옮긴다. `carried` 는 이름 자체가 근거의 약함을 말한다.
+    label = rc.BASIS_LABELS.get(basis, basis)
     return (f'<span class="k">상태</span>{esc(STATUS_LABEL.get(status, status))}'
             f'<span class="sep">|</span><span class="k">근거</span>'
-            f'<span class="{("b" + weak).strip()}">{esc(basis)}{tip}</span>')
+            f'<span class="{("b" + weak).strip()}">{esc(label)}</span>')
 
 
 def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]],
@@ -762,13 +763,25 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
         f"| judgments | `{ctx.hashes['judgments']}` |",
         f"| results | `{results['results_hash']}` |",
     ]
+    # 2026-09-17 FIX-68 S5: 승인 시점 값을 현재 입력인 것처럼 실었다. **현재 값을 싣고** 승인 시점 값은
+    # 다른 표에 따로 둔다. 둘이 다르면 승인이 무효라는 사실도 함께 적는다.
+    cur = current_hashes(ctx.slug)
+    lines += [f"| run | `{cur['run']}` |", f"| draft | `{cur['draft']}` |"]
     if approval:
-        lines += [
-            f"| draft | `{approval['hashes']['draft']}` |",
-            f"| run | `{approval['hashes']['run']}` |",
-            "",
-            f"승인 `{approval['approval_id']}` · {approval['approved_by']} · {approval['approved_at']}",
-        ]
+        stale = {k: v for k, v in approval["hashes"].items() if cur.get(k) != v}
+        lines += ["", "## 승인", "",
+                  f"- 승인 `{approval['approval_id']}` · {approval['approved_by']} · {approval['approved_at']}"]
+        if stale:
+            lines += [
+                "- **이 승인은 현재 무효다.** 승인 뒤에 아래 입력이 바뀌었다.",
+                "",
+                "| 대상 | 승인 시점 | 현재 |",
+                "| --- | --- | --- |",
+            ] + [f"| {k} | `{approval['hashes'][k]}` | `{cur.get(k, '—')}` |" for k in sorted(stale)]
+            lines.append("")
+            lines.append("- 나머지 입력은 승인 시점과 같다. 재승인 전까지 리포트는 `awaiting_user` 상태다.")
+        else:
+            lines.append("- 승인 시점 입력과 현재 입력이 모두 같다.")
     lines += [
         "",
         "## 실행 단위 결정",
@@ -942,7 +955,7 @@ BASIS_DOC = {
                "판단자가 적은 점수와 근거 문장을 그대로 쓴다.", "calc_qual.py:30"),
     "carried": ("입력이 복원되지 않아 숫자만 승계", "**근거가 가장 약한 칸이다.** 기준선에서 점수 숫자만 넘어왔고 "
                 "그 점수를 만든 판정 입력이 남아 있지 않아 엔진이 다시 계산하지 못한다. ② 는 C-03(경로 판정), "
-                "⑦ 는 C-09(매트릭스 입력)가 그 자리다. 같은 `승계` 라도 `manual` 은 근거 문장이 남아 있고 "
+                "⑦ 는 C-09(매트릭스 입력)가 그 자리다. 같은 `승계` 라도 **사람 판단**은 근거 문장이 남아 있고 "
                 "이쪽은 숫자뿐이다.", "calc_qual.py:45 (F2·C-03) · calc_qual.py:157 (F7·C-09)"),
     "grade": ("등급 산식", "⑤ 아군 확보의 `3 + A + H` 처럼 판정 입력을 정해진 산식에 넣어 환산한 점수다.",
               "calc_qual.py:146"),
@@ -983,8 +996,9 @@ def _mode_cell(mode: str) -> str:
     doc = MODE_DOC.get(mode)
     if doc is None:
         return esc(mode)
-    return (f'<a class="tcode first" href="#idx-{_anchor_id(doc[0])}">{esc(doc[0])}'
-            f'<span class="tname">{esc(mode)}</span></a>')
+    name = rc.MODE_LABELS.get(mode, mode)
+    return (f'<a class="tcode first" href="#idx-{_anchor_id(name)}">{esc(doc[0])}'
+            f'<span class="tname">{esc(name)}</span></a>')
 
 
 def _gate_docs(ctx: Any) -> list[tuple[str, str, str]]:
@@ -1034,8 +1048,10 @@ def index_terms(ctx: Any) -> dict[str, str]:
 def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     """본문의 F·G·P·상태·근거 코드를 한자리에 모은다. 본문 코드가 여기로 이어진다."""
     rules = ctx.rules
-    factors = [(f, f"{rules.factor(f)['label']}", f"자동화 {rules.factor(f)['mode']} · 범위 "
-                f"{rules.factor(f)['range'][0]}~{rules.factor(f)['range'][1]}") for f in FACTOR_IDS]
+    # 2026-09-17 FIX-68 S3: `자동화 manual` 로 나갔다. `manual` 은 자동화가 아니고 값도 영어였다.
+    factors = [(f, f"{rules.factor(f)['label']}",
+                f"점수를 만드는 방식 {rc.MODE_LABELS.get(rules.factor(f)['mode'], rules.factor(f)['mode'])}"
+                f" · 범위 {rules.factor(f)['range'][0]}~{rules.factor(f)['range'][1]}") for f in FACTOR_IDS]
     f6 = rules.payload["policies"]["f6"]
     # 2026-09-17 FIX-67: 본문에서 번호가 사라졌으므로 색인도 이름 기준이다. 번호는 내부 표기로만 남는다.
     params = [(rc.F6_PARAM_LABELS.get(pid, pid), spec["label"], spec.get("question", ""), "", pid)
@@ -1053,9 +1069,10 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
         ("needs_rule_decision", STATUS_LABEL["needs_rule_decision"], "미결 규칙 결정(C-번호)이 걸려 점수를 만들지 않았다"),
     ] if k in {c["factors"][f]["status"] for c in results["companies"] for f in FACTOR_IDS} or k in {"ok", "carried_score"}]
     used_basis = {c["factors"][f]["basis"] for c in results["companies"] for f in FACTOR_IDS}
-    bases = [(k, BASIS_DOC[k][0], BASIS_DOC[k][1], BASIS_DOC[k][2]) for k in BASIS_DOC if k in used_basis]
+    bases = [(rc.BASIS_LABELS.get(k, k), BASIS_DOC[k][0], BASIS_DOC[k][1], BASIS_DOC[k][2], k)
+             for k in BASIS_DOC if k in used_basis]
     used_modes = [m for m in MODE_DOC if any(rules.factor(f)["mode"] == m for f in FACTOR_IDS)]
-    modes = [(MODE_DOC[m][0], "", MODE_DOC[m][1], MODE_DOC[m][2], m) for m in used_modes]
+    modes = [(rc.MODE_LABELS.get(m, m), MODE_DOC[m][0], MODE_DOC[m][1], MODE_DOC[m][2], m) for m in used_modes]
     tensions = [(x["id"], x.get("subject", ""), f"재검토 {x.get('recheck_at', '—')}"
                  f"{' · 해소됨' if x.get('status') == 'resolved' else ''}")
                 for x in sorted(rules.payload.get("open_tensions") or [], key=lambda x: x["id"])]
@@ -1075,7 +1092,11 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
         if not rows:
             continue
         out.append(f'<details class="ixblk" id="ix-{key}" open><summary><b>{title}</b>'
-                   f'<span class="ixlead">{lead}</span></summary><div class="ixbody">{_index_rows(rows)}</div></details>')
+                   f'<span class="ixlead">{lead}</span></summary>'
+                   # 2026-09-17 FIX-68: `조합표`·`사람 판단` 처럼 방식과 근거가 같은 이름을 쓴다.
+                   # 묶음마다 앵커를 갈라야 두 행이 서로를 가리지 않는다. 본문이 링크하는 둘만 `idx` 를 쓴다.
+                   f'<div class="ixbody">{_index_rows(rows, "idx" if key in ("factor", "mode", "ten") else f"idx-{key}")}</div>'
+                   f'</details>')
     return "".join(out)
 
 

@@ -63,6 +63,16 @@ def fmt_num(value: float | None, digits: int = 1) -> str:
 # **표시할 때 이름으로 옮겨 그린다.** 번호 뒤에 이름의 끝 낱말이 이미 붙어 있으면(`G4 커버리지`)
 # 둘을 합쳐 한 번만 쓴다.
 CODE_NAMES = {**F6_PARAM_LABELS, "P4": F6_P4_LABEL, **F9_GATE_LABELS}
+# 2026-09-17 FIX-68 S3: 상태는 한국어로 옮겨 놓고 근거(basis)만 영어로 나갔다. 같은 이름을 초안·HTML 이 쓴다.
+# 뜻풀이는 색인(render_html.BASIS_DOC)에 있고 여기 있는 것은 **화면에 찍는 짧은 이름**이다.
+BASIS_LABELS = {
+    "computed": "산식 계산", "manual": "사람 판단", "carried": "숫자만 승계",
+    "grade": "등급 산식", "matrix": "조합표", "criteria": "기준 사다리", "paths": "조건 통과 수",
+}
+MODE_LABELS = {
+    "manual": "사람 판단", "paths": "조건 통과 수", "ladder": "기준 사다리", "formula": "산식",
+    "parameters": "수치 합산", "matrix": "조합표", "gates": "관문 통과",
+}
 # 관측 지표·상태·조건의 내부 이름도 화면에서는 한국어로 옮긴다. **긴 이름부터** 바꾼다
 # (`not_disclosed_confirmed` 가 `not_disclosed` 를 품는다). 결정 선택지와 코드·규칙 경로는 감사 기록·
 # 색인과 대조해야 하므로 **그대로 남긴다.**
@@ -83,8 +93,48 @@ TERM_NAMES = {
     "verified": "검증 완료",
 }
 _TERM_RE = re.compile(r"(?<![A-Za-z0-9_./-])(" + "|".join(
-    sorted((re.escape(k) for k in TERM_NAMES), key=len, reverse=True)) + r")(?![A-Za-z0-9_])")
+    sorted((re.escape(k) for k in TERM_NAMES), key=len, reverse=True))
+    + r")(?![A-Za-z0-9_])(\s*)([가-힣]+)?")
 _CODE_RE = re.compile(r"(?<![A-Za-z0-9_./-])([PG][1-4])(?![A-Za-z0-9_.-])(\s*)([가-힣A-Za-z/]+)?")
+
+
+# 2026-09-17 FIX-68 S4: `P2 가` 를 `EV/매출 가` 로 바꾸니 조사가 맞지 않았다. 이름의 **끝 글자 받침**으로
+# 조사를 고른다. `EV/매출`(ㄹ 받침)·`PER`(R 은 소리로 `얼` 이라 받침 있음)·`런웨이`(받침 없음)가 갈린다.
+JOSA_PAIRS = {"이": "가", "은": "는", "을": "를", "과": "와", "으로": "로", "이나": "나", "이라": "라",
+              "이란": "란", "이며": "며", "이면": "면", "이다": "다"}
+# 서술격 활용형(`인데`·`이고`·`이지만`)은 받침으로 갈리지 않는다 — 빈칸만 붙여 쓴다.
+JOSA_GLUE = ("인데", "이고", "이지만", "이라서", "이었다", "인지", "이라는")
+JOSA_ALT = {**JOSA_PAIRS, **{v: k for k, v in JOSA_PAIRS.items()}}
+# 영문·숫자로 끝나는 이름의 받침. 소리대로 읽어 정한다(PER → 퍼, EV/매출 → 출).
+_ALPHA_BATCHIM = {"l": True, "m": True, "n": True, "r": True, "g": True, "b": True, "k": True,
+                  "p": True, "t": True, "c": True, "d": True, "s": True, "x": True, "z": True,
+                  "a": False, "e": False, "i": False, "o": False, "u": False, "h": False,
+                  "j": False, "q": False, "v": False, "w": False, "y": False, "f": True}
+_NUM_BATCHIM = {"0": True, "1": True, "3": True, "6": True, "7": True, "8": True,
+                "2": False, "4": False, "5": False, "9": False}
+
+
+def has_batchim(word: str) -> bool | None:
+    """낱말 끝소리에 받침이 있는가. 판단할 수 없으면 None."""
+    for ch in reversed(word):
+        if "가" <= ch <= "힣":
+            return (ord(ch) - 0xAC00) % 28 != 0
+        if ch.isdigit():
+            return _NUM_BATCHIM.get(ch)
+        if ch.isalpha():
+            return _ALPHA_BATCHIM.get(ch.lower())
+    return None
+
+
+def fix_josa(name: str, gap: str, josa: str) -> str:
+    """이름 뒤 조사를 받침에 맞게 고르고 사이 빈칸도 정리한다."""
+    if josa in JOSA_GLUE:
+        return name + josa            # 받침과 무관하다. 빈칸만 없앤다
+    bat = has_batchim(name)
+    if bat is None or josa not in JOSA_ALT:
+        return name + gap + josa
+    with_bat, without = (josa, JOSA_ALT[josa]) if josa in JOSA_PAIRS else (JOSA_ALT[josa], josa)
+    return name + (with_bat if bat else without)
 
 
 def rename_codes(text: str) -> str:
@@ -93,8 +143,18 @@ def rename_codes(text: str) -> str:
         gap, nxt = m.group(2) or "", m.group(3) or ""
         if nxt and nxt == name.split()[-1]:
             return name          # 뒤 공백은 매치 밖에 남아 있다 — 여기서 더하면 두 칸이 된다
+        if nxt in JOSA_ALT or nxt in JOSA_GLUE:
+            return fix_josa(name, gap, nxt)
         return name + gap + nxt
-    return _TERM_RE.sub(lambda m: TERM_NAMES[m.group(1)], _CODE_RE.sub(one, text))
+
+    def term(m: re.Match[str]) -> str:
+        name = TERM_NAMES[m.group(1)]
+        gap, nxt = m.group(2) or "", m.group(3) or ""
+        if nxt in JOSA_ALT or nxt in JOSA_GLUE:
+            return fix_josa(name, gap, nxt)
+        return name + gap + nxt
+
+    return _TERM_RE.sub(term, _CODE_RE.sub(one, text))
 
 
 def inline_html(text: str) -> str:
@@ -426,9 +486,9 @@ def price_notice(ctx: Any) -> str:
 
 def private_notice(ctx: Any) -> str:
     if ctx.rules.f6_mode == "parameters":
-        return ("비상장 배수는 상장사 PER 과 직접 견줄 수 없다. 점수는 **밸류/매출 구간표**로 내고, "
+        return ("비상장 배수는 상장사 PER과 직접 견줄 수 없다. 점수는 **밸류/매출 구간표**로 내고, "
                 "**매출 성장과 자본 효율을 둘 다 채울 때만** 한 칸 올려 준다. 경계 표시는 붙이지 않는다.")
-    return "비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 정성 예외(C-12)이며 경계 표시를 적용하지 않는다."
+    return "비상장 배수는 상장사 PER과 직접 비교할 수 없다. 점수는 정성 예외(C-12)이며 경계 표시를 적용하지 않는다."
 
 
 def vendor_policy_note(ctx: Any) -> str:
@@ -442,7 +502,7 @@ def vendor_policy_note(ctx: Any) -> str:
     detail = " · ".join(f"{m} {n}건" for m, n in sorted(by_metric.items()))
     return (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 v1.5 승계 값이다 — "
             "상류가 StockAnalysis 이거나 그 주가로 계산한 값이고, StockAnalysis 는 원천 장부에 `not_adopted · legacy_upstream` 으로만 올라 있다. "
-            "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다. 시가총액은 **PER 과 EV/매출 둘 다의 입력**이라 "
+            "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다. 시가총액은 **PER과 EV/매출 두 곳 모두의 입력**이라 "
             "† 가 붙은 기업의 ⑥ 은 우리가 실측하지 않은 값 위에 서 있다(그렇다고 점수를 깎지는 않는다).")
 
 
@@ -517,6 +577,12 @@ def f9_policy(ctx: Any, key: str) -> Any:
     return (ctx.rules.payload.get("policies", {}).get("f9") or {}).get(key)
 
 
+def _steps(step: int) -> str:
+    """감점 칸 수를 한국어로. 문장에 숫자를 박지 않고 계산 코드가 돌려준 값을 옮긴다."""
+    n = abs(int(step))
+    return "감점이 없고" if n == 0 else f"{['', '한', '두', '세', '네', '다섯'][n] if n < 6 else str(n)} 칸"
+
+
 def method_lines(ctx: Any) -> list[str]:
     """방법 절의 factor 설명.
 
@@ -531,6 +597,12 @@ def method_lines(ctx: Any) -> list[str]:
     one_step = f9_policy(ctx, "g3_runway_one_step_years")
     cover = f9_policy(ctx, "g4_coverage_keep")
     tol = ctx.rules.payload["policies"]["f6"]["boundary_tolerance"]
+    # 2026-09-17 FIX-68 S1·S2: 런웨이 1~3년 구간이 문장에서 빠졌고 1년 밑을 한 칸이라 적었다(실제 두 칸).
+    # 약정 커버리지는 1배 미만의 감점이 아예 없었다. **칸 수를 문장에 박지 않고 계산 코드에서 읽는다.**
+    from .calc_f9 import _coverage_step, _runway_step
+    runway_mid = _runway_step((float(keep) + float(one_step)) / 2, ctx.rules)
+    runway_deep = _runway_step(float(one_step) / 2, ctx.rules)
+    coverage_short = _coverage_step(float(cover) / 2, ctx.rules)
     bands = ctx.rules.payload["policies"]["f9"]["g1_bands_proposed"]
     deep = min(b["score"] for b in bands)
     mid = next((b for b in bands if b["score"] == deep + 1), None)
@@ -543,7 +615,7 @@ def method_lines(ctx: Any) -> list[str]:
         "  - **매출 성장** — 최근 1년 매출을 그 전 1년과 견준다. 30% 이상이면 감점이 없고, 15% 이상은 한 칸, 5% 이상은 두 칸, 그 아래는 세 칸 깎는다.",
         f"  - **입력 신뢰도** — 위 셋을 더한 값에서 한 칸을 더 깎는 자리다. 영업외 손익이 세전이익의 30% 를 넘거나, 최근 1년 대신 회계연도 값을 썼거나, 비교할 전년이 없거나, 자료가 너무 오래됐을 때 걸린다. 여러 개가 걸려도 한 칸까지만 깎는다.",
         f"  - 구간 경계에서 {tol:.0%} 안에 든 값에는 표시를 달지만 **점수는 바꾸지 않는다.**",
-        "  - **비상장사는 다르게 본다.** 기업가치를 최근 1년 매출로 나눈 배수 하나로 점수를 내고, 매출 성장과 자본 효율이 **둘 다** 좋을 때만 한 칸 올려 준다. 상장사의 PER 과 직접 견줄 수 없는 수치다.",
+        "  - **비상장사는 다르게 본다.** 기업가치를 최근 1년 매출로 나눈 배수 하나로 점수를 내고, 매출 성장과 자본 효율이 **둘 다** 좋을 때만 한 칸 올려 준다. 상장사의 PER과 직접 견줄 수 없는 수치다.",
     ] if ctx.rules.f6_mode == "parameters" else [
         "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 예상 PER 구간으로, 비상장사는 배수를 계산하되 점수는 정성 예외로 정한다.",
     ])
@@ -559,8 +631,12 @@ def method_lines(ctx: Any) -> list[str]:
         + f"그보다 깊으면 {deep} 다. 영업이익이 나면 이 관문을 통과한다.",
         "    - **이번 14개사 중 이 조항이 걸린 회사는 없다.**",
         "  - **둘째 관문은 현금이다.** 최근 1년 잉여현금흐름을 본다. 흑자이고 추세가 안정이면 감점이 없고, 흑자라도 나빠지고 있으면 한 칸, 마이너스면 두 칸 깎는다. 비상장사가 공시하지 않으면 같은 두 칸으로 본다.",
-        f"  - **셋째 관문은 런웨이다.** 현금과 조건이 확인된 확정 미인출 여신을 더해 한 해 소진액으로 나눈다. {keep:g}년 이상이면 유지하고, {one_step:g}년 밑이면 한 칸 깎는다. 여기서도 경계 {tol:.0%} 안은 표시만 한다.",
-        f"  - **넷째 관문은 약정 커버리지다.** 계약으로 확보한 수입을 갚기로 한 약정으로 나눈다. {cover:g}배 이상이면 유지한다. 기간이나 범위가 서로 달라 견줄 수 없으면 숫자를 만들지 않는다.",
+        f"  - **셋째 관문은 런웨이다.** 현금과 조건이 확인된 확정 미인출 여신을 더해 한 해 소진액으로 나눈다. "
+        f"{keep:g}년 이상이면 감점이 없고, {one_step:g}년 이상 {keep:g}년 미만이면 {_steps(runway_mid)}, "
+        f"{one_step:g}년 밑이면 {_steps(runway_deep)} 깎는다. 여기서도 경계 {tol:.0%} 안은 표시만 한다.",
+        f"  - **넷째 관문은 약정 커버리지다.** 계약으로 확보한 수입을 갚기로 한 약정으로 나눈다. "
+        f"{cover:g}배 이상이면 감점이 없고 그 아래면 {_steps(coverage_short)} 깎는다. "
+        f"기간이나 범위가 서로 달라 견줄 수 없으면 숫자를 만들지 않는다.",
         f"  - 이 항목의 최저점은 {floor} 이며 그보다 더 내려가지 않는다.",
         "  - **아직 정하지 못한 것이 셋이다.** 수치가 정확히 0 일 때 어떻게 볼지, 현금 완충이 깎이는 속도를 어떻게 셀지, 현금흐름 추세의 안정과 악화를 기계가 어떻게 가를지다.",
     ]

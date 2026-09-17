@@ -198,7 +198,7 @@ def render_research(ctx: Any, *, hashes: dict[str, str]) -> str:
 
 def _factor_row(f: str, fr: dict[str, Any]) -> list[Any]:
     # 2026-09-15 FIX-54 1단계 S3: 산식 텍스트를 HTML 과 같은 함수로. v1.7 parameters(P1~P4)가 초안에서도 비어 있었다.
-    return [FACTOR_LABELS[f], fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), fr["basis"],
+    return [FACTOR_LABELS[f], fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), rc.BASIS_LABELS.get(fr["basis"], fr["basis"]),
             rc.rename_codes(rc.factor_calc_text(f, fr))]
 
 

@@ -57,6 +57,11 @@ def _runway_boundary(runway: float, rules: RuleSet) -> dict[str, Any]:
     return rules.f6_threshold_boundary_flag(runway, nearest)
 
 
+def _coverage_step(coverage: float, rules: RuleSet) -> int:
+    """약정 커버리지 감점. 2026-09-17 FIX-68 S2: 설명 문장이 이 값을 읽어 쓰도록 함수로 뽑았다."""
+    return 0 if coverage >= float(rules.f9["g4_coverage_keep"]) else -1
+
+
 def _runway_step(runway: float, rules: RuleSet) -> int:
     if runway >= float(rules.f9["g3_runway_keep_years"]):
         return 0
@@ -380,7 +385,7 @@ def _g4(cid: str, obs: ObsLookup, gi: dict[str, Any], rules: RuleSet, run: dict[
             out.update({"result": "no_obligations", "coverage": None, "step": 0, "note": "B종 약정 0"})
             return out
         coverage = contracted / offb
-        step = 0 if coverage >= float(rules.f9["g4_coverage_keep"]) else -1
+        step = _coverage_step(coverage, rules)
         out.update({"result": "computed", "coverage": coverage, "contracted_revenue": contracted, "offbalance_B": offb, "step": step})
         return out
     # 결측 유형을 구분한다: 수집 실패·파싱 실패·관측 부재는 자료 대기, 확인된 미공시만 C-16 정책 대상이다 (설계 지침 6.4).
