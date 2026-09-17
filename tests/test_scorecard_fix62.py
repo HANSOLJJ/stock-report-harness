@@ -170,7 +170,7 @@ class Fix62Test(unittest.TestCase):
         self.assertIn("**F9 = -2** 다", ev[0])
         self.assertIn("G1 판정 보류(C-20 비상장 경로)", ev[0])
         self.assertIn("SRC-v15-rule", self.j["openai.F9"]["source_ids"])
-        self.assertIn("⚠️ C-29: BEP 후퇴가 기록돼 있으나 **C-20 이 앞선다**", self.md)
+        self.assertIn("주의 — C-29: BEP 후퇴가 기록돼 있으나 **C-20 이 앞선다**", self.md)
         self.assertIn("| OpenAI | 2 / 14 | 4 / 13 |", (RUN_DIR / "preview.md").read_text(encoding="utf-8"))
 
     def test_resolved_tension_leaves_the_promise_count(self):

@@ -110,7 +110,7 @@ class Stage2Test(unittest.TestCase):
     def test_stage1_leftovers(self):
         self.assertNotIn("선택에 따라 런웨이가 달라질 수 있다", self.md)
         self.assertIn("신용등급이 좋아 더 빌릴 수 있을 것이라는 추정은 넣지 않는다", self.md)
-        self.assertIn("~~완충 약 $41B로 확대~~ (superseded [FIX-54 2단계]", self.md)
+        self.assertIn("~~완충 약 $41B로 확대~~ (대체됨", self.md)
         cur = next(c for c in RULES.payload["policies"]["f6"]["p4"]["conditions"] if c["id"] == "nonop_share")["stored_vs_recomputed"]["current"]
         self.assertEqual(cur["formula"], "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm")
         self.assertAlmostEqual(cur["table"]["alibaba"][1], 0.6124, places=4)

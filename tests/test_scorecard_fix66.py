@@ -128,7 +128,9 @@ class Fix66Test(unittest.TestCase):
     def test_work_codes_and_judgment_ids_are_not_linked(self):
         """`F5-IMPL-48`(작업 코드)과 `alphabet.F9`(판단 id)는 factor 코드가 아니다."""
         self.assertNotIn('<a class="tcode" href="#idx-F5">F5</a>-IMPL', self.html)
-        self.assertIn("F5-IMPL-48", re.sub(r"<[^>]+>", "", self.html))
+        # 2026-09-17 FIX-77: 작업 코드는 본문에서 내려 감사 기록으로 갔다. 링크로 잘못 잇지 않는다는
+        # 사실은 아래 두 줄이 계속 지킨다.
+        self.assertNotIn("F5-IMPL-48", re.sub(r"<[^>]+>", "", self.html))
         self.assertNotRegex(self.html, r'\.<a class="tcode[^"]*" href="#idx-F\d">')
 
     # ---------------------------------------------------------------- S2 상태·근거

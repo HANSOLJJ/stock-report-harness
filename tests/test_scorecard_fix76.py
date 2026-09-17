@@ -30,7 +30,11 @@ WORKNOTES = ("HANDOVER", "carried_score", "pending_rule_decision", "needs_rule_d
 
 def flatten(text: str) -> str:
     """태그·공백·강조 표시를 지운다. 같은 문장이 마크다운과 HTML 로 갈려 있어도 견줄 수 있다."""
-    return re.sub(r"\s+", "", re.sub(r"<[^>]+>", "", text).replace("**", ""))
+    flat = re.sub(r"<[^>]+>", "", text).replace("**", "")
+    # 2026-09-17 FIX-77: 표시 계층이 원본의 그림 표시를 걷어낸다. 대조할 때도 같이 지운다.
+    for mark in ("\u26a0\ufe0f", "\u26a0", "\U0001f4d0", "\U0001f195", "\U0001f527", "주의 — "):
+        flat = flat.replace(mark, "")
+    return re.sub(r"\s+", "", flat)
 
 
 class Fix76Test(unittest.TestCase):

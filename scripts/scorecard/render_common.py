@@ -209,7 +209,7 @@ def inline_html(text: str) -> str:
 
 def struck(text: str) -> str:
     """취소선. 본문에 `~` 가 있으면 마크다운 취소선이 깨지므로 표시어로 대신한다."""
-    return f"~~{text}~~ (superseded)" if "~" not in text else f"(superseded) {text}"
+    return f"~~{text}~~ (대체됨)" if "~" not in text else f"(대체됨) {text}"
 
 
 # ------------------------------------------------------------------ 대체된 수치
@@ -315,13 +315,106 @@ G4_INCOMPATIBLE_NOTE = "(원문 커버리지 계산은 ARR·연환산 약정 기
 
 def card_evidence_note(baseline_id: str) -> str:
     return (f"근거 불릿은 이번 실행 결과에 연결된 판단의 근거란을 먼저 보인다. 승계 판단은 기준선 {baseline_id} 문면에 이번 실행이 붙인 "
-            "superseded 표시·정정이 함께 있고, 이번 실행 판단은 새 근거 뒤에 대체된 옛 판단을 취소선으로 둔다. 판단이 연결되지 않은 "
+            "대체 표시·정정이 함께 있고, 이번 실행 판단은 새 근거 뒤에 대체된 옛 판단을 취소선으로 둔다. 판단이 연결되지 않은 "
             "자동 산출 factor 는 기준선 서술을 참고로만 보인다. 카드의 한 줄 요약은 기준선 원문이며 이번 실행에서 재검증하지 않았다.")
 
 
 def g4_incompatible(observations: list[dict[str, Any]], cid: str) -> bool:
     return any(o["company_id"] == cid and o["metric"] in ("contracted_revenue", "offbalance_B") and o["status"] == "incompatible_basis"
                for o in observations)
+
+
+# ------------------------------------------------------------------ 작업 메모 분리
+# 2026-09-17 FIX-77: 기업 카드의 근거 문장에 **작업 메모**가 그대로 실렸다(사용자 지적).
+# `[FIX-52 재척도 2026-09-15]` 처럼 언제 어느 과제로 표기가 바뀌었는지는 근거가 아니라 이력이다.
+# 사용자가 고른 것은 `메모만 걷어내기` — 근거의 내용과 출처는 남기고 작업 표기만 내린다.
+# 내린 것은 지우지 않고 감사 기록으로 보낸다.
+_WORK_TOKEN = (r"FIX-\d+|OBS-[A-Z0-9-]+|G\d-[A-Z0-9-]+|F\d-[A-Z0-9-]+|P\d-[A-Z0-9-]+"
+               r"|A-[A-Z0-9-]+|AV-[A-Z0-9-]+|TRIG-\d+|HANDOVER")
+_WORK_BRACKET = re.compile(r"\[[^\]]*?(?:" + _WORK_TOKEN + r")[^\]]*\]")
+# 대괄호 **안**에서 뗄 것 — 과제 번호, 단계 표시, 붙어 있는 날짜다. 그 밖의 내용은 근거이므로 남긴다.
+# `[FIX-53 3단계 라벨 정정: 10-Q Note 1 문면은 …]` 에서 정정 내용까지 떼면 근거가 사라진다.
+_WORK_INNER = re.compile(r"(?:" + _WORK_TOKEN + r")|\d단계|\d{4}-\d{2}-\d{2}|재척도 표시|재척도")
+# 대괄호를 떼고 남은 것이 이만큼도 안 되면 그 대괄호는 통째로 이력이다.
+_KEEP_MIN_CHARS = 6
+# 원본이 쓰던 그림 표시. 뜻이 있는 것은 글자로 밝히고 나머지는 뺀다.
+_MARK_LABELS = {"⚠️": "주의 — ", "⚠": "주의 — ", "📐": "", "🆕": "", "🔧": ""}
+# `⚠️` 는 코드포인트 둘(U+26A0 U+FE0F)이라 문자 클래스로는 앞 글자만 잡힌다. 긴 것부터 대안으로 쓴다.
+_MARKS_RE = re.compile("|".join(re.escape(k) for k in sorted(_MARK_LABELS, key=len, reverse=True)))
+# 영어 표기도 본문에서는 이름으로 옮겨 그린다(FIX-73 과 같은 처리).
+_SUPERSEDED_RE = re.compile(r"\bsuperseded\b(?=\s*다)")
+_SUPERSEDED_ANY = re.compile(r"\bsuperseded\b")
+
+
+def split_worknote(text: str) -> tuple[str, str]:
+    """근거 문장을 `(본문, 이력)` 으로 가른다. 이력이 없으면 둘째 값이 빈 문자열이다.
+
+    본문에서 내리는 것은 **작업 표기**뿐이다 — 과제 번호, 지시서 번호, 단계 표시가 그것이다.
+    `채점규칙 22행` 같은 출처와 검토 결과 문장은 근거의 일부라 남긴다.
+    """
+    notes: list[str] = []
+
+    def one_bracket(m: re.Match[str]) -> str:
+        """대괄호 안에서 작업 표기만 뗀다. 내용이 남으면 그 내용은 근거이므로 되돌린다."""
+        inner = _WORK_INNER.sub(" ", m.group(0)[1:-1])
+        inner = re.sub(r"[ \t]{2,}", " ", inner).strip(" ·,—:·")
+        notes.append(m.group(0))
+        return f"[{inner}]" if len(inner) >= _KEEP_MIN_CHARS else " "
+
+    body = _WORK_BRACKET.sub(one_bracket, text)
+    # 대괄호 밖에 남은 작업 표기(`OBS-REG-25 지시서 · G1-TTM-26`)도 이력으로 보낸다.
+    loose = re.compile(r"[(（·,]?\s*(?:" + _WORK_TOKEN + r")(?:[^\s,)）·]*)(?:\s*지시서)?")
+    extra = [m.group(0).strip(" (（·,") for m in loose.finditer(body)]
+    if extra:
+        notes += extra
+        body = loose.sub("", body)
+    body = _MARKS_RE.sub(lambda m: _MARK_LABELS[m.group(0)], body)
+    body = _SUPERSEDED_RE.sub("대체된 것이", body)   # `superseded 다` → `대체된 것이다`
+    body = _SUPERSEDED_ANY.sub("대체됨", body)
+    body = re.sub(r"\(\s*[·,]?\s*\)", "", body)
+    body = re.sub(r"\s*—\s*(?=[)）])", "", body)
+    # 대괄호를 떼면서 **여는** 강조 기호 뒤가 비었다(`** A+2 …**`). 그 자리만 붙인다 —
+    # 쌍으로 잡으면 `**A** · **B**` 의 가운데 ` · ` 까지 강조 안쪽으로 보고 먹는다.
+    body = re.sub(r"(?<![*\S])\*\*\s+(?=\S)", "**", body)
+    body = re.sub(r"[ \t]{2,}", " ", body).strip(" ·,—")
+    if body.count("**") % 2:
+        body = body[::-1].replace("**", "", 1)[::-1]
+    return body, " ".join(notes)
+
+
+def reviewer_label(judgment: dict[str, Any]) -> str:
+    """판단을 **누가 언제** 매겼는지. 검토자 칸의 작업 표기는 떼고 이름과 날짜만 남긴다.
+
+    2026-09-17 FIX-77: `승계된 판단 — 원검토일 …, 이번 실행 재검토 아님` 은 읽는 사람에게
+    기계 상태처럼 들렸다. **승계는 사용자가 앞서 매긴 판단**이고, 이번 실행에서 다시 매긴 것은
+    따로 보여야 한다 — 뭉뚱그리면 거짓이 된다.
+    """
+    # 검토자 칸은 이름만 쓴다. 괄호 안 부연(`(리뷰 C codex 발견 · 사용자 결정)`)과 커밋 해시는 이력이다.
+    who = re.split(r"\s*[(（—]", str(judgment.get("reviewer") or ""), maxsplit=1)[0].strip(" ·—")
+    if who.startswith("worker"):
+        who = "작업자"
+    when = judgment.get("reviewed_at") or ""
+    if judgment.get("status") == "carried":
+        return f"사용자의 판단 · {when}"
+    return f"이번 실행에서 다시 매김 · {who or '검토자 미기재'} · {when}"
+
+
+def _split_block(block: dict[str, Any]) -> dict[str, Any]:
+    """근거 줄에서 작업 메모를 떼어 `notes` 로 옮긴다. 본문만 남은 줄이 `lines` 다.
+
+    2026-09-17 FIX-77: 메모만 걷어내고 근거는 남긴다(사용자 선택). 뗀 것은 버리지 않고
+    감사 기록으로 보내 기업·항목별로 찾을 수 있게 한다.
+    """
+    lines, notes = [], []
+    for depth, text in block["lines"]:
+        body, note = split_worknote(str(text))
+        if note:
+            notes.append(note)
+        if body:
+            lines.append((depth, body))
+    block["lines"] = lines
+    block["notes"] = notes
+    return block
 
 
 def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]], base_evidence: list[str],
@@ -343,28 +436,29 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
         now = "미산출" if fr.get("score") is None else f"{fr['score']:+d}"
         head = (f"**이번 실행 점수는 {now} 이고 입력에서 자동 산출한 값이다**(위 산식 참조). "
                 f"아래는 기준선 {baseline_id} 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다.")
-        return {"kind": "baseline_reference",
-                "header": f"기준선 {baseline_id} 서술(참고 — 이번 실행은 입력에서 자동 산출, 원문 판단은 미적용)",
-                "lines": [(1, head)] + [(1, annotate_replaced(e, company_id, reps)) for e in base_evidence[:6]]}
+        return _split_block({"kind": "baseline_reference",
+                             "header": "참고 서술 — 이번 실행은 관측에서 계산했고 이 문장은 점수 근거가 아니다",
+                             "lines": [(1, head)] + [(1, annotate_replaced(e, company_id, reps))
+                                                     for e in base_evidence[:6]]})
     jid = judgment["judgment_id"]
     evidence = [annotate_replaced(e, company_id, reps) for e in (judgment.get("evidence") or [])]
     if judgment["status"] == "carried":
-        return {"kind": "carried", "header": f"근거(승계 판단 `{jid}` · 기준선 {baseline_id} · 검토 {judgment['reviewed_at']})",
-                "lines": [(1, e) for e in evidence]}
+        return _split_block({"kind": "carried", "header": f"근거 · {reviewer_label(judgment)} · 판단 기록 `{jid}`",
+                             "lines": [(1, e) for e in evidence]})
     lines = [(1, e) for e in evidence]
     sup = judgment.get("superseded")
     if sup:
-        lines.append((1, f"대체된 판단 `{sup['judgment_id']}` (superseded {sup['superseded_at']}) — {sup['why']}"))
+        lines.append((1, f"대체된 판단 `{sup['judgment_id']}` — {sup['superseded_at']} 에 바뀌었다. {sup['why']}"))
         lines += [(2, struck(e)) for e in sup.get("evidence", [])[:6]]
         if len(sup.get("evidence", [])) > 6:
-            lines.append((2, f"(외 {len(sup['evidence']) - 6}줄은 judgments.json superseded 에 있다)"))
+            lines.append((2, f"(외 {len(sup['evidence']) - 6}줄은 판단 기록의 대체 항목에 있다)"))
     elif base_evidence and base_evidence != list(judgment.get("evidence") or []):
         old = [e for e in base_evidence if e not in (judgment.get("evidence") or [])]
         if old:
             lines.append((1, f"과거 기록(기준선 {baseline_id} 서술 — 이번 실행 판단으로 대체):"))
             lines += [(2, struck(e)) for e in old[:6]]
-    return {"kind": "new", "header": f"근거(이번 실행 판단 `{jid}` · {judgment['reviewer']} · {judgment['reviewed_at']})",
-            "lines": lines}
+    return _split_block({"kind": "new", "header": f"근거 · {reviewer_label(judgment)} · 판단 기록 `{jid}`",
+                         "lines": lines})
 
 
 # ------------------------------------------------------------------ 산식 텍스트
@@ -777,6 +871,12 @@ def factor_concept(ctx: Any, fid: str) -> dict[str, Any]:
     item = dict(factor_concepts().get("items", {}).get(fid) or {})
     if not item:
         return {}
+    # 2026-09-17 FIX-77: 원본의 그림 표시(`🆕`·`⚠️`)는 v1.5 안에서만 뜻이 서던 것이다.
+    # 본문과 같은 규칙으로 밝히거나 뺀다.
+    for key in ("definition", "question", "metrics"):
+        if item.get(key):
+            item[key] = split_worknote(str(item[key]))[0]
+    item["examples"] = [split_worknote(str(x))[0] for x in (item.get("examples") or [])]
     # 이름이 바뀌었으면 **지금 이름**을 제목으로 쓰고 원본 이름은 아래에 남긴다.
     now = str(ctx.rules.factor(fid)["label"])
     src = f"{item.get('mark', '')} {item.get('name', '')}".strip()

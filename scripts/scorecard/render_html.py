@@ -195,6 +195,7 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
    취급돼 좁은 화면에서 카드 밖으로 잘려 나갔다. 다른 목록과 같은 줄바꿈 규칙을 준다. */
 .fpts li{margin:6px 0;overflow-wrap:anywhere}
 .fpts li.warn{color:var(--warn-text)}
+.fpts li.warn .wk{display:inline-block;font-size:var(--fs-sm);font-weight:700;color:var(--warn-text);background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:4px;padding:0 6px;margin-right:6px}
 .fpts li.d2{margin-left:14px;color:var(--tx2);list-style:circle}
 .fpts del{color:var(--tx3)}
 details.blk{background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin:10px 0;overflow:hidden}
@@ -610,11 +611,17 @@ def status_basis(fr: dict[str, Any]) -> str:
             f'<span class="{("b" + weak).strip()}">{esc(label)}</span>')
 
 
+# 2026-09-17 FIX-77: 본문에서 내린 작업 메모를 기업·항목별로 모아 감사 기록으로 보낸다.
+# 카드를 그릴 때 채워지고 `render_audit_md` 가 읽는다.
+HISTORY_BY_COMPANY: dict[str, list[tuple[str, str]]] = {}
+
+
 def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]],
                  observations: list[dict[str, Any]] | None = None, judgments: list[dict[str, Any]] | None = None,
-                 reps: list[dict[str, Any]] | None = None) -> str:
+                 reps: list[dict[str, Any]] | None = None, ctx: Any = None) -> str:
     """2026-09-15 FIX-54 1단계 S3: 기준선 evidence 만 읽던 카드를 초안과 같은 근거 블록(render_common.evidence_block)으로."""
     observations = observations or []
+    HISTORY_BY_COMPANY.clear()   # 한 번 그릴 때마다 새로 모은다 — 두 번 부르면 쌓인다
     judgments_by_id = {j["judgment_id"]: j for j in (judgments or [])}
     baseline_n = len((baseline or {}).get("companies", [])) or len(results["companies"])
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
@@ -632,16 +639,30 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
             rows = []
             for f in factors:
                 fr = c["factors"][f]
+                history = HISTORY_BY_COMPANY.setdefault(c["company_id"], [])
                 score = fr["score"]
                 color = f"c-{score_class(score) if f in MOAT_FACTORS else trap_class(score)}"
                 block = rc.evidence_block(fr, judgments_by_id, b.get("evidence", {}).get(f, []), results["baseline_id"], c["company_id"], reps)
                 pts = [f'<li{" class=\"d2\"" if depth > 1 else ""}>{inline_html(text)}</li>' for depth, text in (block or {}).get("lines", [])]
+                history += [(f, n) for n in (block or {}).get("notes", [])]
                 if block is not None and f == "F9" and incompatible_g4:
                     pts.append(f"<li>{esc(rc.G4_INCOMPATIBLE_NOTE)}</li>")
                 # 2026-09-17 FIX-65 S3: 경고 문구에도 규칙 파일과 같은 강조 기호가 섞여 있어 그대로 노출됐다.
-                pts += [f'<li class="warn">⚠️ {inline_html(w)}</li>' for w in fr["warnings"][:4]]
+                # 2026-09-17 FIX-77: `⚠️` 를 글자로 밝히고, 경고에서도 작업 메모를 뗀다. 승계 표기는
+                # 근거 머리줄이 `사용자의 판단 · 날짜` 로 이미 말하므로 여기서 한 번 더 적지 않는다.
+                for w in fr["warnings"][:4]:
+                    if str(w).startswith("승계된 판단 — 원검토일"):
+                        continue
+                    wbody, wnote = rc.split_worknote(str(w))
+                    if wnote:
+                        history.append((f, wnote))
+                    if wbody:
+                        pts.append(f'<li class="warn"><b class="wk">주의</b> {inline_html(wbody)}</li>')
                 calc = factor_calc_text(f, fr)
                 src = f'<div class="fsrc">{inline_html(block["header"])}</div>' if block is not None else ""
+                # 2026-09-17 FIX-77: 근거에 남은 C-번호는 **그 결정 때문에 이 점수가 됐다**는 뜻이라
+                # 지우지 않는다. 눌러서 뜻을 보는 통로는 `link_decision_codes` 가 이미 만든다 —
+                # 여기에 칩을 더 달면 같은 번호가 한 번 더 찍혀 오히려 늘어난다.
                 body = (src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else ""
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
@@ -876,6 +897,27 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             summary = " ".join(str(d["summary"]).replace("|", r"\|").split())
             reco = " ".join(str(d.get("recommendation", "")).replace("|", r"\|").split())
             lines.append(f"| `{d['id']}` | {summary} | {reco} | {run_decisions.get(d['id'], '미결')} |")
+
+    # 2026-09-17 FIX-77: 기업 카드의 근거에서 내린 작업 메모. **버리지 않고 여기서 찾을 수 있게** 한다.
+    if HISTORY_BY_COMPANY:
+        lines += [
+            "",
+            "## 기업·항목별 작업 이력",
+            "",
+            "리포트 본문의 근거는 **무엇을 보고 그 점수를 주었는지**만 싣는다. 언제 어느 과제로 표기가 "
+            "바뀌었는지는 근거가 아니라 이력이라 여기로 옮겼다. 본문 근거 문장 자체는 그대로 남아 있다.",
+            "",
+            "| 기업 | 항목 | 작업 표기 |",
+            "| --- | --- | --- |",
+        ]
+        for cid in sorted(HISTORY_BY_COMPANY):
+            seen: set[tuple[str, str]] = set()
+            for fid, note in HISTORY_BY_COMPANY[cid]:
+                key = (fid, " ".join(str(note).split()))
+                if key in seen or not key[1]:
+                    continue
+                seen.add(key)
+                lines.append(f"| `{cid}` | {rc.FACTOR_LABELS.get(fid, fid)} | {key[1].replace('|', '/')} |")
 
     # 2026-09-17 FIX-76 S2: 규칙 `factors.*.note` 에는 채점 기준과 **작업 메모**가 섞여 있다.
     # 본문은 별표 원문을 쓰고, 이 원문 메모는 감사·대조용으로 여기 모은다.
@@ -1255,8 +1297,10 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     gates = [(name, f"{i+1}번째 관문", note, "", code)
              for i, (code, name, note) in enumerate(_gate_docs(ctx))]
     statuses = [(k, v, d) for k, v, d in [
-        ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다"),
-        ("carried_score", STATUS_LABEL["carried_score"], "기준선 v1.5 의 점수를 그대로 이어받았고 이번 실행에서 재검토하지 않았다"),
+        ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다. 사람이 다시 매긴 칸은 카드에 "
+         "<b>이번 실행에서 다시 매김</b> 으로 나온다"),
+        ("carried_score", STATUS_LABEL["carried_score"], "<b>사용자가 앞서 매긴 판단</b>을 그대로 이어받았고 "
+         "이번 실행에서 다시 매기지 않았다. 카드에는 <b>사용자의 판단 · 원검토일</b> 로 나온다"),
         ("needs_judgment", STATUS_LABEL["needs_judgment"], "사람의 판정 입력이 없어 점수를 만들지 않았다"),
         ("needs_rule_decision", STATUS_LABEL["needs_rule_decision"], "미결 규칙 결정(C-번호)이 걸려 점수를 만들지 않았다"),
     ] if k in {c["factors"][f]["status"] for c in results["companies"] for f in FACTOR_IDS} or k in {"ok", "carried_score"}]
@@ -1506,7 +1550,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_incomplete(results, ctx.rules)}
 <h2><span class="num">03</span>기업별 상세</h2>
 <p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"]))}</p>
-<div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx))}</div>
+<div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)}</div>
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}
 {availability}

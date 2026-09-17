@@ -97,7 +97,7 @@ class SharedRenderTest(unittest.TestCase):
             with self.subTest(cid=cid):
                 self.assertNotIn(f"`{cid}.F6`", self.md)
                 self.assertNotIn(f"<code>{cid}.F6</code>", self.html)
-                self.assertIn("기준선 v1.5 서술(참고 — 이번 실행은 입력에서 자동 산출", self.frow(cid, "⑥ 가격"))
+                self.assertIn("참고 서술 — 이번 실행은 관측에서 계산했고", self.frow(cid, "⑥ 가격"))
 
     # ---------------------------------------------------------------- S3 산식·경계
     def test_f6_parameters_text_is_not_empty(self):
@@ -144,8 +144,8 @@ class SharedRenderTest(unittest.TestCase):
         self.assertIn(f"최저점은 {rc.f9_policy(self.ctx, 'floor')} 이며", self.html_text)
 
     def test_offbalance_cell_and_replaced_values_in_html(self):
-        self.assertIn("$267.3B B종(검증 완료) · 원문 <del>미개시 리스 $106B</del> (superseded)", self.html)
-        self.assertIn("⚠️ 원문 $106B 는 이번 실행 실측 $267.3B(amazon.offbalance_B.obsreg25", self.html_text)
+        self.assertIn("$267.3B B종(검증 완료) · 원문 <del>미개시 리스 $106B</del> (대체됨)", self.html)
+        self.assertIn("주의 — 원문 $106B 는 이번 실행 실측 $267.3B(amazon.offbalance_B.obsreg25", self.html_text)
 
     def test_triggers_share_corrections_and_warnings(self):
         reps = rc.replacements(self.ctx)

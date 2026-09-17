@@ -286,8 +286,16 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
                 lines += [("  " * depth) + f"- {rc.rename_codes(text)}" for depth, text in block["lines"]]
                 if f == "F9" and incompatible_g4:
                     lines.append(f"  - {rc.G4_INCOMPATIBLE_NOTE}")
+            # 2026-09-17 FIX-77: 초안도 카드와 같은 규칙을 쓴다. 승계 표기는 근거 머리줄이 이미 말하고,
+            # `⚠️` 는 글자로 밝히며, 작업 메모는 본문에서 내린다(감사 기록에 남는다).
             for w in fr["warnings"][:4]:
-                lines.append(f"  - ⚠️ {rc.rename_codes(w)}")
+                if str(w).startswith("승계된 판단 — 원검토일"):
+                    continue
+                wbody, _note = rc.split_worknote(str(w))
+                if wbody:
+                    # HTML 카드가 `주의` 배지를 다는 자리다. 초안도 같은 말로 밝힌다.
+                    head = "" if wbody.startswith("주의 —") else "주의 — "
+                    lines.append(f"  - {head}{rc.rename_codes(wbody)}")
         lines.append("")
     # 원자료
     lines += ["## 지표 원자료", ""]

@@ -50,11 +50,11 @@ class DraftLegacyValuesTest(unittest.TestCase):
     def test_amazon_offbalance_cell_uses_verified(self):
         row = next(x for x in self.lines if x.startswith("| Amazon / AWS | $78.2B"))
         self.assertIn("$267.3B B종(verified)", row)
-        self.assertIn("~~미개시 리스 $106B~~ (superseded)", row)
+        self.assertIn("~~미개시 리스 $106B~~ (대체됨)", row)
 
     def test_amazon_f9_narrative_marks_replaced_value(self):
         line = next(x for x in self.lines if "게이트 4 ✅ 미개시 리스 $106B" in x)
-        self.assertIn("⚠️ 원문 $106B 는 이번 실행 실측 $267.3B(amazon.offbalance_B.obsreg25", line)
+        self.assertIn("주의 — 원문 $106B 는 이번 실행 실측 $267.3B(amazon.offbalance_B.obsreg25", line)
 
     def test_companies_without_verified_offbalance_keep_legacy_text(self):
         row = next(x for x in self.lines if x.startswith("| Meta |") and "리스 $279B" in x)

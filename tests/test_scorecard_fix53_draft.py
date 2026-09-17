@@ -34,21 +34,21 @@ class CurrentJudgmentEvidenceTest(unittest.TestCase):
     def test_anthropic_and_openai_f5_show_impl48_reasoning(self):
         for cid in ("anthropic", "openai"):
             with self.subTest(cid=cid):
-                blk = self.block(f"근거(이번 실행 판단 `{cid}.F5.impl48`")
+                blk = self.block(f"판단 기록 `{cid}.F5.impl48`")
                 self.assertIn("체크리스트 19(채점규칙 727행)", blk)
                 self.assertIn("A=+1", blk)
-                self.assertIn(f"대체된 판단 `{cid}.F5` (superseded 2026-09-14)", blk)
+                self.assertIn(f"대체된 판단 `{cid}.F5` — 2026-09-14 에 바뀌었다", blk)
 
     def test_openai_received_investment_is_not_active_alliance(self):
         """제외한 받은 투자가 활성 문장으로 읽히면 안 된다 — 옛 줄은 취소선 아래에만 있다."""
-        blk = self.block("근거(이번 실행 판단 `openai.F5.impl48`", 30)
+        blk = self.block("판단 기록 `openai.F5.impl48`", 30)
         line = next(x for x in blk.splitlines() if "Amazon $50B 투자(3월" in x)
         self.assertIn("~~", line)
-        self.assertIn("(superseded)", line)
+        self.assertIn("(대체됨)", line)
 
     def test_meta_f2_old_yardstick_is_struck(self):
         line = next(x for x in self.lines if "AA 종합 1위(Anthropic)가 5의 기준" in x)
-        self.assertIn("~~②5는 불가 — AA 종합 1위(Anthropic)가 5의 기준이고 Spark 1.3은 3위~~ (superseded", line)
+        self.assertIn("~~②5는 불가 — AA 종합 1위(Anthropic)가 5의 기준이고 Spark 1.3은 3위~~ (대체됨", line)
 
     def test_spacex_f9_label_reaches_draft(self):
         """FIX-52 가 근거란에 붙인 라벨이 이전 렌더러에서는 초안에 안 나왔다."""
@@ -68,7 +68,7 @@ class CurrentJudgmentEvidenceTest(unittest.TestCase):
         self.assertEqual({j["judgment_id"] for j in self.ctx.judgments} - linked, {"anthropic.F6", "openai.F6"})
 
     def test_auto_factor_keeps_baseline_reference_label(self):
-        self.assertIn("기준선 v1.5 서술(참고 — 이번 실행은 입력에서 자동 산출", self.text)
+        self.assertIn("참고 서술 — 이번 실행은 관측에서 계산했고 이 문장은 점수 근거가 아니다", self.text)
 
 
 class ReviewTemplateWordingTest(unittest.TestCase):
