@@ -661,6 +661,68 @@ def _band_text(bands: list[dict[str, Any]], unit: str = "%") -> str:
     return " · ".join(parts)
 
 
+# 2026-09-17 FIX-74: 사다리·산식·조합표가 기계 계산인 것처럼 적혀 있었다. **그 입력이 전부 사람 판단이다.**
+# 어느 항목이 어떤 방식인지 문장에 박지 않고 `judgments.json` 의 `kind` 에서 읽는다.
+# `kind` 는 사람이 **무엇을 적었는지**를 말한다 — 점수 자체인지, 판정 입력인지.
+JUDGMENT_ROLES = {
+    "score": "점수 자체",
+    "criteria": "기준마다 통과 여부",
+    "grade": "동맹과 적대 등급",
+    "matrix": "두 축의 판정",
+    "gate_inputs": "관문 입력",
+}
+# 사람이 매긴 것을 엔진이 어떤 장치로 환산하는지. 규칙의 산식 자체는 아래 `mode` 색인에 있고
+# 여기서는 **판단과 점수 사이에 무엇이 끼어 있는지**만 한 마디로 적는다.
+CONVERSION_NOTES = {
+    "F3": "엔진은 그 결과를 사다리에 태워 칸을 고른다",
+    "F5": "엔진은 기본 3점에 동맹을 더하고 적대를 뺀다",
+    "F7": "엔진은 그 조합을 표에서 찾아 칸을 고른다",
+}
+# 사람이 정하는 **판단 입력**이 각각 무엇을 묻는지. ⑨ 의 뜻은 `calc_f9` 가 그 값을 읽어 무엇을
+# 가르는지에서 가져왔고 이 절의 관문 설명과 같은 말을 쓴다. ⑦ 의 두 축은 `factors.F7.matrix` 의
+# `small|no` 꼴 키가 가리키는 것이다.
+JUDGMENT_INPUT_NAMES = {
+    # ⑨ 관문 입력 — 첫째 관문부터 넷째 관문 순서다.
+    "bep_retreat": "흑자 전환 시점을 뒤로 미뤘는지",
+    "operating_result_reviewed": "영업손익이 흑자인지 적자인지",
+    "fcf_trend": "잉여현금흐름 추세가 안정인지 나빠지는지",
+    "buffer_erosion": "현금 완충이 깎이고 있는지",
+    "direction_A": "적자 폭이 줄고 있다는 첫째 판정",
+    "direction_B": "적자 폭이 줄고 있다는 둘째 판정",
+    "coverage_comparable": "계약 수입과 약정을 견줄 수 있는지",
+    "fcf_not_disclosed_reason": "현금흐름을 공시하지 않은 사유",
+    # ⑦ 조합표의 두 축.
+    "funding_dependent_share": "조달 의존 고객 비중",
+    "own_money_returns": "자기 자금 환류",
+    # ③ 사다리의 기준 넷. 이름은 `calc_qual` 의 대기 사유와 `rules.f3_ladder` 의 주석이 쓰는 말이다.
+    "imitation": "모방불가",
+    "revenue_model": "수익모델",
+    "acceleration": "가속도",
+    "door_closed": "문이 닫혔는지",
+}
+
+
+def judgment_roles(ctx: Any) -> dict[str, list[str]]:
+    """factor 별로 사람이 무엇을 적었는지 `judgments.json` 의 `kind` 를 세어 돌려준다.
+
+    규칙의 `mode` 가 아니라 **실제 판단**을 본다. 규칙이 산식을 정해 두어도 그 산식에 들어가는 값을
+    사람이 적었다면 그 점수는 사람 판단에서 나온 것이다.
+    """
+    out: dict[str, dict[str, int]] = {}
+    for j in ctx.judgments:
+        out.setdefault(j["factor"], {})
+        out[j["factor"]][j["kind"]] = out[j["factor"]].get(j["kind"], 0) + 1
+    return {f: sorted(k, key=lambda x: -out[f][x]) for f, k in out.items()}
+
+
+def judgment_input_names(ctx: Any, factor: str) -> list[str]:
+    """그 항목에서 사람이 정하는 입력이 무엇인지 `judgments.json` 의 `inputs` 키로 읽어 나열한다."""
+    keys = {k for j in ctx.judgments if j["factor"] == factor for k in (j.get("inputs") or {})}
+    # **이름표에 뜻이 있는 것만 내보낸다.** 없는 키를 그대로 쓰면 내부 코드가 화면에 실린다(FIX-73).
+    order = list(JUDGMENT_INPUT_NAMES)
+    return [JUDGMENT_INPUT_NAMES[k] for k in sorted(keys & set(order), key=order.index)]
+
+
 def method_lines(ctx: Any) -> list[str]:
     """방법 절의 factor 설명.
 
@@ -709,6 +771,13 @@ def method_lines(ctx: Any) -> list[str]:
     f6 = ([
         "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 아래 잣대를 각각 재서 더하고, 마지막에 입력을 "
         "믿을 수 있는지로 한 칸을 조정한다.",
+        # 2026-09-17 FIX-74: 아홉 항목 가운데 사람 판단을 거치지 않는 것이 이 하나뿐이라는 사실이
+        # 어디에도 적혀 있지 않았다. 판단 기록에 남은 비상장 점수를 이번 규칙이 쓰지 않는 것도 함께 적는다.
+        "  - **아홉 항목 가운데 사람이 판단을 적지 않는 것은 이 항목 하나뿐이다.** 여기 들어가는 값은 모두 "
+        "등록된 관측이고, 어느 회사가 어떤 잣대를 받는지도 관측의 기간 단위가 정한다."
+        + (" 판단 기록에는 비상장 두 곳의 점수가 남아 있지만 **이번 규칙은 그 점수를 쓰지 않고 관측에서 "
+           "다시 계산한다.**" if ctx.rules.f6_mode == "parameters" and any(
+               j["factor"] == "F6" for j in ctx.judgments) else ""),
         f"  - **PER** — 시가총액을 최근 1년 순이익으로 나눈다. {_band_text(params['P1']['bands'], '배')}.",
         f"  - **EV/매출** — 시가총액에서 순현금을 뺀 값을 최근 1년 매출로 나눈다. {_band_text(params['P2']['bands'], '배')}.",
         f"  - **매출 성장** — 최근 1년 매출을 그 전 1년과 견준다. "
@@ -741,6 +810,10 @@ def method_lines(ctx: Any) -> list[str]:
     g1 = [
         "**⑨ 적자 깊이는 관문 네 개를 차례로 지난다.** 앞 관문의 결과에 따라 뒤 관문이 달라진다.",
         "  - 관문을 지나면 다음 관문으로 간다. 관문마다 깎인 것을 더한 값이 이 항목의 점수다.",
+        # 2026-09-17 FIX-74: 관문을 수치로만 지나는 것처럼 읽혔다. 관문마다 사람이 정한 값이 함께 들어간다.
+        "  - **이 항목은 관측 수치만으로 나오지 않는다.** 재무 수치와 함께 **사람이 정한 값이 관문마다 들어간다.** "
+        "판단 기록에 등록된 것은 " + " · ".join(f"`{x}`" for x in judgment_input_names(ctx, "F9")) + " 다. "
+        "그래서 아래 구간과 칸 수는 기계가 정하지만, **그 구간에 들어갈 값 가운데 일부는 사람이 정한 것**이다.",
         "  - **앞 관문에서 잴 것이 없으면 뒤 관문을 건너뛴다.** 기업 카드에는 `생략` 으로 나온다. "
         "현금흐름을 공시하지 않아 한 해 소진액을 알 수 없으면 런웨이를 계산할 방법이 없는 경우가 그것이다.",
         "  - **첫째 관문은 본업이다.** 최근 1년 영업손익으로 판정한다.",
@@ -781,11 +854,37 @@ def method_lines(ctx: Any) -> list[str]:
         "어떻게 셀지, 현금흐름 추세의 안정과 악화를 기계가 어떻게 가를지다.",
     ]
 
+    # 2026-09-17 FIX-74: 사다리·산식·조합표를 기계 계산처럼 적고 ①④⑧ 만 판단인 것처럼 갈라 놓았다.
+    # **실제로는 일곱이 전부 사람 판단에서 나온다.** 어느 항목이 어느 쪽인지 `kind` 를 세어 읽는다.
+    roles = judgment_roles(ctx)
+    # ⑥ 은 판단 기록에 점수가 남아 있어도 이번 규칙이 관측에서 다시 계산한다(`compute_private` 가
+    # 그 판단을 무시하고 경고만 남긴다). 판단 파일에 있다는 것과 그 점수가 쓰였다는 것은 다르다.
+    ignored = {"F6"} if ctx.rules.f6_mode == "parameters" else set()
+    judged = [f for f in FACTOR_LABELS if f in roles and f not in ignored and f != "F9"]
+    plain = [f for f in judged if roles[f][0] == "score" and f != "F2"]
+    converted = [(f, roles[f][0]) for f in judged if roles[f][0] != "score"]
+
+    def _names(ids: list[str]) -> str:
+        return " · ".join(FACTOR_LABELS[f] for f in ids)
+
+    def carried_note(fid: str) -> str:
+        """같은 항목 안에서 판정 입력이 남지 않아 숫자만 넘어온 회사가 있으면 그 수를 적는다."""
+        n = sum(1 for j in ctx.judgments if j["factor"] == fid and j["kind"] == "score")
+        return (f" 다만 {_count(n)} 곳은 그 판정이 남아 있지 않아 **점수 숫자만 넘어왔고** 엔진이 "
+                "다시 환산하지 못한다." if n else "")
+
     rest = [
-        "**나머지 항목은 이렇게 매긴다.** ③ Last Mover 는 기준을 채운 만큼 사다리를 오르고, "
-        "⑤ 아군 확보는 기본 3점에 동맹을 더하고 적대를 빼며, ⑦ 순환금융은 두 축의 조합표에서 꺼낸다. "
-        "**① 네트워크 효과 · ④ 호황 이후 비전 · ⑧ 비대칭 의존 셋은 사람이 직접 매긴다** — 산식이 없으므로 "
-        "점수보다 근거 문장을 읽어야 한다.",
+        f"**{_names(judged)} {_count(len(judged))} 항목은 모두 사람 판단에서 나온다.** 판단 기록을 세어 보면 "
+        "이 항목들은 14개사 전부가 사람이 적은 판단을 입력으로 갖는다. **사다리·산식·조합표는 사람이 매긴 것을 "
+        "정해진 표로 환산하는 장치이지 판단을 대신하는 것이 아니다.** 그래서 이 항목들은 모두 점수보다 근거 "
+        "문장을 읽어야 한다. 엔진이 무엇을 했는지는 이렇다.",
+    ] + ([f"  - **{_names(plain)}** — 사람이 **{JUDGMENT_ROLES['score']}**를 적는다. 환산할 산식이 아예 없어 "
+          "적힌 점수가 그대로 이 항목의 점수가 된다."] if plain else []) + [
+        f"  - **{FACTOR_LABELS[f]}** — 사람이 **{fix_josa(JUDGMENT_ROLES[kind], '', '을')}** 정하고"
+        + (f"({' · '.join(judgment_input_names(ctx, f))})" if len(judgment_input_names(ctx, f)) > 1 else "")
+        + f", {CONVERSION_NOTES[f]}." + carried_note(f)
+        for f, kind in converted if f in CONVERSION_NOTES
+    ] + [
         # 2026-09-17 FIX-71 N3: 규칙이 정한 방식을 적었으나 **이번 실행에서 그 방식으로 매겨진 회사가 없다.**
         # 둘이 다르면 둘 다 드러나야 한다.
         "**② 게임체인저는 이번 실행에서 계산하지 않았다.** 규칙은 조건을 몇 개 통과했는지 세어 점수로 바꾸도록 "
