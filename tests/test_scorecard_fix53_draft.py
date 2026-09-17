@@ -53,7 +53,7 @@ class CurrentJudgmentEvidenceTest(unittest.TestCase):
     def test_spacex_f9_label_reaches_draft(self):
         """FIX-52 가 근거란에 붙인 라벨이 이전 렌더러에서는 초안에 안 나왔다."""
         self.assertIn("(v1.5 인용 · 채점표_v1.5.md 671·673행)", self.text)
-        self.assertIn("이 실행의 verified 값", self.text)
+        self.assertIn("이 실행의 검증 완료 값", self.text)
 
     def test_every_active_judgment_header_is_present(self):
         # 2026-09-15 FIX-54 1단계 S4: 결과에 연결된 판단만 헤더를 찍는다. anthropic.F6·openai.F6 은 판단 파일에 있지만

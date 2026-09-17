@@ -656,7 +656,7 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
                  f'<p class="sub mt-8">열별 관측 상태: {esc(rc.status_summary(obs, cids, rc.FIN_STATUS_COLUMNS))}</p>'
                  f'<div class="notice info">{inline_html(rc.cash_definition_note(ctx))}</div>'
                  + "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in rc.credit_lines(ctx, results)) +
-                 f'<p class="sub mt-8">{esc(rc.CREDIT_NOTE)} 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 G4 커버리지에 쓴다.</p>')
+                 f'<p class="sub mt-8">{esc(rc.CREDIT_NOTE)} 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 약정 커버리지에 쓴다.</p>')
     if borr_rows:
         parts.append('<h3>TTM 순차입</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>TTM 순차입</th><th>TTM capex</th></tr></thead><tbody>' + "".join(borr_rows) + "</tbody></table></div>")
     return "".join(parts)
@@ -721,21 +721,125 @@ def _asof_line(ctx: Any) -> str:
             f'(C-17 권고대로 셋을 따로 기록했고 이번 실행은 값이 다르다)')
 
 
+AUDIT_SUFFIX = "-audit.md"
+
+
+def audit_path(slug: str) -> Path:
+    """감사 기록 산출물. HTML 과 같은 output/ 에 두고 이름만 뒤에 `-audit` 를 붙인다."""
+    return OUTPUT_DIR / f"{slug}{AUDIT_SUFFIX}"
+
+
+def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] | None = None) -> str:
+    """2026-09-17 FIX-67 S1: 해시·입력 지문·실행 단위 선택·미결 결정 표는 **감사용 기록**이다.
+
+    리포트를 읽는 사람에게 필요한 것이 아니어서 HTML 본문에서 빼고 이 파일로 옮긴다.
+    계약 검증기가 HTML 에 요구하는 것은 `<meta name="results-hash">` 와 generator 메타·순위표·유의 문구·
+    viewport 뿐이라 본문에서 빼도 계약을 깨지 않는다.
+    """
+    rules = ctx.rules
+    base, price, cutoff = _asof_dates(ctx)
+    run_decisions = {r["id"]: r["choice"] for r in ctx.run.get("decisions", [])}
+    lines = [
+        f"# 감사 기록 — {ctx.run['title']}",
+        "",
+        "이 파일은 **재현과 감사를 위한 기록**이다. 리포트 본문에서 뺀 해시·입력 지문·실행 단위 선택을 모은다.",
+        f"리포트는 `output/{ctx.slug}.html` 이고 여기 값들이 그 리포트를 만든 입력이다.",
+        "",
+        "## 규칙과 기준 시점",
+        "",
+        f"- 규칙 `{rules.version}` · 해시 `{rules.hash}`",
+        f"- 원본 파일 `{rules.payload['source']['file']}`",
+        (f"- 분석 기준일 · 가격 기준일 · 정보 컷오프가 모두 `{base}` 로 같다"
+         if base == price == cutoff else
+         f"- 분석 기준일 `{base}` · 가격 기준일 `{price}` · 정보 컷오프 `{cutoff}`"),
+        "- 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있고 이번 실행에서 재검증하지 않았다.",
+        "",
+        "## 입력 해시",
+        "",
+        "| 대상 | 해시 |",
+        "| --- | --- |",
+        f"| observations | `{ctx.hashes['observations']}` |",
+        f"| judgments | `{ctx.hashes['judgments']}` |",
+        f"| results | `{results['results_hash']}` |",
+    ]
+    if approval:
+        lines += [
+            f"| draft | `{approval['hashes']['draft']}` |",
+            f"| run | `{approval['hashes']['run']}` |",
+            "",
+            f"승인 `{approval['approval_id']}` · {approval['approved_by']} · {approval['approved_at']}",
+        ]
+    lines += [
+        "",
+        "## 실행 단위 결정",
+        "",
+        "규칙이 미결로 둔 항목 중 이번 실행에서 고른 선택이다. **목록에 있다고 그 선택을 계산이 실제로 "
+        "읽었다는 뜻은 아니다** — 소비 여부는 각 항목의 산식과 경고에서 확인한다.",
+        "",
+        "| 결정 | 이번 실행 선택 |",
+        "| --- | --- |",
+    ]
+    applied = results.get("decisions_applied") or []
+    for item in applied:
+        # `decisions_applied` 는 `C-05:apply` 처럼 결정과 선택을 한 문자열에 담는다.
+        did, _sep, choice = str(item).partition(":")
+        lines.append(f"| `{did}` | `{choice or run_decisions.get(did, '—')}` |")
+    if not applied:
+        lines.append("| — | 없음 |")
+
+    pending = [d for d in rules.pending_decisions() if d.get("blocking")]
+    if pending:
+        lines += [
+            "",
+            "## 미결 규칙 결정",
+            "",
+            "아직 확정되지 않은 규칙 항목이다. 걸린 항목은 점수를 만들지 않고 대기 상태로 남는다.",
+            "",
+            "| 결정 | 요약 | 권고 | 이번 실행 |",
+            "| --- | --- | --- | --- |",
+        ]
+        for d in pending:
+            summary = " ".join(str(d["summary"]).replace("|", r"\|").split())
+            reco = " ".join(str(d.get("recommendation", "")).replace("|", r"\|").split())
+            lines.append(f"| `{d['id']}` | {summary} | {reco} | {run_decisions.get(d['id'], '미결')} |")
+
+    lines += [
+        "",
+        "## 내부 표기",
+        "",
+        "리포트 본문은 이름을 쓰고 번호는 쓰지 않는다. 코드·규칙 파일과 대조할 때 쓰는 표다.",
+        "",
+        "| 번호 | 리포트 표기 |",
+        "| --- | --- |",
+    ]
+    for pid, label in rc.F6_PARAM_LABELS.items():
+        lines.append(f"| `{pid}` | {label} |")
+    lines.append(f"| `P4` | {rc.F6_P4_LABEL} |")
+    for gid, label in rc.F9_GATE_LABELS.items():
+        lines.append(f"| `{gid}` | {label} |")
+    return "\n".join(lines) + "\n"
+
+
 def render_method(ctx: Any, results: dict[str, Any]) -> str:
     rules = ctx.rules
-    rows = "".join(f'<tr><td class="name">{esc(FACTOR_LABELS[f])}</td><td>{esc(rules.factor(f)["mode"])}</td><td class="mono">{rules.factor(f)["range"][0]}~{rules.factor(f)["range"][1]}</td><td class="text narrow">{esc(", ".join(rules.factor(f).get("decision_ids", [])) or "—")}</td></tr>' for f in FACTOR_IDS)
-    pending = [d for d in rules.pending_decisions() if d.get("blocking")]
-    drows = "".join(f'<tr><td class="mono">{esc(d["id"])}</td><td class="text">{inline_html(d["summary"])}</td><td class="text">{inline_html(d.get("recommendation", ""))}</td><td>{esc(next((r["choice"] for r in ctx.run["decisions"] if r["id"] == d["id"]), "미결"))}</td></tr>' for d in pending)
+    # 2026-09-17 FIX-67: `자동화` 는 `manual` 을 자동화라고 부르게 만드는 머리글이었다. 그 칸이 말하는 것은
+    # **점수를 만드는 방식**이다. 값도 영어 그대로 찍지 않고 색인 항목으로 잇는다.
+    rows = "".join(
+        f'<tr><td class="name">{esc(FACTOR_LABELS[f])}</td>'
+        f'<td class="text narrow">{_mode_cell(rules.factor(f)["mode"])}</td>'
+        f'<td class="mono">{rules.factor(f)["range"][0]}~{rules.factor(f)["range"][1]}</td></tr>' for f in FACTOR_IDS)
+    # 2026-09-17 FIX-67 S1: 해시·입력 지문·실행 단위 선택·미결 결정 표는 감사 기록으로 옮겼다.
+    # 본문에 남는 것은 기준 시점 한 줄, 어떻게 매겼는지, 알려진 한계 셋이다.
     return (
-        f'<ul class="tight"><li>규칙 <b>{esc(rules.version)}</b> · 해시 <code>{esc(rules.hash[:16])}…</code> · 원본 {esc(rules.payload["source"]["file"])}</li>'
-        f'<li>{_asof_line(ctx)} — 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있으며 이번 실행에서 재검증하지 않았다(C-17)</li>'
-        f'<li>입력 해시: observations <code>{esc(ctx.hashes["observations"][:12])}…</code> · judgments <code>{esc(ctx.hashes["judgments"][:12])}…</code> · results <code>{esc(results["results_hash"][:12])}…</code></li>'
-        f'<li>실행 단위 결정: {esc(", ".join(results["decisions_applied"]) or "없음")}</li></ul>'
-        f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th><th>자동화</th><th>범위</th><th class="text narrow">관련 결정</th></tr></thead><tbody>{rows}</tbody></table></div>'
+        f'<p class="sub">{_asof_line(ctx)}. 승계된 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
+        f'남아 있으며 이번 실행에서 다시 확인하지 않았다.</p>'
+        f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th>'
+        f'<th class="text narrow">점수를 만드는 방식</th><th>범위</th></tr></thead><tbody>{rows}</tbody></table></div>'
         # 2026-09-15 FIX-54 1단계 S3: v1.5 문구(NTM PER 구간 · 하한 -5)가 박혀 있었다. 초안과 같은 목록을 쓴다.
         + "".join(method_block(ctx, x) for x in [rc.c04_line(ctx)] + rc.method_lines(ctx))
         + '<h3>알려진 한계</h3>' + render_limitations(ctx)
-        + (f'<h3>미결 규칙 결정</h3><div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">요약</th><th class="text">권고</th><th>이번 실행</th></tr></thead><tbody>{drows}</tbody></table></div>' if drows else "")
+        + f'<p class="sub mt-14">규칙 해시·입력 지문·실행 단위 선택·미결 규칙 결정은 '
+          f'<a href="{esc(ctx.slug)}{AUDIT_SUFFIX}">감사 기록</a>에 따로 모았다.</p>'
     )
 
 
@@ -827,7 +931,8 @@ def render_availability(avail: dict[str, Any], ctx: Any, results: dict[str, Any]
 
 # 2026-09-17 FIX-66: F·G·P 번호와 상태·근거 어휘에 뜻이 없어 읽는 사람이 코드를 해독할 수 없었다.
 # **문구는 전부 규칙 파일이나 코드가 실제로 하는 일에서 끌어온다** — 여기서 새로 짓지 않는다.
-GATE_LINE_RE = re.compile(r"(G[1-4])\s+([^(→]+?)\(([^)]*)\)")
+# 관문 줄에서 머리말(`  - **둘째 관문은 현금이다.** `)을 떼고 설명만 남긴다.
+GATE_NOTE_RE = re.compile(r"^\s*-\s*\*\*[^*]*관문은[^*]*\*\*\s*")
 
 # `basis` 는 그 점수를 만든 방식이다. 각 설명 옆의 파일·행이 값을 붙이는 자리다.
 BASIS_DOC = {
@@ -848,10 +953,58 @@ BASIS_DOC = {
 }
 
 
+# 2026-09-17 FIX-67 추가: Factor 표의 `mode` 일곱 값. 규칙에서 직접 확인해 적었고 근거 경로를 함께 둔다.
+# **`manual` 은 사람 판단이라 근거 문장을 읽어야 하고 나머지는 입력이 같으면 기계가 같은 답을 낸다.**
+MODE_DOC = {
+    "manual": ("사람이 직접 매긴다", "산식이 없다. 판단자가 점수와 근거 문장을 적고 엔진은 그대로 옮긴다. "
+               "**이 방식으로 매긴 항목은 다른 항목보다 근거가 약하다** — 점수보다 근거 문장을 읽어야 한다.",
+               "factors.F1·F4·F8.mode · calc_qual.compute_manual"),
+    "paths": ("조건을 몇 개 통과했는지 센다", "통과 수를 점수로 바꾼다(0개 2점 · 1개 3점 · 2개 4점). "
+              "5점은 통과 수만으로 닿지 않고 세대 격차라는 별도 조건을 채워야 한다.",
+              "factors.F2.path_mapping · score5_requires_generation_gap"),
+    "ladder": ("채운 만큼 사다리를 오른다", "기준 점수를 합해 칸을 고른다(0점 1점 · 0.5~1점 2점 · 1.5~2점 3점 · "
+               "2.5~3점 4점). **4점 칸은 모방불가를 통과해야 열리고** 못 넘으면 3점에서 끊긴다. "
+               "5점은 다시 별도 조건(문이 닫혔는지)을 요구한다.",
+               "factors.F3.ladder · requires_imitation_pass · score5_requires_door_closed"),
+    "formula": ("산식에 넣는다", "기본 3점에서 동맹을 더하고 적대를 뺀다(동맹 0~2 · 적대 0~-3).",
+                "factors.F5.formula · A_allowed · H_allowed"),
+    "parameters": ("여러 수치를 재서 더한다", "PER · EV/매출 · 매출 성장 셋을 각각 구간표에 넣어 더하고, "
+                   "입력 신뢰도가 그 소계를 한 칸까지 내린다.",
+                   "policies.f6.parameters · policies.f6.p4"),
+    "matrix": ("두 축의 조합표에서 꺼낸다", "조달 의존 고객 비중과 자기 자금 환류 두 축으로 칸을 고른다"
+               "(작음·아니오 0 · 작음·예 -1 · 큼 -2).", "factors.F7.matrix"),
+    "gates": ("관문을 차례로 통과시킨다", "앞 관문에서 막히면 뒤는 생략하거나 진단만 한다.",
+              "factors.F9.mode · calc_f9.compute_f9"),
+}
+
+
+def _mode_cell(mode: str) -> str:
+    """Factor 표의 방식 칸. 영어 값 대신 한국어 설명을 보이고 색인으로 잇는다."""
+    doc = MODE_DOC.get(mode)
+    if doc is None:
+        return esc(mode)
+    return (f'<a class="tcode first" href="#idx-{_anchor_id(doc[0])}">{esc(doc[0])}'
+            f'<span class="tname">{esc(mode)}</span></a>')
+
+
 def _gate_docs(ctx: Any) -> list[tuple[str, str, str]]:
-    """G1~G4 의 이름. **규칙 파일에는 게이트 이름 키가 없어** ⑨ 설명 줄에서 읽는다(문자열은 바꾸지 않는다)."""
-    line = next((x for x in rc.method_lines(ctx) if x.startswith("⑨")), "")
-    return [(m.group(1), m.group(2).strip(), m.group(3).strip()) for m in GATE_LINE_RE.finditer(line)]
+    """관문 넷의 번호·이름·설명.
+
+    **규칙 파일에는 게이트 이름 키가 없다.** 이름은 `render_common.F9_GATE_LABELS` 가 들고 있고, 설명은
+    ⑨ 방법 문장의 해당 관문 줄에서 읽는다(문장을 여기서 새로 쓰지 않는다).
+    """
+    lines = rc.method_lines(ctx)
+    out = []
+    for code, name in rc.F9_GATE_LABELS.items():
+        hit = next((x for x in lines if f"관문은 {name}" in x), "")
+        note = GATE_NOTE_RE.sub("", hit).strip()
+        out.append((code, name, note))
+    return out
+
+
+def _anchor_id(code: str) -> str:
+    """색인 앵커. 이름에 공백·슬래시가 있어도 링크가 서게 한다."""
+    return re.sub(r"[^\w가-힣-]+", "-", str(code)).strip("-") or "x"
 
 
 def _index_rows(rows: list[tuple[str, ...]], anchor: str = "idx") -> str:
@@ -860,25 +1013,19 @@ def _index_rows(rows: list[tuple[str, ...]], anchor: str = "idx") -> str:
         code, name, note = row[0], row[1], row[2]
         src = row[3] if len(row) > 3 else ""
         srcpart = f'<span class="ixsrc">근거 {esc(src)}</span>' if src else ""
-        out.append(f'<div class="ixrow" id="{anchor}-{esc(code)}"><span class="ixid">{esc(code)}</span>'
+        internal = row[4] if len(row) > 4 else ""
+        if internal:
+            srcpart = f'<span class="ixsrc">내부 표기 <code>{esc(internal)}</code></span>' + srcpart
+        out.append(f'<div class="ixrow" id="{anchor}-{_anchor_id(code)}"><span class="ixid">{esc(code)}</span>'
                    f'<span class="ixname">{inline_html(name)}</span>'
                    f'<span class="ixnote">{inline_html(note)}{srcpart}</span></div>')
     return "".join(out)
 
 
 def index_terms(ctx: Any) -> dict[str, str]:
-    """본문 코드 → (첫 등장에 덧붙일 이름). 빈 문자열이면 링크만 걸고 이름은 붙이지 않는다.
-
-    ⑥ 파라미터는 본문이 이미 `P1 PER` 처럼 이름을 달고 나오므로 덧붙이면 겹친다(P4 만 이름이 없다).
-    factor 는 `alphabet.F9` 같은 판단 id 가 아닌 자리에서도 문맥이 factor 임을 알려 주므로 링크만 건다.
-    **G1~G4 는 이름이 어디에도 없어** 첫 등장에 붙인다.
-    """
+    """본문 코드 → (첫 등장에 덧붙일 이름). 빈 문자열이면 링크만 걸고 이름은 붙이지 않는다."""
+    # 2026-09-17 FIX-67: P·G 번호는 본문에서 사라졌다. 남은 것은 factor 코드와 긴장 번호다.
     terms: dict[str, str] = {f: "" for f in FACTOR_IDS}
-    terms.update({pid: "" for pid in ("P1", "P2", "P3")})
-    p4 = (ctx.rules.payload["policies"]["f6"].get("p4") or {}).get("label")
-    terms["P4"] = p4 or ""
-    for code, name, _note in _gate_docs(ctx):
-        terms[code] = name
     for x in ctx.rules.payload.get("open_tensions") or []:
         terms[x["id"]] = ""
     return terms
@@ -890,11 +1037,15 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     factors = [(f, f"{rules.factor(f)['label']}", f"자동화 {rules.factor(f)['mode']} · 범위 "
                 f"{rules.factor(f)['range'][0]}~{rules.factor(f)['range'][1]}") for f in FACTOR_IDS]
     f6 = rules.payload["policies"]["f6"]
-    params = [(pid, f"{spec['label']}", spec.get("question", "")) for pid, spec in sorted(f6["parameters"].items())]
+    # 2026-09-17 FIX-67: 본문에서 번호가 사라졌으므로 색인도 이름 기준이다. 번호는 내부 표기로만 남는다.
+    params = [(rc.F6_PARAM_LABELS.get(pid, pid), spec["label"], spec.get("question", ""), "", pid)
+              for pid, spec in sorted(f6["parameters"].items())]
     p4 = f6.get("p4") or {}
     if p4.get("label"):
-        params.append(("P4", p4["label"], f"{p4.get('question', '')} — 개별 파라미터가 아니라 ⑥ 소계에 적용한다"))
-    gates = [(g, name, note) for g, name, note in _gate_docs(ctx)]
+        params.append((rc.F6_P4_LABEL, p4["label"],
+                       f"{p4.get('question', '')} — 낱개 항목이 아니라 ⑥ 소계를 한 칸 내리는 자리다", "", "P4"))
+    gates = [(name, f"{i+1}번째 관문", note, "", code)
+             for i, (code, name, note) in enumerate(_gate_docs(ctx))]
     statuses = [(k, v, d) for k, v, d in [
         ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다"),
         ("carried_score", STATUS_LABEL["carried_score"], "기준선 v1.5 의 점수를 그대로 이어받았고 이번 실행에서 재검토하지 않았다"),
@@ -903,13 +1054,17 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     ] if k in {c["factors"][f]["status"] for c in results["companies"] for f in FACTOR_IDS} or k in {"ok", "carried_score"}]
     used_basis = {c["factors"][f]["basis"] for c in results["companies"] for f in FACTOR_IDS}
     bases = [(k, BASIS_DOC[k][0], BASIS_DOC[k][1], BASIS_DOC[k][2]) for k in BASIS_DOC if k in used_basis]
+    used_modes = [m for m in MODE_DOC if any(rules.factor(f)["mode"] == m for f in FACTOR_IDS)]
+    modes = [(MODE_DOC[m][0], "", MODE_DOC[m][1], MODE_DOC[m][2], m) for m in used_modes]
     tensions = [(x["id"], x.get("subject", ""), f"재검토 {x.get('recheck_at', '—')}"
                  f"{' · 해소됨' if x.get('status') == 'resolved' else ''}")
                 for x in sorted(rules.payload.get("open_tensions") or [], key=lambda x: x["id"])]
     groups = [
         ("factor", "Factor F1~F9", "점수를 내는 9개 항목이다. 본문에서는 ①~⑨ 로도 쓴다.", factors),
-        ("param", "⑥ 파라미터 P1~P4", "⑥ 가격을 만드는 네 칸이다. P1~P3 을 더해 소계를 내고 P4 가 소계를 한 칸 내린다.", params),
-        ("gate", "⑨ 게이트 G1~G4", "⑨ 적자 깊이는 이 순서대로 통과·실패를 판정한다. 앞에서 막히면 뒤는 생략하거나 진단만 한다.", gates),
+        ("mode", "점수를 만드는 방식", "Factor 표의 두 번째 칸이 이 값이다. "
+         "<b>사람이 직접 매기는 셋(①④⑧)은 근거 문장을 읽어야 하고, 나머지는 입력이 같으면 기계가 같은 답을 낸다.</b>", modes),
+        ("param", "⑥ 가격을 만드는 네 칸", "앞 셋을 더해 소계를 내고 입력 신뢰도가 소계를 한 칸 내린다.", params),
+        ("gate", "⑨ 적자 깊이의 관문 넷", "이 순서대로 통과·실패를 판정한다. 앞에서 막히면 뒤는 생략하거나 진단만 한다.", gates),
         ("status", "상태(status)", "그 칸이 <b>이번 실행에서 어떻게 처리됐는지</b>를 말한다.", statuses),
         ("basis", "근거(basis)", "그 점수를 <b>무엇으로 만들었는지</b>를 말한다. 상태와 근거는 다른 정보이고 카드에서 나란히 보인다.", bases),
         ("ten", "긴장 TEN-번호", "이번 실행에서 판정하지 않고 재검토 시점과 함께 등록해 둔 자리다.", tensions),
@@ -996,7 +1151,8 @@ def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> s
 # 2026-09-17 FIX-66: F·G·P 도 색인으로 잇는다. 다만 셋은 본문에 수백 번 나와 **전부 링크하면 문장이 묻힌다**
 # (F 201 · G 111 · P 152회). **절마다 첫 등장 한 번만** 링크하고, 그 한 번에 이름을 같이 보인다.
 # 앞에 `.` 이 붙으면 판단 id(`alphabet.F9`), 뒤에 `-` 가 붙으면 작업 코드(`F5-IMPL-48`)라 건드리지 않는다.
-TERM_RE = re.compile(r"(?<![.\w가-힣])(F[1-9]|G[1-4]|P[1-4]|TEN-[A-Z0-9-]+)(?![\w.-])")
+# 2026-09-17 FIX-67: P·G 번호는 본문에서 사라졌다(이름으로 바꿨다). 남은 코드는 factor 와 긴장뿐이다.
+TERM_RE = re.compile(r"(?<![.\w가-힣])(F[1-9]|TEN-[A-Z0-9-]+)(?![\w.-])")
 
 
 def link_decision_codes(document: str, known: set[str], placeholder: str,
@@ -1017,7 +1173,7 @@ def link_decision_codes(document: str, known: set[str], placeholder: str,
         seen_name.add(code)
         tail = f'<span class="tname">{name}</span>' if name else ""
         cls = "tcode first" if tail else "tcode"
-        return f'<a class="{cls}" href="#idx-{code}">{code}{tail}</a>'
+        return f'<a class="{cls}" href="#idx-{_anchor_id(code)}">{code}{tail}</a>'
 
     def sub_text(m: re.Match[str]) -> str:
         text = m.group(1)
@@ -1191,6 +1347,9 @@ def build_scorecard(slug: str) -> tuple[Path, list[Path], None]:
     document = render_document(ctx, results, baseline, triggers, review_fm, approval, load_availability(slug))
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     paths.html.write_text(document, encoding="utf-8")
+    # 2026-09-17 FIX-67 S1: 감사 기록을 리포트와 나란히 낸다. HTML 방법 절이 이 파일을 링크한다.
+    audit_path(slug).write_text(render_audit_md(ctx, results, approval), encoding="utf-8", newline="\n")
+    print(f"audit: {rel(audit_path(slug))}")
     rows = history_rows(results, approval, ctx.rules.hash, str(ctx.run.get("change_type") or "baseline-recompute"))
     added, skipped = append_history(HISTORY_CSV, rows)
     print(f"history.csv: +{added} rows (중복 {skipped} 건너뜀)")

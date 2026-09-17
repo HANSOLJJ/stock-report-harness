@@ -19,6 +19,8 @@ METHOD_LABELS = {
     # 이 키 이름은 기준선 이관 코드의 문자열이다. NTM 적격성이 검증됐다는 뜻이 아니므로 라벨로 그렇게 읽히면 안 된다.
     "vendor_forward_pe_verified_ntm": "공급사 forward PE(이관 코드 명칭 · 기간 미확인 · NTM 적격성 미검증)",
     "annual_weighted_proxy": "연간 EPS 가중 근사(정밀도 열위)",
+    # 2026-09-17 FIX-67: 실제 데이터 키는 이쪽인데 표에 없어 영어 그대로 나왔다.
+    "annual_eps_weighted_proxy": "연간 EPS 가중 근사(정밀도 열위)",
 }
 SHARE_LABELS = {"large": "큼", "small": "작음", "unknown": "미확인"}
 YESNO_LABELS = {"yes": "있음", "no": "없음", "unknown": "미확인"}
@@ -27,7 +29,12 @@ GATE_LABELS = {
     "negative": "FCF 마이너스", "not_disclosed": "미공시", "zero": "0", "pending": "대기", "skipped": "생략",
     "computed": "산출", "undetermined": "판정 불가", "incompatible": "비교 불가", "no_obligations": "약정 없음",
 }
-F6_PARAM_LABELS = {"P1": "P1 PER", "P2": "P2 EV/매출", "P3": "P3 매출 성장"}
+# 2026-09-17 FIX-67: 사용자 지시로 본문에서 `P1`·`G3` 같은 번호를 쓰지 않고 이름을 그대로 쓴다.
+# 번호는 `results.json`·규칙·감사 기록에만 남는다 — 아래 표가 데이터의 번호를 화면 이름으로 옮긴다.
+# 이름 출처: 규칙 `policies.f6.parameters[].label`·`policies.f6.p4.label` 과 ⑨ 게이트 순서.
+F6_PARAM_LABELS = {"P1": "PER", "P2": "EV/매출", "P3": "매출 성장"}
+F6_P4_LABEL = "입력 신뢰도"
+F9_GATE_LABELS = {"G1": "본업", "G2": "현금", "G3": "런웨이", "G4": "약정 커버리지"}
 VENDOR_MARK = "†"
 
 
@@ -51,9 +58,48 @@ def fmt_num(value: float | None, digits: int = 1) -> str:
     return f"{value:.{digits}f}"
 
 
+# 2026-09-17 FIX-67: `results.json` 의 경고와 판단 근거 문장에 번호가 **데이터로** 들어 있다
+# (`market_cap 이 legacy_unverified 인데 P1, P2 가 …`). 데이터를 고치면 results_hash 가 바뀌므로
+# **표시할 때 이름으로 옮겨 그린다.** 번호 뒤에 이름의 끝 낱말이 이미 붙어 있으면(`G4 커버리지`)
+# 둘을 합쳐 한 번만 쓴다.
+CODE_NAMES = {**F6_PARAM_LABELS, "P4": F6_P4_LABEL, **F9_GATE_LABELS}
+# 관측 지표·상태·조건의 내부 이름도 화면에서는 한국어로 옮긴다. **긴 이름부터** 바꾼다
+# (`not_disclosed_confirmed` 가 `not_disclosed` 를 품는다). 결정 선택지와 코드·규칙 경로는 감사 기록·
+# 색인과 대조해야 하므로 **그대로 남긴다.**
+TERM_NAMES = {
+    "market_cap": "시가총액", "net_cash": "순현금", "lease_liabilities": "리스부채",
+    "revenue_ttm_prior": "전년 매출", "revenue_ttm_full": "12개월 매출", "revenue_ttm": "최근 1년 매출",
+    "net_income_ttm": "최근 1년 순이익", "pretax_income_ttm": "세전이익",
+    "operating_income_ttm": "영업이익", "operating_margin_ttm": "영업손익률",
+    "fcf_ttm": "잉여현금흐름", "undrawn_credit": "미인출 여신", "ntm_per": "예상 PER",
+    "contracted_revenue": "계약 수입", "offbalance_B": "부외 B종 약정", "debt_ebitda": "차입÷EBITDA",
+    "nonop_share": "영업외 비중", "period_basis_not_ttm": "기간 단위 불일치",
+    "short_history": "이력 부족", "stale_asof": "기준 시점 경과",
+    "annual_eps_weighted_proxy": "연간 EPS 가중 근사",
+    "legacy_unverified": "기준선 승계·미검증", "not_disclosed_confirmed": "확인된 미공시",
+    "not_disclosed": "미공시", "incompatible_basis": "기준 비교 불가", "not_applicable": "해당 없음",
+    "working_definition": "작업 정의", "collection_failed": "수집 실패", "parse_failed": "파싱 실패",
+    # `verified` 는 낱말 하나라 아래 정규식(밑줄이 있는 이름)에 걸리지 않는다. 상태 요약에서만 쓴다.
+    "verified": "검증 완료",
+}
+_TERM_RE = re.compile(r"(?<![A-Za-z0-9_./-])(" + "|".join(
+    sorted((re.escape(k) for k in TERM_NAMES), key=len, reverse=True)) + r")(?![A-Za-z0-9_])")
+_CODE_RE = re.compile(r"(?<![A-Za-z0-9_./-])([PG][1-4])(?![A-Za-z0-9_.-])(\s*)([가-힣A-Za-z/]+)?")
+
+
+def rename_codes(text: str) -> str:
+    def one(m: re.Match[str]) -> str:
+        name = CODE_NAMES[m.group(1)]
+        gap, nxt = m.group(2) or "", m.group(3) or ""
+        if nxt and nxt == name.split()[-1]:
+            return name          # 뒤 공백은 매치 밖에 남아 있다 — 여기서 더하면 두 칸이 된다
+        return name + gap + nxt
+    return _TERM_RE.sub(lambda m: TERM_NAMES[m.group(1)], _CODE_RE.sub(one, text))
+
+
 def inline_html(text: str) -> str:
     """이스케이프한 뒤 백틱·`~~`·`**` 만 태그로 바꾼다. 나머지 마크다운 기호는 글자 그대로 둔다."""
-    out = html_lib.escape(str(text), quote=True)
+    out = html_lib.escape(rename_codes(str(text)), quote=True)
     out = re.sub(r"`([^`]+)`", r"<code>\1</code>", out)
     out = re.sub(r"~~(.+?)~~", r"<del>\1</del>", out)
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", out)
@@ -224,7 +270,7 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
 def f9_gate_text(p: dict[str, Any]) -> str:
     label = (GATE_LABELS.get(p.get("result"), p.get("result") or "") or p.get("adjust")
              or (f"적용 → {p['score']}" if p.get("applied") and p.get("score") is not None else ""))
-    text = f"{p['gate']} {label}".rstrip()
+    text = f"{F9_GATE_LABELS.get(p['gate'], p['gate'])} {label}".rstrip()
     # 2026-09-15 FIX-53 2단계: G3 런웨이와 가장 가까운 임계까지의 거리를 보인다. 경계 표시(⚠️)는 F6 와 같은 허용폭 안일 때만.
     if p.get("runway_years") is not None:
         text += f" 런웨이 {p['runway_years']:.2f}년"
@@ -238,7 +284,7 @@ def f9_gate_text(p: dict[str, Any]) -> str:
 
 
 def f6_boundary_flag(calc: dict[str, Any]) -> bool:
-    """경계 열. v1.7 parameters 는 P1~P3 각자와 P4 영업외 비중 임계를 본다. v1.5 bands 는 calc.boundary 하나다."""
+    """경계 열. v1.7 parameters 는 세 파라미터 각자와 입력 신뢰도의 영업외 비중 임계를 본다. v1.5 bands 는 calc.boundary 하나다."""
     if calc.get("mode") == "parameters":
         flags = [((p or {}).get("boundary") or {}).get("flag") for p in (calc.get("parameters") or {}).values()]
         flags.append(((calc.get("p4") or {}).get("nonop_share_boundary") or {}).get("flag"))
@@ -248,7 +294,7 @@ def f6_boundary_flag(calc: dict[str, Any]) -> bool:
 
 def _f6_parameters_text(calc: dict[str, Any]) -> str:
     parts = []
-    labels = dict(F6_PARAM_LABELS, P2="P2 밸류/매출") if calc.get("track") == "private" else F6_PARAM_LABELS
+    labels = dict(F6_PARAM_LABELS, P2="밸류/매출") if calc.get("track") == "private" else F6_PARAM_LABELS
     for pid, p in (calc.get("parameters") or {}).items():
         value = p.get("value")
         if value is None:
@@ -262,7 +308,7 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
         p4 = calc.get("p4") or {}
         steps = p4.get("demotion_steps") or 0
         hit = ", ".join(p4.get("conditions_hit") or []) or "해당 없음"
-        text += f" = 소계 {calc['subtotal_before_p4']} · P4 {-steps if steps else 0}({hit})"
+        text += f" = 소계 {calc['subtotal_before_p4']} · {F6_P4_LABEL} {-steps if steps else 0}({hit})"
         # 2026-09-16 FIX-55 1단계(4차 리뷰 D): 조건 하나가 강등을 혼자 정했다는 사실이 이름으로 보이지 않았다.
         if p4.get("demotion_sole_cause"):
             text += f" — `{p4['demotion_sole_cause']}` 하나가 강등을 정한다"
@@ -342,7 +388,8 @@ def status_summary(obs: Any, cids: list[str], columns: list[tuple[str, str]]) ->
             counts[key] = counts.get(key, 0) + 1
         order = ["verified", "legacy_unverified"]
         items = sorted(counts.items(), key=lambda kv: (order.index(kv[0]) if kv[0] in order else 9, kv[0]))
-        parts.append(f"{label} " + " · ".join(f"{k} {v}" for k, v in items))
+        # 2026-09-17 FIX-67: 상태 키를 영어 그대로 찍어 `legacy_unverified 12` 로 나왔다.
+        parts.append(f"{label} " + " · ".join(f"{TERM_NAMES.get(k, k)} {v}" for k, v in items))
     return " | ".join(parts)
 
 
@@ -369,17 +416,18 @@ def raw_caption(ctx: Any) -> str:
 
 def price_notice(ctx: Any) -> str:
     if ctx.rules.f6_mode == "parameters":
-        return ("⑥ 상장 점수는 P1 TTM PER · P2 (시총−순현금)/매출 · P3 매출 성장의 합에 P4 입력 신뢰도 보정을 더한 값이다(parameters 정본). "
-                "NTM PER·TTM PER·P/S·영업외 비중 열은 v1.5 승계 참고값이며 점수는 이 열이 아니라 원자료에서 다시 계산한다. "
-                "경계 열의 ⚠️ 는 P1~P3 구간 경계나 P4 영업외 비중 임계까지 거리가 ±3% 이내라는 표시이며 점수를 바꾸지 않는다.")
+        return ("⑥ 상장 점수는 **PER · EV/매출(시총에서 순현금을 뺀 값 ÷ 매출) · 매출 성장** 셋을 더한 뒤 "
+                "**입력 신뢰도**로 한 칸을 조정한 값이다. "
+                "아래 표의 NTM PER·TTM PER·P/S·영업외 비중 열은 기준선에서 넘어온 참고값이고 점수는 이 열이 아니라 원자료에서 다시 계산한다. "
+                "경계 열의 ⚠️ 는 구간 경계까지 거리가 ±3% 이내라는 표시이며 점수를 바꾸지 않는다.")
     return ("NTM PER 만 ⑥ 점수에 개입한다. TTM PER·P/S·영업외 비중은 참고·왜곡 탐지용이며 영업외 30% 이상이면 TTM PER 은 무효로 본다. "
             "경계 열의 ⚠️ 는 구간 경계(20·29·42·62·90)까지 거리가 ±3% 이내라는 표시이며 점수를 바꾸지 않는다.")
 
 
 def private_notice(ctx: Any) -> str:
     if ctx.rules.f6_mode == "parameters":
-        return ("비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 P2 구간표에 P3·P4 조건을 모두 채울 때만 한 칸 올리는 보정(C-12)이며 "
-                "경계 표시를 적용하지 않는다.")
+        return ("비상장 배수는 상장사 PER 과 직접 견줄 수 없다. 점수는 **밸류/매출 구간표**로 내고, "
+                "**매출 성장과 자본 효율을 둘 다 채울 때만** 한 칸 올려 준다. 경계 표시는 붙이지 않는다.")
     return "비상장 배수는 상장사 PER 과 직접 비교할 수 없다. 점수는 정성 예외(C-12)이며 경계 표시를 적용하지 않는다."
 
 
@@ -394,7 +442,8 @@ def vendor_policy_note(ctx: Any) -> str:
     detail = " · ".join(f"{m} {n}건" for m, n in sorted(by_metric.items()))
     return (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 v1.5 승계 값이다 — "
             "상류가 StockAnalysis 이거나 그 주가로 계산한 값이고, StockAnalysis 는 원천 장부에 `not_adopted · legacy_upstream` 으로만 올라 있다. "
-            "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다. 시총은 P1·P2 입력이라 † 가 붙은 기업의 ⑥ 은 실측 전 값 위에 서 있다(점수를 깎지는 않는다).")
+            "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다. 시가총액은 **PER 과 EV/매출 둘 다의 입력**이라 "
+            "† 가 붙은 기업의 ⑥ 은 우리가 실측하지 않은 값 위에 서 있다(그렇다고 점수를 깎지는 않는다).")
 
 
 def cash_definition_note(ctx: Any) -> str:
@@ -402,10 +451,12 @@ def cash_definition_note(ctx: Any) -> str:
     sep = ((ctx.rules.payload.get("policies", {}).get("f6") or {}).get("net_cash") or {}).get("scope_separation") or {}
     sites = {s.get("metric"): s for s in sep.get("sites", [])}
     cash, net = sites.get("cash", {}), sites.get("net_cash", {})
-    return ("**현금 두 정의** — `현금` 열은 `cash` 관측(" + (cash.get("site") or "런웨이") + ", 질문 `" + (cash.get("question") or "") +
+    # 규칙의 `site` 문구가 `F9 G3 런웨이`·`F6 P2 → EV 조정` 처럼 번호를 담고 있다. 표시할 때 이름으로 옮긴다.
+    body = ("**현금 두 정의** — `현금` 열은 `cash` 관측(" + (cash.get("site") or "런웨이") + ", 질문 `" + (cash.get("question") or "") +
             "`)이고, `순현금/순부채` 열은 `net_cash` 관측(" + (net.get("site") or "EV 조정") + ", 질문 `" + (net.get("question") or "") +
             "`)으로 시장성 유가증권을 포함한다. **같은 행의 두 열은 서로 맞춰 볼 수 없다** — 순현금은 현금 열에서 차입을 뺀 값이 아니다"
             "(규칙 policies.f6.net_cash.scope_separation). 비상장·일부 기업은 원문 기준이 달라 제한현금 포함 여부도 다를 수 있다.")
+    return rename_codes(body)
 
 
 def credit_lines(ctx: Any, results: dict[str, Any]) -> list[str]:
@@ -436,12 +487,15 @@ def credit_lines(ctx: Any, results: dict[str, Any]) -> list[str]:
 
 
 def c04_line(ctx: Any) -> str:
-    """C-04 가 실제로 무엇을 바꾸는지. 선택을 조회해도 G3 산술은 같다(calc_f9, 3차 리뷰 C RC3-06)."""
+    """런웨이 계산에 무엇을 완충으로 넣는지.
+
+    2026-09-17 FIX-67 재작성. 뜻은 그대로다 — 완충은 현금과 확정 미인출 여신뿐이고, 신용등급으로 추정한
+    조달 여력은 넣지 않는다(`calc_f9._runway` 가 `undrawn_credit` 관측만 더한다).
+    """
     has_credit = any(o["metric"] == "undrawn_credit" and o["status"] == "verified" for o in ctx.observations)
-    return ("정책 기본값 적용: C-04 완충 산정은 exclude(설계 권고) — 완충은 현금 + 조건이 확인된 확정 미인출 여신(`undrawn_credit` 관측)뿐이다. "
-            "include_v15 를 골라도 경고 문구만 바뀌고 G3 산술은 같다(등급 기반 조달 여력은 숫자 관측으로만 들어오고 추정치는 넣지 않는다). "
-            "G1 실패 진단 경로에서는 이 선택을 조회하지 않는다."
-            + (" 이번 실행의 여신 관측은 선택과 무관하게 런웨이에 들어간다." if has_credit else ""))
+    return ("**런웨이를 잴 때 완충으로 세는 것은 현금과 조건이 확인된 확정 미인출 여신뿐이다.** "
+            "신용등급이 좋아 더 빌릴 수 있을 것이라는 추정은 넣지 않는다 — 금액과 조건이 공시로 확인된 것만 센다."
+            + (" 이번 실행에서 확인된 여신은 그 기업의 런웨이에 들어가 있다." if has_credit else ""))
 
 
 def offbalance_cell(obs: Any, cid: str) -> str:
@@ -464,31 +518,59 @@ def f9_policy(ctx: Any, key: str) -> Any:
 
 
 def method_lines(ctx: Any) -> list[str]:
-    """방법 절의 factor 설명. 2026-09-15 FIX-52 에서 초안만 규칙에서 읽게 고쳤고 FIX-54 에서 HTML 도 이 목록을 쓴다."""
-    f6 = ("⑥ 상장: P1 TTM PER · P2 (시총−순현금)/매출 · P3 매출 성장 · P4 입력 신뢰도 보정(parameters 정본). "
-          "비상장: P2 밸류÷TTM 보정 매출에 P3·P4 합쳐 최대 한 칸 보정(C-12)."
-          if ctx.rules.f6_mode == "parameters" else
-          "⑥ 상장: NTM PER 20·29·42·62·90 반개방 구간, 경계 ±3% 는 표시만. 비상장: 배수 자동 계산·점수는 정성 예외.")
-    return [
-        # 2026-09-17 FIX-61(9차 재판정): 확정된 것을 미결이라고 적어 초안·HTML 까지 흘렀다.
-        # 2026-09-17 FIX-62: 같은 날 사용자가 순서를 뒤집었다(C-29). C-20 이 앞선다.
-        f"C-06 중 BEP 후퇴→{f9_policy(ctx, 'g1_bep_retreat_score')} 는 원문 OR 조건 그대로 적용한다(경고 표시). "
-        f"**우선순위는 확정됐다** — **C-20 비상장 경로가 먼저 선다**(C-29, 사용자 결정 2026-09-17으로 앞선 결정을 뒤집음). "
-        f"비상장이고 TTM 영업손익이 구조적 미공시면 BEP 후퇴가 기록돼 있어도 비상장 조항으로 간다. "
-        f"상장사이거나 미공시가 아닌 경우에만 BEP 후퇴가 서고, 그때는 **G1 통과와 손실률 밴드 둘 다보다 앞선다.** "
-        # 2026-09-17 FIX-63(9차 재판정 2회): `두 경로가 만나도 결과는 같다` 가 사실이 아니었다 —
-        # `if bep_retreat:` 가 밴드를 아예 보지 않고 단락시킨다.
-        # 2026-09-17 FIX-64(재판정 3회): 적자 맥락만 적어 범위가 좁았다 — 흑자 회사도 통과하지 못한다.
-        f"**그 자리에서는 순서가 결과를 가른다** — BEP 점수 {f9_policy(ctx, 'g1_bep_retreat_score')} 는 하한이라 "
-        f"손실률이 최심 밴드가 아니면 밴드 점수보다 깊게 내려가고, **영업흑자여도 통과하지 못한다**(TEN-RA6-01). "
-        f"이번 실행에는 해당 기업이 없다. "
-        "C-06 의 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세의 기계 정의다.",
-        f6,
-        f"⑨: G1 본업(TTM 영업손익) → G2 현금(TTM FCF) → G3 런웨이(현금+확정 여신 ÷ 연 소진, 임계 ±3% 는 경계 표시만) → G4 약정 커버리지(계약 수입 ÷ B종). 하한 {f9_policy(ctx, 'floor')}.",
-        "③ 사다리, ⑤ `3 + A + H`, ⑦ 2×2 매트릭스는 판정 입력에서 자동 환산. ①④⑧은 정성 점수. 모르는 값은 0으로 치환하지 않는다.",
-        # 2026-09-15 FIX-54 1단계 S7 RC3-06: 목록에 있다고 계산이 그 선택을 읽었다는 뜻이 아니다.
-        "`실행 단위 결정` 목록은 run.json 에 기록된 선택이다. 각 선택이 이번 계산에서 실제로 소비됐다는 증명은 아니다(소비 여부는 factor 산식·경고에서 확인한다).",
+    """방법 절의 factor 설명.
+
+    2026-09-17 FIX-67: 전면 재작성. 전에는 규칙을 만들며 주고받은 기록이 그대로 남아 결정 번호를 아는
+    사람만 읽을 수 있었다. **뜻은 그대로 두고 읽는 사람을 위한 글로 옮겼다** — 결정 번호는 문장에서 빼
+    `관련 결정` 줄로 보내고(HTML), 누가 언제 뒤집었다는 기록은 결정 항목이 이미 들고 있으므로 뺐다.
+    경우가 갈리는 곳은 한 문장에 몰아넣지 않고 줄로 나눈다.
+    """
+    floor = f9_policy(ctx, "floor")
+    bep = f9_policy(ctx, "g1_bep_retreat_score")
+    keep = f9_policy(ctx, "g3_runway_keep_years")
+    one_step = f9_policy(ctx, "g3_runway_one_step_years")
+    cover = f9_policy(ctx, "g4_coverage_keep")
+    tol = ctx.rules.payload["policies"]["f6"]["boundary_tolerance"]
+    bands = ctx.rules.payload["policies"]["f9"]["g1_bands_proposed"]
+    deep = min(b["score"] for b in bands)
+    mid = next((b for b in bands if b["score"] == deep + 1), None)
+    shallow = next((b for b in bands if b["score"] == deep + 2), None)
+
+    f6 = ([
+        "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 세 가지를 각각 재서 더하고, 마지막에 입력을 믿을 수 있는지로 한 칸을 조정한다.",
+        "  - **PER** — 시가총액을 최근 1년 순이익으로 나눈다. 25배 미만이면 감점이 없고, 45배 미만이면 한 칸, 그 위는 두 칸 깎는다.",
+        "  - **EV/매출** — 시가총액에서 순현금을 뺀 값을 최근 1년 매출로 나눈다. 8배 미만은 감점이 없고, 20배 미만은 한 칸, 그 위는 두 칸이다.",
+        "  - **매출 성장** — 최근 1년 매출을 그 전 1년과 견준다. 30% 이상이면 감점이 없고, 15% 이상은 한 칸, 5% 이상은 두 칸, 그 아래는 세 칸 깎는다.",
+        f"  - **입력 신뢰도** — 위 셋을 더한 값에서 한 칸을 더 깎는 자리다. 영업외 손익이 세전이익의 30% 를 넘거나, 최근 1년 대신 회계연도 값을 썼거나, 비교할 전년이 없거나, 자료가 너무 오래됐을 때 걸린다. 여러 개가 걸려도 한 칸까지만 깎는다.",
+        f"  - 구간 경계에서 {tol:.0%} 안에 든 값에는 표시를 달지만 **점수는 바꾸지 않는다.**",
+        "  - **비상장사는 다르게 본다.** 기업가치를 최근 1년 매출로 나눈 배수 하나로 점수를 내고, 매출 성장과 자본 효율이 **둘 다** 좋을 때만 한 칸 올려 준다. 상장사의 PER 과 직접 견줄 수 없는 수치다.",
+    ] if ctx.rules.f6_mode == "parameters" else [
+        "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 예상 PER 구간으로, 비상장사는 배수를 계산하되 점수는 정성 예외로 정한다.",
+    ])
+
+    g1 = [
+        "**⑨ 적자 깊이는 관문 네 개를 차례로 지난다.** 앞에서 막히면 뒤는 생략하거나 진단만 한다.",
+        "  - **첫째 관문은 본업이다.** 최근 1년 영업손익으로 판정한다.",
+        f"    - 회사가 흑자 전환 시점을 뒤로 미뤘다고 밝히면 이 항목은 최저점 {bep} 를 준다. 채점규칙 원문이 손실 폭과 **무관한 독립 조건**으로 적어 놓았다. 그래서 손실이 얕아도, 영업이익이 나고 있어도 최저점이 된다. **이 처리가 맞는지는 2026년 11월에 다시 본다.**",
+        "    - 다만 비상장사가 영업손익을 아예 공시하지 않으면 이 조항을 쓰지 않고 비상장사용 경로로 보낸다. 공시 의무가 없어 못 본 것을 적자로 셀 수는 없기 때문이다.",
+        "    - 그 밖에는 영업손익률로 나눈다. "
+        + (f"{shallow['min_margin']:.0%} 까지의 손실은 {shallow['score']}, " if shallow else "")
+        + (f"{mid['min_margin']:.0%} 까지는 {mid['score']}, " if mid else "")
+        + f"그보다 깊으면 {deep} 다. 영업이익이 나면 이 관문을 통과한다.",
+        "    - **이번 14개사 중 이 조항이 걸린 회사는 없다.**",
+        "  - **둘째 관문은 현금이다.** 최근 1년 잉여현금흐름을 본다. 흑자이고 추세가 안정이면 감점이 없고, 흑자라도 나빠지고 있으면 한 칸, 마이너스면 두 칸 깎는다. 비상장사가 공시하지 않으면 같은 두 칸으로 본다.",
+        f"  - **셋째 관문은 런웨이다.** 현금과 조건이 확인된 확정 미인출 여신을 더해 한 해 소진액으로 나눈다. {keep:g}년 이상이면 유지하고, {one_step:g}년 밑이면 한 칸 깎는다. 여기서도 경계 {tol:.0%} 안은 표시만 한다.",
+        f"  - **넷째 관문은 약정 커버리지다.** 계약으로 확보한 수입을 갚기로 한 약정으로 나눈다. {cover:g}배 이상이면 유지한다. 기간이나 범위가 서로 달라 견줄 수 없으면 숫자를 만들지 않는다.",
+        f"  - 이 항목의 최저점은 {floor} 이며 그보다 더 내려가지 않는다.",
+        "  - **아직 정하지 못한 것이 셋이다.** 수치가 정확히 0 일 때 어떻게 볼지, 현금 완충이 깎이는 속도를 어떻게 셀지, 현금흐름 추세의 안정과 악화를 기계가 어떻게 가를지다.",
     ]
+
+    rest = [
+        "**나머지 항목은 이렇게 매긴다.** ③ Last Mover 는 기준을 채운 만큼 사다리를 오르고, ⑤ 아군 확보는 기본 3점에 동맹을 더하고 적대를 빼며, ⑦ 순환금융은 두 축의 조합표에서 꺼낸다. "
+        "**① 네트워크 효과 · ④ 호황 이후 비전 · ⑧ 비대칭 의존 셋은 사람이 직접 매긴다** — 산식이 없으므로 점수보다 근거 문장을 읽어야 한다.",
+        "**모르는 값을 0 으로 바꾸지 않는다.** 자료가 없으면 그 항목은 점수를 만들지 않고 대기 상태로 남으며, 그 회사는 공식 순위에서 빠진다.",
+    ]
+    return f6 + g1 + rest
 
 
 def conflict_lines(ctx: Any) -> list[str]:
@@ -550,13 +632,16 @@ def limitations(ctx: Any) -> list[str]:
         ex = sv.get("exceptions") or {}
         explained = "; ".join(f"{k} — {v}" for k, v in (ex.get("explained") or {}).items()) or "없음"
         unexplained = "; ".join(f"{k} — {v}" for k, v in (ex.get("unexplained") or {}).items()) or "없음"
-        out.append(f"**영업외 비중 저장값과 재계산값이 다르다**(status `{sv.get('status')}`). 원자료 표의 `영업외 비중` 열은 v1.5 저장값이고 "
-                   f"P4 는 원자료에서 다시 계산한 값(`{cond.get('formula', '')}`)을 쓴다. 설명된 차이: {explained} 설명 못 한 차이: {unexplained}")
+        # 2026-09-17 FIX-67: 내부 상태값(`resolved_stored_was_right`)과 번호를 그대로 찍던 것을 풀어 쓴다.
+        out.append("**원자료 표의 `영업외 비중` 열은 점수에 쓰지 않는다.** 그 열은 기준선에서 넘어온 값이고, "
+                   "입력 신뢰도 판정은 원자료에서 다시 계산한 값(세전이익에서 영업이익을 뺀 뒤 세전이익으로 나눈 값)을 쓴다. "
+                   f"두 값이 다른 회사가 있다. 설명된 차이: {explained} 설명 못 한 차이: {unexplained}")
     nc = f6.get("net_cash") or {}
     if nc:
         questions = nc.get("open_questions") or []
-        out.append(f"**순현금은 작업 정의다**(status `{nc.get('status')}`). legacy 값에서 역산해 세운 정의라 확정 정의가 나오면 P2 를 다시 계산한다. "
-                   f"남은 질문 {len(questions)}건(규칙 policies.f6.net_cash.open_questions)은 아래와 같다.")
+        out.append("**순현금의 정의가 아직 확정되지 않았다.** 지금은 기준선 값에서 거꾸로 맞춰 세운 작업용 정의"
+                   "(현금과 시장성 유가증권을 더하고 총차입금과 리스부채를 뺀 값)를 쓴다. 확정 정의가 나오면 "
+                   f"⑥ 의 EV/매출을 다시 계산해야 한다. 아직 답하지 못한 질문이 {len(questions)}건이다.")
         for q in questions:
             # 취소한 문장은 빼고, 자를 때 강조·코드 표시가 반쯤 남지 않게 기호를 걷어 낸 뒤 자른다.
             q = re.sub(r"~~.*?~~\s*", "", q).replace("**", "").replace("`", "").strip()

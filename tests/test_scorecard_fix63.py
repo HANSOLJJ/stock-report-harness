@@ -70,10 +70,12 @@ class Fix63Test(unittest.TestCase):
 
     def test_the_contradiction_reached_the_built_html(self):
         """이 문자열은 render_html.render_method 가 방법 표에 그대로 찍는다 — 고친 값이 실린다."""
-        from scorecard.render_html import render_method
-        html = render_method(self.ctx, self.results)
-        self.assertIn("C-20 비상장 경로가 먼저 서고", html)
-        self.assertNotIn("C-20 비상장 경로보다 앞서", html)
+        # 2026-09-17 FIX-67: 미결 결정 표를 감사 기록으로 옮겼다. 이 문자열은 이제 그쪽에 실린다.
+        from scorecard.render_html import render_audit_md, render_method
+        audit = render_audit_md(self.ctx, self.results)
+        self.assertIn("C-20 비상장 경로가 먼저 서고", audit)
+        self.assertNotIn("C-20 비상장 경로보다 앞서", audit)
+        self.assertNotIn("C-20 비상장 경로보다 앞서", render_method(self.ctx, self.results))
 
     def test_no_place_in_the_rules_still_says_the_old_order(self):
         """전수 조사 — 규칙 전체에서 옛 순서를 현재 사실로 적는 문장이 없어야 한다."""
@@ -138,11 +140,12 @@ class Fix63Test(unittest.TestCase):
         self.assertIn("-3 에서 -4 로 내려간다", note)
         self.assertIn("틀린 닫음은 안 적은 것보다 나쁘다", note)
         self.assertIn("점수 영향이 0", note)
-        # 초안까지 고친 문장이 흘러간다.
-        line = next(x for x in rc.method_lines(self.ctx) if "BEP 후퇴" in x)
-        self.assertIn("순서가 결과를 가른다", line)
-        self.assertNotIn("두 경로가 만나도 결과는 같다", line)
-        self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)
+        # 초안까지 고친 사실이 흘러간다. 2026-09-17 FIX-67 로 표현이 바뀌었고 사실은 그대로다 —
+        # 손실이 얕아도 최저점이 된다는 것이 `순서가 결과를 가른다` 와 같은 말이다.
+        line = next(x for x in rc.method_lines(self.ctx) if "손실이 얕아도" in x)
+        self.assertIn("최저점", line)
+        self.assertFalse(any("두 경로가 만나도 결과는 같다" in x for x in rc.method_lines(self.ctx)))
+        self.assertIn(line if line.startswith("  ") else f"- {line}", self.md)
 
     def test_no_new_pending_decision_and_why(self):
         """미결 등재 판단 — 등재하지 않고 TEN-RA6-01 의 범위를 넓혔다."""
@@ -195,7 +198,8 @@ class Fix63Test(unittest.TestCase):
         review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
         h = current_hashes(SLUG)
         self.assertIn(f"results_hash: {h['results']}", review)
-        self.assertIn(f"draft_hash: {h['draft']}", review)
+        # 2026-09-17 FIX-67: 초안이 바뀌어 리뷰의 draft_hash 가 낡았다. 갱신은 재검토 뒤에 한다.
+        self.assertIn("draft_hash: ", review)
         # 2026-09-17 FIX-64: 최종 판정이 와서 reviewers 네 줄이 다시 갱신됐다.
         self.assertIn("financial-calc: pass (9차 · Claude 독립 세션 · 재판정 3회", review)
         self.assertNotIn("financial-calc: 8차", review)
@@ -222,7 +226,10 @@ class Fix63Test(unittest.TestCase):
         from validate_report_contract import validate_contract
         r = validate_contract(SLUG, require_html=False, require_price_chart=False,
                               check_html_if_present=False, check_price_chart_if_present=False)
-        self.assertEqual(r.errors, [])                       # FIX-64 에서 마지막 하나도 닫혔다
+        # 2026-09-17 FIX-67: 방법 문장을 다시 써 초안이 바뀌었다. **리뷰와 승인이 무효가 된 것이 의도된 결과**이고
+        # draft_hash 갱신은 조율자가 재검토를 붙인 뒤에 한다.
+        self.assertEqual([e for e in r.errors if "draft_hash" not in e and "승인 무효" not in e], [])
+        self.assertTrue(any("draft_hash" in e for e in r.errors))
 
     def test_run_records_the_round(self):
         a = next(x for x in self.run_json["assumptions"] if "Q11 이 pass 로 바뀌었다" in x)

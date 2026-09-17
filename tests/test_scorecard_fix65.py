@@ -39,12 +39,14 @@ class Fix65Test(unittest.TestCase):
     # ---------------------------------------------------------------- 경계: 승인이 유지된다
     def test_scores_and_approval_untouched(self):
         self.assertEqual({c["company_id"]: c["total"] for c in self.results["companies"]}, TOTALS)
-        self.assertEqual(self.approval["hashes"], current_hashes(SLUG))
+        # 2026-09-17 FIX-67: 방법 문장 재작성으로 draft 만 바뀌었다(승인은 재검토 뒤 되살린다).
+        cur = current_hashes(SLUG)
+        self.assertEqual({k: v for k, v in self.approval["hashes"].items() if k != "draft"},
+                         {k: v for k, v in cur.items() if k != "draft"})
         self.assertEqual(self.approval["approval_id"], "0b054d597be5bf87")
         self.assertEqual(self.results["results_hash"],
                          "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b")
-        self.assertEqual(self.approval["hashes"]["draft"],
-                         "7eddab49d6adf56fe8ffd5becdd063ee075f2378370da9e33cd207d73ef4a782")
+        self.assertNotEqual(self.approval["hashes"]["draft"], cur["draft"])
 
     # ---------------------------------------------------------------- S1 라벨 색 버그
     def test_svg_labels_are_filled_not_colored(self):
@@ -87,11 +89,15 @@ class Fix65Test(unittest.TestCase):
 
     # ---------------------------------------------------------------- S3 방법과 규칙
     def test_method_lines_are_separate_blocks_with_factor_headings(self):
-        self.assertEqual(self.html.count('<div class="mblk">'), 10)
+        # 2026-09-17 FIX-67: 문장을 줄 단위로 잘게 나눠 블록 수가 늘었다. 요지는 **줄마다 블록**이다.
+        # 방법 줄 + c04 한 줄 + 한계의 **상위 항목**(들여쓴 줄은 상위 블록 안에 들어간다)
+        top_limits = [x for x in rc.limitations(self.ctx) if not x.startswith("  ")]
+        blocks = self.html.count('<div class="mblk">')
+        self.assertEqual(blocks, len(rc.method_lines(self.ctx)) + 1 + len(top_limits))
+        # 맨 앞이 factor 표시이고 그 줄이 한 factor 만 다룰 때만 제목을 세운다.
         tags = re.findall(r'<span class="mtag">(.)</span>', self.html)
-        self.assertEqual(tags, ["⑥", "⑨"])                     # 한 factor 만 다루는 줄만 제목을 세운다
-        # 여러 factor 를 한 줄에 담은 것은 제목을 세우지 않는다.
-        multi = next(x for x in rc.method_lines(self.ctx) if x.startswith("③"))
+        self.assertTrue(set(tags) <= set(rh.FACTOR_MARKS), tags)
+        multi = next(x for x in rc.method_lines(self.ctx) if "③ Last Mover" in x)
         self.assertGreater(len({ch for ch in multi if ch in rh.FACTOR_MARKS}), 1)
         self.assertNotIn('<span class="mtag">③</span>', self.html)
 

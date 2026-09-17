@@ -159,10 +159,10 @@ class Stage1Test(unittest.TestCase):
         self.assertNotIn("anthropic.undrawn_credit", {o["observation_id"].rsplit(".", 1)[0] for o in load("observations.json")["items"]})
 
     def test_demotion_sole_cause_is_named(self):
-        self.assertIn("`nonop_share` 하나가 강등을 정한다", self.md)
-        self.assertIn("`period_basis_not_ttm` 하나가 강등을 정한다", self.md)
+        self.assertIn("`영업외 비중` 하나가 강등을 정한다", self.md)
+        self.assertIn("`기간 단위 불일치` 하나가 강등을 정한다", self.md)
         # 조건이 둘이면 단독 원인이 없으므로 그 문구도 없다
-        spacex = next(line for line in self.md.splitlines() if "P4 -1(period_basis_not_ttm, short_history)" in line)
+        spacex = next(line for line in self.md.splitlines() if "입력 신뢰도 -1(기간 단위 불일치, 이력 부족)" in line)
         self.assertNotIn("하나가 강등을 정한다", spacex)
 
 

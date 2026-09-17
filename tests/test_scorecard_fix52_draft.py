@@ -29,7 +29,7 @@ class DraftSourceTest(unittest.TestCase):
     def test_caption_no_longer_claims_everything_is_legacy(self):
         self.assertNotIn("모든 값은 기준선", self.text)
         self.assertIn("표마다 실측(verified)과 승계가 섞여 있다", self.text)
-        self.assertIn("현금 verified 12", self.text)
+        self.assertIn("현금 검증 완료 12", self.text)
 
     def test_cash_two_definitions_note(self):
         self.assertIn("**현금 두 정의**", self.text)
@@ -41,8 +41,8 @@ class DraftSourceTest(unittest.TestCase):
         self.assertIn("왜 중요한가(v1.5 원문)", self.text)
 
     def test_method_section_reads_policy_numbers(self):
-        self.assertIn("하한 -4.", self.text)
-        self.assertIn("BEP 후퇴→-4", self.text)
+        self.assertIn("최저점은 -4 이며", self.text)
+        self.assertIn("흑자 전환 시점을 뒤로 미뤘다고 밝히면", self.text)
         self.assertNotIn("NTM PER 20·29·42·62·90", self.text)
 
 

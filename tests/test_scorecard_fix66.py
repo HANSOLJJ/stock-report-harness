@@ -39,21 +39,29 @@ class Fix66Test(unittest.TestCase):
     # ---------------------------------------------------------------- 경계
     def test_scores_and_approval_untouched(self):
         self.assertEqual({c["company_id"]: c["total"] for c in self.results["companies"]}, TOTALS)
-        self.assertEqual(self.approval["hashes"], current_hashes(SLUG))
+        # 2026-09-17 FIX-67: 방법 문장 재작성으로 draft 만 바뀌었다(승인은 재검토 뒤 되살린다).
+        cur = current_hashes(SLUG)
+        self.assertEqual({k: v for k, v in self.approval["hashes"].items() if k != "draft"},
+                         {k: v for k, v in cur.items() if k != "draft"})
         self.assertEqual(self.approval["approval_id"], "0b054d597be5bf87")
         self.assertEqual(self.results["results_hash"],
                          "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b")
-        self.assertEqual(self.approval["hashes"]["draft"],
-                         "7eddab49d6adf56fe8ffd5becdd063ee075f2378370da9e33cd207d73ef4a782")
+        self.assertNotEqual(self.approval["hashes"]["draft"], cur["draft"])
 
     # ---------------------------------------------------------------- S1 색인
     def test_index_has_every_group(self):
+        # 2026-09-17 FIX-67: `점수를 만드는 방식`(mode) 묶음이 들어왔고, P·G 는 번호가 아니라 이름으로 선다.
         self.assertEqual(re.findall(r'<details class="ixblk" id="ix-(\w+)"', self.index),
-                         ["factor", "param", "gate", "status", "basis", "ten"])
+                         ["factor", "mode", "param", "gate", "status", "basis", "ten"])
         ids = re.findall(r'<div class="ixrow" id="idx-([^"]+)"', self.index)
-        for code in [f"F{i}" for i in range(1, 10)] + [f"P{i}" for i in range(1, 5)] + [f"G{i}" for i in range(1, 5)]:
+        for code in [f"F{i}" for i in range(1, 10)]:
             with self.subTest(code=code):
                 self.assertIn(code, ids)
+        # 번호는 본문에서 사라졌고 색인에는 `내부 표기` 로만 남는다.
+        for num in ("P1", "P2", "P3", "P4", "G1", "G2", "G3", "G4"):
+            with self.subTest(num=num):
+                self.assertNotIn(num, ids)
+                self.assertIn(f"<code>{num}</code>", self.index)
         for t in RULES.payload["open_tensions"]:
             self.assertIn(t["id"], ids)
 
@@ -67,24 +75,28 @@ class Fix66Test(unittest.TestCase):
         params = RULES.payload["policies"]["f6"]["parameters"]
         for pid, spec in params.items():
             with self.subTest(pid=pid):
-                row = self._row(pid)
+                row = self._row(rc.F6_PARAM_LABELS[pid])      # 색인 행은 이름으로 선다
                 self.assertIn(spec["label"], row)
                 self.assertIn(spec["question"], row)
+                self.assertIn(f"<code>{pid}</code>", row)     # 번호는 내부 표기로만
         p4 = RULES.payload["policies"]["f6"]["p4"]
-        self.assertIn(p4["label"], self._row("P4"))
-        self.assertIn(p4["question"], self._row("P4"))
+        self.assertIn(p4["label"], self._row(rc.F6_P4_LABEL))
+        self.assertIn(p4["question"], self._row(rc.F6_P4_LABEL))
 
     def test_gate_names_come_from_the_method_line(self):
         """규칙 파일에 게이트 이름 키가 **없어서** ⑨ 설명 줄에서 읽는다. 그 줄은 바꾸지 않는다."""
         f9 = RULES.payload["policies"]["f9"]
         self.assertEqual([k for k in f9 if re.fullmatch(r"g[1-4]_(label|name|title)", k)], [])
-        line = next(x for x in rc.method_lines(self.ctx) if x.startswith("⑨"))
+        # 2026-09-17 FIX-67: 이름은 render_common.F9_GATE_LABELS 가 들고, 설명은 관문 줄에서 읽는다.
+        lines = rc.method_lines(self.ctx)
         docs = rh._gate_docs(self.ctx)
         self.assertEqual([d[0] for d in docs], ["G1", "G2", "G3", "G4"])
+        self.assertEqual([d[1] for d in docs], list(rc.F9_GATE_LABELS.values()))
         for code, name, note in docs:
             with self.subTest(code=code):
-                self.assertIn(f"{code} {name}({note})", line)   # 줄에서 그대로 떼 왔다
-                self.assertIn(name, self._row(code))
+                self.assertTrue(note, f"{code} 설명이 비었다")
+                self.assertTrue(any(note in x for x in lines))   # 문장에서 그대로 떼 왔다
+                self.assertIn(f"<code>{code}</code>", self._row(name))
 
     def test_body_codes_link_into_the_index_without_burying_the_text(self):
         links = re.findall(r'<a class="tcode(?: first)?" href="#idx-([^"]+)">', self.html)
@@ -94,20 +106,22 @@ class Fix66Test(unittest.TestCase):
             with self.subTest(code=code):
                 self.assertIn(f'id="idx-{code}"', self.index)
         # 본문에 F 201 · G 111 · P 152 회가 나오지만 링크는 그보다 훨씬 적어야 한다.
+        # 2026-09-17 FIX-67: P·G 는 본문에서 사라졌다. 남은 코드는 factor 와 긴장이다.
         text = re.sub(r"<[^>]+>", " ", self.html.split("</style>", 1)[1])
-        raw = len(re.findall(r"(?<![.\w가-힣])(F[1-9]|G[1-4]|P[1-4])(?![\w.-])", text))
-        self.assertGreater(raw, 300)
-        self.assertLess(len(links), raw / 2)
+        raw = len(re.findall(r"(?<![.\w가-힣])F[1-9](?![\w.-])", text))
+        self.assertGreater(raw, 40)
+        self.assertLess(len(links), raw)
 
     def test_first_mention_shows_the_name_only_where_it_is_missing(self):
         named = re.findall(r'<a class="tcode first" href="#idx-([^"]+)">[^<]*<span class="tname">([^<]+)</span>',
                            self.html)
+        # 2026-09-17 FIX-67: P·G 는 이름으로 바뀌어 링크 대상에서 빠졌다. 이름을 붙이는 자리는
+        # Factor 표의 `점수를 만드는 방식` 칸뿐이다 — 영어 값을 내부 표기로 달고 한국어를 앞세운다.
         codes = {c for c, _n in named}
-        # 이름이 어디에도 없는 코드에만 붙인다. P1~P3 은 본문이 `P1 PER` 처럼 이미 달고 나온다.
-        self.assertEqual(codes, {"G1", "G2", "G3", "G4", "P4"})
-        for code, name in named:
-            with self.subTest(code=code):
-                self.assertEqual(name, rh.index_terms(self.ctx)[code])
+        self.assertEqual(codes, {rh._anchor_id(rh.MODE_DOC[m][0]) for m in rh.MODE_DOC
+                                 if any(RULES.factor(f)["mode"] == m for f in rh.FACTOR_IDS)})
+        for _code, name in named:
+            self.assertIn(name, rh.MODE_DOC)
 
     def test_work_codes_and_judgment_ids_are_not_linked(self):
         """`F5-IMPL-48`(작업 코드)과 `alphabet.F9`(판단 id)는 factor 코드가 아니다."""
@@ -189,7 +203,7 @@ class Fix66Test(unittest.TestCase):
         self.assertIn("min-width:24px;min-height:24px", re.search(r"\.tcode\{[^}]*\}", self.html).group(0))
 
     def _row(self, code: str) -> str:
-        m = re.search(rf'<div class="ixrow" id="idx-{re.escape(code)}">(.*?)</div>\s*(?=<div class="ixrow"|</div>)',
+        m = re.search(rf'<div class="ixrow" id="idx-{re.escape(rh._anchor_id(code))}">(.*?)</div>\s*(?=<div class="ixrow"|</div>)',
                       self.index, re.S)
         self.assertIsNotNone(m, f"색인에 {code} 행이 없다")
         return m.group(1)

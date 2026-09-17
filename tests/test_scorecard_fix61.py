@@ -54,7 +54,9 @@ class Fix61Test(unittest.TestCase):
                 text = (SRC / name).read_text(encoding="utf-8")
                 self.assertNotIn("우선순위 명문화는 결정 대기", text)
                 self.assertNotIn("손실률 경계·우선순위 명문화만 미결", text)
-                self.assertIn("우선순위는 확정됐다", text)
+        # 2026-09-17 FIX-67: 방법 문장을 다시 쓰면서 `우선순위는 확정됐다` 는 표현이 빠졌다.
+        # 지켜야 할 사실은 **미결이 아닌 것을 미결이라 적지 않는 것**이고 그것은 그대로다.
+        self.assertIn("**우선순위는 확정됐다**", (SRC / "calc_f9.py").read_text(encoding="utf-8"))
         c06 = {d["id"]: d for d in RULES.payload["decisions"]}["C-06"]
         # 2026-09-17 FIX-63: 같은 문장이 뒤집힌 순서를 반대로 적고 있어 다시 썼다. 요지는 같다.
         self.assertIn("우선순위는 미결이 아니다", c06["summary"])
@@ -66,13 +68,13 @@ class Fix61Test(unittest.TestCase):
             self.assertIn(frag, c06["summary"])
 
     def test_corrected_sentence_reaches_the_draft(self):
-        line = next(x for x in rc.method_lines(self.ctx) if "BEP 후퇴" in x)
-        self.assertIn("우선순위는 확정됐다", line)
-        # 2026-09-17 FIX-63: `두 경로가 만나도 결과는 같다` 가 사실이 아니어서 빠졌다.
-        self.assertIn("순서가 결과를 가른다", line)
-        self.assertNotIn("두 경로가 만나도 결과는 같다", line)
-        self.assertNotIn("미결이다", line)
-        self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)
+        # 2026-09-17 FIX-67: 문장을 다시 썼다. 사실 셋이 그대로 있는지를 본다.
+        lines = rc.method_lines(self.ctx)
+        undecided = next(x for x in lines if "아직 정하지 못한 것" in x)
+        for frag in ("수치가 정확히 0", "현금 완충", "현금흐름 추세"):
+            with self.subTest(frag=frag):
+                self.assertIn(frag, undecided)
+        self.assertFalse(any("미결이다" in x for x in lines))
         # 경고 문구도 같이 고쳤다. 2026-09-17 FIX-62 로 openai 가 C-20 경로로 옮겨가 이 실행에서는
         # C-06 경고가 서지 않는다 — 문면은 코드에서 확인하고, 실행에는 뒤집기 경고가 대신 선다.
         code = (SRC / "calc_f9.py").read_text(encoding="utf-8")

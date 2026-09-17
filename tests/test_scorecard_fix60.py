@@ -109,9 +109,13 @@ class ContractTest(unittest.TestCase):
                               check_html_if_present=False, check_price_chart_if_present=False)
         # 2026-09-17 FIX-61: 반영이 더 있으면 리뷰 파일의 results_hash·draft_hash 가 낡는다 — 템플릿을 다시
         # 만들 때까지는 그 둘이 더 뜬다. **뿌리는 아래 둘**이고 그것만 남는지를 본다.
-        # 2026-09-17 FIX-64: 네 영역이 pass 로 오면서 마지막 오류도 사라졌다.
-        # 이 테스트가 세운 뿌리 셋(plan 해시 · 승계 예외 미구현 · 영역 결과)이 전부 닫혔다.
-        self.assertEqual(r.errors, [])
+        # 2026-09-17 FIX-64: 네 영역이 pass 로 오면서 이 테스트가 세운 뿌리 셋
+        # (plan 해시 · 승계 예외 미구현 · 영역 결과)이 전부 닫혔다.
+        # 2026-09-17 FIX-67: 방법 문장을 다시 써 초안이 바뀌었고 **리뷰와 승인이 무효가 됐다**(의도된 결과).
+        # 그 둘만 남는 것이 정상이며 뿌리 셋은 그대로 닫혀 있다.
+        rest = [e for e in r.errors if "draft_hash" not in e and "승인 무효" not in e]
+        self.assertEqual(rest, [], r.errors)
+        self.assertTrue(any("draft_hash" in e for e in r.errors))
         self.assertFalse(any("plan rule_hash" in e for e in r.errors))
 
     def test_carried_exceptions_are_counted_in_a_warning(self):

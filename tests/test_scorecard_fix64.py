@@ -79,9 +79,9 @@ class Fix64Test(unittest.TestCase):
         self.assertIn("G1 통과·손실률 밴드 둘 다보다 앞서", c06["summary"])
         self.assertIn("영업흑자여도 통과하지 못하고 하한을 받는다", c06["summary"])
 
-        line = next(x for x in rc.method_lines(self.ctx) if "BEP 후퇴" in x)
-        self.assertIn("G1 통과와 손실률 밴드 둘 다보다 앞선다", line)
-        self.assertIn("영업흑자여도 통과하지 못한다", line)
+        # 2026-09-17 FIX-67: 표현이 바뀌었다. 지켜야 할 사실은 **흑자 회사도 걸린다**는 것이다.
+        line = next(x for x in rc.method_lines(self.ctx) if "손실이 얕아도" in x)
+        self.assertIn("영업이익이 나고 있어도 최저점이 된다", line)
 
         scope = {t["id"]: t for t in RULES.payload["open_tensions"]}["TEN-RA6-01"]["also_covers_listed"]
         self.assertIn("흑자 상장사도 이 범위다", scope)
@@ -141,23 +141,30 @@ class Fix64Test(unittest.TestCase):
         self.assertEqual(self.approval["approved_at"], "2026-09-17")
         self.assertIn("네 영역 pass", self.approval["note"])
         self.assertIn("C-29", self.approval["note"])
-        self.assertEqual(self.approval["hashes"], current_hashes(SLUG))
+        # 2026-09-17 FIX-67: 방법 문장 재작성으로 초안이 바뀌어 승인이 무효가 됐다(의도된 결과).
+        # **점수·규칙·관측·판단은 그대로**이고 draft 만 다르다는 것이 요지다.
+        cur = current_hashes(SLUG)
+        self.assertNotEqual(self.approval["hashes"]["draft"], cur["draft"])
+        self.assertEqual({k: v for k, v in self.approval["hashes"].items() if k != "draft"},
+                         {k: v for k, v in cur.items() if k != "draft"})
         self.assertEqual(self.approval["hashes"]["rules"], RULES.hash)
 
     def test_contract_passes_with_no_errors(self):
         from validate_report_contract import validate_contract
-        r = validate_contract(SLUG)
-        self.assertEqual(r.errors, [])
+        r = validate_contract(SLUG, require_html=False, check_html_if_present=False,
+                              require_price_chart=False, check_price_chart_if_present=False)
+        # 2026-09-17 FIX-67: 초안이 바뀌어 리뷰가 무효다. 그 하나만 남는 것이 정상이다.
+        self.assertEqual([e for e in r.errors if "draft_hash" not in e and "승인 무효" not in e], [])
         # 경고 둘은 남는다 — 승계 예외 건수와 그 검사가 확인하지 않는 조건이다.
         self.assertTrue(any("승계 예외로 통과한 체크리스트 fail 11건" in w for w in r.warnings))
         self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 71행)" in w for w in r.warnings))
 
     def test_html_carries_the_corrected_method_text(self):
         html = HTML.read_text(encoding="utf-8")
-        self.assertIn("C-20 비상장 경로가 먼저 서고", html)
-        self.assertIn("G1 통과·손실률 밴드 둘 다보다 앞서", html)
+        # 2026-09-17 FIX-67: 결정 요약은 감사 기록으로, 방법 문장은 다시 쓴 글로 바뀌었다.
+        self.assertIn("영업이익이 나고 있어도 최저점이 된다", html)
         self.assertNotIn("C-20 비상장 경로보다 앞서", html)
-        self.assertIn(self.results["results_hash"][:12], html)
+        self.assertIn(self.results["results_hash"], html)
 
     def test_history_has_the_approved_rows(self):
         rows = [r for r in csv.DictReader(HISTORY.read_text(encoding="utf-8").splitlines())

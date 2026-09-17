@@ -37,6 +37,9 @@ class SharedRenderTest(unittest.TestCase):
                                    {"approval_id": "00000000-memory", "approved_by": "mem", "approved_at": "2026-09-15"},
                                    load_availability(SLUG))
         cls.html_text = plain(cls.html)
+        # 2026-09-17 FIX-67: 해시·실행 단위 선택·미결 결정 표는 감사 기록으로 옮겼다.
+        from scorecard.render_html import render_audit_md
+        cls.audit = render_audit_md(cls.ctx, cls.results)
 
     def card(self, cid: str) -> str:
         i = self.html.index(f'id="card-{cid}"')
@@ -102,13 +105,13 @@ class SharedRenderTest(unittest.TestCase):
             with self.subTest(cid=c["company_id"]):
                 text = rc.factor_calc_text("F6", c["factors"]["F6"])
                 self.assertTrue(text)
-                self.assertIn(text, self.md)
+                self.assertIn(rc.rename_codes(text), self.md)
                 # 2026-09-17 FIX-65 S3: HTML 은 같은 문장을 표시 변환(백틱 → <code>)만 거쳐 싣는다.
                 # 초안은 마크다운 원문 그대로다 — 둘이 같은 출처에서 온다는 것이 이 검사의 요지다.
                 self.assertIn(rc.inline_html(text), self.unlink(self.frow(c["company_id"], "⑥ 가격")))
         tsmc = rc.factor_calc_text("F6", {c["company_id"]: c for c in self.results["companies"]}["tsmc"]["factors"]["F6"])
-        self.assertIn("P1 PER", tsmc)
-        self.assertIn("P4 -1(period_basis_not_ttm)", tsmc)
+        self.assertIn("PER", rc.rename_codes(tsmc))
+        self.assertIn("입력 신뢰도 -1(기간 단위 불일치)", rc.rename_codes(tsmc))
 
     def test_boundary_column_reads_parameters(self):
         calc = {"mode": "parameters", "parameters": {"P1": {"boundary": {"flag": False}}, "P2": {"boundary": {"flag": True}}}, "p4": {}}
@@ -121,8 +124,8 @@ class SharedRenderTest(unittest.TestCase):
 
     def test_g3_boundary_in_both(self):
         text = "G3 런웨이 3.03년(임계 3년 대비 +0.9% ⚠️ 경계)"
-        self.assertIn(text, self.md)
-        self.assertIn(text, self.unlink(self.frow("spacex-xai", "⑨ 적자 깊이")))
+        self.assertIn(rc.rename_codes(text), self.md)
+        self.assertIn(rc.rename_codes(text), self.unlink(self.frow("spacex-xai", "⑨ 적자 깊이")))
 
     # ---------------------------------------------------------------- S3 원자료·방법·트리거
     def test_raw_tables_share_v17_wording(self):
@@ -135,10 +138,11 @@ class SharedRenderTest(unittest.TestCase):
             # 2026-09-17 FIX-66: HTML 쪽은 코드에 색인 링크가 붙는다. 문장이 같다는 것이 요지다.
             self.assertIn(rc.inline_html(shared), self.unlink(self.html))
         self.assertEqual(self.html_text.count("열별 관측 상태:"), 2)
-        self.assertIn(f"하한 {rc.f9_policy(self.ctx, 'floor')}.", self.html_text)
+        # 2026-09-17 FIX-67: 방법 문장을 다시 쓰면서 하한을 문장으로 적는다.
+        self.assertIn(f"최저점은 {rc.f9_policy(self.ctx, 'floor')} 이며", self.html_text)
 
     def test_offbalance_cell_and_replaced_values_in_html(self):
-        self.assertIn("$267.3B B종(verified) · 원문 <del>미개시 리스 $106B</del> (superseded)", self.html)
+        self.assertIn("$267.3B B종(검증 완료) · 원문 <del>미개시 리스 $106B</del> (superseded)", self.html)
         self.assertIn("⚠️ 원문 $106B 는 이번 실행 실측 $267.3B(amazon.offbalance_B.obsreg25", self.html_text)
 
     def test_triggers_share_corrections_and_warnings(self):
@@ -172,8 +176,9 @@ class SharedRenderTest(unittest.TestCase):
         self.assertIn("alibaba — 가리지 못했다", self.md)
 
     def test_decisions_applied_is_not_consumption_proof(self):
-        self.assertIn("소비됐다는 증명은 아니다", self.md)
-        self.assertIn("소비됐다는 증명은 아니다", self.html_text)
+        # 2026-09-17 FIX-67: 실행 단위 결정 목록과 이 경고는 감사 기록(output/<slug>-audit.md)으로 옮겼다.
+        self.assertIn("계산이 실제로 읽었다는 뜻은 아니다", self.audit)
+        self.assertNotIn("소비됐다는 증명", self.html_text)          # 감사 기록으로 옮겼다
 
 
 if __name__ == "__main__":

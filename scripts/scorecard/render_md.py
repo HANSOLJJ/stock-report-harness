@@ -198,7 +198,8 @@ def render_research(ctx: Any, *, hashes: dict[str, str]) -> str:
 
 def _factor_row(f: str, fr: dict[str, Any]) -> list[Any]:
     # 2026-09-15 FIX-54 1단계 S3: 산식 텍스트를 HTML 과 같은 함수로. v1.7 parameters(P1~P4)가 초안에서도 비어 있었다.
-    return [FACTOR_LABELS[f], fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), fr["basis"], rc.factor_calc_text(f, fr)]
+    return [FACTOR_LABELS[f], fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), fr["basis"],
+            rc.rename_codes(rc.factor_calc_text(f, fr))]
 
 
 def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]]) -> str:
@@ -281,11 +282,12 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             block = rc.evidence_block(fr, judgments_by_id, base_evidence, run["baseline_id"], c["company_id"], reps)
             if block is not None:
                 lines.append(f"- **{FACTOR_LABELS[f]}** {block['header']}:")
-                lines += [("  " * depth) + f"- {text}" for depth, text in block["lines"]]
+                # 2026-09-17 FIX-67: 근거 문장에 번호가 데이터로 들어 있다. 초안도 HTML 과 같은 이름을 쓴다.
+                lines += [("  " * depth) + f"- {rc.rename_codes(text)}" for depth, text in block["lines"]]
                 if f == "F9" and incompatible_g4:
                     lines.append(f"  - {rc.G4_INCOMPATIBLE_NOTE}")
             for w in fr["warnings"][:4]:
-                lines.append(f"  - ⚠️ {w}")
+                lines.append(f"  - ⚠️ {rc.rename_codes(w)}")
         lines.append("")
     # 원자료
     lines += ["## 지표 원자료", ""]
