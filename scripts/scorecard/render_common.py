@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import html as html_lib
 import re
+from pathlib import Path
 from typing import Any
 
 FACTOR_LABELS = {
@@ -673,6 +674,12 @@ JUDGMENT_ROLES = {
 }
 # 사람이 매긴 것을 엔진이 어떤 장치로 환산하는지. 규칙의 산식 자체는 아래 `mode` 색인에 있고
 # 여기서는 **판단과 점수 사이에 무엇이 끼어 있는지**만 한 마디로 적는다.
+# 기준 사다리의 판정값과 조합표 칸이 화면에서 무엇으로 읽혀야 하는지. 규칙은 키만 들고 있다.
+CRITERIA_WEIGHT_LABELS = {"pass": "통과", "partial": "부분 통과", "fail": "실패"}
+MATRIX_AXIS_LABELS = {
+    "small|no": "의존 작음/환류 없음", "small|yes": "의존 작음/환류 있음",
+    "large|no": "의존 큼/환류 없음", "large|yes": "의존 큼/환류 있음",
+}
 CONVERSION_NOTES = {
     "F3": "엔진은 그 결과를 사다리에 태워 칸을 고른다",
     "F5": "엔진은 기본 3점에 동맹을 더하고 적대를 뺀다",
@@ -723,11 +730,119 @@ def judgment_input_names(ctx: Any, factor: str) -> list[str]:
     return [JUDGMENT_INPUT_NAMES[k] for k in sorted(keys & set(order), key=order.index)]
 
 
-def method_lines(ctx: Any) -> list[str]:
-    """방법 절의 factor 설명.
+# 2026-09-17 FIX-76 S2: 본문에 실리면 안 되는 **작업 메모** 표기. 결정 번호·과제 번호·이관 도구 이름·
+# 내부 상태값이다. 출처 표기(`별표 A`)는 남긴다 — 읽는 사람이 원문을 찾아갈 수 있어야 한다.
+_WORKNOTE_RE = re.compile(
+    r"\s*(?:\(|（)?(?:C-\d+[^)）.]*|FIX-\d+[^)）.]*|HANDOVER[^)）.]*|carried_score|"
+    r"pending_rule_decision|needs_rule_decision)(?:\)|）)?")
+
+
+def strip_worknotes(text: str) -> str:
+    """결정 번호·과제 번호·내부 상태값을 덜어 낸다. 남은 겹공백과 빈 괄호도 정리한다.
+
+    원본이 자기 화면 배치를 가리키는 말(`↓ 판정 흐름은 바로 아래`)도 뗀다 — 우리 리포트에서는
+    가리키는 것이 없어 틀린 말이 된다. `별표 A` 같은 **출처 표기는 남긴다.**
+    """
+    out = _WORKNOTE_RE.sub(" ", text)
+    out = re.sub(r"[↓↑][^\n]*?(?:바로 아래|바로 위|아래에|위에)[^\n]*", "", out)
+    out = re.sub(r"^\s*지표\s*—\s*", "", out)          # 카드에 제목이 따로 있어 겹친다
+    out = re.sub(r"\(\s*[,·]?\s*\)", "", out)
+    out = re.sub(r"\s*—\s*(?=[.,]|$)", "", out)
+    out = re.sub(r"[ \t]{2,}", " ", out).strip(" ·,—\n")
+    # 강조 표시가 홀수로 남으면 뒤가 통째로 굵게 나온다. 짝이 안 맞으면 마지막 하나를 뗀다.
+    if out.count("**") % 2:
+        out = out[::-1].replace("**", "", 1)[::-1]
+    return out.strip(" ·,—")
+
+
+_CONCEPTS: dict[str, Any] | None = None
+
+
+def factor_concepts() -> dict[str, Any]:
+    """사용자 원본 `02 9가지 factor 뜯어보기` 를 옮겨 둔 자료를 읽는다.
+
+    2026-09-17 FIX-76: **이 항목이 무엇을 재는가**가 산출물에 통째로 빠져 있었다(사용자 지적).
+    채점 기준·환산 방법과는 다른 층이라 섞지 않는다. 문장은 원본 그대로이고 여기서 짓지 않는다.
+    """
+    global _CONCEPTS
+    if _CONCEPTS is None:
+        import json
+        path = Path(__file__).resolve().parents[2] / "scorecard" / "factor-concepts.json"
+        _CONCEPTS = json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {"items": {}}
+    return _CONCEPTS
+
+
+def factor_concept(ctx: Any, fid: str) -> dict[str, Any]:
+    """그 항목의 개념 설명. 지금 규칙과 달라진 자리에는 `stale`·`renamed` 가 붙어 있다."""
+    item = dict(factor_concepts().get("items", {}).get(fid) or {})
+    if not item:
+        return {}
+    # 이름이 바뀌었으면 **지금 이름**을 제목으로 쓰고 원본 이름은 아래에 남긴다.
+    now = str(ctx.rules.factor(fid)["label"])
+    src = f"{item.get('mark', '')} {item.get('name', '')}".strip()
+    if src.replace(" ", "") != now.replace(" ", ""):
+        item["renamed"] = {"now": now, "source": src}
+    else:
+        item.pop("renamed", None)
+    return item
+
+
+def factor_criteria(ctx: Any, fid: str) -> list[str]:
+    """그 항목을 **무엇을 보고 매기는지**를 규칙에서 읽는다.
+
+    2026-09-17 FIX-75: 규칙 `note` 에 적힌 채점 기준(② 의 세 경로 이름, ① 의 부품형 상한,
+    ④ 의 출하만 인정, ③ 의 기준 배점)이 산출물 어디에도 나오지 않아 **점수를 만드는 방식만 보이고
+    무엇을 보고 매기는지는 보이지 않았다**(사용자 지적). 문장을 새로 짓지 않고 규칙 값을 옮긴다.
+    """
+    f = ctx.rules.factor(fid)
+    out: list[str] = []
+    # 2026-09-17 FIX-76 S2: 여기 규칙 `note` 를 그대로 실었더니 `HANDOVER 사다리`·`C-03 확정`·
+    # `carried_score` 같은 **작업 메모**가 본문에 실렸다(사용자 지적). 기준은 **별표 원문**에서 가져오고
+    # 규칙 `note` 는 감사 기록으로 보낸다.
+    metrics = (factor_concept(ctx, fid) or {}).get("metrics") or ""
+    if metrics:
+        out.append(strip_worknotes(metrics))
+    cap = f.get("component_only_cap")
+    # 같은 말이 `note` 에 이미 있으면 두 번 적지 않는다.
+    if cap is not None and f"상한 {cap}" not in str(f.get("note", "")):
+        out.append(f"소비자·업무 채널이 없는 부품형 회사는 이 항목의 상한이 **{cap}점**이다.")
+    weights = f.get("criteria_weights")
+    if weights:
+        out.append("기준마다 " + " · ".join(
+            f"{CRITERIA_WEIGHT_LABELS.get(k, k)} {v:g}점" for k, v in weights.items())
+            + " 을 주고, 그 합으로 사다리 칸을 고른다.")
+    ladder = f.get("ladder")
+    if ladder:
+        def _pts(step: dict[str, Any]) -> str:
+            lo, hi = step["points"][0], step["points"][-1]
+            return f"{lo:g}점" if lo == hi else f"{lo:g}~{hi:g}점"
+        out.append("사다리는 " + " · ".join(f"{_pts(x)} → {x['score']}점" for x in ladder) + " 다."
+                   + (" **맨 윗칸은 모방불가를 통과해야 열린다.**"
+                      if any(x.get("requires_imitation_pass") for x in ladder) else ""))
+    if f.get("score5_requires_door_closed"):
+        out.append("최고점 5점은 사다리만으로 닿지 않는다 — **문이 닫혔는지**를 따로 통과해야 한다.")
+    if f.get("score5_requires_generation_gap"):
+        out.append("최고점 5점은 통과 수만으로 닿지 않는다 — **세대 격차**를 따로 채워야 한다.")
+    if f.get("formula"):
+        out.append(f"산식은 `{f['formula']}` 이고 동맹 A 는 "
+                   + "·".join(f"{x:g}" for x in f.get("A_allowed", []))
+                   + ", 적대 H 는 " + "·".join(f"{x:g}" for x in f.get("H_allowed", [])) + " 중 하나다.")
+    if f.get("matrix"):
+        out.append("조합표는 " + " · ".join(
+            f"{MATRIX_AXIS_LABELS.get(k, k)} {v}점" for k, v in f["matrix"].items()) + " 다.")
+    # **기준이 규칙에 없는 항목이 있다.** 비어 있다는 사실 자체가 읽는 사람에게 필요한 정보다.
+    if not out:
+        out.append("**이 항목은 규칙이 채점 기준을 적어 두지 않았다.** 범위와 점수를 만드는 방식만 정해져 "
+                   "있어, 무엇을 보고 그 점수를 주었는지는 각 회사 카드의 근거 문장에서 읽어야 한다.")
+    return out
+
+
+def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
+    """방법 절을 **항목별로 갈라** 돌려준다. `(factor_id, 문장들)` 이고 `None` 은 여러 항목에 걸치는 문단이다.
 
     2026-09-17 FIX-67 전면 재작성 → FIX-68·69 정정. **문장이 규칙을 잘못 말하지 않게** 숫자와 칸 수를
     규칙·계산 코드에서 읽어 쓴다(FIX-69 L1). 결정 번호는 문장에서 빼 `관련 결정` 줄로 보낸다.
+    2026-09-17 FIX-75: 평평한 목록이라 어느 문장이 어느 항목 것인지 읽는 사람이 알 수 없었다.
     """
     from .calc_f9 import G4_MISSING_DOWNGRADE_STEP, _coverage_step, _runway_step
     f9 = ctx.rules.payload["policies"]["f9"]
@@ -873,30 +988,46 @@ def method_lines(ctx: Any) -> list[str]:
         return (f" 다만 {_count(n)} 곳은 그 판정이 남아 있지 않아 **점수 숫자만 넘어왔고** 엔진이 "
                 "다시 환산하지 못한다." if n else "")
 
-    rest = [
+    overview = [
         f"**{_names(judged)} {_count(len(judged))} 항목은 모두 사람 판단에서 나온다.** 판단 기록을 세어 보면 "
         "이 항목들은 14개사 전부가 사람이 적은 판단을 입력으로 갖는다. **사다리·산식·조합표는 사람이 매긴 것을 "
         "정해진 표로 환산하는 장치이지 판단을 대신하는 것이 아니다.** 그래서 이 항목들은 모두 점수보다 근거 "
-        "문장을 읽어야 한다. 엔진이 무엇을 했는지는 이렇다.",
-    ] + ([f"  - **{_names(plain)}** — 사람이 **{JUDGMENT_ROLES['score']}**를 적는다. 환산할 산식이 아예 없어 "
-          "적힌 점수가 그대로 이 항목의 점수가 된다."] if plain else []) + [
-        f"  - **{FACTOR_LABELS[f]}** — 사람이 **{fix_josa(JUDGMENT_ROLES[kind], '', '을')}** 정하고"
-        + (f"({' · '.join(judgment_input_names(ctx, f))})" if len(judgment_input_names(ctx, f)) > 1 else "")
-        + f", {CONVERSION_NOTES[f]}." + carried_note(f)
-        for f, kind in converted if f in CONVERSION_NOTES
-    ] + [
-        # 2026-09-17 FIX-71 N3: 규칙이 정한 방식을 적었으나 **이번 실행에서 그 방식으로 매겨진 회사가 없다.**
-        # 둘이 다르면 둘 다 드러나야 한다.
-        "**② 게임체인저는 이번 실행에서 계산하지 않았다.** 규칙은 조건을 몇 개 통과했는지 세어 점수로 바꾸도록 "
+        "문장을 읽어야 한다. 항목마다 사람이 무엇을 적고 엔진이 무엇을 했는지는 아래 각 칸에 적는다.",
+    ]
+    # 2026-09-17 FIX-75: 문장이 어느 항목 것인지 표시가 없어 한 덩어리로 읽혔다(사용자 지적).
+    # 항목마다 갈라 두고 `method_lines` 는 이것을 펴서 돌려준다 — 초안과 HTML 이 같은 원천을 쓴다.
+    scored = {f: [f"사람이 **{JUDGMENT_ROLES['score']}**를 적는다. 환산할 산식이 아예 없어 적힌 점수가 "
+                  "그대로 이 항목의 점수가 된다. **점수보다 근거 문장을 읽어야 한다.**"] for f in plain}
+    for f, kind in converted:
+        if f not in CONVERSION_NOTES:
+            continue
+        inputs = judgment_input_names(ctx, f)
+        scored[f] = [f"사람이 **{fix_josa(JUDGMENT_ROLES[kind], '', '을')}** 정하고"
+                     + (f"({' · '.join(inputs)})" if len(inputs) > 1 else "")
+                     + f", {CONVERSION_NOTES[f]}." + carried_note(f)]
+    # 2026-09-17 FIX-71 N3: 규칙이 정한 방식을 적었으나 **이번 실행에서 그 방식으로 매겨진 회사가 없다.**
+    # 둘이 다르면 둘 다 드러나야 한다.
+    scored.setdefault("F2", []).append(
+        "**이번 실행에서는 계산하지 않았다.** 규칙은 조건을 몇 개 통과했는지 세어 점수로 바꾸도록 "
         f"정해 두었고({', '.join(f'{k}개 {v}점' for k, v in sorted(ctx.rules.factor('F2')['path_mapping'].items()))}, "
         "최고점은 통과 수만으로 닿지 않고 세대 격차를 따로 채워야 한다), **그런데 어느 경로를 통과했는지가 "
         "기준선에서 넘어오지 않아 14개사 모두 기준선 점수를 그대로 쓴다.** 카드의 ② 점수를 보고 통과 수를 "
-        "거꾸로 셈하면 안 된다.",
+        "거꾸로 셈하면 안 된다.")
+    scored["F6"] = f6
+    scored["F9"] = [c04_line(ctx)] + g1
+    common = [
         "**모르는 값을 0 으로 바꾸지 않는다.** 자료가 없으면 그 항목은 점수를 만들지 않고 대기 상태로 남으며, "
         "그 회사는 공식 순위에서 빠진다. **예외가 하나 있다** — 런웨이를 잴 때 미인출 여신이 확인되지 않으면 "
         "0 으로 센다. 완충은 확인된 것만 세기로 했기 때문이고, 없는 여신을 있다고 보지 않으려는 처리다.",
     ]
-    return f6 + g1 + rest
+    return ([(None, overview)]
+            + [(f, scored[f]) for f in FACTOR_LABELS if scored.get(f)]
+            + [(None, common)])
+
+
+def method_lines(ctx: Any) -> list[str]:
+    """방법 절의 문장을 한 줄씩 편 목록. 절 경계를 모르는 쪽(초안 본문)이 쓴다."""
+    return [line for _fid, lines in method_sections(ctx) for line in lines]
 
 
 def conflict_lines(ctx: Any) -> list[str]:

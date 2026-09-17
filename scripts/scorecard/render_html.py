@@ -86,6 +86,10 @@ def css() -> str:
   --bad-soft:rgba(224,78,82,.09);--bad-line:rgba(224,78,82,.28);--bad-text:#f4a5a7;
   --warn-soft:rgba(230,162,60,.10);--warn-line:rgba(230,162,60,.32);--warn-text:#f6d8a3;
   --cat-consumer:#5ea6f6;--cat-work:#4ad39c;--cat-trade:#b195f5;--cat-part:#f0a05c;--cat-mix:#f28cc0;
+  /* 2026-09-17 FIX-75: 방법 절의 아홉 항목이 똑같이 생긴 블록으로 이어져 구분이 되지 않았다(사용자 지적).
+     과점 다섯은 차가운 쪽, 함정 넷은 따뜻한 쪽에서 고르되 서로 섞이지 않는 색조를 준다. */
+  --f1:#5ea6f6;--f2:#b195f5;--f3:#4ad39c;--f4:#6fd0d8;--f5:#f28cc0;
+  --f6:#f0a05c;--f7:#e6a23c;--f8:#e0798f;--f9:#e04e52;
   --cat-trade-soft:rgba(177,149,245,.14);--cat-part-soft:rgba(240,160,92,.14);--cat-mix-soft:rgba(242,140,192,.14);
   /* 2026-09-17 FIX-65 S2: 본문 14 → 16px. 표는 본문보다 한 단계만 아래(15px)로 둔다. */
   --fs-sm:14px;--fs-md:15px;--fs-base:16px;--fs-lg:18px;--fs-2xl:24px;--fs-3xl:30px;
@@ -227,6 +231,59 @@ tr.priv{opacity:.75}
 .mblk .mtag{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border-radius:8px;background:var(--acc-soft);border:1px solid var(--acc-line);color:var(--acc-text);font-size:var(--fs-lg);font-weight:800;margin-bottom:8px}
 .mblk .mtext{font-size:var(--fs-md);line-height:1.8;color:var(--tx);overflow-wrap:anywhere}
 .mblk .mtext+.mtext{margin-top:8px}
+/* 2026-09-17 FIX-75: 항목별 카드. 기업별 상세와 같은 접기 구조이고, 왼쪽 띠와 번호 배지가 항목 색이다. */
+.fcard .fdef{font-size:var(--fs-md);color:var(--tx2);line-height:1.5}
+.fsec>h4 span{font-weight:400;color:var(--tx3);margin-left:8px}
+.fsec .fq{font-size:var(--fs-lg);font-weight:700;color:var(--fc,var(--acc));line-height:1.55;margin-bottom:10px}
+.fsec .fex{background:var(--bg3);border-radius:8px;padding:12px 14px;margin-top:8px}
+.fsec .fex p{font-size:var(--fs-md);line-height:1.8;color:var(--tx2)}
+.fsec .fex p+p{margin-top:10px}
+.fnote{margin-top:10px;font-size:var(--fs-sm);line-height:1.7;color:var(--tx3);border-left:2px solid var(--line);padding-left:10px}
+.fnote.warn{color:var(--warn-text);border-left-color:var(--warn-line);background:var(--warn-soft);padding:8px 10px;border-radius:0 6px 6px 0}
+.fcards{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.fcard{border:1px solid var(--line);border-left:4px solid var(--fc,var(--acc));border-radius:10px;background:var(--bg2);overflow:hidden}
+.fcard>summary{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;list-style:none;min-height:44px}
+.fcard>summary::-webkit-details-marker{display:none}
+.fcard>summary::after{content:'▾';color:var(--tx3);margin-left:auto;font-size:var(--fs-lg)}
+.fcard[open]>summary::after{content:'▴'}
+.fcard[open]>summary{border-bottom:1px solid var(--line)}
+/* 번호가 본문 글자에 묻혀 보이지 않았다 — 배지로 세우고 크게 키운다. */
+.fcard .fnum{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;font-size:var(--fs-2xl);font-weight:800;line-height:1;color:var(--fc,var(--acc));background:color-mix(in srgb,var(--fc,var(--acc)) 12%,transparent);border:1px solid color-mix(in srgb,var(--fc,var(--acc)) 32%,transparent)}
+.fcard .fmeta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fcard .fttl{font-size:var(--fs-lg);font-weight:700;color:var(--tx);line-height:1.3}
+.fcard .fsub{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:var(--fs-sm);color:var(--tx2)}
+.fcard .frange{font-variant-numeric:tabular-nums;color:var(--tx3)}
+.fbadge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:var(--fs-sm);font-weight:700;border:1px solid}
+.fbadge.human{color:var(--warn-text);background:var(--warn-soft);border-color:var(--warn-line)}
+.fbadge.measured{color:var(--good-text);background:var(--good-soft);border-color:var(--good-line)}
+.fbadge.human.soft{color:var(--acc-text);background:var(--acc-soft);border-color:var(--acc-line)}
+.fbadge.mixed{color:var(--tx2);background:var(--bg3);border-color:var(--line)}
+.fbody{padding:14px 16px 16px}
+.fsec+.fsec{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
+.fsec>h4{font-size:var(--fs-sm);font-weight:700;color:var(--tx3);letter-spacing:.02em;margin-bottom:8px}
+.fsec .mtext{font-size:var(--fs-md);line-height:1.8;color:var(--tx);overflow-wrap:anywhere}
+.fsec .mtext+.mtext{margin-top:8px}
+.mlist{margin:8px 0 0 2px;padding-left:16px;display:flex;flex-direction:column;gap:7px}
+.mlist li{font-size:var(--fs-md);line-height:1.75;color:var(--tx2);overflow-wrap:anywhere}
+.mlist .mlist{margin-top:7px;padding-left:15px;border-left:1px solid var(--line)}
+.mlist .mlist li{color:var(--tx3)}
+.frowlink{color:var(--tx);text-decoration:none;border-bottom:1px dotted var(--line)}
+.frowlink:hover{color:var(--acc-text)}
+@media(max-width:520px){
+  .fcard>summary{gap:10px;padding:12px}
+  .fcard .fnum{width:38px;height:38px;font-size:var(--fs-lg)}
+  .fbody{padding:12px}
+  .mlist{padding-left:14px}
+}
+.fcard[data-factor="F1"]{--fc:var(--f1)}
+.fcard[data-factor="F2"]{--fc:var(--f2)}
+.fcard[data-factor="F3"]{--fc:var(--f3)}
+.fcard[data-factor="F4"]{--fc:var(--f4)}
+.fcard[data-factor="F5"]{--fc:var(--f5)}
+.fcard[data-factor="F6"]{--fc:var(--f6)}
+.fcard[data-factor="F7"]{--fc:var(--f7)}
+.fcard[data-factor="F8"]{--fc:var(--f8)}
+.fcard[data-factor="F9"]{--fc:var(--f9)}
 .mdecs{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
 .mdecs>.lbl{display:block;font-size:var(--fs-sm);font-weight:700;color:var(--tx3);margin-bottom:6px}
 .mdec{border:1px solid var(--line);border-radius:8px;background:var(--bg3);margin:6px 0;overflow:hidden}
@@ -820,6 +877,25 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             reco = " ".join(str(d.get("recommendation", "")).replace("|", r"\|").split())
             lines.append(f"| `{d['id']}` | {summary} | {reco} | {run_decisions.get(d['id'], '미결')} |")
 
+    # 2026-09-17 FIX-76 S2: 규칙 `factors.*.note` 에는 채점 기준과 **작업 메모**가 섞여 있다.
+    # 본문은 별표 원문을 쓰고, 이 원문 메모는 감사·대조용으로 여기 모은다.
+    notes = [(fid, str(rules.factor(fid).get("note") or "")) for fid in rc.FACTOR_LABELS]
+    notes = [(fid, n) for fid, n in notes if n]
+    if notes:
+        lines += [
+            "",
+            "## 규칙 파일의 항목 메모",
+            "",
+            "리포트 본문의 `무엇을 보고 매기는가` 는 채점규칙 별표에서 가져온다. 이 표는 규칙 JSON 의 "
+            "`factors.*.note` 원문이며 **결정 번호와 작업 경위가 섞여 있어 본문에 싣지 않는다.** "
+            "규칙 파일과 대조할 때 쓴다.",
+            "",
+            "| 항목 | `note` 원문 |",
+            "| --- | --- |",
+        ]
+        for fid, n in notes:
+            lines.append(f"| `{fid}` {rc.FACTOR_LABELS[fid]} | {' '.join(n.replace('|', r'\|').split())} |")
+
     lines += [
         "",
         "## 내부 표기",
@@ -837,23 +913,120 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
     return "\n".join(lines) + "\n"
 
 
+def _nested_list(lines: list[str]) -> str:
+    """들여쓴 줄을 중첩 목록으로 세운다. 방법 문장은 `  - `·`    - ` 두 단계를 쓴다."""
+    out, depth = [], 0
+    for raw in lines:
+        level = 2 if raw.startswith("    - ") else (1 if raw.startswith("  - ") else 0)
+        text = raw.lstrip(" -") if level else raw
+        while depth < level:
+            out.append("<ul class=\"mlist\">")
+            depth += 1
+        while depth > level:
+            out.append("</ul>")
+            depth -= 1
+        out.append(f'<li>{inline_html(text)}</li>' if level else f'<p class="mtext">{inline_html(text)}</p>')
+    out.append("</ul>" * depth)
+    return "".join(out)
+
+
+def _source_badge(ctx: Any, fid: str, judged: set[str]) -> str:
+    """그 점수가 **어디서 왔는지**. 방식 칸이 말하는 `어떻게 환산하는가` 와 다른 정보다.
+
+    2026-09-17 FIX-76 S3: `사람 판단` 하나로 묶었더니 여덟 항목이 같은 말이 되고 방식 칸과도
+    겹쳤다. 판단의 `kind` 를 읽어 **점수 자체인지 · 판정 입력인지 · 관측과 섞이는지**를 가른다.
+    """
+    if fid not in judged:
+        return '<span class="fbadge measured">관측에서 계산</span>'
+    kind = (rc.judgment_roles(ctx).get(fid) or ["score"])[0]
+    if kind == "gate_inputs":
+        return '<span class="fbadge mixed">관측 + 사람 판정</span>'
+    if kind == "score":
+        return '<span class="fbadge human">사람이 점수를 적음</span>'
+    return '<span class="fbadge human soft">사람이 판정을 적음</span>'
+
+
+def factor_card(ctx: Any, fid: str, lines: list[str], judged: set[str]) -> str:
+    """항목 하나를 기업 카드와 같은 접기 카드로 그린다.
+
+    2026-09-17 FIX-75: 방법 절이 같은 크기 블록을 끝없이 이어 붙여 어느 문장이 어느 항목 것인지
+    읽는 사람이 알 수 없었다. 항목마다 카드를 세웠다.
+    2026-09-17 FIX-76: **무엇을 재는가**(사용자 원본 `9가지 factor 뜯어보기`)가 통째로 빠져 있었다.
+    카드를 세 층으로 나눈다 — ① 무엇을 재는가 ② 무엇을 보고 매기는가 ③ 점수를 어떻게 만드는가.
+    머리에는 번호·이름·한 줄 정의만 둔다. 방식과 범위는 바로 위 표에 있어 겹쳐 적지 않는다.
+    """
+    f = ctx.rules.factor(fid)
+    label = str(f["label"])
+    mark, name = label[0], label[1:].strip()
+    con = rc.factor_concept(ctx, fid)
+    head_def = (f'<span class="fdef">{inline_html(con["definition"])}</span>' if con.get("definition") else "")
+
+    secs = []
+    if con:
+        parts = []
+        if con.get("question"):
+            parts.append('<p class="fq">' + "<br>".join(
+                inline_html(x) for x in str(con["question"]).splitlines() if x.strip()) + '</p>')
+        for ex in con.get("examples") or []:
+            parts.append('<div class="fex">' + "".join(
+                f'<p>{inline_html(x)}</p>' for x in str(ex).splitlines() if x.strip()) + '</div>')
+        if con.get("renamed"):
+            parts.append(f'<p class="fnote">원본은 이 항목을 <b>{esc(con["renamed"]["source"])}</b> 라고 불렀다. '
+                         f'지금 규칙의 이름은 <b>{esc(con["renamed"]["now"])}</b> 다.</p>')
+        # 원본 서술이 지금 규칙과 달라진 자리에는 그 사실을 **그 자리에** 붙인다.
+        if "question" in ((con.get("stale") or {}).get("fields") or []):
+            parts.append(f'<p class="fnote warn">{inline_html(con["stale"]["text"])}</p>')
+        secs.append(('무엇을 재는가', "".join(parts),
+                     '사용자 원본 <b>9가지 factor 뜯어보기</b> 의 문장이다.'))
+
+    criteria = rc.factor_criteria(ctx, fid)
+    stale = con.get("stale") or {}
+    warn = (f'<p class="fnote warn">{inline_html(stale["text"])}</p>'
+            if "metrics" in (stale.get("fields") or []) else "")
+    secs.append(('무엇을 보고 매기는가',
+                 "".join(f'<p class="mtext">{inline_html(x)}</p>' for x in criteria) + warn,
+                 '채점규칙 별표의 지표다.'))
+    secs.append(('점수를 어떻게 만드는가', _nested_list(lines), ''))
+
+    body = "".join(
+        f'<div class="fsec"><h4>{esc(t)}{f"<span>{n}</span>" if n else ""}</h4>{inner}</div>'
+        for t, inner, n in secs if inner) + _decision_chips(ctx, " ".join(lines))
+    return (f'<details class="fcard" id="method-{fid}" data-factor="{fid}">'
+            f'<summary><span class="fnum">{esc(mark)}</span>'
+            f'<span class="fmeta"><span class="fttl">{esc(name)}</span>{head_def}</span></summary>'
+            f'<div class="fbody">{body}</div></details>')
+
+
 def render_method(ctx: Any, results: dict[str, Any]) -> str:
     rules = ctx.rules
     # 2026-09-17 FIX-67: `자동화` 는 `manual` 을 자동화라고 부르게 만드는 머리글이었다. 그 칸이 말하는 것은
     # **점수를 만드는 방식**이다. 값도 영어 그대로 찍지 않고 색인 항목으로 잇는다.
+    # 2026-09-17 FIX-75: 표의 각 줄에서 그 항목 카드로 건너뛴다.
+    sections = rc.method_sections(ctx)
+    judged = {fid for fid in FACTOR_IDS if fid in rc.judgment_roles(ctx)
+              and not (fid == "F6" and ctx.rules.f6_mode == "parameters")}
+    # 2026-09-17 FIX-76 S3: 방식·범위·사람 판단 여부가 표와 카드 머리에 두 번, 카드 머리에서만 세 번
+    # 나왔다(사용자 지적). **표 한 곳에 모으고** 카드 머리에는 번호·이름·한 줄 정의만 남긴다.
     rows = "".join(
-        f'<tr><td class="name">{esc(FACTOR_LABELS[f])}</td>'
+        f'<tr><td class="name"><a class="frowlink" href="#method-{f}">{esc(FACTOR_LABELS[f])}</a></td>'
         f'<td class="text narrow">{_mode_cell(rules.factor(f)["mode"])}</td>'
+        f'<td class="text narrow">{_source_badge(ctx, f, judged)}</td>'
         f'<td class="mono">{rules.factor(f)["range"][0]}~{rules.factor(f)["range"][1]}</td></tr>' for f in FACTOR_IDS)
+    cards = "".join(factor_card(ctx, fid, lines, judged) for fid, lines in sections if fid)
+    loose = "".join(method_block(ctx, x) for fid, lines in sections if not fid for x in lines)
     # 2026-09-17 FIX-67 S1: 해시·입력 지문·실행 단위 선택·미결 결정 표는 감사 기록으로 옮겼다.
     # 본문에 남는 것은 기준 시점 한 줄, 어떻게 매겼는지, 알려진 한계 셋이다.
     return (
         f'<p class="sub">{_asof_line(ctx)}. 승계된 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
         f'남아 있으며 이번 실행에서 다시 확인하지 않았다.</p>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th>'
-        f'<th class="text narrow">점수를 만드는 방식</th><th>범위</th></tr></thead><tbody>{rows}</tbody></table></div>'
-        # 2026-09-15 FIX-54 1단계 S3: v1.5 문구(NTM PER 구간 · 하한 -5)가 박혀 있었다. 초안과 같은 목록을 쓴다.
-        + "".join(method_block(ctx, x) for x in [rc.c04_line(ctx)] + rc.method_lines(ctx))
+        f'<th class="text narrow">점수를 만드는 방식</th><th class="text narrow">점수의 출처</th><th>범위</th></tr></thead><tbody>{rows}</tbody></table></div>'
+        + loose
+        + '<h3>9가지 factor 뜯어보기</h3>'
+        + '<p class="sub">카드를 누르면 세 가지가 차례로 나온다 — <b>무엇을 재는 항목인지</b>, '
+          '<b>무엇을 보고 매기는지</b>, <b>점수를 어떻게 만드는지</b>. 첫째 층은 사용자 원본 '
+          '<b>9가지 factor 뜯어보기</b> 절의 문장이다.</p>'
+        + f'<div class="fcards">{cards}</div>'
         + '<h3>알려진 한계</h3>' + render_limitations(ctx)
         + f'<p class="sub mt-14">규칙 해시·입력 지문·실행 단위 선택·미결 규칙 결정은 '
           f'<a href="{esc(ctx.slug)}{AUDIT_SUFFIX}">감사 기록</a>에 따로 모았다.</p>'
@@ -1337,7 +1510,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}
 {availability}
-<h2><span class="num">0{n + 1}</span>방법과 규칙</h2>
+<h2><span class="num">0{n + 1}</span>채점 방법과 규칙</h2>
 {render_method(ctx, results)}
 {GLOSSARY_SLOT}
 <h2><span class="num">0{n + 2}</span>다음 재채점 트리거</h2>

@@ -34,6 +34,10 @@ class Fix74Test(unittest.TestCase):
     def line(self, needle: str) -> str:
         return next(x for x in self.lines if needle in x)
 
+    def sec(self, fid: str) -> str:
+        """2026-09-17 FIX-75: 문장이 항목별로 갈려 이름 접두사가 빠졌다. 절에서 찾는다."""
+        return " ".join(next(ls for f, ls in rc.method_sections(self.ctx) if f == fid))
+
     # ---------------------------------------------------------------- 사실 확인
     def test_seven_factors_are_all_human_judgment(self):
         """사용자 지적의 근거다 — ①~⑤·⑦·⑧ 은 14개사 전부가 사람 판단을 입력으로 갖는다."""
@@ -74,13 +78,13 @@ class Fix74Test(unittest.TestCase):
 
     def test_the_engine_side_is_still_written(self):
         """사다리·산식·조합표가 어떻게 환산하는지는 지우지 않았다."""
-        self.assertIn("사다리에 태워 칸을 고른다", self.line("③ Last Mover** —"))
-        self.assertIn("기본 3점에 동맹을 더하고 적대를 뺀다", self.line("⑤ 아군** —"))
-        self.assertIn("그 조합을 표에서 찾아 칸을 고른다", self.line("⑦ 순환금융** —"))
+        self.assertIn("사다리에 태워 칸을 고른다", self.sec("F3"))
+        self.assertIn("기본 3점에 동맹을 더하고 적대를 뺀다", self.sec("F5"))
+        self.assertIn("그 조합을 표에서 찾아 칸을 고른다", self.sec("F7"))
         # 그리고 그 입력이 사람 판단이라는 사실이 앞에 선다.
-        for needle in ("③ Last Mover** —", "⑤ 아군** —", "⑦ 순환금융** —"):
-            with self.subTest(needle=needle):
-                self.assertIn("사람이 **", self.line(needle))
+        for fid in ("F3", "F5", "F7"):
+            with self.subTest(factor=fid):
+                self.assertIn("사람이 **", self.sec(fid))
 
     def test_judgment_inputs_never_leak_internal_keys(self):
         """이름표에 없는 입력 키를 그대로 내보내면 내부 코드가 화면에 실린다(FIX-73 과 같은 종류)."""
@@ -90,11 +94,11 @@ class Fix74Test(unittest.TestCase):
                     self.assertIn(name, set(rc.JUDGMENT_INPUT_NAMES.values()))
         # ⑤ 의 A·H 처럼 이름표에 없는 것은 조용히 빠진다 — 키가 새어 나가지 않는다.
         self.assertEqual(rc.judgment_input_names(self.ctx, "F5"), [])
-        self.assertNotIn("door_closed", self.line("③ Last Mover** —"))
+        self.assertNotIn("door_closed", self.sec("F3"))
 
     def test_f7_carried_two_are_named(self):
         """⑦ 열둘은 두 축 판정이고 둘은 숫자만 넘어왔다 — 그 갈림이 문장에 있다."""
-        line = self.line("⑦ 순환금융** —")
+        line = self.sec("F7")
         self.assertIn("두 곳은 그 판정이 남아 있지 않아", line)
         self.assertIn("점수 숫자만 넘어왔고", line)
         kinds = Counter(j["kind"] for j in self.ctx.judgments if j["factor"] == "F7")
