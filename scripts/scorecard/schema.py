@@ -269,7 +269,9 @@ def validate_rules(payload: Any) -> dict[str, Any]:
                                "confirmed_model", "why_the_source_wins_over_handover",
                                "generation_gap_constraints", "scope", "pending_recheck",
                                # 결정에 딸린 범위 변경. 무엇에서 무엇으로 왜 바꿨는지(IMPL-46).
-                               "range_change"])
+                               "range_change",
+                               # 이 결정이 잣대를 바꿔 승계 예외 요건을 못 채우게 된 자리(FIX-59). 점수는 그대로 두고 기록으로 메운다.
+                               "succession_exception_gap"])
         # 고른 것을 적었으면 **선택지 목록 안에 있어야** 한다. 밀린 안을 지우고 고른 것만 남기면
         # 다음 사람이 그 안을 다시 들고 온다 — 그래서 choices 에 둘 다 남긴다(C03-IMPL-43).
         if d.get("chosen"):

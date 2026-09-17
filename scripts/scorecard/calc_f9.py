@@ -119,6 +119,10 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
                 margin = op_income / revenue
     bep_retreat = gi["bep_retreat"] == "yes"
     reviewed_sign = gi.get("operating_result_reviewed", "unknown")
+    # 2026-09-17 FIX-59 S1(사용자 결정 2026-09-17): **`bep_retreat: yes` 가 C-20 판정보다 앞선다.** 이 `and not
+    # bep_retreat` 가 그 우선순위이고, 그래서 openai 는 비상장 미공시여도 C-20 경로로 가지 않고 G1 실패(-4)로 간다.
+    # 근거는 채점규칙 470행(`-5 | 손실률 -30% 초과 · 또는 BEP 목표가 후퇴`)과 494·603행(v1.5 가 OpenAI 에 이름으로
+    # 적용). 규칙 문면은 policies.f9.g1_bep_retreat_precedence, 반대 의견과 상향 가능성은 긴장 TEN-RA5-02 다.
     if margin is None and not bep_retreat:
         if reviewed_sign == "profit":
             # 손실률 수치는 없지만 검토된 TTM 영업흑자 부호만으로 G1 통과. 수치 확보 전까지 경고를 남긴다.

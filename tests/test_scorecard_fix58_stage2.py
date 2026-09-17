@@ -190,10 +190,14 @@ class Stage2Test(unittest.TestCase):
 
     def test_spacex_f7_carries_the_counter_direction_fact(self):
         f7 = self.j["spacex-xai.F7"]
-        add = next(e for e in f7["evidence"] if "클라우드 계약 상대가 Tesla 가 아니다" in e)
+        # 2026-09-17 FIX-59 S3: 같은 계약이라는 단정을 철회하고 Valor 리스를 문면에 넣었다 — 보존 사실이 근거란에
+        # 남는다는 이 검사의 뜻은 그대로다.
+        add = next(e for e in f7["evidence"] if "Anthropic 클라우드 계약이 있다" in e)
         self.assertIn("Cloud Services Agreements with Anthropic PBC", add)
         self.assertIn("were immaterial", add)
         self.assertIn("$295M", add)
+        self.assertIn("동일성을 보존 원문이 주지 않는다", add)
+        self.assertIn("Valor Equity Partners", add)
         t = preserved_text("3cf9799:validation/offb-24/_raw/spcx-20260630.htm")
         self.assertIn("Other transactions with Tesla and other related parties", t)
         self.assertIn("were immaterial", t)

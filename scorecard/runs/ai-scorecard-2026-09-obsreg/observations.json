@@ -9117,7 +9117,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 Anthropic 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1014행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다 [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9189,10 +9189,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9220,7 +9280,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 Anthropic 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1014행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다 [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9292,10 +9352,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9323,7 +9443,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 Anthropic 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1014행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다 [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9395,10 +9515,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9426,7 +9606,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 Anthropic 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1014행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다 [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9498,10 +9678,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9529,7 +9769,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 Anthropic 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1014행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/anthropic_series_h_official_2026-05-28.html — 본문에서 `cash` · `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` 0건. [FIX-56 2단계 정정 · obsreg 5차 리뷰 C(review-obsreg · rule-consistency) low] `profit` 은 **원시 파일 7건 · 태그를 걷은 본문 6건**이고 전부 `Nonprofit(s)` 계열이다(상단 메뉴·바닥글 링크·검색 추천어 · 차이 1건은 `<a href>` 속성 안). 재무 용어로서의 `profit` 은 0건이다 — 앞서 적은 `1건` 은 화면에 보이는 메뉴 항목만 센 것이라 파일 출현 횟수와 달랐다. [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium 와 같은 잣대] openai 쪽에서 놓쳤던 여신 어휘로 다시 훑었다 — `credit` · `facility` · `revolving` · `undrawn` · `unused` · `borrow` · `loan` · `syndicate` **전부 0건**이다. 수치는 조달액·밸류·run-rate 뿐이다 [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9601,10 +9841,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9632,7 +9932,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low] [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9704,10 +10004,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9735,7 +10095,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low] [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9807,10 +10167,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9838,7 +10258,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low] [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -9910,10 +10330,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -9941,7 +10421,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low] [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -10013,10 +10493,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },
@@ -10044,7 +10584,7 @@
         "label_meaning": "**구조적 미공시** — 공시 의무가 없는 비상장사이고(MISS-LABEL-23 구조 기준) 확인한 자료에 이 수치가 없다는 뜻이다. `회사가 어디에도 공개하지 않았다` 는 확인이 아니다. 라벨과 기준은 C-20(사용자 확정 2026-09-11)의 탐지 조건이라 유지한다.",
         "checked_scope": {
           "v15_raw": "SRC-v15-html FIN 표 OpenAI 행 `미공시 · 미공시 · 판정 불가 · — · —`(AI기업_채점표_v1.5.html 1015행)",
-          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low]",
+          "preserved_release": "ffaf318:validation/priv-arr-17b/_raw/openai_accelerating_official_2026-03-31.html — `cash` 2건은 `more revenue and more cashflow` 한 문장이 본문과 페이지 데이터에 두 번 실린 것이고 수치가 아니다. `free cash` · `debt` · `EBITDA` · `operating income` · `operating margin` · `profit` 0건. **매출 수치는 여럿 있다**(`$1B in revenue` · `$1B per quarter` · `$2B in revenue per month` · `enterprise … more than 40% of our revenue`). [FIX-56 2단계 범위 확대 · obsreg 5차 리뷰 A 분담(review-obsreg · validation/fact-sources-split/ntm.md) medium] 여신 어휘를 넣지 않아 놓친 문장이 있었다 — 태그를 걷은 본문 기준 `credit` 2 · `revolving` 2 · `facility` 6 · `undrawn` 2 · `syndicate` 2 건이고 **`expanded our existing revolving credit facility to approximately $4.7 billion` · `The facility remains undrawn at close`** 한 문단이다(본문과 페이지 데이터에 중복 게재). `unused` · `borrow` · `loan` 0건. **그래도 여신 관측을 만들지 않았다** — 금액이 `approximately` 이고 `at close` 가 대차대조 기준일이 아니며 약정 조건이 없고 감사받지 않은 회사 자체 발표다(run.json assumptions). 현금·FCF·부채·TTM 영업손익 수치가 없다는 판정은 그대로 이 자료로 선다. [FIX-55 2단계 범위 서술 정정, obsreg 4차 리뷰 A 분담(NTM Claude 독립 세션, 기준 ab5a053 · review 0752b05) low] [FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **어휘 건수의 재현 방법** — 보존 파일을 `git show <commit>:<path>` 로 읽고 정규식 `<[^>]+>` 를 공백으로 바꿔 태그를 걷은 뒤 `html.unescape` 로 엔티티를 풀고 공백을 하나로 줄인 다음 대소문자를 무시하고 센다. **작업 트리 사본이 아니라 커밋된 사본을 본다.** 이 문서는 페이지 데이터(JSON)가 본문과 같은 문장을 한 번 더 실어 건수가 문단 수보다 크게 나온다 — 그 중복까지 포함한 수다.",
           "not_searched": "감사 재무제표(제출 의무가 없어 보존본 없음) · 투자설명 자료 · 언론 보도 · 그 밖의 회사 게시물 — 새로 받지 않았다(외부 조회 규칙).",
           "review": "obsreg 3차 리뷰 A(기준 04439f7 · review 2088a21) codex medium",
           "recorded_at": "2026-09-15",
@@ -10116,10 +10656,70 @@
                 "fact": "`We invested $28.7 billion in OpenAI's Series C Preferred Stock for the six months ended June 30, 2026` · 이후 잔여 `$21.3 billion`",
                 "registered": false,
                 "why_not": "조달액이지 현금·FCF·부채가 아니다. `openai.cumulative_raised.v15` 는 v1.5 승계값이고 이번 실행이 재측정하지 않는다."
+              },
+              {
+                "what": "anthropic 컴퓨트 약정(AWS 증액)",
+                "where": "Amazon 10-Q Accounting Pronouncements 앞 문단 (3cf9799:validation/offb-24/_raw/amzn-20260630.htm)",
+                "fact": "`In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $ 100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.`",
+                "registered": false,
+                "why_not": "[FIX-59 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) low] **같은 문단의 OpenAI 증액 문장만 목록에 있었고 이 Anthropic 증액 문장이 빠져 있었다.** `anthropic.F8.f8anth33` 이 FIX-53 3단계에서 이미 이 문면으로 라벨을 고쳤고(`기존 다년 약정 위의 증액` · `more than` 이라 하한), `anthropic.offbalance_B.v15` 300,000M 이 그 AWS 몫을 담고 있다. 값은 바뀌지 않고 목록의 빠진 자리를 채운다."
               }
             ],
             "not_found": "현금·TTM FCF·TTM 영업손익·EBITDA 는 **상대방 제출본에도 없다.** 상대방은 자기 투자·약정만 적는다 — 부재 판정 다섯(cash·fcf_ttm·net_cash·debt_ebitda·operating_margin_ttm)의 결론은 그대로다.",
-            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조."
+            "gap": "**Alphabet·Microsoft 제출본이 보존돼 있지 않다.** anthropic 의 최대 공급자(Google Cloud)와 openai 의 최대 주주(Microsoft) 쪽을 같은 방식으로 볼 수 없다. 다음 수집 1순위다 — 긴장 TEN-RA5-01 참조.",
+            "widened_sweep": {
+              "checked_at": "2026-09-17",
+              "review": "obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium",
+              "why": "FIX-58 2단계의 전수가 `_raw`(밑줄) 폴더로만 범위를 잡았다. **밑줄 없는 `raw/` 폴더에도 제출본이 있다** — 범위를 넓혀 다시 훑었다.",
+              "how": "`git log --all --diff-filter=A` 로 추가된 적 있는 모든 경로를 뽑아 `/raw/`(밑줄 없음)를 골라내고, 제출본·표지 성격의 파일을 `git show <commit>:<path>` 로 읽어 태그를 `<[^>]+>` → 공백으로 걷은 뒤 `Anthropic`·`OpenAI`·`xAI` 를 대소문자 무시로 셌다.",
+              "files": {
+                "aff11c2:validation/offb-24b-2026-09-11/raw/AMZN-10Q-2026Q2.txt": {
+                  "Anthropic": 31,
+                  "OpenAI": 15,
+                  "xAI": 0,
+                  "note": "amzn-20260630.htm 과 같은 10-Q 의 다른 포착본 — 건수가 같다. 새 사실 없음."
+                },
+                "aff11c2:validation/offb-24b-2026-09-11/raw/SPCX-10Q-2026Q2.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 119,
+                  "note": "spcx-20260630.htm 과 같은 10-Q. 새 사실 없음."
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-BABA-FY2026.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "b96477d:validation/f6-fx-16-2026-09-10/raw/20F-TSM-FY2025.txt": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-alphabet-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0,
+                  "note": "**alphabet 10-Q 표지 조각이다**(R1 COVER PAGE · 2026-06-30 · 문서 메타와 주식 수만). 본문이 아니다."
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-meta-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "ff75add:validation/mcap-36-2026-09-11/raw/cover-palantir-R1.htm.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                },
+                "d900e2f:validation/f6-fx-16-2026-09-10/raw/edgar-R4-FY2025-income-statement.htm": {
+                  "Anthropic": 0,
+                  "OpenAI": 0,
+                  "xAI": 0
+                }
+              },
+              "result": "**새로 나오는 사실이 없다.** 넓힌 범위에서 나온 제출본은 이미 본 Amazon·SpaceX 10-Q 의 다른 포착본이거나 Alibaba·TSMC 20-F(0건)이거나 표지·개별 표 조각이다. 등록할 것이 없고 **점수에 닿는 변화도 없다.**",
+              "alphabet_correction": "FIX-58 2단계가 `알파벳 제출본이 어느 커밋에도 보존돼 있지 않다` 고 적었는데 **표지 조각은 있다**(위 cover-alphabet-R1). 다만 `Anthropic` 출현 여부를 다투는 것은 **본문**이고 표지에는 문서 메타와 주식 수만 있어 그 판정을 받칠 수 없다. 서술을 `본문이 보존돼 있지 않다` 로 좁힌다 — TEN-RA5-01 의 전제와 발동 조건은 그대로다."
+            }
           }
         }
       },

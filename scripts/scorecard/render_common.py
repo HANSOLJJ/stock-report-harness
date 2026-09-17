@@ -190,9 +190,14 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
     if judgment is None:
         if not base_evidence:
             return None
+        # 2026-09-17 FIX-59 S4(8차 리뷰 D low): 기준선 문면의 첫 줄이 옛 점수로 시작해(anthropic F6 `-3 (v1.5: …)`)
+        # 현재 점수(-4)와 다른 수가 근거란 맨 앞에 왔다. **현재 점수를 첫 줄로 세운다** — 라벨만으로는 첫인상이 안 바뀐다.
+        now = "미산출" if fr.get("score") is None else f"{fr['score']:+d}"
+        head = (f"**이번 실행 점수는 {now} 이고 입력에서 자동 산출한 값이다**(위 산식 참조). "
+                f"아래는 기준선 {baseline_id} 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다.")
         return {"kind": "baseline_reference",
                 "header": f"기준선 {baseline_id} 서술(참고 — 이번 실행은 입력에서 자동 산출, 원문 판단은 미적용)",
-                "lines": [(1, annotate_replaced(e, company_id, reps)) for e in base_evidence[:6]]}
+                "lines": [(1, head)] + [(1, annotate_replaced(e, company_id, reps)) for e in base_evidence[:6]]}
     jid = judgment["judgment_id"]
     evidence = [annotate_replaced(e, company_id, reps) for e in (judgment.get("evidence") or [])]
     if judgment["status"] == "carried":
