@@ -87,11 +87,12 @@ def css() -> str:
   --warn-soft:rgba(230,162,60,.10);--warn-line:rgba(230,162,60,.32);--warn-text:#f6d8a3;
   --cat-consumer:#5ea6f6;--cat-work:#4ad39c;--cat-trade:#b195f5;--cat-part:#f0a05c;--cat-mix:#f28cc0;
   --cat-trade-soft:rgba(177,149,245,.14);--cat-part-soft:rgba(240,160,92,.14);--cat-mix-soft:rgba(242,140,192,.14);
-  --fs-sm:12px;--fs-md:13px;--fs-base:14px;--fs-lg:16px;--fs-2xl:22px;--fs-3xl:26px;
+  /* 2026-09-17 FIX-65 S2: 본문 14 → 16px. 표는 본문보다 한 단계만 아래(15px)로 둔다. */
+  --fs-sm:14px;--fs-md:15px;--fs-base:16px;--fs-lg:18px;--fs-2xl:24px;--fs-3xl:30px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{font-size:var(--fs-base)}
-body{background:var(--bg);color:var(--tx);font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;padding:0 0 64px;font-variant-numeric:tabular-nums}
+body{background:var(--bg);color:var(--tx);font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;padding:0 0 64px;font-variant-numeric:tabular-nums}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px}
 h1{font-size:clamp(26px,4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
 h2{font-size:clamp(18px,2.4vw,24px);font-weight:700;margin:48px 0 8px;letter-spacing:-.01em}
@@ -105,31 +106,31 @@ a{color:var(--acc);text-decoration:none;overflow-wrap:anywhere}
 a:hover{text-decoration:underline}
 header{background:var(--bg2);border-bottom:1px solid var(--line);padding:32px 0 24px;margin-bottom:8px}
 .badge{display:inline-block;background:var(--acc-soft);color:var(--acc);border:1px solid var(--acc-line);padding:4px 10px;border-radius:99px;font-size:var(--fs-sm);font-weight:600;margin-bottom:12px}
-.lede{color:var(--tx2);font-size:var(--fs-base);margin-top:10px;max-width:720px}
-.notice{border:1px solid var(--warn-line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:8px;padding:12px 14px;font-size:var(--fs-md);color:var(--warn-text);margin:16px 0}
+.lede{color:var(--tx2);font-size:var(--fs-base);margin-top:12px;max-width:760px;line-height:1.75}
+.notice{border:1px solid var(--warn-line);border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:8px;padding:14px 16px;font-size:var(--fs-md);color:var(--warn-text);margin:16px 0}
 .notice.info{border-color:var(--acc-line);border-left-color:var(--acc);background:var(--acc-soft);color:var(--acc-text)}
 .notice.bad{border-color:var(--bad-line);border-left-color:var(--dang);background:var(--bad-soft);color:var(--bad-text)}
 .notice.good{border-color:var(--good-line);border-left-color:var(--g4);background:var(--good-soft);color:var(--good-text)}
 .notice b{color:inherit}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(178px,100%),1fr));gap:12px;margin:20px 0}
-.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:18px 18px;min-width:0}
 .kpi .k{font-size:var(--fs-sm);color:var(--tx3);font-weight:600}
 .kpi .v{font-size:var(--fs-3xl);font-weight:800;margin:4px 0 2px;letter-spacing:-.02em;overflow-wrap:anywhere}
 .kpi .d{font-size:var(--fs-md);color:var(--tx2)}
-.chartbox{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0;min-width:0}
+.chartbox{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:20px;margin:20px 0;min-width:0}
 .chartbox svg{width:100%;height:auto;display:block}
 .legend{display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:12px;font-size:var(--fs-md);color:var(--tx2)}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
 table{border-collapse:collapse;width:100%;font-size:var(--fs-md)}
-th,td{padding:12px 8px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
+th,td{padding:14px 12px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:middle}
 th{background:var(--bg3);font-weight:700;font-size:var(--fs-sm);line-height:20px;color:var(--tx2)}
 th.sort{cursor:pointer;user-select:none}
 th.sort:hover{color:var(--tx)}
 th[aria-sort="ascending"]::after{content:" ▲";font-size:var(--fs-sm)}
 th[aria-sort="descending"]::after{content:" ▼";font-size:var(--fs-sm)}
 th.name,td.name{text-align:left;padding-left:14px}
-td.text,th.text{text-align:left;white-space:normal;min-width:180px;line-height:1.5}
+td.text,th.text{text-align:left;white-space:normal;min-width:180px;line-height:1.65}
 tbody tr.row{cursor:pointer}
 tbody tr.row:hover{background:var(--acc-soft)}
 .rk{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 6px;border-radius:6px;background:var(--bg3);font-size:var(--fs-sm);font-weight:700;color:var(--tx2)}
@@ -138,14 +139,17 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .sc.g0{color:var(--tx)}
 .bg-g5{background:var(--g5)}.bg-g4{background:var(--g4)}.bg-g3{background:var(--g3)}.bg-g2{background:var(--g2)}.bg-g1{background:var(--g1)}.bg-g0{background:var(--g0)}
 .c-g5{color:var(--g5)}.c-g4{color:var(--g4)}.c-g3{color:var(--g3)}.c-g2{color:var(--g2)}.c-g1{color:var(--g1)}.c-g0{color:var(--tx3)}
+/* 2026-09-17 FIX-65 S1: SVG `<text>`·`<tspan>` 은 `color` 가 아니라 `fill` 로 칠해진다. 위 등급 클래스를
+   그대로 달면 글자가 상속 기본값(검정)으로 떨어져 어두운 차트에서 사라진다. 같은 이름에 fill 을 준다. */
+svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .c-g2{fill:var(--g2)}svg .c-g1{fill:var(--g1)}svg .c-g0{fill:var(--tx3)}
 .tot{font-weight:800;font-size:var(--fs-lg)}
 .divider{border-left:2px solid var(--line)}
 .pending-list{list-style:none;margin:12px 0 0}
-.pending-list li{padding:8px 12px;border:1px solid var(--warn-line);background:var(--warn-soft);border-radius:8px;margin:6px 0;font-size:var(--fs-md);color:var(--warn-text)}
+.pending-list li{padding:11px 14px;border:1px solid var(--warn-line);background:var(--warn-soft);border-radius:8px;margin:6px 0;font-size:var(--fs-md);color:var(--warn-text)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:12px;margin-top:14px}
 .card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}
 .card[open]{grid-column:1/-1;border-color:var(--acc-line)}
-.card>summary{padding:14px 16px;cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:8px 12px;min-height:44px;flex-wrap:wrap}
+.card>summary{padding:16px 18px;cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:8px 12px;min-height:44px;flex-wrap:wrap}
 .card>summary::-webkit-details-marker{display:none}
 .card[open]>summary{border-bottom:1px solid var(--line)}
 /* 이름 쪽이 최소 190px 을 요구하게 해서, 점수 칸이 길어져도 기업명이 한두 글자 폭으로 접히지 않고
@@ -166,7 +170,7 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .cscore .t{font-size:var(--fs-3xl);font-weight:800;letter-spacing:-.03em;line-height:1}
 .cscore .s{font-size:var(--fs-sm);color:var(--tx3);margin-top:3px}
 .crank{font-size:var(--fs-sm);color:var(--tx3);margin-top:4px;line-height:1.45}
-.cbody{padding:6px 16px 14px}
+.cbody{padding:8px 18px 16px}
 .card[open] .cbody{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;align-items:start}
 .cgrp{min-width:0}
 .cgh{font-size:var(--fs-sm);font-weight:800;letter-spacing:.04em;padding:6px 0 2px}
@@ -182,8 +186,10 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .fcalc{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0 4px;overflow-wrap:anywhere}
 .fsrc{color:var(--tx3);font-size:var(--fs-sm);margin:4px 0 2px}
 .figures td.mono,.figures th:not(.name):not(.text){text-align:right}
-.fpts{margin:0;padding-left:16px;color:var(--tx);line-height:1.55}
-.fpts li{margin:2px 0}
+.fpts{margin:0;padding-left:18px;color:var(--tx);line-height:1.7}
+/* 2026-09-17 FIX-65 S2: `Apple·NVIDIA·AMD·Broadcom·MediaTek` 처럼 가운뎃점으로 이어진 토큰이 한 낱말로
+   취급돼 좁은 화면에서 카드 밖으로 잘려 나갔다. 다른 목록과 같은 줄바꿈 규칙을 준다. */
+.fpts li{margin:6px 0;overflow-wrap:anywhere}
 .fpts li.warn{color:var(--warn-text)}
 .fpts li.d2{margin-left:14px;color:var(--tx2);list-style:circle}
 .fpts del{color:var(--tx3)}
@@ -193,8 +199,8 @@ details.blk>summary::-webkit-details-marker{display:none}
 details.blk>summary::after{content:'▾';color:var(--tx3)}
 details.blk[open]>summary::after{content:'▴'}
 details.blk .inner{padding:0 16px 14px}
-ul.tight{margin:8px 0 0 18px;font-size:var(--fs-md);color:var(--tx)}
-ul.tight li{margin:4px 0;overflow-wrap:anywhere}
+ul.tight{margin:10px 0 0 20px;font-size:var(--fs-md);color:var(--tx);line-height:1.7}
+ul.tight li{margin:8px 0;overflow-wrap:anywhere}
 footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--tx3);font-size:var(--fs-md)}
 footer p{margin:6px 0;font-size:var(--fs-md)}
 .w8{font-weight:800}.b{font-weight:700}.big{font-size:var(--fs-lg)}.narrow{min-width:0}
@@ -207,16 +213,38 @@ tr.priv{opacity:.75}
 .ccode:hover,.ccode:focus-visible{background:var(--acc-line);color:var(--tx);text-decoration:none}
 .cdec{background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin:8px 0;overflow:hidden;scroll-margin-top:16px}
 .cdec:target{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc-line)}
-.cdec>summary{padding:12px 14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:44px;font-size:var(--fs-md)}
+.cdec>summary{padding:14px 16px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:44px;font-size:var(--fs-md)}
 .cdec>summary::-webkit-details-marker{display:none}
 .cdec>summary::after{content:'▾';color:var(--tx3);margin-left:auto}
 .cdec[open]>summary::after{content:'▴'}
 .cdec>summary .id{font-weight:800;font-variant-numeric:tabular-nums;color:var(--acc-text)}
 .cdec>summary .ttl{color:var(--tx2);flex:1 1 200px;min-width:0;line-height:1.45}
 .cdec .inner{padding:0 14px 14px;border-top:1px solid var(--line);margin-top:-1px}
-.dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:var(--fs-md);margin-top:12px}
+/* 2026-09-17 FIX-65 S3: `방법과 규칙` 이 긴 문장을 한 덩어리 목록으로 쏟아내 어디서 끊어 읽을지
+   알 수 없었고, 문장 중간의 C-번호는 링크를 눌러 다른 절로 뛰어야 뜻을 알 수 있었다.
+   줄마다 블록으로 떼고 그 자리에서 결정 요약을 펼쳐 보게 한다(hover 가 아니라 클릭이라 터치에서도 된다). */
+.mblk{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0;min-width:0}
+.mblk .mtag{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border-radius:8px;background:var(--acc-soft);border:1px solid var(--acc-line);color:var(--acc-text);font-size:var(--fs-lg);font-weight:800;margin-bottom:8px}
+.mblk .mtext{font-size:var(--fs-md);line-height:1.8;color:var(--tx);overflow-wrap:anywhere}
+.mblk .mtext+.mtext{margin-top:8px}
+.mdecs{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px}
+.mdecs>.lbl{display:block;font-size:var(--fs-sm);font-weight:700;color:var(--tx3);margin-bottom:6px}
+.mdec{border:1px solid var(--line);border-radius:8px;background:var(--bg3);margin:6px 0;overflow:hidden}
+.mdec>summary{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:44px;padding:8px 12px;cursor:pointer;list-style:none;font-size:var(--fs-sm)}
+.mdec>summary::-webkit-details-marker{display:none}
+.mdec>summary::after{content:'▾';color:var(--tx3);margin-left:auto}
+.mdec[open]>summary::after{content:'▴'}
+.mdec>summary .id{font-weight:800;color:var(--acc-text);font-variant-numeric:tabular-nums}
+.mdec>summary .gist{color:var(--tx2);flex:1 1 200px;min-width:0;line-height:1.6}
+.mdec .full{padding:0 12px 12px;font-size:var(--fs-sm);line-height:1.75;color:var(--tx);border-top:1px solid var(--line);padding-top:10px;overflow-wrap:anywhere}
+.mdec .full .pick{display:block;margin-top:8px;color:var(--tx3)}
+/* 2026-09-17 FIX-65 S4: 14행짜리 막대를 폰 폭에 비율로 욱여넣으면 글자가 6px 로 줄어 읽히지 않는다.
+   좌표계를 720 으로 좁게 잡고 여기서 아래 하한·상한을 준다 — 좁은 화면은 이 칸 안에서만 가로로 스크롤된다. */
+.mtwrap{overflow-x:auto}
+.mtwrap svg{min-width:560px;max-width:860px;margin:0 auto}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;font-size:var(--fs-md);margin-top:12px}
 .dl dt{color:var(--tx3);font-weight:700;white-space:nowrap}
-.dl dd{color:var(--tx);min-width:0;overflow-wrap:anywhere;line-height:1.55}
+.dl dd{color:var(--tx);min-width:0;overflow-wrap:anywhere;line-height:1.7}
 @media(max-width:520px){.dl{grid-template-columns:1fr;gap:2px}.dl dd{margin-bottom:8px}}
 .m-only{display:none}
 @media(max-width:860px){.card[open] .cbody{grid-template-columns:1fr}}
@@ -305,14 +333,14 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
 
     parts = [f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="과점 factor 대비 함정 감점 산점도. 오른쪽일수록 과점 구조가 강하고 위일수록 함정이 얕다">']
     for v in range(int(math.floor(xs[0])), int(math.ceil(xs[1])) + 1, 2):
-        parts.append(f'<line x1="{X(v):.1f}" y1="{M["t"]}" x2="{X(v):.1f}" y2="{M["t"] + ih}" style="stroke:var(--line)"/><text x="{X(v):.1f}" y="{M["t"] + ih + 22}" style="fill:var(--tx3)" font-size="12" text-anchor="middle">{v}</text>')
+        parts.append(f'<line x1="{X(v):.1f}" y1="{M["t"]}" x2="{X(v):.1f}" y2="{M["t"] + ih}" style="stroke:var(--line)"/><text x="{X(v):.1f}" y="{M["t"] + ih + 22}" style="fill:var(--tx3)" font-size="14" text-anchor="middle">{v}</text>')
     v = 0
     while v >= ys[0]:
-        parts.append(f'<line x1="{M["l"]}" y1="{Y(v):.1f}" x2="{M["l"] + iw}" y2="{Y(v):.1f}" style="stroke:var(--line)"/><text x="{M["l"] - 12}" y="{Y(v) + 4:.1f}" style="fill:var(--tx3)" font-size="12" text-anchor="end">{v}</text>')
+        parts.append(f'<line x1="{M["l"]}" y1="{Y(v):.1f}" x2="{M["l"] + iw}" y2="{Y(v):.1f}" style="stroke:var(--line)"/><text x="{M["l"] - 12}" y="{Y(v) + 4:.1f}" style="fill:var(--tx3)" font-size="14" text-anchor="end">{v}</text>')
         v -= 3
-    parts.append(f'<line x1="{X(20):.1f}" y1="{M["t"]}" x2="{X(20):.1f}" y2="{M["t"] + ih}" style="stroke:var(--g5)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".65"/><text x="{X(20) + 7:.1f}" y="{M["t"] + 14}" style="fill:var(--g5)" font-size="12" font-weight="600">과점 후보군 20점</text>')
-    parts.append(f'<text x="{M["l"] + iw / 2:.1f}" y="{H - 10}" style="fill:var(--tx2)" font-size="13" text-anchor="middle" font-weight="600">과점 factor (높을수록 구조가 강함) →</text>')
-    parts.append(f'<text transform="translate(17,{M["t"] + ih / 2:.1f}) rotate(-90)" style="fill:var(--tx2)" font-size="13" text-anchor="middle" font-weight="600">← 함정 감점 (위일수록 얕음)</text>')
+    parts.append(f'<line x1="{X(20):.1f}" y1="{M["t"]}" x2="{X(20):.1f}" y2="{M["t"] + ih}" style="stroke:var(--g5)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".65"/><text x="{X(20) + 7:.1f}" y="{M["t"] + 14}" style="fill:var(--g5)" font-size="14" font-weight="600">과점 후보군 20점</text>')
+    parts.append(f'<text x="{M["l"] + iw / 2:.1f}" y="{H - 10}" style="fill:var(--tx2)" font-size="15" text-anchor="middle" font-weight="600">과점 factor (높을수록 구조가 강함) →</text>')
+    parts.append(f'<text transform="translate(17,{M["t"] + ih / 2:.1f}) rotate(-90)" style="fill:var(--tx2)" font-size="15" text-anchor="middle" font-weight="600">← 함정 감점 (위일수록 얕음)</text>')
     groups: dict[tuple[int, int], list[dict[str, Any]]] = {}
     for c in scored:
         groups.setdefault((c["moat"], c["trap"]), []).append(c)
@@ -334,7 +362,7 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
             parts.append(f'<circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="3" style="fill:{e["color"]}"/>')
     for e in sorted(entries, key=lambda x: x["y"]):
         label = f'{e["names"]}  {e["total"]}점'
-        w, hh = len(label) * 7.4 + 10, 19
+        w, hh = len(label) * 8.6 + 12, 22
         sx = e["r"] + w / 2 + 8
         cands = [(0, -(e["r"] + 10)), (0, e["r"] + 20), (sx, 4), (-sx, 4), (0, -(e["r"] + 28)), (0, e["r"] + 38), (sx, -16), (-sx, 22), (sx, 26), (-sx, -20),
                  (0, -(e["r"] + 46)), (0, e["r"] + 56), (sx, -34), (-sx, 40), (sx, 44), (-sx, -38), (sx + 30, 4), (-sx - 30, 4), (0, -(e["r"] + 64)), (0, e["r"] + 74)]
@@ -356,7 +384,52 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
         placed.append({"x": px, "y": py - hh / 2 + 7, "w": w, "h": hh})
         if math.hypot(px - e["x"], py - e["y"]) > e["r"] + 24:
             parts.append(f'<line x1="{e["x"]:.1f}" y1="{e["y"]:.1f}" x2="{px:.1f}" y2="{py + (5 if py < e["y"] else -11):.1f}" style="stroke:{e["color"]}" stroke-width="1" opacity=".4"/>')
-        parts.append(f'<text x="{px:.1f}" y="{py:.1f}" text-anchor="middle" font-size="12" font-weight="700"><tspan style="fill:var(--tx)">{esc(e["names"])}</tspan> <tspan class="c-{total_class(e["total"])}" font-weight="800">{e["total"]}점</tspan></text>')
+        parts.append(f'<text x="{px:.1f}" y="{py:.1f}" text-anchor="middle" font-size="14" font-weight="700"><tspan style="fill:var(--tx)">{esc(e["names"])}</tspan> <tspan class="c-{total_class(e["total"])}" font-weight="800">{e["total"]}점</tspan></text>')
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def moat_trap_svg(results: dict[str, Any]) -> str:
+    """2026-09-17 FIX-65 S4: 기업별 과점 합계와 함정 합계를 0 기준 좌우 발산 막대로 그린다.
+
+    산점도를 대신하지 않는다 — 산점도는 두 축의 **조합**을, 이 막대는 각 합계의 **크기**를 보여 준다.
+    값은 `results.json` 의 `moat`·`trap`·`total` 을 그대로 읽고 새로 계산하지 않는다.
+    """
+    rows = [c for c in results["companies"] if c["complete"] and not c["reference"]]
+    if not rows:
+        return '<p class="sub">완료 기업이 없어 막대를 그리지 않는다.</p>'
+    rows = sorted(rows, key=lambda c: (-c["total"], -c["moat"], c["display_name"]))
+
+    # 폰 폭에서도 글자가 읽히도록 좌표계를 좁게 잡는다(아래 .mtwrap 이 min-width 로 받는다).
+    W, RH, TOP, BOT = 640, 32, 34, 34
+    NAME_W, TOT_W, LBL = 100, 40, 24              # 기업명 칸 · 총점 칸 · 막대 끝 숫자 자리
+    H = TOP + RH * len(rows) + BOT
+    # 함정 쪽이 짧으므로 0 선을 왼쪽에 붙인다. 좁은 화면에서 먼저 보이는 쪽이 과점 막대가 된다.
+    zero = NAME_W + (W - NAME_W - TOT_W - 16) * 0.34
+    right, left = W - TOT_W - 16 - zero - LBL, zero - NAME_W - 8 - LBL
+    # **좌우 축척은 하나로 묶는다** — 따로 잡으면 같은 길이가 다른 값을 뜻해 막대를 비교할 수 없다.
+    hi, lo = max(c["moat"] for c in rows), max(-c["trap"] for c in rows)
+    unit = min(right / hi if hi else right, left / lo if lo else left)
+
+    parts = [f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="기업별 과점 합계와 함정 합계 막대. '
+             f'0 을 기준으로 오른쪽이 과점 factor 합계, 왼쪽이 함정 factor 합계다">']
+    parts.append(f'<text x="{zero + 8}" y="20" style="fill:var(--g4)" font-size="14" font-weight="700">과점 합계 →</text>')
+    parts.append(f'<text x="{zero - 8}" y="20" style="fill:var(--g1)" font-size="14" font-weight="700" text-anchor="end">← 함정 합계</text>')
+    parts.append(f'<text x="{W - 6}" y="20" style="fill:var(--tx2)" font-size="14" font-weight="700" text-anchor="end">조정</text>')
+    for i, c in enumerate(rows):
+        y = TOP + i * RH
+        mid, bh = y + RH / 2, 17
+        parts.append(f'<text x="{NAME_W - 10}" y="{mid + 5:.1f}" style="fill:var(--tx)" font-size="14" text-anchor="end">'
+                     f'{esc(short_name(c["display_name"]))}</text>')
+        mw, tw = c["moat"] * unit, -c["trap"] * unit
+        parts.append(f'<rect x="{zero:.1f}" y="{mid - bh / 2:.1f}" width="{mw:.1f}" height="{bh}" rx="3" style="fill:var(--g4)" opacity=".85"/>')
+        parts.append(f'<rect x="{zero - tw:.1f}" y="{mid - bh / 2:.1f}" width="{tw:.1f}" height="{bh}" rx="3" style="fill:var(--g1)" opacity=".85"/>')
+        # 숫자는 막대 끝 바깥에 둔다. SVG 글자는 `fill` 로 칠한다(FIX-65 S1 에서 고친 것과 같은 규칙).
+        parts.append(f'<text x="{zero + mw + 6:.1f}" y="{mid + 5:.1f}" style="fill:var(--g4)" font-size="14" font-weight="700">{c["moat"]}</text>')
+        parts.append(f'<text x="{zero - tw - 6:.1f}" y="{mid + 5:.1f}" style="fill:var(--g1)" font-size="14" font-weight="700" text-anchor="end">{c["trap"]}</text>')
+        parts.append(f'<text x="{W - 6}" y="{mid + 5:.1f}" class="c-{total_class(c["total"])}" font-size="15" font-weight="800" text-anchor="end">{c["total"]}</text>')
+    parts.append(f'<line x1="{zero:.1f}" y1="{TOP - 8}" x2="{zero:.1f}" y2="{H - BOT + 8}" style="stroke:var(--tx3)" stroke-width="1.5"/>')
+    parts.append(f'<text x="{zero:.1f}" y="{H - 12}" style="fill:var(--tx3)" font-size="14" text-anchor="middle">0</text>')
     parts.append("</svg>")
     return "".join(parts)
 
@@ -423,7 +496,7 @@ def render_ranking(results: dict[str, Any]) -> str:
 
 def render_incomplete(results: dict[str, Any], rules: Any) -> str:
     items = results["population"]["incomplete"]
-    decisions = "".join(f'<li><b>{esc(d)}</b> {esc((rules.decision(d) or {}).get("summary", ""))}</li>' for d in results["pending_rule_decisions"])
+    decisions = "".join(f'<li><b>{esc(d)}</b> {inline_html((rules.decision(d) or {}).get("summary", ""))}</li>' for d in results["pending_rule_decisions"])
     # 2026-09-16 FIX-58 1단계(7차 리뷰 D): 미완료가 0건이면 조기 반환해 **미결 규칙 결정이 HTML 에서 사라졌다.**
     # 둘은 다른 사실이다 — 미완료 기업이 없어도 미결 결정은 남을 수 있다.
     if not items:
@@ -465,11 +538,12 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 pts = [f'<li{" class=\"d2\"" if depth > 1 else ""}>{inline_html(text)}</li>' for depth, text in (block or {}).get("lines", [])]
                 if block is not None and f == "F9" and incompatible_g4:
                     pts.append(f"<li>{esc(rc.G4_INCOMPATIBLE_NOTE)}</li>")
-                pts += [f'<li class="warn">⚠️ {esc(w)}</li>' for w in fr["warnings"][:4]]
+                # 2026-09-17 FIX-65 S3: 경고 문구에도 규칙 파일과 같은 강조 기호가 섞여 있어 그대로 노출됐다.
+                pts += [f'<li class="warn">⚠️ {inline_html(w)}</li>' for w in fr["warnings"][:4]]
                 calc = factor_calc_text(f, fr)
                 src = f'<div class="fsrc">{inline_html(block["header"])}</div>' if block is not None else ""
                 body = (src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else ""
-                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{esc(STATUS_LABEL.get(fr["status"], fr["status"]))} · {esc(fr["basis"])}</span></div>{f"<div class=\"fcalc\">{esc(calc)}</div>" if calc else ""}{body}</div>')
+                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{esc(STATUS_LABEL.get(fr["status"], fr["status"]))} · {esc(fr["basis"])}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
@@ -546,11 +620,54 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
     return "".join(parts)
 
 
+FACTOR_MARKS = "①②③④⑤⑥⑦⑧⑨"
+
+
+def _decision_gist(summary: str, limit: int = 110) -> str:
+    """결정 요약의 첫 문장. **문구를 새로 쓰지 않는다** — 규칙 파일 `decisions[].summary` 에서 잘라 온다."""
+    s = " ".join(str(summary).split())
+    m = re.search(r"[.!?]\s", s)
+    first = s[:m.start() + 1] if m and m.start() < limit else s
+    return first if len(first) <= limit else first[:limit].rstrip() + "…"
+
+
+def _decision_chips(ctx: Any, text: str) -> str:
+    """줄에 박힌 C-번호를 모아 그 자리에서 뜻을 펼쳐 보게 한다. 링크로 뛰지 않아도 되게."""
+    out = []
+    for code in dict.fromkeys(CODE_RE.findall(text)):
+        d = ctx.rules.decision(code)
+        if d is None:
+            continue
+        pick = next((r["choice"] for r in ctx.run["decisions"] if r["id"] == code), None)
+        picked = f'<span class="pick">이번 실행 선택: <b>{esc(pick)}</b></span>' if pick else ""
+        out.append(f'<details class="mdec"><summary><span class="id">{esc(code)}</span>'
+                   f'<span class="gist">{inline_html(_decision_gist(d["summary"]))}</span></summary>'
+                   f'<div class="full">{inline_html(d["summary"])}{picked}</div></details>')
+    if not out:
+        return ""
+    return '<div class="mdecs"><span class="lbl">관련 결정</span>' + "".join(out) + "</div>"
+
+
+def method_block(ctx: Any, text: str) -> str:
+    """한 줄을 독립 블록으로 만든다. **문장은 그대로 두고 배치만 바꾼다.**
+
+    맨 앞이 factor 표시이고 그 줄이 한 factor 만 다루면 표시를 제목으로 세운다.
+    `③ 사다리, ⑤ …, ⑦ …` 처럼 여러 factor 를 한 줄에 담은 것은 제목을 세우지 않는다 —
+    하나만 떼면 나머지가 제목에서 빠져 오히려 잘못 읽힌다.
+    """
+    marks = {ch for ch in text if ch in FACTOR_MARKS}
+    head, body = "", text
+    if text[:1] in FACTOR_MARKS and len(marks) == 1:
+        head = f'<div><span class="mtag">{esc(text[0])}</span></div>'
+        body = text[1:].lstrip(" :")
+    return f'<div class="mblk">{head}<p class="mtext">{inline_html(body)}</p>{_decision_chips(ctx, text)}</div>'
+
+
 def render_method(ctx: Any, results: dict[str, Any]) -> str:
     rules = ctx.rules
     rows = "".join(f'<tr><td class="name">{esc(FACTOR_LABELS[f])}</td><td>{esc(rules.factor(f)["mode"])}</td><td class="mono">{rules.factor(f)["range"][0]}~{rules.factor(f)["range"][1]}</td><td class="text narrow">{esc(", ".join(rules.factor(f).get("decision_ids", [])) or "—")}</td></tr>' for f in FACTOR_IDS)
     pending = [d for d in rules.pending_decisions() if d.get("blocking")]
-    drows = "".join(f'<tr><td class="mono">{esc(d["id"])}</td><td class="text">{esc(d["summary"])}</td><td class="text">{esc(d.get("recommendation", ""))}</td><td>{esc(next((r["choice"] for r in ctx.run["decisions"] if r["id"] == d["id"]), "미결"))}</td></tr>' for d in pending)
+    drows = "".join(f'<tr><td class="mono">{esc(d["id"])}</td><td class="text">{inline_html(d["summary"])}</td><td class="text">{inline_html(d.get("recommendation", ""))}</td><td>{esc(next((r["choice"] for r in ctx.run["decisions"] if r["id"] == d["id"]), "미결"))}</td></tr>' for d in pending)
     return (
         f'<ul class="tight"><li>규칙 <b>{esc(rules.version)}</b> · 해시 <code>{esc(rules.hash[:16])}…</code> · 원본 {esc(rules.payload["source"]["file"])}</li>'
         f'<li>기준일 {esc(ctx.run["as_of"])} · 가격 기준일 {esc(ctx.run.get("price_as_of") or ctx.run["as_of"])} · 정보 컷오프 {esc(ctx.run.get("info_cutoff") or ctx.run["as_of"])} — 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있으며 이번 실행에서 재검증하지 않았다(C-17)</li>'
@@ -558,8 +675,8 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
         f'<li>실행 단위 결정: {esc(", ".join(results["decisions_applied"]) or "없음")}</li></ul>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th><th>자동화</th><th>범위</th><th class="text narrow">관련 결정</th></tr></thead><tbody>{rows}</tbody></table></div>'
         # 2026-09-15 FIX-54 1단계 S3: v1.5 문구(NTM PER 구간 · 하한 -5)가 박혀 있었다. 초안과 같은 목록을 쓴다.
-        '<ul class="tight">' + "".join(f"<li>{inline_html(x)}</li>" for x in [rc.c04_line(ctx)] + rc.method_lines(ctx)) + '</ul>'
-        '<h3>알려진 한계</h3>' + render_limitations(ctx)
+        + "".join(method_block(ctx, x) for x in [rc.c04_line(ctx)] + rc.method_lines(ctx))
+        + '<h3>알려진 한계</h3>' + render_limitations(ctx)
         + (f'<h3>미결 규칙 결정</h3><div class="tablewrap"><table><thead><tr><th>ID</th><th class="text">요약</th><th class="text">권고</th><th>이번 실행</th></tr></thead><tbody>{drows}</tbody></table></div>' if drows else "")
     )
 
@@ -572,9 +689,12 @@ def render_limitations(ctx: Any) -> str:
             groups[-1][1].append(x[4:])
         else:
             groups.append((x, []))
-    lis = "".join(f"<li>{inline_html(t)}" + (f'<ul class="tight">{"".join(f"<li>{inline_html(q)}</li>" for q in subs)}</ul>' if subs else "") + "</li>"
-                  for t, subs in groups)
-    return f'<ul class="tight">{lis}</ul>'
+    # 2026-09-17 FIX-65 S3: 한 덩어리 목록이라 항목 경계가 보이지 않았다. 방법 절과 같은 블록으로 뗀다.
+    out = []
+    for text, subs in groups:
+        inner = f'<ul class="tight">{"".join(f"<li>{inline_html(q)}</li>" for q in subs)}</ul>' if subs else ""
+        out.append(f'<div class="mblk"><p class="mtext">{inline_html(text)}</p>{inner}{_decision_chips(ctx, text)}</div>')
+    return "".join(out)
 
 
 def load_availability(slug: str) -> dict[str, Any] | None:
@@ -672,12 +792,13 @@ def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> s
             impact = "적용한 선택이 채점 경로에 반영되었다."
         else:
             impact = "이번 실행의 점수에는 영향을 주지 않았다."
-        rows = [("무엇에 대한 결정인가", esc(d["summary"])), ("권고", esc(d.get("recommendation") or "—")),
+        rows = [("무엇에 대한 결정인가", inline_html(d["summary"])), ("권고", inline_html(d.get("recommendation") or "—")),
                 ("선택지", ", ".join(esc(x) for x in d.get("choices", [])) or "규칙 파일에 선택지 정의 없음"),
                 ("영향 factor", ", ".join(esc(FACTOR_LABELS.get(f, f)) for f in d.get("affects", [])) or "—"),
                 ("이번 실행 상태", state), ("점수 영향", impact)]
         dl = "".join(f"<dt>{k}</dt><dd>{v}</dd>" for k, v in rows)
-        head = esc(d["summary"][:60] + ("…" if len(d["summary"]) > 60 else ""))
+        # 글자 수로 자르면 `**` 쌍이 열린 채 끊긴다. 문장 단위로 잘라 온 뒤 표시 변환을 건다.
+        head = inline_html(_decision_gist(d["summary"], 72))
         blocks.append(
             f'<details class="cdec" id="dec-{esc(did)}"><summary><span class="id">{esc(did)}</span>'
             f'<span class="pill{" warn" if d["status"] == "pending" else ""}">{esc(status)}</span>'
@@ -721,7 +842,7 @@ def render_triggers(ctx: Any, triggers: list[dict[str, Any]]) -> str:
 
 
 def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
-    items = "".join(f'<li><b>{esc(s.get("source_id"))}</b> — {esc(s.get("title"))} · {esc(s.get("publisher") or "")} · {esc(s.get("accessed_at") or "")} · {esc(s.get("url") or "URL 미제공")}' + (f' · 이해상충: {esc(s["conflict_of_interest"])}' if s.get("conflict_of_interest") else "") + "</li>" for s in ctx.sources.get("items", []))
+    items = "".join(f'<li><b>{esc(s.get("source_id"))}</b> — {inline_html(s.get("title"))} · {esc(s.get("publisher") or "")} · {esc(s.get("accessed_at") or "")} · {esc(s.get("url") or "URL 미제공")}' + (f' · 이해상충: {inline_html(s["conflict_of_interest"])}' if s.get("conflict_of_interest") else "") + "</li>" for s in ctx.sources.get("items", []))
     reviewers = review_fm.get("reviewers") or []
     rv = ", ".join(str(r) for r in reviewers) if isinstance(reviewers, list) else str(reviewers)
     return f'<ul class="tight">{items}</ul><p class="sub" style="margin-top:10px">리뷰: {esc(review_fm.get("review_type", ""))} · {esc(rv)}</p>'
@@ -781,6 +902,8 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <div class="kpis" id="kpis">{render_kpis(results)}</div>
 <h2><span class="num">01</span>과점 × 함정 지도</h2>
 <div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
+<h3>기업별 과점 합계와 함정 합계</h3>
+<div class="chartbox"><div class="mtwrap">{moat_trap_svg(results)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
 <h2><span class="num">02</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results)}

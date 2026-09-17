@@ -96,7 +96,9 @@ class SharedRenderTest(unittest.TestCase):
                 text = rc.factor_calc_text("F6", c["factors"]["F6"])
                 self.assertTrue(text)
                 self.assertIn(text, self.md)
-                self.assertIn(html_lib.escape(text), self.frow(c["company_id"], "⑥ 가격"))
+                # 2026-09-17 FIX-65 S3: HTML 은 같은 문장을 표시 변환(백틱 → <code>)만 거쳐 싣는다.
+                # 초안은 마크다운 원문 그대로다 — 둘이 같은 출처에서 온다는 것이 이 검사의 요지다.
+                self.assertIn(rc.inline_html(text), self.frow(c["company_id"], "⑥ 가격"))
         tsmc = rc.factor_calc_text("F6", {c["company_id"]: c for c in self.results["companies"]}["tsmc"]["factors"]["F6"])
         self.assertIn("P1 PER", tsmc)
         self.assertIn("P4 -1(period_basis_not_ttm)", tsmc)
