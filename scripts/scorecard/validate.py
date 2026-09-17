@@ -25,6 +25,10 @@ REQUIRED_DRAFT_SECTIONS_SCORECARD = ["개요", "종합 순위표", "기업별 �
 HTML_GENERATOR = "stock-report-harness scorecard-builder"
 DISCLAIMER_TERMS = ("투자 조언", "투자 권유", "투자 자문", "교육 및", "매수", "매도")
 ROW_RE = re.compile(r"^\|(?P<cells>.+)\|\s*$")
+# 2026-09-17 FIX-60: 체크리스트 fail 의 근거 칸에서 긴장 번호를 찾는다. **문자열만 보고 통과시키지 않는다** —
+# 규칙 파일의 open_tensions 와 대조해 실재하고 recheck_at 이 있는 것만 예외로 인정한다(오타가 예외를 만들지 않게).
+TENSION_RE = re.compile(r"TEN-[A-Z0-9-]+")
+
 # 렌더러에서 f-string 접두사가 빠지면 파이썬 표현식이 리터럴로 출력된다. 오류가 안 나므로 검증기에서 막는다.
 UNRENDERED_RE = re.compile(r"\{(?:esc|fmt_[a-z_]+|total_class|score_class|trap_class|head|c\[|results\[|run\[)[^{}]*\}")
 
@@ -32,6 +36,26 @@ UNRENDERED_RE = re.compile(r"\{(?:esc|fmt_[a-z_]+|total_class|score_class|trap_c
 def prel(path: Path) -> str:
     """frontmatter 의 source 경로는 POSIX 구분자로 쓴다. Windows 의 rel() 백슬래시와 비교하지 않도록 정규화한다."""
     return rel(path).replace("\\", "/")
+
+
+def _carried_exception(basis: str, tensions: dict[str, dict[str, Any]]) -> tuple[bool, list[str], str]:
+    """승계 판단 예외가 서는지 (AGENTS.md 71행 · 리뷰 템플릿 본문).
+
+    예외는 **긴장으로 등록되고 재검토 시점이 있을 때만** 선다. 셋을 가른다 —
+    번호가 없다 / 번호가 규칙에 없다 / 번호는 있는데 recheck_at 이 없다. 어느 쪽이든 막는다.
+
+    선언은 AGENTS.md 와 템플릿에 있는데 **읽는 코드가 없어** 승인이 막혔다(2026-09-17). 선언대로 구현한다.
+    """
+    ids = list(dict.fromkeys(TENSION_RE.findall(basis or "")))   # 본문이 같은 번호를 여러 번 적어도 한 번만 센다
+    if not ids:
+        return False, [], "근거 칸에 긴장 번호(TEN-…)가 없음"
+    unknown = [t for t in ids if t not in tensions]
+    if unknown:
+        return False, ids, f"규칙 open_tensions 에 없는 긴장 번호 {unknown}"
+    ok = [t for t in ids if (tensions[t].get("recheck_at") or "").strip()]
+    if not ok:
+        return False, ids, f"긴장 {ids} 에 recheck_at 이 없음"
+    return True, ok, ""
 
 
 def _table_rows(section: str) -> list[list[str]]:
@@ -193,6 +217,9 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     for cells in check_rows:
         if len(cells) >= 4 and cells[0] in ids:
             seen_q[cells[0]] = (cells[2], cells[3])
+    # 2026-09-17 FIX-60: 승계 판단 예외를 규칙의 open_tensions 와 대조해 판정한다.
+    tensions = {t["id"]: t for t in (ctx.rules.payload.get("open_tensions") or [])}
+    carried: list[str] = []
     for qid in sorted(ids):
         if qid not in seen_q:
             result.error(f"체크리스트 {qid} 행 누락")
@@ -201,9 +228,20 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
         if res not in {"pass", "fail", "not_applicable"} and status == "pass":
             result.error(f"체크리스트 {qid} 결과 {res!r} 는 pass/fail/not_applicable 이어야 함")
         if status == "pass" and res == "fail":
-            result.error(f"체크리스트 {qid} 가 fail 인데 review status 가 pass")
+            excepted, cited, why = _carried_exception(basis, tensions)
+            if excepted:
+                # **조용히 넘어가지 않는다.** 예외로 통과한 것을 세어 경고로 남긴다.
+                carried.append(f"{qid}({'·'.join(cited)})")
+            else:
+                result.error(f"체크리스트 {qid} 가 fail 인데 review status 가 pass — 승계 판단 예외가 서지 않음: {why}")
         if status == "pass" and not basis.strip():
             result.error(f"체크리스트 {qid} 근거 없음 (not_applicable 도 사유 필요)")
+    if carried:
+        result.warn(f"승계 예외로 통과한 체크리스트 fail {len(carried)}건: {' · '.join(carried)}")
+        # 이 검사가 기계로 확인하는 것은 **등록과 재검토 시점**뿐이다. AGENTS.md 71행의 나머지 조건
+        # (`이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았다`)은 사람이 판정한다 — 자동 통과로 읽지 않는다.
+        result.warn("위 예외는 긴장 등록·재검토 시점만 기계로 확인한 것이다. "
+                    "`이번 실행이 잣대를 바꾸지 않았다`는 조건은 리뷰어가 판정한다(AGENTS.md 71행)")
     if len(result.errors) == review_errors_before:
         result.check("review 4-area + checklist structure")
 
