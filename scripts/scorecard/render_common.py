@@ -132,6 +132,10 @@ _TERM_RE = re.compile(r"(?<![A-Za-z0-9_./-])(" + "|".join(
     sorted((re.escape(k) for k in TERM_NAMES), key=len, reverse=True))
     + r")(?![A-Za-z0-9_])(\s*)([가-힣]+)?")
 _CODE_RE = re.compile(r"(?<![A-Za-z0-9_./-])([PG][1-4])(?![A-Za-z0-9_.-])(\s*)([가-힣A-Za-z/]+)?")
+# 2026-09-17 FIX-73 S2: `G3/G4` 는 `_CODE_RE` 가 `G3` 만 잡고 `/G4` 는 lookbehind 에 걸려 남겼다.
+# 복합 단계 이름은 낱개 번호보다 **먼저** 통째로 옮겨 그린다.
+_STAGE_RE = re.compile("|".join(
+    re.escape(k) for k in sorted(F9_STAGE_LABELS, key=len, reverse=True)))
 
 
 # 2026-09-17 FIX-68 S4: `P2 가` 를 `EV/매출 가` 로 바꾸니 조사가 맞지 않았다. 이름의 **끝 글자 받침**으로
@@ -190,6 +194,7 @@ def rename_codes(text: str) -> str:
             return fix_josa(name, gap, nxt)
         return name + gap + nxt
 
+    text = _STAGE_RE.sub(lambda m: F9_STAGE_LABELS[m.group(0)], text)
     return _TERM_RE.sub(term, _CODE_RE.sub(one, text))
 
 
