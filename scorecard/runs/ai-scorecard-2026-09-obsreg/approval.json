@@ -1,0 +1,16 @@
+{
+  "schema": "scorecard.approval/1",
+  "run_id": "ai-scorecard-2026-09-obsreg",
+  "approval_id": "0b054d597be5bf87",
+  "approved_by": "사용자",
+  "approved_at": "2026-09-17",
+  "hashes": {
+    "rules": "345c3353372d0f95d98eef5ed918c31e7a3f7878185a24f1e4edfa9870d58d21",
+    "observations": "02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05",
+    "judgments": "2403fb3748edd85310c299ef3022ae756a6a25f2f5664db1f05ab767ebf325d6",
+    "run": "71a83f40e92ea8969da919e9a07ff9561cd60b72e6b934a1d2678367922129be",
+    "results": "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b",
+    "draft": "7eddab49d6adf56fe8ffd5becdd063ee075f2378370da9e33cd207d73ef4a782"
+  },
+  "note": "9라운드 리뷰 뒤 사용자 승인(2026-09-17). 네 영역 pass. openai.F9 는 비 Claude 판정과 재무 계산 재판정에 따라 C-20 경로로 확정(C-29, 총점 4). 남은 지적은 미결·긴장으로 이관."
+}

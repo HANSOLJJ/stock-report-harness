@@ -109,12 +109,9 @@ class ContractTest(unittest.TestCase):
                               check_html_if_present=False, check_price_chart_if_present=False)
         # 2026-09-17 FIX-61: 반영이 더 있으면 리뷰 파일의 results_hash·draft_hash 가 낡는다 — 템플릿을 다시
         # 만들 때까지는 그 둘이 더 뜬다. **뿌리는 아래 둘**이고 그것만 남는지를 본다.
-        roots = [e for e in r.errors if "hash 가" not in e]
-        # 2026-09-17 FIX-63: 리뷰어가 Q11 을 pass 로 재판정했고 템플릿을 재생성해 해시도 맞췄다.
-        # 남은 뿌리는 **재무 계산 영역이 아직 pass 가 아니라는 사실** 하나다.
-        self.assertEqual(len(roots), 1, r.errors)
-        self.assertIn("review status 가 pass 가 아님: 'needs_fix'", roots[0])
-        self.assertFalse(any("체크리스트 Q11" in e for e in r.errors))
+        # 2026-09-17 FIX-64: 네 영역이 pass 로 오면서 마지막 오류도 사라졌다.
+        # 이 테스트가 세운 뿌리 셋(plan 해시 · 승계 예외 미구현 · 영역 결과)이 전부 닫혔다.
+        self.assertEqual(r.errors, [])
         self.assertFalse(any("plan rule_hash" in e for e in r.errors))
 
     def test_carried_exceptions_are_counted_in_a_warning(self):
@@ -125,19 +122,20 @@ class ContractTest(unittest.TestCase):
         """
         r = validate_contract(SLUG, require_html=False, require_price_chart=False,
                               check_html_if_present=False, check_price_chart_if_present=False)
+        # 2026-09-17 FIX-64: status 가 pass 로 돌아와 경고가 다시 선다. Q11 이 pass 라 12 → 11 건이다.
+        warn = next(w for w in r.warnings if "승계 예외로 통과한 체크리스트 fail" in w)
+        self.assertIn("11건", warn)
+        for qid in ("Q01", "Q02", "Q03", "Q05", "Q08", "Q09", "Q12", "Q13", "Q16", "Q20", "Q21"):
+            self.assertIn(qid, warn)
+        self.assertNotIn("Q11", warn)                        # 리뷰어가 pass 로 재판정했다
         review = REVIEW.read_text(encoding="utf-8")
-        self.assertIn("status: needs_fix", review)
-        self.assertEqual([w for w in r.warnings if "승계 예외로 통과한" in w], [])
-        fails = [x for x in review.splitlines() if re.match(r"^\| Q\d\d \| [^|]+ \| fail \|", x)]
-        self.assertEqual(len(fails), 11)                     # Q11 이 pass 로 바뀌어 12 → 11
-        for row in fails:
+        for row in [x for x in review.splitlines() if re.match(r"^\| Q\d\d \| [^|]+ \| fail \|", x)]:
             with self.subTest(qid=row.split(" | ")[0]):
                 excepted, cited, why = _carried_exception(row, tensions())
                 self.assertTrue(excepted, why)
                 self.assertTrue(cited)
-        # 이 검사가 무엇을 확인하지 **않는지**는 검증기 소스에 남아 있다.
-        self.assertIn("리뷰어가 판정한다(AGENTS.md 71행)",
-                      (ROOT / "scripts" / "scorecard" / "validate.py").read_text(encoding="utf-8"))
+        # 이 검사가 무엇을 확인하지 **않는지**도 남긴다.
+        self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 71행)" in w for w in r.warnings))
 
     def test_review_area_requirement_untouched(self):
         """검토 영역 pass 요건은 건드리지 않았다 — 재무 계산은 리뷰어가 재판정한다."""
@@ -146,7 +144,10 @@ class ContractTest(unittest.TestCase):
         self.assertIn("리뷰 영역 {label} 결과가 pass 가 아님", src)
 
     def test_approval_still_absent(self):
-        self.assertFalse((ROOT / "scorecard" / "runs" / SLUG / "approval.json").exists())
+        # 2026-09-17 FIX-64: 네 영역 pass 뒤 사용자 승인이 났다. 이 자리가 승인을 막던 사유는 전부 닫혔다.
+        approval = json.loads((ROOT / "scorecard" / "runs" / SLUG / "approval.json").read_text(encoding="utf-8"))
+        self.assertEqual(approval["approved_by"], "사용자")
+        self.assertEqual(approval["hashes"]["rules"], RULES.hash)
 
 
 if __name__ == "__main__":

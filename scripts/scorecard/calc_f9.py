@@ -162,7 +162,9 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
     elif g1_deferred:
         pass                                    # 이미 경로 기록을 남겼다. G2 로 내려간다
     else:
-        # 영업적자 구간
+        # 영업적자 구간. 2026-09-17 FIX-64(9차 재판정 3회 low): **흑자 회사도 여기로 들어온다** —
+        # 위 g1_pass 가 bep_retreat 를 먼저 보므로 margin 이 양수여도 통과하지 못한다(microsoft 시뮬레이션
+        # +46.78% → F9 -4). 채점규칙 470행의 OR 조건대로이고 TEN-RA6-01 이 그 자리를 잡고 있다.
         if bep_retreat:
             base = int(pol["g1_bep_retreat_score"])
             # 2026-09-15 FIX-52: 문자열이 -5 로 박혀 있어 C-06 재척도(-4) 결과와 모순됐다. 정책 값을 읽는다.

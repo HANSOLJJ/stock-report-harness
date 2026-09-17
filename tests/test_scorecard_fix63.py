@@ -184,8 +184,9 @@ class Fix63Test(unittest.TestCase):
         # 재고정과 이력은 유지된다.
         self.assertIn(f"rule_hash: {RULES.hash}", text)
         self.assertIn("by: FIX-63 (9차 재판정 2회 반영 — 규칙 자기모순 둘)", text)
+        self.assertIn("by: FIX-64 (최종 반영 — 네 영역 pass · 승인 직전)", text)
         self.assertIn("64fb45557c9d40eb0ca9bfd3ed9e18cc53e6ff064dba43458bca25be2744d926", text)
-        self.assertEqual(text.count("pinned_at:"), 5)
+        self.assertEqual(text.count("pinned_at:"), 6)   # FIX-64 가 마지막으로 재고정했다
         self.assertEqual(self.run_json["rule_hash"], RULES.hash)
 
     # ---------------------------------------------------------------- S5 템플릿 재생성
@@ -195,20 +196,21 @@ class Fix63Test(unittest.TestCase):
         h = current_hashes(SLUG)
         self.assertIn(f"results_hash: {h['results']}", review)
         self.assertIn(f"draft_hash: {h['draft']}", review)
-        self.assertIn("9차 재판정 2회 needs_fix", review)               # reviewers 네 줄이 현재 기록이다
+        # 2026-09-17 FIX-64: 최종 판정이 와서 reviewers 네 줄이 다시 갱신됐다.
+        self.assertIn("financial-calc: pass (9차 · Claude 독립 세션 · 재판정 3회", review)
         self.assertNotIn("financial-calc: 8차", review)
 
-    def test_q11_is_pass_by_the_reviewer_and_the_area_is_not(self):
-        """리뷰어가 판정한 것만 옮긴다 — 영역 결과를 pass 로 바꿔 적지 않는다."""
+    def test_q11_is_pass_by_the_reviewer_and_so_is_the_area_now(self):
+        """리뷰어가 판정한 것만 옮긴다. 2026-09-17 FIX-64: 영역도 리뷰어가 pass 로 바꿔 왔다."""
         review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
         q11 = next(x for x in review.splitlines() if x.startswith("| Q11 "))
-        self.assertIn("**pass** (9차 fail 에서 바뀜)", q11)
-        self.assertIn("9차 재무 계산 재판정 2회", q11)                  # 출처를 밝힌다
+        self.assertIn("| pass |", q11)
+        self.assertIn("9차 재무 계산 최종 판정", q11)                   # 출처를 밝힌다
         area = next(x for x in review.splitlines() if x.startswith("| 재무 계산 |"))
-        self.assertIn("needs_fix", area)
-        self.assertNotIn("| pass |", area)
-        self.assertIn("status: needs_fix", review)
-        self.assertFalse((RUN_DIR / "approval.json").exists())
+        self.assertIn("| pass |", area)
+        self.assertIn("재판정 3회 끝에 pass", area)                     # 경과를 적었다
+        self.assertIn("status: pass", review)
+        self.assertTrue((RUN_DIR / "approval.json").exists())
         # 체크리스트 fail 은 11건이고 전부 긴장 번호를 단다.
         import re
         fails = [x for x in review.splitlines() if re.match(r"^\| Q\d\d \| [^|]+ \| fail \|", x)]
@@ -220,8 +222,7 @@ class Fix63Test(unittest.TestCase):
         from validate_report_contract import validate_contract
         r = validate_contract(SLUG, require_html=False, require_price_chart=False,
                               check_html_if_present=False, check_price_chart_if_present=False)
-        self.assertEqual(len(r.errors), 1, r.errors)
-        self.assertIn("review status 가 pass 가 아님", r.errors[0])
+        self.assertEqual(r.errors, [])                       # FIX-64 에서 마지막 하나도 닫혔다
 
     def test_run_records_the_round(self):
         a = next(x for x in self.run_json["assumptions"] if "Q11 이 pass 로 바뀌었다" in x)

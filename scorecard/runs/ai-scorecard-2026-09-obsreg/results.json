@@ -6,11 +6,11 @@
   "rule_version": "v1.7",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "199bc4fefb920a16e58006d394e4037ecab40bcb42616ec458b5ba5b31fd7dc3",
+    "run": "71a83f40e92ea8969da919e9a07ff9561cd60b72e6b934a1d2678367922129be",
     "observations": "02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05",
     "judgments": "2403fb3748edd85310c299ef3022ae756a6a25f2f5664db1f05ab767ebf325d6",
     "sources": "14ec0e8083d82e5321d1b38e1e7fc8dd66c2ebac683d56e85772a46c3a1c3663",
-    "rules": "21e120ae065eee29ec8991f821d20dee0c3ee6b38f242aed5ed977ba0c866e3b"
+    "rules": "345c3353372d0f95d98eef5ed918c31e7a3f7878185a24f1e4edfa9870d58d21"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -4477,5 +4477,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 165,
-  "results_hash": "dda69e881f3f4c3be0e35b49395f688c9a68818a9c8c4f7907c9b8149b49c1ce"
+  "results_hash": "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b"
 }
