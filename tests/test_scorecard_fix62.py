@@ -179,10 +179,11 @@ class Fix62Test(unittest.TestCase):
         lines = rc.conflict_lines(self.ctx)
         head = next(x for x in lines if "제3자 재검토 약속" in x)
         self.assertIn("**확정**된 긴장 5건", head)          # 해소분이 빠지고 새 긴장이 들어와 건수가 같다
-        self.assertIn("TEN-RA6-01(openai.F9, 2026-11)", head)
-        self.assertNotIn("TEN-RA5-02", head)
+        # 2026-09-18 FIX-80 S3: 번호 대신 제목·시점으로 적는다.
+        self.assertIn("BEP 목표 후퇴 = 독립 감점 조건", head)
+        self.assertNotIn("BEP 후퇴가", head)
         done = next(x for x in lines if "이미 해소된 긴장" in x)
-        self.assertIn("TEN-RA5-02(openai.F9, 2026-09-17)", done)
+        self.assertIn("2026-09-17 에 결론이 났다", done)
 
     # ---------------------------------------------------------------- 기록
     def test_run_records_the_reversal(self):

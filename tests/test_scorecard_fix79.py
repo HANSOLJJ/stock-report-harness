@@ -95,8 +95,9 @@ class Fix79Test(unittest.TestCase):
             with self.subTest(gone=gone):
                 self.assertNotIn(gone, self.text)
         self.assertEqual(rc.OBS_ID_RE.findall(self.text), [])
-        # 판단 기록 식별자는 추적용으로 남는다(FIX-77).
-        self.assertIn("판단 기록 openai.F5.impl48", self.text)
+        # 2026-09-18 FIX-80 S3: 판단 기록 식별자도 본문에서 내려 감사 기록으로 보냈다.
+        self.assertNotIn("판단 기록 openai.F5.impl48", self.text)
+        self.assertIn("판단 기록 openai.F5.impl48", self.audit)
 
     def test_observation_ids_go_to_the_audit(self):
         self.assertIn("anthropic.arr.v15", self.audit)

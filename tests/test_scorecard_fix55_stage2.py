@@ -119,7 +119,10 @@ class Stage2Test(unittest.TestCase):
         third = [x for x in lines if "제3자 재검토 약속" in x][0]
         self.assertIn("제3자 재검토 약속", third)
         partial = [x for x in lines if "일부만 확정" in x][0]
-        self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", partial)
+        # 2026-09-18 FIX-80 S3: 긴장은 번호 대신 제목과 시점으로 적는다. 번호는 감사 기록의 `다시 볼 것` 표에 있다.
+        self.assertIn("어느 하네스로 잰 값인지 적지 않는다", partial)
+        self.assertIn("2026-11 에 다시 본다", partial)
+        self.assertNotIn("TEN-", partial)
         self.assertTrue(any("발동 조건" in x for x in lines))
         for line in lines:
             self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)

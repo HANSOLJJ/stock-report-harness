@@ -61,8 +61,9 @@ class SharedRenderTest(unittest.TestCase):
     # ---------------------------------------------------------------- S3 카드
     def test_html_card_uses_active_judgment_and_strikes_superseded(self):
         row = self.frow("tsmc", "⑤ 아군")
-        self.assertIn("<code>tsmc.F5.strict54</code>", row)
-        self.assertIn("대체된 판단 <code>tsmc.F5</code>", row)
+        # 2026-09-18 FIX-80 S3: 판단 ID 는 감사 기록으로, 문장 속 판단 ID 는 회사·항목 이름으로 옮긴다.
+        self.assertIn("이번 실행에서 다시 매김", row)
+        self.assertIn("대체된 판단 <code>TSMC ⑤</code>", row)
         self.assertIn("<del>", row)
         self.assertNotIn("아래는 기준선 근거", self.html)
 
@@ -81,15 +82,20 @@ class SharedRenderTest(unittest.TestCase):
                 n += 1
                 with self.subTest(cid=c["company_id"], f=f):
                     self.assertIn(f"- **{rc.FACTOR_LABELS[f]}** {block['header']}:", self.md)
-                    # HTML 은 본문의 C-번호를 사전 링크로 바꾸므로 태그를 걷은 글자로 비교한다.
                     row = plain(self.frow(c["company_id"], rc.FACTOR_LABELS[f]))
-                    self.assertIn(plain(rc.inline_html(block["header"])), row)
+                    # 2026-09-18 FIX-80 S2: 관측에서 계산한 항목의 v1.5 참고 문단은 HTML 에서 내려 감사 기록으로 갔다.
+                    if block["kind"] == "baseline_reference":
+                        self.assertNotIn("참고 서술", row)
+                        continue
+                    # 2026-09-18 FIX-80 S3: 머리줄의 판단 ID 는 감사 기록으로 갔다. 나머지 머리줄은 초안과 같다.
+                    header = re.sub(r" · 판단 기록 `[^`]+`", "", block["header"])
+                    self.assertIn(plain(rc.inline_html(header)), row)
                     self.assertIn(plain(rc.inline_html(block["lines"][-1][1])), row)
         self.assertEqual(n, 126)
 
     def test_notice_817_no_longer_calls_everything_past_record(self):
         self.assertNotIn("원문을 그대로 옮긴 과거 기록이며", self.html)
-        self.assertIn(rc.inline_html(rc.card_evidence_note("v1.5")), self.html)
+        self.assertIn(rc.inline_html(rc.card_evidence_note("v1.5", html=True)), self.html)
 
     # ---------------------------------------------------------------- S4 judgment_id 로 찾기
     def test_auto_f6_does_not_borrow_carried_judgment_header(self):
@@ -97,7 +103,9 @@ class SharedRenderTest(unittest.TestCase):
             with self.subTest(cid=cid):
                 self.assertNotIn(f"`{cid}.F6`", self.md)
                 self.assertNotIn(f"<code>{cid}.F6</code>", self.html)
-                self.assertIn("참고 서술 — 이번 실행은 관측에서 계산했고", self.frow(cid, "⑥ 가격"))
+                # 2026-09-18 FIX-80 S2: v1.5 참고 문단은 HTML 에서 내렸다(초안에는 리뷰용으로 남는다).
+                self.assertNotIn("참고 서술", self.frow(cid, "⑥ 가격"))
+                self.assertIn("참고 서술 — 이번 실행은 관측에서 계산했고", self.md)
 
     # ---------------------------------------------------------------- S3 산식·경계
     def test_f6_parameters_text_is_not_empty(self):
@@ -111,7 +119,11 @@ class SharedRenderTest(unittest.TestCase):
                 self.assertIn(rc.inline_html(text), self.unlink(self.frow(c["company_id"], "⑥ 가격")))
         tsmc = rc.factor_calc_text("F6", {c["company_id"]: c for c in self.results["companies"]}["tsmc"]["factors"]["F6"])
         self.assertIn("PER", rc.rename_codes(tsmc))
-        self.assertIn("입력 신뢰도 -1(기간 단위 불일치)", rc.rename_codes(tsmc))
+        # 2026-09-18 FIX-80 S1: 입력 신뢰도는 산식 줄이 아니라 감점 사유 한 곳에서 값·기준·이유와 함께 말한다.
+        self.assertTrue(rc.rename_codes(tsmc).endswith("= 소계 -2"))
+        tsmc_fr = next(c for c in self.results["companies"] if c["company_id"] == "tsmc")["factors"]["F6"]
+        cut = next(n["text"] for n in rc.factor_notes(self.ctx, "F6", tsmc_fr) if n["kind"] == "cut")
+        self.assertIn("회계연도 값을 썼다", cut)
 
     def test_boundary_column_reads_parameters(self):
         calc = {"mode": "parameters", "parameters": {"P1": {"boundary": {"flag": False}}, "P2": {"boundary": {"flag": True}}}, "p4": {}}

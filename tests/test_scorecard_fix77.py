@@ -60,7 +60,7 @@ class Fix77Test(unittest.TestCase):
     def test_the_evidence_itself_is_kept(self):
         """사용자가 고른 것은 `메모만 걷어내기` 다 — 근거 내용과 출처는 남는다."""
         text = re.sub(r"<[^>]+>", "", self.cards)
-        for kept in ("체크리스트 19(채점규칙 727행)",        # 출처 표기
+        for kept in ("체크리스트 19(채점규칙 원문)",         # 출처 표기(2026-09-18 FIX-80: 행 번호는 문서 이름으로)
                      "라벨 정정",                          # 정정 사실
                      "매트릭스 large|yes 칸이 -3 → -2 로 바뀌었다",     # 재척도 내용(백틱은 태그가 된다)
                      "하네스 미표기"):                      # 검토 결과
@@ -122,9 +122,11 @@ class Fix77Test(unittest.TestCase):
         """판단 식별자는 작업 메모가 아니라 데이터 식별자다 — 추적성을 지킨다."""
         linked = {fr["judgment_id"] for c in self.results["companies"]
                   for fr in c["factors"].values() if fr.get("judgment_id")}
+        # 2026-09-18 FIX-80 S3: 본문 머리줄에서 뗐다. 추적은 감사 기록의 작업 이력에서 한다.
         for jid in linked:
             with self.subTest(jid=jid):
-                self.assertTrue(f"판단 기록 <code>{jid}</code>" in self.html, f"{jid} 추적이 끊겼다")
+                self.assertTrue(f"판단 기록 {jid}" in self.audit, f"{jid} 추적이 끊겼다")
+                self.assertTrue(f"판단 기록 <code>{jid}</code>" not in self.html)
 
     # ------------------------------------------------- 그림 표시
     def test_picture_marks_are_spelled_out_or_dropped(self):

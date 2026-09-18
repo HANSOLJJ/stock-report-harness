@@ -159,11 +159,15 @@ class Stage1Test(unittest.TestCase):
         self.assertNotIn("anthropic.undrawn_credit", {o["observation_id"].rsplit(".", 1)[0] for o in load("observations.json")["items"]})
 
     def test_demotion_sole_cause_is_named(self):
-        self.assertIn("`영업외 비중` 하나가 강등을 정한다", self.md)
-        self.assertIn("`기간 단위 불일치` 하나가 강등을 정한다", self.md)
+        # 2026-09-18 FIX-80 S1: 산식 줄 꼬리에서 감점 사유 문장으로 옮겼다. 조건 하나가 혼자 정했다는 사실은 그대로다.
+        alpha = next(l for l in self.md.splitlines() if "감점 사유" in l and "본업 밖에서 나왔다" in l and "51%" in l)
+        self.assertIn("걸린 조건은 이 하나다", alpha)
+        tsmc = next(l for l in self.md.splitlines() if "감점 사유" in l and "회계연도 값을 썼다" in l
+                    and "본업 밖" not in l)
+        self.assertIn("걸린 조건은 이 하나다", tsmc)
         # 조건이 둘이면 단독 원인이 없으므로 그 문구도 없다
-        spacex = next(line for line in self.md.splitlines() if "입력 신뢰도 -1(기간 단위 불일치, 이력 부족)" in line)
-        self.assertNotIn("하나가 강등을 정한다", spacex)
+        spacex = next(l for l in self.md.splitlines() if "감점 사유" in l and "비교할 전년 1년치 실적이 없다" in l)
+        self.assertNotIn("걸린 조건은 이 하나다", spacex)
 
 
 if __name__ == "__main__":

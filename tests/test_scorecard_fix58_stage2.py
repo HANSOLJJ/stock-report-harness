@@ -143,7 +143,9 @@ class Stage2Test(unittest.TestCase):
         self.assertIn("하향 가능(-3 → -4)", t["direction"])
         self.assertIn("RA5-01", t["review_finding"])
         head_line = next(x for x in rc.conflict_lines(self.ctx) if "제3자 재검토 약속" in x)
-        self.assertIn("TEN-RA5-01(anthropic.F8, 2026-11)", head_line)
+        # 2026-09-18 FIX-80 S3: 번호 대신 제목·시점으로 적는다.
+        self.assertIn("anthropic.F8 이 -4 로 내려가지 않는 유일한 근거", head_line)
+        self.assertIn("2026-11 에 다시 본다", head_line)
 
     def test_alphabet_filings_are_really_absent_from_the_repo(self):
         """긴장의 전제를 저장소에서 직접 확인한다 — 보존됐는데 못 찾은 것이 아니다."""

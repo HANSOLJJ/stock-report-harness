@@ -70,7 +70,7 @@ CODE_NAMES = {**F6_PARAM_LABELS, "P4": F6_P4_LABEL, **F9_GATE_LABELS}
 # 2026-09-17 FIX-68 S3: 상태는 한국어로 옮겨 놓고 근거(basis)만 영어로 나갔다. 같은 이름을 초안·HTML 이 쓴다.
 # 뜻풀이는 색인(render_html.BASIS_DOC)에 있고 여기 있는 것은 **화면에 찍는 짧은 이름**이다.
 BASIS_LABELS = {
-    "computed": "산식 계산", "manual": "사람 판단", "carried": "숫자만 승계",
+    "computed": "산식 계산", "manual": "사람 판단", "carried": "앞서 매긴 점수만",
     "grade": "등급 산식", "matrix": "조합표", "criteria": "기준 사다리", "paths": "조건 통과 수",
 }
 MODE_LABELS = {
@@ -90,7 +90,7 @@ TERM_NAMES = {
     "nonop_share": "영업외 비중", "period_basis_not_ttm": "기간 단위 불일치",
     "short_history": "이력 부족", "stale_asof": "기준 시점 경과",
     "annual_eps_weighted_proxy": "연간 EPS 가중 근사",
-    "legacy_unverified": "기준선 승계·미검증", "not_disclosed_confirmed": "확인된 미공시",
+    "legacy_unverified": "사용자 원본 값·다시 확인 안 함", "not_disclosed_confirmed": "확인된 미공시",
     "not_disclosed": "미공시", "incompatible_basis": "기준 비교 불가", "not_applicable": "해당 없음",
     "working_definition": "작업 정의", "collection_failed": "수집 실패", "parse_failed": "파싱 실패",
     # `verified` 는 낱말 하나라 아래 정규식(밑줄이 있는 이름)에 걸리지 않는다. 상태 요약에서만 쓴다.
@@ -210,6 +210,7 @@ DECISION_PHRASES = [
     (_C + r"C-03 확정\(", "확정된 ② 기준("),
     (r"\(" + _C + r"C-03 이 재검토 대기로 걸어 둔 항목이다\)", "(② 5점 기준을 정한 결정이 재검토 대기로 걸어 둔 항목이다)"),
     (_C + r"C-03\(경로 판정\)", "경로 판정"),
+    (_C + r"C-09\(매트릭스 입력\)가", "매트릭스 입력이"),
     (_C + r"C-09\(매트릭스 입력\)", "매트릭스 입력"),
     (r"\((F\d)·C-\d+\)", r"(\1)"),
     # `C-13` 은 이 자리들에서 결정이 아니라 **독립 검토 세션의 이름**이다.
@@ -265,9 +266,79 @@ def strip_decision_codes(text: str) -> str:
     return _LEFTOVER_C.sub("", text)
 
 
+# 2026-09-18 FIX-80 S3: 긴장 번호(`TEN-RC-02`)·리뷰 기록(`2차 리뷰 C RC-04`·`체크리스트 Q03`·`AGENTS.md`)·
+# 행 번호(`채점규칙 22행`)·판단 ID(`anthropic.F2`)가 본문에 남았다. 읽는 사람에게 필요한 것은 **무엇을 언제
+# 다시 보는지**와 **어느 문서에 있는지**다. 번호는 감사 기록으로 보내고 본문에서는 말로 옮기거나 뗀다.
+# 회사 이름은 렌더러가 실행 자료에서 채운다(`set_company_names`).
+COMPANY_NAMES: dict[str, str] = {}
+FACTOR_MARKS_BY_ID = {f"F{i}": "①②③④⑤⑥⑦⑧⑨"[i - 1] for i in range(1, 10)}
+JUDGMENT_ID_RE = re.compile(r"(?<![\w./-])([a-z][a-z0-9-]*)\.(F[1-9])(?:\.[a-z0-9]+)?(?![\w.])")
+INTERNAL_REF_PHRASES = [
+    # 번호만 굵게 쓴 자리(`재검토는 **TEN-RA5-01**(2026-11 · …`). 번호를 떼면 빈 강조가 남아 짝이 깨진다.
+    (r"재검토는 \*\*TEN-[A-Z0-9-]+\*\*\s*\((\d{4}-\d{2}) · ", r"\1 에 다시 본다("),
+    (r"\*\*TEN-[A-Z0-9-]+\*\*\s*", ""),
+    (r"재검토는 TEN-[A-Z0-9-]+ \((\d{4}-\d{2})\)", r"\1 에 다시 본다"),
+    (r"재검토는 TEN-[A-Z0-9-]+ \((\d{4}-\d{2}) · ", r"\1 에 다시 본다("),
+    (r"TEN-[A-Z0-9-]+ 로 (\d{4}-\d{2}) 재검토한다", r"\1 에 다시 본다"),
+    (r"\(체크리스트 Q\d+ · \d+차 리뷰 [A-Z] RC-\d+\)", ""),
+    (r"\(\d+차 리뷰 [A-Z] RC-\d+ · AGENTS\.md 리뷰 범위 — ", "("),
+    # 리뷰 기록 꼬리는 그 모양대로만 잡는다 — 다음 마침표까지 넘기면 강조의 여는 기호를 먹는다.
+    (r"\s*obsreg \d+차 리뷰 [A-Z](?: 분담)?\([^)]*\)(?:\s+(?:medium|low|high))?(?:\s*·\s*\d+차 재판정 Q\d+)?\.?", ""),
+    (r"\[\s*정정\s*·?\s*\]\s*", ""),
+    (r"\s*·?\s*\d+차 재판정 Q\d+\.?", ""),
+    (r"\d+차 리뷰 [A-Z] RC-\d+\s*[·,]?\s*", ""),
+    (r"체크리스트 Q\d+\s*[·,]?\s*", ""),
+    (r"AGENTS\.md 리뷰 범위\s*—?\s*", ""),
+    (r"TEN-[A-Z0-9-]+\s*", ""),
+    # 행 번호 — 문서 이름은 남기고 몇째 줄인지만 뗀다.
+    (r"(?<=[^\s(\d·~,])\s*\d+(?:[·~,]\d+)*행", ""),
+    (r"\(\s*\d+(?:[·~,]\d+)*행\s*\)", ""),
+    (r"(?<=· )\d+(?:[·~,]\d+)*행\s*", ""),
+    (r"\(IMPL-\d+ 승계\)", ""),
+    (r"근거는 승계", "근거는 앞서 매긴 것"),
+    (r"승계 근거란", "앞서 매긴 근거란"),
+    (r"은 승계 그대로다", "은 앞서 매긴 그대로다"),
+    (r"을 승계했고", "을 그대로 이어받았고"),
+    # 앞서 매긴 것을 이어받았다는 말은 FIX-77·78 의 표기와 맞춘다.
+    (r"는 승계 그대로", "는 앞서 매긴 그대로"),
+]
+_INTERNAL_RES = [(re.compile(a), b) for a, b in INTERNAL_REF_PHRASES]
+# 감사 기록 이력에 모을 조각 — 본문에서 떼거나 말로 옮긴 것들이다.
+INTERNAL_REF_RE = re.compile(
+    r"TEN-[A-Z0-9-]+|\d+차 리뷰 [A-Z](?: RC-\d+)?|체크리스트 Q\d+|AGENTS\.md 리뷰 범위"
+    r"|(?:채점규칙|채점표(?:_v1\.5\.md)?|별표 [A-Z]|HANDOVER)\s*\d+(?:[·~,]\d+)*행"
+    r"|(?<![\w./-])[a-z][a-z0-9-]*\.F[1-9](?:\.[a-z0-9]+)?(?![\w.])")
+
+
+def set_company_names(companies: dict[str, dict[str, Any]]) -> None:
+    COMPANY_NAMES.clear()
+    COMPANY_NAMES.update({cid: str(c.get("display_name") or cid).split(" / ")[0] for cid, c in companies.items()})
+
+
+def judgment_label(jid_match: re.Match[str]) -> str:
+    """`anthropic.F2` → `Anthropic ②`. 회사 이름표가 비어 있으면 그대로 둔다."""
+    cid, fid = jid_match.group(1), jid_match.group(2)
+    if cid not in COMPANY_NAMES:
+        return jid_match.group(0)
+    return f"{COMPANY_NAMES[cid]} {FACTOR_MARKS_BY_ID[fid]}"
+
+
+def strip_internal_refs(text: str) -> str:
+    """긴장·리뷰·행 번호·판단 ID 를 본문 문장에서 걷거나 말로 옮긴다."""
+    if not any(k in text for k in ("TEN-", "리뷰", "체크리스트", "행", "AGENTS", ".F", "승계", "HANDOVER")):
+        return text
+    text = source_names(text)
+    for rx, rp in _INTERNAL_RES:
+        text = rx.sub(rp, text)
+    text = JUDGMENT_ID_RE.sub(judgment_label, text)
+    text = re.sub(r"\(\s*\)", "", text)
+    text = re.sub(r"\(\s*([^()]*?)\s+\)", r"(\1)", text)
+    return re.sub(r"[ \t]{2,}", " ", text)
+
+
 def inline_html(text: str) -> str:
     """이스케이프한 뒤 백틱·`~~`·`**` 만 태그로 바꾼다. 나머지 마크다운 기호는 글자 그대로 둔다."""
-    text = strip_obs_ids(strip_decision_codes(str(text)))
+    text = strip_internal_refs(strip_obs_ids(strip_decision_codes(str(text))))
     out = html_lib.escape(rename_codes(str(text)), quote=True)
     out = re.sub(r"`([^`]+)`", r"<code>\1</code>", out)
     out = re.sub(r"~~(.+?)~~", r"<del>\1</del>", out)
@@ -380,10 +451,14 @@ def trigger_notes(ctx: Any) -> list[str]:
 G4_INCOMPATIBLE_NOTE = "(원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)"
 
 
-def card_evidence_note(baseline_id: str) -> str:
-    return (f"근거 불릿은 이번 실행 결과에 연결된 판단의 근거란을 먼저 보인다. 승계 판단은 기준선 {baseline_id} 문면에 이번 실행이 붙인 "
-            "대체 표시·정정이 함께 있고, 이번 실행 판단은 새 근거 뒤에 대체된 옛 판단을 취소선으로 둔다. 판단이 연결되지 않은 "
-            "자동 산출 factor 는 기준선 서술을 참고로만 보인다. 카드의 한 줄 요약은 기준선 원문이며 이번 실행에서 재검증하지 않았다.")
+def card_evidence_note(baseline_id: str, html: bool = False) -> str:
+    # 2026-09-18 FIX-80 S2: HTML 카드는 관측에서 계산한 항목의 옛 참고 서술을 싣지 않는다(감사 기록으로 보냈다).
+    # 초안은 리뷰어가 대조하는 문서라 그대로 싣는다 — 안내문도 둘을 갈라 말한다.
+    ref = ("관측에서 계산한 항목에는 옛 참고 서술을 싣지 않는다 — 산식과 사유가 점수 근거이고, 옛 서술은 감사 기록에 있다."
+           if html else "관측에서 계산한 항목은 기준선 서술을 참고로만 보인다.")
+    return (f"근거 불릿은 이번 실행 결과에 연결된 판단의 근거란을 먼저 보인다. 사용자가 앞서 매긴 판단은 기준선 {baseline_id} "
+            "문면에 이번 실행이 붙인 대체 표시·정정이 함께 있고, 이번 실행에서 다시 매긴 판단은 새 근거 뒤에 대체된 옛 판단을 "
+            f"취소선으로 둔다. {ref} 카드의 한 줄 요약은 기준선 원문이며 이번 실행에서 재검증하지 않았다.")
 
 
 def g4_incompatible(observations: list[dict[str, Any]], cid: str) -> bool:
@@ -420,7 +495,7 @@ WARNING_PHRASES = {
     "승계 점수를 기준선 표시로 사용": "앞서 매긴 점수를 참고 표시로만 쓴다",
     "승계 점수를 사용": "앞서 매긴 점수를 그대로 쓴다",
     "legacy 역산으로 세운 정의": "기준선에서 거꾸로 세운 정의",
-    "legacy_unverified": "기준선 승계·미검증",
+    "legacy_unverified": "사용자 원본 값·다시 확인 안 함",
     "제안값(proposed)": "제안값",
     "이번 실행 재검토 아님": "이번 실행에서 다시 매기지 않았다",
     "수동 판단을 무시함": "사람이 적어 둔 점수를 쓰지 않는다",
@@ -513,6 +588,11 @@ def _p4_note(ctx: Any, fr: dict[str, Any]) -> dict[str, Any] | None:
             reasons.append(f"자료 기준일이 {st.get('months_elapsed')}개월 지나 오래됐다(기준 {st.get('limit_months')}개월)")
         else:
             reasons.append(TERM_NAMES.get(cid, cid))
+    # FIX-55 가 지킨 사실(조건 하나가 강등을 혼자 정했다)은 이제 이 문장이 말한다.
+    if len(hit) == 1 and p4.get("demotion_sole_cause"):
+        reasons[-1] += " — 걸린 조건은 이 하나다"
+    if (p4.get("nonop_share_boundary") or {}).get("flag"):
+        reasons.append("영업외 비중이 기준에 아주 가깝다(경계)")
     sub, score = calc.get("subtotal_before_p4"), fr.get("score")
     tail = (f" 그래서 소계 {sub} 에서 {_count(steps)} 칸 낮춰 점수는 **{score}**." if sub is not None else "")
     if len(hit) > 1:
@@ -797,15 +877,10 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
                      + (" ⚠️ 경계" if (p.get("boundary") or {}).get("flag") else ""))
     text = " + ".join(parts)
     if "subtotal_before_p4" in calc:
-        p4 = calc.get("p4") or {}
-        steps = p4.get("demotion_steps") or 0
-        hit = ", ".join(p4.get("conditions_hit") or []) or "해당 없음"
-        text += f" = 소계 {calc['subtotal_before_p4']} · {F6_P4_LABEL} {-steps if steps else 0}({hit})"
-        # 2026-09-16 FIX-55 1단계(4차 리뷰 D): 조건 하나가 강등을 혼자 정했다는 사실이 이름으로 보이지 않았다.
-        if p4.get("demotion_sole_cause"):
-            text += f" — `{p4['demotion_sole_cause']}` 하나가 강등을 정한다"
-        if ((p4.get("nonop_share_boundary") or {}).get("flag")):
-            text += " ⚠️ 영업외 비중 경계"
+        # 2026-09-18 FIX-80 S1: 산식 줄 꼬리(`· 입력 신뢰도 -1(영업외 비중) — 영업외 비중 하나가 강등을 정한다`)가
+        # 바로 아래 감점 사유와 같은 말을 사용자가 뜻을 모르겠다던 형태로 한 번 더 했다. 소계까지만 적고
+        # 입력 신뢰도는 감점 사유 한 곳에서 값·기준·이유와 함께 말한다(`_p4_note`).
+        text += f" = 소계 {calc['subtotal_before_p4']}"
     if "subtotal_before_correction" in calc:
         text += f" = 소계 {calc['subtotal_before_correction']} · 비상장 보정 +{(calc.get('correction') or {}).get('promotion_steps', 0)}"
     # 2026-09-18 FIX-79: `승계 입력 시가총액(PER·EV/매출)` 은 카드의 참고 문구가 무엇이 왜 그런지 말한다.
@@ -899,8 +974,8 @@ def vendor_mark(obs: Any, cid: str, metric: str) -> str:
 def raw_caption(ctx: Any) -> str:
     legacy_n = sum(1 for o in ctx.observations if o["status"] == "legacy_unverified")
     # 2026-09-15 FIX-52: '모든 값은 legacy_unverified' 라고 적었는데 재무 표의 현금·TTM FCF·순현금은 verified 였다(리뷰 A).
-    return (f"기준선 {ctx.run['baseline_id']} 승계 관측(`legacy_unverified` {legacy_n}건, SRC-v15-html·SRC-v15-md·SRC-v15-rule)은 "
-            "이번 실행에서 재검증되지 않았다(D-08). **표마다 실측(verified)과 승계가 섞여 있다** — 각 표 아래에 열별 관측 상태를 적는다. "
+    return (f"기준선 {ctx.run['baseline_id']} 에서 넘어온 관측(`legacy_unverified` {legacy_n}건, SRC-v15-html·SRC-v15-md·SRC-v15-rule)은 "
+            "이번 실행에서 재검증되지 않았다(D-08). **표마다 실측(verified)과 사용자 원본 값이 섞여 있다** — 각 표 아래에 열별 관측 상태를 적는다. "
             "상장사 주가는 USD 이고 TSMC 는 ADR(1주=보통주 5주, 재무 TWD), Alibaba 는 ADS(재무 CNY) 기준이다. `—` 는 관측 없음, "
             "원문 상태(미공시·적자·∞)는 그대로 표기한다.")
 
@@ -931,7 +1006,7 @@ def vendor_policy_note(ctx: Any) -> str:
     for o in flagged:
         by_metric[o["metric"]] = by_metric.get(o["metric"], 0) + 1
     detail = " · ".join(f"{m} {n}건" for m, n in sorted(by_metric.items()))
-    return (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 v1.5 승계 값이다 — "
+    return (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 v1.5 에서 넘어온 값이다 — "
             "상류가 StockAnalysis 이거나 그 주가로 계산한 값이고, StockAnalysis 는 원천 장부에 `not_adopted · legacy_upstream` 으로만 올라 있다. "
             "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다. 시가총액은 **PER과 EV/매출 두 곳 모두의 입력**이라 "
             "† 가 붙은 기업의 ⑥ 은 우리가 실측하지 않은 값 위에 서 있다(그렇다고 점수를 깎지는 않는다).")
@@ -1446,23 +1521,27 @@ def conflict_lines(ctx: Any) -> list[str]:
         if kind and t.get("status") != "resolved":
             by_kind.setdefault(kind, []).append(t)
 
+    # 2026-09-18 FIX-80 S3: `TEN-RC-02(anthropic.F1, 2026-11)` 처럼 번호로 적어 무엇을 다시 보는지 읽히지
+    # 않았다. 긴장의 제목과 시점을 말로 적는다. 번호와 판단 ID 는 감사 기록의 `다시 볼 것` 표에 있다.
     def _ids(items: list[dict[str, Any]], scope_key: str | None = None) -> str:
-        return " · ".join(f"{t['id']}({', '.join(t.get(scope_key) or t['judgment_ids'])}, {t['recheck_at']})" for t in items)
+        return " · ".join(f"{str(t.get('subject') or t['id']).rstrip('. ')} — {t['recheck_at']} 에 다시 본다"
+                          for t in items)
 
     committed = by_kind.get("committed") or []
     if committed:
         out.append(f"**제3자 재검토 약속**(채점규칙 384행) — 비 Claude 세션 재판정이 **확정**된 긴장 {len(committed)}건: {_ids(committed)}.")
     partial = by_kind.get("partial") or []
     if partial:
-        out.append(f"  - **일부만 확정** {len(partial)}건 — {_ids(partial, 'third_party_scope')} 만 비 Claude 세션이 본다. "
-                   "같은 긴장의 나머지 판단은 재채점 때 판단자가 본다.")
+        out.append(f"  - **일부만 확정** {len(partial)}건 — {_ids(partial, 'third_party_scope')}. 이 가운데 일부 판단만 "
+                   "비 Claude 세션이 보고, 나머지는 재채점 때 판단자가 본다.")
     recommended = by_kind.get("recommended") or []
     if recommended:
         out.append(f"  - **권장일 뿐 약속이 아닌 것** {len(recommended)}건 — {_ids(recommended)}. "
                    "규칙이 `비 Claude 세션 권장` 으로 적은 자리이고 재판정자를 정해 두지 않았다.")
     if done:
         out.append(f"  - **이미 해소된 긴장** {len(done)}건 — " +
-                   " · ".join(f"{t['id']}({', '.join(t['judgment_ids'])}, {t['resolved_at']})" for t in done) +
+                   " · ".join(f"{str(t.get('subject') or t['id']).rstrip('. ')} — {t['resolved_at']} 에 결론이 났다"
+                              for t in done) +
                    ". 재판정이 끝나 남은 약속에서 뺐다. 결론은 규칙 `open_tensions` 의 `resolution` 에 있다.")
     c03 = next((d for d in ctx.rules.payload.get("decisions", []) if d["id"] == "C-03"), None)
     recheck = (c03 or {}).get("pending_recheck") or {}

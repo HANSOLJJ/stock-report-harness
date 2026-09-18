@@ -28,7 +28,7 @@ class DraftSourceTest(unittest.TestCase):
 
     def test_caption_no_longer_claims_everything_is_legacy(self):
         self.assertNotIn("모든 값은 기준선", self.text)
-        self.assertIn("표마다 실측(verified)과 승계가 섞여 있다", self.text)
+        self.assertIn("표마다 실측(verified)과 사용자 원본 값이 섞여 있다", self.text)   # 2026-09-18 FIX-80 S4
         self.assertIn("현금 검증 완료 12", self.text)
 
     def test_cash_two_definitions_note(self):

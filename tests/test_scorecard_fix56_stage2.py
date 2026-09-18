@@ -138,10 +138,12 @@ class Stage2Test(unittest.TestCase):
         self.assertIn("**확정**된 긴장 5건", head)
         self.assertNotIn("TEN-RA5-02", head)
         done = next(x for x in lines if "이미 해소된 긴장" in x)
-        self.assertIn("TEN-RA5-02(openai.F9, 2026-09-17)", done)
+        # 2026-09-18 FIX-80 S3: 번호 대신 제목·시점으로. 번호와 판단 ID 는 감사 기록 `다시 볼 것` 표에서 대조한다.
+        self.assertIn("BEP 후퇴가", done)
+        self.assertIn("2026-09-17 에 결론이 났다", done)
         partial = next(x for x in lines if "일부만 확정" in x)
-        self.assertIn("TEN-RC4-01(anthropic.F3, 2026-11)", partial)        # 셋 중 anthropic 만
-        self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", partial)        # 넷 중 anthropic 만
+        self.assertIn("partial 의 정의를 채우지 못한다 — 2026-11 에 다시 본다", partial)
+        self.assertIn("어느 하네스로 잰 값인지 적지 않는다", partial)   # 2026-09-18 FIX-80 S3: 번호 대신 제목
         rec = next(x for x in lines if "권장일 뿐 약속이 아닌 것" in x)
         self.assertIn("3건", rec)
         for line in lines:

@@ -23,7 +23,7 @@ GENERATOR = "stock-report-harness scorecard-builder"
 SHORT = {"F1": "①", "F2": "②", "F3": "③", "F4": "④", "F5": "⑤", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
 TYPE_CLASS = {"소비자": "consumer", "업무": "work", "거래": "trade", "부품": "part", "소비자·업무": "mix", "혼합": "mix"}
 OBS_STATUS_LABELS = {
-    "verified": "검증 완료", "legacy_unverified": "기준선 승계·미검증", "not_applicable": "해당 없음",
+    "verified": "검증 완료", "legacy_unverified": "사용자 원본 값·다시 확인 안 함", "not_applicable": "해당 없음",
     "not_disclosed": "미공시", "collection_failed": "수집 실패", "source_conflict": "출처 충돌",
     "incompatible_basis": "기준 비교 불가", "parse_failed": "파싱 실패",
     # 2026-09-16 FIX-58 1단계(7차 리뷰 D): 스키마에 있는데 라벨 사전에만 없어 원문 키가 그대로 나왔다.
@@ -649,11 +649,26 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 score = fr["score"]
                 color = f"c-{score_class(score) if f in MOAT_FACTORS else trap_class(score)}"
                 block = rc.evidence_block(fr, judgments_by_id, b.get("evidence", {}).get(f, []), results["baseline_id"], c["company_id"], reps)
+                # 2026-09-18 FIX-80 S2: 자동 산출 항목에 붙던 v1.5 참고 문단은 `점수 근거가 아니다` 를 두 번 말하며
+                # 지금 쓰지 않는 수(NTM PER 25.3 · 없어진 20~29 구간)를 보였다. 본문에서 내리고 감사 기록으로 보낸다.
+                # 사람 판단의 근거 문장은 점수 근거라 그대로 둔다.
+                if block is not None and block.get("kind") == "baseline_reference":
+                    history += [(f, "v1.5 참고 문면: " + str(t)) for _d, t in block.get("lines", [])]
+                    block = None
+                # 2026-09-18 FIX-80 S3: 머리줄의 판단 ID 는 감사 기록으로 보낸다(추적은 거기서 한다).
+                if block is not None:
+                    m = re.search(r" · 판단 기록 `([^`]+)`", str(block.get("header") or ""))
+                    if m:
+                        history.append((f, f"판단 기록 {m.group(1)}"))
+                        block = dict(block, header=block["header"].replace(m.group(0), ""))
                 pts = [f'<li{" class=\"d2\"" if depth > 1 else ""}>{inline_html(text)}</li>' for depth, text in (block or {}).get("lines", [])]
                 history += [(f, n) for n in (block or {}).get("notes", [])]
                 # 2026-09-18 FIX-79: 본문에서 떼는 관측 ID 를 이력으로 남긴다.
                 history += [(f, m.group(0)) for _d, t in (block or {}).get("lines", [])
                             for m in rc.OBS_ID_RE.finditer(str(t))]
+                # 2026-09-18 FIX-80 S3: 본문에서 떼는 긴장·리뷰·행 번호·판단 ID 도 이력으로 남긴다.
+                history += [(f, m.group(0).strip()) for _d, t in (block or {}).get("lines", [])
+                            for m in rc.INTERNAL_REF_RE.finditer(str(t))]
                 if block is not None and f == "F9" and incompatible_g4:
                     pts.append(f"<li>{esc(rc.G4_INCOMPATIBLE_NOTE)}</li>")
                 # 2026-09-17 FIX-65 S3: 경고 문구에도 규칙 파일과 같은 강조 기호가 섞여 있어 그대로 노출됐다.
@@ -917,6 +932,16 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             reco = " ".join(str(d.get("recommendation", "")).replace("|", r"\|").split())
             lines.append(f"| `{d['id']}` | {summary} | {reco} | {run_decisions.get(d['id'], '미결')} |")
 
+    # 2026-09-18 FIX-80 S3: 본문은 긴장을 번호 없이 말로 적는다. 번호·판단 ID·시점은 여기서 대조한다.
+    tens = sorted(rules.payload.get("open_tensions") or [], key=lambda x: x["id"])
+    if tens:
+        lines += ["", "## 다시 볼 것(긴장)", "",
+                  "| 번호 | 무엇 | 걸린 판단 | 다시 볼 때 | 상태 |", "| --- | --- | --- | --- | --- |"]
+        for t in tens:
+            what = " ".join(str(t.get("subject") or "").replace("|", "/").split())
+            lines.append(f"| `{t['id']}` | {what} | {', '.join(t.get('judgment_ids') or [])} | "
+                         f"{t.get('recheck_at', '—')} | {'해소 ' + str(t.get('resolved_at')) if t.get('status') == 'resolved' else '대기'} |")
+
     # 2026-09-18 FIX-79 S2: 본문의 C-번호 사전을 여기로 옮겼다. 사전이 `무엇에 대한 결정인가` 칸에
     # 머리줄과 **같은 문장**을 한 번 더 찍던 것은 한 번만 적는다.
     run_choice = {r["id"]: r["choice"] for r in ctx.run.get("decisions", [])}
@@ -1103,7 +1128,7 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     # 2026-09-17 FIX-67 S1: 해시·입력 지문·실행 단위 선택·미결 결정 표는 감사 기록으로 옮겼다.
     # 본문에 남는 것은 기준 시점 한 줄, 어떻게 매겼는지, 알려진 한계 셋이다.
     return (
-        f'<p class="sub">{_asof_line(ctx)}. 승계된 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
+        f'<p class="sub">{_asof_line(ctx)}. 앞서 매긴 판단의 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
         f'남아 있으며 이번 실행에서 다시 확인하지 않았다.</p>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th>'
         f'<th class="text narrow">점수를 만드는 방식</th><th class="text narrow">점수의 출처</th><th>범위</th></tr></thead><tbody>{rows}</tbody></table></div>'
@@ -1220,9 +1245,9 @@ BASIS_DOC = {
                "판단자가 적은 점수와 근거 문장을 그대로 쓴다. **아래 `기준 사다리`·`등급 산식`·`조합표` 도 "
                "사람 판단을 입력으로 받는다** — 이 칸만 사람 판단이라는 뜻이 아니라, 사람이 적은 것이 "
                "점수 자체라는 뜻이다.", "calc_qual.py:30"),
-    "carried": ("입력이 복원되지 않아 숫자만 승계", "**근거가 가장 약한 칸이다.** 기준선에서 점수 숫자만 넘어왔고 "
+    "carried": ("판정 입력 없이 앞서 매긴 점수만 남은 칸", "**근거가 가장 약한 칸이다.** 기준선에서 점수 숫자만 넘어왔고 "
                 "그 점수를 만든 판정 입력이 남아 있지 않아 엔진이 다시 계산하지 못한다. ② 는 C-03(경로 판정), "
-                "⑦ 는 C-09(매트릭스 입력)가 그 자리다. 같은 `승계` 라도 **사람 판단**은 근거 문장이 남아 있고 "
+                "⑦ 는 매트릭스 입력이 그 자리다. 같은 `앞서 매긴 것` 이라도 **사람 판단**은 근거 문장이 남아 있고 "
                 "이쪽은 숫자뿐이다.", "calc_qual.py:45 (F2·C-03) · calc_qual.py:157 (F7·C-09)"),
     "grade": ("등급 산식", "⑤ 아군 확보의 `3 + A + H` 처럼 판정 입력을 정해진 산식에 넣어 환산한 점수다. "
               "**그 A·H 등급을 정하는 것은 사람이다** — 산식은 사람이 매긴 등급을 점수로 옮길 뿐이다.",
@@ -1304,7 +1329,8 @@ def _index_rows(rows: list[tuple[str, ...]], anchor: str = "idx") -> str:
     for row in rows:
         code, name, note = row[0], row[1], row[2]
         src = row[3] if len(row) > 3 else ""
-        srcpart = f'<span class="ixsrc">근거 {esc(src)}</span>' if src else ""
+        # 2026-09-18 FIX-80 S3: `factors.F1·F4·F8.mode · calc_qual.py:30` 은 코드 위치라 읽는 사람의 정보가 아니다.
+        srcpart = ""
         internal = row[4] if len(row) > 4 else ""
         if internal:
             srcpart = f'<span class="ixsrc">내부 표기 <code>{esc(internal)}</code></span>' + srcpart
@@ -1345,7 +1371,7 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
          "다시 매긴 칸이 여기 든다 — 어느 쪽인지는 **근거** 칸과 근거 머리줄이 말한다"),
         ("carried_score", STATUS_LABEL["carried_score"], "**사용자가 앞서 매긴 판단**을 그대로 이어받았고 "
          "이번 실행에서 다시 매기지 않았다. 근거 머리줄에 **사용자의 판단 · 원검토일** 이 함께 나온다. "
-         "판정 입력까지 남아 있는지는 **근거** 칸이 갈라 말한다 — **숫자만 승계** 면 그 입력이 없다는 뜻이다"),
+         "판정 입력까지 남아 있는지는 **근거** 칸이 갈라 말한다 — **앞서 매긴 점수만** 이면 그 입력이 없다는 뜻이다"),
         ("needs_judgment", STATUS_LABEL["needs_judgment"], "사람의 판정 입력이 없어 점수를 만들지 않았다"),
         ("needs_rule_decision", STATUS_LABEL["needs_rule_decision"], "미결 규칙 결정(C-번호)이 걸려 점수를 만들지 않았다"),
     ] if k in {c["factors"][f]["status"] for c in results["companies"] for f in FACTOR_IDS} or k in {"ok", "carried_score"}]
@@ -1366,7 +1392,7 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
         ("gate", "⑨ 적자 깊이의 관문 넷", "이 순서대로 통과·실패를 판정한다. 앞에서 막히면 뒤는 생략하거나 진단만 한다.", gates),
         ("status", "상태(status)", "그 칸이 <b>이번 실행에서 어떻게 처리됐는지</b>를 말한다.", statuses),
         ("basis", "근거(basis)", "그 점수를 <b>무엇으로 만들었는지</b>를 말한다. 상태와 근거는 다른 정보이고 카드에서 나란히 보인다.", bases),
-        ("ten", "긴장 TEN-번호", "이번 실행에서 판정하지 않고 재검토 시점과 함께 등록해 둔 자리다.", tensions),
+        # 2026-09-18 FIX-80 S3: 긴장은 번호 대신 말로 `알려진 한계` 에 적고, 번호 목록은 감사 기록으로 옮겼다.
     ]
     out = ['<h3 id="code-index">용어 색인</h3>',
            '<p class="sub">본문의 코드를 누르면 여기로 온다. 아래 뜻은 규칙 파일과 계산 코드에서 가져온 것이고 이 자리에서 새로 쓰지 않았다.</p>']
@@ -1539,6 +1565,7 @@ def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
 # ------------------------------------------------------------------ 문서
 
 def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]], review_fm: dict[str, Any], approval: dict[str, Any], avail: dict[str, Any] | None = None) -> str:
+    rc.set_company_names(ctx.companies)
     run = ctx.run
     title = run["title"]
     subtitle = f"규칙 {ctx.rules.version} · 기준일 {run['as_of']} · {results['population']['scored']}개사 순위"
@@ -1597,7 +1624,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_ranking(results)}
 {render_incomplete(results, ctx.rules)}
 <h2><span class="num">03</span>기업별 상세</h2>
-<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"]))}</p>
+<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"], html=True))}</p>
 <div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)}</div>
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}

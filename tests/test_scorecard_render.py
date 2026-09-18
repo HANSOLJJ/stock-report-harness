@@ -139,7 +139,7 @@ class TestAvailability(unittest.TestCase):
     def test_observation_status_is_shown_in_korean(self) -> None:
         ctx = self._ctx([obs("old", "ntm_per", 25.3, "2026-09-02")])
         html = render_availability(avail_fixture(), ctx, results_fixture())
-        self.assertIn("기준선 승계·미검증", html)
+        self.assertIn("사용자 원본 값·다시 확인 안 함", html)   # 2026-09-18 FIX-80 S4
 
 
 class TestBuiltDocument(unittest.TestCase):

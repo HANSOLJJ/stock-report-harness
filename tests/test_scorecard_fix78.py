@@ -57,12 +57,13 @@ class Fix78Test(unittest.TestCase):
         carried = next(j for j in self.ctx.judgments if j["status"] == "carried")
         self.assertEqual(rc.reviewer_label(carried, with_owner=False), f"원검토 {carried['reviewed_at']}")
         self.assertEqual(rc.reviewer_label(carried), f"사용자의 판단 · {carried['reviewed_at']}")
-        self.assertIn("근거 · 원검토 2026-09-02 · 판단 기록", strip_tags(self.cards))
+        self.assertIn("근거 · 원검토 2026-09-02", strip_tags(self.cards))
+        self.assertNotRegex(strip_tags(self.cards), r"판단 기록 [a-z]")   # 2026-09-18 FIX-80 S3: 판단 ID 는 감사 기록으로
 
     def test_the_index_status_entry_matches(self):
         idx = self.body[self.body.index('id="ix-status"'):self.body.index('id="ix-basis"')]  # 색인은 그대로다
         self.assertIn("사용자가 앞서 매긴 판단", idx)
-        self.assertIn("숫자만 승계", idx)          # 판정 입력이 남았는지는 근거 칸이 갈라 말한다
+        self.assertIn("앞서 매긴 점수만", idx)     # 판정 입력이 남았는지는 근거 칸이 갈라 말한다(2026-09-18 FIX-80 S4)
         self.assertNotIn(">승계<", idx)
         # 설명 줄은 `inline_html` 을 거친다 — 날 태그를 쓰면 글자로 노출된다.
         self.assertNotIn("&lt;b&gt;", self.body)
@@ -73,7 +74,7 @@ class Fix78Test(unittest.TestCase):
             with self.subTest(cell=strip_tags(m.group(1))[:40]):
                 self.assertNotIn("상태승계", strip_tags(m.group(1)).replace(" ", ""))
         # 근거 칸의 `숫자만 승계` 는 판정 입력이 없다는 **다른 층**의 정보라 남는다.
-        self.assertIn("숫자만 승계", strip_tags(self.cards))
+        self.assertIn("앞서 매긴 점수만", strip_tags(self.cards))   # 2026-09-18 FIX-80 S4: 근거 라벨도 `승계` 없이
 
     # ------------------------------------------------- S2 경고문
     def test_engine_warnings_are_readable(self):
@@ -124,7 +125,7 @@ class Fix78Test(unittest.TestCase):
         text = strip_tags(self.method)
         loose = re.findall(r"C-\d+", text)
         tight = re.findall(r"(?<![A-Za-z-])C-\d+", text)
-        self.assertGreater(len(loose), len(tight), "TEN-RC-0x 오탐이 있어야 정상이다")
+        self.assertEqual(len(loose), 0)          # 2026-09-18 FIX-80 S3: 긴장 번호도 말로 옮겨 오탐 자리가 없어졌다
         # 2026-09-18 FIX-79 S2: 방법 절의 결정 번호는 말로 옮겨 0 이 됐다(전 11).
         self.assertEqual(len(tight), 0)
 

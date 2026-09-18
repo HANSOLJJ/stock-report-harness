@@ -71,7 +71,8 @@ class Stage2Test(unittest.TestCase):
             self.assertIn("채점규칙 22행", affected[jid]["source_lines"])
         # 표시도 그 사실을 따른다.
         partial = next(x for x in rc.conflict_lines(self.ctx) if "일부만 확정" in x)
-        self.assertIn("TEN-RA4-01(anthropic.F2, 2026-11)", partial)
+        self.assertIn("2026-11 에 다시 본다", partial)          # 2026-09-18 FIX-80 S3: 번호 대신 제목·시점
+        self.assertIn("이 가운데 일부 판단만 비 Claude 세션이 보고", partial)
 
     def test_f2_scores_unchanged(self):
         for cid, want in (("anthropic", 5), ("meta", 4), ("alibaba", 4), ("openai", 4)):

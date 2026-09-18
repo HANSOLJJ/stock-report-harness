@@ -52,7 +52,7 @@ class Fix66Test(unittest.TestCase):
     def test_index_has_every_group(self):
         # 2026-09-17 FIX-67: `점수를 만드는 방식`(mode) 묶음이 들어왔고, P·G 는 번호가 아니라 이름으로 선다.
         self.assertEqual(re.findall(r'<details class="ixblk" id="ix-(\w+)"', self.index),
-                         ["factor", "mode", "param", "gate", "status", "basis", "ten"])
+                         ["factor", "mode", "param", "gate", "status", "basis"])   # 2026-09-18 FIX-80: 긴장 번호 묶음은 감사 기록으로
         ids = re.findall(r'<div class="ixrow" id="idx-([^"]+)"', self.index)
         for code in [f"F{i}" for i in range(1, 10)]:
             with self.subTest(code=code):
@@ -63,7 +63,10 @@ class Fix66Test(unittest.TestCase):
                 self.assertNotIn(num, ids)
                 self.assertIn(f"<code>{num}</code>", self.index)
         for t in RULES.payload["open_tensions"]:
-            self.assertIn(t["id"], ids)
+            self.assertNotIn(t["id"], ids)                                  # 2026-09-18 FIX-80 S3
+        audit = (ROOT / "output" / f"{SLUG}-audit.md").read_text(encoding="utf-8")
+        for t in RULES.payload["open_tensions"]:
+            self.assertIn(f"| `{t['id']}` |", audit)
 
     def test_factor_and_parameter_names_come_from_the_rules(self):
         """**문구를 지어내지 않는다** — 규칙 파일에 있는 것을 그대로 쓴다."""
@@ -111,7 +114,7 @@ class Fix66Test(unittest.TestCase):
         # 2026-09-17 FIX-67: P·G 는 본문에서 사라졌다. 남은 코드는 factor 와 긴장이다.
         text = re.sub(r"<[^>]+>", " ", self.html.split("</style>", 1)[1])
         raw = len(re.findall(r"(?<![.\w가-힣])F[1-9](?![\w.-])", text))
-        self.assertGreater(raw, 40)
+        self.assertGreater(raw, 20)      # 2026-09-18 FIX-80: 긴장 번호·코드 경로가 빠져 원래 수가 줄었다. 요지는 링크 < 원래 수
         self.assertLess(len(links), raw)
 
     def test_first_mention_shows_the_name_only_where_it_is_missing(self):
@@ -151,8 +154,8 @@ class Fix66Test(unittest.TestCase):
         self.assertEqual(n, 16)
         row = self._row(rc.BASIS_LABELS["carried"], "basis")
         self.assertIn("근거가 가장 약한 칸이다", row)
-        self.assertIn("calc_qual.py:45", row)
-        self.assertIn("calc_qual.py:157", row)
+        # 2026-09-18 FIX-80 S3: 코드 위치는 읽는 사람의 정보가 아니라 색인에서 뺐다.
+        self.assertNotIn("calc_qual.py", row)
 
     def test_every_basis_in_use_is_documented_with_its_source(self):
         used = {c["factors"][f]["basis"] for c in self.results["companies"] for f in rh.FACTOR_IDS}
@@ -162,8 +165,7 @@ class Fix66Test(unittest.TestCase):
                 row = self._row(rc.BASIS_LABELS.get(basis, basis), "basis")
                 self.assertIn(rh.BASIS_DOC[basis][0], row)
                 self.assertIn(f"<code>{basis}</code>", row)     # 영어 값은 내부 표기로만
-                self.assertIn("근거 ", row)                     # 파일·행이 붙는다
-                self.assertRegex(row, r"calc_\w+\.py:\d+")
+                self.assertNotRegex(row, r"calc_\w+\.py:\d+")   # 2026-09-18 FIX-80 S3: 코드 위치는 색인에서 뺐다
 
     def test_statuses_in_use_are_documented(self):
         used = {c["factors"][f]["status"] for c in self.results["companies"] for f in rh.FACTOR_IDS}
