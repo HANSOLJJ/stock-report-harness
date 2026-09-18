@@ -932,6 +932,27 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             reco = " ".join(str(d.get("recommendation", "")).replace("|", r"\|").split())
             lines.append(f"| `{d['id']}` | {summary} | {reco} | {run_decisions.get(d['id'], '미결')} |")
 
+    # 2026-09-18 FIX-81: References 에 실리던 리뷰 진행 기록과, 본문에서 뗀 정정 꼬리의 원문.
+    from report_contract_lib import read_markdown
+    review_path = artifact_paths(ctx.slug).review
+    if review_path.is_file():
+        rfm, _b, _r, _t = read_markdown(review_path)
+        rvs = rfm.get("reviewers") or []
+        lines += ["", "## 검토 기록", "",
+                  f"검토 방식 `{rfm.get('review_type', '—')}` · 실행 `{rfm.get('review_execution', '—')}` · "
+                  f"검토한 초안 `{rfm.get('draft_hash', '—')}`", ""]
+        lines += [f"- {' '.join(str(r).split())}" for r in (rvs if isinstance(rvs, list) else [rvs])]
+    # 정정 꼬리는 원문을 그대로 간직한 초안에서 읽는다(알려진 한계·트리거 두 절에서 나온다).
+    draft_path = artifact_paths(ctx.slug).draft
+    draft_text = draft_path.read_text(encoding="utf-8") if draft_path.is_file() else ""
+    fixes = [ln for ln in draft_text.splitlines() if re.search(r"\[[^\]]*FIX-\d+[^\]]*\]", ln)]
+    if fixes:
+        lines += ["", "## 정정 이력", "",
+                  "본문은 정정된 현재 내용만 싣는다. 언제 어느 과제로 고쳤는지는 여기 원문으로 남긴다.", ""]
+        for x in fixes:
+            for m in re.finditer(r"\[[^\]]*FIX-\d+[^\]]*\]", x):
+                lines.append(f"- {' '.join(m.group(0).split())[:400]}")
+
     # 2026-09-18 FIX-80 S3: 본문은 긴장을 번호 없이 말로 적는다. 번호·판단 ID·시점은 여기서 대조한다.
     tens = sorted(rules.payload.get("open_tensions") or [], key=lambda x: x["id"])
     if tens:
@@ -1555,11 +1576,35 @@ def render_triggers(ctx: Any, triggers: list[dict[str, Any]]) -> str:
             + "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in rc.trigger_notes(ctx)))
 
 
+def review_line(ctx: Any, review_fm: dict[str, Any]) -> str:
+    """References 끝의 검토 한 줄. 리뷰 파일에서 읽어 쓴다.
+
+    2026-09-18 FIX-81: 여기 리뷰 진행 기록(라운드·커밋 해시·`needs_fix`·과제 번호)이 통째로 실렸다.
+    읽는 사람에게 필요한 것은 **몇 영역을 독립 검토했고 결과가 어땠는지**다. 기록은 감사 기록의 `검토 기록` 절로 옮겼다.
+    """
+    reviewers = review_fm.get("reviewers") or []
+    reviewers = reviewers if isinstance(reviewers, list) else [reviewers]
+    areas = {key: name for key, name, _ in REVIEW_AREAS}
+    got = []
+    for r in reviewers:
+        key, _, rest = str(r).partition(":")
+        got.append((areas.get(key.strip(), key.strip()), rest.strip().split(" ")[0] if rest.strip() else ""))
+    if not got:
+        return ""
+    verdicts = {v for _n, v in got}
+    words = {1: "한", 2: "두", 3: "세", 4: "네", 5: "다섯"}
+    head = f"{words.get(len(got), len(got))} 영역({' · '.join(n for n, _v in got)}) 독립 검토를 거쳤다"
+    head += " — 모두 통과했다." if verdicts == {"pass"} else f" — 판정은 {', '.join(f'{n} {v}' for n, v in got)} 이다."
+    import hashlib
+    cur = hashlib.sha256(artifact_paths(ctx.slug).draft.read_bytes()).hexdigest()
+    if review_fm.get("draft_hash") and review_fm["draft_hash"] != cur:
+        head += " 검토 뒤 표시 문장을 고쳐 지금 판은 다시 검토를 기다린다."
+    return head + " 검토 기록은 감사 기록에 있다."
+
+
 def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
     items = "".join(f'<li><b>{esc(s.get("source_id"))}</b> — {inline_html(s.get("title"))} · {esc(s.get("publisher") or "")} · {esc(s.get("accessed_at") or "")} · {esc(s.get("url") or "URL 미제공")}' + (f' · 이해상충: {inline_html(s["conflict_of_interest"])}' if s.get("conflict_of_interest") else "") + "</li>" for s in ctx.sources.get("items", []))
-    reviewers = review_fm.get("reviewers") or []
-    rv = ", ".join(str(r) for r in reviewers) if isinstance(reviewers, list) else str(reviewers)
-    return f'<ul class="tight">{items}</ul><p class="sub" style="margin-top:10px">리뷰: {esc(review_fm.get("review_type", ""))} · {esc(rv)}</p>'
+    return f'<ul class="tight">{items}</ul><p class="sub" style="margin-top:10px">{esc(review_line(ctx, review_fm))}</p>'
 
 
 # ------------------------------------------------------------------ 문서

@@ -299,6 +299,16 @@ INTERNAL_REF_PHRASES = [
     (r"승계 근거란", "앞서 매긴 근거란"),
     (r"은 승계 그대로다", "은 앞서 매긴 그대로다"),
     (r"을 승계했고", "을 그대로 이어받았고"),
+    # 2026-09-18 FIX-81: 정정 꼬리는 태그만 떼고 **정정된 현재 내용**을 남긴다. 원문은 감사 기록의 `정정 이력` 에 있다.
+    (r"\[정정 \d{4}-\d{2}-\d{2} FIX-\d+\]\s*", ""),
+    (r"\[FIX-\d+(?: \d단계)? (?=[^\]]{6,}\])", "["),
+    # 커밋 해시(글자가 하나는 섞인 7자리)와 보존 경로. 근거가 어디 보존됐는지는 감사 기록의 이력으로 간다.
+    (r"`((?=[0-9a-f]*[a-f])[0-9a-f]{7}:[\w./-]+)`", r"\1"),   # 코드 표기로 감싼 보존 경로는 먼저 벗긴다
+    (r"보존 원문 독립 검토 세션 (?=[0-9a-f]*[a-f])[0-9a-f]{7}:[\w./-]+ 에서", "보존 원문에서"),
+    (r"\(\s*(?=[0-9a-f]*[a-f])[0-9a-f]{7}:[\w./-]+\s*\)", ""),
+    (r"(?<=\()\s*(?=[0-9a-f]*[a-f])[0-9a-f]{7}:[\w./-]+\s*,\s*", ""),
+    (r"\s*,\s*(?=[0-9a-f]*[a-f])[0-9a-f]{7}(?=\))", ""),
+    (r"\(\s*(?=[0-9a-f]*[a-f])[0-9a-f]{7}\s*\)", ""),
     # 앞서 매긴 것을 이어받았다는 말은 FIX-77·78 의 표기와 맞춘다.
     (r"는 승계 그대로", "는 앞서 매긴 그대로"),
 ]
@@ -307,7 +317,8 @@ _INTERNAL_RES = [(re.compile(a), b) for a, b in INTERNAL_REF_PHRASES]
 INTERNAL_REF_RE = re.compile(
     r"TEN-[A-Z0-9-]+|\d+차 리뷰 [A-Z](?: RC-\d+)?|체크리스트 Q\d+|AGENTS\.md 리뷰 범위"
     r"|(?:채점규칙|채점표(?:_v1\.5\.md)?|별표 [A-Z]|HANDOVER)\s*\d+(?:[·~,]\d+)*행"
-    r"|(?<![\w./-])[a-z][a-z0-9-]*\.F[1-9](?:\.[a-z0-9]+)?(?![\w.])")
+    r"|(?<![\w./-])[a-z][a-z0-9-]*\.F[1-9](?:\.[a-z0-9]+)?(?![\w.])"
+    r"|\b(?=[0-9a-f]*[a-f])[0-9a-f]{7}(?::[\w./-]+)?\b")
 
 
 def set_company_names(companies: dict[str, dict[str, Any]]) -> None:
@@ -325,12 +336,13 @@ def judgment_label(jid_match: re.Match[str]) -> str:
 
 def strip_internal_refs(text: str) -> str:
     """긴장·리뷰·행 번호·판단 ID 를 본문 문장에서 걷거나 말로 옮긴다."""
-    if not any(k in text for k in ("TEN-", "리뷰", "체크리스트", "행", "AGENTS", ".F", "승계", "HANDOVER")):
+    if not any(k in text for k in ("TEN-", "리뷰", "체크리스트", "행", "AGENTS", ".F", "승계", "HANDOVER", "FIX-", "(", ":")):
         return text
     text = source_names(text)
     for rx, rp in _INTERNAL_RES:
         text = rx.sub(rp, text)
     text = JUDGMENT_ID_RE.sub(judgment_label, text)
+    text = re.sub(r"\(\s*—\s*", "(", text)            # 괄호 첫머리의 리뷰 기록을 떼면 줄표만 남는다
     text = re.sub(r"\(\s*\)", "", text)
     text = re.sub(r"\(\s*([^()]*?)\s+\)", r"(\1)", text)
     return re.sub(r"[ \t]{2,}", " ", text)
