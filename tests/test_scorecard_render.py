@@ -57,9 +57,11 @@ def results_fixture() -> dict:
 
 class TestDecisionCodeLinks(unittest.TestCase):
     def test_links_text_codes_only(self) -> None:
+        # 2026-09-18 FIX-79 S2: 결정 사전을 감사 기록으로 옮겨 본문은 번호를 잇지 않고 걷는다.
         doc = '<p>규칙 C-13 을 본다</p>'
         out = link_decision_codes(doc, {"C-13"}, GLOSSARY_SLOT)
-        self.assertIn('<a class="ccode" href="#dec-C-13">C-13</a>', out)
+        self.assertNotIn("C-13", out)
+        self.assertNotIn('class="ccode"', out)
 
     def test_leaves_attributes_untouched(self) -> None:
         doc = '<p data-note="C-13">본문</p>'
@@ -81,7 +83,9 @@ class TestDecisionCodeLinks(unittest.TestCase):
         doc = f'<p>C-13</p>{GLOSSARY_SLOT}<p>C-13</p>'
         out = link_decision_codes(doc, {"C-13"}, GLOSSARY_SLOT)
         self.assertIn(GLOSSARY_SLOT, out)
-        self.assertEqual(out.count('class="ccode"'), 2)
+        # 2026-09-18 FIX-79 S2: 자리표 양옆의 본문 번호는 걷히고, 자리표 자체는 그대로 남는다.
+        self.assertEqual(out.count('class="ccode"'), 0)
+        self.assertNotIn("<p>C-13</p>", out)
 
 
 class TestGlossary(unittest.TestCase):

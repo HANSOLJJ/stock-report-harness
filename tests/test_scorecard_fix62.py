@@ -170,7 +170,9 @@ class Fix62Test(unittest.TestCase):
         self.assertIn("**F9 = -2** 다", ev[0])
         self.assertIn("G1 판정 보류(C-20 비상장 경로)", ev[0])
         self.assertIn("SRC-v15-rule", self.j["openai.F9"]["source_ids"])
-        self.assertIn("주의 — C-29: BEP 후퇴가 기록돼 있으나 **C-20 이 앞선다**", self.md)
+        # 2026-09-18 FIX-79 S1: 경고 라벨 대신 뜻을 말로 적는다. 지키는 사실은 **비상장 경로가 BEP 보다 앞선다**는 것.
+        self.assertIn("흑자 전환 시점을 뒤로 미뤘다는 기록이 있지만, 영업손익이 공시되지 않은 비상장사라 "
+                      "비상장사용 경로가 먼저다(사용자 결정 2026-09-17)", self.md)
         self.assertIn("| OpenAI | 2 / 14 | 4 / 13 |", (RUN_DIR / "preview.md").read_text(encoding="utf-8"))
 
     def test_resolved_tension_leaves_the_promise_count(self):

@@ -190,12 +190,12 @@ class Fix66Test(unittest.TestCase):
         """규칙 요약이 내부 메모라 그대로는 뜻이 통하지 않는다. **원문은 지우지 않고** 옆에 덧붙인다."""
         c17 = RULES.decision("C-17")
         self.assertEqual(c17["summary"], "기준일 9/2 인데 9/3~9/7 사건이 섞임")     # 규칙은 그대로다
-        self.assertIn(c17["summary"], re.sub(r"<[^>]+>", "", self.html))
-        note = re.search(r'<span class="runnote">(.*?)</span>', self.html, re.S)
-        self.assertIsNotNone(note)
-        plain = re.sub(r"<[^>]+>", "", note.group(1))
-        self.assertIn("계기를 적은 기록이다", plain)
-        self.assertIn("모두", plain)
+        # 2026-09-18 FIX-79 S2: 사전을 감사 기록으로 옮겼다. 원문 요약은 거기 그대로 있고, 본문은 그 뜻을
+        # 번호 없이 **문장 안에서** 말한다.
+        audit = (ROOT / "output" / f"{SLUG}-audit.md").read_text(encoding="utf-8")
+        self.assertIn(c17["summary"], audit)
+        plain = re.sub(r"<[^>]+>", "", self.html)
+        self.assertIn("셋을 따로 기록하라는 권고가 있지만 이번 실행은 값이 같아 한 번만 적는다", plain)
         self.assertIn(rh._asof_dates(self.ctx)[0], plain)
         self.assertEqual(rh._decision_run_note(self.ctx, "C-13"), "")   # 다른 결정에는 안 붙는다
 

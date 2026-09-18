@@ -291,14 +291,9 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
                     lines.append(f"  - {rc.G4_INCOMPATIBLE_NOTE}")
             # 2026-09-17 FIX-77: 초안도 카드와 같은 규칙을 쓴다. 승계 표기는 근거 머리줄이 이미 말하고,
             # `⚠️` 는 글자로 밝히며, 작업 메모는 본문에서 내린다(감사 기록에 남는다).
-            for w in fr["warnings"][:4]:
-                if str(w).startswith("승계된 판단 — 원검토일"):
-                    continue
-                wbody, _note = rc.split_worknote(rc.readable_warning(str(w)))
-                if wbody:
-                    # HTML 카드가 `주의` 배지를 다는 자리다. 초안도 같은 말로 밝힌다.
-                    head = "" if wbody.startswith("주의 —") else "주의 — "
-                    lines.append(f"  - {head}{rc.rename_codes(wbody)}")
+            # 2026-09-18 FIX-79 S1: HTML 카드와 같은 문장이다 — 한쪽만 고치면 둘이 갈린다.
+            for n in rc.factor_notes(ctx, f, fr):     # 사유가 앞에 오도록 factor_notes 가 정렬해 준다
+                lines.append(f"  - {rc.NOTE_KINDS[n['kind']]} — {n['text']}")
         lines.append("")
     # 원자료
     lines += ["## 지표 원자료", ""]

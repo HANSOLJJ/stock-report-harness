@@ -195,6 +195,12 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
    취급돼 좁은 화면에서 카드 밖으로 잘려 나갔다. 다른 목록과 같은 줄바꿈 규칙을 준다. */
 .fpts li{margin:6px 0;overflow-wrap:anywhere}
 .fpts li.warn{color:var(--warn-text)}
+/* 2026-09-18 FIX-79: 점수를 깎은 사유와 참고용 경고가 같은 딱지였다. 사유는 빨강 계열, 상한은 주황, 참고는 옅게. */
+.fpts li.warn.note{color:var(--tx2)}
+.fpts li.warn.note .wk{color:var(--tx2);background:var(--bg3);border-color:var(--line)}
+.fpts li.warn.cut{color:var(--tx)}
+.fpts li.warn.cut .wk{color:var(--bad-text);background:var(--bad-soft);border-color:var(--bad-line)}
+.fpts li.warn.cap .wk{color:var(--warn-text);background:var(--warn-soft);border-color:var(--warn-line)}
 .fpts li.warn .wk{display:inline-block;font-size:var(--fs-sm);font-weight:700;color:var(--warn-text);background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:4px;padding:0 6px;margin-right:6px}
 .fpts li.d2{margin-left:14px;color:var(--tx2);list-style:circle}
 .fpts del{color:var(--tx3)}
@@ -645,25 +651,32 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 block = rc.evidence_block(fr, judgments_by_id, b.get("evidence", {}).get(f, []), results["baseline_id"], c["company_id"], reps)
                 pts = [f'<li{" class=\"d2\"" if depth > 1 else ""}>{inline_html(text)}</li>' for depth, text in (block or {}).get("lines", [])]
                 history += [(f, n) for n in (block or {}).get("notes", [])]
+                # 2026-09-18 FIX-79: 본문에서 떼는 관측 ID 를 이력으로 남긴다.
+                history += [(f, m.group(0)) for _d, t in (block or {}).get("lines", [])
+                            for m in rc.OBS_ID_RE.finditer(str(t))]
                 if block is not None and f == "F9" and incompatible_g4:
                     pts.append(f"<li>{esc(rc.G4_INCOMPATIBLE_NOTE)}</li>")
                 # 2026-09-17 FIX-65 S3: 경고 문구에도 규칙 파일과 같은 강조 기호가 섞여 있어 그대로 노출됐다.
                 # 2026-09-17 FIX-77: `⚠️` 를 글자로 밝히고, 경고에서도 작업 메모를 뗀다. 승계 표기는
                 # 근거 머리줄이 `사용자의 판단 · 날짜` 로 이미 말하므로 여기서 한 번 더 적지 않는다.
-                for w in fr["warnings"][:4]:
-                    if str(w).startswith("승계된 판단 — 원검토일"):
-                        continue
-                    wbody, wnote = rc.split_worknote(rc.readable_warning(str(w)))
-                    if wnote:
-                        history.append((f, wnote))
-                    if wbody:
-                        pts.append(f'<li class="warn"><b class="wk">주의</b> {inline_html(wbody)}</li>')
+                # 2026-09-18 FIX-79 S1: 계산 기록의 라벨을 그대로 찍어 무엇이 왜 문제인지 읽히지 않았다.
+                # 값과 기준을 `calc` 에서 읽어 다시 쓰고, 점수를 깎은 사유와 참고를 다른 딱지로 가른다.
+                # 앞자리 네 개만 찍던 절단(`[:4]`)도 없앴다 — 비상장 둘은 경고가 여섯이라 뒤가 잘렸다.
+                # 점수를 움직인 사유(감점·상한)는 산식 줄 바로 아래에, 참고는 근거 뒤에 둔다 — 사유가 옛 서술
+                # 뒤로 밀려 점수와 떨어져 있었다.
+                why = []
+                for n in rc.factor_notes(ctx, f, fr):
+                    history += [(f, i) for i in n.get("ids") or []]
+                    item = (f'<li class="warn {n["kind"]}"><b class="wk">{esc(rc.NOTE_KINDS[n["kind"]])}</b> '
+                            f'{inline_html(n["text"])}</li>')
+                    (why if n["kind"] in ("cut", "cap") else pts).append(item)
                 calc = factor_calc_text(f, fr)
                 src = f'<div class="fsrc">{inline_html(block["header"])}</div>' if block is not None else ""
                 # 2026-09-17 FIX-77: 근거에 남은 C-번호는 **그 결정 때문에 이 점수가 됐다**는 뜻이라
                 # 지우지 않는다. 눌러서 뜻을 보는 통로는 `link_decision_codes` 가 이미 만든다 —
                 # 여기에 칩을 더 달면 같은 번호가 한 번 더 찍혀 오히려 늘어난다.
-                body = (src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else ""
+                body = ((f'<ul class="fpts why">{"".join(why)}</ul>' if why else "")
+                        + ((src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else ""))
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
@@ -753,7 +766,12 @@ def _decision_gist(summary: str, limit: int = 110) -> str:
 
 
 def _decision_chips(ctx: Any, text: str) -> str:
-    """줄에 박힌 C-번호를 모아 그 자리에서 뜻을 펼쳐 보게 한다. 링크로 뛰지 않아도 되게."""
+    """줄에 박힌 C-번호를 모아 그 자리에서 뜻을 펼쳐 보게 한다. 링크로 뛰지 않아도 되게.
+
+    2026-09-18 FIX-79 S2: 본문에서 내렸다. 규칙 파일의 결정 기록을 그대로 쏟아 뜻이 읽히지 않았다
+    (사용자 지적). 결정 기록은 감사 기록의 `결정 기록` 절에 있다.
+    """
+    return ""
     out = []
     for code in dict.fromkeys(CODE_RE.findall(text)):
         d = ctx.rules.decision(code)
@@ -898,6 +916,31 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             summary = " ".join(str(d["summary"]).replace("|", r"\|").split())
             reco = " ".join(str(d.get("recommendation", "")).replace("|", r"\|").split())
             lines.append(f"| `{d['id']}` | {summary} | {reco} | {run_decisions.get(d['id'], '미결')} |")
+
+    # 2026-09-18 FIX-79 S2: 본문의 C-번호 사전을 여기로 옮겼다. 사전이 `무엇에 대한 결정인가` 칸에
+    # 머리줄과 **같은 문장**을 한 번 더 찍던 것은 한 번만 적는다.
+    run_choice = {r["id"]: r["choice"] for r in ctx.run.get("decisions", [])}
+    decisions = sorted(rules.payload.get("decisions") or [], key=lambda d: int(str(d["id"]).split("-")[1]))
+    if decisions:
+        lines += [
+            "",
+            "## 결정 기록",
+            "",
+            "규칙 파일이 번호를 붙여 적어 둔 설계 결정이다. 리포트 본문은 번호 없이 **그 결정이 점수에 무엇을 "
+            "했는지**만 말로 적고, 결정 자체의 기록은 여기 모은다.",
+            "",
+            "| 결정 | 상태 | 무엇을 정했나 | 권고 | 이번 실행 선택 | 영향 항목 |",
+            "| --- | --- | --- | --- | --- | --- |",
+        ]
+        for d in decisions:
+            def cell(x: Any) -> str:
+                return " ".join(str(x or "—").replace("|", "/").split())
+            pick = run_choice.get(d["id"])
+            pick_txt = f"{rc.CHOICE_NAMES.get(pick, pick)} (`{pick}`)" if pick else "—"
+            lines.append(
+                f"| `{d['id']}` | {DECISION_STATUS.get(d['status'], d['status'])} | {cell(d.get('summary'))} | "
+                f"{cell(d.get('recommendation'))} | {cell(pick_txt)} | "
+                f"{cell(', '.join(rc.FACTOR_LABELS.get(f, f) for f in d.get('affects', [])))} |")
 
     # 2026-09-17 FIX-77: 기업 카드의 근거에서 내린 작업 메모. **버리지 않고 여기서 찾을 수 있게** 한다.
     if HISTORY_BY_COMPANY:
@@ -1438,9 +1481,11 @@ def link_decision_codes(document: str, known: set[str], placeholder: str,
     def sub_text(m: re.Match[str]) -> str:
         text = m.group(1)
         out = text
-        if "C-" in out:
-            out = CODE_RE.sub(lambda c: f'<a class="ccode" href="#dec-{c.group(0)}">{c.group(0)}</a>'
-                              if c.group(0) in known else c.group(0), out)
+        # 2026-09-18 FIX-79 S2: 번호를 결정 사전으로 잇던 자리다. 사전을 감사 기록으로 옮겼으므로
+        # 링크 대신 번호를 걷는다. 대부분은 `inline_html` 이 먼저 걷고, 여기서는 날 텍스트로 들어온 것을 잡는다.
+        # 규칙에 있는 번호가 들어 있을 때만 걷는다 — 규칙에 없는 `C-99` 는 번호가 아닐 수 있다.
+        if "C-" in out and any(c in known for c in CODE_RE.findall(out)):
+            out = rc.strip_decision_codes(out)
         if terms:
             out = TERM_RE.sub(one_term, out)
         return m.group(0) if out == text else ">" + out + "<"
@@ -1577,7 +1622,13 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     document = re.sub(r"<th(?=[ >])", '<th scope="col"', document)
     used = sorted({m.group(0) for m in CODE_RE.finditer(document) if ctx.rules.decision(m.group(0)) is not None})
     document = link_decision_codes(document, set(used), GLOSSARY_SLOT, index_terms(ctx))
-    return document.replace(GLOSSARY_SLOT, render_code_index(ctx, results) + render_glossary(ctx, results, used))
+    # 2026-09-18 FIX-79 S2: C-번호 사전은 규칙 파일의 설계 결정 기록을 그대로 쏟아 뜻이 읽히지 않았다
+    # (사용자 지적). 본문에서 내리고 감사 기록의 `결정 기록` 절로 옮긴다. 색인에는 그 자리만 알린다.
+    note = (f'<p class="sub mt-14">규칙이 번호(C-번호)를 붙여 기록한 설계 결정은 본문에 싣지 않는다. '
+            f'결정 기록은 <a href="{esc(ctx.slug)}{AUDIT_SUFFIX}">감사 기록</a>의 <b>결정 기록</b> 절에 있다.</p>')
+    index = re.sub(r">([^<>]*)<", lambda m: ">" + rc.strip_decision_codes(m.group(1)) + "<",
+                   render_code_index(ctx, results))
+    return document.replace(GLOSSARY_SLOT, index + note)
 
 
 # ------------------------------------------------------------------ 빌드

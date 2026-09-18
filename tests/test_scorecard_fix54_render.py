@@ -145,7 +145,8 @@ class SharedRenderTest(unittest.TestCase):
 
     def test_offbalance_cell_and_replaced_values_in_html(self):
         self.assertIn("$267.3B B종(검증 완료) · 원문 <del>미개시 리스 $106B</del> (대체됨)", self.html)
-        self.assertIn("주의 — 원문 $106B 는 이번 실행 실측 $267.3B(amazon.offbalance_B.obsreg25", self.html_text)
+        # 2026-09-18 FIX-79: 관측 ID 는 본문에서 떼고 감사 기록으로 보낸다. 대체됐다는 사실은 그대로다.
+        self.assertIn("주의 — 원문 $106B 는 이번 실행 실측 $267.3B(검증 완료, 2026-06-30)로 대체됐다", self.html_text)
 
     def test_triggers_share_corrections_and_warnings(self):
         reps = rc.replacements(self.ctx)

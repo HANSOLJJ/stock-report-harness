@@ -110,19 +110,18 @@ class Fix65Test(unittest.TestCase):
         self.assertNotIn('<span class="mtag">③</span>', self.html)
 
     def test_decision_codes_show_their_meaning_in_place(self):
-        """코드만 봐서는 뜻을 알 수 없었다. 링크로 뛰지 않아도 되게 요약을 같이 편다."""
-        chips = re.findall(r'<details class="mdec"><summary><span class="id">(?:<a[^>]*>)?(C-\d\d)', self.html)
-        self.assertTrue(chips)
-        self.assertIn("관련 결정", self.html)
-        # 요약 문구는 규칙 파일에서 **잘라 온다** — 새로 쓰지 않는다.
-        for code in set(chips):
-            with self.subTest(code=code):
-                d = RULES.decision(code)
-                self.assertIsNotNone(d)
-                self.assertIn(rh._decision_gist(d["summary"])[:24], re.sub(r"<[^>]+>", "", self.html))
-        # hover 가 아니라 details 라 터치에서도 열린다.
-        self.assertIn(".mdec>summary{display:flex;", self.html)
-        self.assertIn("min-height:44px", re.search(r"\.mdec>summary\{[^}]*\}", self.html).group(0))
+        """코드만 봐서는 뜻을 알 수 없었다.
+
+        2026-09-18 FIX-79 S2: 칩으로 요약을 펴 보여도 규칙 파일의 설계 기록이라 뜻이 읽히지 않았다(사용자 지적).
+        본문은 번호 없이 **결정의 효과를 말로** 적고, 결정 기록은 감사 기록으로 옮겼다.
+        """
+        self.assertNotIn('<details class="mdec"', self.html)
+        self.assertNotIn("관련 결정", self.html)
+        audit = (ROOT / "output" / f"{SLUG}-audit.md").read_text(encoding="utf-8")
+        self.assertIn("## 결정 기록", audit)
+        # 요약 문구는 규칙 파일 그대로다 — 새로 쓰지 않는다.
+        d = RULES.decision("C-03")
+        self.assertIn(" ".join(str(d["summary"]).split())[:40], audit)
 
     def test_no_markdown_marks_leak_into_the_report(self):
         """규칙 파일 문면의 `**`·백틱·`~~` 가 독자 화면에 그대로 보이던 자리를 전수로 훑었다."""

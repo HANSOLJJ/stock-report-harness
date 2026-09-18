@@ -132,9 +132,10 @@ class Fix77Test(unittest.TestCase):
         for mark in ("📐", "🆕", "🔧"):
             with self.subTest(mark=mark):
                 self.assertTrue(mark not in text, f"그림 표시가 남았다: {mark}")
-        # `⚠️` 는 뜻이 있어 글자로 밝힌다.
+        # `⚠️` 는 뜻이 있어 글자로 밝힌다. 2026-09-18 FIX-79: 카드의 딱지는 **감점 사유**와 **참고**로 갈렸다.
         self.assertTrue("주의" in text, "경고 라벨이 없다")
-        self.assertTrue('<b class="wk">주의</b>' in self.cards, "경고 배지가 없다")
+        self.assertTrue('<b class="wk">감점 사유</b>' in self.cards, "감점 사유 딱지가 없다")
+        self.assertTrue('<b class="wk">참고</b>' in self.cards, "참고 딱지가 없다")
 
     def test_english_marker_is_renamed(self):
         self.assertTrue("superseded" not in re.sub(r"<[^>]+>", "", self.html), "영어 표기가 남았다")
@@ -142,11 +143,13 @@ class Fix77Test(unittest.TestCase):
 
     # ------------------------------------------------- C-번호는 눌러서 본다
     def test_decision_numbers_are_clickable(self):
-        plain = re.sub(r'\s(?:href|id|class|data-\w+)="[^"]*"', "", self.cards)
-        total = len(re.findall(r"C-\d+", re.sub(r"<[^>]+>", "", plain)))
-        linked = len(re.findall(r'<a class="ccode"', self.cards))
-        self.assertGreater(total, 0)
-        self.assertEqual(total, linked, "카드의 C-번호는 전부 눌러 뜻을 볼 수 있어야 한다")
+        """2026-09-18 FIX-79 S2: 칩으로 잇던 번호를 걷었다. 카드 문장은 번호 없이 읽혀야 한다.
+
+        `리뷰 C RC-04` 의 꼬리를 번호로 세지 않도록 앞에 영문자·붙임표가 없는 것만 센다.
+        """
+        plain = re.sub(r"<[^>]+>", "", re.sub(r'\s(?:href|id|class|data-\w+)="[^"]*"', "", self.cards))
+        self.assertEqual(re.findall(r"(?<![A-Za-z-])C-\d+", plain), [])
+        self.assertNotIn('class="ccode"', self.cards)
 
     # ------------------------------------------------- 점수 불변
     def test_scores_unchanged(self):

@@ -37,7 +37,8 @@ class Fix78Test(unittest.TestCase):
         cls.body = re.sub(r"<style.*?</style>|<script.*?</script>|<!--.*?-->", "", raw, flags=re.S)
         i = cls.body.index('<div class="cards"')
         cls.cards = cls.body[i:cls.body.index("<h2", i)]
-        cls.method = cls.body[cls.body.index('<span class="num">05</span>'):cls.body.index('id="c-glossary"')]
+        # 2026-09-18 FIX-79: C-번호 사전을 감사 기록으로 옮겨 방법 절 끝이 다음 절 머리가 됐다.
+        cls.method = cls.body[cls.body.index('<span class="num">05</span>'):cls.body.index('<span class="num">06</span>')]
         cls.draft = DRAFT.read_text(encoding="utf-8")
 
     # ------------------------------------------------- S1 상태 칸
@@ -59,7 +60,7 @@ class Fix78Test(unittest.TestCase):
         self.assertIn("근거 · 원검토 2026-09-02 · 판단 기록", strip_tags(self.cards))
 
     def test_the_index_status_entry_matches(self):
-        idx = self.body[self.body.index('id="ix-status"'):self.body.index('id="ix-basis"')]
+        idx = self.body[self.body.index('id="ix-status"'):self.body.index('id="ix-basis"')]  # 색인은 그대로다
         self.assertIn("사용자가 앞서 매긴 판단", idx)
         self.assertIn("숫자만 승계", idx)          # 판정 입력이 남았는지는 근거 칸이 갈라 말한다
         self.assertNotIn(">승계<", idx)
@@ -80,9 +81,12 @@ class Fix78Test(unittest.TestCase):
         for gone in ("승계 점수를 사용", "legacy_unverified", "legacy 역산", "policies.f6"):
             with self.subTest(gone=gone):
                 self.assertNotIn(gone, text)
-        self.assertIn("앞서 매긴 점수를 그대로 쓴다", text)
-        self.assertIn("기준선에서 거꾸로 세운 정의", text)
-        self.assertIn("⑥ 순현금 정의 규칙", text)
+        # 2026-09-18 FIX-79 S1: 문구를 `calc` 의 값으로 다시 썼다. 상장사 공통인 순현금 작업 정의는
+        # 카드마다 찍지 않고 방법 절 ⑥ 에 한 번 적는다.
+        self.assertIn("앞서 매긴 점수(-1)를 그대로 쓴다", text)
+        method = strip_tags(self.method)
+        self.assertIn("순현금은 아직 확정되지 않은 작업 정의로 잰다", method)
+        self.assertIn("거꾸로 세운 정의", method)
 
     def test_readable_warning_does_not_touch_the_data(self):
         """표시할 때만 옮겨 그린다 — `results.json` 의 원문은 그대로다."""
@@ -121,7 +125,8 @@ class Fix78Test(unittest.TestCase):
         loose = re.findall(r"C-\d+", text)
         tight = re.findall(r"(?<![A-Za-z-])C-\d+", text)
         self.assertGreater(len(loose), len(tight), "TEN-RC-0x 오탐이 있어야 정상이다")
-        self.assertEqual(len(tight), 11)
+        # 2026-09-18 FIX-79 S2: 방법 절의 결정 번호는 말로 옮겨 0 이 됐다(전 11).
+        self.assertEqual(len(tight), 0)
 
     # ------------------------------------------------- 점수 불변
     def test_scores_unchanged(self):

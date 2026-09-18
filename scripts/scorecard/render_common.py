@@ -199,8 +199,75 @@ def rename_codes(text: str) -> str:
     return _TERM_RE.sub(term, _CODE_RE.sub(one, text))
 
 
+# 2026-09-18 FIX-79 S2: 본문이 결정 번호(`C-03`)를 칩·링크로 걸어 두었는데, 사용자가 사전을 열어 보고
+# 뜻이 읽히지 않는다고 했다. 결정 기록은 감사 기록으로 옮기고 **본문 문장은 번호 없이 읽히게** 한다.
+# 번호를 그냥 지우면 문장이 끊긴다 — 번호가 문장 안에서 맡은 뜻을 말로 옮긴 뒤 남은 것만 뗀다.
+# `TEN-RC-03` 의 꼬리를 번호로 잡지 않도록 앞에 영문자·붙임표가 없는 것만 본다.
+_C = r"(?<![A-Za-z-])"
+DECISION_PHRASES = [
+    (_C + r"C-03 확정 전 (5점 )?잣대", r"② 기준이 확정되기 전 \1잣대"),
+    (_C + r"C-03 확정 기준", "확정된 ② 기준"),
+    (_C + r"C-03 확정\(", "확정된 ② 기준("),
+    (r"\(" + _C + r"C-03 이 재검토 대기로 걸어 둔 항목이다\)", "(② 5점 기준을 정한 결정이 재검토 대기로 걸어 둔 항목이다)"),
+    (_C + r"C-03\(경로 판정\)", "경로 판정"),
+    (_C + r"C-09\(매트릭스 입력\)", "매트릭스 입력"),
+    (r"\((F\d)·C-\d+\)", r"(\1)"),
+    # `C-13` 은 이 자리들에서 결정이 아니라 **독립 검토 세션의 이름**이다.
+    (_C + r"C-13\s+(이|에서)(?=\s)", r"독립 검토 세션\1"),
+    (_C + r"C-13(?![/\w-])", "독립 검토 세션"),
+    (_C + r"C-16 실행 결정으로", "확인된 미공시 처리 결정으로"),
+    (_C + r"C-16 이 ", "확인된 미공시 처리 결정이 "),
+    (_C + r"C-06 `?(?:제안된 손실률 구간 적용|proposed_v15_boundaries)`? 로", "제안된 손실률 구간을 적용해"),
+    (_C + r"C-06 재척도 전", "손실률 구간 재척도 전"),
+    (r"사용자가 " + _C + r"C-29 로 ", "사용자가 "),
+    (r"\(" + _C + r"C-20 비상장 경로\)", "(비상장 경로)"),
+    (_C + r"C-20 비상장", "비상장"),
+    (r"\(" + _C + r"C-17 은 셋을 따로 기록하라는 권고이고, ", "(셋을 따로 기록하라는 권고가 있지만 "),
+    (r"이라 " + _C + r"C-07 로 이번 실행 미적용", "이라 수주잔고 기준과 달라 이번 실행에는 쓰지 않았다"),
+    (_C + r"C-\d+ — ", ""),
+    (r"\s*\(" + _C + r"C-\d+\)", ""),
+    (_C + r"C-\d+\s*[:：]\s*", ""),
+]
+_DECISION_RES = [(re.compile(a), b) for a, b in DECISION_PHRASES]
+# 뒤에 `/` 가 붙으면 경로 앞머리(`C-13/validation/…`)라 번호가 아니다.
+_LEFTOVER_C = re.compile(_C + r"C-\d+(?![/\w-])\s*")
+
+
+# 2026-09-18 FIX-79: 관측 ID(`amazon.offbalance_B.obsreg25`)가 근거 문장에 그대로 찍혔다. 무엇인지는 문장이
+# 이미 말하므로(`실측 $267.3B`) 본문에서는 뗀다. ID 는 감사 기록의 작업 이력으로 간다.
+# 셋째 조각에 숫자가 있는 것만 잡는다 — `data.sec.gov` 같은 도메인과 구별된다. 가운데가 `F5` 인 것은
+# 판단 기록 식별자(`openai.F5.impl48`)라 추적용으로 남긴다(FIX-77).
+OBS_ID_RE = re.compile(r"(?<![\w./-])[a-z][a-z0-9-]*\.(?!F\d\.)[A-Za-z][A-Za-z_]*\.[a-z]*\d+[a-z0-9]*(?![\w.])")
+
+
+def strip_obs_ids(text: str) -> str:
+    """관측 ID 를 떼고 남은 괄호·구분자를 정리한다."""
+    if "." not in text or not OBS_ID_RE.search(text):
+        return text
+    out = re.sub(r"\s*—\s*" + OBS_ID_RE.pattern + r"\s+basis\.\w+", "", text)
+    out = OBS_ID_RE.sub("\x00", out)
+    out = re.sub(r"\x00(\s*[·,]\s*\x00)*", "\x00", out)          # 연달아 붙은 ID 는 하나로
+    out = re.sub(r"\s*,\s*\x00\s*—\s*", " — ", out)              # (기간, ID — 설명)
+    out = re.sub(r"\(\x00\)", "", out)                             # (ID)
+    out = re.sub(r"\(\x00\s*[,·—]\s*", "(", out)                   # (ID, 검증 완료 …) · (ID — …)
+    out = re.sub(r"\s*[,·]\s*\x00(?=\))", "", out)                 # (…, ID)
+    out = out.replace("\x00", "")
+    out = re.sub(r"\(\s*\)", "", out)
+    return re.sub(r"[ \t]{2,}", " ", out)
+
+
+def strip_decision_codes(text: str) -> str:
+    """본문 문장에서 결정 번호를 걷는다. 뜻을 말로 옮긴 뒤 남은 번호만 뗀다."""
+    if "C-" not in text:
+        return text
+    for rx, rep in _DECISION_RES:
+        text = rx.sub(rep, text)
+    return _LEFTOVER_C.sub("", text)
+
+
 def inline_html(text: str) -> str:
     """이스케이프한 뒤 백틱·`~~`·`**` 만 태그로 바꾼다. 나머지 마크다운 기호는 글자 그대로 둔다."""
+    text = strip_obs_ids(strip_decision_codes(str(text)))
     out = html_lib.escape(rename_codes(str(text)), quote=True)
     out = re.sub(r"`([^`]+)`", r"<code>\1</code>", out)
     out = re.sub(r"~~(.+?)~~", r"<del>\1</del>", out)
@@ -342,7 +409,7 @@ _MARK_LABELS = {"⚠️": "주의 — ", "⚠": "주의 — ", "📐": "", "🆕
 # `⚠️` 는 코드포인트 둘(U+26A0 U+FE0F)이라 문자 클래스로는 앞 글자만 잡힌다. 긴 것부터 대안으로 쓴다.
 _MARKS_RE = re.compile("|".join(re.escape(k) for k in sorted(_MARK_LABELS, key=len, reverse=True)))
 # 영어 표기도 본문에서는 이름으로 옮겨 그린다(FIX-73 과 같은 처리).
-_SUPERSEDED_RE = re.compile(r"\bsuperseded\b(?=\s*다)")
+_SUPERSEDED_RE = re.compile(r"\bsuperseded\s*다")
 _SUPERSEDED_ANY = re.compile(r"\bsuperseded\b")
 
 
@@ -391,6 +458,181 @@ def readable_warning(text: str) -> str:
     return _WARN_RE.sub(lambda m: both[m.group(0)], text)
 
 
+# ------------------------------------------------------------------ 카드의 사유·참고 문구
+# 2026-09-18 FIX-79 S1: 카드가 계산 기록의 라벨을 그대로 찍었다(`입력 신뢰도 보정 한 칸 — 조건 영업외 비중`).
+# **무엇이 기준을 넘었는지(값과 기준)와 그래서 왜 문제인지**가 둘 다 빠졌다(사용자 지적).
+# 문장은 `results.json` 의 `calc` 에서 값을 읽어 만든다. 경고 원문은 데이터라 고치지 않는다.
+NOTE_KINDS = {"cut": "감점 사유", "cap": "점수 상한", "note": "참고"}
+# 관측 ID 대신 화면에 쓰는 이름. 관측 ID 는 감사 기록으로 간다.
+OBS_METRIC_NAMES = {
+    "post_money_valuation": "투자 후 기업가치", "arr": "연간 반복 매출(ARR)",
+    "arr_prior": "1년 전 연간 반복 매출", "cumulative_raised": "누적 조달액",
+    "ps_ratio": "매출 대비 기업가치 배수", "offbalance_B": "장부 밖 지출 약정(B종)",
+    "market_cap": "시가총액", "net_cash": "순현금", "lease_liabilities": "리스부채",
+}
+# 입력 신뢰도 조건마다 **읽는 사람이 알아들을 이유**.
+_P4_REASONS = {
+    "period_basis_not_ttm": {
+        "annual": "최근 1년(TTM) 값이 없어 회계연도 값을 썼다 — 기간이 어긋나 다른 회사와 견주기가 덜 정확하다",
+        "quarterly_yoy": "최근 1년치가 없어 한 분기를 전년 같은 분기와 견준 값을 썼다 — 기간이 짧아 비교가 덜 정확하다",
+    },
+    "short_history": "상장한 지 얼마 안 돼 비교할 전년 1년치 실적이 없다",
+}
+_OBS_ID_RE = re.compile(r"^([a-z0-9-]+)\.([A-Za-z_]+)\.([a-z0-9]+)\s*:")
+
+
+def _obs_name(metric: str) -> str:
+    return OBS_METRIC_NAMES.get(metric, TERM_NAMES.get(metric, metric))
+
+
+def _pct(x: float) -> str:
+    return f"{x:.0%}"
+
+
+def _p4_note(ctx: Any, fr: dict[str, Any]) -> dict[str, Any] | None:
+    """⑥ 입력 신뢰도로 한 칸 깎은 사유. 값과 기준을 `calc.p4` 와 규칙에서 읽는다."""
+    calc = fr.get("calc") or {}
+    p4 = calc.get("p4") or {}
+    hit = p4.get("conditions_hit") or []
+    steps = int(p4.get("demotion_steps") or 0)
+    if not hit or not steps:
+        return None
+    conds = {c["id"]: c for c in ctx.rules.payload["policies"]["f6"]["p4"]["conditions"]}
+    reasons = []
+    for cid in hit:
+        if cid == "nonop_share" and p4.get("nonop_share") is not None:
+            thr = float(conds["nonop_share"]["threshold"])
+            reasons.append(f"최근 1년 세전이익의 **{_pct(p4['nonop_share'])}** 가 본업 밖에서 나왔다(기준 {_pct(thr)}) — "
+                           "이익 가운데 본업이 아닌 몫이 커서 PER 이 실제보다 싸 보일 수 있다")
+        elif cid == "period_basis_not_ttm":
+            reasons.append(_P4_REASONS[cid].get(p4.get("period_basis"), "최근 1년(TTM)이 아닌 기간의 값을 썼다"))
+        elif cid in _P4_REASONS:
+            reasons.append(str(_P4_REASONS[cid]))
+        elif cid == "stale_asof":
+            st = p4.get("stale_asof") or {}
+            reasons.append(f"자료 기준일이 {st.get('months_elapsed')}개월 지나 오래됐다(기준 {st.get('limit_months')}개월)")
+        else:
+            reasons.append(TERM_NAMES.get(cid, cid))
+    sub, score = calc.get("subtotal_before_p4"), fr.get("score")
+    tail = (f" 그래서 소계 {sub} 에서 {_count(steps)} 칸 낮춰 점수는 **{score}**." if sub is not None else "")
+    if len(hit) > 1:
+        tail += " 조건이 여럿 걸려도 한 칸까지만 깎는다."
+    return {"kind": "cut", "text": f"입력 신뢰도 −{steps} — " + " · ".join(reasons) + "." + tail}
+
+
+def factor_notes(ctx: Any, fid: str, fr: dict[str, Any]) -> list[dict[str, Any]]:
+    """카드 한 칸의 사유·참고 문구. `{kind, text, ids}` 이고 `ids` 는 감사 기록으로 보낼 관측 ID 다.
+
+    엔진 경고는 계산 기록의 라벨이다. 알려진 종류는 `calc` 의 값으로 다시 쓰고, 방법 절이 이미 모두에게
+    한 번 말하는 공통 문구는 카드에서 뺀다. 모르는 종류는 읽을 수 있게 옮겨 참고로 남긴다 — 버리지 않는다.
+    """
+    calc = fr.get("calc") or {}
+    out: list[dict[str, Any]] = []
+    unverified: list[str] = []
+    unverified_ids: list[str] = []
+    blocked: list[str] = []
+    used_p4 = False
+    for raw in fr.get("warnings") or []:
+        w = str(raw)
+        if w.startswith("승계된 판단 — 원검토일"):
+            continue                                   # 상태 칸과 근거 머리줄이 이미 말한다
+        if w.startswith("C-03 확정") or w.startswith("net_cash 작업 정의"):
+            continue                                   # 14개사·상장사 공통이라 방법 절에 한 번 적는다
+        if w.startswith("P4 보정"):
+            note = _p4_note(ctx, fr)
+            if note and not used_p4:
+                out.append(note)
+                used_p4 = True
+            continue
+        if w.startswith("미검증 입력"):
+            m = re.search(r"(market_cap|net_cash)\s*이 legacy_unverified 인데 ([P\d, ]+?) 가", w)
+            if m:
+                params = [F6_PARAM_LABELS.get(x.strip(), x.strip()) for x in m.group(2).split(",")]
+                unverified.append(f"{_obs_name(m.group(1))}({'·'.join(params)} 계산에 들어감)")
+            b = re.search(r"실측이 막힌 이유: (\w+)", w)
+            if b:
+                blocked.append(_obs_name(b.group(1)))
+            continue
+        mo = _OBS_ID_RE.match(w)
+        if mo and "legacy_unverified" in w:
+            unverified.append(_obs_name(mo.group(2)))
+            unverified_ids.append(f"{mo.group(1)}.{mo.group(2)}.{mo.group(3)}")
+            continue
+        if w.startswith("nonop_share 재계산"):
+            p4 = calc.get("p4") or {}
+            if p4.get("nonop_share") is not None and p4.get("nonop_share_stored") is not None:
+                out.append({"kind": "note", "text":
+                            f"영업외 비중을 공시 숫자로 다시 계산하면 {_pct(p4['nonop_share'])} 다. 사용자 원본 표에는 "
+                            f"{_pct(p4['nonop_share_stored'])} 로 적혀 있었고, 점수에는 다시 계산한 값을 썼다."})
+                continue
+        if w.startswith("nonop_share 산출 안 함"):
+            pretax = ((calc.get("p4") or {}).get("nonop_share_inputs") or {}).get("pretax_income_ttm")
+            shown = f"({fmt_usd(pretax)})" if pretax is not None else ""
+            out.append({"kind": "note", "text":
+                        f"세전이익이 적자{shown}라 영업외 비중을 계산할 수 없다 — 이익이 없으면 그중 본업 밖 몫을 "
+                        "나눌 수 없어서다. 그래서 이 조건은 보지 않았다."})
+            continue
+        if "G3 런웨이" in w and "±" in w:
+            g3 = next((q for q in calc.get("path") or [] if q.get("runway_years") is not None), None)
+            bd = (g3 or {}).get("boundary") or {}
+            if g3 and bd.get("nearest_boundary"):
+                y, b, d = g3["runway_years"], bd["nearest_boundary"], bd["distance_ratio"]
+                side = ("넘었으므로 이 관문에서 더 깎지 않았다" if d >= 0 else "조금 못 미쳐 이 관문 기준으로는 한 칸이 깎인다")
+                out.append({"kind": "note", "text":
+                            f"런웨이 {y:.2f}년 — 기준 {b:g}년과 {abs(d):.1%} 차이라 경계에 아주 가깝다. 기준을 {side}."})
+                continue
+        if w.startswith("F1 부품 상한"):
+            cap = ctx.rules.factor("F1").get("component_only_cap")
+            out.append({"kind": "cap", "text": f"소비자·업무 채널이 없는 부품 공급형이라 이 항목은 최고 {cap}점까지다."})
+            continue
+        if w.startswith("C-04"):
+            out.append({"kind": "note", "text": "런웨이를 잴 때 완충에는 현금과 조건이 확인된 확정 미인출 여신만 넣었다 — "
+                                               "신용등급이 좋아 더 빌릴 수 있다는 추정은 넣지 않는다."})
+            continue
+        if w.startswith("C-06"):
+            bands = ctx.rules.payload["policies"]["f9"].get("g1_bands_proposed") or []
+            txt = " · ".join(f"손실률 {abs(b['min_margin']):.0%} 까지 {b['score']}" for b in bands if b.get("min_margin") is not None)
+            out.append({"kind": "note", "text": "본업 손실률 구간은 제안된 새 구간을 이번 실행에서 적용했다"
+                                               + (f"({txt}, 그보다 깊으면 {min(b['score'] for b in bands)})" if txt else "") + "."})
+            continue
+        if w.startswith("C-20"):
+            out.append({"kind": "note", "text": "영업손익을 공시하지 않는 비상장사라 본업 관문을 판정하지 않고 비상장사용 경로로 "
+                                               "보냈다 — 본업 관문을 **통과했다는 뜻이 아니다**."})
+            continue
+        if w.startswith("C-29"):
+            when = re.search(r"사용자 결정 (\d{4}-\d{2}-\d{2})", w)
+            out.append({"kind": "note", "text": "흑자 전환 시점을 뒤로 미뤘다는 기록이 있지만, 영업손익이 공시되지 않은 비상장사라 "
+                                               "비상장사용 경로가 먼저다" + (f"(사용자 결정 {when.group(1)})" if when else "")
+                                               + ". 전망이나 목표만으로 손실을 단정하지 않는다."})
+            continue
+        if w.startswith("C-09"):
+            out.append({"kind": "note", "text": f"조합표의 두 축 판정이 남아 있지 않아 앞서 매긴 점수({fr.get('score')})를 "
+                                               "그대로 쓴다. 조합표를 다시 태우지 못한다."})
+            continue
+        if "수동 판단을 무시함" in w:
+            out.append({"kind": "note", "text": "판단 기록에 사람이 적어 둔 ⑥ 점수가 있지만, 이번 규칙은 그 점수를 쓰지 않고 "
+                                               "관측에서 다시 계산했다."})
+            continue
+        # 모르는 종류 — 버리지 않고 읽을 수 있게 옮겨 참고로 둔다.
+        body, _n = split_worknote(readable_warning(w))
+        if body:
+            out.append({"kind": "note", "text": rename_codes(body)})
+    if unverified:
+        seen = list(dict.fromkeys(unverified))
+        text = ("**사용자 원본 값이고 이번에 다시 확인하지 않았다** — " + " · ".join(seen) + ". "
+                + (f"{'·'.join(dict.fromkeys(blocked))}를 아직 새로 재지 못해 다시 계산할 수 없었다. " if blocked else "")
+                + "자료를 새로 재지 못한 것이지 회사의 성질이 아니라서 점수는 깎지 않았다.")
+        out.append({"kind": "note", "text": fix_josa_in(text), "ids": unverified_ids})
+    # 점수를 움직인 사유가 먼저 오고 참고는 뒤에 온다 — 둘이 같은 딱지로 섞여 있었다.
+    order = {"cut": 0, "cap": 1, "note": 2}
+    return sorted(out, key=lambda n: order[n["kind"]])
+
+
+def fix_josa_in(text: str) -> str:
+    """`리스부채를`·`시가총액를` 처럼 이름 뒤에 붙인 조사를 받침에 맞춘다."""
+    return re.sub(r"([가-힣A-Za-z)]+)(를|을)(?= )", lambda m: fix_josa(m.group(1), "", m.group(2)), text)
+
+
 def split_worknote(text: str) -> tuple[str, str]:
     """근거 문장을 `(본문, 이력)` 으로 가른다. 이력이 없으면 둘째 값이 빈 문자열이다.
 
@@ -414,7 +656,8 @@ def split_worknote(text: str) -> tuple[str, str]:
         notes += extra
         body = loose.sub("", body)
     body = _MARKS_RE.sub(lambda m: _MARK_LABELS[m.group(0)], body)
-    body = _SUPERSEDED_RE.sub("대체된 것이", body)   # `superseded 다` → `대체된 것이다`
+    body = re.sub(r"주의 —\s*—\s*", "주의 — ", body)
+    body = _SUPERSEDED_RE.sub("대체된 것이다", body)   # `superseded 다` → `대체된 것이다`
     body = _SUPERSEDED_ANY.sub("대체됨", body)
     body = re.sub(r"\(\s*[·,]?\s*\)", "", body)
     body = re.sub(r"\s*—\s*(?=[)）])", "", body)
@@ -565,8 +808,7 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
             text += " ⚠️ 영업외 비중 경계"
     if "subtotal_before_correction" in calc:
         text += f" = 소계 {calc['subtotal_before_correction']} · 비상장 보정 +{(calc.get('correction') or {}).get('promotion_steps', 0)}"
-    if calc.get("unverified_inputs"):
-        text += " · 승계 입력 " + ", ".join(f"{k}({'·'.join(v)})" for k, v in calc["unverified_inputs"].items())
+    # 2026-09-18 FIX-79: `승계 입력 시가총액(PER·EV/매출)` 은 카드의 참고 문구가 무엇이 왜 그런지 말한다.
     return text
 
 
@@ -1058,6 +1300,10 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
         + (" 어느 회사가 여기 드는지는 상장 시점이 아니라 **그 회사 매출 관측이 어느 기간 단위인지**로 가른다."
            if newly_by_basis else ""),
         f"  - 구간 경계에서 {tol:.0%} 안에 든 값에는 표시를 달지만 **점수는 바꾸지 않는다.**",
+        # 2026-09-18 FIX-79 S1: 상장사 카드마다 같은 경고로 찍히던 것을 여기 한 번만 적는다.
+        *(["  - **EV/매출의 순현금은 아직 확정되지 않은 작업 정의로 잰다.** 사용자 원본 값에서 거꾸로 세운 "
+           "정의라, 정의가 확정되면 EV/매출을 다시 계산한다. 상장사 전부에 해당하는 사정이라 기업 카드에는 "
+           "적지 않는다."] if (f6p.get("net_cash") or {}).get("status") == "working_definition" else []),
         # 2026-09-17 FIX-71 R1: 한 문단 안에서 `매출` 이 세 가지를 가리켰다(P2 의 매출 · P3 의 매출 · ARR).
         "  - **비상장사는 다르게 본다.** 기업가치를 **연 매출**로 나눈 배수 하나로 점수를 내고, "
         "**연 매출 성장**과 자본 효율이 **둘 다** 좋을 때만 한 칸 올려 준다. "
