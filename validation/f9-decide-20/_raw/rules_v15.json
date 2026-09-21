@@ -1,0 +1,596 @@
+{
+  "schema": "scorecard.rules/1",
+  "rule_version": "v1.5",
+  "status": "active",
+  "note": "AI기업_채점규칙_v1.5.md(2026-09-02)의 기계 적용 부분을 구조화한 원본. 정성 정의·별표 본문은 docs/scorecard/design-guideline.md 와 원문을 참조한다. decisions 의 pending 항목은 승인 전 활성화하지 않으며, 실행 단위 run.json.decisions 로만 명시적으로 선택한다.",
+  "source": {
+    "file": "AI기업_채점규칙_v1.5.md",
+    "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+    "rule_date": "2026-09-02",
+    "framework_origin": "박종훈 「Part 5 — 8강 다섯 가지 승리공식」(2026-07)"
+  },
+  "scoring": {
+    "moat_factors": [
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "F5"
+    ],
+    "trap_factors": [
+      "F6",
+      "F7",
+      "F8",
+      "F9"
+    ],
+    "moat_max": 25,
+    "trap_min_active": -18,
+    "trap_min_nominal": -20,
+    "total_formula": "과점(F1..F5 합) + 함정(F6..F9 합, 음수 또는 0)",
+    "rank_formula": "1 + (조정총점이 더 높은 완료 기업 수). 동점은 공동 순위, 다음 순위 건너뜀",
+    "moat_candidate_threshold": 20,
+    "moat_candidate_note": "과점 20점 이상은 강의의 분류 기준이며 조정총점에 적용하지 않는다"
+  },
+  "factors": {
+    "F1": {
+      "label": "① 네트워크 효과",
+      "short": "네트워크",
+      "range": [
+        0,
+        5
+      ],
+      "mode": "manual",
+      "component_only_cap": 2,
+      "note": "모든 실질 채널을 보고 가장 강한 락인으로 채점(별표 A). 소비자·업무 채널이 없는 부품형은 상한 2"
+    },
+    "F2": {
+      "label": "② 신기술 게임체인저",
+      "short": "게임체인저",
+      "range": [
+        0,
+        5
+      ],
+      "mode": "paths",
+      "decision_ids": [
+        "C-03"
+      ],
+      "path_mapping_candidate": {
+        "0": 2,
+        "1": 3,
+        "2": 4
+      },
+      "note": "세 경로(성능 도약·패러다임 적응·표준 선점) 통과 수 → 점수 매핑은 개정 후보(C-03). 확정 전에는 승계 score 만 허용"
+    },
+    "F3": {
+      "label": "③ Last Mover",
+      "short": "LastMover",
+      "range": [
+        1,
+        5
+      ],
+      "mode": "ladder",
+      "ladder": [
+        {
+          "points": [
+            0
+          ],
+          "score": 1
+        },
+        {
+          "points": [
+            0.5,
+            1
+          ],
+          "score": 2
+        },
+        {
+          "points": [
+            1.5,
+            2
+          ],
+          "score": 3
+        },
+        {
+          "points": [
+            2.5,
+            3
+          ],
+          "score": 4,
+          "requires_imitation_pass": true
+        }
+      ],
+      "score5_requires_door_closed": true,
+      "criteria_weights": {
+        "pass": 1,
+        "partial": 0.5,
+        "fail": 0
+      }
+    },
+    "F4": {
+      "label": "④ 호황 이후 비전",
+      "short": "호황후비전",
+      "range": [
+        0,
+        5
+      ],
+      "mode": "manual",
+      "note": "출하·실제 배포만 인정, 계획·발표·포지션은 0(별표 D)"
+    },
+    "F5": {
+      "label": "⑤ 아군 확보",
+      "short": "아군확보",
+      "range": [
+        0,
+        5
+      ],
+      "mode": "formula",
+      "formula": "3 + A + H",
+      "A_allowed": [
+        0,
+        1,
+        2
+      ],
+      "H_allowed": [
+        0,
+        -1,
+        -2,
+        -3
+      ]
+    },
+    "F6": {
+      "label": "⑥ 가격",
+      "short": "가격",
+      "range": [
+        -5,
+        0
+      ],
+      "mode": "per_band",
+      "decision_ids": [
+        "C-12",
+        "C-13"
+      ],
+      "note": "상장: NTM PER 구간표 + 경계 ±3% 표시. 비상장: 배수 계산만 자동, 점수는 정성 예외"
+    },
+    "F7": {
+      "label": "⑦ 순환금융",
+      "short": "순환금융",
+      "range": [
+        -3,
+        0
+      ],
+      "mode": "matrix",
+      "decision_ids": [
+        "C-09"
+      ],
+      "matrix": {
+        "small|no": 0,
+        "large|no": -2,
+        "small|yes": -1,
+        "large|yes": -3
+      }
+    },
+    "F8": {
+      "label": "⑧ 비대칭 의존",
+      "short": "비대칭의존",
+      "range": [
+        -5,
+        0
+      ],
+      "mode": "manual"
+    },
+    "F9": {
+      "label": "⑨ 적자 깊이",
+      "short": "적자깊이",
+      "range": [
+        -5,
+        0
+      ],
+      "mode": "gates",
+      "decision_ids": [
+        "C-04",
+        "C-05",
+        "C-06",
+        "C-07",
+        "C-16"
+      ]
+    }
+  },
+  "policies": {
+    "f6": {
+      "bands": [
+        {
+          "upper": 20,
+          "score": 0
+        },
+        {
+          "upper": 29,
+          "score": -1
+        },
+        {
+          "upper": 42,
+          "score": -2
+        },
+        {
+          "upper": 62,
+          "score": -3
+        },
+        {
+          "upper": 90,
+          "score": -4
+        },
+        {
+          "upper": null,
+          "score": -5
+        }
+      ],
+      "band_note": "반개방 구간: upper 미만. 20·29·42·62·90 (v1.5, 칸당 ×1.46 균등)",
+      "boundary_tolerance": 0.03,
+      "boundary_applies_to_private": false,
+      "accepted_ntm_methods": [
+        "consensus_4q_sum",
+        "vendor_forward_pe_verified_ntm"
+      ],
+      "proxy_methods": [
+        "annual_weighted_proxy"
+      ],
+      "private_multiples": [
+        "post_money_valuation/arr",
+        "post_money_valuation/ttm_revenue_est",
+        "arr/cumulative_raised"
+      ],
+      "private_score_mode": "manual_with_rationale"
+    },
+    "f9": {
+      "floor": -5,
+      "g1_bands_proposed": [
+        {
+          "min_margin": -0.1,
+          "score": -3
+        },
+        {
+          "min_margin": -0.3,
+          "score": -4
+        },
+        {
+          "min_margin": null,
+          "score": -5
+        }
+      ],
+      "g1_bands_status": "proposed (C-06) — 손실률 m: -10% <= m < 0 → -3, -30% <= m < -10% → -4, m < -30% → -5",
+      "g1_bep_retreat_score": -5,
+      "g1_buffer_erosion_min_score": -4,
+      "g1_direction_relief_step": 1,
+      "g1_direction_relief_cap": -3,
+      "g2_fcf_positive_stable": 0,
+      "g2_fcf_positive_deteriorating": -1,
+      "g2_fcf_negative": -2,
+      "g2_private_not_disclosed": -2,
+      "g3_runway_keep_years": 3,
+      "g3_runway_one_step_years": 1,
+      "g3_rating_capacity": "exclude",
+      "g4_coverage_keep": 1.0,
+      "g4_undetermined": null
+    }
+  },
+  "checklist": [
+    {
+      "id": "Q01",
+      "focus": "이 감점, 다른 칸에서 이미 셌나?",
+      "case": "알리바바 지정학을 ⑥⑧⑨ 삼중 계상"
+    },
+    {
+      "id": "Q02",
+      "focus": "이 지표가 이 칸의 정의에 맞나?",
+      "case": "가격 지표(SDLLMTK)를 ①에 오분류"
+    },
+    {
+      "id": "Q03",
+      "focus": "회사마다 같은 잣대인가?",
+      "case": "⑧을 Anthropic엔 관대, NVIDIA엔 엄격"
+    },
+    {
+      "id": "Q04",
+      "focus": "시총 크기를 밸류에이션으로 착각했나?",
+      "case": "NVIDIA ⑥ (시총 $5.4T지만 NTM PER 18.0 — 구간 0)"
+    },
+    {
+      "id": "Q05",
+      "focus": "출처가 이해당사자인가?",
+      "case": "Menlo = Anthropic 지분 $14B 보유"
+    },
+    {
+      "id": "Q06",
+      "focus": "볼륨인가 가치인가?",
+      "case": "토큰 1위(중국) ≠ 매출 1위(Anthropic)"
+    },
+    {
+      "id": "Q07",
+      "focus": "\"안 만든 것\"을 카운터 포지셔닝으로 셌나?",
+      "case": "Amazon·Apple ③ — 모델을 안 만든 것 자체는 ③이 아니다"
+    },
+    {
+      "id": "Q08",
+      "focus": "적대세력을 수로 셌나, 성격으로 셌나?",
+      "case": "Apple은 전선 4개, NVIDIA는 고객이 적"
+    },
+    {
+      "id": "Q09",
+      "focus": "미래 계획을 현재 점수에 넣었나?",
+      "case": "Apple ③(2년 지연인데 포지션으로 4점), Anthropic ④(2028년 칩)"
+    },
+    {
+      "id": "Q10",
+      "focus": "거리를 가속도로 착각했나?",
+      "case": "③ 후발가속도에 누적 성과를 씀"
+    },
+    {
+      "id": "Q11",
+      "focus": "순적자를 실격 사유로 썼나?",
+      "case": "그 규칙은 1999년 아마존(22점)을 탈락시킨다. 단위경제로 판정할 것"
+    },
+    {
+      "id": "Q12",
+      "focus": "③ 세 기준을 동등하게 쟀나?",
+      "case": "모방 불가능성이 핵심 — 없으면 상한 3점"
+    },
+    {
+      "id": "Q13",
+      "focus": "\"공짜로 뿌린다\"를 곧바로 카운터 포지셔닝으로 셌나?",
+      "case": "회수 장치가 있어야 한다. 안드로이드엔 Play Store, 오픈웨이트엔 없음"
+    },
+    {
+      "id": "Q14",
+      "focus": "아직 안 끝난 승부를 끝난 것처럼 쟀나?",
+      "case": "라스트무버는 사후 식별 — 문이 닫힌 증거 없으면 상한 4점"
+    },
+    {
+      "id": "Q15",
+      "focus": "⑤에서 \"공짜 사용자\"를 아군으로 셌나?",
+      "case": "파생모델 15만 개는 생태계 지표지 동맹이 아니다. 상업적 약속이 있어야 아군"
+    },
+    {
+      "id": "Q16",
+      "focus": "①을 한 채널로만 쟀나?",
+      "case": "OpenAI를 거래 기반으로 분류해놓고 소비자 지표로 채점 — 모든 실질 채널을 보고 가장 강한 것으로"
+    },
+    {
+      "id": "Q17",
+      "focus": "②를 \"표준 없음\"만으로 깎았나?",
+      "case": "게임체인저는 세 경로 중 하나면 된다 (별표 F)"
+    },
+    {
+      "id": "Q18",
+      "focus": "⑤에서 관계사를 독립 동맹으로 셌나?",
+      "case": "같은 지배주주 아래 회사는 동맹이 아니다 (별표 G). Tesla의 유일한 아군이 SpaceX라 A=0"
+    },
+    {
+      "id": "Q19",
+      "focus": "⑤에서 \"받은 투자\"를 곧바로 동맹 +2로 셌나?",
+      "case": "아군 확보는 능동태. 피투자 관계는 ⑦⑧에서도 세므로 이중 계상 위험 — 별표 G의 A 기준으로 판정"
+    },
+    {
+      "id": "Q20",
+      "focus": "조달을 동맹으로 셌나?",
+      "case": "별표 H — 무엇을 주고받나 / 상대가 잘되면 내가 잘되나(필수) / 끊으면 누가 아픈가"
+    },
+    {
+      "id": "Q21",
+      "focus": "동맹이자 의존인 관계를 한쪽에서만 셌나, 또는 같은 속성을 양쪽에서 셌나?",
+      "case": "상대가 떠날 수 있나(⑤)와 내가 떠날 수 있나(⑧)는 다른 질문. 금지선은 같은 관계가 아니라 같은 속성"
+    },
+    {
+      "id": "Q22",
+      "focus": "지분 평가이익을 ⑦ 순환금융 증거로 셌나?",
+      "case": "평가익은 손익의 질(⑥ 소관). 출처가 내 고객사일 때만 방증 (별표 I)"
+    },
+    {
+      "id": "Q23",
+      "focus": "벤치마크를 서로 다른 하네스끼리 비교했나?",
+      "case": "GPT-6 Astra ARC Prize 표준 62.7% / 벤더 어댑터 99.9%. 같은 하네스끼리만"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "C-01",
+      "status": "documented",
+      "summary": "원본 AGENTS.md 의 체크리스트 17·게이트 2단계·별표 A~F·Meta 1위는 낡은 안내",
+      "recommendation": "새 안내는 활성 원본에서 생성"
+    },
+    {
+      "id": "C-02",
+      "status": "resolved",
+      "summary": "F6·F9 완전 자동(HANDOVER) vs 비상장 F6·F9 정성 수동(구현계획)",
+      "recommendation": "factor 내부를 입력→판정→환산 단계로 분리(설계 지침 4절). 본 규칙 파일의 mode 가 그 결과"
+    },
+    {
+      "id": "C-03",
+      "status": "pending",
+      "blocking": true,
+      "affects": [
+        "F2"
+      ],
+      "summary": "F2 경로 수→점수 매핑(0→2, 1→3, 2→4, AA 1위→5)이 완결되지 않았고 NVIDIA·TSMC 5점을 재현하지 못함",
+      "recommendation": "기업 유형별 최고점 자격과 3경로 통과·0/1점 조건을 확정. 확정 전 신규 F2 는 승계 score 만",
+      "choices": [
+        "activate_candidate_mapping"
+      ]
+    },
+    {
+      "id": "C-04",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F9"
+      ],
+      "summary": "별표 J 는 신용등급의 점수 개입을 금지하나 G3 는 등급 기반 조달 여력을 완충에 넣음",
+      "recommendation": "확인 현금+확정 미인출 여신만 산입(기본 exclude). 등급은 교차검증. include_v15 선택 시 영향 검토",
+      "choices": [
+        "exclude",
+        "include_v15"
+      ]
+    },
+    {
+      "id": "C-05",
+      "status": "pending",
+      "blocking": true,
+      "affects": [
+        "F9"
+      ],
+      "summary": "G1 실패 뒤 G3·G4 를 추가 감점하는지 진단만 하는지 원문이 혼재",
+      "recommendation": "diagnose_only 또는 apply 를 결정. 결과가 달라지는 기업만 대기 처리",
+      "choices": [
+        "diagnose_only",
+        "apply"
+      ]
+    },
+    {
+      "id": "C-06",
+      "status": "pending",
+      "blocking": true,
+      "affects": [
+        "F9"
+      ],
+      "summary": "손실률 -10%·-30% 경계 중첩, FCF/영업손익 0, 완충 잠식, G2 안정/악화의 기계 정의 부재. BEP 후퇴→-5 는 원문 OR 조건 그대로 활성(경고 표시)이며 손실률 경계와의 우선순위 명문화만 미결",
+      "recommendation": "policies.f9.g1_bands_proposed 와 BEP 우선 규칙을 검토해 전 구간 명문화",
+      "choices": [
+        "proposed_v15_boundaries"
+      ]
+    },
+    {
+      "id": "C-07",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F9"
+      ],
+      "summary": "G4 는 RPO/B종인데 Anthropic·OpenAI 는 ARR/연환산 약정으로 계산됨",
+      "recommendation": "ARR 대체 금지. 동일 범위 계약 자료 미확보는 incompatible_basis 로 미완료 표시"
+    },
+    {
+      "id": "C-08",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F5"
+      ],
+      "summary": "별표 H 이탈 가능성 본문과 Bedrock·광고주 예시가 다름. 3문/4문 참조 혼재. 원문 별표 G 는 OpenAI→Oracle $300B 를 동맹 근거로, 별표 H 는 조달로 적어 같은 관계를 다르게 분류함(Q20 긴장, 승계 A+2 는 다른 동맹 근거로 점수 무영향)",
+      "recommendation": "계약상 가능성과 실질 대체·이탈 유인을 구분하는 정성 기준 필요"
+    },
+    {
+      "id": "C-09",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F7"
+      ],
+      "summary": "Anthropic·OpenAI F7 -1 의 매트릭스 입력(환류 여부)이 원문에 없음",
+      "recommendation": "두 축의 실제 입력 복원·검토. 기존 점수에 맞추려고 환류를 추정하지 않음. 승계 score 는 경고와 함께 허용"
+    },
+    {
+      "id": "C-10",
+      "status": "documented",
+      "summary": "가격 설명·경계 트리거에 옛 경계 20·25·35·60·90 이 남음",
+      "recommendation": "활성 경계 20·29·42·62·90 에서 표시·트리거 생성"
+    },
+    {
+      "id": "C-11",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F7"
+      ],
+      "summary": "영업외 비중을 F7 근거로 이월한다는 설명이 별표 I 와 충돌",
+      "recommendation": "손익의 질 참고로만 유지"
+    },
+    {
+      "id": "C-12",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F6"
+      ],
+      "summary": "비상장 F6 가 배수만 vs TTM 보정·이익·자본효율로 점수를 가름이 공존",
+      "recommendation": "비상장 최종 점수는 정성 예외(manual_with_rationale)"
+    },
+    {
+      "id": "C-13",
+      "status": "pending",
+      "blocking": true,
+      "affects": [
+        "F6"
+      ],
+      "summary": "TSMC·Alibaba 는 연간 EPS 가중 근사를 NTM 으로 사용. 신규 계약은 정확한 4분기만 허용",
+      "recommendation": "원본 방법 표시 보존. proxy 채점은 실행 단위 결정으로만",
+      "choices": [
+        "accept_proxy_with_flag",
+        "reject_proxy"
+      ]
+    },
+    {
+      "id": "C-14",
+      "status": "documented",
+      "summary": "트리거에 낡은 기존/예상 점수(NVIDIA F7 -3→-4 등) 잔존",
+      "recommendation": "사건 확인 후 현재 규칙으로 재계산. 트리거는 미래 점수를 저장하지 않음"
+    },
+    {
+      "id": "C-15",
+      "status": "documented",
+      "summary": "Meta 리스 개시 후 연 소진 가산 트리거는 A종 이중 계상 금지와 충돌",
+      "recommendation": "개시 시 분류·원자료 갱신, FCF 반영 지출 재가산 금지"
+    },
+    {
+      "id": "C-16",
+      "status": "pending",
+      "blocking": true,
+      "affects": [
+        "F9"
+      ],
+      "summary": "G4 판정 불가→하향 규칙과 Alibaba·SpaceX 보류 유지 사례가 다름",
+      "recommendation": "결측 유형·적용 대상·하향 중복 방지 규칙 확정",
+      "choices": [
+        "hold",
+        "downgrade"
+      ]
+    },
+    {
+      "id": "C-17",
+      "status": "documented",
+      "summary": "기준일 9/2 인데 9/3~9/7 사건이 섞임",
+      "recommendation": "price_as_of · 재무 기간 · info_cutoff 를 분리 기록"
+    },
+    {
+      "id": "C-18",
+      "status": "documented",
+      "summary": "참조 기업(Moonshot) 포함 여부와 클라우드 표의 기간 불일치",
+      "recommendation": "모집단·기간을 실행별 고정"
+    },
+    {
+      "id": "C-19",
+      "status": "documented",
+      "summary": "유일·최저 등 낡은 비교 문장",
+      "recommendation": "비교 문장은 결과에서 생성하고 통독 검토"
+    },
+    {
+      "id": "C-20",
+      "status": "pending",
+      "blocking": false,
+      "affects": [
+        "F9"
+      ],
+      "summary": "Anthropic 단일 분기 영업흑자를 TTM 원칙과 달리 G1 통과 근거로 씀",
+      "recommendation": "연결 TTM 재확보. 단일 분기로 G1 통과를 자동 복원하지 않음"
+    },
+    {
+      "id": "C-21",
+      "status": "documented",
+      "summary": "가격 공급 정책(yfinance vs FMP)과 stock/scorecard 적용 범위",
+      "recommendation": "docs/scorecard/structure.md 에 유형별 적용 범위 명시. 기존 stock 요건 보존"
+    },
+    {
+      "id": "C-22",
+      "status": "documented",
+      "summary": "총점 설명이 음수 함정을 빼는 것처럼 읽히고 명목 -20 은 F7 하한 -3 과 다름",
+      "recommendation": "합산은 과점 + 음수 함정. 활성 범위는 규칙에서 도출(trap_min_active -18)"
+    }
+  ]
+}

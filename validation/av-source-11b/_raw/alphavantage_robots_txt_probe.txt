@@ -1,0 +1,15 @@
+# Alpha Vantage robots.txt HTTP Probe Record
+# Probe Timestamp: 2026-09-10T11:51:26+09:00 / 2026-09-10T11:51:32+09:00
+# Target URLs:
+#   - https://www.alphavantage.co/robots.txt
+#   - https://alphavantage.co/robots.txt
+#
+# Probe Method: HTTP GET (Antigravity read_url_content tool)
+# Response:
+#   - Status Code: 404 Not Found
+#   - Raw Result: "Failed to fetch document content at https://www.alphavantage.co/robots.txt: failed to get URL https://www.alphavantage.co/robots.txt: status code 404"
+#   - Raw Result (non-www): "Failed to fetch document content at https://alphavantage.co/robots.txt: failed to get URL https://alphavantage.co/robots.txt: status code 404"
+#
+# Finding:
+#   Alpha Vantage does not publish a robots.txt file on its web servers (HTTP 404 Not Found).
+#   There are no automated crawler disallow/allow rules specified via robots.txt.

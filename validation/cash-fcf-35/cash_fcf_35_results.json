@@ -1,0 +1,850 @@
+{
+  "task": "CASH-FCF-35",
+  "created_at": "2026-09-11T16:45:00+09:00",
+  "data_sources": {
+    "primary": "SEC EDGAR Form 10-K, 10-Q, 20-F, S-1/A companyfacts and raw filings",
+    "local_paths": [
+      "validation/f6-avail-15b/_raw/CIK*.json",
+      "validation/offb-24/_raw/baba-20260331.htm",
+      "validation/offb-24/_raw/spcx-20260630.htm",
+      "validation/offb-24/_raw/spcx_s1a_20260603.htm",
+      "validation/tsm-edgar-29/_raw/tsm-20251231.htm"
+    ]
+  },
+  "summary_metrics": {
+    "total_companies": 12,
+    "positive_fcf_count": 8,
+    "negative_fcf_count": 4,
+    "cash_burners": [
+      "AMZN",
+      "ORCL",
+      "SPCX",
+      "BABA"
+    ],
+    "verified_sec_raw_count": 12,
+    "not_disclosed_count": 0
+  },
+  "items": [
+    {
+      "company_id": "apple",
+      "ticker": "AAPL",
+      "name": "Apple Inc.",
+      "cik": "0000320193",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q",
+      "latest_fp": "Q3",
+      "fiscal_year": 2026,
+      "accession_number": "0000320193-26-000070",
+      "period_basis": "TTM",
+      "period_start": "2025-06-29",
+      "period_end": "2026-06-27",
+      "balance_sheet_date": "2026-06-27",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 39544000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 22855000000,
+        "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
+        "liquid_cash_buffer": 62399000000,
+        "noncurrent_marketable_securities": 84118000000,
+        "total_cash_and_all_securities": 146517000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 146724000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "Q_curr_ytd(9m) + (FY_prior(12m) - Q_prior_ytd(9m))",
+        "ocf_components": {
+          "curr_ytd_9m": 116996000000,
+          "prior_fy_12m": 111482000000,
+          "prior_ytd_9m": 81754000000,
+          "tail_derived_3m": 29728000000
+        },
+        "capex_ttm": 10041000000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "Q_curr_ytd(9m) + (FY_prior(12m) - Q_prior_ytd(9m))",
+        "capex_components": {
+          "curr_ytd_9m": 6799000000,
+          "prior_fy_12m": 12715000000,
+          "prior_ytd_9m": 9473000000,
+          "tail_derived_3m": 3242000000
+        },
+        "fcf_ttm": 136683000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 146500000000.0,
+        "legacy_capex_ttm": 10000000000.0,
+        "legacy_fcf_ttm": 136700000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": -17000000.0,
+        "fcf_diff_pct": -0.0124,
+        "capex_diff_usd": 41000000.0,
+        "capex_diff_pct": 0.41,
+        "cash_pure_diff_usd": -106956000000.0,
+        "cash_pure_diff_pct": -73.0075,
+        "cash_buffer_with_noncurrent_diff_usd": 17000000.0,
+        "cash_buffer_with_noncurrent_diff_pct": 0.0116,
+        "analysis": "레거시 Cash $146.5B는 순수 현금($39.54B)이 아니라 유동 유가증권($22.86B) 및 비유동 유가증권($84.12B)을 모두 합산한 총금융자산($146.52B)의 반올림값이었음이 확인됨. FCF TTM 실측치는 $136.683B로 레거시 $136.7B와 0.01% 차이로 정밀 일치함."
+      }
+    },
+    {
+      "company_id": "microsoft",
+      "ticker": "MSFT",
+      "name": "Microsoft Corporation",
+      "cik": "0000789019",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-K",
+      "latest_fp": "FY",
+      "fiscal_year": 2026,
+      "accession_number": "0001193125-26-323660",
+      "period_basis": "TTM",
+      "period_start": "2025-07-01",
+      "period_end": "2026-06-30",
+      "balance_sheet_date": "2026-06-30",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 20935000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 55908000000,
+        "sti_concept": "us-gaap:ShortTermInvestments",
+        "liquid_cash_buffer": 76843000000,
+        "total_cash_and_all_securities": 76843000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 182935000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "direct_fy_filed_is_ttm",
+        "ocf_components": {
+          "direct_fy": 182935000000
+        },
+        "capex_ttm": 115948000000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "direct_fy_filed_is_ttm",
+        "capex_components": {
+          "direct_fy": 115948000000
+        },
+        "fcf_ttm": 66987000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 76800000000.0,
+        "legacy_capex_ttm": 116000000000.0,
+        "legacy_fcf_ttm": 67000000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": -13000000.0,
+        "fcf_diff_pct": -0.0194,
+        "capex_diff_usd": -52000000.0,
+        "capex_diff_pct": -0.0448,
+        "cash_pure_diff_usd": -55865000000.0,
+        "cash_pure_diff_pct": -72.7409,
+        "cash_buffer_diff_usd": 43000000.0,
+        "cash_buffer_diff_pct": 0.056,
+        "analysis": "레거시 Cash $76.8B는 순수 현금($20.935B)과 단기투자자산($55.908B)의 합계인 $76.843B의 반올림값임. FCF TTM $66.987B는 레거시 $67.0B와 0.02% 차이로 정밀 일치함."
+      }
+    },
+    {
+      "company_id": "amazon",
+      "ticker": "AMZN",
+      "name": "Amazon.com, Inc.",
+      "cik": "0001018724",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q",
+      "latest_fp": "Q2",
+      "fiscal_year": 2026,
+      "accession_number": "0001018724-26-000026",
+      "period_basis": "TTM",
+      "period_start": "2025-07-01",
+      "period_end": "2026-06-30",
+      "balance_sheet_date": "2026-06-30",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 78213000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 44775000000,
+        "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
+        "liquid_cash_buffer": 122988000000,
+        "total_cash_and_all_securities": 122988000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 161403000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "direct_ttm_disclosed",
+        "ocf_components": {
+          "direct_ttm_disclosed": 161403000000,
+          "curr_ytd_6m": 71419000000,
+          "prior_fy_12m": 139514000000,
+          "prior_ytd_6m": 49530000000,
+          "tail_derived_6m": 89984000000
+        },
+        "capex_ttm": 173028000000,
+        "capex_concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+        "capex_formula": "direct_ttm_disclosed",
+        "capex_components": {
+          "direct_ttm_disclosed": 173028000000,
+          "curr_ytd_6m": 98411000000,
+          "prior_fy_12m": 131819000000,
+          "prior_ytd_6m": 57202000000,
+          "tail_derived_6m": 74617000000
+        },
+        "fcf_ttm": -11625000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "negative"
+      },
+      "runway": {
+        "runway_years_pure_cash": 6.73,
+        "runway_years_with_liquid_buffer": 10.58,
+        "g3_threshold_keep_years": 3.0,
+        "g3_step_impact": 0,
+        "status": "sustainable_runway_gt_3y"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 123000000000.0,
+        "legacy_capex_ttm": 173000000000.0,
+        "legacy_fcf_ttm": -11600000000.0,
+        "legacy_runway_years": 10.6,
+        "fcf_diff_usd": -25000000.0,
+        "fcf_diff_pct": 0.2155,
+        "capex_diff_usd": 28000000.0,
+        "capex_diff_pct": 0.0162,
+        "cash_pure_diff_usd": -44787000000.0,
+        "cash_pure_diff_pct": -36.4122,
+        "cash_buffer_diff_usd": -12000000.0,
+        "cash_buffer_diff_pct": -0.0098,
+        "runway_pure_diff_years": -3.87,
+        "runway_buffer_diff_years": -0.02,
+        "analysis": "AMZN 10-Q에 공시된 직전 12개월(TTM) CapEx $173.028B 및 OCF $161.403B에서 FCF -$11.625B가 도출되어 레거시 -$11.6B와 정밀 일치함. 레거시 Cash $123.0B는 현금($78.21B)과 유동 유가증권($44.78B) 합계 $122.988B를 반영한 값이며, 순수 현금 기준 런웨이(6.73년)와 버퍼 합산 런웨이(10.58년) 모두 3년 이상이므로 G3 감점 0유지."
+      }
+    },
+    {
+      "company_id": "nvidia",
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "cik": "0001045810",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q",
+      "latest_fp": "Q2",
+      "fiscal_year": 2027,
+      "accession_number": "0001045810-26-000075",
+      "period_basis": "TTM",
+      "period_start": "2025-07-28",
+      "period_end": "2026-07-26",
+      "balance_sheet_date": "2026-07-26",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 22443000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 34143000000,
+        "sti_concept": "us-gaap:DebtSecuritiesCurrent",
+        "liquid_cash_buffer": 56586000000,
+        "total_cash_and_all_securities": 63443000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 134360000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "ocf_components": {
+          "curr_ytd_6m": 74421000000,
+          "prior_fy_12m": 102718000000,
+          "prior_ytd_6m": 42779000000,
+          "tail_derived_6m": 59939000000
+        },
+        "capex_ttm": 7354000000,
+        "capex_concept": "us-gaap:PaymentsToAcquireProductiveAssets",
+        "capex_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "capex_components": {
+          "curr_ytd_6m": 4434000000,
+          "prior_fy_12m": 6042000000,
+          "prior_ytd_6m": 3122000000,
+          "tail_derived_6m": 2920000000
+        },
+        "fcf_ttm": 127006000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 62500000000.0,
+        "legacy_capex_ttm": 7400000000.0,
+        "legacy_fcf_ttm": 127000000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": 6000000.0,
+        "fcf_diff_pct": 0.0047,
+        "capex_diff_usd": -46000000.0,
+        "capex_diff_pct": -0.6216,
+        "cash_pure_diff_usd": -40057000000.0,
+        "cash_pure_diff_pct": -64.0912,
+        "cash_buffer_diff_usd": 943000000.0,
+        "cash_buffer_diff_pct": 1.5088,
+        "analysis": "NVDA CapEx TTM은 $7.354B로 레거시 $7.4B와 일치하며 FCF TTM $127.006B 역시 레거시 $127.0B와 0.005% 차이로 완전 일치함. 레거시 Cash $62.5B는 현금($22.44B)과 1년 내 만기 채권 유가증권($41.0B)을 합산한 $63.44B 부근의 값임."
+      }
+    },
+    {
+      "company_id": "tesla",
+      "ticker": "TSLA",
+      "name": "Tesla, Inc.",
+      "cik": "0001318605",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q",
+      "latest_fp": "Q2",
+      "fiscal_year": 2026,
+      "accession_number": "0001628280-26-049270",
+      "period_basis": "TTM",
+      "period_start": "2025-07-01",
+      "period_end": "2026-06-30",
+      "balance_sheet_date": "2026-06-30",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 15219000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 28305000000,
+        "sti_concept": "us-gaap:ShortTermInvestments",
+        "liquid_cash_buffer": 43524000000,
+        "total_cash_and_all_securities": 43524000000,
+        "restricted_cash": 1206000000
+      },
+      "cash_flows": {
+        "ocf_ttm": 18685000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "ocf_components": {
+          "curr_ytd_6m": 8634000000,
+          "prior_fy_12m": 14747000000,
+          "prior_ytd_6m": 4696000000,
+          "tail_derived_6m": 10051000000
+        },
+        "capex_ttm": 12923000000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "capex_components": {
+          "curr_ytd_6m": 8282000000,
+          "prior_fy_12m": 8527000000,
+          "prior_ytd_6m": 3886000000,
+          "tail_derived_6m": 4641000000
+        },
+        "fcf_ttm": 5762000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 43500000000.0,
+        "legacy_capex_ttm": 12900000000.0,
+        "legacy_fcf_ttm": 5800000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": -38000000.0,
+        "fcf_diff_pct": -0.6552,
+        "capex_diff_usd": 23000000.0,
+        "capex_diff_pct": 0.1783,
+        "cash_pure_diff_usd": -28281000000.0,
+        "cash_pure_diff_pct": -65.0138,
+        "cash_buffer_diff_usd": 24000000.0,
+        "cash_buffer_diff_pct": 0.0552,
+        "analysis": "TSLA CapEx TTM은 $12.923B로 레거시 $12.9B와 일치하며 FCF TTM $5.762B는 레거시 $5.8B와 일치함. 레거시 Cash $43.5B는 현금($15.219B)과 단기투자자산($28.305B)의 정확한 합계인 $43.524B였음."
+      }
+    },
+    {
+      "company_id": "palantir",
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "cik": "0001321655",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q",
+      "latest_fp": "Q2",
+      "fiscal_year": 2026,
+      "accession_number": "0001321655-26-000041",
+      "period_basis": "TTM",
+      "period_start": "2025-07-01",
+      "period_end": "2026-06-30",
+      "balance_sheet_date": "2026-06-30",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 2030047000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 7379052000,
+        "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
+        "liquid_cash_buffer": 9409099000,
+        "total_cash_and_all_securities": 9409099000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 3400291000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "ocf_components": {
+          "curr_ytd_6m": 2115332000,
+          "prior_fy_12m": 2134473000,
+          "prior_ytd_6m": 849514000,
+          "tail_derived_6m": 1284959000
+        },
+        "capex_ttm": 42019000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "capex_components": {
+          "curr_ytd_6m": 21955000,
+          "prior_fy_12m": 33882000,
+          "prior_ytd_6m": 13818000,
+          "tail_derived_6m": 20064000
+        },
+        "fcf_ttm": 3358272000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 9400000000.0,
+        "legacy_capex_ttm": 40000000.0,
+        "legacy_fcf_ttm": 3400000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": -41728000.0,
+        "fcf_diff_pct": -1.2273,
+        "capex_diff_usd": 2019000.0,
+        "capex_diff_pct": 5.0475,
+        "cash_pure_diff_usd": -7369953000.0,
+        "cash_pure_diff_pct": -78.4038,
+        "cash_buffer_diff_usd": 9099000.0,
+        "cash_buffer_diff_pct": 0.0968,
+        "analysis": "PLTR CapEx TTM은 $42.02M(레거시 $40M), FCF TTM은 $3.358B(레거시 $3.4B)로 일치함. 레거시 Cash $9.4B는 현금($2.03B)과 유동 유가증권($7.38B)의 합계인 $9.409B였음."
+      }
+    },
+    {
+      "company_id": "meta",
+      "ticker": "META",
+      "name": "Meta Platforms, Inc.",
+      "cik": "0001326801",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q",
+      "latest_fp": "Q2",
+      "fiscal_year": 2026,
+      "accession_number": "0001628280-26-050705",
+      "period_basis": "TTM",
+      "period_start": "2025-07-01",
+      "period_end": "2026-06-30",
+      "balance_sheet_date": "2026-06-30",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 15462000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 74798000000,
+        "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
+        "liquid_cash_buffer": 90260000000,
+        "total_cash_and_all_securities": 90260000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 130301000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "ocf_components": {
+          "curr_ytd_6m": 64088000000,
+          "prior_fy_12m": 115800000000,
+          "prior_ytd_6m": 49587000000,
+          "tail_derived_6m": 66213000000
+        },
+        "capex_ttm": 89325000000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "capex_components": {
+          "curr_ytd_6m": 49113000000,
+          "prior_fy_12m": 69691000000,
+          "prior_ytd_6m": 29479000000,
+          "tail_derived_6m": 40212000000
+        },
+        "fcf_ttm": 40976000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 90300000000.0,
+        "legacy_capex_ttm": 89300000000.0,
+        "legacy_fcf_ttm": 41000000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": -24000000.0,
+        "fcf_diff_pct": -0.0585,
+        "capex_diff_usd": 25000000.0,
+        "capex_diff_pct": 0.028,
+        "cash_pure_diff_usd": -74838000000.0,
+        "cash_pure_diff_pct": -82.8771,
+        "cash_buffer_diff_usd": -40000000.0,
+        "cash_buffer_diff_pct": -0.0443,
+        "analysis": "META CapEx TTM은 $89.325B(레거시 $89.3B), FCF TTM은 $40.976B(레거시 $41.0B)로 일치함. 레거시 Cash $90.3B는 현금($15.46B)과 유동 유가증권($74.80B) 합계 $90.26B를 반올림한 수치임."
+      }
+    },
+    {
+      "company_id": "oracle",
+      "ticker": "ORCL",
+      "name": "Oracle Corporation",
+      "cik": "0001341439",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-K",
+      "latest_fp": "FY",
+      "fiscal_year": 2026,
+      "accession_number": "0001193125-26-277521",
+      "period_basis": "TTM",
+      "period_start": "2025-06-01",
+      "period_end": "2026-05-31",
+      "balance_sheet_date": "2026-05-31",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 31289000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 605000000,
+        "sti_concept": "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+        "liquid_cash_buffer": 31894000000,
+        "total_cash_and_all_securities": 31894000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 31977000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "direct_fy_filed_is_ttm",
+        "ocf_components": {
+          "direct_fy": 31977000000
+        },
+        "capex_ttm": 55663000000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "direct_fy_filed_is_ttm",
+        "capex_components": {
+          "direct_fy": 55663000000
+        },
+        "fcf_ttm": -23686000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "negative"
+      },
+      "runway": {
+        "runway_years_pure_cash": 1.32,
+        "runway_years_with_liquid_buffer": 1.35,
+        "g3_threshold_keep_years": 3.0,
+        "g3_threshold_one_step_years": 1.0,
+        "g3_step_impact": -1,
+        "status": "runway_between_1_and_3y_minus_1_step"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 31900000000.0,
+        "legacy_capex_ttm": 55700000000.0,
+        "legacy_fcf_ttm": -23700000000.0,
+        "legacy_runway_years": 1.3,
+        "fcf_diff_usd": 14000000.0,
+        "fcf_diff_pct": -0.0591,
+        "capex_diff_usd": -37000000.0,
+        "capex_diff_pct": -0.0664,
+        "cash_pure_diff_usd": -611000000.0,
+        "cash_pure_diff_pct": -1.9154,
+        "cash_buffer_diff_usd": -6000000.0,
+        "cash_buffer_diff_pct": -0.0188,
+        "runway_pure_diff_years": 0.02,
+        "runway_buffer_diff_years": 0.05,
+        "analysis": "ORCL FY2026 공시 기반 CapEx $55.663B, FCF -$23.686B로 레거시 -$23.7B와 0.06% 차이로 일치함. 순수 현금($31.289B) 런웨이는 1.32년, 유가증권 합산($31.894B) 런웨이는 1.35년으로 모두 1년~3년 구간에 속해 G3 -1단계 감점 유지."
+      }
+    },
+    {
+      "company_id": "alphabet",
+      "ticker": "GOOGL",
+      "name": "Alphabet Inc.",
+      "cik": "0001652044",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q",
+      "latest_fp": "Q2",
+      "fiscal_year": 2026,
+      "accession_number": "0001652044-26-000071",
+      "period_basis": "TTM",
+      "period_start": "2025-07-01",
+      "period_end": "2026-06-30",
+      "balance_sheet_date": "2026-06-30",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 55911000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 186563000000,
+        "sti_concept": "us-gaap:MarketableSecuritiesCurrent",
+        "liquid_cash_buffer": 242474000000,
+        "total_cash_and_all_securities": 242474000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm": 185675000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "ocf_components": {
+          "curr_ytd_6m": 84859000000,
+          "prior_fy_12m": 164713000000,
+          "prior_ytd_6m": 63897000000,
+          "tail_derived_6m": 100816000000
+        },
+        "capex_ttm": 132402000000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "Q_curr_ytd(6m) + (FY_prior(12m) - Q_prior_ytd(6m))",
+        "capex_components": {
+          "curr_ytd_6m": 80598000000,
+          "prior_fy_12m": 91447000000,
+          "prior_ytd_6m": 39643000000,
+          "tail_derived_6m": 51804000000
+        },
+        "fcf_ttm": 53273000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 242500000000.0,
+        "legacy_capex_ttm": 132400000000.0,
+        "legacy_fcf_ttm": 53300000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": -27000000.0,
+        "fcf_diff_pct": -0.0507,
+        "capex_diff_usd": 2000000.0,
+        "capex_diff_pct": 0.0015,
+        "cash_pure_diff_usd": -186589000000.0,
+        "cash_pure_diff_pct": -76.9439,
+        "cash_buffer_diff_usd": -26000000.0,
+        "cash_buffer_diff_pct": -0.0107,
+        "analysis": "GOOGL CapEx TTM은 $132.402B(레거시 $132.4B), FCF TTM은 $53.273B(레거시 $53.3B)로 0.05% 이내 일치함. 레거시 Cash $242.5B는 현금($55.91B)과 유동 유가증권($186.56B)의 정확한 합계인 $242.474B였음."
+      }
+    },
+    {
+      "company_id": "spacex-xai",
+      "ticker": "SPCX",
+      "name": "Space Exploration Technologies Corp.",
+      "cik": "0001181412",
+      "taxonomy": "us-gaap",
+      "latest_form": "10-Q / S-1/A",
+      "latest_fp": "Q2 / FY2025",
+      "fiscal_year": 2026,
+      "accession_number": "0001628280-26-052535 (10-Q), 0001193125-26-235805 (S-1/A)",
+      "period_basis": "TTM",
+      "period_start": "2025-07-01",
+      "period_end": "2026-06-30",
+      "balance_sheet_date": "2026-06-30",
+      "currency": "USD",
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents": 93522000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_marketable_securities": 0,
+        "sti_concept": null,
+        "liquid_cash_buffer": 93522000000,
+        "total_cash_and_all_securities": 94352000000,
+        "restricted_cash": 830000000
+      },
+      "cash_flows": {
+        "ocf_ttm": 9900000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "H1_curr(6m) + (FY_prior(12m) - H1_prior(6m))",
+        "ocf_components": {
+          "curr_ytd_6m": 3466000000,
+          "prior_fy_12m": 6785000000,
+          "prior_ytd_6m": 351000000,
+          "tail_derived_6m": 6434000000
+        },
+        "capex_ttm": 42248000000,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "H1_curr(6m) + (FY_prior(12m) - H1_prior(6m))",
+        "capex_components": {
+          "curr_ytd_6m": 28476000000,
+          "prior_fy_12m": 20737000000,
+          "prior_ytd_6m": 6965000000,
+          "tail_derived_6m": 13772000000
+        },
+        "fcf_ttm": -32348000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "negative"
+      },
+      "runway": {
+        "runway_years_pure_cash": 2.89,
+        "runway_years_with_restricted_cash": 2.92,
+        "g3_threshold_keep_years": 3.0,
+        "g3_threshold_one_step_years": 1.0,
+        "g3_step_impact_pure_cash": -1,
+        "g3_step_impact_legacy": 0,
+        "status": "runway_dropped_below_3y_requires_observation_proposal"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 100000000000.0,
+        "legacy_capex_ttm": 42400000000.0,
+        "legacy_fcf_ttm": -32500000000.0,
+        "legacy_runway_years": 3.1,
+        "fcf_diff_usd": 152000000.0,
+        "fcf_diff_pct": -0.4677,
+        "capex_diff_usd": -152000000.0,
+        "capex_diff_pct": -0.3585,
+        "cash_pure_diff_usd": -6478000000.0,
+        "cash_pure_diff_pct": -6.478,
+        "runway_pure_diff_years": -0.21,
+        "analysis": "SPCX의 실측 CapEx TTM은 $42.248B(레거시 $42.4B 대비 -0.36%), FCF TTM은 -$32.348B(레거시 -$32.5B 대비 -0.47%)로 매우 근접함. 반면 대차대조표 현금은 $93.522B로 레거시 개략치 $100.0B보다 낮아, 실측 런웨이는 2.89년(제한성 현금 포함 시 2.92년)으로 산출됨. 이는 F9 G3의 유지 기준선(3.0년)을 하회(1~3년 구간)하므로 -1단계 감점 대상이 될 수 있는 주요 관측임."
+      }
+    },
+    {
+      "company_id": "tsmc",
+      "ticker": "TSM",
+      "name": "Taiwan Semiconductor Manufacturing Company Limited",
+      "cik": "0001046179",
+      "taxonomy": "ifrs-full",
+      "latest_form": "20-F",
+      "latest_fp": "FY",
+      "fiscal_year": 2025,
+      "accession_number": "0001628280-26-025362 (20-F FY2025), 0001193125-25-083423 (20-F FY2024)",
+      "period_basis": "annual",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "balance_sheet_date": "2025-12-31",
+      "currency": "TWD",
+      "currency_usd": "USD",
+      "fx_rate_twd_per_usd": 31.37,
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents_native": 2767856400000,
+        "cash_and_cash_equivalents_usd": 88232600000,
+        "concept": "ifrs-full:CashAndCashEquivalents",
+        "financial_assets_current_usd": 9583700000,
+        "other_current_financial_assets_usd": 1903200000,
+        "liquid_cash_buffer_usd": 99719500000,
+        "total_cash_and_all_financial_assets_usd": 110600000000,
+        "restricted_cash": 0
+      },
+      "cash_flows": {
+        "ocf_ttm_native": 2274975600000,
+        "ocf_ttm_usd": 72520700000,
+        "ocf_concept": "ifrs-full:CashFlowsFromUsedInOperatingActivities",
+        "ocf_formula": "direct_fy2025_20f",
+        "capex_ttm_native": 1272410500000,
+        "capex_ttm_usd": 40561400000,
+        "capex_concept": "Purchase of property, plant and equipment",
+        "capex_formula": "direct_fy2025_20f",
+        "fcf_ttm_native": 1002565100000,
+        "fcf_ttm_usd": 31959300000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "positive"
+      },
+      "runway": {
+        "runway_years": null,
+        "status": "infinite_positive_fcf"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 110600000000.0,
+        "legacy_capex_ttm": 46900000000.0,
+        "legacy_fcf_ttm": 36000000000.0,
+        "legacy_runway_years": null,
+        "fcf_diff_usd": -4040700000.0,
+        "fcf_diff_pct": -11.2242,
+        "capex_diff_usd": -6338600000.0,
+        "capex_diff_pct": -13.5151,
+        "cash_pure_diff_usd": -22367400000.0,
+        "cash_pure_diff_pct": -20.2237,
+        "analysis": "TSM은 F6-FX-16 및 TSM-EDGAR-29에서 확보된 Form 20-F FY2025 감사 재무제표 원자료를 직접 적용함. FY2025 CapEx는 NT$ 1,272.41B($40.561B USD), OCF는 NT$ 2,274.98B($72.521B USD)로 FCF는 NT$ 1,002.57B($31.959B USD)로 실측 복원됨. 레거시 값($36.0B)은 FY2024 구형 추정치 또는 기타 환율 기준이었음."
+      }
+    },
+    {
+      "company_id": "alibaba",
+      "ticker": "BABA",
+      "name": "Alibaba Group Holding Limited",
+      "cik": "0001577552",
+      "taxonomy": "us-gaap",
+      "latest_form": "20-F",
+      "latest_fp": "FY",
+      "fiscal_year": 2026,
+      "accession_number": "0001193125-26-231755",
+      "period_basis": "annual",
+      "period_start": "2025-04-01",
+      "period_end": "2026-03-31",
+      "balance_sheet_date": "2026-03-31",
+      "currency": "CNY",
+      "currency_usd": "USD",
+      "fx_rate_cny_per_usd": 6.8979,
+      "three_way_distinction": "verified_sec_raw",
+      "cash": {
+        "cash_and_cash_equivalents_native": 131530000000,
+        "cash_and_cash_equivalents_usd": 19068000000,
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "short_term_investments_native": 155310000000,
+        "short_term_investments_usd": 22515000000,
+        "sti_concept": "us-gaap:ShortTermInvestments",
+        "liquid_cash_buffer_usd": 41583000000,
+        "restricted_cash_native": 42038000000,
+        "restricted_cash_usd": 6094000000,
+        "total_cash_and_all_treasury_investments_legacy_usd": 56800000000
+      },
+      "cash_flows": {
+        "ocf_ttm_native": 76213000000,
+        "ocf_ttm_usd": 11049000000,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "direct_fy2026_20f",
+        "capex_ttm_native": 126063000000,
+        "capex_ttm_usd": 18275000000,
+        "capex_concept": "Acquisitions of Land use rights, property and equipment",
+        "capex_non_gaap_native": 122021000000,
+        "capex_non_gaap_usd": 17689000000,
+        "fcf_ttm_native": -49850000000,
+        "fcf_ttm_usd": -7226000000,
+        "fcf_non_gaap_native": -46609000000,
+        "fcf_non_gaap_usd": -6757000000,
+        "fcf_formula": "ocf_ttm - capex_ttm",
+        "fcf_result": "negative"
+      },
+      "runway": {
+        "runway_years_pure_cash": 2.64,
+        "runway_years_with_liquid_buffer": 5.75,
+        "runway_years_non_gaap_pure_cash": 2.82,
+        "runway_years_non_gaap_buffer": 6.15,
+        "g3_threshold_keep_years": 3.0,
+        "g3_threshold_one_step_years": 1.0,
+        "g3_step_impact_pure_cash": -1,
+        "g3_step_impact_liquid_buffer": 0,
+        "g3_step_impact_legacy": 0,
+        "status": "critical_f9_decision_boundary_pure_cash_vs_liquid_buffer"
+      },
+      "legacy_comparison": {
+        "legacy_cash": 56800000000.0,
+        "legacy_capex_ttm": 23100000000.0,
+        "legacy_fcf_ttm": -11400000000.0,
+        "legacy_runway_years": 5.0,
+        "fcf_diff_usd": 4173000000.0,
+        "fcf_diff_pct": -36.6053,
+        "capex_diff_usd": -4825000000.0,
+        "capex_diff_pct": -20.8874,
+        "cash_pure_diff_usd": -37732000000.0,
+        "cash_pure_diff_pct": -66.4296,
+        "cash_buffer_diff_usd": -15217000000.0,
+        "cash_buffer_diff_pct": -26.7905,
+        "analysis": "핵심 발견: BABA의 레거시 런웨이 4.98년($56.8B ÷ $11.4B)은 실측되지 않은 구형 레거시 값에 기반했음이 확인됨. Form 20-F FY2026 원자료 실측 복원 결과, OCF는 $11.049B, CapEx는 $18.275B(Non-GAAP $17.689B)로 FCF 적자는 -$7.227B(Non-GAAP -$6.757B)임. 순수 현금($19.068B)만 인정할 경우 런웨이는 2.64년(Non-GAAP 2.82년)으로 3.0년 미만이 되어 G3에서 -1단계 감점이 발생함. 반면 단기투자자산($22.515B)을 유동성 버퍼로 합산($41.583B)할 경우 런웨이는 5.75년(Non-GAAP 6.15년)으로 3년 이상이 되어 감점이 없음. 이는 설계진행 및 총괄의 정책 선택(순수 현금 vs 유동성 버퍼)에 직결되는 결정적 관측임."
+      }
+    }
+  ]
+}

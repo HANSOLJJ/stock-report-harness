@@ -1,0 +1,374 @@
+{
+  "task_id": "PRIV-ARR-30",
+  "status": "completed",
+  "network_call_count": 0,
+  "network_policy": "STRICT_ZERO_CALLS (anthropic.com 및 openai.com 포함 외부 호스트 0건 호출 준수)",
+  "source_files": {
+    "rules_file": {
+      "path": "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AI기업_채점규칙_v1.5.md",
+      "filename": "AI기업_채점규칙_v1.5.md",
+      "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+      "expected_sha256_prefix": "57beb84a",
+      "hash_match": true
+    },
+    "scores_file": {
+      "path": "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AI기업_채점표_v1.5.md",
+      "filename": "AI기업_채점표_v1.5.md",
+      "sha256": "d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30",
+      "expected_sha256": "d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30",
+      "hash_match": true
+    }
+  },
+  "extracted_companies": {
+    "anthropic": {
+      "company_name": "Anthropic",
+      "status": "unlisted (비상장)",
+      "metrics": {
+        "arr": {
+          "value_usd": 65000000000,
+          "display_value": "$65B",
+          "period_label": "7월 (또는 7월말)",
+          "period_status": "specified (명시됨)",
+          "nature": "연환산 런레이트 (특정 시점 월매출 × 12, TTM 매출 대비 과대)",
+          "citations": [
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 공동 6위 — Anthropic · ⑥가격",
+              "line": 338,
+              "text": "post-money $965B ÷ ARR $65B(7월) = 14.8배"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 공동 6위 — Anthropic · ③LastMover",
+              "line": 323,
+              "text": "ARR은 7월 $65B까지 왔지만 월 증가율이 +58%→+57%→약 +14%로 꺾였다."
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "4-1. 2026 Q2 실적표 (실측치 반영)",
+              "line": 911,
+              "text": "| **Anthropic** | Q2 | $10.9B · 런레이트 $65B(7월) | **첫 영업흑자 $559M** | 외부 조달 의존 · FCF 미공시 | -2 |"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "비상장 ⑥ 구간 판정표",
+              "line": 930,
+              "text": "| **Anthropic** | $965B (2026/5 Series H $65B) | **$65B** (7월) | **14.8x** *(TTM 보정 ~30~39)* | **-3** | — |"
+            },
+            {
+              "file": "AI기업_채점규칙_v1.5.md",
+              "section": "#### ⑥ 상장 / 비상장 — 3층 원칙 (v1.5)",
+              "line": 666,
+              "text": "| **Anthropic** | 약 $125B(2021년~) | $65B | **0.52** |"
+            }
+          ]
+        },
+        "arr_prior": {
+          "value_usd": 47000000000,
+          "display_value": "$47B",
+          "period_label": "시점 미명시 (안 밝혔다)",
+          "period_status": "unspecified (원문 시점 미명시)",
+          "nature": "직전 ARR (이전 이력으로 $9B도 언급됨)",
+          "citations": [
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 공동 6위 — Anthropic · ⑥가격",
+              "line": 341,
+              "text": "ARR이 $47B→$65B로 늘며 배수가 내려왔다"
+            },
+            {
+              "file": "AI기업_채점규칙_v1.5.md",
+              "section": "#### ⚠️ 순적자를 실격 사유로 쓰지 않는다 — 아마존 효과",
+              "line": 147,
+              "text": "*\"ARR $9B→$47B\"*(거리)는 **가속도가 아니다.**"
+            }
+          ]
+        },
+        "post_money_valuation": {
+          "value_usd": 965000000000,
+          "display_value": "$965B",
+          "period_label": "2026/5 (Series H)",
+          "period_status": "specified (명시됨)",
+          "citations": [
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "비상장 ⑥ 구간 판정표",
+              "line": 930,
+              "text": "| **Anthropic** | $965B (2026/5 Series H $65B) | **$65B** (7월) | **14.8x** |"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 공동 6위 — Anthropic · ⑥가격",
+              "line": 338,
+              "text": "post-money $965B ÷ ARR $65B(7월) = 14.8배"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 공동 6위 — Anthropic · ⑨적자깊이",
+              "line": 359,
+              "text": "순현금 자체 창출이 아니라 Series H $30B($965B 밸류)에 기댄다"
+            }
+          ]
+        },
+        "cumulative_raised": {
+          "value_usd": 125000000000,
+          "display_value": "약 $125B",
+          "period_label": "2021년~",
+          "period_status": "specified (명시됨)",
+          "citations": [
+            {
+              "file": "AI기업_채점규칙_v1.5.md",
+              "section": "#### ⑥ 상장 / 비상장 — 3층 원칙 (v1.5)",
+              "line": 666,
+              "text": "| **Anthropic** | 약 $125B(2021년~) | $65B | **0.52** |"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 공동 6위 — Anthropic · ⑥가격",
+              "line": 340,
+              "text": "자본효율 0.52(ARR $65B ÷ 누적 조달 약 $125B) — 비상장 3사 중 최선"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "비상장 자본효율 표",
+              "line": 925,
+              "text": "| Anthropic | 약 $125B | $65B | **0.52** |"
+            }
+          ]
+        }
+      },
+      "f6_derived_parameters": {
+        "P2_valuation_multiple": {
+          "formula": "post_money_valuation / arr",
+          "exact": 14.8461538,
+          "table_rounded": 14.8
+        },
+        "P3_growth_rate_pct": {
+          "formula": "(arr - arr_prior) / arr_prior * 100",
+          "exact": 38.29787,
+          "display": "+38.30% (직전 대비, $47B -> $65B)"
+        },
+        "P4_capital_efficiency": {
+          "formula": "arr / cumulative_raised",
+          "exact": 0.52,
+          "display": "0.52"
+        }
+      }
+    },
+    "openai": {
+      "company_name": "OpenAI",
+      "status": "unlisted (비상장)",
+      "metrics": {
+        "arr": {
+          "value_usd": 40000000000,
+          "display_value": "$40B",
+          "period_label": "7월 (표에서는 8/20 기준 병기)",
+          "period_status": "specified (명시됨)",
+          "nature": "연환산 런레이트 (특정 시점 월매출 × 12, TTM 보정 시 약 39배)",
+          "citations": [
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 14위 — OpenAI · ③LastMover",
+              "line": 745,
+              "text": "ARR이 2~4월 $25B에서 정체하다 7월 $40B로 MoM +20% 복귀"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 14위 — OpenAI · ⑥가격",
+              "line": 768,
+              "text": "post-money $852B ÷ ARR $40B = 21.3배 — TTM 보정 시 약 39배"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 14위 — OpenAI · ⑧비대칭의존",
+              "line": 781,
+              "text": "총 컴퓨트 약정 약 $1.4T 대비 연매출 $40B(7월) = 약 35배"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "4-1. 2026 Q2 실적표 (실측치 반영)",
+              "line": 917,
+              "text": "| **OpenAI** | — | 런레이트 $40B+(8/20) | 2026 GAAP 손실 ~$60B 전망 | BEP 2030 | -5 |"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "비상장 ⑥ 구간 판정표",
+              "line": 931,
+              "text": "| **OpenAI** | $852B (2026/3 $122B 조달) | **$40B** (8/20) | **21.3x** *(TTM 보정 ~39)* | **-4** | — *(비상장은 경계 미적용)* |"
+            },
+            {
+              "file": "AI기업_채점규칙_v1.5.md",
+              "section": "#### ⚠️ 순적자를 실격 사유로 쓰지 않는다 — 아마존 효과",
+              "line": 165,
+              "text": "| **OpenAI** | ARR **$25B 정체**(2~4월) → 7월 **$40B**, MoM +20% | ✅ **재가속** |"
+            }
+          ]
+        },
+        "arr_prior": {
+          "value_usd": 25000000000,
+          "display_value": "$25B",
+          "period_label": "2~4월 (정체)",
+          "period_status": "specified (명시됨)",
+          "nature": "직전 ARR (2~4월 정체 구간)",
+          "citations": [
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 14위 — OpenAI · ③LastMover",
+              "line": 745,
+              "text": "ARR이 2~4월 $25B에서 정체하다 7월 $40B로 MoM +20% 복귀"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 14위 — OpenAI · ⑥가격",
+              "line": 771,
+              "text": "ARR이 $25B→$40B로 늘며 배수가 내려왔다"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "종합 시사점",
+              "line": 1096,
+              "text": "ARR $25B 정체 탈출(7월 $40B) 로 배수도 42배→21배로 내려왔다"
+            },
+            {
+              "file": "AI기업_채점규칙_v1.5.md",
+              "section": "#### ⚠️ 순적자를 실격 사유로 쓰지 않는다 — 아마존 효과",
+              "line": 165,
+              "text": "| **OpenAI** | ARR **$25B 정체**(2~4월) → 7월 **$40B**, MoM +20% | ✅ **재가속** |"
+            }
+          ]
+        },
+        "post_money_valuation": {
+          "value_usd": 852000000000,
+          "display_value": "$852B",
+          "period_label": "2026/3 ($122B 조달)",
+          "period_status": "specified (명시됨)",
+          "citations": [
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "비상장 ⑥ 구간 판정표",
+              "line": 931,
+              "text": "| **OpenAI** | $852B (2026/3 $122B 조달) | **$40B** (8/20) | **21.3x** |"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 14위 — OpenAI · ⑥가격",
+              "line": 768,
+              "text": "post-money $852B ÷ ARR $40B = 21.3배 — TTM 보정 시 약 39배"
+            },
+            {
+              "file": "AI기업_채점규칙_v1.5.md",
+              "section": "#### ⑥ 상장 / 비상장 — 3층 원칙 (v1.5)",
+              "line": 669,
+              "text": "OpenAI는 Anthropic보다 1.5배 많은 돈을 태우고 더 낮은 밸류($852B < $965B)에 있다."
+            }
+          ]
+        },
+        "cumulative_raised": {
+          "value_usd": "180B~190B",
+          "display_value": "약 $180~190B",
+          "period_label": "시점 미명시 (누적)",
+          "period_status": "unspecified (누적 시작점 미명시)",
+          "citations": [
+            {
+              "file": "AI기업_채점규칙_v1.5.md",
+              "section": "#### ⑥ 상장 / 비상장 — 3층 원칙 (v1.5)",
+              "line": 667,
+              "text": "| **OpenAI** | 약 $180~190B | $40B | **0.22** |"
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "### 14위 — OpenAI · ⑥가격",
+              "line": 770,
+              "text": "자본효율 0.22(ARR $40B ÷ 누적 조달 약 $180~190B) — Anthropic(0.52)의 절반 이하."
+            },
+            {
+              "file": "AI기업_채점표_v1.5.md",
+              "section": "비상장 자본효율 표",
+              "line": 926,
+              "text": "| OpenAI | 약 $180~190B | $40B | **0.22** |"
+            }
+          ]
+        }
+      },
+      "f6_derived_parameters": {
+        "P2_valuation_multiple": {
+          "formula": "post_money_valuation / arr",
+          "exact": 21.3,
+          "table_rounded": 21.3
+        },
+        "P3_growth_rate_pct": {
+          "formula": "(arr - arr_prior) / arr_prior * 100",
+          "exact": 60.0,
+          "display": "+60.00% (2~4월 $25B 정체 대비 7월 $40B 복귀)"
+        },
+        "P4_capital_efficiency": {
+          "formula": "arr / cumulative_raised",
+          "exact_range": "0.2105 ~ 0.2222",
+          "table_value": 0.22
+        }
+      }
+    }
+  },
+  "key_findings": {
+    "period_gap_between_companies": {
+      "anthropic_prior_gap": "Anthropic은 arr($65B, 7월)의 직전치 arr_prior($47B)에 대해 원문에서 구체적 월 시점을 밝히지 않음 (시점 미명시).",
+      "openai_prior_gap": "OpenAI는 arr($40B, 7월)의 직전치 arr_prior($25B)가 '2~4월 정체'로 3개월 구간 시점이 명시됨.",
+      "implication": "두 회사의 직전 간격이 불일치하나, PRIV-ARR-17 합의 및 P4 보정에 따라 기간 차이를 감수하기로 확정된 상태임."
+    },
+    "arr_vs_runrate": {
+      "status": "런레이트 확인 완료",
+      "rule_statement": "v1.5 채점규칙 Line 647에 'ARR은 특정 시점 월매출 × 12(런레이트)이고, TTM 매출보다 과대하다'고 명시됨.",
+      "observation_proposal_note": "개념명은 arr이지만 실제 내용은 특정 시점 연환산 런레이트이므로 TTM 매출과 직접 비교 불가하며 보정 계수가 필요함."
+    },
+    "missing_distinction_3way": {
+      "company_disclosure": "비상장사이므로 SEC 공시 의무 없음 (회사 미공시 아님)",
+      "source_omission": "Anthropic $47B의 시점 및 OpenAI 누적 조달 시작점은 v1.5 원본 문서에 명시되지 않음 (원본에 없음)",
+      "researcher_discovery": "v1.5 원본에 기록된 4대 수치는 100% 발견 및 추출 완료 (조사자 미발견 아님)"
+    }
+  },
+  "c12_recommendation": {
+    "title": "C-12 비상장 F6 밴드 수립 여부에 대한 검토 의견",
+    "opinion": "정성 예외 (v1.5 선례 기반 정성 보정 트랙) 권고",
+    "rationale": "비상장 F6 밴드가 없어서 정성 예외로 가는 것이 아님. AI기업_채점규칙_v1.5.md에 비상장 구간표(~20x: -2, 20x대: -3, 30x+: -4, 100x+: -5)와 3층 원칙이 이미 엄연히 명시되어 있었음. 그러나 v1.5 원본 작성자 스스로도 해당 구간표를 기계적으로 적용하지 않았음(ARR 배수 적용 시 -2 vs -3, TTM 추정 배수 적용 시 둘 다 -4인데, 실제 판정은 Anthropic -3 vs OpenAI -4로 흑자 전환과 자본효율 0.52를 반영해 1칸 올림). 즉 v1.5 자체가 기계적 구간표에 구속되지 않고 흑자전환 및 자본효율 우위를 반영한 조정을 선례로 채택했음. 따라서 C-12에서 n=2 표본만을 위한 새로운 기계적 밴드를 억지로 신설하기보다는, 밴드가 있음에도 정성 조정을 적용했던 v1.5의 선례와 정합하도록 정성 예외 보정 트랙으로 처리하는 것이 방법론적으로 가장 타당함."
+  },
+  "v15_rules_unlisted_provisions": {
+    "unlisted_tier_table": {
+      "file": "AI기업_채점규칙_v1.5.md",
+      "section": "#### ⑥ 점수 구간 (기계적 적용)",
+      "line_start": 609,
+      "line_end": 616,
+      "table_markdown": "| 점수 | **NTM PER** (상장) | 밸류÷ARR (비상장) |\n|---|---|---|\n| **0** | < 20 | — |\n| **-1** | **20~29** | — |\n| **-2** | **29~42** | ~20x *(ARR 배수 — TTM 보정 필수)* |\n| **-3** | **42~62** | 20x대 |\n| **-4** | **62~90** | 30x+ |\n| **-5** | 90 이상 | 100x+ |",
+      "key_points": [
+        "비상장은 0점과 -1점 칸이 대시(—)로 존재하지 않으며 기계적 최선 점수가 -2점임",
+        "v1.7 private floor(-5)와 결합 시 비상장 F6 점수 구간은 [-2, -5]로 확정됨",
+        "경계 규칙(±3%)은 비상장에 적용하지 않음 (밸류가 반년~1년에 한 번 갱신되므로 하루 변동폭 3% 논리가 성립하지 않음, Line 678-683)"
+      ]
+    },
+    "three_tier_principle": {
+      "file": "AI기업_채점규칙_v1.5.md",
+      "section": "#### ⑥ 상장 / 비상장 — 3층 원칙 (v1.5)",
+      "line_start": 633,
+      "line_end": 643,
+      "table_markdown": "| 층 | 조건 | 처리 |\n|---|---|---|\n| **1차** | **NTM PER이 존재한다** | **그것만 쓴다.** 다른 지표는 참고도 아니다 |\n| **2차** | 비상장이라 없다 | 밸류÷ARR + 비상장 구간표 · **⚠️ 정밀도 열위** 표기 · 경계 규칙 미적용 |\n| **3차** | 마진이 산출된다 | 이익 환산치를 **참고로 병기**한다 — 점수엔 개입 없음 |",
+      "key_points": [
+        "1차: NTM PER 존재 시 그것만 사용 (다른 지표 참고 불가)",
+        "2차: 비상장 시 밸류÷ARR + 비상장 구간표 적용, 정밀도 열위 표기, 경계 규칙 미적용",
+        "3차: 마진 산출 시 이익 환산치 참고 병기 (점수 개입 없음)",
+        "상장 시 즉시 1차로 자동 전환 (비상장 구간표·정밀도 열위·자본효율 폐기, Anthropic은 2026/10 IPO 예상으로 v2 대상)"
+      ]
+    },
+    "unlisted_judgments_table": {
+      "file": "AI기업_채점규칙_v1.5.md",
+      "section": "비상장 3사 판정 (v1.5)",
+      "line_start": 673,
+      "line_end": 676,
+      "table_markdown": "| 기업 | ARR 배수 | TTM 추정 | 이익 | 자본효율 | ⑥ |\n|---|---|---|---|---|---|\n| **Anthropic** | 14.8 | ~30~39 | **흑자 전환** $559M | **0.52** | **-3** |\n| **OpenAI** | 21.3 | ~39 | **적자 · BEP 2030** | **0.22** | **-4** |",
+      "analysis_of_v15_deviation": {
+        "mechanical_arr_multiple": "구간표를 raw ARR 배수(14.8x, 21.3x)에 적용 시 Anthropic은 ~20x로 -2점, OpenAI는 20x대로 -3점이 산출됨",
+        "mechanical_ttm_estimate": "구간표를 TTM 추정 배수(~30~39x, ~39x)에 적용 시 Anthropic 30x+로 -4점, OpenAI 30x+로 -4점으로 둘 다 -4점이 산출됨",
+        "actual_v15_rating": "실제 v1.5 최종 점수는 Anthropic -3점, OpenAI -4점임",
+        "implication": "두 가지 기계적 적용 방식 모두 두 기업에서 각각 1칸씩 어긋남. 즉 v1.5 원본 작성자 스스로가 구간표를 기계적으로 따르지 않고, Anthropic의 흑자 전환($559M)과 높은 자본효율(0.52 vs 0.22)을 근거로 점수를 1칸 올리는 조정을 적용함"
+      }
+    }
+  }
+}
