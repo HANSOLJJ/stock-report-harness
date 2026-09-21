@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 기업 정성적 채점표 — 9 Factor (2026.08)</title>
+<style>
+:root{
+  --bg:#0f1116; --bg2:#171a21; --bg3:#1e222b; --line:#2a2f3a;
+  --tx:#e8eaed; --tx2:#9aa2b1; --tx3:#6b7280;
+  --g5:#10b981; --g4:#34d399; --g3:#fbbf24; --g2:#fb923c; --g1:#ef4444; --g0:#4b5563;
+  --acc:#60a5fa; --warn:#f59e0b; --dang:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--tx);
+  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  line-height:1.65; -webkit-font-smoothing:antialiased; padding:0 0 80px;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+h1{font-size:clamp(24px,4vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.25}
+h2{font-size:clamp(19px,2.6vw,26px);font-weight:700;margin:56px 0 8px;letter-spacing:-.01em}
+h2 .num{color:var(--acc);font-variant-numeric:tabular-nums;margin-right:10px}
+h3{font-size:17px;font-weight:700;margin:28px 0 10px}
+.sub{color:var(--tx2);font-size:14px}
+.mono{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+
+/* header */
+header{background:linear-gradient(180deg,#161a24 0%,var(--bg) 100%);border-bottom:1px solid var(--line);padding:44px 0 32px;margin-bottom:8px}
+.badge{display:inline-block;background:rgba(96,165,250,.12);color:var(--acc);border:1px solid rgba(96,165,250,.3);
+  padding:4px 11px;border-radius:99px;font-size:12px;font-weight:600;margin-bottom:14px}
+.lede{color:var(--tx2);font-size:15px;margin-top:12px;max-width:680px}
+
+/* notice */
+.notice{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.28);border-left:3px solid var(--warn);
+  border-radius:8px;padding:13px 16px;font-size:13.5px;color:#fcd9a0;margin:22px 0}
+.notice b{color:#fde68a}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px;margin:26px 0}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:15px 16px}
+.kpi .k{font-size:11.5px;color:var(--tx3);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.kpi .v{font-size:25px;font-weight:800;margin:5px 0 2px;letter-spacing:-.02em}
+.kpi .d{font-size:12.5px;color:var(--tx2)}
+
+/* scatter */
+.chartbox{background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:20px;margin:18px 0}
+.chartbox svg{width:100%;height:auto;display:block;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;font-size:12.5px;color:var(--tx2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:760px}
+th,td{padding:9px 8px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:var(--bg3);font-weight:700;font-size:11.5px;color:var(--tx2);letter-spacing:.02em;
+  position:sticky;top:0;cursor:pointer;user-select:none}
+th:hover{color:var(--tx)}
+th.name,td.name{text-align:left;padding-left:14px}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:rgba(96,165,250,.06)}
+tbody tr.ref{opacity:.62;font-style:italic}
+td.name b{font-weight:700}
+.rk{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;
+  background:var(--bg3);font-size:11.5px;font-weight:700;color:var(--tx2)}
+.rk.top{background:rgba(16,185,129,.16);color:var(--g4)}
+.sc{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;
+  font-weight:700;font-size:12.5px;color:#0b0d11}
+.tot{font-weight:800;font-size:15px}
+.divider{border-left:2px solid var(--line)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:13px;margin-top:16px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .15s}
+.card:hover{border-color:#3a4150}
+.card>summary{padding:15px 17px;cursor:pointer;list-style:none;display:flex;align-items:flex-start;gap:12px}
+.card>summary::-webkit-details-marker{display:none}
+.card[open]>summary{border-bottom:1px solid var(--line)}
+.chead{flex:1;min-width:0}
+.cname{font-weight:700;font-size:15.5px;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.pill{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--bg3);color:var(--tx2)}
+.pill.plat{background:rgba(96,165,250,.14);color:#93c5fd}
+.pill.model{background:rgba(167,139,250,.14);color:#c4b5fd}
+.pill.infra{background:rgba(251,146,60,.14);color:#fdba74}
+.pill.work{background:rgba(52,211,153,.14);color:#6ee7b7}
+.pill.mix{background:rgba(244,114,182,.14);color:#f9a8d4}
+.ctag{font-size:12.5px;color:var(--tx2);margin-top:5px;line-height:1.45}
+.cscore{text-align:right;flex-shrink:0}
+.cscore .t{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.cscore .s{font-size:11px;color:var(--tx3);margin-top:3px;white-space:nowrap}
+.cscore .sp{margin-top:5px;display:flex;align-items:center;justify-content:flex-end;gap:4px}
+.cscore .delta{font-size:10.5px;font-weight:800}
+.nohist{font-size:10px;color:var(--tx3)}
+.cbody{padding:6px 17px 15px}
+.card[open] .cbody{display:grid;grid-template-columns:1fr 1fr;gap:0 30px;align-items:start}
+@media(max-width:860px){.card[open] .cbody{grid-template-columns:1fr}}
+.frow{padding:10px 0;border-bottom:1px solid rgba(42,47,58,.55);font-size:12.8px}
+.frow:last-child{border-bottom:none}
+.fhead{display:flex;align-items:baseline;gap:8px;margin-bottom:5px;flex-wrap:wrap}
+.flab{color:var(--tx2);font-weight:700;font-size:12.5px;white-space:nowrap;flex:0 0 auto}
+.fsc{font-weight:900;font-size:14px;min-width:22px;white-space:nowrap;flex:0 0 auto}
+.fnote{color:var(--tx3);font-size:11.5px;font-style:italic;flex:1 1 auto;min-width:0;line-height:1.4}
+.ftx{color:#c9cfda;line-height:1.5}
+.ftx b{color:var(--tx);font-weight:700}
+.fpts{margin:0;padding-left:16px;color:#c9cfda;line-height:1.55}
+.fpts li{margin:2px 0}
+.fpts li::marker{color:var(--tx3)}
+.sep{height:1px;background:var(--line);margin:9px 0}
+
+/* rules */
+details.blk{background:var(--bg2);border:1px solid var(--line);border-radius:11px;margin:11px 0;overflow:hidden}
+details.blk>summary{padding:14px 17px;cursor:pointer;font-weight:700;font-size:14.5px;list-style:none;display:flex;justify-content:space-between}
+details.blk>summary::-webkit-details-marker{display:none}
+details.blk>summary::after{content:'▾';color:var(--tx3);transition:transform .2s}
+details.blk[open]>summary::after{transform:rotate(180deg)}
+details.blk .inner{padding:0 17px 16px}
+.rtable{width:100%;font-size:12.8px;border-collapse:collapse;min-width:0}
+.rtable th,.rtable td{text-align:left;padding:8px 9px;white-space:normal;vertical-align:top}
+.rtable th{font-size:11px}
+.q{color:#a5b4fc;font-weight:600}
+.warnbox{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.22);border-radius:8px;padding:11px 14px;
+  font-size:12.8px;color:#fca5a5;margin-top:11px}
+/* gate flow */
+.gflow{margin:16px 0}
+.gate{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:15px 18px;border-left:3px solid var(--acc)}
+.garrow{text-align:center;color:var(--tx3);font-size:15px;line-height:1;padding:7px 0;letter-spacing:.3em}
+.gnum{font-size:10.5px;font-weight:800;letter-spacing:.08em;color:var(--acc)}
+.gq{font-size:15.5px;font-weight:800;margin:3px 0 1px}
+.gmet{font-size:11.8px;color:var(--tx3);margin-bottom:10px}
+.gout{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.gbranch{border-radius:8px;padding:9px 11px;font-size:12.5px;line-height:1.5}
+.gbranch em{display:block;color:var(--tx3);font-size:11.3px;font-style:normal;margin-top:3px;line-height:1.45}
+.gbad{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.22)}
+.ggood{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2)}
+.gwarn{background:rgba(245,158,11,.09);border:1px solid rgba(245,158,11,.24)}
+.gwho{margin-top:10px;font-size:12px;color:var(--tx2);border-top:1px solid var(--line);padding-top:8px}
+.gnote{background:var(--bg3);border:1px solid var(--line);border-radius:9px;padding:10px 13px;margin-top:9px;font-size:12.3px;color:var(--tx2);line-height:1.6}
+.gex{display:flex;flex-wrap:wrap;align-items:stretch;gap:7px;margin-top:9px}
+.gexs{flex:1 1 150px;background:var(--bg3);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:12px;line-height:1.5}
+/* factor cards */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:13px;margin:16px 0;align-items:start}
+.fcard{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:17px 19px;position:relative}
+/* factor 카드 — 클릭하면 전체 폭으로 펼침 */
+details.fcard{transition:border-color .15s}
+details.fcard:hover{border-color:#3a4150}
+details.fcard>summary{list-style:none;cursor:pointer}
+details.fcard>summary::-webkit-details-marker{display:none}
+details.fcard>summary::after{content:'판정 방법 보기 ▾';display:inline-block;margin-top:11px;font-size:11px;
+  font-weight:800;color:var(--acc);background:rgba(99,102,241,.11);border:1px solid rgba(99,102,241,.28);
+  border-radius:99px;padding:3px 10px;letter-spacing:.02em}
+details.fcard[open]>summary::after{content:'접기 ▴'}
+details.fcard[open]{grid-column:1/-1;border-color:var(--acc)}
+details.fcard[open]>summary{border-bottom:1px solid var(--line);padding-bottom:13px}
+.fbody{margin-top:13px}
+details.fcard[open] .fbody{columns:2;column-gap:30px}
+details.fcard[open] .fbody>*{break-inside:avoid}
+@media(max-width:860px){details.fcard[open] .fbody{columns:1}}
+/* 기업 카드 — 열면 전체 폭 + 과점/함정 2단 */
+.card[open]{grid-column:1/-1;border-color:#4a5163}
+.cgrp{min-width:0}
+.cgh{font-size:10.5px;font-weight:800;letter-spacing:.06em;padding:4px 0 2px}
+.cgh.p{color:var(--g4)}
+.cgh.n{color:var(--g2)}
+.fcard.pos{border-top:3px solid var(--g4)}
+.fcard.neg{border-top:3px solid var(--g2)}
+.fnum{position:absolute;top:13px;right:17px;font-size:27px;font-weight:800;color:var(--line);line-height:1}
+.fcard.pos .fnum{color:rgba(52,211,153,.22)}
+.fcard.neg .fnum{color:rgba(251,146,60,.22)}
+.fname{font-size:16.5px;font-weight:800;letter-spacing:-.01em;padding-right:34px}
+.fdef{font-size:13px;color:var(--tx2);margin-top:5px;line-height:1.55}
+.fq{margin:12px 0;padding:9px 12px;background:rgba(96,165,250,.09);border-left:2px solid var(--acc);
+  border-radius:0 6px 6px 0;font-size:13.5px;font-weight:600;color:#a5b4fc;line-height:1.5}
+.fex{font-size:12.8px;color:#c9cfda;line-height:1.62}
+.fex b{color:var(--tx)}
+.fmet{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--tx3);line-height:1.5}
+ul.tight{margin:8px 0 0 18px;font-size:13px;color:#c9cfda}
+ul.tight li{margin:5px 0}
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);color:var(--tx3);font-size:12.5px}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+@media(max-width:640px){
+  .cards{grid-template-columns:1fr}
+  .flab{width:72px;font-size:11.5px}
+  .kpi .v{font-size:21px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+  <div class="badge">v1.5 · 기준일 2026년 9월 2일 · 14개사</div>
+  <h1>AI 기업 정성적 채점표 <span style="color:var(--tx3);font-weight:600">— 9 Factor</span></h1>
+  <p class="lede">AI 시대에 <b>누가 90년 과점을 만들 구조를 갖췄나</b>를 9개 항목으로 채점했다.
+  <b>과점 factor 5개(각 0~5점)</b>에서 더하고 <b>함정 factor 4개(각 0~-5점)</b>에서 뺀다.</p>
+  <div class="notice">
+    ⚠️ <b>이해상충 고지</b> — 이 채점표는 Anthropic이 만든 Claude가 작성했으며, 결과에서 <b>Anthropic이 과점 factor <span id="ciScore">–</span>점으로 최고 그룹</b>에 속한다.
+    또한 ①채점에서 제외한 Menlo Ventures 보고서는 <b>Anthropic 지분 $14B를 보유한 투자사</b>가 발행한 것이다. 투자 판단에 사용할 경우 감안할 것.
+  </div>
+</div>
+</header>
+
+<div class="wrap">
+
+<div class="kpis" id="kpis"></div>
+
+<div class="notice" style="border-left-color:var(--dang);background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.25);color:#fca5a5">
+🔑 <b>③ Last Mover는 지금 변별력이 없다 — 14사가 전부 2~3점이다.</b> 이건 채점 실패가 아니라 <b>"아직 문을 닫고 들어온 자가 없다"는 발견</b>이다. 라스트무버는 사후에만 식별되며, 지금은 <b>10년 경쟁 구간의 한복판</b>이다.
+</div>
+
+<h2><span class="num">01</span>이 표는 무엇을 재는가</h2>
+
+<div class="chartbox" style="padding:22px 24px">
+<p style="font-size:15px;line-height:1.75">경영사학자 <b>챈들러</b>는 산업이 열리면 <b>10년쯤 경쟁하다 이후 90년을 소수가 과점한다</b>고 했다.
+자동차가 GM·포드로 굳은 것처럼, AI도 지금이 그 10년의 한복판이다.
+이 채점표는 <b>"어느 계층(모델·인프라·응용)에 속했나"가 아니라 "누가 90년 과점을 만들 구조를 갖췄나"</b>를 잰다.</p>
+<p style="font-size:14px;color:var(--tx2);margin-top:12px">학술 토대는 Hamilton Helmer의 <i>Seven Powers</i>와 NBER Working Paper(Azoulay 외, 2024). 이를 9개 항목으로 압축했다.</p>
+
+<div class="notice" style="margin-top:18px">
+💡 <b>OpenAI 테스트</b> — 채점 전 1차 필터. <b>"OpenAI가 이 서비스를 내일 무료로 뿌려도 이 회사가 살아남는가?"</b>
+포토샵·세무신고 같은 '포장지' 기업은 여기서 탈락한다. 모닝스타는 이를 두고 AI가 <b>'학살자'가 아니라 '분류 장치'</b>라고 표현했다.
+</div>
+</div>
+
+<h2><span class="num">02</span>9가지 factor 뜯어보기</h2>
+<p class="sub">앞의 5개는 <b>더하고</b>(각 0~5점), 뒤의 4개는 <b>뺀다</b>(각 0~-5점). <b style="color:var(--acc)">카드를 클릭하면 역사적 사례와 판정 방법이 펼쳐진다.</b></p>
+
+<div class="fgrid">
+<details class="fcard pos">
+ <summary><div class="fnum">①</div><div class="fname">네트워크 효과</div>
+ <div class="fdef">사용자가 늘수록 가치가 폭증하고, 한번 들어오면 못 나가는 구조</div>
+ <div class="fq">"가격을 올려도 남는가?"</div>
+ </summary>
+ <div class="fbody">
+<div class="fex"><b>카카오톡</b>은 친구가 다 거기 있어 못 떠난다. <b>아마존은 프라임 회비를 계속 올려도 이탈이 없다.</b> 사용자가 2명이면 연결선 1개지만 4명이면 6개 — 사용자보다 연결이 훨씬 빨리 늘고, 가치는 연결 수만큼 폭증한다.
+ <br><br>AI에선 <b>가입자↑ → 데이터 축적 → 모델 개선 → 가입자↑</b> 루프다. 아직 이 플라이휠을 완성한 곳이 없어서 기회가 남아 있다.</div>
+  <div class="fex" style="margin-top:6px">🆕 <b>클라우드 락인의 자백(2026-09)</b> — AWS·MS는 2024년 영국 CMA에 "멀티클라우드 장벽 없다/수요 없다"고 했다가, 2026년 8~9월 "연결에 몇 주~몇 달 걸렸다"며 100Gbps 상호연결 서비스를 냈다. 전환비용이 컸다는 걸 당사자가 증명한 셈 — 단 다리를 놓은 이상 클라우드층 락인은 앞으로 약해지는 방향.</div>
+<div class="fmet">지표 — <b>채널별로 다르게 잰다(별표 A)</b> · <b>소비자</b>: 설치기반·MAU·가격 인상 후 이탈 · <b>업무</b>: 유료 시트·기업 고객 수 · <b>거래</b>: OpenRouter 매출 점유율·평균 $/M · <b>부품</b>: 최종 사용자 접점이 없으면 <b>상한 2점</b> <span style="color:var(--dang)">개인 소비자는 ①에서, 조직화된 상업 파트너는 ⑤에서 센다</span></div></div>
+</details>
+
+<details class="fcard pos">
+ <summary><div class="fnum">②</div><div class="fname">신기술 게임체인저</div>
+ <div class="fdef">판을 바꾸는 기술을 먼저 내놓거나, 남이 냈을 때 빨리 적응하는 힘</div>
+ <div class="fq">"판을 바꿀 기술을 먼저 냈는가, 남이 바꾼 판에 빨리 올라탔는가?"<br><span style="font-weight:400;font-size:12px">세 경로 중 하나면 된다 — <b>성능 도약 · 패러다임 적응 · 표준 선점</b></span></div>
+ </summary>
+ <div class="fbody">
+<div class="fex">구글은 초기에 검색 모델을 <b>Excite에 75만 달러(약 12억 원)에 팔려고 했다.</b> Excite는 "우리 검색과 별 차이 없다"며 거절했고, CEO George Bell은 1999년에 땅을 쳤다. Yahoo·Lycos도 과거 명성에 안주하다 전부 내줬다.
+ <br><br>지금은 Anthropic의 <b>MCP 표준 선점</b>이 한 경로의 교과서 사례다 — 그러나 <b>구글-Excite부터가 표준이 아니라 성능 격차</b>였고, NVIDIA ②5(Vera Rubin 추론 5배)·Meta ②4(Muse 텍스트 4위)도 성능 경로다. <b>"표준 없음"만으로 깎지 않는다.</b></div>
+ <div class="fmet">지표 — <b>종합 지능</b>: Artificial Analysis Index · ARC-AGI-2 · HLE · SWE-bench · 🆕 <b>에이전트 실무</b>: AutomationBench · Agents' Last Exam · OSWorld · Terminal-Bench <span style="color:var(--tx3)">(판이 코딩에서 화이트칼라로 넘어가는 중이라 종합 지능만으로는 못 잰다 — 두 축이 갈리면 둘 다 적는다. <b>벤더 발표는 1차 근거가 아니고 독립 측정을 우선</b>하며, 불일치는 긴장으로 등록)</span> · <b>비교는 같은 하네스끼리만</b> <span style="color:var(--dang)">(Arena 단독 금지 — 문체·길이 편향 · <b>한쪽만 벤더 하네스인 점수 금지</b> — 체크리스트 23)</span><br><span style="color:var(--tx3)">🆕 <b>하네스</b> = 모델을 감싸는 실행 환경(턴 사이 추론 흔적을 보존하는지, 기록을 자르는지). 2026-09 GPT-6 Astra는 <b>ARC Prize 표준 62.7% / OpenAI 어댑터 99.9%</b>로 <b>37점</b>이 갈렸고 ARC Prize는 차이가 "메모리 처리이지 순수 지능이 아니다"라고 밝혔다. 한쪽만 자기 하네스면 <b>같은 잣대 위반</b>이라 표준 점수를 쓴다. 단 <b>전원이 자기 하네스로 잰 지표는 유효</b>하다(AA Coding Agent Index) — 사용자가 받는 건 맨 모델이 아니라 스캐폴딩까지 포함한 제품이기 때문. <b>"벤더 하네스 금지"가 아니라 "같은 하네스끼리"</b>가 규칙이다.</span></div></div>
+</details>
+
+<details class="fcard pos">
+ <summary><div class="fnum">③</div><div class="fname">Last Mover</div>
+ <div class="fdef">먼저 들어간 기업이 아니라, <b>문을 닫고 들어온 기업</b>이 이긴다</div>
+ <div class="fq">"선두가 내 방식을 베끼면 선두 자신의 수익모델이 무너지는가(진입) + 내 뒤의 진입로는 닫히는가(차단)?"</div>
+ </summary>
+ <div class="fbody">
+<div class="fex">Atari→닌텐도, Yahoo→구글, Friendster→페이스북, IBM Simon(1994)→iPhone. 퍼스트무버는 시행착오로 돈과 시간을 태우고, 후발주자는 그걸 보고 피해 간다.
+ <br><br>라스트무버는 <b>두 동작</b>이다 — <b>축1 들어가기</b>: 카운터 포지셔닝(구글은 안드로이드를 공짜로 뿌렸는데 노키아는 Symbian을 공짜로 못 풀었다) · <b>축2 문 닫기</b>: 내 뒤로 같은 진입로를 차단. 세 기준은 축1을 재고, <b>축2가 4→5점 게이트</b>다. 2026년 현재 축2를 통과한 기업은 없다.</div>
+ <div class="fmet">지표 — <b>세 기준을 ✅1/⚠️0.5/❌0으로 채점해 합계(통과점 0~3)</b>: 모방 불가능성 · 별도 수익모델 · 후발 가속도 · <span style="color:var(--dang)">모방 불가능성 ✅는 (1)못 베끼는 자산 + (2)그 덕에 실제로 앞섬 둘 다 필요 — 아니면 상한 3점</span></div></div>
+</details>
+
+<details class="fcard pos">
+ <summary><div class="fnum">④</div><div class="fname">호황 이후 비전</div>
+ <div class="fdef">호황이 끝난 뒤를 준비했는가</div>
+ <div class="fq">"곡괭이만 팔다 끝나는가, 직접 광부가 되는가?"</div>
+ </summary>
+ <div class="fbody">
+<div class="fex">골드러시 때 곡괭이를 판 <b>브레넌</b>은 큰돈을 벌었지만 호황 이후를 준비하지 않아 <b>노숙자로 죽었다.</b> 닷컴 때 광케이블·통신장비를 만든 노텔·루슨트는 소멸했고, 시스코는 26년간 주가가 정체했다. 광케이블은 한번 깔면 20~30년 안 바꾸는데 거기 안주한 탓이다.
+ <br><br>반면 NVIDIA는 로보틱스·자율주행·LLM 등 <b>10개 영역에 진출</b>하며 "직접 광부가 되겠다"고 선언했다.</div>
+ <div class="fmet">지표 — 사업 부문 수 · 자체 칩 <b>출하 여부</b> · 수주잔고(RPO) · 신규 진출 <span style="color:var(--dang)">계획·발표·포지션은 0점(별표 D) — 출하·매출·채택률처럼 지금 측정되는 것만 센다</span></div></div>
+</details>
+
+<details class="fcard pos">
+ <summary><div class="fnum">⑤</div><div class="fname">아군 확보</div>
+ <div class="fdef"><b>동맹등급 + 적대등급</b> — 아군을 몇이나 <b>맺었는가</b>, 그리고 적을 얼마나 안 만들었는가</div>
+ <div class="fq">"동맹이 적보다 많은가?"<br><span style="color:var(--tx3);font-weight:400">판정은 별표 G — 3 + 동맹등급 + 적대등급</span></div>
+ </summary>
+ <div class="fbody">
+<div class="fex">소니 <b>베타맥스는 성능이 훨씬 좋았지만</b> 기술력을 믿고 혼자 갔다. VHS는 승산이 없다고 보고 전 세계 전자회사를 전부 동맹으로 삼았고, 결국 비디오 대여점이 전부 VHS로 갈아탔다. IBM PC도 인텔-MS 연합에 전 세계 OEM을 아군으로 붙여 애플을 눌렀다.
+ <br><br><b>"동맹 없는 표준은 패배한다."</b> NVIDIA가 이 항목에서 2점에 그치는 이유이기도 하다 — 고객이 전부 적이 되는 중이다.<br><br><b>판정은 두 축이다(별표 G)</b> — <b>⑤ = 3 + 동맹등급(0~+2) + 적대등급(0~-3)</b>. 동맹은 "받은 게 아니라 맺은 것"만 세고(아군 확보는 능동태), 적대는 크기가 아니라 <b>종류</b>를 본다(벌금·소송 같은 <i>비용형</i>인가, 고객이 곧 경쟁자인 <i>구조형</i>인가).<br><br><b>조달과 동맹의 구분(별표 H)</b> — 같은 거래도 <b>방향에 따라 다르다</b>. 파는 쪽에겐 고객이 동맹 후보, 사는 쪽에겐 공급자가 조달이다. Apple이 TSMC에서 칩을 사는 건 Apple에겐 조달이지만 TSMC에겐 Apple이 동맹이다.</div>
+ <div class="fmet">지표 — <b>동맹</b>: 지분·독점·재판매권·수수료 분배의 규모(GW·$) · <b>적대</b>: 건수가 아니라 <b>성격</b>(비용형/구조형/다발형) <span style="color:var(--dang)">불인정 3종 — 조달(사오는 관계)·공짜 사용자(파생모델 수·오픈웨이트 개발자)·관계사</span></div></div>
+</details>
+
+<details class="fcard neg">
+ <summary><div class="fnum">⑥</div><div class="fname">현재 가격의 정도</div>
+ <div class="fdef">미래 성장이 주가에 얼마나 미리 반영됐는가</div>
+ <div class="fq">"3년치 성장을 이미 당겨 썼는가?"<br><span style="font-weight:400;font-size:12px">NTM PER을 구간표에 넣으면 점수가 나온다 — <b>예외 없음</b> · 경계 ±3% 이내면 ⚠️ 표기</span></div>
+ </summary>
+ <div class="fbody">
+<div class="fex"><b>왜 따로 빼는가</b> — 앞의 5개는 "기업이 얼마나 좋은가"만 잰다. 아무리 좋은 기업이어도 비싸게 사면 손해이므로 가격은 별도로 판단해야 한다. 대표적인 예가 "엔비디아 주가가 이미 3년치 성장을 반영하고 있다면"이다.</div>
+ <div class="fmet">지표 — 상장: <b>NTM PER</b>(향후 4개 분기 컨센서스 EPS 합) / 비상장: <b>밸류÷ARR</b> — 이 둘만 점수에 개입 <span style="color:var(--dang)">(TTM PER은 영업외 비중 30%+면 무효 · P/S·시총 크기는 참고만, 점수 개입 금지)</span></div></div>
+</details>
+
+<details class="fcard neg">
+ <summary><div class="fnum">⑦</div><div class="fname">순환 금융</div>
+ <div class="fdef">내 매출을 내는 고객이 그 돈을 조달로 구한 구조</div>
+ <div class="fq">"이 매출은 진짜 수요인가?"</div>
+ </summary>
+ <div class="fbody">
+<div class="fex">NVIDIA가 OpenAI에 투자 → OpenAI가 Oracle과 $300B 계약 → <b>Oracle이 그 돈으로 NVIDIA GPU 구매.</b> 돈이 돌고 돌며 세 회사 매출을 동시에 부풀린다.
+ <br><br>2026년 8월 18일 NVIDIA-OpenAI 데이터센터 계약이 기존 보도보다 <b>$145B 적게 체결</b>되며 "인위적 수요" 우려가 다시 불붙었다.</div>
+ <div class="fmet">지표 — 투자→매출 환류 구조 · 루프의 정중앙인가 주변부인가 · 🆕 손익 왜곡(영업외 이익 비중) <span style="color:var(--tx3)">등급 판정은 <b>별표 I</b> — 기준은 "본업의 루프 의존도" · 평가이익은 ⑦ 증거가 아니라 ⑥ 소관</span></div></div>
+</details>
+
+<details class="fcard neg">
+ <summary><div class="fnum">⑧</div><div class="fname">비대칭 의존</div>
+ <div class="fdef">한쪽에 위험하게 치우친 의존관계</div>
+ <div class="fq">"<b>내가 상대를 떠날 수 있는가?</b>"<br><span style="font-weight:400;font-size:12px">못 떠나면 의존 — 끊기면 매출이 주는 정도인가, 회사가 멈추는가 · 게다가 공급자가 곧 경쟁자인가</span></div>
+ </summary>
+ <div class="fbody">
+<div class="fex">대표적 사례는 <b>CoreWeave</b> — NVIDIA 칩을 담보로 돈을 빌린다. 칩 값이 떨어지면 담보도 같이 무너지는 구조다.
+ <br><br>같은 -3점이어도 성격이 다르다. NVIDIA는 <b>방향성</b>이 나쁘고(고객이 하나씩 자체 칩으로 이탈), Anthropic은 <b>수준</b>이 나쁘다(컴퓨트 100% 외부, 게다가 공급자 셋이 전부 경쟁자).<br><br><b>동맹(⑤)이면서 의존(⑧)일 수 있다 — 이중 계상이 아니다.</b> 질문이 반대 방향이기 때문이다: <b>⑤는 "상대가 나를 떠날 수 있나"</b>(떠날 수 있으면 아군이 아니라 미래의 적), <b>⑧은 "내가 상대를 떠날 수 있나"</b>(못 떠나면 의존). Anthropic↔3사가 정확히 그 경우다 — 3사는 지분에 묶여 못 떠나니 <b>⑤5</b>, Anthropic은 컴퓨트가 100% 남의 것이라 못 떠나니 <b>⑧-3</b>. 금지선은 "같은 관계"가 아니라 <b>"같은 속성"</b>이다 — 공급자가 경쟁자라는 <i>위험</i>은 ⑧에서 세고 ⑤에서 또 깎지 않는다.</div>
+ <div class="fmet">지표 — 고객 집중도 · 컴퓨트 자체 보유 여부 · 지불 약정÷매출</div></div>
+</details>
+
+<details class="fcard neg">
+ <summary><div class="fnum">⑨</div><div class="fname">적자 깊이</div>
+ <div class="fdef">현금을 얼마나 빠르게 태우고 있는가</div>
+ <div class="fq">4단계 게이트 — 순서대로 통과한다<br><span style="font-weight:400;font-size:12px"><b>게이트 1</b> 본업이 버는가(영업이익·<b>손실률</b>) — <i>심각도</i><br><b>게이트 2</b> 현금이 새는가(TTM FCF) — <i>시급성</i><br><b>게이트 3</b> 얼마나 버티는가(런웨이) — <i>지속가능성</i><br><b>게이트 4</b> 미래 지출이 덮이는가(약정 커버리지) — <i>부외 부담</i></span></div>
+ </summary>
+ <div class="fbody">
+<div class="fex"><b>왜 따로 빼는가</b> — 구조가 아무리 좋아도 돈이 먼저 마르면 끝난다. Anthropic의 최대 허들로 <b>"상장 때까지 증시가 버텨주느냐"</b>가 꼽히는 것도 이 항목이다.
+ <br><br>v1.5 현재 게이트 1(본업 적자)에 걸린 곳은 <b>SpaceX·OpenAI</b>다 — OpenAI는 손익분기 목표가 2030년으로 밀려 -5. 알리바바는 3월 분기 영업적자를 냈다가 <b>6월 분기(8/20)에 흑자 복귀</b>해 게이트 2(-2)로 올라왔다. Alphabet은 <b>영업이익 +30%인데 분기 FCF 사상 첫 마이너스</b> — TTM은 +$53B라 -1(추세 악화). 벌면서 더 크게 투자하는 전형.
+ <br><br>🆕 <b>게이트 3(런웨이)</b> 은 우량 기업에겐 안 걸린다 — 채권 시장이 열려 있어 A- 이상은 사실상 무제한이다. <b>등급이 취약한 곳만 걸러내는 장치</b>이고, v1.5에서 걸린 곳은 <b>Oracle 하나</b>(런웨이 1.3년 + BBB- → ⑨-2→-3)다.
+ <br><br>🆕 <b>게이트 4(약정 커버리지)</b> 는 부외 약정을 다룬다. 다만 <b>절대액으로 감점하지 않는다</b> — <b>리스는 매출을 만드는 자산</b>이라 나가는 돈만 세면 아마존 효과를 부정하게 된다. Oracle이 리스 $250B를 내는 것은 <b>RPO $638B</b>를 벌기 위해서다. 그래서 <code>계약된 수입 ÷ 부외 약정</code>으로 재고, <b>1배 미만은 OpenAI 하나뿐(0.67배)</b> 이었다. 5사 약정 $969B 중 $662B가 부외인데도 <b>점수가 안 움직인 것이 결론</b>이다.</div>
+ <div class="fmet">게이트1 영업이익·단위경제 · 게이트2 <b>TTM FCF</b> · 게이트3 런웨이(완충÷연 소진, 조달 여력은 신용등급으로) · 게이트4 커버리지 <span style="color:var(--dang)">(EPS 상회/하회 · 누적적자 절대액 · 우발 보증(⑦ 소관) · 개시된 리스(이미 FCF 포함)는 쓰지 않음)</span><br><b style="color:var(--acc)">↓ 판정 흐름은 바로 아래</b></div></div>
+<div class="sep" style="margin:16px 0 13px"></div>
+<div style="font-size:13.5px;font-weight:800;margin-bottom:5px">판정 흐름 — 기업 카드의 <span style="color:var(--acc)">"게이트 3 → 한 단계 하향"</span>이 무슨 뜻인지</div>
+<p class="sub" style="margin:0 0 4px">점수를 직관으로 주지 않으려고 4단계로 쪼갰다. <b>위에서부터 순서대로 통과하며, 통과하면 다음 게이트로 내려간다.</b></p>
+
+<div class="gflow">
+
+<div class="gate">
+ <div class="gnum">게이트 1 — 심각도</div>
+ <div class="gq">본업이 버는가?</div>
+ <div class="gmet">영업이익 · 단위경제</div>
+ <div class="gout">
+  <div class="gbranch ggood">✅ <b>흑자 → 게이트 2로</b><em>버는데 현금이 마이너스인 것은 성격이 다르다</em></div>
+  <div class="gbranch gbad">❌ <b>영업적자 → -3 ~ -5</b><em>사업 모델 자체의 문제라 아래 게이트로 안 내려간다. 대신 <b>손실률로 구간을 나누고 방향으로 완화</b>한다</em></div>
+ </div>
+ <div class="gnote"><b>"영업적자"는 이진이 아니다</b> — 손실률 -1%와 -50%를 같은 칸에 넣지 않는다. <code>영업손실률 = 영업손실 ÷ 매출</code><br><br>
+ <b style="color:var(--tx)">-3</b> 손실률 <b>-10% 이내</b>(얕은 적자) &nbsp;·&nbsp; <b style="color:var(--tx)">-4</b> <b>-10~-30%</b> 또는 완충 잠식 &nbsp;·&nbsp; <b style="color:var(--tx)">-5</b> <b>-30% 초과</b> 또는 <b>BEP 목표 후퇴</b><br><br>
+ 🔑 <b>절대액을 쓰지 않는다</b>(v1.5 정정) — 예전 -4 기준이 <i>"연 소진 $10B급"</i> 이었는데 이는 <b>규모 편향</b>이다. 매출 $1B에 손실 $500M인 회사는 아무리 심해도 -4를 못 받고, 대기업은 손실률이 얕아도 -4를 받는다. <b>⑥에서 "시총 절대 크기는 쓰지 않는다"고 해놓고 ⑨에서 절대액을 쓰던 모순</b>을 비율로 교정했다.<br><br>
+ 🔑 <b>방향 완화</b> — 악화(BEP 후퇴)를 -5의 근거로 쓰면서 개선에 값을 안 주는 것은 비대칭이다. <b>A. 손실률이 4분기 연속 YoY 개선</b> + <b>B. 매출 성장률 &gt; 비용 성장률</b>(영업 레버리지가 돈다) <b>둘 다</b> 충족하면 <b>한 단계 완화</b>. 하나라도 미달·판정 불가면 유지.<br>
+ <span style="color:var(--tx3)">4분기인 이유 — 애널리스트 통념이 4분기 이상 연속이고(한 분기로는 구조적 개선인지 알 수 없다), 신용평가사는 분기 대신 "12~24개월에 걸쳐 sustained"인지를 본다. 계절성도 한 바퀴 돈다. · 조건 B가 더 중요한 이유 — 감원·자산매각으로 만든 축소는 <b>매출이 안 커도 손실률이 준다.</b> 그건 개선이 아니라 축소다. · <b>상한: 최대 한 단계, -3 아래로는 못 간다</b> — 게이트 1 실패자가 게이트 2 통과자(-2)와 같은 점수를 받으면 "본업이 버는가"라는 구분 자체가 무너진다.</span></div>
+ <div class="gwho">지금 걸린 곳 — <b>SpaceX</b> 손실률 <b>-14.9%</b> → -4 <span style="color:var(--tx3)">(방향은 4분기 데이터 미확보로 판정 불가)</span> · <b>OpenAI</b> <b>BEP가 2030년으로 후퇴</b> → -5 <span style="color:var(--tx3)">(방향 악화)</span></div>
+</div>
+
+<div class="garrow">▼</div>
+
+<div class="gate">
+ <div class="gnum">게이트 2 — 시급성</div>
+ <div class="gq">현금이 새는가?</div>
+ <div class="gmet">TTM FCF <span style="color:var(--tx3)">(분기가 아니라 직전 4개 분기 합 — 계절성·일회성 capex에 흔들리지 않게)</span></div>
+ <div class="gout">
+  <div class="gbranch ggood">✅ <b>흑자 + 추세 안정 → 0</b><em>Apple · NVIDIA · Microsoft · TSMC · Palantir</em></div>
+  <div class="gbranch gwarn">⚠️ <b>흑자지만 추세 악화 → -1</b><em>Meta(분기 -91%) · Alphabet(분기 첫 마이너스) · Tesla(영업이익 -57%)</em></div>
+  <div class="gbranch gbad">❌ <b>마이너스 → -2, 게이트 3으로</b><em>Amazon · Alibaba · Oracle · Anthropic(비상장 미공시도 보수적으로 -2)</em></div>
+ </div>
+ <div class="gwho"><b>여기서 흑자면 끝난다</b> — 태우고 있지 않으니 태울 시간(게이트 3)을 잴 이유가 없다. 그래서 순현금이든 순부채든 ⑨ 점수는 같다</div>
+</div>
+
+<div class="garrow">▼ <span style="font-size:11.5px;letter-spacing:0;color:var(--tx3)">FCF 마이너스인 기업만</span></div>
+
+<div class="gate">
+ <div class="gnum">게이트 3 — 지속가능성</div>
+ <div class="gq">얼마나 버티는가?</div>
+ <div class="gmet"><b>런웨이 = 완충 ÷ 연 소진율</b></div>
+ <div class="gout">
+  <div class="gbranch ggood"><b>3년 이상 → 유지</b><em>Amazon 10.6년 · Alibaba 5.0년 · SpaceX 3.1년</em></div>
+  <div class="gbranch gwarn"><b>1~3년 → 한 단계 하향</b><em>Oracle 1.3년 → -2에서 <b>-3</b>으로</em></div>
+  <div class="gbranch gbad"><b>1년 미만 → 두 단계 하향</b><em>현재 해당 없음</em></div>
+ </div>
+ <div class="gnote"><b>완충 = 현금 + 확정 미인출 여신 + 조달 여력</b>이고, <b>조달 여력은 신용등급으로 판정</b>한다 — 2026년 우량 채권 시장은 열려 있어 <b>A- 이상은 사실상 무제한</b>(인정) / <b>BBB~BBB-는 조건부</b>(넣되 한 단계 보수적으로 — 정크로 떨어지면 기관 보유가 금지돼 시장이 닫힌다) / <b>투기등급·무등급·비상장은 불인정</b>(현금만).<br><br>🔑 <b>여기가 누적 적자의 자리다.</b> 누적 적자를 절대액으로 감점하지 않는다(그러면 아마존을 초기에 탈락시켰을 것이다). 대신 <b>완충을 얼마나 깎아먹었는지</b>로만 들어간다.<br>❌ <i>"누적 적자 $50B니까 나쁘다"</i> → ✅ <i>"완충이 $31.9B 남았고 연 $23.7B를 태우니 1.3년이다"</i></div>
+ <div class="gwho">게이트 3은 <b>우량 기업에겐 안 걸린다</b> — 등급이 취약한 곳만 걸러내는 장치다. v1.5에서 걸린 곳은 <b>Oracle 하나</b></div>
+</div>
+
+<div class="garrow">▼</div>
+
+<div class="gate">
+ <div class="gnum">게이트 4 — 부외 부담</div>
+ <div class="gq">미래 지출이 덮이는가?</div>
+ <div class="gmet"><b>약정 커버리지 = 계약된 수입(RPO·백로그) ÷ 부외 약정</b></div>
+ <div class="gout">
+  <div class="gbranch ggood"><b>1배 이상 → 유지</b><em>Oracle 2.6배(리스 $250B 대비 RPO $638B) · Amazon 1배 초과 · Anthropic 1.3배</em></div>
+  <div class="gbranch gbad"><b>1배 미만 · 판정 불가 → 한 단계 하향</b><em>OpenAI 0.67배 — 연 약정 $60B인데 ARR $40B. 이미 -5 바닥이라 추가 하향 없음</em></div>
+ </div>
+ <div class="gnote"><b>⚠️ 부외 약정을 연 소진율에 그냥 더하면 안 된다</b> — 성격이 다른 셋이 한 칸에 섞여 있고 각자 갈 자리가 다르다.<br><br>
+ <b style="color:var(--tx)">A. 이미 개시된 리스</b>(운영 중 DC 임차료) → <b style="color:#fca5a5">쓰지 않음.</b> 이미 FCF에 들어 있어 더하면 이중 계상<br>
+ <b style="color:var(--tx)">B. 미개시 약정</b>(Meta $279B·Oracle $250B·Anthropic $300B) → <b style="color:var(--acc)">여기, 게이트 4</b><br>
+ <b style="color:var(--tx)">C. 우발 보증</b>(NVIDIA 잔존가치 25%·SB Energy $105B·백스톱) → <b style="color:#fca5a5">쓰지 않음.</b> 확정 지출이 아니라 <b>⑦ 순환금융</b>에서 이미 셌다<br><br>
+ 🔑 <b>왜 절대액이 아니라 커버리지인가</b> — <b>리스는 매출을 만드는 자산</b>이다. Oracle이 $250B를 내는 것은 그 데이터센터에서 RPO $638B를 벌기 위해서다. 나가는 돈만 세고 들어오는 계약을 안 세면, ⑨가 지키기로 한 <b>아마존 효과</b>("적자로 산 자산의 수명을 본다")를 정면으로 부정하게 된다.</div>
+ <div class="gwho">5사 약정 $969B 중 <b>$662B가 부외</b>인데도 <b>점수가 하나도 안 움직인 것이 결론</b>이다 — "부외가 크니 감점"이라는 직관을 규칙이 막았다</div>
+</div>
+
+</div>
+
+<div style="font-size:13px;font-weight:800;margin:18px 0 6px">실제 적용 예 — Oracle이 -3이 된 과정</div>
+<div class="gex">
+ <div class="gexs" style="border-color:rgba(52,211,153,.3)"><b>게이트 1</b> ✅<br><span style="color:var(--tx3)">영업이익 $22.4B<br>(마진 33.2%)</span><br>→ 통과</div>
+ <div class="gexs" style="border-color:rgba(239,68,68,.3)"><b>게이트 2</b> ❌<br><span style="color:var(--tx3)">TTM FCF <b>-$23.7B</b><br>OCF $32.0B − capex $55.7B</span><br>→ <b>-2</b></div>
+ <div class="gexs" style="border-color:rgba(245,158,11,.35)"><b>게이트 3</b> ⚠️<br><span style="color:var(--tx3)">$31.9B ÷ $23.7B = <b>1.3년</b><br>BBB-라 조달 여력 조건부</span><br>→ 한 단계 하향 <b>-3</b></div>
+ <div class="gexs" style="border-color:rgba(52,211,153,.3)"><b>게이트 4</b> ✅<br><span style="color:var(--tx3)">RPO $638B ÷ 리스 $250B<br>= <b>2.6배</b></span><br>→ 추가 하향 없음</div>
+ <div class="gexs" style="border-color:var(--acc);background:rgba(99,102,241,.09)"><b>최종 ⑨ = -3</b><br><span style="color:var(--tx3)">함정 -10 · 조정 4<br>단독 13위</span></div>
+</div>
+<div class="warnbox" style="background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe"><b>⑨에 쓰지 않는 것</b> — <b>EPS 상회/하회</b>(실적의 질이지 현금이 아니다) · <b>누적 적자 절대액</b>(아마존 효과) · <b>CapEx 절대액</b>(이미 FCF에 반영됨) · <b>우발 보증</b>(⑦ 소관) · <b>이미 개시된 리스</b>(이미 FCF에 포함) · <b>순부채 잔고</b>(⑨는 스톡이 아니라 플로우를 잰다 — 레버리지는 별표 J에서 교차검증) · <b>연 소진 절대액</b>(규모 편향 — v1.5에서 손실률 비율로 교체)</div>
+
+</details>
+</div>
+
+<details class="blk" style="margin-top:20px"><summary>카드에 나오는 "별표 A~J"가 뭔가 <span style="color:var(--tx3);font-weight:400;font-size:12.5px">— 10개 규칙 범례</span></summary>
+<div class="inner">
+<p class="sub" style="margin:0 0 8px">채점하다 같은 오류가 반복돼서, 판단이 갈리는 지점마다 규칙을 하나씩 못 박았다. 기업 카드의 근거에 <i>(별표 G)</i> 처럼 붙어 있으면 <b>그 규칙을 적용해 나온 점수</b>라는 뜻이다.</p>
+<div class="tablewrap"><table class="rtable" style="min-width:0">
+<thead><tr><th style="width:52px">별표</th><th style="width:58px">factor</th><th class="name">무엇을 고정했나</th></tr></thead>
+<tbody>
+<tr><td class="mono"><b>A</b></td><td class="mono">①</td><td class="name" style="color:var(--tx2)"><b>채널 매트릭스</b> — 한 회사를 한 유형에 가두지 않는다. 소비자·업무·거래·부품 채널을 각각 재고 <b>가장 강한 락인이 ①을 결정</b>한다. 얕은 채널이 깊은 채널을 깎지 않는다. <b>부품만 있으면 상한 2점</b>(NVIDIA·TSMC)</td></tr>
+<tr><td class="mono"><b>B</b></td><td class="mono">③</td><td class="name" style="color:var(--tx2)"><b>"안 만든 것"은 카운터 포지셔닝이 아니다</b> — 구글은 안드로이드를 <b>만들어서</b> 공짜로 뿌렸다. "우리는 모델 안 만들고 남의 걸 팝니다"는 같은 플레이가 아니다</td></tr>
+<tr><td class="mono"><b>C</b></td><td class="mono">⑤</td><td class="name" style="color:var(--tx2)"><b>적대는 성격이지 개수가 아니다</b> — 소송 건수를 세지 않는다. 규제형(비용)인지 구조형(사업 모델 위협)인지를 본다</td></tr>
+<tr><td class="mono"><b>D</b></td><td class="mono">전체</td><td class="name" style="color:var(--tx2)"><b>미래 계획은 현재 점수에 안 넣는다</b> — 계획·발표·포지션은 0점이고 출하·매출·채택률만 센다. 매 분기 재채점하니 좋아지면 그때 올린다. <i>(허깅페이스 인수가 아직 점수에 없는 이유 — 클로징 2027 상반기·규제 조건부)</i></td></tr>
+<tr><td class="mono"><b>E</b></td><td class="mono">전체</td><td class="name" style="color:var(--tx2)"><b>비(非)AI 사업은 ①·③수익모델·④에서만 센다</b> — Starlink·자동차·DB 같은 사업이 ②게임체인저 점수를 만들어주지 않는다</td></tr>
+<tr><td class="mono"><b>F</b></td><td class="mono">②</td><td class="name" style="color:var(--tx2)"><b>게임체인저 세 경로</b> — 성능 도약 / 패러다임 적응 / <b>표준 선점</b>. 하나라도 통과하면 인정. <i>(Anthropic의 MCP, Amazon의 Interconnect 규격이 표준 경로)</i></td></tr>
+<tr><td class="mono"><b>G</b></td><td class="mono">⑤</td><td class="name" style="color:var(--tx2)"><b>⑤ = 3 + 동맹등급(0~+2) + 적대등급(0~-3)</b> — 중립 3점에서 시작해 가감한다. 카드의 <i>"동맹 A+1 / 적대 H-1 → 3"</i> 이 그 계산이다. 14개사 점수를 전부 재현해 검증했다</td></tr>
+<tr><td class="mono"><b>H</b></td><td class="mono">⑤⑧</td><td class="name" style="color:var(--tx2)"><b>조달과 동맹을 가르는 4문</b> — 방향성 원칙: <b>파는 쪽엔 고객이 동맹, 사는 쪽엔 공급자가 조달</b>. 한 관계가 ⑤ 가점과 ⑧ 감점을 동시에 받는 것은 정상이고, <b>같은 속성을 두 번 세는 것</b>이 금지다</td></tr>
+<tr><td class="mono"><b>I</b></td><td class="mono">⑦</td><td class="name" style="color:var(--tx2)"><b>순환금융 2축 판정</b>(0~-3) — <b>가로축</b>: 내 매출을 내는 고객이 그 돈을 조달로 구했는가 · <b>세로축</b>: 그 돈이 원래 내 돈이었는가(지분·보증). 둘 다면 최심. 배점을 0~-3으로 좁힌 것은 <b>측정 가능성에 비례</b>시키기 위해서다</td></tr>
+<tr><td class="mono"><b>J</b></td><td class="mono">교차검증</td><td class="name" style="color:var(--tx2)"><b>신용등급·CDS는 점수가 아니다</b> — ⑦⑧⑨를 한꺼번에 반영하는 복합 신호라 어느 factor의 입력으로도 못 쓴다(이중 계상). 대신 <b>우리 함정 총점이 맞는지 검증</b>하는 데 쓰고, 어긋나면 재채점 트리거</td></tr>
+</tbody></table></div>
+</div></details>
+
+<h3 style="margin-top:34px">채점을 조인 규칙 세 가지</h3>
+<p class="sub" style="margin-bottom:12px">채점하다 반복해서 걸린 오류를 규칙으로 고정했다.</p>
+
+<div class="fgrid">
+<div class="fcard neg" style="border-top-color:var(--dang)"><div class="fname">B. ③은 "안 만든 자"에게 주는 점수가 아니다</div>
+ <div class="fex" style="margin-top:9px">사례는 전부 <b>만들되 수익모델을 달리한</b> 경우다. 구글은 안드로이드를 <b>만들어서</b> 공짜로 뿌렸고, 닌텐도는 더 좋은 게임기를 <b>만들었다</b>.
+ <br><br>👉 <b>"우리는 모델 안 만들고 남의 걸 팝니다"는 안드로이드 플레이가 아니다.</b> 안드로이드 플레이는 프론티어 모델을 만들어 공짜로 뿌려 모델 계층의 마진을 죽이는 것이다.</div>
+ <div class="fmet"><b>모방 불가능성</b> — 경쟁사 2곳 이상이 이미 하면 불인정 · <b>①의 재탕이면 불인정</b><br>
+ <b>별도 수익모델</b> — 전략을 먹여 살리는 비(非)모델 매출 또는 양의 단위경제 필요. <b>순적자 자체는 실격이 아니다(아마존 효과) — 단위경제로 판정</b><br>
+ <b>후발 가속도</b> — <b>성장률의 2차 도함수.</b> 계획·포지션은 0점, <b>지연은 감속 처리</b><br><br>🔑 <b>같은 지표라도 절대값은 ①, 변화율은 ③</b> — ARR·시트 수의 <b>크기</b>는 ①(위치), <b>증가율의 방향</b>만 ③(가속도). <i>예: Anthropic ARR $65B → ① · 월증가율 +57%→+14% → ③</i><br><br>
+ 🔑 <b>모방 불가능성이 핵심 — 없으면 상한 3점</b><br>
+ 🔑 <b>5점은 "문이 닫혔다"는 증거가 있을 때만</b> — 라스트무버는 사후 식별. 2026년 현재 해당 기업 없음<br>
+ 🔑 <b>"공짜로 뿌린다"만으론 부족 — 회수 장치가 필요</b>. 안드로이드엔 Play Store, 오픈웨이트엔 없음<br>
+ 🔑 <b>순적자는 실격 사유가 아니다</b> — 그 규칙은 1999년 아마존(22점)을 탈락시킨다. 단위경제로 판정</div></div>
+
+<div class="fcard neg" style="border-top-color:var(--dang)"><div class="fname">E. 거리를 가속도로 착각하지 않는다</div>
+ <div class="fex" style="margin-top:9px"><b>위치</b>(현재 규모·ARR·점유율) = ①이 재는 것 · <b>속도</b>(성장률) = 참고 · <b>가속도</b>(성장률의 변화) = ③이 재야 할 것.
+ <br><br>👉 <i>"2년 만에 격차 회수"</i>(거리), <i>"다운로드 30억"</i>(위치), <i>"ARR $9B→$47B"</i>(거리)는 <b>가속도가 아니다.</b> 과거에 얼마나 갔느냐지 지금 빨라지고 있느냐가 아니다.</div>
+ <div class="fmet"><b>⚠️ 플랫폼 전체가 아니라 AI 귀속분만 본다.</b> 기존 플랫폼 규모·관성은 ①이 잰다<br>
+ ✅✅<b>강한 가속</b> Amazon(AI 런레이트 $15B→$25B+, QoQ +67%) · Alphabet(Cloud +34→48→63→82%)<br>
+ ✅<b>가속</b> Microsoft(Azure +39→40→43%, Copilot 순증 500만→1,000만) · Alibaba(+34→36→38→45%) · <b>OpenAI(재가속, $25B 정체→$40B)</b><br>
+ ❌<b>감속</b> <b>Anthropic(ARR 월 +57%→+14%)</b> · Apple(Siri 2년 지연)<br>
+ ⚠️<b>미공시</b> Meta — AI 매출을 별도 공시하지 않는다</div></div>
+
+<div class="fcard neg" style="border-top-color:var(--dang)"><div class="fname">C. ⑤의 적은 수가 아니라 성격을 본다</div>
+ <div class="fex" style="margin-top:9px"><b>고객이 적이 되면 존립 위협</b> — 적이 늘수록 매출이 직접 사라진다. <b>NVIDIA ⑤2점</b>: 매출 40%인 하이퍼스케일러 4곳이 전부 자체 칩 개발 — Nemotron 연합으로 자기 칩 없는 아군군을 만들어 1→2.
+ <br><br><b>규제·경쟁사 소송은 비용</b> — 벌금·언번들링을 당해도 본업 수요는 유지된다. <b>Apple ⑤3점</b>: 전선은 4개지만 DOJ에 져도 아이폰은 팔린다.</div>
+ <div class="fmet">👉 적대세력 <b>수</b>는 애플이 많아도 <b>위험</b>은 엔비디아가 크다. 아군 규모(App Store $1.4T · 엔비디아는 파트너 이탈 중)까지 더해 3 대 1</div></div>
+
+<div class="fcard neg" style="border-top-color:var(--dang)"><div class="fname">D. 미래 계획은 현재 점수에 넣지 않는다</div>
+ <div class="fex" style="margin-top:9px"><b>매 분기 재채점하므로 좋아지면 그때 올린다.</b> 계획·발표·포지션은 0점이고 <b>출하·매출·채택률처럼 지금 측정되는 것만</b> 센다.</div>
+ <div class="fmet">Anthropic 자체 칩(2028~2030) → ④4 유지, Trainium3·Ironwood는 <b>이미 출하 중</b><br>
+ Apple Baltra(2026 하반기 예정) → ④3 유지, 양산 확인 시 상향<br>
+ Apple Siri(2년 연기) → ③ <b>감속으로 처리</b>, 포지션은 있으나 움직이지 않았다</div></div>
+</div>
+
+<div class="notice" style="border-left-color:var(--acc);background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe">
+📐 <b>합산 규칙</b> — 앞 5개 합계(최대 25점)에서 뒤 4개 합계(최대 -20점)를 뺀 값이 <b>조정 총점</b>.
+기준선은 <b>앞 5개가 20점 이상이면 90년 과점 후보군, 14점 이하면 장기 승자가 되기 어렵다</b>. 정성 평가라 1~3점 차이는 의미 없고, <b>매 분기 점수의 변화 방향</b>을 보는 게 목적이다.
+</div>
+
+<details class="blk"><summary>검토했으나 채택하지 않은 factor — "데이터 접근성"</summary><div class="inner">
+<p style="font-size:13.5px;color:var(--tx2);margin-bottom:12px">"데이터 접근성"은 서로 다른 세 가지가 섞인 말이고, <b>셋 다 이미 집이 있다.</b> 별도 factor로 만들면 4중 계상이 된다.</p>
+<table class="rtable">
+<thead><tr><th style="width:30%">무슨 뜻인가</th><th>어디에 있나</th></tr></thead>
+<tbody>
+<tr><td><b>보유량</b><br>데이터를 얼마나 많이 갖고 있나</td><td>어디에도 없다. <b>강의가 "가짜 해자"로 못박은 것</b> — AI가 데이터 이전을 자동화하면 크기는 무의미해진다</td></tr>
+<tr><td><b>회수 루프</b><br>쓸수록 데이터가 쌓여 모델이 좋아지나</td><td><b>①네트워크 효과의 정의 그 자체</b> — "가입자↑ → 데이터 축적 → 가치 증대 → 가입자↑"</td></tr>
+<tr><td><b>법적 접근권</b><br>뭘 합법적으로 학습시킬 수 있나</td><td><b>③LastMover에 반영.</b> Anthropic의 도서 스캔 우회, OpenAI의 NYT 소송이 그 사례</td></tr>
+</tbody></table>
+<div class="warnbox" style="background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe">
+유일하게 안 잡히는 것은 <b>"아직 안 쓴 독점 코퍼스"</b>(유튜브 영상·타오바오 로그·주행영상·기업 데이터)인데, 이건 <b>잠재력이라 별표 D에 따라 0점</b>이다.
+<br><br>👉 <b>검증 방법이 이미 있다.</b> 유튜브 데이터가 진짜 무기면 Gemini가 하드 벤치마크에서 이겨야 한다. 안 이기면 아직 무기가 아니다. <b>가진 것이 아니라 바꿔낸 것으로 점수를 준다.</b>
+</div>
+</div></details>
+
+<h2><span class="num">03</span>과점 × 함정 지도</h2>
+<p class="sub">오른쪽으로 갈수록 구조가 강하고, 위로 갈수록 함정이 얕다. <b>오른쪽 위가 이상적</b>. 원 크기는 시가총액(비상장은 최근 밸류).</p>
+
+<div class="chartbox">
+<svg viewBox="0 0 900 470" id="scatter"></svg>
+<div class="legend">
+  <span><i style="background:#60a5fa"></i>주채널: 소비자</span>
+  <span><i style="background:#34d399"></i>주채널: 업무</span>
+  <span><i style="background:#a78bfa"></i>주채널: 거래</span>
+  <span><i style="background:#fb923c"></i>부품(상한 2점)</span>
+  <span style="margin-left:auto;color:var(--tx3)">점선 = 기준선(과점 factor 20점)</span>
+</div>
+</div>
+
+<h2><span class="num">04</span>종합 순위표</h2>
+<p class="sub">열 제목을 누르면 정렬됩니다.</p>
+
+<div class="tablewrap">
+<table id="mainTable">
+<thead><tr>
+  <th data-k="rank">#</th>
+  <th class="name" data-k="name">기업</th>
+  <th data-k="s0">①네트워크</th><th data-k="s1">②게임체인저</th><th data-k="s2">③LastMover</th>
+  <th data-k="s3">④호황후비전</th><th data-k="s4">⑤아군확보</th>
+  <th data-k="moat" class="divider">과점</th>
+  <th data-k="t0">⑥가격</th><th data-k="t1">⑦순환금융</th><th data-k="t2">⑧비대칭의존</th><th data-k="t3">⑨적자깊이</th>
+  <th data-k="trap">함정</th>
+  <th data-k="total" class="divider">조정총점</th>
+</tr></thead>
+<tbody></tbody>
+</table>
+</div>
+
+<div class="notice" style="border-left-color:var(--acc);background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe">
+📊 <b>v1은 기준선이라 추이 차트가 비어 있다.</b> 강의 원본(2026-07) 점수는 <b>규칙을 8차례 개정하기 전</b>에 매긴 것이라 현재 판과 비교할 수 없다 —
+소급 재채점하지 않는 한 델타를 표시하면 <b>회사가 변한 것처럼 오독</b>된다.
+<b>2026-11(v2)부터 각 기업 카드에 과점 factor 추이가 나타난다.</b>
+</div>
+
+<h2><span class="num">05</span>기업별 상세</h2>
+<p class="sub">카드를 누르면 9개 factor 근거가 펼쳐집니다.</p>
+<div class="cards" id="cards"></div>
+
+<h2><span class="num">06</span>채점 기준 상세</h2>
+
+<details class="blk"><summary>과점 factor 5개 — 각 0~5점</summary><div class="inner">
+<div class="tablewrap" style="border:none;background:none">
+<table class="rtable" style="min-width:560px">
+<thead><tr><th>#</th><th>Factor</th><th>핵심 판별 질문</th><th>1차 지표</th></tr></thead>
+<tbody>
+<tr><td>①</td><td><b>네트워크 효과</b></td><td class="q">"가격을 올려도 남는가?"<br><span style="color:var(--tx3);font-weight:400">아마존이 프라임 회비를 올려도 못 떠나는 것</span></td><td><b>채널별로 다르게 잰다(별표 A)</b> — 소비자: 설치기반·MAU·인상 후 이탈 / 업무: 유료 시트·기업 고객 / 거래: OpenRouter 매출 점유율·평균 $/M / <b>부품: 상한 2점</b></td></tr>
+<tr><td>②</td><td><b>신기술 게임체인저</b></td><td class="q">"판을 바꿀 기술을 먼저 냈는가, 남이 바꾼 판에 빨리 올라탔는가?"<br><span style="color:var(--tx3);font-weight:400">성능 도약 · 패러다임 적응 · 표준 선점 — 셋 중 하나</span></td><td>Artificial Analysis Index · ARC-AGI-2 · HLE · SWE-bench</td></tr>
+<tr><td>③</td><td><b>Last Mover</b></td><td class="q">"선두가 내 방식을 베끼면 선두 자신의 수익모델이 무너지는가(진입) + 내 뒤의 진입로는 닫히는가(차단)?"<br><span style="color:var(--tx3);font-weight:400">노키아가 무료 OS를 따라 하면 노키아의 단말기 매출이 죽는다</span></td><td><b>사다리</b> — 모방 불가능성·별도 수익모델·후발 가속도를 ✅1/⚠️0.5/❌0으로 채점 → <b>통과점(0~3)</b> · 근거 지표는 API 가격·오픈웨이트 배포·OpenRouter 토큰 볼륨</td></tr>
+<tr><td>④</td><td><b>호황 이후 비전</b></td><td class="q">"곡괭이만 팔다 끝나는가, 광부가 되는가?"<br><span style="color:var(--tx3);font-weight:400">노텔·루슨트 소멸 / NVIDIA 10개 영역 진출</span></td><td>사업 부문 수 · 자체 칩 <b>출하 여부</b> · 수주잔고(RPO) · 비AI 사업도 여기서 센다(별표 E) <span style="color:var(--dang)">계획·발표는 0점(별표 D)</span></td></tr>
+<tr><td>⑤</td><td><b>아군 확보</b></td><td class="q">"동맹이 적보다 많은가?"<br><span style="color:var(--tx3);font-weight:400">VHS가 성능 좋은 베타맥스를 이긴 이유</span></td><td><b>⑤ = 3 + 동맹등급 + 적대등급</b>(별표 G) · <b>동맹</b>: 지분·독점·재판매권·수수료 분배의 규모 / <b>적대</b>: 건수가 아니라 <b>성격</b> <span style="color:var(--dang)">조달·공짜 사용자·관계사는 동맹으로 세지 않음(별표 H)</span></td></tr>
+</tbody></table></div>
+<div class="warnbox" style="background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe">
+<b>③ 점수 사다리 (기계적)</b> — 세 기준을 ✅=1 · ⚠️=0.5 · ❌=0으로 판정, 합계를 <b>통과점</b>(0~3)이라 하고 환산:
+<b>P 0→1점 · 0.5~1→2점 · 1.5~2→3점 · 2.5~3→4점(모방 불가능성 완전 ✅일 때만) · 5점은 4점 조건+"문이 닫힌 증거"</b>(선두 가격 결정력 붕괴/점유율 역전).
+v1 검증: 이 사다리는 14개사 현행 점수를 전부 재현한다 — 예: Amazon ❌✅✅(P2)→3 · Apple ❌✅❌(P1)→2 · OpenAI ❌❌✅(P1)→2 · Alibaba ⚠️✅✅(P2.5)→3<i>(모방불가 ⚠️라 4 불가)</i>
+</div>
+<div class="warnbox"><b>①은 회사의 모든 "실질 채널"을 보고, 가장 강한 락인으로 매긴다 — 한 유형에 가두지 않는다.</b>
+<ul class="tight" style="color:#fca5a5">
+<li><b>소비자</b> — 설치기반·MAU·구독 유지율·가격 인상 후 이탈 <i>(Apple·Alphabet·Meta·Amazon·Alibaba·<b>OpenAI</b>·Tesla의 주채널)</i></li>
+<li><b>업무</b> — 유료 시트·기업 고객 수·전환비용 <i>(Microsoft·<b>Anthropic</b>·Palantir·Amazon의 주채널)</i></li>
+<li><b>거래</b> — OpenRouter 매출 점유율·평균 $/M <i>(Anthropic·OpenAI의 보조 채널 · 중국 소형 랩의 주채널)</i></li>
+<li><b>부품</b> — 실질 소비자·업무 채널이 없으면 <b>상한 2점</b> <i>(NVIDIA)</i></li>
+</ul>
+<b style="display:block;margin-top:9px">해자는 가장 깊은 곳이 기준이다 — 얕은 채널이 깊은 채널을 깎지 않는다.</b> 단 실질 채널만 인정(매출·사용자 기여가 유의미할 것). 이전 판은 OpenAI를 "거래 기반"으로 분류해놓고 소비자 지표(MAU 10억)로 채점하는 모순이 있었다 — 이제 표가 채점을 그대로 설명한다.</div>
+</div></details>
+
+<details class="blk"><summary>함정 factor 4개 — 각 0 ~ -5점</summary><div class="inner">
+<div class="tablewrap" style="border:none;background:none">
+<table class="rtable" style="min-width:560px">
+<thead><tr><th>#</th><th>Factor</th><th>핵심 판별 질문</th><th>1차 지표</th></tr></thead>
+<tbody>
+<tr><td>⑥</td><td><b>현재 가격의 정도</b></td><td class="q">"미래 성장이 얼마나 선반영됐나?"</td><td>상장: <b>NTM PER</b> / 비상장: <b>밸류÷ARR</b> — 이 둘만 점수 개입<br><span style="color:var(--tx3)">TTM PER(영업외 30%+ 무효)·P/S·시총 크기는 참고만</span></td></tr>
+<tr><td>⑦</td><td><b>순환 금융</b></td><td class="q">"내 매출을 내는 고객이, 그 돈을 어디서 구했는가?"<br><span style="color:var(--tx3);font-weight:400">자기 영업이익이면 진짜 수요, 조달이면 끊기면 사라질 수요 — 판정은 별표 I 2축(0~-3)</span></td><td>환류 구조 · 루프의 정중앙인가 주변부인가</td></tr>
+<tr><td>⑧</td><td><b>비대칭 의존</b></td><td class="q">"끊기면 매출이 주는가, 회사가 멈추는가?"<br>+ "공급자가 곧 경쟁자인가?"</td><td>고객 집중도 · 컴퓨트 자체 보유 · 약정÷매출</td></tr>
+<tr><td>⑨</td><td><b>적자 깊이</b></td><td class="q">4단계 게이트: 본업이 버는가(영업이익) → 현금이 새는가(TTM FCF) → 얼마나 버티는가(런웨이) → 미래 지출이 덮이는가(커버리지)<br><span style="color:var(--tx3);font-weight:400">영업이익 = 심각도(구조) · FCF = 시급성(생존)</span></td><td><b>TTM FCF</b> · <b>영업손실률</b> · 완충(순현금) · 런웨이 · BEP 시점<br><span style="color:var(--tx3)">EPS 상회/하회 · 누적적자·연 소진 <b>절대액</b> · 순부채 잔고는 쓰지 않음</span></td></tr>
+</tbody></table></div>
+<h3 style="margin-top:18px">⑥ 점수 구간 (기계적 적용)</h3>
+<table class="rtable" style="max-width:380px">
+<thead><tr><th>점수</th><th><b>NTM PER</b> (상장)</th><th>밸류÷ARR (비상장)</th></tr></thead>
+<tbody>
+<tr><td><b>0</b></td><td>&lt; 20</td><td>—</td></tr>
+<tr><td><b>-1</b></td><td><b>20~29</b></td><td>—</td></tr>
+<tr><td><b>-2</b></td><td><b>29~42</b></td><td>~20x</td></tr>
+<tr><td><b>-3</b></td><td><b>42~62</b></td><td>20x대</td></tr>
+<tr><td><b>-4</b></td><td><b>62~90</b></td><td>30x+</td></tr>
+<tr><td><b>-5</b></td><td>90 이상</td><td>100x+</td></tr>
+</tbody></table>
+<p style="font-size:12.8px;color:var(--tx2);margin:8px 0 4px"><b>NTM PER</b> = 주가 ÷ 향후 4개 분기 컨센서스 EPS 합 (StockAnalysis "Forward PE", 회계연도가 달라도 창 동일). <b>예외 없음</b> — 구간표 결과를 다른 지표로 올리거나 내리지 않는다. v1.4까지 NVIDIA에만 P/S 21.5를 이유로 한 단계 더 깎았는데, 규칙이 아니라 "NVIDIA가 Meta보다 싸다는 결론이 이상해서" 직관을 정당화한 것이라 v1.5에서 삭제. <b>PER이 낮으면 낮은 것이 정보다.</b></p>
+<p style="font-size:12.8px;color:var(--tx2);margin:4px 0 8px"><b>경계 규칙 (v1.5)</b> — NTM PER이 구간 경계(<b>20·29·42·62·90</b>)에서 <b>±3% 이내</b>면 ⚠️ · <b>비상장에는 적용하지 않는다</b>(밸류가 반년~1년에 한 번 갱신되므로 "하루 변동폭" 논리가 성립 안 함). 점수는 그대로 기계 적용, 표기만 한다: "우연히 이쪽 칸에 떨어진 점수"임을 알리는 용도. 3%는 하루 정상 변동폭 수준의 임의값. 다음 분기 ⚠️ 기업이 선을 넘으면 변동 사유를 📈실적이 아니라 <b>📏경계 통과</b>로 기록한다.</p>
+<h3 style="margin-top:18px">⑥ 상장 / 비상장 — 3층 원칙 (v1.5)</h3>
+<p style="font-size:12.8px;color:var(--tx2);margin:0 0 8px"><b>두 지표는 종류가 다르다</b> — 상장 NTM PER은 <b>이익 배수</b>, 비상장 밸류÷ARR은 <b>매출 배수</b>. 같은 표에 넣되 <b>직접 비교 불가</b>.</p>
+<div class="tablewrap"><table class="rtable" style="max-width:720px">
+<thead><tr><th>층</th><th class="name">조건</th><th class="name">처리</th></tr></thead>
+<tbody>
+<tr><td><b>1차</b></td><td class="name"><b>NTM PER이 존재</b></td><td class="name"><b>그것만 쓴다</b> — 다른 지표는 참고도 아니다</td></tr>
+<tr><td><b>2차</b></td><td class="name">비상장이라 없음</td><td class="name">밸류÷ARR + 비상장 구간표 · <b>⚠️ 정밀도 열위</b> · 경계 규칙 미적용</td></tr>
+<tr><td><b>3차</b></td><td class="name">마진이 산출됨</td><td class="name">이익 환산치를 <b>참고로 병기</b> — 점수 개입 없음</td></tr>
+</tbody></table></div>
+<div class="warnbox" style="background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.25);color:#a7f3d0"><b>🔑 상장하면 즉시 1차로 전환한다.</b> 상장 첫 분기부터 다른 상장사와 <b>완전히 동일한 룰</b>(NTM PER 구간표 + 경계 규칙)을 적용하고, 비상장 구간표·정밀도 열위 표기·자본효율 보조지표는 <b>전부 폐기</b>한다. 변동 사유는 📐규칙이 아니라 <b>🔧정정</b>(기업이 변한 게 아니라 잣대가 정상화된 것). <b>Anthropic은 10월 IPO 예상 — v2에서 자동 전환 대상.</b></div>
+<div class="warnbox"><b>🔑 ARR은 TTM 매출보다 과대하다 — 반드시 보정</b> · ARR = 특정 시점 월매출 × 12(런레이트), 상장사 P/S 분모 = 직전 4분기 실제 매출. 급성장 기업은 런레이트가 TTM을 크게 앞선다. Anthropic 14.8배를 그대로 쓰면 NVIDIA(17.9)보다 싸 보이지만 <b>분모를 맞추면 30~39로 Palantir(66.2, ⑥-4)의 절반</b>이다.<br><br><b>🔑 자본효율 = ARR ÷ 누적 조달액</b> — 같은 배수라도 그 매출을 만드는 데 돈을 얼마나 태웠는지가 다르다. <b>Anthropic 0.52</b>($65B ÷ 약 $125B) 대비 <b>OpenAI 0.22</b>($40B ÷ 약 $180~190B). OpenAI는 1.5배 많은 돈을 태우고 <b>더 낮은 밸류</b>($852B &lt; $965B)에 있다 — 2.4배 차이가 같은 구간에서도 점수를 가른다.</div>
+<h3 style="margin-top:18px">⑤ 점수 판정 (별표 G · 기계적 적용) — 동맹등급 + 적대등급</h3>
+<p style="font-size:12.8px;color:var(--tx2);margin:0 0 8px"><b>⑤ = 3 + 동맹등급(A) + 적대등급(H)</b> — 새 규칙이 아니라 암묵 기준의 명문화. 아래 판정이 14개사 현행 점수를 전부 재현한다.</p>
+<div class="tablewrap"><table class="rtable" style="max-width:760px">
+<thead><tr><th>A</th><th class="name">동맹 등급 — "아군 확보"는 능동태다</th><th>H</th><th class="name">적대 등급 — 크기가 아니라 종류</th></tr></thead>
+<tbody>
+<tr><td><b>+2</b></td><td class="name">지분이 걸린 동맹이 <b>복수</b>이거나 <b>경쟁사까지</b> 내 매대·공정에 편입</td><td><b>0</b></td><td class="name">적대 최소</td></tr>
+<tr><td><b>+1</b></td><td class="name">의미 있는 상업 동맹이 있으나 소수·한 방향</td><td><b>-1</b></td><td class="name"><b>비용형</b> — 벌금·개별 소송·규제 조사. 사업 구조는 안 건드림</td></tr>
+<tr><td><b>0</b></td><td class="name">독립 상업 동맹 없음 — 공짜 사용자뿐이거나 <b>관계사뿐</b></td><td><b>-2</b></td><td class="name"><b>구조형</b> — 주요 고객이 곧 경쟁자 / 사업의 <b>정당성 자체</b>가 표적</td></tr>
+<tr><td></td><td class="name" style="color:var(--tx3)">불인정 3종: 조달 ≠ 동맹(<b>판별은 별표 H</b>) · 공짜 사용자 ≠ 동맹 · 관계사 ≠ 독립 동맹</td><td><b>-3</b></td><td class="name"><b>다발형</b> — 구조형 적대가 <b>복수 전선 동시 진행</b> + 최대 파트너와도 긴장</td></tr>
+</tbody></table></div>
+<div class="warnbox" style="background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe"><b>예시</b> — Anthropic A+2/H0 = <b>5</b> · Alphabet·Amazon·MS·TSMC A+2/H-1 = <b>4</b> · Meta·Alibaba·Apple·SpaceX A+1/H-1 = <b>3</b> · Palantir A+1/H-2 = <b>2</b> · <b>OpenAI A+2/H-3 = 2</b>(동맹은 Palantir보다 강하나 적대가 한 단계 깊다) · Tesla A0(관계사뿐)/H-1 = <b>2</b> · NVIDIA A0/H-2(<b>고객이 곧 경쟁자</b>) = <b>1</b></div>
+<h4 style="margin:14px 0 6px;font-size:13.5px;color:var(--tx2)">별표 H — 조달과 동맹을 가르는 4문</h4>
+<p style="font-size:12.5px;color:var(--tx3);margin:0 0 8px"><b>같은 거래도 방향에 따라 다르다.</b> 파는 쪽에겐 고객이 동맹 후보, 사는 쪽에겐 공급자가 조달. "아군 확보"는 내 성공에 남을 태우는 것이지 돈 주고 사오는 게 아니다.</p>
+<div class="tablewrap"><table class="rtable" style="max-width:700px">
+<thead><tr><th>#</th><th class="name">질문</th><th class="name">판정</th></tr></thead>
+<tbody>
+<tr><td><b>1</b></td><td class="name">무엇을 주고받나</td><td class="name">단순 매매 = 조달 / <b>지분·독점·공동개발·재판매 권리·수수료 분배</b> = 동맹 후보</td></tr>
+<tr><td><b>2</b></td><td class="name">상대가 잘되면 내가 잘되나</td><td class="name"><b>연동되면 동맹 — 필수 조건</b></td></tr>
+<tr><td><b>3</b></td><td class="name"><b>상대가</b> 나를 떠날 수 있나</td><td class="name">떠날 수 있으면 <b>⑤ 동맹 제외</b> — 아군이 아니라 미래의 적</td></tr>
+<tr><td><b>4</b></td><td class="name"><b>내가</b> 상대를 떠날 수 있나</td><td class="name">못 떠나면 <b>⑧ 감점</b> — <b>⑤ 점수엔 영향 없음</b></td></tr>
+</tbody></table></div>
+<div class="warnbox"><b>3번 질문(상대가 떠날 수 있나)이 NVIDIA와 TSMC를 가른다</b> — 둘 다 파는 쪽이고 고객 매출도 연동되는데, <b>NVIDIA 고객은 대체품(Trainium·TPU·Maia)을 만드는 중</b>이고 <b>TSMC 고객은 팹을 짓지 않는다</b>. ⑤ 2점과 4점의 차이가 이 한 줄에서 나온다. · 조달 예: Apple의 칩 구매·Gemini 연 $1B 라이선스, Meta의 멀티벤더 구매 · <b>개인 소비자는 ⑤가 아니라 ①</b>(iPhone 사용자는 ①5, App Store 개발자는 ⑤ 동맹)</div>
+<h4 style="margin:12px 0 6px;font-size:13px;color:var(--tx2)">떠날 수 있는가 — 4칸으로 보기</h4>
+<div class="tablewrap"><table class="rtable" style="max-width:700px">
+<thead><tr><th></th><th class="name">상대가 떠날 수 있다</th><th class="name">상대가 못 떠난다</th></tr></thead>
+<tbody>
+<tr><td class="name"><b>내가 떠날 수 있다</b></td><td class="name" style="color:var(--tx2)">느슨한 거래 — <i>Amazon ← Bedrock 입점사</i></td><td class="name"><b>내가 갑, 최고의 동맹</b> — <b>TSMC ← 고객</b> ⑤4</td></tr>
+<tr><td class="name"><b>내가 못 떠난다</b></td><td class="name" style="color:var(--dang)"><b>최악 — 아군도 없고 의존만</b><br><b>NVIDIA ← 하이퍼스케일러</b> ⑤1 · ⑧-3</td><td class="name"><b>서로 묶임 — 동맹이되 을</b><br><b>Anthropic ↔ 3사</b> ⑤5 · ⑧-3</td></tr>
+</tbody></table></div>
+<p style="font-size:12.5px;color:var(--tx3);margin:6px 0 0">오른쪽 열은 둘 다 ⑤ 동맹이지만, <b>아래칸은 내가 못 떠나므로 ⑧ 감점이 따로 붙는다</b> — 그것이 "동맹이면서 의존"의 정체다.</p>
+<div class="warnbox" style="background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.25);color:#a7f3d0"><b>동맹(⑤)과 비대칭 의존(⑧)은 겹쳐도 된다</b> — 3번과 4번은 화살표 방향만 다른 같은 질문이라 독립이고, 한 관계가 <b>⑤ 가점과 ⑧ 감점을 동시에</b> 받을 수 있다. 재는 속성이 다르기 때문이다: <b>⑤는 "상대가 잘되면 내가 잘되나"(연동), ⑧은 "내가 상대를 대체할 수 있나"(대체 가능성)</b>. 이중 계상의 금지선은 "같은 관계"가 아니라 <b>"같은 속성"</b>이다 — 공급자가 경쟁자라는 <i>위험</i>은 ⑧에서 세고 ⑤에서 또 깎지 않는다(Anthropic ⑤A+2 / ⑧-3, 긴장 #4). 판정 순서: 1·2·3번으로 ⑤를 정하고 <b>그다음 독립적으로</b> 4번을 포함해 ⑧을 잰다.</div>
+<h3 style="margin-top:18px">⑦ 순환금융 (별표 I) — 무엇을 셀 수 있고 무엇은 못 세는가</h3>
+<p style="font-size:12.8px;color:var(--tx2);margin:0 0 8px"><b>측정 가능</b>: 영업외 이익 비중 · 관계사 거래 공시액 · 실행 투자액 &nbsp;|&nbsp; <b>측정 불가(발표뿐)</b>: 다년 계약 총액($300B·$500B는 인식 매출이 아니다) · <b>투자→매출 환류 경로</b>(세그먼트 공시로 분리 불가) · 루프의 "정중앙" 여부. <b>가점(④)은 실측만, 감점(⑦)은 구속력 있는 약정까지</b> — 단 근거마다 (실측)/(발표)를 표기한다.</p>
+<div class="warnbox"><b>🔑 평가이익은 ⑦의 증거가 아니다 (v1.5 정정)</b> — 평가익은 <b>손익의 질</b>(⑥ 소관, TTM PER 무효)이지 순환의 증거가 아니다. 접점은 하나뿐: <b>평가익의 출처가 내 고객사일 때만 방증</b>. 실제로 Alphabet Q2 평가익 $99B의 상당 부분은 <b>SpaceX 6% 지분(6월 IPO 마킹)</b>인데 SpaceX는 GCP 고객이 아니므로 순환이 아니라 <b>재무 투자 성공</b>이다.</div>
+<div class="tablewrap"><table class="rtable" style="max-width:760px">
+<thead><tr><th>점수</th><th class="name">2축 판정 — 가로: 내 매출을 내는 고객이 조달로 연명하나 / 세로: 내 돈이 고객 주머니로 갔다가 돌아오나</th><th class="name">v1.5 해당</th></tr></thead>
+<tbody>
+<tr><td><b>0</b></td><td class="name">조달 의존 고객 비중 <b>작음</b> · 내 돈 <b>안 돌아옴</b></td><td class="name">Meta · Alibaba · Apple · TSMC · Palantir</td></tr>
+<tr><td><b>-1</b></td><td class="name">비중 작음 · 내 돈 <b>돌아옴</b>(피투자사가 고객이나 본업 대비 미미)</td><td class="name">Alphabet · Amazon · Microsoft · Anthropic · Tesla · SpaceX · OpenAI</td></tr>
+<tr><td><b>-2</b></td><td class="name">비중 <b>큼</b> · 내 돈 안 돌아옴</td><td class="name"><i>(현재 해당 없음)</i></td></tr>
+<tr><td><b>-3</b></td><td class="name">비중 큼 · 내 돈 돌아옴 — <b>내가 조달을 대주고 그 돈이 내 매출이 된다</b></td><td class="name"><b>NVIDIA</b>(지분 $40B+ · 잔존가치 보증 25% · SB Energy $105B) · <b>Oracle</b>(Stargate 지분 $7B · RPO 절반이 OpenAI)</td></tr>
+</tbody></table></div>
+<p style="font-size:12.5px;color:var(--tx3);margin:6px 0 0"><b>배점을 0~-3으로 좁힌 이유</b> — 측정 가능성에 비례시켰다. 다년 계약 총액은 인식 매출이 아니고 환류 경로는 세그먼트로 분리되지 않는다. <b>OpenAI가 -1인 이유</b>(v1.5 재분류) — OpenAI 매출은 일반 사용자·기업이 낸 진짜 돈이고 루프 자금은 매출이 아니라 <b>비용</b> 쪽으로 나간다. 부푼 것은 밸류(⑥-4), 못 떠나는 것은 ⑧-4, 조달 없이 못 버티는 것은 ⑨-5 — 기존 ⑦-5는 그 셋의 재탕이었다. <b>평가익 크기는 ⑦ 입력이 아니다</b>(⑥ 소관).</p>
+<h3 style="margin-top:18px">⑨ 점수 서열 (기계적 적용) — 4단계 게이트</h3>
+<p style="font-size:12.8px;color:var(--tx2);margin-bottom:8px"><b>게이트 1: 본업이 버는가(영업이익·단위경제)?</b> ❌면 -3~-5 (사업 모델 미성립) · ✅면 <b>게이트 2: 현금이 새는가(FCF)?</b> — 영업이익이 심각도를, FCF가 시급성을 가른다. 영업흑자+FCF마이너스는 <i>투자 선택</i>(CapEx는 끌 수 있는 스위치)이라 -2 상한.</p>
+<table class="rtable" style="max-width:640px">
+<thead><tr><th>점수</th><th>상태</th><th>v1.5 해당</th></tr></thead>
+<tbody>
+<tr><td><b>0</b></td><td>FCF 안정 흑자</td><td>Microsoft(+capex 감축) · Apple · NVIDIA · TSMC · Palantir</td></tr>
+<tr><td><b>-1</b></td><td>FCF 흑자이나 급감 / 흑자 전환 직후</td><td><b>Meta</b>(TTM +$41B, 분기 -91%) · <b>Alphabet</b>(TTM +$53B, 분기 첫 마이너스) · <b>Tesla</b>(TTM +$5.8B이나 영업이익 -57%)</td></tr>
+<tr><td><b>-2</b></td><td>FCF <b>실측 마이너스</b>(완충 보유) / 비상장 미공시</td><td>Amazon(-$11.6B) · Alibaba(-$11.4B) · <b>Anthropic</b>(비상장 FCF 미공시 + 완충이 외부 조달뿐)</td></tr>
+<tr><td><b>-3</b></td><td>지속 적자, BEP 미도달 · 또는 <b>게이트 3 하향</b></td><td><b>Oracle</b>(-$23.7B, 런웨이 1.3년 + BBB- → 한 단계 하향)</td></tr>
+<tr><td><b>-4</b></td><td>영업적자 <b>손실률 -10~-30%</b> / 완충 잠식</td><td><b>SpaceX</b>(<b>손실률 -14.9%</b>, FCF -$32.5B, 현금 $100B 완충)</td></tr>
+<tr><td><b>-5</b></td><td>최심 + <b>BEP 자체가 후퇴</b></td><td>OpenAI(적자 $14~33B, BEP 2030)</td></tr>
+</tbody></table>
+<p style="font-size:12px;color:var(--tx3);margin-top:6px">쓰지 않는 것 — EPS 상회/하회(실적의 질) · 누적 적자 절대액(아마존 효과) · CapEx 절대액(이미 FCF에 반영)</p>
+</div></details>
+
+<details class="blk"><summary>채점 전 체크리스트 — 실제로 걸렸던 오류 (대표 6개 · 전체 23개는 규칙 파일)</summary><div class="inner">
+<table class="rtable">
+<thead><tr><th style="width:30px">#</th><th>체크</th><th>발생 사례</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>이 감점, 다른 칸에서 이미 셌나?</b></td><td>알리바바 지정학을 ⑥⑧⑨ 삼중 계상</td></tr>
+<tr><td>2</td><td><b>이 지표가 이 칸의 정의에 맞나?</b></td><td>가격 지표(SDLLMTK)를 ①에 오분류</td></tr>
+<tr><td>3</td><td><b>회사마다 같은 잣대인가?</b></td><td>⑧을 Anthropic엔 관대, NVIDIA엔 엄격</td></tr>
+<tr><td>4</td><td><b>시총 크기를 밸류에이션으로 착각했나?</b></td><td>NVIDIA ⑥ — 시총 $5.4T지만 NTM PER 18.0, 구간 0</td></tr>
+<tr><td>5</td><td><b>출처가 이해당사자인가?</b></td><td>Menlo = Anthropic 지분 $14B 보유</td></tr>
+<tr><td>6</td><td><b>볼륨인가 가치인가?</b></td><td>토큰 1위(중국) ≠ 매출 1위(Anthropic)</td></tr>
+</tbody></table>
+</div></details>
+
+<h2><span class="num">07</span>가격 · 실적 원자료</h2>
+<p class="sub">4-1a 가격은 ⑥의 근거, 4-1b 실적은 ③⑨의 근거. 갱신 트리거가 분리된다 — 가격이 바뀌어도 실적 표는 안 바뀌고, 실적이 나와도 가격 표는 안 바뀐다.</p>
+<h3>4-1a. 가격 — StockAnalysis · 2026-09-02 종가 · 단일 출처</h3>
+<p style="font-size:12.5px;color:var(--tx3);margin:0 0 8px">점수에 개입하는 컬럼은 <b>NTM PER</b>뿐. TTM PER은 왜곡 탐지용(NTM보다 낮으면 일회성 이익 의심), <b>영업외 비중</b> = (세전이익 − 영업이익) ÷ 세전이익 — 30% 넘으면 TTM 무효·⑦ 근거로 이월. P/S는 참고만.</p>
+<div class="tablewrap">
+<table id="valTable">
+<thead><tr><th class="name">기업</th><th>주가</th><th>시총</th><th>NTM PER</th><th>⑥</th><th>경계</th><th>TTM PER</th><th>영업외 비중</th><th>P/S</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+<div class="warnbox" style="background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe">✱ <b>TSMC는 전부 직접 계산</b> — ADR 1주 = 보통주 5주, 재무는 TWD. StockAnalysis 환산이 섞여 있어 ADR 5.19B주 × $415.5 = $2.15T, NTM EPS = (FY26 107.64×5)×4/12 + (FY27 142.13×5)×8/12 = 653 TWD ÷ 30.5 = $21.4 → 19.4. <b>TWD 환율 하나로 20선을 넘을 수 있다.</b> ✱ <b>Alibaba NTM은 직접 계산</b> — StockAnalysis가 CNY/USD를 섞어 forward PE 13.92(FY28 EPS 그대로)를 표시. FY27 $5.71×7/12 + FY28 $8.03×5/12 = NTM EPS $6.68 → 16.7. 시총은 8/26 증자(710M주) 완료 반영. ᵃ NVIDIA 영업외 $32B는 랩 지분 평가익 추정(10-Q 항목별 미확인). ᵇ Palantir·Tesla 영업외는 현금 이자수익이 주(왜곡 아님). ᶜ <b>Oracle은 영업외가 마이너스</b> — 세전($19.55B)이 영업이익($22.39B)보다 작다. 평가익이 아니라 <b>이자비용</b>이 빼먹는 구조로 빅테크와 정반대다.</div>
+<div class="warnbox">⚠️ <b>영업외 비중 세 곳(Alphabet 51% · Amazon 46% · Alibaba 54%)의 뜻</b> — 미국 회계기준상 비상장 지분은 새 펀딩 라운드마다 재평가해 순이익에 반영한다. Anthropic이 1년 새 $183B→$965B로 뛰며 Alphabet(약 14%)·Amazon(약 15~19%) 지분이 각각 $100B 안팎 장부이익을 냈다. <b>자기가 값을 올린 자산의 평가이익으로 자기 이익이 커지는 구조</b> — 현금은 안 들어왔고, 랩 밸류가 꺾이면 같은 크기로 손실. 컨센서스도 FY27 EPS를 FY26보다 낮게(Alphabet -28%, Amazon -17%) 잡는다. Meta·Apple은 1% — 깨끗한 배수.</div>
+
+<h3 style="margin-top:18px">신용 지표 — 점수가 아니라 교차검증 (별표 J)</h3>
+<p style="font-size:12.5px;color:var(--tx3);margin:0 0 8px">신용등급·CDS는 ⑦⑧⑨를 한꺼번에 반영하는 <b>복합 신호</b>라 어느 factor의 입력으로도 쓰지 않는다(이중 계상). 대신 <b>함정 총점이 맞는지 검증</b>한다.</p>
+<div class="tablewrap"><table style="min-width:0">
+<thead><tr><th class="name">기업</th><th>신용등급</th><th>5년 CDS</th><th class="name">특이사항</th><th>함정</th><th>정합?</th></tr></thead>
+<tbody>
+<tr><td class="name"><b>Oracle</b></td><td class="mono"><b>BBB-</b> (S&P 7/9 <b>강등</b>)</td><td class="mono" style="color:var(--dang);font-weight:900">215bp 🔴<br><span style="font-weight:400;font-size:11px;color:var(--tx3)">연초 144</span></td><td class="name" style="color:var(--tx2)"><b>18년래 최고</b> · 이자보상 4.87 · <b>Altman Z 2.18</b> · CDS 순노셔널 $6.5B로 빅테크 전체($12.5B)의 <b>절반</b></td><td class="mono"><b>-10</b></td><td>✅</td></tr>
+<tr><td class="name"><b>NVIDIA</b></td><td class="mono">AA~A급</td><td class="mono" style="color:var(--dang);font-weight:900">82bp 🔴<br><span style="font-weight:400;font-size:11px;color:var(--tx3)">7/27</span></td><td class="name" style="color:var(--tx2)"><b>Alphabet보다 높다</b> — 순환금융·우발채무를 시장이 가격에 반영 · 모건스탠리는 시장이 <b>사실상 BBB 수준</b>의 신용위험을 매기고 있다고 평가</td><td class="mono"><b>-6</b></td><td>✅</td></tr>
+<tr><td class="name"><b>Alphabet</b></td><td class="mono">AA급</td><td class="mono" style="color:var(--warn);font-weight:900">67bp 🔴</td><td class="name" style="color:var(--tx2)"><b>Q2 사상 첫 마이너스 FCF 직후</b> 기록 경신</td><td class="mono">-4</td><td>✅</td></tr>
+<tr><td class="name">Amazon·Meta·Microsoft·Apple</td><td class="mono">AA~AAA급</td><td class="mono" style="font-weight:800">그룹 약 49bp<br><span style="font-weight:400;font-size:11px;color:var(--tx3)">Oracle 제외 집계</span></td><td class="name" style="color:var(--tx2)">2018년 이후 최고 · 2025년 대비 <b>2배 이상</b> · 2026년 IG 채권 <b>$182B 발행</b>(+1,300%, 미국 회사채의 15%)</td><td class="mono">-2~-5</td><td>⚠️ <b>개별 수치 미확보</b></td></tr>
+<tr><td class="name">TSMC</td><td class="mono">AA-급</td><td class="mono" style="color:var(--tx3)">미확인</td><td class="name" style="color:var(--tx2)">순현금 $77B</td><td class="mono">-4</td><td>✅</td></tr>
+<tr><td class="name">Tesla·SpaceX·Palantir</td><td class="mono">투자등급~무차입</td><td class="mono" style="color:var(--tx3)">SpaceX 기록 경신<br><span style="font-size:11px">(수치 미확인)</span></td><td class="name" style="color:var(--tx2)">SpaceX는 IPO 현금 $100B</td><td class="mono">-7~-13</td><td>⚠️ SpaceX는 등급보다 함정이 깊다 — FCF -$32.5B</td></tr>
+<tr><td class="name"><b>OpenAI·Anthropic</b></td><td class="mono"><b>비상장, 등급 없음</b></td><td class="mono" style="color:var(--tx3)">없음</td><td class="name" style="color:var(--tx2)"><b>노출된 상장사의 등급이 대신 말한다</b> — S&P가 Oracle 강등 사유로 <b>OpenAI를 명시</b></td><td class="mono">-14 / -9</td><td>✅</td></tr>
+</tbody></table></div>
+<div class="warnbox"><b>읽는 법</b> — 우리 함정 점수가 얕은데 신용시장이 벌어지면 우리가 뭘 놓친 것이다. 불일치는 재채점 트리거.<br><br><b>🆕 CDS 절대값을 넣으니 검증이 실제로 작동한다</b> — 서열이 <b>Oracle 215 &gt; NVIDIA 82 &gt; Alphabet 67 &gt; 그룹 49</b>이고, 우리 함정도 <b>-10 &gt; -6 &gt; -4 &gt; -2~-5</b>로 같은 방향이다. 특히 <b>NVIDIA가 Alphabet보다 CDS가 높다</b>는 것은 NVIDIA ⑦-3(Oracle과 공동 최심)을 신용시장이 독립적으로 확인해준 셈이다.<br><br>⚠️ 다만 <b>Amazon·Meta·MS·Apple은 개별 CDS가 집계로만 공개</b>돼 정밀 대조가 안 된다. 우리 함정이 -2(Meta)에서 -5(Amazon·Apple)까지 벌어져 있는데 CDS는 한 덩어리라 어느 쪽이 맞는지 확인할 수 없다. <b>개별 수치 확보가 다음 분기 과제</b>다.</div>
+
+<h3 style="margin-top:18px">통합 재무 전수표 — ⑨ 게이트 원자료 <span style="font-size:11.5px;color:var(--tx3);font-weight:400">(StockAnalysis 9/2 + 공시)</span></h3>
+<p style="font-size:12.5px;color:var(--tx3);margin:0 0 8px">한 화면에서 완충·소진·런웨이·레버리지·부외를 같이 본다. ⑨는 왼쪽 절반(게이트 1~3)으로, <b>게이트 4는 오른쪽 두 칸</b>으로 판정한다. <b>상환 연수 = 순부채 ÷ TTM FCF</b>는 점수 입력이 아니라 <b>읽는 보조선</b>(레버리지는 별표 J 소관).</p>
+<div class="tablewrap"><table id="fintbl" style="min-width:0">
+<thead><tr><th class="name">기업</th><th>현금</th><th>TTM FCF</th><th>런웨이</th><th>순현금/순부채</th><th>상환 연수</th><th>D/EBITDA<br><span style="font-weight:400;font-size:10.5px">장부</span></th><th>부외 포함<br><span style="font-weight:400;font-size:10.5px">추정</span></th><th>신용</th><th class="name">부외 약정</th><th>매출대비</th></tr></thead>
+<tbody></tbody></table></div>
+
+<h3 style="margin-top:18px">빚으로 얼마나 대고 있나 — TTM 순차입</h3>
+<p style="font-size:12.5px;color:var(--tx3);margin:0 0 8px">뉴스 발행액보다 크다 — <b>차환을 뺀 순증</b>이고 회사채 외 차입도 포함하기 때문이다.</p>
+<div class="tablewrap"><table id="borrtbl" style="min-width:0">
+<thead><tr><th class="name">기업</th><th>TTM 순차입</th><th>TTM capex</th><th>순차입÷capex</th></tr></thead>
+<tbody></tbody></table></div>
+<div class="warnbox">✱ 100% 초과는 차입이 capex 외 용도(자사주·인수)에도 쓰였다는 뜻.<br><br><b>🔑 Microsoft가 순부채 -$52.0B인데 Apple과 같은 ⑨0인 이유</b> — 그 빚은 <b>연 FCF의 0.8년치</b>이고, 성격도 AI 투자가 아니라 <b>Activision $69B 인수 + 배당·자사주</b>가 남긴 잔고다. 게다가 TTM 순차입이 <b>-$3.0B(순상환)</b> 이라 capex $116B를 전액 영업현금으로 대면서 빚까지 갚는 중이다. 반면 <b>Amazon·Oracle은 "불가"</b> — FCF가 마이너스라 지금 버는 속도로는 원금에 손도 못 댄다. <b>⑨는 스톡(잔고)이 아니라 플로우(속도)를 재고, 완충은 태우고 있을 때만 의미가 있다</b> — 그래서 게이트 3은 FCF 마이너스에만 발동한다.<br><br><b>🆕 부외 포함 레버리지 — 지금은 NVIDIA만 있다.</b> 모건스탠리가 2026-08 NVIDIA 신용 커버리지를 개시하며 <b>우발채무를 전면 반영한 레버리지 0.4배</b>(성장 정체 스트레스 시 0.7배, FCF 채무상환 커버리지 약 15%)를 산출했다. 장부 0.19배의 <b>2배</b>지만 S&P 강등 검토선 1.5배까지는 <b>$1T 이상의 여력</b>이 남는다. 나머지가 "미산출"인 것은 <b>부외가 없어서가 아니라 셀사이드 추정이 공개되지 않아서</b>다 — Meta $628B·Alphabet $707B·Oracle $250B는 규모가 NVIDIA보다 크다. <b>빈칸을 "0"으로 읽지 않는다.</b><br><br><b>🔑 부외 약정은 절대액으로 감점하지 않는다.</b> 세 종류를 분리해 각자 자리에서만 센다 — <b>A 개시된 리스</b>는 이미 FCF에 들어 있고(더하면 이중 계상), <b>C 우발 보증</b>은 확정 지출이 아니라 ⑦ 소관이며(NVIDIA 잔존가치 25%·SB Energy $105B), 남는 <b>B 미개시 약정</b>만 게이트 4로 간다. <b>리스는 매출을 만드는 자산</b>이라 나가는 돈만 세면 ⑨가 지키기로 한 아마존 효과를 정면으로 부정한다 — Oracle이 리스 $250B를 내는 것은 <b>RPO $638B</b>를 벌기 위해서다. 그래서 절대액이 아니라 <code>계약된 수입 ÷ 부외 약정</code>으로 재고, <b>1배 미만은 OpenAI 하나뿐(0.67배)</b> 이었다.</div>
+
+<h3 style="margin-top:18px">4-1b. 최근 분기 실적 — ③⑨ 원자료</h3>
+<div class="tablewrap">
+<table id="earnTable">
+<thead><tr><th class="name">기업</th><th>분기 (발표)</th><th>매출 (YoY)</th><th>EPS (컨센 대비)</th><th>FCF</th><th>⑨</th></tr></thead>
+<tbody></tbody>
+</table>
+</div>
+<div class="warnbox" style="background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.25);color:#a7f3d0">✅ <b>Tesla·SpaceX 분리(v1.5)</b> — 합산 시 Tesla ⑨가 -3이었으나 단독 -1, SpaceX -4로 각각 게이트 판정. SpaceX는 <b>영업손실률 -14.9%</b>로 ⑨ -4 구간(-10~-30%)에 들어간다.</div>
+
+<h3 style="margin-top:18px">비상장 ⑥</h3>
+<p style="font-size:12.5px;color:var(--tx3);margin:0 0 8px">⚠️ <b>정밀도 열위</b> — ARR은 런레이트라 TTM 매출보다 과대하므로 상장사와 직접 비교 불가 · 경계 규칙 미적용 · <b>상장 시 NTM PER로 자동 전환</b></p>
+<div class="tablewrap">
+<table style="min-width:0">
+<thead><tr><th class="name">기업</th><th>post-money 밸류</th><th>ARR</th><th>밸류÷ARR</th><th>누적 조달</th><th>자본효율</th><th>⑥</th><th>경계</th></tr></thead>
+<tbody>
+<tr><td class="name"><b>Anthropic</b></td><td class="mono">$965B</td><td class="mono"><b>$65B</b> (7월)</td><td class="mono" style="color:var(--g3)"><b>14.8x</b><br><span style="font-size:11px;color:var(--tx3)">TTM 보정 ~30~39</span></td><td class="mono">약 $125B</td><td class="mono"><b>0.52</b></td><td class="mono"><b>-3</b></td><td>—</td></tr>
+<tr><td class="name"><b>OpenAI</b></td><td class="mono">$852B</td><td class="mono"><b>$40B</b> (8/20)</td><td class="mono" style="color:var(--g2)"><b>21.3x</b><br><span style="font-size:11px;color:var(--tx3)">TTM 보정 ~39</span></td><td class="mono">약 $180~190B</td><td class="mono" style="color:var(--dang)"><b>0.22</b></td><td class="mono"><b>-4</b></td><td>— <i>(비상장은 경계 미적용)</i></td></tr>
+</tbody></table>
+</div>
+
+<h3 style="margin-top:18px">클라우드 4사 비교 (2026년 4~6월 분기 — 같은 달력 분기)</h3>
+<p style="font-size:12.5px;color:var(--tx3);margin:0 0 8px">🆕 Microsoft가 9/2 세그먼트 개편(3→2개)과 함께 <b>Azure 매출을 최초로 달러 공시</b>하면서 4사를 같은 단위로 비교할 수 있게 됐다. 이전엔 Azure만 성장률(%)로 공개돼 규모 비교가 불가능했다.</p>
+<div class="tablewrap">
+<table style="min-width:0">
+<thead><tr><th class="name">클라우드</th><th>분기 매출</th><th>YoY</th><th class="name">비고</th></tr></thead>
+<tbody>
+<tr><td class="name"><b>AWS</b></td><td class="mono"><b>$42.2B</b></td><td class="mono">+37%</td><td class="name" style="color:var(--tx2)"><b>18분기 최고 성장</b> · 연 런레이트 $169B · Amazon 영업이익의 60%+</td></tr>
+<tr><td class="name"><b>Azure</b></td><td class="mono"><b>$29.42B</b></td><td class="mono"><b>+42%</b></td><td class="name" style="color:var(--tx2)">FY2026 연간 <b>$100B 돌파</b> · 최초 달러 공시</td></tr>
+<tr><td class="name"><b>Google Cloud</b></td><td class="mono">$24.8B</td><td class="mono"><b>+82%</b></td><td class="name" style="color:var(--tx2)">Q1 +63%에서 <b>가속</b> · 영업이익 $8.8B(전년 $2.8B)</td></tr>
+<tr><td class="name"><b>OCI (Oracle)</b> 🆕</td><td class="mono"><b>$5.8B</b></td><td class="mono"><b>+93%</b></td><td class="name" style="color:var(--tx2)">⚠️ <b>3~5월 분기</b>(Oracle 회계연도가 한 달 어긋남) · FY26 연 $18.1B(+77%) · <b>RPO $638B</b>(분기 +$85B)</td></tr>
+</tbody></table>
+</div>
+<div class="warnbox" style="background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe">규모는 AWS &gt; Azure &gt; GCP &gt; OCI지만 <b>성장률 순서는 정확히 반대</b>다. OCI가 +93%로 가장 빠르지만 규모는 GCP의 4분의 1이고 <b>그 성장의 상당 부분이 단일 고객(OpenAI)의 조달에 얹혀 있다</b>(Oracle ⑦-3·⑧-4). ⚠️ Oracle만 3~5월 분기라 한 달 어긋난 비교다. GCP가 두 배 넘는 속도로 붙고 수익성도 3배 이상 개선. 다만 절대 격차는 여전히 AWS가 GCP의 1.7배. · <b>③ 가속도</b>: Azure 달러 공시로 다음 분기부터 MS 가속도를 정량 판정할 수 있으나, 성장률의 변화를 재려면 <b>분기 2개 이상</b>이 필요해 v3(2027-02)부터 가능.</div>
+
+<h3 style="margin-top:18px">오픈/클로즈드 스펙트럼 (2026-09-02) — 이분법이 아니라 3단계</h3>
+<div class="tablewrap">
+<table style="min-width:0">
+<thead><tr><th class="name">진영</th><th class="name">기업</th><th class="name">상세</th><th class="name">채점 연결</th></tr></thead>
+<tbody>
+<tr><td class="name"><b>플래그십까지 오픈</b></td><td class="name"><b>Alibaba</b> <i>(·Kimi 등 중국 소형 랩)</i></td><td class="name" style="color:var(--tx2)">Qwen3.8-Max 8/12~13 공개(텍스트 전용·커스텀 라이선스)</td><td class="name" style="color:var(--tx2)">① 데이터 미회수 · ③ 회수 장치 없음</td></tr>
+<tr><td class="name"><b>투트랙</b> (플래그십 클로즈드 + 소형 오픈)</td><td class="name"><b>Meta</b> · Google · OpenAI · NVIDIA · SpaceX(xAI)</td><td class="name" style="color:var(--tx2)">Muse Spark 클로즈드 / Glimmer 30B 오픈 · Gemini/Gemma · GPT-5.6/gpt-oss · Nemotron</td><td class="name" style="color:var(--tx2)">Meta ③ "알리바바가 더 크게 한다" ⚠️</td></tr>
+<tr><td class="name"><b>완전 클로즈드</b></td><td class="name"><b>Anthropic</b> · Amazon · Microsoft · Apple</td><td class="name" style="color:var(--tx2)">Anthropic은 오픈웨이트 출시가 전무한 유일한 프론티어 랩</td><td class="name" style="color:var(--tx2)">OpenRouter 매출 100% 회수 · 가격 결정력</td></tr>
+</tbody></table>
+</div>
+<div class="warnbox" style="background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.25);color:#bfdbfe">진영 이동 감시 — Meta가 8/10 Muse Spark 1.2 오픈웨이트를 공언, 9/2에도 "soon". <b>출시되면 투트랙 → 플래그십 오픈으로 이동</b>(미국 최초). 완전 오픈은 가격 결정력을 버리고 확산을, 완전 클로즈드는 확산을 버리고 마진을 산다 — 어느 쪽이 이기는 베팅인지 아직 판가름 안 났다.</div>
+
+<h2><span class="num">08</span>핵심 해석</h2>
+<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(300px,1fr))">
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">1. Alphabet 단독 1위(17), Meta·MS·Amazon 공동 2위(16)</div>
+  <div class="ftx">성격이 정반대다 — <b>Alphabet·Amazon은 구조(과점 21)로, Meta는 얕은 함정(-2)으로</b> 상위에 왔다. Anthropic은 과점 21로 공동 최고인데 조정 12 — "구조는 최고인데 값이 비싸다"가 그대로 드러난다. 강의 기준대로 <b>1~3점 차이는 무의미</b>하므로 17·16·16·16은 한 그룹이고 다음 분기부터 <b>변화 방향</b>을 본다.</div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">2. 모델을 안 만드는 기업이 상위권 — 단 그게 ③ 점수를 주는 이유는 아니다</div>
+  <div class="ftx">Amazon·Microsoft는 자체 프론티어 모델이 약하거나 없는데도 상위권이다. 유통과 인프라라는 양 끝단이 수익을 가져가는 구도는 유효하다. <b>그러나 "안 만든 것" 자체는 카운터 포지셔닝이 아니므로</b> ③에서 가점하지 않는다(별표 B). ③은 14사 전원 2~3점 — <b>아직 문을 닫고 들어온 자가 없다.</b></div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">3. Anthropic — 과점 최고점, 함정은 -9</div>
+  <div class="ftx">AA Index 1위(GPT-6 Astra 출시 후에도 방어) + MCP 표준 + 3대 하이퍼스케일러 전원 동맹은 만점급이다. 문제는 그 성능을 <b>전부 남의 인프라 위에서</b> 내고, 공급자 셋이 모두 경쟁자라는 것. 컴퓨트 약정 $300B는 ARR의 4.6배. <b>10월 상장이 이 구조를 바꿀 유일한 카드다.</b></div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">4. Apple — ①만점 / ②공동 최저</div>
+  <div class="ftx">20억 대 설치기반은 대체 불가 자산이지만 Siri 2년 연기와 Gemini 외주는 <b>핵심 AI 계층의 통제력 상실</b>이다. "라스트무버"라는 옹호가 성립하려면 <b>9월 iOS 27의 새 Siri가 실제로 나와야 한다.</b> 최대 리스크는 AI가 아니라 Google 검색 지급금 $20B의 규제 소멸.</div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">5. Meta — "제일 강해서"가 아니라 "제일 덜 위험해서"</div>
+  <div class="ftx">과점 18은 최상위권(19~21)보다 낮다. 근거는 함정 쪽 — <b>-2로 14사 중 가장 얕다</b>: NTM PER 17.9에 영업외 이익 1%(Apple과 함께 가장 깨끗한 배수), 순환 없음, FCF 흑자. 단 <b>부외 약정 $628B(매출 2.8배)는 표 최대</b>이고 분기 FCF가 사실상 0이라 TTM 마이너스 전환이 트리거. 구조 우위 베팅이면 Alphabet·Anthropic, 리스크 조정 베팅이면 Meta.</div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">6. TSMC — NVIDIA의 거울상</div>
+  <div class="ftx">둘 다 ①2·②5의 부품 공급자인데 <b>NVIDIA는 큰 고객이 적(⑤2), TSMC는 NVIDIA의 적들까지 고객(⑤4)</b>. ⑤ 2점 차가 과점 차(18 대 16)의 전부이고, 함정 2점 차(-4 대 -6)가 더해져 조정 14 대 10이다. NVIDIA가 Nemotron 연합으로 ⑤1→2를 만들며 격차를 1점 좁혔다. TSMC의 함정은 대만과 AI 사이클(⑧-4) — 버스트가 오면 선급금 낸 NVIDIA가 먼저 맞고 TSMC는 2023년처럼 마진만 잃는다.</div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">7. 중국 모델 — 위협의 종류가 다르다</div>
+  <div class="ftx">Arena WebDev 2위는 문체·가성비가 섞인 수치이고 종합 지수로는 4위, HLE는 최하위권이다. <b>프론티어를 넘는 위협이 아니라 프론티어의 가격 결정력을 파괴하는 위협.</b> 다만 <b>아직 파괴되지 않았다</b> — Anthropic은 여전히 $6.36/M을 받고 OpenRouter 매출 46%를 가져간다. 새 위협은 오히려 GPT-6 Astra의 <b>Cost per Task</b>다.</div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">8. OpenAI — 조정 2점 최하위지만 방향은 바뀌었다</div>
+  <div class="ftx">과점 16까지 회복 — ②4(이미지 2관왕·ARC-AGI-3 SOTA) + ④4(Jalapeño ASIC 실증) + ③재가속(ARR $25B 정체→$40B). 함정 -14가 모든 걸 지우지만 무게는 순환금융(-1)이 아니라 <b>밸류(-4)·공급자 의존(-4)·2030년으로 밀린 손익분기(-5)</b>에 있다. 컴퓨트 약정이 ARR의 8.5배로 <b>커버리지 1배 미만은 표에서 유일</b>.</div></div>
+
+  <div class="card" style="padding:16px 18px"><div class="cname" style="margin-bottom:7px">9. 부외 약정을 파봤더니 점수가 안 움직였다 — 그게 결론이다</div>
+  <div class="ftx">5사 약정 $969B 중 $662B가 부외이고 Meta $628B·Alphabet $707B·Oracle $250B로 규모는 충격적이다. 그러나 <b>리스는 매출을 만드는 자산</b>이라 나가는 돈만 세면 아마존 효과를 부정한다. 커버리지(계약된 수입÷약정)로 재니 1배 미만은 OpenAI뿐. 실제로 움직인 건 <b>런웨이</b>였다 — Oracle 1.3년 + BBB-로 ⑨-3, 단독 13위.</div></div>
+</div>
+
+<h2><span class="num">09</span>다음 분기 재채점 트리거</h2>
+<div class="tablewrap">
+<table style="min-width:600px">
+<thead><tr><th class="name">항목</th><th class="name">왜 중요한가</th><th class="name">영향</th></tr></thead>
+<tbody id="trig"></tbody>
+</table>
+</div>
+
+<footer>
+<p>정성적 평가이므로 1~3점 차이는 유의미하지 않다. 순위 자체보다 매 분기 점수의 <b>변화 방향</b>을 추적하는 것이 목적이다.</p>
+<p style="margin-top:8px">단위 — <b>$M</b> ≈ 14억 원 · <b>$B</b> ≈ 1조 4,000억 원 · <b>$T</b> ≈ 1,400조 원 (환율 1,400원 기준)</p>
+<p style="margin-top:8px">②채점 참고 <a href="https://arena.ai/leaderboard" target="_blank">Arena Leaderboard</a> · ①채점 <a href="https://openrouter.ai/rankings" target="_blank">OpenRouter Rankings</a></p>
+</footer>
+</div>
+
+<script>
+const F=['①네트워크','②게임체인저','③LastMover','④호황후비전','⑤아군확보'];
+const T=['⑥가격','⑦순환금융','⑧비대칭의존','⑨적자깊이'];
+const D=[
+{rank:2,name:'Amazon / AWS',type:'소비자·업무',cap:2.82,tag:'매대가 가장 크고 클라우드 연결 규격까지 경쟁 3사가 채택했다. 남은 약점은 자체 모델과 FCF 마이너스.',s:[5,4,3,5,4],t:[-1,-1,-1,-2],
+ r:['Prime 2억+ 락인 · 2026년 2월 <b>Alexa+를 전 미국 Prime 회원에 무료 개방</b> · Bedrock <b>AgentCore</b>가 이식 불가능한 신규 락인 형성',
+    '<i>(v1.5: 별표 F 표준 경로 성립 — Anthropic의 MCP와 같은 잣대)</i> <b>표준 경로 ✅</b> — 🆕 AWS Interconnect 오픈 API 규격을 <b>Google(4월)·Azure(8/28)·Oracle이 전부 채택</b>, 멀티클라우드 연결의 사실상 표준 · <b>성능 경로 ✅</b> — Trainium3(첫 3nm, 362 PFLOPS)에서 <b>OpenAI·Anthropic이 실제 학습</b> = 채택으로 입증 · 적응 ⚠️ — <b>Nova는 기여 못 함</b>, Arena 텍스트 99위 · 두 경로 = 4',
+    'Bedrock은 <b>모두의 모델을 팔아 이기는 전략</b>이고 실제로 남들보다 멀리 갔다 — <b>7월 GPT-5.6을 올려 Azure 독점을 깼고</b>, <b>Trainium3에서 OpenAI 모델까지 학습</b>, 100+ 모델·18개 프로바이더 · <b>그러나 세 기준을 엄격히 적용하면</b>: ❌<b>모방 불가능성</b> — Azure AI Foundry·Vertex Model Garden도 매대를 운영한다. 셋 다 하는 걸 아마존이 제일 잘할 뿐이라 <b>실행력이지 모방 불가능성이 아니다</b> · ✅별도 수익모델(컴퓨트) · ✅후발 가속도 · <b>무엇보다 “모델을 안 만든 것” 자체는 카운터 포지셔닝이 아니다</b> — 구글은 안드로이드를 <i>만들어서</i> 뿌렸다',
+    'AWS +36.7%(18분기 최고) · AI·칩 사업 각각 런레이트 $25B+ · 리테일/광고/물류 · 🆕 <b>로보틱스 실측</b> — 플릿 100만 대+, <b>Vulcan</b>(촉각 양팔)이 창고 물품 <b>75%를 집고 넣음</b>, Project Eluna 운영 에이전트 · 단 <b>Blue Jay는 6개월 만에 중단</b>(2/18, 제조비·워크플로 부적합) — 다각화 폭은 그대로라 5 유지',
+    '<i>(v1.3 같은 잣대 — Alphabet을 DOJ로 4에 묶었으면 Amazon도)</i> <b>18개 프로바이더 100+ 모델 아군화</b> — 경쟁사 OpenAI·중국 오픈웨이트까지 재판매(매대 입점 = 상업적 약속) · Anthropic 최대 $25B + 5GW · <b>단 FTC+18개 주 반독점 재판 2027년 2월 대기</b> — Alphabet DOJ 항소와 같은 성격의 규제 적대를 같은 무게로 · <i>만점은 Anthropic처럼 적대 최소일 때만</i> · 🆕 Azure와 멀티클라우드 상호연결(8/28) — 아군 추가가 아니라 <b>적대 완화</b>, 점수 무변동'],
+ rt:['<i>(v1.5: 구간 재설계 — 20~29)</i> NTM PER <b>27.5</b> — 29선까지 5.2% · TTM 20.5는 <b>영업외 46%</b>로 무효 · P/S 3.6(빅테크 최저) 참고',
+    '<i>(v1.5)</i> Anthropic 투자→AWS 매출 환류 — <b>가장 전형적인 순환</b>(피투자사가 곧 대형 고객)이나 본업($776B) 대비 미미 · 🆕 <i>(정정)</i> TTM 영업외 $81B(46%)는 <b>⑥ 소관</b> — 출처가 고객사라 방증만 · 3월 OpenAI $50B 투자는 ⑦ 재검토 대기',
+    '리테일·광고·AWS 3축 분산 · Bedrock은 모델 중립이라 특정 모델사 의존 낮음',
+    '<i>(v1.5: "전환 예상"→실측 확정, 게이트 판정으로 재작성)</i> 게이트 1 ✅ 영업흑자(AWS 영업이익 $42.2B 분기의 60%+) · 게이트 2 ❌ <b>TTM FCF -$11.6B 실측 마이너스</b> — 2026년 CapEx $200B으로 빅테크 최대(TTM capex $173B, 순차입 +$75.2B) · 게이트 3 ✅ <b>런웨이 10.6년</b>(현금 $123B ÷ 연 소진 $11.6B) · AA급이라 조달 여력 무제한 인정 → 유지 · 게이트 4 ✅ 미개시 리스 $106B(매출 0.14배) 대비 AWS 백로그 수백 $B급 → 유지 · 순부채 -$128.7B는 <b>FCF가 마이너스라 상환 연수 "불가"</b> — 단 벌면서 더 크게 투자하는 선택의 문제(CapEx는 끌 수 있는 스위치)']},
+
+{rank:1,name:'Alphabet / Google',type:'소비자',cap:4.173,tag:'모델·칩·유통을 다 가진 유일한 회사. 그러나 모델 성능은 1위가 아니고, TTM 이익의 절반이 본업 밖에서 나왔다 — SpaceX·Anthropic 지분 평가익이다.',s:[5,4,3,5,4],t:[-1,-1,-1,-1],
+ r:['Gemini 앱 MAU <b>9.5억</b>, 10억 임박 · 검색 90% · Android/YouTube/Gmail로 습관 영역 장악',
+    '<b>Arena 텍스트 최고 9위</b>로 Anthropic에 명확히 밀림 · 단 Text-to-Video 1위 · Ironwood TPU 7세대, 8세대 TSMC 2nm · 🆕 <b>Gemini 3.8 Flash</b>(9/2) — 속도·가격 경쟁력 확인, 프론티어 순위는 미변',
+    '❌<b>모방 불가능성 — 검색 90%는 ①에서 이미 5점으로 셌다.</b> 검색에 Gemini를 무료로 얹는 게 OpenAI에게 불가능한 이유는 <b>검색이라는 ①의 자산 때문</b>이므로 ③에서 다시 세지 않는다 · ✅<b>별도 수익모델</b> — 광고가 있어 Gemini를 무료로 뿌려도 손해가 아니다 · ⚠️<b>후발 가속도 — 혼재.</b> 클라우드 +82%는 강하지만 <b>Gemini MAU 증가율은 꺾이는 중</b>(7.5억→9.0억 +20% → 9.5억 +5.6%). <i>2년 만에 격차 회수는 이동 거리지 가속도가 아니라</i> 근거에서 제외',
+    '클라우드 <b>+82%</b>(3사 최고), 수주잔고 $514B · TPU 외판 · Waymo · 완전 수직계열화',
+    'Anthropic 5GW TPU · <b>경쟁사 Meta에까지 TPU 판매</b> · 단 DOJ+38개 주 검색 독점 항소 진행 · 🆕 <b>미 국방부 CDAO 프론티어 AI 계약(2025-07)</b> — Google·OpenAI·Anthropic·xAI <b>4사 각각 상한 $200M</b>. 정부 계약은 상업적 약속이라 아군 인정(Palantir·SpaceX와 같은 잣대) · <b>4사 공통이라 ⑤ 변별력은 없다</b> · 🆕 <b>4사 중 가장 깊이 들어갔다</b> — 4/28 갱신으로 Gemini를 <b>기밀 네트워크</b>에서 "모든 합법적 정부 목적"에 사용, 5월 <b>$200M 기밀 계약 확정</b> · <b>정부 요청으로 안전 설정 완화</b>(4사 중 최다 허용) · 직원 600명+ 반발은 내부 갈등이지 시장 적대는 아님'],
+ rt:['<i>(v1.5: 구간 재설계 — 20~29)</i> NTM PER <b>25.3</b> — 20~29 구간, 경계에서 벗어남(29선까지 12.8%) · TTM 16.9는 <b>영업외 비중 51%</b>로 무효 · P/S 9.3 참고',
+    '<i>(v1.5: 배점 1점 간격 + 방향 분리)</i> Anthropic 투자금이 TPU·GCP 매출로 환류 — <b>자금줄이 맞으나 본업(광고 $446B) 대비 미미</b> · 🆕 <i>(v1.5 정정)</i> <b>평가이익은 ⑦ 증거가 아니다</b> — Q2 평가익 <b>$99B</b>의 상당 부분이 <b>SpaceX 약 6%($94.0B, 6월 IPO $1.77T 마킹)</b>인데 SpaceX는 GCP 고객이 아니다. 평가익은 <b>⑥ 소관</b> · 🆕 <b>Alphabet은 SpaceX 6% 주주</b> — 그 SpaceX가 xAI(Gemini 경쟁자)를 소유',
+    '칩·모델·유통 전 계층 자체 보유로 외부 의존 최소',
+    '<i>(v1.5: 게이트 2를 TTM으로 통일 — 분기 판정 오류 정정)</i> 게이트 1 ✅ 영업흑자 · 게이트 2 <b>TTM FCF +$53.27B 흑자</b> · 단 <b>추세 악화</b> — capex $132.40B로 <b>Q2 사상 첫 분기 마이너스</b> · 순현금 <b>+$121.68B</b>, 현금 $242.47B로 완충은 표 최상위급']},
+
+{rank:2,name:'Microsoft',type:'업무',cap:3.6,tag:'3,000만 유료 시트가 남의 모델을 돈으로 바꾼다. 함정은 표에서 두 번째로 얕고, 약한 고리는 판을 바꾸는 힘 — 하이퍼스케일러 넷 중 가장 낮다.',s:[5,3,3,4,4],t:[-1,-1,-1,0],
+ r:['Copilot 유료 시트 3,000만(분기 +50%), 합산 MAU 4.2억 · Windows/M365 기본 탑재 = <b>배포</b> 전략 그 자체',
+    'Maia 200 발표했으나 배포 물량 미확인 · <b>Arena 상위권에 자체 모델 없음</b> · OpenAI·Anthropic 양쪽 조달',
+    '❌<b>모방 불가능성 — Windows/M365 기본 탑재는 ①에서 이미 5점으로 셌다.</b> 번들링이 모방 불가능한 이유가 <b>윈도우를 가졌기 때문</b>이라 ①의 파생이고, ③에서 또 세면 애플에 적용한 기준과 어긋난다 · ✅<b>별도 수익모델</b> — 소프트웨어 라이선스로 벌기에 모델을 공짜로 끼워 팔 수 있다(IE-넷스케이프 구조) · ✅<b>후발 가속도</b> — Copilot 유료 시트 3,000만, 분기 +50% · <b>애플(③2점)과의 차이는 모방 불가능성이 아니라 여기다</b>',
+    '🆕 <b>Azure 매출 최초 달러 공시</b> — 6월 분기 <b>$29.42B(+42%)</b>, FY2026 연간 <b>$100B 돌파</b>. 9/2 세그먼트 3→2개 통합과 함께 분기 공시 전환 · AI 런레이트 $37B(+123%) · <b>RPO $678B(+84%)</b> — 백로그가 실적보다 빠름',
+    'OpenAI 지분 27% + Anthropic Azure $30B 약정 <b>양다리</b> · 단 Bedrock 상륙으로 Azure 독점 소멸 · 🆕 AWS와 멀티클라우드 상호연결(8/28) — AWS 규격 채택, 적대 완화(점수 무변동)'],
+ rt:['<i>(v1.5: 구간 재설계 — 20~29)</i> NTM PER <b>25.4</b> — v1.4의 25선은 배율이 좁아(×1.25) 실제 분포와 안 맞았다 · TTM 27.9, 영업외 6%(정상) · P/S 11.1 참고',
+    '<i>(v1.5)</i> OpenAI 지분 27% 투자금이 Azure 매출로 환류 — 자금줄이 맞으나 본업($332B) 대비 미미',
+    'OpenAI·Anthropic 이중 조달로 단일 의존 해소',
+    'FCF 흑자 유지 · <b>CY2026 capex를 $190B→$175B으로 하향, 빅테크 중 유일하게 감축</b>']},
+{rank:5,name:'TSMC',type:'부품',cap:2.15,tag:'모든 AI 칩이 지나가는 유일한 문. 고객 전부가 아군이라는 점이 NVIDIA와 정반대인데, 그 문이 대만에 있다.',s:[2,5,3,4,4],t:[0,0,-4,0],
+ r:['<b>부품 채널만</b> — 최종 사용자 접점 없음, 규칙상 상한 2 (NVIDIA와 같은 잣대) · OIP 생태계·PDK 락인은 실재 — 고객 설계 자산이 TSMC 공정에 묶이지만 인간 소비자 채널이 없다',
+    '<b>성능 경로 ✅</b> — <b>N2 양산 시작</b>(Q2 웨이퍼 매출 3%, 하반기 가파른 램프) · N3 30%, 7nm 이하 <b>77%</b> · <b>순수 파운드리 점유 73%</b>, GM 67.7%·영업마진 60.3% 역대 최고 = 가격 결정력 · CoWoS 5.5배 레티클 양산 계획, 14배 레티클 2028 · 도전자: Intel 14A 2028 목표(고객 2곳 협의), Samsung SF2P 수율 70% — 동급 아님',
+    '✅<b>모방 불가능성</b> — 수십 년 Intel·Samsung이 수율·규모를 못 따라옴 · ❌<b>별도 수익모델</b> — 파운드리 단일 · ✅<b>후발 가속도</b> — 매출 +31.6%(FY25) → <b>+42.7%</b>(FY26 가이던스), EPS +62% · 통과점 2 → 3. <b>문은 안 닫힘</b> — Intel 14A·Samsung 2nm가 진입로에 있다',
+    '지리 다각화 — <b>Arizona $165B</b>(팹 6개+패키징), 구마모토, 드레스덴 · A16·A14 로드맵 정시 · CoWoS 캐파 연 +80% · 단 <b>단일 사업</b>이고 HPC가 매출 <b>66%</b> — AI 사이클에 묶임 · "호황 이후"의 선례: <b>2023년 매출 -4.5%·GM 54%</b> — 성장은 사라져도 생존·고마진. 스마트폰·차량·IoT 34%가 바닥',
+    '<b>고객 전부가 아군</b> — Apple·NVIDIA·AMD·Broadcom·MediaTek + <b>NVIDIA의 적들(Trainium·TPU·Maia·Baltra)까지 전부 TSMC 고객</b>. 팹 짓는 고객 없음 — NVIDIA ⑤2와 정반대 · 적대: <b>Intel Foundry</b>(미 정부 10% 지분) · 관세 — 1/14 포고령 25%, 미국 투자 시 캐파 2.5배 무관세 = <b>강요된 $165B</b> · Alphabet DOJ·Amazon FTC와 같은 무게 → 4'],
+ rt:['NTM PER <b>19.4</b>(직접 계산 ✱ — StockAnalysis가 TWD/USD 혼재) — <b>20선 -3%, 경계 ⚠️</b>. TWD 환율 하나로 -1 가능 · TTM 30.9 · 영업외 7%(깨끗) · P/S 15.4 참고 · 시총 <b>$2.15T</b>(ADR 5.19B주 × $415.5)',
+     '고객에 투자 안 함. <b>역방향</b> — 고객이 선급금으로 TSMC 캐파를 댄다',
+     '<b>대만 지정학 = 존립 리스크</b> — 첨단 캐파 대부분이 물리적으로 대만에 · <b>AI 사이클 노출</b> — HPC 66%, NVIDIA 단일 <b>19%</b>(Apple 17%를 제치고 1위, 상위 2사 36%), <b>CoWoS 전용 capex 좌초 위험</b> · ASML EUV 단일 공급 · 단 선급·장기 약정은 take-or-pay라 <b>버스트 시 NVIDIA가 먼저 맞는다</b> — 완충',
+     'FCF <b>+$36B</b>, 순현금 $77B, 영업마진 56% · capex $60~64B(+$10B)에도 흑자']},
+
+{rank:2,name:'Meta',type:'소비자',cap:1.47,tag:'제일 강해서가 아니라 제일 덜 위험해서 공동 2위 — 함정 -2로 14사 중 가장 얕다. Apple과 함께 평가이익 없는 깨끗한 PER, 순환 없음, FCF 흑자.',s:[5,4,3,3,3],t:[0,0,-1,-1],
+ r:['30억+ 사용자, SNS 락인은 페이스북 사례 그 자체 · Muse를 WhatsApp/Instagram/Facebook/AI안경에 전면 배포',
+    '<i>(v1.5: v1.4 하향 <b>철회</b> — "AA 미등재"가 사실이 아니었다)</i> <b>🆕 <b>AA Intelligence Index — Muse Spark 1.3(max) 62, 프론티어 진입</b>(9/2, AA 기사 제목 "Meta reaches the frontier"). Fable 5.1(66)·Opus 5(63) 다음 <b>3위</b>, Fable 5(62)와 동점 · xhigh 61은 Sol·Grok 4.6·Opus 5(high)와 동점 · 궤적 1.0 43 → 1.1 53 → 1.2 57 → <b>1.3 62</b> · 🆕 <b>Tau3-Bench Banking 52%로 전 모델 1위</b> · GDPval-AA v2 1,754 Elo · 🆕 <b>가격 $1.25/$4.25 그대로</b> → 59점 이상 중 <b>태스크당 최저 비용($0.55)</b>, 동급 대비 70%+ 저렴 — ③의 저가 공세가 실측으로 확인 · ②5는 불가 — <b>AA 종합 1위(Anthropic)가 5의 기준</b>이고 Spark 1.3은 3위 · <b>GDPval-AA v2 5위</b> · Arena 텍스트 4위 · <b>성능 경로 ✅ + 적응 경로 ✅</b>, 표준 ❌ → 두 경로 = 4 · 8/10 Spark 1.2 오픈웨이트 공언(미출시)',
+    '✅<b>별도 수익모델 — Meta ③의 핵심.</b> 🆕 <b>Muse Spark 1.1 API $1.25/$4.25</b>(Opus 출력가의 1/6, Grok $2/$6보다 쌈) — <b>광고가 먹여 살리는 저가 클로즈드 API</b>는 알리바바 오픈웨이트와 달리 <b>회수 장치가 있는</b> 가격 카운터 포지셔닝 · ⚠️모방 불가능성 — 구글도 광고로 같은 걸 가능(Gemini Flash 저가) → 불인정 · ⚠️가속도 — AI 매출 미공시 + OpenRouter 채택 증거 아직 없음',
+    'AI 광고 최적화는 매출 +28%로 증명 · <b>메타버스 대규모 실패 이력</b>, AI 이후도 광고 의존(약 98%)',
+    '<i>(v1.3 근거 교체 — 점수 유지)</i> <b>진짜 아군은 수백만 광고주 생태계</b>(연 $600B급 광고 매출의 상업적 약속 — Advantage+ 런레이트 $20B+) · <i>이전 근거 "Glimmer 개발자"는 공짜 사용자(체크리스트 15), "멀티벤더 구매"는 조달이라 무효</i> · 적대: 미성년자 소송 $2.4B·EU 벌금 — 비용이지 존립 위협 아님'],
+ rt:['NTM PER <b>17.9</b> — Alibaba(16.7) 다음으로 낮음 · TTM 21.8, <b>영업외 비중 1% — Apple과 함께 상장 12사 중 평가이익 없는 깨끗한 배수</b> · PEG 0.92 · P/S 6.6 참고',
+    '해당 구조 없음',
+    '광고 편중 · 단 멀티벤더로 칩 의존은 분산',
+    '게이트 1 ✅ 영업흑자 · 게이트 2 <b>TTM FCF +$40.98B 흑자</b> · 단 <b>추세 악화</b> — 분기 FCF <b>+$780M로 -91% 급감</b>, 분기 CapEx $31.1B(전년 2배), 연 $130~145B · ⚠️ 상단 집행 시 TTM 마이너스 전환 가능 — <b>실측 전환 확인 시 -2</b>']},
+
+{rank:8,name:'🍎 Apple',type:'소비자',cap:4.43,tag:'20억 대 락인은 만점, AI 실행은 최저. 라스트무버 자리는 있는데 2년째 안 움직였고 Baltra까지 밀렸다.',s:[5,2,2,3,3],t:[-2,0,-3,0],
+ r:['<b>20억 대 설치기반 = 세계 최강 소비자 락인</b> · App Store 연 billings <b>$1.4T</b> · Q3 iPhone <b>+22%</b> — AI 없이도 하드웨어 사이클이 돈다',
+    '<b>Siri 개편 2년 연기</b>(9월 iOS 27로) · 고난도 추론을 <b>Gemini 커스텀 모델(1.2조 파라미터)에 연 $1B 주고 외주</b> · 자체 AFM 3는 Arena·하드벤치마크에 등장조차 안 함 · <b>분기 CapEx $3.5B — 자릿수 열세</b> · 인재 유출(팀장 Pang→Meta, AI총괄 Giannandrea 은퇴) · <b>단 실리콘 역량은 별개다</b> — Baltra와 M시리즈는 14사 중에서도 상위권. <b>애플의 약점은 칩을 못 만드는 게 아니라 모델을 못 만드는 것</b>이며, ②2점은 모델·표준 주도력의 공백 때문이지 하드웨어 때문이 아니다',
+    '❌<b>모방 불가능성 — 디바이스 20억 대는 ①에서 이미 5점으로 셌다.</b> ③에서 또 쓰면 이중 계상이라 인정하지 않는다 · ✅별도 수익모델(하드웨어·서비스) · ❌<b>후발 가속도가 없다. 오히려 감속이다</b> — Siri 개편이 WWDC 2024 예고 후 <b>2년 연기</b>됐고 고난도 추론은 Gemini에 외주 중 · <b>라스트무버는 늦게 움직여서 이기는 것이지 안 움직이는 게 아니다</b> · 9월 iOS 27에서 새 Siri가 나오면 그때 상향',
+    '🔑 <b>Baltra — 애플의 첫 AI 서버칩.</b> Broadcom 공동개발, TSMC N3P, <b>2026년 하반기 양산 → 2027년 배치</b>. PCC 서버는 이미 M5로 업그레이드. <b>Anthropic 칩(2028~2030)보다 2년 빠르고 애플은 M시리즈로 양산 실적이 있다</b> · <b>그럼에도 3점</b>: 다각화가 빈약하고(Vision Pro 부진, 자동차 취소) Baltra는 내부 전용이라 외판 수익이 없다. <b>무엇보다 Baltra는 추론 인프라를 채울 뿐 모델 공백을 못 메운다</b> — Siri는 여전히 Gemini로 돌아간다',
+    '<b>모델 계약은 동맹이 아니라 조달이다.</b> 애플은 Google에 <b>연 $1B를 주고 Gemini를 사 온다</b> — 애플이 고객이다 · <b>법적 전선 4개</b>: OpenAI 상호 소송, xAI 반독점, DOJ 반독점, <b>EU DMA 항소 3건 전부 기각</b> · <b>그래도 1점이 아닌 이유</b>: 규제·경쟁사 소송은 <b>비용이지 존립 위협이 아니다</b> — DOJ에 져도 아이폰은 팔린다. NVIDIA(⑤2점)는 <b>고객 자신이 적</b>이라 적이 늘수록 매출이 사라진다 · <b>App Store $1.4T</b> 개발자 생태계가 아군 · 순수 성과는 <b>중국 CAC 승인받은 최초 외국 기업</b>'],
+ rt:['<i>(v1.5: 구간 재설계 — 29~42)</i> NTM PER <b>35.5</b> — 29~42 구간, 경계에서 벗어남(42선까지 15.5%) · TTM 37.3 · <b>PEG 3.36, 상장 12사 최악</b> · AI 실행력은 하위인데 밸류는 역사적 최상단',
+    '해당 구조 없음',
+    '<b>Google 검색 지급금 연 $20B</b>이 Services 마진의 핵심인데 <b>DOJ 2월 항소 중</b> — AI보다 이게 큰 리스크 · Siri 핵심을 경쟁사 Gemini에 의존',
+    '매출 $109.4B(+16%), EPS 상회, 현금 $130B+ · <b>오히려 과소투자가 문제</b>']},
+
+{rank:6,name:'Alibaba',type:'소비자',cap:0.294,tag:'영업흑자 복귀 + $10.2B 증자로 실탄은 채웠다. FCF -$6.6B와 "오픈웨이트엔 회수 장치가 없다"는 그대로.',s:[4,4,3,4,3],t:[0,0,-4,-2],
+ r:['타오바오·알리페이 = <b>중국 내 10억 명 규모의 양면 마켓플레이스 네트워크.</b> 애플(iPhone)·메타(SNS)에 준하는 소비자 락인이며 <b>같은 잣대를 적용하면 3점이 아니다</b> · <b>5점이 아닌 이유 셋</b>: ⓐ중국 한정이라 글로벌 인간밀착 부재 ⓑ<b>PDD·더우인에 점유율을 잠식당하는 중</b> ⓒ알리페이는 앤트그룹으로 분리 · <i>Qwen의 OpenRouter 평균 $0.37/M은 모델 기업 지표라 플랫폼 기업인 알리바바 ①에는 적용하지 않는다</i>',
+    'R&D·적응속도 최상위, Arena WebDev 3위·Vision 2위 · <b>단 표준 주도력이 비어 있고</b> HLE 43.6%로 프론티어 미달 · <b>Anthropic이 가짜계정 25,000개·대화 2,880만 건 증류 주장</b>, 기술적 반박 없음',
+    '<b>오픈웨이트 배포가 라스트무버와 무슨 상관인가?</b> 구글은 OS를 공짜로 뿌리고 <b>Play Store 수수료로 회수</b>했지만 <b>오픈웨이트에는 회수 장치가 없다</b> — Qwen을 받아 자기 GPU에 돌리면 알리바바는 한 푼도 못 받고, 실제로 <b>SiliconFlow·Novita·AWS Bedrock이 호스팅해 그쪽이 매출을 가져간다.</b> 안드로이드 비유가 여기서 깨진다 · ⚠️<b>모방 불가능성 부분 인정</b>: 보완재 커모디티화는 진짜 전략이나 ⓐ메타(Glimmer)·구글(Gemma)도 오픈웨이트를 내고 ⓑ<b>플래그십 Qwen3.8-Max 오픈웨이트는 8월 12~13일 공개로 2주밖에 안 됐다</b> · ✅별도 수익모델(커머스·클라우드) · ✅✅<b>후발 가속도 — 6월 분기 가속 확인.</b> 클라우드 +34→36→38→<b>45%</b>(22분기 최고), AI 제품 12분기 연속 3자리수, MaaS ARR 가이던스 RMB 100억 → <b>8월 160억 초과</b> · ❌<b>작동 증거 없음</b> — Anthropic은 여전히 $6.36/M을 받고 OpenRouter 매출 46%를 가져간다',
+    '클라우드 <b>+45%(22분기 최고)</b>, AI 제품 <b>12분기 연속 3자리수</b>, MaaS ARR 8월 160억 초과 · 3년 RMB 380B 중 <b>누적 190B 집행 + 🆕 증자 $10.2B 전액 풀스택 AI 투입 예정</b> · 브라질·프랑스·네덜란드 DC · <i>증자는 의지의 확인이지 결과가 아니므로(규칙 D) 점수 불변</i>',
+    '<b>파생모델 15만 개는 아군이 아니다.</b> ③에서 확인했듯 오픈웨이트에는 회수 장치가 없어 <b>그 개발자들은 알리바바에 한 푼도 내지 않는다.</b> VHS 연합은 전자회사들이 <i>자기 돈으로</i> 데크를 만든 상업적 약속이었다 · <b>진짜 상업 동맹은 Apple 중국 탑재 하나</b>(규모 미공개). 다만 이건 크다 — 중국 아이폰 전체 기반에 Qwen이 들어간다 · Nvidia 협력은 수출통제로 제약 · <b>적대세력</b>: Anthropic이 <b>가짜계정 25,000개·대화 2,880만 건 증류</b>를 공개 주장, 기술적 반박 없음 · <i>중국 지정학 리스크는 ⑧에서 -4로 이미 계상했으므로 여기서 다시 빼지 않는다</i>'],
+ rt:['NTM PER <b>16.7</b>(상장 12사 최저 — SA 데이터 CNY/USD 혼재라 FY27 $5.71·FY28 $8.03을 7:5 가중 직접 계산) · 증자 후 시총 <b>$270B</b> · TTM 25.8은 영업외 54%로 무효 · P/S 1.8 참고 · <b>팔란티어 시총($407B)이 알리바바보다 50% 크다</b>',
+    '해당 구조 없음',
+    '<b>양방향 지정학</b> — 미국 Blackwell 금수 + Remote Access Security Act, 중국은 자국 첨단모델 해외접근 제한 논의 · <b>BABA는 VIE 구조</b> — 본토 지분이 아닌 케이맨 지주사의 계약 다발',
+    '<b>🆕 6월 분기(8/20) 영업흑자 전환</b> — RMB -848M → <b>+15,161M</b>, non-GAAP 순이익 RMB 86M → <b>20,715M</b> 정상화 · <b>그러나 -2 유지</b>: CapEx RMB 67,678M(+75%)로 <b>FCF -$6.6B</b> · <b>🆕 8/23 $10.2B 증자 발표</b>(710M주, 할인 -8.4%, 희석 3.70%, 전액 풀스택 AI) — 완충 약 $41B로 확대. <i>조달은 소진을 메꾸는 것이지 줄이는 게 아니다 · 다만 Anthropic의 최대 허들(상장 전 증시)을 알리바바는 선제 조달로 지웠다</i>']},
+
+{rank:6,name:'Anthropic',type:'업무',cap:0.965,tag:'과점 21점 최고점 — 그 성능을 전부 경쟁사 인프라 위에서 내고, 상장까지 증시가 버텨줘야 한다.',s:[4,5,3,4,5],t:[-3,-1,-3,-2],
+ r:['<b>[주채널: 업무 — 기업 고객·전환비용 / 보조: 거래 — 가격 결정력]</b> 기업 고객 <b>30만+</b>, <b>매출의 약 80%가 API·기업</b>이라 워크플로 전환비용 기반 락인이 실재 · <b>보조 증거(가격 결정력)</b>: OpenRouter에서 <b>토큰 12%로 매출 46%</b>, 평균 <b>$6.36/M</b>로 Qwen($0.37)의 <b>17배 프리미엄</b> — <i>비싸게 받아도 남는다</i>는 ①의 핵심 테스트 통과 · 달러 기준 1위 모델 Claude Opus 4.6 월 $25M, 프로그래밍 지출의 60%+ · <b>5점이 아닌 이유</b>: 개인 사용자 절대수가 OpenAI(WAU 9억)에 크게 열세 · <i>ARR $65B는 규모(위치)이지 여기서 가점하지 않는다 — 증가율은 ③ 소관</i>',
+    '<b>Arena 텍스트·에이전트·웹개발·문서·비전·검색 6개 카테고리 1위</b> + <b>Artificial Analysis Index 1위</b> · 🆕 <b>GPT-6 Astra 출시 후에도 1위 방어</b> — Intelligence Index <b>Fable 5.1(max) 66 &gt; Astra 61</b>(v4.2 개편 후에도 57 &gt; 55), <b>Coding Agent Index Fable 5.1 70 &gt; Astra 67</b>(전원 자기 하네스라 유효한 비교) · <b>MCP 표준 선점</b> · Opus 5 ARC-AGI-3 30.2%(직전 최고 약 8%)',
+    '<b>[지표: AI 귀속 매출의 성장률 변화 — 절대 규모는 ① 소관]</b> ✅<b>별도 수익모델</b> — 소비자가 아닌 <b>기업·코딩</b>을 축으로 잡아 OpenAI와 다른 자리를 팠다 · ❌<b>후발 가속도 — 감속 중이다.</b> ARR은 7월 <b>$65B</b>까지 왔지만 <b>월 증가율이 +58%→+57%→약 +14%로 꺾였다.</b> <i>$9B→$65B는 이동 거리지 가속도가 아니다</i> · ⚠️<b>모방 불가능성이 약하다</b> — <b>MCP는 개방 표준이라 이미 경쟁사들이 채택</b>했다 → <b>3점</b>',
+    '🆕 <b>2026년 8월 5일 자체 추론 칩 팀 공식 발표</b> — 모델과 실리콘을 함께 설계해 <b>토큰당 추론 비용 약 50% 절감</b> 목표, OpenAI 2번째 하드웨어 채용자 Clive Chan 6월 영입, <b>삼성 2nm 파운드리</b> 유력, 텍사스 Hubbard 캠퍼스 가동과 맞물림 · Claude Code·에이전틱 워크플로 확장 · <b>다만 프로토타입 2028년, 양산 2028~2030년이라 계획 단계</b> — Trainium3·Ironwood가 이미 출하 중인 것과 같은 점수를 줄 수 없어 4점 유지, 실물이 나오면 5점 상향 후보',
+    '<b>Amazon 5GW + Google 5GW TPU + MS 1GW — 3대 하이퍼스케일러 전원 동맹은 유일</b> · 적대세력 최소 · 🆕 <b>미 국방부 CDAO 프론티어 AI 계약(2025-07)</b> — Google·OpenAI·Anthropic·xAI <b>4사 각각 상한 $200M</b>. 정부 계약은 상업적 약속이라 아군 인정(Palantir·SpaceX와 같은 잣대) · <b>4사 공통이라 ⑤ 변별력은 없다</b>'],
+ rt:['<b>-3</b> <i>(v1.5: ARR 보정 + 자본효율 반영)</i> · post-money <b>$965B ÷ ARR $65B(7월) = 14.8배</b> — 그러나 <b>ARR은 런레이트라 TTM 매출보다 과대</b>하다. 분모를 TTM으로 맞추면 <b>약 30~39배</b>(Q2 매출 $10.9B 역산) = Palantir(TTM P/S 66.2, ⑥-4)의 절반 수준 · <i>(참고)</i> 이익 기준 $965B ÷ 연환산 영업이익 약 $2.2B = <b>약 440배</b>, Palantir NTM PER 89의 5배 · <b>자본효율 0.52</b>(ARR $65B ÷ 누적 조달 약 $125B) — 비상장 3사 중 최선 · ⚠️ <b>정밀도 열위</b>, <b>10월 IPO 예상 시 상장사 룰로 자동 전환</b>',
+    '<i>(v1.5: 받는 쪽 재분류)</i> <b>매출은 일반 기업·개발자가 낸 진짜 돈</b> — 부푼 것은 밸류이고 그건 ⑥ 소관 · 단 <b>AI 코딩 스타트업 고객 일부가 VC 조달로 API를 쓴다</b> · 3사 투자→같은 3사 클라우드 구매는 투자자 쪽(⑦)과 내 의존(⑧-3)으로 갈라 센다',
+    '<b>컴퓨트 100% 외부 + 공급자 3사가 전부 경쟁자</b>(Gemini·Nova·OpenAI 27%) · 🔧 <b>컴퓨트 약정 $300B</b>(Google Cloud $200B/5년 + AWS $100B/10년) <i>(v1.5 정정: ⑨는 고쳤는데 ⑧에 $80B가 남아 있었음)</i> · 🆕 ⚠️ <b>성능의 원천이 AWS 한 곳에 몰려 있다는 증언</b> — DS투자증권(9/7): Fable 계열의 빠른 성능 향상 배경에 <b>AWS Project Rainier</b>(2025-11 Trainium2 <b>50만개</b> → 2026-04부터 <b>100만개+</b>). <b>-3의 전제가 "3사 분산"인데 돈은 Google이 연 $40B로 AWS($10B)의 4배면서 성능 원천은 AWS</b> — 훈련/서빙 구분으로 설명될 수 있으나 미확인 → 긴장 #10 · FTC가 계약 배타성 검토 · <b>자체 칩이 이 항목의 구조적 해법이지만 2028~2030년 양산이라 당분간 -3 유지</b> · 🆕 <b>제로 데이터 보존 약속</b>(9/2) — 기업 고객의 규제 의존 완화 방향, 단 "고객이 직접 검증해야" 조건부',
+    '<b>-2</b> <i>(v1.5: 미공시 보수 처리 원칙 신설)</i> · 게이트 1 ✅ <b>Q2 첫 영업흑자 $559M</b>(매출 $10.9B, 마진 5%) · 게이트 2 <b>판정 불가 — 비상장이라 FCF 미공시</b>. 없는 데이터를 유리하게 해석하지 않는다 · <b>완충이 외부 조달뿐</b> — Series H $30B($965B 밸류)에 기댄다 · 게이트 4 🔧 <b>컴퓨트 약정 $300B</b>(Google Cloud <b>$200B/5년</b> + AWS <b>$100B/10년</b>, 4/20 5GW) — 연 환산 약 <b>$50B</b>로 ARR $65B의 <b>77%</b>, 커버리지 1.3배로 통과 <i>(v1.5 정정: 기존 $80B는 3.75배 낡은 수치)</i> · ⚠️ 게이트 2의 \'미공시 보수 처리\'와 게이트 4의 \'판정 불가 하향\'은 <b>같은 미공시라 중복 적용하지 않는다</b> · \'상장 때까지 증시가 버텨주느냐\'가 곧 이 항목']},
+
+{rank:8,name:'NVIDIA',type:'부품',cap:5.45,tag:'기술과 호황 이후 비전은 만점인데 아군은 최하위권 — 큰 고객이 전부 자기 칩을 만든다. Nemotron 연합과 Hugging Face로 그 바깥에 아군을 만들기 시작했다.',s:[2,5,2,5,2],t:[0,-3,-3,0],
+ r:['<b>부품 공급형 구조적 상한.</b> CUDA 개발자 생태계는 실재하나 <b>최종 사용자와 접점이 없다.</b> 강의가 명시한 대로 <b>GPU·HBM은 B2B라 인간밀착 해자를 만들 수 없다</b> · 🆕 <b>Hugging Face 인수 서명(9/2)</b> — 모델 300만·데이터셋 50만·개발자 1,800만. 클로징 시 <b>업무 채널(HF 엔터프라이즈)</b>이 생겨 부품 상한 2를 넘길 유일한 경로 · 단 2027 상반기·규제 승인 전까지 미실현 · 리스크: NVIDIA 소유 후 <b>HF 중립성 훼손</b>으로 AMD·Google 이탈 시 역효과',
+    'Vera Rubin 양산(R100 3,360억 트랜지스터, Blackwell 대비 추론 5배·토큰당 비용 1/10) · AI 가속기 점유율 70~75%',
+    '시장 개척자이자 현 지배자 = 퍼스트무버 · <b>커스텀 ASIC 출하 +44.6% · 머천트 GPU +16.1%</b> — 추격당하는 쪽',
+    '로보틱스·자율주행·LLM 등 <b>10개 영역 진출</b> — "곡괭이 팔다 직접 광부가 되겠다"',
+    '🆕 <b>HF 인수는 ⑤ 근거가 아니다</b> — 9/2 확정 계약이나 <b>클로징 2027 상반기·규제 조건부</b>(미실현) · 개발자 1,800만은 <b>공짜 사용자</b>라 체크리스트 15상 아군 불인정(Alibaba 파생모델 15만과 같은 잣대) · HF는 배포 채널이므로 <b>①의 영역</b> · <b>적의 정체가 고객이라는 게 핵심이다.</b> 매출 약 40%인 하이퍼스케일러 4곳이 <b>전원 자체 칩 개발</b> 중이고 Meta는 Google TPU를 병행 조달해 일부 이탈 — <b>적이 하나 늘 때마다 매출이 직접 사라지는 구조</b> · Open Secure AI Alliance에서 OpenAI/Anthropic/Google 배제 · 🆕 <i>(v1.5: 📈 1→2 — 별표 G 동맹등급 A 0→+1)</i> <b>그러나 자기 칩을 안 만드는 아군군을 직접 만들었다 — Nemotron 연합</b>(2026-03 출범): <b>Mistral</b>(기초 모델 공동개발)·<b>Black Forest Labs</b>(멀티모달)·<b>LangChain</b>(에이전트)·<b>Cursor</b>(코딩 평가 데이터)·Thinking Machines Lab·Reflection AI, 이후 <b>NAVER Cloud</b>로 확대. 결과물은 <b>Nemotron 4의 기반이 되어 오픈소스로 공개</b> 예정이고 GTC 2026-03에서 Nemotron3 Ultra를 "Best Open Base Model"로 발표 · <i>(별표 H 4문 통과)</i> 주고받음 ✅(공동개발) · <b>상대가 잘되면 내가 잘된다 ✅</b>(연합사는 자체 칩 개발 자본이 없어 GPU를 빌려 쓴다) · 끊으면 양쪽이 아프다 ✅ → <b>조달이 아니라 동맹</b> · 🆕 <b>NVLink Fusion</b> — 하이퍼스케일러가 자체 XPU를 써도 NVLink·Spectrum-X·ConnectX·BlueField·Vera CPU·MGX 랙과 결합. <b>GPU 점유율 100% 방어를 포기하고 AI Factory 공통 플랫폼을 장악</b>하는 전환 · <b>3으로는 못 간다</b> — 연합은 실재하나 하이퍼스케일러 이탈이라는 <b>구조형 적대</b>가 그대로다(별표 G: 3 + A+1 + H-2 = 2). Palantir·Tesla·OpenAI와 같은 최하위권'],
+ rt:['<i>(v1.5: NTM 18.0 → 20 미만 · <b>P/S 예외 삭제</b> — 규칙이 아니라 직관이었음)</i> NTM PER <b>18.0</b> (Q2 실적 후 이익 급증) · PEG 0.36 · TTM 27.5는 영업외 14%($32B 랩 지분 평가익) 포함 · P/S 17.9는 참고만 — <b>PER이 낮으면 낮은 것이 정보다</b>',
+    '<b>-3 — Oracle과 공동 최심</b> <i>(별표 I: 조달 의존 고객 비중 큼 + 내 돈이 돌아옴)</i> · <b>조달 의존 고객 비중이 크다</b> — OpenAI·네오클라우드·xAI가 <b>투자받은 돈·빚으로 GPU를 산다</b> · <b>내 돈이 돌아온다</b> — 🆕 <i>(실측)</i> <b>2026년 5개월간 AI 지분 $40B+</b>: OpenAI <b>$30B</b> · Anthropic Series G(최대 $10B) · xAI Series E · CoreWeave $2B · Nebius $2B · 공급망(Corning $3.2B·Marvell·Lumentum·Coherent 각 $2B·IREN $2.1B). 그 돈이 GPU 대금으로 회수되고 매출이 피투자사 밸류를 올려 <b>지분 평가익까지 늘리는 이중 루프</b> · <i>(발표)</i> Q2 콜 \'생태계 커밋 약 $500B\' 분해 대기 · <i>(발표)</i> 3월 약정 $100B→$30B 축소, 8/18 계약 보도 대비 <b>$145B 하향</b> · <i>(실측)</i> TTM 영업외 <b>$32B(14%)</b> — ⑥ 소관이나 출처가 고객사라 방증 · 🆕 <b>돈이 아니라 신용을 댄다</b> — <b>GPU 잔존가치 보증 최대 25%</b>(담보 가치가 안 남으면 차액 부담 → 은행 <b>LTV 70~80%</b> 대출이 가능해진다) · <b>SB Energy 보증 $105B 상한</b>(8/17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 토지·전력·셸) · CoreWeave 미판매 캐파 매입 보증(<b>2032-04-13</b>까지) · rent-back $6.3B · 월가와 <b>$500B AI 인프라 금융</b> 조성 · ⚠️ <b>자기모순 구조</b> — 잔존가치를 보증했는데 <b>그 가치를 떨어뜨리는 것이 NVIDIA 자신의 신제품</b>이다(Vera Rubin이 Grace Blackwell 담보 가치를 깎는다) · <i>(경계)</i> 이 보증들은 <b>우발채무(C종)라 ⑨에 넣지 않는다</b> — 확정 지출이 아니고 여기 ⑦에서 이미 셌다',
+    '고객 40% 집중 + 전원 자체칩 개발으로 <b>방향성 악화</b> · 미 정부 중국 우회 접근 조사 · 🆕 <b>공급 커밋 take-or-pay</b> — TSMC(NVIDIA가 TSMC 매출 19%로 1위 고객)·HBM 캐파 선점 약정($500B 커밋의 상당 부분). 수요 꺾이면 <b>NVIDIA가 먼저 맞는다</b>(2022 재고 상각 $1.3B+ 선례) · 🆕 <i>(반대 방향 힘 — 점수 불변)</i> <b>오픈소스 확산이 이 의존의 헤지다</b> — 자체칩을 만드는 고객은 그럴 <b>자본이 있는 소수</b>뿐이고, 오픈웨이트로 창업하는 다수는 그 자본이 없어 기존 클라우드(=NVIDIA GPU)를 빌린다. <b>모델 기업에겐 오픈소스가 경쟁이지만 GPU 판매자에겐 시장 확대</b>다 — 허깅페이스 인수가 그 헤지의 실행 · ⚠️ 단 <b>별표 D</b>에 걸린다 — 헤지는 <b>DC 매출 중 비하이퍼스케일러 비중(ACIE)</b>이 실제로 올라와야 점수가 된다. HF는 <b>클로징 2027 상반기·규제 승인 조건부</b>라 아직 계획이고 트리거로만 관리',
+    '압도적 흑자 (FY27 Q1 매출 $81.6B, DC $75.25B +92%)']},
+
+{rank:13,name:'Oracle',type:'업무',cap:0.444,tag:'순환금융 루프의 세 꼭짓점 중 하나. RPO $638B 중 절반이 한 적자 기업 것이고, 그걸 짓느라 낸 빚에 신용시장이 값을 매겼다.',s:[3,2,3,3,3],t:[0,-3,-4,-3],
+ r:['<i>(업무 채널)</i> 엔터프라이즈 DB 락인은 수십 년째 강력 — 기간계 시스템 전환비용은 표에서 최상위급 · 단 클라우드 점유율은 낮고 AI 락인은 없다 · 가격 결정력은 DB에만 있음',
+    '자체 모델 없음 · 성능 도약 ❌ · 패러다임 적응 ⚠️(OCI를 싸게 파는 것) · 표준 선점 ❌ · 세 경로 중 통과 없음 → 2',
+    '❌<b>모방 불가능성</b> — 데이터센터는 자본만 있으면 누구나 짓는다 · ✅<b>별도 수익모델</b> — DB·ERP 라이선스 이익으로 클라우드를 보조(MS의 라이선스와 같은 구조) · ✅<b>후발 가속도</b> — <b>OCI 분기 $5.8B(+93%)</b>, FY26 연 $18.1B(+77%), RPO $553B→<b>$638B</b>(분기 +$85B) · 통과점 2 → 3',
+    'DB·ERP·NetSuite·Cerner(헬스케어)·클라우드 — 다각화 폭은 중상위 · 단 <b>AI 이후 비전이 약하다</b>(자체 칩·모델·로보틱스 없이 임대업에 가깝다) · 데이터센터 리스 약정 <b>$250B(15~20년)</b>인데 재임대는 단기 — 만기 불일치',
+    '<i>(별표 G: 동맹 A+1 / 적대 H-1 → 3)</i> 동맹: <b>OpenAI 대형 계약</b> · NVIDIA · TikTok 미국 법인 · 정부 클라우드 · 적대: AWS·Azure·GCP 3사와 정면 경쟁, 단 규제 적대는 적다(비용형)'],
+ rt:['NTM PER <b>19.10</b> — 20선 밖(-4.5%) · TTM 26.42 · P/S 6.6 · 주가 52주 <b>-31.6%</b>로 시장이 이미 크게 깎았다 · PEG 0.65 · ⚠️ 단 <b>EV/Sales 8.60</b>(P/S 6.59보다 높다) — 부채 $167B가 시총에 안 잡힌다',
+     '<b>-3</b> <i>(v1.5 정정: Stargate 지분 확인 — 세로축 ✅)</i> · <b>RPO $638B 중 OpenAI가 약 절반</b> = 연매출($67.36B)의 <b>약 4.7년치</b> · 🆕 <b>Stargate LLC에 지분 $7B</b>(SoftBank $19B·OpenAI $19B·MGX $7B와 공동 equity funder) — <b>Oracle 돈이 Stargate로 들어가 DC가 되고 그 DC 매출이 Oracle에 돌아온다</b> · 자체 부채 $167B로 지은 DC는 세로축이 아니다(설비로 갔지 고객 주머니로 안 감) — 그 선투자 위험은 ⑧-4·⑨-3·별표 J에서 센다',
+     '<b>단일 고객이 백로그의 절반</b> — 표 전체에서 가장 극단적인 고객 집중 · 그 고객이 <b>적자 기업</b>이라 대금 지급이 조달에 달려 있다 · <i>(교차검증·별표 J)</i> <b>S&P가 7/9 BBB→BBB- 강등하며 OpenAI를 취약점으로 명시</b> · <b>CDS 215bp 사상 최고</b>(연초 144bp · 18년래 최고)',
+     '<b>-3</b> <i>(v1.5: 게이트 3 런웨이 1.3년 → 한 단계 하향)</i> · 게이트 1 ✅ <b>영업흑자</b>(영업이익 $22.39B, 마진 33.2%) · 게이트 2 ❌ <b>FCF -$23.69B 실측</b>(OCF $31.98B, capex <b>-$55.66B</b>) · 게이트 3 ⚠️ <b>런웨이 1.3년</b> — 현금 $31.89B ÷ 연 소진 $23.69B, 표 전체 최단이며 <b>BBB-라 조달 여력을 온전히 인정받지 못한다</b>(A- 이상만 무제한) → 한 단계 하향 · 게이트 4 ✅ <b>약정 커버리지 2.6배</b> — 리스 $250B에 대해 <b>RPO $638B</b>, 리스는 매출을 만드는 자산이라 절대액이 아니라 커버리지로 잰다 → 추가 하향 없음 · 순부채 <b>-$135.54B</b> · Debt/EBITDA 5.03 · 이자보상 4.87 · <b>Altman Z 2.18</b>(파산 위험 증가) · 2026년 <b>$45~50B 추가 조달 예정</b>이고 그 빚이 다시 이자보상배율을 깎는다']},
+{rank:10,name:'Palantir',type:'업무',cap:0.418,tag:'재무는 최상위(영업마진 43%, FCF 마진 55%), 가격이 전부를 갉아먹는다(NTM PER 89).',s:[2,3,3,3,2],t:[-4,0,-3,0],
+ r:['<i>(업무 밀착형 SW 기업 — 인프라가 아니다)</i> 정부·기업 계약의 전환비용은 실재하나 <b>네트워크 효과가 아니다.</b> 사용자가 늘어도 가치가 폭증하는 <b>스노우볼이 없다</b> — 강의가 말한 <b>가짜 해자(전환비용)</b>에 해당하며, AI가 데이터 이전을 자동화하면 그마저 약해진다',
+    'AIP 온톨로지는 차별적 · Nvidia Nemotron 소버린 구동 제휴 · 표준 주도는 못 함',
+    '온톨로지는 모방 난이도 높음 · <b>단 AI가 데이터 이전을 자동화하면 전환비용 해자가 약화</b>',
+    '미국 상업 +149%($764M)로 정부 의존 탈피 중 · 인프라·모델 계층 확장은 없음',
+    'Nvidia·SAP·Accenture는 아군 · <b>ICE ImmigrationOS $30M 계약, 국무부 감시 자문</b>으로 시민사회·의회 적대 누적 · <b>별표 G: 동맹 A+1 / 적대 H-2 → 2</b> — 적대가 <i>구조형</i>(사업 정당성 표적). OpenAI와 같은 점수지만 경로가 다르다(OpenAI는 A+2/H-3)'],
+ rt:['<i>(v1.5: 9/2 NTM 89.0 — 90선 아래 1.1%, 📏경계)</i> NTM PER <b>89.0</b> · 9/2 하루 -5.8%로 선 아래로 · TTM 144.9 · <b>P/S 66, 상장사 중 SpaceX(83) 다음</b>(참고) · 시총 $407B',
+    '해당 없음',
+    '미 정부 계약 의존(연방 $0.9B+) · 정권 교체 시 직격 · ICE 논란이 상업 고객으로 전이 가능',
+    'GAAP 순이익 $1.06B, 순이익률 55%, EPS $0.41로 컨센 상회']},
+
+
+{rank:10,name:'SpaceX + xAI',type:'소비자·업무',cap:1.91,tag:'AI 인프라 기업으로 보면 과점 18 — Colossus·Grok·Cursor는 실체지만 궤도 DC는 아직 없고, NTM PER 111과 FCF -$32.5B가 함정 -12를 만든다.',s:[3,4,3,5,3],t:[-5,0,-3,-4],
+ r:['<b>소비자</b> — Starlink 1,200만 가입자(6월말), 매출 $11.4B에 <b>영업마진 39%</b> = 가격 결정력 ✅, 단 사용자 간 연결 없음 · <b>SNS</b> — X 편입, 페이스북형 네트워크지만 이탈·수익화 약화 · <b>업무</b> — 🆕 <b>Cursor(8/14 $60B 인수 완료)</b> 개발자 유료 시트, 유지율·가격 결정력 실측 후 4 검토 · Meta·Apple(5)엔 못 미치고 Tesla(2)보단 위 · 🆕 <b>자동차 채널 개시</b> — Starlink V5가 Tesla Cybercab에 팩토리 통합(7/20). 대수 미미해 ① 상향은 아직',
+    '<i>(v1.5: AI 귀속만 — 로켓은 ④로)</i> <b>성능 경로 ✅</b> — 🆕 <b>Grok 4.6 AA Index 61, 전체 6위</b> — Sol Max(61) 동점, Fable 5(62)·Opus 5(63)에 1~2점 차 · <b>적응 경로 ✅</b> — Cursor(AI 코딩 1위) 인수 · Colossus GPU 20만(100만 목표) · Grok을 X·Starlink 지원에 배포 · 표준 ❌ → 두 경로 = 4 · 재사용 로켓·Starship은 AI 게임체인저가 아니다 — <b>궤도 데이터센터가 실현되기 전까지는 ④에서만 센다</b>',
+    '<i>(v1.5: 모방불가·가속도는 AI 귀속만)</i> ⚠️<b>모방 불가능성</b> — Colossus 규모는 자본이면 복제 가능(Stargate·Hyperion), 궤도 DC 미실현 · ✅<b>별도 수익모델</b> — Starlink·발사 이익이 xAI를 댄다 · ✅<b>후발 가속도</b> — 🆕 <b>AI 세그먼트 Q2 $2.56B, +247% YoY</b> · 10월 램프 클라우드 계약 $6.7B 추가 · 통과점 2.5 → 3 (4는 모방불가 완전 ✅일 때만)',
+    'Starlink · Starship · xAI(Grok) · X · Cursor · <b>Terafab</b>(Tesla 합작 반도체 팹) — 다각화 최상위 · 6/12 나스닥 상장 $75B 조달(사상 최대 IPO), 현금 $100B',
+    '아군: NASA(매출 5%)·Space Force(Starshield) — <i>Tesla(Terafab 합작·Cybercab Starlink V5)는 <b>같은 지배주주 아래 관계사</b>라 동맹으로 세지 않는다(별표 G·체크리스트 18 — Tesla 쪽도 같은 이유로 A=0)</i> — 정부 계약은 상업적 약속 ✅ · 적대: EU(X DSA 벌금)·Amazon Kuiper·Blue Origin·OpenAI(머스크 소송)·정치적 적대 다수 · 동맹이 적보다 확실히 많지 않음 → 3 · 🆕 <b>미 국방부 CDAO 프론티어 AI 계약(2025-07)</b> — Google·OpenAI·Anthropic·xAI <b>4사 각각 상한 $200M</b>. 정부 계약은 상업적 약속이라 아군 인정(Palantir·SpaceX와 같은 잣대) · xAI도 4사 중 하나'],
+ rt:['NTM PER <b>111</b>(SA fwd 111.46) · P/S <b>83</b> · 시총 <b>$1.91T</b> — Tesla보다 크다 · 주식 수 YoY <b>+41.8%</b>(IPO + xAI $250B + Cursor $60B 전량 주식교환)',
+     '<i>(v1.5 🔧: -1→0 — 근거가 "루프 없음"인데 점수만 -1이었다. 별표 I 2축으로 재면 0)</i> 별표 I 2축: <b>조달 의존 고객 비중 작음</b>(Starlink 소비자 1,200만·NASA·Space Force) × <b>내 돈 안 돌아옴</b>(고객에 투자해 매출을 되사는 루프 없음) = <b>0</b> · xAI 흡수($250B)·Cursor 인수($60B) 전부 <b>자사주</b> — 감시 대상이나 <b>인수는 순환이 아니라 수직통합</b> · NVIDIA→xAI 투자는 <b>NVIDIA의 ⑦</b>(NVIDIA 돈이 GPU 대금으로 돌아옴)이지 SpaceX 것이 아니다 — OpenAI를 "받는 쪽"으로 재분류한 것과 같은 잣대. OpenAI가 -1인 이유는 자기 Startup Fund가 API 고객에 투자하는 루프가 있어서고 SpaceX엔 그게 없다 · ⚠️ <b>$6.7B 클라우드 계약 상대 미공시</b> — Tesla면 관계사 순환(트리거)',
+     '머스크 개인(내부자 45%) · FAA 발사 허가 · 국방(Starshield) 의존 · xAI 컴퓨트는 NVIDIA 의존 · 🆕 <b>Cursor의 모델은 대부분 Anthropic·OpenAI 것</b> — 경쟁사 안에 들어간 공급 의존 · Starlink 주파수·각국 인허가',
+     '게이트 1 ❌ — <b>영업손실률 -14.9%</b>(순손실 -$8.9B TTM) → <b>-10~-30% 구간이라 -4</b> <i>(v1.5: 기준을 "연 소진 $10B급" 절대액에서 손실률 비율로 교체 — 규모 편향 제거, 점수 불변)</i> · <b>방향 완화 판정 불가</b> — 4분기 연속 YoY 손실률 데이터 미확보 · <b>FCF -$32.5B</b>(capex $42B — Starship·xAI DC) · 완충: 현금 $100B(IPO), 3년 런웨이 · Starlink 단독은 흑자(39%)라 아마존 효과 논리 성립하나 연결 기준 적자 · 🆕 AI 세그먼트 영업손실 <b>-$1.26B/분기</b> · 백로그 $47.5B']},
+{rank:12,name:'Tesla',type:'소비자',cap:1.41,tag:'FSD 구독 148만·ARR $791M은 실체다. 그러나 로보택시는 Waymo에 30배 뒤지고 Optimus·Terafab·AI5는 아직 전부 미래다.',s:[2,3,3,4,2],t:[-5,-1,-2,-1],
+ r:['차량 소유자에게 전환비용은 있으나 <b>사용자 간 연결이 없어 스노우볼이 안 돈다</b> · 가격 결정력 ❌(가격 인하 지속)',
+    'AI5 칩 4월 테이프아웃(AI4 듀얼 대비 약 5배), 소량 생산 2026 내·양산 2027 중반 — <b>Optimus 우선</b> · Optimus 1세대 라인 설치 중(Fremont S/X 전환), "2026 내 생산" · Cortex 205MW · 🆕 <b>Terafab</b>(SpaceX 합작 반도체 팹) 건설·장비 조달 진행 — 실측 전 · 성능 판정 불가(로보택시 Waymo가 앞), 적응 ✅ → 3',
+    '<i>(v1.5: 📈 FSD 구독 실측으로 가속도 ✅ · 🔧 모방불가 ⚠️→❌ — "못 베끼는 자산"으로 든 Starlink V5가 <b>SpaceX 조달품</b>이었다. 통과점 2.5→2, 사다리상 점수는 3 그대로)</i> ❌<b>모방 불가능성</b> — 🆕 <b>Starlink V5 Cybercab 매립 통합</b>(7/20)은 실재하나 <b>그 자산은 SpaceX 것이고 Tesla ⑦이 스스로 "관계사 조달"이라 적었다.</b> SpaceX ⑤에서 Tesla를 관계사라 빼는 것과 같은 잣대(체크리스트 18) — <b>관계사 조달품은 자기 못-베끼는-자산이 아니다.</b> "Waymo가 따라 하려면 적대 관계사에서 사와야"는 추론이지 공시된 배타적 공급 계약이 아니다 · 앞서지도 못함 — 무인 <b>Austin 94대</b>(8/18) 대비 Waymo <b>약 3,000대·주 50만 유료 탑승·10개 도시</b>, 30배 격차 · <b>재검토 조건</b>: 배타적 공급 계약 공시 또는 위성 통합으로 실제 앞서는 지표 · ✅<b>별도 수익모델</b> — 차 팔아 AI 댐 · ✅<b>후발 가속도</b> — 🆕 <b>FSD 활성 구독 148만(+56% YoY)</b>, 월구독 66.6만 → ARR 약 $791M, 순증 사상 최대, NA 부착률 55% · <b>통과점 2.5 → 사다리상 4 구간이나 게이트(모방불가 완전 ✅) 미충족으로 3</b>',
+    '에너지 저장 · Optimus · 로보택시 · Terafab — Starlink·Starship이 빠져도 폭은 상위 · 단 Optimus는 미배치(운영이력 긴장 #6)',
+    '머스크의 OpenAI·Apple 소송, <b>NHTSA FSD 조사 EA26002 격상</b>(320만 대) · 아군은 SpaceX(Terafab 합작) 정도 · 강의의 "악동 이미지가 통하려면 독점이어야 한다" 조건 미충족'],
+ rt:['NTM PER <b>187.5</b> / TTM 370.5 / P/S 13.6 · 시총 $1.41T',
+     '<i>(v1.5)</i> xAI 투자·Terafab 합작 등 머스크 관계사 간 순환 — 규모는 본업 대비 작다 · 🆕 Cybercab의 Starlink V5 조달도 관계사 거래',
+     '머스크 개인 의존 · NHTSA 조사 · 중국(상하이·배터리 공급망)',
+     '게이트 1 ✅ 영업흑자(마진 4.13%) · 게이트 2 <b>TTM FCF +$5.76B 흑자</b>(OCF $18.69B − capex $12.92B) · 단 <b>추세 악화</b> — <b>영업이익 -57%</b>로 FCF의 원천이 무너지는 중(FCF는 후행 지표) · <i>(v1.5: 근거를 EPS에서 영업이익으로 교체)</i>']},
+
+{rank:14,name:'OpenAI',type:'소비자',cap:0.852,tag:'구조는 경계선인데 함정이 다 지운다 — 조정 2점으로 최하위. 무게는 순환금융이 아니라 밸류·공급자 의존·2030년으로 밀린 손익분기에 있다.',s:[4,4,2,4,2],t:[-4,-1,-4,-5],
+ r:['<b>[주채널: 소비자 — MAU·구독 / 보조: 거래 — OpenRouter]</b> <b>WAU 9억, ChatGPT MAU 10억으로 절대 사용자 수 1위</b> — ①을 결정한 건 이 소비자 채널이다 · <b>단 가격 결정력이 없다</b>: OpenRouter 평균 <b>$0.74/M</b>로 Anthropic($6.36)의 1/8.6, 토큰 9.8%에 매출 8.0%로 <b>프리미엄이 붙지 않는다</b> · 쓴 만큼 내고 언제든 갈아탈 수 있어 락인이 약함 · <i>ARR $40B는 규모(위치)이며 증가율은 ③ 소관</i>',
+    '<i>(v1.5: 🆕 GPT-6 Astra 반영 — 근거 전면 갱신, 점수 유지)</i> <b>성능 경로 ✅</b> Arena <b>T2I·Image Edit 1위 2관왕</b>(gpt-image-2) · 🆕 <b>ARC-AGI-3 SOTA</b>(표준 하네스 <b>62.7%</b>) — ARC Prize: "우리가 본 것 중 가장 정밀한 신규 환경 기호 모델을 만든다", <b>인간 성능을 96% 레벨에서 상회</b> · <b>FrontierMath Tier 4 v2 97.6%</b>(Fable 5.1 87.8%) · <b>Exploit-Bench 100%</b> · <b>환각률 92%→51%</b>로 급감하면서 정확도는 +4 · <b>적응 경로 ✅</b> GPT-5.5→5.6→6 출시 속도, 광고 파일럿 6주 ARR $100M · 표준 ❌(MCP 실패) · <b>세 경로 중 둘 통과 = 4</b> · 🔴 <b>5로 못 올리는 이유 — 종합 지능이 전작과 동점이다</b>: 🆕 <b>AA Intelligence Index 61 = GPT-5.6 Sol 61</b>, Fable 5.1(max) <b>66</b>에 5점 뒤지고 Muse Spark 1.3에도 밀린다(v4.2 개편 후에도 Fable 5.1 57 &gt; Astra 55). <b>②5는 Anthropic이 "AA 종합 1위"로 받은 점수</b>라 같은 잣대로 불가 · 🔴 <b>반대 증거</b>: <b>GDPval-AA v2 -80 Elo</b>(44개 직군의 경제적 가치 태스크에서 <b>퇴행</b>), τ³-Banking·SciCode·AA-LCR 2~3점 퇴행, <b>가격 2.5배 인상</b>($4/$20→$10/$50)으로 태스크당 <b>75% 더 비싸짐</b> · ⚠️ <i>(체크리스트 23)</i> OpenAI 발표 <b>ARC-AGI-3 99.9%는 자사 제공 어댑터 하네스</b> 점수다. ARC Prize가 같은 모델을 표준 하네스로 재니 <b>62.7%</b> — <b>37점 차이는 메모리 처리(턴 사이 추론 흔적 보존·기록 절삭)이지 지능이 아니라고 ARC Prize가 명시</b>했고 스스로 "AGI 아니다"라고 밝혔다. 다른 모델은 표준 하네스로 쟀으므로 <b>표준 점수를 쓴다</b> · <i>(같은 하네스 비교)</i> <b>AA Coding Agent Index</b>는 전원 자기 하네스라 유효 — Astra(Codex) <b>67</b>로 Opus 5·Fable 5와 동급이나 <b>1위는 Fable 5.1(Claude Code) 70</b>. 단 <b>토큰 3배 효율</b>로 Fable 5 대비 태스크당 <b>절반 이하 비용</b> · <i>(반응)</i> Gary Marcus조차 <b>"진짜 진보"</b>로 인정 — 기호적 세계모델을 명시적으로 구축한다는 점. 다만 <b>"그 능력이 얼마나 견고한가가 THE key question"</b>이고 "검증 가능한 도메인에서만 잘할 것으로 의심" · 이전 모델보다 <b>모니터 가능성이 낮아졌다</b>는 안전 지적',
+    '<b>[지표: AI 귀속 매출의 성장률 변화 — 절대 규모는 ① 소관]</b> ❌모방 불가능성 · ❌별도 수익모델 · ✅<b>후발 가속도 — 재가속했다.</b> ARR이 2~4월 <b>$25B에서 정체</b>하다 7월 <b>$40B</b>로 MoM +20% 복귀 · 나머지 둘은 여전히 <b>퍼스트무버 함정의 교과서</b>',
+    '<i>(v1.5: 📈 3→4 — 자체 ASIC이 계획에서 <b>성능 실증 + 초기 출하</b>로. 별표 D의 ④ 지표는 "자체 칩 <b>출하 여부</b>" — 2026년 0.1GW 미만이라도 출하는 출하이고, 칩이 아예 없는 Anthropic이 ④4인 것과 같은 잣대)</i> 🆕 <b>첫 자체 추론 ASIC "Jalapeño"가 성능을 실증했다</b> — OpenAI 공개 InferenceX 결과에서 <b>GB300 대비 Peak Throughput/kW: DeepSeek R1 1.7배 · Kimi K2.5 1.5배</b> · <b>자기 모델이 아닌 외부 오픈모델</b>(GPT-OSS 120B·DeepSeek R1 670B·Kimi K2.5 1T)에서도 와트당 토큰 처리량 <b>파레토 프론티어 갱신</b> → 특정 모델이 아니라 <b>LLM 추론 워크로드 자체에 특화된 ASIC</b>임을 입증 · 배치 계획(Broadcom): <b>2026년 0.1GW 미만 → 2027년 1.3GW → 2028년 후속 세대 합산 5GW+</b> · ⚠️ <b>단서</b> — Vera Rubin 대비 성능 열위, <b>NVIDIA 대비 1~2세대 뒤진다</b>. 학습과 범용 추론은 계속 NVIDIA GPU에 의존하므로 5로는 못 간다 · 🆕 <b>인프라도 "미확보"가 아니다</b> — Stargate Abilene에 <b>GPU 20.2만개</b>(B200 10.1만 + B300 10.1만, H100 환산 약 50.9만), <b>연말 40만개</b>로 확대 예정. 단 <b>운영은 파트너(Oracle·SoftBank) 의존</b> · 광고·디바이스 확장 · <i>(같은 잣대)</i> Anthropic ④4는 자체 칩이 <b>2028~2030 양산 계획</b>인 상태에서 받은 점수다. <b>1세대를 이미 내서 외부 모델에서 B300을 상회한 OpenAI를 3에 두는 것은 잣대 불일치</b>',
+    '<b>Stargate LLC 공동 지분</b>(OpenAI 40%·Oracle $7B·SoftBank 40%·MGX)·Broadcom(Jalapeño 공동개발)이 아군 — <i>Oracle $300B 컴퓨트 계약 자체는 사는 쪽의 <b>조달</b>이라 동맹 근거가 아니다(별표 H)</i> · <b>MS와 긴장</b>(Azure 독점 소멸), Apple 상호 소송, 머스크 반독점 계류 · 단 Bedrock 입점은 긍정 변수 · 🆕 <b>미 국방부 CDAO 프론티어 AI 계약(2025-07)</b> — Google·OpenAI·Anthropic·xAI <b>4사 각각 상한 $200M</b>. 정부 계약은 상업적 약속이라 아군 인정(Palantir·SpaceX와 같은 잣대) · <b>4사 공통이라 ⑤ 변별력은 없다</b> · 🆕 <b>Amazon $50B 투자</b>(3월, $35B는 IPO/AGI 조건부)도 지분 동맹 · 🆕 <b>소송 부담이 14사 최대</b> — NYT 등 <b>MDL No. 3143</b> 저작권 집단소송(각하신청 대부분 기각), <b>6/24 지역신문 약 400곳 추가 제소</b>, <b>7/10 Apple 제소</b>, 머스크 반독점 계류 · ✅ <b>별표 G 판정: 동맹 A+2 / 적대 H-3 → 3+2-3 = 2</b> — 동맹은 실제로 Palantir(A+1)보다 강하다. 같은 2점인 이유는 <b>적대가 한 단계 더 깊어서</b>(구조형 적대 복수 전선 + 최대 파트너 MS와도 긴장). <b>-3은 현재 OpenAI 단독 구간</b>'],
+ rt:['<b>-4</b> <i>(v1.5: ARR 보정 + 적자 + 자본효율)</i> · post-money <b>$852B ÷ ARR $40B = 21.3배</b> — TTM 보정 시 <b>약 39배</b> · <b>이익 배수 산출 불가 — 적자</b>(2026 GAAP 손실 약 $60B 전망, BEP 2030) · <b>자본효율 0.22</b>(ARR $40B ÷ 누적 조달 약 $180~190B) — <b>Anthropic(0.52)의 절반 이하</b>. 1.5배 많은 돈을 태우고 더 낮은 밸류($852B &lt; $965B)에 있다 · ⚠️ 정밀도 열위 · IPO는 2027로 밀림',
+    '<b>-1</b> <i>(v1.5: 받는 쪽 재분류 — 기존 -5는 ⑥⑧⑨의 재탕이었다)</i> · <b>OpenAI 매출은 일반 사용자·기업이 낸 진짜 돈</b> — 루프 자금은 매출이 아니라 <b>비용</b> 쪽으로 나간다 · 부푼 것은 <b>밸류</b>($852B)이고 그건 <b>⑥-4</b>, 공급자가 곧 투자자라 못 떠나는 것은 <b>⑧-4</b>, 조달 없이 못 버티는 것은 <b>⑨-5</b> · ⑦로 남는 것은 AI 스타트업 고객의 VC 조달 노출뿐 · <i>(교차검증)</i> <b>S&P가 7/9 Oracle을 BBB→BBB-로 강등하며 OpenAI를 취약점으로 명시</b>(별표 J)',
+    '<b>총 컴퓨트 약정 약 $1.4T 대비 연매출 $40B(7월) = 약 35배</b> — 재가속을 반영해도 배율이 비상식적 · <i>분해: 부외 B종(Oracle $300B+·AWS $38B) $338B+는 ⑨ 게이트 4 대상, 나머지 약 $1.06T는 NVIDIA·AMD·Broadcom·Stargate 발표분(확정 약정 여부 미분리)</i> · Oracle $300B 단일 계약 집중',
+    '2026년 적자 $14~33B · GAAP 손실 전망 ~$60B · 게이트 1 ❌ <b>손익분기 목표가 2030년으로 후퇴</b> — 손실률 구간과 무관하게 <b>BEP 후퇴만으로 -5</b>(방향이 악화라 완화 조건 A 실패) · 14사 최악 · 게이트 4 ❌ <b>약정 커버리지 0.67배</b> — 컴퓨트 약정 <b>$338B+</b>(Oracle $300B+/5년 + AWS $38B/7년, +$100B 증액), 연 환산 약 <b>$60B</b>인데 ARR은 <b>$40B</b>다. <b>버는 것보다 내기로 한 것이 크다</b> — 표에서 유일하게 커버리지 1배 미만 · 이미 -5(바닥)이라 추가 하향 없음, 바닥이 아니었다면 더 내려갔을 항목']},
+];
+// ── 과점 factor 이력 (분기별)
+// ⚠️ v1은 기준선이므로 비어 있다. 강의 원본(2026-07)은 규칙이 8차례 개정되기 전 점수라
+//    현재 판과 비교 불가 — 소급 재채점하지 않는 한 델타를 표시하지 않는다.
+//    v2부터 {'기업명':[['2026-08',과점],['2026-11',과점]], ...} 형태로 채운다.
+const HIST={};
+function spark(name,cur){
+  const s=HIST[name];
+  if(!s||s.length<2) return `<span class="nohist">v1.5 · 기준선</span>`;
+  const w=64,ht=20,vs=s.map(x=>x[1]),mn=Math.min(...vs)-1,mx=Math.max(...vs)+1;
+  const X=i=>4+i*(w-8)/(s.length-1), Y=v=>ht-3-(v-mn)/(mx-mn)*(ht-6);
+  const d=s.map((x,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Y(x[1]).toFixed(1)}`).join(' ');
+  const delta=vs[vs.length-1]-vs[0];
+  const col=delta>0?'var(--g4)':delta<0?'var(--g2)':'var(--tx3)';
+  const pts=s.map((x,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(x[1]).toFixed(1)}" r="2" fill="${col}"/>`).join('');
+  return `<svg width="${w}" height="${ht}" style="vertical-align:middle"><path d="${d}" stroke="${col}" stroke-width="1.6" fill="none"/>${pts}</svg>`
+       + `<span class="delta" style="color:${col}">${delta>0?'▲':delta<0?'▼':'—'}${Math.abs(delta)||''}</span>`;
+}
+D.forEach(d=>{d.moat=d.s.reduce((a,b)=>a+b,0);d.trap=d.t.reduce((a,b)=>a+b,0);d.total=d.moat+d.trap});
+
+const VAL=[
+['Alibaba','$111.76','$270B','16.7 ✱','0','—','25.8','<b style="color:var(--dang)">54%</b> ⚠️','1.8'],
+['Meta','$592.85','$1.51T','17.9','0','—','21.8','1%','6.6'],
+['NVIDIA','$224.41','$5.42T','18.0','0','—','27.5','14% ᵃ','17.9'],
+['TSMC 🆕','$415.50','$2.15T ✱','19.4 ✱','0','⚠️ 20선 −3%','30.9','7%','15.4'],
+['Alphabet','$337.12','$4.12T','25.3','-1','—','16.9','<b style="color:var(--dang)">51%</b> ⚠️','9.3'],
+['Microsoft','$496.82','$3.69T','25.4','-1','—','27.9','6%','11.1'],
+['Amazon','$254.98','$2.75T','27.5','-1','29선 −5.2%','20.5','<b style="color:var(--dang)">46%</b> ⚠️','3.6'],
+['Apple','$324.96','$4.74T','35.5','-2','—','37.3','1%','10.2'],
+['Oracle 🆕','$154.04','$443.7B','19.1','0','—','26.4','<b style="color:var(--dang)">-15%</b> ᶜ','6.6'],
+['Palantir','$169.46','$407B','89.0','-4','⚠️ 90선 −1.1%','144.9','14% ᵇ','66.2'],
+['SpaceX 🆕','$140.71','$1.91T','111','-5','—','적자','적자','82.9'],
+['Tesla','$357.01','$1.41T','187.5','-5','—','370.5','18% ᵇ','13.6'],
+];
+const EARN=[
+['NVIDIA','Q2 FY27 (8/26)','<b>$96.2B (+106%)</b> · DC $89.0B (+117%)','GAAP $2.46 / non-GAAP $2.22 · DC 컨센 $86.3B <b>상회</b>','TTM <b>+$127B</b> · 환원 $26B','0'],
+['TSMC 🆕','Q2 (7/16)','<b>$40.2B (+36%)</b> · HPC 66%','GM 67.7% / OpM 60.3% 역대 최고 · 2026 가이던스 +30%→<b>+40% 이상</b>','TTM +$36B · capex $60~64B','0'],
+['Apple','6월 분기 (7/30)','$109.4B (+16%)','$2.02 <b>상회</b> (Services 하회)','TTM +$137B','0'],
+['Microsoft','Q4 FY26 (7/29)','$90B (+18%) · 🆕 <b>Azure $29.42B(+42%)</b> 최초 달러 공시','non-GAAP $4.74 (컨센 $4.24 <b>상회</b>)','TTM +$67B · capex 감축','0'],
+['Oracle 🆕','Q4 FY26 (3~5월)','$19.2B (+21%) · <b>OCI $5.8B (+93%)</b>','영업마진 33.2%','TTM <b>-$23.7B</b> · 현금 $31.9B · <b>런웨이 1.3년</b>','-3'],
+['Palantir','Q2 (8/3)','$1.94B (+92.8%) · 4분기 연속 상회','$0.41 (컨센 $0.35 <b>상회</b>)','TTM +$3.4B','0'],
+['Meta','Q2 (7/29)','$60.80B (+28%)','$6.18 (컨센 $7.14 <b>하회</b>)','Q2 <b>+$0.78B (-91%)</b> · TTM +$41B','-1'],
+['Anthropic','Q2','$10.9B · 런레이트 $65B(7월)','<b>첫 영업흑자 $559M</b>','외부 조달 의존 · FCF 미공시','-2'],
+['Alphabet','Q2 (7/22)','$119.8B (+24%) · <b>GCP $24.8B(+82%)</b> 영업이익 $8.8B','조정 $2.85 (컨센 $2.89 <b>하회</b>)','Q2 <b>사상 첫 마이너스</b> · TTM +$53B','-1'],
+['Amazon','Q2 (7/30)','$200.61B (+20%) · <b>AWS $42.2B(+37%)</b> 18분기 최고','$5.75 ⚠️ 평가익 포함','TTM <b>-$11.6B</b> 실측 확정','-2'],
+['Alibaba','6월 분기 (8/20)','$39.64B (+9%) · 클라우드 +26%','non-GAAP $1.26 (컨센 $1.51 <b>하회</b>) · 영업흑자 복귀','분기 <b>-$6.6B</b> · TTM -$11.4B · 완충 $41B+$10.2B','-2'],
+['Tesla','Q2 (7/22)','$28.24B (+26%)','$0.33 (컨센 $0.53 <b>하회</b>) · 영업흑자 마진 4%','TTM <b>+$5.8B</b>','-1'],
+['SpaceX','Q2 (8/4)','<b>$7.8B (+92%)</b> · Starlink 1,200만 · <b>AI 세그먼트 $2.56B(+247%)</b>','-$0.09 (컨센 -$0.26 상회) · <b>영업적자 -14.9%</b>','TTM <b>-$32.5B</b> · 현금 $100B','-4'],
+['OpenAI','—','런레이트 $40B+ (8/20)','2026 GAAP 손실 ~$60B 전망','BEP 2030','-5'],
+];
+// 통합 재무 전수표 — [기업, 현금, TTM FCF, 런웨이, 순현금/순부채, 상환 연수, D/EBITDA(장부), 부외 포함(추정), 신용, 부외 약정, 매출대비, 비상장여부]
+const FIN=[
+['Apple','$146.5B','+$136.7B','∞','+$62.2B','순현금','0.45','미산출','AA급','미확인','—',0],
+['NVIDIA','$62.5B','+$127.0B','∞','+$23.6B','순현금','<b>0.19</b>','<b>0.4배</b> 🆕','AA~A급','<b>보증 $105B + 잔존가치 25% + 백스톱 + $6.3B</b> <i>(우발·C종)</i>','0.35배+',0],
+['Microsoft','$76.8B','+$67.0B','∞','<b>-$52.0B</b>','<b>0.8년</b>','0.64','미산출','AAA급','미분리 (QTS $3.9B만 확인)','—',0],
+['Alphabet','<b>$242.5B</b>','+$53.3B','∞','<b>+$121.7B</b>','순현금','0.68','미산출','AA급','총 약정 <b>$707B</b>','<b>1.6배</b>',0],
+['Meta','$90.3B','+$41.0B','∞','-$22.1B','<b>0.5년</b>','0.99','미산출','AA-','리스 $279B + 계약 $349B = <b>$628B</b>','<b>2.8배</b> ⚠️',0],
+['TSMC','$110.6B','+$36.0B','∞','+$77.0B','순현금','0.34','미산출','AA-급','미확인','—',0],
+['Tesla','$43.5B','+$5.8B','∞','+$27.4B','순현금','1.27','미산출','투자등급','미확인','—',0],
+['Palantir','$9.4B','+$3.4B','∞','+$9.2B','순현금','<b>0.08</b>','없음','무차입','없음','—',0],
+['Amazon','$123.0B','<b>-$11.6B</b>','<b>10.6년</b>','<b>-$128.7B</b>','<b>불가</b> ⚠️','1.35','미산출','AA급','미개시 리스 $106B','0.14배',0],
+['Alibaba','$56.8B','<b>-$11.4B</b>','<b>5.0년</b>','+$17.5B','순현금','2.68','미산출','A급','미확인 <i>(증자 $10.2B)</i>','—',0],
+['SpaceX','$100.0B','<b>-$32.5B</b>','<b>3.1년</b>','+$60.3B','순현금','<b>5.78</b> ⚠️','미산출','무등급','미확인','—',0],
+['Oracle','<b>$31.9B</b>','<b>-$23.7B</b>','<b>1.3년</b> ⚠️','<b>-$135.5B</b>','<b>불가</b> ⚠️','<b>5.03</b> ⚠️','미산출','<b>BBB-</b> ⚠️','리스 <b>$250B</b>(15~20년)','<b>3.7배</b> ⚠️',0],
+['Anthropic','미공시','미공시','판정 불가','—','—','—','—','비상장','컴퓨트 <b>$300B</b>','<b>ARR 4.6배</b>',1],
+['OpenAI','미공시','미공시','판정 불가','—','—','—','—','비상장','컴퓨트 <b>$338B+</b>','<b>ARR 8.5배</b> ⚠️',1]];
+
+// TTM 순차입 — [기업, 순차입, capex, 비율]
+const BORR=[
+['SpaceX','<b>+$102.0B</b>','$42.4B','<b>240%</b> ✱'],
+['Amazon','<b>+$75.2B</b>','$173.0B','43%'],
+['Alphabet','<b>+$70.1B</b>','$132.4B','53%'],
+['Meta','<b>+$51.7B</b>','$89.3B','58%'],
+['Oracle','<b>+$40.2B</b>','$55.7B','<b>72%</b> ⚠️'],
+['NVIDIA','+$24.9B','$7.4B','339% ✱'],
+['Alibaba','+$7.5B','$23.1B','32%'],
+['Tesla','+$1.8B','$12.9B','14%'],
+['TSMC','+$0.1B','$46.9B','<b>0.3%</b>'],
+['Palantir','없음','$0.04B','—'],
+['Microsoft','<b>-$3.0B</b>','$116.0B','<b>상환 중</b>'],
+['Apple','<b>-$17.3B</b>','$10.0B','<b>상환 중</b>']];
+
+const TRIG=[
+['🆕 NVIDIA–Hugging Face 클로징','<b>9/2 확정 계약·9/3 발표</b>($11.9B + 리텐션 $1.0B) — <b>클로징 2027 상반기, 규제 조건부</b> · 트리거를 ⑤→<b>①</b>로 정정: 개발자 1,800만은 공짜 사용자(체크리스트 15)','<b>클로징 시</b> ① 부품 상한(2) 재검토 · 규제 불허 시 무효 · HF 중립성 훼손 시 역효과'],
+['🆕 NVIDIA "$500B 생태계 커밋" 분해','Q2 콜 합산 언급, Kress "상당 부분은 공급 커밋". 지분·공급 비율','지분 비중 크면 ⑦-3→-4'],
+['🆕 NVIDIA ACIE 비중','Q2 DC의 45%($40B, +138%) — 하이퍼스케일러 집중 완화 실측','2분기 연속 45%+면 ⑧-3→-2'],
+['🆕 Meta Muse Spark 1.2 오픈웨이트 출시','8/10 공언 "coming weeks", <b>9/2에도 "soon"</b> — 미출시','출시 시 스펙트럼 진영 이동 + ③ 회수장치 재검토'],
+['🆕 TSMC Q3 실적 (10/15)','N2 램프로 하반기 GM 3~4p 희석 가이던스 · HPC 비중·NVIDIA 의존 · TWD 환율(⑥ 20선 -3%)','GM 60%대 사수 여부 · ⑥ 경계 통과 감시'],
+['🆕 AWS–Azure Interconnect GA','8/28 프리뷰(4개 리전). Oracle 포함 3사 전부 AWS 규격','GA 시 Amazon ② 표준 경로 확정 · 클라우드 락인 약화 ① 감시'],
+['🆕 Amazon ⑦ — OpenAI $50B','3월 라운드 참여($35B는 IPO/AGI 조건부). Anthropic + OpenAI 양다리','⑦-2→-3 검토'],
+['🆕 Azure 달러 공시 2개 분기 축적','9/2 세그먼트 개편으로 분기 공시 시작 — ③ 가속도는 <b>2개 분기 이상</b> 필요','v3(2027-02)부터 MS ③ 정량 판정 가능'],
+['🆕 OpenAI MDL 3143 진행','지역신문 400곳(6/24)·Apple(7/10) 추가 제소, 각하신청 대부분 기각','패소·거액 합의 시 ⑤⑨ 동시 악화'],
+['🔑 Anthropic IPO (10월 예상)','상장하면 <b>NTM PER이 생겨 상장사 룰로 자동 전환</b> — 비상장 구간표·정밀도 열위·자본효율 전부 폐기 · 목표 $2T(ARR 기준 약 30배)','⑥ 재산정 · 변동 사유는 🔧정정(잣대 정상화)'],
+['🆕 Oracle Q1 FY27 실적 (9/10)','6~8월 분기 — OCI 성장률·RPO 변화·조달 진행 · <b>OpenAI 몫 비중</b>','RPO 중 OpenAI 비중 확대 시 ⑧ 확대 · ⑦은 이미 -3(최심)'],
+['🆕 신용 지표 교차검증','Oracle CDS 215bp·BBB- · 빅테크 CDS 2배 · IG 발행 $182B(+1,300%)','함정 점수와 신용시장이 어긋나면 재채점(별표 J)'],
+['🆕 Meta 분기 FCF','TTM +$41B라 게이트 2에서 끝나지만 <b>분기 +$0.78B(-91%)로 사실상 0</b> · 부외 $628B(매출 2.8배)는 자가 소비라 <b>대응 RPO가 없다</b>','<b>분기 FCF 마이너스 전환 시 게이트 3 진입 → 커버리지 0배 → ⑨-1→-2</b>'],
+['🆕 Meta 미개시 리스 개시(2029~)','$279B 리스가 개시되면 A종(FCF 반영)으로 전환 · 잔존가치 보증 $28B 미계상(EY 지적)','연 리스료 분리 공시 시 게이트 3 연 소진율에 가산'],
+['🆕 Anthropic 컴퓨트 약정 소화','$300B(Google $200B/5년 + AWS $100B/10년) = 연 ~$50B로 <b>ARR $65B의 77%</b> — 커버리지 1.3배로 여유가 얇다','ARR 성장이 멈추면 커버리지 1배 붕괴 → ⑨-2→-3'],
+['🆕 NVIDIA 우발 보증 발동','잔존가치 25%·SB Energy $105B·CoreWeave 백스톱 — <b>Vera Rubin 출하가 Blackwell 담보 가치를 깎는 자기모순 구조</b>','발동 시 C종→확정 지출 전환, ⑨0 재검토'],
+['🆕 모건스탠리 NVIDIA $170B 우발채무 실현 경로','2028년 말 총 신용 익스포저 <b>약 $200B</b> 중 <b>$170B가 우발</b>(리스보증 $38B·잔존가치 $68B·매출공유/신용지원 $64B) · 부외 포함 레버리지 <b>0.4배</b>(스트레스 0.7)','<b>2028년 전망이라 별표 D로 현재 점수 입력 불가</b> · 실제 계상 전환 시 ⑨0 재검토 · 레버리지 1.5배 접근 시 ⑦⑧ 확대'],
+['🆕 개별 CDS 수치 확보 (Amazon·Meta·MS·Apple)','지금은 \'그룹 약 49bp\' 집계만 공개 — 우리 함정이 -2(Meta)~-5(Amazon·Apple)로 벌어져 있는데 <b>대조 불가</b>','개별 수치 확보 시 별표 J 정합 재검증 · 서열이 어긋나면 재채점'],
+['🆕 Anthropic $6.36/M 프리미엄 지속 여부','①4의 핵심 근거가 <b>OpenAI의 8.6배 단가</b>인데, Astra는 Agents\' Last Exam에서 <b>Opus 5보다 출력 토큰 65% 적게</b> 쓰고 AA도 "Fable 5 대비 태스크당 절반 이하 비용" — <b>Cost per Token이 아니라 Cost per Task로 재면 프리미엄이 뒤집힌다</b>','OpenRouter 매출 점유율·평균 $/M 하락 시 <b>①4→3</b> · 유지되면 가격 결정력 재확인'],
+['🆕 GPT-6 Astra 매출·채택 실측','9/3 출시라 ARR 기여가 <b>4일치도 없다</b>(별표 D — 계획·발표는 0점) · 가격 2.5배 인상이 매출에 어떻게 반영되는지','ARR 재가속 시 ③ 후발 가속도 재판정 · ARR 상승 시 ⑥ 밸류÷ARR 배수 완화'],
+['🆕 가격 2.5배 인상 후 이탈','$4/$20 → <b>$10/$50</b>. 별표 A 거래 채널 지표는 "가격 인상 후 <b>이탈 여부</b>"인데 측정 기간이 없다','OpenRouter 점유율·평균 $/M이 유지되면 <b>가격 결정력 실측 → ①4→5 검토</b> · 이탈하면 하향'],
+['🆕 GDPval 퇴행 지속 여부','Astra가 44개 직군 경제적 가치 태스크에서 <b>-80 Elo 퇴행</b>. 일회성인지 방향인지','<b>2분기 연속 퇴행이면 ②4→3 하향 검토</b> — 성능 경로의 실질이 의심된다'],
+['🆕 Astra 마진·BEP 영향','가격 2.5배 + 토큰 효율 3배가 단위경제에 미치는 영향 · 현재 BEP는 2030년','BEP가 앞당겨지면 <b>⑨-5→-4</b>(게이트 1 방향 완화 조건 A)'],
+['🆕 SpaceX 영업손실률 4분기 추이','게이트 1 방향 완화(v1.5 신설)의 조건 A — <b>손실률이 4분기 연속 YoY 개선</b>인지 + 조건 B <b>매출 성장률 &gt; 비용 성장률</b>. 현재 손실률 -14.9%, 매출 +92%인데 <b>분기별 손실률 시계열을 확보 못 함</b>','두 조건 충족 시 <b>⑨-4→-3</b>(조정 5→6) · 감원·자산매각發 축소면 불인정'],
+['🆕 NVIDIA ACIE 비중 ×2분기 (오픈소스 헤지 실측)','HF 클로징(<b>2027 상반기·규제 조건부</b>)과 별개로, <b>DC 매출 중 비하이퍼스케일러 비중</b>이 실제 올라오는지','2분기 연속 45%+면 <b>⑧-3→-2</b> · HF 클로징 시 ① 부품 상한(2) 해제 검토'],
+['🆕 SpaceX $6.7B 클라우드 계약 상대','10월 램프, 6개월 — 상대명 미공시. <b>Tesla면 ⑦ 관계사 순환</b>','확인 시 SpaceX·Tesla ⑦ -2→-3'],
+['🆕 Cursor의 Claude 사용 비중','Cursor(Anthropic API 최대 고객군)가 xAI 소유가 됨 — Grok으로 전환하나','전환 시 Anthropic ⑧ 확대 · SpaceX ⑧ 완화'],
+['🆕 Cybercab 양산·Starlink V5 대수','Tesla ③ 모방불가를 ⚠️→✅로 올릴 유일한 경로. 현재 무인 94대','Waymo 대비 격차 축소 실측 시 ③3→4 게이트 통과'],
+['🆕 Optimus 생산 개시 · Starship 페이로드','Tesla "2026 내", SpaceX "하반기" — 둘 다 실측 전','Tesla ②④ / SpaceX ② 근거 확정'],
+['📏 ⑥ 경계 ⚠️ 2개사 — TSMC(20선 -3%)·Palantir(90선 -1.1%)','v1.5 구간 재설계(20·29·42·62·90) 후 경계 ±3% 이내는 두 곳뿐. TSMC는 TWD 환율 하나로 20선을 넘을 수 있다','넘으면 📏 경계 통과로 기록 — 밸류 변화가 아니라 선을 넘은 것'],
+['Apple iOS 27 새 Siri (9월)','나오면 ③ 상향의 첫 근거','출시 시 ③2→3 후보 · 연기면 고착'],
+['🔑 Apple Baltra 양산','<b>지연 보도(7월)</b> + AI 칩 스타트업 인수 물색','④3→4 트리거 불발 — 오히려 ② 하방'],
+['🔑 분기별 성장률 시계열 확보','③ 가속도는 성장률의 변화라 <b>2개 분기 이상</b> 필요','MS·Meta는 현재 판정 불가'],
+['🔑 Anthropic 자체 칩 진척','8/5 팀 발표, 삼성 2nm 유력, 프로토타입 2028년','실물 샘플링 시 ④4→5, 양산 시 ⑧-3→-2'],
+['Anthropic 상장 성사·조달액','최대 허들 · 알리바바는 8/23 선제 조달로 같은 리스크를 지움 — 대조 관전','실패 시 ⑧⑨ 확대'],
+['증류 소송의 법적 진전','인과 입증 시','Alibaba ②⑤ 동시 하향'],
+['하이퍼스케일러 FCF','Alphabet Q2 첫 마이너스 · Amazon TTM -$11.6B 실측','2분기 연속이면 ⑨ 확대'],
+['SDLLMTK 추가 하락','8/15 $1.02, 5월 대비 -20%','모델 기업 ⑨ 확대'],
+['OpenRouter 토큰-매출 갭','Anthropic 토큰 12% / 매출 46%','갭 축소 = 프리미엄 상실 신호'],
+];
+
+// ── KPI·고지 자동 생성 (하드코딩 금지: 전부 D에서 계산)
+(function(){
+  const real=D.filter(d=>d.rank!==null);
+  const maxTot=Math.max(...real.map(d=>d.total));
+  const second=Math.max(...real.filter(d=>d.total<maxTot).map(d=>d.total));
+  const win=real.filter(d=>d.total===maxTot).map(d=>d.name.replace(/ \/.*/,'').replace('🍎 ',''));
+  const maxMoat=Math.max(...real.map(d=>d.moat));
+  const moatTop=real.filter(d=>d.moat===maxMoat).map(d=>d.name.replace(/ \/.*/,''));
+  const worst=real.reduce((a,b)=>a.trap<b.trap?a:b);
+  const cand=real.filter(d=>d.moat>=20);
+  const neg=real.filter(d=>d.total<0);
+  const k=document.getElementById('kpis');
+  if(k) k.innerHTML=`
+   <div class="kpi"><div class="k">${win.length>1?'공동 ':'단독 '}1위 (조정 ${maxTot}점)</div><div class="v">${win.length>1?win.length+'개사':win[0]}</div><div class="d">${win.length>1?win.join(' · '):'2위와 '+(maxTot-second)+'점 차'}</div></div>
+   <div class="kpi"><div class="k">과점 factor 최고</div><div class="v">${maxMoat}점</div><div class="d">${moatTop.join(' · ')}</div></div>
+   <div class="kpi"><div class="k">함정 최심</div><div class="v" style="color:var(--dang)">${worst.trap}</div><div class="d">${worst.name} — 조정 ${worst.total}점</div></div>
+   <div class="kpi"><div class="k">과점 후보군</div><div class="v">${cand.length}개사</div><div class="d">과점 factor 20점 이상</div></div>`;
+  const ci=document.getElementById('ciScore');
+  if(ci){ const a=D.find(d=>d.name==='Anthropic'); if(a) ci.textContent=a.moat; }
+})();
+
+const col=v=>v>=5?'var(--g5)':v>=4?'var(--g4)':v>=3?'var(--g3)':v>=2?'var(--g2)':v>=1?'var(--g1)':'var(--g0)';
+const tcol=v=>v===0?'var(--g5)':v>=-1?'var(--g4)':v>=-2?'var(--g3)':v>=-3?'var(--g2)':'var(--g1)';
+const totcol=v=>v>=15?'var(--g5)':v>=12?'var(--g4)':v>=6?'var(--g3)':v>=1?'var(--g2)':'var(--g1)';
+const tp=t=>t.startsWith('소비자')?'plat':t==='업무'?'work':t==='거래'?'model':t==='혼합'?'mix':'infra';
+
+// table
+let sortKey='total',sortDir=-1;
+function drawTable(){
+  const rows=[...D].sort((a,b)=>{
+    let x,y;
+    if(sortKey==='name'){x=a.name;y=b.name;return sortDir*(x>y?1:-1)}
+    if(sortKey==='rank'){x=a.rank??99;y=b.rank??99}
+    else if(sortKey.startsWith('s'))
+      {x=a.s[+sortKey[1]];y=b.s[+sortKey[1]]}
+    else if(sortKey.startsWith('t')&&sortKey.length===2)
+      {x=a.t[+sortKey[1]];y=b.t[+sortKey[1]]}
+    else {x=a[sortKey];y=b[sortKey]}
+    return sortDir*(x-y);
+  });
+  document.querySelector('#mainTable tbody').innerHTML=rows.map(d=>`
+   <tr class="${d.ref?'ref':''}">
+    <td><span class="rk ${d.rank&&d.rank<=3?'top':''}">${d.rank??'참고'}</span></td>
+    <td class="name"><b>${d.name}</b></td>
+    ${d.s.map(v=>`<td><span class="sc" style="background:${col(v)}">${v}</span></td>`).join('')}
+    <td class="divider mono"><b style="font-size:15px">${d.moat}</b></td>
+    ${d.t.map(v=>`<td><span class="mono" style="color:${tcol(v)};font-weight:700">${v}</span></td>`).join('')}
+    <td class="mono" style="font-weight:700">${d.trap}</td>
+    <td class="divider mono tot" style="color:${totcol(d.total)}">${d.total}</td>
+   </tr>`).join('');
+}
+document.querySelectorAll('#mainTable th').forEach(th=>th.onclick=()=>{
+  const k=th.dataset.k; sortDir=(sortKey===k)?-sortDir:-1; sortKey=k; drawTable();
+});
+drawTable();
+
+// cards
+// 근거 문자열을 ' · ' 기준 불릿으로 — <b>/<i>/괄호 균형이 깨지면 다음 조각과 합침
+function splitPts(s){
+  const raw=s.split(' · ').map(x=>x.trim());
+  const bal=x=>(x.match(/<b>/g)||[]).length===(x.match(/<\/b>/g)||[]).length
+             &&(x.match(/<i>/g)||[]).length===(x.match(/<\/i>/g)||[]).length
+             &&(x.match(/\(/g)||[]).length===(x.match(/\)/g)||[]).length;
+  const out=[]; let buf='';
+  for(const p of raw){ buf=buf?buf+' · '+p:p; if(bal(buf)){out.push(buf);buf='';} }
+  if(buf) out.push(buf);
+  return out.filter(Boolean);
+}
+// 선두의 <i>(v1.x …)</i> 주석은 헤더 줄로 올림
+function frow(label,score,color,text){
+  let note=''; const m=text.match(/^<i>\((v[\d.]+[^)]*)\)<\/i>\s*/);
+  if(m){ note=`<span class="fnote">(${m[1]})</span>`; text=text.slice(m[0].length); }
+  const pts=splitPts(text);
+  const body=pts.length>1?`<ul class="fpts">${pts.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<div class="ftx">${pts[0]||''}</div>`;
+  return `<div class="frow"><div class="fhead"><span class="flab">${label}</span><span class="fsc" style="color:${color}">${score}</span>${note}</div>${body}</div>`;
+}
+document.getElementById('cards').innerHTML=D.map(d=>`
+<details class="card">
+ <summary>
+  <div class="chead">
+   <div class="cname">${d.name}<span class="pill ${tp(d.type)}">${d.type}</span>${d.ref?'<span class="pill">참고</span>':''}</div>
+   <div class="ctag">${d.tag}</div>
+  </div>
+  <div class="cscore"><div class="t" style="color:${totcol(d.total)}">${d.total}</div>
+   <div class="s">과점 ${d.moat} / 함정 ${d.trap}</div>
+   <div class="sp">${spark(d.name,d.moat)}</div></div>
+ </summary>
+ <div class="cbody">
+  <div class="cgrp"><div class="cgh p">과점 — 더한다 (각 0~5) · 합 ${d.moat}</div>
+   ${d.s.map((v,i)=>frow(F[i],v,col(v),d.r[i])).join('')}</div>
+  <div class="cgrp"><div class="cgh n">함정 — 뺀다 (각 0~-5) · 합 ${d.trap}</div>
+   ${d.t.map((v,i)=>frow(T[i],v,tcol(v),d.rt[i])).join('')}</div>
+ </div>
+</details>`).join('');
+
+// valuation
+document.querySelector('#valTable tbody').innerHTML=VAL.map(r=>
+ `<tr><td class="name"><b>${r[0]}</b></td>`+r.slice(1).map((c,i)=>
+   `<td class="${[0,1,2,3,5,7].includes(i)?'mono':''}" style="${i===2?'font-weight:800;color:var(--acc)':i===3?'font-weight:800':''}">${c}</td>`).join('')+`</tr>`).join('');
+document.querySelector('#earnTable tbody').innerHTML=EARN.map(r=>
+ `<tr><td class="name"><b>${r[0]}</b></td>`+r.slice(1).map((c,i)=>
+   `<td class="${i===0||i===4?'mono':'name'}" style="${i===4?'font-weight:800':'color:var(--tx2)'}">${c}</td>`).join('')+`</tr>`).join('');
+document.getElementById('trig').innerHTML=TRIG.map(r=>
+ `<tr><td class="name"><b>${r[0]}</b></td><td class="name" style="color:var(--tx2)">${r[1]}</td><td class="name" style="color:var(--tx2)">${r[2]}</td></tr>`).join('');
+
+// 통합 재무 전수표 — FCF 부호로 자동 색칠, 비상장은 이탤릭
+document.querySelector('#fintbl tbody').innerHTML=FIN.map(r=>{
+  const priv=r[11]===1, neg=String(r[2]).includes('-$');
+  const nm=priv?`<i>${r[0]}</i>`:`<b>${r[0]}</b>`;
+  const fcfc=priv?'var(--tx3)':neg?'var(--dang)':'var(--g5)';
+  const runc=priv?'var(--tx3)':(String(r[3]).includes('∞')?'var(--tx3)':'var(--warn)');
+  const rep=String(r[5]);
+  const repc=rep.includes('불가')?'var(--dang)':rep.includes('순현금')?'var(--g5)':rep==='—'?'var(--tx3)':'var(--tx)';
+  const obl=String(r[7]), oblc=obl.includes('미산출')||obl==='—'?'var(--tx3)':'var(--warn)';
+  return `<tr style="${priv?'opacity:.72':''}"><td class="name">${nm}</td>`
+   +`<td class="mono">${r[1]}</td>`
+   +`<td class="mono" style="color:${fcfc};font-weight:800">${r[2]}</td>`
+   +`<td class="mono" style="color:${runc};font-weight:800">${r[3]}</td>`
+   +`<td class="mono">${r[4]}</td>`
+   +`<td class="mono" style="color:${repc};font-weight:800">${r[5]}</td>`
+   +`<td class="mono">${r[6]}</td>`
+   +`<td class="mono" style="color:${oblc}">${r[7]}</td>`
+   +`<td class="mono">${r[8]}</td>`
+   +`<td class="name" style="color:var(--tx2)">${r[9]}</td>`
+   +`<td class="mono">${r[10]}</td></tr>`;
+}).join('');
+
+document.querySelector('#borrtbl tbody').innerHTML=BORR.map(r=>{
+  const rep=String(r[1]).includes('-$');
+  return `<tr><td class="name"><b>${r[0]}</b></td>`
+   +`<td class="mono" style="color:${rep?'var(--g5)':'var(--tx)'};font-weight:800">${r[1]}</td>`
+   +`<td class="mono">${r[2]}</td><td class="mono">${r[3]}</td></tr>`;
+}).join('');
+
+// scatter
+(function(){
+  const W=900,H=470,M={t:24,r:28,b:52,l:62};
+  const iw=W-M.l-M.r, ih=H-M.t-M.b;
+  const xs=[12,23], ys=[-19,1];
+  const X=v=>M.l+(v-xs[0])/(xs[1]-xs[0])*iw;
+  const Y=v=>M.t+(ys[1]-v)/(ys[1]-ys[0])*ih;
+  const R=c=>Math.max(7,Math.min(30,8+Math.sqrt(c)*9));
+  const C={'소비자':'#60a5fa','소비자·업무':'#60a5fa','업무':'#34d399','거래':'#a78bfa','부품':'#fb923c','혼합':'#f472b6'};
+  let s=`<defs><filter id="gl"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+  // grid
+  for(let v=12;v<=24;v+=2) s+=`<line x1="${X(v)}" y1="${M.t}" x2="${X(v)}" y2="${M.t+ih}" stroke="#242a35"/>
+    <text x="${X(v)}" y="${M.t+ih+22}" fill="#6b7280" font-size="12" text-anchor="middle">${v}</text>`;
+  for(let v=0;v>=-18;v-=3) s+=`<line x1="${M.l}" y1="${Y(v)}" x2="${M.l+iw}" y2="${Y(v)}" stroke="#242a35"/>
+    <text x="${M.l-12}" y="${Y(v)+4}" fill="#6b7280" font-size="12" text-anchor="end">${v}</text>`;
+  // baseline
+  s+=`<line x1="${X(20)}" y1="${M.t}" x2="${X(20)}" y2="${M.t+ih}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="5 4" opacity=".65"/>
+      <text x="${X(20)+7}" y="${M.t+14}" fill="#10b981" font-size="11.5" font-weight="600">과점 후보군 20점</text>`;
+  s+=`<text x="${M.l+iw/2}" y="${H-10}" fill="#9aa2b1" font-size="13" text-anchor="middle" font-weight="600">과점 factor (높을수록 구조가 강함) →</text>`;
+  s+=`<text transform="translate(17,${M.t+ih/2}) rotate(-90)" fill="#9aa2b1" font-size="13" text-anchor="middle" font-weight="600">← 함정 감점 (위일수록 얕음)</text>`;
+  // ── points: 동일 좌표는 한 마커로 병합, 라벨은 자동 충돌 회피
+  const groups={};
+  D.forEach(d=>{const k=d.moat+','+d.trap;(groups[k]=groups[k]||[]).push(d);});
+  const short=n=>n.replace(' / AWS','').replace(' / Google','').replace(' + SpaceX','+SpX').replace(' AI','').replace('🍎 ','');
+  const entries=Object.values(groups).map(g=>{
+    const d0=g[0];
+    return {g, x:X(d0.moat), y:Y(d0.trap), r:R(Math.max(...g.map(d=>d.cap))),
+            c:C[d0.type], names:g.map(d=>short(d.name)).join(' · '), total:d0.total};
+  });
+  // 점(원)들을 장애물로 먼저 등록
+  const placed=entries.map(e=>({x:e.x,y:e.y,w:e.r*2+8,h:e.r*2+8}));
+  const fits=(x,y,w,hh)=>{
+    if(x-w/2<M.l-10||x+w/2>W-4||y-hh<10||y>H-M.b+6) return false;
+    return !placed.some(b=>Math.abs(b.x-x)<(b.w+w)/2+5 && Math.abs(b.y-(y-hh/2+7))<(b.h+hh)/2+3);
+  };
+  // 원 먼저 그리기
+  entries.forEach(e=>{
+    s+=`<circle cx="${e.x}" cy="${e.y}" r="${e.r}" fill="${e.c}" opacity=".18"/>`
+      +`<circle cx="${e.x}" cy="${e.y}" r="${e.r}" fill="none" stroke="${e.c}" stroke-width="2" opacity=".9"/>`;
+    if(e.g.length>1) e.g.forEach((d,k)=>{s+=`<circle cx="${e.x+(k-(e.g.length-1)/2)*8}" cy="${e.y}" r="2.6" fill="${C[d.type]}" filter="url(#gl)"/>`;});
+    else s+=`<circle cx="${e.x}" cy="${e.y}" r="3" fill="${e.c}" filter="url(#gl)"/>`;
+  });
+  // 라벨 배치 (위→아래→좌우→더 멀리 순으로 빈 자리 탐색, 멀면 리더선)
+  entries.sort((a,b)=>a.y-b.y).forEach(e=>{
+    const label=`${e.names}  ${e.total}점`;
+    const w=label.length*7.4+10, hh=19;
+    const sx=e.r+w/2+8;
+    const cands=[[0,-(e.r+10)],[0,e.r+20],[sx,4],[-sx,4],
+                 [0,-(e.r+28)],[0,e.r+38],[sx,-16],[-sx,22],[sx,26],[-sx,-20],
+                 [0,-(e.r+46)],[0,e.r+56],[sx,-34],[-sx,40],[sx,44],[-sx,-38],
+                 [sx+30,4],[-sx-30,4],[0,-(e.r+64)],[0,e.r+74]];
+    // 충돌 수를 세서, 완전히 비면 즉시 채택 / 아니면 최소 충돌 후보
+    const clashes=(x,y)=>placed.reduce((n,b)=>n+((Math.abs(b.x-x)<(b.w+w)/2+5&&Math.abs(b.y-(y-hh/2+7))<(b.h+hh)/2+6)?1:0),0)
+                 +((x-w/2<M.l-10||x+w/2>W-4||y-hh<10||y>H-M.b+6)?9:0);
+    let px=e.x, py=e.y-(e.r+10), best=1e9;
+    for(const [dx,dy] of cands){
+      const n=clashes(e.x+dx,e.y+dy);
+      if(n===0){px=e.x+dx;py=e.y+dy;best=0;break;}
+      if(n<best){best=n;px=e.x+dx;py=e.y+dy;}
+    }
+    placed.push({x:px,y:py-hh/2+7,w,h:hh});
+    if(Math.hypot(px-e.x,py-e.y)>e.r+24)
+      s+=`<line x1="${e.x}" y1="${e.y}" x2="${px}" y2="${py+(py<e.y?5:-11)}" stroke="${e.c}" stroke-width="1" opacity=".4"/>`;
+    s+=`<text x="${px}" y="${py}" text-anchor="middle" font-size="12" font-weight="700">`
+      +`<tspan fill="#e8eaed">${e.names}</tspan> <tspan fill="${totcol(e.total)}" font-weight="800">${e.total}점</tspan></text>`;
+  });
+  document.getElementById('scatter').innerHTML=s;
+})();
+</script>
+</body>
+</html>

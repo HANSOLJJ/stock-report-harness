@@ -13,3 +13,4 @@ scorecard/rules/v1.5.json text eol=crlf
 drafts/ai-scorecard-2026-09-baseline.md text eol=crlf
 # data_availability.json 은 승인 해시 밖이고 처음부터 LF 로 커밋·checkout 됐다 — 바이트를 그대로 둔다.
 scorecard/runs/ai-scorecard-2026-09-baseline/data_availability.json text eol=lf
+AI_company_analysis_factor/** -text
