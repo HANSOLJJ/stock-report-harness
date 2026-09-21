@@ -13,6 +13,12 @@ MOAT_FACTORS: tuple[str, ...] = ("F1", "F2", "F3", "F4", "F5")
 TRAP_FACTORS: tuple[str, ...] = ("F6", "F7", "F8", "F9")
 
 COMPANY_TYPES = {"소비자", "업무", "거래", "부품", "소비자·업무", "혼합"}
+# 2026-09-21 ADD-01: 레지스트리 항목의 키 목록. `validate_companies` 와 `registry.add_company`·CLI 가
+# **같은 상수**를 본다 — 두 곳에 따로 적으면 한쪽만 고쳐져 조용히 갈린다.
+COMPANY_REQUIRED_KEYS = ["company_id", "display_name", "aliases", "type", "listed", "ticker",
+                         "exchange", "share_basis", "adr_ratio", "reporting_currency", "scope"]
+COMPANY_OPTIONAL_KEYS = ["reference", "note", "status"]
+SHARE_BASIS_VALUES = {"common", "adr", "ads", "private"}
 OBSERVATION_STATUSES = {
     "verified",
     "legacy_unverified",
@@ -193,12 +199,7 @@ def validate_companies(payload: Any) -> dict[str, dict[str, Any]]:
     out: dict[str, dict[str, Any]] = {}
     for idx, item in enumerate(payload["companies"]):
         where = f"companies[{idx}]"
-        _expect_keys(
-            item,
-            ["company_id", "display_name", "aliases", "type", "listed", "ticker", "exchange", "share_basis", "adr_ratio", "reporting_currency", "scope"],
-            where,
-            optional=["reference", "note", "status"],
-        )
+        _expect_keys(item, COMPANY_REQUIRED_KEYS, where, optional=COMPANY_OPTIONAL_KEYS)
         cid = item["company_id"]
         _require(isinstance(cid, str) and bool(ID_RE.match(cid)), f"{where}: company_id 형식 오류 {cid!r}")
         _require(cid not in out, f"{where}: company_id 중복 {cid!r}")
@@ -207,7 +208,7 @@ def validate_companies(payload: Any) -> dict[str, dict[str, Any]]:
         _require(item["type"] in COMPANY_TYPES, f"{where}: type {item['type']!r} 는 {sorted(COMPANY_TYPES)} 중 하나")
         _require(isinstance(item["listed"], bool), f"{where}: listed 는 bool")
         _require(item["ticker"] is None or isinstance(item["ticker"], str), f"{where}: ticker 는 문자열 또는 null")
-        _require(item["share_basis"] in {"common", "adr", "ads", "private"}, f"{where}: share_basis 오류")
+        _require(item["share_basis"] in SHARE_BASIS_VALUES, f"{where}: share_basis 오류")
         _require(item["adr_ratio"] is None or _is_number(item["adr_ratio"]), f"{where}: adr_ratio 숫자 또는 null")
         _require(isinstance(item["reporting_currency"], str), f"{where}: reporting_currency 필요")
         _require(isinstance(item.get("reference", False), bool), f"{where}: reference 는 bool")
