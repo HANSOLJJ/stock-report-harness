@@ -226,10 +226,9 @@ class Fix63Test(unittest.TestCase):
         from validate_report_contract import validate_contract
         r = validate_contract(SLUG, require_html=False, require_price_chart=False,
                               check_html_if_present=False, check_price_chart_if_present=False)
-        # 2026-09-17 FIX-67: 방법 문장을 다시 써 초안이 바뀌었다. **리뷰와 승인이 무효가 된 것이 의도된 결과**이고
-        # draft_hash 갱신은 조율자가 재검토를 붙인 뒤에 한다.
-        self.assertEqual([e for e in r.errors if "draft_hash" not in e and "승인 무효" not in e], [])
-        self.assertTrue(any("draft_hash" in e for e in r.errors))
+        # 2026-09-17 FIX-67: 방법 문장을 다시 써 초안이 바뀌었고 리뷰와 승인이 무효가 됐다(의도된 결과).
+        # 2026-09-21 재승인: draft_hash 를 갱신하고 다시 승인해 **오류가 하나도 남지 않았다.**
+        self.assertEqual(r.errors, [], r.errors)
 
     def test_run_records_the_round(self):
         a = next(x for x in self.run_json["assumptions"] if "Q11 이 pass 로 바뀌었다" in x)
