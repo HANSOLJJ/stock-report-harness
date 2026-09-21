@@ -12,6 +12,8 @@
 
 Claude Code를 열고 위 명령을 입력하면, 계획 → 리서치 → 원고 → 히어로 이미지 → 4-way 리뷰 → 빌드까지 자동으로 진행되어 검증된 HTML 리포트가 생성됩니다.
 
+이 저장소에는 파이프라인이 둘 있습니다. 종목 리포트(`stock-*`)와 [AI 기업 9-factor 채점표](#ai-기업-9-factor-채점표-ai_scorecard)(`score-*`)입니다. 채점표의 현재 상태와 다음에 정할 것은 아래 채점표 절에 있습니다.
+
 `plan/<slug>.md`가 후속 단계의 단일 기준 문서이며, 모든 산출물은 같은 `slug`의 선행 파일을 참조합니다.
 
 ## 파이프라인
@@ -210,11 +212,46 @@ node server.js samsung-electronics-recent-1y-2026-05
 
 ## AI 기업 9-factor 채점표 (ai_scorecard)
 
-같은 하네스 안에서 AI 기업 채점표를 규칙·원자료·정성 판단으로부터 결정론적으로 계산합니다. 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md`입니다.
+같은 하네스 안에서 AI 기업 14개사를 아홉 항목으로 채점합니다. 앞의 다섯 항목(① 네트워크 효과 · ② 신기술 게임체인저 · ③ Last Mover · ④ 호황 이후 비전 · ⑤ 아군 확보)은 더하고, 뒤의 네 항목(⑥ 가격 · ⑦ 순환금융 · ⑧ 비대칭 의존 · ⑨ 적자 깊이)은 뺍니다.
 
-```
-/score-goal 2026-09 기준선 재계산
-```
+### 현재 상태 (2026-09-21)
+
+| 항목 | 값 |
+| --- | --- |
+| 최신 실행 | `ai-scorecard-2026-09-obsreg` (기준일 2026-09-02, 규칙 v1.7) |
+| 조정총점 | alphabet 15 · amazon 15 · meta 15 · microsoft 14 · tsmc 10 · anthropic 10 · spacex-xai 9 · nvidia 9 · apple 8 · alibaba 7 · palantir 6 · tesla 5 · openai 4 · oracle 2 |
+| 점수 지문 | `results_hash 4a3f6c05b206ef81…` |
+| 리뷰 | 독립 세션 4영역 리뷰 9라운드를 거쳐 네 영역 모두 pass (2026-09-17) |
+| 승인 | 2026-09-17 사용자 승인. 그 뒤 **설명 문장과 화면 표시만** 고쳤고 점수 파일은 바이트 단위로 동일합니다. 다만 초안이 바뀌어 승인과 리뷰의 효력이 멈춘 상태이며 **재승인 대기**입니다. |
+| 테스트 | `npm run test:scorecard` 797건 통과 |
+
+### 아홉 항목은 어떻게 매겨지나
+
+이 채점표는 코드가 기업을 평가하는 도구가 아닙니다. **판단자의 판단을 정해진 규칙으로 정리하고 검산하는 도구**입니다. 항목마다 틀이 잡힌 깊이가 다릅니다.
+
+| 단계 | 항목 | 점수가 나오는 방식 |
+| --- | --- | --- |
+| 측정값만으로 계산 | ⑥ 가격 | 공시 숫자(매출·순이익·시가총액)를 구간에 넣습니다. 사람 판단이 들어가지 않습니다. |
+| 측정값 + 사람 판단 | ⑨ 적자 깊이 | 영업손익·현금흐름은 공시에서, `현금흐름 추세` 같은 여덟 가지 판정은 사람이 넣습니다. 흑자 회사의 0점과 -1점은 사람이 고른 추세 한 칸으로 갈립니다. |
+| 정해진 질문에 답하면 표가 환산 | ③ ⑤ ⑦ | ③ 은 네 기준의 통과·실패, ⑤ 는 동맹·적대 등급, ⑦ 은 두 축을 사람이 정하고 코드는 표로 환산만 합니다. |
+| 점수를 직접 입력 | ① ② ④ ⑧ | 점수와 근거 문장을 통째로 적습니다. ② 는 규칙에 환산표가 있지만 이번 실행에서는 쓰이지 않았습니다. |
+
+코드가 맡는 일은 셋입니다. 모든 회사에 같은 잣대를 강제하고, 산수 실수를 없애고, 어떤 입력에서 어떤 점수가 나왔는지 지문으로 묶어 추적할 수 있게 합니다.
+
+### 파일은 네 종류입니다
+
+| 종류 | 무엇 | 위치 |
+| --- | --- | --- |
+| 기준 | 무엇을 보고 몇 점을 줄지 | 사람용 `AI_company_analysis_factor/` (채점규칙 · 별표 A~J) · 기계용 `scorecard/rules/v1.7.json` |
+| 입력 | 공시 숫자와 사람 판단 | `scorecard/runs/<slug>/observations.json` · `judgments.json` · `sources.json` |
+| 계산 | 입력에 기준을 적용하는 코드 | `scripts/scorecard/` (`calc_f6_params.py` · `calc_f9.py` · `calc_qual.py` · `render_*.py` · `validate.py`) |
+| 지시 | 에이전트의 작업 순서와 금지 사항 | `AGENTS.md` · `.claude/skills/score-*` · `.claude/agents/` |
+
+점수는 기준·입력·계산 셋만으로 결정됩니다. 지시 문서는 일하는 순서를 적은 안내서이고 점수에 영향을 주지 않습니다.
+
+**사람용 규칙 문서는 v1.5 에 멈춰 있습니다.** v1.6·v1.7 의 변경은 기계용 JSON 과 결정 기록에만 있어, 별표 일부(⑥ 전체 · ⑦ 별표 I · ⑨ 게이트 · ② 의 5점 조건 · ⑤ 의 +2 조건)가 지금 점수와 다릅니다.
+
+### 단계와 명령
 
 ```
 plan → research → calculate → draft → review → (사용자 승인) → build
@@ -223,18 +260,51 @@ plan → research → calculate → draft → review → (사용자 승인) → 
 | 단계 | 명령 | 산출물 |
 | --- | --- | --- |
 | 실행 생성 | `python scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title ... --request ...` | `plan/<slug>.md`, `scorecard/runs/<slug>/{run,observations,judgments,sources}.json` |
-| 리서치 | `python scripts/scorecard_cli.py research <slug>` | `research/<slug>.md` (입력 해시 결속) |
-| 계산 | `python scripts/scorecard_cli.py calculate <slug>` | `results.json`, `preview.md` (기준선 대비·필요한 규칙 결정) |
+| 리서치 | `python scripts/scorecard_cli.py research <slug>` | `research/<slug>.md` |
+| 계산 | `python scripts/scorecard_cli.py calculate <slug>` | `results.json`, `preview.md` |
 | 초안 | `python scripts/scorecard_cli.py draft <slug>` | `drafts/<slug>.md` |
-| 리뷰 | `python scripts/scorecard_cli.py review-template <slug>` → 4-way 리뷰 | `reviews/<slug>.md` |
-| 승인 | `python scripts/scorecard_cli.py approve <slug> --by <이름>` (사용자 행위) | `approval.json` (해시 결합) |
-| 빌드 | `python scripts/build_report.py <slug>` | `output/<slug>.html` 대시보드, `scorecard/history.csv` |
+| 리뷰 | `python scripts/scorecard_cli.py review-template <slug>` 뒤 독립 세션 4영역 리뷰 | `reviews/<slug>.md` |
+| 승인 | `python scripts/scorecard_cli.py approve <slug> --by <이름>` (사용자만 실행) | `approval.json` |
+| 빌드 | `python scripts/build_report.py <slug>` | `output/<slug>.html`, `output/<slug>-audit.md`, `scorecard/history.csv` |
+| 상태 확인 | `python scripts/scorecard_cli.py status <slug>` · `python scripts/validate_report_contract.py <slug>` | 단계별 완료 여부와 계약 위반 목록 |
 
-- slug 는 `ai-scorecard-` 로 시작하며 plan frontmatter `report_type: ai_scorecard` 로 분기합니다. 기존 stock 리포트 계약은 바뀌지 않습니다.
-- 기준선 v1.5 는 `python scripts/scorecard_cli.py import-baseline` 으로 원본 HTML/MD 에서 이관하며 `scorecard/baseline/v1.5/import-report.md` 에 대조 결과가 남습니다.
-- 미결 규칙 결정(C-03/05/06/13/16)은 `run.json.decisions` 로만 적용하고, 결정 전 기업은 순위에서 제외됩니다.
-- 테스트: `npm run test:scorecard`.
-- 남은 작업(사용자 결정 대기, 자료·판단 대기, 문서 보완, 미구현 테스트)은 `docs/scorecard/open-items.md` 에 모여 있습니다.
+- slug 는 `ai-scorecard-` 로 시작하고 plan frontmatter 의 `report_type: ai_scorecard` 로 분기합니다. 기존 주식 리포트 계약은 바뀌지 않습니다.
+- 기준선 v1.5 는 `python scripts/scorecard_cli.py import-baseline` 으로 원본 HTML·MD 에서 읽어 옵니다.
+- **판단을 입력하는 명령은 아직 없습니다.** 지금 판단 데이터는 v1.5 채점표를 기계로 읽어 온 것과 에이전트가 고친 것입니다.
+
+### 지문으로 묶여 있습니다
+
+각 단계의 산출물에는 앞 단계 파일의 지문(해시)이 기록됩니다. 승인 파일은 규칙·숫자·판단·실행 설정·점수·초안 여섯 개의 지문을 담습니다. 앞 단계가 한 글자라도 바뀌면 리뷰와 승인이 자동으로 무효가 됩니다. 근거 문장만 고쳐도 같습니다. 그래서 승인된 리포트는 어떤 입력에서 나온 점수인지 나중에도 증명할 수 있습니다.
+
+리포트 본문에는 읽는 사람을 위한 내용만 싣습니다. 해시, 결정 번호(C-01~C-29), 긴장 번호, 리뷰 진행 기록, 정정 이력은 `output/<slug>-audit.md` 에 있습니다.
+
+### 이해상충
+
+채점 대상에 Anthropic 이 들어 있고, 이 저장소의 작업 상당 부분을 Anthropic 의 Claude 가 수행했습니다. Anthropic 과 그 직접 경쟁사(OpenAI · Google)에 걸린 판단은 Claude 가 아닌 세션이 재판정하는 것을 원칙으로 합니다. 최종 승인은 항상 사용자가 합니다.
+
+### 작업공간과 브랜치
+
+Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree 입니다. 커밋은 모두 이 저장소 하나에 있습니다.
+
+| 브랜치 | 역할 |
+| --- | --- |
+| `HANSOLJJ/worker` | 코드·규칙·데이터를 실제로 고치는 곳 |
+| `HANSOLJJ/설계진행` | 과제 분배와 검증 기록(`validation/`) |
+| `HANSOLJJ/review-obsreg` | 독립 리뷰 기록(`reviews/_parts/`) |
+| `HANSOLJJ/NTM-전망치조사` · `HANSOLJJ/C-13` · `HANSOLJJ/scarpper` | 자료 조사와 보조 검증 |
+
+2026-09-21 에 위 브랜치를 `main` 으로 합쳤습니다. 같은 경로에 서로 다른 내용이 있던 C-13 의 네 파일은 `validation/*/c13/` 아래에 따로 보존했습니다.
+
+### 다음에 정할 것
+
+1. **사람용 v1.7 규칙 문서** — v1.5 원문에서 출발해 바뀐 자리만 `이전 → 지금` 으로 표시합니다. 규칙을 사람 말로 옮길 때마다 오류가 나왔으므로 독립 대조를 거칩니다.
+2. **별표를 리포트에 싣기** — 본문이 별표를 46번 가리키지만 내용은 리포트에 없습니다.
+3. **재승인과 정식 빌드** — 점수는 그대로이고 설명만 바뀌었습니다.
+4. **규칙 폴더를 `v1.5/` · `v1.7/` 로 정리** — `scripts/scorecard/baseline_import.py` 와 테스트 둘이 지금 경로를 직접 참조하므로 경로 수정과 함께 해야 합니다.
+5. **정성 판단의 입력 창구** — 에이전트가 질문별로 답·근거·출처를 조사해 제안하고, 사용자가 검토 화면에서 동의하거나 고치는 방식을 검토 중입니다. 판단을 고치면 리뷰와 승인을 새로 받아야 하므로 새 실행에서 씁니다.
+6. **v1.8 방향** — 점수를 직접 입력하는 ① ② ④ ⑧ 을 ③ ⑤ ⑦ 처럼 정해진 질문으로 쪼개고, 질문마다 공시에서 잴 수 있는 값(고객 집중도 · 벤치마크 순위 · 출하 여부 · 수주잔고)을 붙입니다.
+
+세부 미결 사항은 `docs/scorecard/open-items.md`, 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md` 에 있습니다.
 
 ## 의존 도구
 - Python 3.11+, `requirements.txt`의 yfinance/Markdown/PyYAML, Node.js 18+, Claude/Codex CLI
