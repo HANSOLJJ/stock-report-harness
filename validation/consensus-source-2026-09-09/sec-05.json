@@ -1,0 +1,3561 @@
+{
+ "generated_at_utc": "2026-09-09T02:28:21Z",
+ "companies": {
+  "meta": {
+   "cik": "0001326801",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001326801.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001326801/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001326801/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:21Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:21Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:22Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "Meta Platforms, Inc.",
+   "tickers": [
+    "META"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "1231",
+   "sic_description": "Services-Computer Programming, Data Processing, Etc.",
+   "recent_filings": [
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-06-30",
+     "filing_date": "2026-07-30",
+     "accession": "0001628280-26-050705",
+     "primary_doc": "meta-20260630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-29",
+     "filing_date": "2026-07-29",
+     "accession": "0001628280-26-050596",
+     "primary_doc": "meta-20260729.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-27",
+     "filing_date": "2026-05-29",
+     "accession": "0001628280-26-039193",
+     "primary_doc": "meta-20260527.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-30",
+     "filing_date": "2026-05-04",
+     "accession": "0001193125-26-204128",
+     "primary_doc": "d134616d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-03-31",
+     "filing_date": "2026-04-30",
+     "accession": "0001628280-26-028526",
+     "primary_doc": "meta-20260331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-29",
+     "filing_date": "2026-04-29",
+     "accession": "0001628280-26-028364",
+     "primary_doc": "meta-20260429.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-08",
+     "filing_date": "2026-04-14",
+     "accession": "0001628280-26-025108",
+     "primary_doc": "meta-20260408.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-12-31",
+     "filing_date": "2026-01-29",
+     "accession": "0001628280-26-003942",
+     "primary_doc": "meta-20251231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-28",
+     "filing_date": "2026-01-28",
+     "accession": "0001628280-26-003832",
+     "primary_doc": "meta-20260128.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-12",
+     "filing_date": "2026-01-16",
+     "accession": "0001628280-26-002429",
+     "primary_doc": "meta-20260112.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-12-19",
+     "filing_date": "2025-12-19",
+     "accession": "0001628280-25-058337",
+     "primary_doc": "meta-20251219.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-12-05",
+     "filing_date": "2025-12-12",
+     "accession": "0001628280-25-056768",
+     "primary_doc": "meta-20251205.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-30",
+     "filing_date": "2025-11-03",
+     "accession": "0001193125-25-262593",
+     "primary_doc": "d75422d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-09-30",
+     "filing_date": "2025-10-30",
+     "accession": "0001628280-25-047240",
+     "primary_doc": "meta-20250930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-29",
+     "filing_date": "2025-10-29",
+     "accession": "0001628280-25-047114",
+     "primary_doc": "meta-20251029.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-06-30",
+     "filing_date": "2025-07-31",
+     "accession": "0001628280-25-036791",
+     "primary_doc": "meta-20250630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-30",
+     "filing_date": "2025-07-30",
+     "accession": "0001628280-25-036719",
+     "primary_doc": "meta-20250730.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-28",
+     "filing_date": "2025-05-30",
+     "accession": "0001326801-25-000090",
+     "primary_doc": "meta-20250528.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-03-31",
+     "filing_date": "2025-05-01",
+     "accession": "0001326801-25-000054",
+     "primary_doc": "meta-20250331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-04-30",
+     "filing_date": "2025-04-30",
+     "accession": "0001326801-25-000050",
+     "primary_doc": "meta-20250430.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-04-11",
+     "filing_date": "2025-04-11",
+     "accession": "0001326801-25-000027",
+     "primary_doc": "meta-20250411.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-02-13",
+     "filing_date": "2025-02-20",
+     "accession": "0001326801-25-000021",
+     "primary_doc": "meta-20250213.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2024-12-31",
+     "filing_date": "2025-01-30",
+     "accession": "0001326801-25-000017",
+     "primary_doc": "meta-20241231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-01-29",
+     "filing_date": "2025-01-29",
+     "accession": "0001326801-25-000014",
+     "primary_doc": "meta-20250129.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-12-30",
+     "filing_date": "2025-01-06",
+     "accession": "0001326801-25-000005",
+     "primary_doc": "meta-20241230.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 6.03,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 6.43,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-01",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 6.43,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 7.14,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-07-31",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 7.14,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-30",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 1.05,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 10.44,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 6.18,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-30",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 6.2,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 6.59,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-01",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 6.59,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 7.28,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-07-31",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 7.28,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-30",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 1.08,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 10.57,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 6.23,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-30",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  },
+  "nvidia": {
+   "cik": "0001045810",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001045810.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001045810/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001045810/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:22Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:23Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:24Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "NVIDIA CORP",
+   "tickers": [
+    "NVDA"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "0131",
+   "sic_description": "Semiconductors & Related Devices",
+   "recent_filings": [
+    {
+     "form": "8-K",
+     "period_of_report": "2026-09-02",
+     "filing_date": "2026-09-03",
+     "accession": "0001045810-26-000078",
+     "primary_doc": "nvda-20260902.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-07-26",
+     "filing_date": "2026-08-26",
+     "accession": "0001045810-26-000075",
+     "primary_doc": "nvda-20260726.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-08-26",
+     "filing_date": "2026-08-26",
+     "accession": "0001045810-26-000073",
+     "primary_doc": "nvda-20260826.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-08-17",
+     "filing_date": "2026-08-17",
+     "accession": "0001045810-26-000069",
+     "primary_doc": "nvda-20260817.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-28",
+     "filing_date": "2026-07-02",
+     "accession": "0001045810-26-000060",
+     "primary_doc": "nvda-20260628.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-24",
+     "filing_date": "2026-06-30",
+     "accession": "0001045810-26-000056",
+     "primary_doc": "nvda-20260624.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-15",
+     "filing_date": "2026-06-18",
+     "accession": "0001193125-26-275783",
+     "primary_doc": "d48176d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-04-26",
+     "filing_date": "2026-05-20",
+     "accession": "0001045810-26-000052",
+     "primary_doc": "nvda-20260426.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-20",
+     "filing_date": "2026-05-20",
+     "accession": "0001045810-26-000051",
+     "primary_doc": "nvda-20260520.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-07",
+     "filing_date": "2026-05-08",
+     "accession": "0001045810-26-000028",
+     "primary_doc": "nvda-20260507.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-24",
+     "filing_date": "2026-04-27",
+     "accession": "0001045810-26-000026",
+     "primary_doc": "nvda-20260424.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-03-02",
+     "filing_date": "2026-03-06",
+     "accession": "0001045810-26-000024",
+     "primary_doc": "nvda-20260302.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2026-01-25",
+     "filing_date": "2026-02-25",
+     "accession": "0001045810-26-000021",
+     "primary_doc": "nvda-20260125.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-25",
+     "filing_date": "2026-02-25",
+     "accession": "0001045810-26-000019",
+     "primary_doc": "nvda-20260225.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-20",
+     "filing_date": "2026-01-23",
+     "accession": "0001045810-26-000003",
+     "primary_doc": "nvda-20260120.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-10-26",
+     "filing_date": "2025-11-19",
+     "accession": "0001045810-25-000230",
+     "primary_doc": "nvda-20251026.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-11-19",
+     "filing_date": "2025-11-19",
+     "accession": "0001045810-25-000228",
+     "primary_doc": "nvda-20251119.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-07-27",
+     "filing_date": "2025-08-27",
+     "accession": "0001045810-25-000209",
+     "primary_doc": "nvda-20250727.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-08-27",
+     "filing_date": "2025-08-27",
+     "accession": "0001045810-25-000207",
+     "primary_doc": "nvda-20250827.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-31",
+     "filing_date": "2025-08-05",
+     "accession": "0001045810-25-000197",
+     "primary_doc": "nvda-20250731.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-06-25",
+     "filing_date": "2025-07-01",
+     "accession": "0001045810-25-000179",
+     "primary_doc": "nvda-20250625.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-04-27",
+     "filing_date": "2025-05-28",
+     "accession": "0001045810-25-000116",
+     "primary_doc": "nvda-20250427.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-28",
+     "filing_date": "2025-05-28",
+     "accession": "0001045810-25-000115",
+     "primary_doc": "nvda-20250528.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-04-09",
+     "filing_date": "2025-04-15",
+     "accession": "0001045810-25-000082",
+     "primary_doc": "nvda-20250409.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-03-03",
+     "filing_date": "2025-03-07",
+     "accession": "0001045810-25-000039",
+     "primary_doc": "nvda-20250303.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-07-29",
+      "end": "2024-10-27",
+      "val": 0.78,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-19",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-27",
+      "end": "2025-04-27",
+      "val": 0.76,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-28",
+      "frame": null
+     },
+     {
+      "start": "2025-01-27",
+      "end": "2025-04-27",
+      "val": 0.76,
+      "fy": 2027,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-20",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-28",
+      "end": "2025-07-27",
+      "val": 1.08,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-08-27",
+      "frame": null
+     },
+     {
+      "start": "2025-04-28",
+      "end": "2025-07-27",
+      "val": 1.08,
+      "fy": 2027,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-26",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-28",
+      "end": "2025-10-26",
+      "val": 1.3,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-19",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-26",
+      "end": "2026-04-26",
+      "val": 2.39,
+      "fy": 2027,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-20",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-27",
+      "end": "2026-07-26",
+      "val": 2.46,
+      "fy": 2027,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-26",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-07-29",
+      "end": "2024-10-27",
+      "val": 0.79,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-19",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-27",
+      "end": "2025-04-27",
+      "val": 0.77,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-28",
+      "frame": null
+     },
+     {
+      "start": "2025-01-27",
+      "end": "2025-04-27",
+      "val": 0.77,
+      "fy": 2027,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-20",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-28",
+      "end": "2025-07-27",
+      "val": 1.08,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-08-27",
+      "frame": null
+     },
+     {
+      "start": "2025-04-28",
+      "end": "2025-07-27",
+      "val": 1.08,
+      "fy": 2027,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-26",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-28",
+      "end": "2025-10-26",
+      "val": 1.31,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-19",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-26",
+      "end": "2026-04-26",
+      "val": 2.4,
+      "fy": 2027,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-20",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-27",
+      "end": "2026-07-26",
+      "val": 2.47,
+      "fy": 2027,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-26",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  },
+  "alphabet": {
+   "cik": "0001652044",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001652044.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001652044/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001652044/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:24Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:25Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:26Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "Alphabet Inc.",
+   "tickers": [
+    "GOOGL",
+    "GOOG",
+    "GOOGM",
+    "GOOGN"
+   ],
+   "exchanges": [
+    "Nasdaq",
+    "Nasdaq",
+    "Nasdaq",
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "1231",
+   "sic_description": "Services-Computer Programming, Data Processing, Etc.",
+   "recent_filings": [
+    {
+     "form": "8-K",
+     "period_of_report": "2026-08-10",
+     "filing_date": "2026-08-10",
+     "accession": "0001193125-26-342390",
+     "primary_doc": "d171253d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-06-30",
+     "filing_date": "2026-07-23",
+     "accession": "0001652044-26-000071",
+     "primary_doc": "goog-20260630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-22",
+     "filing_date": "2026-07-22",
+     "accession": "0001652044-26-000066",
+     "primary_doc": "goog-20260722.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-05",
+     "filing_date": "2026-06-11",
+     "accession": "0001193125-26-267578",
+     "primary_doc": "d57679d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-05",
+     "filing_date": "2026-06-05",
+     "accession": "0001193125-26-259830",
+     "primary_doc": "d36818d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-02",
+     "filing_date": "2026-06-05",
+     "accession": "0001652044-26-000059",
+     "primary_doc": "goog-20260602.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-04",
+     "filing_date": "2026-06-04",
+     "accession": "0001193125-26-257724",
+     "primary_doc": "d83560d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-21",
+     "filing_date": "2026-05-21",
+     "accession": "0001193125-26-234488",
+     "primary_doc": "d144566d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-11",
+     "filing_date": "2026-05-11",
+     "accession": "0001193125-26-216986",
+     "primary_doc": "d109021d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-03-31",
+     "filing_date": "2026-04-30",
+     "accession": "0001652044-26-000048",
+     "primary_doc": "goog-20260331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-29",
+     "filing_date": "2026-04-29",
+     "accession": "0001652044-26-000043",
+     "primary_doc": "goog-20260429.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-07",
+     "filing_date": "2026-04-10",
+     "accession": "0001652044-26-000034",
+     "primary_doc": "goog-20260407.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-03-30",
+     "filing_date": "2026-04-02",
+     "accession": "0001652044-26-000031",
+     "primary_doc": "goog-20260330.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-03-04",
+     "filing_date": "2026-03-06",
+     "accession": "0001652044-26-000026",
+     "primary_doc": "goog-20260304.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-13",
+     "filing_date": "2026-02-13",
+     "accession": "0001193125-26-051423",
+     "primary_doc": "d946885d8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-12-31",
+     "filing_date": "2026-02-05",
+     "accession": "0001652044-26-000018",
+     "primary_doc": "goog-20251231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-04",
+     "filing_date": "2026-02-04",
+     "accession": "0001652044-26-000012",
+     "primary_doc": "goog-20260204.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-11-06",
+     "filing_date": "2025-11-06",
+     "accession": "0001193125-25-269979",
+     "primary_doc": "d56115d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-09-30",
+     "filing_date": "2025-10-30",
+     "accession": "0001652044-25-000091",
+     "primary_doc": "goog-20250930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-29",
+     "filing_date": "2025-10-29",
+     "accession": "0001652044-25-000087",
+     "primary_doc": "goog-20251029.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-09-05",
+     "filing_date": "2025-09-05",
+     "accession": "0001652044-25-000074",
+     "primary_doc": "goog-20250905.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-09-02",
+     "filing_date": "2025-09-03",
+     "accession": "0001652044-25-000067",
+     "primary_doc": "goog-20250902.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-06-30",
+     "filing_date": "2025-07-24",
+     "accession": "0001652044-25-000062",
+     "primary_doc": "goog-20250630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-23",
+     "filing_date": "2025-07-23",
+     "accession": "0001652044-25-000056",
+     "primary_doc": "goog-20250723.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-08",
+     "filing_date": "2025-07-18",
+     "accession": "0001193125-25-161225",
+     "primary_doc": "d21412d8k.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 2.12,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 2.81,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-04-25",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 2.81,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 2.31,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-07-24",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 2.31,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 2.87,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 5.11,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 9.11,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 2.14,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 2.84,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-04-25",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 2.84,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 2.33,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-07-24",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 2.33,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 2.89,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-30",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 5.17,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 9.23,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  },
+  "microsoft": {
+   "cik": "0000789019",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000789019.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000789019/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000789019/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:26Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:27Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:27Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "MICROSOFT CORP",
+   "tickers": [
+    "MSFT"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "0630",
+   "sic_description": "Services-Prepackaged Software",
+   "recent_filings": [
+    {
+     "form": "8-K",
+     "period_of_report": "2026-09-02",
+     "filing_date": "2026-09-02",
+     "accession": "0001193125-26-380280",
+     "primary_doc": "d291965d8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2026-06-30",
+     "filing_date": "2026-07-29",
+     "accession": "0001193125-26-323660",
+     "primary_doc": "msft-20260630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-29",
+     "filing_date": "2026-07-29",
+     "accession": "0001193125-26-323632",
+     "primary_doc": "msft-20260729.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-02",
+     "filing_date": "2026-06-05",
+     "accession": "0001193125-26-258667",
+     "primary_doc": "d26760d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-13",
+     "filing_date": "2026-05-14",
+     "accession": "0001193125-26-224155",
+     "primary_doc": "d125909d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-03-31",
+     "filing_date": "2026-04-29",
+     "accession": "0001193125-26-191507",
+     "primary_doc": "msft-20260331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-29",
+     "filing_date": "2026-04-29",
+     "accession": "0001193125-26-191457",
+     "primary_doc": "msft-20260429.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-12-31",
+     "filing_date": "2026-01-28",
+     "accession": "0001193125-26-027207",
+     "primary_doc": "msft-20251231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-28",
+     "filing_date": "2026-01-28",
+     "accession": "0001193125-26-027198",
+     "primary_doc": "msft-20260128.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-12-05",
+     "filing_date": "2025-12-08",
+     "accession": "0001193125-25-311196",
+     "primary_doc": "d34077d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-09-30",
+     "filing_date": "2025-10-29",
+     "accession": "0001193125-25-256321",
+     "primary_doc": "msft-20250930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-28",
+     "filing_date": "2025-10-29",
+     "accession": "0001193125-25-256310",
+     "primary_doc": "msft-20251028.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-09-24",
+     "filing_date": "2025-09-30",
+     "accession": "0001193125-25-225125",
+     "primary_doc": "d863209d8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-06-30",
+     "filing_date": "2025-07-30",
+     "accession": "0000950170-25-100235",
+     "primary_doc": "msft-20250630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-30",
+     "filing_date": "2025-07-30",
+     "accession": "0000950170-25-100226",
+     "primary_doc": "msft-20250730.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-01",
+     "filing_date": "2025-07-01",
+     "accession": "0001193125-25-154103",
+     "primary_doc": "d84624d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-03-31",
+     "filing_date": "2025-04-30",
+     "accession": "0000950170-25-061046",
+     "primary_doc": "msft-20250331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-04-30",
+     "filing_date": "2025-04-30",
+     "accession": "0000950170-25-061032",
+     "primary_doc": "msft-20250430.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2024-12-31",
+     "filing_date": "2025-01-29",
+     "accession": "0000950170-25-010491",
+     "primary_doc": "msft-20241231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-01-29",
+     "filing_date": "2025-01-29",
+     "accession": "0000950170-25-010484",
+     "primary_doc": "msft-20250129.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-01-22",
+     "filing_date": "2025-01-22",
+     "accession": "0001193125-25-010492",
+     "primary_doc": "d929748d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-12-10",
+     "filing_date": "2024-12-11",
+     "accession": "0001193125-24-275524",
+     "primary_doc": "d865252d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-12-03",
+     "filing_date": "2024-12-03",
+     "accession": "0000950170-24-132722",
+     "primary_doc": "msft-20241203.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2024-09-30",
+     "filing_date": "2024-10-30",
+     "accession": "0000950170-24-118967",
+     "primary_doc": "msft-20240930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-10-30",
+     "filing_date": "2024-10-30",
+     "accession": "0000950170-24-118955",
+     "primary_doc": "msft-20241030.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 3.3,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-10-29",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "val": 3.23,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-01-29",
+      "frame": null
+     },
+     {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "val": 3.23,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-01-28",
+      "frame": "CY2024Q4"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 3.46,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-04-30",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 3.46,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-04-29",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 3.72,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-10-29",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "val": 5.16,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-01-28",
+      "frame": "CY2025Q4"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 4.27,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-04-29",
+      "frame": "CY2026Q1"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 3.32,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-10-29",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "val": 3.24,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-01-29",
+      "frame": null
+     },
+     {
+      "start": "2024-10-01",
+      "end": "2024-12-31",
+      "val": 3.24,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-01-28",
+      "frame": "CY2024Q4"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 3.47,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-04-30",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 3.47,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-04-29",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 3.73,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-10-29",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2025-10-01",
+      "end": "2025-12-31",
+      "val": 5.18,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-01-28",
+      "frame": "CY2025Q4"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 4.28,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-04-29",
+      "frame": "CY2026Q1"
+     }
+    ]
+   }
+  },
+  "amazon": {
+   "cik": "0001018724",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001018724.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001018724/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001018724/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:28Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:28Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:29Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "AMAZON COM INC",
+   "tickers": [
+    "AMZN"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "1231",
+   "sic_description": "Retail-Catalog & Mail-Order Houses",
+   "recent_filings": [
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-06-30",
+     "filing_date": "2026-07-31",
+     "accession": "0001018724-26-000026",
+     "primary_doc": "amzn-20260630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-30",
+     "filing_date": "2026-07-30",
+     "accession": "0001018724-26-000024",
+     "primary_doc": "amzn-20260730.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-09",
+     "filing_date": "2026-07-09",
+     "accession": "0001104659-26-082293",
+     "primary_doc": "tm2619352d4_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-12",
+     "filing_date": "2026-06-12",
+     "accession": "0001104659-26-073562",
+     "primary_doc": "tm2613616d5_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-08",
+     "filing_date": "2026-06-10",
+     "accession": "0001104659-26-072140",
+     "primary_doc": "tm2613616d4_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-20",
+     "filing_date": "2026-05-22",
+     "accession": "0001104659-26-065717",
+     "primary_doc": "tm2614288d1_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-03-31",
+     "filing_date": "2026-04-30",
+     "accession": "0001018724-26-000014",
+     "primary_doc": "amzn-20260331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-29",
+     "filing_date": "2026-04-29",
+     "accession": "0001018724-26-000012",
+     "primary_doc": "amzn-20260429.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-14",
+     "filing_date": "2026-04-14",
+     "accession": "0001104659-26-042880",
+     "primary_doc": "tm2611746d1_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-09",
+     "filing_date": "2026-04-09",
+     "accession": "0001104659-26-041034",
+     "primary_doc": "tm263815d2_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-03-16",
+     "filing_date": "2026-03-16",
+     "accession": "0001104659-26-028556",
+     "primary_doc": "tm266670d9_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-03-13",
+     "filing_date": "2026-03-13",
+     "accession": "0001104659-26-027729",
+     "primary_doc": "tm266670d8_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-27",
+     "filing_date": "2026-02-27",
+     "accession": "0001104659-26-021050",
+     "primary_doc": "tm267374d1_8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-12-31",
+     "filing_date": "2026-02-06",
+     "accession": "0001018724-26-000004",
+     "primary_doc": "amzn-20251231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-05",
+     "filing_date": "2026-02-05",
+     "accession": "0001018724-26-000002",
+     "primary_doc": "amzn-20260205.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-11-20",
+     "filing_date": "2025-11-20",
+     "accession": "0001104659-25-114647",
+     "primary_doc": "tm2530638d3_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-09-30",
+     "filing_date": "2025-10-31",
+     "accession": "0001018724-25-000123",
+     "primary_doc": "amzn-20250930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-30",
+     "filing_date": "2025-10-30",
+     "accession": "0001018724-25-000121",
+     "primary_doc": "amzn-20251030.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-06-30",
+     "filing_date": "2025-08-01",
+     "accession": "0001018724-25-000086",
+     "primary_doc": "amzn-20250630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-31",
+     "filing_date": "2025-07-31",
+     "accession": "0001018724-25-000084",
+     "primary_doc": "amzn-20250731.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-21",
+     "filing_date": "2025-05-22",
+     "accession": "0001104659-25-052014",
+     "primary_doc": "tm2515134d1_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-03-31",
+     "filing_date": "2025-05-02",
+     "accession": "0001018724-25-000036",
+     "primary_doc": "amzn-20250331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-01",
+     "filing_date": "2025-05-01",
+     "accession": "0001018724-25-000034",
+     "primary_doc": "amzn-20250501.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-04-10",
+     "filing_date": "2025-04-10",
+     "accession": "0001104659-25-033450",
+     "primary_doc": "tm254123d2_8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2024-12-31",
+     "filing_date": "2025-02-07",
+     "accession": "0001018724-25-000004",
+     "primary_doc": "amzn-20241231.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 1.43,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-31",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 1.59,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-02",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 1.59,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 1.68,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-08-01",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 1.68,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 1.95,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-31",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 2.78,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 5.75,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 1.46,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-31",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 1.62,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-02",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 1.62,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 1.71,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-08-01",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 1.71,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 1.98,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-31",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 2.82,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-30",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 5.82,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  },
+  "apple": {
+   "cik": "0000320193",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0000320193.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000320193/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0000320193/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:29Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:30Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:31Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "Apple Inc.",
+   "tickers": [
+    "AAPL"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "0926",
+   "sic_description": "Electronic Computers",
+   "recent_filings": [
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-06-27",
+     "filing_date": "2026-07-31",
+     "accession": "0000320193-26-000020",
+     "primary_doc": "aapl-20260627.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-30",
+     "filing_date": "2026-07-30",
+     "accession": "0000320193-26-000018",
+     "primary_doc": "aapl-20260730.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-03-28",
+     "filing_date": "2026-05-01",
+     "accession": "0000320193-26-000013",
+     "primary_doc": "aapl-20260328.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-30",
+     "filing_date": "2026-04-30",
+     "accession": "0000320193-26-000011",
+     "primary_doc": "aapl-20260430.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-17",
+     "filing_date": "2026-04-20",
+     "accession": "0001140361-26-015711",
+     "primary_doc": "ef20071035_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-24",
+     "filing_date": "2026-02-24",
+     "accession": "0001140361-26-006577",
+     "primary_doc": "ef20060722_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-12-27",
+     "filing_date": "2026-01-30",
+     "accession": "0000320193-26-000006",
+     "primary_doc": "aapl-20251227.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-29",
+     "filing_date": "2026-01-29",
+     "accession": "0000320193-26-000005",
+     "primary_doc": "aapl-20260129.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-12-30",
+     "filing_date": "2026-01-02",
+     "accession": "0001140361-26-000199",
+     "primary_doc": "ef20060722_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-12-04",
+     "filing_date": "2025-12-05",
+     "accession": "0001140361-25-044561",
+     "primary_doc": "ef20060722_8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-09-27",
+     "filing_date": "2025-10-31",
+     "accession": "0000320193-25-000079",
+     "primary_doc": "aapl-20250927.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-30",
+     "filing_date": "2025-10-30",
+     "accession": "0000320193-25-000077",
+     "primary_doc": "aapl-20251030.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-06-28",
+     "filing_date": "2025-08-01",
+     "accession": "0000320193-25-000073",
+     "primary_doc": "aapl-20250628.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-31",
+     "filing_date": "2025-07-31",
+     "accession": "0000320193-25-000071",
+     "primary_doc": "aapl-20250731.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-21",
+     "filing_date": "2025-07-25",
+     "accession": "0001140361-25-027340",
+     "primary_doc": "ef20052355_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-08",
+     "filing_date": "2025-07-09",
+     "accession": "0001140361-25-025275",
+     "primary_doc": "ef20051741_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-05",
+     "filing_date": "2025-05-12",
+     "accession": "0001140361-25-018400",
+     "primary_doc": "ef20048691_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-03-29",
+     "filing_date": "2025-05-02",
+     "accession": "0000320193-25-000057",
+     "primary_doc": "aapl-20250329.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-01",
+     "filing_date": "2025-05-01",
+     "accession": "0000320193-25-000055",
+     "primary_doc": "aapl-20250501.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-02-25",
+     "filing_date": "2025-02-25",
+     "accession": "0001140361-25-005876",
+     "primary_doc": "ef20044022_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2024-12-28",
+     "filing_date": "2025-01-31",
+     "accession": "0000320193-25-000008",
+     "primary_doc": "aapl-20241228.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-01-30",
+     "filing_date": "2025-01-30",
+     "accession": "0000320193-25-000007",
+     "primary_doc": "aapl-20250130.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-12-30",
+     "filing_date": "2025-01-03",
+     "accession": "0001140361-25-000228",
+     "primary_doc": "ef20040370_8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2024-09-28",
+     "filing_date": "2024-11-01",
+     "accession": "0000320193-24-000123",
+     "primary_doc": "aapl-20240928.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-10-31",
+     "filing_date": "2024-10-31",
+     "accession": "0000320193-24-000120",
+     "primary_doc": "aapl-20241031.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-09-29",
+      "end": "2024-12-28",
+      "val": 2.4,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-01-30",
+      "frame": "CY2024Q4"
+     },
+     {
+      "start": "2024-12-29",
+      "end": "2025-03-29",
+      "val": 1.65,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-05-02",
+      "frame": null
+     },
+     {
+      "start": "2024-12-29",
+      "end": "2025-03-29",
+      "val": 1.65,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-05-01",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-03-30",
+      "end": "2025-06-28",
+      "val": 1.57,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-08-01",
+      "frame": null
+     },
+     {
+      "start": "2025-03-30",
+      "end": "2025-06-28",
+      "val": 1.57,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-09-28",
+      "end": "2025-12-27",
+      "val": 2.84,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-01-30",
+      "frame": "CY2025Q4"
+     },
+     {
+      "start": "2025-12-28",
+      "end": "2026-03-28",
+      "val": 2.01,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-05-01",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-03-29",
+      "end": "2026-06-27",
+      "val": 2.02,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-09-29",
+      "end": "2024-12-28",
+      "val": 2.41,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-01-30",
+      "frame": "CY2024Q4"
+     },
+     {
+      "start": "2024-12-29",
+      "end": "2025-03-29",
+      "val": 1.65,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-05-02",
+      "frame": null
+     },
+     {
+      "start": "2024-12-29",
+      "end": "2025-03-29",
+      "val": 1.65,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-05-01",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-03-30",
+      "end": "2025-06-28",
+      "val": 1.57,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-08-01",
+      "frame": null
+     },
+     {
+      "start": "2025-03-30",
+      "end": "2025-06-28",
+      "val": 1.57,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-09-28",
+      "end": "2025-12-27",
+      "val": 2.85,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-01-30",
+      "frame": "CY2025Q4"
+     },
+     {
+      "start": "2025-12-28",
+      "end": "2026-03-28",
+      "val": 2.02,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-05-01",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-03-29",
+      "end": "2026-06-27",
+      "val": 2.03,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-07-31",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  },
+  "oracle": {
+   "cik": "0001341439",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001341439.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001341439/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001341439/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:31Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:32Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:32Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "ORACLE CORP",
+   "tickers": [
+    "ORCL",
+    "ORCL-PD"
+   ],
+   "exchanges": [
+    "NYSE",
+    "NYSE"
+   ],
+   "fiscal_year_end_mmdd": "0531",
+   "sic_description": "Services-Prepackaged Software",
+   "recent_filings": [
+    {
+     "form": "10-K",
+     "period_of_report": "2026-05-31",
+     "filing_date": "2026-06-22",
+     "accession": "0001193125-26-277521",
+     "primary_doc": "orcl-20260531.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-10",
+     "filing_date": "2026-06-10",
+     "accession": "0001193125-26-265848",
+     "primary_doc": "orcl-20260610.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-06",
+     "filing_date": "2026-05-12",
+     "accession": "0001193125-26-219708",
+     "primary_doc": "d76569d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-01",
+     "filing_date": "2026-04-06",
+     "accession": "0001193125-26-142939",
+     "primary_doc": "d132760d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-02-28",
+     "filing_date": "2026-03-11",
+     "accession": "0001193125-26-101045",
+     "primary_doc": "orcl-20260228.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-03-10",
+     "filing_date": "2026-03-10",
+     "accession": "0001193125-26-100148",
+     "primary_doc": "orcl-20260310.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-02",
+     "filing_date": "2026-02-05",
+     "accession": "0001193125-26-039344",
+     "primary_doc": "d63638d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-02",
+     "filing_date": "2026-02-04",
+     "accession": "0001193125-26-037840",
+     "primary_doc": "d23732d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-05",
+     "filing_date": "2026-01-09",
+     "accession": "0001193125-26-009002",
+     "primary_doc": "d34442d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-11-30",
+     "filing_date": "2025-12-11",
+     "accession": "0001193125-25-315925",
+     "primary_doc": "orcl-20251130.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-12-10",
+     "filing_date": "2025-12-10",
+     "accession": "0001193125-25-314207",
+     "primary_doc": "orcl-20251210.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-11-18",
+     "filing_date": "2025-11-21",
+     "accession": "0001193125-25-291441",
+     "primary_doc": "d43173d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-09-26",
+     "filing_date": "2025-09-26",
+     "accession": "0001193125-25-220445",
+     "primary_doc": "d31817d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-09-18",
+     "filing_date": "2025-09-22",
+     "accession": "0001193125-25-210089",
+     "primary_doc": "d921500d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-08-31",
+     "filing_date": "2025-09-10",
+     "accession": "0001193125-25-200095",
+     "primary_doc": "orcl-20250831.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-09-09",
+     "filing_date": "2025-09-09",
+     "accession": "0001193125-25-199175",
+     "primary_doc": "orcl-20250909.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-06-30",
+     "filing_date": "2025-06-30",
+     "accession": "0001193125-25-152035",
+     "primary_doc": "d136779d8k.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-05-31",
+     "filing_date": "2025-06-18",
+     "accession": "0000950170-25-087926",
+     "primary_doc": "orcl-20250531.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-06-11",
+     "filing_date": "2025-06-11",
+     "accession": "0000950170-25-084831",
+     "primary_doc": "orcl-20250611.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-02-28",
+     "filing_date": "2025-03-11",
+     "accession": "0000950170-25-037143",
+     "primary_doc": "orcl-20250228.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-03-10",
+     "filing_date": "2025-03-10",
+     "accession": "0000950170-25-036295",
+     "primary_doc": "orcl-20250310.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-02-03",
+     "filing_date": "2025-02-03",
+     "accession": "0001193125-25-019281",
+     "primary_doc": "d927919d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-01-21",
+     "filing_date": "2025-01-22",
+     "accession": "0001193125-25-010390",
+     "primary_doc": "d918243d8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-01-08",
+     "filing_date": "2025-01-13",
+     "accession": "0001193125-25-005333",
+     "primary_doc": "d902043d8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2024-11-30",
+     "filing_date": "2024-12-10",
+     "accession": "0000950170-24-134973",
+     "primary_doc": "orcl-20241130.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-06-01",
+      "end": "2024-08-31",
+      "val": 1.03,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-09-10",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2024-09-01",
+      "end": "2024-11-30",
+      "val": 1.1,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2024-12-10",
+      "frame": null
+     },
+     {
+      "start": "2024-09-01",
+      "end": "2024-11-30",
+      "val": 1.1,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-12-11",
+      "frame": "CY2024Q4"
+     },
+     {
+      "start": "2024-12-01",
+      "end": "2025-02-28",
+      "val": 1.02,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-03-11",
+      "frame": null
+     },
+     {
+      "start": "2024-12-01",
+      "end": "2025-02-28",
+      "val": 1.02,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-03-11",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-06-01",
+      "end": "2025-08-31",
+      "val": 1.01,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-09-10",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2025-09-01",
+      "end": "2025-11-30",
+      "val": 2.1,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-12-11",
+      "frame": "CY2025Q4"
+     },
+     {
+      "start": "2025-12-01",
+      "end": "2026-02-28",
+      "val": 1.27,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-03-11",
+      "frame": "CY2026Q1"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-06-01",
+      "end": "2024-08-31",
+      "val": 1.06,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-09-10",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2024-09-01",
+      "end": "2024-11-30",
+      "val": 1.13,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2024-12-10",
+      "frame": null
+     },
+     {
+      "start": "2024-09-01",
+      "end": "2024-11-30",
+      "val": 1.13,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-12-11",
+      "frame": "CY2024Q4"
+     },
+     {
+      "start": "2024-12-01",
+      "end": "2025-02-28",
+      "val": 1.05,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-03-11",
+      "frame": null
+     },
+     {
+      "start": "2024-12-01",
+      "end": "2025-02-28",
+      "val": 1.05,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-03-11",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-06-01",
+      "end": "2025-08-31",
+      "val": 1.04,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-09-10",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2025-09-01",
+      "end": "2025-11-30",
+      "val": 2.14,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-12-11",
+      "frame": "CY2025Q4"
+     },
+     {
+      "start": "2025-12-01",
+      "end": "2026-02-28",
+      "val": 1.29,
+      "fy": 2026,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2026-03-11",
+      "frame": "CY2026Q1"
+     }
+    ]
+   }
+  },
+  "palantir": {
+   "cik": "0001321655",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001321655.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001321655/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001321655/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:33Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:33Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:34Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "Palantir Technologies Inc.",
+   "tickers": [
+    "PLTR"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "1231",
+   "sic_description": "Services-Prepackaged Software",
+   "recent_filings": [
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-06-30",
+     "filing_date": "2026-08-04",
+     "accession": "0001321655-26-000041",
+     "primary_doc": "pltr-20260630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-08-03",
+     "filing_date": "2026-08-03",
+     "accession": "0001321655-26-000039",
+     "primary_doc": "pltr-20260803.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-03",
+     "filing_date": "2026-06-09",
+     "accession": "0001321655-26-000033",
+     "primary_doc": "pltr-20260603.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-03-31",
+     "filing_date": "2026-05-05",
+     "accession": "0001321655-26-000028",
+     "primary_doc": "pltr-20260331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-05-04",
+     "filing_date": "2026-05-04",
+     "accession": "0001321655-26-000026",
+     "primary_doc": "pltr-20260504.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-12-31",
+     "filing_date": "2026-02-17",
+     "accession": "0001321655-26-000011",
+     "primary_doc": "pltr-20251231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-02-02",
+     "filing_date": "2026-02-02",
+     "accession": "0001321655-26-000004",
+     "primary_doc": "pltr-20260202.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-09-30",
+     "filing_date": "2025-11-04",
+     "accession": "0001321655-25-000131",
+     "primary_doc": "pltr-20250930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-11-03",
+     "filing_date": "2025-11-03",
+     "accession": "0001321655-25-000130",
+     "primary_doc": "pltr-20251103.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-06-30",
+     "filing_date": "2025-08-05",
+     "accession": "0001321655-25-000106",
+     "primary_doc": "pltr-20250630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-08-04",
+     "filing_date": "2025-08-04",
+     "accession": "0001321655-25-000105",
+     "primary_doc": "pltr-20250804.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-06-05",
+     "filing_date": "2025-06-09",
+     "accession": "0001321655-25-000084",
+     "primary_doc": "pltr-20250605.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-03-31",
+     "filing_date": "2025-05-06",
+     "accession": "0001321655-25-000066",
+     "primary_doc": "pltr-20250331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-05",
+     "filing_date": "2025-05-05",
+     "accession": "0001321655-25-000063",
+     "primary_doc": "pltr-20250505.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-02-27",
+     "filing_date": "2025-02-28",
+     "accession": "0001321655-25-000033",
+     "primary_doc": "pltr-20250227.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2024-12-31",
+     "filing_date": "2025-02-18",
+     "accession": "0001321655-25-000022",
+     "primary_doc": "pltr-20241231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-02-03",
+     "filing_date": "2025-02-03",
+     "accession": "0001321655-25-000007",
+     "primary_doc": "pltr-20250203.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-11-14",
+     "filing_date": "2024-11-14",
+     "accession": "0001321655-24-000219",
+     "primary_doc": "pltr-20241114.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2024-09-30",
+     "filing_date": "2024-11-05",
+     "accession": "0001321655-24-000209",
+     "primary_doc": "pltr-20240930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-11-04",
+     "filing_date": "2024-11-04",
+     "accession": "0001321655-24-000207",
+     "primary_doc": "pltr-20241104.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2024-06-30",
+     "filing_date": "2024-08-06",
+     "accession": "0001321655-24-000135",
+     "primary_doc": "pltr-20240630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-08-05",
+     "filing_date": "2024-08-05",
+     "accession": "0001321655-24-000133",
+     "primary_doc": "pltr-20240805.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-06-05",
+     "filing_date": "2024-06-10",
+     "accession": "0001321655-24-000088",
+     "primary_doc": "pltr-20240605.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2024-03-31",
+     "filing_date": "2024-05-07",
+     "accession": "0001321655-24-000071",
+     "primary_doc": "pltr-20240331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2024-05-06",
+     "filing_date": "2024-05-06",
+     "accession": "0001321655-24-000069",
+     "primary_doc": "pltr-20240506.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 0.06,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-04",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.08,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-06",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.08,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-05",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.13,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-08-05",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.13,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 0.18,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-04",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 0.34,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-05",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 0.41,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 0.06,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-04",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.09,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-05-06",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.09,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-05",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.14,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-08-05",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.14,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 0.2,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-11-04",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 0.36,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-05-05",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 0.44,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  },
+  "tesla": {
+   "cik": "0001318605",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001318605.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001318605/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001318605/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:34Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:35Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:36Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "Tesla, Inc.",
+   "tickers": [
+    "TSLA"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "1231",
+   "sic_description": "Motor Vehicles & Passenger Car Bodies",
+   "recent_filings": [
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-06-30",
+     "filing_date": "2026-07-23",
+     "accession": "0001628280-26-049270",
+     "primary_doc": "tsla-20260630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-22",
+     "filing_date": "2026-07-22",
+     "accession": "0001628280-26-049213",
+     "primary_doc": "tsla-20260722.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-07-02",
+     "filing_date": "2026-07-02",
+     "accession": "0001628280-26-046717",
+     "primary_doc": "tsla-20260702.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-03-31",
+     "filing_date": "2026-04-23",
+     "accession": "0001628280-26-026673",
+     "primary_doc": "tsla-20260331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-22",
+     "filing_date": "2026-04-22",
+     "accession": "0001628280-26-026551",
+     "primary_doc": "tsla-20260422.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-04-02",
+     "filing_date": "2026-04-02",
+     "accession": "0001628280-26-022956",
+     "primary_doc": "tsla-20260402.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2025-12-31",
+     "filing_date": "2026-01-29",
+     "accession": "0001628280-26-003952",
+     "primary_doc": "tsla-20251231.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-28",
+     "filing_date": "2026-01-28",
+     "accession": "0001628280-26-003837",
+     "primary_doc": "tsla-20260128.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-01-02",
+     "filing_date": "2026-01-02",
+     "accession": "0001628280-26-000016",
+     "primary_doc": "tsla-20260102.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-11-06",
+     "filing_date": "2025-11-07",
+     "accession": "0001104659-25-108507",
+     "primary_doc": "tm2530590d1_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-09-30",
+     "filing_date": "2025-10-23",
+     "accession": "0001628280-25-045968",
+     "primary_doc": "tsla-20250930.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-22",
+     "filing_date": "2025-10-22",
+     "accession": "0001628280-25-045861",
+     "primary_doc": "tsla-20251022.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-10-02",
+     "filing_date": "2025-10-02",
+     "accession": "0001628280-25-043530",
+     "primary_doc": "tsla-20251002.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-09-03",
+     "filing_date": "2025-09-05",
+     "accession": "0001104659-25-087862",
+     "primary_doc": "tm2525337d1_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-08-03",
+     "filing_date": "2025-08-04",
+     "accession": "0001104659-25-073263",
+     "primary_doc": "tm2522385d1_8k.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-06-30",
+     "filing_date": "2025-07-24",
+     "accession": "0001628280-25-035806",
+     "primary_doc": "tsla-20250630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-23",
+     "filing_date": "2025-07-23",
+     "accession": "0001628280-25-035738",
+     "primary_doc": "tsla-20250723.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-09",
+     "filing_date": "2025-07-10",
+     "accession": "0001628280-25-034692",
+     "primary_doc": "tsla-20250709.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-07-02",
+     "filing_date": "2025-07-02",
+     "accession": "0001628280-25-033842",
+     "primary_doc": "tsla-20250702.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-15",
+     "filing_date": "2025-05-16",
+     "accession": "0001104659-25-050072",
+     "primary_doc": "tm2515421d1_8k.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-05-15",
+     "filing_date": "2025-05-16",
+     "accession": "0001628280-25-026148",
+     "primary_doc": "tsla-20250515.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2025-03-31",
+     "filing_date": "2025-04-23",
+     "accession": "0001628280-25-018911",
+     "primary_doc": "tsla-20250331.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-04-22",
+     "filing_date": "2025-04-22",
+     "accession": "0001628280-25-018851",
+     "primary_doc": "tsla-20250422.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2025-04-02",
+     "filing_date": "2025-04-02",
+     "accession": "0001628280-25-016070",
+     "primary_doc": "tsla-20250402.htm"
+    },
+    {
+     "form": "10-K",
+     "period_of_report": "2024-12-31",
+     "filing_date": "2025-01-30",
+     "accession": "0001628280-25-003063",
+     "primary_doc": "tsla-20241231.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 0.62,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-23",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.12,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-04-23",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.12,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-23",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.33,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-07-24",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.33,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 0.39,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-23",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 0.13,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-23",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 0.32,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2024-07-01",
+      "end": "2024-09-30",
+      "val": 0.68,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-23",
+      "frame": "CY2024Q3"
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.13,
+      "fy": 2025,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2025-04-23",
+      "frame": null
+     },
+     {
+      "start": "2025-01-01",
+      "end": "2025-03-31",
+      "val": 0.13,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-23",
+      "frame": "CY2025Q1"
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.36,
+      "fy": 2025,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2025-07-24",
+      "frame": null
+     },
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": 0.36,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2025-07-01",
+      "end": "2025-09-30",
+      "val": 0.43,
+      "fy": 2025,
+      "fp": "Q3",
+      "form": "10-Q",
+      "filed": "2025-10-23",
+      "frame": "CY2025Q3"
+     },
+     {
+      "start": "2026-01-01",
+      "end": "2026-03-31",
+      "val": 0.15,
+      "fy": 2026,
+      "fp": "Q1",
+      "form": "10-Q",
+      "filed": "2026-04-23",
+      "frame": "CY2026Q1"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": 0.34,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-07-23",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  },
+  "spacex-xai": {
+   "cik": "0001181412",
+   "urls": {
+    "submissions": "https://data.sec.gov/submissions/CIK0001181412.json",
+    "EarningsPerShareDiluted": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001181412/us-gaap/EarningsPerShareDiluted.json",
+    "EarningsPerShareBasic": "https://data.sec.gov/api/xbrl/companyconcept/CIK0001181412/us-gaap/EarningsPerShareBasic.json"
+   },
+   "fetched_at_utc": {
+    "submissions": "2026-09-09T02:28:36Z",
+    "EarningsPerShareDiluted": "2026-09-09T02:28:37Z",
+    "EarningsPerShareBasic": "2026-09-09T02:28:37Z"
+   },
+   "http_status": {
+    "submissions": 200,
+    "EarningsPerShareDiluted": 200,
+    "EarningsPerShareBasic": 200
+   },
+   "entity_name": "SPACE EXPLORATION TECHNOLOGIES CORP",
+   "tickers": [
+    "SPCX"
+   ],
+   "exchanges": [
+    "Nasdaq"
+   ],
+   "fiscal_year_end_mmdd": "1231",
+   "sic_description": "Services-Computer Programming, Data Processing, Etc.",
+   "recent_filings": [
+    {
+     "form": "8-K",
+     "period_of_report": "2026-08-14",
+     "filing_date": "2026-08-14",
+     "accession": "0001628280-26-056945",
+     "primary_doc": "spcx-20260814.htm"
+    },
+    {
+     "form": "10-Q",
+     "period_of_report": "2026-06-30",
+     "filing_date": "2026-08-04",
+     "accession": "0001628280-26-052535",
+     "primary_doc": "spcx-20260630.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-08-04",
+     "filing_date": "2026-08-04",
+     "accession": "0001628280-26-052515",
+     "primary_doc": "spcx-20260804.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-26",
+     "filing_date": "2026-06-26",
+     "accession": "0001628280-26-045763",
+     "primary_doc": "spcx-closing8xkjune2026.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-23",
+     "filing_date": "2026-06-23",
+     "accession": "0001628280-26-044955",
+     "primary_doc": "spcx-pricing8xk.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-22",
+     "filing_date": "2026-06-22",
+     "accession": "0001628280-26-044489",
+     "primary_doc": "spcx8-kxlaunchseniornotes.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-16",
+     "filing_date": "2026-06-17",
+     "accession": "0001628280-26-043865",
+     "primary_doc": "spaceexplorationtechnologi.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-16",
+     "filing_date": "2026-06-16",
+     "accession": "0001628280-26-043411",
+     "primary_doc": "spaceexplorationtechnologi.htm"
+    },
+    {
+     "form": "8-K",
+     "period_of_report": "2026-06-15",
+     "filing_date": "2026-06-15",
+     "accession": "0001628280-26-043288",
+     "primary_doc": "spaceexplorationtechnologi.htm"
+    }
+   ],
+   "xbrl_units": {
+    "EarningsPerShareDiluted": [
+     "USD/shares"
+    ],
+    "EarningsPerShareBasic": [
+     "USD/shares"
+    ]
+   },
+   "quarterly": {
+    "EarningsPerShareDiluted": [
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": -0.34,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": -0.09,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2026Q2"
+     }
+    ],
+    "EarningsPerShareBasic": [
+     {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "val": -0.34,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2025Q2"
+     },
+     {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "val": -0.09,
+      "fy": 2026,
+      "fp": "Q2",
+      "form": "10-Q",
+      "filed": "2026-08-04",
+      "frame": "CY2026Q2"
+     }
+    ]
+   }
+  }
+ }
+}

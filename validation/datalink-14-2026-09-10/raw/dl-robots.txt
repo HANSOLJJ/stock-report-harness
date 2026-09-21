@@ -1,0 +1,14 @@
+user-agent: *
+sitemap: https://data.nasdaq.com/sitemap.xml.gz
+allow: /search/$
+disallow: /search/
+disallow: /api/*.csv*
+disallow: /api/*.xml*
+disallow: /api/*.xls*
+disallow: /api/*.json*
+disallow: /api/v3/databases/*/data
+disallow: /api/v3/databases/*/codes
+disallow: ?anchor=
+disallow: ?sortDirection=desc
+disallow: ?sortProperty=date
+allow: /*sitemap.xml*

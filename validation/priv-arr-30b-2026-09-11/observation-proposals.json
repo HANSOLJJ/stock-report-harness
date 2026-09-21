@@ -1,0 +1,254 @@
+{
+ "task": "PRIV-ARR-30B",
+ "generated": "2026-09-11",
+ "registration": "제안만 함. 등록은 worker 몫이다.",
+ "network_calls": 0,
+ "sources": {
+  "AI기업_채점규칙_v1.5.md": {
+   "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+   "declared_in_v1.5.json": true,
+   "matches_declaration": true,
+   "source_id": "SRC-v15-rule"
+  },
+  "AI기업_채점표_v1.5.md": {
+   "sha256": "d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30",
+   "declared_in_v1.5.json": false,
+   "note": "v1.5.json 에 선언이 없다. 이번이 최초 해시 기록이다.",
+   "source_id": "SRC-v15-table"
+  }
+ },
+ "kind_note": "arr 과 arr_prior 는 metric 이름이 ARR 이지만 실제 내용은 런레이트다. 원문이 '특정 시점 월매출 × 12' 로 명시한다(규칙 L647). TTM 매출보다 과대하다. kind=run_rate 가 그 사실을 담고 있으니 소비하는 쪽이 반드시 읽어야 한다.",
+ "proposals": [
+  {
+   "observation_id": "anthropic.arr_prior.priv-arr-30b",
+   "company_id": "anthropic",
+   "metric": "arr_prior",
+   "value": 47000000000.0,
+   "unit": "USD",
+   "kind": "run_rate",
+   "raw": "$47B",
+   "period_label": null,
+   "period_stated_in_source": false,
+   "source_files": [
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 341
+    },
+    {
+     "file": "AI기업_채점규칙_v1.5.md",
+     "line": 147
+    }
+   ],
+   "proposed_action": "add_new",
+   "note": "원문이 $47B 에 시점을 붙이지 않았다. 추정해 채우지 않는다. arr(7월) 과의 간격을 알 수 없으므로 P3 를 기간 정규화된 증가율로 쓸 수 없다.",
+   "period_missing_reason": "source_states_value_without_date",
+   "interval_to_arr": null
+  },
+  {
+   "observation_id": "openai.arr_prior.priv-arr-30b",
+   "company_id": "openai",
+   "metric": "arr_prior",
+   "value": 25000000000.0,
+   "unit": "USD",
+   "kind": "run_rate",
+   "raw": "$25B",
+   "period_label": "2~4월(정체 구간)",
+   "period_stated_in_source": true,
+   "source_files": [
+    {
+     "file": "AI기업_채점규칙_v1.5.md",
+     "line": 165
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 745
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 771
+    }
+   ],
+   "proposed_action": "add_new",
+   "note": "원문이 '2~4월 $25B 정체' 로 적어 단일 시점이 아니라 구간이다. 구간 끝(4월)을 직전으로 보면 arr(7월)까지 약 3개월이다.",
+   "period_is_range": true,
+   "range_label": "2026-02~2026-04"
+  },
+  {
+   "observation_id": "openai.arr.priv-arr-30b",
+   "company_id": "openai",
+   "metric": "arr",
+   "value": 40000000000.0,
+   "unit": "USD",
+   "kind": "run_rate",
+   "raw": "$40B / $40B+",
+   "period_label": "원문이 7월 과 8/20 을 함께 쓴다",
+   "period_stated_in_source": true,
+   "source_files": [
+    {
+     "file": "AI기업_채점규칙_v1.5.md",
+     "line": 165
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 745
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 917
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 931
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 781
+    }
+   ],
+   "proposed_action": "amend_period_label",
+   "note": "값은 $40B 로 일치해 변경 없음. 기간 라벨만 문제다. 기존 관측 raw 는 8/20(L917) 을 골랐으나 증가율 서술(L165·L745)은 7월 기준이다. P3 를 계산하려면 어느 쪽인지 정해야 한다.",
+   "existing_observation_id": "openai.arr.v15",
+   "value_changed": false,
+   "candidate_labels": [
+    "7월",
+    "8/20"
+   ]
+  },
+  {
+   "observation_id": "openai.cumulative_raised.priv-arr-30b",
+   "company_id": "openai",
+   "metric": "cumulative_raised",
+   "value": null,
+   "unit": "USD",
+   "kind": "actual",
+   "raw": "약 $180~190B",
+   "period_label": null,
+   "period_stated_in_source": false,
+   "source_files": [
+    {
+     "file": "AI기업_채점규칙_v1.5.md",
+     "line": 667
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 926
+    }
+   ],
+   "proposed_action": "flag_derived_value",
+   "note": "원문은 범위만 준다. 기존 관측의 185B 는 원문에 없는 중간값 유도치다(raw 에 표시는 돼 있다). 원문 자신의 자본효율 0.22 는 범위 상단과 어긋난다 — 40/190=0.2105 는 0.21 로 반올림된다. 0.22 가 성립하려면 누적 조달이 약 186B 이하여야 하므로 원문 범위 상단이 자기 표기와 충돌한다.",
+   "range": [
+    180000000000.0,
+    190000000000.0
+   ],
+   "existing_observation_id": "openai.cumulative_raised.v15",
+   "existing_value": 185000000000.0,
+   "self_consistency": {
+    "source_states": 0.22,
+    "at_180B": 0.2222,
+    "at_185B": 0.2162,
+    "at_190B": 0.2105,
+    "max_consistent_with_0_22": 186050000000.0
+   }
+  },
+  {
+   "observation_id": "anthropic.arr.priv-arr-30b",
+   "company_id": "anthropic",
+   "metric": "arr",
+   "value": 65000000000.0,
+   "unit": "USD",
+   "kind": "run_rate",
+   "raw": "$65B",
+   "period_label": "7월",
+   "period_stated_in_source": true,
+   "source_files": [
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 338
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 911
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 930
+    }
+   ],
+   "proposed_action": "confirm_unchanged",
+   "note": "원문과 기존 관측이 일치한다. 값 변경 제안 없음. status 는 legacy_unverified 에서 verified 로 올릴 수 있다 — 출처 파일 해시가 확인됐고 인용 위치를 직접 대조했다.",
+   "existing_observation_id": "anthropic.arr.v15"
+  },
+  {
+   "observation_id": "anthropic.post_money_valuation.priv-arr-30b",
+   "company_id": "anthropic",
+   "metric": "post_money_valuation",
+   "value": 965000000000.0,
+   "unit": "USD",
+   "kind": "actual",
+   "raw": "$965B",
+   "period_label": "2026/5 Series H",
+   "period_stated_in_source": true,
+   "source_files": [
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 930
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 338
+    }
+   ],
+   "proposed_action": "confirm_unchanged",
+   "note": "원문과 기존 관측이 일치한다. 값 변경 제안 없음. status 는 legacy_unverified 에서 verified 로 올릴 수 있다 — 출처 파일 해시가 확인됐고 인용 위치를 직접 대조했다.",
+   "existing_observation_id": "anthropic.post_money_valuation.v15"
+  },
+  {
+   "observation_id": "anthropic.cumulative_raised.priv-arr-30b",
+   "company_id": "anthropic",
+   "metric": "cumulative_raised",
+   "value": 125000000000.0,
+   "unit": "USD",
+   "kind": "actual",
+   "raw": "약 $125B",
+   "period_label": "2021년~",
+   "period_stated_in_source": true,
+   "source_files": [
+    {
+     "file": "AI기업_채점규칙_v1.5.md",
+     "line": 666
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 925
+    }
+   ],
+   "proposed_action": "confirm_unchanged",
+   "note": "원문과 기존 관측이 일치한다. 값 변경 제안 없음. status 는 legacy_unverified 에서 verified 로 올릴 수 있다 — 출처 파일 해시가 확인됐고 인용 위치를 직접 대조했다.",
+   "existing_observation_id": "anthropic.cumulative_raised.v15"
+  },
+  {
+   "observation_id": "openai.post_money_valuation.priv-arr-30b",
+   "company_id": "openai",
+   "metric": "post_money_valuation",
+   "value": 852000000000.0,
+   "unit": "USD",
+   "kind": "actual",
+   "raw": "$852B",
+   "period_label": "2026/3 $122B 조달",
+   "period_stated_in_source": true,
+   "source_files": [
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 931
+    },
+    {
+     "file": "AI기업_채점표_v1.5.md",
+     "line": 768
+    }
+   ],
+   "proposed_action": "confirm_unchanged",
+   "note": "원문과 기존 관측이 일치한다. 값 변경 제안 없음. status 는 legacy_unverified 에서 verified 로 올릴 수 있다 — 출처 파일 해시가 확인됐고 인용 위치를 직접 대조했다.",
+   "existing_observation_id": "openai.post_money_valuation.v15"
+  }
+ ]
+}

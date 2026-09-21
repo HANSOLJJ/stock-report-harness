@@ -1,0 +1,331 @@
+{
+ "meta": {
+  "snapshot_file": "raw/sa-meta-forecast-data.json",
+  "cik": "0001326801",
+  "exchange": "NASDAQ",
+  "name_full": "Meta Platforms, Inc.",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "2012-05-18",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "nvidia": {
+  "snapshot_file": "raw/sa-nvidia-forecast-data.json",
+  "cik": "0001045810",
+  "exchange": "NASDAQ",
+  "name_full": "NVIDIA Corporation",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "1999-01-22",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "alphabet": {
+  "snapshot_file": "raw/sa-alphabet-forecast-data.json",
+  "cik": "0001652044",
+  "exchange": "NASDAQ",
+  "name_full": "Alphabet Inc.",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "2004-08-19",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "microsoft": {
+  "snapshot_file": "raw/sa-microsoft-forecast-data.json",
+  "cik": "0000789019",
+  "exchange": "NASDAQ",
+  "name_full": "Microsoft Corporation",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "1986-03-13",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "amazon": {
+  "snapshot_file": "raw/sa-amazon-forecast-data.json",
+  "cik": "0001018724",
+  "exchange": "NASDAQ",
+  "name_full": "Amazon.com, Inc.",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "1997-05-15",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "apple": {
+  "snapshot_file": "raw/sa-apple-forecast-data.json",
+  "cik": "0000320193",
+  "exchange": "NASDAQ",
+  "name_full": "Apple Inc.",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "1980-12-12",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "oracle": {
+  "snapshot_file": "raw/sa-oracle-forecast-data.json",
+  "cik": "0001341439",
+  "exchange": "NYSE",
+  "name_full": "Oracle Corporation",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "1986-03-12",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "palantir": {
+  "snapshot_file": "raw/sa-palantir-forecast-data.json",
+  "cik": "1321655",
+  "exchange": "NASDAQ",
+  "name_full": "Palantir Technologies Inc.",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "2020-09-30",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "tesla": {
+  "snapshot_file": "raw/sa-tesla-forecast-data.json",
+  "cik": "0001318605",
+  "exchange": "NASDAQ",
+  "name_full": "Tesla, Inc.",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "dividend": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "2010-06-29",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ },
+ "spacex-xai": {
+  "snapshot_file": "raw/sa-spacex-xai-forecast-data.json",
+  "cik": "0001181412",
+  "exchange": "NASDAQ",
+  "name_full": "Space Exploration Technologies Corp.",
+  "currency_declared": {
+   "main": "USD",
+   "price": "USD",
+   "financial": "USD"
+  },
+  "ipo_date": "2026-06-12",
+  "estimates_source_code": "spg",
+  "declared_data_sources": [
+   {
+    "name": "S&P Global Market Intelligence",
+    "url": "https://www.spglobal.com/market-intelligence/en"
+   },
+   {
+    "name": "TipRanks",
+    "url": "https://www.tipranks.com/"
+   }
+  ],
+  "trust_freshness": null,
+  "exchange_rate": null,
+  "adr_price_divisor": null,
+  "price_target_source": "spg",
+  "price_target_currency": "USD",
+  "spg_named": true,
+  "tipranks_named": true,
+  "adr_divisor_field_present": true,
+  "updated_labels_in_snapshot": []
+ }
+}

@@ -1,0 +1,417 @@
+{
+ "run": "ai-scorecard-2026-09-obsreg",
+ "count": 25,
+ "items": [
+  {
+   "observation_id": "alibaba.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "alibaba",
+   "value": 270000000000.0,
+   "raw": "$270B",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "alphabet.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "alphabet",
+   "value": 4120000000000.0,
+   "raw": "$4.12T",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "amazon.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "amazon",
+   "value": 2750000000000.0,
+   "raw": "$2.75T",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "apple.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "apple",
+   "value": 4740000000000.0,
+   "raw": "$4.74T",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "meta.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "meta",
+   "value": 1510000000000.0,
+   "raw": "$1.51T",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "microsoft.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "microsoft",
+   "value": 3690000000000.0,
+   "raw": "$3.69T",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "nvidia.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "nvidia",
+   "value": 5420000000000.0,
+   "raw": "$5.42T",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "oracle.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "oracle",
+   "value": 443700000000.0,
+   "raw": "$443.7B",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "palantir.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "palantir",
+   "value": 407000000000.0,
+   "raw": "$407B",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "tesla.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "tesla",
+   "value": 1410000000000.0,
+   "raw": "$1.41T",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "tsmc.market_cap.v15",
+   "metric": "market_cap",
+   "company_id": "tsmc",
+   "value": 2150000000000.0,
+   "raw": "$2.15T ✱",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "anthropic.arr_prior.priv31",
+   "metric": "arr_prior",
+   "company_id": "anthropic",
+   "value": 47000000000.0,
+   "raw": "ARR $47B → $65B (직전 런레이트)",
+   "source_id": "SRC-v15-md",
+   "basis": {
+    "period_label": null,
+    "period_label_missing": "**원문에 직전 시점 라벨이 없다.** v1.5 는 'ARR이 $47B→$65B로 늘며 배수가 내려왔다' 고만 적고 $47B 가 언제 기준인지 말하지 않는다. 지어내지 않고 null 로 둔다.",
+    "current_label": "$65B 는 7월 기준이라고 원문이 적는다",
+    "kind_note": "kind=run_rate. **ARR 이 아니라 런레이트다**(PRIV-ARR-17). 이름이 arr_prior 인 것은 기존 12개사 관측·스키마와 얽혀 이름을 바꾸지 않기로 한 결과다.",
+    "growth_implied": 0.38297872340425543,
+    "source_lines": "AI기업_채점표_v1.5.md anthropic ⑥가격 항목"
+   },
+   "note": "PRIV-IMPL-31 / C-12. P3 입력. 시점 라벨이 원문에 없어 null 이다",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "openai.arr_prior.priv31",
+   "metric": "arr_prior",
+   "company_id": "openai",
+   "value": 25000000000.0,
+   "raw": "ARR $25B → $40B (2~4월 정체 구간)",
+   "source_id": "SRC-v15-md",
+   "basis": {
+    "period_label": "2~4월 정체 구간",
+    "current_label": "$40B 는 8/20 기준 — 다만 원문 안에서 시점 표기가 갈린다(아래 contradiction)",
+    "kind_note": "kind=run_rate. ARR 이 아니라 런레이트다.",
+    "growth_implied": 0.6000000000000001,
+    "contradiction": {
+     "field": "openai arr 시점 라벨",
+     "values": [
+      "7월(2회 표기)",
+      "8/20(2회 표기)"
+     ],
+     "value_agrees": "금액 $40B 는 네 표기가 모두 같다",
+     "not_resolved": "**시점을 고르지 않는다.** 값이 같아 P3·P2 에는 영향이 없고, 영향이 없다는 사실까지 적어 둔다."
+    },
+    "source_lines": "AI기업_채점표_v1.5.md openai ⑥가격 항목"
+   },
+   "note": "PRIV-IMPL-31 / C-12. P3 입력. arr 시점 표기가 원문 안에서 갈리나 금액은 같아 점수 영향 없음",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "anthropic.cumulative_raised.priv31",
+   "metric": "cumulative_raised",
+   "company_id": "anthropic",
+   "value": 125000000000.0,
+   "raw": "약 $125B(2021년~)",
+   "source_id": "SRC-v15-md",
+   "basis": {
+    "contradiction": {
+     "field": "anthropic Series H 조달액",
+     "values": [
+      {
+       "value": 30000000000,
+       "location": "AI기업_채점표_v1.5.md ⑨적자깊이 — '완충이 외부 조달뿐이다 … Series H $30B($965B 밸류)에 기댄다'"
+      },
+      {
+       "value": 65000000000,
+       "location": "AI기업_채점표_v1.5.md 비상장 ⑥ 표 — '$965B (2026/5 Series H $65B)'"
+      }
+     ],
+     "same_document": true,
+     "not_resolved": "**어느 쪽이 맞는지 정하지 않는다.** 두 표기가 같은 문서 안에서 갈리고 외부 확인 경로가 이번 과제 범위 밖이다. $65B 는 anthropic 의 ARR 값과 같아 표 작성 중 옮겨 적혔을 가능성도 있으나 그것도 추측이라 단정하지 않는다."
+    },
+    "impact": "이 값이 P4 자본효율(arr ÷ cumulative_raised)의 분모다.",
+    "sensitivity": [
+     {
+      "assumption": "원본 표기 그대로",
+      "cumulative_raised": 125000000000.0,
+      "capital_efficiency": 0.52,
+      "meets_threshold_0_50": true
+     },
+     {
+      "assumption": "125B 가 Series H 를 65B 로 포함했다면 → 30B 로 교체",
+      "cumulative_raised": 90000000000.0,
+      "capital_efficiency": 0.7222,
+      "meets_threshold_0_50": true
+     },
+     {
+      "assumption": "125B 가 Series H 를 30B 로 포함했다면 → 65B 로 교체",
+      "cumulative_raised": 160000000000.0,
+      "capital_efficiency": 0.4062,
+      "meets_threshold_0_50": false
+     }
+    ],
+    "straddles_threshold": true,
+    "straddle_note": "**모순 구간이 보정 임계 0.50 을 가로지른다.** 세 시나리오의 자본효율이 0.41~0.72 이고 그중 하나(65B 포함 가정)만 임계 미달이다. 그 경우 보정이 붙지 않아 anthropic F6 가 -3 이 아니라 -4 가 된다. **값을 고르지 않았고, 갈린다는 사실과 그 결과를 여기 남긴다.**",
+    "registered_value_is": "원본이 자본효율 0.52 를 계산할 때 쓴 값(약 $125B, 2021년~) 그대로다. 우리가 조정하지 않았다."
+   },
+   "note": "PRIV-IMPL-31 / C-12. 승계 관측 anthropic.cumulative_raised.v15 를 대체한다 — **값은 같고 모순 기록과 민감도만 추가한다**",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "openai.cumulative_raised.v15",
+   "metric": "cumulative_raised",
+   "company_id": "openai",
+   "value": 185000000000.0,
+   "raw": "약 $180~190B(중간값)",
+   "source_id": "SRC-v15-rule",
+   "basis": null,
+   "note": "규칙 v1.5 ⑥ 비상장 절",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "anthropic.arr.v15",
+   "metric": "arr",
+   "company_id": "anthropic",
+   "value": 65000000000.0,
+   "raw": "ARR $65B(7월 런레이트)",
+   "source_id": "SRC-v15-rule",
+   "basis": null,
+   "note": "규칙 v1.5 ⑥ 비상장 절",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "openai.arr.v15",
+   "metric": "arr",
+   "company_id": "openai",
+   "value": 40000000000.0,
+   "raw": "런레이트 $40B+(8/20)",
+   "source_id": "SRC-v15-rule",
+   "basis": null,
+   "note": "규칙 v1.5 ⑥ 비상장 절",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "anthropic.post_money_valuation.v15",
+   "metric": "post_money_valuation",
+   "company_id": "anthropic",
+   "value": 965000000000.0,
+   "raw": "$965B",
+   "source_id": "SRC-v15-rule",
+   "basis": null,
+   "note": "규칙 v1.5 ⑥ 비상장 절",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "openai.post_money_valuation.v15",
+   "metric": "post_money_valuation",
+   "company_id": "openai",
+   "value": 852000000000.0,
+   "raw": "$852B",
+   "source_id": "SRC-v15-rule",
+   "basis": null,
+   "note": "규칙 v1.5 ⑥ 비상장 절",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "apple.net_cash.v15",
+   "metric": "net_cash",
+   "company_id": "apple",
+   "value": 62200000000.0,
+   "raw": "+$62.2B",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "palantir.net_cash.v15",
+   "metric": "net_cash",
+   "company_id": "palantir",
+   "value": 9200000000.0,
+   "raw": "+$9.2B",
+   "source_id": "SRC-v15-html",
+   "basis": null,
+   "note": null,
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "anthropic.ps_ratio.priv31",
+   "metric": "ps_ratio",
+   "company_id": "anthropic",
+   "value": 30.0,
+   "raw": "TTM 보정 ~30~39배 (밸류 $965B, Q2 매출 $10.9B 역산)",
+   "source_id": "SRC-v15-md",
+   "basis": {
+    "formula": "post_money_valuation ÷ TTM 보정 매출",
+    "estimate_range": [
+     30.0,
+     39.0
+    ],
+    "range_is_source_given": true,
+    "derivation": "v1.5 원본이 TTM 추정 배수를 직접 준다 — '분모를 TTM으로 맞추면 약 30~39배(Q2 매출 $10.9B 역산)'. 우리가 만든 값이 아니다.",
+    "anchor": "Q2 매출 $10.9B. ARR $65B 런레이트를 그대로 나눈 14.8배가 아니라 분기 실적에서 TTM 을 역산한 값이다.",
+    "why_not_arr": "밸류÷ARR 은 14.8x 로 NVIDIA(17.9)보다 싸 보인다. 분모를 맞추면 30~39x 로 Palantir(TTM P/S 66.2, ⑥-4)의 절반 수준이다(v1.5 654행).",
+    "band_check": "30 과 39 가 모두 '30x+' 구간이라 범위가 판정을 가르지 않는다. 값으로는 낮은 끝 30 을 썼다 — 기업에 가장 덜 불리한 끝에서도 -4 라는 뜻이다.",
+    "precision": "⚠️ 정밀도 열위. 비상장이라 NTM PER 산출 불가이고 경계 규칙도 미적용이다(v1.5 678행).",
+    "source_lines": "AI기업_채점표_v1.5.md ⑥가격 항목 · AI기업_채점규칙_v1.5.md 649~654행"
+   },
+   "note": "PRIV-IMPL-31 / C-12. **P2 분모는 arr 이 아니라 TTM 보정 매출이다.** 구간 추정이라 estimate_range 를 함께 남겼고 계산기가 양 끝의 밴드를 확인한다",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "openai.ps_ratio.priv31",
+   "metric": "ps_ratio",
+   "company_id": "openai",
+   "value": 39.0,
+   "raw": "TTM 보정 약 39배 (밸류 $852B)",
+   "source_id": "SRC-v15-md",
+   "basis": {
+    "formula": "post_money_valuation ÷ TTM 보정 매출",
+    "estimate_range": [
+     39.0,
+     39.0
+    ],
+    "range_is_source_given": true,
+    "derivation": "v1.5 원본 — 'post-money $852B ÷ ARR $40B = 21.3배 — TTM 보정 시 약 39배'. 원본이 단일값으로 준다.",
+    "why_not_arr": "밸류÷ARR 21.3x 는 런레이트 기준이라 과대 평가된다.",
+    "precision": "⚠️ 정밀도 열위 · 경계 규칙 미적용.",
+    "source_lines": "AI기업_채점표_v1.5.md ⑥가격 항목 · AI기업_채점규칙_v1.5.md 652행"
+   },
+   "note": "PRIV-IMPL-31 / C-12. P2 분모는 TTM 보정 매출",
+   "used_by_factors": [
+    "F6"
+   ]
+  },
+  {
+   "observation_id": "oracle.offbalance_B.v15",
+   "metric": "offbalance_B",
+   "company_id": "oracle",
+   "value": 250000000000.0,
+   "raw": "리스 $250B(15~20년)",
+   "source_id": "SRC-v15-rule",
+   "basis": null,
+   "note": "규칙 v1.5 ⑨ 게이트 4 적용표",
+   "used_by_factors": [
+    "F9"
+   ]
+  },
+  {
+   "observation_id": "oracle.contracted_revenue.v15",
+   "metric": "contracted_revenue",
+   "company_id": "oracle",
+   "value": 638000000000.0,
+   "raw": "RPO $638B",
+   "source_id": "SRC-v15-rule",
+   "basis": null,
+   "note": "규칙 v1.5 ⑨ 게이트 4 적용표",
+   "used_by_factors": [
+    "F9"
+   ]
+  }
+ ]
+}

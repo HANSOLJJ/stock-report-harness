@@ -1,0 +1,173 @@
+{
+ "generated_at_utc": "2026-09-10T07:07:21Z",
+ "filings": {
+  "FY2025": {
+   "accession": "0001628280-26-025362",
+   "index_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/index.json",
+   "index_status": 200,
+   "file_count": 202,
+   "files_sample": [
+    "0001628280-26-025362-index-headers.html",
+    "0001628280-26-025362-index.html",
+    "0001628280-26-025362-xbrl.zip",
+    "0001628280-26-025362.txt",
+    "FilingSummary.xml",
+    "MetaLinks.json",
+    "R1.htm",
+    "R10.htm",
+    "R100.htm",
+    "R101.htm",
+    "R102.htm",
+    "R103.htm",
+    "R104.htm",
+    "R105.htm",
+    "R106.htm",
+    "R107.htm",
+    "R108.htm",
+    "R109.htm",
+    "R11.htm",
+    "R110.htm",
+    "R111.htm",
+    "R112.htm",
+    "R113.htm",
+    "R114.htm",
+    "R115.htm",
+    "R116.htm",
+    "R117.htm",
+    "R118.htm",
+    "R119.htm",
+    "R12.htm",
+    "R120.htm",
+    "R121.htm",
+    "R122.htm",
+    "R123.htm",
+    "R124.htm",
+    "R125.htm",
+    "R126.htm",
+    "R127.htm",
+    "R128.htm",
+    "R129.htm"
+   ],
+   "xbrl_signals": {
+    "FilingSummary.xml": true,
+    "Financial_Report.xlsx": false,
+    "R_htm_render_files": 168,
+    "xml_instance": [
+     "tsm-20251231_cal.xml",
+     "tsm-20251231_def.xml",
+     "tsm-20251231_htm.xml",
+     "tsm-20251231_lab.xml",
+     "tsm-20251231_pre.xml"
+    ],
+    "xsd_schema": [
+     "tsm-20251231.xsd"
+    ],
+    "cal_def_lab_pre": [
+     "tsm-20251231_cal.xml",
+     "tsm-20251231_def.xml",
+     "tsm-20251231_lab.xml",
+     "tsm-20251231_pre.xml"
+    ]
+   }
+  },
+  "FY2024": {
+   "accession": "0001193125-25-083423",
+   "index_url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312525083423/index.json",
+   "index_status": 200,
+   "file_count": 210,
+   "files_sample": [
+    "0001193125-25-083423-index-headers.html",
+    "0001193125-25-083423-index.html",
+    "0001193125-25-083423-xbrl.zip",
+    "0001193125-25-083423.txt",
+    "FilingSummary.xml",
+    "Financial_Report.xlsx",
+    "MetaLinks.json",
+    "R1.htm",
+    "R10.htm",
+    "R100.htm",
+    "R101.htm",
+    "R102.htm",
+    "R103.htm",
+    "R104.htm",
+    "R105.htm",
+    "R106.htm",
+    "R107.htm",
+    "R108.htm",
+    "R109.htm",
+    "R11.htm",
+    "R110.htm",
+    "R111.htm",
+    "R112.htm",
+    "R113.htm",
+    "R114.htm",
+    "R115.htm",
+    "R116.htm",
+    "R117.htm",
+    "R118.htm",
+    "R119.htm",
+    "R12.htm",
+    "R120.htm",
+    "R121.htm",
+    "R122.htm",
+    "R123.htm",
+    "R124.htm",
+    "R125.htm",
+    "R126.htm",
+    "R127.htm",
+    "R128.htm"
+   ],
+   "xbrl_signals": {
+    "FilingSummary.xml": true,
+    "Financial_Report.xlsx": true,
+    "R_htm_render_files": 168,
+    "xml_instance": [
+     "d896993d20f_htm.xml",
+     "tsm-20241231_cal.xml",
+     "tsm-20241231_def.xml",
+     "tsm-20241231_lab.xml",
+     "tsm-20241231_pre.xml"
+    ],
+    "xsd_schema": [
+     "tsm-20241231.xsd"
+    ],
+    "cal_def_lab_pre": [
+     "tsm-20241231_cal.xml",
+     "tsm-20241231_def.xml",
+     "tsm-20241231_lab.xml",
+     "tsm-20241231_pre.xml"
+    ]
+   }
+  }
+ },
+ "live_revenue_end_years": [
+  "2015",
+  "2016",
+  "2017",
+  "2018",
+  "2019",
+  "2020",
+  "2021",
+  "2022",
+  "2023",
+  "2024"
+ ],
+ "live_revenue_latest_accn": [
+  [
+   "0001193125-25-083423",
+   "2025-04-17"
+  ],
+  [
+   "0001193125-24-099840",
+   "2024-04-18"
+  ],
+  [
+   "0001193125-23-107214",
+   "2023-04-20"
+  ],
+  [
+   "0001193125-22-104891",
+   "2022-04-14"
+  ]
+ ]
+}
