@@ -1506,14 +1506,32 @@ def method_sections(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None,
         scored[f] = [f"사람이 **{fix_josa(JUDGMENT_ROLES[kind], '', '을')}** 정하고"
                      + (f"({' · '.join(inputs)})" if len(inputs) > 1 else "")
                      + f", {CONVERSION_NOTES[f]}." + carried_note(f)]
-    # 2026-09-17 FIX-71 N3: 규칙이 정한 방식을 적었으나 **이번 실행에서 그 방식으로 매겨진 회사가 없다.**
-    # 둘이 다르면 둘 다 드러나야 한다.
-    scored.setdefault("F2", []).append(
-        "**이번 실행에서는 계산하지 않았다.** 규칙은 조건을 몇 개 통과했는지 세어 점수로 바꾸도록 "
-        f"정해 두었고({', '.join(f'{k}개 {v}점' for k, v in sorted(ctx.rules.factor('F2')['path_mapping'].items()))}, "
-        "최고점은 통과 수만으로 닿지 않고 세대 격차를 따로 채워야 한다), **그런데 어느 경로를 통과했는지가 "
-        "기준선에서 넘어오지 않아 14개사 모두 기준선 점수를 그대로 쓴다.** 카드의 ② 점수를 보고 통과 수를 "
-        "거꾸로 셈하면 안 된다.")
+    # 2026-09-17 FIX-71 N3: 규칙이 정한 방식과 이번 실행에서 실제로 쓴 방식을 함께 드러낸다.
+    f2_judged = {j["company_id"] for j in ctx.judgments if j["factor"] == "F2"}
+    f2_carried = {j["company_id"] for j in ctx.judgments if j["factor"] == "F2" and j["kind"] == "score"}
+    f2_rule = (
+        "규칙은 조건을 몇 개 통과했는지 세어 점수로 바꾸도록 "
+        f"정해 두었다({', '.join(f'{k}개 {v}점' for k, v in sorted(ctx.rules.factor('F2')['path_mapping'].items()))}, "
+        "최고점은 통과 수만으로 닿지 않고 세대 격차를 따로 채워야 한다)."
+    )
+    if f2_carried:
+        if f2_carried == f2_judged:
+            execution = (
+                "**이번 실행에서는 규칙 방식으로 계산하지 않았다.** "
+                f"② 판단 {len(f2_carried)}개사 모두 어느 경로를 통과했는지가 기준선에서 넘어오지 않아 "
+                "기준선 점수를 그대로 쓴다."
+            )
+        else:
+            execution = (
+                "**이번 실행에서는 두 방식이 함께 쓰였다.** "
+                f"② 판단 {len(f2_judged)}개사 중 {len(f2_carried)}곳은 어느 경로를 통과했는지가 기준선에서 "
+                f"넘어오지 않아 기준선 점수를 그대로 썼고, 나머지 {len(f2_judged - f2_carried)}곳은 경로 판정을 "
+                "입력으로 규칙 방식에 따라 계산했다."
+            )
+        scored.setdefault("F2", []).append(
+            f"{execution} {f2_rule} 카드의 ② 점수를 보고 통과 수를 거꾸로 셈하면 안 된다.")
+    else:
+        scored.setdefault("F2", []).append(f2_rule)
     scored["F6"] = f6
     scored["F9"] = [c04_line(ctx)] + g1
     common = [

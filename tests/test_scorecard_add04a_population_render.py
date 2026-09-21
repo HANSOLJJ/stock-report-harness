@@ -1,4 +1,4 @@
-# ADD-04A — 실행 모집단 수는 결과에서 읽고 v1.5 기준선 14사는 고정 사실로 보존한다
+# ADD-04A·04D — 실행 모집단과 F2 승계 수는 실제 결과·판단에서 읽는다
 from __future__ import annotations
 
 import copy
@@ -58,7 +58,52 @@ class Add04aPopulationRenderTest(unittest.TestCase):
 
         self.assertIn("기준선 v1.5 의 14사 순위", draft)
         self.assertIn("기준선 v1.5 1위(14사)", draft)
-        self.assertIn("기준선에서 넘어오지 않아 14개사 모두 기준선 점수를 그대로 쓴다", draft)
+        self.assertIn("② 판단 14개사 모두 어느 경로를 통과했는지가 기준선에서 넘어오지 않아 기준선 점수를 그대로 쓴다", draft)
+
+    def test_f2_all_carried_count_is_dynamic(self):
+        ctx = copy.deepcopy(self.ctx)
+        judgment = copy.deepcopy(next(j for j in ctx.judgments if j["factor"] == "F2"))
+        judgment.update({"judgment_id": "new-company.F2", "company_id": "new-company"})
+        ctx.judgments.append(judgment)
+
+        line = self.line(rc.method_lines(ctx, self.results), "규칙 방식으로 계산하지 않았다")
+        self.assertIn("② 판단 15개사 모두", line)
+
+    def test_f2_mixed_judgments_report_both_execution_paths(self):
+        ctx = copy.deepcopy(self.ctx)
+        judgment = copy.deepcopy(next(j for j in ctx.judgments if j["factor"] == "F2"))
+        judgment.update({
+            "judgment_id": "new-company.F2", "company_id": "new-company", "kind": "paths", "score": None,
+            "status": "new",
+            "inputs": {
+                "performance_leap": "pass", "paradigm_adaptation": "fail", "standard_capture": "pass",
+                "top_rank": "no", "generation_gap": "no",
+            },
+        })
+        judgment.pop("carried_from", None)
+        ctx.judgments.append(judgment)
+
+        line = self.line(rc.method_lines(ctx, self.results), "두 방식이 함께 쓰였다")
+        self.assertIn("② 판단 15개사 중 14곳은", line)
+        self.assertIn("나머지 1곳은 경로 판정을 입력으로 규칙 방식에 따라 계산했다", line)
+        self.assertNotIn("이번 실행에서는 규칙 방식으로 계산하지 않았다", line)
+
+    def test_f2_without_carried_scores_omits_the_succession_note(self):
+        ctx = copy.deepcopy(self.ctx)
+        for judgment in ctx.judgments:
+            if judgment["factor"] == "F2":
+                judgment.update({
+                    "kind": "paths", "score": None, "status": "new",
+                    "inputs": {
+                        "performance_leap": "pass", "paradigm_adaptation": "fail", "standard_capture": "pass",
+                        "top_rank": "no", "generation_gap": "no",
+                    },
+                })
+                judgment.pop("carried_from", None)
+
+        line = self.line(rc.method_lines(ctx, self.results), "규칙은 조건을 몇 개 통과했는지")
+        self.assertNotIn("기준선 점수", line)
+        self.assertNotIn("이번 실행에서는", line)
 
     def test_html_method_uses_the_same_dynamic_population(self):
         extended = copy.deepcopy(self.results)
