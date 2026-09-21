@@ -1,0 +1,579 @@
+{
+  "md_ranking_rows": 14,
+  "score_mismatches": [],
+  "counts": {
+    "companies": 14,
+    "observations": 241,
+    "triggers": 39
+  },
+  "statuses": {
+    "legacy_unverified": 212,
+    "not_disclosed": 24,
+    "parse_failed": 1,
+    "incompatible_basis": 4
+  },
+  "missing_period": 241,
+  "verified_fcf_without_period_accepted": true,
+  "trigger_keys": [
+    "impact_raw",
+    "note",
+    "status",
+    "title",
+    "trigger_id",
+    "why"
+  ],
+  "trigger_html_match": true,
+  "market_cap_differences": [
+    {
+      "company_id": "alphabet",
+      "observations": [
+        {
+          "observation_id": "alphabet.market_cap.d.v15",
+          "company_id": "alphabet",
+          "metric": "market_cap",
+          "value": 4173000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 4.173T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "alphabet.market_cap.v15",
+          "company_id": "alphabet",
+          "metric": "market_cap",
+          "value": 4120000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$4.12T",
+          "note": null
+        }
+      ],
+      "selected_id": "alphabet.market_cap.d.v15"
+    },
+    {
+      "company_id": "amazon",
+      "observations": [
+        {
+          "observation_id": "amazon.market_cap.d.v15",
+          "company_id": "amazon",
+          "metric": "market_cap",
+          "value": 2820000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 2.82T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "amazon.market_cap.v15",
+          "company_id": "amazon",
+          "metric": "market_cap",
+          "value": 2750000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$2.75T",
+          "note": null
+        }
+      ],
+      "selected_id": "amazon.market_cap.d.v15"
+    },
+    {
+      "company_id": "microsoft",
+      "observations": [
+        {
+          "observation_id": "microsoft.market_cap.d.v15",
+          "company_id": "microsoft",
+          "metric": "market_cap",
+          "value": 3600000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 3.6T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "microsoft.market_cap.v15",
+          "company_id": "microsoft",
+          "metric": "market_cap",
+          "value": 3690000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$3.69T",
+          "note": null
+        }
+      ],
+      "selected_id": "microsoft.market_cap.d.v15"
+    },
+    {
+      "company_id": "meta",
+      "observations": [
+        {
+          "observation_id": "meta.market_cap.d.v15",
+          "company_id": "meta",
+          "metric": "market_cap",
+          "value": 1470000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 1.47T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "meta.market_cap.v15",
+          "company_id": "meta",
+          "metric": "market_cap",
+          "value": 1510000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$1.51T",
+          "note": null
+        }
+      ],
+      "selected_id": "meta.market_cap.d.v15"
+    },
+    {
+      "company_id": "alibaba",
+      "observations": [
+        {
+          "observation_id": "alibaba.market_cap.d.v15",
+          "company_id": "alibaba",
+          "metric": "market_cap",
+          "value": 294000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 0.294T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "alibaba.market_cap.v15",
+          "company_id": "alibaba",
+          "metric": "market_cap",
+          "value": 270000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$270B",
+          "note": null
+        }
+      ],
+      "selected_id": "alibaba.market_cap.d.v15"
+    },
+    {
+      "company_id": "apple",
+      "observations": [
+        {
+          "observation_id": "apple.market_cap.d.v15",
+          "company_id": "apple",
+          "metric": "market_cap",
+          "value": 4430000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 4.43T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "apple.market_cap.v15",
+          "company_id": "apple",
+          "metric": "market_cap",
+          "value": 4740000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$4.74T",
+          "note": null
+        }
+      ],
+      "selected_id": "apple.market_cap.d.v15"
+    },
+    {
+      "company_id": "nvidia",
+      "observations": [
+        {
+          "observation_id": "nvidia.market_cap.d.v15",
+          "company_id": "nvidia",
+          "metric": "market_cap",
+          "value": 5450000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 5.45T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "nvidia.market_cap.v15",
+          "company_id": "nvidia",
+          "metric": "market_cap",
+          "value": 5420000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$5.42T",
+          "note": null
+        }
+      ],
+      "selected_id": "nvidia.market_cap.d.v15"
+    },
+    {
+      "company_id": "palantir",
+      "observations": [
+        {
+          "observation_id": "palantir.market_cap.d.v15",
+          "company_id": "palantir",
+          "metric": "market_cap",
+          "value": 418000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 0.418T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "palantir.market_cap.v15",
+          "company_id": "palantir",
+          "metric": "market_cap",
+          "value": 407000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$407B",
+          "note": null
+        }
+      ],
+      "selected_id": "palantir.market_cap.d.v15"
+    },
+    {
+      "company_id": "oracle",
+      "observations": [
+        {
+          "observation_id": "oracle.market_cap.d.v15",
+          "company_id": "oracle",
+          "metric": "market_cap",
+          "value": 444000000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "cap 0.444T",
+          "note": "D.cap (조 달러)"
+        },
+        {
+          "observation_id": "oracle.market_cap.v15",
+          "company_id": "oracle",
+          "metric": "market_cap",
+          "value": 443700000000.0,
+          "unit": "USD",
+          "as_of": "2026-09-02",
+          "kind": "actual",
+          "source_id": "SRC-v15-html",
+          "status": "legacy_unverified",
+          "basis": null,
+          "raw": "$443.7B",
+          "note": null
+        }
+      ],
+      "selected_id": "oracle.market_cap.d.v15"
+    }
+  ],
+  "incompatible_lookup": [
+    {
+      "id": "anthropic.offbalance_B.v15",
+      "preserved": 300000000000.0,
+      "usable": null
+    },
+    {
+      "id": "anthropic.contracted_revenue.v15",
+      "preserved": 65000000000.0,
+      "usable": null
+    },
+    {
+      "id": "openai.offbalance_B.v15",
+      "preserved": 338000000000.0,
+      "usable": null
+    },
+    {
+      "id": "openai.contracted_revenue.v15",
+      "preserved": 40000000000.0,
+      "usable": null
+    }
+  ],
+  "computed_boundary": {
+    "19.4": {
+      "flag": true,
+      "nearest_boundary": 20.0,
+      "distance_ratio": -0.030000000000000072,
+      "tolerance": 0.03
+    },
+    "89.0": {
+      "flag": true,
+      "nearest_boundary": 90.0,
+      "distance_ratio": -0.011111111111111112,
+      "tolerance": 0.03
+    },
+    "27.5": {
+      "flag": false,
+      "nearest_boundary": 29.0,
+      "distance_ratio": -0.05172413793103448,
+      "tolerance": 0.03
+    }
+  },
+  "parse_failed_registered": true,
+  "not_disclosed_values": [
+    {
+      "id": "spacex-xai.ttm_per.v15",
+      "raw": "적자",
+      "note": "적자"
+    },
+    {
+      "id": "spacex-xai.nonop_share.v15",
+      "raw": "적자",
+      "note": null
+    },
+    {
+      "id": "apple.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "nvidia.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "microsoft.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "alphabet.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "meta.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "tsmc.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "tesla.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "palantir.runway_years.v15",
+      "raw": "∞",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "anthropic.cash.v15",
+      "raw": "미공시",
+      "note": null
+    },
+    {
+      "id": "anthropic.fcf_ttm.v15",
+      "raw": "미공시",
+      "note": "비상장 FCF 미공시"
+    },
+    {
+      "id": "anthropic.runway_years.v15",
+      "raw": "판정 불가",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "anthropic.net_cash.v15",
+      "raw": "—",
+      "note": null
+    },
+    {
+      "id": "anthropic.debt_ebitda.v15",
+      "raw": "—",
+      "note": null
+    },
+    {
+      "id": "openai.cash.v15",
+      "raw": "미공시",
+      "note": null
+    },
+    {
+      "id": "openai.fcf_ttm.v15",
+      "raw": "미공시",
+      "note": "비상장 FCF 미공시"
+    },
+    {
+      "id": "openai.runway_years.v15",
+      "raw": "판정 불가",
+      "note": "원본 계산값(현금 ÷ 연 소진). FCF 양수는 계산 대상 아님"
+    },
+    {
+      "id": "openai.net_cash.v15",
+      "raw": "—",
+      "note": null
+    },
+    {
+      "id": "openai.debt_ebitda.v15",
+      "raw": "—",
+      "note": null
+    },
+    {
+      "id": "palantir.net_borrowing_ttm.v15",
+      "raw": "없음",
+      "note": "차환 제외 순증"
+    },
+    {
+      "id": "alibaba.offbalance_B.v15",
+      "raw": "미확인",
+      "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
+    },
+    {
+      "id": "alibaba.contracted_revenue.v15",
+      "raw": "—",
+      "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
+    },
+    {
+      "id": "spacex-xai.offbalance_B.v15",
+      "raw": "미확인",
+      "note": "규칙 v1.5 ⑨ 게이트 4 적용표"
+    }
+  ],
+  "sources": {
+    "schema": "scorecard.sources/1",
+    "run_id": "ai-scorecard-2026-09-baseline",
+    "items": [
+      {
+        "source_id": "SRC-v15-html",
+        "title": "AI기업_채점표_v1.5.html (D·VAL·EARN·FIN·BORR·TRIG)",
+        "publisher": "내부 기준선",
+        "url": null,
+        "accessed_at": "2026-09-08",
+        "sha256": "fa66076cbcd675d3f36a11ab2d4f80c3b2242ece84929dcc2765290ff9d71858",
+        "conflict_of_interest": "작성자 Claude=Anthropic (긴장 #4·#11)",
+        "note": "과거 기록"
+      },
+      {
+        "source_id": "SRC-v15-md",
+        "title": "AI기업_채점표_v1.5.md (순위표·원자료)",
+        "publisher": "내부 기준선",
+        "url": null,
+        "accessed_at": "2026-09-08",
+        "sha256": "d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30",
+        "conflict_of_interest": "작성자 Claude=Anthropic",
+        "note": "과거 기록"
+      },
+      {
+        "source_id": "SRC-v15-rule",
+        "title": "AI기업_채점규칙_v1.5.md (③ 사다리·별표 G·별표 I·⑨ 적용표·⑥ 비상장)",
+        "publisher": "내부 규칙",
+        "url": null,
+        "accessed_at": "2026-09-08",
+        "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+        "conflict_of_interest": null,
+        "note": "규칙 원문 판정표"
+      }
+    ]
+  },
+  "trigger_original_lines": [
+    "| **🆕 Meta 분기 FCF** | TTM +$41B라 게이트 2에서 끝나지만 **분기 +$0.78B(-91%)로 사실상 0** · 부외 $628B(매출 2.8배)는 자가 소비라 **대응 RPO가 없다** | **TTM FCF 마이너스 전환 시 게이트 3 진입 → 커버리지 0배 → ⑨-1→-2**(분기는 추세 수식어일 뿐 — 규칙 게이트 2) |",
+    "| **Menlo 2026년판** | 발행되어도 **이해상충으로 참고만** | — |"
+  ],
+  "meta_trigger": [
+    {
+      "trigger_id": "TRIG-013",
+      "title": "🆕 Meta 분기 FCF",
+      "why": "TTM +$41B라 게이트 2에서 끝나지만 분기 +$0.78B(-91%)로 사실상 0 · 부외 $628B(매출 2.8배)는 자가 소비라 대응 RPO가 없다",
+      "impact_raw": "분기 FCF 마이너스 전환 시 게이트 3 진입 → 커버리지 0배 → ⑨-1→-2",
+      "status": "legacy",
+      "note": "impact_raw 의 예상 점수는 저장값이 아니라 원문 문장(C-14). 사건 확인 후 현재 규칙으로 재계산"
+    }
+  ],
+  "changed_during_check": [],
+  "input_sha256": {
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scorecard\\baseline\\v1.5\\import-report.md": "3ac20e1050fcfe203895e525959cff30c06b3bda1d180f39a1f062fc9b3ed206",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scorecard\\baseline\\v1.5\\observations.json": "8f1b932850ba51e09c4da660fd9185c14012411b33d622fa34c66a203b2daa55",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scorecard\\baseline\\v1.5\\scores.json": "daa46f7b26e4ee3cc2bf6934d312ec5efc0b067a9a00ef811e9e153fbb1bcafb",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scorecard\\baseline\\v1.5\\triggers.json": "9784a48331021415f3837a4bf42921373a7c0234b9f3ccf30afaf2eabdaab57c",
+    "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AGENTS.md": "0da9f593f4bf8ae2c0bc422a7e39f651403cd7937ff689e7efe02de34dbc4e5a",
+    "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AI기업_채점규칙_v1.5.md": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
+    "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AI기업_채점자동화_구현계획.md": "b921372b7ee9a5d26b027c5e46dceabc62344957fe5ac49a15c6847dea1ece3e",
+    "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AI기업_채점표_HANDOVER.md": "3e5190c2cb4a4f8ebee2f72d4599929b79a5d4625b1d046c346627edf63b7cc1",
+    "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AI기업_채점표_v1.5.md": "d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30",
+    "E:\\sourcecode\\01_side_project\\stock-report-harness\\AI_company_analysis_factor\\AI기업_채점표_v1.5.html": "fa66076cbcd675d3f36a11ab2d4f80c3b2242ece84929dcc2765290ff9d71858",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\__init__.py": "ccc674ce0fbd8ed1e465addb6e1d7c6ac0809472304fdc58cf065efdb65bc0bf",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\aggregate.py": "4e769378154195e610f7149b2dabbe74ab853d2b225170001822968ebd8df95f",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\baseline_import.py": "ab23da4816bedb47577bb75c43130e5d280912f667043ce40b17c80b4ea37e4a",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\calc_f6.py": "a412036c73d05824afd370e9159308c6e8ee65530a2c6e84441403b8385ecfa6",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\calc_f9.py": "9ace100ed6b3410591143dfd9ff9ea9417374b53313c54ee1d12e5a99caceeb2",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\calc_qual.py": "a3a9a0e7e5e5a3e59a551a8407be881596fc4b137b42bf546ea9426c29b705c9",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\engine.py": "b171a9894ef439224d23ce5b2f30d31a39b8fd1d52718625f08e30ebd8c2e5fd",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\inputs.py": "d9a7136af28cfbb1eef140b645405fec0503c4ab8019d0efd74a347742b02694",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\render_csv.py": "378a38e782d252bf638a319b79a4602a75ef3fc2b426c776bb1da76635eddf78",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\render_html.py": "657957f30da9011edda8e8a3aeed4b510b0c7452bfeff4b42874f799d2adb063",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\render_md.py": "e7159b8cc387022e8f9f6944fb351b8201037709da20b7e49badfc9751d197f0",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\rules.py": "4eddf771370902a2ecf53e8c03854f08bdff3115ce5a69786c0337169ea52828",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\schema.py": "53cef1b1051bd92c7cb6e5f7eb463962ff32b0ecbec68cfe946ded50ac391de0",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\stages.py": "47e657f092ba9c58feead56018bda98098379e9b67b1bba1d671040caaef09e2",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scripts\\scorecard\\validate.py": "222daf9bec8a649fdfbca52f377276f2e1b3673904917bd2ac2df9625892d161",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scorecard\\rules\\v1.5.json": "d671f22d309b2826247b3fba3bafb0df4cb96df20ab28ed83e45bdd414a2c84d",
+    "C:\\Users\\noble\\orca\\workspaces\\stock-report-harness\\worker\\scorecard\\companies.json": "2bd6baf36ca1b3615cd90cfeabb732db0044a9d01475004b20f8728bb55086f5"
+  }
+}

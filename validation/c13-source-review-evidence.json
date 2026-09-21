@@ -1,0 +1,381 @@
+{
+  "reviewed_commit": "e4eef3707fead09098d0728db104a4ff2e6c13c7",
+  "unit_tests_output": "[Test 1 PASS] Valley 5종 통계 파싱 및 보조통계 결측 보존 확인\n[Test 2 PASS] 단일 원천 2분기 확보 시 결측 2건 및 채점 불가 판정 확인\n[Test 3 PASS] 단일 원천 4분기 확보 시 합산 및 채점 적격 판정 확인\n[Test 4 PASS] 비상장사 지표 검증 및 PER/NTM EPS 배제 확인\n",
+  "syntax_compile": "pass",
+  "files": [
+    "REPORT.md",
+    "evidence.json",
+    "verify_sources.py"
+  ],
+  "raw_snapshots_in_delivered_directory": [],
+  "cases": {
+    "null_quarter": {
+      "exception": "AttributeError",
+      "message": "'NoneType' object has no attribute 'get'"
+    },
+    "nonconsecutive_quarters": {
+      "expected_quarters": [
+        "2026 Q3",
+        "2027 Q1",
+        "2027 Q3",
+        "2028 Q1"
+      ],
+      "fulfilled_quarters": [
+        "2026 Q3",
+        "2027 Q1",
+        "2027 Q3",
+        "2028 Q1"
+      ],
+      "missing_quarters": [],
+      "fulfilled_count": 4,
+      "missing_count": 0,
+      "all_4q_fulfilled": true,
+      "stats_by_quarter": {
+        "2026 Q3": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2027 Q1": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2027 Q3": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2028 Q1": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        }
+      },
+      "mean_by_quarter": {
+        "2026 Q3": 1.0,
+        "2027 Q1": 1.0,
+        "2027 Q3": 1.0,
+        "2028 Q1": 1.0
+      },
+      "sum_4q_mean": 4.0,
+      "scoring_eligible": true,
+      "scoring_status": "eligible_for_f6_scoring"
+    },
+    "missing_basis_metadata": {
+      "expected_quarters": [
+        "2026 Q3",
+        "2026 Q4",
+        "2027 Q1",
+        "2027 Q2"
+      ],
+      "fulfilled_quarters": [
+        "2026 Q3",
+        "2026 Q4",
+        "2027 Q1",
+        "2027 Q2"
+      ],
+      "missing_quarters": [],
+      "fulfilled_count": 4,
+      "missing_count": 0,
+      "all_4q_fulfilled": true,
+      "stats_by_quarter": {
+        "2026 Q3": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2026 Q4": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2027 Q1": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2027 Q2": {
+          "mean": 1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        }
+      },
+      "mean_by_quarter": {
+        "2026 Q3": 1.0,
+        "2026 Q4": 1.0,
+        "2027 Q1": 1.0,
+        "2027 Q2": 1.0
+      },
+      "sum_4q_mean": 4.0,
+      "scoring_eligible": true,
+      "scoring_status": "eligible_for_f6_scoring"
+    },
+    "invalid_range": {
+      "mean": 5.0,
+      "median": 8.0,
+      "min": 7.0,
+      "max": 2.0,
+      "count": 0,
+      "has_mean": true,
+      "has_median": true,
+      "has_range": true,
+      "has_sample_count": true,
+      "auxiliary_missing": []
+    },
+    "nonpositive_values_preserved": {
+      "expected_quarters": [
+        "2026 Q3",
+        "2026 Q4",
+        "2027 Q1",
+        "2027 Q2"
+      ],
+      "fulfilled_quarters": [
+        "2026 Q3",
+        "2026 Q4",
+        "2027 Q1",
+        "2027 Q2"
+      ],
+      "missing_quarters": [],
+      "fulfilled_count": 4,
+      "missing_count": 0,
+      "all_4q_fulfilled": true,
+      "stats_by_quarter": {
+        "2026 Q3": {
+          "mean": -1.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2026 Q4": {
+          "mean": 0.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2027 Q1": {
+          "mean": 2.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        },
+        "2027 Q2": {
+          "mean": 3.0,
+          "median": null,
+          "min": null,
+          "max": null,
+          "count": null,
+          "has_mean": true,
+          "has_median": false,
+          "has_range": false,
+          "has_sample_count": false,
+          "auxiliary_missing": [
+            "median",
+            "min",
+            "max",
+            "count"
+          ]
+        }
+      },
+      "mean_by_quarter": {
+        "2026 Q3": -1.0,
+        "2026 Q4": 0.0,
+        "2027 Q1": 2.0,
+        "2027 Q2": 3.0
+      },
+      "sum_4q_mean": 4.0,
+      "scoring_eligible": true,
+      "scoring_status": "eligible_for_f6_scoring"
+    }
+  },
+  "non_direct_private_metric_sources": [
+    {
+      "company": "openai",
+      "metric": "actual_annual_revenue",
+      "source": "https://www.theinformation.com / Financial audit leaks"
+    },
+    {
+      "company": "openai",
+      "metric": "arr_annualized_revenue",
+      "source": "Bloomberg / Reuters / Internal metric leak"
+    },
+    {
+      "company": "openai",
+      "metric": "revenue_forecast",
+      "source": "The New York Times / Reuters reporting investor presentation"
+    },
+    {
+      "company": "openai",
+      "metric": "cumulative_funding",
+      "source": "Crunchbase / PitchBook / SEC Form D filings"
+    },
+    {
+      "company": "anthropic",
+      "metric": "post_money_valuation",
+      "source": "Reuters / Bloomberg / Series H investor disclosures"
+    },
+    {
+      "company": "anthropic",
+      "metric": "arr_annualized_revenue",
+      "source": "Reuters / The Information reporting investor updates"
+    },
+    {
+      "company": "anthropic",
+      "metric": "revenue_forecast",
+      "source": "IPO planning reports"
+    },
+    {
+      "company": "anthropic",
+      "metric": "cumulative_funding",
+      "source": "Crunchbase / SEC filings / Amazon 10-Q disclosures"
+    }
+  ],
+  "anthropic_revenue_forecast": {
+    "value": 2000.0,
+    "currency": "USD_B",
+    "definition": "Target valuation / long-term revenue run-rate for planned late 2026 IPO",
+    "as_of": "2026-09",
+    "status": "target",
+    "primary_source_url": "IPO planning reports",
+    "notes": "상장 추진 과정에서 제시된 목표치이며 확정 실적이 아님."
+  },
+  "before_hashes": {
+    "evidence.json": "91813d4b271363e2e31673d8b134b562d176a5a217ab0d473554d805a652910d",
+    "REPORT.md": "bf4f7e3fe9ffb39e01e29f2e56fdeb0315ea9b0d66d7faef5cc8f1d52d134894",
+    "verify_sources.py": "9e5f4329de9a81a9481df4af7e77c06ecd21194ea65711318dbe108f2e610e32"
+  },
+  "after_hashes": {
+    "evidence.json": "91813d4b271363e2e31673d8b134b562d176a5a217ab0d473554d805a652910d",
+    "REPORT.md": "bf4f7e3fe9ffb39e01e29f2e56fdeb0315ea9b0d66d7faef5cc8f1d52d134894",
+    "verify_sources.py": "9e5f4329de9a81a9481df4af7e77c06ecd21194ea65711318dbe108f2e610e32"
+  }
+}

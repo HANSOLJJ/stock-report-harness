@@ -1,0 +1,267 @@
+{
+  "reviewed_commit": "b301655",
+  "evidence_assertions_passed": 10,
+  "analysis_stdout": "R1 corrected analysis verified: 10 companies period_unknown/unverified",
+  "historical_comparison_stdout": "worker HEAD  start=96d88bc  end=c13a293  CHANGED (외부)\ngit status   start=['M .claude/settings.json', '?? .agents/', '?? .codex/', '?? package-lock.json']\n             end  =['M .claude/settings.json', '?? .agents/', '?? .codex/', '?? package-lock.json']\n\nref                                            sha256[:16] start  end                판정\ndocs/scorecard/design-guideline.md             d30b69dc88cc2b64   d30b69dc88cc2b64   UNCHANGED\ndocs/scorecard/open-items.md                   a432387f61be667a   a432387f61be667a   UNCHANGED\nscorecard/baseline/v1.5/observations.json      9a58b5bea2a51d79   9a58b5bea2a51d79   UNCHANGED\nscorecard/baseline/v1.5/scores.json            daa46f7b26e4ee3c   daa46f7b26e4ee3c   UNCHANGED\nscorecard/companies.json                       2bd6baf36ca1b361   2bd6baf36ca1b361   UNCHANGED\nscorecard/rules/v1.5.json                      9231b3a05ba5c766   9231b3a05ba5c766   UNCHANGED\nscripts/scorecard/baseline_import.py           9f612c275260dc4f   9f612c275260dc4f   UNCHANGED\nscripts/scorecard/calc_f6.py                   2807a989b15f5fd2   2807a989b15f5fd2   UNCHANGED\n\n참조 파일 변경: 0건 없음\n\nworker/AGENTS.md 현재 sha256[:16] = 5ec8796ad6e89f67\n(QWEN-CLI-DOC-02 시작 시점 기록값 = 6afb005d0f42a19e → 변경됨)\n\ngit diff --name-status 96d88bc c13a293:\nM\tAGENTS.md\n\ngit show --stat c13a293:\nc13a293 docs: Orca 추가 작업 요청 시 터미널 실행 안내 의무화\n AGENTS.md | 9 +++++++++\n 1 file changed, 9 insertions(+)\n\n저장: integrity-verdict.json\n\n결론: HEAD 는 외부 승인 커밋으로 96d88bc → c13a293 이동했으나, 그 커밋은 AGENTS.md 9줄 추가뿐이고 내가 근거로 쓴 참조 파일 8종은 전부 해시 불변이다. 따라서 NTM 판정의 근거는 영향받지 않았다.",
+  "current_worker_head": "9a97a784fe4a4d114b98b05a3ac86d50199e87c8",
+  "current_worker_refs": [
+    {
+      "path": "docs/scorecard/design-guideline.md",
+      "historical_sha256": "d30b69dc88cc2b64fa8b2803dd4e51a8fbe3d099b246fb31b550e96027a0e8a3",
+      "current_sha256": "d30b69dc88cc2b64fa8b2803dd4e51a8fbe3d099b246fb31b550e96027a0e8a3",
+      "unchanged": true
+    },
+    {
+      "path": "docs/scorecard/open-items.md",
+      "historical_sha256": "a432387f61be667a767e15061a765f95f2d82e578840e88015c94534a25b988c",
+      "current_sha256": "14993f7ea4c682db28c654591a638fe0ccbcdc506899524a3a5a5f6c6ff3f595",
+      "unchanged": false
+    },
+    {
+      "path": "scripts/scorecard/baseline_import.py",
+      "historical_sha256": "9f612c275260dc4f9e1f7096f47c4f0b295d9d3165d596045be6fe493ad5bf4a",
+      "current_sha256": "9f612c275260dc4f9e1f7096f47c4f0b295d9d3165d596045be6fe493ad5bf4a",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/scorecard/calc_f6.py",
+      "historical_sha256": "2807a989b15f5fd2801e48c2d1b2ce623531e9b6c79fae3a5cf6f5d329948731",
+      "current_sha256": "2807a989b15f5fd2801e48c2d1b2ce623531e9b6c79fae3a5cf6f5d329948731",
+      "unchanged": true
+    },
+    {
+      "path": "scorecard/companies.json",
+      "historical_sha256": "2bd6baf36ca1b3615cd90cfeabb732db0044a9d01475004b20f8728bb55086f5",
+      "current_sha256": "2bd6baf36ca1b3615cd90cfeabb732db0044a9d01475004b20f8728bb55086f5",
+      "unchanged": true
+    },
+    {
+      "path": "scorecard/baseline/v1.5/observations.json",
+      "historical_sha256": "9a58b5bea2a51d79d0eb3a51ea768b3ef29c1fe59afee0f92d26bafaac2bb1bf",
+      "current_sha256": "9a58b5bea2a51d79d0eb3a51ea768b3ef29c1fe59afee0f92d26bafaac2bb1bf",
+      "unchanged": true
+    },
+    {
+      "path": "scorecard/baseline/v1.5/scores.json",
+      "historical_sha256": "daa46f7b26e4ee3cc2bf6934d312ec5efc0b067a9a00ef811e9e153fbb1bcafb",
+      "current_sha256": "daa46f7b26e4ee3cc2bf6934d312ec5efc0b067a9a00ef811e9e153fbb1bcafb",
+      "unchanged": true
+    },
+    {
+      "path": "scorecard/rules/v1.5.json",
+      "historical_sha256": "9231b3a05ba5c7661dbc91190c66bcf73ab3617643e274698a2690c4b16de6ba",
+      "current_sha256": "9231b3a05ba5c7661dbc91190c66bcf73ab3617643e274698a2690c4b16de6ba",
+      "unchanged": true
+    }
+  ],
+  "quarter_count_discrepancies": [
+    {
+      "company": "meta",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "nvidia",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "alphabet",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "microsoft",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "amazon",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "apple",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "oracle",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "palantir",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "tesla",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    },
+    {
+      "company": "spacex-xai",
+      "yahoo_observed": 2,
+      "corrected_obtained": 0
+    }
+  ],
+  "snapshots": [
+    {
+      "file": "meta-forecast-raw.html",
+      "sha256_current": "4d826ef354739f2bdf9c60615da4035e75b67229f0aebd3a5904d9936bf82951",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-alphabet-forecast.html",
+      "sha256_current": "a6fd5cdf3bbeaaf7ea3689470bb471511e603338f79f4ec12f17c1b3cd4c9d1e",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-alphabet-overview.html",
+      "sha256_current": "22c1d2b939b0286df738bc3185f8a4eab29684673445b1c9af14640ccf791d14",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-amazon-forecast.html",
+      "sha256_current": "df0e05da2ce8292be25219aae1eb5d424ee05590618c5d1b060aac0a5dc463e0",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-amazon-overview.html",
+      "sha256_current": "5061c88e0d84ad3f0d99317edd3cf7e90810c0511fc45aaa0682b64c314d80bd",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-apple-forecast.html",
+      "sha256_current": "8510cf9a6ab516717d1936af90d03ddd47cb23aec8103343fc6dec5d8c9f97ee",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-apple-overview.html",
+      "sha256_current": "378d9ded145326135e481937114d1ccdfde8c09d7c1c42ab48a6a9976fc6d10a",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-meta-forecast.html",
+      "sha256_current": "1d13b328d3e898ff15adf8286b73f5cd8400d7d26c57f87df26bd8690d016680",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-meta-overview.html",
+      "sha256_current": "9535aa2e2d25f26498063c4c25edb28d809b3eb02002b8e00e071d8949ac1d0c",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-microsoft-forecast.html",
+      "sha256_current": "e79a6db3224fe7da44aa655b14eb0996a1caa3ec3780b4df1db051dc42ee2de4",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-microsoft-overview.html",
+      "sha256_current": "1438675b3a2c2d238790658c296cbf284b3fcae2794584e6a63c0759f0b617a3",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-nvidia-forecast.html",
+      "sha256_current": "993a32b3255fa2ab470221542f6a4e3dbab19ed6ce5e4f0eadefd2c523e1fcd3",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-nvidia-overview.html",
+      "sha256_current": "a09735c8c914ae000f679a41b4896e3217714aebb3a60999eee8dacfb44af02b",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-oracle-forecast.html",
+      "sha256_current": "8ab361ed244feaa0fea361b63fa86bb5c56797fac8c2fda634888d4f385b2ecf",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-oracle-overview.html",
+      "sha256_current": "c7a4130f437df5f069a3aba9f7280a28b9b51e3a05cf9319623fa663f17167ac",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-palantir-forecast.html",
+      "sha256_current": "ff2bf6232fa007cbf58061a986e1a1be48a527f6f57c7073114f429de34165f8",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-palantir-overview.html",
+      "sha256_current": "4f4dacacaa411a3574b2f48f191625f16851c2204d4e6d5f83f8f2ce2a8dce1b",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-spacex-xai-forecast.html",
+      "sha256_current": "175310de008d4fca0e24543241b0b136da5bc60a7a0cf3a52b89b1aa4fab1b3c",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-spacex-xai-overview.html",
+      "sha256_current": "5a0b4a4d84954654583fa4a6fd35ada06b815f4bec571a95cebb815491ec4d5b",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-tesla-forecast.html",
+      "sha256_current": "26bba02b3bb69b82547d6eef22e477e420da6885e1e61f6e07048a22140b191b",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-tesla-overview.html",
+      "sha256_current": "321fb4075b44af70956ac8b7b9e4b8494f9109f942f0c3d3ace32a95448c33d6",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-alphabet.html",
+      "sha256_current": "2ed55e6a1b6ba213203a77ccf5f82783453ae87442003391c3428f63e362aadd",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-amazon.html",
+      "sha256_current": "674b2c889e3ff3c1b8790f2fd29ada6cf55481c3e1f5dbec268f6538e15d8f02",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-apple.html",
+      "sha256_current": "c3e3091a15f2732434af7c303c05e278d9fb84bfe4540f282f85c0215e0b0fec",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-meta.html",
+      "sha256_current": "9b2c7d597775e69481666b95920f06c7a5af44d165a9af53f6dba329b920d7b7",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-microsoft.html",
+      "sha256_current": "17b501ebb01a486752bd201c5933171705b99fc52a97209a936b089018996ab7",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-nvidia.html",
+      "sha256_current": "895368628808bb2fd40ce34be470b2d65aba615855a813258c2ca565f7666dbd",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-oracle.html",
+      "sha256_current": "d12ee4286aec2b0fd49adb327b6b3341c31bac60d34eef4a3a319e59af5a698e",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-palantir.html",
+      "sha256_current": "86d0584c1ba87828a207a16be879de3a6c982fd7fa346ad8bb9bff4f690f22df",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-spacex-xai.html",
+      "sha256_current": "cbc5b16faca2d9bc9d4d8d551e03506f0674ee466c85d0196948cfdb6bd35f6f",
+      "git_content_matches_b301655": true
+    },
+    {
+      "file": "raw-yahoo-tesla.html",
+      "sha256_current": "02f3934f8a07c21d1fa23452c8bb1d9effce5ef8477cafb2624ff19af820eb46",
+      "git_content_matches_b301655": true
+    }
+  ],
+  "snapshot_limit": "Commit comparison verifies current Git content, not bytes before the first commit."
+}
