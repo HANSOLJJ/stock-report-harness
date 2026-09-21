@@ -1,0 +1,251 @@
+{
+ "meta": {
+  "fy_labels": [
+   "2021",
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": null,
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 30,
+  "upgrade_count": 80,
+  "nongaap": true
+ },
+ "nvidia": {
+  "fy_labels": [
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028",
+   "2029"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": "<td class=\"border",
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 26,
+  "upgrade_count": 80,
+  "nongaap": true
+ },
+ "alphabet": {
+  "fy_labels": [
+   "2021",
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": null,
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 28,
+  "upgrade_count": 80,
+  "nongaap": true
+ },
+ "microsoft": {
+  "fy_labels": [
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028",
+   "2029"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": "<td class=\"border",
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 26,
+  "upgrade_count": 80,
+  "nongaap": true
+ },
+ "amazon": {
+  "fy_labels": [
+   "2021",
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": null,
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 28,
+  "upgrade_count": 72,
+  "nongaap": true
+ },
+ "apple": {
+  "fy_labels": [
+   "2021",
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": null,
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 26,
+  "upgrade_count": 80,
+  "nongaap": true
+ },
+ "oracle": {
+  "fy_labels": [
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028",
+   "2029"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": "<td class=\"border",
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 26,
+  "upgrade_count": 80,
+  "nongaap": true
+ },
+ "palantir": {
+  "fy_labels": [
+   "2021",
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": null,
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 30,
+  "upgrade_count": 72,
+  "nongaap": true
+ },
+ "tesla": {
+  "fy_labels": [
+   "2021",
+   "2022",
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "-",
+   "<td class=\"border"
+  ],
+  "fy2027_eps_cell": null,
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 26,
+  "upgrade_count": 72,
+  "nongaap": true
+ },
+ "spacex-xai": {
+  "fy_labels": [
+   "2023",
+   "2024",
+   "2025",
+   "2026",
+   "2027",
+   "2028"
+  ],
+  "eps_row": [
+   "/div>",
+   "-",
+   "-",
+   "-",
+   "0.09",
+   "Upgrade",
+   "<path fill-rule=\"evenodd\" d=\"M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2"
+  ],
+  "fy2027_eps_cell": "0.09",
+  "quarter_labels_Q": 0,
+  "quarter_labels_mon": 12,
+  "upgrade_count": 65,
+  "nongaap": true
+ }
+}

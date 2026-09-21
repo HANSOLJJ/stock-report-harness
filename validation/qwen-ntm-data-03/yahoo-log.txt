@@ -1,0 +1,24 @@
+meta         st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2026)', 'Next Year (2027)'] avg=['6.53', '8.22', '31.37', '33.95'] analysts=['47', '45', '56', '58'] err=True
+nvidia       st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Oct 2026)', 'Next Qtr. (Jan 2027)', 'Current Year (2027)', 'Next Year (2028)'] avg=['2.47', '2.75', '9.31', '15.46'] analysts=['41', '38', '48', '56'] err=True
+alphabet     st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2026)', 'Next Year (2027)'] avg=['3.01', '3.33', '20.6', '14.86'] analysts=['38', '35', '51', '51'] err=True
+microsoft    st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2027)', 'Next Year (2028)'] avg=['4.72', '4.83', '19.75', '23.57'] analysts=['38', '37', '49', '51'] err=True
+amazon       st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2026)', 'Next Year (2027)'] avg=['1.95', '2.44', '12.57', '10.49'] analysts=['48', '45', '56', '60'] err=True
+apple        st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2026)', 'Next Year (2027)'] avg=['1.98', '2.91', '8.81', '9.57'] analysts=['27', '19', '36', '38'] err=True
+oracle       st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Aug 2026)', 'Next Qtr. (Nov 2026)', 'Current Year (2027)', 'Next Year (2028)'] avg=['1.74', '1.89', '8.06', '10.97'] analysts=['31', '30', '42', '39'] err=True
+palantir     st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2026)', 'Next Year (2027)'] avg=['0.41', '0.46', '1.61', '2.33'] analysts=['23', '23', '28', '29'] err=True
+tesla        st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2026)', 'Next Year (2027)'] avg=['0.45', '0.49', '1.77', '2.16'] analysts=['28', '28', '45', '46'] err=True
+spacex-xai   st=200   fwdQ=2 fwdY=2 cols=['Current Qtr. (Sep 2026)', 'Next Qtr. (Dec 2026)', 'Current Year (2026)', 'Next Year (2027)'] avg=['0.14', '0.44', '0.12', '1.78'] analysts=['11', '12', '17', '17'] err=True
+
+저장: evidence-yahoo.json
+
+=== 분기 기간 라벨(회계연도 판별) ===
+  meta         quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2026', '2027', '2026', '2027'] currency=Currency in USD
+  nvidia       quarters=['Oct 2026', 'Jan 2027', 'Oct 2026', 'Jan 2027'] years=['2027', '2028', '2027', '2028'] currency=Currency in USD
+  alphabet     quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2026', '2027', '2026', '2027'] currency=Currency in USD
+  microsoft    quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2027', '2028', '2027', '2028'] currency=Currency in USD
+  amazon       quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2026', '2027', '2026', '2027'] currency=Currency in USD
+  apple        quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2026', '2027', '2026', '2027'] currency=Currency in USD
+  oracle       quarters=['Aug 2026', 'Nov 2026', 'Aug 2026', 'Nov 2026'] years=['2027', '2028', '2027', '2028'] currency=Currency in USD
+  palantir     quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2026', '2027', '2026', '2027'] currency=Currency in USD
+  tesla        quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2026', '2027', '2026', '2027'] currency=Currency in USD
+  spacex-xai   quarters=['Sep 2026', 'Dec 2026', 'Sep 2026', 'Dec 2026'] years=['2026', '2027', '2026', '2027'] currency=Currency in USD

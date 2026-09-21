@@ -1,0 +1,12 @@
+[meta] price=None fwdPE=19.06 epsTTM=26.54 | epsThisYr=31.16 epsNextYr=34.96 | Q라벨=0/0 Upgrade=80
+[nvidia] price=None fwdPE=19.1 epsTTM=7.91 | epsThisYr=9.31 epsNextYr=15.52 | Q라벨=0/0 Upgrade=80
+[alphabet] price=None fwdPE=25.39 epsTTM=19.93 | epsThisYr=20.6 epsNextYr=14.85 | Q라벨=0/0 Upgrade=80
+[microsoft] price=None fwdPE=25.3 epsTTM=17.95 | epsThisYr=19.75 epsNextYr=23.57 | Q라벨=0/0 Upgrade=80
+[amazon] price=None fwdPE=27.91 epsTTM=12.44 | epsThisYr=12.55 epsNextYr=10.4 | Q라벨=0/0 Upgrade=72
+[apple] price=None fwdPE=34.73 epsTTM=8.72 | epsThisYr=8.82 epsNextYr=9.57 | Q라벨=0/0 Upgrade=80
+[oracle] price=None fwdPE=19.69 epsTTM=5.83 | epsThisYr=8.06 epsNextYr=10.97 | Q라벨=0/0 Upgrade=80
+[palantir] price=None fwdPE=91.59 epsTTM=1.17 | epsThisYr=1.61 epsNextYr=2.33 | Q라벨=0/0 Upgrade=72
+[tesla] price=None fwdPE=186.01 epsTTM=1.08 | epsThisYr=1.77 epsNextYr=2.16 | Q라벨=0/0 Upgrade=72
+[spacex-xai] price=None fwdPE=119.47 epsTTM=-2.27 | epsThisYr=0.09 epsNextYr=1.6 | Q라벨=0/0 Upgrade=65
+
+저장: C:\Users\noble\orca\workspaces\stock-report-harness\scarpper\validation\qwen-ntm-data-03\evidence.json
