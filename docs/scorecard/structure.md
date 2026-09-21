@@ -33,7 +33,7 @@
 |---|---|---|
 | 관측 | observations.json items | observation_id, company_id, metric(카탈로그 `METRICS`), value, unit, as_of, kind, source_id, status(verified / legacy_unverified / not_applicable / not_disclosed / collection_failed / source_conflict / incompatible_basis / parse_failed), basis, raw, note |
 | 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs), score, inputs, evidence(비어 있으면 안 됨), reviewer, reviewed_at, status(new/carried), carried_from |
-| 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions |
+| 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
 | 자료 확보 현황 | data_availability.json (선택) | schema, surveyed_at, scope, required_quarters, companies_with_full_quarters, headline, score_effect, not_re_surveyed, collection_note, materials[], companies[{company_id, quarter_ends, secured_quarters, missing, survey}], surveys{}, sources[], cautions[], references[] |
@@ -92,6 +92,11 @@ draft ──► drafts/<slug>.md (results_hash 결속)
 review-template ──► reviews/<slug>.md (4 영역 + Q01~Q23, status: needs_fix) → 리뷰어가 채움 → status: pass
 approve --by <name> ──► approval.json (rules/observations/judgments/run/results/draft 해시 결합) — 사용자 행위
 build_report.py ──► 승인 해시 == 현재 해시 검증 → output/<slug>.html → history.csv append(중복 방지) → 사후 검증
+
+[기업 추가 갈래]
+add-company ──► scorecard/companies.json 등록
+init --from-run ──► 이전 실행 계승 + plan + runs 생성 (continued_from 기록)
+research(신규만) ──► diff (1층: 기존 기업 불변 검증) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► approve ──► build
 ```
 
 상태 이름: 자료 부족 `pending_data`, 판단 부족 `needs_judgment`, 규칙 미결 `needs_rule_decision`, 승인 필요 `awaiting_user`(빌더 메시지), 검토 미완 `needs_fix`(리뷰 frontmatter). 해시가 하나라도 바뀌면 검증기가 리뷰·승인을 무효로 판정한다(T-14). 같은 승인본 재빌드는 history.csv 에 행을 추가하지 않는다(T-15). 사전 검증 실패 시 HTML 을 쓰지 않으므로 최신 MD/HTML/CSV 가 갈라지지 않는다(T-16).
@@ -111,7 +116,7 @@ HTML 검증(`scorecard.validate._validate_html`): generator 메타 `stock-report
 ## 7. 훅·명령·스킬
 
 - 훅: `enforce-plan.sh`(scorecard 이미지 면제, review pass 는 유지), `enforce-citations.sh`(scorecard draft 건너뜀). 핵심 통제는 훅이 아니라 `scorecard_cli`·검증기·빌더가 직접 수행한다(설계 지침 4.3).
-- 명령: `/score-plan`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal` → `.claude/skills/score-*/SKILL.md`.
+- 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal` → `.claude/skills/score-*/SKILL.md`.
 - Windows: `python` 실행 파일로 동작하며 `python3` 를 가정하지 않는다. 훅은 Git Bash + python3 별칭 환경에서 동작한다.
 
 ## 8. 회귀·수용 기준 매핑
