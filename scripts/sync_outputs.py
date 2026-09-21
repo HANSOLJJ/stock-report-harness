@@ -12,6 +12,7 @@
 """
 import argparse
 import hashlib
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -20,19 +21,37 @@ SRC = Path("C:/Users/noble/orca/workspaces/stock-report-harness/worker")
 DST = Path("E:/sourcecode/01_side_project/stock-report-harness")
 DIRS = ("output", "plan", "drafts")
 
-# 원본에서 알아보기 쉽도록 이름을 바꿔 두는 산출물.
+# 원본에서 알아보기 쉽도록 짧은 이름을 하나 더 붙인다. 승인된 실행 가운데
+# 가장 최근 것에 붙으므로 새 실행을 승인해도 이 목록을 고칠 일이 없다.
+#
 # 빌드가 내는 이름은 실행 슬러그에 묶여 있어 그대로 두어야 한다 —
 # `artifact_paths(slug)` 가 plan·research·draft·review·html 을 한 슬러그로 엮고
 # 계약 검증기가 그 경로들을 대조하기 때문이다. 그래서 복사할 때만 이름을 바꾼다.
-# 승인본이 바뀌면 왼쪽 값을 새 슬러그로 고치면 된다.
-ALIASES = {
-    "output/ai-scorecard-2026-09-obsreg.html": "output/ai-scoreboard.html",
-    "output/ai-scorecard-2026-09-obsreg-audit.md": "output/ai-scoreboard-audit.md",
-}
+ALIAS_SUFFIXES = {".html": "ai-scorecard.html", "-audit.md": "ai-scorecard-audit.md"}
 
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def latest_approved(root):
+    """승인된 실행 가운데 승인일이 가장 늦은 것의 슬러그를 돌려준다. 없으면 None."""
+    best = None
+    for path in sorted(root.glob("scorecard/runs/*/approval.json")):
+        try:
+            approved_at = json.loads(path.read_text(encoding="utf-8")).get("approved_at")
+        except (OSError, ValueError):
+            continue
+        if approved_at and (best is None or approved_at > best[0]):
+            best = (approved_at, path.parent.name)
+    return best[1] if best else None
+
+
+def aliases_for(slug):
+    """최신 승인본의 산출물에 붙일 짧은 이름. 슬러그가 없으면 빈 표를 돌려준다."""
+    if not slug:
+        return {}
+    return {f"output/{slug}{suffix}": f"output/{name}" for suffix, name in ALIAS_SUFFIXES.items()}
 
 
 def main():
@@ -47,6 +66,11 @@ def main():
     if not args.dst.is_dir():
         sys.exit(f"대상 저장소가 없습니다: {args.dst}")
 
+    slug = latest_approved(args.src)
+    aliases = aliases_for(slug)
+    if slug:
+        print(f"최신 승인본 {slug} 에 짧은 이름을 함께 붙입니다." + chr(10))
+
     added = changed = same = 0
     for name in DIRS:
         root = args.src / name
@@ -54,7 +78,7 @@ def main():
             continue
         for src_file in sorted(p for p in root.rglob("*") if p.is_file()):
             rel = src_file.relative_to(args.src)
-            alias = ALIASES.get(rel.as_posix())
+            alias = aliases.get(rel.as_posix())
             dst_file = args.dst / (alias if alias else rel.as_posix())
             if not dst_file.exists():
                 mark, added = "신규", added + 1
