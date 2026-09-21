@@ -38,7 +38,8 @@ plan → research → draft → image → review → build
 
 5. **다음 경우에만 이 턴을 종료한다:**
    - 최종 build가 성공해 `output/<slug>.html`이 생성되고 프리뷰 URL을 보고할 때
-   - 가격 데이터 조회 불가, 외부 도구 부재 등 실제 `blocked` 조건이 발생했을 때
+   <!-- 2026-09-07 hero 선택 사항 변경 전: - 가격 데이터 조회 불가, 외부 도구 부재 등 실제 `blocked` 조건이 발생했을 때 -->
+   - 가격 데이터 조회 불가 등 실제 `blocked` 조건이 발생했을 때 (이미지 생성 불가는 `blocked`가 아니다. hero 이미지는 선택 사항이므로 hero 없이 계속 진행한다)
    - review/fix 루프가 최대 3회에 도달했을 때
 
 6. **단계 사이에 텍스트를 출력하지 않는다.**
@@ -78,12 +79,14 @@ plan → research → draft → image → review → build
 2. `/stock-image` 스킬 계약에 따라 Codex CLI를 열어 `imagegen` skill로 히어로 이미지 3장을 생성한다.
    - 프롬프트 3개 → PNG 3장 → 스코어링 → 1장 선택
    - `output/assets/<slug>-selected-image.json` 생성
-3. Codex CLI 또는 이미지 생성 도구가 없으면 프롬프트와 blocked 매니페스트만 남기고 `blocked`로 보고한다.
+<!-- 2026-09-07 hero 선택 사항 변경 전: 3. Codex CLI 또는 이미지 생성 도구가 없으면 프롬프트와 blocked 매니페스트만 남기고 `blocked`로 보고한다. -->
+3. Codex CLI 또는 이미지 생성 도구가 없으면 래퍼가 프롬프트 3개와 `status: blocked` 매니페스트만 남긴다. hero 이미지는 선택 사항이므로 이 경우에도 멈추지 않고 hero 없이 5단계로 진행하며, 완료 보고에 이미지 미생성 사유를 포함한다.
 4. **멈추지 않고 즉시 5단계로 진행한다.**
 
 ### 5단계: 리뷰
 
-1. plan, research, draft, selected image가 모두 존재하는지 확인한다.
+<!-- 2026-09-07 hero 선택 사항 변경 전: 1. plan, research, draft, selected image가 모두 존재하는지 확인한다. -->
+1. plan, research, draft가 모두 존재하는지 확인한다. selected image는 있으면 함께 검토한다.
 2. `/stock-review` 스킬 계약에 따라 4-way 리뷰를 실행한다.
    - fact-checker, report-designer, content-editor, codex-independent
 3. `reviews/<slug>.md`에 결과를 기록한다.
@@ -95,7 +98,7 @@ plan → research → draft → image → review → build
 
 1. review `status: pass`인지 확인한다.
 2. `/stock-build` 스킬 계약에 따라 `output/<slug>.html`을 생성한다.
-   - yfinance 실데이터 차트, 히어로 이미지 삽입, 인라인 마커 제거, footer 면책 문구
+   - yfinance 실데이터 차트, 히어로 이미지 삽입(선택된 이미지가 있을 때), 인라인 마커 제거, footer 면책 문구
 3. 로컬 프리뷰 서버를 시작하고 URL을 보고한다.
 4. **이제 완료 보고를 출력하고 턴을 종료한다.**
 
@@ -115,7 +118,7 @@ plan → research → draft → image → review → build
 ## 완료 보고
 
 최종 build 성공 후 단 한 번만 출력한다:
-- 생성된 전체 산출물 목록 (plan, research, draft, images, review, html)
+- 생성된 전체 산출물 목록 (plan, research, draft, images 또는 이미지 미생성 사유, review, html)
 - 최종 HTML 경로: `output/<slug>.html`
 - 프리뷰 URL
 - 파이프라인 중 발생한 이슈 요약 (있는 경우)
