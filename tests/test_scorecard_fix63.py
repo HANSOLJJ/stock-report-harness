@@ -142,9 +142,9 @@ class Fix63Test(unittest.TestCase):
         self.assertIn("점수 영향이 0", note)
         # 초안까지 고친 사실이 흘러간다. 2026-09-17 FIX-67 로 표현이 바뀌었고 사실은 그대로다 —
         # 손실이 얕아도 최저점이 된다는 것이 `순서가 결과를 가른다` 와 같은 말이다.
-        line = next(x for x in rc.method_lines(self.ctx) if "손실이 얕아도" in x)
+        line = next(x for x in rc.method_lines(self.ctx, self.results) if "손실이 얕아도" in x)
         self.assertIn("최저점", line)
-        self.assertFalse(any("두 경로가 만나도 결과는 같다" in x for x in rc.method_lines(self.ctx)))
+        self.assertFalse(any("두 경로가 만나도 결과는 같다" in x for x in rc.method_lines(self.ctx, self.results)))
         self.assertIn(line if line.startswith("  ") else f"- {line}", self.md)
 
     def test_no_new_pending_decision_and_why(self):

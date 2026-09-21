@@ -1134,7 +1134,7 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     # 2026-09-17 FIX-67: `자동화` 는 `manual` 을 자동화라고 부르게 만드는 머리글이었다. 그 칸이 말하는 것은
     # **점수를 만드는 방식**이다. 값도 영어 그대로 찍지 않고 색인 항목으로 잇는다.
     # 2026-09-17 FIX-75: 표의 각 줄에서 그 항목 카드로 건너뛴다.
-    sections = rc.method_sections(ctx)
+    sections = rc.method_sections(ctx, results)
     judged = {fid for fid in FACTOR_IDS if fid in rc.judgment_roles(ctx)
               and not (fid == "F6" and ctx.rules.f6_mode == "parameters")}
     # 2026-09-17 FIX-76 S3: 방식·범위·사람 판단 여부가 표와 카드 머리에 두 번, 카드 머리에서만 세 번
@@ -1325,13 +1325,13 @@ def _mode_cell(mode: str) -> str:
             f'<span class="tname">{esc(name)}</span></a>')
 
 
-def _gate_docs(ctx: Any) -> list[tuple[str, str, str]]:
+def _gate_docs(ctx: Any, results: dict[str, Any]) -> list[tuple[str, str, str]]:
     """관문 넷의 번호·이름·설명.
 
     **규칙 파일에는 게이트 이름 키가 없다.** 이름은 `render_common.F9_GATE_LABELS` 가 들고 있고, 설명은
     ⑨ 방법 문장의 해당 관문 줄에서 읽는다(문장을 여기서 새로 쓰지 않는다).
     """
-    lines = rc.method_lines(ctx)
+    lines = rc.method_lines(ctx, results)
     out = []
     for code, name in rc.F9_GATE_LABELS.items():
         hit = next((x for x in lines if f"관문은 {name}" in x), "")
@@ -1386,7 +1386,7 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
         params.append((rc.F6_P4_LABEL, p4["label"],
                        f"{p4.get('question', '')} — 낱개 항목이 아니라 ⑥ 소계를 한 칸 내리는 자리다", "", "P4"))
     gates = [(name, f"{i+1}번째 관문", note, "", code)
-             for i, (code, name, note) in enumerate(_gate_docs(ctx))]
+             for i, (code, name, note) in enumerate(_gate_docs(ctx, results))]
     statuses = [(k, v, d) for k, v, d in [
         ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다. 관측에서 계산한 칸과 사람이 "
          "다시 매긴 칸이 여기 든다 — 어느 쪽인지는 **근거** 칸과 근거 머리줄이 말한다"),

@@ -93,8 +93,8 @@ class Fix66Test(unittest.TestCase):
         f9 = RULES.payload["policies"]["f9"]
         self.assertEqual([k for k in f9 if re.fullmatch(r"g[1-4]_(label|name|title)", k)], [])
         # 2026-09-17 FIX-67: 이름은 render_common.F9_GATE_LABELS 가 들고, 설명은 관문 줄에서 읽는다.
-        lines = rc.method_lines(self.ctx)
-        docs = rh._gate_docs(self.ctx)
+        lines = rc.method_lines(self.ctx, self.results)
+        docs = rh._gate_docs(self.ctx, self.results)
         self.assertEqual([d[0] for d in docs], ["G1", "G2", "G3", "G4"])
         self.assertEqual([d[1] for d in docs], list(rc.F9_GATE_LABELS.values()))
         for code, name, note in docs:

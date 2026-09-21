@@ -28,7 +28,7 @@ class Fix74Test(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.ctx = load_context(SLUG)
         cls.results = json.loads((RUN_DIR / "results.json").read_text(encoding="utf-8"))
-        cls.lines = rc.method_lines(cls.ctx)
+        cls.lines = rc.method_lines(cls.ctx, cls.results)
         cls.html = HTML.read_text(encoding="utf-8")
 
     def line(self, needle: str) -> str:
@@ -36,7 +36,7 @@ class Fix74Test(unittest.TestCase):
 
     def sec(self, fid: str) -> str:
         """2026-09-17 FIX-75: 문장이 항목별로 갈려 이름 접두사가 빠졌다. 절에서 찾는다."""
-        return " ".join(next(ls for f, ls in rc.method_sections(self.ctx) if f == fid))
+        return " ".join(next(ls for f, ls in rc.method_sections(self.ctx, self.results) if f == fid))
 
     # ---------------------------------------------------------------- 사실 확인
     def test_seven_factors_are_all_human_judgment(self):
@@ -123,7 +123,7 @@ class Fix74Test(unittest.TestCase):
 
         ctx = copy.deepcopy(self.ctx)
         ctx.judgments = [j for j in ctx.judgments if j["factor"] != "F3"]
-        head = next(x for x in rc.method_lines(ctx) if "사람 판단에서 나온다" in x)
+        head = next(x for x in rc.method_lines(ctx, self.results) if "사람 판단에서 나온다" in x)
         self.assertNotIn("③ Last Mover", head)
         self.assertIn("① 네트워크", head)
 

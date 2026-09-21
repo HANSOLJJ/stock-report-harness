@@ -93,11 +93,11 @@ class Fix65Test(unittest.TestCase):
         # 2026-09-17 FIX-75: 항목 카드가 그 일을 한다 — 항목에 딸린 문장은 카드 안 목록으로 가고
         # `mblk` 에는 여러 항목에 걸치는 문단과 한계만 남는다. **한 덩어리로 쏟아지지 않는다**가 요지다.
         top_limits = [x for x in rc.limitations(self.ctx) if not x.startswith("  ")]
-        loose = [x for fid, ls in rc.method_sections(self.ctx) if fid is None for x in ls]
+        loose = [x for fid, ls in rc.method_sections(self.ctx, self.results) if fid is None for x in ls]
         self.assertEqual(self.html.count('<div class="mblk">'), len(loose) + len(top_limits))
         # 항목에 딸린 문장은 아홉 카드 안에 있고, 카드 수는 factor 수와 같다.
         self.assertEqual(self.html.count('<details class="fcard"'), len(rh.FACTOR_IDS))
-        for fid, lines in rc.method_sections(self.ctx):
+        for fid, lines in rc.method_sections(self.ctx, self.results):
             if fid:
                 with self.subTest(factor=fid):
                     self.assertIn(f'id="method-{fid}"', self.html)
@@ -105,7 +105,7 @@ class Fix65Test(unittest.TestCase):
         # 맨 앞이 factor 표시이고 그 줄이 한 factor 만 다룰 때만 제목을 세운다.
         tags = re.findall(r'<span class="mtag">(.)</span>', self.html)
         self.assertTrue(set(tags) <= set(rh.FACTOR_MARKS), tags)
-        multi = next(x for x in rc.method_lines(self.ctx) if "③ Last Mover" in x)
+        multi = next(x for x in rc.method_lines(self.ctx, self.results) if "③ Last Mover" in x)
         self.assertGreater(len({ch for ch in multi if ch in rh.FACTOR_MARKS}), 1)
         self.assertNotIn('<span class="mtag">③</span>', self.html)
 

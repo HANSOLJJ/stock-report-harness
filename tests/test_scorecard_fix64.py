@@ -80,7 +80,7 @@ class Fix64Test(unittest.TestCase):
         self.assertIn("영업흑자여도 통과하지 못하고 하한을 받는다", c06["summary"])
 
         # 2026-09-17 FIX-67: 표현이 바뀌었다. 지켜야 할 사실은 **흑자 회사도 걸린다**는 것이다.
-        line = next(x for x in rc.method_lines(self.ctx) if "손실이 얕아도" in x)
+        line = next(x for x in rc.method_lines(self.ctx, self.results) if "손실이 얕아도" in x)
         self.assertIn("영업이익이 나고 있어도 최저점이 된다", line)
 
         scope = {t["id"]: t for t in RULES.payload["open_tensions"]}["TEN-RA6-01"]["also_covers_listed"]
