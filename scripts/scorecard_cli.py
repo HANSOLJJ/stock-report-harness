@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / research / calculate / draft / review-template / approve / status
+# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / research / calculate / draft / review-template / diff / approve / status
 """Usage:
   python scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   python scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
@@ -8,6 +8,7 @@
   python scripts/scorecard_cli.py calculate <slug>
   python scripts/scorecard_cli.py draft <slug>
   python scripts/scorecard_cli.py review-template <slug> [--force]
+  python scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
   python scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."]
   python scripts/scorecard_cli.py status <slug>
 
@@ -177,6 +178,73 @@ def cmd_approve(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_diff(args: argparse.Namespace) -> int:
+    """두 실행을 견주어 **기존 기업이 안 움직였음**을 확인한다.
+
+    2026-09-21 ADD-02. 1층(입력 가법성)과 2층(점수 투영 불변)만 실패로 본다.
+    subtree 해시 차이는 실패 조건이 아니다. `as_of` 만 바꿔도 달라지므로 이것으로 실패를 내지 않는다.
+    기준일 판정(`period_gap`)은 권고이므로 종료 코드를 바꾸지 않는다.
+    """
+    from scorecard.compare import compare_runs, period_gap
+
+    out = compare_runs(args.slug, args.against)
+    gap = period_gap(args.slug, args.against)
+    if args.json:
+        print(json.dumps({**out, "period_gap": gap}, ensure_ascii=False, indent=2))
+        return 0 if out["ok"] else 1
+
+    print(f"diff: {args.slug} ← {args.against}")
+    print(f"신규 기업: {', '.join(out['new_companies']) or '없음'}")
+    if out["note"]:
+        print(f"※ {out['note']}")
+
+    inputs = out["inputs"]
+    print(f"\n[1층] 입력 가법성: {'통과' if inputs['ok'] else '실패'}")
+    for name, row in inputs["by_file"].items():
+        print(f"  {name} {row['prior']} → {row['new']} | 사라짐 {len(row['removed'])} · "
+              f"고쳐짐 {len(row['edited'])} · "
+              f"더함 {len(row['added'])}(신규 기업 {len(row['added_for_new_companies'])} · "
+              f"기존 기업 {len(row['added_for_existing_companies'])} · "
+              f"기업 표기 없음 {len(row['added_without_company'])})")
+    for line in inputs["violations"]:
+        print(f"  · {line}")
+
+    scores = out["scores"]
+    print(f"\n[2층] 점수 불변: {'통과' if scores['ok'] else '실패'} (공통 {scores['compared']}개사 비교)")
+    for line in scores["violations"]:
+        print(f"  · {line}")
+
+    rank = out["ranking"]
+    print(f"\n[3층] 순위 이동(정보): {'같다' if rank['same_order'] else '달라졌다'}")
+    if not rank["same_order"]:
+        print(f"  이전: {' > '.join(rank['prior'])}")
+        print(f"  이후: {' > '.join(rank['new'])}")
+
+    sub = out["subtrees"]
+    print(f"\n[참고] subtree 해시가 다른 기업 {len(sub['differing'])}곳 "
+          f"(기준일 {sub['as_of']['prior']} → {sub['as_of']['new']})")
+    print(f"  {sub['note']}")
+    for row in sub["detail"][:5]:
+        print(f"  · {row['company_id']}: 다른 경로 {row['path_count']}개 — {row['reason']}")
+    if len(sub["detail"]) > 5:
+        print(f"  · … 외 {len(sub['detail']) - 5}곳")
+
+    appr = out["prior_approval"]
+    print(f"\n[덤] 이전 실행의 승인: {'유효' if appr['valid'] else '무효'}"
+          + (f" (달라진 것: {', '.join(appr['differing'])})" if appr.get("differing") else ""))
+
+    print(f"\n[기준일] {gap['verdict']} — {gap['advice']}")
+    for row in gap["ahead"]:
+        print(f"  · {row['company_id']} 가 {row['quarter']}({row['period_end']}) 로 앞서 있다")
+    if gap["missing_period"]:
+        unlisted = f" (이 가운데 비상장: {', '.join(gap['missing_unlisted'])})" if gap["missing_unlisted"] else ""
+        print(f"  · `revenue_ttm` 기간이 없는 기업: {', '.join(gap['missing_period'])}{unlisted}")
+
+    violations = len(inputs["violations"]) + len(scores["violations"])
+    print(f"\n판정: {'통과 — 기존 기업이 움직이지 않았다' if out['ok'] else f'실패 — 1층·2층 위반 {violations}건'}")
+    return 0 if out["ok"] else 1
+
+
 def cmd_status(args: argparse.Namespace) -> int:
     from scorecard.stages import status
 
@@ -241,6 +309,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("slug")
     p.add_argument("--force", action="store_true")
     p.set_defaults(func=cmd_review_template)
+
+    p = sub.add_parser("diff", help="두 실행을 견준다. subtree 해시 차이는 실패 조건이 아니다 — "
+                                    "`as_of` 만 바꿔도 달라지므로 이것으로 실패를 내지 않는다.")
+    p.add_argument("slug")
+    p.add_argument("--against", required=True, help="견줄 이전 실행의 slug")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_diff)
 
     p = sub.add_parser("approve")
     p.add_argument("slug")
