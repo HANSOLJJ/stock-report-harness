@@ -69,7 +69,7 @@ class Fix61Test(unittest.TestCase):
 
     def test_corrected_sentence_reaches_the_draft(self):
         # 2026-09-17 FIX-67: 문장을 다시 썼다. 사실 셋이 그대로 있는지를 본다.
-        lines = rc.method_lines(self.ctx)
+        lines = rc.method_lines(self.ctx, self.results)
         undecided = next(x for x in lines if "아직 정하지 못한 것" in x)
         for frag in ("수치가 정확히 0", "현금 완충", "현금흐름 추세"):
             with self.subTest(frag=frag):

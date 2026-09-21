@@ -243,9 +243,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         # 2026-09-16 FIX-57 2단계(6차 리뷰 A 분담): 출처별 문구 다섯을 ` / ` 로 이어 붙여 **실행 차원 고지가 맨 끝에 묻혔다.**
         # 읽는 사람이 먼저 알아야 하는 것은 채점자와 채점 대상이 같은 곳이라는 사실이다. 출처별 문구는 References 에 그대로 있다.
         flagged = len([s for s in ctx.sources.get("items", []) if s.get("conflict_of_interest")])
+        private_count = sum(1 for company in results["companies"] if not company["listed"])
         lines += [f"- **이해상충 고지 — 채점 대상에 Anthropic 이 포함되고, 이 채점표를 Anthropic 이 만든 Claude 가 작성했다**"
                   f"(채점규칙 384행 · HANDOVER 75행 · 운영이력 긴장 #4·#11). 투자 판단에 사용할 경우 감안할 것. "
-                  f"비상장 2사의 수치는 이해당사자 1차 발표에서 온다. 이해상충이 표기된 출처 {flagged}건의 개별 문구는 "
+                  f"비상장 {private_count}사의 수치는 이해당사자 1차 발표에서 온다. 이해상충이 표기된 출처 {flagged}건의 개별 문구는 "
                   f"References 의 각 출처 줄에 있고, `알려진 한계` 절이 제3자 재검토 약속을 함께 적는다."]
     if results["pending_rule_decisions"]:
         lines.append(f"- 미결 규칙 결정: {', '.join(results['pending_rule_decisions'])} — 사용자 결정 전에는 해당 기업을 순위에 넣지 않는다")
@@ -312,7 +313,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         "",
         # 2026-09-15 FIX-52: v1.5 문구(NTM PER 구간표 · 하한 -5)가 박혀 있었다. FIX-54 에서 HTML 과 같은 목록(render_common)으로 옮겼다.
     ]
-    lines += [f"- {x}" for x in rc.method_lines(ctx)] + [""]
+    lines += [f"- {x}" for x in rc.method_lines(ctx, results)] + [""]
     # 한계 — 2026-09-15 FIX-54 1단계 S4
     lines += ["## 알려진 한계", ""] + [x if x.startswith("  - ") else f"- {x}" for x in rc.limitations(ctx)] + [""]
     # 트리거

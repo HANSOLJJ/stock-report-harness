@@ -162,7 +162,7 @@ class Fix62Test(unittest.TestCase):
     def test_the_draft_says_the_new_route(self):
         # 2026-09-17 FIX-67: 문장에서 결정 번호와 `누가 뒤집었다`는 기록을 뺐다(결정 항목이 들고 있다).
         # 남아야 할 사실은 **비상장 미공시가 BEP 후퇴보다 앞선다**는 것이다.
-        line = next(x for x in rc.method_lines(self.ctx) if "비상장사가 영업손익을 아예 공시하지 않으면" in x)
+        line = next(x for x in rc.method_lines(self.ctx, self.results) if "비상장사가 영업손익을 아예 공시하지 않으면" in x)
         self.assertIn("이 조항을 쓰지 않고 비상장사용 경로로 보낸다", line)
         self.assertIn(line if line.startswith("  ") else f"- {line}", self.md)
         # openai ⑨ 근거란이 새 경로와 새 점수를 말한다.

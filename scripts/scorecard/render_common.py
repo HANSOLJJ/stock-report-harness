@@ -629,7 +629,7 @@ def factor_notes(ctx: Any, fid: str, fr: dict[str, Any]) -> list[dict[str, Any]]
         if w.startswith("승계된 판단 — 원검토일"):
             continue                                   # 상태 칸과 근거 머리줄이 이미 말한다
         if w.startswith("C-03 확정") or w.startswith("net_cash 작업 정의"):
-            continue                                   # 14개사·상장사 공통이라 방법 절에 한 번 적는다
+            continue                                   # 전체 기업·상장사 공통이라 방법 절에 한 번 적는다
         if w.startswith("P4 보정"):
             note = _p4_note(ctx, fr)
             if note and not used_p4:
@@ -1313,7 +1313,7 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
     return out
 
 
-def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
+def method_sections(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None, list[str]]]:
     """방법 절을 **항목별로 갈라** 돌려준다. `(factor_id, 문장들)` 이고 `None` 은 여러 항목에 걸치는 문단이다.
 
     2026-09-17 FIX-67 전면 재작성 → FIX-68·69 정정. **문장이 규칙을 잘못 말하지 않게** 숫자와 칸 수를
@@ -1332,6 +1332,19 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
     runway_mid = _runway_step((float(keep) + float(one_step)) / 2, ctx.rules)
     runway_deep = _runway_step(float(one_step) / 2, ctx.rules)
     coverage_short = _coverage_step(float(cover) / 2, ctx.rules)
+    population_count = int(results["population"]["scored"]) + len(results["population"]["incomplete"])
+    newly_listed_count = sum(
+        1 for company in results["companies"]
+        if (((company.get("factors") or {}).get("F6") or {}).get("calc") or {}).get("track") == "listed_newly"
+    )
+    bep_retreat_count = sum(
+        1 for company in results["companies"]
+        if any(
+            step.get("gate") == "G1" and str(step.get("band", "")).startswith("BEP 후퇴")
+            for step in ((((company.get("factors") or {}).get("F9") or {}).get("calc") or {}).get("path") or [])
+        )
+    )
+    f6_judgment_count = len({j["company_id"] for j in ctx.judgments if j["factor"] == "F6"})
     bands = f9["g1_bands_proposed"]
     deep = min(b["score"] for b in bands)
     mid = next((b for b in bands if b["score"] == deep + 1), None)
@@ -1366,7 +1379,7 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
         # 어디에도 적혀 있지 않았다. 판단 기록에 남은 비상장 점수를 이번 규칙이 쓰지 않는 것도 함께 적는다.
         "  - **아홉 항목 가운데 사람이 판단을 적지 않는 것은 이 항목 하나뿐이다.** 여기 들어가는 값은 모두 "
         "등록된 관측이고, 어느 회사가 어떤 잣대를 받는지도 관측의 기간 단위가 정한다."
-        + (" 판단 기록에는 비상장 두 곳의 점수가 남아 있지만 **이번 규칙은 그 점수를 쓰지 않고 관측에서 "
+        + (f" 판단 기록에는 비상장 {_count(f6_judgment_count)} 곳의 점수가 남아 있지만 **이번 규칙은 그 점수를 쓰지 않고 관측에서 "
            "다시 계산한다.**" if ctx.rules.f6_mode == "parameters" and any(
                j["factor"] == "F6" for j in ctx.judgments) else ""),
         f"  - **PER** — 시가총액을 최근 1년 순이익으로 나눈다. {_band_text(params['P1']['bands'], '배')}.",
@@ -1383,7 +1396,7 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
            if int(p4["cap_steps"]) else " 다만 이번 규칙에서는 이 자리로 깎지 않는다."),
         "  - **다만 상장한 지 얼마 안 돼 전년 1년치 매출을 복원할 수 없는 회사는 "
         + "·".join(newly_names) + " 둘로만 소계를 낸다.** PER 은 재지 않고, 매출 성장은 앞서 적은 대로 "
-        "분기끼리 견준다. 이번 14개사 중 한 곳이 그 경우다."
+        f"분기끼리 견준다. 이번 {population_count}개사 중 {_count(newly_listed_count)} 곳이 그 경우다."
         + (" 어느 회사가 여기 드는지는 상장 시점이 아니라 **그 회사 매출 관측이 어느 기간 단위인지**로 가른다."
            if newly_by_basis else ""),
         f"  - 구간 경계에서 {tol:.0%} 안에 든 값에는 표시를 달지만 **점수는 바꾸지 않는다.**",
@@ -1414,7 +1427,8 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
         "  - **첫째 관문은 본업이다.** 최근 1년 영업손익으로 판정한다.",
         f"    - 회사가 흑자 전환 시점을 뒤로 미뤘다고 밝히면 이 항목은 최저점 {bep} 를 준다. 채점규칙 원문이 손실 폭과 "
         "**무관한 독립 조건**으로 적어 놓았다. 그래서 손실이 얕아도, 영업이익이 나고 있어도 최저점이 된다. "
-        "**이 처리가 맞는지는 2026년 11월에 다시 본다.** 이번 14개사 중 이 조항이 걸린 회사는 없다.",
+        f"**이 처리가 맞는지는 2026년 11월에 다시 본다.** 이번 {population_count}개사 중 이 조항이 걸린 회사는 "
+        + ("없다." if bep_retreat_count == 0 else f"{_count(bep_retreat_count)} 곳이다."),
         "    - 다만 비상장사가 영업손익을 아예 공시하지 않으면 이 조항을 쓰지 않고 비상장사용 경로로 보낸다. "
         "공시 의무가 없어 못 본 것을 적자로 셀 수는 없기 때문이다.",
         "    - 그 밖에는 영업손익률로 나눈다. "
@@ -1458,6 +1472,11 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
     judged = [f for f in FACTOR_LABELS if f in roles and f not in ignored and f != "F9"]
     plain = [f for f in judged if roles[f][0] == "score" and f != "F2"]
     converted = [(f, roles[f][0]) for f in judged if roles[f][0] != "score"]
+    judged_company_sets = [
+        {j["company_id"] for j in ctx.judgments if j["factor"] == fid}
+        for fid in judged
+    ]
+    judged_company_count = len(set.intersection(*judged_company_sets)) if judged_company_sets else 0
 
     def _names(ids: list[str]) -> str:
         return " · ".join(FACTOR_LABELS[f] for f in ids)
@@ -1470,7 +1489,9 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
 
     overview = [
         f"**{_names(judged)} {_count(len(judged))} 항목은 모두 사람 판단에서 나온다.** 판단 기록을 세어 보면 "
-        "이 항목들은 14개사 전부가 사람이 적은 판단을 입력으로 갖는다. **사다리·산식·조합표는 사람이 매긴 것을 "
+        f"이번 실행 {population_count}개사 "
+        + ("전부가" if judged_company_count == population_count else f"중 {_count(judged_company_count)}곳이")
+        + " 이 항목들에 사람이 적은 판단을 입력으로 갖는다. **사다리·산식·조합표는 사람이 매긴 것을 "
         "정해진 표로 환산하는 장치이지 판단을 대신하는 것이 아니다.** 그래서 이 항목들은 모두 점수보다 근거 "
         "문장을 읽어야 한다. 항목마다 사람이 무엇을 적고 엔진이 무엇을 했는지는 아래 각 칸에 적는다.",
     ]
@@ -1505,9 +1526,9 @@ def method_sections(ctx: Any) -> list[tuple[str | None, list[str]]]:
             + [(None, common)])
 
 
-def method_lines(ctx: Any) -> list[str]:
+def method_lines(ctx: Any, results: dict[str, Any]) -> list[str]:
     """방법 절의 문장을 한 줄씩 편 목록. 절 경계를 모르는 쪽(초안 본문)이 쓴다."""
-    return [line for _fid, lines in method_sections(ctx) for line in lines]
+    return [line for _fid, lines in method_sections(ctx, results) for line in lines]
 
 
 def conflict_lines(ctx: Any) -> list[str]:
@@ -1520,8 +1541,9 @@ def conflict_lines(ctx: Any) -> list[str]:
     # 읽는 사람이 세고 싶은 것은 **표기된 출처의 수**이므로 출처 건수로 센다.
     flagged = [s for s in ctx.sources.get("items", []) if s.get("conflict_of_interest")]
     if flagged:
+        private_count = sum(1 for cid in ctx.run["companies"] if not ctx.companies[cid]["listed"])
         out.append(f"**이해상충** — 이 채점표는 Anthropic 이 만든 Claude 가 작성했고 Anthropic 이 채점 대상에 들어 있다. 이해상충이 표기된 출처가 "
-                   f"{len(flagged)}건이고 문장은 References 의 각 출처 줄에 있다. 비상장 2사의 수치는 회사 자체 발표(이해당사자 1차 자료)에서 온다.")
+                   f"{len(flagged)}건이고 문장은 References 의 각 출처 줄에 있다. 비상장 {private_count}사의 수치는 회사 자체 발표(이해당사자 1차 자료)에서 온다.")
     # 2026-09-16 FIX-56 2단계(5차 리뷰 D low): 전에는 `비 Claude` 가 든 긴장을 통째로 세어 **권장까지 약속으로** 읽혔다.
     # 이제 긴장이 스스로 선언한 갈래(third_party_recheck)를 읽는다.
     tensions = sorted((ctx.rules.payload.get("open_tensions") or []), key=lambda x: x["id"])
