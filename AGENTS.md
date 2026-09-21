@@ -62,7 +62,7 @@
 ## AI Scorecard 계약 (report_type: ai_scorecard)
 - 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md`.
 - 판별: `plan/<slug>.md` frontmatter `report_type: ai_scorecard`, slug 는 `ai-scorecard-` 접두. 없으면 기존 stock_report 계약을 그대로 적용한다.
-- 명령: `/score-plan`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal`. 실행기는 `python scripts/scorecard_cli.py <stage> <slug>`, 빌드는 `python scripts/build_report.py <slug>`.
+- 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal`. 실행기는 `python scripts/scorecard_cli.py <stage> <slug>`, 빌드는 `python scripts/build_report.py <slug>`.
 - 단일 진실은 `scorecard/`(rules, companies, baseline, runs/<slug>, history.csv)에 두고 추적한다. plan/research/drafts/reviews/output 은 생성물이며 손으로 고치지 않는다.
 - 원자료·판단·규칙이 입력이고 점수는 결과다. 자동 산출 점수를 직접 수정하지 않는다. 모르는 값은 0으로 치환하지 않는다(unknown ≠ 0).
 - 정성 판정(③ criteria, ⑤ A/H, ⑦ 매트릭스, ⑨ gate_inputs, ①④⑧ score)은 근거·검토자·검토일이 있어야 하고, 산식·사다리·구간 적용은 프로그램이 한다.

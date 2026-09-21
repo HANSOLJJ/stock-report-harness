@@ -22,7 +22,7 @@ description: AI 기업 9-factor 채점(ai_scorecard) 실행을 생성한다. /sc
 ## 제약
 
 - plan 을 손으로 쓰지 않는다. `init` 이 생성한 파일만 쓴다.
-- 기업 ID 는 `scorecard/companies.json` 에 있는 것만 쓴다. 새 기업은 레지스트리에 먼저 등록한다(안정 ID, 상장 여부, share_basis, 통화).
+- 기업 ID 는 `scorecard/companies.json` 에 있는 것만 쓴다. 새 기업은 레지스트리에 먼저 `/score-add-company` 로 등록한다(안정 ID, 상장 여부, share_basis, 통화).
 - 투자 권유·수익 보장 표현을 쓰지 않는다.
 
 ## 완료 보고
