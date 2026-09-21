@@ -4,6 +4,7 @@
   python scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   python scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
   python scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title "..." --request "..." [--purpose "..."] [--companies a,b] [--decision C-16=hold --rationale "..." --by NAME] [--force]
+  python scripts/scorecard_cli.py init <slug> --from-run <prior_slug> [--add-companies a,b] [--title "..." --request "..." --as-of ... --rule v1.7 --decision C-16=hold --no-carry-decisions]
   python scripts/scorecard_cli.py research <slug>
   python scripts/scorecard_cli.py calculate <slug>
   python scripts/scorecard_cli.py draft <slug>
@@ -110,12 +111,16 @@ def cmd_init(args: argparse.Namespace) -> int:
             raise SystemExit("--decision 을 쓰면 --rationale 과 --by 가 필요하다")
         decisions.append({"id": did.strip(), "choice": choice.strip(), "rationale": args.rationale, "decided_by": args.by, "decided_at": today()})
     companies = [c.strip() for c in args.companies.split(",")] if args.companies else None
+    add_companies = [c.strip() for c in args.add_companies.split(",")] if args.add_companies else None
+    # 2026-09-21 ADD-03. 제목은 실행마다 달라야 한다. 이어받기에서 기본값으로 떨어지면 두 실행이 같은 제목을 갖는다.
+    if args.from_run and not args.title:
+        print(f"[경고] --title 을 주지 않아 이전 실행 {args.from_run} 의 제목을 그대로 쓴다. 실행마다 제목을 달리하는 편이 낫다")
     paths = init_run(
         args.slug,
         as_of=args.as_of,
         title=args.title,
         request=args.request,
-        purpose=args.purpose or "기준선 승계 재계산과 규칙·자료·판단의 일관성 확인",
+        purpose=args.purpose,
         companies=companies,
         baseline_id=args.baseline,
         rule_version=args.rule,
@@ -123,9 +128,15 @@ def cmd_init(args: argparse.Namespace) -> int:
         price_as_of=args.price_as_of,
         info_cutoff=args.info_cutoff,
         force=args.force,
+        from_run=args.from_run,
+        add_companies=add_companies,
+        carry_decisions=not args.no_carry_decisions,
     )
     for name, path in paths.items():
         print(f"{name}: {rel(path)}")
+    if args.from_run:
+        print(f"다음: research 로 새 기업만 조사한 뒤 "
+              f"python scripts/scorecard_cli.py diff {args.slug} --against {args.from_run} 으로 기존 기업 불변을 확인한다")
     print(f"다음: python scripts/scorecard_cli.py research {args.slug}")
     return 0
 
@@ -285,13 +296,17 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("init")
     p.add_argument("slug")
-    p.add_argument("--as-of", required=True)
-    p.add_argument("--title", required=True)
-    p.add_argument("--request", required=True)
+    # `--from-run` 이면 셋 다 이전 실행에서 온다. "없으면 필수" 는 argparse 가 아니라 init_run 이 본다.
+    p.add_argument("--as-of")
+    p.add_argument("--title")
+    p.add_argument("--request")
+    p.add_argument("--from-run", help="이어받을 이전 실행의 slug. 관측·판단·출처·결정을 그대로 가져온다")
+    p.add_argument("--add-companies", help="이어받기에 덧붙일 기업 ID(쉼표). --companies 는 통째 교체이고 이것은 덧붙이기다")
+    p.add_argument("--no-carry-decisions", action="store_true", help="이전 실행의 규칙 결정을 이어받지 않는다")
     p.add_argument("--purpose")
     p.add_argument("--companies")
-    p.add_argument("--baseline", default="v1.5")
-    p.add_argument("--rule", default="v1.5")
+    p.add_argument("--baseline")
+    p.add_argument("--rule")
     p.add_argument("--decision", action="append")
     p.add_argument("--rationale")
     p.add_argument("--by")

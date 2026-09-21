@@ -191,10 +191,11 @@ def compare_runs(slug: str, prior_slug: str) -> dict[str, Any]:
     new_companies = new_ids - prior_ids
     inputs = compare_inputs(slug, prior_slug, new_companies)
     scores = compare_scores(slug, prior_slug, new_companies)
-    # 신규 기업이 0곳이면 이 명령이 겨냥한 사례가 아니다. 그래도 검사는 그대로 돌린다 —
-    # 같은 기업을 다시 조사한 실행이라면 1층·2층이 갈리는 것이 정상이고, 그 사실을 보이는 편이 낫다.
+    # 신규 기업이 0곳인데 위반까지 나면 기업을 더한 사이가 아니라 다시 조사한 사이다.
+    # 그대로 이어받아 위반이 없는 경우에는 덧붙일 말이 없으므로 아무것도 적지 않는다.
     note = ("신규 기업이 없다 — 이 비교는 **기업 추가** 사례가 아니라 같은 기업을 다시 조사한 사례로 보인다. "
-            "아래 위반은 재조사에서는 당연히 나온다." if not new_companies else None)
+            "아래 위반은 재조사에서는 당연히 나온다."
+            if not new_companies and not (inputs["ok"] and scores["ok"]) else None)
     return {
         "slug": slug,
         "prior_slug": prior_slug,

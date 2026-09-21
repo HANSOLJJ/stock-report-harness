@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -12,7 +13,7 @@ from .baseline_import import BASELINE_AS_OF, SRC_HANDOVER, SRC_HANDOVER_SHA256, 
 from .engine import BASELINE_DIR, RunContext, compute, input_hashes, load_companies, load_context, load_results, results_path, run_dir, write_results
 from .render_md import render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
-from .schema import SchemaError, load_json_strict, sha256_file, sha256_text, validate_observations, write_json
+from .schema import SchemaError, load_json_strict, sha256_file, sha256_text, validate_approval, validate_observations, validate_run, write_json
 
 
 def today() -> str:
@@ -31,57 +32,23 @@ def load_baseline(baseline_id: str) -> tuple[dict[str, Any], dict[str, Any], lis
 
 # ------------------------------------------------------------------ init
 
-def init_run(
-    slug: str,
-    *,
-    as_of: str,
-    title: str,
-    request: str,
-    purpose: str,
-    companies: list[str] | None = None,
-    baseline_id: str = "v1.5",
-    rule_version: str = "v1.5",
-    decisions: list[dict[str, Any]] | None = None,
-    price_as_of: str | None = None,
-    info_cutoff: str | None = None,
-    force: bool = False,
-) -> dict[str, Path]:
-    if not slug.startswith("ai-scorecard-"):
-        raise SchemaError("scorecard slug 는 `ai-scorecard-` 로 시작해야 한다 (예: ai-scorecard-2026-09-baseline)")
-    d = run_dir(slug)
-    if d.exists() and not force:
-        raise SchemaError(f"실행 디렉터리가 이미 있음: {rel(d)} (--force 로 덮어쓰기)")
-    registry = load_companies()
-    rules = load_rules(rule_version)
-    scores, base_obs, _triggers = load_baseline(baseline_id)
-    baseline_ids = [c["company_id"] for c in scores["companies"]]
-    selected = companies or baseline_ids
-    unknown = [c for c in selected if c not in registry]
-    if unknown:
-        raise SchemaError(f"알 수 없는 기업 {unknown}")
-    created = today()
-    run = {
-        "schema": "scorecard.run/1",
-        "run_id": slug,
-        "report_type": "ai_scorecard",
-        "title": title,
-        "as_of": as_of,
-        "price_as_of": price_as_of or as_of,
-        "info_cutoff": info_cutoff or as_of,
-        "rule_version": rule_version,
-        "rule_hash": rules.hash,
-        "baseline_id": baseline_id,
-        "companies": selected,
-        "reference_companies": [],
-        "decisions": decisions or [],
-        "created_at": created,
-        "purpose": purpose,
-        "assumptions": [
-            f"원자료와 정성 판단은 기준선 {baseline_id}({scores['as_of']})에서 승계했으며 이번 실행에서 재검증되지 않았다(legacy_unverified)",
-            "미결 규칙 결정(C-xx)은 run.json.decisions 에 명시된 것만 적용한다",
-            "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
-        ],
-    }
+
+@dataclass
+class _Inputs:
+    """`init` 이 만드는 입력 묶음. 기준선에서 새로 만들 때와 이전 실행에서 이어받을 때 이것만 갈린다."""
+
+    observations: dict[str, Any]
+    judgments: dict[str, Any]
+    sources: dict[str, Any]
+    assumptions: list[str]
+    baseline_note: str
+    continued_from: dict[str, Any] | None = None
+
+
+def _inputs_from_baseline(slug: str, *, baseline_id: str, selected: list[str], as_of: str, created: str,
+                          rules: Any, registry: dict[str, dict[str, Any]], scores: dict[str, Any],
+                          base_obs: dict[str, Any]) -> _Inputs:
+    """기준선 v1.5 에서 입력을 만든다. 2026-09-21 ADD-03 이전의 `init_run` 본문을 그대로 옮긴 것이다."""
     observations = {
         "schema": "scorecard.observations/1",
         "run_id": slug,
@@ -109,15 +76,202 @@ def init_run(
             {"source_id": SRC_HANDOVER, "title": "AI기업_채점표_HANDOVER.md (자동화 핸드오버 — 원자료 출처표·기계화 재고·작성자 이해상충)", "publisher": "내부 기준선", "url": None, "accessed_at": created, "sha256": SRC_HANDOVER_SHA256, "conflict_of_interest": "작성자 Claude=Anthropic — HANDOVER 75행 `3-7. 작성자 이해상충. Claude=Anthropic` (긴장 #4·#11)", "note": "저장소에 커밋되지 않고 v1.5 원본 셋과 같은 곳에 보존돼 있다"},
         ],
     }
+    assumptions = [
+        f"원자료와 정성 판단은 기준선 {baseline_id}({scores['as_of']})에서 승계했으며 이번 실행에서 재검증되지 않았다(legacy_unverified)",
+        "미결 규칙 결정(C-xx)은 run.json.decisions 에 명시된 것만 적용한다",
+        "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
+    ]
+    note = f"기준선 `{baseline_id}` ({scores['as_of']}, HTML `{scores['source']['html_sha256'][:12]}…`)의 점수·판정표·원자료를 승계"
+    return _Inputs(observations, judgments, sources, assumptions, note)
+
+
+def _load_prior_run(prior_slug: str) -> dict[str, Any]:
+    path = run_dir(prior_slug) / "run.json"
+    if not path.is_file():
+        raise SchemaError(f"이어받을 실행이 없다: {rel(path)}")
+    return validate_run(load_json_strict(path), prior_slug)
+
+
+def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, selected: list[str],
+                     added: list[str], as_of: str, baseline_id: str, rules: Any,
+                     registry: dict[str, dict[str, Any]]) -> _Inputs:
+    """이전 실행의 관측·판단·출처를 그대로 이어받는다.
+
+    2026-09-21 ADD-03. 기준선에서 다시 만들면 9라운드에 걸쳐 고친 것이 전부 사라진다.
+    **판단 항목에는 아무 표시도 찍지 않는다** — `status: carried` 는 `calc_qual._status_for` 가 읽어
+    factor 를 `carried_score` 로 내리고 `inputs.carried_note` 가 경고를 붙이는 값이다. 재작성하면
+    기존 기업의 점수 상태가 움직인다. 이어받았다는 사실은 `run.continued_from` 에만 적는다.
+    """
+    d = run_dir(prior_slug)
+    prior_obs = load_json_strict(d / "observations.json")
+    prior_jud = load_json_strict(d / "judgments.json")
+    src_path = d / "sources.json"
+    if not src_path.is_file():
+        raise SchemaError(f"이어받을 실행에 sources.json 이 없다: {rel(src_path)} — 관측이 인용한 출처가 장부에서 사라진다")
+
+    observations = {
+        "schema": "scorecard.observations/1",
+        "run_id": slug,
+        "as_of": as_of,
+        "note": f"이전 실행 {prior_slug} 관측 이어받기. 새 관측은 status=verified 와 출처 ID 를 붙여 추가한다",
+        "items": [o for o in prior_obs["items"] if o["company_id"] in selected],
+    }
+    validate_observations(observations, registry, slug)
+    judgments = {
+        "schema": "scorecard.judgments/1",
+        "run_id": slug,
+        "note": f"이전 실행 {prior_slug} 판단 이어받기 — 항목은 한 글자도 바꾸지 않았다. 신규 기업 판단만 추가한다",
+        "items": [j for j in prior_jud["items"] if j["company_id"] in selected],
+    }
+    # 출처는 **통째로** 옮긴다. 기준선 4건으로 덮으면 실행 도중 늘어난 출처가 사라져
+    # 관측의 `source_id` 가 장부에서 사라진다.
+    sources = {**load_json_strict(src_path), "run_id": slug}
+
+    hashes = input_hashes(prior_slug)
+    approval_path = d / "approval.json"
+    approval = validate_approval(load_json_strict(approval_path), prior_slug) if approval_path.is_file() else None
+    assumptions = [
+        f"이전 실행 {prior_slug} 의 관측·판단·출처를 그대로 이어받았다"
+        f"(observations {hashes['observations'][:12]}…, judgments {hashes['judgments'][:12]}…)."
+        f" 이어받은 항목은 이번 실행에서 재검증되지 않았다",
+        (f"이번 실행이 새로 조사한 대상은 {', '.join(registry[c]['display_name'] for c in added)} 뿐이다"
+         if added else "이번 실행은 기업을 더하지 않았고 이전 실행의 입력을 그대로 쓴다"),
+        "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
+    ]
+    prior_rule_hash = prior_run.get("rule_hash")
+    if prior_rule_hash and prior_rule_hash != rules.hash:
+        moved = f"규칙이 이어받은 실행 이후 바뀌었다({prior_rule_hash[:12]}… → {rules.hash[:12]}…)"
+        print(f"[경고] {moved} — 기존 기업 점수 불변은 diff 로 확인한다")
+        assumptions.append(f"{moved} — 기존 기업 점수 불변은 diff 로 확인한다")
+    if approval is None:
+        assumptions.append(f"이전 실행 {prior_slug} 에는 승인 기록이 없다. 승인되지 않은 상태에서 이어받았다")
+    else:
+        # `draft` 는 뺀다. 이어받는 것은 입력이지 문서가 아니다.
+        current = current_hashes(prior_slug)
+        differing = [k for k in ("rules", "observations", "judgments", "run", "results")
+                     if approval["hashes"].get(k) != current.get(k)]
+        if differing:
+            assumptions.append(f"이전 실행 {prior_slug} 의 승인이 무효다(달라진 것: {', '.join(differing)}). 그 상태에서 이어받았다")
+
+    note = (f"이전 실행 `{prior_slug}`(as_of {prior_run['as_of']})의 관측 {len(observations['items'])}건·"
+            f"판단 {len(judgments['items'])}건·출처 {len(sources.get('items') or [])}건을 이어받았고, "
+            f"점수 비교 기준선은 `{baseline_id}` 를 유지한다")
+    continued_from = {
+        "run_id": prior_slug,
+        "as_of": prior_run["as_of"],
+        # 옛 해시를 옮기면 `engine.load_context` 가 규칙 파일과의 등호 검사에서 막는다. 현재 규칙에서 다시 센다.
+        "rule_hash": prior_rule_hash or rules.hash,
+        "hashes": {k: hashes[k] for k in ("run", "observations", "judgments", "sources")},
+        "results_hash": load_results(prior_slug)["results_hash"] if results_path(prior_slug).is_file() else None,
+        "approval_id": approval["approval_id"] if approval else None,
+        "added_companies": list(added),
+    }
+    return _Inputs(observations, judgments, sources, assumptions, note, continued_from)
+
+
+def init_run(
+    slug: str,
+    *,
+    as_of: str | None = None,
+    title: str | None = None,
+    request: str | None = None,
+    purpose: str | None = None,
+    companies: list[str] | None = None,
+    baseline_id: str | None = None,
+    rule_version: str | None = None,
+    decisions: list[dict[str, Any]] | None = None,
+    price_as_of: str | None = None,
+    info_cutoff: str | None = None,
+    force: bool = False,
+    from_run: str | None = None,
+    add_companies: list[str] | None = None,
+    carry_decisions: bool = True,
+) -> dict[str, Path]:
+    if not slug.startswith("ai-scorecard-"):
+        raise SchemaError("scorecard slug 는 `ai-scorecard-` 로 시작해야 한다 (예: ai-scorecard-2026-09-baseline)")
+    d = run_dir(slug)
+    if d.exists() and not force:
+        raise SchemaError(f"실행 디렉터리가 이미 있음: {rel(d)} (--force 로 덮어쓰기)")
+    registry = load_companies()
+
+    prior_run: dict[str, Any] | None = None
+    if from_run is not None:
+        if from_run == slug:
+            raise SchemaError("자기 자신을 이어받을 수 없다")
+        prior_run = _load_prior_run(from_run)
+    elif add_companies:
+        raise SchemaError("--add-companies 는 --from-run 과 함께 쓴다 — 기준선에서 새로 만들 때는 --companies 로 대상을 정한다")
+
+    # 기본값은 이전 실행에서 온다. `--rule` 을 안 주면 v1.5 로 떨어져 규칙이 뒷걸음질하는 것을 막는다.
+    baseline_id = baseline_id or (prior_run["baseline_id"] if prior_run else "v1.5")
+    rule_version = rule_version or (prior_run["rule_version"] if prior_run else "v1.5")
+    as_of = as_of or (prior_run["as_of"] if prior_run else None)
+    if not as_of:
+        raise SchemaError("--as-of 가 필요하다 (--from-run 이면 이전 실행의 기준일을 그대로 쓴다)")
+    title = title or (prior_run["title"] if prior_run else None)
+    if not title:
+        raise SchemaError("--title 이 필요하다")
+    request = request or (f"이전 실행 {from_run} 이어받기" if prior_run else None)
+    if not request:
+        raise SchemaError("--request 가 필요하다")
+    purpose = purpose or (prior_run["purpose"] if prior_run else "기준선 승계 재계산과 규칙·자료·판단의 일관성 확인")
+    price_as_of = price_as_of or (prior_run.get("price_as_of") if prior_run else None)
+    info_cutoff = info_cutoff or (prior_run.get("info_cutoff") if prior_run else None)
+
+    rules = load_rules(rule_version)
+    scores = base_obs = None
+    if prior_run is None:
+        scores, base_obs, _triggers = load_baseline(baseline_id)
+        selected = list(companies or [c["company_id"] for c in scores["companies"]])
+        added: list[str] = []
+    else:
+        selected = list(companies or prior_run["companies"])
+        added = [c for c in (add_companies or []) if c not in selected]
+        selected += added
+    unknown = [c for c in selected if c not in registry]
+    if unknown:
+        raise SchemaError(f"알 수 없는 기업 {unknown}")
+    if prior_run is not None:
+        carried = prior_run["decisions"] if carry_decisions else []
+        overridden = {r["id"] for r in (decisions or [])}
+        decisions = [r for r in carried if r["id"] not in overridden] + list(decisions or [])
+    created = today()
+    inputs = (
+        _inputs_from_baseline(slug, baseline_id=baseline_id, selected=selected, as_of=as_of, created=created,
+                              rules=rules, registry=registry, scores=scores, base_obs=base_obs)
+        if prior_run is None else
+        _inputs_from_run(from_run, prior_run, slug=slug, selected=selected, added=added, as_of=as_of,
+                         baseline_id=baseline_id, rules=rules, registry=registry)
+    )
+    run = {
+        "schema": "scorecard.run/1",
+        "run_id": slug,
+        "report_type": "ai_scorecard",
+        "title": title,
+        "as_of": as_of,
+        "price_as_of": price_as_of or as_of,
+        "info_cutoff": info_cutoff or as_of,
+        "rule_version": rule_version,
+        "rule_hash": rules.hash,
+        "baseline_id": baseline_id,
+        "companies": selected,
+        "reference_companies": [],
+        "decisions": decisions or [],
+        "created_at": created,
+        "purpose": purpose,
+        "assumptions": inputs.assumptions,
+    }
+    if inputs.continued_from is not None:
+        run["continued_from"] = inputs.continued_from
     d.mkdir(parents=True, exist_ok=True)
     write_json(d / "run.json", run)
-    write_json(d / "observations.json", observations)
-    write_json(d / "judgments.json", judgments)
-    write_json(d / "sources.json", sources)
+    write_json(d / "observations.json", inputs.observations)
+    write_json(d / "judgments.json", inputs.judgments)
+    write_json(d / "sources.json", inputs.sources)
     for stale in ("results.json", "preview.md", "approval.json"):
         if (d / stale).exists():
             (d / stale).unlink()
-    plan_text = render_plan(run, rules, registry, request=request, baseline_note=f"기준선 `{baseline_id}` ({scores['as_of']}, HTML `{scores['source']['html_sha256'][:12]}…`)의 점수·판정표·원자료를 승계")
+    plan_text = render_plan(run, rules, registry, request=request, baseline_note=inputs.baseline_note)
     PLAN_DIR.mkdir(parents=True, exist_ok=True)
     plan_path = PLAN_DIR / f"{slug}.md"
     plan_path.write_text(plan_text, encoding="utf-8", newline="\n")

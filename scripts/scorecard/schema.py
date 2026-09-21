@@ -118,6 +118,7 @@ METRICS: dict[str, dict[str, str]] = {
 NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "revenue_ttm_full", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
 class SchemaError(ValueError):
@@ -1105,7 +1106,7 @@ def validate_run(payload: Any, slug: str | None = None) -> dict[str, Any]:
         payload,
         ["schema", "run_id", "report_type", "title", "as_of", "rule_version", "baseline_id", "companies", "decisions", "created_at", "purpose", "assumptions"],
         "run.json",
-        optional=["price_as_of", "info_cutoff", "reference_companies", "rule_hash", "note", "sources_file"],
+        optional=["price_as_of", "info_cutoff", "reference_companies", "rule_hash", "note", "sources_file", "continued_from"],
     )
     _require(payload["schema"] == "scorecard.run/1", "run.json: schema 불일치")
     _require(payload["report_type"] == "ai_scorecard", "run.json: report_type 은 ai_scorecard")
@@ -1121,7 +1122,37 @@ def validate_run(payload: Any, slug: str | None = None) -> dict[str, Any]:
         _expect_keys(d, ["id", "choice", "rationale", "decided_by", "decided_at"], f"run.decisions[{idx}]")
         _require(isinstance(d["rationale"], str) and d["rationale"].strip(), f"run.decisions[{idx}]: rationale 필요")
         _expect_date(d["decided_at"], f"run.decisions[{idx}].decided_at")
+    if "continued_from" in payload:
+        _validate_continued_from(payload["continued_from"], payload["companies"])
     return payload
+
+
+def _validate_continued_from(value: Any, companies: list[str]) -> None:
+    """2026-09-21 ADD-03. 이어받기는 어느 실행에서 무엇을 가져왔는지 run 수준에만 적는다.
+
+    항목(판단·관측)에는 아무 표시도 찍지 않는다. `status: carried` 는 **기준선 승계**라는 뜻으로
+    이미 점유돼 있고, 그것을 재작성하면 기존 기업의 factor 상태와 경고가 바뀐다.
+    """
+    where = "run.continued_from"
+    _expect_keys(value, ["run_id", "as_of", "rule_hash", "hashes", "results_hash", "approval_id", "added_companies"], where)
+    _require(isinstance(value["run_id"], str) and bool(ID_RE.match(value["run_id"])), f"{where}.run_id: 실행 slug 필요")
+    _expect_date(value["as_of"], f"{where}.as_of")
+    _expect_sha(value["rule_hash"], f"{where}.rule_hash")
+    _expect_keys(value["hashes"], ["run", "observations", "judgments", "sources"], f"{where}.hashes")
+    for key, digest in value["hashes"].items():
+        _expect_sha(digest, f"{where}.hashes.{key}")
+    _expect_sha(value["results_hash"], f"{where}.results_hash", allow_none=True)
+    _require(value["approval_id"] is None or (isinstance(value["approval_id"], str) and value["approval_id"].strip()),
+             f"{where}.approval_id: 문자열이거나 null")
+    _require(isinstance(value["added_companies"], list), f"{where}.added_companies: 배열 필요")
+    outside = [c for c in value["added_companies"] if c not in companies]
+    _require(not outside, f"{where}.added_companies: run.companies 에 없는 기업 {outside}")
+
+
+def _expect_sha(value: Any, where: str, allow_none: bool = False) -> None:
+    if value is None and allow_none:
+        return
+    _require(isinstance(value, str) and bool(SHA256_RE.match(value)), f"{where}: sha256 16진 64자 필요 ({value!r})")
 
 
 def validate_approval(payload: Any, run_id: str | None = None) -> dict[str, Any]:
