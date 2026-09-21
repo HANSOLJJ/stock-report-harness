@@ -9,10 +9,10 @@ description: AI 기업 채점표 레지스트리에 기업을 등록한다. /sco
 
 ## 절차
 
-1. 요청에서 기업 정보를 파싱한다: `company_id`, 표시명, 유형(소비자·업무·거래·부품·소비자·업무·부품·업무), 평가 범위, 상장 여부.
+1. 요청에서 기업 정보를 파싱한다: `company_id`, 표시명, 유형('소비자', '업무', '거래', '부품', '소비자·업무', '혼합'), 평가 범위, 상장 여부.
 2. 실행한다:
    ```
-   python scripts/scorecard_cli.py add-company <id> --name "<표시명>" --type <유형> --scope "<평가범위>" (--listed --ticker <티커> --exchange <거래소> | --private) [--aliases a,b] [--share-basis adr|ads --adr-ratio <비율>] [--currency <통화>]
+   python scripts/scorecard_cli.py add-company <id> --name "<표시명>" --type <유형> --scope "<평가범위>" (--listed --ticker <티커> --exchange <거래소> | --private) [--alias <별칭> ...] [--share-basis adr|ads --adr-ratio <비율>] [--currency <통화>]
    ```
 3. 등록만 하고 멈춘다 (research 나 채점으로 진행하지 않는다).
 
