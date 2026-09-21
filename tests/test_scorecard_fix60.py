@@ -112,11 +112,9 @@ class ContractTest(unittest.TestCase):
         # 2026-09-17 FIX-64: 네 영역이 pass 로 오면서 이 테스트가 세운 뿌리 셋
         # (plan 해시 · 승계 예외 미구현 · 영역 결과)이 전부 닫혔다.
         # 2026-09-17 FIX-67: 방법 문장을 다시 써 초안이 바뀌었고 **리뷰와 승인이 무효가 됐다**(의도된 결과).
-        # 그 둘만 남는 것이 정상이며 뿌리 셋은 그대로 닫혀 있다.
-        rest = [e for e in r.errors if "draft_hash" not in e and "승인 무효" not in e]
-        self.assertEqual(rest, [], r.errors)
-        self.assertTrue(any("draft_hash" in e for e in r.errors))
-        self.assertFalse(any("plan rule_hash" in e for e in r.errors))
+        # 2026-09-21 재승인: 리뷰의 draft_hash 를 갱신하고 다시 승인해 그 둘도 닫혔다.
+        # 이제 **오류가 하나도 없다** — 뿌리 셋과 마지막 둘이 전부 닫힌 상태다.
+        self.assertEqual(r.errors, [], r.errors)
 
     def test_carried_exceptions_are_counted_in_a_warning(self):
         """조용히 넘어가지 않는다 — 몇 건을 어느 긴장으로 통과시켰는지 남긴다.

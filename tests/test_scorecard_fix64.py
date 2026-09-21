@@ -138,23 +138,23 @@ class Fix64Test(unittest.TestCase):
     # ---------------------------------------------------------------- 승인·빌드
     def test_approval_matches_the_current_inputs(self):
         self.assertEqual(self.approval["approved_by"], "사용자")
-        self.assertEqual(self.approval["approved_at"], "2026-09-17")
-        self.assertIn("네 영역 pass", self.approval["note"])
-        self.assertIn("C-29", self.approval["note"])
         # 2026-09-17 FIX-67: 방법 문장 재작성으로 초안이 바뀌어 승인이 무효가 됐다(의도된 결과).
-        # **점수·규칙·관측·판단은 그대로**이고 draft 만 다르다는 것이 요지다.
-        cur = current_hashes(SLUG)
-        self.assertNotEqual(self.approval["hashes"]["draft"], cur["draft"])
-        self.assertEqual({k: v for k, v in self.approval["hashes"].items() if k != "draft"},
-                         {k: v for k, v in cur.items() if k != "draft"})
+        # 2026-09-21 재승인: 점수 쪽 다섯이 9월 17일 승인본과 같다는 것을 확인하고 draft 까지 맞물렸다.
+        # 승인 날짜는 재승인마다 바뀌므로 고정하지 않고, **점수가 같다는 사실**을 승인 note 로 잠근다.
+        self.assertEqual(self.approval["approved_at"], "2026-09-21")
+        self.assertEqual(self.approval["approval_id"], "776a511bf0a9028f")
+        self.assertIn("2026-09-17 승인본과 동일", self.approval["note"])
+        self.assertIn("초안만 바뀌었다", self.approval["note"])
+        self.assertEqual(self.approval["hashes"], current_hashes(SLUG))
         self.assertEqual(self.approval["hashes"]["rules"], RULES.hash)
+        self.assertEqual(self.approval["hashes"]["results"], self.results["results_hash"])
 
     def test_contract_passes_with_no_errors(self):
         from validate_report_contract import validate_contract
         r = validate_contract(SLUG, require_html=False, check_html_if_present=False,
                               require_price_chart=False, check_price_chart_if_present=False)
-        # 2026-09-17 FIX-67: 초안이 바뀌어 리뷰가 무효다. 그 하나만 남는 것이 정상이다.
-        self.assertEqual([e for e in r.errors if "draft_hash" not in e and "승인 무효" not in e], [])
+        # 2026-09-17 FIX-67: 초안이 바뀌어 리뷰가 무효였다. 2026-09-21 재승인으로 닫혔다.
+        self.assertEqual(r.errors, [], r.errors)
         # 경고 둘은 남는다 — 승계 예외 건수와 그 검사가 확인하지 않는 조건이다.
         self.assertTrue(any("승계 예외로 통과한 체크리스트 fail 11건" in w for w in r.warnings))
         self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 71행)" in w for w in r.warnings))
@@ -167,10 +167,21 @@ class Fix64Test(unittest.TestCase):
         self.assertIn(self.results["results_hash"], html)
 
     def test_history_has_the_approved_rows(self):
-        rows = [r for r in csv.DictReader(HISTORY.read_text(encoding="utf-8").splitlines())
-                if r["run_id"] == SLUG]
-        self.assertEqual(len(rows), 14)
-        self.assertEqual({r["company_id"]: int(r["total"]) for r in rows}, TOTALS)
+        every = [r for r in csv.DictReader(HISTORY.read_text(encoding="utf-8").splitlines())
+                 if r["run_id"] == SLUG]
+        # 2026-09-21 재승인: 초안 변경으로 무효였던 승인이 풀리면서 14행이 더 붙어 28행이 됐다.
+        # 어느 승인 벌이든 14개사이고 총점과 results_hash 가 같다 — 재승인이 점수를 바꾸지 않았다는 뜻이다.
+        self.assertEqual(len(every), 28)
+        by_approval: dict[str, list] = {}
+        for row in every:
+            by_approval.setdefault(row["approval_id"], []).append(row)
+        for approval_id, batch in by_approval.items():
+            with self.subTest(approval=approval_id):
+                self.assertEqual(len(batch), 14)
+                self.assertEqual({r["company_id"]: int(r["total"]) for r in batch}, TOTALS)
+                self.assertEqual({r["results_hash"] for r in batch}, {self.results["results_hash"]})
+        self.assertIn(self.approval["approval_id"], by_approval)
+        rows = by_approval[self.approval["approval_id"]]
         for r in rows:
             with self.subTest(cid=r["company_id"]):
                 self.assertEqual(r["approval_id"], self.approval["approval_id"])

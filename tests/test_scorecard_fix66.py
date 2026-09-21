@@ -39,14 +39,12 @@ class Fix66Test(unittest.TestCase):
     # ---------------------------------------------------------------- 경계
     def test_scores_and_approval_untouched(self):
         self.assertEqual({c["company_id"]: c["total"] for c in self.results["companies"]}, TOTALS)
-        # 2026-09-17 FIX-67: 방법 문장 재작성으로 draft 만 바뀌었다(승인은 재검토 뒤 되살린다).
-        cur = current_hashes(SLUG)
-        self.assertEqual({k: v for k, v in self.approval["hashes"].items() if k != "draft"},
-                         {k: v for k, v in cur.items() if k != "draft"})
-        self.assertEqual(self.approval["approval_id"], "0b054d597be5bf87")
+        # 2026-09-17 FIX-67: 방법 문장 재작성으로 draft 만 바뀌어 승인이 무효였다.
+        # 2026-09-21 재승인: 리뷰의 draft_hash 를 갱신하고 다시 승인해 여섯이 전부 맞물린다.
+        self.assertEqual(self.approval["approval_id"], "776a511bf0a9028f")
+        self.assertEqual(self.approval["hashes"], current_hashes(SLUG))
         self.assertEqual(self.results["results_hash"],
                          "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b")
-        self.assertNotEqual(self.approval["hashes"]["draft"], cur["draft"])
 
     # ---------------------------------------------------------------- S1 색인
     def test_index_has_every_group(self):
