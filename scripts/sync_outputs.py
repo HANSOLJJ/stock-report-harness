@@ -20,6 +20,16 @@ SRC = Path("C:/Users/noble/orca/workspaces/stock-report-harness/worker")
 DST = Path("E:/sourcecode/01_side_project/stock-report-harness")
 DIRS = ("output", "plan", "drafts")
 
+# 원본에서 알아보기 쉽도록 이름을 바꿔 두는 산출물.
+# 빌드가 내는 이름은 실행 슬러그에 묶여 있어 그대로 두어야 한다 —
+# `artifact_paths(slug)` 가 plan·research·draft·review·html 을 한 슬러그로 엮고
+# 계약 검증기가 그 경로들을 대조하기 때문이다. 그래서 복사할 때만 이름을 바꾼다.
+# 승인본이 바뀌면 왼쪽 값을 새 슬러그로 고치면 된다.
+ALIASES = {
+    "output/ai-scorecard-2026-09-obsreg.html": "output/ai-scoreboard.html",
+    "output/ai-scorecard-2026-09-obsreg-audit.md": "output/ai-scoreboard-audit.md",
+}
+
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -44,7 +54,8 @@ def main():
             continue
         for src_file in sorted(p for p in root.rglob("*") if p.is_file()):
             rel = src_file.relative_to(args.src)
-            dst_file = args.dst / rel
+            alias = ALIASES.get(rel.as_posix())
+            dst_file = args.dst / (alias if alias else rel.as_posix())
             if not dst_file.exists():
                 mark, added = "신규", added + 1
             elif digest(src_file) != digest(dst_file):
@@ -52,7 +63,8 @@ def main():
             else:
                 same += 1
                 continue
-            print(f"  {mark}  {rel.as_posix()}  ({src_file.stat().st_size:,} bytes)")
+            shown = rel.as_posix() if alias is None else f"{rel.as_posix()}  →  {alias}"
+            print(f"  {mark}  {shown}  ({src_file.stat().st_size:,} bytes)")
             if args.apply:
                 dst_file.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src_file, dst_file)
