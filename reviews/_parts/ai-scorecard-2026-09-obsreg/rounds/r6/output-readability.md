@@ -1,0 +1,19 @@
+# output-readability — 출력·가독성
+검토자: Gemini 3.8 Flash (High) · conversation 8fa4f152-aa6e-4432-ad7f-2fb6f396b181 · 2026-09-16T17:37:00+09:00
+결과: pass
+요약: 초안과 결과 JSON의 모든 순위, 총점 및 팩터 점수(14개사 126개 팩터)가 완전히 일치하며, 렌더 매핑, 불확실성 노출, 낡은 비교 문장 부재, 단일 HTML 및 반응형 출력 스펙이 코드 및 산출물 전반에서 결함 없이 충족됨을 확인했습니다.
+
+## 항목
+| # | 항목 | 결과 | 근거(파일:행) |
+|---|---|---|---|
+| 1 | 초안↔결과 일치 | pass | drafts/ai-scorecard-2026-09-obsreg.md:24-51, scorecard/runs/ai-scorecard-2026-09-obsreg/results.json:1-150. 14개사 순위 및 총점(Alphabet·Amazon·Meta 15, Microsoft 14, TSMC·Anthropic 10, SpaceX·NVIDIA 9, Apple 8, Alibaba 7, Palantir 6, Tesla 5, OpenAI·Oracle 2)과 126개 팩터 점수·상태 전수 일치. SpaceX+xAI의 P2 계산(EV/매출 80.3x→-2, F6 -3, 총점 9)이 초안(drafts/ai-scorecard-2026-09-obsreg.md:44, 501, 512, 1184)과 결과에 정확히 반영됨. 재판정된 Anthropic F5(4, ok), OpenAI F5(1, ok), NVIDIA F7(-2, ok), Oracle F7(-2, ok), Anthropic F6(-4, ok)도 draft 표와 일치함. 모델 간 비교 라인의 하네스 미표기 표기(drafts/ai-scorecard-2026-09-obsreg.md:228, 351, 785, 992)가 meta·alibaba·openai·anthropic에 일관되게 적용됨. results_hash(20945e2af302fc047415ec0ebe6620949b9c7e4cd576e49da39b00ea19e8cbe5) 재계산 일치(engine.recompute_matches: True) 및 draft_hash 바이트 sha256(e53b00a221a6d4c91b97ceeb73636b502a2cdc00deff3671c7e4557fa9d03fb7) 일치 확인. |
+| 2 | 렌더 매핑 | pass | scripts/scorecard/render_html.py:446-480, 499-542, scripts/scorecard/render_md.py:13, 241-282, scripts/scorecard/render_common.py:179-215, 235-270. carried_score는 STATUS_LABEL을 거쳐 '승계' 및 헤더 승계 판단 안내로 정상 매핑됨. pending 메시지는 팩터 산식 텍스트(render_common.py:292, 314) 및 미완료 목록(render_html.py:422-434)에 정상 노출됨. unavailable 상태는 nonop_share 결측 시 경고로 누적되어 카드에 표시됨(calc_f6_params.py:103, render_html.py:464). superseded 판단은 대체 사유와 함께 취소선(~~...~~, del 태그)으로 독자에게 보임(render_common.py:62, 202-214, render_html.py:58). boundary 플래그는 F6의 경우 f6_boundary_flag를 통해 원자료 표 경계 열(⚠️) 및 산식에, F9는 G3 런웨이 임계 ±3% 산식에 표시됨(render_common.py:226, 235, render_html.py:509). demotion_sole_cause는 단독 강등 조건 존재 시 '하나가 강등을 정한다'로 산식에 포함됨(render_common.py:262). 누락이나 전도 없음. |
+| 3 | 불확실성 노출 | pass | drafts/ai-scorecard-2026-09-obsreg.md:63, 77, 1169, 1188, 1190, 1273-1283, 1333-1345, scripts/scorecard/render_html.py:461, 468, 511, 529, 531, 536, 563, 740, 797, scripts/scorecard/render_common.py:330, 360, 460-505. 승계 판단은 상태 표기 및 ⚠️ 승계된 판단 불릿으로 노출됨. legacy_unverified는 원자료 표 열별 관측 상태 요약과 미검증 입력 ⚠️ 경고로 명시됨. vendor_not_in_source_policy는 시총·NTM PER 옆 † 표기 및 26건 안내 박스로 노출됨. 이해상충(Claude=Anthropic, 비상장 자체 발표)은 개요, 알려진 한계, 제3자 재검토 약속, References, HTML 배너에 걸쳐 전면 노출됨. stored_vs_recomputed는 영업외 비중 저장값과 재계산값 차이(oracle, alibaba) 설명으로 노출됨. open_questions는 순현금 작업 정의 질문 3건이 문서와 HTML limitations에 리스트로 노출됨. 독자에게 점수가 서 있는 근거와 한계가 완전히 투명하게 보임. |
+| 4 | 낡은 비교 문장 | pass | drafts/ai-scorecard-2026-09-obsreg.md:28, 57-1077, 1068-1074, 1136, 1286-1329, research/ai-scorecard-2026-09-obsreg.md:725-726. 이전 라운드의 SpaceX 총점 11점이나 F6 -1 등 낡은 수치가 본문·표·부록 어디에도 잔존하지 않음. v1.5 기준선 인용부는 '기준선 v1.5 한 줄 요약(과거 기록):' 및 '과거 기록' 라벨로 현재 평가와 명확히 분리됨. C-03 확정 전 AA 종합 1위 잣대나 BEP 후퇴 시 바닥 -5 척도 등 이전 척도 서술은 superseded 취소선 및 정정 사유로 처리되어 현재 결과와 상충하지 않음. research 문서의 미결 결정 선택에도 C-24(P2 계산)가 정확히 반영됨. |
+| 5 | 출력 스펙 | pass | drafts/ai-scorecard-2026-09-obsreg.md:1347, scripts/scorecard/render_md.py:22, scripts/scorecard/render_html.py:75-243, 751-806, scripts/build_report.py:397-400, 902-905, scripts/scorecard/validate.py:241-257. 면책 및 투자 유의 문구가 draft 말미 및 HTML footer에 명시됨. 외부 CSS/JS 의존 없이 모든 스타일과 스크립트가 인라인 임베딩된 단일 HTML 구조를 준수함. 모바일 화면 폭(1180px, 860px, 640px, 520px)에 대응하는 반응형 미디어 쿼리가 구현되어 테이블 sticky 열 고정 및 핵심 열 필터링이 정상 작동함. ai_scorecard 계약에 따라 hero 이미지는 배제되고 빌더 및 검증기에서 에러 없이 단일 대시보드 HTML을 생성할 수 있도록 코드 레벨 검증 완료됨. |
+
+## 발견 사항
+- 없음.
+
+## 확인 못 한 것
+- 사용자 승인(approve) 전 단계이므로 실제 `build_scorecard`를 실행하여 `output/ai-scorecard-2026-09-obsreg.html` 파일을 생성하고 브라우저에서 시각적 렌더링 화면을 직접 렌더링 뷰어로 열람하는 것은 수행하지 못했습니다(빌드 금지 절대 규칙 준수). 다만 `render_html.py`, `render_common.py`, `validate.py`의 렌더링 및 검증 소스 코드를 통해 HTML 출력 스펙 및 구조를 코드 레벨에서 전수 검증했습니다.
