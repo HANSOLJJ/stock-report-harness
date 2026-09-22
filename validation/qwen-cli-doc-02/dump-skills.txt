@@ -1,0 +1,226 @@
+
+##### FILE: .claude/skills/score-approve/SKILL.md  (25 lines) #####
+   1| ---
+   2| name: score-approve
+   3| description: 사용자가 검토한 scorecard 실행을 승인한다. 규칙·자료·판단·결과·초안 해시에 승인을 결합하며, 사용자가 /score-approve <slug> 를 직접 지시했을 때만 실행한다.
+   4| ---
+   5| 
+   6| # 채점 승인 스킬
+   7| 
+   8| 승인은 사용자 행위다. 에이전트가 스스로 승인하거나 `score-goal` 안에서 자동 실행하지 않는다.
+   9| 
+  10| ## 절차
+  11| 
+  12| 1. `reviews/<slug>.md` 가 `status: pass` 이고 `python scripts/validate_report_contract.py <slug>` 가 통과하는지 확인한다.
+  13| 2. `scorecard/runs/<slug>/preview.md` 의 변경 요약(기존/제안 점수, 순위 영향, 변경 원인, 미결 항목)을 사용자에게 다시 보여준다.
+  14| 3. 사용자가 승인을 지시하면 실행한다: `python scripts/scorecard_cli.py approve <slug> --by "<사용자 이름>" [--note "..."]`.
+  15| 4. `approval.json` 의 approval_id 를 보고한다.
+  16| 
+  17| ## 제약
+  18| 
+  19| - 승인 뒤 자료·규칙·판단·초안이 바뀌면 승인은 무효다. 다시 리뷰·승인한다.
+  20| - 미결 규칙 결정이 남아 있어도 승인할 수 있다(미완료 기업은 순위 제외로 표시됨). 단 사용자가 그 사실을 알고 있어야 한다.
+  21| 
+  22| ## 완료 보고
+  23| 
+  24| approval_id, 승인자, 다음 명령 `/score-build <slug>`.
+  25| 
+
+##### FILE: .claude/skills/score-build/SKILL.md  (24 lines) #####
+   1| ---
+   2| name: score-build
+   3| description: 승인된 scorecard 실행을 단일 파일 대시보드 HTML(output/<slug>.html)과 scorecard/history.csv 로 빌드한다. /score-approve 뒤 /score-build <slug> 로 사용한다.
+   4| ---
+   5| 
+   6| # 채점 빌드 스킬
+   7| 
+   8| ## 절차
+   9| 
+  10| 1. `python scripts/build_report.py <slug>` 를 실행한다. 빌더가 report_type 으로 분기해 승인 해시를 검증하고 HTML·history.csv 를 만든 뒤 사후 검증을 돌린다.
+  11|    - `awaiting_user` 메시지가 나오면 승인이 없거나 무효다. 사용자에게 `/score-approve <slug>` 를 요청한다.
+  12| 2. `python scripts/validate_report_contract.py <slug> --require-html` 결과를 확인한다.
+  13| 3. `node server.js <slug>` 로 미리보기 URL 을 안내한다.
+  14| 4. 가능하면 Playwright 로 320/768/1280 폭에서 가로 넘침·탭 대상·순위표 모바일 열·행 탭 동작을 실측한다(dashboard-design 스킬 검증 절).
+  15| 
+  16| ## 제약
+  17| 
+  18| - HTML 을 손으로 쓰거나 고치지 않는다. 렌더러(`scripts/scorecard/render_html.py`)를 고치고 다시 빌드한다.
+  19| - 빌드 중 새 가격·근거를 수집하지 않는다. 승인된 입력에서만 생성한다.
+  20| 
+  21| ## 완료 보고
+  22| 
+  23| HTML 경로, history.csv 추가 행 수, 검증 결과, 미리보기 URL.
+  24| 
+
+##### FILE: .claude/skills/score-calculate/SKILL.md  (23 lines) #####
+   1| ---
+   2| name: score-calculate
+   3| description: scorecard 9개 factor 를 규칙·입력에서 결정론적으로 계산해 results.json 과 기준선 대비 preview.md 를 만든다. /score-research 뒤 /score-calculate <slug> 로 사용한다.
+   4| ---
+   5| 
+   6| # 채점 계산 스킬
+   7| 
+   8| ## 절차
+   9| 
+  10| 1. `python scripts/scorecard_cli.py calculate <slug>` 를 실행한다.
+  11| 2. 출력의 순위·미완료 기업·미결 결정(C-xx)을 읽는다. `scorecard/runs/<slug>/preview.md` 의 "필요한 규칙 결정" 을 사용자에게 그대로 전달한다.
+  12| 3. 사용자가 결정을 내리면 `run.json` 의 `decisions` 에 `{id, choice, rationale, decided_by, decided_at}` 를 추가하고 다시 `calculate` 한다. 결정 없이 기본값을 채택하지 않는다.
+  13| 4. 계산 후 `research` 가 오래됐다는 검증 오류가 나면 `research` 를 다시 생성한다(입력 해시 결속).
+  14| 
+  15| ## 제약
+  16| 
+  17| - 자동 산출 점수(results.json)를 손으로 고치지 않는다. 입력이나 규칙을 고쳐 재계산한다.
+  18| - 규칙 파일(`scorecard/rules/*.json`)을 이 단계에서 바꾸지 않는다. 규칙 변경은 새 버전과 사용자 승인이 필요하다.
+  19| 
+  20| ## 완료 보고
+  21| 
+  22| 순위표 요약, 미완료 기업과 사유, 필요한 결정, 다음 명령 `/score-draft <slug>`.
+  23| 
+
+##### FILE: .claude/skills/score-draft/SKILL.md  (23 lines) #####
+   1| ---
+   2| name: score-draft
+   3| description: scorecard results.json 에서 Markdown 초안(drafts/<slug>.md)을 생성한다. /score-calculate 뒤 /score-draft <slug> 로 사용한다.
+   4| ---
+   5| 
+   6| # 채점 초안 스킬
+   7| 
+   8| ## 절차
+   9| 
+  10| 1. `python scripts/scorecard_cli.py draft <slug>` 를 실행한다.
+  11| 2. 초안은 생성물이다. 손으로 문장을 넣지 않는다. 해석·설명을 추가하려면 렌더러(`scripts/scorecard/render_md.py`)를 고치거나 run 에 주석 필드를 두고 재생성한다.
+  12| 3. 필수 섹션: `# 제목` 1개, `## 개요`, `## 종합 순위표`, `## 기업별 상세`, `## 지표 원자료`, `## 방법과 규칙`, `## References`.
+  13| 4. `python scripts/validate_report_contract.py <slug>` 로 draft 결속(results_hash)을 확인한다. 리뷰 파일이 없으면 그 오류만 남는 것이 정상이다.
+  14| 
+  15| ## 제약
+  16| 
+  17| - 다른 기업의 점수·순위를 문장으로 인용하지 않는다. 비교 문장은 결과에서 생성한다.
+  18| - 투자 권유·수익 보장 표현 금지. 통화는 $M/$B/$T.
+  19| 
+  20| ## 완료 보고
+  21| 
+  22| draft 경로, 검증 결과, 다음 명령 `/score-review <slug>`.
+  23| 
+
+##### FILE: .claude/skills/score-goal/SKILL.md  (26 lines) #####
+   1| ---
+   2| name: score-goal
+   3| description: 종단 간 scorecard 파이프라인. 자연어 요청 하나로 plan → research → calculate → draft → review 를 한 턴에 실행하고 사용자 승인(awaiting_user)에서 멈춘다. 승인과 빌드는 사용자 결정 뒤 /score-approve, /score-build 로 진행한다.
+   4| ---
+   5| 
+   6| # 채점 목표 스킬
+   7| 
+   8| ```
+   9| plan → research → calculate → draft → review → (awaiting_user) → approve → build
+  10| ```
+  11| 
+  12| ## 규칙
+  13| 
+  14| 1. review 까지는 한 턴에서 연속 실행한다. 중간 보고로 턴을 끊지 않는다.
+  15| 2. `Skill` 도구로 하위 스킬을 호출하지 않는다. 각 `score-*` SKILL.md 의 절차를 인라인으로 수행한다.
+  16| 3. 규칙 결정(C-xx)이 필요하면 사용자에게 묻지 말고 미결 상태 그대로 계산한다. 미완료 기업은 순위에서 제외되며 preview.md 에 필요한 결정이 남는다.
+  17| 4. review 가 needs_fix 면 해당 단계로 돌아가 최대 3회 수정·재리뷰한다. 같은 차단 이슈가 3회면 blocked 로 보고한다.
+  18| 5. review pass 뒤 **멈춘다**. 승인은 사용자 행위다. approve/build 를 자동 실행하지 않는다.
+  19| 
+  20| ## 완료 보고 (review 후 한 번)
+  21| 
+  22| - 산출물 목록(plan, run 입력, research, results/preview, draft, review)
+  23| - 순위 요약과 미완료 기업·사유
+  24| - 필요한 규칙 결정 목록(C-xx, 선택지, 영향 기업)
+  25| - 다음 행동: 사용자 승인 `/score-approve <slug>` → `/score-build <slug>`
+  26| 
+
+##### FILE: .claude/skills/score-plan/SKILL.md  (31 lines) #####
+   1| ---
+   2| name: score-plan
+   3| description: AI 기업 9-factor 채점(ai_scorecard) 실행을 생성한다. /score-plan "2026-09 기준선 재계산" 처럼 사용하며 plan/<slug>.md 와 scorecard/runs/<slug>/ 입력(기준선 승계)을 만든다.
+   4| ---
+   5| 
+   6| # 채점 실행 생성 스킬
+   7| 
+   8| `plan/<slug>.md` 와 `scorecard/runs/<slug>/{run,observations,judgments,sources}.json` 을 생성한다. 이후 단계의 단일 기준이다.
+   9| 
+  10| ## 절차
+  11| 
+  12| 1. 요청을 파싱한다. 제목, 분석 기준일(`as_of`, 없으면 기준선 날짜 2026-09-02), 대상 기업(없으면 기준선 14개사), 실행 단위 규칙 결정(사용자가 명시한 C-xx 선택만).
+  13| 2. slug 는 `ai-scorecard-<YYYY-MM>-<label>` 형식으로 정한다 (예: `ai-scorecard-2026-09-baseline`).
+  14| 3. 기준선이 없으면 먼저 `python scripts/scorecard_cli.py import-baseline` 을 실행한다 (원본 HTML/MD 경로가 다르면 `--html`, `--md`).
+  15| 4. 실행한다:
+  16|    ```
+  17|    python scripts/scorecard_cli.py init <slug> --as-of <YYYY-MM-DD> --title "<제목>" --request "<요청 원문>" [--purpose "..."] [--companies a,b] [--decision C-16=hold --rationale "..." --by <이름>]
+  18|    ```
+  19|    `--decision` 은 사용자가 근거와 함께 명시적으로 지시했을 때만 넣는다. 기본은 미결(needs_rule_decision).
+  20| 5. 이 스킬은 research/calculate 로 진행하지 않는다. `score-goal` 에서 호출된 경우에만 즉시 다음 단계로 간다.
+  21| 
+  22| ## 제약
+  23| 
+  24| - plan 을 손으로 쓰지 않는다. `init` 이 생성한 파일만 쓴다.
+  25| - 기업 ID 는 `scorecard/companies.json` 에 있는 것만 쓴다. 새 기업은 레지스트리에 먼저 등록한다(안정 ID, 상장 여부, share_basis, 통화).
+  26| - 투자 권유·수익 보장 표현을 쓰지 않는다.
+  27| 
+  28| ## 완료 보고
+  29| 
+  30| plan 경로, run 디렉터리, 기준일, 기업 수, 적용한 결정 목록, 다음 명령 `/score-research <slug>`.
+  31| 
+
+##### FILE: .claude/skills/score-research/SKILL.md  (29 lines) #####
+   1| ---
+   2| name: score-research
+   3| description: scorecard 실행의 원자료(observations)·판단(judgments)·출처를 엄격 검증하고 research/<slug>.md 를 생성한다. /score-plan 뒤 /score-research <slug> 로 사용한다.
+   4| ---
+   5| 
+   6| # 채점 리서치 스킬
+   7| 
+   8| 실행 입력을 검증하고 `research/<slug>.md` 를 만든다. 새 자료를 넣는 단계이기도 하다.
+   9| 
+  10| ## 절차
+  11| 
+  12| 1. `plan/<slug>.md` 와 `scorecard/runs/<slug>/` 가 있는지 확인한다.
+  13| 2. 새 원자료가 있으면 `observations.json` 에 추가한다. 필수: `metric`(카탈로그), `value`, `unit`, `as_of`, `kind`, `source_id`(sources.json 에 등록), `status`(새 자료는 `verified`), `basis`(주가·EPS 는 `currency`·`share_basis`, NTM EPS 는 `quarters` 4개 YYYYQn).
+  14|    - 수집 실패는 `collection_failed`, 확인된 비공개는 `not_disclosed`, 기간·범위가 다르면 `incompatible_basis`. 다른 기간·지표로 조용히 대체하지 않는다.
+  15|    - 출처 없는 URL 을 만들지 않는다. URL 이 없으면 `url: null`.
+  16| 3. 새 정성 판정이 있으면 `judgments.json` 에 `status: new` 로 교체한다. 근거(`evidence`)·검토자·검토일 필수. F3 는 criteria, F5 는 grade, F7 은 matrix, F9 는 gate_inputs 로 입력하고 점수는 비운다.
+  17| 4. 실행한다: `python scripts/scorecard_cli.py research <slug>`.
+  18|    스키마 오류(`[FAIL]`)가 나면 입력을 고친다. 임의 해석으로 통과시키지 않는다.
+  19| 5. `research/<slug>.md` 의 "미결 항목" 을 읽고 unknown 입력·자료 대기·규칙 결정을 보고한다.
+  20| 
+  21| ## 제약
+  22| 
+  23| - 승계(carried) 판단을 새로 검증된 것처럼 바꾸지 않는다. 재검토했으면 `status: new`, `reviewed_at` 갱신.
+  24| - LLM 이 제안한 판정은 사람이 확인하기 전까지 `status: new` 로 확정하지 않는다(evidence 에 "후보" 표시).
+  25| 
+  26| ## 완료 보고
+  27| 
+  28| research 경로, 관측·판단 건수, 미결 항목, 다음 명령 `/score-calculate <slug>`.
+  29| 
+
+##### FILE: .claude/skills/score-review/SKILL.md  (29 lines) #####
+   1| ---
+   2| name: score-review
+   3| description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성 네 영역과 체크리스트 Q01~Q23 을 별도 세션 리뷰어로 수행하고 reviews/<slug>.md 를 pass|needs_fix|blocked 로 기록한다.
+   4| ---
+   5| 
+   6| # 채점 리뷰 스킬
+   7| 
+   8| ## 절차
+   9| 
+  10| 1. `python scripts/scorecard_cli.py review-template <slug>` 로 `reviews/<slug>.md` 뼈대를 만든다(이미 있으면 `--force` 는 리뷰를 새로 시작할 때만).
+  11| 2. 네 영역을 가급적 별도 Task/서브에이전트 세션에서 수행한다. 각 리뷰어에게 읽을 파일과 출력 형식(RESULT / FINDINGS / CHECKLIST)을 지정한다.
+  12|    - 사실·출처: `fact-checker` — 숫자·기업 귀속·기준 시점·출처·부재 주장·이해상충.
+  13|    - 재무 계산: EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호. results.json 의 calc.path 대조.
+  14|    - 규칙 일관성: 판정 입력↔규칙 판정표, 승계 표시, 미결 결정 처리, 체크리스트 Q01~Q23 전체.
+  15|    - 출력·가독성: `report-designer` — draft·HTML(있으면) 숫자 일치, 낡은 비교 문장(C-19), dashboard-design 기준. 토스 셸 요건은 이 유형에 적용하지 않는다.
+  16| 3. 리뷰 파일의 "검토 영역" 표에 검토자·결과·요약을, "체크리스트" 표에 Q01~Q23 결과와 근거를 채운다. not_applicable 도 사유를 쓴다. 수행하지 않은 검토를 pass 로 쓰지 않는다.
+  17| 4. 네 영역 모두 pass 이고 fail 항목이 없을 때만 frontmatter `status: pass`. 하나라도 needs_fix 면 `needs_fix` 로 두고 상위 단계(research/calculate/draft/렌더러)로 돌아가 수정 후 재생성·재리뷰한다. 자료·규칙·판단·초안이 바뀌면 리뷰는 무효이므로 템플릿의 `results_hash`·`draft_hash` 를 갱신한다(`review-template --force` 후 다시 채움).
+  18| 5. `python scripts/validate_report_contract.py <slug>` 를 실행해 통과를 확인한다.
+  19| 
+  20| ## 상태
+  21| 
+  22| - `pass`: 승인 요청 가능.
+  23| - `needs_fix`: 생성 단계에서 고칠 수 있는 문제.
+  24| - `blocked`: 같은 차단 이슈 3회 반복 또는 외부 자료·권한 한계.
+  25| 
+  26| ## 완료 보고
+  27| 
+  28| 리뷰 상태, 영역별 결과, 수정 목록, pass 이면 사용자에게 `/score-approve <slug>` 결정을 요청한다. 자동으로 승인하지 않는다.
+  29| 

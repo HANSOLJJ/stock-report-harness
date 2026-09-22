@@ -1,0 +1,157 @@
+======================================================================
+scores.json top type: dict
+   schema                   = 'scorecard.baseline/1'
+   baseline_id              = 'v1.5'
+   as_of                    = '2026-09-02'
+   rule_version             = 'v1.5'
+   source                   dict   len=4
+   status                   = 'legacy_unverified'
+   companies                list   len=14
+--- key paths (depth<=4) ---
+   schema                                                       str
+   baseline_id                                                  str
+   as_of                                                        str
+   rule_version                                                 str
+   source                                                       dict
+   source.html                                                  str
+   source.html_sha256                                           str
+   source.md                                                    str
+   source.md_sha256                                             str
+   status                                                       str
+   companies                                                    list
+   companies[].company_id                                       str
+   companies[].display_name_raw                                 str
+   companies[].type_raw                                         str
+   companies[].cap_usd_t                                        float
+   companies[].rank_raw                                         int
+   companies[].tag                                              str
+   companies[].scores                                           dict
+   companies[].scores.F1                                        int
+   companies[].scores.F2                                        int
+   companies[].scores.F3                                        int
+   companies[].scores.F4                                        int
+   companies[].scores.F5                                        int
+   companies[].scores.F6                                        int
+   companies[].scores.F7                                        int
+   companies[].scores.F8                                        int
+   companies[].scores.F9                                        int
+   companies[].moat                                             int
+   companies[].trap                                             int
+   companies[].total                                            int
+   companies[].evidence                                         dict
+   companies[].evidence.F1                                      list
+   companies[].evidence.F2                                      list
+   companies[].evidence.F3                                      list
+   companies[].evidence.F4                                      list
+   companies[].evidence.F5                                      list
+   companies[].evidence.F6                                      list
+   companies[].evidence.F7                                      list
+   companies[].evidence.F8                                      list
+   companies[].evidence.F9                                      list
+   companies[].md_crosscheck                                    str
+
+======================================================================
+observations.json top type: dict
+   schema                   = 'scorecard.observations/1'
+   run_id                   = 'baseline-v1.5'
+   as_of                    = '2026-09-02'
+   items                    list   len=241
+   note                     = 'v1.5 HTML/규칙 원문에서 이관. status=legacy_unverified 는 이번 실행에서 재검증되지 않은 과거 기록'
+--- key paths (depth<=4) ---
+   schema                                                       str
+   run_id                                                       str
+   as_of                                                        str
+   items                                                        list
+   items[].observation_id                                       str
+   items[].company_id                                           str
+   items[].metric                                               str
+   items[].value                                                float
+   items[].unit                                                 str
+   items[].as_of                                                str
+   items[].kind                                                 str
+   items[].source_id                                            str
+   items[].status                                               str
+   items[].basis                                                NoneType
+   items[].raw                                                  str
+   items[].note                                                 str
+   note                                                         str
+
+======================================================================
+triggers.json top type: dict
+   schema                   = 'scorecard.triggers/1'
+   baseline_id              = 'v1.5'
+   items                    list   len=39
+--- key paths (depth<=4) ---
+   schema                                                       str
+   baseline_id                                                  str
+   items                                                        list
+   items[].trigger_id                                           str
+   items[].title                                                str
+   items[].why                                                  str
+   items[].impact_raw                                           str
+   items[].status                                               str
+   items[].note                                                 str
+
+======================================================================
+observations count: 241
+sample[0]:
+{
+  "observation_id": "amazon.market_cap.d.v15",
+  "company_id": "amazon",
+  "metric": "market_cap",
+  "value": 2820000000000.0,
+  "unit": "USD",
+  "as_of": "2026-09-02",
+  "kind": "actual",
+  "source_id": "SRC-v15-html",
+  "status": "legacy_unverified",
+  "basis": null,
+  "raw": "cap 2.82T",
+  "note": "D.cap (조 달러)"
+}
+sample[1]:
+{
+  "observation_id": "alphabet.market_cap.d.v15",
+  "company_id": "alphabet",
+  "metric": "market_cap",
+  "value": 4173000000000.0,
+  "unit": "USD",
+  "as_of": "2026-09-02",
+  "kind": "actual",
+  "source_id": "SRC-v15-html",
+  "status": "legacy_unverified",
+  "basis": null,
+  "raw": "cap 4.173T",
+  "note": "D.cap (조 달러)"
+}
+observation field frequency:
+   observation_id                241 / 241
+   company_id                    241 / 241
+   metric                        241 / 241
+   value                         241 / 241
+   unit                          241 / 241
+   as_of                         241 / 241
+   kind                          241 / 241
+   source_id                     241 / 241
+   status                        241 / 241
+   basis                         241 / 241
+   raw                           241 / 241
+   note                          241 / 241
+======================================================================
+triggers count: 39
+sample[0]:
+{
+  "trigger_id": "TRIG-001",
+  "title": "🆕 NVIDIA–Hugging Face 클로징",
+  "why": "9/2 확정 계약·9/3 발표($11.9B + 리텐션 $1.0B) — 클로징 2027 상반기, 규제 조건부 · 트리거를 ⑤→①로 정정: 개발자 1,800만은 공짜 사용자(체크리스트 15)",
+  "impact_raw": "클로징 시 ① 부품 상한(2) 재검토 · 규제 불허 시 무효 · HF 중립성 훼손 시 역효과",
+  "status": "legacy",
+  "note": "impact_raw 의 예상 점수는 저장값이 아니라 원문 문장(C-14). 사건 확인 후 현재 규칙으로 재계산"
+}
+trigger field frequency:
+   trigger_id                     39 / 39
+   title                          39 / 39
+   why                            39 / 39
+   impact_raw                     39 / 39
+   status                         39 / 39
+   note                           39 / 39

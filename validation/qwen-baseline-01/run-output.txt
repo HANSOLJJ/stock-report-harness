@@ -1,0 +1,114 @@
+[WARN] 카드 기업명 미매핑: '🍎 Apple' (헤더 '### 공동 8위 — 🍎 Apple · 조정 10점 (과점 15 / 함정 -5)')
+==============================================================================
+원본 파싱: 순위표 14개 기업, 카드 13개 기업, MD 총 1146줄
+트리거 섹션 시작줄: 1100
+기준선: 기업 14, 관측 241, 트리거 39, companies.json 14, sources 3
+
+==============================================================================
+[A] F1~F9 · 합계 · 순위 대조 (원본 순위표 vs 원본 카드 vs scores.json)
+   대조한 값: 169개 (14사 × 9 factor + 4 합계/순위)
+
+==============================================================================
+[B] 기준선 내부 산술 · 순위 공식 재계산
+   산술·순위·범위·crosscheck 검사 완료 (14사)
+
+==============================================================================
+[C] 관측/트리거 출처 ID · 원문 위치 추적
+   sources.json source_id: ['SRC-v15-html', 'SRC-v15-md', 'SRC-v15-rule']
+   observations source_id 분포: {'SRC-v15-html': 223, 'SRC-v15-rule': 18}
+   note 에 원문 위치 표식(D./VAL./EARN./FIN./BORR./TRIG.) 없는 관측: 227 / 241
+   basis 비어 있는 관측: 217 / 241
+   raw 문자열이 원본 MD 본문에서 추적되지 않는 관측: 80 / 241
+      - amazon.market_cap.d.v15 : 'cap 2.82T'
+      - alphabet.market_cap.d.v15 : 'cap 4.173T'
+      - microsoft.market_cap.d.v15 : 'cap 3.6T'
+      - meta.market_cap.d.v15 : 'cap 1.47T'
+      - apple.market_cap.d.v15 : 'cap 4.43T'
+      - alibaba.market_cap.d.v15 : 'cap 0.294T'
+      - anthropic.market_cap.d.v15 : 'cap 0.965T'
+      - nvidia.market_cap.d.v15 : 'cap 5.45T'
+      - oracle.market_cap.d.v15 : 'cap 0.444T'
+      - palantir.market_cap.d.v15 : 'cap 0.418T'
+      - openai.market_cap.d.v15 : 'cap 0.852T'
+      - alibaba.nonop_share.v15 : '54% ⚠️'
+      - alibaba.ps_ratio.v15 : '1.8'
+      - meta.nonop_share.v15 : '1%'
+      - meta.ps_ratio.v15 : '6.6'
+      - nvidia.nonop_share.v15 : '14% ᵃ'
+      - tsmc.nonop_share.v15 : '7%'
+      - alphabet.nonop_share.v15 : '51% ⚠️'
+      - alphabet.ps_ratio.v15 : '9.3'
+      - microsoft.nonop_share.v15 : '6%'
+      - amazon.nonop_share.v15 : '46% ⚠️'
+      - amazon.ps_ratio.v15 : '3.6'
+      - apple.nonop_share.v15 : '1%'
+      - oracle.ps_ratio.v15 : '6.6'
+      - palantir.nonop_share.v15 : '14% ᵇ'
+      - spacex-xai.ntm_per.v15 : '111'
+      - spacex-xai.ttm_per.v15 : '적자'
+      - spacex-xai.nonop_share.v15 : '적자'
+      - tesla.nonop_share.v15 : '18% ᵇ'
+      - apple.runway_years.v15 : '∞'
+      - apple.credit_rating.v15 : 'AA급'
+      - apple.offbalance_note.v15 : '미확인'
+      - nvidia.runway_years.v15 : '∞'
+      - microsoft.runway_years.v15 : '∞'
+      - alphabet.runway_years.v15 : '∞'
+      - alphabet.credit_rating.v15 : 'AA급'
+      - meta.runway_years.v15 : '∞'
+      - meta.credit_rating.v15 : 'AA-'
+      - tsmc.runway_years.v15 : '∞'
+      - tsmc.offbalance_note.v15 : '미확인'
+   트리거 필드: {'trigger_id': 39, 'title': 39, 'why': 39, 'impact_raw': 39, 'status': 39, 'note': 39}
+
+==============================================================================
+[D] 자료 상태 · 미수집→0 치환 · 승격 검사
+   status 분포: {'legacy_unverified': 212, 'not_disclosed': 24, 'parse_failed': 1, 'incompatible_basis': 4}
+   kind   분포: {'actual': 171, 'estimate': 12, 'derived': 14, 'text': 42, 'run_rate': 2}
+   unit   분포: {'USD': 110, 'USD/share': 12, 'ratio': 63, 'years': 14, 'text': 42}
+   verified 로 승격된 관측: 0건
+   value==0 관측: 0건
+   value==null 관측: 25건
+   파싱실패 보존 항목 amazon.contracted_revenue.v15 -> value=None status=parse_failed raw='AWS 백로그(수백 $B급) — 숫자 미공시'
+
+==============================================================================
+[E] 기업 ID · 기간 · 단위 · 통화 · 실적/전망/런레이트 구분
+   companies.json: 14, scores.json: 14, observations distinct: 14
+   as_of: {'scores.json': '2026-09-02', 'observations.json': '2026-09-02', 'companies.json': '2026-09-02', 'triggers.json(baseline_id)': 'v1.5'}
+   관측 as_of 분포: {'2026-09-02': 241}
+   관측의 기간 관련 필드: 없음
+   kind 값: {'actual': 171, 'estimate': 12, 'derived': 14, 'text': 42, 'run_rate': 2}
+   metric 이 런레이트/전망성인데 kind=actual 인 관측: 0건
+   unit 값: {'USD': 110, 'USD/share': 12, 'ratio': 63, 'years': 14, 'text': 42}
+   observation_id 중복: 없음
+   trigger_id 중복: 없음
+   (company,metric,as_of) 중복 조합: 12개
+      - ('amazon', 'market_cap', '2026-09-02') x2
+      - ('alphabet', 'market_cap', '2026-09-02') x2
+      - ('microsoft', 'market_cap', '2026-09-02') x2
+      - ('tsmc', 'market_cap', '2026-09-02') x2
+      - ('meta', 'market_cap', '2026-09-02') x2
+      - ('apple', 'market_cap', '2026-09-02') x2
+      - ('alibaba', 'market_cap', '2026-09-02') x2
+      - ('nvidia', 'market_cap', '2026-09-02') x2
+      - ('oracle', 'market_cap', '2026-09-02') x2
+      - ('palantir', 'market_cap', '2026-09-02') x2
+      - ('spacex-xai', 'market_cap', '2026-09-02') x2
+      - ('tesla', 'market_cap', '2026-09-02') x2
+
+==============================================================================
+[결과] 총 finding 370건
+   심각도: {'info': 65, 'high': 71, 'medium': 232, 'low': 2}
+   원문 위치 추적 불가              227
+   원본 내부 불일치                65
+   점수 이관 오류                 40
+   합계/순위 이관 오류              26
+   점수 대조                    4
+   트리거 추적 필드 누락             3
+   자료 상태 계약 위반              1
+   null 값 상태 부적절            1
+   기업 ID 목록/순서 불일치          1
+   표시명 불일치                  1
+   원자료 기간 필드 누락             1
+
+findings 저장: C:\Users\noble\orca\workspaces\stock-report-harness\scarpper\validation\qwen-baseline-01\findings.json

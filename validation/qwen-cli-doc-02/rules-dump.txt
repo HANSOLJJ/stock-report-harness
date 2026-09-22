@@ -1,0 +1,54 @@
+top-level keys: ['checklist', 'decisions', 'factors', 'note', 'policies', 'rule_version', 'schema', 'scoring', 'source', 'status']
+schema: scorecard.rules/1 | version: None | as_of: None
+
+checklist count: 23
+checklist ids: ['Q01', 'Q02', 'Q03', 'Q04', 'Q05', 'Q06', 'Q07', 'Q08', 'Q09', 'Q10', 'Q11', 'Q12', 'Q13', 'Q14', 'Q15', 'Q16', 'Q17', 'Q18', 'Q19', 'Q20', 'Q21', 'Q22', 'Q23']
+Q01~Q23 기대 23개 vs 실제 23개
+기대에 없는데 있는 것: []
+기대하는데 없는 것: []
+
+decisions type: list
+  C-01   status=documented blocking=None   summary=원본 AGENTS.md 의 체크리스트 17·게이트 2단계·별표 A~F·Meta 1위는 낡은 안내
+  C-02   status=resolved   blocking=None   summary=F6·F9 완전 자동(HANDOVER) vs 비상장 F6·F9 정성 수동(구현계획)
+  C-03   status=pending    blocking=True   summary=F2 경로 수→점수 매핑(0→2, 1→3, 2→4, AA 1위→5)이 완결되지 않았고 NVIDIA·TSMC 5점을 재현하지 못
+  C-04   status=pending    blocking=False  summary=별표 J 는 신용등급의 점수 개입을 금지하나 G3 는 등급 기반 조달 여력을 완충에 넣음
+  C-05   status=pending    blocking=True   summary=G1 실패 뒤 G3·G4 를 추가 감점하는지 진단만 하는지 원문이 혼재
+  C-06   status=pending    blocking=True   summary=손실률 -10%·-30% 경계 중첩, FCF/영업손익 0, 완충 잠식, G2 안정/악화의 기계 정의 부재. BEP 후퇴→-5 
+  C-07   status=pending    blocking=False  summary=G4 는 RPO/B종인데 Anthropic·OpenAI 는 ARR/연환산 약정으로 계산됨
+  C-08   status=pending    blocking=False  summary=별표 H 이탈 가능성 본문과 Bedrock·광고주 예시가 다름. 3문/4문 참조 혼재. 원문 별표 G 는 OpenAI→Orac
+  C-09   status=pending    blocking=False  summary=Anthropic·OpenAI F7 -1 의 매트릭스 입력(환류 여부)이 원문에 없음
+  C-10   status=documented blocking=None   summary=가격 설명·경계 트리거에 옛 경계 20·25·35·60·90 이 남음
+  C-11   status=pending    blocking=False  summary=영업외 비중을 F7 근거로 이월한다는 설명이 별표 I 와 충돌
+  C-12   status=pending    blocking=False  summary=비상장 F6 가 배수만 vs TTM 보정·이익·자본효율로 점수를 가름이 공존
+  C-13   status=pending    blocking=True   summary=TSMC·Alibaba 는 연간 EPS 가중 근사를 NTM 으로 사용. 신규 계약은 정확한 4분기만 허용
+  C-14   status=documented blocking=None   summary=트리거에 낡은 기존/예상 점수(NVIDIA F7 -3→-4 등) 잔존
+  C-15   status=documented blocking=None   summary=Meta 리스 개시 후 연 소진 가산 트리거는 A종 이중 계상 금지와 충돌
+  C-16   status=pending    blocking=True   summary=G4 판정 불가→하향 규칙과 Alibaba·SpaceX 보류 유지 사례가 다름
+  C-17   status=documented blocking=None   summary=기준일 9/2 인데 9/3~9/7 사건이 섞임
+  C-18   status=documented blocking=None   summary=참조 기업(Moonshot) 포함 여부와 클라우드 표의 기간 불일치
+  C-19   status=documented blocking=None   summary=유일·최저 등 낡은 비교 문장
+  C-20   status=pending    blocking=False  summary=Anthropic 단일 분기 영업흑자를 TTM 원칙과 달리 G1 통과 근거로 씀
+  C-21   status=documented blocking=None   summary=가격 공급 정책(yfinance vs FMP)과 stock/scorecard 적용 범위
+  C-22   status=documented blocking=None   summary=총점 설명이 음수 함정을 빼는 것처럼 읽히고 명목 -20 은 F7 하한 -3 과 다름
+  개수: 22
+
+factors:
+  F1   mode=manual           range=[0, 5]     pending=None
+  F2   mode=paths            range=[0, 5]     pending=None
+  F3   mode=ladder           range=[1, 5]     pending=None
+  F4   mode=manual           range=[0, 5]     pending=None
+  F5   mode=formula          range=[0, 5]     pending=None
+  F6   mode=per_band         range=[-5, 0]    pending=None
+  F7   mode=matrix           range=[-3, 0]    pending=None
+  F8   mode=manual           range=[-5, 0]    pending=None
+  F9   mode=gates            range=[-5, 0]    pending=None
+
+policies keys: ['f6', 'f9']
+source: {"file": "AI기업_채점규칙_v1.5.md", "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb", "rule_date": "2026-09-02", "framework_origin": "박종훈 「Part 5 — 8강 다섯 가지 승리공식」(2026-07)"}
+
+문서(README/AGENTS)가 미결로 주장: ['C-03', 'C-05', 'C-06', 'C-13', 'C-16']
+rules 에서 pending/blocking 인 것: ['C-03', 'C-04', 'C-05', 'C-06', 'C-07', 'C-08', 'C-09', 'C-11', 'C-12', 'C-13', 'C-16', 'C-20']
+문서에 있는데 rules 에 pending 아님: []
+rules 에 pending 인데 문서에 없음: ['C-04', 'C-07', 'C-08', 'C-09', 'C-11', 'C-12', 'C-20']
+
+factor 별 pending 결정 연결:
