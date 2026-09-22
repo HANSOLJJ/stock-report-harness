@@ -1,0 +1,455 @@
+{
+ "stage": "start",
+ "head": "ea1ecf095c66cb92a563c4ee785a2f5ae0e67143",
+ "status": [
+  "?? package-lock.json",
+  "?? research/ai-scorecard-2026-09-baseline.md",
+  "?? reviews/ai-scorecard-2026-09-baseline.md"
+ ],
+ "files": [
+  {
+   "rel": ".claude/commands/score-approve.md",
+   "sha256": "50f2a064366450cca66cf7f169d729f21d11d86f610c016e118e3bf4134dda52",
+   "bytes": 592,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/score-build.md",
+   "sha256": "06412d6e075e3b59299b968b78331d741380408ad49a2476becf0888d33e1af8",
+   "bytes": 544,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/score-calculate.md",
+   "sha256": "4340a616974cc08a24d2d02101c5f40ca294e8c8ddcd71e6dd3547cb37a33786",
+   "bytes": 517,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/score-draft.md",
+   "sha256": "810bfb12d1493e5b759a23767d4a93013c54029c3f0369263967f61ad52b9bdb",
+   "bytes": 434,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/score-goal.md",
+   "sha256": "49b985ce448d3c64e3680f58312652bbc5665ff8854a8fe1d0b251fb66370f9f",
+   "bytes": 504,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/score-plan.md",
+   "sha256": "3a496d0182783bc0c90ecdce4ef3992a5bc530aacdf928cbc0cb2d4c5dfac0b4",
+   "bytes": 556,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/score-research.md",
+   "sha256": "d939d94cf896f14fbffa89f222185af44dd4c3c13c7b0ca77c793742ec6c0b79",
+   "bytes": 484,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/score-review.md",
+   "sha256": "1daf43d552a0ab8563f91bdf310edd99439b88772ef3d26b9f80ad9a2858ab1c",
+   "bytes": 512,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/stock-build.md",
+   "sha256": "2ff381b369415833db0d24c4ddfcab28db077c5bb34d8ed73ae371991ae93181",
+   "bytes": 638,
+   "lines": 14
+  },
+  {
+   "rel": ".claude/commands/stock-draft.md",
+   "sha256": "941a96b7306823268f4fc4a4543064aec61d6b08038e0bd68401c244e2bb0ca1",
+   "bytes": 380,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/stock-image.md",
+   "sha256": "40969bbe016ed75189ec1d1e193cb4b4cdb5d0a755970722ec761409cdaff168",
+   "bytes": 536,
+   "lines": 13
+  },
+  {
+   "rel": ".claude/commands/stock-plan.md",
+   "sha256": "3bc3e0e12fa14386232b143104b2f4a6ee445f8df43d93b86d8e10f878dd2a7e",
+   "bytes": 459,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/stock-research.md",
+   "sha256": "dfc088c97585c71a85758485f9112fa87fa2644a4ec08eb2d0ffb33275b3c38b",
+   "bytes": 420,
+   "lines": 12
+  },
+  {
+   "rel": ".claude/commands/stock-review.md",
+   "sha256": "536839328ae7e739bac52e98a8d823400b07a7eb96af400131a26d49cdc57d2b",
+   "bytes": 547,
+   "lines": 14
+  },
+  {
+   "rel": ".claude/settings.json",
+   "sha256": "3e0138016d937f848a72602bee87685d2e6ad3a4d2fac993400fef8ed0427b32",
+   "bytes": 3742,
+   "lines": 111
+  },
+  {
+   "rel": ".claude/skills/score-approve/SKILL.md",
+   "sha256": "827d6b62fc6f7c3dd29d32799c4f5d563f6b5cbd853206da80fa35ec76ddfb46",
+   "bytes": 1278,
+   "lines": 25
+  },
+  {
+   "rel": ".claude/skills/score-build/SKILL.md",
+   "sha256": "278908043385064fcbc1ec989f2dc803930a9f2ea545aa1f26f6e6a780c5f287",
+   "bytes": 1251,
+   "lines": 24
+  },
+  {
+   "rel": ".claude/skills/score-calculate/SKILL.md",
+   "sha256": "b807222a3f0be0aa9655f8ac2efe04e58a61a2e53a6d760174fe2e6e3de2104f",
+   "bytes": 1268,
+   "lines": 23
+  },
+  {
+   "rel": ".claude/skills/score-draft/SKILL.md",
+   "sha256": "f6c0a4006ee9b8e71942dc963efc9597fa1e3e45f0a705c972f45378c41dd8de",
+   "bytes": 1105,
+   "lines": 23
+  },
+  {
+   "rel": ".claude/skills/score-goal/SKILL.md",
+   "sha256": "a83268055a26c1ac225c5cc8360213bec375b02c0caa9057825bf19d665d8f70",
+   "bytes": 1462,
+   "lines": 26
+  },
+  {
+   "rel": ".claude/skills/score-plan/SKILL.md",
+   "sha256": "f26d6830304d4d082eb0c9adb92f75b07dc8cb0d5003c4dd54e3edf8b584f59e",
+   "bytes": 1878,
+   "lines": 31
+  },
+  {
+   "rel": ".claude/skills/score-research/SKILL.md",
+   "sha256": "13138e722608417686db11097ef814c7be3dcdeff3afba8072bd03ef0ed88e3e",
+   "bytes": 1951,
+   "lines": 29
+  },
+  {
+   "rel": ".claude/skills/score-review/SKILL.md",
+   "sha256": "e89cde31549eb1647feebb743b59149ed3085937195042e473b28b802162b349",
+   "bytes": 2344,
+   "lines": 29
+  },
+  {
+   "rel": ".claude/skills/stock-build/SKILL.md",
+   "sha256": "3958561a8103822012429755a714c7226abf32a8348cd82419d4d38413a3f502",
+   "bytes": 4729,
+   "lines": 69
+  },
+  {
+   "rel": ".claude/skills/stock-draft/SKILL.md",
+   "sha256": "9b0b67a0a9442050f13528c76ad113bba804cda9a15b98b3e7385df1f5d7e182",
+   "bytes": 2863,
+   "lines": 47
+  },
+  {
+   "rel": ".claude/skills/stock-goal/SKILL.md",
+   "sha256": "a2a4c0beb295eaba383963f87f720e338f3cd57d80a4718bd44f6f06b758083f",
+   "bytes": 5896,
+   "lines": 122
+  },
+  {
+   "rel": ".claude/skills/stock-image/SKILL.md",
+   "sha256": "17fd0e3639073208765260fc35cec71d5c35306c2164368a00425f06817e470a",
+   "bytes": 3920,
+   "lines": 69
+  },
+  {
+   "rel": ".claude/skills/stock-plan/SKILL.md",
+   "sha256": "7865aeebdbc025bbbd6130b5ede86bf70382de8a5c2890aff053a17b0cf95e6e",
+   "bytes": 2538,
+   "lines": 45
+  },
+  {
+   "rel": ".claude/skills/stock-research/SKILL.md",
+   "sha256": "d6458319ceed4970cd0a4dcb2893039a3eb6e72c9920e85993a8891e01faec50",
+   "bytes": 3097,
+   "lines": 52
+  },
+  {
+   "rel": ".claude/skills/stock-review/SKILL.md",
+   "sha256": "8dbb4a3c2ffe37fb913e1babffe9e57ecda83b17f500ba00c21277ce57405573",
+   "bytes": 3265,
+   "lines": 50
+  },
+  {
+   "rel": "AGENTS.md",
+   "sha256": "6afb005d0f42a19e82bb7fe6697545df6969040890d5427bbd8e824b149928ae",
+   "bytes": 9700,
+   "lines": 90
+  },
+  {
+   "rel": "CLAUDE.md",
+   "sha256": "7027ccd4886c9c79d69e7363f4777187f88acf925fc4251c555b1b05acd9c4b1",
+   "bytes": 190,
+   "lines": 5
+  },
+  {
+   "rel": "README.md",
+   "sha256": "ea313e4bacf79100e65cd6312afd0330de02b0f1e4466a528cdb0dd4745c07e9",
+   "bytes": 12634,
+   "lines": 240
+  },
+  {
+   "rel": "docs/scorecard/design-guideline.md",
+   "sha256": "153d663de758f48dfa1f60e40921a9d1f9f902a075d445dab38a370e85e4ebf3",
+   "bytes": 47675,
+   "lines": 479
+  },
+  {
+   "rel": "docs/scorecard/structure.md",
+   "sha256": "e6ea3fb0a6f10effbf0d7299bca9291929270492491bb0378890fa7a5d530468",
+   "bytes": 10784,
+   "lines": 116
+  },
+  {
+   "rel": "docs/finance-style-guide.md",
+   "sha256": "38c340882141295d170227168e959f72c5d2c9f4bd827fecf3d261e7910df0f4",
+   "bytes": 4191,
+   "lines": 99
+  },
+  {
+   "rel": "docs/image-generation-spec.md",
+   "sha256": "b878dffe092843b5b778bda4e9451f35fafef365a0a3b89f42ebd57a8fbffaaf",
+   "bytes": 3599,
+   "lines": 103
+  },
+  {
+   "rel": "docs/memory-system.md",
+   "sha256": "cd5c5e608bdfbf0e76fd55e9caf987a7d3ee5fac491599c3d017d141813b118e",
+   "bytes": 6161,
+   "lines": 149
+  },
+  {
+   "rel": "docs/output-spec.md",
+   "sha256": "d1d56b6a1bd187cd748499d41a6258f4a79e1bc10339a5cb88b8d84ef7f30d25",
+   "bytes": 6096,
+   "lines": 128
+  },
+  {
+   "rel": "docs/pedagogy.md",
+   "sha256": "9092d3223ae6b9f6c9f8104897254f119255b743c220d0a9986b45bf7dcd6179",
+   "bytes": 986,
+   "lines": 26
+  },
+  {
+   "rel": "docs/visual-system.md",
+   "sha256": "93a721ae2d125e82f9e3f9324336d384d616bca9bb104a4f4d7f84f77241c823",
+   "bytes": 4192,
+   "lines": 96
+  },
+  {
+   "rel": "package.json",
+   "sha256": "c34464fafc5b0c99d7ba3a00064442173d8ee521763e5963ce511c4aad079271",
+   "bytes": 731,
+   "lines": 20
+  },
+  {
+   "rel": "scorecard/baseline/v1.5/import-report.md",
+   "sha256": "448d333e50cd6b77d562186d02e908d5bb31bb8acfd6a7788c7d17b1559cf477",
+   "bytes": 2107,
+   "lines": 43
+  },
+  {
+   "rel": "scorecard/baseline/v1.5/observations.json",
+   "sha256": "f22e9415e1dbe056ce2b789072535efb5ae5c32959031394a5f5eb99e472558b",
+   "bytes": 93381,
+   "lines": 3259
+  },
+  {
+   "rel": "scorecard/baseline/v1.5/scores.json",
+   "sha256": "daa46f7b26e4ee3cc2bf6934d312ec5efc0b067a9a00ef811e9e153fbb1bcafb",
+   "bytes": 67673,
+   "lines": 1115
+  },
+  {
+   "rel": "scorecard/baseline/v1.5/triggers.json",
+   "sha256": "9784a48331021415f3837a4bf42921373a7c0234b9f3ccf30afaf2eabdaab57c",
+   "bytes": 18851,
+   "lines": 319
+  },
+  {
+   "rel": "scorecard/companies.json",
+   "sha256": "2bd6baf36ca1b3615cd90cfeabb732db0044a9d01475004b20f8728bb55086f5",
+   "bytes": 4636,
+   "lines": 23
+  },
+  {
+   "rel": "scorecard/rules/v1.5.json",
+   "sha256": "9231b3a05ba5c7661dbc91190c66bcf73ab3617643e274698a2690c4b16de6ba",
+   "bytes": 19210,
+   "lines": 597
+  },
+  {
+   "rel": "scorecard/runs/ai-scorecard-2026-09-baseline/judgments.json",
+   "sha256": "685069767e0cf919387ad3c563d0ccc2b061bd58e8653a88dbc51bfe49db3359",
+   "bytes": 112434,
+   "lines": 2889
+  },
+  {
+   "rel": "scorecard/runs/ai-scorecard-2026-09-baseline/observations.json",
+   "sha256": "37435ae2989236f587b149c7def34c605d140a781965be5a08d4e72ae0cf4f9c",
+   "bytes": 93371,
+   "lines": 3259
+  },
+  {
+   "rel": "scorecard/runs/ai-scorecard-2026-09-baseline/results.json",
+   "sha256": "4eb8c7d77b73dd3e2ca537801a526c6d1b3e8af307dc61606e88588b7532421e",
+   "bytes": 99600,
+   "lines": 3113
+  },
+  {
+   "rel": "scorecard/runs/ai-scorecard-2026-09-baseline/run.json",
+   "sha256": "50b063a5a12e84a67018655950fe248838cdc1562f404d6d7a5693ed966bbfe4",
+   "bytes": 1218,
+   "lines": 38
+  },
+  {
+   "rel": "scorecard/runs/ai-scorecard-2026-09-baseline/sources.json",
+   "sha256": "18f7b6571fc66d21d36ffc8a2f209b7fa5d08136a20f218a0ed52db63b4435bf",
+   "bytes": 1357,
+   "lines": 37
+  },
+  {
+   "rel": "scripts/build_report.py",
+   "sha256": "515112f3345cc5dc3179803211f7e1b665800c59b45abf722adbd827ff0f2f48",
+   "bytes": 44161,
+   "lines": 888
+  },
+  {
+   "rel": "scripts/report_contract_lib.py",
+   "sha256": "cd5c9d068a511698a651cf764441e58a3650fe319e99418b436ad45c071d491b",
+   "bytes": 10094,
+   "lines": 311
+  },
+  {
+   "rel": "scripts/scorecard/__init__.py",
+   "sha256": "ccc674ce0fbd8ed1e465addb6e1d7c6ac0809472304fdc58cf065efdb65bc0bf",
+   "bytes": 272,
+   "lines": 6
+  },
+  {
+   "rel": "scripts/scorecard/aggregate.py",
+   "sha256": "4e769378154195e610f7149b2dabbe74ab853d2b225170001822968ebd8df95f",
+   "bytes": 2841,
+   "lines": 61
+  },
+  {
+   "rel": "scripts/scorecard/baseline_import.py",
+   "sha256": "71dfec112370f4c0efb6159afa3a1ce10af53e193130e8f76bf4c54819fe2bf8",
+   "bytes": 30390,
+   "lines": 562
+  },
+  {
+   "rel": "scripts/scorecard/calc_f6.py",
+   "sha256": "6aefa69891c458dadc58a55fb271b81047b4e3b7b3505ba19910283dffc827ae",
+   "bytes": 9804,
+   "lines": 159
+  },
+  {
+   "rel": "scripts/scorecard/calc_f9.py",
+   "sha256": "f8e6e704e883c12dddff6a934533c0a366d780fa6eb2a75ba67f4e6502fcb929",
+   "bytes": 17944,
+   "lines": 290
+  },
+  {
+   "rel": "scripts/scorecard/calc_qual.py",
+   "sha256": "76f43937d63185593a2aae446140f89cde0867249494956baaf3c1d66c72318e",
+   "bytes": 8088,
+   "lines": 119
+  },
+  {
+   "rel": "scripts/scorecard/engine.py",
+   "sha256": "b171a9894ef439224d23ce5b2f30d31a39b8fd1d52718625f08e30ebd8c2e5fd",
+   "bytes": 6243,
+   "lines": 166
+  },
+  {
+   "rel": "scripts/scorecard/inputs.py",
+   "sha256": "533b3edecae21d4c87dde155cd6be0e22d6ba95f6dcf3ef72e629781b6ce64dc",
+   "bytes": 4011,
+   "lines": 97
+  },
+  {
+   "rel": "scripts/scorecard/render_csv.py",
+   "sha256": "378a38e782d252bf638a319b79a4602a75ef3fc2b426c776bb1da76635eddf78",
+   "bytes": 2761,
+   "lines": 67
+  },
+  {
+   "rel": "scripts/scorecard/render_html.py",
+   "sha256": "024df37f10c95378e50f675570d8fc41a30249ca3821a56a6534700dd7e85606",
+   "bytes": 45395,
+   "lines": 612
+  },
+  {
+   "rel": "scripts/scorecard/render_md.py",
+   "sha256": "df056404a1bd5632185e78f019e234e3c2beb26e251aeca4008d735858729e2b",
+   "bytes": 32050,
+   "lines": 476
+  },
+  {
+   "rel": "scripts/scorecard/rules.py",
+   "sha256": "4eddf771370902a2ecf53e8c03854f08bdff3115ce5a69786c0337169ea52828",
+   "bytes": 5563,
+   "lines": 135
+  },
+  {
+   "rel": "scripts/scorecard/schema.py",
+   "sha256": "b0c7f7f069bf3fb58995d29f6a675d700c588b3c39902e3dbae16530b7e425ea",
+   "bytes": 23211,
+   "lines": 414
+  },
+  {
+   "rel": "scripts/scorecard/stages.py",
+   "sha256": "c95e7a0e5fe56807a4bd717f5d2c115f13a07a4c9e1344da297ed9da71269b4e",
+   "bytes": 12174,
+   "lines": 258
+  },
+  {
+   "rel": "scripts/scorecard/validate.py",
+   "sha256": "222daf9bec8a649fdfbca52f377276f2e1b3673904917bd2ac2df9625892d161",
+   "bytes": 13228,
+   "lines": 252
+  },
+  {
+   "rel": "scripts/scorecard_cli.py",
+   "sha256": "867c6e930a880f27cccdaa1dd05805894866bebb30ca09c8ecea93eaab8655c2",
+   "bytes": 7218,
+   "lines": 181
+  },
+  {
+   "rel": "scripts/validate_report_contract.py",
+   "sha256": "8f5f72d289b8155d5bfc49f2ef7889cd4f30b5191fcfee67b016f1f9bec9d4ed",
+   "bytes": 20823,
+   "lines": 486
+  },
+  {
+   "rel": "tests/__init__.py",
+   "sha256": "339cf09df6044b17bd22be300f1c6b8d3150133ce5bd98376acbe1f14c5025ba",
+   "bytes": 78,
+   "lines": 2
+  },
+  {
+   "rel": "tests/test_scorecard_calc.py",
+   "sha256": "3a111001470dc391162662cd157e3848d209194790e7ade73e48e6d97e22d247",
+   "bytes": 27659,
+   "lines": 456
+  }
+ ]
+}
