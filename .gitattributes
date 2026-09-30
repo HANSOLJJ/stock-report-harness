@@ -22,3 +22,6 @@ AI_company_analysis_factor/** -text
 pyproject.toml text eol=lf
 uv.lock text eol=lf
 .python-version text eol=lf
+
+# 테스트 픽스처는 저장된 응답 바이트 그대로 둔다 — 줄끝 변환이 파서 테스트를 흔든다 (2026-09-30)
+tests/fixtures/** -text
