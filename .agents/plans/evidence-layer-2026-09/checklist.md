@@ -64,3 +64,4 @@
 - [x] 레인 E 조율자 재현(병합 뒤): 두 실행 approval_valid true, recompute obsreg True·baseline 기존 값 불변, output/·scorecard/ 변경 0, unittest 1030건 중 실패 1·오류 14(원자료 부재 집합과 동일), node 9·check 통과
 - [ ] 4.3: 초안(`render_draft`)과 HTML 의 트리거 절이 `triggers.json` 이 있으면 그것을 그리게 한다(지금은 research 만). 계획 3단계 "렌더러는 이 파일이 있으면 legacy 39건 대신 그린다"
 - [ ] baseline 은 기존 recompute 불일치로 재빌드가 멈춘다(승인 검사는 통과). 감사 링크 재빌드는 obsreg 만 해당
+- [ ] 레인 F (Opus) 4.2·4.3 디스패치 완료 → 검증 → 병합. task `task_c39a130db79b`, dispatch `ctx_3a3d42bdc422`, 워크트리 `…/lane-F`, 터미널 `term_6d0d6fec-989e-4175-b8e9-bafee8ff8ff0`
