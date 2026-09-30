@@ -3,7 +3,7 @@ description: 기업 추가 실행에서 기존 기업의 관측·판단·점수�
 argument-hint: "<새 slug> --against <이전 slug> [--json]"
 ---
 
-사용자가 stock-report-harness 의 AI 기업 채점 실행 간 불변성 검증(diff)을 요청했습니다.
+사용자가 이 저장소의 AI 기업 채점 실행 간 불변성 검증(diff)을 요청했습니다.
 
 **입력**: $ARGUMENTS
 

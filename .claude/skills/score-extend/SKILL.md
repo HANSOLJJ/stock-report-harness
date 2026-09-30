@@ -13,9 +13,11 @@ description: 이전 실행의 입력을 이어받아 새 기업을 추가하는 
 2. slug 는 `ai-scorecard-<YYYY-MM>-<label>` 형식으로 정한다 (예: `ai-scorecard-2026-09-extend`).
 3. 실행한다:
    ```
-   python scripts/scorecard_cli.py init <새 slug> --from-run <이전 slug> [--add-companies a,b] [--as-of <YYYY-MM-DD>] [--title "<제목>"] [--purpose "..."]
+   uv run --frozen python -X utf8 scripts/scorecard_cli.py init <새 slug> --from-run <이전 slug> [--add-companies a,b] [--as-of <YYYY-MM-DD>] [--title "<제목>"] [--purpose "..."]
    ```
-4. 여기서 멈춘다 (research 로 진행하지 않는다).
+   규칙 버전은 `--rule` 을 주지 않으면 이전 실행의 것을 이어받는다. 기업 추가 실행에서 규칙을 바꾸지 않는다.
+   실행 묶음은 `output/<새 slug>/` 에 만들어진다(`run.json`, `observations.json`, `judgments.json`, `sources.json`, `plan.md`).
+4. 여기서 멈춘다 (collect 나 research 로 진행하지 않는다).
 
 ## 제약
 
@@ -26,4 +28,4 @@ description: 이전 실행의 입력을 이어받아 새 기업을 추가하는 
 
 ## 완료 보고
 
-새 실행 경로, 이어받은 관측·판단·출처 건수, 더한 기업, 다음 명령 `/score-research <slug>`.
+새 실행 경로, 이어받은 관측·판단·출처 건수, 더한 기업, 다음 명령 `/score-collect <slug>`.

@@ -3,7 +3,7 @@ description: AI 기업 채점표 레지스트리에 기업을 등록합니다. �
 argument-hint: "<company_id> --name <표시명> --type <유형> --scope <평가범위> (--listed|--private) ..."
 ---
 
-사용자가 stock-report-harness 의 AI 기업 채점 레지스트리 기업 등록(add-company)을 요청했습니다.
+사용자가 이 저장소의 AI 기업 채점 레지스트리 기업 등록(add-company)을 요청했습니다.
 
 **입력**: $ARGUMENTS
 

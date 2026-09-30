@@ -267,7 +267,7 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     approval_path = d / "approval.json"
     if require_html or paths.html.is_file():
         if not approval_path.is_file():
-            result.error("사용자 승인 없음: awaiting_user (scorecard_cli.py approve <slug> --by <name>)")
+            result.error("사용자 승인 없음: awaiting_user (사람이 `node server.js --approvals` 승인 페이지에서 승인한다)")
         else:
             try:
                 approval = validate_approval(load_json_strict(approval_path), slug)
