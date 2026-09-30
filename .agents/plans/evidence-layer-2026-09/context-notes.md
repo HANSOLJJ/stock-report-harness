@@ -29,4 +29,5 @@
 - **baseline recompute 불일치는 기존 상태로 판정.** 원본 폴더에서도 저장 results_hash 0942c342… 와 재계산 200d7b01… 가 다르다. 총점·입력 해시는 같고 F9 calc 경로 기록만 다르다. 승인 뒤 엔진이 바뀐 결과라 이번 과제에서 고치지 않고, 레인 A 의 완료 조건을 "이동 전후 같은 값" 으로 바꿨다. approval_valid 는 저장 파일 바이트 기준이라 여전히 필수.
 - **가격 수집기의 시점 결함은 병합을 막지 않았다.** vendor market_cap 이 조회 시점 값인데 종가 날짜로 기록되는 문제는 아직 이 값을 읽는 코드가 없어서 3.4 에서 고친다.
 - **레인 B 가 공유 stash 스택을 썼다.** `git stash -u` 를 한 번 쓰고 즉시 pop 했다고 보고했고, 조율자가 `git stash list` 가 비어 있음을 확인했다.
+- **승인 해시 비교는 `stages.approval_mismatches` 하나로 모은다.** 레인 E 가 발견했다. `render_html.build_scorecard` 와 `compare.approval_state` 가 승인 해시를 dict 전체로 비교해서, 현재 해시에 sources·evidence·triggers 키가 늘면 6키로 승인된 기존 두 실행이 재빌드·diff 에서 무효가 된다. 규칙은 "승인에 있는 키만 대조, 현재에 evidence·triggers 가 있는데 승인에 없으면 불일치, sources 는 승인에 있을 때만 대조". 레인 E 소유를 두 호출부까지 넓혔고 dict 등호 비교 0건을 grep 테스트로 고정한다.
 - **레인 A 는 draft 줄끝을 먼저 판정.** obsreg draft 가 renderer 산출물이라 LF 로 알려져 있지만 확인하지 않았다. approval.json 의 draft 해시와 바이트를 대조해 `.gitattributes` 예외를 정한다. baseline 은 CRLF 예외 유지.
