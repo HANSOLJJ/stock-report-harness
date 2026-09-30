@@ -1,0 +1,28 @@
+# 레인 D — 승인 페이지 작업 체크리스트
+
+- [x] 계획 및 픽스처 생성
+  - [x] `.agents/plans/lane-D/plan.md`, `checklist.md`, `context-notes.md` 작성
+  - [x] `tests/node/fixtures/summary.sample.json` 작성 (지시서 스키마 충족)
+- [x] 테스트 도구 및 가짜 CLI 생성
+  - [x] `tests/node/fake_scorecard_cli.js` 작성 (`SCORECARD_CLI`, `FAKE_CLI_FAIL` 대응)
+- [x] 코어 승인 모듈 구현
+  - [x] `server/approvals.js` 작성 (`createApprovals`, `isLoopback`, CLI execFile, HTML 렌더링)
+- [x] 서버 연동 및 패키지 설정
+  - [x] `server.js` 3개소 30줄 이내 수정 (실제 25줄 수정)
+  - [x] `package.json`에 `test:node` 스크립트 추가 (조율자 합의된 따옴표 glob)
+- [x] Node 테스트 작성 및 검증
+  - [x] `tests/node/approvals.test.js` 작성 (지시서 명시 케이스 100% 커버)
+  - [x] `npm run test:node` 전체 통과 확인 (9 passed)
+- [x] 회귀 및 기준선 검증
+  - [x] `npm run check` 통과 확인
+  - [x] `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 기준선 집합 동일 확인 (failures=7, errors=30)
+  - [x] 통합 브랜치 병합 (`git merge HANSOLJJ/revision_checker`) 완료
+- [x] 수동 실기 검증
+  - [x] 가짜 CLI 기반 서버 구동 및 6자리 일회용 코드 발급 확인
+  - [x] `GET /approve/<run_id>` 페이지 렌더링 및 폼 동작 확인
+  - [x] `POST /approve/<run_id>/approve` 정상 승인 및 서버 종료 콜백 확인
+- [x] 완료 보고 및 커밋
+  - [x] `validation/lane-D-approvals/REPORT.md` 작성
+  - [ ] 소유 파일 한정 변경 여부 확인 (`git diff --stat HANSOLJJ/revision_checker...HEAD`)
+  - [ ] 단일 커밋 생성 (`feat(server): --approvals 승인 페이지와 일회용 코드`, Co-Authored-By 금지)
+  - [ ] `orca orchestration send --type worker_done` 및 조율자 터미널 알림
