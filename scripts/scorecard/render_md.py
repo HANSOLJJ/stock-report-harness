@@ -167,19 +167,32 @@ def _evidence_lines(ctx: Any) -> list[str]:
     return lines
 
 
+TRIGGER_COLUMNS = ["ID", "기업", "Factor", "관찰 사실", "조건", "기한", "근거", "재검토"]
+TRIGGER_C14_NOTE = "트리거는 미래 점수를 저장하지 않는다(C-14). 조건이 성립하면 현재 규칙으로 다시 계산한다."
+
+
+def active_trigger_rows(ctx: Any) -> tuple[list[list[str]], int]:
+    """triggers.json 의 감시 중(watching) 트리거 행과 그 밖의 상태 건수. 연구·초안·HTML 이 같은 열을 쓴다."""
+    active = sorted((t for t in ctx.triggers if t["status"] == "watching"), key=lambda t: t["trigger_id"])
+    rows = [[t["trigger_id"], ctx.companies[t["company_id"]]["display_name"], ", ".join(FACTOR_LABELS[f] for f in t["factors"]),
+             t["observation"], t["condition"], t["deadline"], ", ".join(t["evidence_ids"]) or "—", t["recheck"]["what"]]
+            for t in active]
+    return rows, len(ctx.triggers) - len(active)
+
+
+def _active_trigger_lines(ctx: Any) -> list[str]:
+    rows, others = active_trigger_rows(ctx)
+    lines = [table(TRIGGER_COLUMNS, rows) if rows else "- 감시 중인 트리거 없음", ""]
+    if others:
+        lines += [f"- 그 밖의 상태(fired·expired·withdrawn) {others}건은 triggers.json 에 있다.", ""]
+    return lines + [f"- {TRIGGER_C14_NOTE}", ""]
+
+
 def _trigger_lines(ctx: Any, legacy_triggers: list[dict[str, Any]] | None) -> list[str]:
     """`## 트리거(활성)` — triggers.json 이 있으면 그것을, 없으면 기준선 트리거 서술을 초안과 같은 모양으로 싣는다."""
     lines = ["## 트리거(활성)", ""]
     if ctx.triggers is not None:
-        active = sorted((t for t in ctx.triggers if t["status"] == "watching"), key=lambda t: t["trigger_id"])
-        rows = [[t["trigger_id"], ctx.companies[t["company_id"]]["display_name"], ", ".join(FACTOR_LABELS[f] for f in t["factors"]),
-                 t["observation"], t["condition"], t["deadline"], ", ".join(t["evidence_ids"]) or "—", t["recheck"]["what"]]
-                for t in active]
-        lines += [table(["ID", "기업", "Factor", "관찰 사실", "조건", "기한", "근거", "재검토"], rows) if rows else "- 감시 중인 트리거 없음", ""]
-        others = len(ctx.triggers) - len(active)
-        if others:
-            lines += [f"- 그 밖의 상태(fired·expired·withdrawn) {others}건은 triggers.json 에 있다.", ""]
-        return lines + ["- 트리거는 미래 점수를 저장하지 않는다(C-14). 조건이 성립하면 현재 규칙으로 다시 계산한다.", ""]
+        return lines + _active_trigger_lines(ctx)
     if not legacy_triggers:
         return lines + ["- 등록된 트리거 없음", ""]
     reps = rc.replacements(ctx)
@@ -371,9 +384,11 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     lines += [f"- {x}" for x in rc.method_lines(ctx, results)] + [""]
     # 한계 — 2026-09-15 FIX-54 1단계 S4
     lines += ["## 알려진 한계", ""] + [x if x.startswith("  - ") else f"- {x}" for x in rc.limitations(ctx)] + [""]
-    # 트리거
+    # 트리거 — 2026-09-30 레인 F: triggers.json 이 있으면 연구 단계와 같은 열로 그것을 그린다. 없으면 기준선 트리거(기존 두 실행).
     lines += ["## 트리거", ""]
-    if triggers:
+    if ctx.triggers is not None:
+        lines += _active_trigger_lines(ctx)
+    elif triggers:
         reps = rc.replacements(ctx)
         lines += [table(["ID", "항목", "왜 중요한가(v1.5 원문)", "영향(원문)"],
                         [[t["trigger_id"], t["title"], rc.trigger_why(ctx, t, reps), t["impact_raw"]] for t in triggers]), ""]

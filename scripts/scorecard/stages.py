@@ -1,9 +1,10 @@
-# scorecard 단계 실행: init(실행 생성) → collect → research → calculate(+preview) → draft → review-template → approve. 순서·해시 결속을 코드에서 강제한다.
+# scorecard 단계 실행: init(실행 생성) → collect → research → calculate(+preview) → draft → review-template → confirm·approve·revoke·summary. 순서·해시 결속·실행 잠금을 코드에서 강제한다.
 from __future__ import annotations
 
 import getpass
 import json
 import os
+import re
 from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date, timedelta
@@ -20,10 +21,10 @@ from .collect_prices import fetch_quote, price_observations, price_source_entry
 from .engine import BASELINE_DIR, RunContext, compute, input_hashes, load_companies, load_context, load_results, results_path, run_dir, write_results
 from .evidence_lib import source_entry, upsert_sources, utc_now_iso
 from .paths import run_paths
-from .render_md import render_draft, render_plan, render_preview, render_research, render_review_template
+from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
-from .schema import (APPROVAL_REQUIRED_HASHES, SchemaError, load_json_strict, sha256_file, sha256_obj, sha256_text, validate_approval,
-                     validate_observations, validate_run, validate_sources, write_json)
+from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, SchemaError, load_json_strict, sha256_file, sha256_obj,
+                     sha256_text, validate_approval, validate_observations, validate_run, validate_sources, write_json)
 
 
 def today() -> str:
@@ -670,13 +671,15 @@ def approval_mismatches(approved: dict[str, str], current: dict[str, str]) -> li
     return sorted(differing)
 
 
-def approve(slug: str, *, approved_by: str, note: str | None = None) -> Path:
+def approve(slug: str, *, approved_by: str, note: str | None = None, via: str = "terminal") -> Path:
     from validate_report_contract import validate_contract
 
     # 승인자는 사람의 식별자다. 빈 값이나 자동 생성 이름으로 승인 기록을 만들지 않는다 (D-02).
     if not isinstance(approved_by, str) or not approved_by.strip():
         raise SchemaError("승인자(--by)는 비어 있지 않은 문자열이어야 한다. 임의의 승인자를 만들지 말고 실제 사용자 식별자를 쓴다")
     approved_by = approved_by.strip()
+    if via not in APPROVAL_VIA:
+        raise SchemaError(f"승인 경로(--via)는 {list(APPROVAL_VIA)} 중 하나 ({via!r})")
 
     result = validate_contract(slug, require_html=False, check_html_if_present=False)
     if not result.ok:
@@ -691,10 +694,182 @@ def approve(slug: str, *, approved_by: str, note: str | None = None) -> Path:
         "approved_at": today(),
         "hashes": hashes,
         "note": note,
+        # 2026-09-30 레인 F: 승인 페이지(browser)인지 터미널인지. 기존 두 실행의 승인에는 없는 선택 키다.
+        "approved_via": via,
     }
     path = run_dir(slug) / "approval.json"
     write_json(path, payload)
     return path
+
+
+# ------------------------------------------------------------------ revoke
+
+def revoke(slug: str, *, by: str, note: str) -> Path:
+    """승인을 취소한다. `approval.json` 을 지우고 `revocations.jsonl` 에 한 줄을 더한다(지우기 전 승인의 id·해시를 남긴다)."""
+    if not isinstance(by, str) or not by.strip():
+        raise SchemaError("취소자(--by)는 비어 있지 않은 문자열이어야 한다")
+    if not isinstance(note, str) or not note.strip():
+        raise SchemaError("취소 사유(--note)는 비어 있으면 안 된다")
+    path = run_dir(slug) / "approval.json"
+    if not path.is_file():
+        raise SchemaError(f"취소할 승인이 없다: {rel(path)}")
+    approval = validate_approval(load_json_strict(path), slug)
+    entry = {"revoked_by": by.strip(), "revoked_at": utc_now_iso(), "note": note.strip(),
+             "approval_id": approval["approval_id"], "hashes": approval["hashes"]}
+    log = run_dir(slug) / "revocations.jsonl"
+    with log.open("a", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n")
+    path.unlink()
+    return log
+
+
+# ------------------------------------------------------------------ confirm
+# 2026-09-30 레인 F. 근거 확정은 승인이 아니다. 확정하면 evidence 해시가 바뀌어 calculate 부터 다시 밟고 사람이 다시 승인한다.
+EVIDENCE_ID_RE = re.compile(r"^EV-[a-z0-9-]+-\d{3}$")
+
+
+def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject_ids: list[str] | tuple[str, ...] = (),
+            reviewer: str | None = None, reviewed_at: str | None = None) -> dict[str, Any]:
+    """근거를 확정(`status: confirmed`·`reviewer`·`reviewed_at`)하거나 거부(항목 삭제)한다. 쓴 뒤 실행 전체를 다시 검증하고,
+    검증이 실패하면 원래 파일로 되돌린다(거부한 근거를 트리거·판단이 인용하면 여기서 멈춘다)."""
+    ids, rejects = list(evidence_ids), list(reject_ids)
+    bad = [e for e in ids + rejects if not isinstance(e, str) or not EVIDENCE_ID_RE.match(e)]
+    if bad:
+        raise SchemaError(f"근거 ID 형식이 아니다(EV-<기업>-NNN): {bad}")
+    if not ids and not rejects:
+        raise SchemaError("확정(--evidence)하거나 거부(--reject)할 근거 ID 가 필요하다")
+    both = sorted(set(ids) & set(rejects))
+    if both:
+        raise SchemaError(f"같은 근거를 확정하면서 거부할 수 없다: {both}")
+    path = run_paths(slug).evidence
+    if not path.is_file():
+        raise SchemaError(f"근거 파일이 없다: {rel(path)}")
+    original = path.read_bytes()
+    payload = load_json_strict(path)
+    have = {e["evidence_id"] for e in payload["items"]}
+    unknown = [e for e in ids + rejects if e not in have]
+    if unknown:
+        raise SchemaError(f"evidence.json 에 없는 근거 ID: {unknown}")
+    reviewer = (reviewer or "").strip() or (os.environ.get("SCORECARD_AGENT") or "").strip() or getpass.getuser()
+    reviewed_at = reviewed_at or utc_now_iso()[:10]   # UTC 날짜
+    confirmed, already = [], []
+    for item in payload["items"]:
+        if item["evidence_id"] not in ids:
+            continue
+        if item.get("status") == "confirmed":
+            already.append(item["evidence_id"])
+            continue
+        item.update(status="confirmed", reviewer=reviewer, reviewed_at=reviewed_at)
+        confirmed.append(item["evidence_id"])
+    payload["items"] = [e for e in payload["items"] if e["evidence_id"] not in rejects]
+    write_json(path, payload)
+    try:
+        load_context(slug)
+    except SchemaError:
+        path.write_bytes(original)
+        raise
+    return {"confirmed": confirmed, "already_confirmed": already, "rejected": rejects, "reviewer": reviewer,
+            "reviewed_at": reviewed_at, "evidence_hash": sha256_file(path)}
+
+
+# ------------------------------------------------------------------ summary
+# 2026-09-30 레인 F. 승인 페이지(server/approvals.js)가 읽는다. 키 구조는 tests/node/fixtures/summary.sample.json 그대로다.
+
+def _pending_text(p: dict[str, Any]) -> str:
+    return f"{p['factor']}: {p['status']}" + (f" ({p['decision_id']})" if p.get("decision_id") else "")
+
+
+def _summary_companies(results: dict[str, Any] | None, baseline: dict[str, Any]) -> list[dict[str, Any]]:
+    base = {b["company_id"]: b for b in baseline.get("companies", [])}
+    out = []
+    for c in (results or {}).get("companies", []):
+        b = base.get(c["company_id"])
+        changed = []
+        for f in FACTOR_IDS:
+            old = (b or {}).get("scores", {}).get(f)
+            new = c["factors"][f]["score"]
+            if b and old is not None and new is not None and old != new:
+                changed.append({"factor": f, "from": old, "to": new})
+        out.append({
+            "company_id": c["company_id"],
+            "display_name": c["display_name"],
+            "baseline": {"total": (b or {}).get("total"), "rank": (b or {}).get("rank_raw")},
+            "current": {"total": c["total"], "rank": c["rank"]},
+            "changed_factors": changed,
+            "carried_factors": list(c["carried_factors"]),
+            "pending": [_pending_text(p) for p in c["pending"]],
+        })
+    return out
+
+
+def _part_field(part: Path, label: str) -> str | None:
+    if not part.is_file():
+        return None
+    m = re.search(rf"^{label}:\s*(.+?)\s*$", part.read_text(encoding="utf-8"), re.M)
+    return m.group(1) if m else None
+
+
+def _summary_review(paths: Any) -> dict[str, Any] | None:
+    """`review.md` 의 frontmatter·검토 영역 표·체크리스트. 영역 칸이 비었거나 pending 이면 `review-parts/<영역>.md` 를 읽는다."""
+    if not paths.review.is_file():
+        return None
+    from .validate import _section, _table_rows
+
+    fm, body, _raw, _text = read_markdown(paths.review)
+    rows = {cells[0]: cells for cells in _table_rows(_section(body, "검토 영역")) if len(cells) >= 4}
+    areas = []
+    for key, label, _scope in REVIEW_AREAS:
+        cells = rows.get(label)
+        reviewer = cells[2] if cells and cells[2] else None
+        result = cells[3] if cells and cells[3] and cells[3] != "pending" else None
+        part = paths.review_parts / f"{key}.md"
+        areas.append({"area": key,
+                      "reviewer": reviewer or _part_field(part, "검토자"),
+                      "result": result or _part_field(part, "결과") or (cells[3] if cells else None)})
+    fails = sum(1 for cells in _table_rows(_section(body, "체크리스트")) if len(cells) >= 3 and cells[2] == "fail")
+    return {"status": fm.get("status"), "areas": areas, "checklist_fail": fails}
+
+
+def summary(slug: str) -> dict[str, Any]:
+    """승인 페이지가 한 화면에 싣는 요약. 값은 status·render_md 가 이미 쓰는 데이터를 다시 읽는다. 없는 파일은 0·빈 목록·null 이다."""
+    paths = run_paths(slug)
+    run = validate_run(load_json_strict(paths.run_dir / "run.json"), slug)
+    results = load_results(slug) if results_path(slug).is_file() else None
+    baseline, _obs, _legacy = load_baseline(run["baseline_id"])
+    src_path = paths.run_dir / "sources.json"
+    urls = {s["source_id"]: s.get("url") for s in (load_json_strict(src_path).get("items", []) if src_path.is_file() else [])}
+    candidates = load_json_strict(paths.candidates).get("items", []) if paths.candidates.is_file() else []
+    evidence = load_json_strict(paths.evidence).get("items", []) if paths.evidence.is_file() else []
+    triggers = load_json_strict(paths.triggers).get("items", []) if paths.triggers.is_file() else []
+    hashes = current_hashes(slug)
+    approval_path = paths.run_dir / "approval.json"
+    if approval_path.is_file():
+        approval = load_json_strict(approval_path)
+        approval_out = {"exists": True, "valid": not approval_mismatches(approval.get("hashes") or {}, hashes),
+                        "approved_by": approval.get("approved_by"), "approved_at": approval.get("approved_at")}
+    else:
+        approval_out = {"exists": False, "valid": False, "approved_by": None, "approved_at": None}
+    return {
+        "run_id": slug,
+        "as_of": run["as_of"],
+        "rule_version": run["rule_version"],
+        "companies": _summary_companies(results, baseline),
+        "review": _summary_review(paths),
+        "evidence": {
+            "candidates": len(candidates),
+            "selected": len(evidence),
+            "confirmed": sum(1 for e in evidence if e.get("status") == "confirmed"),
+            "items": [{"evidence_id": e["evidence_id"], "company_id": e["company_id"], "factors": list(e["factors"]),
+                       "kind": e["kind"], "title": e["title"], "url": urls.get(e["source_id"]),
+                       "published_at_utc": e["published_at_utc"], "excerpt": e["excerpt"],
+                       "status": e.get("status", "candidate")} for e in evidence],
+        },
+        "triggers": [{"trigger_id": t["trigger_id"], "company_id": t["company_id"], "factors": list(t["factors"]),
+                      "condition": t["condition"], "deadline": t["deadline"], "status": t["status"]} for t in triggers],
+        "pending_rule_decisions": list((results or {}).get("pending_rule_decisions", [])),
+        "hashes": hashes,
+        "approval": approval_out,
+    }
 
 
 # ------------------------------------------------------------------ status

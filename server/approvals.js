@@ -2,6 +2,7 @@
 const child_process = require('child_process');
 
 const RUN_ID_REGEX = /^[a-z0-9][a-z0-9-]{2,80}$/;
+const MAX_CODE_FAILURES = 5;
 
 function isLoopback(remoteAddress) {
   if (!remoteAddress) return false;
@@ -475,6 +476,9 @@ function createApprovals(options = {}) {
   const code = options.code !== undefined ? String(options.code) : '';
   const runCli = typeof options.runCli === 'function' ? options.runCli : defaultRunCli;
   const onApproved = typeof options.onApproved === 'function' ? options.onApproved : null;
+  const log = typeof options.log === 'function' ? options.log : (msg) => console.error(msg);
+  // 잘못된 코드가 MAX_CODE_FAILURES 번 오면 이 서버의 모든 POST 를 막는다. 풀려면 서버를 다시 띄워 새 코드를 받는다.
+  let codeFailures = 0;
 
   function handle(req, res) {
     const rawUrl = req.url || '/';
@@ -493,6 +497,11 @@ function createApprovals(options = {}) {
     const remoteAddress = req.socket && req.socket.remoteAddress;
     if (!isLoopback(remoteAddress)) {
       sendText(res, 403, 'Forbidden: Loopback requests only');
+      return true;
+    }
+
+    if (req.method === 'POST' && codeFailures >= MAX_CODE_FAILURES) {
+      sendText(res, 403, `Forbidden: ${MAX_CODE_FAILURES} invalid codes - restart the server`);
       return true;
     }
 
@@ -564,6 +573,10 @@ function createApprovals(options = {}) {
         const submittedCode = (params.get('code') || '').trim();
 
         if (submittedCode !== code.trim()) {
+          codeFailures += 1;
+          if (codeFailures === MAX_CODE_FAILURES) {
+            log(`코드 실패 ${MAX_CODE_FAILURES}회 — 서버를 다시 띄우세요`);
+          }
           sendText(res, 403, 'Forbidden: Invalid approval code');
           return;
         }
