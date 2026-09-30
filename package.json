@@ -12,6 +12,7 @@
     "test": "npm run check && npm run validate:memory && npm run test:scorecard",
     "test:scorecard": "uv run --frozen python -X utf8 -m unittest discover -s tests -t .",
     "test:pytest": "uv run --frozen pytest -q",
+    "test:node": "node --test \"tests/node/**/*.test.js\"",
     "scorecard": "uv run --frozen python -X utf8 scripts/scorecard_cli.py"
   },
   "engines": {
