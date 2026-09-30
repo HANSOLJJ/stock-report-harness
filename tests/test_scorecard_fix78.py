@@ -15,9 +15,9 @@ from scorecard.engine import load_context  # noqa: E402
 from scorecard.render_md import STATUS_LABEL  # noqa: E402
 
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
-HTML = ROOT / "output" / f"{SLUG}.html"
-DRAFT = ROOT / "drafts" / f"{SLUG}.md"
+RUN_DIR = ROOT / "output" / SLUG
+HTML = ROOT / "output" / SLUG / "report.html"
+DRAFT = ROOT / "output" / SLUG / "draft.md"
 
 TOTALS = {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,

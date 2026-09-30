@@ -14,7 +14,7 @@ from scorecard.render_md import render_draft, render_review_template  # noqa: E4
 from scorecard.stages import load_baseline  # noqa: E402
 
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 
 
 class CurrentJudgmentEvidenceTest(unittest.TestCase):

@@ -16,7 +16,7 @@ from scorecard import render_md  # noqa: E402
 from scorecard.engine import load_context  # noqa: E402
 
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 
 
 class Add04aPopulationRenderTest(unittest.TestCase):

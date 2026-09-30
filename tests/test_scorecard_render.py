@@ -146,7 +146,7 @@ class TestBuiltDocument(unittest.TestCase):
     """실제 실행의 산출 HTML 이 있으면 링크와 앵커가 짝을 이루는지 확인한다."""
 
     def setUp(self) -> None:
-        self.html_path = ROOT / "output" / f"{SLUG}.html"
+        self.html_path = ROOT / "output" / SLUG / "report.html"
         if not self.html_path.is_file():
             self.skipTest("빌드된 HTML 이 없다")
         self.html = self.html_path.read_text(encoding="utf-8")

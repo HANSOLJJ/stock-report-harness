@@ -18,7 +18,7 @@ from scorecard.stages import load_baseline  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 RAW = ROOT / "validation" / "f6-avail-15" / "_raw"
 CREDIT_TAG_RE = re.compile(r"Unused|Undrawn|RemainingBorrowingCapacity|LineOfCreditFacility", re.I)
 

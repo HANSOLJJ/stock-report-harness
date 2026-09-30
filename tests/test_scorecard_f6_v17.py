@@ -354,7 +354,7 @@ class TestF6StaleAsOf(unittest.TestCase):
     def test_current_run_has_nobody_stale(self):
         """현재 실행에서는 아무도 안 걸린다. **걸릴 일이 없는 것과 검사가 없는 것은 다르다.**"""
         import json
-        run_dir = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-obsreg"
+        run_dir = ROOT / "output" / "ai-scorecard-2026-09-obsreg"
         results = json.loads((run_dir / "results.json").read_text(encoding="utf-8"))
         checked, hit = 0, []
         for c in results["companies"]:

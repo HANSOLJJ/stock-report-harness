@@ -18,7 +18,7 @@ from scorecard.stages import load_baseline  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 SRC = ROOT / "scripts" / "scorecard"
 V15 = Path("E:/sourcecode/01_side_project/stock-report-harness/AI_company_analysis_factor/AI기업_채점규칙_v1.5.md")
 
@@ -197,14 +197,14 @@ class Fix62Test(unittest.TestCase):
         self.assertEqual(self.run_json["rule_hash"], RULES.hash)
 
     def test_plan_is_repinned_again(self):
-        text = (ROOT / "plan" / f"{SLUG}.md").read_text(encoding="utf-8")
+        text = (ROOT / "output" / SLUG / "plan.md").read_text(encoding="utf-8")
         self.assertIn(f"rule_hash: {RULES.hash}", text)
         self.assertIn("by: FIX-62 (openai.F9 경로 뒤집기 · 사용자 결정 2026-09-17)", text)
         self.assertIn("openai ⑨ -4 → -2, 총점 2 → 4", text)
         self.assertIn("점수를 바꾼 것은 아래 일곱이고", text)
 
     def test_q11_and_approval_untouched(self):
-        review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
+        review = (ROOT / "output" / SLUG / "review.md").read_text(encoding="utf-8")
         q11 = next(x for x in review.splitlines() if x.startswith("| Q11 "))
         # 2026-09-17 FIX-63·64: 리뷰어가 재판정 2회에서 pass 로 바꾸고 최종 판정에서 유지했다.
         self.assertIn("| pass |", q11)

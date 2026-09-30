@@ -18,8 +18,8 @@ from scorecard.stages import current_hashes  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
-HTML = ROOT / "output" / f"{SLUG}.html"
+RUN_DIR = ROOT / "output" / SLUG
+HTML = ROOT / "output" / SLUG / "report.html"
 
 TOTALS = {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
@@ -115,7 +115,7 @@ class Fix65Test(unittest.TestCase):
         """
         self.assertNotIn('<details class="mdec"', self.html)
         self.assertNotIn("관련 결정", self.html)
-        audit = (ROOT / "output" / f"{SLUG}-audit.md").read_text(encoding="utf-8")
+        audit = (ROOT / "output" / SLUG / "audit.md").read_text(encoding="utf-8")
         self.assertIn("## 결정 기록", audit)
         # 요약 문구는 규칙 파일 그대로다 — 새로 쓰지 않는다.
         d = RULES.decision("C-03")

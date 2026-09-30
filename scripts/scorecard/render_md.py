@@ -5,6 +5,8 @@ from typing import Any
 
 from report_contract_lib import rel
 
+from .paths import run_paths
+
 from . import render_common as rc
 from .render_common import FACTOR_LABELS, fmt_num, fmt_usd
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS
@@ -72,6 +74,7 @@ def table(headers: list[str], rows: list[list[Any]], align: list[str] | None = N
 # ------------------------------------------------------------------ plan
 
 def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, Any]], *, request: str, baseline_note: str) -> str:
+    paths = run_paths(run["run_id"])
     fm = frontmatter([
         ("slug", run["run_id"]), ("report_type", "ai_scorecard"), ("topic", run["title"]), ("request", request),
         ("output_type", "scorecard"), ("audience", "intermediate"), ("run_id", run["run_id"]), ("as_of", run["as_of"]),
@@ -90,7 +93,7 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 
 - 대상: AI 기업 {len(run['companies'])}개사 9-factor 채점 (`report_type: ai_scorecard`)
 - 요청 원문: {request}
-- 산출물: `research/`·`drafts/`·`reviews/`·`output/{run['run_id']}.html`·`scorecard/history.csv`
+- 산출물: `{paths.rel(paths.run_dir)}/` 묶음(research.md·draft.md·review.md·report.html·audit.md)·`scorecard/history.csv`
 - 흐름: plan → research → calculate → draft → review → awaiting_user → build
 
 ## 분석 목적과 기준 시점
@@ -118,7 +121,7 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 
 {table(['ID', '요약', '영향 factor', '이번 실행 선택'], decision_rows) if decision_rows else '- 없음'}
 
-- 미결 결정이 걸린 factor 는 `needs_rule_decision` 으로 남고 해당 기업은 공식 순위에서 제외된다. 실행 단위 선택은 `scorecard/runs/{run['run_id']}/run.json` 의 `decisions` 에 근거·결정자와 함께 기록한다.
+- 미결 결정이 걸린 factor 는 `needs_rule_decision` 으로 남고 해당 기업은 공식 순위에서 제외된다. 실행 단위 선택은 `{paths.rel(paths.run_dir / 'run.json')}` 의 `decisions` 에 근거·결정자와 함께 기록한다.
 
 ## 리뷰 기준
 
@@ -141,8 +144,9 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 
 def render_research(ctx: Any, *, hashes: dict[str, str]) -> str:
     run = ctx.run
+    paths = run_paths(ctx.slug)
     fm = frontmatter([
-        ("slug", ctx.slug), ("report_type", "ai_scorecard"), ("plan_source", f"plan/{ctx.slug}.md"), ("run_id", ctx.slug),
+        ("slug", ctx.slug), ("report_type", "ai_scorecard"), ("plan_source", paths.rel(paths.plan)), ("run_id", ctx.slug),
         ("as_of", run["as_of"]), ("rule_version", ctx.rules.version), ("observations_hash", hashes["observations"]),
         ("judgments_hash", hashes["judgments"]), ("created_at", run["created_at"]),
     ])
@@ -211,12 +215,13 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     ranking = results["ranking"]
     population = results["population"]
     companies_by_id = {c["company_id"]: c for c in results["companies"]}
+    paths = run_paths(ctx.slug)
     fm = frontmatter([
         ("slug", ctx.slug), ("report_type", "ai_scorecard"), ("title", title),
         ("subtitle", f"규칙 {ctx.rules.version} · 기준일 {run['as_of']} · {population['scored']}개사 순위"),
         ("run_id", ctx.slug), ("as_of", run["as_of"]), ("price_as_of", run.get("price_as_of") or run["as_of"]), ("info_cutoff", run.get("info_cutoff") or run["as_of"]),
         ("rule_version", ctx.rules.version), ("rule_hash", ctx.rules.hash),
-        ("baseline_id", run["baseline_id"]), ("plan_source", f"plan/{ctx.slug}.md"), ("research_source", f"research/{ctx.slug}.md"),
+        ("baseline_id", run["baseline_id"]), ("plan_source", paths.rel(paths.plan)), ("research_source", paths.rel(paths.research)),
         ("results_hash", results["results_hash"]), ("level", "intermediate"), ("duration_minutes", 15), ("created_at", run["created_at"]),
     ])
     conflicts = sorted({src["conflict_of_interest"] for src in ctx.sources.get("items", []) if src.get("conflict_of_interest")})
@@ -426,9 +431,10 @@ def _raw_tables(ctx: Any, results: dict[str, Any]) -> list[str]:
 # ------------------------------------------------------------------ review template
 
 def render_review_template(ctx: Any, results: dict[str, Any], *, draft_hash: str) -> str:
+    paths = run_paths(ctx.slug)
     fm = frontmatter([
         ("slug", ctx.slug), ("report_type", "ai_scorecard"), ("status", "needs_fix"), ("created_at", ctx.run["created_at"]),
-        ("plan_source", f"plan/{ctx.slug}.md"), ("research_source", f"research/{ctx.slug}.md"), ("draft_source", f"drafts/{ctx.slug}.md"),
+        ("plan_source", paths.rel(paths.plan)), ("research_source", paths.rel(paths.research)), ("draft_source", paths.rel(paths.draft)),
         ("results_hash", results["results_hash"]), ("draft_hash", draft_hash),
         ("review_type", "separate-session-4way"), ("review_execution", "separate_subagent_sessions"),
         ("reviewers", [f"{key}: pending" for key, _, _ in REVIEW_AREAS]),
@@ -475,6 +481,6 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
             spec = ctx.rules.decision(did) or {}
             affected = sorted({c["display_name"] for c in results["companies"] for p in c["pending"] if p.get("decision_id") == did})
             lines.append(f"- **{did}** {spec.get('summary', '')} — 선택지: {', '.join(spec.get('choices', [])) or '(기술)'} — 영향: {', '.join(affected)}")
-        lines += ["", f"선택은 `scorecard/runs/{ctx.slug}/run.json` 의 `decisions` 에 `{{id, choice, rationale, decided_by, decided_at}}` 로 기록한 뒤 다시 `calculate` 한다.", ""]
+        lines += ["", f"선택은 `{run_paths(ctx.slug).rel(run_paths(ctx.slug).run_dir / 'run.json')}` 의 `decisions` 에 `{{id, choice, rationale, decided_by, decided_at}}` 로 기록한 뒤 다시 `calculate` 한다.", ""]
     lines += ["## 변동 원인 분류", "", "- 기준선 이관 재계산이라 변동 원인은 📐규칙(미결 결정·엄격 계약)이며 기업 실적 변화가 아니다. 규칙 버전이 같은 실행끼리만 추세로 연결한다.", ""]
     return "\n".join(lines)

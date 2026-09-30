@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-RUN_DIR = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-obsreg"
+RUN_DIR = ROOT / "output" / "ai-scorecard-2026-09-obsreg"
 
 
 def load(name: str) -> dict:

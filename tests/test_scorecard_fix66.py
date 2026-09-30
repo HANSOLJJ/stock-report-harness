@@ -19,8 +19,8 @@ from scorecard.stages import current_hashes  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
-HTML = ROOT / "output" / f"{SLUG}.html"
+RUN_DIR = ROOT / "output" / SLUG
+HTML = ROOT / "output" / SLUG / "report.html"
 
 TOTALS = {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,
           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
@@ -62,7 +62,7 @@ class Fix66Test(unittest.TestCase):
                 self.assertIn(f"<code>{num}</code>", self.index)
         for t in RULES.payload["open_tensions"]:
             self.assertNotIn(t["id"], ids)                                  # 2026-09-18 FIX-80 S3
-        audit = (ROOT / "output" / f"{SLUG}-audit.md").read_text(encoding="utf-8")
+        audit = (ROOT / "output" / SLUG / "audit.md").read_text(encoding="utf-8")
         for t in RULES.payload["open_tensions"]:
             self.assertIn(f"| `{t['id']}` |", audit)
 
@@ -192,7 +192,7 @@ class Fix66Test(unittest.TestCase):
         self.assertEqual(c17["summary"], "기준일 9/2 인데 9/3~9/7 사건이 섞임")     # 규칙은 그대로다
         # 2026-09-18 FIX-79 S2: 사전을 감사 기록으로 옮겼다. 원문 요약은 거기 그대로 있고, 본문은 그 뜻을
         # 번호 없이 **문장 안에서** 말한다.
-        audit = (ROOT / "output" / f"{SLUG}-audit.md").read_text(encoding="utf-8")
+        audit = (ROOT / "output" / SLUG / "audit.md").read_text(encoding="utf-8")
         self.assertIn(c17["summary"], audit)
         plain = re.sub(r"<[^>]+>", "", self.html)
         self.assertIn("셋을 따로 기록하라는 권고가 있지만 이번 실행은 값이 같아 한 번만 적는다", plain)

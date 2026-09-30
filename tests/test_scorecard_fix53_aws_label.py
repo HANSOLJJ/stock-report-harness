@@ -17,7 +17,7 @@ from scorecard.schema import SchemaError, validate_rules  # noqa: E402
 from scorecard.stages import load_baseline  # noqa: E402
 
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 # 2026-09-17 FIX-77: 작업 번호는 감사 기록으로 내렸다. **정정이 붙어 있다**는 사실은 그대로다.
 MARKER = "라벨 정정"
 

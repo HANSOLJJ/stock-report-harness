@@ -7,7 +7,6 @@ flat scalar keys that the pipeline contracts depend on.
 """
 from __future__ import annotations
 
-import html
 import json
 import re
 from dataclasses import dataclass
@@ -16,42 +15,17 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-PLAN_DIR = ROOT / "plan"
-RESEARCH_DIR = ROOT / "research"
-DRAFT_DIR = ROOT / "drafts"
-REVIEW_DIR = ROOT / "reviews"
+# 실행 산출물은 전부 output/<run_id>/ 묶음 아래에 있다. 파일별 경로는 scorecard.paths.run_paths 가 정한다.
 OUTPUT_DIR = ROOT / "output"
-ASSET_DIR = OUTPUT_DIR / "assets"
 
 FRONTMATTER_RE = re.compile(r"\A---\s*\r?\n(?P<frontmatter>.*?)\r?\n---\s*(?:\r?\n)?", re.DOTALL)
 H1_RE = re.compile(r"^#(?!#)\s+.+$", re.MULTILINE)
 H2_RE = re.compile(r"^##\s+(?P<title>.+?)\s*$", re.MULTILINE)
-PRICE_CHART_FENCE_RE = re.compile(r"```price-chart\s*\n(?P<body>.*?)\n```", re.DOTALL)
 # SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P)\d+\]")  # 2026-09-07 변경 전
 # 2026-09-07: enforce-citations.sh 훅은 [H1](yfinance 보유자 데이터) 표식도 허용하는데 검증기·빌더는
 # S/N/P만 제거해 최종 HTML에 [H1]이 남았음(tesla 리포트에서도 사용). 훅과 같은 집합으로 맞춤.
 SOURCE_MARKER_RE = re.compile(r"\[(?:S|N|P|H)\d+\]")
 
-REQUIRED_PLAN_FRONTMATTER = [
-    "slug",
-    "topic",
-    "request",
-    "output_type",
-    "audience",
-    "ticker",
-    "period_start",
-    "period_end",
-    "chart_required",
-    "price_data_source",
-    "price_data_interval",
-    "created_at",
-    "assumptions",
-]
-REQUIRED_DRAFT_SECTIONS = ["개요", "배경", "메커니즘", "영향과 적용", "References"]
-
-# report_type 분기. plan frontmatter 에 없으면 기존 문서는 stock_report 로 본다. 알 수 없는 값은 차단한다.
-REPORT_TYPES = ("stock_report", "ai_scorecard")
-DEFAULT_REPORT_TYPE = "stock_report"
 REQUIRED_SCORECARD_PLAN_FRONTMATTER = [
     "slug",
     "report_type",
@@ -68,19 +42,6 @@ REQUIRED_SCORECARD_PLAN_FRONTMATTER = [
     "created_at",
     "assumptions",
 ]
-CANONICAL_SELECTED_IMAGE_PATH_KEYS = ("image_path", "selected_image")
-SELECTED_IMAGE_PATH_KEYS = (
-    "image_path",
-    "selected_image",
-    "selectedImage",
-    "image",
-    "path",
-    "file",
-    # Legacy keys kept readable so old artifacts produce useful diagnostics.
-    "selected_path",
-    "selected_file",
-)
-PROHIBITED_IMAGE_GENERATION_TERMS = ("pillow", "procedural", "programmatic", "svg", "placeholder", "blank")
 
 
 @dataclass(frozen=True)
@@ -91,23 +52,14 @@ class ArtifactPaths:
     draft: Path
     review: Path
     html: Path
-    image_manifest_json: Path
-    selected_image_json: Path
-    price_chart_json: Path
 
 
 def artifact_paths(slug: str) -> ArtifactPaths:
-    return ArtifactPaths(
-        slug=slug,
-        plan=PLAN_DIR / f"{slug}.md",
-        research=RESEARCH_DIR / f"{slug}.md",
-        draft=DRAFT_DIR / f"{slug}.md",
-        review=REVIEW_DIR / f"{slug}.md",
-        html=OUTPUT_DIR / f"{slug}.html",
-        image_manifest_json=ASSET_DIR / f"{slug}-image-manifest.json",
-        selected_image_json=ASSET_DIR / f"{slug}-selected-image.json",
-        price_chart_json=ASSET_DIR / f"{slug}-price-chart-v1.json",
-    )
+    """실행 묶음 경로만 돌려준다. 이름은 scorecard.paths.run_paths 와 같은 곳에서 온다."""
+    from scorecard.paths import run_paths
+
+    p = run_paths(slug)
+    return ArtifactPaths(slug=slug, plan=p.plan, research=p.research, draft=p.draft, review=p.review, html=p.html)
 
 
 def rel(path: Path) -> str:
@@ -197,18 +149,6 @@ def frontmatter_value(frontmatter: dict[str, Any], key: str) -> str:
     return str(value).strip()
 
 
-def report_type_for(slug: str) -> str:
-    """plan/<slug>.md 의 report_type. plan 이 없거나 키가 없으면 stock_report. 알 수 없는 값은 ValueError."""
-    plan_path = artifact_paths(slug).plan
-    if not plan_path.is_file():
-        return DEFAULT_REPORT_TYPE
-    frontmatter, _body, _raw, _text = read_markdown(plan_path)
-    value = frontmatter_value(frontmatter, "report_type") or DEFAULT_REPORT_TYPE
-    if value not in REPORT_TYPES:
-        raise ValueError(f"{rel(plan_path)} report_type {value!r} 는 {REPORT_TYPES} 중 하나여야 함")
-    return value
-
-
 def heading_titles(body: str) -> list[str]:
     return [m.group("title").strip().rstrip("#").strip() for m in H2_RE.finditer(body)]
 
@@ -221,130 +161,5 @@ def count_h1(body: str) -> int:
     return len(H1_RE.findall(body))
 
 
-def price_chart_blocks(body: str) -> list[dict[str, str]]:
-    return [parse_key_value_block(match.group("body")) for match in PRICE_CHART_FENCE_RE.finditer(body)]
-
-
 def has_source_markers(text: str) -> bool:
     return bool(SOURCE_MARKER_RE.search(text))
-
-
-def strip_source_markers(text: str) -> str:
-    # Remove adjacent source markers and the extra whitespace they often leave.
-    stripped = SOURCE_MARKER_RE.sub("", text)
-    # stripped = re.sub(r"\s+([.,;:!?])", r"\1", stripped)  # 2026-09-07 변경 전
-    # 2026-09-07: \s+ 가 개행까지 삼켜 "compare: ... [P1]\n::" 이 "compare: ...::" 로 붙어
-    # STAT_CARD_RE(\n:: 필요)가 매칭되지 않아 ::stat-card 블록이 본문에 그대로 노출됐음.
-    # 같은 줄 안의 공백만 정리하도록 개행을 제외함.
-    stripped = re.sub(r"[ \t]+([.,;:!?])", r"\1", stripped)
-    # stripped = re.sub(r" {2,}", " ", stripped)  # 2026-09-07 변경 전
-    # 2026-09-07: 줄 앞 들여쓰기까지 한 칸으로 줄여 "    - 요약:" 같은 중첩 목록이 마크다운에서
-    # 풀려 버렸음. 줄 안쪽(비공백 문자 뒤)의 연속 공백만 정리하도록 제한함.
-    stripped = re.sub(r"(?<=\S) {2,}", " ", stripped)
-    return stripped
-
-
-def parse_key_value_block(raw: str) -> dict[str, str]:
-    data: dict[str, str] = {}
-    for line in raw.splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        data[key.strip()] = value.strip().strip('"\'')
-    return data
-
-
-def load_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-def iter_json_strings(value: Any, prefix: str = "$") -> list[tuple[str, str]]:
-    strings: list[tuple[str, str]] = []
-    if isinstance(value, str):
-        strings.append((prefix, value))
-    elif isinstance(value, dict):
-        for key, child in value.items():
-            strings.extend(iter_json_strings(child, f"{prefix}.{key}"))
-    elif isinstance(value, list):
-        for index, child in enumerate(value):
-            strings.extend(iter_json_strings(child, f"{prefix}[{index}]"))
-    return strings
-
-
-def prohibited_image_generation_hits(value: Any) -> list[str]:
-    hits: list[str] = []
-    for path, text in iter_json_strings(value):
-        lowered = text.lower()
-        for term in PROHIBITED_IMAGE_GENERATION_TERMS:
-            if term in lowered:
-                hits.append(f"{path} contains {term!r}")
-    return hits
-
-
-def selected_image_path(slug: str) -> tuple[Path | None, dict[str, Any] | None]:
-    selected_json = artifact_paths(slug).selected_image_json
-    if not selected_json.is_file():
-        return None, None
-    payload = load_json(selected_json)
-    if not isinstance(payload, dict):
-        return None, payload
-    value = next((payload.get(key) for key in SELECTED_IMAGE_PATH_KEYS if payload.get(key)), None)
-    if not isinstance(value, str) or not value.strip():
-        return None, payload
-
-    raw = value.strip()
-    raw_path = Path(raw)
-    candidates: list[Path] = []
-    if raw_path.is_absolute():
-        candidates.append(raw_path)
-    else:
-        candidates.extend(
-            [
-                ROOT / raw_path,
-                OUTPUT_DIR / raw_path,
-                ASSET_DIR / raw_path,
-            ]
-        )
-        if raw.startswith("assets/"):
-            candidates.append(OUTPUT_DIR / raw_path)
-    for candidate in candidates:
-        if candidate.is_file():
-            return candidate, payload
-    # Return the most likely path for helpful diagnostics even when missing.
-    return candidates[-1] if candidates else None, payload
-
-
-def hero_image_status(slug: str) -> tuple[str, Path | None, str]:
-    """Return (status, png_path, reason) for the optional hero image.
-
-    The hero image is optional: it is used only when the image manifest says
-    ``status: complete`` and the selected PNG resolves to a real file.  Any
-    other manifest status (blocked, in_progress, missing) means the report is
-    built without a hero card, and ``reason`` explains why.
-    """
-    manifest_path = artifact_paths(slug).image_manifest_json
-    if not manifest_path.is_file():
-        return "missing", None, f"image manifest 없음: {rel(manifest_path)}"
-    try:
-        manifest = load_json(manifest_path)
-    except Exception as exc:
-        return "invalid", None, f"image manifest 파싱 실패: {exc}"
-    if not isinstance(manifest, dict):
-        return "invalid", None, "image manifest JSON은 object여야 함"
-    status = str(manifest.get("status") or "").strip() or "unknown"
-    if status != "complete":
-        reason = str(manifest.get("blocked_reason") or "").strip() or f"status={status!r}"
-        return status, None, reason
-    image_path, _payload = selected_image_path(slug)
-    if image_path is None or not image_path.is_file():
-        return "complete", None, "image manifest는 complete이지만 selected hero PNG를 찾을 수 없음"
-    return "complete", image_path, ""
-
-
-def html_attr(value: Any) -> str:
-    return html.escape(str(value), quote=True)
-
-
-def html_text(value: Any) -> str:
-    return html.escape(str(value), quote=False)

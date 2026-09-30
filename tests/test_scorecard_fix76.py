@@ -15,9 +15,9 @@ from scorecard import render_html as rh  # noqa: E402
 from scorecard.engine import load_context  # noqa: E402
 
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
-HTML = ROOT / "output" / f"{SLUG}.html"
-AUDIT = ROOT / "output" / f"{SLUG}-audit.md"
+RUN_DIR = ROOT / "output" / SLUG
+HTML = ROOT / "output" / SLUG / "report.html"
+AUDIT = ROOT / "output" / SLUG / "audit.md"
 CONCEPTS = ROOT / "scorecard" / "factor-concepts.json"
 
 TOTALS = {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,

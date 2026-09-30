@@ -22,7 +22,7 @@ from scorecard.schema import SchemaError, load_json_strict, validate_judgments, 
 
 RULES = load_rules("v1.7")
 RUN_ID = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / RUN_ID
+RUN_DIR = ROOT / "output" / RUN_ID
 REGISTRY = {c["company_id"]: c for c in load_json_strict(ROOT / "scorecard" / "companies.json")["companies"]}
 
 

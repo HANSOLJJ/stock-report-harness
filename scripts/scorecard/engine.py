@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from report_contract_lib import ROOT
+from report_contract_lib import OUTPUT_DIR, ROOT
 
 from . import SCHEMA_VERSION
 from .aggregate import rank_companies, summarize_company
@@ -28,13 +28,13 @@ from .schema import (
 
 SCORECARD_DIR = ROOT / "scorecard"
 COMPANIES_PATH = SCORECARD_DIR / "companies.json"
-RUNS_DIR = SCORECARD_DIR / "runs"
 BASELINE_DIR = SCORECARD_DIR / "baseline"
 HISTORY_CSV = SCORECARD_DIR / "history.csv"
 
 
 def run_dir(slug: str) -> Path:
-    return RUNS_DIR / slug
+    """실행 묶음 폴더 `output/<slug>/`. 테스트는 이 모듈의 OUTPUT_DIR 를 바꿔 샌드박스로 돌린다."""
+    return OUTPUT_DIR / slug
 
 
 @dataclass

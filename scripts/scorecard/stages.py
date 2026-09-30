@@ -7,10 +7,11 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from report_contract_lib import DRAFT_DIR, PLAN_DIR, RESEARCH_DIR, REVIEW_DIR, artifact_paths, read_markdown, rel
+from report_contract_lib import read_markdown, rel
 
 from .baseline_import import BASELINE_AS_OF, SRC_HANDOVER, SRC_HANDOVER_SHA256, SRC_HTML, SRC_MD, SRC_RULE, baseline_judgments
 from .engine import BASELINE_DIR, RunContext, compute, input_hashes, load_companies, load_context, load_results, results_path, run_dir, write_results
+from .paths import run_paths
 from .render_md import render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
 from .schema import SchemaError, load_json_strict, sha256_file, sha256_text, validate_approval, validate_observations, validate_run, write_json
@@ -272,8 +273,7 @@ def init_run(
         if (d / stale).exists():
             (d / stale).unlink()
     plan_text = render_plan(run, rules, registry, request=request, baseline_note=inputs.baseline_note)
-    PLAN_DIR.mkdir(parents=True, exist_ok=True)
-    plan_path = PLAN_DIR / f"{slug}.md"
+    plan_path = run_paths(slug).plan
     plan_path.write_text(plan_text, encoding="utf-8", newline="\n")
     return {"plan": plan_path, "run": d / "run.json", "observations": d / "observations.json", "judgments": d / "judgments.json", "sources": d / "sources.json"}
 
@@ -281,11 +281,11 @@ def init_run(
 # ------------------------------------------------------------------ research
 
 def research(slug: str) -> Path:
-    _require_file(PLAN_DIR / f"{slug}.md", "plan")
+    paths = run_paths(slug)
+    _require_file(paths.plan, "plan")
     ctx = load_context(slug)
     text = render_research(ctx, hashes=ctx.hashes)
-    RESEARCH_DIR.mkdir(parents=True, exist_ok=True)
-    path = RESEARCH_DIR / f"{slug}.md"
+    path = paths.research
     path.write_text(text, encoding="utf-8", newline="\n")
     return path
 
@@ -293,13 +293,14 @@ def research(slug: str) -> Path:
 # ------------------------------------------------------------------ calculate
 
 def calculate(slug: str) -> tuple[Path, Path, dict[str, Any]]:
-    _require_file(PLAN_DIR / f"{slug}.md", "plan")
-    _require_file(RESEARCH_DIR / f"{slug}.md", "research")
+    paths = run_paths(slug)
+    _require_file(paths.plan, "plan")
+    _require_file(paths.research, "research")
     ctx = load_context(slug)
     results = compute(ctx)
     path = write_results(slug, results)
     scores, _obs, _trig = load_baseline(ctx.run["baseline_id"])
-    preview_path = run_dir(slug) / "preview.md"
+    preview_path = paths.preview
     preview_path.write_text(render_preview(ctx, results, scores), encoding="utf-8", newline="\n")
     stale_approval = run_dir(slug) / "approval.json"
     if stale_approval.exists():
@@ -312,8 +313,9 @@ def calculate(slug: str) -> tuple[Path, Path, dict[str, Any]]:
 # ------------------------------------------------------------------ draft
 
 def draft(slug: str) -> Path:
-    _require_file(PLAN_DIR / f"{slug}.md", "plan")
-    _require_file(RESEARCH_DIR / f"{slug}.md", "research")
+    paths = run_paths(slug)
+    _require_file(paths.plan, "plan")
+    _require_file(paths.research, "research")
     _require_file(results_path(slug), "results.json (calculate 먼저)")
     ctx = load_context(slug)
     results = load_results(slug)
@@ -321,8 +323,7 @@ def draft(slug: str) -> Path:
         raise SchemaError("입력(run/observations/judgments/rules)이 results.json 계산 이후 바뀜 — calculate 를 다시 실행")
     scores, _obs, triggers = load_baseline(ctx.run["baseline_id"])
     text = render_draft(ctx, results, scores, triggers)
-    DRAFT_DIR.mkdir(parents=True, exist_ok=True)
-    path = DRAFT_DIR / f"{slug}.md"
+    path = paths.draft
     path.write_text(text, encoding="utf-8", newline="\n")
     return path
 
@@ -330,15 +331,15 @@ def draft(slug: str) -> Path:
 # ------------------------------------------------------------------ review template
 
 def review_template(slug: str, *, force: bool = False) -> Path:
-    draft_path = DRAFT_DIR / f"{slug}.md"
+    paths = run_paths(slug)
+    draft_path = paths.draft
     _require_file(draft_path, "draft")
-    path = REVIEW_DIR / f"{slug}.md"
+    path = paths.review
     if path.exists() and not force:
         raise SchemaError(f"리뷰 파일이 이미 있음: {rel(path)} (--force 로 템플릿 재생성)")
     ctx = load_context(slug)
     results = load_results(slug)
     text = render_review_template(ctx, results, draft_hash=sha256_file(draft_path))
-    REVIEW_DIR.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8", newline="\n")
     return path
 
@@ -349,7 +350,7 @@ def current_hashes(slug: str) -> dict[str, str]:
     ctx_hashes = input_hashes(slug)
     run = load_json_strict(run_dir(slug) / "run.json")
     rules = load_rules(run["rule_version"])
-    draft_path = DRAFT_DIR / f"{slug}.md"
+    draft_path = run_paths(slug).draft
     return {
         "rules": rules.hash,
         "observations": ctx_hashes["observations"],
@@ -368,7 +369,7 @@ def approve(slug: str, *, approved_by: str, note: str | None = None) -> Path:
         raise SchemaError("승인자(--by)는 비어 있지 않은 문자열이어야 한다. 임의의 승인자를 만들지 말고 실제 사용자 식별자를 쓴다")
     approved_by = approved_by.strip()
 
-    result = validate_contract(slug, require_html=False, require_price_chart=False, check_html_if_present=False, check_price_chart_if_present=False)
+    result = validate_contract(slug, require_html=False, check_html_if_present=False)
     if not result.ok:
         raise SchemaError("승인 전 계약 검증 실패: " + "; ".join(result.errors[:5]))
     hashes = current_hashes(slug)
@@ -390,8 +391,8 @@ def approve(slug: str, *, approved_by: str, note: str | None = None) -> Path:
 # ------------------------------------------------------------------ status
 
 def status(slug: str) -> dict[str, Any]:
-    paths = artifact_paths(slug)
-    d = run_dir(slug)
+    paths = run_paths(slug)
+    d = paths.run_dir
     out: dict[str, Any] = {"slug": slug}
     out["plan"] = paths.plan.is_file()
     out["run_inputs"] = all((d / name).is_file() for name in ("run.json", "observations.json", "judgments.json"))

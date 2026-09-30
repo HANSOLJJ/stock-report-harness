@@ -17,8 +17,8 @@ from validate_report_contract import validate_contract  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-PLAN = ROOT / "plan" / f"{SLUG}.md"
-REVIEW = ROOT / "reviews" / f"{SLUG}.md"
+PLAN = ROOT / "output" / SLUG / "plan.md"
+REVIEW = ROOT / "output" / SLUG / "review.md"
 INIT_HASH = "64fb45557c9d40eb0ca9bfd3ed9e18cc53e6ff064dba43458bca25be2744d926"
 
 
@@ -30,7 +30,7 @@ class PlanRuleHashTest(unittest.TestCase):
     def test_plan_is_repinned_to_the_current_rules(self):
         fm, _body, _raw, _text = read_markdown(PLAN)
         self.assertEqual(frontmatter_value(fm, "rule_hash"), RULES.hash)
-        run = json.loads((ROOT / "scorecard" / "runs" / SLUG / "run.json").read_text(encoding="utf-8"))
+        run = json.loads((ROOT / "output" / SLUG / "run.json").read_text(encoding="utf-8"))
         self.assertEqual(run["rule_hash"], RULES.hash)      # 셋이 같은 값을 가리킨다
 
     def test_the_init_pin_is_kept_not_erased(self):
@@ -105,8 +105,7 @@ class CarriedExceptionTest(unittest.TestCase):
 
 class ContractTest(unittest.TestCase):
     def test_remaining_errors_are_the_two_we_expect(self):
-        r = validate_contract(SLUG, require_html=False, require_price_chart=False,
-                              check_html_if_present=False, check_price_chart_if_present=False)
+        r = validate_contract(SLUG, require_html=False, check_html_if_present=False)
         # 2026-09-17 FIX-61: 반영이 더 있으면 리뷰 파일의 results_hash·draft_hash 가 낡는다 — 템플릿을 다시
         # 만들 때까지는 그 둘이 더 뜬다. **뿌리는 아래 둘**이고 그것만 남는지를 본다.
         # 2026-09-17 FIX-64: 네 영역이 pass 로 오면서 이 테스트가 세운 뿌리 셋
@@ -122,8 +121,7 @@ class ContractTest(unittest.TestCase):
         2026-09-17 FIX-63: 이 검사는 `status: pass` 일 때만 돈다. 리뷰 파일이 `needs_fix` 인 동안에는
         경고가 서지 않으므로, 여기서는 **파일이 예외를 세울 준비가 돼 있는지**를 대신 본다.
         """
-        r = validate_contract(SLUG, require_html=False, require_price_chart=False,
-                              check_html_if_present=False, check_price_chart_if_present=False)
+        r = validate_contract(SLUG, require_html=False, check_html_if_present=False)
         # 2026-09-17 FIX-64: status 가 pass 로 돌아와 경고가 다시 선다. Q11 이 pass 라 12 → 11 건이다.
         warn = next(w for w in r.warnings if "승계 예외로 통과한 체크리스트 fail" in w)
         self.assertIn("11건", warn)
@@ -147,7 +145,7 @@ class ContractTest(unittest.TestCase):
 
     def test_approval_still_absent(self):
         # 2026-09-17 FIX-64: 네 영역 pass 뒤 사용자 승인이 났다. 이 자리가 승인을 막던 사유는 전부 닫혔다.
-        approval = json.loads((ROOT / "scorecard" / "runs" / SLUG / "approval.json").read_text(encoding="utf-8"))
+        approval = json.loads((ROOT / "output" / SLUG / "approval.json").read_text(encoding="utf-8"))
         self.assertEqual(approval["approved_by"], "사용자")
         self.assertEqual(approval["hashes"]["rules"], RULES.hash)
 

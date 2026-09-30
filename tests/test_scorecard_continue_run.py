@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from scorecard import compare, engine, registry, stages  # noqa: E402
+from scorecard.paths import run_paths  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
 from scorecard.schema import SchemaError, canonical_json, load_json_strict, validate_run  # noqa: E402
 
@@ -30,19 +31,18 @@ class _Sandbox:
 
     def __init__(self) -> None:
         self.dir = Path(tempfile.mkdtemp())
-        self.saved = (engine.RUNS_DIR, engine.COMPANIES_PATH, stages.PLAN_DIR, stages.RESEARCH_DIR)
-        runs = self.dir / "runs"
-        runs.mkdir()
-        shutil.copytree(self.saved[0] / PRIOR, runs / PRIOR)
+        self.saved = (engine.OUTPUT_DIR, engine.COMPANIES_PATH)
+        # 2026-09-30 레인 A: 실행 묶음(output/<slug>/)이 plan·research 까지 담으므로 OUTPUT_DIR 하나만 바꾼다.
+        output = self.dir / "output"
+        output.mkdir()
+        shutil.copytree(self.saved[0] / PRIOR, output / PRIOR)
         self.companies = self.dir / "companies.json"
         shutil.copyfile(self.saved[1], self.companies)
-        engine.RUNS_DIR = runs
+        engine.OUTPUT_DIR = output
         engine.COMPANIES_PATH = self.companies
-        stages.PLAN_DIR = self.dir / "plan"
-        stages.RESEARCH_DIR = self.dir / "research"
 
     def close(self) -> None:
-        engine.RUNS_DIR, engine.COMPANIES_PATH, stages.PLAN_DIR, stages.RESEARCH_DIR = self.saved
+        engine.OUTPUT_DIR, engine.COMPANIES_PATH = self.saved
         shutil.rmtree(self.dir, ignore_errors=True)
 
     def build(self, slug: str, **kwargs) -> dict[str, Path]:
@@ -59,7 +59,7 @@ class ContinueRunTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.box = _Sandbox()
         try:
-            cls.prior_dir = engine.RUNS_DIR / PRIOR
+            cls.prior_dir = engine.OUTPUT_DIR / PRIOR
             cls.prior_run = load_json_strict(cls.prior_dir / "run.json")
             registry.add_company(dict(NEWCOMER), path=cls.box.companies)
             cls.box.build("ai-scorecard-2026-10-carry")
@@ -73,7 +73,7 @@ class ContinueRunTest(unittest.TestCase):
         cls.box.close()
 
     def read(self, slug: str, name: str) -> dict:
-        return load_json_strict(engine.RUNS_DIR / slug / f"{name}.json")
+        return load_json_strict(engine.OUTPUT_DIR / slug / f"{name}.json")
 
     def test_judgment_items_are_copied_character_for_character(self):
         """**가장 위험한 자리다.** `status` 를 재작성하면 기존 기업의 factor 상태와 경고가 움직인다."""
@@ -193,7 +193,7 @@ class ContinueRunTest(unittest.TestCase):
         self.assertIn("samsung", [c["company_id"] for c in results["population"]["incomplete"]])
 
     def test_plan_note_names_the_prior_run_and_keeps_the_baseline(self):
-        text = (stages.PLAN_DIR / "ai-scorecard-2026-10-add.md").read_text(encoding="utf-8")
+        text = run_paths("ai-scorecard-2026-10-add").plan.read_text(encoding="utf-8")
         self.assertIn(f"이전 실행 `{PRIOR}`", text)
         self.assertIn("점수 비교 기준선은 `v1.5` 를 유지한다", text)
 
@@ -241,7 +241,7 @@ class BaselinePathRegressionTest(unittest.TestCase):
                         request="확인용 요청", purpose="확인용 목적")
 
     def read(self, name: str) -> dict:
-        return load_json_strict(engine.RUNS_DIR / "ai-scorecard-2026-09-probe" / f"{name}.json")
+        return load_json_strict(engine.OUTPUT_DIR / "ai-scorecard-2026-09-probe" / f"{name}.json")
 
     def test_baseline_path_writes_no_continued_from(self):
         run = self.read("run")
@@ -270,7 +270,7 @@ class BaselinePathRegressionTest(unittest.TestCase):
         self.assertTrue(all(j["status"] == "carried" for j in self.read("judgments")["items"]))
 
     def test_plan_note_still_points_at_the_baseline(self):
-        text = (stages.PLAN_DIR / "ai-scorecard-2026-09-probe.md").read_text(encoding="utf-8")
+        text = run_paths("ai-scorecard-2026-09-probe").plan.read_text(encoding="utf-8")
         self.assertIn("기준선 `v1.5`", text)
         self.assertIn("점수·판정표·원자료를 승계", text)
 
@@ -279,15 +279,15 @@ class PastRunsStillValidateTest(unittest.TestCase):
     """`continued_from` 을 optional 로 더했다. 그 키가 없는 과거 run.json 이 전부 그대로 통과해야 한다."""
 
     def test_every_committed_run_still_validates(self):
-        slugs = sorted(p.name for p in engine.RUNS_DIR.iterdir() if (p / "run.json").is_file())
+        slugs = sorted(p.name for p in engine.OUTPUT_DIR.iterdir() if (p / "run.json").is_file())
         self.assertIn(PRIOR, slugs)
         for slug in slugs:
             with self.subTest(slug=slug):
-                run = validate_run(load_json_strict(engine.RUNS_DIR / slug / "run.json"), slug)
+                run = validate_run(load_json_strict(engine.OUTPUT_DIR / slug / "run.json"), slug)
                 self.assertNotIn("continued_from", run)
 
     def test_broken_continued_from_is_refused(self):
-        base = load_json_strict(engine.RUNS_DIR / PRIOR / "run.json")
+        base = load_json_strict(engine.OUTPUT_DIR / PRIOR / "run.json")
         good = {
             "run_id": PRIOR, "as_of": "2026-09-02", "rule_hash": "a" * 64,
             "hashes": {k: "b" * 64 for k in ("run", "observations", "judgments", "sources")},
@@ -327,10 +327,10 @@ class InitCliTest(unittest.TestCase):
         self.assertIn("--add-companies", res.stdout)
 
     def test_nothing_is_written_when_the_prior_run_is_missing(self):
-        before = sorted(p.name for p in (ROOT / "scorecard" / "runs").iterdir())
+        before = sorted(p.name for p in (ROOT / "output").iterdir())
         res = self.run_cli("ai-scorecard-2026-10-x", "--from-run", "ai-scorecard-없는실행")
         self.assertEqual(res.returncode, 1)
-        self.assertEqual(sorted(p.name for p in (ROOT / "scorecard" / "runs").iterdir()), before)
+        self.assertEqual(sorted(p.name for p in (ROOT / "output").iterdir()), before)
 
 
 if __name__ == "__main__":

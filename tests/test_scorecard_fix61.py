@@ -20,7 +20,7 @@ from tests.test_scorecard_f6_v17 import company, f6obs, run  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 SRC = ROOT / "scripts" / "scorecard"
 LISTED_TRACKS = ("listed_ttm", "listed_annual")
 
@@ -218,7 +218,7 @@ class Fix61Test(unittest.TestCase):
 
     # ---------------------------------------------------------------- S4 Q11 은 그대로
     def test_q11_untouched(self):
-        review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
+        review = (ROOT / "output" / SLUG / "review.md").read_text(encoding="utf-8")
         q11 = next(x for x in review.splitlines() if x.startswith("| Q11 "))
         # 2026-09-17 FIX-63·64: 리뷰어가 재판정 2회에서 pass 로 바꾸고 최종 판정에서 유지했다.
         self.assertIn("| pass |", q11)
