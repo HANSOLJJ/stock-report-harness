@@ -272,6 +272,62 @@ test('POST /confirm: --evidence 와 --reject 를 올바르게 생성', async () 
   }
 });
 
+test('코드 실패 5회 뒤 모든 POST 403, CLI 미호출, 터미널 안내 1회', async () => {
+  let cliCalls = 0;
+  const logs = [];
+  const approvals = createApprovals({
+    enabled: true,
+    code: '123456',
+    runCli: (args, cb) => {
+      cliCalls += 1;
+      cb(null, { exitCode: 0, stdout: '{}', stderr: '' });
+    },
+    log: (msg) => logs.push(msg),
+  });
+
+  const server = http.createServer((req, res) => {
+    if (approvals.handle(req, res)) return;
+    res.writeHead(404);
+    res.end();
+  });
+
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+
+  const post = (action, body) => makeRequest(
+    server,
+    {
+      path: `/approve/ai-scorecard-2026-11-x/${action}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    },
+    body
+  );
+
+  try {
+    // 4번 틀린 뒤에는 아직 맞는 코드가 통한다.
+    for (let i = 0; i < 4; i += 1) {
+      assert.equal((await post('approve', 'code=000000&by=x')).statusCode, 403);
+    }
+    assert.equal(logs.length, 0);
+    assert.equal((await post('confirm', 'code=123456&evidence=EV-nvidia-001')).statusCode, 200);
+    assert.ok(cliCalls > 0);
+
+    // 5번째 실패에서 막힌다. 그 뒤에는 맞는 코드도, 다른 동작도 403 이다.
+    assert.equal((await post('approve', 'code=000000&by=x')).statusCode, 403);
+    assert.deepEqual(logs, ['코드 실패 5회 — 서버를 다시 띄우세요']);
+    const before = cliCalls;
+    for (const action of ['approve', 'revoke', 'confirm']) {
+      const res = await post(action, 'code=123456&by=x&note=n');
+      assert.equal(res.statusCode, 403, `${action} 는 403 이어야 함`);
+      assert.match(res.body, /restart the server/);
+    }
+    assert.equal(cliCalls, before, '잠긴 뒤에는 CLI 가 호출되면 안 됨');
+    assert.equal(logs.length, 1, '안내는 한 번만 출력');
+  } finally {
+    server.close();
+  }
+});
+
 test('CLI 실패 시 500 및 stderr 표시', async () => {
   process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
   process.env.FAKE_CLI_FAIL = '1';

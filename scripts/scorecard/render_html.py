@@ -16,7 +16,8 @@ from .inputs import ObsLookup
 from .render_csv import append_history, history_rows
 from . import render_common as rc
 from .render_common import GATE_LABELS, METHOD_LABELS, SHARE_LABELS, YESNO_LABELS, factor_calc_text, inline_html  # noqa: F401 — 테스트·호환용 재노출
-from .render_md import DISCLAIMER, FACTOR_LABELS, REVIEW_AREAS, STATUS_LABEL, fmt_num, fmt_pct, fmt_score, fmt_usd
+from .render_md import (DISCLAIMER, FACTOR_LABELS, REVIEW_AREAS, STATUS_LABEL, TRIGGER_C14_NOTE, TRIGGER_COLUMNS, active_trigger_rows, fmt_num,
+                        fmt_pct, fmt_score, fmt_usd)
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS, SchemaError, load_json_strict, sha256_file, validate_approval
 from .stages import approval_mismatches, current_hashes, load_baseline
 
@@ -1562,8 +1563,25 @@ def link_decision_codes(document: str, known: set[str], placeholder: str,
     return "".join(parts)
 
 
+def _render_active_triggers(ctx: Any) -> str:
+    """2026-09-30 레인 F: triggers.json 의 감시 중 트리거. 초안·연구 단계와 같은 열이고 미래 점수는 싣지 않는다(C-14)."""
+    rows, others = active_trigger_rows(ctx)
+    if not rows:
+        body = '<p class="sub">감시 중인 트리거 없음</p>'
+    else:
+        head = f'<th>{esc(TRIGGER_COLUMNS[0])}</th>' + "".join(f'<th class="text">{esc(c)}</th>' for c in TRIGGER_COLUMNS[1:])
+        trs = "".join("<tr>" + f'<td class="mono">{esc(r[0])}</td>' + "".join(f'<td class="text">{esc(v)}</td>' for v in r[1:]) + "</tr>" for r in rows)
+        body = f'<div class="tablewrap"><table><thead><tr>{head}</tr></thead><tbody>{trs}</tbody></table></div>'
+    notes = ([f"그 밖의 상태(fired·expired·withdrawn) {others}건은 triggers.json 에 있다."] if others else []) + [TRIGGER_C14_NOTE]
+    return body + "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in notes)
+
+
 def render_triggers(ctx: Any, triggers: list[dict[str, Any]]) -> str:
-    """2026-09-15 FIX-54 1단계 S3: 초안과 같은 `왜 중요한가` 칸(대체 수치 ⚠️ · source_text_corrections)과 각주."""
+    """2026-09-15 FIX-54 1단계 S3: 초안과 같은 `왜 중요한가` 칸(대체 수치 ⚠️ · source_text_corrections)과 각주.
+
+    2026-09-30 레인 F: `ctx.triggers`(triggers.json)가 있으면 그것을 그리고, 없으면 기준선 트리거를 그린다."""
+    if ctx.triggers is not None:
+        return _render_active_triggers(ctx)
     if not triggers:
         return '<p class="sub">등록된 트리거 없음</p>'
     reps = rc.replacements(ctx)

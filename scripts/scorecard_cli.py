@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / approve / status / resolve-cik
+# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / approve / revoke / status / resolve-cik
 """Usage:
   python scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   python scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
@@ -11,8 +11,14 @@
   python scripts/scorecard_cli.py draft <slug>
   python scripts/scorecard_cli.py review-template <slug> [--force]
   python scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
-  python scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."]
+  python scripts/scorecard_cli.py summary <slug> --json
+  python scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
+  python scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."] [--via browser|terminal]   (사람 셸에서만)
+  python scripts/scorecard_cli.py revoke <slug> --by NAME --note "..."                              (사람 셸에서만)
   python scripts/scorecard_cli.py status <slug>
+
+init·collect·research·calculate·draft·review-template 과 에이전트 세션의 confirm 은 실행 잠금(output/<slug>/.lock)을
+검사·기록한다. 다른 소유자의 잠금이면 거부하고 --take-lock 으로 인수한다.
   python scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply]
 
 build 는 기존 명령 `python scripts/build_report.py <slug>` 가 report_type 으로 분기한다.
@@ -26,6 +32,23 @@ from pathlib import Path
 
 from report_contract_lib import rel
 from scorecard.schema import SchemaError
+
+
+def _claim(args: argparse.Namespace, stage: str) -> None:
+    """실행 잠금(output/<slug>/.lock). 다른 소유자의 잠금이면 거부하고 --take-lock 이면 인수한다(2026-09-30 레인 F)."""
+    from scorecard.stages import claim_lock
+
+    claim_lock(args.slug, stage, take_lock=args.take_lock)
+
+
+def _refuse_agent_session(action: str) -> None:
+    """승인·취소는 사람 행위다. 에이전트 세션이면 CLI 계층에서 거부한다. stages 의 승인 함수 자체는 막지 않는다(테스트가 부른다)."""
+    from scorecard.stages import agent_session_markers
+
+    markers = agent_session_markers()
+    if markers:
+        raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 {action}할 수 없다. "
+                          "사람이 `node server.js --approvals` 승인 페이지에서 한다")
 
 
 def cmd_add_company(args: argparse.Namespace) -> int:
@@ -117,6 +140,9 @@ def cmd_init(args: argparse.Namespace) -> int:
     # 2026-09-21 ADD-03. 제목은 실행마다 달라야 한다. 이어받기에서 기본값으로 떨어지면 두 실행이 같은 제목을 갖는다.
     if args.from_run and not args.title:
         print(f"[경고] --title 을 주지 않아 이전 실행 {args.from_run} 의 제목을 그대로 쓴다. 실행마다 제목을 달리하는 편이 낫다")
+    from scorecard.stages import claim_lock
+
+    claim_lock(args.slug, "init", take_lock=args.take_lock, write=False)
     paths = init_run(
         args.slug,
         as_of=args.as_of,
@@ -134,6 +160,7 @@ def cmd_init(args: argparse.Namespace) -> int:
         add_companies=add_companies,
         carry_decisions=not args.no_carry_decisions,
     )
+    claim_lock(args.slug, "init", take_lock=args.take_lock)
     for name, path in paths.items():
         print(f"{name}: {rel(path)}")
     if args.from_run:
@@ -148,6 +175,7 @@ def cmd_collect(args: argparse.Namespace) -> int:
     from scorecard.stages import COLLECT_KINDS, collect
 
     kinds = COLLECT_KINDS if args.kind == "all" else (args.kind,)
+    _claim(args, "collect")
     out = collect(args.slug, companies=args.company.split(",") if args.company else None, kinds=kinds,
                   since=args.since, forms=args.forms.split(",") if args.forms else None, locale=args.locale,
                   from_file=args.from_file, dry_run=args.dry_run)
@@ -167,6 +195,7 @@ def cmd_collect(args: argparse.Namespace) -> int:
 def cmd_research(args: argparse.Namespace) -> int:
     from scorecard.stages import research
 
+    _claim(args, "research")
     print(f"research: {rel(research(args.slug, register=not args.no_register))}")
     print(f"다음: python scripts/scorecard_cli.py calculate {args.slug}")
     return 0
@@ -175,6 +204,7 @@ def cmd_research(args: argparse.Namespace) -> int:
 def cmd_calculate(args: argparse.Namespace) -> int:
     from scorecard.stages import calculate
 
+    _claim(args, "calculate")
     path, preview, results = calculate(args.slug)
     print(f"results: {rel(path)} (hash {results['results_hash'][:16]}…)")
     print(f"preview: {rel(preview)}")
@@ -191,6 +221,7 @@ def cmd_calculate(args: argparse.Namespace) -> int:
 def cmd_draft(args: argparse.Namespace) -> int:
     from scorecard.stages import draft
 
+    _claim(args, "draft")
     print(f"draft: {rel(draft(args.slug))}")
     print(f"다음: python scripts/scorecard_cli.py review-template {args.slug} → 4-way 리뷰 → approve")
     return 0
@@ -199,6 +230,7 @@ def cmd_draft(args: argparse.Namespace) -> int:
 def cmd_review_template(args: argparse.Namespace) -> int:
     from scorecard.stages import review_template
 
+    _claim(args, "review-template")
     print(f"review template: {rel(review_template(args.slug, force=args.force))}")
     print("검토 영역 4개와 체크리스트 Q01~Q23 를 채우고 status 를 pass 로 바꾼 뒤 validate_report_contract.py 로 확인한다")
     return 0
@@ -207,8 +239,57 @@ def cmd_review_template(args: argparse.Namespace) -> int:
 def cmd_approve(args: argparse.Namespace) -> int:
     from scorecard.stages import approve
 
-    print(f"approval: {rel(approve(args.slug, approved_by=args.by, note=args.note))}")
+    _refuse_agent_session("승인")
+    print(f"approval: {rel(approve(args.slug, approved_by=args.by, note=args.note, via=args.via))}")
     print(f"다음: python scripts/build_report.py {args.slug}")
+    return 0
+
+
+def cmd_revoke(args: argparse.Namespace) -> int:
+    from scorecard.stages import revoke
+
+    _refuse_agent_session("승인 취소")
+    print(f"revoked: approval.json 삭제, 기록 {rel(revoke(args.slug, by=args.by, note=args.note))}")
+    print("다음: 다시 검토한 뒤 승인 페이지에서 승인한다")
+    return 0
+
+
+def _id_list(value: str | None) -> list[str]:
+    return [v.strip() for v in value.split(",") if v.strip()] if value else []
+
+
+def cmd_confirm(args: argparse.Namespace) -> int:
+    """근거 확정·거부. 승인이 아니므로 에이전트도 부를 수 있다. 에이전트 세션일 때만 잠금을 검사·기록한다(2026-09-30 조율자 결정)."""
+    from scorecard.stages import agent_session_markers, confirm
+
+    if agent_session_markers():
+        _claim(args, "confirm")
+    out = confirm(args.slug, evidence_ids=_id_list(args.evidence), reject_ids=_id_list(args.reject), reviewer=args.by)
+    print(f"confirm: 확정 {len(out['confirmed'])} · 이미 확정 {len(out['already_confirmed'])} · 거부(삭제) {len(out['rejected'])}"
+          f" (검토자 {out['reviewer']}, {out['reviewed_at']})")
+    for key in ("confirmed", "already_confirmed", "rejected"):
+        if out[key]:
+            print(f"  {key}: {', '.join(out[key])}")
+    print(f"evidence 해시가 바뀌었다({out['evidence_hash'][:16]}…). calculate → draft → review 를 다시 돌린다: "
+          f"python scripts/scorecard_cli.py calculate {args.slug}")
+    return 0
+
+
+def cmd_summary(args: argparse.Namespace) -> int:
+    """승인 페이지용 요약. --json 은 tests/node/fixtures/summary.sample.json 과 같은 키 구조의 JSON 한 개다."""
+    from scorecard.stages import summary
+
+    data = summary(args.slug)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if args.json:
+        print(json.dumps(data, ensure_ascii=False, indent=2))
+        return 0
+    appr = data["approval"]
+    print(f"summary: {data['run_id']} (as_of {data['as_of']}, 규칙 {data['rule_version']})")
+    print(f"승인: {'있음' if appr['exists'] else '없음'}{' · 유효' if appr['valid'] else (' · 무효' if appr['exists'] else '')}")
+    print(f"기업 {len(data['companies'])} · 근거 {data['evidence']['selected']}(확정 {data['evidence']['confirmed']}) · 트리거 {len(data['triggers'])}"
+          f" · 미결 결정 {', '.join(data['pending_rule_decisions']) or '없음'}")
     return 0
 
 
@@ -321,6 +402,9 @@ def cmd_status(args: argparse.Namespace) -> int:
     return 0
 
 
+TAKE_LOCK_HELP = "다른 소유자의 실행 잠금(output/<slug>/.lock)을 인수한다"
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -371,6 +455,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--price-as-of")
     p.add_argument("--info-cutoff")
     p.add_argument("--force", action="store_true")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_init)
 
     p = sub.add_parser("collect", help="근거 후보 수집. research 앞에서만 돈다(build 는 재수집하지 않는다)")
@@ -382,21 +467,30 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--locale", default="en-US")
     p.add_argument("--from-file", help="네트워크 대신 읽을 파일(--kind 하나와 함께)")
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_collect)
 
     p = sub.add_parser("research")
     p.add_argument("slug")
     p.add_argument("--no-register", action="store_true", help="evidence.json 이 인용한 후보의 출처를 sources.json 에 등록하지 않는다")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_research)
 
-    for name, func in (("calculate", cmd_calculate), ("draft", cmd_draft), ("status", cmd_status)):
+    for name, func in (("calculate", cmd_calculate), ("draft", cmd_draft)):
         p = sub.add_parser(name)
         p.add_argument("slug")
+        p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
         p.set_defaults(func=func)
+
+    p = sub.add_parser("status")
+    p.add_argument("slug")
+    p.set_defaults(func=cmd_status)
 
     p = sub.add_parser("review-template")
     p.add_argument("slug")
+    # --force 는 템플릿 재생성만 뜻한다. 잠금 인수는 --take-lock 하나로 한다(두 의미를 한 플래그에 싣지 않는다).
     p.add_argument("--force", action="store_true")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_review_template)
 
     p = sub.add_parser("diff", help="두 실행을 견준다. subtree 해시 차이는 실패 조건이 아니다 — "
@@ -406,11 +500,31 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_diff)
 
-    p = sub.add_parser("approve")
+    p = sub.add_parser("approve", help="사람 셸에서만 된다. 에이전트 세션은 거부한다")
     p.add_argument("slug")
     p.add_argument("--by", required=True)
     p.add_argument("--note")
+    p.add_argument("--via", choices=["browser", "terminal"], default="terminal", help="승인 경로(approval.json 의 approved_via)")
     p.set_defaults(func=cmd_approve)
+
+    p = sub.add_parser("revoke", help="승인 취소. 사람 셸에서만 된다. approval.json 을 지우고 revocations.jsonl 에 남긴다")
+    p.add_argument("slug")
+    p.add_argument("--by", required=True)
+    p.add_argument("--note", required=True)
+    p.set_defaults(func=cmd_revoke)
+
+    p = sub.add_parser("confirm", help="근거 확정(status: confirmed)·거부(삭제). 승인이 아니다")
+    p.add_argument("slug")
+    p.add_argument("--evidence", help="확정할 근거 ID(쉼표)")
+    p.add_argument("--reject", help="거부해 지울 근거 ID(쉼표)")
+    p.add_argument("--by", help="검토자(없으면 SCORECARD_AGENT 또는 사용자명)")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
+    p.set_defaults(func=cmd_confirm)
+
+    p = sub.add_parser("summary", help="승인 페이지용 요약")
+    p.add_argument("slug")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_summary)
 
     p = sub.add_parser("resolve-cik", help="티커 → SEC CIK 확인. --apply 는 resolved 인 것만 companies.json 에 쓴다")
     p.add_argument("--company")

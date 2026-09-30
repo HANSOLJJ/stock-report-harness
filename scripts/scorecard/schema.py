@@ -1393,13 +1393,16 @@ def _expect_sha(value: Any, where: str, allow_none: bool = False) -> None:
 
 
 def validate_approval(payload: Any, run_id: str | None = None) -> dict[str, Any]:
-    _expect_keys(payload, ["schema", "run_id", "approval_id", "approved_by", "approved_at", "hashes"], "approval.json", optional=["note"])
+    _expect_keys(payload, ["schema", "run_id", "approval_id", "approved_by", "approved_at", "hashes"], "approval.json", optional=["note", "approved_via"])
     _require(payload["schema"] == "scorecard.approval/1", "approval.json: schema 불일치")
     if run_id is not None:
         _require(payload["run_id"] == run_id, "approval.json: run_id 불일치")
     _require(isinstance(payload["approved_by"], str) and payload["approved_by"].strip(),
              f"approval.json: approved_by 는 비어 있지 않은 문자열이어야 함 ({payload['approved_by']!r})")
     _expect_date(payload["approved_at"], "approval.json.approved_at")
+    # 2026-09-30 레인 F: 승인 경로는 선택 키다. 기존 두 실행의 승인에는 없다.
+    if "approved_via" in payload:
+        _require(payload["approved_via"] in APPROVAL_VIA, f"approval.json.approved_via 는 {list(APPROVAL_VIA)} 중 하나 ({payload['approved_via']!r})")
     # 2026-09-30 레인 E: sources·evidence·triggers 는 선택이다. 기존 두 실행의 승인은 6키만 담는다.
     # 대조 규칙은 `stages.approval_mismatches` 한 곳에 있다.
     _expect_keys(payload["hashes"], APPROVAL_REQUIRED_HASHES, "approval.hashes", optional=APPROVAL_OPTIONAL_HASHES)
@@ -1410,3 +1413,4 @@ def validate_approval(payload: Any, run_id: str | None = None) -> dict[str, Any]
 
 APPROVAL_REQUIRED_HASHES = ["rules", "observations", "judgments", "run", "results", "draft"]
 APPROVAL_OPTIONAL_HASHES = ["sources", "evidence", "triggers"]
+APPROVAL_VIA = ("browser", "terminal")

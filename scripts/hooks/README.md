@@ -7,14 +7,30 @@
 | 이름 | 이벤트 | 하는 일 | 결과 |
 |---|---|---|---|
 | `block_dangerous_bash` | PreToolUse 셸 | `rm -rf /`, `sudo`, 원격 스크립트 파이프 실행, 강제 push 차단 | block |
-| `protect_sensitive_files` | PreToolUse 셸·파일 | `.env*`, `.git/`, `.github/workflows/`, `docs/finance-style-guide.md` 수정 차단 | block |
-| `enforce_plan` | PreToolUse 셸·파일 | `output/<slug>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 명령은 리뷰 pass 필요 | block |
+| `protect_sensitive_files` | PreToolUse 셸·파일 | 보호 경로(아래 절) 수정 차단, 승인·취소 명령 차단 | block |
+| `enforce_plan` | PreToolUse 셸·파일 | `output/<slug>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 명령은 리뷰 pass 필요, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 | block |
 | `forbid_financial_advice` | Pre·PostToolUse | `output/*/draft.md`, `**/judgments.json`, `**/evidence/*.json` 의 투자 권유·수익 보장 표현 차단 | block |
 | `remind_review` | PostToolUse 파일, Stop | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고 | warn |
 | `enforce_memory` | PostToolUse 파일 | `memory/_daily/`·`memory/topics/` 변경 뒤 `scripts/validate_memory.py` 실행, 실패하면 차단 | block |
 | `inject_memory_context` | UserPromptSubmit | 프롬프트에 맞는 `memory/topics/*.md` 를 문맥으로 주입 | context |
 
 `enforce-citations` 는 종목 리포트 전용이라 만들지 않았고 배선에서도 뺐다.
+
+## 보호 경로와 승인 명령 (`protect_sensitive_files`)
+
+파일 도구 경로는 아래에 해당하면 막는다. 셸 명령은 같은 경로를 언급하면서 파일을 바꾸는 것처럼 보일 때(변경 명령·리다이렉션)만 막는다. 셸 명령의 `\` 는 `/` 로 바꿔 대조한다.
+
+- `.env*`, `.git/`, `.github/workflows/`, `docs/finance-style-guide.md`
+- 어느 폴더에 있든 `approval.json` (2026-09-30 레인 F)
+- 승인된 실행이 쓰는 규칙 `scorecard/rules/v1.5.json`, `v1.6.json`, `v1.7.json`. **v1.8 은 아직 승인된 실행이 없어 넣지 않았다. 첫 실행이 v1.8 로 승인되면 `_PROTECTED_FILES` 에 더한다.**
+- 이동한 기존 실행 두 폴더 `output/ai-scorecard-2026-09-baseline/`, `output/ai-scorecard-2026-09-obsreg/`
+- `scorecard/history.csv`
+
+셸 명령에 `scorecard_cli.py approve`, `scorecard_cli.py revoke`, `stages.approve`, `stages.revoke` 가 있으면 변경 기호와 무관하게 막는다. 승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. `confirm` 은 막지 않는다. 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 하기 때문이다. 훅은 둘째 방어선이고, 첫째는 CLI 가 에이전트 세션의 `approve`·`revoke` 를 거부하는 것이다(`scorecard.stages.agent_session_markers`).
+
+## 실행 잠금 (`enforce_plan`)
+
+`output/<slug>/.lock`(gitignore)에 `{owner, started_utc, stage}` 가 있고 그 소유자가 훅 프로세스의 소유자와 다르면 그 묶음에 대한 Write/Edit 를 막는다. 잠금 파일이 없으면 통과하고, 읽을 수 없는 잠금은 소유자를 모르는 잠금으로 보아 막는다. 소유자는 `SCORECARD_AGENT`, 없으면 `ORCA_TERMINAL_HANDLE`, 없으면 OS 사용자명이다(`guard.lock_owner` 와 `scorecard.stages.lock_owner` 가 같은 규칙). 잠금은 CLI 의 `init`·`collect`·`research`·`calculate`·`draft`·`review-template` 과 에이전트 세션의 `confirm` 이 쓰고, 인수는 그 단계들의 `--take-lock` 이다.
 
 ## 단계 순서 (`enforce_plan`)
 
@@ -64,5 +80,4 @@
 ## 아직 하지 않은 것
 
 - Antigravity·Muse 배선은 확인 세 건(차단 표현, 페이로드 필드 이름, 훅 프로세스의 작업 디렉터리)이 끝난 뒤 별도 과제로 한다.
-- `approval.json`, 규칙 파일, 이동한 실행 폴더의 보호는 이 통합의 범위가 아니다. 계획의 4.2 에서 다룬다.
 - `protect_sensitive_files` 의 셸 변경 감지 정규식은 bash 명령 기준이다. PowerShell 의 `Set-Content`, `Remove-Item` 같은 cmdlet 은 아직 변경 명령으로 보지 않는다(리다이렉션 `>` 는 잡는다).
