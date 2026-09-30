@@ -27,7 +27,7 @@
 - [ ] 4.6: README 훅 표(`protect-sensitive-files.sh` 등 옛 이름·output-spec) 갱신. AGENTS 에서 레인 S 가 지운 "plan 없이 research 금지 / review 없이 build 금지" 는 채점표에도 맞는 일반 규칙이므로 채점표 단계 이름으로 되살린다
 - [ ] baseline 실행 recompute 불일치(amazon·oracle·openai F9 calc 경로 기록)는 원본 폴더에서도 같은 기존 상태. 별도 과제로 원인 기록 여부 결정
 - [x] 후속 직렬(Opus): 3.1·3.4 는 레인 E 로 디스패치(task `task_886a8483f9d2`, dispatch `ctx_ef9a127fce02`, 터미널 `term_ceb10bfe-fbe6-4320-aaa3-a59083939d17`). 4.2 → 4.3 은 E 병합 뒤
-- [ ] 문서(Sonnet): 4.5 → 4.6
+- [x] 문서(Sonnet): 4.5 → 4.6
 
 ## 1단계 정리·재활용
 - [x] 1.1 stock-research 문구 → score-collect 초안, content-editor → evidence-editor (레인 S)
@@ -52,8 +52,8 @@
 - [x] 4.2 approve 명령·approval.json·이동 실행 폴더·규칙 파일·history.csv 보호(protect 목록 확대), 잠금 파일, approve CLI 의 에이전트 환경변수 거부 (후속 Opus, A 병합 뒤)
 - [x] 4.3 summary·confirm·approve --via·revoke 명령 (후속 Opus)
 - [x] 4.4 server.js --approvals 승인 페이지 (레인 D)
-- [ ] 4.5 score-collect 완성, score-* 개정, 리뷰어 에이전트 재작성 (Sonnet)
-- [ ] 4.6 AGENTS·README·structure.md 반영 (Sonnet)
+- [x] 4.5 score-collect 완성, score-* 개정, 리뷰어 에이전트 재작성 (Sonnet)
+- [x] 4.6 AGENTS·README·structure.md 반영 (Sonnet)
 - [ ] (운영) Antigravity·Muse 배선: 차단 표현·필드 이름·작업 디렉터리 확인 뒤
 
 ## 사용자 준비 항목
@@ -66,8 +66,10 @@
 - [ ] baseline 은 기존 recompute 불일치로 재빌드가 멈춘다(승인 검사는 통과). 감사 링크 재빌드는 obsreg 만 해당
 - [x] 레인 F (Opus) 4.2·4.3 디스패치 완료 → 검증 → 병합. task `task_c39a130db79b`, dispatch `ctx_3a3d42bdc422`, 워크트리 `…/lane-F`, 터미널 `term_6d0d6fec-989e-4175-b8e9-bafee8ff8ff0`
 - [x] 레인 F 조율자 재현(병합 뒤): 두 실행 approval_valid true, output/·scorecard/ 변경 0, summary 계약 키 일치, unittest 1085건 중 실패 1·오류 14(원자료 부재 집합), node 10·check 통과, 훅 스모크에서 승인 명령(PowerShell)·승인 파일 쓰기·이동 실행 수정·v1.7 수정 모두 exit 2, confirm 통과
-- [ ] 4.5·4.6: 터미널 승인 명령 안내가 남은 곳(score-approve 스킬, README, build 의 awaiting_user 메시지)을 승인 페이지 안내로 바꾼다
+- [x] 4.5·4.6: 터미널 승인 명령 안내가 남은 곳(score-approve 스킬, README, build 의 awaiting_user 메시지)을 승인 페이지 안내로 바꾼다
 - [ ] PowerShell cmdlet(Set-Content·Remove-Item·Out-File) 변경은 보호 훅의 _MUTATING 에 없어 지나간다. 리다이렉션은 잡는다. 별도 과제
 - [ ] baseline 초안 재렌더는 render_common.method_sections 가 v1.5(bands) 실행에서 KeyError. obsreg 초안도 지금 코드로 다시 렌더하면 네 줄이 달라진다(저장본은 승인본이라 그대로 둔다)
 - [ ] 에이전트 표지 환경변수는 Claude Code 세션 하나만 조사했다. Codex·Antigravity·Muse 세션은 운영 단계 배선 때 확인
-- [ ] 레인 G (Sonnet) 4.5·4.6 디스패치 완료 → 검증 → 병합. task `task_39b14e9bae11`, dispatch `ctx_2e2d5d341c32`, 워크트리 `…/lane-G`, 터미널 `term_ef689690-3b13-42c5-b514-5d9caea97241`
+- [x] 레인 G (Sonnet) 4.5·4.6 디스패치 완료 → 검증 → 병합. task `task_39b14e9bae11`, dispatch `ctx_2e2d5d341c32`, 워크트리 `…/lane-G`, 터미널 `term_ef689690-3b13-42c5-b514-5d9caea97241`
+- [x] 최종 통합 재현(레인 G 병합 뒤): 두 실행 approval_valid true, unittest 1085건 중 실패 1·오류 14와 pytest 실패 15(전부 원자료 부재 같은 집합), node 10·check·validate:memory 통과, 소유 문서 옛 경로 0건, 에이전트 승인 지시 문구 0건
+- [ ] main 병합과 fork push (사용자 확인 뒤)
