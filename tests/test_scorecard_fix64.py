@@ -151,8 +151,7 @@ class Fix64Test(unittest.TestCase):
 
     def test_contract_passes_with_no_errors(self):
         from validate_report_contract import validate_contract
-        r = validate_contract(SLUG, require_html=False, check_html_if_present=False,
-                              require_price_chart=False, check_price_chart_if_present=False)
+        r = validate_contract(SLUG, require_html=False, check_html_if_present=False)
         # 2026-09-17 FIX-67: 초안이 바뀌어 리뷰가 무효였다. 2026-09-21 재승인으로 닫혔다.
         self.assertEqual(r.errors, [], r.errors)
         # 경고 둘은 남는다 — 승계 예외 건수와 그 검사가 확인하지 않는 조건이다.
