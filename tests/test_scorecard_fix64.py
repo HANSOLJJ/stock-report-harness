@@ -17,7 +17,7 @@ from scorecard.calc_f9 import compute_f9  # noqa: E402
 from scorecard.engine import load_context  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
-from scorecard.stages import current_hashes  # noqa: E402
+from scorecard.stages import approval_mismatches, current_hashes  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
@@ -145,7 +145,7 @@ class Fix64Test(unittest.TestCase):
         self.assertEqual(self.approval["approval_id"], "776a511bf0a9028f")
         self.assertIn("2026-09-17 승인본과 동일", self.approval["note"])
         self.assertIn("초안만 바뀌었다", self.approval["note"])
-        self.assertEqual(self.approval["hashes"], current_hashes(SLUG))
+        self.assertEqual(approval_mismatches(self.approval["hashes"], current_hashes(SLUG)), [])  # 2026-09-30 레인 E: 대조 규칙은 한 곳
         self.assertEqual(self.approval["hashes"]["rules"], RULES.hash)
         self.assertEqual(self.approval["hashes"]["results"], self.results["results_hash"])
 

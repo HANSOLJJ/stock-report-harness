@@ -14,7 +14,7 @@ from typing import Any
 
 from .engine import load_context, load_results, run_dir
 from .schema import FACTOR_IDS, SchemaError, load_json_strict, sha256_obj, validate_approval
-from .stages import current_hashes
+from .stages import approval_mismatches, current_hashes
 
 # 1층에서 견주는 입력 장부. `sources` 항목에는 `company_id` 가 없다 — 귀속을 따질 수 없으므로
 # **지워진 것만** 위반으로 보고 더해진 것은 목록으로만 낸다.
@@ -174,8 +174,7 @@ def approval_state(slug: str) -> dict[str, Any]:
         return {"exists": False, "valid": False, "differing": [], "note": "승인 기록 없음"}
     approval = validate_approval(load_json_strict(path), slug)
     current = current_hashes(slug)
-    differing = sorted(k for k in set(approval["hashes"]) | set(current)
-                       if approval["hashes"].get(k) != current.get(k))
+    differing = approval_mismatches(approval["hashes"], current)
     return {"exists": True, "valid": not differing, "differing": differing,
             "approved_by": approval.get("approved_by"), "approved_at": approval.get("approved_at"),
             "approved_results_hash": approval["hashes"].get("results"),

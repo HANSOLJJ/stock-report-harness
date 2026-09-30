@@ -144,6 +144,10 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"{prel(paths.research)} plan_source 불일치")
         if frontmatter_value(rfm, "observations_hash") != ctx.hashes["observations"] or frontmatter_value(rfm, "judgments_hash") != ctx.hashes["judgments"]:
             result.error(f"{prel(paths.research)} 가 현재 입력 해시와 다름 — research 를 다시 생성")
+        # 2026-09-30 레인 E: 근거·트리거 파일이 있을 때만 대조한다. 파일은 없는데 해시가 적혀 있어도 낡은 research 다.
+        for key in ("evidence", "triggers"):
+            if frontmatter_value(rfm, f"{key}_hash") != ctx.hashes.get(key, ""):
+                result.error(f"{prel(paths.research)} {key}_hash 가 현재 {key} 와 다름 — research 를 다시 생성")
         result.check("research bound to input hashes")
 
     # results -------------------------------------------------------------
@@ -267,9 +271,9 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
         else:
             try:
                 approval = validate_approval(load_json_strict(approval_path), slug)
-                from .stages import current_hashes
+                from .stages import approval_mismatches, current_hashes
 
-                if approval["hashes"] != current_hashes(slug):
+                if approval_mismatches(approval["hashes"], current_hashes(slug)):
                     result.error("승인 이후 규칙/자료/판단/결과/초안이 바뀜 — 승인 무효(awaiting_user)")
                 else:
                     result.check("approval hashes match current inputs")
