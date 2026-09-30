@@ -1400,5 +1400,13 @@ def validate_approval(payload: Any, run_id: str | None = None) -> dict[str, Any]
     _require(isinstance(payload["approved_by"], str) and payload["approved_by"].strip(),
              f"approval.json: approved_by 는 비어 있지 않은 문자열이어야 함 ({payload['approved_by']!r})")
     _expect_date(payload["approved_at"], "approval.json.approved_at")
-    _expect_keys(payload["hashes"], ["rules", "observations", "judgments", "run", "results", "draft"], "approval.hashes")
+    # 2026-09-30 레인 E: sources·evidence·triggers 는 선택이다. 기존 두 실행의 승인은 6키만 담는다.
+    # 대조 규칙은 `stages.approval_mismatches` 한 곳에 있다.
+    _expect_keys(payload["hashes"], APPROVAL_REQUIRED_HASHES, "approval.hashes", optional=APPROVAL_OPTIONAL_HASHES)
+    for key, digest in payload["hashes"].items():
+        _require(isinstance(digest, str), f"approval.hashes.{key}: 문자열 필요 ({digest!r})")
     return payload
+
+
+APPROVAL_REQUIRED_HASHES = ["rules", "observations", "judgments", "run", "results", "draft"]
+APPROVAL_OPTIONAL_HASHES = ["sources", "evidence", "triggers"]

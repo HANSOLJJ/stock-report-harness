@@ -107,10 +107,14 @@ def collect_company_news(
     from_file: str | Path | None = None,
     dry_run: bool = False,
     now: str | None = None,
+    locale: str = "en-US",
 ) -> dict[str, Any]:
     company_id = company["company_id"]
     queries = default_queries(company)
-    urls = [build_query_url(q) for q in queries]
+    # 2026-09-30 레인 E: `collect --locale` 연결. `en-US` → hl=en-US, gl=US, ceid=US:en.
+    lang, _, region = locale.partition("-")
+    region = region or lang.upper()
+    urls = [build_query_url(q, hl=locale, gl=region, ceid=f"{region}:{lang}") for q in queries]
     fetched_at = now or utc_now_iso()
     if dry_run:
         return {"company_id": company_id, "dry_run": True, "queries": queries, "urls": urls}

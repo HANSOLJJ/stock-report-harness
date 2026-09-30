@@ -18,7 +18,7 @@ from . import render_common as rc
 from .render_common import GATE_LABELS, METHOD_LABELS, SHARE_LABELS, YESNO_LABELS, factor_calc_text, inline_html  # noqa: F401 — 테스트·호환용 재노출
 from .render_md import DISCLAIMER, FACTOR_LABELS, REVIEW_AREAS, STATUS_LABEL, fmt_num, fmt_pct, fmt_score, fmt_usd
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS, SchemaError, load_json_strict, sha256_file, validate_approval
-from .stages import current_hashes, load_baseline
+from .stages import approval_mismatches, current_hashes, load_baseline
 
 GENERATOR = "stock-report-harness scorecard-builder"
 SHORT = {"F1": "①", "F2": "②", "F3": "③", "F4": "④", "F5": "⑤", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
@@ -1716,7 +1716,7 @@ def build_scorecard(slug: str) -> tuple[Path, list[Path], None]:
     if not approval_path.is_file():
         raise SystemExit(f"awaiting_user: 사용자 승인 없음 — python scripts/scorecard_cli.py approve {slug} --by <name>")
     approval = validate_approval(load_json_strict(approval_path), slug)
-    if approval["hashes"] != current_hashes(slug):
+    if approval_mismatches(approval["hashes"], current_hashes(slug)):
         raise SystemExit("awaiting_user: 승인 이후 규칙/자료/판단/결과/초안이 바뀌어 승인이 무효 — 다시 검토·승인")
     ctx = load_context(slug)
     results = load_results(slug)

@@ -142,13 +142,61 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 
 # ------------------------------------------------------------------ research
 
-def render_research(ctx: Any, *, hashes: dict[str, str]) -> str:
+def _evidence_lines(ctx: Any) -> list[str]:
+    """`## 근거 자료` — 기업별 표. relevance 는 사람이 쓴 추론이라 그렇게 표시한다."""
+    lines = ["## 근거 자료", ""]
+    if ctx.evidence is None:
+        return lines + ["- evidence.json 없음 — collect 뒤 선별 전이거나 근거 계층을 쓰지 않는 실행이다", ""]
+    if not ctx.evidence:
+        return lines + ["- 선별된 근거 0건", ""]
+    urls = {s["source_id"]: s.get("url") for s in ctx.sources.get("items", [])}
+    for cid in ctx.run["companies"]:
+        items = sorted((e for e in ctx.evidence if e["company_id"] == cid), key=lambda e: e["evidence_id"])
+        if not items:
+            continue
+        rows = []
+        for e in items:
+            url = urls.get(e["source_id"])
+            title = f"[{e['title']}]({url})" if url else e["title"]
+            relevance = e["relevance"] if e["relevance"].startswith("(추론)") else f"(추론) {e['relevance']}"
+            rows.append([e["evidence_id"], ", ".join(FACTOR_LABELS[f] for f in e["factors"]), e["kind"], title,
+                         e["published_at_utc"] or "—", e.get("status", "candidate"), relevance])
+        lines += [f"### {ctx.companies[cid]['display_name']}", "",
+                  table(["근거 ID", "Factor", "종류", "제목", "발행시각(UTC)", "상태", "관련성"], rows), ""]
+    lines += ["- `candidate` 근거는 새 판단(`status: new`)이 인용할 수 없다. 사람이 확인해 `confirmed` 로 올린 근거만 인용한다.", ""]
+    return lines
+
+
+def _trigger_lines(ctx: Any, legacy_triggers: list[dict[str, Any]] | None) -> list[str]:
+    """`## 트리거(활성)` — triggers.json 이 있으면 그것을, 없으면 기준선 트리거 서술을 초안과 같은 모양으로 싣는다."""
+    lines = ["## 트리거(활성)", ""]
+    if ctx.triggers is not None:
+        active = sorted((t for t in ctx.triggers if t["status"] == "watching"), key=lambda t: t["trigger_id"])
+        rows = [[t["trigger_id"], ctx.companies[t["company_id"]]["display_name"], ", ".join(FACTOR_LABELS[f] for f in t["factors"]),
+                 t["observation"], t["condition"], t["deadline"], ", ".join(t["evidence_ids"]) or "—", t["recheck"]["what"]]
+                for t in active]
+        lines += [table(["ID", "기업", "Factor", "관찰 사실", "조건", "기한", "근거", "재검토"], rows) if rows else "- 감시 중인 트리거 없음", ""]
+        others = len(ctx.triggers) - len(active)
+        if others:
+            lines += [f"- 그 밖의 상태(fired·expired·withdrawn) {others}건은 triggers.json 에 있다.", ""]
+        return lines + ["- 트리거는 미래 점수를 저장하지 않는다(C-14). 조건이 성립하면 현재 규칙으로 다시 계산한다.", ""]
+    if not legacy_triggers:
+        return lines + ["- 등록된 트리거 없음", ""]
+    reps = rc.replacements(ctx)
+    lines += [table(["ID", "항목", "왜 중요한가(v1.5 원문)", "영향(원문)"],
+                    [[t["trigger_id"], t["title"], rc.trigger_why(ctx, t, reps), t["impact_raw"]] for t in legacy_triggers]), ""]
+    return lines + [f"- {x}" for x in rc.trigger_notes(ctx)] + [""]
+
+
+def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[dict[str, Any]] | None = None) -> str:
     run = ctx.run
     paths = run_paths(ctx.slug)
+    # 2026-09-30 레인 E: 근거·트리거 해시는 파일이 있을 때만 싣는다(validate.py 도 있을 때만 대조한다).
+    optional = [(f"{k}_hash", hashes[k]) for k in ("evidence", "triggers") if k in hashes]
     fm = frontmatter([
         ("slug", ctx.slug), ("report_type", "ai_scorecard"), ("plan_source", paths.rel(paths.plan)), ("run_id", ctx.slug),
         ("as_of", run["as_of"]), ("rule_version", ctx.rules.version), ("observations_hash", hashes["observations"]),
-        ("judgments_hash", hashes["judgments"]), ("created_at", run["created_at"]),
+        ("judgments_hash", hashes["judgments"]), *optional, ("created_at", run["created_at"]),
     ])
     lines = [f"# 리서치 — {run['title']}", "", f"실행 `{ctx.slug}` 의 원자료·판단 입력·출처를 정리한다. 관측 {len(ctx.observations)}건, 판단 {len(ctx.judgments)}건.", ""]
     lines += ["## 원자료", ""]
@@ -182,6 +230,8 @@ def render_research(ctx: Any, *, hashes: dict[str, str]) -> str:
             inputs = ", ".join(f"{k}={v}" for k, v in j["inputs"].items()) or "—"
             rows.append([FACTOR_LABELS[j["factor"]], j["kind"], fmt_score(j["score"]), inputs, j["status"], f"{j['reviewer']} {j['reviewed_at']}", (j.get("note") or "")[:80]])
         lines += [f"### {company['display_name']}", "", table(["Factor", "종류", "점수", "입력", "상태", "검토", "비고"], rows), ""]
+    lines += _evidence_lines(ctx)
+    lines += _trigger_lines(ctx, legacy_triggers)
     lines += ["## 출처", ""]
     src_rows = [[s.get("source_id"), s.get("title"), s.get("publisher") or "—", s.get("url") or "(URL 없음 — 만들지 않음)", s.get("accessed_at") or "—", s.get("conflict_of_interest") or "—"] for s in ctx.sources.get("items", [])]
     lines += [table(["ID", "제목", "발행", "URL", "접근일", "이해상충"], src_rows) if src_rows else "- 등록된 출처 없음", ""]

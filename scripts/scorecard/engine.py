@@ -65,13 +65,22 @@ def load_companies() -> dict[str, dict[str, Any]]:
 
 
 def input_hashes(slug: str) -> dict[str, str]:
+    from .paths import run_paths  # paths 가 engine 을 import 하므로 여기서 부른다
+
     d = run_dir(slug)
-    return {
+    out = {
         "run": sha256_file(d / "run.json"),
         "observations": sha256_file(d / "observations.json"),
         "judgments": sha256_file(d / "judgments.json"),
         "sources": sha256_file(d / "sources.json") if (d / "sources.json").is_file() else "",
     }
+    # 2026-09-30 레인 E: 근거·트리거는 **파일이 있을 때만** 키를 더한다. 없는 실행(기존 두 실행)의
+    # results.input_hashes 와 results_hash 가 그대로 남아야 한다. 근거를 고치면 calculate 부터 다시 밟는다.
+    paths = run_paths(slug)
+    for key, path in (("evidence", paths.evidence), ("triggers", paths.triggers)):
+        if path.is_file():
+            out[key] = sha256_file(path)
+    return out
 
 
 def load_context(slug: str) -> RunContext:

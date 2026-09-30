@@ -1,20 +1,27 @@
-# scorecard 단계 실행: init(실행 생성) → research → calculate(+preview) → draft → review-template → approve. 순서·해시 결속을 코드에서 강제한다.
+# scorecard 단계 실행: init(실행 생성) → collect → research → calculate(+preview) → draft → review-template → approve. 순서·해시 결속을 코드에서 강제한다.
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
 from report_contract_lib import read_markdown, rel
 
+from . import evidence_lib
 from .baseline_import import BASELINE_AS_OF, SRC_HANDOVER, SRC_HANDOVER_SHA256, SRC_HTML, SRC_MD, SRC_RULE, baseline_judgments
+from .collect_filings import DEFAULT_FORMS, collect_company_filings
+from .collect_news import collect_company_news
+from .collect_prices import fetch_quote, price_observations, price_source_entry
 from .engine import BASELINE_DIR, RunContext, compute, input_hashes, load_companies, load_context, load_results, results_path, run_dir, write_results
+from .evidence_lib import source_entry, upsert_sources, utc_now_iso
 from .paths import run_paths
 from .render_md import render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
-from .schema import SchemaError, load_json_strict, sha256_file, sha256_text, validate_approval, validate_observations, validate_run, write_json
+from .schema import (APPROVAL_REQUIRED_HASHES, SchemaError, load_json_strict, sha256_file, sha256_obj, sha256_text, validate_approval,
+                     validate_observations, validate_run, validate_sources, write_json)
 
 
 def today() -> str:
@@ -278,13 +285,231 @@ def init_run(
     return {"plan": plan_path, "run": d / "run.json", "observations": d / "observations.json", "judgments": d / "judgments.json", "sources": d / "sources.json"}
 
 
+# ------------------------------------------------------------------ collect
+# 2026-09-30 레인 E. research 앞에서만 돈다. build 는 재수집하지 않는다(D-02).
+# 뉴스·공시는 수집 캐시(DATA_ROOT)를 갱신하고 후보 파일만 쓴다 — sources.json 은 선별된 근거가
+# research 에서 등록될 때 바뀐다. 가격만 계산 입력이라 여기서 관측과 출처를 바로 등록한다.
+
+COLLECT_KINDS = ("news", "filings", "prices")
+CANDIDATE_WINDOW_DAYS = 180
+
+
+def _cache_items(company_id: str, kind: str) -> list[dict[str, Any]]:
+    base = evidence_lib.DATA_ROOT / company_id
+    path = base / "news" / "google" / "normalized.json" if kind == "news" else base / "filings" / "index.json"
+    return json.loads(path.read_text(encoding="utf-8")).get("items", []) if path.is_file() else []
+
+
+def candidate_items(company_ids: list[str], *, since: str, until: str) -> list[dict[str, Any]]:
+    """수집 캐시에서 창(since ≤ 발행일 ≤ until, C-17) 안의 후보를 고른다. 발행일이 없는 기사는 창을 판정할 수 없어 뺀다.
+
+    시각 필드(first_seen·updated)는 넣지 않는다. 같은 캐시면 같은 목록이다.
+    """
+    items: list[dict[str, Any]] = []
+    for cid in sorted(set(company_ids)):
+        for a in _cache_items(cid, "news"):
+            day = (a.get("published_at_utc") or "")[:10]
+            if day and since <= day <= until:
+                items.append({"candidate_id": a["article_id"], "company_id": cid, "kind": "news", "title": a["title"],
+                              "url": a["url"], "published_at_utc": a["published_at_utc"], "source": dict(a["source"]),
+                              "raw_ref": a["raw_ref"], "content_hash": a["content_hash"], "source_id": a["source_id"]})
+        for f in _cache_items(cid, "filings"):
+            day = f.get("filed_at") or ""
+            if day and since <= day <= until:
+                stable = {k: f.get(k) for k in ("accession", "form", "filed_at", "report_period", "primary_document", "items")}
+                items_text = f" · Items {', '.join(f['items'])}" if f.get("items") else ""
+                # 공시는 제출일만 있다. 시각을 지어내지 않으므로 published_at_utc 는 null 이고 날짜는 filed_at 에 둔다.
+                items.append({"candidate_id": f["filing_id"], "company_id": cid, "kind": "filing",
+                              "title": f"{f['form']} {day}{items_text}", "url": f["primary_doc_url"],
+                              "published_at_utc": None, "filed_at": day, "form": f["form"],
+                              "raw_ref": f["raw_ref"], "content_hash": sha256_obj(stable), "source_id": f["source_id"]})
+    return sorted(items, key=lambda x: (x["company_id"], x["kind"], x["candidate_id"]))
+
+
+def write_candidates(slug: str, *, since: str, until: str, company_ids: list[str]) -> Path:
+    payload = {"schema": "scorecard.candidates/1", "run_id": slug, "window": {"since": since, "until": until},
+               "items": candidate_items(company_ids, since=since, until=until)}
+    path = run_paths(slug).candidates
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+    return path
+
+
+def _collect_prices(slug: str, run: dict[str, Any], registry: dict[str, dict[str, Any]], selected: list[str], *,
+                    from_file: str | None, dry_run: bool, now: str | None) -> list[dict[str, Any]]:
+    """가격·시총 관측을 observations.json 에 더하고 SRC-YF-<price_as_of> 를 sources.json 에 등록한다. 덮어쓰지 않는다."""
+    price_as_of = run.get("price_as_of") or run["as_of"]
+    source_id = f"SRC-YF-{price_as_of}"
+    quotes = json.loads(Path(from_file).read_text(encoding="utf-8")) if from_file else None
+    rows: list[dict[str, Any]] = []
+    new_obs: list[dict[str, Any]] = []
+    tickers: list[str] = []
+    for cid in selected:
+        company = registry[cid]
+        ticker = company.get("ticker")
+        if not company.get("listed") or not ticker:
+            rows.append({"company_id": cid, "status": "skipped_unlisted"})
+            continue
+        if dry_run:
+            rows.append({"company_id": cid, "status": "dry_run", "ticker": ticker, "price_as_of": price_as_of})
+            continue
+        try:
+            if quotes is not None and ticker not in quotes:
+                raise ValueError(f"{from_file} 에 {ticker} 시세가 없다")
+            quote = quotes[ticker] if quotes is not None else fetch_quote(ticker, price_as_of)
+            obs = price_observations(company, quote, source_id=source_id)
+        except Exception as exc:  # noqa: BLE001 — 기업 하나의 실패로 나머지를 멈추지 않는다
+            rows.append({"company_id": cid, "status": "failed", "error": str(exc)})
+            continue
+        new_obs += obs
+        tickers.append(ticker)
+        rows.append({"company_id": cid, "status": "collected", "close_date": obs[0]["as_of"],
+                     "market_cap": obs[1]["status"], "method": obs[1]["basis"]["method"]})
+    if dry_run or not new_obs:
+        return rows
+
+    d = run_dir(slug)
+    observations = load_json_strict(d / "observations.json")
+    taken = {(o["company_id"], o["metric"], o["as_of"]) for o in observations["items"]}
+    taken_ids = {o["observation_id"] for o in observations["items"]}
+    clash = [o["observation_id"] for o in new_obs
+             if (o["company_id"], o["metric"], o["as_of"]) in taken or o["observation_id"] in taken_ids]
+    if clash:
+        raise SchemaError(f"같은 (기업, 지표, 기준일) 관측이 이미 있다 — 덮어쓰지 않는다: {clash}")
+    observations["items"].extend(new_obs)
+    validate_observations(observations, registry, slug)
+    src_path = d / "sources.json"
+    sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
+    upsert_sources(sources, [price_source_entry(price_as_of, tickers=tickers, accessed_at=now or utc_now_iso())])
+    validate_sources(sources, slug)
+    write_json(d / "observations.json", observations)
+    write_json(src_path, sources)
+    return rows
+
+
+def collect(
+    slug: str,
+    *,
+    companies: list[str] | None = None,
+    kinds: tuple[str, ...] | list[str] = COLLECT_KINDS,
+    since: str | None = None,
+    forms: list[str] | None = None,
+    locale: str = "en-US",
+    from_file: str | None = None,
+    dry_run: bool = False,
+    now: str | None = None,
+) -> dict[str, Any]:
+    """근거 후보를 모은다. `now` 는 테스트가 수집 시각을 고정할 때만 준다."""
+    run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
+    registry = load_companies()
+    selected = list(companies or run["companies"])
+    outside = [c for c in selected if c not in run["companies"]]
+    if outside:
+        raise SchemaError(f"run.companies 에 없는 기업 {outside}")
+    kinds = tuple(kinds)
+    unknown = [k for k in kinds if k not in COLLECT_KINDS]
+    if unknown or not kinds:
+        raise SchemaError(f"--kind 는 {list(COLLECT_KINDS)} 중에서 고른다 ({list(kinds)})")
+    if from_file is not None and len(kinds) != 1:
+        raise SchemaError("--from-file 은 --kind 하나와 함께 쓴다(파일 형식이 종류마다 다르다)")
+    until = run.get("info_cutoff") or run["as_of"]
+    try:
+        since = since or (date.fromisoformat(run["as_of"]) - timedelta(days=CANDIDATE_WINDOW_DAYS)).isoformat()
+        date.fromisoformat(since)
+    except ValueError as exc:
+        raise SchemaError(f"--since 는 YYYY-MM-DD ({since!r})") from exc
+    if since > until:
+        raise SchemaError(f"후보 창이 비어 있다: since {since} > info_cutoff {until}")
+
+    summary: dict[str, Any] = {"run_id": slug, "window": {"since": since, "until": until}, "dry_run": dry_run,
+                               "news": [], "filings": [], "prices": []}
+    for cid in selected if "news" in kinds else []:
+        try:
+            res = collect_company_news(registry[cid], from_file=from_file, dry_run=dry_run, now=now, locale=locale)
+            status = "dry_run" if dry_run else ("skipped_rate_limit" if res["skipped_rate_limit"] and not res["fetched"] else "collected")
+            summary["news"].append({"company_id": cid, "status": status, "urls": res["urls"]})
+        except Exception as exc:  # noqa: BLE001
+            summary["news"].append({"company_id": cid, "status": "failed", "error": str(exc)})
+    sec_ua = os.environ.get("SEC_UA", "").strip()
+    for cid in selected if "filings" in kinds else []:
+        company = registry[cid]
+        if not company.get("cik"):
+            summary["filings"].append({"company_id": cid, "status": "skipped_no_cik"})
+            continue
+        if from_file is None and not dry_run and not sec_ua:
+            # 전체를 실패시키지 않는다. 나머지 종류와 기업은 계속 돈다.
+            summary["filings"].append({"company_id": cid, "status": "skipped_no_user_agent"})
+            continue
+        try:
+            res = collect_company_filings(company, from_file=from_file, dry_run=dry_run, since=since,
+                                          forms=set(forms) if forms else DEFAULT_FORMS, now=now)
+            summary["filings"].append({"company_id": cid, "status": "dry_run" if dry_run else "collected", "urls": res["urls"]})
+        except Exception as exc:  # noqa: BLE001
+            summary["filings"].append({"company_id": cid, "status": "failed", "error": str(exc)})
+    if not dry_run:
+        summary["candidates"] = write_candidates(slug, since=since, until=until, company_ids=run["companies"])
+    if "prices" in kinds:
+        summary["prices"] = _collect_prices(slug, run, registry, selected, from_file=from_file, dry_run=dry_run, now=now)
+    return summary
+
+
 # ------------------------------------------------------------------ research
 
-def research(slug: str) -> Path:
+def _candidate_source_entry(candidate: dict[str, Any]) -> dict[str, Any]:
+    """선별된 후보 하나의 sources.json 항목. 원문 해시는 캐시에 남은 raw 파일에서 센다(없으면 null)."""
+    raw_ref = candidate["raw_ref"]
+    raw = evidence_lib.DATA_ROOT / raw_ref.split("/", 1)[1] if raw_ref.startswith("data/") else evidence_lib.DATA_ROOT / raw_ref
+    kind = "news" if candidate["kind"] == "news" else "filings"
+    key = "article_id" if kind == "news" else "filing_id"
+    cached = next((x for x in _cache_items(candidate["company_id"], kind) if x.get(key) == candidate["candidate_id"]), {})
+    item: dict[str, Any] = {"source_id": candidate["source_id"], "title": candidate["title"], "url": candidate["url"],
+                            "company_id": candidate["company_id"], "raw_ref": raw_ref}
+    if kind == "news":
+        item.update(publisher=candidate["source"].get("name") or "Google News",
+                    publisher_url=candidate["source"].get("url") or None,
+                    published_at_utc=candidate["published_at_utc"],
+                    note="Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다")
+    else:
+        item.update(publisher="SEC EDGAR", note=f"{candidate['form']} 제출일 {candidate['filed_at']}")
+    return source_entry(item, kind="news" if kind == "news" else "filing",
+                        raw_sha256=sha256_file(raw) if raw.is_file() else None,
+                        accessed_at=cached.get("first_seen_utc") or utc_now_iso())
+
+
+def register_evidence_sources(slug: str) -> list[str]:
+    """evidence.json 이 인용한 후보의 출처를 sources.json 에 **추가만** 한다. 기존 id 는 건드리지 않는다.
+
+    후보 파일에 없는 source_id 는 등록하지 않는다 — 그대로 두면 이어지는 엄격 검증이 장부에 없다고 막는다.
+    """
+    paths = run_paths(slug)
+    if not paths.evidence.is_file():
+        return []
+    cited = sorted({e.get("source_id") for e in load_json_strict(paths.evidence).get("items", []) if e.get("source_id")})
+    src_path = run_dir(slug) / "sources.json"
+    sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
+    have = {s["source_id"] for s in sources.get("items", [])}
+    need = [sid for sid in cited if sid not in have]
+    if not need:
+        return []
+    candidates = load_json_strict(paths.candidates).get("items", []) if paths.candidates.is_file() else []
+    by_sid = {c["source_id"]: c for c in candidates}
+    entries = [_candidate_source_entry(by_sid[sid]) for sid in need if sid in by_sid]
+    if not entries:
+        return []
+    upsert_sources(sources, entries)
+    validate_sources(sources, slug)
+    write_json(src_path, sources)
+    return [e["source_id"] for e in entries]
+
+
+def research(slug: str, *, register: bool = True) -> Path:
     paths = run_paths(slug)
     _require_file(paths.plan, "plan")
+    if register:
+        register_evidence_sources(slug)
     ctx = load_context(slug)
-    text = render_research(ctx, hashes=ctx.hashes)
+    _scores, _obs, legacy_triggers = load_baseline(ctx.run["baseline_id"])
+    text = render_research(ctx, hashes=ctx.hashes, legacy_triggers=legacy_triggers)
     path = paths.research
     path.write_text(text, encoding="utf-8", newline="\n")
     return path
@@ -351,14 +576,33 @@ def current_hashes(slug: str) -> dict[str, str]:
     run = load_json_strict(run_dir(slug) / "run.json")
     rules = load_rules(run["rule_version"])
     draft_path = run_paths(slug).draft
-    return {
+    out = {
         "rules": rules.hash,
         "observations": ctx_hashes["observations"],
         "judgments": ctx_hashes["judgments"],
         "run": ctx_hashes["run"],
         "results": load_results(slug)["results_hash"] if results_path(slug).is_file() else "",
         "draft": sha256_file(draft_path) if draft_path.is_file() else "",
+        # 2026-09-30 레인 E: 출처 장부도 승인 대상이다. 근거·트리거는 파일이 있을 때만 키가 생긴다.
+        "sources": ctx_hashes["sources"],
     }
+    for key in ("evidence", "triggers"):
+        if key in ctx_hashes:
+            out[key] = ctx_hashes[key]
+    return out
+
+
+def approval_mismatches(approved: dict[str, str], current: dict[str, str]) -> list[str]:
+    """승인 해시와 현재 해시가 어긋나는 키. 빈 목록이면 승인이 유효하다. **대조 규칙은 여기 한 곳이다.**
+
+    2026-09-30 레인 E. 승인에 있는 키만 현재와 대조한다 — 기존 두 실행의 승인은 6키이고 sources 를
+    담지 않으므로, sources 는 승인에 있을 때만 본다. 다만 근거·트리거 파일이 지금 있는데 승인에 그 키가
+    없으면 승인 뒤에 근거가 생긴 것이므로 무효다. 새 승인(`approve`)은 `current_hashes` 전체를 담는다.
+    """
+    differing = {k for k, v in approved.items() if current.get(k) != v}
+    differing |= {k for k in APPROVAL_REQUIRED_HASHES if k not in approved}
+    differing |= {k for k in ("evidence", "triggers") if k in current and k not in approved}
+    return sorted(differing)
 
 
 def approve(slug: str, *, approved_by: str, note: str | None = None) -> Path:
@@ -406,7 +650,7 @@ def status(slug: str) -> dict[str, Any]:
     out["approval"] = (d / "approval.json").is_file()
     if out["approval"] and out["results"] and out["draft"]:
         approval = load_json_strict(d / "approval.json")
-        out["approval_valid"] = approval.get("hashes") == current_hashes(slug)
+        out["approval_valid"] = not approval_mismatches(approval.get("hashes") or {}, current_hashes(slug))
     out["html"] = paths.html.is_file()
     if out["results"]:
         results = load_results(slug)

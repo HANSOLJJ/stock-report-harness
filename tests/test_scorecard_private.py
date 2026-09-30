@@ -319,5 +319,6 @@ class TestRunIsComplete(unittest.TestCase):
         """승인 실행은 건드리지 않았다."""
         base = ROOT / "output" / "ai-scorecard-2026-09-baseline"
         approved = json.loads((base / "approval.json").read_text(encoding="utf-8"))["hashes"]
-        from scorecard.stages import current_hashes
-        self.assertEqual(current_hashes("ai-scorecard-2026-09-baseline"), approved)
+        from scorecard.stages import approval_mismatches, current_hashes
+        # 2026-09-30 레인 E: current_hashes 에 sources 가 더해졌다. 대조 규칙은 approval_mismatches 한 곳이다.
+        self.assertEqual(approval_mismatches(approved, current_hashes("ai-scorecard-2026-09-baseline")), [])

@@ -15,7 +15,7 @@ from scorecard import render_html as rh  # noqa: E402
 from scorecard.engine import load_context  # noqa: E402
 from scorecard.render_md import STATUS_LABEL  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
-from scorecard.stages import current_hashes  # noqa: E402
+from scorecard.stages import approval_mismatches, current_hashes  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
@@ -42,7 +42,7 @@ class Fix66Test(unittest.TestCase):
         # 2026-09-17 FIX-67: 방법 문장 재작성으로 draft 만 바뀌어 승인이 무효였다.
         # 2026-09-21 재승인: 리뷰의 draft_hash 를 갱신하고 다시 승인해 여섯이 전부 맞물린다.
         self.assertEqual(self.approval["approval_id"], "776a511bf0a9028f")
-        self.assertEqual(self.approval["hashes"], current_hashes(SLUG))
+        self.assertEqual(approval_mismatches(self.approval["hashes"], current_hashes(SLUG)), [])  # 2026-09-30 레인 E: 대조 규칙은 한 곳
         self.assertEqual(self.results["results_hash"],
                          "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b")
 

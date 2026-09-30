@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / research / calculate / draft / review-template / diff / approve / status / resolve-cik
+# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / approve / status / resolve-cik
 """Usage:
   python scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   python scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
   python scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title "..." --request "..." [--purpose "..."] [--companies a,b] [--decision C-16=hold --rationale "..." --by NAME] [--force]
   python scripts/scorecard_cli.py init <slug> --from-run <prior_slug> [--add-companies a,b] [--title "..." --request "..." --as-of ... --rule v1.7 --decision C-16=hold --no-carry-decisions]
-  python scripts/scorecard_cli.py research <slug>
+  python scripts/scorecard_cli.py collect <slug> [--company a,b] [--kind news|filings|prices|all] [--since YYYY-MM-DD] [--forms 8-K,10-Q] [--locale en-US] [--from-file PATH] [--dry-run]
+  python scripts/scorecard_cli.py research <slug> [--no-register]
   python scripts/scorecard_cli.py calculate <slug>
   python scripts/scorecard_cli.py draft <slug>
   python scripts/scorecard_cli.py review-template <slug> [--force]
@@ -138,14 +139,35 @@ def cmd_init(args: argparse.Namespace) -> int:
     if args.from_run:
         print(f"다음: research 로 새 기업만 조사한 뒤 "
               f"python scripts/scorecard_cli.py diff {args.slug} --against {args.from_run} 으로 기존 기업 불변을 확인한다")
-    print(f"다음: python scripts/scorecard_cli.py research {args.slug}")
+    print(f"다음: python scripts/scorecard_cli.py collect {args.slug} → 후보 선별 → research {args.slug}")
+    return 0
+
+
+def cmd_collect(args: argparse.Namespace) -> int:
+    """근거 후보를 모은다. 뉴스·공시는 후보 파일만, 가격은 관측·출처까지 쓴다(2026-09-30 레인 E)."""
+    from scorecard.stages import COLLECT_KINDS, collect
+
+    kinds = COLLECT_KINDS if args.kind == "all" else (args.kind,)
+    out = collect(args.slug, companies=args.company.split(",") if args.company else None, kinds=kinds,
+                  since=args.since, forms=args.forms.split(",") if args.forms else None, locale=args.locale,
+                  from_file=args.from_file, dry_run=args.dry_run)
+    print(f"collect: {args.slug} 창 {out['window']['since']} ~ {out['window']['until']}{' (dry-run)' if out['dry_run'] else ''}")
+    for kind in COLLECT_KINDS:
+        for row in out[kind]:
+            extra = " ".join(f"{k}={v}" for k, v in row.items() if k not in ("company_id", "status", "urls"))
+            print(f"  {kind:<8} {row['company_id']:<12} {row['status']}" + (f" {extra}" if extra else ""))
+            for url in row.get("urls") or []:
+                print(f"    {url}")
+    if out.get("candidates"):
+        print(f"candidates: {rel(out['candidates'])}")
+    print(f"다음: 후보를 선별해 evidence/evidence.json·triggers.json 을 쓴 뒤 python scripts/scorecard_cli.py research {args.slug}")
     return 0
 
 
 def cmd_research(args: argparse.Namespace) -> int:
     from scorecard.stages import research
 
-    print(f"research: {rel(research(args.slug))}")
+    print(f"research: {rel(research(args.slug, register=not args.no_register))}")
     print(f"다음: python scripts/scorecard_cli.py calculate {args.slug}")
     return 0
 
@@ -351,7 +373,23 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--force", action="store_true")
     p.set_defaults(func=cmd_init)
 
-    for name, func in (("research", cmd_research), ("calculate", cmd_calculate), ("draft", cmd_draft), ("status", cmd_status)):
+    p = sub.add_parser("collect", help="근거 후보 수집. research 앞에서만 돈다(build 는 재수집하지 않는다)")
+    p.add_argument("slug")
+    p.add_argument("--company", help="run.companies 가운데 일부(쉼표)")
+    p.add_argument("--kind", choices=["news", "filings", "prices", "all"], default="all")
+    p.add_argument("--since", help="후보 창 시작일(기본 as_of − 180일)")
+    p.add_argument("--forms", help="공시 형식(쉼표). 기본 8-K,10-Q,10-K,20-F,6-K")
+    p.add_argument("--locale", default="en-US")
+    p.add_argument("--from-file", help="네트워크 대신 읽을 파일(--kind 하나와 함께)")
+    p.add_argument("--dry-run", action="store_true")
+    p.set_defaults(func=cmd_collect)
+
+    p = sub.add_parser("research")
+    p.add_argument("slug")
+    p.add_argument("--no-register", action="store_true", help="evidence.json 이 인용한 후보의 출처를 sources.json 에 등록하지 않는다")
+    p.set_defaults(func=cmd_research)
+
+    for name, func in (("calculate", cmd_calculate), ("draft", cmd_draft), ("status", cmd_status)):
         p = sub.add_parser(name)
         p.add_argument("slug")
         p.set_defaults(func=func)
