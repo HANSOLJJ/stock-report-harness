@@ -7,14 +7,14 @@
 
 | 항목 | stock_report (기존) | ai_scorecard (추가) |
 |---|---|---|
-| 판별 | `plan/<slug>.md` frontmatter `report_type` 없음 | `report_type: ai_scorecard`, slug 는 `ai-scorecard-` 접두 |
+| 판별 | `output/<run_id>/plan.md` frontmatter `report_type` 없음 | `report_type: ai_scorecard`, run_id 는 `ai-scorecard-` 접두 |
 | 판별 코드 | `scripts/report_contract_lib.report_type_for()` — 알 수 없는 값은 ValueError 로 차단 | 동일 |
 | 검증 | `validate_report_contract.validate_contract` 기존 로직 그대로 | 같은 함수가 `scorecard.validate.validate_scorecard` 로 위임 (`ValidationResult` 공유) |
-| 빌드 | `build_report.build_report` 기존 로직 그대로 | 같은 함수가 `scorecard.render_html.build_scorecard` 로 위임. CLI `python scripts/build_report.py <slug>` 동일 |
-| hero 이미지·뉴스 100건 | 필수 | 요구하지 않음 (`enforce-plan.sh` 가 plan 의 report_type 을 읽어 면제) |
-| draft 숫자 마커 `[S1]` | 필수 (`enforce-citations.sh`) | 생성물이라 면제. 대신 draft frontmatter `results_hash` 가 results.json 과 결속되고 검증기가 순위표 행을 대조 |
-| 투자 권유 표현 차단 | `forbid-financial-advice.sh` | 동일 적용 |
-| 가격 공급 | yfinance | 실행 원자료(observations.json)만 사용. build 중 재수집 없음 (D-02, C-21) |
+| 빌드 | `build_report.build_report` 기존 로직 그대로 | 같은 함수가 `scorecard.render_html.build_scorecard` 로 위임. CLI `uv run --frozen python -X utf8 scripts/build_report.py <run_id>` 동일 |
+| hero 이미지·뉴스 100건 | 필수 | 요구하지 않음 |
+| draft 숫자 마커 `[S1]` | 필수 | 생성물이라 면제. 대신 draft frontmatter `results_hash` 가 results.json 과 결속되고 검증기가 순위표 행을 대조 |
+| 투자 권유 표현 차단 | `guard.py` 의 `forbid_financial_advice` | 동일 적용 (`draft.md`·`judgments.json`·`evidence/*.json`) |
+| 가격 공급 | yfinance | `collect --kind prices` 가 실행 원자료(observations.json)에 넣는다. build 중 재수집 없음 (D-02, C-21) |
 
 ## 2. 파일 소유권과 저장 스키마
 
@@ -23,9 +23,28 @@
 | `scorecard/rules/v1.5.json` | 규칙 담당 | git | factor 모드·범위, ⑥ 구간, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트 Q01~Q23, 결정 C-01~C-22 상태·선택지 |
 | `scorecard/companies.json` | 통합 담당 | git | 안정 company_id, 표시명·별칭, 유형, 상장, 티커, share_basis, adr_ratio, 통화, 평가 범위 |
 | `scorecard/baseline/v1.5/` | 이관 담당 | git | `scores.json`(점수·근거 불릿), `observations.json`, `triggers.json`, `import-report.md` |
-| `scorecard/runs/<slug>/` | 실행 | git | `run.json`, `observations.json`, `judgments.json`, `sources.json`, `results.json`, `preview.md`, `approval.json`, `data_availability.json`(선택) |
+| `scorecard/rules/v1.8.json` | 규칙 담당 | git | 새 실행이 쓰는 규칙. 원천 allowlist 가 없다(personal use, 사용자 결정 2026-09-30) |
+| `output/<run_id>/` | 실행 | git(입력·결과·승인), 일부 gitignore(`.lock`) | 실행 묶음 한 폴더. 아래 표 |
+| `data/<company_id>/` | 수집 | gitignore | `collect` 가 받은 원문 캐시. `SCORECARD_DATA_ROOT` 로 위치를 바꾼다 |
 | `scorecard/history.csv` | 빌드 | git | 승인본 이력 (run_id, approval_id, 기업, F1~F9, 합계, 순위, 변동 원인) |
-| `plan/ research/ drafts/ reviews/ output/` | 파이프라인 | ignore(기존 정책) | 생성물. 원본은 `scorecard/` 에만 둔다 (D-09) |
+
+실행 묶음 `output/<run_id>/` 의 파일은 `scripts/scorecard/paths.py` 의 `run_paths()` 가 돌려준다. 단계별로 흩어진 옛 폴더는 없다.
+
+| 파일 | 만드는 단계 | 내용 |
+|---|---|---|
+| `run.json` `observations.json` `judgments.json` `sources.json` | `init` | 실행 설정과 입력(원자료·판단·출처) |
+| `plan.md` | `init` | 실행 계획 (생성물) |
+| `evidence/candidates.json` | `collect` | 수집한 근거 후보 (뉴스·공시) |
+| `evidence/evidence.json` | 에이전트 선별 → 사람 확정 | 근거. `status: candidate` 로 올라오고 사람이 `confirmed` 로 바꾼다 |
+| `triggers.json` | 에이전트 선별 | 재채점 조건. 미래 점수를 저장하지 않는다(C-14) |
+| `research.md` | `research` | 입력 검증 결과와 미결 항목 |
+| `results.json` `preview.md` | `calculate` | 점수와 기준선 대비 미리보기 |
+| `draft.md` | `draft` | Markdown 초안 |
+| `review.md` `review-parts/` | `review-template` 과 리뷰어 | 4 영역 리뷰. 영역별 결과는 `review-parts/<영역>.md` |
+| `approval.json` `revocations.jsonl` | 승인 페이지 | 승인 해시와 취소 기록. 사람이 만든다 |
+| `report.html` `audit.md` | 빌드 | 대시보드와 감사 문서 |
+| `data_availability.json` | 수동(선택) | 자료 확보 현황 표시용 기록. 아래 설명 |
+| `.lock` | 각 단계 | 실행 잠금(`{owner, started_utc, stage}`). 다른 소유자의 잠금은 `--take-lock` 으로 넘겨받는다 |
 
 스키마는 `scripts/scorecard/schema.py` 가 엄격 파싱한다. 알 수 없는 키·범위 밖 점수·NaN/Infinity·빈 근거는 `SchemaError` 다.
 
@@ -36,9 +55,11 @@
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
+| 근거 | evidence/evidence.json items | evidence_id(`EV-<company_id>-NNN`), company_id, factors, kind(news / filing), source_id, published_at_utc, title, excerpt(600자 이하), relevance(추론), channel(disclosure / press / company_statement / secondary), conditional_impact(점수 이동 금지), horizon, counter_evidence, unverified, change_vs_previous, status(candidate / confirmed), reviewer·reviewed_at(confirmed 는 필수) |
+| 트리거 | triggers.json items | trigger_id(`TRG-NNN`), company_id, factors, observation, condition, deadline, evidence_ids, source_ids, status(watching / fired / expired / withdrawn), recheck{factors, what}. 점수처럼 보이는 키는 거부한다(C-14) |
 | 자료 확보 현황 | data_availability.json (선택) | schema, surveyed_at, scope, required_quarters, companies_with_full_quarters, headline, score_effect, not_re_surveyed, collection_note, materials[], companies[{company_id, quarter_ends, secured_quarters, missing, survey}], surveys{}, sources[], cautions[], references[] |
 
-`data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `calculate → draft → review → approve` 를 다시 밟아야 한다.
+`data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 승인해야 한다.
 
 화면에 노출되는 `C-NN` 은 렌더러가 후처리로 `#dec-C-NN` 앵커 링크로 바꾸고, 「C-번호 사전」 항목을 규칙 파일의 `decisions` 에서 생성한다. 치환은 태그 사이 텍스트에만 적용하고 속성·`<style>`·`<script>`·경로 문자열(`C-13/...`)은 건드리지 않는다.
 
@@ -60,7 +81,7 @@
 | 기준선 이관 검산 (T-17) | `baseline_import` + `import-report.md` MD 대조 | 14사 match |
 | 입력 검증 (T-03, T-05, T-06, R05, R06) | `schema.validate_*` | `TestReviewRegressions` |
 
-`tests/test_scorecard_calc.py` 는 `python -m unittest discover -s tests -t .` 로 실행한다. 설계진행 검증 담당의 독립 재현 `validation/test_scorecard_review.py`(R01~R06, 10건)도 같은 코드로 통과해야 한다.
+`tests/test_scorecard_calc.py` 는 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 로 실행한다. 설계진행 검증 담당의 독립 재현 `validation/test_scorecard_review.py`(R01~R06, 10건)도 같은 코드로 통과해야 한다.
 
 ## 4. 미결 결정의 취급
 
@@ -84,20 +105,42 @@
 
 ## 5. 단계·상태·승인 흐름
 
+아래 경로는 모두 `output/<run_id>/` 기준이다. 모든 명령은 `uv run --frozen python -X utf8 scripts/…` 로 실행한다.
+
 ```
-init ──► plan/<slug>.md + scorecard/runs/<slug>/{run,observations,judgments,sources}.json
-research ──► research/<slug>.md (observations_hash·judgments_hash 결속)
+init --rule v1.8 ──► plan.md + run.json·observations.json·judgments.json·sources.json
+collect ──► evidence/candidates.json (뉴스·공시 후보) ; --kind prices 는 observations.json 에 ⑥ price·market_cap 관측을 넣는다
+  └─ 에이전트가 후보를 골라 evidence/evidence.json(candidate)·triggers.json 작성
+research ──► research.md (observations_hash·judgments_hash 결속) ; 인용한 근거의 출처를 sources.json 에 등록(--no-register 로 끔)
 calculate ──► results.json(+results_hash) + preview.md ; 입력 해시가 바뀌면 이전 approval.json 자동 무효
-draft ──► drafts/<slug>.md (results_hash 결속)
-review-template ──► reviews/<slug>.md (4 영역 + Q01~Q23, status: needs_fix) → 리뷰어가 채움 → status: pass
-approve --by <name> ──► approval.json (rules/observations/judgments/run/results/draft 해시 결합) — 사용자 행위
-build_report.py ──► 승인 해시 == 현재 해시 검증 → output/<slug>.html → history.csv append(중복 방지) → 사후 검증
+draft ──► draft.md (results_hash 결속)
+review-template ──► review.md (4 영역 + Q01~Q23, status: needs_fix) → 리뷰어가 review-parts/ 를 채움 → status: pass
+[사람] 승인 페이지 ──► 근거 확정(candidate → confirmed) · 승인 · 취소 → approval.json (rules/observations/judgments/run/results/draft 해시 결합)
+build_report.py ──► 승인 해시 == 현재 해시 검증 → report.html·audit.md → history.csv append(중복 방지) → 사후 검증
 
 [기업 추가 갈래]
 add-company ──► scorecard/companies.json 등록
-init --from-run ──► 이전 실행 계승 + plan + runs 생성 (continued_from 기록)
-research(신규만) ──► diff (1층: 기존 기업 불변 검증) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► approve ──► build
+init --from-run ──► 이전 실행 계승 + plan + 입력 생성 (continued_from 기록)
+collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 승인 ──► build
 ```
+
+모든 단계(`init`·`collect`·`research`·`calculate`·`draft`·`review-template`)는 실행 잠금 `.lock` 을 검사하고 기록한다. 다른 소유자의 잠금이면 거부하고 `--take-lock` 으로 넘겨받는다.
+
+### 근거 계층
+
+`collect` 는 후보(`candidate`)만 만든다. 후보를 확정(`confirmed`)하는 것은 사람이고 승인 페이지에서 한다. 규칙은 셋이다.
+
+- `status: new` 판단은 `confirmed` 근거만 인용한다. 후보를 인용하면 교차 참조 검증이 실패한다(`schema.validate_cross_refs`).
+- `confirmed` 근거에는 `reviewer`·`reviewed_at` 이 있어야 한다.
+- 트리거는 재채점 조건만 저장하고 미래 점수를 저장하지 않는다(C-14).
+
+`not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)는 다르다. 근거를 확정하면 판단·결과·초안 해시가 바뀌어 리뷰가 무효가 되므로 `calculate`·`draft`·`review` 를 다시 돌린다.
+
+가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다. 공시 수집에는 환경변수 `SEC_UA` 가 필요하다.
+
+### 승인 (사람 행위)
+
+승인과 취소는 사람이 `node server.js --approvals` 로 띄운 승인 페이지(`http://127.0.0.1:3000/approve/<run_id>`)에서 한다. 터미널에 6자리 일회용 코드가 나오고, 페이지에서 근거 확정·승인·취소를 한다. 코드를 5번 틀리면 서버를 다시 띄워야 하고, 승인이 성공하면 서버는 내려간다. 에이전트는 `approve`·`revoke` 를 실행하지 않는다. 훅(`guard.py`)과 CLI(에이전트 세션의 승인·취소 거부) 둘 다 막고, 첫 방어선은 CLI 와 해시 검증이다. 승인 서버가 떠 있는 동안 브라우저 도구를 가진 에이전트가 터미널의 코드를 읽으면 누를 수 있는 틈이 있다. 코드는 파일에 쓰이지 않고 서버는 승인 뒤 내려가며, 사용자가 이를 알고 수용했다(2026-09-30). 에이전트가 사람에게 하는 말은 "승인 대기" 보고이고, 사람이 에이전트에게 하는 말은 "고쳐" 와 "빌드해" 이다.
 
 상태 이름: 자료 부족 `pending_data`, 판단 부족 `needs_judgment`, 규칙 미결 `needs_rule_decision`, 승인 필요 `awaiting_user`(빌더 메시지), 검토 미완 `needs_fix`(리뷰 frontmatter). 해시가 하나라도 바뀌면 검증기가 리뷰·승인을 무효로 판정한다(T-14). 같은 승인본 재빌드는 history.csv 에 행을 추가하지 않는다(T-15). 사전 검증 실패 시 HTML 을 쓰지 않으므로 최신 MD/HTML/CSV 가 갈라지지 않는다(T-16).
 
@@ -111,13 +154,14 @@ research(신규만) ──► diff (1층: 기존 기업 불변 검증) ──►
 | HTML 대시보드(단일 파일) | `render_html` | dashboard-design 스킬: 320px 리플로우, 표 모바일 패턴(합계 열만 + 첫 두 열 sticky + 행 탭→카드), 탭 대상 ≥24px, Pretendard 링크+폴백, 타입 스케일 토큰, 자체 팔레트(soft/line 짝), 인라인 style 없는 반응형, 산점도 결정론적 라벨 배치, aria-label |
 | history.csv | `render_csv` | (run_id, approval_id, company_id) 중복 방지 |
 
-HTML 검증(`scorecard.validate._validate_html`): generator 메타 `stock-report-harness scorecard-builder`, `results-hash` 메타, viewport, 면책 footer, 순위표 `data-company` 행, source marker 없음. Playwright 실측(2026-09-08): 320/768/769/1280 넘침 0건, 탭 대상 위반 0건, sticky 첫 열 유지, 행 탭 → 카드 열림.
+HTML 검증(`scorecard.validate._validate_html`): generator 메타(`scorecard-builder` 표식), `results-hash` 메타, viewport, 면책 footer, 순위표 `data-company` 행, source marker 없음. Playwright 실측(2026-09-08): 320/768/769/1280 넘침 0건, 탭 대상 위반 0건, sticky 첫 열 유지, 행 탭 → 카드 열림.
 
 ## 7. 훅·명령·스킬
 
-- 훅: `enforce-plan.sh`(scorecard 이미지 면제, review pass 는 유지), `enforce-citations.sh`(scorecard draft 건너뜀). 핵심 통제는 훅이 아니라 `scorecard_cli`·검증기·빌더가 직접 수행한다(설계 지침 4.3).
-- 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal` → `.claude/skills/score-*/SKILL.md`.
-- Windows: `python` 실행 파일로 동작하며 `python3` 를 가정하지 않는다. 훅은 Git Bash + python3 별칭 환경에서 동작한다.
+- 훅: `scripts/hooks/guard.py` 한 모듈이다. `block_dangerous_bash`, `protect_sensitive_files`(승인·취소 명령 차단 포함), `enforce_plan`(`output/<run_id>/` 단계 순서·실행 잠금), `forbid_financial_advice`, `remind_review`(경고만), `enforce_memory`, `inject_memory_context`. 목록과 한계는 `scripts/hooks/README.md`. 핵심 통제는 훅이 아니라 `scorecard_cli`·검증기·빌더가 직접 수행하고(설계 지침 4.3), 훅은 둘째 방어선이다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못한다.
+- 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-collect`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal` → `.claude/skills/score-*/SKILL.md`. `/score-approve` 는 승인을 실행하지 않고 "승인 대기" 보고와 승인 페이지 안내만 한다.
+- 리뷰어 에이전트: `.claude/agents/`(`fact-checker`, `evidence-editor`, `report-designer`)와 같은 내용의 `.codex/agents/*.toml`.
+- 실행은 `uv run --frozen python -X utf8 scripts/…` 이다. 시스템 `python`·`python3` 를 직접 부르지 않는다. 훅 배선도 `uv run` 한 줄이라 bash 를 거치지 않는다.
 
 ## 8. 회귀·수용 기준 매핑
 

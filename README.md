@@ -32,23 +32,45 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 ## 쓰는 법
 
 ```
-plan → research → calculate → draft → review → (사용자 승인) → build
+plan → collect → research → calculate → draft → review → (사람) 승인 → build
 ```
 
-| 단계 | 명령 | 산출물 |
+실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모입니다. 아래 표의 명령은 모두 `uv run --frozen python -X utf8` 뒤에 붙여 실행합니다.
+
+| 단계 | 명령 | 산출물 (`output/<run_id>/`) |
 | --- | --- | --- |
-| 실행 생성 | `python scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title ... --request ...` | `plan/<slug>.md`, `scorecard/runs/<slug>/{run,observations,judgments,sources}.json` |
-| 리서치 | `python scripts/scorecard_cli.py research <slug>` | `research/<slug>.md` |
-| 계산 | `python scripts/scorecard_cli.py calculate <slug>` | `results.json`, `preview.md` |
-| 초안 | `python scripts/scorecard_cli.py draft <slug>` | `drafts/<slug>.md` |
-| 리뷰 | `python scripts/scorecard_cli.py review-template <slug>` 뒤 독립 세션 4영역 리뷰 | `reviews/<slug>.md` |
-| 승인 | `python scripts/scorecard_cli.py approve <slug> --by <이름>` (사용자만 실행) | `approval.json` |
-| 빌드 | `python scripts/build_report.py <slug>` | `output/<slug>.html`, `output/<slug>-audit.md`, `scorecard/history.csv` |
-| 상태 확인 | `python scripts/scorecard_cli.py status <slug>` · `python scripts/validate_report_contract.py <slug>` | 단계별 완료 여부와 계약 위반 목록 |
+| 실행 생성 | `scripts/scorecard_cli.py init <run_id> --rule v1.8 --as-of 2026-09-02 --title ... --request ...` | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
+| 근거 수집 | `scripts/scorecard_cli.py collect <run_id> [--company a,b] [--kind news\|filings\|prices\|all] [--since YYYY-MM-DD]` | `evidence/candidates.json`, 이어서 후보를 골라 `evidence/evidence.json`·`triggers.json` |
+| 리서치 | `scripts/scorecard_cli.py research <run_id>` | `research.md` (인용한 근거의 출처를 `sources.json` 에 등록) |
+| 계산 | `scripts/scorecard_cli.py calculate <run_id>` | `results.json`, `preview.md` |
+| 초안 | `scripts/scorecard_cli.py draft <run_id>` | `draft.md` |
+| 리뷰 | `scripts/scorecard_cli.py review-template <run_id>` 뒤 독립 세션 4영역 리뷰 | `review.md`, `review-parts/` |
+| 승인 | 사람이 승인 페이지에서 (아래 절) | `approval.json` |
+| 빌드 | `scripts/build_report.py <run_id>` | `report.html`, `audit.md`, `scorecard/history.csv` |
+| 상태 확인 | `scripts/scorecard_cli.py status <run_id>` · `scripts/scorecard_cli.py summary <run_id> --json` · `scripts/validate_report_contract.py <run_id>` | 단계별 완료 여부, 승인 페이지용 요약, 계약 위반 목록 |
 
-Claude Code 에서는 `/score-plan`, `/score-research` 처럼 슬래시 명령으로도 부를 수 있습니다. 각 단계의 에이전트 작업 계약은 `.claude/skills/score-*/SKILL.md` 에 있습니다.
+Claude Code 에서는 `/score-plan`, `/score-collect`, `/score-research` 처럼 슬래시 명령으로도 부를 수 있습니다. 각 단계의 에이전트 작업 계약은 `.claude/skills/score-*/SKILL.md` 에 있습니다. 명령마다 인자는 `--help` 로 확인합니다.
 
-slug 는 `ai-scorecard-` 로 시작하고 plan frontmatter 의 `report_type: ai_scorecard` 로 분기합니다. 기준선 v1.5 는 `python scripts/scorecard_cli.py import-baseline` 으로 원본에서 읽어 옵니다.
+run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_type: ai_scorecard` 로 분기합니다. 기준선 v1.5 는 `scripts/scorecard_cli.py import-baseline` 으로 원본에서 읽어 옵니다.
+
+### 근거 계층
+
+`collect` 는 뉴스·공시·가격 후보를 `evidence/candidates.json` 에 모읍니다. 에이전트가 관련 있는 후보만 `evidence/evidence.json` 에 후보(`candidate`) 상태로 올리고, 사람이 승인 페이지에서 확정(`confirmed`)하거나 거부합니다. 새 판단(`status: new`)은 확정된 근거만 인용합니다. 트리거(`triggers.json`)는 재채점 조건만 담고 미래 점수를 저장하지 않습니다. 공시가 `not_disclosed`(발행사가 공시하지 않음을 확인)인 것과 `unverified`(우리가 찾지 못함)인 것은 구분합니다.
+
+가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣습니다. EPS 와 컨센서스는 받지 않습니다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 씁니다. 받아 온 원문은 `data/<company_id>/` 에 캐시되고(gitignore), `SCORECARD_DATA_ROOT` 환경변수로 위치를 바꿀 수 있습니다.
+
+공시 수집(`--kind filings`)에는 환경변수 `SEC_UA` 가 필요합니다. SEC 가 요구하는 식별 문자열(이름과 연락처)을 각자 설정하고, 값은 저장소에 넣지 않습니다.
+
+### 승인 페이지
+
+승인과 승인 취소는 사람만 합니다. 에이전트는 "승인 대기" 를 보고하고 멈춥니다.
+
+1. 프로젝트 루트에서 `node server.js --approvals` 를 실행합니다. 터미널에 6자리 일회용 코드가 나옵니다.
+2. 브라우저에서 `http://127.0.0.1:3000/approve/<run_id>` 를 엽니다.
+3. 요약을 확인하고, 근거 후보를 확정하거나 거부합니다.
+4. 터미널의 코드를 입력해 승인합니다. 필요하면 같은 페이지에서 취소합니다.
+
+코드를 5번 틀리면 서버를 다시 띄워야 하고, 승인이 성공하면 서버는 내려갑니다. 근거를 확정하면 판단·결과·초안의 해시가 바뀌어 리뷰가 무효가 되므로, 에이전트에게 `calculate`·`draft`·`review` 를 다시 시킨 뒤 승인합니다.
 
 **판단을 입력하는 명령은 아직 없습니다.** 지금 판단 데이터는 v1.5 채점표에서 기계로 읽어 온 것과 에이전트가 고친 것입니다.
 
@@ -56,8 +78,8 @@ slug 는 `ai-scorecard-` 로 시작하고 plan frontmatter 의 `report_type: ai_
 
 | 종류 | 무엇 | 위치 |
 | --- | --- | --- |
-| 기준 | 무엇을 보고 몇 점을 줄지 | 사람용 `AI_company_analysis_factor/` (채점규칙 · 별표 A~J) · 기계용 `scorecard/rules/v1.7.json` |
-| 입력 | 공시 숫자와 사람 판단 | `scorecard/runs/<slug>/observations.json` · `judgments.json` · `sources.json` |
+| 기준 | 무엇을 보고 몇 점을 줄지 | 사람용 `AI_company_analysis_factor/` (채점규칙 · 별표 A~J) · 기계용 `scorecard/rules/v1.7.json` (새 실행은 `v1.8.json`) |
+| 입력 | 공시 숫자와 사람 판단, 근거 | `output/<run_id>/observations.json` · `judgments.json` · `sources.json` · `evidence/evidence.json` · `triggers.json` |
 | 계산 | 입력에 기준을 적용하는 코드 | `scripts/scorecard/` (`calc_f6_params.py` · `calc_f9.py` · `calc_qual.py` · `render_*.py` · `validate.py`) |
 | 지시 | 에이전트의 작업 순서와 금지 사항 | `AGENTS.md` · `.claude/skills/score-*` · `.claude/agents/` |
 
@@ -69,23 +91,25 @@ slug 는 `ai-scorecard-` 로 시작하고 plan frontmatter 의 `report_type: ai_
 
 각 단계의 산출물에는 앞 단계 파일의 지문(sha256)이 기록됩니다. 승인 파일은 규칙·숫자·판단·실행 설정·점수·초안 여섯 개의 지문을 담습니다. 앞 단계가 한 글자라도 바뀌면 리뷰와 승인이 자동으로 무효가 됩니다. 근거 문장만 고쳐도 같습니다. 그래서 승인된 리포트는 **어떤 입력에서 나온 점수인지 나중에도 증명**할 수 있습니다.
 
-리포트 본문에는 읽는 사람을 위한 내용만 싣습니다. 해시, 결정 번호(C-01~C-29), 긴장 번호, 리뷰 진행 기록, 정정 이력은 `output/<slug>-audit.md` 에 있습니다.
+리포트 본문에는 읽는 사람을 위한 내용만 싣습니다. 해시, 결정 번호(C-01~C-29), 긴장 번호, 리뷰 진행 기록, 정정 이력은 `output/<run_id>/audit.md` 에 있습니다.
 
 ## 가드레일
 
-Claude Code 프로젝트 훅이 반복 실패를 사전에 차단합니다. 설정은 `.claude/settings.json`, 스크립트는 `.claude/hooks/` 아래에 단일 책임으로 있습니다.
+가드레일 훅은 `scripts/hooks/guard.py` 한 모듈에 있고, 훅 하나가 함수 하나입니다. 목록과 한계는 `scripts/hooks/README.md` 에 있습니다.
 
-| 훅 | 역할 |
-| --- | --- |
-| `block-dangerous-bash.sh` | `rm -rf /`, `sudo`, `git push --force` 등 되돌리기 어려운 명령 차단 |
-| `protect-sensitive-files.sh` | `.env*`, `.git/`, `docs/finance-style-guide.md`, `docs/output-spec.md` 수정 차단 |
-| `forbid-financial-advice.sh` | 투자 권유·수익 보장·FOMO 표현 차단 |
-| `enforce-plan.sh` | 선행 산출물 순서 강제 |
-| `enforce-citations.sh` | 숫자 주장에 출처 표식 요구 |
-| `remind-review.sh` | draft 변경 후 최신 리뷰 `pass` 가 없으면 세션 종료 차단 |
-| `inject-memory-context.sh` · `enforce-memory.sh` | 작업 메모 주입과 검증 |
+| 훅 (`guard.py` 함수) | 이벤트 | 역할 |
+| --- | --- | --- |
+| `block_dangerous_bash` | 셸 실행 전 | `rm -rf /`, `sudo`, 원격 스크립트 파이프 실행, 강제 push 차단 |
+| `protect_sensitive_files` | 셸·파일 도구 실행 전 | `.env*`, `.git/`, `approval.json`, 승인에 쓰인 규칙 파일과 실행 묶음, `scorecard/history.csv` 수정 차단. 승인·취소 명령 차단 |
+| `enforce_plan` | 셸·파일 도구 실행 전 | `output/<run_id>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 전 리뷰 `pass` 요구, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 |
+| `forbid_financial_advice` | 파일 도구 실행 전·후 | `draft.md`·`judgments.json`·`evidence/*.json` 의 투자 권유·수익 보장 표현 차단 |
+| `remind_review` | 파일 도구 실행 후, 세션 종료 | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고만 함 |
+| `enforce_memory` | 파일 도구 실행 후 | `memory/` 변경 뒤 `scripts/validate_memory.py` 실행, 실패하면 차단 |
+| `inject_memory_context` | 프롬프트 제출 | 프롬프트에 맞는 `memory/topics/*.md` 를 문맥으로 주입 |
 
-훅은 Claude Code 가 이 프로젝트 설정을 읽을 때 자동 적용됩니다. Codex 런타임에는 자동으로 걸리지 않아 별도 연결이 필요합니다.
+배선은 Claude Code 가 `.claude/settings.json`, Codex 가 `.codex/hooks.json` 입니다. 두 곳 모두 `uv run --frozen … python -X utf8 scripts/hooks/guard.py <훅이름>` 한 줄로 부릅니다.
+
+훅은 둘째 방어선입니다. 첫째는 승인 해시 검증과 CLI 의 거부(에이전트 세션의 승인·취소 거부)이고, 훅은 도구 호출 밖의 동작을 막지 못합니다.
 
 ## 이해상충
 
@@ -124,10 +148,15 @@ npm run check
 ```
 
 ```bash
-npm run test:scorecard                              # 채점표 테스트
-python3 scripts/validate_report_contract.py <slug>  # 계약 검증
-python3 scripts/validate_memory.py                  # 작업 메모 검증
-node server.js                                      # output/ 로컬 미리보기
+uv run --frozen python -X utf8 -m unittest discover -s tests -t .   # 채점표 테스트 (npm run test:scorecard)
+uv run --frozen pytest -q                                           # pytest (npm run test:pytest)
+npm run test:node                                                   # 승인 서버 테스트
+uv run --frozen python -X utf8 scripts/validate_report_contract.py <run_id>   # 계약 검증
+uv run --frozen python -X utf8 scripts/validate_memory.py                     # 작업 메모 검증
+node server.js                                                      # output/ 로컬 미리보기 (http://localhost:3000/<run_id>/report.html)
+node server.js --approvals                                          # 승인 페이지 (사람이 실행)
 ```
 
+- 포트 3000 이 쓰이고 있으면 기존 프로세스를 끄지 말고 `PORT=<빈 포트>` 로 띄웁니다.
 - Python 3.12+ 와 uv, `pyproject.toml` 의 PyYAML·yfinance, Node.js 18+, Claude CLI
+- 환경변수 `SEC_UA`(공시 수집용, 값은 각자 설정), `SCORECARD_DATA_ROOT`(수집 캐시 위치, 기본 `data/`)
