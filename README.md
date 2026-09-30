@@ -119,9 +119,7 @@ Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree
 ## 설치와 보조 명령
 
 ```bash
-python3 -m venv .venv
-. .venv/bin/activate
-pip install -r requirements.txt
+uv sync --frozen
 npm run check
 ```
 
@@ -132,8 +130,4 @@ python3 scripts/validate_memory.py                  # 작업 메모 검증
 node server.js                                      # output/ 로컬 미리보기
 ```
 
-- Python 3.11+, `requirements.txt` 의 yfinance·Markdown·PyYAML, Node.js 18+, Claude CLI
-
-## 기반: 종목 리포트 하네스 (stock-*)
-
-이 저장소는 원래 종목 하나를 분석해 HTML 리포트를 만드는 하네스였고, 채점표의 **단계 구조·4영역 리뷰·계약 검증기·가드레일이 전부 거기서 나왔습니다.** `scripts/build_report.py` 와 `scripts/validate_report_contract.py` 는 지금도 양쪽이 같이 씁니다. 단계별 계약은 `docs/stock-report-pipeline.md` 에 있습니다. 이미지 단계는 더 쓰지 않습니다.
+- Python 3.12+ 와 uv, `pyproject.toml` 의 PyYAML·yfinance, Node.js 18+, Claude CLI

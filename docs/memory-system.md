@@ -86,7 +86,7 @@ Topic은 daily 5섹션 + **일자** 1개 = 6섹션 고정임. 새 헤더 추가�
 | 날짜 계산, 기간 계산, yfinance 기간, 거래일 라벨 | `memory/topics/time-sync.md` |
 | OpenAI `image_gen`, 외부 뉴스/API 호출, yfinance 호출 | `memory/topics/external-api.md` |
 | hero 이미지 후보/선택, 이미지 manifest, selected-image | `memory/topics/image-workflow.md` |
-| `/stock-plan`, `/stock-research`, `/stock-draft`, `/stock-image`, `/stock-review`, `/stock-build` 순서 | `memory/topics/pipeline-order.md` |
+| `/score-plan`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-build` 단계 순서 | `memory/topics/pipeline-order.md` |
 | `uv sync`, `pnpm install`, Python/Node 빌드 | `memory/topics/build-errors.md` |
 | git commit / push / PR | `memory/topics/git-workflow.md` |
 | Claude/Codex hook, validator, schema 차단 | `memory/topics/guardrails.md` |
@@ -106,12 +106,6 @@ Claude Code `UserPromptSubmit` hook이 사용자 프롬프트를 분석해 관�
 2. `memory/topics/{slug}.md`가 존재하고 내용이 있으면 해당 topic을 `additionalContext`로 주입함.
 3. topic이 없거나 비어 있으면 상태만 알려주고 작업은 막지 않음.
 4. 실패/고비용 재시도 관측이 생기면 daily에 기록하라는 짧은 규칙을 함께 주입함.
-
-수동 테스트:
-
-```bash
-echo '{"prompt":"/stock-build samsung-electronics-recent-30d-2026-05"}' | python3 scripts/memory_context.py
-```
 
 자동 주입은 topic 로딩을 돕는 장치이며, memory 기록 자체는 여전히 관측 기반으로 수행함.
 
