@@ -73,3 +73,5 @@
 - [x] 레인 G (Sonnet) 4.5·4.6 디스패치 완료 → 검증 → 병합. task `task_39b14e9bae11`, dispatch `ctx_2e2d5d341c32`, 워크트리 `…/lane-G`, 터미널 `term_ef689690-3b13-42c5-b514-5d9caea97241`
 - [x] 최종 통합 재현(레인 G 병합 뒤): 두 실행 approval_valid true, unittest 1085건 중 실패 1·오류 14와 pytest 실패 15(전부 원자료 부재 같은 집합), node 10·check·validate:memory 통과, 소유 문서 옛 경로 0건, 에이전트 승인 지시 문구 0건
 - [ ] main 병합과 fork push (사용자 확인 뒤)
+- [x] 레인 V (Fable) 독립 검증 완료·보고서 병합. 새 결함 7건(medium 3: init --force 가 승인 실행 파괴, 승인 거부가 CLI 계층에만 있어 stages 함수 import 로 우회, scorecard/baseline 이 승인 해시·보호 밖 재빌드 입력 / low 4: locale 매핑, CLI 다음 안내·plan 템플릿 흐름·python 접두, 문서 드리프트, 읽기 전용 명령 오탐). 하드 블록 없음
+- [ ] 레인 V 발견 F-1~F-7 수정 여부 사용자 결정
