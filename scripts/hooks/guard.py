@@ -158,7 +158,7 @@ def block_dangerous_bash(payload: dict, *, root: Path) -> Decision:
 
 
 # ------------------------------------------------------------------ 2. 보호 경로
-# docs/output-spec.md 는 2026-09-30 에 보호 목록에서 뺐다. 근거 수집 계층 도입으로 이 문서를 계속 고쳐야 한다.
+# docs/output-spec.md 는 2026-09-30 에 보호 목록에서 뺐다. 종목 리포트 출력 명세라 채점표 전환과 함께 삭제한다.
 _PROTECTED_LITERALS = ["docs/finance-style-guide.md", ".env", ".git", ".github/workflows"]
 
 
