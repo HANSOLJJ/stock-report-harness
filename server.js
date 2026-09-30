@@ -23,6 +23,8 @@ const MIME_TYPES = {
   '.webp': 'image/webp',
   '.ico': 'image/x-icon',
   '.txt': 'text/plain; charset=utf-8',
+  // 실행 묶음의 audit.md·draft.md 를 브라우저에서 바로 읽게 한다. text/markdown 은 내려받기로 처리되는 브라우저가 있다.
+  '.md': 'text/plain; charset=utf-8',
   '.pdf': 'application/pdf',
 };
 
@@ -81,6 +83,7 @@ function reportUrl(filePath) {
   return `http://localhost:${PORT}${encodeURI(toUrlPath(filePath))}`;
 }
 
+// 실행 묶음 output/<run_id>/report.html 을 한 단계만 내려가 찾는다. name 은 run_id 다.
 function findHtmlReports() {
   if (!fs.existsSync(ROOT)) {
     return [];
@@ -88,21 +91,22 @@ function findHtmlReports() {
 
   return fs
     .readdirSync(ROOT, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.html') && !entry.name.startsWith('.'))
-    .map((entry) => {
-      const filePath = path.join(ROOT, entry.name);
-      return { filePath, name: entry.name, mtimeMs: fs.statSync(filePath).mtimeMs };
-    })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+    .map((entry) => ({ name: entry.name, filePath: path.join(ROOT, entry.name, 'report.html') }))
+    .filter((report) => fs.existsSync(report.filePath))
+    .map((report) => ({ ...report, mtimeMs: fs.statSync(report.filePath).mtimeMs }))
     .sort((a, b) => b.mtimeMs - a.mtimeMs);
 }
 
+// run_id, output/<run_id>/, output/<run_id>/report.html 어느 형태로 받아도 run_id 로 맞춘다.
 function normalizeRequestedReport(value) {
   if (!value) {
     return '';
   }
 
-  const basename = path.basename(String(value).trim());
-  return basename.endsWith('.html') ? basename : `${basename}.html`;
+  const trimmed = String(value).trim().replace(/[\\/]+$/, '');
+  const withoutFile = path.basename(trimmed) === 'report.html' ? path.dirname(trimmed) : trimmed;
+  return path.basename(withoutFile).replace(/\.html$/, '');
 }
 
 function printReportLinks() {
@@ -154,11 +158,18 @@ const server = http.createServer((req, res) => {
     }
 
     if (stats.isDirectory()) {
-      const indexPath = path.join(filePath, 'index.html');
-      if (fs.existsSync(indexPath)) {
+      const reqPath = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`).pathname;
+      // 묶음의 report.html 은 audit.md 를 상대 경로로 링크한다. 끝 슬래시가 없으면 링크가 한 단계 위로 풀린다.
+      if (!reqPath.endsWith('/')) {
+        res.writeHead(301, { Location: `${reqPath}/` });
+        return res.end();
+      }
+      const indexPath = ['index.html', 'report.html']
+        .map((name) => path.join(filePath, name))
+        .find((candidate) => fs.existsSync(candidate));
+      if (indexPath) {
         filePath = indexPath;
       } else {
-        const reqPath = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`).pathname;
         const entries = fs.readdirSync(filePath, { withFileTypes: true });
         const html = renderDirectoryListing(reqPath, entries);
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });

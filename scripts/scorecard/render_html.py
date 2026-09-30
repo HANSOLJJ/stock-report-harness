@@ -8,9 +8,10 @@ import re
 from pathlib import Path
 from typing import Any
 
-from report_contract_lib import OUTPUT_DIR, artifact_paths, rel
+from report_contract_lib import rel
 
 from .engine import HISTORY_CSV, load_context, load_results, run_dir
+from .paths import run_paths
 from .inputs import ObsLookup
 from .render_csv import append_history, history_rows
 from . import render_common as rc
@@ -838,12 +839,9 @@ def _asof_line(ctx: Any) -> str:
             f'(C-17 권고대로 셋을 따로 기록했고 이번 실행은 값이 다르다)')
 
 
-AUDIT_SUFFIX = "-audit.md"
-
-
 def audit_path(slug: str) -> Path:
-    """감사 기록 산출물. HTML 과 같은 output/ 에 두고 이름만 뒤에 `-audit` 를 붙인다."""
-    return OUTPUT_DIR / f"{slug}{AUDIT_SUFFIX}"
+    """감사 기록 산출물. HTML 과 같은 실행 묶음 `output/<slug>/` 에 `audit.md` 로 둔다."""
+    return run_paths(slug).audit
 
 
 def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] | None = None) -> str:
@@ -860,7 +858,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
         f"# 감사 기록 — {ctx.run['title']}",
         "",
         "이 파일은 **재현과 감사를 위한 기록**이다. 리포트 본문에서 뺀 해시·입력 지문·실행 단위 선택을 모은다.",
-        f"리포트는 `output/{ctx.slug}.html` 이고 여기 값들이 그 리포트를 만든 입력이다.",
+        f"리포트는 `{run_paths(ctx.slug).rel(run_paths(ctx.slug).html)}` 이고 여기 값들이 그 리포트를 만든 입력이다.",
         "",
         "## 규칙과 기준 시점",
         "",
@@ -934,7 +932,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
 
     # 2026-09-18 FIX-81: References 에 실리던 리뷰 진행 기록과, 본문에서 뗀 정정 꼬리의 원문.
     from report_contract_lib import read_markdown
-    review_path = artifact_paths(ctx.slug).review
+    review_path = run_paths(ctx.slug).review
     if review_path.is_file():
         rfm, _b, _r, _t = read_markdown(review_path)
         rvs = rfm.get("reviewers") or []
@@ -943,7 +941,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
                   f"검토한 초안 `{rfm.get('draft_hash', '—')}`", ""]
         lines += [f"- {' '.join(str(r).split())}" for r in (rvs if isinstance(rvs, list) else [rvs])]
     # 정정 꼬리는 원문을 그대로 간직한 초안에서 읽는다(알려진 한계·트리거 두 절에서 나온다).
-    draft_path = artifact_paths(ctx.slug).draft
+    draft_path = run_paths(ctx.slug).draft
     draft_text = draft_path.read_text(encoding="utf-8") if draft_path.is_file() else ""
     fixes = [ln for ln in draft_text.splitlines() if re.search(r"\[[^\]]*FIX-\d+[^\]]*\]", ln)]
     if fixes:
@@ -1161,7 +1159,7 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
         + f'<div class="fcards">{cards}</div>'
         + '<h3>알려진 한계</h3>' + render_limitations(ctx)
         + f'<p class="sub mt-14">규칙 해시·입력 지문·실행 단위 선택·미결 규칙 결정은 '
-          f'<a href="{esc(ctx.slug)}{AUDIT_SUFFIX}">감사 기록</a>에 따로 모았다.</p>'
+          f'<a href="{esc(audit_path(ctx.slug).name)}">감사 기록</a>에 따로 모았다.</p>'
     )
 
 
@@ -1596,7 +1594,7 @@ def review_line(ctx: Any, review_fm: dict[str, Any]) -> str:
     head = f"{words.get(len(got), len(got))} 영역({' · '.join(n for n, _v in got)}) 독립 검토를 거쳤다"
     head += " — 모두 통과했다." if verdicts == {"pass"} else f" — 판정은 {', '.join(f'{n} {v}' for n, v in got)} 이다."
     import hashlib
-    cur = hashlib.sha256(artifact_paths(ctx.slug).draft.read_bytes()).hexdigest()
+    cur = hashlib.sha256(run_paths(ctx.slug).draft.read_bytes()).hexdigest()
     if review_fm.get("draft_hash") and review_fm["draft_hash"] != cur:
         head += " 검토 뒤 표시 문장을 고쳐 지금 판은 다시 검토를 기다린다."
     return head + " 검토 기록은 감사 기록에 있다."
@@ -1697,7 +1695,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     # 2026-09-18 FIX-79 S2: C-번호 사전은 규칙 파일의 설계 결정 기록을 그대로 쏟아 뜻이 읽히지 않았다
     # (사용자 지적). 본문에서 내리고 감사 기록의 `결정 기록` 절로 옮긴다. 색인에는 그 자리만 알린다.
     note = (f'<p class="sub mt-14">규칙이 번호(C-번호)를 붙여 기록한 설계 결정은 본문에 싣지 않는다. '
-            f'결정 기록은 <a href="{esc(ctx.slug)}{AUDIT_SUFFIX}">감사 기록</a>의 <b>결정 기록</b> 절에 있다.</p>')
+            f'결정 기록은 <a href="{esc(audit_path(ctx.slug).name)}">감사 기록</a>의 <b>결정 기록</b> 절에 있다.</p>')
     index = re.sub(r">([^<>]*)<", lambda m: ">" + rc.strip_decision_codes(m.group(1)) + "<",
                    render_code_index(ctx, results))
     return document.replace(GLOSSARY_SLOT, index + note)
@@ -1723,12 +1721,11 @@ def build_scorecard(slug: str) -> tuple[Path, list[Path], None]:
     ctx = load_context(slug)
     results = load_results(slug)
     baseline, _obs, triggers = load_baseline(ctx.run["baseline_id"])
-    paths = artifact_paths(slug)
+    paths = run_paths(slug)
     from report_contract_lib import read_markdown
 
     review_fm, _b, _r, _t = read_markdown(paths.review)
     document = render_document(ctx, results, baseline, triggers, review_fm, approval, load_availability(slug))
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     paths.html.write_text(document, encoding="utf-8")
     # 2026-09-17 FIX-67 S1: 감사 기록을 리포트와 나란히 낸다. HTML 방법 절이 이 파일을 링크한다.
     audit_path(slug).write_text(render_audit_md(ctx, results, approval), encoding="utf-8", newline="\n")

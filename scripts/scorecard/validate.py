@@ -7,7 +7,6 @@ from typing import Any
 
 from report_contract_lib import (
     REQUIRED_SCORECARD_PLAN_FRONTMATTER,
-    artifact_paths,
     count_h1,
     frontmatter_value,
     has_required_section,
@@ -16,7 +15,8 @@ from report_contract_lib import (
     rel,
 )
 
-from .engine import HISTORY_CSV, compute, input_hashes, load_context, load_results, results_path, run_dir
+from .engine import HISTORY_CSV, compute, input_hashes, load_context, load_results, results_path
+from .paths import RunPaths, run_paths
 from .render_md import REVIEW_AREAS
 from .rules import load_rules
 from .schema import SchemaError, load_json_strict, sha256_file, validate_approval
@@ -28,6 +28,11 @@ ROW_RE = re.compile(r"^\|(?P<cells>.+)\|\s*$")
 # 2026-09-17 FIX-60: 체크리스트 fail 의 근거 칸에서 긴장 번호를 찾는다. **문자열만 보고 통과시키지 않는다** —
 # 규칙 파일의 open_tensions 와 대조해 실재하고 recheck_at 이 있는 것만 예외로 인정한다(오타가 예외를 만들지 않게).
 TENSION_RE = re.compile(r"TEN-[A-Z0-9-]+")
+# 2026-09-30 레인 A: 실행 묶음(output/<slug>/)으로 옮긴 기존 실행 둘은 research·draft·review frontmatter 에
+# 옛 경로 문자열을 갖고 있다. draft 는 승인 해시 대상이라 고칠 수 없으므로 **이 두 실행에만** 옛 문자열을 허용한다.
+# 다른 실행에 옛 문자열이 나오면 불일치 오류다.
+LEGACY_RUNS = frozenset({"ai-scorecard-2026-09-baseline", "ai-scorecard-2026-09-obsreg"})
+LEGACY_SOURCE_STRINGS = {"plan": "plan/{slug}.md", "research": "research/{slug}.md", "draft": "drafts/{slug}.md"}
 
 # 렌더러에서 f-string 접두사가 빠지면 파이썬 표현식이 리터럴로 출력된다. 오류가 안 나므로 검증기에서 막는다.
 UNRENDERED_RE = re.compile(r"\{(?:esc|fmt_[a-z_]+|total_class|score_class|trap_class|head|c\[|results\[|run\[)[^{}]*\}")
@@ -36,6 +41,13 @@ UNRENDERED_RE = re.compile(r"\{(?:esc|fmt_[a-z_]+|total_class|score_class|trap_c
 def prel(path: Path) -> str:
     """frontmatter 의 source 경로는 POSIX 구분자로 쓴다. Windows 의 rel() 백슬래시와 비교하지 않도록 정규화한다."""
     return rel(path).replace("\\", "/")
+
+
+def source_matches(paths: RunPaths, kind: str, actual: str) -> bool:
+    """frontmatter 의 `<kind>_source` 가 묶음 경로와 같은지. 옮긴 기존 실행만 옛 문자열도 받는다."""
+    if actual == paths.rel(getattr(paths, kind)):
+        return True
+    return paths.slug in LEGACY_RUNS and actual == LEGACY_SOURCE_STRINGS[kind].format(slug=paths.slug)
 
 
 def _carried_exception(basis: str, tensions: dict[str, dict[str, Any]]) -> tuple[bool, list[str], str]:
@@ -89,8 +101,8 @@ def check_source_allowlist(rules: Any, sources: dict[str, Any], result: Any) -> 
 
 
 def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_present: bool = True, result: Any) -> Any:
-    paths = artifact_paths(slug)
-    d = run_dir(slug)
+    paths = run_paths(slug)
+    d = paths.run_dir
 
     # plan ---------------------------------------------------------------
     if not paths.plan.is_file():
@@ -128,7 +140,7 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
         result.error(f"필수 파일 없음: {prel(paths.research)}")
     else:
         rfm, _b, _r, _t = read_markdown(paths.research)
-        if frontmatter_value(rfm, "plan_source") != prel(paths.plan):
+        if not source_matches(paths, "plan", frontmatter_value(rfm, "plan_source")):
             result.error(f"{prel(paths.research)} plan_source 불일치")
         if frontmatter_value(rfm, "observations_hash") != ctx.hashes["observations"] or frontmatter_value(rfm, "judgments_hash") != ctx.hashes["judgments"]:
             result.error(f"{prel(paths.research)} 가 현재 입력 해시와 다름 — research 를 다시 생성")
@@ -163,7 +175,8 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"{prel(paths.draft)} 필수 섹션 누락: ## {section}")
     if frontmatter_value(dfm, "results_hash") != results["results_hash"]:
         result.error(f"{prel(paths.draft)} results_hash 가 results.json 과 다름 — draft 를 다시 생성")
-    if frontmatter_value(dfm, "plan_source") != prel(paths.plan) or frontmatter_value(dfm, "research_source") != prel(paths.research):
+    if not (source_matches(paths, "plan", frontmatter_value(dfm, "plan_source"))
+            and source_matches(paths, "research", frontmatter_value(dfm, "research_source"))):
         result.error(f"{prel(paths.draft)} plan_source/research_source 불일치")
     ranking_rows = _table_rows(_section(dbody, "종합 순위표"))
     for row in results["ranking"]:
@@ -182,8 +195,9 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     status = frontmatter_value(vfm, "status")
     if status != "pass":
         result.error(f"{rel(paths.review)} review status 가 pass 가 아님: {status!r}")
-    for key, expected in (("plan_source", prel(paths.plan)), ("research_source", prel(paths.research)), ("draft_source", prel(paths.draft))):
-        if frontmatter_value(vfm, key) != expected:
+    for kind in ("plan", "research", "draft"):
+        key = f"{kind}_source"
+        if not source_matches(paths, kind, frontmatter_value(vfm, key)):
             result.error(f"{rel(paths.review)} {key} 불일치")
     if frontmatter_value(vfm, "review_type") != "separate-session-4way":
         result.error("review_type 은 separate-session-4way 여야 함")

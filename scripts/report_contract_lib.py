@@ -15,10 +15,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-PLAN_DIR = ROOT / "plan"
-RESEARCH_DIR = ROOT / "research"
-DRAFT_DIR = ROOT / "drafts"
-REVIEW_DIR = ROOT / "reviews"
+# 실행 산출물은 전부 output/<run_id>/ 묶음 아래에 있다. 파일별 경로는 scorecard.paths.run_paths 가 정한다.
 OUTPUT_DIR = ROOT / "output"
 
 FRONTMATTER_RE = re.compile(r"\A---\s*\r?\n(?P<frontmatter>.*?)\r?\n---\s*(?:\r?\n)?", re.DOTALL)
@@ -58,14 +55,11 @@ class ArtifactPaths:
 
 
 def artifact_paths(slug: str) -> ArtifactPaths:
-    return ArtifactPaths(
-        slug=slug,
-        plan=PLAN_DIR / f"{slug}.md",
-        research=RESEARCH_DIR / f"{slug}.md",
-        draft=DRAFT_DIR / f"{slug}.md",
-        review=REVIEW_DIR / f"{slug}.md",
-        html=OUTPUT_DIR / f"{slug}.html",
-    )
+    """실행 묶음 경로만 돌려준다. 이름은 scorecard.paths.run_paths 와 같은 곳에서 온다."""
+    from scorecard.paths import run_paths
+
+    p = run_paths(slug)
+    return ArtifactPaths(slug=slug, plan=p.plan, research=p.research, draft=p.draft, review=p.review, html=p.html)
 
 
 def rel(path: Path) -> str:
