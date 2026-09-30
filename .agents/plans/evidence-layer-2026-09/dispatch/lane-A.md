@@ -2,6 +2,14 @@
 
 에이전트: Claude Opus 5.5. 의존: 레인 S 의 1.2(종목 파일 삭제)가 통합 브랜치에 병합된 뒤 시작한다. 공통 규약: `README.md` 를 먼저 읽는다. 계획 원문: `../plan.md` 1.3 과 2단계 전체.
 
+## 시작 시점 상태 (2026-09-30 조율자 기록)
+
+- 레인 S(종목 파일 삭제)와 레인 C(훅 통합)가 통합 브랜치에 병합됐다. `docs/output-spec.md` 도 지워졌다.
+- 이 워크트리의 훅은 새 `scripts/hooks/guard.py` 다. `enforce_plan` 은 `output/<slug>/report.html`·`audit.md` 를 **Write/Edit 도구로 쓰는 것을 막는다.** 2.2 의 복사는 Bash 의 `cp` 나 `uv run --frozen python -X utf8 -c "import shutil; …"` 로 한다. `git mv` 도 Bash 로 하므로 막히지 않는다.
+- `enforce_plan` 은 `output/<slug>/research.md` 를 Write 로 만들 때 같은 폴더의 `plan.md` 를 요구한다. 테스트 픽스처를 Write 로 만들 일이 있으면 순서를 지킨다.
+- `forbid_financial_advice` 는 Bash 뒤마다 `output/*/draft.md` 와 `judgments.json` 을 훑는다. 옮길 두 실행의 draft·judgments 에는 걸리는 표현이 없음을 조율자가 확인했다.
+- `validate.py` 의 `check_source_allowlist` 는 v1.7 실행 때문에 그대로 둔다. 레인 B 의 규칙 v1.8 은 아직 병합 전일 수 있다.
+
 ## 목표 (Target · Change)
 
 종목 리포트 코드를 공유 스크립트에서 지우고, 실행 산출물을 `output/<run_id>/` 한 폴더로 모으는 경로 도우미를 만들고, 기존 실행 2개를 그 양식으로 옮기되 승인 해시가 깨지지 않게 한다. 네 커밋이다.
