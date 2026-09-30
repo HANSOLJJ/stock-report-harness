@@ -17,3 +17,8 @@ AI_company_analysis_factor/** -text
 
 # 셸 스크립트는 Windows checkout 에서도 LF 로 둔다. CRLF 면 WSL bash 가 `exit 0\r` 을 숫자로 읽지 못해 훅이 실패한다.
 *.sh text eol=lf
+
+# uv 프로젝트 파일은 LF 로 고정한다. CRLF 로 바뀌면 uv 가 lockfile 변경으로 볼 수 있다 (2026-09-30).
+pyproject.toml text eol=lf
+uv.lock text eol=lf
+.python-version text eol=lf

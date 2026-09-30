@@ -1,0 +1,20 @@
+[project]
+name = "stock-report-harness"
+version = "0.1.0"
+description = "AI 기업 9-factor 채점표 파이프라인 하네스"
+requires-python = ">=3.12"
+dependencies = [
+  "pyyaml>=6",
+  "yfinance>=1.7",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.uv]
+package = false

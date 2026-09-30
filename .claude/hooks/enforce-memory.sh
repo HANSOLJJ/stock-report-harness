@@ -35,7 +35,11 @@ if not (rel.startswith('memory/_daily/') or rel.startswith('memory/topics/')):
 validator = root / 'scripts' / 'validate_memory.py'
 if not validator.is_file():
     sys.exit(0)
-proc = subprocess.run(['python3', str(validator)], cwd=root, text=True, capture_output=True)
+# 2026-09-30: 프로젝트 Python 은 uv 가 관리한다. uv 가 없으면 시스템 python3 로 되돌아간다.
+import shutil
+cmd = (['uv', 'run', '--frozen', 'python', '-X', 'utf8', str(validator)] if shutil.which('uv')
+       else ['python3', '-X', 'utf8', str(validator)])
+proc = subprocess.run(cmd, cwd=root, text=True, capture_output=True, encoding='utf-8', errors='replace')
 if proc.returncode != 0:
     detail = (proc.stdout + proc.stderr).strip()
     reason = 'memory 파일 변경 후 scripts/validate_memory.py 검증 실패. ' + detail[:1200]
