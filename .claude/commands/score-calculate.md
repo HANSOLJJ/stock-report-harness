@@ -3,7 +3,7 @@ description: scorecard 점수를 결정론적으로 계산하고 기준선 대�
 argument-hint: "<slug>"
 ---
 
-사용자가 stock-report-harness 의 AI 기업 9-factor 채점(ai_scorecard) calculate 단계를 요청했습니다.
+사용자가 이 저장소의 AI 기업 9-factor 채점(ai_scorecard) calculate 단계를 요청했습니다.
 
 **입력**: $ARGUMENTS
 

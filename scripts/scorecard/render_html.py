@@ -1732,7 +1732,7 @@ def build_scorecard(slug: str) -> tuple[Path, list[Path], None]:
         raise SystemExit("Cannot build until pre-build contract errors are fixed")
     approval_path = run_dir(slug) / "approval.json"
     if not approval_path.is_file():
-        raise SystemExit(f"awaiting_user: 사용자 승인 없음 — python scripts/scorecard_cli.py approve {slug} --by <name>")
+        raise SystemExit(f"awaiting_user: 사용자 승인 없음 — 사람이 `node server.js --approvals` 로 승인 페이지(http://127.0.0.1:3000/approve/{slug})를 열어 승인한다")
     approval = validate_approval(load_json_strict(approval_path), slug)
     if approval_mismatches(approval["hashes"], current_hashes(slug)):
         raise SystemExit("awaiting_user: 승인 이후 규칙/자료/판단/결과/초안이 바뀌어 승인이 무효 — 다시 검토·승인")

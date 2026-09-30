@@ -96,8 +96,8 @@ Topic은 daily 5섹션 + **일자** 1개 = 6섹션 고정임. 새 헤더 추가�
 
 Claude Code `UserPromptSubmit` hook이 사용자 프롬프트를 분석해 관련 topic을 자동으로 컨텍스트에 주입함.
 
-- hook: `.claude/hooks/inject-memory-context.sh`
-- selector: `scripts/memory_context.py`
+- hook: `scripts/hooks/guard.py` 의 `inject_memory_context` (Claude `.claude/settings.json`, Codex `.codex/hooks.json` 에서 UserPromptSubmit 으로 배선)
+- selector: 같은 함수가 `memory/topics/*.md` 를 고른다
 - 연결: `.claude/settings.json`의 `hooks.UserPromptSubmit`
 
 동작 방식:
@@ -116,7 +116,7 @@ Claude Code `UserPromptSubmit` hook이 사용자 프롬프트를 분석해 관�
 3. 관측 1건을 `## Entry: YYYY-MM-DD — 제목` 형식으로 append함.
 4. 같은 패턴이 3회 이상이거나 재발 비용이 크면 관련 topic으로 6섹션 entry를 추출함.
 5. topic 등록 후 같은 실패가 재발하면 `scripts/validate_memory.py`, hook, build 검증, test 중 하나로 차단 mechanism을 추가함.
-6. `python3 scripts/validate_memory.py`로 스키마를 검증함.
+6. `uv run --frozen python -X utf8 scripts/validate_memory.py`로 스키마를 검증함.
 
 ## 감사
 

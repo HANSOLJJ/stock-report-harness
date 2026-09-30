@@ -12,7 +12,7 @@ description: 기업 추가 실행에서 기존 기업의 관측·판단·점수 
 1. 비교할 대상 실행(`slug`)과 기준 실행(`--against`)을 확인한다.
 2. 실행한다:
    ```
-   python scripts/scorecard_cli.py diff <slug> --against <이전 slug> [--json]
+   uv run --frozen python -X utf8 scripts/scorecard_cli.py diff <slug> --against <이전 slug> [--json]
    ```
 3. 층별 결과를 읽어 보고한다 (1층: 관측·판단·출처 보존, 2층: 점수 투영·순위 불변).
 
