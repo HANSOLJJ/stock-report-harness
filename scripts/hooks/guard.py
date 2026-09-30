@@ -6,9 +6,11 @@ exit 0 으로 끝낸다(fail-open). 훅 인프라 오류가 모든 도구를 막
 """
 from __future__ import annotations
 
+import getpass
 import hashlib
 import io
 import json
+import os
 import re
 import subprocess
 import sys
@@ -159,7 +161,17 @@ def block_dangerous_bash(payload: dict, *, root: Path) -> Decision:
 
 # ------------------------------------------------------------------ 2. 보호 경로
 # docs/output-spec.md 는 2026-09-30 에 보호 목록에서 뺐다. 종목 리포트 출력 명세라 채점표 전환과 함께 삭제한다.
-_PROTECTED_LITERALS = ["docs/finance-style-guide.md", ".env", ".git", ".github/workflows"]
+# 2026-09-30 레인 F: 승인된 실행이 쓰는 규칙(v1.5~v1.7), 이동한 기존 실행 두 폴더, 이력 파일을 더했다.
+# v1.8 은 아직 승인된 실행이 없어 넣지 않는다. 첫 실행이 v1.8 로 승인되면 여기에 더한다.
+_PROTECTED_RUN_DIRS = ["output/ai-scorecard-2026-09-baseline", "output/ai-scorecard-2026-09-obsreg"]
+_PROTECTED_FILES = [
+    "docs/finance-style-guide.md",
+    "scorecard/rules/v1.5.json", "scorecard/rules/v1.6.json", "scorecard/rules/v1.7.json",
+    "scorecard/history.csv",
+]
+_PROTECTED_LITERALS = [*_PROTECTED_FILES, *_PROTECTED_RUN_DIRS, ".env", ".git", ".github/workflows"]
+_APPROVAL_FILE = re.compile(r"(^|/)approval\.json$")
+_APPROVAL_FILE_IN_CMD = re.compile(r"(?<![\w.-])approval\.json\b")
 
 
 def _is_protected(path: str) -> bool:
@@ -168,12 +180,17 @@ def _is_protected(path: str) -> bool:
         path == ".env" or path.startswith(".env.") or path.startswith(".env/")
         or path == ".git" or path.startswith(".git/")
         or path == ".github/workflows" or path.startswith(".github/workflows/")
-        or path == "docs/finance-style-guide.md"
+        or path in _PROTECTED_FILES
+        or any(path == d or path.startswith(d + "/") for d in _PROTECTED_RUN_DIRS)
+        or bool(_APPROVAL_FILE.search(path))
     )
 
 
 _MUTATING = re.compile(r"(^|[;&|]\s*)(cat\s*>|printf\b|echo\b|tee\b|sed\s+-i\b|perl\s+-pi\b|python\b|python3\b|node\b|rm\b|mv\b|cp\b|install\b|touch\b|truncate\b|chmod\b|chown\b|git\s+checkout\b|git\s+restore\b|git\s+reset\b)")
 _REDIRECT = re.compile(r"(^|[^<>])>{1,2}\s*[^&]")
+# 승인·취소는 사람 행위다. 변경 기호가 없어도 명령 문자열에 있으면 막는다. confirm 은 막지 않는다 —
+# 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 한다.
+_APPROVAL_CMD = re.compile(r"scorecard_cli\.py\s+(?:approve|revoke)\b|stages\.(?:approve|revoke)\b")
 
 
 def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
@@ -182,18 +199,24 @@ def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
         if _is_protected(rp):
             violations.append(rp)
     cmd = extract_command(payload)
+    if cmd and _APPROVAL_CMD.search(cmd.replace("\\", "/")):
+        return block("승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. 에이전트는 approve·revoke 를 실행하지 않는다.")
     # 셸 명령은 보호 경로를 언급하면서 파일을 바꾸는 것처럼 보일 때만 막는다.
     if cmd and (_MUTATING.search(cmd) or _REDIRECT.search(cmd)):
+        norm = cmd.replace("\\", "/")
         for literal in _PROTECTED_LITERALS:
-            if re.search(r"(?<![\w./-])" + re.escape(literal) + r"(?:/|\b)", cmd):
+            if re.search(r"(?<![\w./-])" + re.escape(literal) + r"(?:/|\b)", norm):
                 violations.append(literal)
+        if _APPROVAL_FILE_IN_CMD.search(norm):
+            violations.append("approval.json")
     if not violations:
         return allow()
     uniq: list[str] = []
     for v in violations:
         if v not in uniq:
             uniq.append(v)
-    return block("보호 경로 수정 시도를 차단합니다: " + ", ".join(uniq) + ". 보호 대상: .env*, .git/, .github/workflows/, docs/finance-style-guide.md.")
+    return block("보호 경로 수정 시도를 차단합니다: " + ", ".join(uniq) + ". 보호 대상: .env*, .git/, .github/workflows/, docs/finance-style-guide.md, "
+                 "**/approval.json, scorecard/rules/v1.5~v1.7.json, scorecard/history.csv, output/ai-scorecard-2026-09-baseline/, output/ai-scorecard-2026-09-obsreg/.")
 
 
 # ------------------------------------------------------------------ 3. 단계 순서
@@ -217,14 +240,44 @@ def _review_is_pass(review: Path) -> bool:
     )
 
 
+def lock_owner() -> str:
+    """실행 잠금의 소유자. `scorecard.stages.lock_owner` 와 같은 규칙이다(훅은 scorecard 를 import 하지 않는다)."""
+    for key in ("SCORECARD_AGENT", "ORCA_TERMINAL_HANDLE"):
+        value = os.environ.get(key, "").strip()
+        if value:
+            return value
+    return getpass.getuser()
+
+
+def _lock_holder(base: Path) -> str | None:
+    """`output/<slug>/.lock` 의 소유자. 잠금이 없으면 None, 읽을 수 없으면 빈 문자열(누구의 것도 아니다)."""
+    lock = base / ".lock"
+    if not lock.is_file():
+        return None
+    try:
+        data = json.loads(lock.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return ""
+    owner = data.get("owner") if isinstance(data, dict) else None
+    return owner if isinstance(owner, str) else ""
+
+
 def enforce_plan(payload: dict, *, root: Path) -> Decision:
     problems: list[str] = []
+    locked: list[str] = []
+    me: str | None = None
     for rp in extract_paths(payload, root):
         parsed = _slug_dir_parts(rp)
         if not parsed:
             continue
         slug, rest = parsed
         base = root / "output" / slug
+        holder = _lock_holder(base)
+        if holder is not None:
+            me = me if me is not None else lock_owner()
+            if holder != me:
+                locked.append(f"output/{slug}: 다른 소유자({holder or '알 수 없음'})의 실행 잠금이 있음")
+                continue
         if rest in _BUILD_ONLY:
             problems.append(f"{rp}: 직접 쓰기 금지(빌드 명령으로만 생성)")
         elif rest in _REQUIRES:
@@ -236,6 +289,8 @@ def enforce_plan(payload: dict, *, root: Path) -> Decision:
         slug = m.group(1).strip("\"'`;&|)")
         if not _review_is_pass(root / "output" / slug / "review.md"):
             problems.append(f"output/{slug}/report.html: 빌드 전 pass 상태의 separate-session-4way 리뷰 필요(output/{slug}/review.md)")
+    if locked:
+        return block("다른 에이전트가 맡은 실행 묶음이라 쓰기를 차단합니다. " + "; ".join(locked[:6]) + ". 인수하려면 CLI 단계를 --take-lock 으로 실행한다.")
     if not problems:
         return allow()
     return block("파이프라인 순서(plan → research → draft → review → build)를 위반해 차단합니다. " + "; ".join(problems[:6]))

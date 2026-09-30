@@ -28,6 +28,23 @@ from report_contract_lib import rel
 from scorecard.schema import SchemaError
 
 
+def _claim(args: argparse.Namespace, stage: str) -> None:
+    """실행 잠금(output/<slug>/.lock). 다른 소유자의 잠금이면 거부하고 --take-lock 이면 인수한다(2026-09-30 레인 F)."""
+    from scorecard.stages import claim_lock
+
+    claim_lock(args.slug, stage, take_lock=args.take_lock)
+
+
+def _refuse_agent_session(action: str) -> None:
+    """승인·취소는 사람 행위다. 에이전트 세션이면 CLI 계층에서 거부한다. stages 의 승인 함수 자체는 막지 않는다(테스트가 부른다)."""
+    from scorecard.stages import agent_session_markers
+
+    markers = agent_session_markers()
+    if markers:
+        raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 {action}할 수 없다. "
+                          "사람이 `node server.js --approvals` 승인 페이지에서 한다")
+
+
 def cmd_add_company(args: argparse.Namespace) -> int:
     """채점 대상 기업을 레지스트리에 등록한다(추가만 한다).
 
@@ -117,6 +134,9 @@ def cmd_init(args: argparse.Namespace) -> int:
     # 2026-09-21 ADD-03. 제목은 실행마다 달라야 한다. 이어받기에서 기본값으로 떨어지면 두 실행이 같은 제목을 갖는다.
     if args.from_run and not args.title:
         print(f"[경고] --title 을 주지 않아 이전 실행 {args.from_run} 의 제목을 그대로 쓴다. 실행마다 제목을 달리하는 편이 낫다")
+    from scorecard.stages import claim_lock
+
+    claim_lock(args.slug, "init", take_lock=args.take_lock, write=False)
     paths = init_run(
         args.slug,
         as_of=args.as_of,
@@ -134,6 +154,7 @@ def cmd_init(args: argparse.Namespace) -> int:
         add_companies=add_companies,
         carry_decisions=not args.no_carry_decisions,
     )
+    claim_lock(args.slug, "init", take_lock=args.take_lock)
     for name, path in paths.items():
         print(f"{name}: {rel(path)}")
     if args.from_run:
@@ -148,6 +169,7 @@ def cmd_collect(args: argparse.Namespace) -> int:
     from scorecard.stages import COLLECT_KINDS, collect
 
     kinds = COLLECT_KINDS if args.kind == "all" else (args.kind,)
+    _claim(args, "collect")
     out = collect(args.slug, companies=args.company.split(",") if args.company else None, kinds=kinds,
                   since=args.since, forms=args.forms.split(",") if args.forms else None, locale=args.locale,
                   from_file=args.from_file, dry_run=args.dry_run)
@@ -167,6 +189,7 @@ def cmd_collect(args: argparse.Namespace) -> int:
 def cmd_research(args: argparse.Namespace) -> int:
     from scorecard.stages import research
 
+    _claim(args, "research")
     print(f"research: {rel(research(args.slug, register=not args.no_register))}")
     print(f"다음: python scripts/scorecard_cli.py calculate {args.slug}")
     return 0
@@ -175,6 +198,7 @@ def cmd_research(args: argparse.Namespace) -> int:
 def cmd_calculate(args: argparse.Namespace) -> int:
     from scorecard.stages import calculate
 
+    _claim(args, "calculate")
     path, preview, results = calculate(args.slug)
     print(f"results: {rel(path)} (hash {results['results_hash'][:16]}…)")
     print(f"preview: {rel(preview)}")
@@ -191,6 +215,7 @@ def cmd_calculate(args: argparse.Namespace) -> int:
 def cmd_draft(args: argparse.Namespace) -> int:
     from scorecard.stages import draft
 
+    _claim(args, "draft")
     print(f"draft: {rel(draft(args.slug))}")
     print(f"다음: python scripts/scorecard_cli.py review-template {args.slug} → 4-way 리뷰 → approve")
     return 0
@@ -199,6 +224,7 @@ def cmd_draft(args: argparse.Namespace) -> int:
 def cmd_review_template(args: argparse.Namespace) -> int:
     from scorecard.stages import review_template
 
+    _claim(args, "review-template")
     print(f"review template: {rel(review_template(args.slug, force=args.force))}")
     print("검토 영역 4개와 체크리스트 Q01~Q23 를 채우고 status 를 pass 로 바꾼 뒤 validate_report_contract.py 로 확인한다")
     return 0
@@ -207,6 +233,7 @@ def cmd_review_template(args: argparse.Namespace) -> int:
 def cmd_approve(args: argparse.Namespace) -> int:
     from scorecard.stages import approve
 
+    _refuse_agent_session("승인")
     print(f"approval: {rel(approve(args.slug, approved_by=args.by, note=args.note))}")
     print(f"다음: python scripts/build_report.py {args.slug}")
     return 0
@@ -321,6 +348,9 @@ def cmd_status(args: argparse.Namespace) -> int:
     return 0
 
 
+TAKE_LOCK_HELP = "다른 소유자의 실행 잠금(output/<slug>/.lock)을 인수한다"
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -371,6 +401,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--price-as-of")
     p.add_argument("--info-cutoff")
     p.add_argument("--force", action="store_true")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_init)
 
     p = sub.add_parser("collect", help="근거 후보 수집. research 앞에서만 돈다(build 는 재수집하지 않는다)")
@@ -382,21 +413,30 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--locale", default="en-US")
     p.add_argument("--from-file", help="네트워크 대신 읽을 파일(--kind 하나와 함께)")
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_collect)
 
     p = sub.add_parser("research")
     p.add_argument("slug")
     p.add_argument("--no-register", action="store_true", help="evidence.json 이 인용한 후보의 출처를 sources.json 에 등록하지 않는다")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_research)
 
-    for name, func in (("calculate", cmd_calculate), ("draft", cmd_draft), ("status", cmd_status)):
+    for name, func in (("calculate", cmd_calculate), ("draft", cmd_draft)):
         p = sub.add_parser(name)
         p.add_argument("slug")
+        p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
         p.set_defaults(func=func)
+
+    p = sub.add_parser("status")
+    p.add_argument("slug")
+    p.set_defaults(func=cmd_status)
 
     p = sub.add_parser("review-template")
     p.add_argument("slug")
+    # --force 는 템플릿 재생성만 뜻한다. 잠금 인수는 --take-lock 하나로 한다(두 의미를 한 플래그에 싣지 않는다).
     p.add_argument("--force", action="store_true")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_review_template)
 
     p = sub.add_parser("diff", help="두 실행을 견준다. subtree 해시 차이는 실패 조건이 아니다 — "

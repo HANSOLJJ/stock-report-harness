@@ -1,8 +1,10 @@
 # scorecard 단계 실행: init(실행 생성) → collect → research → calculate(+preview) → draft → review-template → approve. 순서·해시 결속을 코드에서 강제한다.
 from __future__ import annotations
 
+import getpass
 import json
 import os
+from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
@@ -566,6 +568,69 @@ def review_template(slug: str, *, force: bool = False) -> Path:
     results = load_results(slug)
     text = render_review_template(ctx, results, draft_hash=sha256_file(draft_path))
     path.write_text(text, encoding="utf-8", newline="\n")
+    return path
+
+
+# ------------------------------------------------------------------ 세션 판정·실행 잠금
+# 2026-09-30 레인 F. 에이전트 터미널에만 있고 사람이 여는 일반 Orca 셸에는 없는 것을 두 셸의 환경변수를
+# 직접 비교해 골랐다(validation/lane-F-approval/REPORT.md 의 표). `ORCA_*` 는 사람 셸에도 있어서 넣지 않는다.
+AGENT_ENV_MARKERS = ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT", "ORCA_AGENT_LAUNCH_TOKEN", "AI_AGENT")
+# 잠금을 검사하고 쓰는 단계. approve·revoke·build 는 사람 행위라 잠금을 요구하지도 쓰지도 않는다.
+LOCK_STAGES = ("init", "collect", "research", "calculate", "draft", "review-template", "confirm")
+
+
+def agent_session_markers(env: Mapping[str, str] | None = None) -> list[str]:
+    """지금 프로세스가 에이전트 세션이면 그 근거가 된 변수 이름들. 빈 목록이면 사람 세션이다. **판정은 여기 한 곳이다.**"""
+    env = os.environ if env is None else env
+    return [key for key in AGENT_ENV_MARKERS if (env.get(key) or "").strip()]
+
+
+def lock_owner(env: Mapping[str, str] | None = None) -> str:
+    """잠금 소유자: `SCORECARD_AGENT`, 없으면 `ORCA_TERMINAL_HANDLE`, 없으면 OS 사용자명. 훅(guard.lock_owner)도 같은 규칙이다."""
+    env = os.environ if env is None else env
+    for key in ("SCORECARD_AGENT", "ORCA_TERMINAL_HANDLE"):
+        value = (env.get(key) or "").strip()
+        if value:
+            return value
+    return getpass.getuser()
+
+
+def lock_path(slug: str) -> Path:
+    return run_dir(slug) / ".lock"
+
+
+def read_lock(slug: str) -> dict[str, Any] | None:
+    """잠금이 없으면 None. 읽을 수 없는 잠금은 소유자를 모르는 잠금으로 본다(누구의 것도 아니므로 인수해야 한다)."""
+    path = lock_path(slug)
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {"owner": ""}
+    return data if isinstance(data, dict) else {"owner": ""}
+
+
+def claim_lock(slug: str, stage: str, *, take_lock: bool = False, env: Mapping[str, str] | None = None,
+               write: bool = True) -> Path | None:
+    """단계 앞에서 부른다. 다른 소유자의 잠금이면 거부하고 `take_lock` 이면 인수한다.
+
+    단계가 끝나도 잠금은 남긴다 — 한 에이전트가 실행을 끝까지 맡는다. 실행 폴더가 없으면 쓰지 않는다
+    (그 단계가 스스로 선행 산출물 오류를 낸다). `write=False` 는 `init` 처럼 폴더를 만들기 전에 검사만 할 때 쓴다.
+    """
+    if stage not in LOCK_STAGES:
+        raise SchemaError(f"잠금 대상 단계가 아니다: {stage}")
+    me = lock_owner(env)
+    held = read_lock(slug)
+    if held is not None and held.get("owner") != me and not take_lock:
+        raise SchemaError(f"{rel(lock_path(slug))}: 다른 소유자({held.get('owner') or '알 수 없음'}, "
+                          f"{held.get('stage') or '?'} 단계, {held.get('started_utc') or '?'})가 이 실행을 맡고 있다 — 인수하려면 --take-lock")
+    if not write or not run_dir(slug).is_dir():
+        return None
+    started = held.get("started_utc") if held is not None and held.get("owner") == me else None
+    path = lock_path(slug)
+    path.write_text(json.dumps({"owner": me, "started_utc": started or utc_now_iso(), "stage": stage}, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8", newline="\n")
     return path
 
 
