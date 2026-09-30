@@ -1,67 +1,13 @@
-# stock-report-harness 운영 지침
+# 채점표 하네스 운영 지침
 
 ## 목적
-이 저장소는 주식·ETF·섹터 요청을 `plan → research → draft → image → review → build` 파일 계약으로 처리해 검증 가능한 HTML 경제리포트를 만든다.
-`plan/<slug>.md`는 후속 단계의 단일 기준 문서이며, 모든 산출물은 같은 `slug`의 선행 산출물을 참조한다.
-
-## 명령과 기본 순서
-- 명령: `/stock-plan <요청>`, `/stock-research <slug>`, `/stock-draft <slug>`, `/stock-image <slug>`, `/stock-review <slug>`, `/stock-build <slug>`.
-- 기본 순서: `plan → research → draft → hero 이미지 3개 생성/선택 → review → build`.
-- 특정 단계만 요청받아도 필요한 선행 산출물이 없으면 먼저 만든다.
-- review/build에서 문제가 발견되면 같은 slug의 선행 단계로 돌아가 수정 후 재실행한다.
-
-## Plan 계약
-- `/stock-plan`은 반드시 `plan/<slug>.md`를 작성한다.
-- frontmatter 필수: `slug`, `topic`, `request`, `output_type`, `audience`, `ticker`, `period_start`, `period_end`, `chart_required`, `price_data_source`, `price_data_interval`, `created_at`, `assumptions`.
-- 본문 필수: 요청 해석, 이해 목표, 리서치 범위, 데이터 확인 항목, 리포트 구조, 차트 요구, Hero 이미지 방향, 리뷰 기준, 완료/차단 조건.
-- 사용자가 기간을 말하지 않으면 기본값은 최근 6개월이며 `assumptions`에 기록한다.
-
-## Research 계약
-- `/stock-research`는 `plan/<slug>.md`의 research questions와 data requirements를 따른다.
-- `ticker`, `period_start`, `period_end`를 확인하고, 가격 데이터 요구는 `yfinance` 일봉(`interval=1d`)으로 둔다.
-- 관련 종목(개별주/ETF/섹터 proxy)이 있으면 종목별 최신 뉴스 최소 100건을 수집·분류·분석한다.
-- `research/<slug>.md`에는 100건 뉴스의 날짜, 매체, 제목, 핵심 이슈, 가격/수급/리스크 해석을 표로 남긴다.
-- 뉴스 원자료 JSON에는 가능한 항목별 원문 URL을 저장한다. URL이 없으면 원문 URL을 조작하지 말고 fallback과 `url_is_fallback`을 명시한다.
-- 한국 상장 종목은 가능하면 토스증권 종목 뉴스와 투자자별 매매 동향을 참고하고, 사용 URL/API를 `sources`와 원자료 JSON에 남긴다.
-
-## Draft 계약
-- `/stock-draft`는 `plan/<slug>.md`의 outline을 따르고 반드시 `research/<slug>.md`를 근거로 작성한다.
-- frontmatter 필수: `ticker`, `period_start`, `period_end`, `plan_source`, `research_source`.
-- 필수 섹션: H1 정확히 1개, `## 개요`, `## 배경`, `## 메커니즘`, `## 영향과 적용`, `## References`.
-- 가격 차트는 직접 데이터 배열을 쓰지 말고 `price-chart` 블록으로 선언한다.
-- 뉴스 100건이 있으면 `## 최신 뉴스 5건 요약`을 넣고 날짜·매체·제목 링크·1~2문장 요약·가격/수급 해석을 포함한다.
-- 숫자·가격·수급·뉴스 해석에는 근거를 두고, draft/research에는 검증용 출처 표식을 유지한다.
-- 투자 권유, 수익 보장, 매매 지시처럼 읽히는 표현은 금지한다.
-
-## Image 계약
-- `/stock-image`는 plan, research, draft 전체 메시지와 결론 톤을 반영해 hero 후보 3개를 만든다.
-- 이미지 생성은 `python3 scripts/run_stock_image_codex.py <slug>`로 Codex CLI를 열어 `imagegen` skill / built-in `image_gen`이 수행하게 한다.
-- 로컬/Pillow/SVG/빈 placeholder를 실제 hero 이미지로 대체하지 않는다.
-- 이미지에는 텍스트, 숫자, 티커, 로고, 워터마크, UI 스크린샷을 넣지 않는다.
-- 필수 산출물: `output/assets/<slug>-hero-v1~v3.prompt.txt`, `hero-v1~v3.png`, `hero-v1~v3.score.json`, `image-manifest.json`, `selected-image.json`.
-- `image-manifest.json`은 `status: complete`, `generation_method: codex-cli-imagegen`, `generated_with`를 가져야 하며, procedural/Pillow/SVG/placeholder 방식은 실패로 본다.
-- `selected-image.json`은 최소 `slug`, `selected_candidate`, `image_path` 또는 `selected_image`, `reason`, `generated_with`를 포함하고, 경로는 `assets/<file>.png` 또는 `output/assets/<file>.png`처럼 검증기가 찾을 수 있는 값으로 쓴다.
-<!-- 2026-09-07 hero 선택 사항 변경 전: - 최종 HTML에는 선택된 hero 이미지 1장이 반드시 있어야 하며, 없으면 build를 성공 처리하지 않는다. -->
-- hero 이미지는 선택 사항이다. Codex CLI를 쓸 수 있으면 위 절차로 반드시 생성하고, 쓸 수 없으면 래퍼가 남긴 `status: blocked` 매니페스트와 프롬프트 파일만 유지한 채 review/build를 hero 카드 없이 진행한다.
-- 다른 도구나 수동으로 만든 이미지에 `codex-cli-imagegen` 출처를 붙여 통과시키지 않는다. 매니페스트가 `complete`이면 선택된 PNG가 실제로 존재해야 하며, 없으면 build를 실패로 본다.
-
-## Review 계약
-- `reviews/<slug>.md` frontmatter에는 `status: pass | needs_fix | blocked`, `plan_source`, `research_source`, `draft_source`, `review_type: separate-session-4way`, `review_execution: separate_subagent_sessions`를 둔다.
-- 리뷰 작성 후 `python3 scripts/validate_report_contract.py <slug>`를 반드시 실행하고, 실패하면 `needs_fix`로 되돌린다.
-- `needs_fix`이면 generator 단계로 돌아가 수정 후 다시 review한다. 같은 차단 이슈가 3회 반복되거나 외부 데이터/권한 때문에 해결 불가할 때만 `blocked`로 둔다.
-
-## Build 계약
-<!-- 2026-09-07 hero 선택 사항 변경 전: - `/stock-build`는 `plan`, `research`, `draft`, `reviews`, 선택된 hero 이미지가 모두 유효할 때만 `output/<slug>.html`을 만든다. -->
-- `/stock-build`는 `plan`, `research`, `draft`, `reviews`가 모두 유효할 때만 `output/<slug>.html`을 만든다. 선택된 hero 이미지가 있으면 삽입하고, 없으면 hero 카드 없이 렌더링한다.
-- build는 수동 작성이 아니라 `python3 scripts/build_report.py <slug>`로 수행한다.
-- build는 `python3 scripts/validate_report_contract.py <slug> --require-html --require-price-chart`로 pass review, 4-way review metadata, frontmatter 정합성, ticker·기간 일치, 필수 섹션, References, selected image(있을 때), yfinance price chart를 검증한다.
-- 가격 차트는 요청 기간 전체의 실제 yfinance 일봉으로 만들고, 366일 이내·`YYYY-MM-DD` 오름차순 라벨·`ariaLabel`을 만족해야 한다.
-- 최종 HTML 본문에는 `[S1]`, `[N1]` 같은 인라인 참조 표식을 노출하지 말고 References만 남긴다.
-- 최종 HTML에는 투자 유의 문구를 하단 footer note로 포함하고, build 단계에서 새 주장을 추가하지 않는다.
+이 저장소는 AI 기업 9-factor 채점표를 재현 가능하게 계산하는 하네스이다.
+원자료와 판단을 입력으로 받아 `plan → research → calculate → draft → review → 승인 → build` 계약으로 처리하며, 점수는 규칙과 입력에서 프로그램이 산출한다.
+승인은 사용자가 직접 하고, 승인 해시가 현재 입력과 다르면 build 는 멈춘다.
 
 ## AI Scorecard 계약 (report_type: ai_scorecard)
 - 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md`.
-- 판별: `plan/<slug>.md` frontmatter `report_type: ai_scorecard`, slug 는 `ai-scorecard-` 접두. 없으면 기존 stock_report 계약을 그대로 적용한다.
+- 판별: `plan/<slug>.md` frontmatter `report_type: ai_scorecard`, slug 는 `ai-scorecard-` 접두.
 - 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal`. 실행기는 `python scripts/scorecard_cli.py <stage> <slug>`, 빌드는 `python scripts/build_report.py <slug>`.
 - 단일 진실은 `scorecard/`(rules, companies, baseline, runs/<slug>, history.csv)에 두고 추적한다. plan/research/drafts/reviews/output 은 생성물이며 손으로 고치지 않는다.
 - 원자료·판단·규칙이 입력이고 점수는 결과다. 자동 산출 점수를 직접 수정하지 않는다. 모르는 값은 0으로 치환하지 않는다(unknown ≠ 0).
@@ -74,19 +20,11 @@
 - 상장사 ⑥은 v1.7 `parameters` 모드가 정본이다 — P1 TTM PER · P2 (시총−순현금)/매출 · P3 매출 성장 · P4 입력 신뢰도 보정. `bands` 모드(v1.5·v1.6, NTM PER 단일 구간표)는 구버전이며 실행 단위로만 선택한다. ⑨ G4 는 `coverage_comparable: yes` 일 때만 계산한다.
   <!-- 2026-09-14 전: "새 실행에서 상장사 ⑥은 NTM PER(4개 연속 미발표 분기 YYYYQn, 통화·주식 기준 일치)만 채점하고 근사치는 대기한다." — NTMPER-39 가 미발표 분기 컨센서스는 SEC 제출물에 구조적으로 없어 허용 원천으로 지킬 수 없는 계약임을 실증했고, 사용자가 parameters 를 정본으로 확정했다. -->
 - 테스트: `python -X utf8 -m unittest discover -s tests -t .`(T-01~T-12, R01~R06). 코드 변경 후 반드시 실행한다.
-- 구현은 scorecard 작업 브랜치에서 진행 중이며 `scorecard/`·`scripts/scorecard_cli.py`·`docs/scorecard/`는 그 브랜치가 머지될 때 들어온다. 이 절은 그때까지 계약 선언으로만 유효하다.
 
 ## 금지·주의
-- plan 없이 research/draft/build 산출물을 만들지 않는다.
-- research 없이 draft를 만들지 않고, review 없이 build하지 않는다.
 - 임의 가격 데이터, 샘플링 차트, 조작한 기사 URL을 넣지 않는다.
 - `browser-use`와 직접 LLM API 키 호출은 사용하지 않는다.
 - 가격 데이터는 `yfinance`를 사용하고, 웹 리서치는 검증 가능한 출처나 Playwright MCP를 우선한다.
-- macOS/Linux는 `.sh`, Windows는 `.ps1` 스크립트를 우선 사용한다.
-
-## 주요 산출물과 참조 문서
-- 산출물: `plan/<slug>.md`, `research/<slug>.md`, `drafts/<slug>.md`, `reviews/<slug>.md`, `output/<slug>.html`, `output/assets/<slug>-selected-image.json`, `output/assets/<slug>-price-chart-v1.json`.
-- 참조: `docs/pedagogy.md`, `docs/visual-system.md`, `docs/finance-style-guide.md`, `docs/output-spec.md`, `docs/image-generation-spec.md`, `docs/templates/*.md`.
 
 ## Orca worktree 간 메시지와 작업 실행
 - 이 규칙은 프로젝트의 모든 worktree와 에이전트에 적용한다. 새 worktree 생성 또는 기존 worktree 작업 시작 시 이 절이 있는지 확인하고, 오래된 분기에서 누락됐으면 원본 저장소의 공통 규칙을 반영한다. 실행 중인 에이전트에는 갱신된 AGENTS.md를 읽도록 터미널로 안내한다.
