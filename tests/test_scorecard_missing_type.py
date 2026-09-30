@@ -18,7 +18,7 @@ from scorecard.schema import (  # noqa: E402
     validate_rules,
 )
 
-RUN = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-baseline"
+RUN = ROOT / "output" / "ai-scorecard-2026-09-baseline"
 
 
 def company_map() -> dict:

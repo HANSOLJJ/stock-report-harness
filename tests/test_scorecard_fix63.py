@@ -20,9 +20,9 @@ from scorecard.stages import load_baseline  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 SRC = ROOT / "scripts" / "scorecard"
-PLAN = ROOT / "plan" / f"{SLUG}.md"
+PLAN = ROOT / "output" / SLUG / "plan.md"
 
 
 def load(name: str) -> dict:
@@ -195,7 +195,7 @@ class Fix63Test(unittest.TestCase):
     # ---------------------------------------------------------------- S5 템플릿 재생성
     def test_review_template_is_regenerated_with_the_current_hashes(self):
         from scorecard.stages import current_hashes
-        review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
+        review = (ROOT / "output" / SLUG / "review.md").read_text(encoding="utf-8")
         h = current_hashes(SLUG)
         self.assertIn(f"results_hash: {h['results']}", review)
         # 2026-09-17 FIX-67: 초안이 바뀌어 리뷰의 draft_hash 가 낡았다. 갱신은 재검토 뒤에 한다.
@@ -206,7 +206,7 @@ class Fix63Test(unittest.TestCase):
 
     def test_q11_is_pass_by_the_reviewer_and_so_is_the_area_now(self):
         """리뷰어가 판정한 것만 옮긴다. 2026-09-17 FIX-64: 영역도 리뷰어가 pass 로 바꿔 왔다."""
-        review = (ROOT / "reviews" / f"{SLUG}.md").read_text(encoding="utf-8")
+        review = (ROOT / "output" / SLUG / "review.md").read_text(encoding="utf-8")
         q11 = next(x for x in review.splitlines() if x.startswith("| Q11 "))
         self.assertIn("| pass |", q11)
         self.assertIn("9차 재무 계산 최종 판정", q11)                   # 출처를 밝힌다

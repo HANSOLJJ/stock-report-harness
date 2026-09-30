@@ -18,7 +18,7 @@ from scorecard.rules import load_rules  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 PRIV = ("fcf_ttm", "cash", "net_cash", "debt_ebitda", "operating_margin_ttm")
 
 

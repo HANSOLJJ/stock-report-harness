@@ -23,7 +23,7 @@ from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import decision_choice, load_rules  # noqa: E402
 
 RULES = load_rules("v1.7")
-RUN_DIR = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-obsreg"
+RUN_DIR = ROOT / "output" / "ai-scorecard-2026-09-obsreg"
 
 
 def company(listed=True):

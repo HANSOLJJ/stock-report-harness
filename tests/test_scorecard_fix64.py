@@ -21,10 +21,10 @@ from scorecard.stages import current_hashes  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
-RUN_DIR = ROOT / "scorecard" / "runs" / SLUG
+RUN_DIR = ROOT / "output" / SLUG
 SRC = ROOT / "scripts" / "scorecard"
-REVIEW = ROOT / "reviews" / f"{SLUG}.md"
-HTML = ROOT / "output" / f"{SLUG}.html"
+REVIEW = ROOT / "output" / SLUG / "review.md"
+HTML = ROOT / "output" / SLUG / "report.html"
 HISTORY = ROOT / "scorecard" / "history.csv"
 
 TOTALS = {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10, "anthropic": 10,

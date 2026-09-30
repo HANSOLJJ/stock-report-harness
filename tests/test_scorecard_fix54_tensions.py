@@ -14,7 +14,7 @@ from scorecard.rules import load_rules  # noqa: E402
 from scorecard.schema import SchemaError, validate_rules  # noqa: E402
 
 RULES = load_rules("v1.7")
-RUN_DIR = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-obsreg"
+RUN_DIR = ROOT / "output" / "ai-scorecard-2026-09-obsreg"
 
 
 def load(name: str) -> dict:

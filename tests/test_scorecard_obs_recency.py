@@ -83,7 +83,7 @@ class TestRecencyKeySeparated(unittest.TestCase):
 
     def test_approved_run_has_no_observed_at(self):
         """승인된 실행은 건드리지 않았다."""
-        items = load_json_strict(ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-baseline"
+        items = load_json_strict(ROOT / "output" / "ai-scorecard-2026-09-baseline"
                                  / "observations.json")["items"]
         self.assertFalse(any("observed_at" in o for o in items))
 

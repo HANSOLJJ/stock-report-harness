@@ -16,7 +16,7 @@ from scorecard.rules import load_rules  # noqa: E402
 from scorecard.schema import SchemaError, validate_rules  # noqa: E402
 
 RULES = load_rules("v1.7")
-RUN_DIR = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-obsreg"
+RUN_DIR = ROOT / "output" / "ai-scorecard-2026-09-obsreg"
 
 
 def company(cid: str = "acme") -> dict:
@@ -317,7 +317,7 @@ class TestRunIsComplete(unittest.TestCase):
 
     def test_approved_run_untouched(self):
         """승인 실행은 건드리지 않았다."""
-        base = ROOT / "scorecard" / "runs" / "ai-scorecard-2026-09-baseline"
+        base = ROOT / "output" / "ai-scorecard-2026-09-baseline"
         approved = json.loads((base / "approval.json").read_text(encoding="utf-8"))["hashes"]
         from scorecard.stages import current_hashes
         self.assertEqual(current_hashes("ai-scorecard-2026-09-baseline"), approved)

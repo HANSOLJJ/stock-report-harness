@@ -138,11 +138,14 @@ class ProjectionInvarianceTest(unittest.TestCase):
 class ApprovalHashTest(unittest.TestCase):
     """승인된 실행의 입력이 그대로인지 본다."""
 
-    def test_prior_approval_matches_except_the_draft(self):
-        """초안(`drafts/`)은 git 이 추적하지 않으므로 검사하지 않는다. 나머지 다섯은 승인 시점 그대로여야 한다."""
+    def test_prior_approval_matches_all_six_hashes(self):
+        """여섯 해시 모두 승인 시점 그대로여야 한다.
+
+        2026-09-30 레인 A: 초안이 실행 묶음(output/<slug>/draft.md)으로 추적되기 시작해 draft 도 함께 본다.
+        """
         approval = load_json_strict(engine.run_dir(SLUG) / "approval.json")
         current = current_hashes(SLUG)
-        for key in ("rules", "observations", "judgments", "run", "results"):
+        for key in ("rules", "observations", "judgments", "run", "results", "draft"):
             with self.subTest(key=key):
                 self.assertEqual(approval["hashes"][key], current[key])
         self.assertEqual(current["results"], "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b")
