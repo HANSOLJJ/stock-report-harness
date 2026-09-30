@@ -16,7 +16,8 @@
 - [x] 레인 C (Sonnet) 디스패치 완료 → 검증 → 병합 → 조율자가 output-spec 문서 삭제. task `task_ece7f8798677`, dispatch `ctx_e00fb51c41a0`, 워크트리 `…/lane-C`, 터미널 `term_fd89feaf-abfe-4e5a-8a0a-dcd173956894` (첫 시도는 조율자 훅이 spec 안의 보호 경로 문구와 꺾쇠를 차단해 재시도)
 - [x] 레인 D (Antigravity) 디스패치 완료 → 검증 → 병합. task `task_d12890631f47`, dispatch `ctx_f43a7972fc93`, 워크트리 `…/lane-D`, 터미널 `term_76969e8e-cff7-4d73-8d1c-4f2c82998c81`
 - [x] 통합 브랜치 재현(S·C·D·B 병합 뒤): unittest 859건, 실패·오류 집합 기준선과 동일. node 9건 통과. npm run check 통과
-- [ ] 레인 A (Opus) 디스패치 완료 → 검증(해시 보존은 조율자 직접) → 병합. task `task_fd767d2777a0`, dispatch `ctx_9dfd3e4490c9`, 워크트리 `…/lane-A`, 터미널 `term_92109605-09f8-401a-b004-8fab6fcc3879`. 완료 조건 정정 메시지 `msg_2161aab10d56`(baseline recompute 는 기존 불일치)
+- [x] 레인 A 조율자 재현(병합 뒤 checkout 파일): 원본 폴더 대비 12개 파일 sha256 일치, 두 실행 `approval_valid: true`, recompute obsreg True·baseline 기존 False 유지, unittest 974건 중 실패 1·오류 14(전부 `validation/f6-avail-15/_raw` 등 원자료 부재, 원본 폴더에는 있음), node 9 통과
+- [x] 레인 A (Opus) 디스패치 완료 → 검증(해시 보존은 조율자 직접) → 병합. task `task_fd767d2777a0`, dispatch `ctx_9dfd3e4490c9`, 워크트리 `…/lane-A`, 터미널 `term_92109605-09f8-401a-b004-8fab6fcc3879`. 완료 조건 정정 메시지 `msg_2161aab10d56`(baseline recompute 는 기존 불일치)
 
 ## 후속 과제에 넣을 발견 사항 (레인 검증 중)
 - [ ] 3.4: `collect_prices` 의 vendor market_cap·shares_outstanding 은 조회 시점 값인데 종가 날짜(as_of)로 기록된다. 과거 기준일이면 dated 발행주식수로 price×shares 를 쓰거나 조회일=기준일일 때만 vendor 값 사용. ADR(TSM·BABA) 시총 기준 확인. 미사용 인자 `price_as_of` 정리
@@ -31,14 +32,14 @@
 ## 1단계 정리·재활용
 - [x] 1.1 stock-research 문구 → score-collect 초안, content-editor → evidence-editor (레인 S)
 - [x] 1.2 종목 파일 git rm (훅 파일 제외) (레인 S)
-- [ ] 1.3 build_report·validate_report_contract·report_contract_lib 축소 (레인 A)
+- [x] 1.3 build_report·validate_report_contract·report_contract_lib 축소 (레인 A)
 - [x] 1.4 AGENTS·README·memory-system 종목 서술 제거 (레인 S)
 
 ## 2단계 묶음 배치 (레인 A)
-- [ ] 2.1 scripts/scorecard/paths.py, engine/stages/render/validate 경로 통일
-- [ ] 2.2 기존 실행 2개 output/<id>/ 이동 + .gitattributes 동시 갱신 → status approval_valid true 확인
-- [ ] 2.3 테스트 49개 경로, server.js 경로 함수, 훅 매핑
-- [ ] 2.4 sync_outputs.py 제거
+- [x] 2.1 scripts/scorecard/paths.py, engine/stages/render/validate 경로 통일
+- [x] 2.2 기존 실행 2개 output/<id>/ 이동 + .gitattributes 동시 갱신 → status approval_valid true 확인
+- [x] 2.3 테스트 49개 경로, server.js 경로 함수, 훅 매핑
+- [x] 2.4 sync_outputs.py 제거
 
 ## 3단계 근거 계층
 - [ ] 3.1 schema: validate_sources/evidence/triggers/cross_refs, companies cik·news_queries (후속 Opus)
