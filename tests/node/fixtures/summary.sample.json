@@ -1,0 +1,111 @@
+{
+  "run_id": "ai-scorecard-2026-11-x",
+  "as_of": "2026-11-02",
+  "rule_version": "v1.8",
+  "companies": [
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "baseline": {
+        "total": 9,
+        "rank": 8
+      },
+      "current": {
+        "total": 10,
+        "rank": 6
+      },
+      "changed_factors": [
+        {
+          "factor": "F2",
+          "from": 4,
+          "to": 5
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F3"
+      ],
+      "pending": [
+        "F6: pending_rule_decision"
+      ]
+    }
+  ],
+  "review": {
+    "status": "pass",
+    "areas": [
+      {
+        "area": "fact-sources",
+        "reviewer": "Reviewer A",
+        "result": "pass"
+      },
+      {
+        "area": "financial-calc",
+        "reviewer": "Reviewer B",
+        "result": "pass"
+      },
+      {
+        "area": "rule-consistency",
+        "reviewer": "Reviewer C",
+        "result": "pass"
+      },
+      {
+        "area": "presentation",
+        "reviewer": "Reviewer D",
+        "result": "pass"
+      }
+    ],
+    "checklist_fail": 0
+  },
+  "evidence": {
+    "candidates": 40,
+    "selected": 12,
+    "confirmed": 0,
+    "items": [
+      {
+        "evidence_id": "EV-nvidia-001",
+        "company_id": "nvidia",
+        "factors": [
+          "F2"
+        ],
+        "kind": "news",
+        "title": "NVIDIA Blackwell 수요 급증 및 생산 확대 발표",
+        "url": "https://example.com/news/nvidia-blackwell",
+        "published_at_utc": "2026-10-30T12:00:00Z",
+        "excerpt": "NVIDIA는 주요 클라우드 사업자들의 수요 확대에 대응하여 칩 출하를 증대한다고 발표했다.",
+        "status": "candidate"
+      }
+    ]
+  },
+  "triggers": [
+    {
+      "trigger_id": "TRG-001",
+      "company_id": "nvidia",
+      "factors": [
+        "F2"
+      ],
+      "condition": "분기 매출액 400억 달러 초과 달성 여부 확인",
+      "deadline": "2027-02-01",
+      "status": "watching"
+    }
+  ],
+  "pending_rule_decisions": [
+    "C-03"
+  ],
+  "hashes": {
+    "rules": "345c3353372d0f95d98eef5ed918c31e7a3f7878185a24f1e4edfa9870d58d21",
+    "observations": "02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05",
+    "judgments": "2403fb3748edd85310c299ef3022ae756a6a25f2f5664db1f05ab767ebf325d6",
+    "run": "71a83f40e92ea8969da919e9a07ff9561cd60b72e6b934a1d2678367922129be",
+    "results": "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b",
+    "draft": "94215e94def972072ea280547adfcb3acbf11241fcfb2d2a1e1e69c64ad64dfb",
+    "sources": "8a7c2b3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b",
+    "evidence": "1f2e3d4c5b6a7089123456789abcdef0123456789abcdef0123456789abcdef0",
+    "triggers": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+  },
+  "approval": {
+    "exists": false,
+    "valid": false,
+    "approved_by": null,
+    "approved_at": null
+  }
+}

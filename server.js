@@ -3,10 +3,23 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const { createApprovals } = require('./server/approvals');
 
 const PORT = Number(process.env.PORT) || 3000;
 const ROOT = path.resolve(__dirname, 'output');
-const REQUESTED_REPORT = process.argv[2] || process.env.REPORT_SLUG || process.env.REPORT;
+const isApprovals = process.argv.slice(2).includes('--approvals');
+const nonFlagArgs = process.argv.slice(2).filter((arg) => !arg.startsWith('--'));
+const REQUESTED_REPORT = nonFlagArgs[0] || process.env.REPORT_SLUG || process.env.REPORT;
+const approvalCode = isApprovals ? String(crypto.randomInt(0, 1e6)).padStart(6, '0') : null;
+const approvals = createApprovals({
+  enabled: isApprovals,
+  code: approvalCode,
+  onApproved: () => {
+    console.log('Approval confirmed. Shutting down server...');
+    server.close();
+  },
+});
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -137,6 +150,7 @@ function printReportLinks() {
 }
 
 const server = http.createServer((req, res) => {
+  if (approvals && approvals.handle(req, res)) return;
   if (!['GET', 'HEAD'].includes(req.method)) {
     return send(res, 405, 'Method Not Allowed', { Allow: 'GET, HEAD' });
   }
@@ -198,4 +212,11 @@ server.on('error', (error) => {
   throw error;
 });
 
-server.listen(PORT, printReportLinks);
+if (isApprovals) {
+  server.listen(PORT, '127.0.0.1', () => {
+    console.log(`[승인 모드] 일회용 코드: ${approvalCode}`);
+    console.log(`승인 페이지: http://127.0.0.1:${server.address().port}/approve/<run_id>`);
+  });
+} else {
+  server.listen(PORT, printReportLinks);
+}

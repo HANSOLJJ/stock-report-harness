@@ -24,4 +24,9 @@
 - **`docs/output-spec.md` 삭제는 조율자가 레인 C 병합 뒤 직접.** 현재 protect-sensitive-files 훅이 그 경로를 보호해 워커의 `git rm` 이 막힌다. 훅이 guard.py 로 바뀌고 보호 목록에서 빠진 뒤 지운다.
 - **approval.json·이동 실행 폴더·규칙 파일 보호는 4.2(A 병합 뒤)로 미룸.** 레인 C 가 지금 넣으면, C 가 먼저 병합될 경우 레인 A 의 `git mv scorecard/runs/… output/…` 와 draft 복사가 새 훅에 막힌다. remind-review 경고화와 output-spec 보호 해제는 사양이 고정돼 C 에 포함.
 - **SEC 픽스처는 `SEC_UA` 가 있을 때만 실조회.** SEC 는 이름·연락처가 든 User-Agent 를 요구하고 그 값은 사용자가 준다(저장소에 넣지 않음). 없으면 문서 형식대로 합성 픽스처를 만들고 README 에 합성이라 적는다. 구글 RSS·yfinance 는 1회 실조회로 픽스처를 만든다.
+- **워커는 통합 브랜치 merge 를 못 한다.** S·C 모두 `git merge HANSOLJJ/revision_checker` 가 권한 분류기에 거부됐다. 워커 브랜치가 통합 브랜치 뒤에 있어도 조율자가 `--no-ff` 로 병합하고 병합 뒤 전체 테스트를 다시 돈다. 레인 A 지시에도 "거부되면 우회하지 말고 보고" 를 넣었다.
+- **레인 D 의 `.agents/plans/lane-D/` 3개는 병합에서 뺐다.** 글로벌 규칙 7 에 따라 워커가 자기 계획 파일을 만들었지만 소유 밖이고 통합 계획과 겹친다. 브랜치에는 남아 있다.
+- **baseline recompute 불일치는 기존 상태로 판정.** 원본 폴더에서도 저장 results_hash 0942c342… 와 재계산 200d7b01… 가 다르다. 총점·입력 해시는 같고 F9 calc 경로 기록만 다르다. 승인 뒤 엔진이 바뀐 결과라 이번 과제에서 고치지 않고, 레인 A 의 완료 조건을 "이동 전후 같은 값" 으로 바꿨다. approval_valid 는 저장 파일 바이트 기준이라 여전히 필수.
+- **가격 수집기의 시점 결함은 병합을 막지 않았다.** vendor market_cap 이 조회 시점 값인데 종가 날짜로 기록되는 문제는 아직 이 값을 읽는 코드가 없어서 3.4 에서 고친다.
+- **레인 B 가 공유 stash 스택을 썼다.** `git stash -u` 를 한 번 쓰고 즉시 pop 했다고 보고했고, 조율자가 `git stash list` 가 비어 있음을 확인했다.
 - **레인 A 는 draft 줄끝을 먼저 판정.** obsreg draft 가 renderer 산출물이라 LF 로 알려져 있지만 확인하지 않았다. approval.json 의 draft 해시와 바이트를 대조해 `.gitattributes` 예외를 정한다. baseline 은 CRLF 예외 유지.
