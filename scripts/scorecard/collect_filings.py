@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import json
-import os
 import time
 from pathlib import Path
 from typing import Any, Callable
@@ -24,9 +23,9 @@ ARCHIVE_BASE = "https://www.sec.gov/Archives/edgar/data/{cik}/{accession_nodash}
 
 
 def require_user_agent() -> str:
-    sec_ua = os.environ.get("SEC_UA", "").strip()
+    sec_ua = evidence_lib.sec_user_agent()
     if not sec_ua:
-        raise RuntimeError("SEC_UA 환경변수가 필요하다 — 이름과 연락처를 담은 값을 설정한다")
+        raise RuntimeError("SEC_UA 가 필요하다 — 저장소 루트 .env 에 `SEC_UA=이름 이메일` 을 적거나 환경변수로 설정한다")
     return sec_ua
 
 

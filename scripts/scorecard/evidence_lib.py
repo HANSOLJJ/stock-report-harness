@@ -20,9 +20,44 @@ GOOGLE_MAX_FETCH_PER_QUERY_PER_DAY = 4
 SEC_SLEEP_S = 1.0
 
 
+def _dotenv_path() -> Path | None:
+    """로컬 설정 파일 경로. SCORECARD_DOTENV 가 있으면 그 값(빈 문자열이면 읽지 않음), 없으면 저장소 루트 .env."""
+    override = os.environ.get("SCORECARD_DOTENV")
+    if override is not None:
+        return Path(override) if override.strip() else None
+    return ROOT / ".env"
+
+
+def read_local_setting(key: str) -> str:
+    """개인 설정값. 환경변수가 먼저이고, 없으면 gitignore 된 .env 의 `KEY=VALUE` 줄을 읽는다. 없으면 빈 문자열.
+
+    2026-09-30: SEC_UA 처럼 개인 연락처가 든 값은 저장소에 넣지 않는다. 사용자가 환경변수 대신
+    gitignore 된 파일에 두기를 원해서 .env 를 읽는다(보호 훅이 에이전트의 .env 쓰기를 막는다).
+    """
+    value = os.environ.get(key, "").strip()
+    if value:
+        return value
+    path = _dotenv_path()
+    if path is None or not path.is_file():
+        return ""
+    for line in path.read_text(encoding="utf-8-sig").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        name, raw = line.split("=", 1)
+        if name.strip() == key:
+            return raw.strip().strip('"').strip("'").strip()
+    return ""
+
+
+def sec_user_agent() -> str:
+    """SEC 가 요구하는 식별 문자열(이름과 연락처). 없으면 빈 문자열."""
+    return read_local_setting("SEC_UA")
+
+
 def user_agent_for(kind: str) -> str:
     """SEC 조회는 SEC_UA 값을 그대로, 그 밖은 식별 UA를 돌려준다."""
-    sec_ua = os.environ.get("SEC_UA", "").strip()
+    sec_ua = sec_user_agent()
     if kind == "sec":
         return sec_ua
     contact = sec_ua if sec_ua else "contact unset"

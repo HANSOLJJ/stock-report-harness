@@ -23,7 +23,7 @@ collect → 후보 선별(evidence.json) → triggers.json → research
    - `--since`: 후보 창 시작일. 기본은 기준일(`as_of`)에서 180일 전이다.
    - `--from-file`: 네트워크 대신 파일을 읽는다. `--kind` 하나와 함께 쓴다.
    - `--dry-run`: 무엇을 가져올지만 확인한다.
-   - 공시 수집(`--kind filings`)에는 환경변수 `SEC_UA`(이름과 연락처를 담은 식별 문자열)가 필요하다. 비어 있으면 그 기업의 공시는 건너뛰고 나머지는 계속 돈다. 값을 저장소나 문서에 적지 않는다.
+   - 공시 수집(`--kind filings`)에는 `SEC_UA`(이름과 연락처를 담은 식별 문자열)가 필요하다. 사용자가 루트 `.env` 에 적거나 환경변수로 둔다. 에이전트는 `.env` 를 만들거나 고치지 않는다. 비어 있으면 그 기업의 공시는 건너뛰고 나머지는 계속 돈다. 값을 저장소나 문서에 적지 않는다.
    - `--kind prices` 는 yfinance 로 ⑥ `price`·`market_cap` 관측을 `observations.json` 에 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다.
 3. `candidates.json` 을 읽고 factor 와 관련 있는 후보만 `evidence/evidence.json` 에 `status: candidate` 로 선별한다.
    - 필수 필드: `evidence_id`(`EV-<company_id>-NNN`), `company_id`, `factors`, `kind`(news|filing), `source_id`(sources.json 에 등록된 것), `published_at_utc`, `title`, `excerpt`, `relevance`, `channel`(disclosure|press|company_statement|secondary), `conditional_impact`, `horizon`, `counter_evidence`, `unverified`, `change_vs_previous`.

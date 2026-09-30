@@ -136,7 +136,7 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)는 다르다. 근거를 확정하면 판단·결과·초안 해시가 바뀌어 리뷰가 무효가 되므로 `calculate`·`draft`·`review` 를 다시 돌린다.
 
-가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다. 공시 수집에는 환경변수 `SEC_UA` 가 필요하다.
+가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 의 `SEC_UA=이름 이메일`, 또는 같은 이름의 환경변수).
 
 ### 승인 (사람 행위)
 

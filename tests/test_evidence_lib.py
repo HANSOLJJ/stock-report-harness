@@ -155,6 +155,42 @@ class UserAgentTest(unittest.TestCase):
             self.assertIn("contact unset", user_agent_for("news"))
 
 
+class LocalSettingTest(unittest.TestCase):
+    """2026-09-30: SEC_UA 는 환경변수가 먼저이고, 없으면 gitignore 된 .env 에서 읽는다."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.dotenv = Path(self.tmp.name) / "local.env"
+        self.dotenv.write_text("# 개인 설정\nOTHER=x\nSEC_UA = \"Name file@example.com\"\n", encoding="utf-8")
+
+    def test_reads_dotenv_when_env_missing(self):
+        with mock.patch.dict(os.environ, {"SCORECARD_DOTENV": str(self.dotenv)}):
+            os.environ.pop("SEC_UA", None)
+            self.assertEqual(evidence_lib.sec_user_agent(), "Name file@example.com")
+            self.assertEqual(user_agent_for("sec"), "Name file@example.com")
+
+    def test_env_wins_over_dotenv(self):
+        with mock.patch.dict(os.environ, {"SCORECARD_DOTENV": str(self.dotenv), "SEC_UA": "Env env@example.com"}):
+            self.assertEqual(evidence_lib.sec_user_agent(), "Env env@example.com")
+
+    def test_disabled_or_missing_file_is_empty(self):
+        for path in ("", str(Path(self.tmp.name) / "none.env")):
+            with self.subTest(path=path), mock.patch.dict(os.environ, {"SCORECARD_DOTENV": path}):
+                os.environ.pop("SEC_UA", None)
+                self.assertEqual(evidence_lib.sec_user_agent(), "")
+
+    def test_tests_do_not_read_the_real_dotenv(self):
+        # tests/__init__.py 가 끈다. 사용자가 실제 .env 를 만들어도 SEC_UA 없는 경로의 테스트가 흔들리지 않는다.
+        self.assertEqual(os.environ.get("SCORECARD_DOTENV"), "")
+
+    def test_filings_uses_the_same_reader(self):
+        from scorecard.collect_filings import require_user_agent
+        with mock.patch.dict(os.environ, {"SCORECARD_DOTENV": str(self.dotenv)}):
+            os.environ.pop("SEC_UA", None)
+            self.assertEqual(require_user_agent(), "Name file@example.com")
+
+
 class ImportPinTest(unittest.TestCase):
     def test_urllib_importers_are_pinned(self):
         """네트워크 지점(urllib.request)은 evidence_lib 하나다. urllib.parse는

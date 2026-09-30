@@ -59,7 +59,7 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣습니다. EPS 와 컨센서스는 받지 않습니다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 씁니다. 받아 온 원문은 `data/<company_id>/` 에 캐시되고(gitignore), `SCORECARD_DATA_ROOT` 환경변수로 위치를 바꿀 수 있습니다.
 
-공시 수집(`--kind filings`)에는 환경변수 `SEC_UA` 가 필요합니다. SEC 가 요구하는 식별 문자열(이름과 연락처)을 각자 설정하고, 값은 저장소에 넣지 않습니다.
+공시 수집(`--kind filings`)에는 `SEC_UA`(SEC 가 요구하는 식별 문자열, 이름과 연락처)가 필요합니다. 저장소 루트의 `.env` 파일에 `SEC_UA=이름 이메일` 한 줄을 적습니다. `.env` 는 gitignore 되어 커밋되지 않고, 보호 훅이 에이전트의 쓰기를 막습니다. 같은 이름의 환경변수가 있으면 그것이 먼저입니다.
 
 ### 승인 페이지
 
@@ -159,4 +159,4 @@ node server.js --approvals                                          # 승인 페
 
 - 포트 3000 이 쓰이고 있으면 기존 프로세스를 끄지 말고 `PORT=<빈 포트>` 로 띄웁니다.
 - Python 3.12+ 와 uv, `pyproject.toml` 의 PyYAML·yfinance, Node.js 18+, Claude CLI
-- 환경변수 `SEC_UA`(공시 수집용, 값은 각자 설정), `SCORECARD_DATA_ROOT`(수집 캐시 위치, 기본 `data/`)
+- `SEC_UA`(공시 수집용, 루트 `.env` 또는 환경변수), `SCORECARD_DATA_ROOT`(수집 캐시 위치, 기본 `data/`), `SCORECARD_DOTENV`(`.env` 대신 읽을 파일, 빈 값이면 읽지 않음. 테스트가 쓴다)

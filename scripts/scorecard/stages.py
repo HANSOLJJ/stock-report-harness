@@ -433,7 +433,7 @@ def collect(
             summary["news"].append({"company_id": cid, "status": status, "urls": res["urls"]})
         except Exception as exc:  # noqa: BLE001
             summary["news"].append({"company_id": cid, "status": "failed", "error": str(exc)})
-    sec_ua = os.environ.get("SEC_UA", "").strip()
+    sec_ua = evidence_lib.sec_user_agent()
     for cid in selected if "filings" in kinds else []:
         company = registry[cid]
         if not company.get("cik"):

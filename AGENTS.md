@@ -13,7 +13,7 @@
 - 실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모인다. 파일은 `run.json observations.json judgments.json sources.json results.json approval.json plan.md research.md draft.md preview.md review.md review-parts/ evidence/{candidates.json,evidence.json} triggers.json report.html audit.md revocations.jsonl .lock` 이고, 경로 도우미는 `scripts/scorecard/paths.py` 이다. 수집한 원문 캐시는 `data/<company_id>/`(gitignore, `SCORECARD_DATA_ROOT` 로 바꿈)에 둔다.
 - 공유 정의(rules, companies, baseline)와 `history.csv` 는 `scorecard/` 에 두고 추적한다. 실행 묶음의 md·html 은 생성물이며 손으로 고치지 않는다.
 - 근거는 후보(`candidate`)로 들어오고 사람이 승인 페이지에서 확정(`confirmed`)한다. `status: new` 판단은 confirmed 근거만 인용한다. 트리거는 미래 점수를 저장하지 않는다(C-14). `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)를 섞지 않는다.
-- 수집: `collect` 가 뉴스·공시·가격 후보를 모은다. 공시 수집에는 환경변수 `SEC_UA` 가 필요하다. 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣고 EPS·컨센서스는 받지 않는다.
+- 수집: `collect` 가 뉴스·공시·가격 후보를 모은다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 또는 환경변수, 사용자가 설정한다). 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣고 EPS·컨센서스는 받지 않는다.
 - 원자료·판단·규칙이 입력이고 점수는 결과다. 자동 산출 점수를 직접 수정하지 않는다. 모르는 값은 0으로 치환하지 않는다(unknown ≠ 0).
 - 정성 판정(③ criteria, ⑤ A/H, ⑦ 매트릭스, ⑨ gate_inputs, ①④⑧ score)은 근거·검토자·검토일이 있어야 하고, 산식·사다리·구간 적용은 프로그램이 한다.
 - 미결 규칙 결정(C-03, C-05, C-06, C-13, C-16)은 `run.json.decisions` 로만 실행 단위에서 선택한다. 기본값을 조용히 채택하지 않으며 해당 기업은 순위에서 제외된다.
