@@ -141,7 +141,7 @@ class FetchQuoteTest(unittest.TestCase):
 
 class ImportPinTest(unittest.TestCase):
     def test_yfinance_import_only_inside_fetch_quote(self):
-        """yfinance import는 collect_prices.fetch_quote 함수 안 하나다(기존 build_report.py 제외)."""
+        """yfinance import는 collect_prices.fetch_quote 함수 안 하나다."""
         tree = ast.parse((ROOT / "scripts" / "scorecard" / "collect_prices.py").read_text(
             encoding="utf-8"))
         hits = [(node.lineno, stack) for node, stack in _walk(tree) if _is_yf_import(node)]
@@ -155,7 +155,8 @@ class ImportPinTest(unittest.TestCase):
             for line in path.read_text(encoding="utf-8").splitlines():
                 if re.match(r"\s*(import yfinance|from yfinance)\b", line):
                     found.add(path.relative_to(ROOT).as_posix())
-        self.assertEqual(found, {"scripts/build_report.py", "scripts/scorecard/collect_prices.py"})
+        # 2026-09-30 레인 A: build_report.py 의 종목 차트 yfinance 코드를 지워 scripts/ 전체에서 호출 지점은 하나다.
+        self.assertEqual(found, {"scripts/scorecard/collect_prices.py"})
 
 
 def _walk(tree: ast.AST) -> list[tuple[ast.AST, tuple[str, ...]]]:
