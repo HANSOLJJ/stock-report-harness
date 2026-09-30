@@ -20,9 +20,13 @@ from .schema import (
     sha256_file,
     sha256_obj,
     validate_companies,
+    validate_cross_refs,
+    validate_evidence,
     validate_judgments,
     validate_observations,
     validate_run,
+    validate_sources,
+    validate_triggers,
     write_json,
 )
 
@@ -47,6 +51,9 @@ class RunContext:
     judgments: list[dict[str, Any]]
     sources: dict[str, Any]
     hashes: dict[str, str]
+    # 2026-09-30 레인 E: 파일이 없으면 None. 없는 것을 빈 목록으로 바꾸지 않는다(선별 전과 선별 결과 0건은 다르다).
+    evidence: list[dict[str, Any]] | None = None
+    triggers: list[dict[str, Any]] | None = None
 
     @property
     def dir(self) -> Path:
@@ -83,10 +90,22 @@ def load_context(slug: str) -> RunContext:
     observations = validate_observations(load_json_strict(d / "observations.json"), companies, slug,
                                          missing_policy=rules.payload["policies"].get("missing_types"))
     judgments = validate_judgments(load_json_strict(d / "judgments.json"), companies, rules.payload, slug)
-    sources = load_json_strict(d / "sources.json") if (d / "sources.json").is_file() else {"schema": "scorecard.sources/1", "items": []}
+    sources = load_json_strict(d / "sources.json") if (d / "sources.json").is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
+    # 2026-09-30 레인 E: 출처는 항상, 근거·트리거는 파일이 있을 때만 검증하고 셋을 교차 대조한다.
+    source_items = validate_sources(sources, slug)
+    source_ids = {s["source_id"] for s in source_items}
+    from .paths import run_paths  # paths 가 engine 을 import 하므로 여기서 부른다
+
+    paths = run_paths(slug)
+    evidence = (validate_evidence(load_json_strict(paths.evidence), companies, source_ids, slug)
+                if paths.evidence.is_file() else None)
+    triggers = (validate_triggers(load_json_strict(paths.triggers), companies,
+                                  {e["evidence_id"] for e in evidence or []}, source_ids, slug)
+                if paths.triggers.is_file() else None)
+    validate_cross_refs(observations, judgments, evidence, source_items)
     hashes = input_hashes(slug)
     hashes["rules"] = rules.hash
-    return RunContext(slug, run, rules, companies, observations, judgments, sources, hashes)
+    return RunContext(slug, run, rules, companies, observations, judgments, sources, hashes, evidence, triggers)
 
 
 def compute_company(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, dict[str, Any]]:

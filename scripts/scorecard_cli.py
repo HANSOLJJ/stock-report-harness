@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / research / calculate / draft / review-template / diff / approve / status
+# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / research / calculate / draft / review-template / diff / approve / status / resolve-cik
 """Usage:
   python scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   python scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
@@ -12,6 +12,7 @@
   python scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
   python scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."]
   python scripts/scorecard_cli.py status <slug>
+  python scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply]
 
 build 는 기존 명령 `python scripts/build_report.py <slug>` 가 report_type 으로 분기한다.
 """
@@ -256,6 +257,41 @@ def cmd_diff(args: argparse.Namespace) -> int:
     return 0 if out["ok"] else 1
 
 
+def cmd_resolve_cik(args: argparse.Namespace) -> int:
+    """티커로 SEC CIK 를 찾아 표로 낸다. `--apply` 는 `resolved` 인 것만 레지스트리에 쓴다.
+
+    2026-09-30 레인 E. 조회는 `resolve_cik` 모듈이, 쓰기는 `registry.set_company_field` 가 한다.
+    """
+    from scorecard import engine
+    from scorecard.registry import set_company_field
+    from scorecard.resolve_cik import load_payload, load_ticker_map, resolve
+
+    companies = list(engine.load_companies().values())
+    if args.company:
+        companies = [c for c in companies if c["company_id"] == args.company]
+        if not companies:
+            raise SchemaError(f"알 수 없는 company_id: {args.company}")
+    try:
+        payload = load_payload(from_file=args.from_file)
+    except RuntimeError as exc:
+        raise SchemaError(str(exc)) from exc
+    rows = resolve(companies, load_ticker_map(payload))
+    current = {c["company_id"]: c.get("cik") for c in companies}
+    print("company_id\tticker\t현재 cik\t조회 cik\tstatus")
+    for row in rows:
+        print(f"{row['company_id']}\t{row['ticker']}\t{current[row['company_id']]}\t{row['cik']}\t{row['status']}")
+    if not args.apply:
+        return 0
+    written = 0
+    for row in rows:
+        if row["status"] == "resolved" and current[row["company_id"]] != row["cik"]:
+            out = set_company_field(row["company_id"], "cik", row["cik"], path=engine.COMPANIES_PATH)
+            print(f"apply: {out['company_id']} cik {out['old']} → {out['new']} ({rel(engine.COMPANIES_PATH)} {out['line_no']}행)")
+            written += 1
+    print(f"apply: {written}건 기록 (resolved 가 아닌 행은 쓰지 않는다)")
+    return 0
+
+
 def cmd_status(args: argparse.Namespace) -> int:
     from scorecard.stages import status
 
@@ -337,6 +373,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--by", required=True)
     p.add_argument("--note")
     p.set_defaults(func=cmd_approve)
+
+    p = sub.add_parser("resolve-cik", help="티커 → SEC CIK 확인. --apply 는 resolved 인 것만 companies.json 에 쓴다")
+    p.add_argument("--company")
+    p.add_argument("--from-file", help="SEC company_tickers.json 캐시나 픽스처")
+    p.add_argument("--apply", action="store_true")
+    p.set_defaults(func=cmd_resolve_cik)
 
     args = parser.parse_args(argv)
     try:

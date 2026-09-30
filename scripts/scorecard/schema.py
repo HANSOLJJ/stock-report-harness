@@ -1,4 +1,4 @@
-# scorecard 데이터 계약(companies·rules·observations·judgments·run·approval)의 엄격 파서와 정규 해시 유틸
+# scorecard 데이터 계약(companies·rules·observations·judgments·sources·evidence·triggers·run·approval)의 엄격 파서와 정규 해시 유틸
 from __future__ import annotations
 
 import hashlib
@@ -17,7 +17,10 @@ COMPANY_TYPES = {"소비자", "업무", "거래", "부품", "소비자·업무",
 # **같은 상수**를 본다 — 두 곳에 따로 적으면 한쪽만 고쳐져 조용히 갈린다.
 COMPANY_REQUIRED_KEYS = ["company_id", "display_name", "aliases", "type", "listed", "ticker",
                          "exchange", "share_basis", "adr_ratio", "reporting_currency", "scope"]
-COMPANY_OPTIONAL_KEYS = ["reference", "note", "status"]
+# 2026-09-30 레인 E: `cik`·`news_queries` 는 수집기만 읽는다. calc·aggregate 가 읽지 않으므로 results_hash 는 불변이다.
+COMPANY_OPTIONAL_KEYS = ["reference", "note", "status", "cik", "news_queries"]
+# `registry.set_company_field` 가 바꿀 수 있는 키. 나머지 키는 사람이 레지스트리를 직접 고친다.
+COMPANY_SETTABLE_KEYS = ("cik", "news_queries")
 SHARE_BASIS_VALUES = {"common", "adr", "ads", "private"}
 OBSERVATION_STATUSES = {
     "verified",
@@ -213,8 +216,21 @@ def validate_companies(payload: Any) -> dict[str, dict[str, Any]]:
         _require(item["adr_ratio"] is None or _is_number(item["adr_ratio"]), f"{where}: adr_ratio 숫자 또는 null")
         _require(isinstance(item["reporting_currency"], str), f"{where}: reporting_currency 필요")
         _require(isinstance(item.get("reference", False), bool), f"{where}: reference 는 bool")
+        _validate_company_collect_keys(item, where)
         out[cid] = item
     return out
+
+
+def _validate_company_collect_keys(item: dict[str, Any], where: str) -> None:
+    """수집기 전용 선택 키. `cik` 는 양의 정수 또는 null, `news_queries` 는 비어 있지 않은 문자열 배열."""
+    if "cik" in item:
+        cik = item["cik"]
+        _require(cik is None or (isinstance(cik, int) and not isinstance(cik, bool) and cik > 0),
+                 f"{where}: cik 는 양의 정수 또는 null ({cik!r})")
+    if "news_queries" in item:
+        queries = item["news_queries"]
+        _require(isinstance(queries, list) and queries and all(isinstance(q, str) and q.strip() for q in queries),
+                 f"{where}: news_queries 는 비어 있지 않은 문자열 배열 ({queries!r})")
 
 
 def resolve_company_id(name: str, companies: dict[str, dict[str, Any]]) -> str | None:
@@ -1040,8 +1056,13 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
             item,
             ["judgment_id", "company_id", "factor", "kind", "score", "inputs", "evidence", "reviewer", "reviewed_at", "status"],
             where,
-            optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id", "superseded"],
+            optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id", "superseded",
+                      "evidence_ids"],
         )
+        if "evidence_ids" in item:
+            # 2026-09-30 레인 E: 판단이 인용하는 근거(evidence.json). 실재·확정 여부는 validate_cross_refs 가 본다.
+            _require(isinstance(item["evidence_ids"], list) and all(isinstance(e, str) and e for e in item["evidence_ids"]),
+                     f"judgments[{idx}]: evidence_ids 는 문자열 배열")
         if "superseded" in item:
             # 2026-09-14 F5-IMPL-48: 기업·factor 당 판단이 하나라 옛 판단을 별도 항목으로 둘 수 없다.
             # 교체된 판단의 문언은 지우지 않고 새 판단 안에 그대로 싣는다.
@@ -1097,6 +1118,222 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
                          f"{where}: {item['company_id']} {factor} 매트릭스 출력 {key}={cell} 가 range [{lo}, {hi}] 밖")
         items.append(item)
     return items
+
+
+# ------------------------------------------------------------------ sources / evidence / triggers
+# 2026-09-30 레인 E. 근거 계층의 세 파일. 기존 두 실행의 sources.json 은 최상위 {schema, run_id, items} 와
+# 항목 8키만 쓴다 — 그 모양을 그대로 받고, 수집기가 붙이는 선택 키만 더 허용한다.
+
+SOURCE_REQUIRED_KEYS = ["source_id", "title", "publisher", "url", "accessed_at", "sha256", "conflict_of_interest", "note"]
+SOURCE_OPTIONAL_KEYS = ["kind", "company_id", "published_at_utc", "publisher_url", "raw_ref"]
+SOURCE_KINDS = {"news", "filing", "price"}
+ISO_UTC_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+EVIDENCE_KINDS = {"news", "filing"}
+EVIDENCE_CHANNELS = {"disclosure", "press", "company_statement", "secondary"}
+EVIDENCE_STATUSES = {"candidate", "confirmed"}
+EVIDENCE_CHANGES = {"new", "updated", "unchanged"}
+EXCERPT_MAX = 600
+TRIGGER_ID_RE = re.compile(r"^TRG-\d{3}$")
+TRIGGER_STATUSES = {"watching", "fired", "expired", "withdrawn"}
+# C-14: 트리거는 미래 점수를 저장하지 않는다(design-guideline 272행). 키 이름으로 점수처럼 보이는 필드를 막는다.
+SCORE_LIKE_KEY_RE = re.compile(r"score|점수|rating|points|delta|expected|target", re.I)
+# C-14: `conditional_impact` 에 점수 이동(-3→-4, +2점)을 적지 않는다. 사건의 조건부 영향은 말로 쓴다.
+SCORE_TEXT_RE = re.compile(r"[-+−]?\d+\s*(?:→|->)\s*[-+−]?\d+|[-+−]?\d+\s*점")
+
+
+def _expect_str(value: Any, where: str, *, allow_none: bool = False, nonempty: bool = False) -> None:
+    if value is None and allow_none:
+        return
+    _require(isinstance(value, str) and (not nonempty or bool(value.strip())), f"{where}: 문자열 필요 ({value!r})")
+
+
+def _expect_str_list(value: Any, where: str, *, nonempty: bool = False) -> None:
+    _require(isinstance(value, list) and all(isinstance(v, str) and v for v in value), f"{where}: 문자열 배열 필요")
+    _require(not nonempty or bool(value), f"{where}: 비어 있지 않아야 함")
+
+
+def _expect_factors(value: Any, where: str) -> None:
+    _expect_str_list(value, where, nonempty=True)
+    bad = [f for f in value if f not in FACTOR_IDS]
+    _require(not bad, f"{where}: 알 수 없는 factor {bad} (허용 {list(FACTOR_IDS)})")
+    _require(len(set(value)) == len(value), f"{where}: factor 중복")
+
+
+def _expect_iso_utc(value: Any, where: str) -> None:
+    if value is None:
+        return
+    _require(isinstance(value, str) and bool(ISO_UTC_RE.match(value)), f"{where}: YYYY-MM-DDTHH:MM:SSZ 또는 null ({value!r})")
+
+
+def _expect_top(payload: Any, schema: str, name: str, run_id: str | None) -> list[Any]:
+    _expect_keys(payload, ["schema", "run_id", "items"], name, optional=["note"])
+    _require(payload["schema"] == schema, f"{name}: schema 는 {schema!r} ({payload['schema']!r})")
+    if run_id is not None:
+        _require(payload["run_id"] == run_id, f"{name}: run_id 불일치 {payload['run_id']!r} != {run_id!r}")
+    _require(isinstance(payload["items"], list), f"{name}: items 배열 필요")
+    return payload["items"]
+
+
+def validate_sources(payload: Any, run_id: str | None = None) -> list[dict[str, Any]]:
+    items = _expect_top(payload, "scorecard.sources/1", "sources.json", run_id)
+    seen: set[str] = set()
+    for idx, item in enumerate(items):
+        where = f"sources[{idx}]"
+        _expect_keys(item, SOURCE_REQUIRED_KEYS, where, optional=SOURCE_OPTIONAL_KEYS)
+        sid = item["source_id"]
+        _require(isinstance(sid, str) and sid.strip(), f"{where}: source_id 필요")
+        _require(sid not in seen, f"{where}: source_id 중복 {sid!r}")
+        seen.add(sid)
+        _expect_str(item["title"], f"{where}.title", nonempty=True)
+        _expect_str(item["publisher"], f"{where}.publisher", allow_none=True)
+        # URL 이 없는 내부 문서가 있다. 없는 URL 을 만들지 않으므로 null 을 허용한다.
+        _expect_str(item["url"], f"{where}.url", allow_none=True)
+        _expect_str(item["accessed_at"], f"{where}.accessed_at", nonempty=True)
+        _require(bool(DATE_RE.match(item["accessed_at"]) or ISO_UTC_RE.match(item["accessed_at"])),
+                 f"{where}.accessed_at: 날짜 또는 UTC ISO 시각 필요 ({item['accessed_at']!r})")
+        _expect_sha(item["sha256"], f"{where}.sha256", allow_none=True)
+        _expect_str(item["conflict_of_interest"], f"{where}.conflict_of_interest", allow_none=True)
+        _expect_str(item["note"], f"{where}.note", allow_none=True)
+        if "kind" in item:
+            _require(item["kind"] in SOURCE_KINDS, f"{where}.kind 는 {sorted(SOURCE_KINDS)} 중 하나 ({item['kind']!r})")
+        if "company_id" in item:
+            _expect_str(item["company_id"], f"{where}.company_id", nonempty=True)
+        if "published_at_utc" in item:
+            _expect_iso_utc(item["published_at_utc"], f"{where}.published_at_utc")
+        if "publisher_url" in item:
+            pu = item["publisher_url"]
+            _require(isinstance(pu, str) or (isinstance(pu, list) and all(isinstance(u, str) for u in pu)),
+                     f"{where}.publisher_url: 문자열 또는 문자열 배열")
+        if "raw_ref" in item:
+            _expect_str(item["raw_ref"], f"{where}.raw_ref", nonempty=True)
+    return items
+
+
+def validate_evidence(payload: Any, companies: dict[str, dict[str, Any]], source_ids: set[str],
+                      run_id: str | None = None) -> list[dict[str, Any]]:
+    items = _expect_top(payload, "scorecard.evidence/1", "evidence.json", run_id)
+    seen: set[str] = set()
+    for idx, item in enumerate(items):
+        where = f"evidence[{idx}]"
+        _expect_keys(
+            item,
+            ["evidence_id", "company_id", "factors", "kind", "source_id", "published_at_utc", "title", "excerpt",
+             "relevance", "channel", "conditional_impact", "horizon", "counter_evidence", "unverified", "change_vs_previous"],
+            where,
+            optional=["previous_evidence_id", "reviewer", "reviewed_at", "status"],
+        )
+        cid = item["company_id"]
+        _require(cid in companies, f"{where}: 알 수 없는 company_id {cid!r}")
+        eid = item["evidence_id"]
+        _require(isinstance(eid, str) and bool(re.fullmatch(rf"EV-{re.escape(cid)}-\d{{3}}", eid)),
+                 f"{where}: evidence_id 는 EV-{cid}-NNN 형식 ({eid!r})")
+        _require(eid not in seen, f"{where}: evidence_id 중복 {eid!r}")
+        seen.add(eid)
+        _expect_factors(item["factors"], f"{where}.factors")
+        _require(item["kind"] in EVIDENCE_KINDS, f"{where}.kind 는 {sorted(EVIDENCE_KINDS)} 중 하나 ({item['kind']!r})")
+        _require(item["source_id"] in source_ids, f"{where}: source_id {item['source_id']!r} 가 sources.json 에 없음")
+        _expect_iso_utc(item["published_at_utc"], f"{where}.published_at_utc")
+        _expect_str(item["title"], f"{where}.title", nonempty=True)
+        _expect_str(item["excerpt"], f"{where}.excerpt", nonempty=True)
+        _require(len(item["excerpt"]) <= EXCERPT_MAX, f"{where}.excerpt: {EXCERPT_MAX}자 이하 ({len(item['excerpt'])}자)")
+        _expect_str(item["relevance"], f"{where}.relevance", nonempty=True)
+        _require(item["channel"] in EVIDENCE_CHANNELS, f"{where}.channel 는 {sorted(EVIDENCE_CHANNELS)} 중 하나 ({item['channel']!r})")
+        impact = item["conditional_impact"]
+        _expect_str(impact, f"{where}.conditional_impact", allow_none=True)
+        _require(impact is None or not SCORE_TEXT_RE.search(impact),
+                 f"{where}.conditional_impact: 점수 이동을 적지 않는다(C-14) ({impact!r})")
+        _expect_str(item["horizon"], f"{where}.horizon", nonempty=True)
+        _expect_str_list(item["counter_evidence"], f"{where}.counter_evidence")
+        _expect_str_list(item["unverified"], f"{where}.unverified")
+        _require(item["change_vs_previous"] is None or item["change_vs_previous"] in EVIDENCE_CHANGES,
+                 f"{where}.change_vs_previous 는 {sorted(EVIDENCE_CHANGES)} 또는 null")
+        if "previous_evidence_id" in item:
+            _expect_str(item["previous_evidence_id"], f"{where}.previous_evidence_id", nonempty=True)
+        status = item.get("status", "candidate")
+        _require(status in EVIDENCE_STATUSES, f"{where}.status 는 {sorted(EVIDENCE_STATUSES)} 중 하나 ({status!r})")
+        if "reviewer" in item:
+            _expect_str(item["reviewer"], f"{where}.reviewer", nonempty=True)
+        if "reviewed_at" in item:
+            _expect_date(item["reviewed_at"], f"{where}.reviewed_at")
+        if status == "confirmed":
+            # 판단과 같은 규칙이다. 사람이 확인하지 않은 근거를 확정으로 올리지 않는다.
+            _require("reviewer" in item and "reviewed_at" in item, f"{where}: confirmed 근거는 reviewer·reviewed_at 필요")
+    return items
+
+
+def _score_like_keys(node: Any, path: str) -> list[str]:
+    hits: list[str] = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if SCORE_LIKE_KEY_RE.search(str(key)):
+                hits.append(f"{path}.{key}")
+            hits += _score_like_keys(value, f"{path}.{key}")
+    elif isinstance(node, list):
+        for i, value in enumerate(node):
+            hits += _score_like_keys(value, f"{path}[{i}]")
+    return hits
+
+
+def validate_triggers(payload: Any, companies: dict[str, dict[str, Any]], evidence_ids: set[str], source_ids: set[str],
+                      run_id: str | None = None) -> list[dict[str, Any]]:
+    items = _expect_top(payload, "scorecard.triggers/2", "triggers.json", run_id)
+    seen: set[str] = set()
+    for idx, item in enumerate(items):
+        where = f"triggers[{idx}]"
+        scored = _score_like_keys(item, where)
+        _require(not scored, f"{where}: 트리거는 미래 점수를 저장하지 않는다(C-14) — 점수처럼 보이는 키 {scored}")
+        _expect_keys(
+            item,
+            ["trigger_id", "company_id", "factors", "observation", "condition", "deadline", "evidence_ids", "source_ids",
+             "status", "recheck"],
+            where,
+            optional=["legacy_ref", "note"],
+        )
+        tid = item["trigger_id"]
+        _require(isinstance(tid, str) and bool(TRIGGER_ID_RE.match(tid)), f"{where}: trigger_id 는 TRG-NNN 형식 ({tid!r})")
+        _require(tid not in seen, f"{where}: trigger_id 중복 {tid!r}")
+        seen.add(tid)
+        _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
+        _expect_factors(item["factors"], f"{where}.factors")
+        _expect_str(item["observation"], f"{where}.observation", nonempty=True)
+        _expect_str(item["condition"], f"{where}.condition", nonempty=True)
+        _expect_date(item["deadline"], f"{where}.deadline")
+        _expect_str_list(item["evidence_ids"], f"{where}.evidence_ids")
+        unknown_ev = [e for e in item["evidence_ids"] if e not in evidence_ids]
+        _require(not unknown_ev, f"{where}: evidence.json 에 없는 evidence_ids {unknown_ev}")
+        _expect_str_list(item["source_ids"], f"{where}.source_ids")
+        unknown_src = [s for s in item["source_ids"] if s not in source_ids]
+        _require(not unknown_src, f"{where}: sources.json 에 없는 source_ids {unknown_src}")
+        _require(item["status"] in TRIGGER_STATUSES, f"{where}.status 는 {sorted(TRIGGER_STATUSES)} 중 하나 ({item['status']!r})")
+        recheck = _expect_keys(item["recheck"], ["factors", "what"], f"{where}.recheck")
+        _expect_factors(recheck["factors"], f"{where}.recheck.factors")
+        _expect_str(recheck["what"], f"{where}.recheck.what", nonempty=True)
+        if "legacy_ref" in item:
+            _expect_str(item["legacy_ref"], f"{where}.legacy_ref", nonempty=True)
+        if "note" in item:
+            _expect_str(item["note"], f"{where}.note")
+    return items
+
+
+def validate_cross_refs(observations: list[dict[str, Any]], judgments: list[dict[str, Any]],
+                        evidence: list[dict[str, Any]] | None, sources: list[dict[str, Any]]) -> None:
+    """관측·판단·근거가 가리키는 출처와 근거가 장부에 실재하는지. 새 판단은 확정 근거만 인용한다."""
+    source_ids = {s["source_id"] for s in sources}
+    missing_obs = sorted({o["source_id"] for o in observations if o["source_id"] not in source_ids})
+    _require(not missing_obs, f"교차 참조: observations 의 source_id {missing_obs} 가 sources.json 에 없음")
+    missing_jud = sorted({s for j in judgments for s in (j.get("source_ids") or []) if s not in source_ids})
+    _require(not missing_jud, f"교차 참조: judgments 의 source_ids {missing_jud} 가 sources.json 에 없음")
+    ev_status = {e["evidence_id"]: e.get("status", "candidate") for e in (evidence or [])}
+    missing_ev_src = sorted({e["source_id"] for e in (evidence or []) if e["source_id"] not in source_ids})
+    _require(not missing_ev_src, f"교차 참조: evidence 의 source_id {missing_ev_src} 가 sources.json 에 없음")
+    for j in judgments:
+        cited = j.get("evidence_ids") or []
+        unknown = [e for e in cited if e not in ev_status]
+        _require(not unknown, f"교차 참조: {j['judgment_id']} 의 evidence_ids {unknown} 가 evidence.json 에 없음")
+        if j["status"] == "new":
+            unconfirmed = [e for e in cited if ev_status[e] != "confirmed"]
+            _require(not unconfirmed,
+                     f"교차 참조: 새 판단 {j['judgment_id']} 가 확정되지 않은 근거 {unconfirmed} 를 인용 — confirmed 근거만 인용한다")
 
 
 # ------------------------------------------------------------------ run / approval

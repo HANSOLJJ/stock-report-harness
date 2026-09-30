@@ -1,4 +1,4 @@
-# 채점 대상 기업 레지스트리(scorecard/companies.json)에 기업을 **추가만** 하는 편집기
+# 채점 대상 기업 레지스트리(scorecard/companies.json)에 기업을 **추가**하고 수집기 전용 키(cik·news_queries)만 바꾸는 편집기
 """2026-09-21 ADD-01. 레지스트리는 **한 줄 = 한 기업** 형식이고 14줄 전부가 `render_company_line` 으로
 바이트 재현된다. `schema.write_json` 은 `indent=2` 라 그것으로 다시 쓰면 14개 기업이 모두 여러 줄로
 펼쳐져 `git diff` 가 **`추가만 했다`** 를 증명하지 못한다. 그래서 텍스트 삽입으로 더한다.
@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from .engine import COMPANIES_PATH
-from .schema import SchemaError, load_json_strict, resolve_company_id, validate_companies
+from .schema import COMPANY_SETTABLE_KEYS, SchemaError, load_json_strict, resolve_company_id, validate_companies
 
 
 def render_company_line(item: dict[str, Any]) -> str:
@@ -86,3 +86,43 @@ def add_company(item: dict[str, Any], *, path: Path = COMPANIES_PATH) -> dict[st
         raise
     return {"company_id": plan["company_id"], "line_no": plan["line_no"],
             "count_before": plan["count_before"], "count_after": plan["count_after"]}
+
+
+def set_company_field(company_id: str, key: str, value: Any, *, path: Path = COMPANIES_PATH) -> dict[str, Any]:
+    """기업 한 줄의 수집기 전용 키(`cik`·`news_queries`)만 바꾼다. 다른 줄의 바이트는 그대로다.
+
+    2026-09-30 레인 E. 키가 없으면 줄 끝에 붙이고, 있으면 제자리에서 값만 바꾼다.
+    """
+    if key not in COMPANY_SETTABLE_KEYS:
+        raise SchemaError(f"set_company_field 는 {list(COMPANY_SETTABLE_KEYS)} 만 바꾼다 ({key!r})")
+    original = path.read_text(encoding="utf-8")
+    payload = load_json_strict(path)
+    _validate_or_raise(payload, "변경 전 companies.json 이 이미 계약을 어긴다")
+    matches = [item for item in payload["companies"] if item["company_id"] == company_id]
+    if not matches:
+        raise SchemaError(f"알 수 없는 company_id {company_id!r}")
+    item = matches[0]
+    old_line = render_company_line(item)
+    lines = original.split("\n")
+    hits = [i for i, line in enumerate(lines) if line.rstrip(",") == old_line]
+    if len(hits) != 1:
+        raise SchemaError("companies.json 이 이 명령이 쓰는 형식과 다르게 손으로 편집돼 있다 — 사람이 먼저 정리한다")
+    idx = hits[0]
+    updated = dict(item)
+    updated[key] = value
+    comma = "," if lines[idx].endswith(",") else ""
+    lines[idx] = render_company_line(updated) + comma
+    path.write_text("\n".join(lines), encoding="utf-8", newline="\n")
+
+    # 사후 검증 — 하나라도 어기면 원문을 되돌려 쓴다.
+    try:
+        _validate_or_raise(load_json_strict(path), "쓴 뒤 companies.json 이 계약을 어긴다")
+        written = path.read_text(encoding="utf-8").split("\n")
+        before = original.split("\n")
+        changed = [i for i, (a, b) in enumerate(zip(before, written)) if a != b]
+        if len(before) != len(written) or changed != ([idx] if item.get(key, object()) != value else []):
+            raise SchemaError("대상 줄 밖의 바이트가 바뀌었다 — 이 명령은 한 줄만 바꾼다")
+    except SchemaError:
+        path.write_text(original, encoding="utf-8", newline="\n")
+        raise
+    return {"company_id": company_id, "key": key, "old": item.get(key), "new": value, "line_no": idx + 1}
