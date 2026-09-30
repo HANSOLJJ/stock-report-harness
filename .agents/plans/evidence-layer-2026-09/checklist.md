@@ -70,3 +70,4 @@
 - [ ] PowerShell cmdlet(Set-Content·Remove-Item·Out-File) 변경은 보호 훅의 _MUTATING 에 없어 지나간다. 리다이렉션은 잡는다. 별도 과제
 - [ ] baseline 초안 재렌더는 render_common.method_sections 가 v1.5(bands) 실행에서 KeyError. obsreg 초안도 지금 코드로 다시 렌더하면 네 줄이 달라진다(저장본은 승인본이라 그대로 둔다)
 - [ ] 에이전트 표지 환경변수는 Claude Code 세션 하나만 조사했다. Codex·Antigravity·Muse 세션은 운영 단계 배선 때 확인
+- [ ] 레인 G (Sonnet) 4.5·4.6 디스패치 완료 → 검증 → 병합. task `task_39b14e9bae11`, dispatch `ctx_2e2d5d341c32`, 워크트리 `…/lane-G`, 터미널 `term_ef689690-3b13-42c5-b514-5d9caea97241`
