@@ -26,7 +26,7 @@
 - [ ] 4.3: `confirm`·`approve`·`revoke` 가 근거 ID(`EV-<cid>-<NNN>`)·이름 형식을 Python 쪽에서 검증. 승인 페이지 일회용 코드는 시도 횟수 제한 없음(루프백 한정이라 낮음) — 실패 5회면 서버 종료 검토
 - [ ] 4.6: README 훅 표(`protect-sensitive-files.sh` 등 옛 이름·output-spec) 갱신. AGENTS 에서 레인 S 가 지운 "plan 없이 research 금지 / review 없이 build 금지" 는 채점표에도 맞는 일반 규칙이므로 채점표 단계 이름으로 되살린다
 - [ ] baseline 실행 recompute 불일치(amazon·oracle·openai F9 calc 경로 기록)는 원본 폴더에서도 같은 기존 상태. 별도 과제로 원인 기록 여부 결정
-- [ ] 후속 직렬(Opus): 3.1 → 3.4 → 4.2 → 4.3 지시서 작성·디스패치(A·B 병합 뒤)
+- [ ] 후속 직렬(Opus): 3.1·3.4 는 레인 E 로 디스패치(task `task_886a8483f9d2`, dispatch `ctx_ef9a127fce02`, 터미널 `term_ceb10bfe-fbe6-4320-aaa3-a59083939d17`). 4.2 → 4.3 은 E 병합 뒤
 - [ ] 문서(Sonnet): 4.5 → 4.6
 
 ## 1단계 정리·재활용
