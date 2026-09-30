@@ -10,7 +10,7 @@
 
 - 새 파일: `server/approvals.js`, `tests/node/approvals.test.js`, `tests/node/fake_scorecard_cli.js`, `tests/node/fixtures/summary.sample.json`
 - 수정(최소): `server.js` 의 세 곳. (a) argv 파싱에서 `--approvals` 를 플래그로 읽고 `REQUESTED_REPORT` 후보에서 뺀다. (b) 요청 핸들러 첫 줄에 `if (approvals && approvals.handle(req, res)) return;`. (c) `server.listen` 콜백에서 승인 모드면 코드와 안내를 출력하고, 승인 모드일 때만 `127.0.0.1` 에 바인드한다. **그 밖의 함수(`findHtmlReports`, `safeResolve`, `normalizeRequestedReport`, `reportUrl`, MIME 표, 디렉터리 처리)는 레인 A 가 고치므로 건드리지 않는다.**
-- 수정: `package.json` 의 `scripts` 에 `"test:node": "node --test tests/node/"` 한 줄 추가.
+- 수정: `package.json` 의 `scripts` 에 `"test:node": "node --test \"tests/node/**/*.test.js\""` 한 줄 추가. (2026-09-30 질문 회신으로 확정. Windows 에서 npm 스크립트는 cmd.exe 로 돌아 디렉터리 인자가 MODULE_NOT_FOUND 를 내고 셸이 glob 을 펼치지 않으므로, 따옴표로 감싸 Node 가 직접 glob 을 해석하게 한다.)
 
 만지지 않는 것: `scripts/**`, `tests/*.py`, `docs/**`, `.claude/**`, `.codex/**`.
 
