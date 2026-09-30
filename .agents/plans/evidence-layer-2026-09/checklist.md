@@ -10,11 +10,11 @@
 - [x] 0.5 워커 지시서 5종(`dispatch/lane-{S,A,B,C,D}.md`)과 공통 규약 `dispatch/README.md`. `.agents/plans/` 추적, `data/`·`node_modules/` 무시, `tests/fixtures/** -text`
 
 ## 디스패치 현황 (Orca orchestration)
-- Run id: (디스패치 뒤 기록)
-- [ ] 레인 S (Sonnet) 디스패치 → 검증 → 병합
-- [ ] 레인 B (Muse) 디스패치 → 검증 → 병합
-- [ ] 레인 C (Sonnet) 디스패치 → 검증 → 병합 → 조율자가 `docs/output-spec.md` 삭제
-- [ ] 레인 D (Antigravity) 디스패치 → 검증 → 병합
+- Run id: `run_f124df1dad47` (2026-09-30 17:03 KST). 조율자 handle `term_be1eaaf8-815c-4231-a858-7229d925e5fe`
+- [ ] 레인 S (Sonnet) 디스패치 완료 → 검증 → 병합. task `task_0d621b4175f7`, dispatch `ctx_ebddd407600b`, 워크트리 `…/lane-S`, 터미널 `term_2aefbd6b-2029-4088-af26-7151e665f394`
+- [ ] 레인 B (Muse) 디스패치 완료 → 검증 → 병합. task `task_4e19dbd18cc4`, dispatch `ctx_f2bafe443416`, 워크트리 `…/lane-B`, 터미널 `term_863653f9-0bf1-44ae-a2ab-9dbc77faa543` (turn_started 관측 불가 에이전트)
+- [ ] 레인 C (Sonnet) 디스패치 완료 → 검증 → 병합 → 조율자가 output-spec 문서 삭제. task `task_ece7f8798677`, dispatch `ctx_e00fb51c41a0`, 워크트리 `…/lane-C`, 터미널 `term_fd89feaf-abfe-4e5a-8a0a-dcd173956894` (첫 시도는 조율자 훅이 spec 안의 보호 경로 문구와 꺾쇠를 차단해 재시도)
+- [ ] 레인 D (Antigravity) 디스패치 완료 → 검증 → 병합. task `task_d12890631f47`, dispatch `ctx_f43a7972fc93`, 워크트리 `…/lane-D`, 터미널 `term_76969e8e-cff7-4d73-8d1c-4f2c82998c81`
 - [ ] 레인 A (Opus) 디스패치(S 의 1.2 병합 뒤) → 검증(해시 보존은 조율자 직접) → 병합
 - [ ] 후속 직렬(Opus): 3.1 → 3.4 → 4.2 → 4.3 지시서 작성·디스패치(A·B 병합 뒤)
 - [ ] 문서(Sonnet): 4.5 → 4.6
