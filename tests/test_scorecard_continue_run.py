@@ -281,10 +281,15 @@ class PastRunsStillValidateTest(unittest.TestCase):
     def test_every_committed_run_still_validates(self):
         slugs = sorted(p.name for p in engine.OUTPUT_DIR.iterdir() if (p / "run.json").is_file())
         self.assertIn(PRIOR, slugs)
+        # 2026-10-01: 처음엔 모든 실행에 continued_from 이 없다고 단언했으나, --from-run 으로 만든 실행(시험 실행
+        # ai-scorecard-2026-10-test)이 생기면서 그 단언이 낡았다. 모든 실행은 검증을 통과해야 하고, 키가 없어야 하는
+        # 것은 이 키가 생기기 전에 만든 정식 실행 둘뿐이다.
+        legacy = {"ai-scorecard-2026-09-baseline", "ai-scorecard-2026-09-obsreg"}
         for slug in slugs:
             with self.subTest(slug=slug):
                 run = validate_run(load_json_strict(engine.OUTPUT_DIR / slug / "run.json"), slug)
-                self.assertNotIn("continued_from", run)
+                if slug in legacy:
+                    self.assertNotIn("continued_from", run)
 
     def test_broken_continued_from_is_refused(self):
         base = load_json_strict(engine.OUTPUT_DIR / PRIOR / "run.json")
