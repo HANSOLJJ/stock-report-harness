@@ -91,9 +91,10 @@
 - [x] 레인 K (Sonnet) 문서. dispatch `ctx_a06adb492d13`, 터미널 `term_5ae329e4-4d55-4d61-855f-dea7ace943c6`
 - [x] 레인 L (Muse) 근거 평가 표본. dispatch `ctx_b79e5dabdabb`, 터미널 `term_c3babed2-dcd6-4cac-8201-c0e64d8e6a5c` (기동 뒤 붙여넣기로 멈춰 조율자가 Enter 별도 전송)
 - [x] 레인 T (Antigravity) 원자료 테스트 건너뛰기. dispatch `ctx_969631797a3d`, 터미널 `term_4294af58-662b-4bef-8e31-d77deae20a0c`
-- [ ] 끝난 레인 워크트리 13개(S·A·B·C·D·E·F·G·V·H·I·M·J) 정리: 병합 안 된 커밋 0·미커밋 파일 0 확인, 사용자 확인 대기
+- [x] 끝난 레인 워크트리 13개(S·A·B·C·D·E·F·G·V·H·I·M·J) 정리: 병합 안 된 커밋 0·미커밋 파일 0 확인, 사용자 확인 대기
 - [x] 레인 K 병합. score-research 스킬의 judge 안내는 지시서 소유 목록 누락이라 조율자가 보완
 - [x] README 「지금 상태」 표(테스트 797건, 재승인 대기)가 2026-09-21 값이라 낡음. 마지막 레인(T·L) 병합 뒤 실제 수치로 갱신
 - [x] 레인 T 병합: 테스트 파일 변경은 import 와 require_raw 데코레이터 추가뿐(지운 줄 0). unittest 1146건 OK(건너뛰기 13), pytest 1133 통과·13 건너뛰기. 워크트리에서 처음으로 전부 통과
 - [x] 레인 L 병합: 라벨 시트 38건(14개사 2~3건, 관련 없음 제안 15건, 라벨 칸 비어 있음, 위험 표현 0). unittest 1146건 OK(건너뛰기 13)
 - [ ] 사용자: tests/fixtures/evidence/labeling-2026-10.csv 라벨 작성(correct·wrong·irrelevant)
+- [x] 끝난 레인 16개(S·A·B·C·D·E·F·G·V·H·I·M·J·K·T·L) 워크트리 삭제(2026-10-01, 사용자 지시). orca worktree rm 이 브랜치까지 지워, 병합 커밋의 둘째 부모로 16개 브랜치를 되살림(워커 보고 SHA 와 일치)
