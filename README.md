@@ -4,15 +4,16 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 
 앞의 다섯(① 네트워크 효과 · ② 신기술 게임체인저 · ③ Last Mover · ④ 호황 이후 비전 · ⑤ 아군 확보)은 더하고, 뒤의 넷(⑥ 가격 · ⑦ 순환금융 · ⑧ 비대칭 의존 · ⑨ 적자 깊이)은 뺍니다.
 
-## 지금 상태 (2026-09-21)
+## 지금 상태 (2026-10-01)
 
 | 항목 | 값 |
 | --- | --- |
-| 최신 실행 | `ai-scorecard-2026-09-obsreg` · 기준일 2026-09-02 · 규칙 v1.7 |
+| 최신 실행 | `ai-scorecard-2026-09-obsreg` · 기준일 2026-09-02 · 규칙 v1.7 · 묶음 `output/ai-scorecard-2026-09-obsreg/` |
 | 점수 지문 | `results_hash 4a3f6c05b206ef81…` |
 | 리뷰 | 독립 세션 4영역 리뷰 9라운드 끝에 네 영역 pass (2026-09-17) |
-| 승인 | 2026-09-17 사용자 승인. 그 뒤 **설명 문장과 화면 표시만** 고쳤고 점수 파일은 바이트 단위로 동일합니다. 초안이 바뀌어 승인 효력이 멈춘 **재승인 대기** 상태입니다 |
-| 테스트 | `npm run test:scorecard` 797건 통과 |
+| 승인 | 2026-09-21 사용자 재승인. 승인 유효(`status` 의 `approval_valid: true`) |
+| 다음 실행 준비 | 규칙 v1.8, 근거 수집(`collect`: 구글 뉴스·SEC 공시·yfinance 가격), 승인 페이지(`node server.js --approvals`)의 근거 확정·판단 수정, 근거 선별 평가 표본 38건(`tests/fixtures/evidence/`, 라벨 대기) |
+| 테스트 | `npm run test:scorecard` 1146건 통과(원자료가 없는 워크트리에서는 13건 건너뜀), `npm run test:node` 15건 통과 |
 
 조정총점은 alphabet 15 · amazon 15 · meta 15 · microsoft 14 · tsmc 10 · anthropic 10 · spacex-xai 9 · nvidia 9 · apple 8 · alibaba 7 · palantir 6 · tesla 5 · openai 4 · oracle 2 입니다.
 
