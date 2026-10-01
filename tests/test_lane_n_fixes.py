@@ -15,7 +15,7 @@ from tests.test_collect_stage import RSS
 from tests.test_hooks import guard, shell
 from tests.test_run_lock import human_env
 import scorecard_cli
-from scorecard import engine, stages
+from scorecard import baseline_import, engine, stages
 from scorecard.schema import SchemaError, approval_file_present, approval_id_for, load_json_strict, validate_approval, write_json
 
 
@@ -128,7 +128,21 @@ class ApprovedRunStageTest(FlowBase):
             self.assertEqual(stages.protect_baseline_consumers("v9.9"), [])
         with human_env():
             self.assertEqual(stages.protect_baseline_consumers("v1.5"), [SLUG])
-        self.assertIn("protect_baseline_consumers", inspect.getsource(scorecard_cli.cmd_import_baseline))
+        # 2026-10-01: 판정은 CLI 가 아니라 import_baseline 본체에 있다(레인 N 소유 밖 발견 2)
+        self.assertIn("protect_baseline_consumers", inspect.getsource(baseline_import.import_baseline))
+        self.assertNotIn("protect_baseline_consumers", inspect.getsource(scorecard_cli.cmd_import_baseline))
+
+    def test_import_baseline_function_refuses_agent_session(self):
+        """import 로 함수를 직접 불러도 승인 실행이 쓰는 기준선은 에이전트 세션에서 다시 쓰지 못한다. 파일을 읽기 전에 멈춘다."""
+        out = self.box.dir / "baseline" / "v1.5"
+        missing = self.box.dir / "없음.html"
+        with human_env(CLAUDECODE="1"):
+            with self.assertRaisesRegex(SchemaError, "에이전트 세션.*기준선 v1.5"):
+                baseline_import.import_baseline(missing, missing, out, {})
+        self.assertFalse(out.exists())
+        with human_env():   # 사람 세션은 경고 뒤 진행한다(여기서는 없는 파일에서 멈춘다)
+            with self.assertRaises(FileNotFoundError):
+                baseline_import.import_baseline(missing, missing, out, {})
 
 
 class HookStageCommandTest(unittest.TestCase):

@@ -103,13 +103,11 @@ def cmd_add_company(args: argparse.Namespace) -> int:
 def cmd_import_baseline(args: argparse.Namespace) -> int:
     from scorecard.baseline_import import BASELINE_ID, DEFAULT_HTML, DEFAULT_MD, import_baseline
     from scorecard.engine import BASELINE_DIR, load_companies
-    from scorecard.stages import protect_baseline_consumers
 
-    # 2026-10-01 레인 N(V2-1): import_baseline 본체(baseline_import.py)는 이 레인의 소유가 아니라 CLI 에서 판정한다.
-    protect_baseline_consumers(BASELINE_ID)
+    # 2026-10-01: 기준선 소비 승인 실행 보호(레인 N V2-1)는 import_baseline 본체가 한다. CLI 에서 또 부르면 경고가 두 번 난다.
     html_path = Path(args.html) if args.html else DEFAULT_HTML
     md_path = Path(args.md) if args.md else DEFAULT_MD
-    report = import_baseline(html_path, md_path, BASELINE_DIR / "v1.5", load_companies())
+    report = import_baseline(html_path, md_path, BASELINE_DIR / BASELINE_ID, load_companies())
     print(f"기준선 이관: 기업 {report['matched']} · 관측 {report['observations']} · 트리거 {report['triggers']}")
     for issue in report["issues"]:
         print(f"  불일치 - {issue}")

@@ -323,6 +323,11 @@ def _obs(cid: str, metric: str, value: Any, status: str, raw: Any, source_id: st
 
 
 def import_baseline(html_path: Path, md_path: Path, out_dir: Path, companies: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    # 2026-10-01 레인 N 소유 밖 발견 2: 판정이 CLI 에만 있으면 import 로 이 함수를 직접 부를 때 지나간다. 본체에서 판정한다.
+    # stages 가 이 모듈을 import 하므로 함수 안에서 가져온다. 기준선 id 는 기록할 폴더 이름(v1.5)이다.
+    from .stages import protect_baseline_consumers
+
+    protect_baseline_consumers(out_dir.name)
     text = html_path.read_text(encoding="utf-8")
     md_text = md_path.read_text(encoding="utf-8")
     D = extract_js_array(text, "D")
