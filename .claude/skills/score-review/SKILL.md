@@ -34,7 +34,7 @@ uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <run_id> --company
 - `--reason` 에 사유를, `--by` 에 수정을 정한 사람의 이름을 적는다. 이전 값은 `revision_history` 에 남는다.
 - 새 판단은 확정된 근거만 인용한다. 후보 근거를 인용하는 수정은 거부된다.
 - 같은 factor 의 다른 기업 판단을 함께 보고 같은 잣대를 대는지 확인한다(Q03).
-- 고친 뒤에는 판단 해시가 바뀌므로 리뷰가 무효다. `calculate` → `draft` → `review-template --force` 부터 다시 돌리고 "승인 대기" 를 보고한다.
+- 고친 뒤에는 판단 해시가 바뀌므로 리뷰가 무효다. `research → calculate → draft → review-template --force` 부터 다시 돌리고 "승인 대기" 를 보고한다.
 
 ## 상태
 
