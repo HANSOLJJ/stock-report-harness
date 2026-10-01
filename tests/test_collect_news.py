@@ -29,6 +29,25 @@ class QueryUrlTest(unittest.TestCase):
         self.assertIn("hl=en-US", url)
         self.assertIn("NVIDIA", url)
 
+    def _dry_url(self, locale):
+        return collect_company_news(NVIDIA, dry_run=True, locale=locale)["urls"][0]
+
+    def test_language_only_locale_maps_country(self):
+        url = self._dry_url("ko")
+        self.assertIn("hl=ko", url)
+        self.assertIn("gl=KR", url)
+        self.assertIn("ceid=KR%3Ako", url)
+
+    def test_full_locale_unchanged(self):
+        url = self._dry_url("en-US")
+        self.assertIn("hl=en-US", url)
+        self.assertIn("gl=US", url)
+        self.assertIn("ceid=US%3Aen", url)
+
+    def test_unknown_language_only_locale_raises(self):
+        with self.assertRaises(ValueError):
+            self._dry_url("xx")
+
 
 class ParseRssTest(unittest.TestCase):
     def test_fixture_items(self):
