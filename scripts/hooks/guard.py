@@ -12,6 +12,7 @@ import io
 import json
 import os
 import re
+import shlex
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -163,13 +164,15 @@ def block_dangerous_bash(payload: dict, *, root: Path) -> Decision:
 # docs/output-spec.md 는 2026-09-30 에 보호 목록에서 뺐다. 종목 리포트 출력 명세라 채점표 전환과 함께 삭제한다.
 # 2026-09-30 레인 F: 승인된 실행이 쓰는 규칙(v1.5~v1.7), 이동한 기존 실행 두 폴더, 이력 파일을 더했다.
 # v1.8 은 아직 승인된 실행이 없어 넣지 않는다. 첫 실행이 v1.8 로 승인되면 여기에 더한다.
+# 2026-10-01 레인 H(F-3): 기준선은 승인 해시 밖의 재빌드 입력이다(실행에 triggers.json 이 없으면 기준선 트리거를 그린다). 폴더째 보호한다.
 _PROTECTED_RUN_DIRS = ["output/ai-scorecard-2026-09-baseline", "output/ai-scorecard-2026-09-obsreg"]
+_PROTECTED_TREES = [*_PROTECTED_RUN_DIRS, "scorecard/baseline"]
 _PROTECTED_FILES = [
     "docs/finance-style-guide.md",
     "scorecard/rules/v1.5.json", "scorecard/rules/v1.6.json", "scorecard/rules/v1.7.json",
     "scorecard/history.csv",
 ]
-_PROTECTED_LITERALS = [*_PROTECTED_FILES, *_PROTECTED_RUN_DIRS, ".env", ".git", ".github/workflows"]
+_PROTECTED_LITERALS = [*_PROTECTED_FILES, *_PROTECTED_TREES, ".env", ".git", ".github/workflows"]
 _APPROVAL_FILE = re.compile(r"(^|/)approval\.json$")
 _APPROVAL_FILE_IN_CMD = re.compile(r"(?<![\w.-])approval\.json\b")
 
@@ -181,13 +184,138 @@ def _is_protected(path: str) -> bool:
         or path == ".git" or path.startswith(".git/")
         or path == ".github/workflows" or path.startswith(".github/workflows/")
         or path in _PROTECTED_FILES
-        or any(path == d or path.startswith(d + "/") for d in _PROTECTED_RUN_DIRS)
+        or any(path == d or path.startswith(d + "/") for d in _PROTECTED_TREES)
         or bool(_APPROVAL_FILE.search(path))
     )
 
 
-_MUTATING = re.compile(r"(^|[;&|]\s*)(cat\s*>|printf\b|echo\b|tee\b|sed\s+-i\b|perl\s+-pi\b|python\b|python3\b|node\b|rm\b|mv\b|cp\b|install\b|touch\b|truncate\b|chmod\b|chown\b|git\s+checkout\b|git\s+restore\b|git\s+reset\b)")
-_REDIRECT = re.compile(r"(^|[^<>])>{1,2}\s*[^&]")
+# 2026-10-01 레인 H(F-7): 셸 명령은 보호 경로가 "쓰기 대상" 일 때만 막는다. 쓰기 대상은 리다이렉션(`>`, `>>`)의 대상과
+# 변경 동사의 인자다. 읽기만 하는 명령(cat·rg·git show 등)의 경로 언급은 통과한다. 인터프리터(python·node·uv run)는
+# 스크립트 안의 쓰기를 셸에서 가릴 수 없으므로 보호 경로 문자열을 담기만 해도 막는다.
+_WRITE_VERBS = {"rm", "mv", "cp", "tee", "touch", "truncate", "install", "chmod", "chown"}
+_GIT_WRITE = {"checkout", "restore", "reset"}
+_INTERPRETER = re.compile(r"^(?:python(?:3(?:\.\d+)?)?|py|node)$")
+_PREFIX_WORDS = {"env", "command", "exec", "nohup", "time"}
+_CD_WORDS = {"cd", "pushd", "chdir", "set-location", "sl"}
+_SHELL_PUNCT = ";&|()<>\n"
+_ASSIGN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
+
+
+def _protected_mentions(text: str) -> list[str]:
+    """문자열에 나오는 보호 경로 리터럴과 approval.json."""
+    hits = [lit for lit in _PROTECTED_LITERALS if re.search(r"(?<![\w./-])" + re.escape(lit) + r"(?:/|\b)", text)]
+    if _APPROVAL_FILE_IN_CMD.search(text):
+        hits.append("approval.json")
+    return hits
+
+
+def _shell_segments(cmd: str) -> list[list[str]] | None:
+    """명령을 제어 연산자(`;` `&&` `||` `|` `&` 괄호 줄바꿈)로 나눈 단어 목록들. 리다이렉션 기호는 단어로 남긴다. 따옴표가 맞지 않으면 None."""
+    lex = shlex.shlex(cmd.replace("\\", "/"), posix=True, punctuation_chars=_SHELL_PUNCT)
+    lex.whitespace = " \t\r"
+    lex.whitespace_split = True
+    lex.commenters = ""
+    try:
+        tokens = list(lex)
+    except ValueError:
+        return None
+    segments: list[list[str]] = [[]]
+    for tok in tokens:
+        if tok and set(tok) <= set(_SHELL_PUNCT) and not set(tok) & set("<>"):
+            segments.append([])
+        else:
+            segments[-1].append(tok)
+    return [s for s in segments if s]
+
+
+def _is_redirect(tok: str) -> bool:
+    return bool(tok) and set(tok) <= set(_SHELL_PUNCT) and bool(set(tok) & set("<>"))
+
+
+def _target_hits(targets: list[str], base: Path, root: Path) -> list[str]:
+    """쓰기 대상 단어 가운데 보호 경로. `cd` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다."""
+    hits: list[str] = []
+    for target in targets:
+        found = _protected_mentions(target)
+        if not found:
+            try:
+                rp = relpath(str(base / target), root)
+            except (OSError, ValueError):
+                rp = ""
+            if rp and _is_protected(rp):
+                found = [rp]
+        hits += found
+    return hits
+
+
+def _shell_violations(cmd: str, root: Path) -> list[str]:
+    segments = _shell_segments(cmd)
+    if segments is None:  # 나눌 수 없으면 쓰기 대상을 가릴 수 없다. 보호 경로를 언급하기만 해도 막는다
+        return _protected_mentions(cmd.replace("\\", "/"))
+    out: list[str] = []
+    base = root
+    for seg in segments:
+        words: list[str] = []
+        targets: list[str] = []
+        i = 0
+        while i < len(seg):
+            if _is_redirect(seg[i]):
+                if ">" in seg[i] and i + 1 < len(seg):  # 입력 리다이렉션(`<`, heredoc)은 읽기다
+                    targets.append(seg[i + 1])
+                i += 2
+                continue
+            words.append(seg[i])
+            i += 1
+        while words and (_ASSIGN.match(words[0]) or words[0] in _PREFIX_WORDS):
+            env = words[0] == "env"
+            words = words[1:]
+            while env and words and (words[0].startswith("-") or _ASSIGN.match(words[0])):
+                words = words[2:] if words[0] in ("-u", "--unset") else words[1:]
+        verb = words[0].rsplit("/", 1)[-1].lower().removesuffix(".exe") if words else ""
+        args = words[1:]
+        if verb in _CD_WORDS and args:
+            base = base / args[-1]
+        elif (verb == "uv" and args[:1] == ["run"]) or verb == "uvx" or _INTERPRETER.match(verb):
+            out += _protected_mentions(" ".join(seg))
+        elif verb in _WRITE_VERBS:
+            targets += args
+        elif verb == "sed" and any(a.startswith(("-i", "--in-place")) for a in args):
+            targets += args
+        elif verb == "perl" and any(re.match(r"^-[A-Za-z]*i", a) for a in args):
+            targets += args
+        elif verb == "git":
+            git_base, rest = base, args
+            while rest and rest[0].startswith("-"):
+                if rest[0] in ("-C", "-c") and len(rest) > 1:
+                    git_base = git_base / rest[1] if rest[0] == "-C" else git_base
+                    rest = rest[2:]
+                else:
+                    rest = rest[1:]
+            if rest and rest[0] in _GIT_WRITE:
+                out += _target_hits(rest[1:], git_base, root)
+        out += _target_hits(targets, base, root)
+    return out
+
+
+def _init_force_approved(cmd: str, root: Path) -> list[str]:
+    """`scorecard_cli.py init <slug> … --force` 가 승인 파일이 있는 실행을 가리키면 그 승인 파일들. 2026-10-01 레인 H(F-1).
+
+    슬러그는 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더 이름으로 본다. argparse 는 옵션을
+    줄여 쓸 수 있으므로(`--fo`) `--force` 의 접두도 같이 본다."""
+    hits: list[str] = []
+    for words in _shell_segments(cmd) or []:
+        for i, word in enumerate(words):
+            if word.rsplit("/", 1)[-1] != "scorecard_cli.py" or words[i + 1:i + 2] != ["init"]:
+                continue
+            rest = words[i + 2:]
+            if not any(len(a) >= 4 and "--force".startswith(a) for a in rest):
+                continue
+            for name in sorted({a.rstrip("/").rsplit("/", 1)[-1] for a in rest if not a.startswith("-")}):
+                if name and (root / "output" / name / "approval.json").is_file():
+                    hits.append(f"output/{name}/approval.json")
+    return hits
+
+
 # 승인·취소는 사람 행위다. 변경 기호가 없어도 명령 문자열에 있으면 막는다. confirm 은 막지 않는다 —
 # 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 한다.
 _APPROVAL_CMD = re.compile(r"scorecard_cli\.py\s+(?:approve|revoke)\b|stages\.(?:approve|revoke)\b")
@@ -201,14 +329,12 @@ def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
     cmd = extract_command(payload)
     if cmd and _APPROVAL_CMD.search(cmd.replace("\\", "/")):
         return block("승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. 에이전트는 approve·revoke 를 실행하지 않는다.")
-    # 셸 명령은 보호 경로를 언급하면서 파일을 바꾸는 것처럼 보일 때만 막는다.
-    if cmd and (_MUTATING.search(cmd) or _REDIRECT.search(cmd)):
-        norm = cmd.replace("\\", "/")
-        for literal in _PROTECTED_LITERALS:
-            if re.search(r"(?<![\w./-])" + re.escape(literal) + r"(?:/|\b)", norm):
-                violations.append(literal)
-        if _APPROVAL_FILE_IN_CMD.search(norm):
-            violations.append("approval.json")
+    if cmd:
+        approved = _init_force_approved(cmd, root)
+        if approved:
+            return block("승인된 실행을 init --force 로 덮어쓰면 승인 기록이 지워져 차단합니다: " + ", ".join(approved)
+                         + ". 새 slug 로 init 한다. 승인된 실행의 재작성은 사람이 한다.")
+        violations += _shell_violations(cmd, root)
     if not violations:
         return allow()
     uniq: list[str] = []
@@ -216,7 +342,8 @@ def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
         if v not in uniq:
             uniq.append(v)
     return block("보호 경로 수정 시도를 차단합니다: " + ", ".join(uniq) + ". 보호 대상: .env*, .git/, .github/workflows/, docs/finance-style-guide.md, "
-                 "**/approval.json, scorecard/rules/v1.5~v1.7.json, scorecard/history.csv, output/ai-scorecard-2026-09-baseline/, output/ai-scorecard-2026-09-obsreg/.")
+                 "**/approval.json, scorecard/rules/v1.5~v1.7.json, scorecard/history.csv, scorecard/baseline/, "
+                 "output/ai-scorecard-2026-09-baseline/, output/ai-scorecard-2026-09-obsreg/.")
 
 
 # ------------------------------------------------------------------ 3. 단계 순서

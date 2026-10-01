@@ -18,15 +18,31 @@
 
 ## 보호 경로와 승인 명령 (`protect_sensitive_files`)
 
-파일 도구 경로는 아래에 해당하면 막는다. 셸 명령은 같은 경로를 언급하면서 파일을 바꾸는 것처럼 보일 때(변경 명령·리다이렉션)만 막는다. 셸 명령의 `\` 는 `/` 로 바꿔 대조한다.
+파일 도구 경로는 아래에 해당하면 막는다.
 
 - `.env*`, `.git/`, `.github/workflows/`, `docs/finance-style-guide.md`
 - 어느 폴더에 있든 `approval.json` (2026-09-30 레인 F)
 - 승인된 실행이 쓰는 규칙 `scorecard/rules/v1.5.json`, `v1.6.json`, `v1.7.json`. **v1.8 은 아직 승인된 실행이 없어 넣지 않았다. 첫 실행이 v1.8 로 승인되면 `_PROTECTED_FILES` 에 더한다.**
 - 이동한 기존 실행 두 폴더 `output/ai-scorecard-2026-09-baseline/`, `output/ai-scorecard-2026-09-obsreg/`
 - `scorecard/history.csv`
+- `scorecard/baseline/**` (2026-10-01 레인 H). 기준선 트리거는 승인 해시 밖의 재빌드 입력이다. 실행 묶음에 `triggers.json` 이 없으면 렌더러가 기준선 트리거를 그리므로, 바꾸면 승인이 유효한 채 재빌드 리포트가 바뀐다.
 
-셸 명령에 `scorecard_cli.py approve`, `scorecard_cli.py revoke`, `stages.approve`, `stages.revoke` 가 있으면 변경 기호와 무관하게 막는다. 승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. `confirm` 은 막지 않는다. 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 하기 때문이다. 훅은 둘째 방어선이고, 첫째는 CLI 가 에이전트 세션의 `approve`·`revoke` 를 거부하는 것이다(`scorecard.stages.agent_session_markers`).
+셸 명령은 같은 경로가 **쓰기 대상** 일 때만 막는다(2026-10-01 레인 H). 명령을 따옴표를 지켜 토큰으로 나누고(`shlex`) `;`·`&&`·`||`·`|`·`&`·괄호·줄바꿈마다 끊어 명령 하나씩 본다. `\` 는 `/` 로 바꿔 대조한다.
+
+| 명령 | 판정 |
+|---|---|
+| 리다이렉션 `>`·`>>` 의 대상 | 보호 경로면 막는다 |
+| 변경 동사 `rm`·`mv`·`cp`·`tee`·`touch`·`truncate`·`install`·`chmod`·`chown`, `sed -i`, `perl -pi`, `git checkout`·`git restore`·`git reset` 의 인자 | 보호 경로면 막는다 |
+| 인터프리터 `python`·`python3`·`py`·`node`, `uv run …`, `uvx` | 보호 경로 문자열을 담기만 해도 막는다. 스크립트 안의 쓰기를 셸에서 가릴 수 없다 |
+| 읽기 명령 `cat`·`rg`·`grep`·`ls`·`head`·`git show`·`git diff` 등 | 경로를 언급해도 통과한다 |
+
+- 앞에 붙은 `VAR=값`, `env`(옵션·`-u NAME` 포함), `command`·`exec`·`nohup`·`time` 은 건너뛰고 그 뒤의 동사를 본다.
+- `cd`·`pushd`·`Set-Location` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다(`cd output/<보호 실행> && rm draft.md` 도 막는다). `git -C <폴더>` 도 같다.
+- 따옴표가 맞지 않아 나눌 수 없는 명령은 쓰기 대상을 가릴 수 없으므로 보호 경로를 언급하기만 해도 막는다.
+
+셸 명령에 `scorecard_cli.py approve`, `scorecard_cli.py revoke`, `stages.approve`, `stages.revoke` 가 있으면 변경 기호와 무관하게 막는다. 승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. `confirm` 은 막지 않는다. 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 하기 때문이다. 훅은 둘째 방어선이고, 첫째는 `scorecard.stages.approve`·`revoke` **함수 본체** 가 에이전트 세션을 거부하는 것이다(2026-10-01 레인 H). CLI 든 import 든 같은 판정(`scorecard.stages.agent_session_markers`)을 거친다. 테스트만 키워드 인자 `allow_agent_session=True` 로 이 거부를 끈다.
+
+`scorecard_cli.py init <slug> … --force` 는 `output/<slug>/approval.json` 이 있으면 막는다(2026-10-01 레인 H). 덮어쓰면 승인 기록이 지워지기 때문이다. 슬러그가 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더로 보고, argparse 의 줄임(`--fo`)도 `--force` 로 본다. `stages.init_run` 도 같은 경우 에이전트 세션을 거부하고, 사람 세션에서는 CLI 가 승인 기록이 지워졌다고 경고한다.
 
 ## 실행 잠금 (`enforce_plan`)
 
@@ -61,7 +77,7 @@
 - 저장소 루트는 cwd 기준 `git rev-parse --show-toplevel` 로 찾는다. 실패하거나 그 루트에 `scripts/hooks/guard.py` 가 없으면 조용히 exit 0 이다. 무관한 폴더에서 불려도 무해하다.
 - 모르는 훅 이름과 모르는 도구 이름도 통과한다.
 
-훅 인프라 오류로 모든 도구가 막히는 일을 없애려는 선택이다. 첫 방어선은 승인·해시 검증 코드(`scorecard_cli.py`, 빌더)이고 훅은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
+훅 인프라 오류로 모든 도구가 막히는 일을 없애려는 선택이다. 첫 방어선은 승인·해시 검증 코드(`scorecard.stages` 의 승인 함수, 빌더)이고 훅은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
 
 ## 도구 이름 별칭
 
@@ -80,4 +96,4 @@
 ## 아직 하지 않은 것
 
 - Antigravity·Muse 배선은 확인 세 건(차단 표현, 페이로드 필드 이름, 훅 프로세스의 작업 디렉터리)이 끝난 뒤 별도 과제로 한다.
-- `protect_sensitive_files` 의 셸 변경 감지 정규식은 bash 명령 기준이다. PowerShell 의 `Set-Content`, `Remove-Item` 같은 cmdlet 은 아직 변경 명령으로 보지 않는다(리다이렉션 `>` 는 잡는다).
+- `protect_sensitive_files` 의 쓰기 대상 판정은 bash 명령 기준이다. PowerShell 의 `Set-Content`, `Remove-Item` 같은 cmdlet 은 아직 변경 동사로 보지 않는다(리다이렉션 `>` 와 `rm`·`cp`·`mv` 별칭은 잡는다). `find … -delete`, `xargs rm`, 글롭(`rm output/ai-*`)으로 보호 경로를 가리키는 쓰기, 보호 폴더의 상위 폴더 삭제(`rm -rf output`)도 잡지 않는다.
