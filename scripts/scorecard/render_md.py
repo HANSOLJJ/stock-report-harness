@@ -127,7 +127,7 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 
 - 4개 검토 영역: 사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성 (설계 지침 10.1)
 - 체크리스트 Q01~Q23 각 항목 pass / fail / not_applicable + 근거
-- `python scripts/validate_report_contract.py {run['run_id']}` 통과
+- `uv run --frozen python -X utf8 scripts/validate_report_contract.py {run['run_id']}` 통과
 
 ## 완료/차단 조건
 

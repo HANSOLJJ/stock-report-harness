@@ -211,6 +211,9 @@ class GuidanceTest(unittest.TestCase):
         self.addCleanup(box.close)
         plan = run_paths(SLUG).plan.read_text(encoding="utf-8")
         self.assertIn("- 흐름: plan → collect → research → calculate → draft → review → awaiting_user → build", plan)
+        # 2026-10-01 레인 J: plan.md 의 리뷰 기준 안내도 uv 형식이다.
+        self.assertIn(f"`uv run --frozen python -X utf8 scripts/validate_report_contract.py {SLUG}` 통과", plan)
+        self.assertNotIn("`python scripts/", plan)
 
 
 if __name__ == "__main__":
