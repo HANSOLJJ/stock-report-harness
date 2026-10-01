@@ -572,15 +572,40 @@ def _candidate_source_entry(candidate: dict[str, Any]) -> dict[str, Any]:
                         accessed_at=cached.get("first_seen_utc") or utc_now_iso())
 
 
+# 2026-10-01 사실·출처 리뷰(Q05 fail): 새 출처의 conflict_of_interest 가 모두 비어 있었다. 등록할 때 채운다.
+# 선별·판정자가 Claude(Anthropic 모델)라 Anthropic 과 이해관계가 있는 기업의 근거에는 그 사실을 적는다. 관계는 규칙 문서
+# ⑤ 판정표(별표 G)가 적은 것만 쓴다 — Alphabet·Amazon·Microsoft 는 Anthropic 지분 투자, OpenAI 는 직접 경쟁사다(긴장 #4·#11).
+ANTHROPIC_RELATION = {"anthropic": "당사자", "openai": "직접 경쟁사", "alphabet": "Anthropic 투자자",
+                      "amazon": "Anthropic 투자자", "microsoft": "Anthropic 투자자"}
+
+
+def source_conflict_of_interest(company_id: str, channels: set[str] | frozenset[str] = frozenset()) -> str | None:
+    """새로 등록하는 출처의 이해상충 문장. 해당이 없으면 None."""
+    parts = []
+    if "company_statement" in channels:
+        parts.append("발행사(또는 거래 상대) 자체 발표 — 이해당사자")
+    rel = ANTHROPIC_RELATION.get(company_id)
+    if rel:
+        parts.append(f"선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 {rel}다 (긴장 #4·#11)")
+    return " · ".join(parts) or None
+
+
 def register_evidence_sources(slug: str) -> list[str]:
-    """evidence.json 이 인용한 후보의 출처를 sources.json 에 **추가만** 한다. 기존 id 는 건드리지 않는다.
+    """evidence.json 과 triggers.json 이 인용한 후보의 출처를 sources.json 에 **추가만** 한다. 기존 id 는 건드리지 않는다.
 
     후보 파일에 없는 source_id 는 등록하지 않는다 — 그대로 두면 이어지는 엄격 검증이 장부에 없다고 막는다.
+    2026-10-01 사실·출처 리뷰: 근거로 고르지 않은 후보를 트리거가 관측 출처로 가리킬 수 있게 트리거의 source_ids 도 등록한다.
     """
     paths = run_paths(slug)
-    if not paths.evidence.is_file():
+    evidence = load_json_strict(paths.evidence).get("items", []) if paths.evidence.is_file() else []
+    triggers = load_json_strict(paths.triggers).get("items", []) if paths.triggers.is_file() else []
+    if not evidence and not triggers:
         return []
-    cited = sorted({e.get("source_id") for e in load_json_strict(paths.evidence).get("items", []) if e.get("source_id")})
+    channels: dict[str, set[str]] = {}
+    for e in evidence:
+        if e.get("source_id"):
+            channels.setdefault(e["source_id"], set()).add(e.get("channel") or "")
+    cited = sorted(set(channels) | {sid for t in triggers for sid in (t.get("source_ids") or [])})
     src_path = run_dir(slug) / "sources.json"
     sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
     have = {s["source_id"] for s in sources.get("items", [])}
@@ -589,7 +614,13 @@ def register_evidence_sources(slug: str) -> list[str]:
         return []
     candidates = load_json_strict(paths.candidates).get("items", []) if paths.candidates.is_file() else []
     by_sid = {c["source_id"]: c for c in candidates}
-    entries = [_candidate_source_entry(by_sid[sid]) for sid in need if sid in by_sid]
+    entries = []
+    for sid in need:
+        if sid not in by_sid:
+            continue
+        entry = _candidate_source_entry(by_sid[sid])
+        entry["conflict_of_interest"] = source_conflict_of_interest(by_sid[sid]["company_id"], frozenset(channels.get(sid, set())))
+        entries.append(entry)
     if not entries:
         return []
     upsert_sources(sources, entries)
