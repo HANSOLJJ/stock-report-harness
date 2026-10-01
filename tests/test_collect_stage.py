@@ -193,10 +193,43 @@ class PricesTest(_SandboxTest):
         stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
         obs_before = (self.box.run_dir / "observations.json").read_bytes()
         src_before = (self.box.run_dir / "sources.json").read_bytes()
-        with self.assertRaisesRegex(SchemaError, "덮어쓰지 않는다"):
-            stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        # 2026-10-01 레인 J: 중복은 회사 단위 failed 다. 기록할 것이 없으면 파일을 쓰지 않는다.
+        out = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        rows = {r["company_id"]: r for r in out["prices"]}
+        for cid in ("nvidia", "tsmc"):
+            self.assertEqual(rows[cid]["status"], "failed")
+            self.assertIn("덮어쓰지 않는다", rows[cid]["error"])
         self.assertEqual((self.box.run_dir / "observations.json").read_bytes(), obs_before)
         self.assertEqual((self.box.run_dir / "sources.json").read_bytes(), src_before)
+
+    def test_retry_after_partial_failure_records_only_the_missing_company(self):
+        """레인 M 재시도 상황. 먼저 수집된 회사가 중복으로 빠져도 나머지는 기록된다."""
+        quotes = json.loads(QUOTES.read_text(encoding="utf-8"))
+        only_nvda = self.box.dir / "nvda.json"
+        only_nvda.write_text(json.dumps({"NVDA": quotes["NVDA"]}), encoding="utf-8")
+        stages.collect(SLUG, kinds=("prices",), from_file=str(only_nvda), now=NOW)
+        out = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        self.assertEqual({r["company_id"]: r["status"] for r in out["prices"]},
+                         {"nvidia": "failed", "tsmc": "collected", "openai": "skipped_unlisted"})
+        ids = [o["observation_id"] for o in load_json_strict(self.box.run_dir / "observations.json")["items"]]
+        self.assertEqual(ids.count("nvidia.price.2026-09-29"), 1)
+        self.assertIn("tsmc.price.2026-09-29", ids)
+        engine.load_context(SLUG)
+
+    def test_invalid_observation_fails_that_company_only(self):
+        """한 회사의 관측이 스키마를 어기면(NaN 종가) 그 회사만 failed 이고 나머지는 기록된다(F-M-2)."""
+        quotes = json.loads(QUOTES.read_text(encoding="utf-8"))
+        quotes["TSM"]["close"] = float("nan")
+        path = self.box.dir / "nan.json"
+        path.write_text(json.dumps(quotes), encoding="utf-8")   # json 은 NaN 을 리터럴로 쓴다
+        out = stages.collect(SLUG, kinds=("prices",), from_file=str(path), now=NOW)
+        rows = {r["company_id"]: r for r in out["prices"]}
+        self.assertEqual((rows["nvidia"]["status"], rows["tsmc"]["status"]), ("collected", "failed"))
+        self.assertIn("price", rows["tsmc"]["error"])
+        ids = {o["observation_id"] for o in load_json_strict(self.box.run_dir / "observations.json")["items"]}
+        self.assertIn("nvidia.price.2026-09-29", ids)
+        self.assertNotIn("tsmc.price.2026-09-29", ids)
+        engine.load_context(SLUG)
 
     def test_missing_ticker_in_file_fails_that_company_only(self):
         quotes = self.box.dir / "quotes.json"

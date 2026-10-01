@@ -348,13 +348,19 @@ def write_candidates(slug: str, *, since: str, until: str, company_ids: list[str
 
 def _collect_prices(slug: str, run: dict[str, Any], registry: dict[str, dict[str, Any]], selected: list[str], *,
                     from_file: str | None, dry_run: bool, now: str | None) -> list[dict[str, Any]]:
-    """가격·시총 관측을 observations.json 에 더하고 SRC-YF-<price_as_of> 를 sources.json 에 등록한다. 덮어쓰지 않는다."""
+    """가격·시총 관측을 observations.json 에 더하고 SRC-YF-<price_as_of> 를 sources.json 에 등록한다. 덮어쓰지 않는다.
+
+    2026-10-01 레인 J(F-M-2): 회사 하나의 실패가 전체를 막지 않는다. 조회·관측 생성·중복·스키마 검증을 회사 단위로 하고,
+    실패한 회사는 `failed` 로 남기고 나머지만 기록한다.
+    """
     price_as_of = run.get("price_as_of") or run["as_of"]
     source_id = f"SRC-YF-{price_as_of}"
     quotes = json.loads(Path(from_file).read_text(encoding="utf-8")) if from_file else None
     rows: list[dict[str, Any]] = []
     new_obs: list[dict[str, Any]] = []
     tickers: list[str] = []
+    d = run_dir(slug)
+    observations = None if dry_run else load_json_strict(d / "observations.json")
     for cid in selected:
         company = registry[cid]
         ticker = company.get("ticker")
@@ -369,25 +375,28 @@ def _collect_prices(slug: str, run: dict[str, Any], registry: dict[str, dict[str
                 raise ValueError(f"{from_file} 에 {ticker} 시세가 없다")
             quote = quotes[ticker] if quotes is not None else fetch_quote(ticker, price_as_of)
             obs = price_observations(company, quote, source_id=source_id)
+            taken = {(o["company_id"], o["metric"], o["as_of"]) for o in observations["items"]}
+            taken_ids = {o["observation_id"] for o in observations["items"]}
+            clash = [o["observation_id"] for o in obs
+                     if (o["company_id"], o["metric"], o["as_of"]) in taken or o["observation_id"] in taken_ids]
+            if clash:
+                raise SchemaError(f"같은 (기업, 지표, 기준일) 관측이 이미 있다 — 덮어쓰지 않는다: {clash}")
+            # 이 회사의 관측까지 더한 상태로 검증한다. 실패하면 이 회사만 빠진다.
+            validate_observations({**observations, "items": [*observations["items"], *obs]}, registry, slug)
         except Exception as exc:  # noqa: BLE001 — 기업 하나의 실패로 나머지를 멈추지 않는다
             rows.append({"company_id": cid, "status": "failed", "error": str(exc)})
             continue
+        observations["items"].extend(obs)
         new_obs += obs
         tickers.append(ticker)
-        rows.append({"company_id": cid, "status": "collected", "close_date": obs[0]["as_of"],
-                     "market_cap": obs[1]["status"], "method": obs[1]["basis"]["method"]})
+        row = {"company_id": cid, "status": "collected", "close_date": obs[0]["as_of"],
+               "market_cap": obs[1]["status"], "method": obs[1]["basis"]["method"]}
+        if quote.get("skipped_nonfinite_close"):
+            row["skipped_nonfinite_close"] = list(quote["skipped_nonfinite_close"])
+        rows.append(row)
     if dry_run or not new_obs:
         return rows
 
-    d = run_dir(slug)
-    observations = load_json_strict(d / "observations.json")
-    taken = {(o["company_id"], o["metric"], o["as_of"]) for o in observations["items"]}
-    taken_ids = {o["observation_id"] for o in observations["items"]}
-    clash = [o["observation_id"] for o in new_obs
-             if (o["company_id"], o["metric"], o["as_of"]) in taken or o["observation_id"] in taken_ids]
-    if clash:
-        raise SchemaError(f"같은 (기업, 지표, 기준일) 관측이 이미 있다 — 덮어쓰지 않는다: {clash}")
-    observations["items"].extend(new_obs)
     validate_observations(observations, registry, slug)
     src_path = d / "sources.json"
     sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
