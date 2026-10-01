@@ -53,10 +53,10 @@ class UserAgentTest(unittest.TestCase):
 class ParseTest(unittest.TestCase):
     def test_form_and_since_filter(self):
         rows = parse_submissions(payload())
-        self.assertEqual(len(rows), 9)  # S-8 1건 제외
+        self.assertEqual(len(rows), 2)  # 앞 20건 중 4·144·3·N-PX 18건 제외
         self.assertTrue(all(r["form"] in {"8-K", "10-Q", "10-K", "20-F", "6-K"} for r in rows))
         rows = parse_submissions(payload(), since="2026-01-01")
-        self.assertEqual(len(rows), 7)
+        self.assertEqual(len(rows), 2)
         self.assertTrue(all(r["filingDate"] >= "2026-01-01" for r in rows))
 
     def test_deterministic(self):
@@ -67,12 +67,12 @@ class NormalizeTest(unittest.TestCase):
     def test_fields(self):
         row = parse_submissions(payload())[0]
         filing = normalize_filing(row, company_id="nvidia", cik=1045810, raw_ref="rr")
-        self.assertEqual(filing["filing_id"], "edgar:000104581026000150")
-        self.assertEqual(filing["source_id"], "SRC-EDGAR-000104581026000150")
-        self.assertEqual(filing["items"], ["2.02", "9.01"])
+        self.assertEqual(filing["filing_id"], "edgar:000104581026000078")
+        self.assertEqual(filing["source_id"], "SRC-EDGAR-000104581026000078")
+        self.assertEqual(filing["items"], ["8.01"])
         self.assertEqual(filing["primary_doc_url"],
-                         ARCHIVE_BASE.format(cik=1045810, accession_nodash="000104581026000150",
-                                             primary_document="nvda-20260910_8k.htm"))
+                         ARCHIVE_BASE.format(cik=1045810, accession_nodash="000104581026000078",
+                                             primary_document="nvda-20260902.htm"))
         self.assertEqual(normalize_filing(parse_submissions(payload())[1], company_id="nvidia",
                                           cik=1045810, raw_ref="rr")["items"], [])
 
@@ -89,9 +89,9 @@ class CollectTest(unittest.TestCase):
         sleeps: list[float] = []
         out = collect_company_filings(NVIDIA, from_file=FIXTURE, sleep=sleeps.append,
                                       now="2026-09-30T01:00:00Z")
-        self.assertEqual(out["filings"], 9)
+        self.assertEqual(out["filings"], 2)
         index = json.loads(Path(out["index_path"]).read_text(encoding="utf-8"))
-        self.assertEqual(len(index["items"]), 9)
+        self.assertEqual(len(index["items"]), 2)
         again = collect_company_filings(NVIDIA, from_file=FIXTURE, sleep=sleeps.append,
                                         now="2026-09-30T02:00:00Z")
         index2 = json.loads(Path(again["index_path"]).read_text(encoding="utf-8"))
