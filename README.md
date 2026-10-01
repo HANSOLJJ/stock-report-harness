@@ -45,6 +45,7 @@ plan → collect → research → calculate → draft → review → (사람) �
 | 계산 | `scripts/scorecard_cli.py calculate <run_id>` | `results.json`, `preview.md` |
 | 초안 | `scripts/scorecard_cli.py draft <run_id>` | `draft.md` |
 | 리뷰 | `scripts/scorecard_cli.py review-template <run_id>` 뒤 독립 세션 4영역 리뷰 | `review.md`, `review-parts/` |
+| 판단 수정 | 사람이 승인 페이지 8절에서, 명령은 `scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 …` (아래 「판단 수정」) | `judgments.json` 의 `revision_history` |
 | 승인 | 사람이 승인 페이지에서 (아래 절) | `approval.json` |
 | 빌드 | `scripts/build_report.py <run_id>` | `report.html`, `audit.md`, `scorecard/history.csv` |
 | 상태 확인 | `scripts/scorecard_cli.py status <run_id>` · `scripts/scorecard_cli.py summary <run_id> --json` · `scripts/validate_report_contract.py <run_id>` | 단계별 완료 여부, 승인 페이지용 요약, 계약 위반 목록 |
@@ -57,9 +58,11 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 `collect` 는 뉴스·공시·가격 후보를 `evidence/candidates.json` 에 모읍니다. 에이전트가 관련 있는 후보만 `evidence/evidence.json` 에 후보(`candidate`) 상태로 올리고, 사람이 승인 페이지에서 확정(`confirmed`)하거나 거부합니다. 새 판단(`status: new`)은 확정된 근거만 인용합니다. 트리거(`triggers.json`)는 재채점 조건만 담고 미래 점수를 저장하지 않습니다. 공시가 `not_disclosed`(발행사가 공시하지 않음을 확인)인 것과 `unverified`(우리가 찾지 못함)인 것은 구분합니다.
 
-가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣습니다. EPS 와 컨센서스는 받지 않습니다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 씁니다. 받아 온 원문은 `data/<company_id>/` 에 캐시되고(gitignore), `SCORECARD_DATA_ROOT` 환경변수로 위치를 바꿀 수 있습니다.
+가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣습니다. EPS 와 컨센서스는 받지 않습니다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 씁니다. 종가가 NaN 인 날은 건너뛰고 기준일 이하의 직전 확정 종가와 그 날짜를 기록하며, 건너뛴 날짜는 수집 요약에 남습니다. 가격 실패는 **회사 단위**입니다. 조회·관측 생성·중복(같은 기업·지표·기준일)·검증이 한 회사에서 실패하면 그 회사만 `failed` 로 남고 나머지는 기록되므로, 부분 실패 뒤 다시 돌리면 빠진 회사만 들어갑니다. 받아 온 원문은 `data/<company_id>/` 에 캐시되고(gitignore), `SCORECARD_DATA_ROOT` 환경변수로 위치를 바꿀 수 있습니다.
 
-공시 수집(`--kind filings`)에는 `SEC_UA`(SEC 가 요구하는 식별 문자열, 이름과 연락처)가 필요합니다. 저장소 루트의 `.env` 파일에 `SEC_UA=이름 이메일` 한 줄을 적습니다. git worktree 에서 실행하면 그 워크트리 루트를 먼저 보고, 없으면 원본 체크아웃 루트의 `.env` 를 읽으므로 원본 폴더 한 곳에만 두면 됩니다. `.env` 는 gitignore 되어 커밋되지 않고, 보호 훅이 에이전트의 쓰기를 막습니다. 같은 이름의 환경변수가 있으면 그것이 먼저입니다.
+공시 수집(`--kind filings`)에는 `SEC_UA`(SEC 가 요구하는 식별 문자열, 이름과 연락처)가 필요합니다. 저장소 루트의 `.env` 파일에 `SEC_UA=이름 이메일` 한 줄을 적되 **영문으로** 씁니다(HTTP 머리글 제약이라 영문 밖 글자가 있으면 값을 보이지 않고 오류를 냅니다). 뉴스 수집의 요청 식별자도 같은 검사를 거칩니다. 공시를 모을 때만 이 값을 읽으며, 문제가 있으면 그 회사의 공시가 `failed` 로 남고 가격은 영향이 없습니다. git worktree 에서 실행하면 그 워크트리 루트를 먼저 보고, 없으면 원본 체크아웃 루트의 `.env` 를 읽으므로 원본 폴더 한 곳에만 두면 됩니다. `.env` 는 gitignore 되어 커밋되지 않고, 보호 훅이 에이전트의 쓰기를 막습니다. 같은 이름의 환경변수가 있으면 그것이 먼저입니다.
+
+뉴스 질의는 기본이 표시명과 티커입니다. `Meta` 나 `Oracle` 처럼 일반 단어와 겹치는 이름은 `scorecard/companies.json` 의 기업 줄에 `news_queries`(문자열 배열)를 두어 질의를 좁힙니다. 지금 meta(`Meta Platforms`·`META stock`), oracle(`Oracle Corporation`·`ORCL`), apple(`Apple Inc`·`AAPL`)에 들어 있습니다. 같은 파일에 상장 12개사의 SEC CIK(`cik`)도 기입돼 있고, 비상장 anthropic·openai 는 없습니다. 티커에서 CIK 를 다시 확인하려면 `scripts/scorecard_cli.py resolve-cik [--company id] [--apply] [--json]` 를 씁니다. `--apply` 는 확인된(`resolved`) 것만 레지스트리에 쓰고, `--json` 은 표 대신 `{rows, applied}` 한 줄을 냅니다. 두 키는 수집기만 읽으므로 점수 지문(`results_hash`)은 바뀌지 않습니다.
 
 ### 승인 페이지
 
@@ -68,11 +71,29 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 1. 프로젝트 루트에서 `node server.js --approvals` 를 실행합니다. 터미널에 6자리 일회용 코드가 나옵니다.
 2. 브라우저에서 `http://127.0.0.1:3000/approve/<run_id>` 를 엽니다.
 3. 요약을 확인하고, 근거 후보를 확정하거나 거부합니다.
-4. 터미널의 코드를 입력해 승인합니다. 필요하면 같은 페이지에서 취소합니다.
+4. 판단을 고쳐야 하면 8절 「정성 판단 수정」에서 고칩니다(아래).
+5. 터미널의 코드를 입력해 승인합니다. 필요하면 같은 페이지에서 취소합니다.
 
-코드를 5번 틀리면 서버를 다시 띄워야 하고, 승인이 성공하면 서버는 내려갑니다. 근거를 확정하면 판단·결과·초안의 해시가 바뀌어 리뷰가 무효가 되므로, 에이전트에게 `calculate`·`draft`·`review` 를 다시 시킨 뒤 승인합니다.
+코드를 5번 틀리면 서버를 다시 띄워야 하고, 승인이 성공하면 서버는 내려갑니다. 근거를 확정하거나 판단을 고치면 판단·결과·초안의 해시가 바뀌어 리뷰가 무효가 되므로, 에이전트에게 `calculate`·`draft`·`review` 를 다시 시킨 뒤 승인합니다.
 
-**판단을 입력하는 명령은 아직 없습니다.** 지금 판단 데이터는 v1.5 채점표에서 기계로 읽어 온 것과 에이전트가 고친 것입니다.
+#### 판단 수정
+
+사람이 승인 페이지 8절에서 정성 판단의 **입력**을 고칩니다. 점수를 덮어쓰지 않고, 입력을 고치면 점수는 규칙이 다시 계산합니다.
+
+1. `http://127.0.0.1:3000/approve/<run_id>?factor=F3` 처럼 factor 를 고르면 그 factor 의 모든 기업 판단이 나란히 보입니다. **같은 factor 의 다른 기업 판단을 함께 보고** 잣대가 같은지 확인한 뒤 고칩니다(체크리스트 Q03).
+2. 기업을 고르면(`&company=<id>`) 판정 종류에 맞는 입력란이 나옵니다. 근거 문장, 사유, 이름을 적고 터미널의 코드를 넣어 제출합니다. 이전 값은 판단 안의 `revision_history` 에 남고, `status: new`·검토자·검토일이 갱신됩니다.
+3. 해시가 바뀌었다는 안내가 나오면 에이전트에게 `calculate`·`draft`·`review` 를 다시 시킵니다. 리뷰가 `pass` 가 된 뒤 새로고침해 승인합니다.
+
+| factor | 고칠 수 있는 것 |
+| --- | --- |
+| ① ④ ⑧ | 점수(`score`)와 근거 문장 |
+| ③ | 네 기준(`criteria`: imitation · revenue_model · acceleration · door_closed)과 근거 문장 |
+| ⑤ | 등급(`grade`: A 0~2, H 0~−3)과 근거 문장 |
+| ⑦ | 매트릭스(`matrix`: funding_dependent_share · own_money_returns)와 근거 문장 |
+| ⑨ | 게이트 입력(`gate_inputs`: fcf_trend · bep_retreat · buffer_erosion · direction_A·B · coverage_comparable · operating_result_reviewed)과 근거 문장 |
+| ② ⑥ | 대상이 아닙니다 |
+
+③ ⑤ ⑦ ⑨ 는 점수 칸을 고칠 수 없고 판정 재료만 바뀝니다. 점수를 직접 고치는 길은 없습니다. 명령줄 `scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" --by <이름>` 도 같은 일을 하며, 에이전트가 판단 수정을 제안할 때 쓰는 길입니다(승인 페이지는 사람 이름과 코드를 받아 이 명령을 부릅니다). 새 판단(`status: new`)은 확정된 근거만 인용합니다.
 
 ## 파일은 네 종류입니다
 
@@ -100,7 +121,7 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 | 훅 (`guard.py` 함수) | 이벤트 | 역할 |
 | --- | --- | --- |
 | `block_dangerous_bash` | 셸 실행 전 | `rm -rf /`, `sudo`, 원격 스크립트 파이프 실행, 강제 push 차단 |
-| `protect_sensitive_files` | 셸·파일 도구 실행 전 | 보호 목록(`.env*`, `.git/`, `.github/workflows/`, `docs/finance-style-guide.md`, `**/approval.json`, `scorecard/rules/v1.5~v1.7.json`, `scorecard/history.csv`, `scorecard/baseline/**`, 승인된 기준선·관측 실행 묶음 `output/ai-scorecard-2026-09-baseline/`·`output/ai-scorecard-2026-09-obsreg/`) 수정 차단. 셸 명령은 보호 경로가 쓰기 대상(리다이렉션 대상, 변경 동사 인자)일 때만 막고 읽기 명령의 언급은 통과시키며, `python`·`node`·`uv run python` 인터프리터 명령이 보호 경로를 담으면 막음. 승인 있는 실행에 대한 `scorecard_cli.py init … --force` 와 승인·취소 명령은 셸에서 차단 |
+| `protect_sensitive_files` | 셸·파일 도구 실행 전 | 보호 목록(`.env*`, `.git/`, `.github/workflows/`, `docs/finance-style-guide.md`, `**/approval.json`, `scorecard/rules/v1.5~v1.7.json`, `scorecard/history.csv`, `scorecard/baseline/**`, 승인된 기준선·관측 실행 묶음 `output/ai-scorecard-2026-09-baseline/`·`output/ai-scorecard-2026-09-obsreg/`) 수정 차단. 셸 명령은 보호 경로가 쓰기 대상일 때만 막고 읽기 명령의 언급은 통과시킴. 쓰기 대상은 리다이렉션 대상, 변경 동사(`rm`·`mv`·`tee`·`sed -i` 등)와 PowerShell cmdlet(`Set-Content`·`Add-Content`·`Out-File`·`Remove-Item`·`Move-Item`·`New-Item`·`Rename-Item`·`Clear-Content` 와 기본 별칭)의 경로 인자, 복사(`cp`·`Copy-Item`)의 목적지, `find … -delete`·`-exec`, `xargs <변경 동사>`, 보호 경로와 맞는 글롭이며, 보호 경로를 품은 상위 폴더 삭제·이동(`rm -rf output`)도 막음. `python`·`node`·`uv run python` 인터프리터 명령이 보호 경로를 담으면 막음. 승인 있는 실행에 대한 `scorecard_cli.py init … --force` 와 승인·취소 명령은 셸에서 차단 |
 | `enforce_plan` | 셸·파일 도구 실행 전 | `output/<run_id>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 전 리뷰 `pass` 요구, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 |
 | `forbid_financial_advice` | 파일 도구 실행 전·후, 셸 실행 후 | `draft.md`·`judgments.json`·`evidence/*.json` 의 투자 권유·수익 보장 표현 차단. 셸 실행 뒤에는 무엇이 바뀌었는지 알 수 없으므로 대상 파일 전체를 다시 검사 |
 | `remind_review` | 파일 도구 실행 후, 세션 종료 | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고만 함 |
@@ -109,7 +130,7 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 배선은 Claude Code 가 `.claude/settings.json`, Codex 가 `.codex/hooks.json` 입니다. 두 곳 모두 `uv run --frozen … python -X utf8 scripts/hooks/guard.py <훅이름>` 한 줄로 부릅니다.
 
-훅은 둘째 방어선입니다. 첫째는 승인 해시 검증과 CLI 의 거부(에이전트 세션의 승인·취소 거부)이고, 훅은 도구 호출 밖의 동작을 막지 못합니다. 다만 임의 Python 을 실행할 수 있는 에이전트가 작정하면 첫 방어선도 우회할 수 있으므로, 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것입니다.
+훅은 둘째 방어선입니다. 첫째는 승인 해시 검증과 `scorecard.stages` 의 `approve`·`revoke` 함수 본체가 하는 거부입니다. 이 거부는 CLI 로 부르든 import 로 부르든 같은 판정(`agent_session_markers`)을 거치고, 환경변수 표지(`CLAUDECODE`·`CLAUDE_CODE_ENTRYPOINT`·`ORCA_AGENT_LAUNCH_TOKEN`·`AI_AGENT`, Muse 세션의 `MUSE_TOOL_USE_ID`)가 하나라도 있으면 에이전트 세션으로 봅니다. 승인 있는 실행에 대한 `init --force` 도 에이전트 세션이면 `init_run` 이 거부합니다. 훅은 도구 호출 밖의 동작을 막지 못합니다. 다만 임의 Python 을 실행할 수 있는 에이전트가 작정하면 첫 방어선도 우회할 수 있으므로, 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것입니다.
 
 ## 이해상충
 
@@ -135,7 +156,7 @@ Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree
 3. **재승인과 정식 빌드** — 점수는 그대로이고 설명만 바뀌었습니다.
 4. **기업 추가 명령** — `add-company` 로 레지스트리에 등록하고, `init --from-run` 으로 이전 실행을 이어받아 **새 기업만 조사**합니다. 기존 기업 불변은 `diff` 가 기계로 증명합니다. 계획 승인 완료, 구현 중입니다.
 5. **규칙 폴더를 `v1.5/` · `v1.7/` 로 정리** — `scripts/scorecard/baseline_import.py` 와 테스트 둘이 지금 경로를 직접 참조하므로 경로 수정과 함께 해야 합니다.
-6. **정성 판단의 입력 창구** — 에이전트가 질문별로 답·근거·출처를 조사해 제안하고, 사용자가 검토 화면에서 동의하거나 고치는 방식을 검토 중입니다.
+6. **정성 판단의 제안 흐름** — 고치는 창구(`judge`, 승인 페이지 8절)는 생겼습니다. 에이전트가 질문별로 답·근거·출처를 조사해 제안하고 사용자가 검토 화면에서 동의하는 앞단은 아직 검토 중입니다.
 7. **v1.8 방향** — 점수를 직접 입력하는 ① ② ④ ⑧ 을 ③ ⑤ ⑦ 처럼 정해진 질문으로 쪼개고, 질문마다 공시에서 잴 수 있는 값(고객 집중도 · 벤치마크 순위 · 출하 여부 · 수주잔고)을 붙입니다.
 
 세부 미결 사항은 `docs/scorecard/open-items.md`, 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md` 에 있습니다.

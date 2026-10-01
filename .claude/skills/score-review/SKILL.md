@@ -21,6 +21,21 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
 4. 네 영역 모두 pass 이고 fail 항목이 없을 때만 frontmatter `status: pass`. 하나라도 needs_fix 면 `needs_fix` 로 두고 상위 단계(collect/research/calculate/draft/렌더러)로 돌아가 수정 후 재생성·재리뷰한다. 자료·규칙·판단·초안이 바뀌면 리뷰는 무효이므로 템플릿의 `results_hash`·`draft_hash` 를 갱신한다(`review-template --force` 후 다시 채움).
 5. `uv run --frozen python -X utf8 scripts/validate_report_contract.py <run_id>` 를 실행해 통과를 확인한다.
 
+## 판단 수정을 제안할 때
+
+리뷰에서 정성 판단(F1·F3·F4·F5·F7·F8·F9)의 입력이 틀렸다고 보면, 점수나 `draft.md` 를 고치지 않고 판단 입력을 고친다. 사람은 승인 페이지 8절에서 고치고, 에이전트는 사람이 지시한 수정이나 리뷰어가 제안한 수정을 명령으로 기록한다.
+
+```
+uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" --by <이름> [--take-lock]
+```
+
+- F1·F4·F8 은 `--set score=N`, F3 은 `--set imitation=pass` 같은 `criteria` 키, F5 는 `A`·`H`, F7 은 `funding_dependent_share`·`own_money_returns`, F9 는 `gate_inputs` 키를 준다. F3·F5·F7·F9 에 `score` 를 주면 거부된다. F2·F6 은 대상이 아니다.
+- `--evidence` 는 여러 번 주면 그 목록으로 근거를 통째로 바꾼다. 판정 재료를 바꿨다면 근거 문장도 함께 맞춘다.
+- `--reason` 에 사유를, `--by` 에 수정을 정한 사람의 이름을 적는다. 이전 값은 `revision_history` 에 남는다.
+- 새 판단은 확정된 근거만 인용한다. 후보 근거를 인용하는 수정은 거부된다.
+- 같은 factor 의 다른 기업 판단을 함께 보고 같은 잣대를 대는지 확인한다(Q03).
+- 고친 뒤에는 판단 해시가 바뀌므로 리뷰가 무효다. `calculate` → `draft` → `review-template --force` 부터 다시 돌리고 "승인 대기" 를 보고한다.
+
 ## 상태
 
 - `pass`: 승인 요청 가능.
