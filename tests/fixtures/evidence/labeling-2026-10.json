@@ -334,7 +334,7 @@
       "proposed_reason": "특허 소송 평결은 ⑤ 적대 등급 가운데 비용형 재료다. 본업 수요를 건드리지 않으므로 별표 C 의 Apple 사례처럼 비용형에 머문다.",
       "proposed_confidence": "중간",
       "proposed_channel": "secondary",
-      "label": "irrelevant",
+      "label": "correct",
       "label_factors": "F5",
       "label_note": "이거는 규모에 따라서 아군확보 점수에 영향이 있을지 없을지가 정해지지 않을까?"
     },
