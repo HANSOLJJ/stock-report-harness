@@ -59,7 +59,7 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣습니다. EPS 와 컨센서스는 받지 않습니다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 씁니다. 받아 온 원문은 `data/<company_id>/` 에 캐시되고(gitignore), `SCORECARD_DATA_ROOT` 환경변수로 위치를 바꿀 수 있습니다.
 
-공시 수집(`--kind filings`)에는 `SEC_UA`(SEC 가 요구하는 식별 문자열, 이름과 연락처)가 필요합니다. 저장소 루트의 `.env` 파일에 `SEC_UA=이름 이메일` 한 줄을 적습니다. `.env` 는 gitignore 되어 커밋되지 않고, 보호 훅이 에이전트의 쓰기를 막습니다. 같은 이름의 환경변수가 있으면 그것이 먼저입니다.
+공시 수집(`--kind filings`)에는 `SEC_UA`(SEC 가 요구하는 식별 문자열, 이름과 연락처)가 필요합니다. 저장소 루트의 `.env` 파일에 `SEC_UA=이름 이메일` 한 줄을 적습니다. git worktree 에서 실행하면 그 워크트리 루트를 먼저 보고, 없으면 원본 체크아웃 루트의 `.env` 를 읽으므로 원본 폴더 한 곳에만 두면 됩니다. `.env` 는 gitignore 되어 커밋되지 않고, 보호 훅이 에이전트의 쓰기를 막습니다. 같은 이름의 환경변수가 있으면 그것이 먼저입니다.
 
 ### 승인 페이지
 

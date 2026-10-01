@@ -20,12 +20,39 @@ GOOGLE_MAX_FETCH_PER_QUERY_PER_DAY = 4
 SEC_SLEEP_S = 1.0
 
 
-def _dotenv_path() -> Path | None:
-    """로컬 설정 파일 경로. SCORECARD_DOTENV 가 있으면 그 값(빈 문자열이면 읽지 않음), 없으면 저장소 루트 .env."""
+def _main_checkout_root() -> Path | None:
+    """git worktree 라면 원본(main) 체크아웃 루트. `.git` 파일의 gitdir 이 `<원본>/.git/worktrees/<이름>` 을 가리킨다."""
+    marker = ROOT / ".git"
+    if not marker.is_file():
+        return None
+    try:
+        text = marker.read_text(encoding="utf-8").strip()
+    except OSError:
+        return None
+    if not text.startswith("gitdir:"):
+        return None
+    gitdir = Path(text.split(":", 1)[1].strip())
+    if not gitdir.is_absolute():
+        gitdir = (ROOT / gitdir).resolve()
+    if gitdir.parent.name != "worktrees" or gitdir.parent.parent.name != ".git":
+        return None
+    return gitdir.parent.parent.parent
+
+
+def _dotenv_paths() -> list[Path]:
+    """로컬 설정 파일 후보. SCORECARD_DOTENV 가 있으면 그 하나(빈 문자열이면 읽지 않음).
+
+    없으면 이 체크아웃 루트의 .env, 그다음 원본 체크아웃 루트의 .env 순서다. 2026-10-01: 워커마다 워크트리가
+    따로 있어도 사용자가 원본 폴더 한 곳에 만든 .env 를 함께 읽게 한다.
+    """
     override = os.environ.get("SCORECARD_DOTENV")
     if override is not None:
-        return Path(override) if override.strip() else None
-    return ROOT / ".env"
+        return [Path(override)] if override.strip() else []
+    paths = [ROOT / ".env"]
+    main = _main_checkout_root()
+    if main is not None and (main / ".env") != paths[0]:
+        paths.append(main / ".env")
+    return paths
 
 
 def read_local_setting(key: str) -> str:
@@ -37,16 +64,16 @@ def read_local_setting(key: str) -> str:
     value = os.environ.get(key, "").strip()
     if value:
         return value
-    path = _dotenv_path()
-    if path is None or not path.is_file():
-        return ""
-    for line in path.read_text(encoding="utf-8-sig").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
+    for path in _dotenv_paths():
+        if not path.is_file():
             continue
-        name, raw = line.split("=", 1)
-        if name.strip() == key:
-            return raw.strip().strip('"').strip("'").strip()
+        for line in path.read_text(encoding="utf-8-sig").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            name, raw = line.split("=", 1)
+            if name.strip() == key:
+                return raw.strip().strip('"').strip("'").strip()
     return ""
 
 
