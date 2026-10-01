@@ -11,6 +11,7 @@
   uv run --frozen python -X utf8 scripts/scorecard_cli.py draft <slug>
   uv run --frozen python -X utf8 scripts/scorecard_cli.py review-template <slug> [--force]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py trigger-candidates <slug> [--json] [--limit N]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py summary <slug> --json
   uv run --frozen python -X utf8 scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <slug> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json PATH) --reason "…" --by NAME [--take-lock]
@@ -449,6 +450,24 @@ def cmd_diff(args: argparse.Namespace) -> int:
     return 0 if out["ok"] else 1
 
 
+def cmd_trigger_candidates(args: argparse.Namespace) -> int:
+    """이전 트리거마다 확인할 수집 후보를 보여준다. 읽기만 하며 입력·점수를 바꾸지 않는다."""
+    from scorecard import engine
+    from scorecard.schema import SchemaError
+    from scorecard.trigger_candidates import render_text, trigger_candidates_for_run
+
+    if args.limit < 1:
+        raise SchemaError(f"--limit 은 1 이상: {args.limit}")
+    data = trigger_candidates_for_run(args.slug, limit=args.limit)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if args.json:
+        print(json.dumps(data, ensure_ascii=False, indent=2))
+        return 0
+    print(render_text(data, engine.load_companies()), end="")
+    return 0
+
+
 def cmd_resolve_cik(args: argparse.Namespace) -> int:
     """티커로 SEC CIK 를 찾아 표로 낸다. `--apply` 는 `resolved` 인 것만 레지스트리에 쓴다.
 
@@ -656,6 +675,12 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("slug")
     p.add_argument("--json", action="store_true")
     p.set_defaults(func=cmd_summary)
+
+    p = sub.add_parser("trigger-candidates", help="이전 트리거마다 확인할 수집 후보를 보여준다(읽기만)")
+    p.add_argument("slug")
+    p.add_argument("--json", action="store_true", help="사람용 출력 대신 같은 내용의 dict 를 JSON 으로")
+    p.add_argument("--limit", type=int, default=5, help="트리거당 상위 N건(기본 5)")
+    p.set_defaults(func=cmd_trigger_candidates)
 
     p = sub.add_parser("resolve-cik", help="티커 → SEC CIK 확인. --apply 는 resolved 인 것만 companies.json 에 쓴다")
     p.add_argument("--company")
