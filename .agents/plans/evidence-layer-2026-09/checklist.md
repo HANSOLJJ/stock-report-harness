@@ -99,4 +99,7 @@
 - [ ] 사용자: tests/fixtures/evidence/labeling-2026-10.csv 라벨 작성(correct·wrong·irrelevant)
 - [x] 끝난 레인 16개(S·A·B·C·D·E·F·G·V·H·I·M·J·K·T·L) 워크트리 삭제(2026-10-01, 사용자 지시). orca worktree rm 이 브랜치까지 지워, 병합 커밋의 둘째 부모로 16개 브랜치를 되살림(워커 보고 SHA 와 일치)
 - [x] 레인 V2 (Fable) 독립 재검증 완료·보고서 병합. 첫 검증 F-1~F-7 해소(F-3 일부). 새 발견 13건(medium 4: V2-1 단계 명령이 승인 실행의 승인을 무효·삭제, V2-2 근거 인용 판단의 이어받기 실패, V2-3 대소문자 다른 승인 파일 이름, V2-4 보호 훅 재작성 뒤 변수·중첩 셸 쓰기 통과 / low 9). 하드 블록 없음. 병합 전 권고 V2-1·V2-4·V2-2, V2-3 함께
-- [ ] 레인 V2 발견 수정 범위 사용자 결정
+- [x] 레인 V2 발견 수정 범위 사용자 결정 — V2-1~V2-4 는 Opus(레인 N), V2-5 문서는 Antigravity(레인 P), 나머지 low 는 병합 뒤
+- [ ] 레인 N (Opus) V2-1~V2-4. dispatch `ctx_2a662c2cf922`, 터미널 `term_5e9bbb89-be9c-4dbe-a24f-d8c757f344c8`
+- [ ] 레인 P (Antigravity) V2-5 문서. dispatch `ctx_85c30b73f736`, 터미널 `term_ad8d68ca-079e-4b2a-837c-9b8d93403e3e`
+- [ ] 레인 V2 low 나머지(V2-6~V2-13)는 main 병합 뒤 별도 과제
