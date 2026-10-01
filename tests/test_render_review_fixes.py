@@ -35,12 +35,16 @@ class SourceRegistrationTest(unittest.TestCase):
     def test_conflict_of_interest_text(self):
         from scorecard.stages import source_conflict_of_interest
 
-        self.assertIsNone(source_conflict_of_interest("nvidia", frozenset({"press"})))
+        self.assertIsNone(source_conflict_of_interest("tesla", frozenset({"press"})))
         self.assertIn("자체 발표", source_conflict_of_interest("nvidia", frozenset({"company_statement"})))
         self.assertIn("Anthropic 투자자", source_conflict_of_interest("amazon"))
         both = source_conflict_of_interest("anthropic", frozenset({"company_statement"}))
         self.assertIn("자체 발표", both)
         self.assertIn("당사자", both)
+        self.assertIn("2025-11", source_conflict_of_interest("nvidia"))
+        self.assertIn("컴퓨트 공급자", source_conflict_of_interest("spacex-xai"))
+        self.assertIn("Anthropic 을 다룬다", source_conflict_of_interest("tesla", title="Anthropic signs deal with Tesla - Reuters"))
+        self.assertIsNone(source_conflict_of_interest("tesla", title="Tesla robotaxi expands - Reuters"))
 
 
 class TriggerSourceRegistrationTest(unittest.TestCase):

@@ -575,11 +575,16 @@ def _candidate_source_entry(candidate: dict[str, Any]) -> dict[str, Any]:
 # 2026-10-01 사실·출처 리뷰(Q05 fail): 새 출처의 conflict_of_interest 가 모두 비어 있었다. 등록할 때 채운다.
 # 선별·판정자가 Claude(Anthropic 모델)라 Anthropic 과 이해관계가 있는 기업의 근거에는 그 사실을 적는다. 관계는 규칙 문서
 # ⑤ 판정표(별표 G)가 적은 것만 쓴다 — Alphabet·Amazon·Microsoft 는 Anthropic 지분 투자, OpenAI 는 직접 경쟁사다(긴장 #4·#11).
+# 2026-10-01 사실·출처 재리뷰: NVIDIA(2025-11 Anthropic 투자 발표)와 SpaceX·xAI(Anthropic ⑧ 판단이 적은 경쟁사이자 컴퓨트
+# 공급자)가 빠져 있었다. 어느 기업 피드로 들어왔든 기사 제목이 Anthropic·Claude 를 다루면 그것도 표기한다.
 ANTHROPIC_RELATION = {"anthropic": "당사자", "openai": "직접 경쟁사", "alphabet": "Anthropic 투자자",
-                      "amazon": "Anthropic 투자자", "microsoft": "Anthropic 투자자"}
+                      "amazon": "Anthropic 투자자", "microsoft": "Anthropic 투자자",
+                      "nvidia": "Anthropic 투자자(2025-11 발표)", "spacex-xai": "Anthropic 경쟁사(xAI)이자 컴퓨트 공급자"}
+ANTHROPIC_TITLE_RE = re.compile(r"\b(Anthropic|Claude)\b", re.I)
 
 
-def source_conflict_of_interest(company_id: str, channels: set[str] | frozenset[str] = frozenset()) -> str | None:
+def source_conflict_of_interest(company_id: str, channels: set[str] | frozenset[str] = frozenset(),
+                                title: str | None = None) -> str | None:
     """새로 등록하는 출처의 이해상충 문장. 해당이 없으면 None."""
     parts = []
     if "company_statement" in channels:
@@ -587,6 +592,8 @@ def source_conflict_of_interest(company_id: str, channels: set[str] | frozenset[
     rel = ANTHROPIC_RELATION.get(company_id)
     if rel:
         parts.append(f"선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 {rel}다 (긴장 #4·#11)")
+    elif title and ANTHROPIC_TITLE_RE.search(title):
+        parts.append("선별·판정자 Claude 는 Anthropic 모델이고 이 기사는 Anthropic 을 다룬다 (긴장 #4·#11)")
     return " · ".join(parts) or None
 
 
@@ -619,7 +626,8 @@ def register_evidence_sources(slug: str) -> list[str]:
         if sid not in by_sid:
             continue
         entry = _candidate_source_entry(by_sid[sid])
-        entry["conflict_of_interest"] = source_conflict_of_interest(by_sid[sid]["company_id"], frozenset(channels.get(sid, set())))
+        entry["conflict_of_interest"] = source_conflict_of_interest(by_sid[sid]["company_id"], frozenset(channels.get(sid, set())),
+                                                                    title=by_sid[sid].get("title"))
         entries.append(entry)
     if not entries:
         return []
