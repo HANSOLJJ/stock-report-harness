@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -115,6 +116,21 @@ class WindowTest(_SandboxTest):
         by_id = {r["company_id"]: r["status"] for r in out["filings"]}
         self.assertEqual(by_id, {"nvidia": "skipped_no_user_agent", "tsmc": "skipped_no_cik", "openai": "skipped_no_cik"})
         self.assertTrue(run_paths(SLUG).candidates.is_file())
+
+    def test_non_ascii_sec_ua_fails_per_company_before_requests(self):
+        """2026-10-01 레인 J(F-M-1): 영문이 아닌 SEC_UA 는 요청 전에 회사별 failed 다. 가격(파일)은 영향받지 않는다."""
+        os.environ["SEC_UA"] = "Harness 홍길동 hong@example.com"   # Sandbox.close 가 원래 값으로 되돌린다
+        self.addCleanup(os.environ.pop, "SEC_UA", None)
+        with mock.patch.object(evidence_lib.urllib.request, "urlopen", side_effect=AssertionError("요청하면 안 된다")):
+            out = stages.collect(SLUG, now=NOW, kinds=("news", "filings"))
+            prices = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        rows = [*out["news"], *out["filings"]]
+        failed = sorted(r["company_id"] for r in rows if r["status"] == "failed"
+                        and r["error"].startswith("SEC_UA 는 영문으로 적는다(HTTP 머리글 제약)"))
+        self.assertEqual(failed, ["nvidia", "nvidia", "openai", "tsmc"])   # 뉴스 셋 + 공시(cik 있는 nvidia)
+        self.assertTrue(all("홍길동" not in r.get("error", "") for r in rows))
+        self.assertEqual({r["company_id"]: r["status"] for r in prices["prices"]},
+                         {"nvidia": "collected", "tsmc": "collected", "openai": "skipped_unlisted"})
 
     def test_argument_errors(self):
         with self.assertRaises(SchemaError):

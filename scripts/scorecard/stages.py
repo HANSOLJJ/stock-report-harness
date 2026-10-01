@@ -450,11 +450,20 @@ def collect(
             summary["news"].append({"company_id": cid, "status": status, "urls": res["urls"]})
         except Exception as exc:  # noqa: BLE001
             summary["news"].append({"company_id": cid, "status": "failed", "error": str(exc)})
-    sec_ua = evidence_lib.sec_user_agent()
+    # 2026-10-01 레인 J(F-M-1): 공시를 모을 때만 SEC_UA 를 읽는다. 영문이 아니면 요청 전에 회사별 failed 로 남긴다.
+    sec_ua, sec_ua_error = "", None
+    if "filings" in kinds:
+        try:
+            sec_ua = evidence_lib.sec_user_agent()
+        except RuntimeError as exc:
+            sec_ua_error = str(exc)
     for cid in selected if "filings" in kinds else []:
         company = registry[cid]
         if not company.get("cik"):
             summary["filings"].append({"company_id": cid, "status": "skipped_no_cik"})
+            continue
+        if from_file is None and not dry_run and sec_ua_error:
+            summary["filings"].append({"company_id": cid, "status": "failed", "error": sec_ua_error})
             continue
         if from_file is None and not dry_run and not sec_ua:
             # 전체를 실패시키지 않는다. 나머지 종류와 기업은 계속 돈다.

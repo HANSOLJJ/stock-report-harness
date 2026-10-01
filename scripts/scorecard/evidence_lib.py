@@ -77,9 +77,20 @@ def read_local_setting(key: str) -> str:
     return ""
 
 
+SEC_UA_NOT_ASCII = ("SEC_UA 는 영문으로 적는다(HTTP 머리글 제약) — 영문 범위(ASCII) 밖 글자가 있다. "
+                    "저장소 루트 .env 나 환경변수의 SEC_UA 를 영문 이름과 이메일로 고친다")
+
+
 def sec_user_agent() -> str:
-    """SEC 가 요구하는 식별 문자열(이름과 연락처). 없으면 빈 문자열."""
-    return read_local_setting("SEC_UA")
+    """SEC 가 요구하는 식별 문자열(이름과 연락처). 없으면 빈 문자열.
+
+    2026-10-01 레인 J(F-M-1): 영문 범위 밖 글자가 있으면 urllib 이 머리글 인코딩에서 실패한다. 네트워크 요청 전에
+    여기서 막는다. 뉴스 UA 도 이 값을 쓰므로 같은 검사를 거친다. 값은 오류 메시지에 넣지 않는다.
+    """
+    value = read_local_setting("SEC_UA")
+    if value and not value.isascii():
+        raise RuntimeError(SEC_UA_NOT_ASCII)
+    return value
 
 
 def user_agent_for(kind: str) -> str:
