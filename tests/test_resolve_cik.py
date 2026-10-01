@@ -24,6 +24,7 @@ def ticker_map() -> dict[str, int]:
 COMPANIES = [
     {"company_id": "nvidia", "ticker": "NVDA", "listed": True},
     {"company_id": "spacex-xai", "ticker": "SPCX", "listed": True},
+    {"company_id": "ghost", "ticker": "ZZZZ", "listed": True},
     {"company_id": "anthropic", "ticker": None, "listed": False},
 ]
 
@@ -32,7 +33,7 @@ class MapTest(unittest.TestCase):
     def test_upper_keys(self):
         mapping = ticker_map()
         self.assertEqual(mapping["NVDA"], 1045810)
-        self.assertEqual(len(mapping), 11)
+        self.assertEqual(len(mapping), 12)
 
 
 class ResolveTest(unittest.TestCase):
@@ -40,9 +41,12 @@ class ResolveTest(unittest.TestCase):
         rows = {r["company_id"]: r for r in resolve(COMPANIES, ticker_map())}
         self.assertEqual(rows["nvidia"]["status"], "resolved")
         self.assertEqual(rows["nvidia"]["cik"], 1045810)
-        # SPCX는 목록에 없어 not_found로 둔다
-        self.assertEqual(rows["spacex-xai"]["status"], "not_found")
-        self.assertIsNone(rows["spacex-xai"]["cik"])
+        # SPCX는 실응답에 등재되어 resolved(CIK 1181412, 사용자 후보와 일치)
+        self.assertEqual(rows["spacex-xai"]["status"], "resolved")
+        self.assertEqual(rows["spacex-xai"]["cik"], 1181412)
+        # 픽스처에 없는 가짜 티커로 not_found 경로를 검사한다
+        self.assertEqual(rows["ghost"]["status"], "not_found")
+        self.assertIsNone(rows["ghost"]["cik"])
         self.assertEqual(rows["anthropic"]["status"], "unlisted")
 
     def test_deterministic(self):

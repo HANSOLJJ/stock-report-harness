@@ -143,7 +143,7 @@ class ResolveCikCliTest(_RegistrySandbox):
         code, out = self._run()
         self.assertEqual(code, 0)
         self.assertIn("nvidia\tNVDA\tNone\t1045810\tresolved", out)
-        self.assertIn("spacex-xai\tSPCX\tNone\tNone\tnot_found", out)
+        self.assertIn("spacex-xai\tSPCX\tNone\t1181412\tresolved", out)
         self.assertIn("openai\tNone\tNone\tNone\tunlisted", out)
         self.assertEqual(self.path.read_bytes(), original)
 
@@ -152,7 +152,8 @@ class ResolveCikCliTest(_RegistrySandbox):
         self.assertEqual(code, 0)
         by_id = {c["company_id"]: c for c in load_json_strict(self.path)["companies"]}
         self.assertEqual(by_id["nvidia"]["cik"], 1045810)
-        for cid in ("spacex-xai", "openai", "anthropic"):
+        self.assertEqual(by_id["spacex-xai"]["cik"], 1181412)
+        for cid in ("openai", "anthropic"):
             with self.subTest(cid=cid):
                 self.assertNotIn("cik", by_id[cid])
         # 한 번 더 돌려도 이미 같은 값이면 쓰지 않는다.
