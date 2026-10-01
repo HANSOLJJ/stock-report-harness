@@ -410,19 +410,23 @@ test('GET ?factor=F3: 같은 factor 의 모든 기업 판단을 나란히, compa
     const list = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F3' });
     assert.equal(list.statusCode, 200);
     assert.match(list.body, /정성 판단 수정/);
-    assert.match(list.body, /imitation=fail, revenue_model=pass/);
-    assert.match(list.body, /imitation=partial/, '다른 기업(OpenAI)의 같은 factor 판단도 보여야 함');
+    // 2026-10-01 사용자 요청: factor 탭(페이지를 다시 불러오지 않음) + 기업 카드 + 한국어 입력 이름
+    assert.match(list.body, /data-judge-tab="F3" aria-selected="true">③ Last Mover<\/button>/, 'F3 탭이 열려 있어야 함');
+    assert.match(list.body, /data-judge-panel="F3">/);
+    assert.match(list.body, /모방 불가능성<\/span> <strong>미충족<\/strong>/, '지금 값은 한국어 이름과 값');
+    assert.match(list.body, /별도 수익모델<\/span> <strong>충족<\/strong>/);
+    assert.match(list.body, /모방 불가능성<\/span> <strong>절반<\/strong>/, '다른 기업(OpenAI)의 같은 factor 판단도 보여야 함');
     assert.match(list.body, /&lt;b&gt;태그&lt;\/b&gt;/, '근거 문장은 이스케이프');
-    // 2026-10-01 V2-11: 마지막 수정이 에이전트 세션이면 검토자 칸에 보인다(NVIDIA 만, OpenAI 는 수정 이력 없음)
-    assert.equal((list.body.match(/에이전트 세션에서 수정/g) || []).length, 1);
-    assert.doesNotMatch(list.body, /id="judge-form"/, '기업을 고르기 전에는 입력란이 없다');
+    assert.doesNotMatch(list.body, /id="judge-form"/, '기업을 고르기 전에는 열린 입력란이 없다');
+    assert.match(list.body, /<div class="judge-form-wrap" hidden>/, '수정 칸은 닫힌 채 카드 안에 있다');
 
     const form = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F3&company=nvidia' });
-    assert.match(form.body, /action="\/approve\/ai-scorecard-2026-11-x\/judge"/);
+    assert.match(form.body, /<div class="judge-form-wrap"><\s*form method="POST" action="\/approve\/ai-scorecard-2026-11-x\/judge" class="judge-form" id="judge-form">|<div class="judge-form-wrap">\s*<form method="POST" action="\/approve\/ai-scorecard-2026-11-x\/judge" class="judge-form" id="judge-form">/, '고른 기업의 수정 칸이 열려 있어야 함');
     assert.match(form.body, /name="in_imitation"/);
     assert.match(form.body, /name="in_door_closed"/);
-    assert.match(form.body, /<option value="fail" selected>fail<\/option>/);
-    assert.doesNotMatch(form.body, /name="score"/, 'criteria 판단에는 점수 입력란이 없다');
+    assert.match(form.body, /<option value="fail" selected>미충족 \(fail\)<\/option>/);
+    assert.match(form.body, /문 닫기\(후발 차단\)/, '입력란 이름은 한국어');
+    assert.doesNotMatch(form.body.split('id="judge-form"')[1].split('</form>')[0], /name="score"/, 'criteria 판단에는 점수 입력란이 없다');
     assert.match(form.body, /name="reason"/);
 
     const score = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F1&company=nvidia' });

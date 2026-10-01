@@ -252,14 +252,124 @@ function renderErrorPage(statusCode, title, detail) {
 </html>`;
 }
 
-function judgmentInputText(j) {
-  if (j.kind === 'score') return `score ${j.score}`;
-  const inputs = Array.isArray(j.inputs) ? j.inputs : [];
-  return inputs.map((p) => `${p.key}=${p.value}`).join(', ') || '-';
+// 2026-10-01 사용자 요청: 8절을 다시 만든다. factor 를 고를 때 페이지를 다시 불러오지 않고(맨 위로 튀지 않게) 탭으로 바꾸며,
+// 표 대신 기업 카드에 지금 값을 말로 풀어 보이고, 카드 안에서 바로 수정 칸을 연다. 입력 키는 한국어 이름과 뜻으로 보인다.
+const INPUT_LABELS = {
+  A: { label: '동맹 등급', help: '+2 지분 걸린 동맹이 복수이거나 경쟁사까지 내 매대에 편입 · +1 의미 있는 상업 동맹이 소수 · 0 독립 상업 동맹 없음' },
+  H: { label: '적대 등급', help: '0 눈에 띄는 적대 없음 · -1 비용형(벌금·소송·조사·시장 일부 차단) · -2 구조형(주요 고객이 경쟁자, 사업 정당성 표적) · -3 다발형' },
+  imitation: { label: '모방 불가능성', help: '선두가 내 방식을 베끼면 선두 자신의 수익모델이 무너지는가' },
+  revenue_model: { label: '별도 수익모델', help: '선두와 다른 수익모델로 들어왔는가' },
+  acceleration: { label: '후발 가속도', help: 'AI 에 귀속되는 성장률이 빨라지고 있는가' },
+  door_closed: { label: '문 닫기(후발 차단)', help: '선두 가격 결정력 붕괴·점유율 역전 같은 실측 증거가 있는가' },
+  funding_dependent_share: { label: '조달 의존 고객 비중', help: '내 매출 가운데 투자·부채로 지출하는 고객의 비중' },
+  own_money_returns: { label: '내 돈이 돌아오는가', help: '내가 고객에게 넣은 돈이 고객을 거쳐 내 매출로 돌아오는가' },
+  operating_result_reviewed: { label: '영업손익 (게이트 1)', help: '본업이 이익인가 손실인가' },
+  bep_retreat: { label: 'BEP 목표 후퇴 (게이트 1)', help: '손익분기 목표 시점이 뒤로 밀렸는가' },
+  buffer_erosion: { label: '완충 잠식 (게이트 1)', help: '현금과 확정 미인출 여신이 줄고 있는가' },
+  direction_A: { label: '방향 A (게이트 1 완화)', help: '영업손실률이 4분기 연속 전년 대비 개선되는가' },
+  direction_B: { label: '방향 B (게이트 1 완화)', help: '매출 성장률이 비용 성장률보다 큰가' },
+  fcf_trend: { label: 'FCF 추세 (게이트 2)', help: '최근 1년 잉여현금흐름이 흑자일 때 그 추세가 안정적인가' },
+  coverage_comparable: { label: '커버리지 비교 가능 (게이트 4)', help: '약정 지출과 계약 수입을 같은 범위로 비교할 수 있는가' },
+};
+const VALUE_LABELS = {
+  pass: '충족', partial: '절반', fail: '미충족', unknown: '모름', yes: '예', no: '아니오',
+  large: '큼', small: '작음', stable: '안정', deteriorating: '악화', profit: '이익', loss: '손실',
+};
+const STATUS_LABELS = { carried: '이전 판단 승계', new: '이번 실행 판단' };
+
+function inputLabel(key) {
+  return INPUT_LABELS[key] ? INPUT_LABELS[key].label : key;
 }
 
-// 판단 수정 절. factor 를 고르면 그 factor 의 모든 기업 판단을 나란히 보이고(Q03), 기업을 고르면 판정 종류에 맞는 입력란을 낸다.
-function renderJudgeSection(data, judgeFactor, judgeCompany) {
+function valueText(v) {
+  const s = String(v);
+  if (VALUE_LABELS[s]) return VALUE_LABELS[s];
+  return /^[0-9]+$/.test(s) && s !== '0' ? `+${s}` : s;
+}
+
+// 지금 값을 한 줄로 말한다. ⑤ 는 규칙이 3 + 동맹 + 적대 로 계산하므로 결과 점수까지 보인다.
+function judgmentValueHtml(j) {
+  if (j.kind === 'score') {
+    const range = Array.isArray(j.score_range) ? ` (범위 ${escapeHtml(j.score_range[0])} ~ ${escapeHtml(j.score_range[1])})` : '';
+    const note = j.edit_kind && j.edit_kind !== 'score'
+      ? `<div class="muted">이전 실행에서 점수로 승계했다. 판정 재료로 고치면 ${escapeHtml(EDIT_KIND_LABELS[j.edit_kind] || j.edit_kind)} 방식으로 바뀌고 점수는 규칙이 계산한다.</div>` : '';
+    return `<div class="judge-value"><strong>점수 ${escapeHtml(j.score)}</strong>${range}</div>${note}`;
+  }
+  const inputs = Array.isArray(j.inputs) ? j.inputs : [];
+  const parts = inputs.map((pr) => `<span class="judge-input"><span class="muted">${escapeHtml(inputLabel(pr.key))}</span> <strong>${escapeHtml(valueText(pr.value))}</strong></span>`).join('');
+  let total = '';
+  if (j.kind === 'grade') {
+    const map = Object.fromEntries(inputs.map((pr) => [pr.key, Number(pr.value)]));
+    if (Number.isInteger(map.A) && Number.isInteger(map.H)) {
+      total = `<div class="judge-total">3 + 동맹 ${escapeHtml(valueText(map.A))} + 적대 ${escapeHtml(map.H)} = <strong>${escapeHtml(3 + map.A + map.H)}점</strong></div>`;
+    }
+  } else {
+    total = '<div class="muted">점수는 규칙이 이 판정 재료로 계산한다.</div>';
+  }
+  return `<div class="judge-value">${parts || '-'}</div>${total}`;
+}
+
+function renderJudgeForm(runId, j, choices, formId) {
+  const editKind = j.edit_kind;
+  let fields = '';
+  if (editKind === 'score') {
+    const range = Array.isArray(j.score_range) ? j.score_range : [];
+    fields = `
+        <div class="form-group">
+          <label for="${formId}_score">점수 (${escapeHtml(range[0])} ~ ${escapeHtml(range[1])}):</label>
+          <input type="number" id="${formId}_score" name="score" value="${escapeHtml(j.score)}" min="${escapeHtml(range[0])}" max="${escapeHtml(range[1])}" step="1" required />
+        </div>`;
+  } else {
+    const current = {};
+    for (const pr of (Array.isArray(j.inputs) ? j.inputs : [])) current[pr.key] = String(pr.value);
+    const keys = choices[editKind] || {};
+    fields = Object.keys(keys).map((key) => {
+      const has = Object.prototype.hasOwnProperty.call(current, key);
+      const opts = (has ? '' : '<option value="">(값 없음 — 고르지 않으면 바꾸지 않음)</option>')
+        + keys[key].map((v) => `<option value="${escapeHtml(v)}"${has && current[key] === String(v) ? ' selected' : ''}>${escapeHtml(valueText(v))}${VALUE_LABELS[String(v)] ? ` (${escapeHtml(v)})` : ''}</option>`).join('');
+      const help = INPUT_LABELS[key] && INPUT_LABELS[key].help ? `<div class="field-help">${escapeHtml(INPUT_LABELS[key].help)}</div>` : '';
+      return `
+        <div class="form-group">
+          <label for="${formId}_in_${escapeHtml(key)}">${escapeHtml(inputLabel(key))}</label>
+          ${help}
+          <select id="${formId}_in_${escapeHtml(key)}" name="in_${escapeHtml(key)}">${opts}</select>
+        </div>`;
+    }).join('');
+  }
+  const evidenceText = (Array.isArray(j.evidence) ? j.evidence : []).join('\n');
+  return `
+      <form method="POST" action="/approve/${escapeHtml(runId)}/judge" class="judge-form" id="${formId}">
+        <p class="form-desc">점수가 아니라 판단 입력을 고칩니다. 제출하면 판단 해시가 바뀌어 지금의 점수·초안·리뷰·승인이 무효가 되고, 이전 값은 수정 이력에 남습니다.</p>
+        <input type="hidden" name="company" value="${escapeHtml(j.company_id)}" />
+        <input type="hidden" name="factor" value="${escapeHtml(j.factor)}" />
+        ${fields}
+        <div class="form-group">
+          <label for="${formId}_evidence">근거 문장 (한 줄에 하나)</label>
+          <div class="field-help">바꿀 줄만 고치면 됩니다. 손대지 않으면 근거는 그대로 둡니다.</div>
+          <textarea id="${formId}_evidence" name="evidence" rows="8">${escapeHtml(evidenceText)}</textarea>
+          <input type="hidden" name="evidence_original" value="${escapeHtml(evidenceText)}" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="${formId}_reason">수정 사유</label>
+            <input type="text" id="${formId}_reason" name="reason" required placeholder="왜 고치는지" />
+          </div>
+          <div class="form-group">
+            <label for="${formId}_by">수정자 이름</label>
+            <input type="text" id="${formId}_by" name="by" required placeholder="수정자 이름" />
+          </div>
+          <div class="form-group">
+            <label for="${formId}_code">일회용 코드 (6자리)</label>
+            <input type="text" id="${formId}_code" name="code" required pattern="[0-9]{6}" maxlength="6" placeholder="터미널 확인" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">판단 수정 제출</button>
+      </form>`;
+}
+
+// 판단 수정 절. factor 탭을 고르면 그 factor 의 모든 기업 판단을 카드로 나란히 보이고(Q03), 카드에서 수정 칸을 연다.
+// 쿼리(?factor=&company=)로 들어오면 그 탭과 그 기업의 수정 칸을 연 채로 그리고, 그 칸의 id 는 judge-form 이다.
+function renderJudgeSection(data, judgeFactor, judgeCompany, termCtx) {
   const runId = data.run_id || '';
   const judgments = Array.isArray(data.judgments) ? data.judgments : [];
   const choices = data.judgment_choices || {};
@@ -273,98 +383,42 @@ function renderJudgeSection(data, judgeFactor, judgeCompany) {
   if (editable.length === 0) {
     return '<p>고칠 수 있는 판단이 없습니다.</p>';
   }
-  const options = editable.map((e) => `<option value="${escapeHtml(e.factor)}"${e.factor === judgeFactor ? ' selected' : ''}>${escapeHtml(factorLabel(e.factor))} · ${escapeHtml(EDIT_KIND_LABELS[e.edit_kind] || e.edit_kind)}</option>`).join('');
-  const picker = `
-    <form method="GET" action="/approve/${escapeHtml(runId)}" class="inline-form">
-      <label for="judge_factor">factor:</label>
-      <select id="judge_factor" name="factor">${options}</select>
-      <button type="submit" class="btn btn-secondary">이 factor 의 판단 보기</button>
-    </form>`;
-  const selected = editable.find((e) => e.factor === judgeFactor);
-  if (!selected) {
-    return `<p class="form-desc">factor 를 고르면 그 factor 의 모든 기업 판단을 나란히 보여 줍니다. 점수가 아니라 판단 입력을 고칩니다.</p>${picker}`;
-  }
-
-  const rows = judgments.filter((j) => j.factor === selected.factor).map((j) => {
-    const evidence = Array.isArray(j.evidence) ? j.evidence : [];
-    const href = `/approve/${encodeURIComponent(runId)}?factor=${encodeURIComponent(j.factor)}&company=${encodeURIComponent(j.company_id)}#judge-form`;
-    return `<tr${j.company_id === judgeCompany ? ' class="row-selected"' : ''}>
-      <td><strong>${escapeHtml(j.display_name || j.company_id)}</strong></td>
-      <td>${escapeHtml(j.kind)}</td>
-      <td>${escapeHtml(judgmentInputText(j))}</td>
-      <td>${escapeHtml(j.status)}</td>
-      <td>${escapeHtml(j.reviewer)} · ${escapeHtml(j.reviewed_at)}${j.last_revision_session === 'agent' ? '<br /><strong>에이전트 세션에서 수정</strong>' : ''}</td>
-      <td>${escapeHtml(j.revisions || 0)}</td>
-      <td><div class="excerpt">${evidence.map((e) => escapeHtml(e)).join('<br />') || '-'}</div></td>
-      <td><a href="${escapeHtml(href)}">고치기</a></td>
-    </tr>`;
-  }).join('\n');
-  const table = `
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr><th>기업</th><th>판정 종류</th><th>현재 입력</th><th>상태</th><th>검토자 · 검토일</th><th>수정 횟수</th><th>근거</th><th></th></tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
+  const active = editable.some((e) => e.factor === judgeFactor) ? judgeFactor : editable[0].factor;
+  const ctx = termCtx || { runId, companyNames: {} };
+  const tabs = editable.map((e) => `<button type="button" class="judge-tab" data-judge-tab="${escapeHtml(e.factor)}" aria-selected="${e.factor === active}">${escapeHtml(factorLabel(e.factor))}</button>`).join('');
+  const panels = editable.map((e) => {
+    const guide = FACTOR_GUIDE[e.factor];
+    const cards = judgments.filter((j) => j.factor === e.factor).map((j) => {
+      const selected = j.factor === judgeFactor && j.company_id === judgeCompany;
+      const formId = selected ? 'judge-form' : `judge-form-${j.factor}-${j.company_id}`;
+      const evidence = Array.isArray(j.evidence) ? j.evidence : [];
+      const agent = j.last_revision_session === 'agent' ? ' <span class="badge badge-warn">에이전트 세션에서 수정</span>' : '';
+      return `
+      <div class="judge-card${selected ? ' judge-card-open' : ''}" id="judge-${escapeHtml(j.factor)}-${escapeHtml(j.company_id)}">
+        <div class="judge-head">
+          <h3>${escapeHtml(j.display_name || j.company_id)}</h3>
+          <span class="badge">${escapeHtml(STATUS_LABELS[j.status] || j.status)}</span>${agent}
+          <span class="muted">검토 ${escapeHtml(j.reviewer)} · ${escapeHtml(j.reviewed_at)}${j.revisions ? ` · 수정 ${escapeHtml(j.revisions)}회` : ''}</span>
+        </div>
+        ${judgmentValueHtml(j)}
+        <details class="judge-evidence">
+          <summary>근거 문장 ${evidence.length}줄 보기</summary>
+          <ol>${evidence.map((s) => `<li>${linkTerms(escapeHtml(s), ctx)}</li>`).join('')}</ol>
+        </details>
+        <button type="button" class="btn btn-secondary judge-open" data-open-form="${formId}" aria-expanded="${selected}">${selected ? '수정 칸 닫기' : '이 판단 고치기'}</button>
+        <div class="judge-form-wrap"${selected ? '' : ' hidden'}>${renderJudgeForm(runId, j, choices, formId)}</div>
+      </div>`;
+    }).join('');
+    return `
+    <div class="judge-panel" data-judge-panel="${escapeHtml(e.factor)}"${e.factor === active ? '' : ' hidden'}>
+      <p class="judge-guide">${factorChips([e.factor])} <span>${escapeHtml(guide ? guide.question : '')}</span><br /><span class="muted">고치는 것: ${escapeHtml(EDIT_KIND_LABELS[e.edit_kind] || e.edit_kind)}. 같은 잣대가 모든 기업에 닿는지 나란히 보고 고칩니다.</span></p>
+      ${cards}
     </div>`;
-
-  const target = judgments.find((j) => j.factor === selected.factor && j.company_id === judgeCompany);
-  let form = '';
-  if (target) {
-    const editKind = target.edit_kind;
-    let fields = '';
-    if (editKind === 'score') {
-      const range = Array.isArray(target.score_range) ? target.score_range : [];
-      fields = `
-        <div class="form-group">
-          <label for="judge_score">점수 (${escapeHtml(range[0])} ~ ${escapeHtml(range[1])}):</label>
-          <input type="number" id="judge_score" name="score" value="${escapeHtml(target.score)}" min="${escapeHtml(range[0])}" max="${escapeHtml(range[1])}" step="1" required />
-        </div>`;
-    } else {
-      const current = {};
-      for (const p of (Array.isArray(target.inputs) ? target.inputs : [])) current[p.key] = String(p.value);
-      const keys = choices[editKind] || {};
-      fields = Object.keys(keys).map((key) => {
-        const has = Object.prototype.hasOwnProperty.call(current, key);
-        const opts = (has ? '' : '<option value="">(값 없음 — 고르지 않으면 바꾸지 않음)</option>')
-          + keys[key].map((v) => `<option value="${escapeHtml(v)}"${has && current[key] === String(v) ? ' selected' : ''}>${escapeHtml(v)}</option>`).join('');
-        return `
-        <div class="form-group">
-          <label for="judge_in_${escapeHtml(key)}">${escapeHtml(key)}:</label>
-          <select id="judge_in_${escapeHtml(key)}" name="in_${escapeHtml(key)}">${opts}</select>
-        </div>`;
-      }).join('');
-    }
-    const evidenceText = (Array.isArray(target.evidence) ? target.evidence : []).join('\n');
-    form = `
-      <form method="POST" action="/approve/${escapeHtml(runId)}/judge" class="action-form" id="judge-form">
-        <h3>${escapeHtml(target.display_name || target.company_id)} · ${escapeHtml(target.factor)} 판단 수정</h3>
-        <p class="form-desc">점수가 아니라 판단 입력을 고칩니다. 제출하면 판단 해시가 바뀌어 지금의 점수·초안·리뷰·승인이 무효가 됩니다. 이전 값은 판단 안의 수정 이력에 남습니다.</p>
-        <input type="hidden" name="company" value="${escapeHtml(target.company_id)}" />
-        <input type="hidden" name="factor" value="${escapeHtml(target.factor)}" />
-        ${fields}
-        <div class="form-group">
-          <label for="judge_evidence">근거 문장 (한 줄에 하나):</label>
-          <textarea id="judge_evidence" name="evidence" rows="6">${escapeHtml(evidenceText)}</textarea>
-          <input type="hidden" name="evidence_original" value="${escapeHtml(evidenceText)}" />
-        </div>
-        <div class="form-group">
-          <label for="judge_reason">수정 사유:</label>
-          <input type="text" id="judge_reason" name="reason" required placeholder="왜 고치는지" />
-        </div>
-        <div class="form-group">
-          <label for="judge_by">수정자 이름:</label>
-          <input type="text" id="judge_by" name="by" required placeholder="수정자 성함" />
-        </div>
-        <div class="form-group">
-          <label for="judge_code">일회용 코드 (6자리):</label>
-          <input type="text" id="judge_code" name="code" required pattern="[0-9]{6}" maxlength="6" placeholder="터미널 확인" />
-        </div>
-        <button type="submit" class="btn btn-primary">판단 수정 제출</button>
-      </form>`;
-  }
-  return `${picker}${table}${form}`;
+  }).join('');
+  return `
+    <p class="form-desc">위의 factor 탭을 고르면 그 factor 의 모든 기업 판단이 나옵니다. 고칠 기업 카드의 "이 판단 고치기" 를 누르면 그 카드 안에 수정 칸이 열립니다.</p>
+    <div class="judge-tabs" role="tablist">${tabs}</div>
+    ${panels}`;
 }
 
 function normalizeLines(text) {
@@ -608,7 +662,6 @@ function renderSummaryPage(data, options = {}) {
     .inline-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
     .inline-form select { padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; }
     .inline-form .btn-secondary { margin-left: 0; }
-    tr.row-selected td { background: #eff6ff; }
     .notice-banner { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; padding: 12px 16px; border-radius: 6px; margin-bottom: 12px; font-weight: 500; }
     .form-desc { color: #64748b; margin-top: 0; margin-bottom: 12px; font-size: 13px; }
     .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 10px; }
@@ -645,6 +698,25 @@ function renderSummaryPage(data, options = {}) {
     .ev-detail dt { color: #475569; font-weight: 600; }
     .ev-detail dd { margin: 0; overflow-wrap: anywhere; }
     .ev-id { margin-top: 6px; font-size: 11px; color: #94a3b8; }
+    .judge-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+    .judge-tab { border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; border-radius: 999px; padding: 6px 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .judge-tab[aria-selected="true"] { background: #1d4ed8; border-color: #1d4ed8; color: #ffffff; }
+    .judge-guide { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 12px; font-size: 13px; }
+    .judge-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-top: 10px; scroll-margin-top: 230px; }
+    .judge-card-open { border-color: #93c5fd; box-shadow: 0 0 0 2px #dbeafe; }
+    .judge-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+    .judge-head h3 { margin: 0; }
+    .judge-value { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 14px; }
+    .judge-input { white-space: nowrap; }
+    .judge-total { margin-top: 4px; font-size: 14px; }
+    .judge-evidence { margin: 8px 0; font-size: 13px; }
+    .judge-evidence summary { cursor: pointer; color: #2563eb; }
+    .judge-evidence ol { margin: 6px 0 0; padding-left: 22px; }
+    .judge-evidence li { margin-bottom: 4px; overflow-wrap: anywhere; }
+    .judge-form { border-top: 1px dashed #cbd5e1; margin-top: 10px; padding-top: 10px; scroll-margin-top: 230px; }
+    .field-help { font-size: 12px; color: #64748b; margin-bottom: 4px; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0 12px; }
+    .badge-warn { border-color: #f59e0b; color: #b45309; background: #fffbeb; }
     a.term { color: #1d4ed8; text-decoration: underline dotted; text-underline-offset: 2px; }
     .ref-list { display: grid; grid-template-columns: 140px 1fr; gap: 6px 14px; margin: 0; font-size: 13px; }
     .ref-list dt { font-weight: 700; color: #1e3a8a; scroll-margin-top: 240px; }
@@ -772,7 +844,7 @@ function renderSummaryPage(data, options = {}) {
   <!-- (8) 정성 판단 수정 -->
   <section>
     <h2>8. 정성 판단 수정</h2>
-    ${renderJudgeSection(data, judgeFactor, judgeCompany)}
+    ${renderJudgeSection(data, judgeFactor, judgeCompany, termCtx)}
   </section>
 
   <!-- (참조) 규칙 용어 -->
@@ -797,6 +869,28 @@ function renderSummaryPage(data, options = {}) {
         boxes.forEach(function (x) { x.checked = !all; });
       });
     });
+    // 8절: factor 탭은 페이지를 다시 불러오지 않고 패널만 바꾼다. 카드의 버튼은 그 카드의 수정 칸을 열고 닫는다.
+    document.querySelectorAll('[data-judge-tab]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = b.getAttribute('data-judge-tab');
+        document.querySelectorAll('[data-judge-tab]').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+        document.querySelectorAll('[data-judge-panel]').forEach(function (p) { p.hidden = p.getAttribute('data-judge-panel') !== f; });
+      });
+    });
+    document.querySelectorAll('[data-open-form]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var card = b.closest('.judge-card');
+        var wrap = card.querySelector('.judge-form-wrap');
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        card.classList.toggle('judge-card-open', open);
+        b.setAttribute('aria-expanded', String(open));
+        b.textContent = open ? '수정 칸 닫기' : '이 판단 고치기';
+        if (open) { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+    var openForm = document.getElementById('judge-form');
+    if (openForm && !location.hash) { openForm.closest('.judge-card').scrollIntoView({ block: 'start' }); }
   </script>
 </body>
 </html>`;
