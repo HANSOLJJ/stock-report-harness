@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from scorecard.inputs import ObsLookup, recency_key  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
 from scorecard.schema import SchemaError, load_json_strict, validate_observations  # noqa: E402
+from tests._raw import require_raw  # noqa: E402
 
 RAW = ROOT / "validation" / "f6-avail-15" / "_raw"
 
@@ -126,6 +127,7 @@ class TestRestatementGeneration(unittest.TestCase):
         self.assertFalse(out["ok"])
         self.assertEqual(out["action"], "hold")
 
+    @require_raw(RAW / "MSFT.companyfacts.json")
     def test_msft_fy2016_is_held_using_real_facts(self):
         """**원자료로 본다.** 손으로 지어낸 입력이 아니라 보존된 companyfacts 에서 뽑는다.
 
@@ -180,6 +182,7 @@ class TestCollectorConsumesTheRule(unittest.TestCase):
                    if rec.get("restatement", {}).get("checked")]
         self.assertTrue(checked, "복원 근거에 restatement 판정이 하나도 없다 — 수집기를 다시 돌려야 한다")
 
+    @require_raw(RAW / "TSLA.companyfacts.json")
     def test_tesla_fy2024_net_income_is_held(self):
         """**규칙이 실제로 잡은 두 번째 사례다.** 이것은 지어낸 입력이 아니다.
 

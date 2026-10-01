@@ -13,6 +13,7 @@ from scorecard.calc_f9 import compute_f9  # noqa: E402
 from scorecard.engine import load_context  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
+from tests._raw import require_raw  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
@@ -68,6 +69,7 @@ class Stage1Test(unittest.TestCase):
         self.assertTrue(any("시총 관측 12건이 전부 점수 경로" in a for a in self.run_json["assumptions"]))
 
     # ---------------------------------------------------------------- S2 oracle G4
+    @require_raw(RAW / "ORCL.companyfacts.json")
     def test_oracle_rpo_registered_from_the_filing(self):
         o = self.o["oracle.contracted_revenue.fix57"]
         self.assertEqual((o["value"], o["status"], o["as_of"]), (638000000000.0, "verified", "2026-05-31"))
@@ -82,6 +84,7 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual({r["val"] for r in rows}, {638000000000})
         self.assertIn("oracle.contracted_revenue.fix57", self.res["oracle"]["factors"]["F9"]["observation_ids"])
 
+    @require_raw(RAW / "ORCL.companyfacts.json")
     def test_oracle_offbalance_records_that_it_matches_no_filing(self):
         b = self.o["oracle.offbalance_B.v15"]["basis"]
         self.assertEqual(self.o["oracle.offbalance_B.v15"]["value"], 250000000000.0)   # 값을 지어내지 않는다

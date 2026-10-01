@@ -15,6 +15,7 @@ from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.render_html import OBS_STATUS_LABELS, render_incomplete  # noqa: E402
 from scorecard.render_md import STATUS_LABEL  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
+from tests._raw import require_raw  # noqa: E402
 from tests.test_scorecard_f6_v17 import company, obs, run  # noqa: E402
 
 RULES = load_rules("v1.7")
@@ -50,6 +51,7 @@ class Stage1Test(unittest.TestCase):
                           "openai": 4, "oracle": 2})
 
     # ---------------------------------------------------------------- S1 시장성 지분증권
+    @require_raw(RAW / "NVDA.companyfacts.json")
     def test_nvidia_marketable_equity_added(self):
         o = self.o["nvidia.net_cash.nc37"]
         comp = o["basis"]["components"]
@@ -64,6 +66,7 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual((p2["score"], p2["band"]), (-1, "8~20"))       # 밴드 불변
         self.assertEqual(self.res["nvidia"]["factors"]["F6"]["score"], -2)
 
+    @require_raw(RAW / "META.companyfacts.json", RAW / "GOOGL.companyfacts.json")
     def test_meta_and_alphabet_were_already_inside_the_line(self):
         """더하면 이중 계상이다 — 지시서 수치가 산술로는 맞지만 사실이 아니다."""
         self.assertEqual(facts("META", "EquitySecuritiesFvNi", "2026-06-30"), [3543000000.0])
@@ -96,6 +99,7 @@ class Stage1Test(unittest.TestCase):
         for oid in ("meta.net_cash.nc37", "oracle.net_cash.nc37"):
             self.assertEqual(self.o[oid]["basis"]["marketable_equity_sweep"], sweep)
 
+    @require_raw(RAW / "ORCL.companyfacts.json")
     def test_oracle_mixed_tag_stays_out(self):
         self.assertEqual(facts("ORCL", "EquitySecuritiesFvNiAndWithoutReadilyDeterminableFairValue", "2026-05-31"),
                          [2300000000.0])
@@ -106,6 +110,7 @@ class Stage1Test(unittest.TestCase):
                          31894000000.0)
         self.assertAlmostEqual(self.res["oracle"]["factors"]["F6"]["calc"]["parameters"]["P2"]["value"], 8.5995, places=4)
 
+    @require_raw(RAW / "TSLA.companyfacts.json")
     def test_tesla_crypto_gets_the_same_judgment_as_spacex(self):
         self.assertEqual(facts("TSLA", "CryptoAssetFairValueNoncurrent", "2026-06-30"), [674000000.0])
         tesla = self.o["tesla.net_cash.nc37"]["basis"]["components"]["excluded_nonmarketable_present"]
@@ -115,6 +120,7 @@ class Stage1Test(unittest.TestCase):
         self.assertEqual(self.o["tesla.net_cash.nc37"]["value"], 27444000000.0)     # 값 불변
 
     # ---------------------------------------------------------------- S2 oracle 태그 오독
+    @require_raw(RAW / "ORCL.companyfacts.json")
     def test_undiscounted_excess_is_imputed_interest_not_a_commitment(self):
         """보존 원자료가 관계를 준다 — 지급총액 − 인식부채 = 할인차금."""
         pay = facts("ORCL", "LesseeOperatingLeaseLiabilityPaymentsDue", "2026-05-31")[0]

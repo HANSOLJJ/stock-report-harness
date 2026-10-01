@@ -15,6 +15,7 @@ from scorecard.engine import load_context  # noqa: E402
 from scorecard.render_md import render_draft  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
 from scorecard.stages import load_baseline  # noqa: E402
+from tests._raw import require_raw  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
@@ -61,6 +62,7 @@ class Stage2Test(unittest.TestCase):
         self.assertNotIn("tesla.undrawn_credit.fix55", f9["observation_ids"])
         self.assertIn("확정 미인출 여신 — Tesla $5.0B(tesla.undrawn_credit.fix55, 2026-06-30)", self.md)
 
+    @require_raw(RAW / "TSLA.companyfacts.json")
     def test_broad_tag_sweep_finds_only_tesla(self):
         """고정 후보가 아니라 정규식으로 다시 훑는다 — 기준일 이후 값이 있는 회사는 tesla 하나다."""
         recent = {}
