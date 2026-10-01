@@ -147,6 +147,12 @@ test('승인 모드 활성화: GET /approve/<run_id> → 200 및 요약 필드 �
     }
     assert.match(res.body, /class="ev-card[^"]*" data-group="nvidia"/, '근거는 기업별 카드');
     assert.match(res.body, /고른 이유<\/dt><dd>추론: Blackwell/, '근거의 고른 이유가 보여야 함');
+    // 2026-10-01 사용자 요청: 규칙 용어는 참조표로, 판단 ID 는 기업·factor 이름과 판단 수정 화면으로 연결
+    assert.match(res.body, /<a class="term" href="#ref-star-F"[^>]*>별표 F<\/a>/);
+    assert.match(res.body, /<a class="term" href="#ref-P3"[^>]*>P3<\/a>/);
+    assert.match(res.body, /<a class="term" href="#ref-G2"[^>]*>게이트 2<\/a>/);
+    assert.match(res.body, /href="\/approve\/ai-scorecard-2026-11-x\?factor=F2&amp;company=nvidia#judge-form"[^>]*>NVIDIA ② 신기술 게임체인저 판단<\/a>/);
+    assert.match(res.body, /<dt id="ref-star-G">별표 G<\/dt>/, '참조표가 있어야 함');
     assert.match(res.body, /예상 영향<\/dt>/);
     assert.match(res.body, /확인 못 한 것<\/dt>/);
     assert.match(res.body, /기업 발표/, '매체 성격은 한국어 이름');

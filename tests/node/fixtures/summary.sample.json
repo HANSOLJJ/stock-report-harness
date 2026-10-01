@@ -73,7 +73,7 @@
         "published_at_utc": "2026-10-30T12:00:00Z",
         "excerpt": "NVIDIA는 주요 클라우드 사업자들의 수요 확대에 대응하여 칩 출하를 증대한다고 발표했다.",
         "status": "candidate",
-        "relevance": "추론: Blackwell 출하 확대는 ② 성능 도약 경로를 다시 볼 계기다 (선별 확신: 중간)",
+        "relevance": "추론: Blackwell 출하 확대는 별표 F 의 성능 도약 경로로 nvidia.F2 를 다시 볼 계기다. P3 와 게이트 2 는 무관하다 (선별 확신: 중간)",
         "channel": "company_statement",
         "conditional_impact": "독립 측정이 따라오면 ② 판단을 다시 본다",
         "horizon": "medium: 다음 분기 출하 확인",

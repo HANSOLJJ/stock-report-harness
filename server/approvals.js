@@ -34,6 +34,59 @@ const CHANNEL_LABELS = {
   secondary: '의견·재전달',
 };
 
+// 2026-10-01 사용자 요청: 근거 문장의 규칙 용어(별표·잣대·게이트·체크리스트)를 설명 없이 두지 않는다.
+// 출처는 docs/scorecard/rules/AI기업_채점규칙_v1.7.md 의 해당 절이다. 문장에 나오면 아래 참조표로 연결한다.
+const RULES_DOC = 'docs/scorecard/rules/AI기업_채점규칙_v1.7.md';
+const GLOSSARY = {
+  'star-A': { term: '별표 A', text: '① 은 회사의 모든 실질 채널(소비자·업무·거래·부품)을 보고 가장 강한 락인으로 매긴다. 얕은 채널이 깊은 채널을 깎지 않는다.' },
+  'star-B': { term: '별표 B', text: '③ 은 "안 만든 자" 에게 주는 점수가 아니다. 선두가 못 따라 하는 방식으로 들어가기와, 내 뒤 진입로를 닫기 두 동작을 본다.' },
+  'star-C': { term: '별표 C', text: '⑤ 의 적대세력은 수가 아니라 성격을 본다. 고객이 적이 되면 존립 위협이고, 규제기관·경쟁사 소송은 비용이다.' },
+  'star-D': { term: '별표 D', text: '미래 계획은 현재 점수에 넣지 않는다. 출하·매출·채택처럼 지금 측정되는 것만 세고, 계획·발표·예정은 0 이다.' },
+  'star-E': { term: '별표 E', text: '규칙 문서의 ④ 행이 "비AI 사업도 ④ 에서 센다" 의 근거로 가리키지만, v1.7 규칙 문서에는 별표 E 절이 없다.' },
+  'star-F': { term: '별표 F', text: '② 는 세 경로 가운데 하나면 된다. 성능 도약 · 패러다임 적응(남이 바꾼 판에 빨리 올라탐) · 표준 선점.' },
+  'star-G': { term: '별표 G', text: '⑤ = 3 + 동맹 등급(0~+2) + 적대 등급(0~-3). 적대 등급은 -1 비용형(벌금·소송·조사), -2 구조형(주요 고객이 경쟁자이거나 사업 정당성 자체를 겨냥), -3 다발형(구조형이 여러 전선에서 동시에).' },
+  'star-H': { term: '별표 H', text: '조달과 동맹을 가르는 네 질문. 지분·독점·공동개발·재판매·수수료 분배가 있고 상대가 잘되면 내가 잘되는 관계만 동맹이다. 돈 주고 사는 관계는 조달이다. 내가 상대를 못 떠나면 ⑧ 에서 깎는다.' },
+  'star-I': { term: '별표 I', text: '⑦ 판정표. 조달(투자·부채)로 지출하는 고객의 매출 비중(작음·큼)과, 내 돈이 고객을 거쳐 내 매출로 돌아오는지로 0·-1·-2 를 정한다.' },
+  'star-J': { term: '별표 J', text: '신용등급·CDS 는 점수 입력이 아니라 함정 점수가 맞는지 교차검증하는 데만 쓴다.' },
+  P1: { term: 'P1 PER', text: '⑥ 첫째 잣대. 시가총액 ÷ 최근 1년 순이익. 25배 미만 0, 45배 미만 -1, 그 밖 -2.' },
+  P2: { term: 'P2 EV/매출', text: '⑥ 둘째 잣대. (시가총액 − 순현금) ÷ 최근 1년 매출. 8배 미만 0, 20배 미만 -1, 그 밖 -2.' },
+  P3: { term: 'P3 매출 성장', text: '⑥ 셋째 잣대. 최근 1년 매출 ÷ 그 전 1년 − 1. 30% 이상 0, 15% 이상 -1, 5% 이상 -2, 그 아래 -3.' },
+  P4: { term: 'P4 입력 신뢰도', text: '⑥ 넷째 잣대. 입력 자료에 결함이 있으면 P1~P3 소계에서 한 칸 더 깎는다(조건이 여럿이어도 한 칸).' },
+  G1: { term: '⑨ 게이트 1', text: '본업이 버는가(영업이익). 적자면 영업손실률로 -2(-10% 이내)·-3(-10~-30%)·-4(-30% 초과).' },
+  G2: { term: '⑨ 게이트 2', text: '현금이 새는가(최근 1년 잉여현금흐름 FCF). 흑자면 추세만 보고 끝난다.' },
+  G3: { term: '⑨ 게이트 3', text: '얼마나 버티는가(런웨이). 완충은 현금과 확정 미인출 여신뿐이다.' },
+  G4: { term: '⑨ 게이트 4', text: '미래 지출이 덮이는가(약정 커버리지). 회사가 공시하지 않았다고 확인된 경우만 한 칸 깎는다.' },
+  checklist: { term: '체크리스트', text: '규칙 문서 끝의 "채점 전 체크리스트 — 실제로 걸렸던 오류 23가지". 3번(Q03)은 "한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다" 이다.' },
+  tension: { term: '긴장', text: '규칙과 실제 판정이 어긋나 아직 풀지 않은 항목의 번호. 규칙 문서의 운영 이력에 재검토 시점과 함께 적혀 있다.' },
+};
+// 별표 X · P1~P4 · G1~G4 · 게이트 N · 체크리스트 N · QNN · 긴장 #N · <company>.F<n>
+const TERM_RE = /별표\s*([A-J])|\bP([1-4])\b|\bG([1-4])\b|게이트\s*([1-4])|체크리스트\s*(\d{1,2})|\bQ(\d{2})\b|긴장\s*#?(\d{1,2})|\b([a-z][a-z-]*)\.F([1-9])\b/g;
+
+// 이미 escapeHtml 한 문장에 적용한다. 용어 문자열에는 HTML 특수문자가 없다.
+function linkTerms(escaped, ctx) {
+  return String(escaped).replace(TERM_RE, (m, star, p, g, gate, cl, q, ten, cid, fac) => {
+    let key = null;
+    if (star) key = `star-${star}`;
+    else if (p) key = `P${p}`;
+    else if (g || gate) key = `G${g || gate}`;
+    else if (cl || q) key = 'checklist';
+    else if (ten) key = 'tension';
+    if (key) {
+      const ref = GLOSSARY[key];
+      return `<a class="term" href="#ref-${key}" title="${escapeHtml(ref.term)}: ${escapeHtml(ref.text)}">${m}</a>`;
+    }
+    const name = ctx && ctx.companyNames ? ctx.companyNames[cid] : null;
+    if (!name) return m;   // 등록된 기업이 아니면 판단 ID 로 보지 않는다
+    const href = `/approve/${encodeURIComponent(ctx.runId)}?factor=F${fac}&company=${encodeURIComponent(cid)}#judge-form`;
+    return `<a class="term" href="${escapeHtml(href)}" title="판단 ${escapeHtml(m)} 보기">${escapeHtml(name)} ${escapeHtml(factorLabel(`F${fac}`))} 판단</a>`;
+  });
+}
+
+function renderGlossary() {
+  const rows = Object.keys(GLOSSARY).map((key) => `<dt id="ref-${key}">${escapeHtml(GLOSSARY[key].term)}</dt><dd>${escapeHtml(GLOSSARY[key].text)}</dd>`).join('');
+  return `<p class="form-desc">근거 문장의 밑줄 용어를 누르면 여기로 옵니다. 전체 정의는 <code>${escapeHtml(RULES_DOC)}</code> 에 있습니다.</p><dl class="ref-list">${rows}</dl>`;
+}
+
 function factorLabel(f) {
   return FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].label : String(f);
 }
@@ -66,7 +119,8 @@ function renderFactorBar() {
   </nav>`;
 }
 
-function renderEvidenceCard(item) {
+function renderEvidenceCard(item, ctx) {
+  const L = (s) => linkTerms(escapeHtml(s), ctx);
   const eid = item.evidence_id || '';
   const cid = item.company_id || '';
   const titleLink = item.url
@@ -76,11 +130,11 @@ function renderEvidenceCard(item) {
   const counter = Array.isArray(item.counter_evidence) ? item.counter_evidence : [];
   const unverified = Array.isArray(item.unverified) ? item.unverified : [];
   const details = [
-    item.relevance ? `<dt>고른 이유</dt><dd>${escapeHtml(item.relevance)}</dd>` : '',
-    item.conditional_impact ? `<dt>예상 영향</dt><dd>${escapeHtml(item.conditional_impact)}</dd>` : '',
-    item.horizon ? `<dt>시간 범위</dt><dd>${escapeHtml(item.horizon)}</dd>` : '',
-    counter.length ? `<dt>반대 근거·한계</dt><dd>${counter.map((c) => escapeHtml(c)).join('<br />')}</dd>` : '',
-    unverified.length ? `<dt>확인 못 한 것</dt><dd class="muted">${unverified.map((u) => escapeHtml(u)).join('<br />')}</dd>` : '',
+    item.relevance ? `<dt>고른 이유</dt><dd>${L(item.relevance)}</dd>` : '',
+    item.conditional_impact ? `<dt>예상 영향</dt><dd>${L(item.conditional_impact)}</dd>` : '',
+    item.horizon ? `<dt>시간 범위</dt><dd>${L(item.horizon)}</dd>` : '',
+    counter.length ? `<dt>반대 근거·한계</dt><dd>${counter.map((c) => L(c)).join('<br />')}</dd>` : '',
+    unverified.length ? `<dt>확인 못 한 것</dt><dd class="muted">${unverified.map((u) => L(u)).join('<br />')}</dd>` : '',
     item.excerpt && item.excerpt !== item.title ? `<dt>발췌</dt><dd class="muted">${escapeHtml(item.excerpt)}</dd>` : '',
   ].join('');
   return `
@@ -362,6 +416,7 @@ function renderSummaryPage(data, options = {}) {
     .map((j) => ({ [j.company_id]: j.display_name })),
     ...(Array.isArray(data.company_names) ? data.company_names : []).map((c) => ({ [c.company_id]: c.display_name })));
   const companyName = (cid) => companyNames[cid] || cid;
+  const termCtx = { runId, companyNames };
 
   const checklistFailCount = review ? Number(review.checklist_fail || 0) : 0;
   const reviewStatus = review ? review.status : 'none';
@@ -443,7 +498,7 @@ function renderSummaryPage(data, options = {}) {
         <h3>${escapeHtml(companyName(cid))} <span class="muted">${items.length}건</span></h3>
         <button type="button" class="btn-link" data-toggle-group="${escapeHtml(cid)}">이 기업 모두 선택·해제</button>
       </div>
-      ${items.map((item) => renderEvidenceCard(item)).join('')}
+      ${items.map((item) => renderEvidenceCard(item, termCtx)).join('')}
     </div>`).join('\n');
 
   // (5) 활성 트리거 표
@@ -452,7 +507,7 @@ function renderSummaryPage(data, options = {}) {
       <td><strong>${escapeHtml(t.trigger_id || '-')}</strong></td>
       <td>${escapeHtml(companyName(t.company_id || '-'))}</td>
       <td>${factorChips(t.factors)}</td>
-      <td>${t.observation ? `<div class="muted">관측: ${escapeHtml(t.observation)}</div>` : ''}${escapeHtml(t.condition || '-')}${t.recheck_what ? `<div class="muted">다시 볼 것: ${escapeHtml(t.recheck_what)}</div>` : ''}</td>
+      <td>${t.observation ? `<div class="muted">관측: ${linkTerms(escapeHtml(t.observation), termCtx)}</div>` : ''}${linkTerms(escapeHtml(t.condition || '-'), termCtx)}${t.recheck_what ? `<div class="muted">다시 볼 것: ${linkTerms(escapeHtml(t.recheck_what), termCtx)}</div>` : ''}</td>
       <td>${escapeHtml(t.deadline || '-')}</td>
       <td>${escapeHtml(t.status || '-')}</td>
     </tr>`;
@@ -590,6 +645,11 @@ function renderSummaryPage(data, options = {}) {
     .ev-detail dt { color: #475569; font-weight: 600; }
     .ev-detail dd { margin: 0; overflow-wrap: anywhere; }
     .ev-id { margin-top: 6px; font-size: 11px; color: #94a3b8; }
+    a.term { color: #1d4ed8; text-decoration: underline dotted; text-underline-offset: 2px; }
+    .ref-list { display: grid; grid-template-columns: 140px 1fr; gap: 6px 14px; margin: 0; font-size: 13px; }
+    .ref-list dt { font-weight: 700; color: #1e3a8a; scroll-margin-top: 240px; }
+    .ref-list dd { margin: 0; }
+    .ref-list dt:target, .ref-list dt:target + dd { background: #fef9c3; }
     @media (max-width: 480px) {
       body { padding: 8px; }
       section { padding: 12px; }
@@ -597,6 +657,7 @@ function renderSummaryPage(data, options = {}) {
       .ev-detail { grid-template-columns: 1fr; }
       .ev-detail dt { margin-top: 4px; }
       .factor-grid { grid-template-columns: 1fr; max-height: 30vh; }
+      .ref-list { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -712,6 +773,12 @@ function renderSummaryPage(data, options = {}) {
   <section>
     <h2>8. 정성 판단 수정</h2>
     ${renderJudgeSection(data, judgeFactor, judgeCompany)}
+  </section>
+
+  <!-- (참조) 규칙 용어 -->
+  <section>
+    <h2>참조. 근거 문장에 나오는 규칙 용어</h2>
+    ${renderGlossary()}
   </section>
 
   <!-- (9) 승인 / 취소 폼 -->
