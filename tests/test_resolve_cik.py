@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import sys
 import unittest
 from contextlib import redirect_stdout
@@ -11,6 +12,8 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+# 2026-10-01 V2-8: 이 파일을 직접 실행하면 tests/__init__.py 가 돌지 않는다. 실제 .env(SEC_UA)를 읽지 않게 여기서도 끈다.
+os.environ["SCORECARD_DOTENV"] = ""
 
 from scorecard.resolve_cik import load_ticker_map, main, resolve  # noqa: E402
 

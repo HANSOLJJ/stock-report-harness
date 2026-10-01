@@ -11,6 +11,8 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+# 2026-10-01 V2-8: 이 파일을 직접 실행하면 tests/__init__.py 가 돌지 않는다. 실제 .env(SEC_UA)를 읽지 않게 여기서도 끈다.
+os.environ["SCORECARD_DOTENV"] = ""
 
 from scorecard import evidence_lib  # noqa: E402
 from scorecard.collect_filings import (  # noqa: E402

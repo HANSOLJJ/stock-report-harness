@@ -10,6 +10,8 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
+# 2026-10-01 V2-8: 이 파일을 직접 실행하면 tests/__init__.py 가 돌지 않는다. 실제 .env(SEC_UA)를 읽지 않게 여기서도 끈다.
+os.environ["SCORECARD_DOTENV"] = ""
 
 from scorecard import evidence_lib  # noqa: E402
 from scorecard.evidence_lib import (  # noqa: E402
@@ -234,6 +236,28 @@ class ImportPinTest(unittest.TestCase):
         self.assertEqual(parse, {"scripts/scorecard/rules.py",
                                  "scripts/scorecard/collect_news.py"})
 
+
+
+class DirectRunDotenvTest(unittest.TestCase):
+    """2026-10-01 V2-8: tests 패키지를 거치지 않고 파일로 불러와도 설정 파일 읽기가 꺼진다(직접 실행과 같은 조건)."""
+
+    FILES = ("test_collect_filings.py", "test_collect_news.py", "test_collect_prices.py", "test_collect_stage.py",
+             "test_evidence_lib.py", "test_resolve_cik.py")
+
+    def test_each_collector_test_file_disables_dotenv_on_its_own(self):
+        import subprocess
+
+        env = {k: v for k, v in os.environ.items() if k not in ("SCORECARD_DOTENV", "SEC_UA")}
+        for name in self.FILES:
+            code = ("import importlib.util, os, sys; "
+                    f"spec = importlib.util.spec_from_file_location('_direct', r'{ROOT / 'tests' / name}'); "
+                    "mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod); "
+                    "print(repr(os.environ.get('SCORECARD_DOTENV')))")
+            with self.subTest(name=name):
+                out = subprocess.run([sys.executable, "-X", "utf8", "-c", code], cwd=str(ROOT), env=env,
+                                     capture_output=True, text=True, encoding="utf-8")
+                self.assertEqual(out.returncode, 0, out.stderr)
+                self.assertEqual(out.stdout.strip().splitlines()[-1], "''")
 
 if __name__ == "__main__":
     unittest.main()
