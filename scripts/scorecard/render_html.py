@@ -1628,6 +1628,38 @@ def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
 
 # ------------------------------------------------------------------ 문서
 
+EV_ID_RE = re.compile(r"(?<![\w#-])(EV-[a-z0-9-]+-\d{3})(?![\w-])")
+CITED_SLOT = "<!--CITED-EVIDENCE-->"
+
+
+def link_cited_evidence(document: str, ctx: Any) -> str:
+    """2026-10-01 출력·가독성 재리뷰(M1): 초안의 '인용 근거' 표에 해당하는 것이 HTML 에 없어 근거 ID 를 찾아갈 수 없었다.
+    본문(텍스트 노드)의 근거 ID 를 '인용 근거' 절의 해당 줄로 연결하고, 그 절을 References 앞에 둔다."""
+    evidence = {e["evidence_id"]: e for e in (ctx.evidence or [])}
+    head, sep, body = document.partition("<body>")
+    if not sep or not evidence:
+        return document.replace(CITED_SLOT, "")
+    cited = sorted({m.group(1) for m in EV_ID_RE.finditer(re.sub(r"<[^>]+>", " ", body))} & set(evidence))
+    if not cited:
+        return document.replace(CITED_SLOT, "")
+    # 태그 밖 텍스트에서만 바꾼다(속성·이미 걸린 링크 안은 건드리지 않는다).
+    body = re.sub(r">([^<>]*)<", lambda m: ">" + EV_ID_RE.sub(
+        lambda x: f'<a href="#ev-{x.group(1)}">{x.group(1)}</a>' if x.group(1) in evidence else x.group(1), m.group(1)) + "<", body)
+    urls = {s["source_id"]: s.get("url") for s in ctx.sources.get("items", [])}
+    rows = []
+    for eid in cited:
+        e = evidence[eid]
+        url = urls.get(e["source_id"])
+        title = f'<a href="{esc(url)}" target="_blank" rel="noopener noreferrer">{esc(e["title"])}</a>' if url else esc(e["title"])
+        status = {"confirmed": "확정", "candidate": "후보"}.get(e.get("status", "candidate"), e.get("status", "candidate"))
+        rows.append(f'<tr id="ev-{esc(eid)}"><td class="mono">{esc(eid)}</td><td>{esc(ctx.companies[e["company_id"]]["display_name"])}</td>'
+                    f'<td class="text">{title}</td><td class="mono">{esc((e["published_at_utc"] or "—")[:10])}</td><td>{esc(status)}</td></tr>')
+    table = (f'<h3 id="cited-evidence">인용 근거</h3><p class="sub">본문이 인용한 근거 {len(cited)}건. 제목을 누르면 원문이 열린다.</p>'
+             f'<div class="tablewrap"><table><thead><tr><th>근거 ID</th><th>기업</th><th>제목(원문)</th><th>발행일</th><th>상태</th></tr></thead>'
+             f'<tbody>{"".join(rows)}</tbody></table></div>')
+    return (head + sep + body).replace(CITED_SLOT, table)
+
+
 def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]], review_fm: dict[str, Any], approval: dict[str, Any], avail: dict[str, Any] | None = None) -> str:
     rc.set_company_names(ctx.companies)
     run = ctx.run
@@ -1699,6 +1731,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <h2><span class="num">0{n + 2}</span>다음 재채점 트리거</h2>
 {render_triggers(ctx, triggers)}
 <h2><span class="num">0{n + 3}</span>References</h2>
+{CITED_SLOT}
 {render_references(ctx, review_fm)}
 <footer id="disclaimer" aria-label="투자 유의사항">
 <p>{esc(DISCLAIMER)}</p>
@@ -1719,7 +1752,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
             f'결정 기록은 <a href="{esc(audit_path(ctx.slug).name)}">감사 기록</a>의 <b>결정 기록</b> 절에 있다.</p>')
     index = re.sub(r">([^<>]*)<", lambda m: ">" + rc.strip_decision_codes(m.group(1)) + "<",
                    render_code_index(ctx, results))
-    return document.replace(GLOSSARY_SLOT, index + note)
+    return link_cited_evidence(document.replace(GLOSSARY_SLOT, index + note), ctx)
 
 
 # ------------------------------------------------------------------ 빌드
