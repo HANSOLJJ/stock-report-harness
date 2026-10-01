@@ -12,6 +12,16 @@ const {
 
 const FAKE_CLI_PATH = path.resolve(__dirname, 'fake_scorecard_cli.js');
 
+// 2026-10-01 V2-13: 승인 모드에서 코드가 없거나 6자리 숫자가 아니면 라우트를 만들지 않는다
+test('createApprovals: 승인 모드는 6자리 숫자 코드 없이 만들 수 없다', () => {
+  for (const options of [{ enabled: true }, { enabled: true, code: '' }, { enabled: true, code: '12345' },
+    { enabled: true, code: 'abcdef' }, { enabled: true, code: null }]) {
+    assert.throws(() => createApprovals(options), /6자리/, JSON.stringify(options));
+  }
+  assert.doesNotThrow(() => createApprovals({ enabled: false }));
+  assert.doesNotThrow(() => createApprovals({ enabled: true, code: '012345' }));
+});
+
 function makeRequest(server, options, body = null) {
   return new Promise((resolve, reject) => {
     const port = server.address().port;

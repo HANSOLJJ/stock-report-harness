@@ -646,6 +646,10 @@ function parseEvidenceList(params, key) {
 function createApprovals(options = {}) {
   const enabled = Boolean(options.enabled);
   const code = options.code !== undefined ? String(options.code) : '';
+  // 2026-10-01 V2-13: 승인 모드에서 코드가 비면 코드 검사가 빈 문자열끼리 비교되어 통과한다. 생성 시점에 막는다.
+  if (enabled && !/^\d{6}$/.test(code)) {
+    throw new Error('승인 모드에는 6자리 숫자 일회용 코드(code)가 필요합니다');
+  }
   const runCli = typeof options.runCli === 'function' ? options.runCli : defaultRunCli;
   const onApproved = typeof options.onApproved === 'function' ? options.onApproved : null;
   const log = typeof options.log === 'function' ? options.log : (msg) => console.error(msg);
