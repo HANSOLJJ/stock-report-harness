@@ -94,7 +94,7 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 - 대상: AI 기업 {len(run['companies'])}개사 9-factor 채점 (`report_type: ai_scorecard`)
 - 요청 원문: {request}
 - 산출물: `{paths.rel(paths.run_dir)}/` 묶음(research.md·draft.md·review.md·report.html·audit.md)·`scorecard/history.csv`
-- 흐름: plan → research → calculate → draft → review → awaiting_user → build
+- 흐름: plan → collect → research → calculate → draft → review → awaiting_user → build
 
 ## 분석 목적과 기준 시점
 

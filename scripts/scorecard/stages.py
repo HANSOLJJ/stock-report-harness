@@ -203,6 +203,12 @@ def init_run(
     d = run_dir(slug)
     if d.exists() and not force:
         raise SchemaError(f"실행 디렉터리가 이미 있음: {rel(d)} (--force 로 덮어쓰기)")
+    # 2026-10-01 레인 H(F-1): 덮어쓰면 아래에서 approval.json 이 지워진다. 승인 파괴는 사람만 한다.
+    if force and (d / "approval.json").is_file():
+        markers = agent_session_markers()
+        if markers:
+            raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 승인된 실행 {rel(d)} 를 --force 로 덮어쓸 수 없다. "
+                              "덮어쓰면 승인 기록이 지워진다 — 새 slug 로 init 하거나 사람이 한다")
     registry = load_companies()
 
     prior_run: dict[str, Any] | None = None
@@ -586,6 +592,15 @@ def agent_session_markers(env: Mapping[str, str] | None = None) -> list[str]:
     return [key for key in AGENT_ENV_MARKERS if (env.get(key) or "").strip()]
 
 
+def refuse_agent_session(action: str, *, allow_agent_session: bool = False) -> None:
+    """승인·취소는 사람 행위다. 에이전트 세션이면 거부한다. 2026-10-01 레인 H(F-2): CLI 가 아니라 stage 함수 본체에서
+    부른다 — import 로 함수를 직접 부르는 호출자도 같은 판정을 거친다. `allow_agent_session` 은 테스트 전용이고 CLI 는 노출하지 않는다."""
+    markers = agent_session_markers()
+    if markers and not allow_agent_session:
+        raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 {action}할 수 없다. "
+                          "사람이 `node server.js --approvals` 승인 페이지에서 한다")
+
+
 def lock_owner(env: Mapping[str, str] | None = None) -> str:
     """잠금 소유자: `SCORECARD_AGENT`, 없으면 `ORCA_TERMINAL_HANDLE`, 없으면 OS 사용자명. 훅(guard.lock_owner)도 같은 규칙이다."""
     env = os.environ if env is None else env
@@ -671,9 +686,11 @@ def approval_mismatches(approved: dict[str, str], current: dict[str, str]) -> li
     return sorted(differing)
 
 
-def approve(slug: str, *, approved_by: str, note: str | None = None, via: str = "terminal") -> Path:
+def approve(slug: str, *, approved_by: str, note: str | None = None, via: str = "terminal",
+            allow_agent_session: bool = False) -> Path:
     from validate_report_contract import validate_contract
 
+    refuse_agent_session("승인", allow_agent_session=allow_agent_session)
     # 승인자는 사람의 식별자다. 빈 값이나 자동 생성 이름으로 승인 기록을 만들지 않는다 (D-02).
     if not isinstance(approved_by, str) or not approved_by.strip():
         raise SchemaError("승인자(--by)는 비어 있지 않은 문자열이어야 한다. 임의의 승인자를 만들지 말고 실제 사용자 식별자를 쓴다")
@@ -704,8 +721,9 @@ def approve(slug: str, *, approved_by: str, note: str | None = None, via: str = 
 
 # ------------------------------------------------------------------ revoke
 
-def revoke(slug: str, *, by: str, note: str) -> Path:
+def revoke(slug: str, *, by: str, note: str, allow_agent_session: bool = False) -> Path:
     """승인을 취소한다. `approval.json` 을 지우고 `revocations.jsonl` 에 한 줄을 더한다(지우기 전 승인의 id·해시를 남긴다)."""
+    refuse_agent_session("승인 취소", allow_agent_session=allow_agent_session)
     if not isinstance(by, str) or not by.strip():
         raise SchemaError("취소자(--by)는 비어 있지 않은 문자열이어야 한다")
     if not isinstance(note, str) or not note.strip():
