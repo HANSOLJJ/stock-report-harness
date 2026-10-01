@@ -79,3 +79,5 @@
 - [x] 레인 I (Sonnet) F-5·F-6. task `task_6070a52b7d13`, dispatch `ctx_0be5f663c395`, 터미널 `term_d194302d-eb6a-4258-9e23-04611838551a`
 - [x] 레인 I 조율자 재현(병합 뒤): unittest 1093건 중 실패 1·오류 14(원자료 부재 집합), check 통과
 - [ ] open-items D-06(python 표기 혼용)은 npm 스크립트·훅이 모두 uv 로 통일돼 사실상 해소. 닫을지 사용자 확인
+- [x] SEC_UA: 사용자가 원본 폴더 루트 로컬 설정 파일에 기입(2026-10-01), 워크트리에서 원본 루트를 읽도록 코드 보완. 값은 기록하지 않음
+- [ ] 레인 M (Muse) 실제 수집 시험·SEC 실응답 픽스처·환경변수 조사. task `task_b1a5b14fe556`, dispatch `ctx_d49bf5bd9724`, 터미널 `term_e1a0a173-83e2-434d-8729-da4d294496a9`
