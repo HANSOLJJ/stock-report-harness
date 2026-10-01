@@ -108,4 +108,4 @@
 - [ ] main 병합 뒤 별도 과제: 레인 V2 low(V2-6~V2-13), 레인 N 소유 밖 발견 4건(build_report 의 SchemaError 추적 출력, baseline_import 본체 무검사, compare.approval_state 가 임의 approval_id 에 diff 전체 실패, init --force 승인 삭제 미기록)과 훅의 경로 조각 결합 한계
 - [x] 원본 폴더 정리(사용자 지시): plan·drafts·output 의 중복 사본과 옛 빌드, Ciena 종목 산출물 19개, backup/2026-09-21-integrate(57개), .omx, docs/개선점.md 삭제. memory_context.py 서식 수정분은 패치로 보관 뒤 되돌림
 - [x] 원본 폴더 main 병합 뒤 검증: 두 실행 approval_valid true, unittest 1168건 OK(건너뛰기 0, 원자료 테스트까지 실행), pytest 1168 통과, check·node 15·validate:memory 통과
-- [ ] fork(origin) main push — 사용자 확인 대기. Orca 새 워크트리는 origin/main 기준이라 push 해야 다음 워크트리가 이번 결과에서 시작
+- [x] fork(origin) main push — 2026-10-01 push 완료(b07334a..9bf9bf4) — 사용자 확인 대기. Orca 새 워크트리는 origin/main 기준이라 push 해야 다음 워크트리가 이번 결과에서 시작
