@@ -76,4 +76,6 @@
 - [x] 레인 V (Fable) 독립 검증 완료·보고서 병합. 새 결함 7건(medium 3: init --force 가 승인 실행 파괴, 승인 거부가 CLI 계층에만 있어 stages 함수 import 로 우회, scorecard/baseline 이 승인 해시·보호 밖 재빌드 입력 / low 4: locale 매핑, CLI 다음 안내·plan 템플릿 흐름·python 접두, 문서 드리프트, 읽기 전용 명령 오탐). 하드 블록 없음
 - [x] 레인 V 발견 F-1~F-7 수정 여부 사용자 결정 — 전부 수정(2026-10-01)
 - [ ] 레인 H (Opus) F-1·F-2·F-3·F-4·F-7. task `task_bbe840d2d970`, dispatch `ctx_0cde83d7b3e9`, 터미널 `term_519514ec-7c3f-4b70-98b7-32d37d11bf53`
-- [ ] 레인 I (Sonnet) F-5·F-6. task `task_6070a52b7d13`, dispatch `ctx_0be5f663c395`, 터미널 `term_d194302d-eb6a-4258-9e23-04611838551a`
+- [x] 레인 I (Sonnet) F-5·F-6. task `task_6070a52b7d13`, dispatch `ctx_0be5f663c395`, 터미널 `term_d194302d-eb6a-4258-9e23-04611838551a`
+- [x] 레인 I 조율자 재현(병합 뒤): unittest 1093건 중 실패 1·오류 14(원자료 부재 집합), check 통과
+- [ ] open-items D-06(python 표기 혼용)은 npm 스크립트·훅이 모두 uv 로 통일돼 사실상 해소. 닫을지 사용자 확인
