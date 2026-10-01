@@ -224,6 +224,27 @@
       "operating_result_reviewed": ["profit", "loss", "unknown"]
     }
   },
+  "proposals": [
+    {
+      "proposal_id": "PRP-001",
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F5",
+      "edit_kind": "grade",
+      "changes": [{"key": "H", "value": -1}],
+      "evidence_after": ["적대 등급은 비용형이다 — 시험용 <b>태그</b> 문장(EV-nvidia-001, 별표 G)"],
+      "reason": "고객이 경쟁자라는 근거가 약해졌다",
+      "evidence_ids": ["EV-nvidia-001"],
+      "before": {"kind": "grade", "score": null, "inputs": [{"key": "A", "value": 1}, {"key": "H", "value": -2}], "evidence": ["주요 고객이 곧 경쟁자"]},
+      "stale": false,
+      "proposed_by": "agent",
+      "proposed_at": "2026-10-01",
+      "status": "pending",
+      "decided_by": null,
+      "decided_at": null,
+      "decision_note": null
+    }
+  ],
   "hashes": {
     "rules": "345c3353372d0f95d98eef5ed918c31e7a3f7878185a24f1e4edfa9870d58d21",
     "observations": "02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05",

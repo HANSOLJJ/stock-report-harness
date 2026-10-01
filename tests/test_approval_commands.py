@@ -95,6 +95,9 @@ class SummaryShapeTest(FlowBase):
     def test_key_structure_equals_fixture(self):
         self.ready()
         stages.approve(SLUG, approved_by="user", via="browser", allow_agent_session=True)
+        # 2026-10-01 판단 변경 제안도 요약 계약에 든다. 제안은 입력 해시 밖이라 승인은 그대로다.
+        stages.add_proposal(SLUG, company_id="nvidia", factor="F5", changes={"H": -1}, reason="시험 제안",
+                            evidence_ids=["EV-nvidia-001"], evidence_after=["시험 근거 문장"])
         fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
         self.assertEqual(sorted(key_paths(stages.summary(SLUG))), sorted(key_paths(fixture)))
 

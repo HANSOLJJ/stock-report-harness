@@ -27,7 +27,7 @@ from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_EDIT_KIND, JUDGMENT_INPUT_CHOICES,
                      JUDGMENT_REVISION_FIELDS, SchemaError, approval_file_present, approval_id_for, load_json_strict,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
-                     validate_observations, validate_run, validate_sources, validate_triggers, write_json)
+                     validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
 
 def today() -> str:
@@ -970,19 +970,10 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
 # 재계산이 수정을 지우고 입력과 점수가 갈라진다. 고치면 judgments 해시가 바뀌어 research → calculate → draft → review 를 다시 거친 뒤
 # 사람이 승인한다. 승인이 아니므로 에이전트도 부를 수 있고, reviewer 는 받은 이름(`by`)이다.
 
-def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any], reason: str, by: str,
-                    revised_at: str | None = None) -> dict[str, Any]:
-    """`judgments.json` 의 (기업, factor) 판단 하나를 고친다. 이전 값은 그 항목의 `revision_history` 에 남긴다.
-
-    F1·F4·F8 은 `score`·`evidence`, F3·F5·F7·F9 는 판정 재료(inputs 키)·`evidence` 만 받는다. 그 factor 들의 점수 칸은
-    규칙이 계산하므로 받지 않는다. 형식은 쓰기 전에 스키마로 검증하고, 실행 전체 검증(교차 참조)이 실패하면 원래 파일로 되돌린다.
-    """
+def _check_judgment_changes(factor: str, changes: Mapping[str, Any]) -> str:
+    """판단 수정·제안이 받는 값의 형식 검사. 돌려주는 값은 판정 종류(edit kind)다. 2026-10-01 제안 흐름과 함께 쓰려고 뽑았다."""
     if factor not in JUDGMENT_EDIT_KIND:
         raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {sorted(JUDGMENT_EDIT_KIND)})")
-    if not isinstance(by, str) or not by.strip():
-        raise SchemaError("수정자(--by)는 비어 있지 않은 문자열이어야 한다")
-    if not isinstance(reason, str) or not reason.strip():
-        raise SchemaError("수정 사유(--reason)는 비어 있으면 안 된다")
     if not isinstance(changes, Mapping) or not changes:
         raise SchemaError("고칠 값이 없다(--set key=value 또는 --evidence)")
     kind = JUDGMENT_EDIT_KIND[factor]
@@ -999,6 +990,24 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     bad_type = sorted(k for k, v in changes.items() if k != "evidence" and (isinstance(v, bool) or not isinstance(v, (str, int))))
     if bad_type:
         raise SchemaError(f"{factor} 의 값은 문자열이나 정수여야 한다: {bad_type}")
+    return kind
+
+
+def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any], reason: str, by: str,
+                    revised_at: str | None = None, cite_evidence_ids: list[str] | None = None) -> dict[str, Any]:
+    """`judgments.json` 의 (기업, factor) 판단 하나를 고친다. 이전 값은 그 항목의 `revision_history` 에 남긴다.
+
+    F1·F4·F8 은 `score`·`evidence`, F3·F5·F7·F9 는 판정 재료(inputs 키)·`evidence` 만 받는다. 그 factor 들의 점수 칸은
+    규칙이 계산하므로 받지 않는다. 형식은 쓰기 전에 스키마로 검증하고, 실행 전체 검증(교차 참조)이 실패하면 원래 파일로 되돌린다.
+    `cite_evidence_ids` 는 판단의 `evidence_ids` 에 더할 근거다(2026-10-01 제안 반영). 새 판단이라 확정 근거만 받는다.
+    """
+    if factor not in JUDGMENT_EDIT_KIND:
+        raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {sorted(JUDGMENT_EDIT_KIND)})")
+    if not isinstance(by, str) or not by.strip():
+        raise SchemaError("수정자(--by)는 비어 있지 않은 문자열이어야 한다")
+    if not isinstance(reason, str) or not reason.strip():
+        raise SchemaError("수정 사유(--reason)는 비어 있으면 안 된다")
+    kind = _check_judgment_changes(factor, changes)
 
     protect_approved_run(slug, "판단 수정(judge)")
     path = run_dir(slug) / "judgments.json"
@@ -1020,6 +1029,8 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         new.update(kind=kind, score=None, inputs=inputs)
     if "evidence" in changes:
         new["evidence"] = [e.strip() for e in changes["evidence"]]
+    if cite_evidence_ids:
+        new["evidence_ids"] = sorted({*(item.get("evidence_ids") or []), *cite_evidence_ids})
     if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence")):
         raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다")
     revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
@@ -1042,6 +1053,143 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     return {"judgment_id": new["judgment_id"], "company_id": company_id, "factor": factor, "kind": new["kind"],
             "previous": previous, "current": {k: new.get(k) for k in JUDGMENT_REVISION_FIELDS},
             "judgments_hash": sha256_file(path)}
+
+
+# ------------------------------------------------------------------ proposals
+# 2026-10-01 사용자 요청. research 뒤 에이전트가 바꾸고 싶은 판단을 제안으로 써 두면 사람이 승인 페이지에서 반영·거부만 한다.
+# 제안을 쓰는 것은 에이전트도 한다. 반영·거부는 사람 행위라 에이전트 세션이면 거부한다. 거부는 사유가 필수다.
+
+def _judgment_snapshot(j: Mapping[str, Any]) -> dict[str, Any]:
+    return {"kind": j["kind"], "score": j.get("score"), "inputs": copy.deepcopy(j.get("inputs") or {}),
+            "evidence": list(j.get("evidence") or [])}
+
+
+def _load_proposals(slug: str) -> dict[str, Any]:
+    paths = run_paths(slug)
+    if not paths.proposals.is_file():
+        return {"schema": "scorecard.proposals/1", "run_id": slug, "items": []}
+    payload = load_json_strict(paths.proposals)
+    ev_ids = {e["evidence_id"] for e in load_json_strict(paths.evidence).get("items", [])} if paths.evidence.is_file() else set()
+    validate_proposals(payload, load_companies(), ev_ids, slug)
+    return payload
+
+
+def _find_judgment(slug: str, company_id: str, factor: str) -> dict[str, Any]:
+    items = load_json_strict(run_dir(slug) / "judgments.json")["items"]
+    j = next((x for x in items if x["company_id"] == company_id and x["factor"] == factor), None)
+    if j is None:
+        raise SchemaError(f"judgments.json 에 {company_id} {factor} 판단이 없다")
+    return j
+
+
+def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any] | None = None,
+                 evidence_after: list[str] | None = None, reason: str, evidence_ids: list[str] | tuple[str, ...] = (),
+                 by: str | None = None, proposed_at: str | None = None) -> dict[str, Any]:
+    """판단 변경 제안 하나를 proposals.json 에 더한다. 지금 판단 값(before)을 함께 적어 두어, 반영 시점에 판단이 그사이
+    바뀌었는지 가린다. 같은 (기업, factor) 에 결정 전 제안이 이미 있으면 거부한다."""
+    changes = dict(changes or {})
+    if evidence_after is not None:
+        evidence_after = [s.strip() for s in evidence_after]
+    _check_judgment_changes(factor, {**changes, **({"evidence": evidence_after} if evidence_after is not None else {})})
+    if not isinstance(reason, str) or not reason.strip():
+        raise SchemaError("제안 사유(--reason)는 비어 있으면 안 된다")
+    current = _find_judgment(slug, company_id, factor)
+    payload = _load_proposals(slug)
+    if any(p["status"] == "pending" and p["company_id"] == company_id and p["factor"] == factor for p in payload["items"]):
+        raise SchemaError(f"{company_id} {factor} 에 결정 전 제안이 이미 있다 — 그 제안을 먼저 반영하거나 거부한다")
+    nums = [int(p["proposal_id"][4:]) for p in payload["items"]]
+    item = {
+        "proposal_id": f"PRP-{(max(nums) + 1 if nums else 1):03d}",
+        "company_id": company_id,
+        "factor": factor,
+        "changes": changes,
+        "evidence_after": evidence_after,
+        "reason": reason.strip(),
+        "evidence_ids": sorted(set(evidence_ids)),
+        "before": _judgment_snapshot(current),
+        "proposed_by": (by or "").strip() or (os.environ.get("SCORECARD_AGENT") or "").strip() or getpass.getuser(),
+        "proposed_at": proposed_at or utc_now_iso()[:10],
+        "status": "pending",
+    }
+    payload["items"].append(item)
+    ev_ids = {e["evidence_id"] for e in load_json_strict(run_paths(slug).evidence).get("items", [])} if run_paths(slug).evidence.is_file() else set()
+    validate_proposals(payload, load_companies(), ev_ids, slug)
+    write_json(run_paths(slug).proposals, payload)
+    return item
+
+
+def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None = None, note: str | None = None,
+                    allow_agent_session: bool = False) -> dict[str, Any]:
+    """제안을 반영하거나 거부한다. 사람 행위라 에이전트 세션이면 거부한다(`allow_agent_session` 은 테스트 전용).
+    반영은 revise_judgment 로 판단을 고치고 인용 근거를 판단의 evidence_ids 에 더한다. 거부는 사유가 필수다."""
+    refuse_agent_session("판단 변경 제안 반영·거부", allow_agent_session=allow_agent_session)
+    payload = _load_proposals(slug)
+    item = next((p for p in payload["items"] if p["proposal_id"] == proposal_id), None)
+    if item is None:
+        raise SchemaError(f"proposals.json 에 {proposal_id} 가 없다")
+    if item["status"] != "pending":
+        raise SchemaError(f"{proposal_id} 는 이미 결정됐다({item['status']})")
+    by = (by or "").strip() or getpass.getuser()
+    note = (note or "").strip() or None
+    decided_at = utc_now_iso()[:10]
+    out: dict[str, Any] = {"proposal_id": proposal_id, "accepted": accept}
+    if not accept:
+        if not note:
+            raise SchemaError("거부 사유(--note)를 적어야 한다. 다음 실행에서 같은 제안이 올라올 때 참고한다")
+        item.update(status="rejected", decided_by=by, decided_at=decided_at, decision_note=note)
+    else:
+        current = _find_judgment(slug, item["company_id"], item["factor"])
+        if _judgment_snapshot(current) != item["before"]:
+            raise SchemaError(f"{proposal_id} 를 쓴 뒤 {item['company_id']} {item['factor']} 판단이 바뀌었다 — "
+                              "이 제안은 거부하고 지금 판단을 기준으로 다시 제안받는다")
+        changes = dict(item["changes"])
+        if item["evidence_after"] is not None:
+            changes["evidence"] = list(item["evidence_after"])
+        reason = f"제안 {proposal_id} 반영: {item['reason']}" + (f" (메모: {note})" if note else "")
+        out["judgment"] = revise_judgment(slug, company_id=item["company_id"], factor=item["factor"], changes=changes,
+                                          reason=reason, by=by, cite_evidence_ids=list(item["evidence_ids"]))
+        item.update(status="accepted", decided_by=by, decided_at=decided_at, decision_note=note)
+    write_json(run_paths(slug).proposals, payload)
+    out["proposal"] = item
+    return out
+
+
+def _pairs(d: Mapping[str, Any] | None) -> list[dict[str, Any]]:
+    return [{"key": k, "value": v} for k, v in (d or {}).items()]
+
+
+def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    """승인 페이지의 제안 절. 기업·판정 재료 이름을 키로 쓰지 않는다(요약 계약은 키 구조를 비교한다)."""
+    payload = _load_proposals(slug)
+    if not payload["items"]:
+        return []
+    judgments = {(j["company_id"], j["factor"]): j for j in load_json_strict(run_dir(slug) / "judgments.json")["items"]}
+    out = []
+    for p in payload["items"]:
+        j = judgments.get((p["company_id"], p["factor"]))
+        before = p["before"]
+        out.append({
+            "proposal_id": p["proposal_id"],
+            "company_id": p["company_id"],
+            "display_name": (registry.get(p["company_id"]) or {}).get("display_name") or p["company_id"],
+            "factor": p["factor"],
+            "edit_kind": JUDGMENT_EDIT_KIND[p["factor"]],
+            "changes": _pairs(p["changes"]),
+            "evidence_after": p["evidence_after"],
+            "reason": p["reason"],
+            "evidence_ids": list(p["evidence_ids"]),
+            "before": {"kind": before["kind"], "score": before["score"], "inputs": _pairs(before["inputs"]),
+                       "evidence": list(before["evidence"])},
+            # 결정 전 제안인데 그사이 판단이 바뀌었으면 반영할 수 없다
+            "stale": p["status"] == "pending" and (j is None or _judgment_snapshot(j) != before),
+            "proposed_by": p["proposed_by"],
+            "proposed_at": p["proposed_at"],
+            "status": p["status"],
+            "decided_by": p.get("decided_by"),
+            "decided_at": p.get("decided_at"),
+            "decision_note": p.get("decision_note"),
+        })
+    return out
 
 
 # ------------------------------------------------------------------ summary
@@ -1176,6 +1324,7 @@ def summary(slug: str) -> dict[str, Any]:
                           for cid in run["companies"]],
         "pending_rule_decisions": list((results or {}).get("pending_rule_decisions", [])),
         "judgments": _summary_judgments(slug, load_rules(run["rule_version"])),
+        "proposals": _summary_proposals(slug, registry),
         "judgment_choices": copy.deepcopy(JUDGMENT_INPUT_CHOICES),
         "hashes": hashes,
         "approval": approval_out,

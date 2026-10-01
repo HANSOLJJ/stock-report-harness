@@ -1370,6 +1370,52 @@ def validate_triggers(payload: Any, companies: dict[str, dict[str, Any]], eviden
     return items
 
 
+# 2026-10-01 판단 변경 제안. 에이전트가 research 뒤 바꾸고 싶은 판단을 제안으로 쓰고, 사람이 승인 페이지에서 반영·거부한다.
+# 입력 해시에 들지 않는다. 반영하면 judge(revise_judgment)를 거쳐 judgments 가 바뀐다. 거부는 사유가 필수다.
+PROPOSAL_ID_RE = re.compile(r"^PRP-\d{3}$")
+PROPOSAL_STATUSES = {"pending", "accepted", "rejected"}
+PROPOSAL_SNAPSHOT_KEYS = ("kind", "score", "inputs", "evidence")
+
+
+def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evidence_ids: set[str],
+                       run_id: str | None = None) -> list[dict[str, Any]]:
+    items = _expect_top(payload, "scorecard.proposals/1", "proposals.json", run_id)
+    seen: set[str] = set()
+    for idx, item in enumerate(items):
+        where = f"proposals[{idx}]"
+        _expect_keys(item, ["proposal_id", "company_id", "factor", "changes", "evidence_after", "reason", "evidence_ids",
+                            "before", "proposed_by", "proposed_at", "status"],
+                     where, optional=["decided_by", "decided_at", "decision_note"])
+        pid = item["proposal_id"]
+        _require(isinstance(pid, str) and bool(PROPOSAL_ID_RE.match(pid)), f"{where}: proposal_id 는 PRP-NNN 형식 ({pid!r})")
+        _require(pid not in seen, f"{where}: proposal_id 중복 {pid!r}")
+        seen.add(pid)
+        _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
+        _require(item["factor"] in JUDGMENT_EDIT_KIND, f"{where}: {item['factor']!r} 는 제안 대상 factor 가 아니다")
+        _require(isinstance(item["changes"], dict), f"{where}.changes 는 object")
+        after = item["evidence_after"]
+        _require(after is None or (isinstance(after, list) and bool(after) and all(isinstance(s, str) and s.strip() for s in after)),
+                 f"{where}.evidence_after 는 null 이거나 비어 있지 않은 문장 목록")
+        _require(bool(item["changes"]) or after is not None, f"{where}: 바꿀 값(changes)이나 근거 문장(evidence_after)이 있어야 한다")
+        _expect_str(item["reason"], f"{where}.reason", nonempty=True)
+        _expect_str_list(item["evidence_ids"], f"{where}.evidence_ids")
+        unknown = [e for e in item["evidence_ids"] if e not in evidence_ids]
+        _require(not unknown, f"{where}: evidence.json 에 없는 evidence_ids {unknown}")
+        _expect_keys(item["before"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.before")
+        _expect_str(item["proposed_by"], f"{where}.proposed_by", nonempty=True)
+        _expect_date(item["proposed_at"], f"{where}.proposed_at")
+        status = item["status"]
+        _require(status in PROPOSAL_STATUSES, f"{where}.status 는 {sorted(PROPOSAL_STATUSES)} 중 하나 ({status!r})")
+        if status != "pending":
+            _expect_str(item.get("decided_by"), f"{where}.decided_by", nonempty=True)
+            _expect_date(item.get("decided_at"), f"{where}.decided_at")
+        if status == "rejected":
+            _expect_str(item.get("decision_note"), f"{where}.decision_note(거부 사유)", nonempty=True)
+        if "decision_note" in item:
+            _expect_str(item["decision_note"], f"{where}.decision_note", allow_none=True)
+    return items
+
+
 def validate_cross_refs(observations: list[dict[str, Any]], judgments: list[dict[str, Any]],
                         evidence: list[dict[str, Any]] | None, sources: list[dict[str, Any]]) -> None:
     """관측·판단·근거가 가리키는 출처와 근거가 장부에 실재하는지. 새 판단은 확정 근거만 인용한다."""

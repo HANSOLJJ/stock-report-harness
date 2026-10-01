@@ -314,6 +314,50 @@ def cmd_judge(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_propose(args: argparse.Namespace) -> int:
+    """판단 변경 제안을 쓴다(2026-10-01). 에이전트도 쓴다. 반영·거부는 사람이 승인 페이지에서 한다."""
+    from scorecard.stages import add_proposal
+
+    changes: dict[str, object] = {}
+    evidence_after = None
+    if args.json:
+        loaded = json.loads(Path(args.json).read_text(encoding="utf-8"))
+        if not isinstance(loaded, dict):
+            raise SchemaError(f"--json 은 {{changes, evidence_after}} 객체여야 한다: {args.json}")
+        changes.update(loaded.get("changes") or {})
+        evidence_after = loaded.get("evidence_after")
+    for item in args.set or []:
+        key, sep, value = item.partition("=")
+        if not sep or not key.strip():
+            raise SchemaError(f"--set 형식은 key=value: {item!r}")
+        changes[key.strip()] = _judge_value(value.strip())
+    if args.evidence:
+        evidence_after = list(args.evidence)
+    out = add_proposal(args.slug, company_id=args.company, factor=args.factor, changes=changes, evidence_after=evidence_after,
+                       reason=args.reason, evidence_ids=_id_list(args.cite), by=args.by)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    print(f"propose: {out['proposal_id']} {out['company_id']} {out['factor']} — 사람이 승인 페이지의 '판단 변경 제안' 절에서 반영하거나 거부한다")
+    return 0
+
+
+def cmd_proposal(args: argparse.Namespace) -> int:
+    """제안 반영·거부(2026-10-01). 사람 행위라 에이전트 세션이면 거부한다. 거부는 --note(사유) 필수."""
+    from scorecard.stages import decide_proposal
+
+    out = decide_proposal(args.slug, args.id, accept=args.accept, by=args.by, note=args.note)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    p = out["proposal"]
+    if out["accepted"]:
+        print(f"proposal: {p['proposal_id']} 반영 — {p['company_id']} {p['factor']} 판단을 고쳤다(수정자 {p['decided_by']}). "
+              f"research → calculate → draft → review 를 다시 돌린 뒤 승인한다: "
+              f"uv run --frozen python -X utf8 scripts/scorecard_cli.py research {args.slug}")
+    else:
+        print(f"proposal: {p['proposal_id']} 거부 — 사유: {p['decision_note']}")
+    return 0
+
+
 def cmd_summary(args: argparse.Namespace) -> int:
     """승인 페이지용 요약. --json 은 tests/node/fixtures/summary.sample.json 과 같은 키 구조의 JSON 한 개다."""
     from scorecard.stages import summary
@@ -565,6 +609,28 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--by", help="검토자(없으면 SCORECARD_AGENT 또는 사용자명)")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_confirm)
+
+    p = sub.add_parser("propose", help="판단 변경 제안을 쓴다(에이전트도 쓴다). 반영·거부는 사람이 승인 페이지에서 한다")
+    p.add_argument("slug")
+    p.add_argument("--company", required=True)
+    p.add_argument("--factor", required=True, choices=["F1", "F3", "F4", "F5", "F7", "F8", "F9"])
+    p.add_argument("--set", action="append", help="바꿀 판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
+    p.add_argument("--evidence", action="append", help="반영 뒤 근거 문장. 여러 번 주면 그 목록이 근거 전체가 된다")
+    p.add_argument("--json", help="{changes: {...}, evidence_after: [...]} JSON 파일(--set·--evidence 가 덮어쓴다)")
+    p.add_argument("--reason", required=True, help="제안 사유")
+    p.add_argument("--cite", help="인용 근거 ID(쉼표). 반영하면 판단의 evidence_ids 에 더한다(확정 근거만)")
+    p.add_argument("--by", help="제안자(기본 SCORECARD_AGENT 또는 사용자 이름)")
+    p.set_defaults(func=cmd_propose)
+
+    p = sub.add_parser("proposal", help="판단 변경 제안 반영·거부. 사람 셸에서만 된다. 거부는 --note 필수")
+    p.add_argument("slug")
+    p.add_argument("--id", required=True, help="PRP-NNN")
+    g = p.add_mutually_exclusive_group(required=True)
+    g.add_argument("--accept", action="store_true", help="반영")
+    g.add_argument("--reject", action="store_true", help="거부(--note 필수)")
+    p.add_argument("--by", help="결정자(기본 사용자 이름)")
+    p.add_argument("--note", help="메모. 거부면 사유로 필수")
+    p.set_defaults(func=cmd_proposal)
 
     p = sub.add_parser("judge", help="정성 판단 입력 수정(점수가 아니라 판단 입력). 승인이 아니다 — 고친 뒤 research 부터 다시 돈다")
     p.add_argument("slug")

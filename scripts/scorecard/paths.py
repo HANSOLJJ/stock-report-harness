@@ -23,6 +23,7 @@ class RunPaths:
     evidence: Path
     candidates: Path
     triggers: Path
+    proposals: Path
 
     def rel(self, p: Path) -> str:
         """저장소 루트 기준 POSIX 문자열. 렌더러와 검증기가 같은 함수를 쓴다.
@@ -52,4 +53,5 @@ def run_paths(slug: str) -> RunPaths:
         evidence=evidence_dir / "evidence.json",
         candidates=evidence_dir / "candidates.json",
         triggers=d / "triggers.json",
+        proposals=d / "proposals.json",   # 2026-10-01 판단 변경 제안(입력 해시 밖)
     )
