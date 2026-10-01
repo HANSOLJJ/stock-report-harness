@@ -15,10 +15,12 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from scorecard import render_common as rc  # noqa: E402
 from scorecard.engine import load_context  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
+from tests._raw import require_raw  # noqa: E402
 
 RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
 RUN_DIR = ROOT / "output" / SLUG
+RAW = ROOT / "validation" / "f6-avail-15" / "_raw"
 PRIV = ("fcf_ttm", "cash", "net_cash", "debt_ebitda", "operating_margin_ttm")
 
 
@@ -156,6 +158,7 @@ class Stage2Test(unittest.TestCase):
         self.assertFalse(any(re.search(r"googl|goog-", x, re.I) for x in preserved))
 
     # ---------------------------------------------------------------- S5 검색 범위·문면
+    @require_raw(RAW / "ORCL.companyfacts.json")
     def test_oracle_sweep_wording_is_scoped_to_the_regex(self):
         why = self.o["oracle.undrawn_credit.fix54"]["basis"]["broad_tag_sweep"]
         self.assertIn("그 정규식 기준 0건", why)

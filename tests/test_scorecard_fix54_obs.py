@@ -25,10 +25,12 @@ collect_ttm = _load("f6spec18_collect_ttm", ROOT / "validation" / "f6-spec-18" /
 from scorecard.calc_f6 import compute_f6  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
+from tests._raw import require_raw  # noqa: E402
 from tests.test_scorecard_f6_v17 import company, obs, run  # noqa: E402
 
 RULES = load_rules("v1.7")
 RUN_DIR = ROOT / "output" / "ai-scorecard-2026-09-obsreg"
+RAW = ROOT / "validation" / "f6-avail-15" / "_raw"
 
 
 def load(name: str) -> dict:
@@ -36,6 +38,7 @@ def load(name: str) -> dict:
 
 
 class LeaseCompletenessTest(unittest.TestCase):
+    @require_raw(RAW / "SPCX.companyfacts.json", RAW / "PLTR.companyfacts.json", RAW / "TSLA.companyfacts.json")
     def test_missing_component_is_not_summed_as_zero(self):
         for cid, end, missing in (("spacex-xai", "2026-06-30", "OperatingLeaseLiabilityNoncurrent"),
                                   ("palantir", "2026-06-30", "OperatingLeaseLiabilityCurrent")):
@@ -93,6 +96,7 @@ class AppleWindowTest(unittest.TestCase):
             self.assertEqual(o[oid]["period"]["start"], "2025-06-29", oid)
         self.assertEqual(o["apple.revenue_ttm_prior.f6reg28"]["period"], {"start": "2024-06-30", "end": "2025-06-28"})
 
+    @require_raw(RAW / "AAPL.companyfacts.json")
     def test_collector_q4_starts_next_day(self):
         doc = collect_ttm.load_facts("AAPL")
         rows, mix = collect_ttm.coalesce_series(doc, collect_ttm.NET_INCOME_TAGS, "USD")
