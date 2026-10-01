@@ -58,7 +58,7 @@
 
 ## 사용자 준비 항목
 - [x] SEC_UA 환경변수 (원본 폴더 루트 로컬 설정 파일, 2026-10-01)
-- [ ] SPCX CIK 확인 (1181412 후보)
+- [x] SPCX CIK 확인 (1181412 후보) — SEC 실응답에서 1181412 확인, 레인 J 가 companies.json 에 기입
 - [ ] 옛 obsreg `report.html` 은 감사 기록 링크가 `<slug>-audit.md` 라 묶음에서 깨진다. 승인이 유효하므로 빌드를 다시 돌리면 `audit.md` 링크로 재생성된다(사용자 확인 뒤)
 - [x] 남은 unittest 15건은 `validation/f6-avail-15/_raw` 등 원자료가 워크트리에 없어서 난다. main 병합 뒤 원본 폴더에서 전부 통과하는지 확인
 - [x] 레인 E 조율자 재현(병합 뒤): 두 실행 approval_valid true, recompute obsreg True·baseline 기존 값 불변, output/·scorecard/ 변경 0, unittest 1030건 중 실패 1·오류 14(원자료 부재 집합과 동일), node 9·check 통과
@@ -67,7 +67,7 @@
 - [x] 레인 F (Opus) 4.2·4.3 디스패치 완료 → 검증 → 병합. task `task_c39a130db79b`, dispatch `ctx_3a3d42bdc422`, 워크트리 `…/lane-F`, 터미널 `term_6d0d6fec-989e-4175-b8e9-bafee8ff8ff0`
 - [x] 레인 F 조율자 재현(병합 뒤): 두 실행 approval_valid true, output/·scorecard/ 변경 0, summary 계약 키 일치, unittest 1085건 중 실패 1·오류 14(원자료 부재 집합), node 10·check 통과, 훅 스모크에서 승인 명령(PowerShell)·승인 파일 쓰기·이동 실행 수정·v1.7 수정 모두 exit 2, confirm 통과
 - [x] 4.5·4.6: 터미널 승인 명령 안내가 남은 곳(score-approve 스킬, README, build 의 awaiting_user 메시지)을 승인 페이지 안내로 바꾼다
-- [ ] PowerShell cmdlet(Set-Content·Remove-Item·Out-File) 변경은 보호 훅의 _MUTATING 에 없어 지나간다. 리다이렉션은 잡는다. 별도 과제
+- [x] PowerShell cmdlet(Set-Content·Remove-Item·Out-File) — 레인 J 가 쓰기 판정에 추가 변경은 보호 훅의 _MUTATING 에 없어 지나간다. 리다이렉션은 잡는다. 별도 과제
 - [ ] baseline 초안 재렌더는 render_common.method_sections 가 v1.5(bands) 실행에서 KeyError. obsreg 초안도 지금 코드로 다시 렌더하면 네 줄이 달라진다(저장본은 승인본이라 그대로 둔다)
 - [ ] 에이전트 표지 환경변수는 Claude Code 세션 하나만 조사했다. Codex·Antigravity·Muse 세션은 운영 단계 배선 때 확인
 - [x] 레인 G (Sonnet) 4.5·4.6 디스패치 완료 → 검증 → 병합. task `task_39b14e9bae11`, dispatch `ctx_2e2d5d341c32`, 워크트리 `…/lane-G`, 터미널 `term_ef689690-3b13-42c5-b514-5d9caea97241`
@@ -82,11 +82,11 @@
 - [x] SEC_UA: 사용자가 원본 폴더 루트 로컬 설정 파일에 기입(2026-10-01), 워크트리에서 원본 루트를 읽도록 코드 보완. 값은 기록하지 않음
 - [x] 레인 M (Muse) 실제 수집 시험·SEC 실응답 픽스처·환경변수 조사. task `task_b1a5b14fe556`, dispatch `ctx_d49bf5bd9724`, 터미널 `term_e1a0a173-83e2-434d-8729-da4d294496a9`
 - [x] 레인 H 조율자 재현(병합 뒤): unittest 1115건 중 실패 1·오류 14(원자료 부재 집합), 두 실행 approval_valid true, check·node 10 통과. 훅 스모크: 승인 실행 init --force·baseline 쓰기·승인 파일 쓰기·python 승인 파일 쓰기 exit 2, 새 slug init --force·승인 파일 읽기 exit 0
-- [ ] 레인 H 가 남긴 것: 소유 밖 문서(AGENTS·README·structure.md)의 첫 방어선 위치 문구, render_md.py 130행 uv 없는 python, validation/recheck_worker_final.py 의 승인 함수 호출, 계약 밖 쓰기 형태(PowerShell cmdlet·find -delete·xargs·글롭)
+- [x] 레인 H 가 남긴 것: (문서 문구는 레인 K, render_md 안내는 레인 J 가 처리. recheck_worker_final.py 는 옛 검증 기록이라 그대로 둠) 소유 밖 문서(AGENTS·README·structure.md)의 첫 방어선 위치 문구, render_md.py 130행 uv 없는 python, validation/recheck_worker_final.py 의 승인 함수 호출, 계약 밖 쓰기 형태(PowerShell cmdlet·find -delete·xargs·글롭)
 - [x] 레인 M 조율자 재현(병합 뒤): unittest 1115건 중 실패 1·오류 14(원자료 부재 집합, Muse 가 본 훅 배선 2건은 Muse 환경의 bash 에 uv 가 없어서 생긴 것으로 이 환경에서는 통과), 보고서·픽스처에 연락처 없음
 - [x] 실제 수집 재시도(조율자, 임시 DATA_ROOT): SEC_UA 영문화 뒤 뉴스 14개사 99~200건 수집·발행일 결측 0, SEC company_tickers 조회 성공(SPCX 1181412 등재). 가격은 9/29 기준 12개사 정상, 9/30 은 야후 일봉 종가 미확정(NaN)
 - [x] 레인 J: 판단 수정 기능 (task `task_ae3a1a74216f`, dispatch `ctx_79ab07e8848b`, 터미널 `term_8c16cca4-3da4-4158-a9aa-4c535c8a3ec7`) + 수집기 수정(NaN 종가·회사별 실패·resolve-cik --json·SEC_UA 영문 검사·일반 단어 회사 news_queries·CIK 기입) + 정리(훅 쓰기 형태·render_md 130행·Muse 표지)
-- [ ] 레인 K: 문서(첫 방어선 위치 문구, 판단 수정 사용법)
+- [x] 레인 K: 문서(첫 방어선 위치 문구, 판단 수정 사용법)
 - [x] 레인 J 조율자 재현(병합 뒤): unittest 1146건 중 실패 1·오류 14(원자료 부재), 두 실행 approval_valid true·recompute 불변, companies.json 변경은 12개사 cik 와 meta·oracle·apple news_queries 뿐, check·node 15 통과
 - [x] 레인 K (Sonnet) 문서. dispatch `ctx_a06adb492d13`, 터미널 `term_5ae329e4-4d55-4d61-855f-dea7ace943c6`
 - [x] 레인 L (Muse) 근거 평가 표본. dispatch `ctx_b79e5dabdabb`, 터미널 `term_c3babed2-dcd6-4cac-8201-c0e64d8e6a5c` (기동 뒤 붙여넣기로 멈춰 조율자가 Enter 별도 전송)
