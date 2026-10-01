@@ -194,6 +194,46 @@ class HistoryAndHashTest(JudgeBase):
             stages.draft(SLUG)
 
 
+class RevisionSessionTest(JudgeBase):
+    """2026-10-01 V2-11: 수정 이력에 세션 종류가 남고 요약이 마지막 수정의 세션을 싣는다. 거부된 수정은 잠금을 남기지 않는다."""
+
+    def test_session_is_recorded_per_revision(self):
+        with human_env():
+            self.judge("nvidia", "F1", {"score": 3})
+        with human_env(CLAUDECODE="1"):
+            self.judge("nvidia", "F1", {"score": 4}, by="사용자")
+        hist = self.item("nvidia", "F1")["revision_history"]
+        self.assertEqual([h["session"] for h in hist], ["human", "agent"])
+        row = next(r for r in stages.summary(SLUG)["judgments"] if (r["company_id"], r["factor"]) == ("nvidia", "F1"))
+        self.assertEqual(row["last_revision_session"], "agent")
+        untouched = next(r for r in stages.summary(SLUG)["judgments"] if (r["company_id"], r["factor"]) == ("nvidia", "F4"))
+        self.assertIsNone(untouched["last_revision_session"])
+        engine.load_context(SLUG)   # 스키마가 session 키를 받는다
+
+    def test_bad_session_value_is_rejected_by_schema(self):
+        with human_env():
+            self.judge("nvidia", "F1", {"score": 3})
+        payload = load_json_strict(self.jpath)
+        for j in payload["items"]:
+            if (j["company_id"], j["factor"]) == ("nvidia", "F1"):
+                j["revision_history"][0]["session"] = "robot"
+        self.jpath.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+        with self.assertRaisesRegex(SchemaError, "session"):
+            engine.load_context(SLUG)
+
+    def test_refused_judge_in_agent_session_leaves_no_lock(self):
+        lock = stages.lock_path(SLUG)
+        if lock.exists():
+            lock.unlink()
+        with human_env(CLAUDECODE="1", SCORECARD_AGENT="me"):
+            self.cli("judge", SLUG, "--company", "nvidia", "--factor", "F3", "--set", "score=3",
+                     "--reason", "r", "--by", "u", code=1)
+        self.assertFalse(lock.exists())
+        with human_env(CLAUDECODE="1", SCORECARD_AGENT="me"):
+            self.cli("judge", SLUG, "--company", "nvidia", "--factor", "F1", "--set", "score=3", "--reason", "r", "--by", "u")
+        self.assertEqual(json.loads(lock.read_text(encoding="utf-8"))["owner"], "me")
+
+
 class SummaryJudgmentsTest(JudgeBase):
     def test_lists_every_judgment_with_inputs_as_pairs(self):
         self.judge("nvidia", "F3", {"imitation": "pass"})

@@ -1024,8 +1024,11 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다")
     revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
     new.update(status="new", reviewer=by.strip(), reviewed_at=revised_at)
+    # 2026-10-01 V2-11: --by 는 확인할 수 없는 이름이다. 누가 고쳤는지 가리도록 세션 종류를 함께 남긴다.
+    session = "agent" if agent_session_markers() else "human"
     new["revision_history"] = [*item.get("revision_history", []),
-                               {"revised_at": revised_at, "revised_by": by.strip(), "reason": reason.strip(), "previous": previous}]
+                               {"revised_at": revised_at, "revised_by": by.strip(), "reason": reason.strip(), "previous": previous,
+                                "session": session}]
     payload["items"][idx] = new
 
     run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
@@ -1121,6 +1124,8 @@ def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
             "reviewed_at": j["reviewed_at"],
             "edit_kind": JUDGMENT_EDIT_KIND.get(j["factor"]),
             "revisions": len(j.get("revision_history") or []),
+            # 2026-10-01 V2-11: 마지막 수정이 에이전트 세션이었는지. 이력이 없거나 기록 전 수정이면 null.
+            "last_revision_session": ((j.get("revision_history") or [{}])[-1]).get("session"),
         })
     return sorted(out, key=lambda x: (x["factor"], x["company_id"]))
 

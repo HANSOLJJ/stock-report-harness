@@ -155,7 +155,7 @@ function renderJudgeSection(data, judgeFactor, judgeCompany) {
       <td>${escapeHtml(j.kind)}</td>
       <td>${escapeHtml(judgmentInputText(j))}</td>
       <td>${escapeHtml(j.status)}</td>
-      <td>${escapeHtml(j.reviewer)} · ${escapeHtml(j.reviewed_at)}</td>
+      <td>${escapeHtml(j.reviewer)} · ${escapeHtml(j.reviewed_at)}${j.last_revision_session === 'agent' ? '<br /><strong>에이전트 세션에서 수정</strong>' : ''}</td>
       <td>${escapeHtml(j.revisions || 0)}</td>
       <td><div class="excerpt">${evidence.map((e) => escapeHtml(e)).join('<br />') || '-'}</div></td>
       <td><a href="${escapeHtml(href)}">고치기</a></td>

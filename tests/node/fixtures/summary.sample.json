@@ -110,7 +110,8 @@
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "edit_kind": "score",
-      "revisions": 0
+      "revisions": 0,
+      "last_revision_session": null
     },
     {
       "company_id": "nvidia",
@@ -147,7 +148,8 @@
       "reviewer": "사용자",
       "reviewed_at": "2026-10-01",
       "edit_kind": "criteria",
-      "revisions": 1
+      "revisions": 1,
+      "last_revision_session": "agent"
     },
     {
       "company_id": "openai",
@@ -184,7 +186,8 @@
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
       "edit_kind": "criteria",
-      "revisions": 0
+      "revisions": 0,
+      "last_revision_session": null
     }
   ],
   "judgment_choices": {

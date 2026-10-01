@@ -385,6 +385,8 @@ test('GET ?factor=F3: 같은 factor 의 모든 기업 판단을 나란히, compa
     assert.match(list.body, /imitation=fail, revenue_model=pass/);
     assert.match(list.body, /imitation=partial/, '다른 기업(OpenAI)의 같은 factor 판단도 보여야 함');
     assert.match(list.body, /&lt;b&gt;태그&lt;\/b&gt;/, '근거 문장은 이스케이프');
+    // 2026-10-01 V2-11: 마지막 수정이 에이전트 세션이면 검토자 칸에 보인다(NVIDIA 만, OpenAI 는 수정 이력 없음)
+    assert.equal((list.body.match(/에이전트 세션에서 수정/g) || []).length, 1);
     assert.doesNotMatch(list.body, /id="judge-form"/, '기업을 고르기 전에는 입력란이 없다');
 
     const form = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F3&company=nvidia' });

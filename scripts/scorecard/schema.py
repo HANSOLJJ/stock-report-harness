@@ -1085,7 +1085,9 @@ def _validate_revision_history(history: Any, where: str) -> None:
     _require(isinstance(history, list) and history, f"{where}: 비어 있지 않은 배열 필요")
     for idx, entry in enumerate(history):
         at = f"{where}[{idx}]"
-        _expect_keys(entry, ["revised_at", "revised_by", "reason", "previous"], at)
+        # 2026-10-01 V2-11: session 은 수정한 프로세스가 에이전트 세션이었는지(agent|human). 그 전 기록에는 없다.
+        _expect_keys(entry, ["revised_at", "revised_by", "reason", "previous"], at, optional=["session"])
+        _require(entry.get("session") in (None, "agent", "human"), f"{at}.session 은 agent|human")
         _expect_date(entry["revised_at"], f"{at}.revised_at")
         for key in ("revised_by", "reason"):
             _require(isinstance(entry[key], str) and entry[key].strip(), f"{at}: {key} 는 비어 있지 않은 문자열")

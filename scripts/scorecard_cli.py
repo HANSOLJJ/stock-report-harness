@@ -257,11 +257,14 @@ def _id_list(value: str | None) -> list[str]:
 
 def cmd_confirm(args: argparse.Namespace) -> int:
     """근거 확정·거부. 승인이 아니므로 에이전트도 부를 수 있다. 에이전트 세션일 때만 잠금을 검사·기록한다(2026-09-30 조율자 결정)."""
-    from scorecard.stages import agent_session_markers, confirm
+    from scorecard.stages import agent_session_markers, claim_lock, confirm
 
-    if agent_session_markers():
-        _claim(args, "confirm")
+    agent = bool(agent_session_markers())
+    if agent:   # 2026-10-01 V2-11: 다른 소유자 잠금은 먼저 검사하고, 기록은 성공한 뒤에 한다
+        claim_lock(args.slug, "confirm", take_lock=args.take_lock, write=False)
     out = confirm(args.slug, evidence_ids=_id_list(args.evidence), reject_ids=_id_list(args.reject), reviewer=args.by)
+    if agent:
+        _claim(args, "confirm")
     print(f"confirm: 확정 {len(out['confirmed'])} · 이미 확정 {len(out['already_confirmed'])} · 거부(삭제) {len(out['rejected'])}"
           f" (검토자 {out['reviewer']}, {out['reviewed_at']})")
     for key in ("confirmed", "already_confirmed", "rejected"):
@@ -279,10 +282,11 @@ def _judge_value(text: str) -> object:
 
 def cmd_judge(args: argparse.Namespace) -> int:
     """정성 판단 입력 수정(2026-10-01 레인 J). 승인이 아니므로 에이전트도 부를 수 있다. 잠금 규칙은 confirm 과 같다."""
-    from scorecard.stages import agent_session_markers, revise_judgment
+    from scorecard.stages import agent_session_markers, claim_lock, revise_judgment
 
-    if agent_session_markers():
-        _claim(args, "judge")
+    agent = bool(agent_session_markers())
+    if agent:   # 2026-10-01 V2-11: 다른 소유자 잠금은 먼저 검사하고, 기록은 성공한 뒤에 한다(거부된 수정이 잠금을 남기지 않게)
+        claim_lock(args.slug, "judge", take_lock=args.take_lock, write=False)
     changes: dict[str, object] = {}
     if args.json:
         loaded = json.loads(Path(args.json).read_text(encoding="utf-8"))
@@ -297,6 +301,8 @@ def cmd_judge(args: argparse.Namespace) -> int:
     if args.evidence:
         changes["evidence"] = list(args.evidence)
     out = revise_judgment(args.slug, company_id=args.company, factor=args.factor, changes=changes, reason=args.reason, by=args.by)
+    if agent:
+        _claim(args, "judge")
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     print(f"judge: {out['judgment_id']} ({out['kind']}) 수정 — 수정자 {out['current']['reviewer']}, {out['current']['reviewed_at']}")
