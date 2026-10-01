@@ -7,7 +7,7 @@
 - **대상은 채점표만, 종목 리포트는 폐기.** 사용자: "종목 리포트는 딱히 필요 없어 채점표가 중요한거임". 영향: stock-* 스킬·산출물·공유 스크립트의 종목 코드 약 1,200줄 삭제.
 - **작업 위치는 이 워크트리(HANSOLJJ/revision_checker).** 워크트리가 2026-08-26 커밋 0df7d6e 에서 생성돼 채점표가 없었음. 원인은 GitHub origin/main 이 그 커밋에 멈춰 있었기 때문. 로컬 main 을 fork(HANSOLJJ)에 push 하고 이 워크트리를 ff-merge 로 b07334a 에 맞춤. origin 은 fork, upstream 은 원작자(wnghdcjfe, push 권한 없음)로 재설정.
 - **uv 로 Python 환경 통일.** 시스템 python3/python 혼용과 cp949 출력 깨짐이 원인. 훅 논리도 4단계에서 guard.py 로 모으고 모든 배선을 `uv run --frozen python -X utf8` 한 줄로.
-- **첫 원천: Google News RSS + SEC EDGAR + yfinance 가격.** yfinance 는 ⑥ price·market_cap 관측 전용(handoff 정책 4). 종목 차트용 yfinance 코드는 삭제.
+- **첫 원천: Google News RSS + SEC EDGAR + yfinance 가격.** yfinance 는 ⑥ price·market_cap 관측 전용(AGENTS.md 수집 절, 옛 handoff 정책 4). 종목 차트용 yfinance 코드는 삭제.
 - **원천 allowlist 폐지(규칙 v1.8).** 구글 뉴스 robots(/rss 차단)·일반 약관(robots 위반 자동 접근을 남용으로 정의)·뉴스 약관(개인 피드 리더 허용) 검토 결과를 보고 사용자가 "personal use 이니 허용 관련 규칙 전부 제거" 결정. nasdaq.com·Yahoo 배제도 함께 사라짐. 수집기는 식별 UA·낮은 빈도·본문 미수집을 코드 상수로 유지. 이 주제를 사용자에게 다시 올리지 않는다(guardrails ENTRY-004).
 - **수집 키는 company_id.** 비상장 2사(anthropic, openai)에 티커가 없고 TSMC·Alibaba·Alphabet 은 티커가 여럿. 채점표 관측·판단·해시가 이미 company_id 로 묶여 있음.
 - **실행 묶음은 output/<run_id>/, 수집 데이터는 data/<company_id>/.** 사용자가 "최종 결과 묶음에 다 넣자" 제안. output 은 종목 시절부터 최종 결과 자리. 기존 실행 2개도 새 양식으로 이동(과거 이력). 이동 시 .gitattributes CRLF 고정과 frontmatter 옛 경로 문자열 허용이 필요.

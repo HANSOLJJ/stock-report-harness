@@ -59,7 +59,7 @@
 ### collect_prices.py (yfinance, 가격 전용)
 
 - `fetch_quote(ticker, price_as_of) -> dict`. **저장소에서 유일한 yfinance 호출 지점이다.** `import yfinance` 는 이 함수 안에서 한다(모듈 import 시점에 네트워크나 의존을 요구하지 않는다). 반환은 `{close, close_date, market_cap, shares_outstanding, currency}`. `close_date` 는 `price_as_of` 이하의 마지막 거래일(휴장일이면 직전 거래일, 규칙 5.1). `market_cap` 은 벤더 값이 있으면 그것, 없으면 None.
-- `price_observations(company, quote, *, price_as_of, source_id) -> list[dict]`. 상장사에 대해 관측 두 개를 만든다. `price`(unit `USD/share`, basis `{currency, share_basis, adr_ratio}`)와 `market_cap`(unit `USD`, basis `{method: "vendor_market_cap" | "price_x_shares", shares_outstanding}`). 공통은 `status: "verified"`, `kind: "actual"`, `as_of = quote["close_date"]`, `source_id`. 비상장(`listed: false`)은 빈 리스트. 통화가 USD 가 아니면 예외(ADR 은 USD 로 거래되므로 정상 경로에서는 나지 않는다). **스키마 `METRICS` 카탈로그가 요구하는 키와 형식을 정확히 맞춘다.** EPS·컨센서스 관련 필드는 어떤 형태로도 받지 않는다(handoff 정책 4).
+- `price_observations(company, quote, *, price_as_of, source_id) -> list[dict]`. 상장사에 대해 관측 두 개를 만든다. `price`(unit `USD/share`, basis `{currency, share_basis, adr_ratio}`)와 `market_cap`(unit `USD`, basis `{method: "vendor_market_cap" | "price_x_shares", shares_outstanding}`). 공통은 `status: "verified"`, `kind: "actual"`, `as_of = quote["close_date"]`, `source_id`. 비상장(`listed: false`)은 빈 리스트. 통화가 USD 가 아니면 예외(ADR 은 USD 로 거래되므로 정상 경로에서는 나지 않는다). **스키마 `METRICS` 카탈로그가 요구하는 키와 형식을 정확히 맞춘다.** EPS·컨센서스 관련 필드는 어떤 형태로도 받지 않는다(AGENTS.md 수집 절, 옛 handoff 정책 4).
 - `price_source_entry(price_as_of, *, tickers, accessed_at) -> dict`. `source_id = "SRC-YF-<price_as_of>"`, `url = "https://finance.yahoo.com/quote/<첫 티커>"`, 여러 티커면 `publisher_url` 에 목록, `publisher = "Yahoo Finance via yfinance"`, `sha256 = None`, `note` 에 "가격·시총 관측 전용, EPS·컨센서스 미수집".
 
 ### resolve_cik.py
