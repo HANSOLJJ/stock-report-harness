@@ -141,6 +141,14 @@ class CollectTest(unittest.TestCase):
                                    dry_run=True)
         self.assertEqual(out["queries"], ["Foo Bar", "FB"])
 
+    def test_real_registry_news_queries_for_common_word_names(self):
+        """2026-10-01 레인 J: 회사명이 일반 단어인 곳은 이름 그대로 검색하면 다른 기사가 섞인다. 질의를 고정한다."""
+        real = {c["company_id"]: c for c in json.loads((ROOT / "scorecard" / "companies.json").read_text(encoding="utf-8"))["companies"]}
+        self.assertEqual(collect_news.default_queries(real["meta"]), ["Meta Platforms", "META stock"])
+        self.assertEqual(collect_news.default_queries(real["oracle"]), ["Oracle Corporation", "ORCL"])
+        self.assertEqual(collect_news.default_queries(real["apple"]), ["Apple Inc", "AAPL"])
+        self.assertEqual(collect_news.default_queries(real["nvidia"]), ["NVIDIA", "NVDA"])   # 나머지는 표시명·티커 그대로
+
 
 if __name__ == "__main__":
     unittest.main()
