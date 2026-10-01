@@ -12,7 +12,7 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 | 점수 지문 | `results_hash 4a3f6c05b206ef81…` |
 | 리뷰 | 독립 세션 4영역 리뷰 9라운드 끝에 네 영역 pass (2026-09-17) |
 | 승인 | 2026-09-21 사용자 재승인. 승인 유효(`status` 의 `approval_valid: true`) |
-| 다음 실행 준비 | 규칙 v1.8, 근거 수집(`collect`: 구글 뉴스·SEC 공시·yfinance 가격), 승인 페이지(`node server.js --approvals`)의 근거 확정·판단 수정, 근거 선별 평가 표본 38건(`tests/fixtures/evidence/`, 라벨 대기) |
+| 다음 실행 준비 | 규칙 v1.8, 근거 수집(`collect`: 구글 뉴스·SEC 공시·yfinance 가격), 승인 페이지(`node server.js --approvals`)의 근거 확정·판단 수정, 근거 선별 평가 표본 38건(`tests/fixtures/evidence/`, 2026-10-01 라벨 완료) |
 | 테스트 | `npm run test:scorecard` 1168건 통과(원자료 `validation/*/_raw` 가 없는 워크트리에서는 13건을 사유와 함께 건너뜀), `npm run test:node` 15건 통과 |
 
 조정총점은 alphabet 15 · amazon 15 · meta 15 · microsoft 14 · tsmc 10 · anthropic 10 · spacex-xai 9 · nvidia 9 · apple 8 · alibaba 7 · palantir 6 · tesla 5 · openai 4 · oracle 2 입니다.
