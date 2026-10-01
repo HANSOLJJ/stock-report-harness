@@ -6,7 +6,9 @@ exit 0 으로 끝낸다(fail-open). 훅 인프라 오류가 모든 도구를 막
 """
 from __future__ import annotations
 
+import fnmatch
 import getpass
+import glob
 import hashlib
 import io
 import json
@@ -193,6 +195,18 @@ def _is_protected(path: str) -> bool:
 # 변경 동사의 인자다. 읽기만 하는 명령(cat·rg·git show 등)의 경로 언급은 통과한다. 인터프리터(python·node·uv run)는
 # 스크립트 안의 쓰기를 셸에서 가릴 수 없으므로 보호 경로 문자열을 담기만 해도 막는다.
 _WRITE_VERBS = {"rm", "mv", "cp", "tee", "touch", "truncate", "install", "chmod", "chown"}
+# 2026-10-01 레인 J: PowerShell 쓰기 cmdlet 과 기본 별칭. 경로 인자(`-Path x`, `-Path:x`, 위치 인자)는 전부 쓰기 대상이다.
+_PS_WRITE = {"set-content", "add-content", "out-file", "remove-item", "move-item", "copy-item", "new-item", "rename-item",
+             "clear-content", "sc", "ac", "ri", "del", "erase", "rd", "rmdir", "mi", "move", "cpi", "copy", "ni", "rni",
+             "ren", "clc"}
+# 지우거나 옮기는 동사는 보호 경로를 품은 상위 폴더(`rm -rf output`, `Remove-Item -Recurse .`)도 쓰기 대상으로 본다.
+_REMOVE_VERBS = {"rm", "rmdir", "rd", "remove-item", "ri", "del", "erase"}
+_MOVE_VERBS = {"mv", "move-item", "mi", "move", "rename-item", "rni", "ren"}
+# 복사는 원본을 읽기만 한다. 목적지만 쓰기 대상이다.
+_COPY_VERBS = {"cp", "copy-item", "cpi", "copy", "install"}
+_DEST_PARAM = re.compile(r"^-(?:dest(?:ination)?|newn(?:ame)?|t$|-target-directory)", re.I)
+_GLOB_CHARS = set("*?[")
+_XARGS_VALUE_OPTS = {"-n", "-I", "-i", "-L", "-l", "-P", "-d", "-E", "-e", "-s", "-a"}
 _GIT_WRITE = {"checkout", "restore", "reset"}
 _INTERPRETER = re.compile(r"^(?:python(?:3(?:\.\d+)?)?|py|node)$")
 _PREFIX_WORDS = {"env", "command", "exec", "nohup", "time"}
@@ -232,8 +246,75 @@ def _is_redirect(tok: str) -> bool:
     return bool(tok) and set(tok) <= set(_SHELL_PUNCT) and bool(set(tok) & set("<>"))
 
 
-def _target_hits(targets: list[str], base: Path, root: Path) -> list[str]:
-    """쓰기 대상 단어 가운데 보호 경로. `cd` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다."""
+def _protected_anchors() -> list[str]:
+    """보호 리터럴(파일·폴더)과 그 상위 폴더들. 글롭·상위 폴더 판정이 대조한다."""
+    out: list[str] = []
+    for lit in _PROTECTED_LITERALS:
+        parts = lit.split("/")
+        for i in range(1, len(parts) + 1):
+            anchor = "/".join(parts[:i])
+            if anchor not in out:
+                out.append(anchor)
+    return out
+
+
+def _covers_protected(path: Path, root: Path) -> str | None:
+    """`path` 가 보호 경로를 품은 상위 폴더(또는 저장소 루트·그 위)이면 품은 보호 경로 하나. 아니면 None."""
+    try:
+        p = path.resolve()
+    except (OSError, ValueError):
+        return None
+    if p == root or p in root.parents:
+        return "저장소 루트 아래 전체"
+    try:
+        rp = p.relative_to(root).as_posix()
+    except ValueError:
+        return None
+    for lit in _PROTECTED_LITERALS:
+        if lit.startswith(rp + "/"):
+            return lit
+    if p.is_dir():
+        found = next(p.rglob("approval.json"), None)
+        if found is not None:
+            return relpath(str(found), root)
+    return None
+
+
+def _glob_hits(target: str, base: Path, root: Path, *, covers: bool) -> list[str]:
+    """글롭 단어가 가리킬 수 있는 보호 경로. 보호 리터럴(아직 없는 파일 포함)과 대조하고 파일 시스템에서 전개한다."""
+    hits: list[str] = []
+    rel_base = relpath(str(base), root)
+    pattern = target if target.startswith("/") or rel_base in (".", "") else f"{rel_base}/{target}"
+    pat_parts = pattern.removeprefix("./").split("/")
+    for anchor in _protected_anchors() if covers else _PROTECTED_LITERALS:
+        parts = anchor.split("/")
+        # 셸 글롭의 `*` 는 `/` 를 넘지 않는다. `**` 가 있을 때만 경로 전체를 한 번에 대조한다.
+        if "**" in pattern:
+            matched = fnmatch.fnmatchcase(anchor, "/".join(pat_parts))
+        else:
+            matched = len(parts) == len(pat_parts) and all(fnmatch.fnmatchcase(a, p) for a, p in zip(parts, pat_parts))
+        if matched:
+            hits.append(next((lit for lit in _PROTECTED_LITERALS if lit == anchor or lit.startswith(anchor + "/")), anchor))
+    try:
+        matches = glob.glob(str(base / target), recursive=True, include_hidden=True)
+    except (OSError, ValueError):
+        matches = []
+    for m in matches:
+        rp = relpath(m, root)
+        if _is_protected(rp):
+            hits.append(rp)
+        elif covers:
+            inside = _covers_protected(Path(m), root)
+            if inside:
+                hits.append(inside)
+    return hits
+
+
+def _target_hits(targets: list[str], base: Path, root: Path, *, covers: bool = False) -> list[str]:
+    """쓰기 대상 단어 가운데 보호 경로. `cd` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다.
+
+    2026-10-01 레인 J: 글롭(`*?[`)은 보호 경로와 맞으면 대상이다. `covers` 는 지우기·옮기기의 원본이라 보호 경로를 품은
+    상위 폴더도 대상이다."""
     hits: list[str] = []
     for target in targets:
         found = _protected_mentions(target)
@@ -244,8 +325,81 @@ def _target_hits(targets: list[str], base: Path, root: Path) -> list[str]:
                 rp = ""
             if rp and _is_protected(rp):
                 found = [rp]
+            elif covers:
+                inside = _covers_protected(base / target, root)
+                found = [inside] if inside else []
+        if not found and set(target) & _GLOB_CHARS:
+            found = _glob_hits(target, base, root, covers=covers)
         hits += found
     return hits
+
+
+def _verb_of(words: list[str]) -> str:
+    return words[0].rsplit("/", 1)[-1].lower().removesuffix(".exe") if words else ""
+
+
+def _path_args(args: list[str]) -> tuple[list[str], list[str], list[str]]:
+    """변경 동사의 인자를 (전부, 원본, 목적지) 로 나눈다. `-Name:값`·`--name=값` 은 값을 꺼내고, 목적지(`-Destination`·
+    `-NewName`·`-t`·위치 인자 둘 이상일 때의 마지막)는 원본에서 뺀다. 스위치(`-f`, `-Recurse`)는 경로가 아니다."""
+    every: list[str] = []
+    positional: list[str] = []
+    dests: list[str] = []
+    want_dest = False
+    for a in args:
+        if a.startswith("-") and len(a) > 1:
+            name, sep, value = a.partition("=") if a.startswith("--") else a.partition(":")
+            is_dest = bool(_DEST_PARAM.match(name))
+            if sep and value:
+                every.append(value)
+                (dests if is_dest else positional).append(value)
+            want_dest = is_dest and not sep
+            continue
+        every.append(a)
+        (dests if want_dest else positional).append(a)
+        want_dest = False
+    if not dests and len(positional) > 1:
+        return every, positional[:-1], positional[-1:]
+    return every, positional, dests
+
+
+def _write_command(words: list[str]) -> tuple[list[str], list[str]] | None:
+    """한 명령이 파일을 바꾸면 (쓰기 대상, 상위 폴더까지 보는 원본). 바꾸지 않으면 None."""
+    verb, args = _verb_of(words), words[1:]
+    if verb in _WRITE_VERBS or verb in _PS_WRITE:
+        every, sources, dests = _path_args(args)
+        if verb in _REMOVE_VERBS:
+            return every, every
+        if verb in _MOVE_VERBS:
+            return every, sources
+        if verb in _COPY_VERBS:
+            return dests or every, []
+        return every, []
+    if verb == "sed" and any(a.startswith(("-i", "--in-place")) for a in args):
+        return args, []
+    if verb == "perl" and any(re.match(r"^-[A-Za-z]*i", a) for a in args):
+        return args, []
+    if verb == "find":
+        starts = []
+        for a in args:
+            if a.startswith("-") or a in ("(", "!", ")"):
+                break
+            starts.append(a)
+        expr = args[len(starts):]
+        deletes = "-delete" in expr
+        for i, a in enumerate(expr):
+            if a in ("-exec", "-execdir", "-ok", "-okdir") and _write_command(expr[i + 1:]) is not None:
+                deletes = True
+        if deletes:
+            return [*starts, *[a for a in expr if not a.startswith("-")]], starts or ["."]
+    return None
+
+
+def _xargs_inner(words: list[str]) -> list[str]:
+    """`xargs [옵션] 명령 …` 의 명령 부분."""
+    rest = words[1:]
+    while rest and rest[0].startswith("-"):
+        rest = rest[2:] if rest[0] in _XARGS_VALUE_OPTS else rest[1:]
+    return rest
 
 
 def _shell_violations(cmd: str, root: Path) -> list[str]:
@@ -254,6 +408,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
         return _protected_mentions(cmd.replace("\\", "/"))
     out: list[str] = []
     base = root
+    parsed: list[tuple[list[str], list[str], Path]] = []
     for seg in segments:
         words: list[str] = []
         targets: list[str] = []
@@ -271,18 +426,30 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
             words = words[1:]
             while env and words and (words[0].startswith("-") or _ASSIGN.match(words[0])):
                 words = words[2:] if words[0] in ("-u", "--unset") else words[1:]
-        verb = words[0].rsplit("/", 1)[-1].lower().removesuffix(".exe") if words else ""
+        parsed.append((seg, words, base))
+        verb = _verb_of(words)
         args = words[1:]
+        write = _write_command(words)
         if verb in _CD_WORDS and args:
             base = base / args[-1]
         elif (verb == "uv" and args[:1] == ["run"]) or verb == "uvx" or _INTERPRETER.match(verb):
             out += _protected_mentions(" ".join(seg))
-        elif verb in _WRITE_VERBS:
-            targets += args
-        elif verb == "sed" and any(a.startswith(("-i", "--in-place")) for a in args):
-            targets += args
-        elif verb == "perl" and any(re.match(r"^-[A-Za-z]*i", a) for a in args):
-            targets += args
+        elif write is not None:
+            targets += write[0]
+            out += _target_hits(write[1], base, root, covers=True)
+        elif verb == "xargs" and _write_command(_xargs_inner(words)) is not None:
+            # 2026-10-01 레인 J: xargs 로 이어지는 변경은 대상이 앞 명령의 출력이라 셸에서 알 수 없다. 명령 전체의
+            # 보호 경로 언급과, 같은 명령의 다른 명령이 받은 경로(find·ls·git ls-files 의 시작 경로 등)가 보호 경로를
+            # 품는지를 본다. 경로 인자가 없는 find·ls 는 현재 폴더를 훑는다.
+            inner = _write_command(_xargs_inner(words))
+            out += _protected_mentions(cmd.replace("\\", "/"))
+            targets += inner[0]
+            out += _target_hits(inner[1], base, root, covers=True)
+            for _seg, other, other_base in parsed[:-1]:
+                paths = [a for a in other[1:] if not a.startswith("-") and not set(a) & _GLOB_CHARS]
+                if not paths and _verb_of(other) in ("find", "ls", "dir", "get-childitem", "gci"):
+                    paths = ["."]
+                out += _target_hits(paths, other_base, root, covers=True)
         elif verb == "git":
             git_base, rest = base, args
             while rest and rest[0].startswith("-"):

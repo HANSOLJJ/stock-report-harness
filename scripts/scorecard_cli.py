@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / approve / revoke / status / resolve-cik
+# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / judge / approve / revoke / status / resolve-cik
 """Usage:
   uv run --frozen python -X utf8 scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
@@ -13,13 +13,14 @@
   uv run --frozen python -X utf8 scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py summary <slug> --json
   uv run --frozen python -X utf8 scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <slug> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json PATH) --reason "…" --by NAME [--take-lock]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."] [--via browser|terminal]   (사람 셸에서만)
   uv run --frozen python -X utf8 scripts/scorecard_cli.py revoke <slug> --by NAME --note "..."                              (사람 셸에서만)
   uv run --frozen python -X utf8 scripts/scorecard_cli.py status <slug>
 
-init·collect·research·calculate·draft·review-template 과 에이전트 세션의 confirm 은 실행 잠금(output/<slug>/.lock)을
+init·collect·research·calculate·draft·review-template 과 에이전트 세션의 confirm·judge 는 실행 잠금(output/<slug>/.lock)을
 검사·기록한다. 다른 소유자의 잠금이면 거부하고 --take-lock 으로 인수한다.
-  uv run --frozen python -X utf8 scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply] [--json]
 
 build 는 기존 명령 `uv run --frozen python -X utf8 scripts/build_report.py <slug>` 가 report_type 으로 분기한다.
 """
@@ -27,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -270,6 +272,44 @@ def cmd_confirm(args: argparse.Namespace) -> int:
     return 0
 
 
+def _judge_value(text: str) -> object:
+    """`--set` 값. 정수 모양이면 정수(score·A·H), 아니면 문자열이다. 형식 검증은 스키마가 한다."""
+    return int(text) if re.fullmatch(r"-?\d+", text) else text
+
+
+def cmd_judge(args: argparse.Namespace) -> int:
+    """정성 판단 입력 수정(2026-10-01 레인 J). 승인이 아니므로 에이전트도 부를 수 있다. 잠금 규칙은 confirm 과 같다."""
+    from scorecard.stages import agent_session_markers, revise_judgment
+
+    if agent_session_markers():
+        _claim(args, "judge")
+    changes: dict[str, object] = {}
+    if args.json:
+        loaded = json.loads(Path(args.json).read_text(encoding="utf-8"))
+        if not isinstance(loaded, dict):
+            raise SchemaError(f"--json 은 {{키: 값}} 객체여야 한다: {args.json}")
+        changes.update(loaded)
+    for item in args.set or []:
+        key, sep, value = item.partition("=")
+        if not sep or not key.strip():
+            raise SchemaError(f"--set 형식은 key=value: {item!r}")
+        changes[key.strip()] = _judge_value(value.strip())
+    if args.evidence:
+        changes["evidence"] = list(args.evidence)
+    out = revise_judgment(args.slug, company_id=args.company, factor=args.factor, changes=changes, reason=args.reason, by=args.by)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    print(f"judge: {out['judgment_id']} ({out['kind']}) 수정 — 수정자 {out['current']['reviewer']}, {out['current']['reviewed_at']}")
+    for key in ("score", "inputs"):
+        if out["previous"][key] != out["current"][key]:
+            print(f"  {key}: {json.dumps(out['previous'][key], ensure_ascii=False)} → {json.dumps(out['current'][key], ensure_ascii=False)}")
+    if out["previous"]["evidence"] != out["current"]["evidence"]:
+        print(f"  evidence: {len(out['previous']['evidence'])}문장 → {len(out['current']['evidence'])}문장")
+    print(f"judgments 해시가 바뀌었다({out['judgments_hash'][:16]}…). 점수는 아직 그대로다 — calculate → draft → review 를 다시 돌린 뒤 승인한다: "
+          f"uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate {args.slug}")
+    return 0
+
+
 def cmd_summary(args: argparse.Namespace) -> int:
     """승인 페이지용 요약. --json 은 tests/node/fixtures/summary.sample.json 과 같은 키 구조의 JSON 한 개다."""
     from scorecard.stages import summary
@@ -375,18 +415,24 @@ def cmd_resolve_cik(args: argparse.Namespace) -> int:
         raise SchemaError(str(exc)) from exc
     rows = resolve(companies, load_ticker_map(payload))
     current = {c["company_id"]: c.get("cik") for c in companies}
-    print("company_id\tticker\t현재 cik\t조회 cik\tstatus")
-    for row in rows:
-        print(f"{row['company_id']}\t{row['ticker']}\t{current[row['company_id']]}\t{row['cik']}\t{row['status']}")
-    if not args.apply:
-        return 0
-    written = 0
-    for row in rows:
+    if not args.json:
+        print("company_id\tticker\t현재 cik\t조회 cik\tstatus")
+        for row in rows:
+            print(f"{row['company_id']}\t{row['ticker']}\t{current[row['company_id']]}\t{row['cik']}\t{row['status']}")
+    applied = []
+    for row in rows if args.apply else []:
         if row["status"] == "resolved" and current[row["company_id"]] != row["cik"]:
             out = set_company_field(row["company_id"], "cik", row["cik"], path=engine.COMPANIES_PATH)
-            print(f"apply: {out['company_id']} cik {out['old']} → {out['new']} ({rel(engine.COMPANIES_PATH)} {out['line_no']}행)")
-            written += 1
-    print(f"apply: {written}건 기록 (resolved 가 아닌 행은 쓰지 않는다)")
+            applied.append(out)
+            if not args.json:
+                print(f"apply: {out['company_id']} cik {out['old']} → {out['new']} ({rel(engine.COMPANIES_PATH)} {out['line_no']}행)")
+    if args.json:
+        # 2026-10-01 레인 J(F-M-3): 모듈(`resolve_cik.main --json`)과 같은 행에 현재 cik 와 기록 결과를 더한다.
+        print(json.dumps({"rows": [{**row, "current_cik": current[row["company_id"]]} for row in rows],
+                          "applied": [{"company_id": o["company_id"], "old": o["old"], "new": o["new"]} for o in applied]},
+                         ensure_ascii=False))
+    elif args.apply:
+        print(f"apply: {len(applied)}건 기록 (resolved 가 아닌 행은 쓰지 않는다)")
     return 0
 
 
@@ -516,6 +562,18 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_confirm)
 
+    p = sub.add_parser("judge", help="정성 판단 입력 수정(점수가 아니라 판단 입력). 승인이 아니다 — 고친 뒤 calculate 부터 다시 돈다")
+    p.add_argument("slug")
+    p.add_argument("--company", required=True)
+    p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"])
+    p.add_argument("--set", action="append", help="판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
+    p.add_argument("--evidence", action="append", help="근거 문장. 여러 번 주면 그 목록으로 통째 바꾼다")
+    p.add_argument("--json", help="고칠 값 {키: 값} JSON 파일(--set·--evidence 가 덮어쓴다)")
+    p.add_argument("--reason", required=True, help="수정 사유(revision_history 에 남는다)")
+    p.add_argument("--by", required=True, help="수정자. 승인 페이지는 사람 이름을 넣는다")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
+    p.set_defaults(func=cmd_judge)
+
     p = sub.add_parser("summary", help="승인 페이지용 요약")
     p.add_argument("slug")
     p.add_argument("--json", action="store_true")
@@ -525,6 +583,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--company")
     p.add_argument("--from-file", help="SEC company_tickers.json 캐시나 픽스처")
     p.add_argument("--apply", action="store_true")
+    p.add_argument("--json", action="store_true", help="표 대신 JSON 한 줄({rows, applied})")
     p.set_defaults(func=cmd_resolve_cik)
 
     args = parser.parse_args(argv)

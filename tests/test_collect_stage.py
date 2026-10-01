@@ -9,11 +9,12 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from scorecard import engine, evidence_lib, registry, stages  # noqa: E402
+from scorecard import engine, evidence_lib, registry, schema, stages  # noqa: E402
 from scorecard.paths import run_paths  # noqa: E402
 from scorecard.schema import SchemaError, load_json_strict  # noqa: E402
 
@@ -25,6 +26,22 @@ SLUG = "ai-scorecard-2026-09-evidence"
 NOW = "2026-09-30T00:00:00Z"
 
 
+def copy_registry_without_collector_keys(src: Path, dst: Path) -> None:
+    """레지스트리를 복사하되 수집기 전용 키(cik·news_queries)를 뺀다. 한 줄 = 한 기업 형식은 그대로다.
+
+    2026-10-01 레인 J: 실제 레지스트리에 12개사 cik 와 일반 단어 회사의 news_queries 가 들어갔다. 샌드박스 테스트는
+    키가 없는 상태에서 시작해야 skipped_no_cik·set_company_field·resolve-cik --apply 를 검사할 수 있다.
+    """
+    lines = []
+    for line in src.read_text(encoding="utf-8").split("\n"):
+        body = line.strip().rstrip(",")
+        if body.startswith('{"company_id"'):
+            item = {k: v for k, v in json.loads(body).items() if k not in schema.COMPANY_SETTABLE_KEYS}
+            line = registry.render_company_line(item) + ("," if line.rstrip().endswith(",") else "")
+        lines.append(line)
+    dst.write_text("\n".join(lines), encoding="utf-8", newline="\n")
+
+
 class Sandbox:
     """출력 묶음·레지스트리·수집 캐시를 임시 폴더로 돌린다. 정본은 읽기만 한다."""
 
@@ -34,7 +51,7 @@ class Sandbox:
         self.slug = slug
         self.saved = (engine.OUTPUT_DIR, engine.COMPANIES_PATH, evidence_lib.DATA_ROOT, os.environ.get("SEC_UA"))
         self.companies = self.dir / "companies.json"
-        shutil.copyfile(self.saved[1], self.companies)
+        copy_registry_without_collector_keys(self.saved[1], self.companies)
         engine.OUTPUT_DIR = self.dir / "output"
         engine.COMPANIES_PATH = self.companies
         evidence_lib.DATA_ROOT = self.dir / "data"
@@ -116,6 +133,21 @@ class WindowTest(_SandboxTest):
         self.assertEqual(by_id, {"nvidia": "skipped_no_user_agent", "tsmc": "skipped_no_cik", "openai": "skipped_no_cik"})
         self.assertTrue(run_paths(SLUG).candidates.is_file())
 
+    def test_non_ascii_sec_ua_fails_per_company_before_requests(self):
+        """2026-10-01 레인 J(F-M-1): 영문이 아닌 SEC_UA 는 요청 전에 회사별 failed 다. 가격(파일)은 영향받지 않는다."""
+        os.environ["SEC_UA"] = "Harness 홍길동 hong@example.com"   # Sandbox.close 가 원래 값으로 되돌린다
+        self.addCleanup(os.environ.pop, "SEC_UA", None)
+        with mock.patch.object(evidence_lib.urllib.request, "urlopen", side_effect=AssertionError("요청하면 안 된다")):
+            out = stages.collect(SLUG, now=NOW, kinds=("news", "filings"))
+            prices = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        rows = [*out["news"], *out["filings"]]
+        failed = sorted(r["company_id"] for r in rows if r["status"] == "failed"
+                        and r["error"].startswith("SEC_UA 는 영문으로 적는다(HTTP 머리글 제약)"))
+        self.assertEqual(failed, ["nvidia", "nvidia", "openai", "tsmc"])   # 뉴스 셋 + 공시(cik 있는 nvidia)
+        self.assertTrue(all("홍길동" not in r.get("error", "") for r in rows))
+        self.assertEqual({r["company_id"]: r["status"] for r in prices["prices"]},
+                         {"nvidia": "collected", "tsmc": "collected", "openai": "skipped_unlisted"})
+
     def test_argument_errors(self):
         with self.assertRaises(SchemaError):
             stages.collect(SLUG, kinds=("news", "prices"), from_file=str(RSS))
@@ -193,10 +225,43 @@ class PricesTest(_SandboxTest):
         stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
         obs_before = (self.box.run_dir / "observations.json").read_bytes()
         src_before = (self.box.run_dir / "sources.json").read_bytes()
-        with self.assertRaisesRegex(SchemaError, "덮어쓰지 않는다"):
-            stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        # 2026-10-01 레인 J: 중복은 회사 단위 failed 다. 기록할 것이 없으면 파일을 쓰지 않는다.
+        out = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        rows = {r["company_id"]: r for r in out["prices"]}
+        for cid in ("nvidia", "tsmc"):
+            self.assertEqual(rows[cid]["status"], "failed")
+            self.assertIn("덮어쓰지 않는다", rows[cid]["error"])
         self.assertEqual((self.box.run_dir / "observations.json").read_bytes(), obs_before)
         self.assertEqual((self.box.run_dir / "sources.json").read_bytes(), src_before)
+
+    def test_retry_after_partial_failure_records_only_the_missing_company(self):
+        """레인 M 재시도 상황. 먼저 수집된 회사가 중복으로 빠져도 나머지는 기록된다."""
+        quotes = json.loads(QUOTES.read_text(encoding="utf-8"))
+        only_nvda = self.box.dir / "nvda.json"
+        only_nvda.write_text(json.dumps({"NVDA": quotes["NVDA"]}), encoding="utf-8")
+        stages.collect(SLUG, kinds=("prices",), from_file=str(only_nvda), now=NOW)
+        out = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        self.assertEqual({r["company_id"]: r["status"] for r in out["prices"]},
+                         {"nvidia": "failed", "tsmc": "collected", "openai": "skipped_unlisted"})
+        ids = [o["observation_id"] for o in load_json_strict(self.box.run_dir / "observations.json")["items"]]
+        self.assertEqual(ids.count("nvidia.price.2026-09-29"), 1)
+        self.assertIn("tsmc.price.2026-09-29", ids)
+        engine.load_context(SLUG)
+
+    def test_invalid_observation_fails_that_company_only(self):
+        """한 회사의 관측이 스키마를 어기면(NaN 종가) 그 회사만 failed 이고 나머지는 기록된다(F-M-2)."""
+        quotes = json.loads(QUOTES.read_text(encoding="utf-8"))
+        quotes["TSM"]["close"] = float("nan")
+        path = self.box.dir / "nan.json"
+        path.write_text(json.dumps(quotes), encoding="utf-8")   # json 은 NaN 을 리터럴로 쓴다
+        out = stages.collect(SLUG, kinds=("prices",), from_file=str(path), now=NOW)
+        rows = {r["company_id"]: r for r in out["prices"]}
+        self.assertEqual((rows["nvidia"]["status"], rows["tsmc"]["status"]), ("collected", "failed"))
+        self.assertIn("price", rows["tsmc"]["error"])
+        ids = {o["observation_id"] for o in load_json_strict(self.box.run_dir / "observations.json")["items"]}
+        self.assertIn("nvidia.price.2026-09-29", ids)
+        self.assertNotIn("tsmc.price.2026-09-29", ids)
+        engine.load_context(SLUG)
 
     def test_missing_ticker_in_file_fails_that_company_only(self):
         quotes = self.box.dir / "quotes.json"

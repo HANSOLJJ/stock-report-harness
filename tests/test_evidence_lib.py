@@ -154,6 +154,18 @@ class UserAgentTest(unittest.TestCase):
             os.environ.pop("SEC_UA", None)
             self.assertIn("contact unset", user_agent_for("news"))
 
+    def test_non_ascii_sec_ua_is_refused_before_any_request_without_the_value(self):
+        """2026-10-01 레인 J(F-M-1): 영문 밖 글자는 urllib 머리글 인코딩에서 터진다. 요청 전에 막고 값은 메시지에 넣지 않는다."""
+        value = "Harness 홍길동 hong@example.com"
+        with mock.patch.dict(os.environ, {"SEC_UA": value}), \
+                mock.patch.object(evidence_lib.urllib.request, "urlopen", side_effect=AssertionError("요청하면 안 된다")):
+            for kind in ("sec", "news"):
+                with self.subTest(kind=kind), self.assertRaises(RuntimeError) as ctx:
+                    user_agent_for(kind)
+                self.assertIn("SEC_UA 는 영문으로 적는다(HTTP 머리글 제약)", str(ctx.exception))
+                self.assertNotIn("홍길동", str(ctx.exception))
+                self.assertNotIn("hong@example.com", str(ctx.exception))
+
 
 class LocalSettingTest(unittest.TestCase):
     """2026-09-30: SEC_UA 는 환경변수가 먼저이고, 없으면 gitignore 된 .env 에서 읽는다."""

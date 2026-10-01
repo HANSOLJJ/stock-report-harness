@@ -1,6 +1,7 @@
 # yfinance 가격·시총 관측 수집기(EPS·컨센서스 미수집)
 from __future__ import annotations
 
+import math
 from datetime import date, datetime, timedelta, timezone
 from typing import Any
 
@@ -14,13 +15,22 @@ def fetch_quote(ticker: str, price_as_of: str) -> dict[str, Any]:
     hist = stock.history(start=(as_of - timedelta(days=10)).isoformat(),
                          end=(as_of + timedelta(days=1)).isoformat(), auto_adjust=False)
     closes: list[tuple[str, float]] = []
+    # 2026-10-01 레인 J(F-M-2): 야후는 가장 최근 거래일 일봉의 종가를 몇 시간 동안 NaN 으로 둔다. 그 행을 건너뛰고
+    # 기준일 이하의 마지막 유한 종가를 쓴다. 건너뛴 날짜는 반환값에 남긴다.
+    skipped: list[str] = []
     for idx, row in hist.iterrows():
         day = idx.date() if hasattr(idx, "date") else date.fromisoformat(str(idx)[:10])
         if day <= as_of:
-            closes.append((day.isoformat(), float(row["Close"])))
+            value = float(row["Close"])
+            if math.isfinite(value):
+                closes.append((day.isoformat(), value))
+            else:
+                skipped.append(day.isoformat())
     if not closes:
-        raise ValueError(f"{ticker}: {price_as_of} 이하 거래일 종가 없음")
+        raise ValueError(f"{ticker}: {price_as_of} 이하 거래일 종가 없음"
+                         + (f"(유한하지 않은 종가 {len(skipped)}행 건너뜀: {', '.join(skipped)})" if skipped else ""))
     close_date, close = closes[-1]
+    skipped = [d for d in skipped if d > close_date]   # 쓴 종가보다 앞선 결측은 결과에 영향이 없다
 
     market_cap = None
     shares_outstanding = None
@@ -43,7 +53,7 @@ def fetch_quote(ticker: str, price_as_of: str) -> dict[str, Any]:
             shares_outstanding = info.get("sharesOutstanding")
         if currency is None:
             currency = info.get("currency")
-    return {
+    quote = {
         "close": close,
         "close_date": close_date,
         "market_cap": float(market_cap) if market_cap is not None else None,
@@ -52,6 +62,9 @@ def fetch_quote(ticker: str, price_as_of: str) -> dict[str, Any]:
         # fast_info·info 의 시총·발행주식수는 **조회 시점** 값이다. 종가 날짜와 어긋나는지 보려고 조회일을 남긴다.
         "fetched_at": datetime.now(timezone.utc).date().isoformat(),
     }
+    if skipped:
+        quote["skipped_nonfinite_close"] = skipped
+    return quote
 
 
 def _vendor_cap_is_fresh(quote: dict[str, Any]) -> bool:

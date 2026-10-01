@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import scorecard_cli  # noqa: E402
+from tests.test_collect_stage import copy_registry_without_collector_keys  # noqa: E402
 from scorecard import engine, registry  # noqa: E402
 from scorecard.schema import (  # noqa: E402
     SchemaError,
@@ -87,7 +88,7 @@ class _RegistrySandbox(unittest.TestCase):
     def setUp(self) -> None:
         self.dir = Path(tempfile.mkdtemp())
         self.path = self.dir / "companies.json"
-        shutil.copyfile(ROOT / "scorecard" / "companies.json", self.path)
+        copy_registry_without_collector_keys(ROOT / "scorecard" / "companies.json", self.path)
         self.saved = (engine.OUTPUT_DIR, engine.COMPANIES_PATH)
         engine.COMPANIES_PATH = self.path
         self.addCleanup(self._restore)
@@ -162,6 +163,22 @@ class ResolveCikCliTest(_RegistrySandbox):
         self.assertIn("apply: 0건", out)
         self.assertEqual(self.path.read_bytes(), before)
 
+    def test_json_output(self):
+        """2026-10-01 레인 J(F-M-3): CLI 도 --json 을 받는다. 표 없이 JSON 한 줄이다."""
+        original = self.path.read_bytes()
+        code, out = self._run("--json")
+        self.assertEqual(code, 0)
+        data = json.loads(out)
+        self.assertEqual(len(out.strip().splitlines()), 1)
+        rows = {r["company_id"]: r for r in data["rows"]}
+        self.assertEqual((rows["spacex-xai"]["cik"], rows["spacex-xai"]["status"], rows["spacex-xai"]["current_cik"]),
+                         (1181412, "resolved", None))
+        self.assertEqual(rows["openai"]["status"], "unlisted")
+        self.assertEqual(data["applied"], [])
+        self.assertEqual(self.path.read_bytes(), original)
+        code, out = self._run("--json", "--apply", "--company", "nvidia")
+        self.assertEqual(json.loads(out)["applied"], [{"company_id": "nvidia", "old": None, "new": 1045810}])
+
     def test_company_filter(self):
         code, out = self._run("--company", "nvidia", "--apply")
         self.assertEqual(code, 0)
@@ -169,9 +186,18 @@ class ResolveCikCliTest(_RegistrySandbox):
         self.assertEqual(by_id["nvidia"]["cik"], 1045810)
         self.assertNotIn("cik", by_id["apple"])
 
-    def test_real_registry_is_untouched(self):
-        """이 과제는 실제 companies.json 에 --apply 를 돌리지 않는다."""
-        self.assertNotIn('"cik"', (ROOT / "scorecard" / "companies.json").read_text(encoding="utf-8"))
+    def test_real_registry_has_the_resolved_ciks(self):
+        """2026-10-01 레인 J: 실제 SEC 조회(resolve-cik --apply)로 상장 12개사의 cik 를 넣었다. 픽스처(실응답 축약)와 같아야 한다."""
+        from scorecard.resolve_cik import load_ticker_map, resolve
+
+        real = {c["company_id"]: c for c in load_json_strict(ROOT / "scorecard" / "companies.json")["companies"]}
+        rows = resolve(list(real.values()), load_ticker_map(load_json_strict(TICKERS)))
+        self.assertEqual({r["company_id"]: real[r["company_id"]].get("cik") for r in rows},
+                         {r["company_id"]: r["cik"] for r in rows})
+        self.assertEqual(sum(1 for r in rows if r["status"] == "resolved"), 12)
+        self.assertEqual(real["spacex-xai"]["cik"], 1181412)
+        for cid in ("anthropic", "openai"):
+            self.assertNotIn("cik", real[cid])
 
 
 class ResultsHashInvariantTest(_RegistrySandbox):

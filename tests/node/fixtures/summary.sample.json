@@ -91,6 +91,127 @@
   "pending_rule_decisions": [
     "C-03"
   ],
+  "judgments": [
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F1",
+      "kind": "score",
+      "score": 2,
+      "score_range": [
+        0,
+        5
+      ],
+      "inputs": [],
+      "evidence": [
+        "CUDA 개발자 생태계는 업무 채널이 아니라 부품 공급이다"
+      ],
+      "status": "carried",
+      "reviewer": "legacy:v1.5",
+      "reviewed_at": "2026-09-02",
+      "edit_kind": "score",
+      "revisions": 0
+    },
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "score_range": [
+        0,
+        5
+      ],
+      "inputs": [
+        {
+          "key": "imitation",
+          "value": "fail"
+        },
+        {
+          "key": "revenue_model",
+          "value": "pass"
+        },
+        {
+          "key": "acceleration",
+          "value": "fail"
+        },
+        {
+          "key": "door_closed",
+          "value": "fail"
+        }
+      ],
+      "evidence": [
+        "❌모방 불가능성 — 시험용 근거 문장 <b>태그</b>는 그대로 글자로 보여야 한다"
+      ],
+      "status": "new",
+      "reviewer": "사용자",
+      "reviewed_at": "2026-10-01",
+      "edit_kind": "criteria",
+      "revisions": 1
+    },
+    {
+      "company_id": "openai",
+      "display_name": "OpenAI",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "score_range": [
+        0,
+        5
+      ],
+      "inputs": [
+        {
+          "key": "imitation",
+          "value": "partial"
+        },
+        {
+          "key": "revenue_model",
+          "value": "pass"
+        },
+        {
+          "key": "acceleration",
+          "value": "pass"
+        },
+        {
+          "key": "door_closed",
+          "value": "fail"
+        }
+      ],
+      "evidence": [
+        "✅별도 수익모델 — 구독 매출"
+      ],
+      "status": "carried",
+      "reviewer": "legacy:v1.5",
+      "reviewed_at": "2026-09-02",
+      "edit_kind": "criteria",
+      "revisions": 0
+    }
+  ],
+  "judgment_choices": {
+    "criteria": {
+      "imitation": ["pass", "partial", "fail", "unknown"],
+      "revenue_model": ["pass", "partial", "fail", "unknown"],
+      "acceleration": ["pass", "partial", "fail", "unknown"],
+      "door_closed": ["pass", "fail", "unknown"]
+    },
+    "grade": {
+      "A": [0, 1, 2],
+      "H": [0, -1, -2, -3]
+    },
+    "matrix": {
+      "funding_dependent_share": ["large", "small", "unknown"],
+      "own_money_returns": ["yes", "no", "unknown"]
+    },
+    "gate_inputs": {
+      "fcf_trend": ["stable", "deteriorating", "unknown"],
+      "bep_retreat": ["yes", "no", "unknown"],
+      "buffer_erosion": ["yes", "no", "unknown"],
+      "direction_A": ["pass", "fail", "unknown"],
+      "direction_B": ["pass", "fail", "unknown"],
+      "coverage_comparable": ["yes", "no", "unknown"],
+      "operating_result_reviewed": ["profit", "loss", "unknown"]
+    }
+  },
   "hashes": {
     "rules": "345c3353372d0f95d98eef5ed918c31e7a3f7878185a24f1e4edfa9870d58d21",
     "observations": "02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05",

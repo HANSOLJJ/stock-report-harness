@@ -192,6 +192,23 @@ class FetchQuoteTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             fetch_quote("NVDA", "2026-09-29")
 
+    def test_nonfinite_latest_close_falls_back_to_last_finite(self):
+        """2026-09-30 실측(F-M-2): 야후가 가장 최근 일봉 종가를 NaN 으로 둔다. 직전 유한 종가와 그 날짜를 쓰고 건너뛴 날을 남긴다."""
+        self._install_stub([("2026-09-26", 180.0), ("2026-09-29", 181.5), ("2026-09-30", float("nan"))])
+        quote = fetch_quote("NVDA", "2026-09-30")
+        self.assertEqual((quote["close_date"], quote["close"]), ("2026-09-29", 181.5))
+        self.assertEqual(quote["skipped_nonfinite_close"], ["2026-09-30"])
+        obs = price_observations({"company_id": "nvidia", "listed": True, "share_basis": "common", "adr_ratio": None},
+                                 quote, source_id="SRC-YF-2026-09-30")
+        self.assertEqual((obs[0]["as_of"], obs[0]["value"]), ("2026-09-29", 181.5))
+
+    def test_finite_quote_has_no_skip_key_and_all_nan_raises(self):
+        self._install_stub([("2026-09-29", 181.5)])
+        self.assertNotIn("skipped_nonfinite_close", fetch_quote("NVDA", "2026-09-29"))
+        self._install_stub([("2026-09-29", float("nan")), ("2026-09-30", float("inf"))])
+        with self.assertRaisesRegex(ValueError, "건너뜀"):
+            fetch_quote("NVDA", "2026-09-30")
+
 
 class ImportPinTest(unittest.TestCase):
     def test_yfinance_import_only_inside_fetch_quote(self):

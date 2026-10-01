@@ -141,7 +141,8 @@ def collect_company_news(
         "fetched": [], "skipped_rate_limit": [], "raw_files": [],
     }
     articles: list[dict[str, Any]] = []
-    user_agent = evidence_lib.user_agent_for("news")
+    # 파일에서 읽을 때는 요청이 없으므로 UA(와 그 SEC_UA 검사)를 거치지 않는다(2026-10-01 레인 J).
+    user_agent = evidence_lib.user_agent_for("news") if from_file is None else ""
     for query, url in zip(queries, urls):
         if counts.get(query, 0) >= evidence_lib.GOOGLE_MAX_FETCH_PER_QUERY_PER_DAY:
             result["skipped_rate_limit"].append(query)

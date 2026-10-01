@@ -32,9 +32,15 @@
 | 명령 | 판정 |
 |---|---|
 | 리다이렉션 `>`·`>>` 의 대상 | 보호 경로면 막는다 |
-| 변경 동사 `rm`·`mv`·`cp`·`tee`·`touch`·`truncate`·`install`·`chmod`·`chown`, `sed -i`, `perl -pi`, `git checkout`·`git restore`·`git reset` 의 인자 | 보호 경로면 막는다 |
+| 변경 동사 `rm`·`mv`·`tee`·`touch`·`truncate`·`chmod`·`chown`, `sed -i`, `perl -pi`, `git checkout`·`git restore`·`git reset` 의 인자 | 보호 경로면 막는다 |
+| PowerShell `Set-Content`·`Add-Content`·`Out-File`·`Remove-Item`·`Move-Item`·`Copy-Item`·`New-Item`·`Rename-Item`·`Clear-Content` 와 기본 별칭(`sc`·`ac`·`ri`·`del`·`erase`·`rd`·`mi`·`move`·`cpi`·`copy`·`ni`·`rni`·`ren`·`clc`)의 경로 인자(`-Path x`, `-Path:x`, 위치 인자) | 보호 경로면 막는다(2026-10-01 레인 J) |
+| 복사 `cp`·`install`·`Copy-Item` | **목적지**(`-Destination`·`-t`·마지막 위치 인자)만 쓰기 대상이다. 보호 경로에서 복사해 나오는 것은 읽기라 통과한다(레인 J) |
+| 지우기 `rm`·`rmdir`·`Remove-Item` 계열, 옮기기 `mv`·`Move-Item`·`Rename-Item` 계열의 원본 | 보호 경로를 품은 상위 폴더(`rm -rf output`, `rm -rf .`, 승인 파일이 든 실행 폴더)도 막는다(레인 J) |
+| `find … -delete`, `find … -exec <변경 동사>` | 시작 경로가 보호 경로이거나 보호 경로를 품으면 막는다. 경로 없는 `find . …` 는 저장소 전체라 막는다(레인 J) |
+| `… \| xargs <변경 동사>` | 대상이 앞 명령의 출력이라 알 수 없다. 명령 전체에 보호 경로가 나오거나, 같은 명령의 다른 명령이 받은 경로(find·ls·git ls-files 등)가 보호 경로를 품으면 막는다(레인 J) |
+| 글롭(`*`·`?`·`[`)이 든 쓰기 대상 | 보호 경로(아직 없는 파일 포함)와 맞거나 파일 시스템에서 전개한 결과가 보호 경로면 막는다. `*` 는 `/` 를 넘지 않는다(`rm *.md` 는 `docs/` 아래와 맞지 않는다)(레인 J) |
 | 인터프리터 `python`·`python3`·`py`·`node`, `uv run …`, `uvx` | 보호 경로 문자열을 담기만 해도 막는다. 스크립트 안의 쓰기를 셸에서 가릴 수 없다 |
-| 읽기 명령 `cat`·`rg`·`grep`·`ls`·`head`·`git show`·`git diff` 등 | 경로를 언급해도 통과한다 |
+| 읽기 명령 `cat`·`rg`·`grep`·`ls`·`head`·`git show`·`git diff`·`Get-Content`·`Select-String` 등 | 경로를 언급해도 통과한다 |
 
 - 앞에 붙은 `VAR=값`, `env`(옵션·`-u NAME` 포함), `command`·`exec`·`nohup`·`time` 은 건너뛰고 그 뒤의 동사를 본다.
 - `cd`·`pushd`·`Set-Location` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다(`cd output/<보호 실행> && rm draft.md` 도 막는다). `git -C <폴더>` 도 같다.
@@ -46,7 +52,7 @@
 
 ## 실행 잠금 (`enforce_plan`)
 
-`output/<slug>/.lock`(gitignore)에 `{owner, started_utc, stage}` 가 있고 그 소유자가 훅 프로세스의 소유자와 다르면 그 묶음에 대한 Write/Edit 를 막는다. 잠금 파일이 없으면 통과하고, 읽을 수 없는 잠금은 소유자를 모르는 잠금으로 보아 막는다. 소유자는 `SCORECARD_AGENT`, 없으면 `ORCA_TERMINAL_HANDLE`, 없으면 OS 사용자명이다(`guard.lock_owner` 와 `scorecard.stages.lock_owner` 가 같은 규칙). 잠금은 CLI 의 `init`·`collect`·`research`·`calculate`·`draft`·`review-template` 과 에이전트 세션의 `confirm` 이 쓰고, 인수는 그 단계들의 `--take-lock` 이다.
+`output/<slug>/.lock`(gitignore)에 `{owner, started_utc, stage}` 가 있고 그 소유자가 훅 프로세스의 소유자와 다르면 그 묶음에 대한 Write/Edit 를 막는다. 잠금 파일이 없으면 통과하고, 읽을 수 없는 잠금은 소유자를 모르는 잠금으로 보아 막는다. 소유자는 `SCORECARD_AGENT`, 없으면 `ORCA_TERMINAL_HANDLE`, 없으면 OS 사용자명이다(`guard.lock_owner` 와 `scorecard.stages.lock_owner` 가 같은 규칙). 잠금은 CLI 의 `init`·`collect`·`research`·`calculate`·`draft`·`review-template` 과 에이전트 세션의 `confirm`·`judge`(2026-10-01 레인 J) 가 쓰고, 인수는 그 단계들의 `--take-lock` 이다.
 
 ## 단계 순서 (`enforce_plan`)
 
@@ -91,9 +97,10 @@
 
 ## 테스트
 
-`uv run --frozen python -X utf8 -m unittest tests.test_hooks`. 훅 함수를 dict 로 직접 부르므로 bash 가 필요 없다. 배선 스모크 두 건만 `bash` 와 `uv` 가 있을 때 실행한다.
+`uv run --frozen python -X utf8 -m unittest tests.test_hooks tests.test_lane_v_fixes tests.test_hooks_write_forms`. 훅 함수를 dict 로 직접 부르므로 bash 가 필요 없다. 배선 스모크 두 건만 `bash` 와 `uv` 가 있을 때 실행한다.
 
 ## 아직 하지 않은 것
 
 - Antigravity·Muse 배선은 확인 세 건(차단 표현, 페이로드 필드 이름, 훅 프로세스의 작업 디렉터리)이 끝난 뒤 별도 과제로 한다.
-- `protect_sensitive_files` 의 쓰기 대상 판정은 bash 명령 기준이다. PowerShell 의 `Set-Content`, `Remove-Item` 같은 cmdlet 은 아직 변경 동사로 보지 않는다(리다이렉션 `>` 와 `rm`·`cp`·`mv` 별칭은 잡는다). `find … -delete`, `xargs rm`, 글롭(`rm output/ai-*`)으로 보호 경로를 가리키는 쓰기, 보호 폴더의 상위 폴더 삭제(`rm -rf output`)도 잡지 않는다.
+- `protect_sensitive_files` 는 셸 문자열만 본다. PowerShell 변수(`$p = 'output/…'; Remove-Item $p`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(승인 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
+- `xargs` 판정은 보수적이다. 대상 목록을 파일에서 읽는 `cat list.txt | xargs rm` 은 목록 안의 보호 경로를 볼 수 없어 통과한다.
