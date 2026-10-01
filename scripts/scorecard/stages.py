@@ -601,7 +601,9 @@ def review_template(slug: str, *, force: bool = False) -> Path:
 # ------------------------------------------------------------------ 세션 판정·실행 잠금
 # 2026-09-30 레인 F. 에이전트 터미널에만 있고 사람이 여는 일반 Orca 셸에는 없는 것을 두 셸의 환경변수를
 # 직접 비교해 골랐다(validation/lane-F-approval/REPORT.md 의 표). `ORCA_*` 는 사람 셸에도 있어서 넣지 않는다.
-AGENT_ENV_MARKERS = ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT", "ORCA_AGENT_LAUNCH_TOKEN", "AI_AGENT")
+# 2026-10-01 레인 J: Muse 세션 표지 `MUSE_TOOL_USE_ID`(도구 호출 때만 생기는 값, validation/lane-M-live-collection/REPORT.md §4).
+# `MUSE_RELEASE_INFO` 는 사람 셸과 비교하지 못해 넣지 않는다.
+AGENT_ENV_MARKERS = ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT", "ORCA_AGENT_LAUNCH_TOKEN", "AI_AGENT", "MUSE_TOOL_USE_ID")
 # 잠금을 검사하고 쓰는 단계. approve·revoke·build 는 사람 행위라 잠금을 요구하지도 쓰지도 않는다.
 LOCK_STAGES = ("init", "collect", "research", "calculate", "draft", "review-template", "confirm", "judge")
 

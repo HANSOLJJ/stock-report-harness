@@ -166,6 +166,11 @@ class AgentRefusalTest(LockTestBase):
         self.assertEqual(stages.agent_session_markers({"ORCA_AGENT_LAUNCH_TOKEN": "x", "CLAUDE_CODE_ENTRYPOINT": "cli"}),
                          ["CLAUDE_CODE_ENTRYPOINT", "ORCA_AGENT_LAUNCH_TOKEN"])
 
+    def test_muse_tool_use_id_is_a_marker_and_release_info_is_not(self):
+        """2026-10-01 레인 J: 레인 M 조사에서 Muse 세션은 CLAUDECODE·CLAUDE_CODE_ENTRYPOINT·AI_AGENT 가 없었다."""
+        self.assertEqual(stages.agent_session_markers({"MUSE_TOOL_USE_ID": "toolu_x"}), ["MUSE_TOOL_USE_ID"])
+        self.assertEqual(stages.agent_session_markers({"MUSE_RELEASE_INFO": "x"}), [])
+
 
 if __name__ == "__main__":
     unittest.main()
