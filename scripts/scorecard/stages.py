@@ -26,7 +26,8 @@ from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, 
 from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_EDIT_KIND, JUDGMENT_INPUT_CHOICES,
                      JUDGMENT_REVISION_FIELDS, SchemaError, approval_file_present, approval_id_for, load_json_strict,
-                     sha256_file, sha256_obj, validate_approval, validate_judgments, validate_observations, validate_run, validate_sources, write_json)
+                     sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
+                     validate_observations, validate_run, validate_sources, validate_triggers, write_json)
 
 
 def today() -> str:
@@ -56,6 +57,8 @@ class _Inputs:
     assumptions: list[str]
     baseline_note: str
     continued_from: dict[str, Any] | None = None
+    evidence: dict[str, Any] | None = None   # 이어받기만. 판단·트리거가 인용한 근거(2026-10-01 레인 N, V2-2)
+    triggers: dict[str, Any] | None = None
 
 
 def _inputs_from_baseline(slug: str, *, baseline_id: str, selected: list[str], as_of: str, created: str,
@@ -139,6 +142,20 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
     # 출처는 **통째로** 옮긴다. 기준선 4건으로 덮으면 실행 도중 늘어난 출처가 사라져
     # 관측의 `source_id` 가 장부에서 사라진다.
     sources = {**load_json_strict(src_path), "run_id": slug}
+    # 2026-10-01 레인 N(V2-2): 트리거와, 판단·트리거가 인용한 근거 항목을 함께 옮긴다. 옮기지 않으면 출처 장부에는 근거의
+    # 출처가 있는데 근거 항목만 없어 다음 실행의 모든 단계가 교차 참조에서 멈춘다. 근거는 확정 상태 그대로 옮긴다.
+    prior_paths = run_paths(prior_slug)
+    triggers = evidence = None
+    if prior_paths.triggers.is_file():
+        prior_trg = load_json_strict(prior_paths.triggers)
+        items = [t for t in prior_trg.get("items", []) if t.get("company_id") in selected]
+        triggers = {**prior_trg, "run_id": slug, "items": items} if items else None
+    cited = {e for j in judgments["items"] for e in (j.get("evidence_ids") or [])}
+    cited |= {e for t in (triggers or {}).get("items", []) for e in (t.get("evidence_ids") or [])}
+    if prior_paths.evidence.is_file():
+        prior_ev = load_json_strict(prior_paths.evidence)
+        items = [e for e in prior_ev.get("items", []) if e.get("evidence_id") in cited]
+        evidence = {**prior_ev, "run_id": slug, "items": items} if items else None
 
     hashes = input_hashes(prior_slug)
     approval = validate_approval(load_json_strict(d / "approval.json"), prior_slug) if approval_file_present(d) else None
@@ -168,6 +185,9 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
     note = (f"이전 실행 `{prior_slug}`(as_of {prior_run['as_of']})의 관측 {len(observations['items'])}건·"
             f"판단 {len(judgments['items'])}건·출처 {len(sources.get('items') or [])}건을 이어받았고, "
             f"점수 비교 기준선은 `{baseline_id}` 를 유지한다")
+    if evidence or triggers:
+        note += (f". 판단·트리거가 인용한 근거 {len((evidence or {}).get('items', []))}건과 "
+                 f"트리거 {len((triggers or {}).get('items', []))}건도 옮겼다")
     continued_from = {
         "run_id": prior_slug,
         "as_of": prior_run["as_of"],
@@ -178,7 +198,22 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         "approval_id": approval["approval_id"] if approval else None,
         "added_companies": list(added),
     }
-    return _Inputs(observations, judgments, sources, assumptions, note, continued_from)
+    return _Inputs(observations, judgments, sources, assumptions, note, continued_from, evidence, triggers)
+
+
+def _check_carried_refs(prior_slug: str, slug: str, inputs: _Inputs, registry: dict[str, dict[str, Any]]) -> None:
+    """이어받은 입력의 교차 참조를 쓰기 전에 돌린다(2026-10-01 레인 N, V2-2). 맞지 않으면 아무것도 쓰지 않고 멈춘다 —
+    조용히 성공한 뒤 다음 실행의 research·calculate·judge 가 멈추는 일을 없앤다."""
+    try:
+        source_items = validate_sources(inputs.sources, slug)
+        source_ids = {s["source_id"] for s in source_items}
+        ev_items = validate_evidence(inputs.evidence, registry, source_ids, slug) if inputs.evidence else None
+        if inputs.triggers:
+            validate_triggers(inputs.triggers, registry, {e["evidence_id"] for e in ev_items or []}, source_ids, slug)
+        validate_cross_refs(inputs.observations["items"], inputs.judgments["items"], ev_items, source_items)
+    except SchemaError as exc:
+        raise SchemaError(f"init --from-run {prior_slug}: 이어받은 입력의 교차 참조가 맞지 않아 실행을 만들지 않았다 — {exc}. "
+                          f"이전 실행의 evidence/evidence.json·triggers.json·sources.json 을 확인한다") from exc
 
 
 def init_run(
@@ -279,18 +314,27 @@ def init_run(
     }
     if inputs.continued_from is not None:
         run["continued_from"] = inputs.continued_from
+        _check_carried_refs(from_run, slug, inputs, registry)
     d.mkdir(parents=True, exist_ok=True)
     write_json(d / "run.json", run)
     write_json(d / "observations.json", inputs.observations)
     write_json(d / "judgments.json", inputs.judgments)
     write_json(d / "sources.json", inputs.sources)
+    carried_files: dict[str, Path] = {}
+    if inputs.evidence is not None:
+        carried_files["evidence"] = run_paths(slug).evidence
+        write_json(carried_files["evidence"], inputs.evidence)
+    if inputs.triggers is not None:
+        carried_files["triggers"] = run_paths(slug).triggers
+        write_json(carried_files["triggers"], inputs.triggers)
     for stale in ("results.json", "preview.md", "approval.json"):
         if (d / stale).exists():
             (d / stale).unlink()
     plan_text = render_plan(run, rules, registry, request=request, baseline_note=inputs.baseline_note)
     plan_path = run_paths(slug).plan
     plan_path.write_text(plan_text, encoding="utf-8", newline="\n")
-    return {"plan": plan_path, "run": d / "run.json", "observations": d / "observations.json", "judgments": d / "judgments.json", "sources": d / "sources.json"}
+    return {"plan": plan_path, "run": d / "run.json", "observations": d / "observations.json", "judgments": d / "judgments.json",
+            "sources": d / "sources.json", **carried_files}
 
 
 # ------------------------------------------------------------------ collect

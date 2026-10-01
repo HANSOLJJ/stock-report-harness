@@ -199,6 +199,47 @@ class HookInvalidApprovalTest(FlowBase):
         self.assertEqual(guard.protect_sensitive_files(shell("Bash", cmd), root=root).kind, "allow")
 
 
+class ContinueWithEvidenceTest(FlowBase):
+    """V2-2. 근거를 인용한 판단이 있는 실행을 init --from-run 으로 이어받으면 근거·트리거도 옮겨져 다음 실행이 돈다."""
+
+    NEW = "ai-scorecard-2026-10-continued"
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.write_evidence(self.evidence_item("EV-nvidia-002", title="인용되지 않은 근거"))
+        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사람")
+        jp = self.box.run_dir / "judgments.json"
+        payload = load_json_strict(jp)
+        for j in payload["items"]:
+            if (j["company_id"], j["factor"]) == ("nvidia", "F1"):
+                j["evidence_ids"] = ["EV-nvidia-001"]
+        write_json(jp, payload)
+        stages.revise_judgment(SLUG, company_id="nvidia", factor="F1", changes={"score": 1}, reason="근거 반영", by="사람")
+        stages.load_context(SLUG)
+
+    def test_cited_evidence_and_triggers_move_and_next_run_proceeds(self):
+        out = stages.init_run(self.NEW, from_run=SLUG, title="이어받기")
+        self.assertEqual(sorted(out), ["evidence", "judgments", "observations", "plan", "run", "sources", "triggers"])
+        new = engine.run_dir(self.NEW)
+        ev = load_json_strict(new / "evidence" / "evidence.json")
+        self.assertEqual(ev["run_id"], self.NEW)
+        self.assertEqual([(e["evidence_id"], e["status"]) for e in ev["items"]], [("EV-nvidia-001", "confirmed")])
+        trg = load_json_strict(new / "triggers.json")
+        self.assertEqual((trg["run_id"], [t["trigger_id"] for t in trg["items"]]), (self.NEW, ["TRG-001"]))
+        nv = next(j for j in load_json_strict(new / "judgments.json")["items"] if (j["company_id"], j["factor"]) == ("nvidia", "F1"))
+        self.assertEqual((nv["score"], nv["evidence_ids"], len(nv["revision_history"])), (1, ["EV-nvidia-001"], 1))
+        stages.research(self.NEW)
+        results = stages.calculate(self.NEW)[2]
+        f1 = next(c for c in results["companies"] if c["company_id"] == "nvidia")["factors"]["F1"]
+        self.assertEqual(f1["score"], 1)
+
+    def test_broken_cross_reference_stops_init_and_writes_nothing(self):
+        write_json(self.paths.evidence, {"schema": "scorecard.evidence/1", "run_id": SLUG, "items": []})
+        with self.assertRaisesRegex(SchemaError, "init --from-run .*교차 참조.*EV-nvidia-001"):
+            stages.init_run(self.NEW, from_run=SLUG, title="깨진 이어받기")
+        self.assertFalse(engine.run_dir(self.NEW).exists())
+
+
 class ExistingApprovalIdTest(unittest.TestCase):
     def test_existing_runs_approval_id_equals_recomputed(self):
         for slug in EXISTING:
