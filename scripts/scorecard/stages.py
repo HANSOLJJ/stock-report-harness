@@ -1141,6 +1141,7 @@ def summary(slug: str) -> dict[str, Any]:
     candidates = load_json_strict(paths.candidates).get("items", []) if paths.candidates.is_file() else []
     evidence = load_json_strict(paths.evidence).get("items", []) if paths.evidence.is_file() else []
     triggers = load_json_strict(paths.triggers).get("items", []) if paths.triggers.is_file() else []
+    registry = load_companies()
     hashes = current_hashes(slug)
     if approval_file_present(paths.run_dir):
         approval = load_json_strict(paths.run_dir / "approval.json")
@@ -1161,10 +1162,18 @@ def summary(slug: str) -> dict[str, Any]:
             "items": [{"evidence_id": e["evidence_id"], "company_id": e["company_id"], "factors": list(e["factors"]),
                        "kind": e["kind"], "title": e["title"], "url": urls.get(e["source_id"]),
                        "published_at_utc": e["published_at_utc"], "excerpt": e["excerpt"],
-                       "status": e.get("status", "candidate")} for e in evidence],
+                       "status": e.get("status", "candidate"),
+                       # 2026-10-01 사용자 요청(가독성): 사람이 확정 여부를 가를 판단 재료를 함께 싣는다
+                       "relevance": e["relevance"], "channel": e["channel"], "conditional_impact": e["conditional_impact"],
+                       "horizon": e["horizon"], "counter_evidence": list(e["counter_evidence"]),
+                       "unverified": list(e["unverified"])} for e in evidence],
         },
         "triggers": [{"trigger_id": t["trigger_id"], "company_id": t["company_id"], "factors": list(t["factors"]),
-                      "condition": t["condition"], "deadline": t["deadline"], "status": t["status"]} for t in triggers],
+                      "observation": t["observation"], "condition": t["condition"], "deadline": t["deadline"],
+                      "status": t["status"], "recheck_what": t["recheck"]["what"]} for t in triggers],
+        # 2026-10-01 사용자 요청(가독성): 화면이 company_id 대신 표시명을 쓴다
+        "company_names": [{"company_id": cid, "display_name": (registry.get(cid) or {}).get("display_name") or cid}
+                          for cid in run["companies"]],
         "pending_rule_decisions": list((results or {}).get("pending_rule_decisions", [])),
         "judgments": _summary_judgments(slug, load_rules(run["rule_version"])),
         "judgment_choices": copy.deepcopy(JUDGMENT_INPUT_CHOICES),

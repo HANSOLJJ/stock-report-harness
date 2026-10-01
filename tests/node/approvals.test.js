@@ -140,6 +140,18 @@ test('승인 모드 활성화: GET /approve/<run_id> → 200 및 요약 필드 �
     assert.match(res.body, /NVIDIA/, '기업 표시명(NVIDIA)이 포함되어야 함');
     assert.match(res.body, /EV-nvidia-001/, 'evidence_id가 포함되어야 함');
     assert.match(res.body, /345c3353372d0f95/, '해시 일부가 포함되어야 함');
+    // 2026-10-01 사용자 요청(가독성): factor 이름·핵심 질문 고정 막대, 근거 카드의 판단 재료, 기업 표시명 묶음
+    assert.match(res.body, /class="factor-bar"/, 'factor 안내 막대가 있어야 함');
+    for (const label of ['① 네트워크 효과', '② 신기술 게임체인저', '⑤ 아군 확보', '⑨ 적자 깊이']) {
+      assert.ok(res.body.includes(label), `factor 이름 ${label}`);
+    }
+    assert.match(res.body, /class="ev-card[^"]*" data-group="nvidia"/, '근거는 기업별 카드');
+    assert.match(res.body, /고른 이유<\/dt><dd>추론: Blackwell/, '근거의 고른 이유가 보여야 함');
+    assert.match(res.body, /예상 영향<\/dt>/);
+    assert.match(res.body, /확인 못 한 것<\/dt>/);
+    assert.match(res.body, /기업 발표/, '매체 성격은 한국어 이름');
+    assert.match(res.body, /2026\. 10\. 30\. 21:00 KST|2026\. 10\. 30\.? 21:00 KST/, '발행 시각은 KST');
+    assert.match(res.body, /관측: Blackwell 생산 확대 발표/, '트리거의 관측');
   } finally {
     server.close();
   }

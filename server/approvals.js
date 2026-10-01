@@ -14,6 +14,90 @@ const EDIT_KIND_LABELS = {
   matrix: '매트릭스',
   gate_inputs: '게이트 입력',
 };
+// 2026-10-01 사용자 요청(가독성): factor 코드만으로는 뜻을 알 수 없다. 이름과 핵심 판별 질문을 함께 보인다.
+// 출처는 docs/scorecard/rules/AI기업_채점규칙_v1.7.md 의 과점·함정 factor 표(핵심 판별 질문 열)다.
+const FACTOR_GUIDE = {
+  F1: { label: '① 네트워크 효과', group: 'moat', question: '가격을 올려도 남는가? 락인 강도·데이터 루프. 가장 강한 채널로 매긴다' },
+  F2: { label: '② 신기술 게임체인저', group: 'moat', question: '판을 바꿀 기술을 먼저 냈나, 남이 바꾼 판에 빨리 올라탔나? 성능 도약·패러다임 적응·표준 선점' },
+  F3: { label: '③ Last Mover', group: 'moat', question: '선두가 내 방식을 베끼면 선두 수익모델이 무너지나, 내 뒤 진입로는 닫히나?' },
+  F4: { label: '④ 호황 이후 비전', group: 'moat', question: '곡괭이만 팔다 끝나나, 광부가 되나? 출하·사업 부문만 센다(계획은 0)' },
+  F5: { label: '⑤ 아군 확보', group: 'moat', question: '동맹이 적보다 많은가? 조달은 동맹이 아니고, 규제·소송은 적대로 센다' },
+  F6: { label: '⑥ 가격', group: 'trap', question: '미래 성장이 얼마나 선반영됐나? PER·EV/매출·매출 성장' },
+  F7: { label: '⑦ 순환금융', group: 'trap', question: '내 매출을 내는 고객이 그 돈을 어디서 구했나? 자기 이익인가, 조달인가' },
+  F8: { label: '⑧ 비대칭 의존', group: 'trap', question: '끊기면 매출이 주나, 회사가 멈추나? 공급자가 곧 경쟁자인가' },
+  F9: { label: '⑨ 적자 깊이', group: 'trap', question: '본업이 버나 → 현금이 새나 → 얼마나 버티나 → 약정이 덮이나' },
+};
+const CHANNEL_LABELS = {
+  disclosure: '공시',
+  press: '언론 보도',
+  company_statement: '기업 발표',
+  secondary: '의견·재전달',
+};
+
+function factorLabel(f) {
+  return FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].label : String(f);
+}
+
+function factorChips(list) {
+  const factors = Array.isArray(list) ? list : [];
+  return factors.map((f) => {
+    const g = FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].group : 'other';
+    return `<span class="fchip fchip-${g}" title="${escapeHtml(FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].question : '')}">${escapeHtml(factorLabel(f))}</span>`;
+  }).join(' ');
+}
+
+function formatKst(iso) {
+  if (!iso) return '시각 없음';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return String(iso);
+  return `${new Intl.DateTimeFormat('ko-KR', {
+    timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false,
+  }).format(d)} KST`;
+}
+
+function renderFactorBar() {
+  const items = Object.keys(FACTOR_GUIDE).map((f) => `<div class="factor-item">${factorChips([f])}<span class="fq">${escapeHtml(FACTOR_GUIDE[f].question)}</span></div>`).join('');
+  return `
+  <nav class="factor-bar" aria-label="factor 안내">
+    <details open>
+      <summary><strong>Factor 안내</strong> <span class="fq">파란색 ①~⑤ 과점(가점) · 주황색 ⑥~⑨ 함정(감점). 눌러서 접기</span></summary>
+      <div class="factor-grid">${items}</div>
+    </details>
+  </nav>`;
+}
+
+function renderEvidenceCard(item) {
+  const eid = item.evidence_id || '';
+  const cid = item.company_id || '';
+  const titleLink = item.url
+    ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title || eid)}</a>`
+    : escapeHtml(item.title || eid);
+  const confirmed = item.status === 'confirmed';
+  const counter = Array.isArray(item.counter_evidence) ? item.counter_evidence : [];
+  const unverified = Array.isArray(item.unverified) ? item.unverified : [];
+  const details = [
+    item.relevance ? `<dt>고른 이유</dt><dd>${escapeHtml(item.relevance)}</dd>` : '',
+    item.conditional_impact ? `<dt>예상 영향</dt><dd>${escapeHtml(item.conditional_impact)}</dd>` : '',
+    item.horizon ? `<dt>시간 범위</dt><dd>${escapeHtml(item.horizon)}</dd>` : '',
+    counter.length ? `<dt>반대 근거·한계</dt><dd>${counter.map((c) => escapeHtml(c)).join('<br />')}</dd>` : '',
+    unverified.length ? `<dt>확인 못 한 것</dt><dd class="muted">${unverified.map((u) => escapeHtml(u)).join('<br />')}</dd>` : '',
+    item.excerpt && item.excerpt !== item.title ? `<dt>발췌</dt><dd class="muted">${escapeHtml(item.excerpt)}</dd>` : '',
+  ].join('');
+  return `
+      <div class="ev-card${confirmed ? ' ev-confirmed' : ''}" data-group="${escapeHtml(cid)}">
+        <input type="checkbox" name="evidence" value="${escapeHtml(eid)}" id="chk_${escapeHtml(eid)}" checked aria-label="${escapeHtml(eid)} 확정" />
+        <div class="ev-body">
+          <div class="ev-meta">${factorChips(item.factors)}
+            <span class="badge">${escapeHtml(CHANNEL_LABELS[item.channel] || item.channel || (item.kind === 'filing' ? '공시' : '뉴스'))}</span>
+            <span class="muted">${escapeHtml(formatKst(item.published_at_utc))}</span>
+            ${confirmed ? '<span class="badge badge-ok">확정됨</span>' : ''}
+          </div>
+          <div class="ev-title">${titleLink}</div>
+          <dl class="ev-detail">${details}</dl>
+          <div class="ev-id"><label for="chk_${escapeHtml(eid)}">${escapeHtml(eid)}</label></div>
+        </div>
+      </div>`;
+}
 
 function isLoopback(remoteAddress) {
   if (!remoteAddress) return false;
@@ -135,7 +219,7 @@ function renderJudgeSection(data, judgeFactor, judgeCompany) {
   if (editable.length === 0) {
     return '<p>고칠 수 있는 판단이 없습니다.</p>';
   }
-  const options = editable.map((e) => `<option value="${escapeHtml(e.factor)}"${e.factor === judgeFactor ? ' selected' : ''}>${escapeHtml(e.factor)} · ${escapeHtml(EDIT_KIND_LABELS[e.edit_kind] || e.edit_kind)}</option>`).join('');
+  const options = editable.map((e) => `<option value="${escapeHtml(e.factor)}"${e.factor === judgeFactor ? ' selected' : ''}>${escapeHtml(factorLabel(e.factor))} · ${escapeHtml(EDIT_KIND_LABELS[e.edit_kind] || e.edit_kind)}</option>`).join('');
   const picker = `
     <form method="GET" action="/approve/${escapeHtml(runId)}" class="inline-form">
       <label for="judge_factor">factor:</label>
@@ -274,6 +358,10 @@ function renderSummaryPage(data, options = {}) {
   const triggers = Array.isArray(data.triggers) ? data.triggers : [];
   const pendingDecisions = Array.isArray(data.pending_rule_decisions) ? data.pending_rule_decisions : [];
   const hashes = data.hashes || {};
+  const companyNames = Object.assign({}, ...(Array.isArray(data.judgments) ? data.judgments : [])
+    .map((j) => ({ [j.company_id]: j.display_name })),
+    ...(Array.isArray(data.company_names) ? data.company_names : []).map((c) => ({ [c.company_id]: c.display_name })));
+  const companyName = (cid) => companyNames[cid] || cid;
 
   const checklistFailCount = review ? Number(review.checklist_fail || 0) : 0;
   const reviewStatus = review ? review.status : 'none';
@@ -303,9 +391,9 @@ function renderSummaryPage(data, options = {}) {
     const currTotal = c.current ? c.current.total : '-';
     const currRank = c.current ? c.current.rank : '-';
     const changed = Array.isArray(c.changed_factors)
-      ? c.changed_factors.map((f) => `${f.factor}: ${f.from}→${f.to}`).join(', ')
+      ? c.changed_factors.map((f) => `${factorLabel(f.factor)}: ${f.from}→${f.to}`).join(', ')
       : '-';
-    const carried = Array.isArray(c.carried_factors) ? c.carried_factors.join(', ') : '-';
+    const carried = Array.isArray(c.carried_factors) ? c.carried_factors.map((f) => factorLabel(f)).join(', ') : '-';
     const pending = Array.isArray(c.pending) ? c.pending.join(', ') : '-';
 
     return `<tr>
@@ -344,34 +432,27 @@ function renderSummaryPage(data, options = {}) {
 
   // (4) 근거 후보 목록
   const candidateIds = evidenceItems.map((item) => item.evidence_id).join(',');
-  const evidenceRows = evidenceItems.map((item) => {
-    const eid = item.evidence_id || '';
-    const titleLink = item.url
-      ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title || eid)}</a>`
-      : escapeHtml(item.title || eid);
-    const factors = Array.isArray(item.factors) ? item.factors.join(', ') : '';
-
-    return `<tr>
-      <td class="col-check"><input type="checkbox" name="evidence" value="${escapeHtml(eid)}" id="chk_${escapeHtml(eid)}" checked /></td>
-      <td><label for="chk_${escapeHtml(eid)}"><strong>${escapeHtml(eid)}</strong></label></td>
-      <td>${escapeHtml(item.company_id || '-')}</td>
-      <td>${escapeHtml(factors)}</td>
-      <td>${escapeHtml(item.kind || '-')}</td>
-      <td>${titleLink}</td>
-      <td>${escapeHtml(item.published_at_utc || '-')}</td>
-      <td><div class="excerpt">${escapeHtml(item.excerpt || '-')}</div></td>
-      <td>${escapeHtml(item.status || '-')}</td>
-    </tr>`;
-  }).join('\n');
+  const evidenceByCompany = new Map();
+  for (const item of evidenceItems) {
+    if (!evidenceByCompany.has(item.company_id)) evidenceByCompany.set(item.company_id, []);
+    evidenceByCompany.get(item.company_id).push(item);
+  }
+  const evidenceGroups = [...evidenceByCompany].map(([cid, items]) => `
+    <div class="ev-group">
+      <div class="ev-group-head">
+        <h3>${escapeHtml(companyName(cid))} <span class="muted">${items.length}건</span></h3>
+        <button type="button" class="btn-link" data-toggle-group="${escapeHtml(cid)}">이 기업 모두 선택·해제</button>
+      </div>
+      ${items.map((item) => renderEvidenceCard(item)).join('')}
+    </div>`).join('\n');
 
   // (5) 활성 트리거 표
   const triggerRows = triggers.map((t) => {
-    const tfactors = Array.isArray(t.factors) ? t.factors.join(', ') : '';
     return `<tr>
       <td><strong>${escapeHtml(t.trigger_id || '-')}</strong></td>
-      <td>${escapeHtml(t.company_id || '-')}</td>
-      <td>${escapeHtml(tfactors)}</td>
-      <td>${escapeHtml(t.condition || '-')}</td>
+      <td>${escapeHtml(companyName(t.company_id || '-'))}</td>
+      <td>${factorChips(t.factors)}</td>
+      <td>${t.observation ? `<div class="muted">관측: ${escapeHtml(t.observation)}</div>` : ''}${escapeHtml(t.condition || '-')}${t.recheck_what ? `<div class="muted">다시 볼 것: ${escapeHtml(t.recheck_what)}</div>` : ''}</td>
       <td>${escapeHtml(t.deadline || '-')}</td>
       <td>${escapeHtml(t.status || '-')}</td>
     </tr>`;
@@ -480,10 +561,42 @@ function renderSummaryPage(data, options = {}) {
     .meta-card .label { font-size: 12px; color: #64748b; font-weight: 600; }
     .meta-card .value { font-size: 15px; font-weight: 700; color: #0f172a; margin-top: 4px; word-break: break-all; }
     .cli-result-section { border-left: 4px solid #2563eb; }
+    .factor-bar { position: sticky; top: 0; z-index: 20; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 14px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.08); }
+    .factor-bar summary { cursor: pointer; }
+    .factor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 6px 18px; margin-top: 8px; max-height: 40vh; overflow-y: auto; }
+    .factor-item { display: flex; gap: 8px; align-items: baseline; }
+    .factor-item .fchip { flex: none; }
+    .fq { font-size: 12px; color: #64748b; }
+    .fchip { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+    .fchip-moat { background: #dbeafe; color: #1e40af; }
+    .fchip-trap { background: #ffedd5; color: #9a3412; }
+    .fchip-other { background: #e2e8f0; color: #334155; }
+    .badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; border: 1px solid #cbd5e1; color: #475569; background: #f8fafc; }
+    .badge-ok { border-color: #16a34a; color: #15803d; background: #f0fdf4; }
+    .muted { color: #64748b; }
+    .ev-group { margin-top: 18px; }
+    .ev-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; }
+    .ev-group-head h3 { margin: 0; }
+    .btn-link { background: none; border: none; color: #2563eb; cursor: pointer; font-size: 13px; padding: 0; }
+    .ev-card { display: flex; gap: 12px; align-items: flex-start; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-top: 10px; background: #ffffff; }
+    .ev-card input[type=checkbox] { width: 20px; height: 20px; margin-top: 2px; flex: none; }
+    .ev-card.ev-confirmed { border-color: #86efac; background: #f0fdf4; }
+    .ev-body { flex: 1; min-width: 0; }
+    .ev-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; }
+    .ev-title { font-size: 15px; font-weight: 600; margin: 6px 0; line-height: 1.4; overflow-wrap: anywhere; }
+    .ev-title a { color: #0f172a; text-decoration: none; }
+    .ev-title a:hover { color: #2563eb; text-decoration: underline; }
+    .ev-detail { display: grid; grid-template-columns: 110px 1fr; gap: 4px 12px; margin: 0; font-size: 13px; }
+    .ev-detail dt { color: #475569; font-weight: 600; }
+    .ev-detail dd { margin: 0; overflow-wrap: anywhere; }
+    .ev-id { margin-top: 6px; font-size: 11px; color: #94a3b8; }
     @media (max-width: 480px) {
       body { padding: 8px; }
       section { padding: 12px; }
       .meta-grid { grid-template-columns: 1fr; }
+      .ev-detail { grid-template-columns: 1fr; }
+      .ev-detail dt { margin-top: 4px; }
+      .factor-grid { grid-template-columns: 1fr; max-height: 30vh; }
     }
   </style>
 </head>
@@ -491,6 +604,7 @@ function renderSummaryPage(data, options = {}) {
   <header>
     <h1>AI 기업 스코어카드 승인 검토</h1>
   </header>
+  ${renderFactorBar()}
 
   ${lastResultBlock}
 
@@ -536,30 +650,11 @@ function renderSummaryPage(data, options = {}) {
   <section>
     <h2>4. 수집 근거(Evidence) 후보 검토</h2>
     <p class="form-desc">
-      후보 근거 총 ${escapeHtml(evidence.candidates || evidenceItems.length)}건 중 ${escapeHtml(evidence.selected || 0)}건 선택됨 (${escapeHtml(evidence.confirmed || 0)}건 확정 완료). 확정할 근거를 체크한 뒤 확정 버튼을 누르십시오.
+      후보 근거 총 ${escapeHtml(evidence.candidates || evidenceItems.length)}건 중 ${escapeHtml(evidence.selected || 0)}건 선택됨 (${escapeHtml(evidence.confirmed || 0)}건 확정 완료). 체크된 근거는 확정되고, 체크를 푼 근거는 제외(삭제)됩니다. 제목을 누르면 원문이 새 탭에서 열립니다.
     </p>
     <form method="POST" action="/approve/${escapeHtml(runId)}/confirm">
       <input type="hidden" name="candidate_ids" value="${escapeHtml(candidateIds)}" />
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th class="col-check">선택</th>
-              <th>근거 ID</th>
-              <th>기업</th>
-              <th>팩터</th>
-              <th>유형</th>
-              <th>제목</th>
-              <th>발행시각(UTC)</th>
-              <th>발췌</th>
-              <th>상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${evidenceRows || '<tr><td colspan="9">근거 항목이 없습니다.</td></tr>'}
-          </tbody>
-        </table>
-      </div>
+      ${evidenceGroups || '<p>근거 항목이 없습니다.</p>'}
       <div style="margin-top: 14px;">
         <div class="form-group">
           <label for="confirm_code">일회용 코드 (6자리):</label>
@@ -580,7 +675,7 @@ function renderSummaryPage(data, options = {}) {
             <th>트리거 ID</th>
             <th>기업</th>
             <th>팩터</th>
-            <th>조건</th>
+            <th>관측 · 조건 · 다시 볼 것</th>
             <th>기한</th>
             <th>상태</th>
           </tr>
@@ -624,6 +719,18 @@ function renderSummaryPage(data, options = {}) {
     <h2>9. 실행 승인 / 승인 취소</h2>
     ${approvalForm}
   </section>
+  <script>
+    document.querySelectorAll('[data-toggle-group]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var g = b.getAttribute('data-toggle-group');
+        var boxes = Array.prototype.filter.call(document.querySelectorAll('.ev-card input[type=checkbox]'), function (x) {
+          return x.closest('.ev-card').getAttribute('data-group') === g;
+        });
+        var all = boxes.every(function (x) { return x.checked; });
+        boxes.forEach(function (x) { x.checked = !all; });
+      });
+    });
+  </script>
 </body>
 </html>`;
 }

@@ -72,7 +72,13 @@
         "url": "https://example.com/news/nvidia-blackwell",
         "published_at_utc": "2026-10-30T12:00:00Z",
         "excerpt": "NVIDIA는 주요 클라우드 사업자들의 수요 확대에 대응하여 칩 출하를 증대한다고 발표했다.",
-        "status": "candidate"
+        "status": "candidate",
+        "relevance": "추론: Blackwell 출하 확대는 ② 성능 도약 경로를 다시 볼 계기다 (선별 확신: 중간)",
+        "channel": "company_statement",
+        "conditional_impact": "독립 측정이 따라오면 ② 판단을 다시 본다",
+        "horizon": "medium: 다음 분기 출하 확인",
+        "counter_evidence": ["벤더 발표 수치다"],
+        "unverified": ["제목·매체·날짜만 보고 판정함(원문 미열람)"]
       }
     ]
   },
@@ -85,9 +91,12 @@
       ],
       "condition": "분기 매출액 400억 달러 초과 달성 여부 확인",
       "deadline": "2027-02-01",
-      "status": "watching"
+      "status": "watching",
+      "observation": "Blackwell 생산 확대 발표",
+      "recheck_what": "출하량과 독립 벤치마크"
     }
   ],
+  "company_names": [{"company_id": "nvidia", "display_name": "NVIDIA"}, {"company_id": "openai", "display_name": "OpenAI"}],
   "pending_rule_decisions": [
     "C-03"
   ],
