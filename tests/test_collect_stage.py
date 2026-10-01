@@ -14,7 +14,7 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from scorecard import engine, evidence_lib, registry, stages  # noqa: E402
+from scorecard import engine, evidence_lib, registry, schema, stages  # noqa: E402
 from scorecard.paths import run_paths  # noqa: E402
 from scorecard.schema import SchemaError, load_json_strict  # noqa: E402
 
@@ -26,6 +26,22 @@ SLUG = "ai-scorecard-2026-09-evidence"
 NOW = "2026-09-30T00:00:00Z"
 
 
+def copy_registry_without_collector_keys(src: Path, dst: Path) -> None:
+    """레지스트리를 복사하되 수집기 전용 키(cik·news_queries)를 뺀다. 한 줄 = 한 기업 형식은 그대로다.
+
+    2026-10-01 레인 J: 실제 레지스트리에 12개사 cik 와 일반 단어 회사의 news_queries 가 들어갔다. 샌드박스 테스트는
+    키가 없는 상태에서 시작해야 skipped_no_cik·set_company_field·resolve-cik --apply 를 검사할 수 있다.
+    """
+    lines = []
+    for line in src.read_text(encoding="utf-8").split("\n"):
+        body = line.strip().rstrip(",")
+        if body.startswith('{"company_id"'):
+            item = {k: v for k, v in json.loads(body).items() if k not in schema.COMPANY_SETTABLE_KEYS}
+            line = registry.render_company_line(item) + ("," if line.rstrip().endswith(",") else "")
+        lines.append(line)
+    dst.write_text("\n".join(lines), encoding="utf-8", newline="\n")
+
+
 class Sandbox:
     """출력 묶음·레지스트리·수집 캐시를 임시 폴더로 돌린다. 정본은 읽기만 한다."""
 
@@ -35,7 +51,7 @@ class Sandbox:
         self.slug = slug
         self.saved = (engine.OUTPUT_DIR, engine.COMPANIES_PATH, evidence_lib.DATA_ROOT, os.environ.get("SEC_UA"))
         self.companies = self.dir / "companies.json"
-        shutil.copyfile(self.saved[1], self.companies)
+        copy_registry_without_collector_keys(self.saved[1], self.companies)
         engine.OUTPUT_DIR = self.dir / "output"
         engine.COMPANIES_PATH = self.companies
         evidence_lib.DATA_ROOT = self.dir / "data"
