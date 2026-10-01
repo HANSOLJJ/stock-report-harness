@@ -118,6 +118,17 @@ class SummaryShapeTest(FlowBase):
         self.assertEqual(s["approval"], {"exists": False, "valid": False, "approved_by": None, "approved_at": None})
 
 
+class ApprovalReadinessTest(FlowBase):
+    """2026-10-01 사용자 요청: 승인할 수 없는 상태를 승인 버튼을 누르기 전에 알린다."""
+
+    def test_blocked_before_review_and_ready_after(self):
+        r = stages.summary(SLUG)["approval_ready"]
+        self.assertFalse(r["ready"])
+        self.assertTrue(r["blockers"])
+        self.ready()
+        self.assertEqual(stages.summary(SLUG)["approval_ready"], {"ready": True, "blockers": []})
+
+
 class ExistingRunsTest(unittest.TestCase):
     def test_summary_runs_and_approval_is_valid(self):
         fixture_paths = key_paths(json.loads(FIXTURE.read_text(encoding="utf-8")))

@@ -536,6 +536,25 @@ test('POST: 근거 번복은 그 근거만 --revert, 제안 번복은 --undo, �
   }
 });
 
+test('GET: 승인할 수 없는 상태면 승인 폼 대신 막힌 이유와 다음 할 일', async () => {
+  const fixture = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'fixtures', 'summary.sample.json'), 'utf8'));
+  fixture.approval = { exists: false, valid: false, approved_by: null, approved_at: null };
+  fixture.approval_ready = { ready: false, blockers: ['results.json 없음 (calculate 필요)'] };
+  const server = await startServer({
+    enabled: true,
+    code: '123456',
+    runCli: (args, cb) => cb(null, { exitCode: 0, stdout: JSON.stringify(fixture), stderr: '' }),
+  });
+  try {
+    const res = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x' });
+    assert.match(res.body, /아직 승인할 수 없습니다/);
+    assert.match(res.body, /results\.json 없음 \(calculate 필요\)/);
+    assert.doesNotMatch(res.body, /id="approve_code"/, '승인 폼이 없어야 함');
+  } finally {
+    server.close();
+  }
+});
+
 test('POST /proposal: 반영·거부 인자, 메모는 --note=, 형식이 아니면 400', async () => {
   const calls = [];
   const server = await startServer({

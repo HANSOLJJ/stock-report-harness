@@ -566,6 +566,8 @@ function renderSummaryPage(data, options = {}) {
   const asOf = data.as_of || '-';
   const ruleVersion = data.rule_version || '-';
   const approval = data.approval || { exists: false, valid: false };
+  // 2026-10-01: summary 가 승인과 같은 계약 검증을 미리 돌린 결과. 없으면(예전 summary) 막지 않는다.
+  const readiness = data.approval_ready || { ready: true, blockers: [] };
   const review = data.review;
   const companies = Array.isArray(data.companies) ? data.companies : [];
   const evidence = data.evidence || { items: [] };
@@ -715,6 +717,16 @@ function renderSummaryPage(data, options = {}) {
         </div>
         <button type="submit" class="btn btn-danger">승인 취소</button>
       </form>`;
+  } else if (!readiness.ready) {
+    const blockers = Array.isArray(readiness.blockers) ? readiness.blockers : [];
+    approvalForm = `
+      <div class="warning-banner">
+        <strong>아직 승인할 수 없습니다.</strong> 근거 확정이나 판단 수정으로 입력이 바뀌었거나, 계산·초안·리뷰가 끝나지 않았습니다.
+        에이전트에게 <code>research → calculate → draft → review</code> 를 돌리게 한 뒤 이 페이지를 새로고침하세요.
+      </div>
+      <details><summary>막힌 이유 ${blockers.length}건</summary>
+        <ul>${blockers.map((b) => `<li><code>${escapeHtml(b)}</code></li>`).join('')}</ul>
+      </details>`;
   } else {
     approvalForm = `
       ${showReviewWarning ? `

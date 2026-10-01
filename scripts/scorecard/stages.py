@@ -1347,6 +1347,18 @@ def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
     return sorted(out, key=lambda x: (x["factor"], x["company_id"]))
 
 
+def _approval_readiness(slug: str) -> dict[str, Any]:
+    """승인 버튼을 누르기 전에 승인과 같은 계약 검증을 돌려 막힌 이유를 돌려준다(2026-10-01 사용자 요청: 승인할 수 없는 상태에서
+    승인을 눌러 실패 메시지만 받는 일을 없앤다). 검증 자체가 예외를 내도 페이지는 그리고, 그 예외를 이유로 싣는다."""
+    from validate_report_contract import validate_contract
+
+    try:
+        result = validate_contract(slug, require_html=False, check_html_if_present=False)
+    except Exception as exc:  # noqa: BLE001 — 요약은 어떤 경우에도 그려야 한다
+        return {"ready": False, "blockers": [f"승인 전 검증을 돌리지 못했다: {exc}"]}
+    return {"ready": bool(result.ok), "blockers": list(result.errors)}
+
+
 def summary(slug: str) -> dict[str, Any]:
     """승인 페이지가 한 화면에 싣는 요약. 값은 status·render_md 가 이미 쓰는 데이터를 다시 읽는다. 없는 파일은 0·빈 목록·null 이다."""
     paths = run_paths(slug)
@@ -1397,6 +1409,7 @@ def summary(slug: str) -> dict[str, Any]:
         "judgment_choices": copy.deepcopy(JUDGMENT_INPUT_CHOICES),
         "hashes": hashes,
         "approval": approval_out,
+        "approval_ready": _approval_readiness(slug),
     }
 
 
