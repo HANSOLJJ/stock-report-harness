@@ -59,7 +59,7 @@
 | 트리거 | triggers.json items | trigger_id(`TRG-NNN`), company_id, factors, observation, condition, deadline, evidence_ids, source_ids, status(watching / fired / expired / withdrawn), recheck{factors, what}. 점수처럼 보이는 키는 거부한다(C-14) |
 | 자료 확보 현황 | data_availability.json (선택) | schema, surveyed_at, scope, required_quarters, companies_with_full_quarters, headline, score_effect, not_re_surveyed, collection_note, materials[], companies[{company_id, quarter_ends, secured_quarters, missing, survey}], surveys{}, sources[], cautions[], references[] |
 
-`data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 승인해야 한다.
+`data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 승인해야 한다.
 
 화면에 노출되는 `C-NN` 은 렌더러가 후처리로 `#dec-C-NN` 앵커 링크로 바꾸고, 「C-번호 사전」 항목을 규칙 파일의 `decisions` 에서 생성한다. 치환은 태그 사이 텍스트에만 적용하고 속성·`<style>`·`<script>`·경로 문자열(`C-13/...`)은 건드리지 않는다.
 
@@ -134,13 +134,13 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 - `confirmed` 근거에는 `reviewer`·`reviewed_at` 이 있어야 한다.
 - 트리거는 재채점 조건만 저장하고 미래 점수를 저장하지 않는다(C-14).
 
-`not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)는 다르다. 근거를 확정하면 판단·결과·초안 해시가 바뀌어 리뷰가 무효가 되므로 `calculate`·`draft`·`review` 를 다시 돌린다.
+`not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)는 다르다. 근거를 확정하면 판단·결과·초안 해시가 바뀌어 리뷰가 무효가 되므로 `research → calculate → draft → review` 를 다시 돌린다.
 
 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다. 종가가 NaN 인 날은 건너뛰고 기준일 이하의 직전 확정 종가와 그 날짜를 쓰며(건너뛴 날짜는 `skipped_nonfinite_close` 로 요약에 남는다), 전부 NaN 이면 오류다. 가격 실패는 회사 단위라 한 회사가 실패해도(중복 관측 포함) 나머지는 기록된다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 의 `SEC_UA=이름 이메일`, 또는 같은 이름의 환경변수). 영문으로 적는다(HTTP 머리글 제약). 뉴스 질의는 레지스트리의 `news_queries`(없으면 표시명·티커)를 쓰고, 상장 12개사의 `cik` 는 `resolve-cik --apply` 로 기입돼 있다. 두 키는 수집기만 읽는다.
 
 ### 판단 수정 (사람 행위, 승인 페이지 8절)
 
-정성 판단의 입력을 고치는 길은 `scorecard_cli.py judge` 하나이고 승인 페이지 8절이 그 앞단이다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고, F2·F6 은 대상이 아니다. 근거 문장(`evidence`)은 판정 재료와 어긋나지 않게 함께 고칠 수 있다. 고치면 `status: new`·검토자·검토일이 갱신되고 이전 값은 항목 안 `revision_history` 에 쌓인다. 새 판단은 확정된 근거만 인용하므로 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 판단 해시가 바뀌므로 `calculate`·`draft`·`review` 를 다시 돌린 뒤 사람이 승인한다. 승인 페이지는 factor 를 고르면 그 factor 의 모든 기업 판단을 나란히 보이므로(Q03) 같은 잣대가 닿는 다른 기업 판단을 함께 본다. 쓰는 요청은 일회용 코드가 있어야 한다.
+정성 판단의 입력을 고치는 길은 `scorecard_cli.py judge` 하나이고 승인 페이지 8절이 그 앞단이다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고, F2·F6 은 대상이 아니다. 근거 문장(`evidence`)은 판정 재료와 어긋나지 않게 함께 고칠 수 있다. 고치면 `status: new`·검토자·검토일이 갱신되고 이전 값은 항목 안 `revision_history` 에 쌓인다. 새 판단은 확정된 근거만 인용하므로 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 판단 해시가 바뀌므로 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 승인한다. 승인 페이지는 factor 를 고르면 그 factor 의 모든 기업 판단을 나란히 보이므로(Q03) 같은 잣대가 닿는 다른 기업 판단을 함께 본다. 쓰는 요청은 일회용 코드가 있어야 한다.
 
 ### 승인 (사람 행위)
 
