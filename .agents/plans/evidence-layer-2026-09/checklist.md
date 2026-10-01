@@ -21,7 +21,7 @@
 
 ## 후속 과제에 넣을 발견 사항 (레인 검증 중)
 - [x] 3.4: `collect_prices` 의 vendor market_cap·shares_outstanding 은 조회 시점 값인데 종가 날짜(as_of)로 기록된다. 과거 기준일이면 dated 발행주식수로 price×shares 를 쓰거나 조회일=기준일일 때만 vendor 값 사용. ADR(TSM·BABA) 시총 기준 확인. 미사용 인자 `price_as_of` 정리
-- [ ] 3.4: SEC 픽스처 2종은 합성. `SEC_UA` 확보 뒤 실제 응답으로 교체
+- [x] 3.4: SEC 픽스처 2종은 합성 — 레인 M 이 실응답으로 교체. `SEC_UA` 확보 뒤 실제 응답으로 교체
 - [x] 3.4 또는 A 병합 뒤: yfinance import 고정 테스트 범위를 `scripts/scorecard` 에서 `scripts/` 전체로 넓힌다(A 가 build_report 의 yfinance 를 지운 뒤)
 - [x] 4.3: `confirm`·`approve`·`revoke` 가 근거 ID(`EV-<cid>-<NNN>`)·이름 형식을 Python 쪽에서 검증. 승인 페이지 일회용 코드는 시도 횟수 제한 없음(루프백 한정이라 낮음) — 실패 5회면 서버 종료 검토
 - [x] 4.6: README 훅 표(`protect-sensitive-files.sh` 등 옛 이름·output-spec) 갱신. AGENTS 에서 레인 S 가 지운 "plan 없이 research 금지 / review 없이 build 금지" 는 채점표에도 맞는 일반 규칙이므로 채점표 단계 이름으로 되살린다
@@ -80,6 +80,10 @@
 - [x] 레인 I 조율자 재현(병합 뒤): unittest 1093건 중 실패 1·오류 14(원자료 부재 집합), check 통과
 - [ ] open-items D-06(python 표기 혼용)은 npm 스크립트·훅이 모두 uv 로 통일돼 사실상 해소. 닫을지 사용자 확인
 - [x] SEC_UA: 사용자가 원본 폴더 루트 로컬 설정 파일에 기입(2026-10-01), 워크트리에서 원본 루트를 읽도록 코드 보완. 값은 기록하지 않음
-- [ ] 레인 M (Muse) 실제 수집 시험·SEC 실응답 픽스처·환경변수 조사. task `task_b1a5b14fe556`, dispatch `ctx_d49bf5bd9724`, 터미널 `term_e1a0a173-83e2-434d-8729-da4d294496a9`
+- [x] 레인 M (Muse) 실제 수집 시험·SEC 실응답 픽스처·환경변수 조사. task `task_b1a5b14fe556`, dispatch `ctx_d49bf5bd9724`, 터미널 `term_e1a0a173-83e2-434d-8729-da4d294496a9`
 - [x] 레인 H 조율자 재현(병합 뒤): unittest 1115건 중 실패 1·오류 14(원자료 부재 집합), 두 실행 approval_valid true, check·node 10 통과. 훅 스모크: 승인 실행 init --force·baseline 쓰기·승인 파일 쓰기·python 승인 파일 쓰기 exit 2, 새 slug init --force·승인 파일 읽기 exit 0
 - [ ] 레인 H 가 남긴 것: 소유 밖 문서(AGENTS·README·structure.md)의 첫 방어선 위치 문구, render_md.py 130행 uv 없는 python, validation/recheck_worker_final.py 의 승인 함수 호출, 계약 밖 쓰기 형태(PowerShell cmdlet·find -delete·xargs·글롭)
+- [x] 레인 M 조율자 재현(병합 뒤): unittest 1115건 중 실패 1·오류 14(원자료 부재 집합, Muse 가 본 훅 배선 2건은 Muse 환경의 bash 에 uv 가 없어서 생긴 것으로 이 환경에서는 통과), 보고서·픽스처에 연락처 없음
+- [x] 실제 수집 재시도(조율자, 임시 DATA_ROOT): SEC_UA 영문화 뒤 뉴스 14개사 99~200건 수집·발행일 결측 0, SEC company_tickers 조회 성공(SPCX 1181412 등재). 가격은 9/29 기준 12개사 정상, 9/30 은 야후 일봉 종가 미확정(NaN)
+- [ ] 레인 J: 판단 수정 기능 + 수집기 수정(NaN 종가·회사별 실패·resolve-cik --json·SEC_UA 영문 검사·일반 단어 회사 news_queries·CIK 기입) + 정리(훅 쓰기 형태·render_md 130행·Muse 표지)
+- [ ] 레인 K: 문서(첫 방어선 위치 문구, 판단 수정 사용법)
