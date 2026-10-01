@@ -2,7 +2,7 @@
 
 작성일 2026-09-08. 기준 커밋 `2e33648`, 브랜치 `HANSOLJJ/worker`.
 
-이 문서는 **처리하지 않고 남겨둔 항목**만 모은다. 처리한 항목은 커밋 메시지와 `reviews/<slug>.md` 에 있고, 설계·구조 계약은 `design-guideline.md` 와 `structure.md` 에 있다.
+이 문서는 **처리하지 않고 남겨둔 항목**만 모은다. 처리한 항목은 커밋 메시지와 `output/<run_id>/review.md` 에 있고, 설계·구조 계약은 `design-guideline.md` 와 `structure.md` 에 있다.
 
 ## ID 주의
 
@@ -23,7 +23,7 @@
 
 ## 1. 사용자 결정 대기 — 규칙
 
-계산기가 막고 있는 항목이다. `scorecard/runs/<slug>/run.json` 의 `decisions` 에 `{id, choice, rationale, decided_by, decided_at}` 를 넣어야 그 실행에서 적용된다.
+계산기가 막고 있는 항목이다. `output/<run_id>/run.json` 의 `decisions` 에 `{id, choice, rationale, decided_by, decided_at}` 를 넣어야 그 실행에서 적용된다.
 
 > **결정이 곧 순위 편입은 아니다.** 규칙 결정을 내려도 그 기업에 자료·판단 대기가 남으면 순위에 들어오지 않는다. 아래 표의 "정하면 달라지는 것" 은 **현재 입력 기준**이며 완료를 보장하지 않는다. 예: `C-13 = reject_proxy` 는 TSMC·Alibaba 를 자료 대기로 확정하고, `C-06 + C-05 = apply` 는 SpaceX 를 여전히 판단 대기로 남긴다.
 
@@ -51,7 +51,7 @@
 
 조사 대상 상장사 12개 모두 미발표 4개 분기 중 2개만 확보해서 4분기 합산 NTM EPS 를 만들 수 없다. 4분기를 채운 기업은 0개다. 따라서 이 실행의 점수는 기준선 v1.5 입력을 규칙 v1.5 로 다시 계산한 결과이며, 이번 조사 자료로 재산출한 값이 아니다. F1~F5·F7~F9 는 이번 조사 범위 밖이라 최신 재조사 완료로 표시하지 않는다.
 
-현황은 `scorecard/runs/<slug>/data_availability.json` 에 기록하고 HTML 「자료 확보 현황」 섹션이 기업별로 보여준다. 조사 결과를 실제 점수에 넣으려면 나머지 2분기와 통화·주식단위 기준 검증을 확보해 관측을 새로 넣고 `calculate → draft → review → approve` 를 다시 밟아야 한다.
+현황은 `output/<run_id>/data_availability.json` 에 기록하고 HTML 「자료 확보 현황」 섹션이 기업별로 보여준다. 조사 결과를 실제 점수에 넣으려면 나머지 2분기와 통화·주식단위 기준 검증을 확보해 관측을 새로 넣고 `calculate → draft → review → approve` 를 다시 밟아야 한다.
 
 
 | 기업 | 막힌 것 | 필요한 것 |
@@ -65,7 +65,7 @@
 | ID | 내용 |
 |---|---|
 | REVIEW-03/D-03 | `init --help` 에 이미 있는 `--price-as-of`·`--info-cutoff`·`--baseline`·`--rule` 의 의미와 기본값을 README·`score-plan` 스킬에 설명. 기능 부재가 아니라 설명 부재 |
-| REVIEW-03/D-06 | npm 스크립트가 `python3` 와 `python` 을 혼용한다. 훅은 `python3` 별칭을 요구하므로 그 전제를 README 에 명시. 전역 일괄 치환은 하지 않는다 |
+| REVIEW-03/D-06 | npm 스크립트가 `python3` 와 `python` 을 혼용한다. 지금은 npm 스크립트와 훅 배선이 모두 `uv run --frozen python -X utf8` 로 통일돼 별칭 전제가 없다. 이 항목은 문서 안의 맨 `python` 호출 예시를 같은 형식으로 맞추는 일만 남았다 |
 | REVIEW-03/D-07 | Python CLI 의 `--by` 는 필수인데 slash command hint 는 선택처럼 보인다. `/score-approve` 안내에 실제 승인자 확보 절차를 적는다 |
 | REVIEW-03/D-08 | 기본 이관 원본 경로가 특정 머신의 `E:` 경로다. `--html`·`--md` 로 바꿀 수 있고 기준선이 커밋돼 있어 최초 실행에 재이관이 필수가 아니라는 두 사실을 README 에 명시 |
 | REVIEW-03/D-09 | `status` 명령을 README 사용 흐름에 추가. 단 `approval_valid` 는 해시 일치만 보므로 전체 계약 검증의 대체가 아님을 함께 적는다 |
@@ -100,6 +100,6 @@
 
 ### 리뷰 파일을 고치면 HTML 을 다시 빌드한다
 
-승인 해시는 규칙·자료·판단·결과·초안 여섯 가지이고 `reviews/<slug>.md` 는 포함되지 않는다. 그래서 리뷰 파일을 고쳐도 승인은 유효하지만, HTML 의 References 에 들어가는 검토자·리뷰 유형은 **빌드 시점의 리뷰 파일**에서 읽는다. 리뷰 파일을 고쳤으면 `python scripts/build_report.py <slug>` 를 다시 실행해 HTML 을 리뷰 기록과 맞춘다. `history.csv` 는 같은 승인본이면 행을 추가하지 않으므로 재빌드가 이력을 오염시키지 않는다.
+승인 해시는 규칙·자료·판단·결과·초안 여섯 가지이고 `output/<run_id>/review.md` 는 포함되지 않는다. 그래서 리뷰 파일을 고쳐도 승인은 유효하지만, HTML 의 References 에 들어가는 검토자·리뷰 유형은 **빌드 시점의 리뷰 파일**에서 읽는다. 리뷰 파일을 고쳤으면 `uv run --frozen python -X utf8 scripts/build_report.py <run_id>` 를 다시 실행해 HTML 을 리뷰 기록과 맞춘다. `history.csv` 는 같은 승인본이면 행을 추가하지 않으므로 재빌드가 이력을 오염시키지 않는다.
 
 실제로 2026-09-08 에 출력·가독성 2차 결과를 리뷰 파일에 반영한 뒤 재빌드를 하지 않아 HTML 의 검토자 문구가 리뷰와 하루 어긋난 적이 있다(REVIEW-04 지적).

@@ -81,6 +81,8 @@ Topic은 daily 5섹션 + **일자** 1개 = 6섹션 고정임. 새 헤더 추가�
 
 작업 도메인이 해당될 때만 해당 topic을 읽음. 무관한 topic은 로드하지 않음.
 
+지금 실재하는 topic 파일은 `memory/topics/guardrails.md` 하나임. 아래 표는 주입 훅이 찾는 topic 이름이고, 없는 파일은 관측이 생길 때 만듦(훅은 없는 topic을 "(없음)"으로 보고함).
+
 | 도메인 | 파일 |
 | --- | --- |
 | 날짜 계산, 기간 계산, yfinance 기간, 거래일 라벨 | `memory/topics/time-sync.md` |
