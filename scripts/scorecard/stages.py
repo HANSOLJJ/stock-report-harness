@@ -1,6 +1,7 @@
 # scorecard 단계 실행: init(실행 생성) → collect → research → calculate(+preview) → draft → review-template → confirm·approve·revoke·summary. 순서·해시 결속·실행 잠금을 코드에서 강제한다.
 from __future__ import annotations
 
+import copy
 import getpass
 import json
 import os
@@ -23,8 +24,9 @@ from .evidence_lib import source_entry, upsert_sources, utc_now_iso
 from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
-from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, SchemaError, load_json_strict, sha256_file, sha256_obj,
-                     sha256_text, validate_approval, validate_observations, validate_run, validate_sources, write_json)
+from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_EDIT_KIND, JUDGMENT_INPUT_CHOICES,
+                     JUDGMENT_REVISION_FIELDS, SchemaError, load_json_strict, sha256_file, sha256_obj, sha256_text,
+                     validate_approval, validate_judgments, validate_observations, validate_run, validate_sources, write_json)
 
 
 def today() -> str:
@@ -583,7 +585,7 @@ def review_template(slug: str, *, force: bool = False) -> Path:
 # 직접 비교해 골랐다(validation/lane-F-approval/REPORT.md 의 표). `ORCA_*` 는 사람 셸에도 있어서 넣지 않는다.
 AGENT_ENV_MARKERS = ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT", "ORCA_AGENT_LAUNCH_TOKEN", "AI_AGENT")
 # 잠금을 검사하고 쓰는 단계. approve·revoke·build 는 사람 행위라 잠금을 요구하지도 쓰지도 않는다.
-LOCK_STAGES = ("init", "collect", "research", "calculate", "draft", "review-template", "confirm")
+LOCK_STAGES = ("init", "collect", "research", "calculate", "draft", "review-template", "confirm", "judge")
 
 
 def agent_session_markers(env: Mapping[str, str] | None = None) -> list[str]:
@@ -790,6 +792,77 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
             "reviewed_at": reviewed_at, "evidence_hash": sha256_file(path)}
 
 
+# ------------------------------------------------------------------ judge
+# 2026-10-01 레인 J(사용자 결정). 사람이 승인 페이지에서 정성 판단 **입력**을 고친다. results.json 의 점수를 덮어쓰지 않는다 —
+# 재계산이 수정을 지우고 입력과 점수가 갈라진다. 고치면 judgments 해시가 바뀌어 calculate → draft → review 를 다시 거친 뒤
+# 사람이 승인한다. 승인이 아니므로 에이전트도 부를 수 있고, reviewer 는 받은 이름(`by`)이다.
+
+def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any], reason: str, by: str,
+                    revised_at: str | None = None) -> dict[str, Any]:
+    """`judgments.json` 의 (기업, factor) 판단 하나를 고친다. 이전 값은 그 항목의 `revision_history` 에 남긴다.
+
+    F1·F4·F8 은 `score`·`evidence`, F3·F5·F7·F9 는 판정 재료(inputs 키)·`evidence` 만 받는다. 그 factor 들의 점수 칸은
+    규칙이 계산하므로 받지 않는다. 형식은 쓰기 전에 스키마로 검증하고, 실행 전체 검증(교차 참조)이 실패하면 원래 파일로 되돌린다.
+    """
+    if factor not in JUDGMENT_EDIT_KIND:
+        raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {sorted(JUDGMENT_EDIT_KIND)})")
+    if not isinstance(by, str) or not by.strip():
+        raise SchemaError("수정자(--by)는 비어 있지 않은 문자열이어야 한다")
+    if not isinstance(reason, str) or not reason.strip():
+        raise SchemaError("수정 사유(--reason)는 비어 있으면 안 된다")
+    if not isinstance(changes, Mapping) or not changes:
+        raise SchemaError("고칠 값이 없다(--set key=value 또는 --evidence)")
+    kind = JUDGMENT_EDIT_KIND[factor]
+    allowed = {"score", "evidence"} if kind == "score" else {*JUDGMENT_INPUT_CHOICES[kind], "evidence"}
+    unknown = sorted(set(changes) - allowed)
+    if "score" in unknown:
+        raise SchemaError(f"{factor} 의 점수는 규칙이 판정 재료에서 계산한다 — 점수 칸은 고치지 않는다. 고칠 수 있는 것: {sorted(allowed)}")
+    if unknown:
+        raise SchemaError(f"{factor}({kind}) 에서 고칠 수 없는 키 {unknown}. 고칠 수 있는 것: {sorted(allowed)}")
+    if "evidence" in changes and not (isinstance(changes["evidence"], list)
+                                      and all(isinstance(e, str) and e.strip() for e in changes["evidence"])):
+        raise SchemaError("evidence 는 비어 있지 않은 문장 목록이어야 한다")
+
+    path = run_dir(slug) / "judgments.json"
+    original = path.read_bytes()
+    payload = load_json_strict(path)
+    idx = next((i for i, j in enumerate(payload["items"]) if j["company_id"] == company_id and j["factor"] == factor), None)
+    if idx is None:
+        raise SchemaError(f"judgments.json 에 {company_id} {factor} 판단이 없다")
+    item = payload["items"][idx]
+    previous = {k: copy.deepcopy(item.get(k)) for k in JUDGMENT_REVISION_FIELDS}
+    new = dict(item)
+    if kind == "score":
+        if "score" in changes:
+            new["score"] = changes["score"]
+    else:
+        # F7 승계 항목 둘은 kind 가 score 다. 판정 재료를 고치면 matrix 로 바뀌고 점수는 규칙이 계산한다(키가 다 있어야 한다).
+        inputs = dict(item["inputs"]) if item["kind"] == kind else {}
+        inputs.update({k: v for k, v in changes.items() if k != "evidence"})
+        new.update(kind=kind, score=None, inputs=inputs)
+    if "evidence" in changes:
+        new["evidence"] = [e.strip() for e in changes["evidence"]]
+    if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence")):
+        raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다")
+    revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
+    new.update(status="new", reviewer=by.strip(), reviewed_at=revised_at)
+    new["revision_history"] = [*item.get("revision_history", []),
+                               {"revised_at": revised_at, "revised_by": by.strip(), "reason": reason.strip(), "previous": previous}]
+    payload["items"][idx] = new
+
+    run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
+    validate_judgments(payload, load_companies(), load_rules(run["rule_version"]).payload, slug)   # 쓰기 전에 형식 검증
+    write_json(path, payload)
+    try:
+        load_context(slug)
+    except SchemaError:
+        path.write_bytes(original)
+        raise
+    return {"judgment_id": new["judgment_id"], "company_id": company_id, "factor": factor, "kind": new["kind"],
+            "previous": previous, "current": {k: new.get(k) for k in JUDGMENT_REVISION_FIELDS},
+            "judgments_hash": sha256_file(path)}
+
+
 # ------------------------------------------------------------------ summary
 # 2026-09-30 레인 F. 승인 페이지(server/approvals.js)가 읽는다. 키 구조는 tests/node/fixtures/summary.sample.json 그대로다.
 
@@ -848,6 +921,32 @@ def _summary_review(paths: Any) -> dict[str, Any] | None:
     return {"status": fm.get("status"), "areas": areas, "checklist_fail": fails}
 
 
+def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
+    """2026-10-01 레인 J. 기업×factor 판단 입력. inputs 는 키 구조가 판정 종류마다 달라 `{key, value}` 목록으로 낸다."""
+    path = run_dir(slug) / "judgments.json"
+    if not path.is_file():
+        return []
+    registry = load_companies()
+    out = []
+    for j in load_json_strict(path).get("items", []):
+        out.append({
+            "company_id": j["company_id"],
+            "display_name": (registry.get(j["company_id"]) or {}).get("display_name") or j["company_id"],
+            "factor": j["factor"],
+            "kind": j["kind"],
+            "score": j["score"],
+            "score_range": list(rules.payload["factors"][j["factor"]]["range"]),
+            "inputs": [{"key": k, "value": v} for k, v in j["inputs"].items()],
+            "evidence": list(j["evidence"]),
+            "status": j["status"],
+            "reviewer": j["reviewer"],
+            "reviewed_at": j["reviewed_at"],
+            "edit_kind": JUDGMENT_EDIT_KIND.get(j["factor"]),
+            "revisions": len(j.get("revision_history") or []),
+        })
+    return sorted(out, key=lambda x: (x["factor"], x["company_id"]))
+
+
 def summary(slug: str) -> dict[str, Any]:
     """승인 페이지가 한 화면에 싣는 요약. 값은 status·render_md 가 이미 쓰는 데이터를 다시 읽는다. 없는 파일은 0·빈 목록·null 이다."""
     paths = run_paths(slug)
@@ -885,6 +984,8 @@ def summary(slug: str) -> dict[str, Any]:
         "triggers": [{"trigger_id": t["trigger_id"], "company_id": t["company_id"], "factors": list(t["factors"]),
                       "condition": t["condition"], "deadline": t["deadline"], "status": t["status"]} for t in triggers],
         "pending_rule_decisions": list((results or {}).get("pending_rule_decisions", [])),
+        "judgments": _summary_judgments(slug, load_rules(run["rule_version"])),
+        "judgment_choices": copy.deepcopy(JUDGMENT_INPUT_CHOICES),
         "hashes": hashes,
         "approval": approval_out,
     }

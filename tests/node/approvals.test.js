@@ -350,3 +350,145 @@ test('CLI 실패 시 500 및 stderr 표시', async () => {
     server.close();
   }
 });
+
+// 2026-10-01 레인 J: 판단 수정 절과 POST /approve/<run_id>/judge
+function startServer(options) {
+  const approvals = createApprovals(options);
+  const server = http.createServer((req, res) => {
+    if (approvals.handle(req, res)) return;
+    res.writeHead(404);
+    res.end();
+  });
+  return new Promise((resolve) => server.listen(0, '127.0.0.1', () => resolve(server)));
+}
+
+function postForm(server, action, body) {
+  return makeRequest(
+    server,
+    {
+      path: `/approve/ai-scorecard-2026-11-x/${action}`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    },
+    body
+  );
+}
+
+test('GET ?factor=F3: 같은 factor 의 모든 기업 판단을 나란히, company 를 고르면 입력란', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  const server = await startServer({ enabled: true, code: '123456' });
+  try {
+    const list = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F3' });
+    assert.equal(list.statusCode, 200);
+    assert.match(list.body, /정성 판단 수정/);
+    assert.match(list.body, /imitation=fail, revenue_model=pass/);
+    assert.match(list.body, /imitation=partial/, '다른 기업(OpenAI)의 같은 factor 판단도 보여야 함');
+    assert.match(list.body, /&lt;b&gt;태그&lt;\/b&gt;/, '근거 문장은 이스케이프');
+    assert.doesNotMatch(list.body, /id="judge-form"/, '기업을 고르기 전에는 입력란이 없다');
+
+    const form = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F3&company=nvidia' });
+    assert.match(form.body, /action="\/approve\/ai-scorecard-2026-11-x\/judge"/);
+    assert.match(form.body, /name="in_imitation"/);
+    assert.match(form.body, /name="in_door_closed"/);
+    assert.match(form.body, /<option value="fail" selected>fail<\/option>/);
+    assert.doesNotMatch(form.body, /name="score"/, 'criteria 판단에는 점수 입력란이 없다');
+    assert.match(form.body, /name="reason"/);
+
+    const score = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F1&company=nvidia' });
+    assert.match(score.body, /name="score" value="2" min="0" max="5"/);
+
+    const bad = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F3%22%3E&company=..%2Fx' });
+    assert.equal(bad.statusCode, 200);
+    assert.doesNotMatch(bad.body, /id="judge-form"/);
+  } finally {
+    server.close();
+  }
+});
+
+test('POST /judge: 코드 불일치면 403, CLI 미호출', async () => {
+  let cliCalled = false;
+  const server = await startServer({
+    enabled: true,
+    code: '654321',
+    runCli: (args, cb) => { cliCalled = true; cb(null, { exitCode: 0, stdout: '{}', stderr: '' }); },
+  });
+  try {
+    const res = await postForm(server, 'judge', 'code=000000&company=nvidia&factor=F3&in_imitation=pass&reason=r&by=u');
+    assert.equal(res.statusCode, 403);
+    assert.equal(cliCalled, false);
+  } finally {
+    server.close();
+  }
+});
+
+test('POST /judge: 인자 생성 — 판정 재료는 --set, 바뀐 근거만 --evidence=, 자유 입력은 --opt=value', async () => {
+  const calls = [];
+  const server = await startServer({
+    enabled: true,
+    code: '123456',
+    runCli: (args, cb) => { calls.push(args); cb(null, { exitCode: 0, stdout: '{}', stderr: '' }); },
+  });
+  try {
+    const body = new URLSearchParams({
+      code: '123456', company: 'nvidia', factor: 'F3', in_imitation: 'pass', in_door_closed: '', 'in_bad-key': 'x',
+      evidence: '- 하이픈으로 시작\r\n\r\n둘째 문장  ', evidence_original: '옛 문장', reason: '잣대 맞춤', by: '홍길동',
+    }).toString();
+    const res = await postForm(server, 'judge', body);
+    assert.equal(res.statusCode, 200);
+    assert.deepEqual(calls[0], [
+      'judge', 'ai-scorecard-2026-11-x', '--company', 'nvidia', '--factor', 'F3',
+      '--set', 'imitation=pass',
+      '--evidence=- 하이픈으로 시작', '--evidence=둘째 문장',
+      '--reason=잣대 맞춤', '--by=홍길동',
+    ]);
+    assert.deepEqual(calls[1], ['summary', 'ai-scorecard-2026-11-x', '--json']);
+    assert.match(res.body, /판단 해시가 바뀌었다/);
+
+    // 근거를 그대로 두면 --evidence 를 넘기지 않는다. 점수 판단은 score=N 이다.
+    await postForm(server, 'judge', new URLSearchParams({
+      code: '123456', company: 'nvidia', factor: 'F1', score: '3', evidence: 'a\nb', evidence_original: 'a\r\nb', reason: 'r', by: 'u',
+    }).toString());
+    assert.deepEqual(calls[2], ['judge', 'ai-scorecard-2026-11-x', '--company', 'nvidia', '--factor', 'F1',
+      '--set', 'score=3', '--reason=r', '--by=u']);
+  } finally {
+    server.close();
+  }
+});
+
+test('POST /judge: 기업·factor 형식이 아니면 400, CLI 미호출', async () => {
+  let cliCalls = 0;
+  const server = await startServer({
+    enabled: true,
+    code: '123456',
+    runCli: (args, cb) => { cliCalls += 1; cb(null, { exitCode: 0, stdout: '{}', stderr: '' }); },
+  });
+  try {
+    for (const [company, factor] of [['nvidia', 'F10'], ['nvidia', 'f3'], ['--x', 'F3'], ['../x', 'F3'], ['', 'F3']]) {
+      const res = await postForm(server, 'judge', new URLSearchParams({ code: '123456', company, factor, reason: 'r', by: 'u' }).toString());
+      assert.equal(res.statusCode, 400, `${company} ${factor}`);
+    }
+    assert.equal(cliCalls, 0);
+  } finally {
+    server.close();
+  }
+});
+
+test('POST /judge: CLI 가 거부하면 안내 없이 stderr 를 보인다', async () => {
+  const server = await startServer({
+    enabled: true,
+    code: '123456',
+    runCli: (args, cb) => {
+      if (args[0] === 'judge') return cb(null, { exitCode: 1, stdout: '', stderr: '[FAIL] F3 의 점수는 규칙이 판정 재료에서 계산한다' });
+      return cb(null, { exitCode: 1, stdout: '', stderr: 'no summary' });
+    },
+  });
+  try {
+    const res = await postForm(server, 'judge', 'code=123456&company=nvidia&factor=F3&score=3&reason=r&by=u');
+    assert.equal(res.statusCode, 200);
+    assert.match(res.body, /규칙이 판정 재료에서 계산한다/);
+    assert.doesNotMatch(res.body, /판단 해시가 바뀌었다/);
+  } finally {
+    server.close();
+  }
+});

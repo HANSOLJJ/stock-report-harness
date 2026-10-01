@@ -3,6 +3,17 @@ const child_process = require('child_process');
 
 const RUN_ID_REGEX = /^[a-z0-9][a-z0-9-]{2,80}$/;
 const MAX_CODE_FAILURES = 5;
+// 판단 수정(2026-10-01 레인 J). 기업 id 는 schema.ID_RE, factor 는 F1~F9, 판정 재료 키는 영문 식별자만 받는다.
+const COMPANY_ID_REGEX = /^[a-z0-9][a-z0-9._-]{0,63}$/;
+const FACTOR_REGEX = /^F[1-9]$/;
+const INPUT_KEY_REGEX = /^[A-Za-z_]{1,40}$/;
+const EDIT_KIND_LABELS = {
+  score: '점수와 근거',
+  criteria: '판정 기준(criteria)',
+  grade: '등급(A·H)',
+  matrix: '매트릭스',
+  gate_inputs: '게이트 입력',
+};
 
 function isLoopback(remoteAddress) {
   if (!remoteAddress) return false;
@@ -103,8 +114,155 @@ function renderErrorPage(statusCode, title, detail) {
 </html>`;
 }
 
+function judgmentInputText(j) {
+  if (j.kind === 'score') return `score ${j.score}`;
+  const inputs = Array.isArray(j.inputs) ? j.inputs : [];
+  return inputs.map((p) => `${p.key}=${p.value}`).join(', ') || '-';
+}
+
+// 판단 수정 절. factor 를 고르면 그 factor 의 모든 기업 판단을 나란히 보이고(Q03), 기업을 고르면 판정 종류에 맞는 입력란을 낸다.
+function renderJudgeSection(data, judgeFactor, judgeCompany) {
+  const runId = data.run_id || '';
+  const judgments = Array.isArray(data.judgments) ? data.judgments : [];
+  const choices = data.judgment_choices || {};
+  const editable = [];
+  for (const j of judgments) {
+    if (j.edit_kind && !editable.some((e) => e.factor === j.factor)) {
+      editable.push({ factor: j.factor, edit_kind: j.edit_kind });
+    }
+  }
+  editable.sort((a, b) => a.factor.localeCompare(b.factor));
+  if (editable.length === 0) {
+    return '<p>고칠 수 있는 판단이 없습니다.</p>';
+  }
+  const options = editable.map((e) => `<option value="${escapeHtml(e.factor)}"${e.factor === judgeFactor ? ' selected' : ''}>${escapeHtml(e.factor)} · ${escapeHtml(EDIT_KIND_LABELS[e.edit_kind] || e.edit_kind)}</option>`).join('');
+  const picker = `
+    <form method="GET" action="/approve/${escapeHtml(runId)}" class="inline-form">
+      <label for="judge_factor">factor:</label>
+      <select id="judge_factor" name="factor">${options}</select>
+      <button type="submit" class="btn btn-secondary">이 factor 의 판단 보기</button>
+    </form>`;
+  const selected = editable.find((e) => e.factor === judgeFactor);
+  if (!selected) {
+    return `<p class="form-desc">factor 를 고르면 그 factor 의 모든 기업 판단을 나란히 보여 줍니다. 점수가 아니라 판단 입력을 고칩니다.</p>${picker}`;
+  }
+
+  const rows = judgments.filter((j) => j.factor === selected.factor).map((j) => {
+    const evidence = Array.isArray(j.evidence) ? j.evidence : [];
+    const href = `/approve/${encodeURIComponent(runId)}?factor=${encodeURIComponent(j.factor)}&company=${encodeURIComponent(j.company_id)}#judge-form`;
+    return `<tr${j.company_id === judgeCompany ? ' class="row-selected"' : ''}>
+      <td><strong>${escapeHtml(j.display_name || j.company_id)}</strong></td>
+      <td>${escapeHtml(j.kind)}</td>
+      <td>${escapeHtml(judgmentInputText(j))}</td>
+      <td>${escapeHtml(j.status)}</td>
+      <td>${escapeHtml(j.reviewer)} · ${escapeHtml(j.reviewed_at)}</td>
+      <td>${escapeHtml(j.revisions || 0)}</td>
+      <td><div class="excerpt">${evidence.map((e) => escapeHtml(e)).join('<br />') || '-'}</div></td>
+      <td><a href="${escapeHtml(href)}">고치기</a></td>
+    </tr>`;
+  }).join('\n');
+  const table = `
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>기업</th><th>판정 종류</th><th>현재 입력</th><th>상태</th><th>검토자 · 검토일</th><th>수정 횟수</th><th>근거</th><th></th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+
+  const target = judgments.find((j) => j.factor === selected.factor && j.company_id === judgeCompany);
+  let form = '';
+  if (target) {
+    const editKind = target.edit_kind;
+    let fields = '';
+    if (editKind === 'score') {
+      const range = Array.isArray(target.score_range) ? target.score_range : [];
+      fields = `
+        <div class="form-group">
+          <label for="judge_score">점수 (${escapeHtml(range[0])} ~ ${escapeHtml(range[1])}):</label>
+          <input type="number" id="judge_score" name="score" value="${escapeHtml(target.score)}" min="${escapeHtml(range[0])}" max="${escapeHtml(range[1])}" step="1" required />
+        </div>`;
+    } else {
+      const current = {};
+      for (const p of (Array.isArray(target.inputs) ? target.inputs : [])) current[p.key] = String(p.value);
+      const keys = choices[editKind] || {};
+      fields = Object.keys(keys).map((key) => {
+        const has = Object.prototype.hasOwnProperty.call(current, key);
+        const opts = (has ? '' : '<option value="">(값 없음 — 고르지 않으면 바꾸지 않음)</option>')
+          + keys[key].map((v) => `<option value="${escapeHtml(v)}"${has && current[key] === String(v) ? ' selected' : ''}>${escapeHtml(v)}</option>`).join('');
+        return `
+        <div class="form-group">
+          <label for="judge_in_${escapeHtml(key)}">${escapeHtml(key)}:</label>
+          <select id="judge_in_${escapeHtml(key)}" name="in_${escapeHtml(key)}">${opts}</select>
+        </div>`;
+      }).join('');
+    }
+    const evidenceText = (Array.isArray(target.evidence) ? target.evidence : []).join('\n');
+    form = `
+      <form method="POST" action="/approve/${escapeHtml(runId)}/judge" class="action-form" id="judge-form">
+        <h3>${escapeHtml(target.display_name || target.company_id)} · ${escapeHtml(target.factor)} 판단 수정</h3>
+        <p class="form-desc">점수가 아니라 판단 입력을 고칩니다. 제출하면 판단 해시가 바뀌어 지금의 점수·초안·리뷰·승인이 무효가 됩니다. 이전 값은 판단 안의 수정 이력에 남습니다.</p>
+        <input type="hidden" name="company" value="${escapeHtml(target.company_id)}" />
+        <input type="hidden" name="factor" value="${escapeHtml(target.factor)}" />
+        ${fields}
+        <div class="form-group">
+          <label for="judge_evidence">근거 문장 (한 줄에 하나):</label>
+          <textarea id="judge_evidence" name="evidence" rows="6">${escapeHtml(evidenceText)}</textarea>
+          <input type="hidden" name="evidence_original" value="${escapeHtml(evidenceText)}" />
+        </div>
+        <div class="form-group">
+          <label for="judge_reason">수정 사유:</label>
+          <input type="text" id="judge_reason" name="reason" required placeholder="왜 고치는지" />
+        </div>
+        <div class="form-group">
+          <label for="judge_by">수정자 이름:</label>
+          <input type="text" id="judge_by" name="by" required placeholder="수정자 성함" />
+        </div>
+        <div class="form-group">
+          <label for="judge_code">일회용 코드 (6자리):</label>
+          <input type="text" id="judge_code" name="code" required pattern="[0-9]{6}" maxlength="6" placeholder="터미널 확인" />
+        </div>
+        <button type="submit" class="btn btn-primary">판단 수정 제출</button>
+      </form>`;
+  }
+  return `${picker}${table}${form}`;
+}
+
+function normalizeLines(text) {
+  return String(text || '').replace(/\r\n?/g, '\n').split('\n').map((s) => s.trim()).filter(Boolean);
+}
+
+// 판단 수정 POST 의 CLI 인자. 자유 입력(근거·사유·이름)은 `--opt=value` 꼴로 넘겨 '-' 로 시작해도 옵션으로 읽히지 않게 한다.
+function buildJudgeArgs(runId, params) {
+  const company = (params.get('company') || '').trim();
+  const factor = (params.get('factor') || '').trim();
+  if (!COMPANY_ID_REGEX.test(company) || !FACTOR_REGEX.test(factor)) {
+    return null;
+  }
+  const args = ['judge', runId, '--company', company, '--factor', factor];
+  const score = (params.get('score') || '').trim();
+  if (score) {
+    args.push('--set', `score=${score}`);
+  }
+  for (const [name, value] of params.entries()) {
+    if (!name.startsWith('in_')) continue;
+    const key = name.slice(3);
+    const v = String(value).trim();
+    if (!INPUT_KEY_REGEX.test(key) || !v) continue;
+    args.push('--set', `${key}=${v}`);
+  }
+  const evidence = normalizeLines(params.get('evidence'));
+  if (params.has('evidence') && evidence.join('\n') !== normalizeLines(params.get('evidence_original')).join('\n')) {
+    for (const line of evidence) args.push(`--evidence=${line}`);
+  }
+  args.push(`--reason=${(params.get('reason') || '').trim()}`);
+  args.push(`--by=${(params.get('by') || '').trim()}`);
+  return args;
+}
+
 function renderSummaryPage(data, options = {}) {
-  const { lastResult } = options;
+  const { lastResult, notice, judgeFactor, judgeCompany } = options;
   const runId = data.run_id || '';
   const asOf = data.as_of || '-';
   const ruleVersion = data.rule_version || '-';
@@ -127,6 +285,7 @@ function renderSummaryPage(data, options = {}) {
     <section class="cli-result-section">
       <h2>최근 명령 실행 결과 (${escapeHtml(lastResult.command)})</h2>
       <p>종료 코드: <strong>${escapeHtml(lastResult.exitCode)}</strong></p>
+      ${notice ? `<div class="notice-banner">${escapeHtml(notice)}</div>` : ''}
       ${lastResult.stdout ? `<div><strong>표준 출력 (stdout)</strong><pre>${escapeHtml(lastResult.stdout)}</pre></div>` : ''}
       ${lastResult.stderr ? `<div><strong>표준 오류 (stderr)</strong><pre class="stderr">${escapeHtml(lastResult.stderr)}</pre></div>` : ''}
     </section>`;
@@ -308,6 +467,13 @@ function renderSummaryPage(data, options = {}) {
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-weight: 600; margin-bottom: 4px; }
     .form-group input { width: 100%; max-width: 400px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; }
+    .form-group select { width: 100%; max-width: 400px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; background: #ffffff; }
+    .form-group textarea { width: 100%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; font-family: inherit; }
+    .inline-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .inline-form select { padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; }
+    .inline-form .btn-secondary { margin-left: 0; }
+    tr.row-selected td { background: #eff6ff; }
+    .notice-banner { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; padding: 12px 16px; border-radius: 6px; margin-bottom: 12px; font-weight: 500; }
     .form-desc { color: #64748b; margin-top: 0; margin-bottom: 12px; font-size: 13px; }
     .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 10px; }
     .meta-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; }
@@ -447,9 +613,15 @@ function renderSummaryPage(data, options = {}) {
     </div>
   </section>
 
-  <!-- (8) 승인 / 취소 폼 -->
+  <!-- (8) 정성 판단 수정 -->
   <section>
-    <h2>8. 실행 승인 / 승인 취소</h2>
+    <h2>8. 정성 판단 수정</h2>
+    ${renderJudgeSection(data, judgeFactor, judgeCompany)}
+  </section>
+
+  <!-- (9) 승인 / 취소 폼 -->
+  <section>
+    <h2>9. 실행 승인 / 승인 취소</h2>
     ${approvalForm}
   </section>
 </body>
@@ -512,9 +684,11 @@ function createApprovals(options = {}) {
     }
 
     let pathname;
+    let query;
     try {
       const urlObj = new URL(rawUrl, 'http://127.0.0.1');
       pathname = urlObj.pathname;
+      query = urlObj.searchParams;
     } catch (_) {
       sendText(res, 400, 'Bad Request: Malformed URL');
       return true;
@@ -551,14 +725,17 @@ function createApprovals(options = {}) {
           return;
         }
 
-        sendHtml(res, 200, renderSummaryPage(summaryData));
+        // 판단 수정 절의 선택. 형식이 아니면 무시한다(페이지는 그대로 그린다).
+        const judgeFactor = FACTOR_REGEX.test(query.get('factor') || '') ? query.get('factor') : null;
+        const judgeCompany = COMPANY_ID_REGEX.test(query.get('company') || '') ? query.get('company') : null;
+        sendHtml(res, 200, renderSummaryPage(summaryData, { judgeFactor, judgeCompany }));
       });
       return true;
     }
 
     if (req.method === 'POST' && segments.length === 2) {
       const action = segments[1];
-      if (!['confirm', 'approve', 'revoke'].includes(action)) {
+      if (!['confirm', 'approve', 'revoke', 'judge'].includes(action)) {
         sendText(res, 404, 'Not Found: Invalid action');
         return true;
       }
@@ -611,6 +788,13 @@ function createApprovals(options = {}) {
           const by = (params.get('by') || params.get('name') || '').trim();
           const note = (params.get('note') || params.get('reason') || '').trim();
           cliArgs.push('revoke', runId, '--by', by, '--note', note);
+        } else if (action === 'judge') {
+          const judgeArgs = buildJudgeArgs(runId, params);
+          if (!judgeArgs) {
+            sendText(res, 400, 'Bad Request: Invalid company or factor');
+            return;
+          }
+          cliArgs = judgeArgs;
         }
 
         runCli(cliArgs, (cliErr, cliResult) => {
@@ -632,6 +816,13 @@ function createApprovals(options = {}) {
                 stderr: cliResult ? cliResult.stderr : (cliErr ? cliErr.message : ''),
               },
             };
+            if (action === 'judge') {
+              pageOptions.judgeFactor = cliArgs[5];
+              pageOptions.judgeCompany = cliArgs[3];
+              if (cliResult && cliResult.exitCode === 0) {
+                pageOptions.notice = '판단 해시가 바뀌었다 — 에이전트에게 다시 계산·리뷰를 시킨 뒤 새로고침해 승인한다. 지금 페이지의 점수는 아직 수정 전 값이다.';
+              }
+            }
 
             if (summaryData) {
               sendHtml(res, 200, renderSummaryPage(summaryData, pageOptions));

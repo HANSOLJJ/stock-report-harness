@@ -70,6 +70,27 @@ FACTOR_JUDGMENT_KINDS: dict[str, set[str]] = {
     "F9": {"gate_inputs"},
 }
 
+# 2026-10-01 레인 J: 사람이 승인 페이지(`judge`)에서 고치는 정성 판단 입력. 점수가 아니라 판단 입력을 고친다.
+# F1·F4·F8 은 score 와 근거를, 나머지는 판정 재료(inputs)를 고친다 — 그 factor 들의 점수는 규칙이 계산한다.
+# F2(경로 매핑)·F6(가격·비상장) 은 이번 범위가 아니다.
+JUDGMENT_EDIT_KIND: dict[str, str] = {
+    "F1": "score", "F4": "score", "F8": "score",
+    "F3": "criteria", "F5": "grade", "F7": "matrix", "F9": "gate_inputs",
+}
+# 판정 종류별로 고칠 수 있는 입력 키와 허용값. 검증은 `_validate_judgment_inputs` 가 하고 이 표는 입력란을 그린다.
+JUDGMENT_INPUT_CHOICES: dict[str, dict[str, list[Any]]] = {
+    "criteria": {"imitation": ["pass", "partial", "fail", "unknown"], "revenue_model": ["pass", "partial", "fail", "unknown"],
+                 "acceleration": ["pass", "partial", "fail", "unknown"], "door_closed": ["pass", "fail", "unknown"]},
+    "grade": {"A": [0, 1, 2], "H": [0, -1, -2, -3]},
+    "matrix": {"funding_dependent_share": ["large", "small", "unknown"], "own_money_returns": ["yes", "no", "unknown"]},
+    "gate_inputs": {"fcf_trend": ["stable", "deteriorating", "unknown"], "bep_retreat": ["yes", "no", "unknown"],
+                    "buffer_erosion": ["yes", "no", "unknown"], "direction_A": ["pass", "fail", "unknown"],
+                    "direction_B": ["pass", "fail", "unknown"], "coverage_comparable": ["yes", "no", "unknown"],
+                    "operating_result_reviewed": ["profit", "loss", "unknown"]},
+}
+# revision_history 한 칸이 보존하는 이전 값의 키.
+JUDGMENT_REVISION_FIELDS = ("kind", "score", "inputs", "evidence", "status", "reviewer", "reviewed_at")
+
 # 지표 카탈로그. unit은 표시·검증용이고 number 지표만 계산에 쓴다.
 METRICS: dict[str, dict[str, str]] = {
     "price": {"unit": "USD/share", "type": "number"},
@@ -1041,6 +1062,18 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
     raise SchemaError(f"{where}: 알 수 없는 kind {kind!r}")
 
 
+def _validate_revision_history(history: Any, where: str) -> None:
+    """2026-10-01 레인 J. 사람이 고친 판단의 이전 값·사유·누가·언제. 오래된 것이 앞이다."""
+    _require(isinstance(history, list) and history, f"{where}: 비어 있지 않은 배열 필요")
+    for idx, entry in enumerate(history):
+        at = f"{where}[{idx}]"
+        _expect_keys(entry, ["revised_at", "revised_by", "reason", "previous"], at)
+        _expect_date(entry["revised_at"], f"{at}.revised_at")
+        for key in ("revised_by", "reason"):
+            _require(isinstance(entry[key], str) and entry[key].strip(), f"{at}: {key} 는 비어 있지 않은 문자열")
+        _expect_keys(entry["previous"], list(JUDGMENT_REVISION_FIELDS), f"{at}.previous")
+
+
 def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules: dict[str, Any], run_id: str | None = None) -> list[dict[str, Any]]:
     _expect_keys(payload, ["schema", "run_id", "items"], "judgments.json", optional=["note"])
     _require(payload["schema"] == "scorecard.judgments/1", "judgments.json: schema 불일치")
@@ -1057,8 +1090,10 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
             ["judgment_id", "company_id", "factor", "kind", "score", "inputs", "evidence", "reviewer", "reviewed_at", "status"],
             where,
             optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id", "superseded",
-                      "evidence_ids"],
+                      "evidence_ids", "revision_history"],
         )
+        if "revision_history" in item:
+            _validate_revision_history(item["revision_history"], f"{where}.revision_history")
         if "evidence_ids" in item:
             # 2026-09-30 레인 E: 판단이 인용하는 근거(evidence.json). 실재·확정 여부는 validate_cross_refs 가 본다.
             _require(isinstance(item["evidence_ids"], list) and all(isinstance(e, str) and e for e in item["evidence_ids"]),

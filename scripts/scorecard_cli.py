@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / approve / revoke / status / resolve-cik
+# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / judge / approve / revoke / status / resolve-cik
 """Usage:
   uv run --frozen python -X utf8 scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
@@ -13,11 +13,12 @@
   uv run --frozen python -X utf8 scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py summary <slug> --json
   uv run --frozen python -X utf8 scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <slug> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json PATH) --reason "…" --by NAME [--take-lock]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."] [--via browser|terminal]   (사람 셸에서만)
   uv run --frozen python -X utf8 scripts/scorecard_cli.py revoke <slug> --by NAME --note "..."                              (사람 셸에서만)
   uv run --frozen python -X utf8 scripts/scorecard_cli.py status <slug>
 
-init·collect·research·calculate·draft·review-template 과 에이전트 세션의 confirm 은 실행 잠금(output/<slug>/.lock)을
+init·collect·research·calculate·draft·review-template 과 에이전트 세션의 confirm·judge 는 실행 잠금(output/<slug>/.lock)을
 검사·기록한다. 다른 소유자의 잠금이면 거부하고 --take-lock 으로 인수한다.
   uv run --frozen python -X utf8 scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply]
 
@@ -27,6 +28,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -266,6 +268,44 @@ def cmd_confirm(args: argparse.Namespace) -> int:
         if out[key]:
             print(f"  {key}: {', '.join(out[key])}")
     print(f"evidence 해시가 바뀌었다({out['evidence_hash'][:16]}…). calculate → draft → review 를 다시 돌린다: "
+          f"uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate {args.slug}")
+    return 0
+
+
+def _judge_value(text: str) -> object:
+    """`--set` 값. 정수 모양이면 정수(score·A·H), 아니면 문자열이다. 형식 검증은 스키마가 한다."""
+    return int(text) if re.fullmatch(r"-?\d+", text) else text
+
+
+def cmd_judge(args: argparse.Namespace) -> int:
+    """정성 판단 입력 수정(2026-10-01 레인 J). 승인이 아니므로 에이전트도 부를 수 있다. 잠금 규칙은 confirm 과 같다."""
+    from scorecard.stages import agent_session_markers, revise_judgment
+
+    if agent_session_markers():
+        _claim(args, "judge")
+    changes: dict[str, object] = {}
+    if args.json:
+        loaded = json.loads(Path(args.json).read_text(encoding="utf-8"))
+        if not isinstance(loaded, dict):
+            raise SchemaError(f"--json 은 {{키: 값}} 객체여야 한다: {args.json}")
+        changes.update(loaded)
+    for item in args.set or []:
+        key, sep, value = item.partition("=")
+        if not sep or not key.strip():
+            raise SchemaError(f"--set 형식은 key=value: {item!r}")
+        changes[key.strip()] = _judge_value(value.strip())
+    if args.evidence:
+        changes["evidence"] = list(args.evidence)
+    out = revise_judgment(args.slug, company_id=args.company, factor=args.factor, changes=changes, reason=args.reason, by=args.by)
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    print(f"judge: {out['judgment_id']} ({out['kind']}) 수정 — 수정자 {out['current']['reviewer']}, {out['current']['reviewed_at']}")
+    for key in ("score", "inputs"):
+        if out["previous"][key] != out["current"][key]:
+            print(f"  {key}: {json.dumps(out['previous'][key], ensure_ascii=False)} → {json.dumps(out['current'][key], ensure_ascii=False)}")
+    if out["previous"]["evidence"] != out["current"]["evidence"]:
+        print(f"  evidence: {len(out['previous']['evidence'])}문장 → {len(out['current']['evidence'])}문장")
+    print(f"judgments 해시가 바뀌었다({out['judgments_hash'][:16]}…). 점수는 아직 그대로다 — calculate → draft → review 를 다시 돌린 뒤 승인한다: "
           f"uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate {args.slug}")
     return 0
 
@@ -515,6 +555,18 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--by", help="검토자(없으면 SCORECARD_AGENT 또는 사용자명)")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_confirm)
+
+    p = sub.add_parser("judge", help="정성 판단 입력 수정(점수가 아니라 판단 입력). 승인이 아니다 — 고친 뒤 calculate 부터 다시 돈다")
+    p.add_argument("slug")
+    p.add_argument("--company", required=True)
+    p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"])
+    p.add_argument("--set", action="append", help="판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
+    p.add_argument("--evidence", action="append", help="근거 문장. 여러 번 주면 그 목록으로 통째 바꾼다")
+    p.add_argument("--json", help="고칠 값 {키: 값} JSON 파일(--set·--evidence 가 덮어쓴다)")
+    p.add_argument("--reason", required=True, help="수정 사유(revision_history 에 남는다)")
+    p.add_argument("--by", required=True, help="수정자. 승인 페이지는 사람 이름을 넣는다")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
+    p.set_defaults(func=cmd_judge)
 
     p = sub.add_parser("summary", help="승인 페이지용 요약")
     p.add_argument("slug")
