@@ -637,6 +637,49 @@ def register_evidence_sources(slug: str) -> list[str]:
     return [e["source_id"] for e in entries]
 
 
+# 2026-10-01 이전 트리거 처리. 10월 시험 실행이 트리거를 새로 뽑으면서 기준선 트리거 39건을 하나도 처리하지 않았고
+# 어디서도 막히지 않았다. 트리거 목록을 새로 쓰는 실행(triggers.json)은 이전 트리거마다 carry 로 확인 결과를 남긴다.
+TRIGGER_CARRY_MIN_RULE = (1, 8)
+
+
+def _rule_tuple(version: str) -> tuple[int, ...]:
+    return tuple(int(x) for x in re.findall(r"\d+", version))
+
+
+def previous_triggers(run: dict[str, Any]) -> list[dict[str, Any]]:
+    """이 실행이 처리해야 하는 이전 트리거. 이어받은 실행에 triggers.json 이 있으면 그중 관찰 중(watching)인 것,
+    없으면 기준선 트리거 전부다. 항목은 {ref, title, company_id, deadline}."""
+    prev = (run.get("continued_from") or {}).get("run_id")
+    if prev and run_paths(prev).triggers.is_file():
+        items = load_json_strict(run_paths(prev).triggers)["items"]
+        return [{"ref": f"{prev}:{t['trigger_id']}", "title": t["observation"], "company_id": t["company_id"],
+                 "deadline": t["deadline"]} for t in items if t["status"] == "watching"]
+    _scores, _obs, legacy = load_baseline(run["baseline_id"])
+    return [{"ref": f"baseline/{run['baseline_id']}:{t['trigger_id']}", "title": t["title"], "company_id": None,
+             "deadline": None} for t in legacy]
+
+
+def trigger_carry_applies(ctx: RunContext) -> bool:
+    return ctx.triggers is not None and _rule_tuple(ctx.rules.version) >= TRIGGER_CARRY_MIN_RULE
+
+
+def trigger_carry_gaps(ctx: RunContext) -> list[dict[str, Any]]:
+    """처리되지 않은 이전 트리거. 이번 실행 생성일 이후에 확인(carry.checked_at)한 항목이 하나도 가리키지 않으면 빠진 것이다.
+    이전 파일을 복사만 한 항목은 확인일이 옛 날짜이거나 carry 가 없어서 걸린다."""
+    if not trigger_carry_applies(ctx):
+        return []
+    since = ctx.run["created_at"][:10]
+    done = {t["carry"]["ref"] for t in ctx.triggers if "carry" in t and t["carry"]["checked_at"] >= since}
+    return [p for p in previous_triggers(ctx.run) if p["ref"] not in done]
+
+
+def trigger_overdue(ctx: RunContext) -> list[dict[str, Any]]:
+    """기준일이 기한을 넘겼는데 계속 관찰(watching)로 남은 트리거. 발동·만료·철회로 결론을 내거나, 기한을 늦춘다면 note 에 이유를 적는다."""
+    if not trigger_carry_applies(ctx):
+        return []
+    return [t for t in ctx.triggers if t["status"] == "watching" and t["deadline"] < ctx.run["as_of"]]
+
+
 def research(slug: str, *, register: bool = True) -> Path:
     paths = run_paths(slug)
     _require_file(paths.plan, "plan")
@@ -644,8 +687,23 @@ def research(slug: str, *, register: bool = True) -> Path:
     if register:
         register_evidence_sources(slug)
     ctx = load_context(slug)
+    gaps = trigger_carry_gaps(ctx)
+    if gaps:
+        shown = "; ".join(f"{g['ref']} {g['title']}" for g in gaps[:10])
+        more = f" 외 {len(gaps) - 10}건" if len(gaps) > 10 else ""
+        raise SchemaError(
+            f"이전 트리거 {len(gaps)}건을 처리하지 않았다: {shown}{more}. triggers.json 에서 각각을 가리키는 항목에 "
+            f"carry {{ref, checked_at(이번 실행 생성일 {ctx.run['created_at'][:10]} 이후), finding}} 을 적고 "
+            f"상태(watching·fired·expired·withdrawn)로 결론을 낸다. 여러 기업에 걸치면 기업별 항목으로 나눠도 된다")
+    overdue = trigger_overdue(ctx)
+    if overdue:
+        shown = "; ".join(f"{t['trigger_id']}(기한 {t['deadline']}) {t['observation']}" for t in overdue[:10])
+        raise SchemaError(
+            f"기준일 {ctx.run['as_of']} 에 기한이 지났는데 계속 관찰(watching)인 트리거 {len(overdue)}건: {shown}. "
+            f"발동(fired)·만료(expired)·철회(withdrawn)로 결론을 내거나, 기한을 늦추면 note 에 이유를 적는다")
     _scores, _obs, legacy_triggers = load_baseline(ctx.run["baseline_id"])
-    text = render_research(ctx, hashes=ctx.hashes, legacy_triggers=legacy_triggers)
+    previous = previous_triggers(ctx.run) if trigger_carry_applies(ctx) else None
+    text = render_research(ctx, hashes=ctx.hashes, legacy_triggers=legacy_triggers, previous_triggers=previous)
     path = paths.research
     path.write_text(text, encoding="utf-8", newline="\n")
     return path

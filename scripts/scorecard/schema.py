@@ -1190,6 +1190,9 @@ EVIDENCE_CHANGES = {"new", "updated", "unchanged"}
 EXCERPT_MAX = 600
 TRIGGER_ID_RE = re.compile(r"^TRG-\d{3}$")
 TRIGGER_STATUSES = {"watching", "fired", "expired", "withdrawn"}
+# 2026-10-01 이전 트리거 처리. `carry.ref` 는 이어받은 실행의 트리거(`<run_id>:TRG-NNN`)나
+# 기준선 트리거(`baseline/<baseline_id>:TRIG-NNN`)를 가리킨다. 집합 대조는 stages.trigger_carry_gaps 가 한다.
+TRIGGER_CARRY_REF_RE = re.compile(r"^(?:baseline/[A-Za-z0-9._-]+:TRIG-\d{3}|ai-scorecard-[a-z0-9-]+:TRG-\d{3})$")
 # C-14: 트리거는 미래 점수를 저장하지 않는다(design-guideline 272행). 키 이름으로 점수처럼 보이는 필드를 막는다.
 SCORE_LIKE_KEY_RE = re.compile(r"score|점수|rating|points|delta|expected|target", re.I)
 # C-14: `conditional_impact` 에 점수 이동(-3→-4, +2점)을 적지 않는다. 사건의 조건부 영향은 말로 쓴다.
@@ -1342,7 +1345,7 @@ def validate_triggers(payload: Any, companies: dict[str, dict[str, Any]], eviden
             ["trigger_id", "company_id", "factors", "observation", "condition", "deadline", "evidence_ids", "source_ids",
              "status", "recheck"],
             where,
-            optional=["legacy_ref", "note"],
+            optional=["legacy_ref", "note", "carry"],
         )
         tid = item["trigger_id"]
         _require(isinstance(tid, str) and bool(TRIGGER_ID_RE.match(tid)), f"{where}: trigger_id 는 TRG-NNN 형식 ({tid!r})")
@@ -1367,6 +1370,15 @@ def validate_triggers(payload: Any, companies: dict[str, dict[str, Any]], eviden
             _expect_str(item["legacy_ref"], f"{where}.legacy_ref", nonempty=True)
         if "note" in item:
             _expect_str(item["note"], f"{where}.note")
+        if "carry" in item:
+            carry = _expect_keys(item["carry"], ["ref", "checked_at", "finding"], f"{where}.carry")
+            _require(isinstance(carry["ref"], str) and bool(TRIGGER_CARRY_REF_RE.match(carry["ref"])),
+                     f"{where}.carry.ref 는 '<run_id>:TRG-NNN' 또는 'baseline/<id>:TRIG-NNN' 형식 ({carry['ref']!r})")
+            _expect_date(carry["checked_at"], f"{where}.carry.checked_at")
+            _expect_str(carry["finding"], f"{where}.carry.finding", nonempty=True)
+        if item["status"] == "fired":
+            _require(bool(item["evidence_ids"] or item["source_ids"]),
+                     f"{where}: 발동(fired) 트리거는 발동을 보여 주는 evidence_ids 나 source_ids 가 있어야 한다")
     return items
 
 

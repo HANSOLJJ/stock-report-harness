@@ -53,6 +53,11 @@ collect → 후보 선별(evidence.json) → triggers.json → research
      - `conditional_impact` 는 판단 단위의 결론으로 시작한다. **"지금은 유지:"**(이 근거로는 어느 판단도 바꾸지 않음, 근거 문장만 보강) 또는 **"재검토:"**(어느 factor 의 어떤 입력을 어떤 방향으로 다시 볼지)로 시작하고, 그 뒤에 조건을 쓴다. "~의 재료다", "~와 닿는다" 로 끝내지 않는다.
      - `factors` 에는 이 근거로 실제로 다시 보거나 근거 문장을 보강할 factor 만 넣는다. 관련이 "닿을 수 있다" 수준인 factor 는 넣지 않고, 이중 계상이 걱정되면 어느 factor 에만 쓰는지 정해서 그 하나만 넣는다.
 4. 재채점 조건은 `output/<run_id>/triggers.json` 에 `status: watching` 으로 적는다. `condition`·`deadline`·`recheck` 를 채우고, 미래 점수를 저장하지 않는다(C-14).
+   - **이전 트리거를 먼저 전부 처리한다(2026-10-01).** 처리할 목록은 이어받은 실행의 관찰 중(watching) 트리거이고, 그 실행에 `triggers.json` 이 없으면 기준선 트리거(`baseline/<id>:TRIG-NNN`) 전부다. 하나도 빠뜨리지 않는다. 빠지면 `research` 가 목록을 내며 멈춘다.
+   - 각 이전 트리거마다 이번 실행의 트리거 항목에 `carry: {ref, checked_at, finding}` 을 적는다. `ref` 는 `<이전 run_id>:TRG-NNN` 또는 `baseline/<id>:TRIG-NNN`, `checked_at` 은 실제로 확인한 날(이번 실행 생성일 이후, 복사만 한 기록은 인정되지 않는다), `finding` 은 수집한 뉴스·공시에서 무엇을 확인했는지다. 결론은 `status` 로 낸다 — 사건이 일어났으면 `fired`(근거 `evidence_ids` 나 출처 `source_ids` 필수), 기한이 지나 의미가 없어졌으면 `expired`, 더 볼 필요가 없으면 `withdrawn`(이유를 `finding` 에), 아직이면 `watching`(새 기한).
+   - 여러 기업에 걸친 이전 트리거(예: 하이퍼스케일러 FCF)는 기업별 항목으로 나눠 같은 `ref` 를 가리킨다.
+   - `fired` 로 판정한 트리거가 가리키는 판단은 다시 본다. 바꿀 것이면 판단 변경 제안(`propose`)으로 올리고, 유지할 것이면 이유를 `finding` 에 적는다. `research.md` 의 "발동 트리거 재검토 대상" 표에 수정 여부가 나온다.
+   - 기준일이 기한을 넘긴 `watching` 트리거는 `research` 가 막는다. 결론을 내거나, 기한을 늦추면 `note` 에 이유를 적는다.
 5. 실행한다: `uv run --frozen python -X utf8 scripts/scorecard_cli.py research <run_id>`. 이 단계는 `/score-research` 가 이어받는다.
 
 ## 사람이 하는 일

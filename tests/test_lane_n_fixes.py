@@ -239,7 +239,14 @@ class ContinueWithEvidenceTest(FlowBase):
         self.assertEqual(ev["run_id"], self.NEW)
         self.assertEqual([(e["evidence_id"], e["status"]) for e in ev["items"]], [("EV-nvidia-001", "confirmed")])
         trg = load_json_strict(new / "triggers.json")
-        self.assertEqual((trg["run_id"], [t["trigger_id"] for t in trg["items"]]), (self.NEW, ["TRG-001"]))
+        self.assertEqual((trg["run_id"], trg["items"][0]["trigger_id"]), (self.NEW, "TRG-001"))
+        # 2026-10-01 넘겨받은 관찰 중 트리거(TRG-001)는 이번 실행에서 확인해야 research 가 돈다.
+        self.assertEqual([p["ref"] for p in stages.previous_triggers(load_json_strict(new / "run.json"))], [f"{SLUG}:TRG-001"])
+        with self.assertRaisesRegex(SchemaError, f"이전 트리거 1건.*{SLUG}:TRG-001"):
+            stages.research(self.NEW)
+        trg["items"][0]["carry"] = {"ref": f"{SLUG}:TRG-001", "checked_at": load_json_strict(new / "run.json")["created_at"][:10],
+                                    "finding": "채택 공시 없음, 계속 관찰"}
+        write_json(new / "triggers.json", trg)
         nv = next(j for j in load_json_strict(new / "judgments.json")["items"] if (j["company_id"], j["factor"]) == ("nvidia", "F1"))
         self.assertEqual((nv["score"], nv["evidence_ids"], len(nv["revision_history"])), (1, ["EV-nvidia-001"], 1))
         stages.research(self.NEW)

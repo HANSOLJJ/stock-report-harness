@@ -201,7 +201,46 @@ def _trigger_lines(ctx: Any, legacy_triggers: list[dict[str, Any]] | None) -> li
     return lines + [f"- {x}" for x in rc.trigger_notes(ctx)] + [""]
 
 
-def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[dict[str, Any]] | None = None) -> str:
+TRIGGER_STATUS_KO = {"watching": "계속 관찰", "fired": "발동", "expired": "만료", "withdrawn": "철회"}
+
+
+def _carry_lines(ctx: Any, previous: list[dict[str, Any]] | None) -> list[str]:
+    """2026-10-01 `## 이전 트리거 처리` — 이전 트리거마다 이번 실행의 결론과 확인 내용, 발동한 것이 가리키는 판단."""
+    if previous is None:
+        return []
+    by_ref: dict[str, list[dict[str, Any]]] = {}
+    for trg in ctx.triggers:
+        if "carry" in trg:
+            by_ref.setdefault(trg["carry"]["ref"], []).append(trg)
+    rows = []
+    for prev in previous:
+        for trg in sorted(by_ref.get(prev["ref"], []), key=lambda x: x["trigger_id"]):
+            rows.append([prev["ref"], prev["title"], TRIGGER_STATUS_KO[trg["status"]], trg["carry"]["finding"],
+                         trg["carry"]["checked_at"], trg["trigger_id"], ctx.companies[trg["company_id"]]["display_name"]])
+    lines = ["## 이전 트리거 처리", "", f"- 이전 트리거 {len(previous)}건을 이번 실행에서 확인했다. 한 이전 트리거를 기업별 항목 여럿이 나눠 가리킬 수 있다.", ""]
+    lines += [table(["이전 트리거", "항목", "결론", "확인 내용", "확인일", "이번 항목", "기업"], rows) if rows else "- 처리 기록 없음", ""]
+    fired = sorted((x for x in ctx.triggers if x["status"] == "fired"), key=lambda x: x["trigger_id"])
+    if fired:
+        since = ctx.run["created_at"][:10]
+        judgments = {(j["company_id"], j["factor"]): j for j in ctx.judgments}
+        rows = []
+        for trg in fired:
+            for factor in trg["recheck"]["factors"]:
+                j = judgments.get((trg["company_id"], factor))
+                if j is None:
+                    state = "판단 없음(자동 산출 factor)"
+                elif any(r["revised_at"] >= since for r in j.get("revision_history", [])):
+                    state = "이번 실행에서 수정함"
+                else:
+                    state = "수정하지 않음 — 유지 이유를 리뷰에서 확인"
+                rows.append([trg["trigger_id"], ctx.companies[trg["company_id"]]["display_name"], FACTOR_LABELS[factor],
+                             trg["recheck"]["what"], state])
+        lines += ["### 발동 트리거 재검토 대상", "", table(["트리거", "기업", "Factor", "다시 볼 것", "이번 실행"], rows), ""]
+    return lines
+
+
+def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[dict[str, Any]] | None = None,
+                    previous_triggers: list[dict[str, Any]] | None = None) -> str:
     run = ctx.run
     paths = run_paths(ctx.slug)
     # 2026-09-30 레인 E: 근거·트리거 해시는 파일이 있을 때만 싣는다(validate.py 도 있을 때만 대조한다).
@@ -245,6 +284,7 @@ def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[d
         lines += [f"### {company['display_name']}", "", table(["Factor", "종류", "점수", "입력", "상태", "검토", "비고"], rows), ""]
     lines += _evidence_lines(ctx)
     lines += _trigger_lines(ctx, legacy_triggers)
+    lines += _carry_lines(ctx, previous_triggers)
     lines += ["## 출처", ""]
     src_rows = [[s.get("source_id"), s.get("title"), s.get("publisher") or "—", s.get("url") or "(URL 없음 — 만들지 않음)", s.get("accessed_at") or "—", s.get("conflict_of_interest") or "—"] for s in ctx.sources.get("items", [])]
     lines += [table(["ID", "제목", "발행", "URL", "접근일", "이해상충"], src_rows) if src_rows else "- 등록된 출처 없음", ""]

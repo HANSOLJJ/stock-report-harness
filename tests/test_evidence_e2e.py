@@ -16,6 +16,7 @@ from scorecard import engine, evidence_lib  # noqa: E402
 from scorecard.paths import run_paths  # noqa: E402
 from scorecard.schema import load_json_strict, sha256_file, write_json  # noqa: E402
 from scorecard.stages import current_hashes  # noqa: E402
+from tests.test_approval_commands import cover_previous_triggers  # noqa: E402
 from tests.test_collect_stage import QUOTES, RSS, SLUG, Sandbox  # noqa: E402
 
 
@@ -59,6 +60,7 @@ class EvidenceE2ETest(unittest.TestCase):
              "condition": "엔터프라이즈 채택 공시", "deadline": "2027-06-30", "evidence_ids": ["EV-nvidia-001"],
              "source_ids": [cand["source_id"]], "status": "watching",
              "recheck": {"factors": ["F1"], "what": "업무 채널 형성 여부"}}]})
+        cover_previous_triggers(SLUG)   # 2026-10-01 research 는 이전 트리거 처리 기록을 요구한다
 
     def _cite_in_new_judgment(self) -> None:
         path = self.box.run_dir / "judgments.json"

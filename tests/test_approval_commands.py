@@ -41,6 +41,23 @@ def key_paths(node, prefix: str = "") -> set[str]:
     return out
 
 
+def cover_previous_triggers(slug: str = SLUG) -> int:
+    """2026-10-01 research 는 이전 트리거마다 처리 기록(carry)을 요구한다. 시험 실행은 이전 트리거를 철회로 처리해 둔다.
+    덧붙인 항목 수를 돌려준다."""
+    run = load_json_strict(engine.run_dir(slug) / "run.json")
+    path = run_paths(slug).triggers
+    payload = load_json_strict(path)
+    previous = stages.previous_triggers(run)
+    for i, prev in enumerate(previous, start=len(payload["items"]) + 1):
+        payload["items"].append({
+            "trigger_id": f"TRG-{i:03d}", "company_id": "nvidia", "factors": ["F1"], "observation": prev["title"],
+            "condition": "시험용", "deadline": "2027-06-30", "evidence_ids": [], "source_ids": [], "status": "withdrawn",
+            "recheck": {"factors": ["F1"], "what": "시험용"},
+            "carry": {"ref": prev["ref"], "checked_at": run["created_at"][:10], "finding": "시험 실행이라 철회로 처리"}})
+    write_json(path, payload)
+    return len(previous)
+
+
 class FlowBase(unittest.TestCase):
     """샌드박스 실행 하나를 근거·트리거와 함께 리뷰 pass 까지 만든다. 정본 실행은 읽기만 한다."""
 
@@ -55,6 +72,7 @@ class FlowBase(unittest.TestCase):
             {"trigger_id": "TRG-001", "company_id": "nvidia", "factors": ["F1"], "observation": "소프트웨어 플랫폼 발표",
              "condition": "엔터프라이즈 채택 공시", "deadline": "2027-06-30", "evidence_ids": ["EV-nvidia-001"],
              "source_ids": [self.cand["source_id"]], "status": "watching", "recheck": {"factors": ["F1"], "what": "업무 채널 형성 여부"}}]})
+        cover_previous_triggers(SLUG)
         stages.register_evidence_sources(SLUG)   # research 가 하는 출처 등록. confirm 의 전체 검증이 출처 장부를 본다
 
     def evidence_item(self, eid: str = "EV-nvidia-001", **kw) -> dict:

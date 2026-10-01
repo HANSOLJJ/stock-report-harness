@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from scorecard import engine, render_html, render_md, stages  # noqa: E402
 from scorecard.paths import run_paths  # noqa: E402
 from scorecard.schema import write_json  # noqa: E402
-from tests.test_approval_commands import FlowBase  # noqa: E402
+from tests.test_approval_commands import FlowBase, cover_previous_triggers  # noqa: E402
 
 OBSREG = "ai-scorecard-2026-09-obsreg"
 
@@ -30,9 +30,11 @@ class WithTriggersTest(FlowBase):
              "condition": "엔터프라이즈 채택 공시", "deadline": "2027-06-30", "evidence_ids": ["EV-nvidia-001"],
              "source_ids": [self.cand["source_id"]], "status": "watching", "recheck": {"factors": ["F1"], "what": "업무 채널 형성 여부"}},
             {"trigger_id": "TRG-002", "company_id": "openai", "factors": ["F9"], "observation": "자금 조달",
-             "condition": "라운드 종결", "deadline": "2026-12-31", "evidence_ids": [], "source_ids": [],
+             "condition": "라운드 종결", "deadline": "2026-12-31", "evidence_ids": [], "source_ids": [self.cand["source_id"]],
              "status": "fired", "recheck": {"factors": ["F9"], "what": "런웨이"}}]}
         write_json(run_paths(self.box.slug).triggers, payload)
+        # 2026-10-01 발동 트리거는 근거·출처가 필수이고, 이전 트리거는 철회로 처리돼 '그 밖의 상태' 에 함께 센다.
+        self.others = 1 + cover_previous_triggers(self.box.slug)
 
     def test_draft_draws_triggers_json(self):
         self.add_fired()
@@ -40,7 +42,7 @@ class WithTriggersTest(FlowBase):
         stages.calculate(self.box.slug)
         section = trigger_section(stages.draft(self.box.slug).read_text(encoding="utf-8"))
         for text in ("| ID | 기업 | Factor | 관찰 사실 | 조건 | 기한 | 근거 | 재검토 |", "TRG-001", "엔터프라이즈 채택 공시", "EV-nvidia-001",
-                     "업무 채널 형성 여부", "그 밖의 상태(fired·expired·withdrawn) 1건", "미래 점수를 저장하지 않는다(C-14)"):
+                     "업무 채널 형성 여부", f"그 밖의 상태(fired·expired·withdrawn) {self.others}건", "미래 점수를 저장하지 않는다(C-14)"):
             self.assertIn(text, section)
         self.assertNotIn("TRG-002", section)            # 감시 중인 것만 표에 싣는다
         self.assertNotIn("왜 중요한가(v1.5 원문)", section)
@@ -58,7 +60,7 @@ class WithTriggersTest(FlowBase):
         ctx = engine.load_context(self.box.slug)
         _scores, _obs, legacy = stages.load_baseline(ctx.run["baseline_id"])
         html = render_html.render_triggers(ctx, legacy)
-        for text in ("TRG-001", "관찰 사실", "엔터프라이즈 채택 공시", "그 밖의 상태(fired·expired·withdrawn) 1건", "C-14"):
+        for text in ("TRG-001", "관찰 사실", "엔터프라이즈 채택 공시", f"그 밖의 상태(fired·expired·withdrawn) {self.others}건", "C-14"):
             self.assertIn(text, html)
         self.assertNotIn("TRG-002", html)
         self.assertNotIn("기준선 원문", html)
