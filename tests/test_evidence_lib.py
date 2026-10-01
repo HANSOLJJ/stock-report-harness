@@ -184,6 +184,21 @@ class LocalSettingTest(unittest.TestCase):
         # tests/__init__.py 가 끈다. 사용자가 실제 .env 를 만들어도 SEC_UA 없는 경로의 테스트가 흔들리지 않는다.
         self.assertEqual(os.environ.get("SCORECARD_DOTENV"), "")
 
+    def test_worktree_falls_back_to_main_checkout(self):
+        # 2026-10-01: 워크트리 루트에 .env 가 없으면 원본 체크아웃 루트의 .env 를 읽는다.
+        main = Path(self.tmp.name) / "repo"
+        wt = Path(self.tmp.name) / "wt"
+        (main / ".git" / "worktrees" / "lane-x").mkdir(parents=True)
+        wt.mkdir()
+        (wt / ".git").write_text(f"gitdir: {main / '.git' / 'worktrees' / 'lane-x'}\n", encoding="utf-8")
+        (main / ".env").write_text("SEC_UA=Main main@example.com\n", encoding="utf-8")
+        env = {k: v for k, v in os.environ.items() if k not in ("SEC_UA", "SCORECARD_DOTENV")}
+        with mock.patch.object(evidence_lib, "ROOT", wt), mock.patch.dict(os.environ, env, clear=True):
+            self.assertEqual(evidence_lib._dotenv_paths(), [wt / ".env", main / ".env"])
+            self.assertEqual(evidence_lib.sec_user_agent(), "Main main@example.com")
+            (wt / ".env").write_text("SEC_UA=Wt wt@example.com\n", encoding="utf-8")
+            self.assertEqual(evidence_lib.sec_user_agent(), "Wt wt@example.com")
+
     def test_filings_uses_the_same_reader(self):
         from scorecard.collect_filings import require_user_agent
         with mock.patch.dict(os.environ, {"SCORECARD_DOTENV": str(self.dotenv)}):

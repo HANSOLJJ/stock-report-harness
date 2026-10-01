@@ -27,7 +27,7 @@ AI 기업의 경쟁 구조와 재무 위험을 동일한 규칙으로 반복 분
 
 ### 2.1 전체 확인 범위
 
-사용자가 지정한 `E:\sourcecode\01_side_project\stock-report-harness\AI_company_analysis_factor`의 Markdown 5개, 총 2,469줄을 모두 읽었다. 요청에 나온 파일명은 실제 폴더에서 다음 이름으로 확인됐다.
+사용자가 지정한 `E:\sourcecode\01_side_project\stock-report-harness\AI_company_analysis_factor`(읽기 전용 참고 자료이며, 지금은 git 이 그 안 6개 파일을 추적한다)의 Markdown 5개, 총 2,469줄을 모두 읽었다. 요청에 나온 파일명은 실제 폴더에서 다음 이름으로 확인됐다.
 
 | 원본 ID | 파일 | 줄 수 | 활용 |
 |---|---|---:|---|
@@ -350,7 +350,7 @@ F1~F9의 개별 기준선은 S-SCORE의 순위표와 카드를 대조해 가져�
 
 ## 9. 분석 산출물과 실행 흐름
 
-논리 흐름은 `plan → research → calculate → draft/preview → review → awaiting_user → finalize/build`다. 이는 scorecard용 요구이며 기존 stock 실행 계약을 전역으로 변경하는 지시가 아니다.
+논리 흐름은 `plan → research → calculate → draft/preview → review → awaiting_user → approve → build`다. 이는 scorecard용 요구이며 기존 stock 실행 계약을 전역으로 변경하는 지시가 아니다.
 
 | 산출물 | 반드시 보여줄 내용 |
 |---|---|

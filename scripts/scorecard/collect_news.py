@@ -25,6 +25,19 @@ from .evidence_lib import (
 TAG_RE = re.compile(r"<[^>]+>")
 
 
+# 하이픈 없이 언어만 준 locale 의 기본 국가(Google 의 gl 은 국가 코드를 기대한다)
+LANG_DEFAULT_REGION = {"en": "US", "ko": "KR", "ja": "JP", "zh": "CN", "de": "DE", "fr": "FR"}
+
+
+def split_locale(locale: str) -> tuple[str, str]:
+    lang, _, region = locale.partition("-")
+    if not region:
+        region = LANG_DEFAULT_REGION.get(lang, "")
+    if not lang or not region:
+        raise ValueError("locale 은 xx-YY 형식으로 준다")
+    return lang, region
+
+
 def build_query_url(query: str, *, hl: str = "en-US", gl: str = "US", ceid: str = "US:en") -> str:
     params = urllib.parse.urlencode({"q": query, "hl": hl, "gl": gl, "ceid": ceid})
     return f"https://news.google.com/rss/search?{params}"
@@ -112,8 +125,7 @@ def collect_company_news(
     company_id = company["company_id"]
     queries = default_queries(company)
     # 2026-09-30 레인 E: `collect --locale` 연결. `en-US` → hl=en-US, gl=US, ceid=US:en.
-    lang, _, region = locale.partition("-")
-    region = region or lang.upper()
+    lang, region = split_locale(locale)
     urls = [build_query_url(q, hl=locale, gl=region, ceid=f"{region}:{lang}") for q in queries]
     fetched_at = now or utc_now_iso()
     if dry_run:
