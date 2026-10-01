@@ -260,12 +260,13 @@ def cmd_confirm(args: argparse.Namespace) -> int:
     agent = bool(agent_session_markers())
     if agent:   # 2026-10-01 V2-11: 다른 소유자 잠금은 먼저 검사하고, 기록은 성공한 뒤에 한다
         claim_lock(args.slug, "confirm", take_lock=args.take_lock, write=False)
-    out = confirm(args.slug, evidence_ids=_id_list(args.evidence), reject_ids=_id_list(args.reject), reviewer=args.by)
+    out = confirm(args.slug, evidence_ids=_id_list(args.evidence), reject_ids=_id_list(args.reject), reviewer=args.by,
+                  revert_ids=_id_list(args.revert))
     if agent:
         _claim(args, "confirm")
-    print(f"confirm: 확정 {len(out['confirmed'])} · 이미 확정 {len(out['already_confirmed'])} · 거부(삭제) {len(out['rejected'])}"
+    print(f"confirm: 확정 {len(out['confirmed'])} · 이미 확정 {len(out['already_confirmed'])} · 거부(삭제) {len(out['rejected'])} · 번복 {len(out['reverted'])}"
           f" (검토자 {out['reviewer']}, {out['reviewed_at']})")
-    for key in ("confirmed", "already_confirmed", "rejected"):
+    for key in ("confirmed", "already_confirmed", "rejected", "reverted"):
         if out[key]:
             print(f"  {key}: {', '.join(out[key])}")
     print(f"evidence 해시가 바뀌었다({out['evidence_hash'][:16]}…). research → calculate → draft → review 를 다시 돌린다: "
@@ -343,11 +344,16 @@ def cmd_propose(args: argparse.Namespace) -> int:
 
 def cmd_proposal(args: argparse.Namespace) -> int:
     """제안 반영·거부(2026-10-01). 사람 행위라 에이전트 세션이면 거부한다. 거부는 --note(사유) 필수."""
-    from scorecard.stages import decide_proposal
+    from scorecard.stages import decide_proposal, undo_proposal
 
-    out = decide_proposal(args.slug, args.id, accept=args.accept, by=args.by, note=args.note)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
+    if args.undo:
+        undone = undo_proposal(args.slug, args.id, by=args.by)
+        what = "반영을 번복해 판단을 반영 전으로 되돌렸다" if undone["undone"] == "accepted" else "거부를 번복했다"
+        print(f"proposal: {args.id} {what} — 결정 전으로 돌아갔다")
+        return 0
+    out = decide_proposal(args.slug, args.id, accept=args.accept, by=args.by, note=args.note)
     p = out["proposal"]
     if out["accepted"]:
         print(f"proposal: {p['proposal_id']} 반영 — {p['company_id']} {p['factor']} 판단을 고쳤다(수정자 {p['decided_by']}). "
@@ -606,6 +612,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("slug")
     p.add_argument("--evidence", help="확정할 근거 ID(쉼표)")
     p.add_argument("--reject", help="거부해 지울 근거 ID(쉼표)")
+    p.add_argument("--revert", help="확정을 번복해 후보로 되돌릴 근거 ID(쉼표)")
     p.add_argument("--by", help="검토자(없으면 SCORECARD_AGENT 또는 사용자명)")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_confirm)
@@ -628,6 +635,7 @@ def main(argv: list[str] | None = None) -> int:
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument("--accept", action="store_true", help="반영")
     g.add_argument("--reject", action="store_true", help="거부(--note 필수)")
+    g.add_argument("--undo", action="store_true", help="결정 번복(결정 전으로 되돌림, 반영이었으면 판단도 되돌림)")
     p.add_argument("--by", help="결정자(기본 사용자 이름)")
     p.add_argument("--note", help="메모. 거부면 사유로 필수")
     p.set_defaults(func=cmd_proposal)

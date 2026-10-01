@@ -1385,7 +1385,7 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         where = f"proposals[{idx}]"
         _expect_keys(item, ["proposal_id", "company_id", "factor", "changes", "evidence_after", "reason", "evidence_ids",
                             "before", "proposed_by", "proposed_at", "status"],
-                     where, optional=["decided_by", "decided_at", "decision_note"])
+                     where, optional=["decided_by", "decided_at", "decision_note", "applied"])
         pid = item["proposal_id"]
         _require(isinstance(pid, str) and bool(PROPOSAL_ID_RE.match(pid)), f"{where}: proposal_id 는 PRP-NNN 형식 ({pid!r})")
         _require(pid not in seen, f"{where}: proposal_id 중복 {pid!r}")
@@ -1413,6 +1413,11 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
             _expect_str(item.get("decision_note"), f"{where}.decision_note(거부 사유)", nonempty=True)
         if "decision_note" in item:
             _expect_str(item["decision_note"], f"{where}.decision_note", allow_none=True)
+        if "applied" in item:
+            # 반영 때 저장한 반영 전·후 값(번복용). 반영된 제안에만 있다.
+            _require(status == "accepted", f"{where}.applied 는 반영된 제안에만 있다")
+            _expect_keys(item["applied"], ["previous", "after"], f"{where}.applied")
+            _expect_keys(item["applied"]["after"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.applied.after")
     return items
 
 

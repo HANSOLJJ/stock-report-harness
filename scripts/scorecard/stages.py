@@ -921,27 +921,32 @@ EVIDENCE_ID_RE = re.compile(r"^EV-[a-z0-9-]+-\d{3}$")
 
 
 def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject_ids: list[str] | tuple[str, ...] = (),
-            reviewer: str | None = None, reviewed_at: str | None = None) -> dict[str, Any]:
+            reviewer: str | None = None, reviewed_at: str | None = None,
+            revert_ids: list[str] | tuple[str, ...] = ()) -> dict[str, Any]:
     """근거를 확정(`status: confirmed`·`reviewer`·`reviewed_at`)하거나 거부(항목 삭제)한다. 쓴 뒤 실행 전체를 다시 검증하고,
-    검증이 실패하면 원래 파일로 되돌린다(거부한 근거를 트리거·판단이 인용하면 여기서 멈춘다)."""
-    ids, rejects = list(evidence_ids), list(reject_ids)
-    bad = [e for e in ids + rejects if not isinstance(e, str) or not EVIDENCE_ID_RE.match(e)]
+    검증이 실패하면 원래 파일로 되돌린다(거부한 근거를 트리거·판단이 인용하면 여기서 멈춘다).
+    2026-10-01 사용자 요청: `revert_ids` 는 확정을 번복해 후보로 되돌린다. 새 판단이 인용 중이면 교차 검증이 막는다."""
+    ids, rejects, reverts = list(evidence_ids), list(reject_ids), list(revert_ids)
+    bad = [e for e in ids + rejects + reverts if not isinstance(e, str) or not EVIDENCE_ID_RE.match(e)]
     if bad:
         raise SchemaError(f"근거 ID 형식이 아니다(EV-<기업>-NNN): {bad}")
-    if not ids and not rejects:
-        raise SchemaError("확정(--evidence)하거나 거부(--reject)할 근거 ID 가 필요하다")
-    both = sorted(set(ids) & set(rejects))
+    if not ids and not rejects and not reverts:
+        raise SchemaError("확정(--evidence)·거부(--reject)·번복(--revert)할 근거 ID 가 필요하다")
+    both = sorted((set(ids) & set(rejects)) | (set(ids) & set(reverts)) | (set(rejects) & set(reverts)))
     if both:
-        raise SchemaError(f"같은 근거를 확정하면서 거부할 수 없다: {both}")
+        raise SchemaError(f"같은 근거를 확정하면서 거부하거나 번복할 수 없다: {both}")
     path = run_paths(slug).evidence
     if not path.is_file():
         raise SchemaError(f"근거 파일이 없다: {rel(path)}")
     original = path.read_bytes()
     payload = load_json_strict(path)
     have = {e["evidence_id"] for e in payload["items"]}
-    unknown = [e for e in ids + rejects if e not in have]
+    unknown = [e for e in ids + rejects + reverts if e not in have]
     if unknown:
         raise SchemaError(f"evidence.json 에 없는 근거 ID: {unknown}")
+    not_confirmed = sorted(e["evidence_id"] for e in payload["items"] if e["evidence_id"] in reverts and e.get("status") != "confirmed")
+    if not_confirmed:
+        raise SchemaError(f"확정된 근거만 번복할 수 있다: {not_confirmed}")
     protect_approved_run(slug, "근거 확정·거부(confirm)")
     reviewer = (reviewer or "").strip() or (os.environ.get("SCORECARD_AGENT") or "").strip() or getpass.getuser()
     reviewed_at = reviewed_at or utc_now_iso()[:10]   # UTC 날짜
@@ -954,6 +959,11 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
             continue
         item.update(status="confirmed", reviewer=reviewer, reviewed_at=reviewed_at)
         confirmed.append(item["evidence_id"])
+    for item in payload["items"]:
+        if item["evidence_id"] in reverts:
+            item["status"] = "candidate"
+            item.pop("reviewer", None)
+            item.pop("reviewed_at", None)
     payload["items"] = [e for e in payload["items"] if e["evidence_id"] not in rejects]
     write_json(path, payload)
     try:
@@ -961,7 +971,7 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
     except BaseException:   # 2026-10-01 V2-10: 형식 오류가 아닌 예외에서도 검증 안 된 파일을 남기지 않는다
         path.write_bytes(original)
         raise
-    return {"confirmed": confirmed, "already_confirmed": already, "rejected": rejects, "reviewer": reviewer,
+    return {"confirmed": confirmed, "already_confirmed": already, "rejected": rejects, "reverted": reverts, "reviewer": reviewer,
             "reviewed_at": reviewed_at, "evidence_hash": sha256_file(path)}
 
 
@@ -1148,10 +1158,69 @@ def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None
         reason = f"제안 {proposal_id} 반영: {item['reason']}" + (f" (메모: {note})" if note else "")
         out["judgment"] = revise_judgment(slug, company_id=item["company_id"], factor=item["factor"], changes=changes,
                                           reason=reason, by=by, cite_evidence_ids=list(item["evidence_ids"]))
+        after = _find_judgment(slug, item["company_id"], item["factor"])
+        # 번복(undo_proposal)이 판단을 반영 전으로 되돌릴 때 쓴다. evidence_ids 가 없던 판단은 null 로 둔다.
+        item["applied"] = {"previous": {**copy.deepcopy(out["judgment"]["previous"]), "evidence_ids": current.get("evidence_ids")},
+                           "after": _judgment_snapshot(after)}
         item.update(status="accepted", decided_by=by, decided_at=decided_at, decision_note=note)
     write_json(run_paths(slug).proposals, payload)
     out["proposal"] = item
     return out
+
+
+def undo_proposal(slug: str, proposal_id: str, *, by: str | None = None, allow_agent_session: bool = False) -> dict[str, Any]:
+    """결정을 번복해 제안을 결정 전으로 되돌린다(2026-10-01 사용자 요청). 사람 행위라 에이전트 세션이면 거부한다.
+    거부의 번복은 결정 기록만 지운다. 반영의 번복은 판단을 반영 전 값(applied.previous)으로 되돌리고 수정 이력에 '번복' 을
+    남긴다. 반영 뒤 판단이 또 바뀌었으면(applied.after 와 다르면) 번복을 거부한다."""
+    refuse_agent_session("판단 변경 제안 번복", allow_agent_session=allow_agent_session)
+    payload = _load_proposals(slug)
+    item = next((p for p in payload["items"] if p["proposal_id"] == proposal_id), None)
+    if item is None:
+        raise SchemaError(f"proposals.json 에 {proposal_id} 가 없다")
+    if item["status"] == "pending":
+        raise SchemaError(f"{proposal_id} 는 결정 전이라 번복할 것이 없다")
+    by = (by or "").strip() or getpass.getuser()
+    was = item["status"]
+    if was == "accepted":
+        applied = item.get("applied")
+        if not applied:
+            raise SchemaError(f"{proposal_id} 에 반영 전 값이 남아 있지 않아 되돌릴 수 없다 — 전체 판단 표에서 직접 고친다")
+        path = run_dir(slug) / "judgments.json"
+        original = path.read_bytes()
+        jpayload = load_json_strict(path)
+        idx = next(i for i, j in enumerate(jpayload["items"])
+                   if j["company_id"] == item["company_id"] and j["factor"] == item["factor"])
+        cur = jpayload["items"][idx]
+        if _judgment_snapshot(cur) != applied["after"]:
+            raise SchemaError(f"{proposal_id} 를 반영한 뒤 {item['company_id']} {item['factor']} 판단이 또 바뀌었다 — "
+                              "번복하지 않는다. 전체 판단 표에서 직접 고친다")
+        protect_approved_run(slug, "판단 변경 제안 번복")
+        prev = applied["previous"]
+        new = dict(cur)
+        for k in JUDGMENT_REVISION_FIELDS:
+            new[k] = copy.deepcopy(prev[k])
+        if prev.get("evidence_ids") is None:
+            new.pop("evidence_ids", None)
+        else:
+            new["evidence_ids"] = list(prev["evidence_ids"])
+        new["revision_history"] = [*cur.get("revision_history", []),
+                                   {"revised_at": utc_now_iso()[:10], "revised_by": by, "reason": f"제안 {proposal_id} 번복",
+                                    "previous": {k: copy.deepcopy(cur.get(k)) for k in JUDGMENT_REVISION_FIELDS},
+                                    "session": "agent" if agent_session_markers() else "human"}]
+        jpayload["items"][idx] = new
+        run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
+        validate_judgments(jpayload, load_companies(), load_rules(run["rule_version"]).payload, slug)
+        write_json(path, jpayload)
+        try:
+            load_context(slug)
+        except BaseException:
+            path.write_bytes(original)
+            raise
+    item["status"] = "pending"
+    for k in ("decided_by", "decided_at", "decision_note", "applied"):
+        item.pop(k, None)
+    write_json(run_paths(slug).proposals, payload)
+    return {"proposal_id": proposal_id, "undone": was}
 
 
 def _pairs(d: Mapping[str, Any] | None) -> list[dict[str, Any]]:

@@ -119,6 +119,72 @@ class DecideProposalTest(ProposalBase):
             stages.decide_proposal(SLUG, "PRP-001", accept=False, note="사유")
 
 
+class UndoTest(ProposalBase):
+    """2026-10-01 사용자 요청: 확정·결정한 것은 번복할 수 있다."""
+
+    def test_revert_confirmed_evidence_to_candidate(self):
+        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
+        out = stages.confirm(SLUG, revert_ids=["EV-nvidia-001"])
+        self.assertEqual(out["reverted"], ["EV-nvidia-001"])
+        item = load_json_strict(self.paths.evidence)["items"][0]
+        self.assertEqual(item["status"], "candidate")
+        self.assertNotIn("reviewer", item)
+        with self.assertRaisesRegex(SchemaError, "확정된 근거만 번복"):
+            stages.confirm(SLUG, revert_ids=["EV-nvidia-001"])
+
+    def test_revert_refused_while_a_new_judgment_cites_it(self):
+        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
+        self.propose()
+        with human_env():
+            self.decide(accept=True, by="사용자")
+        before = self.paths.evidence.read_bytes()
+        with self.assertRaisesRegex(SchemaError, "확정되지 않은 근거"):
+            stages.confirm(SLUG, revert_ids=["EV-nvidia-001"])
+        self.assertEqual(self.paths.evidence.read_bytes(), before)
+
+    def test_undo_rejected_goes_back_to_pending(self):
+        self.propose()
+        self.decide(accept=False, by="사용자", note="사유")
+        out = stages.undo_proposal(SLUG, "PRP-001", by="사용자", allow_agent_session=True)
+        self.assertEqual(out["undone"], "rejected")
+        p = load_json_strict(self.ppath)["items"][0]
+        self.assertEqual(p["status"], "pending")
+        self.assertNotIn("decision_note", p)
+        with self.assertRaisesRegex(SchemaError, "결정 전이라"):
+            stages.undo_proposal(SLUG, "PRP-001", allow_agent_session=True)
+
+    def test_undo_accepted_restores_the_judgment(self):
+        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
+        original = self.judgment()
+        self.propose(evidence_after=["바뀐 근거"])
+        with human_env():
+            self.decide(accept=True, by="사용자")
+            stages.undo_proposal(SLUG, "PRP-001", by="사용자")
+        j = self.judgment()
+        for k in ("kind", "score", "inputs", "evidence", "status", "reviewer", "reviewed_at"):
+            self.assertEqual(j[k], original[k], k)
+        self.assertEqual(j.get("evidence_ids"), original.get("evidence_ids"))
+        self.assertEqual([h["reason"] for h in j["revision_history"]][-1], "제안 PRP-001 번복")
+        self.assertEqual(load_json_strict(self.ppath)["items"][0]["status"], "pending")
+        engine.load_context(SLUG)
+        stages.confirm(SLUG, revert_ids=["EV-nvidia-001"])   # 인용이 풀렸으니 근거 번복도 된다
+
+    def test_undo_accepted_refused_after_a_later_change(self):
+        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
+        self.propose()
+        with human_env():
+            self.decide(accept=True, by="사용자")
+        stages.revise_judgment(SLUG, company_id="nvidia", factor="F5", changes={"A": 2}, reason="그 뒤 직접 고침", by="사용자")
+        with self.assertRaisesRegex(SchemaError, "또 바뀌었다"):
+            stages.undo_proposal(SLUG, "PRP-001", allow_agent_session=True)
+
+    def test_agent_session_cannot_undo(self):
+        self.propose()
+        self.decide(accept=False, note="사유")
+        with human_env(CLAUDECODE="1"), self.assertRaisesRegex(SchemaError, "에이전트 세션"):
+            stages.undo_proposal(SLUG, "PRP-001")
+
+
 class ProposalCliTest(ProposalBase):
     def test_propose_and_reject_via_cli(self):
         with human_env(CLAUDECODE="1"):   # 에이전트도 제안은 쓴다
