@@ -65,11 +65,11 @@
 | ID | 내용 |
 |---|---|
 | REVIEW-03/D-03 | `init --help` 에 이미 있는 `--price-as-of`·`--info-cutoff`·`--baseline`·`--rule` 의 의미와 기본값을 README·`score-plan` 스킬에 설명. 기능 부재가 아니라 설명 부재 |
-| REVIEW-03/D-06 | npm 스크립트가 `python3` 와 `python` 을 혼용한다. 지금은 npm 스크립트와 훅 배선이 모두 `uv run --frozen python -X utf8` 로 통일돼 별칭 전제가 없다. 이 항목은 문서 안의 맨 `python` 호출 예시를 같은 형식으로 맞추는 일만 남았다 |
 | REVIEW-03/D-07 | Python CLI 의 `--by` 는 필수인데 slash command hint 는 선택처럼 보인다. `/score-approve` 안내에 실제 승인자 확보 절차를 적는다 |
-| REVIEW-03/D-08 | 기본 이관 원본 경로가 특정 머신의 `E:` 경로다. `--html`·`--md` 로 바꿀 수 있고 기준선이 커밋돼 있어 최초 실행에 재이관이 필수가 아니라는 두 사실을 README 에 명시 |
 | REVIEW-03/D-09 | `status` 명령을 README 사용 흐름에 추가. 단 `approval_valid` 는 해시 일치만 보므로 전체 계약 검증의 대체가 아님을 함께 적는다 |
 | REVIEW-03/D-10 | 빌더가 `run.change_type` 을 읽지만 run 스키마가 그 키를 거부해 이력 사유가 `baseline-recompute` 로 고정된다. 같은 입력을 그대로 재실행하는 경우에는 차단 사유가 아니다. **자료·판단·규칙·가격이 바뀐 재채점 이력을 history.csv 에 남기기 전에는 반드시 보완해야 한다** |
+
+`REVIEW-03/D-06`(python 표기 혼용)과 `REVIEW-03/D-08`(이관 원본의 `E:` 절대 경로)은 2026-10-01 에 닫았다. D-06 은 npm 스크립트·훅 배선·문서 예시가 모두 `uv run --frozen python -X utf8` 로 통일됐고, D-08 은 원천 자료를 `docs/scorecard/source/` 로 옮기며 `baseline_import.py` 의 기본 경로를 저장소 기준 상대 경로로 바꿨다.
 
 `REVIEW-03/D-11`(AGENTS 제목 손상)은 base `0df7d6e` 부터 있던 stock 쪽 문제라 이번 범위에서 제외했다. `REVIEW-03/D-12`(plan 부재 시 init 안내)는 선택 사항이다. `REVIEW-03/D-13`(C-20 을 실행 선택지로 만들자)은 기각했다. C-20 은 선택지가 아니라 TTM 자료를 확보할 문제다.
 
