@@ -1,14 +1,14 @@
 # AI 기업 분석 framework — 구조 확장 지침
 
 - 작성일 2026-09-08. `design-guideline.md`(도메인 명세)의 짝이다. 처리하지 않고 남겨둔 항목은 `open-items.md` 에 모은다. 이 문서는 요구 ID(D·F·Q·T·C)를 실제 모듈·파일·테스트에 연결한다.
-- 기준 커밋 `0df7d6e`, 브랜치 `HANSOLJJ/worker`. 원본(`AI_company_analysis_factor/`)은 저장소 밖 읽기 전용이며 SHA-256 은 design-guideline 2.1절과 일치한다.
+- 기준 커밋 `0df7d6e`, 브랜치 `HANSOLJJ/worker`. 원본 규칙·계획 문서(`AI_company_analysis_factor/`)는 읽기 전용 참고 자료이고, git 이 그 안 6개 파일을 추적한다. SHA-256 은 design-guideline 2.1절과 일치한다.
 
 ## 1. 유형 분기와 공통 진입점
 
 | 항목 | stock_report (기존) | ai_scorecard (추가) |
 |---|---|---|
 | 판별 | `output/<run_id>/plan.md` frontmatter `report_type` 없음 | `report_type: ai_scorecard`, run_id 는 `ai-scorecard-` 접두 |
-| 판별 코드 | `scripts/report_contract_lib.report_type_for()` — 알 수 없는 값은 ValueError 로 차단 | 동일 |
+| 판별 코드 | 판별 함수 `report_type_for()` 는 제거됐다. `report_type` 필드는 `scripts/report_contract_lib.py` 의 frontmatter 키 목록에만 남아 있다 | 동일 |
 | 검증 | `validate_report_contract.validate_contract` 기존 로직 그대로 | 같은 함수가 `scorecard.validate.validate_scorecard` 로 위임 (`ValidationResult` 공유) |
 | 빌드 | `build_report.build_report` 기존 로직 그대로 | 같은 함수가 `scorecard.render_html.build_scorecard` 로 위임. CLI `uv run --frozen python -X utf8 scripts/build_report.py <run_id>` 동일 |
 | hero 이미지·뉴스 100건 | 필수 | 요구하지 않음 |

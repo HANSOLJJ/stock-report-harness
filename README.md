@@ -100,16 +100,16 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 | 훅 (`guard.py` 함수) | 이벤트 | 역할 |
 | --- | --- | --- |
 | `block_dangerous_bash` | 셸 실행 전 | `rm -rf /`, `sudo`, 원격 스크립트 파이프 실행, 강제 push 차단 |
-| `protect_sensitive_files` | 셸·파일 도구 실행 전 | `.env*`, `.git/`, `approval.json`, 승인에 쓰인 규칙 파일과 실행 묶음, `scorecard/history.csv` 수정 차단. 승인·취소 명령 차단 |
+| `protect_sensitive_files` | 셸·파일 도구 실행 전 | 보호 목록(`.env*`, `.git/`, `.github/workflows/`, `docs/finance-style-guide.md`, `**/approval.json`, `scorecard/rules/v1.5~v1.7.json`, `scorecard/history.csv`, `scorecard/baseline/**`, 승인된 기준선·관측 실행 묶음 `output/ai-scorecard-2026-09-baseline/`·`output/ai-scorecard-2026-09-obsreg/`) 수정 차단. 셸 명령은 보호 경로가 쓰기 대상(리다이렉션 대상, 변경 동사 인자)일 때만 막고 읽기 명령의 언급은 통과시키며, `python`·`node`·`uv run python` 인터프리터 명령이 보호 경로를 담으면 막음. 승인 있는 실행에 대한 `scorecard_cli.py init … --force` 와 승인·취소 명령은 셸에서 차단 |
 | `enforce_plan` | 셸·파일 도구 실행 전 | `output/<run_id>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 전 리뷰 `pass` 요구, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 |
-| `forbid_financial_advice` | 파일 도구 실행 전·후 | `draft.md`·`judgments.json`·`evidence/*.json` 의 투자 권유·수익 보장 표현 차단 |
+| `forbid_financial_advice` | 파일 도구 실행 전·후, 셸 실행 후 | `draft.md`·`judgments.json`·`evidence/*.json` 의 투자 권유·수익 보장 표현 차단. 셸 실행 뒤에는 무엇이 바뀌었는지 알 수 없으므로 대상 파일 전체를 다시 검사 |
 | `remind_review` | 파일 도구 실행 후, 세션 종료 | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고만 함 |
-| `enforce_memory` | 파일 도구 실행 후 | `memory/` 변경 뒤 `scripts/validate_memory.py` 실행, 실패하면 차단 |
+| `enforce_memory` | 파일 도구 실행 후 | `memory/_daily/`·`memory/topics/` 변경 뒤 `scripts/validate_memory.py` 실행, 실패하면 차단 |
 | `inject_memory_context` | 프롬프트 제출 | 프롬프트에 맞는 `memory/topics/*.md` 를 문맥으로 주입 |
 
 배선은 Claude Code 가 `.claude/settings.json`, Codex 가 `.codex/hooks.json` 입니다. 두 곳 모두 `uv run --frozen … python -X utf8 scripts/hooks/guard.py <훅이름>` 한 줄로 부릅니다.
 
-훅은 둘째 방어선입니다. 첫째는 승인 해시 검증과 CLI 의 거부(에이전트 세션의 승인·취소 거부)이고, 훅은 도구 호출 밖의 동작을 막지 못합니다.
+훅은 둘째 방어선입니다. 첫째는 승인 해시 검증과 CLI 의 거부(에이전트 세션의 승인·취소 거부)이고, 훅은 도구 호출 밖의 동작을 막지 못합니다. 다만 임의 Python 을 실행할 수 있는 에이전트가 작정하면 첫 방어선도 우회할 수 있으므로, 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것입니다.
 
 ## 이해상충
 

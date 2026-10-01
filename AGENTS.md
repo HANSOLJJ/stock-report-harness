@@ -38,6 +38,7 @@
 ## 통제의 위치
 - **통제는 코드가 한다.** 어느 하네스(Claude Code, Codex 등)로 돌리든 승인 해시 검증과 CLI 의 거부(에이전트 세션의 `approve`·`revoke` 거부)가 첫 방어선이고, 훅(`scripts/hooks/guard.py`)은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
 - **훅은 도구 호출 밖을 막지 못한다.** 사람의 터미널에서 직접 실행하는 명령과 훅이 배선되지 않은 에이전트의 동작은 훅이 볼 수 없다. 훅 목록과 한계는 `scripts/hooks/README.md` 에 있다.
+- **첫 방어선에도 한계가 있다.** 임의 Python 을 실행할 수 있는 에이전트가 작정하면 우회할 수 있다. 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것이다.
 - **승인 서버가 떠 있는 동안에는 열린 틈이 있다.** 브라우저 도구를 가진 에이전트가 터미널에 나온 6자리 코드를 읽으면 승인 페이지에서 승인을 누를 수 있다. 코드는 파일에 쓰이지 않고, 서버는 승인이 성공하면 내려간다. 사용자가 이 사실을 알고 수용했다(2026-09-30). 에이전트는 그 코드를 읽어 입력하지 않는다.
 
 ## Orca worktree 간 메시지와 작업 실행
@@ -79,4 +80,5 @@
 - 실패/재시도 비용이 큰 관측은 `memory/_daily/YYYY-MM-DD.md`에 append한다.
 - 같은 패턴 3회 이상 또는 재발 비용이 큰 실패는 `memory/topics/{slug}.md`로 추출한다.
 - memory 변경 후 `uv run --frozen python -X utf8 scripts/validate_memory.py`를 실행한다.
+- 지금 실재하는 topic 파일은 `memory/topics/guardrails.md` 하나다. 아래 목록은 주입 훅이 찾는 topic 이름이고, 없는 파일은 관측이 생길 때 만든다.
 - 작업 시작 시 관련 topic만 읽는다: 시간/yfinance=`time-sync`, 외부 API=`external-api`, 이미지=`image-workflow`, 단계 순서=`pipeline-order`, 빌드=`build-errors`, git=`git-workflow`, hook/validator=`guardrails`.
