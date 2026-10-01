@@ -139,7 +139,9 @@ function renderEvidenceCard(item, ctx) {
   ].join('');
   return `
       <div class="ev-card${confirmed ? ' ev-confirmed' : ''}" data-group="${escapeHtml(cid)}" id="ev-${escapeHtml(eid)}">
-        <input type="checkbox" name="evidence" value="${escapeHtml(eid)}" id="chk_${escapeHtml(eid)}" checked aria-label="${escapeHtml(eid)} 확정" />
+        ${confirmed
+    ? `<button type="submit" class="btn-link ev-revert" name="revert" value="${escapeHtml(eid)}" title="확정을 번복해 후보로 되돌립니다">번복</button>`
+    : `<input type="checkbox" name="evidence" value="${escapeHtml(eid)}" id="chk_${escapeHtml(eid)}" checked aria-label="${escapeHtml(eid)} 확정" />`}
         <div class="ev-body">
           <div class="ev-meta">${factorChips(item.factors)}
             <span class="badge">${escapeHtml(CHANNEL_LABELS[item.channel] || item.channel || (item.kind === 'filing' ? '공시' : '뉴스'))}</span>
@@ -441,7 +443,15 @@ function renderProposalSection(data, ctx) {
           </form>
         </div>`;
     } else {
-      actions = `<div class="prop-decided muted">${escapeHtml(PROPOSAL_STATUS_LABELS[pr.status] || pr.status)} · ${escapeHtml(pr.decided_by || '-')} · ${escapeHtml(pr.decided_at || '-')}${pr.decision_note ? ` · ${pr.status === 'rejected' ? '거부 사유' : '메모'}: ${escapeHtml(pr.decision_note)}` : ''}</div>`;
+      actions = `
+        <div class="prop-decided">
+          <span><strong>${escapeHtml(PROPOSAL_STATUS_LABELS[pr.status] || pr.status)}</strong> · ${escapeHtml(pr.decided_by || '-')} · ${escapeHtml(pr.decided_at || '-')}${pr.decision_note ? ` · ${pr.status === 'rejected' ? '거부 사유' : '메모'}: ${escapeHtml(pr.decision_note)}` : ''}</span>
+          <form method="POST" action="/approve/${escapeHtml(runId)}/proposal" class="prop-form">
+            <input type="hidden" name="id" value="${escapeHtml(pr.proposal_id)}" />
+            <input type="hidden" name="decision" value="undo" />
+            <button type="submit" class="btn btn-secondary" title="${pr.status === 'accepted' ? '판단을 반영 전 값으로 되돌리고 결정 전으로 돌립니다' : '결정 전으로 돌립니다'}">번복</button>
+          </form>
+        </div>`;
     }
     return `
       <div class="prop-card prop-${escapeHtml(pr.status)}" id="proposal-${escapeHtml(pr.proposal_id)}">
@@ -573,16 +583,22 @@ function renderSummaryPage(data, options = {}) {
   const reviewStatus = review ? review.status : 'none';
   const showReviewWarning = checklistFailCount > 0 || reviewStatus !== 'pass';
 
+  // 2026-10-01 사용자 요청: 버튼을 누른 뒤 맨 위로 가지 않게, 결과는 화면 오른쪽 아래 알림 상자로 띄운다.
   let lastResultBlock = '';
   if (lastResult) {
+    const ok = Number(lastResult.exitCode) === 0;
     lastResultBlock = `
-    <section class="cli-result-section">
-      <h2>최근 명령 실행 결과 (${escapeHtml(lastResult.command)})</h2>
-      <p>종료 코드: <strong>${escapeHtml(lastResult.exitCode)}</strong></p>
-      ${notice ? `<div class="notice-banner">${escapeHtml(notice)}</div>` : ''}
-      ${lastResult.stdout ? `<div><strong>표준 출력 (stdout)</strong><pre>${escapeHtml(lastResult.stdout)}</pre></div>` : ''}
-      ${lastResult.stderr ? `<div><strong>표준 오류 (stderr)</strong><pre class="stderr">${escapeHtml(lastResult.stderr)}</pre></div>` : ''}
-    </section>`;
+    <aside class="toast ${ok ? 'toast-ok' : 'toast-fail'}" role="status" id="result-toast">
+      <div class="toast-head"><strong>${ok ? '완료' : '실패'}</strong> <code>${escapeHtml(lastResult.command)}</code>
+        <button type="button" class="toast-close" aria-label="닫기" onclick="this.closest('.toast').remove()">×</button></div>
+      ${notice ? `<div class="toast-notice">${escapeHtml(notice)}</div>` : ''}
+      ${!ok && lastResult.stderr ? `<pre class="stderr">${escapeHtml(lastResult.stderr)}</pre>` : ''}
+      <details><summary>자세히</summary>
+        ${lastResult.stdout ? `<pre>${escapeHtml(lastResult.stdout)}</pre>` : ''}
+        ${ok && lastResult.stderr ? `<pre class="stderr">${escapeHtml(lastResult.stderr)}</pre>` : ''}
+        <div class="muted">종료 코드 ${escapeHtml(lastResult.exitCode)}</div>
+      </details>
+    </aside>`;
   }
 
   // (1) 실행 머리
@@ -637,7 +653,9 @@ function renderSummaryPage(data, options = {}) {
   }
 
   // (4) 근거 후보 목록
-  const candidateIds = evidenceItems.map((item) => item.evidence_id).join(',');
+  // 2026-10-01: 일괄 확정·제외는 아직 후보인 근거만 다룬다. 확정 근거의 체크를 풀어 삭제되던 위험을 없앤다.
+  const pendingEvidence = evidenceItems.filter((item) => item.status !== 'confirmed');
+  const candidateIds = pendingEvidence.map((item) => item.evidence_id).join(',');
   const evidenceByCompany = new Map();
   for (const item of evidenceItems) {
     if (!evidenceByCompany.has(item.company_id)) evidenceByCompany.set(item.company_id, []);
@@ -766,7 +784,6 @@ function renderSummaryPage(data, options = {}) {
     .meta-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px 14px; }
     .meta-card .label { font-size: 12px; color: #64748b; font-weight: 600; }
     .meta-card .value { font-size: 15px; font-weight: 700; color: #0f172a; margin-top: 4px; word-break: break-all; }
-    .cli-result-section { border-left: 4px solid #2563eb; }
     .factor-bar { position: sticky; top: 0; z-index: 20; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 8px 14px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(15,23,42,0.08); }
     .factor-bar summary { cursor: pointer; }
     .factor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 6px 18px; margin-top: 8px; max-height: 40vh; overflow-y: auto; }
@@ -815,6 +832,17 @@ function renderSummaryPage(data, options = {}) {
     .field-help { font-size: 12px; color: #64748b; margin-bottom: 4px; }
     .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0 12px; }
     .badge-warn { border-color: #f59e0b; color: #b45309; background: #fffbeb; }
+    .toast { position: fixed; right: 16px; bottom: 16px; z-index: 50; width: min(520px, calc(100vw - 32px)); max-height: 60vh; overflow: auto; background: #ffffff; border: 1px solid #cbd5e1; border-left-width: 5px; border-radius: 8px; padding: 10px 12px; box-shadow: 0 8px 24px rgba(15,23,42,0.18); font-size: 13px; }
+    .toast-ok { border-left-color: #16a34a; }
+    .toast-fail { border-left-color: #dc2626; }
+    .toast-head { display: flex; gap: 6px; align-items: baseline; }
+    .toast-head code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .toast-close { border: none; background: none; font-size: 18px; cursor: pointer; color: #64748b; }
+    .toast-notice { margin-top: 6px; color: #92400e; }
+    .toast pre { max-height: 200px; }
+    .confirm-bar { position: sticky; bottom: 0; background: #ffffff; padding: 10px 0; margin-top: 12px; border-top: 1px solid #e2e8f0; }
+    .ev-revert { font-weight: 700; flex: none; }
+    .prop-decided { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 10px; }
     .prop-card { border: 1px solid #c7d2fe; border-left: 4px solid #6366f1; border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
     .prop-card.prop-accepted { border-left-color: #16a34a; border-color: #bbf7d0; }
     .prop-card.prop-rejected { border-left-color: #f59e0b; border-color: #fde68a; }
@@ -901,11 +929,13 @@ function renderSummaryPage(data, options = {}) {
     <p class="form-desc">
       후보 근거 총 ${escapeHtml(evidence.candidates || evidenceItems.length)}건 중 ${escapeHtml(evidence.selected || 0)}건 선택됨 (${escapeHtml(evidence.confirmed || 0)}건 확정 완료). 체크된 근거는 확정되고, 체크를 푼 근거는 제외(삭제)됩니다. 제목을 누르면 원문이 새 탭에서 열립니다.
     </p>
-    <form method="POST" action="/approve/${escapeHtml(runId)}/confirm">
+    <form method="POST" action="/approve/${escapeHtml(runId)}/confirm" id="evidence-form">
       <input type="hidden" name="candidate_ids" value="${escapeHtml(candidateIds)}" />
       ${evidenceGroups || '<p>근거 항목이 없습니다.</p>'}
-      <div style="margin-top: 14px;">
-        <button type="submit" name="confirm_action" value="apply" class="btn btn-primary">선택 근거 확정 / 미선택 제외</button>
+      <div class="confirm-bar">
+        ${pendingEvidence.length
+    ? `<button type="submit" name="confirm_action" value="apply" class="btn btn-primary">후보 ${pendingEvidence.length}건: 체크한 것 확정 / 체크 푼 것 제외</button>`
+    : '<span class="badge badge-ok">모든 근거가 확정됐습니다</span> <span class="muted">잘못 확정한 근거는 카드의 "번복" 으로 후보로 되돌립니다.</span>'}
       </div>
     </form>
   </section>
@@ -1014,8 +1044,37 @@ function renderSummaryPage(data, options = {}) {
         if (!f.hidden) { f.querySelector('textarea').focus(); }
       });
     });
+    // 2026-10-01 사용자 요청: 버튼을 누르면 결과 페이지가 맨 위에서 열리던 것을, 누르기 직전 보던 카드 위치로 되돌린다.
+    var KEY = 'approvals-scroll';
+    document.addEventListener('submit', function (ev) {
+      var src = ev.submitter || ev.target;
+      var anchor = src.closest('[id^="ev-"], [id^="proposal-"], [id^="judge-F"], section[id], .judge-card') || ev.target.closest('section');
+      if (!anchor || !anchor.id) { anchor = ev.target.closest('[id]'); }
+      try {
+        if (anchor && anchor.id) {
+          sessionStorage.setItem(KEY, JSON.stringify({ id: anchor.id, top: anchor.getBoundingClientRect().top, path: location.pathname.split('/').slice(0, 3).join('/') }));
+        }
+      } catch (e) { /* 저장소를 못 쓰면 위치 복원만 빠진다 */ }
+    }, true);
+    var restored = false;
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+      sessionStorage.removeItem(KEY);
+      if (saved && location.pathname.indexOf(saved.path) === 0) {
+        var el = document.getElementById(saved.id);
+        if (el) {
+          var panel = el.closest('[data-judge-panel]');
+          if (panel && panel.hidden) {
+            var tab = document.querySelector('[data-judge-tab="' + panel.getAttribute('data-judge-panel') + '"]');
+            if (tab) { tab.click(); }
+          }
+          window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - saved.top);
+          restored = true;
+        }
+      }
+    } catch (e) { /* 무시 */ }
     var openForm = document.getElementById('judge-form');
-    if (openForm && !location.hash) { openForm.closest('.judge-card').scrollIntoView({ block: 'start' }); }
+    if (!restored && openForm && !location.hash) { openForm.closest('.judge-card').scrollIntoView({ block: 'start' }); }
   </script>
 </body>
 </html>`;
@@ -1158,7 +1217,15 @@ function createApprovals(options = {}) {
         }
 
         let cliArgs = [];
-        if (action === 'confirm') {
+        const revertId = (params.get('revert') || '').trim();
+        if (action === 'confirm' && revertId) {
+          // 2026-10-01: 확정 근거 번복은 그 근거 하나만 후보로 되돌린다(같은 폼의 다른 체크 상자는 무시한다).
+          if (!/^EV-[a-z0-9-]+-\d{3}$/.test(revertId)) {
+            sendText(res, 400, 'Bad Request: Invalid evidence id');
+            return;
+          }
+          cliArgs.push('confirm', runId, '--revert', revertId);
+        } else if (action === 'confirm') {
           cliArgs.push('confirm', runId);
           const evidenceList = parseEvidenceList(params, 'evidence');
           let rejectList = parseEvidenceList(params, 'reject');
@@ -1198,11 +1265,11 @@ function createApprovals(options = {}) {
           const id = (params.get('id') || '').trim();
           const decision = (params.get('decision') || '').trim();
           const note = (params.get('note') || '').trim();
-          if (!PROPOSAL_ID_REGEX.test(id) || !['accept', 'reject'].includes(decision)) {
+          if (!PROPOSAL_ID_REGEX.test(id) || !['accept', 'reject', 'undo'].includes(decision)) {
             sendText(res, 400, 'Bad Request: Invalid proposal id or decision');
             return;
           }
-          cliArgs = ['proposal', runId, '--id', id, decision === 'accept' ? '--accept' : '--reject'];
+          cliArgs = ['proposal', runId, '--id', id, { accept: '--accept', reject: '--reject', undo: '--undo' }[decision]];
           if (note) cliArgs.push(`--note=${note}`);
         }
 
@@ -1225,7 +1292,7 @@ function createApprovals(options = {}) {
                 stderr: cliResult ? cliResult.stderr : (cliErr ? cliErr.message : ''),
               },
             };
-            if (action === 'proposal' && cliResult && cliResult.exitCode === 0 && cliArgs[4] === '--accept') {
+            if (action === 'proposal' && cliResult && cliResult.exitCode === 0 && ['--accept', '--undo'].includes(cliArgs[4])) {
               pageOptions.notice = '제안을 반영해 판단이 바뀌었다 — 에이전트에게 research → calculate → draft → review 를 다시 돌리게 한 뒤 새로고침해 승인한다. 지금 페이지의 점수는 아직 반영 전 값이다.';
             }
             if (action === 'judge') {

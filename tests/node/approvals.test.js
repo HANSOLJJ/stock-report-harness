@@ -487,6 +487,55 @@ test('GET: 판단 변경 제안 카드 — 지금 값 → 제안 값, 근거 줄
   }
 });
 
+// 2026-10-01 사용자 요청: 확정한 것은 표시하고 번복할 수 있게, 결과는 알림 상자로(맨 위로 가지 않게)
+test('GET: 확정 근거는 체크 상자 대신 번복 버튼, 일괄 확정은 후보만', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  const server = await startServer({ enabled: true, code: '123456' });
+  try {
+    const res = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x' });
+    assert.match(res.body, /name="revert" value="EV-nvidia-002"[^>]*>번복<\/button>/);
+    assert.doesNotMatch(res.body, /name="evidence" value="EV-nvidia-002"/, '확정 근거에는 체크 상자가 없다');
+    assert.match(res.body, /name="evidence" value="EV-nvidia-001"/);
+    assert.match(res.body, /name="candidate_ids" value="EV-nvidia-001"/, '일괄 처리는 후보만');
+    assert.match(res.body, /후보 1건: 체크한 것 확정 \/ 체크 푼 것 제외/);
+  } finally {
+    server.close();
+  }
+});
+
+test('POST: 근거 번복은 그 근거만 --revert, 제안 번복은 --undo, 결과는 알림 상자', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  const calls = [];
+  const fake = require('child_process');
+  const server = await startServer({
+    enabled: true,
+    code: '123456',
+    runCli: (args, cb) => {
+      calls.push(args);
+      if (args[0] === 'summary') {
+        cb(null, { exitCode: 0, stdout: require('fs').readFileSync(require('path').join(__dirname, 'fixtures', 'summary.sample.json'), 'utf8'), stderr: '' });
+      } else {
+        cb(null, { exitCode: 0, stdout: 'ok', stderr: '' });
+      }
+    },
+  });
+  try {
+    const res = await postForm(server, 'confirm', 'evidence=EV-nvidia-001&candidate_ids=EV-nvidia-001&revert=EV-nvidia-002');
+    assert.deepEqual(calls[0], ['confirm', 'ai-scorecard-2026-11-x', '--revert', 'EV-nvidia-002'], '다른 체크 상자는 무시한다');
+    assert.match(res.body, /<aside class="toast toast-ok" role="status" id="result-toast">/, '결과는 알림 상자');
+    assert.doesNotMatch(res.body, /<section class="cli-result-section"/, "맨 위 결과 상자는 없다");
+    await postForm(server, 'proposal', 'id=PRP-001&decision=undo');
+    assert.deepEqual(calls[2], ['proposal', 'ai-scorecard-2026-11-x', '--id', 'PRP-001', '--undo']);
+    const bad = await postForm(server, 'confirm', 'revert=../x');
+    assert.equal(bad.statusCode, 400);
+    void fake;
+  } finally {
+    server.close();
+  }
+});
+
 test('POST /proposal: 반영·거부 인자, 메모는 --note=, 형식이 아니면 400', async () => {
   const calls = [];
   const server = await startServer({

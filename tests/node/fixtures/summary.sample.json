@@ -79,6 +79,23 @@
         "horizon": "medium: 다음 분기 출하 확인",
         "counter_evidence": ["벤더 발표 수치다"],
         "unverified": ["제목·매체·날짜만 보고 판정함(원문 미열람)"]
+      },
+      {
+        "evidence_id": "EV-nvidia-002",
+        "company_id": "nvidia",
+        "factors": ["F5"],
+        "kind": "news",
+        "title": "확정된 시험 근거",
+        "url": null,
+        "published_at_utc": null,
+        "excerpt": "확정된 시험 근거",
+        "status": "confirmed",
+        "relevance": "추론: 확정된 근거 예시",
+        "channel": "press",
+        "conditional_impact": "지금은 유지: 예시",
+        "horizon": "short",
+        "counter_evidence": [],
+        "unverified": []
       }
     ]
   },
