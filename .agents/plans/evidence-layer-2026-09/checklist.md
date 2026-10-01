@@ -85,5 +85,5 @@
 - [ ] 레인 H 가 남긴 것: 소유 밖 문서(AGENTS·README·structure.md)의 첫 방어선 위치 문구, render_md.py 130행 uv 없는 python, validation/recheck_worker_final.py 의 승인 함수 호출, 계약 밖 쓰기 형태(PowerShell cmdlet·find -delete·xargs·글롭)
 - [x] 레인 M 조율자 재현(병합 뒤): unittest 1115건 중 실패 1·오류 14(원자료 부재 집합, Muse 가 본 훅 배선 2건은 Muse 환경의 bash 에 uv 가 없어서 생긴 것으로 이 환경에서는 통과), 보고서·픽스처에 연락처 없음
 - [x] 실제 수집 재시도(조율자, 임시 DATA_ROOT): SEC_UA 영문화 뒤 뉴스 14개사 99~200건 수집·발행일 결측 0, SEC company_tickers 조회 성공(SPCX 1181412 등재). 가격은 9/29 기준 12개사 정상, 9/30 은 야후 일봉 종가 미확정(NaN)
-- [ ] 레인 J: 판단 수정 기능 + 수집기 수정(NaN 종가·회사별 실패·resolve-cik --json·SEC_UA 영문 검사·일반 단어 회사 news_queries·CIK 기입) + 정리(훅 쓰기 형태·render_md 130행·Muse 표지)
+- [ ] 레인 J: 판단 수정 기능 (task `task_ae3a1a74216f`, dispatch `ctx_79ab07e8848b`, 터미널 `term_8c16cca4-3da4-4158-a9aa-4c535c8a3ec7`) + 수집기 수정(NaN 종가·회사별 실패·resolve-cik --json·SEC_UA 영문 검사·일반 단어 회사 news_queries·CIK 기입) + 정리(훅 쓰기 형태·render_md 130행·Muse 표지)
 - [ ] 레인 K: 문서(첫 방어선 위치 문구, 판단 수정 사용법)
