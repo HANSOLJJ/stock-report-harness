@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 # AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / approve / revoke / status / resolve-cik
 """Usage:
-  python scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
-  python scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
-  python scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title "..." --request "..." [--purpose "..."] [--companies a,b] [--decision C-16=hold --rationale "..." --by NAME] [--force]
-  python scripts/scorecard_cli.py init <slug> --from-run <prior_slug> [--add-companies a,b] [--title "..." --request "..." --as-of ... --rule v1.7 --decision C-16=hold --no-carry-decisions]
-  python scripts/scorecard_cli.py collect <slug> [--company a,b] [--kind news|filings|prices|all] [--since YYYY-MM-DD] [--forms 8-K,10-Q] [--locale en-US] [--from-file PATH] [--dry-run]
-  python scripts/scorecard_cli.py research <slug> [--no-register]
-  python scripts/scorecard_cli.py calculate <slug>
-  python scripts/scorecard_cli.py draft <slug>
-  python scripts/scorecard_cli.py review-template <slug> [--force]
-  python scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
-  python scripts/scorecard_cli.py summary <slug> --json
-  python scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
-  python scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."] [--via browser|terminal]   (사람 셸에서만)
-  python scripts/scorecard_cli.py revoke <slug> --by NAME --note "..."                              (사람 셸에서만)
-  python scripts/scorecard_cli.py status <slug>
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title "..." --request "..." [--purpose "..."] [--companies a,b] [--decision C-16=hold --rationale "..." --by NAME] [--force]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py init <slug> --from-run <prior_slug> [--add-companies a,b] [--title "..." --request "..." --as-of ... --rule v1.7 --decision C-16=hold --no-carry-decisions]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py collect <slug> [--company a,b] [--kind news|filings|prices|all] [--since YYYY-MM-DD] [--forms 8-K,10-Q] [--locale en-US] [--from-file PATH] [--dry-run]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py research <slug> [--no-register]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate <slug>
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py draft <slug>
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py review-template <slug> [--force]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py summary <slug> --json
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."] [--via browser|terminal]   (사람 셸에서만)
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py revoke <slug> --by NAME --note "..."                              (사람 셸에서만)
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py status <slug>
 
 init·collect·research·calculate·draft·review-template 과 에이전트 세션의 confirm 은 실행 잠금(output/<slug>/.lock)을
 검사·기록한다. 다른 소유자의 잠금이면 거부하고 --take-lock 으로 인수한다.
-  python scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply]
 
-build 는 기존 명령 `python scripts/build_report.py <slug>` 가 report_type 으로 분기한다.
+build 는 기존 명령 `uv run --frozen python -X utf8 scripts/build_report.py <slug>` 가 report_type 으로 분기한다.
 """
 from __future__ import annotations
 
@@ -39,16 +39,6 @@ def _claim(args: argparse.Namespace, stage: str) -> None:
     from scorecard.stages import claim_lock
 
     claim_lock(args.slug, stage, take_lock=args.take_lock)
-
-
-def _refuse_agent_session(action: str) -> None:
-    """승인·취소는 사람 행위다. 에이전트 세션이면 CLI 계층에서 거부한다. stages 의 승인 함수 자체는 막지 않는다(테스트가 부른다)."""
-    from scorecard.stages import agent_session_markers
-
-    markers = agent_session_markers()
-    if markers:
-        raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 {action}할 수 없다. "
-                          "사람이 `node server.js --approvals` 승인 페이지에서 한다")
 
 
 def cmd_add_company(args: argparse.Namespace) -> int:
@@ -140,9 +130,11 @@ def cmd_init(args: argparse.Namespace) -> int:
     # 2026-09-21 ADD-03. 제목은 실행마다 달라야 한다. 이어받기에서 기본값으로 떨어지면 두 실행이 같은 제목을 갖는다.
     if args.from_run and not args.title:
         print(f"[경고] --title 을 주지 않아 이전 실행 {args.from_run} 의 제목을 그대로 쓴다. 실행마다 제목을 달리하는 편이 낫다")
+    from scorecard.engine import run_dir
     from scorecard.stages import claim_lock
 
     claim_lock(args.slug, "init", take_lock=args.take_lock, write=False)
+    had_approval = args.force and (run_dir(args.slug) / "approval.json").is_file()
     paths = init_run(
         args.slug,
         as_of=args.as_of,
@@ -163,10 +155,12 @@ def cmd_init(args: argparse.Namespace) -> int:
     claim_lock(args.slug, "init", take_lock=args.take_lock)
     for name, path in paths.items():
         print(f"{name}: {rel(path)}")
+    if had_approval:   # 에이전트 세션은 init_run 이 거부했다. 여기 오는 것은 사람 세션이다(2026-10-01 레인 H, F-1)
+        print("[경고] 승인된 실행을 --force 로 덮어써 승인 기록이 지워졌다(approval.json 삭제). 다시 리뷰한 뒤 사람이 승인 페이지에서 승인해야 한다")
     if args.from_run:
         print(f"다음: research 로 새 기업만 조사한 뒤 "
-              f"python scripts/scorecard_cli.py diff {args.slug} --against {args.from_run} 으로 기존 기업 불변을 확인한다")
-    print(f"다음: python scripts/scorecard_cli.py collect {args.slug} → 후보 선별 → research {args.slug}")
+              f"uv run --frozen python -X utf8 scripts/scorecard_cli.py diff {args.slug} --against {args.from_run} 으로 기존 기업 불변을 확인한다")
+    print(f"다음: uv run --frozen python -X utf8 scripts/scorecard_cli.py collect {args.slug} → 후보 선별 → research {args.slug}")
     return 0
 
 
@@ -188,7 +182,7 @@ def cmd_collect(args: argparse.Namespace) -> int:
                 print(f"    {url}")
     if out.get("candidates"):
         print(f"candidates: {rel(out['candidates'])}")
-    print(f"다음: 후보를 선별해 evidence/evidence.json·triggers.json 을 쓴 뒤 python scripts/scorecard_cli.py research {args.slug}")
+    print(f"다음: 후보를 선별해 evidence/evidence.json·triggers.json 을 쓴 뒤 uv run --frozen python -X utf8 scripts/scorecard_cli.py research {args.slug}")
     return 0
 
 
@@ -197,7 +191,7 @@ def cmd_research(args: argparse.Namespace) -> int:
 
     _claim(args, "research")
     print(f"research: {rel(research(args.slug, register=not args.no_register))}")
-    print(f"다음: python scripts/scorecard_cli.py calculate {args.slug}")
+    print(f"다음: uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate {args.slug}")
     return 0
 
 
@@ -214,7 +208,7 @@ def cmd_calculate(args: argparse.Namespace) -> int:
     for item in results["population"]["incomplete"]:
         reasons = "; ".join(f"{p['factor']} {p['status']}" + (f"({p['decision_id']})" if p.get("decision_id") else "") for p in item["reasons"])
         print(f"  -- {item['display_name']:<20} 미완료: {reasons}")
-    print(f"다음: python scripts/scorecard_cli.py draft {args.slug}")
+    print(f"다음: uv run --frozen python -X utf8 scripts/scorecard_cli.py draft {args.slug}")
     return 0
 
 
@@ -223,7 +217,8 @@ def cmd_draft(args: argparse.Namespace) -> int:
 
     _claim(args, "draft")
     print(f"draft: {rel(draft(args.slug))}")
-    print(f"다음: python scripts/scorecard_cli.py review-template {args.slug} → 4-way 리뷰 → approve")
+    print(f"다음: uv run --frozen python -X utf8 scripts/scorecard_cli.py review-template {args.slug} → 4-way 리뷰 → "
+          "승인 대기 보고(사람이 승인 페이지에서 승인한다)")
     return 0
 
 
@@ -237,18 +232,18 @@ def cmd_review_template(args: argparse.Namespace) -> int:
 
 
 def cmd_approve(args: argparse.Namespace) -> int:
+    """에이전트 세션 거부는 `stages.approve` 본체가 한다(2026-10-01 레인 H, F-2)."""
     from scorecard.stages import approve
 
-    _refuse_agent_session("승인")
     print(f"approval: {rel(approve(args.slug, approved_by=args.by, note=args.note, via=args.via))}")
-    print(f"다음: python scripts/build_report.py {args.slug}")
+    print(f"다음: uv run --frozen python -X utf8 scripts/build_report.py {args.slug}")
     return 0
 
 
 def cmd_revoke(args: argparse.Namespace) -> int:
+    """에이전트 세션 거부는 `stages.revoke` 본체가 한다(2026-10-01 레인 H, F-2)."""
     from scorecard.stages import revoke
 
-    _refuse_agent_session("승인 취소")
     print(f"revoked: approval.json 삭제, 기록 {rel(revoke(args.slug, by=args.by, note=args.note))}")
     print("다음: 다시 검토한 뒤 승인 페이지에서 승인한다")
     return 0
@@ -271,7 +266,7 @@ def cmd_confirm(args: argparse.Namespace) -> int:
         if out[key]:
             print(f"  {key}: {', '.join(out[key])}")
     print(f"evidence 해시가 바뀌었다({out['evidence_hash'][:16]}…). calculate → draft → review 를 다시 돌린다: "
-          f"python scripts/scorecard_cli.py calculate {args.slug}")
+          f"uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate {args.slug}")
     return 0
 
 

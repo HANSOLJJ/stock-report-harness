@@ -94,7 +94,7 @@ class FlowBase(unittest.TestCase):
 class SummaryShapeTest(FlowBase):
     def test_key_structure_equals_fixture(self):
         self.ready()
-        stages.approve(SLUG, approved_by="user", via="browser")
+        stages.approve(SLUG, approved_by="user", via="browser", allow_agent_session=True)
         fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))
         self.assertEqual(sorted(key_paths(stages.summary(SLUG))), sorted(key_paths(fixture)))
 
@@ -212,7 +212,7 @@ class ConfirmTest(FlowBase):
 class ApproveRevokeTest(FlowBase):
     def test_end_to_end(self):
         self.ready()
-        stages.approve(SLUG, approved_by="user", via="browser")
+        stages.approve(SLUG, approved_by="user", via="browser", allow_agent_session=True)
         approval = validate_approval(load_json_strict(self.approval_path), SLUG)
         self.assertEqual(approval["approved_via"], "browser")
         self.assertEqual(sorted(approval["hashes"]), sorted(stages.current_hashes(SLUG)))
@@ -221,7 +221,7 @@ class ApproveRevokeTest(FlowBase):
         stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="user")
         self.assertEqual(stages.summary(SLUG)["approval"], {"exists": True, "valid": False, "approved_by": "user", "approved_at": approval["approved_at"]})
 
-        log = stages.revoke(SLUG, by="user", note="근거 확정으로 해시가 바뀜")
+        log = stages.revoke(SLUG, by="user", note="근거 확정으로 해시가 바뀜", allow_agent_session=True)
         self.assertFalse(self.approval_path.exists())
         lines = log.read_text(encoding="utf-8").splitlines()
         self.assertEqual(len(lines), 1)
@@ -233,10 +233,10 @@ class ApproveRevokeTest(FlowBase):
 
     def test_via_default_and_invalid(self):
         self.ready()
-        stages.approve(SLUG, approved_by="user")
+        stages.approve(SLUG, approved_by="user", allow_agent_session=True)
         self.assertEqual(load_json_strict(self.approval_path)["approved_via"], "terminal")
         with self.assertRaisesRegex(SchemaError, "via"):
-            stages.approve(SLUG, approved_by="user", via="agent")
+            stages.approve(SLUG, approved_by="user", via="agent", allow_agent_session=True)
         base = load_json_strict(self.approval_path)
         with self.assertRaises(SchemaError):
             validate_approval({**base, "approved_via": "agent"}, SLUG)
@@ -249,18 +249,18 @@ class ApproveRevokeTest(FlowBase):
 
     def test_revoke_needs_note_and_existing_approval(self):
         with self.assertRaisesRegex(SchemaError, "취소할 승인이 없다"):
-            stages.revoke(SLUG, by="user", note="n")
+            stages.revoke(SLUG, by="user", note="n", allow_agent_session=True)
         self.ready()
-        stages.approve(SLUG, approved_by="user")
+        stages.approve(SLUG, approved_by="user", allow_agent_session=True)
         for by, note in (("user", ""), ("user", "  "), ("", "n")):
             with self.subTest(by=by, note=note), self.assertRaises(SchemaError):
-                stages.revoke(SLUG, by=by, note=note)
+                stages.revoke(SLUG, by=by, note=note, allow_agent_session=True)
         self.assertTrue(self.approval_path.exists())
         self.assertFalse((self.box.run_dir / "revocations.jsonl").exists())
 
     def test_cli_revoke_refused_in_agent_session(self):
         self.ready()
-        stages.approve(SLUG, approved_by="user")
+        stages.approve(SLUG, approved_by="user", allow_agent_session=True)
         with human_env(ORCA_AGENT_LAUNCH_TOKEN="x"):
             out = self.cli("revoke", SLUG, "--by", "user", "--note", "n", code=1)
         self.assertIn("에이전트 세션", out)
