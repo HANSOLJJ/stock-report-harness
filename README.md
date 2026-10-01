@@ -100,14 +100,14 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 | 종류 | 무엇 | 위치 |
 | --- | --- | --- |
-| 기준 | 무엇을 보고 몇 점을 줄지 | 사람용 `AI_company_analysis_factor/` (채점규칙 · 별표 A~J) · 기계용 `scorecard/rules/v1.7.json` (새 실행은 `v1.8.json`) |
+| 기준 | 무엇을 보고 몇 점을 줄지 | 사람용 `docs/scorecard/rules/` (채점규칙 v1.5·v1.7 · 별표 A~J) · 기계용 `scorecard/rules/v1.7.json` (새 실행은 `v1.8.json`) · v1.5 원천 자료 `docs/scorecard/source/` |
 | 입력 | 공시 숫자와 사람 판단, 근거 | `output/<run_id>/observations.json` · `judgments.json` · `sources.json` · `evidence/evidence.json` · `triggers.json` |
 | 계산 | 입력에 기준을 적용하는 코드 | `scripts/scorecard/` (`calc_f6_params.py` · `calc_f9.py` · `calc_qual.py` · `render_*.py` · `validate.py`) |
 | 지시 | 에이전트의 작업 순서와 금지 사항 | `AGENTS.md` · `.claude/skills/score-*` · `.claude/agents/` |
 
 점수는 기준·입력·계산 셋만으로 결정됩니다. 지시 문서는 일하는 순서를 적은 안내서이고 점수에 영향을 주지 않습니다.
 
-사람용 규칙 문서는 v1.7(2026-09-21)이 최신이고 `AI_company_analysis_factor/` 와 `docs/scorecard/rules/` 에 있습니다. 기계용 v1.8 은 v1.7 에서 원천 허용 목록(`sources`)만 뺀 개정이라, 사람용 문서는 v1.7 을 그대로 씁니다.
+사람용 규칙 문서는 v1.7(2026-09-21)이 최신이고 `docs/scorecard/rules/` 에 있습니다. 기계용 v1.8 은 v1.7 에서 원천 허용 목록(`sources`)만 뺀 개정이라, 사람용 문서는 v1.7 을 그대로 씁니다. v1.5 기준선의 원천 자료(채점표 HTML·MD, 자동화 HANDOVER, 자동화 구현계획)는 `docs/scorecard/source/` 에 받은 바이트 그대로 보관합니다. 승인된 실행의 `sources.json` 이 이 파일들의 sha256 을 출처로 기록하므로 내용을 고치지 않습니다. 2026-10-01 이전 기록에 나오는 `AI_company_analysis_factor/` 는 이 두 폴더의 옛 위치입니다.
 
 ## 지문으로 묶여 있습니다
 
@@ -152,8 +152,7 @@ Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree
 5. **별표를 리포트에 싣기** — 본문이 별표를 46번 가리키지만 내용은 리포트에 없습니다.
 6. **정성 판단의 제안 흐름** — 고치는 창구(`judge`, 승인 페이지 8절)는 생겼습니다. 에이전트가 질문별로 답·근거·출처를 조사해 제안하고 사용자가 검토 화면에서 동의하는 앞단은 아직 검토 중입니다.
 7. **다음 규칙 개정 방향** — 점수를 직접 입력하는 ① ② ④ ⑧ 을 ③ ⑤ ⑦ 처럼 정해진 질문으로 쪼개고, 질문마다 공시에서 잴 수 있는 값(고객 집중도 · 벤치마크 순위 · 출하 여부 · 수주잔고)을 붙입니다.
-8. **규칙 폴더를 `v1.5/` · `v1.7/` 로 정리** — `scripts/scorecard/baseline_import.py` 와 테스트 둘이 지금 경로를 직접 참조하므로 경로 수정과 함께 해야 합니다.
-9. **Antigravity·Muse 훅 연결** — 저장소 밖 전역 설정을 고쳐야 하므로 차단 표현·페이로드 필드·작업 폴더를 확인한 뒤 따로 합니다. 지금은 Claude Code·Codex 만 훅이 연결돼 있습니다.
+8. **Antigravity·Muse 훅 연결** — 저장소 밖 전역 설정을 고쳐야 하므로 차단 표현·페이로드 필드·작업 폴더를 확인한 뒤 따로 합니다. 지금은 Claude Code·Codex 만 훅이 연결돼 있습니다.
 
 기업을 추가할 때는 `/score-add-company` 로 레지스트리에 등록하고 `/score-extend`(`init --from-run`)로 이전 실행을 이어받아 새 기업만 조사합니다. 기존 기업이 움직이지 않았다는 사실은 `diff` 가 기계로 증명합니다.
 

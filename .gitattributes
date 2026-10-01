@@ -17,7 +17,10 @@ output/ai-scorecard-2026-09-baseline/research.md text eol=lf
 output/ai-scorecard-2026-09-baseline/review.md text eol=lf
 # obsreg 의 report.html 은 Windows 빌드가 CRLF 로 썼다(해시 대상 아님). 원본 바이트를 그대로 유지한다.
 output/ai-scorecard-2026-09-obsreg/report.html text eol=crlf
-AI_company_analysis_factor/** -text
+# v1.5 원천 자료와 사람용 규칙 문서는 받은 바이트 그대로 둔다. 승인된 실행의 sources.json 이 이 파일들의 sha256 을 출처로 기록한다.
+# 2026-10-01 AI_company_analysis_factor/ 에서 옮겨 왔다(옛 규칙 `AI_company_analysis_factor/** -text`).
+docs/scorecard/source/** -text
+docs/scorecard/rules/** -text
 
 # 셸 스크립트는 Windows checkout 에서도 LF 로 둔다. CRLF 면 WSL bash 가 `exit 0\r` 을 숫자로 읽지 못해 훅이 실패한다.
 *.sh text eol=lf

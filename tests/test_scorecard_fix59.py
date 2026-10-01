@@ -22,7 +22,7 @@ RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
 RUN_DIR = ROOT / "output" / SLUG
 SRC = ROOT / "scripts" / "scorecard"
-V15 = Path("E:/sourcecode/01_side_project/stock-report-harness/AI_company_analysis_factor/AI기업_채점규칙_v1.5.md")
+V15 = ROOT / "docs" / "scorecard" / "rules" / "AI기업_채점규칙_v1.5.md"  # 2026-10-01 원천 자료를 docs/ 로 옮김
 
 
 def load(name: str) -> dict:

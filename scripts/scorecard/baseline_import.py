@@ -8,7 +8,8 @@ from typing import Any
 
 from .schema import METRICS, SchemaError, resolve_company_id, sha256_file, write_json
 
-DEFAULT_SOURCE_DIR = Path(r"E:/sourcecode/01_side_project/stock-report-harness/AI_company_analysis_factor")
+# 2026-10-01: 원천 자료를 AI_company_analysis_factor/ 에서 docs/scorecard/source/ 로 옮기며 절대 경로를 저장소 기준으로 바꿨다.
+DEFAULT_SOURCE_DIR = Path(__file__).resolve().parents[2] / "docs" / "scorecard" / "source"
 DEFAULT_HTML = DEFAULT_SOURCE_DIR / "AI기업_채점표_v1.5.html"
 DEFAULT_MD = DEFAULT_SOURCE_DIR / "AI기업_채점표_v1.5.md"
 BASELINE_ID = "v1.5"

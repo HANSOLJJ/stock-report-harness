@@ -1,7 +1,7 @@
 # AI 기업 분석 framework — 구조 확장 지침
 
 - 작성일 2026-09-08. `design-guideline.md`(도메인 명세)의 짝이다. 처리하지 않고 남겨둔 항목은 `open-items.md` 에 모은다. 이 문서는 요구 ID(D·F·Q·T·C)를 실제 모듈·파일·테스트에 연결한다.
-- 기준 커밋 `0df7d6e`, 브랜치 `HANSOLJJ/worker`. 원본 규칙·계획 문서(`AI_company_analysis_factor/`)는 읽기 전용 참고 자료이고, git 이 그 안 6개 파일을 추적한다. SHA-256 은 design-guideline 2.1절과 일치한다.
+- 기준 커밋 `0df7d6e`, 브랜치 `HANSOLJJ/worker`. 원본 규칙·계획 문서는 읽기 전용 참고 자료이고, git 이 6개 파일을 추적한다. 2026-10-01 에 옛 `AI_company_analysis_factor/` 에서 규칙 문서 둘은 `docs/scorecard/rules/`, 원천 자료 넷은 `docs/scorecard/source/` 로 옮겼다(바이트 그대로). SHA-256 은 design-guideline 2.1절과 일치한다.
 
 ## 1. 유형 분기와 공통 진입점
 

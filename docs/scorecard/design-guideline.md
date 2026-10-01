@@ -27,7 +27,7 @@ AI 기업의 경쟁 구조와 재무 위험을 동일한 규칙으로 반복 분
 
 ### 2.1 전체 확인 범위
 
-사용자가 지정한 `E:\sourcecode\01_side_project\stock-report-harness\AI_company_analysis_factor`(읽기 전용 참고 자료이며, 지금은 git 이 그 안 6개 파일을 추적한다)의 Markdown 5개, 총 2,469줄을 모두 읽었다. 요청에 나온 파일명은 실제 폴더에서 다음 이름으로 확인됐다.
+사용자가 지정한 `E:\sourcecode\01_side_project\stock-report-harness\AI_company_analysis_factor`(읽기 전용 참고 자료이며, 2026-10-01 부터 규칙 문서는 `docs/scorecard/rules/`, 원천 자료는 `docs/scorecard/source/` 에서 git 이 추적한다)의 Markdown 5개, 총 2,469줄을 모두 읽었다. 요청에 나온 파일명은 실제 폴더에서 다음 이름으로 확인됐다.
 
 | 원본 ID | 파일 | 줄 수 | 활용 |
 |---|---|---:|---|
