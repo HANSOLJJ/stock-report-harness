@@ -60,7 +60,7 @@
 - [x] SEC_UA 환경변수 (원본 폴더 루트 로컬 설정 파일, 2026-10-01)
 - [ ] SPCX CIK 확인 (1181412 후보)
 - [ ] 옛 obsreg `report.html` 은 감사 기록 링크가 `<slug>-audit.md` 라 묶음에서 깨진다. 승인이 유효하므로 빌드를 다시 돌리면 `audit.md` 링크로 재생성된다(사용자 확인 뒤)
-- [ ] 남은 unittest 15건은 `validation/f6-avail-15/_raw` 등 원자료가 워크트리에 없어서 난다. main 병합 뒤 원본 폴더에서 전부 통과하는지 확인
+- [x] 남은 unittest 15건은 `validation/f6-avail-15/_raw` 등 원자료가 워크트리에 없어서 난다. main 병합 뒤 원본 폴더에서 전부 통과하는지 확인
 - [x] 레인 E 조율자 재현(병합 뒤): 두 실행 approval_valid true, recompute obsreg True·baseline 기존 값 불변, output/·scorecard/ 변경 0, unittest 1030건 중 실패 1·오류 14(원자료 부재 집합과 동일), node 9·check 통과
 - [x] 4.3: 초안(`render_draft`)과 HTML 의 트리거 절이 `triggers.json` 이 있으면 그것을 그리게 한다(지금은 research 만). 계획 3단계 "렌더러는 이 파일이 있으면 legacy 39건 대신 그린다"
 - [ ] baseline 은 기존 recompute 불일치로 재빌드가 멈춘다(승인 검사는 통과). 감사 링크 재빌드는 obsreg 만 해당
@@ -72,7 +72,7 @@
 - [ ] 에이전트 표지 환경변수는 Claude Code 세션 하나만 조사했다. Codex·Antigravity·Muse 세션은 운영 단계 배선 때 확인
 - [x] 레인 G (Sonnet) 4.5·4.6 디스패치 완료 → 검증 → 병합. task `task_39b14e9bae11`, dispatch `ctx_2e2d5d341c32`, 워크트리 `…/lane-G`, 터미널 `term_ef689690-3b13-42c5-b514-5d9caea97241`
 - [x] 최종 통합 재현(레인 G 병합 뒤): 두 실행 approval_valid true, unittest 1085건 중 실패 1·오류 14와 pytest 실패 15(전부 원자료 부재 같은 집합), node 10·check·validate:memory 통과, 소유 문서 옛 경로 0건, 에이전트 승인 지시 문구 0건
-- [ ] main 병합과 fork push (사용자 확인 뒤)
+- [x] main 병합과 fork push — main 병합 완료(2026-10-01, fast-forward 1d574e5). push 는 미실시 (사용자 확인 뒤)
 - [x] 레인 V (Fable) 독립 검증 완료·보고서 병합. 새 결함 7건(medium 3: init --force 가 승인 실행 파괴, 승인 거부가 CLI 계층에만 있어 stages 함수 import 로 우회, scorecard/baseline 이 승인 해시·보호 밖 재빌드 입력 / low 4: locale 매핑, CLI 다음 안내·plan 템플릿 흐름·python 접두, 문서 드리프트, 읽기 전용 명령 오탐). 하드 블록 없음
 - [x] 레인 V 발견 F-1~F-7 수정 여부 사용자 결정 — 전부 수정(2026-10-01)
 - [x] 레인 H (Opus) F-1·F-2·F-3·F-4·F-7. task `task_bbe840d2d970`, dispatch `ctx_0cde83d7b3e9`, 터미널 `term_519514ec-7c3f-4b70-98b7-32d37d11bf53`
@@ -106,3 +106,6 @@
 - [x] 레인 P 병합: 문서·스킬 9곳 재실행 순서 수정, 조율자 재검색으로 open-items 54행 1곳 추가 수정(소유 목록 누락)
 - [x] 레인 N 조율자 재현(병합 뒤): unittest 1168건 OK(건너뛰기 13), 두 실행 approval_valid true·recompute 불변, check·node 15 통과. 훅 스모크: 승인 실행 calculate·judge, 대문자 승인 파일 쓰기, 변수·bash -c·PowerShell 변수 쓰기 모두 exit 2. 미승인 실행 calculate·승인 파일 읽기는 통과. 조율자 세션 훅도 보호 경로를 담은 python 명령을 막음(규칙 작동 확인)
 - [ ] main 병합 뒤 별도 과제: 레인 V2 low(V2-6~V2-13), 레인 N 소유 밖 발견 4건(build_report 의 SchemaError 추적 출력, baseline_import 본체 무검사, compare.approval_state 가 임의 approval_id 에 diff 전체 실패, init --force 승인 삭제 미기록)과 훅의 경로 조각 결합 한계
+- [x] 원본 폴더 정리(사용자 지시): plan·drafts·output 의 중복 사본과 옛 빌드, Ciena 종목 산출물 19개, backup/2026-09-21-integrate(57개), .omx, docs/개선점.md 삭제. memory_context.py 서식 수정분은 패치로 보관 뒤 되돌림
+- [x] 원본 폴더 main 병합 뒤 검증: 두 실행 approval_valid true, unittest 1168건 OK(건너뛰기 0, 원자료 테스트까지 실행), pytest 1168 통과, check·node 15·validate:memory 통과
+- [ ] fork(origin) main push — 사용자 확인 대기. Orca 새 워크트리는 origin/main 기준이라 push 해야 다음 워크트리가 이번 결과에서 시작
