@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from scorecard import compare, engine, render_html, stages, validate  # noqa: E402
-from scorecard.schema import SchemaError, load_json_strict, validate_approval  # noqa: E402
+from scorecard.schema import SchemaError, approval_id_for, load_json_strict, validate_approval  # noqa: E402
 from scorecard.stages import approval_mismatches, current_hashes  # noqa: E402
 
 BASELINE = "ai-scorecard-2026-09-baseline"
@@ -77,8 +77,8 @@ class ApprovalRuleTest(unittest.TestCase):
         self.assertEqual(approval_mismatches({k: k * 4 for k in SIX if k != "draft"}, self.CUR), ["draft"])
 
     def test_validate_approval_optional_keys(self):
-        base = {"schema": "scorecard.approval/1", "run_id": "r", "approval_id": "x", "approved_by": "u",
-                "approved_at": "2026-09-30", "hashes": {k: "h" for k in SIX}}
+        base = {"schema": "scorecard.approval/1", "run_id": "r", "approval_id": approval_id_for("r", {k: "h" for k in SIX}),
+                "approved_by": "u", "approved_at": "2026-09-30", "hashes": {k: "h" for k in SIX}}
         validate_approval(base, "r")
         validate_approval({**base, "hashes": {**base["hashes"], "sources": "s", "evidence": "e", "triggers": "t"}}, "r")
         with self.assertRaises(SchemaError):

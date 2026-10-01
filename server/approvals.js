@@ -820,7 +820,7 @@ function createApprovals(options = {}) {
               pageOptions.judgeFactor = cliArgs[5];
               pageOptions.judgeCompany = cliArgs[3];
               if (cliResult && cliResult.exitCode === 0) {
-                pageOptions.notice = '판단 해시가 바뀌었다 — 에이전트에게 다시 계산·리뷰를 시킨 뒤 새로고침해 승인한다. 지금 페이지의 점수는 아직 수정 전 값이다.';
+                pageOptions.notice = '판단 해시가 바뀌었다 — 에이전트에게 research → calculate → draft → review 를 다시 돌리게 한 뒤 새로고침해 승인한다. 지금 페이지의 점수는 아직 수정 전 값이다.';
               }
             }
 

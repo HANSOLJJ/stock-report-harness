@@ -137,7 +137,8 @@ class HistoryAndHashTest(JudgeBase):
         self.ready()
         stages.approve(SLUG, approved_by="user", via="browser", allow_agent_session=True)
         before = stages.current_hashes(SLUG)
-        out = self.judge("nvidia", "F3", {"imitation": "pass"})
+        with human_env():   # 유효 승인 실행의 판단 수정은 승인 페이지(사람 세션)만 한다(2026-10-01 레인 N, V2-1)
+            out = self.judge("nvidia", "F3", {"imitation": "pass"})
         after = stages.current_hashes(SLUG)
         self.assertEqual(sorted(k for k in before if before[k] != after.get(k)), ["judgments"])
         self.assertEqual(out["judgments_hash"], after["judgments"])
@@ -179,7 +180,7 @@ class JudgeCliTest(JudgeBase):
         with human_env():
             out = self.cli("judge", SLUG, "--company", "nvidia", "--factor", "F5", "--set", "A=2", "--set", "H=-1",
                            "--evidence", "-로 시작하는 근거도 받는다", "--evidence=둘째 근거", "--reason", "CLI 시험", "--by", "사용자")
-        self.assertIn("calculate → draft → review", out)
+        self.assertIn("research → calculate → draft → review", out)
         new = self.item("nvidia", "F5")
         self.assertEqual((new["inputs"]["A"], new["inputs"]["H"], new["evidence"]), (2, -1, ["-로 시작하는 근거도 받는다", "둘째 근거"]))
         payload = self.box.dir / "changes.json"

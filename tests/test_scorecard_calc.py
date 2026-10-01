@@ -532,10 +532,11 @@ class TestReviewRegressions(unittest.TestCase):
         check([{**obs("fcf_ttm", -1.0), "period": {"start": "2026-06-30", "end": "2026-06-30"}}])  # 같은 날은 허용
 
     def test_review3_approved_by_must_be_nonblank(self):
-        from scorecard.schema import validate_approval
+        from scorecard.schema import approval_id_for, validate_approval
 
-        base = {"schema": "scorecard.approval/1", "run_id": "r", "approval_id": "x", "approved_by": "noble",
-                "approved_at": "2026-09-08", "hashes": {k: "h" for k in ("rules", "observations", "judgments", "run", "results", "draft")}}
+        hashes = {k: "h" for k in ("rules", "observations", "judgments", "run", "results", "draft")}
+        base = {"schema": "scorecard.approval/1", "run_id": "r", "approval_id": approval_id_for("r", hashes), "approved_by": "noble",
+                "approved_at": "2026-09-08", "hashes": hashes}
         validate_approval(dict(base), "r")
         for bad in ("", "   ", None, 7):
             with self.assertRaises(SchemaError):

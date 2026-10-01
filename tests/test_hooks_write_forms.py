@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import unittest
 
-from tests.test_hooks import TempRootCase, guard, shell
+from tests.test_hooks import TempRootCase, guard, shell, write
 
 OBS = "output/ai-scorecard-2026-09-obsreg"
 APPROVAL = f"{OBS}/approval.json"
@@ -122,6 +122,89 @@ class WriteFormsTest(TempRootCase):
                 "rm -rf output/ai-scorecard-2026-10-new/*",
                 "cat scorecard/rules/*.json",
             ], tool=tool)
+
+    def test_old_blocked_forms_blocked_again(self):
+        # 2026-10-01 레인 N(V2-4). 레인 H 이전(51873f8)에는 막히던 쓰기 형태. 경로가 변수·명령 치환·따옴표·중첩 셸 안에 있다.
+        P = OBS
+        bash = [
+            f"RUN={P}; sed -i s/a/b/ $RUN/draft.md",
+            f'RUN={P} && rm -rf "$RUN"',
+            f"export RUN={P}; echo x > $RUN/draft.md",
+            f"RUN={P}; mv $RUN/draft.md $RUN/draft.bak",
+            f"RUN={P}; cp /tmp/x $RUN/draft.md",
+            f"RUN={P}; truncate -s 0 $RUN/results.json",
+            f"rm $(echo {P}/draft.md)",
+            f"rm `echo {P}/draft.md`",
+            f'sh -c "echo x > {P}/draft.md"',
+            f'bash -c "echo x > {P}/draft.md"',
+            f"awk 'BEGIN{{print \"x\" > \"{P}/draft.md\"}}'",
+            f"echo x | dd of={P}/draft.md",
+            f'rm "{APPROVAL}"',
+        ]
+        self.assert_kinds("block", bash, tool="Bash")
+        ps = [
+            f"$run = '{P}'; 'x' > \"$run/draft.md\"",
+            f"$env:RUN = '{P}'; Remove-Item \"$env:RUN/draft.md\"",
+            f'powershell -Command "Set-Content {P}/draft.md x"',
+            f'pwsh -c "Remove-Item {P}/draft.md"',
+            f'cmd /c "del {P}\\draft.md"',
+            f"Set-Content -Path \"{RULE}\" -Value x",
+        ]
+        self.assert_kinds("block", ps, tool="PowerShell")
+
+    def test_reads_with_quotes_or_variables_still_pass(self):
+        # F-7 회귀 금지: 쓰기가 없거나 출력을 버리기만 하면 따옴표 안 보호 경로도 통과한다.
+        self.assert_kinds("allow", [
+            f"cat {APPROVAL}; echo done",
+            f'rg -n "approval.json" scripts 2>/dev/null',
+            f'rg -n "approval_id" {OBS} 2>&1',
+            f'git log --oneline -- "{OBS}"',
+            f'git commit -m "{APPROVAL} 처리 수정"',
+            f"RUN={OBS}; cat $RUN/draft.md",
+            f"cat {OBS}/results.json > /tmp/x.json",
+            f"cp -r {OBS} /tmp/obsreg-copy",
+            f'echo "done" > /tmp/log.txt',
+        ], tool="Bash")
+        self.assert_kinds("allow", [
+            f"Get-Content \"{APPROVAL}\"",
+            f"$p = '{OBS}'; Get-ChildItem $p",
+            f"Select-String -Path \"{BASELINE}\" -Pattern x 2>$null",
+        ], tool="PowerShell")
+
+
+class CaseInsensitiveTest(TempRootCase):
+    """2026-10-01 레인 N(V2-3). Windows 는 대소문자를 가리지 않으므로 보호 경로 대조도 가리지 않는다."""
+
+    def kind(self, payload: dict) -> str:
+        return guard.protect_sensitive_files(payload, root=self.root).kind
+
+    def test_case_variants_of_protected_paths_blocked_for_file_tools(self):
+        for rel in ("output/ai-scorecard-new/approval.json", "output/ai-scorecard-new/Approval.json",
+                    "output/ai-scorecard-new/approval.JSON", "output/ai-scorecard-new/APPROVAL.JSON",
+                    ".env", ".ENV", ".Env.local", ".GIT/config", "Scorecard/Rules/V1.7.json", "SCORECARD/history.CSV",
+                    "Scorecard/Baseline/v1.5/triggers.json", "Output/AI-Scorecard-2026-09-OBSREG/draft.md",
+                    "Docs/Finance-Style-Guide.md", ".GitHub/Workflows/ci.yml"):
+            for tool in ("Write", "Edit"):
+                with self.subTest(tool=tool, rel=rel):
+                    self.assertEqual(self.kind(write(str(self.root / rel), tool=tool)), "block")
+
+    def test_case_variants_blocked_for_shell_writes(self):
+        for tool in ("Bash", "PowerShell"):
+            for cmd in ("echo x > .ENV", "echo x > output/ai-scorecard-new/Approval.json", "rm Output/AI-Scorecard-2026-09-OBSREG/draft.md",
+                        "Set-Content -Path SCORECARD/history.csv -Value x", "cp x.json Scorecard/Rules/v1.7.json",
+                        "rm scorecard/RULES/V1.*.json"):
+                with self.subTest(tool=tool, cmd=cmd):
+                    self.assertEqual(self.kind(shell(tool, cmd)), "block")
+
+    def test_unprotected_case_lookalikes_pass(self):
+        for rel in ("output/ai-scorecard-new/approval-copy.json", "notes/env.md", "scorecard/rules/v1.8.json"):
+            with self.subTest(rel=rel):
+                self.assertEqual(self.kind(write(str(self.root / rel))), "allow")
+        self.assertEqual(self.kind(shell("Bash", "cat output/ai-scorecard-new/Approval.json")), "allow")
+
+    def test_folder_holding_case_variant_approval_is_covered(self):
+        self.put("output/ai-scorecard-2026-10-odd/Approval.json")
+        self.assertEqual(self.kind(shell("Bash", "rm -rf output/ai-scorecard-2026-10-odd")), "block")
 
 
 if __name__ == "__main__":

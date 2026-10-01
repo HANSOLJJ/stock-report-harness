@@ -175,12 +175,14 @@ _PROTECTED_FILES = [
     "scorecard/history.csv",
 ]
 _PROTECTED_LITERALS = [*_PROTECTED_FILES, *_PROTECTED_TREES, ".env", ".git", ".github/workflows"]
-_APPROVAL_FILE = re.compile(r"(^|/)approval\.json$")
-_APPROVAL_FILE_IN_CMD = re.compile(r"(?<![\w.-])approval\.json\b")
+# 2026-10-01 레인 N(V2-3): 보호 경로 대조는 대소문자를 가리지 않는다. Windows 파일 시스템은 `Approval.json`·`.ENV` 를
+# 같은 파일로 열고, 승인 검증은 `approval.json` 으로 읽는다.
+_APPROVAL_FILE = re.compile(r"(^|/)approval\.json$", re.I)
+_APPROVAL_FILE_IN_CMD = re.compile(r"(?<![\w.-])approval\.json\b", re.I)
 
 
 def _is_protected(path: str) -> bool:
-    path = path.replace("\\", "/")
+    path = path.replace("\\", "/").lower()
     return (
         path == ".env" or path.startswith(".env.") or path.startswith(".env/")
         or path == ".git" or path.startswith(".git/")
@@ -209,6 +211,23 @@ _GLOB_CHARS = set("*?[")
 _XARGS_VALUE_OPTS = {"-n", "-I", "-i", "-L", "-l", "-P", "-d", "-E", "-e", "-s", "-a"}
 _GIT_WRITE = {"checkout", "restore", "reset"}
 _INTERPRETER = re.compile(r"^(?:python(?:3(?:\.\d+)?)?|py|node)$")
+# 2026-10-01 레인 N(V2-4): 중첩 셸과 awk·dd 도 인자 안의 쓰기를 셸 단어로 가릴 수 없다. 인터프리터와 같이 보호 경로를 담기만 해도 막는다.
+_NESTED = {"bash", "sh", "zsh", "dash", "ksh", "fish", "powershell", "pwsh", "cmd", "awk", "gawk", "mawk", "nawk", "dd"}
+# 출력을 버리거나 다른 스트림으로 돌리는 리다이렉션 대상. 파일 쓰기가 아니다.
+_NULL_SINKS = {"/dev/null", "nul", "$null", "&1", "&2", "1", "2", "-"}
+# 쓰기 명령이 있을 때 경로가 숨는 자리: 따옴표 안, 명령 치환(`$(…)`·백틱), 변수 대입값(셸 `NAME=값`, PowerShell `$name = 값`).
+_QUOTED = re.compile(r"'([^']*)'|\"((?:[^\"\\]|\\.)*)\"")
+_SUBST = re.compile(r"\$\(([^()]*)\)|`([^`]*)`")
+_ASSIGN_VALUE = re.compile(r"(?:^|[\s;&|(])(?:export\s+|local\s+|readonly\s+|declare\s+(?:-\w+\s+)*)?[A-Za-z_][A-Za-z0-9_]*=(\S+)")
+_PS_ASSIGN_VALUE = re.compile(r"\$(?:env:)?[A-Za-z_][A-Za-z0-9_]*\s*=\s*([^;|\n]+)", re.I)
+
+
+def _indirect_mentions(cmd: str) -> list[str]:
+    """따옴표 안·명령 치환·변수 대입값에 나오는 보호 경로. 쓰기 명령이 있는 명령에서만 부른다(2026-10-01 레인 N, V2-4)."""
+    parts: list[str] = []
+    for rx in (_QUOTED, _SUBST, _ASSIGN_VALUE, _PS_ASSIGN_VALUE):
+        parts += [g for m in rx.finditer(cmd) for g in m.groups() if g]
+    return _protected_mentions(" ".join(parts))
 _PREFIX_WORDS = {"env", "command", "exec", "nohup", "time"}
 _CD_WORDS = {"cd", "pushd", "chdir", "set-location", "sl"}
 _SHELL_PUNCT = ";&|()<>\n"
@@ -217,7 +236,7 @@ _ASSIGN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
 
 def _protected_mentions(text: str) -> list[str]:
     """문자열에 나오는 보호 경로 리터럴과 approval.json."""
-    hits = [lit for lit in _PROTECTED_LITERALS if re.search(r"(?<![\w./-])" + re.escape(lit) + r"(?:/|\b)", text)]
+    hits = [lit for lit in _PROTECTED_LITERALS if re.search(r"(?<![\w./-])" + re.escape(lit) + r"(?:/|\b)", text, re.I)]
     if _APPROVAL_FILE_IN_CMD.search(text):
         hits.append("approval.json")
     return hits
@@ -267,14 +286,14 @@ def _covers_protected(path: Path, root: Path) -> str | None:
     if p == root or p in root.parents:
         return "저장소 루트 아래 전체"
     try:
-        rp = p.relative_to(root).as_posix()
+        rp = p.relative_to(root).as_posix().lower()
     except ValueError:
         return None
     for lit in _PROTECTED_LITERALS:
         if lit.startswith(rp + "/"):
             return lit
     if p.is_dir():
-        found = next(p.rglob("approval.json"), None)
+        found = next((f for f in p.rglob("*") if f.name.lower() == "approval.json"), None)
         if found is not None:
             return relpath(str(found), root)
     return None
@@ -285,7 +304,7 @@ def _glob_hits(target: str, base: Path, root: Path, *, covers: bool) -> list[str
     hits: list[str] = []
     rel_base = relpath(str(base), root)
     pattern = target if target.startswith("/") or rel_base in (".", "") else f"{rel_base}/{target}"
-    pat_parts = pattern.removeprefix("./").split("/")
+    pat_parts = pattern.removeprefix("./").lower().split("/")
     for anchor in _protected_anchors() if covers else _PROTECTED_LITERALS:
         parts = anchor.split("/")
         # 셸 글롭의 `*` 는 `/` 를 넘지 않는다. `**` 가 있을 때만 경로 전체를 한 번에 대조한다.
@@ -409,6 +428,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
     out: list[str] = []
     base = root
     parsed: list[tuple[list[str], list[str], Path]] = []
+    writes = False   # 명령 어딘가에 쓰기(변경 동사·파일로 가는 리다이렉션)가 있는가
     for seg in segments:
         words: list[str] = []
         targets: list[str] = []
@@ -417,6 +437,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
             if _is_redirect(seg[i]):
                 if ">" in seg[i] and i + 1 < len(seg):  # 입력 리다이렉션(`<`, heredoc)은 읽기다
                     targets.append(seg[i + 1])
+                    writes = writes or seg[i + 1].lower() not in _NULL_SINKS
                 i += 2
                 continue
             words.append(seg[i])
@@ -432,9 +453,10 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
         write = _write_command(words)
         if verb in _CD_WORDS and args:
             base = base / args[-1]
-        elif (verb == "uv" and args[:1] == ["run"]) or verb == "uvx" or _INTERPRETER.match(verb):
+        elif (verb == "uv" and args[:1] == ["run"]) or verb == "uvx" or _INTERPRETER.match(verb) or verb in _NESTED:
             out += _protected_mentions(" ".join(seg))
         elif write is not None:
+            writes = True
             targets += write[0]
             out += _target_hits(write[1], base, root, covers=True)
         elif verb == "xargs" and _write_command(_xargs_inner(words)) is not None:
@@ -442,6 +464,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
             # 보호 경로 언급과, 같은 명령의 다른 명령이 받은 경로(find·ls·git ls-files 의 시작 경로 등)가 보호 경로를
             # 품는지를 본다. 경로 인자가 없는 find·ls 는 현재 폴더를 훑는다.
             inner = _write_command(_xargs_inner(words))
+            writes = True
             out += _protected_mentions(cmd.replace("\\", "/"))
             targets += inner[0]
             out += _target_hits(inner[1], base, root, covers=True)
@@ -459,8 +482,13 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
                 else:
                     rest = rest[1:]
             if rest and rest[0] in _GIT_WRITE:
+                writes = True
                 out += _target_hits(rest[1:], git_base, root)
         out += _target_hits(targets, base, root)
+    # 2026-10-01 레인 N(V2-4): 쓰기가 있는 명령에서는 단어로 나눈 쓰기 대상 밖에 숨은 보호 경로도 막는다
+    # (`RUN=<보호 실행>; rm -rf "$RUN"`, `rm $(echo <보호 경로>)`). 읽기만 하는 명령은 여기에 오지 않는다(F-7).
+    if writes:
+        out += _indirect_mentions(cmd.replace("\\", "/"))
     return out
 
 
@@ -483,9 +511,72 @@ def _init_force_approved(cmd: str, root: Path) -> list[str]:
     return hits
 
 
+# 2026-10-01 레인 N(V2-1): 실행의 입력·산출물을 바꾸는 단계 명령. 맨 실행 이름도 `output/<이름>` 폴더로 풀어, 그 폴더에
+# 유효한 승인이 있으면 막는다. 무효 승인은 막지 않는다 — 사람이 승인 페이지에서 판단을 고친 뒤 에이전트가 다시 돌리는 흐름이다.
+_STAGE_WRITES = {"judge", "confirm", "calculate", "draft", "research", "review-template", "collect"}
+
+
+def _option_value(rest: list[str], name: str) -> str | None:
+    """argparse 처럼 줄여 쓴 옵션(`--k prices`, `--kind=prices`)의 값."""
+    for i, a in enumerate(rest):
+        key, sep, value = a.partition("=")
+        if len(key) >= 3 and key.startswith("--") and name.startswith(key):
+            return value if sep else (rest[i + 1] if i + 1 < len(rest) else "")
+    return None
+
+
+def _stage_changes_run(stage: str, rest: list[str]) -> bool:
+    """이 단계 명령이 실행 폴더의 승인 대상 파일을 바꾸는가. CLI 의 `protect_approved_run` 호출 조건과 같다."""
+    if stage == "review-template":
+        return any(len(a) >= 3 and "--force".startswith(a) for a in rest)
+    if stage == "collect":
+        if any(len(a) >= 3 and "--dry-run".startswith(a) for a in rest):
+            return False
+        return (_option_value(rest, "--kind") or "all") in ("prices", "all")
+    return stage in _STAGE_WRITES
+
+
+def _approval_is_valid(root: Path, name: str) -> bool:
+    """`output/<name>` 의 승인이 유효한가. 판정은 `scorecard.stages.approval_is_valid` 한 곳에 맡긴다(승인 해시 대조를
+    훅에 다시 쓰지 않는다). 판정하지 못하면 예외가 난다 — 호출자가 막는다."""
+    scripts = str(root / "scripts")
+    if scripts not in sys.path:
+        sys.path.insert(0, scripts)
+    from scorecard import stages
+    from scorecard.schema import load_json_strict
+
+    d = stages.run_dir(name)
+    if d.resolve() != (root / "output" / name).resolve():
+        raise RuntimeError(f"훅 루트의 output/{name} 와 scorecard 가 읽는 실행 폴더 {d} 가 다르다")
+    return stages.approval_is_valid(name, load_json_strict(d / "approval.json"))
+
+
+def _stage_on_approved(cmd: str, root: Path) -> list[str]:
+    """`scorecard_cli.py <단계> <실행>` 이 유효 승인 실행을 가리키면 그 이유들. 단계 명령일 때만 해시를 센다.
+
+    판정 중 예외는 여기서 잡아 막는다(fail-closed). `main` 까지 올라가면 fail-open 으로 통과되기 때문이다."""
+    hits: list[str] = []
+    for words in _shell_segments(cmd) or []:
+        for i, word in enumerate(words):
+            stage = words[i + 1] if i + 1 < len(words) else ""
+            if word.rsplit("/", 1)[-1] != "scorecard_cli.py" or not _stage_changes_run(stage, words[i + 2:]):
+                continue
+            for name in sorted({a.rstrip("/").rsplit("/", 1)[-1] for a in words[i + 2:] if not a.startswith("-")}):
+                d = root / "output" / name
+                try:
+                    if not name or not d.is_dir() or not any(n.lower() == "approval.json" for n in os.listdir(d)):
+                        continue
+                    if _approval_is_valid(root, name):
+                        hits.append(f"output/{name}: 승인이 유효한 실행에 {stage}")
+                except Exception as exc:  # noqa: BLE001 — 판정하지 못하면 막는다
+                    hits.append(f"output/{name}: 승인 유효성을 판정하지 못함({type(exc).__name__}: {exc}) — {stage}")
+    return hits
+
+
 # 승인·취소는 사람 행위다. 변경 기호가 없어도 명령 문자열에 있으면 막는다. confirm 은 막지 않는다 —
 # 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 한다.
 _APPROVAL_CMD = re.compile(r"scorecard_cli\.py\s+(?:approve|revoke)\b|stages\.(?:approve|revoke)\b")
+_IMPORT_BASELINE = re.compile(r"scorecard_cli\.py\s+import-baseline\b")
 
 
 def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
@@ -501,6 +592,13 @@ def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
         if approved:
             return block("승인된 실행을 init --force 로 덮어쓰면 승인 기록이 지워져 차단합니다: " + ", ".join(approved)
                          + ". 새 slug 로 init 한다. 승인된 실행의 재작성은 사람이 한다.")
+        staged = _stage_on_approved(cmd, root)
+        if staged:
+            return block("승인이 유효한 실행의 입력·산출물을 바꾸는 단계 명령이라 차단합니다(승인이 무효가 되거나 지워진다): "
+                         + "; ".join(staged) + ". 새 slug 로 init --from-run 해서 이어 간다. 승인된 실행의 재작성은 사람이 한다.")
+        if _IMPORT_BASELINE.search(cmd.replace("\\", "/")):
+            return block("import-baseline 은 보호 트리 scorecard/baseline/ 를 다시 쓴다. 기준선은 승인 해시 밖의 재빌드 입력이라 "
+                         "승인된 실행의 재빌드 리포트가 승인 없이 바뀐다. 사람이 한다.")
         violations += _shell_violations(cmd, root)
     if not violations:
         return allow()

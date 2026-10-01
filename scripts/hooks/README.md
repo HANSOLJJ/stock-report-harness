@@ -27,6 +27,8 @@
 - `scorecard/history.csv`
 - `scorecard/baseline/**` (2026-10-01 레인 H). 기준선 트리거는 승인 해시 밖의 재빌드 입력이다. 실행 묶음에 `triggers.json` 이 없으면 렌더러가 기준선 트리거를 그리므로, 바꾸면 승인이 유효한 채 재빌드 리포트가 바뀐다.
 
+보호 경로 대조는 대소문자를 가리지 않는다(2026-10-01 레인 N, V2-3). Windows 파일 시스템은 `Approval.json`·`approval.JSON`·`.ENV` 를 `approval.json`·`.env` 와 같은 파일로 열기 때문이다. 파일 도구 경로, 셸 명령의 쓰기 대상, 글롭, 승인 파일을 품은 상위 폴더 판정이 모두 같다. 읽는 쪽도 맞춘다. `scorecard.schema.load_json_strict` 는 폴더 목록에 이름이 정확히 `approval.json` 인 항목이 있을 때만 승인 파일을 읽고, `validate_approval` 은 `approval_id` 를 실행·결과·초안 해시로 다시 계산해 대조한다. 대소문자만 바꾼 파일이나 손으로 쓴 임의 `approval_id` 는 승인으로 읽히지 않는다.
+
 셸 명령은 같은 경로가 **쓰기 대상** 일 때만 막는다(2026-10-01 레인 H). 명령을 따옴표를 지켜 토큰으로 나누고(`shlex`) `;`·`&&`·`||`·`|`·`&`·괄호·줄바꿈마다 끊어 명령 하나씩 본다. `\` 는 `/` 로 바꿔 대조한다.
 
 | 명령 | 판정 |
@@ -40,7 +42,9 @@
 | `… \| xargs <변경 동사>` | 대상이 앞 명령의 출력이라 알 수 없다. 명령 전체에 보호 경로가 나오거나, 같은 명령의 다른 명령이 받은 경로(find·ls·git ls-files 등)가 보호 경로를 품으면 막는다(레인 J) |
 | 글롭(`*`·`?`·`[`)이 든 쓰기 대상 | 보호 경로(아직 없는 파일 포함)와 맞거나 파일 시스템에서 전개한 결과가 보호 경로면 막는다. `*` 는 `/` 를 넘지 않는다(`rm *.md` 는 `docs/` 아래와 맞지 않는다)(레인 J) |
 | 인터프리터 `python`·`python3`·`py`·`node`, `uv run …`, `uvx` | 보호 경로 문자열을 담기만 해도 막는다. 스크립트 안의 쓰기를 셸에서 가릴 수 없다 |
-| 읽기 명령 `cat`·`rg`·`grep`·`ls`·`head`·`git show`·`git diff`·`Get-Content`·`Select-String` 등 | 경로를 언급해도 통과한다 |
+| 중첩 셸 `bash`·`sh`·`zsh`·`powershell`·`pwsh`·`cmd` 등과 `awk`·`dd` | 인터프리터와 같다. 보호 경로 문자열을 담기만 해도 막는다(2026-10-01 레인 N, V2-4) |
+| 쓰기(위 변경 동사, 파일로 가는 리다이렉션, `xargs <변경 동사>`, `git checkout` 계열)가 하나라도 있는 명령의 따옴표 안 문자열·명령 치환(`$(…)`·백틱)·변수 대입값(`NAME=값`, `export NAME=값`, PowerShell `$name = 값`·`$env:NAME = 값`) | 보호 경로가 나오면 막는다(레인 N, V2-4). `RUN=<보호 실행>; rm -rf "$RUN"` 처럼 경로가 변수에 숨은 쓰기다. `/dev/null`·`$null`·`&1` 로 가는 리다이렉션은 쓰기로 세지 않는다 |
+| 읽기 명령 `cat`·`rg`·`grep`·`ls`·`head`·`git show`·`git diff`·`Get-Content`·`Select-String` 등 | 쓰기가 없으면 경로를 언급해도(따옴표·변수 안이어도) 통과한다 |
 
 - 앞에 붙은 `VAR=값`, `env`(옵션·`-u NAME` 포함), `command`·`exec`·`nohup`·`time` 은 건너뛰고 그 뒤의 동사를 본다.
 - `cd`·`pushd`·`Set-Location` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다(`cd output/<보호 실행> && rm draft.md` 도 막는다). `git -C <폴더>` 도 같다.
@@ -48,7 +52,9 @@
 
 셸 명령에 `scorecard_cli.py approve`, `scorecard_cli.py revoke`, `stages.approve`, `stages.revoke` 가 있으면 변경 기호와 무관하게 막는다. 승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. `confirm` 은 막지 않는다. 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 하기 때문이다. 훅은 둘째 방어선이고, 첫째는 `scorecard.stages.approve`·`revoke` **함수 본체** 가 에이전트 세션을 거부하는 것이다(2026-10-01 레인 H). CLI 든 import 든 같은 판정(`scorecard.stages.agent_session_markers`)을 거친다. 테스트만 키워드 인자 `allow_agent_session=True` 로 이 거부를 끈다.
 
-`scorecard_cli.py init <slug> … --force` 는 `output/<slug>/approval.json` 이 있으면 막는다(2026-10-01 레인 H). 덮어쓰면 승인 기록이 지워지기 때문이다. 슬러그가 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더로 보고, argparse 의 줄임(`--fo`)도 `--force` 로 본다. `stages.init_run` 도 같은 경우 에이전트 세션을 거부하고, 사람 세션에서는 CLI 가 승인 기록이 지워졌다고 경고한다.
+`scorecard_cli.py init <slug> … --force` 는 `output/<slug>/approval.json` 이 있으면 막는다(2026-10-01 레인 H). 덮어쓰면 승인 기록이 지워지기 때문이다. 슬러그가 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더로 보고, argparse 의 줄임(`--fo`)도 `--force` 로 본다. `stages.init_run` 도 같은 경우 에이전트 세션을 거부하고, 사람 세션에는 경고한다.
+
+실행의 입력·산출물을 바꾸는 단계 명령 `scorecard_cli.py judge`·`confirm`·`calculate`·`draft`·`research`·`review-template --force`·`collect`(`--kind prices`·`all`·생략, `--dry-run` 이 아닐 때)가 **유효한 승인** 이 있는 실행을 가리키면 막는다(2026-10-01 레인 N, V2-1). 실행 이름은 `init --force` 와 같이 맨 이름·`output/<이름>` 경로 모두 마지막 경로 조각을 `output/` 아래 폴더로 푼다. 유효성은 훅이 다시 계산하지 않고 `scorecard.stages.approval_is_valid` 를 불러 판정한다. 그래서 단계 명령이 승인 파일이 있는 실행을 가리킬 때만 해시를 센다. 판정하지 못하면(가져오기 실패, 폴더 불일치, 형식 오류) 훅 함수 안에서 예외를 잡아 막는다(fail-closed). 무효 승인은 막지 않는다. 사람이 승인 페이지에서 판단을 고치면 승인이 무효가 되고, 에이전트가 `research → calculate → draft → review` 를 다시 돌려야 하기 때문이다. 이때 `calculate` 가 무효 승인 파일을 지우면 그 사실을 출력하고 `revocations.jsonl` 에 `revoked_by: "calculate"` 로 남긴다. 같은 판정을 단계 함수 본체(`scorecard.stages.protect_approved_run`)도 하므로 import 로 불러도 에이전트 세션은 거부되고, 사람 세션은 경고를 받고 진행한다. `scorecard_cli.py import-baseline` 은 보호 트리 `scorecard/baseline/` 를 다시 쓰므로 훅이 항상 막고, CLI 도 그 기준선을 쓰는 유효 승인 실행이 있으면 에이전트 세션을 거부한다(`stages.protect_baseline_consumers`).
 
 ## 실행 잠금 (`enforce_plan`)
 
@@ -102,5 +108,6 @@
 ## 아직 하지 않은 것
 
 - Antigravity·Muse 배선은 확인 세 건(차단 표현, 페이로드 필드 이름, 훅 프로세스의 작업 디렉터리)이 끝난 뒤 별도 과제로 한다.
-- `protect_sensitive_files` 는 셸 문자열만 본다. PowerShell 변수(`$p = 'output/…'; Remove-Item $p`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(승인 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
+- `protect_sensitive_files` 는 셸 문자열만 본다. 경로가 변수·따옴표·명령 치환에 **통째로** 들어 있으면 쓰기와 함께 막지만(레인 N), 경로를 조각내 이어 붙이는 쓰기(`D=scorecard/rules; rm $D/v1.7.json`, `Join-Path`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(승인 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
+- 쓰기가 있는 명령은 따옴표 안의 보호 경로를 읽기 인자로 썼어도 막는다(`grep "approval.json" -r . > /tmp/out`). 쓰기와 읽기를 한 명령에 섞지 않거나 따옴표 없이 쓴다.
 - `xargs` 판정은 보수적이다. 대상 목록을 파일에서 읽는 `cat list.txt | xargs rm` 은 목록 안의 보호 경로를 볼 수 없어 통과한다.
