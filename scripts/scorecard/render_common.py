@@ -762,7 +762,7 @@ def split_worknote(text: str) -> tuple[str, str]:
     return body, " ".join(notes)
 
 
-def reviewer_label(judgment: dict[str, Any], with_owner: bool = True) -> str:
+def reviewer_label(judgment: dict[str, Any], with_owner: bool = True, run_created: str | None = None) -> str:
     """판단을 **누가 언제** 매겼는지. 검토자 칸의 작업 표기는 떼고 이름과 날짜만 남긴다.
 
     2026-09-17 FIX-77: `승계된 판단 — 원검토일 …, 이번 실행 재검토 아님` 은 읽는 사람에게
@@ -778,6 +778,10 @@ def reviewer_label(judgment: dict[str, Any], with_owner: bool = True) -> str:
         # 2026-09-17 FIX-78 S1: 상태 칸이 `사용자의 판단` 을 말하는 자리에서는 같은 말을 되풀이하지
         # 않는다. 근거 머리줄은 **언제 매겼는지**만 더한다.
         return f"사용자의 판단 · {when}" if with_owner else f"원검토 {when}"
+    # 2026-10-01 출력·가독성 리뷰(medium): 이전 실행에서 매긴 new 판단을 이어받았는데 '이번 실행에서 다시 매김' 으로 보였다.
+    # 실행 생성일보다 앞서 매겼으면 이전 실행의 판단이다.
+    if run_created and when and str(when) < str(run_created):
+        return f"이전 실행에서 매김 · {who or '검토자 미기재'} · {when}"
     return f"이번 실행에서 다시 매김 · {who or '검토자 미기재'} · {when}"
 
 
@@ -800,7 +804,8 @@ def _split_block(block: dict[str, Any]) -> dict[str, Any]:
 
 
 def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]], base_evidence: list[str],
-                   baseline_id: str, company_id: str, reps: list[dict[str, Any]] | None) -> dict[str, Any] | None:
+                   baseline_id: str, company_id: str, reps: list[dict[str, Any]] | None,
+                   run_created: str | None = None) -> dict[str, Any] | None:
     """factor 하나의 근거 블록 `{kind, header, lines: [(depth, text)]}`. 보일 것이 없으면 None.
 
     2026-09-15 FIX-54 1단계 S4: (회사, factor) 쌍으로 판단을 찾아 자동 산출 F6(anthropic·openai, judgment_id 없음)에
@@ -825,7 +830,7 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
     jid = judgment["judgment_id"]
     evidence = [annotate_replaced(e, company_id, reps) for e in (judgment.get("evidence") or [])]
     if judgment["status"] == "carried":
-        return _split_block({"kind": "carried", "header": f"근거 · {reviewer_label(judgment, with_owner=False)} · 판단 기록 `{jid}`",
+        return _split_block({"kind": "carried", "header": f"근거 · {reviewer_label(judgment, with_owner=False, run_created=run_created)} · 판단 기록 `{jid}`",
                              "lines": [(1, e) for e in evidence]})
     lines = [(1, e) for e in evidence]
     sup = judgment.get("superseded")
@@ -839,7 +844,7 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
         if old:
             lines.append((1, f"과거 기록(기준선 {baseline_id} 서술 — 이번 실행 판단으로 대체):"))
             lines += [(2, struck(e)) for e in old[:6]]
-    return _split_block({"kind": "new", "header": f"근거 · {reviewer_label(judgment, with_owner=False)} · 판단 기록 `{jid}`",
+    return _split_block({"kind": "new", "header": f"근거 · {reviewer_label(judgment, with_owner=False, run_created=run_created)} · 판단 기록 `{jid}`",
                          "lines": lines})
 
 
@@ -1018,10 +1023,21 @@ def vendor_policy_note(ctx: Any) -> str:
     for o in flagged:
         by_metric[o["metric"]] = by_metric.get(o["metric"], 0) + 1
     detail = " · ".join(f"{m} {n}건" for m, n in sorted(by_metric.items()))
-    return (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 v1.5 에서 넘어온 값이다 — "
+    text = (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 v1.5 에서 넘어온 값이다 — "
             "상류가 StockAnalysis 이거나 그 주가로 계산한 값이고, StockAnalysis 는 원천 장부에 `not_adopted · legacy_upstream` 으로만 올라 있다. "
-            "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다. 시가총액은 **PER과 EV/매출 두 곳 모두의 입력**이라 "
-            "† 가 붙은 기업의 ⑥ 은 우리가 실측하지 않은 값 위에 서 있다(그렇다고 점수를 깎지는 않는다).")
+            "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다.")
+    # 2026-10-01 재무 계산 리뷰(low): 새 실행은 시가총액을 직접 받아(verified) 엔진이 고른 칸에 † 가 없는데도
+    # '⑥ 은 실측하지 않은 값 위에 서 있다' 고 적었다. 엔진이 고른 시가총액에 † 가 있을 때만 그 문장을 붙인다.
+    from .inputs import ObsLookup
+
+    lookup = ObsLookup(ctx.observations)
+    mc_flagged = [cid for cid in ctx.run["companies"] if vendor_mark(lookup, cid, "market_cap")]
+    if mc_flagged:
+        text += (" 시가총액은 **PER과 EV/매출 두 곳 모두의 입력**이라 † 가 붙은 기업의 ⑥ 은 우리가 실측하지 않은 값 위에 서 있다"
+                 "(그렇다고 점수를 깎지는 않는다).")
+    else:
+        text += " 이번 실행의 ⑥ 은 직접 받은 시가총액(verified)으로 계산했다 — † 는 참고 열(NTM PER 등)에만 남는다."
+    return text
 
 
 def cash_definition_note(ctx: Any) -> str:

@@ -297,12 +297,15 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         moat_pool = [c for c in results["companies"] if not c["reference"] and c["moat"] is not None]
         max_moat = max(c["moat"] for c in moat_pool)
         moat_top = " · ".join(c["display_name"] + ("" if c["complete"] else "(미완료)") for c in moat_pool if c["moat"] == max_moat)
-        worst = min(ranking, key=lambda r: r["trap"])
+        # 2026-10-01 출력·가독성 리뷰(high): 동점 가운데 첫 기업만 적었다. 같은 함정 점수의 기업을 모두 적는다.
+        worst_trap = min(r["trap"] for r in ranking)
+        worst_all = [r for r in ranking if r["trap"] == worst_trap]
         candidates = [c["display_name"] + ("" if c["complete"] else "(미완료)") for c in moat_pool if c["moat"] >= 20]
         lines += [
             f"- 조정총점 1위: {top_names} ({top[0]['total']}점){' — 공동' if len(top) > 1 else ''}",
             f"- 과점 factor 최고: {moat_top} ({max_moat}점) — 과점이 완결된 전 기업 기준",
-            f"- 함정 최심(완료 {population['scored']}개사 기준): {worst['display_name']} ({worst['trap']}점, 조정 {worst['total']}점)",
+            f"- 함정 최심(완료 {population['scored']}개사 기준): {worst_trap}점 — "
+            + " · ".join(f"{r['display_name']}(조정 {r['total']}점)" for r in worst_all) + (" — 공동" if len(worst_all) > 1 else ""),
             f"- 과점 후보군(과점 20점 이상): {', '.join(candidates) if candidates else '없음'}",
         ]
     lines += [f"- 모집단: 완료 {population['scored']}개사 순위 / 미완료 {len(population['incomplete'])}개사 제외 (미완료는 0점으로 채우지 않는다). 모집단이 다르므로 기준선 {run['baseline_id']} 의 14사 순위와 직접 비교하지 않는다(기업별 상세에 기준선 순위를 병기)."]
@@ -351,7 +354,8 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         for f in FACTOR_IDS:
             fr = c["factors"][f]
             base_evidence = (b or {}).get("evidence", {}).get(f, []) if b else []
-            block = rc.evidence_block(fr, judgments_by_id, base_evidence, run["baseline_id"], c["company_id"], reps)
+            block = rc.evidence_block(fr, judgments_by_id, base_evidence, run["baseline_id"], c["company_id"], reps,
+                                      run_created=run.get("created_at"))
             if block is not None:
                 lines.append(f"- **{FACTOR_LABELS[f]}** {block['header']}:")
                 # 2026-09-17 FIX-67: 근거 문장에 번호가 데이터로 들어 있다. 초안도 HTML 과 같은 이름을 쓴다.
@@ -395,6 +399,25 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         lines += [f"- {x}" for x in rc.trigger_notes(ctx)] + [""]
     else:
         lines += ["- 등록된 트리거 없음", ""]
+    # 2026-10-01 출력·가독성 리뷰(medium): 초안이 근거 ID 를 인용하지만 찾아갈 곳이 없었다. 본문이 인용한 근거를 표로 붙인다.
+    import re as _re
+
+    cited = sorted(set(_re.findall(r"EV-[a-z0-9-]+-\d{3}", "\n".join(lines))))
+    if ctx.evidence and cited:
+        ev_by_id = {e["evidence_id"]: e for e in ctx.evidence}
+        urls = {s["source_id"]: s.get("url") for s in ctx.sources.get("items", [])}
+        rows = []
+        for eid in cited:
+            e = ev_by_id.get(eid)
+            if e is None:
+                rows.append([eid, "—", "evidence.json 에 없음", "—", "—"])
+                continue
+            url = urls.get(e["source_id"])
+            title = f"[{e['title']}]({url})" if url else e["title"]
+            rows.append([eid, ctx.companies[e["company_id"]]["display_name"], title, (e["published_at_utc"] or "—")[:10],
+                         {"confirmed": "확정", "candidate": "후보"}.get(e.get("status", "candidate"), e.get("status", "candidate"))])
+        lines += ["## 인용 근거", "", f"본문이 인용한 근거 {len(cited)}건. 전체 목록과 선별 이유는 `research.md` 의 근거 자료 절에 있다.", "",
+                  table(["근거 ID", "기업", "제목(원문)", "발행일", "상태"], rows), ""]
     # References
     lines += ["## References", ""]
     for src in ctx.sources.get("items", []):
@@ -547,5 +570,47 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
             affected = sorted({c["display_name"] for c in results["companies"] for p in c["pending"] if p.get("decision_id") == did})
             lines.append(f"- **{did}** {spec.get('summary', '')} — 선택지: {', '.join(spec.get('choices', [])) or '(기술)'} — 영향: {', '.join(affected)}")
         lines += ["", f"선택은 `{run_paths(ctx.slug).rel(run_paths(ctx.slug).run_dir / 'run.json')}` 의 `decisions` 에 `{{id, choice, rationale, decided_by, decided_at}}` 로 기록한 뒤 다시 `calculate` 한다.", ""]
-    lines += ["## 변동 원인 분류", "", "- 기준선 이관 재계산이라 변동 원인은 📐규칙(미결 결정·엄격 계약)이며 기업 실적 변화가 아니다. 규칙 버전이 같은 실행끼리만 추세로 연결한다.", ""]
+    # 2026-10-01 출력·가독성 리뷰(medium): 변동 원인을 '규칙 이관' 으로 고정했고 이전 실행과 비교하지 않았다.
+    # 이전 실행을 이어받은 실행은 이전 실행 대비 바뀐 factor 와 원인을 따로 보인다.
+    prior = (ctx.run.get("continued_from") or {}).get("run_id")
+    causes: dict[str, int] = {}
+    if prior:
+        from .engine import load_results
+
+        try:
+            prev = {c["company_id"]: c for c in load_results(prior)["companies"]}
+        except Exception:  # noqa: BLE001 — 이전 실행 결과가 없으면 이 표만 뺀다
+            prev = {}
+        if prev:
+            created = ctx.run.get("created_at") or ""
+            revised = {(j["company_id"], j["factor"]) for j in ctx.judgments
+                       if any(str(h.get("revised_at") or "") >= created for h in (j.get("revision_history") or []))}
+            prow = []
+            for c in sorted(results["companies"], key=lambda x: (x["rank"] is None, x["rank"] or 0, x["company_id"])):
+                p = prev.get(c["company_id"])
+                if p is None:
+                    continue
+                diffs = []
+                for f in FACTOR_IDS:
+                    new, old = c["factors"][f]["score"], p["factors"][f]["score"]
+                    if new == old:
+                        continue
+                    if (c["company_id"], f) in revised:
+                        cause = "✍️ 판단 수정"
+                    elif f in ("F6", "F9"):
+                        cause = "📊 관측(가격·재무)"
+                    else:
+                        cause = "📐 규칙"
+                    causes[cause] = causes.get(cause, 0) + 1
+                    diffs.append(f"{FACTOR_LABELS[f]} {fmt_score(old)}→{fmt_score(new)} ({cause})")
+                if diffs or p.get("total") != c["total"]:
+                    prow.append([c["display_name"], f"{fmt_score(p.get('total'))} / {fmt_score(p.get('rank'))}",
+                                 f"{fmt_score(c['total'])} / {fmt_score(c['rank'])}", "; ".join(diffs) or "factor 같음(순위만 이동)"])
+            lines += [f"## 이전 실행 `{prior}` 대비", "",
+                      table(["기업", "이전 조정/순위", "이번 조정/순위", "바뀐 factor (원인)"], prow) if prow else "- 바뀐 점수 없음", ""]
+    if causes:
+        summary = " · ".join(f"{k} {v}건" for k, v in sorted(causes.items()))
+        lines += ["## 변동 원인 분류", "", f"- 이전 실행 대비 바뀐 factor 의 원인: {summary}. 원인은 판단 수정 이력·자동 산출 factor 로 추정한 분류다.", ""]
+    else:
+        lines += ["## 변동 원인 분류", "", "- 기준선 이관 재계산이라 변동 원인은 📐규칙(미결 결정·엄격 계약)이며 기업 실적 변화가 아니다. 규칙 버전이 같은 실행끼리만 추세로 연결한다.", ""]
     return "\n".join(lines)

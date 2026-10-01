@@ -549,7 +549,9 @@ def render_kpis(results: dict[str, Any]) -> str:
     moat_pool = [c for c in results["companies"] if not c["reference"] and c["moat"] is not None]
     max_moat = max(c["moat"] for c in moat_pool)
     moat_top = [c["display_name"] + ("" if c["complete"] else "(미완료)") for c in moat_pool if c["moat"] == max_moat]
-    worst = min(ranking, key=lambda r: r["trap"])
+    # 2026-10-01 출력·가독성 리뷰(high): 동점 가운데 첫 기업만 보였다. 같은 함정 점수의 기업을 모두 보인다.
+    worst_trap = min(r["trap"] for r in ranking)
+    worst_all = [r for r in ranking if r["trap"] == worst_trap]
     cands = [c for c in moat_pool if c["moat"] >= 20]
     pop = results["population"]
     lead = f"{len(top)}개사 공동" if len(top) > 1 else top[0]["display_name"]
@@ -557,7 +559,7 @@ def render_kpis(results: dict[str, Any]) -> str:
     return "".join([
         f'<div class="kpi"><div class="k">{"공동" if len(top) > 1 else "단독"} 1위 (조정 {top[0]["total"]}점)</div><div class="v">{esc(lead)}</div><div class="d">{esc(lead_d)}</div></div>',
         f'<div class="kpi"><div class="k">과점 factor 최고</div><div class="v">{max_moat}점</div><div class="d">{esc(" · ".join(moat_top))}</div></div>',
-        f'<div class="kpi"><div class="k">함정 최심 (완료 {pop["scored"]}개사 기준)</div><div class="v c-g1">{worst["trap"]}</div><div class="d">{esc(worst["display_name"])} — 조정 {worst["total"]}점</div></div>',
+        f'<div class="kpi"><div class="k">함정 최심 (완료 {pop["scored"]}개사 기준)</div><div class="v c-g1">{worst_trap}</div><div class="d">{esc(" · ".join(f"{r['display_name']} — 조정 {r['total']}점" for r in worst_all))}</div></div>',
         f'<div class="kpi"><div class="k">과점 후보군</div><div class="v">{len(cands)}개사</div><div class="d">과점 20점 이상 · {esc(" · ".join(c["display_name"] + ("" if c["complete"] else "(미완료)") for c in cands))}</div></div>',
         f'<div class="kpi"><div class="k">모집단</div><div class="v">{pop["scored"]}개사</div><div class="d">미완료 {len(pop["incomplete"])}개사 순위 제외</div></div>',
     ])
@@ -650,7 +652,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 history = HISTORY_BY_COMPANY.setdefault(c["company_id"], [])
                 score = fr["score"]
                 color = f"c-{score_class(score) if f in MOAT_FACTORS else trap_class(score)}"
-                block = rc.evidence_block(fr, judgments_by_id, b.get("evidence", {}).get(f, []), results["baseline_id"], c["company_id"], reps)
+                block = rc.evidence_block(fr, judgments_by_id, b.get("evidence", {}).get(f, []), results["baseline_id"], c["company_id"], reps,
+                                          run_created=(ctx.run.get("created_at") if ctx is not None else None))
                 # 2026-09-18 FIX-80 S2: 자동 산출 항목에 붙던 v1.5 참고 문단은 `점수 근거가 아니다` 를 두 번 말하며
                 # 지금 쓰지 않는 수(NTM PER 25.3 · 없어진 20~29 구간)를 보였다. 본문에서 내리고 감사 기록으로 보낸다.
                 # 사람 판단의 근거 문장은 점수 근거라 그대로 둔다.
