@@ -24,8 +24,8 @@
 - [ ] 3.4: SEC 픽스처 2종은 합성. `SEC_UA` 확보 뒤 실제 응답으로 교체
 - [x] 3.4 또는 A 병합 뒤: yfinance import 고정 테스트 범위를 `scripts/scorecard` 에서 `scripts/` 전체로 넓힌다(A 가 build_report 의 yfinance 를 지운 뒤)
 - [x] 4.3: `confirm`·`approve`·`revoke` 가 근거 ID(`EV-<cid>-<NNN>`)·이름 형식을 Python 쪽에서 검증. 승인 페이지 일회용 코드는 시도 횟수 제한 없음(루프백 한정이라 낮음) — 실패 5회면 서버 종료 검토
-- [ ] 4.6: README 훅 표(`protect-sensitive-files.sh` 등 옛 이름·output-spec) 갱신. AGENTS 에서 레인 S 가 지운 "plan 없이 research 금지 / review 없이 build 금지" 는 채점표에도 맞는 일반 규칙이므로 채점표 단계 이름으로 되살린다
-- [ ] baseline 실행 recompute 불일치(amazon·oracle·openai F9 calc 경로 기록)는 원본 폴더에서도 같은 기존 상태. 별도 과제로 원인 기록 여부 결정
+- [x] 4.6: README 훅 표(`protect-sensitive-files.sh` 등 옛 이름·output-spec) 갱신. AGENTS 에서 레인 S 가 지운 "plan 없이 research 금지 / review 없이 build 금지" 는 채점표에도 맞는 일반 규칙이므로 채점표 단계 이름으로 되살린다
+- [x] baseline 실행 recompute 불일치 — 그대로 두기로(차이는 설명 기록 3곳, 점수 동일)(amazon·oracle·openai F9 calc 경로 기록)는 원본 폴더에서도 같은 기존 상태. 별도 과제로 원인 기록 여부 결정
 - [x] 후속 직렬(Opus): 3.1·3.4 는 레인 E 로 디스패치(task `task_886a8483f9d2`, dispatch `ctx_ef9a127fce02`, 터미널 `term_ceb10bfe-fbe6-4320-aaa3-a59083939d17`). 4.2 → 4.3 은 E 병합 뒤
 - [x] 문서(Sonnet): 4.5 → 4.6
 
@@ -57,7 +57,7 @@
 - [ ] (운영) Antigravity·Muse 배선: 차단 표현·필드 이름·작업 디렉터리 확인 뒤
 
 ## 사용자 준비 항목
-- [ ] SEC_UA 환경변수
+- [x] SEC_UA 환경변수 (원본 폴더 루트 로컬 설정 파일, 2026-10-01)
 - [ ] SPCX CIK 확인 (1181412 후보)
 - [ ] 옛 obsreg `report.html` 은 감사 기록 링크가 `<slug>-audit.md` 라 묶음에서 깨진다. 승인이 유효하므로 빌드를 다시 돌리면 `audit.md` 링크로 재생성된다(사용자 확인 뒤)
 - [ ] 남은 unittest 15건은 `validation/f6-avail-15/_raw` 등 원자료가 워크트리에 없어서 난다. main 병합 뒤 원본 폴더에서 전부 통과하는지 확인

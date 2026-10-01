@@ -30,4 +30,6 @@
 - **가격 수집기의 시점 결함은 병합을 막지 않았다.** vendor market_cap 이 조회 시점 값인데 종가 날짜로 기록되는 문제는 아직 이 값을 읽는 코드가 없어서 3.4 에서 고친다.
 - **레인 B 가 공유 stash 스택을 썼다.** `git stash -u` 를 한 번 쓰고 즉시 pop 했다고 보고했고, 조율자가 `git stash list` 가 비어 있음을 확인했다.
 - **승인 해시 비교는 `stages.approval_mismatches` 하나로 모은다.** 레인 E 가 발견했다. `render_html.build_scorecard` 와 `compare.approval_state` 가 승인 해시를 dict 전체로 비교해서, 현재 해시에 sources·evidence·triggers 키가 늘면 6키로 승인된 기존 두 실행이 재빌드·diff 에서 무효가 된다. 규칙은 "승인에 있는 키만 대조, 현재에 evidence·triggers 가 있는데 승인에 없으면 불일치, sources 는 승인에 있을 때만 대조". 레인 E 소유를 두 호출부까지 넓혔고 dict 등호 비교 0건을 grep 테스트로 고정한다.
+- **승인 페이지에서 사람이 정성 판단을 고친다. 점수가 아니라 판단 입력을 고친다(사용자 결정 2026-10-01).** `judgments.json` 에 `reviewer: 사용자`·`status: new`·수정 사유로 쓰고, F1·F4·F8 은 점수와 사유, F3 criteria·F5 등급·F7 매트릭스·F9 gate_inputs 는 판정 재료를 고친다. `results.json` 의 점수를 덮어쓰지 않는다(재계산이 수정을 지우고 입력과 점수가 갈라진다). 수정 제출과 승인은 다른 단계다. 수정하면 해시가 바뀌어 calculate·draft·review 를 다시 거친 뒤 승인한다. 다음 실행은 이 판단을 출처와 함께 carried 로 잇는다. 같은 factor 의 다른 기업 판단을 나란히 보여 잣대 어긋남(Q03)을 줄인다.
+- **baseline 재계산 불일치는 그대로 둔다(추천, 사용자에게 설명 2026-10-01).** 전 필드 비교 결과 차이는 F9 계산 경로의 경계값 참고 정보 2곳과 경고 문구 1곳(C-29 결정 반영)뿐이고 점수·순위·입력 해시는 같다. 재계산하면 리뷰·재승인을 다시 거쳐야 해 얻는 것이 없다.
 - **레인 A 는 draft 줄끝을 먼저 판정.** obsreg draft 가 renderer 산출물이라 LF 로 알려져 있지만 확인하지 않았다. approval.json 의 draft 해시와 바이트를 대조해 `.gitattributes` 예외를 정한다. baseline 은 CRLF 예외 유지.
