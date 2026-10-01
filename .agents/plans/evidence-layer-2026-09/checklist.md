@@ -59,7 +59,7 @@
 ## 사용자 준비 항목
 - [x] SEC_UA 환경변수 (원본 폴더 루트 로컬 설정 파일, 2026-10-01)
 - [x] SPCX CIK 확인 (1181412 후보) — SEC 실응답에서 1181412 확인, 레인 J 가 companies.json 에 기입
-- [ ] 옛 obsreg `report.html` 은 감사 기록 링크가 `<slug>-audit.md` 라 묶음에서 깨진다. 승인이 유효하므로 빌드를 다시 돌리면 `audit.md` 링크로 재생성된다(사용자 확인 뒤)
+- [x] 옛 obsreg `report.html` 은 감사 기록 링크가 `<slug>-audit.md` 라 묶음에서 깨진다. 승인이 유효하므로 빌드를 다시 돌리면 `audit.md` 링크로 재생성된다(사용자 확인 뒤)
 - [x] 남은 unittest 15건은 `validation/f6-avail-15/_raw` 등 원자료가 워크트리에 없어서 난다. main 병합 뒤 원본 폴더에서 전부 통과하는지 확인
 - [x] 레인 E 조율자 재현(병합 뒤): 두 실행 approval_valid true, recompute obsreg True·baseline 기존 값 불변, output/·scorecard/ 변경 0, unittest 1030건 중 실패 1·오류 14(원자료 부재 집합과 동일), node 9·check 통과
 - [x] 4.3: 초안(`render_draft`)과 HTML 의 트리거 절이 `triggers.json` 이 있으면 그것을 그리게 한다(지금은 research 만). 계획 3단계 "렌더러는 이 파일이 있으면 legacy 39건 대신 그린다"
