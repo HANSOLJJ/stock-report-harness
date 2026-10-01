@@ -162,6 +162,22 @@ class ResolveCikCliTest(_RegistrySandbox):
         self.assertIn("apply: 0건", out)
         self.assertEqual(self.path.read_bytes(), before)
 
+    def test_json_output(self):
+        """2026-10-01 레인 J(F-M-3): CLI 도 --json 을 받는다. 표 없이 JSON 한 줄이다."""
+        original = self.path.read_bytes()
+        code, out = self._run("--json")
+        self.assertEqual(code, 0)
+        data = json.loads(out)
+        self.assertEqual(len(out.strip().splitlines()), 1)
+        rows = {r["company_id"]: r for r in data["rows"]}
+        self.assertEqual((rows["spacex-xai"]["cik"], rows["spacex-xai"]["status"], rows["spacex-xai"]["current_cik"]),
+                         (1181412, "resolved", None))
+        self.assertEqual(rows["openai"]["status"], "unlisted")
+        self.assertEqual(data["applied"], [])
+        self.assertEqual(self.path.read_bytes(), original)
+        code, out = self._run("--json", "--apply", "--company", "nvidia")
+        self.assertEqual(json.loads(out)["applied"], [{"company_id": "nvidia", "old": None, "new": 1045810}])
+
     def test_company_filter(self):
         code, out = self._run("--company", "nvidia", "--apply")
         self.assertEqual(code, 0)

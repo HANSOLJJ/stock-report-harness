@@ -20,7 +20,7 @@
 
 init·collect·research·calculate·draft·review-template 과 에이전트 세션의 confirm·judge 는 실행 잠금(output/<slug>/.lock)을
 검사·기록한다. 다른 소유자의 잠금이면 거부하고 --take-lock 으로 인수한다.
-  uv run --frozen python -X utf8 scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py resolve-cik [--company id] [--from-file PATH] [--apply] [--json]
 
 build 는 기존 명령 `uv run --frozen python -X utf8 scripts/build_report.py <slug>` 가 report_type 으로 분기한다.
 """
@@ -415,18 +415,24 @@ def cmd_resolve_cik(args: argparse.Namespace) -> int:
         raise SchemaError(str(exc)) from exc
     rows = resolve(companies, load_ticker_map(payload))
     current = {c["company_id"]: c.get("cik") for c in companies}
-    print("company_id\tticker\t현재 cik\t조회 cik\tstatus")
-    for row in rows:
-        print(f"{row['company_id']}\t{row['ticker']}\t{current[row['company_id']]}\t{row['cik']}\t{row['status']}")
-    if not args.apply:
-        return 0
-    written = 0
-    for row in rows:
+    if not args.json:
+        print("company_id\tticker\t현재 cik\t조회 cik\tstatus")
+        for row in rows:
+            print(f"{row['company_id']}\t{row['ticker']}\t{current[row['company_id']]}\t{row['cik']}\t{row['status']}")
+    applied = []
+    for row in rows if args.apply else []:
         if row["status"] == "resolved" and current[row["company_id"]] != row["cik"]:
             out = set_company_field(row["company_id"], "cik", row["cik"], path=engine.COMPANIES_PATH)
-            print(f"apply: {out['company_id']} cik {out['old']} → {out['new']} ({rel(engine.COMPANIES_PATH)} {out['line_no']}행)")
-            written += 1
-    print(f"apply: {written}건 기록 (resolved 가 아닌 행은 쓰지 않는다)")
+            applied.append(out)
+            if not args.json:
+                print(f"apply: {out['company_id']} cik {out['old']} → {out['new']} ({rel(engine.COMPANIES_PATH)} {out['line_no']}행)")
+    if args.json:
+        # 2026-10-01 레인 J(F-M-3): 모듈(`resolve_cik.main --json`)과 같은 행에 현재 cik 와 기록 결과를 더한다.
+        print(json.dumps({"rows": [{**row, "current_cik": current[row["company_id"]]} for row in rows],
+                          "applied": [{"company_id": o["company_id"], "old": o["old"], "new": o["new"]} for o in applied]},
+                         ensure_ascii=False))
+    elif args.apply:
+        print(f"apply: {len(applied)}건 기록 (resolved 가 아닌 행은 쓰지 않는다)")
     return 0
 
 
@@ -577,6 +583,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--company")
     p.add_argument("--from-file", help="SEC company_tickers.json 캐시나 픽스처")
     p.add_argument("--apply", action="store_true")
+    p.add_argument("--json", action="store_true", help="표 대신 JSON 한 줄({rows, applied})")
     p.set_defaults(func=cmd_resolve_cik)
 
     args = parser.parse_args(argv)
