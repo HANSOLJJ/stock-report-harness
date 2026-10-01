@@ -13,7 +13,7 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 | 리뷰 | 독립 세션 4영역 리뷰 9라운드 끝에 네 영역 pass (2026-09-17) |
 | 승인 | 2026-09-21 사용자 재승인. 승인 유효(`status` 의 `approval_valid: true`) |
 | 다음 실행 준비 | 규칙 v1.8, 근거 수집(`collect`: 구글 뉴스·SEC 공시·yfinance 가격), 승인 페이지(`node server.js --approvals`)의 근거 확정·판단 수정, 근거 선별 평가 표본 38건(`tests/fixtures/evidence/`, 라벨 대기) |
-| 테스트 | `npm run test:scorecard` 1146건 통과(원자료가 없는 워크트리에서는 13건 건너뜀), `npm run test:node` 15건 통과 |
+| 테스트 | `npm run test:scorecard` 1168건 통과(원자료 `validation/*/_raw` 가 없는 워크트리에서는 13건을 사유와 함께 건너뜀), `npm run test:node` 15건 통과 |
 
 조정총점은 alphabet 15 · amazon 15 · meta 15 · microsoft 14 · tsmc 10 · anthropic 10 · spacex-xai 9 · nvidia 9 · apple 8 · alibaba 7 · palantir 6 · tesla 5 · openai 4 · oracle 2 입니다.
 
@@ -107,7 +107,7 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 점수는 기준·입력·계산 셋만으로 결정됩니다. 지시 문서는 일하는 순서를 적은 안내서이고 점수에 영향을 주지 않습니다.
 
-**사람용 규칙 문서는 v1.5 에 멈춰 있습니다.** v1.6·v1.7 의 변경은 기계용 JSON 과 결정 기록에만 있어, 별표 일부(⑥ 전체 · ⑦ 별표 I · ⑨ 게이트 · ② 의 5점 조건 · ⑤ 의 +2 조건)가 지금 점수와 다릅니다.
+사람용 규칙 문서는 v1.7(2026-09-21)이 최신이고 `AI_company_analysis_factor/` 와 `docs/scorecard/rules/` 에 있습니다. 기계용 v1.8 은 v1.7 에서 원천 허용 목록(`sources`)만 뺀 개정이라, 사람용 문서는 v1.7 을 그대로 씁니다.
 
 ## 지문으로 묶여 있습니다
 
@@ -139,26 +139,23 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 ## 작업공간과 브랜치
 
-Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree 입니다. 커밋은 모두 이 저장소 하나에 있습니다.
+Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree 입니다. 커밋은 모두 이 저장소 하나에 있고, 같은 `.git` 을 공유하므로 워크트리의 브랜치는 push 없이 원본 폴더에서 바로 합칠 수 있습니다. Orca 가 새 워크트리를 만들 때는 GitHub fork 의 `main`(`origin/main`)을 기준으로 삼으므로, 로컬 `main` 을 합친 뒤에는 fork 에 push 해 두어야 다음 워크트리가 최신 상태에서 시작합니다.
 
-| 브랜치 | 역할 |
-| --- | --- |
-| `HANSOLJJ/worker` | 코드·규칙·데이터를 실제로 고치는 곳 |
-| `HANSOLJJ/설계진행` | 과제 분배와 검증 기록(`validation/`) |
-| `HANSOLJJ/review-obsreg` | 독립 리뷰 기록(`reviews/_parts/`) |
-| `HANSOLJJ/NTM-전망치조사` · `HANSOLJJ/C-13` · `HANSOLJJ/scarpper` | 자료 조사와 보조 검증 |
-
-2026-09-21 에 위 브랜치를 `main` 으로 합쳤습니다. 같은 경로에 서로 다른 내용이 있던 C-13 의 네 파일은 `validation/*/c13/` 아래에 따로 보존했습니다.
+여러 에이전트로 나눠 일할 때는 조율자 워크트리 하나가 통합 브랜치를 맡고, 레인마다 자식 워크트리를 만들어 병합합니다. 2026-09-30~10-01 의 근거 계층 작업은 통합 브랜치 `HANSOLJJ/revision_checker` 에서 레인 S·A·B·C·D·E·F·G·H·I·J·K·L·M·N·P·T 와 독립 검증 V·V2 로 진행했습니다. 계획·체크리스트·결정 기록·레인 지시서는 `.agents/plans/evidence-layer-2026-09/`, 레인별 보고서는 `validation/lane-*/REPORT.md` 에 있고, 레인 브랜치(`HANSOLJJ/lane-*`)는 이력으로 남아 있습니다. 2026-09-21 이전의 작업 브랜치(`HANSOLJJ/worker`·`설계진행`·`review-obsreg` 등)는 그날 `main` 으로 합쳐졌습니다.
 
 ## 다음에 정할 것
 
-1. **사람용 v1.7 규칙 문서** — v1.5 원문에서 출발해 바뀐 자리만 `이전 → 지금` 으로 표시합니다. 규칙을 사람 말로 옮길 때마다 오류가 나왔으므로 독립 대조를 거칩니다.
-2. **별표를 리포트에 싣기** — 본문이 별표를 46번 가리키지만 내용은 리포트에 없습니다.
-3. **재승인과 정식 빌드** — 점수는 그대로이고 설명만 바뀌었습니다.
-4. **기업 추가 명령** — `add-company` 로 레지스트리에 등록하고, `init --from-run` 으로 이전 실행을 이어받아 **새 기업만 조사**합니다. 기존 기업 불변은 `diff` 가 기계로 증명합니다. 계획 승인 완료, 구현 중입니다.
-5. **규칙 폴더를 `v1.5/` · `v1.7/` 로 정리** — `scripts/scorecard/baseline_import.py` 와 테스트 둘이 지금 경로를 직접 참조하므로 경로 수정과 함께 해야 합니다.
+1. **첫 v1.8 실행(2026-11 정기 재채점)** — `init --rule v1.8` → `collect` 로 14개사 근거를 모으고, 승인 페이지에서 근거 확정·판단 수정을 거쳐 승인합니다. 실제 수집은 2026-10-01 시험에서 14개사 뉴스·SEC·가격이 모두 동작했습니다(`validation/lane-M-live-collection/REPORT.md`).
+2. **근거 선별 평가 표본에 라벨 달기** — `tests/fixtures/evidence/labeling-2026-10.csv` 38건의 `label` 열에 `correct`·`wrong`·`irrelevant` 를 적습니다. 에이전트가 근거를 고르는 품질을 재는 기준이 됩니다.
+3. **obsreg 재빌드** — 옛 `report.html` 의 감사 기록 링크가 묶음 구조에서 깨져 있습니다. 승인이 유효하므로 빌드만 다시 하면 됩니다. baseline 은 승인 뒤 엔진이 바뀌어 재계산 기록 세 줄이 달라 재빌드하지 않습니다(점수는 같음).
+4. **남은 검증 발견** — 독립 재검증의 low 8건(`validation/lane-V2-recheck/REPORT.md` V2-6~V2-13)과 레인 N 이 소유 밖에서 찾은 4건(`validation/lane-N-v2-fixes/REPORT.md`).
+5. **별표를 리포트에 싣기** — 본문이 별표를 46번 가리키지만 내용은 리포트에 없습니다.
 6. **정성 판단의 제안 흐름** — 고치는 창구(`judge`, 승인 페이지 8절)는 생겼습니다. 에이전트가 질문별로 답·근거·출처를 조사해 제안하고 사용자가 검토 화면에서 동의하는 앞단은 아직 검토 중입니다.
-7. **v1.8 방향** — 점수를 직접 입력하는 ① ② ④ ⑧ 을 ③ ⑤ ⑦ 처럼 정해진 질문으로 쪼개고, 질문마다 공시에서 잴 수 있는 값(고객 집중도 · 벤치마크 순위 · 출하 여부 · 수주잔고)을 붙입니다.
+7. **다음 규칙 개정 방향** — 점수를 직접 입력하는 ① ② ④ ⑧ 을 ③ ⑤ ⑦ 처럼 정해진 질문으로 쪼개고, 질문마다 공시에서 잴 수 있는 값(고객 집중도 · 벤치마크 순위 · 출하 여부 · 수주잔고)을 붙입니다.
+8. **규칙 폴더를 `v1.5/` · `v1.7/` 로 정리** — `scripts/scorecard/baseline_import.py` 와 테스트 둘이 지금 경로를 직접 참조하므로 경로 수정과 함께 해야 합니다.
+9. **Antigravity·Muse 훅 연결** — 저장소 밖 전역 설정을 고쳐야 하므로 차단 표현·페이로드 필드·작업 폴더를 확인한 뒤 따로 합니다. 지금은 Claude Code·Codex 만 훅이 연결돼 있습니다.
+
+기업을 추가할 때는 `/score-add-company` 로 레지스트리에 등록하고 `/score-extend`(`init --from-run`)로 이전 실행을 이어받아 새 기업만 조사합니다. 기존 기업이 움직이지 않았다는 사실은 `diff` 가 기계로 증명합니다.
 
 세부 미결 사항은 `docs/scorecard/open-items.md`, 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md` 에 있습니다.
 
