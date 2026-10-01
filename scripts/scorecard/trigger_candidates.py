@@ -132,7 +132,10 @@ def collect_trigger_candidates(previous: list[dict[str, Any]], candidates: list[
         deadline = prev.get("deadline") or next(
             (t.get("deadline") for t in carriers if t.get("deadline")), None)
         company_ids, source = resolve_trigger_companies(prev, companies)
-        tokens = tokenize(trigger_text(prev, extra))
+        # 2026-10-01 조율자 검증: 기업 이름을 겹침에 세면 같은 기업 기사는 모두 붙는다(시험 실행 후보 159건 중 87건이
+        # 기업 이름만 겹침). 대상 기업의 이름 토큰은 점수에서 뺀다.
+        names = set().union(*(company_name_keys(companies[c]) for c in company_ids if c in companies))
+        tokens = tokenize(trigger_text(prev, extra)) - names
         out.append({
             "ref": prev.get("ref"),
             "title": prev.get("title"),

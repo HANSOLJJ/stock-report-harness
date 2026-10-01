@@ -169,6 +169,16 @@ class CarrierTest(unittest.TestCase):
         self.assertEqual(out[0]["company_source"], "all")
 
 
+class CompanyNameNotScoredTest(unittest.TestCase):
+    def test_overlap_only_on_company_name_is_dropped(self):
+        # 2026-10-01 조율자 검증: 기업 이름만 겹친 기사는 붙이지 않는다(같은 기업 기사가 모두 붙는 것을 막는다).
+        out = collect_trigger_candidates(
+            [prev("baseline/v1.5:TRIG-005", "TSMC Q3 실적")],
+            [cand("c1", "tsmc", "TSMC shares rise on AI demand"), cand("c2", "tsmc", "TSMC Q3 revenue beats")],
+            COMPANIES, limit=5)
+        self.assertEqual([(c["candidate_id"], c["overlap_tokens"]) for c in out[0]["candidates"]], [("c2", ["q3"])])
+
+
 class CliTest(unittest.TestCase):
     def setUp(self) -> None:
         self.box = Sandbox(("nvidia", "openai"))
@@ -226,8 +236,9 @@ class CliTest(unittest.TestCase):
                     (left, right))
         first = next(e for e in data["items"] if e["ref"] == "baseline/v1.5:TRIG-001")
         self.assertEqual(first["company_ids"], ["nvidia"])
+        # 2026-10-01 기업 이름(nvidia)은 점수에서 빠지므로 hugging·face 두 토큰이다.
         self.assertEqual([(c["candidate_id"], c["score"]) for c in first["candidates"]],
-                         [("google:aaa", 3)])
+                         [("google:aaa", 2)])
         code, text = self.cli("trigger-candidates", SLUG, "--json", "--limit", "1")
         self.assertEqual(code, 0)
         self.assertTrue(all(len(e["candidates"]) <= 1 for e in json.loads(text)["items"]))
