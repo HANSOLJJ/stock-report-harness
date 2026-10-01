@@ -211,6 +211,23 @@ _GLOB_CHARS = set("*?[")
 _XARGS_VALUE_OPTS = {"-n", "-I", "-i", "-L", "-l", "-P", "-d", "-E", "-e", "-s", "-a"}
 _GIT_WRITE = {"checkout", "restore", "reset"}
 _INTERPRETER = re.compile(r"^(?:python(?:3(?:\.\d+)?)?|py|node)$")
+# 2026-10-01 레인 N(V2-4): 중첩 셸과 awk·dd 도 인자 안의 쓰기를 셸 단어로 가릴 수 없다. 인터프리터와 같이 보호 경로를 담기만 해도 막는다.
+_NESTED = {"bash", "sh", "zsh", "dash", "ksh", "fish", "powershell", "pwsh", "cmd", "awk", "gawk", "mawk", "nawk", "dd"}
+# 출력을 버리거나 다른 스트림으로 돌리는 리다이렉션 대상. 파일 쓰기가 아니다.
+_NULL_SINKS = {"/dev/null", "nul", "$null", "&1", "&2", "1", "2", "-"}
+# 쓰기 명령이 있을 때 경로가 숨는 자리: 따옴표 안, 명령 치환(`$(…)`·백틱), 변수 대입값(셸 `NAME=값`, PowerShell `$name = 값`).
+_QUOTED = re.compile(r"'([^']*)'|\"((?:[^\"\\]|\\.)*)\"")
+_SUBST = re.compile(r"\$\(([^()]*)\)|`([^`]*)`")
+_ASSIGN_VALUE = re.compile(r"(?:^|[\s;&|(])(?:export\s+|local\s+|readonly\s+|declare\s+(?:-\w+\s+)*)?[A-Za-z_][A-Za-z0-9_]*=(\S+)")
+_PS_ASSIGN_VALUE = re.compile(r"\$(?:env:)?[A-Za-z_][A-Za-z0-9_]*\s*=\s*([^;|\n]+)", re.I)
+
+
+def _indirect_mentions(cmd: str) -> list[str]:
+    """따옴표 안·명령 치환·변수 대입값에 나오는 보호 경로. 쓰기 명령이 있는 명령에서만 부른다(2026-10-01 레인 N, V2-4)."""
+    parts: list[str] = []
+    for rx in (_QUOTED, _SUBST, _ASSIGN_VALUE, _PS_ASSIGN_VALUE):
+        parts += [g for m in rx.finditer(cmd) for g in m.groups() if g]
+    return _protected_mentions(" ".join(parts))
 _PREFIX_WORDS = {"env", "command", "exec", "nohup", "time"}
 _CD_WORDS = {"cd", "pushd", "chdir", "set-location", "sl"}
 _SHELL_PUNCT = ";&|()<>\n"
@@ -411,6 +428,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
     out: list[str] = []
     base = root
     parsed: list[tuple[list[str], list[str], Path]] = []
+    writes = False   # 명령 어딘가에 쓰기(변경 동사·파일로 가는 리다이렉션)가 있는가
     for seg in segments:
         words: list[str] = []
         targets: list[str] = []
@@ -419,6 +437,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
             if _is_redirect(seg[i]):
                 if ">" in seg[i] and i + 1 < len(seg):  # 입력 리다이렉션(`<`, heredoc)은 읽기다
                     targets.append(seg[i + 1])
+                    writes = writes or seg[i + 1].lower() not in _NULL_SINKS
                 i += 2
                 continue
             words.append(seg[i])
@@ -434,9 +453,10 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
         write = _write_command(words)
         if verb in _CD_WORDS and args:
             base = base / args[-1]
-        elif (verb == "uv" and args[:1] == ["run"]) or verb == "uvx" or _INTERPRETER.match(verb):
+        elif (verb == "uv" and args[:1] == ["run"]) or verb == "uvx" or _INTERPRETER.match(verb) or verb in _NESTED:
             out += _protected_mentions(" ".join(seg))
         elif write is not None:
+            writes = True
             targets += write[0]
             out += _target_hits(write[1], base, root, covers=True)
         elif verb == "xargs" and _write_command(_xargs_inner(words)) is not None:
@@ -444,6 +464,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
             # 보호 경로 언급과, 같은 명령의 다른 명령이 받은 경로(find·ls·git ls-files 의 시작 경로 등)가 보호 경로를
             # 품는지를 본다. 경로 인자가 없는 find·ls 는 현재 폴더를 훑는다.
             inner = _write_command(_xargs_inner(words))
+            writes = True
             out += _protected_mentions(cmd.replace("\\", "/"))
             targets += inner[0]
             out += _target_hits(inner[1], base, root, covers=True)
@@ -461,8 +482,13 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
                 else:
                     rest = rest[1:]
             if rest and rest[0] in _GIT_WRITE:
+                writes = True
                 out += _target_hits(rest[1:], git_base, root)
         out += _target_hits(targets, base, root)
+    # 2026-10-01 레인 N(V2-4): 쓰기가 있는 명령에서는 단어로 나눈 쓰기 대상 밖에 숨은 보호 경로도 막는다
+    # (`RUN=<보호 실행>; rm -rf "$RUN"`, `rm $(echo <보호 경로>)`). 읽기만 하는 명령은 여기에 오지 않는다(F-7).
+    if writes:
+        out += _indirect_mentions(cmd.replace("\\", "/"))
     return out
 
 

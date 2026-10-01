@@ -123,6 +123,54 @@ class WriteFormsTest(TempRootCase):
                 "cat scorecard/rules/*.json",
             ], tool=tool)
 
+    def test_old_blocked_forms_blocked_again(self):
+        # 2026-10-01 레인 N(V2-4). 레인 H 이전(51873f8)에는 막히던 쓰기 형태. 경로가 변수·명령 치환·따옴표·중첩 셸 안에 있다.
+        P = OBS
+        bash = [
+            f"RUN={P}; sed -i s/a/b/ $RUN/draft.md",
+            f'RUN={P} && rm -rf "$RUN"',
+            f"export RUN={P}; echo x > $RUN/draft.md",
+            f"RUN={P}; mv $RUN/draft.md $RUN/draft.bak",
+            f"RUN={P}; cp /tmp/x $RUN/draft.md",
+            f"RUN={P}; truncate -s 0 $RUN/results.json",
+            f"rm $(echo {P}/draft.md)",
+            f"rm `echo {P}/draft.md`",
+            f'sh -c "echo x > {P}/draft.md"',
+            f'bash -c "echo x > {P}/draft.md"',
+            f"awk 'BEGIN{{print \"x\" > \"{P}/draft.md\"}}'",
+            f"echo x | dd of={P}/draft.md",
+            f'rm "{APPROVAL}"',
+        ]
+        self.assert_kinds("block", bash, tool="Bash")
+        ps = [
+            f"$run = '{P}'; 'x' > \"$run/draft.md\"",
+            f"$env:RUN = '{P}'; Remove-Item \"$env:RUN/draft.md\"",
+            f'powershell -Command "Set-Content {P}/draft.md x"',
+            f'pwsh -c "Remove-Item {P}/draft.md"',
+            f'cmd /c "del {P}\\draft.md"',
+            f"Set-Content -Path \"{RULE}\" -Value x",
+        ]
+        self.assert_kinds("block", ps, tool="PowerShell")
+
+    def test_reads_with_quotes_or_variables_still_pass(self):
+        # F-7 회귀 금지: 쓰기가 없거나 출력을 버리기만 하면 따옴표 안 보호 경로도 통과한다.
+        self.assert_kinds("allow", [
+            f"cat {APPROVAL}; echo done",
+            f'rg -n "approval.json" scripts 2>/dev/null',
+            f'rg -n "approval_id" {OBS} 2>&1',
+            f'git log --oneline -- "{OBS}"',
+            f'git commit -m "{APPROVAL} 처리 수정"',
+            f"RUN={OBS}; cat $RUN/draft.md",
+            f"cat {OBS}/results.json > /tmp/x.json",
+            f"cp -r {OBS} /tmp/obsreg-copy",
+            f'echo "done" > /tmp/log.txt',
+        ], tool="Bash")
+        self.assert_kinds("allow", [
+            f"Get-Content \"{APPROVAL}\"",
+            f"$p = '{OBS}'; Get-ChildItem $p",
+            f"Select-String -Path \"{BASELINE}\" -Pattern x 2>$null",
+        ], tool="PowerShell")
+
 
 class CaseInsensitiveTest(TempRootCase):
     """2026-10-01 레인 N(V2-3). Windows 는 대소문자를 가리지 않으므로 보호 경로 대조도 가리지 않는다."""

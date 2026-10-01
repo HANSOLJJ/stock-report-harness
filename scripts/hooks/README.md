@@ -42,7 +42,9 @@
 | `… \| xargs <변경 동사>` | 대상이 앞 명령의 출력이라 알 수 없다. 명령 전체에 보호 경로가 나오거나, 같은 명령의 다른 명령이 받은 경로(find·ls·git ls-files 등)가 보호 경로를 품으면 막는다(레인 J) |
 | 글롭(`*`·`?`·`[`)이 든 쓰기 대상 | 보호 경로(아직 없는 파일 포함)와 맞거나 파일 시스템에서 전개한 결과가 보호 경로면 막는다. `*` 는 `/` 를 넘지 않는다(`rm *.md` 는 `docs/` 아래와 맞지 않는다)(레인 J) |
 | 인터프리터 `python`·`python3`·`py`·`node`, `uv run …`, `uvx` | 보호 경로 문자열을 담기만 해도 막는다. 스크립트 안의 쓰기를 셸에서 가릴 수 없다 |
-| 읽기 명령 `cat`·`rg`·`grep`·`ls`·`head`·`git show`·`git diff`·`Get-Content`·`Select-String` 등 | 경로를 언급해도 통과한다 |
+| 중첩 셸 `bash`·`sh`·`zsh`·`powershell`·`pwsh`·`cmd` 등과 `awk`·`dd` | 인터프리터와 같다. 보호 경로 문자열을 담기만 해도 막는다(2026-10-01 레인 N, V2-4) |
+| 쓰기(위 변경 동사, 파일로 가는 리다이렉션, `xargs <변경 동사>`, `git checkout` 계열)가 하나라도 있는 명령의 따옴표 안 문자열·명령 치환(`$(…)`·백틱)·변수 대입값(`NAME=값`, `export NAME=값`, PowerShell `$name = 값`·`$env:NAME = 값`) | 보호 경로가 나오면 막는다(레인 N, V2-4). `RUN=<보호 실행>; rm -rf "$RUN"` 처럼 경로가 변수에 숨은 쓰기다. `/dev/null`·`$null`·`&1` 로 가는 리다이렉션은 쓰기로 세지 않는다 |
+| 읽기 명령 `cat`·`rg`·`grep`·`ls`·`head`·`git show`·`git diff`·`Get-Content`·`Select-String` 등 | 쓰기가 없으면 경로를 언급해도(따옴표·변수 안이어도) 통과한다 |
 
 - 앞에 붙은 `VAR=값`, `env`(옵션·`-u NAME` 포함), `command`·`exec`·`nohup`·`time` 은 건너뛰고 그 뒤의 동사를 본다.
 - `cd`·`pushd`·`Set-Location` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다(`cd output/<보호 실행> && rm draft.md` 도 막는다). `git -C <폴더>` 도 같다.
@@ -104,5 +106,6 @@
 ## 아직 하지 않은 것
 
 - Antigravity·Muse 배선은 확인 세 건(차단 표현, 페이로드 필드 이름, 훅 프로세스의 작업 디렉터리)이 끝난 뒤 별도 과제로 한다.
-- `protect_sensitive_files` 는 셸 문자열만 본다. PowerShell 변수(`$p = 'output/…'; Remove-Item $p`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(승인 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
+- `protect_sensitive_files` 는 셸 문자열만 본다. 경로가 변수·따옴표·명령 치환에 **통째로** 들어 있으면 쓰기와 함께 막지만(레인 N), 경로를 조각내 이어 붙이는 쓰기(`D=scorecard/rules; rm $D/v1.7.json`, `Join-Path`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(승인 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
+- 쓰기가 있는 명령은 따옴표 안의 보호 경로를 읽기 인자로 썼어도 막는다(`grep "approval.json" -r . > /tmp/out`). 쓰기와 읽기를 한 명령에 섞지 않거나 따옴표 없이 쓴다.
 - `xargs` 판정은 보수적이다. 대상 목록을 파일에서 읽는 `cat list.txt | xargs rm` 은 목록 안의 보호 경로를 볼 수 없어 통과한다.
