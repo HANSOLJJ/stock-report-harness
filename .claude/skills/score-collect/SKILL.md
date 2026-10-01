@@ -26,7 +26,7 @@ collect → 후보 선별(evidence.json) → triggers.json → research
    - 공시 수집(`--kind filings`)에는 `SEC_UA`(이름과 연락처를 담은 식별 문자열)가 필요하다. 사용자가 루트 `.env` 에 적거나 환경변수로 둔다. **영문으로 적어야 한다**(HTTP 머리글 제약이라 영문 밖 글자가 있으면 값을 보이지 않고 "SEC_UA 는 영문으로 적는다" 오류를 낸다). 뉴스 수집의 요청 식별자도 같은 검사를 거친다. 에이전트는 `.env` 를 만들거나 고치지 않는다. 비어 있거나 영문이 아니면 그 기업의 공시는 `failed` 로 남기고 나머지는 계속 돈다. 값을 저장소나 문서에 적지 않는다.
    - `--kind prices` 는 yfinance 로 ⑥ `price`·`market_cap` 관측을 `observations.json` 에 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다.
    - 종가가 NaN 인 날은 건너뛰고 기준일 이하의 **직전 확정 종가**와 그 날짜를 기록한다. 건너뛴 날짜는 수집 요약의 `skipped_nonfinite_close` 에 있으므로 보고에 옮긴다. 종가가 전부 NaN 이면 그 회사는 오류다.
-   - 가격 실패는 **회사 단위**다. 조회·관측 생성·중복(같은 기업·지표·기준일)·검증이 한 회사에서 실패하면 그 회사만 `failed` 로 남고 나머지는 기록된다. 부분 실패 뒤 다시 돌리면 빠진 회사만 들어간다. 실패 회사를 조용히 다른 값으로 채우지 않는다.
+   - 가격 실패는 **회사 단위**다. 조회·관측 생성·중복(같은 기업·지표·기준일)·검증이 한 회사에서 실패하면 그 회사만 `failed` 로 남고 나머지는 기록된다. 부분 실패 뒤 다시 돌리면 빠진 회사만 들어가고, 이미 기록된 회사는 `skipped_existing` 으로 표시되며 출처 항목에 새 티커 주소가 덧붙는다. 실패 회사를 조용히 다른 값으로 채우지 않는다.
    - 뉴스 질의는 `scorecard/companies.json` 의 `news_queries`(없으면 표시명과 티커)를 쓴다. `Meta`·`Oracle`·`Apple` 처럼 일반 단어와 겹치는 이름은 이 키로 질의를 좁혀 둔다(meta·oracle·apple 에 이미 있다). 질의가 넓어 엉뚱한 기사가 많으면 사용자에게 `news_queries` 를 좁히자고 제안한다.
    - 상장 12개사의 SEC CIK(`cik`)는 `companies.json` 에 기입돼 있다. 티커로 다시 확인하려면 `uv run --frozen python -X utf8 scripts/scorecard_cli.py resolve-cik [--company id] [--json]` 를 쓴다(`--apply` 는 레지스트리를 고치므로 사용자가 요청할 때만).
 3. `candidates.json` 을 읽고 factor 와 관련 있는 후보만 `evidence/evidence.json` 에 `status: candidate` 로 선별한다.

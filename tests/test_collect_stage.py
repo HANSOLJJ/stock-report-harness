@@ -225,12 +225,12 @@ class PricesTest(_SandboxTest):
         stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
         obs_before = (self.box.run_dir / "observations.json").read_bytes()
         src_before = (self.box.run_dir / "sources.json").read_bytes()
-        # 2026-10-01 레인 J: 중복은 회사 단위 failed 다. 기록할 것이 없으면 파일을 쓰지 않는다.
+        # 2026-10-01 V2-7: 같은 출처로 이미 기록된 회사는 실패가 아니라 skipped_existing 이다. 기록할 것이 없으면 파일을 쓰지 않는다.
         out = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
         rows = {r["company_id"]: r for r in out["prices"]}
         for cid in ("nvidia", "tsmc"):
-            self.assertEqual(rows[cid]["status"], "failed")
-            self.assertIn("덮어쓰지 않는다", rows[cid]["error"])
+            self.assertEqual(rows[cid]["status"], "skipped_existing")
+            self.assertNotIn("error", rows[cid])
         self.assertEqual((self.box.run_dir / "observations.json").read_bytes(), obs_before)
         self.assertEqual((self.box.run_dir / "sources.json").read_bytes(), src_before)
 
@@ -240,12 +240,20 @@ class PricesTest(_SandboxTest):
         only_nvda = self.box.dir / "nvda.json"
         only_nvda.write_text(json.dumps({"NVDA": quotes["NVDA"]}), encoding="utf-8")
         stages.collect(SLUG, kinds=("prices",), from_file=str(only_nvda), now=NOW)
-        out = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=NOW)
+        later = "2026-09-30T01:00:00Z"
+        out = stages.collect(SLUG, kinds=("prices",), from_file=str(QUOTES), now=later)
         self.assertEqual({r["company_id"]: r["status"] for r in out["prices"]},
-                         {"nvidia": "failed", "tsmc": "collected", "openai": "skipped_unlisted"})
+                         {"nvidia": "skipped_existing", "tsmc": "collected", "openai": "skipped_unlisted"})
         ids = [o["observation_id"] for o in load_json_strict(self.box.run_dir / "observations.json")["items"]]
         self.assertEqual(ids.count("nvidia.price.2026-09-29"), 1)
         self.assertIn("tsmc.price.2026-09-29", ids)
+        # 2026-10-01 V2-7: 나중에 들어간 회사의 시세 주소가 같은 출처 항목에 덧붙고, 첫 조회 시각은 그대로다.
+        yf = [s for s in load_json_strict(self.box.run_dir / "sources.json")["items"] if s["source_id"] == "SRC-YF-2026-09-29"]
+        self.assertEqual(len(yf), 1)
+        self.assertEqual(yf[0]["url"], "https://finance.yahoo.com/quote/NVDA")
+        self.assertEqual(yf[0]["publisher_url"], ["https://finance.yahoo.com/quote/NVDA", "https://finance.yahoo.com/quote/TSM"])
+        self.assertEqual(yf[0]["accessed_at"], NOW)
+        self.assertIn(f"재조회 {later}: TSM", yf[0]["note"])
         engine.load_context(SLUG)
 
     def test_invalid_observation_fails_that_company_only(self):

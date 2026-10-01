@@ -411,6 +411,10 @@ def _collect_prices(slug: str, run: dict[str, Any], registry: dict[str, dict[str
         if dry_run:
             rows.append({"company_id": cid, "status": "dry_run", "ticker": ticker, "price_as_of": price_as_of})
             continue
+        # 2026-10-01 V2-7: 같은 출처로 이미 기록된 회사는 다시 조회하지 않고 실패와 구분되는 상태로 낸다.
+        if any(o["company_id"] == cid and o.get("source_id") == source_id for o in observations["items"]):
+            rows.append({"company_id": cid, "status": "skipped_existing", "source_id": source_id})
+            continue
         try:
             if quotes is not None and ticker not in quotes:
                 raise ValueError(f"{from_file} 에 {ticker} 시세가 없다")
@@ -441,11 +445,31 @@ def _collect_prices(slug: str, run: dict[str, Any], registry: dict[str, dict[str
     validate_observations(observations, registry, slug)
     src_path = d / "sources.json"
     sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
-    upsert_sources(sources, [price_source_entry(price_as_of, tickers=tickers, accessed_at=now or utc_now_iso())])
+    _merge_price_source(sources, price_source_entry(price_as_of, tickers=tickers, accessed_at=now or utc_now_iso()))
     validate_sources(sources, slug)
     write_json(d / "observations.json", observations)
     write_json(src_path, sources)
     return rows
+
+
+def _merge_price_source(sources: dict[str, Any], entry: dict[str, Any]) -> None:
+    """SRC-YF 출처를 등록한다. 같은 id 가 이미 있으면 새 티커 주소를 publisher_url 에 덧붙이고 재조회 시각을 note 에 남긴다.
+
+    2026-10-01 V2-7: 부분 실패 뒤 다시 수집한 회사의 관측이 자기 시세 주소가 없는 출처를 가리키던 것을 막는다.
+    처음 조회 시각(accessed_at)과 첫 주소(url)는 바꾸지 않는다.
+    """
+    items = sources.setdefault("items", [])
+    for item in items:
+        if item["source_id"] != entry["source_id"]:
+            continue
+        urls = list(item.get("publisher_url") or [item["url"]])
+        added = [u for u in (entry.get("publisher_url") or [entry["url"]]) if u not in urls]
+        if added:
+            item["publisher_url"] = urls + added
+            more = f"재조회 {entry['accessed_at']}: " + ", ".join(u.rsplit("/", 1)[-1] for u in added)
+            item["note"] = f"{item['note']} · {more}" if item.get("note") else more
+        return
+    items.append(entry)
 
 
 def collect(
