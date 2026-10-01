@@ -1735,7 +1735,6 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_references(ctx, review_fm)}
 <footer id="disclaimer" aria-label="투자 유의사항">
 <p>{esc(DISCLAIMER)}</p>
-<p>정성적 평가이므로 1~3점 차이에 통계적 의미를 두지 않는다. 순위 자체보다 같은 규칙 버전 안에서 점수의 변화 방향을 추적하는 것이 목적이다.</p>
 <p>단위 — $M / $B / $T · 실행 {esc(ctx.slug)} · 승인 {esc(approval["approved_by"])} {esc(approval["approved_at"])} · 생성기 {GENERATOR}</p>
 </footer>
 </div>
@@ -1743,6 +1742,9 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </body>
 </html>
 """
+    # 2026-10-01 꼬리말의 "정성적 평가이므로 1~3점 차이에 통계적 의미를 두지 않는다. 순위 자체보다 같은 규칙 버전 안에서
+    # 점수의 변화 방향을 추적하는 것이 목적이다." 문장을 뺐다. v1.5 원문 문구를 옮긴 것인데, 사용자가 점수 차이를 읽는 법을
+    # 보고서가 정하지 않기로 했다(실행마다 자료 오류가 나오는 상태라 차이의 의미를 단정할 수 없다).
     document = re.sub(r"<th(?=[ >])", '<th scope="col"', document)
     used = sorted({m.group(0) for m in CODE_RE.finditer(document) if ctx.rules.decision(m.group(0)) is not None})
     document = link_decision_codes(document, set(used), GLOSSARY_SLOT, index_terms(ctx))
