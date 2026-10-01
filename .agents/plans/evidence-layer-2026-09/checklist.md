@@ -88,7 +88,9 @@
 - [x] 레인 J: 판단 수정 기능 (task `task_ae3a1a74216f`, dispatch `ctx_79ab07e8848b`, 터미널 `term_8c16cca4-3da4-4158-a9aa-4c535c8a3ec7`) + 수집기 수정(NaN 종가·회사별 실패·resolve-cik --json·SEC_UA 영문 검사·일반 단어 회사 news_queries·CIK 기입) + 정리(훅 쓰기 형태·render_md 130행·Muse 표지)
 - [ ] 레인 K: 문서(첫 방어선 위치 문구, 판단 수정 사용법)
 - [x] 레인 J 조율자 재현(병합 뒤): unittest 1146건 중 실패 1·오류 14(원자료 부재), 두 실행 approval_valid true·recompute 불변, companies.json 변경은 12개사 cik 와 meta·oracle·apple news_queries 뿐, check·node 15 통과
-- [ ] 레인 K (Sonnet) 문서. dispatch `ctx_a06adb492d13`, 터미널 `term_5ae329e4-4d55-4d61-855f-dea7ace943c6`
+- [x] 레인 K (Sonnet) 문서. dispatch `ctx_a06adb492d13`, 터미널 `term_5ae329e4-4d55-4d61-855f-dea7ace943c6`
 - [ ] 레인 L (Muse) 근거 평가 표본. dispatch `ctx_b79e5dabdabb`, 터미널 `term_c3babed2-dcd6-4cac-8201-c0e64d8e6a5c` (기동 뒤 붙여넣기로 멈춰 조율자가 Enter 별도 전송)
 - [ ] 레인 T (Antigravity) 원자료 테스트 건너뛰기. dispatch `ctx_969631797a3d`, 터미널 `term_4294af58-662b-4bef-8e31-d77deae20a0c`
 - [ ] 끝난 레인 워크트리 13개(S·A·B·C·D·E·F·G·V·H·I·M·J) 정리: 병합 안 된 커밋 0·미커밋 파일 0 확인, 사용자 확인 대기
+- [x] 레인 K 병합. score-research 스킬의 judge 안내는 지시서 소유 목록 누락이라 조율자가 보완
+- [ ] README 「지금 상태」 표(테스트 797건, 재승인 대기)가 2026-09-21 값이라 낡음. 마지막 레인(T·L) 병합 뒤 실제 수치로 갱신
