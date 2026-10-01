@@ -511,9 +511,72 @@ def _init_force_approved(cmd: str, root: Path) -> list[str]:
     return hits
 
 
+# 2026-10-01 레인 N(V2-1): 실행의 입력·산출물을 바꾸는 단계 명령. 맨 실행 이름도 `output/<이름>` 폴더로 풀어, 그 폴더에
+# 유효한 승인이 있으면 막는다. 무효 승인은 막지 않는다 — 사람이 승인 페이지에서 판단을 고친 뒤 에이전트가 다시 돌리는 흐름이다.
+_STAGE_WRITES = {"judge", "confirm", "calculate", "draft", "research", "review-template", "collect"}
+
+
+def _option_value(rest: list[str], name: str) -> str | None:
+    """argparse 처럼 줄여 쓴 옵션(`--k prices`, `--kind=prices`)의 값."""
+    for i, a in enumerate(rest):
+        key, sep, value = a.partition("=")
+        if len(key) >= 3 and key.startswith("--") and name.startswith(key):
+            return value if sep else (rest[i + 1] if i + 1 < len(rest) else "")
+    return None
+
+
+def _stage_changes_run(stage: str, rest: list[str]) -> bool:
+    """이 단계 명령이 실행 폴더의 승인 대상 파일을 바꾸는가. CLI 의 `protect_approved_run` 호출 조건과 같다."""
+    if stage == "review-template":
+        return any(len(a) >= 3 and "--force".startswith(a) for a in rest)
+    if stage == "collect":
+        if any(len(a) >= 3 and "--dry-run".startswith(a) for a in rest):
+            return False
+        return (_option_value(rest, "--kind") or "all") in ("prices", "all")
+    return stage in _STAGE_WRITES
+
+
+def _approval_is_valid(root: Path, name: str) -> bool:
+    """`output/<name>` 의 승인이 유효한가. 판정은 `scorecard.stages.approval_is_valid` 한 곳에 맡긴다(승인 해시 대조를
+    훅에 다시 쓰지 않는다). 판정하지 못하면 예외가 난다 — 호출자가 막는다."""
+    scripts = str(root / "scripts")
+    if scripts not in sys.path:
+        sys.path.insert(0, scripts)
+    from scorecard import stages
+    from scorecard.schema import load_json_strict
+
+    d = stages.run_dir(name)
+    if d.resolve() != (root / "output" / name).resolve():
+        raise RuntimeError(f"훅 루트의 output/{name} 와 scorecard 가 읽는 실행 폴더 {d} 가 다르다")
+    return stages.approval_is_valid(name, load_json_strict(d / "approval.json"))
+
+
+def _stage_on_approved(cmd: str, root: Path) -> list[str]:
+    """`scorecard_cli.py <단계> <실행>` 이 유효 승인 실행을 가리키면 그 이유들. 단계 명령일 때만 해시를 센다.
+
+    판정 중 예외는 여기서 잡아 막는다(fail-closed). `main` 까지 올라가면 fail-open 으로 통과되기 때문이다."""
+    hits: list[str] = []
+    for words in _shell_segments(cmd) or []:
+        for i, word in enumerate(words):
+            stage = words[i + 1] if i + 1 < len(words) else ""
+            if word.rsplit("/", 1)[-1] != "scorecard_cli.py" or not _stage_changes_run(stage, words[i + 2:]):
+                continue
+            for name in sorted({a.rstrip("/").rsplit("/", 1)[-1] for a in words[i + 2:] if not a.startswith("-")}):
+                d = root / "output" / name
+                try:
+                    if not name or not d.is_dir() or not any(n.lower() == "approval.json" for n in os.listdir(d)):
+                        continue
+                    if _approval_is_valid(root, name):
+                        hits.append(f"output/{name}: 승인이 유효한 실행에 {stage}")
+                except Exception as exc:  # noqa: BLE001 — 판정하지 못하면 막는다
+                    hits.append(f"output/{name}: 승인 유효성을 판정하지 못함({type(exc).__name__}: {exc}) — {stage}")
+    return hits
+
+
 # 승인·취소는 사람 행위다. 변경 기호가 없어도 명령 문자열에 있으면 막는다. confirm 은 막지 않는다 —
 # 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 한다.
 _APPROVAL_CMD = re.compile(r"scorecard_cli\.py\s+(?:approve|revoke)\b|stages\.(?:approve|revoke)\b")
+_IMPORT_BASELINE = re.compile(r"scorecard_cli\.py\s+import-baseline\b")
 
 
 def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
@@ -529,6 +592,13 @@ def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
         if approved:
             return block("승인된 실행을 init --force 로 덮어쓰면 승인 기록이 지워져 차단합니다: " + ", ".join(approved)
                          + ". 새 slug 로 init 한다. 승인된 실행의 재작성은 사람이 한다.")
+        staged = _stage_on_approved(cmd, root)
+        if staged:
+            return block("승인이 유효한 실행의 입력·산출물을 바꾸는 단계 명령이라 차단합니다(승인이 무효가 되거나 지워진다): "
+                         + "; ".join(staged) + ". 새 slug 로 init --from-run 해서 이어 간다. 승인된 실행의 재작성은 사람이 한다.")
+        if _IMPORT_BASELINE.search(cmd.replace("\\", "/")):
+            return block("import-baseline 은 보호 트리 scorecard/baseline/ 를 다시 쓴다. 기준선은 승인 해시 밖의 재빌드 입력이라 "
+                         "승인된 실행의 재빌드 리포트가 승인 없이 바뀐다. 사람이 한다.")
         violations += _shell_violations(cmd, root)
     if not violations:
         return allow()

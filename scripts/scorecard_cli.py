@@ -101,9 +101,12 @@ def cmd_add_company(args: argparse.Namespace) -> int:
 
 
 def cmd_import_baseline(args: argparse.Namespace) -> int:
-    from scorecard.baseline_import import DEFAULT_HTML, DEFAULT_MD, import_baseline
+    from scorecard.baseline_import import BASELINE_ID, DEFAULT_HTML, DEFAULT_MD, import_baseline
     from scorecard.engine import BASELINE_DIR, load_companies
+    from scorecard.stages import protect_baseline_consumers
 
+    # 2026-10-01 레인 N(V2-1): import_baseline 본체(baseline_import.py)는 이 레인의 소유가 아니라 CLI 에서 판정한다.
+    protect_baseline_consumers(BASELINE_ID)
     html_path = Path(args.html) if args.html else DEFAULT_HTML
     md_path = Path(args.md) if args.md else DEFAULT_MD
     report = import_baseline(html_path, md_path, BASELINE_DIR / "v1.5", load_companies())
@@ -132,11 +135,10 @@ def cmd_init(args: argparse.Namespace) -> int:
     # 2026-09-21 ADD-03. 제목은 실행마다 달라야 한다. 이어받기에서 기본값으로 떨어지면 두 실행이 같은 제목을 갖는다.
     if args.from_run and not args.title:
         print(f"[경고] --title 을 주지 않아 이전 실행 {args.from_run} 의 제목을 그대로 쓴다. 실행마다 제목을 달리하는 편이 낫다")
-    from scorecard.engine import run_dir
     from scorecard.stages import claim_lock
 
     claim_lock(args.slug, "init", take_lock=args.take_lock, write=False)
-    had_approval = args.force and (run_dir(args.slug) / "approval.json").is_file()
+    # 승인된 실행을 --force 로 덮어쓸 때의 거부(에이전트)·경고(사람)는 init_run 의 protect_approved_run 이 낸다(2026-10-01 레인 N).
     paths = init_run(
         args.slug,
         as_of=args.as_of,
@@ -157,8 +159,6 @@ def cmd_init(args: argparse.Namespace) -> int:
     claim_lock(args.slug, "init", take_lock=args.take_lock)
     for name, path in paths.items():
         print(f"{name}: {rel(path)}")
-    if had_approval:   # 에이전트 세션은 init_run 이 거부했다. 여기 오는 것은 사람 세션이다(2026-10-01 레인 H, F-1)
-        print("[경고] 승인된 실행을 --force 로 덮어써 승인 기록이 지워졌다(approval.json 삭제). 다시 리뷰한 뒤 사람이 승인 페이지에서 승인해야 한다")
     if args.from_run:
         print(f"다음: research 로 새 기업만 조사한 뒤 "
               f"uv run --frozen python -X utf8 scripts/scorecard_cli.py diff {args.slug} --against {args.from_run} 으로 기존 기업 불변을 확인한다")

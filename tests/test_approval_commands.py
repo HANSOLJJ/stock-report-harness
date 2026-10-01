@@ -218,7 +218,8 @@ class ApproveRevokeTest(FlowBase):
         self.assertEqual(sorted(approval["hashes"]), sorted(stages.current_hashes(SLUG)))
         self.assertTrue(stages.summary(SLUG)["approval"]["valid"])
 
-        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="user")
+        with human_env():   # 유효 승인 실행의 근거 확정은 사람 세션만 한다(2026-10-01 레인 N, V2-1)
+            stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="user")
         self.assertEqual(stages.summary(SLUG)["approval"], {"exists": True, "valid": False, "approved_by": "user", "approved_at": approval["approved_at"]})
 
         log = stages.revoke(SLUG, by="user", note="근거 확정으로 해시가 바뀜", allow_agent_session=True)

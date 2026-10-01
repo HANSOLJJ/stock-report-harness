@@ -205,11 +205,9 @@ def init_run(
     if d.exists() and not force:
         raise SchemaError(f"실행 디렉터리가 이미 있음: {rel(d)} (--force 로 덮어쓰기)")
     # 2026-10-01 레인 H(F-1): 덮어쓰면 아래에서 approval.json 이 지워진다. 승인 파괴는 사람만 한다.
-    if force and (d / "approval.json").is_file():
-        markers = agent_session_markers()
-        if markers:
-            raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 승인된 실행 {rel(d)} 를 --force 로 덮어쓸 수 없다. "
-                              "덮어쓰면 승인 기록이 지워진다 — 새 slug 로 init 하거나 사람이 한다")
+    # 2026-10-01 레인 N(V2-1): 다른 단계와 같은 함수로 판정한다. init 은 무효 승인도 지우므로 파일 존재만 본다.
+    if force:
+        protect_approved_run(slug, "--force 로 재생성", any_approval=True)
     registry = load_companies()
 
     prior_run: dict[str, Any] | None = None
@@ -439,6 +437,8 @@ def collect(
         raise SchemaError(f"--since 는 YYYY-MM-DD ({since!r})") from exc
     if since > until:
         raise SchemaError(f"후보 창이 비어 있다: since {since} > info_cutoff {until}")
+    if "prices" in kinds and not dry_run:   # 가격만 관측·출처(승인 해시 대상)를 바로 쓴다
+        protect_approved_run(slug, "가격 수집(collect --kind prices)")
 
     summary: dict[str, Any] = {"run_id": slug, "window": {"since": since, "until": until}, "dry_run": dry_run,
                                "news": [], "filings": [], "prices": []}
@@ -533,6 +533,7 @@ def register_evidence_sources(slug: str) -> list[str]:
 def research(slug: str, *, register: bool = True) -> Path:
     paths = run_paths(slug)
     _require_file(paths.plan, "plan")
+    protect_approved_run(slug, "research 재생성")
     if register:
         register_evidence_sources(slug)
     ctx = load_context(slug)
@@ -549,17 +550,26 @@ def calculate(slug: str) -> tuple[Path, Path, dict[str, Any]]:
     paths = run_paths(slug)
     _require_file(paths.plan, "plan")
     _require_file(paths.research, "research")
+    was_valid = protect_approved_run(slug, "재계산(calculate)")
     ctx = load_context(slug)
     results = compute(ctx)
     path = write_results(slug, results)
     scores, _obs, _trig = load_baseline(ctx.run["baseline_id"])
     preview_path = paths.preview
     preview_path.write_text(render_preview(ctx, results, scores), encoding="utf-8", newline="\n")
-    stale_approval = run_dir(slug) / "approval.json"
-    if stale_approval.exists():
+    if approval_file_present(run_dir(slug)):
+        stale_approval = run_dir(slug) / "approval.json"
         approval = load_json_strict(stale_approval)
-        if approval.get("hashes", {}).get("results") != results["results_hash"]:
+        approved_results = (approval.get("hashes") or {}).get("results")
+        if approved_results != results["results_hash"]:
+            # 2026-10-01 레인 N(V2-1): 지운 사실을 출력하고 revocations.jsonl 에 남긴다. 원인은 revoked_by·note 로 가린다.
+            reason = ("유효했던 승인을 재계산 결과가 바꿔 지웠다" if was_valid
+                      else "무효 승인 정리: 승인 뒤 입력이 바뀐 실행을 재계산해 결과가 달라졌다")
+            _append_revocation(slug, approval, by="calculate",
+                               note=f"{reason}(승인 results {str(approved_results)[:16]}… → 지금 {results['results_hash'][:16]}…)")
             stale_approval.unlink()
+            print(f"[알림] 재계산 결과 해시가 승인과 달라 approval.json 을 지웠다({reason}). "
+                  f"기록: {rel(run_dir(slug) / 'revocations.jsonl')}. 다시 리뷰한 뒤 사람이 승인 페이지에서 승인한다")
     return path, preview_path, results
 
 
@@ -570,6 +580,7 @@ def draft(slug: str) -> Path:
     _require_file(paths.plan, "plan")
     _require_file(paths.research, "research")
     _require_file(results_path(slug), "results.json (calculate 먼저)")
+    protect_approved_run(slug, "초안 재생성(draft)")
     ctx = load_context(slug)
     results = load_results(slug)
     if results["input_hashes"] != ctx.hashes:
@@ -590,6 +601,8 @@ def review_template(slug: str, *, force: bool = False) -> Path:
     path = paths.review
     if path.exists() and not force:
         raise SchemaError(f"리뷰 파일이 이미 있음: {rel(path)} (--force 로 템플릿 재생성)")
+    if force:
+        protect_approved_run(slug, "리뷰 템플릿 재생성(review-template --force)")
     ctx = load_context(slug)
     results = load_results(slug)
     text = render_review_template(ctx, results, draft_hash=sha256_file(draft_path))
@@ -620,6 +633,62 @@ def refuse_agent_session(action: str, *, allow_agent_session: bool = False) -> N
     if markers and not allow_agent_session:
         raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 {action}할 수 없다. "
                           "사람이 `node server.js --approvals` 승인 페이지에서 한다")
+
+
+def protect_approved_run(slug: str, action: str, *, any_approval: bool = False) -> bool:
+    """승인된 실행의 입력·산출물을 바꾸는 단계 앞에서 부른다. 2026-10-01 레인 N(V2-1): 승인 파괴는 사람만 한다.
+
+    유효한 승인이 있으면 에이전트 세션은 거부하고 사람 세션은 경고를 낸 뒤 진행한다. 무효 승인은 막지 않는다 — 사람이 승인
+    페이지에서 판단을 고친 뒤 에이전트가 research → calculate → draft → review 를 다시 돌리는 흐름이다. 유효성을 판정하지
+    못하면 에이전트는 거부한다. `any_approval` 은 `init --force` 처럼 무효 승인까지 지우는 단계가 쓴다(파일 존재만 본다).
+    세션 판정은 `agent_session_markers` 한 곳이고, 돌려주는 값은 유효한(any_approval 이면 있던) 승인을 지나쳤는지다."""
+    d = run_dir(slug)
+    if any_approval:
+        if not (d / "approval.json").is_file():
+            return False
+        state = "승인된"
+    else:
+        if not approval_file_present(d):
+            return False
+        try:
+            if not approval_is_valid(slug, load_json_strict(d / "approval.json")):
+                return False
+            state = "승인이 유효한"
+        except SchemaError as exc:
+            state = f"승인 유효성을 판정할 수 없는({exc})"
+    markers = agent_session_markers()
+    if markers:
+        raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 {state} 실행 {rel(d)} 에서 {action}할 수 없다. "
+                          "승인 기록이 지워진다(또는 무효가 된다) — 새 slug 로 init(--from-run) 하거나 사람이 한다")
+    print(f"[경고] {state} 실행 {rel(d)} 에서 {action}한다. 승인 기록이 지워지거나 무효가 된다 — 다시 리뷰한 뒤 사람이 승인 페이지에서 승인한다")
+    return True
+
+
+def protect_baseline_consumers(baseline_id: str) -> list[str]:
+    """기준선을 다시 이관하기 전에 부른다. 2026-10-01 레인 N(V2-1). 기준선은 승인 해시 밖의 재빌드 입력이라 바꿔도 승인이
+    유효한 채 남고 재빌드 리포트만 달라진다. 그 기준선을 쓰는 유효 승인 실행이 있으면 에이전트 세션은 거부하고 사람 세션은
+    경고한다. 세션 판정은 `agent_session_markers` 한 곳이다. 돌려주는 값은 그 실행들이다."""
+    out_dir = run_dir("_").parent
+    consumers = []
+    for d in sorted(p for p in out_dir.iterdir() if p.is_dir()) if out_dir.is_dir() else []:
+        if not approval_file_present(d) or not (d / "run.json").is_file():
+            continue
+        try:
+            uses = load_json_strict(d / "run.json").get("baseline_id") == baseline_id
+            valid = uses and approval_is_valid(d.name, load_json_strict(d / "approval.json"))
+        except SchemaError:
+            valid = uses = True   # 판정하지 못하면 소비하는 유효 승인으로 본다
+        if uses and valid:
+            consumers.append(d.name)
+    if not consumers:
+        return []
+    markers = agent_session_markers()
+    if markers:
+        raise SchemaError(f"에이전트 세션({', '.join(markers)})에서는 기준선 {baseline_id} 를 다시 이관할 수 없다. "
+                          f"이 기준선을 쓰는 승인 실행 {consumers} 의 재빌드 리포트가 승인 없이 바뀐다 — 사람이 한다")
+    print(f"[경고] 기준선 {baseline_id} 를 쓰는 승인 실행 {consumers} 가 있다. 승인 해시는 기준선을 담지 않아 승인이 유효한 채 "
+          "재빌드 리포트가 바뀔 수 있다 — 바뀐 기준선을 git 으로 확인한다")
+    return consumers
 
 
 def lock_owner(env: Mapping[str, str] | None = None) -> str:
@@ -763,12 +832,18 @@ def revoke(slug: str, *, by: str, note: str, allow_agent_session: bool = False) 
     if not approval_file_present(path.parent):
         raise SchemaError(f"취소할 승인이 없다: {rel(path)}")
     approval = validate_approval(load_json_strict(path), slug)
-    entry = {"revoked_by": by.strip(), "revoked_at": utc_now_iso(), "note": note.strip(),
-             "approval_id": approval["approval_id"], "hashes": approval["hashes"]}
+    log = _append_revocation(slug, approval, by=by.strip(), note=note.strip())
+    path.unlink()
+    return log
+
+
+def _append_revocation(slug: str, approval: dict[str, Any], *, by: str, note: str) -> Path:
+    """`revocations.jsonl` 에 한 줄을 더한다. 사람의 취소(`revoke`)와 재계산의 승인 삭제(`calculate`)가 같은 형식을 쓴다."""
+    entry = {"revoked_by": by, "revoked_at": utc_now_iso(), "note": note,
+             "approval_id": approval.get("approval_id"), "hashes": approval.get("hashes")}
     log = run_dir(slug) / "revocations.jsonl"
     with log.open("a", encoding="utf-8", newline="\n") as fh:
         fh.write(json.dumps(entry, ensure_ascii=False, sort_keys=True) + "\n")
-    path.unlink()
     return log
 
 
@@ -799,6 +874,7 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
     unknown = [e for e in ids + rejects if e not in have]
     if unknown:
         raise SchemaError(f"evidence.json 에 없는 근거 ID: {unknown}")
+    protect_approved_run(slug, "근거 확정·거부(confirm)")
     reviewer = (reviewer or "").strip() or (os.environ.get("SCORECARD_AGENT") or "").strip() or getpass.getuser()
     reviewed_at = reviewed_at or utc_now_iso()[:10]   # UTC 날짜
     confirmed, already = [], []
@@ -852,6 +928,7 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
                                       and all(isinstance(e, str) and e.strip() for e in changes["evidence"])):
         raise SchemaError("evidence 는 비어 있지 않은 문장 목록이어야 한다")
 
+    protect_approved_run(slug, "판단 수정(judge)")
     path = run_dir(slug) / "judgments.json"
     original = path.read_bytes()
     payload = load_json_strict(path)

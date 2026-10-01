@@ -52,7 +52,9 @@
 
 셸 명령에 `scorecard_cli.py approve`, `scorecard_cli.py revoke`, `stages.approve`, `stages.revoke` 가 있으면 변경 기호와 무관하게 막는다. 승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. `confirm` 은 막지 않는다. 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 하기 때문이다. 훅은 둘째 방어선이고, 첫째는 `scorecard.stages.approve`·`revoke` **함수 본체** 가 에이전트 세션을 거부하는 것이다(2026-10-01 레인 H). CLI 든 import 든 같은 판정(`scorecard.stages.agent_session_markers`)을 거친다. 테스트만 키워드 인자 `allow_agent_session=True` 로 이 거부를 끈다.
 
-`scorecard_cli.py init <slug> … --force` 는 `output/<slug>/approval.json` 이 있으면 막는다(2026-10-01 레인 H). 덮어쓰면 승인 기록이 지워지기 때문이다. 슬러그가 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더로 보고, argparse 의 줄임(`--fo`)도 `--force` 로 본다. `stages.init_run` 도 같은 경우 에이전트 세션을 거부하고, 사람 세션에서는 CLI 가 승인 기록이 지워졌다고 경고한다.
+`scorecard_cli.py init <slug> … --force` 는 `output/<slug>/approval.json` 이 있으면 막는다(2026-10-01 레인 H). 덮어쓰면 승인 기록이 지워지기 때문이다. 슬러그가 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더로 보고, argparse 의 줄임(`--fo`)도 `--force` 로 본다. `stages.init_run` 도 같은 경우 에이전트 세션을 거부하고, 사람 세션에는 경고한다.
+
+실행의 입력·산출물을 바꾸는 단계 명령 `scorecard_cli.py judge`·`confirm`·`calculate`·`draft`·`research`·`review-template --force`·`collect`(`--kind prices`·`all`·생략, `--dry-run` 이 아닐 때)가 **유효한 승인** 이 있는 실행을 가리키면 막는다(2026-10-01 레인 N, V2-1). 실행 이름은 `init --force` 와 같이 맨 이름·`output/<이름>` 경로 모두 마지막 경로 조각을 `output/` 아래 폴더로 푼다. 유효성은 훅이 다시 계산하지 않고 `scorecard.stages.approval_is_valid` 를 불러 판정한다. 그래서 단계 명령이 승인 파일이 있는 실행을 가리킬 때만 해시를 센다. 판정하지 못하면(가져오기 실패, 폴더 불일치, 형식 오류) 훅 함수 안에서 예외를 잡아 막는다(fail-closed). 무효 승인은 막지 않는다. 사람이 승인 페이지에서 판단을 고치면 승인이 무효가 되고, 에이전트가 `research → calculate → draft → review` 를 다시 돌려야 하기 때문이다. 이때 `calculate` 가 무효 승인 파일을 지우면 그 사실을 출력하고 `revocations.jsonl` 에 `revoked_by: "calculate"` 로 남긴다. 같은 판정을 단계 함수 본체(`scorecard.stages.protect_approved_run`)도 하므로 import 로 불러도 에이전트 세션은 거부되고, 사람 세션은 경고를 받고 진행한다. `scorecard_cli.py import-baseline` 은 보호 트리 `scorecard/baseline/` 를 다시 쓰므로 훅이 항상 막고, CLI 도 그 기준선을 쓰는 유효 승인 실행이 있으면 에이전트 세션을 거부한다(`stages.protect_baseline_consumers`).
 
 ## 실행 잠금 (`enforce_plan`)
 
