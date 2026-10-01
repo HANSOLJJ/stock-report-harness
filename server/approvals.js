@@ -138,7 +138,7 @@ function renderEvidenceCard(item, ctx) {
     item.excerpt && item.excerpt !== item.title ? `<dt>발췌</dt><dd class="muted">${escapeHtml(item.excerpt)}</dd>` : '',
   ].join('');
   return `
-      <div class="ev-card${confirmed ? ' ev-confirmed' : ''}" data-group="${escapeHtml(cid)}">
+      <div class="ev-card${confirmed ? ' ev-confirmed' : ''}" data-group="${escapeHtml(cid)}" id="ev-${escapeHtml(eid)}">
         <input type="checkbox" name="evidence" value="${escapeHtml(eid)}" id="chk_${escapeHtml(eid)}" checked aria-label="${escapeHtml(eid)} 확정" />
         <div class="ev-body">
           <div class="ev-meta">${factorChips(item.factors)}
@@ -358,13 +358,110 @@ function renderJudgeForm(runId, j, choices, formId) {
             <label for="${formId}_by">수정자 이름</label>
             <input type="text" id="${formId}_by" name="by" required placeholder="수정자 이름" />
           </div>
-          <div class="form-group">
-            <label for="${formId}_code">일회용 코드 (6자리)</label>
-            <input type="text" id="${formId}_code" name="code" required pattern="[0-9]{6}" maxlength="6" placeholder="터미널 확인" />
-          </div>
         </div>
         <button type="submit" class="btn btn-primary">판단 수정 제출</button>
       </form>`;
+}
+
+// 2026-10-01 사용자 요청: research 뒤 에이전트가 낸 판단 변경 제안. 사람은 반영·거부만 누른다. 거부는 사유가 필수다.
+const PROPOSAL_ID_REGEX = /^PRP-\d{3}$/;
+const PROPOSAL_STATUS_LABELS = { pending: '결정 전', accepted: '반영됨', rejected: '거부됨' };
+
+function pairsToMap(pairs) {
+  const m = {};
+  for (const pr of (Array.isArray(pairs) ? pairs : [])) m[pr.key] = pr.value;
+  return m;
+}
+
+function proposalChangeHtml(pr) {
+  const before = pr.before || {};
+  const beforeInputs = pairsToMap(before.inputs);
+  const changes = Array.isArray(pr.changes) ? pr.changes : [];
+  const rows = changes.map((c) => {
+    const from = c.key === 'score' ? before.score : beforeInputs[c.key];
+    const label = c.key === 'score' ? '점수' : inputLabel(c.key);
+    return `<li><span class="muted">${escapeHtml(label)}</span> <strong>${escapeHtml(from === undefined || from === null ? '없음' : valueText(from))}</strong> → <strong class="to">${escapeHtml(valueText(c.value))}</strong></li>`;
+  }).join('');
+  let total = '';
+  if (before.kind === 'grade' || pr.edit_kind === 'grade') {
+    const after = Object.assign({}, beforeInputs, pairsToMap(changes));
+    const a0 = Number(beforeInputs.A); const h0 = Number(beforeInputs.H);
+    const a1 = Number(after.A); const h1 = Number(after.H);
+    if ([a0, h0, a1, h1].every(Number.isInteger)) {
+      total = `<li><span class="muted">⑤ 점수</span> <strong>${3 + a0 + h0}점</strong> → <strong class="to">${3 + a1 + h1}점</strong></li>`;
+    }
+  }
+  return rows || total ? `<ul class="prop-changes">${rows}${total}</ul>` : '<p class="muted">판정 값은 그대로 두고 근거 문장만 고칩니다.</p>';
+}
+
+function proposalEvidenceDiffHtml(pr, ctx) {
+  if (!Array.isArray(pr.evidence_after)) return '';
+  const before = Array.isArray(pr.before && pr.before.evidence) ? pr.before.evidence : [];
+  const after = pr.evidence_after;
+  const removed = before.filter((s) => !after.includes(s));
+  const added = after.filter((s) => !before.includes(s));
+  const same = after.length - added.length;
+  const line = (cls, mark, s) => `<li class="${cls}"><span class="mark">${mark}</span> ${linkTerms(escapeHtml(s), ctx)}</li>`;
+  return `
+        <div class="prop-label">근거 문장 바뀌는 줄 <span class="muted">(그대로 두는 줄 ${same}개)</span></div>
+        <ul class="prop-diff">${removed.map((s) => line('del', '−', s)).join('')}${added.map((s) => line('add', '+', s)).join('')}</ul>`;
+}
+
+function renderProposalSection(data, ctx) {
+  const runId = data.run_id || '';
+  const proposals = Array.isArray(data.proposals) ? data.proposals : [];
+  if (proposals.length === 0) {
+    return '<p class="form-desc">에이전트가 낸 판단 변경 제안이 없습니다. 판단을 직접 고치려면 아래 "전체 판단 표" 를 씁니다.</p>';
+  }
+  const pending = proposals.filter((pr) => pr.status === 'pending').length;
+  const cards = proposals.map((pr) => {
+    const cited = (Array.isArray(pr.evidence_ids) ? pr.evidence_ids : [])
+      .map((eid) => `<a class="term" href="#ev-${escapeHtml(eid)}">${escapeHtml(eid)}</a>`).join(', ');
+    let actions = '';
+    if (pr.status === 'pending' && pr.stale) {
+      actions = '<div class="warning-banner">이 제안을 쓴 뒤 판단이 바뀌어 반영할 수 없습니다. 사유를 적어 거부하고 에이전트에게 다시 제안받으세요.</div>';
+    }
+    if (pr.status === 'pending') {
+      const fid = `prop-${escapeHtml(pr.proposal_id)}`;
+      actions += `
+        <div class="prop-actions">
+          ${pr.stale ? '' : `<form method="POST" action="/approve/${escapeHtml(runId)}/proposal" class="prop-form">
+            <input type="hidden" name="id" value="${escapeHtml(pr.proposal_id)}" />
+            <input type="hidden" name="decision" value="accept" />
+            <input type="text" name="note" placeholder="메모 (선택)" aria-label="${escapeHtml(pr.proposal_id)} 반영 메모" />
+            <button type="submit" class="btn btn-primary">반영</button>
+          </form>`}
+          <button type="button" class="btn btn-danger" data-open-reject="${fid}">거부</button>
+          <form method="POST" action="/approve/${escapeHtml(runId)}/proposal" class="prop-form prop-reject" id="${fid}" hidden>
+            <input type="hidden" name="id" value="${escapeHtml(pr.proposal_id)}" />
+            <input type="hidden" name="decision" value="reject" />
+            <label for="${fid}-note">거부 사유 (필수)</label>
+            <textarea id="${fid}-note" name="note" rows="2" required placeholder="왜 거부하는지. 다음 실행에서 같은 제안이 올라올 때 참고합니다"></textarea>
+            <button type="submit" class="btn btn-danger">거부 확정</button>
+          </form>
+        </div>`;
+    } else {
+      actions = `<div class="prop-decided muted">${escapeHtml(PROPOSAL_STATUS_LABELS[pr.status] || pr.status)} · ${escapeHtml(pr.decided_by || '-')} · ${escapeHtml(pr.decided_at || '-')}${pr.decision_note ? ` · ${pr.status === 'rejected' ? '거부 사유' : '메모'}: ${escapeHtml(pr.decision_note)}` : ''}</div>`;
+    }
+    return `
+      <div class="prop-card prop-${escapeHtml(pr.status)}" id="proposal-${escapeHtml(pr.proposal_id)}">
+        <div class="judge-head">
+          <h3>${escapeHtml(pr.display_name || pr.company_id)}</h3>${factorChips([pr.factor])}
+          <span class="badge${pr.status === 'accepted' ? ' badge-ok' : pr.status === 'rejected' ? ' badge-warn' : ''}">${escapeHtml(PROPOSAL_STATUS_LABELS[pr.status] || pr.status)}</span>
+          <span class="muted">${escapeHtml(pr.proposal_id)} · 제안 ${escapeHtml(pr.proposed_by)} · ${escapeHtml(pr.proposed_at)}</span>
+        </div>
+        <div class="prop-label">바뀌는 값</div>
+        ${proposalChangeHtml(pr)}
+        ${proposalEvidenceDiffHtml(pr, ctx)}
+        <div class="prop-label">사유</div>
+        <p class="prop-reason">${linkTerms(escapeHtml(pr.reason), ctx)}</p>
+        ${cited ? `<div class="muted">인용 근거: ${cited}</div>` : ''}
+        ${actions}
+      </div>`;
+  }).join('');
+  return `
+    <p class="form-desc">에이전트가 research 뒤 바꾸자고 낸 판단입니다. "반영" 을 누르면 그대로 판단을 고치고 인용 근거를 판단에 붙입니다. "거부" 는 사유를 적어야 합니다. 결정 전 ${pending}건.</p>
+    ${cards}`;
 }
 
 // 판단 수정 절. factor 탭을 고르면 그 factor 의 모든 기업 판단을 카드로 나란히 보이고(Q03), 카드에서 수정 칸을 연다.
@@ -717,6 +814,24 @@ function renderSummaryPage(data, options = {}) {
     .field-help { font-size: 12px; color: #64748b; margin-bottom: 4px; }
     .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0 12px; }
     .badge-warn { border-color: #f59e0b; color: #b45309; background: #fffbeb; }
+    .prop-card { border: 1px solid #c7d2fe; border-left: 4px solid #6366f1; border-radius: 8px; padding: 12px 14px; margin-top: 10px; }
+    .prop-card.prop-accepted { border-left-color: #16a34a; border-color: #bbf7d0; }
+    .prop-card.prop-rejected { border-left-color: #f59e0b; border-color: #fde68a; }
+    .prop-label { margin-top: 10px; font-size: 12px; font-weight: 700; color: #475569; }
+    .prop-changes { margin: 4px 0 0; padding-left: 18px; font-size: 14px; }
+    .prop-changes .to { color: #1d4ed8; }
+    .prop-diff { list-style: none; margin: 4px 0 0; padding: 0; font-size: 13px; }
+    .prop-diff li { padding: 4px 8px; border-radius: 4px; margin-bottom: 3px; overflow-wrap: anywhere; }
+    .prop-diff li.del { background: #fef2f2; color: #991b1b; text-decoration: line-through; }
+    .prop-diff li.add { background: #f0fdf4; color: #166534; }
+    .prop-diff .mark { font-weight: 700; margin-right: 4px; }
+    .prop-reason { margin: 4px 0; }
+    .prop-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; margin-top: 10px; }
+    .prop-form { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .prop-form input[type=text] { padding: 7px 8px; border: 1px solid #cbd5e1; border-radius: 4px; min-width: 200px; }
+    .prop-reject { flex-basis: 100%; flex-direction: column; align-items: stretch; }
+    .prop-reject textarea { width: 100%; padding: 8px; border: 1px solid #fca5a5; border-radius: 4px; font: inherit; }
+    .prop-decided { margin-top: 8px; }
     a.term { color: #1d4ed8; text-decoration: underline dotted; text-underline-offset: 2px; }
     .ref-list { display: grid; grid-template-columns: 140px 1fr; gap: 6px 14px; margin: 0; font-size: 13px; }
     .ref-list dt { font-weight: 700; color: #1e3a8a; scroll-margin-top: 240px; }
@@ -789,18 +904,20 @@ function renderSummaryPage(data, options = {}) {
       <input type="hidden" name="candidate_ids" value="${escapeHtml(candidateIds)}" />
       ${evidenceGroups || '<p>근거 항목이 없습니다.</p>'}
       <div style="margin-top: 14px;">
-        <div class="form-group">
-          <label for="confirm_code">일회용 코드 (6자리):</label>
-          <input type="text" id="confirm_code" name="code" required pattern="[0-9]{6}" maxlength="6" placeholder="터미널 확인" />
-        </div>
         <button type="submit" name="confirm_action" value="apply" class="btn btn-primary">선택 근거 확정 / 미선택 제외</button>
       </div>
     </form>
   </section>
 
+  <!-- (5) 판단 변경 제안 -->
+  <section id="proposals">
+    <h2>5. 판단 변경 제안</h2>
+    ${renderProposalSection(data, termCtx)}
+  </section>
+
   <!-- (5) 활성 트리거 표 -->
   <section>
-    <h2>5. 모니터링 활성 트리거</h2>
+    <h2>6. 모니터링 활성 트리거</h2>
     <div class="table-wrapper">
       <table>
         <thead>
@@ -822,13 +939,13 @@ function renderSummaryPage(data, options = {}) {
 
   <!-- (6) 미결 규칙 결정 -->
   <section>
-    <h2>6. 미결 규칙 결정 (Pending Decisions)</h2>
+    <h2>7. 미결 규칙 결정 (Pending Decisions)</h2>
     ${pendingDecisionsContent}
   </section>
 
   <!-- (7) 지문(해시) 목록 -->
   <section>
-    <h2>7. 무결성 검증 지문 (Hashes)</h2>
+    <h2>8. 무결성 검증 지문 (Hashes)</h2>
     <div class="table-wrapper">
       <table>
         <thead>
@@ -843,7 +960,7 @@ function renderSummaryPage(data, options = {}) {
 
   <!-- (8) 정성 판단 수정 -->
   <section>
-    <h2>8. 정성 판단 수정</h2>
+    <h2>9. 전체 판단 표 (정성 판단 수정)</h2>
     ${renderJudgeSection(data, judgeFactor, judgeCompany, termCtx)}
   </section>
 
@@ -855,7 +972,7 @@ function renderSummaryPage(data, options = {}) {
 
   <!-- (9) 승인 / 취소 폼 -->
   <section>
-    <h2>9. 실행 승인 / 승인 취소</h2>
+    <h2>10. 실행 승인 / 승인 취소</h2>
     ${approvalForm}
   </section>
   <script>
@@ -887,6 +1004,13 @@ function renderSummaryPage(data, options = {}) {
         b.setAttribute('aria-expanded', String(open));
         b.textContent = open ? '수정 칸 닫기' : '이 판단 고치기';
         if (open) { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+    document.querySelectorAll('[data-open-reject]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = document.getElementById(b.getAttribute('data-open-reject'));
+        f.hidden = !f.hidden;
+        if (!f.hidden) { f.querySelector('textarea').focus(); }
       });
     });
     var openForm = document.getElementById('judge-form');
@@ -1007,7 +1131,7 @@ function createApprovals(options = {}) {
 
     if (req.method === 'POST' && segments.length === 2) {
       const action = segments[1];
-      if (!['confirm', 'approve', 'revoke', 'judge'].includes(action)) {
+      if (!['confirm', 'approve', 'revoke', 'judge', 'proposal'].includes(action)) {
         sendText(res, 404, 'Not Found: Invalid action');
         return true;
       }
@@ -1021,7 +1145,9 @@ function createApprovals(options = {}) {
         const params = new URLSearchParams(rawBody);
         const submittedCode = (params.get('code') || '').trim();
 
-        if (submittedCode !== code.trim()) {
+        // 2026-10-01 사용자 요청: 일회용 코드는 승인·취소에만 받는다. 근거 확정·판단 수정·제안 결정은 코드 없이 처리한다.
+        // 승인·취소에 남기는 이유는 에이전트가 이 서버로 승인을 누르는 것을 막는 유일한 장치이기 때문이다.
+        if (['approve', 'revoke'].includes(action) && submittedCode !== code.trim()) {
           codeFailures += 1;
           if (codeFailures === MAX_CODE_FAILURES) {
             log(`코드 실패 ${MAX_CODE_FAILURES}회 — 서버를 다시 띄우세요`);
@@ -1067,6 +1193,16 @@ function createApprovals(options = {}) {
             return;
           }
           cliArgs = judgeArgs;
+        } else if (action === 'proposal') {
+          const id = (params.get('id') || '').trim();
+          const decision = (params.get('decision') || '').trim();
+          const note = (params.get('note') || '').trim();
+          if (!PROPOSAL_ID_REGEX.test(id) || !['accept', 'reject'].includes(decision)) {
+            sendText(res, 400, 'Bad Request: Invalid proposal id or decision');
+            return;
+          }
+          cliArgs = ['proposal', runId, '--id', id, decision === 'accept' ? '--accept' : '--reject'];
+          if (note) cliArgs.push(`--note=${note}`);
         }
 
         runCli(cliArgs, (cliErr, cliResult) => {
@@ -1088,6 +1224,9 @@ function createApprovals(options = {}) {
                 stderr: cliResult ? cliResult.stderr : (cliErr ? cliErr.message : ''),
               },
             };
+            if (action === 'proposal' && cliResult && cliResult.exitCode === 0 && cliArgs[4] === '--accept') {
+              pageOptions.notice = '제안을 반영해 판단이 바뀌었다 — 에이전트에게 research → calculate → draft → review 를 다시 돌리게 한 뒤 새로고침해 승인한다. 지금 페이지의 점수는 아직 반영 전 값이다.';
+            }
             if (action === 'judge') {
               pageOptions.judgeFactor = cliArgs[5];
               pageOptions.judgeCompany = cliArgs[3];

@@ -440,17 +440,71 @@ test('GET ?factor=F3: 같은 factor 의 모든 기업 판단을 나란히, compa
   }
 });
 
-test('POST /judge: 코드 불일치면 403, CLI 미호출', async () => {
-  let cliCalled = false;
+test('POST /judge: 일회용 코드 없이 처리한다(코드는 승인·취소에만)', async () => {
+  const calls = [];
   const server = await startServer({
     enabled: true,
     code: '654321',
-    runCli: (args, cb) => { cliCalled = true; cb(null, { exitCode: 0, stdout: '{}', stderr: '' }); },
+    runCli: (args, cb) => { calls.push(args); cb(null, { exitCode: 0, stdout: args[0] === 'summary' ? '{}' : 'ok', stderr: '' }); },
   });
   try {
-    const res = await postForm(server, 'judge', 'code=000000&company=nvidia&factor=F3&in_imitation=pass&reason=r&by=u');
-    assert.equal(res.statusCode, 403);
-    assert.equal(cliCalled, false);
+    const res = await postForm(server, 'judge', 'company=nvidia&factor=F3&in_imitation=pass&reason=r&by=u');
+    assert.equal(res.statusCode, 200);
+    assert.equal(calls[0][0], 'judge');
+    const confirm = await postForm(server, 'confirm', 'evidence=EV-nvidia-001');
+    assert.equal(confirm.statusCode, 200);
+    // 승인은 여전히 코드가 필요하다
+    const approve = await postForm(server, 'approve', 'code=000000&by=x');
+    assert.equal(approve.statusCode, 403);
+    assert.ok(!calls.some((a) => a[0] === 'approve'), '코드가 틀린 승인은 CLI 를 부르면 안 됨');
+  } finally {
+    server.close();
+  }
+});
+
+// 2026-10-01 사용자 요청: 판단 변경 제안 — 카드에 바뀌는 값과 근거 줄, 반영·거부(거부 사유 필수)
+test('GET: 판단 변경 제안 카드 — 지금 값 → 제안 값, 근거 줄 변경, 반영·거부 폼', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  const server = await startServer({ enabled: true, code: '123456' });
+  try {
+    const res = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x' });
+    assert.equal(res.statusCode, 200);
+    assert.match(res.body, /<h2>5\. 판단 변경 제안<\/h2>/);
+    assert.match(res.body, /id="proposal-PRP-001"/);
+    assert.match(res.body, /적대 등급<\/span> <strong>-2<\/strong> → <strong class="to">-1<\/strong>/, '적대 등급 -2 → -1');
+    assert.match(res.body, /⑤ 점수<\/span> <strong>2점<\/strong> → <strong class="to">3점<\/strong>/, '⑤ 점수 2 → 3');
+    assert.match(res.body, /<li class="del"><span class="mark">−<\/span> 주요 고객이 곧 경쟁자<\/li>/);
+    assert.match(res.body, /<li class="add"><span class="mark">\+<\/span> 적대 등급은 비용형이다 — 시험용 &lt;b&gt;태그&lt;\/b&gt;/, '더한 줄은 이스케이프');
+    assert.match(res.body, /href="#ev-EV-nvidia-001"/, '인용 근거는 근거 카드로 연결');
+    assert.match(res.body, /name="decision" value="accept"/);
+    assert.match(res.body, /name="decision" value="reject"/);
+    assert.match(res.body, /<textarea id="prop-PRP-001-note" name="note" rows="2" required/, '거부 사유는 필수 입력');
+    assert.match(res.body, /<h2>9\. 전체 판단 표 \(정성 판단 수정\)<\/h2>/);
+    assert.doesNotMatch(res.body, /id="confirm_code"/, '근거 확정에는 코드 입력란이 없다');
+  } finally {
+    server.close();
+  }
+});
+
+test('POST /proposal: 반영·거부 인자, 메모는 --note=, 형식이 아니면 400', async () => {
+  const calls = [];
+  const server = await startServer({
+    enabled: true,
+    code: '123456',
+    runCli: (args, cb) => { calls.push(args); cb(null, { exitCode: 0, stdout: args[0] === 'summary' ? '{}' : 'ok', stderr: '' }); },
+  });
+  try {
+    await postForm(server, 'proposal', 'id=PRP-001&decision=accept');
+    assert.deepEqual(calls[0], ['proposal', 'ai-scorecard-2026-11-x', '--id', 'PRP-001', '--accept']);
+    await postForm(server, 'proposal', new URLSearchParams({ id: 'PRP-002', decision: 'reject', note: '-로 시작하는 사유도 받는다' }).toString());
+    assert.deepEqual(calls[2], ['proposal', 'ai-scorecard-2026-11-x', '--id', 'PRP-002', '--reject', '--note=-로 시작하는 사유도 받는다']);
+    const before = calls.length;
+    for (const body of ['id=PRP-1&decision=accept', 'id=PRP-001&decision=maybe', 'id=..%2Fx&decision=reject']) {
+      const res = await postForm(server, 'proposal', body);
+      assert.equal(res.statusCode, 400, body);
+    }
+    assert.equal(calls.length, before, '형식이 아니면 CLI 를 부르지 않는다');
   } finally {
     server.close();
   }
