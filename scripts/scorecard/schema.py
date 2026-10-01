@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import re
 from pathlib import Path
 from typing import Any, Iterable
@@ -170,9 +171,26 @@ def _reject_constant(token: str) -> Any:
     raise SchemaError(f"JSON 에 비유한 숫자 {token} 은 허용하지 않음")
 
 
+APPROVAL_FILE = "approval.json"
+
+
+def approval_file_present(run_dir: Path) -> bool:
+    """폴더 목록에 이름이 **정확히** `approval.json` 인 항목이 있는가. 2026-10-01 레인 N(V2-3): Windows 는 대소문자를
+    가리지 않아 `(d / "approval.json").is_file()` 이 `Approval.json` 에도 참이다. 승인 여부는 이 함수로 본다."""
+    try:
+        return APPROVAL_FILE in os.listdir(run_dir)
+    except OSError:
+        return False
+
+
 def load_json_strict(path: Path) -> Any:
     if not path.is_file():
         raise SchemaError(f"파일 없음: {path}")
+    # 2026-10-01 레인 N(V2-3): 승인 파일은 이름이 정확히 approval.json 일 때만 읽는다. 소유 밖 호출자(build·validate·compare)도
+    # 여기를 지나므로 대소문자만 바꾼 파일은 승인으로 읽히지 않고 오류로 멈춘다.
+    if path.name.lower() == APPROVAL_FILE and (path.name != APPROVAL_FILE or not approval_file_present(path.parent)):
+        found = sorted(n for n in os.listdir(path.parent) if n.lower() == APPROVAL_FILE)
+        raise SchemaError(f"승인 파일은 이름이 정확히 {APPROVAL_FILE} 이어야 한다: {path.parent} 에 있는 것은 {found}")
     try:
         return json.loads(path.read_text(encoding="utf-8"), parse_constant=_reject_constant)
     except json.JSONDecodeError as exc:
@@ -1443,7 +1461,16 @@ def validate_approval(payload: Any, run_id: str | None = None) -> dict[str, Any]
     _expect_keys(payload["hashes"], APPROVAL_REQUIRED_HASHES, "approval.hashes", optional=APPROVAL_OPTIONAL_HASHES)
     for key, digest in payload["hashes"].items():
         _require(isinstance(digest, str), f"approval.hashes.{key}: 문자열 필요 ({digest!r})")
+    # 2026-10-01 레인 N(V2-3): approval_id 는 실행·결과·초안 해시에서 정해진다. 손으로 쓴 임의 값은 승인이 아니다.
+    expected = approval_id_for(payload["run_id"], payload["hashes"])
+    _require(payload["approval_id"] == expected,
+             f"approval.json: approval_id {payload['approval_id']!r} 가 실행·결과·초안 해시로 다시 계산한 값 {expected!r} 와 다름")
     return payload
+
+
+def approval_id_for(run_id: str, hashes: dict[str, str]) -> str:
+    """승인 id. `stages.approve` 가 만들고 `validate_approval` 이 다시 계산해 대조한다. **계산은 여기 한 곳이다.**"""
+    return sha256_text(f"{run_id}:{hashes['results']}:{hashes['draft']}")[:16]
 
 
 APPROVAL_REQUIRED_HASHES = ["rules", "observations", "judgments", "run", "results", "draft"]

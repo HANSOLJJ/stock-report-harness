@@ -175,12 +175,14 @@ _PROTECTED_FILES = [
     "scorecard/history.csv",
 ]
 _PROTECTED_LITERALS = [*_PROTECTED_FILES, *_PROTECTED_TREES, ".env", ".git", ".github/workflows"]
-_APPROVAL_FILE = re.compile(r"(^|/)approval\.json$")
-_APPROVAL_FILE_IN_CMD = re.compile(r"(?<![\w.-])approval\.json\b")
+# 2026-10-01 레인 N(V2-3): 보호 경로 대조는 대소문자를 가리지 않는다. Windows 파일 시스템은 `Approval.json`·`.ENV` 를
+# 같은 파일로 열고, 승인 검증은 `approval.json` 으로 읽는다.
+_APPROVAL_FILE = re.compile(r"(^|/)approval\.json$", re.I)
+_APPROVAL_FILE_IN_CMD = re.compile(r"(?<![\w.-])approval\.json\b", re.I)
 
 
 def _is_protected(path: str) -> bool:
-    path = path.replace("\\", "/")
+    path = path.replace("\\", "/").lower()
     return (
         path == ".env" or path.startswith(".env.") or path.startswith(".env/")
         or path == ".git" or path.startswith(".git/")
@@ -217,7 +219,7 @@ _ASSIGN = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
 
 def _protected_mentions(text: str) -> list[str]:
     """문자열에 나오는 보호 경로 리터럴과 approval.json."""
-    hits = [lit for lit in _PROTECTED_LITERALS if re.search(r"(?<![\w./-])" + re.escape(lit) + r"(?:/|\b)", text)]
+    hits = [lit for lit in _PROTECTED_LITERALS if re.search(r"(?<![\w./-])" + re.escape(lit) + r"(?:/|\b)", text, re.I)]
     if _APPROVAL_FILE_IN_CMD.search(text):
         hits.append("approval.json")
     return hits
@@ -267,14 +269,14 @@ def _covers_protected(path: Path, root: Path) -> str | None:
     if p == root or p in root.parents:
         return "저장소 루트 아래 전체"
     try:
-        rp = p.relative_to(root).as_posix()
+        rp = p.relative_to(root).as_posix().lower()
     except ValueError:
         return None
     for lit in _PROTECTED_LITERALS:
         if lit.startswith(rp + "/"):
             return lit
     if p.is_dir():
-        found = next(p.rglob("approval.json"), None)
+        found = next((f for f in p.rglob("*") if f.name.lower() == "approval.json"), None)
         if found is not None:
             return relpath(str(found), root)
     return None
@@ -285,7 +287,7 @@ def _glob_hits(target: str, base: Path, root: Path, *, covers: bool) -> list[str
     hits: list[str] = []
     rel_base = relpath(str(base), root)
     pattern = target if target.startswith("/") or rel_base in (".", "") else f"{rel_base}/{target}"
-    pat_parts = pattern.removeprefix("./").split("/")
+    pat_parts = pattern.removeprefix("./").lower().split("/")
     for anchor in _protected_anchors() if covers else _PROTECTED_LITERALS:
         parts = anchor.split("/")
         # 셸 글롭의 `*` 는 `/` 를 넘지 않는다. `**` 가 있을 때만 경로 전체를 한 번에 대조한다.

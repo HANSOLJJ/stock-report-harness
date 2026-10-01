@@ -25,8 +25,8 @@ from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_EDIT_KIND, JUDGMENT_INPUT_CHOICES,
-                     JUDGMENT_REVISION_FIELDS, SchemaError, load_json_strict, sha256_file, sha256_obj, sha256_text,
-                     validate_approval, validate_judgments, validate_observations, validate_run, validate_sources, write_json)
+                     JUDGMENT_REVISION_FIELDS, SchemaError, approval_file_present, approval_id_for, load_json_strict,
+                     sha256_file, sha256_obj, validate_approval, validate_judgments, validate_observations, validate_run, validate_sources, write_json)
 
 
 def today() -> str:
@@ -141,8 +141,7 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
     sources = {**load_json_strict(src_path), "run_id": slug}
 
     hashes = input_hashes(prior_slug)
-    approval_path = d / "approval.json"
-    approval = validate_approval(load_json_strict(approval_path), prior_slug) if approval_path.is_file() else None
+    approval = validate_approval(load_json_strict(d / "approval.json"), prior_slug) if approval_file_present(d) else None
     assumptions = [
         f"이전 실행 {prior_slug} 의 관측·판단·출처를 그대로 이어받았다"
         f"(observations {hashes['observations'][:12]}…, judgments {hashes['judgments'][:12]}…)."
@@ -708,6 +707,16 @@ def approval_mismatches(approved: dict[str, str], current: dict[str, str]) -> li
     return sorted(differing)
 
 
+def approval_is_valid(slug: str, approval: Any, current: dict[str, str] | None = None) -> bool:
+    """승인 기록이 형식(approval_id 재계산 포함)을 지키고 해시가 지금과 같은가. 2026-10-01 레인 N(V2-3): 해시만 대조하면
+    손으로 쓴 승인(임의 approval_id)도 유효로 보였다. 빌드(`validate_approval`)와 같은 기준으로 본다."""
+    try:
+        validate_approval(approval, slug)
+    except SchemaError:
+        return False
+    return not approval_mismatches(approval["hashes"], current if current is not None else current_hashes(slug))
+
+
 def approve(slug: str, *, approved_by: str, note: str | None = None, via: str = "terminal",
             allow_agent_session: bool = False) -> Path:
     from validate_report_contract import validate_contract
@@ -724,7 +733,7 @@ def approve(slug: str, *, approved_by: str, note: str | None = None, via: str = 
     if not result.ok:
         raise SchemaError("승인 전 계약 검증 실패: " + "; ".join(result.errors[:5]))
     hashes = current_hashes(slug)
-    approval_id = sha256_text(f"{slug}:{hashes['results']}:{hashes['draft']}")[:16]
+    approval_id = approval_id_for(slug, hashes)
     payload = {
         "schema": "scorecard.approval/1",
         "run_id": slug,
@@ -751,7 +760,7 @@ def revoke(slug: str, *, by: str, note: str, allow_agent_session: bool = False) 
     if not isinstance(note, str) or not note.strip():
         raise SchemaError("취소 사유(--note)는 비어 있으면 안 된다")
     path = run_dir(slug) / "approval.json"
-    if not path.is_file():
+    if not approval_file_present(path.parent):
         raise SchemaError(f"취소할 승인이 없다: {rel(path)}")
     approval = validate_approval(load_json_strict(path), slug)
     entry = {"revoked_by": by.strip(), "revoked_at": utc_now_iso(), "note": note.strip(),
@@ -979,10 +988,9 @@ def summary(slug: str) -> dict[str, Any]:
     evidence = load_json_strict(paths.evidence).get("items", []) if paths.evidence.is_file() else []
     triggers = load_json_strict(paths.triggers).get("items", []) if paths.triggers.is_file() else []
     hashes = current_hashes(slug)
-    approval_path = paths.run_dir / "approval.json"
-    if approval_path.is_file():
-        approval = load_json_strict(approval_path)
-        approval_out = {"exists": True, "valid": not approval_mismatches(approval.get("hashes") or {}, hashes),
+    if approval_file_present(paths.run_dir):
+        approval = load_json_strict(paths.run_dir / "approval.json")
+        approval_out = {"exists": True, "valid": approval_is_valid(slug, approval, hashes),
                         "approved_by": approval.get("approved_by"), "approved_at": approval.get("approved_at")}
     else:
         approval_out = {"exists": False, "valid": False, "approved_by": None, "approved_at": None}
@@ -1026,10 +1034,10 @@ def status(slug: str) -> dict[str, Any]:
     if out["review"]:
         fm, _body, _raw, _text = read_markdown(paths.review)
         out["review_status"] = fm.get("status")
-    out["approval"] = (d / "approval.json").is_file()
+    out["approval"] = approval_file_present(d)
     if out["approval"] and out["results"] and out["draft"]:
         approval = load_json_strict(d / "approval.json")
-        out["approval_valid"] = not approval_mismatches(approval.get("hashes") or {}, current_hashes(slug))
+        out["approval_valid"] = approval_is_valid(slug, approval)
     out["html"] = paths.html.is_file()
     if out["results"]:
         results = load_results(slug)

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import unittest
 
-from tests.test_hooks import TempRootCase, guard, shell
+from tests.test_hooks import TempRootCase, guard, shell, write
 
 OBS = "output/ai-scorecard-2026-09-obsreg"
 APPROVAL = f"{OBS}/approval.json"
@@ -122,6 +122,41 @@ class WriteFormsTest(TempRootCase):
                 "rm -rf output/ai-scorecard-2026-10-new/*",
                 "cat scorecard/rules/*.json",
             ], tool=tool)
+
+
+class CaseInsensitiveTest(TempRootCase):
+    """2026-10-01 레인 N(V2-3). Windows 는 대소문자를 가리지 않으므로 보호 경로 대조도 가리지 않는다."""
+
+    def kind(self, payload: dict) -> str:
+        return guard.protect_sensitive_files(payload, root=self.root).kind
+
+    def test_case_variants_of_protected_paths_blocked_for_file_tools(self):
+        for rel in ("output/ai-scorecard-new/approval.json", "output/ai-scorecard-new/Approval.json",
+                    "output/ai-scorecard-new/approval.JSON", "output/ai-scorecard-new/APPROVAL.JSON",
+                    ".env", ".ENV", ".Env.local", ".GIT/config", "Scorecard/Rules/V1.7.json", "SCORECARD/history.CSV",
+                    "Scorecard/Baseline/v1.5/triggers.json", "Output/AI-Scorecard-2026-09-OBSREG/draft.md",
+                    "Docs/Finance-Style-Guide.md", ".GitHub/Workflows/ci.yml"):
+            for tool in ("Write", "Edit"):
+                with self.subTest(tool=tool, rel=rel):
+                    self.assertEqual(self.kind(write(str(self.root / rel), tool=tool)), "block")
+
+    def test_case_variants_blocked_for_shell_writes(self):
+        for tool in ("Bash", "PowerShell"):
+            for cmd in ("echo x > .ENV", "echo x > output/ai-scorecard-new/Approval.json", "rm Output/AI-Scorecard-2026-09-OBSREG/draft.md",
+                        "Set-Content -Path SCORECARD/history.csv -Value x", "cp x.json Scorecard/Rules/v1.7.json",
+                        "rm scorecard/RULES/V1.*.json"):
+                with self.subTest(tool=tool, cmd=cmd):
+                    self.assertEqual(self.kind(shell(tool, cmd)), "block")
+
+    def test_unprotected_case_lookalikes_pass(self):
+        for rel in ("output/ai-scorecard-new/approval-copy.json", "notes/env.md", "scorecard/rules/v1.8.json"):
+            with self.subTest(rel=rel):
+                self.assertEqual(self.kind(write(str(self.root / rel))), "allow")
+        self.assertEqual(self.kind(shell("Bash", "cat output/ai-scorecard-new/Approval.json")), "allow")
+
+    def test_folder_holding_case_variant_approval_is_covered(self):
+        self.put("output/ai-scorecard-2026-10-odd/Approval.json")
+        self.assertEqual(self.kind(shell("Bash", "rm -rf output/ai-scorecard-2026-10-odd")), "block")
 
 
 if __name__ == "__main__":
