@@ -729,6 +729,7 @@ function renderSummaryPage(data, options = {}) {
   <title>스코어카드 실행 승인: ${escapeHtml(runId)}</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }   /* 2026-10-01: .prop-form 의 display:flex 가 hidden 을 덮어써 거부 칸이 처음부터 펼쳐졌다 */
     body { font-family: system-ui, -apple-system, sans-serif; max-width: 1040px; margin: 0 auto; padding: 16px; color: #1e293b; background: #f8fafc; line-height: 1.5; font-size: 14px; }
     h1 { font-size: 22px; margin-top: 0; color: #0f172a; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; }
     h2 { font-size: 18px; margin-top: 0; color: #334155; }
