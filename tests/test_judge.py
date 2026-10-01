@@ -5,6 +5,7 @@ import json
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -89,7 +90,9 @@ class RefusalTest(JudgeBase):
         cases = (("F1", {"score": 9}, "범위"), ("F1", {"score": "높음"}, "정수"), ("F5", {"A": 5}, "A 는"),
                  ("F3", {"imitation": "yes"}, "imitation"), ("F9", {"fcf_trend": "up"}, "fcf_trend"),
                  ("F3", {"moat": "pass"}, "고칠 수 없는 키"), ("F1", {"evidence": []}, "evidence"),
-                 ("F1", {"evidence": ["  "]}, "evidence"))
+                 ("F1", {"evidence": ["  "]}, "evidence"),
+                 # 2026-10-01 V2-10: 중첩 값·불리언은 추적 출력이 아니라 형식 오류다
+                 ("F3", {"imitation": {"x": 1}}, "문자열이나 정수"), ("F5", {"A": True}, "문자열이나 정수"))
         for factor, changes, pattern in cases:
             with self.subTest(factor=factor, changes=changes):
                 self.assert_refused("nvidia", factor, changes, pattern)
@@ -112,6 +115,36 @@ class RefusalTest(JudgeBase):
         stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
         self.judge("nvidia", "F1", {"score": 3})
         self.assertEqual(self.item("nvidia", "F1")["status"], "new")
+
+
+class RestoreOnAnyErrorTest(JudgeBase):
+    """2026-10-01 V2-10: 쓴 뒤 검증이 형식 오류가 아닌 예외를 내도 원래 파일로 되돌린다."""
+
+    def test_judge_restores_on_unexpected_error(self):
+        before = self.jpath.read_bytes()
+        with mock.patch.object(stages, "load_context", side_effect=KeyError("주입한 예외")):
+            with self.assertRaises(KeyError):
+                self.judge("nvidia", "F1", {"score": 3})
+        self.assertEqual(self.jpath.read_bytes(), before)
+
+    def test_confirm_restores_on_unexpected_error(self):
+        path = self.box.run_dir / "evidence" / "evidence.json"
+        before = path.read_bytes()
+        with mock.patch.object(stages, "load_context", side_effect=OSError("주입한 예외")):
+            with self.assertRaises(OSError):
+                stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
+        self.assertEqual(path.read_bytes(), before)
+
+    def test_cli_nested_json_is_a_clean_failure(self):
+        payload = self.box.dir / "nested.json"
+        payload.write_text(json.dumps({"imitation": {"x": 1}}), encoding="utf-8")
+        before = self.jpath.read_bytes()
+        with human_env():
+            out = self.cli("judge", SLUG, "--company", "nvidia", "--factor", "F3", "--json", payload,
+                           "--reason", "r", "--by", "사용자", code=1)
+        self.assertIn("문자열이나 정수", out)
+        self.assertNotIn("Traceback", out)
+        self.assertEqual(self.jpath.read_bytes(), before)
 
 
 class HistoryAndHashTest(JudgeBase):

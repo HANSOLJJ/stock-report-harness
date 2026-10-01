@@ -958,7 +958,7 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
     write_json(path, payload)
     try:
         load_context(slug)
-    except SchemaError:
+    except BaseException:   # 2026-10-01 V2-10: 형식 오류가 아닌 예외에서도 검증 안 된 파일을 남기지 않는다
         path.write_bytes(original)
         raise
     return {"confirmed": confirmed, "already_confirmed": already, "rejected": rejects, "reviewer": reviewer,
@@ -995,6 +995,10 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     if "evidence" in changes and not (isinstance(changes["evidence"], list)
                                       and all(isinstance(e, str) and e.strip() for e in changes["evidence"])):
         raise SchemaError("evidence 는 비어 있지 않은 문장 목록이어야 한다")
+    # 2026-10-01 V2-10: 허용값은 모두 문자열·정수다. 중첩 값이 스키마의 `in` 비교까지 가서 추적 출력으로 끝나지 않게 먼저 거른다.
+    bad_type = sorted(k for k, v in changes.items() if k != "evidence" and (isinstance(v, bool) or not isinstance(v, (str, int))))
+    if bad_type:
+        raise SchemaError(f"{factor} 의 값은 문자열이나 정수여야 한다: {bad_type}")
 
     protect_approved_run(slug, "판단 수정(judge)")
     path = run_dir(slug) / "judgments.json"
@@ -1029,7 +1033,7 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     write_json(path, payload)
     try:
         load_context(slug)
-    except SchemaError:
+    except BaseException:   # 2026-10-01 V2-10: 형식 오류가 아닌 예외에서도 검증 안 된 파일을 남기지 않는다
         path.write_bytes(original)
         raise
     return {"judgment_id": new["judgment_id"], "company_id": company_id, "factor": factor, "kind": new["kind"],
