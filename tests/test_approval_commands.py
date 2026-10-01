@@ -193,7 +193,7 @@ class ConfirmTest(FlowBase):
     def test_cli_prints_rerun_hint(self):
         with human_env():
             out = self.cli("confirm", SLUG, "--evidence", "EV-nvidia-001", "--by", "user")
-        self.assertIn("calculate → draft → review 를 다시 돌린다", out)
+        self.assertIn("research → calculate → draft → review 를 다시 돌린다", out)
 
     def test_lock_is_checked_only_in_agent_sessions(self):
         lock = stages.lock_path(SLUG)

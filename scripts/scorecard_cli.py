@@ -267,8 +267,8 @@ def cmd_confirm(args: argparse.Namespace) -> int:
     for key in ("confirmed", "already_confirmed", "rejected"):
         if out[key]:
             print(f"  {key}: {', '.join(out[key])}")
-    print(f"evidence 해시가 바뀌었다({out['evidence_hash'][:16]}…). calculate → draft → review 를 다시 돌린다: "
-          f"uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate {args.slug}")
+    print(f"evidence 해시가 바뀌었다({out['evidence_hash'][:16]}…). research → calculate → draft → review 를 다시 돌린다: "
+          f"uv run --frozen python -X utf8 scripts/scorecard_cli.py research {args.slug}")
     return 0
 
 
@@ -305,8 +305,8 @@ def cmd_judge(args: argparse.Namespace) -> int:
             print(f"  {key}: {json.dumps(out['previous'][key], ensure_ascii=False)} → {json.dumps(out['current'][key], ensure_ascii=False)}")
     if out["previous"]["evidence"] != out["current"]["evidence"]:
         print(f"  evidence: {len(out['previous']['evidence'])}문장 → {len(out['current']['evidence'])}문장")
-    print(f"judgments 해시가 바뀌었다({out['judgments_hash'][:16]}…). 점수는 아직 그대로다 — calculate → draft → review 를 다시 돌린 뒤 승인한다: "
-          f"uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate {args.slug}")
+    print(f"judgments 해시가 바뀌었다({out['judgments_hash'][:16]}…). 점수는 아직 그대로다 — research → calculate → draft → review 를 다시 돌린 뒤 승인한다: "
+          f"uv run --frozen python -X utf8 scripts/scorecard_cli.py research {args.slug}")
     return 0
 
 
@@ -562,7 +562,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_confirm)
 
-    p = sub.add_parser("judge", help="정성 판단 입력 수정(점수가 아니라 판단 입력). 승인이 아니다 — 고친 뒤 calculate 부터 다시 돈다")
+    p = sub.add_parser("judge", help="정성 판단 입력 수정(점수가 아니라 판단 입력). 승인이 아니다 — 고친 뒤 research 부터 다시 돈다")
     p.add_argument("slug")
     p.add_argument("--company", required=True)
     p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"])

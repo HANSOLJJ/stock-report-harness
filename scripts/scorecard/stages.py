@@ -892,7 +892,7 @@ def _append_revocation(slug: str, approval: dict[str, Any], *, by: str, note: st
 
 
 # ------------------------------------------------------------------ confirm
-# 2026-09-30 레인 F. 근거 확정은 승인이 아니다. 확정하면 evidence 해시가 바뀌어 calculate 부터 다시 밟고 사람이 다시 승인한다.
+# 2026-09-30 레인 F. 근거 확정은 승인이 아니다. 확정하면 evidence 해시가 바뀌어 research 부터 다시 밟고 사람이 다시 승인한다.
 EVIDENCE_ID_RE = re.compile(r"^EV-[a-z0-9-]+-\d{3}$")
 
 
@@ -943,7 +943,7 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
 
 # ------------------------------------------------------------------ judge
 # 2026-10-01 레인 J(사용자 결정). 사람이 승인 페이지에서 정성 판단 **입력**을 고친다. results.json 의 점수를 덮어쓰지 않는다 —
-# 재계산이 수정을 지우고 입력과 점수가 갈라진다. 고치면 judgments 해시가 바뀌어 calculate → draft → review 를 다시 거친 뒤
+# 재계산이 수정을 지우고 입력과 점수가 갈라진다. 고치면 judgments 해시가 바뀌어 research → calculate → draft → review 를 다시 거친 뒤
 # 사람이 승인한다. 승인이 아니므로 에이전트도 부를 수 있고, reviewer 는 받은 이름(`by`)이다.
 
 def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any], reason: str, by: str,

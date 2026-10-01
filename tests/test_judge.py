@@ -180,7 +180,7 @@ class JudgeCliTest(JudgeBase):
         with human_env():
             out = self.cli("judge", SLUG, "--company", "nvidia", "--factor", "F5", "--set", "A=2", "--set", "H=-1",
                            "--evidence", "-로 시작하는 근거도 받는다", "--evidence=둘째 근거", "--reason", "CLI 시험", "--by", "사용자")
-        self.assertIn("calculate → draft → review", out)
+        self.assertIn("research → calculate → draft → review", out)
         new = self.item("nvidia", "F5")
         self.assertEqual((new["inputs"]["A"], new["inputs"]["H"], new["evidence"]), (2, -1, ["-로 시작하는 근거도 받는다", "둘째 근거"]))
         payload = self.box.dir / "changes.json"
