@@ -13,9 +13,10 @@
 - 실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모인다. 파일은 `run.json observations.json judgments.json sources.json results.json approval.json plan.md research.md draft.md preview.md review.md review-parts/ evidence/{candidates.json,evidence.json} triggers.json report.html audit.md revocations.jsonl .lock` 이고, 경로 도우미는 `scripts/scorecard/paths.py` 이다. 수집한 원문 캐시는 `data/<company_id>/`(gitignore, `SCORECARD_DATA_ROOT` 로 바꿈)에 둔다.
 - 공유 정의(rules, companies, baseline)와 `history.csv` 는 `scorecard/` 에 두고 추적한다. 실행 묶음의 md·html 은 생성물이며 손으로 고치지 않는다.
 - 근거는 후보(`candidate`)로 들어오고 사람이 승인 페이지에서 확정(`confirmed`)한다. `status: new` 판단은 confirmed 근거만 인용한다. 트리거는 미래 점수를 저장하지 않는다(C-14). `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)를 섞지 않는다.
-- 수집: `collect` 가 뉴스·공시·가격 후보를 모은다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 또는 환경변수, 사용자가 설정한다). 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣고 EPS·컨센서스는 받지 않는다.
+- 수집: `collect` 가 뉴스·공시·가격 후보를 모은다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 또는 환경변수, 사용자가 설정하며 영문으로 적는다). 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣고 EPS·컨센서스는 받지 않는다. 종가가 NaN 이면 건너뛰고 직전 확정 종가를 쓰며, 가격 실패는 회사 단위다.
 - 원자료·판단·규칙이 입력이고 점수는 결과다. 자동 산출 점수를 직접 수정하지 않는다. 모르는 값은 0으로 치환하지 않는다(unknown ≠ 0).
 - 정성 판정(③ criteria, ⑤ A/H, ⑦ 매트릭스, ⑨ gate_inputs, ①④⑧ score)은 근거·검토자·검토일이 있어야 하고, 산식·사다리·구간 적용은 프로그램이 한다.
+- 정성 판단을 고치는 길은 `scorecard_cli.py judge` 하나다(사람은 승인 페이지 8절에서, 에이전트는 판단 수정을 제안할 때 CLI 에서). F1·F4·F8 은 `score`, F3·F5·F7·F9 는 판정 재료 키(`criteria`·`grade`·`matrix`·`gate_inputs`)만 받고 점수 칸은 거부하며, F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고 판단 해시가 바뀌므로 `calculate`·`draft`·`review` 를 다시 돌린 뒤 사람이 승인한다. 인자는 `--help` 로 확인한다.
 - 미결 규칙 결정(C-03, C-05, C-06, C-13, C-16)은 `run.json.decisions` 로만 실행 단위에서 선택한다. 기본값을 조용히 채택하지 않으며 해당 기업은 순위에서 제외된다.
 - 리뷰는 4 영역(사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성) + 체크리스트 Q01~Q23. hero 이미지·뉴스 100건 요건은 적용하지 않는다.
 - **리뷰 범위 — 승계 판단 예외.** 체크리스트 fail 의 사유가 `carried_score` 로 승계한 판단의 기존 논리이고, **이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며**, 규칙 파일 긴장 목록에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 리뷰 파일에 해당 fail 과 긴장 번호를 그대로 적는다. **이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다** — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(체크리스트 Q03). 2026-09-15 obsreg 2차 리뷰에서 A+2 엄격 읽기를 anthropic·openai 에만 대고 tsmc 에는 안 댄 것이 이 원칙으로 잡혔다.
@@ -36,7 +37,7 @@
 - 훅·검증을 우회하지 않는다. 다른 소유자의 실행 잠금(`output/<run_id>/.lock`)은 이유 없이 `--take-lock` 으로 넘겨받지 않는다.
 
 ## 통제의 위치
-- **통제는 코드가 한다.** 어느 하네스(Claude Code, Codex 등)로 돌리든 승인 해시 검증과 CLI 의 거부(에이전트 세션의 `approve`·`revoke` 거부)가 첫 방어선이고, 훅(`scripts/hooks/guard.py`)은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
+- **통제는 코드가 한다.** 어느 하네스(Claude Code, Codex 등)로 돌리든 승인 해시 검증과 `scorecard.stages` 의 `approve`·`revoke` 함수 본체가 하는 거부(에이전트 세션이면 거부, CLI 든 import 든 같은 판정)가 첫 방어선이고, 훅(`scripts/hooks/guard.py`)은 둘째 방어선이다. 승인 있는 실행에 대한 `init --force` 도 에이전트 세션이면 `init_run` 이 거부하고 훅이 막는다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
 - **훅은 도구 호출 밖을 막지 못한다.** 사람의 터미널에서 직접 실행하는 명령과 훅이 배선되지 않은 에이전트의 동작은 훅이 볼 수 없다. 훅 목록과 한계는 `scripts/hooks/README.md` 에 있다.
 - **첫 방어선에도 한계가 있다.** 임의 Python 을 실행할 수 있는 에이전트가 작정하면 우회할 수 있다. 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것이다.
 - **승인 서버가 떠 있는 동안에는 열린 틈이 있다.** 브라우저 도구를 가진 에이전트가 터미널에 나온 6자리 코드를 읽으면 승인 페이지에서 승인을 누를 수 있다. 코드는 파일에 쓰이지 않고, 서버는 승인이 성공하면 내려간다. 사용자가 이 사실을 알고 수용했다(2026-09-30). 에이전트는 그 코드를 읽어 입력하지 않는다.

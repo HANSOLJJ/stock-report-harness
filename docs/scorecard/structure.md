@@ -51,7 +51,7 @@
 | 객체 | 파일 | 필수 필드 |
 |---|---|---|
 | 관측 | observations.json items | observation_id, company_id, metric(카탈로그 `METRICS`), value, unit, as_of, kind, source_id, status(verified / legacy_unverified / not_applicable / not_disclosed / collection_failed / source_conflict / incompatible_basis / parse_failed), basis, raw, note |
-| 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs), score, inputs, evidence(비어 있으면 안 됨), reviewer, reviewed_at, status(new/carried), carried_from |
+| 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs), score, inputs, evidence(비어 있으면 안 됨), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`) |
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
@@ -115,7 +115,7 @@ research ──► research.md (observations_hash·judgments_hash 결속) ; 인�
 calculate ──► results.json(+results_hash) + preview.md ; 입력 해시가 바뀌면 이전 approval.json 자동 무효
 draft ──► draft.md (results_hash 결속)
 review-template ──► review.md (4 영역 + Q01~Q23, status: needs_fix) → 리뷰어가 review-parts/ 를 채움 → status: pass
-[사람] 승인 페이지 ──► 근거 확정(candidate → confirmed) · 승인 · 취소 → approval.json (rules/observations/judgments/run/results/draft 해시 결합)
+[사람] 승인 페이지 ──► 근거 확정(candidate → confirmed) · 판단 수정(judge) · 승인 · 취소 → approval.json (rules/observations/judgments/run/results/draft 해시 결합)
 build_report.py ──► 승인 해시 == 현재 해시 검증 → report.html·audit.md → history.csv append(중복 방지) → 사후 검증
 
 [기업 추가 갈래]
@@ -124,7 +124,7 @@ init --from-run ──► 이전 실행 계승 + plan + 입력 생성 (continued
 collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 승인 ──► build
 ```
 
-모든 단계(`init`·`collect`·`research`·`calculate`·`draft`·`review-template`)는 실행 잠금 `.lock` 을 검사하고 기록한다. 다른 소유자의 잠금이면 거부하고 `--take-lock` 으로 넘겨받는다.
+모든 단계(`init`·`collect`·`research`·`calculate`·`draft`·`review-template`)와 에이전트 세션의 `confirm`·`judge` 는 실행 잠금 `.lock` 을 검사하고 기록한다. 다른 소유자의 잠금이면 거부하고 `--take-lock` 으로 넘겨받는다.
 
 ### 근거 계층
 
@@ -136,11 +136,15 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)는 다르다. 근거를 확정하면 판단·결과·초안 해시가 바뀌어 리뷰가 무효가 되므로 `calculate`·`draft`·`review` 를 다시 돌린다.
 
-가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 의 `SEC_UA=이름 이메일`, 또는 같은 이름의 환경변수).
+가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣는다. EPS·컨센서스는 받지 않는다. 조회일이 종가일과 하루 넘게 다르면 벤더 시가총액을 쓰지 않고, ADR 시가총액은 벤더 값만 쓴다. 종가가 NaN 인 날은 건너뛰고 기준일 이하의 직전 확정 종가와 그 날짜를 쓰며(건너뛴 날짜는 `skipped_nonfinite_close` 로 요약에 남는다), 전부 NaN 이면 오류다. 가격 실패는 회사 단위라 한 회사가 실패해도(중복 관측 포함) 나머지는 기록된다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 의 `SEC_UA=이름 이메일`, 또는 같은 이름의 환경변수). 영문으로 적는다(HTTP 머리글 제약). 뉴스 질의는 레지스트리의 `news_queries`(없으면 표시명·티커)를 쓰고, 상장 12개사의 `cik` 는 `resolve-cik --apply` 로 기입돼 있다. 두 키는 수집기만 읽는다.
+
+### 판단 수정 (사람 행위, 승인 페이지 8절)
+
+정성 판단의 입력을 고치는 길은 `scorecard_cli.py judge` 하나이고 승인 페이지 8절이 그 앞단이다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고, F2·F6 은 대상이 아니다. 근거 문장(`evidence`)은 판정 재료와 어긋나지 않게 함께 고칠 수 있다. 고치면 `status: new`·검토자·검토일이 갱신되고 이전 값은 항목 안 `revision_history` 에 쌓인다. 새 판단은 확정된 근거만 인용하므로 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 판단 해시가 바뀌므로 `calculate`·`draft`·`review` 를 다시 돌린 뒤 사람이 승인한다. 승인 페이지는 factor 를 고르면 그 factor 의 모든 기업 판단을 나란히 보이므로(Q03) 같은 잣대가 닿는 다른 기업 판단을 함께 본다. 쓰는 요청은 일회용 코드가 있어야 한다.
 
 ### 승인 (사람 행위)
 
-승인과 취소는 사람이 `node server.js --approvals` 로 띄운 승인 페이지(`http://127.0.0.1:3000/approve/<run_id>`)에서 한다. 터미널에 6자리 일회용 코드가 나오고, 페이지에서 근거 확정·승인·취소를 한다. 코드를 5번 틀리면 서버를 다시 띄워야 하고, 승인이 성공하면 서버는 내려간다. 에이전트는 `approve`·`revoke` 를 실행하지 않는다. 훅(`guard.py`)과 CLI(에이전트 세션의 승인·취소 거부) 둘 다 막고, 첫 방어선은 CLI 와 해시 검증이다. 승인 서버가 떠 있는 동안 브라우저 도구를 가진 에이전트가 터미널의 코드를 읽으면 누를 수 있는 틈이 있다. 코드는 파일에 쓰이지 않고 서버는 승인 뒤 내려가며, 사용자가 이를 알고 수용했다(2026-09-30). 에이전트가 사람에게 하는 말은 "승인 대기" 보고이고, 사람이 에이전트에게 하는 말은 "고쳐" 와 "빌드해" 이다.
+승인과 취소는 사람이 `node server.js --approvals` 로 띄운 승인 페이지(`http://127.0.0.1:3000/approve/<run_id>`)에서 한다. 터미널에 6자리 일회용 코드가 나오고, 페이지에서 근거 확정·승인·취소를 한다. 코드를 5번 틀리면 서버를 다시 띄워야 하고, 승인이 성공하면 서버는 내려간다. 에이전트는 `approve`·`revoke` 를 실행하지 않는다. 훅(`guard.py`)과 `scorecard.stages` 의 `approve`·`revoke` 함수 본체(에이전트 세션 거부, CLI 든 import 든 같은 판정) 둘 다 막고, 첫 방어선은 그 함수 본체와 해시 검증이다. 승인 있는 실행에 대한 `init --force` 도 에이전트 세션이면 `init_run` 이 거부하고 훅이 막는다. 승인 서버가 떠 있는 동안 브라우저 도구를 가진 에이전트가 터미널의 코드를 읽으면 누를 수 있는 틈이 있다. 코드는 파일에 쓰이지 않고 서버는 승인 뒤 내려가며, 사용자가 이를 알고 수용했다(2026-09-30). 에이전트가 사람에게 하는 말은 "승인 대기" 보고이고, 사람이 에이전트에게 하는 말은 "고쳐" 와 "빌드해" 이다.
 
 상태 이름: 자료 부족 `pending_data`, 판단 부족 `needs_judgment`, 규칙 미결 `needs_rule_decision`, 승인 필요 `awaiting_user`(빌더 메시지), 검토 미완 `needs_fix`(리뷰 frontmatter). 해시가 하나라도 바뀌면 검증기가 리뷰·승인을 무효로 판정한다(T-14). 같은 승인본 재빌드는 history.csv 에 행을 추가하지 않는다(T-15). 사전 검증 실패 시 HTML 을 쓰지 않으므로 최신 MD/HTML/CSV 가 갈라지지 않는다(T-16).
 
@@ -158,7 +162,7 @@ HTML 검증(`scorecard.validate._validate_html`): generator 메타(`scorecard-bu
 
 ## 7. 훅·명령·스킬
 
-- 훅: `scripts/hooks/guard.py` 한 모듈이다. `block_dangerous_bash`, `protect_sensitive_files`(승인·취소 명령 차단 포함), `enforce_plan`(`output/<run_id>/` 단계 순서·실행 잠금), `forbid_financial_advice`, `remind_review`(경고만), `enforce_memory`, `inject_memory_context`. 목록과 한계는 `scripts/hooks/README.md`. 핵심 통제는 훅이 아니라 `scorecard_cli`·검증기·빌더가 직접 수행하고(설계 지침 4.3), 훅은 둘째 방어선이다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못한다.
+- 훅: `scripts/hooks/guard.py` 한 모듈이다. `block_dangerous_bash`, `protect_sensitive_files`(보호 경로 `scorecard/baseline/**` 포함, 쓰기 대상일 때만 막고 읽기는 통과, PowerShell cmdlet·`find -delete`·`xargs`·글롭 판정, 승인·취소 명령과 승인 있는 실행의 `init --force` 차단), `enforce_plan`(`output/<run_id>/` 단계 순서·실행 잠금), `forbid_financial_advice`, `remind_review`(경고만), `enforce_memory`, `inject_memory_context`. 목록과 한계는 `scripts/hooks/README.md`. 핵심 통제는 훅이 아니라 `scorecard.stages` 의 승인 함수·검증기·빌더가 직접 수행하고(설계 지침 4.3), 훅은 둘째 방어선이다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못한다.
 - 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-collect`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal` → `.claude/skills/score-*/SKILL.md`. `/score-approve` 는 승인을 실행하지 않고 "승인 대기" 보고와 승인 페이지 안내만 한다.
 - 리뷰어 에이전트: `.claude/agents/`(`fact-checker`, `evidence-editor`, `report-designer`)와 같은 내용의 `.codex/agents/*.toml`.
 - 실행은 `uv run --frozen python -X utf8 scripts/…` 이다. 시스템 `python`·`python3` 를 직접 부르지 않는다. 훅 배선도 `uv run` 한 줄이라 bash 를 거치지 않는다.
