@@ -23,11 +23,13 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
 
 ## 판단 수정을 제안할 때
 
-리뷰에서 정성 판단(F1·F3·F4·F5·F7·F8·F9)의 입력이 틀렸다고 보면, 점수나 `draft.md` 를 고치지 않고 판단 입력을 고친다. 사람은 승인 페이지 8절에서 고치고, 에이전트는 사람이 지시한 수정이나 리뷰어가 제안한 수정을 명령으로 기록한다.
+리뷰에서 정성 판단(F1·F3·F4·F5·F7·F8·F9)의 입력이 틀렸다고 보면, 점수나 `draft.md` 를 고치지 않고 판단 입력을 고친다. 에이전트는 판단 변경 제안을 쓰고 사람이 승인 페이지 5절에서 반영하거나 거부한다. 사람은 9절 「전체 판단 표」에서 직접 고칠 수도 있다. 제안은 리뷰가 끝난 뒤 한 묶음으로 올린다.
 
 ```
-uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" --by <이름> [--take-lock]
+uv run --frozen python -X utf8 scripts/scorecard_cli.py propose <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" [--cite EV-…]
 ```
+
+사람이 바꿀 값을 정확히 지시한 경우에만 같은 인자로 `judge` 를 써서 바로 기록한다(`--by` 에 지시한 사람의 이름).
 
 - F1·F4·F8 은 `--set score=N`, F3 은 `--set imitation=pass` 같은 `criteria` 키, F5 는 `A`·`H`, F7 은 `funding_dependent_share`·`own_money_returns`, F9 는 `gate_inputs` 키를 준다. F3·F5·F7·F9 에 `score` 를 주면 거부된다. F2·F6 은 대상이 아니다.
 - `--evidence` 는 여러 번 주면 그 목록으로 근거를 통째로 바꾼다. 판정 재료를 바꿨다면 근거 문장도 함께 맞춘다.

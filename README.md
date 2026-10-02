@@ -48,7 +48,7 @@ plan → collect → research → calculate → draft → review → (사람) �
 | 계산 | `scripts/scorecard_cli.py calculate <run_id>` | `results.json`, `preview.md` |
 | 초안 | `scripts/scorecard_cli.py draft <run_id>` | `draft.md` |
 | 리뷰 | `scripts/scorecard_cli.py review-template <run_id>` 뒤 독립 세션 4영역 리뷰 | `review.md`, `review-parts/` |
-| 판단 수정 | 사람이 승인 페이지 8절에서, 명령은 `scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 …` (아래 「판단 수정」) | `judgments.json` 의 `revision_history` |
+| 판단 수정 | 사람이 승인 페이지 9절에서 직접 고치거나, 에이전트가 `scripts/scorecard_cli.py propose …` 로 낸 제안을 5절에서 반영 (아래 「판단 수정」) | `judgments.json` 의 `revision_history` |
 | 승인 | 사람이 승인 페이지에서 (아래 절) | `approval.json` |
 | 빌드 | `scripts/build_report.py <run_id>` | `report.html`, `audit.md`, `scorecard/history.csv` |
 | 상태 확인 | `scripts/scorecard_cli.py status <run_id>` · `scripts/scorecard_cli.py summary <run_id> --json` · `scripts/validate_report_contract.py <run_id>` | 단계별 완료 여부, 승인 페이지용 요약, 계약 위반 목록 |
@@ -82,10 +82,10 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 #### 판단 수정
 
-사람이 승인 페이지 8절에서 정성 판단의 **입력**을 고칩니다. 점수를 덮어쓰지 않고, 입력을 고치면 점수는 규칙이 다시 계산합니다.
+사람이 승인 페이지 9절 「전체 판단 표」에서 정성 판단의 **입력**을 고칩니다. 점수를 덮어쓰지 않고, 입력을 고치면 점수는 규칙이 다시 계산합니다.
 
 1. `http://127.0.0.1:3000/approve/<run_id>?factor=F3` 처럼 factor 를 고르면 그 factor 의 모든 기업 판단이 나란히 보입니다. **같은 factor 의 다른 기업 판단을 함께 보고** 잣대가 같은지 확인한 뒤 고칩니다(체크리스트 Q03).
-2. 기업을 고르면(`&company=<id>`) 판정 종류에 맞는 입력란이 나옵니다. 근거 문장, 사유, 이름을 적고 터미널의 코드를 넣어 제출합니다. 이전 값은 판단 안의 `revision_history` 에 남고, `status: new`·검토자·검토일이 갱신됩니다.
+2. 기업을 고르면(`&company=<id>`) 판정 종류에 맞는 입력란이 나옵니다. 근거 문장, 사유, 이름을 적고 제출합니다. 일회용 코드는 필요 없습니다. 이전 값은 판단 안의 `revision_history` 에 남고, `status: new`·검토자·검토일이 갱신됩니다.
 3. 해시가 바뀌었다는 안내가 나오면 에이전트에게 `research → calculate → draft → review` 를 다시 시킵니다. 리뷰가 `pass` 가 된 뒤 새로고침해 승인합니다.
 
 | factor | 고칠 수 있는 것 |
@@ -97,7 +97,7 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 | ⑨ | 게이트 입력(`gate_inputs`: fcf_trend · bep_retreat · buffer_erosion · direction_A·B · coverage_comparable · operating_result_reviewed)과 근거 문장 |
 | ② ⑥ | 대상이 아닙니다 |
 
-③ ⑤ ⑦ ⑨ 는 점수 칸을 고칠 수 없고 판정 재료만 바뀝니다. 점수를 직접 고치는 길은 없습니다. 명령줄 `scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" --by <이름>` 도 같은 일을 하며, 에이전트가 판단 수정을 제안할 때 쓰는 길입니다(승인 페이지는 사람 이름과 코드를 받아 이 명령을 부릅니다). 새 판단(`status: new`)은 확정된 근거만 인용합니다.
+③ ⑤ ⑦ ⑨ 는 점수 칸을 고칠 수 없고 판정 재료만 바뀝니다. 점수를 직접 고치는 길은 없습니다. 명령줄 `scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" --by <이름>` 도 같은 일을 합니다(승인 페이지는 사람 이름을 받아 이 명령을 부릅니다). 에이전트는 이 명령 대신 `scripts/scorecard_cli.py propose` 로 제안을 쓰고, 사람이 5절에서 반영하거나 거부합니다. 새 판단(`status: new`)은 확정된 근거만 인용합니다.
 
 ## 파일은 네 종류입니다
 
