@@ -152,7 +152,7 @@ Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree
 
 기업을 추가할 때는 `/score-add-company` 로 레지스트리에 등록하고 `/score-extend`(`init --from-run`)로 이전 실행을 이어받아 새 기업만 조사합니다. 기존 기업이 움직이지 않았다는 사실은 `diff` 가 기계로 증명합니다.
 
-세부 미결 사항은 `docs/scorecard/open-items.md`, 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md` 에 있습니다.
+도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md` 에 있습니다.
 
 ## 설치와 보조 명령
 

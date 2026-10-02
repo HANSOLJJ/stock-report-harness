@@ -54,7 +54,8 @@ class SupersededC03ChoiceTest(unittest.TestCase):
 
 class DocumentedLimitsTest(unittest.TestCase):
     def test_rc3_06_and_08_are_recorded(self):
-        text = (ROOT / "docs" / "scorecard" / "open-items.md").read_text(encoding="utf-8")
+        # 2026-10-02 open-items.md 를 정리하며 structure.md 9절로 옮겼다.
+        text = (ROOT / "docs" / "scorecard" / "structure.md").read_text(encoding="utf-8")
         self.assertIn("| RC3-06 |", text)
         self.assertIn("**소비 증명이 아니다.**", text)
         self.assertIn("| RC3-08 |", text)

@@ -1,6 +1,6 @@
 # AI 기업 분석 framework — 구조 확장 지침
 
-- 작성일 2026-09-08. `design-guideline.md`(도메인 명세)의 짝이다. 처리하지 않고 남겨둔 항목은 `open-items.md` 에 모은다. 이 문서는 요구 ID(D·F·Q·T·C)를 실제 모듈·파일·테스트에 연결한다.
+- 작성일 2026-09-08. `design-guideline.md`(도메인 명세)의 짝이다. 남은 작업은 루트 `TODO.md` 에 모은다. 이 문서는 요구 ID(D·F·Q·T·C)를 실제 모듈·파일·테스트에 연결한다.
 - 기준 커밋 `0df7d6e`, 브랜치 `HANSOLJJ/worker`. 원본 규칙·계획 문서는 읽기 전용 참고 자료이고, git 이 6개 파일을 추적한다. 2026-10-01 에 옛 `AI_company_analysis_factor/` 에서 규칙 문서 둘은 `docs/scorecard/rules/`, 원천 자료 넷은 `docs/scorecard/source/` 로 옮겼다(바이트 그대로). SHA-256 은 design-guideline 2.1절과 일치한다.
 
 ## 1. 유형 분기와 공통 진입점
@@ -148,7 +148,7 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 상태 이름: 자료 부족 `pending_data`, 판단 부족 `needs_judgment`, 규칙 미결 `needs_rule_decision`, 승인 필요 `awaiting_user`(빌더 메시지), 검토 미완 `needs_fix`(리뷰 frontmatter). 해시가 하나라도 바뀌면 검증기가 리뷰·승인을 무효로 판정한다(T-14). 같은 승인본 재빌드는 history.csv 에 행을 추가하지 않는다(T-15). 사전 검증 실패 시 HTML 을 쓰지 않으므로 최신 MD/HTML/CSV 가 갈라지지 않는다(T-16).
 
-> **해시는 파일 바이트에 걸린다(`sha256_file` = `read_bytes`).** 이 저장소는 `.gitattributes` 가 없고 `core.autocrlf=true`(Git for Windows 시스템 설정)라 checkout·재기록 때 LF/CRLF 가 바뀌면 **내용이 같아도** `rule_hash` 와 승인 해시 6종이 갈린다. 2026-09-14 bfb4fbd 가 LF 바이트로 `rule_hash` 를 고정해 CRLF 작업 트리에서 research·calculate 가 멈췄고 5209311 에서 재고정했다. 지금은 고치지 않는다 — [open-items.md](open-items.md) 4절 HASH-EOL 참조. **[해소 2026-09-15 FIX-53]** 이제 `.gitattributes` 가 줄끝을 고정한다 — open-items HASH-EOL 참조.
+> **해시는 파일 바이트에 걸린다(`sha256_file` = `read_bytes`).** 이 저장소는 `.gitattributes` 가 없고 `core.autocrlf=true`(Git for Windows 시스템 설정)라 checkout·재기록 때 LF/CRLF 가 바뀌면 **내용이 같아도** `rule_hash` 와 승인 해시 6종이 갈린다. 2026-09-14 bfb4fbd 가 LF 바이트로 `rule_hash` 를 고정해 CRLF 작업 트리에서 research·calculate 가 멈췄고 5209311 에서 재고정했다. **[해소 2026-09-15 FIX-53]** 이제 `.gitattributes` 가 scorecard 해시 대상 파일의 줄끝을 고정한다(승인된 baseline·v1.5 규칙은 CRLF, 나머지는 LF). 해시 함수를 줄끝 정규화 기반으로 바꾸는 안은 기존 승인 해시가 모두 달라져 적용하지 않았다.
 
 ## 6. 산출물 렌더러
 
@@ -181,3 +181,13 @@ HTML 검증(`scorecard.validate._validate_html`): generator 메타(`scorecard-bu
 | T-18 | draft 순위표 ↔ results 대조, HTML `data-company` 대조 |
 | T-19 | Playwright 실측 + `node --check` 상당(인라인 JS 는 정적 문자열) |
 | T-20 | 기존 stock validator 경로 무변경 (report_type 없는 slug 는 기존 분기) |
+
+## 9. 알려진 한계
+
+2026-10-02 `open-items.md` 를 정리하며 지금도 맞는 주의 사항만 옮겼다.
+
+| ID | 언제 | 내용 |
+|---|---|---|
+| RC3-06 | `decisions_applied` 를 근거로 무엇을 주장할 때 | **소비 증명이 아니다.** `results.decisions_applied` 는 run.json `decisions` 를 `id:choice` 로 옮긴 목록일 뿐이다(engine.py). 선택을 읽는 분기가 없거나(C-11) 현재 모드에서 효력이 없는(C-13 은 bands 모드 전용) 선택도 들어 있다. 적용 여부는 factor 산식·경고에서 확인한다. 소비 추적(선택마다 읽은 factor 기록)은 구현하지 않았다 |
+| RC3-08 | 관측 kind·metric 의미를 스키마로 막으려 할 때 | **단어 의미는 스키마가 아니라 소비 코드가 막는다.** `metric=arr` 에 `kind=run_rate` 를 `actual` 로 바꿔도 스키마는 통과한다. 비상장 P2 보정의 `arr_growth` 는 `accepted_kinds: ["actual"]` 을 calc_f6_params 가 읽어 run_rate 를 거부한다. kind 를 새로 쓰는 소비자를 만들면 그 코드에 같은 거부를 넣는다 |
+| 재빌드 | 승인 뒤 리뷰 파일을 고쳤을 때 | 승인 해시 여섯 가지에 `review.md` 는 들지 않아 승인은 유효하지만, HTML References 의 검토자·리뷰 유형은 빌드 시점의 리뷰 파일에서 읽는다. 리뷰 파일을 고쳤으면 빌드를 다시 돌린다. 같은 승인본이면 `history.csv` 에 행이 추가되지 않는다 |
