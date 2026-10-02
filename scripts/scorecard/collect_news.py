@@ -168,7 +168,7 @@ def collect_company_news(
     existing: list[dict[str, Any]] = []
     if norm_path.is_file():
         existing = json.loads(norm_path.read_text(encoding="utf-8")).get("items", [])
-    merged = merge_items(existing, articles, "article_id")
+    merged = merge_items(existing, articles, "article_id", now=fetched_at)
     norm_path.write_text(json.dumps({"items": merged}, ensure_ascii=False, indent=2) + "\n",
                          encoding="utf-8", newline="\n")
     state.setdefault("runs", []).append(

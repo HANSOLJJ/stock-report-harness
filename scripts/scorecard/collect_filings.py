@@ -112,7 +112,7 @@ def collect_company_filings(
     existing: list[dict[str, Any]] = []
     if index_path.is_file():
         existing = json.loads(index_path.read_text(encoding="utf-8")).get("items", [])
-    merged = merge_items(existing, filings, "filing_id")
+    merged = merge_items(existing, filings, "filing_id", now=fetched_at)
     index_path.write_text(json.dumps({"items": merged}, ensure_ascii=False, indent=2) + "\n",
                           encoding="utf-8", newline="\n")
     state.setdefault("runs", []).append(

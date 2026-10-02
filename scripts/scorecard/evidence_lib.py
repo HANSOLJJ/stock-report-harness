@@ -163,8 +163,11 @@ def _content_equal(old: dict[str, Any], new: dict[str, Any]) -> bool:
     return strip(old) == strip(new)
 
 
-def merge_items(existing: list[dict[str, Any]], incoming: list[dict[str, Any]], key: str) -> list[dict[str, Any]]:
-    """key 기준 upsert. first_seen_utc 보존, 내용 변경 시 updated_utc 갱신, key 정렬."""
+def merge_items(existing: list[dict[str, Any]], incoming: list[dict[str, Any]], key: str,
+                now: str | None = None) -> list[dict[str, Any]]:
+    """key 기준 upsert. first_seen_utc 보존, 내용 변경 시 updated_utc 갱신, key 정렬.
+    2026-10-02 시각은 호출한 수집기의 기준 시각(now)을 쓴다. 실제 시계를 읽으면 같은 입력의 재수집이 초가 바뀔 때 달라졌다."""
+    stamp = now or utc_now_iso()
     merged: dict[Any, dict[str, Any]] = {item[key]: dict(item) for item in existing}
     for item in incoming:
         k = item[key]
@@ -173,9 +176,9 @@ def merge_items(existing: list[dict[str, Any]], incoming: list[dict[str, Any]], 
         entry = dict(item)
         if k in merged:
             entry["first_seen_utc"] = merged[k].get("first_seen_utc", entry.get("first_seen_utc"))
-            entry["updated_utc"] = utc_now_iso()
+            entry["updated_utc"] = stamp
         else:
-            entry.setdefault("first_seen_utc", utc_now_iso())
+            entry.setdefault("first_seen_utc", stamp)
         merged[k] = entry
     return [merged[k] for k in sorted(merged)]
 

@@ -109,6 +109,14 @@ class MergeTest(unittest.TestCase):
                              "article_id")
         self.assertEqual(first, second)
 
+    def test_stamps_use_given_now(self):
+        # 2026-10-02 실제 시계를 읽어 같은 입력의 재수집이 초가 바뀔 때 달라졌다(test_from_file_and_state 간헐 실패).
+        now = "2026-09-30T01:00:00Z"
+        first = merge_items([], [{"article_id": "a", "v": 1}], "article_id", now=now)
+        self.assertEqual(first[0]["first_seen_utc"], now)
+        changed = merge_items(first, [{"article_id": "a", "v": 2}], "article_id", now="2026-09-30T02:00:00Z")
+        self.assertEqual((changed[0]["first_seen_utc"], changed[0]["updated_utc"]), (now, "2026-09-30T02:00:00Z"))
+
 
 class SourceIdTest(unittest.TestCase):
     def test_article_id(self):
