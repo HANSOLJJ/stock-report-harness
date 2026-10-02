@@ -20,7 +20,7 @@
 
 파일 도구 경로는 아래에 해당하면 막는다.
 
-- `.env*`, `.git/`, `.github/workflows/`, `docs/finance-style-guide.md`
+- `.env*`, `.git/`, `.github/workflows/`
 - 어느 폴더에 있든 `approval.json` (2026-09-30 레인 F)
 - 승인된 실행이 쓰는 규칙 `scorecard/rules/v1.5.json`, `v1.6.json`, `v1.7.json`. **v1.8 은 아직 승인된 실행이 없어 넣지 않았다. 첫 실행이 v1.8 로 승인되면 `_PROTECTED_FILES` 에 더한다.**
 - 이동한 기존 실행 두 폴더 `output/ai-scorecard-2026-09-baseline/`, `output/ai-scorecard-2026-09-obsreg/`

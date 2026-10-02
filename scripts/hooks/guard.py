@@ -169,8 +169,8 @@ def block_dangerous_bash(payload: dict, *, root: Path) -> Decision:
 # 2026-10-01 레인 H(F-3): 기준선은 승인 해시 밖의 재빌드 입력이다(실행에 triggers.json 이 없으면 기준선 트리거를 그린다). 폴더째 보호한다.
 _PROTECTED_RUN_DIRS = ["output/ai-scorecard-2026-09-baseline", "output/ai-scorecard-2026-09-obsreg"]
 _PROTECTED_TREES = [*_PROTECTED_RUN_DIRS, "scorecard/baseline"]
+# 2026-10-02 docs/finance-style-guide.md(종목 리포트 시절 문체 지침)는 읽는 곳이 없어 파일과 함께 보호 목록에서 뺐다.
 _PROTECTED_FILES = [
-    "docs/finance-style-guide.md",
     "scorecard/rules/v1.5.json", "scorecard/rules/v1.6.json", "scorecard/rules/v1.7.json",
     "scorecard/history.csv",
 ]
@@ -606,7 +606,7 @@ def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
     for v in violations:
         if v not in uniq:
             uniq.append(v)
-    return block("보호 경로 수정 시도를 차단합니다: " + ", ".join(uniq) + ". 보호 대상: .env*, .git/, .github/workflows/, docs/finance-style-guide.md, "
+    return block("보호 경로 수정 시도를 차단합니다: " + ", ".join(uniq) + ". 보호 대상: .env*, .git/, .github/workflows/, "
                  "**/approval.json, scorecard/rules/v1.5~v1.7.json, scorecard/history.csv, scorecard/baseline/, "
                  "output/ai-scorecard-2026-09-baseline/, output/ai-scorecard-2026-09-obsreg/.")
 

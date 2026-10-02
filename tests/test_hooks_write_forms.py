@@ -16,7 +16,7 @@ class WriteFormsTest(TempRootCase):
         super().setUp()
         for rel in (APPROVAL, f"{OBS}/draft.md", RULE, "scorecard/rules/v1.8.json", BASELINE, "scorecard/history.csv",
                     "output/ai-scorecard-2026-10-new/draft.md", "output/ai-scorecard-2026-10-done/approval.json",
-                    "tmp-lane-j/a.pyc", "docs/finance-style-guide.md", "notes.md"):
+                    "tmp-lane-j/a.pyc", "notes.md"):
             self.put(rel)
 
     def kind(self, cmd: str, tool: str = "PowerShell") -> str:
@@ -112,7 +112,6 @@ class WriteFormsTest(TempRootCase):
                 "Remove-Item -Recurse sc*",
                 "cp x.json scorecard/rules/v1.[5-7].json",
                 "rm .env*",
-                "rm docs/*.md",
                 "rm -rf scorecard/**/triggers.json",
             ], tool=tool)
             self.assert_kinds("allow", [
@@ -183,7 +182,7 @@ class CaseInsensitiveTest(TempRootCase):
                     "output/ai-scorecard-new/approval.JSON", "output/ai-scorecard-new/APPROVAL.JSON",
                     ".env", ".ENV", ".Env.local", ".GIT/config", "Scorecard/Rules/V1.7.json", "SCORECARD/history.CSV",
                     "Scorecard/Baseline/v1.5/triggers.json", "Output/AI-Scorecard-2026-09-OBSREG/draft.md",
-                    "Docs/Finance-Style-Guide.md", ".GitHub/Workflows/ci.yml"):
+                    ".GitHub/Workflows/ci.yml"):
             for tool in ("Write", "Edit"):
                 with self.subTest(tool=tool, rel=rel):
                     self.assertEqual(self.kind(write(str(self.root / rel), tool=tool)), "block")

@@ -64,12 +64,16 @@ class DangerousCommandTest(unittest.TestCase):
 
 class ProtectedPathTest(TempRootCase):
     def test_protected_write_blocked(self):
-        for rel in (".env", ".github/workflows/x.yml", "docs/finance-style-guide.md"):
+        for rel in (".env", ".github/workflows/x.yml", "scorecard/history.csv"):
             with self.subTest(rel=rel):
                 self.assertEqual(guard.protect_sensitive_files(write(rel), root=self.root).kind, "block")
 
     def test_output_spec_is_no_longer_protected(self):
         self.assertEqual(guard.protect_sensitive_files(write("docs/output-spec.md"), root=self.root).kind, "allow")
+
+    def test_finance_style_guide_is_no_longer_protected(self):
+        # 2026-10-02 파일과 함께 보호 목록에서 뺐다.
+        self.assertEqual(guard.protect_sensitive_files(write("docs/finance-style-guide.md"), root=self.root).kind, "allow")
         self.assertEqual(guard.protect_sensitive_files(shell("Bash", "echo x > docs/output-spec.md"), root=self.root).kind, "allow")
 
     def test_shell_mutation_of_protected_path_blocked(self):
