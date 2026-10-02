@@ -6,21 +6,29 @@
 
 | 이름 | 이벤트 | 하는 일 | 결과 |
 |---|---|---|---|
-| `block_dangerous_bash` | PreToolUse 셸 | `rm -rf /`, `sudo`, 원격 스크립트 파이프 실행, 강제 push 차단 | block |
+| `block_dangerous_bash` | PreToolUse 셸 | `rm -rf /`, `sudo`, 원격 스크립트 파이프 실행, 강제 push, 작업 트리를 지우는 git 명령(`reset --hard`·`clean -f`·`checkout .`·`restore .`), 홈 폴더·드라이브 루트의 재귀 삭제 차단 | block |
 | `protect_sensitive_files` | PreToolUse 셸·파일 | 보호 경로(아래 절) 수정 차단, 승인·취소 명령 차단 | block |
 | `enforce_plan` | PreToolUse 셸·파일 | `output/<slug>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 명령은 리뷰 pass 필요, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 | block |
-| `forbid_financial_advice` | Pre·PostToolUse | `output/*/draft.md`, `**/judgments.json`, `**/evidence/*.json` 의 투자 권유·수익 보장 표현 차단 | block |
+| `forbid_financial_advice` | Pre·PostToolUse | `output/<run>/` 의 `draft.md`·`judgments.json`·`evidence/evidence.json` 에서 우리가 쓴 글의 투자 권유·수익 보장 표현 차단 | block |
 | `remind_review` | PostToolUse 파일, Stop | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고 | warn |
 
 `enforce-citations` 는 종목 리포트 전용이라 만들지 않았고 배선에서도 뺐다. `enforce_memory`·`inject_memory_context` 는 2026-10-02 에 저장소 메모리(`memory/` 폴더, 검증기)와 함께 없앴다. 쓰는 기준이 모호했고 일지는 주입되지 않았으며 한 세션에 약 12만 자를 문맥에 넣었다. 교훈은 `AGENTS.md` 와 스킬에 규칙 한 줄로 적는다.
 
 ## 보호 경로와 승인 명령 (`protect_sensitive_files`)
 
+**같은 저장소의 다른 체크아웃도 같은 규칙으로 본다(2026-10-02).** 훅은 세션이 열린 체크아웃의 `guard.py` 로 돌지만, 대상 경로가 원본 폴더나 다른 워크트리 아래에 있으면 `git worktree list --porcelain` 으로 그 체크아웃을 찾아 그 루트 기준 상대 경로로 판정한다. 전에는 세션 루트 기준으로만 판정해서, 워크트리 세션이 원본 폴더의 `.env`·이력 CSV·규칙·기준선을 쓰는 것이 모두 통과했다.
+
+- 세션 루트 아래 경로는 git 을 부르지 않는다. 루트 밖 경로이거나 보호 경로 이름이 `/` 뒤에 나올 때만 체크아웃 목록을 구한다(약 25ms).
+- 인터프리터·중첩 셸 명령에 절대 경로로 적힌 보호 경로도 잡는다(세션 루트 자신의 절대 경로 포함). Windows 에서는 Git Bash 표기 `/c/…`·`/mnt/c/…`·`/cygdrive/c/…` 를 드라이브 경로로 읽는다.
+- 체크아웃을 통째로 지우거나 옮기는 명령(`rm -rf <다른 워크트리>`)도 막는다.
+- `.git` 이 있는데 체크아웃 목록을 구하지 못하면 루트 밖 경로는 막는다(fail-closed). `.git` 이 없는 폴더는 체크아웃 하나로 본다.
+- 차단 문구는 걸린 경로만 적는다. 다른 체크아웃의 경로에는 `(체크아웃 <폴더 이름>)` 을 붙인다.
+
 파일 도구 경로는 아래에 해당하면 막는다.
 
 - `.env*`, `.git/`, `.github/workflows/`
 - 어느 폴더에 있든 `approval.json` (2026-09-30 레인 F)
-- 승인된 실행이 쓰는 규칙 `scorecard/rules/v1.5.json`, `v1.6.json`, `v1.7.json`. **v1.8 은 아직 승인된 실행이 없어 넣지 않았다. 첫 실행이 v1.8 로 승인되면 `_PROTECTED_FILES` 에 더한다.**
+- 승인된 실행이 쓰는 규칙 `scorecard/rules/v1.5.json`, `v1.6.json`, `v1.7.json`. **v1.8 과 그 뒤의 규칙, 새로 승인되는 실행 폴더는 목록에 더하지 않는다(2026-10-02 사용자 결정).** 고치면 지문이 달라져 승인이 무효가 되고 빌드가 멈추므로 지문 검증에 맡긴다. 이 목록은 지문이 못 잡는 것(`.env`, 기준선, 승인 파일, 이력 CSV)과 기존 항목만 지킨다.
 - 이동한 기존 실행 두 폴더 `output/ai-scorecard-2026-09-baseline/`, `output/ai-scorecard-2026-09-obsreg/`
 - `scorecard/history.csv`
 - `scorecard/baseline/**` (2026-10-01 레인 H). 기준선 트리거는 승인 해시 밖의 재빌드 입력이다. 실행 묶음에 `triggers.json` 이 없으면 렌더러가 기준선 트리거를 그리므로, 바꾸면 승인이 유효한 채 재빌드 리포트가 바뀐다.
@@ -56,7 +64,7 @@
 
 ## 실행 잠금 (`enforce_plan`)
 
-`output/<slug>/.lock`(gitignore)에 `{owner, started_utc, stage}` 가 있고 그 소유자가 훅 프로세스의 소유자와 다르면 그 묶음에 대한 Write/Edit 를 막는다. 잠금 파일이 없으면 통과하고, 읽을 수 없는 잠금은 소유자를 모르는 잠금으로 보아 막는다. 소유자는 `SCORECARD_AGENT`, 없으면 `ORCA_TERMINAL_HANDLE`, 없으면 OS 사용자명이다(`guard.lock_owner` 와 `scorecard.stages.lock_owner` 가 같은 규칙). 잠금은 CLI 의 `init`·`collect`·`research`·`calculate`·`draft`·`review-template` 과 에이전트 세션의 `confirm`·`judge`(2026-10-01 레인 J) 가 쓰고, 인수는 그 단계들의 `--take-lock` 이다.
+`output/<slug>/.lock`(gitignore)에 `{owner, started_utc, stage}` 가 있고 그 소유자가 훅 프로세스의 소유자와 다르면 그 묶음에 대한 Write/Edit 를 막는다. 잠금 파일이 없으면 통과하고, 읽을 수 없는 잠금은 소유자를 모르는 잠금으로 보아 막는다. 소유자는 `SCORECARD_AGENT`, 없으면 `ORCA_TERMINAL_HANDLE`, 없으면 OS 사용자명이다(`guard.lock_owner` 와 `scorecard.stages.lock_owner` 가 같은 규칙). 잠금은 CLI 의 `init`·`collect`·`research`·`calculate`·`draft`·`review-template` 과 에이전트 세션의 `confirm`·`judge`(2026-10-01 레인 J) 가 쓰고, 인수는 그 단계들의 `--take-lock` 이다. 빌드가 사후 검증까지 통과하면 그 실행의 잠금을 지운다(2026-10-02, `render_html.build_scorecard`). 잠금 주인이 터미널 번호라 같은 세션에서도 번호가 바뀔 수 있다. 진행 중에 자기 실행에 막히면 `--take-lock` 으로 넘겨받는다.
 
 ## 단계 순서 (`enforce_plan`)
 
@@ -64,8 +72,17 @@
 
 - `plan.md` 는 자유. `research.md` 는 `plan.md` 가 있어야 한다. `draft.md` 는 `plan.md`·`research.md`, `review.md` 는 여기에 `draft.md` 까지 있어야 한다.
 - `report.html`, `audit.md` 는 Write/Edit 로 쓸 수 없다. 빌드 명령으로만 만든다.
-- 빌드 명령(Bash·PowerShell)은 `output/<slug>/review.md` frontmatter 가 `status: pass`, `review_type: separate-session-4way`, `review_execution: separate_subagent_sessions` 일 때만 통과한다.
+- 빌드 명령(Bash·PowerShell)은 `output/<slug>/review.md` frontmatter 가 `status: pass`, `review_type: separate-session-4way`, `review_execution: separate_subagent_sessions` 일 때만 통과한다. 명령을 단어로 나눠 빌드 호출을 찾는다(2026-10-02): `build_report.py` 가 `python`·`python3`·`py` 뒤에 오거나 `uv run` 으로 실행되는 경우(`./scripts/…`·절대 경로·`-Xutf8` 포함)와 `npm|pnpm|yarn … build:report`. 리뷰 파일은 `cd`·`--directory`·`--prefix`·절대 경로를 따라 **실행될 스크립트가 속한 체크아웃**에서 찾는다. 빌더 파일을 읽기만 하는 명령(`cat`, `git log --`)은 통과한다.
 - `review-parts/**`, `*.json`, `evidence/**`, `triggers.json`, `preview.md` 에는 게이트가 없다. 옛 경로(`plan/`, `research/`, `drafts/`, `reviews/`, `output/<slug>.html`)도 게이트 대상이 아니다.
+
+## 투자 권유 표현 (`forbid_financial_advice`)
+
+우리가 쓴 글만 본다(2026-10-02). 전에는 `output/*/evidence/*.json` 전체를 훑어, 수집 원문 `candidates.json` 의 뉴스 제목 "Buy Now" 때문에 모든 셸 명령 뒤에 block 이 났다.
+
+- 대상은 `output/<run>/` 의 `draft.md`, `judgments.json`, `evidence/evidence.json` 셋이다. `candidates.json` 과 `tests/fixtures/` 는 대상이 아니다.
+- `evidence.json` 은 우리가 쓰는 칸(`relevance`·`conditional_impact`·`counter_evidence`·`unverified`·`horizon`)만 본다. `title`·`excerpt` 는 원문이라 보지 않는다. JSON 으로 읽지 못하는 조각은 `title`·`excerpt` 줄만 빼고 검사한다.
+- `draft.md` 는 기사 제목을 옮기는 「인용 근거」·References 절을 빼고 본다.
+- PreToolUse 는 파일 도구가 쓰려는 문자열을, PostToolUse 는 실제 파일을 본다. 셸 명령 뒤에는 대상 파일 전체를 다시 훑는다.
 
 ## 출력 규약
 
@@ -94,17 +111,20 @@
 
 ## 배선
 
-- Claude Code: `.claude/settings.json`. 명령은 `uv run --frozen --directory "${CLAUDE_PROJECT_DIR:-.}" python -X utf8 scripts/hooks/guard.py <훅이름>` 이다. 매처는 셸 계열 `Bash|PowerShell`, 파일 계열 `Write|Edit|MultiEdit` 이다.
+- Claude Code: `.claude/settings.json`. 명령은 `uv run --frozen --directory "${CLAUDE_PROJECT_DIR:-.}" python -X utf8 scripts/hooks/guard.py <훅이름>` 이다. 매처는 셸 계열 `Bash|PowerShell`, 파일 계열 `Write|Edit|MultiEdit` 이다. 이벤트는 PreToolUse·PostToolUse·Stop 셋이다(프롬프트 제출 훅은 2026-10-02 에 없앴다).
 - Codex: `.codex/hooks.json`. 명령은 `uv run --frozen python -X utf8 scripts/hooks/guard.py <훅이름>` 이다. Codex 는 Windows 에서 bash 를 거치지 않으므로 셸 변수 확장을 쓰지 않는다. **훅 프로세스의 cwd 가 세션 루트라고 가정한다.** 그 가정이 깨지면 `uv` 가 프로젝트를 못 찾거나 `find_root` 가 None 을 돌려주어 훅이 조용히 통과한다. 훅 파일이 바뀌면 Codex 가 신뢰 해시(`~/.codex/config.toml [hooks.state]`)를 다시 묻는다.
 - timeout 은 15초다. 첫 `uv run` 이 `.venv` 를 만들 수 있다.
 
 ## 테스트
 
-`uv run --frozen python -X utf8 -m unittest tests.test_hooks tests.test_lane_v_fixes tests.test_hooks_write_forms`. 훅 함수를 dict 로 직접 부르므로 bash 가 필요 없다. 배선 스모크 두 건만 `bash` 와 `uv` 가 있을 때 실행한다.
+`uv run --frozen python -X utf8 -m unittest tests.test_hooks tests.test_hooks_checkouts tests.test_lane_v_fixes tests.test_hooks_write_forms`. 훅 함수를 dict 로 직접 부르므로 bash 가 필요 없다. 배선 스모크 두 건만 `bash` 와 `uv` 가 있을 때 실행한다.
 
 ## 아직 하지 않은 것
 
 - Antigravity·Muse 배선은 확인 세 건(차단 표현, 페이로드 필드 이름, 훅 프로세스의 작업 디렉터리)이 끝난 뒤 별도 과제로 한다.
+- 단계 순서(`enforce_plan`)와 리뷰 알림(`remind_review` 의 PostToolUse)은 Write·Edit 만 본다. 셸로 `output/<run>/report.html` 이나 `draft.md` 를 직접 쓰는 것은 막지 않는다. 단계 순서와 산출물 정합은 CLI(`_require_file`)와 계약 검증기(`validate_report_contract.py`)가 첫 방어선이고, 리뷰 해시 불일치는 Stop 때 `remind_review` 가 다시 본다.
+- 체크아웃 판정은 `git worktree list` 에 나오는 폴더만 안다. 같은 저장소를 따로 clone 한 폴더는 다른 저장소로 본다.
+- 작업 트리를 지우는 git 명령 차단은 `bash -c "git reset --hard"` 같은 중첩 실행을 놓친다.
 - `protect_sensitive_files` 는 셸 문자열만 본다. 경로가 변수·따옴표·명령 치환에 **통째로** 들어 있으면 쓰기와 함께 막지만(레인 N), 경로를 조각내 이어 붙이는 쓰기(`D=scorecard/rules; rm $D/v1.7.json`, `Join-Path`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(승인 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
 - 쓰기가 있는 명령은 따옴표 안의 보호 경로를 읽기 인자로 썼어도 막는다(`grep "approval.json" -r . > /tmp/out`). 쓰기와 읽기를 한 명령에 섞지 않거나 따옴표 없이 쓴다.
 - `xargs` 판정은 보수적이다. 대상 목록을 파일에서 읽는 `cat list.txt | xargs rm` 은 목록 안의 보호 경로를 볼 수 없어 통과한다.
