@@ -353,38 +353,22 @@ class RemindReviewTest(TempRootCase):
         self.assertEqual(json.loads(post.getvalue())["hookSpecificOutput"], {"hookEventName": "PostToolUse", "additionalContext": "m"})
 
 
-class EnforceMemoryTest(TempRootCase):
-    def test_validator_failure_blocks_and_success_allows(self):
-        self.put("memory/topics/x.md")
-        payload = write("memory/topics/x.md")
-        self.put("scripts/validate_memory.py", "import sys\nprint('bad')\nsys.exit(1)\n")
-        d = guard.enforce_memory(payload, root=self.root)
-        self.assertEqual(d.kind, "block")
-        self.assertIn("bad", d.text)
-        self.put("scripts/validate_memory.py", "print('ok')\n")
-        self.assertEqual(guard.enforce_memory(payload, root=self.root).kind, "allow")
+class MemoryHooksRemovedTest(unittest.TestCase):
+    """2026-10-02 저장소 메모리를 없앴다. 훅·배선·검증기·폴더가 되살아나지 않게 잠근다."""
 
-    def test_paths_outside_memory_skip_validator(self):
-        self.put("scripts/validate_memory.py", "import sys\nsys.exit(1)\n")
-        self.assertEqual(guard.enforce_memory(write("output/t/plan.md"), root=self.root).kind, "allow")
+    def test_hooks_table_has_five_and_no_memory_hooks(self):
+        self.assertEqual(sorted(guard.HOOKS), ["block_dangerous_bash", "enforce_plan", "forbid_financial_advice",
+                                               "protect_sensitive_files", "remind_review"])
 
+    def test_no_prompt_hook_is_wired(self):
+        for path in (ROOT / ".claude" / "settings.json", ROOT / ".codex" / "hooks.json"):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn("UserPromptSubmit", text, path.name)
+            self.assertNotIn("memory", text, path.name)
 
-class InjectMemoryContextTest(TempRootCase):
-    def test_score_command_loads_pipeline_topic(self):
-        self.put("memory/topics/pipeline-order.md", "순서 관측")
-        d = guard.inject_memory_context({"prompt": "/score-build t"}, root=self.root)
-        self.assertEqual(d.kind, "context")
-        self.assertIn("순서 관측", d.text)
-
-    def test_no_match_still_returns_context(self):
-        d = guard.inject_memory_context({"prompt": "zzz"}, root=self.root)
-        self.assertEqual(d.kind, "context")
-        self.assertIn("자동 매칭 없음", d.text)
-
-    def test_context_output_shape(self):
-        out = io.StringIO()
-        self.assertEqual(guard._emit(guard.context("c"), {}, out), 0)
-        self.assertEqual(json.loads(out.getvalue())["hookSpecificOutput"]["hookEventName"], "UserPromptSubmit")
+    def test_memory_files_are_gone(self):
+        for rel in ("memory", "docs/memory-system.md", "scripts/validate_memory.py"):
+            self.assertFalse((ROOT / rel).exists(), rel)
 
 
 class MainTest(unittest.TestCase):

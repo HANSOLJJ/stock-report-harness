@@ -1,4 +1,4 @@
-# 가드레일 훅 9개의 판단 논리를 한 모듈로 모은 진입점 (uv run python scripts/hooks/guard.py <훅이름>)
+# 가드레일 훅 5개의 판단 논리를 한 모듈로 모은 진입점 (uv run python scripts/hooks/guard.py <훅이름>)
 """훅 하나가 함수 하나다. 함수는 페이로드 dict 와 저장소 루트를 받아 Decision 을 돌려준다.
 
 stdin 읽기, 출력 형식, exit code 는 main 만 맡는다. 예기치 않은 예외는 stderr 에 한 줄 남기고
@@ -19,7 +19,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, TextIO
+from typing import Callable, TextIO
 
 GUARD_REL = "scripts/hooks/guard.py"
 
@@ -27,14 +27,11 @@ GUARD_REL = "scripts/hooks/guard.py"
 SHELL_TOOLS = {"Bash", "PowerShell"}
 FILE_TOOLS = {"Write", "Edit", "MultiEdit", "NotebookEdit"}
 
-MAX_TOPIC_CHARS = 6000
-MAX_TOTAL_CHARS = 18000
-
 
 # ------------------------------------------------------------------ 결정
 @dataclass(frozen=True)
 class Decision:
-    kind: str  # allow | block | warn | context
+    kind: str  # allow | block | warn
     text: str = ""
 
 
@@ -48,10 +45,6 @@ def block(reason: str) -> Decision:
 
 def warn(message: str) -> Decision:
     return Decision("warn", message)
-
-
-def context(text: str) -> Decision:
-    return Decision("context", text)
 
 
 # ------------------------------------------------------------------ 공통 유틸
@@ -863,147 +856,6 @@ def remind_review(payload: dict, *, root: Path) -> Decision:
     return warn("리뷰 해시가 무효화됨. " + "; ".join(problems[:6]) + ". " + ", ".join(f"/score-review {s}" for s in slugs) + " 가 필요하다.")
 
 
-# ------------------------------------------------------------------ 6. memory 검증
-def enforce_memory(payload: dict, *, root: Path) -> Decision:
-    hit = [rp for rp in extract_paths(payload, root) if rp.startswith(("memory/_daily/", "memory/topics/"))]
-    if not hit:
-        return allow()
-    validator = root / "scripts" / "validate_memory.py"
-    if not validator.is_file():
-        return allow()
-    proc = subprocess.run(
-        [sys.executable, "-X", "utf8", str(validator)],
-        cwd=root, text=True, capture_output=True, encoding="utf-8", errors="replace",
-    )
-    if proc.returncode == 0:
-        return allow()
-    detail = (proc.stdout + proc.stderr).strip()
-    return block("memory 파일 변경 후 scripts/validate_memory.py 검증 실패. " + detail[:1200])
-
-
-# ------------------------------------------------------------------ 7. memory 문맥 주입
-_DOMAIN_RULES: list[dict[str, Any]] = [
-    {
-        "name": "날짜/기간/yfinance 시간 동기화",
-        "file": "time-sync.md",
-        "patterns": [
-            r"\b(period_start|period_end|created_at|interval=1d|yfinance|price-chart)\b",
-            r"최근\s*\d+\s*(일|개월|년)",
-            r"기간|날짜|거래일|일봉|차트|주가|가격",
-        ],
-    },
-    {
-        "name": "외부 API 호출",
-        "file": "external-api.md",
-        "patterns": [
-            r"\b(OpenAI|ElevenLabs|API|image_gen|imagegen|yfinance|requests|fetch|curl)\b",
-            r"뉴스|토스증권|Google News|외부\s*호출|API\s*호출",
-        ],
-    },
-    {
-        "name": "hero 이미지 워크플로",
-        "file": "image-workflow.md",
-        "patterns": [
-            r"\b(hero|selected-image|image-manifest|image_gen|imagegen)\b",
-            r"이미지|프롬프트|후보\s*3|선택된\s*이미지|비주얼",
-        ],
-    },
-    {
-        "name": "경제리포트 파이프라인 순서",
-        "file": "pipeline-order.md",
-        "patterns": [
-            r"/score-(?:plan|research|calculate|draft|review|approve|build|goal|extend|diff|add-company)\b",
-            r"\b(plan|research|drafts|reviews|output)/",
-            r"빌드|리서치|드래프트|리뷰|경제리포트|HTML|파이프라인",
-        ],
-    },
-    {
-        "name": "빌드/설치 오류",
-        "file": "build-errors.md",
-        "patterns": [
-            r"\b(uv sync|pnpm install|npm install|pip install|node|python|build|lint|typecheck|pytest)\b",
-            r"빌드|설치|의존성|패키지|테스트|검증",
-        ],
-    },
-    {
-        "name": "git workflow",
-        "file": "git-workflow.md",
-        "patterns": [
-            r"\b(git|commit|push|pull request|PR|branch|merge|rebase)\b",
-            r"커밋|푸시|브랜치|병합",
-        ],
-    },
-    {
-        "name": "guardrails/hook/schema",
-        "file": "guardrails.md",
-        "patterns": [
-            r"\b(hook|validator|schema|AGENTS\.md|CLAUDE\.md|settings\.json)\b",
-            r"가드레일|검증기|스키마|차단|훅|메모리|memory",
-        ],
-    },
-]
-
-
-def _extract_prompt(payload: dict) -> str:
-    for key in ("prompt", "message", "user_prompt", "input"):
-        value = payload.get(key)
-        if isinstance(value, str) and value.strip():
-            return value
-    return json.dumps(payload, ensure_ascii=False)
-
-
-def _compact_topic(path: Path) -> str:
-    text = path.read_text(encoding="utf-8").strip()
-    if len(text) <= MAX_TOPIC_CHARS:
-        return text
-    return text[:MAX_TOPIC_CHARS].rstrip() + "\n\n... (topic이 길어 앞부분만 자동 주입함)"
-
-
-def inject_memory_context(payload: dict, *, root: Path) -> Decision:
-    prompt = _extract_prompt(payload)
-    matched = [r for r in _DOMAIN_RULES if any(re.search(p, prompt, re.I) for p in r["patterns"])]
-    if not matched:
-        return context(
-            "[Memory System]\n"
-            "관련 memory topic 자동 매칭 없음. 실패/고비용 재시도 관측이 생기면 "
-            "memory/_daily/YYYY-MM-DD.md에 1 entry = 1 관측으로 기록함."
-        )
-    loaded: list[tuple[str, str, str]] = []
-    missing: list[tuple[str, str]] = []
-    for rule in matched:
-        path = root / "memory" / "topics" / rule["file"]
-        rel = f"memory/topics/{rule['file']}"
-        if path.is_file():
-            content = _compact_topic(path)
-            if content:
-                loaded.append((rule["name"], rel, content))
-            else:
-                missing.append((rule["name"], f"{rel} (빈 파일)"))
-        else:
-            missing.append((rule["name"], f"{rel} (없음)"))
-    lines = [
-        "[Memory System 자동 주입]",
-        "작업 전 아래 topic 관측을 우선 적용함. 무관한 topic은 로드하지 않았음.",
-    ]
-    total = sum(len(line) + 1 for line in lines)
-    for name, rel, content in loaded:
-        block_text = f"\n--- {name}: {rel} ---\n{content}\n"
-        if total + len(block_text) > MAX_TOTAL_CHARS:
-            lines.append("\n... (memory 자동 주입 총량 제한으로 일부 topic 생략함)")
-            break
-        lines.append(block_text)
-        total += len(block_text)
-    if missing:
-        lines.append("\n[Memory topic 상태]")
-        for name, rel in missing:
-            lines.append(f"- {name}: {rel}")
-    lines.append(
-        "\n[기록 규칙] 실패/재시도 비용이 큰 관측은 memory/_daily/YYYY-MM-DD.md에 append하고, "
-        "반복/고비용 패턴은 memory/topics/{slug}.md로 추출함."
-    )
-    return context("\n".join(lines))
-
-
 # ------------------------------------------------------------------ 진입점
 HOOKS: dict[str, Callable[..., Decision]] = {
     "block_dangerous_bash": block_dangerous_bash,
@@ -1011,9 +863,9 @@ HOOKS: dict[str, Callable[..., Decision]] = {
     "enforce_plan": enforce_plan,
     "forbid_financial_advice": forbid_financial_advice,
     "remind_review": remind_review,
-    "enforce_memory": enforce_memory,
-    "inject_memory_context": inject_memory_context,
 }
+# 2026-10-02 저장소 메모리(memory/ 폴더, enforce_memory·inject_memory_context 훅, 검증기)를 없앴다. 쓰는 기준이 모호했고
+# 일지는 주입되지 않았으며 한 세션에 약 12만 자를 문맥에 넣었다. 교훈은 AGENTS.md 와 스킬에 규칙 한 줄로 적는다.
 
 
 def find_root() -> Path | None:
@@ -1042,9 +894,6 @@ def _emit(decision: Decision, payload: dict, out: TextIO) -> int:
             print(json.dumps({"systemMessage": decision.text}, ensure_ascii=False), file=out)
         else:
             print(json.dumps({"hookSpecificOutput": {"hookEventName": "PostToolUse", "additionalContext": decision.text}}, ensure_ascii=False), file=out)
-        return 0
-    if decision.kind == "context":
-        print(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": decision.text}}, ensure_ascii=False), file=out)
         return 0
     return 0
 

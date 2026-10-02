@@ -6,10 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "check": "node --check server.js && uv run --frozen python -X utf8 -m compileall -q scripts",
-    "validate:memory": "uv run --frozen python -X utf8 scripts/validate_memory.py",
     "validate:report": "uv run --frozen python -X utf8 scripts/validate_report_contract.py",
     "build:report": "uv run --frozen python -X utf8 scripts/build_report.py",
-    "test": "npm run check && npm run validate:memory && npm run test:scorecard",
+    "test": "npm run check && npm run test:scorecard",
     "test:scorecard": "uv run --frozen python -X utf8 -m unittest discover -s tests -t .",
     "test:pytest": "uv run --frozen pytest -q",
     "test:node": "node --test \"tests/node/**/*.test.js\"",

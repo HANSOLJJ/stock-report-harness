@@ -162,7 +162,7 @@ HTML 검증(`scorecard.validate._validate_html`): generator 메타(`scorecard-bu
 
 ## 7. 훅·명령·스킬
 
-- 훅: `scripts/hooks/guard.py` 한 모듈이다. `block_dangerous_bash`, `protect_sensitive_files`(보호 경로 `scorecard/baseline/**` 포함, 쓰기 대상일 때만 막고 읽기는 통과, PowerShell cmdlet·`find -delete`·`xargs`·글롭 판정, 승인·취소 명령과 승인 있는 실행의 `init --force` 차단), `enforce_plan`(`output/<run_id>/` 단계 순서·실행 잠금), `forbid_financial_advice`, `remind_review`(경고만), `enforce_memory`, `inject_memory_context`. 목록과 한계는 `scripts/hooks/README.md`. 핵심 통제는 훅이 아니라 `scorecard.stages` 의 승인 함수·검증기·빌더가 직접 수행하고(설계 지침 4.3), 훅은 둘째 방어선이다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못한다.
+- 훅: `scripts/hooks/guard.py` 한 모듈이다. `block_dangerous_bash`, `protect_sensitive_files`(보호 경로 `scorecard/baseline/**` 포함, 쓰기 대상일 때만 막고 읽기는 통과, PowerShell cmdlet·`find -delete`·`xargs`·글롭 판정, 승인·취소 명령과 승인 있는 실행의 `init --force` 차단), `enforce_plan`(`output/<run_id>/` 단계 순서·실행 잠금), `forbid_financial_advice`, `remind_review`(경고만). 목록과 한계는 `scripts/hooks/README.md`. 핵심 통제는 훅이 아니라 `scorecard.stages` 의 승인 함수·검증기·빌더가 직접 수행하고(설계 지침 4.3), 훅은 둘째 방어선이다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못한다.
 - 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-collect`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal` → `.claude/skills/score-*/SKILL.md`. `/score-approve` 는 승인을 실행하지 않고 "승인 대기" 보고와 승인 페이지 안내만 한다.
 - 리뷰어 에이전트: `.claude/agents/`(`fact-checker`, `evidence-editor`, `report-designer`)와 같은 내용의 `.codex/agents/*.toml`.
 - 실행은 `uv run --frozen python -X utf8 scripts/…` 이다. 시스템 `python`·`python3` 를 직접 부르지 않는다. 훅 배선도 `uv run` 한 줄이라 bash 를 거치지 않는다.

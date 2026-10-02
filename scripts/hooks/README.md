@@ -11,10 +11,8 @@
 | `enforce_plan` | PreToolUse 셸·파일 | `output/<slug>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 명령은 리뷰 pass 필요, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 | block |
 | `forbid_financial_advice` | Pre·PostToolUse | `output/*/draft.md`, `**/judgments.json`, `**/evidence/*.json` 의 투자 권유·수익 보장 표현 차단 | block |
 | `remind_review` | PostToolUse 파일, Stop | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고 | warn |
-| `enforce_memory` | PostToolUse 파일 | `memory/_daily/`·`memory/topics/` 변경 뒤 `scripts/validate_memory.py` 실행, 실패하면 차단 | block |
-| `inject_memory_context` | UserPromptSubmit | 프롬프트에 맞는 `memory/topics/*.md` 를 문맥으로 주입 | context |
 
-`enforce-citations` 는 종목 리포트 전용이라 만들지 않았고 배선에서도 뺐다.
+`enforce-citations` 는 종목 리포트 전용이라 만들지 않았고 배선에서도 뺐다. `enforce_memory`·`inject_memory_context` 는 2026-10-02 에 저장소 메모리(`memory/` 폴더, 검증기)와 함께 없앴다. 쓰는 기준이 모호했고 일지는 주입되지 않았으며 한 세션에 약 12만 자를 문맥에 넣었다. 교훈은 `AGENTS.md` 와 스킬에 규칙 한 줄로 적는다.
 
 ## 보호 경로와 승인 명령 (`protect_sensitive_files`)
 
@@ -79,7 +77,6 @@
 | block | stdout `{"decision": "block", "reason": "…"}` 과 같은 이유를 stderr 에도 | 2 |
 | warn (PostToolUse) | `{"hookSpecificOutput": {"hookEventName": "PostToolUse", "additionalContext": "…"}}` | 0 |
 | warn (Stop) | `{"systemMessage": "…"}` | 0 |
-| context (UserPromptSubmit) | `{"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": "…"}}` | 0 |
 
 `remind_review` 는 예전에 Stop 을 차단했으나 경고로 바꿨다. 조율자와 워커 구조에서 워커의 턴 종료를 잘못 막았기 때문이다.
 

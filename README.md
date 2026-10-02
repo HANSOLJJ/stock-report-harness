@@ -129,8 +129,6 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 | `enforce_plan` | 셸·파일 도구 실행 전 | `output/<run_id>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 전 리뷰 `pass` 요구, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 |
 | `forbid_financial_advice` | 파일 도구 실행 전·후, 셸 실행 후 | `draft.md`·`judgments.json`·`evidence/*.json` 의 투자 권유·수익 보장 표현 차단. 셸 실행 뒤에는 무엇이 바뀌었는지 알 수 없으므로 대상 파일 전체를 다시 검사 |
 | `remind_review` | 파일 도구 실행 후, 세션 종료 | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고만 함 |
-| `enforce_memory` | 파일 도구 실행 후 | `memory/_daily/`·`memory/topics/` 변경 뒤 `scripts/validate_memory.py` 실행, 실패하면 차단 |
-| `inject_memory_context` | 프롬프트 제출 | 프롬프트에 맞는 `memory/topics/*.md` 를 문맥으로 주입 |
 
 배선은 Claude Code 가 `.claude/settings.json`, Codex 가 `.codex/hooks.json` 입니다. 두 곳 모두 `uv run --frozen … python -X utf8 scripts/hooks/guard.py <훅이름>` 한 줄로 부릅니다.
 
@@ -166,7 +164,6 @@ uv run --frozen python -X utf8 -m unittest discover -s tests -t .   # 채점표 
 uv run --frozen pytest -q                                           # pytest (npm run test:pytest)
 npm run test:node                                                   # 승인 서버 테스트
 uv run --frozen python -X utf8 scripts/validate_report_contract.py <run_id>   # 계약 검증
-uv run --frozen python -X utf8 scripts/validate_memory.py                     # 작업 메모 검증
 node server.js                                                      # output/ 로컬 미리보기 (http://localhost:3000/<run_id>/report.html)
 node server.js --approvals                                          # 승인 페이지 (사람이 실행)
 ```

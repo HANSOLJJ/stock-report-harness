@@ -1,16 +1,5 @@
 {
   "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "uv run --frozen --directory \"${CLAUDE_PROJECT_DIR:-.}\" python -X utf8 scripts/hooks/guard.py inject_memory_context",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "Bash|PowerShell",
@@ -65,11 +54,6 @@
           {
             "type": "command",
             "command": "uv run --frozen --directory \"${CLAUDE_PROJECT_DIR:-.}\" python -X utf8 scripts/hooks/guard.py remind_review",
-            "timeout": 15
-          },
-          {
-            "type": "command",
-            "command": "uv run --frozen --directory \"${CLAUDE_PROJECT_DIR:-.}\" python -X utf8 scripts/hooks/guard.py enforce_memory",
             "timeout": 15
           }
         ]
