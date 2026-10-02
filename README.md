@@ -36,6 +36,8 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 plan → collect → research → calculate → draft → review → (사람) 승인 → build
 ```
 
+전 과정, 승인 페이지 사용법, 트리거 처리, 자주 막히는 곳은 다이어그램과 함께 `docs/scorecard/guide.md` 에 정리돼 있습니다.
+
 실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모입니다. 아래 표의 명령은 모두 `uv run --frozen python -X utf8` 뒤에 붙여 실행합니다.
 
 | 단계 | 명령 | 산출물 (`output/<run_id>/`) |
