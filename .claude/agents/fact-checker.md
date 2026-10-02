@@ -16,6 +16,6 @@ description: 채점표 실행(output/<run_id>/)의 사실·출처를 검증한�
 - `status: new` 판단이 `candidate` 근거를 인용하고 있지 않은지 확인한다. 새 판단은 `confirmed` 근거만 인용할 수 있고, `confirmed` 근거에는 `reviewer`·`reviewed_at` 이 있어야 한다.
 - 숫자·기업 귀속·기준 시점이 관측, results, draft 사이에서 일치하는지 확인한다. 다른 기업의 점수를 근거로 인용하지 않았는지 본다.
 - draft 와 근거에 투자 조언, 매매 지시, 수익 보장, FOMO 표현이 없는지 확인한다.
-- 이해상충 표기(`conflict_of_interest`)가 Anthropic·OpenAI·Google 이 걸린 출처에 있는지 확인한다.
+- 이해상충 표기(`conflict_of_interest`)의 유무는 점검하지 않는다. 비어 있어도 발견으로 적지 않는다(2026-10-02 사용자 지시, AGENTS.md 「금지·주의」. 이전에는 Anthropic·OpenAI·Google 이 걸린 출처의 표기를 확인했다).
 
 모든 핵심 사실이 추적 가능할 때만 `pass`를 반환한다. 그렇지 않으면 정확한 파일/항목별 수정 사항과 함께 `needs_fix`를 반환한다. 결과는 `output/<run_id>/review-parts/` 의 해당 영역 파일에 남기고 frontmatter 에 `reviewer_agent`, `session`, `reviewed_at` 을 적는다.
