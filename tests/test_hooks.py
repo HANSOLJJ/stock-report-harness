@@ -58,6 +58,26 @@ class DangerousCommandTest(unittest.TestCase):
                 with self.subTest(tool=tool, cmd=cmd):
                     self.assertEqual(guard.block_dangerous_bash(shell(tool, cmd), root=ROOT).kind, "allow")
 
+    # 2026-10-02 사용자 전역 규칙이 금지하는 명령. 전에는 모두 통과했다.
+    def test_commands_that_wipe_uncommitted_work_are_blocked(self):
+        for cmd in ("git reset --hard", "git reset --hard HEAD~1", "git -C sub reset --hard", "cd sub && git reset --hard",
+                    "git clean -fd", "git clean -xfd", "git clean --force -d", "git checkout .", "git checkout -- .",
+                    "git checkout HEAD -- .", "git restore .", "git restore --staged --worktree .",
+                    "rm -rf ~", "rm -rf ~/", "rm -fr $HOME", "Remove-Item -Recurse -Force ~", "Remove-Item -Recurse -Force C:/",
+                    "rm -rf E:"):
+            with self.subTest(cmd=cmd):
+                d = guard.block_dangerous_bash(shell("Bash", cmd), root=ROOT)
+                self.assertEqual(d.kind, "block")
+                self.assertIn("사용자가 직접 실행", d.text)
+
+    def test_look_alikes_are_allowed(self):
+        for cmd in ("git reset --soft HEAD~1", "git reset HEAD file.py", "git clean -n", "git clean -nfd", "git clean --dry-run -fd",
+                    "git checkout main", "git checkout -b fix", "git checkout -- file.py", "git restore file.py",
+                    "git restore --staged .", "rm -rf ~/tmp/x", "rm ~", "git stash", "echo git reset --hard",
+                    "git commit -m \"git reset --hard 와 git clean -fd 를 막는다\"", "git log --grep 'checkout .'"):
+            with self.subTest(cmd=cmd):
+                self.assertEqual(guard.block_dangerous_bash(shell("Bash", cmd), root=ROOT).kind, "allow")
+
     def test_unknown_tool_is_allowed(self):
         self.assertEqual(guard.block_dangerous_bash(shell("Mystery", "rm -rf /"), root=ROOT).kind, "allow")
 

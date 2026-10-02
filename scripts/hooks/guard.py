@@ -208,6 +208,47 @@ _DANGEROUS = [
 ]
 
 
+# 2026-10-02 작업 중인 변경을 되돌릴 수 없이 지우는 명령. 사용자 전역 규칙이 금지하는데 훅은 통과시켰다. 정규식으로 보면
+# 커밋 메시지 안의 언급까지 막히므로, 명령을 단어로 나눠 git 하위 명령과 지우기 대상을 본다.
+_HOME_WORDS = {"~", "$home", "${home}", "$env:userprofile", "%userprofile%"}
+_DRIVE_ROOT = re.compile(r"^[a-z]:$")
+_WHOLE_TREE = {".", ":/", "*"}
+
+
+def _short_flags(args: list[str]) -> str:
+    return "".join(a[1:] for a in args if a.startswith("-") and not a.startswith("--"))
+
+
+def _wipes_work(cmd: str) -> str | None:
+    """작업 트리나 홈 폴더·드라이브를 통째로 지우는 명령이면 그 이름."""
+    for words in _shell_segments(cmd) or []:
+        while words and (_ASSIGN.match(words[0]) or words[0] in _PREFIX_WORDS):
+            words = words[1:]
+        verb, args = _verb_of(words), words[1:]
+        if verb == "git":
+            while args and args[0].startswith("-"):
+                args = args[2:] if args[0] in ("-C", "-c") else args[1:]
+            sub, tail = (args[0] if args else ""), args[1:]
+            paths = [a for a in tail if not a.startswith("-")]
+            if sub == "reset" and "--hard" in tail:
+                return "git reset --hard"
+            if sub == "clean":
+                flags = _short_flags(tail)
+                if ("f" in flags or "--force" in tail) and "n" not in flags and "--dry-run" not in tail:
+                    return "git clean -f"
+            if sub == "checkout" and any(p in _WHOLE_TREE for p in paths):
+                return "git checkout ."
+            if sub == "restore" and any(p in _WHOLE_TREE for p in paths) and ("--staged" not in tail or "--worktree" in tail):
+                return "git restore ."
+        elif verb in _REMOVE_VERBS:
+            recursive = any(c in _short_flags(args).lower() for c in "r") or any(a.lower() in ("--recursive", "-recurse") for a in args)
+            for a in args:
+                target = a.lower().rstrip("/")
+                if recursive and (target in _HOME_WORDS or _DRIVE_ROOT.match(target)):
+                    return f"{verb} {a}"
+    return None
+
+
 def block_dangerous_bash(payload: dict, *, root: Path) -> Decision:
     cmd = extract_command(payload)
     if not cmd:
@@ -215,6 +256,9 @@ def block_dangerous_bash(payload: dict, *, root: Path) -> Decision:
     for pattern, reason in _DANGEROUS:
         if pattern.search(cmd):
             return block(reason)
+    wipe = _wipes_work(cmd)
+    if wipe:
+        return block(f"`{wipe}` 는 작업 중인 변경이나 폴더를 되돌릴 수 없이 지울 수 있어 차단합니다. 필요하면 사용자가 직접 실행합니다.")
     return allow()
 
 
