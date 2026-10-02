@@ -144,7 +144,7 @@ run_id 는 `ai-scorecard-` 로 시작하고 `plan.md` frontmatter 의 `report_ty
 
 Orca 작업공간은 폴더 복사본이 아니라 이 저장소의 git worktree 입니다. 커밋은 모두 이 저장소 하나에 있고, 같은 `.git` 을 공유하므로 워크트리의 브랜치는 push 없이 원본 폴더에서 바로 합칠 수 있습니다. Orca 가 새 워크트리를 만들 때는 GitHub fork 의 `main`(`origin/main`)을 기준으로 삼으므로, 로컬 `main` 을 합친 뒤에는 fork 에 push 해 두어야 다음 워크트리가 최신 상태에서 시작합니다.
 
-여러 에이전트로 나눠 일할 때는 조율자 워크트리 하나가 통합 브랜치를 맡고, 레인마다 자식 워크트리를 만들어 병합합니다. 2026-09-30~10-01 의 근거 계층 작업은 통합 브랜치 `HANSOLJJ/revision_checker` 에서 레인 S·A·B·C·D·E·F·G·H·I·J·K·L·M·N·P·T 와 독립 검증 V·V2 로 진행했습니다. 계획·체크리스트·결정 기록·레인 지시서는 `.agents/plans/evidence-layer-2026-09/`, 레인별 보고서는 `validation/lane-*/REPORT.md` 에 있고, 레인 브랜치(`HANSOLJJ/lane-*`)는 이력으로 남아 있습니다. 2026-09-21 이전의 작업 브랜치(`HANSOLJJ/worker`·`설계진행`·`review-obsreg` 등)는 그날 `main` 으로 합쳐졌습니다.
+여러 에이전트로 나눠 일할 때는 조율자 워크트리 하나가 통합 브랜치를 맡고, 레인마다 자식 워크트리를 만들어 병합합니다. 2026-09-30~10-01 의 근거 계층 작업은 통합 브랜치 `HANSOLJJ/revision_checker` 에서 레인 S·A·B·C·D·E·F·G·H·I·J·K·L·M·N·P·T 와 독립 검증 V·V2 로 진행했습니다. 레인별 보고서는 `validation/lane-*/REPORT.md` 에 있고, 레인 브랜치(`HANSOLJJ/lane-*`)는 이력으로 남아 있습니다. 2026-09-21 이전의 작업 브랜치(`HANSOLJJ/worker`·`설계진행`·`review-obsreg` 등)는 그날 `main` 으로 합쳐졌습니다.
 
 ## 다음에 정할 것
 
