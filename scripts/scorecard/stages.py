@@ -647,13 +647,19 @@ def _rule_tuple(version: str) -> tuple[int, ...]:
 
 
 def previous_triggers(run: dict[str, Any]) -> list[dict[str, Any]]:
-    """이 실행이 처리해야 하는 이전 트리거. 이어받은 실행에 triggers.json 이 있으면 그중 관찰 중(watching)인 것,
-    없으면 기준선 트리거 전부다. 항목은 {ref, title, company_id, deadline}."""
+    """이 실행이 처리해야 하는 이전 트리거. 이어받은 실행에 triggers.json 이 있으면 그중 관찰 중(watching)인 것과,
+    그 실행이 처리하지 않고 넘긴 더 이전 트리거(재귀)다. triggers.json 이 없으면 기준선 트리거 전부다.
+    항목은 {ref, title, company_id, deadline}."""
     prev = (run.get("continued_from") or {}).get("run_id")
     if prev and run_paths(prev).triggers.is_file():
         items = load_json_strict(run_paths(prev).triggers)["items"]
-        return [{"ref": f"{prev}:{t['trigger_id']}", "title": t["observation"], "company_id": t["company_id"],
-                 "deadline": t["deadline"]} for t in items if t["status"] == "watching"]
+        out = [{"ref": f"{prev}:{t['trigger_id']}", "title": t["observation"], "company_id": t["company_id"],
+                "deadline": t["deadline"]} for t in items if t["status"] == "watching"]
+        # 2026-10-02 10월 시험 실행은 이 장치 전에 만들어져 기준선 트리거 39건을 처리하지 않았다. 그 실행을 이어받으면
+        # 39건이 다시 빠지므로, 직전 실행이 carry 로 처리하지 않은 더 이전 트리거는 계속 남긴다.
+        handled = {t["carry"]["ref"] for t in items if "carry" in t}
+        prev_run = load_json_strict(run_dir(prev) / "run.json")
+        return out + [p for p in previous_triggers(prev_run) if p["ref"] not in handled]
     _scores, _obs, legacy = load_baseline(run["baseline_id"])
     return [{"ref": f"baseline/{run['baseline_id']}:{t['trigger_id']}", "title": t["title"], "company_id": None,
              "deadline": None} for t in legacy]

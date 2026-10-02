@@ -95,6 +95,26 @@ class TriggerCarryTest(FlowBase):
             engine.load_context(SLUG)
 
 
+class ChainTest(FlowBase):
+    """2026-10-02 이어받은 실행이 처리하지 않은 더 이전 트리거는 다음 실행에도 남는다."""
+
+    NEW = "ai-scorecard-2026-11-chain"
+
+    def test_unhandled_baseline_triggers_survive_one_more_run(self):
+        payload = load_json_strict(run_paths(SLUG).triggers)
+        payload["items"] = [t for t in payload["items"] if "carry" not in t]   # 이 장치 전의 10월 시험 실행처럼
+        write_json(run_paths(SLUG).triggers, payload)
+        stages.init_run(self.NEW, from_run=SLUG, title="이어받기")
+        refs = [p["ref"] for p in stages.previous_triggers(load_json_strict(engine.run_dir(self.NEW) / "run.json"))]
+        self.assertEqual(refs[0], f"{SLUG}:TRG-001")
+        self.assertEqual((len(refs), refs[1], refs[-1]), (40, "baseline/v1.5:TRIG-001", "baseline/v1.5:TRIG-039"))
+
+    def test_handled_ones_do_not_come_back(self):
+        stages.init_run(self.NEW, from_run=SLUG, title="이어받기")
+        refs = [p["ref"] for p in stages.previous_triggers(load_json_strict(engine.run_dir(self.NEW) / "run.json"))]
+        self.assertEqual(refs, [f"{SLUG}:TRG-001"])
+
+
 class AppliesTest(unittest.TestCase):
     def test_only_rule_v18_and_up_with_triggers_file(self):
         ctx = lambda version, triggers: SimpleNamespace(rules=SimpleNamespace(version=version), triggers=triggers)  # noqa: E731
