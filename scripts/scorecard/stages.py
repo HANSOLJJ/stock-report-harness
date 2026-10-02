@@ -788,6 +788,7 @@ def review_template(slug: str, *, force: bool = False) -> Path:
 # `MUSE_RELEASE_INFO` 는 사람 셸과 비교하지 못해 넣지 않는다.
 AGENT_ENV_MARKERS = ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT", "ORCA_AGENT_LAUNCH_TOKEN", "AI_AGENT", "MUSE_TOOL_USE_ID")
 # 잠금을 검사하고 쓰는 단계. approve·revoke·build 는 사람 행위라 잠금을 요구하지도 쓰지도 않는다.
+# 빌드가 성공하면 잠금을 지운다(render_html.build_scorecard, 2026-10-02).
 LOCK_STAGES = ("init", "collect", "research", "calculate", "draft", "review-template", "confirm", "judge")
 
 

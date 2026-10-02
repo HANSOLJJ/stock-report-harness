@@ -19,7 +19,7 @@ from .render_common import GATE_LABELS, METHOD_LABELS, SHARE_LABELS, YESNO_LABEL
 from .render_md import (DISCLAIMER, FACTOR_LABELS, REVIEW_AREAS, STATUS_LABEL, TRIGGER_C14_NOTE, TRIGGER_COLUMNS, active_trigger_rows, fmt_num,
                         fmt_pct, fmt_score, fmt_usd)
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS, SchemaError, load_json_strict, sha256_file, validate_approval
-from .stages import approval_mismatches, current_hashes, load_baseline
+from .stages import approval_mismatches, current_hashes, load_baseline, lock_path
 
 GENERATOR = "stock-report-harness scorecard-builder"
 SHORT = {"F1": "①", "F2": "②", "F3": "③", "F4": "④", "F5": "⑤", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
@@ -1793,4 +1793,7 @@ def build_scorecard(slug: str) -> tuple[Path, list[Path], None]:
     print_result(postcheck)
     if not postcheck.ok:
         raise SystemExit("Build produced artifacts that failed contract validation")
+    # 2026-10-02 빌드가 끝난 실행의 잠금을 지운다. 승인·빌드 뒤에도 남아서, 잠금 주인(터미널 번호)이 바뀐 같은 세션까지
+    # 그 실행에 쓰지 못했다. 실패한 빌드는 여기까지 오지 않으므로 잠금이 남는다.
+    lock_path(slug).unlink(missing_ok=True)
     return paths.html, [HISTORY_CSV], None

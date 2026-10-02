@@ -128,6 +128,8 @@ class ExistingRunsBuildTest(unittest.TestCase):
         shutil.rmtree(self.dir, ignore_errors=True)
 
     def test_obsreg_builds(self):
+        lock = engine.OUTPUT_DIR / OBSREG / ".lock"
+        lock.write_text('{"owner": "term_old", "started_utc": "2026-10-01T00:00:00Z", "stage": "review-template"}', encoding="utf-8")
         buf = io.StringIO()
         try:
             with redirect_stdout(buf):
@@ -137,13 +139,17 @@ class ExistingRunsBuildTest(unittest.TestCase):
         self.assertTrue(html.is_file())
         self.assertTrue(html.is_relative_to(self.dir))
         self.assertIn("ok - approval hashes match current inputs", buf.getvalue())
+        self.assertFalse(lock.exists())   # 2026-10-02 빌드가 끝나면 잠금을 지운다
 
     def test_baseline_stops_only_on_its_known_recompute_mismatch(self):
         """baseline 은 레인 E 이전부터 재계산 해시가 저장값과 다르다(0942c342… ≠ 200d7b01…). 그 사유로만 멈추고
         승인 검사는 통과한다. awaiting_user 로 멈추지 않는다."""
+        lock = engine.OUTPUT_DIR / BASELINE / ".lock"
+        lock.write_text('{"owner": "term_old"}', encoding="utf-8")
         buf = io.StringIO()
         with redirect_stdout(buf), self.assertRaises(SystemExit) as caught:
             render_html.build_scorecard(BASELINE)
+        self.assertTrue(lock.exists())   # 실패한 빌드는 잠금을 남긴다
         out = buf.getvalue()
         self.assertNotIn("awaiting_user", str(caught.exception))
         self.assertIn("ok - approval hashes match current inputs", out)
