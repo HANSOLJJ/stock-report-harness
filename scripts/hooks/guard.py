@@ -7,6 +7,7 @@ exit 0 으로 끝낸다(fail-open). 훅 인프라 오류가 모든 도구를 막
 from __future__ import annotations
 
 import fnmatch
+import functools
 import getpass
 import glob
 import hashlib
@@ -48,15 +49,72 @@ def warn(message: str) -> Decision:
 
 
 # ------------------------------------------------------------------ 공통 유틸
-def relpath(value: str, root: Path) -> str:
-    """경로를 저장소 상대 POSIX 형태로 바꾼다. 저장소 밖이면 절대 POSIX 경로를 돌려준다."""
-    p = Path(value).expanduser()
-    if not p.is_absolute():
-        p = root / p
+# 2026-10-02 체크아웃 인식. 훅은 세션이 열린 체크아웃(root) 기준 상대 경로로만 보호 경로를 판정해서, 워크트리 세션이
+# 원본 폴더(또는 다른 워크트리)의 `.env`·이력 CSV·규칙·기준선을 쓰는 것을 전부 통과시켰다. 같은 저장소의 다른 체크아웃
+# 아래 경로는 그 체크아웃 기준 상대 경로로 바꿔 같은 규칙을 적용한다.
+class Undecidable(Exception):
+    """같은 저장소의 체크아웃 목록을 구하지 못했다. 루트 밖 경로의 보호 판정을 할 수 없다."""
+
+
+@functools.lru_cache(maxsize=None)
+def checkout_roots(root: Path) -> tuple[Path, ...]:
+    """같은 저장소의 체크아웃 루트들. 세션 루트가 맨 앞이고 나머지는 긴 경로부터다.
+
+    `.git` 이 없는 루트(테스트의 임시 폴더)는 세션 루트 하나만 돌려준다. `.git` 이 있는데 목록을 못 구하면 Undecidable."""
+    if not (root / ".git").exists():
+        return (root,)
     try:
-        return p.resolve().relative_to(root).as_posix()
-    except Exception:
-        return p.resolve().as_posix()
+        proc = subprocess.run(["git", "-C", str(root), "worktree", "list", "--porcelain"],
+                              capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=5)
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise Undecidable(f"git worktree list 실행 실패: {type(exc).__name__}") from exc
+    if proc.returncode != 0:
+        raise Undecidable(f"git worktree list 종료 코드 {proc.returncode}")
+    others: list[Path] = []
+    for line in proc.stdout.splitlines():
+        if line.startswith("worktree "):
+            other = Path(line[len("worktree "):].strip()).resolve()
+            if other != root and other not in others:
+                others.append(other)
+    return (root, *sorted(others, key=lambda r: len(r.as_posix()), reverse=True))
+
+
+_MSYS_DRIVE = re.compile(r"^/(?:mnt/|cygdrive/)?([A-Za-z])(?:/|$)")
+
+
+def _join(base: Path, word: str) -> Path:
+    """단어를 base 기준 경로로 만든다. Windows 에서는 Git Bash 표기(`/c/x`, `/mnt/c/x`, `/cygdrive/c/x`)를 드라이브 경로로 읽는다."""
+    word = word.replace("\\", "/")
+    if os.name == "nt":
+        word = _MSYS_DRIVE.sub(lambda m: m.group(1).upper() + ":/", word)
+    path = Path(word).expanduser()
+    return path if path.is_absolute() else base / path
+
+
+def locate(value: str, root: Path) -> tuple[Path, str]:
+    """(경로가 속한 체크아웃 루트, 그 루트 기준 상대 POSIX 경로). 어느 체크아웃에도 없으면 (root, 절대 POSIX 경로).
+
+    세션 루트 아래 경로는 git 을 부르지 않는다."""
+    p = _join(root, value).resolve()
+    try:
+        return root, p.relative_to(root).as_posix()
+    except ValueError:
+        pass
+    for other in checkout_roots(root)[1:]:
+        try:
+            return other, p.relative_to(other).as_posix()
+        except ValueError:
+            continue
+    return root, p.as_posix()
+
+
+def _label(owner: Path, rp: str, root: Path) -> str:
+    return rp if owner == root else f"{rp} (체크아웃 {owner.name})"
+
+
+def relpath(value: str, root: Path) -> str:
+    """경로를 그 경로가 속한 체크아웃 기준 상대 POSIX 형태로 바꾼다. 저장소 밖이면 절대 POSIX 경로를 돌려준다."""
+    return locate(value, root)[1]
 
 
 def extract_command(payload: dict) -> str:
@@ -67,8 +125,8 @@ def extract_command(payload: dict) -> str:
     return cmd if isinstance(cmd, str) else ""
 
 
-def extract_paths(payload: dict, root: Path) -> list[str]:
-    """파일 계열 도구가 건드리는 경로를 저장소 상대 경로로 돌려준다. 중복은 뺀다."""
+def extract_targets(payload: dict, root: Path) -> list[tuple[Path, str]]:
+    """파일 계열 도구가 건드리는 경로를 (속한 체크아웃 루트, 상대 경로) 로 돌려준다. 중복은 뺀다."""
     if payload.get("tool_name") not in FILE_TOOLS:
         return []
     ti = payload.get("tool_input") or {}
@@ -81,12 +139,17 @@ def extract_paths(payload: dict, root: Path) -> list[str]:
         value = ti.get(key)
         if isinstance(value, list):
             raw.extend(str(v).strip() for v in value if str(v).strip())
-    out: list[str] = []
+    out: list[tuple[Path, str]] = []
     for value in raw:
-        rp = relpath(value, root)
-        if rp not in out:
-            out.append(rp)
+        target = locate(value, root)
+        if target not in out:
+            out.append(target)
     return out
+
+
+def extract_paths(payload: dict, root: Path) -> list[str]:
+    """파일 계열 도구가 건드리는 경로(속한 체크아웃 기준 상대 경로)."""
+    return [rp for _owner, rp in extract_targets(payload, root)]
 
 
 def read_frontmatter(path: Path) -> dict[str, str]:
@@ -158,7 +221,9 @@ def block_dangerous_bash(payload: dict, *, root: Path) -> Decision:
 # ------------------------------------------------------------------ 2. 보호 경로
 # docs/output-spec.md 는 2026-09-30 에 보호 목록에서 뺐다. 종목 리포트 출력 명세라 채점표 전환과 함께 삭제한다.
 # 2026-09-30 레인 F: 승인된 실행이 쓰는 규칙(v1.5~v1.7), 이동한 기존 실행 두 폴더, 이력 파일을 더했다.
-# v1.8 은 아직 승인된 실행이 없어 넣지 않는다. 첫 실행이 v1.8 로 승인되면 여기에 더한다.
+# 2026-10-02 사용자 결정: 승인된 실행 폴더와 그 규칙(v1.8 포함)은 목록에 더하지 않는다. 고치면 지문이 달라져 승인이 무효가
+# 되고 빌드가 멈추므로 지문 검증에 맡긴다. 이 목록은 지문이 못 잡는 것과 기존 항목만 지킨다.
+# (그전 문구: "v1.8 은 아직 승인된 실행이 없어 넣지 않는다. 첫 실행이 v1.8 로 승인되면 여기에 더한다.")
 # 2026-10-01 레인 H(F-3): 기준선은 승인 해시 밖의 재빌드 입력이다(실행에 triggers.json 이 없으면 기준선 트리거를 그린다). 폴더째 보호한다.
 _PROTECTED_RUN_DIRS = ["output/ai-scorecard-2026-09-baseline", "output/ai-scorecard-2026-09-obsreg"]
 _PROTECTED_TREES = [*_PROTECTED_RUN_DIRS, "scorecard/baseline"]
@@ -215,12 +280,12 @@ _ASSIGN_VALUE = re.compile(r"(?:^|[\s;&|(])(?:export\s+|local\s+|readonly\s+|dec
 _PS_ASSIGN_VALUE = re.compile(r"\$(?:env:)?[A-Za-z_][A-Za-z0-9_]*\s*=\s*([^;|\n]+)", re.I)
 
 
-def _indirect_mentions(cmd: str) -> list[str]:
+def _indirect_mentions(cmd: str, root: Path) -> list[str]:
     """따옴표 안·명령 치환·변수 대입값에 나오는 보호 경로. 쓰기 명령이 있는 명령에서만 부른다(2026-10-01 레인 N, V2-4)."""
     parts: list[str] = []
     for rx in (_QUOTED, _SUBST, _ASSIGN_VALUE, _PS_ASSIGN_VALUE):
         parts += [g for m in rx.finditer(cmd) for g in m.groups() if g]
-    return _protected_mentions(" ".join(parts))
+    return _mentions(" ".join(parts), root)
 _PREFIX_WORDS = {"env", "command", "exec", "nohup", "time"}
 _CD_WORDS = {"cd", "pushd", "chdir", "set-location", "sl"}
 _SHELL_PUNCT = ";&|()<>\n"
@@ -233,6 +298,35 @@ def _protected_mentions(text: str) -> list[str]:
     if _APPROVAL_FILE_IN_CMD.search(text):
         hits.append("approval.json")
     return hits
+
+
+def _root_spellings(checkout: Path) -> list[str]:
+    """체크아웃 루트가 명령 문자열에 적힐 수 있는 표기들(슬래시는 `/` 로 통일된 뒤)."""
+    posix = checkout.as_posix()
+    out = [posix]
+    m = re.match(r"^([A-Za-z]):(/.*)?$", posix)
+    if m:
+        drive, rest = m.group(1).lower(), m.group(2) or ""
+        out += [f"/{drive}{rest}", f"/mnt/{drive}{rest}", f"/cygdrive/{drive}{rest}"]
+    home = Path.home().as_posix()
+    if posix.lower().startswith(home.lower() + "/"):
+        out.append("~" + posix[len(home):])
+    return out
+
+
+def _mentions(text: str, root: Path) -> list[str]:
+    """보호 경로 언급. 체크아웃 루트(세션 루트 포함)의 절대 경로로 적힌 것도 잡는다(2026-10-02).
+
+    `_protected_mentions` 는 `/` 뒤의 리터럴을 보지 않는다(`validation/x/.env` 같은 다른 폴더를 피하려고). 그래서
+    `E:/…/저장소/.env` 가 빠졌다. 리터럴이 `/` 뒤에 있을 때만 체크아웃 루트 접두를 벗기고 다시 본다."""
+    hits = _protected_mentions(text)
+    if not any(re.search("/" + re.escape(lit) + r"(?:/|\b)", text, re.I) for lit in _PROTECTED_LITERALS):
+        return hits
+    spellings = sorted({s for checkout in checkout_roots(root) for s in _root_spellings(checkout)}, key=len, reverse=True)
+    stripped = text
+    for spelling in spellings:
+        stripped = re.sub(re.escape(spelling) + "/", " ", stripped, flags=re.I)
+    return hits + [h for h in _protected_mentions(stripped) if h not in hits]
 
 
 def _shell_segments(cmd: str) -> list[list[str]] | None:
@@ -271,20 +365,25 @@ def _protected_anchors() -> list[str]:
 
 
 def _covers_protected(path: Path, root: Path) -> str | None:
-    """`path` 가 보호 경로를 품은 상위 폴더(또는 저장소 루트·그 위)이면 품은 보호 경로 하나. 아니면 None."""
+    """`path` 가 보호 경로를 품은 상위 폴더(또는 체크아웃 루트·그 위)이면 품은 보호 경로 하나. 아니면 None.
+
+    2026-10-02 같은 저장소의 다른 체크아웃도 같은 규칙으로 본다."""
     try:
         p = path.resolve()
     except (OSError, ValueError):
         return None
     if p == root or p in root.parents:
         return "저장소 루트 아래 전체"
-    try:
-        rp = p.relative_to(root).as_posix().lower()
-    except ValueError:
-        return None
+    owner, rp = locate(str(p), root)
+    if owner == root and root not in p.parents:   # 어느 체크아웃에도 속하지 않는다. 다른 체크아웃을 품은 상위 폴더인지만 본다
+        above = next((r for r in checkout_roots(root)[1:] if p in r.parents), None)
+        return f"체크아웃 {above.name} 아래 전체" if above else None
+    if rp in (".", ""):
+        return f"체크아웃 {owner.name} 아래 전체"
+    rp = rp.lower()
     for lit in _PROTECTED_LITERALS:
         if lit.startswith(rp + "/"):
-            return lit
+            return _label(owner, lit, root)
     if p.is_dir():
         found = next((f for f in p.rglob("*") if f.name.lower() == "approval.json"), None)
         if found is not None:
@@ -308,7 +407,7 @@ def _glob_hits(target: str, base: Path, root: Path, *, covers: bool) -> list[str
         if matched:
             hits.append(next((lit for lit in _PROTECTED_LITERALS if lit == anchor or lit.startswith(anchor + "/")), anchor))
     try:
-        matches = glob.glob(str(base / target), recursive=True, include_hidden=True)
+        matches = glob.glob(str(_join(base, target)), recursive=True, include_hidden=True)
     except (OSError, ValueError):
         matches = []
     for m in matches:
@@ -332,13 +431,13 @@ def _target_hits(targets: list[str], base: Path, root: Path, *, covers: bool = F
         found = _protected_mentions(target)
         if not found:
             try:
-                rp = relpath(str(base / target), root)
+                owner, rp = locate(str(_join(base, target)), root)
             except (OSError, ValueError):
-                rp = ""
+                owner, rp = root, ""
             if rp and _is_protected(rp):
-                found = [rp]
+                found = [_label(owner, rp, root)]
             elif covers:
-                inside = _covers_protected(base / target, root)
+                inside = _covers_protected(_join(base, target), root)
                 found = [inside] if inside else []
         if not found and set(target) & _GLOB_CHARS:
             found = _glob_hits(target, base, root, covers=covers)
@@ -417,7 +516,7 @@ def _xargs_inner(words: list[str]) -> list[str]:
 def _shell_violations(cmd: str, root: Path) -> list[str]:
     segments = _shell_segments(cmd)
     if segments is None:  # 나눌 수 없으면 쓰기 대상을 가릴 수 없다. 보호 경로를 언급하기만 해도 막는다
-        return _protected_mentions(cmd.replace("\\", "/"))
+        return _mentions(cmd.replace("\\", "/"), root)
     out: list[str] = []
     base = root
     parsed: list[tuple[list[str], list[str], Path]] = []
@@ -445,9 +544,9 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
         args = words[1:]
         write = _write_command(words)
         if verb in _CD_WORDS and args:
-            base = base / args[-1]
+            base = _join(base, args[-1])
         elif (verb == "uv" and args[:1] == ["run"]) or verb == "uvx" or _INTERPRETER.match(verb) or verb in _NESTED:
-            out += _protected_mentions(" ".join(seg))
+            out += _mentions(" ".join(seg), root)
         elif write is not None:
             writes = True
             targets += write[0]
@@ -458,7 +557,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
             # 품는지를 본다. 경로 인자가 없는 find·ls 는 현재 폴더를 훑는다.
             inner = _write_command(_xargs_inner(words))
             writes = True
-            out += _protected_mentions(cmd.replace("\\", "/"))
+            out += _mentions(cmd.replace("\\", "/"), root)
             targets += inner[0]
             out += _target_hits(inner[1], base, root, covers=True)
             for _seg, other, other_base in parsed[:-1]:
@@ -470,7 +569,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
             git_base, rest = base, args
             while rest and rest[0].startswith("-"):
                 if rest[0] in ("-C", "-c") and len(rest) > 1:
-                    git_base = git_base / rest[1] if rest[0] == "-C" else git_base
+                    git_base = _join(git_base, rest[1]) if rest[0] == "-C" else git_base
                     rest = rest[2:]
                 else:
                     rest = rest[1:]
@@ -481,7 +580,7 @@ def _shell_violations(cmd: str, root: Path) -> list[str]:
     # 2026-10-01 레인 N(V2-4): 쓰기가 있는 명령에서는 단어로 나눈 쓰기 대상 밖에 숨은 보호 경로도 막는다
     # (`RUN=<보호 실행>; rm -rf "$RUN"`, `rm $(echo <보호 경로>)`). 읽기만 하는 명령은 여기에 오지 않는다(F-7).
     if writes:
-        out += _indirect_mentions(cmd.replace("\\", "/"))
+        out += _indirect_mentions(cmd.replace("\\", "/"), root)
     return out
 
 
@@ -573,10 +672,17 @@ _IMPORT_BASELINE = re.compile(r"scorecard_cli\.py\s+import-baseline\b")
 
 
 def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
+    try:
+        return _protect_sensitive_files(payload, root)
+    except Undecidable as exc:   # main 까지 올라가면 fail-open 으로 통과된다. 판정하지 못하면 막는다
+        return block(f"보호 경로 판정을 할 수 없어 차단합니다({exc}). 같은 저장소의 체크아웃 목록이 있어야 루트 밖 경로를 판정한다.")
+
+
+def _protect_sensitive_files(payload: dict, root: Path) -> Decision:
     violations: list[str] = []
-    for rp in extract_paths(payload, root):
+    for owner, rp in extract_targets(payload, root):
         if _is_protected(rp):
-            violations.append(rp)
+            violations.append(_label(owner, rp, root))
     cmd = extract_command(payload)
     if cmd and _APPROVAL_CMD.search(cmd.replace("\\", "/")):
         return block("승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. 에이전트는 approve·revoke 를 실행하지 않는다.")
@@ -599,9 +705,8 @@ def protect_sensitive_files(payload: dict, *, root: Path) -> Decision:
     for v in violations:
         if v not in uniq:
             uniq.append(v)
-    return block("보호 경로 수정 시도를 차단합니다: " + ", ".join(uniq) + ". 보호 대상: .env*, .git/, .github/workflows/, "
-                 "**/approval.json, scorecard/rules/v1.5~v1.7.json, scorecard/history.csv, scorecard/baseline/, "
-                 "output/ai-scorecard-2026-09-baseline/, output/ai-scorecard-2026-09-obsreg/.")
+    # 2026-10-02 전에는 보호 목록 전체를 매번 적었다(약 540자). 걸린 경로만 적고 목록은 설명서를 가리킨다.
+    return block("보호 경로 수정 시도를 차단합니다: " + ", ".join(uniq) + ". 목록은 scripts/hooks/README.md 의 '보호 경로' 절.")
 
 
 # ------------------------------------------------------------------ 3. 단계 순서
@@ -651,12 +756,12 @@ def enforce_plan(payload: dict, *, root: Path) -> Decision:
     problems: list[str] = []
     locked: list[str] = []
     me: str | None = None
-    for rp in extract_paths(payload, root):
+    for owner, rp in extract_targets(payload, root):
         parsed = _slug_dir_parts(rp)
         if not parsed:
             continue
         slug, rest = parsed
-        base = root / "output" / slug
+        base = owner / "output" / slug
         holder = _lock_holder(base)
         if holder is not None:
             me = me if me is not None else lock_owner()
@@ -763,7 +868,7 @@ def forbid_financial_advice(payload: dict, *, root: Path) -> Decision:
     ti = payload.get("tool_input") or {}
     candidates: dict[str, str] = {}
     # PreToolUse 는 쓰려는 문자열을, PostToolUse 는 실제 파일을 본다.
-    for rp in extract_paths(payload, root):
+    for owner, rp in extract_targets(payload, root):
         kind = _advice_kind(rp)
         if kind is None:
             continue
@@ -776,7 +881,7 @@ def forbid_financial_advice(payload: dict, *, root: Path) -> Decision:
             combined = "\n".join(str(e.get("new_string") or "") for e in edits if isinstance(e, dict))
             if combined:
                 candidates[f"{rp} (proposed edits)"] = _advice_text(kind, combined)
-        file_path = root / rp
+        file_path = owner / rp
         if file_path.is_file():
             try:
                 candidates[rp] = _advice_text(kind, file_path.read_text(encoding="utf-8"))
