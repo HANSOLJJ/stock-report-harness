@@ -268,6 +268,51 @@ class FinancialAdviceTest(TempRootCase):
         for tool in ("Bash", "PowerShell"):
             self.assertEqual(guard.forbid_financial_advice(shell(tool, "ls"), root=self.root).kind, "block")
 
+    # 2026-10-02 수집 원문과 인용 칸은 우리가 쓴 글이 아니다. 원본 폴더에서 candidates.json 의 뉴스 제목 "Buy Now" 때문에
+    # 모든 셸 명령 뒤에 block 이 났다.
+    def evidence(self, **fields: object) -> str:
+        item = {"evidence_id": "EV-nvidia-001", "title": "Is Nvidia Stock a Buy Now?", "excerpt": "last chance to buy now",
+                "relevance": "수요 신호", "conditional_impact": None, "counter_evidence": [], "unverified": [], "horizon": "2027H1"}
+        item.update(fields)
+        return json.dumps({"schema": "scorecard.evidence/1", "items": [item]}, ensure_ascii=False, indent=2)
+
+    def test_collected_headlines_are_not_scanned(self):
+        headline = json.dumps({"items": [{"title": "Is Nvidia Stock a Buy Now?"}]})
+        self.assertEqual(guard.forbid_financial_advice(write("output/t/evidence/candidates.json", headline), root=self.root).kind, "allow")
+        self.put("output/t/evidence/candidates.json", headline)
+        self.put("output/t/evidence/evidence.json", self.evidence())
+        for tool in ("Bash", "PowerShell"):
+            self.assertEqual(guard.forbid_financial_advice(shell(tool, "ls"), root=self.root).kind, "allow")
+
+    def test_evidence_checks_only_fields_we_write(self):
+        target = "output/t/evidence/evidence.json"
+        self.assertEqual(guard.forbid_financial_advice(write(target, self.evidence()), root=self.root).kind, "allow")
+        for field, value in (("relevance", "지금 매수"), ("conditional_impact", "수익 보장"), ("counter_evidence", ["buy now"]),
+                             ("unverified", ["확실한 수익"])):
+            with self.subTest(field=field):
+                d = guard.forbid_financial_advice(write(target, self.evidence(**{field: value})), root=self.root)
+                self.assertEqual(d.kind, "block")
+
+    def test_evidence_fragment_skips_verbatim_lines(self):
+        target = "output/t/evidence/evidence.json"
+        edit = lambda new: {"tool_name": "Edit", "tool_input": {"file_path": target, "new_string": new}}  # noqa: E731
+        self.assertEqual(guard.forbid_financial_advice(edit('      "title": "Buy Now: 3 AI Stocks",'), root=self.root).kind, "allow")
+        self.assertEqual(guard.forbid_financial_advice(edit('      "relevance": "buy now",'), root=self.root).kind, "block")
+
+    def test_fixtures_are_not_targets(self):
+        for rel in ("tests/fixtures/evidence/labeling.json", "scorecard/judgments.json"):
+            with self.subTest(rel=rel):
+                self.assertEqual(guard.forbid_financial_advice(write(rel, "buy now"), root=self.root).kind, "allow")
+
+    def test_draft_quoted_sections_are_skipped(self):
+        quoted = ("# 제목\n\n본문이다.\n\n## 인용 근거\n\n| EV-nvidia-001 | NVIDIA | [Is Nvidia Stock a Buy Now?](https://x) |\n\n"
+                  "## References\n\n- SRC-1 — Last Chance: Buy Now · Yahoo\n")
+        self.assertEqual(guard.forbid_financial_advice(write("output/t/draft.md", quoted), root=self.root).kind, "allow")
+        body = quoted.replace("본문이다.", "지금 매수 하자.")
+        self.assertEqual(guard.forbid_financial_advice(write("output/t/draft.md", body), root=self.root).kind, "block")
+        after = quoted + "\n## 해석\n\n지금 매수 하자.\n"
+        self.assertEqual(guard.forbid_financial_advice(write("output/t/draft.md", after), root=self.root).kind, "block")
+
 
 class RemindReviewTest(TempRootCase):
     def _review(self, results_hash: str, draft_hash: str) -> None:

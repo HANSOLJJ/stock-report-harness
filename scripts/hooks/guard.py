@@ -699,18 +699,63 @@ _ADVICE_PATTERNS = [
 ]
 _ADVICE_RX = [re.compile(p, re.I) for p in _ADVICE_PATTERNS]
 _POLICY_LINE = re.compile(r"(아닙니다|아님|하지\s*않|목적으로\s*하지|금지|차단|피해야|사용하지\s*않|not\s+(?:investment\s+)?advice|not\s+guarantee)", re.I)
-_ADVICE_GLOBS = ("output/*/draft.md", "output/*/judgments.json", "output/*/evidence/*.json")
+# 2026-10-02 전: ("output/*/draft.md", "output/*/judgments.json", "output/*/evidence/*.json") 이었고 대상 판정
+# `_advice_target` 은 어느 폴더든 `judgments.json` 과 `evidence/*.json` 을 받았다. 수집 원문 `candidates.json` 의 뉴스 제목
+# "Buy Now" 에 걸려 셸 명령마다 block 이 났고, `tests/fixtures/evidence/` 의 라벨 표본도 대상이었다. 우리가 쓴 글만 본다.
+_ADVICE_GLOBS = ("output/*/draft.md", "output/*/judgments.json", "output/*/evidence/evidence.json")
+_ADVICE_KINDS = {"draft.md": "draft", "judgments.json": "text", "evidence/evidence.json": "evidence"}
+# evidence.json 에서 우리가 쓰는 칸. title·excerpt 는 원문 그대로라 보지 않는다.
+_OUR_EVIDENCE_FIELDS = ("relevance", "conditional_impact", "counter_evidence", "unverified", "horizon")
+_VERBATIM_LINE = re.compile(r'^\s*"(?:title|excerpt)"\s*:.*$', re.M)
+# 초안에서 기사 제목을 그대로 옮기는 절(render_md.render_draft).
+_QUOTED_SECTIONS = {"인용 근거", "References"}
 
 
-def _advice_target(rp: str) -> bool:
-    rp = rp.replace("\\", "/")
-    parts = rp.split("/")
-    name = parts[-1]
-    if len(parts) == 3 and parts[0] == "output" and name == "draft.md":
-        return True
-    if name == "judgments.json":
-        return True
-    return name.endswith(".json") and len(parts) >= 2 and parts[-2] == "evidence"
+def _advice_kind(rp: str) -> str | None:
+    """검사 대상이면 종류(draft·text·evidence), 아니면 None. `output/<run>/` 아래의 세 파일만 본다."""
+    parts = rp.replace("\\", "/").split("/")
+    if len(parts) < 3 or parts[0] != "output":
+        return None
+    return _ADVICE_KINDS.get("/".join(parts[2:]))
+
+
+def _evidence_text(text: str) -> str:
+    """evidence.json 에서 우리가 쓴 칸만 모은다. JSON 으로 읽지 못하면(Edit 조각 등) 원문 칸 줄만 빼고 돌려준다."""
+    try:
+        items = json.loads(text)["items"]
+        if not isinstance(items, list):
+            raise TypeError
+    except (ValueError, KeyError, TypeError):
+        return _VERBATIM_LINE.sub("", text)
+    out: list[str] = []
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        for key in _OUR_EVIDENCE_FIELDS:
+            value = item.get(key)
+            if isinstance(value, str):
+                out.append(value)
+            elif isinstance(value, list):
+                out += [v for v in value if isinstance(v, str)]
+    return "\n".join(out)
+
+
+def _draft_text(text: str) -> str:
+    """초안에서 기사 제목을 옮긴 절을 뺀다."""
+    out: list[str] = []
+    skip = False
+    for line in text.splitlines():
+        if line.startswith("## "):
+            skip = line[3:].strip() in _QUOTED_SECTIONS
+        if not skip:
+            out.append(line)
+    return "\n".join(out)
+
+
+def _advice_text(kind: str, text: str) -> str:
+    if kind == "evidence":
+        return _evidence_text(text)
+    return _draft_text(text) if kind == "draft" else text
 
 
 def _policy_context(text: str, start: int, end: int) -> bool:
@@ -726,21 +771,22 @@ def forbid_financial_advice(payload: dict, *, root: Path) -> Decision:
     candidates: dict[str, str] = {}
     # PreToolUse 는 쓰려는 문자열을, PostToolUse 는 실제 파일을 본다.
     for rp in extract_paths(payload, root):
-        if not _advice_target(rp):
+        kind = _advice_kind(rp)
+        if kind is None:
             continue
         for key in ("content", "new_string"):
             value = ti.get(key)
             if isinstance(value, str) and value:
-                candidates[f"{rp} (proposed {key})"] = value
+                candidates[f"{rp} (proposed {key})"] = _advice_text(kind, value)
         edits = ti.get("edits")
         if isinstance(edits, list):
             combined = "\n".join(str(e.get("new_string") or "") for e in edits if isinstance(e, dict))
             if combined:
-                candidates[f"{rp} (proposed edits)"] = combined
+                candidates[f"{rp} (proposed edits)"] = _advice_text(kind, combined)
         file_path = root / rp
         if file_path.is_file():
             try:
-                candidates[rp] = file_path.read_text(encoding="utf-8")
+                candidates[rp] = _advice_text(kind, file_path.read_text(encoding="utf-8"))
             except (UnicodeDecodeError, OSError):
                 pass
     # 셸 명령 뒤에는 무엇이 바뀌었는지 모르므로 대상 파일 전체를 훑는다.
@@ -748,7 +794,8 @@ def forbid_financial_advice(payload: dict, *, root: Path) -> Decision:
         for pattern in _ADVICE_GLOBS:
             for path in root.glob(pattern):
                 try:
-                    candidates[path.relative_to(root).as_posix()] = path.read_text(encoding="utf-8")
+                    rel = path.relative_to(root).as_posix()
+                    candidates[rel] = _advice_text(_advice_kind(rel) or "text", path.read_text(encoding="utf-8"))
                 except Exception:
                     continue
     findings: list[tuple[str, str]] = []
