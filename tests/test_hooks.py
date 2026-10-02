@@ -119,6 +119,55 @@ class EnforcePlanTest(TempRootCase):
         self.put("output/t/review.md", PASS_REVIEW.replace("separate_subagent_sessions", "same_session"))
         self.assertEqual(guard.enforce_plan(shell("Bash", BUILD), root=self.root).kind, "block")
 
+    # 2026-10-02 빌드 검사는 명령 표기에 기대지 않는다. 전에는 아래 변형이 모두 통과했다.
+    BUILD_FORMS = (
+        "uv run --frozen python -X utf8 ./scripts/build_report.py t",
+        "uv run --frozen python -Xutf8 scripts/build_report.py t",
+        "python3 scripts/build_report.py t",
+        "py scripts/build_report.py output/t",
+        "uv run scripts/build_report.py t",
+        "npm run build:report -- t",
+        "cd . && uv run --frozen python -X utf8 scripts\\build_report.py t",
+    )
+
+    def test_build_command_spellings_are_all_gated(self):
+        forms = (*self.BUILD_FORMS, f"uv run --frozen python -X utf8 {self.root.as_posix()}/scripts/build_report.py t")
+        for cmd in forms:
+            with self.subTest(cmd=cmd):
+                self.assertEqual(guard.enforce_plan(shell("Bash", cmd), root=self.root).kind, "block")
+        self.put("output/t/review.md", PASS_REVIEW)
+        for cmd in forms:
+            with self.subTest(cmd=cmd, review="pass"):
+                self.assertEqual(guard.enforce_plan(shell("Bash", cmd), root=self.root).kind, "allow")
+
+    def test_mentioning_the_builder_is_not_a_build(self):
+        for cmd in ("cat scripts/build_report.py", "git log --oneline -- scripts/build_report.py t", "rg slug scripts/build_report.py",
+                    "git commit -m \"build_report.py t 수정\""):
+            with self.subTest(cmd=cmd):
+                self.assertEqual(guard.enforce_plan(shell("Bash", cmd), root=self.root).kind, "allow")
+
+    def test_build_reads_the_review_of_the_checkout_it_runs_in(self):
+        other = Path(tempfile.mkdtemp()).resolve()
+        self.addCleanup(shutil.rmtree, other, True)
+        o = other.as_posix()
+        forms = (f"uv run --frozen --directory {o} python -X utf8 scripts/build_report.py t",
+                 f"cd {o} && uv run --frozen python -X utf8 scripts/build_report.py t",
+                 f"uv run --frozen python -X utf8 {o}/scripts/build_report.py t",
+                 f"npm --prefix {o} run build:report -- t")
+        with mock.patch.object(guard, "checkout_roots", lambda root: (self.root, other)):
+            self.put("output/t/review.md", PASS_REVIEW)   # 세션 루트의 리뷰는 판정에 쓰이지 않는다
+            for cmd in forms:
+                with self.subTest(cmd=cmd):
+                    d = guard.enforce_plan(shell("Bash", cmd), root=self.root)
+                    self.assertEqual(d.kind, "block")
+                    self.assertIn(f"(체크아웃 {other.name})", d.text)
+            (other / "output" / "t").mkdir(parents=True)
+            (other / "output" / "t" / "review.md").write_text(PASS_REVIEW, encoding="utf-8")
+            (self.root / "output" / "t" / "review.md").unlink()
+            for cmd in forms:
+                with self.subTest(cmd=cmd, review="pass"):
+                    self.assertEqual(guard.enforce_plan(shell("Bash", cmd), root=self.root).kind, "allow")
+
     def test_ungated_artifacts_are_allowed(self):
         for rel in ("output/t/review-parts/x.md", "output/t/evidence/candidates.json", "output/t/triggers.json", "output/t/preview.md", "output/t/results.json"):
             with self.subTest(rel=rel):

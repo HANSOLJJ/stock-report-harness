@@ -286,7 +286,6 @@ flowchart TD
 | 승인 뒤 "사이트에 연결할 수 없음" | 승인 성공 후 서버가 정상 종료 | 상태 명령으로 `approval_valid: true` 확인 |
 | `이전 트리거 N건을 처리하지 않았다` | 확인 기록이 빠짐 | `trigger-candidates` 로 보고 `carry` 작성 |
 | `기한이 지났는데 계속 관찰인 트리거` | 기준일이 기한을 넘김 | 결론을 내거나 기한을 늦추고 `note` 에 이유 |
-| 워크트리 세션에서 빌드가 훅에 막힘 | 훅이 리뷰 파일을 워크트리 기준으로 찾음 (TODO 7번) | 원본 폴더 터미널에서 직접 `uv run --frozen python -X utf8 scripts/build_report.py <run_id>` |
 | PowerShell 에 `! uv run …` 을 붙여 넣어 오류 | `!` 는 Claude Code 입력창 전용 접두어 | 터미널에서는 `!` 없이 실행 |
 | 공시 수집이 `skipped_no_user_agent` | `SEC_UA` 가 없음 | `.env` 에 영문으로 적음 |
 

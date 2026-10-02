@@ -710,7 +710,68 @@ def _protect_sensitive_files(payload: dict, root: Path) -> Decision:
 
 
 # ------------------------------------------------------------------ 3. 단계 순서
-_BUILD_CMD = re.compile(r"(?:uv\s+run\s+(?:--frozen\s+)?)?python3?(?:\s+-X\s+utf8)?\s+scripts/build_report\.py\s+(\S+)")
+# 2026-10-02 전: _BUILD_CMD = re.compile(r"(?:uv\s+run\s+(?:--frozen\s+)?)?python3?(?:\s+-X\s+utf8)?\s+scripts/build_report\.py\s+(\S+)")
+# 이 정규식은 표기가 정확할 때만 잡았다(`./scripts/…`, `-Xutf8`, 절대 경로, `py`, `npm run build:report` 는 통과). 리뷰 파일도
+# 세션 루트에서만 찾아, 워크트리 세션이 `--directory <원본>` 으로 원본의 실행을 빌드하면 pass 리뷰를 없다고 막았다.
+# 명령을 단어로 나눠 빌드 호출을 찾고, 실행될 스크립트가 속한 체크아웃의 리뷰를 본다(빌더의 ROOT 는 스크립트 위치 기준이다).
+_PYTHON_VERB = re.compile(r"^(?:python(?:3(?:\.\d+)?)?|py)$")
+_PYTHON_VALUE_OPTS = {"-X", "-W"}
+_PACKAGE_RUNNERS = {"npm", "pnpm", "yarn"}
+
+
+def _option_dir(words: list[str], names: tuple[str, ...]) -> str | None:
+    """`--directory X`·`--directory=X` 같은 옵션의 값."""
+    for i, word in enumerate(words):
+        key, sep, value = word.partition("=")
+        if key in names:
+            return value if sep else (words[i + 1] if i + 1 < len(words) else None)
+    return None
+
+
+def _first_run_name(words: list[str]) -> str | None:
+    """첫 비옵션 단어의 마지막 경로 조각(실행 이름)."""
+    for word in words:
+        if not word.startswith("-"):
+            return word.rstrip("/").rsplit("/", 1)[-1] or None
+    return None
+
+
+def _build_targets(cmd: str, root: Path) -> list[tuple[Path, str]]:
+    """빌드 명령이 만들 (체크아웃 루트, 실행 이름) 목록."""
+    segments = _shell_segments(cmd)
+    if segments is None:   # 나눌 수 없으면 세션 루트 기준으로 본다
+        return [(root, m.group(1).strip("\"'`;&|)")) for m in re.finditer(r"build_report\.py\s+(\S+)", cmd.replace("\\", "/"))]
+    out: list[tuple[Path, str]] = []
+    base = root
+    for seg in segments:
+        words = [w for w in seg if not _is_redirect(w)]
+        while words and (_ASSIGN.match(words[0]) or words[0] in _PREFIX_WORDS):
+            words = words[1:]
+        verb, args = _verb_of(words), words[1:]
+        if verb in _CD_WORDS and args:
+            base = _join(base, args[-1])
+            continue
+        moved = _option_dir(words, ("--directory", "--prefix", "--dir", "-C"))
+        cwd = _join(base, moved) if moved else base
+        for i, word in enumerate(words):
+            if word.rsplit("/", 1)[-1] != "build_report.py":
+                continue
+            # 빌드 호출인가: 앞 단어 가운데 옵션과 옵션 값(-X utf8)을 건너뛴 첫 단어가 파이썬이거나, `uv run <스크립트>` 다.
+            # `cat scripts/build_report.py`, `git log -- scripts/build_report.py` 는 호출이 아니다.
+            j = i - 1
+            while j > 0 and (words[j].startswith("-") or words[j - 1] in _PYTHON_VALUE_OPTS):
+                j -= 1 if words[j].startswith("-") else 2
+            caller = _verb_of(words[j:j + 1]) if j >= 0 else ""
+            if not (_PYTHON_VERB.match(caller) or (verb in ("uv", "uvx") and "run" in words[1:i])):
+                continue
+            name = _first_run_name(words[i + 1:])
+            if name:
+                out.append((locate(str(_join(cwd, word)), root)[0], name))
+        if verb in _PACKAGE_RUNNERS and "build:report" in words:
+            name = _first_run_name(words[words.index("build:report") + 1:])
+            if name:
+                out.append((locate(str(cwd / "package.json"), root)[0], name))
+    return out
 
 # 파일 이름 → 먼저 있어야 하는 같은 폴더의 파일. plan.md 와 그 밖의 산출물은 게이트가 없다.
 _REQUIRES = {
@@ -753,6 +814,13 @@ def _lock_holder(base: Path) -> str | None:
 
 
 def enforce_plan(payload: dict, *, root: Path) -> Decision:
+    try:
+        return _enforce_plan(payload, root)
+    except Undecidable as exc:   # main 까지 올라가면 fail-open 으로 통과된다. 판정하지 못하면 막는다
+        return block(f"단계 순서 판정을 할 수 없어 차단합니다({exc}). 같은 저장소의 체크아웃 목록이 있어야 루트 밖 경로를 판정한다.")
+
+
+def _enforce_plan(payload: dict, root: Path) -> Decision:
     problems: list[str] = []
     locked: list[str] = []
     me: str | None = None
@@ -775,10 +843,10 @@ def enforce_plan(payload: dict, *, root: Path) -> Decision:
             if missing:
                 problems.append(f"{rp}: 선행 산출물 누락({', '.join(missing)})")
     cmd = extract_command(payload)
-    for m in _BUILD_CMD.finditer(cmd):
-        slug = m.group(1).strip("\"'`;&|)")
-        if not _review_is_pass(root / "output" / slug / "review.md"):
-            problems.append(f"output/{slug}/report.html: 빌드 전 pass 상태의 separate-session-4way 리뷰 필요(output/{slug}/review.md)")
+    for owner, slug in _build_targets(cmd, root) if cmd else []:
+        if not _review_is_pass(owner / "output" / slug / "review.md"):
+            review = _label(owner, f"output/{slug}/review.md", root)
+            problems.append(f"output/{slug}/report.html: 빌드 전 pass 상태의 separate-session-4way 리뷰 필요({review})")
     if locked:
         return block("다른 에이전트가 맡은 실행 묶음이라 쓰기를 차단합니다. " + "; ".join(locked[:6]) + ". 인수하려면 CLI 단계를 --take-lock 으로 실행한다.")
     if not problems:
