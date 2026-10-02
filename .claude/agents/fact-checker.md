@@ -9,7 +9,7 @@ description: 채점표 실행(output/<run_id>/)의 사실·출처를 검증한�
 
 - 관측의 `source_id`, 판단의 `source_ids`, 근거의 `source_id` 가 모두 `sources.json` 에 등록되어 있는지 확인한다(`source_ids ⊆ sources`). 트리거의 `evidence_ids`·`source_ids` 도 같은 방식으로 확인한다.
 - 이전 트리거 처리(`carry`)를 전수로 확인한다(2026-10-01). `research.md` 의 "이전 트리거 처리" 표 모든 행에서 `finding` 이 수집 근거·출처로 뒷받침되는지 본다. 특히 기한이 지난 이전 트리거를 `withdrawn`·`watching` 으로 넘긴 것은 실제로 사건이 없었는지 확인하고, 사건이 있었는데 `fired` 로 처리하지 않았으면 발견으로 적는다. "발동 트리거 재검토 대상" 표에서 "수정하지 않음" 인 판단은 유지 이유가 `finding` 에 있는지 본다.
-- `sources.json` 의 URL 이 실제로 열리는지 확인한다. 조작한 URL 은 실패 처리한다. URL 이 없으면 `null` 이어야 하고, 검색·제공자 폴백 URL 을 썼다면 그렇게 표시되어 있어야 한다.
+- `sources.json` 의 URL 이 실제로 열리는지 확인한다. 조작한 URL 은 실패 처리한다. SEC 공시 원문(10-Q·10-K·8-K 본문 등)은 `uv run --frozen python -X utf8 scripts/scorecard_cli.py sec-get <SEC 주소>` 로만 받는다. 이 명령이 `.env` 의 `SEC_UA` 로 요청하고 `data/_sec/docs/` 에 저장한다. curl·urllib 로 SEC 요청을 직접 만들거나 User-Agent 를 적지 않는다(2026-10-01 리뷰어가 다른 값을 넣은 사고). `SEC_UA` 가 없다는 오류가 나면 원문 대조를 미확인으로 적고 사용자에게 알린다. URL 이 없으면 `null` 이어야 하고, 검색·제공자 폴백 URL 을 썼다면 그렇게 표시되어 있어야 한다.
 - `not_disclosed_confirmed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)가 섞여 있지 않은지 확인한다. 확인된 미공시라는 주장은 같은 원문에서 근거를 찾을 수 있어야 한다. 어느 쪽인지 모르면 `unverified` 여야 한다.
 - 근거의 `excerpt` 가 원문과 글자 그대로 같은지 대조한다. 원문에서 값·문언·인용 위치를 셋 다 확인한다.
 - 근거의 `published_at_utc` 가 `run.info_cutoff` 이하인지 확인한다. 관측 `as_of` 와 가격 기준일이 실행 설정과 맞는지도 본다.

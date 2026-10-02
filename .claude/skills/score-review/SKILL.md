@@ -10,6 +10,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
 1. `uv run --frozen python -X utf8 scripts/scorecard_cli.py review-template <run_id> [--force] [--take-lock]` 로 `output/<run_id>/review.md` 뼈대를 만든다(이미 있으면 `--force` 는 리뷰를 새로 시작할 때만).
 2. 네 영역을 가급적 별도 Task/서브에이전트 세션에서 수행한다. 각 리뷰어에게 읽을 파일과 출력 형식(RESULT / FINDINGS / CHECKLIST)을 지정한다. 각 리뷰어가 쓴 결과는 `output/<run_id>/review-parts/<영역>.md` 에 둔다.
    - 리뷰어 입력: `output/<run_id>/` 의 `draft.md`, `research.md`, `results.json`, `observations.json`, `judgments.json`, `sources.json`, `evidence/evidence.json`, `triggers.json`, `preview.md`(HTML 이 있으면 `report.html`). 근거·트리거·출처를 읽지 않은 리뷰는 사실·출처 영역을 pass 로 쓰지 않는다.
+   - 리뷰어 프롬프트에 "SEC 공시 원문은 `scorecard_cli.py sec-get <SEC 주소>` 로만 받고 SEC 요청이나 User-Agent 를 직접 만들지 않는다" 를 넣는다(2026-10-01 사고).
    - 리뷰어 프롬프트에 "큰 파일은 grep/sed 로 필요한 부분만 읽으라"를 넣는다. 네 개를 동시에 띄우면 세션 사용량 한도(HTTP 429)로 전부 중단되는 일이 있었다(2026-09-08). 한도가 걱정되면 2개씩 나눠 띄우고, 중단된 리뷰어는 같은 agent 에 이어서 진행을 요청한다.
    - 사실·출처: `fact-checker` — 숫자·기업 귀속·기준 시점·출처·부재 주장·이해상충, 근거의 `source_ids ⊆ sources`, URL, excerpt 원문 대조.
    - 근거 불릿: `evidence-editor` — `evidence.json` 과 draft 근거 절의 주장·출처 대응, 추론 표시, 금지 표현. 근거 불릿 검토는 이 에이전트에 맡기고 사실·출처 영역의 근거로 인용한다.

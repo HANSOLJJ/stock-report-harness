@@ -12,6 +12,7 @@
   uv run --frozen python -X utf8 scripts/scorecard_cli.py review-template <slug> [--force]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py diff <slug> --against <prior_slug> [--json]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py trigger-candidates <slug> [--json] [--limit N]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py sec-get <SEC 주소> [--json]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py summary <slug> --json
   uv run --frozen python -X utf8 scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <slug> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json PATH) --reason "…" --by NAME [--take-lock]
@@ -468,6 +469,23 @@ def cmd_trigger_candidates(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_sec_get(args: argparse.Namespace) -> int:
+    """SEC 문서 하나를 .env 의 SEC_UA 로 받아 data/_sec/docs/ 에 저장한다. 에이전트는 User-Agent 를 직접 만들지 않는다."""
+    from scorecard.collect_filings import sec_get
+
+    try:
+        out = sec_get(args.url)
+    except (ValueError, RuntimeError, OSError) as exc:   # 주소 오류·SEC_UA 없음·네트워크 실패. 메시지에 SEC_UA 값은 없다
+        print(f"[FAIL] {exc}", file=sys.stderr)
+        return 1
+    if args.json:
+        print(json.dumps(out, ensure_ascii=False))
+        return 0
+    state = "캐시" if out["cached"] else "새로 받음"
+    print(f"{state}: {out['path']} ({out['bytes']} bytes, sha256 {out['sha256'][:16]}…, {out['fetched_at']})")
+    return 0
+
+
 def cmd_resolve_cik(args: argparse.Namespace) -> int:
     """티커로 SEC CIK 를 찾아 표로 낸다. `--apply` 는 `resolved` 인 것만 레지스트리에 쓴다.
 
@@ -681,6 +699,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--json", action="store_true", help="사람용 출력 대신 같은 내용의 dict 를 JSON 으로")
     p.add_argument("--limit", type=int, default=5, help="트리거당 상위 N건(기본 5)")
     p.set_defaults(func=cmd_trigger_candidates)
+
+    p = sub.add_parser("sec-get", help="SEC 문서 하나를 SEC_UA 로 받아 data/_sec/docs/ 에 저장(같은 주소는 캐시)")
+    p.add_argument("url")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(func=cmd_sec_get)
 
     p = sub.add_parser("resolve-cik", help="티커 → SEC CIK 확인. --apply 는 resolved 인 것만 companies.json 에 쓴다")
     p.add_argument("--company")
