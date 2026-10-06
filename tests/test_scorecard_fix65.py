@@ -90,7 +90,9 @@ class Fix65Test(unittest.TestCase):
         # 2026-09-17 FIX-67: 문장을 줄 단위로 잘게 나눠 블록 수가 늘었다. 요지는 **줄마다 블록**이다.
         # 2026-09-17 FIX-75: 항목 카드가 그 일을 한다 — 항목에 딸린 문장은 카드 안 목록으로 가고
         # `mblk` 에는 여러 항목에 걸치는 문단과 한계만 남는다. **한 덩어리로 쏟아지지 않는다**가 요지다.
-        top_limits = [x for x in rc.limitations(self.ctx) if not x.startswith("  ")]
+        # 2026-10-06: 재검토 약속은 감사 기록으로 옮겼다. 이 검사가 읽는 report.html 은 그 전에 빌드한 승인 산출물이라
+        # 약속 줄(들여쓰기 없는 줄)이 한계 절에 있던 때의 블록 수를 센다.
+        top_limits = [x for x in rc.limitations(self.ctx) + rc.recheck_promise_lines(self.ctx) if not x.startswith("  ")]
         loose = [x for fid, ls in rc.method_sections(self.ctx, self.results) if fid is None for x in ls]
         self.assertEqual(self.html.count('<div class="mblk">'), len(loose) + len(top_limits))
         # 항목에 딸린 문장은 아홉 카드 안에 있고, 카드 수는 factor 수와 같다.

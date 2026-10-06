@@ -968,7 +968,7 @@ def status_summary(obs: Any, cids: list[str], columns: list[tuple[str, str]]) ->
 
 PRICE_STATUS_COLUMNS = [("주가", "price"), ("시총", "market_cap"), ("NTM PER", "ntm_per"), ("TTM PER", "ttm_per"), ("영업외 비중", "nonop_share"), ("P/S", "ps_ratio")]
 FIN_STATUS_COLUMNS = [("현금", "cash"), ("TTM FCF", "fcf_ttm"), ("순현금/순부채", "net_cash"), ("D/EBITDA", "debt_ebitda"), ("신용", "credit_rating")]
-OFFBALANCE_HEADER = "부외 약정(B종 실측 · 없으면 v1.5 원문)"
+OFFBALANCE_HEADER = "부외 약정(B종 실측 · 없으면 원본 표기)"   # 2026-10-06: 판 이름(v1.5)을 화면에 싣지 않는다
 CREDIT_NOTE = "신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(채점 규칙 2.8)."
 
 
@@ -981,8 +981,9 @@ def vendor_mark(obs: Any, cid: str, metric: str) -> str:
 def raw_caption(ctx: Any) -> str:
     legacy_n = sum(1 for o in ctx.observations if o["status"] == "legacy_unverified")
     # 2026-09-15 FIX-52: '모든 값은 legacy_unverified' 라고 적었는데 재무 표의 현금·TTM FCF·순현금은 verified 였다(리뷰 A).
-    return (f"기준선 {ctx.run['baseline_id']} 에서 넘어온 관측(`legacy_unverified` {legacy_n}건, SRC-v15-html·SRC-v15-md·SRC-v15-rule)은 "
-            "이번 실행에서 재검증되지 않았다(D-08). **표마다 실측(verified)과 사용자 원본 값이 섞여 있다** — 각 표 아래에 열별 관측 상태를 적는다. "
+    # 2026-10-06 사용자 지시: '기준선 v1.5 에서 넘어온' 처럼 옛 판을 가리키지 않고 지금 상태(사용자 원본·다시 확인 안 함)로 쓴다.
+    return (f"사용자 원본 값으로 들어와 다시 확인하지 않은 관측(`legacy_unverified` {legacy_n}건, 출처 SRC-v15-html·SRC-v15-md·SRC-v15-rule)은 "
+            "점수 계산에 쓰일 때 그 사실을 표시한다(D-08). **표마다 실측(verified)과 사용자 원본 값이 섞여 있다** — 각 표 아래에 열별 관측 상태를 적는다. "
             "상장사 주가는 USD 이고 TSMC 는 ADR(1주=보통주 5주, 재무 TWD), Alibaba 는 ADS(재무 CNY) 기준이다. `—` 는 관측 없음, "
             "원문 상태(미공시·적자·∞)는 그대로 표기한다.")
 
@@ -991,7 +992,7 @@ def price_notice(ctx: Any) -> str:
     if ctx.rules.f6_mode == "parameters":
         return ("⑥ 상장 점수는 **PER · EV/매출(시총에서 순현금을 뺀 값 ÷ 매출) · 매출 성장** 셋을 더한 뒤 "
                 "**입력 신뢰도**로 한 칸을 조정한 값이다. "
-                "아래 표의 NTM PER·TTM PER·P/S·영업외 비중 열은 기준선에서 넘어온 참고값이고 점수는 이 열이 아니라 원자료에서 다시 계산한다. "
+                "아래 표의 NTM PER·TTM PER·P/S·영업외 비중 열은 사용자 원본 참고값이고 점수는 이 열이 아니라 원자료에서 다시 계산한다. "
                 "경계 열의 ⚠️ 는 구간 경계까지 거리가 ±3% 이내라는 표시이며 점수를 바꾸지 않는다.")
     return ("NTM PER 만 ⑥ 점수에 개입한다. TTM PER·P/S·영업외 비중은 참고·왜곡 탐지용이며 영업외 30% 이상이면 TTM PER 은 무효로 본다. "
             "경계 열의 ⚠️ 는 구간 경계(20·29·42·62·90)까지 거리가 ±3% 이내라는 표시이며 점수를 바꾸지 않는다.")
@@ -1013,7 +1014,7 @@ def vendor_policy_note(ctx: Any) -> str:
     for o in flagged:
         by_metric[o["metric"]] = by_metric.get(o["metric"], 0) + 1
     detail = " · ".join(f"{m} {n}건" for m, n in sorted(by_metric.items()))
-    text = (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 v1.5 에서 넘어온 값이다 — "
+    text = (f"{VENDOR_MARK} **원천 정책 밖 공급사 값 {len(flagged)}건**({detail}). 관측 basis 에 `vendor_not_in_source_policy` 가 붙은 사용자 원본 값이다 — "
             "상류가 StockAnalysis 이거나 그 주가로 계산한 값이고, StockAnalysis 는 원천 장부에 `not_adopted · legacy_upstream` 으로만 올라 있다. "
             "표에서는 엔진이 실제로 고른 칸에만 † 를 붙인다.")
     # 2026-10-01 재무 계산 리뷰(low): 새 실행은 시가총액을 직접 받아(verified) 엔진이 고른 칸에 † 가 없는데도
@@ -1526,14 +1527,14 @@ def method_sections(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None,
         if f2_carried == f2_judged:
             execution = (
                 "**이번 실행에서는 규칙 방식으로 계산하지 않았다.** "
-                f"② 판단 {len(f2_carried)}개사 모두 어느 경로를 통과했는지가 기준선에서 넘어오지 않아 "
-                "기준선 점수를 그대로 쓴다."
+                f"② 판단 {len(f2_carried)}개사 모두 어느 경로를 통과했는지 판정 입력이 기록돼 있지 않아 "
+                "사람이 매긴 점수를 그대로 쓴다."
             )
         else:
             execution = (
                 "**이번 실행에서는 두 방식이 함께 쓰였다.** "
-                f"② 판단 {len(f2_judged)}개사 중 {len(f2_carried)}곳은 어느 경로를 통과했는지가 기준선에서 "
-                f"넘어오지 않아 기준선 점수를 그대로 썼고, 나머지 {len(f2_judged - f2_carried)}곳은 경로 판정을 "
+                f"② 판단 {len(f2_judged)}개사 중 {len(f2_carried)}곳은 어느 경로를 통과했는지 판정 입력이 "
+                f"기록돼 있지 않아 사람이 매긴 점수를 그대로 썼고, 나머지 {len(f2_judged - f2_carried)}곳은 경로 판정을 "
                 "입력으로 규칙 방식에 따라 계산했다."
             )
         scored.setdefault("F2", []).append(
@@ -1616,6 +1617,11 @@ def conflict_lines(ctx: Any) -> list[str]:
     return out
 
 
+def recheck_promise_lines(ctx: Any) -> list[str]:
+    """감사 기록에 싣는 제3자 재검토 약속(conflict_lines 에서 이해상충 고지를 뺀 나머지)."""
+    return [line for line in conflict_lines(ctx) if not line.startswith("**이해상충**")]
+
+
 def limitations(ctx: Any) -> list[str]:
     """2026-09-15 FIX-54 1단계 S4: 한 줄 경고로만 있던 한계를 짧은 절 하나로. 문장은 규칙 파일에서 읽는다."""
     out = []
@@ -1627,18 +1633,19 @@ def limitations(ctx: Any) -> list[str]:
         explained = "; ".join(f"{k} — {v}" for k, v in (ex.get("explained") or {}).items()) or "없음"
         unexplained = "; ".join(f"{k} — {v}" for k, v in (ex.get("unexplained") or {}).items()) or "없음"
         # 2026-09-17 FIX-67: 내부 상태값(`resolved_stored_was_right`)과 번호를 그대로 찍던 것을 풀어 쓴다.
-        out.append("**원자료 표의 `영업외 비중` 열은 점수에 쓰지 않는다.** 그 열은 기준선에서 넘어온 값이고, "
+        out.append("**원자료 표의 `영업외 비중` 열은 점수에 쓰지 않는다.** 그 열은 사용자 원본 값이고, "
                    "입력 신뢰도 판정은 원자료에서 다시 계산한 값(세전이익에서 영업이익을 뺀 뒤 세전이익으로 나눈 값)을 쓴다. "
                    f"두 값이 다른 회사가 있다. 설명된 차이: {explained} 설명 못 한 차이: {unexplained}")
     nc = f6.get("net_cash") or {}
     if nc:
         questions = nc.get("open_questions") or []
-        out.append("**순현금의 정의가 아직 확정되지 않았다.** 지금은 기준선 값에서 거꾸로 맞춰 세운 작업용 정의"
+        out.append("**순현금의 정의가 아직 확정되지 않았다.** 지금은 확정 정의가 아니라 작업용 정의"
                    "(현금과 시장성 유가증권을 더하고 총차입금과 리스부채를 뺀 값)를 쓴다. 확정 정의가 나오면 "
                    f"⑥ 의 EV/매출을 다시 계산해야 한다. 아직 답하지 못한 질문이 {len(questions)}건이다.")
         for q in questions:
             # 취소한 문장은 빼고, 자를 때 강조·코드 표시가 반쯤 남지 않게 기호를 걷어 낸 뒤 자른다.
             q = re.sub(r"~~.*?~~\s*", "", q).replace("**", "").replace("`", "").strip()
             out.append("  - " + (q if len(q) <= 160 else q[:157] + "…"))
-    out += conflict_lines(ctx)
+    # 2026-10-06 사용자 지시: 본문 한계 절에는 이해상충 고지만 둔다. 재검토 약속(규칙 긴장 목록)은 감사 기록으로 보낸다.
+    out += [line for line in conflict_lines(ctx) if line.startswith("**이해상충**")]
     return out

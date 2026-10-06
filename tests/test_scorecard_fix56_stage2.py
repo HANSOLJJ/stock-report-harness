@@ -146,8 +146,12 @@ class Stage2Test(unittest.TestCase):
         self.assertIn("어느 하네스로 잰 값인지 적지 않는다", partial)   # 2026-09-18 FIX-80 S3: 번호 대신 제목
         rec = next(x for x in lines if "권장일 뿐 약속이 아닌 것" in x)
         self.assertIn("3건", rec)
+        # 2026-10-06 사용자 지시: 재검토 약속은 감사 기록에 싣고 초안 본문에는 이해상충 고지만 둔다.
+        from scorecard import render_html as rh
+        audit = rh.render_audit_md(self.ctx, self.results, None)
         for line in lines:
-            self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)
+            shown = line if line.startswith("  - ") else f"- {line}"
+            self.assertIn(shown, self.md if line.startswith("**이해상충**") else audit)
 
     def test_schema_rejects_undeclared_or_wrong_third_party_scope(self):
         bad = copy.deepcopy(RULES.payload)

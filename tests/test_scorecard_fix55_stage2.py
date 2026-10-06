@@ -126,8 +126,16 @@ class Stage2Test(unittest.TestCase):
         self.assertIn("2026-11 에 다시 본다", partial)
         self.assertNotIn("TEN-", partial)
         self.assertTrue(any("발동 조건" in x for x in lines))
+        # 2026-10-06 사용자 지시: 이해상충 고지는 초안 한계 절에, 재검토 약속(규칙 긴장 목록)은 감사 기록에 싣는다.
+        from scorecard import render_html as rh
+        audit = rh.render_audit_md(self.ctx, self.results, None)
         for line in lines:
-            self.assertIn(line if line.startswith("  - ") else f"- {line}", self.md)
+            shown = line if line.startswith("  - ") else f"- {line}"
+            if line.startswith("**이해상충**"):
+                self.assertIn(shown, self.md)
+            else:
+                self.assertIn(shown, audit)
+                self.assertNotIn(shown, self.md)
 
     # S3 서술
     def test_descriptions_fixed(self):

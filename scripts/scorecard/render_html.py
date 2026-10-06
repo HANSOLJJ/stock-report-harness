@@ -918,6 +918,11 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
     if not applied:
         lines.append("| — | 없음 |")
 
+    # 2026-10-06 사용자 지시: 규칙 긴장 목록(제3자 재검토 약속)은 옛 판의 문면을 담아 리포트 본문이 아니라 감사 기록에 둔다.
+    promises = rc.recheck_promise_lines(ctx)
+    if promises:
+        lines += ["", "## 제3자 재검토 약속", ""] + [p if p.startswith("  - ") else f"- {p}" for p in promises]
+
     pending = [d for d in rules.pending_decisions() if d.get("blocking")]
     if pending:
         lines += [
@@ -1101,9 +1106,8 @@ def factor_card(ctx: Any, fid: str, lines: list[str], judged: set[str]) -> str:
         if con.get("question"):
             parts.append('<p class="fq">' + "<br>".join(
                 inline_html(x) for x in str(con["question"]).splitlines() if x.strip()) + '</p>')
-        for ex in con.get("examples") or []:
-            parts.append('<div class="fex">' + "".join(
-                f'<p>{inline_html(x)}</p>' for x in str(ex).splitlines() if x.strip()) + '</div>')
+        # 2026-10-06 사용자 지시: 원본 문서의 예시(examples)는 작성 당시의 기업·점수를 담아 지금 결과와 어긋나는
+        # 옛 사실이 된다(예: ⑨ 'OpenAI -5', 'v1.5에서 걸린 곳은 Oracle 하나'). 리포트에는 싣지 않는다.
         if con.get("renamed"):
             parts.append(f'<p class="fnote">원본은 이 항목을 <b>{esc(con["renamed"]["source"])}</b> 라고 불렀다. '
                          f'지금 규칙의 이름은 <b>{esc(con["renamed"]["now"])}</b> 다.</p>')
@@ -1268,8 +1272,8 @@ BASIS_DOC = {
                "판단자가 적은 점수와 근거 문장을 그대로 쓴다. **아래 `기준 사다리`·`등급 산식`·`조합표` 도 "
                "사람 판단을 입력으로 받는다** — 이 칸만 사람 판단이라는 뜻이 아니라, 사람이 적은 것이 "
                "점수 자체라는 뜻이다.", "calc_qual.py:30"),
-    "carried": ("판정 입력 없이 앞서 매긴 점수만 남은 칸", "**근거가 가장 약한 칸이다.** 기준선에서 점수 숫자만 넘어왔고 "
-                "그 점수를 만든 판정 입력이 남아 있지 않아 엔진이 다시 계산하지 못한다. ② 는 C-03(경로 판정), "
+    "carried": ("판정 입력 없이 앞서 매긴 점수만 남은 칸", "**근거가 가장 약한 칸이다.** 점수 숫자만 있고 "
+                "그 점수를 만든 판정 입력이 기록돼 있지 않아 엔진이 다시 계산하지 못한다. ② 는 C-03(경로 판정), "
                 "⑦ 는 매트릭스 입력이 그 자리다. 같은 `앞서 매긴 것` 이라도 **사람 판단**은 근거 문장이 남아 있고 "
                 "이쪽은 숫자뿐이다.", "calc_qual.py:45 (F2·C-03) · calc_qual.py:157 (F7·C-09)"),
     "grade": ("등급 산식", "⑤ 아군 확보의 `3 + A + H` 처럼 판정 입력을 정해진 산식에 넣어 환산한 점수다. "
@@ -1294,7 +1298,7 @@ MODE_DOC = {
                "factors.F1·F4·F8.mode · calc_qual.compute_manual"),
     "paths": ("조건을 몇 개 통과했는지 센다", "통과 수를 점수로 바꾼다(0개 2점 · 1개 3점 · 2개 4점). "
               "5점은 통과 수만으로 닿지 않고 세대 격차라는 별도 조건을 채워야 한다. **어느 조건을 통과했는지 "
-              "정하는 것은 사람이고**, 이번 실행에서는 그 판정이 기준선에서 넘어오지 않아 점수 숫자만 쓴다.",
+              "정하는 것은 사람이고**, 지금은 그 판정 입력이 기록돼 있지 않아 사람이 매긴 점수 숫자를 쓴다.",
               "factors.F2.path_mapping · score5_requires_generation_gap"),
     "ladder": ("채운 만큼 사다리를 오른다", "기준 점수를 합해 칸을 고른다(0점 1점 · 0.5~1점 2점 · 1.5~2점 3점 · "
                "2.5~3점 4점). **4점 칸은 모방불가를 통과해야 열리고** 못 넘으면 3점에서 끊긴다. "
