@@ -70,7 +70,8 @@ CODE_NAMES = {**F6_PARAM_LABELS, "P4": F6_P4_LABEL, **F9_GATE_LABELS}
 # 2026-09-17 FIX-68 S3: 상태는 한국어로 옮겨 놓고 근거(basis)만 영어로 나갔다. 같은 이름을 초안·HTML 이 쓴다.
 # 뜻풀이는 색인(render_html.BASIS_DOC)에 있고 여기 있는 것은 **화면에 찍는 짧은 이름**이다.
 BASIS_LABELS = {
-    "computed": "산식 계산", "manual": "사람 판단", "carried": "앞서 매긴 점수만",
+    # 2026-10-06 사용자 지시: 화면 꼬리표가 이전 판을 가리키지 않는다(`앞서 매긴` 삭제).
+    "computed": "산식 계산", "manual": "사람 판단", "carried": "점수만 기록",
     "grade": "등급 산식", "matrix": "조합표", "criteria": "기준 사다리", "paths": "조건 통과 수",
 }
 MODE_LABELS = {
@@ -225,6 +226,8 @@ DECISION_PHRASES = [
     (_C + r"C-20 비상장", "비상장"),
     (r"\(" + _C + r"C-17 은 셋을 따로 기록하라는 권고이고, ", "(셋을 따로 기록하라는 권고가 있지만 "),
     (r"이라 " + _C + r"C-07 로 이번 실행 미적용", "이라 수주잔고 기준과 달라 이번 실행에는 쓰지 않았다"),
+    # 2026-10-06 출력 리뷰: 번호만 떼면 `미결 사항 으로` 처럼 문장이 끊겼다.
+    (r"미결 사항 " + _C + r"C-\d+\s*으로", "미결 사항으로"),
     (_C + r"C-\d+ — ", ""),
     (r"\s*\(" + _C + r"C-\d+\)", ""),
     (_C + r"C-\d+\s*[:：]\s*", ""),
@@ -455,7 +458,8 @@ def trigger_notes(ctx: Any) -> list[str]:
 
 # ------------------------------------------------------------------ 근거 블록
 
-G4_INCOMPATIBLE_NOTE = "(원문 커버리지 계산은 ARR·연환산 약정 기반이라 C-07 로 이번 실행 미적용)"
+# 2026-10-06 출력 리뷰: `원문 커버리지 계산은` 이 다른 문서를 가리켜 문장만으로 읽히지 않았다.
+G4_INCOMPATIBLE_NOTE = "(공시된 커버리지는 ARR·연환산 약정 기반이라 수주잔고 기준과 달라 이번 실행에는 쓰지 않았다)"
 
 
 def card_evidence_note(baseline_id: str, html: bool = False) -> str:
@@ -787,12 +791,10 @@ def reviewer_label(judgment: dict[str, Any], with_owner: bool = True, run_create
     if judgment.get("status") == "carried":
         # 2026-09-17 FIX-78 S1: 상태 칸이 `사용자의 판단` 을 말하는 자리에서는 같은 말을 되풀이하지
         # 않는다. 근거 머리줄은 **언제 매겼는지**만 더한다.
-        return f"사용자의 판단 · {when}" if with_owner else f"원검토 {when}"
-    # 2026-10-01 출력·가독성 리뷰(medium): 이전 실행에서 매긴 new 판단을 이어받았는데 '이번 실행에서 다시 매김' 으로 보였다.
-    # 실행 생성일보다 앞서 매겼으면 이전 실행의 판단이다.
-    if run_created and when and str(when) < str(run_created):
-        return f"이전 실행에서 매김 · {who or '검토자 미기재'} · {when}"
-    return f"이번 실행에서 다시 매김 · {who or '검토자 미기재'} · {when}"
+        return f"사용자의 판단 · {when}" if with_owner else f"판단일 {when}"
+    # 2026-10-06 사용자 지시: 리포트는 최종 결과만 싣는다. 어느 실행에서 매겼는지(`이전 실행에서`·`다시 매김`)는
+    # 이력이라 화면 꼬리표에 쓰지 않고, 누가 언제 매겼는지만 남긴다. `run_created` 는 호출부 호환으로 받기만 한다.
+    return f"판단 · {who or '검토자 미기재'} · {when}"
 
 
 def _split_block(block: dict[str, Any]) -> dict[str, Any]:
@@ -1063,10 +1065,15 @@ def credit_lines(ctx: Any, results: dict[str, Any]) -> list[str]:
             label = f"{comp.get('facility', '')} {fmt_usd(comp.get('capacity'))}".strip()
             if comp.get("undrawn_terminates_on"):
                 end = date.fromisoformat(comp["undrawn_terminates_on"])
-                notes.append(f"{label} 는 {end.isoformat()} 까지 인출하지 않으면 미인출분이 소멸한다 — 기준일({as_of.isoformat()}) {(end - as_of).days}일 뒤")
+                # 2026-10-06 출력·재무 리뷰: 소멸일이 기준일보다 앞서면 `기준일 -6일 뒤` 로 찍혔다.
+                if end < as_of:
+                    notes.append(f"{label} 는 {end.isoformat()} 에 인출 시한이 끝나 미인출분이 소멸했다")
+                else:
+                    notes.append(f"{label} 는 {end.isoformat()} 까지 인출하지 않으면 미인출분이 소멸한다 — 기준일({as_of.isoformat()}) {(end - as_of).days}일 뒤")
             elif comp.get("matures_on_month"):
                 notes.append(f"{label} 는 {comp['matures_on_month']} 만기다(연장은 대주 승인 조건)")
-        tail = (" " + " · ".join(notes) + ". 런웨이는 기준일 현재 유효한 약정으로 계산했다.") if notes else ""
+        # 런웨이는 관측 기준일의 공시 약정으로 계산한다. 그 뒤 소멸한 약정도 들어 있다.
+        tail = (" " + " · ".join(notes) + f". 런웨이는 {o['as_of']} 공시 기준 약정으로 계산했다.") if notes else ""
         out.append(f"확정 미인출 여신 — {names.get(o['company_id'], o['company_id'])} {fmt_usd(o['value'])}({o['observation_id']}, {o['as_of']}).{tail}")
     return out
 

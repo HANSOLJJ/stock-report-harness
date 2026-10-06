@@ -12,21 +12,22 @@ from scorecard import render_common as rc  # noqa: E402
 
 
 class ReviewerLabelTest(unittest.TestCase):
-    def test_new_judgment_from_a_prior_run_is_not_this_run(self):
+    # 2026-10-06 사용자 지시: 화면 꼬리표는 어느 실행에서 매겼는지(이력)를 말하지 않고 누가 언제 매겼는지만 말한다.
+    def test_new_judgment_from_a_prior_run_has_no_history_wording(self):
         j = {"status": "new", "reviewer": "설계진행(C-13 A-GRADE-45)", "reviewed_at": "2026-09-14"}
-        self.assertEqual(rc.reviewer_label(j, with_owner=False, run_created="2026-10-01"), "이전 실행에서 매김 · 설계진행 · 2026-09-14")
+        self.assertEqual(rc.reviewer_label(j, with_owner=False, run_created="2026-10-01"), "판단 · 설계진행 · 2026-09-14")
 
     def test_judgment_revised_in_this_run(self):
         j = {"status": "new", "reviewer": "noble", "reviewed_at": "2026-10-01"}
-        self.assertEqual(rc.reviewer_label(j, with_owner=False, run_created="2026-10-01"), "이번 실행에서 다시 매김 · noble · 2026-10-01")
+        self.assertEqual(rc.reviewer_label(j, with_owner=False, run_created="2026-10-01"), "판단 · noble · 2026-10-01")
 
-    def test_without_run_date_keeps_the_old_label(self):
+    def test_without_run_date(self):
         j = {"status": "new", "reviewer": "x", "reviewed_at": "2026-09-14"}
-        self.assertEqual(rc.reviewer_label(j, with_owner=False), "이번 실행에서 다시 매김 · x · 2026-09-14")
+        self.assertEqual(rc.reviewer_label(j, with_owner=False), "판단 · x · 2026-09-14")
 
-    def test_carried_is_unchanged(self):
+    def test_carried_shows_only_the_date(self):
         j = {"status": "carried", "reviewer": "legacy:v1.5", "reviewed_at": "2026-09-02"}
-        self.assertEqual(rc.reviewer_label(j, with_owner=False, run_created="2026-10-01"), "원검토 2026-09-02")
+        self.assertEqual(rc.reviewer_label(j, with_owner=False, run_created="2026-10-01"), "판단일 2026-09-02")
 
 
 class SourceRegistrationTest(unittest.TestCase):

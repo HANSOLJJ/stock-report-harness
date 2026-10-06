@@ -145,5 +145,33 @@ class ValidatorTest(unittest.TestCase):
         self.assertTrue(_rule_at_least("v1.10", SELF_CONTAINED_MIN_RULE))
 
 
+class RenderedTagTest(unittest.TestCase):
+    """렌더러가 붙이는 꼬리표·메모도 이전 판을 가리키지 않고 문장이 끊기지 않는다(2026-10-06 출력·재무 리뷰)."""
+
+    def test_decision_code_removal_keeps_the_sentence(self):
+        from scorecard import render_common as rc
+        self.assertEqual(rc.strip_decision_codes("잔존 기간 요건은 규칙 8절 미결 사항 C-23 으로 남아 있다."),
+                         "잔존 기간 요건은 규칙 8절 미결 사항으로 남아 있다.")
+
+    def credit(self, as_of: str) -> str:
+        from scorecard import render_common as rc
+        obs = {"metric": "undrawn_credit", "status": "verified", "value": 37.5e9, "company_id": "amazon",
+               "observation_id": "amazon.undrawn_credit.x1", "as_of": "2026-06-30",
+               "basis": {"components": [{"facility": "지연인출 대출", "capacity": 17.5e9,
+                                         "undrawn_terminates_on": "2026-09-30"}]}}
+        ctx = SimpleNamespace(run={"as_of": as_of}, observations=[obs])
+        return rc.credit_lines(ctx, {"companies": [{"company_id": "amazon", "display_name": "아마존"}]})[0]
+
+    def test_terminated_credit_is_told_in_the_past(self):
+        line = self.credit("2026-10-06")
+        self.assertIn("2026-09-30 에 인출 시한이 끝나 미인출분이 소멸했다", line)
+        self.assertNotIn("-6일", line)
+        self.assertIn("런웨이는 2026-06-30 공시 기준 약정으로 계산했다", line)
+        self.assertNotIn("기준일 현재 유효한 약정", line)
+
+    def test_future_termination_counts_days(self):
+        self.assertIn("기준일(2026-09-02) 28일 뒤", self.credit("2026-09-02"))
+
+
 if __name__ == "__main__":
     unittest.main()

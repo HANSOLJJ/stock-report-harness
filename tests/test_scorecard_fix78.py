@@ -55,7 +55,8 @@ class Fix78Test(unittest.TestCase):
     def test_the_header_does_not_repeat_the_status(self):
         """상태 칸이 누구 판단인지 말하므로 머리줄은 언제인지만 더한다."""
         carried = next(j for j in self.ctx.judgments if j["status"] == "carried")
-        self.assertEqual(rc.reviewer_label(carried, with_owner=False), f"원검토 {carried['reviewed_at']}")
+        # 2026-10-06 사용자 지시: `원검토` 는 이전 판을 가리켜 `판단일` 로 바꿨다. 아래 카드 검사는 빌드된 승인 리포트를 본다.
+        self.assertEqual(rc.reviewer_label(carried, with_owner=False), f"판단일 {carried['reviewed_at']}")
         self.assertEqual(rc.reviewer_label(carried), f"사용자의 판단 · {carried['reviewed_at']}")
         self.assertIn("근거 · 원검토 2026-09-02", strip_tags(self.cards))
         self.assertNotRegex(strip_tags(self.cards), r"판단 기록 [a-z]")   # 2026-09-18 FIX-80 S3: 판단 ID 는 감사 기록으로

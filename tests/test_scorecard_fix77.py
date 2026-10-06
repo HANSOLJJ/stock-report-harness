@@ -106,7 +106,8 @@ class Fix77Test(unittest.TestCase):
         for j in fresh:
             with self.subTest(jid=j["judgment_id"]):
                 label = rc.reviewer_label(j)
-                self.assertTrue(label.startswith("이번 실행에서 다시 매김"))
+                # 2026-10-06 사용자 지시: 화면 꼬리표는 이력(`이번 실행에서 다시`)을 말하지 않는다. 카드 검사는 빌드된 승인 리포트를 본다.
+                self.assertTrue(label.startswith("판단 · "))
                 self.assertIn(j["reviewed_at"], label)
                 # 검토자 칸의 작업 표기는 이름만 남는다.
                 self.assertNotRegex(label, r"C-\d+|[0-9a-f]{7}|A-[A-Z]+-\d+")

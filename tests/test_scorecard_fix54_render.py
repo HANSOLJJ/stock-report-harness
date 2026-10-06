@@ -62,7 +62,9 @@ class SharedRenderTest(unittest.TestCase):
     def test_html_card_uses_active_judgment_and_strikes_superseded(self):
         row = self.frow("tsmc", "⑤ 아군")
         # 2026-09-18 FIX-80 S3: 판단 ID 는 감사 기록으로, 문장 속 판단 ID 는 회사·항목 이름으로 옮긴다.
-        self.assertIn("이번 실행에서 다시 매김", row)
+        # 2026-10-06 사용자 지시: 꼬리표는 누가 언제 매겼는지만 말한다(`이번 실행에서 다시 매김` 삭제).
+        self.assertIn("판단 · ", row)
+        self.assertNotIn("다시 매김", row)
         # 2026-10-06 사용자 지시: 대체된 옛 판단을 카드에 붙이지 않는다.
         self.assertNotIn("대체된 판단", row)
         self.assertNotIn("아래는 기준선 근거", self.html)

@@ -35,6 +35,13 @@ class Fix66Test(unittest.TestCase):
         cls.ctx = load_context(SLUG)
         cls.html = HTML.read_text(encoding="utf-8")
         cls.index = cls.html.split('id="code-index"', 1)[1].split('id="c-glossary"', 1)[0]
+        # 2026-10-06: 근거 꼬리표 이름을 바꿔 빌드된 승인 리포트와 지금 렌더러가 갈린다. 꼬리표 검사는 메모리 렌더로 한다.
+        from scorecard.stages import load_baseline
+        base, _obs, triggers = load_baseline(cls.ctx.run["baseline_id"])
+        cls.mem_html = rh.render_document(cls.ctx, cls.results, base, triggers, {"review_type": "mem", "reviewers": []},
+                                          {"approval_id": "00000000-memory", "approved_by": "mem", "approved_at": "2026-09-15"},
+                                          rh.load_availability(SLUG))
+        cls.mem_index = cls.mem_html.split('id="code-index"', 1)[1].split('id="c-glossary"', 1)[0]
 
     # ---------------------------------------------------------------- 경계
     def test_scores_and_approval_untouched(self):
@@ -145,12 +152,12 @@ class Fix66Test(unittest.TestCase):
     def test_carried_is_marked_as_the_weakest_basis(self):
         # 2026-09-17 FIX-68 S3: 근거 값도 한국어로 옮겼다. `carried` 는 이름 자체가 근거의 약함을 말한다.
         mark = f'<span class="b weak">{rc.BASIS_LABELS["carried"]}</span>'
-        self.assertIn(mark, self.html)
+        self.assertIn(mark, self.mem_html)
         n = sum(1 for c in self.results["companies"] for f in rh.FACTOR_IDS
                 if c["factors"][f]["basis"] == "carried")
-        self.assertEqual(self.html.count(mark), n)
+        self.assertEqual(self.mem_html.count(mark), n)
         self.assertEqual(n, 16)
-        row = self._row(rc.BASIS_LABELS["carried"], "basis")
+        row = self._row(rc.BASIS_LABELS["carried"], "basis", self.mem_index)
         self.assertIn("근거가 가장 약한 칸이다", row)
         # 2026-09-18 FIX-80 S3: 코드 위치는 읽는 사람의 정보가 아니라 색인에서 뺐다.
         self.assertNotIn("calc_qual.py", row)
@@ -160,7 +167,7 @@ class Fix66Test(unittest.TestCase):
         self.assertEqual(used, {"computed", "manual", "carried", "grade", "matrix", "criteria"})
         for basis in used:
             with self.subTest(basis=basis):
-                row = self._row(rc.BASIS_LABELS.get(basis, basis), "basis")
+                row = self._row(rc.BASIS_LABELS.get(basis, basis), "basis", self.mem_index)
                 self.assertIn(rh.BASIS_DOC[basis][0], row)
                 self.assertIn(f"<code>{basis}</code>", row)     # 영어 값은 내부 표기로만
                 self.assertNotRegex(row, r"calc_\w+\.py:\d+")   # 2026-09-18 FIX-80 S3: 코드 위치는 색인에서 뺐다
@@ -209,11 +216,11 @@ class Fix66Test(unittest.TestCase):
         # 문장 속 링크도 24px 를 채운다.
         self.assertIn("min-width:24px;min-height:24px", re.search(r"\.tcode\{[^}]*\}", self.html).group(0))
 
-    def _row(self, code: str, group: str = "") -> str:
+    def _row(self, code: str, group: str = "", index: str | None = None) -> str:
         # 2026-09-17 FIX-68: `조합표`·`사람 판단` 처럼 방식과 근거가 같은 이름을 쓴다 — 묶음으로 가른다.
         prefix = f"idx-{group}" if group else r"idx(?:-\w+)?"
         m = re.search(rf'<div class="ixrow" id="{prefix}-{re.escape(rh._anchor_id(code))}">(.*?)</div>\s*(?=<div class="ixrow"|</div>)',
-                      self.index, re.S)
+                      self.index if index is None else index, re.S)
         self.assertIsNotNone(m, f"색인에 {code} 행이 없다")
         return m.group(1)
 
