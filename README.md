@@ -6,7 +6,7 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 
 ## 지금 상태
 
-최신 승인 실행은 `ai-scorecard-2026-10-test` 입니다(기준일 2026-10-01, 규칙 v1.8, 2026-10-01 승인). 점수와 순위는 그 실행의 `output/ai-scorecard-2026-10-test/report.html` 에 있고, 실행의 진행 상태는 `scripts/scorecard_cli.py status <run_id>` 로 봅니다. 이 줄은 실행이 새로 승인될 때마다 고칩니다.
+최신 승인 실행은 `ai-scorecard-2026-10-rescore` 입니다(기준일 2026-10-06, 규칙 v1.9, 2026-10-06 승인). 점수와 순위는 그 실행의 `output/ai-scorecard-2026-10-rescore/report.html` 에 있고, 실행의 진행 상태는 `scripts/scorecard_cli.py status <run_id>` 로 봅니다. 이 줄은 실행이 새로 승인될 때마다 고칩니다.
 
 ## 아홉 항목은 어떻게 매겨지나
 

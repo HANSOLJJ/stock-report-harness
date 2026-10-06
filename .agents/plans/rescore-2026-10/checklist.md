@@ -29,7 +29,9 @@
 - [x] 1차 리뷰 4영역 모두 pass, 점수 영향 발견 0(`cf958b4`)
 - [x] 사용자 결정으로 사실 오류 한 묶음 수정(렌더러 `08bfc90`, 트리거·근거 `6ae2ac9`, PRP-005 `96d522f`)
 - [x] 확인 리뷰(2차) 4영역 모두 pass → review.md status pass → validate_report_contract PASS
-- [ ] **사람: 승인 페이지에서 승인** → 그 뒤 `/score-build`
+- [x] 사람: 승인 페이지에서 승인(approval_valid)
+- [x] 빌드 → report.html·audit.md·history.csv 14행, `validate_report_contract --require-html` PASS
+- [x] 화면 검사(Playwright): 320·768·1280px 가로 넘침 없음, 넓은 차트는 가로 스크롤 상자(.mtwrap) 안. factor 탐색 링크 높이 19px(24px 미만, 렌더러는 시험 실행과 같음)는 다음 실행 과제
 
 ## 4. 리뷰
 - [ ] 1차 리뷰(4 영역 + Q01~Q23)
