@@ -1,0 +1,962 @@
+{
+  "schema": "scorecard.triggers/2",
+  "run_id": "ai-scorecard-2026-10-test",
+  "items": [
+    {
+      "trigger_id": "TRG-001",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "observation": "구글이 2026-09-30 최상위 모델 Gemini 4 Argon 을 발표했고(제목 기준) 같은 날 구글 내부의 성능 회의론 보도도 나왔다. 알파벳 ② 판단은 기준선에서 승계한 4점이고 근거는 “프론티어 순위 미변”이다.",
+      "condition": "AA Intelligence Index·ARC-AGI-2·에이전트 실무 측정 같은 독립 측정에 Gemini 4 Argon 이 등재되면",
+      "deadline": "2026-11-15",
+      "evidence_ids": [
+        "EV-alphabet-007"
+      ],
+      "source_ids": [
+        "SRC-NEWS-alphabet-20260930-e34286f1"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2"
+        ],
+        "what": "알파벳 ② 의 성능 도약 경로(벤치마크에서 세대 격차를 만드는가) 통과 여부와, 그 격차가 ② 최고 칸의 조건인 세대 격차 수준인지"
+      }
+    },
+    {
+      "trigger_id": "TRG-002",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "observation": "구글이 EU 의 검색 데이터 공유·AI 접근 개방 명령에 이의를 제기하고 EU 법원에 집행정지를 신청했다. 별도로 반독점 승소 보도(2차 매체)가 있다. 알파벳 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이고 적대 근거는 “DOJ+38개 주 검색 독점 항소 진행”이다.",
+      "condition": "EU 법원의 집행정지 판단이 나오거나 명령 이행이 시작되면, 또는 승소한 사건이 무엇인지 판결문·주요 언론 같은 1차 자료로 확인되면",
+      "deadline": "2026-12-31",
+      "evidence_ids": [
+        "EV-alphabet-005",
+        "EV-alphabet-004"
+      ],
+      "source_ids": [
+        "SRC-NEWS-alphabet-20260920-133c72ed",
+        "SRC-NEWS-alphabet-20260930-623b47a2"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "알파벳 ⑤ 적대 등급을 비용형으로 둘지(EU 명령이 검색 사업 구조를 건드리면 구조형 검토)와, 적대 근거 “DOJ+38개 주 항소”가 지금도 맞는지"
+      }
+    },
+    {
+      "trigger_id": "TRG-003",
+      "company_id": "alphabet",
+      "factors": [
+        "F7"
+      ],
+      "observation": "Anthropic IPO 신고서(S-1)가 Anthropic 매출의 절반 가까이가 Amazon·Google 을 거친다고 밝혔다는 보도가 있다. 알파벳 ⑦ 판단은 조달 의존 고객 비중 ‘작음’, 내 돈이 돌아옴 ‘예’로 별표 I(⑦ 순환금융 판정표) -1 칸이다.",
+      "condition": "Anthropic S-1 원문에서 구글 관련 컴퓨트 약정·매출 규모가 확인되면",
+      "deadline": "2026-11-30",
+      "evidence_ids": [
+        "EV-alphabet-006"
+      ],
+      "source_ids": [
+        "SRC-NEWS-alphabet-20260930-2b5aeb8c"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F7"
+        ],
+        "what": "알파벳 ⑦ 의 조달 의존 고객 비중을 ‘작음’으로 둘지 — 구글 쪽 Anthropic 매출·약정을 Google Cloud 매출·백로그와 견준다"
+      }
+    },
+    {
+      "trigger_id": "TRG-004",
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "observation": "Anthropic 이 클라우드·데이터센터에 $518B 를 쓸 계획이고 그중 $100B+ 가 아마존에 약속됐다는 보도가 있다. 아마존 ⑦ 판단은 조달 의존 고객 비중 ‘작음’, 내 돈이 돌아옴 ‘예’로 별표 I(⑦ 순환금융 판정표) -1 칸이고, 근거에 “OpenAI $50B 투자 ⑦ 재검토 대기”가 남아 있다.",
+      "condition": "Anthropic S-1 원문이나 아마존 다음 10-Q 에서 Anthropic·OpenAI 약정의 규모·기간이 확인되면",
+      "deadline": "2026-11-30",
+      "evidence_ids": [
+        "EV-amazon-007"
+      ],
+      "source_ids": [
+        "SRC-NEWS-amazon-20261001-39aa7ec2"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F7"
+        ],
+        "what": "아마존 ⑦ 의 조달 의존 고객 비중을 ‘작음’으로 둘지 — Anthropic·OpenAI 약정을 AWS 백로그·매출과 견준다"
+      }
+    },
+    {
+      "trigger_id": "TRG-005",
+      "company_id": "amazon",
+      "factors": [
+        "F9"
+      ],
+      "observation": "아마존의 최근 1년 잉여현금흐름이 -$11.6B 로 마이너스라 ⑨ 게이트 2(최근 1년 잉여현금흐름이 마이너스인가)에 걸려 있고, 2026-06-10 에 중요 계약·직접 금융 채무 공시(8-K Items 1.01·2.03)가 있었다. 지금 런웨이는 9.95년(완충 $115.7B = 현금 $78.2B + 확정 미인출 여신 $37.5B), 약정 커버리지는 1.856 이다.",
+      "condition": "2026년 3분기 10-Q 가 공시되면",
+      "deadline": "2026-11-10",
+      "evidence_ids": [
+        "EV-amazon-002",
+        "EV-amazon-001"
+      ],
+      "source_ids": [
+        "SRC-EDGAR-000101872426000026",
+        "SRC-EDGAR-000110465926072140"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F9"
+        ],
+        "what": "아마존 ⑨ 게이트 3(현금 + 확정 미인출 여신으로 몇 년 버티는가)과 게이트 4(남은 계약 매출이 미래 지출 약정을 덮는가)를 새 분기의 최근 1년 잉여현금흐름·현금·확정 미인출 여신으로 다시 계산한다"
+      }
+    },
+    {
+      "trigger_id": "TRG-006",
+      "company_id": "amazon",
+      "factors": [
+        "F1"
+      ],
+      "observation": "아마존이 메타 Muse 쇼핑 에이전트를 차단했다(제목 기준). 아마존 ① 판단은 5점(Prime 2억+ 소비자 락인)이다.",
+      "condition": "에이전트 경로로의 소비자 이탈 수치(Prime 회원 수·쇼핑 트래픽)가 공시되거나 보도되면",
+      "deadline": "2027-02-15",
+      "evidence_ids": [
+        "EV-amazon-004"
+      ],
+      "source_ids": [
+        "SRC-NEWS-amazon-20260929-6dc379e1"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1"
+        ],
+        "what": "아마존 ① 소비자 채널 락인이 제3자 쇼핑 에이전트 경로에서도 유지되는지"
+      }
+    },
+    {
+      "trigger_id": "TRG-007",
+      "company_id": "microsoft",
+      "factors": [
+        "F1"
+      ],
+      "observation": "마이크로소프트가 Copilot Business 라이선스에 사용량 기반 과금을 기본값으로 켠다는 보도(crn, 2026-09-30)가 있다. 계획 단계라 별표 D(계획·발표는 현재 점수에 넣지 않는다)에 따라 근거로 올리지 않았다. 마이크로소프트 ① 판단은 5점(Copilot 유료 시트 3,000만, Windows·M365 기본 탑재)이다.",
+      "condition": "FY27 1분기 실적에서 Copilot 유료 시트 수나 이탈이 공시되면",
+      "deadline": "2026-11-10",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-microsoft-20260930-8f6eb044"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1"
+        ],
+        "what": "가격 구조를 바꾼 뒤에도 Copilot 유료 시트가 유지되는지 — 마이크로소프트 ① 업무 채널 락인"
+      }
+    },
+    {
+      "trigger_id": "TRG-008",
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "observation": "OpenAI 가 M365 와 겹치는 오피스 제품을 냈고, 같은 주 마이크로소프트는 OpenAI 의 Dots 에이전트를 기업용으로 들여왔다. 마이크로소프트 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형: OpenAI 긴장·Azure 독점 소멸)로 4점이다.",
+      "condition": "MS–OpenAI 계약 변경 공시나 M365 고객 이탈 수치가 나오면",
+      "deadline": "2026-12-31",
+      "evidence_ids": [
+        "EV-microsoft-003"
+      ],
+      "source_ids": [
+        "SRC-NEWS-microsoft-20260929-10993ed8"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "마이크로소프트 ⑤ 적대 등급을 비용형으로 둘지, 구조형(주요 고객·파트너가 곧 경쟁자)으로 볼지"
+      }
+    },
+    {
+      "trigger_id": "TRG-009",
+      "company_id": "microsoft",
+      "factors": [
+        "F2"
+      ],
+      "observation": "마이크로소프트가 에이전트(Autopilot)·코딩(Code)을 묶은 새 Copilot 을 출시했다. 마이크로소프트 ② 판단은 기준선에서 승계한 3점이고 근거는 “Arena 상위권에 자체 모델 없음, OpenAI·Anthropic 양쪽 조달”이다.",
+      "condition": "에이전트 실무 독립 측정(OSWorld·Terminal-Bench 등)이나 Autopilot 채택 수치가 공개되면",
+      "deadline": "2026-12-31",
+      "evidence_ids": [
+        "EV-microsoft-002"
+      ],
+      "source_ids": [
+        "SRC-NEWS-microsoft-20260925-74aad420"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2"
+        ],
+        "what": "마이크로소프트 ② 의 패러다임 적응 경로(남이 바꾼 판 — 에이전트·코딩 — 에 빨리 올라타는가) 통과 여부"
+      }
+    },
+    {
+      "trigger_id": "TRG-010",
+      "company_id": "meta",
+      "factors": [
+        "F9"
+      ],
+      "observation": "메타의 최근 1년 잉여현금흐름은 +$40.98B 흑자지만 분기 잉여현금흐름이 -91% 줄었고 설비투자 계획이 연 $130~145B 로 늘었다. 메타 ⑨ 판단은 게이트 2(최근 1년 잉여현금흐름이 마이너스인가)에서 흑자로 끝나고 추세는 악화다.",
+      "condition": "2026년 3분기 10-Q 가 공시되면",
+      "deadline": "2026-11-10",
+      "evidence_ids": [
+        "EV-meta-001"
+      ],
+      "source_ids": [
+        "SRC-EDGAR-000162828026050705"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F9"
+        ],
+        "what": "메타의 최근 1년 잉여현금흐름 부호와 추세 — 마이너스로 바뀌면 ⑨ 게이트 3(현금 + 확정 미인출 여신으로 몇 년 버티는가) 계산에 들어간다"
+      }
+    },
+    {
+      "trigger_id": "TRG-011",
+      "company_id": "meta",
+      "factors": [
+        "F3"
+      ],
+      "observation": "메타 Muse 주간 사용자가 300만을 넘었다는 보도(The Information 단독)가 있다. 메타 ③ 판단에서 후발 가속도(성장률이 오르는가)는 “AI 매출 미공시, 채택 증거 아직 없음”으로 ⚠️ 절반 인정이다.",
+      "condition": "메타가 3분기 실적에서 Muse 사용자나 수익화 수치를 공식 공시하면",
+      "deadline": "2026-11-10",
+      "evidence_ids": [
+        "EV-meta-004"
+      ],
+      "source_ids": [
+        "SRC-NEWS-meta-20260930-b46bb0dd"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F3"
+        ],
+        "what": "메타 ③ 후발 가속도를 ⚠️ 절반 인정으로 둘지, 인정 쪽으로 볼지"
+      }
+    },
+    {
+      "trigger_id": "TRG-012",
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "observation": "메타가 기업용 AI 플랫폼을 출범하고 MongoDB CEO 를 책임자로 영입했다. 별표 D(계획·발표·인사는 현재 점수에 넣지 않는다)에 따라 지금은 근거가 아니다. 메타 ④ 판단은 3점(광고 의존 약 98%)이다.",
+      "condition": "기업용 매출이나 고객 배치가 공시되면",
+      "deadline": "2027-02-15",
+      "evidence_ids": [
+        "EV-meta-002"
+      ],
+      "source_ids": [
+        "SRC-NEWS-meta-20260928-e1cfee35"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4"
+        ],
+        "what": "메타 ④ 다각화 — 광고 밖 사업 부문이 실질 매출을 내는지"
+      }
+    },
+    {
+      "trigger_id": "TRG-013",
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "observation": "같은 주에 두 보도가 나왔다. 중국 당국이 ByteDance·Alibaba 의 NVIDIA 신형 칩 구매 허용을 검토한다는 보도(Reuters 가 The Information 인용)와, 미 의회가 국방수권법으로 중국 대상 AI 칩 수출을 막으려 하고 NVIDIA·AMD 가 행정부 개입을 요청한다는 보도(Politico)다. 지금 NVIDIA ⑤ 판단은 동맹 등급 +1, 적대 등급 -2(구조형 — 주요 고객이 곧 경쟁자)다.",
+      "condition": "중국 당국의 구매 허용이나 미 의회의 수출 차단 조항 확정 가운데 하나가 정부 발표·법안 문안 같은 1차 자료로 확인될 때.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-nvidia-20260928-906e333e",
+        "SRC-NEWS-nvidia-20260929-8d3c9877"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "중국 시장 차단의 범위가 바뀌는지 본다. 시장 일부 차단은 비용형 적대라, 지금 구조형인 적대 등급을 바꾸려면 이것이 두 번째 구조형 전선이 되는지(다발형: 구조형 적대가 복수 전선에서 동시에 진행되고 최대 파트너와도 긴장)를 따진다."
+      }
+    },
+    {
+      "trigger_id": "TRG-014",
+      "company_id": "nvidia",
+      "factors": [
+        "F2"
+      ],
+      "observation": "고객사 CoreWeave 가 Vera Rubin NVL72 를 생산 규모로 제공한다고 발표했다. 지금 NVIDIA ② 판단은 5점(최상단)이고, 그 note 는 Rubin 을 '발표' 로 적어 두었다.",
+      "condition": "NVIDIA 분기 실적이나 10-Q 에서 Rubin 매출 인식이 확인되거나, 독립 측정(MLPerf 등)에서 Rubin 의 세대 격차 수치가 나올 때.",
+      "deadline": "2026-11-30",
+      "evidence_ids": [
+        "EV-nvidia-008"
+      ],
+      "source_ids": [
+        "SRC-NEWS-nvidia-20260930-8fbc4d99"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2"
+        ],
+        "what": "② 판단 note 의 Rubin 표기를 '발표' 에서 '출하' 로 고칠지, 성능 도약 경로의 세대 격차 근거를 벤더 발표가 아닌 독립 측정으로 바꿀 수 있는지 본다."
+      }
+    },
+    {
+      "trigger_id": "TRG-015",
+      "company_id": "nvidia",
+      "factors": [
+        "F4",
+        "F5"
+      ],
+      "observation": "NVIDIA 의 Hugging Face 관련 130억 달러 거래가 보도됐다. 기존 NVIDIA ① 판단은 이 거래를 2026-09-02 에 서명한 인수(종결 2027 상반기·규제 승인 조건부)로 적고 있고, ⑤ 판단은 'HF 인수는 ⑤ 근거가 아니다' 라고 적어 두었다. 지금 NVIDIA ④ 는 5점(최상단)이다.",
+      "condition": "거래 구조(인수인지 지분 투자인지)와 종결이 NVIDIA 공시로 확인될 때.",
+      "deadline": "2027-01-31",
+      "evidence_ids": [
+        "EV-nvidia-004"
+      ],
+      "source_ids": [
+        "SRC-NEWS-nvidia-20260928-596760c7"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4",
+          "F5"
+        ],
+        "what": "인수로 종결되고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 사업 부문 근거를 보강한다(점수는 이미 최상단). 지분 투자로 드러나면 ⑤ 동맹 등급('지분이 걸린 동맹이 복수')에 들어가는지 별표 H 3문(상대가 나를 떠날 수 있으면 동맹이 아니다)을 대어 본다. 기존 ① 판단 note(종결 시 업무 채널이 생겨 부품 채널 상한을 넘길 경로)도 함께 확인한다."
+      }
+    },
+    {
+      "trigger_id": "TRG-016",
+      "company_id": "tsmc",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "observation": "TSMC 가 애리조나에 이어 텍사스에 두 번째 미국 거점을 검토한다는 보도(Reuters, 소식통 인용)가 나왔다. 지금 TSMC ⑤ 판단의 적대 등급은 -1(Intel Foundry·관세로 강요된 미국 투자)이고, ⑧ 판단은 -4(첨단 캐파가 물리적으로 대만에 집중)다.",
+      "condition": "TSMC 이사회 결의(6-K)나 공식 발표로 텍사스 투자가 확정될 때.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-tsmc-20260930-1272c9c8"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5",
+          "F8"
+        ],
+        "what": "⑧ 의 생산 지역 집중 근거와 ⑤ 의 관세·지정학 적대 근거가 달라지는지 본다. 확정돼도 별표 D(계획·발표는 점수 근거가 아니다)에 따라 공장이 가동·출하하기 전에는 근거 문장만 고친다."
+      }
+    },
+    {
+      "trigger_id": "TRG-017",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F6"
+      ],
+      "observation": "2나노 상업 양산 시작이 2차 매체로 보도됐고, 3분기 실적 발표가 2026-10-15 로 예정돼 있다. 지금 TSMC ② 판단은 5점(최상단)이고 근거에 N2 양산 시작이 이미 있다. TSMC ⑥ 은 20-F 연간 수치로 계산하는 트랙이다.",
+      "condition": "3분기 실적에서 N2 매출 비중과 분기 매출 성장률이 공개될 때.",
+      "deadline": "2026-10-31",
+      "evidence_ids": [
+        "EV-tsmc-004"
+      ],
+      "source_ids": [
+        "SRC-NEWS-tsmc-20260918-d70d800e",
+        "SRC-NEWS-tsmc-20261001-4bcd7e85"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2",
+          "F6"
+        ],
+        "what": "N2 출하를 1차 자료로 확인해 ② 근거 문장을 보강한다. ⑥ 매출 성장 잣대(P3, 최근 1년 매출 ÷ 그 전 1년 − 1)는 연간 트랙이라 분기 실적으로 입력이 바뀌지 않으므로, 분기 성장률은 2026 연간 20-F 가 들어올 때까지 참고로만 남긴다."
+      }
+    },
+    {
+      "trigger_id": "TRG-018",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "observation": "Intel CEO 가 TSMC 를 경쟁자가 아니라 파트너라고 발언했다. 지금 TSMC ⑤ 판단은 동맹 등급 +1, 적대 등급 -1 이고, 2026-09-15 엄격 재판정은 TSMC 자신의 경쟁사(Intel Foundry·Samsung 파운드리)가 TSMC 공정에 들어온 근거가 없다고 보았다.",
+      "condition": "Intel 의 TSMC 위탁 생산 물량이나 계약이 Intel·TSMC 공시 또는 1차 발표로 확인될 때.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [
+        "EV-tsmc-007"
+      ],
+      "source_ids": [
+        "SRC-NEWS-tsmc-20261001-3eee57cf"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "동맹 등급의 '경쟁사까지 내 공정에 편입했다' 조항을 TSMC 에 다시 대 보고, 같은 잣대가 닿는 다른 회사가 있는지 함께 확인한다(체크리스트 Q03: 한 회사에 댄 잣대는 같은 잣대가 닿는 모든 회사에 댄다)."
+      }
+    },
+    {
+      "trigger_id": "TRG-019",
+      "company_id": "apple",
+      "factors": [
+        "F4"
+      ],
+      "observation": "Apple 이 10월 13일 스마트홈 허브를 내놓을 계획이라는 Bloomberg 보도가 나왔다. 계획이라 별표 D(계획·발표는 점수 근거가 아니다)에 따라 근거로 올리지 않았다. 지금 Apple ④ 판단은 3점이다.",
+      "condition": "출시 뒤 출하량이나 별도 매출이 공시·실적에서 확인될 때.",
+      "deadline": "2027-02-15",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-apple-20260930-a6b45485"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4"
+        ],
+        "what": "새 제품군이 ④(호황 이후 비전 — 사업 부문 수·자체 칩 출하)의 사업 부문으로 셀 만큼 매출·배치가 생겼는지 본다."
+      }
+    },
+    {
+      "trigger_id": "TRG-020",
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "observation": "메모리 칩 부족으로 Apple 이 제품 가격을 올린다는 보도(Stocktwits, '보도에 따르면')가 나왔다. 지금 Apple ① 판단은 5점(최상단, 20억 대 설치기반의 소비자 채널)이다.",
+      "condition": "가격 인상이 확정되고 다음 분기 실적에서 iPhone 매출·설치기반 변화가 나올 때.",
+      "deadline": "2027-02-15",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-apple-20261001-e4d989e2"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1"
+        ],
+        "what": "① 의 판별 질문 '가격을 올려도 남는가' 를 확인한다. 인상 뒤 이탈이 없으면 근거 문장을 보강하고, 매출·설치기반이 뚜렷이 줄면 ① 락인 판정을 아래쪽으로 다시 본다."
+      }
+    },
+    {
+      "trigger_id": "TRG-021",
+      "company_id": "apple",
+      "factors": [
+        "F4"
+      ],
+      "observation": "규칙 별표 D(계획·발표는 점수 근거가 아니다)는 Apple Baltra(자체 AI 서버 칩)를 '2026 하반기 양산 예정, 양산 확인 시 상향' 으로 적어 두었다. 이번 후보 묶음에는 양산을 확인하는 기사가 없다. 지금 Apple ④ 판단은 3점이다.",
+      "condition": "Baltra 양산·배치가 Apple 공시나 1차 발표로 확인될 때.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-v15-rule"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4"
+        ],
+        "what": "④ 의 수직계열화 입력인 자체 칩 출하가 생겼는지 보고, 확인되면 ④ 를 위쪽으로 다시 본다."
+      }
+    },
+    {
+      "trigger_id": "TRG-022",
+      "company_id": "oracle",
+      "factors": [
+        "F8",
+        "F9"
+      ],
+      "observation": "뉴멕시코 Project Jupiter 에 불가항력 통보가 보도됐고, 위스콘신 1.3GW 데이터센터 지연 가능성 보도(미확인)가 이어졌다. 지금 Oracle ⑧ 판단은 -4(단일 고객이 백로그의 절반), ⑨ 판단은 -3(버티는 기간 약 1.3년으로 한 칸 하향, 약정 커버리지 약 2.55배로 유지)이다.",
+      "condition": "Oracle 10-Q·8-K 에서 자본지출 약정 일정, RPO(계약했으나 아직 인식하지 않은 매출) 인식 시점, 고객 계약 조정 가운데 하나가 바뀐 것이 확인될 때.",
+      "deadline": "2026-12-20",
+      "evidence_ids": [
+        "EV-oracle-004"
+      ],
+      "source_ids": [
+        "SRC-NEWS-oracle-20260924-f9026ef9",
+        "SRC-NEWS-oracle-20260930-9afa8fba"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F8",
+          "F9"
+        ],
+        "what": "⑨ 게이트 4(약정 커버리지 = 계약된 수입 ÷ 미개시 약정, 1배 미만이면 한 칸 하향)를 다시 계산하고, ⑧ 의 단일 고객 설비 의존 근거가 달라지는지 본다."
+      }
+    },
+    {
+      "trigger_id": "TRG-023",
+      "company_id": "oracle",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "observation": "Tencent 가 Oracle 에서 칩 10만 개를 70억 달러에 임차한다는 FT 보도를 Reuters 가 전했다. 지금 Oracle ⑦ 판단은 '조달 의존 고객 비중 큼 + 내 돈 환류 있음' 으로 -2, ⑧ 판단은 -4(단일 고객이 백로그의 절반)다.",
+      "condition": "Oracle 실적 발표·공시나 Tencent 측 확인으로 계약 규모와 기간이 확인될 때.",
+      "deadline": "2026-12-20",
+      "evidence_ids": [
+        "EV-oracle-005"
+      ],
+      "source_ids": [
+        "SRC-NEWS-oracle-20261001-610bad32"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F7",
+          "F8"
+        ],
+        "what": "RPO 고객 구성이 얼마나 분산됐는지와 자기 영업이익으로 지불하는 고객의 비중이 늘었는지 본다. ⑦ 의 '조달 의존 큼' 과 ⑧ 의 단일 고객 의존 판정을 뒤집을 만큼인지가 기준이다."
+      }
+    },
+    {
+      "trigger_id": "TRG-024",
+      "company_id": "oracle",
+      "factors": [
+        "F9"
+      ],
+      "observation": "Oracle ⑨ 판단의 잉여현금흐름 추세 입력(fcf_trend)이 '모름' 으로 남아 있고, 최신 10-Q(2026-08-31 분기)가 들어왔다. 지금 Oracle ⑨ 판단은 게이트 2(최근 1년 잉여현금흐름) 마이너스, 게이트 3(버티는 기간) 약 1.3년으로 한 칸 하향되어 -3 이다.",
+      "condition": "다음 10-Q(2026-11-30 분기)까지 받아 최근 1년 잉여현금흐름의 추세를 판정할 수 있을 때.",
+      "deadline": "2026-12-20",
+      "evidence_ids": [
+        "EV-oracle-003"
+      ],
+      "source_ids": [
+        "SRC-EDGAR-000119312526389274"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F9"
+        ],
+        "what": "추세 입력을 채우고 게이트 판정을 다시 확인한다. Oracle 은 잉여현금흐름이 마이너스라 점수는 버티는 기간과 약정 커버리지가 정하고, 추세 입력은 판단 기록을 채우는 의미가 크다(추론)."
+      }
+    },
+    {
+      "trigger_id": "TRG-025",
+      "company_id": "alibaba",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "observation": "2026-09-21~23 알리바바가 자체 AI 가속기(Zhenwu V900)를 공개했고, 10조 파라미터 Qwen 모델과 2032년까지 20GW 데이터센터 계획이 함께 보도됐다. 셋 다 공개·계획 단계라 별표 D(계획·발표는 현재 점수에 넣지 않는다)에 따라 지금 점수 근거가 아니다.",
+      "condition": "칩이 자사 데이터센터에 배치되거나 외부에 팔린 사실(출하)이 공시나 1차 발표로 확인되거나, 10조 파라미터 모델이 실제로 출시되어 제3자 독립 측정치(Artificial Analysis Index·ARC-AGI 등)가 나오면 다시 본다.",
+      "deadline": "2027-03-31",
+      "evidence_ids": [
+        "EV-alibaba-007"
+      ],
+      "source_ids": [
+        "SRC-NEWS-alibaba-20260921-1cbebf5f",
+        "SRC-NEWS-alibaba-20260921-dd55dc76"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2",
+          "F4"
+        ],
+        "what": "알리바바 ④ 판단(지금 4점, 클라우드 성장·AI 제품·해외 데이터센터로 폭을 셈)에 자체 칩 출하를 수직계열화 근거로 더할지, 알리바바 ② 판단(지금 4점, 프론티어 미달로 적음)의 성능 경로를 독립 측정치로 다시 판정할지."
+      }
+    },
+    {
+      "trigger_id": "TRG-026",
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "observation": "중국 당국이 ByteDance·알리바바의 NVIDIA RTX Pro 5500 구매 허용을 검토한다는 The Information 보도를 Reuters 가 전했다. 검토 단계의 보도다.",
+      "condition": "중국 쪽 구매 허가와 미국 쪽 수출 허가가 모두 확정되고, 알리바바가 실제로 사들였다는 사실이 확인되면 다시 본다.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-alibaba-20260928-906e333e"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F8"
+        ],
+        "what": "알리바바 ⑧ 판단(지금 -4)의 근거인 양방향 지정학, 곧 미국의 첨단 칩 금수와 중국의 자국 모델 해외 접근 제한이 그대로인지, 칩 조달 길이 열려 의존이 덜 치우쳤는지."
+      }
+    },
+    {
+      "trigger_id": "TRG-027",
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "observation": "알리바바 클라우드가 핀란드·네덜란드·터키에 리전을 새로 열고 유럽·중동에 데이터센터를 더한다는 계획이 보도됐고, 게임 자회사 Lingxi Games 를 $2B 넘게 받고 판다는 소식통 보도가 있다. 리전은 계획, 매각은 소식통 단계다.",
+      "condition": "새 리전이 상용 서비스를 시작하거나 해외 클라우드 매출이 공시되면, 또는 게임 사업 매각 완료가 공시되면 다시 본다.",
+      "deadline": "2027-06-30",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-alibaba-20260817-6de25302",
+        "SRC-NEWS-alibaba-20260922-544642a0",
+        "SRC-NEWS-alibaba-20260923-9cfa5261"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4"
+        ],
+        "what": "알리바바 ④ 판단(지금 4점)이 센 사업 부문과 해외 배치(브라질·프랑스·네덜란드 데이터센터)에 새 리전이 더해지는지, 게임 사업이 빠지면서 사업 폭이 줄어드는지. 네덜란드는 판단에 이미 있으므로 중복을 가린다."
+      }
+    },
+    {
+      "trigger_id": "TRG-028",
+      "company_id": "palantir",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "observation": "영국 NHS 연합 데이터 플랫폼(팔란티어 운영)에 자기 데이터 처리를 거부하는 법적 이의 제기가 44,000건 넘게 접수됐고, 노동당 전당대회는 팔란티어 계약 취소 동의를 막았다는 보도가 있다.",
+      "condition": "영국 정부가 계약을 축소하거나 해지하면, 또는 이의 제기가 법원 판단으로 이어지면 다시 본다.",
+      "deadline": "2027-03-31",
+      "evidence_ids": [
+        "EV-palantir-007"
+      ],
+      "source_ids": [
+        "SRC-NEWS-palantir-20260928-1a4e9e5d",
+        "SRC-NEWS-palantir-20261001-5df9629b"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5",
+          "F8"
+        ],
+        "what": "팔란티어 ⑤ 판단(동맹 등급 +1, 적대 등급 -2 구조형으로 2점)의 적대 근거에 영국 전선을 더해 다발형 요건에 닿는지, 그리고 계약이 끊길 경우 팔란티어 ⑧ 판단(지금 -3, 정부 계약 의존)에 정부 계약 상실이 실현된 사례로 넣을지. 같은 사건을 ⑤ 에서는 적대의 성격으로, ⑧ 에서는 매출이 끊기는 의존으로 한 번씩만 센다."
+      }
+    },
+    {
+      "trigger_id": "TRG-029",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "observation": "유럽 노조·인권단체의 정부 계약 철회 요구(2026-09-28), 영국 경찰 다섯 곳의 팔란티어 프로젝트 종료(2026-09-21), 미국 간호사들의 ICE 연계 항의 시위(2026-10-01)가 같은 시기에 보도됐다. 실제 종료가 보도된 것은 영국 경찰 건이고 나머지는 요구·시위다.",
+      "condition": "두 개 이상 지역에서 정부·상업 고객의 실제 계약 해지가 동시에 확인되고, 최대 파트너인 미 정부와의 긴장도 나타나면 다발형 요건을 대 본다.",
+      "deadline": "2027-03-31",
+      "evidence_ids": [
+        "EV-palantir-005",
+        "EV-palantir-004",
+        "EV-palantir-006"
+      ],
+      "source_ids": [
+        "SRC-NEWS-palantir-20260921-b2794839",
+        "SRC-NEWS-palantir-20260928-5212f73d",
+        "SRC-NEWS-palantir-20261001-a9fde893"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "팔란티어 ⑤ 판단의 적대 등급이 구조형(사업 정당성을 겨냥한 적대)에 머무는지, 다발형의 두 요건(구조형 적대가 복수 전선에서 동시 진행, 최대 파트너와도 긴장)에 모두 닿는지."
+      }
+    },
+    {
+      "trigger_id": "TRG-030",
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "observation": "테슬라 Optimus 가 5,000대 주문을 확보했다는 2차 매체 보도(Moomoo, 2026-09-17)가 있다. 주문은 수주이지 출하가 아니다.",
+      "condition": "Optimus 의 외부 고객 인도나 공장 배치 대수가 공시나 1차 발표로 확인되면 다시 본다.",
+      "deadline": "2027-03-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-tesla-20260917-7f2fe1d1"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4"
+        ],
+        "what": "테슬라 ④ 판단(지금 4점)이 Optimus 를 폭에 넣으면서 단 단서, 곧 'Optimus 는 아직 배치되지 않았다'(긴장 #6: 배치 전 사업을 폭에 넣은 미해결 쟁점)가 풀렸는지."
+      }
+    },
+    {
+      "trigger_id": "TRG-031",
+      "company_id": "tesla",
+      "factors": [
+        "F3",
+        "F5"
+      ],
+      "observation": "독일이 테슬라 FSD(감독형 자율주행)의 EU 승인 표결을 12월로 확인했다는 보도, 안전단체가 EU 에 거부를 요구했다는 보도, 크로아티아가 FSD 를 승인했다는 보도가 같은 주에 나왔다.",
+      "condition": "EU 표결 결과가 나오면 다시 본다.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [
+        "EV-tesla-004"
+      ],
+      "source_ids": [
+        "SRC-NEWS-tesla-20260929-0ff6ba75",
+        "SRC-NEWS-tesla-20260929-7296a9d2",
+        "SRC-NEWS-tesla-20260929-79b72b41"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F3",
+          "F5"
+        ],
+        "what": "테슬라 ⑤ 판단(동맹 등급 0, 적대 등급 -1 비용형으로 2점)의 규제 적대가 비용형에 머무는지(승인이 거부돼도 차량 판매는 계속된다), 그리고 테슬라 ③ 판단(지금 3점, 후발 가속도는 FSD 구독 148만·+56% 로 이미 통과)의 가속도 근거가 유럽으로 넓어지는지."
+      }
+    },
+    {
+      "trigger_id": "TRG-032",
+      "company_id": "tesla",
+      "factors": [
+        "F9"
+      ],
+      "observation": "2026-09-29 테슬라가 신용계약 체결을 8-K 로 공시했다(Item 1.01 중요 계약 체결, 1.02 기존 계약 종료, 2.03 직접 금융 채무 발생). 2분기 잉여현금흐름이 적자로 돌았다는 보도도 있다.",
+      "condition": "3분기 10-Q 에서 최근 1년 잉여현금흐름의 부호와 새 신용 한도의 인출 여부가 확인되면 다시 본다.",
+      "deadline": "2026-11-15",
+      "evidence_ids": [
+        "EV-tesla-003",
+        "EV-tesla-001"
+      ],
+      "source_ids": [
+        "SRC-EDGAR-000162828026049270",
+        "SRC-EDGAR-000162828026063820"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F9"
+        ],
+        "what": "테슬라 ⑨ 판단(지금 -1, 게이트 1·2 통과에 추세 악화)이 게이트 2(최근 1년 잉여현금흐름이 마이너스인가)를 계속 통과하는지. 마이너스로 돌아 게이트 3(완충으로 버티는 기간)으로 내려가면, 새 한도 가운데 확정 미인출분을 완충(현금 + 확정 미인출 여신)에 넣어 런웨이를 계산한다."
+      }
+    },
+    {
+      "trigger_id": "TRG-033",
+      "company_id": "spacex-xai",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "observation": "Anthropic 이 SpaceX 에 낼 컴퓨트 계약 총액이 최대 $84.5B 로 보도됐고(Anthropic 상장 신고서 인용), Google 이 xAI 데이터센터 컴퓨트에 매달 $920M 을 낸다는 보도가 있다.",
+      "condition": "다음 10-Q 에서 두 고객의 매출 비중이나 고객 집중 공시가 확인되면 다시 본다.",
+      "deadline": "2026-11-16",
+      "evidence_ids": [
+        "EV-spacex-xai-008",
+        "EV-spacex-xai-001"
+      ],
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20260605-203712fc",
+        "SRC-NEWS-spacex-xai-20260930-855edb41"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F7",
+          "F8"
+        ],
+        "what": "스페이스X ⑦ 판단(지금 0점, 조달 의존 고객 비중 작음·내 돈 환류 없음)의 조달 의존 고객 비중. 투자 유치로 대금을 내는 적자 고객 Anthropic 의 비중이 크면 '큼' 쪽으로 본다. Google 은 자기 영업이익으로 내는 고객이라 이 축에 들지 않는다. 함께 스페이스X ⑧ 판단(지금 -3)에 고객 집중 항목을 더할지 본다."
+      }
+    },
+    {
+      "trigger_id": "TRG-034",
+      "company_id": "spacex-xai",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "observation": "Starship 이 처음 궤도에 올랐고, 우주 데이터센터 위성 100만 기를 겨냥한 $100B 규모 발사장 투자 계획과 Google 의 궤도 AI 시험 발사 예약이 보도됐다. 궤도 비행은 실측이고 우주 데이터센터는 계획이다.",
+      "condition": "궤도 데이터센터가 실제로 컴퓨트를 제공하고 매출이 생기면 다시 본다.",
+      "deadline": "2027-09-30",
+      "evidence_ids": [
+        "EV-spacex-xai-007"
+      ],
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20260925-c55fd45d",
+        "SRC-NEWS-spacex-xai-20260925-e95e4ee1",
+        "SRC-NEWS-spacex-xai-20260928-504eea45"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2"
+        ],
+        "what": "스페이스X ② 판단(지금 4점, 성능·적응 두 경로)이 '궤도 데이터센터가 실현되기 전까지 로켓은 ② 가 아니라 ④ 에서만 센다' 고 단 조건이 풀렸는지."
+      }
+    },
+    {
+      "trigger_id": "TRG-035",
+      "company_id": "spacex-xai",
+      "factors": [
+        "F1"
+      ],
+      "observation": "SpaceXAI 가 Grok·X 사용자 대상 4단계 요금제를 검토한다는 Bloomberg 보도가 있다. 검토 단계라 지금 근거가 아니다.",
+      "condition": "요금제가 시행되고, 인상 뒤 가입자 수나 이탈 수치가 나오면 다시 본다.",
+      "deadline": "2027-03-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20260930-61e3d191"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1"
+        ],
+        "what": "스페이스X ① 판단(지금 3점, Starlink 는 가격 결정력이 있으나 사용자 간 연결이 약하고 X 는 이탈·수익화가 약함)에서 X·Grok 소비자 채널이 가격을 올려도 사용자가 남는지(① 의 판별 질문)."
+      }
+    },
+    {
+      "trigger_id": "TRG-036",
+      "company_id": "anthropic",
+      "factors": [
+        "F6",
+        "F8",
+        "F9"
+      ],
+      "observation": "Anthropic 이 상장 신청서(S-1)를 비공개로 제출했고, 그 내용(손익·약정·파트너 의존)이 2026-09-29~30 여러 매체에 유출 보도됐다. 공개 제출본은 아직 없고, 11월 상장 가능성 보도가 있다.",
+      "condition": "S-1 이 EDGAR(미 증권거래위원회 공시 시스템)에 공개 제출되거나 상장이 확정되면 다시 본다. ⑥(현재 가격의 정도)은 비상장 계산(밸류÷최근 1년 보정 매출)에서 상장사 계산(PER·EV/매출·매출 성장과 입력 신뢰도)으로 옮길지 정한다. ⑨(적자 깊이)는 지금 판정 보류인 게이트 1(본업이 버는가 — 최근 1년 영업이익)과 미공시로 처리한 게이트 2(최근 1년 잉여현금흐름)를 공개 손익·현금흐름으로 판정한다. ⑧(비대칭 의존)의 약정÷매출과 ⑨ 게이트 4(약정 커버리지 — 앞으로 내기로 한 약정을 버는 돈이 덮는가)는 약정 규모를 원문과 대조한다.",
+      "deadline": "2026-11-30",
+      "evidence_ids": [
+        "EV-anthropic-004",
+        "EV-anthropic-003"
+      ],
+      "source_ids": [
+        "SRC-NEWS-anthropic-20260929-6463f068",
+        "SRC-NEWS-anthropic-20260929-c5aa93f0",
+        "SRC-NEWS-anthropic-20260930-7235967b"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F6",
+          "F8",
+          "F9"
+        ],
+        "what": "공개 S-1 의 매출·영업손익·잉여현금흐름·해지 불가 약정 규모와 상장 여부"
+      }
+    },
+    {
+      "trigger_id": "TRG-037",
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "observation": "미 항소법원이 국방부의 Anthropic 거래 배제를 유지했다(2026-09-25). 이후 CEO 와 대통령의 비공개 만찬이 보도됐다. Anthropic ⑤ 판단의 적대 등급은 선별 당시 0(최소)이었고, 이번 실행에서 사람이 반영한 제안 PRP-001 로 -1(비용형)이 됐다.",
+      "condition": "배제 해제(비용형 근거가 약해진다) 또는 배제가 연방 조달 전반으로 넓어진 것(구조형 검토)이 확인되면 ⑤(아군과 적대)의 적대 등급을 다시 판정한다. 배제가 정부 시장 일부에 머물면 비용형(사업 구조는 건드리지 않는 적대), 사업의 정당성을 겨냥하면 구조형이다. 국방부 계약은 동맹 등급에서 4사 공통이라 변별력 없음으로 처리돼 있어 함께 확인한다.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [
+        "EV-anthropic-002"
+      ],
+      "source_ids": [
+        "SRC-NEWS-anthropic-20260925-86310879",
+        "SRC-NEWS-anthropic-20260928-2d95d4f7"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "국방부 배제의 범위·지속 여부와 그 성격(비용형인지 구조형인지)"
+      }
+    },
+    {
+      "trigger_id": "TRG-038",
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "observation": "FTC(미 연방거래위원회)가 Anthropic·OpenAI 등을 상대로 소비자 위해 조사를 열었다는 보도가 2026-09-30 쏟아졌다.",
+      "condition": "FTC 가 민사조사명령·제소·동의명령 같은 처분 단계로 나아가면 그 성격으로 Anthropic ⑤(아군과 적대)의 적대 등급을 다시 본다. 벌금·개별 제재에 그치면 비용형(사업 구조는 건드리지 않는 적대), 판매 제한처럼 사업 구조를 건드리면 구조형이다.",
+      "deadline": "2027-03-31",
+      "evidence_ids": [
+        "EV-anthropic-006"
+      ],
+      "source_ids": [
+        "SRC-NEWS-anthropic-20260930-a02b29dc"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "FTC 조사의 처분 단계와 사업 구조 제한 여부"
+      }
+    },
+    {
+      "trigger_id": "TRG-039",
+      "company_id": "openai",
+      "factors": [
+        "F6",
+        "F9"
+      ],
+      "observation": "Bloomberg 가 OpenAI 의 기업가치 $1.4T 기준 $30B 조달 추진을 보도했다(협상 단계). 같은 날 FT 는 Altman 이 안전 문제가 풀릴 때까지 상장을 미룬다고 보도했다. ARR(연간 반복 매출)이 $70B 에 가깝다는 Axios 보도도 있다.",
+      "condition": "조달 라운드가 확정 밸류로 마감되면 ⑥(현재 가격의 정도)의 분자(지금 post-money $852B)와 분모(최근 1년 보정 매출)를 함께 다시 계산하고, ⑨(적자 깊이)의 완충(현금과 확정 미인출 여신)에 새 조달 현금이 들어오는지 다시 본다.",
+      "deadline": "2026-12-31",
+      "evidence_ids": [
+        "EV-openai-002"
+      ],
+      "source_ids": [
+        "SRC-NEWS-openai-20260929-6afb4340",
+        "SRC-NEWS-openai-20260929-f0a15dfe",
+        "SRC-NEWS-openai-20260929-f6ef918f"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F6",
+          "F9"
+        ],
+        "what": "확정 post-money 밸류와 실제로 거둔 매출"
+      }
+    },
+    {
+      "trigger_id": "TRG-040",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "observation": "OpenAI 가 GPT-6.1 Sol 을 출시했고, 상위 모델 GPT-6.1 Astra 는 안전 문제로 출시를 접었다(학습 중단 보도 포함). OpenAI ② 판단은 성능 도약·패러다임 적응 두 경로 통과로 4점이다.",
+      "condition": "Artificial Analysis·ARC Prize 같은 독립 측정에 Sol 결과가 같은 하네스로 실리거나 Astra 가 출시되면 ②(게임체인저)의 경로 판정 — 성능 도약(세대 격차 수준인지 포함)과 패러다임 적응(출시 속도) — 을 다시 본다.",
+      "deadline": "2026-11-30",
+      "evidence_ids": [
+        "EV-openai-003",
+        "EV-openai-001"
+      ],
+      "source_ids": [
+        "SRC-NEWS-openai-20260928-55a96228",
+        "SRC-NEWS-openai-20260929-33642c17"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2"
+        ],
+        "what": "Sol 의 독립 측정 결과(같은 하네스)와 Astra 출시 여부"
+      }
+    }
+  ]
+}
