@@ -7,20 +7,19 @@
 - [x] SDLLMTK 를 TODO 13번으로(`ccd3816`)
 
 ## 1. 수집
-- [ ] collect (news·filings·prices)
-- [ ] 후보 선별
+- [x] init 다시 함(price_as_of 2026-10-05, info_cutoff 2026-10-06)
+- [x] collect (news·filings·prices) — 가격 12사 10-05 종가, 공시 12사(anthropic·openai CIK 없음)
+- [x] 후보 선별(근거 34건 candidate) — 서브에이전트 5개(A nvidia·tsmc·apple / B alphabet·amazon·microsoft / C meta·oracle·palantir / D anthropic·openai / E alibaba·tesla·spacex-xai)가 스크래치 `work/out-<그룹>.json` 으로 냄. 공통 지시서 `work/INSTRUCTIONS.md`, 합치기 `merge_outputs.py`(새 항목 TRG-041~). 대상: 뉴스 10-01~10-06, 공시 09-02~10-06
 
 ## 2. 트리거
-- [ ] trigger-candidates 확인
-- [ ] 시험 실행 40건 carry·결론
-- [ ] 기준선 관찰 유지 15건 새 항목
-- [ ] 기준선 중복 철회 19건(12 + 7)
-- [ ] 날짜 경과 2건(011, 031*), 철회 3건(002, 030, 038)
-- [ ] `*` 건(004, 006, 031) 발동 여부 판정
-- [ ] trigger_carry_gaps 0건, overdue 0건 확인
+- [x] 79항목 반영(관찰 56, 철회 22, 만료 1, 발동 0). 기준선에서 만든 항목은 TRG-041~079(대응은 스크래치 `work/trigger-id-mapping.json`)
+- [x] `*` 건: 004·006·031 모두 확인 못 해 watching(031 은 기한 11-06)
+- [x] research 통과(gaps 0, overdue 0)
 
 ## 3. 계산·초안
-- [ ] research → calculate → draft
+- [x] calculate — TSMC ⑥ −3→−5, Oracle ⑥ −2→−3(가격 갱신으로 P1 경계 통과). 나머지 12사 동일
+- [ ] Oracle·Alibaba 재무 관측 갱신 여부(사용자 결정 대기)
+- [ ] draft
 
 ## 4. 리뷰
 - [ ] 1차 리뷰(4 영역 + Q01~Q23)

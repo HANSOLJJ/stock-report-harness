@@ -1,0 +1,129 @@
+{
+  "schema": "scorecard.run/1",
+  "run_id": "ai-scorecard-2026-10-rescore",
+  "report_type": "ai_scorecard",
+  "title": "2026-10 정기 재채점",
+  "as_of": "2026-10-06",
+  "price_as_of": "2026-10-05",
+  "info_cutoff": "2026-10-06",
+  "rule_version": "v1.8",
+  "rule_hash": "7e215b55c516cca4ccf0ce4d6d1d0a94014b4ecaf01f3bc523127f29009c59c4",
+  "baseline_id": "v1.5",
+  "companies": [
+    "alphabet",
+    "amazon",
+    "meta",
+    "microsoft",
+    "tsmc",
+    "alibaba",
+    "anthropic",
+    "apple",
+    "nvidia",
+    "palantir",
+    "spacex-xai",
+    "tesla",
+    "oracle",
+    "openai"
+  ],
+  "reference_companies": [],
+  "decisions": [
+    {
+      "id": "C-05",
+      "choice": "apply",
+      "rationale": "G1 실패 뒤 G3·G4 를 실제로 적용한다. 설계진행 2026-09-11 확정.",
+      "decided_by": "설계진행",
+      "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-06",
+      "choice": "proposed_v15_boundaries",
+      "rationale": "G1 밴드를 -2/-3/-4 로 재척도하고 floor -4, bep_retreat -4, buffer_erosion_min -3, relief_cap -2 로 둔다. 함정 재배분 -18 보존. 스텝 값은 그대로. 설계진행 2026-09-11 확정.",
+      "decided_by": "설계진행",
+      "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-16",
+      "choice": "downgrade",
+      "rationale": "확인된 미공시(not_disclosed_confirmed)로 G4 가 판정 불가면 한 칸 내린다. G2 가 이미 g2_private_not_disclosed -2 로 같은 성질을 벌하고 있어 G4 에서 안 벌하면 규칙이 어긋난다. hold 는 공시하고 커버리지가 나쁜 쪽만 깎고 아예 안 하는 쪽은 안 깎아 불투명을 보상한다. MISS-LABEL-23 이 _g4 를 not_disclosed_confirmed 하나만 C-16 으로 보내게 만든 뒤라 근거 없는 감점이 생기지 않는다. 설계진행 2026-09-11 확정(1d39409).",
+      "decided_by": "설계진행",
+      "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-12",
+      "choice": "p2_with_capped_promotion",
+      "rationale": "비상장 F6 는 P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다. P2 는 밸류÷TTM 보정 매출에 v1.5 비상장 구간표를 그대로 쓰고, 보정은 ARR 성장률 0.30 이상과 자본효율 0.50 이상을 둘 다 요구한다. 결과가 v1.5 발표 점수와 같다는 약점을 규칙 파일 private_correction.weakness 에 적어 두었다. 설계진행 2026-09-11 사용자 확정(d57e70e).",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-20",
+      "choice": "defer_to_private_g2",
+      "rationale": "비상장이고 TTM 영업손익이 구조적 미공시면 G1 을 통과시키지 않고 판정 보류로 둔 뒤 G2 비상장 경로로 보낸다. 단일 분기 영업흑자를 통과 근거로 쓰지 않고, 동시에 F9 를 영구 미완료로도 두지 않는다. 설계진행 2026-09-11 사용자 확정(d57e70e).",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-11"
+    },
+    {
+      "id": "C-03",
+      "choice": "paths_with_generation_gap_5",
+      "rationale": "F2 경로 수 0·1·2 → 2·3·4, 성능 도약이 세대 격차 수준이면 5(혼합 모델). 규칙 v1.7 decisions C-03 resolved 를 실행 단위로 옮긴다. 14개사 F2 는 승계 score 판단이라 이 선택으로 점수가 바뀌지 않는다 — 세대 격차는 판단 입력이라 경로 판정이 들어올 때 compute_f2 가 이 선택으로 산출한다. FIX-52.",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-14"
+    },
+    {
+      "id": "C-11",
+      "choice": "block_carryover",
+      "rationale": "영업외 비중은 F6 P4 전용이고 ⑦ 로 이월하지 않는다. 규칙 v1.7 decisions C-11 resolved 를 실행 단위로 옮긴다. 이 선택을 읽는 코드 분기는 없다 — F7 엔진은 두 축만 읽어 원래 이월 경로가 없다. 결정자는 규칙과 같게 사용자 확인 전이다. FIX-52.",
+      "decided_by": "설계진행 제안 · 사용자 확인 전",
+      "decided_at": "2026-09-14"
+    },
+    {
+      "id": "C-13",
+      "choice": "reject_proxy",
+      "rationale": "근사 NTM PER 을 받지 않는다. **bands 모드에서만 효력이 있다** — 이 실행은 v1.7 parameters 모드라 calc_f6 가 per-band 경로에 들어가지 않고 NTM 을 점수에 쓰지 않으므로 결과에 영향이 없다. 규칙 v1.7 decisions C-13 resolved 를 실행 단위로 옮긴다. FIX-52.",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-14"
+    },
+    {
+      "id": "C-24",
+      "choice": "compute_p2_when_inputs_exist",
+      "rationale": "신규 상장 트랙도 입력이 성립하면 P2 를 계산한다. 상장사 열두 곳에 같은 잣대를 대는 쪽이다. spacex-xai 는 P2 80.27(밴드 -2)이 붙어 F6 -1 → -3, 총점 11 → 9 가 된다. 규칙 v1.7 decisions C-24 를 실행 단위로 옮긴다. FIX-56 1단계.",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-16"
+    },
+    {
+      "id": "C-28",
+      "choice": "optional_parameters_for_all_listed_tracks",
+      "rationale": "순손실 상장사의 F6 경로를 세 트랙에서 같게 한다 — `listed_ttm`·`listed_annual` 도 P1 을 선택 파라미터로 두어 순이익이 음수면 P1 을 만들지 않고 P2·P3 로 소계를 낸다. 사유는 `requires_positive` 하나로 좁혔다(결측은 예전처럼 pending). 규칙 v1.7 decisions C-28 resolved 를 실행 단위로 옮긴다. 이번 실행 11개사는 순이익이 전부 양수라 점수 불변. FIX-61.",
+      "decided_by": "obsreg 9차 재무 계산 재판정(Claude 독립 세션) 지적 · 설계진행 지시",
+      "decided_at": "2026-09-17"
+    },
+    {
+      "id": "C-29",
+      "choice": "c20_private_route_first",
+      "rationale": "비상장이고 영업손익이 구조적 미공시면 BEP 후퇴가 기록돼 있어도 C-20 비상장 경로로 보낸다. **앞선 결정(FIX-59 의 bep_retreat 우선)을 뒤집은 것이다.** 근거는 판정 둘(비 Claude Gemini 독립 세션의 `C-20 우선` · 9차 재무 계산 재판정의 Q11 fail)과 별표 D 388~390행이다. openai F9 -4 → -2, 총점 2 → 4. 규칙 v1.7 decisions C-29 를 실행 단위로 옮긴다. FIX-62.",
+      "decided_by": "사용자",
+      "decided_at": "2026-09-17"
+    }
+  ],
+  "created_at": "2026-10-06",
+  "purpose": "근거 계층과 판단 수정 흐름을 실제 자료로 끝까지 시험",
+  "assumptions": [
+    "이전 실행 ai-scorecard-2026-10-test 의 관측·판단·출처를 그대로 이어받았다(observations 979b7e527f73…, judgments 103a5ca22afb…). 이어받은 항목은 이번 실행에서 재검증되지 않았다",
+    "이번 실행은 기업을 더하지 않았고 이전 실행의 입력을 그대로 쓴다",
+    "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)"
+  ],
+  "continued_from": {
+    "run_id": "ai-scorecard-2026-10-test",
+    "as_of": "2026-10-01",
+    "rule_hash": "7e215b55c516cca4ccf0ce4d6d1d0a94014b4ecaf01f3bc523127f29009c59c4",
+    "hashes": {
+      "run": "b4e0ab8530d9c0e55ba4353a72cc3ba0ba0ad39c3896d07584d3d24ec968c592",
+      "observations": "979b7e527f73e9eddf310e13f6968fcf6043b29be94fca84d7340cfd570faa31",
+      "judgments": "103a5ca22afbe70f72f3e5f7fb5ef9f75e0be54481cbb861a0a8321908dd4468",
+      "sources": "1e574216ce01e7eff23fb8d8d94c51eeeafe34444070cb873afe9003b073b58b"
+    },
+    "results_hash": "d82fcfa1fa3148cec2e6df63765ab0c7fb724fd8f12095fc5fd1a00de8d69bd2",
+    "approval_id": "63afbc89a65676ae",
+    "added_companies": []
+  }
+}
