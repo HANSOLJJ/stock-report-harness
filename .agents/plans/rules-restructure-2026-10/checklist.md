@@ -75,7 +75,7 @@
 - [x] `score-plan` 3단계, `score-research` 2단계의 낡은 문구
 - [x] `score-collect` 의 별표 인용과 문서 경로
 - [x] `.agents/skills` 사본 갱신, `diff -rq .agents/skills .claude/skills` 빈 출력
-- [x] `.codex/agents/fact-checker.toml` 의 이해상충 점검 줄을 `.claude/agents/fact-checker.md` 와 맞춤(10-02 에 빠뜨림, gitignore 대상)
+- [x] `.codex/agents/fact-checker.toml` 의 이해상충 점검 줄을 `.claude/agents/fact-checker.md` 와 맞춤(10-02 에 빠뜨림. 추적되는 파일이라 11단계 커밋에 넣음)
 
 ## 8. 옛 문서 삭제
 

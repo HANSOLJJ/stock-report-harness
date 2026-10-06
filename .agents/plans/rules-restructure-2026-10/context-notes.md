@@ -202,4 +202,9 @@ HANDOVER·구현계획·채점표 v1.5 에서 살리기로 한 것의 자리: �
 
 - 스킬 다섯 개를 고쳤다. `score-plan` 3단계(기준선 이관 → 이관돼 있으니 다시 하지 않는다), `score-research` 2단계(NTM EPS `quarters` → 기간 지표의 `period_basis`), `score-collect`(문서 경로와 별표 인용 다섯 곳, 새 문장에 별표 이름을 쓰지 않는다는 줄), `score-goal` 5번(확인 리뷰 한 번, 판단 입력이 원인이면 "제안 반영 대기"에서 멈춤), `score-review`(절차 4번과 `blocked` 정의). 확인 리뷰의 범위를 자세히 정하는 일은 `TODO.md` 7번이다.
 - 다섯 파일을 `.agents/skills/` 에 복사했고 `diff -rq .agents/skills .claude/skills` 가 빈 출력이다.
-- **10-02 에 빠뜨린 것을 찾았다.** `.codex/agents/fact-checker.toml` 에 이해상충 점검 줄이 남아 있었다. `.claude/agents/fact-checker.md` 만 고치고 Codex 사본을 고치지 않았기 때문이다. 같은 줄로 맞췄다. `.codex/` 는 gitignore 대상이라 커밋에 남지 않는다. 앞으로 리뷰어 정의를 고칠 때는 `.codex/agents/*.toml` 도 함께 본다.
+- **10-02 에 빠뜨린 것을 찾았다.** `.codex/agents/fact-checker.toml` 에 이해상충 점검 줄이 남아 있었다. `.claude/agents/fact-checker.md` 만 고치고 Codex 사본을 고치지 않았기 때문이다. 같은 줄로 맞췄다. 앞으로 리뷰어 정의를 고칠 때는 `.codex/agents/*.toml` 도 함께 본다. (정정: 처음에 `.codex/` 가 gitignore 대상이라 커밋에 남지 않는다고 적었으나, `.codex/agents/*.toml` 과 `hooks.json` 은 gitignore 이전부터 추적되던 파일이라 커밋된다. 11단계 정리 커밋에 함께 넣었다.)
+
+## 10·11단계 (2026-10-06)
+
+- **10단계에서 실수가 있었다.** 지운 838개 가운데 원자료 폴더를 git 에서 빼 두던 `.gitignore` 네 개(`f6-avail-15`, `f6-spec-18`, `f6h-feasibility-08`, `priv-arr-17`)가 섞여 있었다. 지울 목록을 "`/_raw/` 아래가 아닌 추적 파일 전부"로 만들면서 폴더의 `.gitignore` 를 원자료의 일부로 보지 못했다. 그 결과 gitignore 대상이던 원자료가 미추적 파일로 드러났다. 직전 커밋에서 네 파일을 되살렸고 원자료가 다시 무시되는 것을 확인했다. 원자료 자체는 지워지지 않았다(`git rm` 은 추적 파일만 지운다).
+- 11단계 전수 검색에서 고칠 곳 두 개(승인 페이지 주석, 평가 표본 설명)를 고쳤다. `README.md` 는 사용자가 「이해상충」「작업공간과 브랜치」 절을 지우며 편집 중이라 손대지 않고 기다린다.
