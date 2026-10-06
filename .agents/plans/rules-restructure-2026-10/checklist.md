@@ -51,10 +51,10 @@
 
 ## 5. structure.md · guide.md 정리
 
-- [ ] D-01~D-10, T-01~T-20 표를 `structure.md` 로 이동, 수용 기준의 현행·구버전 구분(T-01, T-10)
-- [ ] 머리말 경위, 1절 비교표, 낡은 결정 표, 실측 기록 정리
-- [ ] HANDOVER 7절 내용을 `guide.md` 로 이동, 3행 경로 수정
-- [ ] `tests/test_scorecard_fix54_code.py` 통과
+- [x] D-01~D-10, T-01~T-20 표를 `structure.md` 로 이동, 수용 기준의 현행·구버전 구분(T-01·T-03·T-06·T-10, T-20 은 종목 리포트 제거 반영)
+- [x] 머리말 경위, 1절 비교표, 낡은 결정 표, 실측 기록 정리. 자료 상태 표(design-guideline 7.2)를 실제 상태 이름에 맞춰 2절에 넣음
+- [x] HANDOVER 7절 내용을 `guide.md` 6절로 이동, 3행 경로 수정
+- [x] `tests/test_scorecard_fix54_code.py` 통과
 
 ## 6. 코드·테스트 수정
 
