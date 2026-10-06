@@ -148,11 +148,14 @@ test('승인 모드 활성화: GET /approve/<run_id> → 200 및 요약 필드 �
     assert.match(res.body, /class="ev-card[^"]*" data-group="nvidia"/, '근거는 기업별 카드');
     assert.match(res.body, /고른 이유<\/dt><dd>추론: Blackwell/, '근거의 고른 이유가 보여야 함');
     // 2026-10-01 사용자 요청: 규칙 용어는 참조표로, 판단 ID 는 기업·factor 이름과 판단 수정 화면으로 연결
-    assert.match(res.body, /<a class="term" href="#ref-star-F"[^>]*>별표 F<\/a>/);
+    // 2026-10-06 별표 이름 폐지: 옛 "별표 F" 는 새 이름으로 보이고, 새 이름으로 적힌 문장도 같은 풀이에 연결된다
+    assert.match(res.body, /<a class="term" href="#ref-star-F"[^>]*>② 세 경로 규칙<\/a>/);
+    assert.match(res.body, /<a class="term" href="#ref-star-H"[^>]*>⑤ 조달·동맹 네 질문<\/a>/);
+    assert.ok(!/별표 [A-J]/.test(res.body), '화면에 옛 별표 이름이 남지 않아야 함');
     assert.match(res.body, /<a class="term" href="#ref-P3"[^>]*>P3<\/a>/);
     assert.match(res.body, /<a class="term" href="#ref-G2"[^>]*>게이트 2<\/a>/);
     assert.match(res.body, /href="\/approve\/ai-scorecard-2026-11-x\?factor=F2&amp;company=nvidia#judge-form"[^>]*>NVIDIA ② 신기술 게임체인저 판단<\/a>/);
-    assert.match(res.body, /<dt id="ref-star-G">별표 G<\/dt>/, '참조표가 있어야 함');
+    assert.match(res.body, /<dt id="ref-star-G">⑤ 동맹·적대 등급 규칙<\/dt>/, '참조표가 있어야 함');
     assert.match(res.body, /예상 영향<\/dt>/);
     assert.match(res.body, /확인 못 한 것<\/dt>/);
     assert.match(res.body, /기업 발표/, '매체 성격은 한국어 이름');
