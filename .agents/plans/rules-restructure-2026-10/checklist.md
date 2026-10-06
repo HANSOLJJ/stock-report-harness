@@ -96,8 +96,9 @@
 
 ## 11. 최종 검증
 
-- [ ] Python·Node 전체 테스트
-- [ ] 승인 실행 두 개의 `validate_report_contract.py`
-- [ ] 지운 문서 경로·별표 이름·옛 행 번호 `rg` 전수 검색
-- [ ] 대체 장부 확인, `.agents/skills` 일치 재확인
+- [x] Python·Node 전체 테스트 (1254·21, 건너뜀 0)
+- [x] 승인 실행 두 개의 `validate_report_contract.py` (`2026-09-baseline` 은 수정 전부터 재계산 실패, 기록만)
+- [x] 지운 문서 경로·별표 이름 `rg` 전수 검색 (고칠 곳 두 개 고침, `README.md` 106·113·144행은 사용자 편집 중이라 대기)
+- [x] 대체 장부 확인, `.agents/skills` 일치 재확인
+- [ ] `README.md` 정리 (9단계, 사용자 편집과 겹쳐 대기)
 - [ ] 계획 폴더(`survey-*.md` 포함) 삭제
