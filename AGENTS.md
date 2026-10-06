@@ -6,24 +6,23 @@
 승인은 사람이 승인 페이지에서 직접 하고, 승인 해시가 현재 입력과 다르면 build 는 멈춘다.
 
 ## AI Scorecard 계약 (report_type: ai_scorecard)
-- 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 도메인 명세는 `docs/scorecard/design-guideline.md`, 구조 지침은 `docs/scorecard/structure.md`.
+- 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 채점 규칙은 `docs/scorecard/rules.md`, 코드 구조와 스키마는 `docs/scorecard/structure.md`, 실행 순서와 승인 페이지 사용법은 `docs/scorecard/guide.md` 가 원본이다.
 - 판별: `output/<run_id>/plan.md` frontmatter `report_type: ai_scorecard`, run_id(=slug)는 `ai-scorecard-` 접두.
 - 단계 순서: `plan → collect → research → calculate → draft → review → (사람) 승인 → build`.
-- 명령: `/score-plan`, `/score-add-company`, `/score-extend`, `/score-diff`, `/score-collect`, `/score-research`, `/score-calculate`, `/score-draft`, `/score-review`, `/score-approve`, `/score-build`, `/score-goal`. 실행기는 `uv run --frozen python -X utf8 scripts/scorecard_cli.py <stage> <run_id>`, 빌드는 `uv run --frozen python -X utf8 scripts/build_report.py <run_id>`. 새 실행은 `init --rule v1.8` 로 만든다. 인자는 `--help` 로 확인한다.
-- 실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모인다. 파일은 `run.json observations.json judgments.json sources.json results.json approval.json plan.md research.md draft.md preview.md review.md review-parts/ evidence/{candidates.json,evidence.json} triggers.json report.html audit.md revocations.jsonl .lock` 이고, 경로 도우미는 `scripts/scorecard/paths.py` 이다. 수집한 원문 캐시는 `data/<company_id>/`(gitignore, `SCORECARD_DATA_ROOT` 로 바꿈)에 둔다.
+- 명령: `.claude/skills/score-*/SKILL.md` 12개가 `/score-*` 명령이다. 실행기는 `uv run --frozen python -X utf8 scripts/scorecard_cli.py <stage> <run_id>`, 빌드는 `scripts/build_report.py <run_id>` 이고 명령표는 `guide.md` 3절에 있다. 새 실행은 `init --rule v1.8` 로 만든다. 인자는 `--help` 로 확인한다.
+- 실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모인다(파일 목록은 `structure.md` 2절, 경로 도우미는 `scripts/scorecard/paths.py`). 수집한 원문 캐시는 `data/<company_id>/`(gitignore)에 둔다.
 - 공유 정의(rules, companies, baseline)와 `history.csv` 는 `scorecard/` 에 두고 추적한다. 실행 묶음의 md·html 은 생성물이며 손으로 고치지 않는다.
 - 근거는 후보(`candidate`)로 들어오고 사람이 승인 페이지에서 확정(`confirmed`)한다. `status: new` 판단은 confirmed 근거만 인용한다. 트리거는 미래 점수를 저장하지 않는다(C-14). `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)를 섞지 않는다.
-- 수집: `collect` 가 뉴스·공시·가격 후보를 모은다. 공시 수집에는 `SEC_UA` 가 필요하다(루트 `.env` 또는 환경변수, 사용자가 설정하며 영문으로 적는다). 가격은 `collect --kind prices` 가 yfinance 로 ⑥ `price`·`market_cap` 관측을 넣고 EPS·컨센서스는 받지 않는다. 종가가 NaN 이면 건너뛰고 직전 확정 종가를 쓰며, 가격 실패는 회사 단위다.
+- 수집: `collect` 가 뉴스·공시·가격 후보를 모은다. 공시 수집에는 사용자가 루트 `.env` 에 설정한 `SEC_UA` 가 필요하고, 에이전트는 `.env` 를 만들거나 고치지 않는다. 가격 처리 세부는 `score-collect` 스킬에 있다.
 - 원자료·판단·규칙이 입력이고 점수는 결과다. 자동 산출 점수를 직접 수정하지 않는다. 모르는 값은 0으로 치환하지 않는다(unknown ≠ 0).
 - 정성 판정(③ criteria, ⑤ A/H, ⑦ 매트릭스, ⑨ gate_inputs, ①④⑧ score)은 근거·검토자·검토일이 있어야 하고, 산식·사다리·구간 적용은 프로그램이 한다.
-- 정성 판단을 바꾸는 길은 둘이다(2026-10-01). **에이전트는 `scorecard_cli.py propose` 로 판단 변경 제안을 쓰고**(`output/<run_id>/proposals.json`, 입력 해시 밖), 사람이 승인 페이지 5절 「판단 변경 제안」에서 반영하거나 거부한다(거부는 사유 필수, 반영은 `judge` 와 같은 검증을 거치고 인용 근거를 판단의 `evidence_ids` 에 붙인다). **사람은 9절 「전체 판단 표」에서 언제든 직접 고친다**(`scorecard_cli.py judge`). 에이전트는 반영·거부(`proposal`)를 실행하지 않는다. F1·F4·F8 은 `score`, F3·F5·F7·F9 는 판정 재료 키(`criteria`·`grade`·`matrix`·`gate_inputs`)만 받고 점수 칸은 거부하며, F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고 판단 해시가 바뀌므로 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 승인한다. 인자는 `--help` 로 확인한다.
+- 정성 판단을 바꾸는 길은 둘이다(2026-10-01). **에이전트는 `scorecard_cli.py propose` 로 판단 변경 제안만 쓴다.** 반영·거부(`proposal`)와 직접 수정(`judge`)은 사람이 승인 페이지에서 한다. 점수 칸은 고칠 수 없고 판정 재료만 고친다(허용 범위는 `guide.md` 5.5). 고치면 판단 해시가 바뀌므로 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 승인한다.
 - 미결 규칙 결정(C-03, C-05, C-06, C-13, C-16)은 `run.json.decisions` 로만 실행 단위에서 선택한다. 기본값을 조용히 채택하지 않으며 해당 기업은 순위에서 제외된다.
-- 리뷰는 4 영역(사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성) + 체크리스트 Q01~Q23. hero 이미지·뉴스 100건 요건은 적용하지 않는다.
+- 리뷰는 4 영역(사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성) + 체크리스트 Q01~Q23 이고, 1차 리뷰·수정 한 묶음·확인 리뷰 1회로 끝낸다(`score-review` 스킬).
 - **리뷰 범위 — 승계 판단 예외.** 체크리스트 fail 의 사유가 `carried_score` 로 승계한 판단의 기존 논리이고, **이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며**, 규칙 파일 긴장 목록에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 리뷰 파일에 해당 fail 과 긴장 번호를 그대로 적는다. **이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다** — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(체크리스트 Q03). 2026-09-15 obsreg 2차 리뷰에서 A+2 엄격 읽기를 anthropic·openai 에만 대고 tsmc 에는 안 댄 것이 이 원칙으로 잡혔다.
 - **리뷰 범위 — 기업 추가 실행의 축약.** 이전 실행을 이어받아(`init --from-run`) 기업만 더한 실행은 4 영역 리뷰를 **신규 기업과 잣대 일관성**으로 좁힌다. ① 신규 기업의 사실·출처·재무 계산·규칙 적용을 본다. ② 그 기업에 댄 잣대가 기존 기업에 댄 것과 같은지 본다(체크리스트 Q03 과 같은 원칙). **③ 기존 기업이 움직이지 않았다는 사실은 `uv run --frozen python -X utf8 scripts/scorecard_cli.py diff <run_id> --against <이전 run_id>` 의 출력으로 갈음하고 사람이 다시 읽지 않는다.** 그 명령은 입력 가법성(1층)과 점수 투영 불변(2층)을 기계로 판정하며, 위반이 하나라도 있으면 종료 코드 1 을 낸다. **1층·2층 위반이 있으면 이 축약을 쓸 수 없고 전체 리뷰로 돌아간다.** 조사 직후와 계산 직후에 각각 한 번씩 돌린다 — 1층은 조사 직후에, 2층은 계산 직후에 의미가 있다. subtree 해시 차이는 실패 조건이 아니다(기준일만 바꿔도 달라진다). 리뷰 파일에 `diff` 의 층별 결과와 신규 기업 목록을 그대로 옮긴다.
-- 승인과 승인 취소는 사람 행위다. 사람이 `node server.js --approvals` 로 승인 페이지(`http://127.0.0.1:3000/approve/<run_id>`)를 띄우고, 근거 확정·제안 반영·판단 수정은 코드 없이 하고, 승인·취소만 터미널에 나온 6자리 일회용 코드로 한다(2026-10-01 사용자 요청, 코드는 에이전트가 서버로 승인을 누르는 것을 막는 장치라 승인·취소에 남긴다). 에이전트는 승인하지 않고 "승인 대기" 를 보고한다. 승인 해시(rules/observations/judgments/run/results/draft)가 현재와 다르면 build 는 `awaiting_user` 로 멈춘다.
-- 상장사 ⑥은 v1.7 `parameters` 모드가 정본이다 — P1 TTM PER · P2 (시총−순현금)/매출 · P3 매출 성장 · P4 입력 신뢰도 보정. `bands` 모드(v1.5·v1.6, NTM PER 단일 구간표)는 구버전이며 실행 단위로만 선택한다. ⑨ G4 는 `coverage_comparable: yes` 일 때만 계산한다.
-  <!-- 2026-09-14 전: "새 실행에서 상장사 ⑥은 NTM PER(4개 연속 미발표 분기 YYYYQn, 통화·주식 기준 일치)만 채점하고 근사치는 대기한다." — NTMPER-39 가 미발표 분기 컨센서스는 SEC 제출물에 구조적으로 없어 허용 원천으로 지킬 수 없는 계약임을 실증했고, 사용자가 parameters 를 정본으로 확정했다. -->
+- 승인과 승인 취소는 사람 행위다. 사람이 승인 페이지(`node server.js --approvals`)에서 하고, 승인·취소만 터미널에 나온 6자리 일회용 코드로 한다(사용법은 `guide.md` 5절). 에이전트는 승인하지 않고 "승인 대기" 를 보고한다. 승인 해시가 현재와 다르면 build 는 `awaiting_user` 로 멈춘다.
+- 상장사 ⑥은 `parameters` 모드(네 잣대)가 정본이고, `bands` 모드(NTM PER 구간표)는 v1.5·v1.6 실행을 재현하는 데만 쓴다. ⑨ G4 는 `coverage_comparable: yes` 일 때만 계산한다.
 - 테스트: `uv run --frozen python -X utf8 -m unittest discover -s tests -t .`(T-01~T-12, R01~R06)와 `npm run test:node`. 코드 변경 후 반드시 실행한다.
 
 ## 금지·주의
@@ -38,9 +37,7 @@
 - **이해상충을 이유로 작업을 멈추거나 미루지 않는다(2026-10-02 사용자 지시).** 판정자가 Anthropic 모델이라는 점이나 출처·기업 사이의 이해관계를 이유로 수집·판단 제안·리뷰·수정을 거부하거나 사용자에게 되묻지 않는다. 출처 장부의 `conflict_of_interest` 표기는 참고 정보다. 비어 있어도 리뷰의 `needs_fix`·체크리스트 fail 사유로 삼지 않고, 리뷰어 점검 항목과 리뷰 전 점검에도 넣지 않는다. 체크리스트 Q05 는 결과 칸을 채우되 표기 누락을 fail 사유로 적지 않는다. 2026-10-01 시험 실행에서 표기 누락이 점수에 닿지 않는데도 리뷰를 두 번 막았다.
 
 ## 통제의 위치
-- **통제는 코드가 한다.** 어느 하네스(Claude Code, Codex 등)로 돌리든 승인 해시 검증과 `scorecard.stages` 의 `approve`·`revoke` 함수 본체가 하는 거부(에이전트 세션이면 거부, CLI 든 import 든 같은 판정)가 첫 방어선이고, 훅(`scripts/hooks/guard.py`)은 둘째 방어선이다. 승인 있는 실행에 대한 `init --force` 도 에이전트 세션이면 `init_run` 이 거부하고 훅이 막는다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
-- **훅은 도구 호출 밖을 막지 못한다.** 사람의 터미널에서 직접 실행하는 명령과 훅이 배선되지 않은 에이전트의 동작은 훅이 볼 수 없다. 훅 목록과 한계는 `scripts/hooks/README.md` 에 있다.
-- **첫 방어선에도 한계가 있다.** 임의 Python 을 실행할 수 있는 에이전트가 작정하면 우회할 수 있다. 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것이다.
+- **통제는 코드가 한다.** 어느 하네스로 돌리든 첫 방어선은 승인 해시 검증과 `scorecard.stages` 의 `approve`·`revoke` 함수 본체(에이전트 세션이면 거부)이고, 훅(`scripts/hooks/guard.py`)은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못하고, 임의 Python 을 실행하는 에이전트는 첫 방어선도 우회할 수 있다. 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것이다. 훅의 목록과 한계는 `scripts/hooks/README.md` 에 있다.
 - **승인 서버가 떠 있는 동안에는 열린 틈이 있다.** 브라우저 도구를 가진 에이전트가 터미널에 나온 6자리 코드를 읽으면 승인 페이지에서 승인을 누를 수 있다. 코드는 파일에 쓰이지 않고, 서버는 승인이 성공하면 내려간다. 사용자가 이 사실을 알고 수용했다(2026-09-30). 에이전트는 그 코드를 읽어 입력하지 않는다.
 
 ## 다른 에이전트에 일 맡기기 (Orca)
@@ -50,7 +47,7 @@
 
 ## 원자료 조사 규율
 
-모든 worktree의 조사·검증 작업에 적용한다. 지시서에 매번 적지 않아도 기본값이다.
+모든 조사·검증 작업에 적용한다. 지시서에 매번 적지 않아도 기본값이다.
 
 - **밖에서 찾기 전에 저장소 안을 먼저 본다.** 보존된 원자료·이전 과제의 `_raw`·프로젝트 내 원본 문서를 먼저 연다. 2026-09-11에 "없다"고 적힌 값이 이미 저장소 안에 있던 사례가 세 번 나왔다.
 - **출처가 여러 파일이면 전부 연다.** 값과 그 값을 소비하는 규칙이 다른 파일에 있을 수 있다.
