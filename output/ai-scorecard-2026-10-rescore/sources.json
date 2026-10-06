@@ -2993,6 +2993,49 @@
       "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/38e98e63c5fe0925-tm2524743d1_ex99-1.htm(gitignore) — 주소로 다시 받아 sha256 대조",
       "kind": "filing",
       "company_id": "alibaba"
+    },
+    {
+      "source_id": "SRC-EDGAR-000110465926107526",
+      "title": "8-K 2026-09-14 · Items 8.01, 9.01",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926107526/tm2624614d5_8k.htm",
+      "accessed_at": "2026-10-01T06:20:35Z",
+      "sha256": "aa73908ad46a600a4a9525ec65b777d0726c27c6de594e2c74e0e0bea832c399",
+      "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
+      "note": "8-K 제출일 2026-09-14",
+      "kind": "filing",
+      "company_id": "amazon",
+      "raw_ref": "data/amazon/filings/raw/CIK0001018724-aa73908a.json"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20260616-86997696",
+      "title": "SpaceX locks in $60 billion Cursor deal to close gap with rivals in AI coding race - Reuters",
+      "publisher": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPRmxuTnhpZnhfWk9xMXRkVFVNeXBjXzZSRmZRakJpR0RzZnBxOWFfMk40NW1yaXBvTlBQY2FhbG1wY0w4d0wyRFhIOUhjSlF5VW5Fc3pwZ2xRaERESmhmWGp0UE4yT1l2d0M2N2R2UTlLRGFYSkczc2wxcWxCSU1TMzhleHJMR2pKSjcydDRGMHE?oc=5",
+      "accessed_at": "2026-10-01T06:20:27Z",
+      "sha256": "9da267d96cff4610abeba0b150a9b99b0d1ebac47fd04f3006612418efb2056c",
+      "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 경쟁사(xAI)이자 컴퓨트 공급자다 (긴장 #4·#11)",
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-06-16T07:00:00Z",
+      "publisher_url": "https://www.reuters.com",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261006T054447Z-9da267d9.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20260707-4e501b19",
+      "title": "SpaceXAI plans to launch new model with Cursor as soon as Wednesday, The Information reports - Reuters",
+      "publisher": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPM1lHOUltRDNpQXJOMG1XZjhhUjZidXBpZXBOODZQZ0FaMjg5bGFIdE5WSGJVdU5oZlZYZHVtaS1obEQ2RkpENFVtbkROamw2azRCVFdHVHJZQ3lsSFZLM01aQThHY09LWDlMbEtxMFdWaFRNdXhEeE84cW9CRGtLNVA1czFuRGE5aWFQbGExU0dMNkNaN2dwQURVQ3huT0JLM2g0TWN5RzA4VHY3Y2tHNUExbEhDZzY1OUdZN2NOeXhfMTVHY1l0QlZza1o2QVJUNGI4?oc=5",
+      "accessed_at": "2026-10-01T06:20:27Z",
+      "sha256": "9da267d96cff4610abeba0b150a9b99b0d1ebac47fd04f3006612418efb2056c",
+      "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 경쟁사(xAI)이자 컴퓨트 공급자다 (긴장 #4·#11)",
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-07-07T07:00:00Z",
+      "publisher_url": "https://www.reuters.com",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261006T054447Z-9da267d9.xml"
     }
   ]
 }
