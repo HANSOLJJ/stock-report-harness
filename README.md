@@ -39,7 +39,7 @@ plan → collect → research → calculate → draft → review → (사람) �
 
 | 종류 | 무엇                             | 위치                                                                                                                                                                  |
 | ---- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 기준 | 무엇을 보고 몇 점을 줄지         | 사람용 `docs/scorecard/rules.md` · 기계용 `scorecard/rules/v1.8.json`(옛 실행은 `v1.5`~`v1.7`) |
+| 기준 | 무엇을 보고 몇 점을 줄지         | 사람용 `docs/scorecard/rules.md` · 기계용 `scorecard/rules/vN.json`(현행 버전은 `rules.md` 머리말, 옛 실행은 그때 버전) |
 | 입력 | 공시 숫자와 사람 판단, 근거      | `output/<run_id>/observations.json` · `judgments.json` · `sources.json` · `evidence/evidence.json` · `triggers.json`                                                  |
 | 계산 | 입력에 기준을 적용하는 코드      | `scripts/scorecard/` (`calc_f6_params.py` · `calc_f9.py` · `calc_qual.py` · `render_*.py` · `validate.py`)                                                            |
 | 지시 | 에이전트의 작업 순서와 금지 사항 | `AGENTS.md` · `.claude/skills/score-*` · `.claude/agents/`                                                                                                            |

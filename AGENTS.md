@@ -9,7 +9,7 @@
 - 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 채점 규칙은 `docs/scorecard/rules.md`, 코드 구조와 스키마는 `docs/scorecard/structure.md`, 실행 순서와 승인 페이지 사용법은 `docs/scorecard/guide.md` 가 원본이다.
 - 판별: `output/<run_id>/plan.md` frontmatter `report_type: ai_scorecard`, run_id(=slug)는 `ai-scorecard-` 접두.
 - 단계 순서: `plan → collect → research → calculate → draft → review → (사람) 승인 → build`.
-- 명령: `.claude/skills/score-*/SKILL.md` 12개가 `/score-*` 명령이다. 실행기는 `uv run --frozen python -X utf8 scripts/scorecard_cli.py <stage> <run_id>`, 빌드는 `scripts/build_report.py <run_id>` 이고 명령표는 `guide.md` 3절에 있다. 새 실행은 `init --rule v1.8` 로 만든다. 인자는 `--help` 로 확인한다.
+- 명령: `.claude/skills/score-*/SKILL.md` 12개가 `/score-*` 명령이다. 실행기는 `uv run --frozen python -X utf8 scripts/scorecard_cli.py <stage> <run_id>`, 빌드는 `scripts/build_report.py <run_id>` 이고 명령표는 `guide.md` 3절에 있다. 새 실행은 현행 규칙 버전(`rules.md` 머리말)으로 `init --rule` 한다. 인자는 `--help` 로 확인한다.
 - 실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모인다(파일 목록은 `structure.md` 2절, 경로 도우미는 `scripts/scorecard/paths.py`). 수집한 원문 캐시는 `data/<company_id>/`(gitignore)에 둔다.
 - 공유 정의(rules, companies, baseline)와 `history.csv` 는 `scorecard/` 에 두고 추적한다. 실행 묶음의 md·html 은 생성물이며 손으로 고치지 않는다.
 - 근거는 후보(`candidate`)로 들어오고 사람이 승인 페이지에서 확정(`confirmed`)한다. `status: new` 판단은 confirmed 근거만 인용한다. 트리거는 미래 점수를 저장하지 않는다(C-14). `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)를 섞지 않는다.

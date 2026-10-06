@@ -66,7 +66,7 @@ sequenceDiagram
 
 | 순서 | 단계 | 명령 | 결과 (`output/<run_id>/`) |
 | --- | --- | --- | --- |
-| 1 | 실행 생성 | 새로: `scripts/scorecard_cli.py init <run_id> --rule v1.8 --as-of YYYY-MM-DD --title "…" --request "…"`<br/>이어받기: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id>` | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
+| 1 | 실행 생성 | 새로: `scripts/scorecard_cli.py init <run_id> --rule <현행 버전> --as-of YYYY-MM-DD --title "…" --request "…"`<br/>이어받기: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id> --as-of … --price-as-of … --info-cutoff …`<br/>현행 버전은 `rules.md` 머리말에 있습니다. 이어받기는 `--rule`·날짜를 주지 않으면 이전 실행 값을 그대로 씁니다. | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
 | 2 | 수집 | `scripts/scorecard_cli.py collect <run_id> --kind all` | `evidence/candidates.json`, ⑥ 가격 관측 |
 | 3 | 트리거 후보 보기 | `scripts/scorecard_cli.py trigger-candidates <run_id>` | 화면 출력만 (파일 변경 없음) |
 | 4 | 선별 | 에이전트가 후보를 골라 작성 | `evidence/evidence.json`, `triggers.json` |
@@ -88,7 +88,7 @@ sequenceDiagram
 | --- | --- | --- |
 | 정기 재채점 | `init --from-run <직전 실행>` | 직전 실행의 관찰 중 트리거 + 직전 실행이 처리하지 않고 넘긴 더 이전 트리거 |
 | 기업 추가만 | `/score-extend` (`init --from-run … --add-companies a,b`) | 위와 같음. 기존 기업이 움직이지 않았음은 `diff` 가 증명 |
-| 기준선에서 새로 | `init --rule v1.8 …` | 기준선 트리거 전부 (TRIG-001~039) |
+| 기준선에서 새로 | `init --rule <현행 버전> …` | 기준선 트리거 전부 (TRIG-001~039) |
 
 ## 4. 트리거 처리 (2026-10-01 도입)
 
@@ -270,7 +270,7 @@ stateDiagram-v2
 
 ```mermaid
 flowchart TD
-    ROOT["저장소 루트"] --> SC["scorecard/<br/>companies.json · rules/v1.8.json<br/>baseline/v1.5 · history.csv"]
+    ROOT["저장소 루트"] --> SC["scorecard/<br/>companies.json · rules/vN.json<br/>baseline/v1.5 · history.csv"]
     ROOT --> OUT["output/run_id/"]
     ROOT --> DATA["data/company_id/<br/>수집 원문 캐시 (gitignore)"]
     ROOT --> SCR["scripts/<br/>scorecard_cli.py · build_report.py<br/>scorecard/ · hooks/guard.py"]

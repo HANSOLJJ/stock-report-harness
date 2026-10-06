@@ -30,7 +30,7 @@
 
 | 경로 | 누가 쓰나 | 추적 | 내용 |
 |---|---|---|---|
-| `scorecard/rules/v1.5.json` ~ `v1.8.json` | 규칙 개정 때 새 버전을 더한다 | git | factor 모드·범위, ⑥ 잣대·트랙, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트 Q01~Q23, 결정(C-xx) 상태·선택지, 긴장 목록. 새 실행은 v1.8 을 쓴다. 승인 해시에 파일 바이트 해시가 들어가므로 이미 쓰인 파일은 고치지 않는다. 사람용 설명은 `rules.md` |
+| `scorecard/rules/v1.5.json` ~ `vN.json` | 규칙 개정 때 새 버전을 더한다 | git | factor 모드·범위, ⑥ 잣대·트랙, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트 Q01~Q23, 결정(C-xx) 상태·선택지, 긴장 목록. 새 실행은 현행 버전(`rules.md` 머리말)을 쓴다. 승인 해시에 파일 바이트 해시가 들어가므로 이미 쓰인 파일은 고치지 않는다. 사람용 설명은 `rules.md` |
 | `scorecard/companies.json` | `add-company`, `resolve-cik --apply` | git | 안정 company_id, 표시명·별칭, 유형, 상장, 티커, share_basis, adr_ratio, 통화, 평가 범위, `news_queries`, `cik` |
 | `scorecard/baseline/v1.5/` | 이관(끝남). 보호 경로 | git | `scores.json`(점수·근거 불릿), `observations.json`, `triggers.json`, `import-report.md` |
 | `output/<run_id>/` | 각 단계 | git(입력·결과·승인), 일부 gitignore(`.lock`) | 실행 묶음 한 폴더. 아래 표 |
@@ -110,7 +110,7 @@
 | 기준선 이관 검산 (T-17) | `baseline_import` + `import-report.md` MD 대조 | 14사 match |
 | 입력 검증 (T-03, T-05, T-06, R05, R06) | `schema.validate_*` | `TestReviewRegressions` |
 
-테스트는 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 로 실행한다. `tests/test_scorecard_calc.py` 는 v1.5 규칙으로 검사한다(T-01~T-12 의 원래 정의). 현행 규칙의 ⑥ 은 `test_scorecard_f6_v17.py`, ⑦ 재척도는 `test_scorecard_fix52_schema.py`, v1.8 로드와 재계산은 `test_rules_v18.py` 가 본다. 독립 리뷰가 찾은 회귀 R01~R06 은 `test_scorecard_calc.py` 의 `TestReviewRegressions` 가 고정한다.
+테스트는 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 로 실행한다. `tests/test_scorecard_calc.py` 는 v1.5 규칙으로 검사한다(T-01~T-12 의 원래 정의). 현행 규칙의 ⑥ 은 `test_scorecard_f6_v17.py`, ⑦ 재척도는 `test_scorecard_fix52_schema.py`, v1.8 로드와 재계산은 `test_rules_v18.py`, v1.9 의 트랙 판정은 `test_rules_v19.py` 가 본다. 독립 리뷰가 찾은 회귀 R01~R06 은 `test_scorecard_calc.py` 의 `TestReviewRegressions` 가 고정한다.
 
 ## 4. 미결 결정의 취급
 
@@ -127,7 +127,7 @@
 아래 경로는 모두 `output/<run_id>/` 기준이다. 모든 명령은 `uv run --frozen python -X utf8 scripts/…` 로 실행한다.
 
 ```
-init --rule v1.8 ──► plan.md + run.json·observations.json·judgments.json·sources.json
+init --rule vN ──► plan.md + run.json·observations.json·judgments.json·sources.json
 collect ──► evidence/candidates.json (뉴스·공시 후보) ; --kind prices 는 observations.json 에 ⑥ price·market_cap 관측을 넣는다
   └─ 에이전트가 후보를 골라 evidence/evidence.json(candidate)·triggers.json 작성
 research ──► research.md (observations_hash·judgments_hash 결속) ; 인용한 근거의 출처를 sources.json 에 등록(--no-register 로 끔)
