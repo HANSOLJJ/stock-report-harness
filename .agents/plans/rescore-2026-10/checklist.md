@@ -22,8 +22,10 @@
 - [x] 실행을 v1.9 로 다시 만듦 → collect → 근거·트리거 재반영(출처 ID 3건 대응) → research·calculate(점수 v1.8 때와 같음)
 - [x] 1년 전 문서 2건 받기(+ TSMC 대만 IFRS 연간 2건, Oracle 10-K)
 - [x] Oracle·TSMC·Alibaba 관측 29건 → 독립 검산 → 반영 → research·calculate(세 회사 listed_ttm, 나머지 11사 불변)
-- [ ] calculate → 비교 → ⑨ 판정 입력 제안·트리거 finding(TRG-057 등) 수정
-- [ ] draft
+- [x] calculate → 비교 → 근거 문장 제안 PRP-001~004(Oracle ⑨·⑦, Alibaba ⑨, TSMC ⑨, 판정 재료·점수 불변) → 트리거 TRG-024·057 문장 수정
+- [x] draft
+- [ ] **사람: 승인 페이지에서 근거 후보 34건 확정·거부, 제안 PRP-001~004 반영·거부** (제안 반영 대기)
+- [ ] 그 뒤 research → calculate → draft → review-template → 1차 리뷰
 
 ## 4. 리뷰
 - [ ] 1차 리뷰(4 영역 + Q01~Q23)

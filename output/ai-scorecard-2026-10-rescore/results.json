@@ -11,7 +11,7 @@
     "judgments": "d803a3a60b4cf96e861f17290c9b46c5c76241b3554b8970eccb401180e5efce",
     "sources": "4f37c8b31cb8dbfa71ebe5648dc3268a104a400ed0b5d073f633dd999a5d7829",
     "evidence": "7f0a4413b9fa93cce0bb5c9caa70735d992b3c08a27b6c273473d0035e9f8a6f",
-    "triggers": "e9917d8e1187869a06604d82c197c164de05fac6a48488125565e9f8f37ddd37",
+    "triggers": "6fd40b36939ca420913468124cc05d953c0b9be97eecb3716093a99ff2d8190d",
     "rules": "0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d"
   },
   "decisions_applied": [
@@ -4385,5 +4385,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 153,
-  "results_hash": "36f04e2e6a75214e88219eb0ca66d8be660c132cbf68a3f568d529fd69660d75"
+  "results_hash": "51736ed40ceb9400f7c969c5381a11c6341f7b29e72885f8015d725653044d23"
 }
