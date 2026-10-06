@@ -624,8 +624,13 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
             prev = {}
         if prev:
             created = ctx.run.get("created_at") or ""
+            # 2026-10-06 출력·가독성 리뷰(medium): 근거 문장만 바꾼 수정(PRP-003)도 '판단 수정' 으로 분류했다.
+            # 이번 실행 중 수정 가운데 판정 재료(inputs·score)를 실제로 바꾼 것만 판단 수정으로 본다.
             revised = {(j["company_id"], j["factor"]) for j in ctx.judgments
-                       if any(str(h.get("revised_at") or "") >= created for h in (j.get("revision_history") or []))}
+                       if any(str(h.get("revised_at") or "") >= created
+                              and ((h.get("previous") or {}).get("inputs") != j.get("inputs")
+                                   or (h.get("previous") or {}).get("score") != j.get("score"))
+                              for h in (j.get("revision_history") or []))}
             prow = []
             for c in sorted(results["companies"], key=lambda x: (x["rank"] is None, x["rank"] or 0, x["company_id"])):
                 p = prev.get(c["company_id"])
@@ -636,15 +641,20 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
                     new, old = c["factors"][f]["score"], p["factors"][f]["score"]
                     if new == old:
                         continue
+                    # 2026-10-06: 규칙 v1.9 처럼 ⑥ 트랙이 바뀌면 관측 변화와 함께 규칙 변경도 원인이다.
+                    old_track = (p["factors"][f].get("calc") or {}).get("track")
+                    new_track = (c["factors"][f].get("calc") or {}).get("track")
                     if (c["company_id"], f) in revised:
                         cause = "✍️ 판단 수정"
+                    elif f == "F6" and old_track and new_track and old_track != new_track:
+                        cause = f"📐 규칙(트랙 {old_track}→{new_track})·📊 관측"
                     elif f in ("F6", "F9"):
                         cause = "📊 관측(가격·재무)"
                     else:
                         cause = "📐 규칙"
                     causes[cause] = causes.get(cause, 0) + 1
                     diffs.append(f"{FACTOR_LABELS[f]} {fmt_score(old)}→{fmt_score(new)} ({cause})")
-                if diffs or p.get("total") != c["total"]:
+                if diffs or p.get("total") != c["total"] or p.get("rank") != c["rank"]:
                     prow.append([c["display_name"], f"{fmt_score(p.get('total'))} / {fmt_score(p.get('rank'))}",
                                  f"{fmt_score(c['total'])} / {fmt_score(c['rank'])}", "; ".join(diffs) or "factor 같음(순위만 이동)"])
             lines += [f"## 이전 실행 `{prior}` 대비", "",
