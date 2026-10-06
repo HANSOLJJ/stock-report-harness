@@ -1,3 +1,0 @@
-anthropic  anthropic.F5 A +2 H +0  ->  anthropic.F5.impl48 A +1 H +0
-openai     openai.F5 A +2 H -3  ->  openai.F5.impl48 A +1 H -3
-judgments.json 검증 통과·저장

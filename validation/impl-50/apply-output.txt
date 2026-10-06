@@ -1,5 +1,0 @@
-1. C-11 resolved · block_carryover · 설계진행 제안 · 사용자 확인 전
-2. p4 nonop_share scope 등재 (+ 옛 산식 note 자기 정정)
-3. F7 판단 note 14건
-4. 설계 지침 C-11 행 낡음 표시
-   run.json rule_hash 3c78146e7198 -> 90c6b4da1b91

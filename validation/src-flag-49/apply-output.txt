@@ -1,7 +1,0 @@
-1. market_cap 12건: alibaba, meta, nvidia, tsmc, alphabet, microsoft, amazon, apple, oracle, palantir, spacex-xai, tesla
-   author_computed: alibaba, tsmc
-2. sources.not_adopted += stockanalysis.com (legacy_upstream)
-3. net_cash source_mixed 2건: apple, palantir
-   ntm_per vendor_policy_status 갱신 12건
-4. sources.note 등재
-   run.json rule_hash 12fd0de854c0 -> 3c78146e7198

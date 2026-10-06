@@ -110,7 +110,7 @@
 | 기준선 이관 검산 (T-17) | `baseline_import` + `import-report.md` MD 대조 | 14사 match |
 | 입력 검증 (T-03, T-05, T-06, R05, R06) | `schema.validate_*` | `TestReviewRegressions` |
 
-테스트는 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 로 실행한다. `tests/test_scorecard_calc.py` 는 v1.5 규칙으로 검사한다(T-01~T-12 의 원래 정의). 현행 규칙의 ⑥ 은 `test_scorecard_f6_v17.py`, ⑦ 재척도는 `test_scorecard_fix52_schema.py`, v1.8 로드와 재계산은 `test_rules_v18.py` 가 본다. 독립 재현 `validation/test_scorecard_review.py`(R01~R06)도 같은 코드로 통과해야 한다.
+테스트는 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 로 실행한다. `tests/test_scorecard_calc.py` 는 v1.5 규칙으로 검사한다(T-01~T-12 의 원래 정의). 현행 규칙의 ⑥ 은 `test_scorecard_f6_v17.py`, ⑦ 재척도는 `test_scorecard_fix52_schema.py`, v1.8 로드와 재계산은 `test_rules_v18.py` 가 본다. 독립 리뷰가 찾은 회귀 R01~R06 은 `test_scorecard_calc.py` 의 `TestReviewRegressions` 가 고정한다.
 
 ## 4. 미결 결정의 취급
 

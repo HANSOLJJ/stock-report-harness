@@ -92,7 +92,7 @@
 
 ## 10. validation
 
-- [ ] `validation/` 을 사용자 방침대로 처리, 6개 파일과 `_raw` 보존 확인
+- [x] `validation/` 을 사용자 방침대로 처리, 6개 파일과 `_raw` 보존 확인 (838개 삭제, 남은 추적 115개 = `_raw` 109 + 테스트용 6. 이미 깨져 있던 `test_scorecard_review.py` 도 지우고 `structure.md` 언급 수정. Python 1254건 통과)
 
 ## 11. 최종 검증
 

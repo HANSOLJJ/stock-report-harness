@@ -1,9 +1,0 @@
-광역 태그 주사 — 기준일(2026) 이후 값이 있는 회사:
-  TSLA: DebtInstrumentUnusedBorrowingCapacityAmount 2026-06-30 = 5,000,000,000 USD (10-Q 0001628280-26-049270)
-판단 변경 0
-관측 변경 0
-출처 변경 0
-규칙 변경 0
-실행 변경 0
-문서 변경 0
-rule_hash a7e63f185ddc
