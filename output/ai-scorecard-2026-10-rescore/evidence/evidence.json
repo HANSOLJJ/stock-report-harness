@@ -13,7 +13,7 @@
       "published_at_utc": "2026-09-21T07:00:00Z",
       "title": "Alibaba deepens AI push with new chip, bigger model; shares jump 5% - Reuters",
       "excerpt": "Alibaba deepens AI push with new chip, bigger model; shares jump 5% - Reuters",
-      "relevance": "추론: 알리바바가 자체 AI 가속기를 공개하고 더 큰 모델을 예고했다는 보도다. ④ 호황 이후 비전은 자체 칩을 출하가 확인될 때만 수직계열화 근거로 세므로, 이 칩은 출하 여부에 따라 ④ 근거가 될 수 있다. 더 큰 모델(10조 파라미터)은 예고라 별표 D(계획·발표는 현재 점수에 넣지 않는다)에 따라 근거가 아니며 트리거로만 지켜본다. 알리바바 ④ 판단은 4점이고 클라우드 성장(+45%)·AI 제품 매출·해외 데이터센터로 폭을 셌다. (선별 확신: 중간)",
+      "relevance": "추론: 알리바바가 자체 AI 가속기를 공개하고 더 큰 모델을 예고했다는 보도다. ④ 호황 이후 비전은 자체 칩을 출하가 확인될 때만 수직계열화 근거로 세므로, 이 칩은 출하 여부에 따라 ④ 근거가 될 수 있다. 더 큰 모델(10조 파라미터)은 예고라 계획 0점 원칙(규칙 2.1, 계획·발표는 현재 점수에 넣지 않는다)에 따라 근거가 아니며 트리거로만 지켜본다. 알리바바 ④ 판단은 4점이고 클라우드 성장(+45%)·AI 제품 매출·해외 데이터센터로 폭을 셌다. (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "지금은 유지: 공개·예고 단계라 알리바바 ④ 판단을 바꾸지 않는다. 칩이 자사 클라우드에 배치됐거나 외부에 팔리고 있다는 사실이 1차 발표나 공시로 확인되면 ④ 에 자체 칩 출하를 수직계열화 근거로 더하는 쪽으로 다시 본다. 판단이 이미 높은 구간이라 출하가 확인돼도 결론이 달라지지 않을 수 있다.",
       "horizon": "medium — 출하가 확인될 때까지",
@@ -71,12 +71,12 @@
       "published_at_utc": "2026-09-30T06:51:00Z",
       "title": "Google challenges European requirements on sharing search data - marketscreener.com",
       "excerpt": "Google challenges European requirements on sharing search data - marketscreener.com",
-      "relevance": "추론: 구글이 EU 의 검색 데이터 공유 명령에 이의를 제기했다는 보도로, 규제기관과의 분쟁이라 ⑤ 적대 등급의 재료다. 별표 C(규제·소송은 져도 본업 수요가 유지되는 비용)에 따라 규제 적대는 기본이 비용형(-1)이다. 알파벳 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다. (선별 확신: 중간)",
+      "relevance": "추론: 구글이 EU 의 검색 데이터 공유 명령에 이의를 제기했다는 보도로, 규제기관과의 분쟁이라 ⑤ 적대 등급의 재료다. ⑤ 적대 등급표는 벌금·개별 소송·규제 조사처럼 사업 구조를 건드리지 않는 적대를 비용형(-1)으로 두고, 판정 지침은 규제·소송을 져도 본업 수요가 유지되는 비용으로 본다. 알파벳 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다. (선별 확신: 중간)",
       "channel": "secondary",
       "conditional_impact": "지금은 유지: 이의 제기·집행정지 신청 단계라 알파벳 ⑤ 적대 등급 비용형과 같은 방향이고, 적대 근거 문장에 EU 명령을 더하는 데 쓴다. 명령이 유지돼 검색 사업의 구조를 건드리는 수준으로 확인되면 그때 적대 등급을 비용형에서 구조형(사업의 정당성 자체를 겨냥한 적대)으로 볼지 다시 본다.",
       "horizon": "medium — EU 법원 집행정지 판단과 본안은 수개월~수년",
       "counter_evidence": [
-        "별표 C 는 Apple 의 EU DMA(디지털시장법) 전선을 비용형으로 본다 — 같은 잣대면 이 명령도 비용형에 머문다."
+        "⑤ 적대 등급표는 규제 조사·시장 일부 차단을 사업 구조를 건드리지 않는 한 비용형으로 두고, 같은 잣대를 다른 기업의 EU DMA(디지털시장법) 전선에도 댄다. 그 잣대로 보면 이 명령도 비용형에 머문다."
       ],
       "unverified": [
         "제목·매체·날짜만 보고 판정함(기사 본문·웹 조회 없음)",
@@ -99,7 +99,7 @@
       "published_at_utc": "2026-09-30T12:18:17Z",
       "title": "Anthropic IPO Filing Reveals a Major Vulnerability: Nearly 50% of Sales Flow Through Amazon and Google as - Benzinga",
       "excerpt": "Anthropic IPO Filing Reveals a Major Vulnerability: Nearly 50% of Sales Flow Through Amazon and Google as - Benzinga",
-      "relevance": "추론: Anthropic IPO 신고서(S-1)가 Anthropic 매출의 절반 가까이가 Amazon·Google 을 거친다고 밝혔다는 보도다. Anthropic 은 투자·부채로 지출을 대는 적자 고객이고 알파벳은 그 투자자라 별표 I(⑦ 판정: 내 매출을 내는 고객이 그 돈을 조달로 구했는가 × 내 돈이 고객을 거쳐 내 매출로 돌아오는가)의 재료이고, S-1 원문으로 구글 쪽 Anthropic 매출·약정 규모를 잴 수 있다. 알파벳 ⑦ 판단은 조달 의존 고객 비중 ‘작음’, 내 돈이 돌아옴 ‘예’로 판정표 -1 칸이다(Anthropic 투자금이 TPU·GCP 매출로 돌아오나 본업 대비 미미). (선별 확신: 중간)",
+      "relevance": "추론: Anthropic IPO 신고서(S-1)가 Anthropic 매출의 절반 가까이가 Amazon·Google 을 거친다고 밝혔다는 보도다. Anthropic 은 투자·부채로 지출을 대는 적자 고객이고 알파벳은 그 투자자라 ⑦ 판정표(조달 의존 고객 비중 × 내 돈이 고객을 거쳐 내 매출로 돌아오나)의 재료이고, S-1 원문으로 구글 쪽 Anthropic 매출·약정 규모를 잴 수 있다. 알파벳 ⑦ 판단은 조달 의존 고객 비중 ‘작음’, 내 돈이 돌아옴 ‘예’로 판정표 -1 칸이다(Anthropic 투자금이 TPU·GCP 매출로 돌아오나 본업 대비 미미). (선별 확신: 중간)",
       "channel": "secondary",
       "conditional_impact": "재검토: 알파벳 ⑦ 의 조달 의존 고객 비중을 ‘작음’에서 ‘큼’ 쪽으로 다시 볼지 본다. S-1 원문에서 구글 관련 컴퓨트 약정·매출이 Google Cloud 매출·백로그 대비 크다고 확인되면 그렇고, 알파벳 본업 대비 미미하면 지금 판정을 유지한다. 구글의 Anthropic 모델 재판매는 ⑤ 동맹 근거도 되지만 알파벳 동맹 등급은 이미 +2 라 이 카드는 ⑦ 에만 쓴다.",
       "horizon": "medium — 상장 절차와 다년 약정 인식에 걸친다",
@@ -129,7 +129,7 @@
       "published_at_utc": "2026-09-30T22:16:26Z",
       "title": "Google announces Gemini 4 flagship AI model after months of delays - Reuters",
       "excerpt": "Google announces Gemini 4 flagship AI model after months of delays - Reuters",
-      "relevance": "추론: 구글이 몇 달 지연 끝에 최상위 모델 Gemini 4 를 발표했다는 Reuters 보도로, ② 의 성능 도약 경로(벤치마크에서 세대 격차를 만드는가)를 다시 볼 계기다. 알파벳 ② 판단은 기준선에서 승계한 4점이고 근거는 “Arena 텍스트 최고 9위, Gemini 3.8 Flash 로도 프론티어 순위 미변”이라, Gemini 4 가 독립 측정에서 프론티어에 서면 이 근거가 낡는다. (선별 확신: 중간)",
+      "relevance": "추론: 구글이 몇 달 지연 끝에 최상위 모델 Gemini 4 를 발표했다는 Reuters 보도로, ② 의 성능 도약 경로(벤치마크에서 세대 격차를 만드는가)를 다시 볼 계기다. 알파벳 ② 판단은 4점이고, Arena 텍스트 최고 9위이며 Gemini 3.8 Flash 출시 뒤에도 프론티어 순위가 바뀌지 않았다는 것을 근거로 든다. Gemini 4 가 독립 측정에서 프론티어에 서면 이 근거가 맞지 않게 된다. (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "재검토: 알파벳 ② 의 성능 도약 경로 통과 여부와 세대 격차 여부를 위쪽으로 다시 볼지 본다. AA Intelligence Index·ARC-AGI-2·에이전트 실무 측정 같은 독립 측정에서 Gemini 4 가 프론티어에 들거나 세대 격차를 보이면 그렇다. 구글이 발표한 벤치마크만으로는 바꾸지 않는다.",
       "horizon": "short — 독립 측정은 출시 뒤 몇 주 안에 나온다",
@@ -164,7 +164,7 @@
       "conditional_impact": "지금은 유지: 런웨이가 이미 9.95년(현금만으로도 6.7년)이라 확정 미인출 여신이 더해져도 게이트 3 판정은 그대로다. 공시 본문에서 여신 금액이 확인되면 3분기 10-Q 공시 뒤 런웨이를 다시 계산할 때 완충 수치에 넣는다.",
       "horizon": "medium — 여신·사채 만기에 걸친다",
       "counter_evidence": [
-        "사채라면 순차입이 늘어난다 — 다만 ⑨ 는 순부채 잔고를 쓰지 않고 레버리지는 별표 J(신용등급·CDS 교차검증)에서 본다."
+        "사채라면 순차입이 늘어난다. 다만 ⑨ 는 순부채 잔고를 쓰지 않고, 신용등급·CDS 는 규칙 2.8절(신용 지표는 교차검증에만 쓴다)에 따라 함정 총점을 검증하는 데만 쓴다."
       ],
       "unverified": [
         "제목·매체·날짜만 보고 판정함(원문 미열람)",
@@ -216,7 +216,7 @@
       "published_at_utc": "2026-09-29T16:00:41Z",
       "title": "AI agents are fighting over your shopping cart: Meta’s Muse blocked by Amazon and Walmart - NBC News",
       "excerpt": "AI agents are fighting over your shopping cart: Meta’s Muse blocked by Amazon and Walmart - NBC News",
-      "relevance": "추론: 메타의 쇼핑 에이전트 Muse 가 아마존 소비자 채널을 거치려 했고 아마존(·월마트)이 이를 막았다는 NBC 보도다. ① 은 별표 A(회사의 모든 실질 채널 중 가장 강한 락인으로 매긴다)에 따라 아마존 소비자 락인 — “가격을 올려도 남는가” — 으로 매기는데, 제3자 에이전트가 그 채널을 우회하는 경로가 생겼다는 반대 방향 사례다. 아마존 ① 판단은 5점(Prime 2억+ 락인, Alexa+ 무료 개방, Bedrock AgentCore)이다. (선별 확신: 낮음)",
+      "relevance": "추론: 메타의 쇼핑 에이전트 Muse 가 아마존 소비자 채널을 거치려 했고 아마존(·월마트)이 이를 막았다는 NBC 보도다. ① 은 채널별로 재며 회사의 실질 채널 가운데 가장 강한 락인이 점수를 정하므로 아마존은 소비자 락인(가격을 올려도 남는가)으로 매기는데, 제3자 에이전트가 그 채널을 우회하는 경로가 생겼다는 반대 방향 사례다. 아마존 ① 판단은 5점(Prime 2억+ 락인, Alexa+ 무료 개방, Bedrock AgentCore)이다. (선별 확신: 낮음)",
       "channel": "press",
       "conditional_impact": "재검토: 아마존 ① 소비자 채널 락인을 아래쪽으로 다시 볼지 본다. 차단이 효과를 내지 못하고 소비자가 에이전트 경로로 빠져나간다는 수치(Prime 회원 수·쇼핑 트래픽)가 공시되거나 보도되면 그렇다. 지금은 사건만 있고 이탈 수치가 없다.",
       "horizon": "long — 에이전트 쇼핑의 영향은 수년에 걸쳐 드러난다",
@@ -245,9 +245,9 @@
       "published_at_utc": "2026-10-01T01:37:00Z",
       "title": "Anthropic Plans to Spend $518 Billion on Cloud and Data Centers. More Than $100 Billion Is Already Promised to Amazon. - The Motley Fool",
       "excerpt": "Anthropic Plans to Spend $518 Billion on Cloud and Data Centers. More Than $100 Billion Is Already Promised to Amazon. - The Motley Fool",
-      "relevance": "추론: Anthropic 이 클라우드·데이터센터에 $518B 를 쓸 계획이고 그중 $100B+ 가 이미 아마존에 약속됐다는 보도다. 아마존은 Anthropic 의 투자자이고 Anthropic 은 투자·부채로 지출을 대는 적자 고객이라 별표 I(⑦ 판정: 내 매출을 내는 고객이 그 돈을 조달로 구했는가 × 내 돈이 고객을 거쳐 내 매출로 돌아오는가)의 재료이고, $100B+ 가 AWS 백로그($496B)의 큰 몫이라면 지금 판정을 다시 볼 이유다. 아마존 ⑦ 판단은 조달 의존 고객 비중 ‘작음’, 내 돈이 돌아옴 ‘예’로 판정표 -1 칸이다(Anthropic 투자→AWS 매출 환류가 본업 $776B 대비 미미). (선별 확신: 중간)",
+      "relevance": "추론: Anthropic 이 클라우드·데이터센터에 $518B 를 쓸 계획이고 그중 $100B+ 가 이미 아마존에 약속됐다는 보도다. 아마존은 Anthropic 의 투자자이고 Anthropic 은 투자·부채로 지출을 대는 적자 고객이라 ⑦ 판정표(조달 의존 고객 비중 × 내 돈이 고객을 거쳐 내 매출로 돌아오나)의 재료이고, $100B+ 가 AWS 백로그($496B)의 큰 몫이라면 지금 판정을 다시 볼 이유다. 아마존 ⑦ 판단은 조달 의존 고객 비중 ‘작음’, 내 돈이 돌아옴 ‘예’로 판정표 -1 칸이다(Anthropic 투자→AWS 매출 환류가 본업 $776B 대비 미미). (선별 확신: 중간)",
       "channel": "secondary",
-      "conditional_impact": "재검토: 아마존 ⑦ 의 조달 의존 고객 비중을 ‘작음’에서 ‘큼’ 쪽으로 다시 볼지 본다. Anthropic S-1 원문이나 아마존 다음 10-Q 에서 AWS 약정의 규모·기간이 백로그·매출 대비 크다고 확인되면 그렇다. ‘내 돈이 돌아오는가’는 이미 ‘예’로 반영돼 있고, 아마존 ⑦ 판단 근거에 남은 “OpenAI $50B 투자 ⑦ 재검토 대기”도 같은 축이라 함께 본다.",
+      "conditional_impact": "재검토: 아마존 ⑦ 의 조달 의존 고객 비중을 ‘작음’에서 ‘큼’ 쪽으로 다시 볼지 본다. Anthropic S-1 원문이나 아마존 다음 10-Q 에서 AWS 약정의 규모·기간이 백로그·매출 대비 크다고 확인되면 그렇다. ‘내 돈이 돌아오는가’는 이미 ‘예’로 반영돼 있고, 아마존 ⑦ 판단에 재검토 항목으로 남아 있는 2026년 3월 OpenAI $50B 투자 약속도 같은 축이라 함께 본다.",
       "horizon": "medium — 약정은 다년에 걸쳐 매출로 인식된다",
       "counter_evidence": [
         "다년 약정 총액은 인식 매출이 아니다 — ⑦ 은 약정 총액을 매출로 쓰지 않는다.",
@@ -275,7 +275,7 @@
       "published_at_utc": "2026-09-25T17:54:58Z",
       "title": "US appeals court upholds Pentagon's blacklisting of Anthropic - Reuters",
       "excerpt": "US appeals court upholds Pentagon's blacklisting of Anthropic - Reuters",
-      "relevance": "사실: 미 항소법원이 국방부의 Anthropic 거래 배제(블랙리스트)를 유지했다. 추론: 정부 시장 일부가 막힌 것이라 ⑤(아군과 적대)의 적대 등급 재료다. 별표 G(⑤ = 3 + 동맹 등급 + 적대 등급)에서 적대 등급 '최소' 는 규제 조사·소송·시장 차단이 눈에 띄지 않을 때이고, '비용형' 은 벌금·소송·규제 조사·시장 일부 차단처럼 사업 구조는 건드리지 않는 적대다. 선별 당시 Anthropic ⑤ 판단은 동맹 등급 +1, 적대 등급 0(최소)으로 4점이었고, 이 근거를 인용한 제안 PRP-001 반영으로 적대 등급 -1(비용형), 3점이 됐다. 이해상충: 선별자가 Anthropic 모델 (선별 확신: 중간)",
+      "relevance": "사실: 미 항소법원이 국방부의 Anthropic 거래 배제(블랙리스트)를 유지했다. 추론: 정부 시장 일부가 막힌 것이라 ⑤(아군 확보)의 적대 등급 재료다. ⑤ 는 3 + 동맹 등급 + 적대 등급으로 계산하고, 적대 등급 '최소'(0)는 규제 조사·소송·시장 차단이 눈에 띄지 않을 때, '비용형'(-1)은 벌금·소송·규제 조사·시장 일부 차단처럼 사업 구조는 건드리지 않는 적대다. Anthropic ⑤ 판단은 이 배제와 FTC 조사를 근거로 적대 등급을 -1(비용형)로 두고, 동맹 등급 +1 과 합쳐 3점이다. 이해상충: 선별자가 Anthropic 모델 (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "지금은 유지: 제안 PRP-001 로 적대 등급을 최소에서 비용형으로 반영했다. 배제가 연방 조달 전반으로 번지거나 사업의 정당성 자체를 겨냥한 것으로 확인되면 구조형까지 본다. 동맹 등급은 국방부 계약을 4사 공통이라 변별력 없음으로 처리했다.",
       "horizon": "medium — 상고·행정 조치에 따라 바뀔 수 있다",
@@ -286,7 +286,7 @@
       "unverified": [
         "제목·매체·날짜만 보고 판정함(기사 본문 미열람, 웹 조회 없음)",
         "배제 범위(국방부 한정인지 연방 전체인지) 미확인",
-        "배제 시작 시점이 기준선 판단일(2026-09-02) 이전인지 미확인 — 이전이면 승계 판단이 놓친 사실이다"
+        "배제가 처음 시작된 날짜 미확인(2026-09-25 항소심 판결은 배제를 유지한 날이다)"
       ],
       "change_vs_previous": "new",
       "status": "confirmed",
@@ -334,9 +334,9 @@
       "published_at_utc": "2026-09-29T16:48:56Z",
       "title": "Anthropic's $518 billion AI buildout hinges largely on deals that cannot be canceled, filing shows - Reuters",
       "excerpt": "Anthropic's $518 billion AI buildout hinges largely on deals that cannot be canceled, filing shows - Reuters",
-      "relevance": "사실: Reuters 가 상장 신청서를 근거로 Anthropic 의 $518B 규모 AI 설비 구축이 대부분 해지할 수 없는 계약에 걸려 있다고 보도했다. 추론: 해지 불가 약정의 규모는 ⑧(비대칭 의존)의 약정÷매출과 ⑨(적자 깊이) 게이트 4(약정 커버리지 — 앞으로 내기로 한 약정을 버는 돈이 덮는가)의 직접 입력이다. Anthropic ⑧ 판단은 -3점이고 약정 합계를 v1.5 기준선 값 약 $300B(AWS 분은 공시 문면상 하한)로 적고 있다. Anthropic ⑨ 판단은 -2점이고, 게이트 4 는 약정과 계약 수입의 기간·범위가 달라 비교 불가로 두어 계산하지 않았다(근거 문장에는 v1.5 의 하한 기준 커버리지 1.3배가 남아 있다). 이해상충: 선별자가 Anthropic 모델 (선별 확신: 중간)",
+      "relevance": "사실: Reuters 가 상장 신청서를 근거로 Anthropic 의 $518B 규모 AI 설비 구축이 대부분 해지할 수 없는 계약에 걸려 있다고 보도했다. 추론: 해지 불가 약정의 규모는 ⑧(비대칭 의존)의 약정÷매출과 ⑨(적자 깊이) 게이트 4(약정 커버리지 — 앞으로 내기로 한 약정을 계약된 수입이 덮는가)의 직접 입력이다. Anthropic ⑧ 판단은 -3점이고 약정 합계를 약 $300B(Google Cloud $200B/5년, AWS 증액 $100B 초과/10년 — AWS 분은 공시 문면상 하한, Azure $30B 등)로 적고 있다. Anthropic ⑨ 판단은 -2점이고, 게이트 4 는 약정과 계약 수입의 기간·범위가 달라 비교 불가로 두어 계산하지 않았다. 이해상충: 선별자가 Anthropic 모델 (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "재검토: ⑧ 의 약정÷매출 입력을 커지는 방향으로 다시 본다 — 해지 불가 약정이 기준선 $300B 보다 크다는 것이 원문으로 확인되면 그렇다. ⑨ 는 공개 제출본이 약정과 계약 수입을 같은 범위로 주어 게이트 4 를 계산할 수 있게 되면 커버리지를 다시 보고, 그때 커버리지는 근거 문장의 하한 기준 1.3배보다 낮아지는 방향이다. 게이트 2(최근 1년 잉여현금흐름)에서 이미 미공시로 깎은 것을 게이트 4 에서 같은 사유로 다시 깎지 않는다는 규칙을 함께 적용한다.",
+      "conditional_impact": "재검토: ⑧ 의 약정÷매출 입력을 커지는 방향으로 다시 본다 — 해지 불가 약정이 현재 판단의 약정 합계 약 $300B 보다 크다는 것이 원문으로 확인되면 그렇다. ⑨ 는 공개 제출본이 약정과 계약 수입을 같은 범위로 주어 게이트 4 를 계산할 수 있게 되면 커버리지를 처음으로 계산한다. 게이트 2(최근 1년 잉여현금흐름)에서 이미 미공시로 깎은 것을 게이트 4 에서 같은 사유로 다시 깎지 않는다는 규칙을 함께 적용한다.",
       "horizon": "long — 다년 약정이라 여러 해에 걸쳐 지출된다",
       "counter_evidence": [
         "$518B 가 해지 불가 약정 총액인지 계획 지출 전체인지 제목만으로는 가를 수 없다('largely' 라 일부는 해지 가능할 수 있다).",
@@ -364,7 +364,7 @@
       "published_at_utc": "2026-09-30T15:01:25Z",
       "title": "FTC Probing OpenAI and Anthropic Over Product Safety Concerns - bloomberg.com",
       "excerpt": "FTC Probing OpenAI and Anthropic Over Product Safety Concerns - bloomberg.com",
-      "relevance": "사실: Bloomberg 가 FTC(미 연방거래위원회)가 제품 안전 문제로 OpenAI 와 Anthropic 을 조사한다고 보도했다. 추론: 규제기관 조사는 ⑤(아군과 적대)의 적대 등급 재료다(별표 C: 적대는 수가 아니라 성격을 본다). 별표 G(⑤ = 3 + 동맹 등급 + 적대 등급)에서 적대 등급 '최소' 는 규제 조사·소송·시장 차단이 눈에 띄지 않을 때이고, 규제 조사는 '비용형'(사업 구조는 건드리지 않는 적대)의 예로 적혀 있다. 선별 당시 Anthropic ⑤ 판단은 동맹 등급 +1, 적대 등급 0(최소)으로 4점이었고, 이 근거를 인용한 제안 PRP-001 반영으로 적대 등급 -1(비용형), 3점이 됐다. 이해상충: 선별자가 Anthropic 모델 (선별 확신: 중간)",
+      "relevance": "사실: Bloomberg 가 FTC(미 연방거래위원회)가 제품 안전 문제로 OpenAI 와 Anthropic 을 조사한다고 보도했다. 추론: 규제기관 조사는 ⑤(아군 확보)의 적대 등급 재료이고, 적대는 수가 아니라 성격으로 본다. ⑤ 는 3 + 동맹 등급 + 적대 등급으로 계산하고, 적대 등급 '최소'(0)는 규제 조사·소송·시장 차단이 눈에 띄지 않을 때이며, 규제 조사는 '비용형'(-1, 사업 구조는 건드리지 않는 적대)의 예로 규칙에 적혀 있다. Anthropic ⑤ 판단은 이 조사와 국방부 거래 배제를 근거로 적대 등급을 -1(비용형)로 두고, 동맹 등급 +1 과 합쳐 3점이다. 이해상충: 선별자가 Anthropic 모델 (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "지금은 유지: 제안 PRP-001 로 적대 등급을 최소에서 비용형으로 반영했다. 조사가 판매 제한처럼 사업 구조를 건드리는 조치로 이어지면 구조형까지 본다.",
       "horizon": "medium — 조사는 보통 수개월 이상 걸린다",
@@ -423,10 +423,10 @@
       "excerpt": "Meta launches enterprise AI business seeking to cash in on vast spending - Financial Times",
       "relevance": "추론: 메타가 광고 밖 새 사업으로 기업용 AI 플랫폼을 출범했다는 FT 보도다. ④ 는 출하와 사업 부문만 세고 새 사업은 매출이나 고객 배치가 생길 때 근거가 된다. 메타 ④ 판단은 3점이고 근거는 “AI 광고 최적화로 매출 +28%, 그러나 광고 의존 약 98%”다. (선별 확신: 낮음)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: 출범과 책임자 영입(MongoDB CEO)만으로는 별표 D(계획·발표·인사·조직 개편은 현재 점수에 넣지 않는다)에 따라 점수 근거가 아니다. 기업용 매출이나 고객 배치가 공시되면 그때 메타 ④ 의 광고 의존을 낮춰 볼지 다시 본다.",
+      "conditional_impact": "지금은 유지: 출범과 책임자 영입(MongoDB CEO)만으로는 규칙 2.1(계획·발표는 현재 점수에 넣지 않으며 인사·조직 개편도 같다)에 따라 점수 근거가 아니다. 기업용 매출이나 고객 배치가 공시되면 그때 Meta ④ 의 광고 의존을 낮춰 볼지 다시 본다.",
       "horizon": "long — 기업용 매출은 여러 분기에 걸쳐 생긴다",
       "counter_evidence": [
-        "사업 책임자 영입은 조직 개편이라 근거가 아니다(별표 D, 2026-10 라벨링 사람 판정 L010).",
+        "사업 책임자 영입은 조직 개편이라 계획 0점 원칙(규칙 2.1)에 따라 근거가 아니다(2026-10 라벨링 사람 판정).",
         "OpenAI Dots 가 같은 기업 시장을 겨냥한다(제목 기준)."
       ],
       "unverified": [
@@ -450,9 +450,9 @@
       "published_at_utc": "2026-09-30T22:48:00Z",
       "title": "Exclusive: Meta’s Muse Tops 3 Million Weekly Users - The Information",
       "excerpt": "Exclusive: Meta’s Muse Tops 3 Million Weekly Users - The Information",
-      "relevance": "추론: 메타의 새 AI 앱 Muse 주간 사용자가 300만을 넘었다는 The Information 단독 보도다. 메타 ① 은 이미 소비자 채널 락인 최고 칸(5점, 30억+ 사용자)이라 별표 A(가장 강한 채널로 매긴다)에 따라 새 앱 지표로 움직이지 않고, ② 패러다임 적응 경로는 메타 ② 판단에서 이미 통과로 적혀 있어, 이 카드는 후발 서비스가 빨리 크는 소식으로서 ③ 후발 가속도(성장률이 오르는가)에만 쓴다(2026-10 라벨링 사람 판정). 메타 ③ 판단은 별도 수익모델 ✅, 모방 불가능성 ⚠️, 후발 가속도 ⚠️(“AI 매출 미공시, 채택 증거 아직 없음”), 문이 닫힌 증거 없음이다. (선별 확신: 중간)",
+      "relevance": "추론: Meta 의 새 AI 앱 Muse 주간 사용자가 300만을 넘었다는 The Information 단독 보도다. Meta ① 은 이미 소비자 채널 락인 최고 칸(5점, 30억+ 사용자)이고 ① 은 가장 강한 채널로 점수를 매기므로 새 앱 지표로 움직이지 않는다. ② 패러다임 적응 경로는 Meta ② 판단에서 이미 통과다. 그래서 이 카드는 후발 서비스가 빨리 크는 소식으로서 ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에만 쓴다(2026-10 라벨링 사람 판정). Meta ③ 판단은 별도 수익모델 통과, 모방 불가능성 부분, 후발 가속도 부분(“AI 매출 미공시, 채택 증거 아직 없음”), 문이 닫힌 증거 없음이다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "재검토: 메타 ③ 후발 가속도를 ⚠️ 절반 인정에서 인정 쪽으로 다시 볼지 본다. Muse 주간 사용자가 분기마다 더 빠르게 늘고 메타가 사용자나 수익화(광고·구독) 수치를 공식 공시하면 그렇다. 단일 보도 수치 하나로는 바꾸지 않는다.",
+      "conditional_impact": "재검토: Meta ③ 후발 가속도를 부분에서 통과로 다시 볼지 본다. Muse 주간 사용자가 분기마다 더 빠르게 늘고 Meta 가 사용자나 수익화(광고·구독) 수치를 공식 공시하면 그렇다. 단일 보도 수치 하나로는 바꾸지 않는다.",
       "horizon": "medium — 사용 지속성은 1~2 분기 지나야 보인다",
       "counter_evidence": [
         "주간 사용자 300만은 메타 전체 사용자 30억+ 에 비해 작다.",
@@ -481,7 +481,7 @@
       "published_at_utc": "2026-09-25T12:15:07Z",
       "title": "Introducing the new Copilot with Home, Code and Autopilot - The Official Microsoft Blog",
       "excerpt": "Introducing the new Copilot with Home, Code and Autopilot - The Official Microsoft Blog",
-      "relevance": "추론: 마이크로소프트가 에이전트(Autopilot)·코딩(Code)을 묶은 새 Copilot 을 냈다는 공식 블로그 발표로, ② 의 패러다임 적응 경로(남이 바꾼 판 — 에이전트·추론·코딩 — 에 빨리 올라타는가)를 다시 볼 계기다. 마이크로소프트 ② 판단은 기준선에서 승계한 3점이고 근거는 “Maia 200 배포 물량 미확인, Arena 상위권에 자체 모델 없음, OpenAI·Anthropic 양쪽 조달”이다. (선별 확신: 낮음)",
+      "relevance": "추론: 마이크로소프트가 에이전트(Autopilot)·코딩(Code)을 묶은 새 Copilot 을 냈다는 공식 블로그 발표로, ② 의 패러다임 적응 경로(남이 바꾼 판 — 에이전트·추론·코딩 — 에 빨리 올라타는가)를 다시 볼 계기다. 마이크로소프트 ② 판단은 3점이고, Maia 200 배포 물량이 확인되지 않았고 Arena 상위권에 자체 모델이 없으며 모델을 OpenAI·Anthropic 양쪽에서 조달한다는 것을 근거로 든다. (선별 확신: 낮음)",
       "channel": "company_statement",
       "conditional_impact": "재검토: 마이크로소프트 ② 의 패러다임 적응 경로 통과 여부를 위쪽으로 다시 볼지 본다. 에이전트 실무 독립 측정(OSWorld·Terminal-Bench 등)이나 Autopilot 채택 수치가 공개되면 그렇다. 제품 출시와 벤더 발표만으로는 바꾸지 않는다.",
       "horizon": "medium — 채택 수치는 1~2 분기 뒤",
@@ -538,14 +538,14 @@
       "published_at_utc": "2026-09-28T18:44:49Z",
       "title": "OpenAI sparked Hugging Face bids with early investment offer ahead of Nvidia's $13 billion deal - cnbc.com",
       "excerpt": "OpenAI sparked Hugging Face bids with early investment offer ahead of Nvidia's $13 billion deal - cnbc.com",
-      "relevance": "추론: CNBC 제목이 NVIDIA 의 Hugging Face 관련 130억 달러 거래와 그 앞의 OpenAI 투자 제안을 전한다. 기존 NVIDIA ① 판단 근거는 이 거래를 2026-09-02 에 서명한 인수(종결 2027 상반기·규제 승인 조건부)로 적고 있다. 인수가 끝나면 GPU 밖 사업 부문이 늘어 ④(호황 이후 비전 — 사업 부문 수·자체 칩 출하)의 근거가 된다. 지금 NVIDIA ④ 판단은 10개 영역 진출로 5점, 최상단이다. (선별 확신: 낮음)",
+      "relevance": "추론: CNBC 제목이 NVIDIA 의 Hugging Face 관련 130억 달러 거래와 그 앞의 OpenAI 투자 제안을 전한다. NVIDIA 는 2026-09-02 Hugging Face 인수 계약에 서명했고, 종결은 2027 상반기 예정이며 규제 승인 조건부다. 인수가 끝나면 GPU 밖 사업 부문이 늘어 ④(호황 이후 비전 — 사업 부문 수·자체 칩 출하)의 근거가 된다. 지금 NVIDIA ④ 판단은 10개 영역 진출로 최상단 5점이다. (선별 확신: 낮음)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: 거래가 종결 전이라 별표 D(계획·발표·서명은 점수 근거가 아니다)에 따라 ④ 근거가 아니고, ④ 는 이미 최상단이다. 종결되고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 근거 문장을 보강한다. 기존 NVIDIA ⑤ 판단은 'HF 인수는 ⑤ 근거가 아니다' 라고 적어 두었다.",
+      "conditional_impact": "지금은 유지: 거래가 종결 전이라 계획·발표·서명은 점수 근거가 아니라는 원칙(rules.md 2.1)에 따라 ④ 근거가 아니고, ④ 는 이미 최상단이다. 종결되고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 근거 문장을 보강한다. NVIDIA ⑤ 판단도 종결 전인 이 인수를 ⑤ 근거로 세지 않는다.",
       "horizon": "medium — 거래 종결 시점까지",
       "counter_evidence": [
         "기사의 주어는 OpenAI 의 선행 투자 제안이다.",
-        "130억 달러가 9/2 에 서명한 인수와 같은 거래인지 제목만으로 확인하지 못했다.",
-        "기존 판단은 종결 시 Hugging Face 를 ① 업무 채널로 먼저 보고 있어, ④ 보다 ① 에 닿을 수 있다."
+        "130억 달러가 2026-09-02 에 서명한 인수와 같은 거래인지 제목만으로 확인하지 못했다.",
+        "NVIDIA ① 판단은 종결 시 Hugging Face 를 업무 채널로 보므로, 이 거래는 ④ 보다 ① 에 먼저 닿을 수 있다."
       ],
       "unverified": [
         "제목만 보고 판정함(본문·웹 미조회)",
@@ -568,9 +568,9 @@
       "published_at_utc": "2026-09-30T16:21:03Z",
       "title": "CoreWeave Delivers NVIDIA Vera Rubin NVL72 Performance at Production Scale, Starting With Cognition - CoreWeave",
       "excerpt": "CoreWeave Delivers NVIDIA Vera Rubin NVL72 Performance at Production Scale, Starting With Cognition - CoreWeave",
-      "relevance": "추론: 고객사 CoreWeave 가 Vera Rubin NVL72 를 '생산 규모'로 제공한다고 밝혔다. 지금 NVIDIA ② 판단은 5점(최상단)이고, 그 note 는 'Rubin 줄은 발표이고 저장소 어느 자료도 양산을 말하지 않는다' 고 적어 두었다. 이 기사는 바로 그 출하 여부의 공백을 건드린다. (선별 확신: 중간)",
+      "relevance": "추론: 고객사 CoreWeave 가 Vera Rubin NVL72 를 '생산 규모'로 제공한다고 밝혔다. 지금 NVIDIA ② 판단은 5점(최상단)이고, Rubin 의 성능 수치는 NVIDIA 발표이며 NVIDIA 실적이나 공시로 양산·출하가 확인된 적은 없다. 이 기사는 그 출하 여부의 공백을 건드린다. (선별 확신: 중간)",
       "channel": "company_statement",
-      "conditional_impact": "지금은 유지: ② 는 이미 최상단이고, 세대 격차 판정은 고객·벤더 발표 수치가 아니라 독립 측정이 있어야 한다. Rubin 출하가 NVIDIA 실적이나 공시로 확인되면 ② 판단 note 의 'Rubin 은 발표' 표기를 '출하' 로 고쳐 근거 문장을 보강한다.",
+      "conditional_impact": "지금은 유지: ② 는 이미 최상단이고, 세대 격차 판정은 고객·벤더 발표 수치가 아니라 독립 측정이 있어야 한다. Rubin 출하가 NVIDIA 실적이나 공시로 확인되면 ② 근거 문장에서 Rubin 을 발표가 아니라 출하로 적는다.",
       "horizon": "short — 다음 분기 실적(2026-11 말)에서 Rubin 매출 인식 여부로 확인 가능",
       "counter_evidence": [
         "상대 회사(CoreWeave) 발표이지 NVIDIA 1차 공시가 아니다.",
@@ -684,15 +684,15 @@
       "excerpt": "10-Q 2026-09-11",
       "relevance": "추론: 2026-08-31 분기 10-Q 로 Oracle 의 가장 최근 정기 보고서다. ⑨ 를 계산하는 현금·최근 1년 잉여현금흐름·RPO(계약했으나 아직 인식하지 않은 매출)와 ⑧ RPO 고객 집중의 1차 자료다. 지금 Oracle ⑨ 판단은 게이트 1(본업이 버는가) 통과, 게이트 2(최근 1년 잉여현금흐름) 마이너스 약 287억 달러, 게이트 3(버티는 기간) 1.61년으로 한 칸 하향, 게이트 4(약정 커버리지 = RPO ÷ 미개시 리스) 2.66배로 유지되어 -3 이고(2026-08-31 관측), 판단 입력 가운데 잉여현금흐름 추세(fcf_trend)는 '모름' 이다. ⑧ 판단은 -4(단일 고객이 백로그의 절반)다. (선별 확신: 높음)",
       "channel": "disclosure",
-      "conditional_impact": "재검토: Oracle ⑨ 의 계산 입력(현금, 최근 1년 잉여현금흐름, RPO)이 2026-05-31 기준이라 이 10-Q 의 2026-08-31 값으로 갱신하고, 게이트 3 버티는 기간(1~3년이면 한 칸 하향, 1년 미만이면 두 칸)과 게이트 4 커버리지(1배 미만이면 한 칸 하향)를 다시 계산한다. 비어 있는 추세 입력을 채울 수 있는지도 본다. ⑧ 은 RPO 고객별 비중이 공시돼 있고 OpenAI 비중이 뚜렷이 바뀌었을 때만 다시 본다. ⑦ 의 RPO ÷ 매출은 같은 분기 8-K 근거에서 다루므로 여기서는 뺐다.",
+      "conditional_impact": "지금은 유지: 이 10-Q 의 2026-08-31 값으로 Oracle ⑨ 의 계산 입력(현금 $36.37B, 최근 1년 잉여현금흐름 -$28.72B, RPO $664B)이 갱신돼 있고, 게이트 3 버티는 기간 1.61년(1~3년 구간이라 한 칸 하향)과 게이트 4 약정 커버리지 2.66배(1배 이상이라 유지)로 -3 이 나온다. 잉여현금흐름 추세 입력은 2026-05-31 -$23.69B 와 2026-08-31 -$28.72B 두 점뿐이라 다음 10-Q(2026-11-30 분기)까지 보고 채운다. ⑧ 은 이 10-Q 에 RPO 고객별 비중이 나오지 않아 단일 고객 의존 판정을 바꿀 새 사실이 없다. ⑦ 의 RPO ÷ 매출(RPO $664B ÷ 최근 1년 매출 $71.78B)은 Oracle ⑦ 판단 문장에서 다룬다.",
       "horizon": "short — 분기 재무",
       "counter_evidence": [
-        "확정 미인출 여신 관측이 비어 있어 완충은 현금만으로 계산된다."
+        "완충에는 2026-08-31 현금 $36.37B 와 함께 10-K 의 확정 미인출 회전여신 $10.0B(2026-05-31 기준 미인출, 이 10-Q 에 변동 기재 없음)를 넣고 있어, 8월 말 시점의 미인출을 원문으로 확인한 것은 아니다. 여신을 빼면 버티는 기간은 1.27년이고 구간은 같다.",
+        "최근 1년 영업현금흐름에 2026-06~08 분기 고객 선수금 $11.36B 가 들어 있어, 이를 빼면 최근 1년 잉여현금흐름은 약 -$40.08B 다."
       ],
       "unverified": [
-        "제목·매체·날짜만 보고 판정함(원문 미열람)",
-        "공시 본문을 열지 않음 — 양식·날짜·Item 번호만 보고 판정함",
-        "RPO 고객별 비중이 공시됐는지 모름"
+        "2026-08-31 시점에도 회전여신 $10.0B 가 미인출인지는 원문으로 확인되지 않는다(10-K 는 2026-05-31 기준이고 10-Q 는 이 여신을 언급하지 않는다).",
+        "RPO 가운데 OpenAI 몫이 지금도 약 절반인지는 회사 공시로 확인되지 않는다(10-Q 본문에 OpenAI 언급과 고객 집중 서술이 없다)."
       ],
       "change_vs_previous": "new",
       "status": "confirmed",
@@ -889,7 +889,7 @@
       "counter_evidence": [
         "월 지급액이 확정 약정인지 상한인지 제목으로 알 수 없다.",
         "스페이스X ⑦ 판단의 '$6.7B 클라우드 계약' 과 같은 계약인지 모른다.",
-        "Google 은 자체 TPU 가 있어 떠날 수 있으므로(별표 H 3문: 상대가 나를 떠날 수 있으면 동맹이 아니다) ⑤ 동맹으로는 세지 않는다."
+        "Google 은 자체 TPU 가 있어 떠날 수 있으므로(⑤ 조달·동맹 셋째 질문: 상대가 나를 떠날 수 있으면 동맹에서 뺀다) ⑤ 동맹으로는 세지 않는다."
       ],
       "unverified": [
         "제목만 보고 판정함",
@@ -969,7 +969,7 @@
       "published_at_utc": null,
       "title": "10-Q 2026-07-23",
       "excerpt": "10-Q 2026-07-23",
-      "relevance": "추론: 테슬라의 가장 최근 정기 보고서(10-Q, 2026년 2분기)다. 영업현금흐름·설비투자는 ⑨ 게이트 2(최근 1년 잉여현금흐름이 마이너스인가)의, 매출·이익은 ⑥ 의 P1(최근 1년 이익 기준 PER)·P3(매출 성장)의 원천이다. CNBC(2026-07-22) 제목은 같은 분기를 '잉여현금흐름 마이너스 전환, 마진 하락' 으로 적는다. 테슬라 ⑨ 판단은 -1 이다. 게이트 1(본업이 영업이익을 내는가)을 통과했고, 게이트 2 의 최근 1년 잉여현금흐름은 +$5.76B 흑자이지만 영업이익이 57% 줄어 추세 악화로 본다. (선별 확신: 중간)",
+      "relevance": "추론: 테슬라의 가장 최근 정기 보고서(10-Q, 2026년 2분기)다. 영업현금흐름·설비투자는 ⑨ 게이트 2(최근 1년 잉여현금흐름이 마이너스인가)의, 매출·이익은 ⑥ 의 P1(최근 1년 이익 기준 PER)·P3(매출 성장)의 원천이다. CNBC(2026-07-22) 제목은 같은 분기를 '잉여현금흐름 마이너스 전환, 마진 하락' 으로 적는다. 테슬라 ⑨ 판단은 -1 이다. 게이트 1(본업이 영업이익을 내는가)을 통과했고, 게이트 2 의 최근 1년 잉여현금흐름은 +$5.76B 흑자이지만, 2026년 상반기 설비투자가 $8.28B 로 전년 같은 기간($3.89B)의 두 배를 넘고 상반기 잉여현금흐름이 $0.35B 로 전년($0.81B)보다 줄어 추세 악화로 본다. (선별 확신: 중간)",
       "channel": "disclosure",
       "conditional_impact": "지금은 유지: 지금 계산에 쓰는 최근 1년 관측(잉여현금흐름 +US$5,762M, 매출·순이익)은 이미 2025-07-01~2026-06-30 창이라 이 분기가 들어 있고, 분기 적자에도 1년 합계는 흑자다. 테슬라 ⑨ 판단을 바꾸지 않고 추세 악화 근거를 보강한다. 3분기까지 적자 분기가 이어져 1년 합계가 음수가 되면 게이트 2 를 통과하지 못하고 게이트 3(완충으로 버티는 기간)으로 내려가며, 영업적자가 되면 게이트 1 부터 다시 본다.",
       "horizon": "short — 다음 계산 실행에서 TTM 창을 갱신한다",
@@ -1082,13 +1082,13 @@
       "published_at_utc": "2026-10-01T00:11:53Z",
       "title": "Lip-Bu Tan calls TSMC a partner rather than a rival - digitimes",
       "excerpt": "Lip-Bu Tan calls TSMC a partner rather than a rival - digitimes",
-      "relevance": "추론: Intel CEO 가 TSMC 를 경쟁자가 아니라 파트너라고 했다는 digitimes 제목이다. Intel 은 TSMC 의 경쟁 파운드리(Intel Foundry)를 가진 회사이므로, Intel 이 TSMC 공정을 쓰는 고객이라면 ⑤ 동맹 등급의 '경쟁사까지 내 공정에 편입했다' 조항에 닿는다. 지금 TSMC ⑤ 판단은 동맹 등급 +1, 적대 등급 -1(Intel Foundry·관세)로 3점이고, 2026-09-15 엄격 재판정은 TSMC 에 편입된 경쟁사가 NVIDIA 의 경쟁사뿐이고 TSMC 자신의 경쟁사가 들어온 근거는 없다고 보았다. (선별 확신: 낮음)",
+      "relevance": "추론: Intel CEO 가 TSMC 를 경쟁자가 아니라 파트너라고 했다는 digitimes 제목이다. Intel 은 TSMC 의 경쟁 파운드리(Intel Foundry)를 가진 회사이므로, Intel 이 TSMC 공정을 쓰는 고객이라면 ⑤ 동맹 등급의 '경쟁사까지 내 공정에 편입했다' 조항에 닿는다. 지금 TSMC ⑤ 판단은 동맹 등급 +1, 적대 등급 -1(Intel Foundry·관세)로 3점이고, TSMC 공정에 편입된 경쟁사는 NVIDIA 의 경쟁사뿐이며 TSMC 자신의 경쟁사가 들어온 근거는 없다고 본다. (선별 확신: 낮음)",
       "channel": "press",
       "conditional_impact": "재검토: Intel 이 TSMC 공정에 실제로 위탁 생산한다는 사실이 Intel·TSMC 공시나 1차 발표로 확인되면 TSMC ⑤ 동맹 등급을 위쪽으로 다시 본다(경쟁사 편입 조항이 서는지). 같은 잣대가 닿는 다른 회사가 있는지도 함께 본다(체크리스트 Q03: 한 회사에 댄 잣대는 같은 잣대가 닿는 모든 회사에 댄다). Intel Foundry 를 적대 근거로 쓰는 적대 등급과 함께 읽는다.",
       "horizon": "medium — Intel 의 외부 위탁 물량이 공시되는 시점",
       "counter_evidence": [
         "발언이지 계약·물량 공시가 아니다.",
-        "Intel 의 TSMC 위탁은 이전부터 있던 사실일 수 있어 2026-09-15 재판정이 이미 보고 뺐을 가능성이 있다.",
+        "Intel 의 TSMC 위탁이 오래된 사실이라면, 지금 TSMC ⑤ 판단은 이미 그것을 경쟁사 편입으로 보지 않은 것일 수 있다.",
         "같은 묶음의 Panther Lake 분해 기사는 Intel 18A 가 TSMC N3E 에 근접했다고 전한다. 경쟁이 강해지는 방향이다."
       ],
       "unverified": [
@@ -1112,9 +1112,9 @@
       "published_at_utc": null,
       "title": "8-K 2026-09-03 · Items 8.01",
       "excerpt": "8-K 2026-09-03 · Items 8.01",
-      "relevance": "추론: NVIDIA 가 2026-09-03 에 낸 8-K(Item 8.01 기타 사건)다. 본문 파일명(nvda-20260902)과 날짜가 기존 NVIDIA ① 판단이 적은 Hugging Face 인수 서명(2026-09-02)·발표(2026-09-03)와 맞아, 거래를 회사가 직접 밝힌 1차 자료일 가능성이 높다. 지금 NVIDIA ① 판단은 부품 채널 상한인 2 이고, 근거는 '종결되면 업무 채널(HF 엔터프라이즈)이 생겨 부품 상한을 넘길 유일한 경로이나 2027 상반기·규제 승인 전까지 미실현' 이다. (선별 확신: 중간)",
+      "relevance": "추론: NVIDIA 가 2026-09-03 에 낸 8-K(Item 8.01 기타 사건)다. 본문 파일명(nvda-20260902)과 날짜가 NVIDIA 의 Hugging Face 인수 서명(2026-09-02)·발표(2026-09-03)와 맞아, 거래를 회사가 직접 밝힌 1차 자료일 가능성이 높다. 지금 NVIDIA ① 판단은 부품 채널 상한인 2 이고, 종결되면 업무 채널(Hugging Face 엔터프라이즈)이 생겨 상한을 넘길 유일한 경로가 되지만 2027 상반기 종결·규제 승인 전까지는 미실현으로 본다. (선별 확신: 중간)",
       "channel": "disclosure",
-      "conditional_impact": "지금은 유지: 인수 서명과 발표는 rules.md 2.1(계획·발표·서명은 점수 근거가 아니다)에 따라 ① 을 바꾸지 않는다. 이 공시는 ① 판단 근거 문장의 '서명' 사실을 회사 공시로 뒷받침하는 데만 쓰고, 종결이 공시되면 그때 ① 의 부품 채널 상한을 다시 본다(트리거 TRG-015).",
+      "conditional_impact": "지금은 유지: 인수 서명과 발표는 rules.md 2.1(계획·발표·서명은 점수 근거가 아니다)에 따라 ① 을 바꾸지 않는다. 이 공시는 ① 판단 근거의 서명 사실을 회사 공시로 뒷받침하는 데만 쓰고, 종결이 공시되면 그때 ① 의 부품 채널 상한을 다시 본다.",
       "horizon": "long — 종결 예정 2027 상반기, 규제 승인 조건부",
       "counter_evidence": [
         "Item 8.01 은 기타 사건 항목이라 Hugging Face 가 아닌 다른 공지일 수 있다.",
@@ -1142,7 +1142,7 @@
       "excerpt": "Nvidia's bet that its chips can finance the AI boom gets a Wall Street reality check - Reuters",
       "relevance": "추론: NVIDIA 칩을 담보로 AI 설비 자금을 조달하는 구조(NVIDIA 의 GPU 잔존가치 보증 등)에 월가가 의문을 던진다는 Reuters 제목이다. 고객이 투자·부채로 GPU 를 사고 NVIDIA 가 그 신용을 받쳐 주는 구조는 ⑦ 판정표(가로축: 내 매출을 내는 고객이 조달로 연명하는가, 세로축: 내 돈이 고객을 거쳐 내 매출로 돌아오는가)의 재료다. 지금 NVIDIA ⑦ 판단은 조달 의존 고객 비중 큼 + 내 돈이 돌아옴으로 -2(⑦ 범위의 하한)다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: ⑦ 은 이미 범위 하한이라 더 내려갈 자리가 없다. 담보 금융에 대한 시장의 의문은 가로축 '조달 의존 고객 비중 큼' 판단의 근거 문장을 보강하는 데 쓴다. 보증이 실제로 발동해 돈이 나가면 ⑨ 를 다시 본다(트리거 NEW-TRIG-016).",
+      "conditional_impact": "지금은 유지: ⑦ 은 이미 범위 하한이라 더 내려갈 자리가 없다. 담보 금융에 대한 시장의 의문은 가로축 '조달 의존 고객 비중 큼' 판단의 근거 문장을 보강하는 데 쓴다. 보증이 실제로 발동해 돈이 나가면 ⑨ 를 다시 본다.",
       "horizon": "medium — GPU 담보 대출 만기와 잔존가치 재평가 시점",
       "counter_evidence": [
         "분석 기사이고 보증 발동이나 손실 같은 실제 사건을 전하는 것은 아니다.",
@@ -1199,7 +1199,7 @@
       "excerpt": "Nvidia’s Blind Spots Exposed by China Chip Smuggling - Bloomberg.com",
       "relevance": "추론: 중국으로의 NVIDIA 칩 밀수 사건이 NVIDIA 의 관리 사각지대를 드러냈다는 Bloomberg 제목이다. 같은 날 미 당국이 3억 달러어치 NVIDIA 서버를 중국에 밀수한 혐의로 기업 대표를 체포했다는 보도(Ars Technica·SCMP)가 나왔다. 수출 통제 위반이 NVIDIA 자신에 대한 규제 조사로 번지면 ⑤ 적대 등급의 비용형 재료다. 지금 NVIDIA ⑤ 판단은 동맹 등급 +1, 적대 등급 -2(구조형 — 매출 약 40% 인 하이퍼스케일러 고객이 모두 자체 칩을 만드는 경쟁자)다. (선별 확신: 낮음)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: 체포 대상은 밀수업자이고 NVIDIA 가 아니다. 규제 조사·벌금은 비용형 적대라 이미 구조형인 적대 등급을 바꾸지 않는다. 미 당국이 NVIDIA 자체를 조사하거나 제재하는 1차 발표가 나오면 ⑤ 근거 문장에 더하고, 중국 시장 차단과 겹쳐 두 번째 구조형 전선이 되는지는 트리거 TRG-013 에서 본다.",
+      "conditional_impact": "지금은 유지: 체포 대상은 밀수업자이고 NVIDIA 가 아니다. 규제 조사·벌금은 비용형 적대라 이미 구조형인 적대 등급을 바꾸지 않는다. 미 당국이 NVIDIA 자체를 조사하거나 제재하는 1차 발표가 나오면 ⑤ 근거 문장에 더하고, 중국 시장 차단과 겹쳐 두 번째 구조형 전선이 되는지는 중국 수출 통제 트리거에서 관찰한다.",
       "horizon": "medium — 수사와 의회 대응 진행에 따라",
       "counter_evidence": [
         "밀수는 제3자의 위법이고 NVIDIA 가 피해자로 그려질 수도 있다."
@@ -1311,7 +1311,7 @@
       "published_at_utc": "2026-10-05T23:08:00Z",
       "title": "Apple Owes $184 Million in Interest on $634 Million Patent Loss - Bloomberg Law News",
       "excerpt": "Apple Owes $184 Million in Interest on $634 Million Patent Loss - Bloomberg Law News",
-      "relevance": "추론: Apple 이 6억 3,400만 달러 특허 패소 판결에 이자 1억 8,400만 달러를 더 물게 됐다는 Bloomberg Law 제목이다(제목에 소송 상대가 없다). 소송·평결은 ⑤ 적대 등급의 재료이고, 판매 금지가 아닌 손해배상이면 비용형이다. 지금 Apple ⑤ 판단은 동맹 등급 +1, 적대 등급 -1(비용형 — 규제·경쟁사 소송은 져도 아이폰은 팔린다)이다. 직전 실행에서 확정된 햅틱 특허 57억 달러 평결(EV-apple-003)과 같은 부류다. (선별 확신: 중간)",
+      "relevance": "추론: Apple 이 6억 3,400만 달러 특허 패소 판결에 이자 1억 8,400만 달러를 더 물게 됐다는 Bloomberg Law 제목이다(제목에 소송 상대가 없다). 소송·평결은 ⑤ 적대 등급의 재료이고, 판매 금지가 아닌 손해배상이면 비용형이다. 지금 Apple ⑤ 판단은 동맹 등급 +1, 적대 등급 -1(비용형 — 규제·경쟁사 소송은 져도 아이폰은 팔린다)이다. 햅틱 특허 57억 달러 평결과 같은 부류의 손해배상 소송이다. (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "지금은 유지: 손해배상과 이자는 비용형 적대라 Apple 적대 등급을 그대로 두고 법적 전선 목록만 보강한다. 판매·수입 금지처럼 사업 구조를 건드리는 명령이 붙으면 구조형인지 다시 본다.",
       "horizon": "medium — 항소 진행",
@@ -1507,7 +1507,7 @@
       "published_at_utc": "2026-10-01T03:55:00Z",
       "title": "Meta reportedly calls its AI data centers ‘pilot models’ — its research tax credits jumped from $700M to $3.9B - Yahoo Finance",
       "excerpt": "Meta reportedly calls its AI data centers ‘pilot models’ — its research tax credits jumped from $700M to $3.9B - Yahoo Finance",
-      "relevance": "추론: 메타가 AI 데이터센터를 '시험 모형(pilot models)'으로 분류해 연구개발 세액공제를 7억 달러에서 39억 달러로 늘렸다는 보도다. 세무 당국과 다툼이 되면 과세 분쟁이라 ⑤ 적대 등급의 재료이고, 사업 구조를 건드리지 않으므로 비용형이다. 메타 ⑤ 판단은 동맹 등급 +1(광고주 생태계), 적대 등급 -1(비용형: 미성년자 소송·EU 벌금)이다. 시험 실행에서 확정된 IRS 세액공제 환수 보도(저커버그 주식 보상을 연구비로 처리)와 같은 갈래일 수 있다. (선별 확신: 낮음)",
+      "relevance": "추론: Meta 가 AI 데이터센터를 '시험 모형(pilot models)'으로 분류해 연구개발 세액공제를 7억 달러에서 39억 달러로 늘렸다는 보도다. 세무 당국과 다툼이 되면 과세 분쟁이라 ⑤ 적대 등급의 재료이고, 사업 구조를 건드리지 않으므로 비용형이다. Meta ⑤ 판단은 동맹 등급 +1(광고주 생태계), 적대 등급 -1(비용형: 미성년자 소송·EU 벌금)이다. 저커버그 주식 보상을 연구비로 처리한 데 대한 IRS 세액공제 환수 보도와 같은 갈래일 수 있다. (선별 확신: 낮음)",
       "channel": "secondary",
       "conditional_impact": "지금은 유지: 메타 ⑤ 적대 등급은 비용형 그대로이고 근거 문장에 세무 분쟁을 보강할 수 있을 뿐이다. 세액공제 환수나 과세 처분이 확정돼도 금액 부담이지 사업 구조를 건드리지 않으므로 구조형으로 올리지 않는다.",
       "horizon": "long — 세무 분쟁은 여러 해 걸린다",
@@ -1678,7 +1678,7 @@
       "published_at_utc": "2026-10-02T13:50:39Z",
       "title": "Power approval set to delay Oracle's Wisconsin AI datacenter - The Register",
       "excerpt": "Power approval set to delay Oracle's Wisconsin AI datacenter - The Register",
-      "relevance": "추론: 전력 승인 절차 때문에 오라클의 위스콘신 AI 데이터센터가 늦어질 것이라는 The Register 보도다. 시험 실행에서 '미확인' 으로 적었던 위스콘신 1.3GW 지연 가능성을 다른 매체가 이어 보도한 것이다. 지연은 RPO(계약했으나 아직 인식하지 않은 매출) 인식과 미개시 리스 개시를 함께 늦추므로 ⑨ 게이트 4(약정 커버리지) 계산의 재료다. 지금 Oracle ⑨ 판단은 -3(버티는 기간 1.61년으로 한 단계 하향, 약정 커버리지 2.66배로 유지 — 2026-08-31 관측)이다. (선별 확신: 중간)",
+      "relevance": "추론: 전력 승인 절차 때문에 Oracle 의 위스콘신 AI 데이터센터가 늦어질 것이라는 The Register 보도다. 위스콘신 1.3GW 데이터센터의 지연 가능성을 매체가 구체적으로 보도한 것이다. 지연은 RPO(계약했으나 아직 인식하지 않은 매출) 인식과 미개시 리스 개시를 함께 늦추므로 ⑨ 게이트 4(약정 커버리지) 계산의 재료다. 지금 Oracle ⑨ 판단은 -3(버티는 기간 1.61년으로 한 단계 하향, 약정 커버리지 2.66배로 유지 — 2026-08-31 관측)이다. (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "지금은 유지: 지연은 계약 수입과 미개시 약정을 함께 미루므로 커버리지 비율을 바로 바꾸지 않는다. 다음 10-Q 에서 약정 일정이나 RPO 인식 시점이 바뀌고 커버리지가 1배 아래로 내려가는지 확인될 때 Oracle ⑨ 게이트 4 를 다시 계산한다.",
       "horizon": "medium — 전력 승인은 수개월 단위",
@@ -1736,7 +1736,7 @@
       "published_at_utc": "2026-10-01T22:00:00Z",
       "title": "Palantir and Armada Partner to Accelerate Sovereign AI Infrastructure - Yahoo Finance",
       "excerpt": "Palantir and Armada Partner to Accelerate Sovereign AI Infrastructure - Yahoo Finance",
-      "relevance": "추론: 팔란티어가 모듈형 데이터센터 업체 Armada 와 손잡고 소버린 AI 인프라를 함께 공급한다는 발표다. 팔란티어 소프트웨어를 Armada 장비에 얹어 파는 공동 제공이라 ⑤ 조달·동맹 네 질문(돈 주고 사는 관계는 동맹이 아니다)의 1번(공동개발·재판매는 동맹 후보)과 2번(상대가 잘되면 나도 잘되는가)에 닿는 상업 동맹이다. 시험 실행에서 PwC 제휴 확대를 ⑤ 근거로 확정한 것과 같은 잣대다. 팔란티어 ⑤ 판단은 동맹 등급 +1(Nvidia·SAP·Accenture), 적대 등급 -2(구조형)이다. (선별 확신: 중간)",
+      "relevance": "추론: Palantir 가 모듈형 데이터센터 업체 Armada 와 손잡고 소버린 AI 인프라를 함께 공급한다는 발표다. Palantir 소프트웨어를 Armada 장비에 얹어 파는 공동 제공이라 ⑤ 조달·동맹 네 질문(돈 주고 사는 관계는 동맹이 아니다)의 1번(공동개발·재판매는 동맹 후보)과 2번(상대가 잘되면 나도 잘되는가)에 닿는 상업 동맹이다. 회사 사이의 공동 제공·재판매 제휴를 상업 동맹으로 보는 잣대를 그대로 댄 것이다. Palantir ⑤ 판단은 동맹 등급 +1(Nvidia·SAP·Accenture), 적대 등급 -2(구조형)이다. (선별 확신: 중간)",
       "channel": "company_statement",
       "conditional_impact": "지금은 유지: 팔란티어 ⑤ 동맹 등급은 +1 그대로이고 상업 동맹 목록을 보강한다. +2 는 지분이 걸린 동맹이 복수이거나 경쟁사까지 내 플랫폼에 편입했을 때인데 Armada 제휴는 둘 다 아니다. 공동 배치 매출이나 고객 사례가 공시되면 근거 수준을 실측으로 올린다.",
       "horizon": "medium — 배치 실적은 1~2 분기 뒤에 보인다",
@@ -1822,7 +1822,7 @@
       "published_at_utc": "2026-10-03T04:04:37Z",
       "title": "Over 20 NHS trusts have ditched Palantir waiting-list tools, analysis shows - Financial Times",
       "excerpt": "Over 20 NHS trusts have ditched Palantir waiting-list tools, analysis shows - Financial Times",
-      "relevance": "추론: NHS 병원 트러스트 20곳 넘게 팔란티어의 대기자 명단 도구 사용을 그만뒀다는 FT 분석 보도다. 시험 실행에서 영국 경찰 다섯 곳의 프로젝트 종료를 ① 근거로 확정한 것과 같은 잣대로, 고객이 실제로 떠났다는 사실은 전환비용 락인이 약하다는 ① 의 재료다. 팔란티어 ① 판단은 2(전환비용은 실재하나 네트워크 효과가 아니다)이다. 떠난 이유가 제목에 없어 ⑤ 적대 근거로는 쓰지 않는다. (선별 확신: 중간)",
+      "relevance": "추론: NHS 병원 트러스트 20곳 넘게 Palantir 의 대기자 명단 도구 사용을 그만뒀다는 FT 분석 보도다. 2026-09-21 영국 경찰 다섯 곳의 프로젝트 종료를 ① 근거로 쓴 것과 같은 잣대로, 고객이 실제로 떠났다는 사실은 전환비용 락인이 약하다는 ① 의 재료다. Palantir ① 판단은 2(전환비용은 실재하나 네트워크 효과가 아니다)이다. 떠난 이유가 제목에 없어 ⑤ 적대 근거로는 쓰지 않는다. (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "지금은 유지: 팔란티어 ① 은 이미 '전환비용은 있으나 네트워크 효과가 없다' 는 판정이라 그대로 두고, 고객 이탈 사례로 근거 문장을 보강한다. 이탈이 NHS 연합 데이터 플랫폼 계약 자체의 축소로 이어지면 ⑧ 의 정부 계약 상실 사례로 따로 본다.",
       "horizon": "medium — 트러스트별 재계약은 수개월 단위",
@@ -1854,7 +1854,7 @@
       "excerpt": "EXCLUSIVE: Broadcom to lend Anthropic up to $42 billion to lease its chips, filing says - Reuters",
       "relevance": "추론: 공급자가 돈을 빌려주고 그 돈으로 자기 칩을 빌려 쓰게 하는 구조라, Anthropic 쪽에서는 조달(돈 주고 사 오는 관계)이자 새 외부 컴퓨트 약정이다. ⑧(비대칭 의존 — 끊기면 회사가 멈추는가)의 지표인 컴퓨트 자체 보유 여부와 약정÷매출에 닿는다. Anthropic ⑧ 판단은 -3 이고, 근거는 컴퓨트 100% 외부에 공급자 넷(Google·Amazon·Microsoft·SpaceX)이 모두 경쟁자라는 것이다. Broadcom 은 모델 경쟁자가 아니지만 의존처가 하나 더 늘고 약정 규모가 커진다. ⑨(적자 깊이) 게이트 4(약정 커버리지 — 앞으로 내기로 한 약정을 계약된 수입이 덮는가)의 미개시 확정 약정에도 더해질 수 있다. Anthropic ⑨ 판단은 -2 이고, 게이트 4 는 약정과 계약 수입의 기간·범위가 달라 비교 불가로 두어 계산하지 않았다. 제목이 전하는 사실: Reuters 가 제출 서류를 근거로 Broadcom 이 Anthropic 에 칩 임차 자금을 최대 $42B 까지 빌려준다고 보도했다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "재검토: ⑧ 의 약정÷매출 입력을 커지는 방향으로 다시 본다 — 임차 약정이 해지 불가이고 기존 약정 합계(기준선 약 $300B, 유출 보도상 $518B)에 들어 있지 않은 별도 약정으로 확인되면 그렇다. ⑨ 는 지금은 유지다. 게이트 4 가 비교 불가라 약정이 커져도 계산이 바뀌지 않고, 이 대출은 칩 임차 용도로 묶여 있어 게이트 3 의 완충(사용 가능한 현금과 확정 미인출 여신)에도 넣지 않는다.",
+      "conditional_impact": "재검토: ⑧ 의 약정÷매출 입력을 커지는 방향으로 다시 본다 — 임차 약정이 해지 불가이고 기존 약정 합계(현재 판단의 약 $300B, 유출 보도상 $518B)에 들어 있지 않은 별도 약정으로 확인되면 그렇다. ⑨ 는 지금은 유지다. 게이트 4 가 비교 불가라 약정이 커져도 계산이 바뀌지 않고, 이 대출은 칩 임차 용도로 묶여 있어 게이트 3 의 완충(사용 가능한 현금과 확정 미인출 여신)에도 넣지 않는다.",
       "horizon": "long — 칩 임차는 다년 약정이다",
       "counter_evidence": [
         "최대 한도(up to)라 실제 인출·약정 규모는 더 작을 수 있다.",
