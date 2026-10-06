@@ -1850,7 +1850,7 @@
       "title": "Yahoo Finance 일봉 종가·시총(2026-10-05 기준)",
       "publisher": "Yahoo Finance via yfinance",
       "url": "https://finance.yahoo.com/quote/GOOGL",
-      "accessed_at": "2026-10-06T04:36:45Z",
+      "accessed_at": "2026-10-06T05:45:12Z",
       "sha256": null,
       "conflict_of_interest": null,
       "note": "가격·시총 관측 전용, EPS·컨센서스 미수집",
@@ -1914,14 +1914,14 @@
       "publisher": "TechCrunch",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOWXVEZHZZd3FMekpPWXlfTF84cm5aclBUUlI4dmtTTlVGWk1RN3d3UVJLMkxkTlBVSjg4dWVZS0tpRWx6LXVGNkxUS0FOTmNfMEs0UXA0dk1HTzdkTXMxY1RudDJxQ3VDcldicUt5dXI1SkdkZjdsVXVHUEJYSEZuMjV4bGR5WHZNNkFIZVFWWkcwNmIxc2NyclA2S2JpMHhHN1JYV0NGQmU2enhGVjc0dU9taw?oc=5",
       "accessed_at": "2026-10-01T06:20:20Z",
-      "sha256": "9c26b34c3c9d1942066af34f8a14f0b9ab17c0bd887d616c44de48be8a25bfdd",
+      "sha256": "420c15c930d2f0eb9d99eb541c0e1a969915a686117094e2b238ab558b4bea8e",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기사는 Anthropic 을 다룬다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alibaba",
       "published_at_utc": "2026-09-10T07:00:00Z",
       "publisher_url": "https://techcrunch.com",
-      "raw_ref": "data/alibaba/news/google/raw/20261006T043613Z-9c26b34c.xml"
+      "raw_ref": "data/alibaba/news/google/raw/20261006T054440Z-420c15c9.xml"
     },
     {
       "source_id": "SRC-NEWS-alibaba-20260928-1318c0de",
@@ -1944,14 +1944,14 @@
       "publisher": "datacenterdynamics.com",
       "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQS1RqbXJtRUNrcEZ3LUZlSW5TNmR0Z19lYjlUa2JPV3lGTkszYlB1Y3NiM2hVTTRsbTBQMzkxSUs3MzhiMkNVd2w3blluSjJtcnRMVngyWkhZUGh3T3FtMDRvN1ZHUWpXRDFWZkhFSTlQaktJSHhBN1d1emdkeFFlZVJOcXpxdXZGal9yRXBERUpyaVd1RE5mNkFqaDhxVEp4eVExYzFYdDBXTF9DZ25YZE5OSEZNUQ?oc=5",
       "accessed_at": "2026-10-01T06:20:20Z",
-      "sha256": "9c26b34c3c9d1942066af34f8a14f0b9ab17c0bd887d616c44de48be8a25bfdd",
+      "sha256": "420c15c930d2f0eb9d99eb541c0e1a969915a686117094e2b238ab558b4bea8e",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alibaba",
       "published_at_utc": "2026-09-29T17:15:05Z",
       "publisher_url": "https://www.datacenterdynamics.com",
-      "raw_ref": "data/alibaba/news/google/raw/20261006T043613Z-9c26b34c.xml"
+      "raw_ref": "data/alibaba/news/google/raw/20261006T054440Z-420c15c9.xml"
     },
     {
       "source_id": "SRC-NEWS-alibaba-20260929-eb307e4a",
@@ -1959,14 +1959,14 @@
       "publisher": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQclNMYzRyWEdzcFl4bDhlYzBiYmRRTUl6V0F3b1NRUlJMSDZGM2c3UmpIS3hWc1RoVktibHl3Mk5iYVZCRFJkQWk4UGlMZE1vZVdSeVZqLUVxby1peF9uVTNZbjh2S01MbWNrNTFHd09DWVRqam5vX0Jpb2JnTHZYMTZKcTFwdm40YlpDYXBycTF2bGgyOTY0cDROSjE?oc=5",
       "accessed_at": "2026-10-06T04:34:03Z",
-      "sha256": "81b7f53bd8bb71b63c217e268b2ebe1b9dd16ad70918c2f718d450708772d883",
+      "sha256": "d54fa4dad58936507e9e0d2db267ce308253fba3f0881fcbece7ec03e94b2f47",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alibaba",
       "published_at_utc": "2026-09-29T02:09:00Z",
       "publisher_url": "https://finance.yahoo.com",
-      "raw_ref": "data/alibaba/news/google/raw/20261006T043613Z-81b7f53b.xml"
+      "raw_ref": "data/alibaba/news/google/raw/20261006T054440Z-d54fa4da.xml"
     },
     {
       "source_id": "SRC-NEWS-alibaba-20261002-55b41ad1",
@@ -1974,14 +1974,14 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOVkNJVS0xZ0prT294Z0lDekwtNjV2SUhFWE5OMDVUR0VmRGFGZWFhcmw4UGxMSW1FX05RVmplVGRBVGtMM2gwYVZKc1Zyamd1al9IQ0pvdHdVanZrZTFyTEZ6MzJmWXc5TUlIMjZJaHNXQkhtamFWZTI3b00wdlpXY2JSdjZzcjh2T0xTeFJCYnRpTnhUbmZ5eUZEZWtjZTFkT3o1Nm5kU1F1T200U1J6aG5R?oc=5",
       "accessed_at": "2026-10-06T04:34:03Z",
-      "sha256": "9c26b34c3c9d1942066af34f8a14f0b9ab17c0bd887d616c44de48be8a25bfdd",
+      "sha256": "420c15c930d2f0eb9d99eb541c0e1a969915a686117094e2b238ab558b4bea8e",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alibaba",
       "published_at_utc": "2026-10-02T11:08:56Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/alibaba/news/google/raw/20261006T043613Z-9c26b34c.xml"
+      "raw_ref": "data/alibaba/news/google/raw/20261006T054440Z-420c15c9.xml"
     },
     {
       "source_id": "SRC-NEWS-alphabet-20261001-05508d41",
@@ -1989,14 +1989,14 @@
       "publisher": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxONi1nNDZYMjA0eDU1RlpfS0dZSGx5MFlkQmZ2ajhiWERxTW1tcjZ5NHpZeGw3WjBYaVVwQVhwMFFGa1c2a056UHdrT1dRaGlSa0hDZ29WZm4yYmZPRkJQLW1udDc2X0lZelMtZTdZSXd4VW9FX0ppMnpNNXhudE5ONi0zWjNueEJyNWhNVm9Ld19YblZiandMeGptNzBXcms?oc=5",
       "accessed_at": "2026-10-06T04:33:56Z",
-      "sha256": "01596cc23cd2005839edd3ab2ec6f1abfba407121f3dd66368056330eadfdccd",
+      "sha256": "7c917f6de259199e4f8e186d0bad8b6f1dbe57f9cb014eb24063762bebd62e23",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alphabet",
       "published_at_utc": "2026-10-01T18:26:21Z",
       "publisher_url": "https://finance.yahoo.com",
-      "raw_ref": "data/alphabet/news/google/raw/20261006T043606Z-01596cc2.xml"
+      "raw_ref": "data/alphabet/news/google/raw/20261006T054432Z-7c917f6d.xml"
     },
     {
       "source_id": "SRC-NEWS-alphabet-20261001-d05467fa",
@@ -2004,14 +2004,14 @@
       "publisher": "Moomoo",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQMnFHM21XQWdYalFObmt3bzcxZGZSWWUtNDl4cW5LckhxV25MaFJuZnY3TTdUYTZMVHRBMmJOaXlRM1J5WHN6RWJqeFhoX2I3S2swb0hPN1RTNm0wbklDaWZ4TTJSQVpRcXpuYWd2UDdNb1JOTjM2UGtHX3JHMDdkZHgweXpPbTlqeE9qM2hWTXBNX2Vaa2xqcHhxeloxUWNTcDZTbTlicVhhdURv?oc=5",
       "accessed_at": "2026-10-06T04:33:56Z",
-      "sha256": "181029941b0e2978765f6dcc0771f505db8fe57643a9e1f14e9727b0c8cb860f",
+      "sha256": "954353be77423b589ad5e89588c62a74a050bc003a66349dbda34a8510c6728e",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alphabet",
       "published_at_utc": "2026-10-01T16:23:42Z",
       "publisher_url": "https://www.moomoo.com",
-      "raw_ref": "data/alphabet/news/google/raw/20261006T043606Z-18102994.xml"
+      "raw_ref": "data/alphabet/news/google/raw/20261006T054432Z-954353be.xml"
     },
     {
       "source_id": "SRC-NEWS-alphabet-20261004-04484350",
@@ -2019,14 +2019,14 @@
       "publisher": "Financial Times",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOZW1yYUllLXR5NWV4QkRmbnBJWWVyNlVnMU0yX2pjOVBadnJDVVNndEd0YkQ5SE9WTXQ1dlI5aXhxUS0zS0wzT2xiV252dFVqdmRyMnZpRTZ0eEUtWGVINTFONXdEUHhDZjRIUW9rZzF1WUl4dVFLNXFWRGhYM3dRVWZXSm0?oc=5",
       "accessed_at": "2026-10-06T04:33:56Z",
-      "sha256": "01596cc23cd2005839edd3ab2ec6f1abfba407121f3dd66368056330eadfdccd",
+      "sha256": "7c917f6de259199e4f8e186d0bad8b6f1dbe57f9cb014eb24063762bebd62e23",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alphabet",
       "published_at_utc": "2026-10-04T04:01:05Z",
       "publisher_url": "https://www.ft.com",
-      "raw_ref": "data/alphabet/news/google/raw/20261006T043606Z-01596cc2.xml"
+      "raw_ref": "data/alphabet/news/google/raw/20261006T054432Z-7c917f6d.xml"
     },
     {
       "source_id": "SRC-NEWS-alphabet-20261004-52e669be",
@@ -2034,14 +2034,14 @@
       "publisher": "The Motley Fool",
       "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPNTdWT0NNUFhaa091WWl6MUcxQVROSTlEZGE5NC1NR29KVE8xTTRKNGd5UjJoUG9SZG5Ma1BNVVhFZlFxOWd3M3VaWW9WRHhHdVgzaGpnOHdyeTJaVHVOWC0xTU5ucWRiWGtCM0UzcWxibHRCMVZ0RFFVTWhjQ0NLQ3FSbUxaQlVydDBZM0djeGxfUzhQ?oc=5",
       "accessed_at": "2026-10-06T04:33:56Z",
-      "sha256": "181029941b0e2978765f6dcc0771f505db8fe57643a9e1f14e9727b0c8cb860f",
+      "sha256": "954353be77423b589ad5e89588c62a74a050bc003a66349dbda34a8510c6728e",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alphabet",
       "published_at_utc": "2026-10-04T10:31:00Z",
       "publisher_url": "https://www.fool.com",
-      "raw_ref": "data/alphabet/news/google/raw/20261006T043606Z-18102994.xml"
+      "raw_ref": "data/alphabet/news/google/raw/20261006T054432Z-954353be.xml"
     },
     {
       "source_id": "SRC-NEWS-alphabet-20261005-2d1e2913",
@@ -2049,14 +2049,14 @@
       "publisher": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOUFVaazJQUHZ3WnVSUzdKUlFkSF8yaW5mSE1JZDNtZVpyVUM1N1RaTkVsc0s5ZF9oMVY4Y0doOThfWW44bHRaVWpwbGZaZzRzcy04ZTBjM2tRdWlPbTVic0FIdHFpVG5BdnpQeFZNUmtIT1Q0QU55YnpYZ09RRXVJUm94RXR5c0VIUnlYTVV2bmZscHhvRVdJYzFoTVNDeUJJeUpRb2NlVzg2YjNWS04yTXVCXzltdFBianpqMHNTNDljX0U2LTNB?oc=5",
       "accessed_at": "2026-10-06T04:33:56Z",
-      "sha256": "01596cc23cd2005839edd3ab2ec6f1abfba407121f3dd66368056330eadfdccd",
+      "sha256": "7c917f6de259199e4f8e186d0bad8b6f1dbe57f9cb014eb24063762bebd62e23",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "alphabet",
       "published_at_utc": "2026-10-05T16:52:12Z",
       "publisher_url": "https://www.reuters.com",
-      "raw_ref": "data/alphabet/news/google/raw/20261006T043606Z-01596cc2.xml"
+      "raw_ref": "data/alphabet/news/google/raw/20261006T054432Z-7c917f6d.xml"
     },
     {
       "source_id": "SRC-NEWS-amazon-20261002-212d346c",
@@ -2064,14 +2064,14 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPaEIyVFRNcF92TkNYVlBXYzJnMGhyS0dMcVg4TVRYSWZfUEktblRVMnJkVlZiYjcxMVZjY1VEcHVtV084RFFSbXJRaE41U1ZpODQ3c1dGR0ZHSWpZRUxFdDljSTh3VFpDUWxFRFJHX1RMUm1xMHhKZmpwVXJVLUowVDRFQ3pab0c5SzZaQ2tHTkJpdnNKWUxrMVp5dW96cFFuMHRqZE40bnY0dmQ5T29XZk1aRWFsektrZ0hEc0VVT1VpaEFmTWxF?oc=5",
       "accessed_at": "2026-10-06T04:33:57Z",
-      "sha256": "33c3457a81d276f449cf784b6169b1ce091db3965e845cb0c94c666cc220f120",
+      "sha256": "864ae28e2b47e7fcaf8df2c345224305416c163281c57156b0815566026497b1",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "amazon",
       "published_at_utc": "2026-10-02T11:16:13Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/amazon/news/google/raw/20261006T043607Z-33c3457a.xml"
+      "raw_ref": "data/amazon/news/google/raw/20261006T054434Z-864ae28e.xml"
     },
     {
       "source_id": "SRC-NEWS-amazon-20261002-f824e56b",
@@ -2079,14 +2079,14 @@
       "publisher": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNRWF3eFJHazFWalZDX1QwWHBoSWd5TEwxSW1ZRzNveVhxV1NwRGZVdlpCSHJLUVlVcm1TR1hpb09BZmhGeEFkTnkzQXJLcEh2S2xNaDVobGN3TV9Tc1p2N0UxUUhDdEU4djVpUjlLOXhGd0VReVdxaVBweUJWbk5ab0g5T0hTdTlzbWZiTkFqN3BtVW05WVNxam5WTzdTNkhVYlZlajRvV2lOU3JiekRsRzkxSGwyWjRqNldiaGxZWTlmQnM?oc=5",
       "accessed_at": "2026-10-06T04:33:57Z",
-      "sha256": "5123fbaa5e7cde7263b52b4c489096cc2e96057b7a090f7d8e10b711d3070f02",
+      "sha256": "60fbe4e4da459c914ee548109b01006c41d208cb113a4a6cdb1aeaf1fc55a09a",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "amazon",
       "published_at_utc": "2026-10-02T04:12:00Z",
       "publisher_url": "https://www.reuters.com",
-      "raw_ref": "data/amazon/news/google/raw/20261006T043607Z-5123fbaa.xml"
+      "raw_ref": "data/amazon/news/google/raw/20261006T054434Z-60fbe4e4.xml"
     },
     {
       "source_id": "SRC-NEWS-amazon-20261003-6f033ab3",
@@ -2094,29 +2094,29 @@
       "publisher": "Investor's Business Daily",
       "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBvZWVnTU51UGRYUTNtb2xhaThVRkhKUl9PekxZaldtXzdyWThCRHJzNTkySnUtRWNvbGF5djNmQ2ROdXVFbU5BMUp0Z3o0Z2Y5QnVmWXlqcHgxQWxieXpzTEUzYUtySTgyYVMyYThyTE5qNC1HUDRJVHhR?oc=5",
       "accessed_at": "2026-10-06T04:33:57Z",
-      "sha256": "5123fbaa5e7cde7263b52b4c489096cc2e96057b7a090f7d8e10b711d3070f02",
+      "sha256": "60fbe4e4da459c914ee548109b01006c41d208cb113a4a6cdb1aeaf1fc55a09a",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "amazon",
       "published_at_utc": "2026-10-03T14:32:00Z",
       "publisher_url": "https://www.investors.com",
-      "raw_ref": "data/amazon/news/google/raw/20261006T043607Z-5123fbaa.xml"
+      "raw_ref": "data/amazon/news/google/raw/20261006T054434Z-60fbe4e4.xml"
     },
     {
-      "source_id": "SRC-NEWS-amazon-20261006-36c30302",
+      "source_id": "SRC-NEWS-amazon-20261005-36c30302",
       "title": "AI chatbots are steering shoppers to Walmart and Costco over Amazon, UBS finds - qz.com",
       "publisher": "qz.com",
       "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE4tSlNHVDRQR2pFNHp6RGhKenZMUXRQYnRQOVZ2TXktRFJObElYOFRYUU1iRF9fd1hWLWxJTzUtQnJKSi15bFNReUlMLUpjYmllV2p1SDgxYW90dTQyaEd4VWdSN0U1NkxVMWpB?oc=5",
       "accessed_at": "2026-10-06T04:33:57Z",
-      "sha256": "5123fbaa5e7cde7263b52b4c489096cc2e96057b7a090f7d8e10b711d3070f02",
+      "sha256": "60fbe4e4da459c914ee548109b01006c41d208cb113a4a6cdb1aeaf1fc55a09a",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "amazon",
-      "published_at_utc": "2026-10-06T03:19:21Z",
+      "published_at_utc": "2026-10-05T19:35:04Z",
       "publisher_url": "https://qz.com",
-      "raw_ref": "data/amazon/news/google/raw/20261006T043607Z-5123fbaa.xml"
+      "raw_ref": "data/amazon/news/google/raw/20261006T054434Z-60fbe4e4.xml"
     },
     {
       "source_id": "SRC-NEWS-anthropic-20261001-09df7c01",
@@ -2139,14 +2139,14 @@
       "publisher": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbzU3NnV4NFhNazRXQzVkeTV6VVNBSzUyUE0yM25SWGQtaFM1YkU4Y1htNWMtYXBPcU9pRDZfZUhSQnZyYnpvWWJ5ZGE4T3ZPOEZrN3IzeHBxMURHQlZySUhfQTBrb0FPdUxFSHRjVEd2ZFh2VGVuMjluVDhxYmhDa2hHc3hnV1p6c1hxaDJaa0VCQXQ3NmhackVWSVBJRlpXMzJXQ3Q2UHlhVXFaMDNN?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "e9cd43d24fdcf0c27332aeb56156211d56d0807d780c9dc1186a21ee7d3e88ec",
+      "sha256": "d3679f8bb8fde000c14fcb069b703c4e1ecd09c8ba856255c6aa173c53d5fb99",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 당사자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "anthropic",
       "published_at_utc": "2026-10-01T10:11:37Z",
       "publisher_url": "https://www.reuters.com",
-      "raw_ref": "data/anthropic/news/google/raw/20261006T043405Z-e9cd43d2.xml"
+      "raw_ref": "data/anthropic/news/google/raw/20261006T054442Z-d3679f8b.xml"
     },
     {
       "source_id": "SRC-NEWS-anthropic-20261001-605950b8",
@@ -2154,29 +2154,29 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNcUlUbXBSYkVLUzFtY2ptTGZ6Nk5HSHBpdFJBZlF1QU1JbXU3VG1Nb2g3OW95elBUTHV1czlHRUNKUFRBV0Nsa3QtVndGNDh2U3dBWFdRenZhRlVEX3hGTm04bl9TcVpuMkxsRkJNQ2NJbzhmYTYzZ01uRTJIS3g1ek80QmRDdE9iaUxRNmhsbzBDci02bnVaS2dpNDJsZzVJb243b2ppUVk0OFpDTWVQLW5B?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "92d963cf7a54229059e2585e17551e855da1c6e1fc31fbcc01a674cd923a73a2",
+      "sha256": "d3679f8bb8fde000c14fcb069b703c4e1ecd09c8ba856255c6aa173c53d5fb99",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 당사자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "anthropic",
       "published_at_utc": "2026-10-01T21:04:14Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/anthropic/news/google/raw/20261006T043614Z-92d963cf.xml"
+      "raw_ref": "data/anthropic/news/google/raw/20261006T054442Z-d3679f8b.xml"
     },
     {
-      "source_id": "SRC-NEWS-anthropic-20261005-894a1ad4",
-      "title": "Anthropic Subscriptions Offer 5x+ More Value Than OpenAI - newsletter.semianalysis.com",
-      "publisher": "newsletter.semianalysis.com",
-      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1obmlsblJmOTI4SDVYR1hzd3lzNEVkM0JONGV0ZUJjZXpWRjdzaW85cjNIclpLZXJVbzQyU0VkbFVzX3VuM0M5VkZ2MlowRG1DaVc0ZllobllaLTBDaFlrSllvRmpqZVBMS0E2b1NNRkdwMkNnT0xxSFhn?oc=5",
+      "source_id": "SRC-NEWS-anthropic-20261005-749ca1c9",
+      "title": "Pentagon stops using Anthropic AI tools after blacklisting company, BBC told - BBC",
+      "publisher": "BBC",
+      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5ILU5UbWc0NDdJSEowdm9PaE14Nkl1MjlpSEJ4djdRQUlhVWNocFAyMXpxN0pXOUZNQk1YQ3JiZnd5MVpGckNkLU5NU1FXTjZzS2EyWDU0RnB3N1U?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "92d963cf7a54229059e2585e17551e855da1c6e1fc31fbcc01a674cd923a73a2",
+      "sha256": "d3679f8bb8fde000c14fcb069b703c4e1ecd09c8ba856255c6aa173c53d5fb99",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 당사자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "anthropic",
-      "published_at_utc": "2026-10-05T20:01:09Z",
-      "publisher_url": "https://newsletter.semianalysis.com",
-      "raw_ref": "data/anthropic/news/google/raw/20261006T043614Z-92d963cf.xml"
+      "published_at_utc": "2026-10-05T16:13:21Z",
+      "publisher_url": "https://www.bbc.com",
+      "raw_ref": "data/anthropic/news/google/raw/20261006T054442Z-d3679f8b.xml"
     },
     {
       "source_id": "SRC-NEWS-anthropic-20261005-97b9a091",
@@ -2184,14 +2184,14 @@
       "publisher": "KIRO 7 News Seattle",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPN0ZsZ2pIc0ZzdlQ0ajZ4WFRWYW5IbmRNN0tTaXYtRy1EbDMwck5BbllNc1hKczFzOEg0OS1LVi01aW5QaWVvekJzQ1AtQmFrdEh6N0IwdFpzeGNoVG02b2lmTG9oMXA4OTlFN1FHcC1aUlpBWW5EazNuRlNtZUM1alFhYVZFeWNxQS1UUFpjeFBPOTFGclFPWTZIeUpiTmREclBBc3NqTjhXMk5P?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "92d963cf7a54229059e2585e17551e855da1c6e1fc31fbcc01a674cd923a73a2",
+      "sha256": "d3679f8bb8fde000c14fcb069b703c4e1ecd09c8ba856255c6aa173c53d5fb99",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 당사자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "anthropic",
       "published_at_utc": "2026-10-05T13:53:58Z",
       "publisher_url": "https://www.kiro7.com",
-      "raw_ref": "data/anthropic/news/google/raw/20261006T043614Z-92d963cf.xml"
+      "raw_ref": "data/anthropic/news/google/raw/20261006T054442Z-d3679f8b.xml"
     },
     {
       "source_id": "SRC-NEWS-anthropic-20261005-c7eb737d",
@@ -2199,29 +2199,14 @@
       "publisher": "The Information",
       "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOaEpVcFVhSDFxejVlaUt2WWdBeFIxU0Z4bmVqVFVPZHJTVDc1VzQ3SjA2a1JzTTViLUlwTjRZSWFXLTZFWGZGZ09wM1JVUnJ3NnlIaTBKdXRTQ3JScURTMUw0UVQ2Uzl6aUw1dnJ4ZHBpWGYtX1AwOVhxMmQ4dGNKYlBjTjJaSFlYVm54S3JCb3Z0QQ?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "92d963cf7a54229059e2585e17551e855da1c6e1fc31fbcc01a674cd923a73a2",
+      "sha256": "d3679f8bb8fde000c14fcb069b703c4e1ecd09c8ba856255c6aa173c53d5fb99",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 당사자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "anthropic",
       "published_at_utc": "2026-10-05T18:14:00Z",
       "publisher_url": "https://www.theinformation.com",
-      "raw_ref": "data/anthropic/news/google/raw/20261006T043614Z-92d963cf.xml"
-    },
-    {
-      "source_id": "SRC-NEWS-anthropic-20261005-caf4a53a",
-      "title": "Pentagon stops using Anthropic AI tools after blacklisting company, BBC told - bbc.com",
-      "publisher": "bbc.com",
-      "url": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE5ILU5UbWc0NDdJSEowdm9PaE14Nkl1MjlpSEJ4djdRQUlhVWNocFAyMXpxN0pXOUZNQk1YQ3JiZnd5MVpGckNkLU5NU1FXTjZzS2EyWDU0RnB3N1U?oc=5",
-      "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "92d963cf7a54229059e2585e17551e855da1c6e1fc31fbcc01a674cd923a73a2",
-      "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 당사자다 (긴장 #4·#11)",
-      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
-      "kind": "news",
-      "company_id": "anthropic",
-      "published_at_utc": "2026-10-05T16:13:21Z",
-      "publisher_url": "https://www.bbc.com",
-      "raw_ref": "data/anthropic/news/google/raw/20261006T043614Z-92d963cf.xml"
+      "raw_ref": "data/anthropic/news/google/raw/20261006T054442Z-d3679f8b.xml"
     },
     {
       "source_id": "SRC-NEWS-apple-20260930-7850396d",
@@ -2244,14 +2229,14 @@
       "publisher": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcEZ4M3huUXNNUjdQandPVjM0d1JHVUQ2aS1UVllJY3luLVlDZmUzOC1RMkZ2S0RncUpTTjlUay1aLTlBWFJIdUF6eVhjd0FZM3UtRzlqT2RuZWFJTlZtZ2FORjNkQjZIcnU3Vm1SLXNVMXhUQTBiMU1VTzVXRGpGaW9xSVI3cEF3R0RycTFZYWNxRDJoZkpRY1NiTE8?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "e08176cb66adc2c65a7374b1d1603942d92ad8080fabaeedace5293518add610",
+      "sha256": "12e11049e229b741daab06736037b10f06b984af8465f92471598cb848f419e0",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "apple",
       "published_at_utc": "2026-10-02T13:11:25Z",
       "publisher_url": "https://finance.yahoo.com",
-      "raw_ref": "data/apple/news/google/raw/20261006T043615Z-e08176cb.xml"
+      "raw_ref": "data/apple/news/google/raw/20261006T054443Z-12e11049.xml"
     },
     {
       "source_id": "SRC-NEWS-apple-20261005-31954a24",
@@ -2259,14 +2244,14 @@
       "publisher": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPT0JNcmZzcGtDaVEzbUZHaDl3NW5QS1FIY2xtRXNlcFVfa2FrTmVSaDd3WVpOeS1qQkNIdlcyTXVLQ3dGcEU5UVZnUHBZaHdyRFRMMEtwZXgzeXBCMXc2ZWNpQzRCbS1kT3F6V1pieXhpZWNHeElRbG5SbTFUamNDS25HUGhiTEUzQ2FFbFZaTUd2VHRPYkEwUw?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "e08176cb66adc2c65a7374b1d1603942d92ad8080fabaeedace5293518add610",
+      "sha256": "12e11049e229b741daab06736037b10f06b984af8465f92471598cb848f419e0",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "apple",
       "published_at_utc": "2026-10-05T12:46:52Z",
       "publisher_url": "https://finance.yahoo.com",
-      "raw_ref": "data/apple/news/google/raw/20261006T043615Z-e08176cb.xml"
+      "raw_ref": "data/apple/news/google/raw/20261006T054443Z-12e11049.xml"
     },
     {
       "source_id": "SRC-NEWS-apple-20261005-6addb1d6",
@@ -2274,14 +2259,14 @@
       "publisher": "Bloomberg Law News",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPaVhCcXRCYTVoQThUcVJpeWFqdkkzRmg0M3ZCUDNwX2RLaUJackkxRWE2YUZVeWMzU0dfVXVVa1hwelBpd29JWERnMHh3V3owVnpENHEtODVPYXg0LTJHUHdwcXVjWVRUczh4TTh2OUdBc1EtX1pCT3FNbm4ySzBlU3JjOWVqTEtXRHVCVkZNRTcxZ1ZBTkV1bnFGR01mZjNzaWdkWnZTLUxzaFpTdzN4a01n?oc=5",
       "accessed_at": "2026-10-06T04:34:05Z",
-      "sha256": "6bdd0e9e34601f74df25f489790d48e15e156d66436991196511b745c2f57d06",
+      "sha256": "a2797570b60249fcaffcb1996b776d24f28125002b9e8e4a2406c42985e3fa53",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "apple",
       "published_at_utc": "2026-10-05T23:08:00Z",
       "publisher_url": "https://news.bloomberglaw.com",
-      "raw_ref": "data/apple/news/google/raw/20261006T043615Z-6bdd0e9e.xml"
+      "raw_ref": "data/apple/news/google/raw/20261006T054443Z-a2797570.xml"
     },
     {
       "source_id": "SRC-NEWS-meta-20261001-f785a438",
@@ -2304,14 +2289,14 @@
       "publisher": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOZzZWa2JOanlQUC1XM2lWd3NaMmtidFV2ckgwWlc5bWlreHdPcDR5NTBMektNSkMyZ01HOVlRX0k2MnhMU0llck56Q2dRM3pXWS1ia3ZmT3haQ1VlLTlJa01leU5NQWZGTHdPWWU3eFhrb1BJZWxPcC1pdEJ4Ql9xU29UODhHNFBQdEZTMFcwYmRwXzRnNFNYWXVUWDNLUkFUXzRRUHV4VzVYYXZBdVNKQTVvdUJ5Zi13MEVxQw?oc=5",
       "accessed_at": "2026-10-06T04:33:59Z",
-      "sha256": "129b03bba311ad684fe37f66e71ac885af0f7613ad48dfc57250990cd14bc3bb",
+      "sha256": "82903fa7706820613a79e32fcbe58988e7a2407a91867b269cea1ef1d97e8882",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "meta",
       "published_at_utc": "2026-10-05T15:24:26Z",
       "publisher_url": "https://www.reuters.com",
-      "raw_ref": "data/meta/news/google/raw/20261006T043609Z-129b03bb.xml"
+      "raw_ref": "data/meta/news/google/raw/20261006T054436Z-82903fa7.xml"
     },
     {
       "source_id": "SRC-NEWS-meta-20261005-5fa6d368",
@@ -2319,14 +2304,14 @@
       "publisher": "Barchart.com",
       "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQRDFZYWV1TnBjUTBncnhPSGNzbXh4YmZ2WUZybWo4MkMyaHNQb05RQW9jZFNiTU03aTNhb0RCQUE1bnNpcDBDS0tCTlpXN1VjbXlRRjR2WVM1OUtXOU1qOEN2OVR4cmVIUElHU3VtQ1NySWtIeDNkaVBFN2t2VDVEaXRZc19NaXpuRWpQVzN6aDhTdkRTUVplTUNWOFdLeEhQTWFieVdUQnl5OHFwd25oM1RtQldTMV9VX0dsUy1EY1Q5RTdBSW1V?oc=5",
       "accessed_at": "2026-10-06T04:33:59Z",
-      "sha256": "7a718b08d98b2b202864eb42633a8eb3f0ce559d875aee14bedfc21dcd4598e9",
+      "sha256": "de8a79e08c08d5493248a3422b30998460842c9f68b37a04f793b8881f586ae7",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "meta",
       "published_at_utc": "2026-10-05T17:49:40Z",
       "publisher_url": "https://www.barchart.com",
-      "raw_ref": "data/meta/news/google/raw/20261006T043609Z-7a718b08.xml"
+      "raw_ref": "data/meta/news/google/raw/20261006T054436Z-de8a79e0.xml"
     },
     {
       "source_id": "SRC-NEWS-meta-20261005-df671aa0",
@@ -2334,14 +2319,14 @@
       "publisher": "MediaPost",
       "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNSjgxcVFvSnZFcW9wVkxCcmQ4VzhlS1BPaHNkVGpHTE1rLXp6b3RKOFRBcjNwa3BBOElxdzFlQTBPQTFrT2x3WkFEVU5PQUtqalg5NzEybERYRDZTNXdtQXpZSEljRUFYR01LS1VwZDJLSkJIM1JXOG8takw5alkwN0xOcHFPT3JPT3VmdXNHREtiSEJleU5SMEcxeE81YkJXSllIQUF0cmpyWDdLeHRYZ3ctY0JRZXRINjkzRkluUTM?oc=5",
       "accessed_at": "2026-10-06T04:33:59Z",
-      "sha256": "129b03bba311ad684fe37f66e71ac885af0f7613ad48dfc57250990cd14bc3bb",
+      "sha256": "82903fa7706820613a79e32fcbe58988e7a2407a91867b269cea1ef1d97e8882",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "meta",
       "published_at_utc": "2026-10-05T21:26:12Z",
       "publisher_url": "https://www.mediapost.com",
-      "raw_ref": "data/meta/news/google/raw/20261006T043609Z-129b03bb.xml"
+      "raw_ref": "data/meta/news/google/raw/20261006T054436Z-82903fa7.xml"
     },
     {
       "source_id": "SRC-NEWS-meta-20261005-fc53341d",
@@ -2349,14 +2334,14 @@
       "publisher": "Seeking Alpha",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNcnUtT0ZwX3ZENzhEbWR1eHIzbVhNOUoySDY3eXVfZjBzVktOay1kZTVEV3hFeUJCeV80R2VsM0wwVFZjSGdacTBvN1RqczBLclRHc1otWUlPLWc4YWNCQjBVdFV3MEE4d1FkU3NpaGtXQU5xaGpYSmxWeFA1Wl9taWxpNDZxVnViV3Z1VkdVZlktNExvZlZ2TmQ2NnltUQ?oc=5",
       "accessed_at": "2026-10-06T04:33:59Z",
-      "sha256": "129b03bba311ad684fe37f66e71ac885af0f7613ad48dfc57250990cd14bc3bb",
+      "sha256": "82903fa7706820613a79e32fcbe58988e7a2407a91867b269cea1ef1d97e8882",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "meta",
       "published_at_utc": "2026-10-05T10:41:47Z",
       "publisher_url": "https://seekingalpha.com",
-      "raw_ref": "data/meta/news/google/raw/20261006T043609Z-129b03bb.xml"
+      "raw_ref": "data/meta/news/google/raw/20261006T054436Z-82903fa7.xml"
     },
     {
       "source_id": "SRC-NEWS-microsoft-20261005-562a4227",
@@ -2364,14 +2349,14 @@
       "publisher": "MSSP Alert",
       "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNajRjLThIWjZrdnNxRS1GLXI2cnpWbThwaDhFaHY5VmJ0bjlOeWlOd2sxdXZ0YTA4cWhmNDlVMHlXOEZJXzUtM29tVGhVamdkRm1xNVBoNUw0amtoc01RMi0wWE00MENSRktaQVA4TGZlRWM1aUJQVDJ2MUhILWFXdkRlV2p2TU1HdWRMZU1DaXdXa3M?oc=5",
       "accessed_at": "2026-10-06T04:34:00Z",
-      "sha256": "9848e72af3232ee75a3aae7c53865072a4dede0a562dd431015525341f88d59c",
+      "sha256": "c89074933067fe4777bc6b8da1c178079f582d2f7988345dd00cebee23139914",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "microsoft",
       "published_at_utc": "2026-10-05T21:43:07Z",
       "publisher_url": "https://www.msspalert.com",
-      "raw_ref": "data/microsoft/news/google/raw/20261006T043610Z-9848e72a.xml"
+      "raw_ref": "data/microsoft/news/google/raw/20261006T054437Z-c8907493.xml"
     },
     {
       "source_id": "SRC-NEWS-nvidia-20261001-e66a1a54",
@@ -2379,14 +2364,14 @@
       "publisher": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPWWFtWW9YMHUyWmxwTUs1VmZnOHZNdnJBNzB6azNFSG84M0FtS2x1SE50TDZMS0ZNS25zQ1lEZnFRdnd3UFhDRXMwLUVXaDZWRW9RZHdfQXdhNjFBdEJSd243SHlselowdWpIZ3RycmRSdUhlaTlDLUVGNjV1a3UwY2llSXpiV0dvVDN2VU1tS3NmbmQzVFNXV2FZcDJzWEI5b05NRW4zRXFPOV9NZnZUMmE5M2sycEtKVUdpNjRkLW90bGtiZnY0LWtvTHRDQQ?oc=5",
       "accessed_at": "2026-10-06T04:34:07Z",
-      "sha256": "ea260de0dbad8026aa1aa806e23d6cd77575f791f5942b721900d832fbacbb1d",
+      "sha256": "40b28c13e27ef570d1c4a131b004b816a5e8dccaf1adce70cba2052aefbee58f",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자(2025-11 발표)다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "nvidia",
       "published_at_utc": "2026-10-01T19:26:22Z",
       "publisher_url": "https://www.reuters.com",
-      "raw_ref": "data/nvidia/news/google/raw/20261006T043617Z-ea260de0.xml"
+      "raw_ref": "data/nvidia/news/google/raw/20261006T054444Z-40b28c13.xml"
     },
     {
       "source_id": "SRC-NEWS-nvidia-20261002-46ceedb9",
@@ -2394,14 +2379,14 @@
       "publisher": "Financial Times",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOMlctbklMb2FKVW12SWZYdEpsVnl4UlNLUzNHNlpBcUstaUlwYlBrVEFVNWRZWkhBNTZZTGIzMjVpT2NtSzRfbktWeWFjbVlqX1k1TEl0SkJiTjFDekRsd2h2b2ZaYmNsdXp6NU42T2cwZzFiRmZTakRnLVpHek1LcXl3dUg?oc=5",
       "accessed_at": "2026-10-06T04:34:07Z",
-      "sha256": "ea260de0dbad8026aa1aa806e23d6cd77575f791f5942b721900d832fbacbb1d",
+      "sha256": "40b28c13e27ef570d1c4a131b004b816a5e8dccaf1adce70cba2052aefbee58f",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자(2025-11 발표)다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "nvidia",
       "published_at_utc": "2026-10-02T06:42:49Z",
       "publisher_url": "https://www.ft.com",
-      "raw_ref": "data/nvidia/news/google/raw/20261006T043617Z-ea260de0.xml"
+      "raw_ref": "data/nvidia/news/google/raw/20261006T054444Z-40b28c13.xml"
     },
     {
       "source_id": "SRC-NEWS-nvidia-20261002-7e8d381f",
@@ -2409,14 +2394,14 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNUnZqUE1kc1RPWjZZTkV6Rjl0NGlnQ0szamJ5YWFURzFpVWJYUThldVJ2Wm5vSEJBTnVGZjlvMEs3REpRVDJaeU5nMDV2bmEzOVV3cE9sYTdZa3g0c2FnNnlhNThXMnBDQTJjZFczaUtJZTZmT0tsMHc4cWZ0U3R6UzRUVUc4V2VNeUdWMS1oU2xDcllzZ05TakN1c1c4Zi1Vc2pQOTFHSVFSY1hI?oc=5",
       "accessed_at": "2026-10-06T04:34:07Z",
-      "sha256": "ea260de0dbad8026aa1aa806e23d6cd77575f791f5942b721900d832fbacbb1d",
+      "sha256": "40b28c13e27ef570d1c4a131b004b816a5e8dccaf1adce70cba2052aefbee58f",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자(2025-11 발표)다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "nvidia",
       "published_at_utc": "2026-10-02T06:49:00Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/nvidia/news/google/raw/20261006T043617Z-ea260de0.xml"
+      "raw_ref": "data/nvidia/news/google/raw/20261006T054444Z-40b28c13.xml"
     },
     {
       "source_id": "SRC-NEWS-nvidia-20261005-3174747d",
@@ -2424,14 +2409,14 @@
       "publisher": "Financial Times",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQM3NDOW1Ua3hoR2xRZnF4WVl2d1ZCRi1UM1I0S1BPUEJQOE1DQ2Zmdmc3UmVDVHc4TVJwOUNXVE1JdXk1WFRyU19zVXA0ZzdRRGxuN21qdFVtQ1FWUHpwaE5Sei1VRXNobHJpUndPb2pxMUpmd1F0TzBTU3RFNFZRSEFZbHQ?oc=5",
       "accessed_at": "2026-10-06T04:34:07Z",
-      "sha256": "ea260de0dbad8026aa1aa806e23d6cd77575f791f5942b721900d832fbacbb1d",
+      "sha256": "40b28c13e27ef570d1c4a131b004b816a5e8dccaf1adce70cba2052aefbee58f",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자(2025-11 발표)다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "nvidia",
       "published_at_utc": "2026-10-05T09:00:03Z",
       "publisher_url": "https://www.ft.com",
-      "raw_ref": "data/nvidia/news/google/raw/20261006T043617Z-ea260de0.xml"
+      "raw_ref": "data/nvidia/news/google/raw/20261006T054444Z-40b28c13.xml"
     },
     {
       "source_id": "SRC-NEWS-nvidia-20261005-78cf1380",
@@ -2439,14 +2424,14 @@
       "publisher": "AFR",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQZkFMbmdSQlNpOU1vYW0xUUptV2VlMWw1MGo4RnZFWXltN0g2VlBlTFRRZ1FhTWhKSEozM0o5SG1TeW5qZUpLWVQ0RlZUUkNTb3dvWEhJR05qT2VGdC0zTzVxdE0zTnd1M3lLbkkwUnVxclY2Sl8xSGpNYkFwSkVQekduWFpDcFVSMW1qb1VjMC01TTctVW5kVU5yYlREQWkyaG9nOWVGMWpIVG1Xcll4Y0hwWQ?oc=5",
       "accessed_at": "2026-10-06T04:34:07Z",
-      "sha256": "ea260de0dbad8026aa1aa806e23d6cd77575f791f5942b721900d832fbacbb1d",
+      "sha256": "40b28c13e27ef570d1c4a131b004b816a5e8dccaf1adce70cba2052aefbee58f",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자(2025-11 발표)다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "nvidia",
       "published_at_utc": "2026-10-05T18:00:00Z",
       "publisher_url": "https://www.afr.com",
-      "raw_ref": "data/nvidia/news/google/raw/20261006T043617Z-ea260de0.xml"
+      "raw_ref": "data/nvidia/news/google/raw/20261006T054444Z-40b28c13.xml"
     },
     {
       "source_id": "SRC-NEWS-nvidia-20261005-aea585fa",
@@ -2454,14 +2439,14 @@
       "publisher": "Morningstar",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQTU5vTHBEbmdscEZ2Ri1YbkJ0VzdLVWg3b25RbHVUQWlMN3U2c0lqc0VzVFRfR2VWc0RzTXRTOGF3dG9qYWdld0hSVjVkdjN2Zkl4WVh4cjZ4ejdMUDhTZC1UUXI5ZER4MGp2Y0k0NldJNVJrak5NY0MyM25RbTZ0b2NIY0tNRTFZM3ZXVEZLOE8zbXRMUmF2TmcxTHpzdXEyci1HZmZ6c0x3ZF9H?oc=5",
       "accessed_at": "2026-10-06T04:34:07Z",
-      "sha256": "ea260de0dbad8026aa1aa806e23d6cd77575f791f5942b721900d832fbacbb1d",
+      "sha256": "40b28c13e27ef570d1c4a131b004b816a5e8dccaf1adce70cba2052aefbee58f",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자(2025-11 발표)다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "nvidia",
       "published_at_utc": "2026-10-05T21:56:15Z",
       "publisher_url": "https://www.morningstar.com",
-      "raw_ref": "data/nvidia/news/google/raw/20261006T043617Z-ea260de0.xml"
+      "raw_ref": "data/nvidia/news/google/raw/20261006T054444Z-40b28c13.xml"
     },
     {
       "source_id": "SRC-NEWS-nvidia-20261005-dc3dc2da",
@@ -2469,14 +2454,14 @@
       "publisher": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNQ2FQR2h6dGd0eThzSjRKNENDQV9YMnpIZlVfWTNVV2tlSTEzZDJyU09MZ2s1Sk9lWVRESzdwQmdfQjlsRzZPVmJuUzRLQkp5UXhVUHpia2pZWHVfRmQyR21COWx2dGZxR0pzUmxvT3RUUDVhX1JRWm1LQXRfVmV5bGpIMFYtRHFoNW1UMlV3Q3h5X19QaVAxMnJ1SkxrU0pKVnJYcW9LNTNENVJldFc1VTNoRHdRRmNkVFM4?oc=5",
       "accessed_at": "2026-10-06T04:34:07Z",
-      "sha256": "ea260de0dbad8026aa1aa806e23d6cd77575f791f5942b721900d832fbacbb1d",
+      "sha256": "40b28c13e27ef570d1c4a131b004b816a5e8dccaf1adce70cba2052aefbee58f",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 투자자(2025-11 발표)다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "nvidia",
       "published_at_utc": "2026-10-05T20:54:09Z",
       "publisher_url": "https://www.reuters.com",
-      "raw_ref": "data/nvidia/news/google/raw/20261006T043617Z-ea260de0.xml"
+      "raw_ref": "data/nvidia/news/google/raw/20261006T054444Z-40b28c13.xml"
     },
     {
       "source_id": "SRC-NEWS-openai-20261004-d9744080",
@@ -2484,14 +2469,29 @@
       "publisher": "Financial Times",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNbTIyS2l3QWYtSTZxVzB4Znp2U2ZtQzY3NHl5M0VHa3FVMU1PWTR4eWdmd0VwNnNIRTVlS0gyaU9WTVBDZ2RCRGU5dXFKWmc2bWdNWlpfazdrUHpBRGMyRmN5dTc4Qzh6OGh5cUpuZkNGb1BNZ0lxVW5FMmpwLUkycDNPcW8?oc=5",
       "accessed_at": "2026-10-06T04:34:14Z",
-      "sha256": "fe9ae23463b25e407cb452409f5339011b2619de21ae10906b221ff25175bbfa",
+      "sha256": "646063cc60cc5a3498b2973c1281d718becf71c390151743e0e09f219d775408",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 직접 경쟁사다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "openai",
       "published_at_utc": "2026-10-04T11:00:08Z",
       "publisher_url": "https://www.ft.com",
-      "raw_ref": "data/openai/news/google/raw/20261006T043623Z-fe9ae234.xml"
+      "raw_ref": "data/openai/news/google/raw/20261006T054451Z-646063cc.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261005-60db0718",
+      "title": "Anthropic Subscriptions Offer 5x+ More Value Than OpenAI - SemiAnalysis",
+      "publisher": "SemiAnalysis",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1obmlsblJmOTI4SDVYR1hzd3lzNEVkM0JONGV0ZUJjZXpWRjdzaW85cjNIclpLZXJVbzQyU0VkbFVzX3VuM0M5VkZ2MlowRG1DaVc0ZllobllaLTBDaFlrSllvRmpqZVBMS0E2b1NNRkdwMkNnT0xxSFhn?oc=5",
+      "accessed_at": "2026-10-06T04:34:14Z",
+      "sha256": "646063cc60cc5a3498b2973c1281d718becf71c390151743e0e09f219d775408",
+      "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 직접 경쟁사다 (긴장 #4·#11)",
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-05T20:01:09Z",
+      "publisher_url": "https://newsletter.semianalysis.com",
+      "raw_ref": "data/openai/news/google/raw/20261006T054451Z-646063cc.xml"
     },
     {
       "source_id": "SRC-NEWS-openai-20261005-d4921a7a",
@@ -2499,14 +2499,14 @@
       "publisher": "Reuters",
       "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPcW56VDk1TEhMTEdHUmg1RlB0cVIza055bEQ1OWJsLTk3OEFySUJNTzhSQ0Q0bTloYnBGN2VXaTBQUmxnNEd0UUtuc0NEeDR1UjZjWERWeEZURlpNOHVfQUo3TnBKaVF6ekJ4SDktZEdUQW5XUThabHMwdXVlRWl2ZHd0OVNHdDF2UmlRZ2ZWVjREeXhmZ3l3RXZUV3Z2MnNZQlFrOEdaUllrdkNGWmNv?oc=5",
       "accessed_at": "2026-10-06T04:34:14Z",
-      "sha256": "fe9ae23463b25e407cb452409f5339011b2619de21ae10906b221ff25175bbfa",
+      "sha256": "646063cc60cc5a3498b2973c1281d718becf71c390151743e0e09f219d775408",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 직접 경쟁사다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "openai",
       "published_at_utc": "2026-10-05T17:09:34Z",
       "publisher_url": "https://www.reuters.com",
-      "raw_ref": "data/openai/news/google/raw/20261006T043623Z-fe9ae234.xml"
+      "raw_ref": "data/openai/news/google/raw/20261006T054451Z-646063cc.xml"
     },
     {
       "source_id": "SRC-NEWS-openai-20261005-dd3d7c32",
@@ -2514,14 +2514,14 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOTEFudVN0U3NjbUtUYXpkVVZmdWJnU3QxaXhmYXEwVFdsMDg2LV9POGNWMGtQdktuOTZhbmZVNzZKQk05UWwwSjRpYnlDbXpUTnF5Z0VWMXNiMmZJMzFJT1NUaWF0amxob0I1Sm5Ka0Vma3RkUy1OWWwxSk1IUjV1SGRhUWFfOGZhTjkxNTl4bGlBYkR2VjZpMzdBaS1xQ3BuSTA3MGcwSnlnX0xJOEZkWlhR?oc=5",
       "accessed_at": "2026-10-06T04:34:14Z",
-      "sha256": "fe9ae23463b25e407cb452409f5339011b2619de21ae10906b221ff25175bbfa",
+      "sha256": "646063cc60cc5a3498b2973c1281d718becf71c390151743e0e09f219d775408",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 직접 경쟁사다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "openai",
-      "published_at_utc": "2026-10-05T20:46:28Z",
+      "published_at_utc": "2026-10-05T21:30:52Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/openai/news/google/raw/20261006T043623Z-fe9ae234.xml"
+      "raw_ref": "data/openai/news/google/raw/20261006T054451Z-646063cc.xml"
     },
     {
       "source_id": "SRC-NEWS-oracle-20260930-6e24f9c5",
@@ -2559,14 +2559,14 @@
       "publisher": "The Register",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPX0ZBNzZ3QTJiSkVFNG5nbHdLX3p3U096VVV5d0g1RUhMUWVsMWI2N3FZa2xIa3hIb2RnWVQ3WlJoVzk0Q0FCUklrSDdVZWZ4TVBLTjVST0ZYbElDbHpNaEtTako0ckVLVGxGc2I0U2N1cnFqdmE4NTZMRXB1aUtIalhRSHVOcFJ1Mzl0RW5VZndIZkh4NEVJVTJyTzAxVk5ZMWpGUXdMTFlPM2txRVRZcGJzOVA?oc=5",
       "accessed_at": "2026-10-06T04:34:12Z",
-      "sha256": "81637372f6e509433a89ffe5330bde3c3cf112902f174a018e74c3096f586b11",
+      "sha256": "604a37a8ab3efe41ebe921fa66379101e1e2c4a2799cef295566d808498a0ab3",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "oracle",
       "published_at_utc": "2026-10-02T13:50:39Z",
       "publisher_url": "https://www.theregister.com",
-      "raw_ref": "data/oracle/news/google/raw/20261006T043622Z-81637372.xml"
+      "raw_ref": "data/oracle/news/google/raw/20261006T054450Z-604a37a8.xml"
     },
     {
       "source_id": "SRC-NEWS-oracle-20261002-ed736302",
@@ -2574,14 +2574,14 @@
       "publisher": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNMlVxejFUQnJHcTJWeTRKUFM0c2I5ekZQNWRNWGxUVTB0akpRU1RzeC1aa09RRTNHZHIzaV9VRFZkdURCd2JKdXd6ZHFqOXhySzRoaWJHNWpTQlRwU0hOYkIyQ2lFN0ZXM0FzY2pReDN6VlVJaEc2NzVaUk55OFFXMWtXYUJSOHpGd2p4bWF2eURiSUx6OFNQbUxsb3lCTW1STWY4YUdB?oc=5",
       "accessed_at": "2026-10-06T04:34:12Z",
-      "sha256": "81637372f6e509433a89ffe5330bde3c3cf112902f174a018e74c3096f586b11",
+      "sha256": "604a37a8ab3efe41ebe921fa66379101e1e2c4a2799cef295566d808498a0ab3",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "oracle",
       "published_at_utc": "2026-10-02T14:48:10Z",
       "publisher_url": "https://www.benzinga.com",
-      "raw_ref": "data/oracle/news/google/raw/20261006T043622Z-81637372.xml"
+      "raw_ref": "data/oracle/news/google/raw/20261006T054450Z-604a37a8.xml"
     },
     {
       "source_id": "SRC-NEWS-oracle-20261003-381f5442",
@@ -2589,14 +2589,14 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPQlRvRkM2Zlhvem5qWWhrSEVoY0ZyeHQ3dXdVMGs2Q1UzWUVnVFdJMi1NYW00aFNoTjBjd0txU2xZRWN6eUZ5Ujc2TVlESjA5eDBXNkhaQ1VNd1JhY0VwQWY2UFlZc3JDMmtoWEhXSHB0WXU2QWdKVGhXejhYZ0FCUTlUbGZnVDlKcENNQTNRZjB1MlZTYVdBNGJzWXg1RG9wZEozUW9FcHktQ00tbjVXQjJfSQ?oc=5",
       "accessed_at": "2026-10-06T04:34:12Z",
-      "sha256": "81637372f6e509433a89ffe5330bde3c3cf112902f174a018e74c3096f586b11",
+      "sha256": "604a37a8ab3efe41ebe921fa66379101e1e2c4a2799cef295566d808498a0ab3",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "oracle",
       "published_at_utc": "2026-10-03T13:00:00Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/oracle/news/google/raw/20261006T043622Z-81637372.xml"
+      "raw_ref": "data/oracle/news/google/raw/20261006T054450Z-604a37a8.xml"
     },
     {
       "source_id": "SRC-NEWS-oracle-20261005-46bd7a80",
@@ -2604,14 +2604,14 @@
       "publisher": "TradingView",
       "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPdjNvRVhGQjktcW9DcFNramFwdUVjZUFWTmZORGNOQWtCMVVUYVlsUk5jeFBWcVZ1T2E5TFpsT1IyUGJfQ2poMEdiS25nT2J6TDFtc0lwN1I4cDlEZzlRWVlEUGFnaUI5cDlfcGc5eVk5VnhsTDZHM3NuVE43bkFFMDBxaHhnRXFSeWlLaE5ianNveUFQM05wVlVLUjkySlhKN2QzbjlkcHpnWURqVFBxRzhobGtfTnBDSHB5VzhwUlpmUTM1V0tmQkx0SXNpRzJxdGNqNmZR?oc=5",
       "accessed_at": "2026-10-06T04:34:12Z",
-      "sha256": "81637372f6e509433a89ffe5330bde3c3cf112902f174a018e74c3096f586b11",
+      "sha256": "604a37a8ab3efe41ebe921fa66379101e1e2c4a2799cef295566d808498a0ab3",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "oracle",
       "published_at_utc": "2026-10-05T13:21:30Z",
       "publisher_url": "https://www.tradingview.com",
-      "raw_ref": "data/oracle/news/google/raw/20261006T043622Z-81637372.xml"
+      "raw_ref": "data/oracle/news/google/raw/20261006T054450Z-604a37a8.xml"
     },
     {
       "source_id": "SRC-NEWS-oracle-20261005-d05ff2fa",
@@ -2619,14 +2619,14 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOc21GLWViZnp5VUszZF95TWUxS0FBVk9lMUtBV2JmMzZta1h2Nkt5UWFleTBGcXpnQlowdWtRRko3NnJmUkI2bHdQMEl2aHBBUG1HWWpQRDh0bHBRZEVNejBrRkdBYWJQUENYc1BJLTUtTnlpNTAyV2RvbWRYcHFiOE42RUtPcE1JdWt2b1hRNWxUMnJnWEtSMkx6T3I2dl9GMDl6bk43TXBTSWY1amhuZWZyWXU?oc=5",
       "accessed_at": "2026-10-06T04:34:12Z",
-      "sha256": "81637372f6e509433a89ffe5330bde3c3cf112902f174a018e74c3096f586b11",
+      "sha256": "604a37a8ab3efe41ebe921fa66379101e1e2c4a2799cef295566d808498a0ab3",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "oracle",
       "published_at_utc": "2026-10-05T23:09:19Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/oracle/news/google/raw/20261006T043622Z-81637372.xml"
+      "raw_ref": "data/oracle/news/google/raw/20261006T054450Z-604a37a8.xml"
     },
     {
       "source_id": "SRC-NEWS-palantir-20261001-4db0b61a",
@@ -2634,14 +2634,14 @@
       "publisher": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNWVdzVkg3cXYxZ1dOdExaRnFZM005MURIcUo2ZC1Tek1sUkdoZ2N6YmktYkVLR3V5REtSdGpTdF9hLUFaYjFOZGotb1JScG5Nb0ZaXzFPdHE3TDRNRFByMlRYTHhEbHdJZTVwRmp2MVBsNzRtV3Z0YklaQTkzQktIMk4yNWFfVC1EY1phak1oWkdMSWw4SzhBYkNYNWJhOTVWc2dkamM0VS1LY2tv?oc=5",
       "accessed_at": "2026-10-06T04:34:08Z",
-      "sha256": "c008631514aab57f86aacacf7777ab6aa70520c595abe08c6c0f136f85a41844",
+      "sha256": "c97678de878c475beebe1e4fbac00f8b3315c1e69a1671463eb85af6157f0373",
       "conflict_of_interest": "발행사(또는 거래 상대) 자체 발표 — 이해당사자",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "palantir",
       "published_at_utc": "2026-10-01T22:00:00Z",
       "publisher_url": "https://finance.yahoo.com",
-      "raw_ref": "data/palantir/news/google/raw/20261006T043618Z-c0086315.xml"
+      "raw_ref": "data/palantir/news/google/raw/20261006T054446Z-c97678de.xml"
     },
     {
       "source_id": "SRC-NEWS-palantir-20261001-7fa03bc3",
@@ -2649,14 +2649,14 @@
       "publisher": "Financial Times",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPMnVpV1ltT0k5MHB4Y085LUlFSlpJZkVsYVdMdzU3bWJKVnc2Z25RZXBpVXd3aDhfOUhtZGtfUDdOOFhVSGl6OThfbDhFQWpuSExLcklOMjY5OHVvRlVEQzg1SG9JWVZJbnpkaUZYdE5pdXFhWkdTc0ROcWVFMnVNY0x5Tlo?oc=5",
       "accessed_at": "2026-10-06T04:34:08Z",
-      "sha256": "c008631514aab57f86aacacf7777ab6aa70520c595abe08c6c0f136f85a41844",
+      "sha256": "c97678de878c475beebe1e4fbac00f8b3315c1e69a1671463eb85af6157f0373",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "palantir",
       "published_at_utc": "2026-10-01T20:00:09Z",
       "publisher_url": "https://www.ft.com",
-      "raw_ref": "data/palantir/news/google/raw/20261006T043618Z-c0086315.xml"
+      "raw_ref": "data/palantir/news/google/raw/20261006T054446Z-c97678de.xml"
     },
     {
       "source_id": "SRC-NEWS-palantir-20261002-19c86fbf",
@@ -2664,14 +2664,14 @@
       "publisher": "WIRED",
       "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNaXVNdTcwWFE1bnZXdmdpRFYxazJRMDNna3hqZ2d0XzRCczdfdlQ0b0tUSEdURVp6NlJBT3d1SG5QYnVsbnFMbjZNTl9HVTFIZDZ0WTdCbWpJaklFS2dkeHROckZ5Rl9HV0lrbGtlOFVyOGFZQzl1ZS1QMmszcE1MbEY0UjY5cFhZUlY2RS05UEF6RUtVYVE?oc=5",
       "accessed_at": "2026-10-06T04:34:08Z",
-      "sha256": "c008631514aab57f86aacacf7777ab6aa70520c595abe08c6c0f136f85a41844",
+      "sha256": "c97678de878c475beebe1e4fbac00f8b3315c1e69a1671463eb85af6157f0373",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "palantir",
       "published_at_utc": "2026-10-02T19:52:00Z",
       "publisher_url": "https://www.wired.com",
-      "raw_ref": "data/palantir/news/google/raw/20261006T043618Z-c0086315.xml"
+      "raw_ref": "data/palantir/news/google/raw/20261006T054446Z-c97678de.xml"
     },
     {
       "source_id": "SRC-NEWS-palantir-20261003-5c6f844c",
@@ -2679,14 +2679,14 @@
       "publisher": "Financial Times",
       "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNM2FSZ3ZpRDhGRTdGTnJ2dVVidHNCUjVJOVkyME0zbW5LVHpTLWlhcEE4by1OekNNQ0dPN1h5aWZsekROWmM5Um5pbHRySlp4N0tSNHBlay1HMVlxTU5qZnJ4VXJuMER2eFVIZTg5ZGJUSUhIcm1acE13ZmYxcG9JR0t5bXA?oc=5",
       "accessed_at": "2026-10-06T04:34:08Z",
-      "sha256": "c008631514aab57f86aacacf7777ab6aa70520c595abe08c6c0f136f85a41844",
+      "sha256": "c97678de878c475beebe1e4fbac00f8b3315c1e69a1671463eb85af6157f0373",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "palantir",
       "published_at_utc": "2026-10-03T04:04:37Z",
       "publisher_url": "https://www.ft.com",
-      "raw_ref": "data/palantir/news/google/raw/20261006T043618Z-c0086315.xml"
+      "raw_ref": "data/palantir/news/google/raw/20261006T054446Z-c97678de.xml"
     },
     {
       "source_id": "SRC-NEWS-palantir-20261005-4eba16e7",
@@ -2694,14 +2694,14 @@
       "publisher": "The New Humanitarian",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQODdzRnZBUjFHbUt5c3lkQVJIWl92X1VydzF1R2hqeGtyWmFhelpab29UTmJXTUdBWlh2Wi1ISTZVQ09URUE4cTRHak1HTV9vbFJwRDhnWUdpdHJwYlpFTUZmbUJTNXdUbDhBYlVYTEZFZ05nbE55c293RlBCZVhfbXhmdFFlWUN5dThuSFJMQ2F4M18yM0hELXVXNEtkVzdFLWFKVlkxWk1SUVNTWUFKbg?oc=5",
       "accessed_at": "2026-10-06T04:34:08Z",
-      "sha256": "c008631514aab57f86aacacf7777ab6aa70520c595abe08c6c0f136f85a41844",
+      "sha256": "c97678de878c475beebe1e4fbac00f8b3315c1e69a1671463eb85af6157f0373",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "palantir",
       "published_at_utc": "2026-10-05T07:56:00Z",
       "publisher_url": "https://www.thenewhumanitarian.org",
-      "raw_ref": "data/palantir/news/google/raw/20261006T043618Z-c0086315.xml"
+      "raw_ref": "data/palantir/news/google/raw/20261006T054446Z-c97678de.xml"
     },
     {
       "source_id": "SRC-NEWS-spacex-xai-20260929-4c65be85",
@@ -2724,14 +2724,14 @@
       "publisher": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPb0YzRl9SbDgyWFFrWHpGZEk1RTFWY1lsZmt2U0Jmc3ZaUVVnUHdVQzN2b3VmVmZrN0pzLVNpQkwyQVNreUVYc00zNzBhTW12b0RTdk1XSHY3SnREMGtXNTA5NzkyckpFeE1fSEZHVkFEQzB5VEgwZFdsdkMyMjJYQnFRbkxNY0lkaHhBM0lmcXBjb3hZa01TSDZSYUpIdw?oc=5",
       "accessed_at": "2026-10-06T04:34:10Z",
-      "sha256": "a7711d5771506922ffc89afd19a4dba654547e416262ae85699b375a04a6da31",
+      "sha256": "e251a12d2f83fc9fbaeeb520995f16ca5000a2127e9007840fa98a9d0d2b9d57",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 경쟁사(xAI)이자 컴퓨트 공급자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "spacex-xai",
       "published_at_utc": "2026-10-02T20:02:38Z",
       "publisher_url": "https://finance.yahoo.com",
-      "raw_ref": "data/spacex-xai/news/google/raw/20261006T043619Z-a7711d57.xml"
+      "raw_ref": "data/spacex-xai/news/google/raw/20261006T054447Z-e251a12d.xml"
     },
     {
       "source_id": "SRC-NEWS-spacex-xai-20261002-90d6b13e",
@@ -2739,14 +2739,14 @@
       "publisher": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxOejkyNEQzVFduNWpuRDhhUU9UMGcxREJ3c3VVRVRvd1VLU0JQdGhQZTZJY2dUM2JaUGxPRGQtdDNneHZBeVhlM1BYczZNaGFCbXVpdmdULXhEakNmSEVoN3BJSThQdWlwLWQ5bTdfRWxJaHhyaFFoTWR4ZTZjQ3BOYnRXZEEyQVFLT2doWDc0REI5eDhacjNYQ0QwTnBoTXpnUkw2LVBiUQ?oc=5",
       "accessed_at": "2026-10-06T04:34:10Z",
-      "sha256": "a7711d5771506922ffc89afd19a4dba654547e416262ae85699b375a04a6da31",
+      "sha256": "e251a12d2f83fc9fbaeeb520995f16ca5000a2127e9007840fa98a9d0d2b9d57",
       "conflict_of_interest": "선별·판정자 Claude 는 Anthropic 모델이고 이 기업은 Anthropic 경쟁사(xAI)이자 컴퓨트 공급자다 (긴장 #4·#11)",
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "spacex-xai",
       "published_at_utc": "2026-10-02T21:00:11Z",
       "publisher_url": "https://www.benzinga.com",
-      "raw_ref": "data/spacex-xai/news/google/raw/20261006T043619Z-a7711d57.xml"
+      "raw_ref": "data/spacex-xai/news/google/raw/20261006T054447Z-e251a12d.xml"
     },
     {
       "source_id": "SRC-NEWS-tesla-20260921-d3e750f2",
@@ -2799,14 +2799,14 @@
       "publisher": "CNBC",
       "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQNWY2WG5uVHNUbTI1YTB4NXBpbFYtRHA5QnpFbVZuVVJmS1JaMXBqbW40NlhPNzNsVWh2YmhTWFAtXzlRZFdiSkZaSm9kTGtlcC1LMHNVYXNvMkhaZENKX2VfUUE5emlXZDVRQ2tIWDFHQ01hbFNxS3RKUXhKaEQ1bWUxY2UzQjF5VzZJdXhDWG1QVFpLVllsRU8wb1B5WXlKaU1pd0xGa9IBrAFBVV95cUxPQ1B0Znp0dUZkMjZqLXdyQjRjMnJDOHFXQ3lXV1BmNEhIRHdXbWlFX2ZKM0w3ZGJKVzZyTDBhSHU3X1hkYzhRVm5EeXV2aWlzdEw4YnBTUERVLVFhbGJNVGlXSVl3alV2NGRwTVdrR0p5ZnktcXp6cW1FdFhZa3NPTU5pX3JxM3ZodUJDNENWZE5Zbjd4N3pOWC1MRVl2TzQzb1FQMFBIdGF1RjlF?oc=5",
       "accessed_at": "2026-10-06T04:34:11Z",
-      "sha256": "0a6881628ff66b4b10dfc0c73b99b5169098b134bf33baa263b34a4b50813440",
+      "sha256": "cfb57abce6abaf46cb7f62c8456cf39b49aa28347d8c8df3f473ccd96251cbd6",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "tesla",
       "published_at_utc": "2026-10-03T11:00:01Z",
       "publisher_url": "https://www.cnbc.com",
-      "raw_ref": "data/tesla/news/google/raw/20261006T043621Z-0a688162.xml"
+      "raw_ref": "data/tesla/news/google/raw/20261006T054448Z-cfb57abc.xml"
     },
     {
       "source_id": "SRC-NEWS-tesla-20261004-02fb1cc0",
@@ -2814,14 +2814,14 @@
       "publisher": "Benzinga",
       "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQNEhIWEtmZUFFSWhQU3VvTU83aC1oUHUxdTQ5VUJaT3A2QXh0dU9iWVVRNlh3MWZLZmh1SkRFVFlKenltMFh5anN0NFBBUi1UalhUY2s4UWE1dFVhLVQ0S3RlNGhrbkxsR2lWMkh5WVQ5QzdJU1RCNmRqVUJYeVFpeTlvOTRDRkgxaDBqaVM0Wk1LbURaOWdycHlhQ0JUeWg1bjVZdXhOZk9FUXRSQzBvVkhrZHA5akk5VTZEeWxtcG9FNVZW?oc=5",
       "accessed_at": "2026-10-06T04:34:11Z",
-      "sha256": "8bbe266c17f022b11f12b1a95df4a9127cc89c544b8dd47ef76b27e1b48dda5c",
+      "sha256": "89b6505ba696b87199b04d5c2e6e1a1614082737602459beaaf286712ef731a8",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "tesla",
       "published_at_utc": "2026-10-04T15:31:41Z",
       "publisher_url": "https://www.benzinga.com",
-      "raw_ref": "data/tesla/news/google/raw/20261006T043621Z-8bbe266c.xml"
+      "raw_ref": "data/tesla/news/google/raw/20261006T054448Z-89b6505b.xml"
     },
     {
       "source_id": "SRC-NEWS-tesla-20261004-80586e50",
@@ -2844,14 +2844,14 @@
       "publisher": "BASENOR",
       "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNMkFQNUR0UnJ0ckZ4ZUEyUTRIeUdlbzl3NG9sNUR5MGhwOXpRLWZMbExhcldhWWFUSzNPYWVjaGVpSkVxOHlqbHk0T0xEQTVrMkh4TnQwYlA0cExNQlhCYkJsdmdfRW5wbVlVM0hFcHZqQlNBYldJQldpVDVuMTdkVTZYYmpyVDhPdkVpQ2F1REJTRGxodUQ5X3p2RWkxSVc0dC1xT0g2TnA?oc=5",
       "accessed_at": "2026-10-06T04:34:11Z",
-      "sha256": "0a6881628ff66b4b10dfc0c73b99b5169098b134bf33baa263b34a4b50813440",
+      "sha256": "cfb57abce6abaf46cb7f62c8456cf39b49aa28347d8c8df3f473ccd96251cbd6",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "tesla",
       "published_at_utc": "2026-10-05T18:06:14Z",
       "publisher_url": "https://www.basenor.com",
-      "raw_ref": "data/tesla/news/google/raw/20261006T043621Z-0a688162.xml"
+      "raw_ref": "data/tesla/news/google/raw/20261006T054448Z-cfb57abc.xml"
     },
     {
       "source_id": "SRC-NEWS-tesla-20261005-47451dbc",
@@ -2859,14 +2859,14 @@
       "publisher": "Yahoo Finance",
       "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPMmZRYkNwZ293WGgyMWdkWjVBN2xVSDMyVFloQjVRODBuNzAwZEpuRUd1a0gzUkhpdVRRRGlqTHlUZ2ZfUG5iSWRzczZqQm5XYmQ4ZkhOUmhUR3M1X09KeGxCVWx2UUI4b09wa05MeGo2Nms4ZENLNHY4OGJpLU0wQnNhRldfVWFJTnJvaE8xWDI3MHhfVjZZaTNKaUFhX0Nh?oc=5",
       "accessed_at": "2026-10-06T04:34:11Z",
-      "sha256": "8bbe266c17f022b11f12b1a95df4a9127cc89c544b8dd47ef76b27e1b48dda5c",
+      "sha256": "89b6505ba696b87199b04d5c2e6e1a1614082737602459beaaf286712ef731a8",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "tesla",
       "published_at_utc": "2026-10-05T12:45:43Z",
       "publisher_url": "https://finance.yahoo.com",
-      "raw_ref": "data/tesla/news/google/raw/20261006T043621Z-8bbe266c.xml"
+      "raw_ref": "data/tesla/news/google/raw/20261006T054448Z-89b6505b.xml"
     },
     {
       "source_id": "SRC-NEWS-tsmc-20260928-1e21fc66",
@@ -2889,14 +2889,14 @@
       "publisher": "Bloomberg.com",
       "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOQzhaT2NiMElucXVLX2xRcV92d1o4dm5KOVZRaDBYMmF1T3BkWnRsRFdJTFhkNGdGZ3ZTY2h3VWx3ckNTdXlKcWcxdWE5QmpZcDRkOTliaTlJZUdXTHdpdHVzQ3F3amtCbDFCS2o2VWxoSDFtaU01UXB6MFV3c2k4VWJ4M0tXNm43Zy1jTGdDdjAtM0pTd2gxeEtvYUd6c0xpRlFqSW9DNGYwcElCUDAzMktB?oc=5",
       "accessed_at": "2026-10-06T04:34:02Z",
-      "sha256": "a8458b4b02db3496e0d38d4f44fca5c307d6659105547d24f7d280b1dfead8d5",
+      "sha256": "9107a71c998fbc86bd1897c347e15ab60826202356ecd6da61c32a1cf824df0b",
       "conflict_of_interest": null,
       "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다",
       "kind": "news",
       "company_id": "tsmc",
       "published_at_utc": "2026-10-01T13:03:40Z",
       "publisher_url": "https://www.bloomberg.com",
-      "raw_ref": "data/tsmc/news/google/raw/20261006T043612Z-a8458b4b.xml"
+      "raw_ref": "data/tsmc/news/google/raw/20261006T054439Z-9107a71c.xml"
     }
   ]
 }

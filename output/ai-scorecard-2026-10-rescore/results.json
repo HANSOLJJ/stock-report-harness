@@ -3,16 +3,16 @@
   "engine": "scorecard/1",
   "run_id": "ai-scorecard-2026-10-rescore",
   "as_of": "2026-10-06",
-  "rule_version": "v1.8",
+  "rule_version": "v1.9",
   "baseline_id": "v1.5",
   "input_hashes": {
-    "run": "5a1103720c993cacf238d859d6b595bbf9cd3393f0b49eb3ff362dea402eb687",
+    "run": "65a19e92d2a861d18c6c33059b2217f5882c9527dde0827c4b2282c569a52f5f",
     "observations": "304291f5f8e56d88639a3892a6c8eedb02e30499e9bb2675b0fef68b5600e7d6",
     "judgments": "d803a3a60b4cf96e861f17290c9b46c5c76241b3554b8970eccb401180e5efce",
-    "sources": "36911c0cf76b0b4deacb2c70c4987cc60cd037ffc21c91b105affa2ee540f094",
-    "evidence": "642b94717fcf32b082aa0377dee6643215958597037acb366741cfe98fe7fa88",
-    "triggers": "338caef2f598dc4178808f266dd635dba7dc94a59b1bd9b5f9382b7fadb8a4a6",
-    "rules": "7e215b55c516cca4ccf0ce4d6d1d0a94014b4ecaf01f3bc523127f29009c59c4"
+    "sources": "0d10ee725746bb2e0022f66ca77be3f41301be060ae906d356a7581412e87998",
+    "evidence": "7f0a4413b9fa93cce0bb5c9caa70735d992b3c08a27b6c273473d0035e9f8a6f",
+    "triggers": "e9917d8e1187869a06604d82c197c164de05fac6a48488125565e9f8f37ddd37",
+    "rules": "0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d"
   },
   "decisions_applied": [
     "C-05:apply",
@@ -4389,5 +4389,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 154,
-  "results_hash": "f8269c8d2b7d9ebf94898eacd688878837f8d5bd4340e59b56d0b037ce0654cf"
+  "results_hash": "4bc5334865775ee14987212644397a7562bb6624c1f960f14c5d7e6bb55c3eef"
 }

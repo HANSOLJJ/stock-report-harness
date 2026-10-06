@@ -6,8 +6,8 @@
   "as_of": "2026-10-06",
   "price_as_of": "2026-10-05",
   "info_cutoff": "2026-10-06",
-  "rule_version": "v1.8",
-  "rule_hash": "7e215b55c516cca4ccf0ce4d6d1d0a94014b4ecaf01f3bc523127f29009c59c4",
+  "rule_version": "v1.9",
+  "rule_hash": "0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d",
   "baseline_id": "v1.5",
   "companies": [
     "alphabet",
@@ -110,7 +110,8 @@
   "assumptions": [
     "이전 실행 ai-scorecard-2026-10-test 의 관측·판단·출처를 그대로 이어받았다(observations 979b7e527f73…, judgments 103a5ca22afb…). 이어받은 항목은 이번 실행에서 재검증되지 않았다",
     "이번 실행은 기업을 더하지 않았고 이전 실행의 입력을 그대로 쓴다",
-    "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)"
+    "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
+    "규칙이 이어받은 실행 이후 바뀌었다(7e215b55c516… → 0e4122094968…) — 기존 기업 점수 불변은 diff 로 확인한다"
   ],
   "continued_from": {
     "run_id": "ai-scorecard-2026-10-test",

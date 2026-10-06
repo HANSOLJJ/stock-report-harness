@@ -2,15 +2,15 @@
 slug: ai-scorecard-2026-10-rescore
 report_type: ai_scorecard
 topic: 2026-10 정기 재채점
-request: 규칙 문서 재편(2026-10-06) 뒤 10월 시험 실행을 이어받아 14개사를 다시 채점하고, 기준선 트리거 39건과 시험 실행 트리거 40건을 처리한다
+request: 규칙 문서 재편(2026-10-06) 뒤 10월 시험 실행을 이어받아 14개사를 다시 채점하고, 기준선 트리거 39건과 시험 실행 트리거 40건을 처리한다. 규칙 v1.9 로 TSMC·Alibaba 를 분기 기반 최근 1년 값으로 계산한다
 output_type: scorecard
 audience: intermediate
 run_id: ai-scorecard-2026-10-rescore
 as_of: 2026-10-06
 price_as_of: 2026-10-05
 info_cutoff: 2026-10-06
-rule_version: v1.8
-rule_hash: 7e215b55c516cca4ccf0ce4d6d1d0a94014b4ecaf01f3bc523127f29009c59c4
+rule_version: v1.9
+rule_hash: 0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d
 baseline_id: v1.5
 companies:
   - alphabet
@@ -32,13 +32,14 @@ assumptions:
   - 이전 실행 ai-scorecard-2026-10-test 의 관측·판단·출처를 그대로 이어받았다(observations 979b7e527f73…, judgments 103a5ca22afb…). 이어받은 항목은 이번 실행에서 재검증되지 않았다
   - 이번 실행은 기업을 더하지 않았고 이전 실행의 입력을 그대로 쓴다
   - 가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)
+  - 규칙이 이어받은 실행 이후 바뀌었다(7e215b55c516… → 0e4122094968…) — 기존 기업 점수 불변은 diff 로 확인한다
 ---
 # Planning Brief — 2026-10 정기 재채점
 
 ## 요청 해석
 
 - 대상: AI 기업 14개사 9-factor 채점 (`report_type: ai_scorecard`)
-- 요청 원문: 규칙 문서 재편(2026-10-06) 뒤 10월 시험 실행을 이어받아 14개사를 다시 채점하고, 기준선 트리거 39건과 시험 실행 트리거 40건을 처리한다
+- 요청 원문: 규칙 문서 재편(2026-10-06) 뒤 10월 시험 실행을 이어받아 14개사를 다시 채점하고, 기준선 트리거 39건과 시험 실행 트리거 40건을 처리한다. 규칙 v1.9 로 TSMC·Alibaba 를 분기 기반 최근 1년 값으로 계산한다
 - 산출물: `output/ai-scorecard-2026-10-rescore/` 묶음(research.md·draft.md·review.md·report.html·audit.md)·`scorecard/history.csv`
 - 흐름: plan → collect → research → calculate → draft → review → awaiting_user → build
 
@@ -46,7 +47,7 @@ assumptions:
 
 - 목적: 근거 계층과 판단 수정 흐름을 실제 자료로 끝까지 시험
 - 분석 기준일 `as_of` 2026-10-06 · 가격 기준일 2026-10-05 · 정보 컷오프 2026-10-06 (C-17: 셋을 분리 기록)
-- 규칙 `v1.8` (해시 `7e215b55c516cca4…`) — 실행 중 규칙이 바뀌어도 이 실행은 이 해시를 유지한다
+- 규칙 `v1.9` (해시 `0e41220949687543…`) — 실행 중 규칙이 바뀌어도 이 실행은 이 해시를 유지한다
 
 ## 대상 기업과 연결 범위
 

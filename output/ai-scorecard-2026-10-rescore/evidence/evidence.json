@@ -1424,8 +1424,8 @@
         "F1"
       ],
       "kind": "news",
-      "source_id": "SRC-NEWS-amazon-20261006-36c30302",
-      "published_at_utc": "2026-10-06T03:19:21Z",
+      "source_id": "SRC-NEWS-amazon-20261005-36c30302",
+      "published_at_utc": "2026-10-05T19:35:04Z",
       "title": "AI chatbots are steering shoppers to Walmart and Costco over Amazon, UBS finds - qz.com",
       "excerpt": "AI chatbots are steering shoppers to Walmart and Costco over Amazon, UBS finds - qz.com",
       "relevance": "추론: UBS 조사에서 AI 챗봇이 쇼핑을 추천할 때 아마존보다 월마트·코스트코로 소비자를 보낸다는 결과가 나왔다는 보도다. 제3자 쇼핑 에이전트 경로에서 아마존 소비자 채널 락인이 유지되는지를 보는 ① 의 재료다. 아마존 ① 판단은 5점(Prime 2억+ 소비자 락인)이다. (선별 확신: 낮음)",
@@ -1824,7 +1824,7 @@
         "F5"
       ],
       "kind": "news",
-      "source_id": "SRC-NEWS-anthropic-20261005-caf4a53a",
+      "source_id": "SRC-NEWS-anthropic-20261005-749ca1c9",
       "published_at_utc": "2026-10-05T16:13:21Z",
       "title": "Pentagon stops using Anthropic AI tools after blacklisting company, BBC told - bbc.com",
       "excerpt": "Pentagon stops using Anthropic AI tools after blacklisting company, BBC told - bbc.com",

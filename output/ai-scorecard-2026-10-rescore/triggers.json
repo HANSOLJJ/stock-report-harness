@@ -167,7 +167,7 @@
       ],
       "source_ids": [
         "SRC-NEWS-amazon-20260929-6dc379e1",
-        "SRC-NEWS-amazon-20261006-36c30302"
+        "SRC-NEWS-amazon-20261005-36c30302"
       ],
       "status": "watching",
       "recheck": {
@@ -1862,7 +1862,7 @@
       "deadline": "2026-12-31",
       "evidence_ids": [],
       "source_ids": [
-        "SRC-NEWS-anthropic-20261005-894a1ad4"
+        "SRC-NEWS-openai-20261005-60db0718"
       ],
       "status": "watching",
       "recheck": {
