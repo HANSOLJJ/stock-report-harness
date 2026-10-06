@@ -1085,7 +1085,15 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
 # 사람이 승인한다. 승인이 아니므로 에이전트도 부를 수 있고, reviewer 는 받은 이름(`by`)이다.
 
 def _check_judgment_changes(factor: str, changes: Mapping[str, Any]) -> str:
-    """판단 수정·제안이 받는 값의 형식 검사. 돌려주는 값은 판정 종류(edit kind)다. 2026-10-01 제안 흐름과 함께 쓰려고 뽑았다."""
+    """판단 수정·제안이 받는 값의 형식 검사. 돌려주는 값은 판정 종류(edit kind)다. 2026-10-01 제안 흐름과 함께 쓰려고 뽑았다.
+
+    2026-10-06: 근거 문장만 바꾸는 수정은 `evidence_only` 다. 판정 종류·점수·판정 재료·상태를 건드리지 않으므로 ②·⑥ 을
+    포함한 모든 항목에 허용한다(근거를 완결된 현재 상태 문장으로 다시 쓰는 일, AGENTS.md 「금지·주의」)."""
+    if isinstance(changes, Mapping) and set(changes) == {"evidence"} and factor in FACTOR_IDS:
+        if not (isinstance(changes["evidence"], list) and changes["evidence"]
+                and all(isinstance(e, str) and e.strip() for e in changes["evidence"])):
+            raise SchemaError("evidence 는 비어 있지 않은 문장 목록이어야 한다")
+        return "evidence_only"
     if factor not in JUDGMENT_EDIT_KIND:
         raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {sorted(JUDGMENT_EDIT_KIND)})")
     if not isinstance(changes, Mapping) or not changes:
@@ -1115,8 +1123,6 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     규칙이 계산하므로 받지 않는다. 형식은 쓰기 전에 스키마로 검증하고, 실행 전체 검증(교차 참조)이 실패하면 원래 파일로 되돌린다.
     `cite_evidence_ids` 는 판단의 `evidence_ids` 에 더할 근거다(2026-10-01 제안 반영). 새 판단이라 확정 근거만 받는다.
     """
-    if factor not in JUDGMENT_EDIT_KIND:
-        raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {sorted(JUDGMENT_EDIT_KIND)})")
     if not isinstance(by, str) or not by.strip():
         raise SchemaError("수정자(--by)는 비어 있지 않은 문자열이어야 한다")
     if not isinstance(reason, str) or not reason.strip():
@@ -1133,7 +1139,11 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     item = payload["items"][idx]
     previous = {k: copy.deepcopy(item.get(k)) for k in JUDGMENT_REVISION_FIELDS}
     new = dict(item)
-    if kind == "score":
+    if kind == "evidence_only":
+        # 2026-10-06: 근거 문장만 바꾼다. 판정 종류·점수·판정 재료·상태·검토자는 그대로라 승계 판단은 승계로 남는다
+        # (승계 판단 예외·승계 점수 계산이 바뀌지 않는다). 바꾼 사실은 revision_history 에 남는다.
+        pass
+    elif kind == "score":
         if "score" in changes:
             new["score"] = changes["score"]
     else:
@@ -1148,7 +1158,8 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence")):
         raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다")
     revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
-    new.update(status="new", reviewer=by.strip(), reviewed_at=revised_at)
+    if kind != "evidence_only":
+        new.update(status="new", reviewer=by.strip(), reviewed_at=revised_at)
     # 2026-10-01 V2-11: --by 는 확인할 수 없는 이름이다. 누가 고쳤는지 가리도록 세션 종류를 함께 남긴다.
     session = "agent" if agent_session_markers() else "human"
     new["revision_history"] = [*item.get("revision_history", []),
@@ -1421,7 +1432,8 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]]) -> list[d
             "company_id": p["company_id"],
             "display_name": (registry.get(p["company_id"]) or {}).get("display_name") or p["company_id"],
             "factor": p["factor"],
-            "edit_kind": JUDGMENT_EDIT_KIND.get(p["factor"], "summary"),
+            "edit_kind": ("summary" if p["factor"] == SUMMARY_FACTOR
+                          else "evidence_only" if not p["changes"] else JUDGMENT_EDIT_KIND[p["factor"]]),
             "changes": _pairs(p["changes"]),
             "evidence_after": p["evidence_after"],
             "reason": p["reason"],

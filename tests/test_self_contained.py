@@ -81,6 +81,29 @@ class SummaryProposalTest(ProposalBase):
         self.assertTrue(self.summaries())
 
 
+class EvidenceOnlyRevisionTest(ProposalBase):
+    """근거 문장만 바꾸는 제안은 판정 종류·점수·판정 재료·상태·검토자를 건드리지 않는다(승계는 승계로 남는다). ②·⑥ 도 대상이다."""
+
+    def test_carried_f2_and_f1_stay_carried(self):
+        for factor in ("F2", "F1"):
+            with self.subTest(factor=factor):
+                before = self.judgment(factor=factor)
+                self.assertEqual(before["status"], "carried")
+                p = stages.add_proposal(SLUG, company_id="nvidia", factor=factor,
+                                        evidence_after=[f"NVIDIA {factor} 근거를 완결된 현재 상태 문장으로 다시 썼다."], reason="문장 정리")
+                with human_env():
+                    self.decide(p["proposal_id"], accept=True, by="사용자")
+                after = self.judgment(factor=factor)
+                for key in ("kind", "score", "inputs", "status", "reviewer", "reviewed_at"):
+                    self.assertEqual(after.get(key), before.get(key), key)
+                self.assertEqual(after["evidence"], [f"NVIDIA {factor} 근거를 완결된 현재 상태 문장으로 다시 썼다."])
+                self.assertEqual(after["revision_history"][-1]["previous"]["evidence"], before["evidence"])
+
+    def test_f2_cannot_change_score(self):
+        with self.assertRaisesRegex(SchemaError, "고치지 않는다"):
+            stages.add_proposal(SLUG, company_id="nvidia", factor="F2", changes={"score": 3}, reason="r")
+
+
 class ValidatorTest(unittest.TestCase):
     def ctx(self, **kw) -> SimpleNamespace:
         base = dict(judgments=[], company_summaries={}, evidence=[], triggers=[])

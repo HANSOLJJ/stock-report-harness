@@ -1427,7 +1427,9 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         _require(pid not in seen, f"{where}: proposal_id 중복 {pid!r}")
         seen.add(pid)
         _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
-        _require(item["factor"] in JUDGMENT_EDIT_KIND or item["factor"] == SUMMARY_FACTOR,
+        # 2026-10-06: 근거 문장만 바꾸는 제안(changes 없음)은 ②·⑥ 을 포함한 모든 항목이 대상이다.
+        _require(item["factor"] in JUDGMENT_EDIT_KIND or item["factor"] == SUMMARY_FACTOR
+                 or (item["factor"] in FACTOR_IDS and not item["changes"]),
                  f"{where}: {item['factor']!r} 는 제안 대상 factor 가 아니다")
         _require(isinstance(item["changes"], dict), f"{where}.changes 는 object")
         after = item["evidence_after"]

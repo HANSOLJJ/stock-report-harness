@@ -676,8 +676,8 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("propose", help="판단 변경 제안을 쓴다(에이전트도 쓴다). 반영·거부는 사람이 승인 페이지에서 한다")
     p.add_argument("slug")
     p.add_argument("--company", required=True)
-    p.add_argument("--factor", required=True, choices=["F1", "F3", "F4", "F5", "F7", "F8", "F9", "SUMMARY"],
-                   help="SUMMARY 는 기업 한 줄 요약(--evidence 문장 하나)")
+    p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "SUMMARY"],
+                   help="F2·F6 은 근거 문장(--evidence)만 바꾼다. SUMMARY 는 기업 한 줄 요약(--evidence 문장 하나)")
     p.add_argument("--set", action="append", help="바꿀 판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
     p.add_argument("--evidence", action="append", help="반영 뒤 근거 문장. 여러 번 주면 그 목록이 근거 전체가 된다")
     p.add_argument("--json", help="{changes: {...}, evidence_after: [...]} JSON 파일(--set·--evidence 가 덮어쓴다)")
