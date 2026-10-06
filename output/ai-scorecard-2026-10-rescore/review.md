@@ -1,20 +1,20 @@
 ---
 slug: ai-scorecard-2026-10-rescore
 report_type: ai_scorecard
-status: needs_fix
+status: pass
 created_at: 2026-10-06
 plan_source: output/ai-scorecard-2026-10-rescore/plan.md
 research_source: output/ai-scorecard-2026-10-rescore/research.md
 draft_source: output/ai-scorecard-2026-10-rescore/draft.md
-results_hash: 1101644bc117e2a2ccda096baaf8b0f2a7a18fa8e4f29fff4bd1bf4583e1af5c
-draft_hash: 1168a515ee524414b8b248c44cf5f4a7976607f10150cc720dcb280fd7a872f4
+results_hash: 34248db45321ea0b734cdd66bbadf1e5d45445b1f643f0503c405a440b01c104
+draft_hash: 2af65e2f45bb0e34de12fc67f4ab0496824e043cc4e72d3899277560cf87eeca
 review_type: separate-session-4way
 review_execution: separate_subagent_sessions
 reviewers:
-  - "fact-sources: pending"
-  - "financial-calc: pending"
-  - "rule-consistency: pending"
-  - "output-readability: pending"
+  - "fact-sources: pass (Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님, evidence-editor 관점 포함) · 2026-10-06 · 확인 리뷰(2차))"
+  - "financial-calc: pass (Claude Opus 5.5 · 재무 계산 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차))"
+  - "rule-consistency: pass (Claude Opus 5.5 · 규칙 일관성 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차))"
+  - "output-readability: pass (Claude Opus 5.5 · report-designer 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차))"
 ---
 # 리뷰 — 2026-10 정기 재채점
 
@@ -24,10 +24,10 @@ reviewers:
 
 | 영역 | 검토 대상 | 검토자 | 결과 | 요약 |
 | --- | --- | --- | --- | --- |
-| 사실·출처 | 숫자·기업 귀속·기준 시점·공시·뉴스·부재 주장 |  | pending |  |
-| 재무 계산 | EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호 |  | pending |  |
-| 규칙 일관성 | factor 정의·상하한·예외·중복 속성·정성 승계·전 기업 동일 기준 |  | pending |  |
-| 출력·가독성 | 표·카드·근거·차트·이력 일치, 낡은 비교 문장, 모바일·단일 HTML |  | pending |  |
+| 사실·출처 | 숫자·기업 귀속·기준 시점·공시·뉴스·부재 주장 | Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님, evidence-editor 관점 포함) · 2026-10-06 · 확인 리뷰(2차) | pass | 1차 medium 1~3(TRG-057 발동, TRG-078 의 SpaceX 몫 → TRG-080 발동, TRG-070 Cursor 4건)이 닫혔다. low 가운데 아마존 9/14 8-K, 알리바바 ⑨ '-3' 문구, preview 원인 분류도 닫혔다. 새 출처 3건은 sources.json 에 있다. URL·제목·발행일이 후보 원문과 같고, 아마존 8-K 는 원 submissions JSON 에서 접수번호·문서명까지 확인했다. 트리거 참조 187건 가운데 빠진 출처는 없다. 고친 트리거·근거 문장의 숫자(Oracle 런웨이 1.61년, 커버리지 2.66배, FCF −287억 달러, PER 22.83·EV/매출 7.858·성장 21.62%, TSMC P3 30.56%, £4.25B·£4.235B)는 관측·results·원문과 맞다. research.md 의 「이전 트리거 처리」 80행과 「발동 트리거 재검토 대상」 4행은 triggers.json 과 같고, 유지 이유가 finding 에 있다. 새로 보인 것은 low 두 건뿐이고 점수·순위·체크리스트에 닿지 않는다. medium 4(PRP 판단의 source_ids)는 지시대로 다음 실행 과제로 남긴다. |
+| 재무 계산 | EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호 | Claude Opus 5.5 · 재무 계산 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차) | pass | 관측(observations 해시 `0a91b497…`)과 규칙(`0e412209…`)은 1차와 같고, 입력 해시는 judgments·sources·evidence·triggers 만 바뀌었다. 14개사 ⑥·⑨ 를 1차 스크립트로 다시 계산했고 results.json 과 14/14 일치한다. 1차 커밋(cf958b4) 의 results 와 비교해도 14개사 factor 점수·총점·과점·함정·순위가 모두 같고 ⑥·⑨ calc 도 바이트 단위로 같다. 고친 근거·트리거·판단 문장의 숫자는 Oracle 런웨이 1.61년, 커버리지 2.66배, FCF 약 −287억 달러, PER 22.8·EV/매출 7.86·성장 21.6%, TSMC P3 30.56%, 아마존 런웨이 9.95년·커버리지 1.856, 회사채 £4.25B(순조달 약 £4.235B) 다. 모두 확정 관측·계산·원문(8-K 를 sec-get 으로 확인)과 맞는다. preview 원인 분류와 Alibaba ⑨ '-3' 문구, 두 1차 발견은 닫혔다. 나머지 1차 발견은 점수에 닿지 않아 다음 실행 과제로 남긴다. 새로 본 것 둘(EV-oracle-003 의 낡은 조건 문장, TRG-057 의 9/14 8-K 미열람 문장)도 점수에 닿지 않는다. 점수·순위·체크리스트 판정을 바꾸는 발견은 없다. |
+| 규칙 일관성 | factor 정의·상하한·예외·중복 속성·정성 승계·전 기업 동일 기준 | Claude Opus 5.5 · 규칙 일관성 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차) | pass | 1차 medium 두 건은 모두 닫혔다. 첫째, TRG-017 은 v1.9 일반 트랙과 P3 30.56%(30% 경계 바로 위)로 고쳐졌다. 둘째, preview 원인 분류는 렌더러 수정으로 바뀌었다. TSMC·Alibaba ⑥ 은 `📐 규칙(트랙 listed_annual→listed_ttm)·📊 관측`, Alibaba ⑨ 는 `📊 관측` 으로 나온다. 발동으로 바꾼 두 트리거의 판정은 규칙과 맞는다. TRG-057 은 ⑦ 판정표의 "큼 쪽에서는 세로축이 점수를 가르지 않는다" 와 ⑧ 근거 갱신 공시가 없다는 점을 근거로 유지했다. TRG-080 은 2.4 비AI 귀속(로켓·위성은 ①·③ 별도 수익모델·④ 에서만)에 따라 Starship 을 ② 가 아니라 ④ 로 보고, ④ 가 범위 맨 위라 유지했다. spacex-xai.F2 근거도 이미 "재사용 로켓·Starship 은 AI 게임체인저가 아니다" 로 같은 잣대다. research.md 「발동 트리거 재검토 대상」 표는 fired 2건 4행으로 trigger 상태와 맞는다. 다만 ⑦ 행의 `이번 실행에서 수정함` 은 근거 문장만 고친 것이라 오해 소지가 있다(low). 고친 숫자(런웨이 1.61년, 커버리지 2.66배, FCF −287억 달러, ⑥ 22.8·7.86·21.6%)는 관측·results 와 맞다. 점수·순위는 1차와 같다(results 의 입력 해시 가운데 evidence·triggers·sources 만 바뀜). 점수·순위·체크리스트 판정을 바꾸는 발견은 없다. 체크리스트 fail 13건은 1차와 같고 모두 승계 판단 예외다. |
+| 출력·가독성 | 표·카드·근거·차트·이력 일치, 낡은 비교 문장, 모바일·단일 HTML | Claude Opus 5.5 · report-designer 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차) | pass | 1차 medium 여섯 가운데 넷이 닫혔다. 닫힌 것은 Alibaba ⑨ "이번 실행 점수는 -3", TRG-017 의 연간 트랙 문장, TRG-022 와 Oracle 근거 4건의 낡은 런웨이·커버리지, 미리보기 변동 원인 분류와 순위만 이동한 기업 누락이다. 남은 둘은 아마존 여신 문구 "기준일 -6일 뒤"(render_common 1092행 미수정)와 HTML 방법 절 ⑨ 개념 문장(factor-concepts.json F9 `stale` 표지 없음)이다. 둘 다 점수에 닿지 않아 다음 실행 과제로 유지한다. 새 draft.md·preview.md 의 숫자를 다시 스크립트로 전부 대조했고 results.json 과 오류 0 이다. 대조 대상은 순위표 14행, 카드 머리줄 14개, factor 126칸, ⑥·⑨ 원자료 표, 미리보기 두 표다. 고친 문장의 숫자(TSMC P3 30.56%, Oracle 런웨이 1.61년·커버리지 2.66배·FCF 약 −287억 달러·EV/매출 7.86배)도 results 의 calc 와 같다. 새로 본 것은 하나다. 발동 2건(TRG-057, 신설 TRG-080)이 초안·HTML 트리거 절에 보이지 않는다. 판단을 유지했다는 결과도 `그 밖의 상태(fired·expired·withdrawn) 24건은 triggers.json 에 있다` 한 줄에 묻힌다. 점수·순위·체크리스트에 닿지 않으므로 medium 으로 다음 실행 과제에 적는다. 점수·순위·체크리스트 판정을 바꾸는 발견은 없다. report.html 은 여전히 없다. HTML 시각 검증은 빌드 뒤 `uv run --frozen python -X utf8 scripts/validate_report_contract.py ai-scorecard-2026-10-rescore --require-html` 와 Playwright 실측으로 미룬다. |
 
 결과는 pass / needs_fix / blocked 중 하나. 네 영역이 모두 pass 이고 체크리스트에 fail 이 없을 때만 frontmatter `status: pass`.
 **승계 판단 예외(AGENTS.md 리뷰 범위)** — 체크리스트 fail 의 사유가 `carried_score` 로 승계한 판단의 기존 논리이고, 이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며, 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 이때 해당 fail 과 **긴장 번호**(예: `TEN-RC-02`)를 근거 칸에 그대로 적는다. 이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다 — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(Q03).
@@ -36,29 +36,29 @@ reviewers:
 
 | ID | 검사 초점 | 결과 | 근거 |
 | --- | --- | --- | --- |
-| Q01 | 이 감점, 다른 칸에서 이미 셌나? | pending |  |
-| Q02 | 이 지표가 이 칸의 정의에 맞나? | pending |  |
-| Q03 | 회사마다 같은 잣대인가? | pending |  |
-| Q04 | 시총 크기를 밸류에이션으로 착각했나? | pending |  |
-| Q05 | 출처가 이해당사자인가? | pending |  |
-| Q06 | 볼륨인가 가치인가? | pending |  |
-| Q07 | "안 만든 것"을 카운터 포지셔닝으로 셌나? | pending |  |
-| Q08 | 적대세력을 수로 셌나, 성격으로 셌나? | pending |  |
-| Q09 | 미래 계획을 현재 점수에 넣었나? | pending |  |
-| Q10 | 거리를 가속도로 착각했나? | pending |  |
-| Q11 | 순적자를 실격 사유로 썼나? | pending |  |
-| Q12 | ③ 세 기준을 동등하게 쟀나? | pending |  |
-| Q13 | "공짜로 뿌린다"를 곧바로 카운터 포지셔닝으로 셌나? | pending |  |
-| Q14 | 아직 안 끝난 승부를 끝난 것처럼 쟀나? | pending |  |
-| Q15 | ⑤에서 "공짜 사용자"를 아군으로 셌나? | pending |  |
-| Q16 | ①을 한 채널로만 쟀나? | pending |  |
-| Q17 | ②를 "표준 없음"만으로 깎았나? | pending |  |
-| Q18 | ⑤에서 관계사를 독립 동맹으로 셌나? | pending |  |
-| Q19 | ⑤에서 "받은 투자"를 곧바로 동맹 +2로 셌나? | pending |  |
-| Q20 | 조달을 동맹으로 셌나? | pending |  |
-| Q21 | 동맹이자 의존인 관계를 한쪽에서만 셌나, 또는 같은 속성을 양쪽에서 셌나? | pending |  |
-| Q22 | 지분 평가이익을 ⑦ 순환금융 증거로 셌나? | pending |  |
-| Q23 | 벤치마크를 서로 다른 하네스끼리 비교했나? | pending |  |
+| Q01 | 이 감점, 다른 칸에서 이미 셌나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC-05 · TEN-RC3-04.**<br>• 변경분 통과. TRG-057 은 Oracle 선투자 위험을 ⑦ 이 아니라 ⑧·⑨ 에 두고, EV-oracle-004 와 같은 자리를 지킨다. TRG-080 은 Starship 을 ④ 한 곳에만 둔다.<br>• 승계 fail: nvidia F5·F8 의 고객 자체 칩 이탈, tesla F5·F8 의 NHTSA |
+| Q02 | 이 지표가 이 칸의 정의에 맞나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC-02 · TEN-RC3-01 · TEN-RC3-03 · TEN-RC3-05 · TEN-RC4-02.**<br>• 변경분 통과. 비AI 사업(로켓)을 ② 지표로 쓰지 않는다(TRG-080). 완충에 넣는 것은 실현 현금뿐이다(TRG-005).<br>• 저심각 관찰(tsmc/oracle F9 의 스톡 지표, EV-microsoft-004)은 다음 실행 과제로 남는다 |
+| Q03 | 회사마다 같은 잣대인가? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC-03 · TEN-RC4-03.**<br>• 1차 Q03 결론(⑥ 트랙은 예탁증서 2사에만, 최근 1년 창은 전 기업 최신, 여신 기준 동일)은 그대로다. 이번 수정은 TSMC 트리거의 트랙 서술을 다른 기업과 같은 v1.9 기준으로 맞췄다.<br>• 비AI 귀속 잣대는 TRG-080 과 spacex-xai.F2 근거가 같고, tesla(④ 에서 에너지 저장)와도 같다.<br>• 승계 fail: C-08 이탈 조건 미통일, spacex-xai H 수 비교 |
+| Q04 | 시총 크기를 밸류에이션으로 착각했나? | pass | 규칙 일관성(2차): 상장 12사 ⑥ 은 비율 잣대(시총 ÷ 모회사 귀속 순이익, (시총−순현금) ÷ 매출)다. 시총 절대액을 쓰지 않는다. 변경 없음 |
+| Q05 | 출처가 이해당사자인가? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RA-02 · TEN-RA3-01.** 변경분은 통과다. TRG-057 은 법정 제출본(10-Q), TRG-080 은 2차 매체를 확정 근거로 써서 판단을 바꾸지 않았다. 이해상충 표기는 판정에 넣지 않았다 |
+| Q06 | 볼륨인가 가치인가? | pass | 규칙 일관성(2차): 볼륨 지표가 점수 재료로 든 곳이 없다. 변경 없음 |
+| Q07 | "안 만든 것"을 카운터 포지셔닝으로 셌나? | pass | 규칙 일관성(2차): amazon.F3 의 "안 만든 것 자체는 카운터 포지셔닝이 아니다". 변경 없음 |
+| Q08 | 적대세력을 수로 셌나, 성격으로 셌나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC4-03.** 변경분에 ⑤ 판정이 없다 |
+| Q09 | 미래 계획을 현재 점수에 넣었나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RA-02 · TEN-RA3-01 · TEN-RA6-01.**<br>• 변경분 통과. TRG-080 은 실현된 페이로드 배치(실측)만 봤다. 궤도 데이터센터는 실현 전이라 ② 에 넣지 않았다. TRG-005 는 계획 단계 사채·칩 매각을 근거·완충에서 뺐다.<br>• 트리거 80건에 점수 키·예상 점수가 없다(C-14) |
+| Q10 | 거리를 가속도로 착각했나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RB-Q10 · TEN-RC4-04.** ③ 변경 없음 |
+| Q11 | 순적자를 실격 사유로 썼나? | pass | 규칙 일관성(2차): ⑨ 는 게이트 경로로 계산된다. 순적자 실격은 없다. 변경 없음 |
+| Q12 | ③ 세 기준을 동등하게 쟀나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC4-01 · TEN-RC3-05.** ③ 변경 없음 |
+| Q13 | "공짜로 뿌린다"를 곧바로 카운터 포지셔닝으로 셌나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC3-05.** 변경 없음 |
+| Q14 | 아직 안 끝난 승부를 끝난 것처럼 쟀나? | pass | 규칙 일관성(2차): 14사 door_closed 가 전부 fail 이다 |
+| Q15 | ⑤에서 "공짜 사용자"를 아군으로 셌나? | pass | 규칙 일관성(2차): 공짜 사용자를 아군으로 세지 않는다. 변경 없음 |
+| Q16 | ①을 한 채널로만 쟀나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC-02 · TEN-RC4-02.** ① 변경 없음 |
+| Q17 | ②를 "표준 없음"만으로 깎았나? | pass | 규칙 일관성(2차): ② 를 "표준 없음" 하나로 깎지 않는다. spacex-xai.F2 는 성능·적응 두 경로 통과, 표준 실패로 4점이다(TRG-080 확인) |
+| Q18 | ⑤에서 관계사를 독립 동맹으로 셌나? | pass | 규칙 일관성(2차): tesla·spacex-xai 상호 관계사 처리가 같은 잣대다. 변경 없음 |
+| Q19 | ⑤에서 "받은 투자"를 곧바로 동맹 +2로 셌나? | pass | 규칙 일관성(2차): 받은 투자를 A 에 넣은 곳이 없다. 변경 없음 |
+| Q20 | 조달을 동맹으로 셌나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC-03(C-08).** 변경분에 ⑤ 판정이 없다 |
+| Q21 | 동맹이자 의존인 관계를 한쪽에서만 셌나, 또는 같은 속성을 양쪽에서 셌나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RC-05 · TEN-RC3-04.** 변경분에 같은 속성을 양쪽에서 센 곳이 없다 |
+| Q22 | 지분 평가이익을 ⑦ 순환금융 증거로 셌나? | pass | 규칙 일관성(2차): ⑦ 입력에 평가이익이 없다. TRG-057 의 ⑦ 판정도 두 축으로만 한다 |
+| Q23 | 벤치마크를 서로 다른 하네스끼리 비교했나? | fail | 규칙 일관성(2차): **승계 판단 예외 — TEN-RA4-01.** ② 변경 없음. TRG-080 은 벤치마크를 쓰지 않는다 |
 
 결과는 pass / fail / not_applicable. not_applicable 도 근거가 필요하다.
 
@@ -68,5 +68,5 @@ reviewers:
 
 ## 판정
 
-- results_hash `1101644bc117e2a2…` · draft_hash `1168a515ee524414…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
+- results_hash `34248db45321ea0b…` · draft_hash `2af65e2f45bb0e34…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
 - **두 해시의 뜻이 다르다.** `results_hash` 는 `results.json` 에서 `results_hash` 키를 뺀 내용의 정렬 JSON 해시이고(`engine.sha256_obj`) **파일 바이트 sha256 과 다르다.** `draft_hash` 는 초안 **파일 바이트 sha256** 이다. 대조할 때 섞지 않는다.

@@ -1,17 +1,76 @@
 ---
 reviewer_agent: report-designer
-session: rd-opus55-20261006-rescore-r1
+session: rd-opus55-20261006-rescore-r2
 reviewed_at: 2026-10-06
-round: 1
+round: 2
 ---
 # output-readability — 출력·가독성
-검토자: Claude Opus 5.5 · report-designer 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 1차
+검토자: Claude Opus 5.5 · report-designer 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차)
 결과: pass
-요약: draft.md 와 preview.md 의 숫자는 results.json 과 스크립트 전수 대조에서 모두 같다. 대조 대상은 순위표 14행, 카드 머리줄 14개, 카드 factor 126칸, ⑥·⑨ 원자료 표의 점수 열과 ⑨ 표의 FCF·런웨이·순현금, 미리보기 두 표다. 구조도 갖췄다. H1 은 하나이고 필수 절 여섯과 트리거·인용 근거 절이 있다. 인용 근거 56건은 모두 링크와 "확정" 상태를 보이고, 트리거에 미래 점수는 없다. 점수·순위·체크리스트 판정을 바꾸는 발견은 없다. 다만 낡은 문장(C-19)이 다섯 자리에 남았다. Alibaba ⑨ 근거의 "이번 실행 점수는 -3"(현재 -4), TRG-017 의 "TSMC ⑥ 은 연간 트랙"(v1.9 에서 일반 트랙), TRG-022 와 Oracle 근거 네 건의 "런웨이 약 1.3년"(현재 1.61년), Amazon 여신 문구의 "기준일 -6일 뒤"(이미 지난 소멸 시한), 미리보기의 변동 원인 오분류다. 모두 medium 이고 「다음 실행 과제」로 넘긴다. 다른 영역이 needs_fix 를 내 수정 묶음을 만들게 되면 함께 고치기 쉬운 것들이다. report.html 은 없다. 빌드 없이 메모리에서 렌더해 스크래치패드에만 저장한 HTML 로 정적 검사를 미리 했다. 시각 검증은 빌드 뒤 `uv run --frozen python -X utf8 scripts/validate_report_contract.py ai-scorecard-2026-10-rescore --require-html` 와 Playwright 실측으로 미룬다.
+요약: 1차 medium 여섯 가운데 넷이 닫혔다. 닫힌 것은 Alibaba ⑨ "이번 실행 점수는 -3", TRG-017 의 연간 트랙 문장, TRG-022 와 Oracle 근거 4건의 낡은 런웨이·커버리지, 미리보기 변동 원인 분류와 순위만 이동한 기업 누락이다. 남은 둘은 아마존 여신 문구 "기준일 -6일 뒤"(render_common 1092행 미수정)와 HTML 방법 절 ⑨ 개념 문장(factor-concepts.json F9 `stale` 표지 없음)이다. 둘 다 점수에 닿지 않아 다음 실행 과제로 유지한다. 새 draft.md·preview.md 의 숫자를 다시 스크립트로 전부 대조했고 results.json 과 오류 0 이다. 대조 대상은 순위표 14행, 카드 머리줄 14개, factor 126칸, ⑥·⑨ 원자료 표, 미리보기 두 표다. 고친 문장의 숫자(TSMC P3 30.56%, Oracle 런웨이 1.61년·커버리지 2.66배·FCF 약 −287억 달러·EV/매출 7.86배)도 results 의 calc 와 같다. 새로 본 것은 하나다. 발동 2건(TRG-057, 신설 TRG-080)이 초안·HTML 트리거 절에 보이지 않는다. 판단을 유지했다는 결과도 `그 밖의 상태(fired·expired·withdrawn) 24건은 triggers.json 에 있다` 한 줄에 묻힌다. 점수·순위·체크리스트에 닿지 않으므로 medium 으로 다음 실행 과제에 적는다. 점수·순위·체크리스트 판정을 바꾸는 발견은 없다. report.html 은 여전히 없다. HTML 시각 검증은 빌드 뒤 `uv run --frozen python -X utf8 scripts/validate_report_contract.py ai-scorecard-2026-10-rescore --require-html` 와 Playwright 실측으로 미룬다.
 
-검토 기준: results_hash `1101644bc117e2a2ccda096baaf8b0f2a7a18fa8e4f29fff4bd1bf4583e1af5c`, draft_hash `1168a515ee524414b8b248c44cf5f4a7976607f10150cc720dcb280fd7a872f4`(review.md frontmatter 와 같다). 렌더러 기준은 작업 트리의 `scripts/scorecard/render_md.py`·`render_common.py`·`render_html.py` 다(HEAD 3ef3c01, 렌더러 파일 미수정).
+검토 기준: results_hash `34248db45321ea0b734cdd66bbadf1e5d45445b1f643f0503c405a440b01c104`, draft_hash `2af65e2f45bb0e34de12fc67f4ab0496824e043cc4e72d3899277560cf87eeca`(review.md frontmatter, 작업 트리 draft.md 의 sha256 과 같다). 렌더러 기준은 `scripts/scorecard/render_md.py` @ 08bfc90 다. `render_common.py`·`render_html.py` 는 1차와 같다.
 
-## 발견
+## 1차 발견 처리
+
+| 발견(1차 등급) | 상태 | 확인 내용 |
+| --- | --- | --- |
+| Alibaba ⑨ `이번 실행 점수는 -3` (medium) | 닫힘 | draft 802행이 `~~그러나 -2 유지~~ (대체됨 — v1.5 점수 문구다. 현재 점수와 경로는 다음 줄에 있다)` 다. 바로 다음 줄이 `현재 점수 −4 의 경로` 다. judgments.json 은 PRP-005(사람 반영, 96d522f)로 바뀌었다. dry HTML 에서 `이번 실행 점수는 -3)` 은 0건이다. |
+| TRG-017 TSMC ⑥ 연간 트랙 (medium) | 닫힘 | draft 1239행 관찰 문장이 `규칙 v1.9 에서 TSMC ⑥ 은 6-K 반기 재무제표로 복원한 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 값으로 계산하는 일반 트랙이고, 매출 성장 잣대(P3)는 30.56%` 다. results `tsmc.F6.calc` 의 track `listed_ttm`, P3 0.30557 과 같다. 재검토 칸도 `3분기 분기 재무제표(6-K)가 나오면 최근 1년 매출·순이익이 바뀐다 … 밴드가 바뀔 수 있다` 로 맞다. 미래 점수는 적지 않았다. |
+| TRG-022·EV-oracle-003·004·006·007 런웨이 1.3년 (medium) | 닫힘 | TRG-022 는 `버티는 기간 1.61년 …, 약정 커버리지 2.66배 — 2026-08-31 관측` 이다. 네 근거의 relevance 는 1.61년·2.66배·약 287억 달러다. results `oracle.F9` 의 G3 1.6145년, G4 2.656, FCF −28.72B 와 같다. EV-oracle-004 의 `별표 I` 는 `⑦ 판정표` 로 바뀌었다. 관찰 중 트리거와 근거 전체에서 `1.3년`·`2.55배`·`237억`·`연간 트랙` 은 0건이다. EV-oracle-003 `conditional_impact` 에 남은 low 하나는 아래 다음 실행 과제에 적었다. |
+| 미리보기 변동 원인 분류·순위만 이동 (medium) | 닫힘 | preview 의 Alibaba ⑨ 원인이 `📊 관측(가격·재무)` 이다. TSMC·Alibaba ⑥ 은 `📐 규칙(트랙 listed_annual→listed_ttm)·📊 관측` 이고, Palantir 11→10·Tesla 12→11 이 `factor 같음(순위만 이동)` 으로 들어왔다. 두 실행의 results.json 과 같다. 요약은 `관측 2건 · 규칙(트랙)·관측 2건` 이다. `tests.test_preview_causes` 4건이 통과한다. 트랙 이름이 내부 코드(`listed_annual`)로 보이는 것은 low 로 다음 실행 과제에 적었다. |
+| 아마존 여신 문구 `기준일 -6일 뒤` (medium) | 다음 실행 과제 유지 | draft 1123행이 그대로다. `render_common.py` 1092·1095행이 바뀌지 않았고 dry HTML 에도 1건 남는다. TRG-005 의 carry.finding 에는 9/14 파운드화 회사채(현금 기준일 뒤)가 더해졌다. 관찰 문장의 런웨이 9.95년(완충에 $17.5B 포함)은 그대로다. 점수 영향은 없다. |
+| HTML 방법 절 ⑨ 개념 문장 (medium) | 다음 실행 과제 유지 | dry HTML 에 `사실상 무제한` 1건이 남는다. factor-concepts.json F9·F8 에 `stale` 표지가 아직 없다. |
+| low 묶음(내부 표기, 트리거 상태 내역, ⑥ 트랙 표시, Alibaba mixed_as_of, 새 출처 연결, 비상장 배수 열, 이전 실행 low) | 다음 실행 과제 유지 | 이번 수정 범위 밖이다. dry HTML 에서 별표 0건은 1차와 같다. research.md `(추론) 추론:` 65건도 같다. |
+
+## 바뀐 항목 확인
+
+| 바뀐 곳 | 확인 | 결과 |
+| --- | --- | --- |
+| `render_md.py` 미리보기 원인 분류(08bfc90) | diff 를 읽었다. 판단 수정은 이번 실행 중 revision 의 `previous` 와 현재 `inputs`·`score` 가 다를 때만으로 좁혔다. ⑥ 은 두 실행의 `calc.track` 이 다르면 규칙(트랙)을 단다. 행 조건에 `rank` 변화를 더했다. 출력 5행이 results 비교(바뀐 칸 4개, 순위만 이동 2개)와 같고 테스트가 통과한다. | 새 결함 없음. 트랙 내부 코드 노출만 low |
+| TRG-017 | P3 30.56% = 141,552/108,422 − 1 이다(results P3 inputs). 6-K 반기·대만 IFRS 기간 창은 관측 note 와 같다. | 맞음 |
+| TRG-022 | 1.61년·2.66배·2026-08-31 이 results 와 같다. | 맞음 |
+| TRG-005 | 관찰·조건 칸은 이전과 같다. carry.finding 에 £4.25B 발행 완료(현금 관측 2026-06-30 뒤라 완충 밖)가 더해졌다. 새 source_id `SRC-EDGAR-000110465926107526` 이 sources.json 에 있다. | 맞음 |
+| TRG-070 | 관찰·조건·결론(관찰 유지)은 그대로다. carry.finding 의 후보 4건 설명과 source_ids 2건이 sources.json 에 있다. 근거 칸 `—` 는 이전과 같다. | 맞음 |
+| TRG-057 (expired → fired) | finding 의 `⑥ -2→-1(PER 22.8배·EV/매출 7.86배·매출 성장 21.6%)`, `⑨ -3, 런웨이 1.61년` 이 results 와 같다(P1 22.83, P2 7.858, P3 0.2162). 판단 ⑦·⑧ 유지 사유가 적혀 있고 미래 점수는 없다. EV-oracle-003 은 confirmed 다. | 내용 맞음. 화면 표시는 아래 새 발견 |
+| TRG-080 신설 (fired) · TRG-078 | EV-spacex-xai-007 은 confirmed 다. `④ 판단이 이미 범위 맨 위` 는 spacex-xai F4 = 5(범위 0~5)와 맞다. TRG-078 finding 이 테슬라 몫은 TRG-030, SpaceX 몫은 TRG-080 으로 나눴다고 적어 서로 맞물린다. 상태 합계는 80 = 관찰 56 + 철회 22 + 발동 2 이고, 초안의 `24건` 과 같다. | 내용 맞음. 화면 표시는 아래 새 발견 |
+| EV-oracle-003·004·006·007 | relevance 숫자는 위 표와 같다. EV-oracle-004 `⑦ 판정표` 표기가 맞다. EV-oracle-003 `conditional_impact` 는 여전히 `계산 입력이 2026-05-31 기준이라 이 10-Q 의 2026-08-31 값으로 갱신하고 …` 다. 같은 근거의 relevance(2026-08-31 관측으로 갱신됨)와 시점이 엇갈린다. | low 하나 |
+| alibaba.F9 (PRP-005) | 바뀐 것은 취소선 줄의 괄호 문구 하나다. 점수·입력은 그대로다(results F9 -4, 경로 같음). | 맞음 |
+
+새 발견(2차): [medium] **발동 트리거가 화면에 보이지 않는다.** 초안 트리거 절(1280행)과 dry HTML 은 관찰 중 56건만 표에 싣는다. 발동 2건(TRG-057 Oracle 9/10 실적, TRG-080 SpaceX Starship 페이로드)은 `그 밖의 상태(fired·expired·withdrawn) 24건은 triggers.json 에 있다` 한 줄의 건수 안에 묻힌다. 읽는 사람은 이번 실행에 조건이 성립한 사건이 둘 있었다는 것과, 다시 보고 판단을 유지했다는 결과를 볼 수 없다. 이 문구는 지금 없는 상태(expired 0건)까지 나열한다. 점수·순위·체크리스트는 바꾸지 않는다. 1차 low(트리거 상태 내역)를 medium 으로 올려 다음 실행 과제에 합쳤다.
+
+## 체크리스트
+
+| ID | 결과(pass/fail/not_applicable) | 근거 |
+| --- | --- | --- |
+| Q05 | pass | 출력 표기 측면만 본다. 개요·알려진 한계의 이해상충 고지와 비상장 2사 1차 발표 문장이 그대로 있다. 표기 누락 여부는 이 영역에서 보지 않는다(AGENTS.md 「금지·주의」). |
+| Q09 | pass | 출력 측면만 본다. triggers.json 80항목에 점수 필드가 없다. 고친 TRG-017·022 와 발동 TRG-057·080 의 문장은 현재 점수와 유지 사유만 적고 미래 점수를 적지 않는다. TRG-017 의 `밴드가 바뀔 수 있다` 는 가능성 표시이지 점수 저장이 아니다. 점수 반영 판정은 규칙 일관성 영역이 한다. |
+| Q23 | not_applicable | 하네스 비교 판정은 규칙 일관성 영역 몫이다. 출력의 "하네스 미표기" 표지는 1차와 같다. |
+
+그 밖의 Q 는 판단·규칙 영역 소관이라 이 영역에서 판정하지 않았다.
+
+## 다음 실행 과제
+
+- [medium] 트리거 절에 발동 항목을 따로 싣는다. 대상은 ID·기업·사건·근거·"다시 보고 유지/변경" 결과 한 줄(carry.finding 의 `[발동 판정]`)이다. 남은 상태는 건수(철회 22 · 발동 2 · 만료 0)와 접힌 "이어졌거나 철회된 항목" 표로 보인다. 관찰 중 행이 언급하는 기준선 `TRIG-xxx`·시험 실행 ID 가 그 표로 이어지게 한다(`render_md.py` 176~190행, `render_html.py` 1578행).
+- [medium] `render_common.py` 1092·1095행의 확정 미인출 여신 조건 문구를 고친다. 소멸일이 기준일보다 앞이면 "기준일 N일 전에 인출 시한이 지났다(인출 여부 미확인)" 로 쓰고, "기준일 현재 유효한 약정" 문장을 실제 계산(2026-06-30 관측 약정 $37.5B)과 맞춘다. 버퍼에서 뺄지는 재무 계산 영역과 사람이 정한다.
+- [medium] `scorecard/factor-concepts.json` F9(metrics `조달 여력은 신용등급으로`, examples 의 A- 무제한·OpenAI -5·Oracle 1.3년)와 F8 예시(`⑤5`)에 `stale` 표지를 단다.
+- [low] 미리보기 원인 칸의 트랙 이름을 사람이 읽는 이름으로 바꾼다(`listed_annual→listed_ttm` → `연간 → 일반 상장`, `calc.track_label` 사용).
+- [low] EV-oracle-003 의 `conditional_impact` 를 relevance 와 맞춘다. 갱신은 끝났으므로 "다음 10-Q(2026-11-30 분기)로 다시 계산" 으로 고친다.
+- [low] 1차 low 묶음은 그대로 유지한다. 내부 표기(`긴장 #N`, `체크리스트 Q03:`, `codex(GPT)·Gemini`, C-26 삭제 자리 깨짐), ⑥ 트랙 표시와 v1.9 변경 한 줄, Alibaba mixed_as_of·감사 없음 표기, 새 출처와 카드 숫자 연결, 비상장 배수 열, ⑥ 표 P1~P3 열·내부 코드·런웨이 자릿수, 방법 절 빈 바깥 불릿·반복 문장, Anthropic ⑧ 상태 칸, 머리 문단 라벨, research.md `(추론) 추론:`·별표 이름, 알려진 한계 `5→4`, 공시 근거 발행일이다. 자세한 위치는 아래 1차 기록에 있다.
+
+## 수행하지 않은 확인(2차)
+
+- report.html 이 없어 6절 시각 검사(320·768·1280px 넘침, 24px 탭 대상, 첫 두 열 고정, 행 탭 카드, 다크 모드 대비, 실제 audit.md 링크)는 하지 않았다. 빌드 뒤 `validate_report_contract.py ai-scorecard-2026-10-rescore --require-html` 와 Playwright 로 확인한다. dry HTML(`scratchpad/review/mem_render.py`, 스크래치패드에만 저장, 저장소 미변경)은 정적 확인에만 썼다.
+
+## 1차 리뷰 기록
+
+- 1차 검토자: Claude Opus 5.5 · report-designer 독립 세션 · 2026-10-06 · 1차(session rd-opus55-20261006-rescore-r1)
+- 1차 결과: pass
+- 1차 요약: draft.md 와 preview.md 의 숫자는 results.json 과 스크립트 전수 대조에서 모두 같다. 대조 대상은 순위표 14행, 카드 머리줄 14개, 카드 factor 126칸, ⑥·⑨ 원자료 표의 점수 열과 ⑨ 표의 FCF·런웨이·순현금, 미리보기 두 표다. 구조도 갖췄다. H1 은 하나이고 필수 절 여섯과 트리거·인용 근거 절이 있다. 인용 근거 56건은 모두 링크와 "확정" 상태를 보이고, 트리거에 미래 점수는 없다. 점수·순위·체크리스트 판정을 바꾸는 발견은 없다. 다만 낡은 문장(C-19)이 다섯 자리에 남았다. Alibaba ⑨ 근거의 "이번 실행 점수는 -3"(현재 -4), TRG-017 의 "TSMC ⑥ 은 연간 트랙"(v1.9 에서 일반 트랙), TRG-022 와 Oracle 근거 네 건의 "런웨이 약 1.3년"(현재 1.61년), Amazon 여신 문구의 "기준일 -6일 뒤"(이미 지난 소멸 시한), 미리보기의 변동 원인 오분류다. 모두 medium 이고 「다음 실행 과제」로 넘긴다. 다른 영역이 needs_fix 를 내 수정 묶음을 만들게 되면 함께 고치기 쉬운 것들이다. report.html 은 없다. 빌드 없이 메모리에서 렌더해 스크래치패드에만 저장한 HTML 로 정적 검사를 미리 했다. 시각 검증은 빌드 뒤 `uv run --frozen python -X utf8 scripts/validate_report_contract.py ai-scorecard-2026-10-rescore --require-html` 와 Playwright 실측으로 미룬다.
+
+1차 검토 기준: results_hash `1101644bc117e2a2ccda096baaf8b0f2a7a18fa8e4f29fff4bd1bf4583e1af5c`, draft_hash `1168a515ee524414b8b248c44cf5f4a7976607f10150cc720dcb280fd7a872f4`(당시 review.md frontmatter 와 같았다). 렌더러 기준은 작업 트리의 `scripts/scorecard/render_md.py`·`render_common.py`·`render_html.py` 다(HEAD 3ef3c01, 렌더러 파일 미수정).
+
+### 1차 발견
 
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
@@ -30,7 +89,7 @@ round: 1
 | low | 이전 실행 low 중 남은 것 | ⑥ 원자료 표의 기준선 TTM PER·P/S 와 엔진 P1~P3 이 서로 다르다(TSMC 30.9 대 35.3). 산출 방법 열에 내부 코드(`annual_eps_weighted_proxy`)가 보인다. 런웨이 자릿수가 표 10.0, 카드 9.95 로 다르다. 방법과 규칙에 `-   - ` 빈 바깥 불릿 19줄이 있다. factor 이름 없는 같은 문장이 1166·1169·1182행에 반복되고, 1151행과 1183행이 같은 문장이다. Anthropic ⑧ 카드 상태가 "이번 실행 산출" 인데 근거 머리줄은 "이전 실행에서 매김" 이다. 기업별 상세 머리 문단이 "이전 실행에서 매김" 을 설명하지 않는다. research.md 에 `(추론) 추론:` 이 65건 겹치고 근거 관련성의 별표 이름이 그대로다. 알려진 한계에 `anthropic F2 가 5→4 가 될 수 있다` 가 있다. 공시 근거의 발행일이 `—` 다. | 없음 |
 | low | 카드 ⑥ 참고 서술·한 줄 요약 | `시총 $2.15T`(TSMC, 지금 $2.52T), `팔란티어 시총($407B)이 알리바바보다 50% 크다`(지금 $455B 대 $276B), `NTM PER 16.7(상장 12사 최저)` 같은 비교어가 있다. "기준선 v1.5 문면 — 점수 근거가 아니다"·"과거 기록" 표지가 있어 C-19 위반으로 보지 않는다. | 없음 |
 
-## 확인한 것(통과)
+### 1차 확인한 것(통과)
 
 - 구조: H1 은 20행 `# 2026-10 정기 재채점` 하나다(코드 블록 없음). 개요·종합 순위표·기업별 상세·지표 원자료·방법과 규칙·References 가 있고, 알려진 한계·트리거·인용 근거 절도 있다. 끝에 면책 문구가 있다.
 - 숫자 일치(스크립트 `scratchpad/review/or_check.py`, 오류 0): 순위표 14행의 순위·①~⑨·과점·함정·조정총점과 행 순서가 results.ranking 과 같다. 카드 머리줄 14개(순위·조정·과점·함정)와 factor 표 126칸이 같다. ⑥ 상장 12행·비상장 2행과 ⑨ 14행의 점수 열이 같다. ⑨ 표의 FCF·런웨이·순현금 12행은 F9 calc 경로와 F6 P2 입력과 반올림 범위에서 같다. preview 기준선 대비 14행의 "이번" 칸과 이전 실행 대비 3행이 두 실행의 results.json 과 같다. `validate_report_contract.py` 의 "draft ranking table matches results" 도 ok 다(전체는 review status 가 needs_fix 라 FAIL, 정상).
@@ -42,12 +101,12 @@ round: 1
 - 출처 연결: 점수 계산에 쓰인 관측의 출처 16개가 모두 References 에 있다. 새 SEC 출처 8건도 모두 있다.
 - HTML 사전 점검(빌드 아님, `scratchpad/review/mem_render.py` 로 `render_document`·`render_audit_md` 를 메모리에서 돌려 스크래치패드에만 저장했다. 저장소 파일은 바뀌지 않았다): generator `scorecard-builder`, `results-hash` 메타(results_hash 와 같음), viewport, 면책 footer(`aria-label="투자 유의사항"`)가 있다. 순위표 `data-company` 행 14개의 숫자가 results 와 같고, source marker 는 없다. 산점도와 막대 SVG 에 `role="img"`·`aria-label` 이 있다. 방법 절에서 `audit.md` 로 가는 링크가 2개 있다. 본문 보이는 텍스트에 해시·결정 번호·리뷰 차수는 없다(16자 이상 16진수는 SEC 접수번호 URL 뿐이다). 감사 기록에는 입력 해시·실행 단위 결정·검토 기록·정정 이력·긴장·결정 기록 절이 있다. 팔레트는 어두운 배경 하나뿐이다(`--bg:#0e1116`, `prefers-color-scheme` 분기 없음). 이전 빌드와 같은 설계라 발견으로 올리지 않았다.
 
-## 수행하지 않은 확인
+### 1차 수행하지 않은 확인
 
 - report.html 이 없어 6절 시각 검사는 하지 않았다. 대상은 320·768·1280px 가로 넘침, 탭 대상 24px, 모바일 합계 열·첫 두 열 sticky·행 탭 카드, 다크 모드 대비 실측, 실제 산출물의 `audit.md` 링크 동작이다. 빌드 뒤 `uv run --frozen python -X utf8 scripts/validate_report_contract.py ai-scorecard-2026-10-rescore --require-html` 와 Playwright 실측으로 확인한다. 그때 인용 근거 표의 긴 Google News URL 이 320px 에서 `tablewrap` 안에서만 스크롤되는지, 트리거 표 8열이 모바일에서 읽히는지도 본다.
 - 근거·출처 링크가 실제로 열리는지와 excerpt 원문 대조는 사실·출처 영역 몫이라 보지 않았다.
 
-## 체크리스트
+### 1차 체크리스트
 
 | ID | 결과(pass/fail/not_applicable) | 근거 |
 | --- | --- | --- |
@@ -57,7 +116,7 @@ round: 1
 
 그 밖의 Q01~Q04, Q06~Q08, Q10~Q22 는 판단·규칙 영역 소관이다. 출력·가독성 영역에서는 판정하지 않았다.
 
-## 다음 실행 과제
+### 1차 다음 실행 과제
 
 - [medium] Alibaba ⑨ 근거의 `이번 실행 점수는 -3` 을 고친다. 고칠 자리는 판단 입력이므로 `scorecard_cli.py propose ai-scorecard-2026-10-rescore --company alibaba --factor F9 --evidence …` 로 그 줄을 `지난 실행 -3, 이번 실행 -4` 로 바꾸거나 줄을 뺀다. 사람이 승인 페이지에서 반영한다. 근거 문장 제안을 낼 때는 문장마다 "이번 실행" 이 붙은 숫자를 results 와 대조하는 단계를 넣는다(PRP-003 이 놓친 유형).
 - [medium] TRG-017 을 v1.9 에 맞춘다. 문구는 "TSMC ⑥ 은 6-K 반기 재무로 최근 1년을 계산하는 일반 트랙이고, 3분기 실적이 P1~P3 입력을 바꾼다. P3 는 30% 경계 +1.9%" 로 한다. TRG-022 의 `약 1.3년·약 2.6배` 는 1.61년·2.66배로 고친다. EV-oracle-003·004·006·007 의 relevance·conditional_impact 는 "선별 당시(2026-05-31 관측) … 였고, rs1006 갱신으로 1.61년·2.66배가 됐다" 로 고친다. 시험 실행의 EV-anthropic-002·006 정정과 같은 방식이다.

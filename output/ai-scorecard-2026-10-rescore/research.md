@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-10-rescore
 as_of: 2026-10-06
 rule_version: v1.9
 observations_hash: 0a91b4976ef4cc9eb8cbeaffd20e4dfc89657fb0fce3103e595a7a6f1b64fde1
-judgments_hash: 584b07478463deeb436bfc5ccf184c854b1c77fc63f60d9ba91878fd621acb8c
+judgments_hash: 7bb6832dba4501330437fae457e2ac2441a6d41f8b72c1d12ee5612fea1f8980
 evidence_hash: 0c57608bdc528705c393e1cb93e253bbc7fe0aca8f899f86b9aa55db112514ae
 triggers_hash: 906bcdbce93ec46dc98a2f6dba3e493c15264e305f7293b47201c9cf11fe24be
 created_at: 2026-10-06

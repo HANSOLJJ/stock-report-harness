@@ -12,7 +12,7 @@ rule_hash: 0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d
 baseline_id: v1.5
 plan_source: output/ai-scorecard-2026-10-rescore/plan.md
 research_source: output/ai-scorecard-2026-10-rescore/research.md
-results_hash: ac80dc5d56063de61b9adf7b177c4702b1811abbb9545157817b1ed7a9b8db33
+results_hash: 34248db45321ea0b734cdd66bbadf1e5d45445b1f643f0503c405a440b01c104
 level: intermediate
 duration_minutes: 15
 created_at: 2026-10-06
@@ -799,7 +799,7 @@ created_at: 2026-10-06
   - BABA는 VIE 구조 — 본토 지분이 아닌 케이맨 지주사의 계약 다발
 - **⑨ 적자 깊이** 근거 · 이번 실행에서 다시 매김 · noble · 2026-10-06 · 판단 기록 `alibaba.F9.obsreg25`:
   - 6월 분기(8/20) 영업흑자 전환 — RMB -848M → +15,161M, non-GAAP 순이익 RMB 86M → 20,715M 정상화
-  - ~~그러나 -2 유지~~ (대체됨 — v1.5 점수 문구다. 이번 실행 점수는 -3): CapEx RMB 67,678M(+75%)로 FCF -$6.6B
+  - ~~그러나 -2 유지~~ (대체됨 — v1.5 점수 문구다. 현재 점수와 경로는 다음 줄에 있다): CapEx RMB 67,678M(+75%)로 FCF -$6.6B
   - [10월 재채점] **현재 점수 −4 의 경로** — 본업 통과(최근 1년 영업이익률 +2.90%, 2025-07-01~2026-06-30) → 현금 최근 1년 FCF US$−11,102M(영업현금흐름 − 설비투자, alibaba.fcf_ttm.rs1006)이라 −2 → 런웨이 2.17년(현금 US$20,718M(2026-06-30) + 확정 미인출 여신 US$3,330M(2026-03-31, 6월 말 값은 보도자료에 없음) = 24,048M ÷ 11,102M, alibaba.cash.rs1006 · alibaba.undrawn_credit.fix53). 1~3년 구간이라 한 단계 강등 → 약정 커버리지 계약 수입이 확인된 미공시(확인된 미공시)라 C-16 실행 결정으로 한 칸 강등 → **−4**. 3월 말 기준이던 지난 계산(런웨이 3.10년, −3)보다 6월 분기 설비투자 RMB67,678M(+75%)가 소진을 키웠다.
   - 8/23 $10.2B 증자 발표(710M주, 할인 −8.4%, 희석 3.70%, 전액 풀스택 AI). 엔진 완충은 현금 US$20,718M(2026-06-30) + 확정 미인출 여신 US$3,330M = 24,048M 이고, 8월 증자는 현금 관측 기준일 뒤 사건이라 이 완충에 들어 있지 않다. 조달은 소진을 메꾸는 것이지 줄이는 게 아니다 · 다만 Anthropic의 최대 허들(상장 전 증시)을 알리바바는 선제 조달로 지웠다
   - **분모만 있고 분자가 없다.** B종 약정 US$36,851M(RMB254,198M, 2026-03-31)은 있으나 계약 수입은 미공시다
@@ -1145,7 +1145,7 @@ created_at: 2026-10-06
 ## 방법과 규칙
 
 - 규칙 파일 `scorecard/rules/v1.9.json` 해시 `0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d` · 원문 규칙 `AI기업_채점규칙_v1.5.md` 은 sha256 `57beb84ad8c2…`(SRC-v15-rule)
-- 입력 해시: observations `0a91b4976ef4cc9e…`, judgments `584b07478463deeb…`, results `ac80dc5d56063de6…`
+- 입력 해시: observations `0a91b4976ef4cc9e…`, judgments `7bb6832dba450133…`, results `34248db45321ea0b…`
 - 실행 단위 결정: C-05:apply, C-06:proposed_v15_boundaries, C-16:downgrade, C-12:p2_with_capped_promotion, C-20:defer_to_private_g2, C-03:paths_with_generation_gap_5, C-11:block_carryover, C-13:reject_proxy, C-24:compute_p2_when_inputs_exist, C-28:optional_parameters_for_all_listed_tracks, C-29:c20_private_route_first
 - 미결 결정: 없음
 - **런웨이를 잴 때 완충으로 세는 것은 현금과 조건이 확인된 확정 미인출 여신뿐이다.** 신용등급이 좋아 더 빌릴 수 있을 것이라는 추정은 넣지 않는다 — 금액과 조건이 공시로 확인된 것만 센다. 다만 여신이 확인된 기업이라도 **현금흐름이 흑자로 판정되면 런웨이를 계산하지 않아** 그 여신이 점수에 닿지 않는다.

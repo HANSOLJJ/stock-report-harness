@@ -24,8 +24,12 @@
 - [x] Oracle·TSMC·Alibaba 관측 29건 → 독립 검산 → 반영 → research·calculate(세 회사 listed_ttm, 나머지 11사 불변)
 - [x] calculate → 비교 → 근거 문장 제안 PRP-001~004(Oracle ⑨·⑦, Alibaba ⑨, TSMC ⑨, 판정 재료·점수 불변) → 트리거 TRG-024·057 문장 수정
 - [x] draft
-- [ ] **사람: 승인 페이지에서 근거 후보 34건 확정·거부, 제안 PRP-001~004 반영·거부** (제안 반영 대기)
-- [ ] 그 뒤 research → calculate → draft → review-template → 1차 리뷰
+- [x] 사람: 근거 34건 확정(72건 모두 confirmed), 제안 PRP-001~004 반영(`3ef3c01`)
+- [x] research → calculate(점수 그대로) → draft → review-template
+- [x] 1차 리뷰 4영역 모두 pass, 점수 영향 발견 0(`cf958b4`)
+- [x] 사용자 결정으로 사실 오류 한 묶음 수정(렌더러 `08bfc90`, 트리거·근거 `6ae2ac9`, PRP-005 `96d522f`)
+- [x] 확인 리뷰(2차) 4영역 모두 pass → review.md status pass → validate_report_contract PASS
+- [ ] **사람: 승인 페이지에서 승인** → 그 뒤 `/score-build`
 
 ## 4. 리뷰
 - [ ] 1차 리뷰(4 영역 + Q01~Q23)
