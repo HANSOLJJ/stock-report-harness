@@ -1125,7 +1125,9 @@
         "거래 금액·구조(인수인지 지분 투자인지)·종결 조건이 이 공시에 적혀 있는지 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-nvidia-010",
@@ -1151,7 +1153,9 @@
         "기사가 다루는 보증·대출 규모와 대상 고객을 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-nvidia-011",
@@ -1178,7 +1182,9 @@
         "거래 구조(매각 후 재임차인지)와 상대 투자자를 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-nvidia-012",
@@ -1204,7 +1210,9 @@
         "NVIDIA 에 대한 당국의 조사 여부를 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-nvidia-013",
@@ -1231,7 +1239,9 @@
         "모델이 NVIDIA 와의 공동개발 결과인지 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-nvidia-014",
@@ -1257,7 +1267,9 @@
         "피고 명단을 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-nvidia-015",
@@ -1284,7 +1296,9 @@
         "NVIDIA 지분율과 투자 시점을 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-apple-005",
@@ -1310,7 +1324,9 @@
         "항소 여부를 모름"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-alphabet-008",
@@ -1337,7 +1353,9 @@
         "같은 사건 기사 2건 가운데 하나만 골랐다(Insurance Journal 2026-10-05 은 고르지 않음)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-alphabet-009",
@@ -1363,7 +1381,9 @@
         "같은 사건 기사 9건 가운데 하나만 골랐다(Reuters. Seeking Alpha·finance.biggo·marketscreener 2건·TradingView 2건·GuruFocus·PYMNTS 는 고르지 않음)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-alphabet-010",
@@ -1388,7 +1408,9 @@
         "원고(소비자 집단소송인지 개발자 소송인지)와 재판부 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-amazon-008",
@@ -1415,7 +1437,9 @@
         "같은 사건 기사 3건 가운데 하나만 골랐다(Bloomberg. Seeking Alpha 2026-10-02·Futu 2026-10-05 는 고르지 않음)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-amazon-009",
@@ -1441,7 +1465,9 @@
         "UBS 조사의 방법(질의 수·챗봇 종류·기간)과 수치 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-microsoft-004",
@@ -1466,7 +1492,9 @@
         "첨부 자료가 부문 재작성인지, 과거 분기 Azure 달러 매출이 함께 실렸는지 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-meta-006",
@@ -1493,7 +1521,9 @@
         "같은 사건 기사 3건 가운데 하나만 골랐다(Yahoo Finance 2026-10-03, TIKR 2026-10-05 제외)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-meta-007",
@@ -1519,7 +1549,9 @@
         "같은 사건 기사 2건 가운데 하나만 골랐다(TradingView 2026-10-05 제외)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-meta-008",
@@ -1545,7 +1577,9 @@
         "같은 사건 기사 4건 가운데 Reuters 하나만 골랐다(PYMNTS, marketscreener, Investing.com 제외)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-meta-009",
@@ -1572,7 +1606,9 @@
         "증권 분석 매체(Barchart) 기사라 1차 법원 자료가 아니다"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-meta-010",
@@ -1597,7 +1633,9 @@
         "소송 단계(항소 여부)와 FTC 가 구하는 처분 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-oracle-006",
@@ -1625,7 +1663,9 @@
         "같은 사건 기사 5건 가운데 하나만 골랐다(Seeking Alpha, GuruFocus, Yahoo Finance 2건 제외)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-oracle-007",
@@ -1652,7 +1692,9 @@
         "같은 갈래 기사 5건 가운데 하나만 골랐다(FXLeaders, IO Fund 인용 TradingView·Yahoo Finance, Stocktwits 제외)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-oracle-008",
@@ -1679,7 +1721,9 @@
         "같은 사건 기사 5건 가운데 Bloomberg 하나만 골랐다(Yahoo Finance UK, Briefs Finance, GuruFocus, CNBC TV18 제외)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-palantir-008",
@@ -1706,7 +1750,9 @@
         "같은 사건 기사 11건(제목에 Armada 가 나온 것) 가운데 하나만 골랐다"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-palantir-009",
@@ -1733,7 +1779,9 @@
         "대체 대상 계약 범위(NHS 연합 데이터 플랫폼인지 다른 계약인지) 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-palantir-010",
@@ -1759,7 +1807,9 @@
         "같은 사건 기사 5건 가운데 하나만 골랐다(Gizmodo, Yahoo, Gadget Review, Biometric Update 제외)"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-palantir-011",
@@ -1786,7 +1836,9 @@
         "중단 사유 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-anthropic-009",
@@ -1815,7 +1867,9 @@
         "같은 사건 기사 5건(Yahoo Finance 10-01, Financial Times·Investing.com 10-05 $60bn 은행 대출단, Seeking Alpha 10-05) 가운데 하나만 골랐다. FT 의 $60bn 은 같은 거래의 은행 신디케이션으로 보이나 제목만으로 확정하지 못했다"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-anthropic-010",
@@ -1841,7 +1895,9 @@
         "다른 연방기관으로 넓어졌는지 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-anthropic-011",
@@ -1869,7 +1925,9 @@
         "같은 사건 기사 9건(Seeking Alpha·PYMNTS·TradingView·Investing.com·marketscreener·finance.biggo·TipRanks 등) 가운데 1차 보도로 보이는 The Information 하나만 골랐다. 같은 기사들이 meta·microsoft 후보로도 들어와 있다"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-openai-009",
@@ -1894,7 +1952,9 @@
         "원고·청구 내용·법원 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-openai-010",
@@ -1921,7 +1981,9 @@
         "각 조사의 처분 단계(민사조사명령·제소 여부) 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-tesla-007",
@@ -1948,7 +2010,9 @@
         "같은 흐름(오스틴 Cybercab 운행 현황)의 기사 4건 가운데 하나만 골랐다: Yahoo Finance 10-05 '텍사스 차량 네 배 확대', Stocktwits 10-04 'Waymo 가 자율주행에서 테슬라를 앞서 나간다(Gary Black)', Electrek 10-03·Automotive World 10-05 '야간 미운행 설명'"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-tesla-008",
@@ -1976,7 +2040,9 @@
         "생산·인도·에너지 저장 수치는 같은 날 보도 제목에서 옮겼고 공시 본문과 대조하지 않았다"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     },
     {
       "evidence_id": "EV-spacex-xai-009",
@@ -2004,7 +2070,9 @@
         "계약 개시일과 첫 달 인식 금액 원문 미확인"
       ],
       "change_vs_previous": "new",
-      "status": "candidate"
+      "status": "confirmed",
+      "reviewer": "noble",
+      "reviewed_at": "2026-10-06"
     }
   ]
 }
