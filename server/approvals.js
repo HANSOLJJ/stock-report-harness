@@ -15,7 +15,7 @@ const EDIT_KIND_LABELS = {
   gate_inputs: '게이트 입력',
 };
 // 2026-10-01 사용자 요청(가독성): factor 코드만으로는 뜻을 알 수 없다. 이름과 핵심 판별 질문을 함께 보인다.
-// 출처는 docs/scorecard/rules/AI기업_채점규칙_v1.7.md 의 과점·함정 factor 표(핵심 판별 질문 열)다.
+// 출처는 docs/scorecard/rules.md 3·4절의 각 항목 "핵심 질문"이다(2026-10-06 전에는 옛 규칙 v1.7 문서의 factor 표).
 const FACTOR_GUIDE = {
   F1: { label: '① 네트워크 효과', group: 'moat', question: '가격을 올려도 남는가? 락인 강도·데이터 루프. 가장 강한 채널로 매긴다' },
   F2: { label: '② 신기술 게임체인저', group: 'moat', question: '판을 바꿀 기술을 먼저 냈나, 남이 바꾼 판에 빨리 올라탔나? 성능 도약·패러다임 적응·표준 선점' },
