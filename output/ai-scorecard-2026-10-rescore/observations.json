@@ -15806,6 +15806,2709 @@
         "shares_outstanding": 3031501149,
         "fetched_at": "2026-10-06"
       }
+    },
+    {
+      "observation_id": "alibaba.revenue_ttm.rs1006",
+      "company_id": "alibaba",
+      "metric": "revenue_ttm",
+      "value": 151488982313.71414,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY(20-F, 감사) − 전년 같은 분기(2025 보도자료) + 올해 같은 분기(2026 보도자료). policies.f6.reconstruction_paths (2) 와 같은 조립",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다.",
+        "restatement_generation": "2025-04~06 값은 2025 보도자료 당해 칸과 2026 보도자료 비교 칸이 같다. FY2025 값은 FY2025 20-F 와 FY2026 20-F 가 같다. 재작성 없음 — 같은 세대.",
+        "segment_recast_note": "2026 보도자료가 세그먼트를 재분류(recast)했지만 연결 합계 줄에는 닿지 않는다.",
+        "original_value": 1044971000000,
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line": "Revenue",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 1023670000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(Consolidated Income Statements, F-5), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Revenue",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 247652000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB'"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Revenue",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 268953000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.18), 열 'Three months ended June 30, 2026 RMB'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "1,023,670 − 247,652 + 268,953 (RMB 백만)",
+          "sum": 1044971000000,
+          "matches_value": true
+        },
+        "tag": "us-gaap:Revenues",
+        "revenue_coalesce": "20-F 는 us-gaap:Revenues 만 태깅(RevenueFromContractWithCustomerExcludingAssessedTax 없음). 보도자료 줄 이름 'Revenue'"
+      },
+      "raw": "TTM 매출 RMB1,044,971M (2025-07-01~2026-06-30) ÷ 6.8980",
+      "note": "RS1006. v1.9 일반 트랙용 TTM. 기존 obsreg25 는 FY2026 연간이었다."
+    },
+    {
+      "observation_id": "alibaba.operating_income_ttm.rs1006",
+      "company_id": "alibaba",
+      "metric": "operating_income_ttm",
+      "value": 4395911858.509713,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY(20-F, 감사) − 전년 같은 분기(2025 보도자료) + 올해 같은 분기(2026 보도자료). policies.f6.reconstruction_paths (2) 와 같은 조립",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다.",
+        "restatement_generation": "2025-04~06 값은 2025 보도자료 당해 칸과 2026 보도자료 비교 칸이 같다. FY2025 값은 FY2025 20-F 와 FY2026 20-F 가 같다. 재작성 없음 — 같은 세대.",
+        "segment_recast_note": "2026 보도자료가 세그먼트를 재분류(recast)했지만 연결 합계 줄에는 닿지 않는다.",
+        "original_value": 30323000000,
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line": "Income from operations",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 50150000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(Consolidated Income Statements, F-5), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Income from operations",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 34988000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB'"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Income from operations",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 15161000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.18), 열 'Three months ended June 30, 2026 RMB'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "50,150 − 34,988 + 15,161 (RMB 백만)",
+          "sum": 30323000000,
+          "matches_value": true
+        },
+        "tag": "us-gaap:OperatingIncomeLoss"
+      },
+      "raw": "TTM 영업이익 RMB30,323M (2025-07-01~2026-06-30) ÷ 6.8980",
+      "note": "RS1006. 2026-04~06 분기 영업이익이 전년 대비 −57%(영업권 손상 RMB4,458M, EU DSA 과징금 충당) 이라 연간 대비 크게 줄었다."
+    },
+    {
+      "observation_id": "alibaba.net_income_ttm.rs1006",
+      "company_id": "alibaba",
+      "metric": "net_income_ttm",
+      "value": 10663525659.611483,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY(20-F, 감사) − 전년 같은 분기(2025 보도자료) + 올해 같은 분기(2026 보도자료). policies.f6.reconstruction_paths (2) 와 같은 조립",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다.",
+        "restatement_generation": "2025-04~06 값은 2025 보도자료 당해 칸과 2026 보도자료 비교 칸이 같다. FY2025 값은 FY2025 20-F 와 FY2026 20-F 가 같다. 재작성 없음 — 같은 세대.",
+        "segment_recast_note": "2026 보도자료가 세그먼트를 재분류(recast)했지만 연결 합계 줄에는 닿지 않는다.",
+        "original_value": 73557000000,
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line": "Net income attributable to Alibaba Group Holding Limited",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 103592000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(Consolidated Income Statements, F-5), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Net income attributable to Alibaba Group Holding Limited",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 40649000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB'"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Net income attributable to Alibaba Group Holding Limited",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 10614000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.18), 열 'Three months ended June 30, 2026 RMB'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "103,592 − 40,649 + 10,614 (RMB 백만)",
+          "sum": 73557000000,
+          "matches_value": true
+        },
+        "tag": "us-gaap:NetIncomeLoss",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "기존 f6reg28 과 같은 줄 — 'Net income attributable to Alibaba Group Holding Limited'(us-gaap NetIncomeLoss, companyfacts label 'Net Income (Loss) Attributable to Parent', FY2026 103,592). 메자닌 지분 accretion 을 반영한 'Net income attributable to ordinary shareholders'(FY2026 105,904 · 분기 43,116/10,537)는 쓰지 않았다."
+      },
+      "raw": "TTM 지배주주 순이익 RMB73,557M (2025-07-01~2026-06-30) ÷ 6.8980",
+      "note": "RS1006. 지배주주 귀속(기존 정의와 같음)."
+    },
+    {
+      "observation_id": "alibaba.pretax_income_ttm.rs1006",
+      "company_id": "alibaba",
+      "metric": "pretax_income_ttm",
+      "value": 14708756161.206148,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY(20-F, 감사) − 전년 같은 분기(2025 보도자료) + 올해 같은 분기(2026 보도자료). policies.f6.reconstruction_paths (2) 와 같은 조립",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다.",
+        "restatement_generation": "2025-04~06 값은 2025 보도자료 당해 칸과 2026 보도자료 비교 칸이 같다. FY2025 값은 FY2025 20-F 와 FY2026 20-F 가 같다. 재작성 없음 — 같은 세대.",
+        "segment_recast_note": "2026 보도자료가 세그먼트를 재분류(recast)했지만 연결 합계 줄에는 닿지 않는다.",
+        "original_value": 101461000000,
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line": "Income before income tax and share of results of equity method investees",
+              "tag": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 129387000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(Consolidated Income Statements, F-5), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Income before income tax and share of results of equity method investees",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 50234000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB'"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Income before income tax and share of results of equity method investees",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 22308000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.18), 열 'Three months ended June 30, 2026 RMB'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "129,387 − 50,234 + 22,308 (RMB 백만)",
+          "sum": 101461000000,
+          "matches_value": true
+        },
+        "concept": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "how_reconstructed": "FY2026 − 2025-04~06 + 2026-04~06 (기존 nonop44 는 단일 12개월 FY2026)",
+        "cross_check_ni_plus_tax": {
+          "net_income_total_ttm_cny_m": 70189,
+          "income_tax_ttm_cny_m": 33978,
+          "equity_method_ttm_cny_m": 2706,
+          "formula": "세전 = 순이익(전체) + 법인세 − 지분법 손익",
+          "recomputed_cny_m": 101461,
+          "matches": true,
+          "note": "지분법 손익이 세전 아래에 오므로 순이익+법인세에서 지분법을 빼야 맞는다. 성분: 순이익 102,127/42,382/10,444, 법인세 30,045/8,865/12,798, 지분법 2,785/1,013/934 (같은 세 원문 같은 열)"
+        },
+        "fx_path_note": "세전이익과 영업이익을 둘 다 CNY 원값에서 6.8980 으로 환산했다. 기존 nonop44·obsreg25 사이의 환산 경로 불일치(공시 USD vs 선언 환율)는 이번에는 없다.",
+        "nonop_share_implied": 0.7011363972363766
+      },
+      "raw": "TTM 세전이익 RMB101,461M (2025-07-01~2026-06-30) ÷ 6.8980",
+      "note": "RS1006. nonop_share 입력. (세전 − 영업이익)/세전 = 0.7011."
+    },
+    {
+      "observation_id": "alibaba.operating_margin_ttm.rs1006",
+      "company_id": "alibaba",
+      "metric": "operating_margin_ttm",
+      "value": 0.029018,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "operating_income_ttm / revenue_ttm (같은 창·같은 통화, CNY 로 계산)",
+        "numerator_cny": 30323000000,
+        "denominator_cny": 1044971000000,
+        "unrounded": 0.029018030165430427,
+        "currency_note": "비율이라 통화가 상쇄된다. CNY 원값으로 계산했다.",
+        "component_observations": [
+          "alibaba.operating_income_ttm.rs1006",
+          "alibaba.revenue_ttm.rs1006"
+        ],
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line": "Income from operations",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 50150000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(Consolidated Income Statements, F-5), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Income from operations",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 34988000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB'"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Income from operations",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 15161000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.18), 열 'Three months ended June 30, 2026 RMB'"
+            },
+            {
+              "role": "fy_current",
+              "line": "Revenue",
+              "tag": "us-gaap:Revenues",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 1023670000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(Consolidated Income Statements, F-5), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Revenue",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 247652000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB'"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Revenue",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 268953000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.18), 열 'Three months ended June 30, 2026 RMB'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "30,323 / 1,044,971",
+          "sum": 0.029018030165430427,
+          "matches_value": true
+        },
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다."
+      },
+      "raw": "TTM 영업이익률 2.9018%",
+      "note": "RS1006. 양수 — G1 통과."
+    },
+    {
+      "observation_id": "alibaba.revenue_ttm_prior.rs1006",
+      "company_id": "alibaba",
+      "metric": "revenue_ttm_prior",
+      "value": 145080168164.68542,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2025Q1",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "FY2025(20-F) − 2024-04~06(2025 보도자료 비교 열) + 2025-04~06(2025 보도자료 당해 열)",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다.",
+        "restatement_generation": "FY2025 매출 996,347 은 FY2025 20-F(0000950170-25-090161)와 FY2026 20-F 비교 칸이 같다. 2025-04~06 247,652 는 2025·2026 보도자료가 같다. 2024-04~06 243,236 은 2025 보도자료 비교 열 하나만 확인했다(원래 June Quarter 2024 보도자료와는 대조하지 않음).",
+        "segment_recast_note": "2026 보도자료가 세그먼트를 재분류(recast)했지만 연결 합계 줄에는 닿지 않는다.",
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "original_value": 1000763000000,
+        "same_rate_as_current": true,
+        "tag": "us-gaap:Revenues",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_prior",
+              "line": "Revenue",
+              "tag": "us-gaap:Revenues",
+              "start": "2024-04-01",
+              "end": "2025-03-31",
+              "val": 996347000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(F-5), 열 'Year ended March 31, 2025 RMB' (FY2025 20-F 당해 칸과 일치)"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Revenue",
+              "start": "2024-04-01",
+              "end": "2024-06-30",
+              "val": 243236000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 비교 열 'Three months ended June 30, 2024 RMB'"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Revenue",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 247652000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "996,347 − 243,236 + 247,652 (RMB 백만)",
+          "sum": 1000763000000,
+          "matches_value": true
+        },
+        "growth_check": {
+          "revenue_ttm_cny_m": 1044971,
+          "revenue_ttm_prior_cny_m": 1000763,
+          "growth": 0.04417429501290515,
+          "note": "같은 환율이라 USD 성장률 = 위안 성장률"
+        }
+      },
+      "raw": "전년 창 매출 RMB1,000,763M (2024-07-01~2025-06-30) ÷ 6.8980",
+      "note": "RS1006. 당해 창과 같은 환율 6.8980."
+    },
+    {
+      "observation_id": "alibaba.cash.rs1006",
+      "company_id": "alibaba",
+      "metric": "cash",
+      "value": 20718179182.371704,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "period_basis": "ttm",
+        "definition": "사용 가능한 현금 및 현금성자산만(설계 지침 6.4). 단기 투자자산을 넣지 않는다 — 기존 cashfcf35 와 같은 정의",
+        "concept": "Cash and cash equivalents (보도자료 재무상태표 줄. 20-F 의 us-gaap:CashAndCashEquivalentsAtCarryingValue 와 같은 줄)",
+        "unaudited": "6-K 보도자료의 미감사 재무상태표 값",
+        "accession": "0001104659-26-099220",
+        "form": "6-K (Ex.99.1)",
+        "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'",
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "original_value": 142914000000,
+        "component_accessions": {
+          "items": [
+            {
+              "role": "point_in_time",
+              "line": "Cash and cash equivalents",
+              "end": "2026-06-30",
+              "val": 142914000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "142,914 (RMB 백만, 단일 성분)",
+          "sum": 142914000000,
+          "matches_value": true
+        },
+        "preserved_wider_definitions": {
+          "liquid_cash_buffer_cny_m": 474505,
+          "liquid_cash_buffer_usd": 68788779356.33517,
+          "note": "현금 + 단기투자 + 기타 자금운용 중 인출 제한 없는 것(보도자료 본문). 환금성 기준이 정해지면 참고",
+          "restricted_cash_cny_m": 42585,
+          "short_term_investments_cny_m": 154653
+        }
+      },
+      "raw": "현금및현금성자산 RMB142,914M (2026-06-30) ÷ 6.8980",
+      "note": "RS1006. 순수 현금. 기간 창 끝(2026-06-30)과 같은 날짜."
+    },
+    {
+      "observation_id": "alibaba.fcf_ttm.rs1006",
+      "company_id": "alibaba",
+      "metric": "fcf_ttm",
+      "value": -11101623659.031605,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY(20-F, 감사) − 전년 같은 분기(2025 보도자료) + 올해 같은 분기(2026 보도자료). policies.f6.reconstruction_paths (2) 와 같은 조립",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다.",
+        "restatement_generation": "2025-04~06 값은 2025 보도자료 당해 칸과 2026 보도자료 비교 칸이 같다. FY2025 값은 FY2025 20-F 와 FY2026 20-F 가 같다. 재작성 없음 — 같은 세대.",
+        "segment_recast_note": "2026 보도자료가 세그먼트를 재분류(recast)했지만 연결 합계 줄에는 닿지 않는다.",
+        "formula": "ocf_ttm - capex_ttm",
+        "ocf_ttm_cny_m": 78486,
+        "capex_ttm_cny_m": 155065,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities / 보도자료 'Net cash provided by operating activities'",
+        "capex_concept": "Acquisitions of Land use rights, property and equipment (기존 cashfcf35 와 같은 GAAP 개념)",
+        "capex_quarterly_source_is_inference": {
+          "status": "inference",
+          "what": "분기 보도자료의 현금흐름표는 요약형(영업·투자·재무 합계만)이라 capex 줄이 없다. 분기 capex 는 본문 서술의 'capital expenditures'(2025-04~06 RMB38,676M, 2026-04~06 RMB67,678M)를 썼다.",
+          "why_same_concept": "**추론이다.** 20-F 가 같은 단어로 'our capital expenditures totaled RMB32,087 million, RMB85,972 million and RMB126,063 million' 이라 적고, 이 세 값이 감사 현금흐름표(F-12) 'Acquisitions of: Land use rights, property and equipment' 줄과 정확히 같다. 같은 발행사가 같은 용어를 분기 서술에 썼으므로 같은 줄로 본다. 분기 현금흐름표 원본 줄로 확인한 것은 아니다.",
+          "supporting_gap": "분기 서술 capex 가 비GAAP FCF 의 'Purchase of property and equipment (excluding land use rights and construction in progress relating to office campuses)'보다 2025-04~06 47, 2026-04~06 18 만큼 크다 — 토지사용권·사옥 건설분을 포함한다는 정황이고, 20-F FY2026 의 126,063 대 122,021 관계와 같은 방향이다."
+        },
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "original_value": -76579000000,
+        "component_accessions": {
+          "items": [
+            {
+              "role": "ocf_fy_current",
+              "line": "Net cash provided by operating activities",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 76213000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결현금흐름표(Consolidated Statements of Cash Flows, F-12), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "ocf_minus_prior_year_same_quarter",
+              "line": "Net cash provided by operating activities",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 20672000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS'(p.20), 열 'Three months ended June 30, 2025 RMB'"
+            },
+            {
+              "role": "ocf_plus_current_year_quarter",
+              "line": "Net cash provided by operating activities",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 22945000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS'(p.21), 열 'Three months ended June 30, 2026 RMB'"
+            },
+            {
+              "role": "capex_fy_current",
+              "line": "Acquisitions of: Land use rights, property and equipment (20-F) / 'capital expenditures' (보도자료 본문 서술)",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 126063000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결현금흐름표(Consolidated Statements of Cash Flows, F-12), 열 'Year ended March 31, 2026 RMB'"
+            },
+            {
+              "role": "capex_minus_prior_year_same_quarter",
+              "line": "Acquisitions of: Land use rights, property and equipment (20-F) / 'capital expenditures' (보도자료 본문 서술)",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 38676000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 본문 'Net cash provided by investing activities' 문단 — 'partly offset by capital expenditures of RMB38,676 million (US$5,399 million)'"
+            },
+            {
+              "role": "capex_plus_current_year_quarter",
+              "line": "Acquisitions of: Land use rights, property and equipment (20-F) / 'capital expenditures' (보도자료 본문 서술)",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 67678000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 본문 'Capital Expenditures' 절 및 'Net cash used in investing activities' 문단 — 'capital expenditures were RMB67,678 million (US$9,975 million)'"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "(76,213 − 20,672 + 22,945) − (126,063 − 38,676 + 67,678) (RMB 백만)",
+          "sum": -76579000000,
+          "matches_value": true
+        },
+        "non_gaap_variant": {
+          "fcf_non_gaap_ttm_cny_m": -72464,
+          "fcf_non_gaap_ttm_usd": -10505073934.47376,
+          "components": "FY2026 −46,609(20-F 비GAAP 조정표) − 2025-04~06 −18,815 + 2026-04~06 −44,670(보도자료 'Free cash flow')",
+          "definition_difference": "발행사 비GAAP FCF 는 설비 매입에서 토지사용권·사옥 건설을 빼고, 무형자산 매입을 차감하고, 구매자보호기금 예치금 변동을 OCF 에서 조정한다. 기존 정의(OCF − GAAP capex)와 다르다. 등록값은 기존 정의를 따랐다.",
+          "difference_cny_m": 4115
+        }
+      },
+      "raw": "TTM FCF RMB-76,579M = OCF 78,486 − capex 155,065 ÷ 6.8980",
+      "note": "RS1006. 2026-04~06 분기 capex 가 전년 대비 +75% 라 소진이 커졌다. 분기 capex 개념은 추론(basis.capex_quarterly_source_is_inference)."
+    },
+    {
+      "observation_id": "alibaba.net_cash.rs1006",
+      "company_id": "alibaba",
+      "metric": "net_cash",
+      "value": 41583502464.48246,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "mixed_as_of": true,
+        "mixed_as_of_detail": [
+          {
+            "component": "현금+단기투자+기타 자금운용(인출 제한 없는 것)",
+            "as_of": "2026-06-30",
+            "source": "2026 보도자료 본문"
+          },
+          {
+            "component": "차입금 5행",
+            "as_of": "2026-06-30",
+            "source": "2026 보도자료 재무상태표"
+          },
+          {
+            "component": "상장주식(Listed equity securities)",
+            "as_of": "2026-03-31",
+            "source": "20-F 주석 11",
+            "why": "보도자료 재무상태표가 'Equity securities and other investments' 를 유동 88,130 · 비유동 343,018 합계로만 주고 상장·비상장·채무증권·자금운용 분할이 없다"
+          },
+          {
+            "component": "리스부채(운용리스 유동+비유동)",
+            "as_of": "2026-03-31",
+            "source": "20-F 주석 6·19",
+            "why": "보도자료 재무상태표에 리스부채 줄이 없다('Accrued expenses ... and other liabilities'·'Other liabilities' 에 묻혀 있음)"
+          }
+        ],
+        "definition": "현금및현금성자산 + 시장성 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — 기존 nc37 정의",
+        "definition_status": "working_definition",
+        "scope_narrowing": {
+          "what": "6-30 의 현금·단기투자·기타 자금운용 합계 474,505 는 발행사가 '인출 제한 없는 것(unrestricted for withdrawal and use)'만 센 값이다. nc37 은 재무상태표 단기투자 155,310 과 주석 11 기타 자금운용 238,075 를 통째로 넣었다(제한분 포함).",
+          "measured_gap_at_2026_03_31": {
+            "nc37_scope_cny_m": 524915,
+            "unrestricted_cny_m": 520824,
+            "gap_cny_m": 4091,
+            "detail": "단기투자 155,310 − 155,236 = 74, 기타 자금운용 238,075 − 234,058 = 4,017 (20-F MD&A 유동성 문단)"
+          },
+          "chosen": "같은 날짜(6-30) 값인 474,505 를 쓰고 범위가 좁아졌다는 사실을 남긴다. 6-30 의 제한분은 공시되지 않았다.",
+          "alternative_with_restricted": {
+            "how": "474,505 + 3-31 제한분 4,091 (다른 날짜를 하나 더 섞는다)",
+            "net_cash_native_cny_m": 290934,
+            "value_usd": 42176572919.68687
+          }
+        },
+        "components": {
+          "cash_sti_treasury_unrestricted": 474505,
+          "listed_equity_securities_2026_03_31": 100594,
+          "debt_ex_lease": 266530,
+          "lease_total_2026_03_31": 21726,
+          "net_cash_native": 286843,
+          "rows": [
+            {
+              "kind": "debt",
+              "label": "Current bank borrowings",
+              "rmb_million": 30614,
+              "as_of": "2026-06-30",
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current bank borrowings",
+              "rmb_million": 56007,
+              "as_of": "2026-06-30",
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current unsecured senior notes",
+              "rmb_million": 115716,
+              "as_of": "2026-06-30",
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current convertible unsecured senior notes",
+              "rmb_million": 54905,
+              "as_of": "2026-06-30",
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'"
+            },
+            {
+              "kind": "debt",
+              "label": "Non-current exchangeable bonds",
+              "rmb_million": 9288,
+              "as_of": "2026-06-30",
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'"
+            },
+            {
+              "kind": "marketable",
+              "label": "Cash and cash equivalents, short-term investments and other treasury investments (unrestricted)",
+              "rmb_million": 474505,
+              "usd_million_filed_6_7851": 69933,
+              "as_of": "2026-06-30",
+              "quote": "were RMB474,505 million (US$69,933 million), compared to RMB520,824 million as of March 31, 2026",
+              "location": "2026 보도자료 본문 'Cash and cash equivalents, short-term investments and other treasury investments' 절"
+            },
+            {
+              "kind": "marketable",
+              "label": "Listed equity securities",
+              "rmb_million": 100594,
+              "as_of": "2026-03-31",
+              "location": "20-F 주석 11 (nc37 rows 와 같은 줄)"
+            },
+            {
+              "kind": "lease",
+              "label": "Total operating lease liabilities",
+              "rmb_million": 21726,
+              "as_of": "2026-03-31",
+              "location": "20-F 주석 6 만기표 합계·주석 19 유동 4,318 + 비유동 17,408 (nc37 rows 와 같은 줄)"
+            }
+          ],
+          "excluded_same_as_nc37": "비상장 지분·채무증권및대출·지분법 투자(6-30 203,207)·제한 현금(6-30 42,585)"
+        },
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 관측(alibaba.*.obsreg25·f6reg28·cashfcf35·nc37)과 같은 환율",
+        "fx_uniform_rate_note": "당해·전년 창과 시점 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다.",
+        "original_value": 286843000000,
+        "component_accessions": {
+          "items": [
+            {
+              "role": "add_cash_sti_treasury",
+              "end": "2026-06-30",
+              "val": 474505000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 본문"
+            },
+            {
+              "role": "add_listed_equity",
+              "end": "2026-03-31",
+              "val": 100594000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 주석 11"
+            },
+            {
+              "role": "subtract_debt",
+              "end": "2026-06-30",
+              "val": 266530000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS'(p.19~20), 열 'As of June 30, 2026 RMB'"
+            },
+            {
+              "role": "subtract_lease",
+              "end": "2026-03-31",
+              "val": 21726000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 주석 6·19"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "474,505 + 100,594 − 266,530 − 21,726 (RMB 백만)",
+          "sum": 286843000000,
+          "matches_value": true
+        }
+      },
+      "raw": "RMB백만 474,505 + 100,594 − 266,530 − 21,726 = 286,843 ÷ 6.898",
+      "note": "RS1006. mixed_as_of — 상장주식·리스부채는 2026-03-31 값. 제한분을 넣은 대안 값은 basis.scope_narrowing.alternative_with_restricted."
+    },
+    {
+      "observation_id": "oracle.revenue_ttm.rs1006",
+      "company_id": "oracle",
+      "metric": "revenue_ttm",
+      "value": 71776000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "period": {
+        "start": "2025-09-01",
+        "end": "2026-08-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "method": "fy_minus_prior_ytd_plus_current_ytd",
+        "reconstruction": "직전 회계연도 − 전년 같은 기간(1분기) + 올해 같은 기간(1분기). 공통 지시서 규약",
+        "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "scratchpad build_obs_oracle.py (rs1006) — 같은 사실을 여러 제출본이 실으면 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 67357000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-K FY2026 연결손익계산서 p.65 (열: fiscal 2026 | 2025 | 2024, 최신이 왼쪽)"
+            },
+            {
+              "role": "prior_q1(빼기)",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 14926000000,
+              "accession": "0001193125-25-200095",
+              "form": "10-Q",
+              "filed": "2025-09-10",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 0001193125-26-389274 손익계산서 p.2 의 2025 열로도 재확인",
+              "also_filed_in": [
+                "0001193125-26-389274"
+              ]
+            },
+            {
+              "role": "current_q1(더하기)",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2026-06-01",
+              "end": "2026-08-31",
+              "val": 19345000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 손익계산서 p.2 (열: Three Months Ended August 31, 2026 | 2025)"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy − prior_q1 + current_q1",
+            "sum": 71776000000,
+            "matches_value": true
+          }
+        },
+        "restatement_check": "세 성분 모두 companyfacts 안에서 같은 기간 값이 하나뿐이다(10-Q·10-K 기준). 혼합 세대 없음",
+        "replaces": "oracle.revenue_ttm.f6reg28",
+        "cross_check_quarter_sum": {
+          "value": 71777000000,
+          "diff": 1000000,
+          "formula": "Q2 단독 16,058 + Q3 단독 17,190 + Q4 복원(FY 67,357 − 9개월 48,173 = 19,184) + FY27 Q1 19,345",
+          "note": "분기 단독 태그(Q2 16,058)와 누계 차(30,983 − 14,926 = 16,057)가 1M 어긋나 그만큼 갈린다. policies.f6.ttm_window.reconstruction_paths.measured_divergence 의 최대 1M 이내"
+        },
+        "revenue_coalesce": "policies.f6.revenue_coalesce 우선순위 1번 태그가 세 성분 기간에 모두 있다. us-gaap:Revenues 는 FY 두 해에만 있고 값이 같다(67,357·57,399)"
+      },
+      "raw": "2025-09-01~2026-08-31 71,776,000,000",
+      "note": "재무 관측 갱신 rs1006. FY2026 − FY26 Q1 + FY27 Q1"
+    },
+    {
+      "observation_id": "oracle.revenue_ttm_prior.rs1006",
+      "company_id": "oracle",
+      "metric": "revenue_ttm_prior",
+      "value": 59018000000.0,
+      "unit": "USD",
+      "as_of": "2025-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "period": {
+        "start": "2024-09-01",
+        "end": "2025-08-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "method": "fy_minus_prior_ytd_plus_current_ytd",
+        "reconstruction": "직전 회계연도 − 전년 같은 기간(1분기) + 올해 같은 기간(1분기). 공통 지시서 규약",
+        "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "scratchpad build_obs_oracle.py (rs1006) — 같은 사실을 여러 제출본이 실으면 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-06-01",
+              "end": "2025-05-31",
+              "val": 57399000000,
+              "accession": "0000950170-25-087926",
+              "form": "10-K",
+              "filed": "2025-06-18",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "FY2025 10-K 본문 미보존 — companyfacts. FY2026 10-K 손익계산서 p.65 의 2025 열에 같은 값",
+              "also_filed_in": [
+                "0001193125-26-277521"
+              ]
+            },
+            {
+              "role": "prior_q1(빼기)",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2024-06-01",
+              "end": "2024-08-31",
+              "val": 13307000000,
+              "accession": "0000950170-24-104905",
+              "form": "10-Q",
+              "filed": "2024-09-10",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "companyfacts 사실(본문 미보존 제출본) (FY25 Q1 10-Q, 이후 FY26 Q1 10-Q 비교 칸에도 실림)",
+              "also_filed_in": [
+                "0001193125-25-200095"
+              ]
+            },
+            {
+              "role": "current_q1(더하기)",
+              "tag": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 14926000000,
+              "accession": "0001193125-25-200095",
+              "form": "10-Q",
+              "filed": "2025-09-10",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 손익계산서 p.2 (열: Three Months Ended August 31, 2026 | 2025) 의 2025 열",
+              "also_filed_in": [
+                "0001193125-26-389274"
+              ]
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy − prior_q1 + current_q1",
+            "sum": 59018000000,
+            "matches_value": true
+          }
+        },
+        "restatement_check": "세 성분 모두 companyfacts 안에서 같은 기간 값이 하나뿐이다(10-Q·10-K 기준). 혼합 세대 없음",
+        "replaces": "oracle.revenue_ttm_prior.f6reg28",
+        "cross_check_quarter_sum": {
+          "value": 59018000000,
+          "diff": 0,
+          "formula": "14,059 + 14,130 + (57,399 − 41,496 = 15,903) + 14,926"
+        }
+      },
+      "raw": "2024-09-01~2025-08-31 59,018,000,000",
+      "note": "재무 관측 갱신 rs1006. 바로 전 12개월 창"
+    },
+    {
+      "observation_id": "oracle.operating_income_ttm.rs1006",
+      "company_id": "oracle",
+      "metric": "operating_income_ttm",
+      "value": 23057000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "period": {
+        "start": "2025-09-01",
+        "end": "2026-08-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "method": "fy_minus_prior_ytd_plus_current_ytd",
+        "reconstruction": "직전 회계연도 − 전년 같은 기간(1분기) + 올해 같은 기간(1분기). 공통 지시서 규약",
+        "tag": "us-gaap:OperatingIncomeLoss",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "scratchpad build_obs_oracle.py (rs1006) — 같은 사실을 여러 제출본이 실으면 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 20606000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-K FY2026 연결손익계산서 p.65 (열: fiscal 2026 | 2025 | 2024, 최신이 왼쪽)"
+            },
+            {
+              "role": "prior_q1(빼기)",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 4277000000,
+              "accession": "0001193125-25-200095",
+              "form": "10-Q",
+              "filed": "2025-09-10",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 0001193125-26-389274 손익계산서 p.2 의 2025 열로도 재확인",
+              "also_filed_in": [
+                "0001193125-26-389274"
+              ]
+            },
+            {
+              "role": "current_q1(더하기)",
+              "tag": "us-gaap:OperatingIncomeLoss",
+              "start": "2026-06-01",
+              "end": "2026-08-31",
+              "val": 6728000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 손익계산서 p.2 (열: Three Months Ended August 31, 2026 | 2025)"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy − prior_q1 + current_q1",
+            "sum": 23057000000,
+            "matches_value": true
+          }
+        },
+        "restatement_check": "세 성분 모두 companyfacts 안에서 같은 기간 값이 하나뿐이다(10-Q·10-K 기준). 혼합 세대 없음",
+        "replaces": "oracle.operating_income_ttm.f6reg28",
+        "cross_check_quarter_sum": {
+          "value": 23056000000,
+          "diff": -1000000,
+          "formula": "4,731 + 5,464 + (20,606 − 14,473 = 6,133) + 6,728",
+          "note": "Q3 단독 태그 5,464 와 누계 차(14,473 − 9,008 = 5,465)가 1M 어긋난다. 반올림"
+        }
+      },
+      "raw": "2025-09-01~2026-08-31 23,057,000,000",
+      "note": "재무 관측 갱신 rs1006"
+    },
+    {
+      "observation_id": "oracle.net_income_ttm.rs1006",
+      "company_id": "oracle",
+      "metric": "net_income_ttm",
+      "value": 18920000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "period": {
+        "start": "2025-09-01",
+        "end": "2026-08-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "method": "fy_minus_prior_ytd_plus_current_ytd",
+        "reconstruction": "직전 회계연도 − 전년 같은 기간(1분기) + 올해 같은 기간(1분기). 공통 지시서 규약",
+        "tag": "us-gaap:NetIncomeLoss",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "scratchpad build_obs_oracle.py (rs1006) — 같은 사실을 여러 제출본이 실으면 처음 보고한 정기 보고서를 적고 나머지는 also_filed_in 에 둔다",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 17087000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-K FY2026 연결손익계산서 p.65 (열: fiscal 2026 | 2025 | 2024, 최신이 왼쪽)"
+            },
+            {
+              "role": "prior_q1(빼기)",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 2927000000,
+              "accession": "0001193125-25-200095",
+              "form": "10-Q",
+              "filed": "2025-09-10",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 0001193125-26-389274 손익계산서 p.2 의 2025 열로도 재확인",
+              "also_filed_in": [
+                "0001193125-26-389274"
+              ]
+            },
+            {
+              "role": "current_q1(더하기)",
+              "tag": "us-gaap:NetIncomeLoss",
+              "start": "2026-06-01",
+              "end": "2026-08-31",
+              "val": 4760000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 손익계산서 p.2 (열: Three Months Ended August 31, 2026 | 2025)"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy − prior_q1 + current_q1",
+            "sum": 18920000000,
+            "matches_value": true
+          }
+        },
+        "restatement_check": "세 성분 모두 companyfacts 안에서 같은 기간 값이 하나뿐이다(10-Q·10-K 기준). 혼합 세대 없음",
+        "replaces": "oracle.net_income_ttm.f6reg28",
+        "taxonomy": "us-gaap",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "기존과 같은 us-gaap NetIncomeLoss(label `Net Income (Loss) Attributable to Parent`). 10-Q 손익계산서 p.2 의 `Net income` 4,760 은 비지배지분 몫을 영업외손익 안에서 이미 뺀 값이다(주석 1 영업외손익 표 p.8: `Noncontrolling interests in income (53)`). FY 는 ProfitLoss 17,309 대 NetIncomeLoss 17,087 로 갈리고 귀속분을 쓴다",
+        "preferred_dividend_note": "FY2026 부터 6.50% 의무전환우선주 배당이 있다. 우선주 배당 차감 후 보통주 귀속 (`NetIncomeLossAvailableToCommonStockholdersBasic`) 최근 1년 = 16,984 − 2,927 + 4,679 = 18,736. 참고로만 남긴다 — 기존 정의는 우선주 배당 전",
+        "def14a_tag_note": "companyfacts 에 FY2026 NetIncomeLoss 로 DEF 14A(0001193125-26-402816) 가 16,984 를 붙였다. 보통주 귀속값(우선주 배당 103 차감)과 같아 재작성이 아니라 대리인설명서 표기다. 감사 10-K 17,087 을 쓴다(10-Q·10-K 만 성분 후보)"
+      },
+      "raw": "2025-09-01~2026-08-31 18,920,000,000",
+      "note": "재무 관측 갱신 rs1006. 지배주주 귀속"
+    },
+    {
+      "observation_id": "oracle.pretax_income_ttm.rs1006",
+      "company_id": "oracle",
+      "metric": "pretax_income_ttm",
+      "value": 21734000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-EDGAR-000119312526389274",
+      "status": "verified",
+      "period": {
+        "start": "2025-09-01",
+        "end": "2026-08-31"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "measured_as_of": "2026-08-31",
+        "method": "fy_minus_prior_ytd_plus_current_ytd",
+        "concept": "orcl:IncomeLossFromContinuingOperationsIncludingNoncontrollingInterestBeforeIncomeTaxesExtraordinaryItems",
+        "concept_change": "기존 nonop44 는 국내 + 해외 세전이익 합(10-K 전용 태그)이었다. 분기 10-Q 에는 그 두 태그가 없다. 대신 손익계산서 줄 `Income before income taxes` 를 회사 확장 태그로 쓴다 — 10-K(FY 19,554)와 10-Q(5,607·3,427)가 같은 태그를 붙인다. FY 값이 국내 + 해외 합과 정확히 같아 같은 정의다. companyfacts 는 us-gaap 만 담아 이 태그가 없으므로 본문 inline XBRL 에서 읽었다",
+        "definition_identity": "Oracle 은 비지배지분 몫을 영업외손익 안에서 뺀다(10-Q 주석 1 p.8). 그래서 세전 = NetIncomeLoss + 법인세가 세 기간 모두 성립한다. 태그 이름의 IncludingNoncontrollingInterest 는 회사 명명일 뿐이고 값은 NI + 세금과 같다",
+        "why_this_metric": "`nonop_share` 를 `(세전 − 영업이익) / 세전` 으로 계산하는 입력(기존 nonop44 와 같음)",
+        "cross_check_ni_plus_tax": {
+          "ni_ttm": 18920000000,
+          "tax_ttm": 2814000000,
+          "sum": 21734000000,
+          "relative_gap": 0.0
+        },
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "scratchpad build_obs_oracle.py (rs1006)",
+          "items": [
+            {
+              "role": "fy",
+              "tag": "orcl:IncomeLossFromContinuingOperationsIncludingNoncontrollingInterestBeforeIncomeTaxesExtraordinaryItems",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 19554000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22",
+              "source_id": "SRC-SEC-ORCL-10K-FY2026",
+              "location": "10-K FY2026 연결손익계산서 p.65 (열: fiscal 2026 | 2025 | 2024, 최신이 왼쪽) `Income before income taxes`",
+              "equals": {
+                "formula": "us-gaap:IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic + …Foreign (기존 nonop44 성분)",
+                "domestic": 8693000000,
+                "foreign": 10861000000,
+                "sum": 19554000000,
+                "matches": true
+              }
+            },
+            {
+              "role": "prior_q1(빼기)",
+              "tag": "orcl:IncomeLossFromContinuingOperationsIncludingNoncontrollingInterestBeforeIncomeTaxesExtraordinaryItems",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 3427000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-EDGAR-000119312526389274",
+              "location": "10-Q 손익계산서 p.2 (열: Three Months Ended August 31, 2026 | 2025) 2025 열 `Income before income taxes`",
+              "also_check": "FY26 Q1 10-Q(0001193125-25-200095) 의 NetIncomeLoss 2,927 + IncomeTaxExpenseBenefit 500 = 3,427 (그 제출본 원문은 미보존)"
+            },
+            {
+              "role": "current_q1(더하기)",
+              "tag": "orcl:IncomeLossFromContinuingOperationsIncludingNoncontrollingInterestBeforeIncomeTaxesExtraordinaryItems",
+              "start": "2026-06-01",
+              "end": "2026-08-31",
+              "val": 5607000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-EDGAR-000119312526389274",
+              "location": "10-Q 손익계산서 p.2 (열: Three Months Ended August 31, 2026 | 2025) 2026 열 `Income before income taxes`"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy − prior_q1 + current_q1",
+            "sum": 21734000000,
+            "matches_value": true
+          }
+        },
+        "replaces": "oracle.pretax_income_ttm.nonop44"
+      },
+      "raw": "세전이익 최근 1년 21,734M USD",
+      "note": "재무 관측 갱신 rs1006. 분기 성분이 회사 확장 태그라 10-Q 본문을 source 로 둔다"
+    },
+    {
+      "observation_id": "oracle.cash.rs1006",
+      "company_id": "oracle",
+      "metric": "cash",
+      "value": 36369000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-08-31",
+        "form": "10-Q",
+        "accession": "0001193125-26-389274",
+        "taxonomy": "us-gaap",
+        "definition": "사용 가능한 현금 및 현금성자산만(설계 지침 6.4). 단기 투자자산을 넣지 않는다.",
+        "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+        "location": "10-Q 재무상태표 p.1 (열: August 31, 2026 | May 31, 2026) `Cash and cash equivalents`",
+        "why_pure_cash": "기존 cashfcf35 와 같다 — 환금성 기준이 정해지기 전에는 단기 투자자산을 넣지 않는다.",
+        "restricted_cash_excluded": {
+          "value": 2600000000,
+          "quote": "Restricted cash as of August 31, 2026 was $2.6 billion and was included within prepaid expenses and other current assets",
+          "location": "10-Q 주석 1 p.6",
+          "note": "현금흐름표 기말 `Cash, cash equivalents and restricted cash` 38,934,000,000 은 제한 현금을 포함한다. 36,369 + 약 2,6xx. 규칙(f9 counts)이 제한 현금을 빼므로 대차대조표 현금 줄만 쓴다"
+        },
+        "preserved_wider_definitions": {
+          "liquid_cash_buffer": 37077000000.0,
+          "liquid_cash_buffer_note": "현금 + 단기 시장성 증권. 10-Q MD&A 유동성 표 p.33 `Cash, cash equivalents and marketable securities` 37,077 과 같다",
+          "components": {
+            "cash_and_cash_equivalents": 36369000000,
+            "short_term_marketable_securities": 708000000,
+            "sti_concept": "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent"
+          }
+        },
+        "cash_change_drivers": "3개월 사이 +5,080M: 영업현금 23.1B(고객 선수금 11.4B 포함) + ATM 보통주 발행 순 19.9B − 설비투자 28.5B − 차입 상환 4.2B − 제한 현금 재분류 2.6B − 배당 1.6B 등(10-Q MD&A p.33)",
+        "replaces": "oracle.cash.cashfcf35"
+      },
+      "raw": "현금및현금성자산 36,369M (2026-08-31)",
+      "note": "재무 관측 갱신 rs1006. 순수 현금"
+    },
+    {
+      "observation_id": "oracle.fcf_ttm.rs1006",
+      "company_id": "oracle",
+      "metric": "fcf_ttm",
+      "value": -28720000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "period": {
+        "start": "2025-09-01",
+        "end": "2026-08-31"
+      },
+      "basis": {
+        "measured_as_of": "2026-08-31",
+        "taxonomy": "us-gaap",
+        "period_basis": "ttm",
+        "formula": "ocf_ttm - capex_ttm",
+        "ocf_ttm": 46940000000.0,
+        "ocf_concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "ocf_formula": "fy − prior_q1 + current_q1",
+        "capex_ttm": 75660000000.0,
+        "capex_concept": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+        "capex_formula": "fy − prior_q1 + current_q1",
+        "components": {
+          "ocf_components": {
+            "fy": 31977000000,
+            "prior_q1": 8140000000,
+            "current_q1": 23103000000
+          },
+          "capex_components": {
+            "fy": 55663000000,
+            "prior_q1": 8502000000,
+            "current_q1": 28499000000
+          }
+        },
+        "customer_prepayment_note": {
+          "value": 11363000000,
+          "line": "`Increase in deferred revenues from customer prepayments with significant financing component` 11,363 (FY27 Q1), FY26 Q1 —",
+          "location": "10-Q 현금흐름표 p.5 (열: 2026 | 2025); 주석 1 p.7 `we received $11.4 billion of prepayments from customers that included a significant financing component`",
+          "effect": "정의(OCF − CapEx)대로 포함했다. 이 줄을 빼면 최근 1년 FCF 는 -40,083M 이다. 선수금은 미래 매출 이행 의무가 붙은 유입이라 런웨이를 읽을 때 같이 본다"
+        },
+        "issuer_fcf_check": "10-Q MD&A FCF 표 p.34: FY27 Q1 23,103 − 28,499 = −5,396, FY26 Q1 8,140 − 8,502 = −362",
+        "component_accessions": {
+          "rule": "policies.f6.ttm_window.restatement_generation — 각 성분의 accession 을 관측 근거에 보존한다(accession_role: 감사 근거)",
+          "resolved_by": "scratchpad build_obs_oracle.py (rs1006) — OCF·CapEx 각각 FY − 전년 1분기 + 올해 1분기",
+          "items": [
+            {
+              "role": "ocf_fy",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 31977000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-K FY2026 연결현금흐름표 p.68"
+            },
+            {
+              "role": "ocf_prior_q1(빼기)",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 8140000000,
+              "accession": "0001193125-25-200095",
+              "form": "10-Q",
+              "filed": "2025-09-10",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 현금흐름표 p.5 (열: 2026 | 2025) 2025 열",
+              "also_filed_in": [
+                "0001193125-26-389274"
+              ]
+            },
+            {
+              "role": "ocf_current_q1(더하기)",
+              "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+              "start": "2026-06-01",
+              "end": "2026-08-31",
+              "val": 23103000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 현금흐름표 p.5 (열: 2026 | 2025) 2026 열"
+            },
+            {
+              "role": "capex_fy",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-06-01",
+              "end": "2026-05-31",
+              "val": 55663000000,
+              "accession": "0001193125-26-277521",
+              "form": "10-K",
+              "filed": "2026-06-22",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-K FY2026 연결현금흐름표 p.68"
+            },
+            {
+              "role": "capex_prior_q1(빼기)",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2025-06-01",
+              "end": "2025-08-31",
+              "val": 8502000000,
+              "accession": "0001193125-25-200095",
+              "form": "10-Q",
+              "filed": "2025-09-10",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 현금흐름표 p.5 (열: 2026 | 2025) 2025 열",
+              "also_filed_in": [
+                "0001193125-26-389274"
+              ]
+            },
+            {
+              "role": "capex_current_q1(더하기)",
+              "tag": "us-gaap:PaymentsToAcquirePropertyPlantAndEquipment",
+              "start": "2026-06-01",
+              "end": "2026-08-31",
+              "val": 28499000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 현금흐름표 p.5 (열: 2026 | 2025) 2026 열"
+            }
+          ],
+          "arithmetic": {
+            "formula": "(ocf_fy − ocf_prior_q1 + ocf_current_q1) − (capex_fy − capex_prior_q1 + capex_current_q1)",
+            "sum": -28720000000,
+            "matches_value": true
+          }
+        },
+        "replaces": "oracle.fcf_ttm.cashfcf35"
+      },
+      "raw": "TTM FCF -28.7B = OCF 46.9B - CapEx 75.7B",
+      "note": "재무 관측 갱신 rs1006"
+    },
+    {
+      "observation_id": "oracle.net_cash.rs1006",
+      "company_id": "oracle",
+      "metric": "net_cash",
+      "value": -132066000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-08-31",
+        "form": "10-Q",
+        "accession": "0001193125-26-389274",
+        "taxonomy": "us-gaap",
+        "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — securities_scope 참조",
+        "definition_status": "working_definition",
+        "definition_warning": "기존 nc37 과 같은 작업 정의다(policies.f6.net_cash.supersede).",
+        "components": {
+          "cash_and_marketable_securities": 37077000000.0,
+          "cash_and_marketable_securities_concepts": [
+            {
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "value": 36369000000.0
+            },
+            {
+              "tag": "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+              "value": 708000000.0
+            }
+          ],
+          "noncurrent_marketable_securities": "없음 — 10-Q 주석 2 p.9 `all of our marketable debt securities investments mature within one year`",
+          "excluded_nonmarketable_present": {
+            "us-gaap:EquitySecuritiesFvNiAndWithoutReadilyDeterminableFairValue": {
+              "value": 2400000000.0,
+              "why": "10-Q 주석 1 p.7 이 `Our non-marketable equity securities and debt investments totaled $2.4 billion and $2.3 billion` 이라 적고 대부분이 지분법 투자(TikTok USDS Joint Venture, 15%)라고 밝힌다. 기존 nc37 이 `시장성을 증명하지 못한 혼합 줄` 로 뺀 2,300(2026-05-31)을 원문이 비시장성으로 확정해 준다. 제외"
+            }
+          },
+          "debt_ex_lease": 125337000000.0,
+          "debt_concepts": [
+            "us-gaap:NotesPayableCurrent",
+            "us-gaap:LongTermNotesAndLoans"
+          ],
+          "debt_concept_change": "기존 nc37 의 us-gaap:DebtLongtermAndShorttermCombinedAmount 는 10-Q 에 없다. 재무상태표 두 줄의 합을 쓴다. 2026-05-31 비교 칸에서 두 줄 합 129,541 = 기존 총차입 태그 129,541 로 같은 범위다. 10-Q 주석 2 의 차입 원금 `$125.0 billion of senior notes and other long-term borrowings`(장부 125,337 과 할인·발행비 차이)",
+          "operating_lease": 34621000000.0,
+          "finance_lease": 9185000000.0,
+          "lease_total": 43806000000.0,
+          "debt_incl_lease": 169143000000.0
+        },
+        "component_accessions": {
+          "rule": "시점 값 성분. 같은 사실을 여러 제출본이 실으면 처음 보고한 정기 보고서",
+          "items": [
+            {
+              "role": "balance",
+              "tag": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+              "start": null,
+              "end": "2026-08-31",
+              "val": 36369000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 재무상태표 p.1 (열: August 31, 2026 | May 31, 2026) `Cash and cash equivalents`"
+            },
+            {
+              "role": "balance",
+              "tag": "us-gaap:AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+              "start": null,
+              "end": "2026-08-31",
+              "val": 708000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 재무상태표 p.1 (열: August 31, 2026 | May 31, 2026) `Marketable securities`"
+            },
+            {
+              "role": "debt_current",
+              "tag": "us-gaap:NotesPayableCurrent",
+              "start": null,
+              "end": "2026-08-31",
+              "val": 7625000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 재무상태표 p.1 (열: August 31, 2026 | May 31, 2026) `Notes payable and other borrowings, current`"
+            },
+            {
+              "role": "debt_noncurrent",
+              "tag": "us-gaap:LongTermNotesAndLoans",
+              "start": null,
+              "end": "2026-08-31",
+              "val": 117712000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 재무상태표 p.1 (열: August 31, 2026 | May 31, 2026) `Notes payable and other borrowings, non-current`"
+            },
+            {
+              "role": "operating_lease",
+              "tag": "us-gaap:OperatingLeaseLiability",
+              "start": null,
+              "end": "2026-08-31",
+              "val": 34621000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 주석 6 p.13 `Total operating lease liabilities` (유동 4,027 + 비유동 30,594)"
+            },
+            {
+              "role": "finance_lease",
+              "tag": "us-gaap:FinanceLeaseLiability",
+              "start": null,
+              "end": "2026-08-31",
+              "val": 9185000000,
+              "accession": "0001193125-26-389274",
+              "form": "10-Q",
+              "filed": "2026-09-11",
+              "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+              "location": "10-Q 주석 6 p.13 `Total finance lease liabilities` (유동 749 + 비유동 8,436)"
+            }
+          ],
+          "arithmetic": {
+            "formula": "cash + marketable − debt_current − debt_noncurrent − operating_lease − finance_lease",
+            "sum": -132066000000,
+            "matches_value": true
+          }
+        },
+        "issuer_checksum": "10-Q MD&A 유동성 표 p.33 현금+시장성 증권 37,077 = 36,369 + 708",
+        "replaces": "oracle.net_cash.nc37"
+      },
+      "raw": "현금+시장성증권 37.1B − 차입 125.3B − 리스 43.8B = -132.1B",
+      "note": "재무 관측 갱신 rs1006. 유가증권은 시장성 있는 것만"
+    },
+    {
+      "observation_id": "oracle.contracted_revenue.rs1006",
+      "company_id": "oracle",
+      "metric": "contracted_revenue",
+      "value": 664000000000.0,
+      "unit": "USD",
+      "as_of": "2026-08-31",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-08-31",
+        "tag": "us-gaap:RevenueRemainingPerformanceObligation",
+        "accession": "0001193125-26-389274",
+        "form": "10-Q",
+        "location": "10-Q 주석 1 p.7",
+        "quote": "Remaining performance obligations were $664 billion as of August 31, 2026, of which we expect to recognize approximately 13% as revenues over the next twelve months, 37% over the subsequent month 13 to month 36, 34% over the subsequent month 37 to month 60 and the remainder thereafter.",
+        "time_series": {
+          "2025-08-31": 455300000000,
+          "2025-11-30": 523300000000,
+          "2026-02-28": 552600000000,
+          "2026-05-31": 638000000000,
+          "2026-08-31": 664000000000
+        },
+        "rounding": "공시가 10억 단위 반올림(`$664 billion`)이다. XBRL 값도 664,000,000,000",
+        "replaces": "oracle.contracted_revenue.fix57"
+      },
+      "raw": "RPO 664,000M (2026-08-31, 10-Q)",
+      "note": "재무 관측 갱신 rs1006. G4 분자"
+    },
+    {
+      "observation_id": "oracle.undrawn_credit.rs1006",
+      "company_id": "oracle",
+      "metric": "undrawn_credit",
+      "value": 10000000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-31",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-ORCL-10K-FY2026",
+      "status": "verified",
+      "basis": {
+        "form": "10-K",
+        "accession": "0001193125-26-277521",
+        "measured_as_of": "2026-05-31",
+        "original_currency": "USD",
+        "definition": "설계 지침 6.4 런웨이 분자의 `조건이 확인된 확정 미인출 여신`",
+        "components": [
+          {
+            "facility": "Revolving Credit Agreement (unsecured, five-year revolving, Bank of America 대리)",
+            "capacity": 10000000000,
+            "outstanding": 0,
+            "maturity": "2031-03-06",
+            "entered": "2026-03-06",
+            "replaced": "기존 $6.0B 5년 회전 약정(2027-03-08 만기 예정)을 2026-03-06 해지"
+          }
+        ],
+        "primary": {
+          "location": "10-K FY2026 감사 연결재무제표 주석 6 Notes Payable and Other Borrowings — Revolving Credit Agreement, p.85",
+          "quote": "On March 6, 2026, we entered into a new $10.0 billion, five-year revolving credit agreement (the Revolving Credit Agreement) among us, as borrower, Bank of America, N.A., as administrative agent, and the lenders and other agents named therein, which provides for an unsecured $10.0 billion, five-year revolving credit facility (the Revolving Facility) to us for working capital purposes and for other general corporate purposes. … All amounts borrowed under the Revolving Credit Agreement will become due on March 6, 2031 … As of May 31, 2026, we did not have any outstanding borrowings under the Revolving Credit Agreement."
+        },
+        "cross_check": {
+          "location": "10-K MD&A Recent Financing Activities p.53",
+          "quote": "In March 2026, we terminated our existing $6.0 billion, five-year revolving credit agreement. On the same date, we entered into a new $10.0 billion, five-year revolving credit agreement (the Revolving Credit Agreement). As of May 31, 2026, we did not have any outstanding borrowings under the Revolving Credit Agreement."
+        },
+        "conditions_confirmed": "미인출(주석·MD&A 둘 다) · 약정 준수(`We were in compliance with all debt-related covenants at May 31, 2026.`, 주석 6 p.85) · 만기 2031-03-06(기준일에서 4년 넘게 남음 — C-23 잔존 기간 쟁점 없음) · 재무 약정은 EBITDA/순이자비용 3.0배 이상 · 금리 Term SOFR + 87.5~150bp",
+        "statement_body_first": "감사 재무제표 주석 6 을 1차 근거로, MD&A 를 교차 확인으로 둔다.",
+        "mixed_as_of": {
+          "value_as_of": "2026-05-31",
+          "consumer_as_of": "2026-08-31 (같은 런웨이 분자의 cash·fcf_ttm 기준일)",
+          "why": "2026-08-31 10-Q 는 회전 한도를 한 번도 언급하지 않는다(검색어 `revolv`·`credit facilit` 0건). 그 뒤 해지·인출·변경 문장도 없고 분기 현금흐름표 재무활동에 차입 유입 줄이 없다(상환만 있음). 그래서 10-K 기준일의 미인출 한도를 8월 말에도 유효한 것으로 섞는다. 8월 말 시점 미인출을 원문으로 확인한 것은 아니다."
+        },
+        "excluded": [
+          {
+            "what": "Commercial Paper Program up to $10.0B (2026-03-06 증액)",
+            "why": "발행 한도 프로그램이지 약정 여신이 아니다(인수 약정 없음, amazon 과 같은 처리). 2026-05-31 발행 잔액 1.5B 는 차입금에 이미 있다 — `There were $1.5 billion and $2.3 billion of outstanding Commercial Paper Notes as of May 31, 2026 and 2025, respectively.` (주석 6 p.86)"
+          },
+          {
+            "what": "CP 백업 한도 별도 시설",
+            "why": "10-K·10-Q 어디에도 회전 약정이 CP 백업이라는 문장이 없다. 회전 약정 용도는 `working capital purposes and for other general corporate purposes`. CP 잔액을 한도에서 빼지 않았다"
+          },
+          {
+            "what": "Term Loan Credit Agreement 2 ($5.6B)",
+            "why": "전액 인출된 기간 대출(2026-05-31 잔액 5,137)이라 미인출분이 없다"
+          }
+        ],
+        "search": {
+          "keywords": [
+            "revolv",
+            "credit facilit",
+            "credit agreement",
+            "commercial paper",
+            "backstop",
+            "undrawn",
+            "unused",
+            "borrowing capacity",
+            "term loan",
+            "delayed draw",
+            "line of credit",
+            "liquidity facilit",
+            "financing arrangement"
+          ],
+          "scope": [
+            "10-K FY2026 본문 전체 orcl-20260531.htm (accession 0001193125-26-277521)",
+            "10-Q 2026-08-31 본문 전체 orcl-20260831.htm (accession 0001193125-26-389274)",
+            "companyfacts 2026-10-06 (LineOfCredit·Unused·BorrowingCapacity 계열 태그 없음)"
+          ],
+          "hit_counts_10k": {
+            "revolv": 26,
+            "credit facilit": 1,
+            "credit agreement": 50,
+            "commercial paper": 21,
+            "term loan": 35,
+            "financing arrangement": 1
+          },
+          "hit_counts_10q": {
+            "credit agreement": 1,
+            "commercial paper": 2,
+            "term loan": 1,
+            "financing arrangement": 2
+          }
+        },
+        "runway_effect": "런웨이 (36,369 + 10,000) / 28,720 = 1.6145년 (여신 없이 36,369 / 28,720 = 1.2663년). 둘 다 1년 이상 3년 미만이라 G3 step -1 이 같다. 3년에 닿으려면 미인출 여신 49,791M 이 필요한데 확인된 것은 10,000M 이다",
+        "sensitivity": {
+          "none": {
+            "runway_years": 1.26633,
+            "g3_step": -1
+          },
+          "revolver_10000": {
+            "runway_years": 1.614519,
+            "g3_step": -1
+          },
+          "conclusion": "어느 쪽이든 G3 step -1 이다. 이 관측은 점수를 바꾸지 않을 것으로 보인다(엔진 재계산은 조율자 몫)."
+        },
+        "replaces": "oracle.undrawn_credit.fix54 — 우리가 확인하지 못했던(unverified) 값을 10-K 원문으로 채운다"
+      },
+      "raw": "미인출 회전여신 US$10.0B (2026-05-31, 10-K 주석 6)",
+      "note": "재무 관측 갱신 rs1006. 감사 주석 1차 · MD&A 교차. 기준일 섞임(mixed_as_of) — 10-Q 에 변동 문장 없음"
+    },
+    {
+      "observation_id": "tsmc.revenue_ttm.rs1006",
+      "company_id": "tsmc",
+      "metric": "revenue_ttm",
+      "value": 141552197290.40485,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY − 전년 같은 반기 누계 + 올해 반기 누계 (policies.f6.ttm_window.reconstruction_paths (2))",
+        "accounting_standard": "Taiwan-IFRS (IFRS endorsed by FSC, R.O.C.)",
+        "standard_note": "창 안의 세 성분은 모두 **대만 IFRS**(FSC 승인 IFRS, 6-K 연결재무제표)다. 20-F(IASB IFRS)는 미처분이익 가산세를 이익 발생 연도에, 대만 IFRS 는 주총 승인 연도(익년 2분기)에 비용 처리한다. 20-F FY 에 대만 반기를 더하고 빼면 가산세가 이중·누락돼 순이익이 틀어지므로 섞지 않는다. 20-F 는 줄별 대조(standard_reconciliation)와 편의환산 환율 근거로만 쓴다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line_item": "NET REVENUE",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 3809054272.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000024",
+              "form": "6-K",
+              "filed": "2026-02-26",
+              "source_id": "SRC-SEC-TSM-6K-FY2025",
+              "document": "c22a66b105a6575f-a2025q4consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (연간) · 열 '2025 Amount' · 행 'NET REVENUE'"
+            },
+            {
+              "role": "minus_prior_ytd",
+              "line_item": "NET REVENUE",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 1773045533.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2025 (Six Months)' · 행 'NET REVENUE'"
+            },
+            {
+              "role": "plus_current_ytd",
+              "line_item": "NET REVENUE",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 2404483690.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2026 (Six Months)' · 행 'NET REVENUE'"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy_current − minus_prior_ytd + plus_current_ytd",
+            "sum": 4440492429.0,
+            "matches_value": true
+          }
+        },
+        "original_currency": "TWD",
+        "original_value": 4440492429000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods).",
+        "cross_check_filed_usd_fy_component": {
+          "fy2025_20f_usd_million": 121423.5,
+          "recomputed_usd_million": 121423.47057698437
+        }
+      },
+      "raw": "NT$천 3,809,054,272 − 1,773,045,533 + 2,404,483,690 = 4,440,492,429 ÷ 31.37 = US$141,552.2M",
+      "note": "RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원"
+    },
+    {
+      "observation_id": "tsmc.revenue_ttm_prior.rs1006",
+      "company_id": "tsmc",
+      "metric": "revenue_ttm_prior",
+      "value": 108422022760.59929,
+      "unit": "USD",
+      "as_of": "2025-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY − 전년 같은 반기 누계 + 올해 반기 누계 (policies.f6.ttm_window.reconstruction_paths (2))",
+        "accounting_standard": "Taiwan-IFRS (IFRS endorsed by FSC, R.O.C.)",
+        "standard_note": "창 안의 세 성분은 모두 **대만 IFRS**(FSC 승인 IFRS, 6-K 연결재무제표)다. 20-F(IASB IFRS)는 미처분이익 가산세를 이익 발생 연도에, 대만 IFRS 는 주총 승인 연도(익년 2분기)에 비용 처리한다. 20-F FY 에 대만 반기를 더하고 빼면 가산세가 이중·누락돼 순이익이 틀어지므로 섞지 않는다. 20-F 는 줄별 대조(standard_reconciliation)와 편의환산 환율 근거로만 쓴다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line_item": "NET REVENUE",
+              "start": "2024-01-01",
+              "end": "2024-12-31",
+              "val": 2894307699.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-25-000019",
+              "form": "6-K",
+              "filed": "2025-02-27",
+              "source_id": "SRC-SEC-TSM-6K-FY2024",
+              "document": "6692fcd7873d3dc3-tsmc2024q4consolidatedfina.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (연간) · 열 '2024 Amount' · 행 'NET REVENUE'"
+            },
+            {
+              "role": "minus_prior_ytd",
+              "line_item": "NET REVENUE",
+              "start": "2024-01-01",
+              "end": "2024-06-30",
+              "val": 1266154378.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-25-000097",
+              "form": "6-K",
+              "filed": "2025-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2025H1",
+              "document": "2b3f7baba21b41ea-tsmc2025q2consolidatedfina.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2024 (Six Months)' · 행 'NET REVENUE'"
+            },
+            {
+              "role": "plus_current_ytd",
+              "line_item": "NET REVENUE",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 1773045533.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2025 (Six Months, 2026 문서 비교열)' · 행 'NET REVENUE'"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy_current − minus_prior_ytd + plus_current_ytd",
+            "sum": 3401198854.0,
+            "matches_value": true
+          }
+        },
+        "original_currency": "TWD",
+        "original_value": 3401198854000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods).",
+        "same_rate_as_current": true,
+        "growth_vs_current_local": 0.30556683675749596
+      },
+      "raw": "NT$천 2,894,307,699 − 1,266,154,378 + 1,773,045,533 = 3,401,198,854 ÷ 31.37 = US$108,422.0M",
+      "note": "RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원"
+    },
+    {
+      "observation_id": "tsmc.operating_income_ttm.rs1006",
+      "company_id": "tsmc",
+      "metric": "operating_income_ttm",
+      "value": 79412050494.10265,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY − 전년 같은 반기 누계 + 올해 반기 누계 (policies.f6.ttm_window.reconstruction_paths (2))",
+        "accounting_standard": "Taiwan-IFRS (IFRS endorsed by FSC, R.O.C.)",
+        "standard_note": "창 안의 세 성분은 모두 **대만 IFRS**(FSC 승인 IFRS, 6-K 연결재무제표)다. 20-F(IASB IFRS)는 미처분이익 가산세를 이익 발생 연도에, 대만 IFRS 는 주총 승인 연도(익년 2분기)에 비용 처리한다. 20-F FY 에 대만 반기를 더하고 빼면 가산세가 이중·누락돼 순이익이 틀어지므로 섞지 않는다. 20-F 는 줄별 대조(standard_reconciliation)와 편의환산 환율 근거로만 쓴다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line_item": "INCOME FROM OPERATIONS",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1936091677.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000024",
+              "form": "6-K",
+              "filed": "2026-02-26",
+              "source_id": "SRC-SEC-TSM-6K-FY2025",
+              "document": "c22a66b105a6575f-a2025q4consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (연간) · 열 '2025 Amount' · 행 'INCOME FROM OPERATIONS'"
+            },
+            {
+              "role": "minus_prior_ytd",
+              "line_item": "INCOME FROM OPERATIONS",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 870504446.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2025 (Six Months)' · 행 'INCOME FROM OPERATIONS'"
+            },
+            {
+              "role": "plus_current_ytd",
+              "line_item": "INCOME FROM OPERATIONS",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 1425568793.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2026 (Six Months)' · 행 'INCOME FROM OPERATIONS'"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy_current − minus_prior_ytd + plus_current_ytd",
+            "sum": 2491156024.0,
+            "matches_value": true
+          }
+        },
+        "original_currency": "TWD",
+        "original_value": 2491156024000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods)."
+      },
+      "raw": "NT$천 1,936,091,677 − 870,504,446 + 1,425,568,793 = 2,491,156,024 ÷ 31.37 = US$79,412.1M",
+      "note": "RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원"
+    },
+    {
+      "observation_id": "tsmc.net_income_ttm.rs1006",
+      "company_id": "tsmc",
+      "metric": "net_income_ttm",
+      "value": 71312945074.91234,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY − 전년 같은 반기 누계 + 올해 반기 누계 (policies.f6.ttm_window.reconstruction_paths (2))",
+        "accounting_standard": "Taiwan-IFRS (IFRS endorsed by FSC, R.O.C.)",
+        "standard_note": "창 안의 세 성분은 모두 **대만 IFRS**(FSC 승인 IFRS, 6-K 연결재무제표)다. 20-F(IASB IFRS)는 미처분이익 가산세를 이익 발생 연도에, 대만 IFRS 는 주총 승인 연도(익년 2분기)에 비용 처리한다. 20-F FY 에 대만 반기를 더하고 빼면 가산세가 이중·누락돼 순이익이 틀어지므로 섞지 않는다. 20-F 는 줄별 대조(standard_reconciliation)와 편의환산 환율 근거로만 쓴다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line_item": "NET INCOME ATTRIBUTABLE TO: Shareholders of the parent",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1717882627.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000024",
+              "form": "6-K",
+              "filed": "2026-02-26",
+              "source_id": "SRC-SEC-TSM-6K-FY2025",
+              "document": "c22a66b105a6575f-a2025q4consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (연간) · 열 '2025 Amount' · 행 'NET INCOME ATTRIBUTABLE TO: Shareholders of the parent'"
+            },
+            {
+              "role": "minus_prior_ytd",
+              "line_item": "NET INCOME ATTRIBUTABLE TO: Shareholders of the parent",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 759837230.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2025 (Six Months)' · 행 'NET INCOME ATTRIBUTABLE TO: Shareholders of the parent'"
+            },
+            {
+              "role": "plus_current_ytd",
+              "line_item": "NET INCOME ATTRIBUTABLE TO: Shareholders of the parent",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 1279041690.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2026 (Six Months)' · 행 'NET INCOME ATTRIBUTABLE TO: Shareholders of the parent'"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy_current − minus_prior_ytd + plus_current_ytd",
+            "sum": 2237087087.0,
+            "matches_value": true
+          }
+        },
+        "original_currency": "TWD",
+        "original_value": 2237087087000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods).",
+        "ownership_scope": "parent_attributable",
+        "ownership_evidence": "각 성분은 'NET INCOME ATTRIBUTABLE TO: Shareholders of the parent' 행이다(비지배지분 제외)",
+        "mixed_standard_rejected": {
+          "value_ntd_thousand": 2216808460.0,
+          "value_usd": 70666511316.54446,
+          "why": "20-F FY2025 지배순이익(IASB, 1,697,604.0 백만) − 대만 H1'25 + 대만 H1'26 은 2025 이익분 가산세를 20-F FY 와 H1'26 에서 두 번 빼고 2024 이익분 가산세를 H1'25 로 한 번 더 뺀다. 쓰지 않는다.",
+          "diff_vs_used_ntd_million": -20278.627
+        }
+      },
+      "raw": "NT$천 1,717,882,627 − 759,837,230 + 1,279,041,690 = 2,237,087,087 ÷ 31.37 = US$71,312.9M",
+      "note": "RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원"
+    },
+    {
+      "observation_id": "tsmc.pretax_income_ttm.rs1006",
+      "company_id": "tsmc",
+      "metric": "pretax_income_ttm",
+      "value": 85048198820.52916,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY − 전년 같은 반기 누계 + 올해 반기 누계 (policies.f6.ttm_window.reconstruction_paths (2))",
+        "accounting_standard": "Taiwan-IFRS (IFRS endorsed by FSC, R.O.C.)",
+        "standard_note": "창 안의 세 성분은 모두 **대만 IFRS**(FSC 승인 IFRS, 6-K 연결재무제표)다. 20-F(IASB IFRS)는 미처분이익 가산세를 이익 발생 연도에, 대만 IFRS 는 주총 승인 연도(익년 2분기)에 비용 처리한다. 20-F FY 에 대만 반기를 더하고 빼면 가산세가 이중·누락돼 순이익이 틀어지므로 섞지 않는다. 20-F 는 줄별 대조(standard_reconciliation)와 편의환산 환율 근거로만 쓴다.",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line_item": "INCOME BEFORE INCOME TAX",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 2041662840.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000024",
+              "form": "6-K",
+              "filed": "2026-02-26",
+              "source_id": "SRC-SEC-TSM-6K-FY2025",
+              "document": "c22a66b105a6575f-a2025q4consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (연간) · 열 '2025 Amount' · 행 'INCOME BEFORE INCOME TAX'"
+            },
+            {
+              "role": "minus_prior_ytd",
+              "line_item": "INCOME BEFORE INCOME TAX",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 923930616.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2025 (Six Months)' · 행 'INCOME BEFORE INCOME TAX'"
+            },
+            {
+              "role": "plus_current_ytd",
+              "line_item": "INCOME BEFORE INCOME TAX",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 1550229773.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME (반기, 'For the Six Months Ended June 30') · 열 '2026 (Six Months)' · 행 'INCOME BEFORE INCOME TAX'"
+            }
+          ],
+          "arithmetic": {
+            "formula": "fy_current − minus_prior_ytd + plus_current_ytd",
+            "sum": 2667961997.0,
+            "matches_value": true
+          }
+        },
+        "original_currency": "TWD",
+        "original_value": 2667961997000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods).",
+        "nonop_note": "H1'26 세전에 VIS 지분 처분이익 63,202,285 천(Other gains and losses, net, 비현금 재측정이익 포함)이 들어 있다. 영업외 비중 (세전 − 영업이익) / 세전 = 0.0663, 임계 0.30 아래",
+        "cross_check_ni_plus_tax": {
+          "tax_ttm_ntd_thousand": 431209075.0,
+          "ni_total_ttm_ntd_thousand": 2236752922.0,
+          "gap_ntd_thousand": 0.0,
+          "note": "세전 = 연결 순이익(비지배 포함) + 법인세 가 성분마다 성립하므로 TTM 에서도 0 이어야 한다"
+        }
+      },
+      "raw": "NT$천 2,041,662,840 − 923,930,616 + 1,550,229,773 = 2,667,961,997 ÷ 31.37 = US$85,048.2M",
+      "note": "RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원"
+    },
+    {
+      "observation_id": "tsmc.operating_margin_ttm.rs1006",
+      "company_id": "tsmc",
+      "metric": "operating_margin_ttm",
+      "value": 0.561009,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "operating_income_ttm / revenue_ttm (같은 통화·같은 창, 대만달러로 계산)",
+        "numerator_twd": 2491156024000.0,
+        "denominator_twd": 4440492429000.0,
+        "accounting_standard": "Taiwan-IFRS",
+        "currency_note": "비율이라 통화가 상쇄된다",
+        "component_observations": [
+          "tsmc.operating_income_ttm.rs1006",
+          "tsmc.revenue_ttm.rs1006"
+        ]
+      },
+      "raw": "2,491,156,024 / 4,440,492,429 = 56.1009%",
+      "note": "RS1006"
+    },
+    {
+      "observation_id": "tsmc.fcf_ttm.rs1006",
+      "company_id": "tsmc",
+      "metric": "fcf_ttm",
+      "value": 36453821039.209435,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "ocf_ttm − capex_ttm",
+        "accounting_standard": "Taiwan-IFRS",
+        "standard_note": "창 안의 세 성분은 모두 **대만 IFRS**(FSC 승인 IFRS, 6-K 연결재무제표)다. 20-F(IASB IFRS)는 미처분이익 가산세를 이익 발생 연도에, 대만 IFRS 는 주총 승인 연도(익년 2분기)에 비용 처리한다. 20-F FY 에 대만 반기를 더하고 빼면 가산세가 이중·누락돼 순이익이 틀어지므로 섞지 않는다. 20-F 는 줄별 대조(standard_reconciliation)와 편의환산 환율 근거로만 쓴다. 영업CF·설비투자는 두 기준 값이 같다(standard_reconciliation).",
+        "ocf_ttm_ntd_thousand": 2634679110.0,
+        "capex_ttm_ntd_thousand": 1491122744.0,
+        "ocf_concept": "Net cash generated by operating activities",
+        "capex_concept": "Acquisitions of: Property, plant and equipment (지급액, 양수로 기록)",
+        "definition_same_as": "tsmc.fcf_ttm.cashfcf35 (OCF − PP&E 취득 지급액)",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "ocf_fy_current",
+              "line_item": "Net cash generated by operating activities",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 2274975625.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000024",
+              "form": "6-K",
+              "filed": "2026-02-26",
+              "source_id": "SRC-SEC-TSM-6K-FY2025",
+              "document": "c22a66b105a6575f-a2025q4consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF CASH FLOWS (연간) · 열 '2025 Amount' · 행 'Net cash generated by operating activities'"
+            },
+            {
+              "role": "ocf_minus_prior_ytd",
+              "line_item": "Net cash generated by operating activities",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 1122637757.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF CASH FLOWS ('Six Months Ended June 30') · 열 '2025 (Six Months)' · 행 'Net cash generated by operating activities'"
+            },
+            {
+              "role": "ocf_plus_current_ytd",
+              "line_item": "Net cash generated by operating activities",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 1482341242.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF CASH FLOWS ('Six Months Ended June 30') · 열 '2026 (Six Months)' · 행 'Net cash generated by operating activities'"
+            },
+            {
+              "role": "capex_fy_current",
+              "line_item": "CASH FLOWS FROM INVESTING ACTIVITIES · Acquisitions of: Property, plant and equipment",
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "val": 1272410529.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000024",
+              "form": "6-K",
+              "filed": "2026-02-26",
+              "source_id": "SRC-SEC-TSM-6K-FY2025",
+              "document": "c22a66b105a6575f-a2025q4consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF CASH FLOWS (연간) · 열 '2025 Amount' · 행 'CASH FLOWS FROM INVESTING ACTIVITIES · Acquisitions of: Property, plant and equipment'"
+            },
+            {
+              "role": "capex_minus_prior_ytd",
+              "line_item": "CASH FLOWS FROM INVESTING ACTIVITIES · Acquisitions of: Property, plant and equipment",
+              "start": "2025-01-01",
+              "end": "2025-06-30",
+              "val": 628052531.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF CASH FLOWS ('Six Months Ended June 30') · 열 '2025 (Six Months)' · 행 'CASH FLOWS FROM INVESTING ACTIVITIES · Acquisitions of: Property, plant and equipment'"
+            },
+            {
+              "role": "capex_plus_current_ytd",
+              "line_item": "CASH FLOWS FROM INVESTING ACTIVITIES · Acquisitions of: Property, plant and equipment",
+              "start": "2026-01-01",
+              "end": "2026-06-30",
+              "val": 846764746.0,
+              "unit": "NT$ thousand",
+              "accession": "0001046179-26-000541",
+              "form": "6-K",
+              "filed": "2026-08-14",
+              "source_id": "SRC-SEC-TSM-6K-2026H1",
+              "document": "6742744e39d8c375-a2026q2consolidatedreport-.htm",
+              "location": "CONSOLIDATED STATEMENTS OF CASH FLOWS ('Six Months Ended June 30') · 열 '2026 (Six Months)' · 행 'CASH FLOWS FROM INVESTING ACTIVITIES · Acquisitions of: Property, plant and equipment'"
+            }
+          ],
+          "arithmetic": {
+            "formula": "(ocf_fy − ocf_h1'25 + ocf_h1'26) − (capex_fy − capex_h1'25 + capex_h1'26)",
+            "sum": 1143556366.0,
+            "matches_value": true
+          }
+        },
+        "ocf_ttm_usd": 83987220592.92317,
+        "capex_ttm_usd": 47533399553.71374,
+        "original_currency": "TWD",
+        "original_value": 1143556366000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods)."
+      },
+      "raw": "OCF 2,634,679,110 − CapEx 1,491,122,744 = 1,143,556,366 NT$천 ÷ 31.37 = US$36.45B",
+      "note": "RS1006. 현금흐름표는 6개월 누계만 있어 FY − 전년 상반기 + 올해 상반기로 복원"
+    },
+    {
+      "observation_id": "tsmc.cash.rs1006",
+      "company_id": "tsmc",
+      "metric": "cash",
+      "value": 99911323334.39592,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "form": "6-K",
+        "accession": "0001046179-26-000541",
+        "accounting_standard": "Taiwan-IFRS",
+        "definition": "사용 가능한 현금 및 현금성자산만(설계 지침 6.4). 단기 투자자산을 넣지 않는다 — tsmc.cash.cashfcf35 와 같은 정의",
+        "location": "CONSOLIDATED BALANCE SHEETS · 열 'June 30, 2026 Amount' · 행 'Cash and cash equivalents (Note 6)'",
+        "line": "Cash and cash equivalents (Note 6) | $ 3,134,218,213 | 33 | $ 2,767,856,402 | 35 | $ 2,364,524,340 | 34",
+        "preserved_wider_definitions": {
+          "liquid_cash_buffer_ntd_thousand": 3598045662.0,
+          "note": "현금 + 유동 FVTPL·FVOCI·상각후원가·기타금융자산. 환금성 기준이 정해지기 전에는 쓰지 않는다",
+          "liquid_cash_buffer_usd": 114697024609.49951
+        },
+        "restricted_cash": "주석 32 담보 예금(381,814 천)은 기타금융자산에 있고 현금에 없다",
+        "original_currency": "TWD",
+        "original_value": 3134218213000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods)."
+      },
+      "raw": "현금및현금성자산 NT$천 3,134,218,213 ÷ 31.37 = US$99.91B",
+      "note": "RS1006. 순수 현금"
+    },
+    {
+      "observation_id": "tsmc.net_cash.rs1006",
+      "company_id": "tsmc",
+      "metric": "net_cash",
+      "value": 86506992030.60248,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "derived",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "verified",
+      "basis": {
+        "measured_as_of": "2026-06-30",
+        "form": "6-K",
+        "accession": "0001046179-26-000541",
+        "accounting_standard": "Taiwan-IFRS",
+        "unit_scale": "NT$ thousand",
+        "definition": "현금및현금성자산 + **시장성** 유가증권(단기·비유동) − 총차입금 − 리스부채(유동+비유동). 지분법 투자·비상장 지분·제한 현금은 넣지 않는다 — tsmc.net_cash.nc37 와 같은 범위",
+        "definition_status": "working_definition",
+        "how_columns_were_pinned": "대차대조표 열은 'June 30, 2026 | % | December 31, 2025 | % | June 30, 2025 | %' 순서다. 첫 Amount 열을 쓰고 같은 정의로 둘째 열(2025-12-31)을 다시 계산해 nc37 값과 맞는지 확인했다.",
+        "components": {
+          "rows": [
+            {
+              "kind": "cash",
+              "label": "Cash and cash equivalents",
+              "ntd_thousand": 3134218213.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "sec",
+              "label": "Mutual funds (FVTPL 비유동, 주석 7)",
+              "ntd_thousand": 1966322.0,
+              "where": "주석 7"
+            },
+            {
+              "kind": "sec",
+              "label": "Investments in debt instruments at FVTOCI (FVOCI 유동, 주석 8)",
+              "ntd_thousand": 190682065.0,
+              "where": "주석 8"
+            },
+            {
+              "kind": "sec",
+              "label": "Publicly traded stocks at FVTOCI — 유동분",
+              "ntd_thousand": 2500625.0,
+              "where": "주석 8 · B/S 차감"
+            },
+            {
+              "kind": "sec_vis",
+              "label": "Publicly traded stocks at FVTOCI — 비유동분(VIS 잔여 19%)",
+              "ntd_thousand": 76617214.0,
+              "where": "주석 8·13 · B/S 차감"
+            },
+            {
+              "kind": "sec",
+              "label": "Financial assets at amortized cost (유동)",
+              "ntd_thousand": 190385845.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "sec",
+              "label": "Financial assets at amortized cost (비유동)",
+              "ntd_thousand": 105877457.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "sec",
+              "label": "Other financial assets",
+              "ntd_thousand": 80032539.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "skip",
+              "label": "Convertible preferred stocks (FVTPL)",
+              "ntd_thousand": 13813964.0,
+              "where": "주석 7"
+            },
+            {
+              "kind": "skip",
+              "label": "Convertible bonds (FVTPL) — 시장성 미증명",
+              "ntd_thousand": 223426.0,
+              "where": "주석 7"
+            },
+            {
+              "kind": "skip",
+              "label": "Forward exchange contracts (FVTPL, 파생)",
+              "ntd_thousand": 2949.0,
+              "where": "주석 7"
+            },
+            {
+              "kind": "skip",
+              "label": "Non-publicly traded equity investments (FVOCI)",
+              "ntd_thousand": 11534379.0,
+              "where": "주석 8"
+            },
+            {
+              "kind": "skip",
+              "label": "Investments accounted for using equity method",
+              "ntd_thousand": 18126371.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "debt",
+              "label": "Bonds payable",
+              "ntd_thousand": 815036716.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "debt",
+              "label": "Long-term bank loans",
+              "ntd_thousand": 49226958.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "debt",
+              "label": "Long-term liabilities - current portion",
+              "ntd_thousand": 167409865.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "lease",
+              "label": "Lease liabilities (noncurrent)",
+              "ntd_thousand": 33276056.0,
+              "where": "B/S"
+            },
+            {
+              "kind": "lease",
+              "label": "Lease liabilities current portion (accrued expenses and other current liabilities 안, 주석 15)",
+              "ntd_thousand": 3606345.0,
+              "where": "주석 15"
+            }
+          ],
+          "cash_and_marketable_securities": 3782280280.0,
+          "debt_ex_lease": 1031673539.0,
+          "lease_total": 36882401.0,
+          "net_cash_native": 2713724340.0
+        },
+        "arithmetic": {
+          "formula": "Σ(cash, sec, sec_vis) − Σdebt − Σlease",
+          "sum": 2713724340.0,
+          "matches_value": true
+        },
+        "vis_remaining_stake": {
+          "decision": "포함(조율자 지시 2026-10-06). 상장(TPEx) 주식이고 Level 1 공정가치이며 매각이 진행 중이라 시장성 축을 통과한다.",
+          "conflict": "규칙 securities_scope.include 의 '상장 지분증권' 과 components.excluded 의 '전략적 지분투자(환금 목적이 아닌 보유)' 가 이 자산에서 부딪힌다. 주석 8 은 FVOCI 지분을 'held for medium to long-term purposes' 로 적는다.",
+          "source_text": "In May 2026, the Company disposed of 152,000 thousand common shares of VIS, resulting in a decrease in the Company’s shareholding to 19% and the loss of significant influence over VIS. Accordingly, the investment has been reclassified as financial assets at FVTOCI since the date of disposal. The Company recognized a gain on disposal of NT$63,202,285 thousand in the second quarter of 2026. This included the remeasurement of its remaining interest in VIS to a fair value of NT$56,398,783 thousand on the disposal date, compared with its carrying amount, resulting in a non-cash remeasurement gain.",
+          "value_ntd_thousand": 76617214.0,
+          "net_cash_excluding_vis_ntd_thousand": 2637107126.0,
+          "net_cash_excluding_vis_usd": 84064619891.6162,
+          "p2_band_sensitivity": {
+            "2026-09-30": {
+              "market_cap_usd": 2366017592652.7603,
+              "p2_incl_vis": 16.1037,
+              "band_incl_vis": -1,
+              "p2_excl_vis": 16.1209,
+              "band_excl_vis": -1,
+              "band_differs": false
+            },
+            "2026-10-05": {
+              "market_cap_usd": 2519589012203.9497,
+              "p2_incl_vis": 17.1886,
+              "band_incl_vis": -1,
+              "p2_excl_vis": 17.2058,
+              "band_excl_vis": -1,
+              "band_differs": false
+            }
+          },
+          "note": "VIS 를 빼도 P2 밴드는 같다(두 시총 모두 −1, 8~20 구간 안)."
+        },
+        "pledged_assets_note_32": "32 . PLEDGED ASSETS The Company provided negotiable certificates of deposit and time deposits recorded in other financial assets as collateral mainly for court deposit and building lease agreements. As of June 30, 2026 , December 31, 2025 and June 30, 2025 , the aforementioned other financial assets amounted to NT $381,814 thousand, NT $129,385 thousand and NT $120,669 thousand, respectively.",
+        "pledged_sensitivity_usd": 86494820720.43353,
+        "nc37_reproduction_dec25_ntd_thousand": 2171587154.0,
+        "original_currency": "TWD",
+        "original_value": 2713724340000.0,
+        "unit_scale_original": "NT$ thousand",
+        "fx_rate": 31.37,
+        "fx_quote": "TWD per USD",
+        "fx_rate_as_of": "2025-12-31",
+        "fx_rate_source": "FY2025 20-F Note 3 'U.S. DOLLAR AMOUNTS' (F-13) — NT$31.37 to US$1.00, the exchange rate set forth in the H.10 statistical release of the Federal Reserve Board on December 31, 2025",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 선언이 없는 발행사에만 H.10 현물 (policies.f6.fx). 기존 tsmc 관측과 같은 31.37",
+        "fx_uniform_rate_note": "**당해 창과 전년 창에 같은 31.37 을 쓴다** — 분자·분모에서 상쇄돼 성장률이 현지통화 성장률과 같아진다(policies.f6.fx.same_rate_for_both_periods)."
+      },
+      "raw": "NT$천 3,782,280,280 − 1,068,555,940 = 2,713,724,340 ÷ 31.37 = US$86.51B (VIS 제외 US$84.06B)",
+      "note": "RS1006. nc37 범위 · VIS 잔여 19% 포함(판단 갈림은 basis.vis_remaining_stake)"
+    },
+    {
+      "observation_id": "tsmc.undrawn_credit.rs1006",
+      "company_id": "tsmc",
+      "metric": "undrawn_credit",
+      "value": null,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-06",
+      "kind": "actual",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "status": "not_disclosed",
+      "missing_type": "unverified",
+      "basis": {
+        "why": "2026H1·2025H1 6-K 연결재무제표 전문을 검색했다 — credit facilit 0 · unused 1 · lines of credit 0 · line of credit 0 · unutilized 0 · undrawn 0 · revolving 0 · borrowing capacity 0 · letters of credit 1 · available under 1 · banking facilit 0 · financing facilit 0 · credit line 0 건. 걸린 자리는 주석 33 g(미사용 신용장)과 h(이행보증)뿐이다. **신용장·이행보증은 인출 가능한 약정 여신이 아니다**(tsmc.undrawn_credit.fix54 next_collection_guide). 확정 미인출 여신은 확인되지 않았다.",
+        "letters_of_credit_note_33g": "g. Amounts available under unused letters of credit as of June 30, 2026 , December 31, 2025 and June 30, 2025 were NT $1,077,232 thousand, NT $438,643 thousand and NT $435,852 thousand, respectively.",
+        "performance_guarantees_note_33h": "h. The Company entrusted financial institutions to provide performance guarantees mainly for import and export of goods, lease agreement and apply for subsidy. As of June 30, 2026 , December 31, 2025 and June 30, 2025 , the aforementioned guarantee amounted to NT $35,125,511 thousand, NT $23,375,215 thousand, and NT $16,695,014 thousand, respectively.",
+        "period_now_matches": "이번에는 as_of 2026-06-30 과 같은 시점 원문(2026H1 6-K)으로 부재를 확인했다 — fix54 의 기간 어긋남이 풀렸다.",
+        "engine_effect": "숫자가 아니라 G3 분자에 들어가지 않는다. FCF 양수라 ⑨ 게이트 3 에 닿지 않는다."
+      },
+      "raw": null,
+      "note": "RS1006. 확정 미인출 여신 미확인(우리가 확인하지 못했다)."
     }
   ]
 }

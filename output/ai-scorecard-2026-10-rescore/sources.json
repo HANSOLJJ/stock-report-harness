@@ -2897,6 +2897,102 @@
       "published_at_utc": "2026-10-01T13:03:40Z",
       "publisher_url": "https://www.bloomberg.com",
       "raw_ref": "data/tsmc/news/google/raw/20261006T054439Z-9107a71c.xml"
+    },
+    {
+      "source_id": "SRC-SEC-FACTS-ORCL-20261006",
+      "title": "SEC XBRL companyfacts CIK0001341439 (Oracle, 2026-10-06 수집 — FY27 1분기 반영)",
+      "publisher": "SEC EDGAR",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001341439.json",
+      "accessed_at": "2026-10-06T05:04:51Z",
+      "sha256": "65523545f040abaea1dfcf321da2a5aec85e7f34387244b0ffcb26e4c8707f7d",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/ec38cf5e2d28515e-CIK0001341439.json(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "oracle"
+    },
+    {
+      "source_id": "SRC-SEC-ORCL-10K-FY2026",
+      "title": "Oracle Form 10-K FY2026(2026-05-31) — 주석 6 Revolving Credit Agreement $10.0B(p.85)·MD&A 유동성(p.53)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+      "accessed_at": "2026-10-06",
+      "sha256": "517287f80a5c3d4314e3537470ba1c5561f86aea6ced849109f95fabc780236c",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/3fc9afc29cf46cd7-orcl-20260531.htm(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "oracle"
+    },
+    {
+      "source_id": "SRC-SEC-TSM-6K-FY2025",
+      "title": "TSMC 6-K 2026-02-26 첨부 — 2025 연간 연결재무제표·감사보고서(대만 IFRS, Deloitte)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000024/a2025q4consolidatedreport-.htm",
+      "accessed_at": "2026-10-06T05:58:35Z",
+      "sha256": "e1601a32e0f1d225fee0241ed9103dc57dd2e35042f7fc6ccc5c1bc2717603f4",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/c22a66b105a6575f-a2025q4consolidatedreport-.htm(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-SEC-TSM-6K-FY2024",
+      "title": "TSMC 6-K 2025-02-27 첨부 — 2024 연간 연결재무제표·감사보고서(대만 IFRS)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000019/tsmc2024q4consolidatedfina.htm",
+      "accessed_at": "2026-10-06T05:58:40Z",
+      "sha256": "f3a4ed449fd569468d305f0a3e11dc965ac15184072e81b860e25add58f7a761",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/6692fcd7873d3dc3-tsmc2024q4consolidatedfina.htm(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "title": "TSMC 6-K 2026-08-14 첨부 99.1 — 2026 상반기 연결재무제표·감사인 검토보고서(대만 IFRS)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000541/a2026q2consolidatedreport-.htm",
+      "accessed_at": "2026-10-06T05:10:16Z",
+      "sha256": "ce9280e5d17fe4d80b2c625d11c0ff5f3e7597089bc999150a50e05f500228ba",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/6742744e39d8c375-a2026q2consolidatedreport-.htm(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-SEC-TSM-6K-2025H1",
+      "title": "TSMC 6-K 2025-08-14 첨부 — 2025 상반기 연결재무제표·감사인 검토보고서(대만 IFRS)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617925000097/tsmc2025q2consolidatedfina.htm",
+      "accessed_at": "2026-10-06T05:47:45Z",
+      "sha256": "c53e94880b2cdff383edf2d07fc5bd5cb271ea4d0ab8df02da9831caf3f7ca71",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/2b3f7baba21b41ea-tsmc2025q2consolidatedfina.htm(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "title": "Alibaba 6-K 2026-08-20 첨부 99.1 — June Quarter 2026 Results(감사·검토 없음)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000110465926099220/tm2623667d1_ex99-1.htm",
+      "accessed_at": "2026-10-06T05:10:44Z",
+      "sha256": "7e758933e8865700491044dee1a9dc32f2b59af555ca21d63e23319771577966",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/d9a4abca676392b4-tm2623667d1_ex99-1.htm(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "alibaba"
+    },
+    {
+      "source_id": "SRC-SEC-BABA-6K-2025Q1",
+      "title": "Alibaba 6-K 2025-08-29 첨부 99.1 — June Quarter 2025 Results(감사·검토 없음)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000110465925085638/tm2524743d1_ex99-1.htm",
+      "accessed_at": "2026-10-06T05:47:47Z",
+      "sha256": "1d17cc25fab477072810c444ee37718cafb8cb64a28cc8026bcfc234c48ebe8b",
+      "conflict_of_interest": null,
+      "note": "10월 재채점 재무 관측 갱신(규칙 v1.9). 원문 캐시 data/_sec/docs/38e98e63c5fe0925-tm2524743d1_ex99-1.htm(gitignore) — 주소로 다시 받아 sha256 대조",
+      "kind": "filing",
+      "company_id": "alibaba"
     }
   ]
 }

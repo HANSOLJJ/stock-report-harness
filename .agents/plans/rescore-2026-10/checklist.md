@@ -20,8 +20,8 @@
 - [x] calculate — TSMC ⑥ −3→−5, Oracle ⑥ −2→−3(가격 갱신으로 P1 경계 통과). 나머지 12사 동일
 - [x] 규칙 v1.9 와 코드·테스트(`f0d6aa5`), 버전 번호를 rules.md 머리말 한 곳에(`dbe3098`)
 - [x] 실행을 v1.9 로 다시 만듦 → collect → 근거·트리거 재반영(출처 ID 3건 대응) → research·calculate(점수 v1.8 때와 같음)
-- [ ] 1년 전 문서 2건 받기(TSMC 2025-08 6-K 재무제표, Alibaba 2025-08 실적)
-- [ ] Oracle·TSMC·Alibaba 관측 만들기(서브에이전트 3) → 기계 대조 → 반영
+- [x] 1년 전 문서 2건 받기(+ TSMC 대만 IFRS 연간 2건, Oracle 10-K)
+- [x] Oracle·TSMC·Alibaba 관측 29건 → 독립 검산 → 반영 → research·calculate(세 회사 listed_ttm, 나머지 11사 불변)
 - [ ] calculate → 비교 → ⑨ 판정 입력 제안·트리거 finding(TRG-057 등) 수정
 - [ ] draft
 

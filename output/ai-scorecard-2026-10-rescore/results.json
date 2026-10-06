@@ -7,9 +7,9 @@
   "baseline_id": "v1.5",
   "input_hashes": {
     "run": "65a19e92d2a861d18c6c33059b2217f5882c9527dde0827c4b2282c569a52f5f",
-    "observations": "304291f5f8e56d88639a3892a6c8eedb02e30499e9bb2675b0fef68b5600e7d6",
+    "observations": "0a91b4976ef4cc9eb8cbeaffd20e4dfc89657fb0fce3103e595a7a6f1b64fde1",
     "judgments": "d803a3a60b4cf96e861f17290c9b46c5c76241b3554b8970eccb401180e5efce",
-    "sources": "0d10ee725746bb2e0022f66ca77be3f41301be060ae906d356a7581412e87998",
+    "sources": "4f37c8b31cb8dbfa71ebe5648dc3268a104a400ed0b5d073f633dd999a5d7829",
     "evidence": "7f0a4413b9fa93cce0bb5c9caa70735d992b3c08a27b6c273473d0035e9f8a6f",
     "triggers": "e9917d8e1187869a06604d82c197c164de05fac6a48488125565e9f8f37ddd37",
     "rules": "0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d"
@@ -1303,55 +1303,55 @@
         },
         "F6": {
           "factor": "F6",
-          "score": -5,
+          "score": -2,
           "status": "ok",
           "basis": "computed",
           "judgment_id": null,
           "observation_ids": [
             "tsmc.market_cap.2026-10-05",
-            "tsmc.net_cash.nc37",
-            "tsmc.net_income_ttm.f6reg28",
+            "tsmc.net_cash.rs1006",
+            "tsmc.net_income_ttm.rs1006",
             "tsmc.nonop_share.v15",
-            "tsmc.operating_income_ttm.f6reg28",
-            "tsmc.pretax_income_ttm.nonop44",
-            "tsmc.revenue_ttm.f6reg28",
-            "tsmc.revenue_ttm_prior.f6reg28"
+            "tsmc.operating_income_ttm.rs1006",
+            "tsmc.pretax_income_ttm.rs1006",
+            "tsmc.revenue_ttm.rs1006",
+            "tsmc.revenue_ttm_prior.rs1006"
           ],
           "calc": {
             "mode": "parameters",
-            "track": "listed_annual",
-            "track_label": "ADR/FPI 연간",
-            "period_basis": "annual",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": "ttm",
             "floor": -7,
             "parameters": {
               "P1": {
                 "inputs": {
                   "market_cap": 2519589012203.9497,
-                  "net_income_ttm": 54115524386.356
+                  "net_income_ttm": 71312945074.91234
                 },
-                "value": 46.55944926663608,
-                "score": -2,
-                "band": "45+",
+                "value": 35.33143960829536,
+                "score": -1,
+                "band": "25~45",
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 45.0,
-                  "distance_ratio": 0.03465442814746843,
+                  "distance_ratio": -0.2148568975934364,
                   "tolerance": 0.03
                 }
               },
               "P2": {
                 "inputs": {
                   "market_cap": 2519589012203.9497,
-                  "net_cash": 69224963340.77142,
-                  "revenue_ttm": 121423471470.0
+                  "net_cash": 86506992030.60248,
+                  "revenue_ttm": 141552197290.40485
                 },
-                "value": 20.180316204092286,
-                "score": -2,
-                "band": "20+",
+                "value": 17.188585318684236,
+                "score": -1,
+                "band": "8~20",
                 "boundary": {
-                  "flag": true,
+                  "flag": false,
                   "nearest_boundary": 20.0,
-                  "distance_ratio": 0.009015810204614283,
+                  "distance_ratio": -0.14057073406578818,
                   "tolerance": 0.03
                 },
                 "net_cash_definition": {
@@ -1362,16 +1362,16 @@
               },
               "P3": {
                 "inputs": {
-                  "revenue_ttm": 121423471470.0,
-                  "revenue_ttm_prior": 92263554351.0
+                  "revenue_ttm": 141552197290.40485,
+                  "revenue_ttm_prior": 108422022760.59929
                 },
-                "value": 0.31605022507659286,
+                "value": 0.30556683675749596,
                 "score": 0,
                 "band": "0.3+",
                 "boundary": {
-                  "flag": false,
+                  "flag": true,
                   "nearest_boundary": 0.3,
-                  "distance_ratio": 0.05350075025530958,
+                  "distance_ratio": 0.018556122524986583,
                   "tolerance": 0.03
                 }
               }
@@ -1379,48 +1379,45 @@
             "p4": {
               "nonop_share_stored": 0.07,
               "nonop_share_observation_ids": [
-                "tsmc.pretax_income_ttm.nonop44",
-                "tsmc.operating_income_ttm.f6reg28",
-                "tsmc.net_income_ttm.f6reg28",
+                "tsmc.pretax_income_ttm.rs1006",
+                "tsmc.operating_income_ttm.rs1006",
+                "tsmc.net_income_ttm.rs1006",
                 "tsmc.nonop_share.v15"
               ],
-              "nonop_share": 0.05170462958187779,
+              "nonop_share": 0.06627004927311929,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
               "nonop_share_inputs": {
-                "pretax_income_ttm": 65083031558.81415,
-                "operating_income_ttm": 61717937520.0,
-                "net_income_ttm": 54115524386.356
+                "pretax_income_ttm": 85048198820.52916,
+                "operating_income_ttm": 79412050494.10265,
+                "net_income_ttm": 71312945074.91234
               },
               "nonop_share_boundary": {
                 "flag": false,
                 "nearest_boundary": 0.3,
-                "distance_ratio": -0.827651234727074,
+                "distance_ratio": -0.779099835756269,
                 "tolerance": 0.03
               },
               "stale_asof": {
                 "checked": true,
-                "period_end": "2025-12-31",
+                "period_end": "2026-06-30",
                 "as_of": "2026-10-06",
-                "months_elapsed": 9,
-                "limit_months": 16,
-                "period_basis": "annual",
+                "months_elapsed": 3,
+                "limit_months": 6,
+                "period_basis": "ttm",
                 "hit": false
               },
-              "period_basis": "annual",
-              "conditions_hit": [
-                "period_basis_not_ttm"
-              ],
-              "demotion_steps": 1,
-              "demotion_sole_cause": "period_basis_not_ttm"
+              "period_basis": "ttm",
+              "conditions_hit": [],
+              "demotion_steps": 0,
+              "demotion_sole_cause": null
             },
-            "subtotal_before_p4": -4,
-            "score": -5
+            "subtotal_before_p4": -2,
+            "score": -2
           },
           "warnings": [
-            "P2 경계 ⚠️ 20 선까지 +0.9% — 점수는 그대로",
             "net_cash 작업 정의 ⚠️ legacy 역산으로 세운 정의 위에서 P2 를 계산한다 — 확정 정의가 나오면 재계산 대상 (policies.f6.net_cash)",
-            "P4 보정 한 칸 — 조건 period_basis_not_ttm"
+            "P3 경계 ⚠️ 0.3 선까지 +1.9% — 점수는 그대로"
           ],
           "pending": null
         },
@@ -1460,20 +1457,20 @@
           "basis": "computed",
           "judgment_id": "tsmc.F9",
           "observation_ids": [
-            "tsmc.fcf_ttm.cashfcf35",
-            "tsmc.operating_margin_ttm.f6reg28"
+            "tsmc.fcf_ttm.rs1006",
+            "tsmc.operating_margin_ttm.rs1006"
           ],
           "calc": {
             "path": [
               {
                 "gate": "G1",
                 "result": "pass",
-                "operating_margin_ttm": 0.508287
+                "operating_margin_ttm": 0.561009
               },
               {
                 "gate": "G2",
                 "result": "positive_stable",
-                "fcf_ttm": 31959300000.0,
+                "fcf_ttm": 36453821039.209435,
                 "score": 0
               }
             ],
@@ -1492,8 +1489,8 @@
         }
       },
       "moat": 17,
-      "trap": -9,
-      "total": 8,
+      "trap": -6,
+      "total": 11,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -1504,7 +1501,7 @@
         "F7",
         "F8"
       ],
-      "rank": 8
+      "rank": 5
     },
     {
       "company_id": "alibaba",
@@ -1594,55 +1591,55 @@
         },
         "F6": {
           "factor": "F6",
-          "score": -4,
+          "score": -5,
           "status": "ok",
           "basis": "computed",
           "judgment_id": null,
           "observation_ids": [
             "alibaba.market_cap.2026-10-05",
-            "alibaba.net_cash.nc37",
-            "alibaba.net_income_ttm.f6reg28",
+            "alibaba.net_cash.rs1006",
+            "alibaba.net_income_ttm.rs1006",
             "alibaba.nonop_share.v15",
-            "alibaba.operating_income_ttm.obsreg25",
-            "alibaba.pretax_income_ttm.nonop44",
-            "alibaba.revenue_ttm.obsreg25",
-            "alibaba.revenue_ttm_prior.f6reg28"
+            "alibaba.operating_income_ttm.rs1006",
+            "alibaba.pretax_income_ttm.rs1006",
+            "alibaba.revenue_ttm.rs1006",
+            "alibaba.revenue_ttm_prior.rs1006"
           ],
           "calc": {
             "mode": "parameters",
-            "track": "listed_annual",
-            "track_label": "ADR/FPI 연간",
-            "period_basis": "annual",
+            "track": "listed_ttm",
+            "track_label": "일반 상장",
+            "period_basis": "ttm",
             "floor": -7,
             "parameters": {
               "P1": {
                 "inputs": {
                   "market_cap": 275642146833.19507,
-                  "net_income_ttm": 15017686286.0
+                  "net_income_ttm": 10663525659.611483
                 },
-                "value": 18.354501591244325,
-                "score": 0,
-                "band": "0~25",
+                "value": 25.84906302398656,
+                "score": -1,
+                "band": "25~45",
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 25.0,
-                  "distance_ratio": -0.265819936350227,
+                  "distance_ratio": 0.03396252095946238,
                   "tolerance": 0.03
                 }
               },
               "P2": {
                 "inputs": {
                   "market_cap": 275642146833.19507,
-                  "net_cash": 49838648883.73442,
-                  "revenue_ttm": 148401000000.0
+                  "net_cash": 41583502464.48246,
+                  "revenue_ttm": 151488982313.71414
                 },
-                "value": 1.521576660194073,
+                "value": 1.5450539094916313,
                 "score": 0,
                 "band": "0~8",
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 8.0,
-                  "distance_ratio": -0.8098029174757408,
+                  "distance_ratio": -0.806868261313546,
                   "tolerance": 0.03
                 },
                 "net_cash_definition": {
@@ -1653,16 +1650,16 @@
               },
               "P3": {
                 "inputs": {
-                  "revenue_ttm": 148401000000.0,
-                  "revenue_ttm_prior": 144439982604.0
+                  "revenue_ttm": 151488982313.71414,
+                  "revenue_ttm_prior": 145080168164.68542
                 },
-                "value": 0.02742327522192811,
+                "value": 0.04417429501290515,
                 "score": -3,
                 "band": "~0.05",
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 0.05,
-                  "distance_ratio": -0.4515344955614378,
+                  "distance_ratio": -0.11651409974189703,
                   "tolerance": 0.03
                 }
               }
@@ -1670,49 +1667,48 @@
             "p4": {
               "nonop_share_stored": 0.54,
               "nonop_share_observation_ids": [
-                "alibaba.pretax_income_ttm.nonop44",
-                "alibaba.operating_income_ttm.obsreg25",
-                "alibaba.net_income_ttm.f6reg28",
+                "alibaba.pretax_income_ttm.rs1006",
+                "alibaba.operating_income_ttm.rs1006",
+                "alibaba.net_income_ttm.rs1006",
                 "alibaba.nonop_share.v15"
               ],
-              "nonop_share": 0.6124150030528569,
+              "nonop_share": 0.7011363972363764,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
               "nonop_share_inputs": {
-                "pretax_income_ttm": 18757175993.041462,
-                "operating_income_ttm": 7270000000.0,
-                "net_income_ttm": 15017686286.0
+                "pretax_income_ttm": 14708756161.206148,
+                "operating_income_ttm": 4395911858.509713,
+                "net_income_ttm": 10663525659.611483
               },
               "nonop_share_boundary": {
                 "flag": false,
                 "nearest_boundary": 0.3,
-                "distance_ratio": 1.041383343509523,
+                "distance_ratio": 1.337121324121255,
                 "tolerance": 0.03
               },
               "stale_asof": {
                 "checked": true,
-                "period_end": "2026-03-31",
+                "period_end": "2026-06-30",
                 "as_of": "2026-10-06",
-                "months_elapsed": 6,
-                "limit_months": 16,
-                "period_basis": "annual",
+                "months_elapsed": 3,
+                "limit_months": 6,
+                "period_basis": "ttm",
                 "hit": false
               },
-              "period_basis": "annual",
+              "period_basis": "ttm",
               "conditions_hit": [
-                "nonop_share",
-                "period_basis_not_ttm"
+                "nonop_share"
               ],
               "demotion_steps": 1,
-              "demotion_sole_cause": null
+              "demotion_sole_cause": "nonop_share"
             },
-            "subtotal_before_p4": -3,
-            "score": -4
+            "subtotal_before_p4": -4,
+            "score": -5
           },
           "warnings": [
             "net_cash 작업 정의 ⚠️ legacy 역산으로 세운 정의 위에서 P2 를 계산한다 — 확정 정의가 나오면 재계산 대상 (policies.f6.net_cash)",
-            "nonop_share 재계산 0.6124 과 저장값 0.5400 이 다름 — 산식은 정정됐고 이 둘은 남은 불일치다(policies.f6.p4 nonop_share)",
-            "P4 보정 한 칸 — 조건 nonop_share, period_basis_not_ttm"
+            "nonop_share 재계산 0.7011 과 저장값 0.5400 이 다름 — 산식은 정정됐고 이 둘은 남은 불일치다(policies.f6.p4 nonop_share)",
+            "P4 보정 한 칸 — 조건 nonop_share"
           ],
           "pending": null
         },
@@ -1747,16 +1743,16 @@
         },
         "F9": {
           "factor": "F9",
-          "score": -3,
+          "score": -4,
           "status": "ok",
           "basis": "computed",
           "judgment_id": "alibaba.F9.obsreg25",
           "observation_ids": [
-            "alibaba.cash.cashfcf35",
+            "alibaba.cash.rs1006",
             "alibaba.contracted_revenue.obsreg25",
-            "alibaba.fcf_ttm.cashfcf35",
+            "alibaba.fcf_ttm.rs1006",
             "alibaba.offbalance_B.obsreg25",
-            "alibaba.operating_margin_ttm.obsreg25",
+            "alibaba.operating_margin_ttm.rs1006",
             "alibaba.undrawn_credit.fix53"
           ],
           "calc": {
@@ -1764,25 +1760,25 @@
               {
                 "gate": "G1",
                 "result": "pass",
-                "operating_margin_ttm": 0.04899
+                "operating_margin_ttm": 0.029018
               },
               {
                 "gate": "G2",
                 "result": "negative",
-                "fcf_ttm": -7226000000.0,
+                "fcf_ttm": -11101623659.031605,
                 "score": -2
               },
               {
                 "gate": "G3",
-                "runway_years": 3.0996401882092446,
-                "buffer": 22398000000.0,
-                "annual_burn": 7226000000.0,
-                "step": 0,
-                "score": -2,
+                "runway_years": 2.1661857689444886,
+                "buffer": 24048179182.371704,
+                "annual_burn": 11101623659.031605,
+                "step": -1,
+                "score": -3,
                 "boundary": {
                   "flag": false,
                   "nearest_boundary": 3.0,
-                  "distance_ratio": 0.03321339606974819,
+                  "distance_ratio": -0.2779380770185038,
                   "tolerance": 0.03
                 }
               },
@@ -1795,7 +1791,7 @@
                 "reason": "확인된 미공시(not_disclosed_confirmed)",
                 "step": -1,
                 "policy": "downgrade (C-16 실행 결정)",
-                "score": -3
+                "score": -4
               }
             ],
             "inputs": {
@@ -1815,8 +1811,8 @@
         }
       },
       "moat": 18,
-      "trap": -11,
-      "total": 7,
+      "trap": -13,
+      "total": 5,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -1828,7 +1824,7 @@
         "F7",
         "F8"
       ],
-      "rank": 10
+      "rank": 11
     },
     {
       "company_id": "anthropic",
@@ -2120,7 +2116,7 @@
         "F4",
         "F7"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "apple",
@@ -2431,7 +2427,7 @@
         "F7",
         "F8"
       ],
-      "rank": 8
+      "rank": 9
     },
     {
       "company_id": "nvidia",
@@ -2718,7 +2714,7 @@
         "F5",
         "F8"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "palantir",
@@ -3029,7 +3025,7 @@
         "F7",
         "F8"
       ],
-      "rank": 11
+      "rank": 10
     },
     {
       "company_id": "spacex-xai",
@@ -3362,7 +3358,7 @@
         "F7",
         "F8"
       ],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "tesla",
@@ -3651,7 +3647,7 @@
         "F7",
         "F8"
       ],
-      "rank": 12
+      "rank": 11
     },
     {
       "company_id": "oracle",
@@ -3741,19 +3737,19 @@
         },
         "F6": {
           "factor": "F6",
-          "score": -3,
+          "score": -1,
           "status": "ok",
           "basis": "computed",
           "judgment_id": null,
           "observation_ids": [
             "oracle.market_cap.2026-10-05",
-            "oracle.net_cash.nc37",
-            "oracle.net_income_ttm.f6reg28",
+            "oracle.net_cash.rs1006",
+            "oracle.net_income_ttm.rs1006",
             "oracle.nonop_share.v15",
-            "oracle.operating_income_ttm.f6reg28",
-            "oracle.pretax_income_ttm.nonop44",
-            "oracle.revenue_ttm.f6reg28",
-            "oracle.revenue_ttm_prior.f6reg28"
+            "oracle.operating_income_ttm.rs1006",
+            "oracle.pretax_income_ttm.rs1006",
+            "oracle.revenue_ttm.rs1006",
+            "oracle.revenue_ttm_prior.rs1006"
           ],
           "calc": {
             "mode": "parameters",
@@ -3765,31 +3761,31 @@
               "P1": {
                 "inputs": {
                   "market_cap": 431928270757.54974,
-                  "net_income_ttm": 17087000000.0
+                  "net_income_ttm": 18920000000.0
                 },
-                "value": 25.27818053242522,
-                "score": -1,
-                "band": "25~45",
+                "value": 22.82918978633984,
+                "score": 0,
+                "band": "0~25",
                 "boundary": {
-                  "flag": true,
+                  "flag": false,
                   "nearest_boundary": 25.0,
-                  "distance_ratio": 0.011127221297008844,
+                  "distance_ratio": -0.08683240854640645,
                   "tolerance": 0.03
                 }
               },
               "P2": {
                 "inputs": {
                   "market_cap": 431928270757.54974,
-                  "net_cash": -135538000000.0,
-                  "revenue_ttm": 67357000000.0
+                  "net_cash": -132066000000.0,
+                  "revenue_ttm": 71776000000.0
                 },
-                "value": 8.424755715924846,
-                "score": -1,
-                "band": "8~20",
+                "value": 7.857699938106746,
+                "score": 0,
+                "band": "0~8",
                 "boundary": {
-                  "flag": false,
+                  "flag": true,
                   "nearest_boundary": 8.0,
-                  "distance_ratio": 0.05309446449060573,
+                  "distance_ratio": -0.017787507736656716,
                   "tolerance": 0.03
                 },
                 "net_cash_definition": {
@@ -3800,16 +3796,16 @@
               },
               "P3": {
                 "inputs": {
-                  "revenue_ttm": 67357000000.0,
-                  "revenue_ttm_prior": 57399000000.0
+                  "revenue_ttm": 71776000000.0,
+                  "revenue_ttm_prior": 59018000000.0
                 },
-                "value": 0.1734873429850694,
+                "value": 0.2161713375580332,
                 "score": -1,
                 "band": "0.15~0.3",
                 "boundary": {
                   "flag": false,
-                  "nearest_boundary": 0.15,
-                  "distance_ratio": 0.15658228656712941,
+                  "nearest_boundary": 0.3,
+                  "distance_ratio": -0.279428874806556,
                   "tolerance": 0.03
                 }
               }
@@ -3817,30 +3813,30 @@
             "p4": {
               "nonop_share_stored": -0.15,
               "nonop_share_observation_ids": [
-                "oracle.pretax_income_ttm.nonop44",
-                "oracle.operating_income_ttm.f6reg28",
-                "oracle.net_income_ttm.f6reg28",
+                "oracle.pretax_income_ttm.rs1006",
+                "oracle.operating_income_ttm.rs1006",
+                "oracle.net_income_ttm.rs1006",
                 "oracle.nonop_share.v15"
               ],
-              "nonop_share": -0.05379973406975555,
+              "nonop_share": -0.06087236587834729,
               "nonop_share_source": "recomputed",
               "nonop_share_formula": "(pretax_income_ttm - operating_income_ttm) / pretax_income_ttm",
               "nonop_share_inputs": {
-                "pretax_income_ttm": 19554000000.0,
-                "operating_income_ttm": 20606000000.0,
-                "net_income_ttm": 17087000000.0
+                "pretax_income_ttm": 21734000000.0,
+                "operating_income_ttm": 23057000000.0,
+                "net_income_ttm": 18920000000.0
               },
               "nonop_share_boundary": {
                 "flag": false,
                 "nearest_boundary": 0.3,
-                "distance_ratio": -0.8206675531008149,
+                "distance_ratio": -0.7970921137388424,
                 "tolerance": 0.03
               },
               "stale_asof": {
                 "checked": true,
-                "period_end": "2026-05-31",
+                "period_end": "2026-08-31",
                 "as_of": "2026-10-06",
-                "months_elapsed": 4,
+                "months_elapsed": 1,
                 "limit_months": 6,
                 "period_basis": "ttm",
                 "hit": false
@@ -3850,13 +3846,13 @@
               "demotion_steps": 0,
               "demotion_sole_cause": null
             },
-            "subtotal_before_p4": -3,
-            "score": -3
+            "subtotal_before_p4": -1,
+            "score": -1
           },
           "warnings": [
-            "P1 경계 ⚠️ 25 선까지 +1.1% — 점수는 그대로",
+            "P2 경계 ⚠️ 8 선까지 -1.8% — 점수는 그대로",
             "net_cash 작업 정의 ⚠️ legacy 역산으로 세운 정의 위에서 P2 를 계산한다 — 확정 정의가 나오면 재계산 대상 (policies.f6.net_cash)",
-            "nonop_share 재계산 -0.0538 과 저장값 -0.1500 이 다름 — 산식은 정정됐고 이 둘은 남은 불일치다(policies.f6.p4 nonop_share)"
+            "nonop_share 재계산 -0.0609 과 저장값 -0.1500 이 다름 — 산식은 정정됐고 이 둘은 남은 불일치다(policies.f6.p4 nonop_share)"
           ],
           "pending": null
         },
@@ -3894,46 +3890,46 @@
           "basis": "computed",
           "judgment_id": "oracle.F9",
           "observation_ids": [
-            "oracle.cash.cashfcf35",
-            "oracle.contracted_revenue.fix57",
-            "oracle.fcf_ttm.cashfcf35",
+            "oracle.cash.rs1006",
+            "oracle.contracted_revenue.rs1006",
+            "oracle.fcf_ttm.rs1006",
             "oracle.offbalance_B.v15",
-            "oracle.operating_income_ttm.f6reg28",
-            "oracle.revenue_ttm.f6reg28",
-            "oracle.undrawn_credit.fix54"
+            "oracle.operating_income_ttm.rs1006",
+            "oracle.revenue_ttm.rs1006",
+            "oracle.undrawn_credit.rs1006"
           ],
           "calc": {
             "path": [
               {
                 "gate": "G1",
                 "result": "pass",
-                "operating_margin_ttm": 0.30592217586887777
+                "operating_margin_ttm": 0.3212355104770397
               },
               {
                 "gate": "G2",
                 "result": "negative",
-                "fcf_ttm": -23686000000.0,
+                "fcf_ttm": -28720000000.0,
                 "score": -2
               },
               {
                 "gate": "G3",
-                "runway_years": 1.320991302879338,
-                "buffer": 31289000000.0,
-                "annual_burn": 23686000000.0,
+                "runway_years": 1.6145194986072424,
+                "buffer": 46369000000.0,
+                "annual_burn": 28720000000.0,
                 "step": -1,
                 "score": -3,
                 "boundary": {
                   "flag": false,
-                  "nearest_boundary": 1.0,
-                  "distance_ratio": 0.3209913028793381,
+                  "nearest_boundary": 3.0,
+                  "distance_ratio": -0.4618268337975859,
                   "tolerance": 0.03
                 }
               },
               {
                 "gate": "G4",
                 "result": "computed",
-                "coverage": 2.552,
-                "contracted_revenue": 638000000000.0,
+                "coverage": 2.656,
+                "contracted_revenue": 664000000000.0,
                 "offbalance_B": 250000000000.0,
                 "step": 0,
                 "score": -3
@@ -3957,8 +3953,8 @@
         }
       },
       "moat": 14,
-      "trap": -12,
-      "total": 2,
+      "trap": -10,
+      "total": 4,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3969,7 +3965,7 @@
         "F5",
         "F8"
       ],
-      "rank": 14
+      "rank": 13
     },
     {
       "company_id": "openai",
@@ -4302,6 +4298,14 @@
     },
     {
       "rank": 5,
+      "company_id": "tsmc",
+      "display_name": "TSMC",
+      "moat": 17,
+      "trap": -6,
+      "total": 11
+    },
+    {
+      "rank": 6,
       "company_id": "anthropic",
       "display_name": "Anthropic",
       "moat": 19,
@@ -4309,7 +4313,7 @@
       "total": 9
     },
     {
-      "rank": 5,
+      "rank": 6,
       "company_id": "spacex-xai",
       "display_name": "SpaceX + xAI",
       "moat": 18,
@@ -4317,7 +4321,7 @@
       "total": 9
     },
     {
-      "rank": 5,
+      "rank": 6,
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "moat": 16,
@@ -4325,15 +4329,7 @@
       "total": 9
     },
     {
-      "rank": 8,
-      "company_id": "tsmc",
-      "display_name": "TSMC",
-      "moat": 17,
-      "trap": -9,
-      "total": 8
-    },
-    {
-      "rank": 8,
+      "rank": 9,
       "company_id": "apple",
       "display_name": "Apple",
       "moat": 15,
@@ -4342,14 +4338,6 @@
     },
     {
       "rank": 10,
-      "company_id": "alibaba",
-      "display_name": "Alibaba",
-      "moat": 18,
-      "trap": -11,
-      "total": 7
-    },
-    {
-      "rank": 11,
       "company_id": "palantir",
       "display_name": "Palantir",
       "moat": 13,
@@ -4357,7 +4345,15 @@
       "total": 6
     },
     {
-      "rank": 12,
+      "rank": 11,
+      "company_id": "alibaba",
+      "display_name": "Alibaba",
+      "moat": 18,
+      "trap": -13,
+      "total": 5
+    },
+    {
+      "rank": 11,
       "company_id": "tesla",
       "display_name": "Tesla",
       "moat": 14,
@@ -4373,12 +4369,12 @@
       "total": 4
     },
     {
-      "rank": 14,
+      "rank": 13,
       "company_id": "oracle",
       "display_name": "Oracle",
       "moat": 14,
-      "trap": -12,
-      "total": 2
+      "trap": -10,
+      "total": 4
     }
   ],
   "population": {
@@ -4388,6 +4384,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 154,
-  "results_hash": "4bc5334865775ee14987212644397a7562bb6624c1f960f14c5d7e6bb55c3eef"
+  "warnings_count": 153,
+  "results_hash": "36f04e2e6a75214e88219eb0ca66d8be660c132cbf68a3f568d529fd69660d75"
 }

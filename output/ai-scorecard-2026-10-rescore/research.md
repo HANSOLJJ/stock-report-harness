@@ -5,7 +5,7 @@ plan_source: output/ai-scorecard-2026-10-rescore/plan.md
 run_id: ai-scorecard-2026-10-rescore
 as_of: 2026-10-06
 rule_version: v1.9
-observations_hash: 304291f5f8e56d88639a3892a6c8eedb02e30499e9bb2675b0fef68b5600e7d6
+observations_hash: 0a91b4976ef4cc9eb8cbeaffd20e4dfc89657fb0fce3103e595a7a6f1b64fde1
 judgments_hash: d803a3a60b4cf96e861f17290c9b46c5c76241b3554b8970eccb401180e5efce
 evidence_hash: 7f0a4413b9fa93cce0bb5c9caa70735d992b3c08a27b6c273473d0035e9f8a6f
 triggers_hash: e9917d8e1187869a06604d82c197c164de05fac6a48488125565e9f8f37ddd37
@@ -13,7 +13,7 @@ created_at: 2026-10-06
 ---
 # 리서치 — 2026-10 정기 재채점
 
-실행 `ai-scorecard-2026-10-rescore` 의 원자료·판단 입력·출처를 정리한다. 관측 411건, 판단 114건.
+실행 `ai-scorecard-2026-10-rescore` 의 원자료·판단 입력·출처를 정리한다. 관측 440건, 판단 114건.
 
 ## 원자료
 
@@ -163,34 +163,44 @@ created_at: 2026-10-06
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $46.9B | legacy_unverified | actual | SRC-v15-html | $46.9B |  |
 | cash | $88.2B | verified | actual | SRC-SEC-TSM-20F-FY2025 | 현금및현금성자산 88.2B (버퍼 99.7B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $99.9B | verified | actual | SRC-SEC-TSM-6K-2026H1 | 현금및현금성자산 NT$천 3,134,218,213 ÷ 31.37 = US$99.91B | RS1006. 순수 현금 |
 | cash | $110.6B | legacy_unverified | actual | SRC-v15-html | $110.6B | [CASH-FCF-35 대체됨 → tsmc.cash.cashfcf35]  |
 | credit_rating | AA-급 | legacy_unverified | text | SRC-v15-html | AA-급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 0.3 | legacy_unverified | actual | SRC-v15-html | 0.34 |  |
 | fcf_ttm | $32.0B | verified | derived | SRC-SEC-TSM-20F-FY2025 | TTM FCF 32.0B = OCF 72.5B - CapEx 40.6B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | $36.5B | verified | derived | SRC-SEC-TSM-6K-2026H1 | OCF 2,634,679,110 − CapEx 1,491,122,744 = 1,143,556,366 NT$천 ÷ 31.37 = US$36.45B | RS1006. 현금흐름표는 6개월 누계만 있어 FY − 전년 상반기 + 올해 상반기로 복원 |
 | fcf_ttm | $36.0B | legacy_unverified | actual | SRC-v15-html | +$36.0B | [CASH-FCF-35 대체됨 → tsmc.fcf_ttm.cashfcf35]  |
 | market_cap | $2.37T | verified | actual | SRC-YF-2026-09-30 |  |  |
 | market_cap | $2.52T | verified | actual | SRC-YF-2026-10-05 |  |  |
 | market_cap | $2.15T | legacy_unverified | actual | SRC-v15-md | $2.15T ✱ |  |
 | net_borrowing_ttm | $100M | legacy_unverified | actual | SRC-v15-html | +$0.1B | 차환 제외 순증 |
 | net_cash | $69.2B | verified | derived | SRC-SEC-TSM-20F-FY2025 | NT$백만 3,240,002.8 − 1,068,415.7 = 2,171,587.1 ÷ 31.37 = 69.2B USD | NETCASH-37. **보존 20-F 문면 실측** · 유가증권은 시장성 있는 것만 |
+| net_cash | $86.5B | verified | derived | SRC-SEC-TSM-6K-2026H1 | NT$천 3,782,280,280 − 1,068,555,940 = 2,713,724,340 ÷ 31.37 = US$86.51B (VIS 제외 U | RS1006. nc37 범위 · VIS 잔여 19% 포함(판단 갈림은 basis.vis_remaining_stake) |
 | net_cash | $77.0B | legacy_unverified | actual | SRC-v15-html | +$77.0B | [NETCASH-37 대체됨 → tsmc.net_cash.nc37]  |
 | net_income_ttm | $54.1B | verified | actual | SRC-SEC-TSM-20F-FY2025 | FY2025 모회사 귀속 순이익 NT$1,697,604.0백만 (연결 1,695,124.9 · 비지배 −2,479.1) | F6-REG-28 / TSM-EDGAR-29. 손익계산서 NET INCOME 행 |
+| net_income_ttm | $71.3B | verified | actual | SRC-SEC-TSM-6K-2026H1 | NT$천 1,717,882,627 − 759,837,230 + 1,279,041,690 = 2,237,087,087 ÷ 31.37 = US$71 | RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원 |
 | nonop_share | 7% | legacy_unverified | actual | SRC-v15-html | 7% |  |
 | ntm_per | 19.4 | legacy_unverified | estimate | SRC-v15-md | 19.4 ✱ |  |
 | offbalance_note | 미확인 | legacy_unverified | text | SRC-v15-html | 미확인 | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $61.7B | verified | actual | SRC-SEC-TSM-20F-FY2025 | FY2025 영업이익 NT$1,936,091.7백만 | F6-REG-28 / TSM-EDGAR-29. INCOME FROM OPERATIONS 행. MD&A 반올림 1,936,092 가 아니라 **감 |
+| operating_income_ttm | $79.4B | verified | actual | SRC-SEC-TSM-6K-2026H1 | NT$천 1,936,091,677 − 870,504,446 + 1,425,568,793 = 2,491,156,024 ÷ 31.37 = US$79 | RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원 |
 | operating_margin_ttm | 51% | verified | derived | SRC-SEC-TSM-20F-FY2025 | FY2025 영업이익률 +50.83% | F6-REG-28 / TSM-EDGAR-29. FY2024 45.68% 에서 +5.15%p |
+| operating_margin_ttm | 56% | verified | derived | SRC-SEC-TSM-6K-2026H1 | 2,491,156,024 / 4,440,492,429 = 56.1009% | RS1006 |
 | pretax_income_ttm | $65.1B | verified | derived | SRC-SEC-TSM-20F-FY2025 | 세전이익 TTM 65.1B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
+| pretax_income_ttm | $85.0B | verified | derived | SRC-SEC-TSM-6K-2026H1 | NT$천 2,041,662,840 − 923,930,616 + 1,550,229,773 = 2,667,961,997 ÷ 31.37 = US$85 | RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원 |
 | price | 456.19000244140625 | verified | actual | SRC-YF-2026-09-30 |  |  |
 | price | 485.79998779296875 | verified | actual | SRC-YF-2026-10-05 |  |  |
 | price | 415.5 | legacy_unverified | actual | SRC-v15-html | $415.50 |  |
 | ps_ratio | 15.4 | legacy_unverified | actual | SRC-v15-html | 15.4 |  |
 | quarter_note | Q2 (7/16) \| $40.2B (+36%) · HPC 66% \| GM 67.7% / OpM 60.3% 역대 최고 · 2026 가이던스 +30%→+40% 이상 \| TTM +$36B · capex $60~64B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
 | revenue_ttm | $121.4B | verified | actual | SRC-SEC-TSM-20F-FY2025 | FY2025 매출 NT$3,809,054.3백만 (US$121,423.5백만) | F6-REG-28 / TSM-EDGAR-29. **EDGAR 원문 우회 건**이다 — basis.bypass 에 사유·검산·복귀 조건을 남겼다 |
+| revenue_ttm | $141.6B | verified | actual | SRC-SEC-TSM-6K-2026H1 | NT$천 3,809,054,272 − 1,773,045,533 + 2,404,483,690 = 4,440,492,429 ÷ 31.37 = US$ | RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원 |
 | revenue_ttm_prior | $92.3B | verified | actual | SRC-SEC-TSM-20F-FY2025 | FY2024 매출 NT$2,894,307.7백만 (같은 표 둘째 열) | F6-REG-28. **당해와 같은 환율 31.37 로 환산**했다. 공시 USD 를 그대로 쓰지 않았다 |
+| revenue_ttm_prior | $108.4B | verified | actual | SRC-SEC-TSM-6K-2026H1 | NT$천 2,894,307,699 − 1,266,154,378 + 1,773,045,533 = 3,401,198,854 ÷ 31.37 = US$ | RS1006. v1.9 일반 트랙 입력 — 6-K 대만 IFRS 연간·반기 연결재무제표로 최근 1년 복원 |
 | runway_years | — | not_applicable | derived | SRC-v15-html | ∞ | TTM FCF 흑자라 런웨이 산식 적용 대상 아님(원문 ∞) |
 | ttm_per | 30.9 | legacy_unverified | actual | SRC-v15-html | 30.9 |  |
 | undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| undrawn_credit | — | not_disclosed | actual | SRC-SEC-TSM-6K-2026H1 |  | RS1006. 확정 미인출 여신 미확인(우리가 확인하지 못했다). |
 
 ### Alibaba
 
@@ -198,35 +208,44 @@ created_at: 2026-10-06
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $23.1B | legacy_unverified | actual | SRC-v15-html | $23.1B |  |
 | cash | $19.1B | verified | actual | SRC-SEC-BABA-20F-FY2026 | 현금및현금성자산 19.1B (버퍼 41.6B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $20.7B | verified | actual | SRC-SEC-BABA-6K-2026Q1 | 현금및현금성자산 RMB142,914M (2026-06-30) ÷ 6.8980 | RS1006. 순수 현금. 기간 창 끝(2026-06-30)과 같은 날짜. |
 | cash | $56.8B | legacy_unverified | actual | SRC-v15-html | $56.8B | [CASH-FCF-35 대체됨 → alibaba.cash.cashfcf35]  |
 | contracted_revenue | — | not_disclosed | actual | SRC-SEC-BABA-20F-FY2026 | 미공시 — ASC 606 실무적 간편법 선언 | OBS-REG-25 · [FIX-53 3단계] **확인된 미공시.** 20-F 가 두 갈래(1년 이하 계약 · right-to-invoice 계 |
 | contracted_revenue | — | not_disclosed | actual | SRC-v15-rule | — | [OBS-REG-25 대체됨 → alibaba.contracted_revenue.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | A급 | legacy_unverified | text | SRC-v15-html | A급 | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 2.7 | legacy_unverified | actual | SRC-v15-html | 2.68 |  |
 | fcf_ttm | -$7.2B | verified | derived | SRC-SEC-BABA-20F-FY2026 | TTM FCF -7.2B = OCF 11.0B - CapEx 18.3B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | -$11.1B | verified | derived | SRC-SEC-BABA-6K-2026Q1 | TTM FCF RMB-76,579M = OCF 78,486 − capex 155,065 ÷ 6.8980 | RS1006. 2026-04~06 분기 capex 가 전년 대비 +75% 라 소진이 커졌다. 분기 capex 개념은 추론(basis.capex_ |
 | fcf_ttm | -$11.4B | legacy_unverified | actual | SRC-v15-html | -$11.4B | [CASH-FCF-35 대체됨 → alibaba.fcf_ttm.cashfcf35]  |
 | market_cap | $267.4B | verified | actual | SRC-YF-2026-09-30 |  |  |
 | market_cap | $275.6B | verified | actual | SRC-YF-2026-10-05 |  |  |
 | market_cap | $270.0B | legacy_unverified | actual | SRC-v15-md | $270B |  |
 | net_borrowing_ttm | $7.5B | legacy_unverified | actual | SRC-v15-html | +$7.5B | 차환 제외 순증 |
 | net_cash | $49.8B | verified | derived | SRC-SEC-BABA-20F-FY2026 | RMB백만 625,509.0 − 281,722.0 = 343,787.0 ÷ 6.898 = 49.8B USD | NETCASH-37. **보존 20-F 문면 실측** · 유가증권은 시장성 있는 것만 |
+| net_cash | $41.6B | verified | derived | SRC-SEC-BABA-6K-2026Q1 | RMB백만 474,505 + 100,594 − 266,530 − 21,726 = 286,843 ÷ 6.898 | RS1006. mixed_as_of — 상장주식·리스부채는 2026-03-31 값. 제한분을 넣은 대안 값은 basis.scope_narrowi |
 | net_cash | $17.5B | legacy_unverified | actual | SRC-v15-html | +$17.5B | [NETCASH-37 대체됨 → alibaba.net_cash.nc37]  |
 | net_income_ttm | $15.0B | verified | actual | SRC-SEC-BABA-FACTS | 2025-04-01~2026-03-31 103,592,000,000 CNY | F6-REG-28. **당해와 같은 환율 6.8980 으로 환산**했다 |
+| net_income_ttm | $10.7B | verified | actual | SRC-SEC-BABA-6K-2026Q1 | TTM 지배주주 순이익 RMB73,557M (2025-07-01~2026-06-30) ÷ 6.8980 | RS1006. 지배주주 귀속(기존 정의와 같음). |
 | nonop_share | 54% | legacy_unverified | actual | SRC-v15-html | 54% ⚠️ |  |
 | ntm_per | 16.7 | legacy_unverified | estimate | SRC-v15-md | 16.7 ✱ |  |
 | offbalance_B | $36.9B | verified | derived | SRC-SEC-BABA-20F-FY2026 | 자본약정 RMB54,136M + 기타약정 RMB200,062M = RMB254,198M (2026-03-31) → US$36,851M @6.89 | OBS-REG-25. **원 통화는 RMB 다.** 스키마가 unit 을 지표 단위(USD)로 강제해 RMB 를 그대로 둘 자리가 없어 20-F |
 | offbalance_B | — | not_disclosed | actual | SRC-v15-rule | 미확인 | [OBS-REG-25 대체됨 → alibaba.offbalance_B.obsreg25] 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | offbalance_note | 미확인 (증자 $10.2B) | legacy_unverified | text | SRC-v15-html | 미확인 (증자 $10.2B) | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $7.3B | verified | actual | SRC-SEC-BABA-FACTS | FY2026 영업이익 RMB50,150M (US$7,270M) | OBS-REG-25 / G1-TTM-26. 연간 기준. |
+| operating_income_ttm | $4.4B | verified | actual | SRC-SEC-BABA-6K-2026Q1 | TTM 영업이익 RMB30,323M (2025-07-01~2026-06-30) ÷ 6.8980 | RS1006. 2026-04~06 분기 영업이익이 전년 대비 −57%(영업권 손상 RMB4,458M, EU DSA 과징금 충당) 이라 연간 대비 |
 | operating_margin_ttm | 5% | verified | derived | SRC-SEC-BABA-FACTS | FY2026 영업이익률 +4.899% | OBS-REG-25 / G1-TTM-26. **양수다** — G1 을 통과한다. **연간 기준이라는 한계는 F6 P4 가 이미 한 칸 내린다.  |
+| operating_margin_ttm | 3% | verified | derived | SRC-SEC-BABA-6K-2026Q1 | TTM 영업이익률 2.9018% | RS1006. 양수 — G1 통과. |
 | pretax_income_ttm | $18.8B | verified | derived | SRC-SEC-BABA-FACTS | 세전이익 TTM 18.8B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
+| pretax_income_ttm | $14.7B | verified | actual | SRC-SEC-BABA-6K-2026Q1 | TTM 세전이익 RMB101,461M (2025-07-01~2026-06-30) ÷ 6.8980 | RS1006. nonop_share 입력. (세전 − 영업이익)/세전 = 0.7011. |
 | price | 107.54000091552734 | verified | actual | SRC-YF-2026-09-30 |  |  |
 | price | 110.80000305175781 | verified | actual | SRC-YF-2026-10-05 |  |  |
 | price | 111.76 | legacy_unverified | actual | SRC-v15-html | $111.76 |  |
 | ps_ratio | 1.8 | legacy_unverified | actual | SRC-v15-html | 1.8 |  |
 | quarter_note | 6월 분기 (8/20) \| $39.64B (+9%) · 클라우드 +26% \| non-GAAP $1.26 (컨센 $1.51 하회) · 영업흑자 복귀 \| 분기 -$6.6B · TTM -$11.4B · 완충 $41B+$10.2B | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
 | revenue_ttm | $148.4B | verified | actual | SRC-SEC-BABA-FACTS | FY2026 매출 RMB1,023,670M (US$148,401M) | OBS-REG-25 / G1-TTM-26. **연간 기준이다.** F6 P4 가 기간 단위 TTM 아님으로 한 칸 내린다. 같은 한계를 F9 에 |
+| revenue_ttm | $151.5B | verified | actual | SRC-SEC-BABA-6K-2026Q1 | TTM 매출 RMB1,044,971M (2025-07-01~2026-06-30) ÷ 6.8980 | RS1006. v1.9 일반 트랙용 TTM. 기존 obsreg25 는 FY2026 연간이었다. |
 | revenue_ttm_prior | $144.4B | verified | actual | SRC-SEC-BABA-FACTS | 2024-04-01~2025-03-31 996,347,000,000 CNY | F6-REG-28. **당해와 같은 환율 6.8980 으로 환산**했다 |
+| revenue_ttm_prior | $145.1B | verified | actual | SRC-SEC-BABA-6K-2025Q1 | 전년 창 매출 RMB1,000,763M (2024-07-01~2025-06-30) ÷ 6.8980 | RS1006. 당해 창과 같은 환율 6.8980. |
 | runway_years | 5.0 | legacy_unverified | derived | SRC-v15-html | 5.0년 | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | 25.8 | legacy_unverified | actual | SRC-v15-html | 25.8 |  |
 | undrawn_credit | $3.3B | verified | actual | SRC-SEC-BABA-20F-FY2026 | 미인출 회전여신 US$3.33B (2026-03-31, 20-F 주석 21) | FIX-53 2단계. 감사 주석 1차 · MD&A 교차. 런웨이 분자에 들어간다. |
@@ -442,36 +461,46 @@ created_at: 2026-10-06
 | --- | --- | --- | --- | --- | --- | --- |
 | capex_ttm | $55.7B | legacy_unverified | actual | SRC-v15-html | $55.7B |  |
 | cash | $31.3B | verified | actual | SRC-SEC-FACTS-F6 | 현금및현금성자산 31.3B (버퍼 31.9B 는 basis 에 보존) | CASH-FCF-35. **순수 현금으로 등록한다** — 설계 지침 6.4. 유동성 버퍼와 총계는 basis.preserved_wider_def |
+| cash | $36.4B | verified | actual | SRC-SEC-FACTS-ORCL-20261006 | 현금및현금성자산 36,369M (2026-08-31) | 재무 관측 갱신 rs1006. 순수 현금 |
 | cash | $31.9B | legacy_unverified | actual | SRC-v15-html | $31.9B | [CASH-FCF-35 대체됨 → oracle.cash.cashfcf35]  |
 | contracted_revenue | $638.0B | verified | actual | SRC-SEC-FACTS-F6 | RPO 638,000M (2026-05-31, 10-K) | FIX-57 1단계. G4 분자 실측 등록. 값·커버리지·step 불변. |
+| contracted_revenue | $664.0B | verified | actual | SRC-SEC-FACTS-ORCL-20261006 | RPO 664,000M (2026-08-31, 10-Q) | 재무 관측 갱신 rs1006. G4 분자 |
 | contracted_revenue | $638.0B | legacy_unverified | actual | SRC-v15-rule | RPO $638B | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | credit_rating | BBB- ⚠️ | legacy_unverified | text | SRC-v15-html | BBB- ⚠️ | 별표 J 교차검증 전용 — 점수 입력 아님 |
 | debt_ebitda | 5.0 | legacy_unverified | actual | SRC-v15-html | 5.03 ⚠️ |  |
 | fcf_ttm | -$23.7B | verified | derived | SRC-SEC-FACTS-F6 | TTM FCF -23.7B = OCF 32.0B - CapEx 55.7B | CASH-FCF-35. SEC 실측. OCF·CapEx 구성요소를 basis 에 남겼다 |
+| fcf_ttm | -$28.7B | verified | derived | SRC-SEC-FACTS-ORCL-20261006 | TTM FCF -28.7B = OCF 46.9B - CapEx 75.7B | 재무 관측 갱신 rs1006 |
 | fcf_ttm | -$23.7B | legacy_unverified | actual | SRC-v15-html | -$23.7B | [CASH-FCF-35 대체됨 → oracle.fcf_ttm.cashfcf35]  |
 | market_cap | $416.2B | verified | actual | SRC-YF-2026-09-30 |  |  |
 | market_cap | $431.9B | verified | actual | SRC-YF-2026-10-05 |  |  |
 | market_cap | $443.7B | legacy_unverified | actual | SRC-v15-md | $443.7B |  |
 | net_borrowing_ttm | $40.2B | legacy_unverified | actual | SRC-v15-html | +$40.2B | 차환 제외 순증 |
 | net_cash | -$135.5B | verified | derived | SRC-SEC-FACTS-F6 | 현금+시장성증권 31.9B − 차입 129.5B − 리스 37.9B = -135.5B | NETCASH-37. SEC 보존 원자료 실측. **유가증권은 시장성 있는 것만** |
+| net_cash | -$132.1B | verified | derived | SRC-SEC-FACTS-ORCL-20261006 | 현금+시장성증권 37.1B − 차입 125.3B − 리스 43.8B = -132.1B | 재무 관측 갱신 rs1006. 유가증권은 시장성 있는 것만 |
 | net_cash | -$135.5B | legacy_unverified | actual | SRC-v15-html | -$135.5B | [NETCASH-37 대체됨 → oracle.net_cash.nc37]  |
 | net_income_ttm | $17.1B | verified | actual | SRC-SEC-FACTS-F6 | 2025-06-01~2026-05-31 17,087,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
+| net_income_ttm | $18.9B | verified | actual | SRC-SEC-FACTS-ORCL-20261006 | 2025-09-01~2026-08-31 18,920,000,000 | 재무 관측 갱신 rs1006. 지배주주 귀속 |
 | nonop_share | -15% | legacy_unverified | actual | SRC-v15-html | -15% ᶜ |  |
 | ntm_per | 19.1 | legacy_unverified | estimate | SRC-v15-md | 19.1 |  |
 | offbalance_B | $250.0B | legacy_unverified | actual | SRC-v15-rule | 리스 $250B(15~20년) | 규칙 v1.5 ⑨ 게이트 4 적용표 |
 | offbalance_note | 리스 $250B(15~20년) | legacy_unverified | text | SRC-v15-html | 리스 $250B(15~20년) | 부외 약정 원문(A/B/C 분류 전) |
 | operating_income_ttm | $20.6B | verified | actual | SRC-SEC-FACTS-F6 | 2025-06-01~2026-05-31 20,606,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| operating_income_ttm | $23.1B | verified | actual | SRC-SEC-FACTS-ORCL-20261006 | 2025-09-01~2026-08-31 23,057,000,000 | 재무 관측 갱신 rs1006 |
 | pretax_income_ttm | $19.6B | verified | derived | SRC-SEC-FACTS-F6 | 세전이익 TTM 19.6B USD | NONOP-44. nonop_share 산식 정정 입력 — 저장값이 영업외손익÷세전이익 임이 확인됐다 |
+| pretax_income_ttm | $21.7B | verified | derived | SRC-EDGAR-000119312526389274 | 세전이익 최근 1년 21,734M USD | 재무 관측 갱신 rs1006. 분기 성분이 회사 확장 태그라 10-Q 본문을 source 로 둔다 |
 | price | 137.3000030517578 | verified | actual | SRC-YF-2026-09-30 |  |  |
 | price | 142.47999572753906 | verified | actual | SRC-YF-2026-10-05 |  |  |
 | price | 154.04 | legacy_unverified | actual | SRC-v15-html | $154.04 |  |
 | ps_ratio | 6.6 | legacy_unverified | actual | SRC-v15-html | 6.6 |  |
 | quarter_note | Q4 FY26 (3~5월) \| $19.2B (+21%) · OCI $5.8B (+93%) \| 영업마진 33.2% \| TTM -$23.7B · 현금 $31.9B · 런웨이 1.3년 | legacy_unverified | text | SRC-v15-html |  | 최근 분기 실적 원문(③⑨ 참고). TTM 대체 금지 |
 | revenue_ttm | $67.4B | verified | actual | SRC-SEC-FACTS-F6 | 2025-06-01~2026-05-31 67,357,000,000 | F6-REG-28. G1-FILL-27 기준값 |
+| revenue_ttm | $71.8B | verified | actual | SRC-SEC-FACTS-ORCL-20261006 | 2025-09-01~2026-08-31 71,776,000,000 | 재무 관측 갱신 rs1006. FY2026 − FY26 Q1 + FY27 Q1 |
 | revenue_ttm_prior | $57.4B | verified | actual | SRC-SEC-FACTS-F6 | 2024-06-01~2025-05-31 57,399,000,000 | F6-REG-28. F6-SPEC-18 수집기 |
+| revenue_ttm_prior | $59.0B | verified | actual | SRC-SEC-FACTS-ORCL-20261006 | 2024-09-01~2025-08-31 59,018,000,000 | 재무 관측 갱신 rs1006. 바로 전 12개월 창 |
 | runway_years | 1.3 | legacy_unverified | derived | SRC-v15-html | 1.3년 ⚠️ | 원본 계산값(현금 ÷ 연 소진) |
 | ttm_per | 26.4 | legacy_unverified | actual | SRC-v15-html | 26.4 |  |
 | undrawn_credit | — | not_disclosed | actual | SRC-SEC-FACTS-F6 |  | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| undrawn_credit | $10.0B | verified | actual | SRC-SEC-ORCL-10K-FY2026 | 미인출 회전여신 US$10.0B (2026-05-31, 10-K 주석 6) | 재무 관측 갱신 rs1006. 감사 주석 1차 · MD&A 교차. 기준일 섞임(mixed_as_of) — 10-Q 에 변동 문장 없음 |
 
 ### OpenAI
 
@@ -1184,6 +1213,14 @@ created_at: 2026-10-06
 | SRC-NEWS-tesla-20261005-47451dbc | Tesla Expands Texas Cybercab Fleet Fourfold Following Austin Commercial Service Launch - Yahoo Finance | Yahoo Finance | https://news.google.com/rss/articles/CBMioAFBVV95cUxPMmZRYkNwZ293WGgyMWdkWjVBN2xVSDMyVFloQjVRODBuNzAwZEpuRUd1a0gzUkhpdVRRRGlqTHlUZ2ZfUG5iSWRzczZqQm5XYmQ4ZkhOUmhUR3M1X09KeGxCVWx2UUI4b09wa05MeGo2Nms4ZENLNHY4OGJpLU0wQnNhRldfVWFJTnJvaE8xWDI3MHhfVjZZaTNKaUFhX0Nh?oc=5 | 2026-10-06T04:34:11Z | — |
 | SRC-NEWS-tsmc-20260928-1e21fc66 | TSMC to Scale 2 nm Production to 120,000 Wafers per Month by the End of 2026 - TechPowerUp | TechPowerUp | https://news.google.com/rss/articles/CBMisAFBVV95cUxNQkVwa2dKWUtYU1hvd1BlZ25lYmdtX1R6Y1JKZXBOUmdkX3dVeGhqS0NpN0pHNGVFSlNDVWhZd3FUOEc2dkdhamtsV3hod2FfX0FQTDJBVjVoVU1OVHZjbnVDakw0eE5helNYdXVoRDlSRlVMUlJFME52X1NKSEFlY3RadGRjR05mcUxkck5GUDNQME8wNjBONlY3b0tOUkRlMGFOVWtqTXpBQW5zZUY0ddIBtgFBVV95cUxNM2lpUG52bmRXVzV0ejNnVlJrOHFtek5MRnRGckgxWnU0MjR6bndhanhkUEd6WE1uWXc0QkJsWjM5SjFOYVI3Sk1fREF5blFITWVPbFZfbkhHazc1QXpib05DSGk3UVdEVloxUEp3eG9DS1cwRFltZkhHZXVjV1hsN0lWMmhtNUZfVHM3eEdObWJqSEhNdTEzZVFMQjRnQzQxMmJTTERrZS1rSlcwMHdHcmV4QjJPdw?oc=5 | 2026-10-01T06:20:18Z | — |
 | SRC-NEWS-tsmc-20261001-498d4dbe | TSMC Mulls Multibillion-Dollar Texas Site for More AI Chips - Bloomberg.com | Bloomberg.com | https://news.google.com/rss/articles/CBMisgFBVV95cUxOQzhaT2NiMElucXVLX2xRcV92d1o4dm5KOVZRaDBYMmF1T3BkWnRsRFdJTFhkNGdGZ3ZTY2h3VWx3ckNTdXlKcWcxdWE5QmpZcDRkOTliaTlJZUdXTHdpdHVzQ3F3amtCbDFCS2o2VWxoSDFtaU01UXB6MFV3c2k4VWJ4M0tXNm43Zy1jTGdDdjAtM0pTd2gxeEtvYUd6c0xpRlFqSW9DNGYwcElCUDAzMktB?oc=5 | 2026-10-06T04:34:02Z | — |
+| SRC-SEC-FACTS-ORCL-20261006 | SEC XBRL companyfacts CIK0001341439 (Oracle, 2026-10-06 수집 — FY27 1분기 반영) | SEC EDGAR | https://data.sec.gov/api/xbrl/companyfacts/CIK0001341439.json | 2026-10-06T05:04:51Z | — |
+| SRC-SEC-ORCL-10K-FY2026 | Oracle Form 10-K FY2026(2026-05-31) — 주석 6 Revolving Credit Agreement $10.0B(p.85)·MD&A 유동성(p.53) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm | 2026-10-06 | — |
+| SRC-SEC-TSM-6K-FY2025 | TSMC 6-K 2026-02-26 첨부 — 2025 연간 연결재무제표·감사보고서(대만 IFRS, Deloitte) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1046179/000104617926000024/a2025q4consolidatedreport-.htm | 2026-10-06T05:58:35Z | — |
+| SRC-SEC-TSM-6K-FY2024 | TSMC 6-K 2025-02-27 첨부 — 2024 연간 연결재무제표·감사보고서(대만 IFRS) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1046179/000104617925000019/tsmc2024q4consolidatedfina.htm | 2026-10-06T05:58:40Z | — |
+| SRC-SEC-TSM-6K-2026H1 | TSMC 6-K 2026-08-14 첨부 99.1 — 2026 상반기 연결재무제표·감사인 검토보고서(대만 IFRS) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1046179/000104617926000541/a2026q2consolidatedreport-.htm | 2026-10-06T05:10:16Z | — |
+| SRC-SEC-TSM-6K-2025H1 | TSMC 6-K 2025-08-14 첨부 — 2025 상반기 연결재무제표·감사인 검토보고서(대만 IFRS) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1046179/000104617925000097/tsmc2025q2consolidatedfina.htm | 2026-10-06T05:47:45Z | — |
+| SRC-SEC-BABA-6K-2026Q1 | Alibaba 6-K 2026-08-20 첨부 99.1 — June Quarter 2026 Results(감사·검토 없음) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1577552/000110465926099220/tm2623667d1_ex99-1.htm | 2026-10-06T05:10:44Z | — |
+| SRC-SEC-BABA-6K-2025Q1 | Alibaba 6-K 2025-08-29 첨부 99.1 — June Quarter 2025 Results(감사·검토 없음) | SEC EDGAR | https://www.sec.gov/Archives/edgar/data/1577552/000110465925085638/tm2524743d1_ex99-1.htm | 2026-10-06T05:47:47Z | — |
 
 ## 미결 항목
 
@@ -1241,6 +1278,7 @@ created_at: 2026-10-06
 | palantir | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
 | tesla | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). \| [FIX-55 2단계 대체됨 → tesla.undrawn_credit.fix55] 광역 태 |
 | tsmc | undrawn_credit | not_disclosed | FIX-54 1단계 S2 전수 — 확정 미인출 여신 미확인(우리가 확인하지 않았다). |
+| tsmc | undrawn_credit | not_disclosed | RS1006. 확정 미인출 여신 미확인(우리가 확인하지 못했다). |
 | alphabet | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
 | amazon | ⑨ 적자 깊이 | unknown 입력 | fcf_trend, direction_A, direction_B |
 | meta | ⑨ 적자 깊이 | unknown 입력 | direction_A, direction_B, coverage_comparable |
