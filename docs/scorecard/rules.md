@@ -463,3 +463,25 @@ Q05 는 출처 장부의 이해상충 표기가 비어 있다는 이유로 fail 
 | — | 흑자 전환 목표 후퇴가 독립 감점 조건인 것이 "계획·발표는 0점" 원칙(2.1)과 충돌한다. 비상장 미공시의 경우에만 비상장 경로가 앞서도록 정했다(C-29) |
 
 이번 실행이 잣대를 바꾸지 않아 그대로 이어받은 판단 가운데 다시 볼 것은 `v1.8.json` 의 `open_tensions` 에 재검토 시점과 함께 등록돼 있다. 리뷰의 승계 판단 예외는 이 목록을 근거로 한다(AGENTS.md 「리뷰 범위」).
+
+## 9. 옛 문서 복원
+
+이 문서를 쓰면서 아래 문서를 작업 폴더에서 지웠다. 규칙 JSON, 이전 판단, 승인된 실행의 출처 장부가 여전히 이 문서들의 이름·행 번호·해시를 인용하므로, 원문이 필요하면 git 이력에서 꺼낸다.
+
+```
+git show 05c65ee:<경로> > <저장할 경로>
+```
+
+| 문서 | 경로 | sha256 (git 에 저장된 내용) | 이 해시를 등록한 곳 |
+|---|---|---|---|
+| 채점 규칙 v1.5 | `docs/scorecard/rules/AI기업_채점규칙_v1.5.md` | `57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb` | 승인 실행 세 개의 출처 `SRC-v15-rule`, `v1.8.json` 의 `source.sha256` |
+| 채점 규칙 v1.7 | `docs/scorecard/rules/AI기업_채점규칙_v1.7.md` | `64882f8ceb10143647eead9a6bb583e6aa2ba57cf40ab4a33298151f253c4a46` | 없음 |
+| 채점표 v1.5 (Markdown) | `docs/scorecard/source/AI기업_채점표_v1.5.md` | `d28c5416786b5d93798520c060decda855f7a8e53917f623bade7886271aed30` | 승인 실행 세 개의 출처 `SRC-v15-md`, 기준선 `scores.json` |
+| 채점표 v1.5 (HTML) | `docs/scorecard/source/AI기업_채점표_v1.5.html` | `fa66076cbcd675d3f36a11ab2d4f80c3b2242ece84929dcc2765290ff9d71858` | 승인 실행 세 개의 출처 `SRC-v15-html`, 기준선 `scores.json` |
+| 인수인계 문서 | `docs/scorecard/source/AI기업_채점표_HANDOVER.md` | `3e5190c2cb4a4f8ebee2f72d4599929b79a5d4625b1d046c346627edf63b7cc1` | 승인 실행 두 개의 출처 `SRC-v15-handover` |
+| 자동화 구현계획 | `docs/scorecard/source/AI기업_채점자동화_구현계획.md` | `b921372b7ee9a5d26b027c5e46dceabc62344957fe5ac49a15c6847dea1ece3e` | 없음 |
+| 설계 지침 | `docs/scorecard/design-guideline.md` | `e429e3722c7fd8f9b4680ef658d37eea96c1f923e04ba91d04be08a4fa88624e` | 없음 |
+
+- 해시는 `git show 05c65ee:<경로>` 가 내는 바이트의 sha256 이다. 등록된 해시가 있는 네 문서는 꺼낸 내용의 해시가 등록값과 같음을 지우기 전에 확인했다(2026-10-06).
+- 설계 지침은 줄끝 고정 대상이 아니어서, Windows 작업 폴더에 CRLF 로 풀면 바이트 해시가 위 값과 다르다. 내용은 같다.
+- 다섯 원문(규칙 v1.5, 채점표 v1.5 두 개, 인수인계 문서, 구현계획)은 이 저장소에 처음 들어온 커밋 `79e476b` 에도 같은 바이트로 있다. 테스트(`tests/legacy_docs.py`)는 그 커밋에서 꺼낸다.
