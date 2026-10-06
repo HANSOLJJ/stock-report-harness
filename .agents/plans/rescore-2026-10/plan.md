@@ -65,3 +65,15 @@ TRG-007·012·019·021 문장의 "별표 D" 는 "계획 0점 원칙"으로 바�
 1. collect (뉴스·공시·가격) → 후보 선별
 2. `trigger-candidates` 로 트리거별 기사 확인 → triggers.json 79항목 작성
 3. research → calculate → draft → review(1차 리뷰·수정 한 묶음·확인 리뷰 1회) → 승인 대기
+
+## 추가: 규칙 v1.9 와 재무 관측 갱신 (2026-10-06 사용자 승인)
+
+계산해 보니 재무 관측이 낡은 회사가 셋이다. Oracle 은 일반 트랙인데 2026-05-31 분기에 머물러 있다(8-31 분기 10-Q 있음). TSMC·Alibaba 는 v1.8 이 예탁증서 상장사를 무조건 연간 트랙으로 둬서 2025 연간·FY2026(3월 결산) 값을 쓰고 P4 한 칸 감점을 받는데, 둘 다 6-K 로 분기 숫자를 낸다. 사용자 결정: v1.9 로 가되 문서를 늘리지 않는다.
+
+1. **규칙 v1.9 와 코드.** `v1.9.json` = v1.8 복사 + `rule_version`·`note`·`tracks.listed_ttm/listed_annual.select` 문구·새 키 `policies.f6.track_by_period_basis: true`. `calc_f6_params.track_id_for` 는 새 키가 있을 때만 예탁증서 + ttm 을 `listed_ttm` 으로 보낸다(v1.5~v1.8 불변). 테스트 `test_rules_v19.py` 와 트랙 판정 테스트.
+2. **버전 번호를 한 곳에만.** 현행 버전은 `rules.md` 머리말과 JSON 만 갖는다. AGENTS 12행, guide 69·91행, structure 33·130행, score-plan 15·17행(+사본), README 42행을 "현행 버전(rules.md 머리말)" 으로. 사실 기록은 그대로.
+3. **실행을 v1.9 로 다시 만들기.** 폴더를 스크래치로 옮기고(훅 오탐 때문에 --force 대신) init --rule v1.9 + 같은 날짜 → collect → `merge_outputs.py --write`(TRIG-011 finding 수정) → research.
+4. **재무 관측.** 1년 전 문서 2건(TSMC 2025-08 6-K 재무제표, Alibaba 2025-08 실적) 추가로 받는다. 세 회사 `revenue_ttm`·`revenue_ttm_prior`·`operating_income_ttm`·`net_income_ttm`·`pretax_income_ttm`·`fcf_ttm`·`cash`·`net_cash`(+TSMC·Alibaba `operating_margin_ttm`, Oracle `contracted_revenue`·미인출 여신). 최근 1년 = 직전 연간 − 전년 같은 기간 + 올해 같은 기간, 성분 접수번호·위치 기록, 20-F 선언 환율 하나로 당해·전년 환산. 옛 관측은 두고 `observed_at 2026-10-06` 으로 덧붙임. 서브에이전트 3개(회사별)가 스크래치에 내고 조율자가 기계 대조 후 반영.
+5. **계산·판단.** calculate → 회사별 비교 → 어긋나는 ⑨ 판정 입력은 propose 로 제안 → 관련 트리거 finding 수정 → draft → 리뷰 → 승인 대기.
+
+검증: 전체 테스트, 승인 실행 두 개 `validate_report_contract` 재계산 통과, 관측 기계 대조(변조 사본 포함), 세 회사 트랙 `listed_ttm`·나머지 11사 불변, 지시 문서의 v1.8 하드코딩이 사실 기록뿐인지 `rg`.

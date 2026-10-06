@@ -40,10 +40,14 @@ def _period_basis(o: dict[str, Any] | None) -> str | None:
     return ((o or {}).get("basis") or {}).get("period_basis")
 
 
-def track_id_for(company: dict[str, Any], period_basis: str | None) -> str:
+def track_id_for(company: dict[str, Any], period_basis: str | None, *, by_period_basis: bool = False) -> str:
+    """2026-10-06 v1.9: 규칙이 `policies.f6.track_by_period_basis` 를 켜면 예탁증서 상장사도 관측 기간으로 가른다.
+    키가 없는 v1.5~v1.8 은 예탁증서를 연간 트랙에 고정한다(승인 실행 재계산 불변)."""
     if not company["listed"]:
         return "private"
     if company.get("share_basis") in ("adr", "ads"):
+        if by_period_basis and period_basis == "ttm":
+            return "listed_ttm"
         return "listed_annual"
     if period_basis == "quarterly_yoy":
         return "listed_newly"
@@ -328,7 +332,8 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
 
     _, rev_obs = obs.number(cid, "revenue_ttm")
     basis = _period_basis(rev_obs)
-    tid = track_id_for(company, basis)
+    tid = track_id_for(company, basis,
+                       by_period_basis=bool(rules.payload["policies"]["f6"].get("track_by_period_basis")))
     track = rules.f6_track(tid)
     calc: dict[str, Any] = {"mode": "parameters", "track": tid, "track_label": track["label"],
                             "period_basis": basis, "floor": track["floor"], "parameters": {}}
