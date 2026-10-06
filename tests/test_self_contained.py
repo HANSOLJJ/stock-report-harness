@@ -122,7 +122,7 @@ class ValidatorTest(unittest.TestCase):
         ctx = self.ctx(
             judgments=[{"judgment_id": "nvidia.F5", "evidence": ["(v1.5: 📈 1→2 — 별표 G 동맹등급) 근거", "~~옛 문장~~ (superseded [FIX-54 1단계])"]}],
             company_summaries={"nvidia": {"text": "기준선 원문은 다르게 적었다."}},
-            evidence=[{"evidence_id": "EV-1", "relevance": "시험 실행에서 미확인으로 적었다", "conditional_impact": "지금은 유지:",
+            evidence=[{"evidence_id": "EV-1", "relevance": "시험 실행에서 미확인으로 적었다", "conditional_impact": "기준선 약 $300B 와 비교한다",
                        "counter_evidence": ["obsreg 리뷰가 지적했다"], "unverified": []}],
             triggers=[{"trigger_id": "TRG-002", "observation": "기준선 트리거 TRIG-005 를 흡수했다", "condition": "TRG-034 가 관찰한다",
                        "recheck": {"what": "위 줄 참조"}}])
@@ -132,7 +132,7 @@ class ValidatorTest(unittest.TestCase):
                     "다른 판·다른 문장 참조", "다른 트리거 참조"):
             with self.subTest(why=why):
                 self.assertIn(why, joined)
-        for where in ("nvidia.F5 근거[0]", "nvidia 기업 요약", "EV-1.relevance", "EV-1.counter_evidence[0]",
+        for where in ("nvidia.F5 근거[0]", "nvidia 기업 요약", "EV-1.relevance", "EV-1.conditional_impact", "EV-1.counter_evidence[0]",
                       "TRG-002.observation", "TRG-002.condition", "TRG-002.recheck.what"):
             with self.subTest(where=where):
                 self.assertIn(where, joined)

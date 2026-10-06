@@ -111,7 +111,7 @@ SELF_CONTAINED_BANNED = [
     (re.compile(r"superseded", re.I), "대체 표시"),
     (re.compile(r"\b(?:FIX|IMPL|MISS-LABEL|OBS-REG|G1-FILL|NONOP|CASH-FCF|NETCASH|F6-REG|F6-SPEC|F6-FX)-\d+"), "작업 번호"),
     (re.compile(r"obsreg", re.I), "작업 번호"),
-    (re.compile(r"기준선 원문|기준선 v\d|기준선 문면|시험 실행|이전 실행에서|위 줄|아래 줄|다음 줄|윗줄"), "다른 판·다른 문장 참조"),
+    (re.compile(r"기준선|시험 실행|이전 실행에서|위 줄|아래 줄|다음 줄|윗줄"), "다른 판·다른 문장 참조"),
     (re.compile(r"별표\s*[A-J](?![A-Za-z0-9])"), "폐지된 별표 이름"),
 ]
 TRIGGER_CROSS_REF = re.compile(r"\bTRIG-\d{3}|\bTRG-\d{3}|기준선 트리거")
