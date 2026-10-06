@@ -57,7 +57,8 @@ class Add04aPopulationRenderTest(unittest.TestCase):
         draft = render_md.render_draft(self.ctx, self.results, baseline, [])
 
         self.assertIn("기준선 v1.5 의 14사 순위", draft)
-        self.assertIn("기준선 v1.5 1위(14사)", draft)
+        # 2026-10-06 사용자 지시: 기업 카드에 기준선 순위를 붙이지 않는다.
+        self.assertNotIn("기준선 v1.5 1위(14사)", draft)
         self.assertIn("② 판단 14개사 모두 어느 경로를 통과했는지가 기준선에서 넘어오지 않아 기준선 점수를 그대로 쓴다", draft)
 
     def test_f2_all_carried_count_is_dynamic(self):

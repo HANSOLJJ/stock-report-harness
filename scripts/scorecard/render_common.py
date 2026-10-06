@@ -357,11 +357,6 @@ def inline_html(text: str) -> str:
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", out)
 
 
-def struck(text: str) -> str:
-    """취소선. 본문에 `~` 가 있으면 마크다운 취소선이 깨지므로 표시어로 대신한다."""
-    return f"~~{text}~~ (대체됨)" if "~" not in text else f"(대체됨) {text}"
-
-
 # ------------------------------------------------------------------ 대체된 수치
 
 LEGACY_ID_RE = re.compile(r"[a-z-]+\.[A-Za-z_]+\.v15\b")
@@ -466,11 +461,9 @@ G4_INCOMPATIBLE_NOTE = "(원문 커버리지 계산은 ARR·연환산 약정 기
 def card_evidence_note(baseline_id: str, html: bool = False) -> str:
     # 2026-09-18 FIX-80 S2: HTML 카드는 관측에서 계산한 항목의 옛 참고 서술을 싣지 않는다(감사 기록으로 보냈다).
     # 초안은 리뷰어가 대조하는 문서라 그대로 싣는다 — 안내문도 둘을 갈라 말한다.
-    ref = ("관측에서 계산한 항목에는 옛 참고 서술을 싣지 않는다 — 산식과 사유가 점수 근거이고, 옛 서술은 감사 기록에 있다."
-           if html else "관측에서 계산한 항목은 기준선 서술을 참고로만 보인다.")
-    return (f"근거 불릿은 이번 실행 결과에 연결된 판단의 근거란을 먼저 보인다. 사용자가 앞서 매긴 판단은 기준선 {baseline_id} "
-            "문면에 이번 실행이 붙인 대체 표시·정정이 함께 있고, 이번 실행에서 다시 매긴 판단은 새 근거 뒤에 대체된 옛 판단을 "
-            f"취소선으로 둔다. {ref} 카드의 한 줄 요약은 기준선 원문이며 이번 실행에서 재검증하지 않았다.")
+    # 2026-10-06 사용자 지시: 옛 판·대체 표시를 설명하는 안내를 없앴다. 근거는 현재 판단 문장뿐이다.
+    return ("근거는 각 판단에 적힌 현재 근거 문장이다. 관측에서 계산한 항목은 산식과 사유가 점수 근거다. "
+            "카드의 한 줄 요약은 이 실행에서 확정한 기업 요약이다.")
 
 
 def g4_incompatible(observations: list[dict[str, Any]], cid: str) -> bool:
@@ -831,37 +824,17 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
     - 승계 판단(carried): 근거란 자체가 기준선 문면이다. 이번 실행이 붙인 superseded 표시·추가 문장까지 보이도록 판단 파일의 evidence 를 찍는다.
     - 이번 실행 판단(new): 새 근거를 먼저 찍고, 대체된 옛 판단(superseded)이나 기준선 서술을 과거 기록으로 따로 찍는다.
     """
+    # 2026-10-06 사용자 지시: 리포트에는 최종 결과만 싣는다. 대체된 옛 판단(취소선)·기준선 과거 기록·자동 산출 항목의
+    # 기준선 참고 서술·'원문 X 는 실측 Y 로 대체' 주석을 붙이지 않고, 판단 파일의 현재 근거 문장만 싣는다.
+    # 옛 문면은 판단 파일(revision_history·superseded)과 git 이력에 있다. 인자(base_evidence·baseline_id·reps)는
+    # 호출부 호환을 위해 남긴다.
     judgment = judgments_by_id.get(fr.get("judgment_id") or "")
     if judgment is None:
-        if not base_evidence:
-            return None
-        # 2026-09-17 FIX-59 S4(8차 리뷰 D low): 기준선 문면의 첫 줄이 옛 점수로 시작해(anthropic F6 `-3 (v1.5: …)`)
-        # 현재 점수(-4)와 다른 수가 근거란 맨 앞에 왔다. **현재 점수를 첫 줄로 세운다** — 라벨만으로는 첫인상이 안 바뀐다.
-        now = "미산출" if fr.get("score") is None else f"{fr['score']:+d}"
-        head = (f"**이번 실행 점수는 {now} 이고 입력에서 자동 산출한 값이다**(위 산식 참조). "
-                f"아래는 기준선 {baseline_id} 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다.")
-        return _split_block({"kind": "baseline_reference",
-                             "header": "참고 서술 — 이번 실행은 관측에서 계산했고 이 문장은 점수 근거가 아니다",
-                             "lines": [(1, head)] + [(1, annotate_replaced(e, company_id, reps))
-                                                     for e in base_evidence[:6]]})
+        return None
     jid = judgment["judgment_id"]
-    evidence = [annotate_replaced(e, company_id, reps) for e in (judgment.get("evidence") or [])]
-    if judgment["status"] == "carried":
-        return _split_block({"kind": "carried", "header": f"근거 · {reviewer_label(judgment, with_owner=False, run_created=run_created)} · 판단 기록 `{jid}`",
-                             "lines": [(1, e) for e in evidence]})
-    lines = [(1, e) for e in evidence]
-    sup = judgment.get("superseded")
-    if sup:
-        lines.append((1, f"대체된 판단 `{sup['judgment_id']}` — {sup['superseded_at']} 에 바뀌었다. {sup['why']}"))
-        lines += [(2, struck(e)) for e in sup.get("evidence", [])[:6]]
-        if len(sup.get("evidence", [])) > 6:
-            lines.append((2, f"(외 {len(sup['evidence']) - 6}줄은 판단 기록의 대체 항목에 있다)"))
-    elif base_evidence and base_evidence != list(judgment.get("evidence") or []):
-        old = [e for e in base_evidence if e not in (judgment.get("evidence") or [])]
-        if old:
-            lines.append((1, f"과거 기록(기준선 {baseline_id} 서술 — 이번 실행 판단으로 대체):"))
-            lines += [(2, struck(e)) for e in old[:6]]
-    return _split_block({"kind": "new", "header": f"근거 · {reviewer_label(judgment, with_owner=False, run_created=run_created)} · 판단 기록 `{jid}`",
+    lines = [(1, str(e)) for e in (judgment.get("evidence") or [])]
+    kind = "carried" if judgment["status"] == "carried" else "new"
+    return _split_block({"kind": kind, "header": f"근거 · {reviewer_label(judgment, with_owner=False, run_created=run_created)} · 판단 기록 `{jid}`",
                          "lines": lines})
 
 
@@ -1121,7 +1094,8 @@ def offbalance_cell(obs: Any, cid: str) -> str:
     legacy = ((obs.get(cid, "offbalance_note") or {}).get("value") or "—")[:60]
     b = obs.get(cid, "offbalance_B")
     if b is not None and b["status"] == "verified" and b.get("value") is not None:
-        return f"{fmt_usd(b['value'])} B종(verified) · 원문 {struck(legacy)}"
+        # 2026-10-06 사용자 지시: 대체된 원문 문구를 취소선으로 함께 싣지 않는다. 현재 값만 싣는다.
+        return f"{fmt_usd(b['value'])} B종(verified)"
     return legacy
 
 

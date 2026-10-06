@@ -356,6 +356,18 @@ def cmd_proposal(args: argparse.Namespace) -> int:
 
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
+    if args.all_pending == bool(args.id):
+        raise SchemaError("--id 와 --all-pending 가운데 하나만 준다")
+    if args.all_pending:
+        # 2026-10-06: 판단 근거를 현재 상태 문장으로 다시 쓴 제안이 100건을 넘어 하나씩 누르기 어렵다. 사람 셸에서만 된다.
+        if not args.accept:
+            raise SchemaError("--all-pending 은 --accept 와만 쓴다(거부는 사유를 하나씩 적는다)")
+        from scorecard.stages import _load_proposals
+        pending = [p["proposal_id"] for p in _load_proposals(args.slug)["items"] if p["status"] == "pending"]
+        for pid in pending:
+            decide_proposal(args.slug, pid, accept=True, by=args.by, note=args.note)
+        print(f"proposal: 결정 전 제안 {len(pending)}건을 반영했다. research → calculate → draft → review 를 다시 돌린 뒤 승인한다")
+        return 0
     if args.undo:
         undone = undo_proposal(args.slug, args.id, by=args.by)
         what = "반영을 번복해 판단을 반영 전으로 되돌렸다" if undone["undone"] == "accepted" else "거부를 번복했다"
@@ -364,7 +376,8 @@ def cmd_proposal(args: argparse.Namespace) -> int:
     out = decide_proposal(args.slug, args.id, accept=args.accept, by=args.by, note=args.note)
     p = out["proposal"]
     if out["accepted"]:
-        print(f"proposal: {p['proposal_id']} 반영 — {p['company_id']} {p['factor']} 판단을 고쳤다(수정자 {p['decided_by']}). "
+        what = "기업 요약" if p["factor"] == "SUMMARY" else f"{p['factor']} 판단"
+        print(f"proposal: {p['proposal_id']} 반영 — {p['company_id']} {what}을 고쳤다(수정자 {p['decided_by']}). "
               f"research → calculate → draft → review 를 다시 돌린 뒤 승인한다: "
               f"uv run --frozen python -X utf8 scripts/scorecard_cli.py research {args.slug}")
     else:
@@ -663,7 +676,8 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("propose", help="판단 변경 제안을 쓴다(에이전트도 쓴다). 반영·거부는 사람이 승인 페이지에서 한다")
     p.add_argument("slug")
     p.add_argument("--company", required=True)
-    p.add_argument("--factor", required=True, choices=["F1", "F3", "F4", "F5", "F7", "F8", "F9"])
+    p.add_argument("--factor", required=True, choices=["F1", "F3", "F4", "F5", "F7", "F8", "F9", "SUMMARY"],
+                   help="SUMMARY 는 기업 한 줄 요약(--evidence 문장 하나)")
     p.add_argument("--set", action="append", help="바꿀 판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
     p.add_argument("--evidence", action="append", help="반영 뒤 근거 문장. 여러 번 주면 그 목록이 근거 전체가 된다")
     p.add_argument("--json", help="{changes: {...}, evidence_after: [...]} JSON 파일(--set·--evidence 가 덮어쓴다)")
@@ -674,7 +688,8 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("proposal", help="판단 변경 제안 반영·거부. 사람 셸에서만 된다. 거부는 --note 필수")
     p.add_argument("slug")
-    p.add_argument("--id", required=True, help="PRP-NNN")
+    p.add_argument("--id", help="PRP-NNN (--all-pending 과 함께 쓰지 않는다)")
+    p.add_argument("--all-pending", action="store_true", help="결정 전 제안을 모두 반영한다(--accept 와만 쓴다)")
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument("--accept", action="store_true", help="반영")
     g.add_argument("--reject", action="store_true", help="거부(--note 필수)")

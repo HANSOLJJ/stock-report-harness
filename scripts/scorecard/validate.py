@@ -100,6 +100,57 @@ def check_source_allowlist(rules: Any, sources: dict[str, Any], result: Any) -> 
     return True
 
 
+# 2026-10-06 사용자 지시(AGENTS.md 「금지·주의」): 화면에 실리는 문장은 완결된 현재 상태 문장이다. 규칙 버전 표기,
+# 변경 표시, 작업 번호, 이전 판·다른 문장·다른 트리거를 가리키는 표현을 막는다. 규칙 v1.9 이상 실행에만 댄다
+# (옛 승인 실행은 그때 문면 그대로 둔다). 트리거 carry.finding 과 근거 excerpt(원문 제목)는 대상이 아니다.
+SELF_CONTAINED_MIN_RULE = (1, 9)
+SELF_CONTAINED_BANNED = [
+    (re.compile(r"\bv1\.\d"), "규칙 버전 표기"),
+    (re.compile(r"[🆕📈📉🔧📐📏]"), "변경 표시 기호"),
+    (re.compile(r"~~"), "취소선"),
+    (re.compile(r"superseded", re.I), "대체 표시"),
+    (re.compile(r"\b(?:FIX|IMPL|MISS-LABEL|OBS-REG|G1-FILL|NONOP|CASH-FCF|NETCASH|F6-REG|F6-SPEC|F6-FX)-\d+"), "작업 번호"),
+    (re.compile(r"obsreg", re.I), "작업 번호"),
+    (re.compile(r"기준선 원문|기준선 v\d|기준선 문면|시험 실행|이전 실행에서|위 줄|아래 줄|다음 줄|윗줄"), "다른 판·다른 문장 참조"),
+    (re.compile(r"별표\s*[A-J](?![A-Za-z0-9])"), "폐지된 별표 이름"),
+]
+TRIGGER_CROSS_REF = re.compile(r"\bTRIG-\d{3}|\bTRG-\d{3}|기준선 트리거")
+
+
+def self_contained_violations(ctx: Any) -> list[str]:
+    """화면 문장의 금지 표기 목록. `기업·위치: 사유 — 문장 앞부분` 형태."""
+    def hits(text: str, extra: tuple[tuple[re.Pattern[str], str], ...] = ()) -> list[str]:
+        return [why for pat, why in (*SELF_CONTAINED_BANNED, *extra) if pat.search(text or "")]
+
+    out: list[str] = []
+
+    def add(where: str, text: str, extra: tuple[tuple[re.Pattern[str], str], ...] = ()) -> None:
+        for why in hits(text, extra):
+            out.append(f"{where}: {why} — {str(text)[:60]}")
+
+    for j in ctx.judgments:
+        for i, e in enumerate(j.get("evidence") or []):
+            add(f"{j['judgment_id']} 근거[{i}]", str(e))
+    for cid, s in (ctx.company_summaries or {}).items():
+        add(f"{cid} 기업 요약", s["text"])
+    for e in ctx.evidence or []:
+        for key in ("relevance", "conditional_impact"):
+            add(f"{e['evidence_id']}.{key}", e[key])
+        for key in ("counter_evidence", "unverified"):
+            for i, s in enumerate(e[key]):
+                add(f"{e['evidence_id']}.{key}[{i}]", s)
+    cross = ((TRIGGER_CROSS_REF, "다른 트리거 참조"),)
+    for t in ctx.triggers or []:
+        for key in ("observation", "condition"):
+            add(f"{t['trigger_id']}.{key}", t[key], cross)
+        add(f"{t['trigger_id']}.recheck.what", t["recheck"]["what"], cross)
+    return out
+
+
+def _rule_at_least(version: str, minimum: tuple[int, ...]) -> bool:
+    return tuple(int(x) for x in re.findall(r"\d+", version)) >= minimum
+
+
 def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_present: bool = True, result: Any) -> Any:
     paths = run_paths(slug)
     d = paths.run_dir
@@ -131,6 +182,16 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     if frontmatter_value(plan_fm, "as_of") != ctx.run["as_of"]:
         result.error("plan as_of 와 run.json as_of 불일치")
     result.check("run.json/observations/judgments strict schema")
+
+    # 완결된 문장 ----------------------------------------------------------
+    if _rule_at_least(ctx.rules.version, SELF_CONTAINED_MIN_RULE):
+        bad = self_contained_violations(ctx)
+        for line in bad[:20]:
+            result.error(f"완결된 문장이 아니다(AGENTS.md 「금지·주의」) — {line}")
+        if len(bad) > 20:
+            result.error(f"완결된 문장이 아닌 곳이 {len(bad) - 20}건 더 있다")
+        if not bad:
+            result.check("display text is self-contained")
 
     # 자료 원천 allowlist --------------------------------------------------
     check_source_allowlist(ctx.rules, ctx.sources, result)

@@ -1094,8 +1094,32 @@ def _validate_revision_history(history: Any, where: str) -> None:
         _expect_keys(entry["previous"], list(JUDGMENT_REVISION_FIELDS), f"{at}.previous")
 
 
+SUMMARY_FACTOR = "SUMMARY"   # 판단 변경 제안의 대상 가운데 기업 한 줄 요약을 가리키는 값(factor 가 아니다)
+
+
+def validate_company_summaries(value: Any, companies: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """2026-10-06 사용자 지시: 카드의 한 줄 요약은 기준선 원문이 아니라 이 실행에서 확정한 현재 요약이다.
+    판단 파일 최상위 `company_summaries` 에 두므로 판단 해시(승인)가 함께 묶는다. 바꾸는 길은 제안(SUMMARY) 반영뿐이다."""
+    _require(isinstance(value, list), "judgments.json.company_summaries: 배열 필요")
+    out: dict[str, dict[str, Any]] = {}
+    for idx, item in enumerate(value):
+        where = f"company_summaries[{idx}]"
+        _expect_keys(item, ["company_id", "text", "reviewer", "reviewed_at"], where, optional=["proposal_id", "revision_history"])
+        _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
+        _require(item["company_id"] not in out, f"{where}: company_id 중복 {item['company_id']!r}")
+        _expect_str(item["text"], f"{where}.text", nonempty=True)
+        _expect_str(item["reviewer"], f"{where}.reviewer", nonempty=True)
+        _expect_date(item["reviewed_at"], f"{where}.reviewed_at")
+        if "revision_history" in item:
+            _require(isinstance(item["revision_history"], list), f"{where}.revision_history: 배열 필요")
+        out[item["company_id"]] = item
+    return out
+
+
 def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules: dict[str, Any], run_id: str | None = None) -> list[dict[str, Any]]:
-    _expect_keys(payload, ["schema", "run_id", "items"], "judgments.json", optional=["note"])
+    _expect_keys(payload, ["schema", "run_id", "items"], "judgments.json", optional=["note", "company_summaries"])
+    if "company_summaries" in payload:
+        validate_company_summaries(payload["company_summaries"], companies)
     _require(payload["schema"] == "scorecard.judgments/1", "judgments.json: schema 불일치")
     if run_id is not None:
         _require(payload["run_id"] == run_id, f"judgments.json: run_id 불일치 {payload['run_id']!r} != {run_id!r}")
@@ -1403,9 +1427,13 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         _require(pid not in seen, f"{where}: proposal_id 중복 {pid!r}")
         seen.add(pid)
         _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
-        _require(item["factor"] in JUDGMENT_EDIT_KIND, f"{where}: {item['factor']!r} 는 제안 대상 factor 가 아니다")
+        _require(item["factor"] in JUDGMENT_EDIT_KIND or item["factor"] == SUMMARY_FACTOR,
+                 f"{where}: {item['factor']!r} 는 제안 대상 factor 가 아니다")
         _require(isinstance(item["changes"], dict), f"{where}.changes 는 object")
         after = item["evidence_after"]
+        if item["factor"] == SUMMARY_FACTOR:
+            _require(not item["changes"] and isinstance(after, list) and len(after) == 1,
+                     f"{where}: 기업 요약 제안은 changes 없이 evidence_after 에 요약 문장 하나만 둔다")
         _require(after is None or (isinstance(after, list) and bool(after) and all(isinstance(s, str) and s.strip() for s in after)),
                  f"{where}.evidence_after 는 null 이거나 비어 있지 않은 문장 목록")
         _require(bool(item["changes"]) or after is not None, f"{where}: 바꿀 값(changes)이나 근거 문장(evidence_after)이 있어야 한다")

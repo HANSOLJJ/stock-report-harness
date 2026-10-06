@@ -96,6 +96,7 @@ function renderGlossary() {
 }
 
 function factorLabel(f) {
+  if (f === 'SUMMARY') return '한 줄 요약';   // 2026-10-06: 기업 요약 제안(factor 가 아니다)
   return FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].label : String(f);
 }
 
@@ -401,6 +402,7 @@ function proposalChangeHtml(pr) {
       total = `<li><span class="muted">⑤ 점수</span> <strong>${3 + a0 + h0}점</strong> → <strong class="to">${3 + a1 + h1}점</strong></li>`;
     }
   }
+  if (pr.edit_kind === 'summary') return '<p class="muted">기업 카드의 한 줄 요약을 바꿉니다. 점수와 판정 값은 그대로입니다.</p>';
   return rows || total ? `<ul class="prop-changes">${rows}${total}</ul>` : '<p class="muted">판정 값은 그대로 두고 근거 문장만 고칩니다.</p>';
 }
 

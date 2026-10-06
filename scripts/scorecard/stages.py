@@ -25,7 +25,7 @@ from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_EDIT_KIND, JUDGMENT_INPUT_CHOICES,
-                     JUDGMENT_REVISION_FIELDS, SchemaError, approval_file_present, approval_id_for, load_json_strict,
+                     JUDGMENT_REVISION_FIELDS, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, load_json_strict,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
@@ -1196,6 +1196,53 @@ def _find_judgment(slug: str, company_id: str, factor: str) -> dict[str, Any]:
     return j
 
 
+def _summary_snapshot(slug: str, company_id: str) -> dict[str, Any]:
+    """기업 요약을 제안의 before·after 와 같은 모양으로 본다(요약 문장은 evidence 칸 하나)."""
+    payload = load_json_strict(run_dir(slug) / "judgments.json")
+    cur = next((s for s in payload.get("company_summaries") or [] if s["company_id"] == company_id), None)
+    return {"kind": "summary", "score": None, "inputs": {}, "evidence": [cur["text"]] if cur else []}
+
+
+def set_company_summary(slug: str, *, company_id: str, text: str | None, reason: str, by: str) -> str | None:
+    """2026-10-06 사용자 지시: 카드의 한 줄 요약(판단 파일 최상위 company_summaries)을 쓴다. 제안 반영·번복만 부른다.
+    `text` 가 None 이면 그 기업 요약을 지운다(번복). 이전 문장을 돌려준다. 판단 수정과 같은 방식으로 쓰기 전 검증하고 실패하면 되돌린다."""
+    if not isinstance(by, str) or not by.strip():
+        raise SchemaError("수정자(--by)는 비어 있지 않은 문자열이어야 한다")
+    protect_approved_run(slug, "기업 요약 수정")
+    path = run_dir(slug) / "judgments.json"
+    original = path.read_bytes()
+    payload = load_json_strict(path)
+    summaries = list(payload.get("company_summaries") or [])
+    idx = next((i for i, s in enumerate(summaries) if s["company_id"] == company_id), None)
+    previous = summaries[idx]["text"] if idx is not None else None
+    revised_at = utc_now_iso()[:10]
+    if text is None:
+        if idx is not None:
+            summaries.pop(idx)
+    else:
+        history = list(summaries[idx].get("revision_history") or []) if idx is not None else []
+        if previous is not None:
+            history.append({"revised_at": revised_at, "revised_by": by.strip(), "reason": reason.strip(), "previous": previous,
+                            "session": "agent" if agent_session_markers() else "human"})
+        entry = {"company_id": company_id, "text": text.strip(), "reviewer": by.strip(), "reviewed_at": revised_at}
+        if history:
+            entry["revision_history"] = history
+        if idx is None:
+            summaries.append(entry)
+        else:
+            summaries[idx] = entry
+    payload["company_summaries"] = summaries
+    run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
+    validate_judgments(payload, load_companies(), load_rules(run["rule_version"]).payload, slug)
+    write_json(path, payload)
+    try:
+        load_context(slug)
+    except BaseException:
+        path.write_bytes(original)
+        raise
+    return previous
+
+
 def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any] | None = None,
                  evidence_after: list[str] | None = None, reason: str, evidence_ids: list[str] | tuple[str, ...] = (),
                  by: str | None = None, proposed_at: str | None = None) -> dict[str, Any]:
@@ -1204,10 +1251,20 @@ def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[st
     changes = dict(changes or {})
     if evidence_after is not None:
         evidence_after = [s.strip() for s in evidence_after]
-    _check_judgment_changes(factor, {**changes, **({"evidence": evidence_after} if evidence_after is not None else {})})
+    if factor == SUMMARY_FACTOR:
+        # 2026-10-06: 기업 한 줄 요약 제안. 판정 재료 없이 요약 문장 하나만 받는다.
+        if changes or not evidence_after or len(evidence_after) != 1 or not evidence_after[0]:
+            raise SchemaError("기업 요약 제안은 --set 없이 --evidence 로 요약 문장 하나만 준다")
+    else:
+        _check_judgment_changes(factor, {**changes, **({"evidence": evidence_after} if evidence_after is not None else {})})
     if not isinstance(reason, str) or not reason.strip():
         raise SchemaError("제안 사유(--reason)는 비어 있으면 안 된다")
-    current = _find_judgment(slug, company_id, factor)
+    if factor == SUMMARY_FACTOR:
+        if company_id not in load_companies():
+            raise SchemaError(f"알 수 없는 company_id {company_id!r}")
+        before = _summary_snapshot(slug, company_id)
+    else:
+        before = _judgment_snapshot(_find_judgment(slug, company_id, factor))
     payload = _load_proposals(slug)
     if any(p["status"] == "pending" and p["company_id"] == company_id and p["factor"] == factor for p in payload["items"]):
         raise SchemaError(f"{company_id} {factor} 에 결정 전 제안이 이미 있다 — 그 제안을 먼저 반영하거나 거부한다")
@@ -1220,7 +1277,7 @@ def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[st
         "evidence_after": evidence_after,
         "reason": reason.strip(),
         "evidence_ids": sorted(set(evidence_ids)),
-        "before": _judgment_snapshot(current),
+        "before": before,
         "proposed_by": (by or "").strip() or (os.environ.get("SCORECARD_AGENT") or "").strip() or getpass.getuser(),
         "proposed_at": proposed_at or utc_now_iso()[:10],
         "status": "pending",
@@ -1251,6 +1308,14 @@ def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None
         if not note:
             raise SchemaError("거부 사유(--note)를 적어야 한다. 다음 실행에서 같은 제안이 올라올 때 참고한다")
         item.update(status="rejected", decided_by=by, decided_at=decided_at, decision_note=note)
+    elif item["factor"] == SUMMARY_FACTOR:
+        if _summary_snapshot(slug, item["company_id"]) != item["before"]:
+            raise SchemaError(f"{proposal_id} 를 쓴 뒤 {item['company_id']} 기업 요약이 바뀌었다 — "
+                              "이 제안은 거부하고 지금 요약을 기준으로 다시 제안받는다")
+        reason = f"제안 {proposal_id} 반영: {item['reason']}" + (f" (메모: {note})" if note else "")
+        previous = set_company_summary(slug, company_id=item["company_id"], text=item["evidence_after"][0], reason=reason, by=by)
+        item["applied"] = {"previous": {"text": previous}, "after": _summary_snapshot(slug, item["company_id"])}
+        item.update(status="accepted", decided_by=by, decided_at=decided_at, decision_note=note)
     else:
         current = _find_judgment(slug, item["company_id"], item["factor"])
         if _judgment_snapshot(current) != item["before"]:
@@ -1285,7 +1350,13 @@ def undo_proposal(slug: str, proposal_id: str, *, by: str | None = None, allow_a
         raise SchemaError(f"{proposal_id} 는 결정 전이라 번복할 것이 없다")
     by = (by or "").strip() or getpass.getuser()
     was = item["status"]
-    if was == "accepted":
+    if was == "accepted" and item["factor"] == SUMMARY_FACTOR:
+        applied = item.get("applied") or {}
+        if _summary_snapshot(slug, item["company_id"]) != applied.get("after"):
+            raise SchemaError(f"{proposal_id} 를 반영한 뒤 {item['company_id']} 기업 요약이 또 바뀌었다 — 번복하지 않는다")
+        set_company_summary(slug, company_id=item["company_id"], text=(applied.get("previous") or {}).get("text"),
+                            reason=f"제안 {proposal_id} 번복", by=by)
+    elif was == "accepted":
         applied = item.get("applied")
         if not applied:
             raise SchemaError(f"{proposal_id} 에 반영 전 값이 남아 있지 않아 되돌릴 수 없다 — 전체 판단 표에서 직접 고친다")
@@ -1339,14 +1410,18 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]]) -> list[d
     judgments = {(j["company_id"], j["factor"]): j for j in load_json_strict(run_dir(slug) / "judgments.json")["items"]}
     out = []
     for p in payload["items"]:
-        j = judgments.get((p["company_id"], p["factor"]))
         before = p["before"]
+        if p["factor"] == SUMMARY_FACTOR:
+            current = _summary_snapshot(slug, p["company_id"])
+        else:
+            j = judgments.get((p["company_id"], p["factor"]))
+            current = _judgment_snapshot(j) if j is not None else None
         out.append({
             "proposal_id": p["proposal_id"],
             "company_id": p["company_id"],
             "display_name": (registry.get(p["company_id"]) or {}).get("display_name") or p["company_id"],
             "factor": p["factor"],
-            "edit_kind": JUDGMENT_EDIT_KIND[p["factor"]],
+            "edit_kind": JUDGMENT_EDIT_KIND.get(p["factor"], "summary"),
             "changes": _pairs(p["changes"]),
             "evidence_after": p["evidence_after"],
             "reason": p["reason"],
@@ -1354,7 +1429,7 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]]) -> list[d
             "before": {"kind": before["kind"], "score": before["score"], "inputs": _pairs(before["inputs"]),
                        "evidence": list(before["evidence"])},
             # 결정 전 제안인데 그사이 판단이 바뀌었으면 반영할 수 없다
-            "stale": p["status"] == "pending" and (j is None or _judgment_snapshot(j) != before),
+            "stale": p["status"] == "pending" and (current is None or current != before),
             "proposed_by": p["proposed_by"],
             "proposed_at": p["proposed_at"],
             "status": p["status"],

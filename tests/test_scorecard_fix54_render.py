@@ -63,8 +63,8 @@ class SharedRenderTest(unittest.TestCase):
         row = self.frow("tsmc", "⑤ 아군")
         # 2026-09-18 FIX-80 S3: 판단 ID 는 감사 기록으로, 문장 속 판단 ID 는 회사·항목 이름으로 옮긴다.
         self.assertIn("이번 실행에서 다시 매김", row)
-        self.assertIn("대체된 판단 <code>TSMC ⑤</code>", row)
-        self.assertIn("<del>", row)
+        # 2026-10-06 사용자 지시: 대체된 옛 판단을 카드에 붙이지 않는다.
+        self.assertNotIn("대체된 판단", row)
         self.assertNotIn("아래는 기준선 근거", self.html)
 
     def test_html_card_evidence_matches_draft_for_every_factor(self):
@@ -91,7 +91,8 @@ class SharedRenderTest(unittest.TestCase):
                     header = re.sub(r" · 판단 기록 `[^`]+`", "", block["header"])
                     self.assertIn(plain(rc.inline_html(header)), row)
                     self.assertIn(plain(rc.inline_html(block["lines"][-1][1])), row)
-        self.assertEqual(n, 126)
+        # 2026-10-06: 판단이 연결되지 않은 자동 산출 항목에는 근거 블록이 없다(기준선 참고 서술을 싣지 않는다).
+        self.assertEqual(n, sum(1 for c in self.results["companies"] for fr in c["factors"].values() if fr.get("judgment_id")))
 
     def test_notice_817_no_longer_calls_everything_past_record(self):
         self.assertNotIn("원문을 그대로 옮긴 과거 기록이며", self.html)
@@ -105,7 +106,8 @@ class SharedRenderTest(unittest.TestCase):
                 self.assertNotIn(f"<code>{cid}.F6</code>", self.html)
                 # 2026-09-18 FIX-80 S2: v1.5 참고 문단은 HTML 에서 내렸다(초안에는 리뷰용으로 남는다).
                 self.assertNotIn("참고 서술", self.frow(cid, "⑥ 가격"))
-                self.assertIn("참고 서술 — 이번 실행은 관측에서 계산했고", self.md)
+                # 2026-10-06 사용자 지시: 초안에도 기준선 참고 서술을 싣지 않는다.
+                self.assertNotIn("참고 서술 — 이번 실행은 관측에서 계산했고", self.md)
 
     # ---------------------------------------------------------------- S3 산식·경계
     def test_f6_parameters_text_is_not_empty(self):
@@ -156,9 +158,10 @@ class SharedRenderTest(unittest.TestCase):
         self.assertIn(f"최저점은 {rc.f9_policy(self.ctx, 'floor')} 이며", self.html_text)
 
     def test_offbalance_cell_and_replaced_values_in_html(self):
-        self.assertIn("$267.3B B종(검증 완료) · 원문 <del>미개시 리스 $106B</del> (대체됨)", self.html)
-        # 2026-09-18 FIX-79: 관측 ID 는 본문에서 떼고 감사 기록으로 보낸다. 대체됐다는 사실은 그대로다.
-        self.assertIn("주의 — 원문 $106B 는 이번 실행 실측 $267.3B(검증 완료, 2026-06-30)로 대체됐다", self.html_text)
+        # 2026-10-06 사용자 지시: 현재 값만 싣고 대체된 원문 문구·대체 주석을 붙이지 않는다.
+        self.assertIn("$267.3B B종(검증 완료)", self.html)
+        self.assertNotIn("원문 <del>미개시 리스 $106B</del> (대체됨)", self.html)
+        self.assertNotIn("주의 — 원문 $106B 는 이번 실행 실측", self.html_text)
 
     def test_triggers_share_corrections_and_warnings(self):
         reps = rc.replacements(self.ctx)

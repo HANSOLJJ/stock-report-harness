@@ -385,11 +385,12 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     lines += [f"- {rc.card_evidence_note(run['baseline_id'])}", ""]
     for c in ordered:
         b = baseline_scores.get(c["company_id"])
-        base_rank = f" · 기준선 {run['baseline_id']} {b['rank_raw']}위(14사)" if b and b.get("rank_raw") else ""
+        # 2026-10-06 사용자 지시: 기준선 순위·기준선 요약을 싣지 않는다. 요약은 이 실행에서 확정한 기업 요약뿐이다.
         head = f"{c['rank']}위(완료 {population['scored']}개사 기준)" if c["rank"] else "미완료"
-        lines += [f"### {c['display_name']} — {head}{base_rank} · 조정 {fmt_score(c['total'])} (과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])})", ""]
-        if b and b.get("tag"):
-            lines += [f"> 기준선 {run['baseline_id']} 한 줄 요약(과거 기록): {b['tag']}", ""]
+        lines += [f"### {c['display_name']} — {head} · 조정 {fmt_score(c['total'])} (과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])})", ""]
+        summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
+        if summary:
+            lines += [f"> {summary}", ""]
         lines += [table(["Factor", "점수", "상태", "근거 종류", "산식·경로"], [_factor_row(f, c["factors"][f]) for f in FACTOR_IDS]), ""]
         incompatible_g4 = rc.g4_incompatible(ctx.observations, c["company_id"])
         for f in FACTOR_IDS:

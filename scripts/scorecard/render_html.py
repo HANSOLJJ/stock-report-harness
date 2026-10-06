@@ -633,7 +633,6 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
     observations = observations or []
     HISTORY_BY_COMPANY.clear()   # 한 번 그릴 때마다 새로 모은다 — 두 번 부르면 쌓인다
     judgments_by_id = {j["judgment_id"]: j for j in (judgments or [])}
-    baseline_n = len((baseline or {}).get("companies", [])) or len(results["companies"])
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
     out = []
@@ -641,8 +640,9 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         b = base.get(c["company_id"], {})
         cls = TYPE_CLASS.get(c["type"], "mix")
         incompatible_g4 = rc.g4_incompatible(observations, c["company_id"])
-        base_rank = f" · 기준선 {results['baseline_id']} {b['rank_raw']}위({baseline_n}사)" if b.get("rank_raw") else ""
-        rank_text = f"{c['rank']}위(완료 {results['population']['scored']}개사 기준){base_rank}" if c["rank"] else f"미완료{base_rank}"
+        # 2026-10-06 사용자 지시: 기준선 순위를 붙이지 않는다. 이 실행의 순위만 싣는다.
+        rank_text = f"{c['rank']}위(완료 {results['population']['scored']}개사 기준)" if c["rank"] else "미완료"
+        summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
         groups = []
         for label, factors, klass, total in (("과점 — 더한다 (각 0~5)", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다 (각 0~-5)", TRAP_FACTORS, "n", c["trap"])):
@@ -703,9 +703,9 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
             + ("" if c["complete"] else '<span class="pill warn">미완료</span>')
             + "</div>"
-            + (f'<div class="cquote">{esc(b["tag"])}</div>' if b.get("tag") else "")
+            # 2026-10-06 사용자 지시: 요약은 이 실행에서 확정한 기업 요약만 싣는다(기준선 원문 tag 를 쓰지 않는다).
+            + (f'<div class="cquote">{esc(summary)}</div>' if summary else "")
             + f'<div class="crank">{esc(rank_text)}</div>'
-            + (f'<div class="cprov">요약은 기준선 {esc(results["baseline_id"])} 원문 · 미재검증</div>' if b.get("tag") else "")
             + f'</div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(score_text)}</div></div></summary>'
             f'<div class="cbody">{"".join(groups)}</div></details>'
         )

@@ -37,14 +37,14 @@ class CurrentJudgmentEvidenceTest(unittest.TestCase):
                 blk = self.block(f"판단 기록 `{cid}.F5.impl48`")
                 self.assertIn("체크리스트 19(채점규칙 727행)", blk)
                 self.assertIn("A=+1", blk)
-                self.assertIn(f"대체된 판단 `{cid}.F5` — 2026-09-14 에 바뀌었다", blk)
+                # 2026-10-06 사용자 지시: 대체된 옛 판단을 근거 블록에 붙이지 않는다(판단 파일·git 이력에만 있다).
+                self.assertNotIn("대체된 판단", blk)
 
     def test_openai_received_investment_is_not_active_alliance(self):
-        """제외한 받은 투자가 활성 문장으로 읽히면 안 된다 — 옛 줄은 취소선 아래에만 있다."""
+        """제외한 받은 투자가 활성 문장으로 읽히면 안 된다. 2026-10-06 부터 옛 판단 줄은 아예 싣지 않는다."""
         blk = self.block("판단 기록 `openai.F5.impl48`", 30)
-        line = next(x for x in blk.splitlines() if "Amazon $50B 투자(3월" in x)
-        self.assertIn("~~", line)
-        self.assertIn("(대체됨)", line)
+        self.assertFalse(any("Amazon $50B 투자(3월" in x and "~~" in x for x in blk.splitlines()))
+        self.assertNotIn("(대체됨)", blk)
 
     def test_meta_f2_old_yardstick_is_struck(self):
         line = next(x for x in self.lines if "AA 종합 1위(Anthropic)가 5의 기준" in x)
@@ -67,8 +67,9 @@ class CurrentJudgmentEvidenceTest(unittest.TestCase):
                     self.assertNotIn(f"`{j['judgment_id']}`", self.text)
         self.assertEqual({j["judgment_id"] for j in self.ctx.judgments} - linked, {"anthropic.F6", "openai.F6"})
 
-    def test_auto_factor_keeps_baseline_reference_label(self):
-        self.assertIn("참고 서술 — 이번 실행은 관측에서 계산했고 이 문장은 점수 근거가 아니다", self.text)
+    def test_auto_factor_has_no_baseline_reference(self):
+        """2026-10-06 사용자 지시: 자동 산출 항목에 기준선 참고 서술을 붙이지 않는다(산식과 사유가 근거다)."""
+        self.assertNotIn("참고 서술 — 이번 실행은 관측에서 계산했고", self.text)
 
 
 class ReviewTemplateWordingTest(unittest.TestCase):

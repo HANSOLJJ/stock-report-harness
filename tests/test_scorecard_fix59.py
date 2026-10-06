@@ -205,30 +205,23 @@ class Fix59Test(unittest.TestCase):
                 self.assertEqual(self.j[f"{cid}.F2"]["status"], "carried")
 
     # ---------------------------------------------------------------- S4 D 8차
-    def test_auto_factor_block_leads_with_the_current_score(self):
+    def test_auto_factor_has_no_baseline_block(self):
+        """2026-10-06 사용자 지시: 판단이 연결되지 않은 자동 산출 항목(anthropic·openai ⑥)에는 기준선 서술 블록을 싣지 않는다.
+        옛 점수(`-3 (v1.5 …)`)가 근거란에 섞이던 문제(8차 리뷰 D)는 블록 자체를 없애 닫는다."""
         judgments_by_id = {j["judgment_id"]: j for j in self.ctx.judgments}
         reps = rc.replacements(self.ctx)
         base, _obs, _tr = load_baseline(self.ctx.run["baseline_id"])
         base_by_cid = {b["company_id"]: b for b in base["companies"]}
-        seen = 0
         for c in self.results["companies"]:
             for f, fr in c["factors"].items():
                 block = rc.evidence_block(fr, judgments_by_id, base_by_cid.get(c["company_id"], {}).get("evidence", {}).get(f, []),
                                           self.ctx.run["baseline_id"], c["company_id"], reps)
-                if block is None or block["kind"] != "baseline_reference":
-                    continue
-                seen += 1
                 with self.subTest(cid=c["company_id"], f=f):
-                    first = block["lines"][0][1]
-                    self.assertIn("이번 실행 점수는", first)
-                    self.assertIn(f"{fr['score']:+d}", first)
-                    self.assertIn("점수 근거가 아니다", first)
-        self.assertGreaterEqual(seen, 2)                                 # anthropic·openai F6
-        anth = rc.evidence_block(self.res["anthropic"]["factors"]["F6"], judgments_by_id,
-                                 base_by_cid["anthropic"]["evidence"]["F6"], self.ctx.run["baseline_id"], "anthropic", reps)
-        self.assertIn("이번 실행 점수는 -4", anth["lines"][0][1])
-        self.assertIn("-3 (v1.5", anth["lines"][1][1])                   # 옛 수는 둘째 줄로 밀린다
-        self.assertIn("이번 실행 점수는 -4", self.md)
+                    if fr.get("judgment_id"):
+                        self.assertIsNotNone(block)
+                    else:
+                        self.assertIsNone(block)
+        self.assertNotIn("-3 (v1.5", self.md.split("### Anthropic")[1].split("### ")[0] if "### Anthropic" in self.md else "")
 
     # ---------------------------------------------------------------- S5 종료 기록
     def test_round_closing_decision_recorded(self):

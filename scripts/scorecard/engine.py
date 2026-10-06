@@ -1,7 +1,7 @@
 # 실행 입력을 읽어 9개 factor 를 계산하고 결정론적 results.json(해시 포함)을 만드는 엔진
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +20,7 @@ from .schema import (
     sha256_file,
     sha256_obj,
     validate_companies,
+    validate_company_summaries,
     validate_cross_refs,
     validate_evidence,
     validate_judgments,
@@ -54,6 +55,8 @@ class RunContext:
     # 2026-09-30 레인 E: 파일이 없으면 None. 없는 것을 빈 목록으로 바꾸지 않는다(선별 전과 선별 결과 0건은 다르다).
     evidence: list[dict[str, Any]] | None = None
     triggers: list[dict[str, Any]] | None = None
+    # 2026-10-06 사용자 지시: 카드의 한 줄 요약(판단 파일 최상위 company_summaries). 없으면 비어 있고 기준선 원문으로 채우지 않는다.
+    company_summaries: dict[str, dict[str, Any]] = field(default_factory=dict)
 
     @property
     def dir(self) -> Path:
@@ -98,7 +101,9 @@ def load_context(slug: str) -> RunContext:
     # 2026-09-16 FIX-57 2단계: `확인된 미공시` 라벨이 규칙이 선언한 경로를 채우는지 여기서 함께 본다.
     observations = validate_observations(load_json_strict(d / "observations.json"), companies, slug,
                                          missing_policy=rules.payload["policies"].get("missing_types"))
-    judgments = validate_judgments(load_json_strict(d / "judgments.json"), companies, rules.payload, slug)
+    judgments_payload = load_json_strict(d / "judgments.json")
+    judgments = validate_judgments(judgments_payload, companies, rules.payload, slug)
+    summaries = validate_company_summaries(judgments_payload.get("company_summaries") or [], companies)
     sources = load_json_strict(d / "sources.json") if (d / "sources.json").is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
     # 2026-09-30 레인 E: 출처는 항상, 근거·트리거는 파일이 있을 때만 검증하고 셋을 교차 대조한다.
     source_items = validate_sources(sources, slug)
@@ -114,7 +119,8 @@ def load_context(slug: str) -> RunContext:
     validate_cross_refs(observations, judgments, evidence, source_items)
     hashes = input_hashes(slug)
     hashes["rules"] = rules.hash
-    return RunContext(slug, run, rules, companies, observations, judgments, sources, hashes, evidence, triggers)
+    return RunContext(slug, run, rules, companies, observations, judgments, sources, hashes, evidence, triggers,
+                      company_summaries=summaries)
 
 
 def compute_company(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, dict[str, Any]]:
