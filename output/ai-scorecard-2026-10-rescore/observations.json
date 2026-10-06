@@ -2381,7 +2381,7 @@
       "observation_id": "palantir.offbalance_note.v15",
       "company_id": "palantir",
       "metric": "offbalance_note",
-      "value": "미확인 — v1.5 원표기 `없음`",
+      "value": "미확인 — 원본 표기 `없음`",
       "unit": "text",
       "as_of": "2026-09-02",
       "kind": "text",
