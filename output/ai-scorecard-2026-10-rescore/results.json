@@ -8,7 +8,7 @@
   "input_hashes": {
     "run": "65a19e92d2a861d18c6c33059b2217f5882c9527dde0827c4b2282c569a52f5f",
     "observations": "590b1f8a776f058801e1e222ba83ba4b9c117ee4cd447b6e5399b262fe28b576",
-    "judgments": "5086a3003a8eb3a0700c627698b232a08764af96059d069f6cd8e8848cc778f1",
+    "judgments": "941e0fd5dca090a0e78614bb6afe5cae6763dc8f850ae2401417b64fd1be202c",
     "sources": "b3becf746f6a07b643d185e500029376f0fd9aa46ae044c57a6509179772a1d3",
     "evidence": "bc1298c89cf8979392f830df8589346211082d9b0701f38b768ff194743a2040",
     "triggers": "659bfd50a9bbfffb622cb4801c5f5266f2c29320ebd9b787ce9f409e704fc6f7",
@@ -925,7 +925,7 @@
         "F7",
         "F8"
       ],
-      "rank": 4
+      "rank": 3
     },
     {
       "company_id": "microsoft",
@@ -1163,7 +1163,7 @@
         },
         "F9": {
           "factor": "F9",
-          "score": 0,
+          "score": -1,
           "status": "ok",
           "basis": "computed",
           "judgment_id": "microsoft.F9",
@@ -1181,13 +1181,13 @@
               },
               {
                 "gate": "G2",
-                "result": "positive_stable",
+                "result": "positive_deteriorating",
                 "fcf_ttm": 66987000000.0,
-                "score": 0
+                "score": -1
               }
             ],
             "inputs": {
-              "fcf_trend": "stable",
+              "fcf_trend": "deteriorating",
               "bep_retreat": "no",
               "buffer_erosion": "no",
               "direction_A": "unknown",
@@ -1201,8 +1201,8 @@
         }
       },
       "moat": 19,
-      "trap": -5,
-      "total": 14,
+      "trap": -6,
+      "total": 13,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3418,15 +3418,13 @@
         },
         "F4": {
           "factor": "F4",
-          "score": 4,
-          "status": "carried_score",
+          "score": 3,
+          "status": "ok",
           "basis": "manual",
           "judgment_id": "tesla.F4",
           "observation_ids": [],
           "calc": {},
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F5": {
@@ -3633,21 +3631,20 @@
           "pending": null
         }
       },
-      "moat": 14,
+      "moat": 13,
       "trap": -9,
-      "total": 5,
+      "total": 4,
       "complete": true,
       "pending": [],
       "carried_factors": [
         "F1",
         "F2",
         "F3",
-        "F4",
         "F5",
         "F7",
         "F8"
       ],
-      "rank": 11
+      "rank": 13
     },
     {
       "company_id": "oracle",
@@ -3720,19 +3717,17 @@
         },
         "F5": {
           "factor": "F5",
-          "score": 3,
-          "status": "carried_score",
+          "score": 4,
+          "status": "ok",
           "basis": "grade",
           "judgment_id": "oracle.F5",
           "observation_ids": [],
           "calc": {
-            "A": 1,
+            "A": 2,
             "H": -1,
             "formula": "3 + A + H"
           },
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F6": {
@@ -3952,9 +3947,9 @@
           "pending": null
         }
       },
-      "moat": 14,
+      "moat": 15,
       "trap": -10,
-      "total": 4,
+      "total": 5,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3962,10 +3957,9 @@
         "F2",
         "F3",
         "F4",
-        "F5",
         "F8"
       ],
-      "rank": 13
+      "rank": 11
     },
     {
       "company_id": "openai",
@@ -4285,11 +4279,11 @@
       "company_id": "microsoft",
       "display_name": "Microsoft",
       "moat": 19,
-      "trap": -5,
-      "total": 14
+      "trap": -6,
+      "total": 13
     },
     {
-      "rank": 4,
+      "rank": 3,
       "company_id": "meta",
       "display_name": "Meta",
       "moat": 18,
@@ -4354,10 +4348,10 @@
     },
     {
       "rank": 11,
-      "company_id": "tesla",
-      "display_name": "Tesla",
-      "moat": 14,
-      "trap": -9,
+      "company_id": "oracle",
+      "display_name": "Oracle",
+      "moat": 15,
+      "trap": -10,
       "total": 5
     },
     {
@@ -4370,10 +4364,10 @@
     },
     {
       "rank": 13,
-      "company_id": "oracle",
-      "display_name": "Oracle",
-      "moat": 14,
-      "trap": -10,
+      "company_id": "tesla",
+      "display_name": "Tesla",
+      "moat": 13,
+      "trap": -9,
       "total": 4
     }
   ],
@@ -4384,6 +4378,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 153,
-  "results_hash": "975fbe139afc3c37ce9ba81e0b370d5e5f2329d1ade8b033c98304f16577f072"
+  "warnings_count": 151,
+  "results_hash": "c11f5cc6b5eb3bf7310e89952d90b41954e68451bdb53f08c04fc171a5850c7d"
 }

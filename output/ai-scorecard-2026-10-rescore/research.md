@@ -6,7 +6,7 @@ run_id: ai-scorecard-2026-10-rescore
 as_of: 2026-10-06
 rule_version: v1.9
 observations_hash: 590b1f8a776f058801e1e222ba83ba4b9c117ee4cd447b6e5399b262fe28b576
-judgments_hash: 5086a3003a8eb3a0700c627698b232a08764af96059d069f6cd8e8848cc778f1
+judgments_hash: 941e0fd5dca090a0e78614bb6afe5cae6763dc8f850ae2401417b64fd1be202c
 evidence_hash: bc1298c89cf8979392f830df8589346211082d9b0701f38b768ff194743a2040
 triggers_hash: 659bfd50a9bbfffb622cb4801c5f5266f2c29320ebd9b787ce9f409e704fc6f7
 created_at: 2026-10-06
@@ -579,7 +579,7 @@ created_at: 2026-10-06
 | ⑤ 아군 | grade | — | A=2, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
 | ⑦ 순환금융 | matrix | — | funding_dependent_share=small, own_money_returns=yes | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
 | ⑧ 비대칭 의존 | score | -1 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=stable, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=unknown, operating_result_reviewed=profit | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
+| ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=deteriorating, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=unknown, operating_result_reviewed=profit | new | noble 2026-10-06 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |
 
 ### TSMC
 
@@ -680,7 +680,7 @@ created_at: 2026-10-06
 | ① 네트워크 | score | 2 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ② 게임체인저 | score | 3 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
-| ④ 호황 이후 | score | 4 | — | carried | legacy:v1.5 2026-09-02 |  |
+| ④ 호황 이후 | score | 3 | — | new | noble 2026-10-06 |  |
 | ⑤ 아군 | grade | — | A=0, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
 | ⑦ 순환금융 | matrix | — | funding_dependent_share=small, own_money_returns=yes | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
 | ⑧ 비대칭 의존 | score | -2 | — | carried | legacy:v1.5 2026-09-02 |  |
@@ -694,7 +694,7 @@ created_at: 2026-10-06
 | ② 게임체인저 | score | 2 | — | carried | legacy:v1.5 2026-09-02 | ~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 |
 | ③ Last Mover | criteria | — | imitation=fail, revenue_model=pass, acceleration=pass, door_closed=fail | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 ③ 판정표 |
 | ④ 호황 이후 | score | 3 | — | carried | legacy:v1.5 2026-09-02 |  |
-| ⑤ 아군 | grade | — | A=1, H=-1 | carried | legacy:v1.5 2026-09-02 | 규칙 v1.5 별표 G 판정표 |
+| ⑤ 아군 | grade | — | A=2, H=-1 | new | noble 2026-10-06 | 규칙 v1.5 별표 G 판정표 |
 | ⑦ 순환금융 | matrix | — | funding_dependent_share=large, own_money_returns=yes | new | noble 2026-10-06 | 규칙 v1.5 별표 I 판정표 \| [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~ |
 | ⑧ 비대칭 의존 | score | -4 | — | carried | legacy:v1.5 2026-09-02 |  |
 | ⑨ 적자 깊이 | gate_inputs | — | fcf_trend=unknown, bep_retreat=no, buffer_erosion=no, direction_A=unknown, direction_B=unknown, coverage_comparable=yes, operating_result_reviewed=profit | new | noble 2026-10-06 | 규칙 v1.5 ⑨ 적용표(추세·BEP·커버리지 비교 가능성) |

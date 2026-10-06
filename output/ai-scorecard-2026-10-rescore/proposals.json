@@ -8891,7 +8891,53 @@
       },
       "proposed_by": "noble",
       "proposed_at": "2026-10-06",
-      "status": "pending"
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "kind": "criteria",
+          "score": null,
+          "inputs": {
+            "imitation": "fail",
+            "revenue_model": "pass",
+            "acceleration": "fail",
+            "door_closed": "fail"
+          },
+          "evidence": [
+            "NVIDIA ③ 은 세 기준의 통과점이 1 이라 2점이다.",
+            "NVIDIA 는 AI 가속기 시장을 연 개척자이자 지금의 지배자, 곧 퍼스트무버라서 선두가 못 베끼는 방식으로 뒤늦게 들어가는 Last Mover 구도와 맞지 않는다.",
+            "모방 불가능성은 실패로 판정했다. 커스텀 ASIC 출하가 44.6% 늘 때 머천트 GPU 출하는 16.1% 늘어, NVIDIA 는 구조적으로 못 베끼는 자산으로 앞서 가는 쪽이 아니라 추격당하는 쪽이다.",
+            "별도 수익모델은 통과다. 모델이 아니라 GPU 와 시스템을 파는 하드웨어 매출이 전략을 먹여 살린다.",
+            "후발 가속도는 실패로 판정돼 있으며, 이는 NVIDIA 가 후발 진입자가 아니라 시장을 연 쪽이라는 데서 나온 판정으로 읽힌다(추론).",
+            "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)도 없다."
+          ],
+          "status": "carried",
+          "reviewer": "legacy:v1.5",
+          "reviewed_at": "2026-09-02",
+          "evidence_ids": null
+        },
+        "after": {
+          "kind": "criteria",
+          "score": null,
+          "inputs": {
+            "imitation": "fail",
+            "revenue_model": "pass",
+            "acceleration": "fail",
+            "door_closed": "fail"
+          },
+          "evidence": [
+            "NVIDIA ③ 은 세 기준의 통과점이 1 이라 2점이다.",
+            "모방 불가능성은 실패다. NVIDIA 가 앞서 있는 바탕인 CUDA 개발자 생태계는 ① 의 설치기반이라 모방 불가능성 근거로 쓰지 않고, Alphabet 이 자체 칩 TPU 를 Anthropic·Meta 에 파는 것처럼 같은 가속기를 만드는 경쟁자가 이미 있다.",
+            "커스텀 ASIC 출하가 44.6% 늘 때 머천트 GPU 출하는 16.1% 늘어, 구조적으로 못 베끼는 자산 덕에 격차를 벌리는 모습도 아니다.",
+            "별도 수익모델은 통과다. 모델이 아니라 GPU 와 시스템을 파는 하드웨어 매출이 전략을 먹여 살린다.",
+            "후발 가속도는 실패다. 데이터센터 매출의 직전 분기 대비 성장률이 2026-04-26 종료 분기 +21%($75.2B)에서 2026-07-26 종료 분기 +18%($89.0B)로 내려 감속이다(각 분기 10-Q).",
+            "같은 두 분기의 전년 대비 성장률은 +92% 에서 +117% 로 올랐지만, 전년 1분기 데이터센터 매출에는 중국향 Hopper 출하 $4.6B 가 들어 있어 1분기의 전년 대비 성장률이 눌려 있다(추론). 그래서 비교 기준이 고른 직전 분기 대비 성장률로 판정했다.",
+            "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)도 없다."
+          ]
+        }
+      },
+      "decided_by": "noble",
+      "decided_at": "2026-10-06",
+      "decision_note": null
     },
     {
       "proposal_id": "PRP-135",
@@ -8928,7 +8974,46 @@
       },
       "proposed_by": "noble",
       "proposed_at": "2026-10-06",
-      "status": "pending"
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "kind": "grade",
+          "score": null,
+          "inputs": {
+            "A": 1,
+            "H": -1
+          },
+          "evidence": [
+            "Oracle ⑤ 아군 확보는 3 + 동맹 등급(+1) + 적대 등급(−1) 로 3점이다.",
+            "동맹 등급 +1 은 OpenAI 와의 대형 클라우드 계약, NVIDIA, TikTok 미국 법인, 정부 클라우드 계약 같은 의미 있는 상업 동맹에서 나온다.",
+            "적대 등급 −1(비용형)은 AWS·Azure·GCP 3사와 정면으로 경쟁하지만 규제 적대가 적고, 있는 적대도 사업 구조를 건드리지 않는 비용이라는 판정이다.",
+            "2026-10-05 Bloomberg 가 보도한 2025년 의료 부문 침해 사고(2,000만 명 정보 유출)도 소송·규제 조사로 이어질 수 있는 비용형 재료다."
+          ],
+          "status": "carried",
+          "reviewer": "legacy:v1.5",
+          "reviewed_at": "2026-09-02",
+          "evidence_ids": null
+        },
+        "after": {
+          "kind": "grade",
+          "score": null,
+          "inputs": {
+            "A": 2,
+            "H": -1
+          },
+          "evidence": [
+            "Oracle ⑤ 아군 확보는 3 + 동맹 등급(+2) + 적대 등급(−1) 로 4점이다.",
+            "동맹 등급 +2 는 지분이 걸린 동맹이 둘이라서 나온다. Oracle 은 Stargate LLC 에 $7B 를 지분 출자해 OpenAI·SoftBank·MGX 와 함께 데이터센터를 짓고, TikTok 미국 합작법인(TikTok USDS Joint Venture) 지분 15% 를 지분법으로 보유하며 그 합작법인의 클라우드를 맡는다(2026-08-31 분기 10-Q 주석 1).",
+            "두 동맹 모두 상대가 잘되면 Oracle 의 지분 가치와 클라우드 매출이 함께 늘어나는 구조라 조달이 아니라 동맹이다.",
+            "그 밖에 OpenAI 와의 대형 클라우드 계약, NVIDIA, 정부 클라우드 계약 같은 상업 동맹도 있다.",
+            "적대 등급 −1(비용형)은 AWS·Azure·GCP 3사와 정면으로 경쟁하지만 규제 적대가 적고, 있는 적대도 사업 구조를 건드리지 않는 비용이라는 판정이다.",
+            "2026-10-05 Bloomberg 가 보도한 2025년 의료 부문 침해 사고(2,000만 명 정보 유출)도 소송·규제 조사로 이어질 수 있는 비용형 재료다."
+          ]
+        }
+      },
+      "decided_by": "noble",
+      "decided_at": "2026-10-06",
+      "decision_note": null
     },
     {
       "proposal_id": "PRP-136",
@@ -8963,7 +9048,40 @@
       },
       "proposed_by": "noble",
       "proposed_at": "2026-10-06",
-      "status": "pending"
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "kind": "score",
+          "score": 4,
+          "inputs": {},
+          "evidence": [
+            "테슬라 ④ 는 차량 밖으로 넓힌 사업 폭으로 4점이다.",
+            "에너지 저장은 실제로 배치되는 사업이고, 2026년 3분기 배치량이 13.7GWh 라는 보도가 있다. 이 수치는 공시 본문과 대조하지 않은 보도 제목 값이고, 시장 예상에 못 미쳤다는 보도도 함께 있다.",
+            "로보택시는 오스틴에서 무인 운행을 하고 있다.",
+            "Optimus 와 Terafab 도 폭에 넣었으나, Optimus 는 아직 배치되지 않았고 Terafab 은 건설·장비 조달 단계다.",
+            "배치 전 사업을 폭에 넣은 점은 미해결 쟁점으로 남아 있고, Optimus 생산·배치 대수가 확인되면 다시 본다."
+          ],
+          "status": "carried",
+          "reviewer": "legacy:v1.5",
+          "reviewed_at": "2026-09-02",
+          "evidence_ids": null
+        },
+        "after": {
+          "kind": "score",
+          "score": 3,
+          "inputs": {},
+          "evidence": [
+            "테슬라 ④ 는 실제로 배치된 사업 폭이 차량·에너지 저장·소규모 로보택시라 3점이다.",
+            "에너지 저장은 실제로 배치되는 사업이고, 2026년 3분기 배치량이 13.7GWh 라는 보도가 있다. 이 수치는 공시 본문과 대조하지 않은 보도 제목 값이고, 시장 예상에 못 미쳤다는 보도도 함께 있다.",
+            "로보택시는 오스틴에서 무인 운행을 하고 있지만, 상업 운행 첫 달이 순탄치 않았고 확장은 아직 과제라는 보도(CNBC, 2026-10-03)가 있다.",
+            "Optimus 는 아직 배치되지 않았고 Terafab 은 건설·장비 조달 단계라, 출하·실제 배포만 세는 ④ 판정 지침에 따라 사업 폭에 넣지 않는다.",
+            "Optimus 생산·배치 대수나 Terafab 가동이 확인되면 다시 본다."
+          ]
+        }
+      },
+      "decided_by": "noble",
+      "decided_at": "2026-10-06",
+      "decision_note": null
     },
     {
       "proposal_id": "PRP-137",
@@ -9003,7 +9121,56 @@
       },
       "proposed_by": "noble",
       "proposed_at": "2026-10-06",
-      "status": "pending"
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "kind": "gate_inputs",
+          "score": null,
+          "inputs": {
+            "fcf_trend": "stable",
+            "bep_retreat": "no",
+            "buffer_erosion": "no",
+            "direction_A": "unknown",
+            "direction_B": "unknown",
+            "coverage_comparable": "unknown",
+            "operating_result_reviewed": "profit"
+          },
+          "evidence": [
+            "마이크로소프트는 최근 1년(2026-06-30 회계연도) 영업이익 $155.2B, 매출 $331.8B 로 영업이익률이 46.8% 라 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+            "게이트 2(최근 1년 잉여현금흐름)는 영업현금흐름 $182.9B 에서 설비투자 $115.9B 를 뺀 +$67.0B 로 흑자다.",
+            "2026 역년 설비투자 계획을 $190B 에서 $175B 로 낮춰 현금 유출이 커지는 방향이 아니므로, 우리는 추세를 '안정'으로 판정했다.",
+            "흑자이고 추세 안정이라 ⑨ 는 0 에서 끝나고, 게이트 3(버티는 기간)과 게이트 4(미래 지출이 덮이는가)는 계산하지 않는다."
+          ],
+          "status": "carried",
+          "reviewer": "legacy:v1.5",
+          "reviewed_at": "2026-09-02",
+          "evidence_ids": null
+        },
+        "after": {
+          "kind": "gate_inputs",
+          "score": null,
+          "inputs": {
+            "fcf_trend": "deteriorating",
+            "bep_retreat": "no",
+            "buffer_erosion": "no",
+            "direction_A": "unknown",
+            "direction_B": "unknown",
+            "coverage_comparable": "unknown",
+            "operating_result_reviewed": "profit"
+          },
+          "evidence": [
+            "마이크로소프트는 최근 1년(2026-06-30 회계연도) 영업이익 $155.2B, 매출 $331.8B 로 영업이익률이 46.8% 라 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+            "게이트 2(최근 1년 잉여현금흐름)는 영업현금흐름 $182.9B 에서 설비투자 $115.9B 를 뺀 +$67.0B 로 흑자다.",
+            "다만 추세는 악화로 판정했다. 분기 잉여현금흐름이 2026년 1~3월 $15.8B, 4~6월 $19.6B 로 전년 같은 분기($20.3B·$25.6B)보다 각각 22%·23% 줄었고, 4~6월 분기 설비투자는 $35.8B 로 전년 같은 분기 $17.1B 의 두 배를 넘었다(10-Q·10-K 현금흐름표 누계의 차로 구한 분기 값).",
+            "최근 1년 잉여현금흐름도 2025 회계연도 $71.6B 에서 2026 회계연도 $67.0B 로 줄었다. 분기 수치는 추세를 설명하는 데만 쓴다.",
+            "2026 역년 설비투자 계획을 $190B 에서 $175B 로 낮췄지만, 계획은 실측 현금흐름이 아니라 추세 판정의 근거로 쓰지 않는다.",
+            "흑자이나 추세 악화 칸이라 ⑨ 는 −1 에서 끝나고, 게이트 3(버티는 기간)과 게이트 4(미래 지출이 덮이는가)는 계산하지 않는다."
+          ]
+        }
+      },
+      "decided_by": "noble",
+      "decided_at": "2026-10-06",
+      "decision_note": null
     }
   ]
 }
