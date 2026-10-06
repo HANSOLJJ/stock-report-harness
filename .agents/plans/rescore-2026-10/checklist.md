@@ -32,8 +32,10 @@
 - [x] 사람: 승인 페이지에서 승인(approval_valid)
 - [x] 빌드 → report.html·audit.md·history.csv 14행, `validate_report_contract --require-html` PASS
 - [x] (추가 2) 규칙 한 줄(`4ac450f`), 코드: 현재 문장만 렌더·기업 요약 필드·SUMMARY 제안·일괄 반영·검증기(`6a991ee`), 근거만 바꾸는 수정은 승계 유지(`5a284f5`)
-- [ ] (추가 2) 서브에이전트 5개가 판단 114개·요약 14개·근거·트리거 문장을 다시 씀 → `apply_rewrite.py` 검사 → 제안·직접 반영
-- [ ] (추가 2) 사람: `proposal --all-pending --accept` → research·calculate·draft → 1차 리뷰 → 확인 1회 → 재승인 → 재빌드
+- [x] (추가 2) 서브에이전트 5개가 판단 114개·요약 14개·근거·트리거 문장을 다시 씀 → `apply_rewrite.py` 검사 → 제안·직접 반영
+- [x] (추가 2) 사람: `proposal --all-pending --accept` → research·calculate·draft(`9e336b6`) → 1차 리뷰(사실·재무·출력 pass, 규칙 needs_fix 4건)
+- [x] (추가 2) 사용자 결정 "네 건 모두 다시 판정": 제안 PRP-134~137(`proposals.json`), 렌더러 꼬리표·여신 주석 수정
+- [ ] (추가 2) 사람: PRP-134~137 반영·거부 → research·calculate·draft → 확인 리뷰 1회 → 재승인 → 재빌드
 - [x] 화면 검사(Playwright): 320·768·1280px 가로 넘침 없음, 넓은 차트는 가로 스크롤 상자(.mtwrap) 안. factor 탐색 링크 높이 19px(24px 미만, 렌더러는 시험 실행과 같음)는 다음 실행 과제
 
 ## 4. 리뷰
