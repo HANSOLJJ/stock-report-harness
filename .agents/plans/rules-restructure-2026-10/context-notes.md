@@ -197,3 +197,9 @@ HANDOVER·구현계획·채점표 v1.5 에서 살리기로 한 것의 자리: �
 - **기준선 이관 명령.** 원천 자료를 지우면 기본 경로가 없어지므로 `import-baseline` 은 `--html`·`--md` 가 없으면 `git show 79e476b:<경로>` 로 꺼내는 방법을 알리고 종료 코드 2 로 멈춘다. 옛 기본값 줄은 날짜와 사유를 적어 주석으로 남겼다.
 - **확인.** Python 1254건 통과(건너뜀 0), Node 21건 통과. 승인 실행 `ai-scorecard-2026-09-obsreg`·`2026-10-test` 는 `validate_report_contract.py` 통과("results deterministic recompute" 포함).
 - **발견(이번 수정과 무관): `ai-scorecard-2026-09-baseline` 은 재계산 검사에서 실패한다.** 수정 전 커밋(`HEAD`, `git archive` 로 스크래치에 푼 사본)에서도 같은 오류가 나서 원래 있던 문제로 판단했다. 이 실행은 v1.5 규칙의 첫 기준선 실행이고, 9월 수정 라운드에서 계산 문구가 바뀌며 깨진 것으로 보이나 원인은 확인하지 않았다. 고치지 않았다.
+
+## 7단계 (2026-10-06)
+
+- 스킬 다섯 개를 고쳤다. `score-plan` 3단계(기준선 이관 → 이관돼 있으니 다시 하지 않는다), `score-research` 2단계(NTM EPS `quarters` → 기간 지표의 `period_basis`), `score-collect`(문서 경로와 별표 인용 다섯 곳, 새 문장에 별표 이름을 쓰지 않는다는 줄), `score-goal` 5번(확인 리뷰 한 번, 판단 입력이 원인이면 "제안 반영 대기"에서 멈춤), `score-review`(절차 4번과 `blocked` 정의). 확인 리뷰의 범위를 자세히 정하는 일은 `TODO.md` 7번이다.
+- 다섯 파일을 `.agents/skills/` 에 복사했고 `diff -rq .agents/skills .claude/skills` 가 빈 출력이다.
+- **10-02 에 빠뜨린 것을 찾았다.** `.codex/agents/fact-checker.toml` 에 이해상충 점검 줄이 남아 있었다. `.claude/agents/fact-checker.md` 만 고치고 Codex 사본을 고치지 않았기 때문이다. 같은 줄로 맞췄다. `.codex/` 는 gitignore 대상이라 커밋에 남지 않는다. 앞으로 리뷰어 정의를 고칠 때는 `.codex/agents/*.toml` 도 함께 본다.

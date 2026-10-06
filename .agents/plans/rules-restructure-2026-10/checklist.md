@@ -70,11 +70,12 @@
 
 ## 7. 스킬과 리뷰어
 
-- [ ] 재리뷰 상한을 1회로 통일 (`score-goal` 5번, `score-review` 상태 절의 `blocked` 정의, `score-review` 절차 4번)
-- [ ] `score-goal` 5번에 "제안 반영 대기" 멈춤 지점 추가
-- [ ] `score-plan` 3단계, `score-research` 2단계의 낡은 문구
-- [ ] `score-collect` 의 별표 인용과 문서 경로
-- [ ] `.agents/skills` 사본 갱신, `diff -rq .agents/skills .claude/skills` 빈 출력
+- [x] 재리뷰 상한을 1회로 통일 (`score-goal` 5번, `score-review` 상태 절의 `blocked` 정의, `score-review` 절차 4번)
+- [x] `score-goal` 5번에 "제안 반영 대기" 멈춤 지점 추가
+- [x] `score-plan` 3단계, `score-research` 2단계의 낡은 문구
+- [x] `score-collect` 의 별표 인용과 문서 경로
+- [x] `.agents/skills` 사본 갱신, `diff -rq .agents/skills .claude/skills` 빈 출력
+- [x] `.codex/agents/fact-checker.toml` 의 이해상충 점검 줄을 `.claude/agents/fact-checker.md` 와 맞춤(10-02 에 빠뜨림, gitignore 대상)
 
 ## 8. 옛 문서 삭제
 

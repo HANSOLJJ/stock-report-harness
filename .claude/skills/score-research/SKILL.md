@@ -10,7 +10,7 @@ description: scorecard 실행의 원자료(observations)·판단(judgments)·출
 ## 절차
 
 1. `output/<run_id>/plan.md` 와 `output/<run_id>/run.json` 이 있는지 확인한다. 근거 후보가 필요하면 `/score-collect <run_id>` 를 먼저 수행했는지 확인한다.
-2. 새 원자료가 있으면 `output/<run_id>/observations.json` 에 추가한다. 필수: `metric`(카탈로그), `value`, `unit`, `as_of`, `kind`, `source_id`(sources.json 에 등록), `status`(새 자료는 `verified`), `basis`(주가·EPS 는 `currency`·`share_basis`, NTM EPS 는 `quarters` 4개 YYYYQn).
+2. 새 원자료가 있으면 `output/<run_id>/observations.json` 에 추가한다. 필수: `metric`(카탈로그), `value`, `unit`, `as_of`, `kind`, `source_id`(sources.json 에 등록), `status`(새 자료는 `verified`), `basis`(주가는 `currency`·`share_basis`, 매출·이익 같은 기간 지표는 `period_basis`. ⑥ 의 트랙이 이 값으로 정해진다).
    - 수집 실패는 `collection_failed`, 확인된 비공개는 `not_disclosed`, 기간·범위가 다르면 `incompatible_basis`. 다른 기간·지표로 조용히 대체하지 않는다.
    - 출처 없는 URL 을 만들지 않는다. URL 이 없으면 `url: null`.
 3. 새 정성 판정이 있으면 `judgments.json` 을 손으로 고치지 않는다. **에이전트는 `propose` 로 판단 변경 제안을 쓰고**, 사람이 승인 페이지 5절에서 반영·거부한다(2026-10-01). 제안은 확정 근거만 `--cite` 로 인용하고, 근거 문장 변경은 `--evidence`(반영 뒤 전체 목록)로 준다. `uv run --frozen python -X utf8 scripts/scorecard_cli.py propose <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" --cite EV-…`. 사람이 직접 고칠 때는 `judge` 명령을 쓴다. 명령이 형식을 검증하고, `status: new`·검토자·검토일을 쓰고, 이전 값을 `revision_history` 에 남긴다. F1·F4·F8 은 점수와 근거, F3 는 criteria, F5 는 grade, F7 은 matrix, F9 는 gate_inputs 를 고친다. F3·F5·F7·F9 의 점수 칸은 규칙이 계산하므로 고칠 수 없다.

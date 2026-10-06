@@ -27,7 +27,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
    - 출력·가독성: `report-designer` — draft·HTML(있으면) 숫자 일치, 낡은 비교 문장(C-19), 근거·트리거 절 가독성, dashboard-design 기준.
    - 각 `review-parts/<영역>.md` 는 frontmatter 에 `reviewer_agent`(예: `fact-checker`), `session`(리뷰 세션 식별자), `reviewed_at`(YYYY-MM-DD)을 둔다. 본문 첫머리의 `검토자:`·`결과:` 줄은 승인 페이지 요약이 읽으므로 그대로 둔다.
 3. 리뷰 파일의 "검토 영역" 표에 검토자·결과·요약을, "체크리스트" 표에 Q01~Q23 결과와 근거를 채운다. not_applicable 도 사유를 쓴다. 수행하지 않은 검토를 pass 로 쓰지 않는다.
-4. 네 영역 모두 pass 이고 fail 항목이 없을 때만 frontmatter `status: pass`. 하나라도 needs_fix 면 `needs_fix` 로 두고 상위 단계(collect/research/calculate/draft/렌더러)로 돌아가 수정 후 재생성·재리뷰한다. 자료·규칙·판단·초안이 바뀌면 리뷰는 무효이므로 템플릿의 `results_hash`·`draft_hash` 를 갱신한다(`review-template --force` 후 다시 채움).
+4. 네 영역 모두 pass 이고 fail 항목이 없을 때만 frontmatter `status: pass`. 하나라도 needs_fix 면 `needs_fix` 로 두고 상위 단계(collect/research/calculate/draft/렌더러)로 돌아가 발견을 한 묶음으로 고친 뒤 재생성하고 **확인 리뷰를 한 번** 한다. 확인 리뷰에서도 점수·순위·체크리스트 판정을 바꾸는 발견이 남으면 `blocked` 로 사람에게 보고한다(2026-10-06). 자료·규칙·판단·초안이 바뀌면 리뷰는 무효이므로 템플릿의 `results_hash`·`draft_hash` 를 갱신한다(`review-template --force` 후 다시 채움).
 5. `uv run --frozen python -X utf8 scripts/validate_report_contract.py <run_id>` 를 실행해 통과를 확인한다.
 
 ## 판단 수정을 제안할 때
@@ -51,7 +51,7 @@ uv run --frozen python -X utf8 scripts/scorecard_cli.py propose <run_id> --compa
 
 - `pass`: 승인 요청 가능.
 - `needs_fix`: 생성 단계에서 고칠 수 있는 문제.
-- `blocked`: 같은 차단 이슈 3회 반복 또는 외부 자료·권한 한계.
+- `blocked`: 확인 리뷰 뒤에도 점수·순위·체크리스트 판정을 바꾸는 발견이 남았거나, 외부 자료·권한 한계.
 
 ## 완료 보고
 
