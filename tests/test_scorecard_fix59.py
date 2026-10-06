@@ -22,7 +22,9 @@ RULES = load_rules("v1.7")
 SLUG = "ai-scorecard-2026-09-obsreg"
 RUN_DIR = ROOT / "output" / SLUG
 SRC = ROOT / "scripts" / "scorecard"
-V15 = ROOT / "docs" / "scorecard" / "rules" / "AI기업_채점규칙_v1.5.md"  # 2026-10-01 원천 자료를 docs/ 로 옮김
+# 2026-10-06 규칙 문서 재편으로 v1.5 규칙 문서를 작업 폴더에서 지웠다. 인용 행 대조는 git 이력에서 꺼낸 원문으로
+# 한다(파일이 없다고 건너뛰면 조용히 통과한다).
+from tests.legacy_docs import RULES_V15, legacy_text  # noqa: E402
 
 
 def load(name: str) -> dict:
@@ -64,8 +66,11 @@ class Fix59Test(unittest.TestCase):
         self.assertIn("and not bep_retreat", old["where_in_code"])
         self.assertEqual(old["decided_by"], "사용자 (2026-09-17)")
         # 인용한 v1.5 행이 실제로 그 문장인지 원문에서 확인한다.
-        if V15.is_file():
-            lines = V15.read_text(encoding="utf-8").splitlines()
+        v15 = legacy_text(RULES_V15)
+        if v15 is None:
+            self.skipTest("git 이력에서 v1.5 규칙 원문을 꺼내지 못했다")
+        else:
+            lines = v15.splitlines()
             self.assertIn("BEP 목표가 후퇴", lines[469])
             self.assertIn("OpenAI", lines[493])
             self.assertIn("BEP 자체가 후퇴", lines[602])

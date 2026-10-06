@@ -357,7 +357,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         flagged = len([s for s in ctx.sources.get("items", []) if s.get("conflict_of_interest")])
         private_count = sum(1 for company in results["companies"] if not company["listed"])
         lines += [f"- **이해상충 고지 — 채점 대상에 Anthropic 이 포함되고, 이 채점표를 Anthropic 이 만든 Claude 가 작성했다**"
-                  f"(채점규칙 384행 · HANDOVER 75행 · 운영이력 긴장 #4·#11). 투자 판단에 사용할 경우 감안할 것. "
+                  f"(채점 규칙 머리말 · 긴장 #4·#11). 투자 판단에 사용할 경우 감안할 것. "
                   f"비상장 {private_count}사의 수치는 이해당사자 1차 발표에서 온다. 이해상충이 표기된 출처 {flagged}건의 개별 문구는 "
                   f"References 의 각 출처 줄에 있고, `알려진 한계` 절이 제3자 재검토 약속을 함께 적는다."]
     if results["pending_rule_decisions"]:

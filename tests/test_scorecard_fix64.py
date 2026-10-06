@@ -156,7 +156,7 @@ class Fix64Test(unittest.TestCase):
         self.assertEqual(r.errors, [], r.errors)
         # 경고 둘은 남는다 — 승계 예외 건수와 그 검사가 확인하지 않는 조건이다.
         self.assertTrue(any("승계 예외로 통과한 체크리스트 fail 11건" in w for w in r.warnings))
-        self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 71행)" in w for w in r.warnings))
+        self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 「리뷰 범위 — 승계 판단 예외」)" in w for w in r.warnings))
 
     def test_html_carries_the_corrected_method_text(self):
         html = HTML.read_text(encoding="utf-8")

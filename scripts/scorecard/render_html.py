@@ -1020,7 +1020,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             "",
             "## 규칙 파일의 항목 메모",
             "",
-            "리포트 본문의 `무엇을 보고 매기는가` 는 채점규칙 별표에서 가져온다. 이 표는 규칙 JSON 의 "
+            "리포트 본문의 `무엇을 보고 매기는가` 는 항목 설명 원문(`scorecard/factor-concepts.json`)에서 가져온다. 이 표는 규칙 JSON 의 "
             "`factors.*.note` 원문이며 **결정 번호와 작업 경위가 섞여 있어 본문에 싣지 않는다.** "
             "규칙 파일과 대조할 때 쓴다.",
             "",
@@ -1119,7 +1119,7 @@ def factor_card(ctx: Any, fid: str, lines: list[str], judged: set[str]) -> str:
             if "metrics" in (stale.get("fields") or []) else "")
     secs.append(('무엇을 보고 매기는가',
                  "".join(f'<p class="mtext">{inline_html(x)}</p>' for x in criteria) + warn,
-                 '채점규칙 별표의 지표다.'))
+                 '채점 규칙의 지표다.'))
     secs.append(('점수를 어떻게 만드는가', _nested_list(lines), ''))
 
     body = "".join(

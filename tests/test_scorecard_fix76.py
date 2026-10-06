@@ -24,7 +24,7 @@ TOTALS = {"alphabet": 15, "amazon": 15, "meta": 15, "microsoft": 14, "tsmc": 10,
           "spacex-xai": 9, "nvidia": 9, "apple": 8, "alibaba": 7, "palantir": 6, "tesla": 5,
           "openai": 4, "oracle": 2}
 
-# 본문에 실리면 안 되는 작업 메모. `별표 A` 같은 출처 표기는 대상이 아니다.
+# 본문에 실리면 안 되는 작업 메모. 출처 표기(지금 규칙의 이름)는 대상이 아니다.
 WORKNOTES = ("HANDOVER", "carried_score", "pending_rule_decision", "needs_rule_decision")
 
 
@@ -70,7 +70,8 @@ class Fix76Test(unittest.TestCase):
         if not src.is_file():
             self.skipTest("원본 파일이 이 기기에 없다")
         # 추출할 때 `<b>` 를 `**` 로 옮겼으므로 강조 표시를 뺀 뒤 견준다.
-        raw = flatten(src.read_text(encoding="utf-8"))
+        # 2026-10-06: 화면용 문장은 `별표 X` 를 지금 규칙 이름으로 옮겨 내보낸다. 원본에도 같은 대응을 대고 견준다.
+        raw = flatten(rc.rule_names(src.read_text(encoding="utf-8")))
         for fid in rh.FACTOR_IDS:
             con = rc.factor_concept(self.ctx, fid)
             for field in ("definition", "question", "metrics"):
@@ -105,9 +106,10 @@ class Fix76Test(unittest.TestCase):
                         self.assertNotIn(w, line)
 
     def test_strip_worknotes_keeps_the_source_marker(self):
-        """`별표 A` 는 읽는 사람이 원문을 찾아가는 표시라 남긴다."""
-        self.assertIn("별표 A", rc.factor_criteria(self.ctx, "F1")[0])
-        self.assertIn("별표 D", rc.factor_criteria(self.ctx, "F4")[0])
+        """출처 표기는 남긴다. 2026-10-06 규칙 문서 재편 뒤에는 `별표 X` 대신 지금 규칙의 이름으로 나온다."""
+        self.assertIn("① 채널 규칙", rc.factor_criteria(self.ctx, "F1")[0])
+        self.assertIn("계획 0점 원칙", rc.factor_criteria(self.ctx, "F4")[0])
+        self.assertNotIn("별표", rc.factor_criteria(self.ctx, "F1")[0])
         got = rc.strip_worknotes("세 경로 통과 수 → 0개 2(C-03 확정, 2026-09-14). F2 는 carried_score 다")
         self.assertNotIn("C-03", got)
         self.assertNotIn("carried_score", got)

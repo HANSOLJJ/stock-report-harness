@@ -9,9 +9,13 @@ from typing import Any
 from .schema import METRICS, SchemaError, resolve_company_id, sha256_file, write_json
 
 # 2026-10-01: 원천 자료를 AI_company_analysis_factor/ 에서 docs/scorecard/source/ 로 옮기며 절대 경로를 저장소 기준으로 바꿨다.
-DEFAULT_SOURCE_DIR = Path(__file__).resolve().parents[2] / "docs" / "scorecard" / "source"
-DEFAULT_HTML = DEFAULT_SOURCE_DIR / "AI기업_채점표_v1.5.html"
-DEFAULT_MD = DEFAULT_SOURCE_DIR / "AI기업_채점표_v1.5.md"
+# 2026-10-06 규칙 문서 재편: 기준선은 이미 scorecard/baseline/v1.5/ 에 이관돼 있고 원천 자료를 작업 폴더에서 지웠다.
+# 다시 이관해야 하면 아래 커밋에서 원본을 꺼내 경로를 인자로 준다(scorecard_cli.py import-baseline --html … --md …).
+# DEFAULT_SOURCE_DIR = Path(__file__).resolve().parents[2] / "docs" / "scorecard" / "source"
+# DEFAULT_HTML = DEFAULT_SOURCE_DIR / "AI기업_채점표_v1.5.html"
+# DEFAULT_MD = DEFAULT_SOURCE_DIR / "AI기업_채점표_v1.5.md"
+SOURCE_COMMIT = "79e476bfa8a14c83dcaad035ebccd52e0939b690"
+SOURCE_PATHS = {"html": "docs/scorecard/source/AI기업_채점표_v1.5.html", "md": "docs/scorecard/source/AI기업_채점표_v1.5.md"}
 BASELINE_ID = "v1.5"
 BASELINE_AS_OF = "2026-09-02"
 FACTORS = ("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9")

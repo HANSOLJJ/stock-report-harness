@@ -532,8 +532,25 @@ _WARN_RE = re.compile("|".join(
     re.escape(k) for k in sorted(list(WARNING_PHRASES) + list(RULE_PATHS), key=len, reverse=True)))
 
 
+# 2026-10-06 규칙 문서 재편: 별표 A~J 체계를 없애고 `docs/scorecard/rules.md` 의 절로 나눴다. 저장된 문구
+# (판단·결과·출처·개념 설명)의 `별표 X` 는 승인 해시 때문에 고치지 않고, 화면에 낼 때 새 규칙의 이름으로 옮긴다.
+STAR_NAMES = {
+    "A": "① 채널 규칙", "B": "③ 두 동작 규칙", "C": "⑤ 적대 성격 규칙", "D": "계획 0점 원칙",
+    "E": "비AI 사업 귀속 원칙", "F": "② 세 경로 규칙", "G": "⑤ 동맹·적대 등급 규칙",
+    "H": "⑤ 조달·동맹 네 질문", "I": "⑦ 판정표", "J": "신용 지표 교차검증 원칙",
+}
+# 한글이 바로 붙어도 잡도록 `\b` 대신 영숫자가 이어지지 않는지만 본다(`별표 A의` 는 잡고 `별표 AB` 는 안 잡는다).
+_STAR_RE = re.compile(r"별표\s*([A-J])(?![A-Za-z0-9])")
+
+
+def rule_names(text: str) -> str:
+    """`별표 X` 를 지금 규칙 문서의 이름으로 옮긴다."""
+    return _STAR_RE.sub(lambda m: STAR_NAMES[m.group(1)], text) if "별표" in text else text
+
+
 def source_names(text: str) -> str:
     """출처 표기를 읽을 수 있는 문서 이름으로 옮긴다. 행 번호는 `split_worknote` 가 이력으로 보낸다."""
+    text = rule_names(text)
     out = re.sub(r"\b(HANDOVER|채점표|채점규칙|구현계획)\s*\d+행",
                  lambda m: SOURCE_NAMES[m.group(1)], text)
     return re.sub(r"\b(HANDOVER)\b", lambda m: SOURCE_NAMES[m.group(1)], out)
@@ -979,7 +996,7 @@ def status_summary(obs: Any, cids: list[str], columns: list[tuple[str, str]]) ->
 PRICE_STATUS_COLUMNS = [("주가", "price"), ("시총", "market_cap"), ("NTM PER", "ntm_per"), ("TTM PER", "ttm_per"), ("영업외 비중", "nonop_share"), ("P/S", "ps_ratio")]
 FIN_STATUS_COLUMNS = [("현금", "cash"), ("TTM FCF", "fcf_ttm"), ("순현금/순부채", "net_cash"), ("D/EBITDA", "debt_ebitda"), ("신용", "credit_rating")]
 OFFBALANCE_HEADER = "부외 약정(B종 실측 · 없으면 v1.5 원문)"
-CREDIT_NOTE = "신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(별표 J)."
+CREDIT_NOTE = "신용등급·CDS 는 점수 입력이 아니라 교차검증 지표다(채점 규칙 2.8)."
 
 
 def vendor_mark(obs: Any, cid: str, metric: str) -> str:
@@ -1265,10 +1282,11 @@ def factor_concept(ctx: Any, fid: str) -> dict[str, Any]:
         return {}
     # 2026-09-17 FIX-77: 원본의 그림 표시(`🆕`·`⚠️`)는 v1.5 안에서만 뜻이 서던 것이다.
     # 본문과 같은 규칙으로 밝히거나 뺀다.
+    # 2026-10-06: 원본 문장은 파일에서 고치지 않고(사용자가 쓴 문장이다) `별표 X` 만 지금 규칙 이름으로 옮긴다.
     for key in ("definition", "question", "metrics"):
         if item.get(key):
-            item[key] = split_worknote(str(item[key]))[0]
-    item["examples"] = [split_worknote(str(x))[0] for x in (item.get("examples") or [])]
+            item[key] = rule_names(split_worknote(str(item[key]))[0])
+    item["examples"] = [rule_names(split_worknote(str(x))[0]) for x in (item.get("examples") or [])]
     # 이름이 바뀌었으면 **지금 이름**을 제목으로 쓰고 원본 이름은 아래에 남긴다.
     now = str(ctx.rules.factor(fid)["label"])
     src = f"{item.get('mark', '')} {item.get('name', '')}".strip()
@@ -1597,7 +1615,7 @@ def conflict_lines(ctx: Any) -> list[str]:
 
     committed = by_kind.get("committed") or []
     if committed:
-        out.append(f"**제3자 재검토 약속**(채점규칙 384행) — 비 Claude 세션 재판정이 **확정**된 긴장 {len(committed)}건: {_ids(committed)}.")
+        out.append(f"**제3자 재검토 약속**(규칙 파일 긴장 목록) — 비 Claude 세션 재판정이 **확정**된 긴장 {len(committed)}건: {_ids(committed)}.")
     partial = by_kind.get("partial") or []
     if partial:
         out.append(f"  - **일부만 확정** {len(partial)}건 — {_ids(partial, 'third_party_scope')}. 이 가운데 일부 판단만 "

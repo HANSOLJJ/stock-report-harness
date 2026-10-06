@@ -1193,7 +1193,7 @@ TRIGGER_STATUSES = {"watching", "fired", "expired", "withdrawn"}
 # 2026-10-01 이전 트리거 처리. `carry.ref` 는 이어받은 실행의 트리거(`<run_id>:TRG-NNN`)나
 # 기준선 트리거(`baseline/<baseline_id>:TRIG-NNN`)를 가리킨다. 집합 대조는 stages.trigger_carry_gaps 가 한다.
 TRIGGER_CARRY_REF_RE = re.compile(r"^(?:baseline/[A-Za-z0-9._-]+:TRIG-\d{3}|ai-scorecard-[a-z0-9-]+:TRG-\d{3})$")
-# C-14: 트리거는 미래 점수를 저장하지 않는다(design-guideline 272행). 키 이름으로 점수처럼 보이는 필드를 막는다.
+# C-14: 트리거는 미래 점수를 저장하지 않는다(AGENTS.md 계약, rules.md 2.1). 키 이름으로 점수처럼 보이는 필드를 막는다.
 SCORE_LIKE_KEY_RE = re.compile(r"score|점수|rating|points|delta|expected|target", re.I)
 # C-14: `conditional_impact` 에 점수 이동(-3→-4, +2점)을 적지 않는다. 사건의 조건부 영향은 말로 쓴다.
 SCORE_TEXT_RE = re.compile(r"[-+−]?\d+\s*(?:→|->)\s*[-+−]?\d+|[-+−]?\d+\s*점")

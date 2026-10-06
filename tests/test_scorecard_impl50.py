@@ -79,11 +79,13 @@ class BothSidesTest(unittest.TestCase):
                 expected = "new" if j["company_id"] in ("nvidia", "oracle") else "carried"
                 self.assertEqual(j["status"], expected)
 
-    def test_guideline_row_is_marked_stale(self):
-        text = (ROOT / "docs" / "scorecard" / "design-guideline.md").read_text(encoding="utf-8")
-        row = next(line for line in text.splitlines() if line.startswith("| C-11 |"))
-        self.assertIn("~~S-SCORE의 영업외 비중 설명은 F7로 이월이라고 하나", row)
-        self.assertIn("[낡음 2026-09-14 IMPL-50]", row)
+    def test_rules_doc_keeps_nonop_share_out_of_f7(self):
+        # 2026-10-06 규칙 문서 재편: 이 검사는 design-guideline 11절 C-11 행의 낡음 표시를 봤다. 그 문서를 지웠으므로
+        # 같은 결론(영업외 비중은 ⑥ 소관이고 ⑦ 입력이 아니다)이 사람용 규칙 문서에 적혀 있는지 본다.
+        text = (ROOT / "docs" / "scorecard" / "rules.md").read_text(encoding="utf-8")
+        f7 = text.split("### ⑦ ", 1)[1].split("\n### ", 1)[0]
+        self.assertIn("지분 평가이익(⑥ 의 영업외 비중 소관", f7)
+        self.assertIn("입력·점수에는 넣지 않는다", f7)
 
 
 class NoScoreImpactTest(unittest.TestCase):

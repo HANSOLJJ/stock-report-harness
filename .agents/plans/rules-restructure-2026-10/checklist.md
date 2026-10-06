@@ -58,15 +58,15 @@
 
 ## 6. 코드·테스트 수정
 
-- [ ] 표시 대응표(`render_common.py` `SOURCE_NAMES`·`WARNING_PHRASES`)에 별표 → 새 절 이름 추가. 저장 문구는 그대로
-- [ ] 렌더러 문구(`render_common.py` 982·1600, `render_html.py` 1023·1122, `render_md.py` 359)
-- [ ] 승인 페이지 용어집
-- [ ] `factor-concepts.json` 과 `test_scorecard_fix76.py`
-- [ ] 문서를 읽는 테스트 5개, 지우거나 생략된 검사의 대체 장부
-- [ ] 이미 어긋난 참조 (`AGENTS.md 71행` → 절 이름, `design-guideline 272행`)
-- [ ] 기준선 이관 명령의 기본 경로
-- [ ] Python·Node 테스트 통과
-- [ ] 승인 실행 두 개의 `validate_report_contract.py` 통과
+- [x] 표시 대응(`render_common.py` `STAR_NAMES`·`rule_names()`, `source_names()`·`factor_concept()` 에서 적용). 저장 문구는 그대로
+- [x] 렌더러 문구(`render_common.py` 982·1600, `render_html.py` 1023·1122, `render_md.py` 359)
+- [x] 승인 페이지 용어집(경로, 별표 풀이에 새 절, 체크리스트·긴장 풀이)
+- [x] `test_scorecard_fix76.py` (`factor-concepts.json` 은 사용자 원문이라 고치지 않고 표시 단계에서 대응)
+- [x] 문서를 읽는 테스트, 지우거나 바꾼 검사의 대체 장부(`context-notes.md`)
+- [x] 이미 어긋난 참조 (`AGENTS.md 71행` → 절 이름, `design-guideline 272행`)
+- [x] 기준선 이관 명령의 기본 경로(경로 인자 필수, git 이력 안내)
+- [x] Python 1254·Node 21 테스트 통과(건너뜀 0)
+- [x] 승인 실행 두 개의 `validate_report_contract.py` 통과 (`2026-09-baseline` 의 재계산 실패는 수정 전부터, 기록만)
 
 ## 7. 스킬과 리뷰어
 

@@ -57,7 +57,7 @@ class PlanRuleHashTest(unittest.TestCase):
 
 
 class CarriedExceptionTest(unittest.TestCase):
-    """선언(AGENTS.md 71행)대로 구현됐는지 — 등록된 긴장 + 재검토 시점일 때만 예외다."""
+    """선언(AGENTS.md 「리뷰 범위 — 승계 판단 예외」)대로 구현됐는지 — 등록된 긴장 + 재검토 시점일 때만 예외다."""
 
     def test_registered_tension_with_recheck_passes(self):
         ok, cited, why = _carried_exception("v1.5 승계 논리이고 `TEN-RC-02` 로 등록됐다", tensions())
@@ -135,7 +135,7 @@ class ContractTest(unittest.TestCase):
                 self.assertTrue(excepted, why)
                 self.assertTrue(cited)
         # 이 검사가 무엇을 확인하지 **않는지**도 남긴다.
-        self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 71행)" in w for w in r.warnings))
+        self.assertTrue(any("리뷰어가 판정한다(AGENTS.md 「리뷰 범위 — 승계 판단 예외」)" in w for w in r.warnings))
 
     def test_review_area_requirement_untouched(self):
         """검토 영역 pass 요건은 건드리지 않았다 — 재무 계산은 리뷰어가 재판정한다."""

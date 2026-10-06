@@ -51,7 +51,7 @@ def source_matches(paths: RunPaths, kind: str, actual: str) -> bool:
 
 
 def _carried_exception(basis: str, tensions: dict[str, dict[str, Any]]) -> tuple[bool, list[str], str]:
-    """승계 판단 예외가 서는지 (AGENTS.md 71행 · 리뷰 템플릿 본문).
+    """승계 판단 예외가 서는지 (AGENTS.md 「리뷰 범위 — 승계 판단 예외」 · 리뷰 템플릿 본문).
 
     예외는 **긴장으로 등록되고 재검토 시점이 있을 때만** 선다. 셋을 가른다 —
     번호가 없다 / 번호가 규칙에 없다 / 번호는 있는데 recheck_at 이 없다. 어느 쪽이든 막는다.
@@ -256,10 +256,10 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"체크리스트 {qid} 근거 없음 (not_applicable 도 사유 필요)")
     if carried:
         result.warn(f"승계 예외로 통과한 체크리스트 fail {len(carried)}건: {' · '.join(carried)}")
-        # 이 검사가 기계로 확인하는 것은 **등록과 재검토 시점**뿐이다. AGENTS.md 71행의 나머지 조건
+        # 이 검사가 기계로 확인하는 것은 **등록과 재검토 시점**뿐이다. AGENTS.md 「리뷰 범위 — 승계 판단 예외」의 나머지 조건
         # (`이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았다`)은 사람이 판정한다 — 자동 통과로 읽지 않는다.
         result.warn("위 예외는 긴장 등록·재검토 시점만 기계로 확인한 것이다. "
-                    "`이번 실행이 잣대를 바꾸지 않았다`는 조건은 리뷰어가 판정한다(AGENTS.md 71행)")
+                    "`이번 실행이 잣대를 바꾸지 않았다`는 조건은 리뷰어가 판정한다(AGENTS.md 「리뷰 범위 — 승계 판단 예외」)")
     if len(result.errors) == review_errors_before:
         result.check("review 4-area + checklist structure")
 

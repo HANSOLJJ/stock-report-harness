@@ -103,12 +103,18 @@ def cmd_add_company(args: argparse.Namespace) -> int:
 
 
 def cmd_import_baseline(args: argparse.Namespace) -> int:
-    from scorecard.baseline_import import BASELINE_ID, DEFAULT_HTML, DEFAULT_MD, import_baseline
+    from scorecard.baseline_import import BASELINE_ID, SOURCE_COMMIT, SOURCE_PATHS, import_baseline
     from scorecard.engine import BASELINE_DIR, load_companies
 
     # 2026-10-01: 기준선 소비 승인 실행 보호(레인 N V2-1)는 import_baseline 본체가 한다. CLI 에서 또 부르면 경고가 두 번 난다.
-    html_path = Path(args.html) if args.html else DEFAULT_HTML
-    md_path = Path(args.md) if args.md else DEFAULT_MD
+    # 2026-10-06: 원천 자료를 작업 폴더에서 지워 기본 경로가 없어졌다. 경로를 주지 않으면 꺼내는 방법을 알리고 멈춘다.
+    if not (args.html and args.md):
+        print("import-baseline 은 원본 경로가 필요하다(--html, --md). 원본은 git 이력에 있다:\n"
+              + "\n".join(f"  git show {SOURCE_COMMIT[:7]}:{p} > <저장할 경로>" for p in SOURCE_PATHS.values()),
+              file=sys.stderr)
+        return 2
+    html_path = Path(args.html)
+    md_path = Path(args.md)
     report = import_baseline(html_path, md_path, BASELINE_DIR / BASELINE_ID, load_companies())
     print(f"기준선 이관: 기업 {report['matched']} · 관측 {report['observations']} · 트리거 {report['triggers']}")
     for issue in report["issues"]:

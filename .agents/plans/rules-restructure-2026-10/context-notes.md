@@ -176,3 +176,24 @@
 | 12 T-01~T-20 | `structure.md`(5단계) | T-01·T-10 은 현행·구버전 구분 필요 |
 
 HANDOVER·구현계획·채점표 v1.5 에서 살리기로 한 것의 자리: 감점 완화는 엄격하게(2.1), 부재 주장은 검색 범위와 함께(2.7), 지수 버전과 순위(3절 ②), 모집단을 섞지 않음(5절), 작성자 고지(머리말), ⑨ FCF·완충·중복 합산 정의(4절 ⑨ 입력 정의·게이트 3), 정부 계약(3절 ⑤), 1~3점 차이(5절), 가격만 싼 모델(3절 ②), 모델 API 지표와 플랫폼 기업(2.3). HANDOVER 7절(사람이 볼 것)은 5단계에서 `guide.md` 로 옮긴다.
+
+## 5·6단계 (2026-10-06)
+
+- **5단계.** `structure.md` 에 D-01~D-10, 자료 상태 표(design-guideline 7.2 를 실제 상태 이름에 맞춤), T-01~T-20 정의를 들여왔다. T 표는 v1.5 규칙을 전제한 항목(T-01·T-03·T-06·T-10)에 현행 검증 위치를 따로 적었고, T-20 은 종목 리포트 제거를 반영했다. 6절 번호는 `report-designer` 가 가리켜 유지했다. `guide.md` 6절에 HANDOVER 7절 다섯 항목을 옮겼다. 다섯째("CLAUDE.md 현재 상태 줄")는 이 저장소에 맞게 "세션이 첫 전제로 읽는 상태 줄(README 의 최신 실행 등)"로 일반화했다.
+- **6단계: 계획과 달리 `factor-concepts.json` 은 고치지 않았다.** 파일 머리말이 "사용자 원본 HTML 의 문장을 그대로 옮겼고 이 파일에서 새로 짓지 않는다"고 적는다. 그래서 `render_common.factor_concept()` 과 `source_names()` 에서 `별표 X` 를 새 규칙 이름(`STAR_NAMES`, 예: `별표 A` → `① 채널 규칙`)으로 옮기는 방식으로 바꿨다. 저장된 판단·결과 문구의 별표 표기도 같은 함수로 화면에서 바뀐다. 승인 페이지 용어집은 원래 문장의 `별표 X` 를 풀이해야 하므로 용어는 남기고 풀이 끝에 새 절(`채점 규칙 3절 ①` 등)을 붙였다.
+- **검증기는 초안을 다시 만들지 않는다.** `validate.py` 는 초안 파일의 해시만 비교한다(212~214행). 그래서 렌더러가 만드는 문구(`render_md` 359, `render_html` 1023·1122, `render_common` 982·1600)는 직접 고쳐도 승인된 실행의 저장 초안이 그대로이고, 재빌드 때 HTML 만 새 문구로 나온다. 계산 결과에 들어가는 문구(`calc_qual` 142·155, `calc_f9` 152, `stages` 88~92)는 외부 피드백 1 대로 고치지 않았다.
+- **대체 장부: 지우거나 바꾼 검사와 그 대체.**
+
+| 검사 | 전에 본 것 | 지금 보는 것 |
+|---|---|---|
+| `test_scorecard_fix52_docs.GuidelineRangeTableTest` | design-guideline 4.1절 범위표의 "낡음" 표시 | `rules.md` 의 ②⑥⑦⑧⑨ 제목 범위가 `v1.8.json` 과 같고 옛 범위가 현행처럼 남지 않았는지 |
+| `test_scorecard_impl50.test_guideline_row_is_marked_stale` | design-guideline 11절 C-11 행의 "낡음" 표시 | `rules.md` ⑦ 절이 지분 평가이익(영업외 비중)을 ⑥ 소관이고 ⑦ 입력·점수에 넣지 않는다고 적는지 |
+| `test_scorecard_fix59` · `fix62` 의 v1.5 원문 행 대조 | 작업 폴더의 v1.5 규칙 문서(없으면 조용히 건너뜀) | `tests/legacy_docs.py` 가 커밋 `79e476b` 에서 꺼낸 원문. git 을 부르지 못하면 건너뜀으로 드러난다. 6단계 전체 테스트에서 건너뛴 테스트 0건 |
+| `test_scorecard_fix76.test_strip_worknotes_keeps_the_source_marker` | 개념 설명에 `별표 A`·`별표 D` 가 남는다 | 같은 자리에 새 규칙 이름이 나오고 `별표` 가 남지 않는다 |
+| `test_scorecard_fix76.test_the_concept_text_is_copied_not_written` | 화면 문장이 원본 HTML 에 그대로 있다 | 원본 HTML 에도 같은 이름 대응(`rule_names`)을 댄 뒤 견준다 |
+| `test_scorecard_fix60` · `fix64` 의 경고 문구 | "AGENTS.md 71행" | "AGENTS.md 「리뷰 범위 — 승계 판단 예외」"(검증기 문구와 함께 바꿈) |
+| `test_scorecard_fix54_code` | `structure.md` 9절 | 그대로(9절 유지) |
+
+- **기준선 이관 명령.** 원천 자료를 지우면 기본 경로가 없어지므로 `import-baseline` 은 `--html`·`--md` 가 없으면 `git show 79e476b:<경로>` 로 꺼내는 방법을 알리고 종료 코드 2 로 멈춘다. 옛 기본값 줄은 날짜와 사유를 적어 주석으로 남겼다.
+- **확인.** Python 1254건 통과(건너뜀 0), Node 21건 통과. 승인 실행 `ai-scorecard-2026-09-obsreg`·`2026-10-test` 는 `validate_report_contract.py` 통과("results deterministic recompute" 포함).
+- **발견(이번 수정과 무관): `ai-scorecard-2026-09-baseline` 은 재계산 검사에서 실패한다.** 수정 전 커밋(`HEAD`, `git archive` 로 스크래치에 푼 사본)에서도 같은 오류가 나서 원래 있던 문제로 판단했다. 이 실행은 v1.5 규칙의 첫 기준선 실행이고, 9월 수정 라운드에서 계산 문구가 바뀌며 깨진 것으로 보이나 원인은 확인하지 않았다. 고치지 않았다.

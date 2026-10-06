@@ -17,15 +17,21 @@ RUN_DIR = ROOT / "output" / "ai-scorecard-2026-09-obsreg"
 
 
 class GuidelineRangeTableTest(unittest.TestCase):
-    def test_changed_rows_show_v17_range_first_and_keep_old(self):
-        text = (ROOT / "docs" / "scorecard" / "design-guideline.md").read_text(encoding="utf-8")
-        for fid, old in (("F2", "0~5"), ("F6", "-5~0"), ("F7", "-3~0"), ("F9", "-5~0")):
+    # 2026-10-06 규칙 문서 재편: 이 검사는 design-guideline 4.1절 범위표에 붙인 낡음 표시를 봤다. 그 문서를 지우고
+    # 사람용 규칙은 rules.md 하나가 됐으므로, **사람용 문서의 범위가 규칙 JSON 과 같은지**를 rules.md 에서 본다.
+    def test_rules_doc_ranges_match_the_rule_file(self):
+        text = (ROOT / "docs" / "scorecard" / "rules.md").read_text(encoding="utf-8")
+        current = load_rules("v1.8").payload["factors"]
+        marks = {"F2": "②", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
+        for fid, mark in marks.items():
             with self.subTest(fid=fid):
-                row = next(line for line in text.splitlines() if line.startswith(f"| {fid} |"))
-                lo, hi = RULES.payload["factors"][fid]["range"]
-                self.assertIn(f"**{lo}~{hi}** (v1.7)", row)
-                self.assertIn(f"낡음: {old}", row)
-        self.assertIn("[낡음 표시 2026-09-15 FIX-52]", text)
+                lo, hi = current[fid]["range"]
+                span = f"{lo}~{hi}".replace("-", "−")
+                self.assertIn(f"### {mark} ", text)
+                self.assertIn(f"({span},", text.split(f"### {mark} ", 1)[1].splitlines()[0])
+        # 옛 범위가 현행처럼 남아 있으면 안 된다.
+        for old in ("−5~0, ⑦", "⑦ −3~0", "⑨ −5~0"):
+            self.assertNotIn(old, text)
 
 
 class F2OldYardstickTest(unittest.TestCase):
