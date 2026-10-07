@@ -1,0 +1,1446 @@
+{
+  "company_id": "amazon",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-amazon-000101872426000004",
+      "title": "Amazon 10-K (2025-12-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "amazon",
+      "published_at_utc": "2026-02-06T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-amazon-000101872426000024",
+      "title": "Amazon 8-K (2026-07-30) Exhibit 99.1 2분기 실적 보도자료",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000024/amzn-20260630xex991.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "amazon",
+      "published_at_utc": "2026-07-30T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-amazon-000110465921050346",
+      "title": "Amazon 8-K (2021-04-15) Exhibit 99.1 주주서한",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465921050346/tm216818d2_ex99-1.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "amazon",
+      "published_at_utc": "2021-04-15T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-amazon-000110465926041034",
+      "title": "Amazon 8-K (2026-04-09) Exhibit 99.1 주주서한",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926041034/tm263815d3_ex99-1.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "amazon",
+      "published_at_utc": "2026-04-09T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-001",
+      "title": "Alexa+ now available to everyone in the US—and free for Prime members",
+      "publisher": "Amazon News",
+      "url": "https://www.aboutamazon.com/news/devices/alexa-plus-available-free-prime-members-us",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "2026-09-01 에 요금제 설명을 고친 판을 읽었다. 본문은 같은 페이지의 /md/ 판에서 읽었다.",
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-02-04T14:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-002",
+      "title": "AWS announces AWS Interconnect - multicloud connectivity with Microsoft Azure in preview",
+      "publisher": "AWS What's New",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/08/aws-announces-AWS-interconnect-multicloud-microsoft-azure-preview/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-08-31T15:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-003",
+      "title": "AWS announces general availability of AWS Interconnect - multicloud",
+      "publisher": "AWS What's New",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/04/aws-announces-ga-AWS-interconnect-multicloud/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-04-14T15:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-004",
+      "title": "Announcing Amazon EC2 Trn3 UltraServers for faster, lower-cost generative AI training",
+      "publisher": "AWS What's New",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2025/12/amazon-ec2-trn3-ultraservers/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2025-12-02T13:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-005",
+      "title": "AWS lands OpenAI on Bedrock, but Trainium is the real story",
+      "publisher": "The New Stack",
+      "url": "https://thenewstack.io/openai-bedrock-trainium-silicon/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-04-29T14:54:40Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-006",
+      "title": "OpenAI's models land on Amazon Bedrock, one day after Microsoft exclusivity ends",
+      "publisher": "GeekWire",
+      "url": "https://www.geekwire.com/2026/openais-models-land-on-amazon-bedrock-one-day-after-microsoft-exclusivity-ends/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-04-28T17:34:54Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-007",
+      "title": "Introducing Blue Jay and Project Eluna, Amazon's latest robotics and AI technology for its operations",
+      "publisher": "Amazon News",
+      "url": "https://www.aboutamazon.com/news/operations/new-robots-amazon-fulfillment-agentic-ai",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "본문은 같은 페이지의 /md/ 판에서 읽었다.",
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2025-10-22T17:25:34Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-008",
+      "title": "Introducing Vulcan: Amazon's first robot with a sense of touch",
+      "publisher": "Amazon News",
+      "url": "https://www.aboutamazon.com/news/operations/amazon-vulcan-robot-pick-stow-touch",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "2026-06-04 수정 판을 읽었다. 본문은 같은 페이지의 /md/ 판에서 읽었다.",
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2025-05-07T07:00:50Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-009",
+      "title": "Amazon Abandons Blue Jay Warehouse Robot In Less Than Six Months, Pivots To New Technologies: Report",
+      "publisher": "Benzinga",
+      "url": "https://www.benzinga.com/markets/tech/26/02/50681888/amazon-abandons-blue-jay-warehouse-robot-in-less-than-six-months-pivots-to-new-technologies-report",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-02-18T12:19:19Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-010",
+      "title": "Anthropic and Amazon expand compute collaboration",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/anthropic-amazon-compute",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-04-20T15:50:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-011",
+      "title": "US FTC-Amazon antitrust trial pushed back to March 2027",
+      "publisher": "MLex",
+      "url": "https://www.mlex.com/mlex/antitrust/articles/2422758/us-ftc-amazon-antitrust-trial-pushed-back-to-march-2027",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "유료 기사다. 발췌는 기사 페이지에 공개된 MLex Summary 다.",
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2025-12-15T18:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-012",
+      "title": "FTC v. Amazon.com (tracker)",
+      "publisher": "Tech Policy Press",
+      "url": "https://www.techpolicy.press/tracker/ftc-v-amazoncom/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "추적 페이지에 발행일 표시가 없어 마지막 경과 항목(2024-11-14) 날짜를 썼다.",
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2024-11-14T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-013",
+      "title": "Amazon Bedrock adds 18 fully managed open weight models, including the new Mistral Large 3 and Ministral 3 models",
+      "publisher": "AWS News Blog",
+      "url": "https://aws.amazon.com/blogs/aws/amazon-bedrock-adds-fully-managed-open-weight-models",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2025-12-02T16:05:57Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-014",
+      "title": "Amazon Bedrock Marketplace brings over 100 models to Amazon Bedrock",
+      "publisher": "AWS What's New",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2024/12/amazon-bedrock-marketplace-100-models-bedrock/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2024-12-04T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-015",
+      "title": "AI agents promise to do everything for you. There may be a big wrinkle in that plan",
+      "publisher": "CNN Business",
+      "url": "https://www.cnn.com/2026/09/28/tech/meta-muse-ai-agents-amazon",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-09-28T11:00:30Z"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-016",
+      "title": "AWS Bedrock AgentCore Makes the Agent Session a Cloud Resource",
+      "publisher": "RohitAI",
+      "url": "https://rohitai.com/blog/aws-bedrock-agentcore-managed-agent-stack",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-07-20T10:54:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-amazon-010",
+      "company_id": "amazon",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "The Short-Term Credit Agreement matures in October 2026 and may be extended for one additional period of 364 days subject to approval by the lenders. The interest rate applicable to outstanding balances under the Short-Term Credit Agreement is the SOFR specified in the Short-Term Credit Agreement plus 0.45%, with a commitment fee of 0.03% on the undrawn portion. There were no borrowings outstanding under the Credit Agreement and the Short-Term Credit Agreement as of December 31, 2025 and June 30, 2026.",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 5 — Debt, 리볼빙 신용한도 문단(‘We have an aggregate $20.0 billion…’) 넷째 문장부터 끝까지",
+      "relevance": "아마존 ⑨ 완충에 들어가는 364일 리볼빙의 만기와 두 리볼빙의 미인출 상태다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-011",
+      "company_id": "amazon",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "We may draw up to $17.5 billion in a single draw on any business day on or prior to September 30, 2026, after which any undrawn commitments will automatically terminate. Amounts borrowed and repaid may not be reborrowed. There were no borrowings outstanding under the Term Loan as of June 30, 2026.",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 5 — Debt, 지연인출 정기대출 문단(‘In June 2026, we entered into…’) 둘째 문장부터 끝까지",
+      "relevance": "아마존 ⑨ 완충에 들어가는 지연인출 정기대출의 규모·인출 시한·미인출 상태다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-012",
+      "company_id": "amazon",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "CONSOLIDATED BALANCE SHEETS (in millions, except per share data) December 31, 2025 June 30, 2026 (unaudited) ASSETS Current assets: Cash and cash equivalents 86,810 78,213",
+      "locator": "10-Q (2026-06-30) Consolidated Balance Sheets, Cash and cash equivalents 줄(열: December 31, 2025 / June 30, 2026)",
+      "relevance": "아마존 ⑨ 완충의 현금및현금성자산(2026-06-30)이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-013",
+      "company_id": "amazon",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "Net cash provided by (used in) operating activities 32,515 45,387 49,530 71,419 121,137 161,403 INVESTING ACTIVITIES: Purchases of property and equipment (32,183) (54,208) (57,202) (98,411) (107,656) (173,028)",
+      "locator": "10-Q (2026-06-30) Consolidated Statements of Cash Flows, 영업활동 순현금·유형자산 매입 줄(마지막 열 = Twelve Months Ended June 30, 2026)",
+      "relevance": "아마존 최근 1년 영업현금흐름과 설비투자로 잉여현금흐름을 계산하는 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-014",
+      "company_id": "amazon",
+      "factors": [
+        "F7",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "Consolidated Net sales 167,702 200,606 323,369 382,125 Operating expenses 148,531 173,145 285,793 330,812 Operating income 19,171 27,461 37,576 51,313 Total non-operating income 1,686 53,396 4,960 69,378",
+      "locator": "10-Q (2026-06-30) Note 8 — Segment Information 표 Consolidated 블록(열: Q2 2025 / Q2 2026 / 6M 2025 / 6M 2026)",
+      "relevance": "아마존 최근 1년 매출·영업이익·영업외 이익을 10-K 연간값과 합쳐 계산하는 상반기 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-015",
+      "company_id": "amazon",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "Additionally, we have performance obligations, primarily related to AWS, associated with commitments in customer contracts for future services that we expect to fulfill but have not yet been recognized in our financial statements. For contracts with original terms that exceed one year, those commitments not yet recognized were approximately $496 billion as of June 30, 2026. The weighted-average remaining life of our long-term contracts is 6.4 years.",
+      "locator": "10-Q (2026-06-30) Note 1 — Accounting Policies, Unearned Revenue 항목 둘째 문단 첫 세 문장",
+      "relevance": "아마존 ⑨ 게이트 4 분자인 계약된 수입(원계약 1년 초과 계약의 미인식 약정)이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-016",
+      "company_id": "amazon",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "Leases not yet commenced 4,018 11,732 9,278 9,483 9,227 93,476 137,214 Unconditional purchase obligations (2) 23,452 33,026 9,326 7,961 7,659 48,641 130,065",
+      "locator": "10-Q (2026-06-30) Note 4 — Commitments and Contingencies, Commitments 표 두 줄(열: 2026 하반기, 2027~2030, Thereafter, Total)",
+      "relevance": "아마존 ⑨ 게이트 4 분모인 미개시 리스와 무조건 구매약정이고, Thereafter 열까지 Total 에 담긴다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-017",
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "In Q1 2026, AWS and OpenAI Group PBC (“OpenAI”) announced an expansion of the existing $38.0 billion multi-year commitment and commercial arrangement with OpenAI by $100.0 billion over 8.0 years, which includes contractual obligations related to the performance of AWS chips. In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.",
+      "locator": "10-Q (2026-06-30) Note 1 — Accounting Policies, Unearned Revenue 항목 셋째·넷째 문단",
+      "relevance": "아마존 투자처인 OpenAI·Anthropic 이 AWS 에 약정한 금액으로, ⑦ 순환 구조의 크기를 보여 준다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-018",
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "In Q2 2026, we invested $5.0 billion in Anthropic Series G nonvoting preferred stock. We also amended our commercial arrangement primarily for the provision of AWS cloud services, which includes contractual obligations related to the performance of AWS chips.",
+      "locator": "10-Q (2026-06-30) Note 2 — Financial Instruments, Anthropic 항목 ‘In Q2 2026, we invested $5.0 billion…’ 문단 첫 두 문장",
+      "relevance": "아마존의 Anthropic 투자와 AWS 클라우드 상업 계약이 한 거래로 묶여 있다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-019",
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "We also invested $15.0 billion in Series C Preferred Stock of OpenAI and entered into an equity commitment letter agreement (the “Letter Agreement”), pursuant to which we agreed to purchase additional shares of Series C Preferred Stock (the “Commitment Shares”) with an aggregate purchase price of $35.0 billion (the “Commitment Amount”). In Q2 2026, we invested $13.7 billion of the Commitment Amount in Series C Preferred Stock.",
+      "locator": "10-Q (2026-06-30) Note 2 — Financial Instruments, OpenAI 항목 첫 문단 둘째·셋째 문장",
+      "relevance": "아마존의 OpenAI 투자 약정($15.0B + $35.0B)과 2026년 2분기까지의 집행액이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-020",
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "Subsequent to June 30, 2026, we invested the remaining $21.3 billion Commitment Amount in shares of Series C Preferred Stock of OpenAI.",
+      "locator": "10-Q (2026-06-30) Note 2 — Financial Instruments, OpenAI 항목 마지막 문단",
+      "relevance": "OpenAI 투자 약정의 나머지 $21.3B 가 2026-06-30 뒤에 집행됐다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-021",
+      "company_id": "amazon",
+      "factors": [
+        "F7",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000101872426000004",
+      "published_at_utc": "2026-02-06T00:00:00Z",
+      "title": "Amazon 10-K (2025-12-31)",
+      "excerpt": "Consolidated Net sales 574,785 637,959 716,924 Operating expenses 537,933 569,366 636,949 Operating income 36,852 68,593 79,975 Total non-operating income 705 21 17,336",
+      "locator": "10-K (2025-12-31) Note 10 — Segment Information 표 Consolidated 블록(열: 2023 / 2024 / 2025)",
+      "relevance": "아마존 최근 1년 매출·영업이익·영업외 이익 계산에 쓰는 2025 연간값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-022",
+      "company_id": "amazon",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000101872426000024",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Amazon 2026년 2분기 실적 보도자료",
+      "excerpt": "“AWS is booming, growing 36.7% year-over-year in Q2—our fastest growth in 18 quarters—and our AI and Chips businesses each eclipsed run rates of more than $25 billion,” said Andy Jassy, President and CEO, Amazon.",
+      "locator": "8-K (2026-07-30) Exhibit 99.1 보도자료, 실적 요약 뒤 CEO 인용 첫 문장",
+      "relevance": "아마존 ④ 의 AWS 성장률과 AI·칩 사업 연환산 매출이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-023",
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000101872426000024",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Amazon 2026년 2분기 실적 보도자료",
+      "excerpt": "Second quarter 2026 net income includes non-operating pre-tax other income of $53.4 billion, primarily from our investments in Anthropic.",
+      "locator": "8-K (2026-07-30) Exhibit 99.1 보도자료, 첫머리 요약 글머리표 열째 줄",
+      "relevance": "아마존 영업외 이익의 출처가 고객사이기도 한 Anthropic 투자라는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-024",
+      "company_id": "amazon",
+      "factors": [
+        "F3",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000101872426000024",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Amazon 2026년 2분기 실적 보도자료",
+      "excerpt": "Added 10+ fully managed foundation models to Amazon Bedrock, including OpenAI’s GPT-5.6, Anthropic’s Claude Opus 5, Google DeepMind’s Gemma 4, and SpaceXAI’s Grok 4.3. Amazon Bedrock provides the best selection of leading models, at superior performance, and with the governance and security controls that companies need,",
+      "locator": "8-K (2026-07-30) Exhibit 99.1 보도자료, ‘Some other highlights’ 목록 Bedrock 글머리표",
+      "relevance": "Bedrock 이 OpenAI·Anthropic·Google·SpaceXAI 모델을 함께 파는 모델 중립 매대라는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-025",
+      "company_id": "amazon",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000101872426000024",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Amazon 2026년 2분기 실적 보도자료",
+      "excerpt": "Added new capabilities to Bedrock AgentCore, which provides the building blocks that companies need to quickly and securely deploy and operate agents at scale.",
+      "locator": "8-K (2026-07-30) Exhibit 99.1 보도자료, ‘Some other highlights’ 목록 AgentCore 글머리표 첫 문장",
+      "relevance": "업무 채널에서 아마존이 에이전트 배치·운영 기반(AgentCore)을 제공한다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-026",
+      "company_id": "amazon",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000101872426000024",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Amazon 2026년 2분기 실적 보도자료",
+      "excerpt": "Third-party seller services (3) 36,512 40,348 42,486 52,816 41,578 46,780 16 % Third-party seller services -- Y/Y growth, excluding F/X 7 % 10 % 11 % 10 % 12 % 16 % N/A Advertising services (4) 13,921 15,694 17,703 21,317 17,243 19,809 26 % Advertising services -- Y/Y growth, excluding F/X 19 % 22 % 22 % 22 % 22 % 26 % N/A Subscription services (5) 11,715 12,208 12,574 13,122 13,427 13,730 12 % Subscription services -- Y/Y growth, excluding F/X 11 % 11 % 10 % 12 % 12 % 12 % N/A AWS 29,267 30,873 33,006 35,579 37,587 42,232 37 %",
+      "locator": "8-K (2026-07-30) Exhibit 99.1, Supplemental Financial Information 표 Net Sales 블록(열: Q1 2025 ~ Q2 2026, Y/Y %)",
+      "relevance": "아마존 매출이 판매자 서비스·광고·구독·AWS 로 나뉘어 있다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-027",
+      "company_id": "amazon",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000101872426000024",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Amazon 2026년 2분기 실적 보도자료",
+      "excerpt": "AWS segment sales increased 37% year-over-year to $42.2 billion.",
+      "locator": "8-K (2026-07-30) Exhibit 99.1 보도자료, 첫머리 요약 글머리표 넷째 줄",
+      "relevance": "AWS 컴퓨트 사업이 별도 매출을 낸다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-028",
+      "company_id": "amazon",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000110465921050346",
+      "published_at_utc": "2021-04-15T00:00:00Z",
+      "title": "Amazon 2020년 주주서한",
+      "excerpt": "Last year, we hired 500,000 employees and now directly employ 1.3 million people around the world. We have more than 200 million Prime members worldwide.",
+      "locator": "8-K (2021-04-15) Exhibit 99.1 2020년 주주서한, 1997년 서한 회고 다음 문단 둘째·셋째 문장",
+      "relevance": "회사가 밝힌 마지막 Prime 회원 수 규모(2억 명 이상)다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-029",
+      "company_id": "amazon",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-amazon-000110465926041034",
+      "published_at_utc": "2026-04-09T00:00:00Z",
+      "title": "Amazon 2025년 주주서한",
+      "excerpt": "Accelerated by acquiring Kiva in 2012, and investing in numerous robotics initiatives the last 14 years, we now have over one million robots operating in fulfillment centers helping with stowing, picking, sorting, and intra-facility transport.",
+      "locator": "8-K (2026-04-09) Exhibit 99.1 2025년 주주서한, 로보틱스 문단 셋째 문장",
+      "relevance": "아마존이 물류센터에 로봇 100만 대 이상을 운영한다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-030",
+      "company_id": "amazon",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-001",
+      "published_at_utc": "2026-02-04T14:00:00Z",
+      "title": "Alexa+ now available to everyone in the US—and free for Prime members",
+      "excerpt": "Alexa+ is now available in the U.S. for $19.99 per month and included at no additional cost to Prime members.",
+      "locator": "Key takeaways 첫 글머리표",
+      "relevance": "Alexa+ 가 미국 Prime 회원에게 추가 비용 없이 포함됐다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-031",
+      "company_id": "amazon",
+      "factors": [
+        "F2",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-002",
+      "published_at_utc": "2026-08-31T15:00:00Z",
+      "title": "AWS announces AWS Interconnect - multicloud connectivity with Microsoft Azure in preview",
+      "excerpt": "Today, Microsoft Azure is the latest CSP to adopt the specification that powers AWS Interconnect. Customers who operate between AWS and Azure can now manage their connectivity through a single, managed experience, without compromise. This allows AWS to provide a consistent, simple experience to our customers on Microsoft Azure (Preview), OCI (Generally Available), and Google Cloud (Generally Available).",
+      "locator": "공지 본문 둘째 문단 둘째 문장부터 끝까지",
+      "relevance": "Azure 가 2026-08-31 프리뷰로 AWS Interconnect 규격을 채택했고 OCI·Google Cloud 는 정식 출시 상태라는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-032",
+      "company_id": "amazon",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-003",
+      "published_at_utc": "2026-04-14T15:00:00Z",
+      "title": "AWS announces general availability of AWS Interconnect - multicloud",
+      "excerpt": "AWS announces general availability (GA) of AWS Interconnect - multicloud, providing simple, resilient, high-speed private connections to other cloud service providers (CSPs). With GA comes Google Cloud as the first launch partner, with Microsoft Azure and Oracle Cloud Infrastructure (OCI) coming later in 2026.",
+      "locator": "공지 본문 첫 문단",
+      "relevance": "2026년 4월 정식 출시 때 Google Cloud 가 첫 파트너였다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-033",
+      "company_id": "amazon",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-004",
+      "published_at_utc": "2025-12-02T13:00:00Z",
+      "title": "Announcing Amazon EC2 Trn3 UltraServers for faster, lower-cost generative AI training",
+      "excerpt": "AWS announces the general availability of Amazon Elastic Compute Cloud (Amazon EC2) Trn3 UltraServers powered by our fourth–generation AI chip Trainium3, our first 3nm AWS AI chip purpose-built to deliver the best token economics for next-generation agentic, reasoning, and video generation applications.",
+      "locator": "공지 본문 첫 문장",
+      "relevance": "Trainium3 가 AWS 의 첫 3nm AI 칩이라는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-034",
+      "company_id": "amazon",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-004",
+      "published_at_utc": "2025-12-02T13:00:00Z",
+      "title": "Announcing Amazon EC2 Trn3 UltraServers for faster, lower-cost generative AI training",
+      "excerpt": "Trn3 UltraServers can scale up to 144 Trainium3 chips (362 FP8 PFLOPs total) and are available in EC2 UltraClusters 3.0 to scale to hundreds of thousands of chips.",
+      "locator": "공지 본문 첫 문단 다섯째 문장",
+      "relevance": "Trainium3 UltraServer 의 FP8 연산 성능(362 PFLOPs)이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-035",
+      "company_id": "amazon",
+      "factors": [
+        "F2",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-005",
+      "published_at_utc": "2026-04-29T14:54:40Z",
+      "title": "AWS lands OpenAI on Bedrock, but Trainium is the real story",
+      "excerpt": "Eight days later, the OpenAI announcement is also a Trainium story. The February deal that this week’s event productized committed OpenAI to consume approximately 2 gigawatts of Trainium capacity, spanning Trainium3 and Trainium4.",
+      "locator": "기사 11번째 문단 첫 두 문장",
+      "relevance": "OpenAI 가 Trainium3·Trainium4 약 2GW 사용을 약정했다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-036",
+      "company_id": "amazon",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-005",
+      "published_at_utc": "2026-04-29T14:54:40Z",
+      "title": "AWS lands OpenAI on Bedrock, but Trainium is the real story",
+      "excerpt": "Anthropic already trains and serves Claude on Trainium2 across Project Rainier, one of the world’s largest AI compute clusters. I have not found public evidence of OpenAI training a frontier model end-to-end on Trainium.",
+      "locator": "기사 31번째 문단 넷째·다섯째 문장",
+      "relevance": "Anthropic 은 Trainium2 로 학습하지만 OpenAI 의 Trainium 학습은 공개 근거가 없다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-037",
+      "company_id": "amazon",
+      "factors": [
+        "F3",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-006",
+      "published_at_utc": "2026-04-28T17:34:54Z",
+      "title": "OpenAI's models land on Amazon Bedrock, one day after Microsoft exclusivity ends",
+      "excerpt": "Amazon moved quickly Tuesday to capitalize on OpenAI’s new relationship status with Microsoft, launching a preview of OpenAI’s models on its Bedrock platform less than 24 hours after the ChatGPT maker was freed from its previously exclusive cloud arrangement.",
+      "locator": "기사 첫 문단",
+      "relevance": "Microsoft 독점이 풀린 다음 날 OpenAI 모델이 Bedrock 에 올라왔다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-038",
+      "company_id": "amazon",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-010",
+      "published_at_utc": "2026-04-20T15:50:00Z",
+      "title": "Anthropic and Amazon expand compute collaboration",
+      "excerpt": "Claude remains the only frontier AI model available to customers on all three of the world's largest cloud platforms: AWS (Bedrock), Google Cloud (Vertex AI), and Microsoft Azure (Foundry).",
+      "locator": "발표문 ‘Claude Platform on AWS’ 문단 넷째 문장",
+      "relevance": "같은 모델을 Google Vertex AI 와 Microsoft Foundry 도 판다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-039",
+      "company_id": "amazon",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-010",
+      "published_at_utc": "2026-04-20T15:50:00Z",
+      "title": "Anthropic and Amazon expand compute collaboration",
+      "excerpt": "Continued investment. Amazon is investing $5 billion in Anthropic today, with up to an additional $20 billion in the future. This builds on the $8 billion Amazon has previously invested.",
+      "locator": "발표문 ‘Continued investment’ 문단",
+      "relevance": "아마존의 Anthropic 투자 규모(지금 $5B + 향후 최대 $20B)다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-040",
+      "company_id": "amazon",
+      "factors": [
+        "F2",
+        "F5",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-010",
+      "published_at_utc": "2026-04-20T15:50:00Z",
+      "title": "Anthropic and Amazon expand compute collaboration",
+      "excerpt": "Infrastructure at scale. We are committing more than $100 billion over the next ten years to AWS technologies, securing up to 5GW of new capacity to train and run Claude. The commitment spans Graviton and Trainium2 through Trainium4 chips, with the option to purchase future generations of Amazon’s custom silicon as they become available.",
+      "locator": "발표문 ‘Infrastructure at scale’ 문단",
+      "relevance": "Anthropic 이 AWS 에 10년간 $100B 이상·최대 5GW 를 약정했고 Trainium2~Trainium4 를 쓴다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-041",
+      "company_id": "amazon",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-007",
+      "published_at_utc": "2025-10-22T17:25:34Z",
+      "title": "Introducing Blue Jay and Project Eluna, Amazon's latest robotics and AI technology for its operations",
+      "excerpt": "Project Eluna will be piloted at a fulfillment center in Tennessee to assist operators this holiday season, working initially on sortation optimization.",
+      "locator": "‘Project Eluna gives operators more foresight’ 절 둘째 문단 첫 문장",
+      "relevance": "운영 에이전트 Project Eluna 를 물류센터에 배치한다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-042",
+      "company_id": "amazon",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-008",
+      "published_at_utc": "2025-05-07T07:00:50Z",
+      "title": "Introducing Vulcan: Amazon's first robot with a sense of touch",
+      "excerpt": "With the ability to pick and stow approximately 75% of all various types of items we store at our fulfillment centers, and at speeds comparable to that our front-line employees, Vulcan represents a step change in how automation and AI can assist our employees in their everyday tasks.",
+      "locator": "‘The power of touch’ 절 끝 문단 첫 문장",
+      "relevance": "촉각 로봇 Vulcan 이 물류센터 물품의 약 75% 를 집고 넣는다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-043",
+      "company_id": "amazon",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-009",
+      "published_at_utc": "2026-02-18T12:19:19Z",
+      "title": "Amazon Abandons Blue Jay Warehouse Robot In Less Than Six Months, Pivots To New Technologies: Report",
+      "excerpt": "The operations of the robotic system were ceased in January, a few months after its launch in October, Business Insider reported on Tuesday. The robot, designed for same-day delivery warehouses, faced hurdles such as high costs, manufacturing complexity, and implementation issues.",
+      "locator": "기사 둘째 문단",
+      "relevance": "Blue Jay 의 운영 중단 시점과 이유다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-044",
+      "company_id": "amazon",
+      "factors": [
+        "F3",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-013",
+      "published_at_utc": "2025-12-02T16:05:57Z",
+      "title": "Amazon Bedrock adds 18 fully managed open weight models, including the new Mistral Large 3 and Ministral 3 models",
+      "excerpt": "Today, we’re announcing the general availability of an additional 18 fully managed open weight models in Amazon Bedrock from Google, MiniMax AI, Mistral AI, Moonshot AI, NVIDIA, OpenAI, and Qwen, including the new Mistral Large 3 and Ministral 3 3B, 8B, and 14B models.",
+      "locator": "블로그 본문 첫 문단",
+      "relevance": "Bedrock 이 OpenAI·Qwen·Moonshot AI·MiniMax AI 등 오픈웨이트 모델을 판다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-045",
+      "company_id": "amazon",
+      "factors": [
+        "F3",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-014",
+      "published_at_utc": "2024-12-04T00:00:00Z",
+      "title": "Amazon Bedrock Marketplace brings over 100 models to Amazon Bedrock",
+      "excerpt": "Amazon Bedrock Marketplace provides generative AI developers access to over 100 publicly available and proprietary foundation models (FMs), in addition to Amazon Bedrock’s industry-leading, serverless models.",
+      "locator": "공지 본문 첫 문장",
+      "relevance": "Bedrock 이 100개 이상 모델을 판다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-046",
+      "company_id": "amazon",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-011",
+      "published_at_utc": "2025-12-15T18:00:00Z",
+      "title": "US FTC-Amazon antitrust trial pushed back to March 2027",
+      "excerpt": "MLex Summary: Amazon will face off against the US Federal Trade Commission and a group of state attorneys general on March 29, 2027, over antitrust claims related to the company's pricing policies, according to a scheduling order signed by US District Judge John Chun. Trial briefs are to be submitted by March 22, 2027, and a pretrial conference is set for March 15, 2027.",
+      "locator": "기사 요약문(MLex Summary)",
+      "relevance": "FTC 반독점 소송의 재판 일정(2027-03-29)이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "2027-03",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-047",
+      "company_id": "amazon",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-012",
+      "published_at_utc": "2024-11-14T00:00:00Z",
+      "title": "FTC v. Amazon.com (tracker)",
+      "excerpt": "The Federal Trade Commission (FTC), 18 state attorneys general (AGs), and Puerto Rico filed an antitrust lawsuit against Amazon for illegally maintaining monopoly power in the online shopping market.",
+      "locator": "추적 페이지 사건 개요 첫 문장",
+      "relevance": "FTC 반독점 소송의 원고(FTC·18개 주 검찰총장·푸에르토리코)다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-048",
+      "company_id": "amazon",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-015",
+      "published_at_utc": "2026-09-28T11:00:30Z",
+      "title": "AI agents promise to do everything for you. There may be a big wrinkle in that plan",
+      "excerpt": "Meta has partnered with Walmart, GameStop, Sephora, Expedia, OpenTable and Shopify to incorporate their services into the Muse app. But e-commerce juggernaut Amazon refused to play ball with Meta. Amazon blocked the agent, saying it was not given notice or a choice about whether its store should be available through Muse.",
+      "locator": "기사 본문 10번째 문단(‘Meta has partnered with Walmart’ 로 시작)",
+      "relevance": "아마존이 메타의 쇼핑 에이전트 Muse 를 자사 스토어에서 막았다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-049",
+      "company_id": "amazon",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-016",
+      "published_at_utc": "2026-07-20T10:54:00Z",
+      "title": "AWS Bedrock AgentCore Makes the Agent Session a Cloud Resource",
+      "excerpt": "Changing the model does not move the session filesystem, AgentCore Memory, IAM roles, Secrets Manager references, Gateway targets, Cedar policies, CloudWatch evidence, endpoint versions, quota alarms, or cost-allocation tags. Exporting orchestration code does not export those operational dependencies either. The model is becoming a replaceable component while the cloud control plane becomes the durable system. Lock-in has moved upward from the inference endpoint to the execution substrate.",
+      "locator": "글 33~34번째 문단",
+      "relevance": "AgentCore 에 쌓인 운영 의존이 다른 클라우드로 옮겨지지 않는다는 분석이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-amazon-002",
+      "excerpt": "We have an aggregate $20.0 billion in unsecured revolving credit facilities with syndicates of lenders, consisting of a $15.0 billion facility (the “Credit Agreement”) and a $5.0 billion 364-day facility (the “Short-Term Credit Agreement”). The Credit Agreement has a term that extends to November 2028 and may be extended for one or more additional one-year terms subject to approval by the lenders.",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 5 — Debt, 리볼빙 신용한도 문단(‘We have an aggregate $20.0 billion…’) 첫 두 문장"
+    },
+    {
+      "evidence_id": "EV-amazon-001",
+      "excerpt": "The DDTL Credit Agreement provides the Company with a $17.5 billion senior unsecured delayed draw term loan credit facility (the “DDTL Facility”). Commitments to provide the DDTL Facility will expire on September 30, 2026 unless fully borrowed prior to such date.",
+      "locator": "8-K (2026-06-10) Item 1.01, DDTL Credit Agreement 둘째 문단"
+    },
+    {
+      "evidence_id": "EV-amazon-004",
+      "excerpt": "Meta’s new AI agent, Muse, is supposed to handle everyday online errands, including shopping. At several of the country’s biggest retailers, it can’t get through the door.",
+      "locator": "기사 첫 문단(구독자 전용 기사의 공개 리드)"
+    },
+    {
+      "evidence_id": "EV-amazon-009",
+      "excerpt": "UBS analysts have found that AI chatbots are more likely to recommend Walmart $WMT and Costco $COST to shoppers than Amazon $AMZN, a development the firm says signals a new battleground for retailers vying for consumer attention.",
+      "locator": "기사 본문 첫 문단"
+    },
+    {
+      "evidence_id": "EV-amazon-007",
+      "excerpt": "In April, the Claude maker committed more than $100 billion over 10 years to Amazon Web Services (AWS), Amazon's cloud computing segment. That one contract is around a fifth of the $518 billion.",
+      "locator": "기사 둘째 문단 둘째·셋째 문장"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "amazon.F1",
+      "evidence_after": [
+        "아마존 ① 은 소비자 채널의 락인으로 5점을 매겼다.",
+        "둘 다 Prime 회원 수나 쇼핑 트래픽의 이탈을 잰 수치가 아니라서 점수를 바꾸지 않는다."
+      ],
+      "evidence_up_after": [
+        "Prime 회원 2억 명 이상이 묶여 있고, 2026년 2월 Alexa+ 를 미국 Prime 회원 전체에게 무료로 열었다. [EV-amazon-028, EV-amazon-030]",
+        "업무 채널에서도 Bedrock AgentCore 가 다른 클라우드로 옮기기 어려운 새 락인을 만들고 있다. [EV-amazon-025, EV-amazon-049]"
+      ],
+      "evidence_down_after": [
+        "메타의 쇼핑 에이전트 Muse 를 아마존이 차단했다는 보도(2026-09-29)와 AI 챗봇이 아마존보다 월마트·코스트코를 추천한다는 UBS 조사 보도(2026-10-05)가 확정 근거로 들어와 있다. [EV-amazon-004, EV-amazon-048, EV-amazon-009]"
+      ]
+    },
+    {
+      "judgment_id": "amazon.F2",
+      "evidence_after": [
+        "아마존 ② 는 세 경로 가운데 표준 선점과 성능 도약 두 경로를 통과해 4점이다.",
+        "표준 선점(산업 인터페이스를 정의하는가)은 통과다.",
+        "성능 도약은 통과다.",
+        "패러다임 적응은 통과로 세지 않았다.",
+        "경로별 통과 여부를 판정 입력으로 나누어 적지 않았기 때문에 프로그램이 경로 수로 환산하지 않고 사람이 매긴 4점을 쓴다.",
+        "자체 모델 Nova 가 Arena 텍스트 부문 99위로 에이전트·추론 경쟁에 기여하지 못했다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "AWS Interconnect 의 오픈 API 규격을 Google(2026년 4월)·Azure(2026-08-31)·Oracle 이 모두 채택해 멀티클라우드 연결의 사실상 표준이 됐다. [EV-amazon-032, EV-amazon-031]",
+        "첫 3nm 칩인 Trainium3(362 PFLOPS)는 OpenAI(Trainium3·Trainium4 약 2GW)와 Anthropic(Trainium2~Trainium4, 최대 5GW)이 다년 약정으로 채택했다. Anthropic 은 Trainium2 로 Claude 를 학습하고 있지만, 2026년 4월 보도 기준 OpenAI 가 Trainium 에서 모델을 학습했다는 공개 근거는 없었다. [EV-amazon-033, EV-amazon-034, EV-amazon-035, EV-amazon-040, EV-amazon-036]"
+      ],
+      "evidence_down_after": [
+        "AWS–Azure 연결은 2026-08-31 프리뷰로 나왔고 정식 출시는 아직 확인되지 않았다. [EV-amazon-031]"
+      ]
+    },
+    {
+      "judgment_id": "amazon.F3",
+      "evidence_after": [
+        "아마존 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+        "모방 불가능성은 실패다.",
+        "별도 수익모델은 통과이고, 후발 가속도도 통과로 판정했다.",
+        "모델을 직접 만들지 않은 것 자체는 카운터 포지셔닝이 아니다. 카운터 포지셔닝은 안드로이드처럼 만들어서 뿌리되 수익모델을 달리한 경우를 말한다.",
+        "문 닫힘은 실패로 판정해 5점 관문에 닿지 않는다."
+      ],
+      "evidence_up_after": [
+        "Bedrock 은 모두의 모델을 팔아 이기는 전략이고 실제로 앞서 나갔다. 2026년 4월 OpenAI 모델을 올려 Azure 의 OpenAI 모델 독점을 깼고 이어 GPT-5.6 도 올렸으며, OpenAI 로부터 Trainium3·Trainium4 약 2GW 사용 약정을 받았고, 100개 이상 모델을 판다. [EV-amazon-037, EV-amazon-024, EV-amazon-035, EV-amazon-045, EV-amazon-044]",
+        "컴퓨트 매출이 있어 별도 수익모델이 있다. [EV-amazon-027]"
+      ],
+      "evidence_down_after": [
+        "Azure AI Foundry 와 Vertex Model Garden 도 같은 모델 매대를 운영해 경쟁사 둘 이상이 이미 하고 있으므로, 아마존의 우위는 실행력이지 구조적으로 못 베끼는 자산이 아니다. [EV-amazon-038]"
+      ]
+    },
+    {
+      "judgment_id": "amazon.F4",
+      "evidence_after": [
+        "아마존 ④ 는 5점이다.",
+        "Blue Jay 중단에도 다각화의 폭은 그대로라 5점을 매긴다."
+      ],
+      "evidence_up_after": [
+        "2026년 2분기 AWS 매출 성장률은 +36.7% 로 18분기 만의 최고이고, AI 사업과 칩 사업은 각각 연환산 매출(런레이트) $25B 이상이다. [EV-amazon-022]",
+        "리테일·광고·물류에 더해 로보틱스도 실제로 배포했다. 로봇 100만 대 이상을 운영하고, 촉각 양팔 로봇 Vulcan 이 창고 물품의 75% 를 집어 넣으며, 운영 에이전트 Project Eluna 를 쓴다. [EV-amazon-029, EV-amazon-042, EV-amazon-041]"
+      ],
+      "evidence_down_after": [
+        "Blue Jay 로봇은 높은 비용과 제조 복잡성, 도입 문제 때문에 공개 6개월이 안 된 2026년 1월 운영을 멈췄다. [EV-amazon-043]"
+      ]
+    },
+    {
+      "judgment_id": "amazon.F5",
+      "evidence_after": [
+        "아마존 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 -1 로 4점이다.",
+        "매대 입점은 상업적 약속이고 경쟁사까지 자기 매대에 편입한 경우라 동맹 등급을 +2 로 판정했다.",
+        "적대 등급 -1(비용형)은 FTC 반독점 소송에서 나온다. 규제기관 소송은 져도 본업 수요가 유지되는 비용이라 사업 구조를 건드리지 않는 비용형으로 본다.",
+        "⑤ 의 5점은 동맹 +2 에 적대 등급 0(규제 조사·소송·시장 차단이 눈에 띄지 않음)이 겹칠 때만 나오는데, 이 소송이 있어 아마존은 4점이다."
+      ],
+      "evidence_up_after": [
+        "Bedrock 은 100개 이상 모델을 팔고, 경쟁사 OpenAI 와 중국 오픈웨이트 모델까지 재판매한다. [EV-amazon-045, EV-amazon-037, EV-amazon-044]",
+        "Anthropic 과는 최대 $25B 투자와 5GW 규모 컴퓨트로 묶여 있다. [EV-amazon-039, EV-amazon-040]",
+        "2026-08-31 Azure 와 맺은 멀티클라우드 상호연결은 새 동맹이 아니라 적대를 줄이는 사실이라 등급을 바꾸지 않는다. [EV-amazon-031]"
+      ],
+      "evidence_down_after": [
+        "FTC 와 18개 주가 낸 반독점 소송의 재판이 2027년 3월 29일로 잡혀 있다. [EV-amazon-047, EV-amazon-046]"
+      ]
+    },
+    {
+      "judgment_id": "amazon.F7",
+      "evidence_after": [
+        "아마존 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 '작음', 내 돈이 돌아옴 '예' 칸이라 -1 이다.",
+        "내 돈이 돌아온다고 판정했다.",
+        "조달 의존 고객 비중은 작다고 판정했다."
+      ],
+      "evidence_up_after": [
+        "Anthropic 에서 오는 매출은 아마존 최근 1년 매출 $775.7B(2026-06-30 기준)에 견주면 미미하다. [EV-amazon-014, EV-amazon-021]"
+      ],
+      "evidence_down_after": [
+        "아마존이 Anthropic 에 투자한 돈이 AWS 매출로 돌아오는 것은 피투자사가 곧 대형 고객인 전형적인 순환 구조다. [EV-amazon-018, EV-amazon-040]",
+        "최근 1년 영업외 이익 $81.8B(세전이익의 46.6%)는 ⑥ 의 영업외 비중에서 반영하며, 그 출처가 고객사라서 ⑦ 에는 순환 구조의 방증으로만 적고 입력에 넣지 않는다. [EV-amazon-014, EV-amazon-021, EV-amazon-023]",
+        "OpenAI 에는 2026년 1분기 $15.0B 를 투자하고 $35.0B 추가 매입을 약정해 2026-06-30 까지 $28.7B, 그 뒤 나머지 $21.3B 를 집행했고, Anthropic 은 2026년 4월 AWS 에 10년간 $100B 이상을 쓰기로 약정했다. 두 사실은 ⑦ 판정 입력에 넣지 않았고 ⑦ 재검토 항목으로 남아 있다. [EV-amazon-019, EV-amazon-020, EV-amazon-017, EV-amazon-040, EV-amazon-007]"
+      ]
+    },
+    {
+      "judgment_id": "amazon.F8",
+      "evidence_after": [
+        "아마존 ⑧ 은 -1 이다."
+      ],
+      "evidence_up_after": [
+        "매출이 리테일·광고·AWS 세 축으로 나뉘어 있어 한 고객이나 공급자가 끊겨도 회사가 멈추지 않는다고 판단했다. [EV-amazon-026]",
+        "Bedrock 은 특정 모델사에 묶이지 않는 모델 중립 매대라 모델 공급자에 대한 의존도 낮다. [EV-amazon-024]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "amazon.F9.obsreg25",
+      "evidence_after": [
+        "아마존 ⑨ 는 -2 다.",
+        "아마존은 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+        "게이트 2(최근 1년 잉여현금흐름)에서는 잉여현금흐름이 마이너스라 -2 에서 게이트 3 으로 간다.",
+        "게이트 3(버티는 기간)의 런웨이는 3년 이상으로 유지된다. 신용등급으로 추정한 조달 여력은 완충에 넣지 않는다.",
+        "여신을 어느 범위로 세어도 런웨이는 3년 이상이고 게이트 3 결론은 같다. 여신에 잔존 기간 요건을 둘지는 규칙 8절 미결 사항 C-23 으로 남아 있다.",
+        "게이트 4(미래 지출이 덮이는가)의 약정 커버리지는 1배 이상으로 유지된다. 계약된 수입과 미개시 확정 약정은 같은 2026-06-30 10-Q 에서 나와 비교 가능하다고 판정했다.",
+        "미개시 리스만 분모로 쓰면 3.615 이지만 게이트 4 가 묻는 것은 미래 지출 전체라서 구매약정을 합한 값을 쓴다."
+      ],
+      "evidence_up_after": [
+        "아마존은 최근 1년(2026-06-30 기준) 영업이익 $93.7B, 매출 $775.7B 로 영업이익률이 12.1% 다. [EV-amazon-014, EV-amazon-021]",
+        "영업이익이 나는데 현금흐름이 마이너스인 것은 벌면서 더 크게 투자하는 선택의 문제이고, 설비투자는 줄일 수 있는 지출이다. [EV-amazon-014, EV-amazon-013]",
+        "버티는 기간의 완충은 2026-06-30 현금및현금성자산 $78.2B 와 확정 미인출 여신 $37.5B 를 더한 $115.7B 이고, 연 소진 $11.6B 로 나눈 런웨이는 9.95년이다. [EV-amazon-012, EV-amazon-002, EV-amazon-010, EV-amazon-011, EV-amazon-013]",
+        "2028-11 만기 $15.0B 만 세면 런웨이는 8.0년, 여신을 모두 빼고 현금만 세면 6.7년이다. [EV-amazon-002, EV-amazon-012, EV-amazon-013]",
+        "약정 커버리지는 계약된 수입 $496B(원계약 1년 초과 계약의 미인식 약정)를 미개시 확정 약정 $267.3B(미개시 리스 $137.2B + 무조건 구매약정 $130.1B)로 나눈 1.856 이다. [EV-amazon-015, EV-amazon-016]",
+        "분자는 1년 이하 계약이 빠져 과소계상되고 분모는 5년 이후(Thereafter) 열까지 담아 과대계상되므로 커버리지는 보수적으로 낮게 나온다. [EV-amazon-015, EV-amazon-016]"
+      ],
+      "evidence_down_after": [
+        "최근 1년 잉여현금흐름은 영업현금흐름 $161.4B 에서 설비투자 $173.0B 를 뺀 값이 -$11.6B 다. [EV-amazon-013]",
+        "여신 $37.5B 는 2028-11 만기 무담보 리볼빙 $15.0B, 2026-10 만기이고 연장에 대주단 승인이 필요한 364일 리볼빙 $5.0B, 2026-09-30 까지 한 번만 인출할 수 있고 그 뒤 미인출 약정이 자동 소멸하는 지연인출 정기대출 $17.5B 로 이뤄진다. 세 시설 모두 2026-06-30 에 인출 잔액이 없었다. [EV-amazon-002, EV-amazon-010, EV-amazon-011]",
+        "지연인출 약정은 기준일 2026-10-06 전인 2026-09-30 에 미인출 약정으로서의 시한이 끝났고 364일 리볼빙도 2026-10 에 만기가 온다. [EV-amazon-011, EV-amazon-001, EV-amazon-010]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "amazon.F2",
+      "column": "down",
+      "line": "자체 모델 Nova 는 Arena 텍스트 부문 99위로 에이전트·추론 경쟁에 기여하지 못했다.",
+      "searched": "lmarena.ai 텍스트 리더보드(2026-10-07 현재판만 열림, 기준일 이전 순위 기록 없음), Arena 변경 기록 검색, 언론 검색",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "amazon.F3",
+      "column": "up",
+      "line": "(부분) 18개 제공사",
+      "searched": "AWS Bedrock 제품·모델 선택 페이지, AWS What's New·News Blog(2024-12, 2025-12, 2026-02), 2026년 2분기 실적 보도자료",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "amazon.F5",
+      "column": "up",
+      "line": "(부분) 18개 제공사",
+      "searched": "AWS Bedrock 제품·모델 선택 페이지, AWS What's New·News Blog",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "amazon.F2",
+      "before": "AWS Interconnect 의 오픈 API 규격을 Google(2026년 4월)·Azure(2026-08-28)·Oracle 이 모두 채택해 멀티클라우드 연결의 사실상 표준이 됐다.",
+      "after": "AWS Interconnect 의 오픈 API 규격을 Google(2026년 4월)·Azure(2026-08-31)·Oracle 이 모두 채택해 멀티클라우드 연결의 사실상 표준이 됐다. [EV-amazon-032, EV-amazon-031]",
+      "why": "AWS 공지(Posted on Aug 31, 2026)상 Azure 프리뷰 발표일은 2026-08-31 이다.",
+      "evidence_id": "EV-amazon-031"
+    },
+    {
+      "judgment_id": "amazon.F2",
+      "before": "첫 3nm 칩인 Trainium3(362 PFLOPS)에서 OpenAI 와 Anthropic 이 실제로 모델을 학습해, 성능이 채택으로 입증됐다.",
+      "after": "첫 3nm 칩인 Trainium3(362 PFLOPS)는 OpenAI(Trainium3·Trainium4 약 2GW)와 Anthropic(Trainium2~Trainium4, 최대 5GW)이 다년 약정으로 채택했다. Anthropic 은 Trainium2 로 Claude 를 학습하고 있지만, 2026년 4월 보도 기준 OpenAI 가 Trainium 에서 모델을 학습했다는 공개 근거는 없었다. [EV-amazon-033, EV-amazon-034, EV-amazon-035, EV-amazon-040, EV-amazon-036]",
+      "why": "OpenAI 는 Trainium3·Trainium4 약 2GW 사용을 약정했을 뿐이고(The New Stack 2026-04-29), 같은 기사는 OpenAI 가 Trainium 에서 프런티어 모델을 학습한 공개 근거를 찾지 못했다고 적는다. Anthropic 은 Trainium2 로 학습·서빙한다.",
+      "evidence_id": "EV-amazon-035, EV-amazon-036"
+    },
+    {
+      "judgment_id": "amazon.F2",
+      "before": "AWS–Azure 연결은 2026-08-28 프리뷰로 나왔고 정식 출시는 아직 확인되지 않았다.",
+      "after": "AWS–Azure 연결은 2026-08-31 프리뷰로 나왔고 정식 출시는 아직 확인되지 않았다. [EV-amazon-031]",
+      "why": "AWS 공지상 Azure 프리뷰 발표일은 2026-08-31 이다.",
+      "evidence_id": "EV-amazon-031"
+    },
+    {
+      "judgment_id": "amazon.F3",
+      "before": "Bedrock 은 모두의 모델을 팔아 이기는 전략이고 실제로 앞서 나갔다. 2026년 7월 GPT-5.6 을 올려 Azure 의 OpenAI 모델 독점을 깼고, Trainium3 에서 OpenAI 모델까지 학습시키며, 18개 제공사의 100개 이상 모델을 판다.",
+      "after": "Bedrock 은 모두의 모델을 팔아 이기는 전략이고 실제로 앞서 나갔다. 2026년 4월 OpenAI 모델을 올려 Azure 의 OpenAI 모델 독점을 깼고 이어 GPT-5.6 도 올렸으며, OpenAI 로부터 Trainium3·Trainium4 약 2GW 사용 약정을 받았고, 100개 이상 모델을 판다. [EV-amazon-037, EV-amazon-024, EV-amazon-035, EV-amazon-045, EV-amazon-044]",
+      "why": "OpenAI 모델은 Microsoft 독점이 풀린 다음 날인 2026-04-28 Bedrock 에 올라왔고(GeekWire), GPT-5.6 은 7월 30일 실적 보도자료에 추가 모델로 나온다. OpenAI 는 Trainium 에서 모델을 학습한 것이 아니라 Trainium3·Trainium4 약 2GW 사용을 약정했다(The New Stack). 제공사 수 18개는 원문에서 찾지 못해 뺐다.",
+      "evidence_id": "EV-amazon-037, EV-amazon-024, EV-amazon-035"
+    },
+    {
+      "judgment_id": "amazon.F4",
+      "before": "Blue Jay 로봇은 제조비와 작업 흐름 부적합 때문에 6개월 만인 2월 18일 중단했다.",
+      "after": "Blue Jay 로봇은 높은 비용과 제조 복잡성, 도입 문제 때문에 공개 6개월이 안 된 2026년 1월 운영을 멈췄다. [EV-amazon-043]",
+      "why": "Business Insider 를 인용한 보도(Benzinga 2026-02-18)는 운영이 2026년 1월에 멈췄고 사유가 높은 비용·제조 복잡성·도입 문제라고 적는다. 2월 18일은 보도 날짜다.",
+      "evidence_id": "EV-amazon-043"
+    },
+    {
+      "judgment_id": "amazon.F5",
+      "before": "Bedrock 은 18개 제공사의 100개 이상 모델을 팔고, 경쟁사 OpenAI 와 중국 오픈웨이트 모델까지 재판매한다.",
+      "after": "Bedrock 은 100개 이상 모델을 팔고, 경쟁사 OpenAI 와 중국 오픈웨이트 모델까지 재판매한다. [EV-amazon-045, EV-amazon-037, EV-amazon-044]",
+      "why": "제공사 수 18개는 원문에서 찾지 못해 뺐다. 100개 이상 모델(Bedrock Marketplace), OpenAI 모델, Qwen·Moonshot AI 오픈웨이트 모델은 원문으로 확인했다.",
+      "evidence_id": "EV-amazon-045, EV-amazon-044"
+    },
+    {
+      "judgment_id": "amazon.F5",
+      "before": "2026-08-28 Azure 와 맺은 멀티클라우드 상호연결은 새 동맹이 아니라 적대를 줄이는 사실이라 등급을 바꾸지 않는다.",
+      "after": "2026-08-31 Azure 와 맺은 멀티클라우드 상호연결은 새 동맹이 아니라 적대를 줄이는 사실이라 등급을 바꾸지 않는다. [EV-amazon-031]",
+      "why": "AWS 공지상 Azure 프리뷰 발표일은 2026-08-31 이다.",
+      "evidence_id": "EV-amazon-031"
+    },
+    {
+      "judgment_id": "amazon.F5",
+      "before": "FTC 와 18개 주가 낸 반독점 소송의 재판이 2027년 2월로 잡혀 있다.",
+      "after": "FTC 와 18개 주가 낸 반독점 소송의 재판이 2027년 3월 29일로 잡혀 있다. [EV-amazon-047, EV-amazon-046]",
+      "why": "판사 John Chun 이 서명한 일정 명령으로 재판이 2027-03-29 로 미뤄졌다(MLex 2025-12-15).",
+      "evidence_id": "EV-amazon-046"
+    },
+    {
+      "judgment_id": "amazon.F7",
+      "before": "2026년 3월 OpenAI 에 약속한 $50B 투자(그중 $35B 는 OpenAI 상장 또는 AGI 도달 조건부)와 Anthropic 이 아마존에 $100B 이상을 약속했다는 보도(2026-10-01)는 집행 여부와 규모가 확인되지 않아 판정에 넣지 않았고 ⑦ 재검토 항목으로 남아 있다.",
+      "after": "OpenAI 에는 2026년 1분기 $15.0B 를 투자하고 $35.0B 추가 매입을 약정해 2026-06-30 까지 $28.7B, 그 뒤 나머지 $21.3B 를 집행했고, Anthropic 은 2026년 4월 AWS 에 10년간 $100B 이상을 쓰기로 약정했다. 두 사실은 ⑦ 판정 입력에 넣지 않았고 ⑦ 재검토 항목으로 남아 있다. [EV-amazon-019, EV-amazon-020, EV-amazon-017, EV-amazon-040, EV-amazon-007]",
+      "why": "10-Q(2026-06-30) Note 2 는 OpenAI 투자 약정 $50B 중 $28.7B 를 2026-06-30 까지, 나머지 $21.3B 를 그 뒤 집행했다고 적고, Note 1 은 Anthropic 이 AWS 약정을 10년간 $100B 넘게 늘렸다고 적는다. 집행 여부와 규모는 확인된다. 시점은 1분기(10-Q)로 적었다.",
+      "evidence_id": "EV-amazon-019, EV-amazon-020, EV-amazon-017"
+    }
+  ]
+}

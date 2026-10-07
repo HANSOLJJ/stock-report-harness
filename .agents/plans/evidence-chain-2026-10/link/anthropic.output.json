@@ -1,0 +1,1258 @@
+{
+  "company_id": "anthropic",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-anthropic-000162828026040364",
+      "title": "SpaceX S-1/A (Amendment No. 2, 2026-06-03)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1181412/000162828026040364/spaceexplorationtechnologib.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-06-03T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-anthropic-000101872426000026",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-07-31T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-anthropic-000101872426000002",
+      "title": "Amazon 8-K Ex.99.1 — Fourth Quarter 2025 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000002/amzn-20251231xex991.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-02-05T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-anthropic-000101872426000012",
+      "title": "Amazon 8-K Ex.99.1 — First Quarter 2026 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000012/amzn-20260331xex991.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-04-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-anthropic-000119312526323660",
+      "title": "Microsoft 10-K (FY2026, 2026-06-30)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-07-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-001",
+      "title": "Exclusive-Anthropic aims to nearly triple annualized revenue in 2026, sources say (Reuters)",
+      "publisher": "Yahoo Finance (Reuters 전재)",
+      "url": "https://finance.yahoo.com/news/exclusive-anthropic-aims-nearly-triple-170234463.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2025-10-15T17:02:34Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-002",
+      "title": "Valued at $1.3 Billion, OpenRouter Is Systematically Eroding Its Own Reason to Exist",
+      "publisher": "BigGo Finance",
+      "url": "https://finance.biggo.com/news/L3-yh54B6tLPsnrZE-bl",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-06-02T09:37:35Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-003",
+      "title": "ChatGPT reaches 900M weekly active users",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/02/27/chatgpt-reaches-900m-weekly-active-users/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-02-27T18:25:51Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-004",
+      "title": "Meta and Microsoft scale back internal use of Anthropic’s Claude, report says",
+      "publisher": "Yahoo Finance (Investing.com)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/meta-microsoft-scale-back-internal-185842649.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-05T18:58:42Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-005",
+      "title": "GPT-6 Astra vs Claude Fable 5.1: What the Benchmarks Stopped Telling You",
+      "publisher": "OneWave AI",
+      "url": "https://www.onewave-ai.com/blog/gpt-6-astra-vs-claude-fable-5-1",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-08T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-006",
+      "title": "GPT-6 Astra vs Claude Fable 5.1: Benchmarks and Pricing",
+      "publisher": "DataCamp",
+      "url": "https://www.datacamp.com/blog/gpt-6-astra-vs-claude-fable-5-1",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-05T10:30:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-007",
+      "title": "Arena ranks GPT-6 Astra Max first for web development, Claude Fable 5.1 Max first for agents",
+      "publisher": "RuntimeWire",
+      "url": "https://runtimewire.com/article/arena-gpt-6-astra-webdev-leaderboard-claude-agents",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-14T04:15:18Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-008",
+      "title": "Introducing Claude Opus 5",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/claude-opus-5",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-07-24T17:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-009",
+      "title": "Introducing the Model Context Protocol",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/model-context-protocol",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2024-11-25T15:50:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-010",
+      "title": "Donating MCP to the Agentic AI Foundation",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2025-12-09T17:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-011",
+      "title": "Anthropic acquires Bun as Claude Code reaches $1B milestone",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/anthropic-acquires-bun-as-claude-code-reaches-usd1b-milestone",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2025-12-03T04:10:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-012",
+      "title": "Anthropic Confirms In-House Chip Team: Co-Design Bet Could Cut Claude Inference Costs in Half",
+      "publisher": "Tech Times",
+      "url": "https://www.techtimes.com/articles/323238/20260805/anthropic-confirms-house-chip-team-co-design-bet-could-cut-claude-inference-costs-half.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-08-05T20:32:23Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-013",
+      "title": "Microsoft, NVIDIA, and Anthropic announce strategic partnerships",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/microsoft-nvidia-anthropic-announce-strategic-partnerships",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2025-11-18T15:00:24Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-014",
+      "title": "FTC is investigating OpenAI, Anthropic and other AI companies over product risks",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/30/ftc-ai-probe-openai-anthropic.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-30T15:27:47Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-015",
+      "title": "Anthropic raises $65B in Series H funding at $965B post-money valuation",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/series-h",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-05-28T17:13:20Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-016",
+      "title": "Anthropic expands Google and Broadcom compute deal",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/google-broadcom-partnership-compute",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-04-06T21:16:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-anthropic-012",
+      "company_id": "anthropic",
+      "factors": [
+        "F1",
+        "F3",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-001",
+      "published_at_utc": "2025-10-15T17:02:34Z",
+      "title": "Exclusive-Anthropic aims to nearly triple annualized revenue in 2026, sources say (Reuters)",
+      "excerpt": "Anthropic has more than 300,000 business and enterprise customers, which account for about 80% of its revenue.",
+      "locator": "기사 'AI DEMAND SOARS' 소제목 아래 2번째 문단",
+      "relevance": "기업 고객이 30만 곳을 넘고 매출의 약 80% 를 차지한다는 보도로, ①·③·⑦ 의 기업 중심 매출 구조를 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-013",
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-002",
+      "published_at_utc": "2026-06-02T09:37:35Z",
+      "title": "Valued at $1.3 Billion, OpenRouter Is Systematically Eroding Its Own Reason to Exist",
+      "excerpt": "Anthropic's models account for only 12% of token traffic on OpenRouter, yet capture 46% of the platform's revenue.",
+      "locator": "기사 본문 'But a more telling comparison lies in another set of numbers.' 로 시작하는 문단",
+      "relevance": "OpenRouter 에서 토큰 12% 로 매출 46% 를 가져간다는 값으로, ① 거래 채널 가격 결정력의 보조 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-014",
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-003",
+      "published_at_utc": "2026-02-27T18:25:51Z",
+      "title": "ChatGPT reaches 900M weekly active users",
+      "excerpt": "ChatGPT has reached 900 million weekly active users, OpenAI announced Friday, putting the AI chatbot within striking distance of 1 billion.",
+      "locator": "기사 첫 문단",
+      "relevance": "ChatGPT 주간 사용자 9억 명이라는 비교 기준으로, ① 소비자 채널이 약하다는 내릴 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-015",
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-004",
+      "published_at_utc": "2026-10-05T18:58:42Z",
+      "title": "Meta and Microsoft scale back internal use of Anthropic’s Claude, report says",
+      "excerpt": "Earlier this year, Microsoft projected an internal spend of at least $1 billion on Anthropic's technology, according to sources familiar with the company's budget. However, that estimate has since been slashed by more than a third.",
+      "locator": "기사 2번째 문단(The Information 보도 인용)",
+      "relevance": "Microsoft 가 사내 Claude 지출 전망을 3분의 1 넘게 줄였다는 보도로, ① 전환비용에 대한 반대 증거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-016",
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-005",
+      "published_at_utc": "2026-09-08T00:00:00Z",
+      "title": "GPT-6 Astra vs Claude Fable 5.1: What the Benchmarks Stopped Telling You",
+      "excerpt": "On launch day, their Intelligence Index v4.1.1 had Fable 5.1 at 66 and Astra at 61 - a five-point Claude lead, tying Astra with its own predecessor. Within days, v4.2 recalibrated to 57 and 55.",
+      "locator": "기사 'The Scoreboard Moved Three Times in One Week' 절 2번째 문단",
+      "relevance": "Artificial Analysis Intelligence Index 에서 Fable 5.1 66 대 Astra 61, v4.2 에서 57 대 55 라는 값으로, ② 성능 도약 경로의 근거다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-017",
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-006",
+      "published_at_utc": "2026-09-05T10:30:00Z",
+      "title": "GPT-6 Astra vs Claude Fable 5.1: Benchmarks and Pricing",
+      "excerpt": "Artificial Analysis disagrees at the harness level, placing Claude Fable 5.1 in Claude Code at 70 on its Coding Agent Index against 67 for GPT-6 Astra in Codex.",
+      "locator": "기사 FAQs 'Which is better for coding, GPT-6 Astra or Claude Fable 5.1?' 답변",
+      "relevance": "Coding Agent Index 에서 Fable 5.1(Claude Code) 70 대 Astra(Codex) 67 이라는 값으로, ② 성능 도약 경로의 근거다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-018",
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-007",
+      "published_at_utc": "2026-09-14T04:15:18Z",
+      "title": "Arena ranks GPT-6 Astra Max first for web development, Claude Fable 5.1 Max first for agents",
+      "excerpt": "ranked OpenAI's GPT-6 Astra Max first in its September 11th WebDev snapshot. Anthropic's Claude Fable 5.1 Max finished second, while Claude Opus 5 Max took third.",
+      "locator": "기사 본문 2번째 문단",
+      "relevance": "2026-09-11 Arena WebDev 판에서 Claude Fable 5.1 Max 가 2위라는 값으로, ② 사용자 투표형 순위의 참고 근거다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-019",
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-007",
+      "published_at_utc": "2026-09-14T04:15:18Z",
+      "title": "Arena ranks GPT-6 Astra Max first for web development, Claude Fable 5.1 Max first for agents",
+      "excerpt": "Arena's separate Agent Arena leaderboard, dated September 9th, put Claude Fable 5.1 Max first and GPT-6 Astra Max second on agentic tasks involving tools.",
+      "locator": "기사 본문 3번째 문단",
+      "relevance": "2026-09-09 Agent Arena 판에서 Claude Fable 5.1 Max 가 1위라는 값으로, ② 사용자 투표형 순위의 참고 근거다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-020",
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-008",
+      "published_at_utc": "2026-07-24T17:00:00Z",
+      "title": "Introducing Claude Opus 5",
+      "excerpt": "On ARC-AGI 3, an evaluation where the model has to solve novel problems, Opus 5’s score is three times as high as the next-best model.",
+      "locator": "발표문 'Performance and cost-effectiveness' 절 지식 작업 목록 첫 항목",
+      "relevance": "Opus 5 의 ARC-AGI-3 점수가 다음 모델의 세 배라는 회사 발표로, 하네스 미공개라 ② 비교 근거로 쓰지 않는 대상이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-021",
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-009",
+      "published_at_utc": "2024-11-25T15:50:00Z",
+      "title": "Introducing the Model Context Protocol",
+      "excerpt": "Today, we're open-sourcing the Model Context Protocol (MCP), a new standard for connecting AI assistants to the systems where data lives",
+      "locator": "발표문 첫 문단",
+      "relevance": "Anthropic 이 MCP 를 처음 공개해 정의했다는 사실로, ② 표준 선점 경로의 근거다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-022",
+      "company_id": "anthropic",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-010",
+      "published_at_utc": "2025-12-09T17:00:00Z",
+      "title": "Donating MCP to the Agentic AI Foundation",
+      "excerpt": "Across platforms: MCP has been adopted by ChatGPT, Cursor, Gemini, Microsoft Copilot, Visual Studio Code, and other popular AI products;",
+      "locator": "발표문 'MCP has achieved incredible adoption' 목록 첫 항목",
+      "relevance": "MCP 를 ChatGPT·Gemini·Microsoft Copilot 등 경쟁 제품이 이미 채택했다는 사실로, ③ 모방 불가능성의 내릴 근거다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-023",
+      "company_id": "anthropic",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-011",
+      "published_at_utc": "2025-12-03T04:10:00Z",
+      "title": "Anthropic acquires Bun as Claude Code reaches $1B milestone",
+      "excerpt": "In November, Claude Code achieved a significant milestone: just six months after becoming available to the public, it reached $1 billion in run-rate revenue.",
+      "locator": "발표문 첫 문단",
+      "relevance": "Claude Code 가 공개 6개월 만에 런레이트 $1B 에 이르렀다는 사실로, ④ 의 에이전틱 코딩 영역 확장을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-024",
+      "company_id": "anthropic",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-012",
+      "published_at_utc": "2026-08-05T20:32:23Z",
+      "title": "Anthropic Confirms In-House Chip Team: Co-Design Bet Could Cut Claude Inference Costs in Half",
+      "excerpt": "Anthropic confirmed on Wednesday that it is assembling an in-house \"custom silicon team\" to design chips for Claude — the company's first public acknowledgment of a proprietary hardware program that it had been building quietly since at least early June.",
+      "locator": "기사 첫 문단",
+      "relevance": "Anthropic 이 2026-08-05 자체 칩 설계팀을 공식 확인했다는 보도로, ④ 의 자체 칩 계획 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-025",
+      "company_id": "anthropic",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-012",
+      "published_at_utc": "2026-08-05T20:32:23Z",
+      "title": "Anthropic Confirms In-House Chip Team: Co-Design Bet Could Cut Claude Inference Costs in Half",
+      "excerpt": "Clive Chan, who joined Anthropic in early June 2026, anchors the technical leadership of the nascent program. Chan was the second hardware hire on OpenAI's dedicated chip team, joining in January 2024 from Tesla's Dojo supercomputer program",
+      "locator": "기사 'What Co-Design Actually Means for Claude' 절 4번째 문단",
+      "relevance": "OpenAI 칩 팀의 두 번째 하드웨어 채용자였던 Clive Chan 이 6월 합류했다는 사실로, ④ 의 자체 칩 계획 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-026",
+      "company_id": "anthropic",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-012",
+      "published_at_utc": "2026-08-05T20:32:23Z",
+      "title": "Anthropic Confirms In-House Chip Team: Co-Design Bet Could Cut Claude Inference Costs in Half",
+      "excerpt": "The manufacturing question remains open for Anthropic. The company has held exploratory discussions with Samsung Electronics about using its 2nm foundry process",
+      "locator": "기사 'The Manufacturing Question and the Long Horizon' 절 첫 문단",
+      "relevance": "Anthropic 이 삼성 2nm 공정 사용을 탐색 논의했다는 보도로, ④ 의 자체 칩 계획 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-027",
+      "company_id": "anthropic",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-012",
+      "published_at_utc": "2026-08-05T20:32:23Z",
+      "title": "Anthropic Confirms In-House Chip Team: Co-Design Bet Could Cut Claude Inference Costs in Half",
+      "excerpt": "Anthropic has not disclosed a timeline. By the AI chip industry's standard development cycle — typically three to five years from concept to production — a chip beginning serious design work in 2026 would be unlikely to reach production before 2028 at the earliest.",
+      "locator": "기사 'How much does it cost to build a custom AI chip, and when would Anthropic's be ready?' 문답",
+      "relevance": "회사가 칩 일정을 밝히지 않았고 업계 개발 주기로 2028년 전 양산이 어렵다는 보도로, ④·⑧ 에서 자체 칩을 점수에 넣지 않는 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-028",
+      "company_id": "anthropic",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-012",
+      "published_at_utc": "2026-08-05T20:32:23Z",
+      "title": "Anthropic Confirms In-House Chip Team: Co-Design Bet Could Cut Claude Inference Costs in Half",
+      "excerpt": "Anthropic has positioned Clive Chan's hire and the current round of recruiting as the first phase of a program that, by the industry's own timelines, would reach production between 2028 and 2030 at the earliest",
+      "locator": "기사 'No Timeline, No Architecture, No Manufacturing Partner' 절 2번째 문단",
+      "relevance": "업계 일정으로 양산이 빨라야 2028~2030년이라는 보도로, ④·⑧ 에서 자체 칩을 계획 단계로 보는 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-029",
+      "company_id": "anthropic",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-012",
+      "published_at_utc": "2026-08-05T20:32:23Z",
+      "title": "Anthropic Confirms In-House Chip Team: Co-Design Bet Could Cut Claude Inference Costs in Half",
+      "excerpt": "Co-designing chip and model together is how Anthropic plans to halve Claude inference costs",
+      "locator": "기사 제목 아래 부제",
+      "relevance": "칩과 모델을 함께 설계해 Claude 추론 비용을 절반으로 줄이려 한다는 보도로, ④ 의 자체 칩 목표 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-030",
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-013",
+      "published_at_utc": "2025-11-18T15:00:24Z",
+      "title": "Microsoft, NVIDIA, and Anthropic announce strategic partnerships",
+      "excerpt": "This partnership will make Claude the only frontier model available on all three of the world's most prominent cloud services.",
+      "locator": "발표문 'Microsoft and Anthropic are also expanding…' 문단",
+      "relevance": "Claude 가 3대 클라우드 모두에서 제공된다는 회사 발표로, ⑤ 의 하이퍼스케일러 유통 동맹을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-031",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-013",
+      "published_at_utc": "2025-11-18T15:00:24Z",
+      "title": "Microsoft, NVIDIA, and Anthropic announce strategic partnerships",
+      "excerpt": "Anthropic has committed to purchase $30 billion of Azure compute capacity and to contract additional compute capacity up to one gigawatt.",
+      "locator": "발표문 첫 문단",
+      "relevance": "Azure 컴퓨트 $30B 구매 약정으로, ⑧ 컴퓨트 약정의 한 성분이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-032",
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-014",
+      "published_at_utc": "2026-09-30T15:27:47Z",
+      "title": "FTC is investigating OpenAI, Anthropic and other AI companies over product risks",
+      "excerpt": "The FTC has opened an investigation into OpenAI, Anthropic and other AI companies over the potential dangers posed by their products, CNBC has confirmed.",
+      "locator": "기사 첫 문단",
+      "relevance": "FTC 가 제품 위험 문제로 Anthropic 을 조사한다는 확인 보도로, ⑤ 적대 등급의 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-033",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-anthropic-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A (Amendment No. 2, 2026-06-03)",
+      "excerpt": "in May 2026, we entered into Cloud Services Agreements with Anthropic PBC (“Anthropic”), an AI research and development public benefit corporation, with respect to access to compute capacity across COLOSSUS and COLOSSUS II. Compute capacity provided includes approximately 325,000 NVIDIA GPUs, backed by hyperscale-class CPUs, exabyte-scale storage and high-speed networking and interconnects purpose-built for AI workloads. Pursuant to these agreements, the customer has agreed to pay us $1.25 billion per month through May 2029, with capacity ramping in May and June 2026 at a reduced fee.",
+      "locator": "S-1/A Prospectus Summary 'Compute Services Agreements with Third Parties' 문단(Business 절에 같은 문단 반복)",
+      "relevance": "SpaceX 가 Anthropic 에 약 325,000개 NVIDIA GPU 를 2029-05 까지 월 $1.25B 에 제공한다는 공시로, ⑧ 공급자 의존의 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-034",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-anthropic-000119312526323660",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft 10-K (FY2026, 2026-06-30)",
+      "excerpt": "We have an investment accounted for under the equity method that represents an approximate 25% interest on an as-converted basis.",
+      "locator": "10-K Item 8 Note 1 — Accounting Policies, OpenAI 관계 문단",
+      "relevance": "Microsoft 가 OpenAI 지분을 전환 기준 약 25% 보유한다는 공시로, ⑧ 에서 공급자가 모델 경쟁자와 묶여 있다는 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-035",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-anthropic-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30)",
+      "excerpt": "In Q2 2026, AWS and Anthropic announced an expansion of the strategic collaboration and existing multi-year commitment by more than $100.0 billion over 10.0 years, which includes contractual obligations related to the performance of AWS chips.",
+      "locator": "10-Q Note 1 — Accounting Policies, Unearned Revenue 문단",
+      "relevance": "AWS 약정이 기존 약정 위에 10년간 $100.0B 넘게 늘었다는 공시로, ⑧ 컴퓨트 약정의 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-036",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-anthropic-000101872426000002",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Amazon 8-K Ex.99.1 — Fourth Quarter 2025 Results",
+      "excerpt": "Trainium2 powers Project Rainier, the world’s largest operational AI compute cluster with 500,000+ Trainium2 chips, which Anthropic is using to train its industry-leading AI model, Claude.",
+      "locator": "8-K Ex.99.1 'Highlights' AWS 항목",
+      "relevance": "Anthropic 이 Trainium2 50만 개 이상의 Project Rainier 로 Claude 를 훈련한다는 Amazon 공시로, ⑧ 훈련의 AWS 집중을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-037",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-anthropic-000101872426000012",
+      "published_at_utc": "2026-04-29T00:00:00Z",
+      "title": "Amazon 8-K Ex.99.1 — First Quarter 2026 Results",
+      "excerpt": "Announced that Anthropic will secure up to five gigawatts (GW) of current and future generations of Amazon’s Trainium chips to train and power their advanced AI models.",
+      "locator": "8-K Ex.99.1 'Highlights' AWS 항목",
+      "relevance": "Anthropic 이 최대 5GW 의 Trainium 을 확보한다는 Amazon 공시로, ⑧ 훈련의 AWS 집중을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-038",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-016",
+      "published_at_utc": "2026-04-06T21:16:00Z",
+      "title": "Anthropic expands Google and Broadcom compute deal",
+      "excerpt": "We train and run Claude on a range of AI hardware—AWS Trainium, Google TPUs, and NVIDIA GPUs",
+      "locator": "발표문 'The partnership deepens our existing work with Google Cloud…' 다음 문단",
+      "relevance": "Claude 를 AWS Trainium·Google TPU·NVIDIA GPU 로 훈련·서빙한다는 회사 발표로, ⑧ 공급자 구성을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-039",
+      "company_id": "anthropic",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-015",
+      "published_at_utc": "2026-05-28T17:13:20Z",
+      "title": "Anthropic raises $65B in Series H funding at $965B post-money valuation",
+      "excerpt": "Anthropic has raised $65 billion in Series H funding led by Altimeter Capital, Dragoneer, Greenoaks, and Sequoia Capital, valuing the company at $965 billion post-money.",
+      "locator": "발표문 첫 문단",
+      "relevance": "Series H 조달액 $65B 와 post-money $965B 로, ⑨ 완충의 외부 조달 성분이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-anthropic-010",
+      "excerpt": "The Pentagon \"has ceased the use of Anthropic products\", the department official said in a statement on Monday.",
+      "locator": "기사 2번째 문단 (https://www.bbc.com/news/articles/c5j9x9pr0240o, 구글 뉴스 링크가 가리키는 원문)"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "anthropic.F1",
+      "evidence_after": [
+        "Anthropic ①(네트워크 효과 — 가격을 올려도 남는가)은 4점이고, 점수를 정하는 가장 강한 채널은 업무 채널(기업 고객 수·전환비용)이다.",
+        "5점이 아닌 이유는 소비자 채널이 약하기 때문이다.",
+        "Microsoft 의 사내 Claude 지출 감축은 Anthropic 매출에서 그 비중이 확인되지 않아 점수를 바꾸지 않는다.",
+        "ARR $65B 는 크기(위치)로서 이 항목의 배경이며 따로 가점하지 않고, 그 증가율은 ③ 에서 본다.",
+        "OpenRouter 평균 단가 $6.36/M 가 Qwen($0.37/M)의 약 17배라는 값은 원문을 찾지 못해 확인하지 못했다.",
+        "달러 기준 1위 모델인 Claude Opus 4.6 이 OpenRouter 에서 월 $25M 를 벌고 프로그래밍 지출의 60% 이상을 차지한다는 값은 원문을 찾지 못해 확인하지 못했다. 라우팅 서비스 트래픽은 전체 시장이 아니고 토큰 점유율은 매출 점유율이 아니다."
+      ],
+      "evidence_up_after": [
+        "기업 고객이 30만 곳을 넘고 매출의 약 80% 가 API·기업에서 나와, 조직 워크플로에 박힌 전환비용이 락인을 만든다. [EV-anthropic-012]",
+        "보조 증거는 거래 채널의 가격 결정력이다. OpenRouter 에서 토큰 점유율 약 12% 로 매출 점유율 약 46% 를 차지한다. [EV-anthropic-013]"
+      ],
+      "evidence_down_after": [
+        "개인 사용자 수가 OpenAI ChatGPT 의 주간 사용자 9억 명에 크게 못 미친다. [EV-anthropic-014]",
+        "2026-10-05 The Information 은 Microsoft 가 사내 Claude 지출을 3분의 1 줄였다고 보도했고, 우리는 이를 전환비용이 생각보다 낮을 수 있다는 반대 증거로 본다. [EV-anthropic-015]"
+      ]
+    },
+    {
+      "judgment_id": "anthropic.F2",
+      "evidence_after": [
+        "Anthropic ②(신기술 게임체인저)는 5점이며, 이 점수는 승계한 점수다.",
+        "현행 규칙에서 5점은 종합 지수 1위가 아니라 성능 도약이 세대 격차 수준일 때 주고, 그 밖에는 통과한 경로 수(성능 도약·패러다임 적응·표준 선점) 0·1·2개에 2·3·4점을 준다. Anthropic 의 성능 도약이 세대 격차 수준인지는 아직 판정하지 않았다."
+      ],
+      "evidence_up_after": [
+        "성능 도약 경로의 사실은 이렇다. Artificial Analysis Intelligence Index 에서 Fable 5.1(max)은 66 으로 GPT-6 Astra 의 61 보다 높고(지수 v4.2 개편 판에서는 57 대 55), 참가자 전원이 자기 하네스로 잰 Coding Agent Index 에서도 Fable 5.1 이 70 으로 Astra 의 67 보다 높다. [EV-anthropic-016, EV-anthropic-017]",
+        "사용자 투표형 순위인 Arena 에서는 Agent Arena(2026-09-09 판) 1위, WebDev(2026-09-11 판) 2위이지만, 문체·길이 편향이 있어 참고로만 쓴다. [EV-anthropic-019, EV-anthropic-018]",
+        "Opus 5 의 ARC-AGI-3 점수가 다음 모델의 세 배라는 회사 발표는 어느 하네스로 잰 값인지 원문이 밝히지 않아 다른 모델과의 비교 근거로 쓰지 않는다. [EV-anthropic-020]",
+        "표준 선점 경로에서는 Anthropic 이 산업 인터페이스인 MCP 를 먼저 정의했다. [EV-anthropic-021]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "anthropic.F3",
+      "evidence_after": [
+        "Anthropic ③(Last Mover)은 세 기준의 통과점 1.5 로 3점이다. 모방 불가능성 부분 통과(0.5), 별도 수익모델 통과(1), 후발 가속도 실패(0)이고, 문이 닫힌 증거는 없다.",
+        "지표는 AI 귀속 매출의 성장률 변화이며, 매출의 절대 규모는 ① 에서 본다.",
+        "별도 수익모델은 통과로 판정했다.",
+        "후발 가속도는 실패다.",
+        "$9B 에서 $65B 로 온 것은 이동 거리이지 가속도가 아니다.",
+        "모방 불가능성은 부분 통과다.",
+        "ARR 이 7월 $65B 까지 왔고 월 증가율이 +58%, +57%, 약 +14% 로 꺾여 감속 중이라는 값은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "Anthropic 은 소비자가 아니라 기업·코딩을 축으로 잡아 선두와 다른 자리를 팠다. [EV-anthropic-012]"
+      ],
+      "evidence_down_after": [
+        "MCP 는 개방 표준이라 경쟁사들이 이미 채택해, 구조적으로 못 베끼는 자산으로 보기에는 약하다. [EV-anthropic-022]"
+      ]
+    },
+    {
+      "judgment_id": "anthropic.F4",
+      "evidence_after": [
+        "Anthropic ④(호황 이후 비전 — 곡괭이만 팔다 끝나는가)는 4점이며, 이 점수는 승계한 점수다.",
+        "④ 는 출하·실제 배포만 세고 양산 계획은 0점이라 자체 칩은 이 점수를 올리지 않는다.",
+        "자체 칩의 실물 샘플링이나 출하가 1차 자료로 확인되면 5점 상향을 검토한다."
+      ],
+      "evidence_up_after": [
+        "영역 확장의 근거는 Claude Code 와 에이전틱 워크플로로의 확장이다. [EV-anthropic-023]",
+        "Anthropic 은 2026-08-05 자체 칩 설계팀을 공식 확인했다. 모델과 실리콘을 함께 설계해 Claude 추론 비용을 절반으로 줄이려는 계획이고, 6월 OpenAI 칩 팀의 두 번째 하드웨어 채용자였던 Clive Chan 을 영입했으며, 삼성 2nm 공정 사용을 탐색 논의했다고 알려졌다. 회사는 일정을 밝히지 않았고 업계 개발 주기로는 양산이 빨라야 2028~2030년이라 지금은 계획 단계다. [EV-anthropic-024, EV-anthropic-029, EV-anthropic-025, EV-anthropic-026, EV-anthropic-027, EV-anthropic-028]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "evidence_after": [
+        "Anthropic ⑤(아군 확보)는 3 + 동맹 등급 +1 + 적대 등급 -1 = 3점이다.",
+        "아군 확보는 받은 것이 아니라 맺은 것을 세므로, Amazon·Google·Microsoft 의 Anthropic 지분 투자는 동맹 등급에서 뺀다. 투자를 빼면 세 회사와의 관계에는 유통 하나가 남는다.",
+        "미 국방부 CDAO 프론티어 AI 계약(2025-07, 4사 각각 상한 $200M)은 4사가 같이 받아 차이를 만들지 않는다.",
+        "동맹 등급 +2 는 서지 않는다.",
+        "세 유통 관계가 있어 동맹 등급은 0 이 아니라 +1 이다.",
+        "같은 관계를 ⑤ 의 연동 이익과 ⑧ 의 대체 불가 위험에 한 번씩 세는 것은 같은 속성을 두 번 세는 것이 아니다.",
+        "적대 등급은 -1(비용형 — 벌금·개별 소송·규제 조사·시장 일부 차단처럼 사업 구조는 건드리지 않는 적대)이다.",
+        "우리는 국방부 거래 배제·사용 중단과 FTC 조사를 정부 시장 일부의 차단과 업계 공통의 규제 조사로 보고, 사업의 정당성 자체를 겨냥한 구조형(-2)은 아니라고 판단했다.",
+        "세 유통 관계는 공짜 사용자도 관계사도 아닌 독립 상업 동맹이다.",
+        "Anthropic 이 맺은 지분 동맹이 없어 복수의 지분 동맹 조항이 서지 않고, Anthropic 은 경쟁사를 자기 매대에 올린 쪽이 아니라 남의 매대에 오른 쪽이라 경쟁사 편입 조항도 방향이 반대다.",
+        "2026-09-25 미 항소법원이 국방부의 Anthropic 거래 배제를 유지했다는 사실은 원문(Reuters)을 열지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "남는 동맹은 3대 하이퍼스케일러 유통(AWS Bedrock·Google Vertex AI·Microsoft Azure Foundry)이다. [EV-anthropic-030]"
+      ],
+      "evidence_down_after": [
+        "2026-10-05 BBC 는 국방부가 Anthropic AI 도구 사용을 중단했다고 보도했고, 2026-09-30 CNBC 는 FTC 가 제품 위험 문제로 Anthropic 을 조사한다고 확인 보도했다. [EV-anthropic-010, EV-anthropic-032]"
+      ]
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "evidence_after": [
+        "Anthropic 은 비상장이라 ⑥(가격 — 미래 성장이 얼마나 선반영됐나)을 프로그램이 밸류 ÷ 최근 1년 보정 매출로 계산하며, 이 판단 항목은 계산에 쓰이지 않는다.",
+        "계산에 들어가는 밸류는 Series H 의 post-money $965B 이다.",
+        "ARR 은 7월 기준 $65B 이지만 런레이트라 실제로 거둔 최근 1년 매출보다 크게 잡힌다. 그래서 분모는 Q2 매출 $10.9B 에서 역산한 최근 1년 보정 매출을 쓴다.",
+        "ARR 성장률(직전 $47B 대비 약 38%)은 두 값이 모두 런레이트라 인정되지 않아, 보정은 걸리지 않는다.",
+        "기준일 현재 Anthropic 은 상장하지 않았고, 상장하면 첫 분기부터 상장 트랙으로 옮긴다.",
+        "밸류 ÷ ARR 약 14.8배는 분모인 7월 ARR $65B 의 원문을 찾지 못해 확인하지 못했다.",
+        "자본효율(ARR $65B ÷ 누적 조달 약 $125B = 0.52)은 ARR $65B 와 누적 조달 약 $125B 의 원문을 찾지 못해 확인하지 못했다.",
+        "밸류를 최근 1년 보정 매출로 나눈 배수 약 30~39배는 우리가 추정한 값이라 받칠 원문이 없다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "anthropic.F7",
+      "evidence_after": [
+        "Anthropic ⑦(순환금융 — 내 매출을 내는 고객이 그 돈을 어디서 구했나)은 -1점이며, 이 점수는 승계한 점수다.",
+        "부푼 것은 밸류이고 그것은 ⑥ 에서 센다.",
+        "판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)의 가로축은 비중이 작은 쪽으로 본다.",
+        "Amazon·Google·Microsoft 가 투자하고 Anthropic 이 같은 세 회사의 클라우드를 사는 구조는 투자자 쪽의 ⑦ 과 Anthropic 의 ⑧ 으로 갈라 세고, 여기서는 세지 않는다.",
+        "세로축(내 돈이 고객 주머니로 갔다가 내 매출로 돌아오나)의 입력은 판단에 기록돼 있지 않다. 판정표대로라면 비중이 작고 환류가 없을 때는 0점이므로, 우리는 -1 을 세로축 판정이 남은 재검토 대상으로 본다.",
+        "VC 조달로 API 를 쓰는 AI 코딩 스타트업 고객이 일부 있다는 사실은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "Anthropic 의 매출은 일반 기업과 개발자가 낸 돈이다. [EV-anthropic-012]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "evidence_after": [
+        "Anthropic ⑧(비대칭 의존 — 끊기면 회사가 멈추는가)은 -3점이다.",
+        "Google 몫이 훈련용인지 서빙용인지와 AWS 약정 안의 용도별 금액은 확인되지 않았다. 저장소에는 Alphabet 의 10-K·10-Q 본문이 보존돼 있지 않아, Alphabet 이 Anthropic 계약을 공시하지 않았는지도 우리가 다시 확인할 수 없다.",
+        "그래서 점수는 -3 으로 둔다. 우리는 확인하지 못한 부재를 근거로 -4 로 내리지 않으며, Alphabet 의 고객별 공시나 Anthropic 의 훈련 컴퓨트 구성 공시로 Google 몫이 서빙 전용임이 1차 자료로 확인되면 -4 를 재검토한다.",
+        "FTC 가 계약의 배타성을 검토하고 있다.",
+        "Anthropic 이 컴퓨트를 100% 외부에서 빌려 쓰고 공급자가 모두 모델 경쟁자라는 서술은 '100%' 를 받치는 원문을 찾지 못해 확인하지 못했다.",
+        "Google Cloud 약정 $200B/5년은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "자체 칩은 외부 컴퓨트 의존을 줄일 구조적 해법이지만, 회사가 일정을 밝히지 않았고 업계 개발 주기로는 양산이 빨라야 2028~2030년이라 지금 점수에 반영하지 않는다. [EV-anthropic-027, EV-anthropic-028]"
+      ],
+      "evidence_down_after": [
+        "공급자는 Google(Gemini), Amazon(Nova), Microsoft(OpenAI 지분 약 25% 보유), SpaceX(xAI·Grok) 넷이다. SpaceX S-1/A 는 2026년 5월 Anthropic 과 약 325,000개 NVIDIA GPU, 2029년 5월까지 월 $1.25B 의 클라우드 서비스 계약을 맺었다고 공시한다. [EV-anthropic-038, EV-anthropic-035, EV-anthropic-034, EV-anthropic-033]",
+        "컴퓨트 약정은 AWS 약정 증액 $100B 초과/10년, Azure $30B 이다. AWS 분은 Amazon 2026년 2분기 10-Q Note 1 이 '기존 다년 약정을 10년에 걸쳐 $100.0B 넘게 확대했고 AWS 칩 성능과 관련된 계약 의무를 포함한다' 고 공시한 것이라, $100B 는 약정 총액이 아니라 기존 약정 위에 얹은 증액의 하한이다. [EV-anthropic-035, EV-anthropic-031]",
+        "훈련이 AWS 에 몰려 있다는 사실은 Amazon 의 1차 공시로 확인된다. Amazon 의 2026-02-05 8-K 는 Anthropic 이 Trainium2 50만 개 이상으로 이뤄진 Project Rainier 클러스터로 Claude 를 훈련한다고 적고, 2026-04-29 8-K 는 최대 5GW 의 Trainium 확보를 적는다. [EV-anthropic-036, EV-anthropic-037]"
+      ]
+    },
+    {
+      "judgment_id": "anthropic.F9",
+      "evidence_after": [
+        "Anthropic ⑨(적자 깊이)는 프로그램이 비상장 경로로 계산해 -2점이다.",
+        "게이트 1(본업이 버는가 — 최근 1년 영업이익)은 판정 보류다. 비상장이라 최근 1년 영업손익이 공시되지 않았다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 비상장 잉여현금흐름 미공시 조항으로 -2 를 받고, 없는 자료를 유리하게 해석하지 않는다.",
+        "게이트 3(버티는 기간)은 소진율이 없어 건너뛴다.",
+        "게이트 4(약정 커버리지 — 계약된 수입이 미개시 확정 약정을 덮는가)는 계산하지 않는다. 컴퓨트 약정(Google Cloud $200B/5년과 AWS 증액 $100B 초과/10년 등 약 $300B)과 계약 수입의 기간·범위가 달라 견줄 수 없고, 잉여현금흐름 미공시로 게이트 2 에서 이미 깎았으므로 추가 감점도 없다.",
+        "우리는 이 항목이 결국 상장 때까지 외부 조달 시장이 버텨 주느냐에 달려 있다고 본다.",
+        "Q2 단일 분기 첫 영업흑자 $559M(매출 $10.9B, 마진 약 5%)는 확정 실적 원문을 찾지 못해 확인하지 못했다.",
+        "흑자 전환 목표 후퇴와 완충 잠식은 확인되지 않았다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "완충이 외부 조달, 곧 Series H $65B(post-money $965B)뿐이다. [EV-anthropic-039]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "anthropic.F1",
+      "column": "up",
+      "line": "보조 증거는 거래 채널의 가격 결정력이다. OpenRouter 에서 토큰 점유율 약 12% 로 매출 점유율 약 46% 를 차지하고, 평균 단가 $6.36/M 는 Qwen($0.37/M)의 약 17배다.",
+      "searched": "BigGo Finance 2026-06-02, OpenRouter 'State of AI' 보고서(arXiv 2601.10088), OpenRouter 모델 페이지, 웹 검색",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F1",
+      "column": "up",
+      "line": "달러 기준 1위 모델인 Claude Opus 4.6 은 월 $25M 를 벌고 프로그래밍 지출의 60% 이상을 차지한다. 다만 라우팅 서비스 트래픽은 전체 시장이 아니고 토큰 점유율은 매출 점유율이 아니다.",
+      "searched": "OpenRouter Claude Opus 4.6 페이지, 'State of AI' 보고서(arXiv 2601.10088 은 Claude 계열이 프로그래밍 지출의 60% 이상이라고 적으나 Opus 4.6 출시 전 자료), 웹 검색",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F3",
+      "column": "down",
+      "line": "ARR 은 7월 $65B 까지 왔지만 월 증가율이 +58%, +57%, 약 +14% 로 꺾여 감속 중이다.",
+      "searched": "Anthropic 공식 발표(2026-04-06·04-20 런레이트 $30B 초과, 2026-05-28 $47B 초과), 유출 S-1 보도(Fortune 2026-09-29, The Ringer 2026-09-30, Yahoo 2026-10-01 에 7월 런레이트 없음), 저장소 validation/priv-arr-17b(언론 2차 인용만 있고 URL 없음)",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "column": "up",
+      "line": "세 유통 관계는 공짜 사용자도 관계사도 아닌 독립 상업 동맹이다.",
+      "searched": "동맹 분류를 적은 판정 문장이라 받칠 원문이 따로 없다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "column": "down",
+      "line": "Anthropic 이 맺은 지분 동맹이 없어 복수의 지분 동맹 조항이 서지 않고, Anthropic 은 경쟁사를 자기 매대에 올린 쪽이 아니라 남의 매대에 오른 쪽이라 경쟁사 편입 조항도 방향이 반대다.",
+      "searched": "조항 적용 결론을 적은 판정 문장이라 받칠 원문이 따로 없다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "column": "down",
+      "line": "2026-09-25 미 항소법원이 국방부의 Anthropic 거래 배제를 유지했고(Reuters), 2026-10-05 BBC 는 국방부가 Anthropic AI 도구 사용을 중단했다고 보도했으며, 2026-09-30 Bloomberg 는 FTC 가 제품 안전 문제로 Anthropic 을 조사한다고 보도했다.",
+      "searched": "Reuters 원문(접근 차단 401), NYT 2026-09-25(403), BBC 2026-10-05(항소 판결 언급 없음), 저장소 뉴스 캐시(구글 뉴스 링크만)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "column": "up",
+      "line": "밸류 ÷ ARR 은 약 14.8배이며 근거로만 남긴다.",
+      "searched": "Anthropic Series H 발표(2026-05-28, post-money $965B 는 확인), 7월 ARR $65B 는 F3 와 같은 곳을 찾아도 원문 없음",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "column": "up",
+      "line": "한 칸 올리는 보정의 두 조건 가운데 자본효율(ARR $65B ÷ 누적 조달 약 $125B = 0.52)은 기준 0.5 를 넘는다.",
+      "searched": "Anthropic 조달 발표(Series F·G·H), 유출 S-1 보도, 저장소 validation/priv-arr-17b(누적 조달은 내부 채점표 값)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "column": "down",
+      "line": "밸류를 최근 1년 보정 매출로 나눈 배수는 약 30~39배로 추정된다.",
+      "searched": "추정치라 원문 대상이 아니다",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "both_empty": true
+    },
+    {
+      "judgment_id": "anthropic.F7",
+      "column": "down",
+      "line": "조달 의존 고객으로는 VC 조달로 API 를 쓰는 AI 코딩 스타트업 고객 일부가 있다.",
+      "searched": "유출 S-1 보도(Fortune 2026-09-29: 두 고객이 2025년 매출의 약 4분의 1, 이름 미공개), The Ringer 2026-09-30(Cursor 등 추정만)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "column": "down",
+      "line": "Anthropic 은 컴퓨트를 100% 외부에서 빌려 쓰고, 공급자가 모두 모델 경쟁자다.",
+      "searched": "Anthropic 컴퓨트 발표(AWS Trainium·Google TPU·NVIDIA GPU 를 쓴다고만 적음), Motley Fool 2026-09-30(Fluidstack 과 $50B 데이터센터 구축 계획 보도)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "column": "down",
+      "line": "컴퓨트 약정은 Google Cloud $200B/5년, AWS 약정 증액 $100B 초과/10년, Azure $30B 이다. AWS 분은 Amazon 2026년 2분기 10-Q Note 1 이 '기존 다년 약정을 10년에 걸쳐 $100.0B 넘게 확대했고 AWS 칩 성능과 관련된 계약 의무를 포함한다' 고 공시한 것이라, $100B 는 약정 총액이 아니라 기존 약정 위에 얹은 증액의 하한이다.",
+      "searched": "Anthropic 의 Google 발표(2025-10-23 '수백억 달러 규모', 2026-04-06 '수 기가와트'), 유출 S-1 보도(The Ringer 2026-09-30 은 Google 약정 $111.1B)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F9",
+      "column": "up",
+      "line": "Q2 단일 분기 첫 영업흑자 $559M(매출 $10.9B, 마진 약 5%)은 최근 1년 흑자를 대신하지 않는다.",
+      "searched": "유출 S-1 보도(Fortune 2026-09-29, The Ringer 2026-09-30 은 Reuters 를 인용해 2026년 2분기 매출을 $11.5B 로 적음), 저장소 validation/priv-arr-17b(값 $10.9B·$559M 은 2026-05 투자자 IR 덱의 전망치로 기록)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "anthropic.F9",
+      "column": "up",
+      "line": "흑자 전환 목표 후퇴와 완충 잠식은 확인되지 않았다.",
+      "searched": "부재 판정 문장이라 받칠 원문이 따로 없다.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "anthropic.F1",
+      "before": "보조 증거는 거래 채널의 가격 결정력이다. OpenRouter 에서 토큰 점유율 약 12% 로 매출 점유율 약 46% 를 차지하고, 평균 단가 $6.36/M 는 Qwen($0.37/M)의 약 17배다.",
+      "after": "보조 증거는 거래 채널의 가격 결정력이다. OpenRouter 에서 토큰 점유율 약 12% 로 매출 점유율 약 46% 를 차지한다. [EV-anthropic-013]",
+      "why": "BigGo Finance 2026-06-02 는 토큰 12%·매출 46% 를 적지만 평균 단가 $6.36/M 와 Qwen $0.37/M 대비 약 17배는 원문에서 찾지 못했다.",
+      "evidence_id": "EV-anthropic-013"
+    },
+    {
+      "judgment_id": "anthropic.F2",
+      "before": "사용자 투표형 순위인 Arena 에서는 텍스트·에이전트·웹개발·문서·비전·검색 6개 카테고리 1위이지만, 문체·길이 편향이 있어 참고로만 쓴다.",
+      "after": "사용자 투표형 순위인 Arena 에서는 Agent Arena(2026-09-09 판) 1위, WebDev(2026-09-11 판) 2위이지만, 문체·길이 편향이 있어 참고로만 쓴다. [EV-anthropic-019, EV-anthropic-018]",
+      "why": "RuntimeWire 2026-09-14 는 9-11 WebDev 판에서 GPT-6 Astra Max 1위·Claude Fable 5.1 Max 2위, 9-09 Agent Arena 판에서 Claude Fable 5.1 Max 1위를 적는다. 6개 카테고리 1위를 받치는 원문은 찾지 못했다.",
+      "evidence_id": "EV-anthropic-019"
+    },
+    {
+      "judgment_id": "anthropic.F2",
+      "before": "Opus 5 의 ARC-AGI-3 30.2%(직전 최고 약 8%)는 어느 하네스로 잰 값인지 원문이 밝히지 않아 다른 모델과의 비교 근거로 쓰지 않는다.",
+      "after": "Opus 5 의 ARC-AGI-3 점수가 다음 모델의 세 배라는 회사 발표는 어느 하네스로 잰 값인지 원문이 밝히지 않아 다른 모델과의 비교 근거로 쓰지 않는다. [EV-anthropic-020]",
+      "why": "Anthropic 의 Opus 5 발표문(2026-07-24)은 ARC-AGI 3 점수가 다음 모델의 세 배라고만 적고 30.2%·약 8% 수치는 원문에 없다.",
+      "evidence_id": "EV-anthropic-020"
+    },
+    {
+      "judgment_id": "anthropic.F4",
+      "before": "Anthropic 은 2026-08-05 자체 추론 칩 팀을 공식 발표했다. 모델과 실리콘을 함께 설계해 토큰당 추론 비용을 약 50% 줄이는 것이 목표이고, 6월 OpenAI 의 두 번째 하드웨어 채용자였던 Clive Chan 을 영입했으며, 삼성 2nm 파운드리가 유력하다고 알려졌다. 다만 프로토타입은 2028년, 양산은 2028~2030년 계획이라 지금은 계획 단계다.",
+      "after": "Anthropic 은 2026-08-05 자체 칩 설계팀을 공식 확인했다. 모델과 실리콘을 함께 설계해 Claude 추론 비용을 절반으로 줄이려는 계획이고, 6월 OpenAI 칩 팀의 두 번째 하드웨어 채용자였던 Clive Chan 을 영입했으며, 삼성 2nm 공정 사용을 탐색 논의했다고 알려졌다. 회사는 일정을 밝히지 않았고 업계 개발 주기로는 양산이 빨라야 2028~2030년이라 지금은 계획 단계다. [EV-anthropic-024, EV-anthropic-029, EV-anthropic-025, EV-anthropic-026, EV-anthropic-027, EV-anthropic-028]",
+      "why": "Tech Times 2026-08-05 는 회사가 칩 일정을 밝히지 않았고 업계 개발 주기로 양산이 빨라야 2028~2030년이라고 적으며, 삼성과는 2nm 공정 탐색 논의라고 적는다. 프로토타입 2028년·양산 2028~2030년 '계획'과 '삼성 유력'은 원문에 없다.",
+      "evidence_id": "EV-anthropic-024"
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "before": "2026-09-25 미 항소법원이 국방부의 Anthropic 거래 배제를 유지했고(Reuters), 2026-10-05 BBC 는 국방부가 Anthropic AI 도구 사용을 중단했다고 보도했으며, 2026-09-30 Bloomberg 는 FTC 가 제품 안전 문제로 Anthropic 을 조사한다고 보도했다.",
+      "after": "2026-10-05 BBC 는 국방부가 Anthropic AI 도구 사용을 중단했다고 보도했고, 2026-09-30 CNBC 는 FTC 가 제품 위험 문제로 Anthropic 을 조사한다고 확인 보도했다. [EV-anthropic-010, EV-anthropic-032]",
+      "why": "Reuters(항소법원 판결)와 Bloomberg(FTC) 원문은 접근이 막혀 열지 못했다. FTC 조사는 같은 날 CNBC 확인 보도로 받치고 항소법원 부분은 판정 칸으로 옮겼다.",
+      "evidence_id": "EV-anthropic-010"
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "before": "자체 칩은 외부 컴퓨트 의존을 줄일 구조적 해법이지만 2028~2030년 양산 계획이라 지금 점수에 반영하지 않는다.",
+      "after": "자체 칩은 외부 컴퓨트 의존을 줄일 구조적 해법이지만, 회사가 일정을 밝히지 않았고 업계 개발 주기로는 양산이 빨라야 2028~2030년이라 지금 점수에 반영하지 않는다. [EV-anthropic-027, EV-anthropic-028]",
+      "why": "Tech Times 2026-08-05 는 회사가 칩 일정을 밝히지 않았고 업계 개발 주기로 양산이 빨라야 2028~2030년이라고 적으며, 삼성과는 2nm 공정 탐색 논의라고 적는다. 프로토타입 2028년·양산 2028~2030년 '계획'과 '삼성 유력'은 원문에 없다.",
+      "evidence_id": "EV-anthropic-027"
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "before": "공급자는 Google(Gemini), Amazon(Nova), Microsoft(OpenAI 지분 27% 보유), SpaceX(xAI·Grok) 넷이다. SpaceX S-1/A 는 2026년 5월 Anthropic 과 약 325,000개 NVIDIA GPU, 2029년 5월까지 월 $1.25B 의 클라우드 서비스 계약을 맺었다고 공시한다.",
+      "after": "공급자는 Google(Gemini), Amazon(Nova), Microsoft(OpenAI 지분 약 25% 보유), SpaceX(xAI·Grok) 넷이다. SpaceX S-1/A 는 2026년 5월 Anthropic 과 약 325,000개 NVIDIA GPU, 2029년 5월까지 월 $1.25B 의 클라우드 서비스 계약을 맺었다고 공시한다. [EV-anthropic-038, EV-anthropic-035, EV-anthropic-034, EV-anthropic-033]",
+      "why": "Microsoft 10-K(FY2026) Note 1 은 OpenAI 지분을 전환 기준 약 25% 로 적는다. 27% 는 이 공시와 다르다.",
+      "evidence_id": "EV-anthropic-038"
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "before": "컴퓨트 약정은 Google Cloud $200B/5년, AWS 약정 증액 $100B 초과/10년, Azure $30B 이다. AWS 분은 Amazon 2026년 2분기 10-Q Note 1 이 '기존 다년 약정을 10년에 걸쳐 $100.0B 넘게 확대했고 AWS 칩 성능과 관련된 계약 의무를 포함한다' 고 공시한 것이라, $100B 는 약정 총액이 아니라 기존 약정 위에 얹은 증액의 하한이다.",
+      "after": "컴퓨트 약정은 AWS 약정 증액 $100B 초과/10년, Azure $30B 이다. AWS 분은 Amazon 2026년 2분기 10-Q Note 1 이 '기존 다년 약정을 10년에 걸쳐 $100.0B 넘게 확대했고 AWS 칩 성능과 관련된 계약 의무를 포함한다' 고 공시한 것이라, $100B 는 약정 총액이 아니라 기존 약정 위에 얹은 증액의 하한이다. [EV-anthropic-035, EV-anthropic-031]",
+      "why": "Google Cloud $200B/5년을 받치는 원문을 찾지 못했고, 유출 S-1 을 다룬 The Ringer 2026-09-30 은 Google 약정을 $111.1B 로 적어 값이 갈린다. Google 부분을 판정 칸으로 옮겼다.",
+      "evidence_id": "EV-anthropic-035"
+    },
+    {
+      "judgment_id": "anthropic.F9",
+      "before": "완충이 외부 조달, 곧 Series H $30B(post-money $965B)뿐이다.",
+      "after": "완충이 외부 조달, 곧 Series H $65B(post-money $965B)뿐이다. [EV-anthropic-039]",
+      "why": "Anthropic Series H 발표(2026-05-28)는 조달액을 $65 billion 으로 적는다(하이퍼스케일러 기존 약정 $15B 포함).",
+      "evidence_id": "EV-anthropic-039"
+    }
+  ]
+}

@@ -1,0 +1,1373 @@
+{
+  "company_id": "tesla",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "title": "Tesla 10-K (2025-12-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "tesla",
+      "published_at_utc": "2026-01-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "title": "Tesla 8-K (2026-07-22) Exhibit 99.1 Q2 2026 Update",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049213/exhibit991.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "tesla",
+      "published_at_utc": "2026-07-22T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-tesla-000162828026026551",
+      "title": "Tesla 8-K (2026-04-22) Exhibit 99.1 Q1 2026 Update",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026551/exhibit991.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "tesla",
+      "published_at_utc": "2026-04-22T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-001",
+      "title": "Tesla AI5 Tape-Out: 5x AI4 Power, Optimus Pivot [2026]",
+      "publisher": "Tech Insider",
+      "url": "https://tech-insider.org/tesla-ai5-chip-tape-out-optimus-2026/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-05-12T11:37:38Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-002",
+      "title": "Tesla taped out AI5 chip, Musk says — nearly 2 years behind schedule",
+      "publisher": "Electrek",
+      "url": "https://electrek.co/2026/04/15/tesla-ai5-chip-taped-out-musk-ai6-dojo3/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-04-15T14:23:11Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-003",
+      "title": "Tesla puts Starlink antenna in Cybercab",
+      "publisher": "Electrek",
+      "url": "https://electrek.co/2026/07/20/tesla-starlink-cybercab-integration-why/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-07-21T00:25:21Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-004",
+      "title": "Tesla Teases Cybercab With A Built-In Starlink V5 Antenna",
+      "publisher": "Engadget",
+      "url": "https://www.engadget.com/2219549/tesla-teases-cybercab-with-a-built-in-starlink-v5-antenna/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-07-21T13:03:01Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-005",
+      "title": "Tesla's Robotaxi Fleet Might Finally Be Driving Around Austin Unsupervised",
+      "publisher": "Engadget",
+      "url": "https://www.engadget.com/2240859/tesla-robotaxi-fleet-might-finally-be-driving-around-austin-unsupervised/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "기사에 2026-08-18 자 게시물이 인용돼 있다.",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-08-20T15:50:56Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-006",
+      "title": "Waymo's skyrocketing ridership in one chart",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/03/27/waymo-skyrocketing-ridership-in-one-chart/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-03-27T19:11:10Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-007",
+      "title": "Tesla Cybercab pressure to expand after rocky first month in Austin",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/03/tesla-cybercab-pressure-to-expand-after-rocky-first-month-in-austin.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "기존 근거 EV-tesla-007 의 Google News 주소가 가리키는 같은 기사다.",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-03T11:00:01Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-008",
+      "title": "Tesla FSD Reaches 1.48 Million Active Subscriptions, Shares Growth Numbers",
+      "publisher": "Not a Tesla App",
+      "url": "https://www.notateslaapp.com/news/4483/tesla-fsd-reaches-148-million-active-subscriptions",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-07-23T15:38:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-009",
+      "title": "Tesla beats expectations with 486,532 deliveries in Q3 2026 as energy falls short",
+      "publisher": "Drive Tesla Canada",
+      "url": "https://driveteslacanada.ca/news/tesla-q3-2026-deliveries-results/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-02T14:22:04Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-010",
+      "title": "Tesla Wins Approval to Launch Self-Driving Software in Croatia",
+      "publisher": "Global Banking & Finance Review (Reuters 전재)",
+      "url": "https://www.globalbankingandfinance.com/tesla-receives-approval-roll-out-self-driving-software/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Reuters 2026-09-29 기사 전재본이다.",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-09-29T09:15:55Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-011",
+      "title": "Musk Firms Drop Apple Antitrust Suit, Continue OpenAI Case",
+      "publisher": "PYMNTS",
+      "url": "https://www.pymnts.com/legal/antitrust/2026/musk-firms-drop-apple-antitrust-suit-but-continue-case-against-openai/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-09-14T17:57:20Z"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-012",
+      "title": "ODI Resume EA26002: FSD Collisions in Reduced Roadway Visibility Conditions",
+      "publisher": "NHTSA Office of Defects Investigation",
+      "url": "https://static.nhtsa.gov/odi/inv/2026/INOA-EA26002-10023.pdf",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "규제기관 조사 개시 문서(PDF)다.",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-03-18T00:00:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-tesla-009",
+      "company_id": "tesla",
+      "factors": [
+        "F7",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Tesla 10-Q (2026-06-30)",
+      "excerpt": "Total revenues 28,236 22,496 50,623 41,831",
+      "locator": "10-Q (2026-06-30) Consolidated Statements of Operations, Total revenues 줄(열: 3M 2026 / 3M 2025 / 6M 2026 / 6M 2025)",
+      "relevance": "테슬라 최근 1년 매출을 10-K 연간값과 합쳐 계산하는 상반기 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-010",
+      "company_id": "tesla",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Tesla 10-Q (2026-06-30)",
+      "excerpt": "Income from operations 398 923 1,339 1,322",
+      "locator": "10-Q (2026-06-30) Consolidated Statements of Operations, Income from operations 줄(열: 3M 2026 / 3M 2025 / 6M 2026 / 6M 2025)",
+      "relevance": "테슬라 최근 1년 영업이익을 10-K 연간값과 합쳐 계산하는 상반기 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-011",
+      "company_id": "tesla",
+      "factors": [
+        "F3",
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Tesla 10-Q (2026-06-30)",
+      "excerpt": "In the three and six months ended June 30, 2026, we recognized $318 million and $405 million of revenues, respectively, and $242 million and $307 million of cost of revenues, respectively, from SpaceX for its purchase of our Megapack products in the ordinary course of business. Other transactions with SpaceX and other related parties in the three and six months ended June 30, 2026 were immaterial.",
+      "locator": "10-Q (2026-06-30) Note 13 — Related Party Transactions 첫 문단 둘째·셋째 문장",
+      "relevance": "SpaceX 와의 관계사 거래 규모(상반기 매출 $405M)와 그 밖의 관계사 거래가 중요하지 않다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-012",
+      "company_id": "tesla",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Tesla 10-Q (2026-06-30)",
+      "excerpt": "Upon receiving the applicable regulatory approvals, the Company invested $2.00 billion in SpaceX common stock (formerly a preferred share investment in xAI) representing an ownership interest of less than 1% in March 2026.",
+      "locator": "10-Q (2026-06-30) Note 13 — Related Party Transactions 둘째 문단 첫 문장",
+      "relevance": "테슬라의 xAI 우선주 투자가 SpaceX 보통주로 바뀌어 보유된다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-013",
+      "company_id": "tesla",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "Total revenues 94,827 97,690 96,773",
+      "locator": "10-K (2025-12-31) Consolidated Statements of Operations, Total revenues 줄(열: 2025 / 2024 / 2023)",
+      "relevance": "테슬라 최근 1년 매출 계산에 쓰는 2025 연간값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-014",
+      "company_id": "tesla",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "Income from operations 4,355 7,076 8,891",
+      "locator": "10-K (2025-12-31) Consolidated Statements of Operations, Income from operations 줄(열: 2025 / 2024 / 2023)",
+      "relevance": "테슬라 최근 1년 영업이익 계산에 쓰는 2025 연간값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-015",
+      "company_id": "tesla",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "Net cash provided by operating activities 14,747 14,923 13,256 Cash Flows from Investing Activities Purchases of property and equipment excluding finance leases, net of sales (8,527) (11,342) (8,899)",
+      "locator": "10-K (2025-12-31) Consolidated Statements of Cash Flows, 영업활동 순현금·유형자산 매입 줄(열: 2025 / 2024 / 2023)",
+      "relevance": "테슬라 최근 1년 FCF 계산에 쓰는 2025 연간 영업현금흐름과 설비투자다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-016",
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "We are highly dependent on the services of Elon Musk, Technoking of Tesla and our Chief Executive Officer. Although Mr. Musk spends significant time with Tesla and is highly active in our management, he does not devote his full time and attention to Tesla.",
+      "locator": "10-K (2025-12-31) Item 1A Risk Factors, ‘We are highly dependent on the services of Elon Musk…’ 항목 본문 첫 두 문장",
+      "relevance": "회사가 스스로 밝힌 머스크 개인 의존이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-017",
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "We are dependent on the continued supply of lithium-ion battery cells for our vehicles and energy storage products, and we will require substantially more cells to grow our business according to our plans. Currently, we rely on suppliers such as Panasonic and Contemporary Amperex Technology Co. Limited (CATL) for these cells. We have to date fully qualified only a very limited number of such suppliers and have limited flexibility in changing suppliers.",
+      "locator": "10-K (2025-12-31) Item 1A Risk Factors, 배터리 셀 공급 항목 본문 첫 세 문장",
+      "relevance": "배터리 셀을 Panasonic 과 중국 CATL 에 의존한다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-018",
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "Internationally, we also have manufacturing facilities in China and Germany, which allows us to increase the affordability of our vehicles for customers in local markets by reducing transportation and manufacturing costs and limiting the impact of unfavorable tariffs.",
+      "locator": "10-K (2025-12-31) Item 1 Business, Manufacturing 절 둘째 문단 첫 문장",
+      "relevance": "테슬라가 중국(상하이)에 생산 시설을 둔다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-019",
+      "company_id": "tesla",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "Income from operations 923 1,624 1,409 941 398 -57% Operating margin 4.1% 5.8% 5.7% 4.2% 1.4% -269 bp",
+      "locator": "Q2 2026 Update(8-K 2026-07-22 Exhibit 99.1) 4쪽 Financial Summary 표, Income from operations·Operating margin 줄(열: Q2-2025 ~ Q2-2026, YoY)",
+      "relevance": "2026년 2분기 영업이익률이 1.4% 로 떨어졌다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-020",
+      "company_id": "tesla",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "Net cash provided by operating activities 2,540 6,238 3,813 3,937 4,697 85% Capital expenditures (2,394) (2,248) (2,393) (2,493) (5,789) 142% Free cash flow 146 3,990 1,420 1,444 (1,092) -848%",
+      "locator": "Q2 2026 Update 4쪽 Financial Summary 표, Net cash provided by operating activities 줄부터 Free cash flow 줄까지(열: Q2-2025 ~ Q2-2026, YoY)",
+      "relevance": "2026년 2분기 분기 FCF 가 -$1,092M 으로 마이너스라는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-021",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "Active FSD Subscriptions(2) (mil) 0.95 1.04 1.10 1.28 1.48 56%",
+      "locator": "Q2 2026 Update 5쪽 Operational Summary 표, Active FSD Subscriptions 줄(열: Q2-2025 ~ Q2-2026, YoY)",
+      "relevance": "FSD 활성 구독 148만, 전년 대비 56% 증가다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-022",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "FSD adoption grew in the quarter, including record net new subscriptions. We also achieved record FSD attach rates in North America, with over 55% of new deliveries including FSD subscriptions.",
+      "locator": "Q2 2026 Update, FSD (Supervised) 문단 첫 두 문장",
+      "relevance": "FSD 순증 사상 최대와 북미 부착률 55% 초과다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-023",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "AI Training Compute Texas Cortex 1 >90 MW Production Cortex 2 >115 MW Production",
+      "locator": "Q2 2026 Update 7쪽 Supporting Infrastructure 표, AI Training Compute 줄",
+      "relevance": "지금 가동 중인 AI 학습 컴퓨트(Cortex 1·2, 합계 205MW 이상)다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-024",
+      "company_id": "tesla",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "We have decommissioned the manufacturing lines for Models S & X at our Fremont Factory and are installing the first-generation lines for Optimus, where we expect to start production soon. The initial Optimus builds will be used in our Optimus Academy for training data collection and further functionality development.",
+      "locator": "Q2 2026 Update 6쪽 Manufacturing & Hardware, Robotics 문단 첫 두 문장",
+      "relevance": "Optimus 는 Fremont S/X 라인을 걷어 1세대 라인을 설치하는 단계이고 아직 배치 전이라는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-025",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "First-generation production lines for Optimus are being installed in anticipation of production in 2026.",
+      "locator": "Q2 2026 Update 10쪽 Outlook 문단",
+      "relevance": "회사가 Optimus 의 2026년 생산을 밝혔다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "2026",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-026",
+      "company_id": "tesla",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "We continue to make progress on construction and equipment procurement for our semiconductor fab in Austin. While still in its early stages, this project is critical to building our own chipmaking capabilities to ensure reliable long-term supply of essential logic and memory chips for our products.",
+      "locator": "Q2 2026 Update 8쪽 AI & Software, AI Inference Compute 문단",
+      "relevance": "Austin 반도체 팹이 건설·장비 조달 단계라는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-027",
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "We expanded the unsupervised operation area in Austin and launched unsupervised rides in Miami, Orlando and Tampa in July.",
+      "locator": "Q2 2026 Update, Robotaxi 문단(‘We expanded the unsupervised operation area…’ 문장)",
+      "relevance": "오스틴에서 무인(감독자 없는) 로보택시를 운행한다는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-028",
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "Total quarterly revenue increased 26% YoY to $28.2B. YoY, revenue was impacted by the following items (1): + increase in vehicle deliveries + growth in Services and Other + positive FX impact of $0.5B1 + growth in Energy Generation and Storage + higher automotive ancillary sales, primarily driven by an increase in FSD subscriptions - lower regulatory credit revenue - lower vehicle average selling price (ASP) (excl. FX impact1), inclusive of mix impact Profitability",
+      "locator": "Q2 2026 Update, Key Metrics 뒤 Financial Summary 해설 쪽 Revenue 문단",
+      "relevance": "차량 평균판매가격(ASP)이 전년보다 낮아졌다는 회사 설명이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-029",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "Our quarterly operating income decreased 57% YoY to $0.4B, resulting in a 1.4% operating margin. YoY, operating income was primarily impacted by the following items(1): + increase in vehicle deliveries + growth in Services and Other gross profit + lower average cost per vehicle primarily due to lower inbound duties + positive FX impact of $0.1B1 + higher automotive ancillary sales, primarily driven by an increase in FSD subscriptions - increase in operating expenses driven by AI and other R&D projects, SBC (including 2025 CEO Performance Award) and SG&A",
+      "locator": "Q2 2026 Update, Key Metrics 뒤 Financial Summary 해설 쪽 Profitability 문단 앞부분",
+      "relevance": "차량 판매가 이익을 내는 가운데 AI 연구개발 비용이 영업비용 증가를 이끈다는 회사 설명이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-030",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026026551",
+      "published_at_utc": "2026-04-22T00:00:00Z",
+      "title": "Tesla Q1 2026 Update",
+      "excerpt": "In April, we completed the final chip design of our next-generation AI5 inference processor.",
+      "locator": "Q1 2026 Update(8-K 2026-04-22 Exhibit 99.1) AI & Software, AI Inference Compute 문단 끝 문장",
+      "relevance": "AI5 칩 설계를 2026년 4월 끝냈다(테이프아웃)는 회사 발표다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-031",
+      "company_id": "tesla",
+      "factors": [
+        "F2",
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026026551",
+      "published_at_utc": "2026-04-22T00:00:00Z",
+      "title": "Tesla Q1 2026 Update",
+      "excerpt": "Coinciding with Robotaxi and Optimus ramps, we are expanding our scope of manufacturing to include semiconductor fabrication, an important step to ensure sufficient and resilient chip supply. Our partnership with SpaceX aims to build the largest chip fab ever: vertically integrating logic, memory and advanced packaging to allow for rapid iteration as we anticipate greater chip demand than what existing and planned industry capacity can accommodate. This begins with the Tesla-owned Research Fab on our Gigafactory Texas campus.",
+      "locator": "Q1 2026 Update AI & Software, AI Inference Compute 문단 첫 세 문장",
+      "relevance": "테슬라가 SpaceX 와 손잡고 반도체 팹을 짓는다는 회사 발표다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-032",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-001",
+      "published_at_utc": "2026-05-12T11:37:38Z",
+      "title": "Tesla AI5 Tape-Out: 5x AI4 Power, Optimus Pivot [2026]",
+      "excerpt": "He wrote that “a single AI5 has ~5 times the useful compute of a dual SoC AI4,” and in follow-up replies he described the chip as offering roughly 8x the raw compute, 9x the memory, and 5x the bandwidth of AI4.",
+      "locator": "기사 9번째 문단 둘째 문장",
+      "relevance": "AI5 의 성능이 AI4 듀얼 대비 약 5배라는 머스크 발언이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-033",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-001",
+      "published_at_utc": "2026-05-12T11:37:38Z",
+      "title": "Tesla AI5 Tape-Out: 5x AI4 Power, Optimus Pivot [2026]",
+      "excerpt": "“AI4 is enough to achieve much better than human safety for FSD,” Musk wrote in a reply on X. He added that AI5’s focus will be “Optimus and our supercomputer clusters.”",
+      "locator": "기사 11번째 문단 둘째·셋째 문장",
+      "relevance": "AI5 를 차량보다 Optimus 와 슈퍼컴퓨터에 먼저 쓴다는 머스크 발언이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-034",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-001",
+      "published_at_utc": "2026-05-12T11:37:38Z",
+      "title": "Tesla AI5 Tape-Out: 5x AI4 Power, Optimus Pivot [2026]",
+      "excerpt": "NotATeslaApp had actually flagged the split months earlier, reporting in November 2025 that Tesla was developing two distinct AI5 variants – one built at each foundry – with only limited initial units expected before late 2026.",
+      "locator": "기사 8번째 문단 넷째 문장",
+      "relevance": "AI5 는 2026년 말 이전에는 소량만 나온다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "2026",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-035",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-002",
+      "published_at_utc": "2026-04-15T14:23:11Z",
+      "title": "Tesla taped out AI5 chip, Musk says — nearly 2 years behind schedule",
+      "excerpt": "Tesla has said it needs “several hundred thousand completed AI5 boards line side” before it can switch production lines, and that volume isn’t expected until mid-2027.",
+      "locator": "기사 11번째 문단 둘째 문장",
+      "relevance": "AI5 양산 물량은 2027년 중반에야 나온다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "2027",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-036",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-003",
+      "published_at_utc": "2026-07-21T00:25:21Z",
+      "title": "Tesla puts Starlink antenna in Cybercab",
+      "excerpt": "Starlink posted the diagram with the line, “High-speed internet from space for the future of autonomous vehicles.” Tesla’s own post was shorter: “Starlink V5 directly integrated in Cybercab.” The graphic labels a “Starlink Integration” block in the roof, next to the camera and sensor callouts.",
+      "locator": "기사 셋째 문단",
+      "relevance": "테슬라가 2026-07-20 Cybercab 에 Starlink V5 를 직접 통합했다고 발표했다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-037",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-003",
+      "published_at_utc": "2026-07-21T00:25:21Z",
+      "title": "Tesla puts Starlink antenna in Cybercab",
+      "excerpt": "Tesla is building the Cybercab before it can sell it or drive it itself, so “integrated in Cybercab” could mean a production feature or a rendering of a future plan. Tesla didn’t say which.",
+      "locator": "기사 여섯째 문단 둘째 문장",
+      "relevance": "Starlink 통합이 양산 사양인지 설계 단계인지 테슬라가 밝히지 않았다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-038",
+      "company_id": "tesla",
+      "factors": [
+        "F3",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-004",
+      "published_at_utc": "2026-07-21T13:03:01Z",
+      "title": "Tesla Teases Cybercab With A Built-In Starlink V5 Antenna",
+      "excerpt": "Tesla has revealed its upcoming Cybercab design with a built-in SpaceX Starlink V5 dish.",
+      "locator": "기사 첫 문단 첫 문장",
+      "relevance": "Cybercab 에 들어가는 Starlink V5 가 관계사 SpaceX 의 제품이라는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-039",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-005",
+      "published_at_utc": "2026-08-20T15:50:56Z",
+      "title": "Tesla's Robotaxi Fleet Might Finally Be Driving Around Austin Unsupervised",
+      "excerpt": "New Tesla robotaxi license plate in Austin. This is the 94th unsupervised one",
+      "locator": "기사 넷째 문단(2026-08-18 자 게시물 인용)",
+      "relevance": "2026-08-18 오스틴에서 94번째 무인 로보택시가 확인됐다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-040",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-005",
+      "published_at_utc": "2026-08-20T15:50:56Z",
+      "title": "Tesla's Robotaxi Fleet Might Finally Be Driving Around Austin Unsupervised",
+      "excerpt": "Waymo, for instance, operates more than 300 driverless vehicles in Austin, with about 4,000 vehicles running in numerous other cities.",
+      "locator": "기사 마지막 문단 둘째 문장",
+      "relevance": "같은 시기 Waymo 의 오스틴(300대 이상)·전체(약 4,000대) 운행 대수다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-041",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-006",
+      "published_at_utc": "2026-03-27T19:11:10Z",
+      "title": "Waymo's skyrocketing ridership in one chart",
+      "excerpt": "Waymo is now providing 500,000 paid robotaxi rides every week across 10 U.S. cities, the company shared in a post on X this week.",
+      "locator": "기사 본문 첫 문단 첫 문장",
+      "relevance": "Waymo 가 2026년 3월 10개 도시에서 주 50만 회 유료 탑승을 운행했다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-042",
+      "company_id": "tesla",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-007",
+      "published_at_utc": "2026-10-03T11:00:01Z",
+      "title": "Tesla Cybercab pressure to expand after rocky first month in Austin",
+      "excerpt": "Waymo is conducting more than 500,000 paid rides every week and has completed 270 million fully autonomous miles of commercial driving domestically. It currently has over 4,000 driverless vehicles in commercial operations in the U.S.",
+      "locator": "기사 본문 여섯째 문단 둘째·셋째 문장",
+      "relevance": "Waymo 의 운행 규모(주 50만 회 이상, 미국 4,000대 이상)로 로보택시 선두가 Waymo 라는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-043",
+      "company_id": "tesla",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-008",
+      "published_at_utc": "2026-07-23T15:38:00Z",
+      "title": "Tesla FSD Reaches 1.48 Million Active Subscriptions, Shares Growth Numbers",
+      "excerpt": "Out of the 1.48 million total active users, 55% purchased the software upfront, while the remaining 45% are recurring subscribers. That’s roughly 666,000 active monthly subscribers. At $99 per month (although Tesla has said the FSD subscription price will go up as the system gets closer to unsupervised autonomy), that brings Tesla's annualized recurring FSD revenue to $791.2 million, up from $546 million in the first quarter.",
+      "locator": "기사 일곱째 문단",
+      "relevance": "FSD 월 구독 약 66.6만, 연환산 반복 매출 약 $791M 이라는 추정이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-044",
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-009",
+      "published_at_utc": "2026-10-02T14:22:04Z",
+      "title": "Tesla beats expectations with 486,532 deliveries in Q3 2026 as energy falls short",
+      "excerpt": "Tesla deployed 13.7 GWh of energy storage products during Q3 2026, 2.2 GWh, or 14%, below the company-compiled consensus of 15.9 GWh.",
+      "locator": "기사 여덟째 문단",
+      "relevance": "2026년 3분기 에너지 저장 배치가 회사 집계 예상에 14% 못 미쳤다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-045",
+      "company_id": "tesla",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-010",
+      "published_at_utc": "2026-09-29T09:15:55Z",
+      "title": "Tesla Wins Approval to Launch Self-Driving Software in Croatia",
+      "excerpt": "Sept 29 (Reuters) - Tesla said on Tuesday that its supervised Full Self-Driving system has been approved in Croatia, with a rollout across the country expected to begin soon, joining a growing list of European countries that have approved the technology.",
+      "locator": "기사 본문(Reuters 전재) 첫 문단",
+      "relevance": "크로아티아가 2026년 9월 FSD 를 승인했다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-046",
+      "company_id": "tesla",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-010",
+      "published_at_utc": "2026-09-29T09:15:55Z",
+      "title": "Tesla Wins Approval to Launch Self-Driving Software in Croatia",
+      "excerpt": "A safety group and several EU member states have, however, expressed concerns regarding the system's ability to exceed speed limits.",
+      "locator": "기사 본문(Reuters 전재) 글머리표 중 RDW 항목 둘째 문장",
+      "relevance": "안전단체와 일부 EU 회원국이 FSD 의 제한속도 초과 가능성을 우려한다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-047",
+      "company_id": "tesla",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-011",
+      "published_at_utc": "2026-09-14T17:57:20Z",
+      "title": "Musk Firms Drop Apple Antitrust Suit, Continue OpenAI Case",
+      "excerpt": "Those companies had accused Apple of favoring OpenAI’s ChatGPT over other chatbot makers, but have now asked a federal judge for permission to voluntarily dismiss the case, Bloomberg News reported Monday (Sept. 14), citing a court filing. Still, the claims the companies made against OpenAI as part of the same suit have not settled, the filing said. The suit accused the ChatGPT maker of using anti-competitive conduct to keep an illegal monopoly on the chatbot space.",
+      "locator": "기사 여섯째·일곱째 문단",
+      "relevance": "머스크 측이 Apple 청구는 취하하고 OpenAI 청구는 이어 간다는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tesla-048",
+      "company_id": "tesla",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-012",
+      "published_at_utc": "2026-03-18T00:00:00Z",
+      "title": "ODI Resume EA26002: FSD Collisions in Reduced Roadway Visibility Conditions",
+      "excerpt": "Investigation: EA26002 Prompted By: PE24031 Date Opened: 03/18/2026 Investigator: Dylan Copestick Reviewer: Sharon Yukevich Approver: Tanya Topka Subject: FSD Collisions in Reduced Roadway Visibility Conditions MANUFACTURER & PRODUCT INFORMATION Manufacturer: Tesla, Inc. Products: 2016-2026 Model S, X, 2017-2026 Model 3, 2020-2026 Model Y, 2023-2026 Cybertruck equipped with FSD Population: 3,203,754 (Estimated)",
+      "locator": "ODI Resume 1쪽 머리 표와 Manufacturer & Product Information 표",
+      "relevance": "NHTSA 가 FSD 조사를 EA26002(Engineering Analysis)로 올려 약 320만 대를 조사한다는 원문이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-tesla-001",
+      "excerpt": "Net cash provided by operating activities 8,634 4,696 Cash Flows from Investing Activities Purchases of property and equipment excluding finance leases, net of sales (8,282) (3,886)",
+      "locator": "10-Q (2026-06-30) Consolidated Statements of Cash Flows, 영업활동 순현금·유형자산 매입 줄(열: Six Months Ended June 30, 2026 / 2025)"
+    },
+    {
+      "evidence_id": "EV-tesla-008",
+      "excerpt": "In the third quarter, we produced over 464,000 vehicles, delivered over 486,000 vehicles and deployed 13.7 GWh of energy storage products.",
+      "locator": "8-K (2026-10-02) Item 2.02 가 첨부한 Exhibit 99.1 보도자료 첫 문단"
+    },
+    {
+      "evidence_id": "EV-tesla-007",
+      "excerpt": "The unusual driverless vehicles, with no steering wheel, pedals, rear or sideview mirrors, or outside door handles, have received mixed reviews from paying passengers, who shared videos and posts online after the launch on Sept. 3. Criticisms have included lengthy wait times, pickups and drop-offs in the wrong place, and technical difficulties with the vehicles' butterfly doors or trunk closing improperly.",
+      "locator": "기사 본문 둘째 문단"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "tesla.F1",
+      "evidence_after": [
+        "테슬라 ① 은 소비자 채널로 재며 2점이다.",
+        "차량 소유자에게 전환비용이 있다는 사실은 원문을 찾지 못해 확인하지 못했다.",
+        "사용자끼리 연결되는 구조가 없어 쓸수록 가치가 커지는 스노우볼이 돌지 않는다고 판단했으며, 이를 받치는 원문은 찾지 못했다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "평균판매가격(ASP)이 낮아지고 있어 가격을 올려도 고객이 남는지라는 ① 의 핵심 질문에도 가격 결정력으로 답하지 못한다. [EV-tesla-028]"
+      ]
+    },
+    {
+      "judgment_id": "tesla.F2",
+      "evidence_after": [
+        "테슬라 ② 는 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 패러다임 적응 한 경로만 통과로 보아 3점이고, 경로별 입력이 정해지기 전까지 사람이 매긴 점수를 쓴다.",
+        "성능 도약은 판정할 수 없다.",
+        "표준 선점은 근거에 없다.",
+        "AI5 칩·Optimus·Terafab 은 계획이거나 실측 전 단계라서, 계획·발표는 0점이라는 원칙(규칙 2.1)에 따라 점수에 넣지 않는다."
+      ],
+      "evidence_up_after": [
+        "지금 측정되는 AI 자산으로는 Cortex 205MW 가 있다. [EV-tesla-023]",
+        "AI5 칩은 2026년 4월 테이프아웃했고(AI4 듀얼 대비 약 5배) 2026년 안에 소량 생산, 2027년 중반 양산을 목표로 하며 Optimus 에 먼저 쓴다. Optimus 1세대 라인은 Fremont 의 S/X 라인을 전환해 설치 중이고 회사는 2026년 안 생산을 밝혔다. Terafab(SpaceX 와 합작하는 반도체 팹)은 건설과 장비 조달이 진행 중이다. [EV-tesla-030, EV-tesla-032, EV-tesla-034, EV-tesla-035, EV-tesla-033, EV-tesla-024, EV-tesla-025, EV-tesla-031, EV-tesla-026]"
+      ],
+      "evidence_down_after": [
+        "로보택시에서 Waymo 가 앞서 있어 테슬라가 세대 격차를 만들었다고 볼 근거가 없다. [EV-tesla-042]"
+      ]
+    },
+    {
+      "judgment_id": "tesla.F3",
+      "evidence_after": [
+        "테슬라 ③ 은 모방 불가능성 실패(0), 별도 수익모델 통과(1), 후발 가속도 통과(1)로 통과점 2 이고 사다리에서 3점이다.",
+        "모방 불가능성이 실패인 첫째 이유는 자산이 테슬라 것이 아니라는 점이다. ③ 은 관계사 소유 자산을 자기 자산으로 세지 않는다.",
+        "모방 불가능성이 실패인 둘째 이유는 실제로 앞서지 못한다는 점이다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 통과다. 다만 성장률 하나로는 가속인지 단순 성장인지 가를 수 없어 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다.",
+        "모방 불가능성은 테슬라 자기 자산으로 Waymo 와의 격차가 실측으로 줄거나 테슬라에 배타적인 공급 계약이 공시되면 다시 판정한다.",
+        "Waymo 가 따라 하려면 적대 관계사에서 사 와야 한다는 논리는 추론이다."
+      ],
+      "evidence_up_after": [
+        "2026-07-20 테슬라는 Cybercab 에 Starlink V5 를 직접 통합했다고 발표했으나, 양산 사양인지 설계 단계인지는 밝히지 않았다. [EV-tesla-036, EV-tesla-037]",
+        "차량 판매 이익이 AI 를 대고 있다. [EV-tesla-029]",
+        "FSD 활성 구독이 148만으로 전년보다 56% 늘었고, 월 구독 66.6만으로 ARR 약 $791M, 순증 사상 최대, 북미 부착률 55% 다. [EV-tesla-021, EV-tesla-043, EV-tesla-022]"
+      ],
+      "evidence_down_after": [
+        "Starlink V5 자산은 관계사 SpaceX 의 것이고 테슬라는 이를 관계사에서 조달했다. [EV-tesla-038]",
+        "공시된 배타적 공급 계약은 없다. [EV-tesla-011]",
+        "2026-08-18 기준 오스틴 무인 차량은 94번째가 확인된 수준이었고, 같은 시기 Waymo 는 오스틴 300대 이상·전체 약 4,000대를 운행했으며 2026년 3월 기준 10개 도시에서 주 50만 회 유료 탑승을 운행해 차량 수 격차가 약 40배다. [EV-tesla-039, EV-tesla-040, EV-tesla-041]",
+        "오스틴 Cybercab 상업 운행 첫 달이 순탄치 않았다는 CNBC 보도가 있다. [EV-tesla-007]"
+      ]
+    },
+    {
+      "judgment_id": "tesla.F4",
+      "evidence_after": [
+        "테슬라 ④ 는 실제로 배치된 사업 폭이 차량·에너지 저장·소규모 로보택시라 3점이다.",
+        "Optimus 생산·배치 대수나 Terafab 가동이 확인되면 다시 본다."
+      ],
+      "evidence_up_after": [
+        "에너지 저장은 실제로 배치되는 사업이고, 회사는 2026년 3분기 에너지 저장 제품 13.7GWh 를 배치했다고 공시했다. 이 수치는 회사 집계 시장 예상 15.9GWh 에 14% 못 미쳤다는 보도가 있다. [EV-tesla-008, EV-tesla-044]",
+        "로보택시는 오스틴에서 무인 운행을 하고 있다. [EV-tesla-027]",
+        "Optimus 는 아직 배치되지 않았고 Terafab 은 건설·장비 조달 단계라, 출하·실제 배포만 세는 ④ 판정 지침에 따라 사업 폭에 넣지 않는다. [EV-tesla-024, EV-tesla-026]"
+      ],
+      "evidence_down_after": [
+        "로보택시는 상업 운행 첫 달이 순탄치 않았고 확장은 아직 과제라는 보도(CNBC, 2026-10-03)가 있다. [EV-tesla-007]"
+      ]
+    },
+    {
+      "judgment_id": "tesla.F5",
+      "evidence_after": [
+        "테슬라 ⑤ 는 3 + 동맹 등급 A(0) + 적대 등급 H(−1) = 2점이다.",
+        "동맹 등급 0 은 확인되는 독립 상업 동맹이 없다는 판정이다. 눈에 띄는 아군은 Terafab 을 함께 짓는 SpaceX 정도인데, 같은 지배주주가 지배하는 관계사라 동맹으로 세지 않는다.",
+        "적대 등급 −1 은 비용형(벌금·소송·규제 조사처럼 사업 구조를 건드리지 않는 적대)이다.",
+        "이런 규제 적대는 비용형에 머문다고 판단했다.",
+        "NHTSA 조사는 ⑧ 의 근거에도 들어 있어, 같은 속성을 두 번 셌는지가 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다.",
+        "EU 의 FSD 승인이 거부돼도 차량 판매는 계속된다고 판단했으며, 이를 받치는 원문은 찾지 못했다.",
+        "악동 이미지가 통하려면 독점이어야 한다는 강의의 조건을 테슬라는 채우지 못한다고 판단했으며, 이를 받치는 원문은 찾지 못했다."
+      ],
+      "evidence_up_after": [
+        "안전단체의 요구와 같은 무렵 크로아티아는 FSD 를 승인했다. [EV-tesla-045]"
+      ],
+      "evidence_down_after": [
+        "머스크 측(xAI·X)은 OpenAI 를 상대로 반독점 소송을 이어 가고 있고(Apple 에 대한 청구는 2026-09-14 자진 취하를 신청했다), NHTSA 는 FSD 조사를 EA26002 로 격상해 320만 대를 조사하고 있다. [EV-tesla-047, EV-tesla-048]",
+        "안전단체와 일부 EU 회원국이 FSD 가 제한속도를 넘을 수 있다는 점에 우려를 밝혔다. [EV-tesla-046]"
+      ]
+    },
+    {
+      "judgment_id": "tesla.F7",
+      "evidence_after": [
+        "테슬라 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아옴 칸이라 −1 점이다.",
+        "내 돈이 돌아온다는 판정은 머스크 관계사 사이에서 돈이 도는 구조를 근거로 했다.",
+        "조달 의존 고객 비중은 작음으로 판정했다.",
+        "규칙은 관계사 거래라는 사실만으로 환류를 인정하지 않으며, 테슬라 돈이 관계사를 거쳐 테슬라 매출로 돌아오는 금액은 근거에 적혀 있지 않다."
+      ],
+      "evidence_up_after": [
+        "관계사 순환의 규모는 본업에 견주어 작다. [EV-tesla-011, EV-tesla-009]"
+      ],
+      "evidence_down_after": [
+        "테슬라는 xAI 에 투자했고 SpaceX 와 Terafab 을 합작한다. [EV-tesla-012, EV-tesla-031]",
+        "Cybercab 에 들어가는 Starlink V5 도 관계사 SpaceX 에서 조달하는 관계사 거래다. [EV-tesla-038]"
+      ]
+    },
+    {
+      "judgment_id": "tesla.F8",
+      "evidence_after": [
+        "테슬라 ⑧ 은 끊기면 사업이 흔들리는 의존 세 가지로 −2 점이다.",
+        "NHTSA 조사는 ⑤ 의 적대 근거에도 들어 있어, 같은 속성을 두 번 셌는지가 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "첫째는 머스크 개인에 대한 의존이고, 둘째는 NHTSA 의 FSD 조사이며, 셋째는 상하이 공장과 배터리 공급망이 걸린 중국 의존이다. [EV-tesla-016, EV-tesla-048, EV-tesla-018, EV-tesla-017]"
+      ]
+    },
+    {
+      "judgment_id": "tesla.F9",
+      "evidence_after": [
+        "테슬라 ⑨ 는 게이트 2 에서 끝나 −1 점이다.",
+        "게이트 1(본업이 버는가)은 통과해, 영업결과 판정은 흑자다.",
+        "FCF 추세를 악화로 판정해 −1 에서 끝났다.",
+        "게이트 2 에서 끝나므로 완충(현금 + 확정 미인출 여신 US$5,000M)과 게이트 4 는 점수에 쓰이지 않고, 게이트 4 비교 가능성은 판정 불가로 두었다. 2026-09-29 8-K 로 공시한 새 신용계약은 최근 1년 FCF 가 마이너스로 돌아 게이트 3 으로 내려갈 때 완충에 반영한다.",
+        "방향 완화 두 입력은 판정 불가이지만 게이트 1 을 통과해 쓰이지 않는다.",
+        "흑자 전환 목표 후퇴와 완충 잠식은 없음이다."
+      ],
+      "evidence_up_after": [
+        "최근 1년(2025-07-01~2026-06-30) 영업이익은 US$4,372M, 매출은 US$103,619M 으로 영업이익률은 4.22% 다. [EV-tesla-009, EV-tesla-010, EV-tesla-013, EV-tesla-014]",
+        "게이트 2(현금이 새는가)는 같은 창의 FCF 가 US$5,762M(영업현금흐름 US$18,685M − 설비투자 US$12,923M)으로 흑자다. [EV-tesla-001, EV-tesla-015]"
+      ],
+      "evidence_down_after": [
+        "2026년 상반기 설비투자는 US$8,282M 으로 전년 상반기 US$3,886M 의 두 배를 넘었고, 상반기 FCF 는 US$352M 으로 전년 상반기 US$810M 보다 작으며, 2분기에는 분기 FCF 가 -US$1,092M 으로 마이너스로 돌고 영업이익률이 1.4% 로 떨어졌다. [EV-tesla-001, EV-tesla-020, EV-tesla-019]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "tesla.F1",
+      "column": "up",
+      "line": "차량 소유자에게는 전환비용이 있다.",
+      "searched": "Tesla 10-K(2025) 위험요인·사업 절, Q1·Q2 2026 Update, 언론 검색",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "tesla.F1",
+      "column": "down",
+      "line": "사용자끼리 연결되는 구조가 없어, 쓸수록 가치가 커지는 스노우볼이 돌지 않는다.",
+      "searched": "판단 문장이라 받칠 원문 사실이 없다(웹 검색 예산 소진 뒤 추가 검색 불가).",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "tesla.F3",
+      "column": "up",
+      "line": "Waymo 가 따라 하려면 적대 관계사에서 사 와야 한다는 논리는 추론이다.",
+      "searched": "추론 문장(문장 스스로 추론이라고 밝힘)이라 받칠 원문 사실이 없다. 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "tesla.F5",
+      "column": "up",
+      "line": "EU 의 FSD 승인이 거부돼도 차량 판매는 계속된다.",
+      "searched": "판단 문장이라 받칠 원문 사실이 없다(웹 검색 예산 소진 뒤 추가 검색 불가).",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "tesla.F5",
+      "column": "down",
+      "line": "악동 이미지가 통하려면 독점이어야 한다는 강의의 조건을 테슬라는 채우지 못한다.",
+      "searched": "강의 자료는 저장소 밖 내부 자료이고 URL 이 없다. 판단 문장이라 받칠 원문 사실이 없다(웹 검색 예산 소진 뒤 추가 검색 불가).",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "tesla.F9",
+      "column": "up",
+      "line": "흑자 전환 목표 후퇴와 완충 잠식은 없음이다.",
+      "searched": "게이트 입력 판정 문장(bep_retreat·buffer_erosion = no)이라 받칠 원문 사실이 따로 없다. 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "tesla.F1",
+      "before": "가격 인하가 이어지고 있어 가격을 올려도 고객이 남는지라는 ① 의 핵심 질문에도 가격 결정력으로 답하지 못한다.",
+      "after": "평균판매가격(ASP)이 낮아지고 있어 가격을 올려도 고객이 남는지라는 ① 의 핵심 질문에도 가격 결정력으로 답하지 못한다. [EV-tesla-028]",
+      "why": "Q2 2026 Update 는 매출 감소 요인으로 ‘lower vehicle average selling price (ASP) … inclusive of mix impact’ 를 든다. 가격 인하 자체보다 차종 구성까지 포함한 평균판매가격 하락으로 적었다.",
+      "evidence_id": "EV-tesla-028"
+    },
+    {
+      "judgment_id": "tesla.F3",
+      "before": "2026-07-20 Cybercab 에 Starlink V5 를 공장에서 매립 통합한 것은 실재한다.",
+      "after": "2026-07-20 테슬라는 Cybercab 에 Starlink V5 를 직접 통합했다고 발표했으나, 양산 사양인지 설계 단계인지는 밝히지 않았다. [EV-tesla-036, EV-tesla-037]",
+      "why": "Electrek(2026-07-21)은 테슬라 게시물이 ‘Starlink V5 directly integrated in Cybercab’ 라고만 했고 양산 기능인지 미래 계획의 그림인지 밝히지 않았다고 적는다. ‘공장에서 매립 통합한 것은 실재한다’ 는 원문으로 확인되지 않는다.",
+      "evidence_id": "EV-tesla-036, EV-tesla-037"
+    },
+    {
+      "judgment_id": "tesla.F3",
+      "before": "2026-08-18 기준 오스틴 무인 차량은 94대였고 Waymo 는 약 3,000대로 10개 도시에서 주 50만 회 유료 탑승을 운행해 격차가 약 30배다.",
+      "after": "2026-08-18 기준 오스틴 무인 차량은 94번째가 확인된 수준이었고, 같은 시기 Waymo 는 오스틴 300대 이상·전체 약 4,000대를 운행했으며 2026년 3월 기준 10개 도시에서 주 50만 회 유료 탑승을 운행해 차량 수 격차가 약 40배다. [EV-tesla-039, EV-tesla-040, EV-tesla-041]",
+      "why": "Engadget(2026-08-20)은 같은 시기 Waymo 가 오스틴 300대 이상, 전체 약 4,000대를 운행한다고 적는다. 약 3,000대는 2025-12 NHTSA 자료 기준(TechCrunch 2026-03-27)이라 2026-08-18 비교에는 맞지 않는다. 94 는 무인 차량 번호판 누적 확인 순번이다.",
+      "evidence_id": "EV-tesla-039, EV-tesla-040, EV-tesla-041"
+    },
+    {
+      "judgment_id": "tesla.F4",
+      "before": "에너지 저장은 실제로 배치되는 사업이고, 2026년 3분기 배치량이 13.7GWh 라는 보도가 있다. 이 수치는 공시 본문과 대조하지 않은 보도 제목 값이고, 시장 예상에 못 미쳤다는 보도도 함께 있다.",
+      "after": "에너지 저장은 실제로 배치되는 사업이고, 회사는 2026년 3분기 에너지 저장 제품 13.7GWh 를 배치했다고 공시했다. 이 수치는 회사 집계 시장 예상 15.9GWh 에 14% 못 미쳤다는 보도가 있다. [EV-tesla-008, EV-tesla-044]",
+      "why": "13.7GWh 는 8-K(2026-10-02) Exhibit 99.1 본문에 있다(공시 본문과 대조됨). 시장 예상 미달 보도는 회사 집계 예상 15.9GWh 대비 14% 미달(Drive Tesla Canada 2026-10-02)이다.",
+      "evidence_id": "EV-tesla-008, EV-tesla-044"
+    },
+    {
+      "judgment_id": "tesla.F5",
+      "before": "머스크는 OpenAI 와 Apple 을 상대로 소송을 벌이고 있고, NHTSA 는 FSD 조사를 EA26002 로 격상해 320만 대를 조사하고 있다.",
+      "after": "머스크 측(xAI·X)은 OpenAI 를 상대로 반독점 소송을 이어 가고 있고(Apple 에 대한 청구는 2026-09-14 자진 취하를 신청했다), NHTSA 는 FSD 조사를 EA26002 로 격상해 320만 대를 조사하고 있다. [EV-tesla-047, EV-tesla-048]",
+      "why": "xAI·X 는 2026-09-14 Apple 에 대한 청구의 자진 취하를 신청했고 OpenAI 에 대한 청구는 남아 있다(PYMNTS, Bloomberg 인용). NHTSA ODI Resume EA26002 의 대상은 3,203,754대(추정)다.",
+      "evidence_id": "EV-tesla-047, EV-tesla-048"
+    },
+    {
+      "judgment_id": "tesla.F5",
+      "before": "안전단체가 속도 허용 오차를 이유로 EU 에 FSD 승인 거부를 요구했다.",
+      "after": "안전단체와 일부 EU 회원국이 FSD 가 제한속도를 넘을 수 있다는 점에 우려를 밝혔다. [EV-tesla-046]",
+      "why": "열어 본 Reuters 전재본(2026-09-29)은 ‘A safety group and several EU member states have … expressed concerns regarding the system's ability to exceed speed limits’ 라고 적는다. 승인 거부 요구는 기사 제목에만 있어 본문 표현으로 고쳤다.",
+      "evidence_id": "EV-tesla-046"
+    },
+    {
+      "judgment_id": "tesla.F9",
+      "before": "2026년 상반기 설비투자는 US$8,282M 으로 전년 상반기 US$3,886M 의 두 배를 넘었고, 상반기 FCF 는 US$352M 으로 전년 상반기 US$810M 보다 작으며, 2분기에는 분기 FCF 가 마이너스로 돌고 마진이 떨어졌다는 보도(CNBC 2026-07-22)가 있다.",
+      "after": "2026년 상반기 설비투자는 US$8,282M 으로 전년 상반기 US$3,886M 의 두 배를 넘었고, 상반기 FCF 는 US$352M 으로 전년 상반기 US$810M 보다 작으며, 2분기에는 분기 FCF 가 -US$1,092M 으로 마이너스로 돌고 영업이익률이 1.4% 로 떨어졌다. [EV-tesla-001, EV-tesla-020, EV-tesla-019]",
+      "why": "2분기 FCF 와 마진 하락은 회사 공시(Q2 2026 Update Financial Summary: Free cash flow (1,092), Operating margin 1.4%)로 확인했다. CNBC 2026-07-22 기사는 웹 검색 예산 소진으로 열지 못해 출처를 공시로 바꿨다.",
+      "evidence_id": "EV-tesla-001, EV-tesla-020, EV-tesla-019"
+    }
+  ]
+}

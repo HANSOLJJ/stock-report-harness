@@ -1,0 +1,556 @@
+{
+  "items": [
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F1",
+      "column": "up",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "타오바오와 알리페이는 중국 안에서 10억 명 규모가 쓰는 양면 마켓플레이스 네트워크이고, 소비자 채널에서 강한 락인을 만든다.",
+      "searched": "20-F(FY2026) 전문(사용자 수 공시 없음, GMV 기준 세계 최대 소매 커머스라는 문장만 있음), 2026-06 분기 실적 보도자료, Ant Group·Alipay 웹사이트(본문 미노출), Wikipedia(2020-06 기준 13억 명만 있음)"
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F1",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "이 락인은 중국 안에 한정돼 글로벌 소비자 접점이 없고, PDD 와 더우인에 점유율을 잠식당하는 중이며, 알리페이는 앤트그룹으로 분리돼 있다.",
+      "searched": "20-F 경쟁 위험 요인(PDD·더우인 점유율 수치 없음), 2026-06 분기 실적 보도자료(AliExpress 등 해외 커머스 사업이 있음), 웹 검색(점유율 1차 집계 미발견)"
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F2",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "근거는 연구개발과 패러다임 적응 속도가 최상위라는 판단, 그리고 Arena WebDev 3위·Vision 2위 순위다. Arena 는 사용자 투표형 순위라 참고로만 쓴다.",
+      "searched": "Arena 리더보드 변경 기록(순위 없음), OfficeChai 2026-08-03(Frontend Code Arena 4위), Arena·Qwen 공식 X 게시물 검색 결과(Qwen3.8-Max-0902 WebDev 1위 데뷔), RuntimeWire 2026-09-14(9-11 WebDev 1~3위에 Qwen 없음)"
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F2",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "표준 선점 경로는 비어 있다.",
+      "searched": "판정 문장(경로 부재)이라 받칠 원문이 따로 없다."
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F3",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "모방 불가능성을 부분으로 본 것은 보완재를 커모디티화하는 오픈웨이트 배포가 진짜 전략이라는 판단 때문이다.",
+      "searched": "판단 이유를 적은 판정 문장이라 받칠 원문이 따로 없다."
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F3",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "오픈웨이트에는 앱 장터 같은 회수 장치가 없다. Qwen 을 받아 자기 GPU 에 돌리면 알리바바는 대가를 받지 못하고, 실제로 SiliconFlow·Novita·AWS Bedrock 이 호스팅 매출을 가져간다.",
+      "searched": "OpenRouter Qwen 페이지(Novita 엔드포인트가 보이나 발행일 없는 실시간 페이지), SiliconFlow 모델 페이지(발행일 없음), 웹 검색"
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F3",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "Anthropic 은 여전히 $6.36/M 을 받고 OpenRouter 매출의 46% 를 가져가며, OpenRouter 는 전체 시장이 아니다.",
+      "searched": "BigGo Finance 2026-06-02(토큰 12%·매출 46% 만 적음), OpenRouter 'State of AI' 보고서(arXiv 2601.10088), OfficeChai·RuntimeWire 2026-09-15 지출 점유율 기사, 웹 검색"
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F4",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "3년간 RMB3,800억을 쓰는 AI 인프라 계획 가운데 RMB1,900억을 이미 집행했고, 브라질·프랑스·네덜란드에 데이터센터를 두고 있다.",
+      "searched": "The Stack 2026-06-18(프랑스 개설, 네덜란드는 다음 차례), HostingJournalist 2026-09-06(브라질 개설), 웹 검색(네덜란드 개설 보도 미발견)"
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F7",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "알리바바 매출은 커머스와 클라우드 고객에게서 나오고, 고객이 투자 유치나 차입으로 마련한 돈으로 대금을 내는 구조는 근거에 없다.",
+      "searched": "부재를 확인한 판정 문장이라 받칠 원문이 따로 없다."
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F7",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "알리바바가 고객에게 투자하고 그 돈이 알리바바 매출로 돌아오는 순환 구조도 확인되지 않는다.",
+      "searched": "부재를 확인한 판정 문장이라 받칠 원문이 따로 없다."
+    },
+    {
+      "company_id": "alibaba",
+      "judgment_id": "alibaba.F7",
+      "column": null,
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "",
+      "searched": ""
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F2",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "자체 칩은 7세대 Ironwood TPU 이고, 8세대 TPU 는 TSMC 2nm 공정으로 만든다.",
+      "searched": "10-K (FY2025), Q1 2026 CEO 발언 원고(8세대 TPU 발표), Tom's Hardware 2026-05 맞춤 ASIC 정리 기사, Google Gemini 블로그 RSS. Ironwood·8세대 TPU 는 확인했고 TSMC 2nm 제조 부분만 찾지 못해 판정 칸으로 옮겼다(줄은 고쳐 남김)."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F3",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "2년 만에 격차를 회수했다는 사실은 누적 이동 거리이지 성장률의 변화가 아니라서 가속도 근거에서 뺐다.",
+      "searched": "원문 사실이 아니라 가속도 판정에서 무엇을 뺐는지 적은 판정 문장이라 받칠 원문이 없다. 문장 그대로 판정 칸으로 옮겼다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F3",
+      "column": "down",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "Gemini 월간 사용자 증가율은 7.5억 명에서 9.0억 명으로 갈 때 +20% 였다가 9.0억 명에서 9.5억 명으로 갈 때 +5.6% 로 꺾이고 있다.",
+      "searched": "2025년 4분기·2026년 1분기·2분기 실적 발표문(8-K Exhibit 99.1)과 CEO 발언 원고(blog.google). 7.5억 명(2026-02-04)과 9.5억 명(2026-07-22)은 확인했지만 2026년 1분기 발표문·발언 원고에는 Gemini 앱 월간 사용자 수가 없어 9.0억 명 값을 확인하지 못했다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F5",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "미 국방부 CDAO 프론티어 AI 계약(2025-07)은 Google·OpenAI·Anthropic·xAI 네 회사가 각각 상한 $200M 으로 받았다. 정부 계약은 상업적 약속이라 동맹으로 인정하지만, 네 회사가 같은 계약을 받았으므로 등급의 차이를 만들지 않는다.",
+      "searched": "CDAO 누리집(ai.mil, 접속 거부), Anthropic 발표문(2025-07-14, Anthropic 의 상한 $200M 수주만 적음), Google 블로그 RSS. Google 의 수주와 네 회사 동시 수주를 적은 원문을 찾지 못했다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F5",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "구글은 2026-04-28 계약 갱신으로 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 2026년 5월 $200M 기밀 계약을 확정했으며, 정부 요청에 따라 안전 설정을 완화했다.",
+      "searched": "근거 후보(candidates.json)의 구글 관련 보도 제목, Google 블로그 RSS, 10-Q (2026-06-30). 해당 계약 갱신·기밀 계약·안전 설정 완화를 적은 원문을 찾지 못했다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F5",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "구글의 기밀 네트워크 사용 계약 갱신·기밀 계약 확정·안전 설정 완화에 직원 600명 이상이 반발했다.",
+      "searched": "근거 후보(candidates.json)의 구글 관련 보도 제목(2026-09-30 Bloomberg 직원 회의론 기사는 Gemini 4 성능에 관한 것), Google 블로그 RSS. 직원 600명 반발 원문을 찾지 못했다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F5",
+      "column": "down",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "DOJ 와 38개 주가 낸 검색 독점 소송의 항소가 진행 중이다.",
+      "searched": "Simply Wall St 2026-09-20·2026-10-03 기사(미국 연방법원 반독점 소송 두 건 승소만 적음), 10-Q (2026-06-30), 근거 후보 제목. 검색 독점 소송 항소 진행을 적은 원문을 찾지 못했다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F5",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "구글의 EU 검색 데이터 공유 명령 이의 제기(2026-09-30 보도), 출판사 애드테크 손해배상 청구 $3.2B 재판 회부(2026-10-01 보도), 영국 앱 장터 수수료 소송 £1.2bn(2026-10-04 보도), 폴란드 경쟁당국 조사(2026-10-05 보도)가 확정 근거로 들어와 있다.",
+      "searched": "EV-alphabet-010 (Financial Times)·EV-alphabet-009 (Reuters) 원문 접속 불가, 다른 매체 사본은 Google 뉴스 링크 풀기가 막혀(429) 열지 못했다. EU·애드테크 두 항목은 원문으로 확인해 줄을 고쳐 남겼다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F7",
+      "column": "up",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "Anthropic 에서 오는 매출은 알파벳 최근 1년 매출 $445.9B(2026-06-30 기준)에 견주면 미미하다.",
+      "searched": "10-Q (2026-06-30)·10-K (FY2025)·2026년 2분기 실적 발표문(Anthropic 관련 매출 미기재), Fortune 2026-07-22(Anthropic 의 5GW 이상 약정만 적음), Benzinga 2026-09-30. 최근 1년 매출 $445.9B 는 확인했지만 Anthropic 에서 오는 매출 규모를 적은 원문을 찾지 못했다."
+    },
+    {
+      "company_id": "alphabet",
+      "judgment_id": "alphabet.F7",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "2026년 2분기 지분 평가이익 $99B 의 상당 부분은 SpaceX 지분 약 6%($94.0B, 6월 상장 때 기업가치 $1.77T 로 평가)에서 나왔고, SpaceX 는 Google Cloud 고객이 아니다.",
+      "searched": "10-Q (2026-06-30) Note 3·MD&A, Fortune 2026-07-22, SpaceX 10-Q (2026-06-30) 관계사 거래·소송 항목. 평가이익·보유 주식·지분율은 확인했고 SpaceX 의 Google Cloud 이용 여부만 찾지 못해 판정 칸으로 옮겼다(줄은 고쳐 남김)."
+    },
+    {
+      "company_id": "amazon",
+      "judgment_id": "amazon.F2",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "자체 모델 Nova 는 Arena 텍스트 부문 99위로 에이전트·추론 경쟁에 기여하지 못했다.",
+      "searched": "lmarena.ai 텍스트 리더보드(2026-10-07 현재판만 열림, 기준일 이전 순위 기록 없음), Arena 변경 기록 검색, 언론 검색"
+    },
+    {
+      "company_id": "amazon",
+      "judgment_id": "amazon.F3",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "(부분) 18개 제공사",
+      "searched": "AWS Bedrock 제품·모델 선택 페이지, AWS What's New·News Blog(2024-12, 2025-12, 2026-02), 2026년 2분기 실적 보도자료"
+    },
+    {
+      "company_id": "amazon",
+      "judgment_id": "amazon.F5",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "(부분) 18개 제공사",
+      "searched": "AWS Bedrock 제품·모델 선택 페이지, AWS What's New·News Blog"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F1",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "보조 증거는 거래 채널의 가격 결정력이다. OpenRouter 에서 토큰 점유율 약 12% 로 매출 점유율 약 46% 를 차지하고, 평균 단가 $6.36/M 는 Qwen($0.37/M)의 약 17배다.",
+      "searched": "BigGo Finance 2026-06-02, OpenRouter 'State of AI' 보고서(arXiv 2601.10088), OpenRouter 모델 페이지, 웹 검색"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F1",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "달러 기준 1위 모델인 Claude Opus 4.6 은 월 $25M 를 벌고 프로그래밍 지출의 60% 이상을 차지한다. 다만 라우팅 서비스 트래픽은 전체 시장이 아니고 토큰 점유율은 매출 점유율이 아니다.",
+      "searched": "OpenRouter Claude Opus 4.6 페이지, 'State of AI' 보고서(arXiv 2601.10088 은 Claude 계열이 프로그래밍 지출의 60% 이상이라고 적으나 Opus 4.6 출시 전 자료), 웹 검색"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F3",
+      "column": "down",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "ARR 은 7월 $65B 까지 왔지만 월 증가율이 +58%, +57%, 약 +14% 로 꺾여 감속 중이다.",
+      "searched": "Anthropic 공식 발표(2026-04-06·04-20 런레이트 $30B 초과, 2026-05-28 $47B 초과), 유출 S-1 보도(Fortune 2026-09-29, The Ringer 2026-09-30, Yahoo 2026-10-01 에 7월 런레이트 없음), 저장소 validation/priv-arr-17b(언론 2차 인용만 있고 URL 없음)"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F5.impl48",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "세 유통 관계는 공짜 사용자도 관계사도 아닌 독립 상업 동맹이다.",
+      "searched": "동맹 분류를 적은 판정 문장이라 받칠 원문이 따로 없다."
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F5.impl48",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "Anthropic 이 맺은 지분 동맹이 없어 복수의 지분 동맹 조항이 서지 않고, Anthropic 은 경쟁사를 자기 매대에 올린 쪽이 아니라 남의 매대에 오른 쪽이라 경쟁사 편입 조항도 방향이 반대다.",
+      "searched": "조항 적용 결론을 적은 판정 문장이라 받칠 원문이 따로 없다."
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F5.impl48",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "2026-09-25 미 항소법원이 국방부의 Anthropic 거래 배제를 유지했고(Reuters), 2026-10-05 BBC 는 국방부가 Anthropic AI 도구 사용을 중단했다고 보도했으며, 2026-09-30 Bloomberg 는 FTC 가 제품 안전 문제로 Anthropic 을 조사한다고 보도했다.",
+      "searched": "Reuters 원문(접근 차단 401), NYT 2026-09-25(403), BBC 2026-10-05(항소 판결 언급 없음), 저장소 뉴스 캐시(구글 뉴스 링크만)"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F6",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "밸류 ÷ ARR 은 약 14.8배이며 근거로만 남긴다.",
+      "searched": "Anthropic Series H 발표(2026-05-28, post-money $965B 는 확인), 7월 ARR $65B 는 F3 와 같은 곳을 찾아도 원문 없음"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F6",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "한 칸 올리는 보정의 두 조건 가운데 자본효율(ARR $65B ÷ 누적 조달 약 $125B = 0.52)은 기준 0.5 를 넘는다.",
+      "searched": "Anthropic 조달 발표(Series F·G·H), 유출 S-1 보도, 저장소 validation/priv-arr-17b(누적 조달은 내부 채점표 값)"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F6",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "밸류를 최근 1년 보정 매출로 나눈 배수는 약 30~39배로 추정된다.",
+      "searched": "추정치라 원문 대상이 아니다"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F6",
+      "column": null,
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "",
+      "searched": ""
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F7",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "조달 의존 고객으로는 VC 조달로 API 를 쓰는 AI 코딩 스타트업 고객 일부가 있다.",
+      "searched": "유출 S-1 보도(Fortune 2026-09-29: 두 고객이 2025년 매출의 약 4분의 1, 이름 미공개), The Ringer 2026-09-30(Cursor 등 추정만)"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F8.f8anth33",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "Anthropic 은 컴퓨트를 100% 외부에서 빌려 쓰고, 공급자가 모두 모델 경쟁자다.",
+      "searched": "Anthropic 컴퓨트 발표(AWS Trainium·Google TPU·NVIDIA GPU 를 쓴다고만 적음), Motley Fool 2026-09-30(Fluidstack 과 $50B 데이터센터 구축 계획 보도)"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F8.f8anth33",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "컴퓨트 약정은 Google Cloud $200B/5년, AWS 약정 증액 $100B 초과/10년, Azure $30B 이다. AWS 분은 Amazon 2026년 2분기 10-Q Note 1 이 '기존 다년 약정을 10년에 걸쳐 $100.0B 넘게 확대했고 AWS 칩 성능과 관련된 계약 의무를 포함한다' 고 공시한 것이라, $100B 는 약정 총액이 아니라 기존 약정 위에 얹은 증액의 하한이다.",
+      "searched": "Anthropic 의 Google 발표(2025-10-23 '수백억 달러 규모', 2026-04-06 '수 기가와트'), 유출 S-1 보도(The Ringer 2026-09-30 은 Google 약정 $111.1B)"
+    },
+    {
+      "company_id": "anthropic",
+      "judgment_id": "anthropic.F9",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "Q2 단일 분기 첫 영업흑자 $559M(매출 $10.9B, 마진 약 5%)은 최근 1년 흑자를 대신하지 않는다.",
+      "searched": "유출 S-1 보도(Fortune 2026-09-29, The Ringer 2026-09-30 은 Reuters 를 인용해 2026년 2분기 매출을 $11.5B 로 적음), 저장소 validation/priv-arr-17b(값 $10.9B·$559M 은 2026-05 투자자 IR 덱의 전망치로 기록)"
+    },
+    {
+      "company_id": "meta",
+      "judgment_id": "meta.F2",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "같은 지수에서 세대별 점수는 Muse Spark 1.0 43점, 1.1 53점, 1.2 57점, 1.3 62점으로 올랐고, 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 로 5위다. (중 'Muse Spark 1.0 43점' 과 'GDPval-AA v2 5위')",
+      "searched": "Artificial Analysis 기사 Muse Spark 1.3(2026-09-02)·1.2(2026-08-05), AA 모델 페이지(현재 지수 v4.3.2 로 재산정돼 2026-10-06 시점 값이 아님), AA X 게시물(1.0 출시 때 52점), 웹 검색."
+    },
+    {
+      "company_id": "microsoft",
+      "judgment_id": "microsoft.F1",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "Copilot 유료 시트는 3,000만 개로 분기 대비 50% 늘었고, Copilot 합산 월간 사용자는 4.2억 명이다.",
+      "searched": "Microsoft FY26 2·3·4분기 실적 발표 통화록(microsoft.com/investor), 2026-07-29 실적 보도자료(8-K Ex.99.1), 10-K(FY2026). 4.2억 명은 2차 집계 블로그에만 나온다. 같은 줄의 유료 시트 부분은 원문으로 확인해 줄을 고쳐 남겼다."
+    },
+    {
+      "company_id": "nvidia",
+      "judgment_id": "nvidia.F2",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "AI 가속기 점유율 70~75% 라는 수치는 구간만 있고 출처가 없어 판정 근거로 삼지 않는다.",
+      "searched": "NVIDIA 10-K(FY2026)·10-Q(2026-04-26, 2026-07-26), 2026-08-26 실적 콜 녹취록, 웹 검색(AI accelerator market share 70-75%). Tech Times(2026-05-26)는 '70–80%' 를 적었으나 출처 없는 구간이라 같은 값도 아니다."
+    },
+    {
+      "company_id": "nvidia",
+      "judgment_id": "nvidia.F4",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "NVIDIA 는 GPU 를 넘어 로보틱스·자율주행·LLM 등 10개 영역에 진출했다. (중 '10개 영역' 이라는 수)",
+      "searched": "NVIDIA 10-K(FY2026) Item 1 Business, GTC 2026 라이브 블로그(6개 모델 계열), CES 2026 발표, 웹 검색. 로보틱스·자율주행·LLM 진출은 확인했으나 '10개' 라는 수는 찾지 못했다."
+    },
+    {
+      "company_id": "nvidia",
+      "judgment_id": "nvidia.F7.fix52",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "NVIDIA 는 돈만이 아니라 신용도 댄다. GPU 잔존가치를 최대 25% 보증해 은행의 LTV 70~80% 대출을 가능하게 하고, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이며, CoreWeave 미판매 캐파 매입 보증(2032-04-13까지), $6.3B 재임차(rent-back), 월가와의 $500B AI 인프라 금융 조성이 있다. (중 '은행의 LTV 70~80% 대출을 가능하게 하고')",
+      "searched": "Reuters(2026-10-01) 'Nvidia's bet that its chips can finance the AI boom gets a Wall Street reality check' 전문, NVIDIA 10-Q(2026-07-26) Note 8·10, 실적 콜 녹취록, 웹 검색(Nvidia residual value guarantee loan-to-value). 25% 잔존가치 보증은 확인했고 LTV 70~80% 는 찾지 못했다."
+    },
+    {
+      "company_id": "openai",
+      "judgment_id": "openai.F1",
+      "column": "down",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "거래 채널에는 가격 결정력이 없다. OpenRouter 평균 단가 $0.74/M 는 Anthropic($6.36/M)의 약 8.6분의 1 이고, 토큰 점유율 9.8% 에 매출 점유율 8.0% 라 프리미엄이 붙지 않는다.",
+      "searched": "웹 검색(OpenRouter 순위·점유율·평균 단가 보도, OpenRouter 자체 보고서 인용 기사)과 저장소. Anthropic 의 토큰 12%·매출 46% 보도(BigGo Finance 2026-07-10)는 찾았지만 OpenAI 의 $0.74/M·토큰 9.8%·매출 8.0% 와 Anthropic $6.36/M 이 적힌 원문은 찾지 못했다."
+    },
+    {
+      "company_id": "openai",
+      "judgment_id": "openai.F4",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "Broadcom 과의 배치 계획은 2026년 0.1GW 미만, 2027년 1.3GW, 2028년 후속 세대 합산 5GW 이상이다. 출하·실제 배포만 세는 ④ 판정 지침에 따라 자체 칩은 출하가 확인될 때까지 점수 근거로 쓰지 않는다.",
+      "searched": "'2026년 0.1GW 미만' 부분만 미확인. Broadcom Q3 FY2026 실적 발표 전문(Motley Fool)과 OpenAI·Broadcom 발표문에서 찾지 못했다."
+    },
+    {
+      "company_id": "openai",
+      "judgment_id": "openai.F5.impl48",
+      "column": "down",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "Microsoft 와는 Azure 독점이 끝나며 긴장이 생겼고, Apple 과 상호 소송 중이며, 머스크의 반독점 소송이 계류 중이고, NYT 등이 낸 MDL No. 3143 저작권 집단소송에는 6/24 지역신문 약 400곳이 추가로 제소하고 7/10 Apple 이 제소했다.",
+      "searched": "웹 검색 한도(세션 200회)를 다 써 MDL No. 3143 추가 제소(2026-06-24 지역신문 약 400곳, 2026-07-10 Apple), Apple 상호 소송, 머스크 반독점 소송의 원문을 찾지 못했다. Microsoft 라이선스 비독점 전환(2026-04-27 재협상)은 Luminix 요약에서만 보았고 '긴장'을 받치는 문장은 없었다."
+    },
+    {
+      "company_id": "openai",
+      "judgment_id": "openai.F6",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "분모를 최근 1년 보정 매출로 맞춘 배수는 약 39배다.",
+      "searched": "최근 1년 보정 매출(분모)의 원문을 찾지 못했다. 분기 매출 $5.7B·$6.7B 는 Luminix 요약에만 있고, 39배를 만드는 분모 값과 그 출처는 확인하지 못했다."
+    },
+    {
+      "company_id": "openai",
+      "judgment_id": "openai.F6",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "자본효율(ARR $40B ÷ 누적 조달 약 $185B = 0.22)은 기준 0.5 에 못 미친다.",
+      "searched": "누적 조달 약 $185B 의 원문을 찾지 못했다(저장소 validation/priv-arr-17b 에는 '약 $180~190B(중간값)'이라는 내부 기록만 있다)."
+    },
+    {
+      "company_id": "openai",
+      "judgment_id": "openai.F9",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "흑자 전환 목표가 2030년으로 후퇴했다는 기록은 판정 입력에 그대로 남아 있지만, 2026년 적자 $14~33B 와 GAAP 손실 약 $60B 는 전망이라 손실을 단정하는 근거로 쓰지 않는다.",
+      "searched": "'2026년 적자 상단 $33B'와 'GAAP 손실 약 $60B' 부분만 미확인. Luminix 요약은 $14B(일부 $17B+)만 적고, 웹 검색 한도 소진으로 다른 원문을 찾지 못했다."
+    },
+    {
+      "company_id": "openai",
+      "judgment_id": "openai.F9",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "연 환산 약정 약 $60B 가 ARR $40B 보다 크다는 사실은 남지만, ARR 이나 연 환산 약정은 커버리지가 아니라 점수에 넣지 않는다.",
+      "searched": "연 환산 약정 약 $60B 의 원문을 찾지 못했다. Sam Altman 의 '8년간 약 $1.4T' 는 연 약 $175B 에 해당해 이 값과 맞지 않는다."
+    },
+    {
+      "company_id": "oracle",
+      "judgment_id": "oracle.F2",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "자체 모델이 없다.",
+      "searched": "10-K(FY2026) Item 1·1A 의 AI·LLM 서술(고객이 고른 LLM 을 쓰게 한다는 문장만 있음), OCI Generative AI 문서(Cohere·Google·Meta·OpenAI·xAI 모델만 나열하나 발행일이 없어 기준일 조건을 확인할 수 없음)."
+    },
+    {
+      "company_id": "oracle",
+      "judgment_id": "oracle.F5",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "규제 적대가 적다.",
+      "searched": "10-K(FY2026) Item 1A 규제·정부 위험 항목, Item 3 법률 절차. 규제 적대가 적다는 것은 부재 판단이라 받칠 원문이 없다."
+    },
+    {
+      "company_id": "oracle",
+      "judgment_id": "oracle.F7.fix52",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "Oracle 은 Stargate LLC 에 $7B 를 지분 출자했고(SoftBank $19B·OpenAI $19B·MGX $7B 와 공동 출자), 그 돈이 고객을 위한 데이터센터가 되어 다시 Oracle 매출로 돌아온다.",
+      "searched": "Oracle 10-Q(2026-08-31) Note 1 Non-Marketable Investments(비시장성 지분·채무 투자 합계 $2.4B, 대부분 TikTok USDS JV), 10-K(FY2026) 전문(Stargate 언급 없음), OpenAI·SoftBank 의 2025-01-21 Stargate 발표(Oracle 을 초기 지분 출자자로만 적고 금액 없음), TechCrunch 2025-01-21 보도(금액 없음), The Register 2025-09-11(SoftBank $19B 만 언급). Oracle $7B 는 검색 요약에만 '출자 예정'으로 나오고 실제 출자를 적은 원문은 없다."
+    },
+    {
+      "company_id": "palantir",
+      "judgment_id": "palantir.F5",
+      "column": "down",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "미 이민세관단속국(ICE)의 ImmigrationOS 계약($30M)과 국무부 감시 자문 때문에 사업의 정당성 자체가 시민사회·의회의 표적이 됐다.",
+      "searched": "'국무부 감시 자문' 부분만 미확인. 웹 검색(Palantir State Department surveillance / Catch and Revoke)에서 Palantir 가 2025-07-24 국무부 'Catch & Revoke' 에 자사 제품이 쓰이지 않았다고 밝힌 자료만 찾았다. ICE 계약 부분은 고친 줄에 남겼다."
+    },
+    {
+      "company_id": "spacex-xai",
+      "judgment_id": "spacex-xai.F9.obsreg25",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "흑자 전환 목표 후퇴와 완충 잠식은 없음이다.",
+      "searched": "SpaceX 10-Q(2026-06-30)·S-1/A(2026-06-03)·8-K Ex.99.1(2026-08-04) 본문. 흑자 전환 목표를 미룬다는 문장도, 완충이 줄었다는 문장도 없고 이를 '없음'으로 적은 원문도 없다. 현금은 2025-12-31 US$24,747M 에서 2026-06-30 US$93,522M 으로 늘었다."
+    },
+    {
+      "company_id": "tesla",
+      "judgment_id": "tesla.F1",
+      "column": "up",
+      "score_bearing": true,
+      "kind": "fact",
+      "line": "차량 소유자에게는 전환비용이 있다.",
+      "searched": "Tesla 10-K(2025) 위험요인·사업 절, Q1·Q2 2026 Update, 언론 검색"
+    },
+    {
+      "company_id": "tesla",
+      "judgment_id": "tesla.F9",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "흑자 전환 목표 후퇴와 완충 잠식은 없음이다.",
+      "searched": "게이트 입력 판정 문장(bep_retreat·buffer_erosion = no)이라 받칠 원문 사실이 따로 없다. 판정 칸으로 그대로 옮겼다."
+    },
+    {
+      "company_id": "tsmc",
+      "judgment_id": "tsmc.F8",
+      "column": "up",
+      "score_bearing": false,
+      "kind": "fact",
+      "line": "완충 장치도 있다. 선급금과 장기 약정은 take-or-pay 라 수요가 꺾이면 NVIDIA 같은 고객이 먼저 맞는다.",
+      "searched": "20-F (FY2025) Item 4 Advance Payment by Customers·Note 22, 2Q26·4Q25 실적 통화 녹취록, 웹 보도. 선급금 존재와 처리 방식만 확인했고 take-or-pay 조건과 손실 분담 순서는 찾지 못해 그 부분만 판정 칸으로 옮겼다(줄은 고쳐 남김)."
+    }
+  ],
+  "next_numbers": {
+    "alibaba": 55,
+    "alibaba_web": 20,
+    "alphabet": 38,
+    "alphabet_web": 10,
+    "amazon": 50,
+    "amazon_web": 17,
+    "anthropic": 40,
+    "anthropic_web": 17,
+    "apple": 35,
+    "apple_web": 19,
+    "meta": 40,
+    "meta_web": 10,
+    "microsoft": 24,
+    "microsoft_web": 8,
+    "nvidia": 66,
+    "nvidia_web": 16,
+    "openai": 41,
+    "openai_web": 22,
+    "oracle": 34,
+    "oracle_web": 5,
+    "palantir": 27,
+    "palantir_web": 7,
+    "spacex-xai": 60,
+    "spacex-xai_web": 17,
+    "tesla": 49,
+    "tesla_web": 13,
+    "tsmc": 62,
+    "tsmc_web": 17
+  }
+}

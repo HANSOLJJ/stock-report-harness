@@ -1,0 +1,1004 @@
+{
+  "company_id": "meta",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-meta-000162828026050596",
+      "title": "Meta 8-K (2026-07-29) Exhibit 99.1 Second Quarter 2026 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-06302026xexhibit991.htm",
+      "kind": "filing",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-SEC-meta-000162828026003942",
+      "title": "Meta 10-K (2025-12-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm",
+      "kind": "filing",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-001",
+      "title": "Introducing Muse Spark: Meta's Most Powerful Model Yet",
+      "publisher": "Meta Newsroom",
+      "url": "https://about.fb.com/news/2026/04/introducing-muse-spark-meta-superintelligence-labs/",
+      "kind": "news",
+      "published_at_utc": "2026-04-08T15:59:56Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-002",
+      "title": "Meta's Muse reportedly passes 3 million weekly users and 5m downloads",
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/meta-muse-3-million-weekly-users-information",
+      "kind": "news",
+      "published_at_utc": "2026-10-02T13:36:29Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-003",
+      "title": "Muse Spark 1.3: Meta reaches the frontier",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/articles/muse-spark-1-3",
+      "kind": "news",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-004",
+      "title": "Muse Spark 1.2 (Artificial Analysis article)",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/articles/muse-spark-1-2",
+      "kind": "news",
+      "published_at_utc": "2026-08-05T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-005",
+      "title": "Meta Platforms, Inc. (META) Second Quarter 2026 Results Conference Call",
+      "publisher": "Meta Investor Relations",
+      "url": "https://s21.q4cdn.com/399680738/files/doc_financials/2026/q2/META-Q2-2026-Earnings-Call-Transcript.pdf",
+      "kind": "news",
+      "published_at_utc": "2026-07-29T20:30:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-006",
+      "title": "Meta launches enterprise AI platform, hires MongoDB CEO to lead new initiative",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/meta-launches-enterprise-ai-platform-hires-mongodb-ceo-to-lead-new-initiative/",
+      "kind": "news",
+      "published_at_utc": "2026-09-28T16:52:38Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-007",
+      "title": "Google and Meta reportedly strike new, multibillion-dollar AI chip deal",
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/02/26/google-meta-reportedly-strike-new-multibillion-dollar-ai-chip-deal/",
+      "kind": "news",
+      "published_at_utc": "2026-02-27T02:08:48Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-008",
+      "title": "Norway becomes first major country to propose temporary ban on AI glasses in public places",
+      "publisher": "The Irish Times",
+      "url": "https://www.irishtimes.com/business/2026/10/05/norway-first-country-to-propose-temporary-ban-on-ai-glasses-in-public-places/",
+      "kind": "news",
+      "published_at_utc": "2026-10-05T13:02:25Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    },
+    {
+      "source_id": "SRC-WEB-meta-009",
+      "title": "Meta tells the IRS its AI data centres are experiments, NYT reports",
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/meta-tax-credit-ai-data-centres-experiments-irs-nyt",
+      "kind": "news",
+      "published_at_utc": "2026-10-01T12:40:35Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "meta"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-meta-011",
+      "company_id": "meta",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026050596",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 8-K (2026-07-29) Exhibit 99.1 Second Quarter 2026 Results",
+      "excerpt": "Family daily active people (DAP) – DAP was 3.60 billion on average for June 2026, an increase of 3% year-over-year.",
+      "locator": "8-K Exhibit 99.1 Second Quarter 2026 Operational and Other Financial Highlights 첫 항목",
+      "relevance": "Facebook·Instagram·Messenger·WhatsApp 일간 사용자가 36억 명이라는 공시로, 사용자 30억 명 이상을 뒷받침한다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-012",
+      "company_id": "meta",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-001",
+      "published_at_utc": "2026-04-08T15:59:56Z",
+      "title": "Introducing Muse Spark: Meta's Most Powerful Model Yet",
+      "excerpt": "Muse Spark is starting to gradually roll out on Ray-Ban Meta and Oakley Meta glasses in the US and Canada over the next few weeks, and on Meta Ray-Ban Display this summer. Beyond the app and glasses, Muse Spark is starting to bring the same intelligence to Meta AI across WhatsApp, Instagram, Facebook, Messenger, and Threads — in places like search bars, group chats, posts, and more.",
+      "locator": "뉴스룸 글 AI 안경·앱 배포 문단 첫 두 문장",
+      "relevance": "Meta 가 Muse 를 WhatsApp·Instagram·Facebook·AI 안경에 배포한다고 직접 밝힌 문장이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-013",
+      "company_id": "meta",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-002",
+      "published_at_utc": "2026-10-02T13:36:29Z",
+      "title": "Meta's Muse reportedly passes 3 million weekly users and 5m downloads",
+      "excerpt": "More than 3 million people prompt Meta’s Muse at least once a week, according to internal data reviewed by The Information. More than 1 million send the AI agent a prompt every day, Jyoti Mann reported.",
+      "locator": "기사 본문 1번째 문단",
+      "relevance": "The Information 이 본 내부 자료상 Muse 주간 프롬프트 사용자가 300만 명을 넘었다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-014",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-003",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "title": "Muse Spark 1.3: Meta reaches the frontier",
+      "excerpt": "Meta has released Muse Spark 1.3, their fourth Muse Spark model release in five months. Muse Spark 1.3 (max), which is in limited preview for Meta's partners, scores 62 on the Artificial Analysis Intelligence Index, behind only Claude Fable 5.1 and Claude Opus 5.",
+      "locator": "기사 본문 1번째 문단 첫 두 문장",
+      "relevance": "Muse Spark 1.3(max)이 AA 종합 지수 62점으로 두 모델 다음, 즉 3위라는 벤치마크 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-015",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-003",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "title": "Muse Spark 1.3: Meta reaches the frontier",
+      "excerpt": "Muse Spark 1.3 (xhigh) enters the Artificial Analysis Intelligence Index at 61, up 4 points from Muse Spark 1.2 (57, August) and 8 points from Muse Spark 1.1 (53, July).",
+      "locator": "기사 본문 2번째 문단 첫 문장",
+      "relevance": "Muse Spark 세대별 AA 종합 지수(1.1 53점, 1.2 57점, 1.3 xhigh 61점)를 적은 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-016",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-003",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "title": "Muse Spark 1.3: Meta reaches the frontier",
+      "excerpt": "Muse Spark 1.3 (max), which is in a limited preview stage, lands at 62. This higher index score is enabled by gains vs. Muse Spark 1.3 (xhigh) in Tau3-Bench Banking (52% vs. 47%) and GDPval-AA v2 (1,754 Elo vs. 1,709).",
+      "locator": "기사 본문 3번째 문단 첫 두 문장",
+      "relevance": "Muse Spark 1.3(max)의 종합 지수 62점과 GDPval-AA v2 1,754 Elo 를 적은 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-017",
+      "company_id": "meta",
+      "factors": [
+        "F2",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-003",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "title": "Muse Spark 1.3: Meta reaches the frontier",
+      "excerpt": "Muse Spark 1.3 (xhigh) is the most cost-efficient model at its intelligence level: $0.55 per Intelligence Index task at Meta's unchanged $1.25/$4.25 per 1M token pricing. No model scoring 59 or above costs less per task. The nearest are Gemini 3.8 Flash (high, 59, $0.58), GPT-5.6 Sol (xhigh, 59, $0.63) and GLM-5.3 (max, 60, $0.68), while its direct peers at 61 cost far more: Grok 4.6 (high, $0.94), GPT-5.6 Sol (max, $0.95) and Claude Opus 5 (high, $1.23).",
+      "locator": "기사 'Other model details' 다음 비용 비교 문단",
+      "relevance": "Muse 가격이 100만 토큰당 $1.25/$4.25 로 유지되고 59점 이상 모델 중 태스크당 비용이 가장 낮으며, Google Gemini 3.8 Flash 가 $0.58 로 바로 뒤에 있다는 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-018",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-003",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "title": "Muse Spark 1.3: Meta reaches the frontier",
+      "excerpt": "Muse Spark 1.3 (max) scores 52% on Tau3-Bench Banking, the new #1 performer on this evaluation.",
+      "locator": "기사 Tau3-Bench Banking 문단 첫 문장",
+      "relevance": "Tau3-Bench Banking 52% 1위라는 집계로, 하네스는 밝히지 않았다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-019",
+      "company_id": "meta",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-004",
+      "published_at_utc": "2026-08-05T00:00:00Z",
+      "title": "Muse Spark 1.2 (Artificial Analysis article)",
+      "excerpt": "Model details: Muse Spark 1.2 retains Muse Spark 1.1’s 1M token context window and pricing ($1.25/$4.25 per 1M input/output tokens, with cache hits discounted to $0.15 per 1M), and is available on Meta’s first-party API at launch.",
+      "locator": "기사 Key takeaways 'Model details' 항목",
+      "relevance": "Muse Spark 1.1 API 가격이 100만 토큰당 입력 $1.25·출력 $4.25 임을 보여 주는 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-020",
+      "company_id": "meta",
+      "factors": [
+        "F3",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026050596",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 8-K (2026-07-29) Exhibit 99.1 Second Quarter 2026 Results",
+      "excerpt": "Three Months Ended June 30, 2026 | 2025 | Six Months Ended June 30, 2026 | 2025; Revenue: Advertising $ 59,363 | $ 46,563 | $ 114,387 | $ 87,955; Other revenue 1,007 | 583 | 1,891 | 1,093; Total revenue $ 60,801 | $ 47,516 | $ 117,111 | $ 89,830",
+      "locator": "8-K Exhibit 99.1 Segment Results 표 — Revenue: Advertising·Other revenue·Total revenue 행",
+      "relevance": "2026-06-30 분기 매출 $60.8B 가운데 광고가 $59.4B(약 98%)라는 공시 표다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-021",
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026050596",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 8-K (2026-07-29) Exhibit 99.1 Second Quarter 2026 Results",
+      "excerpt": "Revenue – Revenue was $60.80 billion, an increase of 28% year-over-year. Revenue on a constant currency basis would have increased by 27% year-over-year.",
+      "locator": "8-K Exhibit 99.1 Second Quarter 2026 Operational and Other Financial Highlights 넷째 항목",
+      "relevance": "2026-06-30 분기 매출 $60.80B, 전년 대비 +28% 를 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-022",
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T20:30:00Z",
+      "title": "Meta Platforms, Inc. (META) Second Quarter 2026 Results Conference Call",
+      "excerpt": "In Q2, we also advanced our user understanding models to analyze ads and organic activity and simultaneously improve both user experience and advertiser performance. Combined with our GEM model for ads ranking and sequence learning, these advancements generated an 8.3% increase in ad clicks and a 15.7% uplift in conversions on Facebook.",
+      "locator": "실적 콜 녹취록 CFO Susan Li 발표 중 광고 AI 문단",
+      "relevance": "AI 광고 모델이 Facebook 광고 클릭 +8.3%, 전환 +15.7% 를 냈다는 회사 발언으로, AI 가 광고 매출을 늘린 실측이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-023",
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-006",
+      "published_at_utc": "2026-09-28T16:52:38Z",
+      "title": "Meta launches enterprise AI platform, hires MongoDB CEO to lead new initiative",
+      "excerpt": "Meta announced Monday that it’s launching “Meta Enterprise Platform,” a new initiative aimed at expanding the company’s AI offerings to businesses and corporate customers. The social media giant hired Chirantan “CJ” Desai, the CEO of database software giant MongoDB, to lead the new initiative.",
+      "locator": "기사 1번째 문단",
+      "relevance": "Meta 가 2026-09-28 기업용 AI 사업을 출범하고 책임자를 영입했다는 보도로, 출범 단계임을 보여 준다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-024",
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026003942",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Meta 10-K (2025-12-31)",
+      "excerpt": "Some of these investments, particularly our significant investments in Reality Labs, have generated only limited revenue and reduced our operating margin and profitability, and we expect the adverse financial impact of such investments to continue for the foreseeable future. For example, our investments in Reality Labs reduced our 2025 overall operating profit by approximately $19.19 billion, and we expect our 2026 Reality Labs operating losses to remain similar to 2025.",
+      "locator": "10-K (2025) Part I Item 1A Risk Factors — 'We incur significant expenses in operating our business' 위험 문단",
+      "relevance": "메타버스(Reality Labs) 투자가 매출은 적고 2025년 영업이익을 $19.19B 깎았다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-025",
+      "company_id": "meta",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T20:30:00Z",
+      "title": "Meta Platforms, Inc. (META) Second Quarter 2026 Results Conference Call",
+      "excerpt": "Our AI-powered Advantage+ end-to-end solutions continued to grow, reaching over $75 billion in annual revenue run-rate this quarter. We are working to deepen adoption as advertisers who leverage multiple tools see compounding performance gains.",
+      "locator": "실적 콜 녹취록 CFO Susan Li 발표 중 Advantage+ 문단",
+      "relevance": "자동화 광고 상품 Advantage+ 의 연 환산 매출이 2026-06-30 분기에 $75B 를 넘었다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-026",
+      "company_id": "meta",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30)",
+      "excerpt": "General and administrative expenses in the three and six months ended June 30, 2026 increased $2.95 billion, or 111%, and $3.28 billion, or 66%, respectively, compared to the same periods in 2025. The increases were primarily due to $2.40 billion of charges related to legal proceedings in the three months ended June 30, 2026.",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A — General and administrative 표 아래 문단",
+      "relevance": "2026-06-30 분기에 소송 관련 비용 $2.40B 를 반영했다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-027",
+      "company_id": "meta",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30)",
+      "excerpt": "Trial in the first of the state attorneys general cases began on February 2, 2026 in the First Judicial District Court of New Mexico, in a case brought by the New Mexico Attorney General. On March 24, 2026, a jury returned a verdict against us and ordered that we pay a civil penalty of $375 million.",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 9 Commitments and Contingencies — Youth-Related Actions 첫 문단 중",
+      "relevance": "미성년자 관련 소송에서 배심원이 $375M 민사벌금을 명령했다는 공시로, 미성년자 소송이 비용이 됨을 보여 준다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-028",
+      "company_id": "meta",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30)",
+      "excerpt": "In April 2025, the European Commission issued a final decision that our \"subscription for no ads\" model does not comply with such requirements and imposed a fine of EUR €200 million.",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 9 Commitments and Contingencies — Competition, DMA 'subscription for no ads' 문단",
+      "relevance": "EU 집행위원회가 DMA 위반으로 €200M 벌금을 부과했다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-029",
+      "company_id": "meta",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-008",
+      "published_at_utc": "2026-10-05T13:02:25Z",
+      "title": "Norway becomes first major country to propose temporary ban on AI glasses in public places",
+      "excerpt": "Norway has become the first major country to propose a temporary ban on the use of artificial intelligence (AI) glasses in selected public places amid growing privacy concerns over wearable technology.",
+      "locator": "기사 1번째 문단",
+      "relevance": "노르웨이가 AI 안경 한시 금지를 제안했다는 보도로, Meta AI 안경에 걸리는 계획 단계 규제다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-030",
+      "company_id": "meta",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-009",
+      "published_at_utc": "2026-10-01T12:40:35Z",
+      "title": "Meta tells the IRS its AI data centres are experiments, NYT reports",
+      "excerpt": "The credit cut Meta’s taxes by $2bn in 2024 and $3.9bn in 2025, filings show. In 2023, it was $700m. Meta is now the biggest beneficiary of the credit among publicly traded companies, the Times found.",
+      "locator": "기사 'Data centres as 'pilot models'' 절 셋째 문단 첫 세 문장",
+      "relevance": "Meta 가 AI 데이터센터를 연구 시험물로 분류해 받은 연구개발 세액공제가 2023년 $700M 에서 2025년 $3.9B 로 늘었다는 보도로, 분류 논란의 대상이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-031",
+      "company_id": "meta",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30)",
+      "excerpt": "Advertising. We generate substantially all of our revenue from advertising. Our advertising revenue is generated by displaying ad products on Facebook, Instagram, Messenger, and third-party mobile applications.",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A — Components of Results of Operations, Revenue 'Advertising' 문단 첫 두 문장",
+      "relevance": "Meta 매출의 거의 전부가 광고에서 나온다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-032",
+      "company_id": "meta",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T20:30:00Z",
+      "title": "Meta Platforms, Inc. (META) Second Quarter 2026 Results Conference Call",
+      "excerpt": "So we view this as an extension of the sales and the partnerships that we have with many millions of advertisers and hundreds of millions of small businesses that use our platforms.",
+      "locator": "실적 콜 녹취록 Q&A 중 Mark Zuckerberg 의 기업 사업 답변",
+      "relevance": "Meta 광고주가 수백만 곳이라는 CEO 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-033",
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-007",
+      "published_at_utc": "2026-02-27T02:08:48Z",
+      "title": "Google and Meta reportedly strike new, multibillion-dollar AI chip deal",
+      "excerpt": "But Meta doesn’t want to be tied to a single chip provider, and has also established a relationship with one of Nvidia’s biggest rivals in Advanced Micro Devices Inc. Earlier this week, the Facebook parent said it’s going to buy billions of dollars’ worth of AMD’s AI chips, including its newest Instinct MI400 series GPUs.",
+      "locator": "기사 8번째 문단 첫 두 문장",
+      "relevance": "Meta 가 NVIDIA·AMD·Google TPU 로 AI 칩 공급처를 나눈다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-034",
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30)",
+      "excerpt": "We generate substantially all of our revenue from advertising. The loss of marketers, or reduction in spending by marketers, could seriously harm our business. Substantially all of our revenue is currently generated from marketers advertising on Facebook and Instagram. As is common in the industry, our marketers do not have long-term advertising commitments with us.",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 광고 의존 위험 제목과 첫 문단 첫 두 문장",
+      "relevance": "광고주가 이탈하거나 지출을 줄이면 사업이 크게 해를 입는다는 회사 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-035",
+      "company_id": "meta",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026003942",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Meta 10-K (2025-12-31)",
+      "excerpt": "Year Ended December 31, 2025 | 2024 | 2023; Revenue $ 200,966 | $ 164,501 | $ 134,902; Income from operations 83,276 | 69,380 | 46,751",
+      "locator": "10-K (2025) Part II Item 8 Consolidated Statements of Income — Revenue·Income from operations 행",
+      "relevance": "최근 1년 수치를 만드는 데 쓰는 2025년 연간 매출·영업이익이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-036",
+      "company_id": "meta",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026003942",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Meta 10-K (2025-12-31)",
+      "excerpt": "Year Ended December 31, 2025 | 2024 | 2023; Net cash provided by operating activities $ 115,800 | $ 91,328 | $ 71,113; Purchases of property and equipment (69,691) | (37,256) | (27,045)",
+      "locator": "10-K (2025) Part II Item 8 Consolidated Statements of Cash Flows — Net cash provided by operating activities·Purchases of property and equipment 행",
+      "relevance": "최근 1년 잉여현금흐름을 만드는 데 쓰는 2025년 영업현금흐름과 설비투자다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-037",
+      "company_id": "meta",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30)",
+      "excerpt": "Six Months Ended June 30, 2026 | 2025; Net cash provided by operating activities 64,088 | 49,587; Purchases of property and equipment (49,113) | (29,479)",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Condensed Consolidated Statements of Cash Flows — Net cash provided by operating activities·Purchases of property and equipment 행",
+      "relevance": "최근 1년(2025-07-01~2026-06-30) 영업현금흐름 $130.30B 에서 설비투자 $89.33B 를 빼면 잉여현금흐름이 +$40.98B 다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-038",
+      "company_id": "meta",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026050596",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 8-K (2026-07-29) Exhibit 99.1 Second Quarter 2026 Results",
+      "excerpt": "Three Months Ended June 30, 2026 | 2025 | Six Months Ended June 30, 2026 | 2025; Net cash provided by operating activities $ 31,862 | $ 25,561 | $ 64,088 | $ 49,587; Purchases of property and equipment (30,116) | (16,538) | (49,113) | (29,479); Principal payments on finance leases (962) | (474) | (1,805) | (1,225); Free cash flow $ 784 | $ 8,549 | $ 13,170 | $ 18,883",
+      "locator": "8-K Exhibit 99.1 Reconciliation of GAAP to Non-GAAP Results — Free cash flow 표",
+      "relevance": "2026-06-30 분기 잉여현금흐름 $784M(전년 동기 $8,549M)과 금융리스 원금 포함 설비투자 $31.08B(전년 동기 $17.01B)를 보여 주는 공시 표다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-039",
+      "company_id": "meta",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026050596",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 8-K (2026-07-29) Exhibit 99.1 Second Quarter 2026 Results",
+      "excerpt": "We anticipate 2026 capital expenditures, including principal payments on finance leases, to be in the range of $130-145 billion, narrowed from our prior outlook of $125-145 billion.",
+      "locator": "8-K Exhibit 99.1 CFO Outlook Commentary 넷째 문단",
+      "relevance": "회사의 2026년 설비투자 계획이 $130~145B 라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-meta-001",
+      "excerpt": "Three Months Ended June 30, 2026 | 2025 | Six Months Ended June 30, 2026 | 2025; Revenue $ 60,801 | $ 47,516 | $ 117,111 | $ 89,830; Income from operations 18,775 | 20,441 | 41,647 | 37,997",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Condensed Consolidated Statements of Income — Revenue·Income from operations 행"
+    },
+    {
+      "evidence_id": "EV-meta-009",
+      "excerpt": "Meta Platforms (META) could be facing a multibillion-dollar bill in New Mexico, with the state asking a judge to impose between $35 billion and $40 billion in penalties. The request follows a jury's finding that Meta misled consumers about Facebook users' data privacy, putting a potentially significant liability back in focus.",
+      "locator": "Barchart 기사 1번째 문단(Yahoo Finance 전재본으로 확인)"
+    },
+    {
+      "evidence_id": "EV-meta-010",
+      "excerpt": "The Federal Trade Commission is pushing an appellate court to revive a lawsuit claiming that Meta Platforms violated antitrust law by monopolizing a market for \"personal social networking services.\"",
+      "locator": "MediaPost 기사 1번째 문단"
+    },
+    {
+      "evidence_id": "EV-meta-008",
+      "excerpt": "LONDON, Oct 5 (Reuters) - Meta, TikTok and X are challenging British regulator Ofcom over the amount of information it is demanding they provide under Britain's nascent online safety regime.",
+      "locator": "Reuters 기사 1번째 문단(The Star 전재본으로 확인)"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "meta.F1",
+      "evidence_after": [
+        "Meta ① 네트워크 효과(가격을 올려도 남는가)는 소비자 채널로 재며 5점이다."
+      ],
+      "evidence_up_after": [
+        "페이스북·인스타그램·왓츠앱 사용자가 30억 명을 넘고 지인 관계망이 서비스 안에 있어, 떠나면 불편한 소비자 락인의 전형이라고 판정했다. [EV-meta-011]",
+        "Meta 는 자사 AI Muse 를 WhatsApp·Instagram·Facebook·AI 안경에 전면 배포해, 이미 깔린 사용자 기반 위에서 AI 를 공급한다. [EV-meta-012]",
+        "① 은 회사의 가장 강한 채널이 점수를 정하므로, 새 AI 앱의 사용자 지표(Muse 주간 사용자 300만 돌파, 2026-09-30 The Information 보도)는 이 점수를 움직이지 않는다. [EV-meta-013]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "meta.F2",
+      "evidence_after": [
+        "Meta ② 신기술 게임체인저(판을 바꿀 기술을 먼저 냈는가)는 세 경로 가운데 성능 도약과 패러다임 적응을 통과로, 표준 선점을 실패로 보아 두 경로 통과의 4점이다.",
+        "5점은 종합 지수 1위가 아니라 성능 도약이 세대 격차 수준일 때 주는데, Meta 의 성능 도약이 세대 격차 수준인지는 아직 판정하지 않았으므로 두 경로 통과의 4점을 쓴다.",
+        "Muse Spark 1.0 의 종합 지수 43점과 GDPval-AA v2 5위라는 순위는 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "Artificial Analysis(AA) 종합 지수에서 Muse Spark 1.3(max)은 62점으로 3위이고, AA 는 2026-09-02 기사 제목에서 'Meta reaches the frontier' 라고 적었다. [EV-meta-014]",
+        "같은 지수에서 세대별 점수는 Muse Spark 1.1 53점, 1.2 57점, 1.3(xhigh) 61점으로 올랐고 1.3(max)은 62점이며, 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 다. [EV-meta-015, EV-meta-016]",
+        "가격은 100만 토큰당 입력 $1.25·출력 $4.25 를 유지해, AA 59점 이상 모델 가운데 태스크당 비용이 가장 낮다($0.55). [EV-meta-017]",
+        "Tau3-Bench Banking 52% 는 전 모델 1위로 적혀 있으나 원문이 어느 하네스로 쟀는지 밝히지 않아, 같은 하네스끼리만 비교한다는 원칙상 모델 간 비교 근거로 쓰기 어렵다고 본다. [EV-meta-018]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "meta.F3",
+      "evidence_after": [
+        "Meta ③ Last Mover(선두가 베끼면 선두 자신의 수익모델이 무너지는 방식으로 들어왔는가)는 통과점 2 로 3점이다.",
+        "별도 수익모델은 통과다. 회수 장치가 있는 가격 카운터 포지셔닝으로 판정했다.",
+        "모방 불가능성은 부분이다.",
+        "후발 가속도(AI 귀속 지표의 성장률이 오르는가)도 부분이다. Meta 는 AI 매출을 공시하지 않고 OpenRouter 채택 증거도 아직 없다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)는 없다.",
+        "통과 1점에 부분 0.5점 두 개를 더한 통과점 2 는 사다리에서 3점이다."
+      ],
+      "evidence_up_after": [
+        "Meta 는 Muse Spark 1.1 API 를 100만 토큰당 입력 $1.25·출력 $4.25 에 팔고, 이 저가 클로즈드 API 를 광고 매출이 먹여 살린다. [EV-meta-019, EV-meta-020]",
+        "Meta 에는 광고 수익이라는 자산이 있다. [EV-meta-020]",
+        "Muse 주간 사용자 300만 돌파(The Information 단독, 2026-09-30)는 한 시점 수치라 성장률의 변화를 보여 주지 않는다. [EV-meta-013]"
+      ],
+      "evidence_down_after": [
+        "구글도 광고로 같은 저가 전략(Gemini Flash)을 쓸 수 있어, 구조적으로 못 베끼는 자산으로 보지 않았다. [EV-meta-017]"
+      ]
+    },
+    {
+      "judgment_id": "meta.F4",
+      "evidence_after": [
+        "Meta ④ 호황 이후 비전(곡괭이만 팔다 끝나는가, 광부가 되는가)은 3점이다.",
+        "영역 다각화는 약하다고 판정했다.",
+        "기업용 AI 매출이나 고객 배치가 공시되면 광고 의존을 다시 본다."
+      ],
+      "evidence_up_after": [
+        "AI 를 광고 최적화에 써서 매출을 늘린 것은 실측으로 증명됐다. 2026-06-30 분기 매출은 $60.80B 로 전년 대비 28% 늘었다. [EV-meta-021, EV-meta-022]",
+        "2026-09-28 출범한 기업용 AI 사업은 출범과 책임자 영입 단계라, 계획·발표는 현재 점수에 넣지 않는다는 원칙(규칙 2.1)에 따라 점수 근거가 아니다. [EV-meta-023]"
+      ],
+      "evidence_down_after": [
+        "매출의 약 98% 가 여전히 광고에서 나오고 메타버스에 대규모로 투자했다가 실패한 이력이 있다. [EV-meta-020, EV-meta-024]"
+      ]
+    },
+    {
+      "judgment_id": "meta.F5",
+      "evidence_after": [
+        "Meta ⑤ 아군 확보는 3 + 동맹 등급(+1) + 적대 등급(−1) 로 3점이다.",
+        "동맹 등급 +1 은 수백만 광고주 생태계에서 나온다.",
+        "Glimmer 개발자처럼 모델을 공짜로 받아 쓰는 개발자는 상업적 약속이 없는 공짜 사용자이고, 여러 칩 공급사에서 사 오는 것은 조달이라 동맹으로 세지 않는다.",
+        "지분이 걸린 동맹이 복수이거나 경쟁사를 자기 플랫폼에 편입한 사실은 확인되지 않아 +2 로 보지 않았다.",
+        "적대 등급 −1(비용형)은 미성년자 관련 소송과 EU 벌금이 광고 본업의 구조를 건드리지 않는 적대라는 판정이다."
+      ],
+      "evidence_up_after": [
+        "광고주는 돈을 내고 Meta 광고 도구를 쓰는 상업적 약속 관계이고, 자동화 광고 상품 Advantage+ 의 연 환산 매출은 2026-06-30 분기에 $75B 를 넘었다. [EV-meta-025]"
+      ],
+      "evidence_down_after": [
+        "2026-06-30 분기 소송 관련 비용 $2.4B 와 미성년자 관련 소송, EU 벌금은 비용이 든다. [EV-meta-026, EV-meta-027, EV-meta-028]",
+        "2026-10-01~10-05 보도된 뉴멕시코주의 $40B 청구, FTC 의 반독점 소송 재개 시도, 영국 규제기관과의 데이터 제출 다툼, 노르웨이의 AI 안경 한시 금지 계획, 연구개발 세액공제 분류 논란도 모두 청구·시도·계획 단계의 비용형 재료로 본다. [EV-meta-009, EV-meta-010, EV-meta-008, EV-meta-029, EV-meta-030]"
+      ]
+    },
+    {
+      "judgment_id": "meta.F7",
+      "evidence_after": [
+        "Meta ⑦ 순환금융(내 매출을 내는 고객이 그 돈을 어디서 구했는가)은 0점이다.",
+        "투자·부채 조달에 기대 대금을 내는 고객의 비중은 작다고 판정했다.",
+        "Meta 가 고객에게 넣은 돈이 고객 주머니를 거쳐 Meta 매출로 되돌아오는 구조도 확인되지 않아, 세로축은 '내 돈이 돌아오지 않음' 이다.",
+        "⑦ 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 '작음·돌아오지 않음' 칸은 0점이다."
+      ],
+      "evidence_up_after": [
+        "Meta 매출의 대부분은 수백만 광고주가 내는 광고비다. [EV-meta-031, EV-meta-032]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "meta.F8",
+      "evidence_after": [
+        "Meta ⑧ 비대칭 의존(끊기면 매출이 주는가, 회사가 멈추는가)은 −1 이다.",
+        "AI 칩 공급이 분산돼 있어 감점 폭을 작게 두었다."
+      ],
+      "evidence_up_after": [
+        "AI 칩은 여러 공급사에서 사 오므로 한 공급사가 끊겨도 핵심 생산이 멈추지 않는다. [EV-meta-033]"
+      ],
+      "evidence_down_after": [
+        "매출이 광고에 편중돼 있어 광고 시장이 꺾이면 매출이 직접 준다. [EV-meta-034]"
+      ]
+    },
+    {
+      "judgment_id": "meta.F9",
+      "evidence_after": [
+        "Meta ⑨ 적자 깊이는 게이트 2 에서 끝나 −1 이다.",
+        "게이트 1(본업이 버는가)은 통과다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 흑자이지만 추세는 악화로 판정했다.",
+        "흑자이나 추세가 악화하면 게이트 2 에서 −1 로 끝난다.",
+        "계획 상단을 집행해 최근 1년 잉여현금흐름이 실제로 마이너스가 되면 게이트 2 는 −2 가 되고 게이트 3(버티는 기간)을 계산한다."
+      ],
+      "evidence_up_after": [
+        "2025-07-01~2026-06-30 최근 1년 영업이익 $86.93B 를 매출 $228.25B 로 나눈 영업이익률이 38.1% 다. [EV-meta-035, EV-meta-001]",
+        "같은 최근 1년 기간 영업현금흐름 $130.30B 에서 설비투자 $89.33B 를 뺀 잉여현금흐름이 +$40.98B 다. [EV-meta-036, EV-meta-037]"
+      ],
+      "evidence_down_after": [
+        "2026-06-30 분기 잉여현금흐름이 +$0.78B 로 전년 동기보다 91% 줄었고, 그 분기 설비투자(금융리스 원금 상환 포함)는 $31.1B 로 전년 동기 $17.0B 의 약 1.8배이며, 회사의 연간 설비투자 계획은 $130~145B 다. [EV-meta-038, EV-meta-039]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "meta.F2",
+      "column": "up",
+      "line": "같은 지수에서 세대별 점수는 Muse Spark 1.0 43점, 1.1 53점, 1.2 57점, 1.3 62점으로 올랐고, 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 로 5위다. (중 'Muse Spark 1.0 43점' 과 'GDPval-AA v2 5위')",
+      "searched": "Artificial Analysis 기사 Muse Spark 1.3(2026-09-02)·1.2(2026-08-05), AA 모델 페이지(현재 지수 v4.3.2 로 재산정돼 2026-10-06 시점 값이 아님), AA X 게시물(1.0 출시 때 52점), 웹 검색.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "meta.F2",
+      "before": "같은 지수에서 세대별 점수는 Muse Spark 1.0 43점, 1.1 53점, 1.2 57점, 1.3 62점으로 올랐고, 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 로 5위다.",
+      "after": "같은 지수에서 세대별 점수는 Muse Spark 1.1 53점, 1.2 57점, 1.3(xhigh) 61점으로 올랐고 1.3(max)은 62점이며, 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 다.",
+      "why": "AA(2026-09-02): 'Muse Spark 1.3 (xhigh) enters ... at 61, up 4 points from Muse Spark 1.2 (57, August) and 8 points from Muse Spark 1.1 (53, July)', '1.3 (max) ... lands at 62', 'GDPval-AA v2 (1,754 Elo ...)'. 1.0 의 43점과 GDPval 5위는 원문에 없어 뺐다(판정 칸에 미확인).",
+      "evidence_id": "EV-meta-015, EV-meta-016"
+    },
+    {
+      "judgment_id": "meta.F5",
+      "before": "광고주는 돈을 내고 Meta 광고 도구를 쓰는 상업적 약속 관계이고, 자동화 광고 상품 Advantage+ 의 연 환산 매출은 $20B 를 넘는다.",
+      "after": "광고주는 돈을 내고 Meta 광고 도구를 쓰는 상업적 약속 관계이고, 자동화 광고 상품 Advantage+ 의 연 환산 매출은 2026-06-30 분기에 $75B 를 넘었다.",
+      "why": "Meta 2026-07-29 실적 콜: 'Advantage+ end-to-end solutions ... reaching over $75 billion in annual revenue run-rate this quarter'. $20B 는 2024년 4분기 쇼핑 캠페인 기준의 지난 값이다.",
+      "evidence_id": "EV-meta-025"
+    },
+    {
+      "judgment_id": "meta.F5",
+      "before": "미성년자 관련 소송 $2.4B 와 EU 벌금은 비용이 든다.",
+      "after": "2026-06-30 분기 소송 관련 비용 $2.4B 와 미성년자 관련 소송, EU 벌금은 비용이 든다.",
+      "why": "Meta 10-Q(2026-06-30) MD&A: '$2.40 billion of charges related to legal proceedings' 로만 적고 미성년자 소송 비용이라고 특정하지 않는다. 미성년자 소송(뉴멕시코 $375M 평결)과 EU 벌금(DMA €200M)은 Note 9 에 따로 있다.",
+      "evidence_id": "EV-meta-026, EV-meta-027, EV-meta-028"
+    },
+    {
+      "judgment_id": "meta.F9",
+      "before": "2026-06-30 분기 잉여현금흐름이 +$0.78B 로 전년 동기보다 91% 줄었고, 그 분기 설비투자는 $31.1B 로 전년의 두 배이며, 회사의 연간 설비투자 계획은 $130~145B 다.",
+      "after": "2026-06-30 분기 잉여현금흐름이 +$0.78B 로 전년 동기보다 91% 줄었고, 그 분기 설비투자(금융리스 원금 상환 포함)는 $31.1B 로 전년 동기 $17.0B 의 약 1.8배이며, 회사의 연간 설비투자 계획은 $130~145B 다.",
+      "why": "Meta 8-K Exhibit 99.1 FCF 조정표: 분기 설비투자(금융리스 원금 포함) $30,116M+$962M=$31,078M, 전년 동기 $16,538M+$474M=$17,012M 으로 약 1.83배다. '두 배' 를 '약 1.8배' 로 고쳤다.",
+      "evidence_id": "EV-meta-038"
+    }
+  ]
+}

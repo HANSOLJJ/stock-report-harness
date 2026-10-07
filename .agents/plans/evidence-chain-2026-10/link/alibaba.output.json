@@ -1,0 +1,1688 @@
+{
+  "company_id": "alibaba",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-05-20T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000110465926099220/tm2623667d1_ex99-1.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-20T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-alibaba-000110465925115949",
+      "title": "Alibaba 6-K Ex.99.1 — September Quarter 2025 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000110465925115949/tm2532163d1_ex99-1.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "alibaba",
+      "published_at_utc": "2025-11-25T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-alibaba-000110465926032060",
+      "title": "Alibaba 6-K Ex.99.1 — December Quarter 2025 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000110465926032060/tm269353d1_ex99-1.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-03-19T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-alibaba-000110465926060224",
+      "title": "Alibaba 6-K Ex.99.1 — March Quarter 2026 and Fiscal Year 2026 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000110465926060224/tm2614494d1_ex99-1.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-05-13T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-alibaba-000119312526361715",
+      "title": "Alibaba 6-K Ex.99.4 — Pricing of HK$80 Billion Placing of New Shares Under General Mandate",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526361715/baba-ex99_4.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-24T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-001",
+      "title": "Alibaba shares slide after $10.2 billion AI share sale offered at sharp discount (Reuters)",
+      "publisher": "AOL (Reuters 전재)",
+      "url": "https://www.aol.com/articles/alibaba-stock-slumps-hong-kong-013210000.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-24T01:32:10Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-002",
+      "title": "Alibaba Group Holding Ltd (BABA) (Q1 2027) Earnings Call Highlights: Cloud Revenue Surges 45%",
+      "publisher": "Yahoo Finance (GuruFocus)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/alibaba-group-holding-ltd-baba-190335455.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-20T19:03:35Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-003",
+      "title": "Alibaba Cloud lifts MaaS revenue with deeper focus on AI coding",
+      "publisher": "KrASIA",
+      "url": "https://kr-asia.com/alibaba-cloud-lifts-maas-revenue-with-deeper-focus-on-ai-coding",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-05-25T08:50:15Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-004",
+      "title": "Alibaba Cloud Opens First Brazil Region in São Paulo",
+      "publisher": "HostingJournalist",
+      "url": "https://hostingjournalist.com/news/alibaba-cloud-opens-first-brazil-region-in-s%C3%A3o-paulo",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-09-06T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-005",
+      "title": "Alibaba opens French data centres in Europe cloud push",
+      "publisher": "The Stack",
+      "url": "https://www.thestack.technology/alibaba-opens-french-cloud-azs-after-landing-uefa-qwen-deal/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-06-18T09:00:06Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-006",
+      "title": "Alibaba deepens AI push with new chip, bigger model; shares jump 5% (Reuters)",
+      "publisher": "BusinessWorld (Reuters 전재)",
+      "url": "https://bworldonline.com/technology/2026/09/22/780450/alibaba-deepens-ai-push-with-new-chip-bigger-model-shares-jump-5/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-09-22T09:57:17Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-007",
+      "title": "Qwen3.8-Max Ranks #4 On Frontend Code Arena, #2 On Vision Arena",
+      "publisher": "OfficeChai",
+      "url": "https://officechai.com/ai/qwen3-8-max-ranks-4-on-frontend-code-arena-2-on-vision-arena/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-03T12:32:30Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-008",
+      "title": "Qwen3.8-Max: Features, Benchmarks, and Pricing",
+      "publisher": "DataCamp",
+      "url": "https://www.datacamp.com/blog/qwen3-8-max",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-05T16:15:35Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-009",
+      "title": "Detecting and countering misuse of AI: September 2026",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/threat-intelligence-report-september-2026",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-09-10T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-010",
+      "title": "Meta releases open-weights Muse Glimmer model with 30B parameters",
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/08/10/meta-releases-open-source-muse-glimmer-model-30b-parameters/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-10T20:28:32Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-011",
+      "title": "Gemma 4: Expanding the Gemmaverse with Apache 2.0",
+      "publisher": "Google Open Source Blog",
+      "url": "https://opensource.googleblog.com/2026/03/gemma-4-expanding-the-gemmaverse-with-apache-20.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-04-02T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-012",
+      "title": "Qwen3.8-Max Open Weights: First Max-Class Qwen You Can Download",
+      "publisher": "LLM Stats",
+      "url": "https://llm-stats.com/blog/research/qwen3-8-max-open-weights",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-12T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-013",
+      "title": "Qwen models are now available in Amazon Bedrock",
+      "publisher": "AWS News Blog",
+      "url": "https://aws.amazon.com/blogs/aws/qwen-models-are-now-available-in-amazon-bedrock/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2025-09-18T22:02:11Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-014",
+      "title": "Valued at $1.3 Billion, OpenRouter Is Systematically Eroding Its Own Reason to Exist",
+      "publisher": "BigGo Finance",
+      "url": "https://finance.biggo.com/news/L3-yh54B6tLPsnrZE-bl",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-06-02T09:37:35Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-015",
+      "title": "Apple Intelligence approved for launch in China with Alibaba and Baidu",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/16/apple-intelligence-approved-for-launch-in-china-with-alibabas-qwen-ai/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-07-16T13:17:59Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-016",
+      "title": "Qwen3.8-27B surpasses 1 million downloads within two weeks of open-source release",
+      "publisher": "BigGo Finance",
+      "url": "https://finance.biggo.com/news/f1d17015-9554-4d5b-9d3b-0ee47fa07b49",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-17T10:35:40Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-017",
+      "title": "Alibaba brings Nvidia’s AI robotics tools to its cloud",
+      "publisher": "CloudComputing News",
+      "url": "https://www.cloudcomputing-news.net/news/alibaba-brings-nvidia-ai-robotics-tools-to-its-cloud/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2025-09-25T11:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-018",
+      "title": "US says ban on AI chip shipments applies to Chinese firms outside China",
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/economy/2026/6/1/us-says-ban-on-ai-chip-shipments-applies-to-chinese-firms-outside-china",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-06-01T03:01:29Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-019",
+      "title": "China weighs curbing overseas access to its top AI models",
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/china-curbing-overseas-access-top-ai-models",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-07-07T15:37:37Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-alibaba-008",
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "“Alipay” is to Alipay.com Co., Ltd., a company incorporated under the laws of the PRC on December 8, 2004, with which we have a long-term contractual relationship and which is a wholly-owned subsidiary of Ant Group",
+      "locator": "20-F 서두 용어 정의(Certain Defined Terms) 'Alipay' 항목",
+      "relevance": "알리페이가 알리바바가 아니라 앤트그룹의 완전자회사라는 사실로, ① 의 알리페이 분리 서술을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-009",
+      "company_id": "alibaba",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-007",
+      "published_at_utc": "2026-08-03T12:32:30Z",
+      "title": "Qwen3.8-Max Ranks #4 On Frontend Code Arena, #2 On Vision Arena",
+      "excerpt": "On Arena’s Vision leaderboard, which scores models on image understanding tasks with style control turned on, Qwen3.8-Max ranks second overall at 1,305, trailing only Claude Fable 5 at high effort (1,318) and sitting ahead of every Claude Opus variant, Gemini 3 Pro, GPT-5.5, and Grok-4.5.",
+      "locator": "기사 본문 4번째 문단('Vision tells a similarly strong story.' 로 시작)",
+      "relevance": "Qwen3.8-Max 가 Arena Vision 순위 2위라는 사실로, ② 의 사용자 투표형 순위 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-010",
+      "company_id": "alibaba",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-008",
+      "published_at_utc": "2026-08-05T16:15:35Z",
+      "title": "Qwen3.8-Max: Features, Benchmarks, and Pricing",
+      "excerpt": "The pattern holds across the board: strong on agentic and applied work, competitive on reasoning, and occasionally behind on the hardest reasoning exam, Humanity's Last Exam, where it scores 43.6 against Fable 5's 53.3.",
+      "locator": "기사 'GPQA Diamond and general capabilities' 절 2번째 문단",
+      "relevance": "Qwen3.8-Max 의 HLE 43.6 이 Fable 5 의 53.3 에 못 미친다는 값으로, ② 성능 도약 경로의 약점이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-011",
+      "company_id": "alibaba",
+      "factors": [
+        "F2",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-009",
+      "published_at_utc": "2026-09-10T00:00:00Z",
+      "title": "Detecting and countering misuse of AI: September 2026",
+      "excerpt": "Alibaba’s illicit distillation campaign peaked at nearly 3 million exchanges per day launched from more than 3,500 fraudulent accounts.",
+      "locator": "보고서 'Illicit distillation' 장 GTG 16005 사례 3번째 문단",
+      "relevance": "Anthropic 이 알리바바 증류에 3,500개가 넘는 가짜 계정이 쓰였다고 주장한 원문으로, ②·⑤ 의 내릴 근거다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-012",
+      "company_id": "alibaba",
+      "factors": [
+        "F2",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-009",
+      "published_at_utc": "2026-09-10T00:00:00Z",
+      "title": "Detecting and countering misuse of AI: September 2026",
+      "excerpt": "Scale of distillation attacks attributable to Alibaba between May and July 2026: over 151 million exchanges observed.",
+      "locator": "보고서 'Illicit distillation' 장 GTG 16005 사례 끝의 규모 표기",
+      "relevance": "Anthropic 이 2026년 5~7월 알리바바 귀속 교환을 1억 5,100만 건 넘게 관측했다고 주장한 값으로, ②·⑤ 의 내릴 근거다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-013",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465925115949",
+      "published_at_utc": "2025-11-25T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — September Quarter 2025 Results",
+      "excerpt": "Revenue from Cloud Intelligence Group was RMB39,824 million (US$5,594 million) in the quarter ended September 30, 2025, an increase of 34% compared to RMB29,610 million in the same quarter of 2024.",
+      "locator": "보도자료 'Segment Results — Cloud Intelligence Group' (i) Segment revenue 문단",
+      "relevance": "2025-07~09 분기 클라우드 매출이 전년 대비 34% 늘었다는 값으로, ③ 후발 가속도 계열의 첫 분기다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-014",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926032060",
+      "published_at_utc": "2026-03-19T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — December Quarter 2025 Results",
+      "excerpt": "Revenue from Cloud Intelligence Group was RMB43,284 million (US$6,190 million) in the quarter ended December 31, 2025, an increase of 36% compared to RMB31,742 million in the same quarter of 2024.",
+      "locator": "보도자료 'Segment Results — Cloud Intelligence Group' (i) Segment revenue 문단",
+      "relevance": "2025-10~12 분기 클라우드 매출이 전년 대비 36% 늘었다는 값으로, ③ 후발 가속도 계열의 둘째 분기다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-015",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926060224",
+      "published_at_utc": "2026-05-13T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — March Quarter 2026 and Fiscal Year 2026 Results",
+      "excerpt": "Revenue from Cloud Intelligence Group was RMB41,626 million (US$6,035 million) in the quarter ended March 31, 2026, an increase of 38% compared to RMB30,127 million in the same quarter of 2025.",
+      "locator": "보도자료 'Segment Results — Cloud Intelligence Group' (i) Segment revenue 문단",
+      "relevance": "2026-01~03 분기 클라우드 매출이 전년 대비 38% 늘었다는 값으로, ③ 후발 가속도 계열의 셋째 분기다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-016",
+      "company_id": "alibaba",
+      "factors": [
+        "F3",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "For the quarter ended June 30, 2026, revenue from AI Cloud and Compute Services was RMB48,437 million (US$7,139 million). The year-over-year growth of total revenue and revenue from external customers both accelerated to 45%. This momentum was primarily driven by the increasing adoption of AI-related products. AI-related product revenue continued to show strong momentum, achieving RMB12,376 million (US$1,824 million) and delivering the twelfth consecutive quarter of triple-digit year-over-year growth.",
+      "locator": "보도자료 'BUSINESS AND STRATEGIC UPDATES — AI Cloud and Compute Services' 첫 문단",
+      "relevance": "2026-04~06 분기 AI 클라우드 매출과 외부 고객 매출이 45% 늘고 AI 제품 매출이 12분기 연속 세 자릿수로 늘었다는 값으로, ③·④ 의 올릴 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-017",
+      "company_id": "alibaba",
+      "factors": [
+        "F3",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-002",
+      "published_at_utc": "2026-08-20T19:03:35Z",
+      "title": "Alibaba Group Holding Ltd (BABA) (Q1 2027) Earnings Call Highlights: Cloud Revenue Surges 45%",
+      "excerpt": "Alibaba Cloud's external revenue grew 45% year-over-year, marking a 22-quarter high, with EBITDA margin expanding to 11.6%.",
+      "locator": "기사 'Positive Points' 첫 항목",
+      "relevance": "클라우드 외부 매출 성장률 45% 가 22분기 만의 최고라는 실적 발표 요지로, ③·④ 의 올릴 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-018",
+      "company_id": "alibaba",
+      "factors": [
+        "F3",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-002",
+      "published_at_utc": "2026-08-20T19:03:35Z",
+      "title": "Alibaba Group Holding Ltd (BABA) (Q1 2027) Earnings Call Highlights: Cloud Revenue Surges 45%",
+      "excerpt": "The company expects cloud revenue growth to further accelerate in coming quarters, with MaaS ARR surpassing RMB16 billion and a year-end target of RMB30 billion.",
+      "locator": "기사 'Positive Points' 넷째 항목",
+      "relevance": "2026-08 실적 발표 시점 MaaS ARR 가 RMB160억을 넘었다는 값으로, ③·④ 의 올릴 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-019",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-003",
+      "published_at_utc": "2026-05-25T08:50:15Z",
+      "title": "Alibaba Cloud lifts MaaS revenue with deeper focus on AI coding",
+      "excerpt": "Alibaba CEO Eddie Wu said on the group’s latest earnings call that annual recurring revenue from AI model and application services, including the Model Studio platform, will exceed RMB 10 billion (USD 1.5 billion) in the June quarter and surpass RMB 30 billion (USD 4.4 billion) by year’s end.",
+      "locator": "기사 본문 'Alibaba CEO Eddie Wu said on the group’s latest earnings call…' 로 시작하는 문단",
+      "relevance": "2026-05 실적 발표에서 회사가 6월 분기 MaaS ARR RMB100억 돌파를 가이던스로 냈다는 사실로, ③ 의 가이던스 초과를 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-020",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-002",
+      "published_at_utc": "2026-08-20T19:03:35Z",
+      "title": "Alibaba Group Holding Ltd (BABA) (Q1 2027) Earnings Call Highlights: Cloud Revenue Surges 45%",
+      "excerpt": "Alibaba E-commerce Group Revenue: RMB205.9 billion, up 4% year over year.",
+      "locator": "기사 첫머리 실적 요약 목록의 'Alibaba E-commerce Group Revenue' 항목",
+      "relevance": "커머스 부문이 분기 RMB2,059억 매출을 내는 별도 수익원이라는 사실로, ③ 별도 수익모델을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-021",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-010",
+      "published_at_utc": "2026-08-10T20:28:32Z",
+      "title": "Meta releases open-weights Muse Glimmer model with 30B parameters",
+      "excerpt": "Meta Platforms Inc. today released Muse Glimmer, an open-weights language model that can run on personal computers.",
+      "locator": "기사 첫 문단",
+      "relevance": "메타도 오픈웨이트 모델을 낸다는 사실로, ③ 모방 불가능성의 내릴 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-022",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-011",
+      "published_at_utc": "2026-04-02T00:00:00Z",
+      "title": "Gemma 4: Expanding the Gemmaverse with Apache 2.0",
+      "excerpt": "The release of Gemma 4 under the Apache 2.0 license — our most capable open models ranging from edge devices to 31B parameters — provides cutting-edge AI models for this community of developers. The industry-standard Apache license broadens the horizon for Gemma 4's applicability and usefulness, providing well-understood terms for modification, reuse, and further development.",
+      "locator": "블로그 본문 첫 문단",
+      "relevance": "구글도 Gemma 4 를 오픈 모델로 낸다는 사실로, ③ 모방 불가능성의 내릴 근거다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-023",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-012",
+      "published_at_utc": "2026-08-12T00:00:00Z",
+      "title": "Qwen3.8-Max Open Weights: First Max-Class Qwen You Can Download",
+      "excerpt": "On Aug 12, 2026, Qwen shipped open weights as Qwen3.8-2.4T-A95B (2.4T total / ~95B active)—the first Max-class Qwen you can download.",
+      "locator": "기사 본문 첫 문단",
+      "relevance": "플래그십 Qwen3.8-Max 의 오픈웨이트가 2026-08-12 에 공개됐다는 사실로, ③ 의 내릴 근거다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-024",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-013",
+      "published_at_utc": "2025-09-18T22:02:11Z",
+      "title": "Qwen models are now available in Amazon Bedrock",
+      "excerpt": "Today we are adding Qwen models from Alibaba in Amazon Bedrock. With this launch, Amazon Bedrock continues to expand model choice by adding access to Qwen3 open weight foundation models (FMs) in a full managed, serverless way.",
+      "locator": "블로그 본문 첫 문단",
+      "relevance": "AWS Bedrock 이 Qwen3 오픈웨이트 모델을 자기 서비스로 제공한다는 사실로, ③ 의 회수 장치 부재 서술을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-025",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-014",
+      "published_at_utc": "2026-06-02T09:37:35Z",
+      "title": "Valued at $1.3 Billion, OpenRouter Is Systematically Eroding Its Own Reason to Exist",
+      "excerpt": "Anthropic's models account for only 12% of token traffic on OpenRouter, yet capture 46% of the platform's revenue.",
+      "locator": "기사 본문 'But a more telling comparison lies in another set of numbers.' 로 시작하는 문단",
+      "relevance": "Anthropic 이 OpenRouter 매출의 46% 를 가져간다는 값으로, ③ 문이 닫히지 않았다는 판정의 내릴 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-026",
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-002",
+      "published_at_utc": "2026-08-20T19:03:35Z",
+      "title": "Alibaba Group Holding Ltd (BABA) (Q1 2027) Earnings Call Highlights: Cloud Revenue Surges 45%",
+      "excerpt": "We have spent RMB190 billion of the RMB380 billion three-year plan, which is broadly in line with expectations.",
+      "locator": "기사 Q&A 중 CapEx·RMB380 billion 예산 질문에 대한 회사 답변",
+      "relevance": "3년 RMB3,800억 AI 인프라 계획 중 RMB1,900억을 집행했다는 회사 답변으로, ④ 의 올릴 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-027",
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-005",
+      "published_at_utc": "2026-06-18T09:00:06Z",
+      "title": "Alibaba opens French data centres in Europe cloud push",
+      "excerpt": "Chinese cloud provider Alibaba has opened two new cloud availability zones (AZs) based in Paris, France.",
+      "locator": "기사 본문 첫 문단",
+      "relevance": "알리바바가 2026-06 프랑스 파리에 클라우드 가용영역을 열었다는 사실로, ④ 의 해외 배포를 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-028",
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-004",
+      "published_at_utc": "2026-09-06T00:00:00Z",
+      "title": "Alibaba Cloud Opens First Brazil Region in São Paulo",
+      "excerpt": "Alibaba Cloud has opened its first cloud region in Brazil, putting two data centers in São Paulo and extending its infrastructure footprint into South America.",
+      "locator": "기사 본문 첫 문단",
+      "relevance": "알리바바가 브라질 상파울루에 데이터센터 두 곳으로 첫 리전을 열었다는 사실로, ④ 의 해외 배포를 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-029",
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526361715",
+      "published_at_utc": "2026-08-24T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.4 — Pricing of HK$80 Billion Placing of New Shares Under General Mandate",
+      "excerpt": "The Placing is being undertaken to extend the Company’s global AI leadership. Alibaba intends to use 100% of the net proceeds from the Placing to invest in its full stack AI capabilities, including to expand and enhance its AI infrastructure.",
+      "locator": "HKEX 공시 'Reasons for the Placing and Use of Proceeds' 문단",
+      "relevance": "증자 순수입 전액을 풀스택 AI 에 쓴다는 회사 공시로, ④ 의 계획·발표 서술을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-030",
+      "company_id": "alibaba",
+      "factors": [
+        "F4",
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-001",
+      "published_at_utc": "2026-08-24T01:32:10Z",
+      "title": "Alibaba shares slide after $10.2 billion AI share sale offered at sharp discount (Reuters)",
+      "excerpt": "The e-commerce and cloud computing giant said it would sell HK$80 billion ($10.2 billion) of new shares at HK$112.70 each, an 8.4% discount to Friday's close, to fund chips, AI infrastructure and models.",
+      "locator": "기사 2번째 문단",
+      "relevance": "HK$800억($10.2B) 신주를 전 거래일 종가 대비 8.4% 할인으로 판다는 보도로, ④·⑨ 의 증자 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-031",
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-006",
+      "published_at_utc": "2026-09-22T09:57:17Z",
+      "title": "Alibaba deepens AI push with new chip, bigger model; shares jump 5% (Reuters)",
+      "excerpt": "The chip is set for mass production and commercial release in the first quarter of 2027",
+      "locator": "기사 'Alibaba also unveiled the Zhenwu V900…' 다음 문단",
+      "relevance": "새 AI 칩 Zhenwu V900 의 양산·상용 출시가 2027년 1분기라는 사실로, ④ 에서 아직 출하 전이라는 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-032",
+      "company_id": "alibaba",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-015",
+      "published_at_utc": "2026-07-16T13:17:59Z",
+      "title": "Apple Intelligence approved for launch in China with Alibaba and Baidu",
+      "excerpt": "Alibaba earlier confirmed the company’s news to CNBC in a statement, saying that its Qwen models would be “integrated into Apple Intelligence experiences,” though it did not provide a time frame. It also said the integrations would involve AI capabilities like “text and image understanding and generation.”",
+      "locator": "기사 7번째 문단",
+      "relevance": "알리바바가 Qwen 의 Apple Intelligence 통합을 확인했으나 시점을 밝히지 않았다는 사실로, ⑤ 의 동맹 근거다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-033",
+      "company_id": "alibaba",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-016",
+      "published_at_utc": "2026-08-17T10:35:40Z",
+      "title": "Qwen3.8-27B surpasses 1 million downloads within two weeks of open-source release",
+      "excerpt": "In terms of ecosystem scale, Qwen-based derivative models now exceed 150,000",
+      "locator": "기사 'In terms of ecosystem scale…' 로 시작하는 문단 첫 문장",
+      "relevance": "Qwen 기반 파생모델이 15만 개를 넘는다는 값으로, ⑤ 에서 동맹으로 세지 않는 대상의 규모다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-034",
+      "company_id": "alibaba",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-017",
+      "published_at_utc": "2025-09-25T11:00:00Z",
+      "title": "Alibaba brings Nvidia’s AI robotics tools to its cloud",
+      "excerpt": "Alibaba and Nvidia have teamed up again, expanding their collaboration in AI and robotics. The two companies announced at the Apsara Conference in Hangzhou that Nvidia’s embodied AI tools will be integrated into Alibaba Cloud’s machine learning platform. The move gives developers access to Nvidia’s toolkit for building AI systems that interact with the physical world, including robotics and autonomous driving.",
+      "locator": "기사 첫 문단",
+      "relevance": "알리바바와 NVIDIA 의 협력이 존재한다는 사실로, ⑤ 에서 수출통제 때문에 동맹으로 세지 않는 대상이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-035",
+      "company_id": "alibaba",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "restrictions on advanced computing chips of Nvidia. In January 2026, the U.S. House of Representatives passed the Remote Access Security Act, which, if enacted into law, would further restrict China-based companies’ access to computing resources of service providers powered by advanced U.S. chips.",
+      "locator": "20-F Item 3.D Risk Factors — 미국 수출통제·제재 위험 요인(27쪽 첫머리)",
+      "relevance": "NVIDIA 첨단 칩 제한과 미 하원의 Remote Access Security Act 통과를 회사가 위험으로 공시한 문장으로, ⑤·⑧ 의 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-036",
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-018",
+      "published_at_utc": "2026-06-01T03:01:29Z",
+      "title": "US says ban on AI chip shipments applies to Chinese firms outside China",
+      "excerpt": "Chip giant Nvidia, whose top-of-the-line Blackwell GPUs are banned for export to China, said it had already been operating in keeping with the clarified rules.",
+      "locator": "기사 'Chip giant Nvidia…' 로 시작하는 문단",
+      "relevance": "NVIDIA Blackwell GPU 의 대중국 수출이 금지돼 있다는 사실로, ⑧ 의 미국 쪽 의존 위험이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-037",
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-019",
+      "published_at_utc": "2026-07-07T15:37:37Z",
+      "title": "China weighs curbing overseas access to its top AI models",
+      "excerpt": "Chinese officials have discussed limiting who outside the country can use the nation’s best AI models, Reuters reports. The Ministry of Commerce ran the meetings over the past month, and Alibaba, ByteDance, and the startup Z.ai took part. The talks cover the most capable models, including some not yet out.",
+      "locator": "기사 첫 문단",
+      "relevance": "중국 당국이 자국 첨단 모델의 해외 접근 제한을 알리바바 등과 논의했다는 보도로, ⑧ 의 중국 쪽 의존 위험이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-038",
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "We and, through us, our shareholders do not own any equity interests in the VIEs. Investors in our ADSs and Shares are purchasing equity securities of a Cayman Islands holding company rather than equity securities issued by our consolidated subsidiaries and the VIEs, and investors may never hold equity interests in the VIEs under current PRC laws and regulations.",
+      "locator": "20-F Item 3 Key Information — 'The VIE Structure Adopted by Our Company' 첫 문단",
+      "relevance": "ADS 투자자가 VIE 지분이 아니라 케이맨 지주회사 증권을 산다는 공시로, ⑧ 의 VIE 구조 위험이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-039",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Revenue 5, 25 941,168 996,347 1,023,670 148,401",
+      "locator": "20-F 연결손익계산서(Consolidated Income Statements, F-5) Revenue 줄 — 열 순서 2024·2025·2026 RMB, 2026 US$",
+      "relevance": "FY2026 감사 매출 RMB1,023,670M 으로, ⑨ 최근 1년 매출 복원의 출발값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-040",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Other gains, net — 761 1,848 268 Income from operations 113,350 140,905 50,150 7,270",
+      "locator": "20-F 연결손익계산서(F-5) Income from operations 줄 — 열 순서 2024·2025·2026 RMB, 2026 US$",
+      "relevance": "FY2026 감사 영업이익 RMB50,150M 으로, ⑨ 최근 1년 영업이익 복원의 출발값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-041",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "Revenue 247,652 268,953 39,639 9 % Income from operations 34,988 15,161 2,234 (57 )%(2)",
+      "locator": "보도자료 'JUNE QUARTER SUMMARY FINANCIAL RESULTS' 표 Revenue·Income from operations 줄 — 열 순서 2025 RMB, 2026 RMB, 2026 US$, YoY",
+      "relevance": "2025·2026 6월 분기 매출과 영업이익(미감사)으로, ⑨ 최근 1년 창을 빼고 더하는 값과 분기 흑자를 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-042",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Deferred revenue and customer advances 2,070 11,224 9,462 1,372 Net cash provided by operating activities 182,593 163,509 76,213 11,049",
+      "locator": "20-F 연결현금흐름표(Consolidated Statements of Cash Flows, F-12) Net cash provided by operating activities 줄 — 열 순서 2024·2025·2026 RMB, 2026 US$",
+      "relevance": "FY2026 감사 영업현금흐름 RMB76,213M 으로, ⑨ 최근 1년 FCF 복원의 출발값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-043",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Acquisitions of: Land use rights, property and equipment (32,087 ) (85,972 ) (126,063 ) (18,275 )",
+      "locator": "20-F 연결현금흐름표(F-12) 투자활동 'Acquisitions of: Land use rights, property and equipment' 줄 — 열 순서 2024·2025·2026 RMB, 2026 US$",
+      "relevance": "FY2026 감사 설비투자 RMB126,063M 으로, ⑨ 최근 1년 FCF 복원의 출발값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-044",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "Net cash provided by operating activities was RMB22,945 million (US$3,382 million), an increase of 11% compared to RMB20,672 million in the same quarter of 2025.",
+      "locator": "보도자료 'BUSINESS HIGHLIGHTS' 영업현금흐름 항목",
+      "relevance": "2025·2026 6월 분기 영업현금흐름(미감사)으로, ⑨ 최근 1년 FCF 창을 빼고 더하는 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-045",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "the quarter ended June 30, 2026, capital expenditures were RMB67,678 million (US$9,975 million), an increase of 75% compared to RMB38,676 million in the same quarter of 2025",
+      "locator": "보도자료 'Capital Expenditures' 문단",
+      "relevance": "2026-04~06 분기 설비투자가 RMB67,678M 으로 전년 같은 분기 RMB38,676M 보다 75% 늘었다는 값으로, ⑨ 소진 확대를 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-046",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Unless otherwise stated, all translations of Renminbi and Hong Kong dollars into U.S. dollars and from U.S. dollars into Renminbi in this annual report were made at a rate of RMB6.8980 to US$1.00 and HK$7.8400 to US$1.00, the respective exchange rates on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board.",
+      "locator": "20-F 서두 'Exchange Rate Information' 문단",
+      "relevance": "20-F 가 스스로 선언한 편의환산 환율 RMB6.8980/US$ 로, ⑨ 의 달러 환산값을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-047",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "Current assets: Cash and cash equivalents 131,530 142,914 21,063",
+      "locator": "보도자료 'UNAUDITED CONSOLIDATED BALANCE SHEETS' Cash and cash equivalents 줄 — 열 순서 2026-03-31 RMB, 2026-06-30 RMB, 2026-06-30 US$",
+      "relevance": "2026-06-30 현금및현금성자산 RMB142,914M(미감사)으로, ⑨ 완충의 현금 성분이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-048",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "As of March 31, 2025 and 2026, the Company had a revolving credit facility provided by certain financial institutions which has not yet been drawn down. In September 2025, the Company amended the terms of the revolving credit facility agreement. The size of the credit facility was amended from US$6.5 billion to US$3.33 billion",
+      "locator": "20-F 연결재무제표 주석 21 Bank borrowings — 회전여신 문단(F-65)",
+      "relevance": "2026-03-31 현재 미인출인 US$3.33B 회전여신으로, ⑨ 완충의 여신 성분이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-049",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Total capital commitments contracted but not provided for amounted to RMB45,321 million and RMB54,136 million as of March 31, 2025 and 2026, respectively.",
+      "locator": "20-F 연결재무제표 주석 27 Commitments (a) Capital commitments",
+      "relevance": "2026-03-31 자본약정 RMB54,136M 으로, ⑨ 게이트 4 분모의 한 성분이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-050",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "These commitments are analyzed as follows: As of March 31, 2025 2026 RMB RMB (in millions) No later than 1 year 32,364 57,441 Later than 1 year and no later than 5 years 46,768 133,598 More than 5 years 5,094 9,023 84,226 200,062",
+      "locator": "20-F 연결재무제표 주석 27 Commitments (c) Other commitments 표 — 열 순서 2025·2026 RMB",
+      "relevance": "2026-03-31 기타약정 RMB200,062M 으로, ⑨ 게이트 4 분모의 다른 성분이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-051",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "The Company applies the practical expedient to not disclose the value of unsatisfied performance obligations for contracts with an original expected duration of one year or less and contracts for which revenue is recognized at the amount to which the Company has the right to invoice for services performed.",
+      "locator": "20-F 연결재무제표 주석 2(g) Revenue recognition — 'Practical expedients and exemptions'(F-21)",
+      "relevance": "잔여 수행의무 금액을 공시하지 않는 실무적 간편법 선언으로, ⑨ 게이트 4 분자가 미공시인 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-052",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "Income from operations in the quarter ended June 30, 2026 was RMB15,161 million (US$2,234 million), or 6% of revenue, a decrease of 57% compared to RMB34,988 million, or 14% of revenue, in the same quarter of 2025, primarily due to the decrease in adjusted EBITA, impairment of goodwill and a provision in relation to the fine imposed by the European Commission under the Digital Services Act of EUR550 million recorded this year.",
+      "locator": "보도자료 'Income from operations and operating margin' 문단",
+      "relevance": "2026-04~06 분기 영업이익이 전년보다 57% 줄었고 영업권 손상과 EU DSA 과징금 충당이 반영됐다는 사실로, ⑨ 의 내릴 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-053",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "Impairment of goodwill of RMB4,458 million (US$657 million) was recorded in the quarter ended June 30, 2026.",
+      "locator": "보도자료 'Impairment of goodwill' 문단",
+      "relevance": "2026-04~06 분기 영업권 손상 RMB4,458M 으로, ⑨ 의 내릴 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-054",
+      "company_id": "alibaba",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526361715",
+      "published_at_utc": "2026-08-24T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.4 — Pricing of HK$80 Billion Placing of New Shares Under General Mandate",
+      "excerpt": "The total number of Placing Shares under the Placing is 710,000,000 new Shares, representing approximately 3.70% of the 19,174,988,918 Shares in issue as at the date of the Placing Agreement",
+      "locator": "HKEX 공시 'Placing Shares' 문단",
+      "relevance": "신주 710,000,000주가 기존 발행주식의 약 3.70% 라는 공시로, ⑨ 증자 서술의 희석 값을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [],
+  "judgments": [
+    {
+      "judgment_id": "alibaba.F1",
+      "evidence_after": [
+        "소비자 채널이 알리바바의 가장 강한 락인이라 ① 을 4점으로 판정했다.",
+        "5점이 아닌 이유는 세 가지다.",
+        "Qwen 의 OpenRouter 평균 단가 $0.37/M 은 모델 기업의 가격 결정력 지표라서, 지표를 회사 유형에 맞춘다는 원칙(규칙 2.3)에 따라 플랫폼 기업인 알리바바의 ① 에는 쓰지 않는다.",
+        "타오바오와 알리페이가 중국 안에서 10억 명 규모가 쓰는 양면 마켓플레이스 네트워크라는 사실은 원문을 찾지 못해 확인하지 못했다.",
+        "이 락인이 중국 안에 한정돼 글로벌 소비자 접점이 없고 PDD 와 더우인에 점유율을 잠식당하는 중이라는 사실은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "알리페이는 앤트그룹으로 분리돼 있다. [EV-alibaba-008]"
+      ]
+    },
+    {
+      "judgment_id": "alibaba.F2",
+      "evidence_after": [
+        "알리바바 ② 는 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 두 경로를 통과했다는 판정으로 4점이다.",
+        "세대 격차가 사람이 내리는 판정 입력이라 경로별 입력이 정해지기 전까지 사람이 매긴 점수 4 를 그대로 쓴다.",
+        "HLE 하네스 사실은 판정하지 않았고 점수는 그대로다.",
+        "Qwen 의 Arena WebDev 3위 순위는 원문을 찾지 못해 확인하지 못했다.",
+        "표준 선점 경로는 비어 있다."
+      ],
+      "evidence_up_after": [
+        "근거는 연구개발과 패러다임 적응 속도가 최상위라는 판단, 그리고 Arena Vision 2위 순위다. Arena 는 사용자 투표형 순위라 참고로만 쓴다. [EV-alibaba-009]"
+      ],
+      "evidence_down_after": [
+        "HLE 43.6% 는 프론티어에 못 미치는 값으로 적혀 있으나, 어느 하네스로 잰 값인지 원문이 적지 않아 같은 하네스끼리만 비교한다는 원칙(체크리스트 Q23)을 확인할 수 없다. [EV-alibaba-010]",
+        "Anthropic 이 2026년 5~7월 1억 5,100만 건이 넘는 교환과 3,500개가 넘는 가짜 계정으로 증류했다고 공개 주장했고, 알리바바의 기술적 반박은 없다. 주장 단계라 경로 판정에서 빼지 않는다. [EV-alibaba-011, EV-alibaba-012]"
+      ]
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "evidence_after": [
+        "알리바바 ③ 은 모방 불가능성 부분 통과(0.5), 별도 수익모델 통과(1), 후발 가속도 통과(1)로 통과점 2.5 다. 사다리로는 4 구간이지만 모방 불가능성이 완전 통과가 아니어서 3점이다.",
+        "경쟁사 두 곳이 이미 같은 방식을 쓰고 회수 장치가 없다는 두 사실은 부분 통과 판정과 어긋날 수 있어, 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 역전)는 없다.",
+        "모방 불가능성을 부분으로 본 것은 보완재를 커모디티화하는 오픈웨이트 배포가 진짜 전략이라는 판단 때문이다.",
+        "SiliconFlow·Novita 가 Qwen 호스팅 매출을 가져간다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다.",
+        "Anthropic 이 OpenRouter 에서 평균 $6.36/M 을 받는다는 값은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "별도 수익모델은 커머스와 클라우드가 대고 있다. [EV-alibaba-020, EV-alibaba-016]",
+        "클라우드 성장률이 +34%, +36%, +38%, +45%(22분기 만의 최고)로 분기마다 올랐고, AI 제품 매출이 12분기 연속 세 자릿수로 늘었으며, MaaS ARR 가 가이던스 RMB100억을 넘어 2026년 8월 RMB160억을 초과했다. [EV-alibaba-013, EV-alibaba-014, EV-alibaba-015, EV-alibaba-016, EV-alibaba-017, EV-alibaba-019, EV-alibaba-018]"
+      ],
+      "evidence_down_after": [
+        "메타(Glimmer)와 구글(Gemma)도 오픈웨이트를 내고, 플래그십 Qwen3.8-Max 의 오픈웨이트는 2026-08-12~13 에야 공개됐다. [EV-alibaba-021, EV-alibaba-022, EV-alibaba-023]",
+        "오픈웨이트에는 앱 장터 같은 회수 장치가 없다. Qwen 을 받아 자기 GPU 에 돌리면 알리바바는 대가를 받지 못하고, 실제로 AWS Bedrock 이 호스팅 매출을 가져간다. [EV-alibaba-024]",
+        "Anthropic 은 여전히 OpenRouter 매출의 46% 를 가져가며, OpenRouter 는 전체 시장이 아니다. [EV-alibaba-025]"
+      ]
+    },
+    {
+      "judgment_id": "alibaba.F4",
+      "evidence_after": [
+        "알리바바 ④ 는 커머스·클라우드·AI 에 걸친 사업 폭과 실제 배포로 4점이다.",
+        "알리바바가 네덜란드에 데이터센터를 열었다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "클라우드 매출 성장률은 +45% 로 22분기 만의 최고이고, AI 제품 매출은 12분기 연속 세 자릿수로 늘었으며, MaaS ARR 는 2026년 8월 RMB160억을 넘었다. [EV-alibaba-016, EV-alibaba-017, EV-alibaba-018]",
+        "3년간 RMB3,800억을 쓰는 AI 인프라 계획 가운데 RMB1,900억을 이미 집행했고, 브라질·프랑스에 데이터센터를 두고 있다. [EV-alibaba-026, EV-alibaba-028, EV-alibaba-027]",
+        "2026-08-23 발표한 $10.2B 증자는 전액 풀스택 AI 에 쓴다고 밝혔으나, 의지의 확인이지 결과가 아니어서 계획·발표는 현재 점수에 넣지 않는다는 원칙(규칙 2.1)에 따라 점수를 올리지 않는다. [EV-alibaba-029, EV-alibaba-030]",
+        "자체 AI 가속기를 공개했다는 보도도 출하가 확인되기 전이라 수직계열화 근거로 세지 않는다. [EV-alibaba-031]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "alibaba.F5",
+      "evidence_after": [
+        "알리바바 ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(−1) = 3점이다.",
+        "동맹 등급 +1 은 의미 있는 상업 동맹이 하나뿐이라는 판정이다.",
+        "적대 등급 −1 은 비용형(벌금·소송·규제 조사처럼 사업 구조를 건드리지 않는 적대)이다.",
+        "중국 지정학 위험은 ⑧ 에서 −4 로 셌으므로, 같은 속성을 두 번 세지 않는다는 원칙에 따라 여기서 다시 깎지 않는다."
+      ],
+      "evidence_up_after": [
+        "Apple 이 중국 사용자용 Apple Intelligence 에 Qwen 을 넣기로 했고 2026-07 중국 규제 당국 승인을 받았으나, 알리바바는 시점을 밝히지 않았고 규모도 공개되지 않았다. [EV-alibaba-032]"
+      ],
+      "evidence_down_after": [
+        "Qwen 파생모델 15만 개는 공짜 사용자라 동맹으로 세지 않는다. 오픈웨이트에는 회수 장치가 없어 그 개발자들이 알리바바에 대가를 내지 않기 때문이다. [EV-alibaba-033]",
+        "NVIDIA 와의 협력은 미국 수출통제에 묶여 있어 동맹으로 세지 않았다. [EV-alibaba-034, EV-alibaba-035]",
+        "Anthropic 이 2026년 5~7월 3,500개가 넘는 가짜 계정과 1억 5,100만 건이 넘는 교환을 이용한 증류를 공개적으로 주장했고, 알리바바의 기술적 반박은 없다. [EV-alibaba-011, EV-alibaba-012]"
+      ]
+    },
+    {
+      "judgment_id": "alibaba.F7",
+      "evidence_after": [
+        "알리바바 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
+        "조달 의존 고객 비중은 작음으로 판정했다.",
+        "세로축은 돌아오지 않음으로 판정했다.",
+        "최근 1년 세전이익의 약 70% 가 영업외 이익이지만, 영업외 비중은 ⑥ 의 P4(입력 신뢰도 보정)에서만 다루고 ⑦ 의 입력으로 쓰지 않는다.",
+        "알리바바 매출은 커머스와 클라우드 고객에게서 나오고, 고객이 투자 유치나 차입으로 마련한 돈으로 대금을 내는 구조는 근거에 없다.",
+        "알리바바가 고객에게 투자하고 그 돈이 알리바바 매출로 돌아오는 순환 구조도 확인되지 않는다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "alibaba.F8",
+      "evidence_after": [
+        "알리바바 ⑧ 은 미국과 중국 양쪽에 걸린 지정학 의존으로 −4 점이다.",
+        "칩 조달과 해외 진출이 두 정부의 결정에 함께 묶여 있다는 것이 이 점수의 판단이다.",
+        "이 지정학 위험은 ⑤ 에서 다시 깎지 않고 ⑧ 에서만 센다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "미국 쪽에는 Blackwell 칩 금수와 Remote Access Security Act 가 있고, 중국 쪽에서는 자국 첨단 모델의 해외 접근을 제한하는 방안이 논의되고 있다. [EV-alibaba-036, EV-alibaba-035, EV-alibaba-037]",
+        "BABA 주식은 VIE 구조라서, 투자자가 가진 것은 본토 사업의 지분이 아니라 케이맨 지주회사가 맺은 계약 묶음이다. [EV-alibaba-038]"
+      ]
+    },
+    {
+      "judgment_id": "alibaba.F9.obsreg25",
+      "evidence_after": [
+        "알리바바 ⑨ 는 게이트 네 개를 모두 지나 바닥인 −4 점이다.",
+        "게이트 1(본업이 버는가)은 통과해, 영업결과 판정은 흑자다.",
+        "게이트 2(현금이 새는가)는 최근 1년 FCF 가 마이너스라 −2 에서 게이트 3 으로 간다.",
+        "게이트 3(버티는 기간)은 런웨이가 1~3년 구간이라 한 단계 내려 −3 이다.",
+        "게이트 4 의 계약 수입은 회사가 공시하지 않았다고 확인된 결측으로 분류했다.",
+        "두 값이 갖춰지면 같은 범위와 기간으로 견줄 수 있다고 보아 비교 가능성은 예로 입력했다. 그래야 엔진이 결측 유형까지 내려가 회사가 안 낸 것과 우리가 못 찾은 것을 가르고, C-16 실행 결정(확인된 미공시는 한 칸 깎는다)에 따라 −4 가 된다.",
+        "흑자 전환 목표 후퇴와 완충 잠식은 없음으로, FCF 추세와 방향 완화 두 입력은 판정 불가로 두었으며 이 경로에서는 점수에 닿지 않는다."
+      ],
+      "evidence_up_after": [
+        "최근 1년(2025-07-01~2026-06-30) 영업이익 RMB30,323M 을 매출 RMB1,044,971M 으로 나눈 영업이익률은 +2.90% 다. 이 창은 FY2026 20-F 감사값에 2025·2026 6월 분기 실적 보도자료 값을 빼고 더해 복원했고, 분기 보도자료 값은 감사받지 않았다. [EV-alibaba-039, EV-alibaba-040, EV-alibaba-041]",
+        "2026-04~06 분기 영업이익은 RMB15,161M 으로 흑자다. [EV-alibaba-041]",
+        "2026-08-23 발표한 $10.2B 증자(710M주, 할인 8.4%, 희석 3.70%)는 현금 기준일 뒤의 일이라 완충에 들어 있지 않다. 조달은 소진을 메울 뿐 줄이지는 않는다. [EV-alibaba-030, EV-alibaba-054]"
+      ],
+      "evidence_down_after": [
+        "2026-04~06 분기 영업이익은 전년 같은 분기 RMB34,988M 보다 57% 적고, 이 분기에 영업권 손상 RMB4,458M 과 EU DSA 과징금 충당이 반영됐다. [EV-alibaba-052, EV-alibaba-053]",
+        "최근 1년 FCF 가 RMB−76,579M(영업현금흐름 RMB78,486M − 설비투자 RMB155,065M), 달러로 US$−11,102M 이다. 2026-04~06 분기 설비투자가 RMB67,678M 으로 전년 같은 분기보다 75% 늘어난 것이 소진을 키웠다. [EV-alibaba-042, EV-alibaba-043, EV-alibaba-044, EV-alibaba-045, EV-alibaba-046]",
+        "완충은 2026-06-30 현금및현금성자산 US$20,718M 에 2026-03-31 기준 확정 미인출 회전여신 US$3,330M 을 더한 US$24,048M 이고, 런웨이는 24,048 ÷ 11,102 = 2.17년이다. 6월 말 미인출 여신 값은 보도자료에 없다. [EV-alibaba-047, EV-alibaba-048, EV-alibaba-046]",
+        "게이트 4(미래 지출이 덮이는가)의 분모인 미개시 확정 약정은 2026-03-31 기준 RMB254,198M(US$36,851M, 자본약정과 기타약정의 합)이지만, 분자인 계약 수입은 공시되지 않았다. 20-F 가 1년 이하 계약과 청구권 기준 계약의 잔여 수행의무를 공시하지 않는 실무적 간편법을 선언했고 문서 전문에서 잔여 수행의무 금액이 나오지 않는다. [EV-alibaba-049, EV-alibaba-050, EV-alibaba-051, EV-alibaba-046]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "alibaba.F1",
+      "column": "up",
+      "line": "타오바오와 알리페이는 중국 안에서 10억 명 규모가 쓰는 양면 마켓플레이스 네트워크이고, 소비자 채널에서 강한 락인을 만든다.",
+      "searched": "20-F(FY2026) 전문(사용자 수 공시 없음, GMV 기준 세계 최대 소매 커머스라는 문장만 있음), 2026-06 분기 실적 보도자료, Ant Group·Alipay 웹사이트(본문 미노출), Wikipedia(2020-06 기준 13억 명만 있음)",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "alibaba.F1",
+      "column": "down",
+      "line": "이 락인은 중국 안에 한정돼 글로벌 소비자 접점이 없고, PDD 와 더우인에 점유율을 잠식당하는 중이며, 알리페이는 앤트그룹으로 분리돼 있다.",
+      "searched": "20-F 경쟁 위험 요인(PDD·더우인 점유율 수치 없음), 2026-06 분기 실적 보도자료(AliExpress 등 해외 커머스 사업이 있음), 웹 검색(점유율 1차 집계 미발견)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F2",
+      "column": "up",
+      "line": "근거는 연구개발과 패러다임 적응 속도가 최상위라는 판단, 그리고 Arena WebDev 3위·Vision 2위 순위다. Arena 는 사용자 투표형 순위라 참고로만 쓴다.",
+      "searched": "Arena 리더보드 변경 기록(순위 없음), OfficeChai 2026-08-03(Frontend Code Arena 4위), Arena·Qwen 공식 X 게시물 검색 결과(Qwen3.8-Max-0902 WebDev 1위 데뷔), RuntimeWire 2026-09-14(9-11 WebDev 1~3위에 Qwen 없음)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F2",
+      "column": "down",
+      "line": "표준 선점 경로는 비어 있다.",
+      "searched": "판정 문장(경로 부재)이라 받칠 원문이 따로 없다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "column": "up",
+      "line": "모방 불가능성을 부분으로 본 것은 보완재를 커모디티화하는 오픈웨이트 배포가 진짜 전략이라는 판단 때문이다.",
+      "searched": "판단 이유를 적은 판정 문장이라 받칠 원문이 따로 없다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "column": "down",
+      "line": "오픈웨이트에는 앱 장터 같은 회수 장치가 없다. Qwen 을 받아 자기 GPU 에 돌리면 알리바바는 대가를 받지 못하고, 실제로 SiliconFlow·Novita·AWS Bedrock 이 호스팅 매출을 가져간다.",
+      "searched": "OpenRouter Qwen 페이지(Novita 엔드포인트가 보이나 발행일 없는 실시간 페이지), SiliconFlow 모델 페이지(발행일 없음), 웹 검색",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "column": "down",
+      "line": "Anthropic 은 여전히 $6.36/M 을 받고 OpenRouter 매출의 46% 를 가져가며, OpenRouter 는 전체 시장이 아니다.",
+      "searched": "BigGo Finance 2026-06-02(토큰 12%·매출 46% 만 적음), OpenRouter 'State of AI' 보고서(arXiv 2601.10088), OfficeChai·RuntimeWire 2026-09-15 지출 점유율 기사, 웹 검색",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F4",
+      "column": "up",
+      "line": "3년간 RMB3,800억을 쓰는 AI 인프라 계획 가운데 RMB1,900억을 이미 집행했고, 브라질·프랑스·네덜란드에 데이터센터를 두고 있다.",
+      "searched": "The Stack 2026-06-18(프랑스 개설, 네덜란드는 다음 차례), HostingJournalist 2026-09-06(브라질 개설), 웹 검색(네덜란드 개설 보도 미발견)",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F7",
+      "column": "up",
+      "line": "알리바바 매출은 커머스와 클라우드 고객에게서 나오고, 고객이 투자 유치나 차입으로 마련한 돈으로 대금을 내는 구조는 근거에 없다.",
+      "searched": "부재를 확인한 판정 문장이라 받칠 원문이 따로 없다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F7",
+      "column": "up",
+      "line": "알리바바가 고객에게 투자하고 그 돈이 알리바바 매출로 돌아오는 순환 구조도 확인되지 않는다.",
+      "searched": "부재를 확인한 판정 문장이라 받칠 원문이 따로 없다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alibaba.F7",
+      "both_empty": true
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "alibaba.F1",
+      "before": "이 락인은 중국 안에 한정돼 글로벌 소비자 접점이 없고, PDD 와 더우인에 점유율을 잠식당하는 중이며, 알리페이는 앤트그룹으로 분리돼 있다.",
+      "after": "알리페이는 앤트그룹으로 분리돼 있다. [EV-alibaba-008]",
+      "why": "20-F 용어 정의가 Alipay 를 Ant Group 의 완전자회사로 적는 것만 원문으로 확인했다. 같은 줄의 앞 두 사실은 확인하지 못해 판정 칸으로 옮겼다.",
+      "evidence_id": "EV-alibaba-008"
+    },
+    {
+      "judgment_id": "alibaba.F2",
+      "before": "근거는 연구개발과 패러다임 적응 속도가 최상위라는 판단, 그리고 Arena WebDev 3위·Vision 2위 순위다. Arena 는 사용자 투표형 순위라 참고로만 쓴다.",
+      "after": "근거는 연구개발과 패러다임 적응 속도가 최상위라는 판단, 그리고 Arena Vision 2위 순위다. Arena 는 사용자 투표형 순위라 참고로만 쓴다. [EV-alibaba-009]",
+      "why": "OfficeChai 2026-08-03 은 Qwen3.8-Max 의 Arena Vision 2위(1,305)를 적지만 WebDev 3위를 받치는 원문은 없다. 찾은 원문은 시점마다 Frontend Code Arena 4위(2026-08-03), WebDev 1위 데뷔(2026-09 초 Qwen3.8-Max-0902), 9-11 판 상위 3위 밖으로 갈린다.",
+      "evidence_id": "EV-alibaba-009"
+    },
+    {
+      "judgment_id": "alibaba.F2",
+      "before": "Anthropic 이 가짜 계정 25,000개와 대화 2,880만 건으로 증류했다고 공개 주장했고, 알리바바의 기술적 반박은 없다. 주장 단계라 경로 판정에서 빼지 않는다.",
+      "after": "Anthropic 이 2026년 5~7월 1억 5,100만 건이 넘는 교환과 3,500개가 넘는 가짜 계정으로 증류했다고 공개 주장했고, 알리바바의 기술적 반박은 없다. 주장 단계라 경로 판정에서 빼지 않는다. [EV-alibaba-011, EV-alibaba-012]",
+      "why": "Anthropic 2026-09 위협 보고서(GTG 16005)는 알리바바 증류를 2026년 5~7월 1억 5,100만 건 이상의 교환, 하루 최대 약 300만 건, 3,500개가 넘는 가짜 계정으로 적는다. 가짜 계정 25,000개·대화 2,880만 건은 원문에 없다.",
+      "evidence_id": "EV-alibaba-011"
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "before": "오픈웨이트에는 앱 장터 같은 회수 장치가 없다. Qwen 을 받아 자기 GPU 에 돌리면 알리바바는 대가를 받지 못하고, 실제로 SiliconFlow·Novita·AWS Bedrock 이 호스팅 매출을 가져간다.",
+      "after": "오픈웨이트에는 앱 장터 같은 회수 장치가 없다. Qwen 을 받아 자기 GPU 에 돌리면 알리바바는 대가를 받지 못하고, 실제로 AWS Bedrock 이 호스팅 매출을 가져간다. [EV-alibaba-024]",
+      "why": "AWS 블로그(2025-09-18)로 Bedrock 의 Qwen3 오픈웨이트 모델 제공은 확인했으나, SiliconFlow·Novita 는 기준일 이전 발행일이 있는 원문을 찾지 못했다.",
+      "evidence_id": "EV-alibaba-024"
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "before": "Anthropic 은 여전히 $6.36/M 을 받고 OpenRouter 매출의 46% 를 가져가며, OpenRouter 는 전체 시장이 아니다.",
+      "after": "Anthropic 은 여전히 OpenRouter 매출의 46% 를 가져가며, OpenRouter 는 전체 시장이 아니다. [EV-alibaba-025]",
+      "why": "BigGo Finance 2026-06-02 는 Anthropic 이 OpenRouter 토큰의 12% 로 매출의 46% 를 가져간다고 적는다. 평균 단가 $6.36/M 은 원문에서 찾지 못했다.",
+      "evidence_id": "EV-alibaba-025"
+    },
+    {
+      "judgment_id": "alibaba.F4",
+      "before": "3년간 RMB3,800억을 쓰는 AI 인프라 계획 가운데 RMB1,900억을 이미 집행했고, 브라질·프랑스·네덜란드에 데이터센터를 두고 있다.",
+      "after": "3년간 RMB3,800억을 쓰는 AI 인프라 계획 가운데 RMB1,900억을 이미 집행했고, 브라질·프랑스에 데이터센터를 두고 있다. [EV-alibaba-026, EV-alibaba-028, EV-alibaba-027]",
+      "why": "프랑스(2026-06-17 파리 가용영역)와 브라질(2026-09 상파울루 리전) 개설은 원문으로 확인했으나 네덜란드 개설은 확인하지 못했다. The Stack 2026-06-18 은 네덜란드를 다음 차례로 적는다.",
+      "evidence_id": "EV-alibaba-026"
+    },
+    {
+      "judgment_id": "alibaba.F5",
+      "before": "Apple 이 중국 아이폰에 Qwen 을 탑재했고, 규모는 공개되지 않았으나 중국 아이폰 설치기반 전체에 Qwen 이 들어간다.",
+      "after": "Apple 이 중국 사용자용 Apple Intelligence 에 Qwen 을 넣기로 했고 2026-07 중국 규제 당국 승인을 받았으나, 알리바바는 시점을 밝히지 않았고 규모도 공개되지 않았다. [EV-alibaba-032]",
+      "why": "TechCrunch 2026-07-16 은 중국 사이버공간관리국이 Qwen 통합을 조건으로 Apple 의 AI 서비스를 승인했고 알리바바가 시점을 밝히지 않았다고 적는다. 중국 아이폰에 이미 탑재됐다는 사실과 설치기반 전체에 들어간다는 사실은 원문에 없다.",
+      "evidence_id": "EV-alibaba-032"
+    },
+    {
+      "judgment_id": "alibaba.F5",
+      "before": "Anthropic 이 가짜 계정 25,000개와 대화 2,880만 건을 이용한 증류를 공개적으로 주장했고, 알리바바의 기술적 반박은 없다.",
+      "after": "Anthropic 이 2026년 5~7월 3,500개가 넘는 가짜 계정과 1억 5,100만 건이 넘는 교환을 이용한 증류를 공개적으로 주장했고, 알리바바의 기술적 반박은 없다. [EV-alibaba-011, EV-alibaba-012]",
+      "why": "Anthropic 2026-09 위협 보고서(GTG 16005)는 알리바바 증류를 2026년 5~7월 1억 5,100만 건 이상의 교환, 3,500개가 넘는 가짜 계정으로 적는다. 가짜 계정 25,000개·대화 2,880만 건은 원문에 없다.",
+      "evidence_id": "EV-alibaba-011"
+    }
+  ]
+}

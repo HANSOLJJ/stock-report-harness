@@ -1,0 +1,1667 @@
+{
+  "company_id": "nvidia",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-nvidia-000104581026000052",
+      "title": "NVIDIA 10-Q (2026-04-26)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+      "kind": "filing",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-SEC-nvidia-000104581026000021",
+      "title": "NVIDIA 10-K (FY2026, 2026-01-25)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+      "kind": "filing",
+      "published_at_utc": "2026-02-25T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-SEC-nvidia-000104581022000147",
+      "title": "NVIDIA 10-Q (2022-07-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581022000147/nvda-20220731.htm",
+      "kind": "filing",
+      "published_at_utc": "2022-08-31T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-SEC-nvidia-000176962825000047",
+      "title": "CoreWeave 8-K (2025-09-09)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000047/crwv-20250909.htm",
+      "kind": "filing",
+      "published_at_utc": "2025-09-15T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-001",
+      "title": "NVIDIA to Acquire Hugging Face",
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/nvidia-to-acquire-hugging-face/",
+      "kind": "news",
+      "published_at_utc": "2026-09-03T11:56:49Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-002",
+      "title": "Nvidia's $12.9B Hugging Face deal has an open-source problem",
+      "publisher": "The New Stack",
+      "url": "https://thenewstack.io/nvidia-hugging-face-acquisition-neutrality/",
+      "kind": "news",
+      "published_at_utc": "2026-08-27T15:35:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-003",
+      "title": "NVIDIA Kicks Off the Next Generation of AI With Rubin — Six New Chips, One Incredible AI Supercomputer",
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/rubin-platform-ai-supercomputer",
+      "kind": "news",
+      "published_at_utc": "2026-01-05T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-004",
+      "title": "Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer",
+      "publisher": "NVIDIA Technical Blog",
+      "url": "https://developer.nvidia.com/blog/inside-the-nvidia-rubin-platform-six-new-chips-one-ai-supercomputer/",
+      "kind": "news",
+      "published_at_utc": "2026-01-05T22:20:12Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-005",
+      "title": "NVIDIA Corp. (NVDA) Q2 2027 Earnings Call Corrected Transcript (2026-08-26)",
+      "publisher": "NVIDIA IR (FactSet CallStreet)",
+      "url": "https://s201.q4cdn.com/141608511/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf",
+      "kind": "news",
+      "published_at_utc": "2026-08-26T21:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-006",
+      "title": "Google and Meta reportedly strike new, multibillion-dollar AI chip deal",
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/02/26/google-meta-reportedly-strike-new-multibillion-dollar-ai-chip-deal/",
+      "kind": "news",
+      "published_at_utc": "2026-02-27T02:08:48Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-007",
+      "title": "Custom AI Chips Outpace Nvidia GPU Growth in 2026: ASIC Shipments Set to Triple GPU Rate",
+      "publisher": "Tech Times",
+      "url": "https://www.techtimes.com/articles/317225/20260526/custom-ai-chips-outpace-nvidia-gpu-growth-2026-asic-shipments-set-triple-gpu-rate.htm",
+      "kind": "news",
+      "published_at_utc": "2026-05-26T15:52:11Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-008",
+      "title": "NVIDIA GTC 2026: Live Updates on What's Next in AI",
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/gtc-2026-news/",
+      "kind": "news",
+      "published_at_utc": "2026-03-16T18:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-009",
+      "title": "NVIDIA GTC Taipei at COMPUTEX: Live Updates on What's Next in AI",
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/nvidia-gtc-taipei-computex-2026-news/",
+      "kind": "news",
+      "published_at_utc": "2026-06-04T13:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-010",
+      "title": "NVIDIA Launches Nemotron Coalition of Leading Global AI Labs to Advance Open Frontier Models",
+      "publisher": "NVIDIA Newsroom",
+      "url": "https://nvidianews.nvidia.com/news/nvidia-launches-nemotron-coalition-of-leading-global-ai-labs-to-advance-open-frontier-models",
+      "kind": "news",
+      "published_at_utc": "2026-03-16T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-011",
+      "title": "NAVER Cloud joins the NVIDIA Nemotron Coalition: Collaborating toward sovereign AI",
+      "publisher": "NAVER Cloud CLOVA Tech Blog",
+      "url": "https://clova.ai/en/tech-blog/naver-cloud-joins-the-nvidia-nemotron-coalition-collaborating-toward-sovereign-ai",
+      "kind": "news",
+      "published_at_utc": "2026-06-10T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-012",
+      "title": "d-Matrix Adopts NVIDIA NVLink Fusion for Rack-Scale XPU Deployment",
+      "publisher": "NVIDIA Blog",
+      "url": "https://blogs.nvidia.com/blog/d-matrix-nvlink-fusion/",
+      "kind": "news",
+      "published_at_utc": "2026-09-10T13:00:21Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-013",
+      "title": "OpenAI, Google, and Anthropic absent from Nvidia-led Open Secure AI Alliance",
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/openai-google-and-anthropic-absent-from-nvidia-led-open-secure-ai-alliance-30-companies-join-security-alliance-after-openai-agent-breach",
+      "kind": "news",
+      "published_at_utc": "2026-07-27T19:03:47Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-014",
+      "title": "Nvidia embraces role of AI investor, pushing past $40 billion in equity bets this year",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/05/09/nvidia-embraces-ai-investor-topping-40-billion-in-equity-bets-2026.html",
+      "kind": "news",
+      "published_at_utc": "2026-05-09T12:00:01Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-015",
+      "title": "[Taiwan Chip News] Nvidia Surpasses Apple to Become TSMC's Largest Customer Amid AI Boom",
+      "publisher": "The Asia Business Daily",
+      "url": "https://www.asiae.co.kr/en/article/2026030610061501773",
+      "kind": "news",
+      "published_at_utc": "2026-03-08T23:03:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "nvidia"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-nvidia-016",
+      "company_id": "nvidia",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000104581026000021",
+      "published_at_utc": "2026-02-25T00:00:00Z",
+      "title": "NVIDIA 10-K (FY2026, 2026-01-25)",
+      "excerpt": "Our AI technology leadership is reinforced by our large and expanding ecosystem. Our computing platforms are available from virtually every major server maker and CSP, as well as on our own AI supercomputers. There are over 7.5 million developers worldwide using CUDA and our other software tools to help deploy our technology in our target markets.",
+      "locator": "10-K (FY2026) Part I Item 1 Business — Business Strategies, 'Extending our technology and platform leadership in AI' 항목 셋째 문단",
+      "relevance": "CUDA 를 쓰는 개발자가 750만 명을 넘는다는 회사 공시로, CUDA 개발자 생태계가 실재함을 보여 준다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-017",
+      "company_id": "nvidia",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000078",
+      "published_at_utc": "2026-09-03T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-09-02) Item 8.01",
+      "excerpt": "The transaction is expected to close in the first half of 2027, subject to the satisfaction or waiver of customary closing conditions, including receipt of required regulatory approvals.",
+      "locator": "8-K (2026-09-02) Item 8.01 Other Events 셋째 문단",
+      "relevance": "Hugging Face 인수 종결이 2027 상반기 예정이고 규제 승인 조건부라 기준일 현재 미실현임을 보여 준다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-018",
+      "company_id": "nvidia",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-001",
+      "published_at_utc": "2026-09-03T11:56:49Z",
+      "title": "NVIDIA to Acquire Hugging Face",
+      "excerpt": "More than 18 million developers, researchers and creators use Hugging Face to share more than 3 million models, 500,000 datasets and 1 million applications. More than 200,000 companies use the platform to discover, evaluate, customize and deploy AI.",
+      "locator": "블로그 본문 2번째 문단",
+      "relevance": "Hugging Face 의 개발자·모델·데이터셋 규모를 NVIDIA 가 직접 밝힌 문장이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-019",
+      "company_id": "nvidia",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "We refer to customers who purchase products directly from NVIDIA as direct customers, such as AIBs, distributors, ODMs, OEMs, CSPs, AI model makers, and system integrators. Certain direct customers may use either internal resources or third-party system integrators to complete their build. We refer to indirect customers as those who purchase products through our direct customers; indirect customers include CSPs, AI clouds, AI model makers, enterprises, and public sector entities.",
+      "locator": "10-Q (2026-07-26) Part I Item 1 Note 13 Segment Information — Concentration of Revenue 첫 문단",
+      "relevance": "NVIDIA 의 직접·간접 고객이 모두 기업·기관이라 제품이 B2B 부품으로 팔림을 보여 준다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-020",
+      "company_id": "nvidia",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-002",
+      "published_at_utc": "2026-08-27T15:35:00Z",
+      "title": "Nvidia's $12.9B Hugging Face deal has an open-source problem",
+      "excerpt": "The bigger question is what happens over time. Nvidia could provide earlier support for new models on its own hardware or make deployment easier. At the same time, AMD, Intel, and AWS may have to reconsider how much engineering work they want to contribute to integrations maintained within a competitor-owned platform. Some of that work could eventually move elsewhere.",
+      "locator": "기사 'Deployment defaults favor Nvidia' 절 셋째 문단",
+      "relevance": "NVIDIA 소유가 되면 경쟁 칩 회사들이 Hugging Face 기여를 줄이고 떠날 수 있다는 중립성 위험을 다룬 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-021",
+      "company_id": "nvidia",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-003",
+      "published_at_utc": "2026-01-05T00:00:00Z",
+      "title": "NVIDIA Kicks Off the Next Generation of AI With Rubin — Six New Chips, One Incredible AI Supercomputer",
+      "excerpt": "The Rubin platform harnesses extreme codesign across hardware and software to deliver up to 10x reduction in inference token cost and 4x reduction in number of GPUs to train MoE models, compared with the NVIDIA Blackwell platform.",
+      "locator": "보도자료 첫머리 요약 첫 항목",
+      "relevance": "Vera Rubin 이 Blackwell 대비 토큰당 비용을 최대 10분의 1 로 줄인다는 벤더 주장이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-022",
+      "company_id": "nvidia",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-004",
+      "published_at_utc": "2026-01-05T22:20:12Z",
+      "title": "Inside the NVIDIA Rubin Platform: Six New Chips, One AI Supercomputer",
+      "excerpt": "Feature | Blackwell | Rubin; Transistors (full chip) | 208B | 336B; Compute dies | 2 | 2; NVFP4 inference (PFLOPS) | 10 | 50*; NVFP4 training (PFLOPS) | 10 | 35**",
+      "locator": "기술 블로그 Rubin GPU 절, Table 2. NVIDIA GPU compute capability comparison",
+      "relevance": "Rubin GPU 의 트랜지스터 3,360억 개와 NVFP4 추론 성능 50 PFLOPS(Blackwell 10 PFLOPS 의 5배)를 NVIDIA 가 밝힌 표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-023",
+      "company_id": "nvidia",
+      "factors": [
+        "F2"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Our next-generation Data Center architecture, Vera Rubin, began production shipments in the third quarter of fiscal year 2027. We will be shipping both Blackwell and Rubin systems in the future and are currently experiencing certain supply constraints.",
+      "locator": "10-Q (2026-07-26) Part I Item 2 MD&A — Recent Developments, Future Objectives and Challenges 둘째 문단",
+      "relevance": "NVIDIA 가 자기 공시에서 Vera Rubin 의 생산 출하가 2027 회계연도 3분기에 시작됐다고 밝힌 문장이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-024",
+      "company_id": "nvidia",
+      "factors": [
+        "F3",
+        "F5",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Three Months Ended Jul 26, 2026 | Jul 27, 2025 | Six Months Ended Jul 26, 2026 | Jul 27, 2025 (In millions); Revenue by Market Platform; Data Center $ 89,023 | $ 41,096 | $ 164,269 | $ 80,208; Hyperscale 48,710 | 24,168 | 91,761 | 46,428; AI Clouds, Industrial, & Enterprise 40,313 | 16,928 | 72,508 | 33,780; Edge Computing 7,198 | 5,647 | 13,568 | 10,597; Total revenue $ 96,221 | $ 46,743 | $ 177,837 | $ 90,805",
+      "locator": "10-Q (2026-07-26) Part I Item 1 Note 13 Segment Information — Revenue by Market Platform 표",
+      "relevance": "2026-07-26 종료 분기 매출 $96.2B 가운데 데이터센터 하드웨어가 $89.0B, 하이퍼스케일 고객이 $48.7B(약 절반)임을 보여 준다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-025",
+      "company_id": "nvidia",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000104581026000052",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-04-26)",
+      "excerpt": "Data Center revenue was $75.2 billion, up 92% from a year ago and up 21% sequentially, driven by the ramp of our Blackwell 300 products and demand for our InfiniBand, Spectrum-X Ethernet, and NVLink solutions.",
+      "locator": "10-Q (2026-04-26) Part I Item 2 MD&A — First Quarter of Fiscal Year 2027 Summary 표 아래 둘째 문단 첫 문장",
+      "relevance": "2026-04-26 종료 분기 데이터센터 매출 $75.2B(전년 대비 +92%, 직전 분기 대비 +21%)를 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-026",
+      "company_id": "nvidia",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000104581026000052",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-04-26)",
+      "excerpt": "Hyperscaler revenue increased sequentially and remained at approximately 50% of Data Center revenue, while the remaining 50% came from a continued diversification of customers, including AI Clouds, industrial, enterprise, and sovereign customers. No shipments of Data Center Hopper products to China occurred during the quarter, compared with $4.6 billion in the first quarter of fiscal year 2026.",
+      "locator": "10-Q (2026-04-26) Part I Item 2 MD&A — First Quarter of Fiscal Year 2027 Summary 표 아래 둘째 문단 둘째·셋째 문장",
+      "relevance": "전년 1분기 데이터센터 매출에 중국향 Hopper 출하 $4.6B 가 들어 있었다는 공시로, 1분기 전년 대비 성장률이 눌린 이유다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-027",
+      "company_id": "nvidia",
+      "factors": [
+        "F3",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Revenue was $96.2 billion, up 106% from a year ago and up 18% sequentially. Data Center revenue was $89.0 billion, up 117% from a year ago and up 18% sequentially, driven by the ramp of our Blackwell Ultra infrastructure.",
+      "locator": "10-Q (2026-07-26) Part I Item 2 MD&A — Second Quarter of Fiscal Year 2027 Summary 표 아래 첫째·둘째 문단 첫 문장",
+      "relevance": "2026-07-26 종료 분기 매출 $96.2B(+106%), 데이터센터 매출 $89.0B(전년 대비 +117%, 직전 분기 대비 +18%)를 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-028",
+      "company_id": "nvidia",
+      "factors": [
+        "F3",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-006",
+      "published_at_utc": "2026-02-27T02:08:48Z",
+      "title": "Google and Meta reportedly strike new, multibillion-dollar AI chip deal",
+      "excerpt": "Meta Platforms Inc. has reportedly agreed to a multibillion-dollar deal to rent Google Cloud's custom artificial intelligence chips, according to a report in The Information today.",
+      "locator": "기사 1번째 문단",
+      "relevance": "Meta 가 Google 의 자체 AI 칩(TPU)을 수십억 달러 규모로 빌려 쓰기로 했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-029",
+      "company_id": "nvidia",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-006",
+      "published_at_utc": "2026-02-27T02:08:48Z",
+      "title": "Google and Meta reportedly strike new, multibillion-dollar AI chip deal",
+      "excerpt": "One of the first companies to adopt the new TPUs was Anthropic PBC, which touted the massive price-performance gains they provide, enabling it to serve massive Claude models at scale. Earlier, Google announced it had struck a deal with Anthropic worth “tens of billions of dollars” to give it access to 1 million TPUs through its cloud infrastructure platform.",
+      "locator": "기사 6번째 문단",
+      "relevance": "Google 이 Anthropic 에 TPU 100만 개 사용권을 수백억 달러 규모로 제공한다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-030",
+      "company_id": "nvidia",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-007",
+      "published_at_utc": "2026-05-26T15:52:11Z",
+      "title": "Custom AI Chips Outpace Nvidia GPU Growth in 2026: ASIC Shipments Set to Triple GPU Rate",
+      "excerpt": "Alchip Technologies Chairman and CEO Johnny Shen said Tuesday that he expects revenue growth from custom application-specific integrated circuits to outrun the broader GPU market — a forecast aligned with independent research from TrendForce showing that custom AI chip shipments from cloud providers are on track to grow 44.6% in 2026, against a 16.1% growth rate for merchant GPU shipments.",
+      "locator": "기사 1번째 문단 첫 문장",
+      "relevance": "TrendForce 가 2026년 클라우드 업체 커스텀 AI 칩 출하 +44.6%, 머천트 GPU 출하 +16.1% 를 전망했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-031",
+      "company_id": "nvidia",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-008",
+      "published_at_utc": "2026-03-16T18:00:00Z",
+      "title": "NVIDIA GTC 2026: Live Updates on What's Next in AI",
+      "excerpt": "In addition, NVIDIA is expanding its open model ecosystem with a new Nemotron Coalition, rallying partners around six frontier model families: NVIDIA Nemotron (language and reasoning), NVIDIA Cosmos (world and vision), NVIDIA Isaac GR00T (general‑purpose robotics), NVIDIA Alpaymayo (autonomous driving), NVIDIA BioNeMo (biology and chemistry) and NVIDIA Earth‑2 (weather and climate).",
+      "locator": "라이브 블로그 'NVIDIA NemoClaw for OpenClaw, Nemotron Coalition' 절 마지막 문단",
+      "relevance": "NVIDIA 가 언어·로보틱스·자율주행·생물·기후 등 여러 영역의 자체 모델 계열을 운영함을 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-032",
+      "company_id": "nvidia",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-009",
+      "published_at_utc": "2026-06-04T13:00:00Z",
+      "title": "NVIDIA GTC Taipei at COMPUTEX: Live Updates on What's Next in AI",
+      "excerpt": "NVIDIA Nemotron 3 Ultra Is Live, With Early Adopters Perplexity, Palantir and ServiceNow Powering Long-Running AI Agents NVIDIA today released Nemotron 3 Ultra, an open model built for long-running agents with contributions from the Nemotron Coalition.",
+      "locator": "라이브 블로그 'Thursday, June 4, 6:00 a.m. PT' 항목 제목과 첫 문단",
+      "relevance": "NVIDIA 가 2026-06-04 자체 모델 Nemotron 3 Ultra 를 공개했음을 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-033",
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-010",
+      "published_at_utc": "2026-03-16T00:00:00Z",
+      "title": "NVIDIA Launches Nemotron Coalition of Leading Global AI Labs to Advance Open Frontier Models",
+      "excerpt": "Leading innovators Black Forest Labs, Cursor, LangChain, Mistral AI, Perplexity, Reflection AI, Sarvam and Thinking Machines Lab are inaugural members, helping shape the next generation of AI systems.",
+      "locator": "보도자료 News Summary 2번째 항목",
+      "relevance": "2026-03-16 출범한 Nemotron 연합의 창립 참여사 명단이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-034",
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-011",
+      "published_at_utc": "2026-06-10T00:00:00Z",
+      "title": "NAVER Cloud joins the NVIDIA Nemotron Coalition: Collaborating toward sovereign AI",
+      "excerpt": "Now we’re taking another meaningful step forward: joining the Nemotron Coalition led by NVIDIA. In this post, we’ll look at what the Nemotron Coalition is and what joining it means for us.",
+      "locator": "블로그 도입부 둘째 문단",
+      "relevance": "NAVER Cloud 가 Nemotron 연합에 합류했다고 직접 밝힌 문장이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-035",
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-010",
+      "published_at_utc": "2026-03-16T00:00:00Z",
+      "title": "NVIDIA Launches Nemotron Coalition of Leading Global AI Labs to Advance Open Frontier Models",
+      "excerpt": "The first project stemming from the coalition will be a base model codeveloped by Mistral AI and NVIDIA, bringing together the AI expertise and technology of both companies. Coalition members will contribute data, evaluations and domain expertise to support the model’s post-training and continued development.",
+      "locator": "보도자료 본문 셋째 문단",
+      "relevance": "연합 첫 과제가 Mistral AI 와 NVIDIA 의 공동개발 모델이고 참여사가 데이터·평가를 기여한다는 문장으로, 공동개발을 주고받는 관계를 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-036",
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-012",
+      "published_at_utc": "2026-09-10T13:00:21Z",
+      "title": "d-Matrix Adopts NVIDIA NVLink Fusion for Rack-Scale XPU Deployment",
+      "excerpt": "Adopters include AWS, which is designing Trainium4 to integrate with NVLink Fusion, and d-Matrix, a custom inference accelerator provider.",
+      "locator": "블로그 'NVLink Fusion — Quick Answers' 절, 'Who are the NVLink Fusion partners?' 답 첫 문장",
+      "relevance": "하이퍼스케일러 AWS 가 자체 칩 Trainium4 를 NVLink Fusion 에 묶도록 설계하고 있음을 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-037",
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-012",
+      "published_at_utc": "2026-09-10T13:00:21Z",
+      "title": "d-Matrix Adopts NVIDIA NVLink Fusion for Rack-Scale XPU Deployment",
+      "excerpt": "d-Matrix also plans to integrate NVIDIA Vera CPUs, NVIDIA ConnectX-9 SuperNICs, NVIDIA BlueField-4 DPUs and NVIDIA Spectrum-X Ethernet networking. Together with NVLink and MGX, these technologies give d-Matrix a proven foundation to deploy specialized inference alongside NVIDIA systems within flexible, unified AI factories.",
+      "locator": "블로그 'NVLink Fusion Integrates d-Matrix XPUs Into AI Factories' 절 둘째 문단",
+      "relevance": "NVLink Fusion 을 쓰는 자체 XPU 가 Vera CPU·ConnectX·BlueField·Spectrum-X·MGX 랙과 함께 묶이는 구조를 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-038",
+      "company_id": "nvidia",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-007",
+      "published_at_utc": "2026-05-26T15:52:11Z",
+      "title": "Custom AI Chips Outpace Nvidia GPU Growth in 2026: ASIC Shipments Set to Triple GPU Rate",
+      "excerpt": "This is precisely why Google, Amazon, Microsoft, and Meta have each committed billions of dollars to in-house AI chip programs. Google's Ironwood TPU, Amazon's Trainium series, Microsoft's Maia 200, and Meta's MTIA accelerators are all custom application-specific chips that reduce their builders' dependence on Nvidia hardware and optimize for the specific model architectures and inference patterns each company runs at scale.",
+      "locator": "기사 'Why Hyperscalers Choose Custom Silicon Over Nvidia GPUs' 절 셋째 문단",
+      "relevance": "하이퍼스케일러 4곳(Google·Amazon·Microsoft·Meta)이 모두 자체 AI 칩을 개발한다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-039",
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-013",
+      "published_at_utc": "2026-07-27T19:03:47Z",
+      "title": "OpenAI, Google, and Anthropic absent from Nvidia-led Open Secure AI Alliance",
+      "excerpt": "Founding members include NVIDIA, Dell Technologies, Synopsys, Microsoft, IBM, Red Hat, CrowdStrike, Palo Alto Networks, Cloudflare, Hugging Face, Databricks, SpaceXAI, and The Linux Foundation. Conspicuously absent from the alliance are OpenAI, Google, and Anthropic, companies behind proprietary, \"closed\" AI models.",
+      "locator": "기사 본문 'According to the announcement' 문단 둘째·셋째 문장",
+      "relevance": "NVIDIA 가 주도한 Open Secure AI Alliance 에 OpenAI·Google·Anthropic 이 빠졌다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-040",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "In addition, access to capital can be particularly constrained for less-capitalized companies, which may face difficulties securing financing for large-scale infrastructure projects. We believe AI clouds and AI model makers have significant demand for training and inference compute and currently lack the ability to secure long-term infrastructure contracts and investment-grade financing capacity to secure the AI infrastructure necessary to grow.",
+      "locator": "10-Q (2026-07-26) Part I Item 2 MD&A — Recent Developments, Future Objectives and Challenges 셋째 문단",
+      "relevance": "AI 클라우드·모델 회사 고객이 자체 신용으로는 인프라 자금을 대지 못한다는 NVIDIA 의 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-041",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-005",
+      "published_at_utc": "2026-08-26T21:00:00Z",
+      "title": "NVIDIA Corp. (NVDA) Q2 2027 Earnings Call Corrected Transcript (2026-08-26)",
+      "excerpt": "Our AI-native start-up ecosystem, developed and running primarily on the NVIDIA Compute platform, is scaling at a rapid pace. Global VC funding in AI, roughly 70% of which is spent on compute, exceeded $400 billion in the first half of 2026, surpassing the $265 billion raised in all of 2025.",
+      "locator": "실적 콜 녹취록 CFO Colette Kress 발표 중 ACIE 성장 문단(5쪽)",
+      "relevance": "AI 스타트업이 투자받은 돈의 약 70% 를 컴퓨트에 쓴다는 CFO 발언으로, 고객이 투자금으로 GPU 를 사는 구조를 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-042",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-014",
+      "published_at_utc": "2026-05-09T12:00:01Z",
+      "title": "Nvidia embraces role of AI investor, pushing past $40 billion in equity bets this year",
+      "excerpt": "In 2026, the pace of deals has kicked into overdrive, with Nvidia already topping $40 billion in commitments and expanding its portfolio to include more public equities. This week alone Nvidia forged an agreement with data center operator IREN, giving it the right to invest up to $2.1 billion in the company, a day after Nvidia struck a pact with Corning, allowing it to invest up to $3.2 billion in the 175-year-old glass maker.",
+      "locator": "기사 본문 2·3번째 문단",
+      "relevance": "NVIDIA 의 2026년 지분 투자 약정이 $40B 를 넘었고 IREN $2.1B·Corning $3.2B 가 들어 있다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-043",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-014",
+      "published_at_utc": "2026-05-09T12:00:01Z",
+      "title": "Nvidia embraces role of AI investor, pushing past $40 billion in equity bets this year",
+      "excerpt": "Its single largest bet was a $30 billion check for ChatGPT creator and longtime partner OpenAI. Nvidia also participated in massive funding rounds for Anthropic and Elon Musk's xAI, shortly before it merged with SpaceX in February.",
+      "locator": "기사 ''We don't pick winners'' 절 첫 문단",
+      "relevance": "OpenAI $30B 와 Anthropic·xAI 펀딩 라운드 참여를 다룬 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-044",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-014",
+      "published_at_utc": "2026-05-09T12:00:01Z",
+      "title": "Nvidia embraces role of AI investor, pushing past $40 billion in equity bets this year",
+      "excerpt": "In March, Nvidia invested $2 billion in Marvell Technology as part of a strategic partnership to work on silicon photonics technology. That month it put the same amount in Lumentum and Coherent, two companies developing photonics technologies.",
+      "locator": "기사 본문 Marvell·Lumentum·Coherent 문단(Corning 공장 문단 다음)",
+      "relevance": "공급망 기업 Marvell·Lumentum·Coherent 에 각 $2B 를 넣었다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-045",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-014",
+      "published_at_utc": "2026-05-09T12:00:01Z",
+      "title": "Nvidia embraces role of AI investor, pushing past $40 billion in equity bets this year",
+      "excerpt": "Then there are the so-called neoclouds. In January, Nvidia invested $2 billion in CoreWeave in a deal that involves building out data centers with Nvidia's technology. It also invested $2 billion in Nebius Group, an AI cloud company, as part of an agreement on AI infrastructure deployment, fleet management, inference and AI factory design.",
+      "locator": "기사 본문 네오클라우드 문단(Marvell 문단 다음)",
+      "relevance": "네오클라우드 CoreWeave·Nebius 에 각 $2B 를 넣었다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-046",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Items 1.01, 2.03, 7.01",
+      "excerpt": "On August 17, 2026, NVIDIA Corporation (“NVIDIA”) announced a multi-year partnership with SB Energy Corp. (collectively with its affiliates, “SB Energy”) to advance the development of the PORTS Technology Campus, a large-scale AI data center campus in Pike County, Ohio (the “Portsmouth Site”). Through the partnership and the credit support described below, NVIDIA has secured land, power, and shell capacity at the Portsmouth Site to host NVIDIA AI compute infrastructure. An affiliate of OpenAI Group PBC (such affiliate, “OpenAI”) will be the tenant.",
+      "locator": "8-K (2026-08-17) Item 1.01 첫 문단",
+      "relevance": "오하이오 PORTS 캠퍼스의 토지·전력·셸을 확보하는 신용 보강이고 세입자가 OpenAI 계열사임을 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-047",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Items 1.01, 2.03, 7.01",
+      "excerpt": "On August 17, 2026, NVIDIA entered into multiple residual value guaranties (collectively, the “Agreements”) with SB Energy (the “Lessor”) relating to leases for approximately 4.25 gigawatts of IT load in the aggregate at the Portsmouth Site.",
+      "locator": "8-K (2026-08-17) Item 1.01 'Residual Value Guaranties' 첫 문단 첫 문장",
+      "relevance": "SB Energy 보증이 PORTS 캠퍼스 4.25GW 임대에 걸린다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-048",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Items 1.01, 2.03, 7.01",
+      "excerpt": "NVIDIA’s aggregate payment obligation is cumulatively capped at $105 billion for its initial commitment under the Agreements.",
+      "locator": "8-K (2026-08-17) Item 1.01 'Residual Value Guaranties' 둘째 문단 첫 문장",
+      "relevance": "SB Energy 보증의 지급 의무 상한이 $105B 라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-049",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000176962825000047",
+      "published_at_utc": "2025-09-15T00:00:00Z",
+      "title": "CoreWeave 8-K (2025-09-09)",
+      "excerpt": "On September 9, 2025, CoreWeave, Inc. (the “Company”) and NVIDIA Corporation (“NVIDIA”) entered into a new order form (the “Order Form”) under the existing Master Services Agreement (“MSA”) dated as of April 10, 2023, which has an initial value of $6.3 billion, that establishes an arrangement with respect to the sale by the Company of reserved cloud computing capacity to its customers and provides NVIDIA access to any residual unsold cloud computing capacity.",
+      "locator": "CoreWeave 8-K (2025-09-09) Item 1.01 첫 문단 첫 문장",
+      "relevance": "CoreWeave 미판매 캐파 매입 주문서의 초기 가치가 $6.3B 임을 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-050",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000176962825000047",
+      "published_at_utc": "2025-09-15T00:00:00Z",
+      "title": "CoreWeave 8-K (2025-09-09)",
+      "excerpt": "Under the terms of agreement, in instances where the Company’s datacenter capacity is not fully utilized by its own customers, NVIDIA is obligated to purchase the residual unsold capacity through April 13, 2032, subject to any termination described below and satisfaction of delivery and availability of service requirements.",
+      "locator": "CoreWeave 8-K (2025-09-09) Item 1.01 첫 문단 둘째 문장",
+      "relevance": "NVIDIA 가 CoreWeave 의 미판매 캐파를 2032-04-13 까지 사야 할 의무를 진다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-051",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "In August 2026, we entered into memorandums of understanding with several large capital providers to establish independent financing platforms designed to mobilize more than $500 billion of third-party capital over time to support the deployment of AI infrastructure.",
+      "locator": "10-Q (2026-07-26) Part I Item 2 MD&A — Recent Developments, Future Objectives and Challenges, AI 인프라 금융 플랫폼 문단 첫 문장",
+      "relevance": "대형 자본 공급자들과 $500B 넘는 AI 인프라 금융 플랫폼을 만들기로 양해각서를 맺었다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-052",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-005",
+      "published_at_utc": "2026-08-26T21:00:00Z",
+      "title": "NVIDIA Corp. (NVDA) Q2 2027 Earnings Call Corrected Transcript (2026-08-26)",
+      "excerpt": "Our ability to extreme codesign across GPU, CPU, NVLink scale-up networking, scale-out networking, systems, algorithms, and software enables us to deliver X-factor performance gain every generation. Vera Rubin exemplifies this, delivering 30x higher throughput per megawatt and 35x lower token cost relative to Grace Blackwell Ultra.",
+      "locator": "실적 콜 녹취록 CFO Colette Kress 발표 중 Vera Rubin 문단(4쪽)",
+      "relevance": "NVIDIA 스스로 Vera Rubin 이 Grace Blackwell Ultra 보다 토큰 비용을 35분의 1 로 낮춘다고 밝혀, 기존 세대 담보 가치를 깎는 요인임을 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-053",
+      "company_id": "nvidia",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-005",
+      "published_at_utc": "2026-08-26T21:00:00Z",
+      "title": "NVIDIA Corp. (NVDA) Q2 2027 Earnings Call Corrected Transcript (2026-08-26)",
+      "excerpt": "Thanks for taking my question. And thanks for providing all the transparency and all the commitments and guarantees that you have for a number of years. When I just add up everything that's in the CFO commentary, I get to a number of about $500 billion or so, obviously, over the next several years.",
+      "locator": "실적 콜 녹취록 Q&A 넷째 질문(Vivek Arya, BofA Securities)",
+      "relevance": "생태계 커밋 약 $500B 는 애널리스트가 CFO 코멘터리의 약정·보증을 더한 수치임을 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-054",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Future commitments by fiscal year as of July 26, 2026: Remainder of 2027 | 2028 | 2029 | 2030 | 2031 | 2032 and thereafter | Total (In billions); Supply and capacity $ 92 | $ 87 | $ 88 | $ 6 | $ 5 | $ 1 | $ 279; Cloud service agreements 3 | 8 | 7 | 6 | 4 | 1 | 29; Data center leases not commenced — | 1 | 1 | 2 | 1 | 20 | 25; Equity investments 18 | 3 | 2 | 2 | — | — | 25; Capital expenditures 7 | 1 | — | — | — | — | 8; Total $ 120 | $ 100 | $ 98 | $ 16 | $ 10 | $ 22 | $ 366",
+      "locator": "10-Q (2026-07-26) Part I Item 1 Note 10 Commitments and Contingencies — Commitments 표",
+      "relevance": "2026-07-26 현재 약정 $366B 의 내역(공급·캐파 $279B, 지분 투자 $25B 등)을 밝힌 공시 표다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-055",
+      "company_id": "nvidia",
+      "factors": [
+        "F7",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000104581026000021",
+      "published_at_utc": "2026-02-25T00:00:00Z",
+      "title": "NVIDIA 10-K (FY2026, 2026-01-25)",
+      "excerpt": "Year Ended Jan 25, 2026 | Jan 26, 2025 | Jan 28, 2024; Revenue $ 215,938 | $ 130,497 | $ 60,922; Operating income 130,387 | 81,453 | 32,972; Total other income, net 11,063 | 2,573 | 846; Income before income tax 141,450 | 84,026 | 33,818",
+      "locator": "10-K (FY2026) Part II Item 8 Consolidated Statements of Income — Revenue·Operating income·Total other income, net·Income before income tax 행",
+      "relevance": "최근 1년 수치를 만드는 데 쓰는 2026 회계연도(2025-01-27~2026-01-25) 연간 매출·영업이익·영업외이익·세전이익이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-056",
+      "company_id": "nvidia",
+      "factors": [
+        "F7",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Three Months Ended Jul 26, 2026 | Jul 27, 2025 | Six Months Ended Jul 26, 2026 | Jul 27, 2025; Revenue $ 96,221 | $ 46,743 | $ 177,837 | $ 90,805; Operating income 63,734 | 28,440 | 117,270 | 50,078; Other income, net 7,773 | 2,766 | 24,140 | 3,039; Income before income tax 71,507 | 31,206 | 141,410 | 53,117",
+      "locator": "10-Q (2026-07-26) Part I Item 1 Condensed Consolidated Statements of Income — Revenue·Operating income·Other income, net·Income before income tax 행",
+      "relevance": "최근 1년(2025-07-28~2026-07-26) 수치는 연간값에서 전년 상반기를 빼고 올해 상반기를 더해 구한다(매출 $303.0B, 영업이익 $197.6B, 영업외이익 $32.2B, 세전이익 $229.7B).",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-057",
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Other income, net, primarily consists of realized or unrealized gains and losses from investments in non-marketable securities and publicly-held equity securities. Gains from equity securities, net, were primarily driven by unrealized gains in equity securities.",
+      "locator": "10-Q (2026-07-26) Part I Item 2 MD&A — Other Income, Net 표 아래 문단",
+      "relevance": "영업외이익이 주로 비상장·상장 지분 투자 평가이익에서 나온다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-058",
+      "company_id": "nvidia",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Open-source foundation models are rapidly growing in popularity with developers worldwide. We believe the demand for open-source foundation models and applications promotes use of our products worldwide.",
+      "locator": "10-Q (2026-07-26) Part I Item 2 MD&A — Recent Developments, Future Objectives and Challenges, 오픈소스 모델 문단 첫 두 문장",
+      "relevance": "오픈소스 모델 수요가 NVIDIA 제품 사용을 늘린다는 회사 판단을 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-059",
+      "company_id": "nvidia",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "We have provided and will continue to provide assistance to authorities regarding attempted diversion, but as we do not have physical control of our products after sale, we must also rely on the compliance programs of our customers and partners.",
+      "locator": "10-Q (2026-07-26) Part II Item 1A Risk Factors — 수출 통제 위험 가운데 'The increasingly complex export controls' 문단 둘째 문장",
+      "relevance": "NVIDIA 가 당국의 우회 반출 조사에 협조하고 있음을 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-060",
+      "company_id": "nvidia",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Supply and capacity – We have partnered with our extensive network to secure the necessary supply and critical components needed to meet demand for the next several years, increasing supply commitments from $119 billion last quarter to $279 billion as of July 26, 2026. These supply commitments are for our data center infrastructure systems, primarily memory and manufacturing facilities, to produce our products for long-term demand across current and future product architectures.",
+      "locator": "10-Q (2026-07-26) Part I Item 1 Note 10 Commitments and Contingencies — Commitments 표 아래 'Supply and capacity' 문단",
+      "relevance": "공급·캐파 약정이 $279B 로 늘었고 주로 메모리·제조 설비라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-061",
+      "company_id": "nvidia",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-015",
+      "published_at_utc": "2026-03-08T23:03:00Z",
+      "title": "[Taiwan Chip News] Nvidia Surpasses Apple to Become TSMC's Largest Customer Amid AI Boom",
+      "excerpt": "According to TSMC's annual report released on March 9, the revenue contributed by TSMC's \"largest customer (Nvidia)\" last year amounted to 726.9 billion Taiwan dollars (approximately 31 trillion won), a 1.06-fold increase compared to 2024. The proportion of TSMC's total revenue accounted for by this customer also rose from 12% in 2024 to 19% last year.",
+      "locator": "기사 본문 2번째 문단",
+      "relevance": "TSMC 연차보고서상 최대 고객(NVIDIA)이 2025년 TSMC 매출의 19% 를 차지했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-062",
+      "company_id": "nvidia",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-005",
+      "published_at_utc": "2026-08-26T21:00:00Z",
+      "title": "NVIDIA Corp. (NVDA) Q2 2027 Earnings Call Corrected Transcript (2026-08-26)",
+      "excerpt": "So, Vivek, let me add a little bit more regarding the commitments and the portion within those commitments, which is our supply commitments. This is essential. This is essential for the raising of Vera Rubin today as well as all next year.",
+      "locator": "실적 콜 녹취록 Q&A 넷째 질문에 대한 CFO Colette Kress 답변 첫머리",
+      "relevance": "CFO 가 약 $500B 커밋 가운데 공급 약정이 핵심 부분이라고 답한 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-063",
+      "company_id": "nvidia",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000104581022000147",
+      "published_at_utc": "2022-08-31T00:00:00Z",
+      "title": "NVIDIA 10-Q (2022-07-31)",
+      "excerpt": "These decreases were primarily due to a $1.34 billion charge in the second quarter of fiscal year 2023, comprised of $1.22 billion for inventory and related reserves, primarily relating to Data Center and Gaming, and $122 million for warranty reserves.",
+      "locator": "10-Q (2022-07-31) Part I Item 2 MD&A — Gross Margin 문단 둘째 문장",
+      "relevance": "2022년 수요 둔화 때 재고 관련 $1.22B 를 포함한 $1.34B 상각을 한 선례를 밝힌 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-064",
+      "company_id": "nvidia",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-nvidia-000104581026000021",
+      "published_at_utc": "2026-02-25T00:00:00Z",
+      "title": "NVIDIA 10-K (FY2026, 2026-01-25)",
+      "excerpt": "Year Ended Jan 25, 2026 | Jan 26, 2025 | Jan 28, 2024; Net cash provided by operating activities 102,718 | 64,089 | 28,090; Purchases related to property and equipment and intangible assets (6,042) | (3,236) | (1,069)",
+      "locator": "10-K (FY2026) Part II Item 8 Consolidated Statements of Cash Flows — Net cash provided by operating activities·Purchases related to property and equipment and intangible assets 행",
+      "relevance": "최근 1년 FCF 를 만드는 데 쓰는 2026 회계연도 영업현금흐름과 설비투자다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-nvidia-065",
+      "company_id": "nvidia",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Six Months Ended Jul 26, 2026 | Jul 27, 2025; Net cash provided by operating activities 74,421 | 42,779; Purchases related to property and equipment and intangible assets (4,434) | (3,122)",
+      "locator": "10-Q (2026-07-26) Part I Item 1 Condensed Consolidated Statements of Cash Flows — Net cash provided by operating activities·Purchases related to property and equipment and intangible assets 행",
+      "relevance": "최근 1년 영업현금흐름 $134.4B 에서 설비투자 $7.4B 를 빼면 FCF 가 +$127.0B 다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-nvidia-009",
+      "excerpt": "On September 2, 2026, NVIDIA Corporation (“NVIDIA”) entered into a definitive agreement to acquire Hugging Face, Inc. (“Hugging Face”). Hugging Face operates a platform and community for developing, sharing and deploying open-source models, datasets and applications.",
+      "locator": "8-K (2026-09-02) Item 8.01 Other Events 첫 문단"
+    },
+    {
+      "evidence_id": "EV-nvidia-008",
+      "excerpt": "SAN FRANCISCO — Sept. 30, 2026 — CoreWeave Inc. (Nasdaq: CRWV), The Essential Cloud for AI™, today announced the availability of NVIDIA Vera Rubin NVL72 on CoreWeave, with Cognition as the first customer anywhere running production workloads on the system.",
+      "locator": "CoreWeave 보도자료 1번째 문단 첫 문장(coreweave.com 원문으로 확인)"
+    },
+    {
+      "evidence_id": "EV-nvidia-010",
+      "excerpt": "Nvidia has said that some of the deals could have no more than a25% residual value guarantee, saying the initiative is designed to address concerns around circular financing.",
+      "locator": "Reuters 기사 12번째 문단(The Star 전재본으로 확인)"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "nvidia.F1",
+      "evidence_after": [
+        "NVIDIA ① 은 부품 채널 상한(최종 사용자와 접점이 없는 부품 공급자는 2점을 넘지 못한다)에 걸려 2점이다.",
+        "NVIDIA 는 개인이 매일 쓰는 소비자 채널이나 조직 워크플로에 박힌 업무 채널을 만들지 못한다고 판정했다.",
+        "인수가 종결되면 Hugging Face 엔터프라이즈라는 업무 채널이 생겨 부품 상한을 넘길 유일한 경로가 된다고 본다(판단)."
+      ],
+      "evidence_up_after": [
+        "CUDA 개발자 생태계는 실재한다. [EV-nvidia-016]",
+        "NVIDIA 는 2026-09-02 Hugging Face 인수 계약에 서명했고, Hugging Face 에는 모델 300만 개, 데이터셋 50만 개, 개발자 1,800만 명이 있다. 다만 종결은 2027 상반기 예정이고 규제 승인 조건부라 기준일(2026-10-06) 현재 미실현이며, 서명과 발표는 점수 근거가 아니다(rules.md 2.1). [EV-nvidia-009, EV-nvidia-017, EV-nvidia-018]"
+      ],
+      "evidence_down_after": [
+        "GPU 와 HBM 은 B2B 부품이다. [EV-nvidia-019]",
+        "NVIDIA 소유가 된 뒤 Hugging Face 의 중립성이 훼손돼 AMD·Intel·AWS 같은 참여자가 떠나면 오히려 역효과가 날 수 있다. [EV-nvidia-020]"
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F2",
+      "evidence_after": [
+        "NVIDIA ② 는 범위 최상단인 5점이고, 성능 도약이 세대 격차 수준이라는 판단에서 나온 점수다.",
+        "세 경로(성능 도약·패러다임 적응·표준 선점)별 판정 입력은 아직 따로 매기지 않아, 점수는 사람이 매긴 5점으로 서 있다.",
+        "추론: Rubin 출하와 독립 측정이 확인되기 전까지 이 5점은 벤더 발표에 기댄 판정이다.",
+        "AI 가속기 점유율 70~75% 라는 수치는 원문을 찾지 못해 확인하지 못했고 판정 근거로 삼지 않는다."
+      ],
+      "evidence_up_after": [
+        "근거는 NVIDIA 가 보도자료(2026-01-05 공개, 2026-03-16 GTC 재공개)로 밝힌 Vera Rubin(R100, 트랜지스터 3,360억 개)이며, NVIDIA 는 Blackwell 대비 추론 성능 5배와 토큰당 비용 10분의 1 을 주장한다. 이 성능 수치는 벤더 발표이고 독립 측정이 아니다. [EV-nvidia-021, EV-nvidia-022]",
+        "2026-09-30 고객사 CoreWeave 가 Vera Rubin NVL72 를 생산 규모로 제공한다고 발표했고, NVIDIA 도 2026-07-26 종료 분기 10-Q 에서 Vera Rubin 의 생산 출하가 2027 회계연도 3분기(2026-07-27 시작)에 시작됐다고 밝혔다. [EV-nvidia-008, EV-nvidia-023]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "nvidia.F3",
+      "evidence_after": [
+        "NVIDIA ③ 은 세 기준의 통과점이 1 이라 2점이다.",
+        "모방 불가능성은 실패다. NVIDIA 가 앞서 있는 바탕인 CUDA 개발자 생태계는 ① 의 설치기반이라 모방 불가능성 근거로 쓰지 않는다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 실패다.",
+        "후발 가속도는 비교 기준이 고른 직전 분기 대비 성장률로 판정했다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)도 없다."
+      ],
+      "evidence_up_after": [
+        "모델이 아니라 GPU 와 시스템을 파는 하드웨어 매출이 전략을 먹여 살린다. [EV-nvidia-024]",
+        "같은 두 분기의 전년 대비 성장률은 +92% 에서 +117% 로 올랐지만, 전년 1분기 데이터센터 매출에는 중국향 Hopper 출하 $4.6B 가 들어 있어 1분기의 전년 대비 성장률이 눌려 있다(추론). [EV-nvidia-025, EV-nvidia-026, EV-nvidia-027]"
+      ],
+      "evidence_down_after": [
+        "Alphabet 이 자체 칩 TPU 를 Anthropic·Meta 에 파는 것처럼 같은 가속기를 만드는 경쟁자가 이미 있다. [EV-nvidia-028, EV-nvidia-029]",
+        "TrendForce 는 2026년 커스텀 ASIC 출하가 44.6% 늘 때 머천트 GPU 출하는 16.1% 늘 것으로 전망해, 구조적으로 못 베끼는 자산 덕에 격차를 벌리는 모습도 아니다. [EV-nvidia-030]",
+        "데이터센터 매출의 직전 분기 대비 성장률이 2026-04-26 종료 분기 +21%($75.2B)에서 2026-07-26 종료 분기 +18%($89.0B)로 내려 감속이다(각 분기 10-Q). [EV-nvidia-025, EV-nvidia-027]"
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F4",
+      "evidence_after": [
+        "NVIDIA ④ 는 범위 최상단인 5점이다.",
+        "NVIDIA 는 곡괭이를 파는 데서 직접 광부가 되는 쪽으로 움직이고 있다고 판정했다.",
+        "NVIDIA 가 진출한 영역이 10개라는 수는 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "NVIDIA 는 GPU 를 넘어 로보틱스·자율주행·LLM 등 여러 영역에 진출했다. [EV-nvidia-031]",
+        "모델 영역에서는 Nemotron 모델을 직접 내고 있으며, 2026-06-04 Nemotron 3 Ultra 를 공개했다. [EV-nvidia-032]",
+        "Hugging Face 인수는 2026-09-02 에 서명했으나 종결 전(2027 상반기 예정, 규제 승인 조건부)이라 ④ 근거로 세지 않는다. [EV-nvidia-009, EV-nvidia-017]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "nvidia.F5",
+      "evidence_after": [
+        "NVIDIA ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(-2) 로 2점이다.",
+        "Nemotron 연합은 조달과 동맹을 가르는 질문을 통과한다.",
+        "Hugging Face 인수는 종결 전(2027 상반기, 규제 승인 조건부)이라 근거가 아니고, Hugging Face 개발자 1,800만 명은 공짜 사용자라 동맹으로 세지 않으며 배포 채널이라는 성격은 ① 에서 본다.",
+        "적대 등급은 -2(구조형 — 주요 고객이 곧 경쟁자)이다.",
+        "고객이 적이 되는 구조라 적이 하나 늘 때마다 매출이 직접 사라진다.",
+        "연합은 실재하지만 이 구조형 적대가 그대로라 3점에 이르지 못한다."
+      ],
+      "evidence_up_after": [
+        "동맹 등급 +1 의 근거는 NVIDIA 가 2026-03 에 출범시킨 Nemotron 연합으로, Mistral(기초 모델 공동개발)·Black Forest Labs(멀티모달)·LangChain(에이전트)·Cursor(코딩 평가 데이터)·Thinking Machines Lab·Reflection AI 가 참여했고 이후 NAVER Cloud 로 넓어졌다. [EV-nvidia-033, EV-nvidia-034]",
+        "Nemotron 연합에서 NVIDIA 와 연합사는 공동개발을 주고받고, 연합사는 자체 칩을 개발할 자본이 없어 NVIDIA GPU 를 빌려 쓰므로 상대가 잘되면 NVIDIA 도 잘되며, 끊으면 양쪽이 아프다. [EV-nvidia-035]",
+        "NVIDIA 는 NVLink Fusion 으로 하이퍼스케일러가 자체 XPU 를 써도 NVLink·Spectrum-X·ConnectX·BlueField·Vera CPU·MGX 랙과 묶이게 해, GPU 점유율 대신 AI 공장의 공통 플랫폼을 쥐는 쪽으로 옮겨 가고 있다. [EV-nvidia-036, EV-nvidia-037]"
+      ],
+      "evidence_down_after": [
+        "매출 약 절반을 내는 하이퍼스케일 부문의 주요 고객 4곳이 모두 자체 칩을 개발하고, Meta 가 Google TPU 를 병행 조달해 일부 이탈했다. [EV-nvidia-024, EV-nvidia-038, EV-nvidia-028]",
+        "Open Secure AI Alliance 구성에서 OpenAI·Anthropic·Google 이 빠진 것도 고객이 경쟁자가 되는 긴장을 보여 준다. [EV-nvidia-039]"
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F7.fix52",
+      "evidence_after": [
+        "NVIDIA ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 큼, 돌아옴 칸이라 범위 하한인 -2점이며, 비중이 큰 쪽에서는 세로축이 점수를 가르지 않는다.",
+        "가로축은 큼으로 본다.",
+        "세로축도 선다.",
+        "이 보증들은 확정 지출이 아닌 우발 보증이라 ⑨ 에 넣지 않고 ⑦ 에서만 센다.",
+        "GPU 잔존가치 보증이 은행의 LTV 70~80% 대출을 가능하게 한다는 사실은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "OpenAI·네오클라우드·xAI 같은 고객이 투자받은 돈과 빚으로 GPU 를 산다. [EV-nvidia-040, EV-nvidia-041]",
+        "NVIDIA 는 2026년 다섯 달 동안 AI 기업 지분에 $40B 넘게 넣었고(실측), 여기에는 OpenAI $30B, Anthropic Series G(최대 $10B), xAI Series E, CoreWeave $2B, Nebius $2B 와 공급망(Corning $3.2B, Marvell·Lumentum·Coherent 각 $2B, IREN $2.1B)이 들며, 그 돈이 GPU 대금으로 돌아오고 매출이 피투자사 가치를 올려 지분 평가이익까지 늘리는 이중 고리라고 판정했다. [EV-nvidia-042, EV-nvidia-043, EV-nvidia-044, EV-nvidia-045]",
+        "NVIDIA 는 돈만이 아니라 신용도 댄다. 일부 금융 거래에서 GPU 잔존가치를 최대 25% 보증하고, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이며, CoreWeave 미판매 캐파 매입 약정(초기 가치 $6.3B, 2032-04-13까지)과 월가와의 $500B AI 인프라 금융 조성이 있다. [EV-nvidia-010, EV-nvidia-046, EV-nvidia-047, EV-nvidia-048, EV-nvidia-049, EV-nvidia-050, EV-nvidia-051]",
+        "잔존가치를 보증한 담보(Grace Blackwell)의 가치를 깎는 것이 NVIDIA 자신의 신제품 Vera Rubin 이라는 자기모순도 있다. [EV-nvidia-052]",
+        "2026-08-26 2분기 실적 콜에서 나온 생태계 커밋 약 $500B 는 애널리스트가 CFO 코멘터리의 약정·보증을 더한 수치이고, 2026-07-26 현재 약정 가운데 공급·캐파 약정이 $279B, 지분 투자 약정이 $25B 다. [EV-nvidia-053, EV-nvidia-054]",
+        "최근 1년(2025-07-28~2026-07-26) 영업외이익 $32.2B(세전이익의 14%)는 ⑥ 소관이라 ⑦ 의 입력이 아니며, 출처가 고객사 지분이라는 점만 방증으로 적는다. [EV-nvidia-055, EV-nvidia-056, EV-nvidia-057]"
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F8",
+      "evidence_after": [
+        "NVIDIA ⑧ 은 -3점이다.",
+        "다만 감점을 덜어 주는 근거는 가점과 같이 실측으로만 인정하므로(rules.md 2.1), 이 헤지는 데이터센터 매출 가운데 비하이퍼스케일러 비중이 실제로 올라와야 점수에 닿는다. Hugging Face 인수도 종결 전이라 이 헤지의 실행으로 세지 않는다."
+      ],
+      "evidence_up_after": [
+        "반대 방향의 힘도 있다. 자체 칩을 만들 자본이 있는 고객은 소수이고 오픈웨이트로 창업하는 다수는 기존 클라우드의 NVIDIA GPU 를 빌려 쓰므로, 오픈소스 확산은 GPU 판매자에게 시장 확대라고 본다(추론). [EV-nvidia-058]"
+      ],
+      "evidence_down_after": [
+        "매출 약 절반을 내는 하이퍼스케일 고객이 모두 자체 칩을 개발하고 있어, 고객 집중과 의존 방향이 함께 나빠지고 있다. 미 정부는 중국 우회 접근을 조사하고 있다. [EV-nvidia-024, EV-nvidia-038, EV-nvidia-059]",
+        "공급 쪽에는 공급·캐파 약정 $279B(2026-07-26 현재, 주로 메모리·제조 설비)가 있다. NVIDIA 는 TSMC 매출의 19% 를 차지하는 최대 고객이고, 이 공급 약정이 2026-08-26 실적 콜에서 애널리스트가 더한 생태계 커밋 약 $500B 의 가장 큰 부분이다. [EV-nvidia-060, EV-nvidia-061, EV-nvidia-053, EV-nvidia-062]",
+        "수요가 꺾이면 이 약정 때문에 NVIDIA 가 먼저 맞으며, 2022년 재고 관련 $1.22B 를 포함한 $1.34B 상각이 그 선례다. [EV-nvidia-063]"
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F9",
+      "evidence_after": [
+        "NVIDIA ⑨ 는 감점 없이 0점이다.",
+        "게이트 1(본업이 버는가)은 통과한다.",
+        "게이트 2(현금이 새는가)는 FCF 추세를 안정으로 판정해 0점에서 끝난다.",
+        "고객 금융을 받치는 우발 보증은 확정 지출이 아니어서 ⑦ 에서 세고 ⑨ 에는 넣지 않는다."
+      ],
+      "evidence_up_after": [
+        "최근 1년(2025-07-28~2026-07-26) 매출 $303.0B, 영업이익 $197.6B 로 영업이익률이 65.2% 다. [EV-nvidia-055, EV-nvidia-056]",
+        "최근 1년(2025-07-28~2026-07-26) FCF 가 +$127.0B 로 흑자다. [EV-nvidia-064, EV-nvidia-065]",
+        "2026-07 종료 분기 매출은 $96.2B(전년 대비 +106%), 데이터센터 매출은 $89.0B(+117%)로, 분기 흐름도 추세 안정 판정과 맞는다. [EV-nvidia-027]"
+      ],
+      "evidence_down_after": []
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "nvidia.F2",
+      "column": "up",
+      "line": "AI 가속기 점유율 70~75% 라는 수치는 구간만 있고 출처가 없어 판정 근거로 삼지 않는다.",
+      "searched": "NVIDIA 10-K(FY2026)·10-Q(2026-04-26, 2026-07-26), 2026-08-26 실적 콜 녹취록, 웹 검색(AI accelerator market share 70-75%). Tech Times(2026-05-26)는 '70–80%' 를 적었으나 출처 없는 구간이라 같은 값도 아니다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "nvidia.F4",
+      "column": "up",
+      "line": "NVIDIA 는 GPU 를 넘어 로보틱스·자율주행·LLM 등 10개 영역에 진출했다. (중 '10개 영역' 이라는 수)",
+      "searched": "NVIDIA 10-K(FY2026) Item 1 Business, GTC 2026 라이브 블로그(6개 모델 계열), CES 2026 발표, 웹 검색. 로보틱스·자율주행·LLM 진출은 확인했으나 '10개' 라는 수는 찾지 못했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "nvidia.F7.fix52",
+      "column": "down",
+      "line": "NVIDIA 는 돈만이 아니라 신용도 댄다. GPU 잔존가치를 최대 25% 보증해 은행의 LTV 70~80% 대출을 가능하게 하고, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이며, CoreWeave 미판매 캐파 매입 보증(2032-04-13까지), $6.3B 재임차(rent-back), 월가와의 $500B AI 인프라 금융 조성이 있다. (중 '은행의 LTV 70~80% 대출을 가능하게 하고')",
+      "searched": "Reuters(2026-10-01) 'Nvidia's bet that its chips can finance the AI boom gets a Wall Street reality check' 전문, NVIDIA 10-Q(2026-07-26) Note 8·10, 실적 콜 녹취록, 웹 검색(Nvidia residual value guarantee loan-to-value). 25% 잔존가치 보증은 확인했고 LTV 70~80% 는 찾지 못했다.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "nvidia.F1",
+      "before": "NVIDIA 소유가 된 뒤 Hugging Face 의 중립성이 훼손돼 AMD·Google 같은 참여자가 떠나면 오히려 역효과가 날 수 있다.",
+      "after": "NVIDIA 소유가 된 뒤 Hugging Face 의 중립성이 훼손돼 AMD·Intel·AWS 같은 참여자가 떠나면 오히려 역효과가 날 수 있다.",
+      "why": "원문(The New Stack 2026-08-27)은 떠날 수 있는 참여자로 'AMD, Intel, and AWS' 를 든다. Google 은 그 문단에 없다.",
+      "evidence_id": "EV-nvidia-020"
+    },
+    {
+      "judgment_id": "nvidia.F2",
+      "before": "2026-09-30 고객사 CoreWeave 가 Vera Rubin NVL72 를 생산 규모로 제공한다고 발표했으나, NVIDIA 자신의 실적이나 공시로 Rubin 출하가 확인된 것은 아니다.",
+      "after": "2026-09-30 고객사 CoreWeave 가 Vera Rubin NVL72 를 생산 규모로 제공한다고 발표했고, NVIDIA 도 2026-07-26 종료 분기 10-Q 에서 Vera Rubin 의 생산 출하가 2027 회계연도 3분기(2026-07-27 시작)에 시작됐다고 밝혔다.",
+      "why": "NVIDIA 10-Q(2026-07-26, 2026-08-26 제출) MD&A: 'Vera Rubin, began production shipments in the third quarter of fiscal year 2027'. 실적 콜에서도 'We commenced production shipments of Vera Rubin earlier this month' 라고 했다. NVIDIA 공시로 출하가 확인된다.",
+      "evidence_id": "EV-nvidia-023"
+    },
+    {
+      "judgment_id": "nvidia.F3",
+      "before": "커스텀 ASIC 출하가 44.6% 늘 때 머천트 GPU 출하는 16.1% 늘어, 구조적으로 못 베끼는 자산 덕에 격차를 벌리는 모습도 아니다.",
+      "after": "TrendForce 는 2026년 커스텀 ASIC 출하가 44.6% 늘 때 머천트 GPU 출하는 16.1% 늘 것으로 전망해, 구조적으로 못 베끼는 자산 덕에 격차를 벌리는 모습도 아니다.",
+      "why": "원문(Tech Times 2026-05-26)은 TrendForce 의 2026년 전망치('on track to grow 44.6% in 2026, against a 16.1% growth rate for merchant GPU shipments')다. 실측 출하가 아니다.",
+      "evidence_id": "EV-nvidia-030"
+    },
+    {
+      "judgment_id": "nvidia.F4",
+      "before": "NVIDIA 는 GPU 를 넘어 로보틱스·자율주행·LLM 등 10개 영역에 진출했다.",
+      "after": "NVIDIA 는 GPU 를 넘어 로보틱스·자율주행·LLM 등 여러 영역에 진출했다.",
+      "why": "로보틱스·자율주행·언어 모델 진출은 NVIDIA GTC 2026 블로그에서 확인했으나 '10개 영역' 이라는 수는 원문에서 찾지 못해 뺐다(판정 칸에 미확인으로 적었다).",
+      "evidence_id": "EV-nvidia-031"
+    },
+    {
+      "judgment_id": "nvidia.F4",
+      "before": "모델 영역에서는 Nemotron 모델을 직접 내고 있으며, 2026-03 GTC 에서 Nemotron3 Ultra 를 발표했다.",
+      "after": "모델 영역에서는 Nemotron 모델을 직접 내고 있으며, 2026-06-04 Nemotron 3 Ultra 를 공개했다.",
+      "why": "Nemotron 3 Ultra 는 2025-12-15 Nemotron 3 계열 발표 때 예고됐고 GTC Taipei(Computex) 기간인 2026-06-04 'NVIDIA today released Nemotron 3 Ultra' 로 공개됐다. 2026-03 GTC 발표가 아니다.",
+      "evidence_id": "EV-nvidia-032"
+    },
+    {
+      "judgment_id": "nvidia.F5",
+      "before": "매출 약 40% 를 내는 하이퍼스케일러 4곳이 모두 자체 칩을 개발하고, Meta 가 Google TPU 를 병행 조달해 일부 이탈했다.",
+      "after": "매출 약 절반을 내는 하이퍼스케일 부문의 주요 고객 4곳이 모두 자체 칩을 개발하고, Meta 가 Google TPU 를 병행 조달해 일부 이탈했다.",
+      "why": "NVIDIA 10-Q(2026-07-26) Note 13: 분기 매출 $96,221M 중 Hyperscale $48,710M(약 51%). 10-Q(2026-04-26)도 하이퍼스케일러가 데이터센터 매출의 약 50% 라고 적는다. '약 40%' 를 '약 절반' 으로 고쳤다.",
+      "evidence_id": "EV-nvidia-024"
+    },
+    {
+      "judgment_id": "nvidia.F7.fix52",
+      "before": "NVIDIA 는 돈만이 아니라 신용도 댄다. GPU 잔존가치를 최대 25% 보증해 은행의 LTV 70~80% 대출을 가능하게 하고, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이며, CoreWeave 미판매 캐파 매입 보증(2032-04-13까지), $6.3B 재임차(rent-back), 월가와의 $500B AI 인프라 금융 조성이 있다.",
+      "after": "NVIDIA 는 돈만이 아니라 신용도 댄다. 일부 금융 거래에서 GPU 잔존가치를 최대 25% 보증하고, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이며, CoreWeave 미판매 캐파 매입 약정(초기 가치 $6.3B, 2032-04-13까지)과 월가와의 $500B AI 인프라 금융 조성이 있다.",
+      "why": "Reuters(2026-10-01)는 '일부 거래' 의 잔존가치 보증 상한 25% 만 적고 LTV 70~80% 는 원문에 없어 뺐다(판정 칸에 미확인). CoreWeave 8-K(2025-09-09)에서 $6.3B 는 미판매 캐파 매입 주문서의 초기 가치라 별도 재임차 항목이 아니므로 한 항목으로 합쳤다.",
+      "evidence_id": "EV-nvidia-010, EV-nvidia-049"
+    },
+    {
+      "judgment_id": "nvidia.F7.fix52",
+      "before": "2026-08-26 2분기 실적 콜에서 밝힌 생태계 커밋 약 $500B 는 발표이고, 지분과 공급 약정으로 나눈 내역은 아직 공개되지 않았다.",
+      "after": "2026-08-26 2분기 실적 콜에서 나온 생태계 커밋 약 $500B 는 애널리스트가 CFO 코멘터리의 약정·보증을 더한 수치이고, 2026-07-26 현재 약정 가운데 공급·캐파 약정이 $279B, 지분 투자 약정이 $25B 다.",
+      "why": "실적 콜 녹취록: 약 $500B 는 애널리스트(Vivek Arya)가 'When I just add up everything that's in the CFO commentary' 로 더한 수치다. 내역은 10-Q Note 10 약정 표에 공개돼 있다(Supply and capacity $279B, Equity investments $25B, 합계 $366B).",
+      "evidence_id": "EV-nvidia-053, EV-nvidia-054"
+    },
+    {
+      "judgment_id": "nvidia.F8",
+      "before": "매출 약 40% 를 내는 하이퍼스케일러 고객이 모두 자체 칩을 개발하고 있어, 고객 집중과 의존 방향이 함께 나빠지고 있다. 미 정부는 중국 우회 접근을 조사하고 있다.",
+      "after": "매출 약 절반을 내는 하이퍼스케일 고객이 모두 자체 칩을 개발하고 있어, 고객 집중과 의존 방향이 함께 나빠지고 있다. 미 정부는 중국 우회 접근을 조사하고 있다.",
+      "why": "NVIDIA 10-Q(2026-07-26) Note 13: Hyperscale $48,710M / 총매출 $96,221M ≈ 51%. '약 40%' 를 '약 절반' 으로 고쳤다.",
+      "evidence_id": "EV-nvidia-024"
+    },
+    {
+      "judgment_id": "nvidia.F8",
+      "before": "공급 쪽에는 take-or-pay 약정이 있다. NVIDIA 는 TSMC 매출의 19% 를 차지하는 최대 고객이고 HBM 캐파도 선점 약정으로 잡아 두었으며, 이것이 생태계 커밋 약 $500B(발표)의 상당 부분이다.",
+      "after": "공급 쪽에는 공급·캐파 약정 $279B(2026-07-26 현재, 주로 메모리·제조 설비)가 있다. NVIDIA 는 TSMC 매출의 19% 를 차지하는 최대 고객이고, 이 공급 약정이 2026-08-26 실적 콜에서 애널리스트가 더한 생태계 커밋 약 $500B 의 가장 큰 부분이다.",
+      "why": "10-Q Note 10: 공급 약정은 'primarily memory and manufacturing facilities' 이고 일부는 취소·조정 가능하다고 적어 take-or-pay 로 단정할 근거가 없다. 약 $500B 는 회사 발표가 아니라 애널리스트 합산이고, CFO 는 그 가운데 공급 약정이 핵심이라고 답했다.",
+      "evidence_id": "EV-nvidia-060, EV-nvidia-053, EV-nvidia-062"
+    },
+    {
+      "judgment_id": "nvidia.F8",
+      "before": "수요가 꺾이면 이 약정 때문에 NVIDIA 가 먼저 맞으며, 2022년 $1.3B 넘는 재고 상각이 그 선례다.",
+      "after": "수요가 꺾이면 이 약정 때문에 NVIDIA 가 먼저 맞으며, 2022년 재고 관련 $1.22B 를 포함한 $1.34B 상각이 그 선례다.",
+      "why": "NVIDIA 10-Q(2022-07-31): '$1.34 billion charge ... comprised of $1.22 billion for inventory and related reserves ... and $122 million for warranty reserves'. 재고 상각만으로는 $1.22B 다.",
+      "evidence_id": "EV-nvidia-063"
+    }
+  ]
+}

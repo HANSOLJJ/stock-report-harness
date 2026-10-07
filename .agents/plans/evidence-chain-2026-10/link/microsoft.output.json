@@ -1,0 +1,772 @@
+{
+  "company_id": "microsoft",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-microsoft-000119312526191507",
+      "title": "Microsoft 10-Q (2026-03-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526191507/msft-20260331.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-04-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-microsoft-000119312526323632",
+      "title": "Microsoft 8-K Exhibit 99.1 FY2026 4분기 실적 보도자료 (2026-07-29)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-ex99_1.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-07-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-microsoft-000119312526380280",
+      "title": "Microsoft 8-K Exhibit 99.1 FY27 Segments and Investor Metrics (2026-09-02)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526380280/d291965dex991.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-09-02T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-001",
+      "title": "Microsoft Fiscal Year 2026 Fourth Quarter Earnings Conference Call",
+      "publisher": "Microsoft Investor Relations",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-07-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-002",
+      "title": "Microsoft Fiscal Year 2026 Third Quarter Earnings Conference Call",
+      "publisher": "Microsoft Investor Relations",
+      "url": "https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q3",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-04-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-003",
+      "title": "Microsoft, NVIDIA and Anthropic announce strategic partnerships",
+      "publisher": "The Official Microsoft Blog",
+      "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2025-11-18T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-004",
+      "title": "OpenAI launches Dots, its bubbly agentic avatar",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/29/openai-launches-dots-its-bubbly-agentic-avatar/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-09-29T17:17:15Z"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-005",
+      "title": "AWS announces AWS Interconnect - multicloud connectivity with Microsoft Azure in preview",
+      "publisher": "AWS What's New",
+      "url": "https://aws.amazon.com/about-aws/whats-new/2026/08/aws-announces-AWS-interconnect-multicloud-microsoft-azure-preview/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-08-31T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-006",
+      "title": "OpenAI's models land on Amazon Bedrock, one day after Microsoft exclusivity ends",
+      "publisher": "GeekWire",
+      "url": "https://www.geekwire.com/2026/openais-models-land-on-amazon-bedrock-one-day-after-microsoft-exclusivity-ends/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-04-28T17:34:54Z"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-007",
+      "title": "Text Arena Leaderboard (Overall, 2026-10-02)",
+      "publisher": "Arena (arena.ai, 구 lmarena.ai)",
+      "url": "https://arena.ai/leaderboard/text",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-10-02T00:00:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-microsoft-005",
+      "company_id": "microsoft",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-001",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Fourth Quarter Earnings Conference Call",
+      "excerpt": "When it comes to knowledge work, we now have over 30 million paid Microsoft 365 Copilot seats, with net seat adds more than doubling quarter-over-quarter.",
+      "locator": "통화록 Satya Nadella 발언, 'knowledge work' 문단",
+      "relevance": "2026-06-30 분기 말 Microsoft 365 Copilot 유료 시트가 3,000만 개를 넘었다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-006",
+      "company_id": "microsoft",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-002",
+      "published_at_utc": "2026-04-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Third Quarter Earnings Conference Call",
+      "excerpt": "Quarter over quarter, we continue to see acceleration and now have over 20 million Microsoft 365 Copilot paid seats.",
+      "locator": "통화록 Satya Nadella 발언, 'knowledge work' 문단",
+      "relevance": "2026-03-31 분기 말 유료 시트가 2,000만 개를 넘었다는 회사 발언으로, 한 분기 증가율(약 50%)의 기준값이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-007",
+      "company_id": "microsoft",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000119312526323660",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft 10-K (FY2026, 2026-06-30)",
+      "excerpt": "Microsoft 365 Commercial is an AI-powered business and productivity solutions platform that brings together Office, Windows, Microsoft 365 Copilot, and Enterprise Mobility + Security to help organizations empower their employees. … Microsoft 365 Commercial revenue is mainly affected by a combination of continued installed base growth and average revenue per user expansion",
+      "locator": "10-K (FY2026) Item 1 Business — Operating Segments, Microsoft 365 Commercial Products and Cloud Services 문단",
+      "relevance": "Copilot 이 Office·Windows 와 한 플랫폼으로 묶여 팔리고 그 매출이 설치 기반 확대로 움직인다는 회사 서술이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-008",
+      "company_id": "microsoft",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-002",
+      "published_at_utc": "2026-04-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Third Quarter Earnings Conference Call",
+      "excerpt": "Our Maia 200 AI accelerator — which offers over 30% improved tokens per dollar, compared to the latest silicon in our fleet — is now live in our Iowa and Arizona datacenters.",
+      "locator": "통화록 Satya Nadella 발언, 데이터센터 함대(fleet) 문단",
+      "relevance": "Maia 200 이 아이오와·애리조나 데이터센터에서 가동 중이라는 발언으로, 배포 물량은 밝히지 않았다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-009",
+      "company_id": "microsoft",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-007",
+      "published_at_utc": "2026-10-02T00:00:00Z",
+      "title": "Text Arena Leaderboard (Overall, 2026-10-02)",
+      "excerpt": "Text Arena … Overall … Oct 2, 2026 8,626,731 votes 413 models … 1 1 1 gemini-4-argon-high Google · Proprietary 1525 … 317 311 319 phi-4 Microsoft · MIT 1256 ±5 24,126",
+      "locator": "Text Arena 종합 순위표 머리(갱신일·표본)와 1위 줄, 마이크로소프트 모델 최상위 줄(317위)",
+      "relevance": "2026-10-02 갱신 Text Arena 종합 순위에서 마이크로소프트 모델의 최고 순위가 317위(phi-4)라 상위권에 자체 모델이 없다는 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-010",
+      "company_id": "microsoft",
+      "factors": [
+        "F2",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-001",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Fourth Quarter Earnings Conference Call",
+      "excerpt": "And it’s not just about cost. It also has the added benefit of business continuity and resilience because every model is substitutable. This is the system we are using in our products, with great results. For example, millions of developers have used MAI-Code-1-Flash on GitHub Copilot, achieving higher code acceptance rates and 10% lower median token usage, while still having access to frontier capabilities from OpenAI and Anthropic.",
+      "locator": "통화록 Satya Nadella 발언, 모델 시스템 문단(MAI 모델 소개 다음)",
+      "relevance": "자체 MAI 모델도 제품에 쓰지만 최상위 성능은 OpenAI 와 Anthropic 양쪽에서 받고, 모델을 서로 바꿔 쓸 수 있게 설계했다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-011",
+      "company_id": "microsoft",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-microsoft-000119312526323632",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft 8-K Exhibit 99.1 FY2026 4분기 실적 보도자료 (2026-07-29)",
+      "excerpt": "Microsoft Cloud revenue was $59.3 billion and increased 27%, and commercial remaining performance obligation increased 84% to $678 billion.",
+      "locator": "8-K Exhibit 99.1 (2026-07-29) Business Highlights 첫 문장",
+      "relevance": "2026-06-30 상업 부문 남은 계약 매출(RPO)이 $678B 로 84% 늘었다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-012",
+      "company_id": "microsoft",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-microsoft-000119312526380280",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "title": "Microsoft 8-K Exhibit 99.1 FY27 Segments and Investor Metrics (2026-09-02)",
+      "excerpt": "Azure $22,384 $24,129 $26,008 $29,417 $101,938 $16,021 $17,337 $18,540 $20,712 $72,610 … As Restated 2026 Q1 Q2 Q3 Q4 Fiscal Year Azure revenue growth (y/y) 40% / 39% 39% / 38% 40% / 39% 42% 40%",
+      "locator": "8-K Exhibit 99.1 (2026-09-02) Products and Service Offerings — Revenue As Restated 표의 Azure 줄, FY27 Investor Metrics As Restated 표의 Azure revenue growth 줄",
+      "relevance": "새 부문 기준으로 다시 낸 Azure 매출이 2026-04~06 분기 $29.42B(전년 대비 42%), 2026 회계연도 $101.94B 라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-013",
+      "company_id": "microsoft",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-002",
+      "published_at_utc": "2026-04-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Third Quarter Earnings Conference Call",
+      "excerpt": "As Satya shared, our AI business annual revenue run rate surpassed $37 billion this quarter, growing 123% year-over-year.",
+      "locator": "통화록 Amy Hood 발언 첫 문단",
+      "relevance": "2026-01~03 분기 AI 사업 연환산 매출이 $37B 를 넘어 123% 늘었다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-014",
+      "company_id": "microsoft",
+      "factors": [
+        "F5",
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000119312526323660",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft 10-K (FY2026, 2026-06-30)",
+      "excerpt": "We have an investment accounted for under the equity method that represents an approximate 25% interest on an as-converted basis. … For fiscal year 2026, we recorded revenue from commercial arrangements with OpenAI, inclusive of revenue-sharing payments, of $24.1 billion, and accounts receivable from OpenAI as of June 30, 2026 was $6.0 billion. We have made total funding commitments of $13.0 billion related to our investment, of which $11.9 billion has been funded as of June 30, 2026.",
+      "locator": "10-K (FY2026) Note 1 Accounting Policies — Financial Instruments, Investments 의 OpenAI 문단",
+      "relevance": "마이크로소프트의 OpenAI 지분(전환 기준 약 25%), 2026 회계연도 OpenAI 상대 매출 $24.1B, 실제 집행 투자금 $11.9B 를 적은 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-015",
+      "company_id": "microsoft",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-003",
+      "published_at_utc": "2025-11-18T00:00:00Z",
+      "title": "Microsoft, NVIDIA and Anthropic announce strategic partnerships",
+      "excerpt": "Anthropic has committed to purchase $30 billion of Azure compute capacity and to contract additional compute capacity up to one gigawatt. … Microsoft has also committed to continuing access for Claude across Microsoft’s Copilot family, including GitHub Copilot, Microsoft 365 Copilot, and Copilot Studio.",
+      "locator": "블로그 본문 1번째 문단 마지막 문장과 4번째 문단",
+      "relevance": "Anthropic 의 Azure $30B 구매 약정과 Copilot 제품군에 Claude 를 계속 넣는다는 회사 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-016",
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-004",
+      "published_at_utc": "2026-09-29T17:17:15Z",
+      "title": "OpenAI launches Dots, its bubbly agentic avatar",
+      "excerpt": "OpenAI also envisions “specialist Dots” that take on specific responsibilities. Individual Dots can be provisioned with specific identities, credentials, and tools through existing systems. OpenAI is already working with Microsoft to integrate into the company’s Agent 365 security controls.",
+      "locator": "기사 7번째 문단",
+      "relevance": "OpenAI 가 Dots 에이전트를 마이크로소프트 Agent 365 보안 통제에 붙이는 작업을 마이크로소프트와 하고 있다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-017",
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-005",
+      "published_at_utc": "2026-08-31T00:00:00Z",
+      "title": "AWS announces AWS Interconnect - multicloud connectivity with Microsoft Azure in preview",
+      "excerpt": "AWS introduced AWS Interconnect – multicloud in preview at re:Invent 2025, publishing an open specification for network interoperability that raised the bar for the industry and established a framework any provider can adopt, inviting the broader ecosystem to participate. Today, Microsoft Azure is the latest CSP to adopt the specification that powers AWS Interconnect.",
+      "locator": "발표문 3번째 문단",
+      "relevance": "Azure 가 AWS 가 공개한 클라우드 상호연결 규격을 채택했다는 AWS 발표다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-018",
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-006",
+      "published_at_utc": "2026-04-28T17:34:54Z",
+      "title": "OpenAI's models land on Amazon Bedrock, one day after Microsoft exclusivity ends",
+      "excerpt": "SAN FRANCISCO — Amazon moved quickly Tuesday to capitalize on OpenAI’s new relationship status with Microsoft, launching a preview of OpenAI’s models on its Bedrock platform less than 24 hours after the ChatGPT maker was freed from its previously exclusive cloud arrangement.",
+      "locator": "기사 1번째 문단(작성자·일시 줄 다음)",
+      "relevance": "OpenAI 모델이 마이크로소프트와의 독점 클라우드 계약이 풀린 직후 아마존 Bedrock 에 올라갔다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-019",
+      "company_id": "microsoft",
+      "factors": [
+        "F7",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000119312526323660",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft 10-K (FY2026, 2026-06-30)",
+      "excerpt": "INCOME STATEMENTS (In millions, except per share amounts) Year Ended June 30, 2026 2025 2024 … Total revenue 331,839 281,724 245,122 … Operating income 155,237 128,528 109,433",
+      "locator": "10-K (FY2026) Income Statements, Year Ended June 30 2026 열",
+      "relevance": "2026 회계연도 매출 $331.8B 와 영업이익 $155.2B 다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-020",
+      "company_id": "microsoft",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000119312526323660",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft 10-K (FY2026, 2026-06-30)",
+      "excerpt": "CASH FLOWS STATEMENTS (In millions) Year Ended June 30, 2026 2025 2024 … Net cash from operations 182,935 136,162 118,548 … Additions to property and equipment (115,948 ) (64,551 ) (44,477 )",
+      "locator": "10-K (FY2026) Cash Flows Statements, Net cash from operations 줄과 Additions to property and equipment 줄",
+      "relevance": "2026·2025 회계연도 영업현금흐름과 설비투자로, 연간 잉여현금흐름과 4~6월 분기 값(연간 − 9개월 누계)의 바탕이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-021",
+      "company_id": "microsoft",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-001",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Fourth Quarter Earnings Conference Call",
+      "excerpt": "The greater impact is on capital expenditures as more of our future datacenter leases will shift from finance leases to operating leases as a result of this update. Finance leases are included in capital expenditures while operating leases are not. Outside of this useful life impact, our calendar year 2026 CapEx investment expectations remain unchanged. However, the shift from finance to operating leases adjusts our expectation to approximately $175 billion.",
+      "locator": "통화록 Amy Hood 발언, 내용연수 변경 문단",
+      "relevance": "2026 역년 설비투자 예상치가 약 $175B 로 바뀐 것은 리스 분류가 바뀐 효과이고 투자 기대치 자체는 그대로라는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-022",
+      "company_id": "microsoft",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-002",
+      "published_at_utc": "2026-04-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Third Quarter Earnings Conference Call",
+      "excerpt": "For calendar year 2026, we expect to invest roughly $190 billion in capital expenditures which includes approximately $25 billion from the impact of higher component pricing.",
+      "locator": "통화록 Amy Hood 발언, 설비투자 전망 문단",
+      "relevance": "2026 역년 설비투자 예상치가 약 $190B 였다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-microsoft-023",
+      "company_id": "microsoft",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-microsoft-000119312526191507",
+      "published_at_utc": "2026-04-29T00:00:00Z",
+      "title": "Microsoft 10-Q (2026-03-31)",
+      "excerpt": "Three Months Ended March 31, Nine Months Ended March 31, 2026 2025 2026 2025 … Net cash from operations 46,679 37,044 127,494 93,515 … Additions to property and equipment (30,876 ) (16,745 ) (80,146 ) (47,472 )",
+      "locator": "10-Q (2026-03-31) Cash Flows Statements, Three Months·Nine Months Ended March 31 열",
+      "relevance": "2026·2025년 1~3월 분기 영업현금흐름·설비투자와 9개월 누계로, 분기 잉여현금흐름을 구하는 바탕이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-microsoft-002",
+      "excerpt": "Code lets everyone build their own solutions with the tools to run them safely, and it’s powered by the same underlying technology as GitHub Copilot. And Autopilot is a persistent, proactive and personal agent that keeps working even when you’re not. Home and Code will start rolling out in our Frontier program in the coming weeks and Autopilot is expanding to private preview at the end of the month.",
+      "locator": "블로그 본문 2번째 문단(작성자 줄 다음) 후반"
+    },
+    {
+      "evidence_id": "EV-microsoft-003",
+      "excerpt": "OpenAI has been a close partner of Microsoft from the jump, but the AI lab is increasingly going after the company’s bread and butter, workplace software, with new features that closely resemble an office software suite like Microsoft’s. … OpenAI also launched Pages, a companion word processor that the company describes as “a new type of document, built for human and agent collaboration.” It appears to be OpenAI’s answer to Google Docs and Microsoft Word.",
+      "locator": "기사 1번째 문단과 5번째 문단"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "microsoft.F1",
+      "evidence_after": [
+        "마이크로소프트 ① 은 업무 채널의 락인으로 5점을 매겼다.",
+        "마이크로소프트의 업무 채널은 가격을 올려도 떠나기 어렵다고 판단했다.",
+        "Copilot 합산 월간 사용자가 4.2억 명이라는 사실은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "Copilot 유료 시트는 3,000만 개로 분기 대비 50% 늘었다. [EV-microsoft-005, EV-microsoft-006]",
+        "Windows 와 M365 에 기본 탑재되는 것 자체가 배포 전략이라 조직 워크플로에 깊이 박혀 있다. [EV-microsoft-007]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "microsoft.F2",
+      "evidence_after": [
+        "마이크로소프트 ② 는 3점이고, 이는 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 한 경로를 통과한 것에 해당한다.",
+        "경로별 통과 여부를 판정 입력으로 나누어 적지 않았기 때문에 프로그램이 경로 수로 환산하지 않고 사람이 매긴 3점을 쓴다."
+      ],
+      "evidence_up_after": [
+        "자체 칩 Maia 200 은 발표됐지만 배포 물량이 확인되지 않아 성능 도약의 근거로 보지 않았다. [EV-microsoft-008]",
+        "2026-09-25 공식 블로그로 발표한 에이전트(Autopilot)·코딩(Code) 결합 Copilot 은 독립 측정이나 채택 수치가 아직 없어 이 판단에 반영하지 않았다. [EV-microsoft-002]"
+      ],
+      "evidence_down_after": [
+        "Arena 상위권에 마이크로소프트 자체 모델이 없다. [EV-microsoft-009]",
+        "모델은 OpenAI 와 Anthropic 양쪽에서 조달한다. [EV-microsoft-010]"
+      ]
+    },
+    {
+      "judgment_id": "microsoft.F3",
+      "evidence_after": [
+        "마이크로소프트 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+        "모방 불가능성은 실패다. Windows·M365 기본 탑재는 ① 에서 이미 5점으로 셌고, 번들링을 경쟁사가 못 베끼는 이유가 Windows 를 가졌기 때문이라 ① 의 파생이므로 ③ 에서 다시 세지 않는다. 같은 잣대를 다른 기업의 설치기반에도 댄다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 통과다.",
+        "문 닫힘은 실패로 판정해 5점 관문에 닿지 않는다."
+      ],
+      "evidence_up_after": [
+        "마이크로소프트는 소프트웨어 라이선스로 벌기 때문에 모델을 공짜로 끼워 팔 수 있고, 이는 익스플로러가 넷스케이프를 이긴 구조와 같다. [EV-microsoft-007]",
+        "Copilot 유료 시트가 3,000만 개로 분기 대비 50% 늘었다. [EV-microsoft-005, EV-microsoft-006]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "microsoft.F4",
+      "evidence_after": [
+        "마이크로소프트 ④ 는 4점이다.",
+        "2026-09-02 사업 부문을 3개에서 2개로 합치면서 Azure 매출을 분기마다 공시하기 시작했다."
+      ],
+      "evidence_up_after": [
+        "Azure 매출을 처음으로 달러로 공시했는데, 2026년 6월 분기 $29.42B(전년 대비 +42%)였고 2026 회계연도 연간으로 $100B 를 넘었다. [EV-microsoft-012]",
+        "AI 사업의 연환산 매출(런레이트)은 $37B(+123%)이고, 남은 계약 매출(RPO)은 $678B(+84%)로 백로그가 실적보다 빠르게 늘고 있다. [EV-microsoft-013, EV-microsoft-011]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "microsoft.F5",
+      "evidence_after": [
+        "마이크로소프트 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 -1 로 4점이다.",
+        "동맹 등급 +2 는 두 프론티어 모델사를 함께 묶은 데서 나온다.",
+        "OpenAI 와의 긴장과 Azure 독점이 사라진 것은 사업 구조를 무너뜨리는 적대는 아니라고 보아 적대 등급 -1(비용형)로 판정했다.",
+        "OpenAI 와 협력이 이어지고 M365 고객 이탈 수치도 없어, 주요 파트너가 곧 경쟁자인 구조형(-2)으로 올리지 않았다."
+      ],
+      "evidence_up_after": [
+        "마이크로소프트는 OpenAI 지분 약 25%(전환 기준, 2026-06-30)와 Anthropic 의 Azure $30B 약정으로 두 프론티어 모델사를 함께 묶었다. [EV-microsoft-014, EV-microsoft-015]",
+        "같은 주 OpenAI 가 Dots 에이전트를 마이크로소프트 Agent 365 보안 통제에 붙이는 작업을 마이크로소프트와 함께 하고 있다고 밝히는 등 협력도 이어진다. [EV-microsoft-016]",
+        "2026-08-31 AWS 가 발표한 멀티클라우드 상호연결은 Azure 가 AWS 규격을 채택한 것으로, 적대를 줄이는 사실이지만 등급을 바꾸지는 않는다. [EV-microsoft-017]"
+      ],
+      "evidence_down_after": [
+        "OpenAI 와의 긴장이 있고, OpenAI 모델이 아마존 Bedrock 에 올라가 Azure 의 독점이 사라졌다. [EV-microsoft-018]",
+        "OpenAI 가 M365 와 겹치는 오피스 제품을 냈다는 보도(2026-09-29)가 확정 근거로 들어와 있으나, M365 고객 이탈 수치는 없다. [EV-microsoft-003]"
+      ]
+    },
+    {
+      "judgment_id": "microsoft.F7",
+      "evidence_after": [
+        "마이크로소프트 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 '작음', 내 돈이 돌아옴 '예' 칸이라 -1 이다.",
+        "마이크로소프트에는 내 돈이 돌아오는 구조가 맞다.",
+        "조달 의존 고객 비중은 작다고 판정했다."
+      ],
+      "evidence_up_after": [
+        "회사가 공시한 2026 회계연도(2026-06-30) OpenAI 상업 거래 매출(수익 배분 포함)은 $24.1B 로 같은 해 매출 $331.8B 의 약 7% 이고, OpenAI 에 실제로 집행한 투자금은 누적 $11.9B 다. [EV-microsoft-014, EV-microsoft-019]"
+      ],
+      "evidence_down_after": [
+        "마이크로소프트가 OpenAI 에 투자해 전환 기준 약 25% 지분(2026-06-30)을 가진 그 투자금이 Azure 매출로 돌아온다. [EV-microsoft-014]"
+      ]
+    },
+    {
+      "judgment_id": "microsoft.F8",
+      "evidence_after": [
+        "마이크로소프트 ⑧ 은 -1 이다.",
+        "회사가 멈추는 구조가 아니라고 판단했다."
+      ],
+      "evidence_up_after": [
+        "모델을 OpenAI 와 Anthropic 두 곳에서 조달해 한 공급자에 대한 단일 의존을 풀었다. [EV-microsoft-010, EV-microsoft-015]",
+        "모델 공급자 한쪽이 끊겨도 다른 쪽으로 옮길 수 있다. [EV-microsoft-010]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "microsoft.F9",
+      "evidence_after": [
+        "흑자이나 추세 악화 칸이라 ⑨ 는 −1 에서 끝나고, 게이트 3(버티는 기간)과 게이트 4(미래 지출이 덮이는가)는 계산하지 않는다.",
+        "마이크로소프트는 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+        "잉여현금흐름 추세는 악화로 판정했다.",
+        "분기 수치는 추세를 설명하는 데만 쓴다."
+      ],
+      "evidence_up_after": [
+        "마이크로소프트는 최근 1년(2026-06-30 회계연도) 영업이익 $155.2B, 매출 $331.8B 로 영업이익률이 46.8% 다. [EV-microsoft-019]",
+        "게이트 2(최근 1년 잉여현금흐름)는 영업현금흐름 $182.9B 에서 설비투자 $115.9B 를 뺀 +$67.0B 로 흑자다. [EV-microsoft-020]",
+        "2026 역년 설비투자 예상치를 약 $190B 에서 약 $175B 로 바꿨는데, 회사는 데이터센터 리스가 금융리스에서 운용리스로 옮겨 가는 효과이고 투자 기대치 자체는 그대로라고 밝혔으며, 계획은 실측 현금흐름이 아니라 추세 판정의 근거로 쓰지 않는다. [EV-microsoft-022, EV-microsoft-021]"
+      ],
+      "evidence_down_after": [
+        "분기 잉여현금흐름이 2026년 1~3월 $15.8B, 4~6월 $19.6B 로 전년 같은 분기($20.3B·$25.6B)보다 각각 22%·23% 줄었고, 4~6월 분기 설비투자는 $35.8B 로 전년 같은 분기 $17.1B 의 두 배를 넘었다(10-Q·10-K 현금흐름표 누계의 차로 구한 분기 값). [EV-microsoft-023, EV-microsoft-020]",
+        "최근 1년 잉여현금흐름은 2025 회계연도 $71.6B 에서 2026 회계연도 $67.0B 로 줄었다. [EV-microsoft-020]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "microsoft.F1",
+      "column": "up",
+      "line": "Copilot 유료 시트는 3,000만 개로 분기 대비 50% 늘었고, Copilot 합산 월간 사용자는 4.2억 명이다.",
+      "searched": "Microsoft FY26 2·3·4분기 실적 발표 통화록(microsoft.com/investor), 2026-07-29 실적 보도자료(8-K Ex.99.1), 10-K(FY2026). 4.2억 명은 2차 집계 블로그에만 나온다. 같은 줄의 유료 시트 부분은 원문으로 확인해 줄을 고쳐 남겼다.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "microsoft.F1",
+      "before": "Copilot 유료 시트는 3,000만 개로 분기 대비 50% 늘었고, Copilot 합산 월간 사용자는 4.2억 명이다.",
+      "after": "Copilot 유료 시트는 3,000만 개로 분기 대비 50% 늘었다.",
+      "why": "유료 시트는 2026-04-29 통화록 '2,000만 개 넘음', 2026-07-29 통화록 '3,000만 개 넘음'으로 확인된다. 'Copilot 합산 월간 사용자 4.2억 명'은 FY26 2·3·4분기 통화록과 실적 보도자료에서 찾지 못해 빼고 판정 칸으로 옮겼다.",
+      "evidence_id": "EV-microsoft-005, EV-microsoft-006"
+    },
+    {
+      "judgment_id": "microsoft.F5",
+      "before": "마이크로소프트는 OpenAI 지분 27% 와 Anthropic 의 Azure $30B 약정으로 두 프론티어 모델사를 함께 묶었다.",
+      "after": "마이크로소프트는 OpenAI 지분 약 25%(전환 기준, 2026-06-30)와 Anthropic 의 Azure $30B 약정으로 두 프론티어 모델사를 함께 묶었다.",
+      "why": "10-K(FY2026) Note 1 은 OpenAI 지분을 전환 기준 약 25% 로 적는다(재자본화와 추가 조달로 지분이 줄었다고 함). 27% 는 이 공시와 다르다.",
+      "evidence_id": "EV-microsoft-014, EV-microsoft-015"
+    },
+    {
+      "judgment_id": "microsoft.F5",
+      "before": "같은 주 마이크로소프트가 OpenAI 의 Dots 에이전트를 기업용으로 들여오는 등 협력도 이어진다.",
+      "after": "같은 주 OpenAI 가 Dots 에이전트를 마이크로소프트 Agent 365 보안 통제에 붙이는 작업을 마이크로소프트와 함께 하고 있다고 밝히는 등 협력도 이어진다.",
+      "why": "TechCrunch 2026-09-29 는 OpenAI 가 Dots 를 Agent 365 보안 통제에 통합하는 작업을 마이크로소프트와 하고 있다고만 적고, 마이크로소프트가 Dots 를 기업용으로 들여왔다고 적지 않는다.",
+      "evidence_id": "EV-microsoft-016"
+    },
+    {
+      "judgment_id": "microsoft.F5",
+      "before": "2026-08-28 AWS 와 맺은 멀티클라우드 상호연결은 AWS 규격을 채택한 것으로, 적대를 줄이는 사실이지만 등급을 바꾸지는 않는다.",
+      "after": "2026-08-31 AWS 가 발표한 멀티클라우드 상호연결은 Azure 가 AWS 규격을 채택한 것으로, 적대를 줄이는 사실이지만 등급을 바꾸지는 않는다.",
+      "why": "AWS 발표일은 2026-08-31 이고(마이크로소프트 Azure 네트워킹 블로그는 2026-08-26), 2026-08-28 자 원문은 찾지 못했다.",
+      "evidence_id": "EV-microsoft-017"
+    },
+    {
+      "judgment_id": "microsoft.F7",
+      "before": "OpenAI 투자금이 돌아온 Azure 매출은 최근 1년 매출 $331.8B(2026-06-30 회계연도)에 견주면 미미하다.",
+      "after": "회사가 공시한 2026 회계연도(2026-06-30) OpenAI 상업 거래 매출(수익 배분 포함)은 $24.1B 로 같은 해 매출 $331.8B 의 약 7% 이고, OpenAI 에 실제로 집행한 투자금은 누적 $11.9B 다.",
+      "why": "10-K(FY2026) Note 1 은 2026 회계연도 OpenAI 상대 매출을 $24.1B(매출 $331.8B 의 7.3%), 집행 투자금을 $11.9B 로 적어 '미미하다'와 다르다.",
+      "evidence_id": "EV-microsoft-014, EV-microsoft-019"
+    },
+    {
+      "judgment_id": "microsoft.F7",
+      "before": "마이크로소프트가 OpenAI 에 투자해 지분 27% 를 가진 그 투자금이 Azure 매출로 돌아온다.",
+      "after": "마이크로소프트가 OpenAI 에 투자해 전환 기준 약 25% 지분(2026-06-30)을 가진 그 투자금이 Azure 매출로 돌아온다.",
+      "why": "10-K(FY2026) Note 1 은 OpenAI 지분을 전환 기준 약 25% 로 적는다.",
+      "evidence_id": "EV-microsoft-014"
+    },
+    {
+      "judgment_id": "microsoft.F9",
+      "before": "2026 역년 설비투자 계획을 $190B 에서 $175B 로 낮췄지만, 계획은 실측 현금흐름이 아니라 추세 판정의 근거로 쓰지 않는다.",
+      "after": "2026 역년 설비투자 예상치를 약 $190B 에서 약 $175B 로 바꿨는데, 회사는 데이터센터 리스가 금융리스에서 운용리스로 옮겨 가는 효과이고 투자 기대치 자체는 그대로라고 밝혔으며, 계획은 실측 현금흐름이 아니라 추세 판정의 근거로 쓰지 않는다.",
+      "why": "2026-07-29 통화록은 $175B 로의 변경이 금융리스→운용리스 분류 변경 효과이고 '2026 역년 설비투자 기대치는 그대로'라고 밝혀, 투자를 '낮췄다'와 다르다.",
+      "evidence_id": "EV-microsoft-022, EV-microsoft-021"
+    }
+  ]
+}

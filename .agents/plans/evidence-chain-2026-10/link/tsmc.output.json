@@ -1,0 +1,1747 @@
+{
+  "company_id": "tsmc",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-tsmc-000104617926000451",
+      "title": "TSMC 6-K (2026-07-16) Exhibit 99.1 — 2Q26 실적 발표문",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000451/a2q26e_withguidancexfinal.htm",
+      "sha256": "1701d89289ce8684ad4f37588f07bfa5ab7e1ba7892b25f3886f5feeb3b92f0d",
+      "note": "접수번호 0001046179-26-000451",
+      "kind": "filing",
+      "published_at_utc": "2026-07-16T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-SEC-tsmc-000119312524099840",
+      "title": "TSMC Form 20-F (FY2023)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000119312524099840/d592628d20f.htm",
+      "sha256": "fdbb92ec82af26bc651af0fd41a4e09028a3caee0f7880f320dd9c6bf63a1eb6",
+      "note": "접수번호 0001193125-24-099840",
+      "kind": "filing",
+      "published_at_utc": "2024-04-18T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-SEC-tsmc-000005086325000129",
+      "title": "Intel 8-K (2025-08-22) Exhibit 99.1 — Intel and Trump Administration Reach Historic Agreement",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086325000129/a08222025form8-kex991.htm",
+      "sha256": "13f37737551eaf6cf111b0a075e99df315be9e19fb7a1a5f0b065a86e0720576",
+      "note": "Intel 이 낸 공시다. 접수번호 0000050863-25-000129",
+      "kind": "filing",
+      "published_at_utc": "2025-08-22T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-001",
+      "title": "TSMC Q2 2026 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "publisher": "TSMC Investor Relations",
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-08/3e494f0c14dd0890f897aa044415e21d93486cc4/TSMC%202Q26%20Transcript.pdf",
+      "sha256": "17947a4c33c3ef2153641706eef7051422ab8594251dfbb64646b92d9a4cc915",
+      "note": "통화일 2026-07-16. TSMC IR 2Q26 실적 페이지에 걸린 PDF",
+      "kind": "news",
+      "published_at_utc": "2026-07-16T06:00:00Z",
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-002",
+      "title": "TSMC Q4 2025 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "publisher": "TSMC Investor Relations",
+      "url": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-01/51d09df96cd89ac19d65af39032b038dc2896a24/TSMC%204Q25%20Transcript.pdf",
+      "sha256": "ee9ea0fa8cd18e3bea90f5f082687492a2ce3900a16e217226811ae2a58d08b0",
+      "note": "통화일 2026-01-15. TSMC IR 4Q25 실적 페이지에 걸린 PDF",
+      "kind": "news",
+      "published_at_utc": "2026-01-15T06:00:00Z",
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-003",
+      "title": "Global Foundry Revenue Approaches US$53.49 Billion in 2Q26 as SMIC Narrows Market Share Gap with Samsung, Says TrendForce",
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/presscenter/news/20260909-13225.html",
+      "kind": "news",
+      "published_at_utc": "2026-09-09T07:30:02Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-004",
+      "title": "[News] TSMC 2Q26 Net Income Soars 77% YoY to NT$706.56B Record; Gross Margin Beats Forecast at 67.7%",
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/07/16/news-tsmc-2q26-net-income-soars-77-yoy-to-nt706-56b-record-eps-nt27-25-gross-margin-beats-forecast-at-67-7/",
+      "kind": "news",
+      "published_at_utc": "2026-07-16T00:00:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-005",
+      "title": "[News] TSMC Boosts Arizona Investment by US$100B, Plans 4 More Fabs for 2nm and Advanced Packaging",
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/07/16/news-tsmc-boosts-arizona-investment-by-us100b-plans-4-more-fabs-for-2nm-and-advanced-packaging/",
+      "kind": "news",
+      "published_at_utc": "2026-07-16T16:54:53Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-006",
+      "title": "TSMC to increase 2nm and A16 capacity by 70% CAGR 2026-28",
+      "publisher": "Electronics Weekly",
+      "url": "https://www.electronicsweekly.com/news/business/tsmc-to-increae-2nm-and-a16-capacity-by-70-cagr-2026-28-2026-05/",
+      "kind": "news",
+      "published_at_utc": "2026-05-15T00:00:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-007",
+      "title": "[News] Intel Pulls Forward 14A Timeline by One Year, Targeting 2028 Mass Production Near TSMC’s Roadmap",
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/07/24/news-intel-pulls-forward-14a-timeline-by-one-year-targeting-2028-mass-production-near-tsmcs-roadmap/",
+      "kind": "news",
+      "published_at_utc": "2026-07-24T00:00:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-008",
+      "title": "Samsung’s 2nm chip process making some serious progress",
+      "publisher": "Sammy Fans",
+      "url": "https://www.sammyfans.com/2026/09/28/samsung-2nm-chip-process-making-some-serious-progress/",
+      "kind": "news",
+      "published_at_utc": "2026-09-29T03:12:33Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-009",
+      "title": "[News] Samsung 2nm Yields Reportedly at ~55%, Below Mass Production Threshold; Qualcomm May Opt for TSMC",
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/04/14/news-samsung-2nm-yields-reportedly-at-55-below-mass-production-threshold-qualcomm-may-opt-for-tsmc/",
+      "kind": "news",
+      "published_at_utc": "2026-04-14T00:00:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-010",
+      "title": "The custom AI ASIC state of play (May 2026) — Broadcom deals, Google TPUs, Meta MTIA & beyond",
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia",
+      "kind": "news",
+      "published_at_utc": "2026-05-21T12:43:38Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-011",
+      "title": "AWS Releases Trainium3 ASIC to Ease Reliance on NVIDIA Hardware",
+      "publisher": "TechPowerUp",
+      "url": "https://www.techpowerup.com/343581/aws-releases-trainium3-asic-to-ease-reliance-on-nvidia-hardware",
+      "kind": "news",
+      "published_at_utc": "2025-12-03T00:00:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-012",
+      "title": "Apple’s self-designed AI server chip “Baltra” may be manufactured by TSMC",
+      "publisher": "TechNode",
+      "url": "https://technode.com/2026/04/09/apples-self-designed-ai-server-chip-baltra-may-be-manufactured-by-tsmc-using-3nm-n3e-process/",
+      "kind": "news",
+      "published_at_utc": "2026-04-09T07:13:20Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-013",
+      "title": "NVIDIA Beats Apple to Become TSMC's Largest Customer",
+      "publisher": "TechPowerUp",
+      "url": "https://www.techpowerup.com/346835/nvidia-beats-apple-to-become-tsmcs-largest-customer",
+      "kind": "news",
+      "published_at_utc": "2026-02-27T11:05:24Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-014",
+      "title": "TSMC's first 2 nm Node Customers are Apple, AMD, NVIDIA, and MediaTek; Intel Missing",
+      "publisher": "TechPowerUp",
+      "url": "https://www.techpowerup.com/341044/tsmcs-first-2-nm-node-customers-are-apple-amd-nvidia-and-mediatek-intel-missing",
+      "kind": "news",
+      "published_at_utc": "2025-09-16T09:20:14Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-015",
+      "title": "TSMC announces additional $100bn investment in Arizona as chipmaker posts $40.2bn revenue for Q2 2026",
+      "publisher": "DCD (DatacenterDynamics)",
+      "url": "https://www.datacenterdynamics.com/en/news/tsmc-announces-additional-100bn-investment-in-arizona-as-chipmaker-posts-402bn-revenue-for-q2-2026/",
+      "kind": "news",
+      "published_at_utc": "2026-07-16T00:00:00Z",
+      "note": "본문 날짜줄은 July 16, 2026 이다. 페이지 메타 태그의 날짜(2026-10-13)는 본문 날짜와 다르다",
+      "sha256": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    },
+    {
+      "source_id": "SRC-WEB-tsmc-016",
+      "title": "Taiwan to face lower tariffs and invest in US chip manufacturing in new trade deal as US introduces 25% global semiconductor tariff",
+      "publisher": "Automotive Logistics",
+      "url": "https://www.automotivelogistics.media/nearshoring/taiwan-to-face-lower-tariffs-and-invest-in-us-chip-manufacturing-in-new-trade-deal-as-us-introduces-25-global-semiconductor-tariff/2588639",
+      "kind": "news",
+      "published_at_utc": "2026-01-19T16:02:33Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "tsmc"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-tsmc-008",
+      "company_id": "tsmc",
+      "factors": [
+        "F1",
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "Such infrastructure includes design flow for electronic design automation (“EDA”), silicon proven building blocks such as libraries and intellectual properties, simulation and verification design kits such as PDK and technology files. All of this infrastructure is built on top of the technology foundation, and each technology needs its own design infrastructure to be usable for designers. This is the concept of our technology platforms.",
+      "locator": "20-F (FY2025) Item 4 Information on the Company — Design and Technology Platforms 문단 앞부분",
+      "relevance": "TSMC 공정마다 PDK 등 전용 설계 인프라가 따로 필요하다는 회사 서술로, 고객 설계 자산이 공정에 묶인다는 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-061",
+      "company_id": "tsmc",
+      "factors": [
+        "F1",
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "For years, we and our alliance partners have spent considerable effort, time and resources to build our technology platforms. We unveiled an Open Innovation Platform® (“OIP”) initiative in 2008 to further enhance our technologies offerings.",
+      "locator": "20-F (FY2025) Item 4 Information on the Company — Design and Technology Platforms 문단 중간",
+      "relevance": "TSMC 가 협력사와 함께 OIP 설계 생태계를 만들어 왔다는 회사 서술이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-009",
+      "company_id": "tsmc",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "We manufacture a variety of semiconductors based on designs provided by our customers. Our business model is commonly called a “dedicated semiconductor foundry.”",
+      "locator": "20-F (FY2025) Item 5 Operating and Financial Review and Prospects — Overview 첫 문단",
+      "relevance": "TSMC 가 고객 설계를 받아 생산만 하는 전업 파운드리라는 회사 서술로, 최종 사용자 채널이 없다는 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-010",
+      "company_id": "tsmc",
+      "factors": [
+        "F3",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "As a result, the Company has only one operating segment, the foundry segment. The foundry segment engages mainly in the manufacturing, sales, packaging, testing and computer-aided design of integrated circuits and other semiconductor devices and the manufacturing of masks.",
+      "locator": "20-F (FY2025) 연결재무제표 Note 38 Operating Segments Information, a. 문단",
+      "relevance": "TSMC 의 영업 부문이 파운드리 하나뿐이라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-011",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tsmc-000104617926000451",
+      "published_at_utc": "2026-07-16T00:00:00Z",
+      "title": "TSMC 6-K (2026-07-16) Exhibit 99.1 — 2Q26 실적 발표문",
+      "excerpt": "Year-over-year, second quarter revenue increased 36.0%, while net income and diluted EPS both increased 77.4%. Compared to first quarter 2026, second quarter results represented a 12.0% increase in revenue and a 23.4% increase in net income. All figures were prepared in accordance with TIFRS on a consolidated basis. In US dollars, second quarter revenue was $40.20 billion, which increased 33.7% year-over-year and increased 12.0% from the previous quarter. Gross margin for the quarter was 67.7%, operating margin was 60.3%, and net profit margin was 55.6%.",
+      "locator": "6-K (2026-07-16) Exhibit 99.1 실적 발표문 2·3·4번째 문단",
+      "relevance": "2026년 2분기 매출 증가율(전년 대비 36.0%)과 매출총이익률 67.7%·영업이익률 60.3% 의 원문이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-012",
+      "company_id": "tsmc",
+      "factors": [
+        "F2"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tsmc-000104617926000451",
+      "published_at_utc": "2026-07-16T00:00:00Z",
+      "title": "TSMC 6-K (2026-07-16) Exhibit 99.1 — 2Q26 실적 발표문",
+      "excerpt": "In the second quarter, shipments of 2-nanometer accounted for 3% of total wafer revenue; 3-nanometer accounted for 30%; 5-nanometer accounted for 33%; and 7-nanometer accounted for 11%. Advanced technologies, defined as 7-nanometer and more advanced technologies, accounted for 77% of total wafer revenue.",
+      "locator": "6-K (2026-07-16) Exhibit 99.1 실적 발표문 5번째 문단",
+      "relevance": "2026년 2분기 웨이퍼 매출의 공정별 비중(N2 3%, N3 30%, 7나노 이하 77%)이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-013",
+      "company_id": "tsmc",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-001",
+      "published_at_utc": "2026-07-16T06:00:00Z",
+      "title": "TSMC Q2 2026 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "HPC increased 20% quarter over quarter to account for 66% of our second-quarter revenue. Smartphone decreased 4% to account for 22%. IoT increased 4% to account for 5%. Automotive increased 15% to account for 4%. DCE increased 5% to account for 1%.",
+      "locator": "2Q26 실적 통화 녹취록 3쪽, Wendell Huang 발표 중 revenue contribution by platform 문단",
+      "relevance": "2026년 2분기 매출의 플랫폼별 비중으로, HPC 66% 와 그 밖의 플랫폼(합계 34%)을 보여 준다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-014",
+      "company_id": "tsmc",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-001",
+      "published_at_utc": "2026-07-16T06:00:00Z",
+      "title": "TSMC Q2 2026 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "First, we expect a steep ramp-up of our 2-nanometer to dilute our gross margin by about 3 to 4 percentage points in the second half of the year.",
+      "locator": "2Q26 실적 통화 녹취록 4쪽, Wendell Huang 하반기 수익성 설명 둘째 문단",
+      "relevance": "2나노를 2026년 하반기에 가파르게 늘린다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-015",
+      "company_id": "tsmc",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-001",
+      "published_at_utc": "2026-07-16T06:00:00Z",
+      "title": "TSMC Q2 2026 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "Supported by our robust technology differentiation and the broad customer base, we now expect our full-year 2026 revenue growth to be slightly above 40% year over year in US dollar terms.",
+      "locator": "2Q26 실적 통화 녹취록 5쪽, C.C. Wei 수요 전망 문단 끝 문장",
+      "relevance": "2026년 매출 성장 가이던스를 40% 를 조금 넘는 수준으로 올렸다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-016",
+      "company_id": "tsmc",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-002",
+      "published_at_utc": "2026-01-15T06:00:00Z",
+      "title": "TSMC Q4 2025 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "Our revenue increased 35.9% in US dollar terms to USD122 billion or increased 31.6% into TWD3.8 trillion.",
+      "locator": "4Q25 실적 통화 녹취록 3쪽, Wendell Huang 2025년 실적 정리 문단",
+      "relevance": "2025년 매출 증가율(대만달러 기준 31.6%)의 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-017",
+      "company_id": "tsmc",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-002",
+      "published_at_utc": "2026-01-15T06:00:00Z",
+      "title": "TSMC Q4 2025 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "We expect 2026 to be another strong growth year for TSMC, and forecast our full year revenue to increase by close to 30%, in US dollar terms.",
+      "locator": "4Q25 실적 통화 녹취록 5쪽, C.C. Wei 2026년 전망 문단",
+      "relevance": "연초에 낸 2026년 매출 성장 가이던스(약 30%)의 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-018",
+      "company_id": "tsmc",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-002",
+      "published_at_utc": "2026-01-15T06:00:00Z",
+      "title": "TSMC Q4 2025 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "N2 successfully entered high volume manufacturing in 4Q 2025 at both our Hsinchu and Kaohsiung sides with good yield.",
+      "locator": "4Q25 실적 통화 녹취록 7쪽, C.C. Wei N2·A16 현황 첫 문단",
+      "relevance": "N2 가 2025년 4분기에 양산에 들어갔다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-019",
+      "company_id": "tsmc",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-002",
+      "published_at_utc": "2026-01-15T06:00:00Z",
+      "title": "TSMC Q4 2025 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "We also introduced A16 featuring our best-in-class superpower rail, or SPR. A16 is best suitable for specific HPC products with complex signal routes and dense power delivery networks. Volume production is on track for second half 2026.",
+      "locator": "4Q25 실적 통화 녹취록 7쪽, C.C. Wei N2·A16 현황 셋째 문단",
+      "relevance": "A16 양산이 2026년 하반기 일정대로 간다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-020",
+      "company_id": "tsmc",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-001",
+      "published_at_utc": "2026-07-16T06:00:00Z",
+      "title": "TSMC Q2 2026 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "A14 technology development is on track and progressing well. Internal product-like vehicle demonstrated close to 90% device performance and close to 90% 256 megabits SRAM yield. We are observing a strong level of customer interest and engagement on both smartphone and HPC/AI applications, and customer new tap-out activity is ongoing and ahead of schedule. Risk production will start in 2027 and volume production is scheduled for 2028.",
+      "locator": "2Q26 실적 통화 녹취록 6쪽, C.C. Wei A14 현황 문단",
+      "relevance": "A14 개발이 일정대로 가고 2028년 양산 예정이라는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-021",
+      "company_id": "tsmc",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-001",
+      "published_at_utc": "2026-07-16T06:00:00Z",
+      "title": "TSMC Q2 2026 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "So Felix is noting, in January, we guided for USD52 billion to USD56 billion. In April, we said closer to USD56 billion, now USD60 billion to USD64 billion. So we have increased the CapEx guidance.",
+      "locator": "2Q26 실적 통화 녹취록 20쪽, Jeff Su 가 Felix Pan 질문을 정리한 문단",
+      "relevance": "2026년 설비투자 가이던스가 1월 $52~56B 에서 $60~64B 로 올랐다는 회사 측 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-022",
+      "company_id": "tsmc",
+      "factors": [
+        "F5",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-001",
+      "published_at_utc": "2026-07-16T06:00:00Z",
+      "title": "TSMC Q2 2026 Earnings Call Edited Transcript (LSEG StreetEvents)",
+      "excerpt": "To answer, Jim, to answer your question directly, every company has a different consideration and every company has a different strategy. So far, no, TSMC don't do this kind of financial arrangement, because of we think we are working with current customer, with the current model smoothly and also successfully.",
+      "locator": "2Q26 실적 통화 녹취록 14쪽, C.C. Wei 답변(13쪽 Jim Fontanelli 의 고객 투자 질문에 대한 답)",
+      "relevance": "TSMC 가 고객이나 고객의 고객에 투자·금융을 대는 방식을 쓰지 않는다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-023",
+      "company_id": "tsmc",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "Based on market demand, we have continued to add capacity to meet market needs for our products and services, including in Taiwan, in Arizona, U.S., in Kumamoto, Japan and in Dresden, Germany.",
+      "locator": "20-F (FY2025) Item 3 Risk Factors — capacity and production facilities 항목 첫 문단",
+      "relevance": "TSMC 가 대만·애리조나·구마모토·드레스덴에 캐파를 늘리고 있다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-024",
+      "company_id": "tsmc",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-005",
+      "published_at_utc": "2026-07-16T16:54:53Z",
+      "title": "[News] TSMC Boosts Arizona Investment by US$100B, Plans 4 More Fabs for 2nm and Advanced Packaging",
+      "excerpt": "As noted by Bloomberg, the new commitment brings TSMC’s total planned investment in Arizona to US$265 billion, eventually expanding its U.S. footprint to 10 fabs and two advanced packaging facilities.",
+      "locator": "기사 2번째 문단",
+      "relevance": "애리조나 총투자 계획이 $265B(팹 10개·첨단 패키징 2곳)로 늘었다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-025",
+      "company_id": "tsmc",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-006",
+      "published_at_utc": "2026-05-15T00:00:00Z",
+      "title": "TSMC to increase 2nm and A16 capacity by 70% CAGR 2026-28",
+      "excerpt": "It said capacity increases for 2nm and A16 wafers will grow at a 70% CAGR from 2026 to 2028, and that CoWoS capacity will grow at more than 80% CAGR from 2022 to 2027.",
+      "locator": "기사 2번째 문단",
+      "relevance": "TSMC 가 기술 심포지엄에서 CoWoS 캐파를 연평균 80% 넘게 늘린다고 밝혔다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-026",
+      "company_id": "tsmc",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-006",
+      "published_at_utc": "2026-05-15T00:00:00Z",
+      "title": "TSMC to increase 2nm and A16 capacity by 70% CAGR 2026-28",
+      "excerpt": "TSMC’s 5.5-reticle-size CoWoS version has 98% yields. The report adds that TSMC is planning a 14-reticle-size version capable of integrating 20 HBM stacks in 2028, and a larger reticle size will support 24 HBM stacks in 2029.",
+      "locator": "기사 끝에서 둘째 문단",
+      "relevance": "5.5배 레티클 CoWoS 는 이미 양산 수율이 나오고 14배 레티클은 2028년 계획이라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-027",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-003",
+      "published_at_utc": "2026-09-09T07:30:02Z",
+      "title": "Global Foundry Revenue Approaches US$53.49 Billion in 2Q26 as SMIC Narrows Market Share Gap with Samsung, Says TrendForce",
+      "excerpt": "Among the top 10 foundries, TSMC maintained its lead with 2Q26 revenue nearing $40.2 billion, a 12.1% increase QoQ, capturing a 72.5% market share.",
+      "locator": "보도자료 4번째 문단 첫 문장",
+      "relevance": "TrendForce 집계로 2026년 2분기 상위 10개 파운드리 매출 가운데 TSMC 점유율이 72.5% 다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-028",
+      "company_id": "tsmc",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-004",
+      "published_at_utc": "2026-07-16T00:00:00Z",
+      "title": "[News] TSMC 2Q26 Net Income Soars 77% YoY to NT$706.56B Record; Gross Margin Beats Forecast at 67.7%",
+      "excerpt": "Notably, TSMC’s gross margin already surged to a record 66.2% in 1Q26, then climbed even higher in 2Q26 to set another all-time high, surpassing the company’s 65.5%–67.5% guidance range.",
+      "locator": "기사 6번째 문단",
+      "relevance": "2026년 2분기 매출총이익률 67.7% 가 분기 사상 최고라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-029",
+      "company_id": "tsmc",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-009",
+      "published_at_utc": "2026-04-14T00:00:00Z",
+      "title": "[News] Samsung 2nm Yields Reportedly at ~55%, Below Mass Production Threshold; Qualcomm May Opt for TSMC",
+      "excerpt": "According to Busan Ilbo, sources indicate that Samsung Foundry’s 2nm yields remain in the mid-50% range, falling short of the roughly 60% threshold typically required for stable mass production. After backend processing, effective yields are expected to decline to around 40%. While Samsung has technically entered the 2nm node, industry observers say current yield levels remain insufficient to attract major global tech customers. In contrast, rival TSMC is reportedly achieving a more stable yield range of 60–70% at 2nm, the report adds.",
+      "locator": "기사 첫 문단",
+      "relevance": "Samsung 2나노 수율이 TSMC 에 못 미친다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-030",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-007",
+      "published_at_utc": "2026-07-24T00:00:00Z",
+      "title": "[News] Intel Pulls Forward 14A Timeline by One Year, Targeting 2028 Mass Production Near TSMC’s Roadmap",
+      "excerpt": "As noted by Wccftech, Intel now expects 14A to enter risk production for internal products in the second half of 2027, a year earlier than previously planned, while high-volume manufacturing remains on track for 2028—also ahead of its original 2029 roadmap.",
+      "locator": "기사 3번째 문단",
+      "relevance": "Intel 14A 의 대량 양산 목표가 2028년이라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-031",
+      "company_id": "tsmc",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-007",
+      "published_at_utc": "2026-07-24T00:00:00Z",
+      "title": "[News] Intel Pulls Forward 14A Timeline by One Year, Targeting 2028 Mass Production Near TSMC’s Roadmap",
+      "excerpt": "Team Blue has already secured its first 14A customer. Reuters, citing Elon Musk, reported in April that Tesla plans to use Intel’s next-generation 14A process for chips in its Terafab AI complex in Austin.",
+      "locator": "기사 5번째 문단",
+      "relevance": "Intel 14A 가 첫 외부 고객(Tesla)을 확보했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-032",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-008",
+      "published_at_utc": "2026-09-29T03:12:33Z",
+      "title": "Samsung’s 2nm chip process making some serious progress",
+      "excerpt": "According to Chosun, Samsung Foundry has lifted SF2 yield to around the 60% level, up from the mid-50% range previously reported by the market.",
+      "locator": "기사 2번째 문단",
+      "relevance": "Samsung 2나노(SF2) 수율이 60% 수준이라는 최근 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-033",
+      "company_id": "tsmc",
+      "factors": [
+        "F5",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-010",
+      "published_at_utc": "2026-05-21T12:43:38Z",
+      "title": "The custom AI ASIC state of play (May 2026) — Broadcom deals, Google TPUs, Meta MTIA & beyond",
+      "excerpt": "It’s manufactured on TSMC's N3P process in a dual-chiplet design co-developed with Broadcom and MediaTek, and features two TensorCores with doubled 256x256 MXU arrays plus four SparseCores.",
+      "locator": "기사 Google TPU 절 첫 문단(TPU v7 Ironwood 설명)",
+      "relevance": "Google TPU v7 이 Broadcom·MediaTek 과 함께 설계돼 TSMC N3P 로 만들어진다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-034",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-010",
+      "published_at_utc": "2026-05-21T12:43:38Z",
+      "title": "The custom AI ASIC state of play (May 2026) — Broadcom deals, Google TPUs, Meta MTIA & beyond",
+      "excerpt": "Microsoft's custom silicon program took a significant step forward in January with the deployment of Maia 200, manufactured on TSMC 3nm with over 140 billion transistors.",
+      "locator": "기사 Microsoft, Tesla, and other efforts 절 첫 문장",
+      "relevance": "Microsoft Maia 200 이 TSMC 3나노로 만들어진다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-035",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-011",
+      "published_at_utc": "2025-12-03T00:00:00Z",
+      "title": "AWS Releases Trainium3 ASIC to Ease Reliance on NVIDIA Hardware",
+      "excerpt": "The chip is manufactured using TSMC's N3 3 nm node and is now available in Amazon EC2 Trn3 UltraServer instances.",
+      "locator": "기사 첫 문단 끝 문장",
+      "relevance": "AWS Trainium3 가 TSMC N3 로 만들어진다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-036",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-011",
+      "published_at_utc": "2025-12-03T00:00:00Z",
+      "title": "AWS Releases Trainium3 ASIC to Ease Reliance on NVIDIA Hardware",
+      "excerpt": "Amazon is providing these ASICs to help customers diversify their computing infrastructure beyond traditional NVIDIA and AMD GPUs.",
+      "locator": "기사 3번째 문단 첫 문장",
+      "relevance": "Trainium 이 NVIDIA GPU 를 대신하려는 칩이라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-037",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-012",
+      "published_at_utc": "2026-04-09T07:13:20Z",
+      "title": "Apple’s self-designed AI server chip “Baltra” may be manufactured by TSMC",
+      "excerpt": "Apple and Broadcom’s collaboration on an AI server chip, internally codenamed “Baltra”, is expected to be manufactured by TSMC using the N3E process, the second-generation 3nm fabrication technology.",
+      "locator": "기사 첫 문단 첫 문장",
+      "relevance": "Apple Baltra 를 TSMC 3나노(N3E)로 만들 것으로 보인다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-038",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-012",
+      "published_at_utc": "2026-04-09T07:13:20Z",
+      "title": "Apple’s self-designed AI server chip “Baltra” may be manufactured by TSMC",
+      "excerpt": "The Baltra AI server chip is expected to be first deployed in Apple’s security-focused cloud infrastructure, providing cloud computing services to reduce reliance on expensive NVIDIA GPUs, thereby lowering data center operating costs.",
+      "locator": "기사 2번째 문단",
+      "relevance": "Baltra 가 NVIDIA GPU 의존을 줄이려는 칩이라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-039",
+      "company_id": "tsmc",
+      "factors": [
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-013",
+      "published_at_utc": "2026-02-27T11:05:24Z",
+      "title": "NVIDIA Beats Apple to Become TSMC's Largest Customer",
+      "excerpt": "As for client B, also known as Apple, they provided a not insignificant NT$645.1 billion or US$20.5 billion in revenue for TSMC. As a share of TSMC's revenue, NVIDIA stood for 19 percent—up from 12 percent in 2024—and Apple for 17 percent, down from 22 percent in 2024.",
+      "locator": "기사 2번째 문단 끝 두 문장",
+      "relevance": "2025년 TSMC 매출에서 NVIDIA 가 19%, Apple 이 17% 로 NVIDIA 가 최대 고객이 됐다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-040",
+      "company_id": "tsmc",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "Our largest customer in 2023, 2024 and 2025 accounted for 25%, 22% and 19% of our net revenue in the respective year. Our second largest customer in 2023, 2024 and 2025 accounted for 11%, 12%, and 17% of our net revenue in the respective year.",
+      "locator": "20-F (FY2025) Item 3 Risk Factors — large customers 항목 둘째 문단",
+      "relevance": "2025년 최대 고객 19%, 둘째 고객 17%(합계 36%)라는 공시다. 고객 이름은 공시하지 않는다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-041",
+      "company_id": "tsmc",
+      "factors": [
+        "F5",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-014",
+      "published_at_utc": "2025-09-16T09:20:14Z",
+      "title": "TSMC's first 2 nm Node Customers are Apple, AMD, NVIDIA, and MediaTek; Intel Missing",
+      "excerpt": "TrendForce compiled a brief list of the first customers of TSMC's 2 nm N2 foundry node. Perhaps the biggest customer is Apple, with its upcoming A20 chip powering next-generation iPhones, the M6 line of processors powering its Macs, and the Vision Pro R2 chip powering its next-gen AR wearable, with mass-production expected to commence in 2026. AMD and MediaTek will be among the first customers implementing N2.",
+      "locator": "기사 첫 문단 앞 세 문장",
+      "relevance": "Apple·AMD·MediaTek 이 TSMC 첨단 공정의 주요 고객이라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-042",
+      "company_id": "tsmc",
+      "factors": [
+        "F5",
+        "F7",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "However, some of our customers have entered into agreements with us to pay temporary receipts in order to retain specified capacity at our fabs. The treatment of advance temporary receipts, either by refund or by accounts receivable offsetting, will be determined by mutual consent when the terms and conditions set forth in the agreements are satisfied.",
+      "locator": "20-F (FY2025) Item 4 Information on the Company — Advance Payment by Customers 문단(연결재무제표 Note 22 c. Temporary receipts from customers 참조)",
+      "relevance": "일부 고객이 캐파를 확보하려고 TSMC 에 선급금을 낸다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-043",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tsmc-000005086325000129",
+      "published_at_utc": "2025-08-22T00:00:00Z",
+      "title": "Intel 8-K (2025-08-22) Exhibit 99.1 — Intel and Trump Administration Reach Historic Agreement",
+      "excerpt": "Under the terms of today’s announcement, the government agrees to purchase 433.3 million primary shares of Intel common stock at a price of $20.47 per share, equivalent to a 9.9 percent stake in the company.",
+      "locator": "Intel 8-K (2025-08-22) Exhibit 99.1 보도자료 6번째 문단",
+      "relevance": "미 정부가 Intel 보통주 9.9% 를 사기로 한 합의 내용이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-044",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-015",
+      "published_at_utc": "2026-07-16T00:00:00Z",
+      "title": "TSMC announces additional $100bn investment in Arizona as chipmaker posts $40.2bn revenue for Q2 2026",
+      "excerpt": "When questioned about how the company can continue to compete against other players in the market, in particular Intel, which received an $8.9 billion investment from the US government last year in exchange for a ten percent stake, Wei somewhat coyly responded: “We also got the government support, by the way, although we don't announce it.“",
+      "locator": "기사 6번째 문단",
+      "relevance": "미 정부가 Intel 지분 약 10% 를 실제로 가지고 있다는 2026년 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-045",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-016",
+      "published_at_utc": "2026-01-19T16:02:33Z",
+      "title": "Taiwan to face lower tariffs and invest in US chip manufacturing in new trade deal as US introduces 25% global semiconductor tariff",
+      "excerpt": "Meanwhile, the US government has classified the import of both semiconductor chips and critical minerals as national security risks, and has imposed an additional 25% global tariff on the import of certain semiconductors.",
+      "locator": "기사 첫 문단 둘째 문장",
+      "relevance": "2026년 1월 미국이 일부 반도체 수입에 25% 관세를 매겼다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-046",
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tsmc-016",
+      "published_at_utc": "2026-01-19T16:02:33Z",
+      "title": "Taiwan to face lower tariffs and invest in US chip manufacturing in new trade deal as US introduces 25% global semiconductor tariff",
+      "excerpt": "Those building new semiconductor capacity in the US will be allowed to import up to 2.5 times the planned capacity without paying Section 232 duties during the approved construction period, with a lower preferential Section 232 rate for above-quota imports.",
+      "locator": "기사 미국·대만 무역 합의 설명 문단",
+      "relevance": "미국에 새 반도체 캐파를 짓는 대만 기업은 계획 캐파의 2.5배까지 관세 없이 들여올 수 있다는 합의 내용이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-047",
+      "company_id": "tsmc",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "The majority of our principal executive officers and our principal production facilities are located in the R.O.C., and the majority of our net revenue is derived from our operations in the R.O.C.",
+      "locator": "20-F (FY2025) Item 3 Risk Factors — political, economic, financial, military conditions 항목 첫 문장",
+      "relevance": "주요 생산 시설 대부분이 대만에 있다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-048",
+      "company_id": "tsmc",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "Implementing these capacity expansion plans will increase our costs, and the increases may be substantial. For example, we would need to build new facilities, purchase additional equipment and hire and train personnel to operate the new equipment. If the market demand does not materialize, and/or we do not increase our net revenue accordingly, our financial performance may be adversely affected by these increased costs.",
+      "locator": "20-F (FY2025) Item 3 Risk Factors — capacity and production facilities 항목 둘째 문단",
+      "relevance": "수요가 따라오지 않으면 캐파 증설 비용이 실적을 해친다는 회사의 위험 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-049",
+      "company_id": "tsmc",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tsmc-000119312524099840",
+      "published_at_utc": "2024-04-18T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2023)",
+      "excerpt": "Our net revenue in 2023 decreased by 4.5% from 2022, which was mainly attributed to a decrease in wafer shipments, partially offset by an increase in ASP due to a higher proportion of advanced technology (7-nanometer and below) revenue and a depreciation of the NT dollar against the U.S. dollar.",
+      "locator": "20-F (FY2023) Item 5 — Year-to-Year Comparisons, Net Revenue 문단",
+      "relevance": "2023년 매출이 4.5% 줄었다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-050",
+      "company_id": "tsmc",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tsmc-000119312524099840",
+      "published_at_utc": "2024-04-18T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2023)",
+      "excerpt": "In 2023, our gross margin decreased to 54.4% of net revenue from 59.6% in 2022, mainly attributable to lower capacity utilization and 3-nanometer ramp-up, partially offset by more favorable foreign exchange rate.",
+      "locator": "20-F (FY2023) Item 5 — Year-to-Year Comparisons, Gross Margin 문단",
+      "relevance": "2023년 매출총이익률이 54.4% 였다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-051",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F3",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "published_at_utc": "2026-08-14T00:00:00Z",
+      "title": "TSMC 6-K (2026-08-14) 2026 상반기 연결재무제표(대만 IFRS)",
+      "excerpt": "For the Three Months Ended June 30 For the Six Months Ended June 30 2026 2025 2026 2025 Amount % Amount % Amount % Amount % NET REVENUE (Notes 20, 31 and 37) $1,270,380,250 100 $933,791,869 100 $2,404,483,690 100 $1,773,045,533 100",
+      "locator": "6-K (2026-08-14) 2026 상반기 연결재무제표 CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME — NET REVENUE 행(단위 천 대만달러)",
+      "relevance": "최근 1년 매출 = 2025년 연간 − 2025년 상반기 + 2026년 상반기 계산에 들어가는 상반기 매출이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-052",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "published_at_utc": "2026-08-14T00:00:00Z",
+      "title": "TSMC 6-K (2026-08-14) 2026 상반기 연결재무제표(대만 IFRS)",
+      "excerpt": "INCOME FROM OPERATIONS (Note 37) 766,602,651 60 463,423,638 50 1,425,568,793 59 870,504,446 49",
+      "locator": "6-K (2026-08-14) 2026 상반기 연결재무제표 CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME — INCOME FROM OPERATIONS 행(3개월·6개월, 2026·2025)",
+      "relevance": "최근 1년 영업이익(2025-07-01~2026-06-30) 계산에 들어가는 상반기 영업이익이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-053",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F3",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-FY2025",
+      "published_at_utc": "2026-02-26T00:00:00Z",
+      "title": "TSMC 6-K (2026-02-26) 2025 연결재무제표(대만 IFRS)",
+      "excerpt": "NET REVENUE (Notes 5, 21, 33 and 39) $3,809,054,272 100 $2,894,307,699 100",
+      "locator": "6-K (2026-02-26) 2025 연결재무제표 CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME — NET REVENUE 행(2025·2024, 단위 천 대만달러)",
+      "relevance": "최근 1년 매출과 그 전 1년 매출 계산에 들어가는 연간 매출이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-054",
+      "company_id": "tsmc",
+      "factors": [
+        "F2",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-FY2025",
+      "published_at_utc": "2026-02-26T00:00:00Z",
+      "title": "TSMC 6-K (2026-02-26) 2025 연결재무제표(대만 IFRS)",
+      "excerpt": "INCOME FROM OPERATIONS (Note 39) 1,936,091,677 51 1,322,053,050 46",
+      "locator": "6-K (2026-02-26) 2025 연결재무제표 CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME — INCOME FROM OPERATIONS 행(2025·2024)",
+      "relevance": "최근 1년 영업이익 계산에 들어가는 2025년 연간 영업이익이다. 최근 1년 영업이익률 56.1% = 2,491,156,024 / 4,440,492,429(천 대만달러)다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-055",
+      "company_id": "tsmc",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-2025H1",
+      "published_at_utc": "2025-08-14T00:00:00Z",
+      "title": "TSMC 6-K (2025-08-14) 2025 상반기 연결재무제표(대만 IFRS)",
+      "excerpt": "NET REVENUE (Notes 20, 31 and 37) $ 933,791,869 100 $ 673,510,177 100 $ 1,773,045,533 100 $ 1,266,154,378 100",
+      "locator": "6-K (2025-08-14) 2025 상반기 연결재무제표 CONSOLIDATED STATEMENTS OF COMPREHENSIVE INCOME — NET REVENUE 행(3개월 2025·2024, 6개월 2025·2024)",
+      "relevance": "그 전 1년 매출(2024-07-01~2025-06-30) = 2024년 연간 − 2024년 상반기 + 2025년 상반기 계산에 들어가는 2024년 상반기 매출이다. 최근 1년 매출 증가율 30.6% = 4,440,492,429 / 3,401,198,854 − 1 이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-056",
+      "company_id": "tsmc",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "published_at_utc": "2026-08-14T00:00:00Z",
+      "title": "TSMC 6-K (2026-08-14) 2026 상반기 연결재무제표(대만 IFRS)",
+      "excerpt": "Net cash generated by operating activities 1,482,341,242 1,122,637,757",
+      "locator": "6-K (2026-08-14) 2026 상반기 연결재무제표 CONSOLIDATED STATEMENTS OF CASH FLOWS — Net cash generated by operating activities 행(6개월 2026·2025)",
+      "relevance": "최근 1년 영업현금흐름 계산에 들어가는 상반기 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-057",
+      "company_id": "tsmc",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-2026H1",
+      "published_at_utc": "2026-08-14T00:00:00Z",
+      "title": "TSMC 6-K (2026-08-14) 2026 상반기 연결재무제표(대만 IFRS)",
+      "excerpt": "Hedging financial instruments - (631,620) Property, plant and equipment (846,764,746) (628,052,531)",
+      "locator": "6-K (2026-08-14) 2026 상반기 연결재무제표 CONSOLIDATED STATEMENTS OF CASH FLOWS — CASH FLOWS FROM INVESTING ACTIVITIES, Acquisitions of: Property, plant and equipment 행",
+      "relevance": "최근 1년 설비투자 계산에 들어가는 상반기 설비 취득 지급액이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-058",
+      "company_id": "tsmc",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-FY2025",
+      "published_at_utc": "2026-02-26T00:00:00Z",
+      "title": "TSMC 6-K (2026-02-26) 2025 연결재무제표(대만 IFRS)",
+      "excerpt": "Income taxes paid (267,557,452) (183,640,119) Net cash generated by operating activities 2,274,975,625 1,826,177,068",
+      "locator": "6-K (2026-02-26) 2025 연결재무제표 CONSOLIDATED STATEMENTS OF CASH FLOWS — Net cash generated by operating activities 행(2025·2024)",
+      "relevance": "최근 1년 영업현금흐름 계산에 들어가는 2025년 연간 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-059",
+      "company_id": "tsmc",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-6K-FY2025",
+      "published_at_utc": "2026-02-26T00:00:00Z",
+      "title": "TSMC 6-K (2026-02-26) 2025 연결재무제표(대만 IFRS)",
+      "excerpt": "Investments accounted for using equity method - (3,738,753) Property, plant and equipment (1,272,410,529) (956,006,536)",
+      "locator": "6-K (2026-02-26) 2025 연결재무제표 CONSOLIDATED STATEMENTS OF CASH FLOWS — Acquisitions of: Property, plant and equipment 행(2025·2024)",
+      "relevance": "최근 1년 설비투자 계산에 들어가는 2025년 설비 취득 지급액이다. 최근 1년 FCF = (2,274,975,625 − 1,122,637,757 + 1,482,341,242) − (1,272,410,529 − 628,052,531 + 846,764,746) = 1,143,556,366 천 대만달러다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-tsmc-060",
+      "company_id": "tsmc",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-TSM-20F-FY2025",
+      "published_at_utc": "2026-04-16T00:00:00Z",
+      "title": "TSMC Form 20-F (FY2025)",
+      "excerpt": "For convenience only, U.S. dollar amounts presented in the accompanying consolidated financial statements have been translated from New Taiwan dollars at the exchange rate as set forth in the statistical release of the Federal Reserve Board of the United States, which was NT$31.37 to US$1.00 as of December 31, 2025.",
+      "locator": "20-F (FY2025) 연결재무제표 Note 3 U.S. Dollar Amounts",
+      "relevance": "최근 1년 FCF 1,143,556,366 천 대만달러를 미국달러(+$36.5B)로 바꾸는 발행사 선언 환율이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-tsmc-004",
+      "excerpt": "The foundry begins commercial 2nm production while relying on ASML equipment that remains without a direct competing supplier.",
+      "locator": "기사 첫머리 요약 둘째 항목(원문 주소 https://simplywall.st/stocks/us/semiconductors/nyse-tsm/taiwan-semiconductor-manufacturing/news/taiwan-semiconductor-manufacturing-tsm-starts-commercial-2-n)"
+    },
+    {
+      "evidence_id": "EV-tsmc-007",
+      "excerpt": "Intel CEO Lip-Bu Tan stated that Intel's relationship with TSMC is built on partnership rather than rivalry.",
+      "locator": "기사 첫 문단 첫 문장(무료 공개분, 원문 주소 https://www.digitimes.com/news/a20260930PD246/intel-lip-bu-tan-tsmc-partnership.html)"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "tsmc.F1",
+      "evidence_after": [
+        "TSMC ① 은 부품 채널 상한(최종 사용자와 접점이 없는 부품 공급자는 2점을 넘지 못한다)에 걸려 2점이다.",
+        "OIP·PDK 락인은 부품 채널 상한을 풀 소비자·업무 채널이 아니다."
+      ],
+      "evidence_up_after": [
+        "OIP 설계 생태계와 PDK(공정 설계 키트) 락인은 실재해 고객의 설계 자산이 TSMC 공정에 묶인다. [EV-tsmc-061, EV-tsmc-008]"
+      ],
+      "evidence_down_after": [
+        "TSMC 는 칩 설계사에 공정을 파는 부품 채널만 있고, 개인 소비자나 조직 워크플로와 닿는 채널이 없다. [EV-tsmc-009]"
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F2",
+      "evidence_after": [
+        "TSMC ② 는 범위 최상단인 5점이고, 성능 도약 경로가 세대 격차 수준이라는 판단에서 나온 점수다.",
+        "세 경로(성능 도약·패러다임 적응·표준 선점)별 판정 입력은 아직 따로 매기지 않아, 점수는 사람이 매긴 5점으로 서 있다."
+      ],
+      "evidence_up_after": [
+        "TSMC 는 N2(2나노) 양산을 시작해 2026년 2분기 웨이퍼 매출의 3% 를 N2 로 냈고 하반기에 가파르게 늘릴 계획이며, 2026-09-18 에도 2나노 상업 양산 시작이 2차 매체로 보도됐다. [EV-tsmc-018, EV-tsmc-012, EV-tsmc-014, EV-tsmc-004]",
+        "웨이퍼 매출에서 N3 가 30%, 7나노 이하가 77% 를 차지한다. [EV-tsmc-012]",
+        "파운드리 시장 점유율(TrendForce 상위 10개사 매출 기준)은 2026년 2분기 72.5% 이고, 2026년 2분기 매출총이익률은 67.7% 로 분기 사상 최고였으며 영업이익률은 60.3% 여서 가격 결정력을 보여 준다. 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 영업이익률은 56.1% 다. [EV-tsmc-027, EV-tsmc-011, EV-tsmc-028, EV-tsmc-051, EV-tsmc-052, EV-tsmc-053, EV-tsmc-054]",
+        "CoWoS 패키징은 5.5배 레티클을 이미 98% 수율로 만들고 있고 14배 레티클을 2028년 목표로 둔다(계획). [EV-tsmc-026]",
+        "도전자인 Intel 14A 는 2028년 대량 양산이 목표이고 첫 외부 고객(Tesla)을 확보했으며 Samsung 2나노(SF2) 수율은 60% 수준이라, 같은 세대의 경쟁자로 보지 않았다. [EV-tsmc-030, EV-tsmc-031, EV-tsmc-032]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "tsmc.F3",
+      "evidence_after": [
+        "TSMC ③ 은 세 기준의 통과점이 2 라 3점이다.",
+        "모방 불가능성은 통과다.",
+        "별도 수익모델은 실패다.",
+        "후발 가속도는 통과로 판정했다.",
+        "문이 닫힌 증거는 없다."
+      ],
+      "evidence_up_after": [
+        "Intel 과 Samsung 은 TSMC 의 수율과 규모를 따라잡지 못했다. [EV-tsmc-027, EV-tsmc-029]",
+        "TSMC 매출 성장률은 2025년 31.6% 였고, 2026년 2분기 매출은 전년 대비 36% 늘었으며, 회사는 2026년 매출 성장 가이던스를 +30% 에서 +40% 이상으로 올렸다. [EV-tsmc-016, EV-tsmc-011, EV-tsmc-017, EV-tsmc-015]"
+      ],
+      "evidence_down_after": [
+        "TSMC 의 사업은 파운드리 하나뿐이다. [EV-tsmc-010]",
+        "최근 1년(2025-07-01~2026-06-30) 매출 성장률은 30.6% 로 2025년 연간과 비슷해, 반기 창으로 본 가속은 아직 뚜렷하지 않다(추론). [EV-tsmc-051, EV-tsmc-053, EV-tsmc-055]",
+        "Intel 14A 와 Samsung 2나노가 진입로에 있다. [EV-tsmc-030, EV-tsmc-032]"
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F4",
+      "evidence_after": [
+        "TSMC ④ 는 4점이다.",
+        "TSMC ④ 가 5점에 이르지 못하는 이유는 파운드리 단일 사업과 AI 사이클 노출이다."
+      ],
+      "evidence_up_after": [
+        "TSMC 는 생산 지역을 넓히고 있다. 애리조나에 $265B(팹 10개와 첨단 패키징 공장 2곳)를 투자하고 일본 구마모토와 독일 드레스덴에도 거점을 둔다. [EV-tsmc-024, EV-tsmc-023]",
+        "A16·A14 공정 로드맵이 일정대로 가고 있고, CoWoS 캐파를 해마다 80% 늘린다. [EV-tsmc-019, EV-tsmc-020, EV-tsmc-025]",
+        "2023년 회사는 살아남아 고마진을 지켰고, 스마트폰·IoT·차량 등 HPC 밖의 매출 34% 가 바닥을 받친다. [EV-tsmc-050, EV-tsmc-013]"
+      ],
+      "evidence_down_after": [
+        "TSMC 는 사업이 파운드리 하나이고 HPC 가 매출의 66% 라 AI 사이클에 묶여 있다. [EV-tsmc-010, EV-tsmc-013]",
+        "호황 이후의 모습을 보여 주는 2023년에는 매출이 4.5% 줄고 매출총이익률은 54% 였다. [EV-tsmc-049, EV-tsmc-050]"
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F5.strict54",
+      "evidence_after": [
+        "TSMC ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(-1) 로 3점이다.",
+        "동맹 등급 +2 는 지분이 걸린 동맹이 복수이거나 자기 경쟁사까지 자기 공정에 편입했을 때 서는데, TSMC 는 둘 다 아니다.",
+        "고객 동맹 자체는 서므로 동맹 등급은 +1 이다.",
+        "적대 등급 -1(비용형)은 Intel Foundry 와 관세에서 나온다."
+      ],
+      "evidence_up_after": [
+        "TSMC 공정에는 Apple·NVIDIA·AMD·Broadcom·MediaTek 에 더해 Trainium·TPU·Maia 같은 칩까지 들어와 있고, Apple 의 Baltra 도 TSMC 3나노로 만들 것으로 보도됐다. [EV-tsmc-041, EV-tsmc-039, EV-tsmc-033, EV-tsmc-035, EV-tsmc-034, EV-tsmc-037]",
+        "TSMC 와 고객의 거래는 매매지만 공정 락인이 있고 고객은 팹을 지을 수 없어 떠나기 어렵다. [EV-tsmc-008, EV-tsmc-061, EV-tsmc-009]",
+        "2026-10-01 Intel CEO 가 TSMC 를 경쟁자가 아니라 파트너라고 말했다는 보도가 있으나, Intel 의 TSMC 위탁 계약이나 물량이 공시로 확인되지 않아 동맹 등급을 바꾸지 않는다. [EV-tsmc-007]"
+      ],
+      "evidence_down_after": [
+        "TSMC 는 고객에 투자하지 않는다. 방향은 반대여서 고객이 선급금으로 TSMC 캐파를 댄다. [EV-tsmc-022, EV-tsmc-042]",
+        "Trainium·TPU·Maia·Baltra 는 NVIDIA 의 경쟁 칩이고, TSMC 자신의 경쟁사(Intel Foundry·Samsung 파운드리)가 TSMC 공정에 들어왔다는 근거는 없다. [EV-tsmc-036, EV-tsmc-038]",
+        "미 정부가 Intel 지분 약 10%(합의 기준 9.9%)를 가지고 있다. [EV-tsmc-043, EV-tsmc-044]",
+        "2026년 1월 미국은 일부 반도체 수입에 25% 관세를 매겼고, 이어진 미국·대만 무역 합의로 미국에 새 반도체 캐파를 짓는 대만 기업은 건설 기간에 계획 캐파의 2.5배까지 관세 없이 들여올 수 있게 돼, TSMC 의 미국 투자가 사실상 강요됐다. [EV-tsmc-045, EV-tsmc-046]"
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F7",
+      "evidence_after": [
+        "TSMC ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
+        "조달 의존 고객 비중은 작음으로 판정했다.",
+        "최근 1년(2025-07-01~2026-06-30) 영업외이익 비중(세전이익의 6.6%)은 ⑥ 소관이라 ⑦ 의 입력이 아니다."
+      ],
+      "evidence_up_after": [
+        "TSMC 는 고객에 투자하지 않아, 자기 돈이 고객을 거쳐 매출로 돌아오는 고리가 없다. 오히려 고객이 선급금으로 TSMC 캐파를 댄다. [EV-tsmc-022, EV-tsmc-042]",
+        "TSMC 의 주요 고객은 Apple·NVIDIA·AMD·Broadcom·MediaTek 같은 칩 설계사다. [EV-tsmc-041, EV-tsmc-039, EV-tsmc-033]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "tsmc.F8",
+      "evidence_after": [
+        "TSMC ⑧ 은 -4점이다.",
+        "대만 지정학을 존립 위험으로 판정했다.",
+        "선급금·장기 약정이 take-or-pay 여서 수요가 꺾이면 NVIDIA 같은 고객이 먼저 손실을 진다는 사실은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "완충 장치도 있다. 일부 고객은 TSMC 캐파를 확보하려고 선급금을 내고, 약정 조건이 충족되면 환불할지 매출채권과 상계할지를 합의로 정한다. [EV-tsmc-042]"
+      ],
+      "evidence_down_after": [
+        "가장 큰 위험은 대만 지정학이다. 첨단 캐파 대부분이 물리적으로 대만에 있다. [EV-tsmc-047]",
+        "AI 사이클 노출도 크다. HPC 가 매출의 66% 이고, NVIDIA 한 곳이 19% 로 Apple(17%)을 제치고 최대 고객이 됐으며 상위 두 곳이 36% 를 차지하고, CoWoS 전용 설비투자는 수요가 꺾이면 좌초될 수 있다. [EV-tsmc-013, EV-tsmc-039, EV-tsmc-040, EV-tsmc-048]",
+        "EUV 노광장비는 ASML 한 곳에서만 공급받는다. [EV-tsmc-004]"
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F9",
+      "evidence_after": [
+        "TSMC ⑨ 는 감점 없이 0점이다.",
+        "게이트 1(본업이 버는가)은 통과한다.",
+        "게이트 2(현금이 새는가)는 추세를 안정으로 판정해 0점에서 끝난다.",
+        "2026-06-30 순현금은 $86.5B(VIS 잔여 지분 포함, 빼면 $84.1B)이지만, 순현금 잔고는 ⑨ 의 입력이 아니어서 참고로만 적는다."
+      ],
+      "evidence_up_after": [
+        "최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 영업이익률은 56.1% 다. [EV-tsmc-051, EV-tsmc-052, EV-tsmc-053, EV-tsmc-054]",
+        "최근 1년(2025-07-01~2026-06-30) FCF 는 +$36.5B 로 흑자다. [EV-tsmc-056, EV-tsmc-057, EV-tsmc-058, EV-tsmc-059, EV-tsmc-060]"
+      ],
+      "evidence_down_after": [
+        "2026년 설비투자 가이던스를 1월의 $52~56B 에서 $60~64B 로 올렸다. 가이던스는 계획이라 추세 판정의 근거로 쓰지 않는다. [EV-tsmc-021]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "tsmc.F8",
+      "column": "up",
+      "line": "완충 장치도 있다. 선급금과 장기 약정은 take-or-pay 라 수요가 꺾이면 NVIDIA 같은 고객이 먼저 맞는다.",
+      "searched": "20-F (FY2025) Item 4 Advance Payment by Customers·Note 22, 2Q26·4Q25 실적 통화 녹취록, 웹 보도. 선급금 존재와 처리 방식만 확인했고 take-or-pay 조건과 손실 분담 순서는 찾지 못해 그 부분만 판정 칸으로 옮겼다(줄은 고쳐 남김).",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "tsmc.F2",
+      "before": "순수 파운드리 점유율은 73% 이고, 2026년 2분기 매출총이익률 67.7%·영업이익률 60.3% 로 분기 사상 최고를 기록해 가격 결정력을 보여 준다. 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 영업이익률은 56.1% 다.",
+      "after": "파운드리 시장 점유율(TrendForce 상위 10개사 매출 기준)은 2026년 2분기 72.5% 이고, 2026년 2분기 매출총이익률은 67.7% 로 분기 사상 최고였으며 영업이익률은 60.3% 여서 가격 결정력을 보여 준다. 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 영업이익률은 56.1% 다.",
+      "why": "TrendForce 2026년 2분기 집계는 상위 10개 파운드리(순수 파운드리만이 아님) 가운데 TSMC 점유율을 72.5% 로 적는다. 사상 최고로 보도된 것은 매출총이익률 67.7% 이고, 영업이익률 60.3% 가 사상 최고라는 원문은 찾지 못했다.",
+      "evidence_id": "EV-tsmc-027, EV-tsmc-011, EV-tsmc-028, EV-tsmc-051, EV-tsmc-052, EV-tsmc-053, EV-tsmc-054"
+    },
+    {
+      "judgment_id": "tsmc.F2",
+      "before": "CoWoS 패키징은 5.5배 레티클 양산을 계획하고 14배 레티클을 2028년 목표로 둔다(계획).",
+      "after": "CoWoS 패키징은 5.5배 레티클을 이미 98% 수율로 만들고 있고 14배 레티클을 2028년 목표로 둔다(계획).",
+      "why": "원문은 5.5배 레티클 CoWoS 를 계획이 아니라 이미 98% 수율로 만들고 있다고 적는다.",
+      "evidence_id": "EV-tsmc-026"
+    },
+    {
+      "judgment_id": "tsmc.F2",
+      "before": "도전자인 Intel 14A 는 2028년이 목표이고 고객 2곳과 협의 중이며 Samsung SF2P 수율은 70% 수준이라, 같은 세대의 경쟁자로 보지 않았다.",
+      "after": "도전자인 Intel 14A 는 2028년 대량 양산이 목표이고 첫 외부 고객(Tesla)을 확보했으며 Samsung 2나노(SF2) 수율은 60% 수준이라, 같은 세대의 경쟁자로 보지 않았다.",
+      "why": "2026-07-24 보도는 Intel 14A 가 고객 2곳과 협의하는 단계를 지나 첫 외부 고객 Tesla 를 확보했다고 적는다. Samsung 2나노 수율은 2026-09-28 보도에서 SF2 기준 60% 수준이고, SF2P 70% 는 원문을 찾지 못했다.",
+      "evidence_id": "EV-tsmc-030, EV-tsmc-031, EV-tsmc-032"
+    },
+    {
+      "judgment_id": "tsmc.F3",
+      "before": "Intel 과 Samsung 이 수십 년 동안 TSMC 의 수율과 규모를 따라잡지 못했다.",
+      "after": "Intel 과 Samsung 은 TSMC 의 수율과 규모를 따라잡지 못했다.",
+      "why": "원문(2026년 2분기 점유율 72.5%, Samsung 2나노 수율 50% 중반 대 TSMC 60~70%)은 지금의 수율·규모 격차를 보여 주지만 \"수십 년 동안\"이라는 기간을 적은 원문은 찾지 못했다.",
+      "evidence_id": "EV-tsmc-027, EV-tsmc-029"
+    },
+    {
+      "judgment_id": "tsmc.F4",
+      "before": "TSMC 는 생산 지역을 넓히고 있다. 애리조나에 $165B(팹 6개와 패키징)를 투자하고 일본 구마모토와 독일 드레스덴에도 거점을 둔다.",
+      "after": "TSMC 는 생산 지역을 넓히고 있다. 애리조나에 $265B(팹 10개와 첨단 패키징 공장 2곳)를 투자하고 일본 구마모토와 독일 드레스덴에도 거점을 둔다.",
+      "why": "2026-07-16 TSMC 가 애리조나 투자를 $100B 더 늘려 총 $265B(팹 10개·첨단 패키징 2곳)가 됐다.",
+      "evidence_id": "EV-tsmc-024, EV-tsmc-023"
+    },
+    {
+      "judgment_id": "tsmc.F4",
+      "before": "2023년 회사는 살아남아 고마진을 지켰고, 스마트폰·차량·IoT 매출 34% 가 바닥을 받친다.",
+      "after": "2023년 회사는 살아남아 고마진을 지켰고, 스마트폰·IoT·차량 등 HPC 밖의 매출 34% 가 바닥을 받친다.",
+      "why": "2026년 2분기 플랫폼 비중은 스마트폰 22%·IoT 5%·차량 4%·DCE 1%·기타 2% 로, 34% 는 스마트폰·차량·IoT 셋이 아니라 HPC(66%)를 뺀 나머지 전체다.",
+      "evidence_id": "EV-tsmc-050, EV-tsmc-013"
+    },
+    {
+      "judgment_id": "tsmc.F5.strict54",
+      "before": "TSMC 공정에는 Apple·NVIDIA·AMD·Broadcom·MediaTek 에 더해 Trainium·TPU·Maia·Baltra 같은 칩까지 들어와 있다.",
+      "after": "TSMC 공정에는 Apple·NVIDIA·AMD·Broadcom·MediaTek 에 더해 Trainium·TPU·Maia 같은 칩까지 들어와 있고, Apple 의 Baltra 도 TSMC 3나노로 만들 것으로 보도됐다.",
+      "why": "Trainium3·TPU v7·Maia 200 은 TSMC 3나노로 만든다는 원문이 있으나, Baltra 는 TSMC N3E 로 만들 것으로 \"예상된다\"는 보도(2026-04-09)뿐이다.",
+      "evidence_id": "EV-tsmc-041, EV-tsmc-039, EV-tsmc-033, EV-tsmc-035, EV-tsmc-034, EV-tsmc-037"
+    },
+    {
+      "judgment_id": "tsmc.F5.strict54",
+      "before": "미 정부가 Intel Foundry 의 10% 지분을 가지고 있다.",
+      "after": "미 정부가 Intel 지분 약 10%(합의 기준 9.9%)를 가지고 있다.",
+      "why": "미 정부의 지분은 Intel Foundry 가 아니라 Intel 회사 전체의 보통주 9.9%(2025-08 합의, $8.9B)다.",
+      "evidence_id": "EV-tsmc-043, EV-tsmc-044"
+    },
+    {
+      "judgment_id": "tsmc.F5.strict54",
+      "before": "1월 14일 포고령은 25% 관세를 매기면서 미국에 투자하면 캐파의 2.5배까지 무관세로 해 주어, $165B 미국 투자가 사실상 강요됐다.",
+      "after": "2026년 1월 미국은 일부 반도체 수입에 25% 관세를 매겼고, 이어진 미국·대만 무역 합의로 미국에 새 반도체 캐파를 짓는 대만 기업은 건설 기간에 계획 캐파의 2.5배까지 관세 없이 들여올 수 있게 돼, TSMC 의 미국 투자가 사실상 강요됐다.",
+      "why": "25% 관세는 2026년 1월 포고령으로, 계획 캐파 2.5배 무관세 수입은 그 뒤의 미국·대만 무역 합의로 나왔다. 포고령 날짜(1월 14일)를 적은 원문은 열지 못했고, TSMC 미국 투자액은 2026-07-16 이후 $265B 다.",
+      "evidence_id": "EV-tsmc-045, EV-tsmc-046"
+    },
+    {
+      "judgment_id": "tsmc.F8",
+      "before": "완충 장치도 있다. 선급금과 장기 약정은 take-or-pay 라 수요가 꺾이면 NVIDIA 같은 고객이 먼저 맞는다.",
+      "after": "완충 장치도 있다. 일부 고객은 TSMC 캐파를 확보하려고 선급금을 내고, 약정 조건이 충족되면 환불할지 매출채권과 상계할지를 합의로 정한다.",
+      "why": "20-F 는 고객 선급금(temporary receipts)과 그 처리 방식만 적는다. 선급금·장기 약정이 take-or-pay 라 수요가 꺾이면 고객이 먼저 손실을 진다는 원문은 찾지 못했다.",
+      "evidence_id": "EV-tsmc-042"
+    },
+    {
+      "judgment_id": "tsmc.F9",
+      "before": "2026년 설비투자 가이던스를 $60~64B 로 약 $10B 올렸다. 가이던스는 계획이라 추세 판정의 근거로 쓰지 않는다.",
+      "after": "2026년 설비투자 가이던스를 1월의 $52~56B 에서 $60~64B 로 올렸다. 가이던스는 계획이라 추세 판정의 근거로 쓰지 않는다.",
+      "why": "회사는 1월 $52~56B, 4월 $56B 근처, 7월 $60~64B 로 적어 상·하단 모두 $8B 올랐다. \"약 $10B\" 는 통화에서 애널리스트가 쓴 표현이다.",
+      "evidence_id": "EV-tsmc-021"
+    }
+  ]
+}
