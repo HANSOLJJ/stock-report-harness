@@ -735,7 +735,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
         groups = []
-        for label, factors, klass, total in (("과점 — 더한다 (각 0~5)", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다 (각 0~-5)", TRAP_FACTORS, "n", c["trap"])):
+        # 2026-10-07 외부 분석: factor 마다 범위가 달라(② 2~5, ⑥ 0~-7 …) '각 0~5'·'각 0~-5' 표기를 뺐다. 범위는 머리말 리드에 규칙에서 읽어 싣는다
+        for label, factors, klass, total in (("과점 — 더한다", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다", TRAP_FACTORS, "n", c["trap"])):
             rows = []
             for f in factors:
                 fr = c["factors"][f]
@@ -1764,6 +1765,23 @@ def link_cited_evidence(document: str, ctx: Any) -> str:
     return (head + sep + body).replace(CITED_SLOT, table)
 
 
+def _range_text(ctx: Any, factors: tuple[str, ...]) -> str:
+    """factor 범위를 규칙에서 읽어 같은 범위끼리 묶는다. 예: '①·④·⑤ 0~5점, ② 2~5점'."""
+    groups: dict[tuple[int, int], list[str]] = {}
+    for f in factors:
+        lo, hi = ctx.rules.payload["factors"][f]["range"]
+        groups.setdefault((lo, hi), []).append(ctx.rules.payload["factors"][f]["label"].split()[0])
+    return ", ".join(f"{'·'.join(marks)} {hi}~{lo}점" if hi <= 0 else f"{'·'.join(marks)} {lo}~{hi}점"
+                     for (lo, hi), marks in groups.items())
+
+
+def _f6_note(ctx: Any) -> str:
+    # 2026-10-07 외부 분석: ⑥ 이름이 '가격'이라 낮은 점수가 '주가가 비싸다'로만 읽혔다. 파라미터 모드는 성장·이익의 질까지 합친다
+    if ctx.rules.payload["factors"]["F6"].get("mode") != "parameters":
+        return ""
+    return " ⑥ 가격은 PER·EV/매출 배수에 매출 성장률과 영업외 이익 비중 보정을 합친 점수라, 낮은 점수가 곧 주가가 비싸다는 뜻은 아니다."
+
+
 def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]], review_fm: dict[str, Any], approval: dict[str, Any], avail: dict[str, Any] | None = None) -> str:
     rc.set_company_names(ctx.companies)
     run = ctx.run
@@ -1809,7 +1827,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <header><div class="wrap">
   <div class="badge">{esc(ctx.rules.version)} · 기준일 {esc(run["as_of"])} · 채점 {len(run["companies"])}개사 · 순위 {results["population"]["scored"]}개사 · 승인 {esc(approval["approval_id"][:8])}</div>
   <h1>{esc(title)}</h1>
-  <p class="lede">AI 시대에 <b>누가 90년 과점을 만들 구조를 갖췄나</b>를 9개 항목으로 채점했다. <b>과점 factor 5개(각 0~5점)</b>에서 더하고 <b>함정 factor 4개(각 0~-5점)</b>에서 뺀다. 점수는 규칙과 입력에서 계산된 결과이며 손으로 고치지 않는다.</p>
+  <p class="lede">AI 시대에 <b>누가 90년 과점을 만들 구조를 갖췄나</b>를 9개 항목으로 채점했다. <b>과점 factor 5개({esc(_range_text(ctx, MOAT_FACTORS))})</b>에서 더하고 <b>함정 factor 4개({esc(_range_text(ctx, TRAP_FACTORS))})</b>에서 뺀다.{_f6_note(ctx)} 점수는 규칙과 입력에서 계산된 결과이며 손으로 고치지 않는다.</p>
   {survey_note}
   {anthropic_note}
 </div></header>

@@ -94,6 +94,15 @@ class ReportTabsTest(unittest.TestCase):
         # 좁은 화면에서 뒤쪽 탭이 잘려 있으면 .more 로 오른쪽 끝을 흐리게 한다(round 6 출력 리뷰)
         self.assertIn("classList.toggle('more'", code)
 
+    def test_lede_reads_factor_ranges_from_rules(self):
+        # 2026-10-07 외부 분석: '함정 각 0~-5' 는 ⑥ -7·⑦ -2·⑨ -4 와 달랐다
+        for slug, html in self.html.items():
+            with self.subTest(slug=slug):
+                lede = re.search(r'<p class="lede">(.*?)</p>', html, re.S).group(1)
+                for needle in ("② 2~5점", "③ 1~5점", "⑥ 0~-7점", "⑦ 0~-2점", "⑨ 0~-4점", "영업외 이익 비중"):
+                    self.assertIn(needle, lede)
+                self.assertNotIn("각 0~", html)
+
     def test_draft_notes_of_a_factor_without_evidence_get_their_own_header(self):
         from scorecard.render_md import render_draft
         slug = "ai-scorecard-2026-10-rescore"
