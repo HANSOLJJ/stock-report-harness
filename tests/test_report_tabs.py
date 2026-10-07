@@ -91,6 +91,20 @@ class ReportTabsTest(unittest.TestCase):
         # 순위표 행 클릭과 해시 펼침이 스크롤 전에 탭을 연다
         self.assertIn("window.reportShow(card); card.open=true", code)
         self.assertIn("window.reportShow(el);\n    el.open=true", code)
+        # 좁은 화면에서 뒤쪽 탭이 잘려 있으면 .more 로 오른쪽 끝을 흐리게 한다(round 6 출력 리뷰)
+        self.assertIn("classList.toggle('more'", code)
+
+    def test_draft_notes_of_a_factor_without_evidence_get_their_own_header(self):
+        from scorecard.render_md import render_draft
+        slug = "ai-scorecard-2026-10-rescore"
+        ctx = engine.load_context(slug)
+        baseline, _obs, triggers = stages.load_baseline(ctx.run["baseline_id"])
+        lines = render_draft(ctx, engine.load_results(slug), baseline, triggers).splitlines()
+        # 상장사 ⑥ 은 관측에서 계산해 근거 블록이 없다. 그 사유 줄은 ⑤ 블록이 아니라 ⑥ 머리줄 바로 아래에 온다
+        heads = [i for i, line in enumerate(lines) if line == "- **⑥ 가격**:"]
+        self.assertTrue(heads, "근거 블록이 없는 ⑥ 의 머리줄이 없다")
+        for i in heads:
+            self.assertTrue(lines[i + 1].startswith("  - "), lines[i + 1])
 
 
 if __name__ == "__main__":

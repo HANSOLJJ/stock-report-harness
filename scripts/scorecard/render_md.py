@@ -414,7 +414,11 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             # 2026-09-17 FIX-77: 초안도 카드와 같은 규칙을 쓴다. 승계 표기는 근거 머리줄이 이미 말하고,
             # `⚠️` 는 글자로 밝히며, 작업 메모는 본문에서 내린다(감사 기록에 남는다).
             # 2026-09-18 FIX-79 S1: HTML 카드와 같은 문장이다 — 한쪽만 고치면 둘이 갈린다.
-            for n in rc.factor_notes(ctx, f, fr):     # 사유가 앞에 오도록 factor_notes 가 정렬해 준다
+            notes = rc.factor_notes(ctx, f, fr)      # 사유가 앞에 오도록 factor_notes 가 정렬해 준다
+            if notes and block is None:
+                # 2026-10-07 출력 리뷰: 근거 블록이 없는 항목(관측에서 계산한 ⑥ 등)의 사유가 앞 항목 아래에 붙었다.
+                lines.append(f"- **{FACTOR_LABELS[f]}**:")
+            for n in notes:
                 lines.append(f"  - {rc.NOTE_KINDS[n['kind']]} — {n['text']}")
         lines.append("")
     # 원자료

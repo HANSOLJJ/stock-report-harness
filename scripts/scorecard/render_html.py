@@ -221,6 +221,8 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
 /* 2026-10-07 사용자 요청: 상단 탭. 머리 아래에 붙어 있고 좁은 화면에서는 가로로 밀어 본다. JS 가 없으면 탭 바는 숨고 패널은 모두 보인다. */
 .tabs{position:sticky;top:0;z-index:30;display:flex;gap:4px;overflow-x:auto;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0 8px;margin:4px 0 8px;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
+/* 좁은 화면에서 뒤쪽 탭이 잘려 있으면 오른쪽 끝을 흐리게 해 더 있다는 것을 알린다(JS 가 .more 를 세운다). */
+.tabs.more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 48px),transparent)}
 .tabs button{flex:0 0 auto;min-height:40px;padding:8px 14px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--tx2);font:inherit;font-size:var(--fs-md);font-weight:600;cursor:pointer}
 .tabs button:hover{color:var(--tx);background:var(--bg2)}
 .tabs button[aria-selected="true"]{color:var(--acc-text);background:var(--acc-soft);border-color:var(--acc-line)}
@@ -414,10 +416,14 @@ def js() -> str:
   function activate(id,remember){
     if(!panels.some(p=>p.id===id)) return false;
     panels.forEach(p=>{p.hidden=(p.id!==id);});
-    tabs.forEach(t=>{const on=t.dataset.tab===id; t.setAttribute('aria-selected',on?'true':'false'); t.tabIndex=on?0:-1;});
+    tabs.forEach(t=>{const on=t.dataset.tab===id; t.setAttribute('aria-selected',on?'true':'false'); t.tabIndex=on?0:-1;
+      if(on&&bar&&!bar.hidden) bar.scrollLeft=Math.max(0,t.offsetLeft-(bar.clientWidth-t.offsetWidth)/2);});
     if(remember) history.replaceState(null,'','#'+id);
+    moreHint();
     return true;
   }
+  function moreHint(){if(bar) bar.classList.toggle('more',bar.scrollLeft+bar.clientWidth<bar.scrollWidth-2);}
+  if(bar){bar.addEventListener('scroll',moreHint,{passive:true}); addEventListener('resize',moreHint);}
   // 다른 탭에 있는 요소로 가기 전에 그 요소가 든 탭을 연다(순위표 → 기업 카드, 트리거 → 인용 근거, 원자료 → 색인).
   window.reportShow=function(el){const p=el&&el.closest('.tabpanel'); if(p&&p.hidden) activate(p.id,false);};
   function toTop(){const head=document.querySelector('header'); const y=head?head.getBoundingClientRect().bottom+scrollY:0; if(scrollY>y) scrollTo(0,y);}
@@ -440,8 +446,9 @@ def js() -> str:
     return false;
   }
   addEventListener('hashchange',()=>fromHash(true));
-  if(!fromHash(false)) activate(panels[0].id,false);
   if(bar) bar.hidden=false;
+  if(!fromHash(false)) activate(panels[0].id,false);
+  moreHint();
 })();
 (function(){
   const table=document.getElementById('mainTable'); if(!table) return;
@@ -1238,7 +1245,8 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     # 2026-09-17 FIX-67 S1: 해시·입력 지문·실행 단위 선택·미결 결정 표는 감사 기록으로 옮겼다.
     # 본문에 남는 것은 기준 시점 한 줄, 어떻게 매겼는지, 알려진 한계 셋이다.
     return (
-        f'<p class="sub">{_asof_line(ctx)}. 앞서 매긴 판단의 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
+        # 2026-10-07 출력 리뷰: '앞서 매긴' 은 이전 판을 가리켜 화면 고정 문장에서 뺐다.
+        f'<p class="sub">{_asof_line(ctx)}. 사용자의 판단으로 이어받은 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
         f'남아 있으며 이번 실행에서 다시 확인하지 않았다.</p>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th>'
         f'<th class="text narrow">점수를 만드는 방식</th><th class="text narrow">점수의 출처</th><th>범위</th></tr></thead><tbody>{rows}</tbody></table></div>'
@@ -1357,7 +1365,7 @@ BASIS_DOC = {
                "점수 자체라는 뜻이다.", "calc_qual.py:30"),
     "carried": ("판정 입력 없이 점수만 기록된 칸", "**근거가 가장 약한 칸이다.** 점수 숫자만 있고 "
                 "그 점수를 만든 판정 입력이 기록돼 있지 않아 엔진이 다시 계산하지 못한다. ② 는 C-03(경로 판정), "
-                "⑦ 는 매트릭스 입력이 그 자리다. 같은 `앞서 매긴 것` 이라도 **사람 판단**은 근거 문장이 남아 있고 "
+                "⑦ 는 매트릭스 입력이 그 자리다. 같은 사람이 매긴 점수라도 **사람 판단**은 근거 문장이 남아 있고 "
                 "이쪽은 숫자뿐이다.", "calc_qual.py:45 (F2·C-03) · calc_qual.py:157 (F7·C-09)"),
     "grade": ("등급 산식", "⑤ 아군 확보의 `3 + A + H` 처럼 판정 입력을 정해진 산식에 넣어 환산한 점수다. "
               "**그 A·H 등급을 정하는 것은 사람이다** — 산식은 사람이 매긴 등급을 점수로 옮길 뿐이다.",
@@ -1479,7 +1487,7 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     statuses = [(k, v, d) for k, v, d in [
         ("ok", STATUS_LABEL["ok"], "이번 실행에서 점수가 만들어졌다. 관측에서 계산한 칸과 사람이 "
          "다시 매긴 칸이 여기 든다 — 어느 쪽인지는 **근거** 칸과 근거 머리줄이 말한다"),
-        ("carried_score", STATUS_LABEL["carried_score"], "**사용자가 앞서 매긴 판단**을 그대로 이어받았고 "
+        ("carried_score", STATUS_LABEL["carried_score"], "**사용자가 매긴 판단**을 그대로 이어받았고 "
          "이번 실행에서 다시 매기지 않았다. 근거 머리줄에 **사용자의 판단 · 판단일** 이 함께 나온다. "
          "판정 입력까지 남아 있는지는 **근거** 칸이 갈라 말한다 — **점수만 기록** 이면 그 입력이 없다는 뜻이다"),
         ("needs_judgment", STATUS_LABEL["needs_judgment"], "사람의 판정 입력이 없어 점수를 만들지 않았다"),
