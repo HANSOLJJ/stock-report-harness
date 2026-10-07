@@ -106,6 +106,16 @@ class ReportTabsTest(unittest.TestCase):
                     self.assertIn(needle, lede)
                 self.assertNotIn("각 0~", html)
 
+    def test_screen_names_drop_the_second_brand(self):
+        # 2026-10-07 사용자 요청: 'Alphabet / Google'·'Amazon / AWS'·'SpaceX + xAI' 가 순위표 칸을 넓혔다
+        html = self.html["ai-scorecard-2026-10-rescore"]
+        rows = re.findall(r'<td class="name keep" data-k="name" data-v="([^"]+)">', html)
+        cards = re.findall(r'<div class="cname">([^<]+)<', html)
+        trigs = re.findall(r'<td class="tmeta"><div class="mono">[^<]+</div><div>([^<]+)</div>', html)
+        for names in (rows, cards, trigs):
+            self.assertTrue({"Alphabet", "Amazon", "SpaceX"} <= set(names), names)
+            self.assertFalse([n for n in names if " / " in n or "xAI" in n], names)
+
     def test_draft_notes_of_a_factor_without_evidence_get_their_own_header(self):
         from scorecard.render_md import render_draft
         slug = "ai-scorecard-2026-10-rescore"

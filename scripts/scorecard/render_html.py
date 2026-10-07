@@ -621,7 +621,7 @@ def market_caps(ctx: Any) -> dict[str, float | None]:
 
 
 def short_name(name: str) -> str:
-    return name.replace(" / AWS", "").replace(" / Google", "").replace(" + xAI", "+xAI").replace("🍎 ", "")
+    return name.replace(" / AWS", "").replace(" / Google", "").replace(" + xAI", "").replace("🍎 ", "")
 
 
 # ------------------------------------------------------------------ 섹션 렌더
@@ -1690,7 +1690,7 @@ def _render_active_triggers(ctx: Any) -> str:
         # 좁은 열에 눌렸다. 왼쪽 좁은 칸에 짧은 값을 세로로 쌓고, 오른쪽 넓은 칸에 글을 둔다. 초안·연구의 마크다운 표는 그대로다.
         def row(r: list[Any]) -> str:
             tid, company, factors, observation, condition, deadline, evidence, recheck = r
-            meta = (f'<div class="mono">{esc(tid)}</div><div>{esc(company)}</div><div>{esc(factors)}</div>'
+            meta = (f'<div class="mono">{esc(tid)}</div><div>{esc(short_name(company))}</div><div>{esc(factors)}</div>'
                     f'<div>기한 {esc(deadline)}</div><div>{esc(evidence)}</div>')
             text = "".join(f'<p><b class="tk">{esc(label)}</b> {esc(value)}</p>'
                            for label, value in (("관찰 사실", observation), ("조건", condition), ("재검토", recheck)))
@@ -1779,7 +1779,7 @@ def link_cited_evidence(document: str, ctx: Any) -> str:
         same = " ".join(e["excerpt"].split()).casefold() == " ".join(e["title"].split()).casefold()
         quote = ('<span class="sub">제목만 확인</span>' if same else f'“{esc(e["excerpt"])}”'
                  + (f'<br><span class="sub">위치: {esc(e["locator"])}</span>' if e.get("locator") else ""))
-        rows.append(f'<tr id="ev-{esc(eid)}"><td class="mono">{esc(eid)}</td><td>{esc(ctx.companies[e["company_id"]]["display_name"])}</td>'
+        rows.append(f'<tr id="ev-{esc(eid)}"><td class="mono">{esc(eid)}</td><td>{esc(short_name(ctx.companies[e["company_id"]]["display_name"]))}</td>'
                     f'<td class="text">{title}</td><td class="text">{quote}</td><td class="mono">{esc((e["published_at_utc"] or "—")[:10])}</td><td>{esc(status)}</td></tr>')
     table = (f'<h3 id="cited-evidence">인용 근거</h3><p class="sub">본문이 인용한 근거 {len(cited)}건. 제목을 누르면 원문이 열린다.</p>'
              f'<div class="tablewrap"><table><thead><tr><th>근거 ID</th><th>기업</th><th>제목(원문)</th><th>본문 발췌 · 위치</th><th>발행일</th><th>상태</th></tr></thead>'
@@ -1806,6 +1806,8 @@ def _f6_note(ctx: Any) -> str:
 
 def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]], review_fm: dict[str, Any], approval: dict[str, Any], avail: dict[str, Any] | None = None) -> str:
     rc.set_company_names(ctx.companies)
+    # 2026-10-07 사용자 요청: 'Alphabet / Google'·'SpaceX + xAI' 같은 긴 이름이 표 칸을 넓혀 화면 이름만 줄인다. 해시 대상(results·draft)은 그대로다.
+    results = {**results, **{k: [{**c, "display_name": short_name(c["display_name"])} for c in results[k]] for k in ("companies", "ranking")}}
     run = ctx.run
     title = run["title"]
     subtitle = f"규칙 {ctx.rules.version} · 기준일 {run['as_of']} · {results['population']['scored']}개사 순위"
