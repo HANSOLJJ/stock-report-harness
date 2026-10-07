@@ -501,8 +501,9 @@ _SUPERSEDED_ANY = re.compile(r"\bsuperseded\b")
 # (`승계 점수를 사용` · `legacy 역산` · `policies.f6.net_cash`). 데이터(`results.json` 의
 # `warnings`)는 고치지 않고 **표시할 때** 옮겨 그린다. 긴 구절이라 낱말 이름표와 따로 둔다.
 WARNING_PHRASES = {
-    "승계 점수를 기준선 표시로 사용": "앞서 매긴 점수를 참고 표시로만 쓴다",
-    "승계 점수를 사용": "앞서 매긴 점수를 그대로 쓴다",
+    # 2026-10-06 출력 리뷰: `앞서 매긴` 은 이전 판을 가리킨다. 누가 매긴 점수인지로 적는다.
+    "승계 점수를 기준선 표시로 사용": "사람이 매긴 점수를 참고 표시로만 쓴다",
+    "승계 점수를 사용": "사람이 매긴 점수를 그대로 쓴다",
     "legacy 역산으로 세운 정의": "기준선에서 거꾸로 세운 정의",
     "legacy_unverified": "사용자 원본 값·다시 확인 안 함",
     "제안값(proposed)": "제안값",
@@ -712,7 +713,7 @@ def factor_notes(ctx: Any, fid: str, fr: dict[str, Any]) -> list[dict[str, Any]]
                                                + ". 전망이나 목표만으로 손실을 단정하지 않는다."})
             continue
         if w.startswith("C-09"):
-            out.append({"kind": "note", "text": f"조합표의 두 축 판정이 남아 있지 않아 앞서 매긴 점수({fr.get('score')})를 "
+            out.append({"kind": "note", "text": f"조합표의 두 축 판정이 남아 있지 않아 사람이 매긴 점수({fr.get('score')})를 "
                                                "그대로 쓴다. 조합표를 다시 태우지 못한다."})
             continue
         if "수동 판단을 무시함" in w:

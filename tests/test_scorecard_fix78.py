@@ -97,7 +97,7 @@ class Fix78Test(unittest.TestCase):
         self.assertTrue(any("승계 점수를 사용" in w for w in raw))
         self.assertTrue(any("legacy_unverified" in w for w in raw))
         self.assertEqual(rc.readable_warning("C-09: 매트릭스 입력이 복원되지 않아 승계 점수를 기준선 표시로 사용"),
-                         "C-09: 매트릭스 입력이 복원되지 않아 앞서 매긴 점수를 참고 표시로만 쓴다")
+                         "C-09: 매트릭스 입력이 복원되지 않아 사람이 매긴 점수를 참고 표시로만 쓴다")   # 2026-10-06 `앞서 매긴` 삭제
 
     def test_no_broken_josa_anywhere(self):
         """이름 뒤 조사를 이름표 전체로 훑는다(FIX-68 에서 고쳤던 종류)."""
