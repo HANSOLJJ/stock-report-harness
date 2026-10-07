@@ -215,6 +215,16 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
 .fdir .fpts{padding-left:16px}
 .fdir .none{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0}
 @media(max-width:860px){.fdir{grid-template-columns:1fr}}
+/* 2026-10-07: 트리거 표 두 덩어리. 왼쪽 메타 칸은 좁게 고정하고 오른쪽 글 칸이 나머지를 쓴다. */
+.trig th:first-child,.trig td.tmeta{width:190px;min-width:0}
+.trig td.tmeta{white-space:normal;text-align:left;vertical-align:top;line-height:1.6;color:var(--tx2);font-size:var(--fs-sm)}
+.trig td.tmeta .mono{color:var(--tx);font-weight:700}
+.trig td.tmeta a{white-space:nowrap;overflow-wrap:normal}
+.trig td.text{vertical-align:top}
+.trig td.text p{margin:0 0 8px}
+.trig td.text p:last-child{margin-bottom:0}
+.trig .tk{display:inline-block;font-size:var(--fs-sm);color:var(--tx2);margin-right:6px}
+@media(max-width:640px){.trig thead{display:none}.trig td.tmeta,.trig td.text{display:block;width:auto}.trig td.tmeta{border-bottom:0;padding-bottom:4px}}
 .fpts li.d2{margin-left:14px;color:var(--tx2);list-style:circle}
 .fpts del{color:var(--tx3)}
 details.blk{background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin:10px 0;overflow:hidden}
@@ -227,7 +237,7 @@ ul.tight{margin:10px 0 0 20px;font-size:var(--fs-md);color:var(--tx);line-height
 ul.tight li{margin:8px 0;overflow-wrap:anywhere}
 footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--tx3);font-size:var(--fs-md)}
 footer p{margin:6px 0;font-size:var(--fs-md)}
-.w8{font-weight:800}.b{font-weight:700}.big{font-size:var(--fs-lg)}.narrow{min-width:0}
+.w8{font-weight:800}.b{font-weight:700}.big{font-size:var(--fs-lg)}.narrow,td.text.narrow,th.text.narrow{min-width:0}
 .mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-14{margin-top:14px}
 tr.priv{opacity:.75}
 .pill.legacy{background:var(--warn-soft);color:var(--warn-text);margin-right:4px}
@@ -1598,9 +1608,18 @@ def _render_active_triggers(ctx: Any) -> str:
     if not rows:
         body = '<p class="sub">감시 중인 트리거 없음</p>'
     else:
-        head = f'<th>{esc(TRIGGER_COLUMNS[0])}</th>' + "".join(f'<th class="text">{esc(c)}</th>' for c in TRIGGER_COLUMNS[1:])
-        trs = "".join("<tr>" + f'<td class="mono">{esc(r[0])}</td>' + "".join(f'<td class="text">{esc(v)}</td>' for v in r[1:]) + "</tr>" for r in rows)
-        body = f'<div class="tablewrap"><table><thead><tr>{head}</tr></thead><tbody>{trs}</tbody></table></div>'
+        # 2026-10-07 사용자 요청: 짧은 값(ID·기업·Factor·기한·근거)이 넓은 열을 차지하고 읽을 글(관찰 사실·조건·재검토)이
+        # 좁은 열에 눌렸다. 왼쪽 좁은 칸에 짧은 값을 세로로 쌓고, 오른쪽 넓은 칸에 글을 둔다. 초안·연구의 마크다운 표는 그대로다.
+        def row(r: list[Any]) -> str:
+            tid, company, factors, observation, condition, deadline, evidence, recheck = r
+            meta = (f'<div class="mono">{esc(tid)}</div><div>{esc(company)}</div><div>{esc(factors)}</div>'
+                    f'<div>기한 {esc(deadline)}</div><div>{esc(evidence)}</div>')
+            text = "".join(f'<p><b class="tk">{esc(label)}</b> {esc(value)}</p>'
+                           for label, value in (("관찰 사실", observation), ("조건", condition), ("재검토", recheck)))
+            return f'<tr><td class="tmeta">{meta}</td><td class="text">{text}</td></tr>'
+        head = f'<th class="text">트리거</th><th class="text">{esc(" · ".join(TRIGGER_COLUMNS[3:5] + TRIGGER_COLUMNS[7:]))}</th>'
+        body = (f'<div class="tablewrap"><table class="trig"><thead><tr>{head}</tr></thead>'
+                f'<tbody>{"".join(row(r) for r in rows)}</tbody></table></div>')
     notes = ([f"그 밖의 상태(fired·expired·withdrawn) {others}건은 triggers.json 에 있다."] if others else []) + [TRIGGER_C14_NOTE]
     return body + "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in notes)
 

@@ -64,6 +64,14 @@ class WithTriggersTest(FlowBase):
             self.assertIn(text, html)
         self.assertNotIn("TRG-002", html)
         self.assertNotIn("기준선 원문", html)
+        # 2026-10-07 두 덩어리: 왼쪽 메타 칸에 ID·기업·Factor·기한·근거, 오른쪽 글 칸에 관찰 사실·조건·재검토
+        self.assertIn('<table class="trig">', html)
+        meta = html[html.index('<td class="tmeta">'):html.index('</td>', html.index('<td class="tmeta">'))]
+        for text in ("TRG-001", "기한 2027-06-30", "EV-nvidia-001"):
+            self.assertIn(text, meta)
+        self.assertIn('<b class="tk">조건</b> 엔터프라이즈 채택 공시', html)
+        self.assertIn('<b class="tk">재검토</b> 업무 채널 형성 여부', html)
+        self.assertNotIn('<th class="text">기한</th>', html)
 
     def test_no_watching_trigger(self):
         write_json(run_paths(self.box.slug).triggers, {"schema": "scorecard.triggers/2", "run_id": self.box.slug, "items": []})
