@@ -61,5 +61,5 @@
 - [x] `research → calculate → draft`, 14개사 total·rank 불변 확인, `review-template --force`
 - [x] 4영역 1차 리뷰 → 수정 한 묶음 → 확인 리뷰 1회 → `review.md` pass → `validate_report_contract.py`
 - [x] "승인 대기" 보고
-- [ ] (사람) 최종 승인 → `build_report.py` → `--require-html` → Playwright(320·768·1280, 탭, 앵커 세 갈래, 트리거 표 폭) → 커밋
-- [ ] 이 폴더 checklist·context-notes 마무리
+- [x] (사람) 최종 승인(756c276e) → `build_report.py` → `--require-html` → Playwright(320·768·1280, 탭, 앵커 세 갈래, 트리거 표 폭) → 커밋
+- [x] 이 폴더 checklist·context-notes 마무리
