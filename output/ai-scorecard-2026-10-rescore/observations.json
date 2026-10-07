@@ -18514,7 +18514,7 @@
       "observation_id": "oracle.offbalance_B.link26",
       "company_id": "oracle",
       "metric": "offbalance_B",
-      "value": 301309000000.0,
+      "value": 322150000000.0,
       "unit": "USD",
       "as_of": "2026-08-31",
       "observed_at": "2026-10-07",
@@ -18524,22 +18524,22 @@
       "basis": {
         "measured_as_of": "2026-08-31",
         "aggregation": "sum_of_components",
-        "mixed_as_of": true,
-        "location": "10-Q (2026-08-31) Note 6 Leases and Other Commitments 미개시 리스 약정 문단 [EV-oracle-013] + 10-K (2026-05-31) UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount",
+        "mixed_as_of": false,
+        "location": "10-Q (2026-08-31) Note 6 Leases and Other Commitments — 미개시 리스 약정 문단 [EV-oracle-013] · Unconditional Obligations 표 [EV-oracle-036]",
         "components": [
           {
             "label": "Lease commitments not yet commenced (2026-08-31)",
             "value": 288000000000
           },
           {
-            "label": "Unrecorded unconditional purchase obligations (2026-05-31)",
-            "value": 13309000000
+            "label": "Unconditional purchase obligations (2026-08-31)",
+            "value": 34150000000
           }
         ],
-        "why_mixed": "10-Q 는 무조건 구매 약정을 새로 적지 않아 10-K(2026-05-31) 값을 더했다. 아마존 B종(미개시 리스 + 무조건 구매 약정)과 같은 범위다.",
-        "replaces": "oracle.offbalance_B.v15 ($250B, 공시 사실과 맞지 않는 승계 값)"
+        "replaces": "oracle.offbalance_B.v15 ($250B, 공시 사실과 맞지 않는 승계 값)",
+        "scope_note": "아마존 B종(미개시 리스 + 무조건 구매 약정)과 같은 범위다. 두 성분 모두 같은 10-Q 의 2026-08-31 값이다."
       },
-      "raw": "미개시 리스 $288B(15~19년, 2026-08-31) + 무조건 구매 약정 $13.309B(2026-05-31) = $301.309B",
+      "raw": "미개시 리스 $288B(15~19년) + 무조건 구매 약정 $34.15B = $322.15B (2026-08-31)",
       "note": "원문 연결 작업(2026-10-07)에서 10-Q 의 미개시 리스 약정을 확인해 승계 값 $250B 를 대체한다."
     }
   ]

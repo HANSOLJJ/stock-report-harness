@@ -23,21 +23,21 @@
 
 ## D. 원문 연결
 - [x] 지시서 LINK-INSTRUCTIONS.md
-- [ ] 서브에이전트 5묶음 산출
-- [ ] 기계 검사(URL·발췌·위치·사실 보존·표지 형식, 변조 사본으로 검사기 확인)
-- [ ] evidence·sources 기록, confirm
-- [ ] propose → proposal 반영, 위반 0
-- [ ] 원문 못 찾은 사실 목록과 점수 영향 정리
+- [x] 서브에이전트 7묶음 산출 + 2차 탐색 2묶음
+- [x] 기계 검사(URL·발췌·위치·사실 보존·표지 형식, 변조 사본으로 검사기 확인)
+- [x] evidence·sources 기록, confirm
+- [x] propose → proposal 반영, 위반 0
+- [x] 원문 못 찾은 사실 목록과 점수 영향 정리
 
 ## E. 판단 정정
-- [ ] oracle.F7·openai.F5 Stargate
-- [ ] anthropic.F2 잣대 일치
-- [ ] TEN-RC-05·TEN-RC3-04 판정
-- [ ] Amazon 런웨이 표시
+- [x] oracle.F7·openai.F5 Stargate
+- [x] anthropic.F2 잣대 일치
+- [x] TEN-RC-05·TEN-RC3-04 판정
+- [x] Amazon 런웨이 표시
 
 ## F. 재계산·리뷰
-- [ ] research → calculate → draft, 점수 변화표
-- [ ] review-template, 4영역 1차 리뷰
+- [x] research → calculate → draft, 점수 변화표
+- [x] review-template, 4영역 1차 리뷰
 - [ ] 수정 한 묶음, 확인 리뷰, pass
 - [ ] validate_report_contract, "승인 대기" 보고
 

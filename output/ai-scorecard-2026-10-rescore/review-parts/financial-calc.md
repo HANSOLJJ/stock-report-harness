@@ -1,17 +1,96 @@
 ---
 reviewer_agent: general-purpose (financial-calc)
-session: rescore-1007-financial-calc-r7
+session: rescore-1007-financial-calc-r8
 reviewed_at: 2026-10-07
-round: 7
+round: 8
 ---
 # financial-calc — 재무 계산
-검토자: Claude Opus 5.5 · 재무 계산 독립 세션(이 실행을 만든 세션 아님) · 2026-10-07 · 근거 세 칸 재분류 뒤 · 확인 리뷰
-결과: pass
-요약: 1차(round 6) 뒤 수정 묶음(PRP-259~263, 렌더러 네 가지)을 계산 쪽에서 확인했다. results.json 은 1차 기준판(`07814146…`)과 견줘 `results_hash`·`input_hashes.judgments` 두 칸 말고는 바이트 단위로 같다. 14개사 factor 점수·⑥⑨ calc·과점·함정·총점·순위(1·1·3·3·5·6·6·6·9·10·11·12·12·14)가 그대로다. 판단은 다섯 건(alphabet.F5·tsmc.F9·oracle.F8·oracle.F9·openai.F7)만 바뀌었고, 모두 score·inputs·status 가 그대로이며 근거 칸 문장만 옮겼다. 1차 needs_fix 인 tsmc.F9 설비투자 가이던스 줄은 내릴 근거로 옮겨져 계획 단서가 붙었고, 숫자($60~64B·약 $10B)가 그대로라 닫혔다. 문구는 Microsoft 설비투자 계획 줄과 같은 "추세 판정의 근거로 쓰지 않는다" 다. FCF 흑자는 올릴 근거 둘째 줄(+$36.5B, calc +$36.45B)에 남아, 버린 "FCF 는 흑자다" 는 겹치던 표현이다. oracle.F9 는 조달 예고($45~50B, 올릴 근거, 계획 단서)와 신용등급 조달 여력(판정 칸)으로 나뉘었고 숫자가 그대로다. 1.61년·2.66배·−$28.72B 줄은 바뀌지 않았다. 이로써 1차 다음 실행 과제 5(조달 여력)도 닫혔다. 다섯 건의 숫자·영문 토큰은 1차 기준판과 같다(tsmc.F9 의 겹치던 'FCF' 하나만 빠짐). 두 방향 칸이 함께 빈 판단 0, 중복 0이다. draft 의 순위표·머리 줄·제목 줄은 1차 기준판과 같고, 숫자 토큰 차이는 해시 조각뿐이다. needs_fix 0건.
+검토자: Claude Opus 5.5 · 재무 계산 독립 세션(이 실행을 만든 세션 아님) · 2026-10-07 · 원문 연결 뒤
+결과: needs_fix
+요약: 점수·순위는 승인본과 같다. results.json 을 이전 승인본(git `a576ee3`, `59518fa1…`)과 깊이 비교했다. 다른 곳은 Oracle ⑨ G4 의 분모($250B → $301.309B)·커버리지(2.656 → 2.204)·관측 ID 와 사라진 legacy 경고 하나, 입력 해시뿐이다. 14개사 factor 점수·순위·모집단은 같다. 메모리에서 엔진(`engine.compute(load_context)`)을 다시 돌리면 results_hash `bacc7bc3…` 가 그대로 나온다. 판단 114개의 kind·score·inputs·status 도 승인본과 같다. TRG-005 의 8.4·8.0·6.7년은 실제 `calc_f9.compute_f9` 에 미인출 여신 값만 바꿔 넣어 대조했다. 8.448·8.018·6.728년이 나오고 모두 G3 step 0·⑨ −2 다. 방향 칸 재무 숫자도 F6~F9 285개·F1~F5 312개를 인용 근거 발췌와 calc·관측값에 기계로 대조했다. 맞지 않은 줄은 모두 TTM 창 복원·합·비율 같은 파생값이라 손으로 다시 계산했고, 하나(oracle.F9 2.31배)만 틀렸다. needs_fix 는 다섯 건이다. ① `oracle.offbalance_B.link26` 은 구매 약정을 10-K(2026-05-31) $13.309B 로 넣고 "10-Q 는 새로 적지 않았다" 고 적었다. 그런데 같은 10-Q Note 6 이 2026-08-31 기준 $34,150M 을 공시한다. 분모는 $322.15B, 커버리지는 2.06배가 맞다. ② oracle.F9 올릴 근거의 "÷ $288B = 2.31배" 는 엔진 G4(B종 합계로 나눔)와 다른 값이고, 같은 카드 ⑨ 행은 2.20배다. ③ TRG-022 와 근거 문장 넷에 옛 $250B 기준 커버리지 2.66배가 남아 있다. ④ anthropic.F6 판정 칸은 $10.9B 를 Q2 매출로 적는다. 이 실행의 anthropic.F9 정정으로 $10.9B 는 전망치이고 잠정 매출은 $11.5B 다. ⑥ P2 범위(30~39배)의 아래 끝이 30x+ 경계에 딱 붙어 있다. 분모가 커지면 범위가 밴드를 갈라 ⑥ 이 보류될 수 있다(재도출이 필요하고, 점수 영향은 확정되지 않았다). ⑤ TRG-041 에 고치기 전 하이퍼스케일러 비중 '약 40%' 와, ⑧ 에서 뺀 자체 칩 논리가 남아 있다. 다섯 건 모두 지금 계산으로는 점수·순위를 바꾸지 않는다(④ 는 재도출 결과에 달림).
+
+검토 기준: results_hash bacc7bc3e82a981d50f89a40bad99f236879fea44d8713f9852d0efaaac36e88, draft_hash 0148fb46af32d9e81ee21112e0ec53f5a35d6377efa8fb592be1cf8745a51277 (review.md frontmatter 와 같고, results.json 의 results_hash 와 draft.md sha256 을 실측해도 같다)
+
+## 확인 내용
+
+| 항목 | 결과 |
+| --- | --- |
+| results 승인본 대조 | 커밋 a576ee3 의 results.json(`59518fa1…`)과 깊이 비교했다. 다른 곳은 다음과 같다. `companies[oracle].F9.calc.path[G4]` 의 coverage 2.656 → 2.2037·offbalance_B 250,000M → 301,309M, `observation_ids[3]` `oracle.offbalance_B.v15` → `.link26`, `warnings` 의 legacy 경고 하나 삭제(`warnings_count` 150 → 149), `input_hashes` 의 evidence·judgments·observations·sources·triggers. factor 점수 126칸, 다른 calc, ranking, population, decisions_applied 는 같다 |
+| 엔진 재현 | `load_context` → `compute` 를 메모리에서 돌렸다. results_hash `bacc7bc3…` 가 그대로 나오고 factor 점수·ranking 이 results.json 과 같다 |
+| 판단·관측 | 판단 114개의 kind·score·inputs·status 가 a576ee3 판과 같다. 관측은 `oracle.offbalance_B.link26` 하나가 더해졌고 바뀐 관측은 없다 |
+| Oracle B종(`link26`) | 성분 288,000M 은 10-Q(2026-08-31) Note 6 원문("$ 288 billion of additional lease commitments … fifteen to nineteen years", `data/_sec/docs/f456b72311131dd5-orcl-20260831.htm`)과 맞는다. 13,309M 은 10-K(2026-05-31) 무조건 구매 약정 표 합계(1,841 + 1,034 + 1,053 + 952 + 896 + 7,533)와 맞고, 합계 301,309M 은 산술이 맞다. **다만 같은 10-Q Note 6 'Unconditional Obligations' 문단이 2026-08-31 기준 합계 $34,150M 을 공시한다(발견 1).** 범위(미개시 리스 + 무조건 구매 약정)는 아마존 B종(같은 10-Q 의 $137.2B + $130.1B)과 같다 |
+| G4 커버리지 | 664 ÷ 301.309 = 2.2037, results 와 같다. `calc_f9.compute_f9` 메모리 대조 결과는 다음과 같다. 분모 $322.15B(10-Q 같은 날짜)면 2.0612, $288B(리스만)면 2.3056, $250B(승계)면 2.656 이다. 넷 다 `g4_coverage_keep` 1.0 이상이라 G4 step 0·⑨ −3 이다. 관측 선택은 verified `link26` 이 legacy `v15` 를 앞선다(재현 결과로 확인) |
+| TRG-005 | `amazon.undrawn_credit.fix54` 값만 바꿔 `compute_f9` 를 돌렸다. 37.5B 는 9.9538년, 20.0B($17.5B 뺌)는 8.4484년, 15.0B 는 8.0183년, 0 은 6.728년이고, 넷 다 G3 step 0·⑨ −2·커버리지 1.8557 이다. 트리거 문장의 8.4·8.0·6.7·9.95년, 완충 $115.7B(78,213 + 37,500), −$11.6B(−11,625), 1.856 이 모두 맞다. 시설 셋(15.0B 2028-11 · 5.0B 364일 2026-10 · 17.5B 2026-09-30 인출 시한)의 금액·만기가 관측 basis components 와 같다 |
+| 고친 재무 숫자(link `corrections`·retry `results`) | 재무 항목을 하나씩 다시 계산했다. 결과는 다음과 같다. alphabet.F9 분기 FCF −$5.9B(−5,855M, 앞 세 분기 24.5·24.6·10.1 과 합치면 TTM 53.3 = calc +53.273), alphabet.F7 $94.1B = 80.0 + 14.1, amazon.F7 OpenAI $28.7B = 15.0 + 13.7 · 28.7 + 21.3 = 50.0, apple.F2 분기 설비투자 6,799 − 4,344 = 2,455, meta.F9 31,078 = 30,116 + 962 · 17,012 = 16,538 + 474 · 1.83배 · FCF 784 대 8,549 = −90.8%, microsoft.F7 24.1 ÷ 331.8 = 7.3%, nvidia.F5·F8 48,710 ÷ 96,221 = 50.6%, nvidia.F8 1.22 + 0.122 = 1.34, spacex-xai.F1 4,423 ÷ 11,387 = 38.8%, spacex-xai.F4 638,888,888 × $135 = $86.25B 총액(순 $85.7B 는 회사 발표), tesla.F9 상반기 FCF 1,444 − 1,092 = 352 · 8,634 − 8,282 = 352 · 4,696 − 3,886 = 810, oracle.F9 664 ÷ 288 = 2.306(발견 2), anthropic.F6 965 ÷ 65 = 14.85, openai.F6 40 ÷ 185 = 0.216, openai.F8 1.4T ÷ 40B = 35 · 1.4 − 0.338 = 1.06T. 모두 맞다 |
+| 방향 칸 재무 숫자 기계 대조 | 올릴·내릴 근거 줄의 숫자를 표지가 가리키는 발췌, 그 회사 results calc, 관측값(성분 포함)에 대조했다. F6~F9 는 285개 중 19줄, F1~F5 는 312개 중 27줄이 직접 맞지 않았다. F6~F9 19줄은 모두 파생값이라 발췌로 다시 계산했다. Amazon 영업외 81,754 = 17,336 + 69,378 − 4,960 · 46.59%, Meta OCF 115,800 + 64,088 − 49,587 = 130,301 · 설비투자 89,325, Microsoft 분기 FCF·$71.6B, Alibaba 매출 1,044,971 · 영업이익 30,323 · OCF 78,486 · 설비투자 155,065 · FCF −76,579 ÷ 6.898 = −11,102 · 약정 54,136 + 200,062 = 254,198 ÷ 6.898 = 36,851, NVIDIA 영업외 32,164 · 세전 229,743 · 14.0%, SpaceX 영업손실 3,732 · 매출 23,044 · −16.195% · 순손실 8,218 · OCF 9,900 · 설비투자 42,248, Oracle OCF 46,940 · 설비투자 75,660 · −28,720 · 선수금 뺀 −40,083 · 완충 46,369 · 1.266·1.157년 · 영업이익률 32.12% 가 모두 맞는다. 틀린 것은 oracle.F9 2.31배 하나다. F1~F5 의 재무 숫자(Oracle RPO +$85.4B, Alphabet +20%·+5.6%, Anthropic +58%·+57%·약 +14%, Tesla FSD ARR 66.6만 × $99 × 12 ≈ $791M)도 맞고, 나머지는 사실·출처 영역의 비재무 숫자다 |
+| 비상장 ⑥ | anthropic 965 ÷ 65 = 14.85·65 ÷ 47 − 1 = 38.3%·65 ÷ 125 = 0.52, openai 852 ÷ 40 = 21.3·40 ÷ 25 − 1 = 60%·40 ÷ 185 = 0.216 이 calc 와 같다. 보정은 require_all 이고 arr_growth 가 run_rate 로 불충족이라 자본효율이 0.41~0.72 어디여도 점수가 같다. P2 는 v1.5 승계 범위(anthropic 30~39, openai 39)를 쓴다(발견 4) |
+| draft | 머리·factor 행·순위표 178줄을 승인본 draft 와 견줬다. 다른 줄은 Oracle ⑨ 행 "약정 커버리지 산출 2.66배 → 2.20배" 하나다. 순위표·총점 줄은 같다 |
+
+검토에 쓴 스크립트는 세션 스크래치 폴더(`scratchpad/fc8/cmp.py`·`f9.py`·`numchk.py`·`corr.py`·`ev.py`)에 있다. 저장소에는 두지 않았다.
+
+## 발견
+
+| 등급 | 판단·위치 · 칸 | 줄 앞부분 | 근거 ID | 발견 | 고칠 방향 | 점수 영향 |
+| --- | --- | --- | --- | --- | --- | --- |
+| needs_fix | observations `oracle.offbalance_B.link26` · basis.components[1]·why_mixed·raw | "Unrecorded unconditional purchase obligations (2026-05-31) 13309000000" · "10-Q 는 무조건 구매 약정을 새로 적지 않아 10-K(2026-05-31) 값을 더했다" | (새 근거 필요) 10-Q(2026-08-31) Note 6 'Unconditional Obligations' | 원문과 다르다. 같은 10-Q 가 "As of August 31, 2026, our unconditional purchase and certain other obligations with terms of one year or greater … were as follows (in millions): Remainder of fiscal 2027 $ 5,449 · Fiscal 2028 6,176 · Fiscal 2029 3,863 · Fiscal 2030 4,318 · Fiscal 2031 6,768 · Fiscal 2032 954 · Thereafter 6,622 · Total $ 34,150" 을 공시한다. 10-K 도 "Subsequent to May 31, 2026, we entered into an additional $ 19 billion of unconditional purchase commitments" 라 적어, $13.309B 는 기준일 현재 약정을 작게 센다. 기준일을 섞을 이유가 없고, 아마존 B종은 같은 10-Q 한 날짜로 맞췄다 | components[1] 을 "Unconditional purchase and certain other obligations with terms of one year or greater (2026-08-31)" 34,150,000,000 으로 바꾸고 value 322,150,000,000, mixed_as_of false, location 은 10-Q Note 6 두 문단으로 한다. 10-Q 구매 약정 문단을 새 근거(EV)로 확정해 잇는다. 기간 범위("1년 이상")가 10-K 표(범위 표기 없음)와 다르다는 점은 basis 에 한 줄로 적는다. 계산하면 커버리지 664 ÷ 322.15 = 2.0612 이고, draft ⑨ 행은 "2.06배", TTM 표는 "$322.2B B종(verified)" 가 된다 | 없음(G4 step 0, ⑨ −3 그대로. `compute_f9` 메모리 대조) |
+| needs_fix | oracle.F9 · evidence_up[2] | "RPO $664B(2026-08-31)를 10-Q 가 공시한 아직 개시되지 않은 리스 약정 $288B 로 나누면 약 2.31배다(추론 계산)." | EV-oracle-003, EV-oracle-013 | 엔진 G4 는 B종 합계로 나눠 지금 2.20배(발견 1 반영 뒤 2.06배)를 내는데, 이 줄은 리스만으로 나눈 2.31배를 적는다. 같은 카드의 ⑨ 행은 "약정 커버리지 산출 2.20배" 라 한 카드 안에서 숫자가 갈린다 | 다음 문장으로 다시 쓴다. "RPO $664B(2026-08-31)를 미개시 확정 약정 $322.2B(10-Q 가 공시한 아직 개시되지 않은 리스 약정 $288B 와 1년 이상 무조건 구매 약정 $34.15B, 둘 다 2026-08-31)로 나눈 약정 커버리지는 약 2.06배다. [EV-oracle-003, EV-oracle-013, EV-(발견 1 의 새 근거)]" | 없음 |
+| needs_fix | triggers.json TRG-022 · observation | "… ⑨ 판단은 -3(버티는 기간 1.61년으로 한 단계 하향, 약정 커버리지 2.66배로 유지 — 2026-08-31 관측)이다." | EV-oracle-004, EV-oracle-006, EV-oracle-007 | 2.66배는 이 실행이 "공시 사실과 맞지 않는 승계 값"으로 바꾼 $250B 기준이다. 리포트 트리거 표(draft 1827행)에 그대로 보인다. 같은 2.66배가 EV-oracle-003 relevance("게이트 4(약정 커버리지 = RPO ÷ 미개시 리스) 2.66배")·conditional_impact, EV-oracle-004 conditional_impact("커버리지 비율(2.66배, 2026-08-31)"), EV-oracle-007 relevance 에도 남아 있다(draft 에는 렌더되지 않음) | 다섯 곳 모두 "약정 커버리지 약 2.06배(계약된 수입 ÷ 미개시 확정 약정)" 로 다시 쓴다(발견 1 반영 값). EV-oracle-003 의 산식 이름 "RPO ÷ 미개시 리스" 도 "계약된 수입 ÷ 미개시 확정 약정" 으로 바꾼다 | 없음 |
+| needs_fix | anthropic.F6 · 판정 칸 evidence[2]·evidence[5] · 관측 `anthropic.ps_ratio.priv31` | "ARR 은 7월 기준 $65B 이지만 … 그래서 분모는 Q2 매출 $10.9B 에서 역산한 최근 1년 보정 매출을 쓴다." · "자본효율(… = 0.52)은 ARR $65B 와 누적 조달 약 $125B 의 원문을 찾지 못해 확인하지 못했다." | EV-anthropic-047, EV-anthropic-041, EV-anthropic-040 | (1) 이 실행의 anthropic.F9 정정(EV-anthropic-047 WSJ 2026-05-20 "projected … $10.9 billion", EV-anthropic-041 CNBC 2026-08-17 "preliminary revenue figure of $11.5 billion")으로 $10.9B 는 투자 유치용 전망치이고, 잠정 Q2 매출은 $11.5B 다. 판정 칸은 여전히 실적 매출처럼 적는다. (2) ⑥ P2 입력 `ps_ratio` 는 v1.5 가 이 전망치에서 역산한 범위 30~39배다(legacy_unverified, 역산 방법 기록 없음). 아래 끝 30.0 이 비상장 밴드 '30x+'(lower_inclusive)의 경계에 딱 붙어 있다. 실적 $11.5B 로 바꾸면 보정 매출이 커지고(분기 합 방식이면 +$0.6B), 965 ÷ 32.77 ≈ 29.4 로 아래 끝이 '20x대' 로 내려간다. 그러면 `calc_f6_params` range_guard 로 ⑥ 이 pending_data 가 되어 Anthropic 이 순위에서 빠질 수 있다. 역산 방법이 없어 정확히 다시 계산할 수는 없다. (3) 판정 칸[5] 는 ARR $65B 원문을 못 찾았다고 적지만 같은 판단의 올릴 근거가 EV-anthropic-040(CNBC "$65 billion at the end of July")을 인용한다 | 판정 칸[2] 를 다음 문장으로 다시 쓴다. "분모는 v1.5 가 2026-05 투자자 전망치인 Q2 매출 $10.9B 에서 역산한 최근 1년 보정 매출(배수 약 30~39배)이고, 2026-08 잠정 Q2 매출은 $11.5B 로 그보다 크다." 조율자는 `ps_ratio` 범위를 $11.5B 로 다시 역산할지 정한다. 다시 역산하지 않으면 basis 에 앵커가 전망치라는 사실과 이 민감도(아래 끝이 30 아래로 내려가면 밴드가 갈린다)를 적는다. 판정 칸[5] 는 "누적 조달 약 $125B 의 원문을 찾지 못해 확인하지 못했다" 로 좁힌다 | 지금 계산은 없음. 재역산하면 ⑥ 보류·순위 제외가 될 수 있다(미확정) |
+| needs_fix | triggers.json TRG-041 · observation (규칙 일관성 영역과 겹침) | "… 지금 NVIDIA ⑧ 판단은 -3 이고, 근거는 매출 약 40% 인 하이퍼스케일러 4곳이 모두 자체 칩을 개발해 의존 방향이 악화된다는 것이다." | EV-nvidia-024(nvidia.F5·F8 내릴 근거가 인용) | 하이퍼스케일 비중은 이 실행에서 10-Q Note 13(분기 $48,710M ÷ $96,221M = 50.6%)으로 '약 절반' 으로 정정됐다. TEN-RC-05 판정으로 자체 칩 속성은 ⑤ 에서만 세고 ⑧ 근거에서 뺐다. 트리거 문장은 옛 숫자와 옛 ⑧ 근거를 함께 적는다. EV-nvidia-012 relevance 의 "매출 약 40% 인 하이퍼스케일…" 도 같은 옛 숫자다 | TRG-041 의 ⑧ 근거 문장을 지금 nvidia.F8 판정(고객 집중 크기·공급 약정·중국 우회 조사, 하이퍼스케일 매출 약 절반)으로 다시 쓰고, EV-nvidia-012 의 비중도 '약 절반' 으로 고친다 | 없음 |
+
+### 다른 영역 발견(참고, 조율자가 해당 영역으로 넘긴다)
+
+재무 계산 밖이지만 같은 유형(원문 정정이 판단에만 반영되고 트리거·요약에는 옛 값이 남음)이라 적는다. 등급은 사실·출처 영역이 정한다.
+
+| 위치 | 남은 옛 값 | 판단 쪽 정정 값 |
+| --- | --- | --- |
+| TRG-020 observation · company_summaries(apple) | "20억 대 설치기반" | apple.F1 "25억 대가 넘는 기기 설치기반"(EV-apple-006) |
+| TRG-065 observation | "평균 $6.36/M 로 OpenAI($0.74/M)의 약 8.6배" | anthropic.F1·alibaba.F3·openai.F1 에서 원문을 찾지 못해 방향 칸에서 뺀 값 |
+| TRG-079 observation | "가짜 계정 25,000개·대화 2,880만 건" | alibaba.F2·F5 "3,500개가 넘는 가짜 계정과 1억 5,100만 건이 넘는 교환"(EV-alibaba-011·012) |
+
+### 지난 리뷰(round 7) 발견·과제 처리
+
+| 항목 | 상태 |
+| --- | --- |
+| round 7 발견 | 없었다 |
+| (round 6 다음 실행 과제 1) ⑨ 현금 잔고 줄의 칸 | 남음(alphabet 올릴, tsmc 판정) |
+| (round 6 다음 실행 과제 2) 런웨이 민감도 줄의 칸 | 남음(amazon 올릴, oracle·spacex 판정) |
+| (round 6 다음 실행 과제 3) ⑦ 영업외 이익 줄의 칸 | 남음(amazon·nvidia 내릴, tsmc·alibaba·apple 판정) |
+| (round 6 다음 실행 과제 4) '흑자 전환 후퇴·완충 잠식 없음' 줄 | 바뀜. 넷 다 판정 칸으로 옮겨졌으나 문언이 갈린다(아래 다음 실행 과제 5) |
+| (round 5 과제) Oracle G4 분모를 10-Q 미개시 리스 $288B 로 verified 등록 | `link26` 으로 등록돼 닫히되, 구매 약정 성분이 발견 1 로 남는다 |
+| round 5 에서 넘어온 나머지 10개 | 남음 |
+
+## 체크리스트
+
+| ID | 결과(pass/fail/not_applicable) | 근거 |
+| --- | --- | --- |
+| Q01 | pass | TEN-RC-05·TEN-RC3-04 정정은 ⑧ 근거 문장만 바꾸고 ⑧ 점수(−3·−2)와 ⑤ 입력은 그대로다. 계산 입력에서 같은 감점을 두 번 세는 자리는 없다. amazon.F7·nvidia.F7 의 영업외 이익 줄은 "⑥ 소관, ⑦ 입력 아님" 단서가 그대로다. TRG-041 의 옛 ⑧ 근거 문장은 발견 5 로 고친다 |
+| Q03 | pass(재무 계산 범위) | G4 분모 범위(미개시 리스 + 무조건 구매 약정)는 아마존·Oracle·SpaceX 가 같다. Oracle 만 구매 약정 기준일을 10-K 로 둔 것은 잣대 차이가 아니라 자료 선택 오류라 발견 1 로 고친다(점수 불변). 조달 의존 비중 숫자(Alphabet 연 약 $40B ÷ $445.9B, Microsoft $24.1B ÷ $331.8B = 7.3%)는 산술이 맞다. '작음' 판정 기준이 같은지는 규칙 영역이 판정한다 |
+| Q04 | pass | P1·P2 는 비율이고 시총 크기는 점수에 들어가지 않는다 |
+| Q09 | pass | 계획 숫자는 계산 입력에 들어가지 않고, 방향 칸에서는 단서와 함께 쓴다. TSMC 가이던스 $52~56B → $60~64B, Meta 설비투자 계획 $130~145B, Oracle 조달 예고 $45~50B 가 그렇다. Microsoft 설비투자 예상치 변경은 판정 칸으로 옮겼다. TRG-005 의 $42B 회사채·$8B 칩 매각 보도도 "계획 단계, 완충에 넣지 않는다" 다. Anthropic Q2 $559M·$10.9B 는 전망치로 표시됐다(⑥ 쪽은 발견 4) |
+| Q11 | pass | G1 은 영업이익률 밴드이고 순손실은 P1 미산출로만 처리한다 |
+| Q22 | pass | 지분 평가이익은 ⑥ P4 에만 쓰인다(alphabet 0.507·amazon 0.466·nvidia 0.140 재계산 값이 calc 와 같다). alphabet.F7 올릴 근거의 SpaceX 평가이익 줄은 ⑦ 입력이 아니다 |
+
+## 다음 실행 과제
+
+1. openai.F6 판정 칸 "2026년 GAAP 손실이 약 $60B 로 전망되고" 를 openai.F9 정정(약 $14B 에서 GAAP 약 $62B 까지 전망이 갈림, EV-openai-040·047)과 맞춘다.
+2. `oracle.offbalance_B.v15` note 에 아마존 v15 처럼 "[대체됨 → oracle.offbalance_B.link26]" 를 단다. basis.coverage_either_way(2.552)는 지금 RPO 와 맞지 않는 옛 계산이다.
+3. `amazon.undrawn_credit.fix54` basis.sensitivity 에 TRG-005 가 쓰는 "$17.5B 뺌 8.448년" 칸을 더한다. conditions_note 의 낡은 기준일 표현(round 4 부터 남음)도 함께 고친다.
+4. meta.F9 내릴 근거의 분기 FCF(+$0.78B, −91%)는 Meta 정의(금융리스 원금 상환 포함)이고, 올릴 근거의 최근 1년 FCF(+$40.98B)는 영업현금흐름 − 설비투자다. 줄에 정의를 밝힌다. 같은 정의(금융리스 제외)로 바꾸면 분기 $1.75B 대 $9.02B, −81% 로 방향은 같다.
+5. '흑자 전환 목표 후퇴·완충 잠식' 줄은 네 회사 모두 판정 칸에 있고 입력도 넷 다 no 인데, 문언이 "없음"(alibaba)·"없음이다"(tesla)·"확인되지 않았다"(anthropic)·"원문을 찾지 못해 확인하지 못했다"(spacex-xai)로 갈린다. 뒤의 둘은 unknown 으로 읽혀 입력 no 와 어긋난다. 문언을 입력에 맞추거나 입력을 다시 본다(규칙 영역 판정).
+6. round 6 다음 실행 과제 1~3 과 round 5 에서 넘어온 나머지 10개(아래 「이전 리뷰 기록」)는 그대로다.
+
+## 이전 리뷰 기록
+
+### round 7(근거 세 칸 재분류 뒤 확인 리뷰) 기록 — results_hash 59518fa1… 기준
+
+7차 검토자: Claude Opus 5.5 · 재무 계산 독립 세션(이 실행을 만든 세션 아님) · 2026-10-07 · 근거 세 칸 재분류 뒤 · 확인 리뷰
+7차 결과: pass
+7차 요약: 1차(round 6) 뒤 수정 묶음(PRP-259~263, 렌더러 네 가지)을 계산 쪽에서 확인했다. results.json 은 1차 기준판(`07814146…`)과 견줘 `results_hash`·`input_hashes.judgments` 두 칸 말고는 바이트 단위로 같다. 14개사 factor 점수·⑥⑨ calc·과점·함정·총점·순위(1·1·3·3·5·6·6·6·9·10·11·12·12·14)가 그대로다. 판단은 다섯 건(alphabet.F5·tsmc.F9·oracle.F8·oracle.F9·openai.F7)만 바뀌었고, 모두 score·inputs·status 가 그대로이며 근거 칸 문장만 옮겼다. 1차 needs_fix 인 tsmc.F9 설비투자 가이던스 줄은 내릴 근거로 옮겨져 계획 단서가 붙었고, 숫자($60~64B·약 $10B)가 그대로라 닫혔다. 문구는 Microsoft 설비투자 계획 줄과 같은 "추세 판정의 근거로 쓰지 않는다" 다. FCF 흑자는 올릴 근거 둘째 줄(+$36.5B, calc +$36.45B)에 남아, 버린 "FCF 는 흑자다" 는 겹치던 표현이다. oracle.F9 는 조달 예고($45~50B, 올릴 근거, 계획 단서)와 신용등급 조달 여력(판정 칸)으로 나뉘었고 숫자가 그대로다. 1.61년·2.66배·−$28.72B 줄은 바뀌지 않았다. 이로써 1차 다음 실행 과제 5(조달 여력)도 닫혔다. 다섯 건의 숫자·영문 토큰은 1차 기준판과 같다(tsmc.F9 의 겹치던 'FCF' 하나만 빠짐). 두 방향 칸이 함께 빈 판단 0, 중복 0이다. draft 의 순위표·머리 줄·제목 줄은 1차 기준판과 같고, 숫자 토큰 차이는 해시 조각뿐이다. needs_fix 0건.
 
 검토 기준: results_hash 59518fa18f928802828905ce4844947b8a6c3d5a83d7b6062366532dab7e59ce, draft_hash cb819da1aab10ac67a0286100b6387811d4a08a5f4aa14f6c4bfb57c27a90716 (review.md frontmatter 와 같고, results.json 의 results_hash 와 draft.md sha256 을 실측해도 같다)
 
-## 확인 내용
+#### 확인 내용
 
 | 항목 | 결과 |
 | --- | --- |
@@ -23,13 +102,13 @@ round: 7
 | 토큰 대조 | 다섯 건의 숫자·영문 토큰 다중집합이 1차 기준판과 같다. 다른 곳은 tsmc.F9 에서 겹치던 'FCF' 하나가 빠진 것뿐이다. 두 방향 칸이 함께 빈 판단 0, 칸 사이 중복 문장 0 |
 | draft | 순위표·기업 머리 줄·제목 줄이 1차 기준판과 한 줄도 다르지 않다. 숫자 토큰 차이는 해시 조각뿐이다 |
 
-## 발견
+#### 발견
 
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
 | — | — | 수정 묶음에서 새 계산·방향 결함은 없다 | — |
 
-### 1차(round 6) 발견 처리
+##### 1차(round 6) 발견 처리
 
 | 발견 | 상태 |
 | --- | --- |
@@ -41,7 +120,7 @@ round: 7
 | (다음 실행 과제 4) '흑자 전환 후퇴·완충 잠식 없음' 줄의 칸·문언(anthropic "확인되지 않았다") | 남음 |
 | (다음 실행 과제 6) round 5 에서 넘어온 11개 | 남음 |
 
-## 체크리스트
+#### 체크리스트
 
 | ID | 결과(pass/fail/not_applicable) | 근거 |
 | --- | --- | --- |
@@ -52,11 +131,9 @@ round: 7
 | Q11 | pass | G1 은 영업이익률 밴드이고 순손실은 P1 미산출로만 처리한다 |
 | Q22 | pass | round 6 과 같다. 지분 평가이익은 ⑥ P4 에만 쓰인다 |
 
-## 다음 실행 과제
+#### 다음 실행 과제
 
 1차의 다음 실행 과제 1~4 와 round 5 에서 넘어온 11개가 남는다(아래 「이전 리뷰 기록」 round 6·round 5 절). 새로 더한 과제는 없다.
-
-## 이전 리뷰 기록
 
 ### round 6(근거 세 칸 재분류 뒤 1차) 기록 — results_hash 07814146… 기준
 

@@ -38,3 +38,9 @@
 - 2차 탐색: retry-a(40항목 → found 18·partial 5·not_found 9·is_analysis 9), retry-b(18 → 4·4·5·5). 반영 결정은 scratchpad merge_retry.py DECISIONS(31건). oracle.F7 Stargate 새 줄(예정 보도 + 추론)은 방향 칸에 넣지 않고 판정 칸 문장만 원문대로 고쳤다.
 - 최종 병합본 `link/final/`(1차 + 2차 + 후속 수정 22건). 구조 문제 0, 토큰·판정 칸 차이 41건은 모두 조율자 확인 차이.
 - 2차에서도 못 찾은 점수 근거: openai.F1 OpenRouter 단가·점유율(기준일 이전 원문 없음), alphabet.F7 Anthropic 매출 '미미'(반대 방향 약정 $200B·백로그 40% 초과를 내릴 근거로 넣고 '작음' 유지 근거를 판정 칸에), anthropic.F6 자본효율 0.52(누적 조달 원문이 $120B~$130B+ 로 갈림). openai.F1·anthropic.F6 점수 영향은 재계산 뒤 확인.
+- round 8 리뷰 결과 수집 중.
+  - 출력·가독성 needs_fix 1: `.cite` 전체 nowrap → 표지가 카드 밖으로 잘림. 고침(`.cite a` 에만 nowrap), 320·1280px 실측 잘림 0·겹침 0(759개). 커밋함.
+  - 사실·출처 a needs_fix 1: amazon.F2 Trainium3 "362 PFLOPS" 는 144칩 UltraServer FP8 합계, 칩당 2.52 PFLOPS(EV-amazon-034). 수정 묶음에 넣는다.
+  - 사실·출처 a low 중 바로 고칠 것: anthropic.F6 판정 칸 "ARR $65B 원문을 찾지 못해" → 올릴 근거가 EV-anthropic-040 으로 확인했으므로 미확인 대상을 누적 조달로 좁힌다.
+  - 사실·출처 c needs_fix 1: spacex-xai.F2 올릴 근거[3](Starship 궤도 비행) 표지 EV-spacex-xai-009 는 Google 컴퓨트 계약 발췌 → 표지를 [EV-spacex-xai-022, EV-spacex-xai-007] 로.
+  - 사실·출처 b needs_fix 2(nvidia.F7): 내릴 근거[1] "$40B 넘게 넣었고(실측)" → 원문은 약정(commitments), Anthropic Series G·$10B·xAI Series E 는 원문에 없다 → '약정'으로 고치고 라운드 세부는 판정 칸 미확인으로. 내릴 근거[3] "담보(Grace Blackwell)" 전제는 원문 없음 → 판정 칸 (추론)으로 옮긴다.

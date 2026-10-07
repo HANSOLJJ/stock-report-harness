@@ -7,11 +7,11 @@
   "baseline_id": "v1.5",
   "input_hashes": {
     "run": "65a19e92d2a861d18c6c33059b2217f5882c9527dde0827c4b2282c569a52f5f",
-    "observations": "2ac517b50cdbf7d7ccccdbdf37e3224c5cef6ca44dc9bd201c6a37c99557b262",
-    "judgments": "37bab83c8791088b1a864e6d36dc5f1cf750ee47d2b0ef0a4c7f8d3f4c40fa9e",
+    "observations": "65ea6a0b225da5ae3f1d04ad46f1e4126eeee67f0c134fcaa0f6fb73fcd1528b",
+    "judgments": "5478951c227a850c52a3f7fb2cd0075a7bff2826200fa32cc7791b9844a56ce5",
     "sources": "054add916953d7fe233c149d8de7560fc56009a87c1ef1c44a7df0013bd8c873",
-    "evidence": "47ce2de07cc6c7b921b481f6ff37990ddea9fac020647417d3b78253c2da995d",
-    "triggers": "8b563dc98bc2596472f04f82c4b2250f13ff04be860fd57978e54937defa1340",
+    "evidence": "935d4aab28dbca20d6c75661c30db7fe1fddef6a73dc414b25445d2c6a510bc8",
+    "triggers": "ef5764eff2cf7e949687e7d2053564aa573f059480be44e253458f032a57c00b",
     "rules": "0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d"
   },
   "decisions_applied": [
@@ -2427,7 +2427,7 @@
         "F7",
         "F8"
       ],
-      "rank": 9
+      "rank": 8
     },
     {
       "company_id": "nvidia",
@@ -3242,18 +3242,16 @@
         },
         "F7": {
           "factor": "F7",
-          "score": 0,
-          "status": "carried_score",
+          "score": -2,
+          "status": "ok",
           "basis": "matrix",
           "judgment_id": "spacex-xai.F7",
           "observation_ids": [],
           "calc": {
-            "funding_dependent_share": "small",
+            "funding_dependent_share": "large",
             "own_money_returns": "no"
           },
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F8": {
@@ -3345,8 +3343,8 @@
         }
       },
       "moat": 18,
-      "trap": -9,
-      "total": 9,
+      "trap": -11,
+      "total": 7,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3355,10 +3353,9 @@
         "F3",
         "F4",
         "F5",
-        "F7",
         "F8"
       ],
-      "rank": 6
+      "rank": 9
     },
     {
       "company_id": "tesla",
@@ -3923,9 +3920,9 @@
               {
                 "gate": "G4",
                 "result": "computed",
-                "coverage": 2.2037177780949126,
+                "coverage": 2.061151637435977,
                 "contracted_revenue": 664000000000.0,
-                "offbalance_B": 301309000000.0,
+                "offbalance_B": 322150000000.0,
                 "step": 0,
                 "score": -3
               }
@@ -4304,14 +4301,6 @@
     },
     {
       "rank": 6,
-      "company_id": "spacex-xai",
-      "display_name": "SpaceX + xAI",
-      "moat": 18,
-      "trap": -9,
-      "total": 9
-    },
-    {
-      "rank": 6,
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "moat": 16,
@@ -4319,12 +4308,20 @@
       "total": 9
     },
     {
-      "rank": 9,
+      "rank": 8,
       "company_id": "apple",
       "display_name": "Apple",
       "moat": 15,
       "trap": -7,
       "total": 8
+    },
+    {
+      "rank": 9,
+      "company_id": "spacex-xai",
+      "display_name": "SpaceX + xAI",
+      "moat": 18,
+      "trap": -11,
+      "total": 7
     },
     {
       "rank": 10,
@@ -4374,6 +4371,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 149,
-  "results_hash": "bacc7bc3e82a981d50f89a40bad99f236879fea44d8713f9852d0efaaac36e88"
+  "warnings_count": 148,
+  "results_hash": "cdbacbdb94c3201200f7ee971dcc87cfd57dce2c7ccd77030e55f774d4a1ffe6"
 }

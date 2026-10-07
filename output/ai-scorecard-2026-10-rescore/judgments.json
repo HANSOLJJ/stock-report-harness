@@ -1011,7 +1011,7 @@
       "evidence": [
         "아마존 ② 는 세 경로 가운데 표준 선점과 성능 도약 두 경로를 통과해 4점이다.",
         "표준 선점(산업 인터페이스를 정의하는가)은 통과다.",
-        "성능 도약은 통과다.",
+        "성능 도약은 통과로 보았다. 실측 근거는 Anthropic 이 Trainium2 로 프런티어 모델을 학습한다는 사실과 두 프런티어 연구소의 다년 채택이고, Trainium3 성능 수치는 독립 측정이 없는 회사 발표다.",
         "패러다임 적응은 통과로 세지 않았다.",
         "경로별 통과 여부를 판정 입력으로 나누어 적지 않았기 때문에 프로그램이 경로 수로 환산하지 않고 사람이 매긴 4점을 쓴다."
       ],
@@ -1095,15 +1095,46 @@
             ]
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-378 반영: round 8 리뷰 수정(2026-10-07): Trainium3 성능 수치의 주체(144칩 서버 합계)를 원문대로 고치고, 성능 도약 근거를 실측(Anthropic 의 Trainium2 학습)으로 다시 적었다",
+          "previous": {
+            "kind": "score",
+            "score": 4,
+            "inputs": {},
+            "evidence": [
+              "아마존 ② 는 세 경로 가운데 표준 선점과 성능 도약 두 경로를 통과해 4점이다.",
+              "표준 선점(산업 인터페이스를 정의하는가)은 통과다.",
+              "성능 도약은 통과다.",
+              "패러다임 적응은 통과로 세지 않았다.",
+              "경로별 통과 여부를 판정 입력으로 나누어 적지 않았기 때문에 프로그램이 경로 수로 환산하지 않고 사람이 매긴 4점을 쓴다."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [
+              "AWS Interconnect 의 오픈 API 규격을 Google(2026년 4월)·Azure(2026-08-31)·Oracle 이 모두 채택해 멀티클라우드 연결의 사실상 표준이 됐다. [EV-amazon-032, EV-amazon-031]",
+              "첫 3nm 칩인 Trainium3(362 PFLOPS)는 OpenAI(Trainium3·Trainium4 약 2GW)와 Anthropic(Trainium2~Trainium4, 최대 5GW)이 다년 약정으로 채택했다. Anthropic 은 Trainium2 로 Claude 를 학습하고 있지만, 2026년 4월 보도 기준 OpenAI 가 Trainium 에서 모델을 학습했다는 공개 근거는 없었다. [EV-amazon-033, EV-amazon-034, EV-amazon-035, EV-amazon-040, EV-amazon-036]"
+            ],
+            "evidence_down": [
+              "AWS–Azure 연결은 2026-08-31 프리뷰로 나왔고 정식 출시는 아직 확인되지 않았다. [EV-amazon-031]",
+              "자체 모델 Nova 는 Arena 텍스트 부문(2026-10-02)에서 최고 117위(amazon-nova-experimental-chat-26-02-10)로 에이전트·추론 경쟁에 기여하지 못했다. [EV-amazon-051]"
+            ]
+          },
+          "session": "agent"
         }
       ],
       "evidence_up": [
         "AWS Interconnect 의 오픈 API 규격을 Google(2026년 4월)·Azure(2026-08-31)·Oracle 이 모두 채택해 멀티클라우드 연결의 사실상 표준이 됐다. [EV-amazon-032, EV-amazon-031]",
-        "첫 3nm 칩인 Trainium3(362 PFLOPS)는 OpenAI(Trainium3·Trainium4 약 2GW)와 Anthropic(Trainium2~Trainium4, 최대 5GW)이 다년 약정으로 채택했다. Anthropic 은 Trainium2 로 Claude 를 학습하고 있지만, 2026년 4월 보도 기준 OpenAI 가 Trainium 에서 모델을 학습했다는 공개 근거는 없었다. [EV-amazon-033, EV-amazon-034, EV-amazon-035, EV-amazon-040, EV-amazon-036]"
+        "첫 3nm 칩인 Trainium3(144칩 UltraServer 합계 FP8 362 PFLOPS)는 OpenAI(Trainium3·Trainium4 약 2GW)와 Anthropic(Trainium2~Trainium4, 최대 5GW)이 다년 약정으로 채택했다. [EV-amazon-033, EV-amazon-034, EV-amazon-035, EV-amazon-040]",
+        "Anthropic 은 세계 최대급 AI 컴퓨트 클러스터인 Project Rainier 의 Trainium2 로 Claude 를 학습하고 서비스한다. [EV-amazon-036]"
       ],
       "evidence_down": [
         "AWS–Azure 연결은 2026-08-31 프리뷰로 나왔고 정식 출시는 아직 확인되지 않았다. [EV-amazon-031]",
-        "자체 모델 Nova 는 Arena 텍스트 부문(2026-10-02)에서 최고 117위(amazon-nova-experimental-chat-26-02-10)로 에이전트·추론 경쟁에 기여하지 못했다. [EV-amazon-051]"
+        "자체 모델 Nova 는 Arena 텍스트 부문(2026-10-02)에서 최고 117위(amazon-nova-experimental-chat-26-02-10)로 에이전트·추론 경쟁에 기여하지 못했다. [EV-amazon-051]",
+        "2026년 4월 보도 기준 OpenAI 가 Trainium 에서 프런티어 모델을 처음부터 끝까지 학습했다는 공개 근거는 없었다. [EV-amazon-036]"
       ]
     },
     {
@@ -1480,7 +1511,9 @@
       "evidence": [
         "아마존 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 '작음', 내 돈이 돌아옴 '예' 칸이라 -1 이다.",
         "내 돈이 돌아온다고 판정했다.",
-        "조달 의존 고객 비중은 작다고 판정했다."
+        "조달 의존 고객 비중은 작다고 판정했다.",
+        "Anthropic 에서 오는 매출이 최근 1년 매출 $775.7B 에 견주어 미미하다는 사실은 아마존의 Anthropic 관련 매출 원문을 찾지 못해 확인하지 못했다.",
+        "Anthropic 의 AWS 약정은 10년간 $100B 넘게(연 약 $10B 수준)로 최근 1년 매출 $775.7B 에 견주어 조달 의존 고객 비중을 '작음'으로 둔다."
       ],
       "counter_evidence": [],
       "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전).",
@@ -1569,11 +1602,39 @@
             ]
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-385 반영: round 8 리뷰 수정(2026-10-07): 규칙 일관성 N4: 'Anthropic 매출 미미' 는 표지가 분모만 받쳐 판정 칸 미확인으로 옮기고, 가로축 판단은 연간 약정 ÷ 최근 1년 매출로 적었다",
+          "previous": {
+            "kind": "matrix",
+            "score": null,
+            "inputs": {
+              "funding_dependent_share": "small",
+              "own_money_returns": "yes"
+            },
+            "evidence": [
+              "아마존 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 '작음', 내 돈이 돌아옴 '예' 칸이라 -1 이다.",
+              "내 돈이 돌아온다고 판정했다.",
+              "조달 의존 고객 비중은 작다고 판정했다."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [
+              "Anthropic 에서 오는 매출은 아마존 최근 1년 매출 $775.7B(2026-06-30 기준)에 견주면 미미하다. [EV-amazon-014, EV-amazon-021]"
+            ],
+            "evidence_down": [
+              "아마존이 Anthropic 에 투자한 돈이 AWS 매출로 돌아오는 것은 피투자사가 곧 대형 고객인 전형적인 순환 구조다. [EV-amazon-018, EV-amazon-040]",
+              "최근 1년 영업외 이익 $81.8B(세전이익의 46.6%)는 ⑥ 의 영업외 비중에서 반영하며, 그 출처가 고객사라서 ⑦ 에는 순환 구조의 방증으로만 적고 입력에 넣지 않는다. [EV-amazon-014, EV-amazon-021, EV-amazon-023]",
+              "OpenAI 에는 2026년 1분기 $15.0B 를 투자하고 $35.0B 추가 매입을 약정해 2026-06-30 까지 $28.7B, 그 뒤 나머지 $21.3B 를 집행했고, Anthropic 은 2026년 4월 AWS 에 10년간 $100B 이상을 쓰기로 약정했다. 두 사실은 ⑦ 판정 입력에 넣지 않았고 ⑦ 재검토 항목으로 남아 있다. [EV-amazon-019, EV-amazon-020, EV-amazon-017, EV-amazon-040, EV-amazon-007]"
+            ]
+          },
+          "session": "agent"
         }
       ],
-      "evidence_up": [
-        "Anthropic 에서 오는 매출은 아마존 최근 1년 매출 $775.7B(2026-06-30 기준)에 견주면 미미하다. [EV-amazon-014, EV-amazon-021]"
-      ],
+      "evidence_up": [],
       "evidence_down": [
         "아마존이 Anthropic 에 투자한 돈이 AWS 매출로 돌아오는 것은 피투자사가 곧 대형 고객인 전형적인 순환 구조다. [EV-amazon-018, EV-amazon-040]",
         "최근 1년 영업외 이익 $81.8B(세전이익의 46.6%)는 ⑥ 의 영업외 비중에서 반영하며, 그 출처가 고객사라서 ⑦ 에는 순환 구조의 방증으로만 적고 입력에 넣지 않는다. [EV-amazon-014, EV-amazon-021, EV-amazon-023]",
@@ -6202,10 +6263,10 @@
       "evidence": [
         "Anthropic 은 비상장이라 ⑥(가격 — 미래 성장이 얼마나 선반영됐나)을 프로그램이 밸류 ÷ 최근 1년 보정 매출로 계산하며, 이 판단 항목은 계산에 쓰이지 않는다.",
         "계산에 들어가는 밸류는 Series H 의 post-money $965B 이다.",
-        "ARR 은 7월 기준 $65B 이지만 런레이트라 실제로 거둔 최근 1년 매출보다 크게 잡힌다. 그래서 분모는 Q2 매출 $10.9B 에서 역산한 최근 1년 보정 매출을 쓴다.",
+        "ARR 은 7월 기준 $65B 이지만 런레이트라 실제로 거둔 최근 1년 매출보다 크게 잡힌다. 그래서 분모는 Q2 매출 전망치 $10.9B(2026-08 잠정 매출은 $11.5B)에서 역산한 최근 1년 보정 매출을 쓴다.",
         "ARR 성장률(직전 $47B 대비 약 38%)은 두 값이 모두 런레이트라 인정되지 않아, 보정은 걸리지 않는다.",
         "기준일 현재 Anthropic 은 상장하지 않았고, 상장하면 첫 분기부터 상장 트랙으로 옮긴다.",
-        "자본효율(ARR $65B ÷ 누적 조달 약 $125B = 0.52)은 ARR $65B 와 누적 조달 약 $125B 의 원문을 찾지 못해 확인하지 못했다.",
+        "자본효율(ARR $65B ÷ 누적 조달 약 $125B = 0.52)은 누적 조달 약 $125B 의 원문을 찾지 못해 확인하지 못했다.",
         "밸류를 최근 1년 보정 매출로 나눈 배수 약 30~39배는 우리가 추정한 값이라 받칠 원문이 없다."
       ],
       "counter_evidence": [],
@@ -6291,6 +6352,38 @@
             ],
             "evidence_down": [
               "밸류를 최근 1년 보정 매출로 나눈 배수는 약 30~39배로 추정된다."
+            ]
+          },
+          "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-381 반영: round 8 리뷰 수정(2026-10-07): Q2 매출 $10.9B 는 전망치임을 밝히고, 미확인 대상을 누적 조달로 좁혔다(ARR $65B 는 EV-anthropic-040 으로 확인)",
+          "previous": {
+            "kind": "score",
+            "score": -3,
+            "inputs": {
+              "private": true
+            },
+            "evidence": [
+              "Anthropic 은 비상장이라 ⑥(가격 — 미래 성장이 얼마나 선반영됐나)을 프로그램이 밸류 ÷ 최근 1년 보정 매출로 계산하며, 이 판단 항목은 계산에 쓰이지 않는다.",
+              "계산에 들어가는 밸류는 Series H 의 post-money $965B 이다.",
+              "ARR 은 7월 기준 $65B 이지만 런레이트라 실제로 거둔 최근 1년 매출보다 크게 잡힌다. 그래서 분모는 Q2 매출 $10.9B 에서 역산한 최근 1년 보정 매출을 쓴다.",
+              "ARR 성장률(직전 $47B 대비 약 38%)은 두 값이 모두 런레이트라 인정되지 않아, 보정은 걸리지 않는다.",
+              "기준일 현재 Anthropic 은 상장하지 않았고, 상장하면 첫 분기부터 상장 트랙으로 옮긴다.",
+              "자본효율(ARR $65B ÷ 누적 조달 약 $125B = 0.52)은 ARR $65B 와 누적 조달 약 $125B 의 원문을 찾지 못해 확인하지 못했다.",
+              "밸류를 최근 1년 보정 매출로 나눈 배수 약 30~39배는 우리가 추정한 값이라 받칠 원문이 없다."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [
+              "밸류 ÷ ARR 은 약 14.8배이며 근거로만 남긴다. [EV-anthropic-039, EV-anthropic-040]",
+              "run-rate 매출은 2025년 말 약 $9B 에서 2026-04 $30B 초과, 2026-05 $47B 초과를 거쳐 2026-07 말 $65B 로 늘었다. [EV-anthropic-043, EV-anthropic-044, EV-anthropic-040]"
+            ],
+            "evidence_down": [
+              "Anthropic 은 2026-05-28 Series H 에서 post-money 기업가치 $965B 로 $65B 를 조달했다. [EV-anthropic-039]"
             ]
           },
           "session": "agent"
@@ -8116,7 +8209,9 @@
         "NVIDIA ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 큼, 돌아옴 칸이라 범위 하한인 -2점이며, 비중이 큰 쪽에서는 세로축이 점수를 가르지 않는다.",
         "가로축은 큼으로 본다.",
         "세로축도 선다.",
-        "이 보증들은 확정 지출이 아닌 우발 보증이라 ⑨ 에 넣지 않고 ⑦ 에서만 센다."
+        "이 보증들은 확정 지출이 아닌 우발 보증이라 ⑨ 에 넣지 않고 ⑦ 에서만 센다.",
+        "Anthropic 라운드의 금액과 xAI 라운드의 이름은 원문을 찾지 못해 확인하지 못했다.",
+        "추론: NVIDIA 가 잔존가치를 보증한 GPU 의 가치를 NVIDIA 자신의 신제품이 깎는 자기모순이 있다고 본다. 회사는 Vera Rubin 이 Grace Blackwell Ultra 보다 처리량 30배, 토큰 비용 35분의 1 이라고 밝혔다. [EV-nvidia-052]"
       ],
       "counter_evidence": [],
       "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전). | [FIX-52] 매트릭스 재척도로 -3 → -2. **large 쪽에서 세로축이 점수를 가르지 못한다** — factors.F7.matrix_rescale 참조. 옛 판단은 superseded 에 있다.",
@@ -8264,14 +8359,45 @@
             ]
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-380 반영: round 8 리뷰 수정(2026-10-07): $40B 는 원문상 약정이고 라운드 세부는 원문에 없어 판정 칸 미확인으로 옮겼다. 담보가 Grace Blackwell 이라는 전제는 원문이 없어 자기모순 해석을 판정 칸 추론으로 옮겼다",
+          "previous": {
+            "kind": "matrix",
+            "score": null,
+            "inputs": {
+              "funding_dependent_share": "large",
+              "own_money_returns": "yes"
+            },
+            "evidence": [
+              "NVIDIA ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 큼, 돌아옴 칸이라 범위 하한인 -2점이며, 비중이 큰 쪽에서는 세로축이 점수를 가르지 않는다.",
+              "가로축은 큼으로 본다.",
+              "세로축도 선다.",
+              "이 보증들은 확정 지출이 아닌 우발 보증이라 ⑨ 에 넣지 않고 ⑦ 에서만 센다."
+            ],
+            "status": "new",
+            "reviewer": "설계진행(리뷰 C codex 발견 · 사용자 결정)",
+            "reviewed_at": "2026-09-15",
+            "evidence_up": [],
+            "evidence_down": [
+              "OpenAI·네오클라우드·xAI 같은 고객이 투자받은 돈과 빚으로 GPU 를 산다. [EV-nvidia-040, EV-nvidia-041]",
+              "NVIDIA 는 2026년 다섯 달 동안 AI 기업 지분에 $40B 넘게 넣었고(실측), 여기에는 OpenAI $30B, Anthropic Series G(최대 $10B), xAI Series E, CoreWeave $2B, Nebius $2B 와 공급망(Corning $3.2B, Marvell·Lumentum·Coherent 각 $2B, IREN $2.1B)이 들며, 그 돈이 GPU 대금으로 돌아오고 매출이 피투자사 가치를 올려 지분 평가이익까지 늘리는 이중 고리라고 판정했다. [EV-nvidia-042, EV-nvidia-043, EV-nvidia-044, EV-nvidia-045]",
+              "NVIDIA 는 돈만이 아니라 신용도 댄다. 일부 금융 거래에서 GPU 잔존가치를 최대 25% 보증하고, SemiAnalysis 는 NVIDIA 의 신용 지원이 붙은 GPU 클러스터에 대출기관이 보통 LTV 70~80% 를 적용한다고 분석했으며, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이고, CoreWeave 미판매 캐파 매입 약정(초기 가치 $6.3B, 2032-04-13까지)과 월가와의 $500B AI 인프라 금융 조성이 있다. [EV-nvidia-010, EV-nvidia-046, EV-nvidia-047, EV-nvidia-048, EV-nvidia-049, EV-nvidia-050, EV-nvidia-051, EV-nvidia-066]",
+              "잔존가치를 보증한 담보(Grace Blackwell)의 가치를 깎는 것이 NVIDIA 자신의 신제품 Vera Rubin 이라는 자기모순도 있다. [EV-nvidia-052]",
+              "2026-08-26 2분기 실적 콜에서 나온 생태계 커밋 약 $500B 는 애널리스트가 CFO 코멘터리의 약정·보증을 더한 수치이고, 2026-07-26 현재 약정 가운데 공급·캐파 약정이 $279B, 지분 투자 약정이 $25B 다. [EV-nvidia-053, EV-nvidia-054]",
+              "최근 1년(2025-07-28~2026-07-26) 영업외이익 $32.2B(세전이익의 14%)는 ⑥ 소관이라 ⑦ 의 입력이 아니며, 출처가 고객사 지분이라는 점만 방증으로 적는다. [EV-nvidia-055, EV-nvidia-056, EV-nvidia-057]"
+            ]
+          },
+          "session": "agent"
         }
       ],
       "evidence_up": [],
       "evidence_down": [
         "OpenAI·네오클라우드·xAI 같은 고객이 투자받은 돈과 빚으로 GPU 를 산다. [EV-nvidia-040, EV-nvidia-041]",
-        "NVIDIA 는 2026년 다섯 달 동안 AI 기업 지분에 $40B 넘게 넣었고(실측), 여기에는 OpenAI $30B, Anthropic Series G(최대 $10B), xAI Series E, CoreWeave $2B, Nebius $2B 와 공급망(Corning $3.2B, Marvell·Lumentum·Coherent 각 $2B, IREN $2.1B)이 들며, 그 돈이 GPU 대금으로 돌아오고 매출이 피투자사 가치를 올려 지분 평가이익까지 늘리는 이중 고리라고 판정했다. [EV-nvidia-042, EV-nvidia-043, EV-nvidia-044, EV-nvidia-045]",
+        "NVIDIA 는 2026년 다섯 달 동안 AI 기업 지분에 $40B 넘게 약정했고, 여기에는 OpenAI $30B, Anthropic·xAI 펀딩 라운드 참여, CoreWeave $2B, Nebius $2B 와 공급망(Corning $3.2B, Marvell·Lumentum·Coherent 각 $2B, IREN $2.1B)이 들며, 그 돈이 GPU 대금으로 돌아오고 매출이 피투자사 가치를 올려 지분 평가이익까지 늘리는 이중 고리라고 판정했다. [EV-nvidia-042, EV-nvidia-043, EV-nvidia-044, EV-nvidia-045]",
         "NVIDIA 는 돈만이 아니라 신용도 댄다. 일부 금융 거래에서 GPU 잔존가치를 최대 25% 보증하고, SemiAnalysis 는 NVIDIA 의 신용 지원이 붙은 GPU 클러스터에 대출기관이 보통 LTV 70~80% 를 적용한다고 분석했으며, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이고, CoreWeave 미판매 캐파 매입 약정(초기 가치 $6.3B, 2032-04-13까지)과 월가와의 $500B AI 인프라 금융 조성이 있다. [EV-nvidia-010, EV-nvidia-046, EV-nvidia-047, EV-nvidia-048, EV-nvidia-049, EV-nvidia-050, EV-nvidia-051, EV-nvidia-066]",
-        "잔존가치를 보증한 담보(Grace Blackwell)의 가치를 깎는 것이 NVIDIA 자신의 신제품 Vera Rubin 이라는 자기모순도 있다. [EV-nvidia-052]",
         "2026-08-26 2분기 실적 콜에서 나온 생태계 커밋 약 $500B 는 애널리스트가 CFO 코멘터리의 약정·보증을 더한 수치이고, 2026-07-26 현재 약정 가운데 공급·캐파 약정이 $279B, 지분 투자 약정이 $25B 다. [EV-nvidia-053, EV-nvidia-054]",
         "최근 1년(2025-07-28~2026-07-26) 영업외이익 $32.2B(세전이익의 14%)는 ⑥ 소관이라 ⑦ 의 입력이 아니며, 출처가 고객사 지분이라는 점만 방증으로 적는다. [EV-nvidia-055, EV-nvidia-056, EV-nvidia-057]"
       ]
@@ -9135,7 +9261,7 @@
       "evidence": [
         "Palantir ⑧ 비대칭 의존(끊기면 매출이 주는가, 회사가 멈추는가)은 −3 이다.",
         "같은 정부 관계를 ⑤ 에서는 적대의 성격으로, ⑧ 에서는 끊기면 매출이 사라지는 의존으로 한 번씩만 센다.",
-        "ICE 계약 논란이 상업 고객의 이탈로 번질 수 있다는 점도 이 의존을 키운다."
+        "ICE 계약 논란은 사업 정당성을 겨냥한 적대라 ⑤ 에서만 세고 ⑧ 에서는 다시 깎지 않는다(규칙 2.2). ⑧ 은 미 정부 매출 의존으로 매기며 이것으로 −3 이 선다."
       ],
       "counter_evidence": [],
       "note": null,
@@ -9205,6 +9331,29 @@
             "evidence_down": [
               "미 연방 정부 계약이 연 $0.9B 를 넘는 핵심 매출원이라, 정권이 바뀌어 정책이 달라지면 매출이 직접 타격을 받는다고 판정했다.",
               "ICE 계약 논란이 상업 고객의 이탈로 번질 수 있다는 점도 이 의존을 키운다."
+            ]
+          },
+          "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-384 반영: round 8 리뷰 수정(2026-10-07): 규칙 일관성 N2: ICE 논란의 고객 이탈 가능성은 ⑤ 구조형 적대와 같은 속성이고 미래 가능성이라 ⑧ 에서 뺐다",
+          "previous": {
+            "kind": "score",
+            "score": -3,
+            "inputs": {},
+            "evidence": [
+              "Palantir ⑧ 비대칭 의존(끊기면 매출이 주는가, 회사가 멈추는가)은 −3 이다.",
+              "같은 정부 관계를 ⑤ 에서는 적대의 성격으로, ⑧ 에서는 끊기면 매출이 사라지는 의존으로 한 번씩만 센다.",
+              "ICE 계약 논란이 상업 고객의 이탈로 번질 수 있다는 점도 이 의존을 키운다."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [],
+            "evidence_down": [
+              "미 정부 고객 매출이 2025년 한 해 $1.9B 인 핵심 매출원이라, 정권이 바뀌어 정책이 달라지면 매출이 직접 타격을 받는다고 판정했다. [EV-palantir-018]"
             ]
           },
           "session": "agent"
@@ -9540,13 +9689,41 @@
             "evidence_down": []
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-379 반영: round 8 리뷰 수정(2026-10-07): 다른 사실(Google 컴퓨트 계약)을 받치는 표지 EV-spacex-xai-009 를 뺐다",
+          "previous": {
+            "kind": "score",
+            "score": 4,
+            "inputs": {},
+            "evidence": [
+              "스페이스X ② 는 AI 에 귀속되는 부분만 재며, 성능 도약과 패러다임 적응 두 경로를 통과해 4점이다. 경로별 입력이 정해지기 전까지 사람이 매긴 점수를 쓴다.",
+              "성능 도약은 최상위 모델과 1~2점 차라서 통과로 보았다.",
+              "패러다임 적응은 Cursor 인수와 Grok 배포로 통과로 보았다.",
+              "표준 선점은 근거가 없다.",
+              "재사용 로켓과 Starship 은 비AI 사업이라 ④ 에서만 센다(규칙 2.4)."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [
+              "Grok 4.6 은 2026-08 공개 때 Artificial Analysis Index 61 로 Claude Opus 5·Fable 5 다음의 공동 3위(GPT-5.6 Sol 과 동률)였다. [EV-spacex-xai-018]",
+              "AI 코딩 도구 Cursor 를 인수했고, Grok 을 Starlink 고객 지원에 배포했다. [EV-spacex-xai-013, EV-spacex-xai-019, EV-spacex-xai-020]",
+              "Colossus 는 GPU 20만 개 규모이고, 100만 개는 목표라 점수에 넣지 않는다. [EV-spacex-xai-021]",
+              "2026-09-28 Starship 이 처음 궤도에 올라 Starlink 위성을 배치했지만, 궤도 데이터센터가 실제로 컴퓨트를 제공하기 전까지 ② 근거가 아니다. [EV-spacex-xai-022, EV-spacex-xai-007, EV-spacex-xai-009]"
+            ],
+            "evidence_down": []
+          },
+          "session": "agent"
         }
       ],
       "evidence_up": [
         "Grok 4.6 은 2026-08 공개 때 Artificial Analysis Index 61 로 Claude Opus 5·Fable 5 다음의 공동 3위(GPT-5.6 Sol 과 동률)였다. [EV-spacex-xai-018]",
         "AI 코딩 도구 Cursor 를 인수했고, Grok 을 Starlink 고객 지원에 배포했다. [EV-spacex-xai-013, EV-spacex-xai-019, EV-spacex-xai-020]",
         "Colossus 는 GPU 20만 개 규모이고, 100만 개는 목표라 점수에 넣지 않는다. [EV-spacex-xai-021]",
-        "2026-09-28 Starship 이 처음 궤도에 올라 Starlink 위성을 배치했지만, 궤도 데이터센터가 실제로 컴퓨트를 제공하기 전까지 ② 근거가 아니다. [EV-spacex-xai-022, EV-spacex-xai-007, EV-spacex-xai-009]"
+        "2026-09-28 Starship 이 처음 궤도에 올라 Starlink 위성을 배치했지만, 궤도 데이터센터가 실제로 컴퓨트를 제공하기 전까지 ② 근거가 아니다. [EV-spacex-xai-022, EV-spacex-xai-007]"
       ],
       "evidence_down": []
     },
@@ -9896,20 +10073,20 @@
       "kind": "matrix",
       "score": null,
       "inputs": {
-        "funding_dependent_share": "small",
+        "funding_dependent_share": "large",
         "own_money_returns": "no"
       },
       "evidence": [
-        "스페이스X ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
-        "Anthropic 계약의 연간 인식 매출이 크다고 확인되면 조달 의존 고객 비중을 큼 쪽으로 다시 본다.",
+        "스페이스X ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 큼, 돌아오지 않음 칸이라 -2점이다.",
+        "Anthropic 계약은 연 약 $15B 로 최근 1년 매출 약 $23.0B 의 약 65% 에 이르러 조달 의존 고객 비중을 큼으로 둔다. 다른 회사에도 연간 약정 ÷ 최근 1년 매출로 같은 잣대를 댄다. 계약 대부분을 90일 통보로 해지할 수 있다는 보도가 있지만, 계약이 이어지는 동안 이 매출은 투자 유치로 마련한 돈으로 들어온다.",
         "10월부터 램프하는 $6.7B 클라우드 계약은 상대가 공시되지 않았고, 금액 체계가 달라 Anthropic 계약과 같은 계약인지 정할 수 없다.",
         "관계자 거래로는 SpaceX 가 Tesla Megapack 을 3개월 $295M, 6개월 $329M 어치 샀고, 이사 Antonio Gracias 의 Valor Equity Partners 로부터 AI 인프라 장비를 리스한 거래가 판매후리스 요건을 채우지 못한 거래로 처리돼 2026-06-30 관련 부채가 유동 $2,039M, 비유동 $11,290M 이다. Valor 는 고객이 아니라 장비 임대인이라 판정표의 두 축 어디에도 닿지 않는다."
       ],
       "counter_evidence": [],
       "note": "규칙 v1.5 별표 I 판정표 | [IMPL-50] **영업외 비중은 F7 입력이 아니다.** F6 P4 전용이다 — 채점규칙 별표 I 351~356행 `평가이익은 ⑦의 증거가 아니다 … ⑥ — TTM PER 무효 처리` · 438행 ⑦ `쓰지 않는 것` 의 `지분 평가이익(⑥ 소관)`. 채점표 3-1a 범례 L804 의 `→ ⑦ 근거로 이월` 은 C-11 block_carryover 로 차단됐다(설계진행 제안 · 사용자 확인 전).",
-      "reviewer": "legacy:v1.5",
-      "reviewed_at": "2026-09-02",
-      "status": "carried",
+      "reviewer": "claude (사용자 위임 2026-10-07)",
+      "reviewed_at": "2026-10-07",
+      "status": "new",
       "carried_from": "baseline:v1.5",
       "source_ids": [
         "SRC-v15-html",
@@ -9996,6 +10173,37 @@
             ]
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-382 반영: round 8 리뷰 수정(2026-10-07): 규칙 일관성 N1: alphabet·microsoft ⑦ 에 댄 잣대(연간 약정 ÷ 최근 1년 매출)를 대면 Anthropic 계약이 매출의 약 65% 라 가로축이 큼이다(체크리스트 Q03)",
+          "previous": {
+            "kind": "matrix",
+            "score": null,
+            "inputs": {
+              "funding_dependent_share": "small",
+              "own_money_returns": "no"
+            },
+            "evidence": [
+              "스페이스X ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
+              "Anthropic 계약의 연간 인식 매출이 크다고 확인되면 조달 의존 고객 비중을 큼 쪽으로 다시 본다.",
+              "10월부터 램프하는 $6.7B 클라우드 계약은 상대가 공시되지 않았고, 금액 체계가 달라 Anthropic 계약과 같은 계약인지 정할 수 없다.",
+              "관계자 거래로는 SpaceX 가 Tesla Megapack 을 3개월 $295M, 6개월 $329M 어치 샀고, 이사 Antonio Gracias 의 Valor Equity Partners 로부터 AI 인프라 장비를 리스한 거래가 판매후리스 요건을 채우지 못한 거래로 처리돼 2026-06-30 관련 부채가 유동 $2,039M, 비유동 $11,290M 이다. Valor 는 고객이 아니라 장비 임대인이라 판정표의 두 축 어디에도 닿지 않는다."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [
+              "매출을 내는 고객은 Starlink 소비자 1,200만 명, NASA, Space Force 처럼 자기 돈으로 내는 쪽이다. [EV-spacex-xai-010, EV-spacex-xai-040, EV-spacex-xai-035]",
+              "매달 $920M 컴퓨트 대금을 내는 Google 도 자기 영업이익으로 내는 고객이다. [EV-spacex-xai-001, EV-spacex-xai-009]",
+              "스페이스X 가 고객에게 투자해 그 돈이 매출로 돌아오는 고리는 없다. xAI 흡수($250B)와 Cursor 인수($60B)는 모두 자사주로 치른 수직통합이고, NVIDIA 의 xAI 투자는 NVIDIA 쪽 ⑦ 에 속하는 사안이다. [EV-spacex-xai-041, EV-spacex-xai-013]"
+            ],
+            "evidence_down": [
+              "S-1/A 는 2026-05 Anthropic 과 맺은 클라우드 서비스 계약(NVIDIA GPU 약 32.5만 개, 2029-05 까지 월 $1.25B)을 공시했고, Anthropic 상장 신고서를 인용한 보도는 총액을 최대 $84.5B 로 적는다. Anthropic 은 투자 유치로 대금을 내는 적자 고객이다. [EV-spacex-xai-042, EV-spacex-xai-008, EV-spacex-xai-043]"
+            ]
+          },
+          "session": "agent"
         }
       ],
       "evidence_up": [
@@ -10004,7 +10212,8 @@
         "스페이스X 가 고객에게 투자해 그 돈이 매출로 돌아오는 고리는 없다. xAI 흡수($250B)와 Cursor 인수($60B)는 모두 자사주로 치른 수직통합이고, NVIDIA 의 xAI 투자는 NVIDIA 쪽 ⑦ 에 속하는 사안이다. [EV-spacex-xai-041, EV-spacex-xai-013]"
       ],
       "evidence_down": [
-        "S-1/A 는 2026-05 Anthropic 과 맺은 클라우드 서비스 계약(NVIDIA GPU 약 32.5만 개, 2029-05 까지 월 $1.25B)을 공시했고, Anthropic 상장 신고서를 인용한 보도는 총액을 최대 $84.5B 로 적는다. Anthropic 은 투자 유치로 대금을 내는 적자 고객이다. [EV-spacex-xai-042, EV-spacex-xai-008, EV-spacex-xai-043]"
+        "S-1/A 는 2026-05 Anthropic 과 맺은 클라우드 서비스 계약(NVIDIA GPU 약 32.5만 개, 2029-05 까지 월 $1.25B)을 공시했고, Anthropic 상장 신고서를 인용한 보도는 총액을 최대 $84.5B 로 적는다. Anthropic 은 투자 유치로 대금을 내는 적자 고객이다. [EV-spacex-xai-042, EV-spacex-xai-008, EV-spacex-xai-043]",
+        "2026년 2분기 매출의 19.5% 를 AI 부문의 고객 B 한 곳이 냈다. [EV-spacex-xai-060]"
       ]
     },
     {
@@ -10016,7 +10225,7 @@
       "inputs": {},
       "evidence": [
         "스페이스X ⑧ 은 끊기면 사업이 멈추거나 흔들리는 의존 여러 개로 −3 점이다.",
-        "지금 근거에 고객 집중 항목은 없고, Google·Anthropic 컴퓨트 계약이 매출에서 차지하는 비중이 공시되면 고객 집중 항목을 더할지 본다."
+        "고객 집중은 2026년 2분기 매출 기준 고객 A 18.3%, 고객 B 19.5%(AI 부문)이고, 어느 한 고객이 끊겨도 회사가 멈추는 수준은 아니라 -3 을 유지한다."
       ],
       "counter_evidence": [],
       "note": null,
@@ -10094,13 +10303,38 @@
             ]
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-383 반영: round 8 리뷰 수정(2026-10-07): 10-Q 주석 3 의 고객 집중 공시를 더했다",
+          "previous": {
+            "kind": "score",
+            "score": -3,
+            "inputs": {},
+            "evidence": [
+              "스페이스X ⑧ 은 끊기면 사업이 멈추거나 흔들리는 의존 여러 개로 −3 점이다.",
+              "지금 근거에 고객 집중 항목은 없고, Google·Anthropic 컴퓨트 계약이 매출에서 차지하는 비중이 공시되면 고객 집중 항목을 더할지 본다."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [],
+            "evidence_down": [
+              "머스크 개인에 대한 의존이 크고, 머스크는 공모 후 합산 의결권의 84.4% 를 갖는다. [EV-spacex-xai-044, EV-spacex-xai-045]",
+              "발사는 FAA 허가에, Starlink 는 주파수와 각국 인허가에 묶여 있고, Starshield 를 통해 국방 수요에 기대고 있다. [EV-spacex-xai-046, EV-spacex-xai-027, EV-spacex-xai-035]",
+              "xAI 컴퓨트는 NVIDIA GPU 에 의존하고, Cursor 는 경쟁사인 Anthropic·OpenAI 의 모델을 쓰므로 공급자가 곧 경쟁자인 의존이다. [EV-spacex-xai-042, EV-spacex-xai-047, EV-spacex-xai-048, EV-spacex-xai-049]"
+            ]
+          },
+          "session": "agent"
         }
       ],
       "evidence_up": [],
       "evidence_down": [
         "머스크 개인에 대한 의존이 크고, 머스크는 공모 후 합산 의결권의 84.4% 를 갖는다. [EV-spacex-xai-044, EV-spacex-xai-045]",
         "발사는 FAA 허가에, Starlink 는 주파수와 각국 인허가에 묶여 있고, Starshield 를 통해 국방 수요에 기대고 있다. [EV-spacex-xai-046, EV-spacex-xai-027, EV-spacex-xai-035]",
-        "xAI 컴퓨트는 NVIDIA GPU 에 의존하고, Cursor 는 경쟁사인 Anthropic·OpenAI 의 모델을 쓰므로 공급자가 곧 경쟁자인 의존이다. [EV-spacex-xai-042, EV-spacex-xai-047, EV-spacex-xai-048, EV-spacex-xai-049]"
+        "xAI 컴퓨트는 NVIDIA GPU 에 의존하고, Cursor 는 경쟁사인 Anthropic·OpenAI 의 모델을 쓰므로 공급자가 곧 경쟁자인 의존이다. [EV-spacex-xai-042, EV-spacex-xai-047, EV-spacex-xai-048, EV-spacex-xai-049]",
+        "2026년 2분기 매출의 18.3% 를 세 부문에 걸친 고객 A 가, 19.5% 를 AI 부문 고객 B 가 냈다. [EV-spacex-xai-060]"
       ]
     },
     {
@@ -11284,8 +11518,7 @@
         "성능 도약은 실패다.",
         "패러다임 적응은 부분 통과로 보았고, 부분 통과는 통과로 세지 않는다.",
         "통과 경로가 0개이면 2점이다.",
-        "Oracle 에 자체 모델이 없다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다.",
-        "산업 인터페이스를 정의하는 표준 선점에 실패했다는 판단은 받칠 원문을 찾지 못해 확인하지 못했다."
+        "산업 인터페이스를 정의하는 표준 선점은 그런 인터페이스를 냈다는 근거가 없어 통과로 세지 않는다."
       ],
       "counter_evidence": [],
       "note": "~~C-03: 경로 매핑 미확정 — 승계 점수~~ C-03 확정(paths_with_generation_gap_5), 세대 격차는 판단 입력이라 경로 판정 전까지 승계 [FIX-53 3단계]",
@@ -11365,12 +11598,40 @@
             ]
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-386 반영: round 8 리뷰 수정(2026-10-07): 규칙 일관성 N5: 10-K 의 '고객이 고른 LLM' 문장으로 성능 도약 실패를 다시 받쳤다",
+          "previous": {
+            "kind": "score",
+            "score": 2,
+            "inputs": {},
+            "evidence": [
+              "Oracle ② 신기술 게임체인저(판을 바꿀 기술을 먼저 냈는가)는 세 경로 가운데 통과한 경로가 없어 2점이다.",
+              "성능 도약은 실패다.",
+              "패러다임 적응은 부분 통과로 보았고, 부분 통과는 통과로 세지 않는다.",
+              "통과 경로가 0개이면 2점이다.",
+              "Oracle 에 자체 모델이 없다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다.",
+              "산업 인터페이스를 정의하는 표준 선점에 실패했다는 판단은 받칠 원문을 찾지 못해 확인하지 못했다."
+            ],
+            "status": "carried",
+            "reviewer": "legacy:v1.5",
+            "reviewed_at": "2026-09-02",
+            "evidence_up": [
+              "OCI(Oracle 클라우드 인프라)를 싸게 파는 방식으로 AI 수요에 올라탔다. [EV-oracle-033]"
+            ],
+            "evidence_down": []
+          },
+          "session": "agent"
         }
       ],
       "evidence_up": [
         "OCI(Oracle 클라우드 인프라)를 싸게 파는 방식으로 AI 수요에 올라탔다. [EV-oracle-033]"
       ],
-      "evidence_down": []
+      "evidence_down": [
+        "Oracle 은 자체 모델 대신 고객이 고른 생성형 AI 대규모 언어 모델(LLM)을 쓸 수 있게 한다. [EV-oracle-035]"
+      ]
     },
     {
       "judgment_id": "oracle.F3",
@@ -12349,12 +12610,55 @@
             ]
           },
           "session": "agent"
+        },
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-387 반영: round 8 리뷰 수정(2026-10-07): 재무 계산: 게이트 4 분모를 10-Q 2026-08-31 의 무조건 구매 약정까지 넣은 값으로 맞췄다(엔진 값과 같다)",
+          "previous": {
+            "kind": "gate_inputs",
+            "score": null,
+            "inputs": {
+              "fcf_trend": "unknown",
+              "bep_retreat": "no",
+              "buffer_erosion": "no",
+              "direction_A": "unknown",
+              "direction_B": "unknown",
+              "coverage_comparable": "yes",
+              "operating_result_reviewed": "profit"
+            },
+            "evidence": [
+              "Oracle ⑨ 적자 깊이는 게이트 2 에서 −2 를 받고 게이트 3 에서 한 단계 더 내려 −3 이다.",
+              "게이트 1(본업이 버는가)은 통과다.",
+              "게이트 2(최근 1년 잉여현금흐름)는 마이너스다.",
+              "게이트 3(버티는 기간)은 1.61년으로 1~3년 구간이라 한 단계 하향한다.",
+              "여신을 빼면 1.27년, 선수금을 뺀 소진액 $40.08B 로 나누면 약 1.16년이라 어느 쪽이든 같은 구간이다(추론 계산).",
+              "완충에는 현금과 확정 미인출 여신만 넣는다.",
+              "신용등급(BBB-)으로 추정한 조달 여력은 완충에 넣지 않는다.",
+              "게이트 4(약정 커버리지 = 계약된 수입 ÷ 미개시 확정 약정)는 1배 이상으로 유지된다.",
+              "잉여현금흐름 추세 입력은 '모름' 이다. 추세는 다음 분기 자료까지 보고 판정하며 잉여현금흐름이 마이너스인 지금은 점수에 닿지 않는다."
+            ],
+            "status": "new",
+            "reviewer": "noble",
+            "reviewed_at": "2026-10-06",
+            "evidence_up": [
+              "2025-09-01~2026-08-31 최근 1년 영업이익 $23.06B 를 매출 $71.78B 로 나눈 영업이익률이 32.1% 다. [EV-oracle-014, EV-oracle-010]",
+              "회사는 2026년 $45~50B 추가 조달을 예고했으나, 계획이라 완충에 넣지 않는다. [EV-oracle-030]",
+              "RPO $664B(2026-08-31)를 10-Q 가 공시한 아직 개시되지 않은 리스 약정 $288B 로 나누면 약 2.31배다(추론 계산). [EV-oracle-003, EV-oracle-013]"
+            ],
+            "evidence_down": [
+              "2025-09-01~2026-08-31 영업현금흐름 $46.94B 에서 설비투자 $75.66B 를 뺀 잉여현금흐름이 −$28.72B 이고, 영업현금흐름에 2026-06~08 분기 고객 선수금 $11.36B 가 들어 있어 이를 빼면 약 −$40.08B 다. [EV-oracle-015, EV-oracle-011]",
+              "완충 $46.37B 는 2026-08-31 현금 $36.37B 와 확정 미인출 회전여신 $10.0B(10-K 기준 2026-05-31 미인출, 2031-03-06 만기, 2026-08-31 10-Q 에 변동 기재 없음)를 더한 값이고 연 소진액은 $28.72B 다. [EV-oracle-012, EV-oracle-016, EV-oracle-015, EV-oracle-011]",
+              "최근 1년 잉여현금흐름은 2026-05-31 기준 −$23.69B 에서 2026-08-31 기준 −$28.72B 로 마이너스 폭이 커졌다. [EV-oracle-015, EV-oracle-011]"
+            ]
+          },
+          "session": "agent"
         }
       ],
       "evidence_up": [
         "2025-09-01~2026-08-31 최근 1년 영업이익 $23.06B 를 매출 $71.78B 로 나눈 영업이익률이 32.1% 다. [EV-oracle-014, EV-oracle-010]",
         "회사는 2026년 $45~50B 추가 조달을 예고했으나, 계획이라 완충에 넣지 않는다. [EV-oracle-030]",
-        "RPO $664B(2026-08-31)를 10-Q 가 공시한 아직 개시되지 않은 리스 약정 $288B 로 나누면 약 2.31배다(추론 계산). [EV-oracle-003, EV-oracle-013]"
+        "RPO $664B(2026-08-31)를 10-Q 가 공시한 미개시 확정 약정 $322.15B(아직 개시되지 않은 리스 $288B + 무조건 구매 약정 $34.15B)로 나누면 약 2.06배다. [EV-oracle-003, EV-oracle-013, EV-oracle-036]"
       ],
       "evidence_down": [
         "2025-09-01~2026-08-31 영업현금흐름 $46.94B 에서 설비투자 $75.66B 를 뺀 잉여현금흐름이 −$28.72B 이고, 영업현금흐름에 2026-06~08 분기 고객 선수금 $11.36B 가 들어 있어 이를 빼면 약 −$40.08B 다. [EV-oracle-015, EV-oracle-011]",
@@ -13497,9 +13801,18 @@
     },
     {
       "company_id": "apple",
-      "text": "Apple 은 총점 8(과점 15, 함정 -7)로 9위다. 20억 대 설치기반으로 ① 이 5점이지만 자체 모델이 약해 ② 와 ③ 이 2점에 머물고, 최근 1년 매출 성장 14.2% 로 ⑥ 이 -4점, Google 검색 지급금과 Gemini 의존으로 ⑧ 이 -3점이다.",
-      "reviewer": "noble",
-      "reviewed_at": "2026-10-06"
+      "text": "Apple 은 총점 8(과점 15, 함정 -7)로 8위다. 25억 대 넘는 설치기반으로 ① 이 5점이지만 자체 모델이 약해 ② 와 ③ 이 2점에 머물고, 최근 1년 매출 성장 14.2% 로 ⑥ 이 -4점, Google 검색 지급금과 Gemini 의존으로 ⑧ 이 -3점이다.",
+      "reviewer": "claude (사용자 위임 2026-10-07)",
+      "reviewed_at": "2026-10-07",
+      "revision_history": [
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-388 반영: round 8 수정: SpaceX ⑦ 재판정으로 순위가 9위에서 8위가 됐고, 설치기반을 원문 값(25억 대 넘음)으로 고쳤다",
+          "previous": "Apple 은 총점 8(과점 15, 함정 -7)로 9위다. 20억 대 설치기반으로 ① 이 5점이지만 자체 모델이 약해 ② 와 ③ 이 2점에 머물고, 최근 1년 매출 성장 14.2% 로 ⑥ 이 -4점, Google 검색 지급금과 Gemini 의존으로 ⑧ 이 -3점이다.",
+          "session": "agent"
+        }
+      ]
     },
     {
       "company_id": "meta",
@@ -13582,9 +13895,18 @@
     },
     {
       "company_id": "spacex-xai",
-      "text": "스페이스X+xAI 는 총점 9(과점 18, 함정 −9)로 공동 6위다. Starlink·Starship·xAI·X·Cursor 에 걸친 최상단 다각화(④ 5)와 두 경로 AI 기술력(② 4)이 강점이고, 영업손실률 −16.2% 에 런웨이가 3.03년으로 경계에 붙은 적자 깊이(⑨ −3), 매출의 95배인 EV/매출 가격(⑥ −3), 머스크·인허가·NVIDIA 의존(⑧ −3)이 깎는다.",
-      "reviewer": "noble",
-      "reviewed_at": "2026-10-06"
+      "text": "스페이스X+xAI 는 총점 7(과점 18, 함정 −11)로 9위다. Starlink·Starship·xAI·X·Cursor 에 걸친 최상단 다각화(④ 5)와 두 경로 AI 기술력(② 4)이 강점이고, 영업손실률 −16.2% 에 런웨이가 3.03년으로 경계에 붙은 적자 깊이(⑨ −3), 매출의 95배인 EV/매출 가격(⑥ −3), 머스크·인허가·NVIDIA 의존(⑧ −3), 투자 유치로 대금을 내는 Anthropic 계약이 매출의 큰 몫을 차지하는 순환금융(⑦ −2)이 깎는다.",
+      "reviewer": "claude (사용자 위임 2026-10-07)",
+      "reviewed_at": "2026-10-07",
+      "revision_history": [
+        {
+          "revised_at": "2026-10-07",
+          "revised_by": "claude (사용자 위임 2026-10-07)",
+          "reason": "제안 PRP-389 반영: round 8 수정: ⑦ 가로축을 큼으로 재판정해 총점 9→7, 순위 6위→9위가 됐다",
+          "previous": "스페이스X+xAI 는 총점 9(과점 18, 함정 −9)로 공동 6위다. Starlink·Starship·xAI·X·Cursor 에 걸친 최상단 다각화(④ 5)와 두 경로 AI 기술력(② 4)이 강점이고, 영업손실률 −16.2% 에 런웨이가 3.03년으로 경계에 붙은 적자 깊이(⑨ −3), 매출의 95배인 EV/매출 가격(⑥ −3), 머스크·인허가·NVIDIA 의존(⑧ −3)이 깎는다.",
+          "session": "agent"
+        }
+      ]
     },
     {
       "company_id": "tesla",
