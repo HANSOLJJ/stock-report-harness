@@ -152,6 +152,17 @@ class RenderThreeWayTest(V19Base):
         self.assertIn("판단 근거는 세 칸이다", draft)
 
 
+class WorknoteTest(unittest.TestCase):
+    def test_benchmark_name_is_not_a_task_code(self):
+        from scorecard import render_common as rc
+        body, note = rc.split_worknote("τ³-Banking·SciCode·AA-LCR 이 2~3포인트 퇴행했다.")
+        self.assertIn("AA-LCR", body)
+        self.assertEqual(note, "")
+        body, note = rc.split_worknote("값을 고쳤다(A-GRADE-45).")
+        self.assertNotIn("A-GRADE-45", body)
+        self.assertIn("A-GRADE-45", note)
+
+
 class RenderOldFormatTest(ProposalBase):
     def test_v18_has_no_direction_labels(self):
         draft, html = render_both(SLUG)
