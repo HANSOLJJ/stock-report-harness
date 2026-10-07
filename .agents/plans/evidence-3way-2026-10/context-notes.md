@@ -55,3 +55,13 @@
 
 ## 범위 밖으로 둔 것
 - `TERM_RE`(render_html.py 1511) lookbehind 버그, Pretendard CDN, 방법 절 ⑨ "조달 여력은 신용등급으로"(사용자 원본 문장), 리뷰 영역 파일의 「다음 실행 과제」, `protect_approved_run` 의 에이전트 거부 해제.
+
+## 구현 중 결정 (2026-10-07, Opus 5.5 세션)
+
+- **요약 JSON 은 새 키를 늘 낸다.** `tests/test_approval_commands.py` 의 SummaryShapeTest 가 키 구조를 fixture 와 **같음**으로 비교한다. 판단에는 `evidence_up`·`evidence_down`(없으면 빈 목록)과 `three_way`, 제안에는 `evidence_up_after`·`evidence_down_after`(없으면 null)와 `before.evidence_up/down` 을 늘 싣고 fixture 를 맞췄다.
+- **빈 칸은 CLI 에서 `--up ""`(승인 페이지는 `--up=`)로 넘긴다.** argparse 의 append 로는 빈 목록을 표현할 수 없어, 빈 문자열만 준 경우를 '없음'으로 읽는다.
+- **`revise_judgment` 의 v1.9 검사는 새 항목 전체에 댄다.** 판정 칸만 고치는 수정도 방향 칸이 없으면 막힌다. 그래서 지금 실행(v1.9)의 판단은 세 칸 제안으로만 바뀐다(6단계).
+- **트리거 표 메타 칸의 근거 링크는 줄바꿈하지 않는다.** `a{overflow-wrap:anywhere}` 때문에 `EV-` 와 `alphabet-004` 사이가 꺾였다.
+- **탭 바는 처음에 `hidden` 이고 JS 가 연다.** UA 기본값 `[hidden]{display:none}` 때문에 패널에 hidden 을 HTML 로 넣으면 JS 없이 볼 수 없다. 패널은 JS 가 숨긴다.
+- **이동 대상에 scroll-margin-top 72px.** 고정 탭 바가 이동한 대상(인용 근거 행 등)을 가렸다.
+- **서버가 승인 페이지를 연다(별건, 같은 날).** 사용자 요청. `node server.js --approvals` 가 파일이 가장 최근에 바뀐 채점 실행의 승인 페이지를 브라우저로 연다.
