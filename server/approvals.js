@@ -200,7 +200,9 @@ function defaultRunCli(args, callback) {
     cmdArgs = ['run', '--frozen', 'python', '-X', 'utf8', 'scripts/scorecard_cli.py', ...args];
   }
 
-  child_process.execFile(cmd, cmdArgs, { encoding: 'utf8' }, (err, stdout, stderr) => {
+  // 2026-10-07: 제안이 260건을 넘고 근거가 세 칸이 되면서 summary --json 이 1.2MB 가 돼 기본 한도(1MB)를 넘었다
+  // ("stdout maxBuffer length exceeded"). 한도를 넉넉히 준다.
+  child_process.execFile(cmd, cmdArgs, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }, (err, stdout, stderr) => {
     const exitCode = err ? (typeof err.code === 'number' ? err.code : 1) : 0;
     callback(null, {
       exitCode,
