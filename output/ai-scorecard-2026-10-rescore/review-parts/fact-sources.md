@@ -1,17 +1,65 @@
 ---
 reviewer_agent: fact-checker
-session: fc-opus55-20261006-rescore-r1 (1·2차와 같은 세션)
+session: fc-opus55-20261006-rescore-r1 (1~3차와 같은 세션)
 reviewed_at: 2026-10-06
-round: 3
+round: 4
 ---
 # fact-sources — 사실·출처
-검토자: Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님, evidence-editor 관점 포함) · 2026-10-06 · 완결된 문장 재작성 뒤 1차
-결과: pass
-요약: 다시 쓴 판단 114개(승계 102·새 판단 12)와 기업 요약 14개를 문장 단위로 전수 대조했다. 이전 문장(`revision_history[-1].previous.evidence`)·확정 근거·관측·results·트리거·후보 제목 어디에도 없는 새 사실은 찾지 못했다. 금액·숫자·고유명사·날짜를 스크립트로 뽑아 대조했고, 걸린 41문장은 모두 관측에서 계산한 비율·성분이거나 관측 basis·이전 문장에 있는 값이었다. 판단 문장 속 2026-09 이후 날짜 보도는 모두 같은 기업의 확정 근거와 ±1일 안에서 맞는다. 다만 연도 없이 'M/D'·'M월'로 적혀 있던 이전 사실 일곱 곳에 2026 을 붙였다(알파벳 ⑤ 4/28·5월, 아마존 ②·⑤ 와 마이크로소프트 ⑤ 의 8/28, 아마존 ② 의 Google 4월, Oracle ⑧ 의 S&P 7/9, 스페이스X ① 의 7/20). 원문으로 연도를 확인할 수 있는 것은 아니지만 2026 은 사실상 틀림없다. 이 밖에 이전 문장의 사실이 빠져 판정 재료의 근거가 약해진 곳은 없고, 빠진 것은 다른 기업 점수 비교·옛 판 수치·작업 표기였다. 요약 14개는 총점·과점·함정·순위·공동 여부·인용 수치(성장률·PER·EV/매출·영업외 비중·런웨이·커버리지)가 results 와 모두 맞는다. 고친 근거 28건·트리거 51건에도 새 사실이 없고, 상태·기한·출처 칸은 바뀌지 않았다. 참조 무결성은 그대로 0 누락이다. 아마존 지연인출 정기대출 $17.5B 의 소멸 조건은 10-Q 원문과 맞는다. 판단 문장은 '시한이 끝났다'로만 적고, 계산은 2026-06-30 기준 $37.5B 를 쓴다. 둘은 어긋나지 않으며 점수 영향도 없다(런웨이 8.0년·6.7년). 점수·순위·체크리스트를 바꾸는 발견은 없다. 남은 것은 medium 1건(판단 단위 출처 연결)과 low 들이다.
+검토자: Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님, evidence-editor 관점 포함) · 2026-10-06 · 완결된 문장 재작성 뒤 1차 · 확인 리뷰
+결과: needs_fix
+요약: PRP-134~137 로 바뀐 판단 네 건의 사실을 원문과 대조했다. NVIDIA ③ 의 데이터센터 매출($75,246M·$89,023M, 직전 분기 대비 +21%·+18%, 전년 대비 +92%·+117%)과 전년 1분기 중국 Hopper $4.6B 는 10-Q 두 건 원문과 맞는다. Microsoft ⑨ 의 분기 FCF($15.8B·$19.6B 대 $20.3B·$25.6B, 설비투자 $35.8B 대 $17.1B, 회계연도 $71.6B→$67.0B)는 companyfacts 누계 차로 다시 계산한 값과 맞는다. Tesla ④ 의 근거(EV-tesla-007·008)도 맞다. 점수·순위를 바꾸는 발견은 두 건이다. (1) Oracle ⑤ 의 동맹 등급 +2 는 '지분이 걸린 동맹 둘' 에 기대는데, 둘째 동맹인 'Stargate LLC 에 $7B 지분 출자' 를 Oracle 원문이 받쳐 주지 않는다. 2026-08-31 10-Q 와 FY2026 10-K 에 'Stargate' 는 0건이다. 두 문서 모두 비시장성 지분·채무 투자 합계를 $2.4B(2026-08-31)·$2.3B(2026-05-31)로 적고, 그 "substantial majority" 가 TikTok USDS 합작법인(지분 15%)이라고 적는다. $7B 지분 보유와 양립하기 어렵고, 이 사실의 출처는 기준선 문서(SRC-v15-html)뿐이다. 이 판단이 서지 않으면 ⑤ 4→3, 총점 5→4 가 되고 순위도 바뀐다. (2) 기업 요약 넷이 새 점수를 따르지 않는다. Microsoft 는 '총점 14·3위·⑨ 0', Oracle 은 '4점·공동 13위', Tesla 는 '총점 5·공동 11위·④ 4', Meta 는 '4위' 로 적혀 있고, 이 문장이 draft 카드에 그대로 실려 같은 draft 의 순위표(Microsoft·Meta 공동 3위 13점, Oracle 공동 11위 5점, Tesla 공동 13위 4점)와 어긋난다. 이전 리뷰의 다음 실행 과제는 바뀐 것이 없어 그대로 남는다.
 
-검토 기준: results_hash `975fbe139afc3c37…`, draft_hash `7f21d3d4b2577789…`(review.md frontmatter 와 같음을 확인). 재작성 커밋 `6c5efaf`·`96d39b2`·`2a4b94b`·`9e336b6`. 판단 114·요약 14·근거 72·트리거 80·출처 210건이다.
+검토 기준: results_hash `c11f5cc6b5eb3bf7…`, draft_hash `d522699cf7916b1d…`(review.md frontmatter 와 같음을 확인). 수정 커밋 `80fc1c4`·`3e1eea1`·`f5a54fa`.
 
-## 수행한 검토 (스크립트는 스크래치 `review/fs3_*.py`)
+## 수행한 확인 (스크립트는 스크래치 `review/fs4_*.py`)
+
+- **NVIDIA ③**: 캐시 10-Q 두 건의 sha256 이 index 와 같다(`7eee9866…-nvda-20260426.htm` 접수 0001045810-26-000052, `abcad314…-nvda-20260726.htm` 접수 0001045810-26-000075). 매출 분해표에 "Data Center $75,246 · $62,314 · $39,112 · 21% · 92%" 와 "Data Center $89,023 · $75,246 · $41,096 · 18% · 117%" 가 있다. 1분기 10-Q 에 "No shipments of Data Center Hopper products to China occurred during the quarter, compared with $4.6 billion in the first quarter of fiscal year 2026." 가 있다. 문장의 숫자와 위치가 모두 맞는다. '1분기 전년 대비 성장률이 눌려 있다' 는 문장 스스로 추론이라고 표시했다. 'Alphabet 이 TPU 를 Anthropic·Meta 에 판다' 는 alphabet.F5, 'CUDA 생태계는 ① 의 설치기반' 은 nvidia.F1 문장과 같다. 다만 1분기 10-Q(0001045810-26-000052)는 sources.json 에 등록돼 있지 않다.
+- **Oracle ⑤**: 2026-08-31 10-Q(f456b723…) p.7 에 "The substantial majority of the non-marketable investments we held as of August 31, 2026 were with TikTok USDS Joint Venture LLC, an equity method investee in which we have an ownership interest of 15 %." 가 있다. 같은 쪽에 "Our non-marketable equity securities and debt investments totaled $ 2.4 billion and $ 2.3 billion as of August 31, 2026 and May 31, 2026" 가 있다. FY2026 10-K(3fc9afc2…)도 2026-05-31 합계를 $2.3B, TikTok 을 substantial majority 로 적는다. 두 문서에서 'Stargate'·'OpenAI'·'Crusoe' 는 0건이다. 후보 제목(시험·이번 실행)에도 Oracle 의 Stargate 지분을 다룬 제목이 없다. 'TikTok 합작법인의 클라우드를 맡는다' 도 10-Q 주석 1 에는 없다. 적대 근거(EV-oracle-008 의료 침해 2,000만 명)는 확정 근거와 맞는다.
+- **Tesla ④**: CNBC 2026-10-03(EV-tesla-007, confirmed)와 13.7GWh·시장 예상 미달(EV-tesla-008·후보 제목)이 맞는다. Optimus 미배치와 Terafab 건설 단계는 이전 문장·트리거와 같다.
+- **Microsoft ⑨**: `validation/f6-avail-15/_raw/MSFT.companyfacts.json` 에서 영업현금흐름·설비투자 누계(같은 회계연도 시작일)의 차로 여덟 분기를 다시 구했다. FY25 분기 FCF 는 19.26·6.49·20.30·25.57, FY26 은 25.66·5.88·15.80·19.64 이고, FY25 4분기 설비투자 17.08, FY26 4분기 35.80, 회계연도 FCF 71.61→66.99 다($B). 문장의 숫자와 같다. 문장은 FY26 3·4분기만 적는데, 1분기는 전년보다 +33%, 2분기는 −9% 다(재무·규칙 영역이 판정에 반영할지 본다). 판단 source_ids 는 SRC-v15-html 하나다.
+- **기업 요약 14개**: 총점·과점·함정·순위·공동 여부를 새 results 와 다시 대조했다. 넷이 어긋난다(아래 발견 2). 나머지 열은 맞는다.
+- **렌더러 문구**: draft 1086행 "Term Loan (unsecured delayed draw) $17.5B 는 2026-09-30 에 인출 시한이 끝나 미인출분이 소멸했다. 런웨이는 2026-06-30 공시 기준 약정으로 계산했다." 는 10-Q 원문("after which any undrawn commitments will automatically terminate")과 관측 as_of 에 맞는다.
+- **바뀐 판단과 닿는 근거·트리거 문장**: EV-oracle-008 relevance 가 "Oracle ⑤ 판단은 동맹 등급 +1" 로, EV-tesla-008 relevance 가 "테슬라 ④ 판단은 4점(…Optimus·…Terafab…)" 으로 남아 있다.
+- **참조 무결성**: 바뀐 판단의 evidence_ids(EV-oracle-003, EV-tesla-007·008)는 모두 confirmed 근거이고 source_ids 는 모두 sources.json 에 있다.
+
+## 발견
+| 등급 | 위치 | 발견 | 점수 영향 |
+| --- | --- | --- | --- |
+| high · needs_fix | judgments.json oracle.F5 (PRP-135, A=+2) | 동맹 등급 +2 의 둘째 근거 'Stargate LLC 에 $7B 를 지분 출자' 를 Oracle 원문이 받치지 않는다. 10-Q(2026-08-31)·10-K(FY2026)에 Stargate 는 0건이다. 비시장성 지분·채무 투자 합계는 $2.4B 이고 그 대부분이 TikTok USDS 합작법인이라, $7B 지분과 양립하기 어렵다. 이 사실의 출처는 기준선 문서뿐이고 확정 근거·후보에도 없다. 지분 동맹은 원문으로 TikTok 하나만 확인되므로 '지분이 걸린 동맹이 복수' 요건이 서지 않는다. 고치는 길은 둘이다. Stargate 지분을 1차 자료(Oracle·OpenAI·SoftBank 공시)로 확인해 출처를 붙이거나, A 를 +1 로 되돌린다. | 있음 — ⑤ 4→3, Oracle 총점 5→4, 순위(공동 11위→공동 13위) |
+| high · needs_fix | judgments.json company_summaries(microsoft·oracle·tesla·meta) · draft.md 191·250·815·965행 | 요약 넷이 새 점수를 따르지 않는다. Microsoft 는 '총점 14점(과점 19, 함정 −5)·3위·⑨ 는 추세 안정이라 0' 인데 실제는 13점(19, −6)·공동 3위·⑨ −1(악화)이다. Oracle 은 '4점(과점 14)·공동 13위' 인데 5점(15)·공동 11위다. Tesla 는 '총점 5(과점 14)·공동 11위·④ 4 강점' 인데 4점(13)·공동 13위·④ 3 이다. Meta 는 '4위' 인데 공동 3위다. draft 카드가 같은 draft 의 순위표와 서로 다른 점수·순위를 싣는다. | 있음 — 화면에 실리는 점수·순위 진술이 틀림(계산값은 맞음) |
+| medium | judgments.json nvidia.F3 · microsoft.F9 · sources.json | nvidia.F3 가 근거로 쓴 2026-04-26 분기 10-Q(0001045810-26-000052)는 sources.json 에 없다. 판단 source_ids 는 두 판단 모두 SRC-v15-html 하나라, 10-Q·companyfacts 숫자가 판단 단위로 출처에 이어지지 않는다(3차 medium 의 연장). | 없음 |
+| low | judgments.json oracle.F5 | 'TikTok 합작법인의 클라우드를 맡는다' 를 10-Q 주석 1 출처로 묶어 적었으나, 주석 1 은 지분 15%·지분법만 적는다. | 없음 |
+| low | evidence.json EV-oracle-008 · EV-tesla-008 relevance | 바뀌기 전 판정(Oracle ⑤ 동맹 +1, 테슬라 ④ 4점·Optimus·Terafab 포함)을 '지금 판단' 으로 적는다. | 없음 |
+| low | judgments.json microsoft.F9 | 분기 FCF 악화를 FY26 3·4분기 둘로만 적는다. 같은 회계연도 1분기는 전년 대비 +33%, 2분기는 −9% 다. 사실 오류는 아니고, 이 사실을 판정에 어떻게 반영할지는 재무·규칙 영역이 본다. | 없음 |
+
+이전 리뷰(3차) 발견의 처리는 다음과 같다. 판단 근거 출처 연결(medium)은 남는다. 연도 추정 일곱 곳은 판단이 바뀌지 않아 남는다. TRG-057 의 '9/14 8-K 미열람'·PRP-002 표현, 철회 트리거의 다른 트리거 번호 참조, F5 세 판단 counter_evidence 의 행 번호, EV-anthropic-010 꼬리표, TRG-006 날짜·메타 303건은 트리거·근거가 바뀌지 않아 모두 남는다. 아마존 여신 메모는 렌더러 수정 뒤에도 사실과 맞는다(닫힘 유지).
+
+## 체크리스트
+| ID | 결과(pass/fail/not_applicable) | 근거 |
+| --- | --- | --- |
+| Q05 | pass | 이해당사자 출처를 사실의 상한으로 둔다(3차와 같음). 바뀐 판단 네 건은 10-Q·companyfacts·확정 근거를 쓴다. 이해상충 표기는 AGENTS.md 에 따라 보지 않았다. |
+| Q09 | pass | Tesla ④ 는 배치 전 Optimus·Terafab 을 폭에서 뺐고, Microsoft ⑨ 는 2026 역년 설비투자 계획 하향을 추세 근거로 쓰지 않는다고 적었다. Oracle ⑤ 의 Stargate 지분은 계획 문제가 아니라 출처 문제라 발견 1 로 적었다. |
+| Q14 | pass | 진행 중인 사건을 끝난 것으로 세지 않는다(3차와 같음). NVIDIA ③ 의 1분기 비교 기준 왜곡은 스스로 추론으로 표시했다. |
+| Q23 | not_applicable | 바뀐 판단 네 건에 벤치마크 비교가 없다. |
+
+## 다음 실행 과제
+1. (needs_fix 와 같은 묶음) oracle.F5 의 Stargate LLC 지분을 1차 자료로 확인해 출처를 붙인다. 확인되지 않으면 A 를 +1 로 되돌리는 제안을 올린다. 같은 사실을 쓰는 oracle.F7(세로축 '내 돈이 돌아옴')과 openai.F5(Stargate 공동 지분)도 같은 자료로 문장을 맞춘다. 두 판단의 점수에는 닿지 않는다(Oracle ⑦ 은 가로축 '큼' 이라 −2, OpenAI ⑤ 는 Broadcom·국방부로 +1 유지).
+2. (needs_fix 와 같은 묶음) 기업 요약 넷(Microsoft·Oracle·Tesla·Meta)을 새 results 로 다시 쓴다. 요약이 총점·순위를 적는 이상 판단이 바뀔 때마다 요약도 같이 바뀌도록, 검증기가 요약 속 총점·과점·함정·순위를 results 와 대조하게 한다.
+3. (medium) nvidia.F3 가 인용한 2026-04-26 분기 10-Q 를 sources.json 에 등록하고, 판단의 source_ids·evidence_ids 를 문장이 인용한 확정 근거·SEC 출처로 채운다(3차 과제 1 의 연장).
+4. (low) EV-oracle-008·EV-tesla-008 relevance 의 '지금 판단' 서술을 새 판정으로 맞춘다. oracle.F5 의 TikTok 클라우드 서술에 맞는 출처를 붙이거나 출처 괄호 밖으로 뺀다.
+5. (low) 3차 과제 2~6 을 유지한다. 연도 추정 일곱 곳, TRG-057 finding, F5 세 판단 counter_evidence, EV-anthropic-010·TRG-006·메타 건수, Oracle 관측 위치·건수·accessed_at·캐시 경합이다.
+
+## 이전 리뷰 기록
+
+아래는 3차(완결된 문장 재작성 뒤 1차)와 그 안에 옮겨 둔 1·2차 리뷰를 지우지 않고 옮긴 것이다. 세 리뷰 모두 결과는 pass 였다.
+
+3차 검토자: Claude Opus 5.5 · 완결된 문장 재작성 뒤 1차 · 2026-10-06
+3차 결과: pass
+3차 요약: 다시 쓴 판단 114개(승계 102·새 판단 12)와 기업 요약 14개를 문장 단위로 전수 대조했다. 이전 문장(`revision_history[-1].previous.evidence`)·확정 근거·관측·results·트리거·후보 제목 어디에도 없는 새 사실은 찾지 못했다. 금액·숫자·고유명사·날짜를 스크립트로 뽑아 대조했고, 걸린 41문장은 모두 관측에서 계산한 비율·성분이거나 관측 basis·이전 문장에 있는 값이었다. 판단 문장 속 2026-09 이후 날짜 보도는 모두 같은 기업의 확정 근거와 ±1일 안에서 맞는다. 다만 연도 없이 'M/D'·'M월'로 적혀 있던 이전 사실 일곱 곳에 2026 을 붙였다(알파벳 ⑤ 4/28·5월, 아마존 ②·⑤ 와 마이크로소프트 ⑤ 의 8/28, 아마존 ② 의 Google 4월, Oracle ⑧ 의 S&P 7/9, 스페이스X ① 의 7/20). 원문으로 연도를 확인할 수 있는 것은 아니지만 2026 은 사실상 틀림없다. 이 밖에 이전 문장의 사실이 빠져 판정 재료의 근거가 약해진 곳은 없고, 빠진 것은 다른 기업 점수 비교·옛 판 수치·작업 표기였다. 요약 14개는 총점·과점·함정·순위·공동 여부·인용 수치(성장률·PER·EV/매출·영업외 비중·런웨이·커버리지)가 results 와 모두 맞는다. 고친 근거 28건·트리거 51건에도 새 사실이 없고, 상태·기한·출처 칸은 바뀌지 않았다. 참조 무결성은 그대로 0 누락이다. 아마존 지연인출 정기대출 $17.5B 의 소멸 조건은 10-Q 원문과 맞는다. 판단 문장은 '시한이 끝났다'로만 적고, 계산은 2026-06-30 기준 $37.5B 를 쓴다. 둘은 어긋나지 않으며 점수 영향도 없다(런웨이 8.0년·6.7년). 점수·순위·체크리스트를 바꾸는 발견은 없다. 남은 것은 medium 1건(판단 단위 출처 연결)과 low 들이다.
+
+3차 검토 기준: results_hash `975fbe139afc3c37…`, draft_hash `7f21d3d4b2577789…`(review.md frontmatter 와 같음을 확인). 재작성 커밋 `6c5efaf`·`96d39b2`·`2a4b94b`·`9e336b6`. 판단 114·요약 14·근거 72·트리거 80·출처 210건이다.
+
+### 3차 — 수행한 검토 (스크립트는 스크래치 `review/fs3_*.py`)
 
 - **새 사실 탐지(판단 114·요약 14)**: 문장마다 금액(달러·억·조 환산 포함, 오차 1.2%)·숫자·영문 고유명사를 뽑았다. 이것을 같은 기업의 이전 문장 전부(재작성 전 판단, `revision_history` 의 모든 previous, superseded 기록), 근거(재작성 전·후), 트리거, 관측 raw·basis, results, 후보 제목과 대조했다. 걸린 41문장을 하나씩 열어 보니 모두 계산값(영업이익률·영업외 비중·성장률·PER·EV/매출·런웨이 1.16년·커버리지 2.31배·RPO 증가폭 $26B)이거나 관측 basis·이전 표에 있는 값이었다. 예를 들면 알리바바 영업권 손상 RMB4,458M·EU DSA 충당(rs1006 note), 스페이스X 신용장 $645M·Spectrum $11.1B/$20.8B(관측 basis·이전 문장), 메타 영업현금흐름 $130.30B(관측 basis), 팔란티어 92.8%·$764M(이전 표)이다.
 - **문장 전수 읽기**: 114개 판단의 이전·새 문장을 나란히 놓고 전부 읽었다. 새로 보이는 서술은 다시 원문과 대조했다. Vera Rubin 보도자료 날짜(2026-01-05·2026-03-16)는 이전 note 에 있다. CoreWeave NVL72(2026-09-30)·테슬라 에너지 저장 미달·크로아티아 FSD·Oracle 의료 침해 2,000만 명·Tencent 칩 10만 개·Palantir Armada·44,000건·WIRED 는 확정 근거·후보 제목에 있다. TSMC 2분기 +36%·가이던스 +30%→+40% 이상·GM 67.7%, 메타 2분기 $60.80B, 아마존 Interconnect 프리뷰, 알파벳 현금 $55.9B, 애플 현금 $39.5B, 알리바바 자본약정+기타약정은 이전 표·트리거·관측에 있다. 스페이스X ⑤ 의 'Google 은 자체 TPU 가 있어 떠날 수 있다'도 확정 근거 문장에 있다.
@@ -23,7 +71,7 @@ round: 3
 - **아마존 미인출 여신**: 보존 10-Q(3cf9799:validation/offb-24/_raw/amzn-20260630.htm) 원문 "single draw on any business day on or prior to September 30, 2026, after which any undrawn commitments will automatically terminate" 와 판단 문장이 맞는다. 판단은 소멸이 아니라 '인출 시한이 끝났다'로 적는다(인출했는지는 원문으로 알 수 없다). 관측 as_of(2026-06-30)에는 세 시설 모두 유효했으므로 계산의 $37.5B 와 어긋나지 않는다. 15.0B 만 세면 8.0년, 현금만 세면 6.7년이라 G3 결론도 같다(관측 basis.sensitivity 와 일치).
 - **참조 무결성**: 관측 525·판단 183·근거 72·트리거 187 참조가 모두 출처 210건 안에 있다. 판단의 evidence_ids 는 anthropic.F5.impl48(EV-anthropic-002·006, confirmed) 한 건이다.
 
-## 발견
+### 3차 — 발견
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
 | medium | judgments.json 판단 전반(특히 새 판단 12개와 2026-09 이후 보도를 인용하는 판단) | 다시 쓴 문장이 확정 근거의 보도(예: 알파벳 ⑤ 의 EU·애드테크·영국·폴란드, 메타 ⑤ 의 10월 보도, 팔란티어 ⑤ 의 Armada·44,000건·WIRED, Oracle ⑤ 의 침해 사고, 아마존 ① 의 UBS)와 새 SEC 원문 숫자를 문장 안에서 날짜·매체로 인용한다. 그런데 판단의 `source_ids` 는 대부분 [SRC-v15-html·rule·md] 그대로이고 `evidence_ids` 는 한 건뿐이다. 사실은 모두 확정 근거·관측에 있어 추적은 되지만, 판단 단위로는 이어지지 않는다(지난 리뷰 medium 4 가 넓어진 것). | 없음 |
@@ -34,7 +82,7 @@ round: 3
 | low | evidence.json EV-anthropic-010 | excerpt 꼬리표 '- bbc.com' 과 raw_ref·출처 장부의 '- BBC' 가 다르다(1차 low, 미해결). | 없음 |
 | low | triggers.json TRG-006 · TRG-010·011·012·056 | qz 보도일 10-06(후보 2026-10-05T19:35Z)과 메타 뉴스 303건(후보 307건)이 그대로다(1차 low, 미해결). | 없음 |
 
-## 체크리스트
+### 3차 — 체크리스트
 | ID | 결과(pass/fail/not_applicable) | 근거 |
 | --- | --- | --- |
 | Q05 | pass | 다시 쓴 문장도 이해당사자 발표를 사실의 상한으로 둔다. NVIDIA Vera Rubin 수치는 '벤더 발표이고 독립 측정이 아니다'로, OpenAI Jalapeño InferenceX 는 '이해당사자 발표라 1차 근거가 아니다'로 적었다. OpenAI ARC-AGI-3 99.9% 는 자사 하네스라 쓰지 않았다. Microsoft Copilot 블로그는 '독립 측정이 없어 반영하지 않았다'로 적었다. 이해상충 표기는 AGENTS.md 에 따라 보지 않았다. |
@@ -42,7 +90,7 @@ round: 3
 | Q14 | pass | 진행 중인 사건(Hugging Face 종결 전, Anthropic 상장 전, OpenAI 라운드 협상, EU FSD 표결 12월, 새 Siri 미출시)은 미완으로 적었다. 아마존 지연인출 약정도 인출 여부를 단정하지 않는다. |
 | Q23 | pass | 하네스가 다른 벤치마크 비교를 근거로 쓰지 않는다. 메타 Tau3-Bench, 알리바바 HLE, Anthropic ARC-AGI-3, OpenAI FrontierMath 는 하네스 미표기라 비교 근거에서 뺐고, 전원 자기 하네스인 Coding Agent Index 만 비교에 썼다. |
 
-## 다음 실행 과제
+### 3차 — 다음 실행 과제
 1. (medium) 판단의 `source_ids`·`evidence_ids` 를 문장이 인용한 확정 근거와 새 SEC 출처로 채우는 판단 변경 제안을 올린다. 재작성 문장이 보도를 날짜·매체로 인용하므로, 해당 EV ID 를 기계로 붙일 수 있다(이번 스크립트로 2026-09 이후 보도는 모두 ±1일 확정 근거와 맞았다).
 2. (low) 연도를 추정해 붙인 날짜 일곱 곳(알파벳 ⑤ 4/28·5월, 아마존 ② 4월·8/28, 아마존 ⑤·마이크로소프트 ⑤ 8/28, Oracle ⑧ 7/9, 스페이스X ①·테슬라 ③ 7/20)을 원문으로 확인하거나 '연도 미확인'으로 적는다.
 3. (low) TRG-057 finding 의 '9/14 8-K 본문 미열람'을 Ellison 10b5-1 계획 취소로 고치고, 'PRP-002'·'시험 실행' 표현을 지운다. 철회 트리거들의 'TRG-0NN 으로 이었다' 를 완결된 문장으로 바꿀지는 출력 영역과 함께 정한다.
@@ -50,7 +98,7 @@ round: 3
 5. (low) EV-anthropic-010 excerpt 꼬리표, TRG-006 qz 날짜, 메타 뉴스 건수를 후보 원문 기준으로 맞춘다.
 6. (low) oracle.net_cash.rs1006 리스 위치(p.12), oracle.undrawn_credit 'revolv' 건수(35), 출처 5건의 accessed_at(raw 수집 시각)을 고친다. sec-get 캐시 index 의 동시 기록 경합을 막는다.
 
-## 이전 리뷰 기록
+### 1·2차 리뷰 기록
 
 아래는 확인 리뷰(2차)와 그 안에 옮겨 둔 1차 리뷰를 지우지 않고 옮긴 것이다. 두 리뷰 모두 결과는 pass 였다.
 
@@ -60,7 +108,7 @@ round: 3
 
 2차 검토 기준: results_hash `34248db45321ea0b…`, draft_hash `2af65e2f45bb0e34…`(review.md frontmatter 와 같음을 확인). 1차 뒤 커밋 `08bfc90`·`6ae2ac9`·`96d522f`. 트리거 80·출처 210·근거 72·판단 114건이다.
 
-### 2차 — 1차 발견 처리
+#### 2차 — 1차 발견 처리
 | 1차 발견 | 상태 | 확인 내용 |
 | --- | --- | --- |
 | medium · TRG-057 expired | 닫힘 | status 가 `fired` 다. finding 에 발동 판정이 붙었다. Oracle ⑥ −2→−1 은 results 와 같다(P1 22.83·P2 7.858·P3 21.62%). ⑨ −3 은 그대로이고 런웨이는 1.61년이다. ⑦ 은 PRP-002 로 숫자만 고쳤다. ⑧ 은 10-Q 에 OpenAI 0건·고객 집중 서술 0건이라 유지했고, 이것은 1차에 원문으로 확인했다. research.md 「발동 트리거 재검토 대상」에 ⑦(수정함)·⑧(수정하지 않음) 행이 있다. |
@@ -78,7 +126,7 @@ round: 3
 | low · preview 알리바바 ⑨ 원인 '판단 수정' | 닫힘 | preview 가 '⑨ −3→−4 (📊 관측(가격·재무))' 다. ⑥ 은 '📐 규칙(트랙 listed_annual→listed_ttm)·📊 관측' 이고, 순위만 바뀐 Palantir·Tesla 행이 들어갔다. |
 | low · oracle.F7·F9 의 v1.5 수치 표시 없음 | 다음 실행 과제 유지 | 바뀌지 않았다. |
 
-### 2차 — 바뀐 항목 확인
+#### 2차 — 바뀐 항목 확인
 | 항목 | 결과 | 확인 내용 |
 | --- | --- | --- |
 | TRG-057 finding 숫자 | 맞음 | PER 431.93/18.92 = 22.83, EV/매출 (431.93+132.07)/71.78 = 7.858, 성장 71,776/59,018 − 1 = 21.62%. results oracle F6 P1·P2·P3 와 같다. |
@@ -92,13 +140,13 @@ round: 3
 | 참조 무결성 | 맞음 | 관측 525·판단 183·근거 72·트리거 187 참조가 모두 출처 210건 안에 있다. 트리거 evidence_ids 는 모두 confirmed 근거다. |
 | research.md 트리거 표 | 맞음 | 「이전 트리거 처리」 80행의 결론·확인 내용이 triggers.json 80항목과 같다(TRIG-029 는 두 행). 「발동 트리거 재검토 대상」 4행. |
 
-### 2차 — 새로 보인 것
+#### 2차 — 새로 보인 것
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
 | low | triggers.json TRG-057 carry.finding | 끝 문장 "2026-09-14 8-K(Items 8.01·9.01)도 후보에 있으나 본문 미열람이다" 가 남았다. 같은 공시를 TRG-022 finding 은 'Ellison 10b5-1 계획 취소' 로 확인해 적었다. 두 finding 의 서술이 어긋난다. | 없음 |
 | low | sources.json SRC-NEWS-spacex-xai-20260616-86997696·20260707-4e501b19 (기존 3건 포함 5건) | raw_ref 는 2026-10-06 수집본(20261006T…)인데 accessed_at 은 2026-10-01T06:20:27Z 다. 기준일 안이라 점수와 무관하다. | 없음 |
 
-### 2차 — 체크리스트
+#### 2차 — 체크리스트
 | ID | 결과(pass/fail/not_applicable) | 근거 |
 | --- | --- | --- |
 | Q05 | pass | 1차와 같다. 새로 쓴 TRG-070·TRG-080 도 2차 매체 제목을 사실의 상한으로 두고, 전환·궤도 컴퓨트 같은 미확인 사실은 조건 미충족으로 남겼다. 이해상충 표기는 AGENTS.md 에 따라 보지 않았다. |
@@ -106,7 +154,7 @@ round: 3
 | Q14 | pass | TRG-080 은 '페이로드 배치'라는 끝난 사건만 발동으로 세고, 궤도 데이터센터 컴퓨트·매출은 TRG-034 관찰로 남겼다. TRG-070 은 인수·협업을 모델 전환으로 세지 않았다. |
 | Q23 | pass | 1차와 같다(바뀐 항목에 벤치마크 비교 없음). |
 
-### 2차 — 다음 실행 과제
+#### 2차 — 다음 실행 과제
 1. (medium) PRP 판단 네 건(oracle.F9, oracle.F7.fix52, alibaba.F9.obsreg25, tsmc.F9)의 `source_ids` 에 새 SEC 출처(SRC-SEC-FACTS-ORCL-20261006, SRC-SEC-ORCL-10K-FY2026, SRC-SEC-TSM-6K-*, SRC-SEC-BABA-6K-*)를 더하는 제안을 올린다. Oracle·TSMC 문장에도 관측 ID(rs1006)를 적는다.
 2. (low) TRG-057 finding 끝 문장의 9/14 8-K '본문 미열람' 을 TRG-022 와 같게 'Ellison 10b5-1 계획 취소' 로 고친다.
 3. (low) amazon.F9.obsreg25 '미개시 리스 $106B', oracle.F7 '$167B', oracle.F9 의 Debt/EBITDA·이자보상·Altman Z 에 v1.5 표시를 붙이거나 현재 값으로 고친다.
@@ -116,7 +164,7 @@ round: 3
 7. (low) TRG-006 의 qz 날짜(10-05)와 메타 뉴스 건수(307)를 후보 기준으로 맞춘다.
 8. (low) raw_ref 가 2026-10-06 수집본인 출처 5건의 accessed_at 을 실제 수집 시각으로 맞춘다.
 
-### 1차 리뷰 기록
+#### 1차 리뷰 기록
 
 아래는 1차(round 1) 내용을 지우지 않고 옮긴 것이다. 1차 결과는 pass 였고, 아래 요약 문단 뒤 1차 검토 기준은 results_hash `1101644bc117e2a2…`, draft_hash `1168a515ee524414…` 였다.
 
@@ -124,7 +172,7 @@ round: 3
 
 1차 검토 기준: results_hash `1101644bc117e2a2…`, draft_hash `1168a515ee524414…`(review.md frontmatter 와 같음을 확인). 관측 440·판단 114(new 12)·근거 72·트리거 79·출처 207·후보 4,507건.
 
-#### 1차 수행한 검토 (전수, 스크립트는 스크래치 `review/fs_*.py`)
+##### 1차 수행한 검토 (전수, 스크립트는 스크래치 `review/fs_*.py`)
 
 - **참조 무결성**: 관측·판단·근거·트리거·제안의 `source_id`/`source_ids`/`evidence_ids` 를 재귀로 전부 모아 대조했다. 빠진 것 0건. draft.md 의 SRC 207·EV 56 참조도 모두 있다. research.md 에서는 EV 두 개가 이번 장부에 없다(발견 9).
 - **근거 72건**: 38건은 이전 실행 근거와 모든 칸이 같고(reviewed_at 2026-10-01), 34건은 이번에 확정했다(noble, 2026-10-06). 상태는 전부 confirmed 다. `status: new` 판단 가운데 EV 를 인용한 것은 anthropic.F5.impl48(EV-anthropic-002·006, confirmed) 하나다. excerpt = 후보 제목인 것이 71건이고, 예외는 EV-anthropic-010 이다(발견 7). 가장 늦은 발행시각은 2026-10-05T23:09:19Z 다. 공시 9건은 published_at_utc 가 null 이고 filed_at 은 2026-06-10~10-02 이다. 후보 창은 2026-04-09~10-06 이다.
@@ -137,7 +185,7 @@ round: 3
 - **기준 시점**: 관측 as_of 와 observed_at, 출처 accessed_at 이 모두 기준일(2026-10-06) 이하다. 가격·시총 관측 24건은 2026-10-05(SRC-YF-2026-10-05)로 run.json price_as_of 와 같다.
 - **근거 불릿(evidence-editor)**: relevance 는 '추론:' 이나 '사실:/추론:' 표시가 72건 모두 있다. 뉴스 63건은 모두 '제목만' 단서가 있다. conditional_impact·horizon·counter_evidence·unverified·channel 은 빈 칸이 없다. 매수·매도·목표주가·수익 보장·FOMO 같은 금지 표현은 근거와 draft 모두에서 0건이다(draft 1557행은 면책 문구다).
 
-#### 1차 발견
+##### 1차 발견
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
 | medium | triggers.json TRG-057 (baseline/v1.5:TRIG-011) | 사건(Oracle 2026-09-10 실적 8-K, 2026-09-11 10-Q)이 일어났고 수집됐다. 이 10-Q 로 관측을 갱신해 Oracle ⑥ 이 −2→−1 로 움직였다. 그런데 status 가 `expired` 다. guide.md 4.1 과 score-collect 규칙은 "사건이 일어났으면 fired" 이고 expired 는 "기한이 지나 의미가 없어졌다"는 뜻이다. 그래서 research.md 에 「발동 트리거 재검토 대상」 행(Oracle ⑦·⑧)이 없다. ⑦ 문장은 PRP-002 로 이미 고쳐졌고 ⑧ 은 10-Q 에 OpenAI 몫이 없어 유지 이유가 finding 에 있다. | 없음(점수는 관측에서 산출, ⑦⑧ 판정 재료 불변) |
@@ -156,7 +204,7 @@ round: 3
 | low | preview.md 「이전 실행 대비」 | 알리바바 ⑨ −3→−4 의 원인이 "✍️ 판단 수정" 으로 적혀 있다. PRP-003 은 근거 문장만 바꿨고 gate_inputs 는 그대로다. 실제 원인은 관측 갱신(FCF·현금)이다. | 없음 |
 | low | judgments.json oracle.F7.fix52 · oracle.F9 | 갱신된 2026-08-31 숫자 옆에 v1.5 값이 표시 없이 남아 있다. oracle.F7 의 '자체 부채 $167B'(현재 차입 $125.3B + 리스 $43.8B), oracle.F9 의 'Debt/EBITDA 5.03·이자보상 4.87·Altman Z 2.18' 이다. 게이트 입력은 아니다. | 없음 |
 
-#### 1차 체크리스트
+##### 1차 체크리스트
 | ID | 결과(pass/fail/not_applicable) | 근거 |
 | --- | --- | --- |
 | Q05 | pass | 이해당사자 출처를 확정 사실로 쓰지 않았다. 벤더 발표 벤치마크(Gemini 4 Argon '19개 중 13개', NVIDIA 블로그의 Astra 가속, Microsoft 음성 모델)는 TRG-001·009·040·066 에서 방증으로만 다뤘다. 회사 주장('중국에서 가장 강력한')은 EV-alibaba-007 counter_evidence 에 적혔다. 출처 장부의 `conflict_of_interest` 표기는 AGENTS.md 「금지·주의」(2026-10-02)에 따라 점검하지 않았다. |
@@ -164,7 +212,7 @@ round: 3
 | Q14 | pass | 진행 중인 사건은 끝난 것으로 세지 않았다. Anthropic S-1·상장, Hugging Face 종결(8-K 원문은 2027 상반기 종결 예정), OpenAI $30B 라운드, EU 표결, 영국 Palantir 계약은 모두 watching 이다. 알리바바 G4 는 '모름' 이 아니라 원문으로 확인한 미공시만 C-16 으로 보냈다. |
 | Q23 | pass | 사실·출처 관점에서 서로 다른 하네스의 벤치마크 비교를 근거로 쓴 곳이 없다. TRG-040 은 같은 하네스 독립 측정을 조건으로 두고, 벤더 수치는 조건 미충족으로 처리했다. |
 
-#### 1차 다음 실행 과제
+##### 1차 다음 실행 과제
 1. (medium, 승인 전 고칠 만함) TRG-057 을 `fired` 로 바꾸고 「발동 트리거 재검토 대상」에 Oracle ⑦(PRP-002 로 근거 문장만 갱신)과 ⑧(10-Q 에 OpenAI 몫·고객 집중 서술 0건이라 수정하지 않음) 행을 넣는다.
 2. (medium, 승인 전 고칠 만함) TRG-078 을 기업별로 나눈다. SpaceX 몫(Starship 페이로드 실측)은 `fired` + "수정하지 않음" 사유로 두고, 테슬라 몫(Optimus)은 TRG-030 으로 철회한다.
 3. (medium, 승인 전 고칠 만함) TRG-070 finding 의 'Cursor 0건' 을 고친다. 2026-06-16 SpaceX 의 Cursor 인수($60B), 2026-07-07 'SpaceXAI·Cursor 새 모델 출시' 보도를 적고, 제목으로는 기본 모델 전환·Claude 비중 축소가 확인되지 않아 watching 을 유지한다고 적는다. 가능하면 Reuters 07-07 본문을 열어 전환 여부를 확인한다.

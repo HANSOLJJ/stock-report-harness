@@ -1,15 +1,122 @@
 ---
 reviewer_agent: general-purpose (규칙 일관성)
-session: rc-rescore-20261006-r3
+session: rc-rescore-20261007-r4
 reviewed_at: 2026-10-06
-round: 3
+round: 4
 ---
 # rule-consistency — 규칙 일관성
-검토자: Claude Opus 5.5 · 규칙 일관성 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 완결된 문장 재작성 뒤 1차
+검토자: Claude Opus 5.5 · 규칙 일관성 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 완결된 문장 재작성 뒤 1차 · 확인 리뷰
 결과: needs_fix
-요약: 판단 114개의 새 문장을 판정 재료(③ 세 기준·⑤ A·H·⑦ 두 축·⑨ gate_inputs·①②④⑧ 점수)와 하나씩 대조했다. 문장과 판정 재료가 어긋나는 승계 판단은 대부분 이미 `open_tensions` 에 재검토 시점(2026-11)과 함께 등록돼 있어 승계 판단 예외에 든다. 예를 들면 tsmc.F3 후발 가속도(TEN-RC4-04), anthropic·openai F7(TEN-RC3-01), anthropic.F2 의 5점(TEN-RA4-01·C-03 pending_recheck), spacex-xai·tesla·microsoft·amazon·palantir F3 가속도(TEN-RB-Q10)가 그렇다. 그런데 문장을 완결된 현재 상태로 다시 쓰면서 **등록되지 않은 긴장 네 건**이 드러났다. 넷 모두 점수를 움직일 수 있어 체크리스트 Q02·Q03·Q09·Q12 를 예외 없는 fail 로 만든다.<br>(1) nvidia.F3 은 후발 가속도를 실패로 두는데, 사유가 규칙 기준(AI 귀속 지표의 성장률이 오르는가)이 아니라 "시장을 연 퍼스트무버" 다. 같은 실행 안의 데이터센터 매출 성장률은 직전 분기 +92% 에서 +117% 로 올랐다.<br>(2) oracle.F5 는 동맹 등급 +2 의 "지분이 걸린 동맹 복수" 조항을 판정하지 않았다. 실행 안에는 Stargate LLC $7B 지분 출자와 TikTok USDS 합작사 15% 지분이 있고, microsoft.F5 +2 는 준 투자를 능동 지분 동맹으로 세는 잣대를 썼다.<br>(3) tesla.F4 는 배치 전인 Optimus·Terafab 을 사업 폭에 넣었다고 스스로 적는다.<br>(4) microsoft.F9 는 FCF 추세 "안정" 을 설비투자 계획 하향 하나로 판정했다.<br>넷 다 승계 판단이고, 고치는 길은 둘이다. 사람이 판정 재료를 규칙대로 다시 매기거나(propose→승인 페이지), 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록해 승계 판단 예외로 돌리는 것이다. 점수·순위는 1차·확인 리뷰와 같고, 검증기의 화면 문장 검사(`self_contained`)는 통과한다.
+요약: 1차 needs_fix 네 건(nvidia.F3, oracle.F5, tesla.F4, microsoft.F9)은 모두 닫혔다.<br>• NVIDIA ③ 의 후발 가속도 실패는 직전 분기 대비 감속(+21%→+18%)으로 판정했고, 규칙 문언에 맞다. rules.md ③ 지침은 "직전 분기 대비 성장률이 오르면 가속 … 내리면 감속" 을 가속도의 정의로 먼저 적고, 전년 대비 비교는 자료 요건으로 덧붙인다. 두 지표가 갈린 이유(전년 1분기 중국향 Hopper $4.6B 의 기저)와 고른 근거도 문장에 남겼다. 1차에서 이 리뷰가 낸 전년 대비 통과 제안은 철회한다.<br>• Microsoft 분기 FCF 여덟 분기는 companyfacts 에서 다시 계산해 문장과 맞췄다.<br>그러나 이번에 새로 댄 잣대 셋을 같은 잣대가 닿는 회사에 대 보니, 두 회사가 남았다(Q03).<br>• **(나) 준 지분 투자로 이룬 지분 동맹 복수 → +2:** A +1 가운데 NVIDIA 만 실행 안에 고객 지분 투자가 여럿 있다. CoreWeave $2B·Nebius $2B 와 Nemotron 연합 회원 Reflection AI 투자가 그것인데, nvidia.F5 는 이 조항을 판정하지 않았다. EV-nvidia-013 은 오히려 "⑦ 과 겹치지 않도록 ⑤ 에서는 공동개발만 센다" 고 적어, Oracle·Microsoft 처럼 같은 지분을 ⑤ 와 ⑦ 에 함께 쓰는 잣대와 반대다.<br>• **(다) ④ 의 배치 전 사업 제외:** openai.F4 4점의 근거는 출하 실적이 저장소에 없는 자체 ASIC Jalapeño 다. 이 사정은 TEN-RA3-01 로 등록돼 있지만, 이번 실행이 같은 잣대를 Tesla 에 대 4→3 으로 내렸으므로 승계 판단 예외가 아니다(AGENTS.md 「리뷰 범위 — 승계 판단 예외」).<br>• **(가) 분기 실측 현금흐름으로 재는 FCF 추세:** 모든 FCF 흑자 기업에 대 보니 판정이 그대로다. 문장의 근거만 손볼 곳이 있다(low).<br>두 건 모두 점수와 순위를 움직일 수 있다.
 
-검토 기준: results_hash `975fbe139afc3c37…`, draft_hash `7f21d3d4b2577789…`. review.md frontmatter 와 같은 값이고, results_hash 는 results.json 에서, 초안 sha256 은 파일에서 이 세션이 다시 계산했다.
+검토 기준: results_hash `c11f5cc6b5eb3bf7…`, draft_hash `d522699cf7916b1d…`. review.md frontmatter 와 같은 값이고, results_hash 는 results.json 에서, 초안 sha256 은 파일에서 이 세션이 다시 계산했다.
+
+확인한 것:
+- 네 판단의 새 문장과 판정 재료·개정 이력, proposals PRP-134~137.
+- results 의 순위: Microsoft 13 공동 3위, Oracle 5 공동 11위, Tesla 4 공동 13위.
+- 분기 FCF 복원: `validation/f6-avail-15/_raw/{MSFT,AAPL,PLTR}.companyfacts.json` 의 누계 차로 구했다(스크래치 `review/qfcf.py`). TSMC 는 tsmc.fcf_ttm.rs1006 basis 의 6-K 반기 성분으로 구했다.
+- A +1 인 9개사(meta·tsmc·alibaba·anthropic·apple·nvidia·palantir·spacex-xai·openai)의 판단·근거에서 지분·투자·출자 서술을 전수 검색했다.
+- 14개사 ④ 판단에서 계획·서명·미배치 서술을 전수로 읽었다.
+
+## 발견
+1차 발견의 처리:
+
+| 1차 발견 | 상태 | 확인 내용 |
+| --- | --- | --- |
+| high · nvidia.F3 가속도 사유가 비기준(퍼스트무버) | **닫힘** | 판정 재료는 그대로(acceleration fail, imitation fail)이고 사유를 규칙 기준으로 다시 썼다.<br>• **가속도:** 데이터센터 매출의 직전 분기 대비 성장률이 +21%($75.2B)에서 +18%($89.0B)로 내렸다. 규칙 ③ 지침 문언 "직전 분기 대비 성장률이 오르면 가속, 유지면 등속, 내리면 감속" 에 그대로 맞고, 수준값 3개 분기 요건도 선다(직전 분기 대비 +21% 가 전 분기 수준을 전제).<br>• **두 지표가 갈림:** 전년 대비는 +92%→+117% 로 올라 두 지표가 갈렸다. 규칙은 직전 분기 대비를 정의로 두고 전년 대비를 비교 요건으로 덧붙일 뿐 우선순위를 따로 정하지 않는다. 갈린 이유(전년 1분기 중국향 Hopper $4.6B 기저, 추론 표시)와 고른 근거를 문장에 남겼다. 가점은 실측이 분명할 때만 준다는 2.1 의 방향과도 맞다.<br>• **1차 제안 철회:** 1차에서 이 리뷰가 낸 "전년 대비 가속으로 통과" 제안은 규칙의 첫 정의를 건너뛴 것이라 철회한다.<br>• **모방 불가능성:** CUDA 생태계를 ① 의 설치기반이라 쓰지 않는 처리는 alphabet·microsoft·apple 의 "① 재탕 → 실패" 와 같은 잣대다 |
+| high · oracle.F5 동맹 +2 조항 미판정 | **닫힘** | A +1→+2 다. 지분 동맹 둘은 Stargate LLC $7B 출자와 TikTok USDS 15% 이고, 네 질문 1·2번(지분·연동)을 문장에 적었다. 같은 지분을 ⑦ 세로축과 ⑤ 에 함께 쓰는 것은 microsoft(OpenAI 27%)와 같은 처리다. Stargate 를 합작 법인 하나로 센 것도 openai.F5 와 같다. ⑤ 4, 총점 5, 공동 11위가 results 와 맞다 |
+| medium · tesla.F4 배치 전 사업 포함 | **닫힘** | 4→3 이다. Optimus·Terafab 을 폭에서 빼고 차량·에너지 저장·소규모 로보택시로 매겼다. ④ 판정 지침("출하·실제 배포와 계획 … 을 나눈다. 양산 계획은 0점")에 맞다. 총점 4, 공동 13위다 |
+| medium · microsoft.F9 추세를 계획으로 판정 | **닫힘** | fcf_trend 를 deteriorating 으로 바꿨다. 분기 FCF 를 다시 계산하면 2026년 1~3월 15,803M(전년 20,299M, −22%), 4~6월 19,639M(전년 25,568M, −23%)이다. 4~6월 설비투자는 35,802M(전년 17,079M)이고, 회계연도 FCF 는 71,611M→66,987M 이다. 문장 숫자와 같다. 설비투자 계획 하향을 근거에서 뺐다고 명시한다. ⑨ −1, 총점 13 이 results 와 맞다 |
+| medium · anthropic.F3·openai.F3 별도 수익모델 사유 | 남음(다음 실행 과제) | 문장 불변이다 |
+| medium · tesla.F7 환류 고리 | 남음(다음 실행 과제) | 문장 불변이다 |
+| medium · microsoft.F5 +2 근거(Anthropic 지분 투자) | 남음(다음 실행 과제) | 문장 불변이다. 이번에 oracle 이 "준 지분 = 지분 동맹" 으로 +2 가 되면서 이 빈칸이 더 눈에 띈다 |
+| medium · palantir.F3 별도 수익모델 사유 | 남음(다음 실행 과제) | 불변이다(점수 영향 없음) |
+| low 다섯 건(counter_evidence 옛 문서 표기, spacex-xai.F4 Terafab, judgments note, 아마존 여신 각주, TRG-057·080) | 아마존 여신 각주 닫힘 · 나머지 남음 | 렌더러가 "런웨이는 <관측일> 공시 기준 약정으로 계산했다" 로 바꿨다(출력 영역이 문면 확인). spacex-xai.F4 의 Terafab 은 아래 (다) 로 다시 적는다 |
+
+이번 확인에서 본 것:
+
+| 등급 | 위치 | 발견 | 점수 영향 |
+| --- | --- | --- | --- |
+| **high · needs_fix** | `judgments.json` nvidia.F5(승계, A +1) · `evidence.json` EV-nvidia-013 · 참조 nvidia.F7.fix52·oracle.F5·microsoft.F5 | **(나) 지분 동맹 복수 잣대가 NVIDIA 에 닿는데 판정하지 않았다(Q03·Q19).**<br>• 이번 실행은 oracle.F5 에 "준 지분 투자 둘 → 지분 동맹 복수 → +2" 를 댔다. microsoft.F5 +2 도 같은 잣대다(A+2 재판정 b1f32f0).<br>• A +1 아홉 회사 가운데 실행 안 사실로 고객 지분 투자가 여럿인 곳은 NVIDIA 뿐이다. nvidia.F7.fix52 에 CoreWeave $2B·Nebius $2B 와 OpenAI·Anthropic·xAI 지분이 있고, EV-nvidia-013 에는 "NVIDIA 가 투자한 Reflection AI(Nemotron 연합 회원)" 가 있다.<br>• 이탈 가능성(네 질문 3번)도 따져야 한다. OpenAI·Anthropic 은 자체 칩으로 떠날 수 있어 빠질 수 있다(TEN-RC-03 의 nvidia 항목 사유). 그러나 CoreWeave·Nebius·Reflection 은 nvidia.F5 자신이 연합사에 적은 대로 "자체 칩을 개발할 자본이 없어 NVIDIA GPU 를 빌려 쓰므로 … 끊으면 양쪽이 아프다" 쪽이다.<br>• nvidia.F5 문장은 +2 조항을 판정하지 않는다. EV-nvidia-013 conditional_impact 는 "NVIDIA 가 Reflection 에 넣은 돈은 ⑦ 의 환류 근거와 겹치지 않도록 ⑤ 에서는 공동개발 관계만 센다" 고 적어, oracle(Stargate 를 ⑦ 세로축과 ⑤ +2 에 함께 사용)·microsoft 와 반대 잣대다.<br>• TEN-RC-03 은 이탈 조건 통일(C-08) 긴장이다. 이번 실행이 바꾼 잣대(지분 동맹 복수)가 닿는 판단이므로 승계 판단 예외가 아니다 | **있음.** A +2 이면 ⑤ 3, nvidia 총점 9→10 으로 단독 6위가 되고 anthropic·spacex-xai 는 7위 |
+| **medium · needs_fix** | `judgments.json` openai.F4(승계, 4점) · 규칙 `open_tensions` TEN-RA3-01 | **(다) ④ 배치 전 사업 제외 잣대가 OpenAI 에 닿는다(Q03·Q09).** 4점의 근거는 자체 추론 ASIC Jalapeño 다. 그러나 문장 스스로 "출하 실적이나 독립 측정은 저장소에 없다", "Broadcom 과의 배치 계획은 2026년 0.1GW 미만 … 계획이라 점수에 넣지 않는다" 고 적는다. 이 사정은 TEN-RA3-01(하향 가능 4→3, 2026-11)로 등록돼 있다. 하지만 이번 실행이 같은 ④ 잣대(출하·실제 배포만)를 tesla.F4 에 대 4→3 으로 내렸으므로, AGENTS.md 「승계 판단 예외」의 "이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다" 에 걸린다. 출하가 1차 자료로 확인되면 4 가 서고, 아니면 Stargate Abilene(운영은 Oracle·SoftBank)·광고·디바이스로 다시 매겨야 한다 | **있음(가능).** 3 이면 openai 총점 4→3 으로 단독 14위, tesla 단독 13위 |
+| low | `judgments.json` spacex-xai.F4 | **(다)의 잔여.** 사업 부문 목록에 Terafab(건설·장비 조달 단계)이 남았다. Tesla 는 같은 Terafab 을 폭에서 뺐다 | 없음. 나머지 다섯 부문으로 5 그대로 |
+| low | `judgments.json` apple.F9·nvidia.F9·palantir.F9·tsmc.F9 | **(가)는 판정은 맞고 문장 근거만 다르다.** 네 회사의 "안정" 근거가 매출 흐름이거나 사유가 없다.<br>• 분기 실측 FCF 로 다시 재면 모두 안정 이상이다. apple 은 2026년 1~3월 26,731M(전년 20,881M), 4~6월 31,914M(24,405M)이다. palantir 는 892M(304M), 1,202M(532M)이다. tsmc 는 상반기 NT$635.6B(전년 494.6B, +28.5%)다. nvidia 는 조율자 계산으로 +86%·+59% 다.<br>• alphabet·meta·tesla 의 악화는 실측 분기 FCF 로 이미 판정돼 있다 | 없음 |
+| low | `judgments.json` nvidia.F3 상태 | **새 사유인데 원래 판단일이 표시된다.** 사유를 새로 판정했는데 상태가 `carried`, 검토자 `legacy:v1.5`·2026-09-02 그대로다. 근거 문장만 바꾸는 수정은 상태를 건드리지 않는 설계(5a284f5)라 규칙 위반은 아니다. 다만 화면 머리줄 판단일이 사유를 쓴 날과 다르다 | 없음 |
+| low | rules.md 3절 ③ 판정 지침 | **우선순위 규정이 없다.** 직전 분기 대비와 전년 대비 성장률이 갈릴 때 무엇을 앞세울지 정하지 않는다. NVIDIA 는 직전 분기 대비를 골라 근거를 남겼다. 다른 회사(alibaba·oracle·tsmc)는 전년 대비 자료만 있어 전년 대비로 쟀다. 같은 회사에 두 자료가 생기면(예: microsoft Azure 분기 공시) 같은 순서를 대도록 규칙에 적어 두는 것이 좋다 | 없음 |
+
+## 체크리스트
+승계 판단 예외는 fail 사유가 승계 판단의 기존 논리이고, 이번 실행이 그 잣대를 바꾸지 않았으며, `open_tensions` 에 recheck_at 2026-11 로 등록된 경우에만 적었다. 이번 실행이 새로 댄 잣대는 ⑥ 트랙·최근 1년 창·여신, 지분 동맹 복수 → +2, ④ 배치 전 제외, 분기 실측 FCF 추세다. 이 잣대가 닿는 판단은 등록돼 있어도 예외로 적지 않았다.
+
+| ID | 결과 | 근거 |
+| --- | --- | --- |
+| Q01 | fail | **승계 판단 예외 — TEN-RC-05 · TEN-RC3-04.** oracle 의 Stargate 를 ⑤(동맹)와 ⑦(환류)에 함께 쓰는 것은 속성이 달라(2.2 "같은 관계를 두 칸에 한 번씩은 정상") 중복이 아니다 |
+| Q02 | fail | **승계 판단 예외 — TEN-RC-02 · TEN-RC3-01 · TEN-RC3-03 · TEN-RC3-05 · TEN-RC4-02.** 1차의 예외 없는 fail(nvidia.F3)은 닫혔다. 가속도를 규칙 정의(직전 분기 대비)로 쟀다 |
+| Q03 | fail | **예외 없는 fail — nvidia.F5((나) 잣대 미적용) · openai.F4((다) 잣대 미적용).**<br>• 1차의 oracle.F5·nvidia.F3·microsoft.F9 는 닫혔다.<br>• (가) FCF 추세 잣대는 FCF 흑자 8개사 모두 판정이 그대로다.<br>• 승계 판단 예외도 있다: TEN-RC-03 · TEN-RC4-03 |
+| Q04 | pass | ⑥ 은 비율 잣대이고 변경이 없다 |
+| Q05 | fail | **승계 판단 예외 — TEN-RA-02(nvidia F2).**<br>• openai.F4 의 이해당사자 발표 근거(TEN-RA3-01)는 (다) 잣대에 닿아 Q03·Q09 의 예외 없는 fail 로 옮겼다.<br>• 이해상충 표기는 판정에 넣지 않았다 |
+| Q06 | pass | 볼륨 지표가 점수 재료로 든 곳이 없다 |
+| Q07 | pass | amazon.F3 문장 그대로다 |
+| Q08 | fail | **승계 판단 예외 — TEN-RC4-03.** 변경분에 H 변화가 없다 |
+| Q09 | fail | **예외 없는 fail — openai.F4.** 출하 미확인 ASIC 이 ④ 4점의 근거다.<br>• 1차의 tesla.F4·microsoft.F9 는 닫혔다.<br>• 승계 판단 예외도 있다: TEN-RA-02 · TEN-RA6-01 |
+| Q10 | fail | **승계 판단 예외 — TEN-RB-Q10 · TEN-RC4-04.** nvidia.F3 은 거리(누적 매출 규모)가 아니라 성장률의 변화로 쟀다 |
+| Q11 | pass | ⑨ 게이트 경로로 계산하고, 순적자 실격은 없다 |
+| Q12 | fail | **승계 판단 예외 — TEN-RC4-01 · TEN-RC3-05.** 1차의 예외 없는 fail(nvidia.F3)은 닫혔다. 세 기준 모두 규칙 정의로 사유를 댄다 |
+| Q13 | fail | **승계 판단 예외 — TEN-RC3-05** |
+| Q14 | pass | 14사 door_closed 가 전부 fail 이다 |
+| Q15 | pass | 공짜 사용자를 동맹으로 세지 않는다. 변경 없음 |
+| Q16 | fail | **승계 판단 예외 — TEN-RC-02 · TEN-RC4-02** |
+| Q17 | pass | 변경 없음 |
+| Q18 | pass | tesla·spacex-xai 관계사 처리가 같다. tesla.F4 도 관계사 합작 Terafab 을 배치 전이라 뺐다 |
+| Q19 | fail | **예외 없는 fail(같은 원인 Q03) — nvidia.F5.** 받은 투자를 빼는 처리는 일관된다. 그러나 준 지분 투자를 지분 동맹으로 세는 잣대를 oracle·microsoft 에는 대고 nvidia 에는 대지 않았다 |
+| Q20 | fail | **승계 판단 예외 — TEN-RC-03(C-08).** oracle 의 두 지분 동맹은 조달이 아니라고 문장이 적는다 |
+| Q21 | fail | **승계 판단 예외 — TEN-RC-05 · TEN-RC3-04** |
+| Q22 | pass | ⑦ 입력에 평가이익이 없다. oracle ⑦ 세로축은 출자금의 환류이지 평가이익이 아니다 |
+| Q23 | fail | **승계 판단 예외 — TEN-RA4-01** |
+
+예외 없는 fail 은 Q03·Q09·Q19 이고, 원인 판단은 nvidia.F5 와 openai.F4 둘이다.
+
+**닫는 길(둘 공통, 하나를 고른다).**
+- (가) 사람이 승인 페이지에서 판정 재료를 규칙대로 다시 매긴다.
+  - nvidia.F5 A: CoreWeave·Nebius·Reflection 지분 동맹을 네 질문으로 판정하고, EV-nvidia-013 의 "⑤ 에서는 공동개발만" 문장을 같이 맞춘다.
+  - openai.F4 score: Jalapeño 출하를 1차 자료로 확인하거나 출하분을 빼고 다시 매긴다.
+- (나) 같은 잣대를 대고도 지금 값이 선다는 판정을 문장으로 남긴다. 예를 들어 NVIDIA 지분 투자처가 왜 동맹이 아닌지, Jalapeño 출하의 1차 자료가 무엇인지 적는다.
+
+이번 실행이 그 잣대를 바꿨으므로 긴장 등록만으로는 닫히지 않는다. 고친 뒤 research → calculate → draft → 확인을 거친다. score-review 절차상 확인 리뷰는 이번이 한 번이라, 남으면 `blocked` 로 사람에게 올린다.
+
+## 다음 실행 과제
+- anthropic.F3·openai.F3 의 별도 수익모델 사유를 규칙 기준(비모델 매출 또는 양의 단위경제)으로 다시 쓴다.
+- tesla.F7 '내 돈이 돌아옴' 의 고리를 사람이 판정해 문장에 넣는다. 고리는 xAI 투자 → SpaceX 의 Megapack 구매다.
+- microsoft.F5 +2 근거에 Microsoft 의 Anthropic 지분 투자를 넣는다. oracle.F5 와 같은 서술 방식으로 맞춘다.
+- palantir.F3 별도 수익모델 '부분' 사유를 채운다.
+- spacex-xai.F4 부문 목록에서 Terafab 을 배치 전 사업으로 뺀다(tesla.F4 와 같은 처리).
+- apple·nvidia·palantir·tsmc F9 의 '안정' 근거를 분기 실측 FCF 로 다시 쓴다(위 계산값).
+- rules.md ③ 지침에 직전 분기 대비·전년 대비 성장률이 갈릴 때의 우선순위를 적는다.
+- nvidia.F3 처럼 사유를 새로 판정한 승계 판단의 판단일 표시를 정한다(상태·검토자 갱신 여부).
+- tsmc·anthropic·openai F5 의 `counter_evidence` 에서 옛 문서 행 번호 표기를 지운다.
+- judgments.json 최상위 note 를 지금 상태로 고친다.
+- TRG-057 condition 을 fired 에 맞게 고치고, TRG-080 source_ids 를 채운다.
+- 방법 절 ⑨ 의 "조달 여력은 신용등급으로" 고정 문장(`factor-concepts.json`, 사용자 원본)은 사용자 판단 대기다.
+- 이전 리뷰에서 넘어온 것(관측·규칙 불변이라 유지):
+  - alibaba 여신 `mixed_as_of`.
+  - oracle G4 분모 C-26($288B).
+  - net_cash 상장 지분증권·전략적 지분투자 우선순위(TSMC VIS).
+  - tsmc·oracle F9 의 스톡 지표.
+  - EV-amazon-008 microsoft 배정.
+  - EV-microsoft-004 AI 귀속 단서.
+  - Alibaba 9월 분기 트리거.
+  - rules.md 8절 C-09·C-26.
+  - CDAO "4사 공통" 서술.
+  - 비상장 보정 ARR kind 기준.
+  - research 발동 트리거 표의 "수정함" 문구.
+
+## 이전 리뷰 기록
+
+### 재작성 뒤 1차(round 3) · rule-consistency — 규칙 일관성
+round 3 검토자: Claude Opus 5.5 · 규칙 일관성 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 완결된 문장 재작성 뒤 1차
+round 3 결과: needs_fix
+round 3 요약: 판단 114개의 새 문장을 판정 재료(③ 세 기준·⑤ A·H·⑦ 두 축·⑨ gate_inputs·①②④⑧ 점수)와 하나씩 대조했다. 문장과 판정 재료가 어긋나는 승계 판단은 대부분 이미 `open_tensions` 에 재검토 시점(2026-11)과 함께 등록돼 있어 승계 판단 예외에 든다. 예를 들면 tsmc.F3 후발 가속도(TEN-RC4-04), anthropic·openai F7(TEN-RC3-01), anthropic.F2 의 5점(TEN-RA4-01·C-03 pending_recheck), spacex-xai·tesla·microsoft·amazon·palantir F3 가속도(TEN-RB-Q10)가 그렇다. 그런데 문장을 완결된 현재 상태로 다시 쓰면서 **등록되지 않은 긴장 네 건**이 드러났다. 넷 모두 점수를 움직일 수 있어 체크리스트 Q02·Q03·Q09·Q12 를 예외 없는 fail 로 만든다.<br>(1) nvidia.F3 은 후발 가속도를 실패로 두는데, 사유가 규칙 기준(AI 귀속 지표의 성장률이 오르는가)이 아니라 "시장을 연 퍼스트무버" 다. 같은 실행 안의 데이터센터 매출 성장률은 직전 분기 +92% 에서 +117% 로 올랐다.<br>(2) oracle.F5 는 동맹 등급 +2 의 "지분이 걸린 동맹 복수" 조항을 판정하지 않았다. 실행 안에는 Stargate LLC $7B 지분 출자와 TikTok USDS 합작사 15% 지분이 있고, microsoft.F5 +2 는 준 투자를 능동 지분 동맹으로 세는 잣대를 썼다.<br>(3) tesla.F4 는 배치 전인 Optimus·Terafab 을 사업 폭에 넣었다고 스스로 적는다.<br>(4) microsoft.F9 는 FCF 추세 "안정" 을 설비투자 계획 하향 하나로 판정했다.<br>넷 다 승계 판단이고, 고치는 길은 둘이다. 사람이 판정 재료를 규칙대로 다시 매기거나(propose→승인 페이지), 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록해 승계 판단 예외로 돌리는 것이다. 점수·순위는 1차·확인 리뷰와 같고, 검증기의 화면 문장 검사(`self_contained`)는 통과한다.
+
+round 3 검토 기준: results_hash `975fbe139afc3c37…`, draft_hash `7f21d3d4b2577789…`. review.md frontmatter 와 같은 값이고, results_hash 는 results.json 에서, 초안 sha256 은 파일에서 이 세션이 다시 계산했다.
 
 확인한 것:
 - `judgments.json` 114개: 지금 evidence 를 판정 재료·점수와 전부 대조했다. 문장이 판정 재료와 어긋나 보인 판단 12개는 `revision_history[-1].previous.evidence` 와도 맞춰, 재작성이 만든 것인지 원래 있던 것인지 갈랐다(모두 원래 있던 논리였다).
@@ -18,7 +125,7 @@ round: 3
 - results 의 점수 14개사가 이전 리뷰와 같다. 입력 해시 가운데 observations 는 원본 표기 문구 한 줄만 바뀌었다.
 - `validate_report_contract.py`: display text self-contained ok, 결정론적 재계산 ok. 실패는 review 상태·승인·HTML 해시뿐이다.
 
-## 발견
+#### 발견
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
 | **high · needs_fix** | `judgments.json` nvidia.F3(승계, `acceleration: fail`, `imitation: fail`) | **후발 가속도를 규칙 기준이 아닌 사유로 실패시켰다(Q02·Q03·Q12).**<br>• 문장: "후발 가속도는 실패로 판정돼 있으며, 이는 NVIDIA 가 후발 진입자가 아니라 시장을 연 쪽이라는 데서 나온 판정으로 읽힌다(추론)". 이전 문장도 "시장 개척자이자 현 지배자 = 퍼스트무버" 하나다.<br>• 규칙 ③ 의 후발 가속도는 "AI 귀속 지표의 성장률이 오르는가(2차 도함수)" 이고, 선두 기업을 빼는 조항이 없다.<br>• 같은 실행의 다른 선두 기업은 성장률로 판정했다. tsmc.F3 은 매출 성장률, microsoft.F3 은 Copilot 시트 증가율, amazon.F3 은 통과로 판정됐다.<br>• NVIDIA 의 AI 귀속 지표인 데이터센터 매출 성장률은 직전 판단 문장의 FY27 1분기 +92% 에서 지금 nvidia.F9 문장의 2분기 +117% 로 올랐다.<br>• 모방 불가능성 실패 사유("추격당하는 쪽")도 기준(구조적 자산 + 실제로 앞섬)과 다르다. 같은 판단에 점유율 70~75% 가 적혀 있다.<br>• `open_tensions` 에 이 판단이 없다. | **있음.** 가속도 통과 시 통과점 2 → ③ 3. nvidia 총점 9→10, 공동 6위 → 단독 6위가 되고 anthropic·spacex-xai 는 7위 |
@@ -35,7 +142,7 @@ round: 3
 | low | 초안 1081행 | **소멸한 여신을 "기준일 현재 유효" 로 적는다.** "런웨이는 기준일 현재 유효한 약정으로 계산했다" 가 남아 있다. amazon.F9 문장은 이제 Term Loan 소멸과 C-23 을 바르게 적는다(문장은 고쳐짐, 고정 각주는 남음) | 없음(6.7년 이상) |
 | low | `triggers.json` TRG-057 condition · TRG-080 source_ids | **확인 리뷰 low 가 남았다.** TRG-057 condition 의 "사건이 지나 기한이 끝났다" 가 그대로이고, TRG-080 의 `source_ids` 는 비어 있다 | 없음 |
 
-## 체크리스트
+#### 체크리스트
 승계 판단 예외는 fail 사유가 승계 판단의 기존 논리이고, 이번 실행이 그 잣대를 바꾸지 않았으며, `open_tensions` 에 recheck_at 2026-11 로 등록된 경우에만 적었다. 이번 재작성은 문장만 바꿨고 판정 재료·점수를 바꾸지 않았으므로 앞의 두 조건은 모든 승계 판단에 선다. 셋째 조건(등록)이 없는 fail 은 예외로 적지 않았다.
 
 | ID | 결과 | 근거 |
@@ -72,7 +179,7 @@ round: 3
 
 어느 쪽이든 research → calculate → draft → 확인 리뷰를 거친다.
 
-## 다음 실행 과제
+#### 다음 실행 과제
 - anthropic.F3·openai.F3 별도 수익모델 사유를 규칙 기준(비모델 매출 또는 양의 단위경제)으로 다시 쓴다.
 - tesla.F7 '내 돈이 돌아옴' 의 고리를 사람이 판정해 문장에 넣는다. 고리는 xAI 투자 → SpaceX 의 Megapack 구매 $329M/6개월이다.
 - microsoft.F5 +2 근거에 Microsoft 의 Anthropic 지분 투자를 넣는다.
@@ -95,9 +202,9 @@ round: 3
   - 비상장 보정 ARR kind 기준.
   - research 발동 트리거 표의 `이번 실행에서 수정함`: 이제 문장 재작성만으로 TRG-080 ② 행도 "수정함" 이 돼, 판정 재료 변경과 문장 변경을 가르지 못한다. EV-oracle-003 문구는 고쳐져 닫혔다.
 
-## 이전 리뷰 기록
+#### 이전 리뷰 기록
 
-### 확인 리뷰(2차) · rule-consistency — 규칙 일관성
+##### 확인 리뷰(2차) · rule-consistency — 규칙 일관성
 2차 검토자: Claude Opus 5.5 · 규칙 일관성 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 확인 리뷰(2차)
 2차 결과: pass
 2차 요약: 1차 medium 두 건은 모두 닫혔다. 첫째, TRG-017 은 v1.9 일반 트랙과 P3 30.56%(30% 경계 바로 위)로 고쳐졌다. 둘째, preview 원인 분류는 렌더러 수정으로 바뀌었다. TSMC·Alibaba ⑥ 은 `📐 규칙(트랙 listed_annual→listed_ttm)·📊 관측`, Alibaba ⑨ 는 `📊 관측` 으로 나온다. 발동으로 바꾼 두 트리거의 판정은 규칙과 맞는다. TRG-057 은 ⑦ 판정표의 "큼 쪽에서는 세로축이 점수를 가르지 않는다" 와 ⑧ 근거 갱신 공시가 없다는 점을 근거로 유지했다. TRG-080 은 2.4 비AI 귀속(로켓·위성은 ①·③ 별도 수익모델·④ 에서만)에 따라 Starship 을 ② 가 아니라 ④ 로 보고, ④ 가 범위 맨 위라 유지했다. spacex-xai.F2 근거도 이미 "재사용 로켓·Starship 은 AI 게임체인저가 아니다" 로 같은 잣대다. research.md 「발동 트리거 재검토 대상」 표는 fired 2건 4행으로 trigger 상태와 맞는다. 다만 ⑦ 행의 `이번 실행에서 수정함` 은 근거 문장만 고친 것이라 오해 소지가 있다(low). 고친 숫자(런웨이 1.61년, 커버리지 2.66배, FCF −287억 달러, ⑥ 22.8·7.86·21.6%)는 관측·results 와 맞다. 점수·순위는 1차와 같다(results 의 입력 해시 가운데 evidence·triggers·sources 만 바뀜). 점수·순위·체크리스트 판정을 바꾸는 발견은 없다. 체크리스트 fail 13건은 1차와 같고 모두 승계 판단 예외다.
@@ -113,7 +220,7 @@ round: 3
 - research.md 1014행 표.
 - `validate_report_contract.py`: review 상태 외 전부 ok, 결정론적 재계산 ok.
 
-#### 1차 발견 처리
+###### 1차 발견 처리
 | 1차 발견 | 상태 | 확인 내용 |
 | --- | --- | --- |
 | medium · TRG-017 연간 트랙 문장 | **닫힘** | observation 은 "규칙 v1.9 에서 TSMC ⑥ 은 6-K 반기 재무제표로 복원한 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) … 일반 트랙이고, P3 는 30.56% 로 30% 경계 바로 위" 로 바뀌었다. recheck 는 "3분기 6-K 가 나오면 최근 1년 매출·순이익이 바뀐다 … 다음 실행에서 밴드가 바뀔 수 있다" 로 바뀌었다. results tsmc F6 `track: listed_ttm`, P3 0.3056(경계 표시 +1.9%)과 맞는다. 초안·research 표도 같은 문면이다 |
@@ -132,7 +239,7 @@ round: 3
 | low · CDAO "4사 공통" 서술 | 다음 실행 과제 유지 | 불변 |
 | info · 비상장 보정의 ARR kind 기준 | 다음 실행 과제 유지 | 불변 |
 
-#### 바뀐 항목 확인
+###### 바뀐 항목 확인
 | 항목 | 판정 | 확인 내용 |
 | --- | --- | --- |
 | 렌더러 미리보기 원인 분류(08bfc90) | 맞음 | `판단 수정` 은 판정 재료가 바뀐 개정만 센다. ⑥ 트랙 변화는 규칙 원인으로 함께 적는다. 순위만 바뀐 기업도 행에 넣는다. 규칙 5절과 맞고, 테스트로 고정됐다 |
@@ -143,7 +250,7 @@ round: 3
 | evidence EV-oracle-003·004·006·007 | 맞음 | 숫자가 관측과 맞다. EV-oracle-004 의 "⑦ 판정표에 따라 이 선투자 위험은 ⑦ 이 아니라 ⑧·⑨" 는 ⑦ 지침(세로축은 고객에게 준 돈이지 내 설비에 태운 돈이 아니다)과 맞다 |
 | judgments alibaba.F9.obsreg25 (PRP-005) | 맞음 | 취소선 줄이 "현재 점수와 경로는 다음 줄에 있다" 로 바뀌었다. inputs 불변(개정 이력 previous 와 같음)이고 점수 −4 그대로다 |
 
-#### 체크리스트
+###### 체크리스트
 2차 기준으로 다시 봤다. 이번 수정은 트리거·근거 문장·렌더러뿐이고 판정 재료·점수는 그대로라, 판정은 1차와 같다. 승계 판단 예외의 조건(fail 사유가 승계 판단의 기존 논리, 이번 실행이 그 잣대를 바꾸지 않음, `open_tensions` 에 recheck_at 2026-11 로 등록)은 그대로 선다.
 
 | ID | 결과 | 근거 |
@@ -174,7 +281,7 @@ round: 3
 
 fail 13건(Q01·02·03·05·08·09·10·12·13·16·20·21·23)이 인용한 긴장 16개(TEN-RC-02·RC-03·RC-05·RB-Q10·RA-02·RC3-01·RC3-03·RC3-04·RC3-05·RA3-01·RC4-01·RC4-02·RC4-03·RC4-04·RA4-01·RA6-01)는 모두 `status: open`, `recheck_at: 2026-11` 이다. 이번 실행이 고친 판단 5건(tsmc.F9·oracle.F9·oracle.F7.fix52·alibaba.F9.obsreg25, PRP-005 포함)은 어느 긴장의 대상에도 없다.
 
-#### 다음 실행 과제
+###### 다음 실행 과제
 1차에서 유지된 것:
 - alibaba.undrawn_credit.fix53 에 Oracle 과 같은 `mixed_as_of`(3-31 값 / 6-30 소비, 6월 분기 6-K 여신 언급 검색)를 남긴다. `runway_effect`·`score_dependence` 를 현재 값(여신 제외 1.87년·포함 2.17년, 점수 비의존)으로 고친다.
 - oracle G4 분모를 C-26 결정과 함께 정리한다(10-Q 미개시 리스 $288B, 2026-08-31).
@@ -198,7 +305,7 @@ fail 13건(Q01·02·03·05·08·09·10·12·13·16·20·21·23)이 인용한 긴
 - TRG-080 의 `source_ids` 가 비어 있다. EV-spacex-xai-007 의 출처를 트리거에도 적는다.
 - EV-oracle-003 conditional_impact 의 "계산 입력이 2026-05-31 기준이라 … 갱신하고" 는 선별 당시 문장이다. 이번 실행에서 이미 갱신됐다는 사실을 덧붙인다.
 
-#### 1차 리뷰 기록
+###### 1차 리뷰 기록
 
 ##### 1차 · rule-consistency — 규칙 일관성
 1차 검토자: Claude Opus 5.5 · 규칙 일관성 독립 세션(이 실행을 만든 세션 아님) · 2026-10-06 · 1차
