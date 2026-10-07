@@ -1,0 +1,289 @@
+{
+  "company_id": "nvidia",
+  "next_evidence_number": 16,
+  "judgments": [
+    {
+      "judgment_id": "nvidia.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 2,
+      "inputs": {},
+      "evidence": [
+        "NVIDIA ① 은 부품 채널 상한(최종 사용자와 접점이 없는 부품 공급자는 2점을 넘지 못한다)에 걸려 2점이다.",
+        "NVIDIA 는 개인이 매일 쓰는 소비자 채널이나 조직 워크플로에 박힌 업무 채널을 만들지 못한다고 판정했다.",
+        "인수가 종결되면 Hugging Face 엔터프라이즈라는 업무 채널이 생겨 부품 상한을 넘길 유일한 경로가 된다고 본다(판단)."
+      ],
+      "evidence_up": [
+        "CUDA 개발자 생태계는 실재한다.",
+        "NVIDIA 는 2026-09-02 Hugging Face 인수 계약에 서명했고, Hugging Face 에는 모델 300만 개, 데이터셋 50만 개, 개발자 1,800만 명이 있다. 다만 종결은 2027 상반기 예정이고 규제 승인 조건부라 기준일(2026-10-06) 현재 미실현이며, 서명과 발표는 점수 근거가 아니다(rules.md 2.1)."
+      ],
+      "evidence_down": [
+        "GPU 와 HBM 은 B2B 부품이다.",
+        "NVIDIA 소유가 된 뒤 Hugging Face 의 중립성이 훼손돼 AMD·Google 같은 참여자가 떠나면 오히려 역효과가 날 수 있다."
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "NVIDIA ② 는 범위 최상단인 5점이고, 성능 도약이 세대 격차 수준이라는 판단에서 나온 점수다.",
+        "세 경로(성능 도약·패러다임 적응·표준 선점)별 판정 입력은 아직 따로 매기지 않아, 점수는 사람이 매긴 5점으로 서 있다.",
+        "추론: Rubin 출하와 독립 측정이 확인되기 전까지 이 5점은 벤더 발표에 기댄 판정이다."
+      ],
+      "evidence_up": [
+        "근거는 NVIDIA 가 보도자료(2026-01-05 공개, 2026-03-16 GTC 재공개)로 밝힌 Vera Rubin(R100, 트랜지스터 3,360억 개)이며, NVIDIA 는 Blackwell 대비 추론 성능 5배와 토큰당 비용 10분의 1 을 주장한다. 이 성능 수치는 벤더 발표이고 독립 측정이 아니다.",
+        "2026-09-30 고객사 CoreWeave 가 Vera Rubin NVL72 를 생산 규모로 제공한다고 발표했으나, NVIDIA 자신의 실적이나 공시로 Rubin 출하가 확인된 것은 아니다.",
+        "AI 가속기 점유율 70~75% 라는 수치는 구간만 있고 출처가 없어 판정 근거로 삼지 않는다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "nvidia.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "fail",
+        "revenue_model": "pass",
+        "acceleration": "fail",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "NVIDIA ③ 은 세 기준의 통과점이 1 이라 2점이다.",
+        "모방 불가능성은 실패다. NVIDIA 가 앞서 있는 바탕인 CUDA 개발자 생태계는 ① 의 설치기반이라 모방 불가능성 근거로 쓰지 않는다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 실패다.",
+        "후발 가속도는 비교 기준이 고른 직전 분기 대비 성장률로 판정했다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)도 없다."
+      ],
+      "evidence_up": [
+        "모델이 아니라 GPU 와 시스템을 파는 하드웨어 매출이 전략을 먹여 살린다.",
+        "같은 두 분기의 전년 대비 성장률은 +92% 에서 +117% 로 올랐지만, 전년 1분기 데이터센터 매출에는 중국향 Hopper 출하 $4.6B 가 들어 있어 1분기의 전년 대비 성장률이 눌려 있다(추론)."
+      ],
+      "evidence_down": [
+        "Alphabet 이 자체 칩 TPU 를 Anthropic·Meta 에 파는 것처럼 같은 가속기를 만드는 경쟁자가 이미 있다.",
+        "커스텀 ASIC 출하가 44.6% 늘 때 머천트 GPU 출하는 16.1% 늘어, 구조적으로 못 베끼는 자산 덕에 격차를 벌리는 모습도 아니다.",
+        "데이터센터 매출의 직전 분기 대비 성장률이 2026-04-26 종료 분기 +21%($75.2B)에서 2026-07-26 종료 분기 +18%($89.0B)로 내려 감속이다(각 분기 10-Q)."
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "NVIDIA ④ 는 범위 최상단인 5점이다.",
+        "NVIDIA 는 곡괭이를 파는 데서 직접 광부가 되는 쪽으로 움직이고 있다고 판정했다."
+      ],
+      "evidence_up": [
+        "NVIDIA 는 GPU 를 넘어 로보틱스·자율주행·LLM 등 10개 영역에 진출했다.",
+        "모델 영역에서는 Nemotron 모델을 직접 내고 있으며, 2026-03 GTC 에서 Nemotron3 Ultra 를 발표했다.",
+        "Hugging Face 인수는 2026-09-02 에 서명했으나 종결 전(2027 상반기 예정, 규제 승인 조건부)이라 ④ 근거로 세지 않는다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "nvidia.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -2
+      },
+      "evidence": [
+        "NVIDIA ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(-2) 로 2점이다.",
+        "Nemotron 연합은 조달과 동맹을 가르는 질문을 통과한다.",
+        "Hugging Face 인수는 종결 전(2027 상반기, 규제 승인 조건부)이라 근거가 아니고, Hugging Face 개발자 1,800만 명은 공짜 사용자라 동맹으로 세지 않으며 배포 채널이라는 성격은 ① 에서 본다.",
+        "적대 등급은 -2(구조형 — 주요 고객이 곧 경쟁자)이다.",
+        "고객이 적이 되는 구조라 적이 하나 늘 때마다 매출이 직접 사라진다.",
+        "연합은 실재하지만 이 구조형 적대가 그대로라 3점에 이르지 못한다."
+      ],
+      "evidence_up": [
+        "동맹 등급 +1 의 근거는 NVIDIA 가 2026-03 에 출범시킨 Nemotron 연합으로, Mistral(기초 모델 공동개발)·Black Forest Labs(멀티모달)·LangChain(에이전트)·Cursor(코딩 평가 데이터)·Thinking Machines Lab·Reflection AI 가 참여했고 이후 NAVER Cloud 로 넓어졌다.",
+        "Nemotron 연합에서 NVIDIA 와 연합사는 공동개발을 주고받고, 연합사는 자체 칩을 개발할 자본이 없어 NVIDIA GPU 를 빌려 쓰므로 상대가 잘되면 NVIDIA 도 잘되며, 끊으면 양쪽이 아프다.",
+        "NVIDIA 는 NVLink Fusion 으로 하이퍼스케일러가 자체 XPU 를 써도 NVLink·Spectrum-X·ConnectX·BlueField·Vera CPU·MGX 랙과 묶이게 해, GPU 점유율 대신 AI 공장의 공통 플랫폼을 쥐는 쪽으로 옮겨 가고 있다."
+      ],
+      "evidence_down": [
+        "매출 약 40% 를 내는 하이퍼스케일러 4곳이 모두 자체 칩을 개발하고, Meta 가 Google TPU 를 병행 조달해 일부 이탈했다.",
+        "Open Secure AI Alliance 구성에서 OpenAI·Anthropic·Google 이 빠진 것도 고객이 경쟁자가 되는 긴장을 보여 준다."
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F7.fix52",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "large",
+        "own_money_returns": "yes"
+      },
+      "evidence": [
+        "NVIDIA ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 큼, 돌아옴 칸이라 범위 하한인 -2점이며, 비중이 큰 쪽에서는 세로축이 점수를 가르지 않는다.",
+        "가로축은 큼으로 본다.",
+        "세로축도 선다.",
+        "이 보증들은 확정 지출이 아닌 우발 보증이라 ⑨ 에 넣지 않고 ⑦ 에서만 센다."
+      ],
+      "evidence_up": [],
+      "evidence_down": [
+        "OpenAI·네오클라우드·xAI 같은 고객이 투자받은 돈과 빚으로 GPU 를 산다.",
+        "NVIDIA 는 2026년 다섯 달 동안 AI 기업 지분에 $40B 넘게 넣었고(실측), 여기에는 OpenAI $30B, Anthropic Series G(최대 $10B), xAI Series E, CoreWeave $2B, Nebius $2B 와 공급망(Corning $3.2B, Marvell·Lumentum·Coherent 각 $2B, IREN $2.1B)이 들며, 그 돈이 GPU 대금으로 돌아오고 매출이 피투자사 가치를 올려 지분 평가이익까지 늘리는 이중 고리라고 판정했다.",
+        "NVIDIA 는 돈만이 아니라 신용도 댄다. GPU 잔존가치를 최대 25% 보증해 은행의 LTV 70~80% 대출을 가능하게 하고, SB Energy 보증 상한은 $105B(2026-08-17 8-K, OpenAI 계열사용 오하이오 PORTS 캠퍼스 4.25GW 의 토지·전력·셸)이며, CoreWeave 미판매 캐파 매입 보증(2032-04-13까지), $6.3B 재임차(rent-back), 월가와의 $500B AI 인프라 금융 조성이 있다.",
+        "잔존가치를 보증한 담보(Grace Blackwell)의 가치를 깎는 것이 NVIDIA 자신의 신제품 Vera Rubin 이라는 자기모순도 있다.",
+        "2026-08-26 2분기 실적 콜에서 밝힌 생태계 커밋 약 $500B 는 발표이고, 지분과 공급 약정으로 나눈 내역은 아직 공개되지 않았다.",
+        "최근 1년(2025-07-28~2026-07-26) 영업외이익 $32.2B(세전이익의 14%)는 ⑥ 소관이라 ⑦ 의 입력이 아니며, 출처가 고객사 지분이라는 점만 방증으로 적는다."
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -3,
+      "inputs": {},
+      "evidence": [
+        "NVIDIA ⑧ 은 -3점이다.",
+        "다만 감점을 덜어 주는 근거는 가점과 같이 실측으로만 인정하므로(rules.md 2.1), 이 헤지는 데이터센터 매출 가운데 비하이퍼스케일러 비중이 실제로 올라와야 점수에 닿는다. Hugging Face 인수도 종결 전이라 이 헤지의 실행으로 세지 않는다."
+      ],
+      "evidence_up": [
+        "반대 방향의 힘도 있다. 자체 칩을 만들 자본이 있는 고객은 소수이고 오픈웨이트로 창업하는 다수는 기존 클라우드의 NVIDIA GPU 를 빌려 쓰므로, 오픈소스 확산은 GPU 판매자에게 시장 확대라고 본다(추론)."
+      ],
+      "evidence_down": [
+        "매출 약 40% 를 내는 하이퍼스케일러 고객이 모두 자체 칩을 개발하고 있어, 고객 집중과 의존 방향이 함께 나빠지고 있다. 미 정부는 중국 우회 접근을 조사하고 있다.",
+        "공급 쪽에는 take-or-pay 약정이 있다. NVIDIA 는 TSMC 매출의 19% 를 차지하는 최대 고객이고 HBM 캐파도 선점 약정으로 잡아 두었으며, 이것이 생태계 커밋 약 $500B(발표)의 상당 부분이다.",
+        "수요가 꺾이면 이 약정 때문에 NVIDIA 가 먼저 맞으며, 2022년 $1.3B 넘는 재고 상각이 그 선례다."
+      ]
+    },
+    {
+      "judgment_id": "nvidia.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "stable",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "unknown",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "NVIDIA ⑨ 는 감점 없이 0점이다.",
+        "게이트 1(본업이 버는가)은 통과한다.",
+        "게이트 2(현금이 새는가)는 FCF 추세를 안정으로 판정해 0점에서 끝난다.",
+        "고객 금융을 받치는 우발 보증은 확정 지출이 아니어서 ⑦ 에서 세고 ⑨ 에는 넣지 않는다."
+      ],
+      "evidence_up": [
+        "최근 1년(2025-07-28~2026-07-26) 매출 $303.0B, 영업이익 $197.6B 로 영업이익률이 65.2% 다.",
+        "최근 1년(2025-07-28~2026-07-26) FCF 가 +$127.0B 로 흑자다.",
+        "2026-07 종료 분기 매출은 $96.2B(전년 대비 +106%), 데이터센터 매출은 $89.0B(+117%)로, 분기 흐름도 추세 안정 판정과 맞는다."
+      ],
+      "evidence_down": []
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-nvidia-004",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "title": "OpenAI sparked Hugging Face bids with early investment offer ahead of Nvidia's $13 billion deal - cnbc.com",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQMThSYmpsQmN6bHcxbk1TSTN3a0xPaHdqOS0wYS1hUWhOQzREbWpSVzlvalkzY0ozWkxWcVo3Z0lzQ3NiOUN1MnBMQVNiTkxjTzVadkZXSWJ5NjM2VzRaS0EzekJrWWZ0VDVRWXdDUXQ5b3Q1SzF3MGJUTUZpMDFTb1ZKbWlJaGxsQkhvU2hGcGExQjZ3VXhBNVMtM3RrazNmT0hBUnVBVVlaYm8?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20260928-596760c7",
+      "published_at_utc": "2026-09-28T18:44:49Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-008",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "title": "CoreWeave Delivers NVIDIA Vera Rubin NVL72 Performance at Production Scale, Starting With Cognition - CoreWeave",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNTTd2T1pOekRaT3c2NHBWS1NlOVJEWFpiR2JidzlZd18yVkRuNVMyaE5XaERqVGhKbWhrc1c5Y2dXYjFMWEh3MmpBWlZGS3BzSWFZMV82YlBORGVST3B3ZFM0c2N4M1RPQ19jRjVUVTJTR2dmeTR0YUVSYWoySkxvZjhOb2l4TlRIZzg1Z3ZadGFLU2hTWVlDWjduenRiRDVlLTZiR3Q2d1RkY1NnNXVPVVhBaGh2Vk5BYVBaam03M0E5cnpEZzNTbQ?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20260930-8fbc4d99",
+      "published_at_utc": "2026-09-30T16:21:03Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-009",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "title": "8-K 2026-09-03 · Items 8.01",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm",
+      "source_id": "SRC-EDGAR-000104581026000078",
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-nvidia-010",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "title": "Nvidia's bet that its chips can finance the AI boom gets a Wall Street reality check - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPWWFtWW9YMHUyWmxwTUs1VmZnOHZNdnJBNzB6azNFSG84M0FtS2x1SE50TDZMS0ZNS25zQ1lEZnFRdnd3UFhDRXMwLUVXaDZWRW9RZHdfQXdhNjFBdEJSd243SHlselowdWpIZ3RycmRSdUhlaTlDLUVGNjV1a3UwY2llSXpiV0dvVDN2VU1tS3NmbmQzVFNXV2FZcDJzWEI5b05NRW4zRXFPOV9NZnZUMmE5M2sycEtKVUdpNjRkLW90bGtiZnY0LWtvTHRDQQ?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20261001-e66a1a54",
+      "published_at_utc": "2026-10-01T19:26:22Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-011",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "title": "Amazon seeks to offload $8bn of Nvidia chips to investors - Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOMlctbklMb2FKVW12SWZYdEpsVnl4UlNLUzNHNlpBcUstaUlwYlBrVEFVNWRZWkhBNTZZTGIzMjVpT2NtSzRfbktWeWFjbVlqX1k1TEl0SkJiTjFDekRsd2h2b2ZaYmNsdXp6NU42T2cwZzFiRmZTakRnLVpHek1LcXl3dUg?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20261002-46ceedb9",
+      "published_at_utc": "2026-10-02T06:42:49Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-012",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Nvidia’s Blind Spots Exposed by China Chip Smuggling - Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNUnZqUE1kc1RPWjZZTkV6Rjl0NGlnQ0szamJ5YWFURzFpVWJYUThldVJ2Wm5vSEJBTnVGZjlvMEs3REpRVDJaeU5nMDV2bmEzOVV3cE9sYTdZa3g0c2FnNnlhNThXMnBDQTJjZFczaUtJZTZmT0tsMHc4cWZ0U3R6UzRUVUc4V2VNeUdWMS1oU2xDcllzZ05TakN1c1c4Zi1Vc2pQOTFHSVFSY1hI?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20261002-7e8d381f",
+      "published_at_utc": "2026-10-02T06:49:00Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-013",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Nvidia-backed Reflection unveils first AI model to take on Chinese open models - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNQ2FQR2h6dGd0eThzSjRKNENDQV9YMnpIZlVfWTNVV2tlSTEzZDJyU09MZ2s1Sk9lWVRESzdwQmdfQjlsRzZPVmJuUzRLQkp5UXhVUHpia2pZWHVfRmQyR21COWx2dGZxR0pzUmxvT3RUUDVhX1JRWm1LQXRfVmV5bGpIMFYtRHFoNW1UMlV3Q3h5X19QaVAxMnJ1SkxrU0pKVnJYcW9LNTNENVJldFc1VTNoRHdRRmNkVFM4?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20261005-dc3dc2da",
+      "published_at_utc": "2026-10-05T20:54:09Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-014",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Nvidia’s $20bn licensing deal with Groq faces lawsuit from jilted engineers - Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQM3NDOW1Ua3hoR2xRZnF4WVl2d1ZCRi1UM1I0S1BPUEJQOE1DQ2Zmdmc3UmVDVHc4TVJwOUNXVE1JdXk1WFRyU19zVXA0ZzdRRGxuN21qdFVtQ1FWUHpwaE5Sei1VRXNobHJpUndPb2pxMUpmd1F0TzBTU3RFNFZRSEFZbHQ?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20261005-3174747d",
+      "published_at_utc": "2026-10-05T09:00:03Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-015",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "title": "Firmus IPO and future success are greatly dependent on Nvidia’s Jensen Huang - AFR",
+      "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQZkFMbmdSQlNpOU1vYW0xUUptV2VlMWw1MGo4RnZFWXltN0g2VlBlTFRRZ1FhTWhKSEozM0o5SG1TeW5qZUpLWVQ0RlZUUkNTb3dvWEhJR05qT2VGdC0zTzVxdE0zTnd1M3lLbkkwUnVxclY2Sl8xSGpNYkFwSkVQekduWFpDcFVSMW1qb1VjMC01TTctVW5kVU5yYlREQWkyaG9nOWVGMWpIVG1Xcll4Y0hwWQ?oc=5",
+      "source_id": "SRC-NEWS-nvidia-20261005-78cf1380",
+      "published_at_utc": "2026-10-05T18:00:00Z"
+    }
+  ]
+}

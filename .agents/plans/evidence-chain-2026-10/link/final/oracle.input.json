@@ -1,0 +1,267 @@
+{
+  "company_id": "oracle",
+  "next_evidence_number": 9,
+  "judgments": [
+    {
+      "judgment_id": "oracle.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "Oracle ① 네트워크 효과(가격을 올려도 남는가)는 업무 채널(조직 워크플로에 박혔는가)로 재며 3점이다.",
+        "가장 강한 채널인 데이터베이스 락인이 점수를 정하되 최고 칸까지는 가지 않는다고 판정했다."
+      ],
+      "evidence_up": [
+        "엔터프라이즈 데이터베이스 락인은 수십 년째 강력하고, 기간계 시스템을 바꾸는 전환비용이 매우 크다."
+      ],
+      "evidence_down": [
+        "가격 결정력은 데이터베이스에서만 확인된다.",
+        "클라우드 점유율은 낮고 AI 쪽 락인은 없다."
+      ]
+    },
+    {
+      "judgment_id": "oracle.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 2,
+      "inputs": {},
+      "evidence": [
+        "Oracle ② 신기술 게임체인저(판을 바꿀 기술을 먼저 냈는가)는 세 경로 가운데 통과한 경로가 없어 2점이다.",
+        "성능 도약은 실패다.",
+        "패러다임 적응은 부분 통과로 보았고, 부분 통과는 통과로 세지 않는다.",
+        "통과 경로가 0개이면 2점이다."
+      ],
+      "evidence_up": [
+        "OCI(Oracle 클라우드 인프라)를 싸게 파는 방식으로 AI 수요에 올라탔다."
+      ],
+      "evidence_down": [
+        "자체 모델이 없다.",
+        "산업 인터페이스를 정의하는 표준 선점도 실패다."
+      ]
+    },
+    {
+      "judgment_id": "oracle.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "fail",
+        "revenue_model": "pass",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "Oracle ③ Last Mover(선두가 베끼면 선두 자신의 수익모델이 무너지는 방식으로 들어왔는가)는 통과점 2 로 3점이다.",
+        "모방 불가능성은 실패다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 통과다.",
+        "2026-08-31 분기의 OCI 성장률은 관측에 없어, 이 분기 자료로 가속 판정을 다시 하지는 않았다.",
+        "문이 닫힌 증거는 없고, 통과 두 개의 통과점 2 는 사다리에서 3점이다."
+      ],
+      "evidence_up": [
+        "데이터베이스·ERP 라이선스 이익이 클라우드 사업을 보조한다.",
+        "2026-05-31 분기 OCI 매출이 $5.8B 로 전년 대비 93% 늘어, FY26 연간 OCI 성장률 77%($18.1B)보다 높았다.",
+        "RPO(계약했으나 아직 인식하지 않은 매출)는 2026-02-28 $552.6B 에서 2026-05-31 $638B 로 한 분기에 $85B 넘게 늘었다."
+      ],
+      "evidence_down": [
+        "데이터센터는 자본만 있으면 누구나 지을 수 있어 구조적으로 못 베끼는 자산이 아니다.",
+        "RPO 는 2026-08-31 에 $664B 로, 한 분기 증가폭이 $26B 로 줄었다."
+      ]
+    },
+    {
+      "judgment_id": "oracle.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "Oracle ④ 호황 이후 비전(곡괭이만 팔다 끝나는가, 광부가 되는가)은 3점이다.",
+        "AI 이후의 변신과 수직계열화 비전은 약하다고 판정했다."
+      ],
+      "evidence_up": [
+        "데이터베이스·ERP·NetSuite·Cerner(헬스케어)·클라우드로 사업 영역의 다각화 폭은 중상위다."
+      ],
+      "evidence_down": [
+        "자체 칩·모델·로보틱스 없이 데이터센터를 지어 빌려주는 임대업에 가깝다.",
+        "데이터센터 리스 약정은 $250B 규모의 15~20년 계약인데 고객에게 다시 빌려주는 계약은 그보다 짧아 만기가 어긋난다."
+      ]
+    },
+    {
+      "judgment_id": "oracle.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -1
+      },
+      "evidence": [
+        "Oracle ⑤ 아군 확보는 3 + 동맹 등급(+1) + 적대 등급(−1) 로 3점이다.",
+        "동맹 등급 +1 은 의미 있는 상업 동맹에서 나온다.",
+        "지분 동맹이 둘 이상이라는 +2 조건이 서지 않는다.",
+        "적대 등급 −1(비용형)은 있는 적대가 사업 구조를 건드리지 않는 비용이라는 판정이다."
+      ],
+      "evidence_up": [
+        "OpenAI 와의 대형 클라우드 계약, NVIDIA, TikTok 미국 법인, 정부 클라우드 계약 같은 의미 있는 상업 동맹이 있다.",
+        "규제 적대가 적다."
+      ],
+      "evidence_down": [
+        "지분이 걸린 동맹은 TikTok 미국 합작법인(TikTok USDS Joint Venture) 지분 15% 하나다(2026-08-31 분기 10-Q 주석 1).",
+        "같은 10-Q 와 2026 회계연도 10-K 에는 Stargate 지분 출자가 나오지 않고 비시장성 지분·채무 투자 합계가 $2.4B 다.",
+        "AWS·Azure·GCP 3사와 정면으로 경쟁한다.",
+        "2026-10-05 Bloomberg 가 보도한 2025년 의료 부문 침해 사고(2,000만 명 정보 유출)도 소송·규제 조사로 이어질 수 있는 비용형 재료다."
+      ]
+    },
+    {
+      "judgment_id": "oracle.F7.fix52",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "large",
+        "own_money_returns": "yes"
+      },
+      "evidence": [
+        "Oracle ⑦ 순환금융(내 매출을 내는 고객이 그 돈을 어디서 구했는가)은 '조달 의존 고객 비중 큼' 과 '내 돈이 돌아옴' 으로 판정해 −2 다.",
+        "조달 의존 비중은 큼으로 판정했다.",
+        "세로축은 '내 돈이 돌아옴' 이다.",
+        "Oracle 이 자기 차입으로 지은 데이터센터는 고객 주머니가 아니라 자기 설비로 간 돈이라 세로축 근거가 아니며, 그 선투자 위험은 ⑧·⑨ 와 신용 지표 교차검증에서 다룬다.",
+        "⑦ 판정표에서 조달 의존 비중이 큰 쪽은 세로축과 상관없이 −2 이고, 이는 ⑦ 범위의 최저점이다."
+      ],
+      "evidence_up": [
+        "2026-10-01 보도된 Tencent 의 칩 10만 개 임차($7B)는 자기 영업이익으로 지불할 수 있는 고객이지만 RPO 의 1% 남짓이라 가로축 판정을 바꾸지 못한다고 본다(추론)."
+      ],
+      "evidence_down": [
+        "2026-08-31 RPO $664B 가운데 약 절반이 적자 기업 OpenAI 의 몫이고, 그 몫은 최근 1년 매출 $71.78B 의 약 4.6년치다. 회사가 OpenAI 몫을 따로 공시하지 않아 절반은 추정이다.",
+        "Oracle 은 Stargate LLC 에 $7B 를 지분 출자했고(SoftBank $19B·OpenAI $19B·MGX $7B 와 공동 출자), 그 돈이 고객을 위한 데이터센터가 되어 다시 Oracle 매출로 돌아온다."
+      ]
+    },
+    {
+      "judgment_id": "oracle.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -4,
+      "inputs": {},
+      "evidence": [
+        "Oracle ⑧ 비대칭 의존(끊기면 매출이 주는가, 회사가 멈추는가)은 −4 다.",
+        "신용 지표는 점수 입력이 아니라 교차검증에만 쓰는데(규칙 2.8), S&P 가 2026-07-09 등급을 BBB 에서 BBB- 로 내리며 OpenAI 를 취약점으로 명시했고 CDS 는 연초 144bp 에서 215bp 로 18년 만의 최고까지 벌어져 깊은 감점과 방향이 맞다."
+      ],
+      "evidence_up": [
+        "2026-10-01 보도된 Tencent 칩 임차($7B)는 고객을 넓히는 반대 근거이지만 RPO 의 1% 남짓이라 집중도를 바꾸지 못한다고 본다(추론)."
+      ],
+      "evidence_down": [
+        "단일 고객인 OpenAI 가 수주잔고(RPO)의 약 절반을 차지해 고객 집중이 극단적이다.",
+        "그 고객이 적자 기업이라 대금 지급이 외부 조달에 달려 있고, 조달이 막히면 그 고객을 위해 지은 설비가 매출을 잃는다고 판정했다.",
+        "2026-09-24 뉴멕시코 데이터센터(Project Jupiter)에 불가항력 통보를 보냈다는 보도처럼, 단일 고객용 설비의 일정 위험도 이 의존에 붙어 있다."
+      ]
+    },
+    {
+      "judgment_id": "oracle.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "unknown",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "yes",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "Oracle ⑨ 적자 깊이는 게이트 2 에서 −2 를 받고 게이트 3 에서 한 단계 더 내려 −3 이다.",
+        "게이트 1(본업이 버는가)은 통과다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 마이너스다.",
+        "게이트 3(버티는 기간)은 1.61년으로 1~3년 구간이라 한 단계 하향한다.",
+        "여신을 빼면 1.27년, 선수금을 뺀 소진액 $40.08B 로 나누면 약 1.16년이라 어느 쪽이든 같은 구간이다(추론 계산).",
+        "완충에는 현금과 확정 미인출 여신만 넣는다.",
+        "신용등급(BBB-)으로 추정한 조달 여력은 완충에 넣지 않는다.",
+        "게이트 4(약정 커버리지 = 계약된 수입 ÷ 미개시 확정 약정)는 1배 이상으로 유지된다.",
+        "잉여현금흐름 추세 입력은 '모름' 이다. 추세는 다음 분기 자료까지 보고 판정하며 잉여현금흐름이 마이너스인 지금은 점수에 닿지 않는다."
+      ],
+      "evidence_up": [
+        "2025-09-01~2026-08-31 최근 1년 영업이익 $23.06B 를 매출 $71.78B 로 나눈 영업이익률이 32.1% 다.",
+        "회사는 2026년 $45~50B 추가 조달을 예고했으나, 계획이라 완충에 넣지 않는다.",
+        "RPO $664B(2026-08-31)를 미개시 리스 약정 $250B 로 나누면 2.66배다. 리스 $250B 는 이번에 재검증하지 않은 값이고 10-Q 는 아직 개시되지 않은 리스 약정을 $288B 로 공시했는데, 이 값으로 나눠도 약 2.31배라 판정은 같다(추론 계산)."
+      ],
+      "evidence_down": [
+        "2025-09-01~2026-08-31 영업현금흐름 $46.94B 에서 설비투자 $75.66B 를 뺀 잉여현금흐름이 −$28.72B 이고, 영업현금흐름에 2026-06~08 분기 고객 선수금 $11.36B 가 들어 있어 이를 빼면 약 −$40.08B 다.",
+        "완충 $46.37B 는 2026-08-31 현금 $36.37B 와 확정 미인출 회전여신 $10.0B(10-K 기준 2026-05-31 미인출, 2031-03-06 만기, 2026-08-31 10-Q 에 변동 기재 없음)를 더한 값이고 연 소진액은 $28.72B 다.",
+        "최근 1년 잉여현금흐름은 2026-05-31 기준 −$23.69B 에서 2026-08-31 기준 −$28.72B 로 마이너스 폭이 커졌다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-oracle-003",
+      "factors": [
+        "F8",
+        "F9"
+      ],
+      "kind": "filing",
+      "title": "10-Q 2026-09-11",
+      "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389274/orcl-20260831.htm",
+      "source_id": "SRC-EDGAR-000119312526389274",
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-oracle-004",
+      "factors": [
+        "F8",
+        "F9"
+      ],
+      "kind": "news",
+      "title": "Oracle sends 'force majeure' notice about data center project — stock drops 3% - CNBC",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE83OGFNcURydFoxR0o2WFYyX2ZTRkVUdno1UnNET2lrM0ZDVUdnZE11NWtMWFl1NnV1aU4tbXlLeFgtUEJVT2ZRY0tVcWxZWnpZR0g0a2owZDNYUHQ5Z05NZDY0aDAwUGhQMHZtUFZVd2lXX3Nnbkp5b9IBfkFVX3lxTE9xalhSV0NpQlJoUnQ4VDZGYUQtR1hnY1ZKMlVPVlRTelNaQk9qMTF5NzROY2xRcmFVNFJBQnY4QnlsVVRuOE53T1BtaDVxTXJlZlB2UzZhWmE2b0hPZmFlYlhZSDdDbU5lbEpGSnFvUGJtWVd5S1RZMGFvdG1Qdw?oc=5",
+      "source_id": "SRC-NEWS-oracle-20260924-f9026ef9",
+      "published_at_utc": "2026-09-24T12:48:08Z"
+    },
+    {
+      "evidence_id": "EV-oracle-005",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "kind": "news",
+      "title": "China’s Tencent leases 100,000 chips from Oracle to accelerate AI push, FT reports - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNR3F1ZTMtVFZsOVNXOEU4X09jTTI0RDVYNUJmQUNVVUhJQkV6YlRmdldFaWwyVzU1UnZLQl9Ia0tqTHlBZ09SUXZ6VC1kcEx6bjQyQlgxXzI1YVpwYldSV3NwNXZRRkFPSWQzclhFbE04anBtbnRZV2FwRUlIMmU2eVV3M0VscEE1Znd5bU5rNEhwWVVXdlR0c2tIbnlnald3VVBJdVFiTDZMUmhqV0x1bE1jVVR2STZ5bHdF?oc=5",
+      "source_id": "SRC-NEWS-oracle-20261001-610bad32",
+      "published_at_utc": "2026-10-01T03:12:00Z"
+    },
+    {
+      "evidence_id": "EV-oracle-006",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "title": "Oracle : Project Jupiter Statement on Southern New Mexico Floods - marketscreener.com",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQczJ1bUlrU2RPZndQazdQRTFGSFBiOGJRc19HbHFzWEM1Vld2UGNWV1ozc1d4MHNVZkJwQTB3UWFmM0xLX3hZOElDY3kyLW1YSU5BSWREWmlicWZHQnlTMDFXd3VVdEJvdnVhRzR1Q0ZuQkx0TDV4LUoyNnFrSVQ1QW1zb0V2S09kRWZzb1FPd1BZcHJSRkRrMUxVc3dTcUhWNklGMjVhQktxdnR2eVpjOHBkT3lmQQ?oc=5",
+      "source_id": "SRC-NEWS-oracle-20261001-6fd05bf7",
+      "published_at_utc": "2026-10-01T01:55:05Z"
+    },
+    {
+      "evidence_id": "EV-oracle-007",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "title": "Power approval set to delay Oracle's Wisconsin AI datacenter - The Register",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPX0ZBNzZ3QTJiSkVFNG5nbHdLX3p3U096VVV5d0g1RUhMUWVsMWI2N3FZa2xIa3hIb2RnWVQ3WlJoVzk0Q0FCUklrSDdVZWZ4TVBLTjVST0ZYbElDbHpNaEtTako0ckVLVGxGc2I0U2N1cnFqdmE4NTZMRXB1aUtIalhRSHVOcFJ1Mzl0RW5VZndIZkh4NEVJVTJyTzAxVk5ZMWpGUXdMTFlPM2txRVRZcGJzOVA?oc=5",
+      "source_id": "SRC-NEWS-oracle-20261002-61c2233a",
+      "published_at_utc": "2026-10-02T13:50:39Z"
+    },
+    {
+      "evidence_id": "EV-oracle-008",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Oracle 2025 Health Breach Compromised Data of 20 Million People - Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOc21GLWViZnp5VUszZF95TWUxS0FBVk9lMUtBV2JmMzZta1h2Nkt5UWFleTBGcXpnQlowdWtRRko3NnJmUkI2bHdQMEl2aHBBUG1HWWpQRDh0bHBRZEVNejBrRkdBYWJQUENYc1BJLTUtTnlpNTAyV2RvbWRYcHFiOE42RUtPcE1JdWt2b1hRNWxUMnJnWEtSMkx6T3I2dl9GMDl6bk43TXBTSWY1amhuZWZyWXU?oc=5",
+      "source_id": "SRC-NEWS-oracle-20261005-d05ff2fa",
+      "published_at_utc": "2026-10-05T23:09:19Z"
+    }
+  ]
+}

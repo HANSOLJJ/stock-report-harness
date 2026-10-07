@@ -1,0 +1,208 @@
+{
+  "company_id": "tsmc",
+  "next_evidence_number": 8,
+  "judgments": [
+    {
+      "judgment_id": "tsmc.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 2,
+      "inputs": {},
+      "evidence": [
+        "TSMC ① 은 부품 채널 상한(최종 사용자와 접점이 없는 부품 공급자는 2점을 넘지 못한다)에 걸려 2점이다.",
+        "OIP·PDK 락인은 부품 채널 상한을 풀 소비자·업무 채널이 아니다."
+      ],
+      "evidence_up": [
+        "OIP 설계 생태계와 PDK(공정 설계 키트) 락인은 실재해 고객의 설계 자산이 TSMC 공정에 묶인다."
+      ],
+      "evidence_down": [
+        "TSMC 는 칩 설계사에 공정을 파는 부품 채널만 있고, 개인 소비자나 조직 워크플로와 닿는 채널이 없다."
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "TSMC ② 는 범위 최상단인 5점이고, 성능 도약 경로가 세대 격차 수준이라는 판단에서 나온 점수다.",
+        "세 경로(성능 도약·패러다임 적응·표준 선점)별 판정 입력은 아직 따로 매기지 않아, 점수는 사람이 매긴 5점으로 서 있다."
+      ],
+      "evidence_up": [
+        "TSMC 는 N2(2나노) 양산을 시작해 2026년 2분기 웨이퍼 매출의 3% 를 N2 로 냈고 하반기에 가파르게 늘릴 계획이며, 2026-09-18 에도 2나노 상업 양산 시작이 2차 매체로 보도됐다.",
+        "웨이퍼 매출에서 N3 가 30%, 7나노 이하가 77% 를 차지한다.",
+        "순수 파운드리 점유율은 73% 이고, 2026년 2분기 매출총이익률 67.7%·영업이익률 60.3% 로 분기 사상 최고를 기록해 가격 결정력을 보여 준다. 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 영업이익률은 56.1% 다.",
+        "CoWoS 패키징은 5.5배 레티클 양산을 계획하고 14배 레티클을 2028년 목표로 둔다(계획).",
+        "도전자인 Intel 14A 는 2028년이 목표이고 고객 2곳과 협의 중이며 Samsung SF2P 수율은 70% 수준이라, 같은 세대의 경쟁자로 보지 않았다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "tsmc.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "pass",
+        "revenue_model": "fail",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "TSMC ③ 은 세 기준의 통과점이 2 라 3점이다.",
+        "모방 불가능성은 통과다.",
+        "별도 수익모델은 실패다.",
+        "후발 가속도는 통과로 판정했다.",
+        "문이 닫힌 증거는 없다."
+      ],
+      "evidence_up": [
+        "Intel 과 Samsung 이 수십 년 동안 TSMC 의 수율과 규모를 따라잡지 못했다.",
+        "TSMC 매출 성장률은 2025년 31.6% 였고, 2026년 2분기 매출은 전년 대비 36% 늘었으며, 회사는 2026년 매출 성장 가이던스를 +30% 에서 +40% 이상으로 올렸다."
+      ],
+      "evidence_down": [
+        "TSMC 의 사업은 파운드리 하나뿐이다.",
+        "최근 1년(2025-07-01~2026-06-30) 매출 성장률은 30.6% 로 2025년 연간과 비슷해, 반기 창으로 본 가속은 아직 뚜렷하지 않다(추론).",
+        "Intel 14A 와 Samsung 2나노가 진입로에 있다."
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 4,
+      "inputs": {},
+      "evidence": [
+        "TSMC ④ 는 4점이다.",
+        "TSMC ④ 가 5점에 이르지 못하는 이유는 파운드리 단일 사업과 AI 사이클 노출이다."
+      ],
+      "evidence_up": [
+        "TSMC 는 생산 지역을 넓히고 있다. 애리조나에 $165B(팹 6개와 패키징)를 투자하고 일본 구마모토와 독일 드레스덴에도 거점을 둔다.",
+        "A16·A14 공정 로드맵이 일정대로 가고 있고, CoWoS 캐파를 해마다 80% 늘린다.",
+        "2023년 회사는 살아남아 고마진을 지켰고, 스마트폰·차량·IoT 매출 34% 가 바닥을 받친다."
+      ],
+      "evidence_down": [
+        "TSMC 는 사업이 파운드리 하나이고 HPC 가 매출의 66% 라 AI 사이클에 묶여 있다.",
+        "호황 이후의 모습을 보여 주는 2023년에는 매출이 4.5% 줄고 매출총이익률은 54% 였다."
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F5.strict54",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -1
+      },
+      "evidence": [
+        "TSMC ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(-1) 로 3점이다.",
+        "동맹 등급 +2 는 지분이 걸린 동맹이 복수이거나 자기 경쟁사까지 자기 공정에 편입했을 때 서는데, TSMC 는 둘 다 아니다.",
+        "고객 동맹 자체는 서므로 동맹 등급은 +1 이다.",
+        "적대 등급 -1(비용형)은 Intel Foundry 와 관세에서 나온다."
+      ],
+      "evidence_up": [
+        "TSMC 공정에는 Apple·NVIDIA·AMD·Broadcom·MediaTek 에 더해 Trainium·TPU·Maia·Baltra 같은 칩까지 들어와 있다.",
+        "TSMC 와 고객의 거래는 매매지만 공정 락인이 있고 고객은 팹을 지을 수 없어 떠나기 어렵다.",
+        "2026-10-01 Intel CEO 가 TSMC 를 경쟁자가 아니라 파트너라고 말했다는 보도가 있으나, Intel 의 TSMC 위탁 계약이나 물량이 공시로 확인되지 않아 동맹 등급을 바꾸지 않는다."
+      ],
+      "evidence_down": [
+        "TSMC 는 고객에 투자하지 않는다. 방향은 반대여서 고객이 선급금으로 TSMC 캐파를 댄다.",
+        "Trainium·TPU·Maia·Baltra 는 NVIDIA 의 경쟁 칩이고, TSMC 자신의 경쟁사(Intel Foundry·Samsung 파운드리)가 TSMC 공정에 들어왔다는 근거는 없다.",
+        "미 정부가 Intel Foundry 의 10% 지분을 가지고 있다.",
+        "1월 14일 포고령은 25% 관세를 매기면서 미국에 투자하면 캐파의 2.5배까지 무관세로 해 주어, $165B 미국 투자가 사실상 강요됐다."
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "no"
+      },
+      "evidence": [
+        "TSMC ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
+        "조달 의존 고객 비중은 작음으로 판정했다.",
+        "최근 1년(2025-07-01~2026-06-30) 영업외이익 비중(세전이익의 6.6%)은 ⑥ 소관이라 ⑦ 의 입력이 아니다."
+      ],
+      "evidence_up": [
+        "TSMC 는 고객에 투자하지 않아, 자기 돈이 고객을 거쳐 매출로 돌아오는 고리가 없다. 오히려 고객이 선급금으로 TSMC 캐파를 댄다.",
+        "TSMC 의 주요 고객은 Apple·NVIDIA·AMD·Broadcom·MediaTek 같은 칩 설계사다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "tsmc.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -4,
+      "inputs": {},
+      "evidence": [
+        "TSMC ⑧ 은 -4점이다.",
+        "대만 지정학을 존립 위험으로 판정했다."
+      ],
+      "evidence_up": [
+        "완충 장치도 있다. 선급금과 장기 약정은 take-or-pay 라 수요가 꺾이면 NVIDIA 같은 고객이 먼저 맞는다."
+      ],
+      "evidence_down": [
+        "가장 큰 위험은 대만 지정학이다. 첨단 캐파 대부분이 물리적으로 대만에 있다.",
+        "AI 사이클 노출도 크다. HPC 가 매출의 66% 이고, NVIDIA 한 곳이 19% 로 Apple(17%)을 제치고 최대 고객이 됐으며 상위 두 곳이 36% 를 차지하고, CoWoS 전용 설비투자는 수요가 꺾이면 좌초될 수 있다.",
+        "EUV 노광장비는 ASML 한 곳에서만 공급받는다."
+      ]
+    },
+    {
+      "judgment_id": "tsmc.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "stable",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "unknown",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "TSMC ⑨ 는 감점 없이 0점이다.",
+        "게이트 1(본업이 버는가)은 통과한다.",
+        "게이트 2(현금이 새는가)는 추세를 안정으로 판정해 0점에서 끝난다.",
+        "2026-06-30 순현금은 $86.5B(VIS 잔여 지분 포함, 빼면 $84.1B)이지만, 순현금 잔고는 ⑨ 의 입력이 아니어서 참고로만 적는다."
+      ],
+      "evidence_up": [
+        "최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 영업이익률은 56.1% 다.",
+        "최근 1년(2025-07-01~2026-06-30) FCF 는 +$36.5B 로 흑자다."
+      ],
+      "evidence_down": [
+        "2026년 설비투자 가이던스를 $60~64B 로 약 $10B 올렸다. 가이던스는 계획이라 추세 판정의 근거로 쓰지 않는다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-tsmc-004",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "title": "Taiwan Semiconductor Manufacturing (TSM) Starts Commercial 2 Nm Production - simplywall.st",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNblhVN1A1bzdQekU0cGtoSUZRb0QzOU9mbk16amtyNVFSUy1WY044QmlUcFRSQWlISHM5aUZPWXNwMTRXa0lCNGg5aHlNNHBSS1lNUHNXR2VJQWNLbWpEMExNdjVhVjFpVDZ0b2RhOWZoNGt6bzd0RGx0eUhiTGN2SUp6RE9nMGJiUVV5Y1IzREpjY0tQTXpySVJtYV9MWjVQdVdmWTdsbS1RR3d1SXNpOXZaN1FBdFhYT1MyaExaZWtWeTc0bDlNUnZsb3Q4WHNfVFJhUFhxZmRCZTV3NzlwRFpVT05KQWVaNWFJOdIB8gFBVV95cUxPWk9pZE9KSExncUhORVAycGlFbWFNZ0hTTEFfX000Tzd0NzhNNzk5OFBTLUN1dnVxQnA1aXhDV051N09DTnZPUHVpTThrejAyTkJ2UjYwUjlmS1JDMFVHVk5Yd3hxbmtyX2FNZ2lJRDlGZ1RzZ3BBcE1XdGRPZy00Z2V6QkY2Y0RJcDhiYUZfckJ4N2o5MTM1anpicUROV1FtdW1mNTROakdJVmw5Wk1kZVR6eGwxYUVsejFRdVlCeldLeUdvTVRnMFpWYWpoV28yYWljZWFvbGthbFlZNG5SaEhNR19VTF9falBpOGdBSUFKUQ?oc=5",
+      "source_id": "SRC-NEWS-tsmc-20260918-d70d800e",
+      "published_at_utc": "2026-09-18T15:31:56Z"
+    },
+    {
+      "evidence_id": "EV-tsmc-007",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Lip-Bu Tan calls TSMC a partner rather than a rival - digitimes",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNWW82ZlFIOG9kMHZqdnlsYkxCOWlOeE1Fb01XeEoxYWtkYjRHck04R2ZxdEJ6TzhBRTRTNFZkUlI5SEp2S0ttN0FXWVk5aFdRSXFzM3UxcU0zLTF5TjNvNWhaOHZXeVVjLThiUjlZQlA3Skx0NXc3ODB6dTFkVnNzYXpHSkREbjNOc2UxMQ?oc=5",
+      "source_id": "SRC-NEWS-tsmc-20261001-3eee57cf",
+      "published_at_utc": "2026-10-01T00:11:53Z"
+    }
+  ]
+}

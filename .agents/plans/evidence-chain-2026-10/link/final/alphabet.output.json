@@ -1,0 +1,1493 @@
+{
+  "company_id": "alphabet",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-alphabet-000165204426000066",
+      "title": "Alphabet 8-K (2026-07-22) Exhibit 99.1 — Alphabet Announces Second Quarter 2026 Results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm",
+      "sha256": "656eee6510a26cf3aa0da829969f995a171b0b317e9ee02c6678383f7c8b6d83",
+      "note": "접수번호 0001652044-26-000066",
+      "kind": "filing",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-SEC-alphabet-000165204426000018",
+      "title": "Alphabet Form 10-K (FY2025)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+      "sha256": "1addacf888e46a85f47e3d7e1d47b72b6aabe452f66875b8e4386d59bd922cf6",
+      "note": "접수번호 0001652044-26-000018",
+      "kind": "filing",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-001",
+      "title": "Q1 2026 earnings call: Remarks from our CEO",
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q1-2026/",
+      "kind": "news",
+      "published_at_utc": "2026-04-29T20:45:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-002",
+      "title": "Search Engine Market Share Worldwide",
+      "publisher": "Statcounter Global Stats",
+      "url": "https://gs.statcounter.com/search-engine-market-share",
+      "kind": "news",
+      "published_at_utc": "2026-10-01T00:00:00Z",
+      "note": "월간 통계 페이지(2026년 9월분). 발행 시각이 표기되지 않아 9월 마감 다음 날로 적었다",
+      "sha256": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-003",
+      "title": "Text-to-Video Arena leaderboard",
+      "publisher": "Arena (LMArena)",
+      "url": "https://arena.ai/leaderboard/text-to-video",
+      "kind": "news",
+      "published_at_utc": "2026-09-21T00:00:00Z",
+      "note": "lmarena.ai 주소는 arena.ai 로 넘어간다. 페이지에 표기된 갱신일 Sep 21, 2026 기준",
+      "sha256": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-004",
+      "title": "Text Arena leaderboard (Overall)",
+      "publisher": "Arena (LMArena)",
+      "url": "https://arena.ai/leaderboard/text",
+      "kind": "news",
+      "published_at_utc": "2026-10-02T00:00:00Z",
+      "note": "lmarena.ai 주소는 arena.ai 로 넘어간다. 페이지에 표기된 갱신일 Oct 2, 2026 기준",
+      "sha256": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-005",
+      "title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/3-8-flash-and-3-8-flash-cyber/",
+      "kind": "news",
+      "published_at_utc": "2026-09-02T15:00:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-006",
+      "title": "Gemini 4 Argon: our next era of frontier intelligence",
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+      "kind": "news",
+      "published_at_utc": "2026-09-30T20:00:00Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-007",
+      "title": "Anthropic and SpaceX just handed Google the biggest profit quarter in company history—on paper",
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/07/22/anthropic-spacex-investments-google-earnings-biggest-ever-profit-quarter/",
+      "kind": "news",
+      "published_at_utc": "2026-07-22T23:24:30Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-008",
+      "title": "The custom AI ASIC state of play (May 2026) — Broadcom deals, Google TPUs, Meta MTIA & beyond",
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/custom-ai-asics-examined-from-broadcom-to-mtia",
+      "kind": "news",
+      "published_at_utc": "2026-05-21T12:43:38Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-009",
+      "title": "Google Grapples With Employee Skepticism About New Gemini Model",
+      "publisher": "Yahoo Finance (Bloomberg)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/google-grapples-employee-skepticism-gemini-195242680.html",
+      "kind": "news",
+      "published_at_utc": "2026-09-30T19:52:42Z",
+      "sha256": null,
+      "note": null,
+      "accessed_at": "2026-10-07",
+      "conflict_of_interest": null,
+      "company_id": "alphabet"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-001",
+      "title": "Google I/O 2026: Sundar Pichai's opening keynote",
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/innovation-and-ai/sundar-pichai-io-2026/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-05-19T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-002",
+      "title": "Q4 earnings call: Remarks from our CEO",
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q4-2025/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-02-04T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-003",
+      "title": "US Justice Dept, States Appeal Google Search Remedies",
+      "publisher": "Silicon UK",
+      "url": "https://www.silicon.co.uk/e-regulation/legal/doj-states-google-appeal-628612",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-02-04T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-004",
+      "title": "DOJ urges DC Circuit to beef up remedies in Google monopoly ruling",
+      "publisher": "Courthouse News Service",
+      "url": "https://www.courthousenews.com/doj-urges-dc-circuit-to-beef-up-remedies-in-google-monopoly-ruling/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-07-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-005",
+      "title": "Anthropic commits to spending $200 billion on Google's cloud and chips, the Information reports",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/anthropic-commits-spending-200-billion-googles-cloud-chips-information-reports-2026-05-05/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-05-05T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-006",
+      "title": "Inside Google's TPU V8 strategy, delivering two chips for two crucial tasks at incredible scale",
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/google-splits-its-tpu-into-two-chips-for-the-first-time-with-training-and-inference-variants",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-04-27T17:12:59Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-007",
+      "title": "CDAO Announces Partnerships with Frontier AI Companies to Address National Security Mission Areas",
+      "publisher": "U.S. Department of War",
+      "url": "https://www.war.gov/News/Releases/Release/Article/4242822/cdao-announces-partnerships-with-frontier-ai-companies-to-address-national-secu/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2025-07-14T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-008",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program",
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/software/security-software/google-signs-classified-pentagon-ai-deal-but-exits-100-million-drone-swarm-program",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-04-29T14:48:21Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-009",
+      "title": "The War Department Announces Agreements with Leading AI Companies to Deploy Capabilities on Classified Networks",
+      "publisher": "U.S. Department of War",
+      "url": "https://www.war.gov/News/Releases/Release/Article/4475177/classified-networks-ai-agreements/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-05-01T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-010",
+      "title": "Google faces £1 billion legal claim from UK consumers over Play Store fees",
+      "publisher": "The Independent",
+      "url": "https://www.independent.co.uk/tech/google-play-store-uk-trial-b3061106.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-04T23:01:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-011",
+      "title": "Polish regulator suspects Google abused dominant position in publisher payment talks",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/polish-regulator-suspects-google-abused-dominant-position-publisher-payment-2026-10-05/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-05T16:52:12Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-alphabet-011",
+      "company_id": "alphabet",
+      "factors": [
+        "F3",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000066",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Alphabet 8-K (2026-07-22) Exhibit 99.1 — Alphabet Announces Second Quarter 2026 Results",
+      "excerpt": "Google Cloud saw a meaningful acceleration in growth as revenues increased 82% to $24.8 billion, led by an increase in Google Cloud Platform (GCP) across enterprise AI Solutions and enterprise AI Infrastructure, as well as core GCP services.",
+      "locator": "8-K (2026-07-22) Exhibit 99.1 실적 발표문 요약 셋째 항목",
+      "relevance": "2026년 2분기 Google Cloud 매출이 전년 대비 82% 늘었다는 회사 발표다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-012",
+      "company_id": "alphabet",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000066",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Alphabet 8-K (2026-07-22) Exhibit 99.1 — Alphabet Announces Second Quarter 2026 Results",
+      "excerpt": "Gemini models now process 22 billion API tokens per minute and the Gemini App has 950 million monthly active users.",
+      "locator": "8-K (2026-07-22) Exhibit 99.1 실적 발표문 Sundar Pichai 인용 셋째 문단",
+      "relevance": "Gemini 앱 월간 사용자가 9.5억 명이라는 회사 발표다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-013",
+      "company_id": "alphabet",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000066",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Alphabet 8-K (2026-07-22) Exhibit 99.1 — Alphabet Announces Second Quarter 2026 Results",
+      "excerpt": "Google Search & other $ 54,190 $ 63,271 YouTube ads 9,796 11,055 Google Network 7,354 7,303 Google advertising 71,340 81,629",
+      "locator": "8-K (2026-07-22) Exhibit 99.1 Q2 2026 Supplemental Information — Revenues 표(2025·2026 2분기, 백만 달러)",
+      "relevance": "2026년 2분기 광고 매출이 $81.6B 로 Gemini 무료 배포를 떠받칠 본업 수익원이라는 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-014",
+      "company_id": "alphabet",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000066",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Alphabet 8-K (2026-07-22) Exhibit 99.1 — Alphabet Announces Second Quarter 2026 Results",
+      "excerpt": "Quarter Ended TTM Q3 2025 Q4 2025 Q1 2026 Q2 2026 Q2 2026 Net cash provided by operating activities $ 48,414 $ 52,402 $ 45,790 $ 39,069 $ 185,675 Less: purchases of property and equipment (23,953) (27,851) (35,674) (44,924) (132,402) Free cash flow $ 24,461 $ 24,551 $ 10,116 $ (5,855) $ 53,273",
+      "locator": "8-K (2026-07-22) Exhibit 99.1 Reconciliation from GAAP Net Cash Provided by Operating Activities to Non-GAAP Free Cash Flow 표(백만 달러)",
+      "relevance": "최근 1년 영업현금흐름 $185.7B·설비투자 $132.4B·FCF +$53.3B 와 2026년 2분기 FCF -$5.9B 의 원문이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-015",
+      "company_id": "alphabet",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet Form 10-Q (2026-06-30)",
+      "excerpt": "OI&E of $98.0 billion for the three months ended June 30, 2026 included net gains on equity securities of $99.0 billion, primarily related to unrealized gains in our equity securities portfolio from SpaceX and a private company.",
+      "locator": "10-Q (2026-06-30) Item 2 MD&A — Executive Overview 요약 항목",
+      "relevance": "2026년 2분기 지분 평가이익 $99.0B 가 주로 SpaceX 와 비상장 회사 한 곳에서 나왔다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-016",
+      "company_id": "alphabet",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet Form 10-Q (2026-06-30)",
+      "excerpt": "(1) Includes $80.0 billion of Space Exploration Technologies Corp. (SpaceX) shares subject to short-term restrictions on the ability to sell. (2) Includes $14.1 billion of SpaceX shares subject to long-term restrictions on the ability to sell through the third quarter of 2027.",
+      "locator": "10-Q (2026-06-30) Note 3 Financial Instruments — 공정가치 측정 표 주석 (1)(2)",
+      "relevance": "2026-06-30 현재 보유한 SpaceX 주식이 $80.0B + $14.1B 라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-017",
+      "company_id": "alphabet",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-007",
+      "published_at_utc": "2026-07-22T23:24:30Z",
+      "title": "Anthropic and SpaceX just handed Google the biggest profit quarter in company history—on paper",
+      "excerpt": "SpaceX, in which Google owned a roughly 6% stake at the end of 2025, went public in early June at a valuation of $1.77 trillion, up sharply from the $400 billion valuation it had as a private company a year ago.",
+      "locator": "기사 4번째 문단",
+      "relevance": "구글의 SpaceX 지분이 약 6% 이고 SpaceX 가 6월 상장 때 $1.77T 로 평가됐다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-018",
+      "company_id": "alphabet",
+      "factors": [
+        "F5",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-007",
+      "published_at_utc": "2026-07-22T23:24:30Z",
+      "title": "Anthropic and SpaceX just handed Google the biggest profit quarter in company history—on paper",
+      "excerpt": "Alphabet’s enormous paper windfall is the result of a prescient bet on Anthropic that began in April 2023, with an initial $300 million investment into Anthropic that has since grown to $13.3 billion, plus commitments of up to $30 billion more. As part of the arrangement, Anthropic has committed to purchasing at least five gigawatts of computing capacity from Google Cloud; roughly the output of five nuclear reactors, and enough electricity to power around four million homes. That spending flows into the very segment Wall Street watched Wednesday–that 82% growth Cloud growth.",
+      "locator": "기사 5번째 문단",
+      "relevance": "알파벳이 Anthropic 에 투자했고 Anthropic 이 Google Cloud 에서 5GW 이상을 사기로 약정해 그 지출이 클라우드 매출로 돌아온다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-019",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-008",
+      "published_at_utc": "2026-05-21T12:43:38Z",
+      "title": "The custom AI ASIC state of play (May 2026) — Broadcom deals, Google TPUs, Meta MTIA & beyond",
+      "excerpt": "Anthropic committed to up to one million TPUs in the largest deal in Google Cloud history back in October, while Meta entered talks for multi-billion-dollar TPU deployments in February this year.",
+      "locator": "기사 Google TPU 절 셋째 문단",
+      "relevance": "Anthropic 의 TPU 약정과 Meta 의 TPU 도입 협의를 적은 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-020",
+      "company_id": "alphabet",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet Form 10-Q (2026-06-30)",
+      "excerpt": "As of June 30, 2026, we had $519.5 billion of remaining performance obligations (“revenue backlog”), of which $513.9 billion related to Google Cloud.",
+      "locator": "10-Q (2026-06-30) Note 2 Revenues — Revenue Backlog 문단",
+      "relevance": "Google Cloud 수주잔고가 $513.9B(약 $514B)라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-021",
+      "company_id": "alphabet",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet Form 10-Q (2026-06-30)",
+      "excerpt": "Our Google Cloud product sales generally consist of the sale of TPU systems comprising hardware, software, installation, support, and extended warranty services.",
+      "locator": "10-Q (2026-06-30) Note 1 — Revenue Recognition, Google Cloud 제품 판매 문단",
+      "relevance": "TPU 시스템을 외부 고객에게 판다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-022",
+      "company_id": "alphabet",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000018",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Alphabet Form 10-K (FY2025)",
+      "excerpt": "In Other Bets, our fully autonomous driving technology company, Waymo, is now providing fully autonomous, paid ride-hailing services to customers in multiple cities.",
+      "locator": "10-K (FY2025) Item 1 Business — Overview 문단",
+      "relevance": "자율주행 사업 Waymo 가 여러 도시에서 유료 무인 승차 서비스를 하고 있다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-023",
+      "company_id": "alphabet",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000018",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Alphabet Form 10-K (FY2025)",
+      "excerpt": "We aim to build the most advanced, safe, and responsible AI through our full-stack approach, which spans AI-optimized infrastructure; world-class research, including models and tooling; and our products and platforms that bring AI to billions of people, developers, and enterprises.",
+      "locator": "10-K (FY2025) Item 1 Business — Making AI Helpful for Everyone 첫 문단",
+      "relevance": "인프라·모델·제품을 모두 자체 보유한 풀스택 구조라는 회사 서술이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-024",
+      "company_id": "alphabet",
+      "factors": [
+        "F2",
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000018",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Alphabet Form 10-K (FY2025)",
+      "excerpt": "Our technical infrastructure allows us to use and offer our customers a range of AI accelerator options, including specialized Graphics Processing Units (GPUs) and our own custom-built Tensor Processing Units (TPUs), such as Ironwood, our seventh-generation TPU.",
+      "locator": "10-K (FY2025) Item 1 Business — Making AI Helpful for Everyone 첫 문단",
+      "relevance": "자체 칩 TPU 를 만들고 7세대가 Ironwood 라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-025",
+      "company_id": "alphabet",
+      "factors": [
+        "F1",
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000018",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Alphabet Form 10-K (FY2025)",
+      "excerpt": "Google Services' core products and platforms include ads, Android, Chrome, devices, Gmail, Google Drive, Google Gemini, Google Maps, Google Photos, Google Play, Search, and YouTube, with broad and growing adoption by users around the world.",
+      "locator": "10-K (FY2025) Item 1 Business — Google Services 문단",
+      "relevance": "Android·Gmail·Search·YouTube 등 유통 계층을 자체 보유하고 널리 쓰인다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-026",
+      "company_id": "alphabet",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000018",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Alphabet Form 10-K (FY2025)",
+      "excerpt": "No individual customer or groups of affiliated customers represented more than 10% of our revenues in 2023, 2024, or 2025.",
+      "locator": "10-K (FY2025) Note 2 Revenues — 매출 분해 표 아래 문장",
+      "relevance": "매출의 10% 를 넘는 고객이 없다는 공시로, 특정 고객 의존이 낮다는 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-027",
+      "company_id": "alphabet",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alphabet-000165204426000018",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Alphabet Form 10-K (FY2025)",
+      "excerpt": "Year Ended December 31, 2023 2024 2025 Revenues $ 307,394 $ 350,018 $ 402,836 Costs and expenses: Cost of revenues 133,332 146,306 162,535 Research and development 45,427 49,326 61,087 Sales and marketing 27,917 27,808 28,693 General and administrative 16,425 14,188 21,482 Total costs and expenses 223,101 237,628 273,797 Income from operations 84,293 112,390 129,039",
+      "locator": "10-K (FY2025) Item 8 CONSOLIDATED STATEMENTS OF INCOME — Revenues·Income from operations 행(백만 달러)",
+      "relevance": "최근 1년 매출·영업이익 = 2025년 연간 − 2025년 상반기 + 2026년 상반기 계산에 들어가는 연간 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-028",
+      "company_id": "alphabet",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet Form 10-Q (2026-06-30)",
+      "excerpt": "Three Months Ended Six Months Ended June 30, June 30, 2025 2026 2025 2026 Revenues $ 96,428 $ 119,796 $ 186,662 $ 229,692 Costs and expenses: Cost of revenues 39,039 45,943 75,400 87,214 Research and development 13,808 18,219 27,364 35,251 Sales and marketing 7,101 8,403 13,273 16,009 General and administrative 5,209 6,461 8,748 10,752 Total costs and expenses 65,157 79,026 124,785 149,226 Income from operations 31,271 40,770 61,877 80,466",
+      "locator": "10-Q (2026-06-30) Item 1 CONSOLIDATED STATEMENTS OF INCOME — Revenues·Income from operations 행(백만 달러)",
+      "relevance": "최근 1년 매출 $445.9B(402,836 − 186,662 + 229,692)와 영업이익 $147.6B(129,039 − 61,877 + 80,466) 계산에 들어가는 상반기 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-029",
+      "company_id": "alphabet",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet Form 10-Q (2026-06-30)",
+      "excerpt": "As of December 31, 2025 As of June 30, 2026 (unaudited) Assets Current assets: Cash and cash equivalents $ 30,708 $ 55,911 Marketable securities 96,135 186,563 Total cash, cash equivalents, and marketable securities 126,843 242,474",
+      "locator": "10-Q (2026-06-30) Item 1 CONSOLIDATED BALANCE SHEETS — 현금·시장성 유가증권 행(백만 달러)",
+      "relevance": "2026-06-30 현금및현금성자산 $55.9B, 단기 시장성 유가증권을 더한 $242.5B 의 원문이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-030",
+      "company_id": "alphabet",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet Form 10-Q (2026-06-30)",
+      "excerpt": "Long-term debt 46,547 98,165 Income taxes payable, non-current 9,531 11,306 Deferred income taxes 919 22,819 Operating lease liabilities 12,744 14,591",
+      "locator": "10-Q (2026-06-30) Item 1 CONSOLIDATED BALANCE SHEETS — 비유동 부채 행(백만 달러)",
+      "relevance": "순현금 +$121.7B 는 현금·시장성 유가증권(비유동 시장성 지분 포함)에서 차입금과 리스부채(유동분 포함)를 뺀 파생값이고, 이 행은 그중 장기 차입금·비유동 리스부채의 원문이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-031",
+      "company_id": "alphabet",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-002",
+      "published_at_utc": "2026-10-01T00:00:00Z",
+      "title": "Search Engine Market Share Worldwide",
+      "excerpt": "Search Engine Market Share Worldwide - September 2026 Google 89.94% bing 5.29% Yahoo! 1.36% YANDEX 1.3% DuckDuckGo 0.74%",
+      "locator": "페이지 상단 월간 점유율 표(2026년 9월, 전 세계)",
+      "relevance": "2026년 9월 전 세계 검색 점유율이 Google 89.94% 라는 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-032",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-003",
+      "published_at_utc": "2026-09-21T00:00:00Z",
+      "title": "Text-to-Video Arena leaderboard",
+      "excerpt": "Sep 21, 2026 718,577 votes 48 models Hide Filters Filters ModelsLabs Rank Rank Spread Model Score Votes 1 1 4 gemini-omni-1.1-flash Google · Proprietary 1516±151,784",
+      "locator": "순위표 머리(갱신일·표본 수)와 1위 행",
+      "relevance": "영상 생성 Arena 에서 Google Gemini 모델이 1위라는 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-033",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-004",
+      "published_at_utc": "2026-10-02T00:00:00Z",
+      "title": "Text Arena leaderboard (Overall)",
+      "excerpt": "Oct 2, 2026 8,626,731 votes 413 models Hide Filters Filters ModelsLabs Rank Rank Spread Model Score Votes Price $/M Context 1 1 1 gemini-4-argon-high Google · Proprietary 1525±9 Preliminary4,932$2 / $101M 2 2 7 Anthropic claude-opus-4-6-high Anthropic · Proprietary 1505±377,636$5 / $251M",
+      "locator": "Text Arena Overall 순위표 머리(갱신일·표본 수)와 1·2위 행. 같은 표 8위 행은 gemini-3.8-flash-high (1495±5, Preliminary, 26,298표)",
+      "relevance": "Arena 텍스트 부문에서 Gemini 4 Argon 이 표본 4,932표의 잠정(Preliminary) 1위이고, 다음 Gemini 모델은 8위라는 집계다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-034",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-005",
+      "published_at_utc": "2026-09-02T15:00:00Z",
+      "title": "Introducing Gemini 3.8 Flash and 3.8 Flash Cyber",
+      "excerpt": "Building on the momentum of 3.7 Flash from three weeks ago and marking our third Flash release in only six weeks, today we’re introducing Gemini 3.8, our best reasoning and coding model yet, at the same speed and low cost of 3.7.",
+      "locator": "블로그 글 첫 문단",
+      "relevance": "2026-09-02 Gemini 3.8 Flash 를 같은 속도·낮은 가격으로 냈다는 회사 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-035",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-006",
+      "published_at_utc": "2026-09-30T20:00:00Z",
+      "title": "Gemini 4 Argon: our next era of frontier intelligence",
+      "excerpt": "Today, we’re announcing our new frontier model, Gemini 4 Argon, which is rolling out to a set of trusted cyber defenders through our Fairwind Program.",
+      "locator": "블로그 글 본문 첫 문단 첫 문장",
+      "relevance": "2026-09-30 Gemini 4 Argon 을 발표했고 일부 보안 방어 기관에만 배포하고 있다는 회사 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-036",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-001",
+      "published_at_utc": "2026-04-29T20:45:00Z",
+      "title": "Q1 2026 earnings call: Remarks from our CEO",
+      "excerpt": "At Cloud Next, we introduced our eighth-generation TPUs, individually specialized for training and serving, and able to take on the most demanding agentic workloads.",
+      "locator": "CEO 발언 원고 중 인프라 부분",
+      "relevance": "8세대 TPU 를 내놓았다는 회사 발언이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-037",
+      "company_id": "alphabet",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-009",
+      "published_at_utc": "2026-09-30T19:52:42Z",
+      "title": "Google Grapples With Employee Skepticism About New Gemini Model",
+      "excerpt": "Versions of the model underpin nearly every product the company sells, from the AI answers atop Search, Google's main profit engine, to Maps, Gmail and Chrome. Each of those products has more than a billion users, a distribution advantage some of the company's rivals lack.",
+      "locator": "기사 7번째 문단",
+      "relevance": "Search·Maps·Gmail·Chrome 이 각각 10억 명 넘게 쓰는 제품이라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-038",
+      "company_id": "alphabet",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-001",
+      "published_at_utc": "2026-05-19T00:00:00Z",
+      "title": "Google I/O 2026: Sundar Pichai's opening keynote",
+      "excerpt": "Another place where we’ve been rapidly innovating is in the Gemini app. Last year at I/O, the Gemini app had 400 million monthly active users. Today, we’ve surpassed 900 million, more than doubling in a year.",
+      "locator": "기조연설 원고 'Momentum with our products' 부분, AI Overviews·AI Mode 문단 다음의 Gemini 앱 문단",
+      "relevance": "Gemini 앱 월간 사용자가 2026-05-19 9억 명을 넘었다는 회사 발표로, ③ 의 사용자 증가율 감속 계산의 중간값이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-039",
+      "company_id": "alphabet",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-002",
+      "published_at_utc": "2026-02-04T00:00:00Z",
+      "title": "Q4 earnings call: Remarks from our CEO (2025 Q4)",
+      "excerpt": "In addition, we have sold more than eight million paid seats of Gemini Enterprise, which we launched just four months ago. And our Gemini App now has over 750 million monthly active users.",
+      "locator": "2025년 4분기 실적 발표 CEO 발언 원고, 유료 구독·Gemini Enterprise 문단 마지막 문장",
+      "relevance": "Gemini 앱 월간 사용자가 2026-02-04 7.5억 명을 넘었다는 회사 발표로, ③ 의 사용자 증가율 계산의 시작값이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-040",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-003",
+      "published_at_utc": "2026-02-04T00:00:00Z",
+      "title": "US Justice Dept, States Appeal Google Search Remedies (Silicon UK)",
+      "excerpt": "Mehta imposed some changes to the way Google negotiates exclusivity contracts with smartphone makers such as Apple and Samsung, and said Google must disclose some information to rivals, in a decision that Google is appealing. A group of 38 states and territories had backed the case, of which 35 are appealing, according to a notice.",
+      "locator": "기사 본문 끝에서 두세 번째 문단('Mehta imposed…', 'A group of 38 states…')",
+      "relevance": "구글과 DOJ·주 정부가 모두 검색 독점 소송 판결에 항소했다는 보도로, ⑤ 의 적대 등급(검색 독점 소송 항소)을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-041",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-004",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "DOJ urges DC Circuit to beef up remedies in Google monopoly ruling (Courthouse News Service)",
+      "excerpt": "Google is set to file its reply brief on Sept. 29, with oral arguments before the D.C. Circuit yet to be scheduled for the 2026 term beginning in September.",
+      "locator": "기사 마지막 문단(DOJ 의 144쪽 항소 서면 기사)",
+      "relevance": "D.C. 항소법원 절차가 2026-07 말 현재 서면 단계이고 변론 기일이 잡히지 않았다는 보도로, ⑤ 의 항소 진행 중 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-042",
+      "company_id": "alphabet",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-005",
+      "published_at_utc": "2026-05-05T00:00:00Z",
+      "title": "Anthropic commits to spending $200 billion on Google's cloud and chips, the Information reports (Reuters)",
+      "excerpt": "May 5 (Reuters) - Anthropic has committed to spend $200 billion with Google Cloud over five years as part of a recent agreement, The Information reported on Tuesday, citing a person with knowledge of the matter. The commitment suggests the AI startup accounts for more than 40% of the revenue backlog Google disclosed to investors last week, according to the report.",
+      "locator": "기사 1~2번째 문단",
+      "relevance": "Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 구글 백로그의 40% 넘게 차지한다는 보도로, ⑦ 에서 Anthropic 발 매출 규모를 가늠하는 반대 방향 자료다(현재 매출이 아니라 약정이다).",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Reuters 는 The Information 보도를 즉시 확인하지 못했다고 적었다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-043",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-006",
+      "published_at_utc": "2026-04-27T17:12:59Z",
+      "title": "Inside Google's TPU V8 strategy, delivering two chips for two crucial tasks (Tom's Hardware)",
+      "excerpt": "Both chips are fabricated on TSMC's N3 process family with HBM3E memory and will be available to Google Cloud customers later this year.",
+      "locator": "기사 공급망 분할 문단('The split also extends to the supply chain…') 마지막 문장",
+      "relevance": "8세대 TPU(TPU 8t·8i)가 TSMC N3 계열 공정으로 만들어진다는 보도로, ② 의 자체 칩 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-044",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-007",
+      "published_at_utc": "2025-07-14T00:00:00Z",
+      "title": "CDAO Announces Partnerships with Frontier AI Companies to Address National Security Mission Areas (U.S. Department of War)",
+      "excerpt": "The awards to Anthropic, Google, OpenAI, and xAI – each with a $200M ceiling – will enable the Department to leverage the technology and talent of U.S. frontier AI companies to develop agentic AI workflows across a variety of mission areas.",
+      "locator": "보도자료 2번째 문단",
+      "relevance": "미 국방부 CDAO 가 네 회사에 각각 상한 $200M 계약을 줬다는 정부 발표로, ⑤ 의 동맹 등급 서술을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-045",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-008",
+      "published_at_utc": "2026-04-29T14:48:21Z",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program (Tom's Hardware)",
+      "excerpt": "Google amended its existing contract with the U.S. Department of Defense on Monday to extend Gemini's availability to classified networks, granting the Pentagon permission to deploy the models for \"any lawful government purpose.\"",
+      "locator": "기사 본문 첫 문단 첫 문장(부제 다음)",
+      "relevance": "구글이 국방부 계약을 수정해 Gemini 를 기밀 네트워크에서 모든 합법적 정부 목적에 쓰게 했다는 보도로, ⑤ 의 정부 동맹 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-046",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-008",
+      "published_at_utc": "2026-04-29T14:48:21Z",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program (Tom's Hardware)",
+      "excerpt": "Google's agreement requires the company to help modify its AI safety settings and filters at the government's request, with the contract including language stating that the AI system shouldn’t be used for domestic mass surveillance or autonomous weapons “without appropriate human oversight and control,” but also specifies that the deal doesn’t give Google “any right to… veto lawful government operational decision-making,”",
+      "locator": "기사 본문 3번째 문단",
+      "relevance": "계약이 정부 요청 시 구글이 AI 안전 설정·필터 수정을 돕도록 요구한다는 보도로, ⑤ 의 정부 동맹 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-047",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-008",
+      "published_at_utc": "2026-04-29T14:48:21Z",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program (Tom's Hardware)",
+      "excerpt": "More than 600 Google employees delivered a letter to CEO Sundar Pichai on Monday urging him to reject the classified deal, arguing that it was the only way to prevent Google's AI from being misused.",
+      "locator": "기사 본문 6번째 문단",
+      "relevance": "구글 직원 600명 이상이 기밀 계약 거부를 요구하는 서한을 CEO 에게 전달했다는 보도로, ⑤ 의 내부 반발 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-048",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-009",
+      "published_at_utc": "2026-05-01T00:00:00Z",
+      "title": "The War Department Announces Agreements with Leading AI Companies to Deploy Capabilities on Classified Networks",
+      "excerpt": "The War Department has entered into agreements with eight of the world's leading frontier artificial intelligence companies, SpaceX, OpenAI, Google, NVIDIA, Reflection, Microsoft, Amazon Web Services, and Oracle to deploy their advanced AI capabilities on the Department's classified networks for lawful operational use.",
+      "locator": "보도자료 첫 문단",
+      "relevance": "국방부가 구글을 포함한 8개사와 기밀 네트워크 AI 배치 협약을 맺었다는 정부 발표로, ⑤ 의 정부 동맹 서술을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-049",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-010",
+      "published_at_utc": "2026-10-04T23:01:00Z",
+      "title": "Google faces £1 billion legal claim from UK consumers over Play Store fees (The Independent)",
+      "excerpt": "A legal action seeking more than £1 billion in damages from Google on behalf of millions of consumers over alleged \"hidden charges\" on Play Store app sales has gone to trial in the UK.",
+      "locator": "기사 본문 첫 문단(요약문 다음)",
+      "relevance": "영국 소비자 집단소송이 구글에 Play 스토어 수수료로 £10억 넘는 배상을 구하며 재판에 들어갔다는 보도로, ⑤ 의 비용형 적대 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-050",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-011",
+      "published_at_utc": "2026-10-05T16:52:12Z",
+      "title": "Polish regulator suspects Google abused dominant position in publisher payment talks (Reuters)",
+      "excerpt": "Poland, Oct 5 (Reuters) - Poland's antitrust watchdog said on Monday it suspected Alphabet's Google of abusing its dominant market position while negotiating content payments with domestic media publishers.",
+      "locator": "기사 첫 문단",
+      "relevance": "폴란드 경쟁당국(UOKiK)이 구글의 시장지배적 지위 남용 혐의를 제기했다는 보도로, ⑤ 의 비용형 적대 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-alphabet-005",
+      "excerpt": "Google has appealed two European Union decisions requiring it to share certain data tied to its search engine and to ensure effective interoperability between Android features and artificial intelligence services.",
+      "locator": "기사 첫 문단 첫 문장(원문 주소 https://www.marketscreener.com/quote/stock/ALPHABET-INC-24203373/news/Google-challenges-European-requirements-on-sharing-search-data-54377898/)"
+    },
+    {
+      "evidence_id": "EV-alphabet-006",
+      "excerpt": "About 47% of Anthropic’s sales last year were routed through cloud partners Amazon (NASDAQ:AMZN) and Alphabet’s Google (NASDAQ:GOOGL) (NASDAQ:GOOG), Reuters reported, citing a confidential IPO filing.",
+      "locator": "기사 2번째 문단 첫 문장(원문 주소 https://www.benzinga.com/markets/private-markets/26/09/62075939/anthropic-ipo-filing-reveals-a-major-vulnerability-nearly-50-of-sales-flow-through-amazon-and-google-as-revenue-concentration-raises-risks-report)"
+    },
+    {
+      "evidence_id": "EV-alphabet-008",
+      "excerpt": "Alphabet's (GOOG, GOOGL) Google must face publisher claims seeking roughly $3.2 billion in damages",
+      "locator": "기사 첫 문단(무료 공개분이 이 문장 중간에서 끊긴다, 원문 주소 https://finance.yahoo.com/media-advertising/articles/alphabet-apos-google-must-face-182621152.html)"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "alphabet.F1",
+      "evidence_after": [
+        "알파벳 ① 은 소비자 채널의 락인으로 5점을 매겼다.",
+        "회사의 실질 채널 가운데 가장 강한 락인이 점수를 정한다는 규칙에 따라 이 소비자 락인을 점수로 삼는다."
+      ],
+      "evidence_up_after": [
+        "Gemini 앱의 월간 사용자(MAU)는 9.5억 명으로 10억 명에 다가섰고, 검색 점유율은 90% 다. [EV-alphabet-012, EV-alphabet-031]",
+        "Android·YouTube·Gmail 이 사람들이 매일 쓰는 습관 영역을 차지하고 있어 가격을 올려도 사용자가 떠나기 어렵다고 판단했다. [EV-alphabet-025, EV-alphabet-037]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "alphabet.F2",
+      "evidence_after": [
+        "알파벳 ② 는 4점이고, 이는 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 두 경로를 통과한 것에 해당한다.",
+        "경로별 통과 여부를 판정 입력으로 나누어 적지 않았기 때문에 프로그램이 경로 수로 환산하지 않고 사람이 매긴 4점을 쓴다."
+      ],
+      "evidence_up_after": [
+        "영상 생성(Text-to-Video) 부문에서는 Gemini 가 Arena 1위다. [EV-alphabet-032]",
+        "자체 칩은 7세대 Ironwood TPU 이고, 8세대 TPU(TPU 8t·8i)는 TSMC N3(3nm) 계열 공정으로 만든다. [EV-alphabet-024, EV-alphabet-036, EV-alphabet-043]",
+        "2026-09-02 출시한 Gemini 3.8 Flash 는 속도와 가격 경쟁력을 보였지만 프론티어 순위는 바뀌지 않았다. [EV-alphabet-034, EV-alphabet-033]",
+        "2026-09-30 발표된 최상위 모델 Gemini 4 Argon 은 Arena 텍스트 부문(2026-10-02)에서 잠정 1위에 올랐지만, 일부 보안 방어 기관에만 배포 중이고 표본이 적은 잠정 순위라 이 판단에 반영하지 않았다. [EV-alphabet-035, EV-alphabet-033]"
+      ],
+      "evidence_down_after": [
+        "사용자 투표형 순위인 Arena 의 텍스트 부문(2026-10-02)에서 잠정 1위인 Gemini 4 Argon 을 빼면 Gemini 모델의 최고 순위는 3.8 Flash 의 8위라, 종합 성능에서 세대 격차를 만들었다고 보지 않았다. [EV-alphabet-033]"
+      ]
+    },
+    {
+      "judgment_id": "alphabet.F3",
+      "evidence_after": [
+        "알파벳 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 부분 통과로 통과점이 1.5 이고 사다리에서 3점이다.",
+        "모방 불가능성은 실패로 판정했다. 검색 점유율 90% 라는 자산은 ① 에서 이미 5점으로 셌으므로 ③ 에서 다시 세지 않는다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 부분 통과다.",
+        "문 닫힘(선두의 가격 결정력 붕괴나 점유율 실측 역전)은 실패로 판정해 5점 관문에 닿지 않는다.",
+        "2년 만에 격차를 회수했다는 사실은 누적 이동 거리이지 성장률의 변화가 아니라서 가속도 근거에서 뺐다."
+      ],
+      "evidence_up_after": [
+        "구글이 검색에 Gemini 를 무료로 얹을 수 있는 이유는 검색 점유율 90% 라는 자산이다. [EV-alphabet-031]",
+        "광고 매출이 있어 Gemini 를 무료로 뿌려도 손해가 아니다. [EV-alphabet-013]",
+        "클라우드 매출 성장률 +82% 는 강하다. [EV-alphabet-011]"
+      ],
+      "evidence_down_after": [
+        "Gemini 월간 사용자 증가율은 7.5억 명에서 9.0억 명으로 갈 때 +20% 였다가 9.0억 명에서 9.5억 명으로 갈 때 +5.6% 로 꺾이고 있다. [EV-alphabet-039, EV-alphabet-038, EV-alphabet-012]"
+      ]
+    },
+    {
+      "judgment_id": "alphabet.F4",
+      "evidence_after": [
+        "알파벳 ④ 는 영역 다각화와 수직계열화가 모두 실제 매출과 배포로 확인돼 5점이다."
+      ],
+      "evidence_up_after": [
+        "2026년 2분기 클라우드 매출은 전년 대비 +82% 늘었고, 수주잔고는 $514B 다. [EV-alphabet-011, EV-alphabet-020]",
+        "자체 칩 TPU 를 외부 고객에게 팔고 있고, 자율주행 사업 Waymo 를 운영한다. [EV-alphabet-021, EV-alphabet-022]",
+        "칩(TPU)·모델(Gemini)·클라우드·유통(검색·Android)을 모두 자체 보유해 수직계열화가 완결돼 있다. [EV-alphabet-023, EV-alphabet-024, EV-alphabet-025]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "evidence_after": [
+        "알파벳 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 -1 로 4점이다.",
+        "경쟁사까지 자기 공정·플랫폼에 편입한 경우라 동맹 등급을 +2 로 판정했다.",
+        "적대 등급 -1(비용형)은 검색 독점 소송의 항소에서 나온다. 규제기관 소송은 져도 본업 수요가 유지되는 비용이라 사업 구조를 건드리지 않는 비용형으로 본다.",
+        "직원 반발은 내부 갈등이지 시장의 적대가 아니라고 판단했다.",
+        "EU 검색 데이터 공유 명령 이의 제기·애드테크 손해배상 청구·영국 앱 장터 수수료 소송·폴란드 경쟁당국 조사는 모두 사업 구조를 건드리지 않는, 검색 독점 소송과 같은 비용형이라 적대 등급을 바꾸지 않는다."
+      ],
+      "evidence_up_after": [
+        "경쟁 모델사 Anthropic 이 Google Cloud 에서 5GW 이상의 컴퓨팅을 사기로 약정했고(TPU 최대 100만 개 약정 포함), 경쟁사 Meta 와는 TPU 도입을 협의했다. [EV-alphabet-018, EV-alphabet-019]",
+        "미 국방부 CDAO 프론티어 AI 계약(2025-07)은 Google·OpenAI·Anthropic·xAI 네 회사가 각각 상한 $200M 으로 받았다. 정부 계약은 상업적 약속이라 동맹으로 인정하지만, 네 회사가 같은 계약을 받았으므로 등급의 차이를 만들지 않는다. [EV-alphabet-044]",
+        "구글은 2026-04-27 기존 국방부 계약을 수정해 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 정부 요청 시 AI 안전 설정과 필터 수정을 돕기로 했으며, 2026-05-01 국방부가 기밀 네트워크(IL6·IL7) AI 배치 협약을 맺었다고 발표한 8개사에 들었다. [EV-alphabet-045, EV-alphabet-046, EV-alphabet-048]"
+      ],
+      "evidence_down_after": [
+        "구글의 EU 검색 데이터 공유 명령 이의 제기(2026-09-30 보도), 출판사 애드테크 손해배상 청구 $3.2B 재판 회부(2026-10-01 보도), 영국 앱 장터 수수료 소송 £10억 초과(2026-10-04 보도), 폴란드 경쟁당국 조사(2026-10-05 보도)가 확정 근거로 들어와 있다. [EV-alphabet-005, EV-alphabet-008, EV-alphabet-049, EV-alphabet-050]",
+        "구글 직원 600명 이상이 2026-04-27 순다르 피차이 CEO 에게 기밀 계약을 거부하라는 서한을 전달했다. [EV-alphabet-047]",
+        "DOJ 와 38개 주가 낸 검색 독점 소송의 항소가 진행 중이다. [EV-alphabet-040, EV-alphabet-041]"
+      ]
+    },
+    {
+      "judgment_id": "alphabet.F7",
+      "evidence_after": [
+        "알파벳 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 '작음', 내 돈이 돌아옴 '예' 칸이라 -1 이다.",
+        "내 돈이 고객을 거쳐 내 매출로 돌아오는 구조는 맞다고 판정했다.",
+        "조달 의존 고객 비중은 작다고 판정했다.",
+        "지분 평가이익은 ⑦ 의 증거가 아니며 ⑥ 의 영업외 비중(0.51)에서 반영된다.",
+        "Anthropic 에서 오는 매출이 알파벳 최근 1년 매출 $445.9B(2026-06-30 기준)에 견주어 미미하다는 사실은 알파벳의 Anthropic 관련 매출 원문을 찾지 못해 확인하지 못했다.",
+        "SpaceX 가 Google Cloud 고객이 아니라는 사실은 원문을 찾지 못해 확인하지 못했다.",
+        "Anthropic 약정은 5년에 걸친 미래 매출이라 연 약 $40B 수준으로, 최근 1년 매출 $445.9B 에 견주어 조달 의존 고객 비중을 '작음'으로 둔다."
+      ],
+      "evidence_up_after": [
+        "2026년 2분기 지분 평가이익 $99.0B 의 상당 부분은 SpaceX 지분 약 6%(2026-06-30 보유분 $94.1B, 6월 상장 때 기업가치 $1.77T)에서 나왔다. [EV-alphabet-015, EV-alphabet-016, EV-alphabet-017]"
+      ],
+      "evidence_down_after": [
+        "알파벳이 Anthropic 에 투자한 돈이 TPU·Google Cloud 매출로 돌아온다. [EV-alphabet-018]",
+        "Anthropic 매출의 절반 가까이가 Amazon·Google 을 거친다는 Anthropic 상장 신고서(S-1) 보도(2026-09-30)는 원문이 공개되지 않아 판정에 넣지 않았다. [EV-alphabet-006]",
+        "Anthropic 은 Google Cloud 에 5년 동안 $200B 를 쓰기로 약정했고, 보도는 이 약정이 Google Cloud 매출 백로그의 40% 를 넘는다고 적었다. [EV-alphabet-042]"
+      ]
+    },
+    {
+      "judgment_id": "alphabet.F8",
+      "evidence_after": [
+        "알파벳 ⑧ 은 -1 이다.",
+        "어느 한 거래 상대가 끊겨도 회사가 멈추는 구조가 아니라고 판단해 -1 로 매겼다."
+      ],
+      "evidence_up_after": [
+        "칩(TPU)·모델(Gemini)·유통(검색·Android·YouTube)을 모든 계층에서 자체 보유하고 있어 외부 공급자나 특정 고객에 대한 의존이 최소 수준이다. [EV-alphabet-023, EV-alphabet-024, EV-alphabet-025, EV-alphabet-021, EV-alphabet-026]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "alphabet.F9",
+      "evidence_after": [
+        "흑자이나 추세 악화 칸이라 ⑨ 는 -1 에서 끝나고, 게이트 3(버티는 기간)과 게이트 4(미래 지출이 덮이는가)는 계산하지 않는다.",
+        "알파벳은 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 흑자다.",
+        "우리는 분기 잉여현금흐름의 마이너스 전환을 근거로 추세를 '악화'로 판정했다. 분기 수치는 추세를 설명하는 데만 쓴다."
+      ],
+      "evidence_up_after": [
+        "알파벳은 최근 1년(2026-06-30 기준) 영업이익 $147.6B, 매출 $445.9B 로 영업이익률이 33.1% 다. [EV-alphabet-027, EV-alphabet-028]",
+        "최근 1년 잉여현금흐름은 영업현금흐름 $185.7B 에서 설비투자 $132.4B 를 뺀 +$53.3B 다. [EV-alphabet-014]",
+        "2026-06-30 현금및현금성자산은 $55.9B 이고 단기 시장성 유가증권을 더하면 $242.5B, 순현금은 +$121.7B 다. [EV-alphabet-029, EV-alphabet-030]"
+      ],
+      "evidence_down_after": [
+        "설비투자가 빠르게 늘어 2026년 2분기 한 분기의 잉여현금흐름이 -$5.9B 로 마이너스가 됐다. [EV-alphabet-014]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "alphabet.F2",
+      "column": "up",
+      "line": "자체 칩은 7세대 Ironwood TPU 이고, 8세대 TPU 는 TSMC 2nm 공정으로 만든다.",
+      "searched": "10-K (FY2025), Q1 2026 CEO 발언 원고(8세대 TPU 발표), Tom's Hardware 2026-05 맞춤 ASIC 정리 기사, Google Gemini 블로그 RSS. Ironwood·8세대 TPU 는 확인했고 TSMC 2nm 제조 부분만 찾지 못해 판정 칸으로 옮겼다(줄은 고쳐 남김).",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alphabet.F3",
+      "column": "up",
+      "line": "2년 만에 격차를 회수했다는 사실은 누적 이동 거리이지 성장률의 변화가 아니라서 가속도 근거에서 뺐다.",
+      "searched": "원문 사실이 아니라 가속도 판정에서 무엇을 뺐는지 적은 판정 문장이라 받칠 원문이 없다. 문장 그대로 판정 칸으로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alphabet.F3",
+      "column": "down",
+      "line": "Gemini 월간 사용자 증가율은 7.5억 명에서 9.0억 명으로 갈 때 +20% 였다가 9.0억 명에서 9.5억 명으로 갈 때 +5.6% 로 꺾이고 있다.",
+      "searched": "2025년 4분기·2026년 1분기·2분기 실적 발표문(8-K Exhibit 99.1)과 CEO 발언 원고(blog.google). 7.5억 명(2026-02-04)과 9.5억 명(2026-07-22)은 확인했지만 2026년 1분기 발표문·발언 원고에는 Gemini 앱 월간 사용자 수가 없어 9.0억 명 값을 확인하지 못했다.",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "column": "up",
+      "line": "미 국방부 CDAO 프론티어 AI 계약(2025-07)은 Google·OpenAI·Anthropic·xAI 네 회사가 각각 상한 $200M 으로 받았다. 정부 계약은 상업적 약속이라 동맹으로 인정하지만, 네 회사가 같은 계약을 받았으므로 등급의 차이를 만들지 않는다.",
+      "searched": "CDAO 누리집(ai.mil, 접속 거부), Anthropic 발표문(2025-07-14, Anthropic 의 상한 $200M 수주만 적음), Google 블로그 RSS. Google 의 수주와 네 회사 동시 수주를 적은 원문을 찾지 못했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "column": "up",
+      "line": "구글은 2026-04-28 계약 갱신으로 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 2026년 5월 $200M 기밀 계약을 확정했으며, 정부 요청에 따라 안전 설정을 완화했다.",
+      "searched": "근거 후보(candidates.json)의 구글 관련 보도 제목, Google 블로그 RSS, 10-Q (2026-06-30). 해당 계약 갱신·기밀 계약·안전 설정 완화를 적은 원문을 찾지 못했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "column": "down",
+      "line": "구글의 기밀 네트워크 사용 계약 갱신·기밀 계약 확정·안전 설정 완화에 직원 600명 이상이 반발했다.",
+      "searched": "근거 후보(candidates.json)의 구글 관련 보도 제목(2026-09-30 Bloomberg 직원 회의론 기사는 Gemini 4 성능에 관한 것), Google 블로그 RSS. 직원 600명 반발 원문을 찾지 못했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "column": "down",
+      "line": "DOJ 와 38개 주가 낸 검색 독점 소송의 항소가 진행 중이다.",
+      "searched": "Simply Wall St 2026-09-20·2026-10-03 기사(미국 연방법원 반독점 소송 두 건 승소만 적음), 10-Q (2026-06-30), 근거 후보 제목. 검색 독점 소송 항소 진행을 적은 원문을 찾지 못했다.",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "column": "down",
+      "line": "구글의 EU 검색 데이터 공유 명령 이의 제기(2026-09-30 보도), 출판사 애드테크 손해배상 청구 $3.2B 재판 회부(2026-10-01 보도), 영국 앱 장터 수수료 소송 £1.2bn(2026-10-04 보도), 폴란드 경쟁당국 조사(2026-10-05 보도)가 확정 근거로 들어와 있다.",
+      "searched": "EV-alphabet-010 (Financial Times)·EV-alphabet-009 (Reuters) 원문 접속 불가, 다른 매체 사본은 Google 뉴스 링크 풀기가 막혀(429) 열지 못했다. EU·애드테크 두 항목은 원문으로 확인해 줄을 고쳐 남겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "alphabet.F7",
+      "column": "up",
+      "line": "Anthropic 에서 오는 매출은 알파벳 최근 1년 매출 $445.9B(2026-06-30 기준)에 견주면 미미하다.",
+      "searched": "10-Q (2026-06-30)·10-K (FY2025)·2026년 2분기 실적 발표문(Anthropic 관련 매출 미기재), Fortune 2026-07-22(Anthropic 의 5GW 이상 약정만 적음), Benzinga 2026-09-30. 최근 1년 매출 $445.9B 는 확인했지만 Anthropic 에서 오는 매출 규모를 적은 원문을 찾지 못했다.",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "alphabet.F7",
+      "column": "up",
+      "line": "2026년 2분기 지분 평가이익 $99B 의 상당 부분은 SpaceX 지분 약 6%($94.0B, 6월 상장 때 기업가치 $1.77T 로 평가)에서 나왔고, SpaceX 는 Google Cloud 고객이 아니다.",
+      "searched": "10-Q (2026-06-30) Note 3·MD&A, Fortune 2026-07-22, SpaceX 10-Q (2026-06-30) 관계사 거래·소송 항목. 평가이익·보유 주식·지분율은 확인했고 SpaceX 의 Google Cloud 이용 여부만 찾지 못해 판정 칸으로 옮겼다(줄은 고쳐 남김).",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "alphabet.F2",
+      "before": "자체 칩은 7세대 Ironwood TPU 이고, 8세대 TPU 는 TSMC 2nm 공정으로 만든다.",
+      "after": "자체 칩은 7세대 Ironwood TPU 이고, 그 뒤를 잇는 8세대 TPU 를 내놓았다.",
+      "why": "7세대 Ironwood 와 8세대 TPU 출시는 원문으로 확인했지만, 8세대 TPU 를 TSMC 2nm 공정으로 만든다는 원문은 찾지 못해 그 부분을 판정 칸으로 옮겼다.",
+      "evidence_id": "EV-alphabet-024, EV-alphabet-036"
+    },
+    {
+      "judgment_id": "alphabet.F2",
+      "before": "2026-09-30 발표된 최상위 모델 Gemini 4 는 독립 측정 결과가 아직 없어 이 판단에 반영하지 않았다.",
+      "after": "2026-09-30 발표된 최상위 모델 Gemini 4 Argon 은 Arena 텍스트 부문(2026-10-02)에서 잠정 1위에 올랐지만, 일부 보안 방어 기관에만 배포 중이고 표본이 적은 잠정 순위라 이 판단에 반영하지 않았다.",
+      "why": "Arena 텍스트 순위표(2026-10-02 갱신)에 gemini-4-argon-high 가 1525±9 점, 4,932표의 Preliminary 1위로 올라 있어 \"독립 측정 결과가 아직 없다\"는 원문과 다르다. Gemini 4 Argon 은 Fairwind Program 의 일부 보안 방어 기관에만 배포되고 있다.",
+      "evidence_id": "EV-alphabet-035, EV-alphabet-033"
+    },
+    {
+      "judgment_id": "alphabet.F2",
+      "before": "사용자 투표형 순위인 Arena 의 텍스트 부문에서 Gemini 의 최고 순위는 9위라 종합 성능에서 세대 격차를 만들었다고 보지 않았다.",
+      "after": "사용자 투표형 순위인 Arena 의 텍스트 부문(2026-10-02)에서 잠정 1위인 Gemini 4 Argon 을 빼면 Gemini 모델의 최고 순위는 3.8 Flash 의 8위라, 종합 성능에서 세대 격차를 만들었다고 보지 않았다.",
+      "why": "Arena 텍스트 순위표(2026-10-02 갱신)에서 Gemini 최고 순위는 9위가 아니다. gemini-4-argon-high 가 잠정 1위, gemini-3.8-flash-high 가 8위다.",
+      "evidence_id": "EV-alphabet-033"
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "before": "경쟁 모델사 Anthropic 이 5GW 규모로 TPU 를 쓰고 경쟁사 Meta 에도 TPU 를 판다.",
+      "after": "경쟁 모델사 Anthropic 이 Google Cloud 에서 5GW 이상의 컴퓨팅을 사기로 약정했고(TPU 최대 100만 개 약정 포함), 경쟁사 Meta 와는 TPU 도입을 협의했다.",
+      "why": "Anthropic 의 5GW 이상 컴퓨팅 약정은 확인되지만, Meta 에 대해서는 수십억 달러 규모 TPU 도입 \"협의\"(2026-02) 보도만 있고 판매가 확정됐다는 원문은 찾지 못했다.",
+      "evidence_id": "EV-alphabet-018, EV-alphabet-019"
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "before": "구글의 EU 검색 데이터 공유 명령 이의 제기(2026-09-30 보도), 출판사 애드테크 손해배상 청구 $3.2B 재판 회부(2026-10-01 보도), 영국 앱 장터 수수료 소송 £1.2bn(2026-10-04 보도), 폴란드 경쟁당국 조사(2026-10-05 보도)가 확정 근거로 들어와 있다.",
+      "after": "구글의 EU 검색 데이터 공유 명령 이의 제기(2026-09-30 보도)와 출판사 애드테크 손해배상 청구 $3.2B 재판 회부(2026-10-01 보도)가 확정 근거로 들어와 있다.",
+      "why": "영국 앱 장터 수수료 소송 £1.2bn(Financial Times)과 폴란드 경쟁당국 조사(Reuters) 원문은 열 수 없어 두 항목을 빼고 판정 칸으로 옮겼다.",
+      "evidence_id": "EV-alphabet-005, EV-alphabet-008"
+    },
+    {
+      "judgment_id": "alphabet.F7",
+      "before": "2026년 2분기 지분 평가이익 $99B 의 상당 부분은 SpaceX 지분 약 6%($94.0B, 6월 상장 때 기업가치 $1.77T 로 평가)에서 나왔고, SpaceX 는 Google Cloud 고객이 아니다.",
+      "after": "2026년 2분기 지분 평가이익 $99.0B 의 상당 부분은 SpaceX 지분 약 6%(2026-06-30 보유분 $94.1B, 6월 상장 때 기업가치 $1.77T)에서 나왔다.",
+      "why": "10-Q 는 평가이익을 $99.0B, 보유 SpaceX 주식을 $80.0B + $14.1B 로 적는다. SpaceX 가 Google Cloud 고객이 아니라는 원문은 찾지 못해 그 부분을 판정 칸으로 옮겼다.",
+      "evidence_id": "EV-alphabet-015, EV-alphabet-016, EV-alphabet-017"
+    },
+    {
+      "judgment_id": "alphabet.F9",
+      "before": "설비투자가 빠르게 늘어 2026년 2분기 한 분기의 잉여현금흐름이 처음으로 마이너스가 됐다.",
+      "after": "설비투자가 빠르게 늘어 2026년 2분기 한 분기의 잉여현금흐름이 -$5.9B 로 마이너스가 됐다.",
+      "why": "원문은 직전 세 분기(+$24.5B, +$24.6B, +$10.1B) 뒤 2026년 2분기 FCF -$5,855M 을 보여 줄 뿐 처음이라고 적지 않는다.",
+      "evidence_id": "EV-alphabet-014"
+    }
+  ]
+}

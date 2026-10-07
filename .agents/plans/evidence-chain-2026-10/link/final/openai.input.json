@@ -1,0 +1,264 @@
+{
+  "company_id": "openai",
+  "next_evidence_number": 11,
+  "judgments": [
+    {
+      "judgment_id": "openai.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 4,
+      "inputs": {},
+      "evidence": [
+        "OpenAI ①(네트워크 효과 — 가격을 올려도 남는가)은 4점이고, 점수를 정하는 가장 강한 채널은 소비자 채널(MAU·구독)이다.",
+        "우리는 가격 결정력이 실측되지 않은 점을 5점으로 가지 않는 이유로 본다.",
+        "ARR $40B 는 크기(위치)이며, 그 증가율은 ③ 에서 본다."
+      ],
+      "evidence_up": [
+        "주간 사용자 9억 명, ChatGPT 월간 사용자 10억 명으로 절대 사용자 수가 가장 많다."
+      ],
+      "evidence_down": [
+        "거래 채널에는 가격 결정력이 없다. OpenRouter 평균 단가 $0.74/M 는 Anthropic($6.36/M)의 약 8.6분의 1 이고, 토큰 점유율 9.8% 에 매출 점유율 8.0% 라 프리미엄이 붙지 않는다.",
+        "쓴 만큼 내고 언제든 갈아탈 수 있어 거래 채널의 락인은 약하다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 4,
+      "inputs": {},
+      "evidence": [
+        "OpenAI ②(신기술 게임체인저)는 세 경로(성능 도약·패러다임 적응·표준 선점) 중 둘을 통과해 4점이며, 이 점수는 승계한 점수다.",
+        "패러다임 적응 경로는 통과했고, 표준 선점 경로는 실패다.",
+        "5점은 성능 도약이 세대 격차 수준일 때 주는데, 종합 지능이 전작과 동점이라 그 수준으로 보지 않는다."
+      ],
+      "evidence_up": [
+        "성능 도약 경로의 근거는 ARC Prize 가 표준 하네스로 잰 GPT-6 Astra 의 ARC-AGI-3 62.7%(최고 기록, 인간 성능을 96% 레벨에서 상회)와 Exploit-Bench 100%, 환각률 92% 에서 51% 로의 하락이다. OpenAI 가 발표한 99.9% 는 자사 어댑터 하네스 점수라 쓰지 않는다.",
+        "FrontierMath Tier 4 v2 97.6%(Fable 5.1 87.8%)는 하네스가 표기되지 않아 모델 간 비교 근거로 쓰지 않는다. Arena T2I·Image Edit 1위(gpt-image-2)는 사용자 투표형 순위라 참고로만 쓴다.",
+        "GPT-5.5, 5.6, 6 으로 출시가 이어졌고, 광고 파일럿이 6주 만에 ARR $100M 를 냈다.",
+        "2026-09-29 OpenAI 는 GPT-6.1 Sol 을 출시했고, Sol 의 독립 측정은 아직 없다."
+      ],
+      "evidence_down": [
+        "Artificial Analysis Intelligence Index 에서 Astra 는 61 로 GPT-5.6 Sol 과 같고 Fable 5.1(max) 66 보다 낮으며, 코딩 축의 Coding Agent Index 는 67 로 1위 Fable 5.1 의 70 보다 낮다.",
+        "반대 증거도 있다. GDPval-AA v2 가 -80 Elo 퇴행했고, τ³-Banking·SciCode·AA-LCR 이 2~3포인트 퇴행했으며, 가격이 $4/$20 에서 $10/$50 으로 2.5배 올라 태스크당 75% 비싸졌다.",
+        "2026-09-28 WSJ 는 OpenAI 가 안전 문제로 상위 모델 출시를 접었다고 보도했다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "fail",
+        "revenue_model": "fail",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "OpenAI ③(Last Mover)은 통과점 1 로 2점이다. 후발 가속도만 통과(1)하고 모방 불가능성과 별도 수익모델은 실패(0)이며, 문이 닫힌 증거는 없다.",
+        "지표는 AI 귀속 매출의 성장률 변화이며, 매출의 절대 규모는 ① 에서 본다.",
+        "후발 가속도는 통과다.",
+        "모방 불가능성과 별도 수익모델은 실패로 판정했다."
+      ],
+      "evidence_up": [
+        "ARR 이 2~4월 $25B 에서 정체하다 7월 $40B 로 올라 월 증가율 +20% 로 다시 가속했다."
+      ],
+      "evidence_down": [
+        "우리는 OpenAI 가 경쟁사가 베낄 수 있는 방식을 먼저 연 선두 주자라 퍼스트무버 함정에 머물러 있다고 본다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "OpenAI ④(호황 이후 비전 — 곡괭이만 팔다 끝나는가)는 3점이다.",
+        "Jalapeño 출하량이나 독립 측정이 확인되면 다시 본다."
+      ],
+      "evidence_up": [
+        "실제로 배포된 사업은 소비자용 ChatGPT 와 기업·개발자용 API 이다.",
+        "첫 자체 추론 ASIC 'Jalapeño' 는 OpenAI 가 공개한 InferenceX 결과에서 GB300 대비 kW 당 최대 처리량이 DeepSeek R1 1.7배, Kimi K2.5 1.5배였지만, 이해당사자인 OpenAI 의 발표이고 출하 실적이나 독립 측정은 저장소에 없다.",
+        "Broadcom 과의 배치 계획은 2026년 0.1GW 미만, 2027년 1.3GW, 2028년 후속 세대 합산 5GW 이상이다. 출하·실제 배포만 세는 ④ 판정 지침에 따라 자체 칩은 출하가 확인될 때까지 점수 근거로 쓰지 않는다.",
+        "인프라로는 Stargate Abilene 에 GPU 20.2만 개(B200 10.1만, B300 10.1만, H100 환산 약 50.9만)가 있다."
+      ],
+      "evidence_down": [
+        "광고·디바이스로의 확장은 아직 진행 중이다.",
+        "Stargate Abilene 의 운영은 Oracle·SoftBank 에 의존한다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F5.impl48",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -3
+      },
+      "evidence": [
+        "OpenAI ⑤(아군 확보)는 3 + 동맹 등급 +1 + 적대 등급 -3 = 1점이다.",
+        "아군 확보는 받은 것이 아니라 맺은 것을 세므로, Amazon $50B·SoftBank·Microsoft 27%·NVIDIA 의 투자는 동맹 등급에서 뺀다. Oracle 과의 $300B 컴퓨트 계약도 OpenAI 가 사는 쪽의 조달이라 동맹이 아니며, Microsoft·Oracle·NVIDIA 는 OpenAI 가 못 떠나는 관계라 ⑧ 에서 센다.",
+        "국방부 계약은 4사가 같이 받아 차이를 만들지 않는다. 빠지는 것은 Oracle 의 $300B 계약이지 Oracle 전체가 아니어서, Oracle 의 Stargate $7B 지분은 동맹으로 남는다.",
+        "동맹 등급 +2 는 서지 않고, 0 도 아니므로 동맹 등급은 +1 이다.",
+        "적대 등급은 -3(다발형 — 구조형 적대가 복수 전선에서 동시에 진행되고 최대 파트너와도 긴장)이다.",
+        "적대 등급이 이미 가장 낮은 단계라 등급은 그대로다."
+      ],
+      "evidence_up": [
+        "남는 동맹은 Stargate LLC 공동 지분(OpenAI 40%·Oracle $7B·SoftBank 40%·MGX), Broadcom 과의 Jalapeño 공동개발, 미 국방부 CDAO 계약이다.",
+        "Broadcom 공동개발과 국방부 계약이 독립 상업 동맹으로 남는다.",
+        "AWS Bedrock 입점은 긍정 변수다."
+      ],
+      "evidence_down": [
+        "지분이 걸린 동맹은 Stargate 하나뿐이고, 경쟁사를 OpenAI 의 매대에 올린 사실도 없다.",
+        "Microsoft 와는 Azure 독점이 끝나며 긴장이 생겼고, Apple 과 상호 소송 중이며, 머스크의 반독점 소송이 계류 중이고, NYT 등이 낸 MDL No. 3143 저작권 집단소송에는 6/24 지역신문 약 400곳이 추가로 제소하고 7/10 Apple 이 제소했다.",
+        "2026-10-05 Reuters 는 OpenAI 가 'Astra' 모델 이름으로 상표권 침해 소송을 당했다고, 2026-10-04 Financial Times 는 에이전트 해킹 관련 법적 위험이 여러 관할에서 쌓인다고 보도했다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F6",
+      "factor": "F6",
+      "kind": "score",
+      "score": -4,
+      "inputs": {
+        "private": true
+      },
+      "evidence": [
+        "OpenAI 는 비상장이라 ⑥(가격 — 미래 성장이 얼마나 선반영됐나)을 프로그램이 밸류 ÷ 최근 1년 보정 매출로 계산하며, 이 판단 항목은 계산에 쓰이지 않는다.",
+        "계산에 들어가는 밸류는 post-money $852B 이고, ARR 은 7월 기준 $40B 런레이트다.",
+        "2026년 GAAP 손실이 약 $60B 로 전망되고 흑자 전환 목표가 2030년이라 이익 배수는 만들 수 없다.",
+        "한 칸 올리는 보정의 두 조건은 모두 서지 않는다. ARR 성장률(직전 $25B 대비 60%)은 두 값이 런레이트라 인정되지 않는다.",
+        "기준일 현재 OpenAI 는 상장하지 않았다."
+      ],
+      "evidence_up": [
+        "밸류 ÷ ARR 은 21.3배이며 근거로만 남긴다."
+      ],
+      "evidence_down": [
+        "분모를 최근 1년 보정 매출로 맞춘 배수는 약 39배다.",
+        "자본효율(ARR $40B ÷ 누적 조달 약 $185B = 0.22)은 기준 0.5 에 못 미친다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F7",
+      "factor": "F7",
+      "kind": "score",
+      "score": -1,
+      "inputs": {},
+      "evidence": [
+        "OpenAI ⑦(순환금융 — 내 매출을 내는 고객이 그 돈을 어디서 구했나)은 -1점이며, 이 점수는 승계한 점수다.",
+        "부푼 밸류($852B)는 ⑥ 에서, 공급자가 곧 투자자라 못 떠나는 것은 ⑧ 에서, 조달 없이 못 버티는 것은 ⑨ 에서 센다.",
+        "판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)의 가로축은 비중이 작은 쪽으로 본다.",
+        "세로축의 후보 근거는 OpenAI Startup Fund 가 API 고객에 투자하는 구조다. 이를 환류로 보면 비중이 작고 돈이 돌아오는 칸이라 -1 이지만, 이 입력은 외부 사실로 검증되지 않았고 판단에 기록되지도 않았다.",
+        "신용 교차검증으로는 S&P 가 7/9 Oracle 을 BBB 에서 BBB- 로 내리며 OpenAI 를 취약점으로 명시했다. 신용 지표는 입력이 아니라 교차검증에만 쓴다."
+      ],
+      "evidence_up": [
+        "OpenAI 의 매출은 일반 사용자와 기업이 낸 돈이고, 공급자와 투자자 사이를 도는 자금은 매출이 아니라 비용 쪽으로 나간다."
+      ],
+      "evidence_down": [
+        "⑦ 에 남는 것은 AI 스타트업 고객의 VC 조달 노출뿐이다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -4,
+      "inputs": {},
+      "evidence": [
+        "OpenAI ⑧(비대칭 의존 — 끊기면 회사가 멈추는가)은 -4점이며, 이 점수는 승계한 점수다."
+      ],
+      "evidence_up": [],
+      "evidence_down": [
+        "총 컴퓨트 약정은 약 $1.4T 로, 7월 런레이트 매출 $40B 의 약 35배다. 재가속을 반영해도 매출에 비해 약정이 지나치게 크다.",
+        "그 가운데 Oracle $300B 이상과 AWS $38B 를 더한 $338B 이상은 미개시 확정 약정으로 ⑨ 게이트 4 의 대상이다. 나머지 약 $1.06T 는 NVIDIA·AMD·Broadcom·Stargate 와의 발표분이고, 확정 약정인지는 나뉘어 있지 않다.",
+        "Oracle 과의 $300B 단일 계약에 약정이 몰려 있고, Microsoft·Oracle·NVIDIA 는 공급자이자 투자자라 OpenAI 가 떠나기 어려운 관계다."
+      ]
+    },
+    {
+      "judgment_id": "openai.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "unknown",
+        "bep_retreat": "yes",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "no",
+        "operating_result_reviewed": "loss",
+        "fcf_not_disclosed_reason": "reason:openai.fcf_not_disclosed"
+      },
+      "evidence": [
+        "OpenAI ⑨(적자 깊이)는 프로그램이 비상장 경로로 계산해 -2점이다.",
+        "게이트 1(본업이 버는가 — 최근 1년 영업이익)은 판정 보류다. 비상장이라 최근 1년 영업손익이 공시되지 않았고, 이때는 비상장 경로가 흑자 전환 목표 후퇴 조항보다 앞선다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 비상장 잉여현금흐름 미공시 조항으로 -2 를 받고, 게이트 3(버티는 기간)은 소진율이 없어 건너뛴다.",
+        "게이트 4(약정 커버리지 — 계약된 수입이 미개시 확정 약정을 덮는가)는 계산하지 않는다. 컴퓨트 약정 $338B 이상(Oracle $300B 이상/5년, AWS $38B/7년)과 계약 수입의 기간·범위가 달라 견줄 수 없고, 잉여현금흐름 미공시로 게이트 2 에서 이미 깎았으므로 추가 감점도 없다."
+      ],
+      "evidence_up": [],
+      "evidence_down": [
+        "흑자 전환 목표가 2030년으로 후퇴했다는 기록은 판정 입력에 그대로 남아 있지만, 2026년 적자 $14~33B 와 GAAP 손실 약 $60B 는 전망이라 손실을 단정하는 근거로 쓰지 않는다.",
+        "연 환산 약정 약 $60B 가 ARR $40B 보다 크다는 사실은 남지만, ARR 이나 연 환산 약정은 커버리지가 아니라 점수에 넣지 않는다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-openai-001",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "title": "Exclusive | OpenAI Scraps Release of New AI Model Over Safety Concerns - WSJ",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNcC0xNDExdTJodUowZi1yeWdFN3M5RlpvY3FvZ1lQeHltWGVkeG01ZTVlaHJ0TldqVVRhekJhWl9ZRTRLNHRqX1NQQVFKMW5NRnhBTmlUNWNpX1FBX3Myc3VlaGIxbFZTZDZYRlYwTGNVLTUtNnJScGJWcm5rX0hMMmNadFFmZw?oc=5",
+      "source_id": "SRC-NEWS-openai-20260928-55a96228",
+      "published_at_utc": "2026-09-28T23:07:00Z"
+    },
+    {
+      "evidence_id": "EV-openai-002",
+      "factors": [
+        "F6"
+      ],
+      "kind": "news",
+      "title": "Scoop: OpenAI's annual recurring revenue nears $70B - axios.com",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQT2xYcWJPOUFTTWFUWmpMSFN1UzdQc3ZoWmFFUEpsTFJFcjZBbkdqemNrN18ydnpIQnJyR09xMW9Ba2ZHWkFwRUMyMlZLcFkxQ1dDdl9mb1MxZnYwcExXcGNFTFQ3UHBTbERwM2pVYzdwcnZ6MnNSM3NHbE5VODFfaXNhX3dsQjF3?oc=5",
+      "source_id": "SRC-NEWS-openai-20260929-6afb4340",
+      "published_at_utc": "2026-09-29T14:15:48Z"
+    },
+    {
+      "evidence_id": "EV-openai-003",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "title": "Introducing GPT-6.1 Sol - OpenAI",
+      "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE1fNFpCaXpwdjNfd3pjTWZ6X1ljNS03RTNaS2k2UE5LZ1ZnbHJVVWstREg4UWdKWjg3Y3FpT1JJTS1OOVA2SjR5WXBoZ3ZXX0ZTek9td3p3SHVsOHRSM0E?oc=5",
+      "source_id": "SRC-NEWS-openai-20260929-33642c17",
+      "published_at_utc": "2026-09-29T17:10:11Z"
+    },
+    {
+      "evidence_id": "EV-openai-009",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "OpenAI sued for trademark infringement over 'Astra' AI model - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPcW56VDk1TEhMTEdHUmg1RlB0cVIza055bEQ1OWJsLTk3OEFySUJNTzhSQ0Q0bTloYnBGN2VXaTBQUmxnNEd0UUtuc0NEeDR1UjZjWERWeEZURlpNOHVfQUo3TnBKaVF6ekJ4SDktZEdUQW5XUThabHMwdXVlRWl2ZHd0OVNHdDF2UmlRZ2ZWVjREeXhmZ3l3RXZUV3Z2MnNZQlFrOEdaUllrdkNGWmNv?oc=5",
+      "source_id": "SRC-NEWS-openai-20261005-d4921a7a",
+      "published_at_utc": "2026-10-05T17:09:34Z"
+    },
+    {
+      "evidence_id": "EV-openai-010",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Legal risks pile up for Altman as OpenAI uncovers dozens of hacks - Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNbTIyS2l3QWYtSTZxVzB4Znp2U2ZtQzY3NHl5M0VHa3FVMU1PWTR4eWdmd0VwNnNIRTVlS0gyaU9WTVBDZ2RCRGU5dXFKWmc2bWdNWlpfazdrUHpBRGMyRmN5dTc4Qzh6OGh5cUpuZkNGb1BNZ0lxVW5FMmpwLUkycDNPcW8?oc=5",
+      "source_id": "SRC-NEWS-openai-20261004-d9744080",
+      "published_at_utc": "2026-10-04T11:00:08Z"
+    }
+  ]
+}

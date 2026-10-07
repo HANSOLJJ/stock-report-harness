@@ -1,0 +1,264 @@
+{
+  "company_id": "palantir",
+  "next_evidence_number": 12,
+  "judgments": [
+    {
+      "judgment_id": "palantir.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 2,
+      "inputs": {},
+      "evidence": [
+        "Palantir ① 네트워크 효과(가격을 올려도 남는가)는 업무 채널(조직 워크플로에 박혔는가)로 재며 2점이다.",
+        "고객이 실제로 떠나는 사례는 전환비용 락인이 약하다는 이 판정과 같은 방향이다."
+      ],
+      "evidence_up": [
+        "정부·기업 계약의 전환비용은 실재한다."
+      ],
+      "evidence_down": [
+        "그 전환비용은 사용자가 늘수록 가치가 불어나는 네트워크 효과는 아니다.",
+        "전환비용에만 기대는 해자는 프레임워크가 말하는 가짜 해자에 가깝고, AI 가 데이터 이전을 자동화하면 그마저 약해진다고 판정했다.",
+        "실제로 영국 경찰 다섯 곳이 2년 만에 Palantir 프로젝트를 끝냈고(2026-09-21 FT), NHS 병원 트러스트 20곳 넘게 Palantir 대기자 명단 도구를 그만뒀다(2026-10-03 FT 분석)."
+      ]
+    },
+    {
+      "judgment_id": "palantir.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "Palantir ② 신기술 게임체인저(판을 바꿀 기술을 먼저 냈는가)는 세 경로 가운데 하나를 통과로 보아 3점이다.",
+        "통과한 경로가 하나이면 3점이다."
+      ],
+      "evidence_up": [
+        "AIP 온톨로지가 차별적이고 Nvidia Nemotron 모델을 소버린 환경에서 구동하는 제휴가 있어, 남이 바꾼 AI 판에 빨리 올라탄 패러다임 적응 경로를 통과로 읽었다(추론: 판단이 경로 이름을 따로 적지 않았다)."
+      ],
+      "evidence_down": [
+        "산업 인터페이스를 정의하는 표준 선점은 하지 못했다."
+      ]
+    },
+    {
+      "judgment_id": "palantir.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "partial",
+        "revenue_model": "partial",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "Palantir ③ Last Mover(선두가 베끼면 선두 자신의 수익모델이 무너지는 방식으로 들어왔는가)는 통과점 2 로 3점이다.",
+        "모방 불가능성은 부분이다.",
+        "후발 가속도는 통과다.",
+        "별도 수익모델은 부분으로 판정돼 있으나, 이 판단은 부분으로 본 사유를 따로 적지 않아 다음 재검토에서 사유를 채울 대상이다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)는 없다.",
+        "통과 1점에 부분 0.5점 두 개를 더한 통과점 2 는 사다리에서 3점이다."
+      ],
+      "evidence_up": [
+        "온톨로지는 모방 난이도가 높은 자산이다.",
+        "2026-06-30 분기 매출이 $1.94B 로 전년 대비 92.8% 늘어, 같은 날까지 최근 1년 매출 성장률 78.9%($6.16B, 그 전 1년 $3.44B)보다 높고 미국 상업 매출도 149% 늘었다($764M)."
+      ],
+      "evidence_down": [
+        "AI 가 데이터 이전을 자동화하면 온톨로지 위에 선 전환비용 해자가 약해질 수 있다."
+      ]
+    },
+    {
+      "judgment_id": "palantir.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "Palantir ④ 호황 이후 비전(곡괭이만 팔다 끝나는가, 광부가 되는가)은 3점이다."
+      ],
+      "evidence_up": [
+        "미국 상업 매출이 149% 늘어 $764M 가 되면서, 정부 의존에서 벗어나는 다각화가 실측으로 진행 중이다."
+      ],
+      "evidence_down": [
+        "사업은 소프트웨어 계층에 머물고, 인프라나 모델 계층으로 넓힌 출하·배포는 없다."
+      ]
+    },
+    {
+      "judgment_id": "palantir.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -2
+      },
+      "evidence": [
+        "Palantir ⑤ 아군 확보는 3 + 동맹 등급(+1) + 적대 등급(−2) 로 2점이다.",
+        "동맹 등급 +1 은 상업 동맹에서 나온다.",
+        "동맹 등급을 +2 로 보지 않았다.",
+        "적대 등급 −2(구조형)는 사업의 정당성 자체가 시민사회·의회의 표적이 됐다는 판정이다.",
+        "다발형(−3)은 구조형 적대가 여러 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있어야 해서, 적대 등급은 구조형에 머문다고 판정했다."
+      ],
+      "evidence_up": [
+        "Nvidia·SAP·Accenture 와 상업 동맹을 맺고 있고, 2026-10-01 발표한 Armada 와의 소버린 AI 인프라 공동 제공도 같은 성격의 상업 동맹이다.",
+        "구조형 적대로 인한 실제 이탈은 영국에서만 확인되고, 최대 파트너인 미 정부와의 긴장은 보이지 않는다."
+      ],
+      "evidence_down": [
+        "지분이 걸린 동맹이 복수이거나 경쟁사를 자기 플랫폼에 편입한 사실은 없다.",
+        "미 이민세관단속국(ICE)의 ImmigrationOS 계약($30M)과 국무부 감시 자문 때문에 사업의 정당성 자체가 시민사회·의회의 표적이 됐다.",
+        "2026-09-28 EU 노조·인권단체의 정부 계약 철회 요구, 2026-10-01 영국 NHS 연합 데이터 플랫폼에 대한 44,000건 넘는 법적 이의 제기와 샌프란시스코 간호사들의 ICE 연계 항의, 2026-10-02 ICE 가 시위 참가자 사진을 Palantir 데이터베이스에 넣었다는 WIRED 보도가 이 구조형 적대를 뒷받침한다."
+      ]
+    },
+    {
+      "judgment_id": "palantir.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "no"
+      },
+      "evidence": [
+        "Palantir ⑦ 순환금융(내 매출을 내는 고객이 그 돈을 어디서 구했는가)은 0점이다.",
+        "투자·부채 조달에 기대 대금을 내는 고객의 비중은 작다고 판정했다.",
+        "세로축은 '내 돈이 돌아오지 않음' 이다.",
+        "⑦ 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 '작음·돌아오지 않음' 칸은 0점이다."
+      ],
+      "evidence_up": [
+        "Palantir 매출은 정부와 기업 고객의 소프트웨어 계약에서 나온다.",
+        "Palantir 가 고객에게 넣은 돈이 고객 주머니를 거쳐 매출로 되돌아오는 구조는 확인되지 않는다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "palantir.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -3,
+      "inputs": {},
+      "evidence": [
+        "Palantir ⑧ 비대칭 의존(끊기면 매출이 주는가, 회사가 멈추는가)은 −3 이다.",
+        "같은 정부 관계를 ⑤ 에서는 적대의 성격으로, ⑧ 에서는 끊기면 매출이 사라지는 의존으로 한 번씩만 센다."
+      ],
+      "evidence_up": [],
+      "evidence_down": [
+        "미 연방 정부 계약이 연 $0.9B 를 넘는 핵심 매출원이라, 정권이 바뀌어 정책이 달라지면 매출이 직접 타격을 받는다고 판정했다.",
+        "ICE 계약 논란이 상업 고객의 이탈로 번질 수 있다는 점도 이 의존을 키운다."
+      ]
+    },
+    {
+      "judgment_id": "palantir.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "stable",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "unknown",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "Palantir ⑨ 적자 깊이는 게이트 2 에서 끝나 0점이다.",
+        "게이트 1(본업이 버는가)은 통과다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 흑자다.",
+        "잉여현금흐름 추세는 안정으로 판정했고, 흑자이면서 추세가 안정이면 게이트 2 에서 0점으로 끝난다."
+      ],
+      "evidence_up": [
+        "2025-07-01~2026-06-30 최근 1년 영업이익 $2.63B 를 매출 $6.16B 로 나눈 영업이익률이 42.8% 다.",
+        "2025-07-01~2026-06-30 영업현금흐름 $3.40B 에서 설비투자 $0.04B 를 뺀 잉여현금흐름이 +$3.36B 다."
+      ],
+      "evidence_down": []
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-palantir-004",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "title": "Five UK police forces end Palantir project after two years - Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOVkE3SDI3N2ROT0xEVkJlcUI3MFJjTHFHZ1ZtcGN5M2dBNk1LNFptaHYxSnBpRGQzODhMM2lCLTQzVEdNRUFrZlZneE5IRVgyVHpTcFUwdlBCd2ZmTEktamp1U1hQSUNqVF91T2h1bmhLTUVBWTZiWGtPSkdZcUgzUGVqUHE?oc=5",
+      "source_id": "SRC-NEWS-palantir-20260921-b2794839",
+      "published_at_utc": "2026-09-21T07:00:00Z"
+    },
+    {
+      "evidence_id": "EV-palantir-005",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "'Not Just Another Tech Company': Unions, Rights Groups Across EU Demand Governments Ditch Palantir - Common Dreams",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1HdDhKeVVDblBLQ2JCWEoyTWZ3TXRXU21DR0NKQ19pSDZURXBmU0FuODhlWk5wQ0hyNWM3ZEhfRThpNHBSaUQtblU5dy14b19uaEhibHd1UVEyQ0NMN0YtNnpTVkZ2VDdEVzNPNTJBcWVFVDhxNGc?oc=5",
+      "source_id": "SRC-NEWS-palantir-20260928-5212f73d",
+      "published_at_utc": "2026-09-28T16:55:35Z"
+    },
+    {
+      "evidence_id": "EV-palantir-006",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "San Francisco nurses protest ICE connection with Palantir - CBS News",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOMXVKVVdGd0RqMkk1c0pSaDJ4a0FVTkdjVDN6VW11elZ1UnhXOGd6M0hzSWNYa3RtVXFyOGVIQzlGV3Fhb1pBbzljbk41Y3JPZEdaejcyRmlaNjhwUUVlTlNXeU8xMFVtQm9ZR0ZfR1RTeXRqT3hnNkdRNENWaGVXZ1JidHdGbFNZNHJyNTJzb3lCNkp2TWJjT1BDOE1zdFVOTzlz?oc=5",
+      "source_id": "SRC-NEWS-palantir-20261001-a9fde893",
+      "published_at_utc": "2026-10-01T01:24:00Z"
+    },
+    {
+      "evidence_id": "EV-palantir-007",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "More than 44,000 file legal objections to Palantir NHS platform handling their data - The Guardian",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNc2lpa0pURkdTLWNUZ25IZEthd1JacVhRN3RzRVF4S0dDSUttNmlDNXJVUVBGRmZ3cU9LZjg0Ym54Qi1hZGZnTnREWUY2QTVudDBBWEN1N3FRME4tN3IyRWNsQTc4X3Y4OGFSb21wQ0x6WXdWZU1jdjk2NUgzazNFSHhGNDBFdzJ0TVNmVk5XN2ltWk5qNGFlMXFIMWhnTGU1YmF0Q0Rn?oc=5",
+      "source_id": "SRC-NEWS-palantir-20261001-5df9629b",
+      "published_at_utc": "2026-10-01T01:30:00Z"
+    },
+    {
+      "evidence_id": "EV-palantir-008",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Palantir and Armada Partner to Accelerate Sovereign AI Infrastructure - Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNWVdzVkg3cXYxZ1dOdExaRnFZM005MURIcUo2ZC1Tek1sUkdoZ2N6YmktYkVLR3V5REtSdGpTdF9hLUFaYjFOZGotb1JScG5Nb0ZaXzFPdHE3TDRNRFByMlRYTHhEbHdJZTVwRmp2MVBsNzRtV3Z0YklaQTkzQktIMk4yNWFfVC1EY1phak1oWkdMSWw4SzhBYkNYNWJhOTVWc2dkamM0VS1LY2tv?oc=5",
+      "source_id": "SRC-NEWS-palantir-20261001-4db0b61a",
+      "published_at_utc": "2026-10-01T22:00:00Z"
+    },
+    {
+      "evidence_id": "EV-palantir-009",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Andy Burnham searches for UK alternative to Palantir - Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPMnVpV1ltT0k5MHB4Y085LUlFSlpJZkVsYVdMdzU3bWJKVnc2Z25RZXBpVXd3aDhfOUhtZGtfUDdOOFhVSGl6OThfbDhFQWpuSExLcklOMjY5OHVvRlVEQzg1SG9JWVZJbnpkaUZYdE5pdXFhWkdTc0ROcWVFMnVNY0x5Tlo?oc=5",
+      "source_id": "SRC-NEWS-palantir-20261001-7fa03bc3",
+      "published_at_utc": "2026-10-01T20:00:09Z"
+    },
+    {
+      "evidence_id": "EV-palantir-010",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "ICE Has Been Dumping Protester Photos Into a Palantir Database - WIRED",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNaXVNdTcwWFE1bnZXdmdpRFYxazJRMDNna3hqZ2d0XzRCczdfdlQ0b0tUSEdURVp6NlJBT3d1SG5QYnVsbnFMbjZNTl9HVTFIZDZ0WTdCbWpJaklFS2dkeHROckZ5Rl9HV0lrbGtlOFVyOGFZQzl1ZS1QMmszcE1MbEY0UjY5cFhZUlY2RS05UEF6RUtVYVE?oc=5",
+      "source_id": "SRC-NEWS-palantir-20261002-19c86fbf",
+      "published_at_utc": "2026-10-02T19:52:00Z"
+    },
+    {
+      "evidence_id": "EV-palantir-011",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "title": "Over 20 NHS trusts have ditched Palantir waiting-list tools, analysis shows - Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNM2FSZ3ZpRDhGRTdGTnJ2dVVidHNCUjVJOVkyME0zbW5LVHpTLWlhcEE4by1OekNNQ0dPN1h5aWZsekROWmM5Um5pbHRySlp4N0tSNHBlay1HMVlxTU5qZnJ4VXJuMER2eFVIZTg5ZGJUSUhIcm1acE13ZmYxcG9JR0t5bXA?oc=5",
+      "source_id": "SRC-NEWS-palantir-20261003-5c6f844c",
+      "published_at_utc": "2026-10-03T04:04:37Z"
+    }
+  ]
+}

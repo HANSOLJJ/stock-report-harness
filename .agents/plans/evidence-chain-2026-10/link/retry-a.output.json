@@ -1,0 +1,1375 @@
+{
+  "sources": [
+    {
+      "source_id": "SRC-WEB2-alibaba-001",
+      "title": "Alipay App Launches Major AI Agent Upgrade to Enhance Everyday Services for One Billion Users",
+      "publisher": "Ant Group",
+      "url": "https://www.antgroup.com/en/news-media/press-releases/1781578800000",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-06-16T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alibaba-002",
+      "title": "QM报告：淘宝APP月活9.57亿领先京东美团，抖省省日活已近1600万",
+      "publisher": "新浪财经(鞭牛士)",
+      "url": "https://finance.sina.com.cn/roll/2026-05-19/doc-inhykxfr2337064.shtml",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-05-19T02:40:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alibaba-003",
+      "title": "Alibaba Will Turn Around Its Loss-Making Businesses Faster Than We Previously Expected",
+      "publisher": "Morningstar",
+      "url": "https://www.morningstar.com/company-reports/1266281-alibaba-will-turn-around-its-loss-making-businesses-faster-than-we-previously-expected",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2025-02-21T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alibaba-004",
+      "title": "Qwen3.8 Flash on Novita AI: Multimodal API From $0.15/M Input",
+      "publisher": "Novita AI",
+      "url": "https://blogs.novita.ai/qwen3-8-flash-on-novita-ai-launch-pricing/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-08-31T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-001",
+      "title": "Google I/O 2026: Sundar Pichai's opening keynote",
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/innovation-and-ai/sundar-pichai-io-2026/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-05-19T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-002",
+      "title": "Q4 earnings call: Remarks from our CEO",
+      "publisher": "Google (The Keyword)",
+      "url": "https://blog.google/company-news/inside-google/message-ceo/alphabet-earnings-q4-2025/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-02-04T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-003",
+      "title": "US Justice Dept, States Appeal Google Search Remedies",
+      "publisher": "Silicon UK",
+      "url": "https://www.silicon.co.uk/e-regulation/legal/doj-states-google-appeal-628612",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-02-04T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-004",
+      "title": "DOJ urges DC Circuit to beef up remedies in Google monopoly ruling",
+      "publisher": "Courthouse News Service",
+      "url": "https://www.courthousenews.com/doj-urges-dc-circuit-to-beef-up-remedies-in-google-monopoly-ruling/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-07-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-005",
+      "title": "Anthropic commits to spending $200 billion on Google's cloud and chips, the Information reports",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/anthropic-commits-spending-200-billion-googles-cloud-chips-information-reports-2026-05-05/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-05-05T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-006",
+      "title": "Inside Google's TPU V8 strategy, delivering two chips for two crucial tasks at incredible scale",
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/google-splits-its-tpu-into-two-chips-for-the-first-time-with-training-and-inference-variants",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-04-27T17:12:59Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-007",
+      "title": "CDAO Announces Partnerships with Frontier AI Companies to Address National Security Mission Areas",
+      "publisher": "U.S. Department of War",
+      "url": "https://www.war.gov/News/Releases/Release/Article/4242822/cdao-announces-partnerships-with-frontier-ai-companies-to-address-national-secu/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2025-07-14T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-008",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program",
+      "publisher": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/software/security-software/google-signs-classified-pentagon-ai-deal-but-exits-100-million-drone-swarm-program",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-04-29T14:48:21Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-009",
+      "title": "The War Department Announces Agreements with Leading AI Companies to Deploy Capabilities on Classified Networks",
+      "publisher": "U.S. Department of War",
+      "url": "https://www.war.gov/News/Releases/Release/Article/4475177/classified-networks-ai-agreements/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-05-01T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-010",
+      "title": "Google faces £1 billion legal claim from UK consumers over Play Store fees",
+      "publisher": "The Independent",
+      "url": "https://www.independent.co.uk/tech/google-play-store-uk-trial-b3061106.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-04T23:01:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-alphabet-011",
+      "title": "Polish regulator suspects Google abused dominant position in publisher payment talks",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/legal/litigation/polish-regulator-suspects-google-abused-dominant-position-publisher-payment-2026-10-05/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-05T16:52:12Z"
+    },
+    {
+      "source_id": "SRC-WEB2-amazon-001",
+      "title": "Amazon Bedrock Model Catalog 2026",
+      "publisher": "hidekazu-konishi.com",
+      "url": "https://hidekazu-konishi.com/entry/amazon_bedrock_model_catalog_2026.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-10-03T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-amazon-002",
+      "title": "Text Arena Leaderboard (Overall, 2026-10-02)",
+      "publisher": "Arena (arena.ai)",
+      "url": "https://arena.ai/leaderboard/text",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-10-02T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-anthropic-001",
+      "title": "Anthropic says annualized revenue climbed to $65 billion in July",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/08/17/anthropic-says-annualized-revenue-climbed-to-65-billion-in-july.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-08-17T20:33:35Z"
+    },
+    {
+      "source_id": "SRC-WEB2-anthropic-002",
+      "title": "Enterprises Drive Anthropic Run-Rate Revenue to $19 Billion",
+      "publisher": "PYMNTS",
+      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/enterprises-drive-anthropic-run-rate-revenue-to-19-billion/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-03-04T20:23:42Z"
+    },
+    {
+      "source_id": "SRC-WEB2-anthropic-003",
+      "title": "Anthropic commits to spending $200 billion on Google's cloud and chips, the Information reports",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/business/anthropic-commits-spending-200-billion-googles-cloud-chips-information-reports-2026-05-05/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-05-05T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-anthropic-004",
+      "title": "US appeals court upholds Pentagon's blacklisting of Anthropic",
+      "publisher": "Reuters",
+      "url": "https://www.reuters.com/world/us-appeals-court-declines-block-pentagons-blacklisting-anthropic-2026-09-25/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-25T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-anthropic-005",
+      "title": "Anthropic revenue set to more than double to $10.9 billion in Q2 - WSJ (Investing.com)",
+      "publisher": "Yahoo Finance (Investing.com)",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/anthropic-revenue-set-more-double-212649753.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-05-20T21:26:49Z"
+    },
+    {
+      "source_id": "SRC-WEB2-anthropic-006",
+      "title": "OpenAI and Anthropic Get 80% of Revenue From 1% of Customers",
+      "publisher": "PYMNTS",
+      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/openai-and-anthropic-get-80percent-of-revenue-from-1percent-of-customers/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-04T17:05:20Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-alibaba-055",
+      "company_id": "alibaba",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Total Alibaba China E-commerce Group 490,101 508,380 554,217 80,345 Alibaba International Digital Commerce Group: International commerce retail 81,654 108,465 117,731 17,067 International commerce wholesale 20,944 23,835 26,439 3,833 Total Alibaba International Digital Commerce Group 102,598 132,300 144,170 20,900 Cloud Intelligence Group 106,374 118,028 158,132 22,924 All others (4) 317,539 338,347 254,367 36,876 Unallocated 1,297 1,924 2,340 339 Inter-segment elimination (76,741) (102,632) (89,556) (12,983) Consolidated revenue 941,168 996,347 1,023,670 148,401",
+      "locator": "20-F Item 5 Operating and Financial Review — Components of Results of Operations — Revenue, 부문별 매출 표(부문 간 제거 전, 단위 RMB 백만; 열은 FY2024·FY2025·FY2026 RMB·FY2026 US$ 오름차순)",
+      "relevance": "FY2026 연결 매출이 중국 커머스·국제 커머스·클라우드·기타 부문에서 나온다는 부문 매출 표로, ⑦ 의 매출 출처(고객 구성)를 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-056",
+      "company_id": "alibaba",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "We generate revenue from merchants by leveraging our consumer insights and data technologies which enable brands and merchants to attract, engage and retain consumers, complete transactions, improve their branding, enhance operating efficiency and offer various services.",
+      "locator": "20-F Item 5 'Our Monetization Model' — Alibaba China E-commerce Group — E-Commerce 첫 문장",
+      "relevance": "중국 커머스 매출이 판매자(브랜드·상인)에게서 나온다는 수익 모델 서술로, ⑦ 의 고객 구성을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-057",
+      "company_id": "alibaba",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026, 2026-03-31)",
+      "excerpt": "Our Cloud businesses primarily generate revenue from the provision of public and non-public cloud services to our domestic and international enterprise customers",
+      "locator": "20-F Item 5 'Our Monetization Model' — Cloud Intelligence Group 첫 문장",
+      "relevance": "클라우드 매출이 국내외 기업 고객에게서 나온다는 수익 모델 서술로, ⑦ 의 고객 구성을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-058",
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alibaba-001",
+      "published_at_utc": "2026-06-16T00:00:00Z",
+      "title": "Alipay App Launches Major AI Agent Upgrade to Enhance Everyday Services for One Billion Users (Ant Group)",
+      "excerpt": "As the world becomes increasingly digital, Alipay has evolved from a trusted e-wallet into an all-in-one digital platform for daily services, connecting more than one billion consumers to over 80 million merchants across China.",
+      "locator": "보도자료 끝 'About Alipay' 단락 첫 문장",
+      "relevance": "알리페이가 중국에서 10억 명 넘는 소비자와 8,000만 곳 넘는 판매자를 잇는 양면 플랫폼이라는 회사 발표로, ① 의 소비자 채널 규모를 받친다. 알리페이는 앤트그룹 소속이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-059",
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alibaba-002",
+      "published_at_utc": "2026-05-19T02:40:00Z",
+      "title": "QM报告：淘宝APP月活9.57亿领先京东美团 (新浪财经)",
+      "excerpt": "数据显示，截止到2026年3月，淘宝APP、京东APP、美团APP月活用户分别为9.57亿、5.98亿、5.12亿，同比分别增加0.6%、8.6%和3.2%；",
+      "locator": "기사 4번째 문단(QuestMobile 2026 본지생활 소비 인사이트 보고서 인용)",
+      "relevance": "QuestMobile 집계로 2026-03 타오바오 앱 월간 사용자가 9.57억 명이라는 보도로, ① 의 소비자 채널 규모를 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-060",
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alibaba-003",
+      "published_at_utc": "2025-02-21T00:00:00Z",
+      "title": "Alibaba Will Turn Around Its Loss-Making Businesses Faster Than We Previously Expected (Morningstar)",
+      "excerpt": "Alibaba is losing market share to PDD Holdings, or PDD, and Douyin in the China e-commerce business, and we don't see a quick fix in the near term.",
+      "locator": "리포트 'Business Strategy and Outlook' 첫 문장",
+      "relevance": "알리바바가 중국 커머스에서 PDD 와 더우인에 점유율을 잃고 있다는 애널리스트 판단으로, ① 의 락인 약화 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "2025-02 리포트라 기준일 직전 점유율 수치로 갱신하지 못했다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alibaba-061",
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alibaba-004",
+      "published_at_utc": "2026-08-31T00:00:00Z",
+      "title": "Qwen3.8 Flash on Novita AI: Multimodal API From $0.15/M Input (Novita AI)",
+      "excerpt": "Qwen3.8 Flash is available on Novita AI as a multimodal serverless model and an early preview of the Qwen4 architecture. It is the more efficiency-oriented Qwen3.8 option: the model combines 125B total parameters with 6B activated parameters per token, accepts text, image, and video input, and currently lists $0.15 per 1M input tokens, $0.016 per 1M cache-read tokens, and $0.47 per 1M output tokens on Novita AI.",
+      "locator": "블로그 본문 첫 문단(목차 다음)",
+      "relevance": "제3자 호스팅사 Novita 가 Qwen 모델을 자기 가격표로 팔고 있다는 발표로, ③ 의 오픈웨이트 회수 장치 부재 서술을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Novita 가 알리바바에 사용료를 내는지는 원문에 없다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-038",
+      "company_id": "alphabet",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-001",
+      "published_at_utc": "2026-05-19T00:00:00Z",
+      "title": "Google I/O 2026: Sundar Pichai's opening keynote",
+      "excerpt": "Another place where we’ve been rapidly innovating is in the Gemini app. Last year at I/O, the Gemini app had 400 million monthly active users. Today, we’ve surpassed 900 million, more than doubling in a year.",
+      "locator": "기조연설 원고 'Momentum with our products' 부분, AI Overviews·AI Mode 문단 다음의 Gemini 앱 문단",
+      "relevance": "Gemini 앱 월간 사용자가 2026-05-19 9억 명을 넘었다는 회사 발표로, ③ 의 사용자 증가율 감속 계산의 중간값이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-039",
+      "company_id": "alphabet",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-002",
+      "published_at_utc": "2026-02-04T00:00:00Z",
+      "title": "Q4 earnings call: Remarks from our CEO (2025 Q4)",
+      "excerpt": "In addition, we have sold more than eight million paid seats of Gemini Enterprise, which we launched just four months ago. And our Gemini App now has over 750 million monthly active users.",
+      "locator": "2025년 4분기 실적 발표 CEO 발언 원고, 유료 구독·Gemini Enterprise 문단 마지막 문장",
+      "relevance": "Gemini 앱 월간 사용자가 2026-02-04 7.5억 명을 넘었다는 회사 발표로, ③ 의 사용자 증가율 계산의 시작값이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-040",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-003",
+      "published_at_utc": "2026-02-04T00:00:00Z",
+      "title": "US Justice Dept, States Appeal Google Search Remedies (Silicon UK)",
+      "excerpt": "Mehta imposed some changes to the way Google negotiates exclusivity contracts with smartphone makers such as Apple and Samsung, and said Google must disclose some information to rivals, in a decision that Google is appealing. A group of 38 states and territories had backed the case, of which 35 are appealing, according to a notice.",
+      "locator": "기사 본문 끝에서 두세 번째 문단('Mehta imposed…', 'A group of 38 states…')",
+      "relevance": "구글과 DOJ·주 정부가 모두 검색 독점 소송 판결에 항소했다는 보도로, ⑤ 의 적대 등급(검색 독점 소송 항소)을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-041",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-004",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "DOJ urges DC Circuit to beef up remedies in Google monopoly ruling (Courthouse News Service)",
+      "excerpt": "Google is set to file its reply brief on Sept. 29, with oral arguments before the D.C. Circuit yet to be scheduled for the 2026 term beginning in September.",
+      "locator": "기사 마지막 문단(DOJ 의 144쪽 항소 서면 기사)",
+      "relevance": "D.C. 항소법원 절차가 2026-07 말 현재 서면 단계이고 변론 기일이 잡히지 않았다는 보도로, ⑤ 의 항소 진행 중 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-042",
+      "company_id": "alphabet",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-005",
+      "published_at_utc": "2026-05-05T00:00:00Z",
+      "title": "Anthropic commits to spending $200 billion on Google's cloud and chips, the Information reports (Reuters)",
+      "excerpt": "May 5 (Reuters) - Anthropic has committed to spend $200 billion with Google Cloud over five years as part of a recent agreement, The Information reported on Tuesday, citing a person with knowledge of the matter. The commitment suggests the AI startup accounts for more than 40% of the revenue backlog Google disclosed to investors last week, according to the report.",
+      "locator": "기사 1~2번째 문단",
+      "relevance": "Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 구글 백로그의 40% 넘게 차지한다는 보도로, ⑦ 에서 Anthropic 발 매출 규모를 가늠하는 반대 방향 자료다(현재 매출이 아니라 약정이다).",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Reuters 는 The Information 보도를 즉시 확인하지 못했다고 적었다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-043",
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-006",
+      "published_at_utc": "2026-04-27T17:12:59Z",
+      "title": "Inside Google's TPU V8 strategy, delivering two chips for two crucial tasks (Tom's Hardware)",
+      "excerpt": "Both chips are fabricated on TSMC's N3 process family with HBM3E memory and will be available to Google Cloud customers later this year.",
+      "locator": "기사 공급망 분할 문단('The split also extends to the supply chain…') 마지막 문장",
+      "relevance": "8세대 TPU(TPU 8t·8i)가 TSMC N3 계열 공정으로 만들어진다는 보도로, ② 의 자체 칩 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-044",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-007",
+      "published_at_utc": "2025-07-14T00:00:00Z",
+      "title": "CDAO Announces Partnerships with Frontier AI Companies to Address National Security Mission Areas (U.S. Department of War)",
+      "excerpt": "The awards to Anthropic, Google, OpenAI, and xAI – each with a $200M ceiling – will enable the Department to leverage the technology and talent of U.S. frontier AI companies to develop agentic AI workflows across a variety of mission areas.",
+      "locator": "보도자료 2번째 문단",
+      "relevance": "미 국방부 CDAO 가 네 회사에 각각 상한 $200M 계약을 줬다는 정부 발표로, ⑤ 의 동맹 등급 서술을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-045",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-008",
+      "published_at_utc": "2026-04-29T14:48:21Z",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program (Tom's Hardware)",
+      "excerpt": "Google amended its existing contract with the U.S. Department of Defense on Monday to extend Gemini's availability to classified networks, granting the Pentagon permission to deploy the models for \"any lawful government purpose.\"",
+      "locator": "기사 본문 첫 문단 첫 문장(부제 다음)",
+      "relevance": "구글이 국방부 계약을 수정해 Gemini 를 기밀 네트워크에서 모든 합법적 정부 목적에 쓰게 했다는 보도로, ⑤ 의 정부 동맹 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-046",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-008",
+      "published_at_utc": "2026-04-29T14:48:21Z",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program (Tom's Hardware)",
+      "excerpt": "Google's agreement requires the company to help modify its AI safety settings and filters at the government's request, with the contract including language stating that the AI system shouldn’t be used for domestic mass surveillance or autonomous weapons “without appropriate human oversight and control,” but also specifies that the deal doesn’t give Google “any right to… veto lawful government operational decision-making,”",
+      "locator": "기사 본문 3번째 문단",
+      "relevance": "계약이 정부 요청 시 구글이 AI 안전 설정·필터 수정을 돕도록 요구한다는 보도로, ⑤ 의 정부 동맹 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-047",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-008",
+      "published_at_utc": "2026-04-29T14:48:21Z",
+      "title": "Google signs classified Pentagon AI deal but exits $100 million drone swarm program (Tom's Hardware)",
+      "excerpt": "More than 600 Google employees delivered a letter to CEO Sundar Pichai on Monday urging him to reject the classified deal, arguing that it was the only way to prevent Google's AI from being misused.",
+      "locator": "기사 본문 6번째 문단",
+      "relevance": "구글 직원 600명 이상이 기밀 계약 거부를 요구하는 서한을 CEO 에게 전달했다는 보도로, ⑤ 의 내부 반발 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-048",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-009",
+      "published_at_utc": "2026-05-01T00:00:00Z",
+      "title": "The War Department Announces Agreements with Leading AI Companies to Deploy Capabilities on Classified Networks",
+      "excerpt": "The War Department has entered into agreements with eight of the world's leading frontier artificial intelligence companies, SpaceX, OpenAI, Google, NVIDIA, Reflection, Microsoft, Amazon Web Services, and Oracle to deploy their advanced AI capabilities on the Department's classified networks for lawful operational use.",
+      "locator": "보도자료 첫 문단",
+      "relevance": "국방부가 구글을 포함한 8개사와 기밀 네트워크 AI 배치 협약을 맺었다는 정부 발표로, ⑤ 의 정부 동맹 서술을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-049",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-010",
+      "published_at_utc": "2026-10-04T23:01:00Z",
+      "title": "Google faces £1 billion legal claim from UK consumers over Play Store fees (The Independent)",
+      "excerpt": "A legal action seeking more than £1 billion in damages from Google on behalf of millions of consumers over alleged \"hidden charges\" on Play Store app sales has gone to trial in the UK.",
+      "locator": "기사 본문 첫 문단(요약문 다음)",
+      "relevance": "영국 소비자 집단소송이 구글에 Play 스토어 수수료로 £10억 넘는 배상을 구하며 재판에 들어갔다는 보도로, ⑤ 의 비용형 적대 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-alphabet-050",
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-alphabet-011",
+      "published_at_utc": "2026-10-05T16:52:12Z",
+      "title": "Polish regulator suspects Google abused dominant position in publisher payment talks (Reuters)",
+      "excerpt": "Poland, Oct 5 (Reuters) - Poland's antitrust watchdog said on Monday it suspected Alphabet's Google of abusing its dominant market position while negotiating content payments with domestic media publishers.",
+      "locator": "기사 첫 문단",
+      "relevance": "폴란드 경쟁당국(UOKiK)이 구글의 시장지배적 지위 남용 혐의를 제기했다는 보도로, ⑤ 의 비용형 적대 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-050",
+      "company_id": "amazon",
+      "factors": [
+        "F3",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-amazon-001",
+      "published_at_utc": "2026-10-03T00:00:00Z",
+      "title": "Amazon Bedrock Model Catalog 2026 (hidekazu-konishi.com)",
+      "excerpt": "The headline number for 2026 is that Bedrock now exposes models from 19 providers, a sharp jump from the 6 providers that defined the 2024 snapshot.",
+      "locator": "글 '2. Quick Reference Summary — 2.1 Model Count by Provider' 첫 문장(최종 갱신 2026-10-03)",
+      "relevance": "Bedrock 이 19개 제공사의 모델을 판다는 집계로, ③·⑤ 의 모델 매대 규모를 받친다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "AWS 1차 자료가 아닌 개인 집계 페이지이고, 갱신 날짜 기준 값이다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-amazon-051",
+      "company_id": "amazon",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-amazon-002",
+      "published_at_utc": "2026-10-02T00:00:00Z",
+      "title": "Text Arena Leaderboard (Overall, 2026-10-02)",
+      "excerpt": "Oct 2, 2026 8,626,731 votes 413 models … 117 94 142 amazon-nova-experimental-chat-26-02-10 Amazon · Proprietary 1427 ±10 3,519",
+      "locator": "Arena Text 종합 순위표 2026-10-02 판, 머리글과 Amazon 모델 최고 순위 행(Rank 117, Rank Spread 94~142)",
+      "relevance": "기준일 직전 Arena 텍스트 순위표에서 Amazon Nova 계열 최고 순위가 117위라는 값으로, ② 의 자체 모델 경쟁력 서술을 받친다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-040",
+      "company_id": "anthropic",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-anthropic-001",
+      "published_at_utc": "2026-08-17T20:33:35Z",
+      "title": "Anthropic says annualized revenue climbed to $65 billion in July (CNBC)",
+      "excerpt": "Anthropic’s annualized revenue run rate hit $65 billion at the end of July, CNBC confirmed on Monday, a sevenfold increase from a year ago.",
+      "locator": "기사 첫 문단",
+      "relevance": "2026-07 말 run-rate 매출이 $65B 라는 보도로, ③ 의 ARR 추이와 ⑥ 의 밸류 ÷ ARR 분모를 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-041",
+      "company_id": "anthropic",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-anthropic-001",
+      "published_at_utc": "2026-08-17T20:33:35Z",
+      "title": "Anthropic says annualized revenue climbed to $65 billion in July (CNBC)",
+      "excerpt": "Anthropic also shared a preliminary revenue figure of $11.5 billion for the second quarter, a 14-fold jump from a year ago, a source said. The company declined to comment.",
+      "locator": "기사 4번째 문단",
+      "relevance": "2026년 2분기 잠정 매출이 $11.5B 라는 보도로, ⑨ 의 분기 실적 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-042",
+      "company_id": "anthropic",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-anthropic-002",
+      "published_at_utc": "2026-03-04T20:23:42Z",
+      "title": "Enterprises Drive Anthropic Run-Rate Revenue to $19 Billion (PYMNTS)",
+      "excerpt": "Anthropic’s run-rate revenue has topped $19 billion, more than double the $9 billion it achieved about three months ago, Bloomberg reported Tuesday (March 3), citing unnamed sources.",
+      "locator": "기사 첫 문단",
+      "relevance": "2026-03 초 run-rate 매출이 $19B 를 넘었다는 보도로, ③ 의 월 증가율 계산의 시작값이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-043",
+      "company_id": "anthropic",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-016",
+      "published_at_utc": "2026-04-06T00:00:00Z",
+      "title": "Anthropic expands Google and Broadcom compute deal",
+      "excerpt": "Demand from Claude customers has accelerated in 2026. Our run-rate revenue has now surpassed $30 billion—up from approximately $9 billion at the end of 2025.",
+      "locator": "발표문 본문, Krishna Rao 인용 다음 문단 첫 두 문장",
+      "relevance": "2026-04-06 run-rate 매출이 $30B 를 넘었다는 회사 발표로, ③ 의 ARR 추이를 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-044",
+      "company_id": "anthropic",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-015",
+      "published_at_utc": "2026-05-28T00:00:00Z",
+      "title": "Anthropic raises $65B in Series H funding at $965B post-money valuation",
+      "excerpt": "Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month.",
+      "locator": "발표문 2번째 문단 둘째 문장",
+      "relevance": "2026-05 초 run-rate 매출이 $47B 를 넘었다는 회사 발표로, ③ 의 ARR 추이를 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-045",
+      "company_id": "anthropic",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-anthropic-003",
+      "published_at_utc": "2026-05-05T00:00:00Z",
+      "title": "Anthropic commits to spending $200 billion on Google's cloud and chips, the Information reports (Reuters)",
+      "excerpt": "May 5 (Reuters) - Anthropic has committed to spend $200 billion with Google Cloud over five years as part of a recent agreement, The Information reported on Tuesday, citing a person with knowledge of the matter.",
+      "locator": "기사 첫 문단",
+      "relevance": "Anthropic 의 Google Cloud 약정이 5년 $200B 라는 보도로, ⑧ 의 컴퓨트 약정 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Reuters 는 The Information 보도를 즉시 확인하지 못했고 Anthropic 은 논평을 거부했다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-046",
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-anthropic-004",
+      "published_at_utc": "2026-09-25T00:00:00Z",
+      "title": "US appeals court upholds Pentagon's blacklisting of Anthropic (Reuters)",
+      "excerpt": "NEW YORK, Sept 25 (Reuters) - A federal appeals court upheld on Friday the Pentagon's blacklisting of Anthropic from military contracts, handing a victory to President Donald Trump and Defense Secretary Pete Hegseth in their battle with the AI startup over safety guardrails on its technology. The 2-1 decision by the US Court of Appeals in Washington, D.C. came in a lawsuit by Anthropic challenging its March designation by the Pentagon as a national security supply chain risk,",
+      "locator": "기사 1~2번째 문단",
+      "relevance": "D.C. 항소법원이 2026-09-25 국방부의 Anthropic 거래 배제를 유지했다는 보도로, ⑤ 의 적대 등급 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-047",
+      "company_id": "anthropic",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-anthropic-005",
+      "published_at_utc": "2026-05-20T21:26:49Z",
+      "title": "Anthropic revenue set to more than double to $10.9 billion in Q2 - WSJ (Investing.com)",
+      "excerpt": "Anthropic is projected to more than double its revenue from $4.8 billion in the first quarter to $10.9 billion in the second quarter, according to a report from the Wall Street Journal, citing figures shared during an ongoing funding round. The company expects to post its first operating profit of $559 million in the June quarter. The reported operating profit includes model training costs but excludes stock-based compensation.",
+      "locator": "기사 본문 1~2번째 문단",
+      "relevance": "2분기 매출 $10.9B·첫 영업흑자 $559M 이 투자 유치 과정에서 나온 전망치이고 주식보상을 뺀 값이라는 보도로, ⑨ 의 분기 흑자 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-anthropic-048",
+      "company_id": "anthropic",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-anthropic-006",
+      "published_at_utc": "2026-09-04T17:05:20Z",
+      "title": "OpenAI and Anthropic Get 80% of Revenue From 1% of Customers (PYMNTS)",
+      "excerpt": "At Anthropic, two customers, Cursor and GitHub Copilot, account for close to a quarter of total revenue. That shows how usage-based pricing can turn a handful of accounts into an outsized share of a company’s business.",
+      "locator": "기사 2번째 문단",
+      "relevance": "AI 코딩 도구 Cursor 가 Anthropic 의 최대 고객 둘 가운데 하나라는 보도로, ⑦ 의 조달 의존 고객 서술을 받친다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "같은 기사 7번째 문단은 이 비중이 VentureBeat 의 지난해 보도($5B 중 약 $1.2B)라고 적는다.",
+        "Cursor 의 자금 출처(VC 조달 여부)는 원문에 없다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-meta-040",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-004",
+      "published_at_utc": "2026-08-05T00:00:00Z",
+      "title": "Muse Spark 1.2 (Artificial Analysis article)",
+      "excerpt": "Muse Spark 1.2 (xhigh) lands at 54, up 3 points from Muse Spark 1.1 (51) and 11 points from Muse Spark 1.0 (43, April).",
+      "locator": "기사 첫 문단",
+      "relevance": "2026-08-05 AA 기사가 Muse Spark 1.0 의 종합 지수를 43점(4월)으로 적은 문장으로, ② 의 세대별 점수 서술을 받친다. 같은 문장의 1.1·1.2 점수는 2026-09-02 기사 판보다 낮은 지수 판 값이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "results": [
+    {
+      "judgment_id": "alibaba.F1",
+      "line": "타오바오와 알리페이는 중국 안에서 10억 명 규모가 쓰는 양면 마켓플레이스 네트워크이고, 소비자 채널에서 강한 락인을 만든다.",
+      "status": "found",
+      "column": "up",
+      "new_line": "타오바오 앱 월간 사용자는 9.57억 명(2026-03)이고 알리페이는 중국에서 10억 명 넘는 소비자와 8,000만 곳 넘는 판매자를 잇는 양면 네트워크로, 소비자 채널에서 강한 락인을 만든다. [EV-alibaba-059, EV-alibaba-058]",
+      "note": "QuestMobile(新浪财经 2026-05-19): 2026-03 타오바오 앱 MAU 9.57억(전년 대비 +0.6%). 앤트그룹 보도자료(2026-06-16): 알리페이가 중국에서 10억 명 넘는 소비자와 8,000만 판매자를 연결. '10억 명 규모'를 원문 값(타오바오 9.57억, 알리페이 10억 초과)으로 구체화했다. 알리페이는 앤트그룹 소속이라는 점은 내릴 근거 칸에 있다. '강한 락인'은 판단이라 원문 대상이 아니다."
+    },
+    {
+      "judgment_id": "alibaba.F1",
+      "line": "이 락인은 중국 안에 한정돼 글로벌 소비자 접점이 없고, PDD 와 더우인에 점유율을 잠식당하는 중이며, 알리페이는 앤트그룹으로 분리돼 있다.",
+      "status": "partial",
+      "column": "down",
+      "new_line": "이 락인은 중국 소비자에 묶여 있고, PDD 와 더우인에 점유율을 잠식당하는 중이며, 알리페이는 앤트그룹으로 분리돼 있다. [EV-alibaba-059, EV-alibaba-060, EV-alibaba-008]",
+      "dropped": "글로벌 소비자 접점이 없고",
+      "note": "점유율 잠식은 Morningstar(2025-02-21) 애널리스트 판단으로만 확인했다(2026년 점유율 수치는 못 찾음). '글로벌 소비자 접점이 없다'는 원문과 어긋난다: 20-F 부문 매출 표에 AliExpress·Trendyol·Lazada 를 포함한 International commerce retail 매출 RMB117,731M(FY2026)이 있다(EV-alibaba-055)."
+    },
+    {
+      "judgment_id": "alibaba.F2",
+      "line": "근거는 연구개발과 패러다임 적응 속도가 최상위라는 판단, 그리고 Arena WebDev 3위·Vision 2위 순위다. Arena 는 사용자 투표형 순위라 참고로만 쓴다.",
+      "status": "not_found",
+      "column": "up",
+      "note": "Bing 검색으로 Arena WebDev 순위를 다시 찾았다. 원문마다 값이 다르다: Qwen3.8-Max 출시 때 Code Arena WebDev 4위(OfficeChai 2026-08-03, Tech Times 2026-09-02), Qwen3.8-Max-0902 가 2026-09-02 WebDev 1위로 데뷔(Arena X 게시물·alphasignal), Qwen3.8-27B 9위(2026-08-24·09-01), RuntimeWire 2026-09-14 은 9-11 스냅샷 1~3위에 Qwen 없음. 기준일 직전 '3위'를 적은 원문은 없다. 현재 순위표(arena.ai/leaderboard/code/webdev)는 기준일 뒤 갱신판이다."
+    },
+    {
+      "judgment_id": "alibaba.F2",
+      "line": "표준 선점 경로는 비어 있다.",
+      "status": "is_analysis",
+      "column": "down",
+      "note": "경로가 비어 있다는 판정 문장이다."
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "line": "모방 불가능성을 부분으로 본 것은 보완재를 커모디티화하는 오픈웨이트 배포가 진짜 전략이라는 판단 때문이다.",
+      "status": "is_analysis",
+      "column": "up",
+      "note": "부분 판정의 이유를 적은 판단 문장이다."
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "line": "오픈웨이트에는 앱 장터 같은 회수 장치가 없다. Qwen 을 받아 자기 GPU 에 돌리면 알리바바는 대가를 받지 못하고, 실제로 SiliconFlow·Novita·AWS Bedrock 이 호스팅 매출을 가져간다.",
+      "status": "partial",
+      "column": "down",
+      "new_line": "오픈웨이트에는 앱 장터 같은 회수 장치가 없다. Qwen 을 받아 자기 GPU 에 돌리면 알리바바는 대가를 받지 못하고, 실제로 Novita·AWS Bedrock 이 호스팅 매출을 가져간다. [EV-alibaba-061, EV-alibaba-024]",
+      "dropped": "SiliconFlow",
+      "note": "Novita 블로그(2026-08-31)는 Qwen3.8 Flash 를 자기 서버리스 API 로 100만 토큰당 입력 $0.15·출력 $0.47 에 판다고 적는다. Novita 가 알리바바에 사용료를 내는지는 원문에 없다. SiliconFlow 는 Qwen 모델 목록 페이지(siliconflow.com/models/qwen)만 있고 발행일 없는 실시간 페이지라 쓰지 않았다."
+    },
+    {
+      "judgment_id": "alibaba.F3",
+      "line": "Anthropic 은 여전히 $6.36/M 을 받고 OpenRouter 매출의 46% 를 가져가며, OpenRouter 는 전체 시장이 아니다.",
+      "status": "not_found",
+      "column": "down",
+      "note": "Bing·DuckDuckGo 로 'OpenRouter Anthropic $6.36' 을 다시 찾았다. 12%·46% 는 여러 곳에 있지만 평균 단가 $6.36/M 은 어떤 원문에도 없다. meshlaunch·nodemini 등 발행일 없는 집계 블로그에도 $6.36 은 없다."
+    },
+    {
+      "judgment_id": "alibaba.F4",
+      "line": "3년간 RMB3,800억을 쓰는 AI 인프라 계획 가운데 RMB1,900억을 이미 집행했고, 브라질·프랑스·네덜란드에 데이터센터를 두고 있다.",
+      "status": "not_found",
+      "column": "up",
+      "note": "원문 값이 다르다: SCMP(2026-09-23)는 알리바바 클라우드가 튀르키예·핀란드·네덜란드에 12개월 안에 데이터센터를 열 계획이며 첫 곳은 10월 네덜란드라고 적고, Cloud Expo(2026-09-25)도 '12개월 안에 개설 계획'이라 적는다. 기준일(2026-10-06) 전에 네덜란드 데이터센터가 열렸다는 원문은 없다. 계획은 현재 점수에 넣지 않는다."
+    },
+    {
+      "judgment_id": "alibaba.F7",
+      "line": "알리바바 매출은 커머스와 클라우드 고객에게서 나오고, 고객이 투자 유치나 차입으로 마련한 돈으로 대금을 내는 구조는 근거에 없다.",
+      "status": "is_analysis",
+      "column": "up",
+      "note": "조달 의존 구조가 근거에 없다는 부재 판정이다. 매출 출처 사실은 both_empty 새 줄로 옮겼다."
+    },
+    {
+      "judgment_id": "alibaba.F7",
+      "line": "알리바바가 고객에게 투자하고 그 돈이 알리바바 매출로 돌아오는 순환 구조도 확인되지 않는다.",
+      "status": "is_analysis",
+      "column": "up",
+      "note": "순환 구조가 확인되지 않는다는 부재 판정이다."
+    },
+    {
+      "judgment_id": "alibaba.F7",
+      "line": "",
+      "status": "found",
+      "column": "up",
+      "new_line": "알리바바의 FY2026(2026-03-31 종료) 부문 매출(부문 간 제거 전)은 중국 커머스 RMB554,217M, 국제 커머스 RMB144,170M, 클라우드 인텔리전스 그룹 RMB158,132M, 기타 RMB254,367M 이고(연결 매출 RMB1,023,670M), 커머스 매출은 판매자에게서, 클라우드 매출은 국내외 기업 고객에게서 받는다. [EV-alibaba-055, EV-alibaba-056, EV-alibaba-057]",
+      "note": "두 방향 칸이 빈 판단의 새 줄. 0점(돌아오지 않음·비중 작음)을 받치는 매출 출처 사실로 20-F 부문 매출 표와 수익 모델 서술을 썼다. 표 열은 FY2024·FY2025·FY2026 오름차순이다."
+    },
+    {
+      "judgment_id": "alphabet.F2",
+      "line": "자체 칩은 7세대 Ironwood TPU 이고, 8세대 TPU 는 TSMC 2nm 공정으로 만든다.",
+      "status": "found",
+      "column": "up",
+      "new_line": "자체 칩은 7세대 Ironwood TPU 이고, 8세대 TPU(TPU 8t·8i)는 TSMC N3(3nm) 계열 공정으로 만든다. [EV-alphabet-024, EV-alphabet-036, EV-alphabet-043]",
+      "note": "원문 값이 다르다: Tom's Hardware(2026-04-27)는 두 칩 모두 TSMC N3 공정 계열로 만든다고 적는다. 2nm 를 적은 원문은 없다."
+    },
+    {
+      "judgment_id": "alphabet.F3",
+      "line": "2년 만에 격차를 회수했다는 사실은 누적 이동 거리이지 성장률의 변화가 아니라서 가속도 근거에서 뺐다.",
+      "status": "is_analysis",
+      "column": "up",
+      "note": "가속도 근거에서 무엇을 뺐는지 적은 판정 문장이다."
+    },
+    {
+      "judgment_id": "alphabet.F3",
+      "line": "Gemini 월간 사용자 증가율은 7.5억 명에서 9.0억 명으로 갈 때 +20% 였다가 9.0억 명에서 9.5억 명으로 갈 때 +5.6% 로 꺾이고 있다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "Gemini 월간 사용자 증가율은 7.5억 명에서 9.0억 명으로 갈 때 +20% 였다가 9.0억 명에서 9.5억 명으로 갈 때 +5.6% 로 꺾이고 있다. [EV-alphabet-039, EV-alphabet-038, EV-alphabet-012]",
+      "note": "9.0억 명은 분기 실적 발표가 아니라 Google I/O 2026 기조연설(2026-05-19, '900 million 초과')이다. 7.5억(2026-02-04)→9.0억(05-19)은 약 3.5개월, 9.0억→9.5억(07-22)은 약 2개월이라 두 증가율의 기간이 다르다. 월 환산으로도 약 +5.7% → 약 +2.8% 로 감속이다."
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "line": "미 국방부 CDAO 프론티어 AI 계약(2025-07)은 Google·OpenAI·Anthropic·xAI 네 회사가 각각 상한 $200M 으로 받았다. 정부 계약은 상업적 약속이라 동맹으로 인정하지만, 네 회사가 같은 계약을 받았으므로 등급의 차이를 만들지 않는다.",
+      "status": "found",
+      "column": "up",
+      "new_line": "미 국방부 CDAO 프론티어 AI 계약(2025-07)은 Google·OpenAI·Anthropic·xAI 네 회사가 각각 상한 $200M 으로 받았다. 정부 계약은 상업적 약속이라 동맹으로 인정하지만, 네 회사가 같은 계약을 받았으므로 등급의 차이를 만들지 않는다. [EV-alphabet-044]",
+      "note": "미 국방부(war.gov) 2025-07-14 보도자료. ai.mil 대신 war.gov 사본이 열렸다."
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "line": "구글은 2026-04-28 계약 갱신으로 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 2026년 5월 $200M 기밀 계약을 확정했으며, 정부 요청에 따라 안전 설정을 완화했다.",
+      "status": "partial",
+      "column": "up",
+      "new_line": "구글은 2026-04-27 기존 국방부 계약을 수정해 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 정부 요청 시 AI 안전 설정과 필터 수정을 돕기로 했으며, 2026-05-01 국방부가 기밀 네트워크(IL6·IL7) AI 배치 협약을 맺었다고 발표한 8개사에 들었다. [EV-alphabet-045, EV-alphabet-046, EV-alphabet-048]",
+      "dropped": "기밀 계약 금액 $200M",
+      "note": "원문 값이 다르다: (1) 날짜 — Tom's Hardware(2026-04-29)는 계약 수정을 '월요일'(2026-04-27)로 적는다. 다른 보도(NYT 2026-04-28 등)는 04-28 에 보도·확인했다. (2) '안전 설정을 완화했다' → 원문은 계약이 정부 요청 시 안전 설정·필터 수정을 돕도록 요구한다고 적는다(실행 여부는 없음). (3) 2026-05 확정 계약은 국방부 2026-05-01 발표의 8개사 기밀 네트워크 협약이며 금액 $200M 은 적혀 있지 않다."
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "line": "구글의 기밀 네트워크 사용 계약 갱신·기밀 계약 확정·안전 설정 완화에 직원 600명 이상이 반발했다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "구글 직원 600명 이상이 2026-04-27 순다르 피차이 CEO 에게 기밀 계약을 거부하라는 서한을 전달했다. [EV-alphabet-047]",
+      "note": "원문은 서한이 계약 수정과 같은 날(월요일) 전달됐고 기밀 계약 거부를 요구했다고 적는다. 기밀 계약 확정(05-01)·안전 설정 조항에 대한 반발이라는 부분은 원문과 시점이 맞지 않아 원문대로 고쳤다."
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "line": "DOJ 와 38개 주가 낸 검색 독점 소송의 항소가 진행 중이다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "DOJ 와 38개 주가 낸 검색 독점 소송의 항소가 진행 중이다. [EV-alphabet-040, EV-alphabet-041]",
+      "note": "Silicon UK(2026-02-04): 구글이 항소 중이고, 소송을 낸 38개 주·준주 가운데 35곳이 항소했다. Courthouse News(2026-07-29): DOJ 가 D.C. 항소법원에 144쪽 서면을 냈고, 구글 답변서는 9-29 예정, 변론 기일은 미정. '38개 주'는 원문상 '38개 주·준주'다."
+    },
+    {
+      "judgment_id": "alphabet.F5",
+      "line": "구글의 EU 검색 데이터 공유 명령 이의 제기(2026-09-30 보도), 출판사 애드테크 손해배상 청구 $3.2B 재판 회부(2026-10-01 보도), 영국 앱 장터 수수료 소송 £1.2bn(2026-10-04 보도), 폴란드 경쟁당국 조사(2026-10-05 보도)가 확정 근거로 들어와 있다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "구글의 EU 검색 데이터 공유 명령 이의 제기(2026-09-30 보도), 출판사 애드테크 손해배상 청구 $3.2B 재판 회부(2026-10-01 보도), 영국 앱 장터 수수료 소송 £10억 초과(2026-10-04 보도), 폴란드 경쟁당국 조사(2026-10-05 보도)가 확정 근거로 들어와 있다. [EV-alphabet-005, EV-alphabet-008, EV-alphabet-049, EV-alphabet-050]",
+      "note": "영국 소송은 The Independent(2026-10-04 23:01 UTC)로 확인했고 원문 값은 'more than £1 billion' 이다(FT 의 £1.2bn 은 원문을 열지 못했다). 폴란드는 Reuters(2026-10-05) 원문으로 확인했다. EU·애드테크 두 항목은 1차의 EV-alphabet-005·008 그대로다."
+    },
+    {
+      "judgment_id": "alphabet.F7",
+      "line": "Anthropic 에서 오는 매출은 알파벳 최근 1년 매출 $445.9B(2026-06-30 기준)에 견주면 미미하다.",
+      "status": "not_found",
+      "column": "up",
+      "note": "Bing 으로 구글의 Anthropic 발 매출 규모를 다시 찾았다. 알파벳이 Anthropic 관련 매출을 공시한 원문은 없다. 반대 방향 자료로 Reuters(2026-05-05, The Information 인용)는 Anthropic 이 Google Cloud 에 5년 $200B(연평균 약 $40B)를 약정해 구글 백로그의 40% 넘게 차지한다고 보도했다(EV-alphabet-042, 약정이지 현재 매출이 아니다). '미미하다'를 받칠 원문은 없고, 약정 규모는 이 판단과 반대로 읽힐 수 있다."
+    },
+    {
+      "judgment_id": "alphabet.F7",
+      "line": "2026년 2분기 지분 평가이익 $99B 의 상당 부분은 SpaceX 지분 약 6%($94.0B, 6월 상장 때 기업가치 $1.77T 로 평가)에서 나왔고, SpaceX 는 Google Cloud 고객이 아니다.",
+      "status": "is_analysis",
+      "column": "up",
+      "note": "남은 부분 'SpaceX 는 Google Cloud 고객이 아니다'는 부재 주장이다. 평가이익·지분 부분은 1차에서 연결했다."
+    },
+    {
+      "judgment_id": "amazon.F2",
+      "line": "자체 모델 Nova 는 Arena 텍스트 부문 99위로 에이전트·추론 경쟁에 기여하지 못했다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "자체 모델 Nova 는 Arena 텍스트 부문(2026-10-02)에서 최고 117위(amazon-nova-experimental-chat-26-02-10)로 에이전트·추론 경쟁에 기여하지 못했다. [EV-amazon-051]",
+      "note": "원문 값이 다르다: Arena 텍스트 종합 순위표 2026-10-02 판에서 Amazon 모델 최고 순위는 117위(순위 범위 94~142, 1427±10점)이고, 공개 모델 nova-2-lite 는 240위다. 99위인 Nova 는 없다."
+    },
+    {
+      "judgment_id": "amazon.F3",
+      "line": "(부분) 18개 제공사",
+      "status": "found",
+      "column": "up",
+      "new_line": "Bedrock 은 모두의 모델을 팔아 이기는 전략이고 실제로 앞서 나갔다. 2026년 4월 OpenAI 모델을 올려 Azure 의 OpenAI 모델 독점을 깼고 이어 GPT-5.6 도 올렸으며, OpenAI 로부터 Trainium3·Trainium4 약 2GW 사용 약정을 받았고, 19개 제공사의 100개 이상 모델을 판다. [EV-amazon-037, EV-amazon-024, EV-amazon-035, EV-amazon-045, EV-amazon-044, EV-amazon-050]",
+      "note": "원문 값이 다르다: Bedrock 모델 카탈로그(hidekazu-konishi.com, 최종 갱신 2026-10-03)는 19개 제공사라고 적는다. 다른 집계(aws-bedrock-explorer.com, 2026-09-15 스냅숏)도 116개 모델·19개 제공사다. '18' 은 2025-12-02 AWS 블로그의 '오픈웨이트 모델 18개 추가'와 섞인 값으로 보인다. new_line 은 1차 반영 줄에 제공사 수를 넣은 것이다."
+    },
+    {
+      "judgment_id": "amazon.F5",
+      "line": "(부분) 18개 제공사",
+      "status": "found",
+      "column": "up",
+      "new_line": "Bedrock 은 19개 제공사의 100개 이상 모델을 팔고, 경쟁사 OpenAI 와 중국 오픈웨이트 모델까지 재판매한다. [EV-amazon-045, EV-amazon-037, EV-amazon-044, EV-amazon-050]",
+      "note": "F3 와 같은 원문. 18 → 19 로 고쳤다. new_line 은 1차 반영 줄에 제공사 수를 넣은 것이다."
+    },
+    {
+      "judgment_id": "anthropic.F1",
+      "line": "보조 증거는 거래 채널의 가격 결정력이다. OpenRouter 에서 토큰 점유율 약 12% 로 매출 점유율 약 46% 를 차지하고, 평균 단가 $6.36/M 는 Qwen($0.37/M)의 약 17배다.",
+      "status": "not_found",
+      "column": "up",
+      "note": "Bing·DuckDuckGo 로 '$6.36'·'$0.37'·'17배' 를 다시 찾았다. 12%·46% 는 1차의 EV-anthropic-013 으로 이미 연결돼 있다. 평균 단가 $6.36/M 과 Qwen $0.37/M 은 어떤 원문에도 없다."
+    },
+    {
+      "judgment_id": "anthropic.F1",
+      "line": "달러 기준 1위 모델인 Claude Opus 4.6 은 월 $25M 를 벌고 프로그래밍 지출의 60% 이상을 차지한다. 다만 라우팅 서비스 트래픽은 전체 시장이 아니고 토큰 점유율은 매출 점유율이 아니다.",
+      "status": "not_found",
+      "column": "up",
+      "note": "'Claude Opus 4.6 ~$25M/month' 는 meshlaunch.com·nodemini.com 등 발행일·필자 없는 집계 블로그에만 있고, '프로그래밍 지출 60% 이상' 은 원문을 찾지 못했다. 신뢰할 수 있는 원문이 아니라 쓰지 않았다."
+    },
+    {
+      "judgment_id": "anthropic.F3",
+      "line": "ARR 은 7월 $65B 까지 왔지만 월 증가율이 +58%, +57%, 약 +14% 로 꺾여 감속 중이다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "ARR 은 7월 $65B 까지 왔지만 월 증가율이 +58%, +57%, 약 +14% 로 꺾여 감속 중이다. [EV-anthropic-042, EV-anthropic-043, EV-anthropic-044, EV-anthropic-040]",
+      "note": "원문 값: $19B 초과(2026-03-03 Bloomberg 보도, PYMNTS 인용) → $30B 초과(2026-04-06 회사 발표) → $47B 초과(2026-05 초, 회사 발표) → $65B(2026-07 말, CNBC). 19→30 은 +58%, 30→47 은 +57%, 47→65 는 약 2.5~3개월 +38% 로 월평균 약 +11~14% 다. 증가율은 이 값들로 계산한 것이다. $19B 는 회사 발표가 아니라 언론 보도다."
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "line": "세 유통 관계는 공짜 사용자도 관계사도 아닌 독립 상업 동맹이다.",
+      "status": "is_analysis",
+      "column": "up",
+      "note": "동맹 분류 판정 문장이다."
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "line": "Anthropic 이 맺은 지분 동맹이 없어 복수의 지분 동맹 조항이 서지 않고, Anthropic 은 경쟁사를 자기 매대에 올린 쪽이 아니라 남의 매대에 오른 쪽이라 경쟁사 편입 조항도 방향이 반대다.",
+      "status": "is_analysis",
+      "column": "down",
+      "note": "조항 적용 결론 문장이다."
+    },
+    {
+      "judgment_id": "anthropic.F5.impl48",
+      "line": "2026-09-25 미 항소법원이 국방부의 Anthropic 거래 배제를 유지했고(Reuters), 2026-10-05 BBC 는 국방부가 Anthropic AI 도구 사용을 중단했다고 보도했으며, 2026-09-30 Bloomberg 는 FTC 가 제품 안전 문제로 Anthropic 을 조사한다고 보도했다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "2026-09-25 미 항소법원이 국방부의 Anthropic 거래 배제를 유지했고(Reuters), 2026-10-05 BBC 는 국방부가 Anthropic AI 도구 사용을 중단했다고 보도했으며, 2026-09-30 CNBC 는 FTC 가 제품 위험 문제로 Anthropic 을 조사한다고 확인 보도했다. [EV-anthropic-046, EV-anthropic-010, EV-anthropic-032]",
+      "note": "Reuters 원문(2026-09-25)이 열렸다: D.C. 항소법원 2-1 판결로 국방부의 공급망 위험 지정·거래 배제가 유지됐다. FTC 부분은 1차와 같이 CNBC(2026-09-30)로 고친 문장을 썼다(원래 줄은 Bloomberg·'제품 안전')."
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "line": "밸류 ÷ ARR 은 약 14.8배이며 근거로만 남긴다.",
+      "status": "found",
+      "column": "up",
+      "new_line": "밸류 ÷ ARR 은 약 14.8배이며 근거로만 남긴다. [EV-anthropic-039, EV-anthropic-040]",
+      "note": "$965B(Series H post-money) ÷ $65B(2026-07 말 run-rate, CNBC) = 14.85."
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "line": "한 칸 올리는 보정의 두 조건 가운데 자본효율(ARR $65B ÷ 누적 조달 약 $125B = 0.52)은 기준 0.5 를 넘는다.",
+      "status": "not_found",
+      "column": "up",
+      "note": "ARR $65B 는 EV-anthropic-040 으로 확인했다. 누적 조달 약 $125B 는 원문이 갈린다: revenuememo.com(2026-09-30)은 '지분으로 $120B 넘게', NYT(2026-05-28, PitchBook 인용)는 검색 결과 요약에 '$130B 넘게'(본문은 유료라 열지 못함). 분모가 $130B 를 넘으면 0.5 아래가 되므로, '0.52 로 기준 0.5 를 넘는다'를 확인할 수 없다."
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "line": "밸류를 최근 1년 보정 매출로 나눈 배수는 약 30~39배로 추정된다.",
+      "status": "is_analysis",
+      "column": "down",
+      "note": "우리가 추정한 배수다."
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "line": "",
+      "status": "found",
+      "column": "down",
+      "new_line": "Anthropic 은 2026-05-28 Series H 에서 post-money 기업가치 $965B 로 $65B 를 조달했다. [EV-anthropic-039]",
+      "note": "두 방향 칸이 빈 판단의 새 줄(가격이 높게 매겨진 쪽). 회사 Series H 발표문."
+    },
+    {
+      "judgment_id": "anthropic.F6",
+      "line": "",
+      "status": "found",
+      "column": "up",
+      "new_line": "run-rate 매출은 2025년 말 약 $9B 에서 2026-04 $30B 초과, 2026-05 $47B 초과를 거쳐 2026-07 말 $65B 로 늘었다. [EV-anthropic-043, EV-anthropic-044, EV-anthropic-040]",
+      "note": "두 방향 칸이 빈 판단의 새 줄(매출 규모·성장 쪽). 회사 발표 두 건과 CNBC."
+    },
+    {
+      "judgment_id": "anthropic.F7",
+      "line": "조달 의존 고객으로는 VC 조달로 API 를 쓰는 AI 코딩 스타트업 고객 일부가 있다.",
+      "status": "partial",
+      "column": "down",
+      "new_line": "조달 의존 고객으로는 API 를 쓰는 AI 코딩 스타트업 Cursor 같은 고객 일부가 있다. [EV-anthropic-048]",
+      "dropped": "VC 조달로",
+      "note": "PYMNTS(2026-09-04)는 Cursor 와 GitHub Copilot 두 고객이 Anthropic 매출의 4분의 1 가까이를 낸다고 적고, 그 출처를 VentureBeat 의 지난해 보도로 밝힌다. Cursor 의 자금 출처(VC 조달)는 원문에 없다. GitHub Copilot 은 Microsoft 소유라 조달 의존 고객이 아니다. 일부 블로그는 SpaceX 가 2026-06 Cursor 인수에 합의했다고 적지만 확인하지 않았다."
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "line": "Anthropic 은 컴퓨트를 100% 외부에서 빌려 쓰고, 공급자가 모두 모델 경쟁자다.",
+      "status": "not_found",
+      "column": "down",
+      "note": "'100%' 를 받치는 원문이 없다. 반대 방향 자료로 Anthropic 은 2025-11 미국 컴퓨팅 인프라에 $50B 를 투자하기로 했다고 밝혔고(2026-04-06 Google·Broadcom 발표문이 이를 언급), Motley Fool(2026-09-30)은 Fluidstack 과의 데이터센터 구축을 보도했다. 공급자가 모두 모델 경쟁자라는 부분은 1차의 공급자 목록 줄에 있다."
+    },
+    {
+      "judgment_id": "anthropic.F8.f8anth33",
+      "line": "컴퓨트 약정은 Google Cloud $200B/5년, AWS 약정 증액 $100B 초과/10년, Azure $30B 이다. AWS 분은 Amazon 2026년 2분기 10-Q Note 1 이 '기존 다년 약정을 10년에 걸쳐 $100.0B 넘게 확대했고 AWS 칩 성능과 관련된 계약 의무를 포함한다' 고 공시한 것이라, $100B 는 약정 총액이 아니라 기존 약정 위에 얹은 증액의 하한이다.",
+      "status": "found",
+      "column": "down",
+      "new_line": "컴퓨트 약정은 Google Cloud $200B/5년, AWS 약정 증액 $100B 초과/10년, Azure $30B 이다. AWS 분은 Amazon 2026년 2분기 10-Q Note 1 이 '기존 다년 약정을 10년에 걸쳐 $100.0B 넘게 확대했고 AWS 칩 성능과 관련된 계약 의무를 포함한다' 고 공시한 것이라, $100B 는 약정 총액이 아니라 기존 약정 위에 얹은 증액의 하한이다. [EV-anthropic-045, EV-anthropic-035, EV-anthropic-031]",
+      "note": "Google Cloud $200B/5년은 Reuters(2026-05-05)가 The Information 을 인용해 보도한 값이고, Reuters 는 즉시 확인하지 못했다고 적었다. 회사 발표는 '수 기가와트'까지만 적는다."
+    },
+    {
+      "judgment_id": "anthropic.F9",
+      "line": "Q2 단일 분기 첫 영업흑자 $559M(매출 $10.9B, 마진 약 5%)은 최근 1년 흑자를 대신하지 않는다.",
+      "status": "found",
+      "column": "up",
+      "new_line": "Q2 단일 분기 첫 영업흑자는 2026-05 투자자 전망치로 $559M(매출 $10.9B 전망, 마진 약 5%, 주식보상 제외)이었고 2026-08 잠정 매출은 $11.5B 였으며, 단일 분기 흑자는 최근 1년 흑자를 대신하지 않는다. [EV-anthropic-047, EV-anthropic-041]",
+      "note": "원문 값이 다르다: $559M·$10.9B 는 확정 실적이 아니라 2026-05-20 WSJ 가 보도한 투자 유치용 전망치다(Investing.com 인용, 주식보상 제외·훈련비 포함). CNBC(2026-08-17)는 2분기 잠정 매출을 $11.5B 로 보도했다. 확정 영업이익 금액은 원문에서 찾지 못했다."
+    },
+    {
+      "judgment_id": "meta.F2",
+      "line": "같은 지수에서 세대별 점수는 Muse Spark 1.0 43점, 1.1 53점, 1.2 57점, 1.3 62점으로 올랐고, 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 로 5위다. (중 'Muse Spark 1.0 43점' 과 'GDPval-AA v2 5위')",
+      "status": "partial",
+      "column": "up",
+      "new_line": "같은 지수에서 세대별 점수는 Muse Spark 1.1 53점, 1.2 57점, 1.3(xhigh) 61점으로 올랐고 1.3(max)은 62점이며(2026-08-05 AA 기사 기준 Muse Spark 1.0 은 43점), 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 다. [EV-meta-015, EV-meta-016, EV-meta-040]",
+      "dropped": "GDPval-AA v2 5위",
+      "note": "1.0 의 43점은 AA 의 Muse Spark 1.2 기사(2026-08-05)에 있다. 그 기사의 1.1·1.2 점수(51·54)는 1.3 기사(2026-09-02)의 53·57 과 지수 판이 달라, 43점은 1.1~1.3 점수와 같은 판 값이 아니다. GDPval-AA v2 순위는 1.3 기사에 없고, 1.2 기사가 1.2 를 5위(1,631 Elo)로 적을 뿐이다. 1.3(max) 1,754 Elo 의 순위는 찾지 못했다."
+    },
+    {
+      "judgment_id": "microsoft.F1",
+      "line": "Copilot 유료 시트는 3,000만 개로 분기 대비 50% 늘었고, Copilot 합산 월간 사용자는 4.2억 명이다.",
+      "status": "not_found",
+      "column": "up",
+      "note": "Microsoft FY26 1~4분기 실적 통화록을 다시 열었다. 1차 자료의 최신 값은 FY26 1분기(2025-10-29) '1st party family of Copilots 월간 사용자 1.5억 명 초과'이고, 4.2억 명은 stackmatix·neuralwired 등 2차 블로그에만 나온다. 1차 출처 없는 4.2억 명은 쓰지 않았다."
+    }
+  ]
+}

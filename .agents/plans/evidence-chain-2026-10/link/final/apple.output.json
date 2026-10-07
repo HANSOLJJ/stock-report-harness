@@ -1,0 +1,1162 @@
+{
+  "company_id": "apple",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-apple-000032019326000020",
+      "title": "Apple 10-Q (2026-06-27)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000020/aapl-20260627.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "apple",
+      "published_at_utc": "2026-07-31T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-apple-000032019326000013",
+      "title": "Apple 10-Q (2026-03-28)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000013/aapl-20260328.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "apple",
+      "published_at_utc": "2026-05-01T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-apple-000032019326000018",
+      "title": "Apple 8-K Exhibit 99.1 Apple reports third quarter results",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000018/a8-kex991q3202606272026.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "apple",
+      "published_at_utc": "2026-07-30T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-apple-000032019325000079",
+      "title": "Apple 10-K (2025-09-27)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "filing",
+      "company_id": "apple",
+      "published_at_utc": "2025-10-31T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-001",
+      "title": "Apple reaches 2.5 billion active devices after record quarter",
+      "publisher": "AppleInsider",
+      "url": "https://appleinsider.com/articles/26/01/29/apple-reaches-25-billion-active-devices-after-record-breaking-quarter",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-01-29T23:08:42Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-002",
+      "title": "App Store ecosystem generated $1.4 trillion in 2025, 90% commission-free",
+      "publisher": "9to5Mac",
+      "url": "https://9to5mac.com/2026/06/04/app-store-ecosystem-generated-1-4-trillion-in-2025-90-commission-free/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-06-04T13:21:23Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-003",
+      "title": "Apple is reportedly making an AI server chip with Broadcom's help",
+      "publisher": "Macworld",
+      "url": "https://www.macworld.com/article/2555054/apple-is-reportedly-making-an-ai-server-chip-with-broadcoms-help.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2024-12-12T17:10:09Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-004",
+      "title": "Apple releases iOS 27, redesigned Siri AI",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/09/14/apple-releases-ios-27-redesigned-siri-ai.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-09-14T19:05:40Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-005",
+      "title": "Apple nears deal to pay Google $1B annually to power new Siri, report says",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2025/11/05/apple-nears-deal-to-pay-google-1b-annually-to-power-new-siri-report-says/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2025-11-05T20:37:47Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-006",
+      "title": "Apple picks Google's Gemini to run AI-powered Siri coming this year",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/01/12/apple-google-ai-siri-gemini.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-01-12T15:19:25Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-007",
+      "title": "Apple loses top AI models executive to Meta’s hiring spree",
+      "publisher": "Gulf News (Bloomberg)",
+      "url": "https://gulfnews.com/technology/companies/apple-loses-its-top-ai-models-executive-to-meta-s-hiring-spree-1.500190359",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "페이지 표기 'July 08, 2025 | 09:18' 의 날짜를 적었다.",
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2025-07-08T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-008",
+      "title": "John Giannandrea to retire from Apple",
+      "publisher": "Apple Newsroom",
+      "url": "https://www.apple.com/newsroom/2025/12/john-giannandrea-to-retire-from-apple/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "페이지에 발행일 메타가 없어 발표일(2025-12-01)로 적었다.",
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2025-12-01T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-009",
+      "title": "Apple Upgrades Private Cloud Compute Servers to M5 Chips",
+      "publisher": "WinBuzzer",
+      "url": "https://winbuzzer.com/2026/02/18/apple-upgrades-private-cloud-compute-m5-chips-xcxwbn/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-02-18T15:18:46Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-010",
+      "title": "[News] Apple Reportedly Pushes In-House AI Chip, Eyes 2027 Server Deployment; Foxconn to Gain",
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2025/12/17/news-apple-reportedly-pushes-in-house-ai-chip-eyes-2027-server-deployment-foxconn-to-gain/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "발행일은 URL 경로의 날짜다.",
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2025-12-17T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-011",
+      "title": "Apple is giving up on the Vision Pro after weak sales and high return rates",
+      "publisher": "TechSpot",
+      "url": "https://www.techspot.com/news/112244-apple-giving-up-vision-pro-after-weak-sales.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-04-30T12:03:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-012",
+      "title": "Apple cancels its electric car project",
+      "publisher": "NPR",
+      "url": "https://www.npr.org/2024/02/27/1234315814/apple-cancels-electric-car",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2024-02-28T01:56:38Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-013",
+      "title": "Apple Trained Its Own AI for China With Alibaba, Winning Unprecedented Beijing Clearance",
+      "publisher": "Tech Times",
+      "url": "https://www.techtimes.com/articles/324565/20260815/apple-trained-its-own-ai-china-alibaba-winning-unprecedented-beijing-clearance.htm",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-08-15T12:09:09Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-014",
+      "title": "Apple sues OpenAI over alleged trade secret theft",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-07-10T21:00:29Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-015",
+      "title": "Apple loses challenge against EU digital competition rules",
+      "publisher": "TechXplore (AFP)",
+      "url": "https://techxplore.com/news/2026-07-apple-eu-digital-competition.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-07-08T15:40:01Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-016",
+      "title": "Google’s payments to Apple reached $20 billion in 2022, antitrust court documents show",
+      "publisher": "Yahoo Finance (Bloomberg)",
+      "url": "https://finance.yahoo.com/news/google-payments-apple-reached-20-220947331.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2024-05-02T08:02:31Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-017",
+      "title": "DOJ and states appeal Google search antitrust remedies ruling",
+      "publisher": "Search Engine Land",
+      "url": "https://searchengineland.com/doj-states-appeal-google-search-antitrust-remedies-ruling-468230",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-02-04T15:08:39Z"
+    },
+    {
+      "source_id": "SRC-WEB-apple-018",
+      "title": "X and SpaceXAI move to drop Apple from antitrust lawsuit",
+      "publisher": "9to5Mac",
+      "url": "https://9to5mac.com/2026/09/14/x-and-spacexai-move-to-drop-apple-from-antitrust-lawsuit-keep-claims-against-openai/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-09-14T22:03:53Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-apple-006",
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-001",
+      "published_at_utc": "2026-01-29T23:08:42Z",
+      "title": "Apple reaches 2.5 billion active devices after record quarter",
+      "excerpt": "Apple's first-quarter earnings are record-breaking and surpassed estimates with $143.8 billion in revenue. During the call, Apple shared that its install base reached over 2.5 billion active users, the first update to the number since 2.35 billion was shared in January 2025.",
+      "locator": "기사 2번째 문단",
+      "relevance": "Apple 활성 기기 설치기반이 2026-01 기준 25억 대를 넘었다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-007",
+      "company_id": "apple",
+      "factors": [
+        "F1",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-002",
+      "published_at_utc": "2026-06-04T13:21:23Z",
+      "title": "App Store ecosystem generated $1.4 trillion in 2025, 90% commission-free",
+      "excerpt": "Apple has just published a new study from economists at Analysis Group that says $1.4 trillion in developer billings and sales was generated by the App Store ecosystem in 2025.",
+      "locator": "기사 1번째 문단",
+      "relevance": "App Store 생태계가 2025년 $1.4T 의 개발자 결제·판매를 일으켰다는 Apple 발표 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-008",
+      "company_id": "apple",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019326000020",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Apple 10-Q (2026-06-27)",
+      "excerpt": "iPhone | $ | 54,252 | $ | 44,582 | 22% | $ | 196,515 | $ | 160,561 | 22% | Mac | 10,352 | 8,046 | 29% | ... | iPad | 6,191 | 6,581 | (6) | % | ... | Wearables, Home and Accessories | 7,883 | 7,404 | 6% | ... | Services | 30,739 | 27,423 | 12% | ... | Total net sales | $ | 109,417 | $ | 94,036 | 16%",
+      "locator": "10-Q (2026-06-27) Item 2 MD&A — Products and Services Performance 표 Three Months Ended 열 (p.15)",
+      "relevance": "2026년 6월 분기 제품·서비스별 매출로, iPhone 이 전년 대비 22% 늘었고 매출이 하드웨어와 서비스에서 나온다는 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-009",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-003",
+      "published_at_utc": "2024-12-12T17:10:09Z",
+      "title": "Apple is reportedly making an AI server chip with Broadcom's help",
+      "excerpt": "According to The Information (subscription required), Apple is working with Broadcom on a server chip that can handle the demands of AI processing. The chip, code-named Baltra, is expected to be ready by 2026. While Apple is working with Broadcom on the development of Baltra, The Information reports that the actual manufacturing will involve TSMC’s N3P process, an enhancement of 3nm production technology.",
+      "locator": "기사 2번째 문단",
+      "relevance": "Apple 이 Broadcom 과 AI 서버 칩 Baltra 를 개발하고 TSMC 3nm(N3P)로 만든다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-010",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-009",
+      "published_at_utc": "2026-02-18T15:18:46Z",
+      "title": "Apple Upgrades Private Cloud Compute Servers to M5 Chips",
+      "excerpt": "Apple is upgrading its Private Cloud Compute servers to M5 chips, skipping two generations of silicon to boost the infrastructure powering Apple Intelligence’s cloud features.",
+      "locator": "기사 2번째 문단",
+      "relevance": "Apple 이 PCC 서버를 자체 M5 칩으로 바꾸고 있다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-011",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-004",
+      "published_at_utc": "2026-09-14T19:05:40Z",
+      "title": "Apple releases iOS 27, redesigned Siri AI",
+      "excerpt": "Apple on Monday released a new version of the iPhone software called iOS 27, which includes the company’s redesigned Siri AI personal assistant, before the latest iPhones hit store shelves this week. The new Siri AI is in beta, Apple said, and users have to opt in through the settings app, though they may have to add their names to the waitlist before getting access. ... Apple first revealed the Siri AI assistant in June. A version of the company’s AI-powered Siri announced in 2024 was delayed last year.",
+      "locator": "기사 1·2번째 문단과 5번째 문단",
+      "relevance": "2024년 예고한 Siri 개편이 미뤄졌다가 2026-09-14 iOS 27 과 함께 베타로 출시됐다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-012",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F4",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-004",
+      "published_at_utc": "2026-09-14T19:05:40Z",
+      "title": "Apple releases iOS 27, redesigned Siri AI",
+      "excerpt": "However, for more complicated Siri AI queries, Apple has what’s called Private Cloud Compute that uses Google Cloud infrastructure with Nvidia and Intel chips. Apple is also using Google’s Gemini to build its own models.",
+      "locator": "기사 6번째 문단",
+      "relevance": "새 Siri 의 고난도 질의가 Google Cloud 기반 PCC 에서 처리되고 Apple 이 Gemini 로 자체 모델을 만든다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-013",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-005",
+      "published_at_utc": "2025-11-05T20:37:47Z",
+      "title": "Apple nears deal to pay Google $1B annually to power new Siri, report says",
+      "excerpt": "Apple is nearing a deal with Google that would see the iPhone maker pay the tech giant roughly $1 billion a year for a custom version of Google’s Gemini AI model to power its overhaul of Siri, according to a new report from Bloomberg. ... The custom AI model’s 1.2 trillion parameters — a measure of the software’s complexity and capability — would far exceed the level of Apple’s current models.",
+      "locator": "기사 1번째 문단과 3번째 문단(행사 안내 2줄 다음부터 셈)",
+      "relevance": "Apple 이 Siri 개편용 Gemini 커스텀 모델(1.2조 파라미터)에 연 약 $1B 를 낸다는 Bloomberg 인용 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-014",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F3",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-006",
+      "published_at_utc": "2026-01-12T15:19:25Z",
+      "title": "Apple picks Google's Gemini to run AI-powered Siri coming this year",
+      "excerpt": "The multiyear partnership will lean on Google’s Gemini and cloud technology for future Apple foundational models, according to a joint statement obtained by CNBC’s Jim Cramer. ... The models will continue to run on Apple devices and the company’s private cloud compute, the companies added.",
+      "locator": "기사 2번째 문단과 4번째 문단",
+      "relevance": "Apple 과 Google 이 Gemini 를 Apple 기반 모델의 토대로 쓰는 다년 협력을 공동 발표했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-015",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019326000020",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Apple 10-Q (2026-06-27)",
+      "excerpt": "Cash generated by operating activities | 116,996 | 81,754 | ... Payments for acquisition of property, plant and equipment | (6,799) | (9,473)",
+      "locator": "10-Q (2026-06-27) Condensed Consolidated Statements of Cash Flows — Nine Months Ended 열 (p.5)",
+      "relevance": "2026 회계연도 9개월 영업현금흐름과 설비투자로, 최근 1년 FCF 와 분기 설비투자 계산에 쓴다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-016",
+      "company_id": "apple",
+      "factors": [
+        "F2"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019326000013",
+      "published_at_utc": "2026-05-01T00:00:00Z",
+      "title": "Apple 10-Q (2026-03-28)",
+      "excerpt": "Payments for acquisition of property, plant and equipment | (4,344) | (6,011)",
+      "locator": "10-Q (2026-03-28) Condensed Consolidated Statements of Cash Flows — Six Months Ended 열 (p.5)",
+      "relevance": "2026 회계연도 상반기 설비투자로, 9개월 값(6,799)에서 빼면 2026년 6월 분기 설비투자 약 US$2,455M 이 나온다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-017",
+      "company_id": "apple",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-007",
+      "published_at_utc": "2025-07-08T00:00:00Z",
+      "title": "Apple loses top AI models executive to Meta’s hiring spree",
+      "excerpt": "Ruoming Pang, a distinguished engineer and manager in charge of the company’s Apple foundation models team, is departing, according to people with knowledge of the matter. Pang, who joined Apple from Alphabet Inc. in 2021, is the latest big hire for Meta’s new superintelligence group, said the people, who declined to be named discussing unannounced personnel moves.",
+      "locator": "기사 2번째 문단(부제 다음)",
+      "relevance": "Apple 기반 모델 팀장 Pang 이 Meta 로 옮긴다는 Bloomberg 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-018",
+      "company_id": "apple",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-008",
+      "published_at_utc": "2025-12-01T00:00:00Z",
+      "title": "John Giannandrea to retire from Apple",
+      "excerpt": "Apple today announced John Giannandrea, Apple’s senior vice president for Machine Learning and AI Strategy, is stepping down from his position and will serve as an advisor to the company before retiring in the spring of 2026.",
+      "locator": "보도자료 1번째 문단 첫 문장",
+      "relevance": "AI 총괄 Giannandrea 가 물러나 2026년 봄 은퇴한다는 Apple 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-019",
+      "company_id": "apple",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-010",
+      "published_at_utc": "2025-12-17T00:00:00Z",
+      "title": "[News] Apple Reportedly Pushes In-House AI Chip, Eyes 2027 Server Deployment; Foxconn to Gain",
+      "excerpt": "According to Economic Daily News, citing sources, the company is working with Broadcom to develop its first proprietary AI chip, dubbed “Baltra,” with AI servers deployment expected to begin in 2027. ... The report, citing Wccftech, indicates that Apple’s in-house AI server chip, “Baltra,” is intended for AI inference and is expected to adopt TSMC’s 3nm N3E process",
+      "locator": "기사 1번째 문단과 2번째 문단",
+      "relevance": "Baltra 가 Apple 자체 AI 서버의 추론용 칩이고 2027년 서버 배치 예정이라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-020",
+      "company_id": "apple",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-011",
+      "published_at_utc": "2026-04-30T12:03:00Z",
+      "title": "Apple is giving up on the Vision Pro after weak sales and high return rates",
+      "excerpt": "Sources have informed MacRumors that Apple has ceased development of the Vision Pro after last year's upgraded model failed to lift lukewarm sales. Apple reportedly cut production dramatically soon after launching the AR headset in 2024 and sold only a few hundred thousand units in total.",
+      "locator": "기사 2번째 문단",
+      "relevance": "Vision Pro 판매 부진과 개발 중단 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-021",
+      "company_id": "apple",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-012",
+      "published_at_utc": "2024-02-28T01:56:38Z",
+      "title": "Apple cancels its electric car project",
+      "excerpt": "Apple has ended its secret plans of building a self-driving electric car, a decade-long effort that was seen as one of the most ambitious undertakings in the company's history.",
+      "locator": "기사 본문 1번째 문단(사진 설명 다음)",
+      "relevance": "Apple 자동차 사업 취소 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-022",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-013",
+      "published_at_utc": "2026-08-15T12:09:09Z",
+      "title": "Apple Trained Its Own AI for China With Alibaba, Winning Unprecedented Beijing Clearance",
+      "excerpt": "Apple has secretly trained a proprietary large language model for the Chinese market with Alibaba's technical support — and Beijing approved it — making the iPhone maker the first foreign company the Chinese government has ever cleared to deploy its own AI model to mainland consumers, Reuters reported August 14, citing three people familiar with the situation.",
+      "locator": "기사 1번째 문단",
+      "relevance": "Apple 이 중국 당국(CAC 등록) 승인을 받은 첫 외국 기업이라는 Reuters 인용 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-023",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-014",
+      "published_at_utc": "2026-07-10T21:00:29Z",
+      "title": "Apple sues OpenAI over alleged trade secret theft",
+      "excerpt": "Apple filed a lawsuit Friday against OpenAI over allegations of trade secret theft and breach of contract.",
+      "locator": "기사 1번째 문단(행사 안내 2줄 다음)",
+      "relevance": "Apple 이 OpenAI 를 영업비밀 침해로 제소했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-024",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019326000020",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Apple 10-Q (2026-06-27)",
+      "excerpt": "For example, the Company is subject to civil antitrust lawsuits in the U.S. alleging monopolization or attempted monopolization in the markets for “performance smartphones” and “smartphones” generally in violation of U.S. antitrust laws.",
+      "locator": "10-Q (2026-06-27) Part II Item 1A Risk Factors — 규제·조사 위험 항목 (p.22)",
+      "relevance": "Apple 이 미국에서 스마트폰 독점 혐의 반독점 소송을 받고 있다는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-025",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-015",
+      "published_at_utc": "2026-07-08T15:40:01Z",
+      "title": "Apple loses challenge against EU digital competition rules",
+      "excerpt": "\"The General Court dismisses all the actions brought by Apple,\" the Luxembourg-based court said in a statement. \"It confirms the designation of Apple as a gatekeeper in relation to the App Store and iOS.\"",
+      "locator": "기사 3번째 문단(편집 안내 다음부터 셈)",
+      "relevance": "EU 일반법원이 DMA 지정에 대한 Apple 의 소송을 모두 기각했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-026",
+      "company_id": "apple",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019326000020",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Apple 10-Q (2026-06-27)",
+      "excerpt": "For example, the Company earns revenue from licensing arrangements with Google LLC (“Google”) and other companies to offer their search services on the Company’s platforms and applications, and certain of these arrangements are currently subject to government investigations and legal proceedings. ... The court’s order was appealed by both the DOJ and Google.",
+      "locator": "10-Q (2026-06-27) Part II Item 1A Risk Factors — 제휴사 조사·소송 위험 문단 (p.23)",
+      "relevance": "Google 검색 라이선스 수입이 DOJ 소송의 항소 대상이라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-027",
+      "company_id": "apple",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-016",
+      "published_at_utc": "2024-05-02T08:02:31Z",
+      "title": "Google’s payments to Apple reached $20 billion in 2022, antitrust court documents show",
+      "excerpt": "(Bloomberg) — Alphabet Inc. paid Apple Inc. $20 billion in 2022 for Google to be the default search engine in the Safari browser, according to newly unsealed court documents in the Justice Department's antitrust lawsuit against Google.",
+      "locator": "기사 1번째 문단",
+      "relevance": "Google 이 Apple 에 낸 기본 검색 대가가 연 $20B 규모라는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-028",
+      "company_id": "apple",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-017",
+      "published_at_utc": "2026-02-04T15:08:39Z",
+      "title": "DOJ and states appeal Google search antitrust remedies ruling",
+      "excerpt": "What’s happening. The DOJ and state attorneys general filed notices of appeal yesterday, challenging U.S. District Judge Amit Mehta’s September remedies ruling, Bloomberg and Reuters reported.",
+      "locator": "기사 3번째 문단",
+      "relevance": "DOJ 가 2026-02 초 Google 검색 사건 구제 판결에 항소했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-029",
+      "company_id": "apple",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019325000079",
+      "published_at_utc": "2025-10-31T00:00:00Z",
+      "title": "Apple 10-K (2025-09-27)",
+      "excerpt": "The Company’s customers are primarily in the consumer, small and mid-sized business, education, enterprise and government markets.",
+      "locator": "10-K (2025-09-27) Part I Item 1 Business — Markets and Distribution (p.2)",
+      "relevance": "Apple 고객이 소비자·기업·교육·정부라는 공시다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-030",
+      "company_id": "apple",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019326000020",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Apple 10-Q (2026-06-27)",
+      "excerpt": "Total net sales | 109,417 | 94,036 | 364,357 | 313,695 | ... Operating income | 35,695 | 28,202 | 122,432 | 100,623",
+      "locator": "10-Q (2026-06-27) Condensed Consolidated Statements of Operations — Three/Nine Months Ended 열 (p.1)",
+      "relevance": "최근 1년 매출·영업이익 계산에 쓰는 9개월 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-031",
+      "company_id": "apple",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019325000079",
+      "published_at_utc": "2025-10-31T00:00:00Z",
+      "title": "Apple 10-K (2025-09-27)",
+      "excerpt": "Total net sales | 416,161 | 391,035 | 383,285 | ... Operating income | 133,050 | 123,216 | 114,301",
+      "locator": "10-K (2025-09-27) Consolidated Statements of Operations — 2025·2024·2023 열 (p.29)",
+      "relevance": "최근 1년 매출·영업이익 계산에 쓰는 2025 회계연도 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-032",
+      "company_id": "apple",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019325000079",
+      "published_at_utc": "2025-10-31T00:00:00Z",
+      "title": "Apple 10-K (2025-09-27)",
+      "excerpt": "Cash generated by operating activities | 111,482 | 118,254 | 110,543 | ... Payments for acquisition of property, plant and equipment | (12,715) | (9,447) | (10,959)",
+      "locator": "10-K (2025-09-27) Consolidated Statements of Cash Flows — 2025·2024·2023 열 (p.33)",
+      "relevance": "최근 1년 FCF 계산에 쓰는 2025 회계연도 영업현금흐름과 설비투자다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-033",
+      "company_id": "apple",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000032019326000018",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Apple 8-K Exhibit 99.1 Apple reports third quarter results",
+      "excerpt": "The Company posted quarterly revenue of $109.4 billion, up 16 percent year over year.",
+      "locator": "8-K Exhibit 99.1 (2026-07-30) 본문 1번째 문단",
+      "relevance": "2026년 6월 분기 매출 $109.4B, 전년 대비 16% 증가 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-apple-034",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-018",
+      "published_at_utc": "2026-09-14T22:03:53Z",
+      "title": "X and SpaceXAI move to drop Apple from antitrust lawsuit",
+      "excerpt": "Today, X and SpaceXAI filed a motion to voluntarily dismiss with prejudice their claims against Apple, while keeping their claims against OpenAI.",
+      "locator": "기사 6번째 문단",
+      "relevance": "xAI(SpaceXAI)·X 가 2026-09-14 Apple 에 대한 반독점 청구를 취하했다는 보도다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-apple-005",
+      "excerpt": "Apple Inc. must pay an additional $184 million in interest on a jury’s $634 million patent verdict in favor of Masimo Corp. based on sales of Apple Watches with heart-rate monitoring features, a federal judge ruled Monday.",
+      "locator": "기사 1번째 문단 (원문 https://news.bloomberglaw.com/tech-and-telecom-law/apple-owes-184-million-in-interest-on-634-million-patent-loss)"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "apple.F1",
+      "evidence_after": [
+        "Apple ① 은 범위 최상단인 5점이다.",
+        "Apple 의 소비자 채널을 세계에서 가장 강한 소비자 락인이라고 판정했다."
+      ],
+      "evidence_up_after": [
+        "25억 대가 넘는 기기 설치기반이 개인이 매일 쓰고 떠나면 불편한 소비자 채널을 이룬다. [EV-apple-006]",
+        "App Store 생태계는 연 $1.4T 의 결제·판매를 일으킨다. [EV-apple-007]",
+        "2026년 6월 분기 iPhone 매출이 22% 늘어, AI 기능 없이도 하드웨어 교체 주기가 돈다는 것을 보여 준다. [EV-apple-008]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "apple.F2",
+      "evidence_after": [
+        "Apple ② 는 범위 하한인 2점이고, 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 통과한 것이 없다는 판단이다.",
+        "세 경로별 판정 입력은 아직 따로 매기지 않아, 점수는 사람이 매긴 2점으로 서 있다.",
+        "실리콘 역량은 따로 본다. Apple ② 가 낮은 이유는 칩이 아니라 모델과 표준 주도력의 공백이다.",
+        "자체 모델 AFM 3 가 Arena 나 하드 벤치마크에 나오지 않는다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "M 시리즈와 Baltra 를 만드는 Apple 의 칩 설계력은 강하다. [EV-apple-009, EV-apple-010]"
+      ],
+      "evidence_down_after": [
+        "Siri 개편은 WWDC 2024 예고 뒤 2년 미뤄졌다가 2026-09-14 iOS 27 과 함께 베타(설정에서 옵트인, 대기 명단)로 출시됐다. [EV-apple-011]",
+        "고난도 추론은 Google 에 연 $1B 를 주고 Gemini 커스텀 모델(파라미터 1.2조 개)로 외주하고 있다. [EV-apple-013, EV-apple-014, EV-apple-012]",
+        "분기 설비투자는 2026년 6월 분기 약 $2.5B(9개월 누계 $6.8B) 수준이고, 팀장 Pang 이 Meta 로 옮기고 AI 총괄 Giannandrea 가 은퇴하는 등 인재도 빠져나갔다. [EV-apple-015, EV-apple-016, EV-apple-017, EV-apple-018]"
+      ]
+    },
+    {
+      "judgment_id": "apple.F3",
+      "evidence_after": [
+        "Apple ③ 은 세 기준의 통과점이 1 이라 2점이다.",
+        "모방 불가능성은 실패다. 25억 대 넘는 설치기반은 ① 에서 이미 5점으로 셌으므로, ③ 에서 다시 쓰면 같은 속성을 두 번 세게 된다.",
+        "별도 수익모델은 통과한다.",
+        "후발 가속도는 실패다.",
+        "지연은 감속으로 처리한다는 원칙에 따라 Siri 개편 지연을 가속이 아니라 감속으로 본다.",
+        "라스트무버는 늦게 움직여 이기는 것이지 움직이지 않는 것이 아니다.",
+        "새 Siri 는 2026-09-14 iOS 27 과 함께 베타로 나왔으나 사용·채택 지표가 없어 가속도 판정을 바꾸지 않는다."
+      ],
+      "evidence_up_after": [
+        "Apple 은 하드웨어와 서비스로 매출을 낸다. [EV-apple-008]"
+      ],
+      "evidence_down_after": [
+        "Siri 개편이 WWDC 2024 예고 뒤 2년 미뤄졌고 고난도 추론은 Gemini 에 외주하고 있다. [EV-apple-011, EV-apple-014]"
+      ]
+    },
+    {
+      "judgment_id": "apple.F4",
+      "evidence_after": [
+        "Apple ④ 는 3점이다.",
+        "Apple ④ 가 5점에 못 미치는 이유는 다각화가 빈약하기 때문이다."
+      ],
+      "evidence_up_after": [
+        "Apple 은 M 시리즈 자체 칩을 대량 출하해 온 수직계열화 실적이 있고, 비공개 클라우드 연산(PCC) 서버는 이미 M5 로 바꿨다. [EV-apple-010]",
+        "첫 AI 서버 칩 Baltra 는 Broadcom 과 공동개발하며 TSMC 3nm 공정으로 2026년까지 준비해 2027년 서버에 배치할 계획이지만, 양산 전 계획이라 점수 근거가 아니다. [EV-apple-009, EV-apple-019]"
+      ],
+      "evidence_down_after": [
+        "Vision Pro 는 부진하고 자동차 사업은 취소됐다. [EV-apple-020, EV-apple-021]",
+        "Baltra 는 내부 전용이라 외부 판매 수익이 없고, 추론 인프라를 채울 뿐 모델 공백을 메우지 못한다. Siri 는 여전히 Gemini 로 돌아간다. [EV-apple-019, EV-apple-012]"
+      ]
+    },
+    {
+      "judgment_id": "apple.F5",
+      "evidence_after": [
+        "Apple ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(-1) 로 3점이다.",
+        "동맹 등급 +1 의 근거는 App Store 개발자 생태계다.",
+        "Google 과의 모델 계약은 동맹이 아니라 조달이다. Apple 이 연 $1B 를 주고 Gemini 를 사 오는 고객 쪽이기 때문이다.",
+        "적대 등급 -1(비용형)은 법적 전선에서 나온다.",
+        "Apple 의 법적 전선들은 비용이지 존립 위협이 아니라고 보아 구조형(-2)이 아니라 비용형으로 판정했다.",
+        "DOJ 소송에서 져도 아이폰은 팔린다는 점은 받치는 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "App Store 개발자 생태계는 연 $1.4T 의 거래를 일으킨다. [EV-apple-007]",
+        "Apple 은 중국 CAC 승인을 받은 첫 외국 기업이다. [EV-apple-022]"
+      ],
+      "evidence_down_after": [
+        "Apple 은 OpenAI 를 영업비밀 침해로 제소해 소송 중이고, 미 법무부(DOJ) 반독점 소송이 걸려 있으며, EU DMA 지정에 대한 소송은 모두 기각됐다. [EV-apple-023, EV-apple-024, EV-apple-025]",
+        "2026-10-05 에는 6억 3,400만 달러 특허 패소 판결에 이자 1억 8,400만 달러가 더해졌다는 보도도 나왔다. [EV-apple-005]"
+      ]
+    },
+    {
+      "judgment_id": "apple.F7",
+      "evidence_after": [
+        "Apple ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
+        "Apple 에는 순환금융 구조가 확인되지 않는다.",
+        "Apple 이 고객에게 넣은 돈이 매출로 돌아오는 고리는 없다고 판정했다.",
+        "최근 1년(2025-06-29~2026-06-27) 영업외이익 비중(세전이익의 0.7%)은 ⑥ 소관이라 ⑦ 의 입력이 아니다."
+      ],
+      "evidence_up_after": [
+        "Apple 의 매출은 기기와 서비스를 사는 소비자·기업에서 나온다. [EV-apple-029, EV-apple-008]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "apple.F8",
+      "evidence_after": [
+        "Apple ⑧ 은 -3점이다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "가장 큰 의존은 AI 가 아니라 Google 검색 지급금이다. 연 약 $20B 가 Services 마진의 핵심인데 DOJ 소송이 2월부터 항소 단계에 있어, 이 지급이 끊길 위험이 있다. [EV-apple-027, EV-apple-026, EV-apple-028]",
+        "Siri 의 핵심 추론도 경쟁사 Google 의 Gemini 에 기대고 있어, 공급자가 곧 경쟁자인 의존이다. [EV-apple-014, EV-apple-012, EV-apple-013]"
+      ]
+    },
+    {
+      "judgment_id": "apple.F9",
+      "evidence_after": [
+        "Apple ⑨ 는 감점 없이 0점이다.",
+        "게이트 1(본업이 버는가)은 통과한다.",
+        "게이트 2(현금이 새는가)는 추세를 안정으로 판정해 0점에서 끝난다.",
+        "분기 매출 흐름도 추세 안정 판정과 맞는다.",
+        "2026-06-27 현금및현금성자산은 $39.5B 이고 단기 투자자산을 더하면 $62.4B 이며, FCF 가 흑자라 게이트 3(버티는 기간)은 따지지 않는다."
+      ],
+      "evidence_up_after": [
+        "최근 1년(2025-06-29~2026-06-27) 매출 $466.8B, 영업이익 $154.9B 로 영업이익률이 33.2% 다. [EV-apple-030, EV-apple-031]",
+        "최근 1년(2025-06-29~2026-06-27) FCF 는 +$136.7B 로 흑자다. [EV-apple-015, EV-apple-032]",
+        "2026년 6월 분기 매출은 $109.4B 로 전년 대비 16% 늘었다. [EV-apple-033]"
+      ],
+      "evidence_down_after": []
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "apple.F2",
+      "column": "down",
+      "line": "고난도 추론은 Google 에 연 $1B 를 주고 Gemini 커스텀 모델(파라미터 1.2조 개)로 외주하고 있고, 자체 모델 AFM 3 는 Arena 나 하드 벤치마크에 나오지 않는다.",
+      "searched": "줄의 뒷부분(자체 모델 AFM 3 의 Arena·하드 벤치마크 부재)만 찾지 못했다. 부재 주장이라 기준일(2026-10-06) 이전에 발행된 원문이 없고, lmarena·artificialanalysis.ai 는 발행일 없는 현재 표만 있다. 앞부분(Gemini 연 $1B·1.2조 파라미터)은 TechCrunch·CNBC 로 연결했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "apple.F5",
+      "column": "up",
+      "line": "DOJ 에 져도 아이폰은 팔린다.",
+      "searched": "판정자의 추론 문장이라 받칠 원문이 없다. Apple 10-Q(2026-06-27) 위험 요인과 DOJ 소송 보도에서 판매 영향 전망을 적은 문장을 찾지 못했다.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "apple.F1",
+      "before": "약 20억 대의 기기 설치기반이 개인이 매일 쓰고 떠나면 불편한 소비자 채널을 이룬다.",
+      "after": "25억 대가 넘는 기기 설치기반이 개인이 매일 쓰고 떠나면 불편한 소비자 채널을 이룬다. [EV-apple-006]",
+      "why": "Apple 은 2026-01 실적 발표에서 활성 기기 설치기반이 25억 대를 넘었다고 밝혔다(2025-01 은 23.5억 대). '약 20억 대'는 원문과 다르다.",
+      "evidence_id": "EV-apple-006"
+    },
+    {
+      "judgment_id": "apple.F2",
+      "before": "Siri 개편은 WWDC 2024 예고 뒤 2년 미뤄져 iOS 27 로 넘어갔고, 기준일(2026-10-06)까지 새 Siri 출시는 확인되지 않았다.",
+      "after": "Siri 개편은 WWDC 2024 예고 뒤 2년 미뤄졌다가 2026-09-14 iOS 27 과 함께 베타(설정에서 옵트인, 대기 명단)로 출시됐다. [EV-apple-011]",
+      "why": "원문(CNBC 2026-09-14)은 Apple 이 2026-09-14 iOS 27 과 함께 새 Siri AI 를 베타로 출시했다고 적는다. '기준일까지 새 Siri 출시는 확인되지 않았다'는 원문과 반대다. 이 줄은 ② 2점의 하한 근거와 ③ 가속도 판정 문장('새 Siri 가 출시되고 …')에 닿으므로 판단 재검토 대상이다.",
+      "evidence_id": "EV-apple-011"
+    },
+    {
+      "judgment_id": "apple.F2",
+      "before": "고난도 추론은 Google 에 연 $1B 를 주고 Gemini 커스텀 모델(파라미터 1.2조 개)로 외주하고 있고, 자체 모델 AFM 3 는 Arena 나 하드 벤치마크에 나오지 않는다.",
+      "after": "고난도 추론은 Google 에 연 $1B 를 주고 Gemini 커스텀 모델(파라미터 1.2조 개)로 외주하고 있다. [EV-apple-013, EV-apple-014, EV-apple-012]",
+      "why": "Gemini 외주 부분은 원문으로 확인했다. 'AFM 3 가 Arena 나 하드 벤치마크에 나오지 않는다'는 기준일 이전 원문을 찾지 못해 이 줄에서 빼고 판정 칸으로 옮겼다(unfound 참고).",
+      "evidence_id": "EV-apple-013"
+    },
+    {
+      "judgment_id": "apple.F2",
+      "before": "분기 설비투자는 $3.5B 수준이고, 팀장 Pang 이 Meta 로 옮기고 AI 총괄 Giannandrea 가 은퇴하는 등 인재도 빠져나갔다.",
+      "after": "분기 설비투자는 2026년 6월 분기 약 $2.5B(9개월 누계 $6.8B) 수준이고, 팀장 Pang 이 Meta 로 옮기고 AI 총괄 Giannandrea 가 은퇴하는 등 인재도 빠져나갔다. [EV-apple-015, EV-apple-016, EV-apple-017, EV-apple-018]",
+      "why": "10-Q 설비투자는 2026 회계연도 9개월 US$6,799M, 상반기 US$4,344M 이라 2026년 6월 분기는 약 US$2,455M 이다. '$3.5B 수준'을 받치는 분기는 원문에서 찾지 못했다.",
+      "evidence_id": "EV-apple-015"
+    },
+    {
+      "judgment_id": "apple.F4",
+      "before": "첫 AI 서버 칩 Baltra 는 Broadcom 과 공동개발하며 TSMC N3P 로 2026년 하반기 양산해 2027년 배치할 계획이지만, 양산 전 계획이라 점수 근거가 아니다.",
+      "after": "첫 AI 서버 칩 Baltra 는 Broadcom 과 공동개발하며 TSMC 3nm 공정으로 2026년까지 준비해 2027년 서버에 배치할 계획이지만, 양산 전 계획이라 점수 근거가 아니다. [EV-apple-009, EV-apple-019]",
+      "why": "'2026년 하반기 양산'을 적은 원문은 찾지 못했다. Macworld(The Information 인용)는 2026년까지 준비·TSMC N3P, TrendForce(Wccftech 인용)는 N3E·2027년 서버 배치로 적어 공정 세부가 갈린다. 두 보도가 겹치는 'TSMC 3nm' 로 좁혔다.",
+      "evidence_id": "EV-apple-019"
+    },
+    {
+      "judgment_id": "apple.F5",
+      "before": "Apple 은 OpenAI 와 서로 소송 중이고, xAI 반독점 소송과 미 법무부(DOJ) 반독점 소송이 걸려 있으며, EU DMA 에 대한 항소 3건은 모두 기각됐다.",
+      "after": "Apple 은 OpenAI 를 영업비밀 침해로 제소해 소송 중이고, 미 법무부(DOJ) 반독점 소송이 걸려 있으며, EU DMA 지정에 대한 소송은 모두 기각됐다. [EV-apple-023, EV-apple-024, EV-apple-025]",
+      "why": "OpenAI 소송은 Apple 이 2026-07-10 제기했고 OpenAI 의 맞소송은 찾지 못해 '서로 소송 중'을 고쳤다. xAI·X 는 2026-09-14 Apple 에 대한 반독점 청구를 취하(with prejudice)해 기준일에는 걸려 있지 않다. DMA 는 EU 일반법원이 Apple 의 소송을 모두 기각했다고 적을 뿐 건수(3건)는 원문에서 확인하지 못했다.",
+      "evidence_id": "EV-apple-034"
+    }
+  ]
+}

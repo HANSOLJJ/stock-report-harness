@@ -1,0 +1,759 @@
+{
+  "company_id": "palantir",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "title": "Palantir 10-Q (2026-06-30)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000041/pltr-20260630.htm",
+      "kind": "filing",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-SEC-palantir-000132165526000011",
+      "title": "Palantir 10-K (2025-12-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000011/pltr-20251231.htm",
+      "kind": "filing",
+      "published_at_utc": "2026-02-17T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-SEC-palantir-000132165525000106",
+      "title": "Palantir 10-Q (2025-06-30)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165525000106/pltr-20250630.htm",
+      "kind": "filing",
+      "published_at_utc": "2025-08-05T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-WEB-palantir-001",
+      "title": "Five police forces drop Palantir pilot as funding ends",
+      "publisher": "Police Professional",
+      "url": "https://policeprofessional.com/news/five-police-forces-drop-palantir-pilot-as-funding-ends/",
+      "kind": "news",
+      "published_at_utc": "2026-09-23T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-WEB-palantir-002",
+      "title": "Regulator considers concerns over presentation of FDP-related data",
+      "publisher": "Healthcare Management",
+      "url": "https://www.healthcare-management.uk/regulator-considers-concerns-presentation-fdp-related",
+      "kind": "news",
+      "published_at_utc": "2026-10-06T07:09:41Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-WEB-palantir-003",
+      "title": "Palantir Launches Engine for Deploying NVIDIA Nemotron Open Models in Sovereign Environments",
+      "publisher": "Business Wire",
+      "url": "https://www.businesswire.com/news/home/20260629390275/en/Palantir-Launches-Engine-for-Deploying-NVIDIA-Nemotron-Open-Models-in-Sovereign-Environments",
+      "kind": "news",
+      "published_at_utc": "2026-06-29T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-WEB-palantir-004",
+      "title": "SAP and Palantir Enhance Partnership with AI-Supported Data Migration Tooling",
+      "publisher": "SAP News Center",
+      "url": "https://news.sap.com/2026/05/sap-palantir-enhance-partnership-ai-supported-data-migration-tooling/",
+      "kind": "news",
+      "published_at_utc": "2026-05-12T12:30:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-WEB-palantir-005",
+      "title": "Palantir to develop ImmigrationOS for ICE to speed up deportations",
+      "publisher": "TechRadar",
+      "url": "https://www.techradar.com/pro/security/palantir-to-develop-immigrationos-for-ice-to-speed-up-deportations",
+      "kind": "news",
+      "published_at_utc": "2025-04-22T20:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-WEB-palantir-006",
+      "title": "Nurses rally in San Francisco against Palantir's work with ICE",
+      "publisher": "KALW",
+      "url": "https://www.kalw.org/bay-area-news/2026-10-01/nurses-rally-in-san-francisco-against-palantirs-work-with-ice",
+      "kind": "news",
+      "published_at_utc": "2026-10-01T00:00:00Z",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "company_id": "palantir"
+    },
+    {
+      "source_id": "SRC-WEB2-palantir-001",
+      "title": "State Department Wants Palantir to Advise on Free Speech",
+      "publisher": "The Intercept",
+      "url": "https://theintercept.com/2026/08/07/state-department-palantir-free-speech-surveillance/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "palantir",
+      "published_at_utc": "2026-08-07T16:02:04Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-palantir-012",
+      "company_id": "palantir",
+      "factors": [
+        "F3",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30)",
+      "excerpt": "| | Three Months Ended June 30, | | Six Months Ended June 30, | | 2026 | | 2025 | | 2026 | | 2025 | Revenue | $ | 1,935,464 | | | $ | 1,003,697 | | | $ | 3,568,047 | | | $ | 1,887,552 | | Income from operations | 912,004 | | | 269,317 | | | 1,666,002 | | | 445,365 |",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Condensed Consolidated Statements of Operations — Revenue·Income from operations 줄",
+      "relevance": "2026-06-30 분기·반기 매출과 영업이익으로, 분기 성장률과 최근 1년 매출·영업이익 계산에 들어간다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-013",
+      "company_id": "palantir",
+      "factors": [
+        "F3",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30)",
+      "excerpt": "Revenue increased by $932 million, or 93%, for the three months ended June 30, 2026 compared to the same period in 2025. … Revenue from U.S. commercial customers was $764 million for the three months ended June 30, 2026 compared to $306 million for the same period in 2025, a 149% increase.",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A, Comparison of the Three and Six Months Ended June 30, 2026 and 2025 — Revenue 문단",
+      "relevance": "분기 매출 성장률과 미국 상업 매출 $764M·149% 증가를 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-014",
+      "company_id": "palantir",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30)",
+      "excerpt": "| | Six Months Ended June 30, | | 2026 | | 2025 | Net cash provided by operating activities | 2,115,332 | | | 849,514 | | Purchases of property and equipment | (21,955) | | | (13,818) |",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Condensed Consolidated Statements of Cash Flows — Net cash provided by operating activities·Purchases of property and equipment 줄",
+      "relevance": "최근 1년 영업현금흐름과 설비투자 계산에 들어가는 2026·2025 상반기 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-015",
+      "company_id": "palantir",
+      "factors": [
+        "F3",
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000011",
+      "published_at_utc": "2026-02-17T00:00:00Z",
+      "title": "Palantir 10-K (2025-12-31)",
+      "excerpt": "| | Years Ended December 31, | | 2025 | | 2024 | | 2023 | Revenue | $ | 4,475,446 | | | $ | 2,865,507 | | | $ | 2,225,012 | | Income from operations | 1,414,015 | | | 310,403 | | | 119,966 |",
+      "locator": "10-K (2025-12-31) Item 8 Consolidated Statements of Operations — Revenue·Income from operations 줄",
+      "relevance": "최근 1년 매출·영업이익 계산에 들어가는 2025·2024 연간 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-016",
+      "company_id": "palantir",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000011",
+      "published_at_utc": "2026-02-17T00:00:00Z",
+      "title": "Palantir 10-K (2025-12-31)",
+      "excerpt": "| | Years Ended December 31, | | 2025 | | 2024 | | 2023 | Net cash provided by operating activities | 2,134,473 | | | 1,153,865 | | | 712,183 | | Purchases of property and equipment | (33,882) | | | (12,634) | | | (15,114) |",
+      "locator": "10-K (2025-12-31) Item 8 Consolidated Statements of Cash Flows — Net cash provided by operating activities·Purchases of property and equipment 줄",
+      "relevance": "최근 1년 잉여현금흐름 계산에 들어가는 2025 연간 영업현금흐름과 설비투자다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-017",
+      "company_id": "palantir",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165525000106",
+      "published_at_utc": "2025-08-05T00:00:00Z",
+      "title": "Palantir 10-Q (2025-06-30)",
+      "excerpt": "| | Three Months Ended June 30, | | Six Months Ended June 30, | | 2025 | | 2024 | | 2025 | | 2024 | Revenue | $ | 1,003,697 | | | $ | 678,134 | | | $ | 1,887,552 | | | $ | 1,312,472 |",
+      "locator": "10-Q (2025-06-30) Part I Item 1 Condensed Consolidated Statements of Operations — Revenue 줄",
+      "relevance": "그 전 1년 매출($3.44B) 계산에 들어가는 2024 상반기 매출이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-018",
+      "company_id": "palantir",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000011",
+      "published_at_utc": "2026-02-17T00:00:00Z",
+      "title": "Palantir 10-K (2025-12-31)",
+      "excerpt": "Revenue from U.S. government customers was $1.9 billion for the year ended December 31, 2025 compared to $1.2 billion for the same period in 2024.",
+      "locator": "10-K (2025-12-31) Item 7 MD&A, Comparison of the Years Ended December 31, 2025 and 2024 — Revenue 문단",
+      "relevance": "미 정부 고객 매출 규모로, Palantir 매출이 미 정부에 기대는 정도를 보여 준다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-019",
+      "company_id": "palantir",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30)",
+      "excerpt": "We generate revenue from the sale of subscriptions to access our software platforms in our hosted environment along with ongoing operating and maintenance (“O&M”) services (“Palantir Cloud”), software subscriptions in our customers’ environments with ongoing O&M services (“On-Premises Software”), and professional services.",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A, Components of Results of Operations — Revenue 문단 첫 문장",
+      "relevance": "매출원이 소프트웨어 구독·라이선스와 전문 서비스라는 회사 설명으로, 사업이 소프트웨어 계층에 있음을 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-020",
+      "company_id": "palantir",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30)",
+      "excerpt": "In the six months ended June 30, 2026, 52% of our revenue came from government customers and 48% came from commercial customers.",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A, Overview — Our Customers 문단",
+      "relevance": "매출이 정부와 상업 고객에서 나온다는 구성 비율이다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-021",
+      "company_id": "palantir",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-palantir-001",
+      "published_at_utc": "2026-09-23T00:00:00Z",
+      "title": "Five police forces drop Palantir pilot as funding ends",
+      "excerpt": "Five police forces are ending a two-year pilot of Palantir’s data analysis technology after Home Office funding for the programme was discontinued. The East Midlands Special Operations Unit (EMSOU), which covers Derbyshire, Leicestershire, Lincolnshire, Northamptonshire and Nottinghamshire, will end its trial of Palantir’s Foundry platform this month.",
+      "locator": "기사 1~2번째 문단",
+      "relevance": "영국 경찰 다섯 곳이 2년 시범 사업을 끝낸 고객 이탈 사례다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-022",
+      "company_id": "palantir",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-palantir-002",
+      "published_at_utc": "2026-10-06T07:09:41Z",
+      "title": "Regulator considers concerns over presentation of FDP-related data",
+      "excerpt": "NHS England claims more than 300,000 patients have been flagged for removal from elective care waiting lists across 40 trusts with the support of Palantir technology. FT analysis, however, shows more than half of these trusts no longer used the inpatient or outpatient care co-ordination solutions to manage waiting lists.",
+      "locator": "기사 3~4번째 본문 문단",
+      "relevance": "Palantir 대기자 명단 도구를 쓰던 NHS 트러스트 40곳 가운데 절반 넘게가 사용을 그만둔 고객 이탈 사례다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-023",
+      "company_id": "palantir",
+      "factors": [
+        "F2",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-palantir-003",
+      "published_at_utc": "2026-06-29T00:00:00Z",
+      "title": "Palantir Launches Engine for Deploying NVIDIA Nemotron Open Models in Sovereign Environments",
+      "excerpt": "Palantir Technologies Inc. (NASDAQ: PLTR) today announced a strategic initiative with NVIDIA to deliver an intelligent engine for running NVIDIA AI and Nemotron open models in sovereign environments, with a focus on United States government agencies and U.S. critical infrastructure, where open models are essential for national security, corporate sustainability, and industrial innovation.",
+      "locator": "보도자료 본문 1번째 문단",
+      "relevance": "Nvidia Nemotron 모델을 소버린 환경에서 구동하는 Nvidia 와의 제휴다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-024",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-palantir-004",
+      "published_at_utc": "2026-05-12T12:30:00Z",
+      "title": "SAP and Palantir Enhance Partnership with AI-Supported Data Migration Tooling",
+      "excerpt": "This year at SAP Sapphire, SAP and Palantir announced an expansion of their strategic partnership focused on delivering new data migration capabilities designed to help enterprise customers succeed in the AI era and realize SAP’s vision of the Autonomous Enterprise. … Accenture plays a key role in bringing this joint effort to life as the first global strategic services partner for this initiative, helping their clients translate these capabilities into large-scale business-led programs.",
+      "locator": "기사 1번째 문단, 6번째 문단",
+      "relevance": "SAP 와의 전략적 제휴 확대와 Accenture 의 글로벌 전략 서비스 파트너 참여로, 상업 동맹을 받친다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-025",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-palantir-005",
+      "published_at_utc": "2025-04-22T20:00:00Z",
+      "title": "Palantir to develop ImmigrationOS for ICE to speed up deportations",
+      "excerpt": "US Immigration and Customs Enforcement (ICE) has awarded a $29.9 million contract to software firm Palantir to build a software system to quickly enforce the Trump administration's deportation targets, 404 Media reports.",
+      "locator": "기사 1번째 문단",
+      "relevance": "ICE 의 ImmigrationOS 계약 규모($29.9M)다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-026",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-palantir-006",
+      "published_at_utc": "2026-10-01T00:00:00Z",
+      "title": "Nurses rally in San Francisco against Palantir's work with ICE",
+      "excerpt": "1500 nurses marched to ICE’s San Francisco field office on Wednesday chanting, “Hey hey, ho ho, Palantir has got to go!” They want public institutions, including hospitals, to cut ties with Palantir, which they say is aiding and abetting ICE’s threat to democracy.",
+      "locator": "기사 2번째 문단",
+      "relevance": "샌프란시스코 간호사들이 ICE 와의 연계를 이유로 Palantir 에 항의한 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-palantir-027",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-palantir-001",
+      "published_at_utc": "2026-08-07T16:02:04Z",
+      "title": "State Department Wants Palantir to Advise on Free Speech",
+      "excerpt": "Among the partners for the State Department’s new “Freedom Tech Excellence Program” is Palantir, the AI and data integration firm started by right-wing powerbroker Peter Thiel. Under the program, company employees will go on temporary assignments to advise the government on “digital freedom and freedom of expression,” including counter-surveillance and dealing with First Amendment issues. … “Certainly neither this State Department, nor the partners they have announced so far, are trustworthy leaders in what they identify as online freedom of expression or countering digital surveillance.”",
+      "locator": "기사 본문 2번째 문단, Carrie DeCell(Knight First Amendment Institute) 인용 문단",
+      "relevance": "Palantir 가 국무부의 표현의 자유·감시 대응 자문 프로그램 파트너로 선정돼 시민사회의 비판을 받았다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-palantir-004",
+      "excerpt": "Significant setback for US technology company’s bid to establish itself as key supplier to British law enforcement",
+      "locator": "기사 부제(제목 아래 standfirst). 본문은 구독 장벽으로 열람하지 못했다"
+    },
+    {
+      "evidence_id": "EV-palantir-011",
+      "excerpt": "FT findings prompt fresh probe by statistics regulator into health service claims over controversial data project",
+      "locator": "기사 부제(제목 아래 standfirst). 본문은 구독 장벽으로 열람하지 못했다"
+    },
+    {
+      "evidence_id": "EV-palantir-005",
+      "excerpt": "A large coalition of labor unions and rights groups across Europe on Sunday demanded governments end their relationships with US tech company Palantir, which they described as a threat to democracy and civil liberties.",
+      "locator": "기사 1번째 본문 문단(사진 설명 다음)"
+    },
+    {
+      "evidence_id": "EV-palantir-007",
+      "excerpt": "More than 44,000 people have filed legal objections to their health data being shared with, stored in or used by the nationwide Federated Data Platform (FDP) operated using the US company’s AI technology.",
+      "locator": "기사 2번째 본문 문단(부제 다음)"
+    },
+    {
+      "evidence_id": "EV-palantir-008",
+      "excerpt": "Palantir Technologies Inc. (NASDAQ: PLTR) and Armada today announced a partnership to deliver sovereign AI on infrastructure manufactured in the United States and allied nations, with Palantir naming Armada its Inaugural Certified Modular Data Center Partner.",
+      "locator": "보도자료 본문 1번째 문단(MIAMI & SAN FRANCISCO, October 01, 2026)"
+    },
+    {
+      "evidence_id": "EV-palantir-010",
+      "excerpt": "AN EXPLOSIVE AND newly partially unsealed court filing alleges that the US Department of Homeland Security built up dossiers on ICE observers—including their photos, license plate numbers, and other information—and stored them in a heavily customized system called the Investigative Case Management database, which was built using proprietary software from and hosted by Palantir.",
+      "locator": "기사 1번째 문단"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "palantir.F1",
+      "evidence_after": [
+        "Palantir ① 네트워크 효과(가격을 올려도 남는가)는 업무 채널(조직 워크플로에 박혔는가)로 재며 2점이다.",
+        "고객이 실제로 떠나는 사례는 전환비용 락인이 약하다는 이 판정과 같은 방향이다.",
+        "정부·기업 계약의 전환비용은 실재한다.",
+        "그 전환비용은 사용자가 늘수록 가치가 불어나는 네트워크 효과는 아니다.",
+        "전환비용에만 기대는 해자는 프레임워크가 말하는 가짜 해자에 가깝고, AI 가 데이터 이전을 자동화하면 그마저 약해진다고 판정했다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "실제로 영국 경찰 다섯 곳이 2년 만에 Palantir 프로젝트를 끝냈고(2026-09-21 FT), NHS 병원 트러스트 20곳 넘게 Palantir 대기자 명단 도구를 그만뒀다(2026-10-03 FT 분석). [EV-palantir-004, EV-palantir-021, EV-palantir-011, EV-palantir-022]"
+      ]
+    },
+    {
+      "judgment_id": "palantir.F2",
+      "evidence_after": [
+        "Palantir ② 신기술 게임체인저(판을 바꿀 기술을 먼저 냈는가)는 세 경로 가운데 하나를 통과로 보아 3점이다.",
+        "통과한 경로가 하나이면 3점이다.",
+        "산업 인터페이스를 정의하는 표준 선점은 하지 못했다."
+      ],
+      "evidence_up_after": [
+        "AIP 온톨로지가 차별적이고 Nvidia Nemotron 모델을 소버린 환경에서 구동하는 제휴가 있어, 남이 바꾼 AI 판에 빨리 올라탄 패러다임 적응 경로를 통과로 읽었다(추론: 판단이 경로 이름을 따로 적지 않았다). [EV-palantir-023]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "palantir.F3",
+      "evidence_after": [
+        "Palantir ③ Last Mover(선두가 베끼면 선두 자신의 수익모델이 무너지는 방식으로 들어왔는가)는 통과점 2 로 3점이다.",
+        "모방 불가능성은 부분이다.",
+        "후발 가속도는 통과다.",
+        "별도 수익모델은 부분으로 판정돼 있으나, 이 판단은 부분으로 본 사유를 따로 적지 않아 다음 재검토에서 사유를 채울 대상이다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)는 없다.",
+        "통과 1점에 부분 0.5점 두 개를 더한 통과점 2 는 사다리에서 3점이다.",
+        "온톨로지는 모방 난이도가 높은 자산이다.",
+        "AI 가 데이터 이전을 자동화하면 온톨로지 위에 선 전환비용 해자가 약해질 수 있다."
+      ],
+      "evidence_up_after": [
+        "2026-06-30 분기 매출이 $1.94B 로 전년 대비 92.8% 늘어, 같은 날까지 최근 1년 매출 성장률 78.9%($6.16B, 그 전 1년 $3.44B)보다 높고 미국 상업 매출도 149% 늘었다($764M). [EV-palantir-012, EV-palantir-013, EV-palantir-015, EV-palantir-017]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "palantir.F4",
+      "evidence_after": [
+        "Palantir ④ 호황 이후 비전(곡괭이만 팔다 끝나는가, 광부가 되는가)은 3점이다."
+      ],
+      "evidence_up_after": [
+        "미국 상업 매출이 149% 늘어 $764M 가 되면서, 정부 의존에서 벗어나는 다각화가 실측으로 진행 중이다. [EV-palantir-013]"
+      ],
+      "evidence_down_after": [
+        "사업은 소프트웨어 계층에 머물고, 인프라나 모델 계층으로 넓힌 출하·배포는 없다. [EV-palantir-019]"
+      ]
+    },
+    {
+      "judgment_id": "palantir.F5",
+      "evidence_after": [
+        "Palantir ⑤ 아군 확보는 3 + 동맹 등급(+1) + 적대 등급(−2) 로 2점이다.",
+        "동맹 등급 +1 은 상업 동맹에서 나온다.",
+        "동맹 등급을 +2 로 보지 않았다.",
+        "적대 등급 −2(구조형)는 사업의 정당성 자체가 시민사회·의회의 표적이 됐다는 판정이다.",
+        "다발형(−3)은 구조형 적대가 여러 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있어야 해서, 적대 등급은 구조형에 머문다고 판정했다.",
+        "구조형 적대로 인한 실제 이탈은 영국에서만 확인되고, 최대 파트너인 미 정부와의 긴장은 보이지 않는다.",
+        "지분이 걸린 동맹이 복수이거나 경쟁사를 자기 플랫폼에 편입한 사실은 없다."
+      ],
+      "evidence_up_after": [
+        "Nvidia·SAP·Accenture 와 상업 동맹을 맺고 있고, 2026-10-01 발표한 Armada 와의 소버린 AI 인프라 공동 제공도 같은 성격의 상업 동맹이다. [EV-palantir-023, EV-palantir-024, EV-palantir-008]"
+      ],
+      "evidence_down_after": [
+        "미 이민세관단속국(ICE)의 ImmigrationOS 계약($30M)과 국무부 표현의 자유·감시 대응 자문 프로그램(Freedom Tech Excellence Program) 파트너 선정 때문에 사업의 정당성 자체가 시민사회·의회의 표적이 됐다. [EV-palantir-025, EV-palantir-027]",
+        "2026-09-28 EU 노조·인권단체의 정부 계약 철회 요구, 2026-09-30 영국 NHS 연합 데이터 플랫폼에 대한 44,000건 넘는 법적 이의 제기와 같은 날 샌프란시스코 간호사들의 ICE 연계 항의, 2026-10-02 ICE 가 시위 참가자 사진을 Palantir 데이터베이스에 넣었다는 WIRED 보도가 이 구조형 적대를 뒷받침한다. [EV-palantir-005, EV-palantir-007, EV-palantir-026, EV-palantir-010]"
+      ]
+    },
+    {
+      "judgment_id": "palantir.F7",
+      "evidence_after": [
+        "Palantir ⑦ 순환금융(내 매출을 내는 고객이 그 돈을 어디서 구했는가)은 0점이다.",
+        "투자·부채 조달에 기대 대금을 내는 고객의 비중은 작다고 판정했다.",
+        "세로축은 '내 돈이 돌아오지 않음' 이다.",
+        "⑦ 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 '작음·돌아오지 않음' 칸은 0점이다.",
+        "Palantir 가 고객에게 넣은 돈이 고객 주머니를 거쳐 매출로 되돌아오는 구조는 확인되지 않는다."
+      ],
+      "evidence_up_after": [
+        "Palantir 매출은 정부와 기업 고객의 소프트웨어 계약에서 나온다. [EV-palantir-020]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "palantir.F8",
+      "evidence_after": [
+        "Palantir ⑧ 비대칭 의존(끊기면 매출이 주는가, 회사가 멈추는가)은 −3 이다.",
+        "같은 정부 관계를 ⑤ 에서는 적대의 성격으로, ⑧ 에서는 끊기면 매출이 사라지는 의존으로 한 번씩만 센다.",
+        "ICE 계약 논란이 상업 고객의 이탈로 번질 수 있다는 점도 이 의존을 키운다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "미 정부 고객 매출이 2025년 한 해 $1.9B 인 핵심 매출원이라, 정권이 바뀌어 정책이 달라지면 매출이 직접 타격을 받는다고 판정했다. [EV-palantir-018]"
+      ]
+    },
+    {
+      "judgment_id": "palantir.F9",
+      "evidence_after": [
+        "Palantir ⑨ 적자 깊이는 게이트 2 에서 끝나 0점이다.",
+        "게이트 1(본업이 버는가)은 통과다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 흑자다.",
+        "잉여현금흐름 추세는 안정으로 판정했고, 흑자이면서 추세가 안정이면 게이트 2 에서 0점으로 끝난다."
+      ],
+      "evidence_up_after": [
+        "2025-07-01~2026-06-30 최근 1년 영업이익 $2.63B 를 매출 $6.16B 로 나눈 영업이익률이 42.8% 다. [EV-palantir-012, EV-palantir-015]",
+        "2025-07-01~2026-06-30 영업현금흐름 $3.40B 에서 설비투자 $0.04B 를 뺀 잉여현금흐름이 +$3.36B 다. [EV-palantir-014, EV-palantir-016]"
+      ],
+      "evidence_down_after": []
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "palantir.F1",
+      "column": "up",
+      "line": "정부·기업 계약의 전환비용은 실재한다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F1",
+      "column": "down",
+      "line": "그 전환비용은 사용자가 늘수록 가치가 불어나는 네트워크 효과는 아니다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F1",
+      "column": "down",
+      "line": "전환비용에만 기대는 해자는 프레임워크가 말하는 가짜 해자에 가깝고, AI 가 데이터 이전을 자동화하면 그마저 약해진다고 판정했다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F2",
+      "column": "down",
+      "line": "산업 인터페이스를 정의하는 표준 선점은 하지 못했다.",
+      "searched": "'없다'는 부재 주장이라 원문으로 받칠 수 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F3",
+      "column": "up",
+      "line": "온톨로지는 모방 난이도가 높은 자산이다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F3",
+      "column": "down",
+      "line": "AI 가 데이터 이전을 자동화하면 온톨로지 위에 선 전환비용 해자가 약해질 수 있다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F5",
+      "column": "down",
+      "line": "미 이민세관단속국(ICE)의 ImmigrationOS 계약($30M)과 국무부 감시 자문 때문에 사업의 정당성 자체가 시민사회·의회의 표적이 됐다.",
+      "searched": "'국무부 감시 자문' 부분만 미확인. 웹 검색(Palantir State Department surveillance / Catch and Revoke)에서 Palantir 가 2025-07-24 국무부 'Catch & Revoke' 에 자사 제품이 쓰이지 않았다고 밝힌 자료만 찾았다. ICE 계약 부분은 고친 줄에 남겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F5",
+      "column": "up",
+      "line": "구조형 적대로 인한 실제 이탈은 영국에서만 확인되고, 최대 파트너인 미 정부와의 긴장은 보이지 않는다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F5",
+      "column": "down",
+      "line": "지분이 걸린 동맹이 복수이거나 경쟁사를 자기 플랫폼에 편입한 사실은 없다.",
+      "searched": "'없다'는 부재 주장이라 원문으로 받칠 수 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F7",
+      "column": "up",
+      "line": "Palantir 가 고객에게 넣은 돈이 고객 주머니를 거쳐 매출로 되돌아오는 구조는 확인되지 않는다.",
+      "searched": "'없다'는 부재 주장이라 원문으로 받칠 수 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "palantir.F8",
+      "column": "down",
+      "line": "ICE 계약 논란이 상업 고객의 이탈로 번질 수 있다는 점도 이 의존을 키운다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "palantir.F5",
+      "before": "미 이민세관단속국(ICE)의 ImmigrationOS 계약($30M)과 국무부 감시 자문 때문에 사업의 정당성 자체가 시민사회·의회의 표적이 됐다.",
+      "after": "미 이민세관단속국(ICE)의 ImmigrationOS 계약($30M) 때문에 사업의 정당성 자체가 시민사회·의회의 표적이 됐다.",
+      "why": "ICE ImmigrationOS 계약($29.9M)은 TechRadar(2025-04-22) 1번째 문단에서 확인했다. '국무부 감시 자문'은 원문을 찾지 못해 줄에서 빼고 판정 칸으로 옮겼다(unfound 에 같이 적음).",
+      "evidence_id": "EV-palantir-025"
+    },
+    {
+      "judgment_id": "palantir.F5",
+      "before": "2026-09-28 EU 노조·인권단체의 정부 계약 철회 요구, 2026-10-01 영국 NHS 연합 데이터 플랫폼에 대한 44,000건 넘는 법적 이의 제기와 샌프란시스코 간호사들의 ICE 연계 항의, 2026-10-02 ICE 가 시위 참가자 사진을 Palantir 데이터베이스에 넣었다는 WIRED 보도가 이 구조형 적대를 뒷받침한다.",
+      "after": "2026-09-28 EU 노조·인권단체의 정부 계약 철회 요구, 2026-09-30 영국 NHS 연합 데이터 플랫폼에 대한 44,000건 넘는 법적 이의 제기와 같은 날 샌프란시스코 간호사들의 ICE 연계 항의, 2026-10-02 ICE 가 시위 참가자 사진을 Palantir 데이터베이스에 넣었다는 WIRED 보도가 이 구조형 적대를 뒷받침한다.",
+      "why": "Guardian 의 44,000건 보도는 2026-09-30T14:51Z 게시이고, KALW 는 간호사 행진이 수요일(2026-09-30)에 있었다고 적었다. 날짜를 2026-10-01 에서 2026-09-30 으로 고쳤다.",
+      "evidence_id": "EV-palantir-007"
+    },
+    {
+      "judgment_id": "palantir.F8",
+      "before": "미 연방 정부 계약이 연 $0.9B 를 넘는 핵심 매출원이라, 정권이 바뀌어 정책이 달라지면 매출이 직접 타격을 받는다고 판정했다.",
+      "after": "미 정부 고객 매출이 2025년 한 해 $1.9B 인 핵심 매출원이라, 정권이 바뀌어 정책이 달라지면 매출이 직접 타격을 받는다고 판정했다.",
+      "why": "10-K(2025-12-31) MD&A: 'Revenue from U.S. government customers was $1.9 billion for the year ended December 31, 2025'. '연 $0.9B' 와 맞지 않아 원문 값으로 고쳤다(10-Q 2026-06-30 기준 분기 $809M).",
+      "evidence_id": "EV-palantir-018"
+    }
+  ]
+}

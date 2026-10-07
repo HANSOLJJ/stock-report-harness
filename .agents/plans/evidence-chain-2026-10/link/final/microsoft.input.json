@@ -1,0 +1,208 @@
+{
+  "company_id": "microsoft",
+  "next_evidence_number": 5,
+  "judgments": [
+    {
+      "judgment_id": "microsoft.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "마이크로소프트 ① 은 업무 채널의 락인으로 5점을 매겼다.",
+        "마이크로소프트의 업무 채널은 가격을 올려도 떠나기 어렵다고 판단했다."
+      ],
+      "evidence_up": [
+        "Copilot 유료 시트는 3,000만 개로 분기 대비 50% 늘었고, Copilot 합산 월간 사용자는 4.2억 명이다.",
+        "Windows 와 M365 에 기본 탑재되는 것 자체가 배포 전략이라 조직 워크플로에 깊이 박혀 있다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "microsoft.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "마이크로소프트 ② 는 3점이고, 이는 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 한 경로를 통과한 것에 해당한다.",
+        "경로별 통과 여부를 판정 입력으로 나누어 적지 않았기 때문에 프로그램이 경로 수로 환산하지 않고 사람이 매긴 3점을 쓴다."
+      ],
+      "evidence_up": [
+        "자체 칩 Maia 200 은 발표됐지만 배포 물량이 확인되지 않아 성능 도약의 근거로 보지 않았다.",
+        "2026-09-25 공식 블로그로 발표한 에이전트(Autopilot)·코딩(Code) 결합 Copilot 은 독립 측정이나 채택 수치가 아직 없어 이 판단에 반영하지 않았다."
+      ],
+      "evidence_down": [
+        "Arena 상위권에 마이크로소프트 자체 모델이 없다.",
+        "모델은 OpenAI 와 Anthropic 양쪽에서 조달한다."
+      ]
+    },
+    {
+      "judgment_id": "microsoft.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "fail",
+        "revenue_model": "pass",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "마이크로소프트 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+        "모방 불가능성은 실패다. Windows·M365 기본 탑재는 ① 에서 이미 5점으로 셌고, 번들링을 경쟁사가 못 베끼는 이유가 Windows 를 가졌기 때문이라 ① 의 파생이므로 ③ 에서 다시 세지 않는다. 같은 잣대를 다른 기업의 설치기반에도 댄다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 통과다.",
+        "문 닫힘은 실패로 판정해 5점 관문에 닿지 않는다."
+      ],
+      "evidence_up": [
+        "마이크로소프트는 소프트웨어 라이선스로 벌기 때문에 모델을 공짜로 끼워 팔 수 있고, 이는 익스플로러가 넷스케이프를 이긴 구조와 같다.",
+        "Copilot 유료 시트가 3,000만 개로 분기 대비 50% 늘었다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "microsoft.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 4,
+      "inputs": {},
+      "evidence": [
+        "마이크로소프트 ④ 는 4점이다.",
+        "2026-09-02 사업 부문을 3개에서 2개로 합치면서 Azure 매출을 분기마다 공시하기 시작했다."
+      ],
+      "evidence_up": [
+        "Azure 매출을 처음으로 달러로 공시했는데, 2026년 6월 분기 $29.42B(전년 대비 +42%)였고 2026 회계연도 연간으로 $100B 를 넘었다.",
+        "AI 사업의 연환산 매출(런레이트)은 $37B(+123%)이고, 남은 계약 매출(RPO)은 $678B(+84%)로 백로그가 실적보다 빠르게 늘고 있다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "microsoft.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 2,
+        "H": -1
+      },
+      "evidence": [
+        "마이크로소프트 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 -1 로 4점이다.",
+        "동맹 등급 +2 는 두 프론티어 모델사를 함께 묶은 데서 나온다.",
+        "OpenAI 와의 긴장과 Azure 독점이 사라진 것은 사업 구조를 무너뜨리는 적대는 아니라고 보아 적대 등급 -1(비용형)로 판정했다.",
+        "OpenAI 와 협력이 이어지고 M365 고객 이탈 수치도 없어, 주요 파트너가 곧 경쟁자인 구조형(-2)으로 올리지 않았다."
+      ],
+      "evidence_up": [
+        "마이크로소프트는 OpenAI 지분 27% 와 Anthropic 의 Azure $30B 약정으로 두 프론티어 모델사를 함께 묶었다.",
+        "같은 주 마이크로소프트가 OpenAI 의 Dots 에이전트를 기업용으로 들여오는 등 협력도 이어진다.",
+        "2026-08-28 AWS 와 맺은 멀티클라우드 상호연결은 AWS 규격을 채택한 것으로, 적대를 줄이는 사실이지만 등급을 바꾸지는 않는다."
+      ],
+      "evidence_down": [
+        "OpenAI 와의 긴장이 있고, OpenAI 모델이 아마존 Bedrock 에 올라가 Azure 의 독점이 사라졌다.",
+        "OpenAI 가 M365 와 겹치는 오피스 제품을 냈다는 보도(2026-09-29)가 확정 근거로 들어와 있으나, M365 고객 이탈 수치는 없다."
+      ]
+    },
+    {
+      "judgment_id": "microsoft.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "yes"
+      },
+      "evidence": [
+        "마이크로소프트 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 '작음', 내 돈이 돌아옴 '예' 칸이라 -1 이다.",
+        "마이크로소프트에는 내 돈이 돌아오는 구조가 맞다.",
+        "조달 의존 고객 비중은 작다고 판정했다."
+      ],
+      "evidence_up": [
+        "OpenAI 투자금이 돌아온 Azure 매출은 최근 1년 매출 $331.8B(2026-06-30 회계연도)에 견주면 미미하다."
+      ],
+      "evidence_down": [
+        "마이크로소프트가 OpenAI 에 투자해 지분 27% 를 가진 그 투자금이 Azure 매출로 돌아온다."
+      ]
+    },
+    {
+      "judgment_id": "microsoft.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -1,
+      "inputs": {},
+      "evidence": [
+        "마이크로소프트 ⑧ 은 -1 이다.",
+        "회사가 멈추는 구조가 아니라고 판단했다."
+      ],
+      "evidence_up": [
+        "모델을 OpenAI 와 Anthropic 두 곳에서 조달해 한 공급자에 대한 단일 의존을 풀었다.",
+        "모델 공급자 한쪽이 끊겨도 다른 쪽으로 옮길 수 있다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "microsoft.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "deteriorating",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "unknown",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "흑자이나 추세 악화 칸이라 ⑨ 는 −1 에서 끝나고, 게이트 3(버티는 기간)과 게이트 4(미래 지출이 덮이는가)는 계산하지 않는다.",
+        "마이크로소프트는 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+        "잉여현금흐름 추세는 악화로 판정했다.",
+        "분기 수치는 추세를 설명하는 데만 쓴다."
+      ],
+      "evidence_up": [
+        "마이크로소프트는 최근 1년(2026-06-30 회계연도) 영업이익 $155.2B, 매출 $331.8B 로 영업이익률이 46.8% 다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 영업현금흐름 $182.9B 에서 설비투자 $115.9B 를 뺀 +$67.0B 로 흑자다.",
+        "2026 역년 설비투자 계획을 $190B 에서 $175B 로 낮췄지만, 계획은 실측 현금흐름이 아니라 추세 판정의 근거로 쓰지 않는다."
+      ],
+      "evidence_down": [
+        "분기 잉여현금흐름이 2026년 1~3월 $15.8B, 4~6월 $19.6B 로 전년 같은 분기($20.3B·$25.6B)보다 각각 22%·23% 줄었고, 4~6월 분기 설비투자는 $35.8B 로 전년 같은 분기 $17.1B 의 두 배를 넘었다(10-Q·10-K 현금흐름표 누계의 차로 구한 분기 값).",
+        "최근 1년 잉여현금흐름은 2025 회계연도 $71.6B 에서 2026 회계연도 $67.0B 로 줄었다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-microsoft-002",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "title": "Introducing the new Copilot with Home, Code and Autopilot - The Official Microsoft Blog",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQdnBldHlfWlM4TjV6Y2NWTlNMUjFzQ0ZUa2M5MTkwX2pkaHNhbXc0TDJJbUs4bmxHZ3RSXzQ3SlFXd3VuemZFaWJFekFneHRNUDBNb2ZyTmgxVWFqR1BySzZRelo1ZjdTWXhuYjlGc1dOQm9JNTJMWHNlSHY0Z2FxS3hhMnp1OGVqWFdMTGlFYXZoZV9mc29ySDhGdUlZOW1RM3Rv?oc=5",
+      "source_id": "SRC-NEWS-microsoft-20260925-74aad420",
+      "published_at_utc": "2026-09-25T12:15:07Z"
+    },
+    {
+      "evidence_id": "EV-microsoft-003",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "OpenAI takes on Microsoft with the launch of what feels a whole lot like ChatGPT's own office suite - TechCrunch",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPMThVYXNHdk44dXhHc1F0NHZ5SzJYd2FBN3BWSHJ3R1pXMjMySWlfbTQwaVRxc2l3QkFGUDJLamZ2Yk1zVlBFekl6SVRlbF9kc0lpWEdjQVBHUzhETUNMQm0waVdPSmlOLTh6MlhNZ2pmbFZBR0hpQnYtQUhVX2tiTzBtbEp0YkRuQjViX0Z2eGFpTzVwMFlOd010STAyeVRKVHhlWVNnZ0xpYTcxVDlxM3dha2tjbXp3SE9QRGhfTkdNNlJLQm9sOTh4dHdpQQ?oc=5",
+      "source_id": "SRC-NEWS-microsoft-20260929-10993ed8",
+      "published_at_utc": "2026-09-29T17:45:51Z"
+    },
+    {
+      "evidence_id": "EV-microsoft-004",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "title": "8-K 2026-09-02 · Items 7.01, 9.01",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526380280/d291965d8k.htm",
+      "source_id": "SRC-EDGAR-000119312526380280",
+      "published_at_utc": null
+    }
+  ]
+}

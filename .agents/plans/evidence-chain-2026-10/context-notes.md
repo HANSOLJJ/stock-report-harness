@@ -35,3 +35,6 @@
   11. openai.F4 판정 칸 "출하량이나 독립 측정이 확인되면 다시 본다" — Broadcom 이 2026-09-02 Jalapeño 출하를 밝혔다(물량 미공개). 출하는 확인, 물량 미공개라 판정 유지 문장으로.
   12. openai.F2: AA 값이 게시물(09-04)과 기사(09-09)에서 갈린다(근거 unverified 에 기록). 두 값 모두 "Astra 가 1위 모델과 동점 이하"라 5점 아님 판정은 같다 — 확인 필요.
 - amazon·tesla 결과 검사 통과. amazon.F2 4점 유지(성능 도약 근거는 Trainium3 다년 약정 채택. '실제 학습'만 미확인). tesla.F1 2점 유지(올릴 근거 빔, 내릴 근거 ASP 하락 확인). amazon.F7 "OpenAI $50B·Anthropic $100B 집행 미확인" 은 10-Q 로 사실 정정됐고 ⑦ 판정 입력엔 넣지 않는 서술 유지.
+- 2차 탐색: retry-a(40항목 → found 18·partial 5·not_found 9·is_analysis 9), retry-b(18 → 4·4·5·5). 반영 결정은 scratchpad merge_retry.py DECISIONS(31건). oracle.F7 Stargate 새 줄(예정 보도 + 추론)은 방향 칸에 넣지 않고 판정 칸 문장만 원문대로 고쳤다.
+- 최종 병합본 `link/final/`(1차 + 2차 + 후속 수정 22건). 구조 문제 0, 토큰·판정 칸 차이 41건은 모두 조율자 확인 차이.
+- 2차에서도 못 찾은 점수 근거: openai.F1 OpenRouter 단가·점유율(기준일 이전 원문 없음), alphabet.F7 Anthropic 매출 '미미'(반대 방향 약정 $200B·백로그 40% 초과를 내릴 근거로 넣고 '작음' 유지 근거를 판정 칸에), anthropic.F6 자본효율 0.52(누적 조달 원문이 $120B~$130B+ 로 갈림). openai.F1·anthropic.F6 점수 영향은 재계산 뒤 확인.

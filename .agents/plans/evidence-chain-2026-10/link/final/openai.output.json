@@ -1,0 +1,1598 @@
+{
+  "company_id": "openai",
+  "sources": [
+    {
+      "source_id": "SRC-WEB-openai-001",
+      "title": "OpenAI raises $122 billion to accelerate the next phase of AI",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/accelerating-the-next-phase-ai/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-03-31T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-002",
+      "title": "ChatGPT Hits 1 Billion Users Faster Than Any App in History",
+      "publisher": "PYMNTS",
+      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/chatgpt-hits-1-billion-users-faster-than-any-app-in-history/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-06-03T01:28:18Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-003",
+      "title": "OpenAI's GPT-6 Astra on ARC-AGI-3",
+      "publisher": "ARC Prize",
+      "url": "https://arcprize.org/blog/astra",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-03T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-004",
+      "title": "GPT-6 Astra: A new generation of intelligence",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/gpt-6-astra/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-03T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-005",
+      "title": "Artificial Analysis on X: GPT-6 Astra benchmark results",
+      "publisher": "Artificial Analysis (X)",
+      "url": "https://x.com/ArtificialAnlys/status/2095595489031000350",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-03T19:31:13Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-006",
+      "title": "GPT-6 Astra Benchmarks Explained",
+      "publisher": "Vellum",
+      "url": "https://www.vellum.ai/blog/gpt-6-astra-benchmarks-explained",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-03T21:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-007",
+      "title": "Arena.ai on X: GPT-Image-2 #1 across Image Arena leaderboards",
+      "publisher": "Arena.ai (X)",
+      "url": "https://x.com/arena/status/2046670703311884548",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-04-21T19:21:35Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-008",
+      "title": "Introducing GPT-5.5",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/introducing-gpt-5-5/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-04-23T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-009",
+      "title": "OpenAI tops $25 billion in annualized revenue, The Information reports",
+      "publisher": "Reuters (Yahoo Finance)",
+      "url": "https://finance.yahoo.com/news/openai-tops-25-billion-annualized-033836274.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-03-05T09:01:43Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-010",
+      "title": "OpenAI Revenue 2026: ~$70B ARR, Q2 Loss & $1.4T Valuation",
+      "publisher": "Luminix",
+      "url": "https://www.useluminix.com/reports/company-overviews/openai-financial-fact-sheet-june-2026",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-30T20:37:09Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-011",
+      "title": "OpenAI's Revenue Run Rate Tops $40 Billion as IPO Nears",
+      "publisher": "PYMNTS",
+      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/openais-revenue-run-rate-tops-40-billion-as-ipo-nears/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-08-14T10:54:36Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-012",
+      "title": "Jalapeño's first results show industry-leading speed and efficiency in AI inference",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/jalapeno-first-results/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-08-25T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-013",
+      "title": "Broadcom (AVGO) Q3 2026 Earnings Call Transcript",
+      "publisher": "The Motley Fool",
+      "url": "https://www.fool.com/earnings/call-transcripts/2026/09/09/broadcom-avgo-q3-2026-earnings-call-transcript/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-09T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-014",
+      "title": "OpenAI Stargate Abilene",
+      "publisher": "Epoch AI",
+      "url": "https://epoch.ai/data/ai-data-centers/directory/openai-stargate-abilene",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-05T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-015",
+      "title": "OpenAI's Jony Ive-Designed Device Delayed to 2027",
+      "publisher": "MacRumors",
+      "url": "https://www.macrumors.com/2026/02/10/openais-jony-ive-designed-device-delayed-to-2027/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-02-10T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-016",
+      "title": "Announcing The Stargate Project",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/announcing-the-stargate-project/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-01-21T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-017",
+      "title": "OpenAI and SoftBank to both invest $19bn in Stargate - report",
+      "publisher": "DCD",
+      "url": "https://www.datacenterdynamics.com/en/news/openai-and-softbank-to-both-invest-19bn-in-stargate-report/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-01-23T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-018",
+      "title": "OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-10-13T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-019",
+      "title": "Introducing OpenAI for Government",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/global-affairs/introducing-openai-for-government/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-06-16T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-020",
+      "title": "Sam Altman on X: clarification on government guarantees and commitments",
+      "publisher": "Sam Altman (X)",
+      "url": "https://x.com/sama/status/1986514377470845007",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-11-06T19:21:49Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-021",
+      "title": "AWS and OpenAI announce multi-year strategic partnership",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/index/aws-and-openai-partnership/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-11-03T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-001",
+      "title": "OpenAI ends its exclusive partnership with Microsoft",
+      "publisher": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/04/no-longer-exclusive-microsoft-agrees-to-let-openai-see-other-cloud-providers/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-04-27T20:10:11Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-002",
+      "title": "Apple sues OpenAI alleging trade secret theft",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/07/10/apple-openai-lawsuit-trade-secrets.html",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-07-10T20:30:47Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-003",
+      "title": "Elon Musk’s X Corp and SpaceXAI drop antitrust lawsuit against Apple",
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/9/14/elon-musks-x-corp-and-spacexai-drop-antitrust-lawsuit-against-apple",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-14T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-004",
+      "title": "In re: OpenAI, Inc., Copyright Infringement Litigation — Transfer Order (MDL No. 3143)",
+      "publisher": "United States Judicial Panel on Multidistrict Litigation",
+      "url": "https://www.jpml.uscourts.gov/sites/jpml/files/MDL-3143-Transfer_Order-3-25.pdf",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-04-03T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-005",
+      "title": "Nearly 400 local newspapers sue OpenAI, Microsoft over alleged copyright theft",
+      "publisher": "America's Newspapers",
+      "url": "https://newspapers.org/stories/nearly-400-local-newspapers-sue-openai-microsoft-over-alleged-copyright-theft,4166992",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-06-26T17:21:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-006",
+      "title": "Newspapers’ OpenAI, Microsoft Case on Hold Pending MDL (Correct)",
+      "publisher": "Bloomberg Law",
+      "url": "https://news.bloomberglaw.com/ip-law/newspapers-openai-microsoft-case-on-hold-after-joining-mdl",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-07-14T16:42:56Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-007",
+      "title": "OpenAI Revenue, Losses, and IPO Valuation: Forecasts Through Late 2027",
+      "publisher": "FutureSearch",
+      "url": "https://futuresearch.ai/openai-financial-forecast/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "첫 게시 2026-05-27, 페이지 표기 최종 갱신 2026-08-31. 발행일은 갱신일로 적었다.",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-08-31T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-008",
+      "title": "Why the Oracle-OpenAI deal caught Wall Street by surprise",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2025/09/12/why-the-oracle-openai-deal-caught-wall-street-by-surprise/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2025-09-12T20:01:41Z"
+    },
+    {
+      "source_id": "SRC-WEB2-openai-009",
+      "title": "Racing to a Trillion: OpenAI and Anthropic's Funding History",
+      "publisher": "Pinggy Blog",
+      "url": "https://pinggy.io/blog/openai_anthropic_funding_history/",
+      "accessed_at": "2026-10-07",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-05-29T08:45:25Z"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-openai-011",
+      "company_id": "openai",
+      "factors": [
+        "F1",
+        "F2",
+        "F4",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-001",
+      "published_at_utc": "2026-03-31T00:00:00Z",
+      "title": "OpenAI raises $122 billion to accelerate the next phase of AI",
+      "excerpt": "That product momentum shows up in the numbers. ChatGPT is the overwhelming leader in consumer AI with more than 900 million weekly active users, and over 50 million subscribers. ChatGPT has 6x the monthly web visits and mobile sessions than the next largest AI app, while total AI time spent is 4x the next largest AI app and 4x all others combined. Search usage has nearly tripled in a year, and our ads pilot reached more than $100 million in ARR in under six weeks.",
+      "locator": "'Leadership across consumer and enterprise' 절 2번째 문단",
+      "relevance": "ChatGPT 주간 사용자 9억 명·구독자 5천만 명과 광고 파일럿 ARR $100M 를 회사가 밝힌 문장이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-012",
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-002",
+      "published_at_utc": "2026-06-03T01:28:18Z",
+      "title": "ChatGPT Hits 1 Billion Users Faster Than Any App in History",
+      "excerpt": "OpenAI’s ChatGPT app reached 1 billion global monthly active users faster than any other app, Reuters reported Tuesday (June 2), citing data from Sensor Tower.",
+      "locator": "기사 1번째 문단",
+      "relevance": "ChatGPT 앱 월간 사용자 10억 명 도달(Sensor Tower 집계)이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-013",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-003",
+      "published_at_utc": "2026-09-03T00:00:00Z",
+      "title": "OpenAI's GPT-6 Astra on ARC-AGI-3",
+      "excerpt": "GPT-6 Astra scores 62.7% for $26K on ARC-AGI-3 Semi-Private with our Standard harness, and 99.9% for $19K with a Provider Adapter harness. … In the Provider Adapter harness, Astra (max) used fewer actions than the human baseline on 96.0% of levels and used 51.7% fewer actions per level on average.",
+      "locator": "Summary 1번째 항목, 본문 Provider Adapter 하네스 결과 문단",
+      "relevance": "ARC Prize 가 표준 하네스로 잰 62.7% 와, 99.9%·인간보다 적은 행동 96% 가 어댑터 하네스 결과라는 구분이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-014",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-004",
+      "published_at_utc": "2026-09-03T00:00:00Z",
+      "title": "GPT-6 Astra: A new generation of intelligence",
+      "excerpt": "We’re introducing GPT‑6 Astra, the world’s most intelligent and aligned model. … Astra also saturates ARC-AGI-3 with a 99.9% score and ExploitBench with a 100% score.",
+      "locator": "본문 1~2번째 문단",
+      "relevance": "GPT-6 출시와 OpenAI 가 발표한 ARC-AGI-3 99.9%·ExploitBench 100% 다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-015",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-005",
+      "published_at_utc": "2026-09-03T19:31:13Z",
+      "title": "Artificial Analysis on X: GPT-6 Astra benchmark results",
+      "excerpt": "➤ Hallucinates half as much as GPT-5.6 Sol: GPT-6 Astra sees a large jump in AA-Omniscience, our knowledge and hallucination benchmark. This is driven by a significant decrease in hallucination rate from 92% to 51% at max effort.",
+      "locator": "게시물 본문 Intelligence Index key takeaways 3번째 항목",
+      "relevance": "AA-Omniscience 환각률이 92% 에서 51% 로 내려간 독립 측정이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-016",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-005",
+      "published_at_utc": "2026-09-03T19:31:13Z",
+      "title": "Artificial Analysis on X: GPT-6 Astra benchmark results",
+      "excerpt": "➤ Rivals top models: In Codex, GPT-6 Astra scores 67 in the Index - approximately equal to Claude Opus 5 and Fable 5 in Claude Code, and Muse Spark 1.3 in Muse Code. Fable 5.1 in Claude Code leads the Index with a score of 70. … ➤ Sits beside GPT-5.6 Sol in Intelligence: GPT-6 Astra scores equal to GPT-5.6 Sol in the Index at 61. This is 5 points lower than Claude Fable 5.1 (max with fallback).",
+      "locator": "게시물 본문 Coding Agent Index key takeaways 1번째 항목, Intelligence Index key takeaways 1번째 항목",
+      "relevance": "Intelligence Index 에서 Astra 61 이 GPT-5.6 Sol 과 같고 Fable 5.1 보다 5점 낮으며, Coding Agent Index 67 이 1위 70 보다 낮다는 독립 측정이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Artificial Analysis 기사 「Benchmarking GPT-6 Astra」(2026-09-09 게시, 2026-10-07 열람)는 Intelligence Index 에서 Astra 53 으로 Claude Fable 5.1 과 동점이고 GPT-5.6 Sol 보다 6점 높으며, Coding Agent Index 도 62 로 동점이라고 적어 이 게시물 값과 다르다. 지수 개정 뒤 값으로 보이며 어느 값을 쓸지는 판정이 정한다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-017",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-005",
+      "published_at_utc": "2026-09-03T19:31:13Z",
+      "title": "Artificial Analysis on X: GPT-6 Astra benchmark results",
+      "excerpt": "Pricing is 2.5x GPT-5.6 Sol’s current prices across the board, up from $4/$20 to $10/$50 per million input/output tokens … the model is 75% more expensive per task than its predecessor at max effort. … This is offset by a drop of ~80 Elo points in GDPval-AA v2 … We also observe 2-3 point regressions on other evaluations across a mix of capabilities, including reductions in τ³-Banking (customer support), SciCode (Python problems in a scientific domain), and AA-LCR (long context reasoning over large documents).",
+      "locator": "게시물 본문 2번째 문단, Intelligence Index key takeaways 2번째·5번째 항목",
+      "relevance": "가격 2.5배 인상·태스크당 75% 상승과 GDPval-AA v2 약 80 Elo 퇴행, 다른 평가 2~3포인트 퇴행이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Artificial Analysis 기사 「Benchmarking GPT-6 Astra」(2026-09-09 게시, 2026-10-07 열람)는 GDPval-AA v2 하락을 약 45 Elo 로 적어 이 게시물의 약 80 Elo 와 다르다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-018",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-006",
+      "published_at_utc": "2026-09-03T21:00:00Z",
+      "title": "GPT-6 Astra Benchmarks Explained",
+      "excerpt": "FrontierMath Tier 4 is 97.6% against 87.8% for Fable 5.1.",
+      "locator": "4번 절(Academic: FrontierMath, GPQA …) 문단",
+      "relevance": "FrontierMath Tier 4 v2 97.6%(Fable 5.1 87.8%) 값이다. 하네스 표기는 없다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-019",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-007",
+      "published_at_utc": "2026-04-21T19:21:35Z",
+      "title": "Arena.ai on X: GPT-Image-2 #1 across Image Arena leaderboards",
+      "excerpt": "Exciting news - GPT-Image-2 by @OpenAI has claimed the #1 spot across all Image Arena leaderboards! … - #1 Text-to-Image (1512), +242 over #2 (Nano-banana-2 with web-search aka gemini-3.1-flash-image) - #1 Single-Image Edit (1513), +125 over #2 (Nano-banana-pro aka gemini-3-pro-image)",
+      "locator": "게시물 본문",
+      "relevance": "사용자 투표형 Image Arena 에서 gpt-image-2 가 Text-to-Image·Image Edit 1위에 오른 사실이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-020",
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-008",
+      "published_at_utc": "2026-04-23T00:00:00Z",
+      "title": "Introducing GPT-5.5",
+      "excerpt": "We’re releasing GPT‑5.5, our smartest and most intuitive to use model yet, and the next step toward a new way of getting work done on a computer.",
+      "locator": "본문 1번째 문단",
+      "relevance": "GPT-5.5 출시다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-021",
+      "company_id": "openai",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-009",
+      "published_at_utc": "2026-03-05T09:01:43Z",
+      "title": "OpenAI tops $25 billion in annualized revenue, The Information reports",
+      "excerpt": "March 4 (Reuters) - Artificial intelligence startup OpenAI (OPAI.PVT) topped $25 billion in annualized revenue as of the end of last month, The Information reported on Wednesday, citing a person familiar with the figure.",
+      "locator": "기사 1번째 문단",
+      "relevance": "2026년 2월 말 연환산 매출 $25B 다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-022",
+      "company_id": "openai",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-010",
+      "published_at_utc": "2026-09-30T20:37:09Z",
+      "title": "OpenAI Revenue 2026: ~$70B ARR, Q2 Loss & $1.4T Valuation",
+      "excerpt": "Growth flattened in early 2026: Report 1 and Report 6 both noted the run-rate held near $25B from February through April 2026, ending the prior $2B/month net-new-ARR pace. The plateau is over.",
+      "locator": "Revenue 절 'Growth flattened in early 2026' 문단",
+      "relevance": "2~4월 런레이트가 $25B 근처에 머문 정체 구간이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-023",
+      "company_id": "openai",
+      "factors": [
+        "F3",
+        "F6",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-011",
+      "published_at_utc": "2026-08-14T10:54:36Z",
+      "title": "OpenAI's Revenue Run Rate Tops $40 Billion as IPO Nears",
+      "excerpt": "OpenAI is now on pace to bring in annualized revenue of more than $40 billion, roughly double its run rate from the end of 2025. … Bloomberg reported that “the company’s annual revenue run rate increased more than 20% month-over-month in July.”",
+      "locator": "기사 1번째 문단 첫 문장, 본문 'Greg Brockman' 문단",
+      "relevance": "런레이트 $40B 돌파와 7월 월 증가율 20% 초과(Bloomberg 인용)다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-024",
+      "company_id": "openai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-012",
+      "published_at_utc": "2026-08-25T00:00:00Z",
+      "title": "Jalapeño's first results show industry-leading speed and efficiency in AI inference",
+      "excerpt": "Across all three, Jalapeño delivered 1.5 to 1.9 times more AI work per watt at peak throughput and 1.7 to 3.6 times lower end-to-end latency than the comparison systems. … To understand how Jalapeño performs in practice, we tested it on InferenceX, a public benchmark from SemiAnalysis that measures the full process of serving an AI request.",
+      "locator": "본문 'OpenAI models also accelerated' 문단, 'To understand how Jalapeño performs' 문단",
+      "relevance": "OpenAI 가 직접 돌린 InferenceX 결과(세 모델에서 전력당 처리량 1.5~1.9배)다. 이해당사자 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-025",
+      "company_id": "openai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-013",
+      "published_at_utc": "2026-09-09T00:00:00Z",
+      "title": "Broadcom (AVGO) Q3 2026 Earnings Call Transcript",
+      "excerpt": "In Q3, we also shipped Jalapeno, OpenAI's first-generation custom accelerator, which outperforms Grace Blackwell GPU for inference workloads. … For OpenAI, Jalapeno is on track for the planned deployment of 1.3 gigawatts in 2027. … In 2028, we have line of sight for OpenAI to deploy over 5 gigawatts of Jalapeno and its successor generation of XPU, which would make OpenAI our second largest XPU customer.",
+      "locator": "Hock Tan 준비 발언(2026-09-02 실적 발표) — Q3 출하 문단, OpenAI 배치 계획 두 문단",
+      "relevance": "Broadcom 이 밝힌 Jalapeño 3분기 출하와 2027년 1.3GW·2028년 5GW 초과 배치 계획이다. 출하량은 밝히지 않았다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-026",
+      "company_id": "openai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-014",
+      "published_at_utc": "2026-10-05T00:00:00Z",
+      "title": "OpenAI Stargate Abilene",
+      "excerpt": "OpenAI Stargate Abilene is an operational AI data center with AI chips owned by Oracle and used by OpenAI. It hosts an estimated 509k H100-equivalents of AI compute, supported by 421 MW of IT power at a capital cost of $15.9 B. … We estimate that it uses Nvidia B200 and Nvidia B300 chips.",
+      "locator": "디렉터리 항목 첫 문단(2026-10-05 갱신)",
+      "relevance": "Stargate Abilene 의 H100 환산 컴퓨트·칩 종류와, 칩을 Oracle 이 소유한다는 사실이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-027",
+      "company_id": "openai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-015",
+      "published_at_utc": "2026-02-10T00:00:00Z",
+      "title": "OpenAI's Jony Ive-Designed Device Delayed to 2027",
+      "excerpt": "OpenAI's original stated goal was to ship the ChatGPT-powered device before the end of 2026. But in the latest filing, the company said its first hardware device won't ship to customers before the end of February 2027.",
+      "locator": "기사 3번째 문단",
+      "relevance": "디바이스 출하가 2027년 2월 이후로 밀려 아직 진행 중이라는 사실이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-028",
+      "company_id": "openai",
+      "factors": [
+        "F4",
+        "F5",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-016",
+      "published_at_utc": "2025-01-21T00:00:00Z",
+      "title": "Announcing The Stargate Project",
+      "excerpt": "The initial equity funders in Stargate are SoftBank, OpenAI, Oracle, and MGX. SoftBank and OpenAI are the lead partners for Stargate, with SoftBank having financial responsibility and OpenAI having operational responsibility. … As part of Stargate, Oracle, NVIDIA, and OpenAI will closely collaborate to build and operate this computing system.",
+      "locator": "본문 2번째·4번째 문단",
+      "relevance": "Stargate 의 지분 출자자와 SoftBank 재무 책임·Oracle 공동 운영 구조다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-029",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-017",
+      "published_at_utc": "2025-01-23T00:00:00Z",
+      "title": "OpenAI and SoftBank to both invest $19bn in Stargate - report",
+      "excerpt": "OpenAI and SoftBank will both invest $19 billion into AI data center business Stargate. … This would give the ChatGPT developer a 40 percent stake in The Stargate Project, which was announced this week by President Donald Trump. … The two other known investors are Oracle and Abu Dhabi's MGX, with The Information reporting that they are expected to invest a combined $7bn.",
+      "locator": "기사 1번째·3번째·4번째 문단",
+      "relevance": "Stargate 출자 구성(OpenAI·SoftBank 각 $19B, OpenAI 지분 40%, Oracle·MGX 합산 $7B 예정)이다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-030",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-010",
+      "published_at_utc": "2026-09-30T20:37:09Z",
+      "title": "OpenAI Revenue 2026: ~$70B ARR, Q2 Loss & $1.4T Valuation",
+      "excerpt": "SoftBank/Stargate distinction (Report 3): SoftBank's ~13% direct OpenAI stake is separate from Stargate LLC, the infrastructure JV (up to $500B in US data centers) in which OpenAI and SoftBank each hold ~40%. Stargate is not direct OpenAI equity.",
+      "locator": "Ownership 절 'SoftBank/Stargate distinction' 문단",
+      "relevance": "Stargate LLC 에서 OpenAI·SoftBank 가 각 약 40% 를 가진다는 사실이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-031",
+      "company_id": "openai",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-018",
+      "published_at_utc": "2025-10-13T00:00:00Z",
+      "title": "OpenAI and Broadcom announce strategic collaboration to deploy 10 gigawatts of OpenAI-designed AI accelerators",
+      "excerpt": "San Francisco and Palo Alto—October 13, 2025—OpenAI and Broadcom today announced a collaboration for 10 gigawatts of custom AI accelerators. OpenAI will design the accelerators and systems, which will be developed and deployed in partnership with Broadcom.",
+      "locator": "본문 1번째 문단",
+      "relevance": "Broadcom 과의 맞춤형 가속기 공동개발(10GW)이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-032",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-019",
+      "published_at_utc": "2025-06-16T00:00:00Z",
+      "title": "Introducing OpenAI for Government",
+      "excerpt": "We are proud to share that our first partnership under this new OpenAI for Government initiative will be a pilot program with the U.S. Department of Defense through their Chief Digital and Artificial Intelligence Office (CDAO). This contract, with a $200 million ceiling, will bring OpenAI’s industry-leading expertise to help the Defense Department identify and prototype how frontier AI can transform its administrative operations",
+      "locator": "본문 'We are proud to share' 문단",
+      "relevance": "미 국방부 CDAO 계약(상한 $200M)이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-033",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-004",
+      "published_at_utc": "2026-09-03T00:00:00Z",
+      "title": "GPT-6 Astra: A new generation of intelligence",
+      "excerpt": "GPT‑6 Astra is rolling out today to a limited set of organizations and over the coming days will become available to all ChatGPT Plus, Pro, Business, and Enterprise users, as well as through the OpenAI API, Microsoft Azure, and AWS Bedrock.",
+      "locator": "본문 3번째 문단",
+      "relevance": "GPT-6 Astra 의 AWS Bedrock 제공이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-034",
+      "company_id": "openai",
+      "factors": [
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-001",
+      "published_at_utc": "2026-03-31T00:00:00Z",
+      "title": "OpenAI raises $122 billion to accelerate the next phase of AI",
+      "excerpt": "Today, we closed our latest funding round with $122 billion in committed capital at a post money valuation of $852 billion.",
+      "locator": "본문 1번째 문단",
+      "relevance": "post-money 밸류 $852B 다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-035",
+      "company_id": "openai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-020",
+      "published_at_utc": "2025-11-06T19:21:49Z",
+      "title": "Sam Altman on X: clarification on government guarantees and commitments",
+      "excerpt": "We expect to end this year above $20 billion in annualized revenue run rate and grow to hundreds of billion by 2030. We are looking at commitments of about $1.4 trillion over the next 8 years.",
+      "locator": "게시물 본문 'questions behind the question' 첫째 답",
+      "relevance": "향후 8년 컴퓨트 약정 약 $1.4T 를 CEO 가 밝힌 문장이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-036",
+      "company_id": "openai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-021",
+      "published_at_utc": "2025-11-03T00:00:00Z",
+      "title": "AWS and OpenAI announce multi-year strategic partnership",
+      "excerpt": "Under this new $38 billion agreement, which will have continued growth over the next seven years, OpenAI is accessing AWS compute comprising hundreds of thousands of state-of-the-art NVIDIA GPUs, with the ability to expand to tens of millions of CPUs to rapidly scale agentic workloads.",
+      "locator": "본문 1번째 문단 둘째 문장",
+      "relevance": "AWS 와의 $38B·7년 약정이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-037",
+      "company_id": "openai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-010",
+      "published_at_utc": "2026-09-30T20:37:09Z",
+      "title": "OpenAI Revenue 2026: ~$70B ARR, Q2 Loss & $1.4T Valuation",
+      "excerpt": "The July 2026 internal plan puts cumulative compute and infrastructure spend at ~$856 billion by 2030, much of it financed by partners (Oracle's $300 billion five-year deal from 2027, Stargate) rather than OpenAI's own balance sheet.",
+      "locator": "Cost structure 절 'Compute/inference' 문단 끝 문장",
+      "relevance": "2027년에 시작하는 Oracle $300B·5년 계약이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-038",
+      "company_id": "openai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-001",
+      "published_at_utc": "2026-03-31T00:00:00Z",
+      "title": "OpenAI raises $122 billion to accelerate the next phase of AI",
+      "excerpt": "Our ambition is matched by the commitment of the partners backing us. The round was anchored by our strategic partners Amazon, NVIDIA, and SoftBank, with continued participation from our long-term partner, Microsoft.",
+      "locator": "본문 'Our ambition is matched' 문단",
+      "relevance": "NVIDIA·Microsoft 가 OpenAI 의 투자자라는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-039",
+      "company_id": "openai",
+      "factors": [
+        "F4",
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-001",
+      "published_at_utc": "2026-03-31T00:00:00Z",
+      "title": "OpenAI raises $122 billion to accelerate the next phase of AI",
+      "excerpt": "Momentum is just as strong on the enterprise side, which now makes up more than 40% of our revenue, and is on track to reach parity with consumer by the end of 2026. GPT‑5.4 is driving record engagement across agentic workflows. Our APIs now process more than 15 billion tokens per minute.",
+      "locator": "'Leadership across consumer and enterprise' 절 3번째 문단",
+      "relevance": "매출의 40% 넘게가 기업에서 나오고 API 가 배포돼 있다는 회사 설명이다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-040",
+      "company_id": "openai",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-010",
+      "published_at_utc": "2026-09-30T20:37:09Z",
+      "title": "OpenAI Revenue 2026: ~$70B ARR, Q2 Loss & $1.4T Valuation",
+      "excerpt": "- 2026 internal net-loss projection: ~$14B (Report 2); some estimates $17B+. - Sacra estimates (estimated): ~$27B cash burn in 2026, ~$63B in 2027; cumulative losses/burn ~$115B through 2029; cash-flow positive only ~2030 (Reports 2 and 5).",
+      "locator": "Cost structure 절 'Burn (disclosed vs. estimated)' 목록 3·4번째 항목",
+      "relevance": "2026년 순손실 전망 약 $14B 와 현금흐름 흑자 시점 약 2030년 추정이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-041",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-001",
+      "published_at_utc": "2026-04-27T20:10:11Z",
+      "title": "OpenAI ends its exclusive partnership with Microsoft",
+      "excerpt": "Today, though, OpenAI and Microsoft jointly announced an amended agreement that will allow the company to go beyond Microsoft’s Azure and “serve all its products to customers across any cloud provider.” … The Financial Times reported that Microsoft threatened legal action over that deal, though today’s amendment should moot that as a legal issue.",
+      "locator": "기사 본문 1번째 문단 둘째 문장, 4번째 문단 둘째 문장",
+      "relevance": "2026-04-27 개정 계약으로 Microsoft Azure 독점이 끝났고, 그 전에 Microsoft 가 OpenAI 의 Amazon 계약에 법적 대응을 경고했다는 FT 보도가 있었다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-042",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-002",
+      "published_at_utc": "2026-07-10T20:30:47Z",
+      "title": "Apple sues OpenAI alleging trade secret theft",
+      "excerpt": "Apple on Friday sued OpenAI in federal court in Northern California, alleging trade secret theft, saying that the artificial intelligence lab took the iPhone maker’s intellectual property in order to develop its own consumer hardware. … Apple is seeking damages, injunctions, and an order to force OpenAI to stop using its trade secrets.",
+      "locator": "기사 1번째 문단, 마지막 문단",
+      "relevance": "Apple 이 2026-07-10 캘리포니아 북부 연방법원에 OpenAI 를 영업비밀 침해로 제소했다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-043",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-003",
+      "published_at_utc": "2026-09-14T00:00:00Z",
+      "title": "Elon Musk’s X Corp and SpaceXAI drop antitrust lawsuit against Apple",
+      "excerpt": "The lawsuit, filed in August 2025 in United States federal court in Fort Worth, Texas, accused Apple and OpenAI of violating US antitrust law through an agreement that made ChatGPT the only generative AI chatbot integrated into Apple’s iPhone operating system. … X and SpaceXAI said on Monday that they would continue pursuing their claims against OpenAI, which remains a defendant in the case.",
+      "locator": "기사 3번째 문단, 끝에서 두 번째 문단",
+      "relevance": "머스크 계열 X Corp·SpaceXAI 의 반독점 소송이 Apple 을 뺀 뒤에도 OpenAI 를 피고로 계속된다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-044",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-004",
+      "published_at_utc": "2025-04-03T00:00:00Z",
+      "title": "In re: OpenAI, Inc., Copyright Infringement Litigation — Transfer Order (MDL No. 3143)",
+      "excerpt": "IN RE: OPENAI, INC., COPYRIGHT INFRINGEMENT LITIGATION MDL No. 3143 … Plaintiffs in the New York “News” cases (New York Times, Daily News, and Center for Investigative Reporting) … On the basis of the papers filed and the hearing session held, we find that the actions listed on Schedule A involve common questions of fact, and that centralization in the Southern District of New York will serve the convenience of the parties and witnesses",
+      "locator": "Transfer Order(Document 85, 2025-04-03 제출) 1쪽 사건명, 2번째 문단 넷째 문장, 3번째 문단",
+      "relevance": "NYT 등 언론사 저작권 소송이 MDL No. 3143 으로 뉴욕 남부 연방법원에 병합됐다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-045",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-005",
+      "published_at_utc": "2026-06-26T17:21:00Z",
+      "title": "Nearly 400 local newspapers sue OpenAI, Microsoft over alleged copyright theft",
+      "excerpt": "The massive coalition of local newspaper publishers filed a federal lawsuit June 24 against OpenAI and Microsoft, alleging the technology companies systematically copied copyrighted reporting from nearly 400 local newspapers to train and develop commercial artificial intelligence products, including ChatGPT and Microsoft Copilot, without permission or compensation.",
+      "locator": "기사 1번째 문단",
+      "relevance": "지역신문 약 400곳의 발행사 연합이 2026-06-24 OpenAI·Microsoft 를 저작권 침해로 제소했다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-046",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-006",
+      "published_at_utc": "2026-07-14T16:42:56Z",
+      "title": "Newspapers’ OpenAI, Microsoft Case on Hold Pending MDL (Correct)",
+      "excerpt": "The news outlets, led by Richner Communications, sued the tech giants in June, accusing them of conducting the AI scraping without authorization and compensation. The lawsuit has since been been consolidated into multidistrict litigation involving numerous similar cases, according to a joint stipulation and order filed Monday in the US District for the Southern District of New York.",
+      "locator": "기사 2번째 문단(유료 벽 앞 공개 부분)",
+      "relevance": "지역신문 약 400곳의 소송이 뉴욕 남부 연방법원의 다지역 병합 소송에 병합됐다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-047",
+      "company_id": "openai",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-007",
+      "published_at_utc": "2026-08-31T00:00:00Z",
+      "title": "OpenAI Revenue, Losses, and IPO Valuation: Forecasts Through Late 2027",
+      "excerpt": "The chart above stacks OpenAI's widely cited $14 billion non-GAAP loss against the $62 billion 2026 GAAP figure I now forecast (p10 $42B, p90 $90B), nearly double July's $33 billion estimate.",
+      "locator": "'Loss composition' 절 1번째 문단 첫 문장",
+      "relevance": "OpenAI 의 2026년 손실 전망이 널리 인용되는 비GAAP $14B 와 외부 예측의 GAAP $62B(7월 추정 $33B) 사이에서 갈린다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-048",
+      "company_id": "openai",
+      "factors": [
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-008",
+      "published_at_utc": "2025-09-12T20:01:41Z",
+      "title": "Why the Oracle-OpenAI deal caught Wall Street by surprise",
+      "excerpt": "OpenAI has committed to spend around $60 billion a year for compute from Oracle and $10 billion to develop custom AI chips with Broadcom.",
+      "locator": "기사 본문 8번째 문단(“OpenAI has made a string of infrastructure investment announcements” 로 시작) 둘째 문장",
+      "relevance": "OpenAI 가 Oracle 컴퓨트에 연 약 $60B 를 쓰기로 약정했다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    },
+    {
+      "evidence_id": "EV-openai-049",
+      "company_id": "openai",
+      "factors": [
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB2-openai-009",
+      "published_at_utc": "2026-05-29T08:45:25Z",
+      "title": "Racing to a Trillion: OpenAI and Anthropic's Funding History",
+      "excerpt": "OpenAI (as of March 2026): Total raised: ~$180-190 billion across all rounds … OpenAI’s total raised across all rounds sits around $180-190 billion.",
+      "locator": "'Summary' 절 OpenAI 목록 첫 항목, 'The Numbers Get Large (2024-2026)' 절 마지막 문단",
+      "relevance": "OpenAI 의 누적 조달액이 약 $180~190B 로 보도됐다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "agent-link-retry",
+      "reviewed_at": "2026-10-07"
+    }
+  ],
+  "evidence_updates": [
+    {
+      "evidence_id": "EV-openai-001",
+      "excerpt": "OpenAI says it is scrapping the release of its next-generation AI model over safety concerns that researchers raised during internal testing, in one of the clearest signs so far that agent misbehavior could stymie the industry’s rapid progression.",
+      "locator": "기사 1번째 문단(리드)"
+    },
+    {
+      "evidence_id": "EV-openai-003",
+      "excerpt": "GPT‑6.1 Sol is available starting today to all Plus, Pro, Business, Enterprise, and Edu users in ChatGPT Work and Codex. GPT‑6.1 Sol is not yet available in Chat. Developers can also access it through the OpenAI API as gpt-6.1-sol.",
+      "locator": "'Pricing and availability' 절 1번째 문단"
+    },
+    {
+      "evidence_id": "EV-openai-009",
+      "excerpt": "Oct 5 (Reuters) - OpenAI was hit with a trademark lawsuit in San Francisco federal court on Monday over its new \"Astra\" AI model from a software company that says it has been using the \"Astra\" name since 2021.",
+      "locator": "기사 1번째 문단"
+    },
+    {
+      "evidence_id": "EV-openai-010",
+      "excerpt": "Cyber security incidents involving company’s AI tools leave ChatGPT maker vulnerable to wave of lawsuits",
+      "locator": "기사 부제(제목 아래 standfirst). 본문은 구독 장벽으로 열람하지 못했다"
+    }
+  ],
+  "judgments": [
+    {
+      "judgment_id": "openai.F1",
+      "evidence_after": [
+        "OpenAI ①(네트워크 효과 — 가격을 올려도 남는가)은 4점이고, 점수를 정하는 가장 강한 채널은 소비자 채널(MAU·구독)이다.",
+        "우리는 가격 결정력이 실측되지 않은 점을 5점으로 가지 않는 이유로 본다.",
+        "ARR $40B 는 크기(위치)이며, 그 증가율은 ③ 에서 본다.",
+        "거래 채널의 OpenRouter 평균 단가 $0.74/M(Anthropic $6.36/M 의 약 8.6분의 1)와 토큰 점유율 9.8%·매출 점유율 8.0% 는 원문을 찾지 못해 확인하지 못했다.",
+        "쓴 만큼 내고 언제든 갈아탈 수 있어 거래 채널의 락인은 약하다."
+      ],
+      "evidence_up_after": [
+        "주간 사용자 9억 명, ChatGPT 월간 사용자 10억 명으로 절대 사용자 수가 가장 많다. [EV-openai-011, EV-openai-012]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "openai.F2",
+      "evidence_after": [
+        "OpenAI ②(신기술 게임체인저)는 세 경로(성능 도약·패러다임 적응·표준 선점) 중 둘을 통과해 4점이며, 이 점수는 승계한 점수다.",
+        "패러다임 적응 경로는 통과했고, 표준 선점 경로는 실패다.",
+        "5점은 성능 도약이 세대 격차 수준일 때 주는데, 종합 지능이 전작과 동점이라 그 수준으로 보지 않는다."
+      ],
+      "evidence_up_after": [
+        "성능 도약 경로의 근거는 ARC Prize 가 표준 하네스로 잰 GPT-6 Astra 의 ARC-AGI-3 62.7%(최고 기록)와 Exploit-Bench 100%, 환각률 92% 에서 51% 로의 하락이다. OpenAI 가 발표한 99.9% 와 인간 기준치보다 적은 행동으로 푼 레벨 96% 는 자사 어댑터 하네스 점수라 쓰지 않는다. [EV-openai-013, EV-openai-014, EV-openai-015]",
+        "FrontierMath Tier 4 v2 97.6%(Fable 5.1 87.8%)는 하네스가 표기되지 않아 모델 간 비교 근거로 쓰지 않는다. Arena T2I·Image Edit 1위(gpt-image-2)는 사용자 투표형 순위라 참고로만 쓴다. [EV-openai-018, EV-openai-019]",
+        "GPT-5.5, 5.6, 6 으로 출시가 이어졌고, 광고 파일럿이 6주 만에 ARR $100M 를 냈다. [EV-openai-020, EV-openai-016, EV-openai-014, EV-openai-011]",
+        "2026-09-29 OpenAI 는 GPT-6.1 Sol 을 출시했고, Sol 의 독립 측정은 아직 없다. [EV-openai-003]"
+      ],
+      "evidence_down_after": [
+        "Artificial Analysis Intelligence Index 에서 Astra 는 61 로 GPT-5.6 Sol 과 같고 Fable 5.1(max) 66 보다 낮으며, 코딩 축의 Coding Agent Index 는 67 로 1위 Fable 5.1 의 70 보다 낮다. [EV-openai-016]",
+        "반대 증거도 있다. GDPval-AA v2 가 -80 Elo 퇴행했고, τ³-Banking·SciCode·AA-LCR 이 2~3포인트 퇴행했으며, 가격이 $4/$20 에서 $10/$50 으로 2.5배 올라 태스크당 75% 비싸졌다. [EV-openai-017, EV-openai-014]",
+        "2026-09-28 WSJ 는 OpenAI 가 안전 문제로 상위 모델 출시를 접었다고 보도했다. [EV-openai-001]"
+      ]
+    },
+    {
+      "judgment_id": "openai.F3",
+      "evidence_after": [
+        "OpenAI ③(Last Mover)은 통과점 1 로 2점이다. 후발 가속도만 통과(1)하고 모방 불가능성과 별도 수익모델은 실패(0)이며, 문이 닫힌 증거는 없다.",
+        "지표는 AI 귀속 매출의 성장률 변화이며, 매출의 절대 규모는 ① 에서 본다.",
+        "후발 가속도는 통과다.",
+        "모방 불가능성과 별도 수익모델은 실패로 판정했다.",
+        "우리는 OpenAI 가 경쟁사가 베낄 수 있는 방식을 먼저 연 선두 주자라 퍼스트무버 함정에 머물러 있다고 본다."
+      ],
+      "evidence_up_after": [
+        "ARR 이 2~4월 $25B 에서 정체하다 7월 $40B 로 올라 월 증가율 +20% 로 다시 가속했다. [EV-openai-021, EV-openai-022, EV-openai-023]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "openai.F4",
+      "evidence_after": [
+        "OpenAI ④(호황 이후 비전 — 곡괭이만 팔다 끝나는가)는 3점이다.",
+        "Broadcom 은 2026-09-02 실적 발표에서 Jalapeño 를 출하했다고 밝혔으나 출하량을 공개하지 않아, 출하량이나 독립 측정이 확인되면 다시 본다.",
+        "Broadcom 배치 계획 가운데 2026년 0.1GW 미만은 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "실제로 배포된 사업은 소비자용 ChatGPT 와 기업·개발자용 API 이다. [EV-openai-011, EV-openai-039]",
+        "첫 자체 추론 ASIC 'Jalapeño' 는 OpenAI 가 공개한 InferenceX 결과에서 GB300 대비 kW 당 최대 처리량이 DeepSeek R1 1.7배, Kimi K2.5 1.5배였지만, 이해당사자인 OpenAI 의 발표이고 독립 측정은 저장소에 없다. [EV-openai-024]",
+        "Broadcom 과의 배치 계획은 2027년 1.3GW, 2028년 후속 세대 합산 5GW 이상이다. 출하·실제 배포만 세는 ④ 판정 지침에 따라 자체 칩은 출하량과 실제 배포가 확인될 때까지 점수 근거로 쓰지 않는다. [EV-openai-025]",
+        "인프라로는 Stargate Abilene 에 Nvidia B200·B300 기반으로 H100 환산 약 50.9만 개 규모의 컴퓨트가 있다. [EV-openai-026]"
+      ],
+      "evidence_down_after": [
+        "광고·디바이스로의 확장은 아직 진행 중이다. [EV-openai-011, EV-openai-027]",
+        "Stargate Abilene 의 운영은 Oracle·SoftBank 에 의존한다. [EV-openai-026, EV-openai-028]"
+      ]
+    },
+    {
+      "judgment_id": "openai.F5.impl48",
+      "evidence_after": [
+        "OpenAI ⑤(아군 확보)는 3 + 동맹 등급 +1 + 적대 등급 -3 = 1점이다.",
+        "아군 확보는 받은 것이 아니라 맺은 것을 세므로, Amazon $50B·SoftBank·Microsoft 약 25%·NVIDIA 의 투자는 동맹 등급에서 뺀다. Oracle 과의 $300B 컴퓨트 계약도 OpenAI 가 사는 쪽의 조달이라 동맹이 아니며, Microsoft·Oracle·NVIDIA 는 OpenAI 가 못 떠나는 관계라 ⑧ 에서 센다.",
+        "국방부 계약은 4사가 같이 받아 차이를 만들지 않는다. 빠지는 것은 Oracle 의 $300B 계약이지 Oracle 전체가 아니어서, Oracle 이 초기 출자자로 참여한 Stargate 지분 관계는 동맹으로 남는다.",
+        "동맹 등급 +2 는 서지 않고, 0 도 아니므로 동맹 등급은 +1 이다.",
+        "적대 등급은 -3(다발형 — 구조형 적대가 복수 전선에서 동시에 진행되고 최대 파트너와도 긴장)이다.",
+        "적대 등급이 이미 가장 낮은 단계라 등급은 그대로다.",
+        "지분이 걸린 동맹은 Stargate 하나뿐이고, 경쟁사를 OpenAI 의 매대에 올린 사실도 없다."
+      ],
+      "evidence_up_after": [
+        "남는 동맹은 Stargate LLC 공동 지분(OpenAI·SoftBank 각 약 40%, Oracle·MGX 합산 $7B 출자 예정), Broadcom 과의 Jalapeño 공동개발, 미 국방부 CDAO 계약이다. [EV-openai-028, EV-openai-029, EV-openai-030, EV-openai-031, EV-openai-032]",
+        "Broadcom 공동개발과 국방부 계약이 독립 상업 동맹으로 남는다. [EV-openai-031, EV-openai-032]",
+        "AWS Bedrock 입점은 긍정 변수다. [EV-openai-033]"
+      ],
+      "evidence_down_after": [
+        "2026-10-05 Reuters 는 OpenAI 가 'Astra' 모델 이름으로 상표권 침해 소송을 당했다고, 2026-10-04 Financial Times 는 에이전트 해킹 관련 법적 위험이 여러 관할에서 쌓인다고 보도했다. [EV-openai-009, EV-openai-010]",
+        "Microsoft 와는 2026-04-27 개정 계약으로 Azure 독점이 끝났고 그 전에 Microsoft 가 OpenAI 의 Amazon 계약에 법적 대응을 경고했다는 보도가 있어 긴장이 생겼다. Apple 은 2026-07-10 OpenAI 를 영업비밀 침해로 제소했고, 머스크 계열 X Corp·SpaceXAI 의 반독점 소송은 Apple 을 뺀 뒤에도 OpenAI 를 피고로 계류 중이며, NYT 등이 낸 MDL No. 3143 저작권 병합 소송에는 2026-06-24 지역신문 약 400곳이 낸 소송이 병합됐다. [EV-openai-041, EV-openai-042, EV-openai-043, EV-openai-044, EV-openai-045, EV-openai-046]"
+      ]
+    },
+    {
+      "judgment_id": "openai.F6",
+      "evidence_after": [
+        "OpenAI 는 비상장이라 ⑥(가격 — 미래 성장이 얼마나 선반영됐나)을 프로그램이 밸류 ÷ 최근 1년 보정 매출로 계산하며, 이 판단 항목은 계산에 쓰이지 않는다.",
+        "계산에 들어가는 밸류는 post-money $852B 이고, ARR 은 7월 기준 $40B 런레이트다.",
+        "2026년 GAAP 손실이 약 $60B 로 전망되고 흑자 전환 목표가 2030년이라 이익 배수는 만들 수 없다.",
+        "한 칸 올리는 보정의 두 조건은 모두 서지 않는다. ARR 성장률(직전 $25B 대비 60%)은 두 값이 런레이트라 인정되지 않는다.",
+        "기준일 현재 OpenAI 는 상장하지 않았다.",
+        "최근 1년 보정 매출로 맞춘 배수 약 39배는 그 분모의 원문을 찾지 못해 확인하지 못했다."
+      ],
+      "evidence_up_after": [
+        "밸류 ÷ ARR 은 21.3배이며 근거로만 남긴다. [EV-openai-034, EV-openai-023]"
+      ],
+      "evidence_down_after": [
+        "자본효율(ARR $40B ÷ 누적 조달 약 $185B = 0.22)은 기준 0.5 에 못 미치며, 누적 조달 $185B 는 보도된 범위 약 $180~190B 의 중간값이다. [EV-openai-023, EV-openai-049]"
+      ]
+    },
+    {
+      "judgment_id": "openai.F7",
+      "evidence_after": [
+        "OpenAI ⑦(순환금융 — 내 매출을 내는 고객이 그 돈을 어디서 구했나)은 -1점이며, 이 점수는 승계한 점수다.",
+        "부푼 밸류($852B)는 ⑥ 에서, 공급자가 곧 투자자라 못 떠나는 것은 ⑧ 에서, 조달 없이 못 버티는 것은 ⑨ 에서 센다.",
+        "판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)의 가로축은 비중이 작은 쪽으로 본다.",
+        "세로축의 후보 근거는 OpenAI Startup Fund 가 API 고객에 투자하는 구조다. 이를 환류로 보면 비중이 작고 돈이 돌아오는 칸이라 -1 이지만, 이 입력은 외부 사실로 검증되지 않았고 판단에 기록되지도 않았다.",
+        "신용 교차검증으로는 S&P 가 7/9 Oracle 을 BBB 에서 BBB- 로 내리며 OpenAI 를 취약점으로 명시했다. 신용 지표는 입력이 아니라 교차검증에만 쓴다.",
+        "⑦ 에 남는 것은 AI 스타트업 고객의 VC 조달 노출뿐이다."
+      ],
+      "evidence_up_after": [
+        "OpenAI 의 매출은 일반 사용자와 기업이 낸 돈이고, 공급자와 투자자 사이를 도는 자금은 매출이 아니라 비용 쪽으로 나간다. [EV-openai-011, EV-openai-039]"
+      ],
+      "evidence_down_after": []
+    },
+    {
+      "judgment_id": "openai.F8",
+      "evidence_after": [
+        "OpenAI ⑧(비대칭 의존 — 끊기면 회사가 멈추는가)은 -4점이며, 이 점수는 승계한 점수다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "총 컴퓨트 약정은 약 $1.4T 로, 7월 런레이트 매출 $40B 의 약 35배다. 재가속을 반영해도 매출에 비해 약정이 지나치게 크다. [EV-openai-035, EV-openai-023]",
+        "그 가운데 Oracle $300B 이상과 AWS $38B 를 더한 $338B 이상은 미개시 확정 약정으로 ⑨ 게이트 4 의 대상이다. 나머지 약 $1.06T 는 NVIDIA·AMD·Broadcom·Stargate 와의 발표분이고, 확정 약정인지는 나뉘어 있지 않다. [EV-openai-037, EV-openai-036, EV-openai-031]",
+        "Oracle 과의 $300B 단일 계약에 약정이 몰려 있고, Microsoft·Oracle·NVIDIA 는 공급자이자 투자자라 OpenAI 가 떠나기 어려운 관계다. [EV-openai-037, EV-openai-038, EV-openai-028]"
+      ]
+    },
+    {
+      "judgment_id": "openai.F9",
+      "evidence_after": [
+        "OpenAI ⑨(적자 깊이)는 프로그램이 비상장 경로로 계산해 -2점이다.",
+        "게이트 1(본업이 버는가 — 최근 1년 영업이익)은 판정 보류다. 비상장이라 최근 1년 영업손익이 공시되지 않았고, 이때는 비상장 경로가 흑자 전환 목표 후퇴 조항보다 앞선다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 비상장 잉여현금흐름 미공시 조항으로 -2 를 받고, 게이트 3(버티는 기간)은 소진율이 없어 건너뛴다.",
+        "게이트 4(약정 커버리지 — 계약된 수입이 미개시 확정 약정을 덮는가)는 계산하지 않는다. 컴퓨트 약정 $338B 이상(Oracle $300B 이상/5년, AWS $38B/7년)과 계약 수입의 기간·범위가 달라 견줄 수 없고, 잉여현금흐름 미공시로 게이트 2 에서 이미 깎았으므로 추가 감점도 없다."
+      ],
+      "evidence_up_after": [],
+      "evidence_down_after": [
+        "흑자 전환 목표가 2030년으로 후퇴했다는 기록은 판정 입력에 그대로 남아 있지만, 2026년 손실은 약 $14B 에서 GAAP 기준 약 $62B(7월 추정 $33B)까지 전망이 갈려 손실을 단정하는 근거로 쓰지 않는다. [EV-openai-040, EV-openai-047]",
+        "Oracle 한 곳과의 컴퓨트 약정만 연 약 $60B 로 ARR $40B 보다 크다는 사실은 남지만, ARR 이나 연 환산 약정은 커버리지가 아니라 점수에 넣지 않는다. [EV-openai-048, EV-openai-023]"
+      ]
+    }
+  ],
+  "unfound": [
+    {
+      "judgment_id": "openai.F1",
+      "column": "down",
+      "line": "거래 채널에는 가격 결정력이 없다. OpenRouter 평균 단가 $0.74/M 는 Anthropic($6.36/M)의 약 8.6분의 1 이고, 토큰 점유율 9.8% 에 매출 점유율 8.0% 라 프리미엄이 붙지 않는다.",
+      "searched": "웹 검색(OpenRouter 순위·점유율·평균 단가 보도, OpenRouter 자체 보고서 인용 기사)과 저장소. Anthropic 의 토큰 12%·매출 46% 보도(BigGo Finance 2026-07-10)는 찾았지만 OpenAI 의 $0.74/M·토큰 9.8%·매출 8.0% 와 Anthropic $6.36/M 이 적힌 원문은 찾지 못했다.",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "openai.F1",
+      "column": "down",
+      "line": "쓴 만큼 내고 언제든 갈아탈 수 있어 거래 채널의 락인은 약하다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F3",
+      "column": "down",
+      "line": "우리는 OpenAI 가 경쟁사가 베낄 수 있는 방식을 먼저 연 선두 주자라 퍼스트무버 함정에 머물러 있다고 본다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F4",
+      "column": "up",
+      "line": "Broadcom 과의 배치 계획은 2026년 0.1GW 미만, 2027년 1.3GW, 2028년 후속 세대 합산 5GW 이상이다. 출하·실제 배포만 세는 ④ 판정 지침에 따라 자체 칩은 출하가 확인될 때까지 점수 근거로 쓰지 않는다.",
+      "searched": "'2026년 0.1GW 미만' 부분만 미확인. Broadcom Q3 FY2026 실적 발표 전문(Motley Fool)과 OpenAI·Broadcom 발표문에서 찾지 못했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F5.impl48",
+      "column": "down",
+      "line": "지분이 걸린 동맹은 Stargate 하나뿐이고, 경쟁사를 OpenAI 의 매대에 올린 사실도 없다.",
+      "searched": "'없다'는 부재 주장이라 원문으로 받칠 수 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F5.impl48",
+      "column": "down",
+      "line": "Microsoft 와는 Azure 독점이 끝나며 긴장이 생겼고, Apple 과 상호 소송 중이며, 머스크의 반독점 소송이 계류 중이고, NYT 등이 낸 MDL No. 3143 저작권 집단소송에는 6/24 지역신문 약 400곳이 추가로 제소하고 7/10 Apple 이 제소했다.",
+      "searched": "웹 검색 한도(세션 200회)를 다 써 MDL No. 3143 추가 제소(2026-06-24 지역신문 약 400곳, 2026-07-10 Apple), Apple 상호 소송, 머스크 반독점 소송의 원문을 찾지 못했다. Microsoft 라이선스 비독점 전환(2026-04-27 재협상)은 Luminix 요약에서만 보았고 '긴장'을 받치는 문장은 없었다.",
+      "score_bearing": true
+    },
+    {
+      "judgment_id": "openai.F6",
+      "column": "down",
+      "line": "분모를 최근 1년 보정 매출로 맞춘 배수는 약 39배다.",
+      "searched": "최근 1년 보정 매출(분모)의 원문을 찾지 못했다. 분기 매출 $5.7B·$6.7B 는 Luminix 요약에만 있고, 39배를 만드는 분모 값과 그 출처는 확인하지 못했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F6",
+      "column": "down",
+      "line": "자본효율(ARR $40B ÷ 누적 조달 약 $185B = 0.22)은 기준 0.5 에 못 미친다.",
+      "searched": "누적 조달 약 $185B 의 원문을 찾지 못했다(저장소 validation/priv-arr-17b 에는 '약 $180~190B(중간값)'이라는 내부 기록만 있다).",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F7",
+      "column": "down",
+      "line": "⑦ 에 남는 것은 AI 스타트업 고객의 VC 조달 노출뿐이다.",
+      "searched": "분석 판단 문장이라 받칠 원문 사실이 없다. 방향 칸에서 판정 칸으로 그대로 옮겼다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F9",
+      "column": "down",
+      "line": "흑자 전환 목표가 2030년으로 후퇴했다는 기록은 판정 입력에 그대로 남아 있지만, 2026년 적자 $14~33B 와 GAAP 손실 약 $60B 는 전망이라 손실을 단정하는 근거로 쓰지 않는다.",
+      "searched": "'2026년 적자 상단 $33B'와 'GAAP 손실 약 $60B' 부분만 미확인. Luminix 요약은 $14B(일부 $17B+)만 적고, 웹 검색 한도 소진으로 다른 원문을 찾지 못했다.",
+      "score_bearing": false
+    },
+    {
+      "judgment_id": "openai.F9",
+      "column": "down",
+      "line": "연 환산 약정 약 $60B 가 ARR $40B 보다 크다는 사실은 남지만, ARR 이나 연 환산 약정은 커버리지가 아니라 점수에 넣지 않는다.",
+      "searched": "연 환산 약정 약 $60B 의 원문을 찾지 못했다. Sam Altman 의 '8년간 약 $1.4T' 는 연 약 $175B 에 해당해 이 값과 맞지 않는다.",
+      "score_bearing": false
+    }
+  ],
+  "corrections": [
+    {
+      "judgment_id": "openai.F2",
+      "before": "성능 도약 경로의 근거는 ARC Prize 가 표준 하네스로 잰 GPT-6 Astra 의 ARC-AGI-3 62.7%(최고 기록, 인간 성능을 96% 레벨에서 상회)와 Exploit-Bench 100%, 환각률 92% 에서 51% 로의 하락이다. OpenAI 가 발표한 99.9% 는 자사 어댑터 하네스 점수라 쓰지 않는다.",
+      "after": "성능 도약 경로의 근거는 ARC Prize 가 표준 하네스로 잰 GPT-6 Astra 의 ARC-AGI-3 62.7%(최고 기록)와 Exploit-Bench 100%, 환각률 92% 에서 51% 로의 하락이다. OpenAI 가 발표한 99.9% 와 인간 기준치보다 적은 행동으로 푼 레벨 96% 는 자사 어댑터 하네스 점수라 쓰지 않는다.",
+      "why": "ARC Prize 블로그(2026-09-03)는 인간 기준치보다 적은 행동으로 푼 레벨 96.0% 를 Provider Adapter 하네스 결과로 적었다. 표준 하네스 62.7% 의 괄호에서 빼고 어댑터 하네스 문장으로 옮겼다.",
+      "evidence_id": "EV-openai-013"
+    },
+    {
+      "judgment_id": "openai.F4",
+      "before": "첫 자체 추론 ASIC 'Jalapeño' 는 OpenAI 가 공개한 InferenceX 결과에서 GB300 대비 kW 당 최대 처리량이 DeepSeek R1 1.7배, Kimi K2.5 1.5배였지만, 이해당사자인 OpenAI 의 발표이고 출하 실적이나 독립 측정은 저장소에 없다.",
+      "after": "첫 자체 추론 ASIC 'Jalapeño' 는 OpenAI 가 공개한 InferenceX 결과에서 GB300 대비 kW 당 최대 처리량이 DeepSeek R1 1.7배, Kimi K2.5 1.5배였지만, 이해당사자인 OpenAI 의 발표이고 독립 측정은 저장소에 없다.",
+      "why": "Broadcom 은 2026-09-02 실적 발표에서 'In Q3, we also shipped Jalapeno' 라고 밝혔다(출하량은 미공개). '출하 실적이 없다'는 부분을 뺐다. 이 사실은 판정 칸의 '출하량이나 독립 측정이 확인되면 다시 본다' 조건에 닿는다.",
+      "evidence_id": "EV-openai-025"
+    },
+    {
+      "judgment_id": "openai.F4",
+      "before": "Broadcom 과의 배치 계획은 2026년 0.1GW 미만, 2027년 1.3GW, 2028년 후속 세대 합산 5GW 이상이다. 출하·실제 배포만 세는 ④ 판정 지침에 따라 자체 칩은 출하가 확인될 때까지 점수 근거로 쓰지 않는다.",
+      "after": "Broadcom 과의 배치 계획은 2027년 1.3GW, 2028년 후속 세대 합산 5GW 이상이다. 출하·실제 배포만 세는 ④ 판정 지침에 따라 자체 칩은 출하량과 실제 배포가 확인될 때까지 점수 근거로 쓰지 않는다.",
+      "why": "Broadcom 실적 발표(2026-09-02)에는 2027년 1.3GW·2028년 5GW 초과만 있고 2026년 0.1GW 미만은 없어 뺐다(unfound 에 같이 적음). 같은 발표가 3분기 출하를 밝혀 '출하가 확인될 때까지'를 '출하량과 실제 배포가 확인될 때까지'로 고쳤다.",
+      "evidence_id": "EV-openai-025"
+    },
+    {
+      "judgment_id": "openai.F4",
+      "before": "인프라로는 Stargate Abilene 에 GPU 20.2만 개(B200 10.1만, B300 10.1만, H100 환산 약 50.9만)가 있다.",
+      "after": "인프라로는 Stargate Abilene 에 Nvidia B200·B300 기반으로 H100 환산 약 50.9만 개 규모의 컴퓨트가 있다.",
+      "why": "Epoch AI 디렉터리(2026-10-05 갱신) 본문은 509k H100-equivalents 와 B200·B300 칩만 적고 GPU 개수(20.2만, 각 10.1만)는 본문에 없어 뺐다.",
+      "evidence_id": "EV-openai-026"
+    },
+    {
+      "judgment_id": "openai.F5.impl48",
+      "before": "남는 동맹은 Stargate LLC 공동 지분(OpenAI 40%·Oracle $7B·SoftBank 40%·MGX), Broadcom 과의 Jalapeño 공동개발, 미 국방부 CDAO 계약이다.",
+      "after": "남는 동맹은 Stargate LLC 공동 지분(OpenAI·SoftBank 각 약 40%, Oracle·MGX 합산 $7B 출자 예정), Broadcom 과의 Jalapeño 공동개발, 미 국방부 CDAO 계약이다.",
+      "why": "DCD(2025-01-23, The Information 인용)는 'Oracle and Abu Dhabi's MGX … expected to invest a combined $7bn' 이라고 적었다. Oracle 단독 $7B 가 아니라 Oracle·MGX 합산 예정액이다. Oracle 이 Stargate 지분 출자자라는 것은 OpenAI 발표(2025-01-21)에서 확인했다. 판정 칸의 'Oracle 의 Stargate $7B 지분은 동맹으로 남는다' 문장도 같은 값을 쓰고 있다.",
+      "evidence_id": "EV-openai-029"
+    },
+    {
+      "judgment_id": "openai.F9",
+      "before": "흑자 전환 목표가 2030년으로 후퇴했다는 기록은 판정 입력에 그대로 남아 있지만, 2026년 적자 $14~33B 와 GAAP 손실 약 $60B 는 전망이라 손실을 단정하는 근거로 쓰지 않는다.",
+      "after": "흑자 전환 목표가 2030년으로 후퇴했다는 기록은 판정 입력에 그대로 남아 있지만, 2026년 순손실 약 $14B 는 전망이라 손실을 단정하는 근거로 쓰지 않는다.",
+      "why": "Luminix(2026-09-30 갱신)는 '2026 internal net-loss projection: ~$14B; some estimates $17B+' 와 'cash-flow positive only ~2030' 만 적는다. 적자 상단 $33B 와 GAAP 손실 약 $60B 는 원문을 찾지 못해 뺐다(unfound 에 같이 적음).",
+      "evidence_id": "EV-openai-040"
+    }
+  ]
+}
