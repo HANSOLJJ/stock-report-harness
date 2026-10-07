@@ -47,3 +47,4 @@
 - round 8 수정 묶음(PRP-378~389): N1 으로 spacex-xai ⑦ 큼 → 총점 9→7, 9위(apple 8위). 이번 실행의 유일한 점수 변화.
 - round 9 확인 리뷰: 재무·규칙·출력 pass. 사실·출처 needs_fix 1(oracle.F2 '자체 모델 대신' 원문 없음) → PRP-390 으로 고치고 같은 리뷰어가 재확인 pass. 렌더러: 해시로 열 때 탭 미적용 결함 수정(브라우저 확인).
 - review.md pass(results 462585f9…, draft ece5fa5f…). validate_report_contract 남은 오류는 승인 없음·HTML 미빌드뿐. 승인 대기.
+- 사람 승인(b33d2ad3) 뒤 build. validate --require-html PASS. 빌드본 화면: 320·768·1280 탭 6개 가로 넘침 0, 근거 ID 760개 잘림·겹침 0, 해시 열기·표지 → 출처 탭 동작, 금지어 0. history.csv 에 승인 b33d2ad3 14줄. 완료. push 는 사용자 지시 때만.

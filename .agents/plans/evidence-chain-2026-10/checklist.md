@@ -42,4 +42,4 @@
 - [x] validate_report_contract, "승인 대기" 보고
 
 ## G. 빌드(승인 뒤)
-- [ ] build_report → --require-html → 화면 확인 → 커밋
+- [x] build_report → --require-html → 화면 확인 → 커밋
