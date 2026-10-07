@@ -212,10 +212,43 @@ server.on('error', (error) => {
   throw error;
 });
 
+// 2026-10-07 사용자 요청: 승인 페이지 주소를 외우지 않게 한다. 인자로 준 실행, 없으면 가장 최근에 바뀐 채점 실행을 연다.
+function latestScorecardRun() {
+  if (!fs.existsSync(ROOT)) return null;
+  const runs = fs.readdirSync(ROOT, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && entry.name.startsWith('ai-scorecard-'))
+    .map((entry) => path.join(ROOT, entry.name))
+    .filter((dir) => fs.existsSync(path.join(dir, 'run.json')))
+    .map((dir) => ({
+      name: path.basename(dir),
+      mtimeMs: Math.max(...fs.readdirSync(dir).map((f) => fs.statSync(path.join(dir, f)).mtimeMs)),
+    }))
+    .sort((a, b) => b.mtimeMs - a.mtimeMs);
+  return runs.length ? runs[0].name : null;
+}
+
+// 기본 브라우저로 연다. SCORECARD_NO_OPEN=1 이면 열지 않는다. 열기에 실패해도 서버는 계속 돈다.
+function openInBrowser(url) {
+  if (process.env.SCORECARD_NO_OPEN) return;
+  const { spawn } = require('child_process');
+  const [cmd, args] = process.platform === 'win32' ? ['cmd', ['/c', 'start', '', url]]
+    : process.platform === 'darwin' ? ['open', [url]] : ['xdg-open', [url]];
+  try {
+    spawn(cmd, args, { stdio: 'ignore', detached: true }).on('error', () => {}).unref();
+  } catch (_) { /* 브라우저를 못 열면 출력한 주소로 연다 */ }
+}
+
 if (isApprovals) {
   server.listen(PORT, '127.0.0.1', () => {
     console.log(`[승인 모드] 일회용 코드: ${approvalCode}`);
-    console.log(`승인 페이지: http://127.0.0.1:${server.address().port}/approve/<run_id>`);
+    const run = normalizeRequestedReport(REQUESTED_REPORT) || latestScorecardRun();
+    if (run) {
+      const url = `http://127.0.0.1:${server.address().port}/approve/${run}`;
+      console.log(`승인 페이지: ${url}`);
+      openInBrowser(url);
+    } else {
+      console.log(`승인 페이지: http://127.0.0.1:${server.address().port}/approve/<run_id>`);
+    }
   });
 } else {
   server.listen(PORT, printReportLinks);
