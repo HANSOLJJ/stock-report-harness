@@ -63,7 +63,7 @@ collect → 후보 선별(evidence.json) → triggers.json → research
 
 ## 사람이 하는 일
 
-선별한 근거는 후보 상태로 남는다. 사람이 `node server.js --approvals` 로 승인 페이지를 띄워 근거를 확정하거나 거부한다. 에이전트는 `confirm` 으로 근거를 확정하지 않는다. 사용자가 확정할 ID 를 지정해 지시한 경우에만 그 ID 로 실행한다. 확정하면 해시가 바뀌므로 `research → calculate → draft → review` 를 다시 돌린다.
+선별한 근거는 후보 상태로 남는다. 에이전트가 원문을 열어 확인한 뒤 `confirm` 으로 확정하거나 거부한다(2026-10-07 사용자 지시: 사람은 최종 승인만 한다). 확정하면 해시가 바뀌므로 `research → calculate → draft → review` 를 다시 돌린다.
 
 ## 제약
 

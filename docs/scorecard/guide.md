@@ -16,14 +16,15 @@ flowchart LR
     D --> E["calculate<br/>점수 계산"]
     E --> F["draft<br/>초안"]
     F --> G["review<br/>4영역 리뷰"]
-    G --> H{"사람<br/>승인 페이지"}
-    H -- "근거 확정·제안 반영·판단 수정" --> D
+    G -- "발견 → 에이전트가 근거 확정·제안 반영" --> D
+    G -- "pass" --> H{"사람<br/>승인 페이지"}
+    H -- "판단 직접 수정(선택)" --> D
     H -- "승인" --> I["build<br/>report.html"]
     style H fill:#fde68a,stroke:#b45309
     style I fill:#bbf7d0,stroke:#15803d
 ```
 
-사람이 승인 페이지에서 무엇인가를 바꾸면 화살표가 research 로 돌아갑니다. 바뀐 입력으로 계산과 리뷰를 다시 해야 승인할 수 있기 때문입니다.
+입력이 바뀌면 화살표가 research 로 돌아갑니다. 리뷰 발견을 에이전트가 반영했든 사람이 승인 페이지에서 판단을 직접 고쳤든, 바뀐 입력으로 계산과 리뷰를 다시 해야 승인할 수 있기 때문입니다.
 
 ## 2. 누가 무엇을 하나
 
@@ -47,14 +48,10 @@ sequenceDiagram
     A->>C: research · calculate · draft
     A->>R: 4영역 리뷰 요청 (한 번에 전수)
     R-->>A: pass 또는 발견 목록
-    A->>C: propose (판단 변경 제안)
-    A-->>U: 승인 대기 보고
-    U->>P: node server.js --approvals
-    U->>P: 근거 확정 · 제안 반영 또는 거부
-    P->>C: confirm · proposal · judge
-    C-->>U: 지문이 바뀜, 다시 돌려야 함
-    U->>A: "다시 돌려"
+    A->>C: confirm · propose · proposal (근거 확정, 제안 작성·반영)
     A->>C: research → calculate → draft → review
+    A-->>U: 승인 대기 보고
+    U->>P: node server.js --approvals (브라우저가 저절로 열림)
     U->>P: 이름 + 6자리 코드로 승인
     U->>A: "빌드해"
     A->>C: build_report
@@ -322,12 +319,12 @@ flowchart TD
 
 ## 9. 11월 정기 재채점 체크리스트
 
-1. `init <run_id> --from-run ai-scorecard-2026-10-test` (또는 `--from-run ai-scorecard-2026-09-obsreg`)
+1. `init <run_id> --from-run ai-scorecard-2026-10-rescore` (가장 최근에 승인된 실행을 이어받는다)
 2. `collect <run_id> --kind all`
-3. `trigger-candidates <run_id>` 로 이전 트리거(10월 시험 실행에서 이어받으면 40 + 기준선 39 = 79건) 확인
+3. `trigger-candidates <run_id>` 로 이전 트리거 확인
 4. 근거·트리거 선별, 이전 트리거마다 `carry` 기록. 중복(TRIG-010·035 Anthropic 상장, TRIG-003·025 NVIDIA ACIE)과 ⑥ 경계(TRIG-030, v1.7 부터 구간표 없음)는 철회
 5. `research → calculate → draft`
 6. 리뷰 4영역을 한 번에, 전수로
-7. 판단 변경 제안을 한 묶음으로 `propose`
-8. "승인 대기" 보고 → 사람이 승인 페이지에서 결정 → "다시 돌려" → 승인
+7. 리뷰 발견을 한 묶음으로 `propose` 하고, 원문과 대조한 뒤 에이전트가 `proposal` 로 반영·거부 → `research` 부터 다시
+8. "승인 대기" 보고 → 사람이 승인 페이지에서 승인
 9. 빌드

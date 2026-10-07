@@ -147,7 +147,7 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 ### 근거 계층
 
-`collect` 는 후보(`candidate`)만 만든다. 후보를 확정(`confirmed`)하는 것은 사람이고 승인 페이지에서 한다. 규칙은 셋이다.
+`collect` 는 후보(`candidate`)만 만든다. 후보를 확정(`confirmed`)하는 것은 에이전트이고, 원문을 확인한 뒤 `confirm` 으로 한다(2026-10-07 사용자 지시: 사람은 최종 승인만 한다). 규칙은 셋이다.
 
 - `status: new` 판단은 `confirmed` 근거만 인용한다. 후보를 인용하면 교차 참조 검증이 실패한다(`schema.validate_cross_refs`).
 - `confirmed` 근거에는 `reviewer`·`reviewed_at` 이 있어야 한다.
