@@ -7,11 +7,11 @@
   "baseline_id": "v1.5",
   "input_hashes": {
     "run": "65a19e92d2a861d18c6c33059b2217f5882c9527dde0827c4b2282c569a52f5f",
-    "observations": "590b1f8a776f058801e1e222ba83ba4b9c117ee4cd447b6e5399b262fe28b576",
-    "judgments": "8554c26aa3425c4411b40fd28c9e5132817739b2999ede9c33dacba76ce913ad",
-    "sources": "b3becf746f6a07b643d185e500029376f0fd9aa46ae044c57a6509179772a1d3",
-    "evidence": "421ac049a2c60f906bfb4277461e5ec3eca11ca48cb5a019581b8ae98b75684d",
-    "triggers": "7416e109f0c061505e906da23f963a6b9f8b9c66d04bc6ea0322f16fcf009a07",
+    "observations": "2ac517b50cdbf7d7ccccdbdf37e3224c5cef6ca44dc9bd201c6a37c99557b262",
+    "judgments": "37bab83c8791088b1a864e6d36dc5f1cf750ee47d2b0ef0a4c7f8d3f4c40fa9e",
+    "sources": "054add916953d7fe233c149d8de7560fc56009a87c1ef1c44a7df0013bd8c873",
+    "evidence": "47ce2de07cc6c7b921b481f6ff37990ddea9fac020647417d3b78253c2da995d",
+    "triggers": "8b563dc98bc2596472f04f82c4b2250f13ff04be860fd57978e54937defa1340",
     "rules": "0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d"
   },
   "decisions_applied": [
@@ -3888,7 +3888,7 @@
             "oracle.cash.rs1006",
             "oracle.contracted_revenue.rs1006",
             "oracle.fcf_ttm.rs1006",
-            "oracle.offbalance_B.v15",
+            "oracle.offbalance_B.link26",
             "oracle.operating_income_ttm.rs1006",
             "oracle.revenue_ttm.rs1006",
             "oracle.undrawn_credit.rs1006"
@@ -3923,9 +3923,9 @@
               {
                 "gate": "G4",
                 "result": "computed",
-                "coverage": 2.656,
+                "coverage": 2.2037177780949126,
                 "contracted_revenue": 664000000000.0,
-                "offbalance_B": 250000000000.0,
+                "offbalance_B": 301309000000.0,
                 "step": 0,
                 "score": -3
               }
@@ -3941,8 +3941,7 @@
             }
           },
           "warnings": [
-            "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)",
-            "oracle.offbalance_B.v15: legacy_unverified 원자료(이번 실행에서 재검증되지 않음)"
+            "C-04: 완충은 현금+확정 미인출 여신만(등급 기반 조달 여력 제외, 설계 권고)"
           ],
           "pending": null
         }
@@ -4375,6 +4374,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 150,
-  "results_hash": "59518fa18f928802828905ce4844947b8a6c3d5a83d7b6062366532dab7e59ce"
+  "warnings_count": 149,
+  "results_hash": "bacc7bc3e82a981d50f89a40bad99f236879fea44d8713f9852d0efaaac36e88"
 }
