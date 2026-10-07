@@ -1,24 +1,73 @@
 ---
 reviewer_agent: fact-checker
-session: fc-opus55-20261006-rescore-r1 (1~4차와 같은 세션)
+session: fc-opus55-20261007-rescore-r6 (근거 세 칸을 나눈 세션·서브에이전트와 다른 세션)
 reviewed_at: 2026-10-07
-round: 5
+round: 6
 ---
 # fact-sources — 사실·출처
-검토자: Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님, evidence-editor 관점 포함) · 2026-10-07 · 완결된 문장 재작성 뒤 1차 · 확인 리뷰 · 좁은 확인
-결과: pass
-요약: 확인 리뷰의 needs_fix 2건이 닫혔다. (1) Oracle ⑤ 는 동맹 등급 +1 로 되돌아갔다(PRP-142). 새 문장의 사실은 원문과 맞는다. 지분 동맹은 TikTok USDS 합작법인 15% 하나이고(10-Q p.7), 10-Q·10-K 에 Stargate 는 0건이며, 비시장성 지분·채무 투자 합계는 10-Q 에 $2.4B 로 적혀 있다. 원문에 없던 'TikTok 합작법인의 클라우드를 맡는다' 는 빠졌다. (2) 기업 요약 14개의 총점·과점·함정·순위·공동 여부를 results 와 다시 대조했다. 모두 맞고, 고친 여섯(Microsoft·Meta·Alibaba·OpenAI·Oracle·Tesla)의 서술 사실도 각 판단과 맞는다. OpenAI ④ 3점 문장(PRP-143)의 사실은 모두 이전 판단 문장에 있던 것이고, 자체 칩을 근거에서 뺀 이유를 판정 지침으로 적었다. EV-tesla-008 relevance 와 TRG-030 recheck 의 테슬라 ④ 는 3점으로 맞춰졌고, EV-oracle-008 의 '동맹 등급 +1' 은 이제 맞는 값이다. 점수·순위·체크리스트를 바꾸는 발견은 남지 않았다. 남은 것은 다음 실행 과제뿐이다. 그중 Oracle ⑦·OpenAI ⑤ 에 남은 'Oracle 의 Stargate $7B 지분' 서술은 점수에 닿지 않는다.
+검토자: Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님, evidence-editor 관점 포함) · 2026-10-07 · 근거 세 칸 재분류 뒤
+결과: needs_fix
+요약: 판단 114개를 모두 읽었다. 이전 문장(`revision_history[-1].previous.evidence`)과 세 칸 문장을 나란히 놓고 대조했다. 세 칸 합이 담은 사실은 이전 문장과 같다. 숫자·영문 토큰 차이는 두 방향 모두 0건이다. 한글 어절 차이는 어미·조사·주어 보충뿐이다. 새로 생긴 사실과 빠진 사실은 찾지 못했다. 점수·순위·factor 점수·기업 요약은 round 5 와 같다. 사실을 바꾼 수정은 없고, needs_fix 는 1건이다. alphabet.F5 내릴 근거 첫 줄이 "직원 600명 이상의 반발은 시장의 적대가 아니다" 라는 결론 문장이라, 그 칸이 말하려는 방향과 반대로 읽힌다. 서브에이전트 수정이 반발의 대상('이에' = 계약 갱신·기밀 계약·안전 설정 완화)을 '안전 설정 완화' 하나로 좁혔다. 사실을 내릴 근거에 두고 결론은 판정 칸으로 옮긴다. counter_evidence 를 비운 3건 가운데 tsmc·openai 는 버린 내용이 기준선 판정표 행 번호와 인용 위치 메모뿐이라 잃은 사실이 없다. anthropic 은 '세 회사에서 컴퓨트를 사는 것은 조달이라 동맹이 아니다' 라는 지금도 유효한 판정 논리가 함께 버려졌다(점수 영향 없음, 다음 실행 과제). 렌더러가 openai.F2 의 벤치마크 이름 'AA-LCR' 을 작업 메모로 오인해 draft·리포트에 'SciCode·A' 로 싣는다. round 5 에도 있던 결함이다(다음 실행 과제, 출력 영역과 함께 본다).
 
-검토 기준: results_hash `e279d193d30137ee…`, draft_hash `1bbf20715c81cc01…`(review.md frontmatter 와 같음을 확인).
+검토 기준: results_hash `07814146bc1e8401…`, draft_hash `9461bade7e987939…`(review.md frontmatter 와 같음을 확인). 비교 기준은 round 5 커밋 `f019b73`, 재분류 커밋 `336738c` 다. 스크립트는 스크래치 `review6/dump.py`·`review6/tokdiff.py` 다.
 
 ## 확인 내용
+
+- **바뀐 범위**: `f019b73` 뒤로 입력 가운데 judgments.json 만 바뀌었다. observations·sources·evidence·triggers 해시는 round 5 와 같다. results.json 은 judgments 해시와 results_hash 두 줄만 바뀌었다. draft 의 표·기업 머리줄·요약 377줄은 round 5 와 한 글자도 다르지 않다. 그래서 출처 URL·excerpt·SEC 원문 대조·기준일·트리거 carry 표는 round 1~5 의 확인이 그대로 유효하다. 이번에는 sec-get 을 쓰지 않았다.
+- **판단 칸**: 114개 모두 `evidence`·`evidence_up`·`evidence_down`·`revision_history` 가 바뀌었다. `counter_evidence` 는 3건만 바뀌었다. kind·score·inputs·status·reviewer·reviewed_at·source_ids 는 하나도 바뀌지 않았다. `revision_history[-1].previous` 의 evidence·점수·판정 재료는 114개 모두 round 5 판단과 같다. 수정 경로는 제안 PRP-148~258(111건, accepted)과 judge 3건(tsmc.F5.strict54·anthropic.F5.impl48·openai.F5.impl48)이다. company_summaries 는 바뀌지 않았다.
+- **사실 보존(기계)**: 세 칸 문장은 828개다. 이 가운데 385개는 이전 문장을 그대로 옮겼고, 443개는 나누거나 고친 문장이다. 숫자·금액·영문 토큰을 판단마다 이전 문장과 대조했다. 빠진 토큰과 새 토큰이 모두 0건이다. 한글 어절 차이 254줄은 모두 어미(‘~라’→‘~다’), 접속어(다만·그러나·반면) 삭제, 주어 보충('마이크로소프트는', 'TSMC 의 사업은')이다. 칸 사이 중복 0, 빈 판정 칸 0, 두 방향 칸이 함께 빈 판단 0, 남은 counter_evidence 0 이다.
+- **사실 보존(전수 읽기)**: 114개 판단의 이전 문장, 세 칸 문장, 서브에이전트 `edits` 를 모두 읽었다. 뜻이 바뀐 수정은 두 곳이다. alphabet.F5 의 '이에 반발한' → '구글의 안전 설정 완화에 반발한' 은 반발 대상을 좁혔다(발견 1). palantir.F5 의 '실제 이탈은' → '구조형 적대로 인한 실제 이탈은' 은 원문에 없던 인과를 붙였다(low). 이 밖의 수정은 뜻이 같다. 예를 들어 alphabet.F7 '그 매출은' → 'Anthropic 에서 오는 매출은', openai.F2 '2~3점' → '2~3포인트', tsmc.F5 '미 정부가 10% 지분을 가진 Intel Foundry' → '미 정부가 Intel Foundry 의 10% 지분을 가지고 있다' 가 그렇다.
+- **품질 단서**: 방향 칸으로 간 보도·벤더 발표·계획 문장은 약점 단서를 같은 줄에 그대로 갖고 있다. 예를 들어 nvidia.F2 Vera Rubin 은 '벤더 발표이고 독립 측정이 아니다', openai.F4 Jalapeño 는 '이해당사자인 OpenAI 의 발표', tesla.F4 13.7GWh 는 '공시 본문과 대조하지 않은 보도 제목 값', anthropic.F4 자체 칩은 '지금은 계획 단계다', nvidia.F3 전년 대비 성장률은 '(추론)' 을 달고 있다.
+- **counter_evidence 3건**: tsmc.F5 에서 버린 것은 기준선 판정표 218행(A +2, 4점)과 '고객에 투자 안 함' 인용 행 번호(243행) 메모다. 'NVIDIA 경쟁 칩이 TSMC 공정에 들어와 있다' 와 'TSMC 는 고객에 투자하지 않는다' 는 각각 올릴 근거·내릴 근거에 이미 있다. openai.F5 에서 버린 것은 판정표 224행·276행 메모다. 'Oracle $300B·Amazon $50B·SoftBank·DoD' 는 판정 칸 둘째 줄에 있다. anthropic.F5 에서 버린 것은 판정표 214행 메모와 'Amazon 5GW + Google 5GW TPU + MS 1GW 는 사는 쪽의 컴퓨트 확보라 조달 ≠ 동맹에 걸리고 ⑧ 에서 센다' 다. 뒤의 것은 지금도 유효한 판정 논리인데 세 칸 어디에도 없다. 판정 칸은 '투자를 빼면 … 유통 하나가 남는다' 고만 적는다. A=+1 은 유통만으로 서므로 점수에는 닿지 않는다(다음 실행 과제 2). 'MS 1GW' 는 지금 판단 문장 어디에도 없는 옛 근거 숫자라 되살리지 않아도 된다.
+- **참조 무결성**: 관측 525·판단 186·근거 72·트리거 187 참조가 모두 출처 210건 안에 있다. 빠진 참조는 0건이다.
+- **draft 반영**: 세 칸 문장 828개 가운데 810개가 draft 에 글자 그대로 있다. 나머지 18개는 셋으로 갈린다. 첫째, anthropic.F6·openai.F6(16개)는 자동 산출 factor 라 판단이 카드에 연결되지 않는다. round 5 에도 이 판단 문장은 draft 에 없었다. 둘째, alibaba.F7 의 'P4' 는 이름 바꾸기로 '입력 신뢰도' 가 됐다. 셋째, openai.F2 내릴 근거의 'AA-LCR' 은 `render_common.split_worknote` 가 'A-LCR' 을 작업 메모로 떼어 'SciCode·A 이 2~3포인트' 로 실린다(draft 1542행). 마지막 결함은 round 5 draft 981행에도 있었다. 판단 문장 전체에서 split_worknote 에 걸리는 줄은 이 한 줄뿐이다.
+- **금지 표현**: 새로 생긴 문장이 없고, 고친 문장에 매수·매도·목표주가·수익 보장 표현은 0건이다.
+
+## 발견
+| 등급 | 위치 | 발견 | 고칠 방향 | 점수 영향 |
+| --- | --- | --- | --- | --- |
+| needs_fix | judgments.json alphabet.F5 · evidence_down[0] "구글의 안전 설정 완화에 반발한 직원 600명 이상의 움직임은 내부 갈등이지 시장의 적대가 아니라고 판단했다." | 내릴 근거 칸에 결론 문장이 있다. 문장이 말하는 것은 '이 반발은 적대가 아니다', 곧 적대 등급을 깎지 않는 쪽이라 칸의 방향과 반대로 읽힌다. 서브에이전트 수정이 이전 문장의 '이에 반발한'(계약 갱신·$200M 기밀 계약·안전 설정 완화 셋)을 '안전 설정 완화에 반발한' 하나로 좁혔다. 원문에서 반발 대상을 가를 근거는 없다(기준선 원문도 '직원 600명+ 반발' 만 적는다). | 둘로 나눈다. 내릴 근거: "구글의 기밀 네트워크 사용 갱신·기밀 계약·안전 설정 완화에 직원 600명 이상이 반발했다." 판정 칸(적대 등급 문장 바로 뒤): "직원 반발은 내부 갈등이지 시장의 적대가 아니라고 판단했다." | 없음(H=−1 그대로) |
+| low | judgments.json palantir.F5 · evidence_up[1] "구조형 적대로 인한 실제 이탈은 영국에서만 확인되고, …" | 수정이 '구조형 적대로 인한' 을 붙였다. 이전 문장은 '실제 이탈은 영국에서만 확인되고' 이고, 영국 경찰·NHS 이탈의 원인이 시민사회·의회의 적대라는 사실은 원문·근거에 없다. | '구조형 적대로 인한' 을 빼고 "실제 이탈은 영국에서만 확인되고, 최대 파트너인 미 정부와의 긴장은 보이지 않는다." 로 쓴다. | 없음 |
+| low | judgments.json anthropic.F5.impl48 판정 칸 | counter_evidence 를 비우며 '세 회사에서 컴퓨트를 사는 것은 조달이라 동맹이 아니고 ⑧ 에서 센다' 는 판정 논리도 함께 버렸다. 판정 칸은 '투자를 빼면 세 회사와의 관계에는 유통 하나가 남는다' 고만 적어, 컴퓨트 구매 관계를 왜 세지 않는지 빠졌다. openai.F5 는 같은 잣대를 'Oracle 과의 $300B 컴퓨트 계약도 OpenAI 가 사는 쪽의 조달이라 동맹이 아니며' 로 적는다. | 판정 칸 둘째 줄 뒤에 "Anthropic 이 세 회사에서 컴퓨트를 사는 관계는 사는 쪽의 조달이라 동맹이 아니고, 그 의존은 ⑧ 에서 센다." 를 더한다. | 없음 |
+| low | render_common.split_worknote · draft.md 1542행 · report.html | openai.F2 내릴 근거의 벤치마크 이름 'AA-LCR' 에서 'A-LCR' 을 작업 메모로 떼어 'τ³-Banking·SciCode·A 이 2~3포인트 퇴행' 으로 싣는다. 판단 파일 문장은 맞다. round 5 draft 981행에도 같은 결함이 있었다. | 작업 메모 패턴이 영문 낱말 안의 'A-LCR' 을 잡지 않게 고친다. 테스트에 'AA-LCR' 문장을 넣는다(출력 영역과 함께 본다). | 없음 |
+
+판정 칸·방향 칸 분류가 갈릴 수 있는 줄과 칸을 건너가는 지시어는 사실이 바뀐 것이 아니라 「다음 실행 과제」 3~5 에 적었다. round 5 의 low 둘(oracle.F5 의 10-Q·10-K $2.4B 묶음, oracle.F7·openai.F5 의 Stargate $7B 지분)은 문장이 칸만 옮겨 그대로 남는다(oracle.F5 evidence_down[1], oracle.F7 evidence_down[1], openai.F5 evidence_up[0]·판정 칸 셋째 줄).
+
+## 체크리스트
+| ID | 결과(pass/fail/not_applicable) | 근거 |
+| --- | --- | --- |
+| Q05 | pass | 이해당사자 발표를 방향 칸으로 옮길 때 '벤더 발표이고 독립 측정이 아니다'(nvidia.F2), '이해당사자인 OpenAI 의 발표'(openai.F4), '자사 어댑터 하네스 점수라 쓰지 않는다'(openai.F2) 같은 단서를 같은 줄에 남겼다. 이해상충 표기는 AGENTS.md 에 따라 보지 않았다. |
+| Q09 | pass | 계획 문장은 방향 칸에 두되 '계획이라 점수에 넣지 않는다' 를 같은 줄에 남겼다(anthropic.F4·F8 자체 칩, apple.F4 Baltra, alibaba.F4 증자, oracle.F9 추가 조달, tesla.F4 Optimus·Terafab, meta.F4 기업용 AI). tesla.F2 는 점수 표기('0점') 때문에 그 문장을 판정 칸에 두었다. |
+| Q14 | pass | 진행 중인 사건(Hugging Face 종결 전, Starship 시험 비행 성격, 로보택시 확장 과제, Gemini 4·GPT-6.1 Sol 독립 측정 없음)은 나눈 뒤에도 미완으로 적혀 있다. |
+| Q23 | pass | 하네스가 표기되지 않은 벤치마크(meta.F2 Tau3-Bench, alibaba.F2 HLE, anthropic.F2 ARC-AGI-3 30.2%, openai.F2 FrontierMath)는 '비교 근거로 쓰지 않는다' 단서를 같은 줄에 남겼다. 하네스가 다른 수치를 비교 근거로 쓴 줄은 없다. |
+
+## 다음 실행 과제
+1. (low) palantir.F5 evidence_up[1] 에서 '구조형 적대로 인한' 을 뺀다.
+2. (low) anthropic.F5.impl48 판정 칸에 '세 회사에서 컴퓨트를 사는 관계는 조달이라 동맹이 아니고 ⑧ 에서 센다' 를 더한다(openai.F5 와 같은 잣대).
+3. (low, 규칙 일관성 영역과 함께) 판정 문장이 방향 칸에 있거나 한 줄에 두 방향이 섞인 줄이다. alibaba.F3 up[0] '모방 불가능성을 부분으로 본 것은 … 판단 때문이다' 는 판정 칸으로 옮긴다. openai.F3 down[0] '퍼스트무버 함정에 머물러 있다고 본다' 는 판정 칸으로 옮긴다. meta.F1 up[2] '새 AI 앱의 사용자 지표는 이 점수를 움직이지 않는다' 도 판정 칸으로 옮긴다. alphabet.F2 up[2] Gemini 3.8 Flash 는 '속도·가격 경쟁력'(올릴 근거)과 '프론티어 순위 불변'(내릴 근거)으로 나눈다. tsmc.F5 down[0] 은 '고객에 투자하지 않는다'(내릴 근거)와 '고객이 선급금으로 캐파를 댄다'(올릴 근거)로 나눈다. anthropic.F8 판정 칸 'FTC 가 계약의 배타성을 검토하고 있다' 는 사실이라 방향 칸으로 옮긴다. 이전 문장을 통째로 옮겨 '~라고 판정했다/판단했다' 가 붙은 방향 칸 줄도 사실과 결론으로 나눈다. alphabet.F1 up[1], amazon.F8 up[0], meta.F1 up[0], palantir.F1 down[1], palantir.F8 down[0], oracle.F8 down[1], nvidia.F7 down[1] 이 그렇다(모두 방향은 맞다).
+4. (low, Q03) '흑자 전환 목표 후퇴와 완충 잠식은 없음' 이 anthropic.F9·spacex-xai.F9·tesla.F9 에서는 올릴 근거, alibaba.F9 에서는 판정 칸에 있다. 판정 재료(bep_retreat·buffer_erosion) 문장이라 네 회사 모두 판정 칸으로 맞춘다. anthropic.F9 는 입력이 `no` 인데 문장이 '확인되지 않았다' 라 미확인처럼 읽히므로 '없다' 로 고친다.
+5. (low, 출력 영역과 함께) 칸이 갈리며 지시 대상이 다른 칸으로 간 줄이다. microsoft.F5 up[1] '같은 주'(기준 보도는 내릴 근거), palantir.F1 down[0] '그 전환비용은', alibaba.F1 down[0] '이 락인은'(대상은 올릴 근거), nvidia.F7 판정 '이 보증들은'(대상은 내릴 근거), nvidia.F8 판정 '이 헤지는'(대상은 올릴 근거), tesla.F5 판정 '이런 규제 적대는', spacex-xai.F5 판정 '이 적대들을'(대상은 내릴 근거)을 주어를 밝힌 문장으로 다시 쓴다.
+6. (low) `split_worknote` 가 'AA-LCR' 을 깎지 않게 고친다(발견 4).
+7. (low) round 5 과제 1~4 를 유지한다. oracle.F7·openai.F5 의 Oracle Stargate $7B 지분, oracle.F5 의 $2.4B 문서별 표기, nvidia.F3 의 2026-04-26 10-Q 등록과 판단 source_ids·evidence_ids, 3차 과제 2~6 이다.
+
+## 이전 리뷰 기록
+
+아래는 5차(좁은 확인)와 그 안에 옮겨 둔 1~4차 리뷰를 지우지 않고 옮긴 것이다.
+
+5차 검토자: Claude Opus 5.5 · 완결된 문장 재작성 뒤 1차 · 확인 리뷰 · 좁은 확인 · 2026-10-07
+5차 결과: pass
+5차 요약: 확인 리뷰의 needs_fix 2건이 닫혔다. (1) Oracle ⑤ 는 동맹 등급 +1 로 되돌아갔다(PRP-142). 새 문장의 사실은 원문과 맞는다. 지분 동맹은 TikTok USDS 합작법인 15% 하나이고(10-Q p.7), 10-Q·10-K 에 Stargate 는 0건이며, 비시장성 지분·채무 투자 합계는 10-Q 에 $2.4B 로 적혀 있다. 원문에 없던 'TikTok 합작법인의 클라우드를 맡는다' 는 빠졌다. (2) 기업 요약 14개의 총점·과점·함정·순위·공동 여부를 results 와 다시 대조했다. 모두 맞고, 고친 여섯(Microsoft·Meta·Alibaba·OpenAI·Oracle·Tesla)의 서술 사실도 각 판단과 맞는다. OpenAI ④ 3점 문장(PRP-143)의 사실은 모두 이전 판단 문장에 있던 것이고, 자체 칩을 근거에서 뺀 이유를 판정 지침으로 적었다. EV-tesla-008 relevance 와 TRG-030 recheck 의 테슬라 ④ 는 3점으로 맞춰졌고, EV-oracle-008 의 '동맹 등급 +1' 은 이제 맞는 값이다. 점수·순위·체크리스트를 바꾸는 발견은 남지 않았다. 남은 것은 다음 실행 과제뿐이다. 그중 Oracle ⑦·OpenAI ⑤ 에 남은 'Oracle 의 Stargate $7B 지분' 서술은 점수에 닿지 않는다.
+
+5차 검토 기준: results_hash `e279d193d30137ee…`, draft_hash `1bbf20715c81cc01…`(review.md frontmatter 와 같음을 확인).
+
+### 5차 — 확인 내용
 
 - **Oracle ⑤ (PRP-142, A=+1·H=−1, 3점)**: 'TikTok USDS Joint Venture LLC … ownership interest of 15 %' 와 'non-marketable equity securities and debt investments totaled $ 2.4 billion … as of August 31, 2026' 는 10-Q(f456b723…) p.7 원문과 같다. 'Stargate' 는 10-Q·10-K(3fc9afc2…) 모두 0건이다. 문장이 "같은 10-Q 와 2026 회계연도 10-K 에는 … 합계가 $2.4B" 로 두 문서를 묶어 적는데, 10-K 의 합계는 2026-05-31 기준 $2.3B 다(아래 low). evidence_ids 는 EV-oracle-003(10-Q, confirmed)이다.
 - **OpenAI ④ (PRP-143, 3점)**: InferenceX 1.7배·1.5배, Broadcom 배치 계획 0.1GW 미만·1.3GW·5GW 이상, Stargate Abilene GPU 20.2만 개(B200·B300 각 10.1만, H100 환산 약 50.9만)는 이전 openai.F4 문장과 같다. 'ChatGPT 와 API 가 실제 배포 사업' 은 openai.F1 문장과 맞는다. 새로 생긴 사실은 없다.
 - **기업 요약 14개**: 총점·과점·함정·순위·공동 여부가 results 와 모두 맞는다. 공동 1위 Alphabet·Amazon, 공동 3위 Microsoft·Meta(13), 5위 TSMC, 공동 6위 Anthropic·SpaceX·NVIDIA, 9위 Apple, 10위 Palantir, 11위 Alibaba(단독), 공동 12위 Oracle·Tesla(4), 14위 OpenAI(3)다. 고친 여섯의 서술 사실도 판단과 맞는다. Microsoft ⑨ 는 '설비투자 증가로 분기 FCF 감소·−1' 로 microsoft.F9 와 같고, Tesla ④ 3 의 '차량·에너지 저장·소규모 로보택시' 는 tesla.F4 와, OpenAI ④ 3 은 '자체 칩 출하 미확인' 으로 openai.F4 와 같다.
 - **근거·트리거**: EV-tesla-008 relevance 는 "테슬라 ④ 판단은 3점(차량·에너지 저장·소규모 로보택시, 배치 전인 Optimus·Terafab 은 폭에서 뺐다)" 이고, TRG-030 recheck.what 은 "지금 3" 이다. OpenAI·Oracle·Tesla 근거·트리거에 옛 점수('④ 4점', '동맹 등급 +2')는 남아 있지 않다.
 
-## 발견
+### 5차 — 발견
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
 | 닫힘 | oracle.F5 (확인 리뷰 needs_fix 1) | A +2 → +1 로 되돌렸고, 문장이 원문으로 확인되는 지분 동맹(TikTok 15%) 하나만 적는다. | — |
@@ -28,7 +77,7 @@ round: 5
 
 4차(확인 리뷰)의 medium(nvidia.F3 의 2026-04-26 10-Q 미등록, 판단 source_ids 연결)과 low(EV-oracle-008·EV-tesla-008 relevance — 이번에 닫힘, microsoft.F9 분기 선택)는 위와 「다음 실행 과제」로 정리했다.
 
-## 체크리스트
+### 5차 — 체크리스트
 | ID | 결과(pass/fail/not_applicable) | 근거 |
 | --- | --- | --- |
 | Q05 | pass | Oracle ⑤ 는 발행사 공시(10-Q·10-K)로 지분 동맹을 확인했고, OpenAI ④ 는 이해당사자 발표(InferenceX)를 근거에서 뺐다. 이해상충 표기는 AGENTS.md 에 따라 보지 않았다. |
@@ -36,13 +85,13 @@ round: 5
 | Q14 | pass | 출하 전 칩·미배치 사업·확인되지 않은 지분을 끝난 사실로 세지 않는다. |
 | Q23 | not_applicable | 이번 묶음에 벤치마크 비교가 없다. |
 
-## 다음 실행 과제
+### 5차 — 다음 실행 과제
 1. (low) oracle.F7·openai.F5 의 'Oracle Stargate $7B 지분' 서술을 1차 자료로 확인하거나, Oracle 공시에 없다는 사실로 고친다(Oracle ⑦ 세로축 근거 문장, OpenAI ⑤ 의 Stargate 공동 지분 구성).
 2. (low) oracle.F5 의 비시장성 투자 합계를 '10-Q $2.4B(2026-08-31)·10-K $2.3B(2026-05-31)' 로 문서별로 적는다.
 3. (medium) nvidia.F3 가 인용한 2026-04-26 분기 10-Q(0001045810-26-000052)를 sources.json 에 등록한다. 판단의 source_ids·evidence_ids 를 문장이 인용한 확정 근거·SEC 출처(nvidia.F3·microsoft.F9·oracle.F5 의 10-K 포함)로 채운다.
 4. (low) 3차 과제 2~6 을 유지한다. 연도 추정 일곱 곳, TRG-057 finding, F5 세 판단 counter_evidence, EV-anthropic-010·TRG-006·메타 건수, Oracle 관측 위치·건수·accessed_at·캐시 경합이다.
 
-## 이전 리뷰 기록
+### 1~4차 리뷰 기록
 
 아래는 4차(확인 리뷰)와 그 안에 옮겨 둔 1~3차 리뷰를 지우지 않고 옮긴 것이다.
 
