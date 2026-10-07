@@ -159,7 +159,7 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 ### 판단 수정
 
-정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 사람이 반영하는 것(`proposal --accept`)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
+정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
 
 ### 승인
 

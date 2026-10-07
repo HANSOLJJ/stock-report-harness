@@ -324,7 +324,7 @@ def cmd_judge(args: argparse.Namespace) -> int:
 
 
 def cmd_propose(args: argparse.Namespace) -> int:
-    """판단 변경 제안을 쓴다(2026-10-01). 에이전트도 쓴다. 반영·거부는 사람이 승인 페이지에서 한다."""
+    """판단 변경 제안을 쓴다(2026-10-01). 에이전트도 쓴다. 반영·거부는 `proposal` 로 한다(2026-10-07 부터 에이전트도 한다)."""
     from scorecard.stages import add_proposal
 
     changes: dict[str, object] = {}
@@ -346,12 +346,12 @@ def cmd_propose(args: argparse.Namespace) -> int:
                        reason=args.reason, evidence_ids=_id_list(args.cite), by=args.by)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    print(f"propose: {out['proposal_id']} {out['company_id']} {out['factor']} — 사람이 승인 페이지의 '판단 변경 제안' 절에서 반영하거나 거부한다")
+    print(f"propose: {out['proposal_id']} {out['company_id']} {out['factor']} — `proposal` 명령이나 승인 페이지의 '판단 변경 제안' 절에서 반영하거나 거부한다")
     return 0
 
 
 def cmd_proposal(args: argparse.Namespace) -> int:
-    """제안 반영·거부(2026-10-01). 사람 행위라 에이전트 세션이면 거부한다. 거부는 --note(사유) 필수."""
+    """제안 반영·거부(2026-10-01). 2026-10-07 사용자 지시로 에이전트도 한다. 거부는 --note(사유) 필수."""
     from scorecard.stages import decide_proposal, undo_proposal
 
     if hasattr(sys.stdout, "reconfigure"):
@@ -359,7 +359,7 @@ def cmd_proposal(args: argparse.Namespace) -> int:
     if args.all_pending == bool(args.id):
         raise SchemaError("--id 와 --all-pending 가운데 하나만 준다")
     if args.all_pending:
-        # 2026-10-06: 판단 근거를 현재 상태 문장으로 다시 쓴 제안이 100건을 넘어 하나씩 누르기 어렵다. 사람 셸에서만 된다.
+        # 2026-10-06: 판단 근거를 현재 상태 문장으로 다시 쓴 제안이 100건을 넘어 하나씩 누르기 어렵다.
         if not args.accept:
             raise SchemaError("--all-pending 은 --accept 와만 쓴다(거부는 사유를 하나씩 적는다)")
         from scorecard.stages import _load_proposals
@@ -673,7 +673,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_confirm)
 
-    p = sub.add_parser("propose", help="판단 변경 제안을 쓴다(에이전트도 쓴다). 반영·거부는 사람이 승인 페이지에서 한다")
+    p = sub.add_parser("propose", help="판단 변경 제안을 쓴다(에이전트도 쓴다). 반영·거부는 proposal 로 한다")
     p.add_argument("slug")
     p.add_argument("--company", required=True)
     p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "SUMMARY"],
@@ -686,7 +686,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--by", help="제안자(기본 SCORECARD_AGENT 또는 사용자 이름)")
     p.set_defaults(func=cmd_propose)
 
-    p = sub.add_parser("proposal", help="판단 변경 제안 반영·거부. 사람 셸에서만 된다. 거부는 --note 필수")
+    p = sub.add_parser("proposal", help="판단 변경 제안 반영·거부(에이전트도 한다). 거부는 --note 필수")
     p.add_argument("slug")
     p.add_argument("--id", help="PRP-NNN (--all-pending 과 함께 쓰지 않는다)")
     p.add_argument("--all-pending", action="store_true", help="결정 전 제안을 모두 반영한다(--accept 와만 쓴다)")

@@ -113,10 +113,12 @@ class DecideProposalTest(ProposalBase):
         self.assertEqual((self.box.run_dir / "judgments.json").read_bytes(), before)
         self.assertEqual(load_json_strict(self.ppath)["items"][0]["status"], "pending")
 
-    def test_agent_session_cannot_decide(self):
+    def test_agent_session_can_decide(self):
+        # 2026-10-07 사용자 지시: 사람은 최종 승인만 하고 제안 반영·거부는 에이전트도 한다.
         self.propose()
-        with human_env(CLAUDECODE="1"), self.assertRaisesRegex(SchemaError, "에이전트 세션"):
+        with human_env(CLAUDECODE="1"):
             stages.decide_proposal(SLUG, "PRP-001", accept=False, note="사유")
+        self.assertEqual(load_json_strict(self.ppath)["items"][0]["status"], "rejected")
 
 
 class UndoTest(ProposalBase):
@@ -178,11 +180,13 @@ class UndoTest(ProposalBase):
         with self.assertRaisesRegex(SchemaError, "또 바뀌었다"):
             stages.undo_proposal(SLUG, "PRP-001", allow_agent_session=True)
 
-    def test_agent_session_cannot_undo(self):
+    def test_agent_session_can_undo(self):
+        # 2026-10-07 사용자 지시: 제안 결정을 에이전트에 맡겼으므로 번복도 맡긴다.
         self.propose()
         self.decide(accept=False, note="사유")
-        with human_env(CLAUDECODE="1"), self.assertRaisesRegex(SchemaError, "에이전트 세션"):
+        with human_env(CLAUDECODE="1"):
             stages.undo_proposal(SLUG, "PRP-001")
+        self.assertEqual(load_json_strict(self.ppath)["items"][0]["status"], "pending")
 
 
 class ProposalCliTest(ProposalBase):
@@ -191,9 +195,8 @@ class ProposalCliTest(ProposalBase):
             out = self.cli("propose", SLUG, "--company", "nvidia", "--factor", "F5", "--set", "H=-1",
                            "--evidence", "새 근거", "--reason", "시험", "--cite", "EV-nvidia-001")
         self.assertIn("PRP-001", out)
+        # 2026-10-07 사용자 지시: 에이전트 셸에서도 반영·거부가 된다. 거부 사유 필수는 그대로다.
         with human_env(CLAUDECODE="1"):
-            self.assertIn("에이전트 세션", self.cli("proposal", SLUG, "--id", "PRP-001", "--reject", "--note", "x", code=1))
-        with human_env():
             self.assertIn("거부 사유", self.cli("proposal", SLUG, "--id", "PRP-001", "--reject", code=1))
             self.assertIn("거부", self.cli("proposal", SLUG, "--id", "PRP-001", "--reject", "--note", "근거 부족", "--by", "사용자"))
         p = json.loads(self.ppath.read_text(encoding="utf-8"))["items"][0]

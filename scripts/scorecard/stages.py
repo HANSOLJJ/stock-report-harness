@@ -1302,9 +1302,11 @@ def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[st
 
 def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None = None, note: str | None = None,
                     allow_agent_session: bool = False) -> dict[str, Any]:
-    """제안을 반영하거나 거부한다. 사람 행위라 에이전트 세션이면 거부한다(`allow_agent_session` 은 테스트 전용).
-    반영은 revise_judgment 로 판단을 고치고 인용 근거를 판단의 evidence_ids 에 더한다. 거부는 사유가 필수다."""
-    refuse_agent_session("판단 변경 제안 반영·거부", allow_agent_session=allow_agent_session)
+    """제안을 반영하거나 거부한다. 에이전트도 한다(2026-10-07 사용자 지시: 사람은 최종 승인만 한다).
+    반영은 revise_judgment 로 판단을 고치고 인용 근거를 판단의 evidence_ids 에 더한다. 거부는 사유가 필수다.
+    `allow_agent_session` 은 호출부 호환으로 받기만 한다."""
+    # 2026-10-07 사용자 지시("나는 최종승인만 할거다"): 제안 반영·거부를 에이전트에 맡긴다. 승인·승인 취소의 거부는 그대로다.
+    # refuse_agent_session("판단 변경 제안 반영·거부", allow_agent_session=allow_agent_session)
     payload = _load_proposals(slug)
     item = next((p for p in payload["items"] if p["proposal_id"] == proposal_id), None)
     if item is None:
@@ -1349,10 +1351,11 @@ def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None
 
 
 def undo_proposal(slug: str, proposal_id: str, *, by: str | None = None, allow_agent_session: bool = False) -> dict[str, Any]:
-    """결정을 번복해 제안을 결정 전으로 되돌린다(2026-10-01 사용자 요청). 사람 행위라 에이전트 세션이면 거부한다.
+    """결정을 번복해 제안을 결정 전으로 되돌린다(2026-10-01 사용자 요청). 에이전트도 한다(2026-10-07).
     거부의 번복은 결정 기록만 지운다. 반영의 번복은 판단을 반영 전 값(applied.previous)으로 되돌리고 수정 이력에 '번복' 을
     남긴다. 반영 뒤 판단이 또 바뀌었으면(applied.after 와 다르면) 번복을 거부한다."""
-    refuse_agent_session("판단 변경 제안 번복", allow_agent_session=allow_agent_session)
+    # 2026-10-07 사용자 지시: 제안 결정을 에이전트에 맡겼으므로 번복도 맡긴다.
+    # refuse_agent_session("판단 변경 제안 번복", allow_agent_session=allow_agent_session)
     payload = _load_proposals(slug)
     item = next((p for p in payload["items"] if p["proposal_id"] == proposal_id), None)
     if item is None:
