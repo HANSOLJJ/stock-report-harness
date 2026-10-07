@@ -61,8 +61,10 @@ def cover_previous_triggers(slug: str = SLUG) -> int:
 class FlowBase(unittest.TestCase):
     """샌드박스 실행 하나를 근거·트리거와 함께 리뷰 pass 까지 만든다. 정본 실행은 읽기만 한다."""
 
+    RULE = "v1.8"   # 2026-10-07: 근거 세 칸 시험은 v1.9 로 띄운다
+
     def setUp(self) -> None:
-        self.box = Sandbox(("nvidia", "openai"))
+        self.box = Sandbox(("nvidia", "openai"), rule_version=self.RULE)
         self.addCleanup(self.box.close)
         self.paths = run_paths(SLUG)
         stages.collect(SLUG, kinds=("news",), from_file=str(RSS), now=NOW)

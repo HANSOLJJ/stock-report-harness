@@ -48,7 +48,7 @@ class Sandbox:
     """출력 묶음·레지스트리·수집 캐시를 임시 폴더로 돌린다. 정본은 읽기만 한다."""
 
     def __init__(self, companies: tuple[str, ...] = ("nvidia", "tsmc", "openai"), *, as_of: str = "2026-09-29",
-                 slug: str = SLUG, init: bool = True) -> None:
+                 slug: str = SLUG, init: bool = True, rule_version: str = "v1.8") -> None:
         self.dir = Path(tempfile.mkdtemp())
         self.slug = slug
         self.saved = (engine.OUTPUT_DIR, engine.COMPANIES_PATH, evidence_lib.DATA_ROOT, os.environ.get("SEC_UA"))
@@ -62,7 +62,7 @@ class Sandbox:
         if not init:
             return
         stages.init_run(slug, as_of=as_of, title="근거 계층 시험", request="근거 계층 시험", purpose="근거 계층 시험",
-                        companies=list(companies), rule_version="v1.8")
+                        companies=list(companies), rule_version=rule_version)
 
     @property
     def run_dir(self) -> Path:

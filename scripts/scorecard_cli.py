@@ -307,6 +307,7 @@ def cmd_judge(args: argparse.Namespace) -> int:
         changes[key.strip()] = _judge_value(value.strip())
     if args.evidence:
         changes["evidence"] = list(args.evidence)
+    changes.update(_direction_args(args, suffix=""))
     out = revise_judgment(args.slug, company_id=args.company, factor=args.factor, changes=changes, reason=args.reason, by=args.by)
     if agent:
         _claim(args, "judge")
@@ -316,11 +317,24 @@ def cmd_judge(args: argparse.Namespace) -> int:
     for key in ("score", "inputs"):
         if out["previous"][key] != out["current"][key]:
             print(f"  {key}: {json.dumps(out['previous'][key], ensure_ascii=False)} → {json.dumps(out['current'][key], ensure_ascii=False)}")
-    if out["previous"]["evidence"] != out["current"]["evidence"]:
-        print(f"  evidence: {len(out['previous']['evidence'])}문장 → {len(out['current']['evidence'])}문장")
+    for key, label in (("evidence", "판정"), ("evidence_up", "올릴 근거"), ("evidence_down", "내릴 근거")):
+        before, after = out["previous"].get(key), out["current"].get(key)
+        if before != after:
+            print(f"  {label}: {len(before) if before is not None else '없던 칸'}문장 → {len(after or [])}문장")
     print(f"judgments 해시가 바뀌었다({out['judgments_hash'][:16]}…). 점수는 아직 그대로다 — research → calculate → draft → review 를 다시 돌린 뒤 승인한다: "
           f"uv run --frozen python -X utf8 scripts/scorecard_cli.py research {args.slug}")
     return 0
+
+
+def _direction_args(args: argparse.Namespace, *, suffix: str) -> dict[str, list[str]]:
+    """2026-10-07: `--up`·`--down` 을 올릴·내릴 근거 칸으로 옮긴다. 플래그를 주면 그 목록으로 통째 바꾸고, 빈 문자열만 주면
+    (`--up ""`) 그 칸을 '없음'(빈 목록)으로 바꾼다. 주지 않은 칸은 건드리지 않는다."""
+    out = {}
+    for flag, key in (("up", "evidence_up"), ("down", "evidence_down")):
+        values = getattr(args, flag, None)
+        if values is not None:
+            out[key + suffix] = [v for v in values if v.strip()]
+    return out
 
 
 def cmd_propose(args: argparse.Namespace) -> int:
@@ -329,12 +343,14 @@ def cmd_propose(args: argparse.Namespace) -> int:
 
     changes: dict[str, object] = {}
     evidence_after = None
+    directions: dict[str, list[str] | None] = {}
     if args.json:
         loaded = json.loads(Path(args.json).read_text(encoding="utf-8"))
         if not isinstance(loaded, dict):
-            raise SchemaError(f"--json 은 {{changes, evidence_after}} 객체여야 한다: {args.json}")
+            raise SchemaError(f"--json 은 {{changes, evidence_after, evidence_up_after, evidence_down_after}} 객체여야 한다: {args.json}")
         changes.update(loaded.get("changes") or {})
         evidence_after = loaded.get("evidence_after")
+        directions = {k: loaded.get(k) for k in ("evidence_up_after", "evidence_down_after")}
     for item in args.set or []:
         key, sep, value = item.partition("=")
         if not sep or not key.strip():
@@ -342,8 +358,11 @@ def cmd_propose(args: argparse.Namespace) -> int:
         changes[key.strip()] = _judge_value(value.strip())
     if args.evidence:
         evidence_after = list(args.evidence)
+    directions.update(_direction_args(args, suffix="_after"))
     out = add_proposal(args.slug, company_id=args.company, factor=args.factor, changes=changes, evidence_after=evidence_after,
-                       reason=args.reason, evidence_ids=_id_list(args.cite), by=args.by)
+                       reason=args.reason, evidence_ids=_id_list(args.cite), by=args.by,
+                       evidence_up_after=directions.get("evidence_up_after"),
+                       evidence_down_after=directions.get("evidence_down_after"))
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     print(f"propose: {out['proposal_id']} {out['company_id']} {out['factor']} — `proposal` 명령이나 승인 페이지의 '판단 변경 제안' 절에서 반영하거나 거부한다")
@@ -679,8 +698,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "SUMMARY"],
                    help="F2·F6 은 근거 문장(--evidence)만 바꾼다. SUMMARY 는 기업 한 줄 요약(--evidence 문장 하나)")
     p.add_argument("--set", action="append", help="바꿀 판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
-    p.add_argument("--evidence", action="append", help="반영 뒤 근거 문장. 여러 번 주면 그 목록이 근거 전체가 된다")
-    p.add_argument("--json", help="{changes: {...}, evidence_after: [...]} JSON 파일(--set·--evidence 가 덮어쓴다)")
+    p.add_argument("--evidence", action="append", help="반영 뒤 판정 칸 문장. 여러 번 주면 그 목록이 판정 칸 전체가 된다")
+    p.add_argument("--up", action="append", help="반영 뒤 올릴 근거 칸 문장(여러 번). --up \"\" 만 주면 '없음'으로 비운다")
+    p.add_argument("--down", action="append", help="반영 뒤 내릴 근거 칸 문장(여러 번). --down \"\" 만 주면 '없음'으로 비운다")
+    p.add_argument("--json", help="{changes, evidence_after, evidence_up_after, evidence_down_after} JSON 파일"
+                                  "(--set·--evidence·--up·--down 이 덮어쓴다)")
     p.add_argument("--reason", required=True, help="제안 사유")
     p.add_argument("--cite", help="인용 근거 ID(쉼표). 반영하면 판단의 evidence_ids 에 더한다(확정 근거만)")
     p.add_argument("--by", help="제안자(기본 SCORECARD_AGENT 또는 사용자 이름)")
@@ -703,8 +725,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--company", required=True)
     p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"])
     p.add_argument("--set", action="append", help="판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
-    p.add_argument("--evidence", action="append", help="근거 문장. 여러 번 주면 그 목록으로 통째 바꾼다")
-    p.add_argument("--json", help="고칠 값 {키: 값} JSON 파일(--set·--evidence 가 덮어쓴다)")
+    p.add_argument("--evidence", action="append", help="판정 칸 문장. 여러 번 주면 그 목록으로 통째 바꾼다")
+    p.add_argument("--up", action="append", help="올릴 근거 칸 문장(여러 번). --up \"\" 만 주면 '없음'으로 비운다")
+    p.add_argument("--down", action="append", help="내릴 근거 칸 문장(여러 번). --down \"\" 만 주면 '없음'으로 비운다")
+    p.add_argument("--json", help="고칠 값 {키: 값} JSON 파일. 세 칸은 evidence·evidence_up·evidence_down"
+                                  "(--set·--evidence·--up·--down 이 덮어쓴다)")
     p.add_argument("--reason", required=True, help="수정 사유(revision_history 에 남는다)")
     p.add_argument("--by", required=True, help="수정자. 승인 페이지는 사람 이름을 넣는다")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)

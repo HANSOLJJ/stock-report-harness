@@ -132,6 +132,9 @@
       "evidence": [
         "CUDA 개발자 생태계는 업무 채널이 아니라 부품 공급이다"
       ],
+      "evidence_up": [],
+      "evidence_down": [],
+      "three_way": false,
       "status": "carried",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
@@ -170,6 +173,13 @@
       "evidence": [
         "❌모방 불가능성 — 시험용 근거 문장 <b>태그</b>는 그대로 글자로 보여야 한다"
       ],
+      "evidence_up": [
+        "데이터센터 매출의 전년 대비 성장률이 +92% 에서 +117% 로 올랐다"
+      ],
+      "evidence_down": [
+        "직전 분기 대비 성장률은 +21% 에서 +18% 로 내렸다 — 시험용 <i>태그</i>"
+      ],
+      "three_way": true,
       "status": "new",
       "reviewer": "사용자",
       "reviewed_at": "2026-10-01",
@@ -208,6 +218,9 @@
       "evidence": [
         "✅별도 수익모델 — 구독 매출"
       ],
+      "evidence_up": [],
+      "evidence_down": [],
+      "three_way": false,
       "status": "carried",
       "reviewer": "legacy:v1.5",
       "reviewed_at": "2026-09-02",
@@ -250,9 +263,12 @@
       "edit_kind": "grade",
       "changes": [{"key": "H", "value": -1}],
       "evidence_after": ["적대 등급은 비용형이다 — 시험용 <b>태그</b> 문장(EV-nvidia-001, 별표 G)"],
+      "evidence_up_after": ["주요 고객과의 공동개발이 이어진다"],
+      "evidence_down_after": null,
       "reason": "고객이 경쟁자라는 근거가 약해졌다",
       "evidence_ids": ["EV-nvidia-001"],
-      "before": {"kind": "grade", "score": null, "inputs": [{"key": "A", "value": 1}, {"key": "H", "value": -2}], "evidence": ["주요 고객이 곧 경쟁자"]},
+      "before": {"kind": "grade", "score": null, "inputs": [{"key": "A", "value": 1}, {"key": "H", "value": -2}], "evidence": ["주요 고객이 곧 경쟁자"],
+                 "evidence_up": [], "evidence_down": ["주요 고객이 자체 칩을 만든다"]},
       "stale": false,
       "proposed_by": "agent",
       "proposed_at": "2026-10-01",

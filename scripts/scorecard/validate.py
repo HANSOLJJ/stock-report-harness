@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 from report_contract_lib import (
     REQUIRED_SCORECARD_PLAN_FRONTMATTER,
@@ -131,6 +131,9 @@ def self_contained_violations(ctx: Any) -> list[str]:
     for j in ctx.judgments:
         for i, e in enumerate(j.get("evidence") or []):
             add(f"{j['judgment_id']} 근거[{i}]", str(e))
+        for key, label in (("evidence_up", "올릴 근거"), ("evidence_down", "내릴 근거")):
+            for i, e in enumerate(j.get(key) or []):
+                add(f"{j['judgment_id']} {label}[{i}]", str(e))
     for cid, s in (ctx.company_summaries or {}).items():
         add(f"{cid} 기업 요약", s["text"])
     for e in ctx.evidence or []:
@@ -149,6 +152,28 @@ def self_contained_violations(ctx: Any) -> list[str]:
 
 def _rule_at_least(version: str, minimum: tuple[int, ...]) -> bool:
     return tuple(int(x) for x in re.findall(r"\d+", version)) >= minimum
+
+
+# 2026-10-07 사용자 지시: 판단 근거는 판정(evidence)·올릴 근거(evidence_up)·내릴 근거(evidence_down) 세 칸으로 쓴다.
+# 규칙 v1.9 이상 실행에만 댄다. 같은 검사를 판단을 쓰는 시점(stages.revise_judgment)과 검증기가 함께 쓴다.
+THREE_WAY_MIN_RULE = (1, 9)
+
+
+def three_way_item_violations(item: Mapping[str, Any]) -> list[str]:
+    """판단 하나의 세 칸 형식 위반. 판정 칸이 비지 않는 것은 스키마가 본다."""
+    out: list[str] = []
+    missing = [k for k in ("evidence_up", "evidence_down") if k not in item]
+    if missing:
+        out.append(f"{'·'.join(missing)} 칸이 없다(빈 칸이면 빈 목록으로 둔다)")
+    elif not (item["evidence_up"] or item["evidence_down"]):
+        out.append("올릴 근거와 내릴 근거가 둘 다 비었다(방향이 있는 사실이 하나는 있어야 한다)")
+    if item.get("counter_evidence"):
+        out.append("counter_evidence 는 비워 두고 반대 방향 사실은 올릴·내릴 근거 칸에 쓴다")
+    return out
+
+
+def three_way_violations(ctx: Any) -> list[str]:
+    return [f"{j['judgment_id']}: {why}" for j in ctx.judgments for why in three_way_item_violations(j)]
 
 
 def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_present: bool = True, result: Any) -> Any:
@@ -192,6 +217,16 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"완결된 문장이 아닌 곳이 {len(bad) - 20}건 더 있다")
         if not bad:
             result.check("display text is self-contained")
+
+    # 근거 세 칸 ------------------------------------------------------------
+    if _rule_at_least(ctx.rules.version, THREE_WAY_MIN_RULE):
+        bad = three_way_violations(ctx)
+        for line in bad[:20]:
+            result.error(f"판단 근거가 세 칸(판정·올릴 근거·내릴 근거)이 아니다(guide.md 5.5) — {line}")
+        if len(bad) > 20:
+            result.error(f"세 칸이 아닌 판단이 {len(bad) - 20}건 더 있다")
+        if not bad:
+            result.check("judgment evidence is three-way")
 
     # 자료 원천 allowlist --------------------------------------------------
     check_source_allowlist(ctx.rules, ctx.sources, result)

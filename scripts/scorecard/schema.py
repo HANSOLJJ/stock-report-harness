@@ -91,6 +91,9 @@ JUDGMENT_INPUT_CHOICES: dict[str, dict[str, list[Any]]] = {
 }
 # revision_history 한 칸이 보존하는 이전 값의 키.
 JUDGMENT_REVISION_FIELDS = ("kind", "score", "inputs", "evidence", "status", "reviewer", "reviewed_at")
+# 2026-10-07 사용자 지시: 판단 근거를 판정(evidence)·올릴 근거·내릴 근거 세 칸으로 쓴다. 두 방향 칸은 선택 키라
+# 옛 실행(v1.5~v1.8)은 없이 읽히고, 규칙 v1.9 이상 실행은 검증기(validate.three_way_violations)가 요구한다.
+JUDGMENT_DIRECTION_FIELDS = ("evidence_up", "evidence_down")
 
 # 지표 카탈로그. unit은 표시·검증용이고 number 지표만 계산에 쓴다.
 METRICS: dict[str, dict[str, str]] = {
@@ -1091,7 +1094,17 @@ def _validate_revision_history(history: Any, where: str) -> None:
         _expect_date(entry["revised_at"], f"{at}.revised_at")
         for key in ("revised_by", "reason"):
             _require(isinstance(entry[key], str) and entry[key].strip(), f"{at}: {key} 는 비어 있지 않은 문자열")
-        _expect_keys(entry["previous"], list(JUDGMENT_REVISION_FIELDS), f"{at}.previous")
+        # 2026-10-07: 세 칸 도입 뒤의 이력은 두 방향 칸도 보존한다. 그 전 이력(7키)도 그대로 받는다.
+        _expect_keys(entry["previous"], list(JUDGMENT_REVISION_FIELDS), f"{at}.previous", optional=list(JUDGMENT_DIRECTION_FIELDS))
+        for key in JUDGMENT_DIRECTION_FIELDS:
+            if key in entry["previous"]:
+                _expect_direction_list(entry["previous"][key], f"{at}.previous.{key}")
+
+
+def _expect_direction_list(value: Any, where: str) -> None:
+    """올릴·내릴 근거 칸. 빈 목록은 '없음'이라 허용하고, 원소는 공백 아닌 문자열이어야 한다."""
+    _require(isinstance(value, list) and all(isinstance(s, str) and s.strip() for s in value),
+             f"{where}: 공백 아닌 문장의 배열이어야 한다(빈 배열은 '없음')")
 
 
 SUMMARY_FACTOR = "SUMMARY"   # 판단 변경 제안의 대상 가운데 기업 한 줄 요약을 가리키는 값(factor 가 아니다)
@@ -1134,8 +1147,11 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
             ["judgment_id", "company_id", "factor", "kind", "score", "inputs", "evidence", "reviewer", "reviewed_at", "status"],
             where,
             optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id", "superseded",
-                      "evidence_ids", "revision_history"],
+                      "evidence_ids", "revision_history", *JUDGMENT_DIRECTION_FIELDS],
         )
+        for key in JUDGMENT_DIRECTION_FIELDS:
+            if key in item:
+                _expect_direction_list(item[key], f"{where}.{key}")
         if "revision_history" in item:
             _validate_revision_history(item["revision_history"], f"{where}.revision_history")
         if "evidence_ids" in item:
@@ -1411,6 +1427,7 @@ def validate_triggers(payload: Any, companies: dict[str, dict[str, Any]], eviden
 PROPOSAL_ID_RE = re.compile(r"^PRP-\d{3}$")
 PROPOSAL_STATUSES = {"pending", "accepted", "rejected"}
 PROPOSAL_SNAPSHOT_KEYS = ("kind", "score", "inputs", "evidence")
+PROPOSAL_DIRECTION_AFTER = ("evidence_up_after", "evidence_down_after")
 
 
 def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evidence_ids: set[str],
@@ -1421,7 +1438,12 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         where = f"proposals[{idx}]"
         _expect_keys(item, ["proposal_id", "company_id", "factor", "changes", "evidence_after", "reason", "evidence_ids",
                             "before", "proposed_by", "proposed_at", "status"],
-                     where, optional=["decided_by", "decided_at", "decision_note", "applied"])
+                     where, optional=["decided_by", "decided_at", "decision_note", "applied", *PROPOSAL_DIRECTION_AFTER])
+        # 2026-10-07: 올릴·내릴 근거 칸의 반영 뒤 문장. null(키 없음)이면 그 칸을 바꾸지 않고, 빈 배열이면 '없음'으로 바꾼다.
+        for key in PROPOSAL_DIRECTION_AFTER:
+            if item.get(key) is not None:
+                _expect_direction_list(item[key], f"{where}.{key}")
+        direction_after = any(item.get(k) is not None for k in PROPOSAL_DIRECTION_AFTER)
         pid = item["proposal_id"]
         _require(isinstance(pid, str) and bool(PROPOSAL_ID_RE.match(pid)), f"{where}: proposal_id 는 PRP-NNN 형식 ({pid!r})")
         _require(pid not in seen, f"{where}: proposal_id 중복 {pid!r}")
@@ -1438,12 +1460,14 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
                      f"{where}: 기업 요약 제안은 changes 없이 evidence_after 에 요약 문장 하나만 둔다")
         _require(after is None or (isinstance(after, list) and bool(after) and all(isinstance(s, str) and s.strip() for s in after)),
                  f"{where}.evidence_after 는 null 이거나 비어 있지 않은 문장 목록")
-        _require(bool(item["changes"]) or after is not None, f"{where}: 바꿀 값(changes)이나 근거 문장(evidence_after)이 있어야 한다")
+        _require(bool(item["changes"]) or after is not None or direction_after,
+                 f"{where}: 바꿀 값(changes)이나 근거 문장(evidence_after·evidence_up_after·evidence_down_after)이 있어야 한다")
+        _require(not (item["factor"] == SUMMARY_FACTOR and direction_after), f"{where}: 기업 요약 제안에는 올릴·내릴 근거 칸이 없다")
         _expect_str(item["reason"], f"{where}.reason", nonempty=True)
         _expect_str_list(item["evidence_ids"], f"{where}.evidence_ids")
         unknown = [e for e in item["evidence_ids"] if e not in evidence_ids]
         _require(not unknown, f"{where}: evidence.json 에 없는 evidence_ids {unknown}")
-        _expect_keys(item["before"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.before")
+        _expect_keys(item["before"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.before", optional=list(JUDGMENT_DIRECTION_FIELDS))
         _expect_str(item["proposed_by"], f"{where}.proposed_by", nonempty=True)
         _expect_date(item["proposed_at"], f"{where}.proposed_at")
         status = item["status"]
@@ -1459,7 +1483,8 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
             # 반영 때 저장한 반영 전·후 값(번복용). 반영된 제안에만 있다.
             _require(status == "accepted", f"{where}.applied 는 반영된 제안에만 있다")
             _expect_keys(item["applied"], ["previous", "after"], f"{where}.applied")
-            _expect_keys(item["applied"]["after"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.applied.after")
+            _expect_keys(item["applied"]["after"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.applied.after",
+                         optional=list(JUDGMENT_DIRECTION_FIELDS))
     return items
 
 

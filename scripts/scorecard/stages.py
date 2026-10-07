@@ -24,8 +24,8 @@ from .evidence_lib import source_entry, upsert_sources, utc_now_iso
 from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
-from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_EDIT_KIND, JUDGMENT_INPUT_CHOICES,
-                     JUDGMENT_REVISION_FIELDS, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, load_json_strict,
+from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_DIRECTION_FIELDS, JUDGMENT_EDIT_KIND,
+                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, PROPOSAL_DIRECTION_AFTER, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, load_json_strict,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
@@ -1088,31 +1088,42 @@ def _check_judgment_changes(factor: str, changes: Mapping[str, Any]) -> str:
     """판단 수정·제안이 받는 값의 형식 검사. 돌려주는 값은 판정 종류(edit kind)다. 2026-10-01 제안 흐름과 함께 쓰려고 뽑았다.
 
     2026-10-06: 근거 문장만 바꾸는 수정은 `evidence_only` 다. 판정 종류·점수·판정 재료·상태를 건드리지 않으므로 ②·⑥ 을
-    포함한 모든 항목에 허용한다(근거를 완결된 현재 상태 문장으로 다시 쓰는 일, AGENTS.md 「금지·주의」)."""
-    if isinstance(changes, Mapping) and set(changes) == {"evidence"} and factor in FACTOR_IDS:
-        if not (isinstance(changes["evidence"], list) and changes["evidence"]
-                and all(isinstance(e, str) and e.strip() for e in changes["evidence"])):
-            raise SchemaError("evidence 는 비어 있지 않은 문장 목록이어야 한다")
+    포함한 모든 항목에 허용한다(근거를 완결된 현재 상태 문장으로 다시 쓰는 일, AGENTS.md 「금지·주의」).
+
+    2026-10-07: 근거는 판정(evidence)·올릴 근거(evidence_up)·내릴 근거(evidence_down) 세 칸이다. 세 칸만 바꾸는 수정도
+    `evidence_only` 다. 방향 칸은 빈 목록(없음)을 허용한다."""
+    text_keys = {"evidence", *JUDGMENT_DIRECTION_FIELDS}
+    if isinstance(changes, Mapping):
+        _check_evidence_texts(changes)
+    if isinstance(changes, Mapping) and changes and set(changes) <= text_keys and factor in FACTOR_IDS:
         return "evidence_only"
     if factor not in JUDGMENT_EDIT_KIND:
         raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {sorted(JUDGMENT_EDIT_KIND)})")
     if not isinstance(changes, Mapping) or not changes:
         raise SchemaError("고칠 값이 없다(--set key=value 또는 --evidence)")
     kind = JUDGMENT_EDIT_KIND[factor]
-    allowed = {"score", "evidence"} if kind == "score" else {*JUDGMENT_INPUT_CHOICES[kind], "evidence"}
+    allowed = ({"score"} if kind == "score" else set(JUDGMENT_INPUT_CHOICES[kind])) | text_keys
     unknown = sorted(set(changes) - allowed)
     if "score" in unknown:
         raise SchemaError(f"{factor} 의 점수는 규칙이 판정 재료에서 계산한다 — 점수 칸은 고치지 않는다. 고칠 수 있는 것: {sorted(allowed)}")
     if unknown:
         raise SchemaError(f"{factor}({kind}) 에서 고칠 수 없는 키 {unknown}. 고칠 수 있는 것: {sorted(allowed)}")
-    if "evidence" in changes and not (isinstance(changes["evidence"], list)
-                                      and all(isinstance(e, str) and e.strip() for e in changes["evidence"])):
-        raise SchemaError("evidence 는 비어 있지 않은 문장 목록이어야 한다")
     # 2026-10-01 V2-10: 허용값은 모두 문자열·정수다. 중첩 값이 스키마의 `in` 비교까지 가서 추적 출력으로 끝나지 않게 먼저 거른다.
-    bad_type = sorted(k for k, v in changes.items() if k != "evidence" and (isinstance(v, bool) or not isinstance(v, (str, int))))
+    bad_type = sorted(k for k, v in changes.items() if k not in text_keys and (isinstance(v, bool) or not isinstance(v, (str, int))))
     if bad_type:
         raise SchemaError(f"{factor} 의 값은 문자열이나 정수여야 한다: {bad_type}")
     return kind
+
+
+def _check_evidence_texts(changes: Mapping[str, Any]) -> None:
+    """판정 칸은 비어 있지 않은 문장 목록, 올릴·내릴 칸은 문장 목록(빈 목록은 '없음')이어야 한다."""
+    if "evidence" in changes and not (isinstance(changes["evidence"], list) and changes["evidence"]
+                                      and all(isinstance(e, str) and e.strip() for e in changes["evidence"])):
+        raise SchemaError("evidence(판정 칸)는 비어 있지 않은 문장 목록이어야 한다")
+    for key in JUDGMENT_DIRECTION_FIELDS:
+        if key in changes and not (isinstance(changes[key], list)
+                                   and all(isinstance(e, str) and e.strip() for e in changes[key])):
+            raise SchemaError(f"{key} 는 문장 목록이어야 한다(빈 목록은 '없음')")
 
 
 def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any], reason: str, by: str,
@@ -1138,6 +1149,8 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         raise SchemaError(f"judgments.json 에 {company_id} {factor} 판단이 없다")
     item = payload["items"][idx]
     previous = {k: copy.deepcopy(item.get(k)) for k in JUDGMENT_REVISION_FIELDS}
+    # 2026-10-07: 방향 칸이 있던 판단은 그 값도 이력에 남긴다(번복이 되돌린다). 없던 판단의 이력은 7키 그대로다.
+    previous.update({k: copy.deepcopy(item[k]) for k in JUDGMENT_DIRECTION_FIELDS if k in item})
     new = dict(item)
     if kind == "evidence_only":
         # 2026-10-06: 근거 문장만 바꾼다. 판정 종류·점수·판정 재료·상태·검토자는 그대로라 승계 판단은 승계로 남는다
@@ -1149,14 +1162,23 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     else:
         # F7 승계 항목 둘은 kind 가 score 다. 판정 재료를 고치면 matrix 로 바뀌고 점수는 규칙이 계산한다(키가 다 있어야 한다).
         inputs = dict(item["inputs"]) if item["kind"] == kind else {}
-        inputs.update({k: v for k, v in changes.items() if k != "evidence"})
+        inputs.update({k: v for k, v in changes.items() if k not in ("evidence", *JUDGMENT_DIRECTION_FIELDS)})
         new.update(kind=kind, score=None, inputs=inputs)
-    if "evidence" in changes:
-        new["evidence"] = [e.strip() for e in changes["evidence"]]
+    for key in ("evidence", *JUDGMENT_DIRECTION_FIELDS):
+        if key in changes:
+            new[key] = [e.strip() for e in changes[key]]
     if cite_evidence_ids:
         new["evidence_ids"] = sorted({*(item.get("evidence_ids") or []), *cite_evidence_ids})
-    if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence")):
+    if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence", *JUDGMENT_DIRECTION_FIELDS)):
         raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다")
+    run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
+    # 2026-10-07 사용자 지시: 규칙 v1.9 이상 실행은 근거를 세 칸으로 쓰는 시점에 막는다(검증기와 같은 기준).
+    from .validate import THREE_WAY_MIN_RULE, _rule_at_least, three_way_item_violations
+    if _rule_at_least(run["rule_version"], THREE_WAY_MIN_RULE):
+        bad = three_way_item_violations(new)
+        if bad:
+            raise SchemaError(f"{company_id} {factor}: 근거 세 칸 형식 위반 — " + "; ".join(bad)
+                              + " (판정은 --evidence, 올릴 근거는 --up, 내릴 근거는 --down. 기준은 guide.md 5.5)")
     revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
     if kind != "evidence_only":
         new.update(status="new", reviewer=by.strip(), reviewed_at=revised_at)
@@ -1167,7 +1189,6 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
                                 "session": session}]
     payload["items"][idx] = new
 
-    run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
     validate_judgments(payload, load_companies(), load_rules(run["rule_version"]).payload, slug)   # 쓰기 전에 형식 검증
     write_json(path, payload)
     try:
@@ -1176,7 +1197,8 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         path.write_bytes(original)
         raise
     return {"judgment_id": new["judgment_id"], "company_id": company_id, "factor": factor, "kind": new["kind"],
-            "previous": previous, "current": {k: new.get(k) for k in JUDGMENT_REVISION_FIELDS},
+            "previous": previous,
+            "current": {k: new.get(k) for k in (*JUDGMENT_REVISION_FIELDS, *JUDGMENT_DIRECTION_FIELDS) if k in new},
             "judgments_hash": sha256_file(path)}
 
 
@@ -1185,8 +1207,11 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
 # 제안을 쓰는 것은 에이전트도 한다. 반영·거부는 사람 행위라 에이전트 세션이면 거부한다. 거부는 사유가 필수다.
 
 def _judgment_snapshot(j: Mapping[str, Any]) -> dict[str, Any]:
-    return {"kind": j["kind"], "score": j.get("score"), "inputs": copy.deepcopy(j.get("inputs") or {}),
+    snap = {"kind": j["kind"], "score": j.get("score"), "inputs": copy.deepcopy(j.get("inputs") or {}),
             "evidence": list(j.get("evidence") or [])}
+    # 2026-10-07: 방향 칸이 있는 판단만 스냅숏에도 싣는다. 없던 판단의 옛 스냅숏(4키)과 비교가 그대로 맞는다.
+    snap.update({k: list(j[k]) for k in JUDGMENT_DIRECTION_FIELDS if k in j})
+    return snap
 
 
 def _load_proposals(slug: str) -> dict[str, Any]:
@@ -1256,18 +1281,25 @@ def set_company_summary(slug: str, *, company_id: str, text: str | None, reason:
 
 def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any] | None = None,
                  evidence_after: list[str] | None = None, reason: str, evidence_ids: list[str] | tuple[str, ...] = (),
-                 by: str | None = None, proposed_at: str | None = None) -> dict[str, Any]:
+                 by: str | None = None, proposed_at: str | None = None,
+                 evidence_up_after: list[str] | None = None, evidence_down_after: list[str] | None = None) -> dict[str, Any]:
     """판단 변경 제안 하나를 proposals.json 에 더한다. 지금 판단 값(before)을 함께 적어 두어, 반영 시점에 판단이 그사이
-    바뀌었는지 가린다. 같은 (기업, factor) 에 결정 전 제안이 이미 있으면 거부한다."""
+    바뀌었는지 가린다. 같은 (기업, factor) 에 결정 전 제안이 이미 있으면 거부한다.
+
+    2026-10-07: `evidence_up_after`·`evidence_down_after` 는 올릴·내릴 근거 칸의 반영 뒤 문장이다. None 이면 그 칸을 바꾸지
+    않고, 빈 목록이면 '없음'으로 바꾼다."""
     changes = dict(changes or {})
     if evidence_after is not None:
         evidence_after = [s.strip() for s in evidence_after]
+    directions = {k: [s.strip() for s in v] for k, v in (("evidence_up", evidence_up_after), ("evidence_down", evidence_down_after))
+                  if v is not None}
     if factor == SUMMARY_FACTOR:
         # 2026-10-06: 기업 한 줄 요약 제안. 판정 재료 없이 요약 문장 하나만 받는다.
-        if changes or not evidence_after or len(evidence_after) != 1 or not evidence_after[0]:
+        if changes or directions or not evidence_after or len(evidence_after) != 1 or not evidence_after[0]:
             raise SchemaError("기업 요약 제안은 --set 없이 --evidence 로 요약 문장 하나만 준다")
     else:
-        _check_judgment_changes(factor, {**changes, **({"evidence": evidence_after} if evidence_after is not None else {})})
+        _check_judgment_changes(factor, {**changes, **({"evidence": evidence_after} if evidence_after is not None else {}),
+                                         **directions})
     if not isinstance(reason, str) or not reason.strip():
         raise SchemaError("제안 사유(--reason)는 비어 있으면 안 된다")
     if factor == SUMMARY_FACTOR:
@@ -1293,6 +1325,7 @@ def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[st
         "proposed_at": proposed_at or utc_now_iso()[:10],
         "status": "pending",
     }
+    item.update({f"{k}_after": v for k, v in directions.items()})
     payload["items"].append(item)
     ev_ids = {e["evidence_id"] for e in load_json_strict(run_paths(slug).evidence).get("items", [])} if run_paths(slug).evidence.is_file() else set()
     validate_proposals(payload, load_companies(), ev_ids, slug)
@@ -1337,6 +1370,9 @@ def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None
         changes = dict(item["changes"])
         if item["evidence_after"] is not None:
             changes["evidence"] = list(item["evidence_after"])
+        for key in PROPOSAL_DIRECTION_AFTER:
+            if item.get(key) is not None:
+                changes[key[: -len("_after")]] = list(item[key])
         reason = f"제안 {proposal_id} 반영: {item['reason']}" + (f" (메모: {note})" if note else "")
         out["judgment"] = revise_judgment(slug, company_id=item["company_id"], factor=item["factor"], changes=changes,
                                           reason=reason, by=by, cite_evidence_ids=list(item["evidence_ids"]))
@@ -1388,13 +1424,21 @@ def undo_proposal(slug: str, proposal_id: str, *, by: str | None = None, allow_a
         new = dict(cur)
         for k in JUDGMENT_REVISION_FIELDS:
             new[k] = copy.deepcopy(prev[k])
+        # 2026-10-07: 방향 칸은 반영 전에 있었으면 되돌리고, 없었으면 지운다(옛 applied.previous 는 7키라 지운다).
+        for k in JUDGMENT_DIRECTION_FIELDS:
+            if k in prev:
+                new[k] = copy.deepcopy(prev[k])
+            else:
+                new.pop(k, None)
         if prev.get("evidence_ids") is None:
             new.pop("evidence_ids", None)
         else:
             new["evidence_ids"] = list(prev["evidence_ids"])
+        undone_from = {k: copy.deepcopy(cur.get(k)) for k in JUDGMENT_REVISION_FIELDS}
+        undone_from.update({k: copy.deepcopy(cur[k]) for k in JUDGMENT_DIRECTION_FIELDS if k in cur})
         new["revision_history"] = [*cur.get("revision_history", []),
                                    {"revised_at": utc_now_iso()[:10], "revised_by": by, "reason": f"제안 {proposal_id} 번복",
-                                    "previous": {k: copy.deepcopy(cur.get(k)) for k in JUDGMENT_REVISION_FIELDS},
+                                    "previous": undone_from,
                                     "session": "agent" if agent_session_markers() else "human"}]
         jpayload["items"][idx] = new
         run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
@@ -1439,10 +1483,15 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]]) -> list[d
                           else "evidence_only" if not p["changes"] else JUDGMENT_EDIT_KIND[p["factor"]]),
             "changes": _pairs(p["changes"]),
             "evidence_after": p["evidence_after"],
+            # 2026-10-07: 올릴·내릴 근거 칸. null 이면 그 칸을 바꾸지 않는 제안이다.
+            "evidence_up_after": p.get("evidence_up_after"),
+            "evidence_down_after": p.get("evidence_down_after"),
             "reason": p["reason"],
             "evidence_ids": list(p["evidence_ids"]),
             "before": {"kind": before["kind"], "score": before["score"], "inputs": _pairs(before["inputs"]),
-                       "evidence": list(before["evidence"])},
+                       "evidence": list(before["evidence"]),
+                       "evidence_up": list(before.get("evidence_up") or []),
+                       "evidence_down": list(before.get("evidence_down") or [])},
             # 결정 전 제안인데 그사이 판단이 바뀌었으면 반영할 수 없다
             "stale": p["status"] == "pending" and (current is None or current != before),
             "proposed_by": p["proposed_by"],
@@ -1530,6 +1579,10 @@ def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
             "score_range": list(rules.payload["factors"][j["factor"]]["range"]),
             "inputs": [{"key": k, "value": v} for k, v in j["inputs"].items()],
             "evidence": list(j["evidence"]),
+            # 2026-10-07: 근거 세 칸. three_way 가 false 면 옛 형식(판정 칸 하나)이라 승인 페이지가 한 덩어리로 그린다.
+            "evidence_up": list(j.get("evidence_up") or []),
+            "evidence_down": list(j.get("evidence_down") or []),
+            "three_way": all(k in j for k in JUDGMENT_DIRECTION_FIELDS),
             "status": j["status"],
             "reviewer": j["reviewer"],
             "reviewed_at": j["reviewed_at"],
