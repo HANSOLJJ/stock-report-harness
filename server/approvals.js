@@ -347,19 +347,26 @@ function renderJudgeForm(runId, j, choices, formId) {
         </div>`;
     }).join('');
   }
-  const evidenceText = (Array.isArray(j.evidence) ? j.evidence : []).join('\n');
+  // 2026-10-07 사용자 지시: 근거는 판정·올릴 근거·내릴 근거 세 칸이다. 손대지 않은 칸은 넘기지 않는다.
+  const evidenceBox = (name, label, help, lines, rows) => {
+    const text = (Array.isArray(lines) ? lines : []).join('\n');
+    return `
+        <div class="form-group">
+          <label for="${formId}_${name}">${label} (한 줄에 하나)</label>
+          <div class="field-help">${help}</div>
+          <textarea id="${formId}_${name}" name="${name}" rows="${rows}">${escapeHtml(text)}</textarea>
+          <input type="hidden" name="${name}_original" value="${escapeHtml(text)}" />
+        </div>`;
+  };
   return `
       <form method="POST" action="/approve/${escapeHtml(runId)}/judge" class="judge-form" id="${formId}">
         <p class="form-desc">점수가 아니라 판단 입력을 고칩니다. 제출하면 판단 해시가 바뀌어 지금의 점수·초안·리뷰·승인이 무효가 되고, 이전 값은 수정 이력에 남습니다.</p>
         <input type="hidden" name="company" value="${escapeHtml(j.company_id)}" />
         <input type="hidden" name="factor" value="${escapeHtml(j.factor)}" />
         ${fields}
-        <div class="form-group">
-          <label for="${formId}_evidence">근거 문장 (한 줄에 하나)</label>
-          <div class="field-help">바꿀 줄만 고치면 됩니다. 손대지 않으면 근거는 그대로 둡니다.</div>
-          <textarea id="${formId}_evidence" name="evidence" rows="8">${escapeHtml(evidenceText)}</textarea>
-          <input type="hidden" name="evidence_original" value="${escapeHtml(evidenceText)}" />
-        </div>
+        ${evidenceBox('evidence', '판정', '점수와 그 점수가 나온 이유, 저울질, 미확인. 바꿀 줄만 고치면 됩니다.', j.evidence, 6)}
+        ${evidenceBox('evidence_up', '올릴 근거', '이 사실만 보면 점수가 오르는 것. 비우면 "없음"입니다.', j.evidence_up, 4)}
+        ${evidenceBox('evidence_down', '내릴 근거', '이 사실만 보면 점수가 내리는 것. 비우면 "없음"입니다.', j.evidence_down, 4)}
         <div class="form-row">
           <div class="form-group">
             <label for="${formId}_reason">수정 사유</label>
@@ -407,16 +414,25 @@ function proposalChangeHtml(pr) {
 }
 
 function proposalEvidenceDiffHtml(pr, ctx) {
-  if (!Array.isArray(pr.evidence_after)) return '';
-  const before = Array.isArray(pr.before && pr.before.evidence) ? pr.before.evidence : [];
-  const after = pr.evidence_after;
-  const removed = before.filter((s) => !after.includes(s));
-  const added = after.filter((s) => !before.includes(s));
-  const same = after.length - added.length;
+  // 2026-10-07: 세 칸(판정·올릴 근거·내릴 근거)마다 따로 비교한다. 제안이 그 칸을 바꾸지 않으면(null) 그리지 않는다.
+  const columns = [
+    ['evidence_after', 'evidence', '근거 문장'],
+    ['evidence_up_after', 'evidence_up', '올릴 근거'],
+    ['evidence_down_after', 'evidence_down', '내릴 근거'],
+  ];
   const line = (cls, mark, s) => `<li class="${cls}"><span class="mark">${mark}</span> ${linkTerms(escapeHtml(s), ctx)}</li>`;
-  return `
-        <div class="prop-label">근거 문장 바뀌는 줄 <span class="muted">(그대로 두는 줄 ${same}개)</span></div>
+  return columns.map(([afterKey, beforeKey, label]) => {
+    if (!Array.isArray(pr[afterKey])) return '';
+    const before = Array.isArray(pr.before && pr.before[beforeKey]) ? pr.before[beforeKey] : [];
+    const after = pr[afterKey];
+    const removed = before.filter((s) => !after.includes(s));
+    const added = after.filter((s) => !before.includes(s));
+    const same = after.length - added.length;
+    const empty = after.length === 0 ? ' <span class="muted">— 반영 뒤 "없음"</span>' : '';
+    return `
+        <div class="prop-label">${label} 바뀌는 줄 <span class="muted">(그대로 두는 줄 ${same}개)</span>${empty}</div>
         <ul class="prop-diff">${removed.map((s) => line('del', '−', s)).join('')}${added.map((s) => line('add', '+', s)).join('')}</ul>`;
+  }).join('');
 }
 
 function renderProposalSection(data, ctx) {
@@ -518,10 +534,7 @@ function renderJudgeSection(data, judgeFactor, judgeCompany, termCtx) {
           <span class="muted">검토 ${escapeHtml(j.reviewer)} · ${escapeHtml(j.reviewed_at)}${j.revisions ? ` · 수정 ${escapeHtml(j.revisions)}회` : ''}</span>
         </div>
         ${judgmentValueHtml(j)}
-        <details class="judge-evidence">
-          <summary>근거 문장 ${evidence.length}줄 보기</summary>
-          <ol>${evidence.map((s) => `<li>${linkTerms(escapeHtml(s), ctx)}</li>`).join('')}</ol>
-        </details>
+        ${judgmentEvidenceHtml(j, evidence, ctx)}
         <button type="button" class="btn btn-secondary judge-open" data-open-form="${formId}" aria-expanded="${selected}">${selected ? '수정 칸 닫기' : '이 판단 고치기'}</button>
         <div class="judge-form-wrap"${selected ? '' : ' hidden'}>${renderJudgeForm(runId, j, choices, formId)}</div>
       </div>`;
@@ -536,6 +549,29 @@ function renderJudgeSection(data, judgeFactor, judgeCompany, termCtx) {
     <p class="form-desc">위의 factor 탭을 고르면 그 factor 의 모든 기업 판단이 나옵니다. 고칠 기업 카드의 "이 판단 고치기" 를 누르면 그 카드 안에 수정 칸이 열립니다.</p>
     <div class="judge-tabs" role="tablist">${tabs}</div>
     ${panels}`;
+}
+
+// 2026-10-07: 세 칸 판단은 판정·올릴 근거·내릴 근거를 나눠 보여 준다. 옛 판단(three_way 아님)은 한 덩어리 그대로다.
+function judgmentEvidenceHtml(j, evidence, ctx) {
+  const list = (lines) => (lines.length
+    ? `<ol>${lines.map((s) => `<li>${linkTerms(escapeHtml(s), ctx)}</li>`).join('')}</ol>`
+    : '<p class="muted">없음</p>');
+  if (!j.three_way) {
+    return `
+        <details class="judge-evidence">
+          <summary>근거 문장 ${evidence.length}줄 보기</summary>
+          ${list(evidence)}
+        </details>`;
+  }
+  const up = Array.isArray(j.evidence_up) ? j.evidence_up : [];
+  const down = Array.isArray(j.evidence_down) ? j.evidence_down : [];
+  return `
+        <details class="judge-evidence">
+          <summary>근거 보기 — 판정 ${evidence.length}줄 · 올릴 근거 ${up.length}줄 · 내릴 근거 ${down.length}줄</summary>
+          <div class="prop-label">판정</div>${list(evidence)}
+          <div class="prop-label">올릴 근거</div>${list(up)}
+          <div class="prop-label">내릴 근거</div>${list(down)}
+        </details>`;
 }
 
 function normalizeLines(text) {
@@ -564,6 +600,14 @@ function buildJudgeArgs(runId, params) {
   const evidence = normalizeLines(params.get('evidence'));
   if (params.has('evidence') && evidence.join('\n') !== normalizeLines(params.get('evidence_original')).join('\n')) {
     for (const line of evidence) args.push(`--evidence=${line}`);
+  }
+  // 2026-10-07: 올릴·내릴 근거 칸. 바뀐 칸만 넘기고, 비웠으면 빈 값 하나(`--up=`)로 '없음'을 알린다.
+  for (const [field, flag] of [['evidence_up', '--up'], ['evidence_down', '--down']]) {
+    if (!params.has(field)) continue;
+    const lines = normalizeLines(params.get(field));
+    if (lines.join('\n') === normalizeLines(params.get(`${field}_original`)).join('\n')) continue;
+    if (lines.length === 0) args.push(`${flag}=`);
+    for (const line of lines) args.push(`${flag}=${line}`);
   }
   args.push(`--reason=${(params.get('reason') || '').trim()}`);
   args.push(`--by=${(params.get('by') || '').trim()}`);

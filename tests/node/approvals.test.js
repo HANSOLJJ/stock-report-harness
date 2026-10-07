@@ -480,6 +480,14 @@ test('GET: 판단 변경 제안 카드 — 지금 값 → 제안 값, 근거 줄
     assert.match(res.body, /<li class="del"><span class="mark">−<\/span> 주요 고객이 곧 경쟁자<\/li>/);
     assert.match(res.body, /<li class="add"><span class="mark">\+<\/span> 적대 등급은 비용형이다 — 시험용 &lt;b&gt;태그&lt;\/b&gt;/, '더한 줄은 이스케이프');
     assert.match(res.body, /href="#ev-EV-nvidia-001"/, '인용 근거는 근거 카드로 연결');
+    // 2026-10-07 근거 세 칸: 제안의 올릴 근거 칸 비교, 세 칸 판단 카드, 수정 폼의 세 칸
+    assert.match(res.body, /올릴 근거 바뀌는 줄/);
+    assert.match(res.body, /<li class="add"><span class="mark">\+<\/span> 주요 고객과의 공동개발이 이어진다<\/li>/);
+    assert.doesNotMatch(res.body, /내릴 근거 바뀌는 줄/, '바꾸지 않는 칸(null)은 그리지 않는다');
+    assert.match(res.body, /근거 보기 — 판정 1줄 · 올릴 근거 1줄 · 내릴 근거 1줄/);
+    assert.match(res.body, /시험용 &lt;i&gt;태그&lt;\/i&gt;/, '내릴 근거도 이스케이프');
+    assert.match(res.body, /name="evidence_up" rows="4"/);
+    assert.match(res.body, /name="evidence_down_original"/);
     assert.match(res.body, /name="decision" value="accept"/);
     assert.match(res.body, /name="decision" value="reject"/);
     assert.match(res.body, /<textarea id="prop-PRP-001-note" name="note" rows="2" required/, '거부 사유는 필수 입력');
@@ -610,6 +618,17 @@ test('POST /judge: 인자 생성 — 판정 재료는 --set, 바뀐 근거만 --
     }).toString());
     assert.deepEqual(calls[2], ['judge', 'ai-scorecard-2026-11-x', '--company', 'nvidia', '--factor', 'F1',
       '--set', 'score=3', '--reason=r', '--by=u']);
+
+    // 2026-10-07 근거 세 칸: 바뀐 칸만 --up/--down 으로 넘기고, 비운 칸은 빈 값 하나로 '없음'을 알린다.
+    await postForm(server, 'judge', new URLSearchParams({
+      code: '123456', company: 'nvidia', factor: 'F5',
+      evidence: 'a', evidence_original: 'a',
+      evidence_up: '오른다\n또 오른다', evidence_up_original: '오른다',
+      evidence_down: '', evidence_down_original: '내린다',
+      reason: 'r', by: 'u',
+    }).toString());
+    assert.deepEqual(calls[4], ['judge', 'ai-scorecard-2026-11-x', '--company', 'nvidia', '--factor', 'F5',
+      '--up=오른다', '--up=또 오른다', '--down=', '--reason=r', '--by=u']);
   } finally {
     server.close();
   }
