@@ -54,12 +54,12 @@
 ## 6단계 — 판단 114개 재분류 → 리뷰 → 승인 대기
 
 - [x] (전제) 사용자가 승인 취소함(2026-10-07)
-- [ ] `SPLIT-INSTRUCTIONS.md` 작성(이 폴더)
-- [ ] 서브에이전트 5개가 기업 묶음별 JSON 산출
-- [ ] 기계 검사 스크립트(토큰 보존·금지 표기·up+down≥1·점수 표기는 판정 칸만·중복 0) + 변조 사본으로 검사가 걸리는지 확인
-- [ ] `propose --json` 114건 → `proposal --all-pending --accept` → `three_way_violations` 0
-- [ ] `research → calculate → draft`, 14개사 total·rank 불변 확인, `review-template --force`
-- [ ] 4영역 1차 리뷰 → 수정 한 묶음 → 확인 리뷰 1회 → `review.md` pass → `validate_report_contract.py`
-- [ ] "승인 대기" 보고
+- [x] `SPLIT-INSTRUCTIONS.md` 작성(이 폴더)
+- [x] 서브에이전트 5개가 기업 묶음별 JSON 산출
+- [x] 기계 검사 스크립트(토큰 보존·금지 표기·up+down≥1·점수 표기는 판정 칸만·중복 0) + 변조 사본으로 검사가 걸리는지 확인
+- [x] `propose --json` 114건 → `proposal --all-pending --accept` → `three_way_violations` 0
+- [x] `research → calculate → draft`, 14개사 total·rank 불변 확인, `review-template --force`
+- [x] 4영역 1차 리뷰 → 수정 한 묶음 → 확인 리뷰 1회 → `review.md` pass → `validate_report_contract.py`
+- [x] "승인 대기" 보고
 - [ ] (사람) 최종 승인 → `build_report.py` → `--require-html` → Playwright(320·768·1280, 탭, 앵커 세 갈래, 트리거 표 폭) → 커밋
 - [ ] 이 폴더 checklist·context-notes 마무리
