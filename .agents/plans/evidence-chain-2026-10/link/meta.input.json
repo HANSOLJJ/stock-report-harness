@@ -1,0 +1,268 @@
+{
+  "company_id": "meta",
+  "next_evidence_number": 11,
+  "judgments": [
+    {
+      "judgment_id": "meta.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "Meta ① 네트워크 효과(가격을 올려도 남는가)는 소비자 채널로 재며 5점이다."
+      ],
+      "evidence_up": [
+        "페이스북·인스타그램·왓츠앱 사용자가 30억 명을 넘고 지인 관계망이 서비스 안에 있어, 떠나면 불편한 소비자 락인의 전형이라고 판정했다.",
+        "Meta 는 자사 AI Muse 를 WhatsApp·Instagram·Facebook·AI 안경에 전면 배포해, 이미 깔린 사용자 기반 위에서 AI 를 공급한다.",
+        "① 은 회사의 가장 강한 채널이 점수를 정하므로, 새 AI 앱의 사용자 지표(Muse 주간 사용자 300만 돌파, 2026-09-30 The Information 보도)는 이 점수를 움직이지 않는다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "meta.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 4,
+      "inputs": {},
+      "evidence": [
+        "Meta ② 신기술 게임체인저(판을 바꿀 기술을 먼저 냈는가)는 세 경로 가운데 성능 도약과 패러다임 적응을 통과로, 표준 선점을 실패로 보아 두 경로 통과의 4점이다.",
+        "5점은 종합 지수 1위가 아니라 성능 도약이 세대 격차 수준일 때 주는데, Meta 의 성능 도약이 세대 격차 수준인지는 아직 판정하지 않았으므로 두 경로 통과의 4점을 쓴다."
+      ],
+      "evidence_up": [
+        "Artificial Analysis(AA) 종합 지수에서 Muse Spark 1.3(max)은 62점으로 3위이고, AA 는 2026-09-02 기사 제목에서 'Meta reaches the frontier' 라고 적었다.",
+        "같은 지수에서 세대별 점수는 Muse Spark 1.0 43점, 1.1 53점, 1.2 57점, 1.3 62점으로 올랐고, 에이전트 실무 지표 GDPval-AA v2 에서는 1,754 Elo 로 5위다.",
+        "가격은 100만 토큰당 입력 $1.25·출력 $4.25 를 유지해, AA 59점 이상 모델 가운데 태스크당 비용이 가장 낮다($0.55).",
+        "Tau3-Bench Banking 52% 는 전 모델 1위로 적혀 있으나 원문이 어느 하네스로 쟀는지 밝히지 않아, 같은 하네스끼리만 비교한다는 원칙상 모델 간 비교 근거로 쓰기 어렵다고 본다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "meta.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "partial",
+        "revenue_model": "pass",
+        "acceleration": "partial",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "Meta ③ Last Mover(선두가 베끼면 선두 자신의 수익모델이 무너지는 방식으로 들어왔는가)는 통과점 2 로 3점이다.",
+        "별도 수익모델은 통과다. 회수 장치가 있는 가격 카운터 포지셔닝으로 판정했다.",
+        "모방 불가능성은 부분이다.",
+        "후발 가속도(AI 귀속 지표의 성장률이 오르는가)도 부분이다. Meta 는 AI 매출을 공시하지 않고 OpenRouter 채택 증거도 아직 없다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 실측 역전)는 없다.",
+        "통과 1점에 부분 0.5점 두 개를 더한 통과점 2 는 사다리에서 3점이다."
+      ],
+      "evidence_up": [
+        "Meta 는 Muse Spark 1.1 API 를 100만 토큰당 입력 $1.25·출력 $4.25 에 팔고, 이 저가 클로즈드 API 를 광고 매출이 먹여 살린다.",
+        "Meta 에는 광고 수익이라는 자산이 있다.",
+        "Muse 주간 사용자 300만 돌파(The Information 단독, 2026-09-30)는 한 시점 수치라 성장률의 변화를 보여 주지 않는다."
+      ],
+      "evidence_down": [
+        "구글도 광고로 같은 저가 전략(Gemini Flash)을 쓸 수 있어, 구조적으로 못 베끼는 자산으로 보지 않았다."
+      ]
+    },
+    {
+      "judgment_id": "meta.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "Meta ④ 호황 이후 비전(곡괭이만 팔다 끝나는가, 광부가 되는가)은 3점이다.",
+        "영역 다각화는 약하다고 판정했다.",
+        "기업용 AI 매출이나 고객 배치가 공시되면 광고 의존을 다시 본다."
+      ],
+      "evidence_up": [
+        "AI 를 광고 최적화에 써서 매출을 늘린 것은 실측으로 증명됐다. 2026-06-30 분기 매출은 $60.80B 로 전년 대비 28% 늘었다.",
+        "2026-09-28 출범한 기업용 AI 사업은 출범과 책임자 영입 단계라, 계획·발표는 현재 점수에 넣지 않는다는 원칙(규칙 2.1)에 따라 점수 근거가 아니다."
+      ],
+      "evidence_down": [
+        "매출의 약 98% 가 여전히 광고에서 나오고 메타버스에 대규모로 투자했다가 실패한 이력이 있다."
+      ]
+    },
+    {
+      "judgment_id": "meta.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -1
+      },
+      "evidence": [
+        "Meta ⑤ 아군 확보는 3 + 동맹 등급(+1) + 적대 등급(−1) 로 3점이다.",
+        "동맹 등급 +1 은 수백만 광고주 생태계에서 나온다.",
+        "Glimmer 개발자처럼 모델을 공짜로 받아 쓰는 개발자는 상업적 약속이 없는 공짜 사용자이고, 여러 칩 공급사에서 사 오는 것은 조달이라 동맹으로 세지 않는다.",
+        "지분이 걸린 동맹이 복수이거나 경쟁사를 자기 플랫폼에 편입한 사실은 확인되지 않아 +2 로 보지 않았다.",
+        "적대 등급 −1(비용형)은 미성년자 관련 소송과 EU 벌금이 광고 본업의 구조를 건드리지 않는 적대라는 판정이다."
+      ],
+      "evidence_up": [
+        "광고주는 돈을 내고 Meta 광고 도구를 쓰는 상업적 약속 관계이고, 자동화 광고 상품 Advantage+ 의 연 환산 매출은 $20B 를 넘는다."
+      ],
+      "evidence_down": [
+        "미성년자 관련 소송 $2.4B 와 EU 벌금은 비용이 든다.",
+        "2026-10-01~10-05 보도된 뉴멕시코주의 $40B 청구, FTC 의 반독점 소송 재개 시도, 영국 규제기관과의 데이터 제출 다툼, 노르웨이의 AI 안경 한시 금지 계획, 연구개발 세액공제 분류 논란도 모두 청구·시도·계획 단계의 비용형 재료로 본다."
+      ]
+    },
+    {
+      "judgment_id": "meta.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "no"
+      },
+      "evidence": [
+        "Meta ⑦ 순환금융(내 매출을 내는 고객이 그 돈을 어디서 구했는가)은 0점이다.",
+        "투자·부채 조달에 기대 대금을 내는 고객의 비중은 작다고 판정했다.",
+        "Meta 가 고객에게 넣은 돈이 고객 주머니를 거쳐 Meta 매출로 되돌아오는 구조도 확인되지 않아, 세로축은 '내 돈이 돌아오지 않음' 이다.",
+        "⑦ 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 '작음·돌아오지 않음' 칸은 0점이다."
+      ],
+      "evidence_up": [
+        "Meta 매출의 대부분은 수백만 광고주가 내는 광고비다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "meta.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -1,
+      "inputs": {},
+      "evidence": [
+        "Meta ⑧ 비대칭 의존(끊기면 매출이 주는가, 회사가 멈추는가)은 −1 이다.",
+        "AI 칩 공급이 분산돼 있어 감점 폭을 작게 두었다."
+      ],
+      "evidence_up": [
+        "AI 칩은 여러 공급사에서 사 오므로 한 공급사가 끊겨도 핵심 생산이 멈추지 않는다."
+      ],
+      "evidence_down": [
+        "매출이 광고에 편중돼 있어 광고 시장이 꺾이면 매출이 직접 준다."
+      ]
+    },
+    {
+      "judgment_id": "meta.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "deteriorating",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "unknown",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "Meta ⑨ 적자 깊이는 게이트 2 에서 끝나 −1 이다.",
+        "게이트 1(본업이 버는가)은 통과다.",
+        "게이트 2(최근 1년 잉여현금흐름)는 흑자이지만 추세는 악화로 판정했다.",
+        "흑자이나 추세가 악화하면 게이트 2 에서 −1 로 끝난다.",
+        "계획 상단을 집행해 최근 1년 잉여현금흐름이 실제로 마이너스가 되면 게이트 2 는 −2 가 되고 게이트 3(버티는 기간)을 계산한다."
+      ],
+      "evidence_up": [
+        "2025-07-01~2026-06-30 최근 1년 영업이익 $86.93B 를 매출 $228.25B 로 나눈 영업이익률이 38.1% 다.",
+        "같은 최근 1년 기간 영업현금흐름 $130.30B 에서 설비투자 $89.33B 를 뺀 잉여현금흐름이 +$40.98B 다."
+      ],
+      "evidence_down": [
+        "2026-06-30 분기 잉여현금흐름이 +$0.78B 로 전년 동기보다 91% 줄었고, 그 분기 설비투자는 $31.1B 로 전년의 두 배이며, 회사의 연간 설비투자 계획은 $130~145B 다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-meta-001",
+      "factors": [
+        "F6",
+        "F9"
+      ],
+      "kind": "filing",
+      "title": "10-Q 2026-07-30",
+      "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050705/meta-20260630.htm",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-meta-002",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "title": "Meta launches enterprise AI business seeking to cash in on vast spending - Financial Times",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQYXl4S1J5V0N4UWpZbHpnUlFaQWlXWWdjZFd0ZVBOSzJXS2VQZndsTXgyM29XV083LVlySlk5eGNxTWRXUjBGdkZHa3djdVJ6MDlVNDFKWlFfbnlHeW8tRi1Kd25jQlNYanFTQ3NhMFN5aWFFaHRWV21DR01mSEtxSzRyaDc?oc=5",
+      "source_id": "SRC-NEWS-meta-20260928-e1cfee35",
+      "published_at_utc": "2026-09-28T15:54:34Z"
+    },
+    {
+      "evidence_id": "EV-meta-004",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "title": "Exclusive: Meta’s Muse Tops 3 Million Weekly Users - The Information",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPZUlsQkdDcHFFRnVIeXo3anBjZ2RfcW1XcEk3N1VRd3NtTkUyaUNBWmNGZU5KTGNaemxIMGlCTHZfcG1GQl93OFJQbWhKbF9JbGJpM3QxTDdOLW1MWEdwQVpSaDZscElPZDRaNm5NU3h4S0htdEduODQwVVlzbWFiQ2hyMXY1M1NUc2lUX0hUUExsYjg?oc=5",
+      "source_id": "SRC-NEWS-meta-20260930-b46bb0dd",
+      "published_at_utc": "2026-09-30T22:48:00Z"
+    },
+    {
+      "evidence_id": "EV-meta-006",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Meta reportedly calls its AI data centers ‘pilot models’ — its research tax credits jumped from $700M to $3.9B - Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPSXVrZFVJSGlUX0ktM3VUZ0J4bjJJdzNlcTBYUjlPaTUybFJidXd5TEw5Nk5OdWYyRExiM183bUNFcEVxYzZ6bmdfMk44YzAxaHBYbHZZUWdxTkgtbWx5Z2llb1A3SEpVRlBIMUZhTG8teEljSE9MdHVzWGJ1NDRGaHI0M2U0Tms4R2ZZamVDWi1iT0tZcVNXWg?oc=5",
+      "source_id": "SRC-NEWS-meta-20261001-f785a438",
+      "published_at_utc": "2026-10-01T03:55:00Z"
+    },
+    {
+      "evidence_id": "EV-meta-007",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Norway plans temporary AI glasses ban over privacy concerns (META:NASDAQ) - Seeking Alpha",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNcnUtT0ZwX3ZENzhEbWR1eHIzbVhNOUoySDY3eXVfZjBzVktOay1kZTVEV3hFeUJCeV80R2VsM0wwVFZjSGdacTBvN1RqczBLclRHc1otWUlPLWc4YWNCQjBVdFV3MEE4d1FkU3NpaGtXQU5xaGpYSmxWeFA1Wl9taWxpNDZxVnViV3Z1VkdVZlktNExvZlZ2TmQ2NnltUQ?oc=5",
+      "source_id": "SRC-NEWS-meta-20261005-fc53341d",
+      "published_at_utc": "2026-10-05T10:41:47Z"
+    },
+    {
+      "evidence_id": "EV-meta-008",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Meta, TikTok, X challenge UK watchdog over online safety data demands - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOZzZWa2JOanlQUC1XM2lWd3NaMmtidFV2ckgwWlc5bWlreHdPcDR5NTBMektNSkMyZ01HOVlRX0k2MnhMU0llck56Q2dRM3pXWS1ia3ZmT3haQ1VlLTlJa01leU5NQWZGTHdPWWU3eFhrb1BJZWxPcC1pdEJ4Ql9xU29UODhHNFBQdEZTMFcwYmRwXzRnNFNYWXVUWDNLUkFUXzRRUHV4VzVYYXZBdVNKQTVvdUJ5Zi13MEVxQw?oc=5",
+      "source_id": "SRC-NEWS-meta-20261005-3a601a4a",
+      "published_at_utc": "2026-10-05T15:24:26Z"
+    },
+    {
+      "evidence_id": "EV-meta-009",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Why New Mexico Wants $40 Billion from Meta Platforms and What It Means for META Stock - Barchart.com",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQRDFZYWV1TnBjUTBncnhPSGNzbXh4YmZ2WUZybWo4MkMyaHNQb05RQW9jZFNiTU03aTNhb0RCQUE1bnNpcDBDS0tCTlpXN1VjbXlRRjR2WVM1OUtXOU1qOEN2OVR4cmVIUElHU3VtQ1NySWtIeDNkaVBFN2t2VDVEaXRZc19NaXpuRWpQVzN6aDhTdkRTUVplTUNWOFdLeEhQTWFieVdUQnl5OHFwd25oM1RtQldTMV9VX0dsUy1EY1Q5RTdBSW1V?oc=5",
+      "source_id": "SRC-NEWS-meta-20261005-5fa6d368",
+      "published_at_utc": "2026-10-05T17:49:40Z"
+    },
+    {
+      "evidence_id": "EV-meta-010",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "FTC Presses To Revive Antitrust Case Against Meta 10/06/2026 - MediaPost",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNSjgxcVFvSnZFcW9wVkxCcmQ4VzhlS1BPaHNkVGpHTE1rLXp6b3RKOFRBcjNwa3BBOElxdzFlQTBPQTFrT2x3WkFEVU5PQUtqalg5NzEybERYRDZTNXdtQXpZSEljRUFYR01LS1VwZDJLSkJIM1JXOG8takw5alkwN0xOcHFPT3JPT3VmdXNHREtiSEJleU5SMEcxeE81YkJXSllIQUF0cmpyWDdLeHRYZ3ctY0JRZXRINjkzRkluUTM?oc=5",
+      "source_id": "SRC-NEWS-meta-20261005-df671aa0",
+      "published_at_utc": "2026-10-05T21:26:12Z"
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "company_id": "spacex-xai",
+  "next_evidence_number": 10,
+  "judgments": [
+    {
+      "judgment_id": "spacex-xai.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "스페이스X ① 은 소비자·SNS·업무 채널 가운데 가장 강한 락인으로 재며 3점이다.",
+        "가격 결정력과 사용자 간 연결을 함께 갖춘 채널이 아직 없어 3점으로 판정했다.",
+        "Cursor 의 유지율과 가격 결정력이 실측되면 4점을 검토한다."
+      ],
+      "evidence_up": [
+        "소비자 채널의 Starlink 는 2026년 6월 말 가입자 1,200만 명, 매출 $11.4B, 영업마진 39% 로 가격 결정력을 보인다.",
+        "SNS 채널의 X 는 페이스북형 네트워크다.",
+        "업무 채널의 Cursor 는 2026-08-14 $60B 인수를 마친 개발자 유료 시트 사업이다.",
+        "2026-07-20 부터 Starlink V5 가 Tesla Cybercab 에 공장에서 통합되는 자동차 채널도 생겼으나, 대수가 미미해 점수에 넣지 않는다."
+      ],
+      "evidence_down": [
+        "Starlink 에는 사용자끼리 연결되는 구조가 없다.",
+        "X 는 이탈과 수익화가 약해지고 있다."
+      ]
+    },
+    {
+      "judgment_id": "spacex-xai.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 4,
+      "inputs": {},
+      "evidence": [
+        "스페이스X ② 는 AI 에 귀속되는 부분만 재며, 성능 도약과 패러다임 적응 두 경로를 통과해 4점이다. 경로별 입력이 정해지기 전까지 사람이 매긴 점수를 쓴다.",
+        "성능 도약은 최상위 모델과 1~2점 차라서 통과로 보았다.",
+        "패러다임 적응은 Cursor 인수와 Grok 배포로 통과로 보았다.",
+        "표준 선점은 근거가 없다.",
+        "재사용 로켓과 Starship 은 비AI 사업이라 ④ 에서만 센다(규칙 2.4)."
+      ],
+      "evidence_up": [
+        "Grok 4.6 은 Artificial Analysis Index 61 로 전체 6위다.",
+        "AI 코딩 1위 Cursor 를 인수했고, Grok 을 X·Starlink 고객 지원에 배포했다.",
+        "Colossus 는 GPU 20만 개 규모이고, 100만 개는 목표라 점수에 넣지 않는다.",
+        "2026-09-28 Starship 이 처음 궤도에 올라 Starlink 위성을 배치했지만, 궤도 데이터센터가 실제로 컴퓨트를 제공하기 전까지 ② 근거가 아니다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "spacex-xai.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "partial",
+        "revenue_model": "pass",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "스페이스X ③ 은 모방 불가능성 부분 통과(0.5), 별도 수익모델 통과(1), 후발 가속도 통과(1)로 통과점 2.5 다. 사다리로는 4 구간이지만 모방 불가능성이 완전 통과가 아니어서 3점이다.",
+        "모방 불가능성과 가속도는 AI 에 귀속되는 부분만 본다.",
+        "모방 불가능성은 부분으로 판정했다. 모방 불가능성의 근거가 자산 자체의 복제 가능성을 말하고 있어 부분의 정의(자산은 있으나 아직 앞서지 못함)와 맞는지가 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 통과다. 성장률 하나로는 가속인지 단순 성장인지 가를 수 없어 이 판정도 2026-11 재검토 대상이다.",
+        "문이 닫힌 증거(선두의 가격 결정력 붕괴나 점유율 역전)는 없다."
+      ],
+      "evidence_up": [
+        "Starlink 와 발사 사업의 이익이 xAI 를 대고 있다.",
+        "AI 세그먼트 매출이 2분기 $2.56B 로 전년보다 247% 늘었고, 10월부터 램프하는 $6.7B 클라우드 계약이 더해진다."
+      ],
+      "evidence_down": [
+        "Colossus 규모는 자본만 있으면 복제할 수 있고(Stargate·Hyperion), 궤도 데이터센터는 아직 실현되지 않았다."
+      ]
+    },
+    {
+      "judgment_id": "spacex-xai.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "스페이스X ④ 는 다각화가 범위의 최상단이라 5점이다."
+      ],
+      "evidence_up": [
+        "Starlink, Starship, xAI(Grok), X, Cursor, Terafab(Tesla 와 합작하는 반도체 팹)을 사업 부문으로 세며, Terafab 은 건설·장비 조달 단계다.",
+        "2026-09-28 Starship 14차 비행이 처음 궤도에 올라 Starlink 위성을 배치했다.",
+        "2026-06-12 나스닥 상장으로 $75B 를 조달해 사상 최대 IPO 를 기록했고, 2026-06-30 현금및현금성자산은 US$93,522M, 단기 시장성 증권을 더하면 US$100,009M 이다."
+      ],
+      "evidence_down": [
+        "Starship 14차 비행은 엔진 고장으로 임무가 조기 종료됐다는 보도가 있어 시험 비행 성격이다."
+      ]
+    },
+    {
+      "judgment_id": "spacex-xai.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -1
+      },
+      "evidence": [
+        "스페이스X ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(−1) = 3점이다.",
+        "동맹 등급 +1 은 정부 계약을 상업적 약속으로 보는 원칙에서 나온다.",
+        "Tesla 와의 Terafab 합작과 Cybercab 용 Starlink V5 공급은 같은 지배주주가 지배하는 관계사 거래라 동맹으로 세지 않는다. Google 은 xAI 컴퓨트를 쓰지만 자체 TPU 가 있어 떠날 수 있으므로 동맹이 아니다.",
+        "적대 등급 −1 은 비용형(벌금·소송처럼 사업 구조를 건드리지 않는 적대)이다.",
+        "이 적대들을 종류(비용형·구조형·다발형)로 다시 대는 일은 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다."
+      ],
+      "evidence_up": [
+        "NASA(매출의 5%)와 Space Force(Starshield)가 아군이고, xAI 는 2025-07 미 국방부 CDAO 프론티어 AI 계약(4사가 각각 상한 $200M)을 받은 회사 가운데 하나다. CDAO 계약은 여러 회사가 같은 계약을 받았으므로 회사 사이의 차이를 만들지 않는다."
+      ],
+      "evidence_down": [
+        "적대는 EU 의 X DSA 벌금, Amazon Kuiper·Blue Origin 과의 경쟁, 머스크의 OpenAI 소송, 여러 정치적 적대다."
+      ]
+    },
+    {
+      "judgment_id": "spacex-xai.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "no"
+      },
+      "evidence": [
+        "스페이스X ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
+        "Anthropic 계약의 연간 인식 매출이 크다고 확인되면 조달 의존 고객 비중을 큼 쪽으로 다시 본다.",
+        "10월부터 램프하는 $6.7B 클라우드 계약은 상대가 공시되지 않았고, 금액 체계가 달라 Anthropic 계약과 같은 계약인지 정할 수 없다.",
+        "관계자 거래로는 SpaceX 가 Tesla Megapack 을 3개월 $295M, 6개월 $329M 어치 샀고, 이사 Antonio Gracias 의 Valor Equity Partners 로부터 AI 인프라 장비를 리스한 거래가 판매후리스 요건을 채우지 못한 거래로 처리돼 2026-06-30 관련 부채가 유동 $2,039M, 비유동 $11,290M 이다. Valor 는 고객이 아니라 장비 임대인이라 판정표의 두 축 어디에도 닿지 않는다."
+      ],
+      "evidence_up": [
+        "매출을 내는 고객은 Starlink 소비자 1,200만 명, NASA, Space Force 처럼 자기 돈으로 내는 쪽이다.",
+        "매달 $920M 컴퓨트 대금을 내는 Google 도 자기 영업이익으로 내는 고객이다.",
+        "스페이스X 가 고객에게 투자해 그 돈이 매출로 돌아오는 고리는 없다. xAI 흡수($250B)와 Cursor 인수($60B)는 모두 자사주로 치른 수직통합이고, NVIDIA 의 xAI 투자는 NVIDIA 쪽 ⑦ 에 속하는 사안이다."
+      ],
+      "evidence_down": [
+        "S-1/A 는 2026-05 Anthropic 과 맺은 클라우드 서비스 계약(NVIDIA GPU 약 32.5만 개, 2029-05 까지 월 $1.25B)을 공시했고, Anthropic 상장 신고서를 인용한 보도는 총액을 최대 $84.5B 로 적는다. Anthropic 은 투자 유치로 대금을 내는 적자 고객이다."
+      ]
+    },
+    {
+      "judgment_id": "spacex-xai.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -3,
+      "inputs": {},
+      "evidence": [
+        "스페이스X ⑧ 은 끊기면 사업이 멈추거나 흔들리는 의존 여러 개로 −3 점이다.",
+        "지금 근거에 고객 집중 항목은 없고, Google·Anthropic 컴퓨트 계약이 매출에서 차지하는 비중이 공시되면 고객 집중 항목을 더할지 본다."
+      ],
+      "evidence_up": [],
+      "evidence_down": [
+        "머스크 개인에 대한 의존이 크고, 내부자 지분은 45% 다.",
+        "발사는 FAA 허가에, Starlink 는 주파수와 각국 인허가에 묶여 있고, Starshield 를 통해 국방 수요에 기대고 있다.",
+        "xAI 컴퓨트는 NVIDIA GPU 에 의존하고, Cursor 가 쓰는 모델은 대부분 경쟁사인 Anthropic·OpenAI 의 것이라 공급자가 곧 경쟁자인 의존이다."
+      ]
+    },
+    {
+      "judgment_id": "spacex-xai.F9.obsreg25",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "unknown",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "yes",
+        "operating_result_reviewed": "loss"
+      },
+      "evidence": [
+        "스페이스X ⑨ 는 게이트 1 에서 막혀 −3 점이다.",
+        "게이트 1(본업이 버는가)은 영업손실률이 C-06 실행 결정이 쓰는 경계(−10%·−30%)에서 −30% 이상 −10% 미만 구간이라 −3 이다.",
+        "방향 완화(4분기 연속 손실률 개선과 매출이 비용보다 빠르게 늘어남)는 같은 정의의 분기 손실률 자료가 없어 두 입력 모두 판정 불가이므로 완화하지 않는다.",
+        "게이트 1 에서 막혔으므로 게이트 2 를 건너뛰고, C-05 실행 결정(게이트 3·4 를 점수에 반영한다)에 따라 게이트 3·4 를 계산한다.",
+        "게이트 3(버티는 기간)은 런웨이가 임계 3년보다 0.86% 길어 단계 변화는 없지만 ±3% 경계 표시가 붙는다. 미인출 여신은 한도 US$5,000M 에서 신용장 US$645M 을 모두 뺀 보수적 하한이고, 한도 전액을 넣어도 런웨이는 3.05년으로 결론이 같다.",
+        "게이트 4(미래 지출이 덮이는가)는 커버리지가 1 이상이라 유지다.",
+        "비교 가능성은 예로 판정했다. 미개시 리스는 6개월 이른 기준일이지만 분모의 5.5% 이고, 2027년 지출 US$22,244M 이 약정의 80% 로 몰려 있으며, 백로그에는 이연수익 US$14,286M 이 들어 있다. 약정표의 Spectrum 거래분은 현금과 Class A 보통주로 치르는데 연도별로 따로 떼어 있지 않아, 주식 지급분(약 $11.1B)이 분모를 키워 커버리지가 보수적으로 나온다. 주식 지급분을 빼면 약 2.57, Spectrum 잔여분 약 $20.8B 를 모두 빼면 약 5.4 로 어느 쪽이든 1 이상이다.",
+        "게이트 3·4 모두 단계 변화가 없어 최종 점수는 게이트 1 의 −3 이다."
+      ],
+      "evidence_up": [
+        "Starlink 단독은 영업마진 39% 흑자다.",
+        "흑자 전환 목표 후퇴와 완충 잠식은 없음이다.",
+        "최근 1년 FCF 에 완충 US$97,877M(2026-06-30 현금및현금성자산 US$93,522M + 확정 미인출 회전여신 US$4,355M)을 대면 런웨이는 3.03년이다.",
+        "2026-06-30 백로그 US$47,461M 을 미개시 확정 약정 US$29,582M(2025-12-31 기준 미개시 리스 US$1,627M + 2026-06-30 기준 무조건 구매약정 US$27,955M)으로 나눈 커버리지는 1.604 다."
+      ],
+      "evidence_down": [
+        "최근 1년(2025-07-01~2026-06-30) 영업손실은 US$3,732M, 매출은 US$23,044M 으로 영업손실률은 −16.195% 다. 같은 창의 순손실은 US$8,218M 이다.",
+        "연결 기준은 적자이고, AI 세그먼트는 분기 영업손실이 $1.26B 다.",
+        "최근 1년 FCF 는 US$−32,348M(영업현금흐름 US$9,900M − 설비투자 US$42,248M)이다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-spacex-xai-001",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "kind": "news",
+      "title": "Google to pay SpaceX $920 million a month for compute capacity at xAI data centers - cnbc.com",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQbTlsMnZmeWxoUk0yWmhKcGs0eVhkc1d1c1JVRm9qUWFMQWVuTy1YcmFyVDBGTDhkOGwyRlBhNWFJWTVBTHNOOUlsSVFzVlB3bXFjZWZYaEhWblQwSU5yc00wU241V3BoVFEtTndGcURrVXc2eFBLMlFuZkdUSzdkUEpZNXctWHVvUjZTczUzRE4tNHA3eUgtVVN4NVZKWnZUd2NKRNIBqgFBVV95cUxNRGdVeDExV2J4SUxteXpvQVJqMWl2NmstN3lpR3dqaHU1djhwNkozR0pyZG5wZlhiRU9zSVdod0xyZWYwbEljVEpMOXdIelJzZFV3SVV3UHBvOUZzS3VKWGlLV3RIemFaZTFMOEh2ZlBDNW9fLXVlWXZSVU5RTGkxcHZzc1VSWU05SWdkMGtrZWR0aFJwb3FfZEs5bl9SQjJYWUJOTGVqU05iZw?oc=5",
+      "source_id": "SRC-NEWS-spacex-xai-20260605-203712fc",
+      "published_at_utc": "2026-06-05T07:00:00Z"
+    },
+    {
+      "evidence_id": "EV-spacex-xai-007",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "title": "SpaceX Launches Starship Flight 14, Deploys Starlink Satellites. - Investor's Business Daily",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNaVRhMG1KOWZyTmRBVUxUeE5lakZDRVNKOG55NVh2ZGN2T2theGx0dzdhQU9SYUpLamdNWkJVcERKb05SM21vWDFoMmFZS2Q4ZUhESTA3VF9hVno0bGJnekhXeXdKM0VNcnZIaEliOXNERVhVczBMZ0pCN3k5TmdJNWxsUlZ6cDItbTJKNEowUlNIX0NCcXdYdGM0R3F1UQ?oc=5",
+      "source_id": "SRC-NEWS-spacex-xai-20260928-504eea45",
+      "published_at_utc": "2026-09-28T20:55:00Z"
+    },
+    {
+      "evidence_id": "EV-spacex-xai-008",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "kind": "news",
+      "title": "Anthropic-SpaceX Compute Deal Size Revealed: Potential Spending Up to $84.5 Billion Nearly Doubles Prior Disclosure - TradingKey",
+      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxOLVFGNlM4QjN1dW9aMUJ4Rmxfa3ZaeHlSN1htZVF2N29sdERIdE1zNE9MNHFkOEFtRlRxaVdtWGd3TVE4dE96MVZVeHhaM01fQVZLdnk3LTJKTC0yanhzQWg0dnViM09tdUd6TVRaeTI2a256ZzktQUFEeFk1ZDc5Z1FYcHdCUlhMNmQzWEtyRWREc0NmX2RwNnU3cG9pc19yUjNhVVhEZTZad0t2U3RsRktvdXVLaERIS3QxaVJTMjJiY2ttLWt0ekZ2a2ZtV1JiZUJv?oc=5",
+      "source_id": "SRC-NEWS-spacex-xai-20260930-855edb41",
+      "published_at_utc": "2026-09-30T09:12:12Z"
+    },
+    {
+      "evidence_id": "EV-spacex-xai-009",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "kind": "news",
+      "title": "SPCX Stock Climbs As Three Thursday Launches Meet Start Of Google’s $920 Million AI Pact - Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPb0YzRl9SbDgyWFFrWHpGZEk1RTFWY1lsZmt2U0Jmc3ZaUVVnUHdVQzN2b3VmVmZrN0pzLVNpQkwyQVNreUVYc00zNzBhTW12b0RTdk1XSHY3SnREMGtXNTA5NzkyckpFeE1fSEZHVkFEQzB5VEgwZFdsdkMyMjJYQnFRbkxNY0lkaHhBM0lmcXBjb3hZa01TSDZSYUpIdw?oc=5",
+      "source_id": "SRC-NEWS-spacex-xai-20261002-2eb3e9a9",
+      "published_at_utc": "2026-10-02T20:02:38Z"
+    }
+  ]
+}

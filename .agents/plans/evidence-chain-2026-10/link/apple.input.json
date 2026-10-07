@@ -1,0 +1,191 @@
+{
+  "company_id": "apple",
+  "next_evidence_number": 6,
+  "judgments": [
+    {
+      "judgment_id": "apple.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "Apple ① 은 범위 최상단인 5점이다.",
+        "Apple 의 소비자 채널을 세계에서 가장 강한 소비자 락인이라고 판정했다."
+      ],
+      "evidence_up": [
+        "약 20억 대의 기기 설치기반이 개인이 매일 쓰고 떠나면 불편한 소비자 채널을 이룬다.",
+        "App Store 생태계는 연 $1.4T 의 결제·판매를 일으킨다.",
+        "2026년 6월 분기 iPhone 매출이 22% 늘어, AI 기능 없이도 하드웨어 교체 주기가 돈다는 것을 보여 준다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "apple.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 2,
+      "inputs": {},
+      "evidence": [
+        "Apple ② 는 범위 하한인 2점이고, 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 통과한 것이 없다는 판단이다.",
+        "세 경로별 판정 입력은 아직 따로 매기지 않아, 점수는 사람이 매긴 2점으로 서 있다.",
+        "실리콘 역량은 따로 본다. Apple ② 가 낮은 이유는 칩이 아니라 모델과 표준 주도력의 공백이다."
+      ],
+      "evidence_up": [
+        "M 시리즈와 Baltra 를 만드는 Apple 의 칩 설계력은 강하다."
+      ],
+      "evidence_down": [
+        "Siri 개편은 WWDC 2024 예고 뒤 2년 미뤄져 iOS 27 로 넘어갔고, 기준일(2026-10-06)까지 새 Siri 출시는 확인되지 않았다.",
+        "고난도 추론은 Google 에 연 $1B 를 주고 Gemini 커스텀 모델(파라미터 1.2조 개)로 외주하고 있고, 자체 모델 AFM 3 는 Arena 나 하드 벤치마크에 나오지 않는다.",
+        "분기 설비투자는 $3.5B 수준이고, 팀장 Pang 이 Meta 로 옮기고 AI 총괄 Giannandrea 가 은퇴하는 등 인재도 빠져나갔다."
+      ]
+    },
+    {
+      "judgment_id": "apple.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "fail",
+        "revenue_model": "pass",
+        "acceleration": "fail",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "Apple ③ 은 세 기준의 통과점이 1 이라 2점이다.",
+        "모방 불가능성은 실패다. 20억 대 설치기반은 ① 에서 이미 5점으로 셌으므로, ③ 에서 다시 쓰면 같은 속성을 두 번 세게 된다.",
+        "별도 수익모델은 통과한다.",
+        "후발 가속도는 실패다.",
+        "지연은 감속으로 처리한다는 원칙에 따라 Siri 개편 지연을 가속이 아니라 감속으로 본다.",
+        "라스트무버는 늦게 움직여 이기는 것이지 움직이지 않는 것이 아니다.",
+        "새 Siri 가 출시되고 사용·채택 지표가 따라오면 가속도 판정을 다시 본다."
+      ],
+      "evidence_up": [
+        "Apple 은 하드웨어와 서비스로 매출을 낸다."
+      ],
+      "evidence_down": [
+        "Siri 개편이 WWDC 2024 예고 뒤 2년 미뤄졌고 고난도 추론은 Gemini 에 외주하고 있다."
+      ]
+    },
+    {
+      "judgment_id": "apple.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "Apple ④ 는 3점이다.",
+        "Apple ④ 가 5점에 못 미치는 이유는 다각화가 빈약하기 때문이다."
+      ],
+      "evidence_up": [
+        "Apple 은 M 시리즈 자체 칩을 대량 출하해 온 수직계열화 실적이 있고, 비공개 클라우드 연산(PCC) 서버는 이미 M5 로 바꿨다.",
+        "첫 AI 서버 칩 Baltra 는 Broadcom 과 공동개발하며 TSMC N3P 로 2026년 하반기 양산해 2027년 배치할 계획이지만, 양산 전 계획이라 점수 근거가 아니다."
+      ],
+      "evidence_down": [
+        "Vision Pro 는 부진하고 자동차 사업은 취소됐다.",
+        "Baltra 는 내부 전용이라 외부 판매 수익이 없고, 추론 인프라를 채울 뿐 모델 공백을 메우지 못한다. Siri 는 여전히 Gemini 로 돌아간다."
+      ]
+    },
+    {
+      "judgment_id": "apple.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 1,
+        "H": -1
+      },
+      "evidence": [
+        "Apple ⑤ 는 3 + 동맹 등급 A(+1) + 적대 등급 H(-1) 로 3점이다.",
+        "동맹 등급 +1 의 근거는 App Store 개발자 생태계다.",
+        "Google 과의 모델 계약은 동맹이 아니라 조달이다. Apple 이 연 $1B 를 주고 Gemini 를 사 오는 고객 쪽이기 때문이다.",
+        "적대 등급 -1(비용형)은 법적 전선에서 나온다.",
+        "Apple 의 법적 전선들은 비용이지 존립 위협이 아니라고 보아 구조형(-2)이 아니라 비용형으로 판정했다."
+      ],
+      "evidence_up": [
+        "App Store 개발자 생태계는 연 $1.4T 의 거래를 일으킨다.",
+        "Apple 은 중국 CAC 승인을 받은 첫 외국 기업이다.",
+        "DOJ 에 져도 아이폰은 팔린다."
+      ],
+      "evidence_down": [
+        "Apple 은 OpenAI 와 서로 소송 중이고, xAI 반독점 소송과 미 법무부(DOJ) 반독점 소송이 걸려 있으며, EU DMA 에 대한 항소 3건은 모두 기각됐다.",
+        "2026-10-05 에는 6억 3,400만 달러 특허 패소 판결에 이자 1억 8,400만 달러가 더해졌다는 보도도 나왔다."
+      ]
+    },
+    {
+      "judgment_id": "apple.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "no"
+      },
+      "evidence": [
+        "Apple ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아오지 않음 칸이라 0점이다.",
+        "Apple 에는 순환금융 구조가 확인되지 않는다.",
+        "Apple 이 고객에게 넣은 돈이 매출로 돌아오는 고리는 없다고 판정했다.",
+        "최근 1년(2025-06-29~2026-06-27) 영업외이익 비중(세전이익의 0.7%)은 ⑥ 소관이라 ⑦ 의 입력이 아니다."
+      ],
+      "evidence_up": [
+        "Apple 의 매출은 기기와 서비스를 사는 소비자·기업에서 나온다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "apple.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -3,
+      "inputs": {},
+      "evidence": [
+        "Apple ⑧ 은 -3점이다."
+      ],
+      "evidence_up": [],
+      "evidence_down": [
+        "가장 큰 의존은 AI 가 아니라 Google 검색 지급금이다. 연 약 $20B 가 Services 마진의 핵심인데 DOJ 소송이 2월부터 항소 단계에 있어, 이 지급이 끊길 위험이 있다.",
+        "Siri 의 핵심 추론도 경쟁사 Google 의 Gemini 에 기대고 있어, 공급자가 곧 경쟁자인 의존이다."
+      ]
+    },
+    {
+      "judgment_id": "apple.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "stable",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "unknown",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "Apple ⑨ 는 감점 없이 0점이다.",
+        "게이트 1(본업이 버는가)은 통과한다.",
+        "게이트 2(현금이 새는가)는 추세를 안정으로 판정해 0점에서 끝난다.",
+        "분기 매출 흐름도 추세 안정 판정과 맞는다.",
+        "2026-06-27 현금및현금성자산은 $39.5B 이고 단기 투자자산을 더하면 $62.4B 이며, FCF 가 흑자라 게이트 3(버티는 기간)은 따지지 않는다."
+      ],
+      "evidence_up": [
+        "최근 1년(2025-06-29~2026-06-27) 매출 $466.8B, 영업이익 $154.9B 로 영업이익률이 33.2% 다.",
+        "최근 1년(2025-06-29~2026-06-27) FCF 는 +$136.7B 로 흑자다.",
+        "2026년 6월 분기 매출은 $109.4B 로 전년 대비 16% 늘었다."
+      ],
+      "evidence_down": []
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-apple-005",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Apple Owes $184 Million in Interest on $634 Million Patent Loss - Bloomberg Law News",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPaVhCcXRCYTVoQThUcVJpeWFqdkkzRmg0M3ZCUDNwX2RLaUJackkxRWE2YUZVeWMzU0dfVXVVa1hwelBpd29JWERnMHh3V3owVnpENHEtODVPYXg0LTJHUHdwcXVjWVRUczh4TTh2OUdBc1EtX1pCT3FNbm4ySzBlU3JjOWVqTEtXRHVCVkZNRTcxZ1ZBTkV1bnFGR01mZjNzaWdkWnZTLUxzaFpTdzN4a01n?oc=5",
+      "source_id": "SRC-NEWS-apple-20261005-6addb1d6",
+      "published_at_utc": "2026-10-05T23:08:00Z"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "company_id": "tesla",
+  "next_evidence_number": 9,
+  "judgments": [
+    {
+      "judgment_id": "tesla.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 2,
+      "inputs": {},
+      "evidence": [
+        "테슬라 ① 은 소비자 채널로 재며 2점이다."
+      ],
+      "evidence_up": [
+        "차량 소유자에게는 전환비용이 있다."
+      ],
+      "evidence_down": [
+        "사용자끼리 연결되는 구조가 없어, 쓸수록 가치가 커지는 스노우볼이 돌지 않는다.",
+        "가격 인하가 이어지고 있어 가격을 올려도 고객이 남는지라는 ① 의 핵심 질문에도 가격 결정력으로 답하지 못한다."
+      ]
+    },
+    {
+      "judgment_id": "tesla.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "테슬라 ② 는 세 경로(성능 도약·패러다임 적응·표준 선점) 가운데 패러다임 적응 한 경로만 통과로 보아 3점이고, 경로별 입력이 정해지기 전까지 사람이 매긴 점수를 쓴다.",
+        "성능 도약은 판정할 수 없다.",
+        "표준 선점은 근거에 없다.",
+        "AI5 칩·Optimus·Terafab 은 계획이거나 실측 전 단계라서, 계획·발표는 0점이라는 원칙(규칙 2.1)에 따라 점수에 넣지 않는다."
+      ],
+      "evidence_up": [
+        "지금 측정되는 AI 자산으로는 Cortex 205MW 가 있다.",
+        "AI5 칩은 2026년 4월 테이프아웃했고(AI4 듀얼 대비 약 5배) 2026년 안에 소량 생산, 2027년 중반 양산을 목표로 하며 Optimus 에 먼저 쓴다. Optimus 1세대 라인은 Fremont 의 S/X 라인을 전환해 설치 중이고 회사는 2026년 안 생산을 밝혔다. Terafab(SpaceX 와 합작하는 반도체 팹)은 건설과 장비 조달이 진행 중이다."
+      ],
+      "evidence_down": [
+        "로보택시에서 Waymo 가 앞서 있어 테슬라가 세대 격차를 만들었다고 볼 근거가 없다."
+      ]
+    },
+    {
+      "judgment_id": "tesla.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "fail",
+        "revenue_model": "pass",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "테슬라 ③ 은 모방 불가능성 실패(0), 별도 수익모델 통과(1), 후발 가속도 통과(1)로 통과점 2 이고 사다리에서 3점이다.",
+        "모방 불가능성이 실패인 첫째 이유는 자산이 테슬라 것이 아니라는 점이다. ③ 은 관계사 소유 자산을 자기 자산으로 세지 않는다.",
+        "모방 불가능성이 실패인 둘째 이유는 실제로 앞서지 못한다는 점이다.",
+        "별도 수익모델은 통과다.",
+        "후발 가속도는 통과다. 다만 성장률 하나로는 가속인지 단순 성장인지 가를 수 없어 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다.",
+        "모방 불가능성은 테슬라 자기 자산으로 Waymo 와의 격차가 실측으로 줄거나 테슬라에 배타적인 공급 계약이 공시되면 다시 판정한다."
+      ],
+      "evidence_up": [
+        "2026-07-20 Cybercab 에 Starlink V5 를 공장에서 매립 통합한 것은 실재한다.",
+        "Waymo 가 따라 하려면 적대 관계사에서 사 와야 한다는 논리는 추론이다.",
+        "차량 판매 이익이 AI 를 대고 있다.",
+        "FSD 활성 구독이 148만으로 전년보다 56% 늘었고, 월 구독 66.6만으로 ARR 약 $791M, 순증 사상 최대, 북미 부착률 55% 다."
+      ],
+      "evidence_down": [
+        "Starlink V5 자산은 관계사 SpaceX 의 것이고 테슬라는 이를 관계사에서 조달했다.",
+        "공시된 배타적 공급 계약은 없다.",
+        "2026-08-18 기준 오스틴 무인 차량은 94대였고 Waymo 는 약 3,000대로 10개 도시에서 주 50만 회 유료 탑승을 운행해 격차가 약 30배다.",
+        "오스틴 Cybercab 상업 운행 첫 달이 순탄치 않았다는 CNBC 보도가 있다."
+      ]
+    },
+    {
+      "judgment_id": "tesla.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 3,
+      "inputs": {},
+      "evidence": [
+        "테슬라 ④ 는 실제로 배치된 사업 폭이 차량·에너지 저장·소규모 로보택시라 3점이다.",
+        "Optimus 생산·배치 대수나 Terafab 가동이 확인되면 다시 본다."
+      ],
+      "evidence_up": [
+        "에너지 저장은 실제로 배치되는 사업이고, 2026년 3분기 배치량이 13.7GWh 라는 보도가 있다. 이 수치는 공시 본문과 대조하지 않은 보도 제목 값이고, 시장 예상에 못 미쳤다는 보도도 함께 있다.",
+        "로보택시는 오스틴에서 무인 운행을 하고 있다.",
+        "Optimus 는 아직 배치되지 않았고 Terafab 은 건설·장비 조달 단계라, 출하·실제 배포만 세는 ④ 판정 지침에 따라 사업 폭에 넣지 않는다."
+      ],
+      "evidence_down": [
+        "로보택시는 상업 운행 첫 달이 순탄치 않았고 확장은 아직 과제라는 보도(CNBC, 2026-10-03)가 있다."
+      ]
+    },
+    {
+      "judgment_id": "tesla.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 0,
+        "H": -1
+      },
+      "evidence": [
+        "테슬라 ⑤ 는 3 + 동맹 등급 A(0) + 적대 등급 H(−1) = 2점이다.",
+        "동맹 등급 0 은 확인되는 독립 상업 동맹이 없다는 판정이다. 눈에 띄는 아군은 Terafab 을 함께 짓는 SpaceX 정도인데, 같은 지배주주가 지배하는 관계사라 동맹으로 세지 않는다.",
+        "적대 등급 −1 은 비용형(벌금·소송·규제 조사처럼 사업 구조를 건드리지 않는 적대)이다.",
+        "이런 규제 적대는 비용형에 머문다고 판단했다.",
+        "NHTSA 조사는 ⑧ 의 근거에도 들어 있어, 같은 속성을 두 번 셌는지가 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다."
+      ],
+      "evidence_up": [
+        "안전단체의 요구와 같은 무렵 크로아티아는 FSD 를 승인했다.",
+        "EU 의 FSD 승인이 거부돼도 차량 판매는 계속된다."
+      ],
+      "evidence_down": [
+        "머스크는 OpenAI 와 Apple 을 상대로 소송을 벌이고 있고, NHTSA 는 FSD 조사를 EA26002 로 격상해 320만 대를 조사하고 있다.",
+        "안전단체가 속도 허용 오차를 이유로 EU 에 FSD 승인 거부를 요구했다.",
+        "악동 이미지가 통하려면 독점이어야 한다는 강의의 조건을 테슬라는 채우지 못한다."
+      ]
+    },
+    {
+      "judgment_id": "tesla.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "yes"
+      },
+      "evidence": [
+        "테슬라 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 작음, 돌아옴 칸이라 −1 점이다.",
+        "내 돈이 돌아온다는 판정은 머스크 관계사 사이에서 돈이 도는 구조를 근거로 했다.",
+        "조달 의존 고객 비중은 작음으로 판정했다.",
+        "규칙은 관계사 거래라는 사실만으로 환류를 인정하지 않으며, 테슬라 돈이 관계사를 거쳐 테슬라 매출로 돌아오는 금액은 근거에 적혀 있지 않다."
+      ],
+      "evidence_up": [
+        "관계사 순환의 규모는 본업에 견주어 작다."
+      ],
+      "evidence_down": [
+        "테슬라는 xAI 에 투자했고 SpaceX 와 Terafab 을 합작한다.",
+        "Cybercab 에 들어가는 Starlink V5 도 관계사 SpaceX 에서 조달하는 관계사 거래다."
+      ]
+    },
+    {
+      "judgment_id": "tesla.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -2,
+      "inputs": {},
+      "evidence": [
+        "테슬라 ⑧ 은 끊기면 사업이 흔들리는 의존 세 가지로 −2 점이다.",
+        "NHTSA 조사는 ⑤ 의 적대 근거에도 들어 있어, 같은 속성을 두 번 셌는지가 규칙 긴장 목록에 2026-11 재검토 대상으로 올라 있다."
+      ],
+      "evidence_up": [],
+      "evidence_down": [
+        "첫째는 머스크 개인에 대한 의존이고, 둘째는 NHTSA 의 FSD 조사이며, 셋째는 상하이 공장과 배터리 공급망이 걸린 중국 의존이다."
+      ]
+    },
+    {
+      "judgment_id": "tesla.F9",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "deteriorating",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "unknown",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "테슬라 ⑨ 는 게이트 2 에서 끝나 −1 점이다.",
+        "게이트 1(본업이 버는가)은 통과해, 영업결과 판정은 흑자다.",
+        "FCF 추세를 악화로 판정해 −1 에서 끝났다.",
+        "게이트 2 에서 끝나므로 완충(현금 + 확정 미인출 여신 US$5,000M)과 게이트 4 는 점수에 쓰이지 않고, 게이트 4 비교 가능성은 판정 불가로 두었다. 2026-09-29 8-K 로 공시한 새 신용계약은 최근 1년 FCF 가 마이너스로 돌아 게이트 3 으로 내려갈 때 완충에 반영한다.",
+        "방향 완화 두 입력은 판정 불가이지만 게이트 1 을 통과해 쓰이지 않는다."
+      ],
+      "evidence_up": [
+        "최근 1년(2025-07-01~2026-06-30) 영업이익은 US$4,372M, 매출은 US$103,619M 으로 영업이익률은 4.22% 다.",
+        "게이트 2(현금이 새는가)는 같은 창의 FCF 가 US$5,762M(영업현금흐름 US$18,685M − 설비투자 US$12,923M)으로 흑자다.",
+        "흑자 전환 목표 후퇴와 완충 잠식은 없음이다."
+      ],
+      "evidence_down": [
+        "2026년 상반기 설비투자는 US$8,282M 으로 전년 상반기 US$3,886M 의 두 배를 넘었고, 상반기 FCF 는 US$352M 으로 전년 상반기 US$810M 보다 작으며, 2분기에는 분기 FCF 가 마이너스로 돌고 마진이 떨어졌다는 보도(CNBC 2026-07-22)가 있다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-tesla-001",
+      "factors": [
+        "F6",
+        "F9"
+      ],
+      "kind": "filing",
+      "title": "10-Q 2026-07-23",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-tesla-003",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "title": "8-K 2026-09-29 · Items 1.01, 1.02, 2.03, 9.01",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026063820/tsla-20260929.htm",
+      "source_id": "SRC-EDGAR-000162828026063820",
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-tesla-004",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Safety group urges EU to reject Tesla FSD over speed offset - Reuters",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQQ0pPYVBiQTZoVXBmNnNuWlZLWVhwd0ZJckNOVWhhT3o4Q2cwLTVxZ1RaTy0zWVNJMHViYkNfZGVqTjB1ZFVJOUhtN18tZ3dNVDZZMW5RRU1vS0ZIWkpxbDZwS243UjFjMEJHa3p2Z2s0OUFFb3kxdlhCZXEwLVlRREdLdi1jWDlJcGpGY0ZZemVVakp0eWM0QXVjcGhCWDl5UzhaWG9VUEtrM1JXUDFINk1QUnNNOE85azBtZFdDOA?oc=5",
+      "source_id": "SRC-NEWS-tesla-20260929-79b72b41",
+      "published_at_utc": "2026-09-29T07:39:43Z"
+    },
+    {
+      "evidence_id": "EV-tesla-007",
+      "factors": [
+        "F3"
+      ],
+      "kind": "news",
+      "title": "Tesla’s Cybercab had a rocky first month in Austin. Now comes the hard part: expanding - CNBC",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQNWY2WG5uVHNUbTI1YTB4NXBpbFYtRHA5QnpFbVZuVVJmS1JaMXBqbW40NlhPNzNsVWh2YmhTWFAtXzlRZFdiSkZaSm9kTGtlcC1LMHNVYXNvMkhaZENKX2VfUUE5emlXZDVRQ2tIWDFHQ01hbFNxS3RKUXhKaEQ1bWUxY2UzQjF5VzZJdXhDWG1QVFpLVllsRU8wb1B5WXlKaU1pd0xGa9IBrAFBVV95cUxPQ1B0Znp0dUZkMjZqLXdyQjRjMnJDOHFXQ3lXV1BmNEhIRHdXbWlFX2ZKM0w3ZGJKVzZyTDBhSHU3X1hkYzhRVm5EeXV2aWlzdEw4YnBTUERVLVFhbGJNVGlXSVl3alV2NGRwTVdrR0p5ZnktcXp6cW1FdFhZa3NPTU5pX3JxM3ZodUJDNENWZE5Zbjd4N3pOWC1MRVl2TzQzb1FQMFBIdGF1RjlF?oc=5",
+      "source_id": "SRC-NEWS-tesla-20261003-361005d7",
+      "published_at_utc": "2026-10-03T11:00:01Z"
+    },
+    {
+      "evidence_id": "EV-tesla-008",
+      "factors": [
+        "F4",
+        "F9"
+      ],
+      "kind": "filing",
+      "title": "8-K 2026-10-02 · Items 2.02, 9.01",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026064366/tsla-20261002.htm",
+      "source_id": "SRC-EDGAR-000162828026064366",
+      "published_at_utc": null
+    }
+  ]
+}

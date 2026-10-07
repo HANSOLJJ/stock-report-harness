@@ -8,3 +8,8 @@
 - anthropic.F2 · meta.F2 · nvidia.F2 · tsmc.F2 · openai.F2 는 모두 kind score, inputs 없음. 점수 직접 칸이라 propose `--set score=` 로 바꾼다.
 - 근거 입력 경로: evidence.json 은 에이전트가 쓰고 `confirm` 으로 확정, research 가 인용 후보의 출처를 sources.json 에 자동 등록한다. 수동 근거는 sources.json 에 출처를 직접 등록한다.
 - 결정: 인용 단위는 EV 하나. 공시 숫자도 filing EV 로. 표지는 줄 끝 `[EV-…]`. 판정 칸은 표지 불요. 게이트 rule ≥ 1.9.
+- A단계: 문서(흐름도·시퀀스·근거 계층·스킬 셋·11월 예시)와 리드 범위 표기·⑥ 설명 커밋(0d57b9b 외).
+- B단계: 표지 검사 장치 커밋. 표지는 줄 끝 `[EV-…]`(괄호 안 언급은 표지 아님). 인용 근거 표에 본문 발췌·위치 칸(HTML 항상, 초안은 v1.9 이상만 — 옛 승인 실행의 draft 바이트 보호). Python 1316·node 통과.
+- C단계: 사용자가 승인 756c276e 를 취소했다(revocations.jsonl).
+- F2 는 revise_judgment 대상이 아니다(structure.md 판단 수정 절). anthropic.F2 를 고치는 길은 E단계에서 따로 찾는다.
+- D단계 묶음: (openai, palantir) (nvidia, meta) (oracle, microsoft) (spacex-xai, apple) (tsmc, alphabet) (amazon, tesla) (alibaba, anthropic). 방향 칸 414줄. 근거 company_id 는 판단의 기업, 새 출처 ID 는 SRC-SEC-<cid>-<accession>·SRC-WEB-<cid>-NNN.

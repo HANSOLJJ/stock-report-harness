@@ -1,0 +1,258 @@
+{
+  "company_id": "amazon",
+  "next_evidence_number": 10,
+  "judgments": [
+    {
+      "judgment_id": "amazon.F1",
+      "factor": "F1",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "아마존 ① 은 소비자 채널의 락인으로 5점을 매겼다.",
+        "둘 다 Prime 회원 수나 쇼핑 트래픽의 이탈을 잰 수치가 아니라서 점수를 바꾸지 않는다."
+      ],
+      "evidence_up": [
+        "Prime 회원 2억 명 이상이 묶여 있고, 2026년 2월 Alexa+ 를 미국 Prime 회원 전체에게 무료로 열었다.",
+        "업무 채널에서도 Bedrock AgentCore 가 다른 클라우드로 옮기기 어려운 새 락인을 만들고 있다."
+      ],
+      "evidence_down": [
+        "메타의 쇼핑 에이전트 Muse 를 아마존이 차단했다는 보도(2026-09-29)와 AI 챗봇이 아마존보다 월마트·코스트코를 추천한다는 UBS 조사 보도(2026-10-05)가 확정 근거로 들어와 있다."
+      ]
+    },
+    {
+      "judgment_id": "amazon.F2",
+      "factor": "F2",
+      "kind": "score",
+      "score": 4,
+      "inputs": {},
+      "evidence": [
+        "아마존 ② 는 세 경로 가운데 표준 선점과 성능 도약 두 경로를 통과해 4점이다.",
+        "표준 선점(산업 인터페이스를 정의하는가)은 통과다.",
+        "성능 도약은 통과다.",
+        "패러다임 적응은 통과로 세지 않았다.",
+        "경로별 통과 여부를 판정 입력으로 나누어 적지 않았기 때문에 프로그램이 경로 수로 환산하지 않고 사람이 매긴 4점을 쓴다."
+      ],
+      "evidence_up": [
+        "AWS Interconnect 의 오픈 API 규격을 Google(2026년 4월)·Azure(2026-08-28)·Oracle 이 모두 채택해 멀티클라우드 연결의 사실상 표준이 됐다.",
+        "첫 3nm 칩인 Trainium3(362 PFLOPS)에서 OpenAI 와 Anthropic 이 실제로 모델을 학습해, 성능이 채택으로 입증됐다."
+      ],
+      "evidence_down": [
+        "AWS–Azure 연결은 2026-08-28 프리뷰로 나왔고 정식 출시는 아직 확인되지 않았다.",
+        "자체 모델 Nova 는 Arena 텍스트 부문 99위로 에이전트·추론 경쟁에 기여하지 못했다."
+      ]
+    },
+    {
+      "judgment_id": "amazon.F3",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "inputs": {
+        "imitation": "fail",
+        "revenue_model": "pass",
+        "acceleration": "pass",
+        "door_closed": "fail"
+      },
+      "evidence": [
+        "아마존 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+        "모방 불가능성은 실패다.",
+        "별도 수익모델은 통과이고, 후발 가속도도 통과로 판정했다.",
+        "모델을 직접 만들지 않은 것 자체는 카운터 포지셔닝이 아니다. 카운터 포지셔닝은 안드로이드처럼 만들어서 뿌리되 수익모델을 달리한 경우를 말한다.",
+        "문 닫힘은 실패로 판정해 5점 관문에 닿지 않는다."
+      ],
+      "evidence_up": [
+        "Bedrock 은 모두의 모델을 팔아 이기는 전략이고 실제로 앞서 나갔다. 2026년 7월 GPT-5.6 을 올려 Azure 의 OpenAI 모델 독점을 깼고, Trainium3 에서 OpenAI 모델까지 학습시키며, 18개 제공사의 100개 이상 모델을 판다.",
+        "컴퓨트 매출이 있어 별도 수익모델이 있다."
+      ],
+      "evidence_down": [
+        "Azure AI Foundry 와 Vertex Model Garden 도 같은 모델 매대를 운영해 경쟁사 둘 이상이 이미 하고 있으므로, 아마존의 우위는 실행력이지 구조적으로 못 베끼는 자산이 아니다."
+      ]
+    },
+    {
+      "judgment_id": "amazon.F4",
+      "factor": "F4",
+      "kind": "score",
+      "score": 5,
+      "inputs": {},
+      "evidence": [
+        "아마존 ④ 는 5점이다.",
+        "Blue Jay 중단에도 다각화의 폭은 그대로라 5점을 매긴다."
+      ],
+      "evidence_up": [
+        "2026년 2분기 AWS 매출 성장률은 +36.7% 로 18분기 만의 최고이고, AI 사업과 칩 사업은 각각 연환산 매출(런레이트) $25B 이상이다.",
+        "리테일·광고·물류에 더해 로보틱스도 실제로 배포했다. 로봇 100만 대 이상을 운영하고, 촉각 양팔 로봇 Vulcan 이 창고 물품의 75% 를 집어 넣으며, 운영 에이전트 Project Eluna 를 쓴다."
+      ],
+      "evidence_down": [
+        "Blue Jay 로봇은 제조비와 작업 흐름 부적합 때문에 6개월 만인 2월 18일 중단했다."
+      ]
+    },
+    {
+      "judgment_id": "amazon.F5",
+      "factor": "F5",
+      "kind": "grade",
+      "score": null,
+      "inputs": {
+        "A": 2,
+        "H": -1
+      },
+      "evidence": [
+        "아마존 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 -1 로 4점이다.",
+        "매대 입점은 상업적 약속이고 경쟁사까지 자기 매대에 편입한 경우라 동맹 등급을 +2 로 판정했다.",
+        "적대 등급 -1(비용형)은 FTC 반독점 소송에서 나온다. 규제기관 소송은 져도 본업 수요가 유지되는 비용이라 사업 구조를 건드리지 않는 비용형으로 본다.",
+        "⑤ 의 5점은 동맹 +2 에 적대 등급 0(규제 조사·소송·시장 차단이 눈에 띄지 않음)이 겹칠 때만 나오는데, 이 소송이 있어 아마존은 4점이다."
+      ],
+      "evidence_up": [
+        "Bedrock 은 18개 제공사의 100개 이상 모델을 팔고, 경쟁사 OpenAI 와 중국 오픈웨이트 모델까지 재판매한다.",
+        "Anthropic 과는 최대 $25B 투자와 5GW 규모 컴퓨트로 묶여 있다.",
+        "2026-08-28 Azure 와 맺은 멀티클라우드 상호연결은 새 동맹이 아니라 적대를 줄이는 사실이라 등급을 바꾸지 않는다."
+      ],
+      "evidence_down": [
+        "FTC 와 18개 주가 낸 반독점 소송의 재판이 2027년 2월로 잡혀 있다."
+      ]
+    },
+    {
+      "judgment_id": "amazon.F7",
+      "factor": "F7",
+      "kind": "matrix",
+      "score": null,
+      "inputs": {
+        "funding_dependent_share": "small",
+        "own_money_returns": "yes"
+      },
+      "evidence": [
+        "아마존 ⑦ 은 판정표(조달 의존 고객 비중 × 내 돈이 돌아오나)에서 비중 '작음', 내 돈이 돌아옴 '예' 칸이라 -1 이다.",
+        "내 돈이 돌아온다고 판정했다.",
+        "조달 의존 고객 비중은 작다고 판정했다."
+      ],
+      "evidence_up": [
+        "Anthropic 에서 오는 매출은 아마존 최근 1년 매출 $775.7B(2026-06-30 기준)에 견주면 미미하다."
+      ],
+      "evidence_down": [
+        "아마존이 Anthropic 에 투자한 돈이 AWS 매출로 돌아오는 것은 피투자사가 곧 대형 고객인 전형적인 순환 구조다.",
+        "최근 1년 영업외 이익 $81.8B(세전이익의 46.6%)는 ⑥ 의 영업외 비중에서 반영하며, 그 출처가 고객사라서 ⑦ 에는 순환 구조의 방증으로만 적고 입력에 넣지 않는다.",
+        "2026년 3월 OpenAI 에 약속한 $50B 투자(그중 $35B 는 OpenAI 상장 또는 AGI 도달 조건부)와 Anthropic 이 아마존에 $100B 이상을 약속했다는 보도(2026-10-01)는 집행 여부와 규모가 확인되지 않아 판정에 넣지 않았고 ⑦ 재검토 항목으로 남아 있다."
+      ]
+    },
+    {
+      "judgment_id": "amazon.F8",
+      "factor": "F8",
+      "kind": "score",
+      "score": -1,
+      "inputs": {},
+      "evidence": [
+        "아마존 ⑧ 은 -1 이다."
+      ],
+      "evidence_up": [
+        "매출이 리테일·광고·AWS 세 축으로 나뉘어 있어 한 고객이나 공급자가 끊겨도 회사가 멈추지 않는다고 판단했다.",
+        "Bedrock 은 특정 모델사에 묶이지 않는 모델 중립 매대라 모델 공급자에 대한 의존도 낮다."
+      ],
+      "evidence_down": []
+    },
+    {
+      "judgment_id": "amazon.F9.obsreg25",
+      "factor": "F9",
+      "kind": "gate_inputs",
+      "score": null,
+      "inputs": {
+        "fcf_trend": "unknown",
+        "bep_retreat": "no",
+        "buffer_erosion": "no",
+        "direction_A": "unknown",
+        "direction_B": "unknown",
+        "coverage_comparable": "yes",
+        "operating_result_reviewed": "profit"
+      },
+      "evidence": [
+        "아마존 ⑨ 는 -2 다.",
+        "아마존은 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+        "게이트 2(최근 1년 잉여현금흐름)에서는 잉여현금흐름이 마이너스라 -2 에서 게이트 3 으로 간다.",
+        "게이트 3(버티는 기간)의 런웨이는 3년 이상으로 유지된다. 신용등급으로 추정한 조달 여력은 완충에 넣지 않는다.",
+        "여신을 어느 범위로 세어도 런웨이는 3년 이상이고 게이트 3 결론은 같다. 여신에 잔존 기간 요건을 둘지는 규칙 8절 미결 사항 C-23 으로 남아 있다.",
+        "게이트 4(미래 지출이 덮이는가)의 약정 커버리지는 1배 이상으로 유지된다. 계약된 수입과 미개시 확정 약정은 같은 2026-06-30 10-Q 에서 나와 비교 가능하다고 판정했다.",
+        "미개시 리스만 분모로 쓰면 3.615 이지만 게이트 4 가 묻는 것은 미래 지출 전체라서 구매약정을 합한 값을 쓴다."
+      ],
+      "evidence_up": [
+        "아마존은 최근 1년(2026-06-30 기준) 영업이익 $93.7B, 매출 $775.7B 로 영업이익률이 12.1% 다.",
+        "영업이익이 나는데 현금흐름이 마이너스인 것은 벌면서 더 크게 투자하는 선택의 문제이고, 설비투자는 줄일 수 있는 지출이다.",
+        "버티는 기간의 완충은 2026-06-30 현금및현금성자산 $78.2B 와 확정 미인출 여신 $37.5B 를 더한 $115.7B 이고, 연 소진 $11.6B 로 나눈 런웨이는 9.95년이다.",
+        "2028-11 만기 $15.0B 만 세면 런웨이는 8.0년, 여신을 모두 빼고 현금만 세면 6.7년이다.",
+        "약정 커버리지는 계약된 수입 $496B(원계약 1년 초과 계약의 미인식 약정)를 미개시 확정 약정 $267.3B(미개시 리스 $137.2B + 무조건 구매약정 $130.1B)로 나눈 1.856 이다.",
+        "분자는 1년 이하 계약이 빠져 과소계상되고 분모는 5년 이후(Thereafter) 열까지 담아 과대계상되므로 커버리지는 보수적으로 낮게 나온다."
+      ],
+      "evidence_down": [
+        "최근 1년 잉여현금흐름은 영업현금흐름 $161.4B 에서 설비투자 $173.0B 를 뺀 값이 -$11.6B 다.",
+        "여신 $37.5B 는 2028-11 만기 무담보 리볼빙 $15.0B, 2026-10 만기이고 연장에 대주단 승인이 필요한 364일 리볼빙 $5.0B, 2026-09-30 까지 한 번만 인출할 수 있고 그 뒤 미인출 약정이 자동 소멸하는 지연인출 정기대출 $17.5B 로 이뤄진다. 세 시설 모두 2026-06-30 에 인출 잔액이 없었다.",
+        "지연인출 약정은 기준일 2026-10-06 전인 2026-09-30 에 미인출 약정으로서의 시한이 끝났고 364일 리볼빙도 2026-10 에 만기가 온다."
+      ]
+    }
+  ],
+  "existing_evidence": [
+    {
+      "evidence_id": "EV-amazon-001",
+      "factors": [
+        "F9"
+      ],
+      "kind": "filing",
+      "title": "8-K 2026-06-10 · Items 1.01, 2.03, 9.01",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926072140/tm2613616d4_8k.htm",
+      "source_id": "SRC-EDGAR-000110465926072140",
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-amazon-002",
+      "factors": [
+        "F6",
+        "F9"
+      ],
+      "kind": "filing",
+      "title": "10-Q 2026-07-31",
+      "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm",
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-amazon-004",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "title": "AI agents are fighting over your shopping cart: Meta’s Muse blocked by Amazon and Walmart - NBC News",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPZ2c5MVIxcTRLS25nNVdnNGVIcDhORmhFVDZaZHlGd0pmWjQ4MTNPcDBiLUh1RUFnbzhvMlRRTDk3UDR2Z0QtbDU0UXVFMzVaYWVnX0k4RWtzNE5DTms0RzZSd09PcXhGOTJvaHdQcFBxSEliNGY1V2Jtd01ITlRpQUQwLWdSb3RINmNBWWl1ejBaWVNXalQ3LVllMmxqZkFmTUs1R1NUb29OVGc?oc=5",
+      "source_id": "SRC-NEWS-amazon-20260929-6dc379e1",
+      "published_at_utc": "2026-09-29T16:00:41Z"
+    },
+    {
+      "evidence_id": "EV-amazon-007",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "title": "Anthropic Plans to Spend $518 Billion on Cloud and Data Centers. More Than $100 Billion Is Already Promised to Amazon. - The Motley Fool",
+      "url": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPV1VyZWNDUXhZRmxTa0FTZVgyUGRON3M4ZGFRSEltazdOMDFyd3AwRk9fR2pPYk1FM2dIN05VTjViVXdoMko5NklabHd0ZU15bkNpMmZiTjZrWXFxNllzdlNmUTRONnE0dTc0UEJNOVIxVlFsMjNvRk1DcnQtbkZPeHZWVkRNSEVCdWFJZTB2RkdxRFZWQzZhbEZiVHowRlZsLURZSUlfckpxWkVvVmUxZlhzMGNXdHhtQ25UWmhGVzNrSGt3eVRBazJOeUhEODBUWGNaMnRhYzdpb3FfWWZjRDRfMXpXcDdhWVBrdm1TYS12TnNlb3c?oc=5",
+      "source_id": "SRC-NEWS-amazon-20261001-39aa7ec2",
+      "published_at_utc": "2026-10-01T01:37:00Z"
+    },
+    {
+      "evidence_id": "EV-amazon-008",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "title": "Microsoft, Amazon Cloud Arms Set to Face Deeper Scrutiny Under EU’s Tech Rules - Bloomberg.com",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPaEIyVFRNcF92TkNYVlBXYzJnMGhyS0dMcVg4TVRYSWZfUEktblRVMnJkVlZiYjcxMVZjY1VEcHVtV084RFFSbXJRaE41U1ZpODQ3c1dGR0ZHSWpZRUxFdDljSTh3VFpDUWxFRFJHX1RMUm1xMHhKZmpwVXJVLUowVDRFQ3pab0c5SzZaQ2tHTkJpdnNKWUxrMVp5dW96cFFuMHRqZE40bnY0dmQ5T29XZk1aRWFsektrZ0hEc0VVT1VpaEFmTWxF?oc=5",
+      "source_id": "SRC-NEWS-amazon-20261002-212d346c",
+      "published_at_utc": "2026-10-02T11:16:13Z"
+    },
+    {
+      "evidence_id": "EV-amazon-009",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "title": "AI chatbots are steering shoppers to Walmart and Costco over Amazon, UBS finds - qz.com",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE4tSlNHVDRQR2pFNHp6RGhKenZMUXRQYnRQOVZ2TXktRFJObElYOFRYUU1iRF9fd1hWLWxJTzUtQnJKSi15bFNReUlMLUpjYmllV2p1SDgxYW90dTQyaEd4VWdSN0U1NkxVMWpB?oc=5",
+      "source_id": "SRC-NEWS-amazon-20261005-36c30302",
+      "published_at_utc": "2026-10-05T19:35:04Z"
+    }
+  ]
+}
