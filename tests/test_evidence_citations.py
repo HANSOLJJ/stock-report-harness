@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -111,6 +112,16 @@ class ValidatorTest(unittest.TestCase):
         self.assertEqual(len(bad), 2)
         self.assertTrue(bad[0].startswith("nvidia.F5 내릴 근거[0]"))
         self.assertTrue(bad[1].startswith("openai.F5 올릴 근거[0]"))
+
+
+class CiteCssTest(unittest.TestCase):
+    def test_marker_wraps_between_ids(self):
+        # 2026-10-07 출력 리뷰 round 8: 표지 전체에 nowrap 을 걸어 근거 ID 여럿인 표지가 카드(overflow:hidden) 밖으로 잘렸다
+        from scorecard.render_html import css
+        sheet = css()
+        rule = re.search(r"\.cite\{([^}]*)\}", sheet).group(1)
+        self.assertNotIn("nowrap", rule, "표지 전체는 줄바꿈될 수 있어야 한다")
+        self.assertIn(".cite a{white-space:nowrap}", sheet, "ID 하나는 중간에서 끊지 않는다")
 
 
 class RenderTest(V19Base):

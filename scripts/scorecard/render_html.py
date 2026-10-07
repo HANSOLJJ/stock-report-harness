@@ -217,7 +217,8 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
 .fdir .fdown .fdh{color:var(--bad-text)}
 .fdir .fpts{padding-left:16px}
 .fdir .none{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0}
-.cite{font-size:var(--fs-sm);color:var(--tx3);white-space:nowrap}
+.cite{font-size:var(--fs-sm);color:var(--tx3)}
+.cite a{white-space:nowrap}
 @media(max-width:860px){.fdir{grid-template-columns:1fr}}
 /* 2026-10-07 사용자 요청: 상단 탭. 머리 아래에 붙어 있고 좁은 화면에서는 가로로 밀어 본다. JS 가 없으면 탭 바는 숨고 패널은 모두 보인다. */
 .tabs{position:sticky;top:0;z-index:30;display:flex;gap:4px;overflow-x:auto;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0 8px;margin:4px 0 8px;scrollbar-width:none}
