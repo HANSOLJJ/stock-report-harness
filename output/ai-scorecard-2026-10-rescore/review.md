@@ -6,8 +6,8 @@ created_at: 2026-10-06
 plan_source: output/ai-scorecard-2026-10-rescore/plan.md
 research_source: output/ai-scorecard-2026-10-rescore/research.md
 draft_source: output/ai-scorecard-2026-10-rescore/draft.md
-results_hash: bacc7bc3e82a981d50f89a40bad99f236879fea44d8713f9852d0efaaac36e88
-draft_hash: 0148fb46af32d9e81ee21112e0ec53f5a35d6377efa8fb592be1cf8745a51277
+results_hash: cdbacbdb94c3201200f7ee971dcc87cfd57dce2c7ccd77030e55f774d4a1ffe6
+draft_hash: c2919e6763a508144123233527c74a042de3f28ac997fa133fa31dbc4d1153c7
 review_type: separate-session-4way
 review_execution: separate_subagent_sessions
 reviewers:
@@ -68,5 +68,5 @@ reviewers:
 
 ## 판정
 
-- results_hash `bacc7bc3e82a981d…` · draft_hash `0148fb46af32d9e8…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
+- results_hash `cdbacbdb94c32012…` · draft_hash `c2919e6763a50814…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
 - **두 해시의 뜻이 다르다.** `results_hash` 는 `results.json` 에서 `results_hash` 키를 뺀 내용의 정렬 JSON 해시이고(`engine.sha256_obj`) **파일 바이트 sha256 과 다르다.** `draft_hash` 는 초안 **파일 바이트 sha256** 이다. 대조할 때 섞지 않는다.
