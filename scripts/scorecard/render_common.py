@@ -462,12 +462,22 @@ def trigger_notes(ctx: Any) -> list[str]:
 G4_INCOMPATIBLE_NOTE = "(공시된 커버리지는 ARR·연환산 약정 기반이라 수주잔고 기준과 달라 이번 실행에는 쓰지 않았다)"
 
 
-def card_evidence_note(baseline_id: str, html: bool = False) -> str:
+def card_evidence_note(baseline_id: str, html: bool = False, three_way: bool = False) -> str:
     # 2026-09-18 FIX-80 S2: HTML 카드는 관측에서 계산한 항목의 옛 참고 서술을 싣지 않는다(감사 기록으로 보냈다).
     # 초안은 리뷰어가 대조하는 문서라 그대로 싣는다 — 안내문도 둘을 갈라 말한다.
     # 2026-10-06 사용자 지시: 옛 판·대체 표시를 설명하는 안내를 없앴다. 근거는 현재 판단 문장뿐이다.
-    return ("근거는 각 판단에 적힌 현재 근거 문장이다. 관측에서 계산한 항목은 산식과 사유가 점수 근거다. "
+    note = ("근거는 각 판단에 적힌 현재 근거 문장이다. 관측에서 계산한 항목은 산식과 사유가 점수 근거다. "
             "카드의 한 줄 요약은 이 실행에서 확정한 기업 요약이다.")
+    if three_way:
+        # 2026-10-07 사용자 지시: 근거 세 칸의 뜻. 함정 항목은 점수가 음수라 '올릴 근거'가 함정이 얕다는 사실이다.
+        note += (" 판단 근거는 세 칸이다. 판정은 점수와 그 이유, 올릴 근거는 그 사실만 보면 점수가 오르는 것, "
+                 "내릴 근거는 점수가 내리는 것이다. 함정 항목에서 올릴 근거는 함정이 얕다는 사실이다.")
+    return note
+
+
+def has_three_way(ctx: Any) -> bool:
+    """이 실행의 판단이 근거 세 칸을 쓰는가(2026-10-07)."""
+    return any(all(k in j for k in ("evidence_up", "evidence_down")) for j in (getattr(ctx, "judgments", None) or []))
 
 
 def g4_incompatible(observations: list[dict[str, Any]], cid: str) -> bool:
@@ -804,14 +814,23 @@ def _split_block(block: dict[str, Any]) -> dict[str, Any]:
     2026-09-17 FIX-77: 메모만 걷어내고 근거는 남긴다(사용자 선택). 뗀 것은 버리지 않고
     감사 기록으로 보내 기업·항목별로 찾을 수 있게 한다.
     """
-    lines, notes = [], []
-    for depth, text in block["lines"]:
-        body, note = split_worknote(str(text))
-        if note:
-            notes.append(note)
-        if body:
-            lines.append((depth, body))
-    block["lines"] = lines
+    notes: list[str] = []
+
+    def strip(rows: list[tuple[int, str]]) -> list[tuple[int, str]]:
+        kept = []
+        for depth, text in rows:
+            body, note = split_worknote(str(text))
+            if note:
+                notes.append(note)
+            if body:
+                kept.append((depth, body))
+        return kept
+
+    block["lines"] = strip(block["lines"])
+    # 2026-10-07: 세 칸 판단은 올릴·내릴 근거에서도 작업 메모를 뗀다.
+    for key in ("up", "down"):
+        if key in block:
+            block[key] = strip(block[key])
     block["notes"] = notes
     return block
 
@@ -837,8 +856,17 @@ def evidence_block(fr: dict[str, Any], judgments_by_id: dict[str, dict[str, Any]
     jid = judgment["judgment_id"]
     lines = [(1, str(e)) for e in (judgment.get("evidence") or [])]
     kind = "carried" if judgment["status"] == "carried" else "new"
-    return _split_block({"kind": kind, "header": f"근거 · {reviewer_label(judgment, with_owner=False, run_created=run_created)} · 판단 기록 `{jid}`",
-                         "lines": lines})
+    block = {"kind": kind, "header": f"근거 · {reviewer_label(judgment, with_owner=False, run_created=run_created)} · 판단 기록 `{jid}`",
+             "lines": lines}
+    # 2026-10-07 사용자 지시: 세 칸 판단이면 `lines` 는 판정 칸이고 올릴·내릴 근거를 따로 싣는다(빈 칸은 화면에서 '없음').
+    # 옛 판단(방향 칸 없음)은 지금 모양 그대로라 승인된 옛 실행의 재빌드가 바뀌지 않는다.
+    if all(k in judgment for k in ("evidence_up", "evidence_down")):
+        block.update(three_way=True, up=[(1, str(e)) for e in judgment["evidence_up"]],
+                     down=[(1, str(e)) for e in judgment["evidence_down"]])
+    return _split_block(block)
+
+
+EVIDENCE_DIRECTION_LABELS = (("up", "올릴 근거"), ("down", "내릴 근거"))
 
 
 # ------------------------------------------------------------------ 산식 텍스트

@@ -204,6 +204,17 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
 .fpts li.warn.cut .wk{color:var(--bad-text);background:var(--bad-soft);border-color:var(--bad-line)}
 .fpts li.warn.cap .wk{color:var(--warn-text);background:var(--warn-soft);border-color:var(--warn-line)}
 .fpts li.warn .wk{display:inline-block;font-size:var(--fs-sm);font-weight:700;color:var(--warn-text);background:var(--warn-soft);border:1px solid var(--warn-line);border-radius:4px;padding:0 6px;margin-right:6px}
+/* 2026-10-07 사용자 지시: 판단 근거 세 칸. 판정(위 목록) 아래에 올릴 근거와 내릴 근거를 나란히 둔다. */
+.fdir{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 2px}
+.fdir>div{border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+.fdir .fup{background:var(--good-soft);border-color:var(--good-line)}
+.fdir .fdown{background:var(--bad-soft);border-color:var(--bad-line)}
+.fdir .fdh{font-size:var(--fs-sm);font-weight:700;margin-bottom:2px}
+.fdir .fup .fdh{color:var(--good-text)}
+.fdir .fdown .fdh{color:var(--bad-text)}
+.fdir .fpts{padding-left:16px}
+.fdir .none{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0}
+@media(max-width:860px){.fdir{grid-template-columns:1fr}}
 .fpts li.d2{margin-left:14px;color:var(--tx2);list-style:circle}
 .fpts del{color:var(--tx3)}
 details.blk{background:var(--bg2);border:1px solid var(--line);border-radius:10px;margin:10px 0;overflow:hidden}
@@ -626,6 +637,17 @@ def status_basis(fr: dict[str, Any]) -> str:
 HISTORY_BY_COMPANY: dict[str, list[tuple[str, str]]] = {}
 
 
+def _direction_html(block: dict[str, Any]) -> str:
+    """2026-10-07 사용자 지시: 세 칸 판단의 올릴 근거·내릴 근거. 빈 칸은 '없음'으로 보인다."""
+    boxes = []
+    for key, label in rc.EVIDENCE_DIRECTION_LABELS:
+        rows = block.get(key) or []
+        inner = (f'<ul class="fpts">{"".join(f"<li>{inline_html(t)}</li>" for _d, t in rows)}</ul>' if rows
+                 else '<p class="none">없음</p>')
+        boxes.append(f'<div class="f{key}"><div class="fdh">{esc(label)}</div>{inner}</div>')
+    return f'<div class="fdir">{"".join(boxes)}</div>'
+
+
 def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]],
                  observations: list[dict[str, Any]] | None = None, judgments: list[dict[str, Any]] | None = None,
                  reps: list[dict[str, Any]] | None = None, ctx: Any = None) -> str:
@@ -668,12 +690,11 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                         block = dict(block, header=block["header"].replace(m.group(0), ""))
                 pts = [f'<li{" class=\"d2\"" if depth > 1 else ""}>{inline_html(text)}</li>' for depth, text in (block or {}).get("lines", [])]
                 history += [(f, n) for n in (block or {}).get("notes", [])]
+                all_rows = [*(block or {}).get("lines", []), *(block or {}).get("up", []), *(block or {}).get("down", [])]
                 # 2026-09-18 FIX-79: 본문에서 떼는 관측 ID 를 이력으로 남긴다.
-                history += [(f, m.group(0)) for _d, t in (block or {}).get("lines", [])
-                            for m in rc.OBS_ID_RE.finditer(str(t))]
+                history += [(f, m.group(0)) for _d, t in all_rows for m in rc.OBS_ID_RE.finditer(str(t))]
                 # 2026-09-18 FIX-80 S3: 본문에서 떼는 긴장·리뷰·행 번호·판단 ID 도 이력으로 남긴다.
-                history += [(f, m.group(0).strip()) for _d, t in (block or {}).get("lines", [])
-                            for m in rc.INTERNAL_REF_RE.finditer(str(t))]
+                history += [(f, m.group(0).strip()) for _d, t in all_rows for m in rc.INTERNAL_REF_RE.finditer(str(t))]
                 if block is not None and f == "F9" and incompatible_g4:
                     pts.append(f"<li>{esc(rc.G4_INCOMPATIBLE_NOTE)}</li>")
                 # 2026-09-17 FIX-65 S3: 경고 문구에도 규칙 파일과 같은 강조 기호가 섞여 있어 그대로 노출됐다.
@@ -696,7 +717,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 # 지우지 않는다. 눌러서 뜻을 보는 통로는 `link_decision_codes` 가 이미 만든다 —
                 # 여기에 칩을 더 달면 같은 번호가 한 번 더 찍혀 오히려 늘어난다.
                 body = ((f'<ul class="fpts why">{"".join(why)}</ul>' if why else "")
-                        + ((src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else ""))
+                        + ((src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else "")
+                        + (_direction_html(block) if block is not None and block.get("three_way") else ""))
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
@@ -1724,7 +1746,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_ranking(results)}
 {render_incomplete(results, ctx.rules)}
 <h2><span class="num">03</span>기업별 상세</h2>
-<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"], html=True))}</p>
+<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"], html=True, three_way=rc.has_three_way(ctx)))}</p>
 <div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)}</div>
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}

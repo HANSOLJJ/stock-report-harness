@@ -382,7 +382,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     # 2026-09-15 FIX-54 1단계 S4: (회사, factor) 쌍으로 찾아 자동 산출 F6(anthropic·openai)에 승계 판단 문구가 찍혔다.
     judgments_by_id = {j["judgment_id"]: j for j in ctx.judgments}
     reps = rc.replacements(ctx)
-    lines += [f"- {rc.card_evidence_note(run['baseline_id'])}", ""]
+    lines += [f"- {rc.card_evidence_note(run['baseline_id'], three_way=rc.has_three_way(ctx))}", ""]
     for c in ordered:
         b = baseline_scores.get(c["company_id"])
         # 2026-10-06 사용자 지시: 기준선 순위·기준선 요약을 싣지 않는다. 요약은 이 실행에서 확정한 기업 요약뿐이다.
@@ -401,7 +401,14 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             if block is not None:
                 lines.append(f"- **{FACTOR_LABELS[f]}** {block['header']}:")
                 # 2026-09-17 FIX-67: 근거 문장에 번호가 데이터로 들어 있다. 초안도 HTML 과 같은 이름을 쓴다.
-                lines += [("  " * depth) + f"- {rc.rename_codes(text)}" for depth, text in block["lines"]]
+                if block.get("three_way"):
+                    # 2026-10-07 사용자 지시: 세 칸 판단은 판정·올릴 근거·내릴 근거를 소제목으로 나눈다. 빈 칸은 '없음'.
+                    for label, rows in (("판정", block["lines"]),
+                                        *((lab, block.get(key) or []) for key, lab in rc.EVIDENCE_DIRECTION_LABELS)):
+                        lines.append(f"  - {label}")
+                        lines += [f"    - {rc.rename_codes(text)}" for _depth, text in rows] or ["    - 없음"]
+                else:
+                    lines += [("  " * depth) + f"- {rc.rename_codes(text)}" for depth, text in block["lines"]]
                 if f == "F9" and incompatible_g4:
                     lines.append(f"  - {rc.G4_INCOMPATIBLE_NOTE}")
             # 2026-09-17 FIX-77: 초안도 카드와 같은 규칙을 쓴다. 승계 표기는 근거 머리줄이 이미 말하고,

@@ -104,6 +104,43 @@ class ProposalThreeWayTest(V19Base):
         self.assertEqual((p["evidence_up_after"], p["evidence_down_after"]), (UP, DOWN))
 
 
+def render_both(slug: str) -> tuple[str, str]:
+    from scorecard import render_common as rc
+    from scorecard import render_html
+    stages.research(slug)
+    stages.calculate(slug)
+    draft = stages.draft(slug).read_text(encoding="utf-8")
+    ctx = engine.load_context(slug)
+    results = engine.load_results(slug)
+    baseline, _obs, _trig = stages.load_baseline(ctx.run["baseline_id"])
+    html = render_html.render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)
+    return draft, html
+
+
+class RenderThreeWayTest(V19Base):
+    def test_draft_and_card_show_three_columns(self):
+        self.propose3(changes={}, evidence_down_after=[])
+        self.decide(accept=True, by="사용자")
+        draft, html = render_both(SLUG)
+        section = draft[draft.index("NVIDIA"):]
+        for text in ("  - 판정", "  - 올릴 근거", f"    - {UP[0]}", "  - 내릴 근거", "    - 없음"):
+            self.assertIn(text, section)
+        card = html[html.index('id="card-nvidia"'):]
+        card = card[:card.index("</details>")]
+        self.assertIn('<div class="fdir">', card)
+        self.assertIn('<div class="fdh">올릴 근거</div>', card)
+        self.assertIn('<p class="none">없음</p>', card)
+        self.assertIn("판단 근거는 세 칸이다", draft)
+
+
+class RenderOldFormatTest(ProposalBase):
+    def test_v18_has_no_direction_labels(self):
+        draft, html = render_both(SLUG)
+        self.assertNotIn('class="fdir"', html)
+        self.assertNotIn("  - 올릴 근거", draft)
+        self.assertNotIn("판단 근거는 세 칸이다", draft)
+
+
 class CliThreeWayTest(V19Base):
     def test_propose_and_judge_with_up_down(self):
         with human_env(CLAUDECODE="1"):
