@@ -1,0 +1,97 @@
+# 리포트 상단 탭(2026-10-07 사용자 요청): 탭 6개와 패널 연결, 앵커 무결성, 패널별 내용, JS 없는 경우를 메모리 렌더로 잠근다
+from __future__ import annotations
+
+import re
+import sys
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from scorecard import engine, stages  # noqa: E402
+from scorecard.render_html import TABS, js, load_availability, render_document  # noqa: E402
+
+SLUGS = ("ai-scorecard-2026-09-obsreg", "ai-scorecard-2026-10-rescore")
+MARKERS = {
+    "tab-summary": ('id="kpis"', 'id="mainTable"'),
+    "tab-companies": ('class="cards"', 'id="card-'),
+    "tab-raw": ("지표 원자료",),
+    "tab-triggers": ("다음 재채점 트리거",),
+    "tab-method": ("채점 방법과 규칙", 'id="code-index"'),
+    "tab-sources": ("References",),
+}
+
+
+def render(slug: str) -> str:
+    ctx = engine.load_context(slug)
+    results = engine.load_results(slug)
+    baseline, _obs, triggers = stages.load_baseline(ctx.run["baseline_id"])
+    return render_document(ctx, results, baseline, triggers, {"review_type": "mem", "reviewers": []},
+                           {"approval_id": "00000000-memory", "approved_by": "mem", "approved_at": "2026-10-07"},
+                           load_availability(slug))
+
+
+def panels(html: str) -> dict[str, str]:
+    return {m.group(1): m.group(2) for m in re.finditer(r'<section class="tabpanel" id="(tab-[a-z]+)"[^>]*>(.*?)</section>', html, re.S)}
+
+
+class ReportTabsTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.html = {slug: render(slug) for slug in SLUGS}
+
+    def test_six_tabs_control_existing_panels(self):
+        for slug, html in self.html.items():
+            with self.subTest(slug=slug):
+                buttons = re.findall(r'<button type="button" role="tab" id="tabbtn-([a-z]+)" data-tab="(tab-[a-z]+)" '
+                                     r'aria-controls="(tab-[a-z]+)"', html)
+                self.assertEqual([b[0] for b in buttons], [t for t, _l in TABS])
+                self.assertTrue(all(b[1] == b[2] == f"tab-{b[0]}" for b in buttons))
+                self.assertEqual(list(panels(html)), [f"tab-{t}" for t, _l in TABS])
+                # 첫 탭이 선택돼 있고, JS 가 없으면 탭 바는 숨고 패널은 모두 보인다(hidden 은 JS 가 세운다)
+                self.assertIn('id="tabbtn-summary" data-tab="tab-summary" aria-controls="tab-summary" aria-selected="true"', html)
+                self.assertIn('<nav class="tabs" role="tablist" aria-label="리포트 구역" hidden>', html)
+                self.assertNotRegex(html, r'<section class="tabpanel"[^>]*\shidden')
+
+    def test_every_in_page_anchor_has_a_target(self):
+        for slug, html in self.html.items():
+            with self.subTest(slug=slug):
+                ids = set(re.findall(r'\sid="([^"]+)"', html))
+                targets = {h for h in re.findall(r'href="#([^"]+)"', html)}
+                self.assertTrue(targets, "앵커가 하나는 있어야 한다")
+                self.assertEqual(sorted(targets - ids), [])
+
+    def test_panels_hold_their_sections(self):
+        for slug, html in self.html.items():
+            with self.subTest(slug=slug):
+                got = panels(html)
+                for pid, needles in MARKERS.items():
+                    for needle in needles:
+                        self.assertIn(needle, got[pid], f"{pid} 에 {needle!r} 가 없다")
+                if slug.endswith("rescore"):   # obsreg 는 triggers.json 이 없어 기준선 트리거 표를 그린다
+                    self.assertIn('class="trig"', got["tab-triggers"])
+                self.assertNotIn('id="mainTable"', got["tab-companies"])
+                # 요약 탭은 순위표가 지도보다 먼저다
+                s = got["tab-summary"]
+                self.assertLess(s.index('id="mainTable"'), s.index("과점 × 함정 지도"))
+
+    def test_no_section_heading_outside_panels(self):
+        for slug, html in self.html.items():
+            with self.subTest(slug=slug):
+                outside = re.sub(r'<section class="tabpanel".*?</section>', "", html, flags=re.S)
+                self.assertNotIn("<h2", outside)
+                self.assertIn('<footer id="disclaimer"', outside, "투자 유의 문구는 탭 밖에서 늘 보인다")
+
+    def test_script_switches_tabs_before_following_anchors(self):
+        code = js()
+        for needle in ("window.reportShow", "closest('.tabpanel')", "addEventListener('hashchange'",
+                       "a[href^=\"#\"]", "history.replaceState"):
+            self.assertIn(needle, code)
+        # 순위표 행 클릭과 해시 펼침이 스크롤 전에 탭을 연다
+        self.assertIn("window.reportShow(card); card.open=true", code)
+        self.assertIn("window.reportShow(el);\n    el.open=true", code)
+
+
+if __name__ == "__main__":
+    unittest.main()

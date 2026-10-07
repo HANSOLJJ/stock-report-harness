@@ -34,6 +34,9 @@ OBS_STATUS_LABELS = {
 DECISION_STATUS = {"pending": "미결", "resolved": "확정", "documented": "문서화"}
 CODE_RE = re.compile(r"C-\d{2}(?![\d\w/-])")
 GLOSSARY_SLOT = "<!--scorecard:glossary-->"
+# 2026-10-07 사용자 요청: 리포트 상단 탭. 첫 탭은 요약 카드와 순위표(지도는 그 아래)다. id 는 `tab-` 뒤에 붙는다.
+TABS = (("summary", "요약"), ("companies", "기업 상세"), ("raw", "원자료"), ("triggers", "트리거"),
+        ("method", "방법·규칙"), ("sources", "출처"))
 def esc(value: Any) -> str:
     return html_lib.escape(str(value), quote=True)
 
@@ -215,6 +218,16 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
 .fdir .fpts{padding-left:16px}
 .fdir .none{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0}
 @media(max-width:860px){.fdir{grid-template-columns:1fr}}
+/* 2026-10-07 사용자 요청: 상단 탭. 머리 아래에 붙어 있고 좁은 화면에서는 가로로 밀어 본다. JS 가 없으면 탭 바는 숨고 패널은 모두 보인다. */
+.tabs{position:sticky;top:0;z-index:30;display:flex;gap:4px;overflow-x:auto;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0 8px;margin:4px 0 8px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;min-height:40px;padding:8px 14px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--tx2);font:inherit;font-size:var(--fs-md);font-weight:600;cursor:pointer}
+.tabs button:hover{color:var(--tx);background:var(--bg2)}
+.tabs button[aria-selected="true"]{color:var(--acc-text);background:var(--acc-soft);border-color:var(--acc-line)}
+.tabs button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.tabpanel>h2:first-child{margin-top:18px}
+.tabpanel [id]{scroll-margin-top:72px}
+@media print{.tabs{display:none}.tabpanel[hidden]{display:block!important}}
 /* 2026-10-07: 트리거 표 두 덩어리. 왼쪽 메타 칸은 좁게 고정하고 오른쪽 글 칸이 나머지를 쓴다. */
 .trig th:first-child,.trig td.tmeta{width:190px;min-width:0}
 .trig td.tmeta{white-space:normal;text-align:left;vertical-align:top;line-height:1.6;color:var(--tx2);font-size:var(--fs-sm)}
@@ -394,6 +407,43 @@ tr.priv{opacity:.75}
 def js() -> str:
     return """
 (function(){
+  // 2026-10-07 사용자 요청: 한 페이지가 길어 절을 상단 탭으로 나눈다. JS 가 없으면 모든 패널이 보인다(hidden 은 JS 가 세운다).
+  const panels=[...document.querySelectorAll('.tabpanel')]; if(!panels.length) return;
+  const tabs=[...document.querySelectorAll('.tabs [data-tab]')];
+  const bar=document.querySelector('.tabs');
+  function activate(id,remember){
+    if(!panels.some(p=>p.id===id)) return false;
+    panels.forEach(p=>{p.hidden=(p.id!==id);});
+    tabs.forEach(t=>{const on=t.dataset.tab===id; t.setAttribute('aria-selected',on?'true':'false'); t.tabIndex=on?0:-1;});
+    if(remember) history.replaceState(null,'','#'+id);
+    return true;
+  }
+  // 다른 탭에 있는 요소로 가기 전에 그 요소가 든 탭을 연다(순위표 → 기업 카드, 트리거 → 인용 근거, 원자료 → 색인).
+  window.reportShow=function(el){const p=el&&el.closest('.tabpanel'); if(p&&p.hidden) activate(p.id,false);};
+  function toTop(){const head=document.querySelector('header'); const y=head?head.getBoundingClientRect().bottom+scrollY:0; if(scrollY>y) scrollTo(0,y);}
+  tabs.forEach((t,i)=>{
+    t.addEventListener('click',()=>{activate(t.dataset.tab,true); toTop();});
+    t.addEventListener('keydown',e=>{
+      const step=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0; if(!step) return;
+      e.preventDefault(); const n=tabs[(i+step+tabs.length)%tabs.length]; n.focus(); n.click();
+    });
+  });
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href^="#"]'); if(!a) return;
+    const el=document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+    if(el) window.reportShow(el);
+  },true);
+  function fromHash(scroll){
+    const id=decodeURIComponent(location.hash.slice(1)); const el=id&&document.getElementById(id);
+    if(el&&el.classList.contains('tabpanel')){activate(id,false); return true;}
+    if(el){window.reportShow(el); if(scroll) el.scrollIntoView({block:'start'}); return true;}
+    return false;
+  }
+  addEventListener('hashchange',()=>fromHash(true));
+  if(!fromHash(false)) activate(panels[0].id,false);
+  if(bar) bar.hidden=false;
+})();
+(function(){
   const table=document.getElementById('mainTable'); if(!table) return;
   const tbody=table.tBodies[0];
   const head=[...table.tHead.rows[0].cells];
@@ -408,7 +458,7 @@ def js() -> str:
   head.forEach(th=>{ if(!th.dataset.k) return; th.classList.add('sort'); th.setAttribute('tabindex','0');
     const go=()=>{const k=th.dataset.k; dir=(sortKey===k)?-dir:-1; sortKey=k; draw();};
     th.addEventListener('click',go); th.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}}); });
-  tbody.addEventListener('click',e=>{const tr=e.target.closest('tr.row'); if(!tr) return; const card=document.getElementById('card-'+tr.dataset.company); if(!card) return; card.open=true; card.scrollIntoView({behavior:'smooth',block:'start'});});
+  tbody.addEventListener('click',e=>{const tr=e.target.closest('tr.row'); if(!tr) return; const card=document.getElementById('card-'+tr.dataset.company); if(!card) return; if(window.reportShow) window.reportShow(card); card.open=true; card.scrollIntoView({behavior:'smooth',block:'start'});});
   draw();
 })();
 (function(){
@@ -417,6 +467,7 @@ def js() -> str:
   function openHash(smooth){
     const id=decodeURIComponent(location.hash.slice(1)); if(!id) return;
     const el=document.getElementById(id); if(!el||el.tagName!=='DETAILS') return;
+    if(window.reportShow) window.reportShow(el);
     el.open=true; el.scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'});
   }
   document.addEventListener('click',e=>{
@@ -1755,29 +1806,42 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
   {anthropic_note}
 </div></header>
 <div class="wrap">
+<nav class="tabs" role="tablist" aria-label="리포트 구역" hidden>{"".join(f'<button type="button" role="tab" id="tabbtn-{tid}" data-tab="tab-{tid}" aria-controls="tab-{tid}" aria-selected="{"true" if i == 0 else "false"}">{esc(label)}</button>' for i, (tid, label) in enumerate(TABS))}</nav>
+<section class="tabpanel" id="tab-summary" role="tabpanel" aria-labelledby="tabbtn-summary">
 <div class="kpis" id="kpis">{render_kpis(results)}</div>
-<h2><span class="num">01</span>과점 × 함정 지도</h2>
-<div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
-<h3>기업별 과점 합계와 함정 합계</h3>
-<div class="chartbox"><div class="mtwrap">{moat_trap_svg(results)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
-<h2><span class="num">02</span>종합 순위표</h2>
+<h2><span class="num">01</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results)}
 {render_incomplete(results, ctx.rules)}
+<h2><span class="num">02</span>과점 × 함정 지도</h2>
+<div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
+<h3>기업별 과점 합계와 함정 합계</h3>
+<div class="chartbox"><div class="mtwrap">{moat_trap_svg(results)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
+</section>
+<section class="tabpanel" id="tab-companies" role="tabpanel" aria-labelledby="tabbtn-companies">
 <h2><span class="num">03</span>기업별 상세</h2>
 <p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"], html=True, three_way=rc.has_three_way(ctx)))}</p>
 <div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)}</div>
+</section>
+<section class="tabpanel" id="tab-raw" role="tabpanel" aria-labelledby="tabbtn-raw">
 <h2><span class="num">04</span>지표 원자료</h2>
 {render_raw_tables(ctx, results)}
 {availability}
-<h2><span class="num">0{n + 1}</span>채점 방법과 규칙</h2>
+</section>
+<section class="tabpanel" id="tab-triggers" role="tabpanel" aria-labelledby="tabbtn-triggers">
+<h2><span class="num">0{n + 1}</span>다음 재채점 트리거</h2>
+{render_triggers(ctx, triggers)}
+</section>
+<section class="tabpanel" id="tab-method" role="tabpanel" aria-labelledby="tabbtn-method">
+<h2><span class="num">0{n + 2}</span>채점 방법과 규칙</h2>
 {render_method(ctx, results)}
 {GLOSSARY_SLOT}
-<h2><span class="num">0{n + 2}</span>다음 재채점 트리거</h2>
-{render_triggers(ctx, triggers)}
+</section>
+<section class="tabpanel" id="tab-sources" role="tabpanel" aria-labelledby="tabbtn-sources">
 <h2><span class="num">0{n + 3}</span>References</h2>
 {CITED_SLOT}
 {render_references(ctx, review_fm)}
+</section>
 <footer id="disclaimer" aria-label="투자 유의사항">
 <p>{esc(DISCLAIMER)}</p>
 <p>단위 — $M / $B / $T · 실행 {esc(ctx.slug)} · 승인 {esc(approval["approved_by"])} {esc(approval["approved_at"])} · 생성기 {GENERATOR}</p>
