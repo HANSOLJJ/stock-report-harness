@@ -326,7 +326,9 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
 
     # approval / html / history (build gate) -------------------------------
     approval_path = d / "approval.json"
-    if require_html or paths.html.is_file():
+    # 2026-10-07: 승인 전 검증(approve·승인 페이지, check_html_if_present=False)은 승인 여부를 묻지 않는다. 이전 빌드의
+    # report.html 이 남은 실행에서 '사용자 승인 없음' 이 막힌 이유로 나와 다시 승인할 수 없었다.
+    if require_html or (check_html_if_present and paths.html.is_file()):
         if not approval_path.is_file():
             result.error("사용자 승인 없음: awaiting_user (사람이 `node server.js --approvals` 승인 페이지에서 승인한다)")
         else:

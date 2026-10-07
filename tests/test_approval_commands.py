@@ -146,6 +146,13 @@ class ApprovalReadinessTest(FlowBase):
         self.ready()
         self.assertEqual(stages.summary(SLUG)["approval_ready"], {"ready": True, "blockers": []})
 
+    def test_stale_report_html_does_not_block_reapproval(self):
+        # 2026-10-07: 승인 취소 뒤 다시 승인하려는 실행에 이전 빌드의 report.html 이 남아 있으면
+        # 승인 전 검증이 '사용자 승인 없음' 을 막힌 이유로 내 승인 자체를 막았다.
+        self.ready()
+        self.paths.html.write_text("<html>이전 빌드</html>", encoding="utf-8")
+        self.assertEqual(stages.summary(SLUG)["approval_ready"], {"ready": True, "blockers": []})
+
 
 class ExistingRunsTest(unittest.TestCase):
     def test_summary_runs_and_approval_is_valid(self):

@@ -152,7 +152,9 @@ class ExistingRunsBuildTest(unittest.TestCase):
         self.assertTrue(lock.exists())   # 실패한 빌드는 잠금을 남긴다
         out = buf.getvalue()
         self.assertNotIn("awaiting_user", str(caught.exception))
-        self.assertIn("ok - approval hashes match current inputs", out)
+        # 2026-10-07: 빌드 사전 검증(check_html_if_present=False)은 승인을 묻지 않는다. 승인은 사전 검증 바로 뒤
+        # build_scorecard 가 따로 보고, 빌드 뒤 검증(require_html=True)이 다시 본다.
+        self.assertNotIn("awaiting_user", out)
         errors = [line for line in out.splitlines() if line.strip().startswith("error -")]
         self.assertEqual(errors, ["  error - 재계산 결과가 저장된 results.json 과 다름 (결정론 위반 또는 규칙 변경)"])
 
