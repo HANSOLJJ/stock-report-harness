@@ -60,7 +60,7 @@
 | 객체 | 파일 | 필수 필드 |
 |---|---|---|
 | 관측 | observations.json items | observation_id, company_id, metric(카탈로그 `METRICS`), value, unit, as_of, kind, source_id, status(verified / legacy_unverified / not_applicable / not_disclosed / collection_failed / source_conflict / incompatible_basis / parse_failed), basis, raw, note |
-| 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs), score, inputs, evidence(비어 있으면 안 됨), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`) |
+| 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs), score, inputs, evidence(판정 칸, 비어 있으면 안 됨), evidence_up·evidence_down(선택: 올릴·내릴 근거 칸, 빈 목록은 '없음'. 규칙 v1.9 이상은 필수, `guide.md` 5.6), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`, previous 는 방향 칸이 있던 판단이면 그것도 담는다) |
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
@@ -159,7 +159,7 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 ### 판단 수정
 
-정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
+정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 근거 세 칸(`evidence`·`evidence_up`·`evidence_down`)만 바꾸는 수정은 모든 factor 에 되고 판정 값·상태를 유지한다. 규칙 v1.9 이상 실행이면 쓰기 전에 `validate.three_way_item_violations` 로 세 칸 형식을 검사한다. 제안은 `evidence_after`·`evidence_up_after`·`evidence_down_after` 로 세 칸의 반영 뒤 문장을 든다(null 은 그 칸을 바꾸지 않음). 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
 
 ### 승인
 
