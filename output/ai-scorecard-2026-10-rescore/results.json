@@ -8,10 +8,10 @@
   "input_hashes": {
     "run": "65a19e92d2a861d18c6c33059b2217f5882c9527dde0827c4b2282c569a52f5f",
     "observations": "590b1f8a776f058801e1e222ba83ba4b9c117ee4cd447b6e5399b262fe28b576",
-    "judgments": "941e0fd5dca090a0e78614bb6afe5cae6763dc8f850ae2401417b64fd1be202c",
+    "judgments": "9be532835ff18fc73c2aa8181981adb9db432c6e56cf708d64cfb9f5f0da2f98",
     "sources": "b3becf746f6a07b643d185e500029376f0fd9aa46ae044c57a6509179772a1d3",
-    "evidence": "bc1298c89cf8979392f830df8589346211082d9b0701f38b768ff194743a2040",
-    "triggers": "659bfd50a9bbfffb622cb4801c5f5266f2c29320ebd9b787ce9f409e704fc6f7",
+    "evidence": "421ac049a2c60f906bfb4277461e5ec3eca11ca48cb5a019581b8ae98b75684d",
+    "triggers": "7416e109f0c061505e906da23f963a6b9f8b9c66d04bc6ea0322f16fcf009a07",
     "rules": "0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d"
   },
   "decisions_applied": [
@@ -3644,7 +3644,7 @@
         "F7",
         "F8"
       ],
-      "rank": 13
+      "rank": 12
     },
     {
       "company_id": "oracle",
@@ -3717,13 +3717,13 @@
         },
         "F5": {
           "factor": "F5",
-          "score": 4,
+          "score": 3,
           "status": "ok",
           "basis": "grade",
           "judgment_id": "oracle.F5",
           "observation_ids": [],
           "calc": {
-            "A": 2,
+            "A": 1,
             "H": -1,
             "formula": "3 + A + H"
           },
@@ -3947,9 +3947,9 @@
           "pending": null
         }
       },
-      "moat": 15,
+      "moat": 14,
       "trap": -10,
-      "total": 5,
+      "total": 4,
       "complete": true,
       "pending": [],
       "carried_factors": [
@@ -3959,7 +3959,7 @@
         "F4",
         "F8"
       ],
-      "rank": 11
+      "rank": 12
     },
     {
       "company_id": "openai",
@@ -4019,15 +4019,13 @@
         },
         "F4": {
           "factor": "F4",
-          "score": 4,
-          "status": "carried_score",
+          "score": 3,
+          "status": "ok",
           "basis": "manual",
           "judgment_id": "openai.F4",
           "observation_ids": [],
           "calc": {},
-          "warnings": [
-            "승계된 판단 — 원검토일 2026-09-02(baseline:v1.5), 이번 실행 재검토 아님"
-          ],
+          "warnings": [],
           "pending": null
         },
         "F5": {
@@ -4241,20 +4239,19 @@
           "pending": null
         }
       },
-      "moat": 15,
+      "moat": 14,
       "trap": -11,
-      "total": 4,
+      "total": 3,
       "complete": true,
       "pending": [],
       "carried_factors": [
         "F1",
         "F2",
         "F3",
-        "F4",
         "F7",
         "F8"
       ],
-      "rank": 13
+      "rank": 14
     }
   ],
   "ranking": [
@@ -4347,28 +4344,28 @@
       "total": 5
     },
     {
-      "rank": 11,
+      "rank": 12,
       "company_id": "oracle",
       "display_name": "Oracle",
-      "moat": 15,
+      "moat": 14,
       "trap": -10,
-      "total": 5
-    },
-    {
-      "rank": 13,
-      "company_id": "openai",
-      "display_name": "OpenAI",
-      "moat": 15,
-      "trap": -11,
       "total": 4
     },
     {
-      "rank": 13,
+      "rank": 12,
       "company_id": "tesla",
       "display_name": "Tesla",
       "moat": 13,
       "trap": -9,
       "total": 4
+    },
+    {
+      "rank": 14,
+      "company_id": "openai",
+      "display_name": "OpenAI",
+      "moat": 14,
+      "trap": -11,
+      "total": 3
     }
   ],
   "population": {
@@ -4378,6 +4375,6 @@
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
-  "warnings_count": 151,
-  "results_hash": "c11f5cc6b5eb3bf7310e89952d90b41954e68451bdb53f08c04fc171a5850c7d"
+  "warnings_count": 150,
+  "results_hash": "e279d193d30137ee25dcd9b90a11196dcca280e803db718c371760376420bee0"
 }
