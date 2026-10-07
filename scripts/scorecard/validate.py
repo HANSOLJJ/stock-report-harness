@@ -176,6 +176,58 @@ def three_way_violations(ctx: Any) -> list[str]:
     return [f"{j['judgment_id']}: {why}" for j in ctx.judgments for why in three_way_item_violations(j)]
 
 
+# 2026-10-07 사용자 지시("URL 이 있어야 하지 않겠냐"): 외부 분석이 확정 근거 72건 전부 excerpt 가 제목과 같고 판단 문장이
+# URL 없는 내부 기준선 문서만 가리킨다는 것을 짚었다. 올릴·내릴 근거의 모든 줄은 끝에 근거 표지 `[EV-…]` 를 달고,
+# 표지가 가리키는 근거는 확정됐고 출처 URL·본문 발췌(제목과 다름)·인용 위치(locator)를 갖춰야 한다.
+# 판정 칸(결론·저울질·미확인)은 표지를 요구하지 않는다. 같은 검사를 쓰는 시점과 검증기가 함께 쓴다.
+CITATION_MIN_RULE = (1, 9)
+_EV = r"EV-[a-z0-9-]+-\d{3}"
+CITE_TAIL_RE = re.compile(rf"\[({_EV}(?:\s*,\s*{_EV})*)\]\s*$")
+
+
+def cited_ids(line: str) -> list[str]:
+    m = CITE_TAIL_RE.search(line or "")
+    return re.findall(_EV, m.group(1)) if m else []
+
+
+def citable_evidence_violation(e: Mapping[str, Any] | None, url: str | None) -> str | None:
+    """판단 문장이 인용할 수 있는 근거인지. 안 되면 사유."""
+    if e is None:
+        return "evidence.json 에 없는 근거"
+    if e.get("status") != "confirmed":
+        return "확정되지 않은 근거"
+    if not (url or "").startswith(("https://", "http://")):
+        return "출처에 URL 이 없다"
+    if " ".join(e["excerpt"].split()).casefold() == " ".join(e["title"].split()).casefold():
+        return "excerpt 가 제목과 같다(본문에서 발췌한다)"
+    if not (e.get("locator") or "").strip():
+        return "인용 위치(locator)가 없다"
+    return None
+
+
+def citation_item_violations(item: Mapping[str, Any], evidence: Mapping[str, Mapping[str, Any]],
+                             urls: Mapping[str, str | None]) -> list[str]:
+    out: list[str] = []
+    for key, label in (("evidence_up", "올릴 근거"), ("evidence_down", "내릴 근거")):
+        for i, line in enumerate(item.get(key) or []):
+            ids = cited_ids(line)
+            if not ids:
+                out.append(f"{label}[{i}]: 줄 끝에 근거 표지 [EV-…] 가 없다 — {line[:40]}")
+                continue
+            for eid in ids:
+                e = evidence.get(eid)
+                why = citable_evidence_violation(e, urls.get(e["source_id"]) if e else None)
+                if why:
+                    out.append(f"{label}[{i}]: {eid} — {why}")
+    return out
+
+
+def citation_violations(ctx: Any) -> list[str]:
+    evidence = {e["evidence_id"]: e for e in (ctx.evidence or [])}
+    urls = {s["source_id"]: s.get("url") for s in ctx.sources.get("items", [])}
+    return [f"{j['judgment_id']} {why}" for j in ctx.judgments for why in citation_item_violations(j, evidence, urls)]
+
+
 def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_present: bool = True, result: Any) -> Any:
     paths = run_paths(slug)
     d = paths.run_dir
@@ -222,11 +274,21 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     if _rule_at_least(ctx.rules.version, THREE_WAY_MIN_RULE):
         bad = three_way_violations(ctx)
         for line in bad[:20]:
-            result.error(f"판단 근거가 세 칸(판정·올릴 근거·내릴 근거)이 아니다(guide.md 5.5) — {line}")
+            result.error(f"판단 근거가 세 칸(판정·올릴 근거·내릴 근거)이 아니다(guide.md 5.6) — {line}")
         if len(bad) > 20:
             result.error(f"세 칸이 아닌 판단이 {len(bad) - 20}건 더 있다")
         if not bad:
             result.check("judgment evidence is three-way")
+
+    # 근거 표지 -------------------------------------------------------------
+    if _rule_at_least(ctx.rules.version, CITATION_MIN_RULE):
+        bad = citation_violations(ctx)
+        for line in bad[:20]:
+            result.error(f"올릴·내릴 근거가 원문 근거와 이어지지 않는다(guide.md 5.7) — {line}")
+        if len(bad) > 20:
+            result.error(f"원문 근거와 이어지지 않는 줄이 {len(bad) - 20}건 더 있다")
+        if not bad:
+            result.check("judgment direction lines cite source evidence")
 
     # 자료 원천 allowlist --------------------------------------------------
     check_source_allowlist(ctx.rules, ctx.sources, result)

@@ -151,6 +151,7 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 - `status: new` 판단은 `confirmed` 근거만 인용한다. 후보를 인용하면 교차 참조 검증이 실패한다(`schema.validate_cross_refs`).
 - `confirmed` 근거에는 `reviewer`·`reviewed_at` 이 있어야 한다.
+- 규칙 v1.9 이상 실행은 판단의 올릴·내릴 근거 줄마다 끝에 표지 `[EV-…]` 를 달고, 그 근거는 confirmed·출처 URL·본문 발췌(제목과 다름)·`locator` 를 갖춘다(`validate.citation_item_violations`, 쓰는 시점은 `stages.revise_judgment`). 기준은 `guide.md` 5.7.
 - 트리거는 재채점 조건만 저장하고 미래 점수를 저장하지 않는다(C-14).
 
 `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)는 다르다. 근거를 확정하면 판단·결과·초안 해시가 바뀌어 리뷰가 무효가 되므로 `research → calculate → draft → review` 를 다시 돌린다.

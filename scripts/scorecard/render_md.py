@@ -459,18 +459,24 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     if ctx.evidence and cited:
         ev_by_id = {e["evidence_id"]: e for e in ctx.evidence}
         urls = {s["source_id"]: s.get("url") for s in ctx.sources.get("items", [])}
+        # 2026-10-07: 규칙 v1.9 이상 실행은 본문 발췌와 인용 위치를 함께 싣는다(옛 승인 실행의 초안 바이트는 그대로 둔다)
+        with_quote = tuple(int(x) for x in _re.findall(r"\d+", ctx.rules.version)) >= (1, 9)
         rows = []
         for eid in cited:
             e = ev_by_id.get(eid)
             if e is None:
-                rows.append([eid, "—", "evidence.json 에 없음", "—", "—"])
+                rows.append([eid, "—", "evidence.json 에 없음", *(["—"] if with_quote else []), "—", "—"])
                 continue
             url = urls.get(e["source_id"])
             title = f"[{e['title']}]({url})" if url else e["title"]
-            rows.append([eid, ctx.companies[e["company_id"]]["display_name"], title, (e["published_at_utc"] or "—")[:10],
+            quote = []
+            if with_quote:
+                same = " ".join(e["excerpt"].split()).casefold() == " ".join(e["title"].split()).casefold()
+                quote = ["제목만 확인" if same else f"“{e['excerpt']}”" + (f" (위치: {e['locator']})" if e.get("locator") else "")]
+            rows.append([eid, ctx.companies[e["company_id"]]["display_name"], title, *quote, (e["published_at_utc"] or "—")[:10],
                          {"confirmed": "확정", "candidate": "후보"}.get(e.get("status", "candidate"), e.get("status", "candidate"))])
         lines += ["## 인용 근거", "", f"본문이 인용한 근거 {len(cited)}건. 전체 목록과 선별 이유는 `research.md` 의 근거 자료 절에 있다.", "",
-                  table(["근거 ID", "기업", "제목(원문)", "발행일", "상태"], rows), ""]
+                  table(["근거 ID", "기업", "제목(원문)", *(["본문 발췌 · 위치"] if with_quote else []), "발행일", "상태"], rows), ""]
     # References
     lines += ["## References", ""]
     for src in ctx.sources.get("items", []):

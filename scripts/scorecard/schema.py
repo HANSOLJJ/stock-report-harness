@@ -1319,7 +1319,7 @@ def validate_evidence(payload: Any, companies: dict[str, dict[str, Any]], source
             ["evidence_id", "company_id", "factors", "kind", "source_id", "published_at_utc", "title", "excerpt",
              "relevance", "channel", "conditional_impact", "horizon", "counter_evidence", "unverified", "change_vs_previous"],
             where,
-            optional=["previous_evidence_id", "reviewer", "reviewed_at", "status"],
+            optional=["previous_evidence_id", "reviewer", "reviewed_at", "status", "locator"],
         )
         cid = item["company_id"]
         _require(cid in companies, f"{where}: 알 수 없는 company_id {cid!r}")
@@ -1348,6 +1348,9 @@ def validate_evidence(payload: Any, companies: dict[str, dict[str, Any]], source
                  f"{where}.change_vs_previous 는 {sorted(EVIDENCE_CHANGES)} 또는 null")
         if "previous_evidence_id" in item:
             _expect_str(item["previous_evidence_id"], f"{where}.previous_evidence_id", nonempty=True)
+        if "locator" in item:
+            # 2026-10-07: excerpt 를 원문 어디서 땄는지(공시는 항목·주석·표, 기사는 문단). 판단 문장이 인용하는 근거는 필수(validate.CITATION_MIN_RULE)
+            _expect_str(item["locator"], f"{where}.locator", nonempty=True)
         status = item.get("status", "candidate")
         _require(status in EVIDENCE_STATUSES, f"{where}.status 는 {sorted(EVIDENCE_STATUSES)} 중 하나 ({status!r})")
         if "reviewer" in item:

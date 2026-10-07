@@ -32,6 +32,7 @@ collect → 후보 선별(evidence.json) → triggers.json → research
 3. `candidates.json` 을 읽고 factor 와 관련 있는 후보만 `evidence/evidence.json` 에 `status: candidate` 로 선별한다.
    - 필수 필드: `evidence_id`(`EV-<company_id>-NNN`), `company_id`, `factors`, `kind`(news|filing), `source_id`(sources.json 에 등록된 것), `published_at_utc`, `title`, `excerpt`, `relevance`, `channel`(disclosure|press|company_statement|secondary), `conditional_impact`, `horizon`, `counter_evidence`, `unverified`, `change_vs_previous`.
    - `excerpt` 는 원문 그대로 600자 이하로 옮긴다. 요약하거나 고쳐 쓰지 않는다.
+   - 판단 문장이 인용할 근거는 원문 본문을 열어 `excerpt` 를 본문에서 따고(제목과 달라야 한다), 선택 키 `locator` 에 발췌한 자리(공시는 항목·주석·표, 기사는 문단)를 적는다. 출처에는 `http(s)://` URL 이 있어야 한다. 제목만 확인한 근거는 판단 문장이 인용할 수 없다(2026-10-07, `guide.md` 5.7).
    - `relevance` 는 추론이므로 추론임을 표시한다.
    - `conditional_impact` 에는 점수 이동(`-3→-4`, `+2점`)을 적지 않는다. 사건이 미치는 조건부 영향을 말로 쓴다.
    - `published_at_utc` 가 `run.info_cutoff` 보다 늦은 후보는 올리지 않는다.

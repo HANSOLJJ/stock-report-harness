@@ -217,6 +217,7 @@ svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .
 .fdir .fdown .fdh{color:var(--bad-text)}
 .fdir .fpts{padding-left:16px}
 .fdir .none{color:var(--tx3);font-size:var(--fs-sm);margin:2px 0}
+.cite{font-size:var(--fs-sm);color:var(--tx3);white-space:nowrap}
 @media(max-width:860px){.fdir{grid-template-columns:1fr}}
 /* 2026-10-07 사용자 요청: 상단 탭. 머리 아래에 붙어 있고 좁은 화면에서는 가로로 밀어 본다. JS 가 없으면 탭 바는 숨고 패널은 모두 보인다. */
 .tabs{position:sticky;top:0;z-index:30;display:flex;gap:4px;overflow-x:auto;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0 8px;margin:4px 0 8px;scrollbar-width:none}
@@ -705,12 +706,23 @@ def status_basis(fr: dict[str, Any]) -> str:
 HISTORY_BY_COMPANY: dict[str, list[tuple[str, str]]] = {}
 
 
+# 2026-10-07: 올릴·내릴 근거 줄 끝의 원문 근거 표지(validate.CITE_TAIL_RE 와 같은 모양). 작게 떼어 그리고, ID 는 link_cited_evidence 가 잇는다
+_CITE_TAIL = re.compile(r"\s*\[(EV-[a-z0-9-]+-\d{3}(?:\s*,\s*EV-[a-z0-9-]+-\d{3})*)\]\s*$")
+
+
+def _cited_line_html(text: str) -> str:
+    m = _CITE_TAIL.search(text)
+    if not m:
+        return inline_html(text)
+    return f'{inline_html(text[:m.start()])} <span class="cite">[{esc(m.group(1))}]</span>'
+
+
 def _direction_html(block: dict[str, Any]) -> str:
     """2026-10-07 사용자 지시: 세 칸 판단의 올릴 근거·내릴 근거. 빈 칸은 '없음'으로 보인다."""
     boxes = []
     for key, label in rc.EVIDENCE_DIRECTION_LABELS:
         rows = block.get(key) or []
-        inner = (f'<ul class="fpts">{"".join(f"<li>{inline_html(t)}</li>" for _d, t in rows)}</ul>' if rows
+        inner = (f'<ul class="fpts">{"".join(f"<li>{_cited_line_html(t)}</li>" for _d, t in rows)}</ul>' if rows
                  else '<p class="none">없음</p>')
         boxes.append(f'<div class="f{key}"><div class="fdh">{esc(label)}</div>{inner}</div>')
     return f'<div class="fdir">{"".join(boxes)}</div>'
@@ -1757,10 +1769,14 @@ def link_cited_evidence(document: str, ctx: Any) -> str:
         url = urls.get(e["source_id"])
         title = f'<a href="{esc(url)}" target="_blank" rel="noopener noreferrer">{esc(e["title"])}</a>' if url else esc(e["title"])
         status = {"confirmed": "확정", "candidate": "후보"}.get(e.get("status", "candidate"), e.get("status", "candidate"))
+        # 2026-10-07: 문장 → 원문 → 인용 위치를 한 줄에서 따라가게 본문 발췌와 위치를 싣는다. 제목만 있는 근거는 '제목만 확인'
+        same = " ".join(e["excerpt"].split()).casefold() == " ".join(e["title"].split()).casefold()
+        quote = ('<span class="sub">제목만 확인</span>' if same else f'“{esc(e["excerpt"])}”'
+                 + (f'<br><span class="sub">위치: {esc(e["locator"])}</span>' if e.get("locator") else ""))
         rows.append(f'<tr id="ev-{esc(eid)}"><td class="mono">{esc(eid)}</td><td>{esc(ctx.companies[e["company_id"]]["display_name"])}</td>'
-                    f'<td class="text">{title}</td><td class="mono">{esc((e["published_at_utc"] or "—")[:10])}</td><td>{esc(status)}</td></tr>')
+                    f'<td class="text">{title}</td><td class="text">{quote}</td><td class="mono">{esc((e["published_at_utc"] or "—")[:10])}</td><td>{esc(status)}</td></tr>')
     table = (f'<h3 id="cited-evidence">인용 근거</h3><p class="sub">본문이 인용한 근거 {len(cited)}건. 제목을 누르면 원문이 열린다.</p>'
-             f'<div class="tablewrap"><table><thead><tr><th>근거 ID</th><th>기업</th><th>제목(원문)</th><th>발행일</th><th>상태</th></tr></thead>'
+             f'<div class="tablewrap"><table><thead><tr><th>근거 ID</th><th>기업</th><th>제목(원문)</th><th>본문 발췌 · 위치</th><th>발행일</th><th>상태</th></tr></thead>'
              f'<tbody>{"".join(rows)}</tbody></table></div>')
     return (head + sep + body).replace(CITED_SLOT, table)
 

@@ -1183,7 +1183,18 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         bad = three_way_item_violations(new)
         if bad:
             raise SchemaError(f"{company_id} {factor}: 근거 세 칸 형식 위반 — " + "; ".join(bad)
-                              + " (판정은 --evidence, 올릴 근거는 --up, 내릴 근거는 --down. 기준은 guide.md 5.5)")
+                              + " (판정은 --evidence, 올릴 근거는 --up, 내릴 근거는 --down. 기준은 guide.md 5.6)")
+    # 2026-10-07 사용자 지시: 올릴·내릴 근거의 줄마다 원문 근거 표지를 쓰는 시점에 막는다(검증기와 같은 기준).
+    from .validate import CITATION_MIN_RULE, citation_item_violations
+    if _rule_at_least(run["rule_version"], CITATION_MIN_RULE):
+        ev_path, src_path = run_paths(slug).evidence, run_dir(slug) / "sources.json"
+        evidence = {e["evidence_id"]: e for e in (load_json_strict(ev_path)["items"] if ev_path.is_file() else [])}
+        urls = {s["source_id"]: s.get("url") for s in (load_json_strict(src_path)["items"] if src_path.is_file() else [])}
+        bad = citation_item_violations(new, evidence, urls)
+        if bad:
+            raise SchemaError(f"{company_id} {factor}: 올릴·내릴 근거가 원문 근거와 이어지지 않는다 — " + "; ".join(bad[:5])
+                              + (f" 외 {len(bad) - 5}건" if len(bad) > 5 else "")
+                              + " (줄 끝에 [EV-…] 를 달고, 그 근거는 확정·URL·본문 발췌·locator 를 갖춘다. 기준은 guide.md 5.7)")
     revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
     if kind != "evidence_only":
         new.update(status="new", reviewer=by.strip(), reviewed_at=revised_at)

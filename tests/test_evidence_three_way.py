@@ -18,12 +18,21 @@ from tests.test_collect_stage import SLUG  # noqa: E402
 from tests.test_proposals import ProposalBase  # noqa: E402
 from tests.test_run_lock import human_env  # noqa: E402
 
-UP = ["관측 지표가 좋아졌다(EV-nvidia-001)"]
-DOWN = ["주요 고객이 자체 칩을 만든다"]
+UP = ["관측 지표가 좋아졌다. [EV-nvidia-001]"]
+DOWN = ["주요 고객이 자체 칩을 만든다. [EV-nvidia-001]"]
+BODY = {"excerpt": "NVIDIA said its developer platform reached new enterprise customers this quarter.", "locator": "기사 3번째 문단"}
 
 
 class V19Base(ProposalBase):
     RULE = "v1.9"
+
+    # 2026-10-07: v1.9 는 올릴·내릴 근거 줄마다 원문 근거 표지를 요구한다. 인용 근거는 확정·URL·본문 발췌·위치를 갖춘다
+    def evidence_item(self, eid: str = "EV-nvidia-001", **kw) -> dict:
+        return super().evidence_item(eid, **{**BODY, **kw})
+
+    def setUp(self) -> None:
+        super().setUp()
+        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
 
     def propose3(self, **kw) -> dict:
         kw.setdefault("evidence_after", ["적대 등급은 비용형이다(EV-nvidia-001)"])
@@ -34,7 +43,6 @@ class V19Base(ProposalBase):
 
 class ProposalThreeWayTest(V19Base):
     def test_accept_writes_three_columns_and_history(self):
-        stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
         p = self.propose3()
         self.assertEqual((p["evidence_up_after"], p["evidence_down_after"]), (UP, DOWN))
         self.assertNotIn("evidence_up", p["before"], "방향 칸이 없던 판단의 스냅숏은 옛 4키다")
