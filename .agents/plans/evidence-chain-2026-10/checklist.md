@@ -38,8 +38,8 @@
 ## F. 재계산·리뷰
 - [x] research → calculate → draft, 점수 변화표
 - [x] review-template, 4영역 1차 리뷰
-- [ ] 수정 한 묶음, 확인 리뷰, pass
-- [ ] validate_report_contract, "승인 대기" 보고
+- [x] 수정 한 묶음, 확인 리뷰, pass
+- [x] validate_report_contract, "승인 대기" 보고
 
 ## G. 빌드(승인 뒤)
 - [ ] build_report → --require-html → 화면 확인 → 커밋

@@ -12,7 +12,7 @@ rule_hash: 0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d
 baseline_id: v1.5
 plan_source: output/ai-scorecard-2026-10-rescore/plan.md
 research_source: output/ai-scorecard-2026-10-rescore/research.md
-results_hash: cdbacbdb94c3201200f7ee971dcc87cfd57dce2c7ccd77030e55f774d4a1ffe6
+results_hash: 462585f940bfc201daf798e03879dd97f3e4dbf6c1d7e4f7a35b23d69cee861c
 level: intermediate
 duration_minutes: 15
 created_at: 2026-10-06
@@ -1336,10 +1336,11 @@ created_at: 2026-10-06
     - 패러다임 적응은 부분 통과로 보았고, 부분 통과는 통과로 세지 않는다.
     - 통과 경로가 0개이면 2점이다.
     - 산업 인터페이스를 정의하는 표준 선점은 그런 인터페이스를 냈다는 근거가 없어 통과로 세지 않는다.
+    - Oracle 에 자체 모델이 없다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다.
   - 올릴 근거
     - OCI(Oracle 클라우드 인프라)를 싸게 파는 방식으로 AI 수요에 올라탔다. [EV-oracle-033]
   - 내릴 근거
-    - Oracle 은 자체 모델 대신 고객이 고른 생성형 AI 대규모 언어 모델(LLM)을 쓸 수 있게 한다. [EV-oracle-035]
+    - Oracle 은 고객이 고른 생성형 AI 대규모 언어 모델(LLM)을 Oracle AI Database 에서 쓸 수 있게 한다. [EV-oracle-035]
 - **③ Last Mover** 근거 · 판단일 2026-09-02 · 판단 기록 `oracle.F3`:
   - 판정
     - Oracle ③ Last Mover(선두가 베끼면 선두 자신의 수익모델이 무너지는 방식으로 들어왔는가)는 통과점 2 로 3점이다.
@@ -1739,7 +1740,7 @@ created_at: 2026-10-06
 ## 방법과 규칙
 
 - 규칙 파일 `scorecard/rules/v1.9.json` 해시 `0e4122094968754392e7be606f133378a86305598230d49fea40a55506dc602d` · 원문 규칙 `AI기업_채점규칙_v1.5.md` 은 sha256 `57beb84ad8c2…`(SRC-v15-rule)
-- 입력 해시: observations `65ea6a0b225da5ae…`, judgments `5478951c227a850c…`, results `cdbacbdb94c32012…`
+- 입력 해시: observations `65ea6a0b225da5ae…`, judgments `f319cc78cdef822c…`, results `462585f940bfc201…`
 - 실행 단위 결정: C-05:apply, C-06:proposed_v15_boundaries, C-16:downgrade, C-12:p2_with_capped_promotion, C-20:defer_to_private_g2, C-03:paths_with_generation_gap_5, C-11:block_carryover, C-13:reject_proxy, C-24:compute_p2_when_inputs_exist, C-28:optional_parameters_for_all_listed_tracks, C-29:c20_private_route_first
 - 미결 결정: 없음
 - **런웨이를 잴 때 완충으로 세는 것은 현금과 조건이 확인된 확정 미인출 여신뿐이다.** 신용등급이 좋아 더 빌릴 수 있을 것이라는 추정은 넣지 않는다 — 금액과 조건이 공시로 확인된 것만 센다. 다만 여신이 확인된 기업이라도 **현금흐름이 흑자로 판정되면 런웨이를 계산하지 않아** 그 여신이 점수에 닿지 않는다.

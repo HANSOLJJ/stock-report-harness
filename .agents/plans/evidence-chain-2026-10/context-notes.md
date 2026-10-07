@@ -44,3 +44,6 @@
   - 사실·출처 a low 중 바로 고칠 것: anthropic.F6 판정 칸 "ARR $65B 원문을 찾지 못해" → 올릴 근거가 EV-anthropic-040 으로 확인했으므로 미확인 대상을 누적 조달로 좁힌다.
   - 사실·출처 c needs_fix 1: spacex-xai.F2 올릴 근거[3](Starship 궤도 비행) 표지 EV-spacex-xai-009 는 Google 컴퓨트 계약 발췌 → 표지를 [EV-spacex-xai-022, EV-spacex-xai-007] 로.
   - 사실·출처 b needs_fix 2(nvidia.F7): 내릴 근거[1] "$40B 넘게 넣었고(실측)" → 원문은 약정(commitments), Anthropic Series G·$10B·xAI Series E 는 원문에 없다 → '약정'으로 고치고 라운드 세부는 판정 칸 미확인으로. 내릴 근거[3] "담보(Grace Blackwell)" 전제는 원문 없음 → 판정 칸 (추론)으로 옮긴다.
+- round 8 수정 묶음(PRP-378~389): N1 으로 spacex-xai ⑦ 큼 → 총점 9→7, 9위(apple 8위). 이번 실행의 유일한 점수 변화.
+- round 9 확인 리뷰: 재무·규칙·출력 pass. 사실·출처 needs_fix 1(oracle.F2 '자체 모델 대신' 원문 없음) → PRP-390 으로 고치고 같은 리뷰어가 재확인 pass. 렌더러: 해시로 열 때 탭 미적용 결함 수정(브라우저 확인).
+- review.md pass(results 462585f9…, draft ece5fa5f…). validate_report_contract 남은 오류는 승인 없음·HTML 미빌드뿐. 승인 대기.

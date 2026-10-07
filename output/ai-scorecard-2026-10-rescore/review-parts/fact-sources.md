@@ -1,17 +1,103 @@
 ---
 reviewer_agent: fact-checker
-session: fc-opus55-20261007-rescore-r6 (근거 세 칸을 나눈 세션·서브에이전트와 다른 세션)
+session: fc-opus55-20261007-rescore-r9 (원문 연결 세션·round 8 수정 세션·조율자·a·b·c 묶음 세션과 다른 세션)
 reviewed_at: 2026-10-07
-round: 7
+round: 9
 ---
 # fact-sources — 사실·출처
-검토자: Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님, evidence-editor 관점 포함) · 2026-10-07 · 근거 세 칸 재분류 뒤 · 확인 리뷰
+검토자: Claude Opus 5.5 (claude-opus-5-5) · 사실·출처 독립 세션(이 실행을 만든 세션 아님) · 2026-10-07 · 원문 연결 뒤 · 확인 리뷰
 결과: pass
-요약: 1차(round 6)의 needs_fix 1건(alphabet.F5)이 닫혔다. 내릴 근거는 "구글의 기밀 네트워크 사용 계약 갱신·기밀 계약 확정·안전 설정 완화에 직원 600명 이상이 반발했다." 로 바뀌었다. 이전 문장 '이에 반발한' 이 가리키던 대상 셋(2026-04-28 계약 갱신, 2026년 5월 $200M 기밀 계약, 안전 설정 완화)과 같다. 결론 "직원 반발은 내부 갈등이지 시장의 적대가 아니라고 판단했다." 는 판정 칸에서 적대 등급 문장 바로 뒤에 있다. 함께 고친 tsmc.F9·oracle.F8·oracle.F9·openai.F7 네 건은 문장을 옮기거나 나눴을 뿐이다. 숫자·영문 토큰 차이는 0건이다. 빠진 사실은 없고, 새로 붙은 것은 '계획이라 근거로 쓰지 않는다' 같은 판정 단서뿐이다. 렌더러 수정으로 openai.F2 는 draft 에 'SciCode·AA-LCR' 로 실린다(1차 low 닫힘). 그 수정 뒤 판단 문장 가운데 작업 메모 분리에 걸리는 줄은 0개다. 점수·순위·기업 요약·관측·출처·근거·트리거는 바뀌지 않았다. 1차 low 가운데 palantir.F5 인과 수식어와 anthropic.F5 조달 논리는 이번 묶음에 들지 않아 남는다. 둘 다 점수에 닿지 않는다.
+요약: 확인 리뷰 뒤 수정 1건을 다시 확인했고 닫혔다. PRP-390 이 oracle.F2 내릴 근거를 "Oracle 은 고객이 고른 생성형 AI 대규모 언어 모델(LLM)을 Oracle AI Database 에서 쓸 수 있게 한다. [EV-oracle-035]" 로 고쳤다. 10-K 원문은 "in our recent releases of Oracle AI Database, which … providing customers with an option to utilize generative AI large language models (LLMs) of their choice" 라서 이 줄을 받친다. 판정 칸 끝에는 "Oracle 에 자체 모델이 없다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다." 가 되살아났다. EV-oracle-035 relevance 도 같은 뜻이다. '자체 모델 대신' 은 judgments 의 revision_history 에만 남고 evidence·research·draft 에는 0건이다. draft 1339·1343행에도 반영됐다. 함께 고친 EV-oracle-006 relevance 는 2.06배로 결과와 같고, 근거·research·draft·트리거에 '2.66' 은 0건이다. EV-spacex-xai-001·008·009 의 relevance·conditional_impact 는 ⑦ −2(조달 의존 고객 비중 큼, 연 약 $15B ÷ 최근 1년 매출 약 65%)와 ⑧ −3(고객 A 18.3%·고객 B 19.5%)으로 판단·EV-spacex-xai-060 과 같다. 점수·순위는 바뀌지 않았다. 기계 점검(근거 603건 출처 등록, 판단 표지 전부 confirmed)도 그대로 통과한다. 그 아래는 확인 리뷰 본문이다. round 8 의 needs_fix 4건(a 1건, b 2건, c 1건)은 모두 닫혔다. 새 근거 3건(EV-spacex-xai-060, EV-oracle-035, EV-oracle-036)은 `sec-get` 으로 받은 공시 원문에서 발췌가 글자 그대로 나온다(엄격 일치). locator 의 주석·항목 자리도 맞다. 수정한 판단 10개의 방향 칸 줄, 관측 link26, 트리거 6건, 기업 요약 2건의 숫자도 원문과 맞는다. 결과 값(⑦ −2, 총점 7, 9위, Apple 8위)과도 같다. 기계 점검에서는 근거 603건의 출처가 모두 등록돼 있다. 판단 표지 774개는 모두 confirmed 근거를 가리키고, 표지 없는 방향 칸 줄은 0이다. 발행일이 기준일을 넘는 근거도 0건이다. 새 needs_fix 는 1건이다. oracle.F2 내릴 근거 "Oracle 은 자체 모델 대신 고객이 고른 … LLM 을 쓸 수 있게 한다" 의 '자체 모델 대신' 은 EV-oracle-035 원문에 없다. 10-K 본문 어디에도 없다. 수정 전 판정 칸이 "원문을 찾지 못해 확인하지 못했다" 로 적던 사실이 표지와 함께 방향 칸에 다시 들어온 것이다. 점수·순위에는 닿지 않는다(② 2점, 통과 경로 0). 이 건은 PRP-390 으로 닫혔다(위). 다음 실행 과제는 36건이다(a 8, b 14, c 10, 이번 4).
 
-검토 기준: results_hash `59518fa18f928802…`, draft_hash `cb819da1aab10ac6…`(review.md frontmatter 와 같음을 확인). 비교 기준은 1차 리뷰 커밋 `a9e0282`, 수정 커밋 `312c0d1`·`b4338a4`·`daab16c` 다.
+검토 기준: results_hash `462585f940bfc201…`, draft_hash `ece5fa5f37d75c5c…`. review.md frontmatter 와 같고, draft.md 의 sha256 도 같다. 수정 1건 재확인은 PRP-390 반영 뒤 작업 트리를 대상으로 했다. 확인 리뷰 본문의 기준 해시는 results_hash `cdbacbdb94c32012…`, draft_hash `c2919e6763a50814…` 이고, 비교 기준은 수정 커밋 `9469aa7` 의 부모다. 제안은 PRP-378~389 다. 스크립트는 세션 스크래치 `fs9/diff.py`·`match.py`·`grep_ev.py` 에 있다.
+
+## 1차 세 묶음(round 8) 요약
+| 묶음 | 범위 | 본 것 | 결과 | needs_fix | 다음 실행 과제 | 파일 |
+| --- | --- | --- | --- | --- | --- | --- |
+| a | alibaba, alphabet, amazon, anthropic, apple | 방향 칸 138줄, 표지 근거 211건. 기계 엄격 146, 느슨 50, Playwright 14, 사람 1. 열지 못한 근거 0 | needs_fix | 1 (amazon.F2 Trainium3 362 PFLOPS 주체) | 9 | `review-parts/fact-sources-a.md` |
+| b | meta, microsoft, nvidia, openai, oracle | 판단 41개, 방향 칸 135줄, 표지 근거 179건, URL 97개. SEC 70, urllib 76, Playwright 33. 179/179 일치 | needs_fix | 2 (nvidia.F7 $40B '실측'·라운드 세부, Grace Blackwell 담보 전제) | 14 | `review-parts/fact-sources-b.md` |
+| c | palantir, spacex-xai, tesla, tsmc | 판단 32개, 방향 칸 103줄, 표지 근거 176건. 175건 일치, 1건(EV-spacex-xai-007 유료벽)은 같은 줄의 EV-spacex-xai-022 가 받침 | needs_fix | 1 (spacex-xai.F2 EV-spacex-xai-009 오표지) | 10 | `review-parts/fact-sources-c.md` |
+
+세 묶음을 합치면 방향 칸 376줄과 표지 근거 566건을 전부 봤다. 원문에 없는 발췌는 0건이다. 최근 1년 합산(14개사 ⑨ 등)은 세 묶음이 발췌의 표 값으로 모두 다시 계산했고, 판단 값과 같다. 열지 못한 근거는 EV-spacex-xai-007 1건뿐이다. 세 파일은 읽기만 했고 고치지 않았다.
 
 ## 확인 내용
+
+- **바뀐 범위**: 판단 10개(amazon.F2·F7, anthropic.F6, nvidia.F7.fix52, palantir.F8, spacex-xai.F2·F7·F8, oracle.F2·F9), 기업 요약 2개(apple, spacex-xai), 근거 7건(새 3건, relevance·conditional_impact 수정 4건: EV-oracle-003·004·007, EV-nvidia-012), 관측 1개(oracle.offbalance_B.link26), 트리거 6건(TRG-020·022·033·041·065·079)이다. 지시서 수정 묶음 1~5 와 같다.
+- **기계 점검(전체)**: 근거 603건의 `source_id` 는 모두 sources.json 에 있다. 판단 `source_ids`, 관측 441개 `source_id`, 트리거 80건의 `evidence_ids`·`source_ids` 도 미등록 0이다. 판단의 표지 참조 774개는 모두 evidence.json 에 있고, 모두 `confirmed` 이며 reviewer·reviewed_at 이 있다. 방향 칸에서 줄 끝 표지가 없는 줄은 0이다. `published_at_utc` 가 2026-10-06 을 넘는 근거는 0건이다. `status: new` 로 바뀐 spacex-xai.F7 도 confirmed 근거만 인용한다.
+- **새 근거 3건(SEC 원문, `scorecard_cli.py sec-get`, 모두 캐시)**:
+  - EV-spacex-xai-060 은 `spcx-20260630.htm` 에서 엄격 일치한다(411자). 바로 앞이 Note 3 의 Backlog 문단과 "Concentration of risk" 머리글이고, 바로 뒤가 "Note 4 - Inventory" 라서 locator 'Note 3 Revenue — Concentration of risk 표' 가 맞다. 쪽은 p.13 꼬리표 뒤인 p.14 다. 고객 A 18.3%·고객 B 19.5%(2026년 2분기), 고객 B 는 AI 부문이다. 발행일 2026-08-04 는 같은 출처의 다른 근거 14건과 같다.
+  - EV-oracle-035 는 `orcl-20260531.htm` 에서 엄격 일치한다(325자). Item 1 Business 의 AI 기능 문단(p.6 꼬리표 뒤) 안에 있고, 다음 머리글은 "Oracle Infrastructure Software Licenses" 다. 다만 발췌가 받치는 것은 '고객이 고른 LLM 을 쓸 수 있다' 까지다(발견 1).
+  - EV-oracle-036 은 `orcl-20260831.htm` 에서 엄격 일치한다(340자). "6. LEASES AND OTHER COMMITMENTS" 의 "Unconditional Obligations" 절이고, 바로 뒤가 "7. STOCKHOLDERS' EQUITY" 다. 쪽은 p.12 꼬리표 뒤다. 연도별 5,449 + 6,176 + 3,863 + 4,318 + 6,768 + 954 + 6,622 = 34,150 으로 합계가 맞는다. 원문 문언은 'unconditional purchase and certain other obligations with terms of one year or greater' 다.
+- **수정한 방향 칸 줄**:
+  - amazon.F2 up[1] 의 '144칩 UltraServer 합계 FP8 362 PFLOPS' 는 EV-amazon-034 와 같다. up[2] "Project Rainier 의 Trainium2 로 Claude 를 학습하고 서비스한다" 와 down[2] "OpenAI 가 Trainium 에서 프런티어 모델을 처음부터 끝까지 학습했다는 공개 근거는 없었다" 는 EV-amazon-036 의 두 문장 그대로다.
+  - nvidia.F7 down[1] 의 '$40B 넘게 약정', 'Anthropic·xAI 펀딩 라운드 참여' 는 EV-nvidia-042·043 과 같다.
+  - spacex-xai.F7 down[1]·F8 down[3] 의 19.5%·18.3% 는 EV-spacex-xai-060 과 같다.
+  - oracle.F9 up[2] 의 664 ÷ 322.15 = 2.061 은 2.06배와 같다.
+- **수정한 판정 칸 줄의 숫자**:
+  - amazon.F7 '10년간 $100B 넘게' 는 EV-amazon-040 과 같다.
+  - spacex-xai.F7 '연 약 $15B' 는 월 $1.25B × 12 로 EV-spacex-xai-042 와 같다. '최근 1년 매출 약 $23.0B' 는 23,044 다. '90일 통보 해지 보도' 는 EV-spacex-xai-008 이다.
+  - anthropic.F6 'Q2 매출 전망치 $10.9B' 는 EV-anthropic-047, '잠정 $11.5B' 는 EV-anthropic-041 이다. ARR $65B 는 EV-anthropic-040 으로 확인된 값이라, 미확인 대상을 누적 조달로 좁힌 것이 맞다.
+  - nvidia.F7 판정 칸의 Vera Rubin 30배·35분의 1 은 EV-nvidia-052 와 같다.
+- **관측 link26**: 성분 $288B(EV-oracle-013)와 $34.15B(EV-oracle-036)가 같은 10-Q 의 2026-08-31 값이다. 합계 $322.15B 가 맞고, `mixed_as_of: false` 도 맞다. round 8 레코드가 적은 "10-Q 는 무조건 구매 약정을 새로 적지 않는다" 는 원문과 달랐고, 이번에 고쳐졌다.
+- **트리거·기업 요약**:
+  - TRG-020 과 apple 요약의 '25억 대 넘는 설치기반' 은 EV-apple-006 이다.
+  - TRG-079 의 '3,500개 넘는 계정·5~7월 1억 5,100만 건' 은 EV-alibaba-011·012 다.
+  - TRG-041 의 '약 절반' 은 하이퍼스케일 비중 50.6%(b 묶음 재계산)다.
+  - TRG-022 와 EV-oracle-003·004·007 의 2.06배는 results 와 같다.
+  - apple 요약(총점 8, 과점 15, 함정 −7, 8위)과 spacex-xai 요약(총점 7, 과점 18, 함정 −11, 9위, ④5·②4·⑨−3·⑥−3·⑧−3·⑦−2)은 results.json 과 같다.
+- **draft**: 바뀐 판단 9개의 세 칸 문장은 draft.md 에 모두 그대로 있다. anthropic.F6 은 비상장 ⑥ 항목이라 카드에 렌더되지 않는다(설계대로다). '넣었고(실측)', 'Grace Blackwell)', 'EV-spacex-xai-009' 오표지, '2.66배', '2.31배', '13.309' 는 draft 에 0건이다.
+- **금지 표현**: 바뀐 문장과 새 근거에 투자 조언·매매 지시·수익 보장·FOMO 표현은 없다.
+- **범위 밖**: 이번은 확인 리뷰라 바뀐 항목과 그 숫자만 원문과 대조했다. research.md 의 "이전 트리거 처리" 표 전수와 바뀌지 않은 근거의 URL 재방문은 round 8 세 묶음의 결과를 그대로 쓴다. 바뀐 근거가 모두 SEC 공시라 Playwright 는 쓰지 않았다.
+
+## 1차 발견 처리
+| 1차 발견 | 상태 | 확인 내용 |
+| --- | --- | --- |
+| a · needs_fix · amazon.F2 up[1] "Trainium3(362 PFLOPS)" | 닫힘 | "Trainium3(144칩 UltraServer 합계 FP8 362 PFLOPS)" 로 고쳐 EV-amazon-034 와 주체가 같다. OpenAI 학습 근거 없음은 down[2] 로, Anthropic 의 Trainium2 학습은 up[2] 로 나눴고, 둘 다 EV-amazon-036 원문 그대로다(PRP-380). draft 203행에도 반영됐다. |
+| b · needs_fix · nvidia.F7.fix52 down[1] '$40B 넣었고(실측)'·Series G/E | 닫힘 | '$40B 넘게 약정했고', 'Anthropic·xAI 펀딩 라운드 참여' 로 원문에 맞췄다. 금액·라운드 이름은 판정 칸에 "원문을 찾지 못해 확인하지 못했다" 로 갔다. Corning·IREN 의 '최대' 투자 권리 표기는 고치지 않았다(다음 실행 과제 이번-1). |
+| b · needs_fix · nvidia.F7.fix52 down[3] 담보(Grace Blackwell) 전제 | 닫힘 | 방향 칸에서 뺐다. 판정 칸에 "추론: NVIDIA 가 잔존가치를 보증한 GPU 의 가치를 NVIDIA 자신의 신제품이 깎는 …" 로 옮겼고, 담보 세대 전제는 사라졌다. GPU 잔존가치 보증은 EV-nvidia-010, Vera Rubin 수치는 EV-nvidia-052 가 받친다. |
+| c · needs_fix · spacex-xai.F2 up[3] EV-spacex-xai-009 오표지 | 닫힘 | 표지가 `[EV-spacex-xai-022, EV-spacex-xai-007]` 이다(PRP-384). |
+| a 과제 1 · anthropic.F6 미확인 범위 | 닫힘 | 미확인 대상을 '누적 조달 약 $125B' 로 좁혔다. |
+| b 과제 8 일부 · EV-oracle-003 발행일 | 닫힘 | 2026-09-11 로 채웠다. EV-meta-001·EV-nvidia-009 와 출처 SRC-EDGAR-000119312526389274 의 `published_at_utc` 는 남는다. |
+
+## 발견
+| 등급 | 판단 ID · 칸 | 줄 앞부분 | 근거 ID | 발견 | 고칠 방향 | 점수 영향 |
+| --- | --- | --- | --- | --- | --- | --- |
+| needs_fix → 닫힘(PRP-390, 재확인) | oracle.F2 · evidence_down[0] | "Oracle 은 자체 모델 대신 고객이 고른 생성형 AI 대규모 언어 모델(LLM)을 쓸 수 있게 한다." | EV-oracle-035 | 발췌는 "…while also providing customers with an option to utilize generative AI large language models (LLMs) of their choice." 다. 받치는 것은 고객이 LLM 을 고를 수 있다는 사실뿐이다. '자체 모델 대신'(Oracle 에 자체 모델이 없다)은 발췌에도, 10-K 본문 전체에도 없다(본문에서 'language model' 1회, 'LLM' 3회, 'Cohere'·'Llama'·'OpenAI'·'own model' 은 0회). 수정 전 판정 칸은 "Oracle 에 자체 모델이 없다는 사실은 기준일 이전 원문을 찾지 못해 확인하지 못했다." 였다(`revision_history[-1].previous`). PRP-386 이 그 줄을 지우고, 원문을 찾지 못한 사실을 표지와 함께 방향 칸에 다시 넣었다. EV-oracle-035 의 relevance 도 같은 문구다. | 줄을 "Oracle 은 고객이 고른 생성형 AI 대규모 언어 모델(LLM)을 쓸 수 있게 한다. [EV-oracle-035]" 로 줄이고, 판정 칸에 "Oracle 에 자체 모델이 없다는 사실은 원문을 찾지 못해 확인하지 못했다." 를 되살린다. EV-oracle-035 relevance 의 '자체 모델 대신' 도 뺀다. 자체 모델 부재를 받치는 원문을 찾으면 새 근거로 단다. | 없음(② 2점은 통과 경로 0개에서 나오고, 이 줄은 성능 도약 실패의 보조 근거다) |
+
+## 체크리스트
+| ID | 결과(pass/fail/not_applicable) | 근거 |
+| --- | --- | --- |
+| Q05 | pass | 세 묶음 모두 pass 다. 이번에 바뀐 줄의 회사 발표(AWS Trainium3 수치, NVIDIA 실적 콜)는 줄에서 회사 발표로 읽힌다(amazon.F2 판정 칸 "독립 측정이 없는 회사 발표", nvidia.F7 "회사는 … 밝혔다"). 이해상충 표기는 AGENTS.md 에 따라 보지 않았다. |
+| Q09 | pass | 세 묶음 모두 pass 다. 바뀐 줄에 계획을 점수에 넣은 것은 없다(oracle.F9 $45~50B 조달은 '계획이라 완충에 넣지 않는다' 를 유지한다). |
+| Q14 | pass | b·c 묶음 pass 다. spacex-xai.F7 의 '90일 통보 해지' 는 보도라고 적었다. |
+| Q23 | pass | 세 묶음 모두 pass 다. 바뀐 줄에 하네스가 다른 벤치마크 비교는 없다. |
+
+## 다음 실행 과제
+이번에 새로 나온 것(4건 남음, 2번은 수정 1건 재확인 때 닫혔다):
+1. (low) nvidia.F7.fix52 down[1] 의 'Corning $3.2B … IREN $2.1B' 를 원문(EV-nvidia-042 "right to invest up to $2.1 billion", "allowing it to invest up to $3.2 billion")대로 '최대 … 투자 권리' 로 적는다. 줄 머리가 '약정' 이라 큰 어긋남은 아니다.
+2. (닫힘) EV-oracle-006 relevance(research.md 1311행에도 실림)에 '게이트 4 2.66배' 가 남아 있었다. 수정 1건 재확인 때 2.06배로 고쳐진 것을 확인했다. 같은 수정에서 EV-oracle-003·004·007 은 고쳤다. draft·리포트에는 relevance 가 렌더되지 않는다.
+3. (low) TRG-065 observation 의 "토큰 점유율과 평균 단가는 기준일 이전 원문을 찾지 못했다" 가 확정 근거 EV-anthropic-013(2026-06-02, "only 12% of token traffic on OpenRouter, yet capture 46% of the platform's revenue")과 어긋난다. 토큰 점유율 12% 는 원문이 있다. 미확인 대상을 평균 단가로 좁힌다.
+4. (low) oracle.F9 up[2] "10-Q 가 공시한 미개시 확정 약정 $322.15B" 의 합계는 두 공시 값을 우리가 더한 값이다. '(두 값의 합, 추론 계산)' 을 되살린다. 관측 link26 성분 이름 'Unconditional purchase obligations' 는 원문대로 'unconditional purchase and certain other obligations' 로 적는다.
+5. (low) spacex-xai 기업 요약의 "Anthropic 계약이 매출의 큰 몫을 차지하는" 은 연간 약정 ÷ 최근 1년 매출(약 65%)로 견준 값이다. 실제 인식 매출 비중이 아니다. 계약은 2026-05 시작이고, 10-Q 의 고객 B 19.5% 는 고객 이름이 공시되지 않았다. 판정 칸 문장('연 약 $15B 로 최근 1년 매출의 약 65%')에 맞춰 적는다.
+
+round 8 세 묶음에서 이어지는 것(32건, 각 파일의 「다음 실행 과제」):
+- a 묶음 2~9 (8건): alphabet.F9 순현금 발췌 보강, EV-amazon-001·002 발행일, alibaba 배정 2026-08-23·공시 08-24, 오래된 근거 교체 셋, apple.F4 Baltra 추론, 방향 칸 결론 문장 8곳, 발췌 생략 표기, 뉴스 문단 번호 기계 점검.
+- b 묶음 1~14 (14건): 8번은 EV-oracle-003 만 닫혔다. 나머지는 openai.F4 부록 수치 발췌, nvidia.F5 연합사 역할 문장, microsoft.F4 '처음으로', openai.F8 NVIDIA·AMD 근거, FT 유료벽 '여러 관할', 추론 표시 둘, Google 리다이렉트 13개 발행사 URL·'a25%', openai.F6 $60B ↔ $62B, 라이브 페이지 사본, meta.F3 날짜, nvidia.F2 GTC·R100, ExploitBench 잣대다.
+- c 묶음 1~10 (10건): 4번의 EV-spacex-xai-009 는 표지에서 빠져 닫혔다. 나머지는 EV-tesla-001·008 발행일·unverified, EV-tesla-008 Exhibit 출처·sha256, 표 발췌 생략 표기, 근거 factors 메타데이터, spacex-xai.F9 '완충 잠식' 칸, tesla.F1 전환비용, Starlink V5 문장 통일, 의결권 84.4%/82.4%, 받침 약한 줄 셋, palantir.F5 '구조형 적대로 인한'(지금도 판정 칸에 있음)이다.
+
+## 이전 리뷰 기록
+
+### 8차(round 8) — 세 묶음
+round 8 은 사실·출처를 a·b·c 세 세션으로 나눠 봤다. 결과는 세 파일 `review-parts/fact-sources-a.md`·`fact-sources-b.md`·`fact-sources-c.md` 에 그대로 있다(모두 needs_fix, 검토 기준 results_hash `bacc7bc3e82a981d…`, draft_hash `0148fb46af32d9e8…`). 요약은 위 「1차 세 묶음(round 8) 요약」 표에 있다.
+
+### 7차(round 7) — 근거 세 칸 재분류 뒤 확인 리뷰
+7차 검토자: Claude Opus 5.5 · 사실·출처 독립 세션 · 2026-10-07 · 근거 세 칸 재분류 뒤 · 확인 리뷰 (session fc-opus55-20261007-rescore-r6)
+7차 결과: pass
+7차 요약: 1차(round 6)의 needs_fix 1건(alphabet.F5)이 닫혔다. 내릴 근거는 "구글의 기밀 네트워크 사용 계약 갱신·기밀 계약 확정·안전 설정 완화에 직원 600명 이상이 반발했다." 로 바뀌었다. 이전 문장 '이에 반발한' 이 가리키던 대상 셋(2026-04-28 계약 갱신, 2026년 5월 $200M 기밀 계약, 안전 설정 완화)과 같다. 결론 "직원 반발은 내부 갈등이지 시장의 적대가 아니라고 판단했다." 는 판정 칸에서 적대 등급 문장 바로 뒤에 있다. 함께 고친 tsmc.F9·oracle.F8·oracle.F9·openai.F7 네 건은 문장을 옮기거나 나눴을 뿐이다. 숫자·영문 토큰 차이는 0건이다. 빠진 사실은 없고, 새로 붙은 것은 '계획이라 근거로 쓰지 않는다' 같은 판정 단서뿐이다. 렌더러 수정으로 openai.F2 는 draft 에 'SciCode·AA-LCR' 로 실린다(1차 low 닫힘). 그 수정 뒤 판단 문장 가운데 작업 메모 분리에 걸리는 줄은 0개다. 점수·순위·기업 요약·관측·출처·근거·트리거는 바뀌지 않았다. 1차 low 가운데 palantir.F5 인과 수식어와 anthropic.F5 조달 논리는 이번 묶음에 들지 않아 남는다. 둘 다 점수에 닿지 않는다.
+
+7차 검토 기준: results_hash `59518fa18f928802…`, draft_hash `cb819da1aab10ac6…`(review.md frontmatter 와 같음을 확인). 비교 기준은 1차 리뷰 커밋 `a9e0282`, 수정 커밋 `312c0d1`·`b4338a4`·`daab16c` 다.
+
+### 7차 — 확인 내용
 
 - **바뀐 범위**: `a9e0282` 뒤로 입력 가운데 judgments.json 만 바뀌었다. 바뀐 판단은 alphabet.F5·tsmc.F9·oracle.F8·oracle.F9·openai.F7 다섯 개다. 수정 경로는 제안 PRP-259~263(accepted)이다. 다섯 판단 모두 `revision_history[-1].previous` 의 세 칸이 round 6 판단과 같다. 판정 재료·점수·출처 칸과 company_summaries 는 바뀌지 않았다. observations·sources·evidence·triggers 는 diff 가 없다. results.json 은 judgments 해시와 results_hash 두 줄만 바뀌었다.
 - **alphabet.F5**: 숫자·영문 토큰 차이는 0건이다. 반발 대상 셋은 판단의 올릴 근거 둘째 줄(2026-04-28 계약 갱신·2026년 5월 $200M 기밀 계약 확정·안전 설정 완화)과 같은 사건이다. 기준선 원문은 '직원 600명+ 반발' 만 적고 대상을 따로 적지 않는다. 그래서 이전 문장의 '이에'(앞 문장 전체)로 되돌린 것이 원문에 맞다.
@@ -21,7 +107,7 @@ round: 7
 - **draft**: 다섯 판단의 세 칸 문장 46개가 draft 에 모두 글자 그대로 있다. openai.F2 는 'SciCode·AA-LCR' 로 실리고, 'SciCode·A 이' 는 0건이다. `split_worknote` 를 판단 문장 828개 전부에 다시 돌려 보았다. 고쳐지거나 메모로 떼이는 줄은 0개다. 진짜 작업 번호(`FIX-52`)는 여전히 떼인다. report.html 은 빌드 산출물이라 아직 옛 문면이다. 승인 뒤 build 때 바뀐다.
 - **금지 표현**: 새로 쓴 다섯 문장에 투자 조언·수익 보장 표현은 없다.
 
-## 1차 발견 처리
+### 7차 — 1차 발견 처리
 | 1차 발견 | 상태 | 확인 내용 |
 | --- | --- | --- |
 | needs_fix · alphabet.F5 evidence_down[0] 결론 문장·반발 대상 축소 | 닫힘 | 사실은 내릴 근거, 결론은 판정 칸으로 갔다. 반발 대상 셋이 원문대로 돌아왔다(PRP-263). |
@@ -29,12 +115,12 @@ round: 7
 | low · anthropic.F5 조달 ≠ 동맹 논리 | 남음 | 이번 묶음에 들지 않았다. 다음 실행 과제 2. |
 | low · split_worknote 의 AA-LCR | 닫힘 | `312c0d1` 이 작업 번호 앞에 영문·숫자·붙임표가 없을 때만 잡게 했다. draft 에 'SciCode·AA-LCR' 로 실린다. |
 
-## 발견
+### 7차 — 발견
 | 등급 | 위치 | 발견 | 점수 영향 |
 | --- | --- | --- | --- |
 | — | — | 수정 묶음이 새로 만든 사실 문제는 없다. | — |
 
-## 체크리스트
+### 7차 — 체크리스트
 | ID | 결과(pass/fail/not_applicable) | 근거 |
 | --- | --- | --- |
 | Q05 | pass | 1차와 같다. 이번에 바뀐 문장에 이해당사자 출처는 없다. 이해상충 표기는 AGENTS.md 에 따라 보지 않았다. |
@@ -42,13 +128,13 @@ round: 7
 | Q14 | pass | 1차와 같다. |
 | Q23 | pass | 1차와 같다(바뀐 판단에 벤치마크 비교가 없다). |
 
-## 다음 실행 과제
+### 7차 — 다음 실행 과제
 1. (low) palantir.F5 evidence_up[1] 에서 '구조형 적대로 인한' 을 뺀다.
 2. (low) anthropic.F5.impl48 판정 칸에 '세 회사에서 컴퓨트를 사는 관계는 조달이라 동맹이 아니고 ⑧ 에서 센다' 를 더한다.
 3. (low) 1차 과제 3~5 를 유지한다. 분류가 갈릴 수 있는 줄, '흑자 전환 목표 후퇴·완충 잠식 없음' 의 칸 통일, 칸을 건너가는 지시어 7곳이다.
 4. (low) round 5 과제 1~4 를 유지한다. Oracle Stargate $7B 지분, oracle.F5 $2.4B 문서별 표기, nvidia.F3 10-Q 등록·판단 출처 연결, 3차 과제 2~6 이다.
 
-## 이전 리뷰 기록
+### 1~6차 리뷰 기록
 
 아래는 6차(근거 세 칸 재분류 뒤 1차)와 그 안에 옮겨 둔 1~5차 리뷰를 지우지 않고 옮긴 것이다.
 
