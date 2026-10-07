@@ -14,15 +14,15 @@
 
 | 대상 | 해시 |
 | --- | --- |
-| observations | `590b1f8a776f058801e1e222ba83ba4b9c117ee4cd447b6e5399b262fe28b576` |
-| judgments | `8554c26aa3425c4411b40fd28c9e5132817739b2999ede9c33dacba76ce913ad` |
-| results | `59518fa18f928802828905ce4844947b8a6c3d5a83d7b6062366532dab7e59ce` |
+| observations | `65ea6a0b225da5ae3f1d04ad46f1e4126eeee67f0c134fcaa0f6fb73fcd1528b` |
+| judgments | `f319cc78cdef822cc20e6811de0df77648ccf185728bc7d26d52b07bbf3928fb` |
+| results | `462585f940bfc201daf798e03879dd97f3e4dbf6c1d7e4f7a35b23d69cee861c` |
 | run | `65a19e92d2a861d18c6c33059b2217f5882c9527dde0827c4b2282c569a52f5f` |
-| draft | `cb819da1aab10ac67a0286100b6387811d4a08a5f4aa14f6c4bfb57c27a90716` |
+| draft | `ece5fa5f37d75c5c87f558a403bd660a073c22e64d3bf687fe980b783c605af3` |
 
 ## 승인
 
-- 승인 `756c276e2c24b091` · 정한솔 · 2026-10-07
+- 승인 `b33d2ad371679697` · 정한솔 · 2026-10-07
 - 승인 시점 입력과 현재 입력이 모두 같다.
 
 ## 실행 단위 결정
@@ -63,12 +63,12 @@
 
 ## 검토 기록
 
-검토 방식 `separate-session-4way` · 실행 `separate_subagent_sessions` · 검토한 초안 `cb819da1aab10ac67a0286100b6387811d4a08a5f4aa14f6c4bfb57c27a90716`
+검토 방식 `separate-session-4way` · 실행 `separate_subagent_sessions` · 검토한 초안 `ece5fa5f37d75c5c87f558a403bd660a073c22e64d3bf687fe980b783c605af3`
 
-- fact-sources: Claude Opus 5.5 fact-checker 독립 세션 fc-opus55-20261007-rescore-r6 · round 7 pass
-- financial-calc: Claude Opus 5.5 general-purpose 독립 세션 rescore-1007-financial-calc-r7 · round 7 pass
-- rule-consistency: Claude Opus 5.5 general-purpose 독립 세션 rc-rescore-20261007-r7 · round 7 pass
-- output-readability: Claude Opus 5.5 report-designer 독립 세션 rd-opus55-20261007-rescore-r7 · round 7 pass
+- fact-sources: Claude Opus 5.5 fact-checker 독립 세션 · round 8 세 묶음(a·b·c) + round 9 확인 pass
+- financial-calc: Claude Opus 5.5 general-purpose 독립 세션 · round 9 pass
+- rule-consistency: Claude Opus 5.5 general-purpose 독립 세션 · round 9 pass
+- output-readability: Claude Opus 5.5 report-designer 독립 세션 · round 9 pass
 
 ## 정정 이력
 
@@ -232,7 +232,6 @@
 | `oracle` | ⑦ 순환금융 | 판단 기록 oracle.F7.fix52 |
 | `oracle` | ⑧ 비대칭 의존 | 판단 기록 oracle.F8 |
 | `oracle` | ⑨ 적자 깊이 | 판단 기록 oracle.F9 |
-| `oracle` | ⑨ 적자 깊이 | oracle.offbalance_B.v15 |
 | `palantir` | ① 네트워크 | 판단 기록 palantir.F1 |
 | `palantir` | ② 게임체인저 | 판단 기록 palantir.F2 |
 | `palantir` | ③ Last Mover | 판단 기록 palantir.F3 |
