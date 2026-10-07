@@ -38,7 +38,8 @@
 - [x] (추가 2) 사람: PRP-134~137 반영 → research·calculate·draft → 확인 리뷰(needs_fix: 요약 넷, oracle.F5 Stargate 원문 없음, openai.F4 Q03)
 - [x] (추가 2) 사용자 결정 "한 묶음 더 고치고 좁은 확인": PRP-138~147, 근거·트리거 두 곳, 렌더러 ⑦ 메모 → 좁은 확인 4영역 pass → review.md pass
 - [x] (추가 2) 사용자 지시 "나는 최종승인만": 근거 확정·제안 반영을 에이전트가 맡게 바꿈(사용자가 stages.py 두 줄 주석 처리, 문서·테스트 갱신)
-- [ ] (추가 2) 사람: 최종 승인 → 재빌드(report.html) → `validate_report_contract --require-html` → 화면 검사
+- [x] (추가 2) 사람: 최종 승인(903d6cc9) → 재빌드(report.html) → `validate_report_contract --require-html` PASS → 화면 검사(320·768·1280px 넘침 0). 승인 전 검증이 옛 report.html 때문에 재승인을 막던 버그를 고침
+- [ ] 다음 실행: 머리말·색인의 "앞서 매긴 판단" 3곳, References 의 "(긴장 #4·#11)" 표기, 리뷰 영역 파일의 「다음 실행 과제」 전부
 - [x] 화면 검사(Playwright): 320·768·1280px 가로 넘침 없음, 넓은 차트는 가로 스크롤 상자(.mtwrap) 안. factor 탐색 링크 높이 19px(24px 미만, 렌더러는 시험 실행과 같음)는 다음 실행 과제
 
 ## 4. 리뷰
