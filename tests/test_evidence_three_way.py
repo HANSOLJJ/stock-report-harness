@@ -87,6 +87,25 @@ class ProposalThreeWayTest(V19Base):
                                    changes={"evidence_up": [], "evidence_down": []}, reason="시험", by="사용자")
         self.assertNotIn("evidence_up", self.judgment(), "거부된 수정은 파일을 바꾸지 않는다")
 
+    def test_clearing_counter_evidence_moves_it_to_history(self):
+        path = self.box.run_dir / "judgments.json"
+        payload = load_json_strict(path)
+        item = next(j for j in payload["items"] if j["company_id"] == "nvidia" and j["factor"] == "F5")
+        item["counter_evidence"] = ["옛 감사 문면"]
+        path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+        with self.assertRaisesRegex(SchemaError, "비우는 것"):
+            stages.revise_judgment(SLUG, company_id="nvidia", factor="F5", changes={"counter_evidence": ["새 문장"]},
+                                   reason="시험", by="사용자")
+        with self.assertRaisesRegex(SchemaError, "counter_evidence 는 비워"):
+            stages.revise_judgment(SLUG, company_id="nvidia", factor="F5",
+                                   changes={"evidence_up": UP, "evidence_down": DOWN}, reason="시험", by="사용자")
+        stages.revise_judgment(SLUG, company_id="nvidia", factor="F5",
+                               changes={"evidence_up": UP, "evidence_down": DOWN, "counter_evidence": []}, reason="시험", by="사용자")
+        j = self.judgment()
+        self.assertEqual(j["counter_evidence"], [])
+        self.assertEqual(j["revision_history"][-1]["previous"]["counter_evidence"], ["옛 감사 문면"])
+        self.assertEqual(j["status"], "carried", "근거 칸만 바꾼 수정이라 승계 상태가 그대로다")
+
     def test_summary_proposal_has_no_direction_columns(self):
         with self.assertRaisesRegex(SchemaError, "요약 문장 하나만"):
             stages.add_proposal(SLUG, company_id="nvidia", factor="SUMMARY", evidence_after=["요약"],

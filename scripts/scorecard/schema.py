@@ -1095,7 +1095,8 @@ def _validate_revision_history(history: Any, where: str) -> None:
         for key in ("revised_by", "reason"):
             _require(isinstance(entry[key], str) and entry[key].strip(), f"{at}: {key} 는 비어 있지 않은 문자열")
         # 2026-10-07: 세 칸 도입 뒤의 이력은 두 방향 칸도 보존한다. 그 전 이력(7키)도 그대로 받는다.
-        _expect_keys(entry["previous"], list(JUDGMENT_REVISION_FIELDS), f"{at}.previous", optional=list(JUDGMENT_DIRECTION_FIELDS))
+        _expect_keys(entry["previous"], list(JUDGMENT_REVISION_FIELDS), f"{at}.previous",
+                     optional=[*JUDGMENT_DIRECTION_FIELDS, "counter_evidence"])
         for key in JUDGMENT_DIRECTION_FIELDS:
             if key in entry["previous"]:
                 _expect_direction_list(entry["previous"][key], f"{at}.previous.{key}")

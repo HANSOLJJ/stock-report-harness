@@ -1092,9 +1092,12 @@ def _check_judgment_changes(factor: str, changes: Mapping[str, Any]) -> str:
 
     2026-10-07: 근거는 판정(evidence)·올릴 근거(evidence_up)·내릴 근거(evidence_down) 세 칸이다. 세 칸만 바꾸는 수정도
     `evidence_only` 다. 방향 칸은 빈 목록(없음)을 허용한다."""
-    text_keys = {"evidence", *JUDGMENT_DIRECTION_FIELDS}
+    text_keys = {"evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence"}
     if isinstance(changes, Mapping):
         _check_evidence_texts(changes)
+        # 2026-10-07: counter_evidence 는 세 칸으로 옮긴 뒤 비우는 것만 받는다(규칙 v1.9 이상은 비어 있어야 한다).
+        if "counter_evidence" in changes and changes["counter_evidence"] != []:
+            raise SchemaError("counter_evidence 는 비우는 것([])만 받는다 — 반대 방향 사실은 --up·--down 칸에 쓴다")
     if isinstance(changes, Mapping) and changes and set(changes) <= text_keys and factor in FACTOR_IDS:
         return "evidence_only"
     if factor not in JUDGMENT_EDIT_KIND:
@@ -1151,6 +1154,8 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     previous = {k: copy.deepcopy(item.get(k)) for k in JUDGMENT_REVISION_FIELDS}
     # 2026-10-07: 방향 칸이 있던 판단은 그 값도 이력에 남긴다(번복이 되돌린다). 없던 판단의 이력은 7키 그대로다.
     previous.update({k: copy.deepcopy(item[k]) for k in JUDGMENT_DIRECTION_FIELDS if k in item})
+    if "counter_evidence" in changes and item.get("counter_evidence"):
+        previous["counter_evidence"] = copy.deepcopy(item["counter_evidence"])   # 비우기 전 내용은 이력에 남긴다
     new = dict(item)
     if kind == "evidence_only":
         # 2026-10-06: 근거 문장만 바꾼다. 판정 종류·점수·판정 재료·상태·검토자는 그대로라 승계 판단은 승계로 남는다
@@ -1162,14 +1167,14 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     else:
         # F7 승계 항목 둘은 kind 가 score 다. 판정 재료를 고치면 matrix 로 바뀌고 점수는 규칙이 계산한다(키가 다 있어야 한다).
         inputs = dict(item["inputs"]) if item["kind"] == kind else {}
-        inputs.update({k: v for k, v in changes.items() if k not in ("evidence", *JUDGMENT_DIRECTION_FIELDS)})
+        inputs.update({k: v for k, v in changes.items() if k not in ("evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence")})
         new.update(kind=kind, score=None, inputs=inputs)
-    for key in ("evidence", *JUDGMENT_DIRECTION_FIELDS):
+    for key in ("evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence"):
         if key in changes:
             new[key] = [e.strip() for e in changes[key]]
     if cite_evidence_ids:
         new["evidence_ids"] = sorted({*(item.get("evidence_ids") or []), *cite_evidence_ids})
-    if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence", *JUDGMENT_DIRECTION_FIELDS)):
+    if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence")):
         raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다")
     run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
     # 2026-10-07 사용자 지시: 규칙 v1.9 이상 실행은 근거를 세 칸으로 쓰는 시점에 막는다(검증기와 같은 기준).
