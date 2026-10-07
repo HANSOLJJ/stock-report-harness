@@ -441,15 +441,20 @@ def js() -> str:
     const el=document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
     if(el) window.reportShow(el);
   },true);
+  // 2026-10-07 출력 리뷰 round 9: 처음 열 때는 숨긴 패널이 없어 reportShow 가 아무것도 하지 않았고 패널 여섯 개가 모두 보였다.
+  // 해시가 가리키는 요소의 패널을 직접 연다. 패널 밖 요소(투자 유의 등)면 첫 탭을 연다.
   function fromHash(scroll){
     const id=decodeURIComponent(location.hash.slice(1)); const el=id&&document.getElementById(id);
-    if(el&&el.classList.contains('tabpanel')){activate(id,false); return true;}
-    if(el){window.reportShow(el); if(scroll) el.scrollIntoView({block:'start'}); return true;}
-    return false;
+    if(!el) return false;
+    const p=el.classList.contains('tabpanel')?el:el.closest('.tabpanel');
+    if(!p) return false;
+    activate(p.id,false);
+    if(scroll&&p!==el) el.scrollIntoView({block:'start'});
+    return true;
   }
   addEventListener('hashchange',()=>fromHash(true));
   if(bar) bar.hidden=false;
-  if(!fromHash(false)) activate(panels[0].id,false);
+  if(!fromHash(true)) activate(panels[0].id,false);
   moreHint();
 })();
 (function(){

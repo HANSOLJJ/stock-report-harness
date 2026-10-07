@@ -93,6 +93,9 @@ class ReportTabsTest(unittest.TestCase):
         self.assertIn("window.reportShow(el);\n    el.open=true", code)
         # 좁은 화면에서 뒤쪽 탭이 잘려 있으면 .more 로 오른쪽 끝을 흐리게 한다(round 6 출력 리뷰)
         self.assertIn("classList.toggle('more'", code)
+        # 해시를 달고 처음 열 때도 그 요소의 패널 하나만 연다(round 9 출력 리뷰). reportShow 는 숨긴 패널이 있을 때만 움직인다
+        self.assertIn("const p=el.classList.contains('tabpanel')?el:el.closest('.tabpanel');", code)
+        self.assertIn("if(!fromHash(true)) activate(panels[0].id,false);", code)
 
     def test_lede_reads_factor_ranges_from_rules(self):
         # 2026-10-07 외부 분석: '함정 각 0~-5' 는 ⑥ -7·⑦ -2·⑨ -4 와 달랐다
