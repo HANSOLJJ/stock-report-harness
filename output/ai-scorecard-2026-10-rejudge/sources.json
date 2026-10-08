@@ -8112,6 +8112,19 @@
       "sha256": null,
       "conflict_of_interest": null,
       "note": "② 마이크로소프트 표준 선점 근거(다른 회사 Intel 의 OpenVINO 가 ONNX 모델을 바로 읽음). 페이지에 게시·갱신일이 없어 열람 시각을 적었다. 주소의 2026 은 문서 판이다."
+    },
+    {
+      "source_id": "SRC-WEB-meta-015",
+      "title": "Our next-generation Meta Training and Inference Accelerator",
+      "publisher": "Meta AI Blog",
+      "url": "https://ai.meta.com/blog/next-generation-meta-training-inference-accelerator-AI-MTIA/",
+      "accessed_at": "2026-10-09",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "회사 공식 엔지니어링 블로그. 게시일 2024-04-10",
+      "kind": "news",
+      "company_id": "meta",
+      "published_at_utc": "2024-04-10T00:00:00Z"
     }
   ]
 }

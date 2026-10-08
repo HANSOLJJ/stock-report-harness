@@ -1,6 +1,8 @@
 # 판단 세션의 산출물(work/judge/<F>-<company>.json)을 순서대로 propose 하고 한꺼번에 반영한다
 """
-사용: uv run --frozen python -X utf8 .agents/plans/rejudge-all-2026-11/work/apply_judgments.py <slug> [--only F1,F3] [--dry-run] [--no-accept]
+사용: uv run --frozen python -X utf8 .agents/plans/rejudge-all-2026-11/work/apply_judgments.py <slug> [--dir judge-fix1] [--only F1,F3] [--dry-run] [--no-accept]
+
+--dir 은 work/ 아래 제안 파일 폴더 이름이다(기본 judge). 리뷰 뒤 수정 묶음은 judge-fix1 처럼 따로 둔다.
 
 파일 모양은 REJUDGE-INSTRUCTIONS.md 5번. propose 가 하나라도 실패하면 그 자리에서 멈추고(이미 쓴 제안은 남는다) 실패 파일을 적는다.
 --no-accept 면 제안만 쓰고 반영은 하지 않는다. 반영은 `proposal --all-pending --accept` 한 번이다.
@@ -26,7 +28,10 @@ def main() -> int:
     accept = "--no-accept" not in args
     if "--only" in args:
         only = set(args[args.index("--only") + 1].split(","))
-    files = sorted(f for f in WORK.glob("F*-*.json") if not f.name.endswith(".propose.json"))
+    work = WORK
+    if "--dir" in args:
+        work = Path(__file__).resolve().parent / args[args.index("--dir") + 1]
+    files = sorted(f for f in work.glob("F*-*.json") if not f.name.endswith(".propose.json"))
     if only:
         files = [f for f in files if f.name.split("-", 1)[0] in only]
     if not files:

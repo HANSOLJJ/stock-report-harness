@@ -7,11 +7,11 @@
   "baseline_id": "v1.5",
   "input_hashes": {
     "run": "531a71410ecf11d62c8f19ad6077158827c2f58997eab3e9b5170a8e2f0ca9ad",
-    "observations": "e54e319f9fcea02bbfd4cee1e5837e28d4b8f3287301fc805cc1b9d47c4f3d95",
-    "judgments": "77a9bd458cc66f4945202d014baf844711171390ebdd37ff0a8895fd679068db",
-    "sources": "c576848007747eedd2c270bdace1da91519044a66b60da5bb3540eebe2629066",
-    "evidence": "1fee07ef06a0acfff63dee81352540ad67502a083c17aeff7ec2a0965ef7b0d9",
-    "triggers": "f1cdf8ccca5e63c41f33d3fdb9aad17d140dd9fc7c53d68c7ecd278c4a1611d9",
+    "observations": "d65211f087719e723b5068661381f3013b11bfc46d3e5cd5fe19b32c7007418f",
+    "judgments": "a29e371222d221c87ddc8e9d8aab5dd83f5d2f92ede6bb4b651524c1793d6493",
+    "sources": "8feba64b0d2c3370d7b0064fbb5c542dc75c05df12ccc620bf801479a51bbfb9",
+    "evidence": "384ab409000b0afdd600fa2cb31719a7693038ce4786fc5fa6db988b553b6bf0",
+    "triggers": "5eeaf8a74f31ed8d379d64d796b259fc2e6a6cbaabccf2750250bc6437d8d654",
     "rules": "3bf9418cf3eb43f9b91152f7e11249808658d80d4944c15222217b72b4be3cc5"
   },
   "decisions_applied": [
@@ -810,7 +810,7 @@
         },
         "F4": {
           "factor": "F4",
-          "score": 3,
+          "score": 4,
           "status": "ok",
           "basis": "manual",
           "judgment_id": "meta.F4",
@@ -1680,7 +1680,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 5
+      "rank": 4
     },
     {
       "company_id": "alibaba",
@@ -2133,12 +2133,12 @@
           "calc": {
             "criteria": {
               "imitation": "fail",
-              "revenue_model": "pass",
+              "revenue_model": "partial",
               "acceleration": "fail"
             },
             "door_closed": "fail",
-            "pass_points": 1.0,
-            "ladder_note": "통과점 1 → 2",
+            "pass_points": 0.5,
+            "ladder_note": "통과점 0.5 → 2",
             "acceleration_tier": "a",
             "acceleration_growth_rates": [
               2.33,
@@ -2972,13 +2972,13 @@
         },
         "F7": {
           "factor": "F7",
-          "score": -1,
+          "score": -2,
           "status": "ok",
           "basis": "matrix",
           "judgment_id": "nvidia.F7.fix52",
           "observation_ids": [],
           "calc": {
-            "funding_dependent_share": "small",
+            "funding_dependent_share": "large",
             "own_money_returns": "yes"
           },
           "warnings": [],
@@ -3035,8 +3035,8 @@
         }
       },
       "moat": 17,
-      "trap": -7,
-      "total": 10,
+      "trap": -8,
+      "total": 9,
       "complete": true,
       "pending": [],
       "carried_factors": [],
@@ -4791,11 +4791,11 @@
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "moat": 17,
-      "trap": -7,
-      "total": 10
+      "trap": -8,
+      "total": 9
     },
     {
-      "rank": 5,
+      "rank": 4,
       "company_id": "tsmc",
       "display_name": "TSMC",
       "moat": 15,
@@ -4890,5 +4890,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 60,
-  "results_hash": "4b6e99f7ce96e1c4b5d6d39e94275d921ae20880ee4def2831669021ddd560f1"
+  "results_hash": "ca52264b918d32d524e00ed10cf7adb2a0d8e874045df2ff196ee053e38f2a5b"
 }

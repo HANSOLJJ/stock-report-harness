@@ -1,0 +1,11 @@
+{
+  "changes": {},
+  "evidence_after": null,
+  "evidence_up_after": [
+    "Apple 10-K 의 고객 집중 공시는 매출채권 기준(한 고객 12%, 통신사 합계 34%)뿐이고 매출 10% 이상 고객은 없다(공시 의무상 해당 고객이 없다고 읽은 추론). [EV-apple-041]",
+    "Apple 과 Google 은 Gemini 기반 모델이 Apple 기기와 Apple 의 Private Cloud Compute 에서 계속 돈다고 밝혔다. [EV-apple-014]",
+    "Apple 은 Private Cloud Compute 서버를 자체 M5 칩으로 바꾸고 있다. [EV-apple-010]",
+    "Siri AI 를 포함한 Apple Intelligence 서버 기능은 지금 하루 한도 안에서 무료이고 유료화는 앞으로의 계획이다. [EV-apple-037]"
+  ],
+  "evidence_down_after": null
+}

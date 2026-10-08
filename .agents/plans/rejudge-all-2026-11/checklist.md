@@ -58,7 +58,10 @@
 - [x] 작업 분할 확정: 수집·트리거·관측은 회사 묶음 5개(A nvidia·tsmc·apple / B alphabet·amazon·microsoft / C meta·oracle·palantir / D anthropic·openai / E alibaba·tesla·spacex-xai, `GROUP-INSTRUCTIONS.md`), 판단은 항목별 7세션. 산출물은 `work/out-<G>.json`, 합치기는 `work/merge_group_outputs.py`
 - [x] 묶음 5개 산출물 합침(근거 +140, 트리거 56/56 이어받음 + 새 21, 관측 +108, 출처 +109) → `confirm` 138건(검토자 claude, 사용자 위임) → 근거 741 확정·2 후보, load_context 통과. 묶음 보고는 `work/report-A~E.md`
 - [x] init 결함 수정(표지 인용 근거 누락) 커밋, 재실행 근거 603건 복원
-- [ ] 판단 세션 7개(①②③④⑤⑦⑧, opus) 동시 실행 중 → `work/judge/<F>-<company>.json` → `apply_judgments.py` 로 propose → `proposal --all-pending --accept`
+- [x] 판단 세션 7개(①②③④⑤⑦⑧, opus) → `work/judge/` 98건 → `apply_judgments.py` propose 98건 → `proposal --all-pending --accept`. 도중 코드 수정 둘(③ e 단계 지연 조항 fail, ② 세 경로 통과 → 4)과 근거 추가(Amazon Prime 요금, ② 표준 선점 9건, ④ Nova·NVIDIA Edge·Tesla 칩 4건)
+- [x] research 통과(승계 0, 트리거 56/56, 기한 초과 0) → diff(전부 재판단이라 2층 "실패"는 변경 목록 역할) → calculate: 13사 순위, Meta 미완료(③ e·unknown) → draft → review-template
+- [ ] 4영역 리뷰(사실·출처 A/B, 규칙 일관성, 재무 계산, 출력·가독성) → review.md 채움 → 수정 한 묶음 → 확인 리뷰 → status pass
+- [ ] 승인 대기 보고(사람이 승인 페이지에서) → build → push → 맥미니 3단계
 - [ ] 10월 미해결 12건(Q02·Q03·Q05·Q08·Q09·Q10·Q12·Q13·Q16·Q19·Q20·Q23) 처리
 - [ ] research → `diff --against ai-scorecard-2026-10-rescore` → calculate → draft
 - [ ] review (승계 예외 없이) → 승인 대기 보고

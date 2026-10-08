@@ -6,8 +6,8 @@ created_at: 2026-10-08
 plan_source: output/ai-scorecard-2026-10-rejudge/plan.md
 research_source: output/ai-scorecard-2026-10-rejudge/research.md
 draft_source: output/ai-scorecard-2026-10-rejudge/draft.md
-results_hash: 4b6e99f7ce96e1c4b5d6d39e94275d921ae20880ee4def2831669021ddd560f1
-draft_hash: 2051fc49db48dbde432ef471edf075a3f51fae4a60a0375406a4074393cf66b1
+results_hash: ca52264b918d32d524e00ed10cf7adb2a0d8e874045df2ff196ee053e38f2a5b
+draft_hash: 5c0003f9c5615e0cb8989115a7d8c43aec9d3a04cff71380e1b5a15f9dcfd646
 review_type: separate-session-4way
 review_execution: separate_subagent_sessions
 reviewers:
@@ -68,5 +68,5 @@ reviewers:
 
 ## 판정
 
-- results_hash `4b6e99f7ce96e1c4…` · draft_hash `2051fc49db48dbde…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
+- results_hash `ca52264b918d32d5…` · draft_hash `5c0003f9c5615e0c…` 기준 검토. 자료·규칙·판단·초안이 바뀌면 이 리뷰는 무효다(D-10).
 - **두 해시의 뜻이 다르다.** `results_hash` 는 `results.json` 에서 `results_hash` 키를 뺀 내용의 정렬 JSON 해시이고(`engine.sha256_obj`) **파일 바이트 sha256 과 다르다.** `draft_hash` 는 초안 **파일 바이트 sha256** 이다. 대조할 때 섞지 않는다.
