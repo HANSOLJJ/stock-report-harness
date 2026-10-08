@@ -15,7 +15,7 @@
 - [x] 렌더러: 첫 화면 요약 상자(`render_judgment_status`, 요약 탭 KPI 아래). 승계 칸 수·항목별 분포·검토일, 기준선 이후 재판단 칸과 이번 실행 기간 재판단 칸, 숫자만 남은 칸, 지난 실행 대비 변경 칸 목록, 재검토로 넘긴 쟁점 수와 시점
 - [x] 검증기: 상자 존재와 `data-carried` = results carried_score 칸 수
 - [x] 테스트(Python 1320·Node 21 통과) → rescore·test 재빌드(승인 유지, 계약 PASS) → 커밋 3개(렌더러·출력·계획)
-- [ ] push → 맥미니 3단계 갱신 (사용자 지시: 모든 단계가 끝난 뒤 한 번에)
+- [x] push → 맥미니 3단계 갱신 (사용자 지시: 모든 단계가 끝난 뒤 한 번에. 2026-10-09 4절 마지막 항목과 함께 끝냄)
 - [ ] ① 시범: Microsoft·NVIDIA·Palantir·TSMC 네 회사에 네 입력을 스크래치에서 채워 본다. 빈 칸 비율과 사다리 A 결과를 context-notes 에 적는다. 점수 파일은 건드리지 않는다
 
 ## 1. 규칙 v2.0
@@ -61,7 +61,7 @@
 - [x] 판단 세션 7개(①②③④⑤⑦⑧, opus) → `work/judge/` 98건 → `apply_judgments.py` propose 98건 → `proposal --all-pending --accept`. 도중 코드 수정 둘(③ e 단계 지연 조항 fail, ② 세 경로 통과 → 4)과 근거 추가(Amazon Prime 요금, ② 표준 선점 9건, ④ Nova·NVIDIA Edge·Tesla 칩 4건)
 - [x] research 통과(승계 0, 트리거 56/56, 기한 초과 0) → diff(전부 재판단이라 2층 "실패"는 변경 목록 역할) → calculate: 13사 순위, Meta 미완료(③ e·unknown) → draft → review-template
 - [x] 4영역 리뷰(사실·출처 A/B, 규칙 일관성, 재무 계산, 출력·가독성) → review.md 채움 → 수정 한 묶음 → 확인 리뷰 → status pass (2026-10-09, 계약 검증 PASS. NVIDIA 10→9 공동 4위, Meta ④ 4, 나머지 그대로)
-- [ ] 승인 대기 보고(사람이 승인 페이지에서) → build → push → 맥미니 3단계
+- [x] 승인 대기 보고(사람이 승인 페이지에서) → build → push → 맥미니 3단계 (2026-10-09 승인 정한솔 → build 계약 검증 10항목 통과 → origin main a48a710 push → 맥미니 ff pull. 9월 리포트 2개의 수동 수정은 pull 이 건드리지 않아 그대로 남았고 패치 사본은 맥미니 /tmp/sep-reports-20261009.patch)
 - [ ] 10월 미해결 12건(Q02·Q03·Q05·Q08·Q09·Q10·Q12·Q13·Q16·Q19·Q20·Q23) 처리
 - [ ] research → `diff --against ai-scorecard-2026-10-rescore` → calculate → draft
 - [ ] review (승계 예외 없이) → 승인 대기 보고
