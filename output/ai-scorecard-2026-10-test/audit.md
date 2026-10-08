@@ -43,6 +43,14 @@
 | `C-28` | `optional_parameters_for_all_listed_tracks` |
 | `C-29` | `c20_private_route_first` |
 
+## 제3자 재검토 약속
+
+- **제3자 재검토 약속**(규칙 파일 긴장 목록) — 비 Claude 세션 재판정이 **확정**된 긴장 5건: anthropic.F8 이 -4 로 내려가지 않는 유일한 근거(`Alphabet 제출본에 Anthropic 0건`)를 확인할 수 없다 — 2026-11 에 다시 본다 · 채점규칙 470행(BEP 목표 후퇴 = 독립 감점 조건)과 별표 D 388~390행(계획·발표·포지션은 0점)이 v1.5 안에서 충돌한다 — 2026-11 에 다시 본다 · anthropic F1 — 주채널을 업무로 적고도 개인 사용자 절대수 열세로 5점을 막는다 — 2026-11 에 다시 본다 · C-08 — 별표 H 이탈 조건의 허용·제외 기준이 F5 전사에 통일되지 않았다 — 2026-11 에 다시 본다 · anthropic·openai F7 — 매트릭스 입력 없이 -1 을 승계했고 v1.5 매트릭스와 판정표가 서로 어긋난다 — 2026-11 에 다시 본다.
+  - **일부만 확정** 2건 — F2 근거란이 모델 간 성능을 비교하면서 어느 하네스로 잰 값인지 적지 않는다 — 채점규칙 22행 `비교는 같은 하네스끼리만` 을 확인할 수 없다 — 2026-11 에 다시 본다 · meta·anthropic·spacex-xai 의 F3 `imitation=partial` 이 partial 의 정의를 채우지 못한다 — 2026-11 에 다시 본다. 이 가운데 일부 판단만 비 Claude 세션이 보고, 나머지는 재채점 때 판단자가 본다.
+  - **권장일 뿐 약속이 아닌 것** 3건 — openai F4 4점의 3→4 상향 근거가 이해당사자 발표이고 배치 계획이 섞였다 — 2026-11 에 다시 본다 · nvidia F5·F8 — 고객 40% 자체 칩 이탈이라는 같은 속성이 F5 H -2 와 F8 -3 에 반복된다 — 2026-11 에 다시 본다 · palantir·oracle F1 — 업무 채널 전환비용을 한쪽은 가짜 해자로 빼고 한쪽은 락인으로 인정한다 — 2026-11 에 다시 본다. 규칙이 `비 Claude 세션 권장` 으로 적은 자리이고 재판정자를 정해 두지 않았다.
+  - **이미 해소된 긴장** 1건 — BEP 후퇴가 C-20 비상장 판정보다 앞서는 것이 맞는지 — v1.5 안에서 두 문면이 충돌한다 — 2026-09-17 에 결론이 났다. 재판정이 끝나 남은 약속에서 뺐다. 결론은 규칙 `open_tensions` 의 `resolution` 에 있다.
+  - anthropic ②5 재검토 — anthropic ②5 재검토가 C-13 에서 돌고 있다. **결과에 따라 anthropic F2 가 5→4 가 될 수 있다.** 시점 2026-11 재채점 (사용자 원본 채점표 · 인수인계 문서) · 발동 조건 `독립 기관의 에이전트 실무 축 측정 (인수인계 문서)` (C-03 이 재검토 대기로 걸어 둔 항목이다). 이번 실행은 이 판단을 재판정하지 않았다.
+
 ## 미결 규칙 결정
 
 아직 확정되지 않은 규칙 항목이다. 걸린 항목은 점수를 만들지 않고 대기 상태로 남는다.
@@ -144,12 +152,6 @@
 | `alibaba` | ③ Last Mover | 판단 기록 alibaba.F3 |
 | `alibaba` | ④ 호황 이후 | 판단 기록 alibaba.F4 |
 | `alibaba` | ⑤ 아군 | 판단 기록 alibaba.F5 |
-| `alibaba` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -4 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `alibaba` | ⑥ 가격 | v1.5 참고 문면: NTM PER 16.7(상장 12사 최저 — SA 데이터 CNY/USD 혼재라 FY27 $5.71·FY28 $8.03을 7:5 가중 직접 계산) |
-| `alibaba` | ⑥ 가격 | v1.5 참고 문면: 증자 후 시총 $270B |
-| `alibaba` | ⑥ 가격 | v1.5 참고 문면: TTM 25.8은 영업외 54%로 무효 |
-| `alibaba` | ⑥ 가격 | v1.5 참고 문면: P/S 1.8 참고 |
-| `alibaba` | ⑥ 가격 | v1.5 참고 문면: 팔란티어 시총($407B)이 알리바바보다 50% 크다 |
 | `alibaba` | ⑦ 순환금융 | 판단 기록 alibaba.F7 |
 | `alibaba` | ⑧ 비대칭 의존 | 판단 기록 alibaba.F8 |
 | `alibaba` | ⑨ 적자 깊이 | 판단 기록 alibaba.F9.obsreg25 |
@@ -164,10 +166,6 @@
 | `alphabet` | ③ Last Mover | 판단 기록 alphabet.F3 |
 | `alphabet` | ④ 호황 이후 | 판단 기록 alphabet.F4 |
 | `alphabet` | ⑤ 아군 | 판단 기록 alphabet.F5 |
-| `alphabet` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -3 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `alphabet` | ⑥ 가격 | v1.5 참고 문면: (v1.5: 구간 재설계 — 20~29) NTM PER 25.3 — 20~29 구간, 경계에서 벗어남(29선까지 12.8%) |
-| `alphabet` | ⑥ 가격 | v1.5 참고 문면: TTM 16.9는 영업외 비중 51%로 무효 |
-| `alphabet` | ⑥ 가격 | v1.5 참고 문면: P/S 9.3 참고 |
 | `alphabet` | ⑦ 순환금융 | 판단 기록 alphabet.F7 |
 | `alphabet` | ⑧ 비대칭 의존 | 판단 기록 alphabet.F8 |
 | `alphabet` | ⑨ 적자 깊이 | 판단 기록 alphabet.F9 |
@@ -176,15 +174,10 @@
 | `amazon` | ③ Last Mover | 판단 기록 amazon.F3 |
 | `amazon` | ④ 호황 이후 | 판단 기록 amazon.F4 |
 | `amazon` | ⑤ 아군 | 판단 기록 amazon.F5 |
-| `amazon` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -2 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `amazon` | ⑥ 가격 | v1.5 참고 문면: (v1.5: 구간 재설계 — 20~29) NTM PER 27.5 — 29선까지 5.2% |
-| `amazon` | ⑥ 가격 | v1.5 참고 문면: TTM 20.5는 영업외 46%로 무효 |
-| `amazon` | ⑥ 가격 | v1.5 참고 문면: P/S 3.6(빅테크 최저) 참고 |
 | `amazon` | ⑦ 순환금융 | 판단 기록 amazon.F7 |
 | `amazon` | ⑧ 비대칭 의존 | 판단 기록 amazon.F8 |
 | `amazon` | ⑨ 적자 깊이 | 판단 기록 amazon.F9.obsreg25 |
 | `amazon` | ⑨ 적자 깊이 | OBS-REG-25 지시서 |
-| `amazon` | ⑨ 적자 깊이 | amazon.offbalance_B.obsreg25 |
 | `anthropic` | ① 네트워크 | 판단 기록 anthropic.F1 |
 | `anthropic` | ② 게임체인저 | 판단 기록 anthropic.F2 |
 | `anthropic` | ② 게임체인저 | [FIX-53 3단계] |
@@ -200,15 +193,6 @@
 | `anthropic` | ⑤ 아군 | [F5-IMPL-48 재판정 2026-09-14] |
 | `anthropic` | ⑤ 아군 | 채점규칙 727행 |
 | `anthropic` | ⑤ 아군 | 별표 H 288행 |
-| `anthropic` | ⑤ 아군 | anthropic.F5 |
-| `anthropic` | ⑤ 아군 | a01f127 |
-| `anthropic` | ⑤ 아군 | 1aab1f2 |
-| `anthropic` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -4 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `anthropic` | ⑥ 가격 | v1.5 참고 문면: -3 (v1.5: ARR 보정 + 자본효율 반영) |
-| `anthropic` | ⑥ 가격 | v1.5 참고 문면: post-money $965B ÷ ARR $65B(7월) = 14.8배 — 그러나 ARR은 런레이트라 TTM 매출보다 과대하다. 분모를 TTM으로 맞추면 약 30~39배(Q2 매출 $10.9B 역산) = Palantir(TTM P/S 66.2, ⑥-4)의 절반 수준 |
-| `anthropic` | ⑥ 가격 | v1.5 참고 문면: (참고) 이익 기준 $965B ÷ 연환산 영업이익 약 $2.2B = 약 440배, Palantir NTM PER 89의 5배 |
-| `anthropic` | ⑥ 가격 | v1.5 참고 문면: 자본효율 0.52(ARR $65B ÷ 누적 조달 약 $125B) — 비상장 3사 중 최선 |
-| `anthropic` | ⑥ 가격 | v1.5 참고 문면: 주의 — 정밀도 열위, 10월 IPO 예상 시 상장사 룰로 자동 전환 |
 | `anthropic` | ⑥ 가격 | anthropic.post_money_valuation.v15 |
 | `anthropic` | ⑥ 가격 | anthropic.arr.v15 |
 | `anthropic` | ⑥ 가격 | anthropic.arr_prior.priv31 |
@@ -235,11 +219,6 @@
 | `apple` | ③ Last Mover | 판단 기록 apple.F3 |
 | `apple` | ④ 호황 이후 | 판단 기록 apple.F4 |
 | `apple` | ⑤ 아군 | 판단 기록 apple.F5 |
-| `apple` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -4 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `apple` | ⑥ 가격 | v1.5 참고 문면: (v1.5: 구간 재설계 — 29~42) NTM PER 35.5 — 29~42 구간, 경계에서 벗어남(42선까지 15.5%) |
-| `apple` | ⑥ 가격 | v1.5 참고 문면: TTM 37.3 |
-| `apple` | ⑥ 가격 | v1.5 참고 문면: PEG 3.36, 상장 12사 최악 |
-| `apple` | ⑥ 가격 | v1.5 참고 문면: AI 실행력은 하위인데 밸류는 역사적 최상단 |
 | `apple` | ⑦ 순환금융 | 판단 기록 apple.F7 |
 | `apple` | ⑧ 비대칭 의존 | 판단 기록 apple.F8 |
 | `apple` | ⑨ 적자 깊이 | 판단 기록 apple.F9 |
@@ -254,11 +233,6 @@
 | `meta` | ③ Last Mover | 판단 기록 meta.F3 |
 | `meta` | ④ 호황 이후 | 판단 기록 meta.F4 |
 | `meta` | ⑤ 아군 | 판단 기록 meta.F5 |
-| `meta` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -3 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `meta` | ⑥ 가격 | v1.5 참고 문면: NTM PER 17.9 — Alibaba(16.7) 다음으로 낮음 |
-| `meta` | ⑥ 가격 | v1.5 참고 문면: TTM 21.8, 영업외 비중 1% — Apple과 함께 상장 12사 중 평가이익 없는 깨끗한 배수 |
-| `meta` | ⑥ 가격 | v1.5 참고 문면: PEG 0.92 |
-| `meta` | ⑥ 가격 | v1.5 참고 문면: P/S 6.6 참고 |
 | `meta` | ⑦ 순환금융 | 판단 기록 meta.F7 |
 | `meta` | ⑧ 비대칭 의존 | 판단 기록 meta.F8 |
 | `meta` | ⑨ 적자 깊이 | 판단 기록 meta.F9 |
@@ -267,10 +241,6 @@
 | `microsoft` | ③ Last Mover | 판단 기록 microsoft.F3 |
 | `microsoft` | ④ 호황 이후 | 판단 기록 microsoft.F4 |
 | `microsoft` | ⑤ 아군 | 판단 기록 microsoft.F5 |
-| `microsoft` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -3 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `microsoft` | ⑥ 가격 | v1.5 참고 문면: (v1.5: 구간 재설계 — 20~29) NTM PER 25.4 — v1.4의 25선은 배율이 좁아(×1.25) 실제 분포와 안 맞았다 |
-| `microsoft` | ⑥ 가격 | v1.5 참고 문면: TTM 27.9, 영업외 6%(정상) |
-| `microsoft` | ⑥ 가격 | v1.5 참고 문면: P/S 11.1 참고 |
 | `microsoft` | ⑦ 순환금융 | 판단 기록 microsoft.F7 |
 | `microsoft` | ⑧ 비대칭 의존 | 판단 기록 microsoft.F8 |
 | `microsoft` | ⑨ 적자 깊이 | 판단 기록 microsoft.F9 |
@@ -279,22 +249,14 @@
 | `nvidia` | ③ Last Mover | 판단 기록 nvidia.F3 |
 | `nvidia` | ④ 호황 이후 | 판단 기록 nvidia.F4 |
 | `nvidia` | ⑤ 아군 | 판단 기록 nvidia.F5 |
-| `nvidia` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -2 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `nvidia` | ⑥ 가격 | v1.5 참고 문면: (v1.5: NTM 18.0 → 20 미만 · P/S 예외 삭제 — 규칙이 아니라 직관이었음) NTM PER 18.0 (Q2 실적 후 이익 급증) |
-| `nvidia` | ⑥ 가격 | v1.5 참고 문면: PEG 0.36 |
-| `nvidia` | ⑥ 가격 | v1.5 참고 문면: TTM 27.5는 영업외 14%($32B 랩 지분 평가익) 포함 |
-| `nvidia` | ⑥ 가격 | v1.5 참고 문면: P/S 17.9는 참고만 — PER이 낮으면 낮은 것이 정보다 |
 | `nvidia` | ⑦ 순환금융 | 판단 기록 nvidia.F7.fix52 |
 | `nvidia` | ⑦ 순환금융 | [FIX-52 재척도 2026-09-15] |
-| `nvidia` | ⑦ 순환금융 | FIX-52 |
-| `nvidia` | ⑦ 순환금융 | nvidia.F7 |
 | `nvidia` | ⑧ 비대칭 의존 | 판단 기록 nvidia.F8 |
 | `nvidia` | ⑨ 적자 깊이 | 판단 기록 nvidia.F9 |
 | `openai` | ① 네트워크 | 판단 기록 openai.F1 |
 | `openai` | ② 게임체인저 | 판단 기록 openai.F2 |
 | `openai` | ② 게임체인저 | [FIX-56 2단계] |
 | `openai` | ② 게임체인저 | [FIX-52 2026-09-15] |
-| `openai` | ② 게임체인저 | A-LCR |
 | `openai` | ② 게임체인저 | 채점표 732행 |
 | `openai` | ② 게임체인저 | 채점규칙 22행 |
 | `openai` | ② 게임체인저 | anthropic.F2 |
@@ -309,16 +271,6 @@
 | `openai` | ⑤ 아군 | 채점규칙 727행 |
 | `openai` | ⑤ 아군 | 채점표 759행 |
 | `openai` | ⑤ 아군 | 별표 H 276행 |
-| `openai` | ⑤ 아군 | openai.F5 |
-| `openai` | ⑤ 아군 | a01f127 |
-| `openai` | ⑤ 아군 | 1aab1f2 |
-| `openai` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -4 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `openai` | ⑥ 가격 | v1.5 참고 문면: -4 (v1.5: ARR 보정 + 적자 + 자본효율) |
-| `openai` | ⑥ 가격 | v1.5 참고 문면: post-money $852B ÷ ARR $40B = 21.3배 — TTM 보정 시 약 39배 |
-| `openai` | ⑥ 가격 | v1.5 참고 문면: 이익 배수 산출 불가 — 적자(2026 GAAP 손실 약 $60B 전망, BEP 2030) |
-| `openai` | ⑥ 가격 | v1.5 참고 문면: 자본효율 0.22(ARR $40B ÷ 누적 조달 약 $180~190B) — Anthropic(0.52)의 절반 이하. 1.5배 많은 돈을 태우고 더 낮은 밸류($852B < $965B)에 있다 |
-| `openai` | ⑥ 가격 | v1.5 참고 문면: 주의 — 정밀도 열위 |
-| `openai` | ⑥ 가격 | v1.5 참고 문면: IPO는 2027로 밀림 |
 | `openai` | ⑥ 가격 | openai.post_money_valuation.v15 |
 | `openai` | ⑥ 가격 | openai.arr.v15 |
 | `openai` | ⑥ 가격 | openai.arr_prior.priv31 |
@@ -335,36 +287,18 @@
 | `oracle` | ① 네트워크 | 판단 기록 oracle.F1 |
 | `oracle` | ② 게임체인저 | 판단 기록 oracle.F2 |
 | `oracle` | ③ Last Mover | 판단 기록 oracle.F3 |
-| `oracle` | ③ Last Mover | oracle.contracted_revenue.fix57 |
 | `oracle` | ④ 호황 이후 | 판단 기록 oracle.F4 |
 | `oracle` | ⑤ 아군 | 판단 기록 oracle.F5 |
-| `oracle` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -2 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `oracle` | ⑥ 가격 | v1.5 참고 문면: NTM PER 19.10 — 20선 밖(-4.5%) |
-| `oracle` | ⑥ 가격 | v1.5 참고 문면: TTM 26.42 |
-| `oracle` | ⑥ 가격 | v1.5 참고 문면: P/S 6.6 |
-| `oracle` | ⑥ 가격 | v1.5 참고 문면: 주가 52주 -31.6%로 시장이 이미 크게 깎았다 |
-| `oracle` | ⑥ 가격 | v1.5 참고 문면: PEG 0.65 |
-| `oracle` | ⑥ 가격 | v1.5 참고 문면: 주의 — 단 EV/Sales 8.60(P/S 6.59보다 높다) — 부채 $167B가 시총에 안 잡힌다 |
 | `oracle` | ⑦ 순환금융 | 판단 기록 oracle.F7.fix52 |
 | `oracle` | ⑦ 순환금융 | [FIX-52 재척도 2026-09-15] |
-| `oracle` | ⑦ 순환금융 | FIX-52 |
-| `oracle` | ⑦ 순환금융 | oracle.contracted_revenue.fix57 |
-| `oracle` | ⑦ 순환금융 | oracle.F7 |
 | `oracle` | ⑧ 비대칭 의존 | 판단 기록 oracle.F8 |
 | `oracle` | ⑨ 적자 깊이 | 판단 기록 oracle.F9 |
-| `oracle` | ⑨ 적자 깊이 | oracle.contracted_revenue.fix57 |
 | `oracle` | ⑨ 적자 깊이 | oracle.offbalance_B.v15 |
 | `palantir` | ① 네트워크 | 판단 기록 palantir.F1 |
 | `palantir` | ② 게임체인저 | 판단 기록 palantir.F2 |
 | `palantir` | ③ Last Mover | 판단 기록 palantir.F3 |
 | `palantir` | ④ 호황 이후 | 판단 기록 palantir.F4 |
 | `palantir` | ⑤ 아군 | 판단 기록 palantir.F5 |
-| `palantir` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -4 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `palantir` | ⑥ 가격 | v1.5 참고 문면: (v1.5: 9/2 NTM 89.0 — 90선 아래 1.1%, 📏경계) NTM PER 89.0 |
-| `palantir` | ⑥ 가격 | v1.5 참고 문면: 9/2 하루 -5.8%로 선 아래로 |
-| `palantir` | ⑥ 가격 | v1.5 참고 문면: TTM 144.9 |
-| `palantir` | ⑥ 가격 | v1.5 참고 문면: P/S 66, 상장사 중 SpaceX(83) 다음(참고) |
-| `palantir` | ⑥ 가격 | v1.5 참고 문면: 시총 $407B |
 | `palantir` | ⑦ 순환금융 | 판단 기록 palantir.F7 |
 | `palantir` | ⑧ 비대칭 의존 | 판단 기록 palantir.F8 |
 | `palantir` | ⑨ 적자 깊이 | 판단 기록 palantir.F9 |
@@ -373,11 +307,6 @@
 | `spacex-xai` | ③ Last Mover | 판단 기록 spacex-xai.F3 |
 | `spacex-xai` | ④ 호황 이후 | 판단 기록 spacex-xai.F4 |
 | `spacex-xai` | ⑤ 아군 | 판단 기록 spacex-xai.F5 |
-| `spacex-xai` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -3 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `spacex-xai` | ⑥ 가격 | v1.5 참고 문면: NTM PER 111(SA fwd 111.46) |
-| `spacex-xai` | ⑥ 가격 | v1.5 참고 문면: P/S 83 |
-| `spacex-xai` | ⑥ 가격 | v1.5 참고 문면: 시총 $1.91T — Tesla보다 크다 |
-| `spacex-xai` | ⑥ 가격 | v1.5 참고 문면: 주식 수 YoY +41.8%(IPO + xAI $250B + Cursor $60B 전량 주식교환) |
 | `spacex-xai` | ⑦ 순환금융 | 판단 기록 spacex-xai.F7 |
 | `spacex-xai` | ⑦ 순환금융 | [FIX-59 정정 · obsreg 8차 리뷰 A 분담(Claude 독립 세션, review-obsreg e5a47d3) medium] FIX-58 |
 | `spacex-xai` | ⑦ 순환금융 | 8차 리뷰 A |
@@ -390,8 +319,6 @@
 | `spacex-xai` | ⑨ 적자 깊이 | [FIX-54 2단계] |
 | `spacex-xai` | ⑨ 적자 깊이 | OBS-REG-25 지시서 |
 | `spacex-xai` | ⑨ 적자 깊이 | spacex-xai.undrawn_credit.fix54 |
-| `spacex-xai` | ⑨ 적자 깊이 | spacex-xai.operating_margin_ttm.f6reg28 |
-| `spacex-xai` | ⑨ 적자 깊이 | spacex-xai.contracted_revenue.obsreg25 |
 | `spacex-xai` | ⑨ 적자 깊이 | spacex-xai.offbalance_B.obsreg25 |
 | `spacex-xai` | ⑨ 적자 깊이 | 채점표_v1.5.md 671·673행 |
 | `spacex-xai` | ⑨ 적자 깊이 | 채점표_v1.5.md 672행 |
@@ -401,9 +328,6 @@
 | `tesla` | ③ Last Mover | 판단 기록 tesla.F3 |
 | `tesla` | ④ 호황 이후 | 판단 기록 tesla.F4 |
 | `tesla` | ⑤ 아군 | 판단 기록 tesla.F5 |
-| `tesla` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -5 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `tesla` | ⑥ 가격 | v1.5 참고 문면: NTM PER 187.5 / TTM 370.5 / P/S 13.6 |
-| `tesla` | ⑥ 가격 | v1.5 참고 문면: 시총 $1.41T |
 | `tesla` | ⑦ 순환금융 | 판단 기록 tesla.F7 |
 | `tesla` | ⑧ 비대칭 의존 | 판단 기록 tesla.F8 |
 | `tesla` | ⑨ 적자 깊이 | 판단 기록 tesla.F9 |
@@ -419,21 +343,13 @@
 | `tsmc` | ⑤ 아군 | 채점표_v1.5.md 243행 |
 | `tsmc` | ⑤ 아군 | 채점규칙 218행 |
 | `tsmc` | ⑤ 아군 | 채점규칙 289행 |
-| `tsmc` | ⑤ 아군 | tsmc.F5 |
-| `tsmc` | ⑤ 아군 | AGENTS.md 리뷰 범위 |
-| `tsmc` | ⑥ 가격 | v1.5 참고 문면: **이번 실행 점수는 -3 이고 입력에서 자동 산출한 값이다**(위 산식 참조). 아래는 기준선 v1.5 문면이라 다른 수가 섞여 있을 수 있다 — 점수 근거가 아니다. |
-| `tsmc` | ⑥ 가격 | v1.5 참고 문면: NTM PER 19.4(직접 계산 ✱ — StockAnalysis가 TWD/USD 혼재) — 20선 -3%, 경계 주의 — . TWD 환율 하나로 -1 가능 |
-| `tsmc` | ⑥ 가격 | v1.5 참고 문면: TTM 30.9 |
-| `tsmc` | ⑥ 가격 | v1.5 참고 문면: 영업외 7%(깨끗) |
-| `tsmc` | ⑥ 가격 | v1.5 참고 문면: P/S 15.4 참고 |
-| `tsmc` | ⑥ 가격 | v1.5 참고 문면: 시총 $2.15T(ADR 5.19B주 × $415.5) |
 | `tsmc` | ⑦ 순환금융 | 판단 기록 tsmc.F7 |
 | `tsmc` | ⑧ 비대칭 의존 | 판단 기록 tsmc.F8 |
 | `tsmc` | ⑨ 적자 깊이 | 판단 기록 tsmc.F9 |
 
 ## 규칙 파일의 항목 메모
 
-리포트 본문의 `무엇을 보고 매기는가` 는 채점규칙 별표에서 가져온다. 이 표는 규칙 JSON 의 `factors.*.note` 원문이며 **결정 번호와 작업 경위가 섞여 있어 본문에 싣지 않는다.** 규칙 파일과 대조할 때 쓴다.
+리포트 본문의 `무엇을 보고 매기는가` 는 항목 설명 원문(`scorecard/factor-concepts.json`)에서 가져온다. 이 표는 규칙 JSON 의 `factors.*.note` 원문이며 **결정 번호와 작업 경위가 섞여 있어 본문에 싣지 않는다.** 규칙 파일과 대조할 때 쓴다.
 
 | 항목 | `note` 원문 |
 | --- | --- |
