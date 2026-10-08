@@ -1816,10 +1816,12 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
         if c["complete"] and not c["reference"] and c["type"] not in present:
             present.append(c["type"])
     legend = "".join(f'<span><i style="background:var(--cat-{TYPE_CLASS.get(t, "mix")})"></i>{esc(t)}{" (① 상한 2점)" if t == "부품" else ""}</span>' for t in present)
+    # 2026-10-08 사용자 지시: 리포트 머리의 이해상충 고지 상자를 싣지 않는다(10-07 Mac mini 공개본에서 먼저 지움).
+    # 한계 절의 이해상충 문장과 출처 줄의 표기는 그대로 둔다.
     anthropic_note = ""
-    for c in results["companies"]:
-        if c["company_id"] == "anthropic":
-            anthropic_note = f'<div class="notice">⚠️ <b>이해상충 고지</b> — 이 채점표는 Anthropic 이 만든 Claude 가 작성했으며 Anthropic 이 평가 대상에 포함된다(과점 factor {fmt_score(c["moat"])}점). 투자 판단에 사용할 경우 감안할 것.</div>'
+    # for c in results["companies"]:
+    #     if c["company_id"] == "anthropic":
+    #         anthropic_note = f'<div class="notice">⚠️ <b>이해상충 고지</b> — 이 채점표는 Anthropic 이 만든 Claude 가 작성했으며 Anthropic 이 평가 대상에 포함된다(과점 factor {fmt_score(c["moat"])}점). 투자 판단에 사용할 경우 감안할 것.</div>'
     survey_note = ""
     if avail:
         survey_note = (

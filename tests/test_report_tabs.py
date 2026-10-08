@@ -116,6 +116,12 @@ class ReportTabsTest(unittest.TestCase):
             self.assertTrue({"Alphabet", "Amazon", "SpaceX"} <= set(names), names)
             self.assertFalse([n for n in names if " / " in n or "xAI" in n], names)
 
+    def test_header_has_no_conflict_notice_box(self):
+        # 2026-10-08 사용자 지시: 리포트 머리의 이해상충 고지 상자를 싣지 않는다
+        for slug, html in self.html.items():
+            with self.subTest(slug=slug):
+                self.assertNotIn("<b>이해상충 고지</b>", html)
+
     def test_draft_notes_of_a_factor_without_evidence_get_their_own_header(self):
         from scorecard.render_md import render_draft
         slug = "ai-scorecard-2026-10-rescore"
