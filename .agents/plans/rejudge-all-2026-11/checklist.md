@@ -12,20 +12,21 @@
 - [x] 첫 화면 요약 상자는 **10월 승인본에도 지금** 그린다(렌더러만 바뀌므로 승인 유지)
 
 ## 0.5 지금 할 것 (v2.0 과 독립)
-- [ ] 렌더러: 첫 화면 요약 상자(이번 실행 판단 칸 수·날짜, 지난 실행 대비 변경 칸, 승계 칸 수와 항목별 분포, 미해결 지적 수와 재검토 시점)
-- [ ] `validate_report_contract` 에 요약 상자 검사
-- [ ] 테스트 → rescore·test 재빌드(승인 유지 확인) → 커밋 → push → 맥미니 3단계 갱신
+- [x] 렌더러: 첫 화면 요약 상자(`render_judgment_status`, 요약 탭 KPI 아래). 승계 칸 수·항목별 분포·검토일, 기준선 이후 재판단 칸과 이번 실행 기간 재판단 칸, 숫자만 남은 칸, 지난 실행 대비 변경 칸 목록, 재검토로 넘긴 쟁점 수와 시점
+- [x] 검증기: 상자 존재와 `data-carried` = results carried_score 칸 수
+- [x] 테스트(Python 1320·Node 21 통과) → rescore·test 재빌드(승인 유지, 계약 PASS) → 커밋 3개(렌더러·출력·계획)
+- [ ] push → 맥미니 3단계 갱신 (사용자 지시: 모든 단계가 끝난 뒤 한 번에)
 - [ ] ① 시범: Microsoft·NVIDIA·Palantir·TSMC 네 회사에 네 입력을 스크래치에서 채워 본다. 빈 칸 비율과 사다리 A 결과를 context-notes 에 적는다. 점수 파일은 건드리지 않는다
 
 ## 1. 규칙 v2.0
-- [ ] `rules.md` 2절에 "정기 실행 재판단" 조항 (전부 다시 매김, 재확인 기록, 승계는 기업 추가 실행만)
-- [ ] `rules.md` ① 절 재작성: 이름 "락인과 가격결정력", 채널 목록(부품 행 삭제, 조직 고객은 업무 채널), 네 질문 정의(전환비용 pass/partial 기준, 가격 실측 8분기), 사다리 A, 지속성 할인, `ai_monetized_in_channel`, unknown 처리
-- [ ] `rules.md` ② 절: 세대 격차 정의(모델 6개월·하드웨어 12개월), 벤더 발표 = 부분 통과 명시
-- [ ] `rules.md` ③ 절: 가속도 지표 단계 a~e 표, 대리 지표 상한 partial, 성장률 두 개 요구
-- [ ] `rules.md` 6절 가짜 해자 표와 ③ 모방 불가능성의 "①의 설치기반이라 안 센다" 문구가 새 ①과 맞는지 확인 (CUDA 가 ①에서 세지면 그대로 둔다)
-- [ ] `scorecard/rules/v2.0.json`: ① 사다리 정책값, 미해결 목록(open_tensions)에서 ① 계열 3건을 "v2.0 재판단으로 닫음"으로
-- [ ] AGENTS.md 「리뷰 범위 — 승계 판단 예외」를 기업 추가 실행 한정으로 고침 (main 에서만)
-- [ ] `score-review`·`score-research` 스킬 문구 맞춤
+- [x] `rules.md` 2.9절 "정기 실행은 모든 정성 판단을 다시 매긴다" (전부 다시 매김, `reconfirmed`, 승계는 기업 추가 실행만, 리뷰 예외도 기업 추가 실행만)
+- [x] `rules.md` ① 절 재작성: "① 락인과 가격결정력", 채널 소비자·업무·거래(조직 고객은 업무), 네 질문 표(전환비용 pass = 대체재 있는데도 남음, 가격 실측 8분기), 지속성 할인, 사다리 표, AI 수익화 표시, 중복 금지, 상한 금지
+- [x] `rules.md` ② 절: 세대 격차 시간 정의(`generation_gap_months`, 모델 6·하드웨어 12), 벤더 발표 = 부분(`leap_independent`)
+- [x] `rules.md` ③ 절: 지표 단계 a~e 표(`acceleration_tier`), 성장률 두 개(`acceleration_growth_rates`)
+- [x] `rules.md` 1절 표·6절 가짜 해자 표·8절 미결 표(세대 격차 행 삭제)·8절 승계 문장
+- [x] `scorecard/rules/v2.0.json` (스크래치 `make_v20.py` 로 v1.9 에서 생성, `load_rules('v2.0')` 통과, 해시 3bf9418cf3eb…): F1 lockin 선언·사다리, F2 세대 격차·독립 측정, F3 지표 단계, F7 judgment_kinds, policies.rejudge, C-30, TEN-RC-02·RC3-03·RC4-02 resolved, 나머지 open 14건 recheck_at 2026-10
+- [x] AGENTS.md: 정기 실행 재판단 항목 추가, 「리뷰 범위 — 승계 판단 예외」를 기업 추가 실행 한정으로
+- [ ] `score-review`·`score-research`·`score-plan` 스킬 문구 (서브에이전트 C)
 
 ## 2. 스키마·엔진
 - [ ] `schema.py`: ① 새 kind(가칭 `lockin`) — inputs: channels[], loop·switching·substitutes·pricing(pass/partial/fail/unknown), durability_discount(yes/no), ai_monetized_in_channel. F1 허용 kind 에서 `score` 제거(v2.0 이상)
@@ -51,8 +52,9 @@
 - [ ] 회사별 있는 것만: `nrr`(Palantir), `paid_seats`(Microsoft Copilot), `mau`(Gemini·Meta AI 시계열), `token_share`·`price_per_m`(OpenRouter, 모델 기업), `customer_prepayments`(TSMC), `fsd_subscribers`(Tesla)
 - [ ] 사건 근거: 가격 인상 공지·보도, 이탈 보도, 경쟁사 출하(경쟁사 10-Q 도 EDGAR 로), 가격 페이지 스냅샷
 
-## 4. 11월 실행
-- [ ] `init --from-run ai-scorecard-2026-10-rescore --rule v2.0 --as-of … --price-as-of … --info-cutoff …`
+## 4. 10월 v2.0 재실행 (11월을 기다리지 않는다 — 2026-10-08 사용자 결정)
+- [ ] 실행 이름 `ai-scorecard-2026-10-rejudge` (제안). `init --from-run ai-scorecard-2026-10-rescore --rule v2.0 --as-of <시작일> --price-as-of <직전 확정 종가일> --info-cutoff <시작일> --title "2026-10 전부 재판단(v2.0)"`
+- [ ] 작업 분할: ① 근거 수집·확정은 회사 묶음(10월과 같은 5묶음)으로, ② 판단은 **항목별로 14사를 한 세션이** 맡는다(같은 잣대, Q03). ①·②·③·④·⑤·⑦·⑧ 일곱 세션. 판단자는 opus.
 - [ ] collect → 후보 선별 → 근거 확정
 - [ ] ② 경로 입력(C-03) 14사 신규 작성 — 지금은 전부 숫자만 있음
 - [ ] ⑦ 매트릭스 2사 신규 작성 (basis carried 인 두 칸)

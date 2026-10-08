@@ -24,7 +24,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
    - 사실·출처: `fact-checker` — 숫자·기업 귀속·기준 시점·출처·부재 주장, 근거의 `source_ids ⊆ sources`, URL, excerpt 원문 대조. 올릴·내릴 근거 줄마다 표지 `[EV-…]` 가 가리키는 근거의 본문 발췌가 원문 그 위치(`locator`)에 실제로 있고 그 줄의 사실을 받치는지 전수로 본다(2026-10-07, `guide.md` 5.7). 이해상충 표기는 보지 않는다(2026-10-02, AGENTS.md 「금지·주의」).
    - 근거 불릿: `evidence-editor` — `evidence.json` 과 draft 근거 절의 주장·출처 대응, 추론 표시, 금지 표현. 근거 불릿 검토는 이 에이전트에 맡기고 사실·출처 영역의 근거로 인용한다.
    - 재무 계산: EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호. results.json 의 calc.path 대조.
-   - 규칙 일관성: 판정 입력↔규칙 판정표, 승계 표시, 미결 결정 처리, 체크리스트 Q01~Q23 전체.
+   - 규칙 일관성: 판정 입력↔규칙 판정표, 승계 표시(기업 추가 실행에만. 규칙 v2.0 이상 정기 실행은 승계 판단이 없어야 한다, `rules.md` 2.9), 미결 결정 처리, 체크리스트 Q01~Q23 전체.
    - 출력·가독성: `report-designer` — draft·HTML(있으면) 숫자 일치, 낡은 비교 문장(C-19), 근거·트리거 절 가독성, dashboard-design 기준.
    - 각 `review-parts/<영역>.md` 는 frontmatter 에 `reviewer_agent`(예: `fact-checker`), `session`(리뷰 세션 식별자), `reviewed_at`(YYYY-MM-DD)을 둔다. 본문 첫머리의 `검토자:`·`결과:` 줄은 승인 페이지 요약이 읽으므로 그대로 둔다.
 3. 리뷰 파일의 "검토 영역" 표에 검토자·결과·요약을, "체크리스트" 표에 Q01~Q23 결과와 근거를 채운다. not_applicable 도 사유를 쓴다. 수행하지 않은 검토를 pass 로 쓰지 않는다.

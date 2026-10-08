@@ -60,7 +60,8 @@
 | 객체 | 파일 | 필수 필드 |
 |---|---|---|
 | 관측 | observations.json items | observation_id, company_id, metric(카탈로그 `METRICS`), value, unit, as_of, kind, source_id, status(verified / legacy_unverified / not_applicable / not_disclosed / collection_failed / source_conflict / incompatible_basis / parse_failed), basis, raw, note |
-| 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs), score, inputs, evidence(판정 칸, 비어 있으면 안 됨), evidence_up·evidence_down(선택: 올릴·내릴 근거 칸, 빈 목록은 '없음'. 규칙 v1.9 이상은 필수, `guide.md` 5.6), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`, previous 는 방향 칸이 있던 판단이면 그것도 담는다) |
+| 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs/lockin), score, inputs, evidence(판정 칸, 비어 있으면 안 됨), evidence_up·evidence_down(선택: 올릴·내릴 근거 칸, 빈 목록은 '없음'. 규칙 v1.9 이상은 필수, `guide.md` 5.6), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`, previous 는 방향 칸이 있던 판단이면 그것도 담는다), reconfirmed(선택: 다시 읽었으나 바꾸지 않은 기록 `[{at, by, evidence_ids}]`, `rules.md` 2.9) |
+| 판단 입력(규칙 v2.0) | judgments.json items[].inputs | ① `lockin`: channel_consumer·channel_work·channel_trade(yes/no), loop·switching·substitutes·pricing(pass/partial/fail/unknown), durability_discount(yes/no/unknown), ai_monetized_in_channel(yes/partial/no/unknown, 점수 밖 표시), pricing_sustained_quarters(선택, 정수). ② `paths` 선택 키: generation_gap_months(정수), leap_independent(yes/no/unknown). ③ `criteria` 선택 키: acceleration_tier(a~e), acceleration_growth_rates(숫자 2개) |
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
@@ -86,6 +87,11 @@
 | | `needs_judgment` | 판단 입력 대기. 필요한 질문을 `pending` 에 적는다 |
 | | `needs_rule_decision` | 규칙 미결. 해당 계산 분기를 활성화하지 않는다 |
 | | `error` · `unavailable` | 입력이 규칙과 모순되거나 산출할 수 없다 |
+| factor 결과 `basis` | `computed` | 관측에서 산식으로 계산(⑥·⑨) |
+| | `manual` | 사람이 적은 점수 그대로(④⑧, 규칙 v1.9 이하는 ① 도) |
+| | `criteria` · `grade` · `matrix` · `paths` | 판정 입력을 사다리·산식·조합표·경로 수로 환산(③⑤⑦②) |
+| | `lockin` | ① 네 질문 판정을 사다리로 환산(규칙 v2.0). `calc` 에 입력과 단계별 보정이 담긴다 |
+| | `carried` | 판정 입력 없이 점수 숫자만 있다(기업 추가 실행의 기존 기업에만 생긴다) |
 
 `data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 승인해야 한다.
 
@@ -95,8 +101,9 @@
 
 | 요구 | 모듈 | 테스트 |
 |---|---|---|
-| F1·F4·F8 정성 (부품 상한 2) | `calc_qual.compute_manual` | `test_f1_component_cap` |
-| F2 경로 환산 (C-03 확정: 경로 수 0·1·2 → 2·3·4, 세대 격차 → 5. 경로 입력이 없으면 승계 score) | `calc_qual.compute_f2`, `_f2_generation_gap` | `tests/test_scorecard_c03.py`, `test_f2_requires_decision_and_carried_allowed` |
+| F4·F8 정성 점수 (규칙 v1.9 이하는 F1 도 여기서, 부품 상한 2) | `calc_qual.compute_manual` | `test_f1_component_cap` |
+| F1 네 질문 사다리 (규칙 v2.0: 락인 강도 = 회수 루프·전환비용 중 높은 판정 통과 4·부분 3·실패 1, 가격 실측 ±1, 대체 공급 실패 −1, 지속성 할인 −1, 0~5 로 자름. 둘 다 미확인이면 판단 대기) | `calc_qual.compute_f1` | `tests/test_v20_*.py` |
+| F2 경로 환산 (C-03 확정: 경로 수 0·1·2 → 2·3·4, 세대 격차 → 5. 규칙 v2.0 정기 실행은 경로 입력 `paths` 로만 판단하고, 세대 격차는 개월 수 `generation_gap_months`, 벤더 발표만 있으면 성능 도약 부분 통과. 점수 숫자만 넘어온 `score` 판단은 기업 추가 실행의 기존 기업에만 남는다) | `calc_qual.compute_f2`, `_f2_generation_gap` | `tests/test_scorecard_c03.py`, `test_f2_requires_decision_and_carried_allowed`, `tests/test_v20_*.py` |
 | F3 사다리 + 모방불가 상한 + 문 닫힘 | `calc_qual.compute_f3`, `rules.f3_ladder` | T-04 `test_t04_f3_all_combinations` |
 | F5 `3 + A + H` | `calc_qual.compute_f5`, `rules.f5_formula` | T-05 |
 | F7 2×2 (v1.7 이후 −2~0, `large\|yes` −2. v1.5 규칙은 −3) | `calc_qual.compute_f7`, `rules.f7_matrix`, schema | T-06, `tests/test_scorecard_fix52_schema.py` |
