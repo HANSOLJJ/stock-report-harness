@@ -1,0 +1,31 @@
+{
+  "changes": {
+    "performance_leap": "fail",
+    "paradigm_adaptation": "pass",
+    "standard_capture": "pass",
+    "top_rank": "no",
+    "generation_gap": "no"
+  },
+  "evidence_after": [
+    "마이크로소프트 ② 는 성능 도약 실패, 패러다임 적응 통과, 표준 선점 통과로 판정한다. 통과로 세는 경로는 둘이다.",
+    "성능 도약은 실패다. 자체 모델은 2026-10-08 Artificial Analysis 순위표 발췌의 회사별 최고 모델 목록에 없고 사용자 투표형 Arena 텍스트 부문(2026-10-02, 참고) 최고 순위도 317위이며, 최상위 성능은 OpenAI·Anthropic 모델을 받아 쓴다. Maia 200 의 달러당 토큰 30% 넘는 개선은 자기 함대 대비 회사 발언이라 독립 측정이 아니다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 업무용 AI 비서 Microsoft 365 Copilot 유료 좌석이 1,500만(2025년 10~12월 분기)에서 2,000만, 3,000만(2026-06-30 분기 말)으로 늘었고 코딩 도구 GitHub Copilot 에서 자체 모델 MAI-Code-1-Flash 를 수백만 개발자가 써, 출시와 채택 지표가 함께 있어 통과다. 에이전트(Autopilot)·코딩(Code)을 묶은 새 Copilot 은 2026-09-25 발표 뒤 시범 배포 단계다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 Microsoft 가 Facebook 과 함께 2017-09 발표한 AI 모델 교환 형식 ONNX 를 다른 회사 NVIDIA(TensorRT)와 Intel(OpenVINO)이 2026년 문서에서 기본 또는 직접 입력 형식으로 써 통과다. ONNX 는 Facebook(지금의 Meta)과 함께 정의한 형식이라 Microsoft 단독 정의는 아니다."
+  ],
+  "evidence_up_after": [
+    "2026-06-30 분기 말 Microsoft 365 Copilot 유료 좌석은 3,000만 개를 넘었고 분기 순증이 직전 분기의 두 배를 넘었다. [EV-microsoft-005]",
+    "2026-03-31 분기 말 Microsoft 365 Copilot 유료 좌석은 2,000만 개를 넘었다. [EV-microsoft-006]",
+    "2025년 10~12월 분기 Microsoft 365 Copilot 유료 좌석은 1,500만 개였다. [EV-microsoft-031]",
+    "수백만 개발자가 GitHub Copilot 에서 자체 모델 MAI-Code-1-Flash 를 썼고 코드 수락률이 올랐다. [EV-microsoft-010]",
+    "자체 AI 가속기 Maia 200 이 아이오와·애리조나 데이터센터에서 가동 중이다. 배포 물량은 밝히지 않았다. [EV-microsoft-008]",
+    "Microsoft 는 2017-09-07 Facebook 과 함께 AI 모델 교환 형식 ONNX 를 발표했고 두 회사가 오픈소스로 함께 개발했다고 밝혔다. [EV-microsoft-036]",
+    "NVIDIA TensorRT 문서(2026-09-08 갱신)는 학습한 모델을 들여오는 주된 방법이 ONNX 교환 형식이고 ONNX 파서 라이브러리를 함께 낸다고 적는다. [EV-microsoft-037]",
+    "Intel OpenVINO 2026 문서는 OpenVINO 런타임이 ONNX 모델 파일을 자체 중간 표현으로 바꾸지 않고 바로 읽는다고 적는다. [EV-microsoft-038]"
+  ],
+  "evidence_down_after": [
+    "사용자 투표형 Arena 텍스트 종합 순위(2026-10-02)에서 마이크로소프트 모델 최고 순위는 317위(phi-4)다. 참고 지표다. [EV-microsoft-009]",
+    "마이크로소프트는 최상위 성능을 OpenAI 와 Anthropic 모델에서 받고 모델을 서로 바꿔 쓸 수 있게 설계했다고 밝혔다. [EV-microsoft-010]",
+    "에이전트·코딩을 묶은 새 Copilot 의 Home·Code 는 Frontier 프로그램에서 배포를 시작할 예정이고 Autopilot 은 2026-09 말 비공개 프리뷰로 넓히는 단계다. [EV-microsoft-002]"
+  ]
+}

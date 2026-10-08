@@ -1,0 +1,54 @@
+{
+  "changes": {
+    "performance_leap": "pass",
+    "paradigm_adaptation": "pass",
+    "standard_capture": "pass",
+    "top_rank": "no",
+    "generation_gap": "no",
+    "generation_gap_months": 0,
+    "leap_independent": "yes"
+  },
+  "evidence_after": [
+    "NVIDIA ② 는 성능 도약·패러다임 적응·표준 선점 세 경로를 모두 통과로 판정하고, 성능 도약은 세대 격차 수준이 아니라고 판정한다.",
+    "칩의 성능 도약은 MLPerf 독립 벤치마크로 잰다. MLPerf Inference 6.1판(2026-09-16 공개)에서 VLM·DeepSeek R1 두 시험의 가속기당 최고 기록이 Vera Rubin 미리보기 시스템에서 나왔고, 6개월 전·1년 전 최고 기록보다 각각 2.99배·5.7배 높다. 다른 시험의 최고 기록은 직전 라운드와 같은 하드웨어에서 나왔다.",
+    "독립 측정 여부는 '예'로 본다. MLCommons 가 검토해 공개한 결과라 벤더 발표가 아니다. Vera Rubin 은 미리보기(preview) 등급으로 올라 제출 시점에는 판매 중인 제품이 아니었으나, NVIDIA 10-Q 는 생산 출하가 2027 회계연도 3분기(2026-07-27 시작)에 시작됐다고 적었고 CoreWeave 는 2026-09-30 고객의 생산 작업에 Vera Rubin NVL72 를 제공한다고 밝혀 기준일에는 출하 중인 제품이다.",
+    "Vera Rubin 의 Blackwell 대비 추론 성능 5배·토큰 비용 최대 10분의 1 같은 NVIDIA 발표 수치는 1차 근거로 쓰지 않는다.",
+    "세대 격차는 '아니오'다. 독립 측정 1위가 선 MLPerf 6.1판 공개일(2026-09-16)부터 기준일까지 0개월이고, 생산 출하가 시작될 수 있는 가장 이른 날(2026-07-27)부터 잡아도 2개월이라 부품형 임계 12개월에 못 미친다. 경쟁 제품 AMD MI450 은 2026년 3분기 생산을 시작했고 대량 출하는 2027년이라 2위는 아직 같은 세대에 도달하지 않았다.",
+    "패러다임 적응은 AI 가속기 Blackwell 300 출하 확대로 데이터센터 매출이 늘었고, 장기 실행 에이전트용 공개 모델 Nemotron 3 Ultra 를 Perplexity·Palantir·ServiceNow 가 먼저 채택해 통과다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 통과다. CUDA 와 NVIDIA 소프트웨어 도구를 쓰는 개발자가 590만 명 넘게(FY2025 10-K)에서 750만 명 넘게(FY2026 10-K)로 늘었고, NVIDIA 컴퓨팅 플랫폼은 거의 모든 주요 서버 제조사와 클라우드 사업자가 제공한다. NVLink Fusion 의 AWS·d-Matrix 채택은 설계·계획 단계라 점수 근거로 세지 않는다. CUDA 위에서만 도는 라이브러리 수는 이번 실행의 확정 근거에 없다."
+  ],
+  "evidence_up_after": [
+    "MLPerf Inference 6.1판(2026-09-16)에 NVIDIA Rubin·Vera Rubin NVL72 가 미리보기 등급으로 올랐고, 이번 라운드 VLM 서버 시나리오 가속기당 최고 기록은 6개월 전보다 2.99배, DeepSeek R1 은 1년 전보다 5.7배 높다. [EV-nvidia-074]",
+    "MLPerf 작업반 의장들은 VLM·DeepSeek R1 두 시험의 최대 성능 증가가 Vera Rubin 기반 미리보기 시스템 제출에서 나왔다고 적었다. [EV-nvidia-075]",
+    "NVIDIA 는 2026-07-26 분기 10-Q 에서 Vera Rubin 의 생산 출하가 2027 회계연도 3분기에 시작됐다고 밝혔다. [EV-nvidia-023]",
+    "CoreWeave 는 2026-09-30 Vera Rubin NVL72 를 제공하기 시작했고 Cognition 이 그 시스템에서 생산 작업을 돌리는 첫 고객이다. [EV-nvidia-008]",
+    "경쟁 제품 AMD MI450 은 2026년 3분기 TSMC 2나노로 생산에 들어갔고 대량 출하는 2027년부터라는 보도다. [EV-nvidia-076]",
+    "2026-04-26 분기 데이터센터 매출은 $75.2B 로 전년보다 92% 늘었고 Blackwell 300 제품 출하 확대가 이끌었다. [EV-nvidia-025]",
+    "NVIDIA 는 2026-06-04 장기 실행 에이전트용 공개 모델 Nemotron 3 Ultra 를 내놓았고 Perplexity·Palantir·ServiceNow 가 먼저 채택했다. [EV-nvidia-032]",
+    "CUDA 와 NVIDIA 소프트웨어 도구를 쓰는 개발자는 FY2025 10-K 에 590만 명 넘게, FY2026 10-K 에 750만 명 넘게 적혔다. [EV-nvidia-067, EV-nvidia-016]",
+    "NVIDIA 컴퓨팅 플랫폼은 거의 모든 주요 서버 제조사와 클라우드 사업자가 제공한다. [EV-nvidia-016]",
+    "NVLink Fusion 은 AWS(Trainium4 를 묶도록 설계 중)와 d-Matrix 가 채택했다. 설계·계획 단계라 점수에 넣지 않는다. [EV-nvidia-036]"
+  ],
+  "evidence_down_after": [
+    "Vera Rubin 은 MLPerf 에 미리보기 등급으로 올라 제출 시점에는 판매 중인 제품이 아니었고, 다른 시험의 최고 기록은 직전 라운드와 같은 하드웨어에서 나왔다. [EV-nvidia-074, EV-nvidia-075]",
+    "독립 측정 1위가 선 MLPerf 6.1판 공개일은 2026-09-16 이라 기준일까지 한 달이 지나지 않았다. [EV-nvidia-074]",
+    "Google·Amazon·Microsoft·Meta 는 모두 NVIDIA 하드웨어 의존을 줄이는 자체 AI 칩(Ironwood TPU·Trainium·Maia 200·MTIA)을 만든다. [EV-nvidia-038]",
+    "Meta 는 Google Cloud 의 자체 AI 칩을 수십억 달러 규모로 빌려 쓰기로 했다는 보도가 있다. [EV-nvidia-028]"
+  ],
+  "cite": [
+    "EV-nvidia-074",
+    "EV-nvidia-075",
+    "EV-nvidia-023",
+    "EV-nvidia-008",
+    "EV-nvidia-076",
+    "EV-nvidia-025",
+    "EV-nvidia-032",
+    "EV-nvidia-067",
+    "EV-nvidia-016",
+    "EV-nvidia-036",
+    "EV-nvidia-038",
+    "EV-nvidia-028"
+  ],
+  "reconfirm": [],
+  "reason": "② 세 경로 입력을 MLPerf 독립 측정과 확정 근거로 처음 매긴다."
+}

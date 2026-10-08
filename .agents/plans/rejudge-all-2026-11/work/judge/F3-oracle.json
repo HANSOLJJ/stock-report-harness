@@ -1,0 +1,30 @@
+{
+  "changes": {
+    "imitation": "fail",
+    "revenue_model": "pass",
+    "acceleration": "partial",
+    "door_closed": "fail",
+    "acceleration_tier": "c",
+    "acceleration_growth_rates": [0.93, 1.21]
+  },
+  "evidence_after": [
+    "Oracle ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 부분 통과로 통과점이 1.5 이고 사다리에서 3점이다.",
+    "모방 불가능성은 실패다. 데이터센터 규모는 자본만 있으면 지을 수 있고 CoreWeave·Nebius 같은 신생 클라우드도 빠르게 커지고 있어, 경쟁사가 구조적으로 못 베끼는 자산이 아니다.",
+    "별도 수익모델은 통과다. 데이터베이스·애플리케이션 소프트웨어 지원 매출이 클라우드 확장을 먹여 살린다. NVIDIA 칩 임대 사업의 총이익률이 낮다는 보도가 있으나 전략을 대는 비모델 매출이 있다는 판정은 바뀌지 않는다.",
+    "후발 가속도는 지표 단계 c(클라우드 인프라 매출)로 판정했다. 전년 대비 성장률이 FY2026 4분기 93%, FY2027 1분기 121% 로 올랐으나 c 단계는 최대 부분이라 부분 통과다. 저장한 성장률은 0.93 과 1.21 이다.",
+    "클라우드 인프라 매출에는 AI 가 아닌 컴퓨트·저장 매출이 섞여 있고 AI 비중은 공시되지 않는다. 잔여 수행 의무(RPO)는 수준값이라 가속도 근거로 쓰지 않는다.",
+    "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나, 클라우드 점유율은 Amazon·Microsoft·Google 이 앞서고 Oracle 은 고성장 2위권 사업자 가운데 하나다."
+  ],
+  "evidence_up_after": [
+    "FY2026 소프트웨어 지원 매출은 $19.8B 로 클라우드 인프라 매출 $18.1B 보다 크다. [EV-oracle-028]",
+    "클라우드 인프라 매출의 전년 대비 성장률은 FY2026 1분기 55%, 2분기 68%, 3분기 84%, 4분기 93%, FY2027 1분기 121% 로 분기마다 올랐다. [EV-oracle-037]"
+  ],
+  "evidence_down_after": [
+    "Oracle 은 10-K 에서 많은 시장의 진입 장벽이 낮아 새 경쟁자가 자주 나온다고 적는다. [EV-oracle-024]",
+    "2026년 2분기 세계 클라우드 점유율은 Amazon 28%, Microsoft 20%, Google 15% 이고, 고성장 2위권 사업자로 CoreWeave·OpenAI·Oracle·Crusoe·Nebius·Anthropic·Nscale 이 꼽혔다. [EV-oracle-032]",
+    "Oracle 의 NVIDIA 클라우드 사업은 2025년 8월까지 석 달 매출 $9억에 총이익률 14% 였다는 보도가 있다. [EV-oracle-033]"
+  ],
+  "cite": ["EV-oracle-028", "EV-oracle-037", "EV-oracle-024", "EV-oracle-032", "EV-oracle-033"],
+  "reconfirm": [],
+  "reason": "OCI 매출(c 단계) 성장률 93%→121% 가속을 상한에 따라 부분 통과로 다시 매기고, RPO 는 수준값이라 가속도 근거에서 뺐다"
+}

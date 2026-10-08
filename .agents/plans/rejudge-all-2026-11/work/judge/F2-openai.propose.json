@@ -1,0 +1,35 @@
+{
+  "changes": {
+    "performance_leap": "partial",
+    "paradigm_adaptation": "pass",
+    "standard_capture": "pass",
+    "top_rank": "no",
+    "generation_gap": "no"
+  },
+  "evidence_after": [
+    "OpenAI ② 는 성능 도약 부분, 패러다임 적응 통과, 표준 선점 통과로 판정한다. 통과로 세는 경로는 둘이다.",
+    "성능 도약은 모델 기업에 같은 날(2026-10-08) 열람한 Artificial Analysis 순위표 한 장(종합 지수 4.3.2판, GDPval-AA 2.1판, Coding Agent Index 1.5판)과 같은 날 ARC Prize 순위표로 가르고, 회사마다 가장 높은 모델끼리 비교한다. 통과는 세 축 가운데 두 축 이상 1위, 부분은 한 축 1위(그 축에 드는 하드 벤치마크 1위 포함)이거나 어느 축에서 회사 기준 2위 안, 실패는 어느 축에서도 회사 기준 2위 안에 들지 못한 경우다.",
+    "OpenAI 는 종합 지능 축의 하드 벤치마크 ARC-AGI-2 와 표준 하네스 ARC-AGI-3 에서 1위지만, 같은 축의 종합 지수에서는 Gemini 4 Argon 과 함께 회사 기준 공동 2위이고 에이전트 실무(GDPval-AA)와 코딩(Coding Agent Index)에서는 1위가 아니다. 한 축 안의 1위라 성능 도약은 부분이다.",
+    "ARC-AGI-3 의 Provider Adapter 하네스 값과 OpenAI 가 발표한 99.9% 는 표준 하네스와 견줄 수 없어 쓰지 않는다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 추론 모델을 쓰는 ChatGPT·Codex·API 를 내놓았고 ChatGPT 주간 사용자가 9억 명 이상(2026-03-31)에서 12억 명(2026-09-29)으로 늘어난 채택 지표가 있어 통과다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 경쟁 모델 회사 Google 과 Anthropic 이 각자 API 에 OpenAI 라이브러리·SDK 호환 경로를 두어, 다른 회사가 OpenAI 인터페이스를 채택한 사실이 있어 통과다. Anthropic 은 이 호환 계층을 시험·비교용으로 한정하고, Google 은 OpenAI 라이브러리를 쓰지 않는 개발자에게 자기 API 를 직접 부르라고 권해 두 회사 모두 호환 경로를 주 경로로 두지는 않는다."
+  ],
+  "evidence_up_after": [
+    "같은 날 ARC Prize 순위표에서 ARC-AGI-2 1위는 GPT-6 Astra(Max) 95.0%, 2위는 GPT-6.1 Sol(Max) 94.2% 이고, 표준 하네스 ARC-AGI-3 1위도 GPT-6 Astra(Max) 62.7% 다. [EV-anthropic-053]",
+    "OpenAI 는 2026-03-31 ChatGPT 주간 사용자가 9억 명을 넘고 구독자가 5천만 명을 넘는다고 밝혔다. [EV-openai-011]",
+    "2026-09-29 DevDay 에서 Altman 은 ChatGPT 주간 사용자가 12억 명이라고 말했다. [EV-openai-055]",
+    "OpenAI 는 GPT-5.4 가 에이전트 업무 흐름에서 최고 참여를 이끌고 API 가 분당 150억 토큰 넘게 처리한다고 밝혔다. [EV-openai-039]",
+    "GPT-6.1 Sol 은 2026-09-29 ChatGPT Work 와 Codex 의 Plus·Pro·Business·Enterprise·Edu 사용자 전원에게 열렸다. [EV-openai-003]",
+    "Google 은 Gemini 모델을 OpenAI 라이브러리(Python·TypeScript/JavaScript)와 REST API 로 코드 세 줄만 바꿔 쓸 수 있다고 Gemini API 문서에서 안내한다. [EV-openai-062]",
+    "Anthropic 은 OpenAI SDK 로 Claude API 를 쓸 수 있는 호환 계층을 제공한다. [EV-openai-063]"
+  ],
+  "evidence_down_after": [
+    "같은 날 종합 지수 4.3.2판에서 OpenAI 최고 GPT-6 Astra(max) 53 은 1위 Claude Opus 5.5(max) 58 보다 5 낮다. [EV-anthropic-049]",
+    "같은 날 GDPval-AA 2.1판에서 OpenAI 최고는 GPT-5.6 Sol(Max) 1611(28위)이고, 9월 모델 GPT-6.1 Sol(Max) 1575(36위)와 GPT-6 Astra(Max) 1542(41위)는 그보다 낮으며, 1위 Claude Opus 5.5(Max) 는 1866 이다. [EV-anthropic-051]",
+    "같은 날 Coding Agent Index 1.5판에서 OpenAI 최고 Codex - GPT-6.1 Sol(xhigh) 63 은 1위 Claude Code - Sonnet 5.5(max) 68 과 Antigravity CLI - Gemini 4 Argon 64 보다 낮다. [EV-anthropic-052]",
+    "Artificial Analysis 는 GPT-6 Astra 출시 때 GDPval-AA 2판 점수가 약 80 Elo 내려가고 고객 지원·과학 코딩·긴 문맥 평가도 2~3 포인트 내려갔다고 적었다. [EV-openai-017]",
+    "WSJ 는 2026-09-28 OpenAI 가 내부 시험에서 나온 안전 문제로 다음 세대 모델 출시를 접었다고 보도했다. 출시되지 않은 모델은 성능 도약에 세지 않는다. [EV-openai-001]",
+    "Anthropic 은 OpenAI SDK 호환 계층이 주로 모델 능력을 시험·비교하려는 것이고 대부분의 쓰임에서 장기·운영용 해법이 아니라고 적는다. [EV-openai-063]"
+  ]
+}

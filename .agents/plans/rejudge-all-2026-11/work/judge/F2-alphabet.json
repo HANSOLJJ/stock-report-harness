@@ -1,0 +1,48 @@
+{
+  "changes": {
+    "performance_leap": "partial",
+    "paradigm_adaptation": "pass",
+    "standard_capture": "pass",
+    "top_rank": "no",
+    "generation_gap": "no"
+  },
+  "evidence_after": [
+    "알파벳 ② 는 성능 도약 부분, 패러다임 적응 통과, 표준 선점 통과로 판정한다. 통과로 세는 경로는 둘이다.",
+    "성능 도약은 모델 기업에 같은 날(2026-10-08) 열람한 Artificial Analysis 순위표 한 장(종합 지수 4.3.2판, GDPval-AA 2.1판, Coding Agent Index 1.5판)과 같은 날 ARC Prize 순위표로 가르고, 회사마다 가장 높은 모델끼리 비교한다. 통과는 세 축 가운데 두 축 이상 1위, 부분은 한 축 1위이거나 어느 축에서 회사 기준 2위 안, 실패는 어느 축에서도 회사 기준 2위 안에 들지 못한 경우다.",
+    "Gemini 4 Argon 은 종합 지수에서 GPT-6 Astra 와 함께 회사 기준 공동 2위(53), 코딩 축에서 회사 기준 2위(64)이지만 어느 축에서도 1위가 아니어서 성능 도약은 부분이다. 같은 날 ARC Prize 순위표에는 Gemini 4 Argon 이 없어 이 시험으로는 견주지 못한다.",
+    "사용자 투표형 Arena 텍스트 부문(2026-10-02)에서 Gemini 4 Argon 이 표본 4,932표의 잠정 1위인 것은 참고로만 보고 판정에 넣지 않는다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 기업용 AI 제품 Gemini Enterprise 가 출시 넉 달 만에 유료 좌석 800만 개를 넘었고 Gemini 앱 월간 사용자가 9.5억 명이며, 2026년 2분기부터 TPU 시스템을 외부에 팔아 매출로 인식해 출시와 채택 지표가 함께 있어 통과다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 Google 이 2025-04-09 공개한 에이전트 사이 통신 규격 A2A 를 다른 회사 제품 Microsoft Copilot Studio 가 지원해 통과다. 발표 때의 파트너 50여 곳은 지원·기여 약속이라 그 수를 채택 수로 세지 않는다. Anthropic·Meta 가 TPU 를 쓰는 것은 제품 구매라 표준 선점 근거로 세지 않는다."
+  ],
+  "evidence_up_after": [
+    "Google 은 2026-02-04 출시 넉 달 된 Gemini Enterprise 유료 좌석을 800만 개 넘게 팔았고 Gemini 앱 월간 사용자가 7.5억 명을 넘었다고 밝혔다. [EV-alphabet-039]",
+    "2026-07-22 Gemini 모델은 분당 API 토큰 220억 개를 처리하고 Gemini 앱 월간 사용자는 9.5억 명이다. [EV-alphabet-012]",
+    "Google 은 학습용과 추론용으로 나눈 8세대 TPU 를 내놓으며 가장 무거운 에이전트 작업을 맡을 수 있다고 밝혔다. 회사 발언이다. [EV-alphabet-036]",
+    "Google Cloud 는 2026년 2분기부터 TPU 시스템 판매 매출을 인식하기 시작했다. [EV-alphabet-063]",
+    "Anthropic 은 TPU 를 최대 100만 개까지 쓰기로 약정했고 Meta 는 수십억 달러 규모 TPU 도입을 협의했다. [EV-alphabet-019]",
+    "Google 은 2025-04-09 에이전트끼리 통신하는 공개 프로토콜 A2A 를 50곳 넘는 기술 파트너의 지원·기여와 함께 내놓았다. [EV-alphabet-066]",
+    "Microsoft Copilot Studio 는 A2A 프로토콜을 지원하는 다른 에이전트를 연결해 A2A 로 그 에이전트와 일을 나눈다(2026-08-26 갱신 문서). [EV-alphabet-067]"
+  ],
+  "evidence_down_after": [
+    "같은 날 종합 지수 4.3.2판에서 Gemini 4 Argon(high) 53 은 1위 Claude Opus 5.5(max) 58 보다 5 낮다. [EV-anthropic-049]",
+    "같은 날 GDPval-AA 2.1판에서 Gemini 4 Argon(High) 은 1626 으로 21위이고 1위 Claude Opus 5.5(Max) 는 1866 이다. [EV-anthropic-051]",
+    "같은 날 Coding Agent Index 1.5판에서 Antigravity CLI - Gemini 4 Argon 64 는 1위 Claude Code - Sonnet 5.5(max) 68 보다 4 낮다. [EV-anthropic-052]",
+    "Gemini 4 Argon 은 2026-09-30 발표 때 Fairwind 프로그램으로 신뢰할 수 있는 일부 보안 방어 기관에만 배포됐다. [EV-alphabet-035]"
+  ],
+  "cite": [
+    "EV-alphabet-039",
+    "EV-alphabet-012",
+    "EV-alphabet-036",
+    "EV-alphabet-063",
+    "EV-alphabet-019",
+    "EV-anthropic-049",
+    "EV-anthropic-051",
+    "EV-anthropic-052",
+    "EV-alphabet-035",
+    "EV-alphabet-066",
+    "EV-alphabet-067"
+  ],
+  "reconfirm": [],
+  "reason": "② 세 경로 입력을 2026-10-08 같은 날 독립 순위표와 확정 근거로 처음 매기고, 표준 선점은 다른 회사의 A2A 지원 근거로 통과로 둔다."
+}

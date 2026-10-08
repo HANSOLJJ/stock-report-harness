@@ -14,12 +14,21 @@
 2. 회사마다 판정 입력을 정하고 근거를 세 칸으로 쓴다(`docs/scorecard/guide.md` 5.6). 판정 칸에는 결론·저울질·미확인, 올릴 근거와 내릴 근거에는 그 사실 하나만 보면 점수가 오르는지 내리는지로 가른 문장. 올릴·내릴 근거의 줄마다 끝에 `[EV-…]` 표지(5.7). 표지가 가리키는 근거는 `confirmed` 이고 URL·본문 발췌·`locator` 가 있어야 한다.
 3. 원문을 못 찾은 사실은 방향 칸에서 빼고 판정 칸에 "미확인"으로 둔다. 회사가 공시하지 않음을 확인한 것(`not_disclosed`)과 우리가 못 찾은 것(`unverified`)을 섞지 않는다. 미확인을 실패로 적지 않는다.
 4. 숫자는 원문을 연 뒤 적는다. 다른 판단 문장의 숫자를 옮겨 적지 않는다(2026-10-07 Oracle ⑤ 교훈). 공시 원문은 `data/_sec/docs/` 캐시에 있고, 없으면 `scorecard_cli.py sec-get <SEC 주소>` 로 받는다.
-5. 회사마다 제안을 쓴다.
+5. 회사마다 파일 하나를 쓴다. **CLI(`propose`·`judge`)는 부르지 않는다** — 판단 세션 일곱이 동시에 부르면 실행 잠금이 충돌한다. 조율자가 `work/apply_judgments.py` 로 순서대로 `propose` → `proposal --accept` 한다.
+   파일: `.agents/plans/rejudge-all-2026-11/work/judge/<F>-<company_id>.json`
+   ```json
+   {
+     "changes": {"<판정 입력 키>": "값", …},
+     "evidence_after": ["판정 칸 문장", …],
+     "evidence_up_after": ["올릴 근거 문장 … [EV-…]", …],
+     "evidence_down_after": ["내릴 근거 문장 … [EV-…]", …],
+     "cite": ["EV-…", …],
+     "reconfirm": ["EV-…", …],
+     "reason": "제안 사유 한 문장"
+   }
    ```
-   uv run --frozen python -X utf8 scripts/scorecard_cli.py propose <slug> --company <id> --factor F1 --json work/F1-<id>.json --reason "v2.0 네 질문으로 재판단" --cite EV-…,EV-…
-   ```
-   JSON 은 `{"changes": {<판정 입력 키>: 값, …}, "evidence_after": [...], "evidence_up_after": [...], "evidence_down_after": [...]}` 이다. 점수 칸은 없다. 점수는 규칙이 계산한다.
-6. 열네 회사가 끝나면 마지막 답변에 회사별 입력 요약표(입력 값과 계산될 점수의 가늠), 미확인으로 남긴 것, 자료가 없어 `unknown` 으로 둔 칸, 같은 잣대를 대면서 어려웠던 경계 사례를 적는다. 조율자가 `proposal --all-pending --accept` 로 반영한다.
+   `changes` 에는 점수 칸이 없다(④⑧ 만 `score`). ①은 lockin 입력 전부, ②는 paths 입력 전부(옛 판단이 score 라 키를 다 줘야 한다), ③은 criteria 입력 전부와 `acceleration_tier`·`acceleration_growth_rates`, ⑤는 `A`·`H`, ⑦은 `funding_dependent_share`·`own_money_returns`. `cite` 는 올릴·내릴 근거가 가리키는 확정 근거 ID 전부. 판정 입력이 지난 판단과 전부 같다면 `changes` 를 비우고 `reconfirm` 에 다시 읽은 근거 ID 를 적는다(그래도 세 칸 문장은 새로 쓴다). `evidence_up_after`·`evidence_down_after` 는 비어 있어도 된다(없음).
+6. 열네 회사가 끝나면 마지막 답변에 회사별 입력 요약표(입력 값과 계산될 점수의 가늠), 미확인으로 남긴 것, 자료가 없어 `unknown` 으로 둔 칸, 같은 잣대를 대면서 어려웠던 경계 사례, 조율자가 더 확정해야 할 근거(후보 상태인데 꼭 필요한 것)를 적는다.
 
 ## 완결된 문장 (AGENTS.md 「금지·주의」)
 

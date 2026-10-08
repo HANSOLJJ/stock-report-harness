@@ -1,0 +1,329 @@
+{
+  "group": "F2-std",
+  "sources": [
+    {
+      "source_id": "SRC-WEB-openai-029",
+      "company_id": "openai",
+      "kind": "news",
+      "title": "OpenAI compatibility | Gemini API | Google AI for Developers",
+      "publisher": "Google (Google AI for Developers)",
+      "url": "https://ai.google.dev/gemini-api/docs/openai",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② OpenAI 표준 선점 근거(다른 회사가 OpenAI API 형식을 채택). 페이지 하단 'Last updated 2026-09-02 UTC' 를 published_at_utc 로 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-openai-030",
+      "company_id": "openai",
+      "kind": "news",
+      "title": "OpenAI SDK compatibility — Claude Platform Docs",
+      "publisher": "Anthropic (Claude Platform Docs)",
+      "url": "https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2026-10-08T11:07:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② OpenAI 표준 선점 근거(다른 회사가 OpenAI SDK 형식을 채택). docs.anthropic.com/en/api/openai-sdk 와 platform.claude.com/docs/en/api/openai-sdk 가 이 주소로 넘어간다. 페이지에 게시·갱신일이 없어 열람 시각을 published_at_utc 로 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-011",
+      "company_id": "alphabet",
+      "kind": "news",
+      "title": "Announcing the Agent2Agent Protocol (A2A) - Google Developers Blog",
+      "publisher": "Google (Google Developers Blog)",
+      "url": "https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2025-04-09T00:00:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 알파벳 표준 선점 근거(Google 이 A2A 를 정의해 공개). 게시일 'APRIL 9, 2025' 를 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-012",
+      "company_id": "alphabet",
+      "kind": "news",
+      "title": "Connect to an agent over the Agent2Agent (A2A) protocol - Microsoft Copilot Studio | Microsoft Learn",
+      "publisher": "Microsoft (Microsoft Learn)",
+      "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/add-agent-agent-to-agent",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2026-08-26T19:04:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 알파벳 표준 선점 근거(다른 회사 제품 Copilot Studio 가 A2A 를 지원). 문서 메타데이터 updated_at(2026-08-26T19:04:00Z)을 published_at_utc 로 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-meta-013",
+      "company_id": "meta",
+      "kind": "news",
+      "title": "Announcing the PyTorch Foundation: A new era for the cutting-edge AI framework",
+      "publisher": "Meta (Meta AI Blog)",
+      "url": "https://ai.meta.com/blog/pytorch-foundation/",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2022-09-12T00:00:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② Meta 표준 선점 근거(Meta 가 만든 PyTorch 를 다른 회사가 쓰고 재단 이사회에 참여). 게시일 'September 12, 2022' 를 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-meta-014",
+      "company_id": "meta",
+      "kind": "news",
+      "title": "Alibaba Cloud, Ant Group, Cambricon and Huawei Come Together in Shanghai to Advance the Open Source AI Stack at PyTorch Conference China",
+      "publisher": "PyTorch Foundation (Linux Foundation)",
+      "url": "https://pytorch.org/blog/alibaba-cloud-ant-group-cambricon-and-huawei-come-together-in-shanghai-to-advance-the-open-source-ai-stack-at-pytorch-conference-china/",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2026-09-08T00:00:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② Meta 표준 선점 근거(2026 년 현재 다른 회사가 PyTorch 재단에 회원으로 들어옴). 페이지 날짜는 September 7, 2026 이고 본문 날짜줄은 September 8, 2026 이라 날짜줄을 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-011",
+      "company_id": "microsoft",
+      "kind": "news",
+      "title": "Microsoft and Facebook create open ecosystem for AI model interoperability",
+      "publisher": "Microsoft (Microsoft Azure Blog)",
+      "url": "https://azure.microsoft.com/en-us/blog/microsoft-and-facebook-create-open-ecosystem-for-ai-model-interoperability/",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2017-09-07T00:00:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 마이크로소프트 표준 선점 근거(Microsoft 가 Facebook 과 ONNX 를 함께 정의). 게시일 'September 7, 2017' 을 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-012",
+      "company_id": "microsoft",
+      "kind": "news",
+      "title": "Architecture Overview — NVIDIA TensorRT Documentation",
+      "publisher": "NVIDIA (NVIDIA Docs)",
+      "url": "https://docs.nvidia.com/deeplearning/tensorrt/latest/architecture/architecture-overview.html",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2026-09-08T00:00:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 마이크로소프트 표준 선점 근거(다른 회사 NVIDIA 의 추론 엔진이 ONNX 를 기본 입력 형식으로 씀). 페이지 하단 'Last updated on Sep 08, 2026' 을 적었다."
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-013",
+      "company_id": "microsoft",
+      "kind": "news",
+      "title": "Converting an ONNX Model — OpenVINO 2026 Documentation",
+      "publisher": "Intel (OpenVINO Documentation)",
+      "url": "https://docs.openvino.ai/2026/openvino-workflow/model-preparation/convert-model-onnx.html",
+      "accessed_at": "2026-10-08",
+      "published_at_utc": "2026-10-08T11:07:00Z",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 마이크로소프트 표준 선점 근거(다른 회사 Intel 의 OpenVINO 가 ONNX 모델을 바로 읽음). 페이지에 게시·갱신일이 없어 열람 시각을 적었다. 주소의 2026 은 문서 판이다."
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "openai",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-029",
+      "published_at_utc": "2026-09-02T00:00:00Z",
+      "title": "OpenAI compatibility | Gemini API | Google AI for Developers",
+      "excerpt": "Gemini models are accessible using the OpenAI libraries (Python and TypeScript / Javascript) along with the REST API, by updating three lines of code and using your Gemini API key. If you aren't already using the OpenAI libraries, we recommend that you call the Gemini API directly.",
+      "locator": "Gemini API 문서 'OpenAI compatibility' 페이지 제목 바로 아래 첫 문단",
+      "relevance": "사실: Google 은 Gemini API 문서에서 Gemini 모델을 OpenAI 라이브러리(Python·TypeScript/JavaScript)와 REST API 로 코드 세 줄만 바꿔 쓸 수 있다고 안내한다. 추론: 경쟁 모델 회사 Google 이 OpenAI API 형식을 자기 API 의 호환 경로로 채택했다는 사실이라 OpenAI ② 표준 선점(다른 회사가 그 인터페이스를 채택)의 근거다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: OpenAI ② 표준 선점을 미확인에서 통과로 다시 본다. 다른 회사가 OpenAI 의 API 형식을 채택한 사실이다.",
+      "horizon": "현재 — 2026-09-02 갱신된 문서, 2026-10-08 열람",
+      "counter_evidence": [
+        "Google 은 OpenAI 라이브러리를 이미 쓰고 있지 않은 개발자에게는 Gemini API 를 직접 부르라고 권해, 호환 경로를 주 경로로 두지 않는다."
+      ],
+      "unverified": [
+        "페이지에 게시일이 없어 하단의 최종 갱신일(2026-09-02 UTC)을 published_at_utc 로 적었다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-030",
+      "published_at_utc": "2026-10-08T11:07:00Z",
+      "title": "OpenAI SDK compatibility — Claude Platform Docs",
+      "excerpt": "Anthropic provides a compatibility layer that enables you to use the OpenAI SDK to test the Claude API. With a few code changes, you can quickly evaluate Anthropic model capabilities. … This compatibility layer is primarily intended to test and compare model capabilities, and is not considered a long-term or production-ready solution for most use cases.",
+      "locator": "Claude Platform Docs 'OpenAI SDK compatibility' 페이지 첫 문단과 그 아래 Note 상자 첫 문장",
+      "relevance": "사실: Anthropic 은 개발 문서에서 OpenAI SDK 로 Claude API 를 쓸 수 있는 호환 계층을 제공한다고 밝힌다. 추론: 경쟁 모델 회사 Anthropic 이 OpenAI SDK 형식을 받아들였다는 사실이라 OpenAI ② 표준 선점(다른 회사가 그 인터페이스를 채택)의 근거다. 같은 문서가 이 계층을 시험·비교용으로 한정한다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: OpenAI ② 표준 선점을 미확인에서 통과로 다시 본다. 다른 회사가 OpenAI 의 SDK 형식을 채택한 사실이다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 문서",
+      "counter_evidence": [
+        "Anthropic 은 이 호환 계층이 주로 모델 능력을 시험·비교하려는 것이고 대부분의 쓰임에서 장기·운영용 해법이 아니라고 적는다."
+      ],
+      "unverified": [
+        "페이지에 게시·갱신일이 없어 열람 시각(2026-10-08T11:07:00Z)을 published_at_utc 로 적었다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alphabet",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-011",
+      "published_at_utc": "2025-04-09T00:00:00Z",
+      "title": "Announcing the Agent2Agent Protocol (A2A) - Google Developers Blog",
+      "excerpt": "Today, we’re launching a new, open protocol called Agent2Agent (A2A), with support and contributions from more than 50 technology partners like Atlassian, Box, Cohere, Intuit, Langchain, MongoDB, PayPal, Salesforce, SAP, ServiceNow, UKG and Workday; and leading service providers including Accenture, BCG, Capgemini, Cognizant, Deloitte, HCLTech, Infosys, KPMG, McKinsey, PwC, TCS, and Wipro.",
+      "locator": "블로그 'A new era of Agent Interoperability' 본문 중 'Today, we’re launching' 으로 시작하는 문단 첫 문장",
+      "relevance": "사실: Google 은 2025-04-09 에이전트끼리 통신하는 공개 프로토콜 A2A 를 내놓으며 50곳 넘는 기술 파트너가 지원·기여한다고 밝혔다. 추론: A2A 를 정의한 회사가 Google 이라는 사실이라 알파벳 ② 표준 선점의 '인터페이스를 정의했다' 쪽 근거다. 다른 회사 제품의 실제 채택은 Microsoft Copilot Studio 문서로 잇는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 알파벳 ② 표준 선점을 미확인에서 통과로 다시 본다. Google 이 정의한 인터페이스다.",
+      "horizon": "현재 — 2025-04-09 발표, 2026-10-08 열람",
+      "counter_evidence": [
+        "발표 시점의 파트너 지원·기여 약속이라 각 파트너 제품이 A2A 를 출하했는지는 이 문단이 보여 주지 않는다."
+      ],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alphabet",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-012",
+      "published_at_utc": "2026-08-26T19:04:00Z",
+      "title": "Connect to an agent over the Agent2Agent (A2A) protocol - Microsoft Copilot Studio | Microsoft Learn",
+      "excerpt": "The Agent2Agent (A2A) protocol is an open standard for communication and collaboration between agents. You can connect your custom agent to another agent that supports the A2A protocol. Copilot Studio uses the A2A protocol to orchestrate with this agent in response to a user request or a trigger.",
+      "locator": "Microsoft Learn 'Connect to an agent over the Agent2Agent (A2A) protocol' 문서 머리 Note 다음 첫 문단",
+      "relevance": "사실: Microsoft 는 Copilot Studio 문서에서 A2A 프로토콜을 지원하는 다른 에이전트를 연결해 Copilot Studio 가 A2A 로 그 에이전트와 일을 나눈다고 안내한다. 추론: 다른 회사 제품(Microsoft Copilot Studio)이 Google 이 정의한 A2A 를 채택했다는 사실이라 알파벳 ② 표준 선점(다른 회사가 그 인터페이스를 채택)의 근거다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: 알파벳 ② 표준 선점을 미확인에서 통과로 다시 본다. 다른 회사 제품이 A2A 를 지원한다.",
+      "horizon": "현재 — 2026-08-26 갱신된 문서, 2026-10-08 열람",
+      "counter_evidence": [
+        "이 문서는 A2A 를 만든 회사를 적지 않는다. Google 이 정의했다는 사실은 Google 발표로 잇는다.",
+        "Copilot Studio 는 A2A 와 함께 MCP 서버, 자체 Activity Protocol 같은 다른 연결 방식도 안내한다."
+      ],
+      "unverified": [
+        "문서 메타데이터의 갱신 시각(2026-08-26T19:04:00Z)을 published_at_utc 로 적었고 처음 게시일은 확인하지 않았다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-013",
+      "published_at_utc": "2022-09-12T00:00:00Z",
+      "title": "Announcing the PyTorch Foundation: A new era for the cutting-edge AI framework",
+      "excerpt": "The project will join the Linux Foundation with a diverse governing board composed of representatives from AMD, Amazon Web Services, Google Cloud, Meta, Microsoft Azure, and Nvidia, with the intention to expand over time. … In 2016, a group of Meta AI researchers embarked quietly on a couple of projects. They were determined to create a single, simple, standardized interface for their end-to-end workflow. … PyTorch is also a foundation of the AI research and products built by Amazon Web Services, Microsoft Azure, OpenAI, and many other companies and research institutions.",
+      "locator": "블로그 첫 문단 둘째 문장, 'A thriving community' 절 첫 문단 첫 두 문장, 같은 절 torchvision 다음 문단",
+      "relevance": "사실: Meta 는 2022-09-12 PyTorch 를 Linux Foundation 산하 PyTorch 재단으로 옮기며 이사회가 AMD·AWS·Google Cloud·Meta·Microsoft Azure·NVIDIA 대표로 꾸려진다고 밝혔고, PyTorch 가 2016년 Meta AI 연구진이 시작한 프로젝트이며 AWS·Microsoft Azure·OpenAI 등 많은 회사의 AI 연구와 제품의 토대라고 적었다. 추론: Meta 가 정의한 AI 프레임워크 인터페이스를 다른 회사들이 채택했다는 사실이라 Meta ② 표준 선점의 근거다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Meta ② 표준 선점을 미확인에서 통과로 다시 본다. Meta 가 만든 인터페이스를 다른 회사가 쓴다.",
+      "horizon": "현재 — 2022-09-12 발표, 2026 년 현재 회원 가입은 PyTorch 재단 발표로 잇는다",
+      "counter_evidence": [
+        "2022 년 발표라 지금의 사용 현황을 직접 재지 않는다.",
+        "PyTorch 는 Linux Foundation 산하 재단으로 옮겨 운영 주체가 Meta 가 아니다."
+      ],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-014",
+      "published_at_utc": "2026-09-08T00:00:00Z",
+      "title": "Alibaba Cloud, Ant Group, Cambricon and Huawei Come Together in Shanghai to Advance the Open Source AI Stack at PyTorch Conference China",
+      "excerpt": "The PyTorch Foundation, a community-driven hub for open source AI under the Linux Foundation, today announced that Alibaba Cloud and Cambricon have joined the Foundation as Platinum members, and Ant Group has joined as a Gold member. … More than 250 organizations across China contribute PyTorch Foundation projects including DeepSpeed, Helion, PyTorch, Ray, Safetensors, and vLLM.",
+      "locator": "보도자료 날짜줄(September 8, 2026) 첫 문단 첫 문장, Mark Collier 인용 다음 문단 둘째 문장",
+      "relevance": "사실: PyTorch 재단은 2026-09-08 Alibaba Cloud·Cambricon 이 Platinum 회원, Ant Group 이 Gold 회원으로 들어왔고 중국에서 250곳 넘는 조직이 PyTorch 등 재단 프로젝트에 기여한다고 밝혔다. 추론: 기준일 한 달 전에도 다른 회사들이 PyTorch 생태계에 새로 합류하고 있다는 사실이라 Meta ② 표준 선점의 '지금 측정되는 채택' 근거다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: Meta ② 표준 선점을 미확인에서 통과로 다시 본다. 2026 년 현재 다른 회사가 PyTorch 재단에 합류한다.",
+      "horizon": "현재 — 2026-09-08 발표",
+      "counter_evidence": [
+        "이 보도자료는 PyTorch 를 Meta 가 만들었다는 사실을 적지 않는다. 그 사실은 Meta 발표로 잇는다.",
+        "재단 회원 가입은 PyTorch 채택의 방증이고 회사별 사용 규모는 보여 주지 않는다."
+      ],
+      "unverified": [
+        "페이지 머리 날짜는 September 7, 2026 이고 본문 날짜줄은 September 8, 2026 이라 날짜줄을 published_at_utc 로 적었다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-011",
+      "published_at_utc": "2017-09-07T00:00:00Z",
+      "title": "Microsoft and Facebook create open ecosystem for AI model interoperability",
+      "excerpt": "Today we are excited to announce the Open Neural Network Exchange (ONNX) format in conjunction with Facebook. ONNX provides a shared model representation for interoperability and innovation in the AI framework ecosystem. Cognitive Toolkit, Caffe2, and PyTorch will all be supporting ONNX. Microsoft and Facebook co-developed ONNX as an open source project, and we hope the community will help us evolve it.",
+      "locator": "블로그 본문 첫 문단('At Microsoft our commitment…') 다음 문단",
+      "relevance": "사실: Microsoft 는 2017-09-07 Facebook 과 함께 AI 모델 교환 형식 ONNX 를 발표하고 두 회사가 오픈소스로 함께 개발했다고 밝혔다. 추론: ONNX 를 정의한 회사에 Microsoft 가 든다는 사실이라 마이크로소프트 ② 표준 선점의 '인터페이스를 정의했다' 쪽 근거다. 다른 회사의 지금 채택은 NVIDIA TensorRT·Intel OpenVINO 문서로 잇는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 마이크로소프트 ② 표준 선점을 미확인에서 통과로 다시 본다. Microsoft 가 함께 정의한 인터페이스다.",
+      "horizon": "현재 — 2017-09-07 발표, 2026-10-08 열람",
+      "counter_evidence": [
+        "Facebook(지금의 Meta)과 함께 만든 형식이라 Microsoft 단독 정의가 아니다.",
+        "2017 년 발표라 지금의 사용 현황은 이 근거가 재지 않는다."
+      ],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-012",
+      "published_at_utc": "2026-09-08T00:00:00Z",
+      "title": "Architecture Overview — NVIDIA TensorRT Documentation",
+      "excerpt": "The primary means of importing a trained model from a framework is the ONNX interchange format. TensorRT ships with an ONNX parser library to assist in importing models.",
+      "locator": "TensorRT 문서 Architecture Overview 페이지 'ONNX' 절 첫 문단",
+      "relevance": "사실: NVIDIA 는 TensorRT 문서에서 학습한 모델을 들여오는 주된 방법이 ONNX 교환 형식이고 TensorRT 가 ONNX 파서 라이브러리를 함께 낸다고 적는다. 추론: 다른 회사(NVIDIA)의 추론 엔진이 ONNX 를 기본 입력 형식으로 채택했다는 2026 년 현재 사실이라 마이크로소프트 ② 표준 선점(다른 회사가 그 인터페이스를 채택)의 근거다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: 마이크로소프트 ② 표준 선점을 미확인에서 통과로 다시 본다. 다른 회사 제품이 ONNX 를 기본 입력 형식으로 쓴다.",
+      "horizon": "현재 — 2026-09-08 갱신된 문서",
+      "counter_evidence": [
+        "이 문서는 ONNX 를 누가 만들었는지 적지 않는다. Microsoft 가 함께 정의했다는 사실은 Microsoft 발표로 잇는다."
+      ],
+      "unverified": [
+        "페이지 하단의 최종 갱신일(Sep 08, 2026)을 published_at_utc 로 적었다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": ["F2"],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-013",
+      "published_at_utc": "2026-10-08T11:07:00Z",
+      "title": "Converting an ONNX Model — OpenVINO 2026 Documentation",
+      "excerpt": "ONNX is a representation format for deep learning models that enables AI developers to easily transfer models between different frameworks. … An ONNX model file can be loaded by openvino.Core.read_model or openvino.Core.compile_model methods by OpenVINO runtime API without the need to prepare an OpenVINO IR first.",
+      "locator": "OpenVINO 2026 문서 'Converting an ONNX Model' 페이지 'Introduction to ONNX' 절 첫 문장과 바로 다음 Note",
+      "relevance": "사실: Intel 의 OpenVINO 2026 문서는 OpenVINO 런타임이 ONNX 모델 파일을 자체 중간 표현으로 바꾸지 않고 바로 읽는다고 적는다. 추론: 다른 회사(Intel)의 추론 도구가 ONNX 를 직접 입력으로 채택했다는 사실이라 마이크로소프트 ② 표준 선점(다른 회사가 그 인터페이스를 채택)의 근거다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: 마이크로소프트 ② 표준 선점을 미확인에서 통과로 다시 본다. 다른 회사 제품이 ONNX 를 직접 읽는다.",
+      "horizon": "현재 — 2026 문서 판, 2026-10-08 열람",
+      "counter_evidence": [
+        "이 문서는 ONNX 를 누가 만들었는지 적지 않는다.",
+        "같은 문서는 모델을 불러오는 지연이 중요하면 OpenVINO 자체 형식으로 바꾸는 쪽을 여전히 권한다."
+      ],
+      "unverified": [
+        "페이지에 게시·갱신일이 없어 열람 시각(2026-10-08T11:07:00Z)을 published_at_utc 로 적었다. 주소의 2026 은 문서 판 번호다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    }
+  ],
+  "evidence_fixes": [
+    {
+      "evidence_id": "EV-anthropic-051",
+      "excerpt": "Anchored to DeepSeek V4.1 Flash (max) at 1600 … 1 ; Anthropic ; Claude Opus 5.5 (Max, Default Fallback) ; 1866 ; -26 / +26 ; Sep 2026 … 8 ; SpaceXAI ; Grok 4.7 (Xhigh) ; 1712 ; -23 / +23 ; Sep 2026 … 13 ; Meta ; Muse Spark 1.3 (Max) ; 1684 ; -20 / +20 ; Sep 2026 … 14 ; Alibaba ; Qwen3.8 Max (0902) ; 1671 ; -21 / +21 ; Sep 2026 … 21 ; Google ; Gemini 4 Argon (High) ; 1626 ; -22 / +22 ; Sep 2026 … 28 ; OpenAI ; GPT-5.6 Sol (Max) ; 1611 ; -17 / +17 ; Jul 2026 … 36 ; OpenAI ; GPT-6.1 Sol (Max) ; 1575 ; -20 / +20 ; Sep 2026 … 41 ; OpenAI ; GPT-6 Astra (Max) ; 1542 ; -25 / +25 ; Sep 2026",
+      "locator": "GDPval-AA v2.1 평가 페이지 순위 표 머리 설명('Anchored to …')과 순위 표(Rank·Creator·Name·Elo·CI·Release Date) 1·8·13·14·21·28·36·41위 행(2026-10-08 11:07 UTC 다시 열람)",
+      "note": "8위 Grok 4.7(Xhigh) 은 원문 표에서 1712(CI -23 / +23)다. 이 근거의 relevance 와 묶음 D 보고의 1715 는 원문과 다르니 relevance 의 그 값도 1712 로 고쳐야 한다. 다른 행의 값은 기존 발췌와 같다. 600자 안에 넣으려고 머리 설명 앞부분('Elo rating for performance on real-world work tasks ·')을 뺐다. 표에서 Meta 앞의 12위는 Xiaomi MiMo-V2.6-Pro 1685 다."
+    }
+  ]
+}

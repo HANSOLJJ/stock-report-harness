@@ -1,0 +1,31 @@
+{
+  "changes": {
+    "imitation": "fail",
+    "revenue_model": "pass",
+    "acceleration": "partial",
+    "door_closed": "fail",
+    "acceleration_tier": "c",
+    "acceleration_growth_rates": [0.28, 0.37]
+  },
+  "evidence_after": [
+    "아마존 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 부분 통과로 통과점이 1.5 이고 사다리에서 3점이다.",
+    "모방 불가능성은 실패다. 모두의 모델을 파는 Bedrock 매대는 Azure Foundry 와 Google Vertex AI 도 같은 프런티어 모델을 올려 경쟁사 둘 이상이 이미 하고 있다. 공급 쪽 자산인 클라우드 규모와 Trainium 도 Microsoft·Google 이 비슷한 규모의 클라우드와 자체 가속기를 갖고 있어 구조적으로 못 베끼는 자산이 아니다. 모델을 직접 만들지 않은 것 자체는 카운터 포지셔닝으로 세지 않는다.",
+    "별도 수익모델은 통과다. AWS 컴퓨트 매출이 전략을 먹여 살린다.",
+    "후발 가속도는 지표 단계 c(AWS 세그먼트 매출)로 판정했다. 전년 대비 성장률이 2025년 4분기 24%, 2026년 1분기 28%, 2분기 37% 로 올랐으나 c 단계는 최대 부분이라 부분 통과다. 저장한 성장률은 0.28 과 0.37 이다.",
+    "칩 사업 연환산 매출($200억 초과)은 한 시점 값이라 b 단계 지표로 쓸 수 없었다. AWS 매출에는 AI 가 아닌 컴퓨트·저장 매출이 섞여 있고 AI 비중은 공시되지 않는다.",
+    "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없다. 2026년 4월 Microsoft 의 OpenAI 독점이 끝나 OpenAI 모델이 Bedrock 에 올라왔으나 이는 경쟁사의 독점 해제이지 점유율 실측 역전이 아니다."
+  ],
+  "evidence_up_after": [
+    "2026년 2분기 AWS 세그먼트 매출은 $42.2B 로 전년보다 37% 늘어 컴퓨트 매출이 전략을 먹여 살린다. [EV-amazon-027]",
+    "AWS 매출의 전년 대비 성장률은 2025년 4분기 24%, 2026년 1분기 28%(15분기 만의 최고), 2분기 37% 로 올랐다. [EV-amazon-058, EV-amazon-057, EV-amazon-027]",
+    "Bedrock 은 2026년 4월 Microsoft 의 독점이 끝난 지 하루도 안 돼 OpenAI 모델을 올렸고, 2분기에 GPT-5.6·Claude Opus 5·Gemma 4·Grok 4.3 을 포함한 10개 넘는 모델을 더해 19개 제공사의 모델을 판다. [EV-amazon-037, EV-amazon-024, EV-amazon-050]",
+    "OpenAI 는 Trainium3·Trainium4 약 2GW 사용을 약정했다. [EV-amazon-035]"
+  ],
+  "evidence_down_after": [
+    "Claude 는 AWS Bedrock·Google Vertex AI·Microsoft Azure Foundry 세 곳 모두에서 판매돼, 같은 모델 매대를 경쟁사 둘이 이미 운영한다. [EV-amazon-038]",
+    "2026년 2분기 세계 클라우드 점유율은 Amazon 28%, Microsoft 20%, Google 15% 이고 Microsoft·Google 의 성장률이 훨씬 높다. [EV-oracle-032]"
+  ],
+  "cite": ["EV-amazon-027", "EV-amazon-058", "EV-amazon-057", "EV-amazon-037", "EV-amazon-024", "EV-amazon-050", "EV-amazon-035", "EV-amazon-038", "EV-oracle-032"],
+  "reconfirm": [],
+  "reason": "AWS 매출(c 단계) 성장률 24%→28%→37% 가속을 상한에 따라 부분 통과로 다시 매기고, 같은 매대·규모를 경쟁사 둘 이상이 갖춰 모방 불가능성은 실패로 두었다"
+}

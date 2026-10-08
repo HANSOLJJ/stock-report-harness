@@ -1,0 +1,1678 @@
+{
+  "group": "E",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-tesla-000162828024002390",
+      "title": "Tesla 10-K (2023-12-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828024002390/tsla-20231231.htm",
+      "accessed_at": "2026-10-08T06:19:22Z",
+      "sha256": "83382169bef5a80eb9ca227873a38090baaa145a44481472e3a1ff58b31724cc",
+      "conflict_of_interest": null,
+      "note": "접수번호 0001628280-24-002390(2024-01-29). 원문 캐시 data/_sec/docs/80176725512fc0d0-tsla-20231231.htm(gitignore)",
+      "kind": "filing",
+      "company_id": "tesla",
+      "published_at_utc": "2024-01-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-tesla-000162828025003063",
+      "title": "Tesla 10-K (2024-12-31)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm",
+      "accessed_at": "2026-10-08T06:19:24Z",
+      "sha256": "92c4e06180b761d9e0511df65af2990c0fb819bfe43ce4b085233a7e4398d477",
+      "conflict_of_interest": null,
+      "note": "접수번호 0001628280-25-003063(2025-01-30). 원문 캐시 data/_sec/docs/bdbe997a54127fd2-tsla-20241231.htm(gitignore)",
+      "kind": "filing",
+      "company_id": "tesla",
+      "published_at_utc": "2025-01-30T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-tesla-FACTS-20261008",
+      "title": "SEC XBRL companyfacts CIK0001318605 (Tesla) — GrossProfit · Revenue · ShareBasedCompensation · WeightedAverageNumberOfDilutedSharesOutstanding",
+      "publisher": "SEC EDGAR",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001318605.json",
+      "accessed_at": "2026-10-08T06:18:31Z",
+      "sha256": "d0c2b9288d027a6d735039a6fe874a348b65a7fdbc6c133130666c777c885204",
+      "conflict_of_interest": null,
+      "note": "원문 캐시 data/_sec/docs/597cbaed96873924-CIK0001318605.json(gitignore). 성분마다 접수번호를 관측 basis 에 적었다",
+      "kind": "filing",
+      "company_id": "tesla"
+    },
+    {
+      "source_id": "SRC-SEC-spacex-xai-FACTS-20261008",
+      "title": "SEC XBRL companyfacts CIK0001181412 (SpaceX) — CostOfRevenue · Revenue · ShareBasedCompensation · WeightedAverageNumberOfDilutedSharesOutstanding",
+      "publisher": "SEC EDGAR",
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001181412.json",
+      "accessed_at": "2026-10-08T06:18:33Z",
+      "sha256": "cd3b109b3790272e1bce6153d0b183476ea23a377c26132f1d7449e4e722de7f",
+      "conflict_of_interest": null,
+      "note": "원문 캐시 data/_sec/docs/5d890c15704eda7c-CIK0001181412.json(gitignore). 10-Q(0001628280-26-052535) 사실만 있고 연간 사실은 S-1/A 문면에서 읽는다",
+      "kind": "filing",
+      "company_id": "spacex-xai"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-013",
+      "title": "Tesla beats Q3 delivery expectations but falls further behind BYD in BEV sales",
+      "publisher": "CnEVPost",
+      "url": "https://cnevpost.com/2026/10/02/tesla-q3-delivery-byd-bev-sales/",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "본문을 직접 열어 발췌했다. BYD 수치는 매체가 회사 발표를 모은 값이다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-02T13:33:22Z"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-020",
+      "title": "Alibaba sues the Pentagon to get off its Chinese military companies list",
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/alibaba-sues-us-defense-department",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "본문을 직접 열어 발췌했다",
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-06-24T09:39:47Z"
+    },
+    {
+      "source_id": "SRC-NEWS-alibaba-20261008-a567be7b",
+      "title": "Alibaba in early talks on Spain data center power supply - China Daily",
+      "publisher": "China Daily",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5hNDBtR2U1WGttRlM1QzBTRXB4MWNQemNfQTh1WVdtMGFZWm1xS0o4VDMwcVpMa0NrRkdQQmRSQjhJRVEtQnNnWFdvYTE1S2tOQjFpWml0TjB2YnpueldzTTVyOHk0Nmt0OUgxdVhkSmVQcHFRQnpUeU54ekJRUQ?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "a567be7be23b6c93c1cbf722936a295a25ee2282eee99b8e8cf61ba2e120def0",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-10-08T03:24:45Z",
+      "raw_ref": "data/alibaba/news/google/raw/20261008T060306Z-d5a42da0.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261007-daa806e1",
+      "title": "Tesla Targets 1,000 Optimus Robots Produced Weekly In Rapid Production Ramp-Up - BGR",
+      "publisher": "BGR",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1QR3h4MFFXYTNKN19xcm9ZZUIzOUVJMUFfdnlORGxKNF84LWwwVVNNMTl1UHVXcU9aaGN5SHRDNnUyTldpajg4bFhRSXMwX2l1RWRHRmZTNHJQcVVMNWdZTEJONzBpLVlPY2tBd1F4bTNKLUhUX1E?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "daa806e1e3d1e194f2a50e197198202cc54db51e9f0c6f51f92fecc3bdf1a423",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-07T15:17:00Z",
+      "raw_ref": "data/tesla/news/google/raw/20261008T060314Z-16167c6c.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261007-6442851b",
+      "title": "Musk welcomes German backing for Tesla driver assistance tech as group chases EU approval - Reuters",
+      "publisher": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOWVhTZHNJZ2Zlc2dudElLLTRtM1hRNEllQ3E3RzRuX1BTR1NsOGxUMjBLajYtYmU5QUtTbnh3cW5KTEpKSmNjalVJajY3TW4wam9LQjlBZFUycWZrenA1WmpUNDR2SmZaeEFMS195WnZMWldRc0JwVWk2WGNSdnJOMWpRNUhfZ0RsOEswY3pSTFNzVmhkQVJiS3RBeTdGQ2FiX0t6NElhd0hOMWV5TDFJRWE5UWRQYkV1VFE?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "6442851b3df6606fde5f2603b96174cd7ee8fdb8f7088ce734a5e4e688286d98",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-07T09:34:00Z",
+      "raw_ref": "data/tesla/news/google/raw/20261008T060314Z-16167c6c.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261007-bce2af75",
+      "title": "Tesla is browbeating the EU to approve its ‘Full Self-Driving’ tech. The pressure is working. - Reuters",
+      "publisher": "Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxOdjBuOTVpakJxeU9NUm55Z2xWcU42ellEeUI4XzhuaGdNWWViVkFqSGJwVGg5Y3NPNmFlTFVBdVBiWGh3TmdCbjF1UnhGM00tQXFPSS1lOHB2YVk1d3ZGbnEwMkRuWGJFREdOcmFaZ3VOYm4tTHkydlZEOEJrTGNqVDZHSk5IZFkxSGFHREhFcm9ZamZNU2YxbmRfVVpmYUJwYm5Wc2Zhdm9yUnlZYW1UM2xjcXVtWGNsQlZsTjh2eXBjQWRaSm9OQg?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "bce2af75733bbce11b2718ed7d6b3aa0a469d3a9c01741f4765f59eb53638605",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-07T06:13:18Z",
+      "raw_ref": "data/tesla/news/google/raw/20261008T060314Z-16167c6c.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261006-599856cf",
+      "title": "Germany Will Support FSD in EU Vote If Tesla Renames It - Not a Tesla App",
+      "publisher": "Not a Tesla App",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPV1cxYmMxdmdmS01GbUJ0bFpLQTlWZHh5LV90cE53eGZZdHhHTmxSTU02SkZpSGlsYXc5blBsNDlOT1ZJOGVkZlh6cHZaRDZzQlhPbk9pR2Ztc0twc0c0LUhTTTViQVdiZ3lIdXByS1phMlItdXBRN3RqQVRWYjViMHpvOXBRV3NCSl9HZkpSNzJGQ3Vnc2FIbG1n?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "599856cffa3ac80c927728c50b78181e25f49efbf239095b54badec594c4b22e",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-06T20:29:00Z",
+      "raw_ref": "data/tesla/news/google/raw/20261008T060314Z-16167c6c.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261007-c829477a",
+      "title": "Tesla Stock Falls as European Self-Driving Approvals Are Delayed - Barron's",
+      "publisher": "Barron's",
+      "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNNzlDVXpnWGcxUmIzOE11VEFtS1MzMk9RdUIyaG95T21pSlVQV1JBZDdfZzNxa0FXVnZtSnBUVG5qcHBGTk44WXFaU3kxUi1YdjhMZWFWbThmZldQaFZFNmxkcW5mV1NBbGp3bHdHaVZ0eHpCYnVNQWNvWlpSa3ZKTWFuNFgxSEE?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "c829477ae7c7b0b03a093ef2183998df03cf4f70b95c699e72bb9239e30ba170",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-07T12:02:00Z",
+      "raw_ref": "data/tesla/news/google/raw/20261008T060314Z-16167c6c.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261007-cffb664f",
+      "title": "Tesla Cybercab loses its entire door panel in a Philadelphia crash - Electrek",
+      "publisher": "Electrek",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOU2RWSUliUWtQNFBwLW16MC1nTXNBb2wwLWNOdFhvc05UbnJ1YVR3U1paNmhJS0l2Vm9wcUd6UUxieS1aa2owa0MzTFdIUFlLNEhqZ3gxem1yU09WUERQUXFGc2VBSlcwSl9ST2dtTXVVS0V3SWNOTlhoWTJ4UC14cEF3?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "cffb664fc87b2a0bbf5d131b3ab5a31ef6f3f244b4a2c25815f010a5ee4e08b8",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-07T18:44:00Z",
+      "raw_ref": "data/tesla/news/google/raw/20261008T060314Z-16167c6c.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261007-f51ceb40",
+      "title": "SpaceX Reportedly Seeks $40 Billion in Loans, Debt to Buy Nvidia Chips - Benzinga",
+      "publisher": "Benzinga",
+      "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNNkx0TFJ3cW5FOEVKb25aZWc1MzBER2l3R1dVQ3ZUejNHc3pkMTRtLW1HUjVtYWdXRHVWNlVDTTlFWnZkWi1CeDBsRFVhYVNmcDlXM2V5cm84YWQ4SmItNkM0dGhWWHdaa2RWRnBJdUpxYjhYb21hRXFnUDB1aEV0anVuOVh6VjZHUUJYanZSS202ZWVyVExEZHhJakhjbnVtai1FeWRYSURCcUhRRWtsSjE0WDJBanRQUERVQXRidWNHRlVBRHBsRQ?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "f51ceb40ac6cf351a9875c83ac139478ba26e149a7cc86b0129e2a1e169c017c",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-07T12:54:07Z",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261008T060312Z-9a756918.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261007-c8500f7b",
+      "title": "CNBC's Faber confirms that SpaceX's (SPCX) USD 40bln capital raise has not yet been priced - Newsquawk",
+      "publisher": "Newsquawk",
+      "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPRkNRaXBabTFIY3M0RTJ3eVVxeG5zeUtZVFUyMW8xWW5KMzFWM1B5cC1kdC1iaG0tMXFvQ1pWbEJXNjdDcjRlenhEZmNScW16dUZwdFItRUZ6TFFJUUYzYnBld1ozbW9la0FXcDJNc01pbWxxQUVTd0pYQ0ZUZXpGaFdlUmEwaWZuRXVaMFQ0b3dseHlTWFRwYnhwc2hyYnpjeExaY1VvRVZhVjRKRlRvSW55SGd4V2NIaERzMmxoTQ?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "c8500f7b4da9be1d7e886717c839622a77e090772d70af8b6fc790ba8e206cce",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별(제목만 보고 트리거 확인에 씀). url 은 Google 리다이렉트 링크다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-07T13:54:26Z",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261008T060312Z-9a756918.xml"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926060224",
+      "published_at_utc": "2026-05-13T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — March Quarter 2026 and Fiscal Year 2026 Results",
+      "excerpt": "To help merchants grow their businesses and increase willingness to spend on our platform, we upgraded our business development program for select merchants during the quarter, under which the level of platform subsidies for these merchants is directly tied to their marketing spend on our platform. For accounting purposes, such subsidies previously recorded as sales and marketing expenses are now recorded as a contra revenue item to customer management revenue (CMR). Accordingly, CMR grew 1% year-over-year during the quarter.",
+      "locator": "6-K Ex.99.1(2026-05-13) 'BUSINESS AND STRATEGIC UPDATES — Consumption Businesses — Alibaba China E-commerce Group' 둘째 문단 첫 세 문장 (p.4)",
+      "relevance": "추론: 알리바바가 2026년 1~3월 분기에 일부 판매자에게 주는 플랫폼 보조금을 그 판매자의 광고 지출에 연동하는 프로그램을 키웠고, 그 보조금을 고객관리매출(CMR, 판매자에게 받는 광고·수수료 매출)의 차감 항목으로 처리해 CMR 이 보고 기준 +1% 에 그쳤다는 공시다(같은 문단은 보조금을 빼면 +8% 라고 적는다). 판매자에게 받는 실효 가격을 보조금으로 낮춘 사실이라 ① 가격 실측(가격을 올리거나 유지했는데 고객이 남았는가)의 실패 쪽 재료다. 이어받은 알리바바 ① 판단은 점수만 있는 4점이고 이번 실행에서 네 질문으로 다시 매긴다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ① 가격 실측을 판매자 채널의 실효 가격 인하(광고 지출 연동 보조금) 사실로 다시 본다. 보조금을 가격 인하로 볼지 판촉비의 회계 재분류로 볼지는 판정 칸에서 가른다.",
+      "horizon": "medium — 프로그램이 이어지는 동안 분기마다 CMR 에 반영된다",
+      "counter_evidence": [
+        "보조금은 원래 판매관리비로 잡던 금액을 매출 차감으로 옮긴 회계 처리이고, 같은 문단은 그 효과를 빼면 CMR 이 +8% 늘었다고 적는다.",
+        "보조금이 판매자의 광고 지출에 연동되므로 판매자가 낸 광고비 총액은 늘었을 수 있다."
+      ],
+      "unverified": [
+        "프로그램 대상 판매자 비중과 보조금 총액을 보도자료에서 찾지 못했다.",
+        "수수료율(take rate) 수치는 보도자료와 20-F 에서 찾지 못했다(20-F 는 정의만 둔다)."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-BABA-6K-2025Q1",
+      "published_at_utc": "2025-08-29T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2025 Results",
+      "excerpt": "Customer management revenue grew 10% year-over-year to RMB89,252 million (US$12,459 million) during the quarter, primarily driven by the improvement of take rate, which benefited from the addition of software service fees in September last year and increasing penetration of Quanzhantui.",
+      "locator": "6-K Ex.99.1(2025-08-29) 'BUSINESS AND STRATEGIC UPDATES — Alibaba China E-commerce Group' 둘째 문단 (p.2)",
+      "relevance": "추론: 2025년 4~6월 분기 CMR 이 +10% 늘었고 원인이 수수료율 개선이며, 그 개선은 2024년 9월 추가한 소프트웨어 서비스 수수료와 AI 광고 도구 Quanzhantui 확산에서 왔다는 공시다. 판매자에게 받는 가격을 올린 뒤 매출이 늘었다는 사실이라 ① 가격 실측의 통과 쪽 재료이고, Quanzhantui 는 AI 도구라 ① AI 수익화 표시(가장 강한 채널 안에서 AI 로 돈을 더 받는가)의 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ① 가격 실측에서 가격 인상 시점(2024년 9월 소프트웨어 서비스 수수료)과 그 뒤 수수료율 개선이 이어진 분기 수를 세는 출발점으로 쓴다. 8개 분기 지속 여부는 그 뒤 분기 공시(CMR 둔화와 보조금 프로그램)와 함께 센다.",
+      "horizon": "long — 2024년 9월 인상 뒤의 분기 추세",
+      "counter_evidence": [
+        "2025년 10~12월 분기 보도자료는 소프트웨어 서비스 수수료 효과가 사라지며 CMR 증가율이 1% 로 둔화했다고 적는다."
+      ],
+      "unverified": [
+        "수수료율 수치와 소프트웨어 서비스 수수료의 요율은 이 문단에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926032060",
+      "published_at_utc": "2026-03-19T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — December Quarter 2025 Results",
+      "excerpt": "Customer management revenue grew 1% year-over-year to RMB102,664 million (US$14,681 million) during the quarter. The slow-down in revenue growth was primarily due to weaker transaction activities and phase-out of the impact of software service fee implementation. The Taobao app achieved a double-digit year-over-year increase in monthly active consumers during the quarter, driven by the growing mindshare and increasing scale of our quick commerce business.",
+      "locator": "6-K Ex.99.1(2026-03-19) 'BUSINESS AND STRATEGIC UPDATES — Alibaba China E-commerce Group' CMR 문단",
+      "relevance": "추론: 2025년 10~12월 분기 CMR 증가율이 1% 로 둔화했고, 회사는 원인을 거래 활동 약세와 소프트웨어 서비스 수수료 도입 효과의 소멸로 적었다. 같은 문단은 Taobao 앱 월간 활성 소비자가 전년 대비 두 자릿수 늘었다고 적는다. 판매자 가격 인상 효과가 약 1년 뒤 사라지고 사용자는 늘었다는 사실이라 ① 가격 실측(인상 효과의 지속 기간)과 회수 루프(사용자 증가)의 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ① 가격 실측에서 인상 효과가 이어진 분기 수를 이 공시에서 끊어 센다. Taobao 월간 활성 소비자 증가는 회수 루프의 사용자 쪽 근거로 쓰되 판매자 쪽 증가와 함께 본다.",
+      "horizon": "medium — 분기 추세",
+      "counter_evidence": [
+        "회사는 월간 활성 소비자 증가가 즉시배송(quick commerce) 확장에서 왔다고 적어, 전자상거래 본업의 사용자 증가와 다를 수 있다."
+      ],
+      "unverified": [
+        "월간 활성 소비자의 절대값은 이 보도자료에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "In our China E-commerce business, CMR decreased 7% year-over-year during the quarter. Excluding the contra revenue impact from the new business development program, on a like-for-like basis, CMR would have grown 1% year-over-year. The slow-down in revenue growth was primarily due to weaker transaction activities. We saw incremental customer management revenue driven by the increase in monthly active consumers on the Taobao app because of our growth of quick commerce business.",
+      "locator": "6-K Ex.99.1(2026-08-20) 'BUSINESS AND STRATEGIC UPDATES — Alibaba E-commerce Group' China E-commerce 문단 (p.3)",
+      "relevance": "추론: 2026년 4~6월 분기 CMR 이 보고 기준 −7%, 보조금 차감을 뺀 같은 기준 +1% 였고 회사는 둔화 원인을 거래 활동 약세로 적었다. 판매자 보조금을 늘린 뒤에도 같은 기준 매출이 1% 늘어나는 데 그쳤다는 사실이라 ① 가격 실측의 실패 쪽 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ① 가격 실측을 판매자 채널에서 실효 가격을 낮추고도 거래가 약해진 사실로 다시 본다. 대체 공급(PDD·Douyin·JD 의 출하)과 함께 읽는다.",
+      "horizon": "short — 최근 분기 사실",
+      "counter_evidence": [
+        "회사는 즉시배송 성장으로 Taobao 앱 월간 활성 소비자가 늘어 CMR 이 더해졌다고도 적는다."
+      ],
+      "unverified": [
+        "Taobao·Tmall 거래액(GMV) 수치를 보도자료와 20-F 에서 찾지 못해 거래 약세의 크기를 잴 수 없다(20-F 는 GMV 의 정의만 둔다)."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "Cost of revenue in the quarter ended June 30, 2026 was RMB166,096 million (US$24,480 million), or 61.8% of revenue, compared to RMB136,429 million, or 55.1% of revenue, in the same quarter of 2025. Without the effect of share-based compensation expense, cost of revenue as a percentage of revenue would have increased from 54.9% in the quarter ended June 30, 2025 to 61.6% in the quarter ended June 30, 2026, primarily driven by the increase in proportion of cloud and technology businesses in our revenue mix, as well as the contra revenue impact from the new business development program.",
+      "locator": "6-K Ex.99.1(2026-08-20) 'JUNE QUARTER OTHER FINANCIAL RESULTS — Costs and Expenses' Cost of revenue 문단 (p.10)",
+      "relevance": "추론: 2026년 4~6월 분기 매출원가율이 55.1% 에서 61.8% 로 올랐고(주식보상 제외 54.9%→61.6%), 회사는 원인을 매출 구성에서 클라우드·기술 사업 비중이 커진 것과 판매자 보조금의 매출 차감 처리로 적었다. ① 가격 실측을 총마진으로 판정할 때 요구하는 원인 설명(제품 구성·원가 변화인지) 문단이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 총마진 하락의 원인이 구성 변화와 보조금 회계라고 회사가 밝혀 이 문단만으로 ① 가격 실측을 통과나 실패로 정하지 않고, 판정 칸의 원인 설명에 쓴다.",
+      "horizon": "short — 최근 분기 사실",
+      "counter_evidence": [
+        "2025년 4~6월 분기에는 매출원가율이 60.1% 에서 55.1% 로 내려갔고, 그때 회사는 Sun Art·Intime 매각과 저마진 직매입 축소, 수익화 개선을 원인으로 적었다."
+      ],
+      "unverified": [
+        "세그먼트별 매출원가가 보도자료에 없어 구성 효과와 보조금 효과의 크기를 나눌 수 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926060224",
+      "published_at_utc": "2026-05-13T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — March Quarter 2026 and Fiscal Year 2026 Results",
+      "excerpt": "Cost of revenue in fiscal year 2026 was RMB616,136 million (US$89,321 million), or 60.2% of revenue, compared to RMB598,285 million, or 60.0% of revenue, in fiscal year 2025. Without the effect of share-based compensation expense, cost of revenue as a percentage of revenue would have increased from 59.8% in fiscal year 2025 to 60.0% in fiscal year 2026, primarily driven by our expansion in quick commerce business, and the growth in our cloud and technology businesses, partly offset by the disposal of Sun Art and Intime businesses, improvement in monetization and operating efficiency.",
+      "locator": "6-K Ex.99.1(2026-05-13) 회계연도 2026 'Costs and Expenses' Cost of revenue 문단 (p.23)",
+      "relevance": "추론: 2026 회계연도(2025-04~2026-03) 매출원가율이 60.0% 에서 60.2% 로 거의 같았고(주식보상 제외 59.8%→60.0%), 회사는 즉시배송 확장과 클라우드·기술 사업 성장이 원가율을 올리고 Sun Art·Intime 매각과 수익화·운영 효율 개선이 내렸다고 적었다. 총마진 추세의 원인이 제품 구성과 사업 매각에 크게 묶여 있다는 문단이라 ① 가격 실측의 원인 설명 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 연간 총마진이 거의 같고 원인이 구성 변화라 ① 가격 실측의 판정 칸 설명에만 쓴다.",
+      "horizon": "medium — 회계연도 사실",
+      "counter_evidence": [
+        "'수익화 개선(improvement in monetization)'이 원가율을 낮춘 요인으로 함께 적혀 있어 가격 효과가 일부 섞여 있다."
+      ],
+      "unverified": [
+        "수익화 개선 효과의 크기를 이 문단에서 찾지 못했다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-BABA-6K-2025Q1",
+      "published_at_utc": "2025-08-29T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2025 Results",
+      "excerpt": "The number of 88VIP members, our highest spending consumer group, continued to increase by double digits year-over-year, surpassing 53 million. We will continue to focus on improving the retention of 88VIP membership through enhanced value proposition to our most valued customers.",
+      "locator": "6-K Ex.99.1(2025-08-29) 'BUSINESS AND STRATEGIC UPDATES — Alibaba China E-commerce Group' 넷째 문단 (p.2)",
+      "relevance": "추론: 연회비를 내는 최상위 소비자 등급 88VIP 회원이 2025-06 분기에 전년 대비 두 자릿수 늘어 5,300만 명을 넘었다는 공시다. 2026-06 분기 약 6,400만 명 공시와 함께 유료 회원 시계열 두 시점이 되어 ① 소비자 채널의 회수 루프·전환비용(유료 회원 유지) 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ① 소비자 채널의 전환비용·회수 루프를 유료 회원 수 시계열로 다시 본다.",
+      "horizon": "medium — 분기 공시 시계열",
+      "counter_evidence": [
+        "회원 수 증가는 유지율(갱신율)이 아니다. 유지율 수치는 보도자료에서 찾지 못했다."
+      ],
+      "unverified": [
+        "88VIP 연회비와 그 변경 여부는 이 보도자료에 없다.",
+        "'5,300만 명을 넘었다'는 하한 표현이다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "The number of 88VIP members, our highest spending consumer group, continued to increase by double digits year-over-year to approximately 64 million as of June 30, 2026. We remain focused on the growth and retention of 88VIP members through enhanced value proposition to our most valued customers.",
+      "locator": "6-K Ex.99.1(2026-08-20) 'BUSINESS AND STRATEGIC UPDATES — Alibaba E-commerce Group' 88VIP 문단 (p.3)",
+      "relevance": "추론: 88VIP 회원이 2026-06-30 약 6,400만 명으로 전년 대비 두 자릿수 늘었다는 공시다. 2025-06 분기 공시(5,300만 명 초과)와 비교하면 1년 사이 늘어난 폭은 1,100만 명 이하다(앞 값이 하한이라). 판매자 보조금과 CMR 둔화가 있던 같은 기간에 최상위 소비자 등급은 늘었다는 사실이라 ① 소비자 채널의 회수 루프·전환비용 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ① 소비자 채널의 전환비용·회수 루프를 유료 회원 시계열로 다시 본다. 회원 증가가 즉시배송 혜택 묶음에서 왔는지는 판정 칸에서 가른다.",
+      "horizon": "medium — 분기 공시 시계열",
+      "counter_evidence": [
+        "회사는 같은 분기 CMR 둔화 원인을 거래 활동 약세로 적었다."
+      ],
+      "unverified": [
+        "유지율·갱신율은 보도자료에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926060224",
+      "published_at_utc": "2026-05-13T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — March Quarter 2026 and Fiscal Year 2026 Results",
+      "excerpt": "For the quarter ended March 31, 2026, revenue from Cloud Intelligence Group was RMB41,626 million (US$6,035 million), a 38% increase from the same quarter last year. Notably, the year-over-year growth of revenue from external customers accelerated to 40%. This momentum was primarily driven by public cloud revenue growth, including the increasing adoption of AI-related products. AI-related product revenue continued to show strong momentum, achieving RMB8,971 million and delivering the eleventh consecutive quarter of triple-digit year-over-year growth.",
+      "locator": "6-K Ex.99.1(2026-05-13) 'AI + Cloud Businesses — Cloud Intelligence Group' 첫 문단 (p.5)",
+      "relevance": "추론: 2026년 1~3월 분기 클라우드 매출이 +38%, 외부 고객 매출이 +40% 로 빨라졌고, AI 관련 제품 매출이 RMB8,971M 으로 11분기 연속 전년 대비 세 자릿수 성장했다는 공시다. 2026년 4~6월 분기 AI 관련 제품 매출 RMB12,376M(같은 회사 6-K)과 함께 AI 제품 매출 수준값 두 개가 되어 ③ 가속도 b 단계(AI 제품 매출)의 재료다. 외부 고객 매출 성장률은 분기 보도자료마다 26%(2025-06)→29%→35%→40%→45%(2026-06, 세그먼트 재편 뒤)로 이어진다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ③ 후발 가속도를 b 단계(AI 관련 제품 매출)로 다시 본다. 수준값이 두 개라 같은 정의의 성장률은 직전 분기 대비 하나(+38%)만 나오고 전년 대비는 '세 자릿수'라는 하한 진술뿐이라, 판정 칸에 그 한계를 적는다.",
+      "horizon": "short — 분기 실적마다 갱신된다",
+      "counter_evidence": [
+        "2026년 4~6월 분기부터 세그먼트가 'AI Cloud and Compute Services'(클라우드 + T-Head)로 바뀌어 클라우드 성장률 시계열의 정의가 그 분기에서 갈린다.",
+        "AI 관련 제품 매출의 전년 같은 분기 수준값은 2025-06·09·12 와 2026-03 분기 보도자료에서 찾지 못해 정확한 전년 대비 성장률을 계산할 수 없다."
+      ],
+      "unverified": [
+        "AI 관련 제품 매출에 들어가는 제품 범위는 보도자료에 정의되어 있지 않다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
+      "excerpt": "The Zhenwu chips, including Zhenwu M890, the latest AI processor, have achieved broad commercial adoption via Alibaba Cloud services from more than 650 external customers across over 20 industries, including autonomous driving, Internet, and financial services. This broad adoption demonstrates its ability to support AI workloads from training and fine-tuning to inference.",
+      "locator": "6-K Ex.99.1(2026-08-20) 'BUSINESS AND STRATEGIC UPDATES — Chip Design – T-Head Semiconductor' 둘째 문단 (p.3)",
+      "relevance": "추론: 자체 AI 가속기 Zhenwu(최신 M890 포함)가 알리바바 클라우드를 통해 20개 넘는 업종의 외부 고객 650곳 넘게 상용으로 쓰이고 있다는 공시다. 자체 칩이 자사 클라우드에 배치되어 외부 고객 작업을 돌린다는 배치 사실이라 ④ 호황 이후 비전(자체 칩은 출하가 확인될 때 수직계열화 근거로 센다)의 재료다. 이어받은 알리바바 ④ 판단은 4점이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ④ 판단에 자체 칩의 자사 클라우드 배치를 수직계열화 근거로 더할지 본다. 2026-09 공개한 Zhenwu V900 의 배치는 아직 확인되지 않아 그 칩은 따로 지켜본다.",
+      "horizon": "medium — 배치가 이어지는 동안",
+      "counter_evidence": [
+        "칩 출하 대수와 클라우드 매출 가운데 자체 칩이 차지하는 비중을 보도자료에서 찾지 못했다."
+      ],
+      "unverified": [
+        "'650곳 넘는 외부 고객'은 회사 집계이고 고객별 사용량은 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-020",
+      "published_at_utc": "2026-06-24T09:39:47Z",
+      "title": "Alibaba sues the Pentagon to get off its Chinese military companies list",
+      "excerpt": "Alibaba has taken the US Department of Defense to court over a label the company insists it does not deserve. In a complaint filed on Tuesday in the federal court in San Jose, California, the Hangzhou group asked a judge to strike its name from the Pentagon’s list of “Chinese military companies” and declared the designation, in its own words, to have “no basis in fact or law.” … Under the relevant law, the Defense Department cannot enter into or renew contracts directly with listed entities from June 30, and from 2027 it cannot buy their goods or services through third parties either.",
+      "locator": "기사 본문 첫 문단('Alibaba has taken…')과 'Under the relevant law…' 문단",
+      "relevance": "추론: 미국 국방부가 2026-06-08 알리바바를 1260H 목록(중국 군사기업 목록)에 올렸고, 알리바바가 2026-06 연방법원(산호세)에 목록 삭제를 구하는 소송을 냈다는 기사다. 등재로 국방부는 2026-06-30 부터 알리바바와 직접 계약할 수 없고 2027 년부터는 제3자를 통한 조달도 막힌다. 정부 조치·소송은 ⑤ 적대 등급의 재료이고, 미국 자본·조달 접근이 좁아지는 것은 ⑧ 비대칭 의존(양방향 지정학)의 재료다. 이어받은 알리바바 ⑤ 판단은 동맹 등급 +1·적대 등급 -1(비용형)이고 ⑧ 판단은 -4 이며, 두 판단의 근거 문장에 이 등재가 들어 있지 않다.",
+      "channel": "press",
+      "conditional_impact": "재검토: 알리바바 ⑤ 적대 등급에 1260H 등재와 그 소송을 더한다. 등재 자체는 판매 금지가 아니어서 비용형에 머무를 가능성이 크지만(추론), 2027 년 간접 조달 금지와 금융·파트너십 제약이 매출에 닿는지 판정 칸에서 본다. ⑧ 은 이미 양방향 지정학을 담고 있어 같은 속성을 두 번 세지 않도록 어느 항목에 둘지 정한다.",
+      "horizon": "long — 소송 결과와 2027 년 간접 조달 금지까지",
+      "counter_evidence": [
+        "기사는 등재가 그 자체로 미국 기업과의 거래를 금지하지 않는다고 적는다.",
+        "알리바바의 미국 국방부 직접 매출은 공시되지 않아 직접 계약 금지의 매출 영향은 작을 수 있다(추론)."
+      ],
+      "unverified": [
+        "소송의 진행 상황(심리 일정·가처분 여부)은 확인하지 못했다.",
+        "등재 근거(MIIT 연관)는 국방부 주장이다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828024002390",
+      "published_at_utc": "2024-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2023-12-31)",
+      "excerpt": "Automotive sales revenue increased $11.30 billion, or 17%, in the year ended December 31, 2023 as compared to the year ended December 31, 2022, primarily due to an increase of 473,382 combined Model 3 and Model Y cash deliveries from production ramping of Model Y globally. The increase was partially offset by a lower average selling price on our vehicles driven by overall price reductions year over year, sales mix, and a negative impact from the United States dollar strengthening against other foreign currencies in the year ended December 31, 2023 compared to the prior year.",
+      "locator": "10-K(2023-12-31) Item 7 MD&A, Automotive & Services and Other Segment '2023 compared to 2022' Automotive sales revenue 문단 (p.38)",
+      "relevance": "추론: 2023년 자동차 매출이 +17% 늘었고 원인은 Model 3·Y 현금 인도 473,382대 증가였으며, 전반적인 가격 인하로 평균 판매가가 내려 증가 폭을 깎았다는 10-K 문단이다. 가격을 내려 판매량을 늘린 사실이라 ① 가격 실측(가격을 올리거나 유지했는데 고객이 남았는가)의 실패 쪽 재료다. 이어받은 테슬라 ① 판단은 점수만 있는 2점이고 이번 실행에서 네 질문으로 다시 매긴다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ① 가격 실측을 2023년 가격 인하와 그 뒤 판매량 사실로 다시 본다. 가격 인하가 판매량을 늘린 해(2023)와 늘리지 못한 해(2024·2025)를 함께 센다.",
+      "horizon": "long — 2023년 연간 사실",
+      "counter_evidence": [
+        "같은 해 대당 원가도 구성·물류비·재료비·고정비 흡수로 내렸다고 회사가 적어, 가격 인하 일부를 원가 하락이 받쳤다."
+      ],
+      "unverified": [
+        "차종·지역별 가격 인하 폭은 10-K 에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828024002390",
+      "published_at_utc": "2024-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2023-12-31)",
+      "excerpt": "Gross margin for total automotive decreased from 28.5% to 19.4% in the year ended December 31, 2023 as compared to the year ended December 31, 2022. The decrease was primarily due to a lower average selling price on our vehicles partially offset by the favorable change in our average combined cost per unit of our vehicles and IRA manufacturing credits earned as discussed above.",
+      "locator": "10-K(2023-12-31) Item 7 MD&A, Cost of Revenues and Gross Margin '2023 compared to 2022' Gross margin for total automotive 문단",
+      "relevance": "추론: 2023년 자동차 총마진이 28.5% 에서 19.4% 로 내렸고 회사는 주된 원인을 평균 판매가 하락으로 적었다. ① 가격 실측을 총마진으로 볼 때 요구하는 원인 설명이 '가격 하락'으로 공시된 문단이라 실패 쪽 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ① 가격 실측의 실패 쪽 근거로 쓴다. 그 뒤 연결 총마진(2024년 17.9%, 2025년 18.0%)이 이 낮아진 수준에서 유지되는지 함께 본다.",
+      "horizon": "long — 2023년 연간 사실",
+      "counter_evidence": [
+        "회사는 대당 원가 하락과 IRA 제조 세액공제가 하락 일부를 상쇄했다고 적는다."
+      ],
+      "unverified": [
+        "차종별 가격 인하 폭은 이 문단에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828025003063",
+      "published_at_utc": "2025-01-30T00:00:00Z",
+      "title": "Tesla 10-K (2024-12-31)",
+      "excerpt": "Automotive sales revenue decreased $6.03 billion, or 8%, in the year ended December 31, 2024 as compared to the year ended December 31, 2023, primarily due to lower average selling price on our vehicles driven by overall price reductions and attractive financing options provided in 2024 as well as mix. Additionally, there was a decrease of approximately 22,000 combined Model 3 and Model Y cash deliveries. The decreases were partially offset by an increase of approximately 19,000 deliveries of other models primarily due to our production ramp of Cybertruck.",
+      "locator": "10-K(2024-12-31) Item 7 MD&A '2024 compared to 2023' Automotive sales revenue 문단 (p.37)",
+      "relevance": "추론: 2024년 자동차 매출이 −8% 였고 원인은 전반적 가격 인하와 금융 혜택으로 평균 판매가가 내린 것이며, Model 3·Y 현금 인도도 약 22,000대 줄었다는 10-K 문단이다. 가격을 더 내렸는데도 주력 차종 판매량이 줄었다는 사실이라 ① 가격 실측의 실패 쪽 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ① 가격 실측을 2024년 가격 인하 뒤 판매량 감소 사실로 다시 본다.",
+      "horizon": "long — 2024년 연간 사실",
+      "counter_evidence": [
+        "Cybertruck 인도 약 19,000대 증가가 일부를 메웠고, 같은 해 FSD 기능 출시로 FSD 매출 $596M 을 인식했다고 같은 문단이 적는다."
+      ],
+      "unverified": [
+        "지역별 가격 인하 폭과 금융 혜택 규모는 10-K 에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "Automotive sales revenue decreased $6.66 billion, or 9%, in the year ended December 31, 2025 as compared to the year ended December 31, 2024, due a decrease of approximately 8% in cash deliveries and a lower average selling price per unit driven by sales mix and higher customer incentives such as attractive financing options.",
+      "locator": "10-K(2025-12-31) Item 7 MD&A, Automotive & Services and Other Segment '2025 compared to 2024' Automotive sales revenue 문단",
+      "relevance": "추론: 2025년 자동차 매출이 −9% 였고 원인은 현금 인도 약 8% 감소와, 구성 변화·고객 인센티브(금융 혜택)에 따른 평균 판매가 하락이라는 10-K 문단이다. 인센티브로 실효 가격을 낮췄는데도 인도가 줄었다는 사실이라 ① 가격 실측의 실패 쪽 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ① 가격 실측을 2025년 인센티브와 인도 감소 사실로 다시 본다. 2026년 상반기에는 인도가 늘고 평균 판매가가 구성·환율로 올랐다는 10-Q 문단과 함께 방향을 본다.",
+      "horizon": "long — 2025년 연간 사실",
+      "counter_evidence": [
+        "2026년 4~6월 분기 현금 인도는 전년 대비 약 25% 늘었다(같은 회사 10-Q)."
+      ],
+      "unverified": [
+        "인센티브 총액은 10-K 에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "Use of the Supercharger network either requires payment of a fee or is free under certain sales programs. We offer Supercharger access to non-Tesla vehicles in support of our mission, with all major automakers announcing their adoption of the North American Charging Standard (NACS) in certain markets.",
+      "locator": "10-K(2025-12-31) Item 1 Business, Public Charging 문단 셋째·넷째 문장",
+      "relevance": "추론: 테슬라가 Supercharger 를 타사 차량에 열었고 주요 완성차 업체가 모두 일부 시장에서 북미 충전 표준(NACS) 채택을 발표했다는 10-K 문단이다. 테슬라 차주만 쓰던 충전망이 경쟁 차량에도 열려, 충전망이 만들던 전환비용(테슬라를 떠나면 충전망을 잃는다)이 약해졌다는 사실이라 ① 전환비용의 내릴 쪽 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ① 전환비용을 충전망 개방 사실로 다시 본다. 개방 뒤 테슬라 차주의 재구매율(충성도) 실측이 있으면 함께 판정한다.",
+      "horizon": "long — 구조 변화",
+      "counter_evidence": [
+        "충전망 개방은 유료 충전 매출(서비스·기타 매출)을 늘리는 쪽이라 충전 사업에는 이익일 수 있다(추론).",
+        "S&P Global Mobility 는 2026-01 테슬라가 브랜드 충성도(Overall Loyalty to Make) 상을 4년 연속 받았다고 발표했다."
+      ],
+      "unverified": [
+        "타사 차량의 Supercharger 이용 비중은 10-K 에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Tesla 10-Q (2026-06-30)",
+      "excerpt": "Automotive sales revenue increased $4.22 billion, or 27%, in the three months ended June 30, 2026 as compared to the three months ended June 30, 2025, due to an increase of approximately 25% in cash deliveries. … Additionally, there was a higher average selling price per unit primarily driven by sales mix and a positive impact from the weakening of the United States dollar when compared to foreign currencies year over year and an increase from higher revenue from FSD (Supervised) subscriptions in the current period.",
+      "locator": "10-Q(2026-06-30) Item 2 MD&A, Automotive & Services and Other Segment Automotive sales revenue 첫 문단과 둘째 문단 끝 문장(상반기 비교) (p.31)",
+      "relevance": "추론: 2026년 4~6월 분기 자동차 매출이 +27% 로 현금 인도 약 25% 증가에서 왔고, 상반기에는 평균 판매가가 구성·달러 약세·FSD 구독 매출로 올랐다는 10-Q 문단이다. 2023~2025년 가격 인하·인센티브 뒤 2026년 상반기에 판매량과 평균 판매가가 함께 올랐다는 최근 사실이라 ① 가격 실측의 올릴 쪽 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ① 가격 실측에서 평균 판매가 회복이 구성·환율 요인인지 가격 인상인지 가른다. 회사가 구성·환율·FSD 를 원인으로 적었으므로 정가 인상 사실로 세지 않는 쪽이 원문에 맞다(추론).",
+      "horizon": "short — 최근 분기 사실",
+      "counter_evidence": [
+        "같은 분기 실적 자료(Q2 2026 Update)는 환율 제외 평균 판매가가 구성 효과를 포함해 낮아졌다고 적는다.",
+        "전년 상반기는 New Model Y 전환으로 모든 공장을 동시에 세운 기간이라 상반기 인도 증가율이 그만큼 부풀었다고 회사가 적는다."
+      ],
+      "unverified": [
+        "2026년 4~6월 분기만의 평균 판매가 방향은 10-Q 문단에 따로 적혀 있지 않다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-tesla-013",
+      "published_at_utc": "2026-10-02T13:33:22Z",
+      "title": "Tesla beats Q3 delivery expectations but falls further behind BYD in BEV sales",
+      "excerpt": "By contrast, BYD (HKEX: 1211) sold 762,478 passenger battery electric vehicles (BEVs) in the third quarter, up 30.89% year-on-year and 36.87% from the second quarter, according to data compiled by CnEVPost. BYD's BEV sales exceeded Tesla's deliveries by 275,946 vehicles, or 56.72%, in the quarter. In the second quarter, the gap was 76,964 vehicles, with BYD ahead by 16.03%.",
+      "locator": "기사 본문 'By contrast, BYD…' 문단과 'BYD's BEV sales exceeded…' 문단",
+      "relevance": "추론: 2026년 7~9월 분기 BYD 승용 순수전기차 판매가 762,478대로 테슬라 인도 486,532대보다 275,946대(56.72%) 많았고, 그 격차가 직전 분기 76,964대에서 커졌다는 기사다. 비교 가능한 순수전기차를 경쟁사가 더 많이 출하하고 있다는 사실이라 ① 대체 공급(대체재가 출하 중이고 격차가 좁은가)의 실패 쪽 재료다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: 테슬라 ① 대체 공급을 BYD 순수전기차 출하 실적으로 다시 본다. 성능·가격 격차는 판매 대수만으로 잴 수 없어 판정 칸에 그 한계를 적는다.",
+      "horizon": "short — 분기 판매 실적",
+      "counter_evidence": [
+        "같은 기사는 2026년 1~3월 분기에는 테슬라 인도 358,023대가 BYD 순수전기차 310,389대보다 많았다고 적는다.",
+        "BYD 판매는 중국 비중이 크고 미국 시장에서는 팔리지 않아 테슬라와 겹치는 시장이 일부다(추론)."
+      ],
+      "unverified": [
+        "BYD 수치는 매체가 회사 발표를 모은 값이고 BYD 원 공시와 대조하지 않았다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 Update",
+      "excerpt": "Storage deployed (GWh) 9.6 12.5 14.2 8.8 13.5 41%",
+      "locator": "Q2 2026 Update 5쪽 Operational Summary 표, Storage deployed (GWh) 줄(열: Q2-2025 · Q3-2025 · Q4-2025 · Q1-2026 · Q2-2026 · YoY)",
+      "relevance": "추론: 테슬라 에너지 저장 배치량이 2025-06 분기 9.6GWh → 12.5 → 14.2 → 8.8 → 2026-06 분기 13.5GWh(전년 대비 +41%)라는 분기 표다. 2026년 7~9월 분기 13.7GWh(같은 회사 8-K 첨부 보도자료)와 이어 보면 에너지 저장 사업이 실측 배치를 이어 가고 있어 ④ 호황 이후 비전(비AI 사업도 매출·배치가 있으면 센다)의 재료다. 이어받은 테슬라 ④ 판단은 3점이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 에너지 저장은 테슬라 ④ 판단에 이미 들어 있어 배치 시계열은 근거 문장만 보강한다.",
+      "horizon": "short — 분기 배치 실적",
+      "counter_evidence": [
+        "2026년 1~3월 분기 배치는 8.8GWh 로 직전 분기보다 줄었고, 7~9월 분기 13.7GWh 는 회사 집계 시장 예상(15.9GWh)에 못 미쳤다고 Drive Tesla Canada 가 보도했다."
+      ],
+      "unverified": [
+        "배치 GWh 는 매출이 아니고 단가(Megapack 평균 판매가)는 10-Q 가 하락했다고만 적는다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A (2026-06-03)",
+      "excerpt": "We generally expect Starlink Subscriber ARPU to continue to decline over the next few years as the portion of our subscriber base outside North America continues to grow, as we add lower priced service plans, and as we adjust the monthly service plan fees we charge for broadband offerings . … Our Starlink Subscriber monthly ARPU decreased from $86 per month for the three months ended March 31, 2025 to $66 per month for the three months ended March 31, 2026 and from $91 per … month in 2024 to $81 per month in 2025.",
+      "locator": "S-1/A(2026-06-03) MD&A Key Business Metrics — Connectivity, Starlink Subscriber ARPU 문단 (p.89)",
+      "relevance": "추론: SpaceX 가 Starlink 가입자 평균 매출(ARPU)이 북미 밖 가입자 비중 증가·저가 요금제 추가·요금 조정으로 앞으로도 내려갈 것이라 밝혔고, 실제로 ARPU 가 2024년 월 $91 에서 2025년 $81 로, 2025-01~03 $86 에서 2026-01~03 $66 으로 내렸다는 상장 신고서 문단이다. 같은 문단은 ARPU 인상보다 매출 성장과 마진 확대를 앞세운다고 적는다. 가격을 내려 가입자를 늘리는 전략을 회사가 밝힌 것이라 ① 가격 실측의 실패 쪽 재료다. 이어받은 스페이스X ① 판단은 점수만 있는 3점이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ① 가격 실측을 Starlink ARPU 하락과 저가 요금제 추가 사실로 다시 본다. 같은 기간 가입자가 두 배로 늘었지만 '가격을 내리고 고객이 늘었다'는 사실은 가격 실측 통과가 아니라는 점을 판정 칸에 적는다.",
+      "horizon": "long — 회사가 몇 년간 이어진다고 밝힌 추세",
+      "counter_evidence": [
+        "회사는 ARPU 하락의 주된 원인을 해외 확장(지역 구성)과 저가 요금제 추가로 적어, 같은 요금제의 가격 인하와는 다를 수 있다."
+      ],
+      "unverified": [
+        "요금제별 가격 변경 내역은 신고서에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30)",
+      "excerpt": "As of | (in millions) | June 30, 2026 | June 30, 2025 | Starlink subscribers | 12.0 | 6.0 | … (dollars per month) | June 30, 2026 | June 30, 2025 | June 30, 2026 | June 30, 2025 | Starlink ARPU | $66 | $85 | $66 | $85 |",
+      "locator": "10-Q(2026-06-30) Item 2 MD&A Key Business Metrics — Connectivity, Starlink subscribers 표와 Starlink Subscriber ARPU 표(열: 3개월 2026·2025, 6개월 2026·2025) (p.36)",
+      "relevance": "추론: 2026-06-30 Starlink 가입자 1,200만(전년 600만)과 2026년 4~6월 분기 월 ARPU $66(전년 $85)을 함께 보여 주는 10-Q 표다. 가입자가 두 배로 늘 때 ARPU 는 약 22% 내렸다는 최근 분기 사실이라 ① 가격 실측과 회수 루프(가입자 수 시계열)의 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ① 의 가격 실측과 회수 루프를 이 분기 값으로 다시 본다. Starlink 는 가입자끼리 연결되는 서비스가 아니어서 가입자가 늘 때 기존 가입자 편익이 커지는 구조인지는 판정 칸에서 따로 가른다.",
+      "horizon": "short — 최근 분기 사실",
+      "counter_evidence": [
+        "가입자 정의는 Starlink.com 직접 계정의 서비스 회선이고 정부·기업 계약 고객은 빠져 있다(같은 10-Q 정의 문단)."
+      ],
+      "unverified": [
+        "가입자 해지율(이탈률)은 10-Q 에 없다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A (2026-06-03)",
+      "excerpt": "Connectivity: | | | | | | | | | | | Three Months Ended March 31, | Year Ended December 31, | | | 2026 | | 2025 | | 2025 | | 2024 | | 2023 | Starlink Subscribers (in millions) (1) ... | 10.3 | | 5.0 | | 8.9 | | 4.4 | | 2.3 | Starlink ARPU (dollars per month) (1) | $ 66 | | $ 86 | | $ 81 | | $ 91 | | $ 99 |",
+      "locator": "S-1/A(2026-06-03) Prospectus Summary — Segment Operating and Financial Data (unaudited), Connectivity 표 Starlink Subscribers·Starlink ARPU 줄",
+      "relevance": "추론: Starlink 가입자가 2023년 말 230만 → 2024년 말 440만 → 2025년 말 890만 → 2026-03-31 1,030만으로 늘고, 같은 기간 월 ARPU 가 $99 → $91 → $81 → $66(2026-01~03)으로 내렸다는 상장 신고서 요약 표다. 가입자 시계열 네 시점과 ARPU 시계열이 함께 있어 ① 회수 루프(참여자 수 성장)와 가격 실측(단가 하락)의 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ① 의 회수 루프와 가격 실측을 이 시계열로 다시 본다.",
+      "horizon": "long — 3년 시계열",
+      "counter_evidence": [
+        "ARPU 하락에는 해외 가입자 비중 증가라는 지역 구성 효과가 섞여 있다고 회사가 적는다."
+      ],
+      "unverified": [
+        "표는 감사받지 않은 운영 지표다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F3",
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A (2026-06-03)",
+      "excerpt": "Revenue for the three months ended March 31, 2026 increased by $91 million , or 12.5% , compared to the prior three months ended March 31, 2025 due to the increase in AI solutions and infrastructure revenue of $191 million , offset by decrease in advertising revenue of $100 million . The increase in AI solutions and infrastructure was primarily due to an increase in Grok and X subscription revenue of $177 million and an increase in data licensing arrangements of $12 million .",
+      "locator": "S-1/A(2026-06-03) MD&A Results of Operations — Segment Results, AI(Three Months Ended March 31) 표($818M·$727M) 다음 Revenue 문단",
+      "relevance": "추론: AI 세그먼트 매출이 2026년 1~3월 분기 $818M 으로 전년 $727M 보다 12.5% 늘었고, AI 솔루션·인프라 매출 +$191M(그 가운데 Grok·X 구독 +$177M)이 광고 매출 −$100M 을 넘었다는 상장 신고서 문단이다. 2026년 4~6월 분기 AI 세그먼트 매출 +247.5%(10-Q)와 같은 정의의 전년 대비 성장률 두 개가 되어 ③ 가속도 b 단계(xAI 세그먼트)의 재료이고, Grok·X 구독 매출 증가는 ① 소비자 채널의 재료다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ③ 후발 가속도를 AI 세그먼트 매출의 같은 정의 성장률 두 개(1분기 12.5%, 2분기 247.5%)로 다시 본다. 2분기 급증은 2026-05 시작한 Anthropic 컴퓨트 계약에서 왔으므로 비AI(X 광고) 비중과 고객 한 곳 의존을 판정 칸에 적는다.",
+      "horizon": "short — 분기 비교",
+      "counter_evidence": [
+        "2분기 성장은 AI 세그먼트 고객 B(2분기 연결 매출의 19.5%) 한 곳의 신규 계약에 크게 기댄다(10-Q 주석 3)."
+      ],
+      "unverified": [
+        "AI 세그먼트 안의 X 광고 매출 수준값은 이 문단에 없고 감소분만 있다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F1",
+        "F7",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A (2026-06-03)",
+      "excerpt": "Pursuant to these agreements, the customer has agreed to pay us $1.25 billion per month through May 2029, with capacity ramping in May and June 2026 at a reduced fee. After the initial three-month period, the agreements may be terminated by either party upon 90 days’ notice. The customer will retain ownership and intellectual property rights in its content, AI models, and related data. This structure allows us to monetize a portion of the compute capacity in our infrastructure, while still permitting reallocation of that capacity for our own internal initiatives if needed in the future.",
+      "locator": "S-1/A(2026-06-03) Business — Compute Services Agreements with Third Parties 문단 넷째~일곱째 문장",
+      "relevance": "추론: Anthropic 이 2029-05 까지 매달 $1.25B 를 내기로 한 컴퓨트 계약이 최초 3개월 뒤에는 어느 쪽이든 90일 통지로 해지할 수 있다는 상장 신고서 문단이다. AI 컴퓨트(업무 채널)의 최대 고객이 짧은 통지로 떠날 수 있다는 계약 조건이라 ① 전환비용(관계 수준 락인)의 내릴 쪽 재료이고, ⑦ 순환금융·⑧ 고객 집중 판단의 계약 조건 근거다. 이어받은 스페이스X ⑦ 판단은 조달 의존 고객 비중 큼·내 돈 환류 없음이고 ⑧ 판단은 -3 이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ① 의 업무 채널 전환비용을 '최초 3개월 뒤 90일 통지로 해지 가능' 조건으로 다시 본다. ⑦·⑧ 은 계약 금액만 적힌 근거에 해지 조건을 더해 근거 문장을 고친다.",
+      "horizon": "medium — 2029-05 까지 이어지는 계약",
+      "counter_evidence": [
+        "계약은 2026-05 시작했고 해지 소식은 없으며, 2026년 4~6월 분기 고객 B(AI 세그먼트) 매출 비중은 19.5% 로 커졌다(10-Q 주석 3)."
+      ],
+      "unverified": [
+        "10-Q 는 고객 B 의 이름을 밝히지 않아 고객 B 가 Anthropic 인지는 확인하지 못했다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    }
+  ],
+  "triggers": [
+    {
+      "trigger_id": "TRG-025",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: alibaba 뉴스 2026-10-06~10-08 후보 64건과 공시 6-K 4건(2026-09-04·09-22·09-29·10-07). 6-K 4건은 본문을 열어 보니 월간 주식 변동 신고 2건, 주주총회 표결 결과 1건, 익일 공시 1건이다. 뉴스는 스페인 데이터센터 전력 협의(China Daily 10-08), Sui 결제 연동, Joe Tsai 오픈소스 발언 정도이고 Zhenwu V900 의 배치·출하나 10조 파라미터 모델 출시는 없다. 다만 2026-08-20 6-K 는 앞 세대 Zhenwu(M890 포함)가 알리바바 클라우드를 통해 외부 고객 650곳 넘게 상용으로 쓰인다고 적어, ④ 수직계열화 판단에 쓸 자체 칩 배치 근거로 따로 올렸다. V900 자체의 배치는 확인되지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-SEC-alibaba-000110465926099220"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-026",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "검색 범위: alibaba 뉴스 2026-10-06~10-08 후보와 공시 6-K 4건. NVIDIA RTX Pro 5500 구매에 관한 중국 허가 확정·미국 수출 허가·실제 구매 소식은 없다. 관찰을 유지한다.",
+      "source_ids": [],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-027",
+      "status": "watching",
+      "deadline": "2027-06-30",
+      "finding": "검색 범위: alibaba 뉴스 2026-10-06~10-08 후보와 공시 6-K 4건. China Daily 10-08 '스페인 데이터센터 전력 공급 초기 협의'는 Solaria 와의 협의를 다시 전한 것이고 상용 개시가 아니다. 핀란드·네덜란드·터키 리전의 상용 개시, 해외 클라우드 매출 공시, Lingxi Games 매각 완료 공시는 없다. 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-alibaba-20261008-a567be7b"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-079",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: alibaba 뉴스 2026-10-06~10-08 후보와 공시 6-K 4건. 증류를 다루는 소송·정부 절차의 구속력 있는 판단은 없다. Simply Wall St 10-06·10-07 해설의 '소송'은 증권 집단소송과 미국 국방부 1260H 등재 소송을 가리키며 증류와 무관하다(1260H 등재 소송은 ⑤⑧ 근거로 따로 올리고 새 트리거로 지켜본다). 관찰을 유지한다.",
+      "source_ids": [],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-030",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: tesla 뉴스 2026-10-06~10-08 후보 140건과 공시 8-K 2건(2026-09-29 신용계약, 2026-10-02 3분기 생산·인도). BGR 10-07 '주당 Optimus 1,000대 생산 목표'는 목표이고 생산 대수가 아니다. The Information 10-07 은 전 Optimus 책임자의 창업 소식이다. 생산 개시·외부 인도·공장 배치 대수는 없고, 3분기 실적 발표는 10-21 이다(8-K 첨부 보도자료). 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-tesla-20261007-daa806e1"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-031",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "검색 범위: tesla 뉴스 2026-10-06~10-08 후보. Reuters 10-07 '독일이 테슬라 운전자 보조 기술의 EU 승인을 지지'와 '테슬라의 EU 압박이 효과를 내고 있다', Not a Tesla App 10-06 '이름을 바꾸면 독일이 EU 표결에서 지지', Barron's 10-07 '유럽 자율주행 승인 지연' 이 있다. 모두 표결 전 단계이고 결과는 없다. Barron's 제목의 '지연'이 표결 일정 연기인지는 제목만으로 가르지 못했다. 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-tesla-20261007-6442851b",
+        "SRC-NEWS-tesla-20261007-bce2af75",
+        "SRC-NEWS-tesla-20261006-599856cf",
+        "SRC-NEWS-tesla-20261007-c829477a"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-032",
+      "status": "watching",
+      "deadline": "2026-11-15",
+      "finding": "검색 범위: tesla 뉴스 2026-10-06~10-08 후보와 2026-10-02 8-K 첨부 보도자료(본문 열람). 첨부 보도자료는 3분기 생산 464,391대·인도 486,532대·에너지 저장 13.7GWh 를 적고, 순이익·현금흐름은 10-21 실적 발표와 3분기 10-Q 에 싣는다고 밝힌다. 3분기 10-Q 는 아직 제출되지 않았다. 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-EDGAR-000162828026064366"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-077",
+      "status": "watching",
+      "deadline": "2027-01-31",
+      "finding": "검색 범위: tesla 뉴스 2026-10-06~10-08 후보. Electrek 10-07 'Cybercab 이 필라델피아 사고로 문짝을 잃었다', Motor1 10-06·Yahoo Autos 10-07 'Cybercab 야간(오후 11시 뒤) 운행 중단 이유' 가 있다. Waymo 대비 무인 운행 대수·유료 탑승 횟수·운행 도시 수의 격차가 줄었다는 실측은 없다. 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-tesla-20261007-cffb664f"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-033",
+      "status": "watching",
+      "deadline": "2026-11-16",
+      "finding": "검색 범위: spacex-xai 뉴스 2026-10-06~10-08 후보 71건(이 기간 SpaceX 공시 후보 없음). 고객별 매출 비중이나 Anthropic 계약 해지 공시는 없고, 10-06~10-07 보도는 NVIDIA 칩 구매용 $40B 차입 추진(가격 미확정)이다. 상장 신고서 원문을 다시 열어 Anthropic 계약이 최초 3개월 뒤 어느 쪽이든 90일 통지로 해지할 수 있다는 조건을 확인해 근거로 올렸다. 3분기 10-Q 를 기다리며 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-SEC-spacex-xai-000162828026040364"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-034",
+      "status": "watching",
+      "deadline": "2027-09-30",
+      "finding": "검색 범위: spacex-xai 뉴스 2026-10-06~10-08 후보. Seeking Alpha 10-06 '10GW 가 이야기를 바꿀 수 있다', Stocktwits 10-08 'Starship 연료 계획·TSMC 협의', Yahoo Finance UK 10-07 'Starship 14차 비행 저궤도 도달' 재보도가 있다. 궤도 데이터센터의 실제 컴퓨트 제공·매출은 없다. 관찰을 유지한다.",
+      "source_ids": [],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-035",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: spacex-xai 뉴스 2026-10-06~10-08 후보. Grok·X 요금제 시행이나 인상 뒤 가입자·이탈 수치는 없고, 10-06 보도는 AI 부문 이름 변경 소식이다. 상장 신고서에는 2026년 1~3월 분기 Grok·X 구독 매출이 전년 대비 $177M 늘었다는 문단이 있어 근거로 올렸다(요금 인상과는 무관한 수준 변화). 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-SEC-spacex-xai-000162828026040364"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-075",
+      "status": "watching",
+      "deadline": "2026-11-16",
+      "finding": "검색 범위: spacex-xai 뉴스 2026-10-06~10-08 후보(이 기간 SpaceX 공시 후보 없음). 분기 영업손실률 시계열을 늘리는 새 공시는 없다. 지금 확보한 같은 정의 분기 값은 상장 신고서의 2025·2026년 1~3월 분기와 10-Q 의 2025·2026년 4~6월 분기뿐이라 방향 완화의 4분기 연속 조건을 판정할 수 없다. 3분기 10-Q 를 기한으로 관찰을 유지한다.",
+      "source_ids": [],
+      "evidence_ids": []
+    }
+  ],
+  "new_triggers": [
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F9",
+        "F8"
+      ],
+      "observation": "2026-10-06~10-07 SpaceX 가 Apollo 주도로 NVIDIA AI 칩 구매용 $40B 규모 차입·대출을 추진한다는 보도가 이어졌고, CNBC 는 가격이 아직 정해지지 않았다고 전했다(Newsquawk 10-07). 보도 단계라 계획 0점 원칙(계획·발표는 현재 점수에 넣지 않는다)에 따라 지금 근거가 아니다.",
+      "condition": "차입이 체결되어 금액·만기·확정 미인출 한도·담보 조건이 8-K 나 10-Q 로 공시되면 다시 본다.",
+      "deadline": "2027-01-31",
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20261007-f51ceb40",
+        "SRC-NEWS-spacex-xai-20261007-c8500f7b"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F9",
+          "F8"
+        ],
+        "what": "스페이스X ⑨ 판단의 게이트 3(완충으로 버티는 기간)에 새 차입의 확정 미인출분과 늘어난 부채를 넣어 런웨이를 다시 계산하고, 스페이스X ⑧ 판단의 NVIDIA 공급 의존이 더 커지는지 본다."
+      }
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F5",
+        "F8"
+      ],
+      "observation": "미국 국방부가 2026-06-08 알리바바를 1260H 목록(중국 군사기업 목록)에 올렸고, 알리바바가 2026-06 산호세 연방법원에 목록 삭제를 구하는 소송을 냈다. 등재로 국방부는 2026-06-30 부터 직접 계약을 할 수 없고 2027 년부터 제3자를 통한 조달도 막힌다.",
+      "condition": "법원이 등재를 유지하거나 삭제하는 판단(판결·가처분)을 내리거나, 2027 년 간접 조달 금지가 시행되어 알리바바가 매출·조달 영향을 공시하면 다시 본다.",
+      "deadline": "2027-06-30",
+      "source_ids": [
+        "SRC-WEB-alibaba-020"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5",
+          "F8"
+        ],
+        "what": "알리바바 ⑤ 판단의 적대 등급이 비용형에 머무는지 구조형 쪽으로 가는지, 알리바바 ⑧ 판단의 양방향 지정학 의존이 더 깊어지는지."
+      }
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "observation": "테슬라는 2026-10-21 3분기 실적과 Q3 2026 Update 를 낸다(2026-10-02 8-K 첨부 보도자료). 지금 FSD 활성 구독은 2025-06 분기 0.95백만에서 2026-06 분기 1.48백만까지 다섯 분기 값이 있고 직전 분기 대비 증가율은 2026-03 분기 +16.4%, 2026-06 분기 +15.6% 다.",
+      "condition": "Q3 2026 Update 가 나오면 2026-09 분기 FSD 활성 구독, 자동차 총마진, 평균 판매가 설명을 읽는다.",
+      "deadline": "2026-11-15",
+      "source_ids": [
+        "SRC-EDGAR-000162828026064366",
+        "SRC-SEC-tesla-000162828026049213"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1",
+          "F3"
+        ],
+        "what": "테슬라 ③ 후발 가속도(FSD 구독, b 단계)의 같은 정의 성장률을 한 분기 늘려 가속·등속·감속을 다시 가르고, 테슬라 ① 가격 실측의 평균 판매가·총마진 추세를 갱신한다."
+      }
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1",
+        "F3"
+      ],
+      "observation": "알리바바의 AI 관련 제품 매출 수준값은 2026-03 분기 RMB8,971M 과 2026-06 분기 RMB12,376M 두 개뿐이고, 전년 대비는 '세 자릿수 성장'이라는 하한 진술만 있다. 판매자 보조금 프로그램 뒤 CMR 은 2026-06 분기 보고 기준 −7%(같은 기준 +1%)다.",
+      "condition": "2026-09 분기 실적 보도자료(6-K)가 나오면 AI 관련 제품 매출 세 번째 수준값과 CMR·보조금 설명을 읽는다.",
+      "deadline": "2026-12-15",
+      "source_ids": [
+        "SRC-SEC-alibaba-000110465926099220",
+        "SRC-SEC-alibaba-000110465926060224"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1",
+          "F3"
+        ],
+        "what": "알리바바 ③ 후발 가속도(AI 관련 제품 매출, b 단계)의 같은 정의 성장률을 두 개로 채울 수 있는지, 알리바바 ① 가격 실측에서 판매자 보조금이 이어지는지."
+      }
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "alibaba.gross_margin_ttm.2026-06-30.rejudge",
+      "company_id": "alibaba",
+      "metric": "gross_margin_ttm",
+      "value": 0.38199,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "raw": "Revenue 1,023,670 · Cost of revenue (616,136) [20-F FY2026] − Revenue 247,652 · Cost of revenue 136,429 [3M 2025-06] + Revenue 268,953 · Cost of revenue 166,096 [3M 2026-06] (RMB 백만)",
+      "note": "최근 1년(2025-07-01~2026-06-30) 매출총이익률 = (매출 − 매출원가) ÷ 매출 = (1,044,971 − 645,803) ÷ 1,044,971. 비율이라 환산하지 않는다. 20-F 연결손익계산서(F-5, 열은 왼쪽부터 2024·2025·2026 오름차순)와 2025·2026년 6월 분기 보도자료 'Costs and Expenses' 표(p.9·p.10). 분기 성분은 감사·검토 없는 보도자료 값이다.",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "FY2026 − 2025-04~06 + 2026-04~06",
+        "unit_of_components": "RMB 백만",
+        "components": [
+          {
+            "label": "FY2026 매출·매출원가",
+            "revenue": 1023670,
+            "cost_of_revenue": 616136,
+            "sign": "+",
+            "source_id": "SRC-SEC-BABA-20F-FY2026",
+            "where": "20-F 연결손익계산서 F-5 'Year ended March 31, 2026 RMB' 열",
+            "audited": true
+          },
+          {
+            "label": "2025-04~06 매출·매출원가",
+            "revenue": 247652,
+            "cost_of_revenue": 136429,
+            "sign": "−",
+            "source_id": "SRC-SEC-BABA-6K-2025Q1",
+            "where": "2025 보도자료 'Costs and Expenses' 표와 요약 손익표(같은 값이 2026 보도자료 비교 열에도 있다)",
+            "audited": false
+          },
+          {
+            "label": "2026-04~06 매출·매출원가",
+            "revenue": 268953,
+            "cost_of_revenue": 166096,
+            "sign": "+",
+            "source_id": "SRC-SEC-BABA-6K-2026Q1",
+            "where": "2026 보도자료 'Costs and Expenses' 표(p.10)",
+            "audited": false
+          }
+        ],
+        "arithmetic": "매출 1,023,670 − 247,652 + 268,953 = 1,044,971; 매출원가 616,136 − 136,429 + 166,096 = 645,803; 매출총이익 399,168",
+        "checksum": "20-F 달러 칸 매출 US$148,401M·매출원가 US$89,321M 을 6.8980 으로 되곱하면 위안 값과 맞는다",
+        "margin_driver_note": "회사가 밝힌 원가율 변동 원인은 구성 변화(클라우드·기술 비중, 즉시배송)·사업 매각(Sun Art·Intime)·판매자 보조금의 매출 차감 처리다(같은 출처 Cost of revenue 문단)."
+      }
+    },
+    {
+      "observation_id": "alibaba.gross_margin_ttm_prior.2025-06-30.rejudge",
+      "company_id": "alibaba",
+      "metric": "gross_margin_ttm_prior",
+      "value": 0.411841,
+      "unit": "ratio",
+      "as_of": "2025-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2025Q1",
+      "status": "verified",
+      "raw": "Revenue 996,347 · Cost of revenue (598,285) [20-F FY2025 열] − Revenue 243,236 · Cost of revenue 146,106 [3M 2024-06] + Revenue 247,652 · Cost of revenue 136,429 [3M 2025-06] (RMB 백만)",
+      "note": "그 전 1년(2024-07-01~2025-06-30) 매출총이익률 = (1,000,763 − 588,608) ÷ 1,000,763. FY2025 성분은 FY2026 20-F F-5 의 'Year ended March 31, 2025' 열, 분기 성분은 2025년 6월 분기 보도자료의 당해·비교 열(p.9).",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "FY2025 − 2024-04~06 + 2025-04~06",
+        "unit_of_components": "RMB 백만",
+        "components": [
+          {
+            "label": "FY2025 매출·매출원가",
+            "revenue": 996347,
+            "cost_of_revenue": 598285,
+            "sign": "+",
+            "source_id": "SRC-SEC-BABA-20F-FY2026",
+            "where": "20-F 연결손익계산서 F-5 'Year ended March 31, 2025 RMB' 열",
+            "audited": true
+          },
+          {
+            "label": "2024-04~06 매출·매출원가",
+            "revenue": 243236,
+            "cost_of_revenue": 146106,
+            "sign": "−",
+            "source_id": "SRC-SEC-BABA-6K-2025Q1",
+            "where": "2025 보도자료 비교 열 'Three months ended June 30, 2024'",
+            "audited": false
+          },
+          {
+            "label": "2025-04~06 매출·매출원가",
+            "revenue": 247652,
+            "cost_of_revenue": 136429,
+            "sign": "+",
+            "source_id": "SRC-SEC-BABA-6K-2025Q1",
+            "where": "2025 보도자료 당해 열",
+            "audited": false
+          }
+        ],
+        "arithmetic": "매출 1,000,763; 매출원가 598,285 − 146,106 + 136,429 = 588,608; 매출총이익 412,155",
+        "same_window_as": "alibaba.revenue_ttm_prior.rs1006 의 매출 1,000,763 과 같은 창"
+      }
+    },
+    {
+      "observation_id": "alibaba.sbc_ttm.2026-06-30.rejudge",
+      "company_id": "alibaba",
+      "metric": "sbc_ttm",
+      "value": 2113656132.21,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "raw": "Total share-based compensation expense 14,821 [FY2026] − 3,545 [3M 2025-06] + 3,304 [3M 2026-06] (RMB 백만, 현금·비현금 포함)",
+      "note": "최근 1년 주식보상비용 RMB14,580M ÷ 6.8980. FY2026 값은 20-F Item 5 주식보상 표(유형별 'Total share-based compensation expense', 현금·비현금 포함), 분기 값은 2025·2026년 6월 분기 보도자료 'Share-based compensation expense' 표(p.11). 현금흐름표의 비현금 주식보상 가산액과는 정의가 다르다.",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "original_value_cny_m": 14580,
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00(2026-03-31, H.10). 기존 알리바바 관측과 같은 환율",
+        "components": [
+          {
+            "label": "FY2026",
+            "val_cny_m": 14821,
+            "sign": "+",
+            "source_id": "SRC-SEC-BABA-20F-FY2026"
+          },
+          {
+            "label": "2025-04~06",
+            "val_cny_m": 3545,
+            "sign": "−",
+            "source_id": "SRC-SEC-BABA-6K-2025Q1"
+          },
+          {
+            "label": "2026-04~06",
+            "val_cny_m": 3304,
+            "sign": "+",
+            "source_id": "SRC-SEC-BABA-6K-2026Q1"
+          }
+        ],
+        "checksum": "20-F 달러 칸 US$2,149M × 6.8980 = RMB14,824M 으로 14,821 과 반올림 범위에서 맞는다"
+      }
+    },
+    {
+      "observation_id": "alibaba.shares_diluted.2026-06-30.rejudge",
+      "company_id": "alibaba",
+      "metric": "shares_diluted",
+      "value": 19324000000,
+      "unit": "count",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "raw": "Weighted average number of shares used in calculating earnings per ordinary share (million shares) Diluted 19,142 | 19,324",
+      "note": "2026-04~06 분기 가중평균 희석 보통주 수(백만 주). ADS 1주 = 보통주 8주라 ADS 환산 약 2,415.5백만 주다. 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS' 하단(p.18).",
+      "period": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "share_unit": "ordinary",
+        "adr_ratio": 8,
+        "ads_equivalent": 2415500000
+      }
+    },
+    {
+      "observation_id": "alibaba.shares_diluted.2025-06-30.rejudge",
+      "company_id": "alibaba",
+      "metric": "shares_diluted",
+      "value": 19142000000,
+      "unit": "count",
+      "as_of": "2025-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "raw": "Weighted average number of shares used in calculating earnings per ordinary share (million shares) Diluted 19,142 | 19,324",
+      "note": "2025-04~06 분기 가중평균 희석 보통주 수(백만 주, 2026년 6월 분기 보도자료의 비교 열). ADS 환산 약 2,392.75백만 주.",
+      "period": {
+        "start": "2025-04-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "share_unit": "ordinary",
+        "adr_ratio": 8,
+        "ads_equivalent": 2392750000
+      }
+    },
+    {
+      "observation_id": "tesla.gross_margin_ttm.2026-06-30.rejudge",
+      "company_id": "tesla",
+      "metric": "gross_margin_ttm",
+      "value": 0.188518,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "status": "verified",
+      "raw": "GrossProfit 9,471 [H1 2026] + 17,094 [FY2025] − 7,031 [H1 2025]; Revenue 50,623 + 94,827 − 41,831 (USD 백만)",
+      "note": "최근 1년(2025-07-01~2026-06-30) 매출총이익률 = 19,534 ÷ 103,619. 10-Q(2026-06-30) 손익계산서 6개월 열과 10-K(2025-12-31) 손익계산서. Q2 2026 Update 의 분기 매출총이익(5,054·5,009·4,720·4,751) 합과 같다.",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "H1 2026 + FY2025 − H1 2025",
+        "components": [
+          {
+            "label": "H1 2026",
+            "gross_profit": 9471,
+            "revenue": 50623,
+            "accession": "0001628280-26-049270",
+            "form": "10-Q"
+          },
+          {
+            "label": "FY2025",
+            "gross_profit": 17094,
+            "revenue": 94827,
+            "accession": "0001628280-26-003952",
+            "form": "10-K"
+          },
+          {
+            "label": "H1 2025",
+            "gross_profit": 7031,
+            "revenue": 41831,
+            "accession": "0001628280-25-035806",
+            "form": "10-Q",
+            "also_filed_in": "0001628280-26-049270"
+          }
+        ],
+        "tags": "us-gaap:GrossProfit, us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "facts_source_id": "SRC-SEC-tesla-FACTS-20261008",
+        "same_window_as": "tesla.revenue_ttm.f6reg28 의 매출 103,619 와 같다"
+      }
+    },
+    {
+      "observation_id": "tesla.gross_margin_ttm_prior.2025-06-30.rejudge",
+      "company_id": "tesla",
+      "metric": "gross_margin_ttm_prior",
+      "value": 0.174795,
+      "unit": "ratio",
+      "as_of": "2025-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-tesla-FACTS-20261008",
+      "status": "verified",
+      "raw": "GrossProfit 7,031 [H1 2025] + 17,450 [FY2024] − 8,274 [H1 2024]; Revenue 41,831 + 97,690 − 46,801 (USD 백만)",
+      "note": "그 전 1년(2024-07-01~2025-06-30) 매출총이익률 = 16,207 ÷ 92,720. companyfacts 의 10-K(2024·2025)·10-Q(2024·2025 2분기) 사실. 분기 합(4,997 + 4,179 + 3,153 + 3,878)과 같다.",
+      "period": {
+        "start": "2024-07-01",
+        "end": "2025-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "H1 2025 + FY2024 − H1 2024",
+        "components": [
+          {
+            "label": "H1 2025",
+            "gross_profit": 7031,
+            "revenue": 41831,
+            "accession": "0001628280-25-035806",
+            "form": "10-Q"
+          },
+          {
+            "label": "FY2024",
+            "gross_profit": 17450,
+            "revenue": 97690,
+            "accession": "0001628280-25-003063",
+            "form": "10-K",
+            "also_filed_in": "0001628280-26-003952"
+          },
+          {
+            "label": "H1 2024",
+            "gross_profit": 8274,
+            "revenue": 46801,
+            "accession": "0001628280-24-032662",
+            "form": "10-Q",
+            "also_filed_in": "0001628280-25-035806"
+          }
+        ],
+        "same_window_as": "tesla.revenue_ttm_prior.f6reg28 의 매출 92,720 과 같다",
+        "annual_context": "연결 총마진 2023 18.2% · 2024 17.9% · 2025 18.0%(10-K 2025 Cost of Revenues and Gross Margin 표). 자동차 총마진은 2022 28.5% → 2023 19.4%(10-K 2023, 평균 판매가 하락)"
+      }
+    },
+    {
+      "observation_id": "tesla.sbc_ttm.2026-06-30.rejudge",
+      "company_id": "tesla",
+      "metric": "sbc_ttm",
+      "value": 3798000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "status": "verified",
+      "raw": "Stock-based compensation 2,181 [H1 2026] + 2,825 [FY2025] − 1,208 [H1 2025] (USD 백만)",
+      "note": "최근 1년 주식보상비용 $3,798M. 현금흐름표 'Stock-based compensation' 가산액(us-gaap:ShareBasedCompensation). 10-Q(2026-06-30)·10-K(2025-12-31)·10-Q(2025-06-30).",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "components": [
+          {
+            "label": "H1 2026",
+            "val": 2181,
+            "accession": "0001628280-26-049270"
+          },
+          {
+            "label": "FY2025",
+            "val": 2825,
+            "accession": "0001628280-26-003952"
+          },
+          {
+            "label": "H1 2025",
+            "val": 1208,
+            "accession": "0001628280-25-035806"
+          }
+        ],
+        "facts_source_id": "SRC-SEC-tesla-FACTS-20261008",
+        "note": "2025 CEO 성과 보상분이 포함된다(Q2 2026 Update 영업비용 설명)"
+      }
+    },
+    {
+      "observation_id": "tesla.shares_diluted.2026-06-30.rejudge",
+      "company_id": "tesla",
+      "metric": "shares_diluted",
+      "value": 3540000000,
+      "unit": "count",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "status": "verified",
+      "raw": "Weighted average shares used in computing net income per share of common stock Diluted 3,540 (3M 2026-06) | 3,519 (3M 2025-06)",
+      "note": "2026-04~06 분기 가중평균 희석 주식 수(백만 주). 10-Q 손익계산서 하단(us-gaap:WeightedAverageNumberOfDilutedSharesOutstanding). Q2 2026 Update 재무제표 값과 같다.",
+      "period": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      }
+    },
+    {
+      "observation_id": "tesla.shares_diluted.2025-06-30.rejudge",
+      "company_id": "tesla",
+      "metric": "shares_diluted",
+      "value": 3519000000,
+      "unit": "count",
+      "as_of": "2025-06-30",
+      "kind": "actual",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "status": "verified",
+      "raw": "Weighted average shares used in computing net income per share of common stock Diluted 3,540 (3M 2026-06) | 3,519 (3M 2025-06)",
+      "note": "2025-04~06 분기 가중평균 희석 주식 수(백만 주). 10-Q(2026-06-30) 비교 열.",
+      "period": {
+        "start": "2025-04-01",
+        "end": "2025-06-30"
+      }
+    },
+    {
+      "observation_id": "tesla.fsd_subscribers.2025-06-30.rejudge",
+      "company_id": "tesla",
+      "metric": "fsd_subscribers",
+      "value": 950000,
+      "unit": "count",
+      "as_of": "2025-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "status": "verified",
+      "raw": "Active FSD Subscriptions(2) (mil) 0.95 1.04 1.10 1.28 1.48 56% … (2) In accordance with our 2025 CEO Performance Award, metric includes both upfront payment and monthly subscriptions and excludes free trials.",
+      "note": "분기 말 FSD(Supervised) 활성 이용 수 0.95백만. Q2 2026 Update 5쪽 Operational Summary 표(열: Q2-2025 ~ Q2-2026). 주석 (2)에 따라 일시불 구매와 월 구독을 함께 세고 무료 체험은 뺀다(순수 월 구독 수가 아니다). 값은 0.01백만 단위로 반올림되어 있다.",
+      "basis": {
+        "definition": "upfront payment + monthly subscriptions, excludes free trials",
+        "rounding": "0.01 million",
+        "quarter": "2025-04-01~2025-06-30"
+      }
+    },
+    {
+      "observation_id": "tesla.fsd_subscribers.2025-09-30.rejudge",
+      "company_id": "tesla",
+      "metric": "fsd_subscribers",
+      "value": 1040000,
+      "unit": "count",
+      "as_of": "2025-09-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "status": "verified",
+      "raw": "Active FSD Subscriptions(2) (mil) 0.95 1.04 1.10 1.28 1.48 56% … (2) In accordance with our 2025 CEO Performance Award, metric includes both upfront payment and monthly subscriptions and excludes free trials.",
+      "note": "분기 말 FSD(Supervised) 활성 이용 수 1.04백만. Q2 2026 Update 5쪽 Operational Summary 표(열: Q2-2025 ~ Q2-2026). 주석 (2)에 따라 일시불 구매와 월 구독을 함께 세고 무료 체험은 뺀다(순수 월 구독 수가 아니다). 값은 0.01백만 단위로 반올림되어 있다.",
+      "basis": {
+        "definition": "upfront payment + monthly subscriptions, excludes free trials",
+        "rounding": "0.01 million",
+        "quarter": "2025-07-01~2025-09-30"
+      }
+    },
+    {
+      "observation_id": "tesla.fsd_subscribers.2025-12-31.rejudge",
+      "company_id": "tesla",
+      "metric": "fsd_subscribers",
+      "value": 1100000,
+      "unit": "count",
+      "as_of": "2025-12-31",
+      "kind": "actual",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "status": "verified",
+      "raw": "Active FSD Subscriptions(2) (mil) 0.95 1.04 1.10 1.28 1.48 56% … (2) In accordance with our 2025 CEO Performance Award, metric includes both upfront payment and monthly subscriptions and excludes free trials.",
+      "note": "분기 말 FSD(Supervised) 활성 이용 수 1.10백만. Q2 2026 Update 5쪽 Operational Summary 표(열: Q2-2025 ~ Q2-2026). 주석 (2)에 따라 일시불 구매와 월 구독을 함께 세고 무료 체험은 뺀다(순수 월 구독 수가 아니다). 값은 0.01백만 단위로 반올림되어 있다.",
+      "basis": {
+        "definition": "upfront payment + monthly subscriptions, excludes free trials",
+        "rounding": "0.01 million",
+        "quarter": "2025-10-01~2025-12-31"
+      }
+    },
+    {
+      "observation_id": "tesla.fsd_subscribers.2026-03-31.rejudge",
+      "company_id": "tesla",
+      "metric": "fsd_subscribers",
+      "value": 1280000,
+      "unit": "count",
+      "as_of": "2026-03-31",
+      "kind": "actual",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "status": "verified",
+      "raw": "Active FSD Subscriptions(2) (mil) 0.95 1.04 1.10 1.28 1.48 56% … (2) In accordance with our 2025 CEO Performance Award, metric includes both upfront payment and monthly subscriptions and excludes free trials.",
+      "note": "분기 말 FSD(Supervised) 활성 이용 수 1.28백만. Q2 2026 Update 5쪽 Operational Summary 표(열: Q2-2025 ~ Q2-2026). 주석 (2)에 따라 일시불 구매와 월 구독을 함께 세고 무료 체험은 뺀다(순수 월 구독 수가 아니다). 값은 0.01백만 단위로 반올림되어 있다.",
+      "basis": {
+        "definition": "upfront payment + monthly subscriptions, excludes free trials",
+        "rounding": "0.01 million",
+        "quarter": "2026-01-01~2026-03-31"
+      }
+    },
+    {
+      "observation_id": "tesla.fsd_subscribers.2026-06-30.rejudge",
+      "company_id": "tesla",
+      "metric": "fsd_subscribers",
+      "value": 1480000,
+      "unit": "count",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "status": "verified",
+      "raw": "Active FSD Subscriptions(2) (mil) 0.95 1.04 1.10 1.28 1.48 56% … (2) In accordance with our 2025 CEO Performance Award, metric includes both upfront payment and monthly subscriptions and excludes free trials.",
+      "note": "분기 말 FSD(Supervised) 활성 이용 수 1.48백만. Q2 2026 Update 5쪽 Operational Summary 표(열: Q2-2025 ~ Q2-2026). 주석 (2)에 따라 일시불 구매와 월 구독을 함께 세고 무료 체험은 뺀다(순수 월 구독 수가 아니다). 값은 0.01백만 단위로 반올림되어 있다.",
+      "basis": {
+        "definition": "upfront payment + monthly subscriptions, excludes free trials",
+        "rounding": "0.01 million",
+        "quarter": "2026-04-01~2026-06-30"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.gross_margin_ttm.2026-06-30.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "gross_margin_ttm",
+      "value": 0.518747,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "raw": "Revenue 18,674 · Cost of revenue 9,451 [FY2025, S-1/A] + Revenue 12,508 · Cost of revenue 5,883 [H1 2026] − Revenue 8,138 · Cost of revenue 4,244 [H1 2025] (USD 백만)",
+      "note": "최근 1년(2025-07-01~2026-06-30) 매출총이익률 = (23,044 − 11,090) ÷ 23,044. 매출원가에 위성 감가상각이 들어 있다(10-Q MD&A Cost of Revenue 문단). 같은 창의 전년(2024-07-01~2025-06-30) 값은 2024년 상반기 사실이 어느 제출본에도 없어 만들 수 없다.",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "FY2025 + H1 2026 − H1 2025",
+        "components": [
+          {
+            "label": "FY2025",
+            "revenue": 18674,
+            "cost_of_revenue": 9451,
+            "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+            "where": "S-1/A 감사 연결손익계산서(열은 왼쪽부터 2025·2024·2023 내림차순)",
+            "audited": true
+          },
+          {
+            "label": "H1 2026",
+            "revenue": 12508,
+            "cost_of_revenue": 5883,
+            "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+            "accession": "0001628280-26-052535"
+          },
+          {
+            "label": "H1 2025",
+            "revenue": 8138,
+            "cost_of_revenue": 4244,
+            "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+            "accession": "0001628280-26-052535"
+          }
+        ],
+        "same_window_as": "spacex-xai.revenue_ttm_full.fix56 의 매출 23,044 와 같다",
+        "facts_source_id": "SRC-SEC-spacex-xai-FACTS-20261008",
+        "prior_window_note": "같은 창 전년 값은 만들 수 없어 연간 쌍(2025 대 2024)을 따로 등록했다"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.gross_margin_ttm.2025-12-31.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "gross_margin_ttm",
+      "value": 0.493895,
+      "unit": "ratio",
+      "as_of": "2025-12-31",
+      "kind": "actual",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "status": "verified",
+      "raw": "Revenue $ 18,674 $ 14,015 $ 10,387 · Cost of revenue 9,451 7,996 6,110 (Year Ended December 31, 2025 · 2024 · 2023)",
+      "note": "2025 회계연도(2025-01-01~2025-12-31) 매출총이익률 = (18,674 − 9,451) ÷ 18,674. S-1/A 감사 연결손익계산서. 같은 창 전년이 없는 최근 1년 값 대신 연간 쌍의 당해 값으로 둔다.",
+      "period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "basis": {
+        "period_basis": "fiscal_year",
+        "pairs_with": "spacex-xai.gross_margin_ttm_prior.2024-12-31.rejudge"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.gross_margin_ttm_prior.2024-12-31.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "gross_margin_ttm_prior",
+      "value": 0.429468,
+      "unit": "ratio",
+      "as_of": "2024-12-31",
+      "kind": "actual",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "status": "verified",
+      "raw": "Revenue $ 18,674 $ 14,015 $ 10,387 · Cost of revenue 9,451 7,996 6,110 (Year Ended December 31, 2025 · 2024 · 2023)",
+      "note": "2024 회계연도(2024-01-01~2024-12-31) 매출총이익률 = (14,015 − 7,996) ÷ 14,015. 2025 회계연도 값(spacex-xai.gross_margin_ttm.2025-12-31.rejudge)의 전년 짝이다. 2023 회계연도는 (10,387 − 6,110) ÷ 10,387 = 0.4118 이다.",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      },
+      "basis": {
+        "period_basis": "fiscal_year",
+        "fy2023_gross_margin": 0.411765
+      }
+    },
+    {
+      "observation_id": "spacex-xai.sbc_ttm.2026-06-30.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "sbc_ttm",
+      "value": 2723000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "raw": "Share-based compensation 1,947 [FY2025, S-1/A 현금흐름표] + 1,470 [H1 2026] − 694 [H1 2025] (USD 백만)",
+      "note": "최근 1년 주식보상비용 $2,723M. FY2025 는 S-1/A 감사 연결현금흐름표, 반기 값은 10-Q(us-gaap:ShareBasedCompensation).",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "components": [
+          {
+            "label": "FY2025",
+            "val": 1947,
+            "source_id": "SRC-SEC-spacex-xai-000162828026040364"
+          },
+          {
+            "label": "H1 2026",
+            "val": 1470,
+            "accession": "0001628280-26-052535"
+          },
+          {
+            "label": "H1 2025",
+            "val": 694,
+            "accession": "0001628280-26-052535"
+          }
+        ],
+        "facts_source_id": "SRC-SEC-spacex-xai-FACTS-20261008"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.shares_diluted.2026-06-30.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "shares_diluted",
+      "value": 5864000000,
+      "unit": "count",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "raw": "WeightedAverageNumberOfDilutedSharesOutstanding 2026-04-01~2026-06-30 5,864,000,000 (10-Q 0001628280-26-052535)",
+      "note": "2026-04~06 분기 가중평균 희석 주식 수(순손실이라 기본 주식 수와 같은 기준). 2026-06 상장(신주 638,888,888주)과 xAI 주식 교환이 반영되어 전년 같은 분기 2,929백만 주보다 크다. 10-Q 손익계산서 하단.",
+      "period": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "prior_year_quarter": 2929000000,
+        "facts_source_id": "SRC-SEC-spacex-xai-FACTS-20261008"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.top_customer_share.fy2025.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "top_customer_share",
+      "value": 0.209,
+      "unit": "ratio",
+      "as_of": "2025-12-31",
+      "kind": "actual",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "status": "verified",
+      "raw": "Consolidated revenue from a significant customer is as follows: Year Ended December 31, 2025 2024 2023 Customer A 20.9 % 24.2 % 25.2 % Revenue from this customer relates to all three segments. No other customers represented more than 10% of con…",
+      "note": "S-1/A 감사 재무제표 주석 'Concentration of risk'(F-23). 고객 A 는 세 세그먼트 모두에 매출이 있고 이름은 공시되지 않는다. 다른 10% 이상 고객은 없다.",
+      "period": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.top_customer_share.fy2024.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "top_customer_share",
+      "value": 0.242,
+      "unit": "ratio",
+      "as_of": "2024-12-31",
+      "kind": "actual",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "status": "verified",
+      "raw": "Customer A 20.9 % 24.2 % 25.2 % (Year Ended December 31, 2025 · 2024 · 2023)",
+      "note": "S-1/A 감사 재무제표 주석 'Concentration of risk'(F-23) 2024 열.",
+      "period": {
+        "start": "2024-01-01",
+        "end": "2024-12-31"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.top_customer_share.2026q2.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "top_customer_share",
+      "value": 0.195,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "raw": "Three Months Ended June 30, | Six Months Ended June 30, | 2026 | 2025 | 2026 | 2025 | Customer A | 18.3 | % | 16.7 | % | 17.9 | % | 19.9 | % | Customer B | 19.5 | % | * | 12.2 | % | * |",
+      "note": "10-Q 주석 3 Revenue 'Concentration of risk' 표 3개월 열. 이 분기 최대는 고객 B 19.5%(AI 세그먼트 매출, 이름 미공시)이고 고객 A 는 18.3% 다.",
+      "period": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      }
+    },
+    {
+      "observation_id": "spacex-xai.top_customer_share.2026h1.rejudge",
+      "company_id": "spacex-xai",
+      "metric": "top_customer_share",
+      "value": 0.179,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "raw": "Three Months Ended June 30, | Six Months Ended June 30, | 2026 | 2025 | 2026 | 2025 | Customer A | 18.3 | % | 16.7 | % | 17.9 | % | 19.9 | % | Customer B | 19.5 | % | * | 12.2 | % | * |",
+      "note": "10-Q 주석 3 'Concentration of risk' 표 6개월 열. 상반기 최대는 고객 A 17.9% 이고 고객 B 는 12.2% 다.",
+      "period": {
+        "start": "2026-01-01",
+        "end": "2026-06-30"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "changes": {
+    "performance_leap": "pass",
+    "paradigm_adaptation": "pass",
+    "standard_capture": "pass",
+    "top_rank": "no",
+    "generation_gap": "no",
+    "generation_gap_months": 0,
+    "leap_independent": "yes"
+  },
+  "evidence_after": [
+    "Anthropic ② 는 성능 도약·패러다임 적응·표준 선점 세 경로를 모두 통과로 판정하고, 성능 도약은 세대 격차 수준이 아니라고 판정한다.",
+    "성능 도약은 모델 기업에 같은 날(2026-10-08) 열람한 Artificial Analysis 순위표 한 장(종합 지수 4.3.2판, GDPval-AA 2.1판, Coding Agent Index 1.5판)과 같은 날 ARC Prize 순위표로 가르고, 회사마다 가장 높은 모델끼리 비교한다. 통과는 세 축(종합 지능·에이전트 실무·코딩) 가운데 두 축 이상 1위다.",
+    "Anthropic 은 종합 지수·GDPval-AA·Coding Agent Index 세 순위표에서 모두 1위다. 종합 지능 축 안에서는 ARC-AGI-2·3 1위가 OpenAI 라 이 축은 측정끼리 갈리지만, 에이전트 실무와 코딩 두 축 1위만으로 통과 조건이 선다.",
+    "세 순위표는 Artificial Analysis 가 같은 하네스로, 코딩은 참가자 전원이 각자 제품 하네스로 잰 독립 측정이라 독립 측정 여부는 '예'다.",
+    "세대 격차는 '아니오'다. 종합 지수 1위는 Opus 5.5 측정이 실린 2026-09-22 에 성립했고 다른 회사는 아직 그 수준(58)에 오지 않았으므로, 개월 수는 그날부터 기준일까지 0개월이다. Opus 5 가 나온 2026-07-24 부터 앞섰다고 넉넉히 잡아도 2개월이라 모델 기업 임계 6개월에 못 미친다.",
+    "패러다임 적응은 코딩 에이전트 Claude Code 를 내놓았고 공개 6개월 만에 연환산 매출 $1B 라는 채택 지표가 있어 통과다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 Anthropic 이 정의한 MCP 를 ChatGPT·Gemini·Microsoft Copilot 등 다른 회사 제품이 채택해 통과다. MCP 는 2025-12 Agentic AI Foundation 에 기부돼 운영 주체가 바뀌었지만 인터페이스를 정의한 사실은 그대로다."
+  ],
+  "evidence_up_after": [
+    "2026-10-08 Artificial Analysis 종합 지수 4.3.2판(평가 10종)에서 Claude Opus 5.5(max) 58 이 1위이고, 다른 회사 최고는 GPT-6 Astra(max)·Gemini 4 Argon(high) 53, Muse Spark 1.3(max) 48, Grok 4.7(xhigh) 46 이다. [EV-anthropic-049]",
+    "같은 날 LLM Leaderboard 에서 Intelligence Index 상위 두 모델은 Claude Opus 5.5(max) 58 과 Claude Sonnet 5.5(max) 56 이고, Alibaba 최고는 Qwen3.8 Max(0902) 45 다. [EV-anthropic-050]",
+    "같은 날 GDPval-AA 2.1판(실무 과제 Elo)에서 Claude Opus 5.5(Max) 1866 이 1위이고, Muse Spark 1.3(Max) 1684 가 13위, Qwen3.8 Max(0902) 1671 이 14위, Gemini 4 Argon(High) 1626 이 21위, OpenAI 최고 GPT-5.6 Sol(Max) 1611 이 28위다. [EV-anthropic-051]",
+    "같은 날 Coding Agent Index 1.5판(DeepSWE·Terminal-Bench 4.0·SWE-Atlas-QnA pass@1 평균)에서 Claude Code - Sonnet 5.5(max) 68 이 1위, Claude Code - Opus 5.5(max) 66 이 2위이고, 다른 회사 최고는 Antigravity CLI - Gemini 4 Argon 64, Codex - GPT-6.1 Sol(xhigh) 63 이다. [EV-anthropic-052]",
+    "Artificial Analysis 는 2026-09-22 Claude Opus 5.5(max)가 종합 지수 58 로 지금까지 잰 가운데 몇 점 차 최고점이라고 적었다. [EV-anthropic-054]",
+    "Claude Code 는 일반 공개 6개월 만인 2025-11 에 연환산 매출 $1B 에 이르렀다. [EV-anthropic-023]",
+    "Anthropic 은 2024-11-25 AI 비서와 데이터가 있는 시스템을 잇는 새 표준으로 MCP 를 공개했다. [EV-anthropic-021]",
+    "MCP 는 ChatGPT·Cursor·Gemini·Microsoft Copilot·Visual Studio Code 등 다른 회사 제품이 채택했다. [EV-anthropic-022]"
+  ],
+  "evidence_down_after": [
+    "같은 날 ARC Prize 순위표에서 ARC-AGI-2 1위는 GPT-6 Astra(Max) 95.0% 이고 Claude Opus 5.5(High) 는 93.3% 이며, Claude Opus 5.5 의 ARC-AGI-3 값은 N/A 다. 표준 하네스 ARC-AGI-3 에서 Anthropic 최고 Claude Opus 5(High) 30.2% 는 GPT-6 Astra(Max) 62.7% 에 못 미친다. [EV-anthropic-053]",
+    "종합 지수 1위를 처음 잰 Opus 5.5 측정은 2026-09-22 에 실려 기준일까지 한 달이 지나지 않았다. [EV-anthropic-054]"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "changes": {
+    "channel_consumer": "yes",
+    "channel_work": "yes",
+    "channel_trade": "no",
+    "loop": "partial",
+    "switching": "fail",
+    "substitutes": "partial",
+    "pricing": "fail",
+    "durability_discount": "unknown",
+    "ai_monetized_in_channel": "partial"
+  },
+  "evidence_after": [
+    "가격을 내려야 했거나 단가가 계속 떨어진 것은 가격 실측 실패의 사실로 보고, 회수 루프는 두 변이 서로 끌어당기는 구조가 있어도 참여자가 줄면 부분으로 본다.",
+    "가장 강한 채널은 소비자 채널이다. Starlink 가입자 1,200만 명과 X, Grok 구독이 여기에 있다. 업무 채널(Anthropic 연산 계약·Starshield·Cursor)은 연산 계약이 최초 3개월 뒤 90일 통지로 해지할 수 있고 Cursor 는 인수 직후라 소비자 채널보다 약하다.",
+    "회수 루프는 부분이다. X 는 사용자끼리 이어지는 관계망 구조가 있으나 EU 사용자가 다시 줄고 광고 매출이 줄어 성장이 멈췄다. Starlink 는 가입 회선마다 따로 제공되는 서비스라 사용자끼리 끌어당기는 구조가 없다.",
+    "전환비용은 실패다. 이 채널의 묶임을 만드는 X 에서 EU 사용자 감소가 관측된다. Starlink 의 해지율은 공시되지 않아 미확인이고, 가입자 증가는 신규 유입과 유지를 가르지 못한다.",
+    "대체 공급은 부분이다. S-1/A 가 X 의 경쟁자로 Threads·Reddit·TikTok 을 들고 X 사용자가 줄지만, Starlink 와 비교할 위성 인터넷 대체재의 출하는 확정 근거에 없어 미확인이다.",
+    "가격 실측은 실패다. Starlink ARPU 가 2023년 $99 에서 2024년 $91, 2025년 $81, 2026년 6월 분기 $66 으로 떨어졌고, 회사는 북미 밖 가입자 비중 증가와 저가 요금제 추가, 월 요금 조정으로 ARPU 가 몇 년 더 내려갈 것이라고 적었다. X 광고 매출도 2026년 상반기에 줄었다.",
+    "지속성 할인은 미확인이다. 10-Q 의 10% 이상 고객은 고객 A(세 세그먼트, 상반기 17.9%)와 고객 B(AI 세그먼트, 2분기 19.5%)인데 이름이 공시되지 않아 그 고객의 자체 대체재가 출하 중인지 맞출 수 없다.",
+    "AI 수익화는 부분이다. 2026년 1분기 Grok·X 구독 매출이 늘었으나 Grok 몫은 따로 공시되지 않고, 소비자 채널 매출의 중심인 Starlink 는 AI 로 돈을 더 받지 않는다.",
+    "Starlink 해지율과 X 의 전 세계 사용자 시계열은 미확인이다."
+  ],
+  "evidence_up_after": [
+    "Starlink 가입자는 2025-06-30 600만 명에서 2026-06-30 1,200만 명으로 늘었다. [EV-spacex-xai-010]",
+    "Starlink 가입자는 2023년 230만, 2024년 440만, 2025년 890만 명이다. [EV-spacex-xai-063]",
+    "Connectivity 세그먼트 매출은 2025년 $11,387M 으로 2024년 $7,599M 보다 많고 영업이익은 $4,423M 이다. [EV-spacex-xai-011]",
+    "2026년 1분기 AI 세그먼트에서 Grok·X 구독 매출이 $177M 늘었다. [EV-spacex-xai-064]"
+  ],
+  "evidence_down_after": [
+    "회사는 북미 밖 가입자 비중 증가, 저가 요금제 추가, 월 요금 조정으로 Starlink ARPU 가 몇 년 더 내려갈 것이라고 적었고, ARPU 는 2025년 1분기 $86 에서 2026년 1분기 $66 으로 내렸다. [EV-spacex-xai-061]",
+    "Starlink ARPU 는 2023년 $99, 2024년 $91, 2025년 $81 이다. [EV-spacex-xai-063]",
+    "2026년 6월 분기 Starlink ARPU 는 $66 으로 전년 같은 분기 $85 보다 낮다. [EV-spacex-xai-062]",
+    "X 는 최신 DSA 공시에서 EU 사용자가 다시 줄었다. [EV-spacex-xai-017]",
+    "AI 세그먼트의 광고 매출은 2026년 상반기 $160M 줄었다. [EV-spacex-xai-016]",
+    "Starlink 서비스는 가입 회선마다 단말기에 붙어 요금제로 따로 청구된다. [EV-spacex-xai-015]",
+    "S-1/A 는 X 의 경쟁자로 Threads·Reddit·TikTok 같은 소셜 네트워크를 든다. [EV-spacex-xai-012]"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "changes": {
+    "performance_leap": "fail",
+    "paradigm_adaptation": "partial",
+    "standard_capture": "fail",
+    "top_rank": "no",
+    "generation_gap": "no"
+  },
+  "evidence_after": [
+    "Apple ② 는 성능 도약 실패, 패러다임 적응 부분, 표준 선점 실패로 통과 경로가 없다.",
+    "성능 도약은 실패다. 고난도 Siri 질의는 Google Cloud 기반 Private Cloud Compute 에서 처리하고 Apple 기반 모델은 Gemini 위에 만들며, 2026-10-08 Artificial Analysis 순위표 발췌의 회사별 최고 모델 목록에 Apple 모델은 없다. M 시리즈·Baltra 칩은 자체 서버 안에서 쓰이고 다른 칩을 앞선다는 독립 측정이 근거에 없다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 부분이다. 새 Siri AI 를 2026-09-14 iOS 27 과 함께 베타(설정에서 옵트인, 대기 명단)로 출시했으나 채택 지표가 없다. 2024년에 발표한 Siri 개편이 미뤄져 발표 뒤 약 2년이 걸렸다.",
+    "표준 선점은 실패다. 이번 실행의 확정 근거와 2026-10-08 판단 세션의 웹 검색에서 Apple 이 정의하고 다른 회사가 산업 인터페이스로 채택한 AI 규격을 찾지 못했다. Foundation Models 프레임워크의 외부 모델 연결 규격은 Apple 기기 안에서만 쓰이는 형식이라 표준으로 보지 않는다."
+  ],
+  "evidence_up_after": [
+    "Apple 은 2026-09-14 iOS 27 과 함께 새 Siri AI 를 출시했다. [EV-apple-011]",
+    "Apple 은 Private Cloud Compute 서버를 두 세대를 건너뛴 자체 M5 칩으로 바꾸고 있다. [EV-apple-010]",
+    "Apple 은 Broadcom 과 AI 서버 칩 Baltra 를 개발하고 TSMC N3P 로 만든다는 보도가 있다. 성능을 독립 측정한 근거는 없다. [EV-apple-009]"
+  ],
+  "evidence_down_after": [
+    "새 Siri AI 는 베타라 사용자가 설정에서 옵트인하고 대기 명단에 이름을 올려야 하며, 2024년 발표한 Siri 개편은 지난해 미뤄졌다. [EV-apple-011]",
+    "고난도 Siri 질의는 Google Cloud 인프라를 쓰는 Private Cloud Compute 에서 처리하고 Apple 은 Google Gemini 로 자체 모델을 만든다. [EV-apple-012]",
+    "Apple 이 Siri 개편용 Gemini 커스텀 모델(파라미터 1.2조 개)에 연 약 $1B 를 내는 계약에 가까워졌다는 Bloomberg 인용 보도가 있다(2025-11). [EV-apple-013]",
+    "Apple 과 Google 은 Gemini 와 Google 클라우드 기술을 미래 Apple 기반 모델의 토대로 쓰는 다년 협력을 공동 발표했다. [EV-apple-014]",
+    "Apple 기반 모델 팀장 Ruoming Pang 이 Meta 로 옮겼고 AI 총괄 John Giannandrea 는 물러나 2026년 봄 은퇴한다. [EV-apple-017, EV-apple-018]"
+  ]
+}

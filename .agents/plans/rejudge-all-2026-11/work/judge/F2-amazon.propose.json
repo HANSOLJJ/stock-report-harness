@@ -1,0 +1,28 @@
+{
+  "changes": {
+    "performance_leap": "fail",
+    "paradigm_adaptation": "pass",
+    "standard_capture": "fail",
+    "top_rank": "no",
+    "generation_gap": "no"
+  },
+  "evidence_after": [
+    "아마존 ② 는 성능 도약 실패, 패러다임 적응 통과, 표준 선점 실패로 통과 경로가 하나다.",
+    "성능 도약은 실패다. 자체 모델 Nova 는 2026-10-08 Artificial Analysis 순위표 발췌의 회사별 최고 모델 목록에 없고, 사용자 투표형 Arena 텍스트 부문(2026-10-02, 참고)에서도 최고 117위다. 자체 칩 Trainium3 의 성능 수치(144칩 합계 FP8 362 PFLOPs)는 회사 발표이고 선두 칩을 앞선다는 독립 측정이 없다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 에이전트·추론용으로 내놓은 Trainium3 와 에이전트 운영 기반 Bedrock AgentCore 가 있고, AI 사업 연환산 매출 $25B 초과, Anthropic 의 Trainium2 학습·서비스, OpenAI 의 Trainium 약 2GW 약정이라는 채택 지표가 있어 통과다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 실패다. Google Cloud·OCI 가 정식으로, Azure 가 프리뷰로 AWS Interconnect 규격을 채택했지만 멀티클라우드 네트워크 연결 규격이라 AI 에 귀속되지 않아 ② 에 세지 않는다(규칙 2.4). 이번 실행의 확정 근거에서 아마존이 정의하고 다른 회사가 채택한 AI 인터페이스는 찾지 못했다."
+  ],
+  "evidence_up_after": [
+    "AWS 는 2025-12 4세대 AI 칩 Trainium3 를 에이전트·추론·영상 생성용 첫 3nm 칩으로 정식 출시했다. [EV-amazon-033]",
+    "2026년 2분기 AWS 는 전년보다 36.7% 성장했고 AI 사업과 칩 사업이 각각 연환산 매출 $25B 를 넘었다. [EV-amazon-022]",
+    "Anthropic 은 세계 최대급 AI 컴퓨트 클러스터 Project Rainier 의 Trainium2 로 Claude 를 학습하고 서비스한다. [EV-amazon-036]",
+    "OpenAI 는 Trainium3·Trainium4 약 2GW 사용을 약정했다. [EV-amazon-035]",
+    "Anthropic 은 AWS 기술에 10년간 $100B 넘게, 최대 5GW 를 약정했고 Trainium2~Trainium4 를 쓴다. [EV-amazon-040]",
+    "아마존은 2026년 2분기 에이전트 배치·운영 기반 Bedrock AgentCore 에 새 기능을 더했다. [EV-amazon-025]"
+  ],
+  "evidence_down_after": [
+    "사용자 투표형 Arena 텍스트 종합 순위(2026-10-02)에서 Amazon Nova 계열 최고 순위는 117위다. 참고 지표다. [EV-amazon-051]",
+    "2026-04 보도 기준 OpenAI 가 Trainium 에서 프런티어 모델을 처음부터 끝까지 학습했다는 공개 근거는 없었다. [EV-amazon-036]"
+  ]
+}

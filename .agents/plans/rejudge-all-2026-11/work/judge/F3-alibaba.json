@@ -1,0 +1,34 @@
+{
+  "changes": {
+    "imitation": "fail",
+    "revenue_model": "pass",
+    "acceleration": "partial",
+    "door_closed": "fail",
+    "acceleration_tier": "c",
+    "acceleration_growth_rates": [0.40, 0.45]
+  },
+  "evidence_after": [
+    "알리바바 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 부분 통과로 통과점이 1.5 이고 사다리에서 3점이다.",
+    "모방 불가능성은 실패다. 오픈웨이트 배포는 Meta(Muse Glimmer)와 Google(Gemma 4)도 하고 있어 경쟁사 둘 이상이 이미 같은 방식을 쓰고, 오픈웨이트에는 회수 장치가 없어 Qwen 을 받아 돌리는 Novita·AWS Bedrock 같은 호스팅 업체가 매출을 가져간다. 자체 AI 칩 Zhenwu 는 Google·Amazon 등도 자체 가속기를 운용해 구조적으로 못 베끼는 자산이 아니다.",
+    "별도 수익모델은 통과다. 커머스와 클라우드 매출이 AI 를 먹여 살린다.",
+    "후발 가속도는 지표 단계 c(AI 클라우드·컴퓨트 서비스 부문의 외부 고객 매출)로 판정했다. AI 관련 제품 매출(b)은 확정된 수준값이 2026년 3월 분기 RMB89.71억과 6월 분기 RMB123.76억 둘뿐이고(직전 분기 대비 약 38%) 전년 대비는 '12분기 연속 세 자릿수'라는 진술뿐이라, 같은 정의의 성장률 두 개를 만들 수 없어 쓰지 못했다.",
+    "외부 고객 매출의 전년 대비 성장률은 2026년 3월 분기 40%, 6월 분기 45% 로 올랐으나 c 단계는 최대 부분이라 부분 통과다. 저장한 성장률은 0.40 과 0.45 다. 부문 이름이 바뀌었으나 회사가 직전 분기보다 가속했다고 적어 같은 정의로 읽었다.",
+    "6월 분기 부문 매출 RMB484.37억 가운데 AI 관련 제품 매출은 약 26% 이고 나머지는 AI 아닌 클라우드 매출이다.",
+    "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나, OpenRouter 에서 Anthropic 이 토큰 비중보다 훨씬 큰 매출 비중을 가져가고 있어 그런 증거가 없다."
+  ],
+  "evidence_up_after": [
+    "2026년 6월 분기 알리바바 전자상거래 그룹 매출은 RMB2,059억으로 전년보다 4% 늘어, AI 투자를 대는 커머스 매출이 있다. [EV-alibaba-020]",
+    "AI 클라우드·컴퓨트 서비스 부문 매출은 2026년 6월 분기 RMB484.37억이고, 외부 고객 매출의 전년 대비 성장률이 3월 분기 40% 에서 6월 분기 45% 로 올랐다. [EV-alibaba-070, EV-alibaba-016]",
+    "AI 관련 제품 매출은 2026년 3월 분기 RMB89.71억에서 6월 분기 RMB123.76억으로 늘었고 12분기 연속 전년 대비 세 자릿수로 늘었다. [EV-alibaba-070, EV-alibaba-016]",
+    "자체 AI 칩 Zhenwu 는 알리바바 클라우드를 통해 20개 넘는 산업의 외부 고객 650곳 이상이 쓴다. [EV-alibaba-071]"
+  ],
+  "evidence_down_after": [
+    "Meta 는 오픈웨이트 모델 Muse Glimmer 를, Google 은 Apache 2.0 라이선스의 Gemma 4 를 내놓았다. [EV-alibaba-021, EV-alibaba-022]",
+    "Qwen 모델은 AWS Bedrock 과 Novita AI 에서도 팔려 그 호스팅 매출은 그 업체들이 가져간다. [EV-alibaba-024, EV-alibaba-061]",
+    "Anthropic 모델은 OpenRouter 토큰 트래픽의 12% 지만 매출의 46% 를 가져간다. [EV-alibaba-025]",
+    "Google·Amazon·Microsoft·Meta 가 각각 자체 AI 가속기를 운용한다. [EV-nvidia-038]"
+  ],
+  "cite": ["EV-alibaba-020", "EV-alibaba-070", "EV-alibaba-016", "EV-alibaba-071", "EV-alibaba-021", "EV-alibaba-022", "EV-alibaba-024", "EV-alibaba-061", "EV-alibaba-025", "EV-nvidia-038"],
+  "reconfirm": [],
+  "reason": "AI 제품 매출(b)은 수준값이 둘뿐이라 클라우드 외부 고객 매출(c) 40%→45% 로 가속도를 상한 부분 통과로 두고, 오픈웨이트는 경쟁사 둘 이상이 하고 회수 장치가 없어 모방 불가능성을 실패로 다시 매겼다"
+}

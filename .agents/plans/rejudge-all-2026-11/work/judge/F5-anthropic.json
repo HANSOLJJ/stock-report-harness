@@ -1,0 +1,77 @@
+{
+  "changes": {
+    "A": 1,
+    "H": -2
+  },
+  "evidence_after": [
+    "Anthropic ⑤ 는 3 + 동맹 등급 +1 + 적대 등급 −2 로 2점이다.",
+    "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+    "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+    "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+    "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기거나, 고객에게 관계를 끊으라는 정당성 공격으로 실제 이탈이 생기면 구조형이다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+    "동맹 등급 +1 은 AWS Bedrock 과 Google Vertex AI 를 통한 재판매 유통에서 나온다. Amazon·Google 이 Anthropic 지분을 가져 Anthropic 이 잘돼야 두 회사도 벌므로 떠날 수 없는 관계이고, 두 회사가 Claude 물량을 줄였다는 실측은 없다.",
+    "Amazon·Google·Microsoft 의 지분 투자는 받은 투자라 동맹 등급에 그대로 세지 않고, 투자 자체로 +2 를 만들지 않는다.",
+    "Microsoft 는 GitHub Copilot 에 자체 모델 MAI-Code-1-Flash 를 넣고 사내 Claude 지출 전망을 3분의 1 넘게 줄여 떠나고 있는 상대라 동맹에서 뺀다.",
+    "SpaceXAI 의 Grok Bot 이 Claude Opus 5.5 를 쓰기 시작한 것은 경쟁사가 Claude 를 쓰는 사실이지만, SpaceXAI 는 자체 Grok·Cursor 모델을 이미 내놓았고 Anthropic 에 묶인 약정이 확인되지 않아 떠날 수 있는 관계라 경쟁사 편입 조항으로 세지 않는다.",
+    "Anthropic 이 SpaceX·Google·Amazon·Microsoft 에서 컴퓨트를 사는 것은 조달이라 ⑧ 소관이다. 국방부 CDAO 계약은 여러 회사가 함께 받아 등급의 차이를 만들지 않는다. Anthropic 이 지분을 건 동맹이 없고 경쟁사를 자기 매대에 묶은 사실도 없어 +2 가 아니다.",
+    "적대 등급 −2 는 구조형이다. 매출의 4분의 1 가까이를 내는 큰 고객 둘(Cursor·GitHub Copilot)이 모두 자체 모델을 내는 경쟁사 소유이고, 그 가운데 Microsoft 는 GitHub Copilot 에 자체 모델을 넣어 Claude 물량을 대신하기 시작했다. 고객이 대체품을 낼수록 매출이 직접 사라지는 구조다.",
+    "Cursor 는 2026-08 SpaceX 에 인수됐고 SpaceX 는 Anthropic 을 주요 경쟁사로 공시한다. Anthropic 은 Cursor 에 컴퓨트를 늘리겠다고 밝혀 Cursor 쪽 물량은 아직 줄지 않았다.",
+    "국방부 거래 배제의 유지와 사용 중단은 정부 시장 일부의 차단이고 FTC 조사는 업계 공통의 규제 조사라 비용형이다. 다발형은 최대 유통 파트너 Amazon 과의 긴장이 보이지 않아 서지 않는다.",
+    "큰 고객 둘의 매출 비중은 공개 제출본이 아니라 보도와 유출된 상장 신청서 초안에 기댄다.",
+    "⑧ 에서 센 것, 곧 컴퓨트 공급자가 모두 모델 경쟁자라는 공급자=경쟁자 의존과 고객 둘의 매출 비중 크기는 여기서 다시 세지 않는다. ⑤ 는 큰 고객이 경쟁사로서 대체품을 내는 속성만 센다.",
+    "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+  ],
+  "evidence_up_after": [
+    "Microsoft·NVIDIA 와의 제휴로 Claude 는 세계 3대 클라우드 모두에서 제공되는 유일한 프론티어 모델이 됐다. [EV-anthropic-030]",
+    "Anthropic 매출의 약 47% 가 2025년 클라우드 파트너 Amazon·Google 을 거쳤다는 보도가 있다(유출된 상장 신청서 인용). [EV-alphabet-006]",
+    "Amazon 은 Anthropic 에 앞서 $8B 를 넣은 데 이어 $5B 를 더 넣고 최대 $20B 를 추가로 넣기로 했고, Alphabet 의 Anthropic 투자는 $13.3B 로 불었으며 최대 $30B 추가 약정이 있다. [EV-amazon-039, EV-alphabet-018]",
+    "SpaceXAI 의 소비자용 에이전트 앱 Grok Bot 이 2026-10 자사·Cursor 모델 대신 Claude Opus 5.5 를 쓰기 시작했다. [EV-anthropic-062]",
+    "Anthropic 은 SpaceX 에 인수된 Cursor 의 Claude 모델 지원을 위해 컴퓨트를 계속 늘리겠다고 밝혔다. [EV-spacex-xai-048]"
+  ],
+  "evidence_down_after": [
+    "Anthropic 매출의 4분의 1 가까이를 고객 두 곳, Cursor 와 GitHub Copilot 이 낸다는 보도가 있다. [EV-anthropic-048]",
+    "SpaceX 는 2026-08-14 Cursor 인수를 마쳤고 Anthropic 을 AI 시장의 주요 경쟁사로 공시한다. [EV-spacex-xai-013, EV-spacex-xai-012]",
+    "Microsoft 는 GitHub Copilot 에서 자체 모델 MAI-Code-1-Flash 를 수백만 개발자에게 쓰게 하며 모든 모델을 서로 바꿀 수 있게 짰다고 밝혔다. [EV-microsoft-010]",
+    "Microsoft 는 사내 Anthropic 기술 지출 전망 $1B 이상을 3분의 1 넘게 줄였다. [EV-anthropic-015]",
+    "2026-09-25 미 항소법원은 국방부의 Anthropic 군 계약 배제를 유지했고, 2026-10-05 국방부는 Anthropic 제품 사용을 중단했다고 밝혔다. [EV-anthropic-046, EV-anthropic-010]",
+    "FTC 는 제품 위험 문제로 OpenAI·Anthropic 등 AI 회사들을 조사하고 있다. [EV-anthropic-032]"
+  ],
+  "cite": [
+    "EV-anthropic-030",
+    "EV-alphabet-006",
+    "EV-amazon-039",
+    "EV-alphabet-018",
+    "EV-anthropic-062",
+    "EV-spacex-xai-048",
+    "EV-anthropic-048",
+    "EV-spacex-xai-013",
+    "EV-spacex-xai-012",
+    "EV-microsoft-010",
+    "EV-anthropic-015",
+    "EV-anthropic-046",
+    "EV-anthropic-010",
+    "EV-anthropic-032"
+  ],
+  "reconfirm": [
+    "EV-anthropic-030",
+    "EV-alphabet-006",
+    "EV-amazon-039",
+    "EV-alphabet-018",
+    "EV-anthropic-062",
+    "EV-spacex-xai-048",
+    "EV-anthropic-048",
+    "EV-spacex-xai-013",
+    "EV-spacex-xai-012",
+    "EV-microsoft-010",
+    "EV-anthropic-015",
+    "EV-anthropic-046",
+    "EV-anthropic-010",
+    "EV-anthropic-032",
+    "EV-anthropic-002",
+    "EV-anthropic-006",
+    "EV-anthropic-011",
+    "EV-anthropic-060",
+    "EV-anthropic-024"
+  ],
+  "reason": "지분으로 묶인 Bedrock·Vertex 유통으로 동맹 +1 을 유지하고, 매출 4분의 1 가까이를 내는 큰 고객 둘이 자체 모델을 내는 경쟁사 소유이고 Microsoft 가 대체를 시작해 적대를 구조형 −2 로 내렸다"
+}

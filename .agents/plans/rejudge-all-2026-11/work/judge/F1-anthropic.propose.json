@@ -1,0 +1,45 @@
+{
+  "changes": {
+    "channel_consumer": "yes",
+    "channel_work": "yes",
+    "channel_trade": "yes",
+    "loop": "fail",
+    "switching": "partial",
+    "substitutes": "fail",
+    "pricing": "fail",
+    "durability_discount": "unknown",
+    "ai_monetized_in_channel": "yes"
+  },
+  "evidence_after": [
+    "거래 채널(모델 API)의 가격 실측은 정가·평균 단가와 라우팅 서비스 점유율을 함께 보아, 단가 프리미엄을 지키며 점유율이 늘면 통과, 단가를 내리며 점유율을 지키면 부분, 단가를 내렸는데 점유율도 줄면 실패로 보고, 라우팅 서비스 토큰 점유율은 매출 점유율이 아니며 라우팅 서비스는 전체 시장이 아니다.",
+    "가장 강한 채널은 거래 채널이다. 기업 고객이 매출의 약 80% 를 내고, 매출의 약 4분의 1 을 내는 두 고객(Cursor·GitHub Copilot)이 사용량 기반 API 고객이다. 소비자 채널은 카드 결제 자료에서 47개 주에서 OpenAI 에 뒤져 이보다 약하다.",
+    "가격 실측은 실패다. Opus 정가를 $5/$25 에서 $4/$20 으로, 캐시 읽기를 $0.50 에서 $0.20 으로 내리고 Haiku 5.5 를 이전 Haiku 의 10% 가격에 냈다. 같은 시기 OpenRouter 토큰 점유율(관측)은 0.1169(7월 19일 주)에서 0.0494(9월 6일 주), 0.0389(10월 4일 주)로 줄었고 평균 단가(관측)는 $1.2393(9월 8~30일)에서 $1.0178(10월 1~7일)로 내려갔다.",
+    "단가 프리미엄 자체는 남아 있다. 2026년 6월 보도에서 Anthropic 은 OpenRouter 토큰의 12% 로 매출의 46% 를 냈고, 10월 1~7일 평균 단가(관측)도 OpenAI 의 $0.3604 보다 높다. 9~10월 지출 점유율 추이는 확정 근거에 없어 미확인이다.",
+    "전환비용은 부분이다. 고객은 모델 세대마다 다시 고르고, Microsoft 가 사내 Claude 지출 전망을 줄였으며 SpaceXAI 는 Grok Bot 의 모델을 자사 모델에서 Claude 로 바꿨다(옮기기 쉽다는 사실). 연환산 $100만 넘게 쓰는 기업 고객이 두 달이 안 돼 두 배로 늘어 이탈 규모는 기반에 견줘 작아 실패로 보지 않았다.",
+    "회수 루프는 실패다. API 고객 한 곳의 가치는 다른 고객 수와 무관하다. MCP 는 재단에 기증한 공개 표준이라 Anthropic 만의 회수 루프로 세지 않았다.",
+    "대체 공급은 실패다. 독립 측정(Artificial Analysis 종합 지수)에서 Opus 5.5 는 58 이고 GPT-6 Astra·Gemini 4 Argon 53, GPT-6.1 Sol 52 가 출하 중이며, GPT-6.1 Sol 은 GPT-6 Astra 보다 1점 낮은 지수를 4분의 1 미만 업무당 비용으로 낸다. 코딩 에이전트 지수도 68 대 64·63 으로 격차가 좁다.",
+    "업무당 비용은 Opus 5.5 가 Opus 5 와 같은 수준이지만 지수 과제당 출력 토큰이 GPT-6 Astra 보다 많아, 토큰 단가만으로 가격 경쟁력을 판정하지 않았다.",
+    "지속성 할인은 미확인이다. 비공개 상장 신청서가 유출 보도로만 알려졌고(두 고객이 매출의 4분의 1), 공개 제출본에 10% 이상 고객이 공시되지 않아 할인의 전제와 그 고객의 자체 대체재 출하를 확정하지 못했다.",
+    "AI 수익화는 예다. 거래 채널 매출 전부가 Claude 모델 사용료다.",
+    "고객 이탈률과 4월 뒤 고객 수는 미확인이다."
+  ],
+  "evidence_up_after": [
+    "2026년 6월 보도에서 Anthropic 모델은 OpenRouter 토큰 트래픽의 12% 로 플랫폼 매출의 46% 를 냈다. [EV-anthropic-013]",
+    "연환산 $100만 넘게 쓰는 기업 고객은 2월 500곳 넘게에서 4월 1,000곳 넘게로 두 달이 안 돼 두 배가 됐다. [EV-anthropic-059]",
+    "기업 고객은 30만 곳을 넘고 매출의 약 80% 를 낸다(2025-10 보도). [EV-anthropic-012]",
+    "Artificial Analysis 종합 지수에서 Claude Opus 5.5 는 58 로 1위다. [EV-anthropic-049]",
+    "SpaceXAI 의 Grok Bot 은 10월부터 자사 모델 대신 Claude Opus 5.5 를 쓴다. [EV-anthropic-062]"
+  ],
+  "evidence_down_after": [
+    "Opus 5.5 정가는 입력·출력 100만 토큰당 $4/$20 으로 Opus 5 의 $5/$25 보다 낮고 캐시 읽기는 $0.50 에서 $0.20 으로 내렸다. [EV-anthropic-054]",
+    "Haiku 5.5 는 10만 토큰 이하 프롬프트에 $0.10/$0.50 으로 이전 Haiku 의 10% 가격이다. [EV-anthropic-056]",
+    "OpenRouter 의 9월 28일 주 텍스트 요청 점유율에서 Anthropic 은 2.5% 로 7위다. [EV-anthropic-057]",
+    "Microsoft 는 올해 사내 Anthropic 지출 전망 $10억 이상을 3분의 1 넘게 줄였다(The Information 보도 인용). [EV-anthropic-015]",
+    "Pentagon 은 Anthropic 제품 사용을 멈췄다(블랙리스트 지정 뒤의 중단이라 대체재로 옮긴 이탈과는 다르다). [EV-anthropic-010]",
+    "Anthropic 은 스타트업에 Claude Team 1년 무료와 API 크레딧 $1,000 를 준다. [EV-anthropic-061]",
+    "Artificial Analysis 종합 지수에서 Claude Fable 5.1·GPT-6 Astra·Gemini 4 Argon 은 53, GPT-6.1 Sol 은 52 다. [EV-anthropic-049]",
+    "GPT-6.1 Sol 은 GPT-6 Astra 보다 종합 지수가 1점 낮으면서 업무당 비용은 4분의 1 미만이다. [EV-openai-052]",
+    "코딩 에이전트 지수는 Claude Code Sonnet 5.5 68, Antigravity CLI Gemini 4 Argon 64, Codex GPT-6.1 Sol 63 이다. [EV-anthropic-052]",
+    "Opus 5.5 는 지수 과제당 출력 토큰을 약 119k 개 써 GPT-6 Astra(약 27k 개)보다 많다. [EV-anthropic-054]"
+  ]
+}

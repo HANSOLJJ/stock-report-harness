@@ -1,0 +1,98 @@
+{
+  "group": "F4-ev",
+  "sources": [],
+  "evidence": [
+    {
+      "company_id": "amazon",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-anthropic-000101872426000002",
+      "published_at_utc": "2026-02-05T00:00:00Z",
+      "title": "Amazon 8-K Ex.99.1 — Fourth Quarter 2025 Results",
+      "excerpt": "Added 20+ fully-managed models on Amazon Bedrock, including from Amazon Nova as well as Anthropic, Google, OpenAI, NVIDIA, Qwen, Mistral AI, Stability AI, Cohere, MiniMax AI, and Moonshot AI—enabling customers to test and switch between models without rewriting code while accessing breakthrough capabilities in coding, reasoning, and agentic workflows. • Expanded its family of Nova models, including Nova 2 Lite and Nova 2 Pro for frontier intelligence with lower costs and latency, and Nova 2 Sonic for multilingual conversational AI.",
+      "relevance": "(추론) 아마존이 자체 모델 Nova 를 Amazon Bedrock 에서 완전 관리형 모델로 고객에게 제공하고, Nova 2 Lite·Nova 2 Pro·Nova 2 Sonic 으로 모델 계열을 넓혔다고 실적 보도자료에 적었다. 자체 모델이 출시돼 외부 고객이 쓰는 상품이라는 회사 공시라 ④ 다섯 자리 가운데 모델 자리의 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 아마존 ④ 의 모델 자리를 출시 근거로 채울 수 있다. 모델 경쟁력은 ② 에서 따로 본다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "같은 글머리표가 Bedrock 이 Anthropic·Google·OpenAI 등 다른 회사 모델도 함께 판다고 적는다."
+      ],
+      "unverified": [
+        "Nova 모델별 사용량·매출은 보도자료에 없다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "8-K (2026-02-05) Exhibit 99.1 보도자료, Andy Jassy 인용 뒤 'Some other highlights' 목록의 Amazon Bedrock 모델 추가 글머리표와 그 바로 뒤 Nova 모델 계열 확장 글머리표",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Edge Computing revenue was $7.2 billion, up 27% from a year ago and up 13% sequentially. The increases were driven by strong sales of Blackwell workstations, partially offset by slower consumer PC sales that were tempered by elevated memory and systems prices .",
+      "relevance": "(추론) 2026-07-26 종료 분기 Edge Computing 매출은 $7.2B 이고, 회사는 증가를 Blackwell 워크스테이션 판매로, 상쇄 요인을 소비자 PC 판매 둔화로 설명한다. Edge Computing 안에 데이터센터 AI 인프라와 별개인 소비자 PC 판매가 들어 있다는 공시라 ④ 의 AI 밖 매출 자리 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: NVIDIA ④ 의 AI 밖 매출 자리를 소비자 PC 판매가 있다는 공시로 채울 수 있다. 소비자 PC 판매액은 따로 공시되지 않는다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "같은 문단은 Edge Computing 증가를 AI 작업에도 쓰이는 Blackwell 워크스테이션 판매로 설명해, Edge Computing 전체가 AI 와 무관한 매출은 아니다."
+      ],
+      "unverified": [
+        "Edge Computing 가운데 소비자 PC(게이밍) 판매액과 비중은 공시되지 않는다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-07-26) Part I Item 2 MD&A — Second Quarter of Fiscal Year 2027 Summary, Revenue by Market Platform 표 아래 셋째 문단(Edge Computing 문단) 전체",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26)",
+      "excerpt": "Additionally, restrictions imposed by the Chinese government on the duration of gaming activities and access to games may adversely affect our Edge Computing revenue, and even if we are able to participate in the China data center compute market, increased oversight of digital platform companies may adversely affect our Data Center revenue.",
+      "relevance": "(추론) 회사는 중국 정부의 게임 이용 시간·게임 접근 제한이 Edge Computing 매출에 불리할 수 있다고 위험 요인에 적었다. Edge Computing 매출에 게임 수요가 들어 있다는 회사 서술이라, 소비자 PC 판매 문단과 함께 ④ 의 AI 밖 매출 자리를 받친다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: NVIDIA ④ 의 AI 밖 매출 자리를 게임 수요가 Edge Computing 매출에 들어 있다는 공시로 받칠 수 있다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "게임 관련 매출액은 공시되지 않는다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-07-26) Part II Item 1A Risk Factors — 수출 통제 위험 가운데 'In addition to export controls' 문단 다음 문단('Additionally, restrictions imposed by the Chinese government…') 첫 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025-12-31)",
+      "excerpt": "We use AI to develop real-world applications, such as autonomous driving solutions and robots. We utilize vision-based technologies, systems and software to train our artificial neural networks, which are accelerated by our own in-house, custom designed inference chips. … Currently, we offer in our customer vehicles certain advanced driver assistance systems.",
+      "relevance": "(추론) 테슬라는 자율주행용 인공신경망을 자체 설계한 추론 칩으로 가속한다고 10-K 에 적었고, 고객 차량에 운전자 보조 시스템을 제공한다고 같은 소제목 아래 적었다. 자체 설계 AI 칩이 회사 제품에 쓰인다는 공시라 ④ 다섯 자리 가운데 칩 자리의 직접 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ④ 의 칩 자리를 회사 공시로 직접 받친다. 칩 자리는 이미 세고 있어 점수는 그대로다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "자체 추론 칩의 출하 대수와 세대별 비중은 10-K 에 없다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (2025-12-31) Part I Item 1 Business — Technology, Automotive, 'Self-Driving Development and Artificial Intelligence' 소제목 첫 문단 첫째·둘째 문장과 둘째 문단 첫 문장",
+      "verified_original": true
+    }
+  ]
+}

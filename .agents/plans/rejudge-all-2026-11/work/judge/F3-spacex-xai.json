@@ -1,0 +1,32 @@
+{
+  "changes": {
+    "imitation": "fail",
+    "revenue_model": "pass",
+    "acceleration": "pass",
+    "door_closed": "fail",
+    "acceleration_tier": "b",
+    "acceleration_growth_rates": [0.125, 2.475]
+  },
+  "evidence_after": [
+    "스페이스X ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+    "모방 불가능성은 AI 에 귀속되는 부분만 보고 실패로 판정했다. Colossus 를 빠르게 지은 데이터센터 규모는 Meta Hyperion·Stargate 처럼 자본이 있는 경쟁사들이 이미 짓고 있고, 궤도 AI 데이터센터는 대규모 위성군과 인허가가 필요한 계획이라 점수에 넣지 않는다. Grok 모델은 독립 지수에서 공동 3위라 자산 덕에 앞서 있다고 볼 수 없다. Starlink 는 비AI 사업이라 이 기준에서 세지 않는다.",
+    "별도 수익모델은 통과다. Starlink(Connectivity 부문) 영업이익이 AI 부문 영업손실을 대고 있다.",
+    "후발 가속도는 지표 단계 b(AI 세그먼트 매출)의 전년 대비 성장률로 판정했다. 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)로 올라 가속이라 통과다. 저장한 성장률은 0.125 와 2.475 다.",
+    "AI 세그먼트에는 줄고 있는 X 광고 매출(비AI)이 섞여 있고 그 비중은 확정 근거에 없다. 2분기 증가는 AI 세그먼트 고객 B 한 곳(연결 매출의 19.5%)의 새 계약에서 크게 왔다.",
+    "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없다."
+  ],
+  "evidence_up_after": [
+    "2026년 2분기 Connectivity 부문 영업이익은 $16.56억이고 AI 부문 영업손실은 $12.57억이라 Starlink 가 AI 를 대고 있다. [EV-spacex-xai-023]",
+    "AI 세그먼트 매출의 전년 대비 성장률은 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)다. [EV-spacex-xai-064, EV-spacex-xai-024]",
+    "회사는 3분기 첫 몇 주에 10월부터 램프하는 $67억 규모 클라우드 서비스 계약을 더 맺었다(계약이라 점수에 넣지 않는다). [EV-spacex-xai-025]"
+  ],
+  "evidence_down_after": [
+    "2026년 2분기 연결 매출의 19.5% 가 AI 세그먼트의 고객 B 한 곳에서 나왔다. [EV-spacex-xai-060]",
+    "Meta 는 5GW 규모의 Hyperion 데이터센터를 짓고 있고, OpenAI·Oracle·SoftBank 의 Stargate 도 xAI Colossus 와 나란히 꼽힌다. [EV-spacex-xai-026]",
+    "궤도 AI 컴퓨트는 최대 100만 기에 이를 수 있는 위성군과 여러 인허가가 필요한 계획이다(계획이라 점수에 넣지 않는다). [EV-spacex-xai-027]",
+    "Grok 4.6 은 Artificial Analysis 지능 지수 61 로 GPT-5.6 Sol Max 와 공동 3위이고 1·2위는 Anthropic 모델이다. [EV-spacex-xai-018]"
+  ],
+  "cite": ["EV-spacex-xai-023", "EV-spacex-xai-064", "EV-spacex-xai-024", "EV-spacex-xai-025", "EV-spacex-xai-060", "EV-spacex-xai-026", "EV-spacex-xai-027", "EV-spacex-xai-018"],
+  "reconfirm": [],
+  "reason": "지표 단계 b(AI 세그먼트 매출) 전년 대비 12.5%→247.5% 가속으로 가속도 통과를 성장률 두 개로 다시 받치고, 데이터센터 규모는 경쟁사들이 이미 짓고 있어 모방 불가능성을 실패로 바꿨다"
+}

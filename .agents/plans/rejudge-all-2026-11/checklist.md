@@ -53,13 +53,12 @@
 - [ ] 사건 근거: 가격 인상 공지·보도, 이탈 보도, 경쟁사 출하(경쟁사 10-Q 도 EDGAR 로), 가격 페이지 스냅샷
 
 ## 4. 10월 v2.0 재실행 (11월을 기다리지 않는다 — 2026-10-08 사용자 결정)
-- [ ] 실행 이름 `ai-scorecard-2026-10-rejudge` (제안). `init --from-run ai-scorecard-2026-10-rescore --rule v2.0 --as-of <시작일> --price-as-of <직전 확정 종가일> --info-cutoff <시작일> --title "2026-10 전부 재판단(v2.0)"`
-- [ ] 작업 분할: ① 근거 수집·확정은 회사 묶음(10월과 같은 5묶음)으로, ② 판단은 **항목별로 14사를 한 세션이** 맡는다(같은 잣대, Q03). ①·②·③·④·⑤·⑦·⑧ 일곱 세션. 판단자는 opus.
-- [ ] collect → 후보 선별 → 근거 확정
-- [ ] ② 경로 입력(C-03) 14사 신규 작성 — 지금은 전부 숫자만 있음
-- [ ] ⑦ 매트릭스 2사 신규 작성 (basis carried 인 두 칸)
-- [ ] ① 14사: 채널 목록·네 질문 입력, 근거 표지. TEN-RC-02(anthropic)·RC3-03(palantir·oracle)·RC4-02(openai)·부품(nvidia·tsmc) 같은 잣대로
-- [ ] ③④⑤⑧ 14사 재판단 또는 재확인 기록
+- [x] 실행 `ai-scorecard-2026-10-rejudge` 생성(`init --from-run ai-scorecard-2026-10-rescore --rule v2.0 --as-of 2026-10-08 --price-as-of 2026-10-07 --info-cutoff 2026-10-08`). 규칙 해시 변경 경고는 예상된 것
+- [x] collect(all, since 2026-09-02): 후보 5,427건(10-06 이후 뉴스 1,510건, 공시 15건), 가격·시총 12사 2026-10-07 종가
+- [x] 작업 분할 확정: 수집·트리거·관측은 회사 묶음 5개(A nvidia·tsmc·apple / B alphabet·amazon·microsoft / C meta·oracle·palantir / D anthropic·openai / E alibaba·tesla·spacex-xai, `GROUP-INSTRUCTIONS.md`), 판단은 항목별 7세션. 산출물은 `work/out-<G>.json`, 합치기는 `work/merge_group_outputs.py`
+- [x] 묶음 5개 산출물 합침(근거 +140, 트리거 56/56 이어받음 + 새 21, 관측 +108, 출처 +109) → `confirm` 138건(검토자 claude, 사용자 위임) → 근거 741 확정·2 후보, load_context 통과. 묶음 보고는 `work/report-A~E.md`
+- [x] init 결함 수정(표지 인용 근거 누락) 커밋, 재실행 근거 603건 복원
+- [ ] 판단 세션 7개(①②③④⑤⑦⑧, opus) 동시 실행 중 → `work/judge/<F>-<company>.json` → `apply_judgments.py` 로 propose → `proposal --all-pending --accept`
 - [ ] 10월 미해결 12건(Q02·Q03·Q05·Q08·Q09·Q10·Q12·Q13·Q16·Q19·Q20·Q23) 처리
 - [ ] research → `diff --against ai-scorecard-2026-10-rescore` → calculate → draft
 - [ ] review (승계 예외 없이) → 승인 대기 보고

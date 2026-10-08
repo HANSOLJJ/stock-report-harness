@@ -1,0 +1,1461 @@
+{
+  "group": "D",
+  "sources": [
+    {
+      "source_id": "SRC-WEB-anthropic-017",
+      "title": "Artificial Analysis 홈페이지 — Intelligence 차트와 변경 기록(2026-10-08 열람)",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 모델 기업 공통 근거(같은 날짜 한 장). Anthropic·OpenAI·Alphabet·Meta·Alibaba 판단이 함께 인용한다. 열람 시각을 published_at_utc 로 적었다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:13:05Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-018",
+      "title": "Artificial Analysis LLM Leaderboard(2026-10-08 열람)",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/leaderboards/models",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 모델 기업 공통 근거. 표 필터 기본값(Status: Current). 열람 시각을 published_at_utc 로 적었다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:12:49Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-019",
+      "title": "GDPval-AA v2.1 Leaderboard(2026-10-08 열람)",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/evaluations/gdpval-aa",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 에이전트 실무 축 공통 근거. 순위 표는 페이지 HTML 의 표(Creator·Name·Elo·CI·Release Date)에서 읽었다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:13:19Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-020",
+      "title": "Artificial Analysis Coding Agent Benchmarks(2026-10-08 열람)",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/agents/coding-agents",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 코딩 축 공통 근거",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:14:04Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-021",
+      "title": "ARC Prize Leaderboard(2026-10-08 열람)",
+      "publisher": "ARC Prize",
+      "url": "https://arcprize.org/leaderboard",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "② 종합 지능 축 보조 근거. 표준 하네스(Standard)와 Provider Adapter 하네스를 구분해 적는다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:14:15Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-022",
+      "title": "Claude Opus 5.5 takes the top spot on the Artificial Analysis Intelligence Index",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/articles/claude-opus-5-5",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-22T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-023",
+      "title": "Pricing - Claude Platform Docs",
+      "publisher": "Anthropic",
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "docs.claude.com 가격 문서가 이 주소로 넘겨진다. 페이지에 갱신일이 없어 열람 시각을 published_at_utc 로 적었다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:16:02Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-024",
+      "title": "Anthropic has released Claude Haiku 5.5",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/articles/claude-haiku-5-5",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-07T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-025",
+      "title": "LLM Rankings | OpenRouter(사용 자료 2026-10-07 까지)",
+      "publisher": "OpenRouter",
+      "url": "https://openrouter.ai/rankings",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "페이지 문구: 'Usage data through Oct 7, 2026'. 시장 점유율 차트는 요청 수를 센다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:19:04Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-026",
+      "title": "OpenRouter 랭킹 응답 자료 — models?view=week(7일 창 2026-10-01~10-07)",
+      "publisher": "OpenRouter",
+      "url": "https://openrouter.ai/api/frontend/v1/rankings/models?view=week",
+      "accessed_at": "2026-10-08",
+      "sha256": "f7902c40840ff7c87bf480ab17added7705c4e7cd9204b78c77bd42a0f86c430",
+      "conflict_of_interest": null,
+      "note": "openrouter.ai/rankings 가 쓰는 JSON 응답. 모델 642개 변형별 total_prompt_tokens·total_completion_tokens·total_usage. 2026-10-08 내려받은 파일의 sha256",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:19:04Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-027",
+      "title": "OpenRouter 랭킹 응답 자료 — models?view=month(30일 창 2026-09-08~10-07)",
+      "publisher": "OpenRouter",
+      "url": "https://openrouter.ai/api/frontend/v1/rankings/models?view=month",
+      "accessed_at": "2026-10-08",
+      "sha256": "014f4dcc92ae97d5672bb7d117aa6a060ace710d7a16052c76d403181d55005d",
+      "conflict_of_interest": null,
+      "note": "openrouter.ai/rankings 가 쓰는 JSON 응답. 모델 684개 변형. 2026-10-08 내려받은 파일의 sha256",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:19:04Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-028",
+      "title": "OpenRouter 랭킹 응답 자료 — model-rankings-chart(주간 토큰, 상위 9개 + Others)",
+      "publisher": "OpenRouter",
+      "url": "https://openrouter.ai/api/frontend/v1/rankings/model-rankings-chart",
+      "accessed_at": "2026-10-08",
+      "sha256": "8d1e5a7956e7f24a30ac4b46205623786962908e00c97ed1efad808e679409c7",
+      "conflict_of_interest": null,
+      "note": "Top Models 차트 자료. 주마다 상위 9개 모델과 나머지(Others) 토큰이라 합이 그 주 전체 토큰이다. 2026-10-08 내려받은 파일의 sha256",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:19:04Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-029",
+      "title": "Anthropic API and Models | OpenRouter(회사 일별 토큰 시계열)",
+      "publisher": "OpenRouter",
+      "url": "https://openrouter.ai/anthropic",
+      "accessed_at": "2026-10-08",
+      "sha256": "0bab306a6888baa2293cd877f5ebc127b3ec6cf73ba8fea43a442c6fb61c437b",
+      "conflict_of_interest": null,
+      "note": "'Anthropic tokens processed on OpenRouter' 일별 시계열(2026-07-10~10-08, 상위 9개 모델 + Others). 2026-10-08 내려받은 HTML 의 sha256",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:22:12Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-030",
+      "title": "AI Giants' Profitability Under Pressure: OpenAI and Anthropic Miss Gross Margin Targets as Inference Costs Skyrocket",
+      "publisher": "BigGo Finance",
+      "url": "https://finance.biggo.com/news/mRiPlZwBTwP6zY3HRxp-",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "The Information 보도를 전재한 2차 기사. 게시 시각 2026-02-26 01:08(GMT+9)",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-02-25T16:08:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-031",
+      "title": "Anthropic $2 trillion IPO S-1 prospectus has leaked—and it shows steep losses",
+      "publisher": "Fortune",
+      "url": "https://fortune.com/2026/09/29/anthropic-ipo-s-1-prospectus-income-statement/",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Reuters 가 본 상장 신청서 초안을 인용한 기사. 게시 시각은 날짜만 확인했다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-032",
+      "title": "SEC EDGAR 회사 검색 'anthropic'(2026-10-08 조회)",
+      "publisher": "U.S. Securities and Exchange Commission",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?company=anthropic&type=&dateb=&owner=include&count=40&action=getcompany",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "결과 35건이 모두 투자 조합(SPV·시리즈)이고 Anthropic, PBC 법인은 없다. 같은 날 EDGAR 전문 검색(S-1·S-1/A, 2026-09-01~10-08, 'Anthropic')도 Anthropic 제출본을 돌려주지 않았다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-08T06:11:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-022",
+      "title": "OpenAI API and Models | OpenRouter(회사 일별 토큰 시계열)",
+      "publisher": "OpenRouter",
+      "url": "https://openrouter.ai/openai",
+      "accessed_at": "2026-10-08",
+      "sha256": "c37304ad0034cc27fcd8a14f85804b4681c59663b81dc30bad8d781cb5316960",
+      "conflict_of_interest": null,
+      "note": "'OpenAI tokens processed on OpenRouter' 일별 시계열(2026-07-10~10-08, 상위 9개 모델 + Others). 2026-10-08 내려받은 HTML 의 sha256",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-08T06:22:30Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-023",
+      "title": "Business Pricing | OpenAI — API",
+      "publisher": "OpenAI",
+      "url": "https://openai.com/business/pricing/",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "openai.com/api/pricing 이 이 페이지 API 탭으로 넘겨진다. 갱신일이 없어 열람 시각을 published_at_utc 로 적었다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-08T06:16:12Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-024",
+      "title": "GPT-6.1 Sol replaces GPT-6 Sol after just 7 days, with near-Astra intelligence",
+      "publisher": "Artificial Analysis",
+      "url": "https://artificialanalysis.ai/articles/gpt-6-1-sol-replaces-gpt-6-sol-after-just-7-days-with-near-astra-intelligence",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-025",
+      "title": "About ChatGPT Pro tiers | OpenAI Help Center",
+      "publisher": "OpenAI",
+      "url": "https://help.openai.com/en/articles/9793128-about-chatgpt-pro-tiers",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "페이지 표기 'Updated: 4 days ago'(2026-10-08 열람)를 날짜로 옮겼다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-04T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-026",
+      "title": "What is ChatGPT Plus? | OpenAI Help Center",
+      "publisher": "OpenAI",
+      "url": "https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "페이지 표기 'Updated: 2 days ago'(2026-10-08 열람)를 날짜로 옮겼다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-06T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-027",
+      "title": "OpenAI Dev Day 2026: Live Updates On The Latest ChatGPT And Codex Announcements",
+      "publisher": "Engadget",
+      "url": "https://www.engadget.com/2271985/openai-dev-day-live-blog-chatgpt-news/",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "실시간 기사. 인용 항목 시각 1:02 PM·1:47 PM EDT",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-09-29T17:02:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-028",
+      "title": "SEC EDGAR 회사 검색 'openai'(2026-10-08 조회)",
+      "publisher": "U.S. Securities and Exchange Commission",
+      "url": "https://www.sec.gov/cgi-bin/browse-edgar?company=openai&type=&dateb=&owner=include&count=40&action=getcompany",
+      "accessed_at": "2026-10-08",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "결과 25건이 모두 투자 조합·펀드이거나 이름만 겹치는 다른 회사이고 OpenAI 운영 법인은 없다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-08T06:40:00Z"
+    },
+    {
+      "source_id": "SRC-NEWS-anthropic-20261006-e09e12e2",
+      "title": "Anthropic is giving startups a free year of Claude Team and $1,000 in credits - TechCrunch",
+      "publisher": "TechCrunch",
+      "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOOUw1T3diMDBtTXdtdnJ1bk5DdUpfUWtuYzJaVjF2M0lUMjJkeXYxZUN0bEQ5bU45OGM5OXZXUzJGZFJKSHhRaHRlbk80dnZlMEpNaGZfT1JfWmhnRmtpMGJ0dWNlaFRNd0FWVUNQVGRoeVhJVmk5clNPMkRZWmNnLUZSRmlZeXN5bEtvNW51WmlSazMxcHhPODdIV2lZYnNyWDBRUk1nRW5KMklkaHpwSFQ5M0NOS2l2dlow?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "e09e12e25dd1d457dc0732a6235139ce1254783ead432a214ba631c0acbf05e4",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크이고 본문은 https://techcrunch.com/2026/10/06/anthropic-gives-startups-a-free-year-of-enterprise-service-and-1000-in-token-credits/ 에서 2026-10-08 열람했다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-06T16:00:00Z",
+      "publisher_url": "https://techcrunch.com",
+      "raw_ref": "data/anthropic/news/google/raw/20261008T060308Z-c25f5cf3.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-anthropic-20261007-221f0533",
+      "title": "Grok Bot just got a lot smarter thanks to Anthropic’s Claude - 9to5Mac",
+      "publisher": "9to5Mac",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOR3lNT3Z6allrVnFWSU10dHBSYzVjVUZVZEx1UmlVcXk1S0JIWWxBcW9HV1EzbHZPMFNfbUpOeE0wbGtYaTBVa1NrcE9ZWDVnV3BCRWhMMk1Lenk4clNTanducHZNeHhlRWpGS0QwQ01oWVNtR1JyWmNUR2RNOF95VWhyZEhFenR6SHhVMnZTc0lXck9xLVE?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "221f053397613f36cc97fddb56da050e2951520bebf3448be721285ce31f722b",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크이고 본문은 https://9to5mac.com/2026/10/07/grok-bot-just-got-a-lot-smarter-thanks-to-anthropics-claude/ 에서 2026-10-08 열람했다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-07T15:02:00Z",
+      "publisher_url": "https://9to5mac.com",
+      "raw_ref": "data/anthropic/news/google/raw/20261008T060308Z-c25f5cf3.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-anthropic-20261007-d15120d5",
+      "title": "This map shows which states are paying for OpenAI vs Anthropic — and there's a clear winner - Business Insider",
+      "publisher": "Business Insider",
+      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE45MHNqR014dUJnRkpJRXJZNGtGNW9DT2l2NGdYYlB0blRWRUhIMS1TTVoySG1fRWxEZ3d4d1FpUFdkN1pqMGxuR1pyb1lwbnFybFIyMmVFcjBpT0JSMGp2bGlFcVVVdHc3SjRWY09kM3hHNy1udnlCbDlB?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "d15120d5d46e57a6e764a1bac14d9f8af0b449634c9c8f1b4f798d7f5c1cd985",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크이고 본문은 https://www.businessinsider.com/openai-vs-anthropic-states-map-2026-10 에서 2026-10-08 열람했다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-07T08:03:00Z",
+      "publisher_url": "https://www.businessinsider.com",
+      "raw_ref": "data/anthropic/news/google/raw/20261008T060308Z-c25f5cf3.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261007-84e315d2",
+      "title": "Broadcom Holds Early Talks About Financing Deal for OpenAI Chips - Yahoo Finance",
+      "publisher": "Yahoo Finance",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPbkFlOXlYMDhqdzF0MjR3NkViQ01OR0k0clMzTmk2YUp0ekdFTm9zMU5Bd1VzcUZ4VDFTXy1lT29JZ0FLU1RWektLbllySVlzczJCeXhuUTF0cjVLZUJvQlRWTEd5VktVaWN0YnZDdGlJM1BaLTZibjdQbGtWLTdocHRLaTJ1LVp4WE40aEo1a0RXN084VnhISFdxRTZad01qN1E?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "84e315d229fa5b355980cda565c5a3a3d0173f2507b65649da9e6405fe5a8b3d",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크이고 본문은 https://finance.yahoo.com/technology/ai/articles/broadcom-holds-early-talks-financing-230717190.html 에서 2026-10-08 열람했다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-07T23:07:17Z",
+      "publisher_url": "https://finance.yahoo.com",
+      "raw_ref": "data/openai/news/google/raw/20261008T060317Z-ac729bb9.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261006-7f4f3ff8",
+      "title": "OpenAI moves to make ChatGPT Ads more measurable — and more visual - Digiday",
+      "publisher": "Digiday",
+      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNdmlSLUE2dXNFV1ZKYXJoa1VqcFR4eG5FcmtxbHJyVWlQaTdrUzNYMDRYQ1hQZENxNEZlcG5oRGx0Y3hDeGJybnhhT3d1czFaSlJqUnkycFRHZ01NOXNKTDE0VHV4Tm5rc0JxNHlkQkVmV3JYYV9TRHBmc2NoYzNtRGVjYkRkVjRXd2VKTXB6bmVzYnpfbjlXVThESQ?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "7f4f3ff8dbb874b993d593ce2789c671b28aa93eed015fe577b63a8e4d5e5b78",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크이고 본문은 https://digiday.com/marketing/openai-moves-to-make-chatgpt-ads-more-measurable-and-more-visual/ 에서 2026-10-08 열람했다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-06T04:03:21Z",
+      "publisher_url": "https://digiday.com",
+      "raw_ref": "data/openai/news/google/raw/20261006T054451Z-646063cc.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261006-47ddb214",
+      "title": "Florida attorney general seeks temporary injunction against OpenAI, Altman - The Capitolist",
+      "publisher": "The Capitolist",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOU042U0hXbkpjc1I4eGJIb3Y1U1BUaG9zdXF1d19rN21XelpFVGQ0UWdndFFZak9kU1cwRHpDTTdXdm96QUhYSVRNZGoxVi1FYnR2dUxKbGVuQkE5czJaOUdMQzNZbDl6N2RhNnBjSGZNdDIyaUNqTXVfUG1rcmxsQmlpMkZhLWtnbXdObi1vdTNxbXRjRVMzWVJ0eC0tUk1CY0HSAacBQVVfeXFMTzB3Nl8tLTIxOWFjazFRbk1LOTNvMkZRQmg0aU9nSS1MSVZHYmlfLW9pVlJyS0dxXzRQNzRjbTZiT0VwYzBXTkx3Rk40blJHNEtHYzlyRzRyb3k0RU5yZWhmUlVEbGtnd1pkNXBsaUVQdlRSektQeXFmYlVTVWFIMGVWY1lKTWROOXBPV0JNTTVhVVo3NXhYWWx3VldmU214eVQ1OTBTekU?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "47ddb214f0b99aad84a54c451a59da977cec2425ac384805b1d822775ba7ffc1",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크이고 본문은 https://thecapitolist.com/florida-attorney-general-seeks-temporary-injunction-against-openai-altman/ 에서 2026-10-08 열람했다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-06T04:52:07Z",
+      "publisher_url": "https://thecapitolist.com",
+      "raw_ref": "data/openai/news/google/raw/20261006T054451Z-646063cc.xml"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261006-bdb2fe5d",
+      "title": "California Subpoenas OpenAI Over AI Agent Cybersecurity Breaches - Security Boulevard",
+      "publisher": "Security Boulevard",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNU1hOZU9BRlg2Q1JQNWJTcHR3a1BwdS1OQlI0N3NRbExkak5GLTFUWU93YkQ1R0wwRVN0MFFuLTRnUWhjZzZTd2FJaVY0ZloyQzBOc2tMU0FUV3RsN1BjZGlEOWdhc3BBU1VTU0tGUnNfdC1iaTF4UHhheDRpZGtfRzVadGlyd1dLLXMweUZDc2JPNmJ0X1FDYkhINUY2SEhhNENQV1Vn?oc=5",
+      "accessed_at": "2026-10-08",
+      "sha256": "bdb2fe5d2102aea141f2f1fe5a4bf785e8f67569ed45a266801df6aec8d39345",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크이고 본문은 https://securityboulevard.com/2026/10/california-subpoenas-openai-over-ai-agent-cybersecurity-breaches/ 에서 2026-10-08 열람했다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-06T01:58:58Z",
+      "publisher_url": "https://securityboulevard.com",
+      "raw_ref": "data/openai/news/google/raw/20261006T054451Z-646063cc.xml"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-017",
+      "published_at_utc": "2026-10-08T06:13:05Z",
+      "title": "Artificial Analysis 홈페이지 Intelligence 차트 — Intelligence Index v4.3.2(2026-10-08 열람)",
+      "excerpt": "Artificial Analysis Intelligence Index · Higher is better: Claude Opus 5.5 (max with fallback) 58, Claude Fable 5.1 (max with fallback) 53, GPT-6 Astra (max) 53, Gemini 4 Argon (high) 53, GPT-6.1 Sol (max) 52, Muse Spark 1.3 (max) 48, Grok 4.7 (xhigh) 46 … Artificial Analysis Intelligence Index v4.3.2 incorporates 10 evaluations: AA-Briefcase v1.1, GDPval-AA v2.1, AutomationBench-AA, Terminal-Bench 4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1 … New language model evaluation · 7 Oct Claude Haiku 5.5 (Max)",
+      "relevance": "사실: 2026-10-08 열람한 Artificial Analysis 홈페이지의 종합 지능 차트(회사별 최고 모델, 지수 판 4.3.2, 평가 10종)에서 1위는 Claude Opus 5.5(max) 58 이고, GPT-6 Astra(max)·Gemini 4 Argon(high)·Claude Fable 5.1(max) 이 53, GPT-6.1 Sol(max) 52, Muse Spark 1.3(max) 48, Grok 4.7(xhigh) 46 이다. 변경 기록상 가장 최근 평가는 10월 7일 Claude Haiku 5.5, Gemini 4 Argon 은 9월 30일이다. 추론: ② 성능 도약의 종합 지능 축을 모델 기업에 같은 날짜·같은 지수 판으로 대는 근거다. OpenAI·Alphabet·Meta·Alibaba ② 판단도 같은 날짜의 이 표를 인용한다(모델 기업 공통 근거).",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ② 성능 도약의 종합 지능 축 판정을 이 차트의 순위로 다시 매긴다. 다른 날짜·다른 지수 판의 절대값과 잇지 않고 순위만 쓴다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 순위",
+      "counter_evidence": [
+        "ARC Prize 의 ARC-AGI-2·ARC-AGI-3 에서는 GPT-6 Astra(Max)가 1위라 종합 지능 축 안에서도 측정 도구에 따라 1위가 갈린다."
+      ],
+      "unverified": [
+        "차트 라벨과 값이 페이지에 순서대로 따로 실려 있어 순서대로 짝지어 옮겼다.",
+        "Anthropic 모델은 기본 폴백(default fallback)을 켠 상태로 평가됐다.",
+        "Alibaba 최고 모델(Qwen3.8 Max (0902), 45)은 이 차트의 상위 10에 들지 않아 LLM Leaderboard 표에서 확인했다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "홈페이지 Intelligence 절 'Artificial Analysis Intelligence Index · Higher is better' 차트, 지수 구성 설명 문장, Changelog 목록",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-018",
+      "published_at_utc": "2026-10-08T06:12:49Z",
+      "title": "Artificial Analysis LLM Leaderboard — Intelligence Index 열(2026-10-08 열람)",
+      "excerpt": "Claude Opus 5.5 (max with fallback) and Claude Sonnet 5.5 (max with fallback) are the highest intelligence models, followed by Claude Opus 5.5 (xhigh with fallback) and Claude Opus 5.5 (high with fallback). … Claude Opus 5.5 (max with fallback) | 1M | Anthropic | 58 … Claude Sonnet 5.5 (max with fallback) | 1M | Anthropic | 56 … GPT-6 Astra (max) | 1M | OpenAI | 53 … Gemini 4 Argon (high) | 1M | Google | 53 … GPT-6.1 Sol (max) | 1M | OpenAI | 52 … Muse Spark 1.3 (max) | 1M | Meta | 48 … Qwen3.8 Max (0902) | 984k | Alibaba | 45",
+      "relevance": "사실: 같은 날 LLM Leaderboard 표(현행 모델)에서 Intelligence Index 상위는 Claude Opus 5.5(max) 58, Claude Sonnet 5.5(max) 56 이고, 회사별 최고는 OpenAI GPT-6 Astra(max) 53, Google Gemini 4 Argon(high) 53, Meta Muse Spark 1.3(max) 48, Alibaba Qwen3.8 Max(0902) 45 다. 추론: 홈페이지 차트에 없는 2위 모델과 Alibaba 값을 같은 날짜로 채우는 공통 근거다. OpenAI·Alphabet·Meta·Alibaba ② 판단도 같은 날짜의 이 표를 인용한다(모델 기업 공통 근거).",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ② 성능 도약의 종합 지능 축에서 회사별 최고 모델의 순위를 이 표로 확인한다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 순위",
+      "counter_evidence": [],
+      "unverified": [
+        "OpenRouter 랭킹의 벤치마크 절은 같은 지수에서 'Qwen3.8 Max' 를 53.4 로 보여 Artificial Analysis 자체 표와 모델 페이지의 Qwen3.8 Max (0902) 45 와 다르다. 이 근거는 Artificial Analysis 자체 값을 쓴다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "LLM Leaderboard 첫 화면 요약 문장(Intelligence), 표(Status: Current)의 Model·Context Window·Creator·Artificial Analysis Intelligence Index 열",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-019",
+      "published_at_utc": "2026-10-08T06:13:19Z",
+      "title": "GDPval-AA v2.1 Leaderboard(2026-10-08 열람)",
+      "excerpt": "Elo rating for performance on real-world work tasks · Anchored to DeepSeek V4.1 Flash (max) at 1600 … 1 ; Anthropic ; Claude Opus 5.5 (Max, Default Fallback) ; 1866 ; -26 / +26 ; Sep 2026 … 13 ; Meta ; Muse Spark 1.3 (Max) ; 1684 ; -20 / +20 ; Sep 2026 … 14 ; Alibaba ; Qwen3.8 Max (0902) ; 1671 ; -21 / +21 ; Sep 2026 … 21 ; Google ; Gemini 4 Argon (High) ; 1626 ; -22 / +22 ; Sep 2026 … 28 ; OpenAI ; GPT-5.6 Sol (Max) ; 1611 ; -17 / +17 ; Jul 2026 … 36 ; OpenAI ; GPT-6.1 Sol (Max) ; 1575 ; -20 / +20 ; Sep 2026 … 41 ; OpenAI ; GPT-6 Astra (Max) ; 1542 ; -25 / +25 ; Sep 2026",
+      "relevance": "사실: 같은 날 GDPval-AA v2.1(44개 직군 실무 과제, Elo) 순위표에서 1위는 Claude Opus 5.5(Max) 1866 이고, 다른 회사 최고는 Grok 4.7(Xhigh) 1715, Muse Spark 1.3(Max) 1684, Qwen3.8 Max(0902) 1671, Gemini 4 Argon(High) 1626, GPT-5.6 Sol(Max) 1611 이다. OpenAI 의 9월 출시 모델 GPT-6.1 Sol(Max) 1575 와 GPT-6 Astra(Max) 1542 는 7월 모델 GPT-5.6 Sol 보다 낮다. 추론: ② 성능 도약의 에이전트 실무 축 근거다. OpenAI·Alphabet·Meta·Alibaba ② 판단도 같은 날짜의 이 표를 인용한다(모델 기업 공통 근거).",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ② 성능 도약의 에이전트 실무 축을 이 표로 판정한다. OpenAI 는 최신 상위 모델 두 개가 전작보다 낮다는 사실을 성능 도약 판정 칸에 함께 적는다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 순위",
+      "counter_evidence": [],
+      "unverified": [
+        "Artificial Analysis 의 Opus 5.5 기사(2026-09-22)는 GDPval-AA 를 1,846 Elo 로 적어 지금 표의 1866 과 다르다. 기준 모델 고정 Elo 가 평가가 쌓이며 다시 계산된 것으로 보이며 순위는 같다.",
+        "표에 평가일 열은 없고 모델 출시 월(Release Date)만 있다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "GDPval-AA v2.1 평가 페이지의 순위 표(Creator·Name·Elo·CI·Release Date) 1·8·13·14·21·28·36·41위 행",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-020",
+      "published_at_utc": "2026-10-08T06:14:04Z",
+      "title": "Artificial Analysis Coding Agent Index(2026-10-08 열람)",
+      "excerpt": "Composite index of 3 benchmarks: DeepSWE v1.1 Software engineering tasks, 113 tasks … Terminal-Bench 4.0 Agentic terminal use, 66 tasks … SWE-Atlas-QnA Technical Q&A, 124 tasks … Each benchmark score averages pass@1 across three attempts per task. … Artificial Analysis Coding Agent Index v1.5 · Higher is better: Claude Code - Sonnet 5.5 (max) 68, Claude Code - Opus 5.5 (max) 66, Antigravity CLI - Gemini 4 Argon 64, Codex - GPT-6.1 Sol (xhigh) 63, Claude Code - Fable 5.1 (max) (with fallback) 62, Codex - GPT-6 Astra (max) 62, Grok Build - Grok 4.7 (xhigh) 56, Muse Code - Muse Spark 1.3 (max) 54",
+      "relevance": "사실: 같은 날 Coding Agent Index(지수 판 1.5, DeepSWE·Terminal-Bench 4.0·SWE-Atlas-QnA 세 벤치마크 pass@1 평균)에서 1위는 Claude Code - Sonnet 5.5(max) 68, 2위 Claude Code - Opus 5.5(max) 66, 3위 Antigravity CLI - Gemini 4 Argon 64, 4위 Codex - GPT-6.1 Sol(xhigh) 63 이고 Codex - GPT-6 Astra(max) 62, Grok Build - Grok 4.7(xhigh) 56, Muse Code - Muse Spark 1.3(max) 54 가 뒤따른다. 추론: 참가자 전원이 자기 제품 하네스로 잰 지표라 비교에 쓸 수 있고, ② 성능 도약의 코딩 축 근거다. OpenAI·Alphabet·Meta·Alibaba ② 판단도 같은 날짜의 이 표를 인용한다(모델 기업 공통 근거).",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ② 성능 도약의 코딩 축을 이 표로 판정한다. 1위와 3위의 차이가 4포인트라 격차가 좁다는 사실을 판정 칸에 함께 적는다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 순위",
+      "counter_evidence": [],
+      "unverified": [
+        "페이지 글자로 값이 실린 것은 상위 8개 에이전트뿐이라 Alibaba 에이전트의 값은 읽지 못했다.",
+        "SWE-bench Verified 공식 순위표(swebench.com)는 2026-10-08 열람 때 가장 최근 항목이 2026년 2월 제출분이라 지금 모델 비교에 쓰지 않았다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "Coding Agent Benchmarks 페이지 머리 설명(벤치마크 세 개와 채점 방식), 'Coding Agent Index' 차트",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-021",
+      "published_at_utc": "2026-10-08T06:14:15Z",
+      "title": "ARC Prize Leaderboard(2026-10-08 열람)",
+      "excerpt": "AI System ; Release Date ; ARC-AGI-1 ; ARC-AGI-2 ; ARC-AGI-3 … GPT-6.1 Sol (Max) ; 2026-09-29 ; 96.5%, $0.095/task ; 94.2%, $0.254/task ; 52.7%, $7.6K (Standard) · 96.2%, $3.8K (Provider Adapter) … Claude Opus 5.5 (High) ; 2026-09-22 ; 98.5%, $0.158/task ; 93.3%, $0.408/task ; N/A … GPT-6 Astra (Max) ; 2026-09-02 ; 97.5%, $0.433/task ; 95.0%, $1.12/task ; 62.7%, $26.1K (Standard) · 98.6%, $17.3K (Provider Adapter) … Claude Opus 5 (High) ; 2026-07-24 ; 97.5%, $0.470/task ; 88.3%, $1.45/task ; 30.2%, $20.7K (Standard)",
+      "relevance": "사실: 2026-10-08 열람한 ARC Prize 순위표에서 ARC-AGI-2 는 GPT-6 Astra(Max) 95.0%, GPT-6.1 Sol(Max) 94.2%, Claude Opus 5.5(High) 93.3% 이고, ARC-AGI-3 표준 하네스는 GPT-6 Astra(Max) 62.7%, GPT-6.1 Sol(Max) 52.7%, Claude Opus 5(High) 30.2% 다. Claude Opus 5.5 의 ARC-AGI-3 은 N/A 이고 Gemini 4 Argon·Muse Spark 1.3·Qwen3.8 Max 는 표에 없다. 추론: ② 종합 지능 축의 하드 벤치마크 근거로 이 시험에서는 OpenAI 가 1위다. 표준 하네스 값만 모델 간 비교에 쓰고 Provider Adapter 하네스 값은 쓰지 않는다. OpenAI·Alphabet·Meta·Alibaba ② 판단도 같은 날짜의 이 표를 인용한다(모델 기업 공통 근거).",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ② 종합 지능 축을 Artificial Analysis 종합 지수와 ARC-AGI 로 함께 보고, 둘이 갈리면 둘 다 판정 칸에 적는다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 순위",
+      "counter_evidence": [],
+      "unverified": [
+        "Anthropic 최신 모델(Opus 5.5·Sonnet 5.5)의 ARC-AGI-3 결과가 표에 없어 이 시험에서 Anthropic 최신 모델과 OpenAI 를 직접 견줄 수 없다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "Leaderboard 표(AI System·Release Date·ARC-AGI-1·ARC-AGI-2·ARC-AGI-3) GPT-6.1 Sol (Max)·Claude Opus 5.5 (High)·Grok 4.7 (XHigh)·GPT-6 Astra (Max)·Claude Opus 5 (High) 행",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1",
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-022",
+      "published_at_utc": "2026-09-22T00:00:00Z",
+      "title": "Claude Opus 5.5 takes the top spot on the Artificial Analysis Intelligence Index",
+      "excerpt": "At max effort it scores 58 on the Artificial Analysis Intelligence Index, the highest score we have measured by several points. Anthropic has cut Opus pricing to $4/$20 per 1M input/output tokens (Opus 5: $5/$25) and cache reads from $0.50 to $0.20. … ➤ Level with Opus 5 on cost per task despite 1.6x the output tokens: Opus 5.5 (max) uses ~119k output tokens per Intelligence Index task, against ~73k for Opus 5 (max), ~78k for Fable 5.1 (max) and ~27k for GPT-6 Astra (max)",
+      "relevance": "사실: Artificial Analysis 는 2026-09-22 Claude Opus 5.5(max)가 종합 지수 58 로 측정 최고치라고 적었고, 같은 기사에서 Opus 정가가 $5/$25 에서 $4/$20 으로, 캐시 읽기가 $0.50 에서 $0.20 으로 내렸다고 적었다. 과제당 출력 토큰은 Opus 5.5(max) 약 11.9만, GPT-6 Astra(max) 약 2.7만이다. 추론: ② 에서는 Anthropic 이 종합 지수 1위에 오른 날짜(세대 격차 개월 수의 출발점 후보)를 주고, ① 에서는 거래 채널 정가를 내렸다는 가격 실측 사실과 토큰당 단가가 아니라 업무당 비용으로 재야 한다는 근거(과제당 출력 토큰이 네 배 넘게 차이)를 준다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ① 가격 실측에 Opus 정가 인하를 넣어 다시 보고, ② 세대 격차 개월 수를 셀 때 이 날짜를 종합 지수 1위 성립일 후보로 쓴다.",
+      "horizon": "현재 — 2026-09-22 출시·평가",
+      "counter_evidence": [
+        "같은 기사는 Opus 5.5 의 과제당 비용이 Opus 5 와 같다고 적어 정가 인하가 업무당 비용 인하로 그대로 이어지지는 않았다."
+      ],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "locator": "기사 첫 두 문단, Key takeaways 셋째 항목",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-023",
+      "published_at_utc": "2026-10-08T06:16:02Z",
+      "title": "Pricing - Claude Platform Docs(2026-10-08 열람)",
+      "excerpt": "Claude Fable 5.1 … $10 / MTok | $50 / MTok … $0.25 / MTok · Claude Opus 5.5 … $4 / MTok | $20 / MTok | $5 / MTok | $8 / MTok | $0.20 / MTok · Claude Sonnet 5.5 … $2 / MTok | $10 / MTok | $2.50 / MTok | $4 / MTok | $0.10 / MTok · Claude Haiku 5.5 … $0.10 / MTok for prompts up to 100,000 tokens | $0.50 / MTok · Additional models … Claude Fable 5 | $10 / MTok | $50 / MTok … $1 / MTok · Claude Opus 5 | $5 / MTok | $25 / MTok | $6.25 / MTok | $10 / MTok | $0.50 / MTok · Claude Sonnet 5 | $2 / MTok | $10 / MTok … $0.20 / MTok · Claude Haiku 4.5 | $1 / MTok | $5 / MTok",
+      "relevance": "사실: Anthropic 공식 가격표(2026-10-08 열람)에서 현행 모델 정가는 Opus 5.5 $4/$20, Sonnet 5.5 $2/$10(캐시 적중 $0.10), Haiku 5.5 $0.10/$0.50(10만 토큰 이하), Fable 5.1 $10/$50 이고, 같은 표의 전 세대는 Opus 5 $5/$25, Sonnet 5 $2/$10(캐시 적중 $0.20), Haiku 4.5 $1/$5, Fable 5 $10/$50(캐시 적중 $1) 이다. 추론: 같은 등급의 후속 모델마다 정가가 내리거나(Opus −20%, Haiku −90%) 캐시 단가가 내렸다(Sonnet −50%, Fable −75%). ① 거래 채널 가격 실측에서 단가를 내렸다는 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: ① 가격 실측을 거래 채널 단가 인하 쪽으로 다시 본다. 점유율이 함께 늘었는지는 OpenRouter 관측(토큰 점유율·평균 단가)과 같이 판정한다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 정가",
+      "counter_evidence": [
+        "최상위 등급 Fable 5.1 은 입력·출력 정가 $10/$50 을 Fable 5 와 같게 유지했다."
+      ],
+      "unverified": [
+        "가격표에는 변경 날짜가 없다. Opus 인하는 Artificial Analysis 기사(2026-09-22), Haiku 인하는 같은 곳 기사(2026-10-07)에 날짜가 있다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "Pricing 페이지 'Model pricing' 표와 'Additional models' 표",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-024",
+      "published_at_utc": "2026-10-07T00:00:00Z",
+      "title": "Anthropic has released Claude Haiku 5.5",
+      "excerpt": "Haiku 5.5 is cheaper than its predecessor - it costs $0.10/$0.50 per 1M input/output tokens for prompts up to 100k tokens (the same as GPT-6 Luna and 10% of the previous Haiku model). However, this pricing rises 5x to $0.50/$2.50 above 100k. … ➤ Heavy token use compared to GPT-6 Luna: Haiku 5.5 (max) uses ~162k output tokens per Intelligence Index task, ~3x GPT-6 Luna (max, ~50k).",
+      "relevance": "사실: Artificial Analysis 는 2026-10-07 Claude Haiku 5.5 정가가 전작의 10% 이고 GPT-6 Luna 와 같다고 적었고, 과제당 출력 토큰은 GPT-6 Luna 의 약 3배라고 적었다. 추론: ① 가격 실측에서 소형 모델 단가를 경쟁사 수준까지 내렸다는 사실이고, 업무당 비용은 토큰 사용량 때문에 단가 차이만큼 줄지 않는다는 근거다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ① 가격 실측에 소형 모델 단가 인하를 넣어 다시 보고, 업무당 비용을 잴 수 없으면 판정 칸에 미확인으로 적는다.",
+      "horizon": "현재 — 2026-10-07 출시",
+      "counter_evidence": [],
+      "unverified": [
+        "같은 기사는 계층형 가격이 사이트에 아직 반영되지 않아 과제당 비용 수치가 잠정치라고 적었다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 둘째 문단, Key takeaways 둘째 항목",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-025",
+      "published_at_utc": "2026-10-08T06:19:04Z",
+      "title": "LLM Rankings | OpenRouter(사용 자료 2026-10-07 까지)",
+      "excerpt": "Usage data through Oct 7, 2026 … 9\tClaude Opus 5.5\tanthropic\t3.37T tokens\t+74% … Share of text requests made on OpenRouter in the week beginning Sep 28, 2026 … 1\tDeepSeek\t21.8%\t+5% 2\tGoogle\t21.5%\t+23% 3\tOpenAI\t18.2%\t+20% … 7\tAnthropic\t2.5%\t+6% … The Top Models chart and the LLM Leaderboard rank models by tokens processed, while the Market Share chart counts requests. None of them measures users or spend.",
+      "relevance": "사실: OpenRouter 랭킹(사용 자료 2026-10-07 까지)에서 9월 28일 주간 텍스트 요청 점유율은 Anthropic 2.5%, OpenAI 18.2% 이고, 페이지는 이 차트가 요청 수를 세며 사용자나 지출을 재지 않는다고 적는다. 같은 사이트의 랭킹 응답 자료로 계산하면 Anthropic 토큰 점유율은 9월 8~30일 3.7%, 10월 1~7일 4.7%, 지출 점유율은 26.6% 에서 31.7%, 평균 단가는 백만 토큰당 $1.239 에서 $1.018 이다. 회사 일별 토큰으로 계산한 주간 토큰 점유율은 7월 13일 주 11.7%, 8월 31일 주 4.9%, 9월 28일 주 3.9% 다(관측으로 등록). 추론: ① 거래 채널 가격 실측의 '단가 대 점유율' 재료다. 라우팅 서비스 트래픽은 전체 시장이 아니고 토큰 점유율은 매출 점유율이 아니다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ① 가격 실측을 거래 채널 기준으로 다시 본다. 토큰 점유율이 7월보다 낮고 평균 단가는 9월보다 10월에 내렸으므로, 단가 프리미엄을 지키며 점유율이 늘었는지 단가를 내리며 점유율을 지켰는지 가른다.",
+      "horizon": "현재 — 2026-07~10 시계열",
+      "counter_evidence": [
+        "10월 1~7일에는 Anthropic 토큰 점유율과 지출 점유율이 모두 9월 8~30일보다 높다(Opus 5.5 주간 토큰 +74%)."
+      ],
+      "unverified": [
+        "응답 자료의 total_usage 필드에는 단위 표기가 없다. 모델별 값을 토큰으로 나눈 단가가 공식 정가(캐시 할인 반영) 범위 안에 들어(Claude Haiku 5.5 $0.098, GPT-6 Luna $0.045) 미국 달러 지출액으로 읽었다.",
+        "캐시 토큰 필드가 모두 0 으로 와서 입력 토큰 안의 캐시 비중은 알 수 없다.",
+        "요청 점유율과 토큰 점유율은 다른 지표라 섞어 쓰지 않는다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "랭킹 페이지 'This Week' 표 9위 행, 'Market share by model author, as text' 표, 'How to read these rankings' 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-030",
+      "published_at_utc": "2026-02-25T16:08:00Z",
+      "title": "AI Giants' Profitability Under Pressure: OpenAI and Anthropic Miss Gross Margin Targets as Inference Costs Skyrocket",
+      "excerpt": "Data shows that OpenAI's gross margin last year fell to 33% from 40% in 2024, significantly below its own forecast of 46%. For Anthropic, while its gross margin improved dramatically from a staggering negative 94% in 2024, it is projected to reach only 40% in 2025, still 10 percentage points below its previously set target. … Inference costs—the fees paid to cloud service providers to power AI models in responding to user requests—are the core reason for the gross margin pressure on both companies.",
+      "relevance": "사실: BigGo Finance 는 The Information 보도를 인용해 Anthropic 매출총이익률이 2024년 −94% 에서 2025년 40%(전망)로 오르지만 목표보다 10%p 낮고, 원인은 추론 비용 증가라고 적었다. 추론: ① 가격 실측의 총마진 추세 재료다. 원가 요인(추론 비용)이 명시돼 있어 총마진 변화를 가격 결정력으로 바로 읽지 않는다. 회사가 공개한 수치가 아니라 투자자 자료를 본 보도다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 회사 공개 수치가 아닌 2차 보도의 전망치라 ① 가격 실측 판정을 바꾸지 않고, 매출총이익률 미공시 사실과 함께 판정 칸 참고로 적는다.",
+      "horizon": "과거 — 2024~2025 연간",
+      "counter_evidence": [],
+      "unverified": [
+        "The Information 원문은 유료라 열지 못했고 BigGo 전재 문단만 읽었다.",
+        "2025년 값은 확정치가 아니라 전망치다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 둘째·넷째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-016",
+      "published_at_utc": "2026-04-06T00:00:00Z",
+      "title": "Anthropic expands Google and Broadcom compute deal — 연환산 $100만 이상 기업 고객 수 문단",
+      "excerpt": "When we announced our Series G fundraising in February, we shared that over 500 business customers were each spending over $1 million on an annualized basis. Today that number exceeds 1,000, doubling in less than two months.",
+      "relevance": "사실: Anthropic 은 2026-04-06 연환산 $100만 이상을 쓰는 기업 고객이 2월 500곳 이상에서 1,000곳 이상으로 두 달이 안 돼 두 배가 됐다고 밝혔다. 추론: ① 업무 채널의 고객 기반 시계열(두 시점)이다. 고객 증가를 보일 뿐 유지율은 아니라서 전환비용 판정에는 대체재가 있는데도 남았다는 자료가 따로 필요하다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 고객 수 증가만으로 ① 전환비용·회수 루프 판정을 바꾸지 않고, 업무 채널이 실질 채널이라는 근거를 보강한다.",
+      "horizon": "과거 — 2026-02~04",
+      "counter_evidence": [],
+      "unverified": [
+        "4월 이후 같은 기준의 고객 수는 Anthropic 뉴스룸(2026-10-08 확인)에서 찾지 못했다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "발표문 넷째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-031",
+      "published_at_utc": "2026-09-29T00:00:00Z",
+      "title": "Anthropic $2 trillion IPO S-1 prospectus has leaked—and it shows steep losses",
+      "excerpt": "A draft of Anthropic’s $2 trillion IPO prospectus was leaked to Reuters and we now have details about the AI lab’s finances. … Customer concentration is another risk: A quarter of Anthropic’s revenue comes from just two clients.",
+      "relevance": "사실: Fortune 은 Reuters 가 본 상장 신청서 초안을 근거로 Anthropic 매출의 4분의 1 이 고객 두 곳에서 나온다고 적었다. 추론: ⑧ 고객 집중의 재료다. 공개 제출본에서 같은 내용이 확인되고 두 고객이 자체 대체 모델을 출하 중이면 ① 지속성 할인 대상이 된다. 지금은 비공개 초안이라 공시 근거가 아니다.",
+      "channel": "press",
+      "conditional_impact": "재검토: ⑧ 판정 칸에 고객 쪽 집중(두 곳이 약 4분의 1)을 재료로 넣을지 본다. ① 지속성 할인은 공개 제출본에서 고객 이름과 그 고객의 자체 모델 출하가 확인될 때만 적용한다.",
+      "horizon": "short — 공개 제출 때 원문으로 확인된다",
+      "counter_evidence": [],
+      "unverified": [
+        "두 고객의 이름은 기사에 없다.",
+        "Reuters 보도를 인용한 2차 기사이고 상장 신청서는 EDGAR 에 공개 제출되지 않았다(2026-10-08 EDGAR 회사 검색 결과에 Anthropic, PBC 법인이 없다)."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 첫 문단과 넷째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-anthropic-20261006-e09e12e2",
+      "published_at_utc": "2026-10-06T16:00:00Z",
+      "title": "Anthropic is giving startups a free year of Claude Team and $1,000 in credits - TechCrunch",
+      "excerpt": "The new version of the program, which launched as part of Anthropic’s SF Tech Week event, provides a free year of Claude Team, Anthropic’s paid plan for groups, with up to five premium seats, as well as $1,000 in API credits for building with Claude.",
+      "relevance": "사실: Anthropic 은 2026-10-06 설립 5년 이내이거나 2년 안에 투자받은 기업에 Claude Team 1년 무료(프리미엄 좌석 최대 5개)와 API 크레딧 $1,000 을 주는 프로그램을 넓혔다. 추론: ① 가격 실측에서 신규 고객 확보에 무상 제공을 쓴다는 사실이다. 대상이 신생 기업에 한정돼 기존 고객 정가에는 닿지 않는다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 신생 기업 한정 판촉이라 ① 가격 실측 판정을 바꾸지 않고, 할인 없이 가격을 유지하는지 볼 때 참고 사실로 적는다.",
+      "horizon": "현재 — 2026-10-06 시작",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "locator": "기사 둘째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-anthropic-20261007-221f0533",
+      "published_at_utc": "2026-10-07T15:02:00Z",
+      "title": "Grok Bot just got a lot smarter thanks to Anthropic’s Claude - 9to5Mac",
+      "excerpt": "For October, Grok Bot is getting a major backend upgrade that will see Anthropic’s Claude be used for intelligence instead of SpaceXAI/Cursor’s less capable models. For context, Anthropic became a SpaceX customer this year as it shopped for compute to power Claude usage. As of today, Grok Bot can now use Claude Opus 5.5, the newest version of one of Anthropic’s most capable models.",
+      "relevance": "사실: 9to5Mac 은 2026-10-07 SpaceXAI 의 소비자용 에이전트 앱 Grok Bot 이 자사·Cursor 모델 대신 Claude Opus 5.5 를 쓰기 시작했다고 보도했다. 추론: 자체 모델을 가진 경쟁사가 Anthropic 모델을 자기 제품에 넣은 것이라 ⑤ 동맹 등급의 '내 경쟁사까지 내 매대·플랫폼에 편입' 기준에 닿는다. 같은 관계에서 Anthropic 은 SpaceX 컴퓨트를 사는 고객이다. Anthropic ⑤ 판단은 지금 동맹 등급 +1, 적대 등급 −1(비용형)이다.",
+      "channel": "press",
+      "conditional_impact": "재검토: ⑤ 동맹 등급의 경쟁사 편입 기준을 SpaceXAI 의 Claude 채택이 채우는지 본다. 계약 형태(지분·독점·수익 분배 여부)와 SpaceXAI 가 언제든 떠날 수 있는지(조달·동맹 셋째 질문)를 함께 따진다.",
+      "horizon": "short — 2026-10 적용",
+      "counter_evidence": [
+        "SpaceXAI 는 자체 모델이 있어 언제든 돌아갈 수 있으므로(조달·동맹 셋째 질문) 동맹으로 세기에 약하다."
+      ],
+      "unverified": [
+        "Anthropic·SpaceXAI 의 공식 발표는 찾지 못했다(2026-10-08 Anthropic 뉴스룸 확인).",
+        "계약이 API 구매인지 재판매·수익 분배인지는 기사에 없다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 셋째·넷째·다섯째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F8",
+        "F9"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261007-84e315d2",
+      "published_at_utc": "2026-10-07T23:07:17Z",
+      "title": "Broadcom Holds Early Talks About Financing Deal for OpenAI Chips - Yahoo Finance(Bloomberg)",
+      "excerpt": "(Bloomberg) -- Broadcom Inc., fresh off the launch of a $60 billion debt financing to help fund Anthropic PBC's artificial intelligence build-out, is already sketching out plans for its next blockbuster deal. … Last week, banks involved in the massive Broadcom-backed debt package that will benefit Anthropic began sending out syndication letters for a $42 billion Class A senior-secured tranche. Blackstone Inc. is leading an $18 billion tranche of Class B junior debt, committing $9 billion from various funds, Bloomberg reported at the time.",
+      "relevance": "사실: Bloomberg 는 Broadcom 이 Anthropic 컴퓨트 증설을 위한 $600억 부채 조달을 시작했고, 은행단이 $420억 선순위(A) 트랜치 신디케이션에 들어갔으며 Blackstone 이 $180억 후순위(B) 트랜치를 이끈다고 보도했다. 추론: Broadcom 칩을 빌려 쓰는 구조의 조달 규모가 $420억에서 $600억으로 커졌다는 사실로 ⑧(컴퓨트 공급자 의존)과 ⑨ 게이트 4(미개시 확정 약정)의 재료다. Anthropic 이 직접 쓰는 미인출 여신이 아니라 ⑨ 완충에는 넣지 않는다. Anthropic ⑧ 판단은 지금 −3, ⑨ 는 −2(비상장 경로)다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 칩 임차 조달의 규모가 커진 사실로 ⑧ 공급자 의존 근거 문장을 보강하고, ⑨ 게이트 4 는 공개 제출본에서 이 임차가 미개시 확정 약정에 들어가는지 확인한 뒤 본다.",
+      "horizon": "short — 신디케이션 진행 중",
+      "counter_evidence": [],
+      "unverified": [
+        "Anthropic 측 임차 약정의 기간·단가는 기사에 없다."
+      ],
+      "change_vs_previous": "updated",
+      "locator": "기사 첫 문단과 'Last week, banks involved' 로 시작하는 문단",
+      "verified_original": true,
+      "previous_evidence_id": "EV-anthropic-009"
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-025",
+      "published_at_utc": "2026-10-08T06:19:04Z",
+      "title": "LLM Rankings | OpenRouter(사용 자료 2026-10-07 까지)",
+      "excerpt": "Usage data through Oct 7, 2026 … 6\tGPT-6 Luna\topenai\t6.46T tokens\t+28% … Models ranked by tokens processed on OpenRouter over the trailing thirty days … 5\tGPT-5.6 Luna\topenai\t39.1T\t+15% … 3\tOpenAI\t18.2%\t+20% … Each model is ranked by the number of tokens it processed through the OpenRouter API, counting both prompt and completion tokens.",
+      "relevance": "사실: OpenRouter 랭킹에서 OpenAI 는 9월 28일 주간 텍스트 요청 점유율 18.2% 이고, 주간 토큰 상위 모델은 소형 GPT-6 Luna(6.46조)다. 같은 사이트 응답 자료로 계산하면 OpenAI 토큰 점유율은 9월 8~30일 14.3%, 10월 1~7일 10.4%, 지출 점유율은 29.1% 에서 24.7%, 평균 단가는 백만 토큰당 $0.348 에서 $0.360 이다. 회사 일별 토큰으로 계산한 주간 토큰 점유율은 7월 13일 주 6.8%, 8월 31일 주 16.1%, 9월 28일 주 11.4% 다(관측으로 등록). 10월 1~7일 OpenAI 모델 가운데 지출이 가장 큰 것은 정가를 올린 GPT-6 Astra(토큰 1.31조, 평균 $1.514)다. 추론: ① 거래 채널 가격 실측의 '단가 대 점유율' 재료다. 라우팅 서비스 트래픽은 전체 시장이 아니고 토큰 점유율은 매출 점유율이 아니다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ① 거래 채널 가격 실측을 다시 본다. 토큰 점유율은 7월보다 높지만 9월 초 정점 뒤 내렸고, 평균 단가는 거의 그대로이므로 GPT-6 Astra 인상 뒤 점유율이 유지됐는지 가른다. 가장 강한 채널은 소비자라 이 근거는 보조로 쓴다.",
+      "horizon": "현재 — 2026-07~10 시계열",
+      "counter_evidence": [
+        "9월 7일 주 OpenAI 토큰 점유율은 18.9% 로 정점이었고 9월 28일 주에는 그보다 낮다."
+      ],
+      "unverified": [
+        "응답 자료의 total_usage 필드는 단위 표기가 없어 미국 달러 지출액으로 읽었다(모델별 단가가 공식 정가 범위 안).",
+        "요청 점유율과 토큰 점유율은 다른 지표라 섞어 쓰지 않는다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "랭킹 페이지 'This Week' 표 6위 행, 'This Month' 표 5위 행, 'Market share by model author, as text' 표 3위 행, 'What is measured' 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-023",
+      "published_at_utc": "2026-10-08T06:16:12Z",
+      "title": "Business Pricing | OpenAI — API(2026-10-08 열람)",
+      "excerpt": "GPT-6 Astra Our most capable model, built for the hardest end-to-end work Price Input: $10.00 / 1M tokens Cached input: $1.00 / 1M tokens Output: $50.00 / 1M tokens GPT-6.1 Sol Built to power complex coding and agentic workflows at scale Price Input: $2.00 / 1M tokens Cached input: $0.10 / 1M tokens Output: $10.00 / 1M tokens GPT-6 Luna Our most efficient model for focused, high-volume tasks. Price Input: $0.10 / 1M tokens Cached input: $0.01 / 1M tokens Output: $0.50 / 1M tokens Pricing above reflects standard processing rates for context lengths under 272K.",
+      "relevance": "사실: OpenAI 공식 가격표(2026-10-08 열람)에서 GPT-6 Astra 는 $10/$50(캐시 $1), GPT-6.1 Sol 은 $2/$10(캐시 $0.10), GPT-6 Luna 는 $0.10/$0.50 이다. 추론: 최상위 모델은 9월 출시 때 올린 정가($4/$20 에서 $10/$50)를 유지하고, 중간 모델 Sol 은 GPT-5.6 Sol 대비 50% 내린 정가를 유지한다. ① 거래 채널 가격 실측에서 상위는 인상 유지, 중간은 인하 쪽 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: ① 가격 실측을 모델 등급별로 나눠 다시 본다. 인상한 GPT-6 Astra 의 거래 채널 점유율이 유지되는지는 OpenRouter 관측과 함께 판정한다.",
+      "horizon": "현재 — 2026-10-08 열람 시점의 정가",
+      "counter_evidence": [],
+      "unverified": [
+        "가격표에는 변경 날짜가 없다. 인상 전 가격은 Artificial Analysis 게시물(2026-09-03), Sol 인하 폭은 같은 곳 기사(2026-09-29)에 근거한다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "Business Pricing 페이지 API 탭 'Powered by our frontier models' 절",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1",
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-024",
+      "published_at_utc": "2026-09-29T00:00:00Z",
+      "title": "GPT-6.1 Sol replaces GPT-6 Sol after just 7 days, with near-Astra intelligence",
+      "excerpt": "GPT-6.1 Sol replaces GPT-6 Sol after just 7 days. It scores 1 point below GPT-6 Astra in the Intelligence Index at less than one quarter of the Cost per Task. Pricing matches GPT-6 Sol at $2/$10 per million input/output tokens, except that the cache read discount rises from 90% to 95%. … This represents an additional price cut, following GPT-6 Sol’s original 50% discount from GPT-5.6 Sol. … It makes significant gains in agentic knowledge work, improving 4 points and 5 points in AA-Briefcase v1.1 and GDPval-AA v2.1 respectively.",
+      "relevance": "사실: Artificial Analysis 는 2026-09-29 GPT-6.1 Sol 을 독립 측정해 종합 지수가 GPT-6 Astra 보다 1 낮고 과제당 비용은 4분의 1 미만이며 GDPval-AA 에서 GPT-6 Sol 보다 5포인트 올랐다고 적었다. 정가는 GPT-5.6 Sol 대비 50% 내린 GPT-6 Sol 과 같은 $2/$10 이다. 추론: OpenAI Sol 결과가 같은 하네스의 독립 측정에 실렸다는 사실(② 성능 도약 재검토 조건)이고, ① 에서는 중간 모델 정가 인하 사실이다. 같은 날 순위표에서 GPT-6.1 Sol 의 GDPval-AA(1575)는 GPT-5.6 Sol(1611)보다 낮다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: ② 성능 도약을 Sol 의 독립 측정까지 넣어 다시 판정하고, 에이전트 실무 축에서 전작보다 낮은 상태가 이어지는지 적는다. ① 가격 실측에는 중간 모델 정가 인하 사실로 넣는다.",
+      "horizon": "현재 — 2026-09-29 출시·평가",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "locator": "기사 첫 두 문단, Key takeaways 첫째 항목",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-025",
+      "published_at_utc": "2026-10-04T00:00:00Z",
+      "title": "About ChatGPT Pro tiers | OpenAI Help Center",
+      "excerpt": "Choose from three monthly Pro plans: Plan Monthly price (USD) Ultrafast Pro 100 $100 Not included Pro 200 $200 Not included Pro 500 $500 Included … New subscriptions that aren’t eligible for grandfathering include a lower usage allowance than previously offered with Pro 200  to reflect our increasingly efficient models. The monthly price remains $200. … After that date, your subscription will move to the lower included usage allowance. Your subscription price stays at $200/month.",
+      "relevance": "사실: OpenAI 도움말(2026-10-04 갱신)은 Pro 를 월 $100·$200·$500 세 요금으로 나누고, Pro 200 은 가격을 $200 으로 둔 채 신규 가입분의 포함 사용량을 줄였으며 기존 가입자도 2026-10-29 뒤 줄어든 사용량으로 옮긴다고 적는다. 추론: 같은 값에 사용량을 줄였으므로 소비자 채널의 실질 가격 인상이다. ① 가격 실측의 인상 사실이며, 그 뒤 구독자가 남는지는 아직 관측되지 않았다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: ① 가격 실측에 Pro 200 의 실질 인상(사용량 축소, 기존 가입자 2026-10-29 뒤 적용)을 넣고, 구독자 유지는 다음 구독자 수 공개 때 확인한다.",
+      "horizon": "short — 2026-09-29 신규 가입, 2026-10-29 기존 가입자 적용",
+      "counter_evidence": [],
+      "unverified": [
+        "줄어든 사용량의 크기는 도움말에 없다. 언론은 Plus 대비 20배에서 10배로 줄었다고 전한다.",
+        "도움말은 Pro 200 신규 가입이 다시 열렸다고만 적고 멈춘 기간과 이유는 적지 않는다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "도움말 머리 안내문, 'Pro plans' 표, 'Can I subscribe to Pro 200 again?'·'What happens to my existing Pro 200 subscription?' 답변",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-026",
+      "published_at_utc": "2026-10-06T00:00:00Z",
+      "title": "What is ChatGPT Plus? | OpenAI Help Center",
+      "excerpt": "ChatGPT Plus is a subscription plan that provides enhanced access to the ChatGPT web app for $20/month.",
+      "relevance": "사실: OpenAI 도움말(2026-10-06 갱신)은 ChatGPT Plus 가 월 $20 이라고 적는다. 추론: OpenAI 가 2026-03-31 밝힌 유료 구독자 5,000만 명 이상과 함께 보면 Plus 정가가 유지된 채 구독자가 늘었다는 소비자 채널 가격 실측 재료다. 정가 유지 기간(분기 수)은 이 페이지만으로 셀 수 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: Plus 정가 유지 사실만으로 ① 가격 실측을 바꾸지 않고, 구독자 수 시계열과 함께 판정 칸에 적는다.",
+      "horizon": "현재 — 2026-10-06 갱신",
+      "counter_evidence": [],
+      "unverified": [
+        "Plus 가격이 $20 으로 정해진 날짜와 그 뒤 변동 이력은 이 페이지에 없다.",
+        "광고가 붙는 낮은 요금 Go 는 국가별 가격표(한국 원화 표시, 월 13,000원)에서만 확인했다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "도움말 셋째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-027",
+      "published_at_utc": "2026-09-29T17:02:00Z",
+      "title": "OpenAI Dev Day 2026: Live Updates On The Latest ChatGPT And Codex Announcements - Engadget",
+      "excerpt": "Altman is reiterating the stat that 1.2 billion people now use ChatGPT every week. … A graphic behind Altman indicates ChatGPT now has 1.2 billion weekly users.",
+      "relevance": "사실: Engadget 실시간 기사는 2026-09-29 DevDay 에서 Altman 이 ChatGPT 주간 사용자가 12억 명이라고 말했다고 전한다. OpenAI 는 2026-03-31 주간 사용자 9억 명 이상이라고 밝혔다. 추론: 소비자 채널 사용자 시계열의 두 시점(9억 → 12억)이다. OpenAI 는 주간 사용자만 공개해 월간 사용자 관측으로는 등록하지 않았다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 사용자 수 증가는 ① 소비자 채널이 실질 채널이라는 근거를 보강하지만, 무료 사용자가 대부분이라 전환비용·가격 실측 판정을 바꾸지 않는다.",
+      "horizon": "현재 — 2026-09-29",
+      "counter_evidence": [],
+      "unverified": [
+        "OpenAI 의 DevDay 공식 자료는 열지 못했고 실시간 기사 문장에 근거한다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "실시간 기사 'September 29th @ 1:47 PM EDT'·'September 29th @ 1:02 PM EDT' 항목",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-anthropic-20261007-d15120d5",
+      "published_at_utc": "2026-10-07T08:03:00Z",
+      "title": "This map shows which states are paying for OpenAI vs Anthropic — and there's a clear winner - Business Insider",
+      "excerpt": "YipitData collected AI spending data from consumer credit and debit cards between June and August. The data, which Andreessen Horowitz first published Monday in its \"Top 100 Gen AI Consumer Apps\" report, shows OpenAI with a major lead. People spent more on OpenAI products than on Anthropic's in 47 states, Yipit found. The only states where Claude led in spending were Massachusetts, Montana, and California.",
+      "relevance": "사실: Business Insider 는 YipitData 카드 결제 자료(2026년 6~8월)에서 소비자 AI 지출이 47개 주에서 OpenAI 가 Anthropic 보다 많았다고 보도했다. 추론: 소비자 채널 유료 지출에서 OpenAI 가 앞선다는 독립 집계로, OpenAI ① 소비자 채널이 실질 채널이라는 근거이고 Anthropic ① 의 소비자 채널이 약하다는 근거도 된다. 무료 사용자는 빠져 있다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 두 회사의 가장 강한 채널 판정을 바꾸지 않고, 소비자 채널 유료 지출의 상대 크기를 근거 문장에 보강한다.",
+      "horizon": "과거 — 2026-06~08",
+      "counter_evidence": [
+        "인구가 가장 많은 캘리포니아에서는 Claude 지출이 더 많았다."
+      ],
+      "unverified": [
+        "주별 지출 비중만 있고 금액과 구독자 수는 기사에 없다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 첫째~넷째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261006-7f4f3ff8",
+      "published_at_utc": "2026-10-06T04:03:21Z",
+      "title": "OpenAI moves to make ChatGPT Ads more measurable — and more visual - Digiday",
+      "excerpt": "Since OpenAI started selling ads in ChatGPT in February, advertisers have kept coming back to the same complaints: they can’t measure the ads properly, they don’t have enough formats to work with and there isn’t enough inventory to absorb what they want to spend. OpenAI’s latest round of updates takes aim at two of them. … Taken together, the updates reflect how early OpenAI’s ad business remains: the company is still building out the formats, measurement tools and safeguards that advertisers typically expect from a more mature ad platform.",
+      "relevance": "사실: Digiday 는 OpenAI 가 2026년 2월부터 ChatGPT 에 광고를 팔고 있고 10월 미국에서 이미지 생성 중 광고 시험과 측정 파트너 확대를 시작한다고 보도했으며, 광고 사업이 아직 초기라고 적었다. 추론: OpenAI 가 가장 강한 채널(소비자)에서 구독 외에 광고로도 AI 를 수익화하기 시작했다는 ① AI 수익화 표시 재료다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: AI 수익화 표시는 점수 밖이라 ① 판정을 바꾸지 않고, 소비자 채널의 AI 수익화 칸을 구독과 초기 광고로 적는 근거로 쓴다.",
+      "horizon": "현재 — 2026-02 시작, 2026-10 확대",
+      "counter_evidence": [],
+      "unverified": [
+        "광고 매출 규모는 기사에 없다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 첫 문단과 일곱째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-030",
+      "published_at_utc": "2026-02-25T16:08:00Z",
+      "title": "AI Giants' Profitability Under Pressure: OpenAI and Anthropic Miss Gross Margin Targets as Inference Costs Skyrocket",
+      "excerpt": "Data shows that OpenAI's gross margin last year fell to 33% from 40% in 2024, significantly below its own forecast of 46%. … OpenAI's gross margin pressure also stems from its vast non-paying user base. … Last year, nearly half of its total inference costs (approximately $3.9 billion) were spent supporting non-paying users, while costs associated with paying users amounted to $4.5 billion.",
+      "relevance": "사실: BigGo Finance 는 The Information 보도를 인용해 OpenAI 매출총이익률이 2024년 40% 에서 2025년 33% 로 내려 자체 전망 46% 에 못 미쳤고, 추론 비용의 거의 절반($39억)이 무료 사용자에게 쓰였다고 적었다. 추론: ① 가격 실측의 총마진 추세 재료이고 하락 원인이 원가(추론 비용·무료 사용자)로 설명돼 있다. 회사 공개 수치가 아니라 투자자 자료를 본 보도다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 회사 공개 수치가 아닌 2차 보도라 ① 가격 실측 판정을 바꾸지 않고, 매출총이익률 미공시 사실과 함께 판정 칸 참고로 적는다.",
+      "horizon": "과거 — 2024~2025 연간",
+      "counter_evidence": [],
+      "unverified": [
+        "The Information 원문은 유료라 열지 못했고 BigGo 전재 문단만 읽었다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 둘째·일곱째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261006-47ddb214",
+      "published_at_utc": "2026-10-06T04:52:07Z",
+      "title": "Florida attorney general seeks temporary injunction against OpenAI, Altman - The Capitolist",
+      "excerpt": "Florida Attorney General James Uthmeier has asked a court for a new temporary injunction against OpenAI and CEO Sam Altman over ChatGPT. In filing the request September 28, Uthmeier said ChatGPT is unsafe and deceptive and is already harming Floridians, especially children. … Uthmeier said Florida is “answering their cries for help” by asking the court for the new temporary injunction to restrict OpenAI’s development and marketing practices. “No new model development without independent safety guardrails,” he said.",
+      "relevance": "사실: 플로리다 법무장관은 2026-09-28 OpenAI 와 Altman 을 상대로 개발·마케팅 관행을 제한하는 새 임시 금지명령을 법원에 신청했다(6월 1일 제기한 주 소송의 연장). 추론: 독립 안전장치 없는 신모델 개발 금지까지 요구해 사업 구조를 건드리는 적대이고 ⑤ 적대 등급의 구조형 재료다. OpenAI ⑤ 판단의 적대 등급은 지금 −3(다발형)으로 이미 가장 낮다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: OpenAI ⑤ 적대 등급은 이미 다발형이라 바꾸지 않고, 구조형 전선의 근거 문장에 주 정부의 개발 제한 신청을 보강한다. 법원이 금지명령을 내리면 그 범위를 다시 본다.",
+      "horizon": "short — 법원 결정 대기",
+      "counter_evidence": [],
+      "unverified": [
+        "신청서 원문은 열지 않았고 The Capitolist 기사와 법무장관 발언 인용에 근거한다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 첫째·둘째·일곱째·여덟째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261006-bdb2fe5d",
+      "published_at_utc": "2026-10-06T01:58:58Z",
+      "title": "California Subpoenas OpenAI Over AI Agent Cybersecurity Breaches - Security Boulevard",
+      "excerpt": "California Attorney General Rob Bonta has issued a formal subpoena to OpenAI as part of an expanding state investigation into cybersecurity breaches linked to the company’s autonomous artificial intelligence (AI) systems. … While initial inquiries focused specifically on the Hugging Face breach, Bonta confirmed Thursday that the newly served subpoena forms part of a broader Department of Justice examination into security risks spanning OpenAI’s entire suite of models.",
+      "relevance": "사실: 캘리포니아 법무장관은 OpenAI 자율 에이전트의 사이버 침해(Hugging Face 무단 접근 등)를 조사하며 OpenAI 에 정식 소환장을 보냈고, 조사 범위를 OpenAI 모델 전체의 보안 위험으로 넓혔다. 추론: 규제 조사라 그 자체는 비용형 재료이지만, 주 정부 두 곳(플로리다·캘리포니아)이 같은 시기에 처분 단계로 움직였다는 사실은 ⑤ 다발형 판정의 근거 문장을 보강한다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: OpenAI ⑤ 적대 등급은 이미 다발형이라 바꾸지 않고 근거 문장을 보강한다. 조사가 판매 제한 같은 처분으로 이어지면 그 성격을 다시 본다.",
+      "horizon": "short — 조사 진행 중",
+      "counter_evidence": [],
+      "unverified": [
+        "소환장 원문과 캘리포니아 법무부 발표문은 열지 않았다."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 요약 첫 항목, 본문 첫째·넷째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261007-84e315d2",
+      "published_at_utc": "2026-10-07T23:07:17Z",
+      "title": "Broadcom Holds Early Talks About Financing Deal for OpenAI Chips - Yahoo Finance(Bloomberg)",
+      "excerpt": "The company has held early discussions to arrange financing to help OpenAI purchase the custom artificial intelligence chip that the pair is developing together, according to people familiar with the matter. No formal process has begun and plans could change, though early talks indicate the two could seek to raise around $30 billion of debt for the next leg, said one of the people, all of whom asked not to be identified because the information isn't public.",
+      "relevance": "사실: Bloomberg 는 2026-10-07 Broadcom 이 OpenAI 와 공동 개발 중인 맞춤 칩을 OpenAI 가 살 수 있도록 약 $300억 부채 조달을 초기 논의 중이고 공식 절차는 시작되지 않았다고 보도했다. 추론: 성사되면 OpenAI 의 칩 공급자(Broadcom) 의존과 미개시 약정이 커지는 ⑧ 재료이나, 지금은 논의 단계라 점수 근거가 아니다. OpenAI ⑧ 판단은 지금 −4 다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 초기 논의라 ⑧ 판단을 바꾸지 않는다. 조달이 확정되면 ⑧ 공급자 의존과 ⑨ 게이트 4 약정 규모를 다시 본다.",
+      "horizon": "short — 초기 논의",
+      "counter_evidence": [],
+      "unverified": [
+        "Seeking Alpha(2026-10-08)는 같은 건을 $500억 이상으로 적어 보도마다 규모가 다르다(제목 기준)."
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 일곱째·여덟째 문단('The company has held early discussions', 'No formal process has begun')",
+      "verified_original": true
+    }
+  ],
+  "triggers": [
+    {
+      "trigger_id": "TRG-036",
+      "status": "watching",
+      "deadline": "2026-11-30",
+      "finding": "Reuters(10-06, Quartz·Kuwait Times 전재)는 CEO 보수를 'S-1 statement seen by Reuters' 로 전했고, 이는 비공개 초안을 본 보도다. 2026-10-08 EDGAR 회사 검색 'anthropic' 결과 35건은 모두 투자 조합이고 Anthropic, PBC 법인은 없으며, 같은 날 EDGAR 전문 검색(S-1·S-1/A, 09-01~10-08)도 Anthropic 제출본을 돌려주지 않았다. 공개 제출과 상장일 확정이 없어 관찰을 유지한다. 새로 확인한 사실: Fortune(09-29)은 초안 기준 매출의 4분의 1 이 고객 두 곳에서 나온다고 적었고(근거로 올림), Broadcom 의 Anthropic 칩 임차 조달은 $600억($420억 선순위 + $180억 후순위)으로 커졌다(근거로 올림). 검색 범위: Anthropic 뉴스 후보 2026-10-06~10-08 98건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(Anthropic 은 CIK 가 없어 공시 수집 대상이 아니다).",
+      "source_ids": [
+        "SRC-WEB-anthropic-032"
+      ],
+      "checked_at": "2026-10-08",
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-037",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "SBS(10-06)는 국방부의 Anthropic 사용 중단을 다시 전했고, Legis1(10-07)은 국방부 AI 감독의 공백을 다룬 해설이다. 배제 해제도 연방 조달 전반으로의 확대도 보도되지 않아 관찰을 유지한다. 검색 범위: Anthropic 뉴스 후보 2026-10-06~10-08 98건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(Anthropic 은 CIK 가 없어 공시 수집 대상이 아니다).",
+      "checked_at": "2026-10-08",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-038",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "2026-10-06~10-08 전 기업 새 후보 제목에서 'FTC'·'Federal Trade' 를 찾았으나 0건이다. 민사조사명령·제소·동의명령 같은 처분 단계 보도가 없어 관찰을 유지한다. 검색 범위: Anthropic 뉴스 후보 2026-10-06~10-08 98건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(Anthropic 은 CIK 가 없어 공시 수집 대상이 아니다).",
+      "checked_at": "2026-10-08",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-039",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "Bloomberg(10-05)를 받은 Yahoo Finance UK·The Next Web·Seeking Alpha·Investing.com(10-06)이 UAE 펀드(MGX)·BlackRock 과의 $300억 라운드 협상을 전했다. 확정 밸류와 마감 보도가 없어 관찰을 유지한다. 별건으로 Broadcom 이 OpenAI 맞춤 칩 구매용 약 $300억 부채 조달을 초기 논의 중이라는 Bloomberg(10-07) 보도가 있어 새 트리거로 관찰한다. 검색 범위: OpenAI 뉴스 후보 2026-10-06~10-08 114건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(OpenAI 는 CIK 가 없어 공시 수집 대상이 아니다).",
+      "checked_at": "2026-10-08",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-040",
+      "status": "fired",
+      "deadline": "2026-11-30",
+      "finding": "GPT-6.1 Sol 의 독립 측정이 같은 하네스로 실렸다. Artificial Analysis(09-29 기사, 10-08 순위표): 종합 지수 52(GPT-6 Astra 53), GDPval-AA v2.1 1575(GPT-5.6 Sol 1611, GPT-6 Astra 1542, GPT-6 Sol 보다는 5포인트 상승), Coding Agent Index 63(xhigh). ARC Prize(10-08 순위표): ARC-AGI-3 표준 하네스 52.7%. 에이전트 실무 축은 GPT-6 Astra 에 이어 GPT-6.1 Sol 도 GPT-5.6 Sol 보다 낮다. GPT-6.1 Astra 는 출시되지 않았다(Security Boulevard 10-06 '출시 일시 중단'). 조건(Sol 의 독립 측정)이 충족돼 발동이며, 이번 재판단에서 OpenAI ② 성능 도약을 이 측정으로 다시 판정한다. 상위 모델 출시는 새 트리거로 이어 관찰한다. 검색 범위: OpenAI 뉴스 후보 2026-10-06~10-08 114건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(OpenAI 는 CIK 가 없어 공시 수집 대상이 아니다).",
+      "source_ids": [
+        "SRC-WEB-openai-024",
+        "SRC-WEB-anthropic-019",
+        "SRC-WEB-anthropic-021"
+      ],
+      "checked_at": "2026-10-08",
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-062",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "2026-10-06~10-08 OpenAI 후보 제목에서 MDL 3143·저작권·New York Times 소송을 찾았으나 판결·합의 보도는 없다(New York Times 가 매체로 붙은 기사 3건은 수학 성과·호주 의회·퇴사 인터뷰다). 같은 기간 소송·규제 기사는 플로리다 법무장관 임시 금지명령 신청과 캘리포니아 법무장관 소환장이며 둘은 근거로 올렸다. 조건 미충족이라 관찰을 유지한다. 검색 범위: OpenAI 뉴스 후보 2026-10-06~10-08 114건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(OpenAI 는 CIK 가 없어 공시 수집 대상이 아니다).",
+      "checked_at": "2026-10-08",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-065",
+      "status": "fired",
+      "deadline": "2026-12-31",
+      "finding": "OpenRouter 거래 채널 실측이 생겼다(2026-10-08 내려받은 랭킹 응답 자료와 회사 페이지). Anthropic 지출 점유율은 9월 8~30일 26.6%, 10월 1~7일 31.7% 로 6월 보도치 46%(BigGo, 출처 산식 미상)보다 낮고, 토큰 점유율은 3.7%·4.7%(주간 시계열 7월 13일 주 11.7% → 9월 28일 주 3.9%), 평균 단가는 백만 토큰당 $1.239 → $1.018 로 내렸다. 지출 점유율 ÷ 토큰 점유율 배수는 약 6.7배로 6월 보도치(약 3.8배)보다 크다. 같은 기간 Anthropic 정가는 Opus 5.5(−20%)·Haiku 5.5(−90%)·Sonnet 5.5 캐시(−50%)로 내렸다. 조건이 정한 실측(매출 점유율·평균 단가·토큰 점유율)이 들어와 발동이며, 이번 재판단에서 Anthropic ① 가격 실측을 이 관측으로 다시 판정한다. 업무당 비용의 독립 비교는 여전히 없다(Artificial Analysis 는 과제당 비용과 출력 토큰만 낸다). 검색 범위: Anthropic 뉴스 후보 2026-10-06~10-08 98건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(Anthropic 은 CIK 가 없어 공시 수집 대상이 아니다).",
+      "source_ids": [
+        "SRC-WEB-anthropic-025",
+        "SRC-WEB-anthropic-026",
+        "SRC-WEB-anthropic-027",
+        "SRC-WEB-anthropic-028",
+        "SRC-WEB-anthropic-029"
+      ],
+      "checked_at": "2026-10-08",
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-066",
+      "status": "fired",
+      "deadline": "2026-12-31",
+      "finding": "GPT-6 Astra 출시(09-03, 정가 2.5배 인상) 뒤 거래 채널 실측이 생겼다. OpenRouter 10월 1~7일 GPT-6 Astra 는 토큰 1.31조·평균 $1.514/M 로 OpenAI 모델 가운데 지출 1위이고, OpenAI 전체 토큰 점유율은 9월 7일 주 18.9% 정점 뒤 9월 28일 주 11.4%, 9월 8~30일 14.3% → 10월 1~7일 10.4%, 평균 단가는 $0.348 → $0.360, 지출 점유율은 29.1% → 24.7% 다. ① 조건(가격 인상 뒤 OpenRouter 점유율·단가)이 실측돼 발동이며 이번 재판단에서 OpenAI ① 을 다시 판정한다. ③⑥⑨ 조건(Astra 귀속 매출·실제 매출·영업손익 공개)은 충족되지 않아 새 트리거로 이어 관찰한다. 별도로 OpenAI 는 Pro 200 사용량을 같은 값에 줄였다(실질 인상, 근거로 올림). 검색 범위: OpenAI 뉴스 후보 2026-10-06~10-08 114건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(OpenAI 는 CIK 가 없어 공시 수집 대상이 아니다).",
+      "source_ids": [
+        "SRC-WEB-anthropic-026",
+        "SRC-WEB-anthropic-027",
+        "SRC-WEB-openai-022",
+        "SRC-WEB-openai-023"
+      ],
+      "checked_at": "2026-10-08",
+      "evidence_ids": []
+    },
+    {
+      "trigger_id": "TRG-070",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-06~10-08 전 기업 새 후보 제목에 'Cursor' 는 0건이다. 반대 방향 사실로 9to5Mac(10-07)은 SpaceXAI 의 Grok Bot 이 자사·Cursor 모델 대신 Claude Opus 5.5 를 쓰기 시작했다고 보도했다(⑤ 근거로 올림). Cursor 의 Claude 사용 축소나 Grok 기본 모델 전환은 확인되지 않아 관찰을 유지한다. Fortune(09-29)이 전한 매출 4분의 1 을 차지하는 고객 두 곳의 정체는 공개 상장 신청서에서 확인하도록 새 트리거로 관찰한다. 검색 범위: Anthropic 뉴스 후보 2026-10-06~10-08 98건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(Anthropic 은 CIK 가 없어 공시 수집 대상이 아니다).",
+      "checked_at": "2026-10-08",
+      "evidence_ids": [],
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-071",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "자체 칩 샘플링·출하 보도는 없다. 칩 관련 사실은 Broadcom 이 주선한 Anthropic 칩 임차 조달이 $600억으로 커졌다는 Bloomberg(10-07) 보도뿐이고, 이는 공급사 칩을 빌려 쓰는 것이라 자체 칩 출하가 아니다. 관찰을 유지한다. 검색 범위: Anthropic 뉴스 후보 2026-10-06~10-08 98건(제목 전수)과 본문을 연 기사, 전 기업 새 후보 제목 키워드 검색, 2026-10-08 EDGAR 회사 검색(Anthropic 은 CIK 가 없어 공시 수집 대상이 아니다).",
+      "checked_at": "2026-10-08",
+      "evidence_ids": [],
+      "source_ids": []
+    }
+  ],
+  "new_triggers": [
+    {
+      "company_id": "openai",
+      "factors": [
+        "F8",
+        "F9"
+      ],
+      "observation": "Bloomberg 는 2026-10-07 Broadcom 이 OpenAI 맞춤 칩 구매를 돕는 약 $300억 부채 조달을 초기 논의 중이라고 보도했고, 공식 절차는 시작되지 않았다. OpenAI ⑧ 판단은 지금 −4, ⑨ 는 −2(비상장 경로)다.",
+      "condition": "조달이 확정되거나 OpenAI 가 칩 임차·구매 약정을 공개하면 ⑧(비대칭 의존 — 공급자 Broadcom 에 대한 의존과 약정 ÷ 매출)과 ⑨ 게이트 4(약정 커버리지 — 미개시 확정 약정)를 다시 본다. 칩 임차 조달은 OpenAI 가 직접 쓰는 미인출 여신이 아니므로 ⑨ 완충에 넣지 않는다. 논의·보도만으로는 다시 보지 않는다.",
+      "deadline": "2027-03-31",
+      "source_ids": [
+        "SRC-NEWS-openai-20261007-84e315d2"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F8",
+          "F9"
+        ],
+        "what": "Broadcom 주선 칩 조달의 확정 여부·규모와 OpenAI 측 약정 형태"
+      },
+      "evidence_ids": []
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F3",
+        "F6",
+        "F9"
+      ],
+      "observation": "OpenAI 는 비상장이라 실제 매출과 영업손익을 공시하지 않고, 런레이트 ARR 보도만 있다. 거래 채널에서는 GPT-6 Astra 가 2026-10-01~10-07 OpenRouter 지출이 가장 큰 OpenAI 모델이다.",
+      "condition": "OpenAI 가 실제로 거둔 매출이나 영업손익을 회사 발표나 공개 제출본으로 밝히면 ③(같은 정의 성장률 두 개로 본 후발 가속도), ⑥(최근 1년 보정 매출 분모), ⑨ 게이트 1(본업 이익 — 흑자 전환 목표 후퇴 조항 포함)을 다시 본다. 런레이트 ARR 은 ⑥ 분모로 쓰지 않는다.",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-NEWS-openai-20260929-6afb4340",
+        "SRC-WEB-anthropic-026"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F3",
+          "F6",
+          "F9"
+        ],
+        "what": "OpenAI 실제 매출·영업손익 공개 여부와 같은 정의의 성장률"
+      },
+      "evidence_ids": []
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1"
+      ],
+      "observation": "OpenAI 는 Pro 200 의 월 가격을 $200 으로 두고 포함 사용량을 줄였다. 신규 가입분은 2026-09-29 부터, 기존 가입자는 2026-10-29 뒤 줄어든 사용량을 쓴다. Plus 는 월 $20 이다.",
+      "condition": "OpenAI 가 유료 구독자 수를 새로 공개하거나 Pro 해지 증가가 신뢰할 매체로 확인되면 ①(가격 실측 — 실질 인상 뒤 고객이 남았는가)을 다시 본다. 구독자가 줄지 않았으면 인상 유지 사실로, 이탈이 확인되면 실패 쪽 사실로 적는다.",
+      "deadline": "2027-01-31",
+      "source_ids": [
+        "SRC-WEB-openai-025",
+        "SRC-WEB-openai-026"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1"
+        ],
+        "what": "실질 인상 뒤 유료 구독자 수와 Pro 해지"
+      },
+      "evidence_ids": []
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F2"
+      ],
+      "observation": "OpenAI 는 상위 모델 GPT-6.1 Astra 의 출시를 안전 문제로 멈췄다. 2026-10-08 독립 측정에서 OpenAI 최신 모델은 종합 지수 GPT-6 Astra 53·GPT-6.1 Sol 52 로 Claude Opus 5.5(58)보다 낮고, ARC-AGI-2·3 에서는 GPT-6 Astra 가 1위다.",
+      "condition": "GPT-6.1 Astra 나 다음 상위 모델이 출시돼 Artificial Analysis·ARC Prize 같은 독립 측정에 같은 하네스로 실리면 ②(신기술 게임체인저)의 성능 도약 경로를 세 축(종합 지능·에이전트 실무·코딩)별로 다시 본다. 벤더 발표 벤치마크만으로는 다시 보지 않는다.",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-NEWS-openai-20260928-55a96228",
+        "SRC-NEWS-openai-20261006-bdb2fe5d"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2"
+        ],
+        "what": "OpenAI 상위 모델 출시와 그 독립 측정 결과"
+      },
+      "evidence_ids": []
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1",
+        "F8"
+      ],
+      "observation": "Reuters 가 본 상장 신청서 초안에 따르면 Anthropic 매출의 4분의 1 이 고객 두 곳에서 나오고, 두 고객의 이름은 보도되지 않았다. 상장 신청서는 EDGAR 에 공개 제출되지 않았다.",
+      "condition": "공개 제출본에서 매출 10% 이상 고객의 이름과 비중이 확인되면 ⑧(비대칭 의존 — 고객 집중)을 다시 보고, 그 고객이 자체 모델을 출하 중이면 ①(지속성 할인)을 적용할지 본다. 출하가 아니라 발표·계획이면 할인하지 않는다.",
+      "deadline": "2026-11-30",
+      "source_ids": [
+        "SRC-WEB-anthropic-031"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1",
+          "F8"
+        ],
+        "what": "공개 상장 신청서의 10% 이상 고객 이름·비중과 그 고객의 자체 모델 출하 여부"
+      },
+      "evidence_ids": []
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F2"
+      ],
+      "observation": "2026-10-08 Artificial Analysis 순위표에서 Anthropic 은 종합 지수(Claude Opus 5.5, 58)·에이전트 실무(GDPval-AA, Claude Opus 5.5 1866)·코딩(Coding Agent Index, Claude Sonnet 5.5 68) 세 축 모두 1위이고, Opus 5.5 가 종합 지수 1위에 오른 평가 공개일은 2026-09-22 다. ARC-AGI-2·3 에서는 GPT-6 Astra 가 1위다.",
+      "condition": "Anthropic 이 세 축 가운데 두 축 이상에서 독립 측정 1위를 유지한 채 2027-03-22(1위 성립 뒤 6개월)에 이르면 ② 세대 격차 개월 수를 다시 센다. 그 전에 2위가 같은 수준에 도달하면 도달일까지의 개월 수로 세대 격차를 판정하고 관찰을 끝낸다. 지수 판이 바뀌면 절대값을 잇지 않고 순위만 잇는다.",
+      "deadline": "2027-03-31",
+      "source_ids": [
+        "SRC-WEB-anthropic-017",
+        "SRC-WEB-anthropic-019",
+        "SRC-WEB-anthropic-020",
+        "SRC-WEB-anthropic-022"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F2"
+        ],
+        "what": "두 축 이상 1위 유지 기간과 2위의 같은 수준 도달일"
+      },
+      "evidence_ids": []
+    }
+  ],
+  "observations": [
+    {
+      "company_id": "anthropic",
+      "metric": "token_share",
+      "value": 0.1169,
+      "unit": "ratio",
+      "as_of": "2026-07-19",
+      "period": {
+        "start": "2026-07-13",
+        "end": "2026-07-19"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-029",
+      "status": "verified",
+      "raw": "anthropic 일별 토큰 2026-07-13~2026-07-19 합 7,340,142,407,871 ÷ 랭킹 차트 같은 주(x=2026-07-13) 전체(상위 9개 + Others) 62,773,944,339,618",
+      "note": "OpenRouter 회사 페이지 'tokens processed on OpenRouter' 일별 시계열(상위 9개 모델 + Others 로 회사 전체)을 7일 합산하고, model-rankings-chart 응답(SRC-WEB-anthropic-028)의 같은 주 전체 토큰으로 나눴다. 회사 합산 기준: model_permaslug 접두 'anthropic/' 전부(무료·배치 변형 포함), 프롬프트+완성 토큰. 토큰 점유율은 매출 점유율이 아니고 라우팅 서비스 트래픽은 전체 시장이 아니다(rules.md 2.7)."
+    },
+    {
+      "company_id": "anthropic",
+      "metric": "token_share",
+      "value": 0.0494,
+      "unit": "ratio",
+      "as_of": "2026-09-06",
+      "period": {
+        "start": "2026-08-31",
+        "end": "2026-09-06"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-029",
+      "status": "verified",
+      "raw": "anthropic 일별 토큰 2026-08-31~2026-09-06 합 5,700,912,054,203 ÷ 랭킹 차트 같은 주(x=2026-08-31) 전체(상위 9개 + Others) 115,463,303,706,156",
+      "note": "OpenRouter 회사 페이지 'tokens processed on OpenRouter' 일별 시계열(상위 9개 모델 + Others 로 회사 전체)을 7일 합산하고, model-rankings-chart 응답(SRC-WEB-anthropic-028)의 같은 주 전체 토큰으로 나눴다. 회사 합산 기준: model_permaslug 접두 'anthropic/' 전부(무료·배치 변형 포함), 프롬프트+완성 토큰. 토큰 점유율은 매출 점유율이 아니고 라우팅 서비스 트래픽은 전체 시장이 아니다(rules.md 2.7)."
+    },
+    {
+      "company_id": "anthropic",
+      "metric": "token_share",
+      "value": 0.0389,
+      "unit": "ratio",
+      "as_of": "2026-10-04",
+      "period": {
+        "start": "2026-09-28",
+        "end": "2026-10-04"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-029",
+      "status": "verified",
+      "raw": "anthropic 일별 토큰 2026-09-28~2026-10-04 합 6,450,208,408,386 ÷ 랭킹 차트 같은 주(x=2026-09-28) 전체(상위 9개 + Others) 165,856,038,005,319",
+      "note": "OpenRouter 회사 페이지 'tokens processed on OpenRouter' 일별 시계열(상위 9개 모델 + Others 로 회사 전체)을 7일 합산하고, model-rankings-chart 응답(SRC-WEB-anthropic-028)의 같은 주 전체 토큰으로 나눴다. 회사 합산 기준: model_permaslug 접두 'anthropic/' 전부(무료·배치 변형 포함), 프롬프트+완성 토큰. 토큰 점유율은 매출 점유율이 아니고 라우팅 서비스 트래픽은 전체 시장이 아니다(rules.md 2.7)."
+    },
+    {
+      "company_id": "openai",
+      "metric": "token_share",
+      "value": 0.0684,
+      "unit": "ratio",
+      "as_of": "2026-07-19",
+      "period": {
+        "start": "2026-07-13",
+        "end": "2026-07-19"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-openai-022",
+      "status": "verified",
+      "raw": "openai 일별 토큰 2026-07-13~2026-07-19 합 4,291,523,686,566 ÷ 랭킹 차트 같은 주(x=2026-07-13) 전체(상위 9개 + Others) 62,773,944,339,618",
+      "note": "OpenRouter 회사 페이지 'tokens processed on OpenRouter' 일별 시계열(상위 9개 모델 + Others 로 회사 전체)을 7일 합산하고, model-rankings-chart 응답(SRC-WEB-anthropic-028)의 같은 주 전체 토큰으로 나눴다. 회사 합산 기준: model_permaslug 접두 'openai/' 전부(무료·배치 변형 포함), 프롬프트+완성 토큰. 토큰 점유율은 매출 점유율이 아니고 라우팅 서비스 트래픽은 전체 시장이 아니다(rules.md 2.7)."
+    },
+    {
+      "company_id": "openai",
+      "metric": "token_share",
+      "value": 0.1605,
+      "unit": "ratio",
+      "as_of": "2026-09-06",
+      "period": {
+        "start": "2026-08-31",
+        "end": "2026-09-06"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-openai-022",
+      "status": "verified",
+      "raw": "openai 일별 토큰 2026-08-31~2026-09-06 합 18,536,802,128,948 ÷ 랭킹 차트 같은 주(x=2026-08-31) 전체(상위 9개 + Others) 115,463,303,706,156",
+      "note": "OpenRouter 회사 페이지 'tokens processed on OpenRouter' 일별 시계열(상위 9개 모델 + Others 로 회사 전체)을 7일 합산하고, model-rankings-chart 응답(SRC-WEB-anthropic-028)의 같은 주 전체 토큰으로 나눴다. 회사 합산 기준: model_permaslug 접두 'openai/' 전부(무료·배치 변형 포함), 프롬프트+완성 토큰. 토큰 점유율은 매출 점유율이 아니고 라우팅 서비스 트래픽은 전체 시장이 아니다(rules.md 2.7)."
+    },
+    {
+      "company_id": "openai",
+      "metric": "token_share",
+      "value": 0.1136,
+      "unit": "ratio",
+      "as_of": "2026-10-04",
+      "period": {
+        "start": "2026-09-28",
+        "end": "2026-10-04"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-openai-022",
+      "status": "verified",
+      "raw": "openai 일별 토큰 2026-09-28~2026-10-04 합 18,846,667,405,123 ÷ 랭킹 차트 같은 주(x=2026-09-28) 전체(상위 9개 + Others) 165,856,038,005,319",
+      "note": "OpenRouter 회사 페이지 'tokens processed on OpenRouter' 일별 시계열(상위 9개 모델 + Others 로 회사 전체)을 7일 합산하고, model-rankings-chart 응답(SRC-WEB-anthropic-028)의 같은 주 전체 토큰으로 나눴다. 회사 합산 기준: model_permaslug 접두 'openai/' 전부(무료·배치 변형 포함), 프롬프트+완성 토큰. 토큰 점유율은 매출 점유율이 아니고 라우팅 서비스 트래픽은 전체 시장이 아니다(rules.md 2.7)."
+    },
+    {
+      "company_id": "anthropic",
+      "metric": "price_per_m",
+      "value": 1.2393,
+      "unit": "USD",
+      "as_of": "2026-09-30",
+      "period": {
+        "start": "2026-09-08",
+        "end": "2026-09-30"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-027",
+      "status": "verified",
+      "raw": "'anthropic/' 접두 합: 30일 창 total_usage − 7일 창 = 20,757,857.57, 토큰(prompt+completion) 30일 창 − 7일 창 = 16,750,096,011,507",
+      "note": "평균 $/M = total_usage 합 ÷ (total_prompt_tokens + total_completion_tokens) 합 × 1e6. 9월 8~30일(23일) 값은 30일 창(models?view=month, 2026-09-08~10-07)에서 7일 창(models?view=week, SRC-WEB-anthropic-026, 2026-10-01~10-07)을 모델별로 뺀 회사 합이다. 회사 합산 기준: model_permaslug 접두 'anthropic/' 전부. total_usage 는 단위 표기가 없는 응답 필드로, 모델별 단가가 공식 정가(캐시 할인 반영) 범위 안이라 미국 달러 지출로 읽었다. 같은 창의 토큰 점유율 3.7%, 지출 점유율 26.6%."
+    },
+    {
+      "company_id": "anthropic",
+      "metric": "price_per_m",
+      "value": 1.0178,
+      "unit": "USD",
+      "as_of": "2026-10-07",
+      "period": {
+        "start": "2026-10-01",
+        "end": "2026-10-07"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-026",
+      "status": "verified",
+      "raw": "'anthropic/' 접두 합: 7일 창 total_usage = 7,968,179.68, 토큰(prompt+completion) = 7,829,053,689,525",
+      "note": "평균 $/M = total_usage 합 ÷ (total_prompt_tokens + total_completion_tokens) 합 × 1e6. 7일 창 models?view=week(2026-10-01~10-07). 회사 합산 기준: model_permaslug 접두 'anthropic/' 전부. total_usage 는 단위 표기가 없는 응답 필드로 미국 달러 지출로 읽었다. 같은 창의 토큰 점유율 4.7%, 지출 점유율 31.7%."
+    },
+    {
+      "company_id": "openai",
+      "metric": "price_per_m",
+      "value": 0.3476,
+      "unit": "USD",
+      "as_of": "2026-09-30",
+      "period": {
+        "start": "2026-09-08",
+        "end": "2026-09-30"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-027",
+      "status": "verified",
+      "raw": "'openai/' 접두 합: 30일 창 total_usage − 7일 창 = 22,675,771.05, 토큰(prompt+completion) 30일 창 − 7일 창 = 65,234,074,416,851",
+      "note": "평균 $/M = total_usage 합 ÷ (total_prompt_tokens + total_completion_tokens) 합 × 1e6. 9월 8~30일(23일) 값은 30일 창(models?view=month, 2026-09-08~10-07)에서 7일 창(models?view=week, SRC-WEB-anthropic-026, 2026-10-01~10-07)을 모델별로 뺀 회사 합이다. 회사 합산 기준: model_permaslug 접두 'openai/' 전부. total_usage 는 단위 표기가 없는 응답 필드로, 모델별 단가가 공식 정가(캐시 할인 반영) 범위 안이라 미국 달러 지출로 읽었다. 같은 창의 토큰 점유율 14.3%, 지출 점유율 29.1%."
+    },
+    {
+      "company_id": "openai",
+      "metric": "price_per_m",
+      "value": 0.3604,
+      "unit": "USD",
+      "as_of": "2026-10-07",
+      "period": {
+        "start": "2026-10-01",
+        "end": "2026-10-07"
+      },
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-026",
+      "status": "verified",
+      "raw": "'openai/' 접두 합: 7일 창 total_usage = 6,218,353.47, 토큰(prompt+completion) = 17,253,569,287,443",
+      "note": "평균 $/M = total_usage 합 ÷ (total_prompt_tokens + total_completion_tokens) 합 × 1e6. 7일 창 models?view=week(2026-10-01~10-07). 회사 합산 기준: model_permaslug 접두 'openai/' 전부. total_usage 는 단위 표기가 없는 응답 필드로 미국 달러 지출로 읽었다. 같은 창의 토큰 점유율 10.4%, 지출 점유율 24.7%."
+    },
+    {
+      "company_id": "anthropic",
+      "metric": "gross_margin_ttm",
+      "value": null,
+      "unit": "ratio",
+      "as_of": "2026-10-08",
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-032",
+      "status": "not_disclosed",
+      "raw": "EDGAR 회사 검색 'anthropic' 결과 35건이 모두 투자 조합(SPV·시리즈)이고 Anthropic, PBC 법인이 없다. EDGAR 전문 검색(S-1·S-1/A, 2026-09-01~10-08)도 Anthropic 제출본을 돌려주지 않았다.",
+      "note": "Anthropic 은 비상장이라 감사 재무제표를 낼 의무가 없고, 상장 신청서는 비공개 상태다(Reuters 2026-10-06 'S-1 statement seen by Reuters'). Anthropic 뉴스룸·가격 문서에 매출총이익률 자발 공개는 없다(2026-10-08 확인). 언론은 The Information 을 인용해 2025년 40% 전망·2024년 −94% 를 전하나 회사 공개 수치가 아니다. 규칙의 비상장 구조 경로 목록(rules.policies.missing_types.not_disclosed_confirmed.routes.structural.metrics)에 gross_margin_ttm 이 없어 missing_type: not_disclosed_confirmed 를 달면 검증이 막히므로 missing_type 은 비워 둔다."
+    },
+    {
+      "company_id": "openai",
+      "metric": "gross_margin_ttm",
+      "value": null,
+      "unit": "ratio",
+      "as_of": "2026-10-08",
+      "kind": "actual",
+      "source_id": "SRC-WEB-openai-028",
+      "status": "not_disclosed",
+      "raw": "EDGAR 회사 검색 'openai' 결과 25건이 모두 투자 조합·펀드이거나 이름만 겹치는 다른 회사이고 OpenAI 운영 법인이 없다.",
+      "note": "OpenAI 는 비상장이라 감사 재무제표를 낼 의무가 없고 공개 상장 신청서도 없다. OpenAI 발표(2026-03-31 조달 발표 등)와 가격·도움말 페이지에 매출총이익률 자발 공개는 없다(2026-10-08 확인). 언론은 The Information 을 인용해 2025년 33%·2024년 40% 를 전하나 회사 공개 수치가 아니다. 규칙의 비상장 구조 경로 목록에 gross_margin_ttm 이 없어 missing_type: not_disclosed_confirmed 를 달면 검증이 막히므로 missing_type 은 비워 둔다."
+    }
+  ]
+}

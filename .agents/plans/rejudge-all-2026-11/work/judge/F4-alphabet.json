@@ -1,0 +1,47 @@
+{
+  "changes": {
+    "score": 5
+  },
+  "evidence_after": [
+    "점수 사다리는 다섯 자리(자체 칩·자체 모델·클라우드·AI 유통·AI 밖 매출) 가운데 출하나 실제 배포가 확인된 자리 수다 — 다섯 자리를 모두 가지면 5, 넷이면 4, 셋이면 3, 둘이면 2, 하나면 1, 하나도 없으면 0 이다.",
+    "자리를 세는 기준은 다음과 같다. 칩은 자기가 설계하거나 자기 공장에서 만든 AI 연산 칩을 외부에 팔았거나 자기 서비스에 배치했을 때, 모델은 자체 AI 모델을 출시해 자기 제품이나 외부 고객이 쓰고 있을 때, 클라우드는 연산 인프라를 외부 고객에게 팔 때, AI 유통(광부 자리)은 자체 제품·채널로 최종 고객에게 AI 상품을 팔아 유료 구독·좌석·사용료를 받을 때, AI 밖 매출은 AI 호황과 무관한 출하된 사업이 따로 매출을 낼 때 센다.",
+    "계획·발표·인수 서명·규제 승인 대기·양산 전 칩은 세지 않고, 소량이라도 출하·배치했으면 센다. AI 유통과 AI 밖 매출은 서로 다른 매출에서만 세며, 사업 부문 개수와 투자·조달 금액은 자리 셈에 넣지 않는다. 모델 경쟁력은 ②, 남에게 기대는 정도는 ⑧, 매출 성장 속도는 ③ 에서 세므로 여기서는 자리가 출하됐는지만 보고, 수주잔고는 클라우드 자리를 계약이 받치는지 확인하는 데만 쓴다.",
+    "알파벳은 다섯 자리를 모두 가져 5점이다 — TPU 를 외부에 팔고, Gemini 가 거의 모든 제품을 받치며, Google Cloud 가 연산을 팔고, Gemini Enterprise 유료 좌석으로 최종 고객에게 AI 를 팔며, 광고 사업이 AI 호황과 무관한 매출을 낸다."
+  ],
+  "evidence_up_after": [
+    "자체 칩 TPU(7세대 Ironwood)를 만들어 쓰고, TPU 시스템을 외부 고객에게 팔아 2026년 2분기에 그 판매 매출을 처음 인식했다. [EV-alphabet-024, EV-alphabet-021, EV-alphabet-063]",
+    "자체 모델 Gemini 는 API 로 분당 220억 토큰을 처리하고, 그 모델이 검색의 AI 답변부터 지도·Gmail·Chrome 까지 회사가 파는 거의 모든 제품을 받친다. [EV-alphabet-012, EV-alphabet-037]",
+    "Google Cloud 매출은 2026년 2분기 $24.8B 로 전년 대비 82% 늘었고, 2026-06-30 수주잔고 $519.5B 가운데 $513.9B 가 Google Cloud 몫이다. [EV-alphabet-011, EV-alphabet-020]",
+    "Gemini Enterprise 유료 좌석을 출시 넉 달 만에 800만 개 넘게 팔았고, Gemini 앱 월간 사용자는 9.5억 명이다. [EV-alphabet-039, EV-alphabet-012]",
+    "자율주행 사업 Waymo 는 여러 도시에서 유료 무인 승차 서비스를 하고 있다. [EV-alphabet-022]",
+    "2026년 2분기 광고 매출은 $81.6B 이고 그 가운데 검색이 $63.3B, YouTube 광고가 $11.1B 다. [EV-alphabet-013]"
+  ],
+  "evidence_down_after": [],
+  "cite": [
+    "EV-alphabet-024",
+    "EV-alphabet-021",
+    "EV-alphabet-063",
+    "EV-alphabet-012",
+    "EV-alphabet-037",
+    "EV-alphabet-011",
+    "EV-alphabet-020",
+    "EV-alphabet-039",
+    "EV-alphabet-022",
+    "EV-alphabet-013"
+  ],
+  "reconfirm": [
+    "EV-alphabet-024",
+    "EV-alphabet-021",
+    "EV-alphabet-063",
+    "EV-alphabet-012",
+    "EV-alphabet-037",
+    "EV-alphabet-011",
+    "EV-alphabet-020",
+    "EV-alphabet-039",
+    "EV-alphabet-022",
+    "EV-alphabet-013",
+    "EV-alphabet-023",
+    "EV-alphabet-025"
+  ],
+  "reason": "다섯 자리 사다리로 다시 매겨 칩·모델·클라우드·AI 유통·AI 밖 매출이 모두 출하로 확인돼 5점이다."
+}

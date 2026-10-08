@@ -1,0 +1,27 @@
+{
+  "changes": {
+    "performance_leap": "fail",
+    "paradigm_adaptation": "pass",
+    "standard_capture": "fail",
+    "top_rank": "no",
+    "generation_gap": "no"
+  },
+  "evidence_after": [
+    "알리바바 ② 는 성능 도약 실패, 패러다임 적응 통과, 표준 선점 실패로 통과 경로가 하나다.",
+    "성능 도약은 모델 기업에 같은 날(2026-10-08) 열람한 Artificial Analysis 순위표 한 장(종합 지수 4.3.2판, GDPval-AA 2.1판, Coding Agent Index 1.5판)과 같은 날 ARC Prize 순위표로 가르고, 회사마다 가장 높은 모델끼리 비교한다. 통과는 세 축 가운데 두 축 이상 1위, 부분은 한 축 1위이거나 어느 축에서 회사 기준 2위 안, 실패는 어느 축에서도 회사 기준 2위 안에 들지 못한 경우다.",
+    "Qwen3.8 Max(0902) 는 종합 지수 45 로 1위(58)와 회사 기준 공동 2위(53)에 못 미치고 GDPval-AA 에서 14위다. Coding Agent Index 차트(68 부터 54 까지 여덟 제품)와 같은 날 ARC Prize 순위표에는 알리바바 제품이 없다. 어느 축에서도 회사 기준 2위 안에 들지 못해 성능 도약은 실패다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 AI 모델·응용 서비스(MaaS)와 AI 관련 제품을 내놓았고 MaaS 연환산 매출 RMB160억 초과, AI 관련 제품 매출 12분기 연속 세 자릿수 성장이라는 채택 지표가 있어 통과다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 실패다. 이번 실행의 확정 근거와 2026-10-08 판단 세션의 웹 검색에서 알리바바가 정의하고 다른 회사가 채택한 AI 인터페이스를 찾지 못했다. Qwen 기반 파생 모델 15만 개는 모델 위에 쌓은 결과물이지 다른 회사가 채택한 인터페이스가 아니다."
+  ],
+  "evidence_up_after": [
+    "2026년 4~6월 분기 AI 관련 제품 매출은 RMB12,376M 으로 12분기 연속 전년 대비 세 자릿수로 늘었고, AI 클라우드 외부 고객 매출 성장률은 45% 로 빨라졌다. [EV-alibaba-016]",
+    "2026-08 실적 발표 시점 MaaS 연환산 매출은 RMB160억을 넘었다. [EV-alibaba-018]",
+    "Qwen 기반 파생 모델은 15만 개를 넘는다. 패러다임 적응의 채택 규모이고 표준 선점의 근거는 아니다. [EV-alibaba-033]"
+  ],
+  "evidence_down_after": [
+    "같은 날 LLM Leaderboard 에서 Alibaba 최고 Qwen3.8 Max(0902) 는 Intelligence Index 45 로 1위 Claude Opus 5.5(max) 58 보다 낮다. [EV-anthropic-050]",
+    "같은 날 GDPval-AA 2.1판에서 Qwen3.8 Max(0902) 는 1671 로 14위이고 1위 Claude Opus 5.5(Max) 는 1866 이다. [EV-anthropic-051]",
+    "Qwen3.8-Max 는 HLE 43.6 으로 Fable 5 의 53.3 에 못 미친다는 2026-08 기사 값이 있으나, 날짜가 다르고 하네스가 적혀 있지 않아 비교에 쓰지 않는다. [EV-alibaba-010]"
+  ]
+}

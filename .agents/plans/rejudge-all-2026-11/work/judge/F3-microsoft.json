@@ -1,0 +1,32 @@
+{
+  "changes": {
+    "imitation": "fail",
+    "revenue_model": "pass",
+    "acceleration": "pass",
+    "door_closed": "fail",
+    "acceleration_tier": "b",
+    "acceleration_growth_rates": [0.333, 0.5]
+  },
+  "evidence_after": [
+    "마이크로소프트 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+    "모방 불가능성은 실패다. Windows·Microsoft 365 설치기반에 Copilot 을 끼워 파는 힘은 ① 의 자산이라 여기서 세지 않는다. OpenAI 모델 독점은 2026년 4월 끝났고, 자체 가속기 Maia 200 은 Google·Amazon·Meta 도 같은 종류의 칩을 운용해 구조적으로 못 베끼는 자산이 아니다.",
+    "별도 수익모델은 통과다. 소프트웨어 구독 매출이 AI 를 먹여 살리고 Copilot 이 사용자당 매출을 끌어올린다.",
+    "후발 가속도는 지표 단계 b(Microsoft 365 Copilot 유료 좌석)로 판정했다. 2026-01-28 1,500만, 2026-04-29 2,000만 초과, 2026-07-29 3,000만 초과로 직전 분기 대비 성장률이 약 33% 에서 약 50% 로 올라 가속이라 통과다. 저장한 성장률은 0.333 과 0.5 다.",
+    "2,000만과 3,000만은 '넘었다'는 하한 표현이지만, 회사가 순증 좌석이 직전 분기의 두 배를 넘었다고 밝혀 하한의 오차로 결론이 바뀌지 않는다.",
+    "Copilot 유료 좌석 3,000만은 Microsoft 365 상업용 유료 좌석 4.5억 이상의 약 7% 이고, 나머지 좌석과 Azure·Windows 등 대부분의 매출은 이 지표 밖이다. Azure 성장률은 AI 아닌 클라우드가 섞여 b 지표가 있는 마이크로소프트에는 쓰지 않는다.",
+    "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없고, OpenAI 가 업무용 문서 도구를 내놓아 진입로는 열려 있다."
+  ],
+  "evidence_up_after": [
+    "Microsoft 365 상업용 클라우드 매출은 FY2026 에 17% 늘었고, 사용자당 매출 증가를 Microsoft 365 Copilot 과 E5 가 이끌었다. [EV-microsoft-029]",
+    "Microsoft 365 Copilot 유료 좌석은 2026-01-28 1,500만, 2026-04-29 2,000만 초과, 2026-07-29 3,000만 초과로 직전 분기 대비 성장률이 약 33% 에서 약 50% 로 올랐다. [EV-microsoft-031, EV-microsoft-006, EV-microsoft-005]",
+    "2026-07-29 회사는 Copilot 순증 좌석이 직전 분기의 두 배를 넘었다고 밝혔고, 2026-04-29 에도 분기마다 가속이 이어진다고 밝혔다. [EV-microsoft-005, EV-microsoft-006]"
+  ],
+  "evidence_down_after": [
+    "Microsoft 의 OpenAI 클라우드 독점이 풀리자 Amazon 이 하루도 안 돼 Bedrock 에 OpenAI 모델을 올렸다. [EV-microsoft-018]",
+    "Microsoft 의 자체 가속기 Maia 200 은 Iowa·Arizona 데이터센터에서 가동 중이지만, Google·Amazon·Meta 도 각자 자체 AI 가속기를 운용한다. [EV-microsoft-008, EV-nvidia-038]",
+    "OpenAI 가 Microsoft Word·Google Docs 와 비슷한 문서 도구 Pages 를 내놓아 업무용 소프트웨어로 들어오고 있다. [EV-microsoft-003]"
+  ],
+  "cite": ["EV-microsoft-029", "EV-microsoft-031", "EV-microsoft-006", "EV-microsoft-005", "EV-microsoft-018", "EV-microsoft-008", "EV-nvidia-038", "EV-microsoft-003"],
+  "reconfirm": [],
+  "reason": "지표 단계 b(Copilot 유료 좌석) 직전 분기 대비 약 33%→약 50% 가속으로 가속도 통과를 같은 정의의 성장률 두 개로 다시 받쳤다"
+}

@@ -1,0 +1,48 @@
+{
+  "changes": {
+    "channel_consumer": "yes",
+    "channel_work": "yes",
+    "channel_trade": "no",
+    "loop": "unknown",
+    "switching": "pass",
+    "substitutes": "partial",
+    "pricing": "pass",
+    "pricing_sustained_quarters": 16,
+    "durability_discount": "no",
+    "ai_monetized_in_channel": "yes"
+  },
+  "evidence_after": [
+    "회수 루프는 두 변이 서로 끌어당기는 구조와 참여자 수 증가가 두 시점 이상 근거로 있을 때만 통과로 보고, Windows·Microsoft 365 기본 탑재 같은 배포 전략은 회수 루프로 세지 않는다.",
+    "가장 강한 채널은 업무 채널이다. Microsoft 365 상업용 유료 좌석이 4.5억 개를 넘고 조직 워크플로에 박혀 있다. Windows·Xbox 같은 소비자 채널은 이보다 약하다.",
+    "회수 루프는 미확인이다. 기본 탑재는 배포 전략이라 세지 않았고, 회수 루프 후보인 Teams·GitHub 의 참여자 수 시계열은 확정 근거에 없다.",
+    "전환비용은 통과다. 2022-03-01 정가를 올린 뒤에도, Gemini 를 얹은 Google Workspace 가 팔리는 동안 상업용 좌석이 FY2023 11%, FY2024 7%, FY2025 6%, FY2026 6% 늘었다. 네덜란드 국세청의 자체 인프라·오픈소스 전환 결정은 반대 사례이나 실제 이전은 2027년부터라 이탈로는 아직 관측되지 않았다.",
+    "가격 실측은 통과이고 지속 분기는 16이다. 2022-03-01 상업용 정가 인상(제품별 $1~$4) 뒤 FY2023~FY2026 열여섯 분기 동안 좌석이 해마다 늘고 사용자당 매출도 올랐다. 총마진이 0.6882 에서 0.6794 로 낮아진 것은 회사가 AI 인프라 투자와 AI 사용 증가로 설명해 가격 실측과 무관하다. 2026-07-01 두 번째 인상 뒤의 좌석 변화는 아직 관측되지 않았다.",
+    "대체 공급은 부분이다. Google Workspace 와 OpenAI 의 문서 도구가 출하 중이지만 좌석 증가가 이어져 격차가 남아 있다. 성능 격차를 잰 독립 측정은 미확인이다.",
+    "지속성 할인은 아니오다. FY2024~FY2026 매출 10% 이상 고객이 없다.",
+    "AI 수익화는 예다. Microsoft 365 Copilot 유료 좌석이 1,500만(2026-01)에서 2,000만 이상(2026-04), 3,000만 이상(2026-07)으로 늘었고, 회사는 FY2026 사용자당 매출 상승을 Copilot 과 E5 로 설명한다.",
+    "좌석을 줄인 고객 비중(이탈률)은 미확인이다."
+  ],
+  "evidence_up_after": [
+    "Microsoft 는 2022-03-01 부터 Microsoft 365 상업용 정가를 올렸다(Business Basic $5 에서 $6, Office 365 E3 $20 에서 $23, Microsoft 365 E3 $32 에서 $36 등). [EV-microsoft-024]",
+    "FY2023 Office 365 상업용 매출은 13% 늘었고 좌석은 11% 늘었으며 사용자당 매출도 올랐다. [EV-microsoft-026]",
+    "FY2024 Office 365 상업용 매출은 16%, 좌석은 7% 늘었다. [EV-microsoft-027]",
+    "FY2025 Microsoft 365 상업용 클라우드 매출은 15%, 좌석은 6% 늘었다. [EV-microsoft-028]",
+    "FY2026 Microsoft 365 상업용 클라우드 매출은 17%, 좌석은 6% 늘었고 사용자당 매출 상승은 Copilot 과 E5 에서 나왔다. [EV-microsoft-029]",
+    "FY2026 네 분기 모두 상업용 좌석이 전년보다 6% 늘었다. [EV-microsoft-030]",
+    "2026년 1월 상업용 유료 좌석은 4.5억 개를 넘었다. [EV-microsoft-031]",
+    "10-K 는 Microsoft 365 상업용 매출이 설치기반 증가와 사용자당 매출 확대로 움직인다고 적는다. [EV-microsoft-007]"
+  ],
+  "evidence_down_after": [
+    "Google Workspace 는 Gmail·Docs·Drive·Meet 에 Gemini 를 얹은 기업용 구독으로 팔린다. [EV-microsoft-032]",
+    "OpenAI 는 Word 에 맞설 문서 도구 Pages 등 사무용 기능을 내놓았다. [EV-microsoft-003]",
+    "네덜란드 국세청은 Microsoft 365 클라우드 이전 계획을 접고 자체 인프라와 유럽 오픈소스로 옮기기로 했으며 메일·일정은 2027년에 옮긴다. [EV-microsoft-035]",
+    "상업용 좌석 증가율은 FY2023 11% 에서 FY2026 6% 로 낮아졌다. [EV-microsoft-026, EV-microsoft-030]",
+    "FY2026 총마진율은 AI 인프라 투자와 AI 제품 사용 증가로 소폭 낮아졌다(원가 요인). [EV-microsoft-034]"
+  ],
+  "cite": [
+    "EV-microsoft-024", "EV-microsoft-026", "EV-microsoft-027", "EV-microsoft-028", "EV-microsoft-029", "EV-microsoft-030",
+    "EV-microsoft-031", "EV-microsoft-007", "EV-microsoft-032", "EV-microsoft-003", "EV-microsoft-035", "EV-microsoft-034"
+  ],
+  "reconfirm": [],
+  "reason": "업무 채널에서 2022년 정가 인상 뒤 열여섯 분기 좌석 증가를 가격 실측·전환비용 통과로, 기본 탑재는 회수 루프로 세지 않아 회수 루프를 미확인으로 다시 판정했다."
+}

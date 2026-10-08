@@ -1,0 +1,72 @@
+{
+  "changes": {
+    "A": 1,
+    "H": -1,
+    "reconfirmed": {
+      "evidence_ids": [
+        "EV-openai-030",
+        "EV-openai-028",
+        "EV-openai-029",
+        "EV-amazon-019",
+        "EV-amazon-020",
+        "EV-openai-033",
+        "EV-amazon-017",
+        "EV-openai-032",
+        "EV-alphabet-044",
+        "EV-openai-059",
+        "EV-openai-060",
+        "EV-anthropic-032",
+        "EV-openai-044",
+        "EV-openai-045",
+        "EV-openai-046",
+        "EV-openai-043",
+        "EV-openai-042",
+        "EV-openai-009",
+        "EV-openai-010",
+        "EV-openai-041",
+        "EV-microsoft-010",
+        "EV-openai-031",
+        "EV-openai-025",
+        "EV-openai-026",
+        "EV-openai-061"
+      ]
+    }
+  },
+  "evidence_after": [
+    "OpenAI ⑤ 는 3 + 동맹 등급 +1 + 적대 등급 −1 로 3점이다.",
+    "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+    "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+    "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+    "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기거나, 고객에게 관계를 끊으라는 정당성 공격으로 실제 이탈이 생기면 구조형이다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+    "동맹 등급 +1 은 Stargate LLC 공동 지분과 AWS Bedrock 재판매 유통에서 나온다. Amazon 은 OpenAI 지분을 가져 OpenAI 가 잘돼야 벌므로 떠날 수 없는 관계이고, Stargate 는 OpenAI 가 지분 약 40% 를 가진 합작법인이다.",
+    "Amazon·SoftBank·Microsoft·NVIDIA 의 투자는 받은 투자라 동맹 등급에 그대로 세지 않는다. Oracle 컴퓨트 계약과 Broadcom 맞춤 가속기 공동개발은 OpenAI 가 돈을 내고 사 오는 쪽이라 조달이고 ⑧ 소관이다.",
+    "Microsoft 는 GitHub Copilot 에 자체 모델을 넣고 Copilot 제품군에 Claude 를 함께 쓰고 있어 떠나는 중인 상대로 보고 동맹에서 뺀다.",
+    "합작법인 하나는 지분 동맹 하나로 센다. 참여사별로 나누면 같은 계약을 여러 번 세게 된다. 지분 동맹이 Stargate 하나이고 경쟁사를 OpenAI 매대에 묶은 사실도 없어 +2 가 아니다.",
+    "국방부 CDAO 계약과 기밀망 배치 협약은 여러 회사가 함께 받아 등급의 차이를 만들지 않는다.",
+    "적대 등급 −1 은 비용형이다. 플로리다 법무장관의 주 소송과 개발·마케팅 제한 임시 금지명령 청구, 캘리포니아 법무장관의 소환장, FTC 조사, 언론사 저작권 병합 소송, X·SpaceXAI 반독점 소송, Apple 의 영업비밀 소송, 상표 소송은 모두 규제기관·경쟁사·권리자의 소송과 조사로, 져도 ChatGPT 와 API 수요가 남는다.",
+    "플로리다 청구는 독립 안전장치 없는 신모델 개발을 막으라는 요구라 무겁지만, 규제기관 소송을 비용형으로 보는 잣대를 Meta 의 플로리다 청구와 알파벳·아마존·Apple·Meta 의 반독점 소송에 똑같이 대므로 비용형으로 둔다.",
+    "전선이 많아도 구조형 전선이 확인되지 않아 구조형이나 다발형으로 올리지 않는다. 최대 파트너 Microsoft 와는 Azure 독점이 끝나기 전 법적 대응 경고가 오갈 만큼 긴장이 있었으나, 다발형은 구조형 전선이 둘 이상일 때만 선다.",
+    "주요 고객이 OpenAI 모델의 대체품을 내놓고 물량을 옮기는지는 OpenAI 가 고객 집중을 공개하지 않아 확인하지 못했다(미확인). Microsoft 가 OpenAI 매출에서 차지하는 몫이 크다고 확인되면 구조형을 다시 본다.",
+    "⑧ 에서 센 것, 곧 컴퓨트 약정 크기와 Microsoft·Oracle·AWS 에 묶인 공급자 의존, 공급자가 곧 경쟁자라는 위험은 여기서 다시 세지 않는다.",
+    "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+  ],
+  "evidence_up_after": [
+    "Stargate LLC 에서 OpenAI 와 SoftBank 가 각각 약 40% 를 가지며, Stargate 의 첫 지분 출자자는 SoftBank·OpenAI·Oracle·MGX 이고 OpenAI 가 운영 책임을 진다. [EV-openai-030, EV-openai-028]",
+    "OpenAI 와 SoftBank 는 Stargate 에 각각 $19B 를 넣기로 했다고 보도됐다. [EV-openai-029]",
+    "Amazon 은 OpenAI 시리즈 C 우선주에 $15.0B 를 넣고 $35.0B 를 더 넣기로 약정해 2026-06-30 뒤에 모두 넣었다. [EV-amazon-019, EV-amazon-020]",
+    "GPT-6 Astra 는 OpenAI API·Microsoft Azure 와 함께 AWS Bedrock 에서도 제공된다. [EV-openai-033]",
+    "OpenAI 는 2026년 1분기 AWS 약정을 8년간 $100.0B 늘렸다. [EV-amazon-017]",
+    "미 국방부 CDAO 는 OpenAI 에 상한 $200M 계약을 줬으나 네 회사가 같은 계약을 받아 등급의 차이를 만들지 않는다. [EV-openai-032, EV-alphabet-044]"
+  ],
+  "evidence_down_after": [
+    "플로리다 법무장관은 2026-09-28 ChatGPT 가 안전하지 않고 기만적이라며 OpenAI 의 개발·마케팅 관행을 제한하는 새 임시 금지명령을 청구했고, 독립 안전장치 없는 신모델 개발 금지를 요구했다. [EV-openai-059]",
+    "캘리포니아 법무장관은 OpenAI 자율 에이전트의 사이버 침해를 조사하며 소환장을 보냈고 조사 범위를 OpenAI 모델 전체의 보안 위험으로 넓혔다. [EV-openai-060]",
+    "FTC 는 제품 위험 문제로 OpenAI·Anthropic 등 AI 회사들을 조사하고 있다. [EV-anthropic-032]",
+    "NYT 등 언론사 저작권 소송은 MDL No. 3143 으로 병합됐고, 2026-06-24 지역신문 약 400곳이 낸 소송도 여기에 병합됐다. [EV-openai-044, EV-openai-045, EV-openai-046]",
+    "머스크 계열 X Corp·SpaceXAI 의 반독점 소송은 Apple 을 뺀 뒤에도 OpenAI 를 피고로 이어진다. [EV-openai-043]",
+    "Apple 은 2026-07-10 OpenAI 를 영업비밀 침해로 제소하고 손해배상과 금지명령을 구했다. [EV-openai-042]",
+    "OpenAI 는 2026-10-05 'Astra' 모델 이름으로 상표권 침해 소송을 당했고, 자사 AI 도구가 얽힌 보안 사고로 소송 위험이 쌓이고 있다는 보도가 있다. [EV-openai-009, EV-openai-010]",
+    "2026-04-27 개정 계약으로 Microsoft Azure 독점이 끝났고, 그 전에 Microsoft 가 OpenAI 의 Amazon 계약에 법적 대응을 경고했다는 FT 보도가 있었다. [EV-openai-041]",
+    "Microsoft 는 GitHub Copilot 에서 자체 모델 MAI-Code-1-Flash 를 수백만 개발자에게 쓰게 하고 OpenAI·Anthropic 모델을 서로 바꿀 수 있게 짰다. [EV-microsoft-010]"
+  ]
+}
