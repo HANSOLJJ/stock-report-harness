@@ -236,9 +236,10 @@ def compute_f3(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSe
         acc = effective["acceleration"]
         if tier is None:
             warnings.append("가속도 지표 단계(acceleration_tier)가 적히지 않은 판단 — 같은 단계끼리 비교할 수 없음")
-        elif cap == "unknown" and acc != "unknown":
+        elif cap == "unknown" and acc not in ("unknown", "fail"):
+            # 지표가 없는 단계는 통과·부분을 줄 수 없다. 실패는 규칙 ③ 판정 지침의 지연 조항(지연은 감속)이라 그대로 센다.
             effective["acceleration"] = "unknown"
-            warnings.append(f"지표 단계 {tier} 는 가속도를 판정할 수 없다 — 입력 {acc} 를 미확인으로 계산")
+            warnings.append(f"지표 단계 {tier} 는 가속도를 통과·부분으로 판정할 수 없다 — 입력 {acc} 를 미확인으로 계산")
         elif cap in STRENGTH_RANK and acc in STRENGTH_RANK and STRENGTH_RANK[acc] > STRENGTH_RANK[cap]:
             effective["acceleration"] = cap
             warnings.append(f"지표 단계 {tier} 의 가속도는 최대 {cap} — 입력 {acc} 를 {cap} 로 계산")

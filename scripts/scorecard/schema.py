@@ -1230,7 +1230,12 @@ def _validate_judgment_inputs_for_rules(kind: str, inputs: dict[str, Any], spec:
         acc = inputs["acceleration"]
         label = tiers[tier].get("label") or tier
         if cap == "unknown":
-            _require(acc == "unknown", f"{where}: 지표 단계 {tier}({label})는 가속도를 판정할 수 없다 — acceleration 은 unknown ({acc!r})")
+            # 2026-10-08 ③ 재판단에서 Apple 이 걸렸다. 지표가 없는 단계(e)는 통과·부분을 줄 수 없지만, 규칙 ③ 판정 지침의
+            # "지연은 감속으로 처리한다"(출시가 미뤄져 움직이지 않은 것)는 지표 없이도 서는 실패 경로다. max 는 상한이므로
+            # 통과·부분만 막고 실패(지연 조항)와 미확인(점수 없음)은 받는다.
+            _require(acc in ("unknown", "fail"),
+                     f"{where}: 지표 단계 {tier}({label})는 가속도를 통과·부분으로 판정할 수 없다 — unknown(점수 없음) 또는 "
+                     f"지연 조항에 따른 fail 만 된다 ({acc!r})")
         elif cap in TRI_RANK and acc in TRI_RANK:
             _require(TRI_RANK[acc] <= TRI_RANK[cap], f"{where}: 지표 단계 {tier}({label})의 가속도는 최대 {cap} ({acc!r})")
         need = int(tiers_spec.get("growth_rates_required") or 0)
