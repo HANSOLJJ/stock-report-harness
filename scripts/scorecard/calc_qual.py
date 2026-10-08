@@ -208,6 +208,15 @@ def _f2_generation_gap(fid: str, inputs: dict[str, Any], paths: list[str], calc:
                                  warnings=warnings + ["C-03 확정: 성능 도약이 세대 격차 수준 → 5"] + carried_note(judgment))
     passed = calc["passed"]
     if str(passed) not in mapping:
+        # 2026-10-08 재판단에서 Anthropic·NVIDIA 가 세 경로를 다 통과했는데 세대 격차가 아니라 걸렸다. 매핑은 0·1·2 칸뿐인데
+        # 5 는 세대 격차에만 주기로 했으므로(score5_requires_generation_gap), 세 경로 통과는 매핑의 가장 높은 칸(두 경로 4)과 같다.
+        # 통과 수가 매핑의 최대 키보다 크면 그 칸으로 자르고, 작은데 없으면(0·1 이 빠진 규칙) 지금처럼 규칙 결정 대기다.
+        top = max(int(k) for k in mapping)
+        if passed > top and spec.get("score5_requires_generation_gap"):
+            calc["mapping_capped_from"] = passed
+            return factor_result(fid, score=int(mapping[str(top)]), status="ok", basis="paths", judgment=judgment, calc=calc,
+                                 warnings=warnings + [f"C-03 확정: 경로 {passed}개 통과는 세대 격차가 아니라 두 경로와 같은 {mapping[str(top)]} "
+                                                      "— 5 는 세대 격차에만"] + carried_note(judgment))
         return factor_result(fid, score=None, status="needs_rule_decision", basis="paths", judgment=judgment, calc=calc,
                              pending=pending_info("rule", f"경로 {passed}개 통과(세대 격차 없음) 점수가 매핑에 없음", "C-03"))
     return factor_result(fid, score=int(mapping[str(passed)]), status="ok", basis="paths", judgment=judgment, calc=calc,
