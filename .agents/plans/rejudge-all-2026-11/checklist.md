@@ -60,7 +60,7 @@
 - [x] init 결함 수정(표지 인용 근거 누락) 커밋, 재실행 근거 603건 복원
 - [x] 판단 세션 7개(①②③④⑤⑦⑧, opus) → `work/judge/` 98건 → `apply_judgments.py` propose 98건 → `proposal --all-pending --accept`. 도중 코드 수정 둘(③ e 단계 지연 조항 fail, ② 세 경로 통과 → 4)과 근거 추가(Amazon Prime 요금, ② 표준 선점 9건, ④ Nova·NVIDIA Edge·Tesla 칩 4건)
 - [x] research 통과(승계 0, 트리거 56/56, 기한 초과 0) → diff(전부 재판단이라 2층 "실패"는 변경 목록 역할) → calculate: 13사 순위, Meta 미완료(③ e·unknown) → draft → review-template
-- [ ] 4영역 리뷰(사실·출처 A/B, 규칙 일관성, 재무 계산, 출력·가독성) → review.md 채움 → 수정 한 묶음 → 확인 리뷰 → status pass
+- [x] 4영역 리뷰(사실·출처 A/B, 규칙 일관성, 재무 계산, 출력·가독성) → review.md 채움 → 수정 한 묶음 → 확인 리뷰 → status pass (2026-10-09, 계약 검증 PASS. NVIDIA 10→9 공동 4위, Meta ④ 4, 나머지 그대로)
 - [ ] 승인 대기 보고(사람이 승인 페이지에서) → build → push → 맥미니 3단계
 - [ ] 10월 미해결 12건(Q02·Q03·Q05·Q08·Q09·Q10·Q12·Q13·Q16·Q19·Q20·Q23) 처리
 - [ ] research → `diff --against ai-scorecard-2026-10-rescore` → calculate → draft
