@@ -715,6 +715,7 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
     prev = _previous_results(ctx)
     this_run = [(c, fid, fr) for c, fid, fr in judged
                 if prev and _last_review(by_pair.get((c["company_id"], fid), {})) > str(prev["as_of"])]
+    rejudge = bool((ctx.rules.payload.get("policies") or {}).get("rejudge"))
     lines: list[str] = []
     if carried:
         judged_text = (f"기준선 이후 다시 매긴 판단은 {len(judged)}칸(검토일 {esc(dates(judged))})"
@@ -731,6 +732,15 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
         lines.append(f"점수 {len(cells)}칸을 모두 이번 실행에서 매겼다 — 판단 {len(judged)}칸"
                      + (f"(검토일 {esc(dates(judged))})" if judged else "") + f", 관측 계산 {len(computed)}칸"
                      + (f", 점수를 만들지 않은 칸 {unscored}칸" if unscored else "") + ".")
+    # 2026-10-09 출력·가독성 리뷰: 관측에서 계산한 칸 가운데 ⑨ 는 게이트 판정 입력을 판단으로 받는데, 그 판단은 재판단 범위
+    # (`policies.rejudge.qualitative_factors`) 밖이라 이어받은 채 남는다. 상자가 "모두 이번 실행에서 매겼다" 고만 적으면 카드의
+    # ⑨ 판단일(2026-09-02)과 어긋나 읽히므로, 재판단 조항이 있는 규칙에서는 그 칸 수와 검토일 범위를 한 줄 더 적는다.
+    input_judged = [(c, fid, fr) for c, fid, fr in computed if fr.get("judgment_id") and (c["company_id"], fid) in by_pair]
+    if rejudge and input_judged:
+        inherited = sum(1 for c, fid, _fr in input_judged if by_pair[(c["company_id"], fid)].get("status") == "carried")
+        lines.append(f"관측 계산 칸 가운데 {esc(per_factor(input_judged))} {len(input_judged)}칸은 게이트 판정 입력을 판단으로 함께 받고, "
+                     f"그 판단의 검토일은 {esc(dates(input_judged))} 이다"
+                     + (f". 그중 {inherited}칸은 이전 실행의 판단을 그대로 이어받았고 재판단 범위 밖이다." if inherited else "(재판단 범위 밖이다)."))
     if prev:
         prev_by = {c["company_id"]: c for c in prev["companies"]}
         changed = [(c["display_name"], fid, prev_by[c["company_id"]]["factors"][fid]["score"], fr["score"])
@@ -740,7 +750,6 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
         lines.append(f"지난 실행(기준일 {esc(prev['as_of'])}) 대비 점수가 바뀐 칸은 <b>{len(changed)}칸</b>이다" + (f": {shown}{more}." if changed else "."))
     tens = [t for t in (ctx.rules.payload.get("open_tensions") or []) if t.get("status") == "open"]
     prior_as_of = str((ctx.run.get("continued_from") or {}).get("as_of") or "")
-    rejudge = bool((ctx.rules.payload.get("policies") or {}).get("rejudge"))
     if tens and prior_as_of and rejudge:
         # 2026-10-08 규칙 v2.0(rules.md 2.9): 정기 실행은 모든 판단을 다시 매긴다. 쟁점이 걸린 판단이 모두 이번 실행 기간
         # (이어받은 실행의 기준일 뒤)에 새로 매겨졌거나 다시 확인됐으면 그 쟁점은 재판단으로 닫힌 것으로 센다.
@@ -2032,7 +2041,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </section>
 <section class="tabpanel" id="tab-companies" role="tabpanel" aria-labelledby="tabbtn-companies">
 <h2><span class="num">03</span>기업별 상세</h2>
-<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"], html=True, three_way=rc.has_three_way(ctx)))}</p>
+<p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"], html=True, three_way=rc.has_three_way(ctx), has_summaries=bool(getattr(ctx, "company_summaries", None))))}</p>
 <div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)}</div>
 </section>
 <section class="tabpanel" id="tab-raw" role="tabpanel" aria-labelledby="tabbtn-raw">

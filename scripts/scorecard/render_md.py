@@ -384,7 +384,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     # 2026-09-15 FIX-54 1단계 S4: (회사, factor) 쌍으로 찾아 자동 산출 F6(anthropic·openai)에 승계 판단 문구가 찍혔다.
     judgments_by_id = {j["judgment_id"]: j for j in ctx.judgments}
     reps = rc.replacements(ctx)
-    lines += [f"- {rc.card_evidence_note(run['baseline_id'], three_way=rc.has_three_way(ctx))}", ""]
+    lines += [f"- {rc.card_evidence_note(run['baseline_id'], three_way=rc.has_three_way(ctx), has_summaries=bool(getattr(ctx, 'company_summaries', None)))}", ""]
     for c in ordered:
         b = baseline_scores.get(c["company_id"])
         # 2026-10-06 사용자 지시: 기준선 순위·기준선 요약을 싣지 않는다. 요약은 이 실행에서 확정한 기업 요약뿐이다.

@@ -481,12 +481,13 @@ def trigger_notes(ctx: Any) -> list[str]:
 G4_INCOMPATIBLE_NOTE = "(공시된 커버리지는 ARR·연환산 약정 기반이라 수주잔고 기준과 달라 이번 실행에는 쓰지 않았다)"
 
 
-def card_evidence_note(baseline_id: str, html: bool = False, three_way: bool = False) -> str:
+def card_evidence_note(baseline_id: str, html: bool = False, three_way: bool = False, has_summaries: bool = True) -> str:
     # 2026-09-18 FIX-80 S2: HTML 카드는 관측에서 계산한 항목의 옛 참고 서술을 싣지 않는다(감사 기록으로 보냈다).
     # 초안은 리뷰어가 대조하는 문서라 그대로 싣는다 — 안내문도 둘을 갈라 말한다.
     # 2026-10-06 사용자 지시: 옛 판·대체 표시를 설명하는 안내를 없앴다. 근거는 현재 판단 문장뿐이다.
-    note = ("근거는 각 판단에 적힌 현재 근거 문장이다. 관측에서 계산한 항목은 산식과 사유가 점수 근거다. "
-            "카드의 한 줄 요약은 이 실행에서 확정한 기업 요약이다.")
+    # 2026-10-09 출력·가독성 리뷰: 기업 요약이 없는 실행에서 "한 줄 요약은 … 기업 요약이다" 가 실려 없는 것을 있다고 적었다.
+    note = ("근거는 각 판단에 적힌 현재 근거 문장이다. 관측에서 계산한 항목은 산식과 사유가 점수 근거다."
+            + (" 카드의 한 줄 요약은 이 실행에서 확정한 기업 요약이다." if has_summaries else ""))
     if three_way:
         # 2026-10-07 사용자 지시: 근거 세 칸의 뜻. 함정 항목은 점수가 음수라 '올릴 근거'가 함정이 얕다는 사실이다.
         note += (" 판단 근거는 세 칸이다. 판정은 점수와 그 이유, 올릴 근거는 그 사실만 보면 점수가 오르는 것, "
