@@ -40,6 +40,8 @@ PERIOD_REQUIRED_METRICS = {
     "net_income_ttm", "revenue_ttm_prior", "pretax_income_ttm", "revenue_ttm_full",
     # 분기 EPS 는 어느 분기인지가 값의 일부다. 기간 없이는 4분기 연속 판정을 할 수 없다.
     "ntm_eps_quarter",
+    # 2026-10-08: 규칙 v2.0 재실행의 최근 1년 흐름 지표. operating_margin_ttm 과 같은 이유로 기간을 요구한다.
+    "gross_margin_ttm", "gross_margin_ttm_prior", "sbc_ttm",
 }
 OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
 # 결측 유형. status=not_disclosed 하나가 네 뜻(미확인·미공시·계산 대상 아님·산출 불가)으로 쓰여
@@ -52,15 +54,25 @@ OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
 MISSING_TYPES = {"unverified", "not_disclosed_confirmed", "not_applicable", "indeterminate"}
 # C-16(약정 커버리지 결측 정책)이 걸리는 유일한 유형. 우리가 안 찾은 것을 그 기업의 위험으로 둔갑시키지 않는다.
 MISSING_TYPE_FOR_DISCLOSURE_POLICY = "not_disclosed_confirmed"
-JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs"}
+# 2026-10-08 사용자 결정(규칙 v2.0): ① 을 네 질문 판정 입력(lockin)과 사다리로 계산한다.
+JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs", "lockin"}
 JUDGMENT_STATUSES = {"new", "carried"}
 TRI = {"pass", "partial", "fail", "unknown"}
 YES_NO = {"yes", "no", "unknown"}
 PASS_FAIL = {"pass", "fail", "unknown"}
+# 2026-10-08 규칙 v2.0 ① 판정 입력의 값 범위. 채널 셋은 있다/없다만 받는다(미확인 채널은 채널로 세지 않는다).
+LOCKIN_CHANNEL_KEYS = ("channel_consumer", "channel_work", "channel_trade")
+LOCKIN_QUESTION_KEYS = ("loop", "switching", "substitutes", "pricing")
+CHANNEL_VALUES = {"yes", "no"}
+AI_MONETIZED_VALUES = {"yes", "partial", "no", "unknown"}
+# 2026-10-08 규칙 v2.0 ③ 가속도 지표 단계. 단계별 허용 판정은 규칙 factors.F3.acceleration_tiers 가 정한다.
+ACCELERATION_TIERS = {"a", "b", "c", "d", "e"}
 
 # factor별 허용 판단 종류. score는 정성 factor와 비상장 F6, 그리고 승계(carried) 전용 예외에만 허용한다.
+# 2026-10-08: F1 에 lockin 을 더한다. 옛 실행(v1.9 이하)의 F1 score 판단은 계속 읽힌다. 규칙이 factor 의
+# judgment_kinds 를 선언하면 새 판단(status: new)은 그 목록만 허용한다(validate_judgments).
 FACTOR_JUDGMENT_KINDS: dict[str, set[str]] = {
-    "F1": {"score"},
+    "F1": {"lockin", "score"},
     "F2": {"paths", "score"},
     "F3": {"criteria"},
     "F4": {"score"},
@@ -79,9 +91,23 @@ JUDGMENT_EDIT_KIND: dict[str, str] = {
     "F3": "criteria", "F5": "grade", "F7": "matrix", "F9": "gate_inputs",
 }
 # 판정 종류별로 고칠 수 있는 입력 키와 허용값. 검증은 `_validate_judgment_inputs` 가 하고 이 표는 입력란을 그린다.
+# 2026-10-08 규칙 v2.0: criteria 에 지표 단계, lockin(① 네 질문)과 paths(② 세 경로) 입력란을 더한다. 어느 판정 종류로
+# 고치는지는 규칙을 아는 `judgment_edit_kind` 가 정한다(v1.9 이하 실행에서 ② 는 여전히 고치지 않는다).
 JUDGMENT_INPUT_CHOICES: dict[str, dict[str, list[Any]]] = {
     "criteria": {"imitation": ["pass", "partial", "fail", "unknown"], "revenue_model": ["pass", "partial", "fail", "unknown"],
-                 "acceleration": ["pass", "partial", "fail", "unknown"], "door_closed": ["pass", "fail", "unknown"]},
+                 "acceleration": ["pass", "partial", "fail", "unknown"], "door_closed": ["pass", "fail", "unknown"],
+                 "acceleration_tier": ["a", "b", "c", "d", "e"]},
+    "lockin": {"channel_consumer": ["yes", "no"], "channel_work": ["yes", "no"], "channel_trade": ["yes", "no"],
+               "loop": ["pass", "partial", "fail", "unknown"], "switching": ["pass", "partial", "fail", "unknown"],
+               "substitutes": ["pass", "partial", "fail", "unknown"], "pricing": ["pass", "partial", "fail", "unknown"],
+               "durability_discount": ["yes", "no", "unknown"],
+               "ai_monetized_in_channel": ["yes", "partial", "no", "unknown"],
+               "pricing_sustained_quarters": list(range(0, 25))},
+    "paths": {"performance_leap": ["pass", "partial", "fail", "unknown"],
+              "paradigm_adaptation": ["pass", "partial", "fail", "unknown"],
+              "standard_capture": ["pass", "partial", "fail", "unknown"],
+              "top_rank": ["yes", "no", "unknown"], "generation_gap": ["yes", "no", "unknown"],
+              "leap_independent": ["yes", "no", "unknown"], "generation_gap_months": list(range(0, 37))},
     "grade": {"A": [0, 1, 2], "H": [0, -1, -2, -3]},
     "matrix": {"funding_dependent_share": ["large", "small", "unknown"], "own_money_returns": ["yes", "no", "unknown"]},
     "gate_inputs": {"fcf_trend": ["stable", "deteriorating", "unknown"], "bep_retreat": ["yes", "no", "unknown"],
@@ -89,6 +115,24 @@ JUDGMENT_INPUT_CHOICES: dict[str, dict[str, list[Any]]] = {
                     "direction_B": ["pass", "fail", "unknown"], "coverage_comparable": ["yes", "no", "unknown"],
                     "operating_result_reviewed": ["profit", "loss", "unknown"]},
 }
+# 2026-10-08 규칙 v2.0: 선택 상자로 그릴 수 없는 판정 재료(③ 성장률 두 개). 승인 페이지에는 싣지 않고 CLI(`judge --json`·
+# `propose --json`)로만 받는다. 형식(숫자 두 개)은 `_validate_judgment_inputs` 가 본다.
+JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {"criteria": ("acceleration_growth_rates",)}
+
+
+def judgment_edit_kind(rules_payload_or_factors: Any, factor: str) -> str | None:
+    """factor 의 판단을 어느 판정 종류로 고치는가. 규칙이 `judgment_kinds` 를 선언하면 그 첫째, 없으면 `JUDGMENT_EDIT_KIND`.
+
+    2026-10-08 규칙 v2.0: ① 은 lockin, ② 는 paths, ⑦ 은 matrix 로 고친다. v1.9 이하 실행은 지금처럼 ② 를 고치지 않는다(None).
+    규칙 payload, 그 `factors` 표, `RuleSet` 어느 것을 받아도 된다."""
+    payload = getattr(rules_payload_or_factors, "payload", rules_payload_or_factors) or {}
+    factors = payload.get("factors", payload) if isinstance(payload, dict) else {}
+    kinds = (factors.get(factor) or {}).get("judgment_kinds") if isinstance(factors, dict) else None
+    if kinds:
+        return str(kinds[0])
+    return JUDGMENT_EDIT_KIND.get(factor)
+
+
 # revision_history 한 칸이 보존하는 이전 값의 키.
 JUDGMENT_REVISION_FIELDS = ("kind", "score", "inputs", "evidence", "status", "reviewer", "reviewed_at")
 # 2026-10-07 사용자 지시: 판단 근거를 판정(evidence)·올릴 근거·내릴 근거 세 칸으로 쓴다. 두 방향 칸은 선택 키라
@@ -141,9 +185,41 @@ METRICS: dict[str, dict[str, str]] = {
     "ttm_revenue_est": {"unit": "USD", "type": "number"},
     "cumulative_raised": {"unit": "USD", "type": "number"},
     "quarter_note": {"unit": "text", "type": "text"},
+    # 2026-10-08 사용자 결정: 규칙 v2.0 재실행에서 수집할 관측. 단위 count 는 사람·좌석·구독·주식처럼 세는 수다.
+    # 최근 1년 매출총이익률 — ① 가격 실측의 1차 지표(2026-10-08 사용자 결정)
+    "gross_margin_ttm": {"unit": "ratio", "type": "number"},
+    # 그 전 1년 매출총이익률 — ① 가격 실측의 추세 비교용(2026-10-08 사용자 결정)
+    "gross_margin_ttm_prior": {"unit": "ratio", "type": "number"},
+    # 10-K 에 공시된 매출 10% 이상 고객 중 최대 비중 — ① 지속성 할인(2026-10-08 사용자 결정)
+    "top_customer_share": {"unit": "ratio", "type": "number"},
+    # RPO 가운데 12개월 안에 인식할 비중 — ① 전환비용(2026-10-08 사용자 결정)
+    "rpo_next12m_share": {"unit": "ratio", "type": "number"},
+    # 순매출 유지율 — ① 전환비용(2026-10-08 사용자 결정)
+    "nrr": {"unit": "ratio", "type": "number"},
+    # 고객 선급금 — ① 전환비용, 파운드리처럼 고객이 미리 돈을 내는 회사(2026-10-08 사용자 결정)
+    "customer_prepayments": {"unit": "USD", "type": "number"},
+    # 라우팅 서비스 토큰 점유율 — ① 거래 채널 가격 실측. 규칙 2.7 대로 매출 점유율이 아니다(2026-10-08 사용자 결정)
+    "token_share": {"unit": "ratio", "type": "number"},
+    # 토큰 백만 개당 평균 단가 — ① 거래 채널 가격 실측(2026-10-08 사용자 결정)
+    "price_per_m": {"unit": "USD", "type": "number"},
+    # 유료 좌석 수 — ① 가격 실측·③ 가속도 b 단계(2026-10-08 사용자 결정)
+    "paid_seats": {"unit": "count", "type": "number"},
+    # 월간 사용자 수 — ① 회수 루프·③ 가속도 d 단계(2026-10-08 사용자 결정)
+    "mau": {"unit": "count", "type": "number"},
+    # 개발자 생태계 규모 — ① 회수 루프(2026-10-08 사용자 결정)
+    "developer_count": {"unit": "count", "type": "number"},
+    # FSD 구독 수 — ③ 가속도 b 단계(2026-10-08 사용자 결정)
+    "fsd_subscribers": {"unit": "count", "type": "number"},
+    # 희석 주식 수 — 자본 효율 진단 예비(2026-10-08 사용자 결정)
+    "shares_diluted": {"unit": "count", "type": "number"},
+    # 최근 1년 주식보상비용 — 자본 효율 진단 예비(2026-10-08 사용자 결정)
+    "sbc_ttm": {"unit": "USD", "type": "number"},
 }
 
 NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "revenue_ttm_full", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
+# 2026-10-08: 정의상 음수가 될 수 없는 새 관측(비중·단가·세는 수·선급금). 매출총이익률과 주식보상비용은 음수가 나올 수 있어 넣지 않는다.
+NON_NEGATIVE_METRICS |= {"top_customer_share", "rpo_next12m_share", "nrr", "customer_prepayments", "token_share", "price_per_m",
+                         "paid_seats", "mau", "developer_count", "fsd_subscribers", "shares_diluted"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -309,6 +385,11 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         for key, value in (spec.get("matrix") or {}).items():
             _require(_is_number(value) and lo <= value <= hi,
                      f"rules.json.factors.{fid}.matrix[{key}]: {value} 가 range [{lo}, {hi}] 밖")
+        # 2026-10-08 규칙 v2.0: 새 판단이 받는 kind 목록. validate_judgments·judgment_edit_kind 가 읽으므로 스키마가 아는 kind 여야 한다.
+        if "judgment_kinds" in spec:
+            kinds = spec["judgment_kinds"]
+            _require(isinstance(kinds, list) and bool(kinds) and all(k in FACTOR_JUDGMENT_KINDS[fid] for k in kinds),
+                     f"rules.json.factors.{fid}.judgment_kinds: {sorted(FACTOR_JUDGMENT_KINDS[fid])} 중에서 고른 비어 있지 않은 목록 ({kinds!r})")
     _validate_f6_policy(payload["policies"]["f6"], factors["F6"], f9=payload["policies"].get("f9"))
     _validate_f9_policy(payload["policies"]["f9"], factors["F9"])
     if "missing_types" in payload["policies"]:
@@ -1047,10 +1128,36 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
         _require(inputs["H"] in (0, -1, -2, -3) and not isinstance(inputs["H"], bool), f"{where}: H 는 0/-1/-2/-3")
         return
     if kind == "criteria":
-        _expect_keys(inputs, ["imitation", "revenue_model", "acceleration", "door_closed"], where)
+        # 2026-10-08 규칙 v2.0: 가속도 지표 단계(a~e)와 같은 정의의 성장률 두 개. 필수 여부는 규칙을 아는 validate_judgments 가 본다.
+        _expect_keys(inputs, ["imitation", "revenue_model", "acceleration", "door_closed"], where,
+                     optional=["acceleration_tier", "acceleration_growth_rates"])
         for key in ("imitation", "revenue_model", "acceleration"):
             _require(inputs[key] in TRI, f"{where}: {key} 는 {sorted(TRI)}")
         _require(inputs["door_closed"] in PASS_FAIL, f"{where}: door_closed 는 {sorted(PASS_FAIL)}")
+        if "acceleration_tier" in inputs:
+            _require(inputs["acceleration_tier"] in ACCELERATION_TIERS,
+                     f"{where}: acceleration_tier 는 {sorted(ACCELERATION_TIERS)} ({inputs['acceleration_tier']!r})")
+        if "acceleration_growth_rates" in inputs:
+            rates = inputs["acceleration_growth_rates"]
+            _require(isinstance(rates, list) and len(rates) == 2 and all(_is_number(r) for r in rates),
+                     f"{where}: acceleration_growth_rates 는 숫자 정확히 2개 목록 ({rates!r})")
+        return
+    if kind == "lockin":
+        # 2026-10-08 규칙 v2.0 ①: 채널 셋(있다/없다)·네 질문(통과·부분·실패·미확인)·지속성 할인·AI 수익화 표시.
+        # 가격 실측 통과의 분기 임계는 규칙을 아는 validate_judgments 가 본다.
+        _expect_keys(inputs, [*LOCKIN_CHANNEL_KEYS, *LOCKIN_QUESTION_KEYS, "durability_discount", "ai_monetized_in_channel"],
+                     where, optional=["pricing_sustained_quarters"])
+        for key in LOCKIN_CHANNEL_KEYS:
+            _require(inputs[key] in CHANNEL_VALUES, f"{where}: {key} 는 {sorted(CHANNEL_VALUES)} ({inputs[key]!r})")
+        for key in LOCKIN_QUESTION_KEYS:
+            _require(inputs[key] in TRI, f"{where}: {key} 는 {sorted(TRI)} ({inputs[key]!r})")
+        _require(inputs["durability_discount"] in YES_NO, f"{where}: durability_discount 는 {sorted(YES_NO)}")
+        _require(inputs["ai_monetized_in_channel"] in AI_MONETIZED_VALUES,
+                 f"{where}: ai_monetized_in_channel 는 {sorted(AI_MONETIZED_VALUES)} ({inputs['ai_monetized_in_channel']!r})")
+        if "pricing_sustained_quarters" in inputs:
+            q = inputs["pricing_sustained_quarters"]
+            _require(isinstance(q, int) and not isinstance(q, bool) and q >= 0,
+                     f"{where}: pricing_sustained_quarters 는 0 이상 정수 ({q!r})")
         return
     if kind == "matrix":
         _expect_keys(inputs, ["funding_dependent_share", "own_money_returns"], where)
@@ -1059,12 +1166,19 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
         return
     if kind == "paths":
         # generation_gap: C-03 확정 모델(v1.7)의 5점 조건. top_rank(AA 종합 1위)는 v1.5·v1.6 후보 매핑의 입력이다.
+        # 2026-10-08 규칙 v2.0: 세대 격차의 개월 수와 성능 도약의 독립 측정 여부. 필수 여부는 규칙을 아는 validate_judgments 가 본다.
         _expect_keys(inputs, ["performance_leap", "paradigm_adaptation", "standard_capture", "top_rank"], where,
-                     optional=["generation_gap"])
+                     optional=["generation_gap", "generation_gap_months", "leap_independent"])
         for key in ("performance_leap", "paradigm_adaptation", "standard_capture"):
             _require(inputs[key] in TRI, f"{where}: {key} 는 {sorted(TRI)}")
         _require(inputs["top_rank"] in YES_NO, f"{where}: top_rank 오류")
         _require(inputs.get("generation_gap", "unknown") in YES_NO, f"{where}: generation_gap 오류")
+        if "generation_gap_months" in inputs:
+            m = inputs["generation_gap_months"]
+            _require(isinstance(m, int) and not isinstance(m, bool) and m >= 0,
+                     f"{where}: generation_gap_months 는 0 이상 정수 ({m!r})")
+        if "leap_independent" in inputs:
+            _require(inputs["leap_independent"] in YES_NO, f"{where}: leap_independent 는 {sorted(YES_NO)}")
         return
     if kind == "gate_inputs":
         _expect_keys(
@@ -1083,6 +1197,64 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
     raise SchemaError(f"{where}: 알 수 없는 kind {kind!r}")
 
 
+TRI_RANK = {"fail": 0, "partial": 1, "pass": 2}
+
+
+def _validate_judgment_inputs_for_rules(kind: str, inputs: dict[str, Any], spec: dict[str, Any], where: str) -> None:
+    """규칙이 선언한 판정 입력 요건(2026-10-08 규칙 v2.0). 키가 없는 규칙(v1.9 이하)은 아무것도 보지 않는다.
+
+    새 판단(status: new)에만 댄다. 이어받은 판단은 그 판단을 매긴 때의 규칙으로 매겼고, 정기 실행에 승계가 남는 것은
+    rejudge 정책 검사가 막는다."""
+    if kind == "lockin":
+        need = (spec.get("ladder") or {}).get("pricing_pass_requires_quarters")
+        if need is not None and inputs.get("pricing") == "pass":
+            q = inputs.get("pricing_sustained_quarters")
+            _require(q is not None, f"{where}: 가격 실측 통과는 지속 분기 수(pricing_sustained_quarters)가 있어야 한다 — 규칙은 {need}분기 이상")
+            _require(q >= int(need), f"{where}: 가격 실측 통과는 {need}분기 이상 지속이어야 한다(입력 {q}분기) — 미만이면 부분이다")
+    elif kind == "paths":
+        if spec.get("leap_requires_independent_measurement") and inputs.get("performance_leap") == "pass":
+            _require("leap_independent" in inputs,
+                     f"{where}: 성능 도약 통과는 독립 측정 여부(leap_independent)를 적어야 한다 — 벤더 발표만 있으면 부분 통과다")
+        if spec.get("generation_gap_months") and inputs.get("generation_gap") == "yes":
+            _require("generation_gap_months" in inputs,
+                     f"{where}: 세대 격차 yes 는 2위가 도달하는 데 걸린 개월 수(generation_gap_months)를 적어야 한다")
+    elif kind == "criteria":
+        tiers_spec = spec.get("acceleration_tiers")
+        if not tiers_spec:
+            return
+        tiers = tiers_spec.get("tiers") or {}
+        tier = inputs.get("acceleration_tier")
+        _require(tier is not None, f"{where}: 가속도 지표 단계(acceleration_tier, {sorted(tiers)})가 있어야 한다")
+        _require(tier in tiers, f"{where}: acceleration_tier {tier!r} 는 규칙 단계 {sorted(tiers)} 가 아니다")
+        cap = tiers[tier].get("max")
+        acc = inputs["acceleration"]
+        label = tiers[tier].get("label") or tier
+        if cap == "unknown":
+            _require(acc == "unknown", f"{where}: 지표 단계 {tier}({label})는 가속도를 판정할 수 없다 — acceleration 은 unknown ({acc!r})")
+        elif cap in TRI_RANK and acc in TRI_RANK:
+            _require(TRI_RANK[acc] <= TRI_RANK[cap], f"{where}: 지표 단계 {tier}({label})의 가속도는 최대 {cap} ({acc!r})")
+        need = int(tiers_spec.get("growth_rates_required") or 0)
+        if need and cap == "pass" and acc != "unknown":
+            rates = inputs.get("acceleration_growth_rates")
+            _require(isinstance(rates, list) and len(rates) == need,
+                     f"{where}: 가속도 판정은 같은 정의의 성장률 {need}개(acceleration_growth_rates)를 저장해야 한다 — "
+                     "하나로는 가속인지 단순 성장인지 가를 수 없다")
+
+
+def _validate_reconfirmed(value: Any, where: str) -> None:
+    """2026-10-08 규칙 v2.0(rules.md 2.9): 다시 읽었으나 바꾸지 않은 판단의 재확인 기록. 날짜·검토자·다시 읽은 근거 ID.
+    근거의 실재·확정 여부는 validate_cross_refs 가 본다."""
+    _require(isinstance(value, list) and value, f"{where}: 비어 있지 않은 배열 필요")
+    for idx, entry in enumerate(value):
+        at = f"{where}[{idx}]"
+        _expect_keys(entry, ["at", "by", "evidence_ids"], at)
+        _expect_date(entry["at"], f"{at}.at")
+        _require(isinstance(entry["by"], str) and entry["by"].strip(), f"{at}.by: 비어 있지 않은 문자열")
+        ids = entry["evidence_ids"]
+        _require(isinstance(ids, list) and ids and all(isinstance(e, str) and e.startswith("EV-") for e in ids),
+                 f"{at}.evidence_ids: 다시 읽은 근거 ID(EV-…)의 비어 있지 않은 배열 ({ids!r})")
+
+
 def _validate_revision_history(history: Any, where: str) -> None:
     """2026-10-01 레인 J. 사람이 고친 판단의 이전 값·사유·누가·언제. 오래된 것이 앞이다."""
     _require(isinstance(history, list) and history, f"{where}: 비어 있지 않은 배열 필요")
@@ -1095,11 +1267,14 @@ def _validate_revision_history(history: Any, where: str) -> None:
         for key in ("revised_by", "reason"):
             _require(isinstance(entry[key], str) and entry[key].strip(), f"{at}: {key} 는 비어 있지 않은 문자열")
         # 2026-10-07: 세 칸 도입 뒤의 이력은 두 방향 칸도 보존한다. 그 전 이력(7키)도 그대로 받는다.
+        # 2026-10-08: 재확인 기록이 있던 판단은 그 목록도 보존한다(번복이 되돌린다).
         _expect_keys(entry["previous"], list(JUDGMENT_REVISION_FIELDS), f"{at}.previous",
-                     optional=[*JUDGMENT_DIRECTION_FIELDS, "counter_evidence"])
+                     optional=[*JUDGMENT_DIRECTION_FIELDS, "counter_evidence", "reconfirmed"])
         for key in JUDGMENT_DIRECTION_FIELDS:
             if key in entry["previous"]:
                 _expect_direction_list(entry["previous"][key], f"{at}.previous.{key}")
+        if "reconfirmed" in entry["previous"]:
+            _validate_reconfirmed(entry["previous"]["reconfirmed"], f"{at}.previous.reconfirmed")
 
 
 def _expect_direction_list(value: Any, where: str) -> None:
@@ -1148,11 +1323,13 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
             ["judgment_id", "company_id", "factor", "kind", "score", "inputs", "evidence", "reviewer", "reviewed_at", "status"],
             where,
             optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id", "superseded",
-                      "evidence_ids", "revision_history", *JUDGMENT_DIRECTION_FIELDS],
+                      "evidence_ids", "revision_history", *JUDGMENT_DIRECTION_FIELDS, "reconfirmed"],
         )
         for key in JUDGMENT_DIRECTION_FIELDS:
             if key in item:
                 _expect_direction_list(item[key], f"{where}.{key}")
+        if "reconfirmed" in item:
+            _validate_reconfirmed(item["reconfirmed"], f"{where}.reconfirmed")
         if "revision_history" in item:
             _validate_revision_history(item["revision_history"], f"{where}.revision_history")
         if "evidence_ids" in item:
@@ -1185,6 +1362,14 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
         kind = item["kind"]
         _require(kind in FACTOR_JUDGMENT_KINDS[factor], f"{where}: {factor} 에 kind {kind!r} 불허 (허용 {sorted(FACTOR_JUDGMENT_KINDS[factor])})")
         _require(item["status"] in JUDGMENT_STATUSES, f"{where}: status {item['status']!r} 오류")
+        # 2026-10-08 규칙 v2.0: 규칙이 factor 의 judgment_kinds 를 선언하면 새 판단은 그 목록만 허용한다(① lockin, ② paths,
+        # ⑦ matrix). 이어받은 판단(carried)은 옛 kind 를 그대로 읽는다 — 재실행이 옛 판단을 이어받은 뒤 하나씩 새 판단으로
+        # 바꾸므로, 여기서 막으면 아직 안 바꾼 판단 때문에 첫 저장부터 실패한다. 정기 실행에 승계가 남는 것은
+        # validate.validate_scorecard 의 rejudge 정책 검사가 막는다(2026-10-08 설계 보완).
+        declared = rules["factors"][factor].get("judgment_kinds")
+        if declared and item["status"] == "new":
+            _require(kind in declared, f"{where}: 규칙 {rules.get('rule_version')} 의 {factor} 새 판단은 kind {sorted(declared)} 만 받는다 "
+                                       f"({kind!r}) — 이어받은 점수가 아니라 판정 입력으로 다시 매긴다")
         if item["status"] == "carried":
             _require(isinstance(item.get("carried_from"), str) and item["carried_from"], f"{where}: carried 판단은 carried_from 필요")
         _expect_date(item["reviewed_at"], f"{where}.reviewed_at")
@@ -1205,6 +1390,8 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
         else:
             _require(score is None, f"{where}: kind {kind!r} 판단의 score 는 null (자동 산출)")
         _validate_judgment_inputs(kind, item["inputs"], f"{where}.inputs")
+        if item["status"] == "new":
+            _validate_judgment_inputs_for_rules(kind, item["inputs"], rules["factors"][factor], f"{where}.inputs")
         if kind == "matrix":
             # 매트릭스 판단은 score 를 들지 않으므로 **입력이 가리키는 칸**의 점수를 range 와 대조한다(FIX-52).
             key = f"{item['inputs'].get('funding_dependent_share')}|{item['inputs'].get('own_money_returns')}"
@@ -1432,10 +1619,24 @@ PROPOSAL_ID_RE = re.compile(r"^PRP-\d{3}$")
 PROPOSAL_STATUSES = {"pending", "accepted", "rejected"}
 PROPOSAL_SNAPSHOT_KEYS = ("kind", "score", "inputs", "evidence")
 PROPOSAL_DIRECTION_AFTER = ("evidence_up_after", "evidence_down_after")
+# 2026-10-08 규칙 v2.0(rules.md 2.9): 다시 읽었으나 바꾸지 않은 판단의 재확인. judge·propose 의 changes 에
+# `{"reconfirmed": {"evidence_ids": [...]}}` 로 받고, 판단에는 `reconfirmed: [{at, by, evidence_ids}]` 로 쌓는다.
+RECONFIRM_KEY = "reconfirmed"
+
+
+def reconfirm_evidence_ids(value: Any, where: str = "reconfirmed") -> list[str]:
+    """재확인 요청의 근거 ID(순서 유지, 중복 제거). 모양이 틀리거나 비어 있으면 거부한다. 판단 수정과 제안이 같이 쓴다."""
+    _require(isinstance(value, dict) and set(value) == {"evidence_ids"},
+             f"{where}: {{\"evidence_ids\": [\"EV-…\", …]}} 모양이어야 한다 ({value!r})")
+    ids = value["evidence_ids"]
+    _require(isinstance(ids, list) and ids and all(isinstance(e, str) and e.strip().startswith("EV-") for e in ids),
+             f"{where}.evidence_ids: 다시 읽은 근거 ID(EV-…)가 하나 이상 있어야 한다 ({ids!r})")
+    return list(dict.fromkeys(e.strip() for e in ids))
 
 
 def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evidence_ids: set[str],
-                       run_id: str | None = None) -> list[dict[str, Any]]:
+                       run_id: str | None = None, rules: Any = None) -> list[dict[str, Any]]:
+    """`rules`(규칙 payload 또는 RuleSet)를 주면 제안 대상 factor 를 규칙 기준 edit kind 로 가린다(2026-10-08 규칙 v2.0 의 ②)."""
     items = _expect_top(payload, "scorecard.proposals/1", "proposals.json", run_id)
     seen: set[str] = set()
     for idx, item in enumerate(items):
@@ -1454,10 +1655,19 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         seen.add(pid)
         _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
         # 2026-10-06: 근거 문장만 바꾸는 제안(changes 없음)은 ②·⑥ 을 포함한 모든 항목이 대상이다.
-        _require(item["factor"] in JUDGMENT_EDIT_KIND or item["factor"] == SUMMARY_FACTOR
-                 or (item["factor"] in FACTOR_IDS and not item["changes"]),
+        # 2026-10-08: 재확인만 하는 제안(changes 가 reconfirmed 하나)도 모든 항목이 대상이다.
+        editable = (judgment_edit_kind(rules, item["factor"]) is not None if rules is not None
+                    else item["factor"] in JUDGMENT_EDIT_KIND)
+        _require(editable or item["factor"] == SUMMARY_FACTOR
+                 or (item["factor"] in FACTOR_IDS and not (set(item["changes"] or {}) - {RECONFIRM_KEY})),
                  f"{where}: {item['factor']!r} 는 제안 대상 factor 가 아니다")
         _require(isinstance(item["changes"], dict), f"{where}.changes 는 object")
+        if RECONFIRM_KEY in item["changes"]:
+            # 근거 ID 는 장부에 있어야 한다. 확정 여부는 반영할 때 교차 참조(validate_cross_refs)가 본다.
+            ids = reconfirm_evidence_ids(item["changes"][RECONFIRM_KEY], f"{where}.changes.{RECONFIRM_KEY}")
+            unknown = [e for e in ids if e not in evidence_ids]
+            _require(not unknown, f"{where}: 재확인 근거 {unknown} 가 evidence.json 에 없음")
+            _require(item["factor"] != SUMMARY_FACTOR, f"{where}: 기업 요약은 재확인하지 않는다")
         after = item["evidence_after"]
         if item["factor"] == SUMMARY_FACTOR:
             _require(not item["changes"] and isinstance(after, list) and len(after) == 1,
@@ -1471,7 +1681,8 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         _expect_str_list(item["evidence_ids"], f"{where}.evidence_ids")
         unknown = [e for e in item["evidence_ids"] if e not in evidence_ids]
         _require(not unknown, f"{where}: evidence.json 에 없는 evidence_ids {unknown}")
-        _expect_keys(item["before"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.before", optional=list(JUDGMENT_DIRECTION_FIELDS))
+        _expect_keys(item["before"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.before",
+                     optional=[*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY])
         _expect_str(item["proposed_by"], f"{where}.proposed_by", nonempty=True)
         _expect_date(item["proposed_at"], f"{where}.proposed_at")
         status = item["status"]
@@ -1488,7 +1699,7 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
             _require(status == "accepted", f"{where}.applied 는 반영된 제안에만 있다")
             _expect_keys(item["applied"], ["previous", "after"], f"{where}.applied")
             _expect_keys(item["applied"]["after"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.applied.after",
-                         optional=list(JUDGMENT_DIRECTION_FIELDS))
+                         optional=[*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY])
     return items
 
 
@@ -1511,6 +1722,12 @@ def validate_cross_refs(observations: list[dict[str, Any]], judgments: list[dict
             unconfirmed = [e for e in cited if ev_status[e] != "confirmed"]
             _require(not unconfirmed,
                      f"교차 참조: 새 판단 {j['judgment_id']} 가 확정되지 않은 근거 {unconfirmed} 를 인용 — confirmed 근거만 인용한다")
+        # 2026-10-08 규칙 v2.0: 재확인 기록이 가리키는 근거도 장부에 있고 확정된 것이어야 한다(다시 읽었다는 근거).
+        reread = [e for r in (j.get("reconfirmed") or []) for e in r["evidence_ids"]]
+        missing = [e for e in reread if e not in ev_status]
+        _require(not missing, f"교차 참조: {j['judgment_id']} 의 reconfirmed 근거 {missing} 가 evidence.json 에 없음")
+        unconfirmed = [e for e in reread if ev_status[e] != "confirmed"]
+        _require(not unconfirmed, f"교차 참조: {j['judgment_id']} 의 reconfirmed 가 확정되지 않은 근거 {unconfirmed} 를 가리킴")
 
 
 # ------------------------------------------------------------------ run / approval

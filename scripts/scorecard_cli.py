@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / judge / approve / revoke / status / resolve-cik
+# AI 기업 9-factor 채점(ai_scorecard) 단계 CLI: add-company / import-baseline / init / collect / research / calculate / draft / review-template / diff / summary / confirm / judge / propose / proposal / approve / revoke / status / resolve-cik
 """Usage:
   uv run --frozen python -X utf8 scripts/scorecard_cli.py add-company <company_id> --name "표시명" --type 업무 --scope "평가 범위" (--listed | --private) [--ticker NVDA --exchange NASDAQ] [--share-basis common|adr|ads|private] [--adr-ratio 5] [--currency USD] [--alias 별칭] [--reference] [--note "..."] [--status "..."] [--dry-run]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
@@ -15,7 +15,15 @@
   uv run --frozen python -X utf8 scripts/scorecard_cli.py sec-get <SEC 주소> [--json]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py summary <slug> --json
   uv run --frozen python -X utf8 scripts/scorecard_cli.py confirm <slug> [--evidence EV-a-001,EV-a-002] [--reject EV-a-003] [--by NAME] [--take-lock]
-  uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <slug> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json PATH) --reason "…" --by NAME [--take-lock]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <slug> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --up "…" --down "…" | --json PATH | --reconfirm EV-a,EV-b) --reason "…" --by NAME [--take-lock]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py propose <slug> --company <id> --factor F1..F9|SUMMARY (--set key=value … | --evidence "문장" … | --up "…" --down "…" | --json PATH | --reconfirm EV-a,EV-b) --reason "…" [--cite EV-…] [--by NAME]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py proposal <slug> (--id PRP-NNN | --all-pending) (--accept | --reject --note "…" | --undo) [--by NAME]
+
+judge·propose 의 판정 재료는 실행 규칙이 정한다. 규칙 v2.0 이상: F1 은 네 질문 입력(channel_*·loop·switching·substitutes·pricing·
+durability_discount·ai_monetized_in_channel·pricing_sustained_quarters), F2 는 세 경로 입력(performance_leap·paradigm_adaptation·
+standard_capture·top_rank·generation_gap·generation_gap_months·leap_independent), F3 는 acceleration_tier 와 --json 의
+acceleration_growth_rates(숫자 두 개), F7 은 매트릭스, F4·F8 은 score=N. 그 전 규칙: F1·F4·F8 은 score=N, F2 는 근거 문장만.
+--reconfirm 은 값을 그대로 두고 다시 읽은 확정 근거를 적어 새 판단으로 기록한다(reconfirmed, rules.md 2.9).
   uv run --frozen python -X utf8 scripts/scorecard_cli.py approve <slug> --by NAME [--note "..."] [--via browser|terminal]   (사람 셸에서만)
   uv run --frozen python -X utf8 scripts/scorecard_cli.py revoke <slug> --by NAME --note "..."                              (사람 셸에서만)
   uv run --frozen python -X utf8 scripts/scorecard_cli.py status <slug>
@@ -308,6 +316,7 @@ def cmd_judge(args: argparse.Namespace) -> int:
     if args.evidence:
         changes["evidence"] = list(args.evidence)
     changes.update(_direction_args(args, suffix=""))
+    changes.update(_reconfirm_arg(args))
     out = revise_judgment(args.slug, company_id=args.company, factor=args.factor, changes=changes, reason=args.reason, by=args.by)
     if agent:
         _claim(args, "judge")
@@ -321,9 +330,18 @@ def cmd_judge(args: argparse.Namespace) -> int:
         before, after = out["previous"].get(key), out["current"].get(key)
         if before != after:
             print(f"  {label}: {len(before) if before is not None else '없던 칸'}문장 → {len(after or [])}문장")
+    if "reconfirmed" in changes:
+        last = out["current"]["reconfirmed"][-1]
+        print(f"  재확인: {last['at']} {last['by']} — 근거 {', '.join(last['evidence_ids'])}")
     print(f"judgments 해시가 바뀌었다({out['judgments_hash'][:16]}…). 점수는 아직 그대로다 — research → calculate → draft → review 를 다시 돌린 뒤 승인한다: "
           f"uv run --frozen python -X utf8 scripts/scorecard_cli.py research {args.slug}")
     return 0
+
+
+def _reconfirm_arg(args: argparse.Namespace) -> dict[str, dict[str, list[str]]]:
+    """2026-10-08: `--reconfirm EV-a,EV-b` 를 재확인 요청으로 옮긴다. 빈 값(`--reconfirm ""`)도 넘겨 스키마가 거부하게 한다."""
+    value = getattr(args, "reconfirm", None)
+    return {} if value is None else {"reconfirmed": {"evidence_ids": _id_list(value)}}
 
 
 def _direction_args(args: argparse.Namespace, *, suffix: str) -> dict[str, list[str]]:
@@ -359,6 +377,7 @@ def cmd_propose(args: argparse.Namespace) -> int:
     if args.evidence:
         evidence_after = list(args.evidence)
     directions.update(_direction_args(args, suffix="_after"))
+    changes.update(_reconfirm_arg(args))
     out = add_proposal(args.slug, company_id=args.company, factor=args.factor, changes=changes, evidence_after=evidence_after,
                        reason=args.reason, evidence_ids=_id_list(args.cite), by=args.by,
                        evidence_up_after=directions.get("evidence_up_after"),
@@ -696,13 +715,18 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("slug")
     p.add_argument("--company", required=True)
     p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "SUMMARY"],
-                   help="F2·F6 은 근거 문장(--evidence)만 바꾼다. SUMMARY 는 기업 한 줄 요약(--evidence 문장 하나)")
-    p.add_argument("--set", action="append", help="바꿀 판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
+                   help="F6 은 근거 문장(--evidence)만 바꾼다. F2 는 규칙 v2.0 이상이면 세 경로 입력(paths), 그 전은 근거 문장만. "
+                        "SUMMARY 는 기업 한 줄 요약(--evidence 문장 하나)")
+    p.add_argument("--set", action="append",
+                   help="바꿀 판정 재료 key=value. 여러 번 준다. F1 은 규칙 v2.0 이상이면 네 질문 입력(loop=pass 등), 그 전은 score=N. "
+                        "F4·F8 은 score=N")
+    p.add_argument("--reconfirm", help="값을 그대로 두고 다시 읽은 확정 근거 ID(쉼표). 반영하면 재확인 기록을 남기고 새 판단으로 쓴다")
     p.add_argument("--evidence", action="append", help="반영 뒤 판정 칸 문장. 여러 번 주면 그 목록이 판정 칸 전체가 된다")
     p.add_argument("--up", action="append", help="반영 뒤 올릴 근거 칸 문장(여러 번). --up \"\" 만 주면 '없음'으로 비운다")
     p.add_argument("--down", action="append", help="반영 뒤 내릴 근거 칸 문장(여러 번). --down \"\" 만 주면 '없음'으로 비운다")
     p.add_argument("--json", help="{changes, evidence_after, evidence_up_after, evidence_down_after} JSON 파일"
-                                  "(--set·--evidence·--up·--down 이 덮어쓴다)")
+                                  "(--set·--evidence·--up·--down·--reconfirm 이 덮어쓴다). "
+                                  "changes 의 reconfirmed: {evidence_ids: [...]} 는 재확인이다")
     p.add_argument("--reason", required=True, help="제안 사유")
     p.add_argument("--cite", help="인용 근거 ID(쉼표). 반영하면 판단의 evidence_ids 에 더한다(확정 근거만)")
     p.add_argument("--by", help="제안자(기본 SCORECARD_AGENT 또는 사용자 이름)")
@@ -724,12 +748,16 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("slug")
     p.add_argument("--company", required=True)
     p.add_argument("--factor", required=True, choices=["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"])
-    p.add_argument("--set", action="append", help="판정 재료 key=value (F1·F4·F8 은 score=N). 여러 번 준다")
+    p.add_argument("--set", action="append",
+                   help="판정 재료 key=value. 여러 번 준다. F1 은 규칙 v2.0 이상이면 네 질문 입력(loop=pass 등), 그 전은 score=N. "
+                        "F2 는 v2.0 이상이면 세 경로 입력. F4·F8 은 score=N")
+    p.add_argument("--reconfirm", help="값을 그대로 두고 다시 읽은 확정 근거 ID(쉼표). 재확인 기록을 남기고 새 판단(status new)으로 쓴다")
     p.add_argument("--evidence", action="append", help="판정 칸 문장. 여러 번 주면 그 목록으로 통째 바꾼다")
     p.add_argument("--up", action="append", help="올릴 근거 칸 문장(여러 번). --up \"\" 만 주면 '없음'으로 비운다")
     p.add_argument("--down", action="append", help="내릴 근거 칸 문장(여러 번). --down \"\" 만 주면 '없음'으로 비운다")
-    p.add_argument("--json", help="고칠 값 {키: 값} JSON 파일. 세 칸은 evidence·evidence_up·evidence_down"
-                                  "(--set·--evidence·--up·--down 이 덮어쓴다)")
+    p.add_argument("--json", help="고칠 값 {키: 값} JSON 파일. 세 칸은 evidence·evidence_up·evidence_down, "
+                                  "재확인은 reconfirmed: {evidence_ids: [...]}, ③ 성장률 두 개는 acceleration_growth_rates"
+                                  "(--set·--evidence·--up·--down·--reconfirm 이 덮어쓴다)")
     p.add_argument("--reason", required=True, help="수정 사유(revision_history 에 남는다)")
     p.add_argument("--by", required=True, help="수정자. 승인 페이지는 사람 이름을 넣는다")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)

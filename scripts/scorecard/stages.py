@@ -24,8 +24,8 @@ from .evidence_lib import source_entry, upsert_sources, utc_now_iso
 from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
-from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_DIRECTION_FIELDS, JUDGMENT_EDIT_KIND,
-                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, PROPOSAL_DIRECTION_AFTER, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, load_json_strict,
+from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_CLI_ONLY_INPUTS, JUDGMENT_DIRECTION_FIELDS,
+                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, PROPOSAL_DIRECTION_AFTER, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, judgment_edit_kind, load_json_strict, reconfirm_evidence_ids,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
@@ -693,6 +693,17 @@ def research(slug: str, *, register: bool = True) -> Path:
     if register:
         register_evidence_sources(slug)
     ctx = load_context(slug)
+    # 2026-10-08 규칙 v2.0(rules.md 2.9): 정기 실행은 정성 판단 전부를 다시 매긴 뒤에 research 로 간다. 검사는 계약 검증과 같은
+    # 함수(validate.rejudge_findings)다. calculate 는 막지 않는다 — 이어받은 판단은 needs_judgment 로 미완료가 된다.
+    from .validate import is_regular_run, rejudge_findings
+    findings = rejudge_findings(ctx)
+    if findings:
+        ids = list(dict.fromkeys(jid for jid, _why in findings))
+        shown = ", ".join(ids[:30]) + (f" 외 {len(ids) - 30}건" if len(ids) > 30 else "")
+        head = ("정기 실행은 정성 판단 전부를 다시 매긴다(rules.md 2.9)" if is_regular_run(ctx.run)
+                else "기업 추가 실행은 더한 기업의 정성 판단을 새로 매긴다(rules.md 2.9)")
+        raise SchemaError(f"{head} — 다시 매기지 않은 판단 {len(ids)}건: {shown}. 첫 사유: {findings[0][1]}. "
+                          "판정 입력을 고치거나(judge·propose), 값을 그대로 두고 다시 읽었으면 --reconfirm EV-… 로 재확인한다")
     gaps = trigger_carry_gaps(ctx)
     if gaps:
         shown = "; ".join(f"{g['ref']} {g['title']}" for g in gaps[:10])
@@ -1084,37 +1095,59 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
 # 재계산이 수정을 지우고 입력과 점수가 갈라진다. 고치면 judgments 해시가 바뀌어 research → calculate → draft → review 를 다시 거친 뒤
 # 사람이 승인한다. 승인이 아니므로 에이전트도 부를 수 있고, reviewer 는 받은 이름(`by`)이다.
 
-def _check_judgment_changes(factor: str, changes: Mapping[str, Any]) -> str:
+def _check_judgment_changes(factor: str, changes: Mapping[str, Any], rules: Any = None) -> str:
     """판단 수정·제안이 받는 값의 형식 검사. 돌려주는 값은 판정 종류(edit kind)다. 2026-10-01 제안 흐름과 함께 쓰려고 뽑았다.
 
     2026-10-06: 근거 문장만 바꾸는 수정은 `evidence_only` 다. 판정 종류·점수·판정 재료·상태를 건드리지 않으므로 ②·⑥ 을
     포함한 모든 항목에 허용한다(근거를 완결된 현재 상태 문장으로 다시 쓰는 일, AGENTS.md 「금지·주의」).
 
     2026-10-07: 근거는 판정(evidence)·올릴 근거(evidence_up)·내릴 근거(evidence_down) 세 칸이다. 세 칸만 바꾸는 수정도
-    `evidence_only` 다. 방향 칸은 빈 목록(없음)을 허용한다."""
+    `evidence_only` 다. 방향 칸은 빈 목록(없음)을 허용한다.
+
+    2026-10-08 규칙 v2.0: edit kind 는 실행 규칙(`rules`, payload 또는 RuleSet)에서 정한다(`judgment_edit_kind`). ① lockin,
+    ② paths, ⑦ matrix 로 고치고, 이어받은 score 판단은 판정 재료를 다 주면 그 kind 로 바뀐다. 규칙을 주지 않으면 옛 표를 쓴다.
+
+    2026-10-08 재확인: `reconfirmed: {"evidence_ids": [...]}` 를 받는다. 그것만 있으면 `reconfirm` 을 돌려주고 모든 항목에
+    허용한다(값은 그대로 두고 새 판단으로 기록). 판정 재료·근거 문장과 함께 줄 수도 있고, 그때는 나머지 키로 kind 를 정한다."""
     text_keys = {"evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence"}
     if isinstance(changes, Mapping):
         _check_evidence_texts(changes)
         # 2026-10-07: counter_evidence 는 세 칸으로 옮긴 뒤 비우는 것만 받는다(규칙 v1.9 이상은 비어 있어야 한다).
         if "counter_evidence" in changes and changes["counter_evidence"] != []:
             raise SchemaError("counter_evidence 는 비우는 것([])만 받는다 — 반대 방향 사실은 --up·--down 칸에 쓴다")
+        if RECONFIRM_KEY in changes:
+            reconfirm_evidence_ids(changes[RECONFIRM_KEY], f"{factor} 재확인(--reconfirm)")
+            if factor not in FACTOR_IDS:
+                raise SchemaError(f"{factor} 는 판단 항목이 아니라 재확인하지 않는다")
+            changes = {k: v for k, v in changes.items() if k != RECONFIRM_KEY}
+            if not changes:
+                return "reconfirm"
     if isinstance(changes, Mapping) and changes and set(changes) <= text_keys and factor in FACTOR_IDS:
         return "evidence_only"
-    if factor not in JUDGMENT_EDIT_KIND:
-        raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {sorted(JUDGMENT_EDIT_KIND)})")
+    kind = judgment_edit_kind(rules, factor)
+    if kind is None:
+        editable = sorted(f for f in FACTOR_IDS if judgment_edit_kind(rules, f) is not None)
+        raise SchemaError(f"{factor} 판단은 승인 페이지에서 고치지 않는다(대상 {editable})")
     if not isinstance(changes, Mapping) or not changes:
-        raise SchemaError("고칠 값이 없다(--set key=value 또는 --evidence)")
-    kind = JUDGMENT_EDIT_KIND[factor]
-    allowed = ({"score"} if kind == "score" else set(JUDGMENT_INPUT_CHOICES[kind])) | text_keys
+        raise SchemaError("고칠 값이 없다(--set key=value, --evidence 또는 --reconfirm)")
+    # 2026-10-08: 선택 상자로 못 그리는 재료(③ 성장률 두 개)는 CLI 로만 받는다. 형식은 스키마가 본다.
+    cli_only = set(JUDGMENT_CLI_ONLY_INPUTS.get(kind, ()))
+    allowed = ({"score"} if kind == "score" else set(JUDGMENT_INPUT_CHOICES[kind]) | cli_only) | text_keys
     unknown = sorted(set(changes) - allowed)
     if "score" in unknown:
         raise SchemaError(f"{factor} 의 점수는 규칙이 판정 재료에서 계산한다 — 점수 칸은 고치지 않는다. 고칠 수 있는 것: {sorted(allowed)}")
     if unknown:
         raise SchemaError(f"{factor}({kind}) 에서 고칠 수 없는 키 {unknown}. 고칠 수 있는 것: {sorted(allowed)}")
     # 2026-10-01 V2-10: 허용값은 모두 문자열·정수다. 중첩 값이 스키마의 `in` 비교까지 가서 추적 출력으로 끝나지 않게 먼저 거른다.
-    bad_type = sorted(k for k, v in changes.items() if k not in text_keys and (isinstance(v, bool) or not isinstance(v, (str, int))))
+    bad_type = sorted(k for k, v in changes.items() if k not in text_keys and k not in cli_only
+                      and (isinstance(v, bool) or not isinstance(v, (str, int))))
     if bad_type:
         raise SchemaError(f"{factor} 의 값은 문자열이나 정수여야 한다: {bad_type}")
+    bad_list = sorted(k for k in cli_only if k in changes
+                      and not (isinstance(changes[k], list) and all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                                                                   for v in changes[k])))
+    if bad_list:
+        raise SchemaError(f"{factor} 의 {bad_list} 는 숫자 목록이어야 한다(예: [0.42, 0.55])")
     return kind
 
 
@@ -1136,12 +1169,21 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     F1·F4·F8 은 `score`·`evidence`, F3·F5·F7·F9 는 판정 재료(inputs 키)·`evidence` 만 받는다. 그 factor 들의 점수 칸은
     규칙이 계산하므로 받지 않는다. 형식은 쓰기 전에 스키마로 검증하고, 실행 전체 검증(교차 참조)이 실패하면 원래 파일로 되돌린다.
     `cite_evidence_ids` 는 판단의 `evidence_ids` 에 더할 근거다(2026-10-01 제안 반영). 새 판단이라 확정 근거만 받는다.
+
+    2026-10-08 재확인(rules.md 2.9): `changes` 에 `reconfirmed: {"evidence_ids": [...]}` 가 있으면 값이 그대로여도 거부하지
+    않고 판단의 `reconfirmed` 에 `{at, by, evidence_ids}` 를 덧붙이며 새 판단(status new·검토자·검토일)으로 기록한다.
+    근거는 확정 근거여야 한다(쓴 뒤 교차 참조가 막으면 되돌린다).
     """
     if not isinstance(by, str) or not by.strip():
         raise SchemaError("수정자(--by)는 비어 있지 않은 문자열이어야 한다")
     if not isinstance(reason, str) or not reason.strip():
         raise SchemaError("수정 사유(--reason)는 비어 있으면 안 된다")
-    kind = _check_judgment_changes(factor, changes)
+    # 2026-10-08 규칙 v2.0: 무엇으로 고치는지(edit kind)는 실행 규칙이 정한다.
+    run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
+    rules = load_rules(run["rule_version"])
+    kind = _check_judgment_changes(factor, changes, rules)
+    reconfirm = reconfirm_evidence_ids(changes[RECONFIRM_KEY]) if RECONFIRM_KEY in changes else None
+    changes = {k: v for k, v in changes.items() if k != RECONFIRM_KEY}
 
     protect_approved_run(slug, "판단 수정(judge)")
     path = run_dir(slug) / "judgments.json"
@@ -1156,8 +1198,10 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     previous.update({k: copy.deepcopy(item[k]) for k in JUDGMENT_DIRECTION_FIELDS if k in item})
     if "counter_evidence" in changes and item.get("counter_evidence"):
         previous["counter_evidence"] = copy.deepcopy(item["counter_evidence"])   # 비우기 전 내용은 이력에 남긴다
+    if RECONFIRM_KEY in item:
+        previous[RECONFIRM_KEY] = copy.deepcopy(item[RECONFIRM_KEY])   # 2026-10-08: 번복이 재확인 목록도 되돌린다
     new = dict(item)
-    if kind == "evidence_only":
+    if kind in ("evidence_only", "reconfirm"):
         # 2026-10-06: 근거 문장만 바꾼다. 판정 종류·점수·판정 재료·상태·검토자는 그대로라 승계 판단은 승계로 남는다
         # (승계 판단 예외·승계 점수 계산이 바뀌지 않는다). 바꾼 사실은 revision_history 에 남는다.
         pass
@@ -1166,6 +1210,7 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
             new["score"] = changes["score"]
     else:
         # F7 승계 항목 둘은 kind 가 score 다. 판정 재료를 고치면 matrix 로 바뀌고 점수는 규칙이 계산한다(키가 다 있어야 한다).
+        # 2026-10-08 규칙 v2.0: ① score → lockin, ② score → paths 도 같은 길이다. 옛 inputs 를 비우고 changes 로 채운다.
         inputs = dict(item["inputs"]) if item["kind"] == kind else {}
         inputs.update({k: v for k, v in changes.items() if k not in ("evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence")})
         new.update(kind=kind, score=None, inputs=inputs)
@@ -1174,9 +1219,9 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
             new[key] = [e.strip() for e in changes[key]]
     if cite_evidence_ids:
         new["evidence_ids"] = sorted({*(item.get("evidence_ids") or []), *cite_evidence_ids})
-    if all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence")):
-        raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다")
-    run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
+    # 2026-10-08: 재확인은 값이 그대로인 것이 정상이다. 재확인이 없을 때만 '바뀐 값이 없다' 로 거부한다.
+    if reconfirm is None and all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence")):
+        raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다(값을 그대로 두고 다시 읽었으면 --reconfirm 으로 재확인한다)")
     # 2026-10-07 사용자 지시: 규칙 v1.9 이상 실행은 근거를 세 칸으로 쓰는 시점에 막는다(검증기와 같은 기준).
     from .validate import THREE_WAY_MIN_RULE, _rule_at_least, three_way_item_violations
     if _rule_at_least(run["rule_version"], THREE_WAY_MIN_RULE):
@@ -1196,8 +1241,11 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
                               + (f" 외 {len(bad) - 5}건" if len(bad) > 5 else "")
                               + " (줄 끝에 [EV-…] 를 달고, 그 근거는 확정·URL·본문 발췌·locator 를 갖춘다. 기준은 guide.md 5.7)")
     revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
-    if kind != "evidence_only":
+    if kind != "evidence_only" or reconfirm is not None:
         new.update(status="new", reviewer=by.strip(), reviewed_at=revised_at)
+    if reconfirm is not None:
+        new[RECONFIRM_KEY] = [*copy.deepcopy(item.get(RECONFIRM_KEY) or []),
+                              {"at": revised_at, "by": by.strip(), "evidence_ids": reconfirm}]
     # 2026-10-01 V2-11: --by 는 확인할 수 없는 이름이다. 누가 고쳤는지 가리도록 세션 종류를 함께 남긴다.
     session = "agent" if agent_session_markers() else "human"
     new["revision_history"] = [*item.get("revision_history", []),
@@ -1205,7 +1253,7 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
                                 "session": session}]
     payload["items"][idx] = new
 
-    validate_judgments(payload, load_companies(), load_rules(run["rule_version"]).payload, slug)   # 쓰기 전에 형식 검증
+    validate_judgments(payload, load_companies(), rules.payload, slug)   # 쓰기 전에 형식 검증
     write_json(path, payload)
     try:
         load_context(slug)
@@ -1214,7 +1262,7 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         raise
     return {"judgment_id": new["judgment_id"], "company_id": company_id, "factor": factor, "kind": new["kind"],
             "previous": previous,
-            "current": {k: new.get(k) for k in (*JUDGMENT_REVISION_FIELDS, *JUDGMENT_DIRECTION_FIELDS) if k in new},
+            "current": {k: new.get(k) for k in (*JUDGMENT_REVISION_FIELDS, *JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY) if k in new},
             "judgments_hash": sha256_file(path)}
 
 
@@ -1227,7 +1275,16 @@ def _judgment_snapshot(j: Mapping[str, Any]) -> dict[str, Any]:
             "evidence": list(j.get("evidence") or [])}
     # 2026-10-07: 방향 칸이 있는 판단만 스냅숏에도 싣는다. 없던 판단의 옛 스냅숏(4키)과 비교가 그대로 맞는다.
     snap.update({k: list(j[k]) for k in JUDGMENT_DIRECTION_FIELDS if k in j})
+    # 2026-10-08: 재확인 기록이 있는 판단만 싣는다. 재확인은 값을 바꾸지 않으므로 이것이 없으면 제안의 '그사이 바뀜'·번복의
+    # '또 바뀜' 판정이 재확인을 놓친다. 재확인이 없던 판단의 옛 스냅숏과 비교는 그대로 맞는다.
+    if RECONFIRM_KEY in j:
+        snap[RECONFIRM_KEY] = copy.deepcopy(j[RECONFIRM_KEY])
     return snap
+
+
+def _run_rules(slug: str) -> Any:
+    """실행의 규칙(RuleSet). 2026-10-08: 제안·수정의 edit kind 를 규칙 기준으로 가리려고 둔다."""
+    return load_rules(validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)["rule_version"])
 
 
 def _load_proposals(slug: str) -> dict[str, Any]:
@@ -1236,7 +1293,7 @@ def _load_proposals(slug: str) -> dict[str, Any]:
         return {"schema": "scorecard.proposals/1", "run_id": slug, "items": []}
     payload = load_json_strict(paths.proposals)
     ev_ids = {e["evidence_id"] for e in load_json_strict(paths.evidence).get("items", [])} if paths.evidence.is_file() else set()
-    validate_proposals(payload, load_companies(), ev_ids, slug)
+    validate_proposals(payload, load_companies(), ev_ids, slug, rules=_run_rules(slug))
     return payload
 
 
@@ -1309,13 +1366,14 @@ def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[st
         evidence_after = [s.strip() for s in evidence_after]
     directions = {k: [s.strip() for s in v] for k, v in (("evidence_up", evidence_up_after), ("evidence_down", evidence_down_after))
                   if v is not None}
+    rules = _run_rules(slug)
     if factor == SUMMARY_FACTOR:
         # 2026-10-06: 기업 한 줄 요약 제안. 판정 재료 없이 요약 문장 하나만 받는다.
         if changes or directions or not evidence_after or len(evidence_after) != 1 or not evidence_after[0]:
             raise SchemaError("기업 요약 제안은 --set 없이 --evidence 로 요약 문장 하나만 준다")
     else:
         _check_judgment_changes(factor, {**changes, **({"evidence": evidence_after} if evidence_after is not None else {}),
-                                         **directions})
+                                         **directions}, rules)
     if not isinstance(reason, str) or not reason.strip():
         raise SchemaError("제안 사유(--reason)는 비어 있으면 안 된다")
     if factor == SUMMARY_FACTOR:
@@ -1344,7 +1402,7 @@ def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[st
     item.update({f"{k}_after": v for k, v in directions.items()})
     payload["items"].append(item)
     ev_ids = {e["evidence_id"] for e in load_json_strict(run_paths(slug).evidence).get("items", [])} if run_paths(slug).evidence.is_file() else set()
-    validate_proposals(payload, load_companies(), ev_ids, slug)
+    validate_proposals(payload, load_companies(), ev_ids, slug, rules=rules)
     write_json(run_paths(slug).proposals, payload)
     return item
 
@@ -1441,7 +1499,8 @@ def undo_proposal(slug: str, proposal_id: str, *, by: str | None = None, allow_a
         for k in JUDGMENT_REVISION_FIELDS:
             new[k] = copy.deepcopy(prev[k])
         # 2026-10-07: 방향 칸은 반영 전에 있었으면 되돌리고, 없었으면 지운다(옛 applied.previous 는 7키라 지운다).
-        for k in JUDGMENT_DIRECTION_FIELDS:
+        # 2026-10-08: 재확인 목록도 같은 규칙이다.
+        for k in (*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY):
             if k in prev:
                 new[k] = copy.deepcopy(prev[k])
             else:
@@ -1451,7 +1510,7 @@ def undo_proposal(slug: str, proposal_id: str, *, by: str | None = None, allow_a
         else:
             new["evidence_ids"] = list(prev["evidence_ids"])
         undone_from = {k: copy.deepcopy(cur.get(k)) for k in JUDGMENT_REVISION_FIELDS}
-        undone_from.update({k: copy.deepcopy(cur[k]) for k in JUDGMENT_DIRECTION_FIELDS if k in cur})
+        undone_from.update({k: copy.deepcopy(cur[k]) for k in (*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY) if k in cur})
         new["revision_history"] = [*cur.get("revision_history", []),
                                    {"revised_at": utc_now_iso()[:10], "revised_by": by, "reason": f"제안 {proposal_id} 번복",
                                     "previous": undone_from,
@@ -1476,9 +1535,11 @@ def _pairs(d: Mapping[str, Any] | None) -> list[dict[str, Any]]:
     return [{"key": k, "value": v} for k, v in (d or {}).items()]
 
 
-def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
-    """승인 페이지의 제안 절. 기업·판정 재료 이름을 키로 쓰지 않는다(요약 계약은 키 구조를 비교한다)."""
+def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]], rules: Any = None) -> list[dict[str, Any]]:
+    """승인 페이지의 제안 절. 기업·판정 재료 이름을 키로 쓰지 않는다(요약 계약은 키 구조를 비교한다).
+    2026-10-08: edit_kind 는 실행 규칙 기준이다(`judgment_edit_kind`)."""
     payload = _load_proposals(slug)
+    rules = rules if rules is not None else _run_rules(slug)
     if not payload["items"]:
         return []
     judgments = {(j["company_id"], j["factor"]): j for j in load_json_strict(run_dir(slug) / "judgments.json")["items"]}
@@ -1496,7 +1557,7 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]]) -> list[d
             "display_name": (registry.get(p["company_id"]) or {}).get("display_name") or p["company_id"],
             "factor": p["factor"],
             "edit_kind": ("summary" if p["factor"] == SUMMARY_FACTOR
-                          else "evidence_only" if not p["changes"] else JUDGMENT_EDIT_KIND[p["factor"]]),
+                          else "evidence_only" if not p["changes"] else judgment_edit_kind(rules, p["factor"])),
             "changes": _pairs(p["changes"]),
             "evidence_after": p["evidence_after"],
             # 2026-10-07: 올릴·내릴 근거 칸. null 이면 그 칸을 바꾸지 않는 제안이다.
@@ -1602,7 +1663,8 @@ def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
             "status": j["status"],
             "reviewer": j["reviewer"],
             "reviewed_at": j["reviewed_at"],
-            "edit_kind": JUDGMENT_EDIT_KIND.get(j["factor"]),
+            # 2026-10-08 규칙 v2.0: 규칙 기준 edit kind(① lockin·② paths·⑦ matrix). 승인 페이지가 입력란을 고른다.
+            "edit_kind": judgment_edit_kind(rules, j["factor"]),
             "revisions": len(j.get("revision_history") or []),
             # 2026-10-01 V2-11: 마지막 수정이 에이전트 세션이었는지. 이력이 없거나 기록 전 수정이면 null.
             "last_revision_session": ((j.get("revision_history") or [{}])[-1]).get("session"),
@@ -1634,6 +1696,7 @@ def summary(slug: str) -> dict[str, Any]:
     evidence = load_json_strict(paths.evidence).get("items", []) if paths.evidence.is_file() else []
     triggers = load_json_strict(paths.triggers).get("items", []) if paths.triggers.is_file() else []
     registry = load_companies()
+    rules = load_rules(run["rule_version"])
     hashes = current_hashes(slug)
     if approval_file_present(paths.run_dir):
         approval = load_json_strict(paths.run_dir / "approval.json")
@@ -1667,9 +1730,11 @@ def summary(slug: str) -> dict[str, Any]:
         "company_names": [{"company_id": cid, "display_name": (registry.get(cid) or {}).get("display_name") or cid}
                           for cid in run["companies"]],
         "pending_rule_decisions": list((results or {}).get("pending_rule_decisions", [])),
-        "judgments": _summary_judgments(slug, load_rules(run["rule_version"])),
-        "proposals": _summary_proposals(slug, registry),
+        "judgments": _summary_judgments(slug, rules),
+        "proposals": _summary_proposals(slug, registry, rules),
         "judgment_choices": copy.deepcopy(JUDGMENT_INPUT_CHOICES),
+        # 2026-10-08 규칙 v2.0: 항목 이름은 규칙이 정한다(① 이 '락인과 가격결정력' 으로 바뀌었다). 승인 페이지가 읽는다.
+        "factor_labels": {fid: rules.payload["factors"][fid]["label"] for fid in FACTOR_IDS},
         "hashes": hashes,
         "approval": approval_out,
         "approval_ready": _approval_readiness(slug),

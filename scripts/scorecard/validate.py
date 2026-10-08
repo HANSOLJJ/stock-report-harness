@@ -228,6 +228,48 @@ def citation_violations(ctx: Any) -> list[str]:
     return [f"{j['judgment_id']} {why}" for j in ctx.judgments for why in citation_item_violations(j, evidence, urls)]
 
 
+# 2026-10-08 사용자 결정(규칙 v2.0 policies.rejudge, rules.md 2.9): 정기 실행은 정성 판단 일곱 항목을 모든 기업에 대해 그 실행의
+# 근거로 다시 매긴다. 승계(status: carried)는 기업 추가 실행의 기존 기업에만 남는다. 정책이 없는 규칙(v1.9 이하)은 보지 않는다.
+# 판단을 고치는 단계(init·judge·propose·proposal)는 막지 않고, 이 검사가 계약 검증(리뷰·승인·빌드)에서 막는다.
+def is_regular_run(run: Mapping[str, Any]) -> bool:
+    """정기 실행인가. 이어받지 않았거나(continued_from 없음) 이어받았어도 더한 기업이 없으면 정기 실행이다."""
+    cont = run.get("continued_from")
+    return not cont or not cont.get("added_companies")
+
+
+def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
+    """rejudge 정책 위반을 (판단 ID, 사유) 로 돌려준다. 정기 실행은 모든 기업, 기업 추가 실행은 더한 기업의 정성 판단만 본다.
+    계약 검증(validate_scorecard)과 research 단계(stages.research)가 이 함수를 같이 부른다(2026-10-08)."""
+    policy = ctx.rules.payload["policies"].get("rejudge")
+    if not policy:
+        return []
+    factors = set(policy.get("qualitative_factors") or [])
+    cont = ctx.run.get("continued_from") or {}
+    added = set(cont.get("added_companies") or [])
+    regular = is_regular_run(ctx.run)
+    prior_as_of = cont.get("as_of")
+    out: list[tuple[str, str]] = []
+    for j in ctx.judgments:
+        if j["factor"] not in factors or not (regular or j["company_id"] in added):
+            continue
+        if policy.get("carried_allowed_only_in_extend_runs") and j["status"] == "carried":
+            where = "정기 실행" if regular else "기업 추가 실행의 신규 기업"
+            out.append((j["judgment_id"], f"{where}에 승계 판단(status: carried)이 남아 있다 — 이번 실행의 근거로 다시 매긴다"))
+            continue
+        if prior_as_of and policy.get("reviewed_at_after_prior_as_of"):
+            reconfirmed = (j.get("reconfirmed") or [{}])[-1].get("at")
+            if max(d for d in (j["reviewed_at"], reconfirmed) if d) <= prior_as_of:
+                out.append((j["judgment_id"], f"이번 실행에서 다시 매기지 않은 판단 — 검토일 {j['reviewed_at']}"
+                            + (f"·재확인 {reconfirmed}" if reconfirmed else "")
+                            + f" 이 이전 실행 기준일 {prior_as_of} 보다 뒤가 아니다"))
+    return out
+
+
+def rejudge_violations(ctx: Any) -> list[str]:
+    """rejudge 정책 위반 목록(`판단 ID: 사유`)."""
+    return [f"{jid}: {why}" for jid, why in rejudge_findings(ctx)]
+
+
 def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_present: bool = True, result: Any) -> Any:
     paths = run_paths(slug)
     d = paths.run_dir
@@ -289,6 +331,19 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"원문 근거와 이어지지 않는 줄이 {len(bad) - 20}건 더 있다")
         if not bad:
             result.check("judgment direction lines cite source evidence")
+
+    # 정기 실행 재판단 -------------------------------------------------------
+    rejudge = ctx.rules.payload["policies"].get("rejudge")
+    regular_run = is_regular_run(ctx.run)
+    if rejudge:
+        bad = rejudge_violations(ctx)
+        for line in bad[:20]:
+            result.error(f"정기 실행은 정성 판단을 모두 다시 매긴다(rules.md 2.9) — {line}")
+        if len(bad) > 20:
+            result.error(f"다시 매기지 않은 정성 판단이 {len(bad) - 20}건 더 있다")
+        if not bad:
+            result.check("rejudge policy: all qualitative judgments are new for this run" if regular_run else
+                         "rejudge policy: added companies' qualitative judgments are new for this run")
 
     # 자료 원천 allowlist --------------------------------------------------
     check_source_allowlist(ctx.rules, ctx.sources, result)
@@ -405,6 +460,9 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"체크리스트 {qid} 결과 {res!r} 는 pass/fail/not_applicable 이어야 함")
         if status == "pass" and res == "fail":
             excepted, cited, why = _carried_exception(basis, tensions)
+            if excepted and rejudge and rejudge.get("review_carried_exception_only_in_extend_runs") and regular_run:
+                # 2026-10-08 사용자 결정(rules.md 2.9): 승계 판단 예외는 기업 추가 실행에만 있다. 정기 실행의 fail 은 막는다.
+                excepted, why = False, "정기 실행에는 승계 판단 예외를 적용하지 않는다(rules.md 2.9)"
             if excepted:
                 # **조용히 넘어가지 않는다.** 예외로 통과한 것을 세어 경고로 남긴다.
                 carried.append(f"{qid}({'·'.join(cited)})")

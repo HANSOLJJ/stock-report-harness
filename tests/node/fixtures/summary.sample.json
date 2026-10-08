@@ -234,7 +234,29 @@
       "imitation": ["pass", "partial", "fail", "unknown"],
       "revenue_model": ["pass", "partial", "fail", "unknown"],
       "acceleration": ["pass", "partial", "fail", "unknown"],
-      "door_closed": ["pass", "fail", "unknown"]
+      "door_closed": ["pass", "fail", "unknown"],
+      "acceleration_tier": ["a", "b", "c", "d", "e"]
+    },
+    "lockin": {
+      "channel_consumer": ["yes", "no"],
+      "channel_work": ["yes", "no"],
+      "channel_trade": ["yes", "no"],
+      "loop": ["pass", "partial", "fail", "unknown"],
+      "switching": ["pass", "partial", "fail", "unknown"],
+      "substitutes": ["pass", "partial", "fail", "unknown"],
+      "pricing": ["pass", "partial", "fail", "unknown"],
+      "durability_discount": ["yes", "no", "unknown"],
+      "ai_monetized_in_channel": ["yes", "partial", "no", "unknown"],
+      "pricing_sustained_quarters": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+    },
+    "paths": {
+      "performance_leap": ["pass", "partial", "fail", "unknown"],
+      "paradigm_adaptation": ["pass", "partial", "fail", "unknown"],
+      "standard_capture": ["pass", "partial", "fail", "unknown"],
+      "top_rank": ["yes", "no", "unknown"],
+      "generation_gap": ["yes", "no", "unknown"],
+      "leap_independent": ["yes", "no", "unknown"],
+      "generation_gap_months": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]
     },
     "grade": {
       "A": [0, 1, 2],
@@ -253,6 +275,17 @@
       "coverage_comparable": ["yes", "no", "unknown"],
       "operating_result_reviewed": ["profit", "loss", "unknown"]
     }
+  },
+  "factor_labels": {
+    "F1": "① 네트워크 효과",
+    "F2": "② 신기술 게임체인저",
+    "F3": "③ Last Mover",
+    "F4": "④ 호황 이후 비전",
+    "F5": "⑤ 아군 확보",
+    "F6": "⑥ 가격",
+    "F7": "⑦ 순환금융",
+    "F8": "⑧ 비대칭 의존",
+    "F9": "⑨ 적자 깊이"
   },
   "proposals": [
     {
