@@ -254,6 +254,25 @@ class ContinueWithEvidenceTest(FlowBase):
         f1 = next(c for c in results["companies"] if c["company_id"] == "nvidia")["factors"]["F1"]
         self.assertEqual(f1["score"], 1)
 
+    def test_confirmed_and_text_cited_evidence_move_too(self):
+        # 2026-10-08: 확정된 근거는 인용 여부와 무관하게, 후보는 올릴·내릴 근거의 [EV-…] 표지가 가리키면 옮긴다.
+        # 10월 재채점을 이어받은 실행에 근거가 56건만 옮겨져 표지 570건이 끊기고 새 번호가 옛 번호와 겹쳤다.
+        ev_payload = load_json_strict(self.paths.evidence)   # setUp 이 쓴 001(확정)·002(후보) 뒤에 003 을 덧붙인다
+        ev_payload["items"].append(self.evidence_item("EV-nvidia-003", title="표지로만 인용된 후보"))
+        write_json(self.paths.evidence, ev_payload)
+        stages.confirm(SLUG, evidence_ids=["EV-nvidia-002"], reviewer="사람")   # 확정됐지만 아무 판단도 인용하지 않는다
+        jp = self.box.run_dir / "judgments.json"
+        payload = load_json_strict(jp)
+        for j in payload["items"]:
+            if (j["company_id"], j["factor"]) == ("nvidia", "F1"):
+                j["evidence_up"] = ["올릴 근거 문장. [EV-nvidia-003]"]
+                j["evidence_down"] = []
+        write_json(jp, payload)
+        stages.init_run(self.NEW, from_run=SLUG, title="이어받기")
+        ev = load_json_strict(engine.run_dir(self.NEW) / "evidence" / "evidence.json")
+        self.assertEqual(sorted((e["evidence_id"], e["status"]) for e in ev["items"]),
+                         [("EV-nvidia-001", "confirmed"), ("EV-nvidia-002", "confirmed"), ("EV-nvidia-003", "candidate")])
+
     def test_broken_cross_reference_stops_init_and_writes_nothing(self):
         write_json(self.paths.evidence, {"schema": "scorecard.evidence/1", "run_id": SLUG, "items": []})
         with self.assertRaisesRegex(SchemaError, "init --from-run .*교차 참조.*EV-nvidia-001"):

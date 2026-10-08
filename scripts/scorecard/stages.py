@@ -152,9 +152,16 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         triggers = {**prior_trg, "run_id": slug, "items": items} if items else None
     cited = {e for j in judgments["items"] for e in (j.get("evidence_ids") or [])}
     cited |= {e for t in (triggers or {}).get("items", []) for e in (t.get("evidence_ids") or [])}
+    # 2026-10-08: 올릴·내릴 근거 문장 끝의 [EV-…] 표지가 가리키는 근거도 옮긴다. 세 칸·표지(2026-10-07)가 들어온 뒤 판단은
+    # evidence_ids 칸보다 표지로 훨씬 많은 근거를 인용하는데(10월 재채점 570건 대 56건) 칸만 보고 옮겨 다음 실행에서
+    # 표지 검사가 깨지고 새 근거 번호가 옛 번호와 겹쳤다. 확정된 근거는 인용 여부와 무관하게 전부 옮긴다 — 다음 실행의
+    # 판단이 다시 인용할 지식이고, 빠지면 번호가 겹친다. 후보(candidate)는 인용된 것만 옮긴다.
+    from .validate import cited_ids
+    cited |= {e for j in judgments["items"] for key in JUDGMENT_DIRECTION_FIELDS for line in (j.get(key) or []) for e in cited_ids(line)}
     if prior_paths.evidence.is_file():
         prior_ev = load_json_strict(prior_paths.evidence)
-        items = [e for e in prior_ev.get("items", []) if e.get("evidence_id") in cited]
+        items = [e for e in prior_ev.get("items", [])
+                 if e.get("company_id") in selected and (e.get("evidence_id") in cited or e.get("status") == "confirmed")]
         evidence = {**prior_ev, "run_id": slug, "items": items} if items else None
 
     hashes = input_hashes(prior_slug)
