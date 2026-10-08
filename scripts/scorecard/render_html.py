@@ -738,7 +738,8 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
     input_judged = [(c, fid, fr) for c, fid, fr in computed if fr.get("judgment_id") and (c["company_id"], fid) in by_pair]
     if rejudge and input_judged:
         inherited = sum(1 for c, fid, _fr in input_judged if by_pair[(c["company_id"], fid)].get("status") == "carried")
-        lines.append(f"관측 계산 칸 가운데 {esc(per_factor(input_judged))} {len(input_judged)}칸은 게이트 판정 입력을 판단으로 함께 받고, "
+        symbols = "·".join(SHORT[fid] for fid in FACTOR_IDS if any(f == fid for _c, f, _fr in input_judged))
+        lines.append(f"관측 계산 칸 가운데 {esc(symbols)} {len(input_judged)}칸은 게이트 판정 입력을 판단으로 함께 받고, "
                      f"그 판단의 검토일은 {esc(dates(input_judged))} 이다"
                      + (f". 그중 {inherited}칸은 이전 실행의 판단을 그대로 이어받았고 재판단 범위 밖이다." if inherited else "(재판단 범위 밖이다)."))
     if prev:

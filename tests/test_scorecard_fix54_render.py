@@ -98,7 +98,9 @@ class SharedRenderTest(unittest.TestCase):
 
     def test_notice_817_no_longer_calls_everything_past_record(self):
         self.assertNotIn("원문을 그대로 옮긴 과거 기록이며", self.html)
-        self.assertIn(rc.inline_html(rc.card_evidence_note("v1.5", html=True)), self.html)
+        # 2026-10-09: 기업 요약이 없는 실행은 "한 줄 요약은 … 기업 요약이다" 문장을 싣지 않는다
+        note = rc.card_evidence_note("v1.5", html=True, has_summaries=bool(getattr(self.ctx, "company_summaries", None)))
+        self.assertIn(rc.inline_html(note), self.html)
 
     # ---------------------------------------------------------------- S4 judgment_id 로 찾기
     def test_auto_f6_does_not_borrow_carried_judgment_header(self):

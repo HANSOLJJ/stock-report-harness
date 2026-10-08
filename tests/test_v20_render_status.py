@@ -99,12 +99,13 @@ class RejudgeStatusTest(unittest.TestCase):
                      and c["factors"]["F9"].get("judgment_id"))
         self.assertGreater(n_gate, 0)
         _attrs, body = box(with_prior(self.ctx, PRIOR_AS_OF), self.results)
-        self.assertIn(f"⑨{n_gate} {n_gate}칸은 게이트 판정 입력을 판단으로 함께 받고, 그 판단의 검토일은 2026-10-09 이다(재판단 범위 밖이다).", body)
+        self.assertIn(f"⑨ {n_gate}칸은 게이트 판정 입력을 판단으로 함께 받고, 그 판단의 검토일은 2026-10-09 이다(재판단 범위 밖이다).", body)
         self.assertNotIn("이어받았고", body)
+        self.assertNotIn(f"⑨{n_gate}", body)
         # 이어받은 ⑨ 판단이 있으면 그 수를 따로 적고 검토일 범위가 넓어진다
         ctx = edit(with_prior(self.ctx, PRIOR_AS_OF), ("alphabet", "F9"), status="carried", reviewed_at="2026-09-02")
         _attrs, body = box(ctx, self.results)
-        self.assertIn(f"⑨{n_gate} {n_gate}칸은 게이트 판정 입력을 판단으로 함께 받고, 그 판단의 검토일은 2026-09-02 ~ 2026-10-09 이다. "
+        self.assertIn(f"⑨ {n_gate}칸은 게이트 판정 입력을 판단으로 함께 받고, 그 판단의 검토일은 2026-09-02 ~ 2026-10-09 이다. "
                       "그중 1칸은 이전 실행의 판단을 그대로 이어받았고 재판단 범위 밖이다.", body)
         self.assertIn("모두 이번 실행에서 매겼다", body)
 
