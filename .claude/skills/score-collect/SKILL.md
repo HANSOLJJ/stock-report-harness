@@ -5,7 +5,7 @@ description: scorecard 실행의 근거 후보(뉴스·공시·가격)를 수집
 
 # 채점 근거 수집 스킬
 
-실행 하나의 근거 후보(뉴스·공시·가격)를 모으고, factor 와 관련 있는 것만 `evidence/evidence.json` 에 후보(`candidate`)로 올린다. 점수와 판단은 이 단계에서 바꾸지 않는다. 후보를 확정(`confirmed`)하는 것은 사람이며, 승인 페이지에서 한다.
+실행 하나의 근거 후보(뉴스·공시·가격)를 모으고, factor 와 관련 있는 것만 `evidence/evidence.json` 에 후보(`candidate`)로 올린다. 점수와 판단은 이 단계에서 바꾸지 않는다. 후보를 확정(`confirmed`)하는 것은 에이전트이며, 원문을 확인한 뒤 `confirm` 으로 한다(2026-10-07 사용자 지시: 사람은 최종 승인만 한다). 사람도 승인 페이지에서 확정할 수 있다.
 
 ```
 collect → 후보 선별(evidence.json) → triggers.json → research
@@ -72,7 +72,7 @@ collect → 후보 선별(evidence.json) → triggers.json → research
 - URL 을 조작하지 않는다. URL 이 없으면 `url: null` 로 두고, 검색·제공자 폴백 URL 을 쓴 경우 `url_is_fallback: true` 를 표시한다.
 - 수집이 차단되거나 실패하면 누락된 자료를 정확히 명시한다. 조용히 다른 자료·기간·지표로 대체하지 않는다.
 - 사실과 추론을 분리한다. 원문에서 확인한 내용은 사실로, 우리가 해석한 내용은 추론으로 표시한다.
-- 사람이 `confirmed` 로 올리기 전까지 `status: new` 판단이 `candidate` 근거를 인용하지 않는다.
+- 원문을 확인해 `confirmed` 로 올리기 전까지 `status: new` 판단이 `candidate` 근거를 인용하지 않는다.
 - `not_disclosed`(발행사가 공시하지 않음을 확인)와 `unverified`(우리가 찾지 못함)를 구분한다. 어느 쪽인지 모르면 `unverified` 로 둔다.
 - 기사 본문을 가져오지 않는다. 제목·요약·URL 만 다룬다.
 - 다른 기업의 점수를 근거로 인용하지 않는다.

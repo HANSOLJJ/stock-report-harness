@@ -44,7 +44,7 @@
 | `run.json` `observations.json` `judgments.json` `sources.json` | `init` | 실행 설정과 입력(원자료·판단·출처) |
 | `plan.md` | `init` | 실행 계획 (생성물) |
 | `evidence/candidates.json` | `collect` | 수집한 근거 후보 (뉴스·공시) |
-| `evidence/evidence.json` | 에이전트 선별 → 사람 확정 | 근거. `status: candidate` 로 올라오고 사람이 `confirmed` 로 바꾼다 |
+| `evidence/evidence.json` | 에이전트 선별 → 에이전트 확정(`confirm`) | 근거. `status: candidate` 로 올라오고 에이전트가 원문을 확인한 뒤 `confirmed` 로 바꾼다. 사람도 승인 페이지에서 바꿀 수 있다 |
 | `triggers.json` | 에이전트 선별 | 재채점 조건. 미래 점수를 저장하지 않는다(C-14) |
 | `research.md` | `research` | 입력 검증 결과와 미결 항목 |
 | `results.json` `preview.md` | `calculate` | 점수와 기준선 대비 미리보기 |
@@ -64,7 +64,7 @@
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
-| 근거 | evidence/evidence.json items | evidence_id(`EV-<company_id>-NNN`), company_id, factors, kind(news / filing), source_id, published_at_utc, title, excerpt(600자 이하), relevance(추론), channel(disclosure / press / company_statement / secondary), conditional_impact(점수 이동 금지), horizon, counter_evidence, unverified, change_vs_previous, status(candidate / confirmed), reviewer·reviewed_at(confirmed 는 필수) |
+| 근거 | evidence/evidence.json items | evidence_id(`EV-<company_id>-NNN`), company_id, factors, kind(news / filing), source_id, published_at_utc, title, excerpt(600자 이하), relevance(추론), channel(disclosure / press / company_statement / secondary), conditional_impact(점수 이동 금지), horizon, counter_evidence, unverified, change_vs_previous, status(candidate / confirmed), reviewer·reviewed_at(confirmed 는 필수), locator(선택: 원문 안 인용 위치. 규칙 v1.9 이상에서 표지 `[EV-…]` 가 가리키는 근거는 필수) |
 | 트리거 | triggers.json items | trigger_id(`TRG-NNN`), company_id, factors, observation, condition, deadline, evidence_ids, source_ids, status(watching / fired / expired / withdrawn), recheck{factors, what}. 점수처럼 보이는 키는 거부한다(C-14) |
 | 자료 확보 현황 | data_availability.json (선택) | schema, surveyed_at, scope, required_quarters, companies_with_full_quarters, headline, score_effect, not_re_surveyed, collection_note, materials[], companies[{company_id, quarter_ends, secured_quarters, missing, survey}], surveys{}, sources[], cautions[], references[] |
 

@@ -320,7 +320,7 @@ flowchart TD
 | --- | --- |
 | `output/<run_id>/` 의 md·html | 아니요. 생성물입니다 |
 | `judgments.json` | 승인 페이지 또는 `judge`·`proposal` 명령으로만 |
-| `evidence.json`, `triggers.json` | 에이전트가 선별 단계에서 작성, 확정은 승인 페이지 |
+| `evidence.json`, `triggers.json` | 에이전트가 선별 단계에서 작성, 근거 확정은 에이전트가 `confirm` 으로(사람도 승인 페이지 4절에서 가능) |
 | `approval.json`, `scorecard/history.csv`, 기준선 | 아니요. 훅이 막습니다 |
 
 ## 8. 자주 막히는 곳
