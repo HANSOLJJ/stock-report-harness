@@ -14,7 +14,7 @@ from scorecard.render_html import TABS, js, load_availability, render_document  
 
 SLUGS = ("ai-scorecard-2026-09-obsreg", "ai-scorecard-2026-10-rescore")
 MARKERS = {
-    "tab-summary": ('id="kpis"', 'id="mainTable"'),
+    "tab-summary": ('id="kpis"', 'id="judgment-status"', 'id="mainTable"'),
     "tab-companies": ('class="cards"', 'id="card-'),
     "tab-raw": ("지표 원자료",),
     "tab-triggers": ("다음 재채점 트리거",),
@@ -121,6 +121,26 @@ class ReportTabsTest(unittest.TestCase):
         for slug, html in self.html.items():
             with self.subTest(slug=slug):
                 self.assertNotIn("<b>이해상충 고지</b>", html)
+
+    def test_judgment_status_box_counts_match_results(self):
+        # 2026-10-08 사용자 결정: 첫 화면에 "이 점수는 언제 매겨졌나" 상자. 이어받은 칸 수가 results 와 같고,
+        # 이전 실행이 있는 실행에만 "지난 실행 대비" 줄이 붙는다
+        for slug, html in self.html.items():
+            with self.subTest(slug=slug):
+                box = re.search(r'<div class="notice info" id="judgment-status"([^>]*)>(.*?)</div>', html, re.S)
+                self.assertIsNotNone(box, "판단 현황 상자 없음")
+                attrs, body = box.group(1), box.group(2)
+                results = engine.load_results(slug)
+                cells = [c["factors"][f] for c in results["companies"] if not c["reference"] for f in c["factors"]]
+                carried = sum(1 for fr in cells if fr["status"] == "carried_score")
+                self.assertIn(f'data-carried="{carried}"', attrs)
+                self.assertIn(f'data-total="{len(cells)}"', attrs)
+                self.assertIn("이어받았다" if carried else "모두 이번 실행에서 매겼다", body)
+                has_prev = bool((engine.load_context(slug).run.get("continued_from") or {}).get("run_id"))
+                self.assertEqual("지난 실행(기준일" in body, has_prev)
+                # 숫자만 남은 칸(② 경로 입력 없음)이 있으면 그 사실을 적는다
+                if any(fr.get("basis") == "carried" for fr in cells):
+                    self.assertIn("점수 숫자만 기록돼 있어", body)
 
     def test_draft_notes_of_a_factor_without_evidence_get_their_own_header(self):
         from scorecard.render_md import render_draft

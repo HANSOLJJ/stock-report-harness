@@ -470,6 +470,13 @@ def _validate_html(slug: str, html_path: Path, results: dict[str, Any], require_
         if f'data-company="{row["company_id"]}"' not in text:
             result.error(f"HTML 순위표에 {row['company_id']} 행 없음")
             break
+    # 2026-10-08 사용자 결정: 첫 화면의 판단 현황 상자가 있고, 이어받은(carried_score) 칸 수가 results 와 같아야 한다.
+    carried_cells = sum(1 for c in results["companies"] if not c["reference"]
+                        for fid in c["factors"] if c["factors"][fid]["status"] == "carried_score")
+    if 'id="judgment-status"' not in text:
+        result.error("HTML 첫 화면에 판단 현황 상자(id=judgment-status) 없음")
+    elif f'data-carried="{carried_cells}"' not in text:
+        result.error(f"HTML 판단 현황 상자의 이어받은 칸 수가 results 와 다름 (results {carried_cells}칸)")
     result.check("HTML exists, marker-free, bound to results")
 
 

@@ -651,6 +651,77 @@ def render_kpis(results: dict[str, Any]) -> str:
     ])
 
 
+def _previous_results(ctx: Any) -> dict[str, Any] | None:
+    """`run.json.continued_from` 가 가리키는 이전 실행의 results. 없거나 열 수 없으면 None 이고 비교 줄을 생략한다."""
+    prev = (ctx.run.get("continued_from") or {}).get("run_id")
+    if not prev or not (run_dir(prev) / "results.json").is_file():
+        return None
+    try:
+        return load_results(prev)
+    except (SchemaError, OSError, ValueError):
+        return None
+
+
+def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
+    """첫 화면 상자 — 이 점수들이 언제 매겨졌는지.
+
+    2026-10-08 사용자 결정: 10월 재채점 126칸 중 87칸이 9월 2일 판단을 그대로 이어받았는데 리포트 어디에도 그 합계가 없었다.
+    칸마다 붙은 승계 표시로는 "대부분 지난 판단"이라는 사실이 읽히지 않는다. 이어받은 칸 수와 검토일, 이번 실행에서 새로 매긴 칸,
+    지난 실행 대비 바뀐 칸, 리뷰가 승계 예외로 넘긴 미해결 쟁점을 한 상자에 적는다. data-* 값은 검증기가 results 와 대조한다.
+    """
+    cells = [(c, fid, c["factors"][fid]) for c in results["companies"] if not c["reference"] for fid in FACTOR_IDS]
+    carried = [(c, fid, fr) for c, fid, fr in cells if fr["status"] == "carried_score"]
+    computed = [(c, fid, fr) for c, fid, fr in cells if fr["status"] == "ok" and fr.get("basis") == "computed"]
+    judged = [(c, fid, fr) for c, fid, fr in cells if fr["status"] == "ok" and fr.get("basis") != "computed"]
+    unscored = len(cells) - len(carried) - len(computed) - len(judged)
+    by_pair = {(j["company_id"], j["factor"]): j for j in ctx.judgments}
+
+    def dates(group: list[tuple[dict[str, Any], str, dict[str, Any]]]) -> str:
+        ds = sorted({str(by_pair[(c["company_id"], fid)].get("reviewed_at") or "") for c, fid, _fr in group if (c["company_id"], fid) in by_pair} - {""})
+        return "" if not ds else (ds[0] if len(ds) == 1 else f"{ds[0]} ~ {ds[-1]}")
+
+    def per_factor(group: list[tuple[dict[str, Any], str, dict[str, Any]]]) -> str:
+        n = {fid: sum(1 for _c, f, _fr in group if f == fid) for fid in FACTOR_IDS}
+        return " ".join(f"{SHORT[fid]}{n[fid]}" for fid in FACTOR_IDS if n[fid])
+
+    # `status: new` 는 "기준선 이후 다시 매김"이지 "이번 실행에서 매김"이 아니다 — 이전 실행에서 다시 매긴 판단도 `init --from-run` 으로
+    # 이어지면 new 로 남는다. 그래서 이번 실행 기간(지난 실행 기준일 이후) 검토분을 따로 센다.
+    prev = _previous_results(ctx)
+    this_run = [(c, fid, fr) for c, fid, fr in judged
+                if prev and str(by_pair.get((c["company_id"], fid), {}).get("reviewed_at") or "") > str(prev["as_of"])]
+    lines: list[str] = []
+    if carried:
+        judged_text = (f"기준선 이후 다시 매긴 판단은 {len(judged)}칸(검토일 {esc(dates(judged))})"
+                       + (f"이고 그중 지난 실행 기준일 {esc(prev['as_of'])} 이후에 매긴 것은 {len(this_run)}칸" if prev else "")) if judged else "다시 매긴 판단은 없다"
+        lines.append(f"점수 {len(cells)}칸 가운데 <b>{len(carried)}칸은 이전 실행의 판단을 그대로 이어받았다</b>({esc(per_factor(carried))}). "
+                     f"이어받은 판단의 검토일은 {esc(dates(carried))} 이다. {judged_text}. 관측에서 계산한 칸은 {len(computed)}칸이다"
+                     + (f", 점수를 만들지 않은 칸은 {unscored}칸이다" if unscored else "") + ".")
+        numbers_only = [(c, fid, fr) for c, fid, fr in carried if fr.get("basis") == "carried"]
+        if numbers_only:
+            lines.append(f"이어받은 칸 가운데 {len(numbers_only)}칸({esc(per_factor(numbers_only))})은 판정 입력 없이 점수 숫자만 기록돼 있어 "
+                         f"엔진이 다시 계산하지 못한다.")
+        lines.append("이어받은 칸은 이번 실행에서 다시 판단하지 않았으므로, 점수가 그대로라는 사실이 다시 확인했다는 뜻은 아니다.")
+    else:
+        lines.append(f"점수 {len(cells)}칸을 모두 이번 실행에서 매겼다 — 판단 {len(judged)}칸"
+                     + (f"(검토일 {esc(dates(judged))})" if judged else "") + f", 관측 계산 {len(computed)}칸"
+                     + (f", 점수를 만들지 않은 칸 {unscored}칸" if unscored else "") + ".")
+    if prev:
+        prev_by = {c["company_id"]: c for c in prev["companies"]}
+        changed = [(c["display_name"], fid, prev_by[c["company_id"]]["factors"][fid]["score"], fr["score"])
+                   for c, fid, fr in cells if c["company_id"] in prev_by and prev_by[c["company_id"]]["factors"][fid]["score"] != fr["score"]]
+        shown = " · ".join(f"{esc(name)} {SHORT[fid]} {fmt_score(a)}→{fmt_score(b)}" for name, fid, a, b in changed[:12])
+        more = f" 외 {len(changed) - 12}칸" if len(changed) > 12 else ""
+        lines.append(f"지난 실행(기준일 {esc(prev['as_of'])}) 대비 점수가 바뀐 칸은 <b>{len(changed)}칸</b>이다" + (f": {shown}{more}." if changed else "."))
+    tens = [t for t in (ctx.rules.payload.get("open_tensions") or []) if t.get("status") == "open"]
+    if tens:
+        n_j = len({j for t in tens for j in (t.get("judgment_ids") or [])})
+        months = sorted({str(t.get("recheck_at")) for t in tens if t.get("recheck_at")})
+        lines.append(f"리뷰에서 지적됐으나 이번 실행에서 고치지 않고 재검토로 넘긴 쟁점은 <b>{len(tens)}건</b>(판단 {n_j}개)이고, "
+                     f"{esc(' · '.join(months))} 에 다시 본다.")
+    return (f'<div class="notice info" id="judgment-status" data-total="{len(cells)}" data-carried="{len(carried)}" '
+            f'data-new="{len(judged)}" data-computed="{len(computed)}"><b>이 점수는 언제 매겨졌나.</b> ' + "<br>".join(lines) + "</div>")
+
+
 def render_ranking(results: dict[str, Any]) -> str:
     rows = []
     by_id = {c["company_id"]: c for c in results["companies"]}
@@ -1861,6 +1932,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <nav class="tabs" role="tablist" aria-label="리포트 구역" hidden>{"".join(f'<button type="button" role="tab" id="tabbtn-{tid}" data-tab="tab-{tid}" aria-controls="tab-{tid}" aria-selected="{"true" if i == 0 else "false"}">{esc(label)}</button>' for i, (tid, label) in enumerate(TABS))}</nav>
 <section class="tabpanel" id="tab-summary" role="tabpanel" aria-labelledby="tabbtn-summary">
 <div class="kpis" id="kpis">{render_kpis(results)}</div>
+{render_judgment_status(ctx, results)}
 <h2><span class="num">01</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results)}
