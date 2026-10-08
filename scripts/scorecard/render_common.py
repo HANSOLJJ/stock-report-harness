@@ -15,6 +15,22 @@ FACTOR_LABELS = {
     "F1": "① 네트워크", "F2": "② 게임체인저", "F3": "③ Last Mover", "F4": "④ 호황 이후", "F5": "⑤ 아군",
     "F6": "⑥ 가격", "F7": "⑦ 순환금융", "F8": "⑧ 비대칭 의존", "F9": "⑨ 적자 깊이",
 }
+# 2026-10-08 규칙 v2.0: ① 이름이 "락인과 가격결정력"으로 바뀌었다. 옛 실행의 화면은 글자 하나 바뀌면 안 되므로
+# 규칙의 `label` 이 아래 옛 라벨과 같으면 위의 짧은 이름을 그대로 쓰고, 다르면 규칙의 `short` 로 짧은 이름을 만든다.
+LEGACY_RULE_LABELS = {
+    "F1": "① 네트워크 효과", "F2": "② 신기술 게임체인저", "F3": "③ Last Mover", "F4": "④ 호황 이후 비전",
+    "F5": "⑤ 아군 확보", "F6": "⑥ 가격", "F7": "⑦ 순환금융", "F8": "⑧ 비대칭 의존", "F9": "⑨ 적자 깊이",
+}
+
+
+def factor_label(rules: Any, fid: str) -> str:
+    """화면에 쓰는 항목의 짧은 이름. 규칙을 모르면(`None` 이거나 `factor()` 가 없는 시험용 컨텍스트) 옛 이름을 돌려준다."""
+    if not callable(getattr(rules, "factor", None)):
+        return FACTOR_LABELS[fid]
+    spec = rules.factor(fid)
+    if spec.get("label") == LEGACY_RULE_LABELS[fid]:
+        return FACTOR_LABELS[fid]
+    return f"{FACTOR_MARKS_BY_ID[fid]} {spec['short']}"
 METHOD_LABELS = {
     "consensus_4q_sum": "미발표 4개 분기 컨센서스 합",
     # 이 키 이름은 기준선 이관 코드의 문자열이다. NTM 적격성이 검증됐다는 뜻이 아니므로 라벨로 그렇게 읽히면 안 된다.
@@ -73,10 +89,13 @@ BASIS_LABELS = {
     # 2026-10-06 사용자 지시: 화면 꼬리표가 이전 판을 가리키지 않는다(`앞서 매긴` 삭제).
     "computed": "산식 계산", "manual": "사람 판단", "carried": "점수만 기록",
     "grade": "등급 산식", "matrix": "조합표", "criteria": "기준 사다리", "paths": "조건 통과 수",
+    # 2026-10-08 규칙 v2.0: ① 은 네 질문 판정을 사다리로 환산한다.
+    "lockin": "네 질문 사다리",
 }
 MODE_LABELS = {
     "manual": "사람 판단", "paths": "조건 통과 수", "ladder": "기준 사다리", "formula": "산식",
     "parameters": "수치 합산", "matrix": "조합표", "gates": "관문 통과",
+    "lockin": "네 질문 사다리",
 }
 # 관측 지표·상태·조건의 내부 이름도 화면에서는 한국어로 옮긴다. **긴 이름부터** 바꾼다
 # (`not_disclosed_confirmed` 가 `not_disclosed` 를 품는다). 결정 선택지와 코드·규칙 경로는 감사 기록·
@@ -700,7 +719,8 @@ def factor_notes(ctx: Any, fid: str, fr: dict[str, Any]) -> list[dict[str, Any]]
                 out.append({"kind": "note", "text":
                             f"런웨이 {y:.2f}년 — 기준 {b:g}년과 {abs(d):.1%} 차이라 경계에 아주 가깝다. 기준을 {side}."})
                 continue
-        if w.startswith("F1 부품 상한"):
+        # 2026-10-08: 부품 채널 상한은 규칙 F1 에 `component_only_cap` 이 있을 때만 말한다(규칙 v2.0 에는 없다).
+        if w.startswith("F1 부품 상한") and ctx.rules.factor("F1").get("component_only_cap") is not None:
             cap = ctx.rules.factor("F1").get("component_only_cap")
             out.append({"kind": "cap", "text": f"소비자·업무 채널이 없는 부품 공급형이라 이 항목은 최고 {cap}점까지다."})
             continue
@@ -927,7 +947,128 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
     return text
 
 
-def factor_calc_text(f: str, fr: dict[str, Any]) -> str:
+# 2026-10-08 규칙 v2.0: ① 네 질문, ② 세대 격차·독립 측정, ③ 가속도 지표 단계를 산식 줄에 싣는다. ③ 기준 사다리가
+# 통과점을 싣는 것과 같은 자리다. 라벨은 규칙에서 읽고, 값은 판단 입력을 먼저 보고 없으면 결과 `calc` 에서 찾는다
+# (`calc` 의 키 이름은 계산 코드가 정하므로 방어적으로 읽는다). 새 키가 없는 옛 실행에는 아무것도 덧붙지 않는다.
+VERDICT_LABELS = {"pass": "통과", "partial": "부분", "fail": "실패", "unknown": "미확인"}
+AI_MONETIZED_LABELS = {"yes": "예", "partial": "부분", "no": "아니오", "unknown": "미확인"}
+DURABILITY_LABELS = {"yes": "해당", "no": "없음", "unknown": "미확인"}
+INDEPENDENT_LABELS = {"yes": "예", "no": "아니오", "unknown": "미확인"}
+
+
+def judgment_values(fr: dict[str, Any], inputs: dict[str, Any] | None) -> dict[str, Any]:
+    """결과 `calc`(경로·기준·입력 묶음 포함)와 판단 입력을 합친다. 판단 입력이 이긴다."""
+    calc = fr.get("calc") or {}
+    vals: dict[str, Any] = {}
+    for part in (calc, calc.get("paths"), calc.get("criteria"), calc.get("inputs"), inputs):
+        if isinstance(part, dict):
+            vals.update(part)
+    return vals
+
+
+def ai_monetized(rules: Any, vals: dict[str, Any]) -> tuple[str, str] | None:
+    """`(라벨, 값 라벨)`. 규칙에 AI 수익화 표시 필드가 없거나 값이 없으면 None."""
+    spec = ((rules.factor("F1").get("display_only_inputs") or {}).get("ai_monetized_in_channel")) if rules is not None else None
+    if not spec or vals.get("ai_monetized_in_channel") is None:
+        return None
+    v = vals["ai_monetized_in_channel"]
+    return str(spec.get("label") or "AI 수익화"), AI_MONETIZED_LABELS.get(v, str(v))
+
+
+LOCKIN_STEP_LABELS = (("pricing", "가격 실측"), ("substitutes", "대체 공급"), ("durability_discount", "지속성 할인"))
+
+
+def _lockin_trace(calc: dict[str, Any]) -> str:
+    """① 사다리 계산을 한 줄로. 엔진이 결과 `calc` 에 남긴 기본 점수·보정(`steps`)·합(`raw`)·점수를 그대로 옮긴다."""
+    steps = calc.get("steps")
+    if not isinstance(steps, dict) or calc.get("score") is None:
+        return ""
+    base = int(steps.get("base") or 0)
+    head = f"실질 채널 없음 {base}" if calc.get("no_channel") else f"강도 {base}"
+    moves = [(label, int(steps[key])) for key, label in LOCKIN_STEP_LABELS if steps.get(key)]
+    score = int(calc["score"])
+    raw = int(calc.get("raw", base + sum(d for _n, d in moves)))
+    lo, hi = calc.get("range") or (None, None)
+    if not moves and raw == score:
+        return f"사다리 {head}"            # 더하고 뺄 것이 없으면 기본 점수가 곧 점수다
+    return ("사다리 " + ", ".join([head, *(f"{name} {d:+d}" for name, d in moves)]) + f" = {score}"
+            + (f"({lo}~{hi} 로 자름)" if raw != score else ""))
+
+
+def lockin_calc_text(rules: Any, fr: dict[str, Any], vals: dict[str, Any]) -> str:
+    """① 락인 산식 줄 — 채널, 네 질문 판정, 가격 실측 분기 수, 지속성 할인, 사다리, AI 수익화(점수 밖)."""
+    spec = rules.factor("F1")
+    channels = spec.get("channels") or {}
+    keys = channels.get("keys") or []
+    names = channels.get("labels") or {}
+    parts: list[str] = []
+    if any(k in vals for k in keys):
+        on = [str(names.get(k, k)) for k in keys if vals.get(k) == "yes"]
+        parts.append("채널 " + ("·".join(on) if on else "없음"))
+    for key, q in (spec.get("questions") or {}).items():
+        if vals.get(key) is None:
+            continue
+        item = f"{q.get('label', key)} {VERDICT_LABELS.get(vals[key], vals[key])}"
+        if key == "pricing":
+            # 통과로 적었어도 지속 분기가 모자라면 엔진이 부분으로 계산한다(`pricing_used`). 그 사실을 같은 자리에 적는다.
+            used = (fr.get("calc") or {}).get("pricing_used")
+            notes = [f"{vals['pricing_sustained_quarters']}분기 지속"] if vals.get("pricing_sustained_quarters") is not None else []
+            if used and used != vals[key]:
+                notes.append(f"{fix_josa(VERDICT_LABELS.get(used, used), '', '으로')} 계산")
+            item += f"({', '.join(notes)})" if notes else ""
+        parts.append(item)
+    if vals.get("durability_discount") is not None:
+        parts.append(f"지속성 할인 {DURABILITY_LABELS.get(vals['durability_discount'], vals['durability_discount'])}")
+    text = " · ".join(parts)
+    trace = _lockin_trace(fr.get("calc") or {})
+    if trace:
+        text = f"{text} → {trace}" if text else trace
+    ai = ai_monetized(rules, vals)
+    if ai:
+        text += (" · " if text else "") + f"{ai[0]} {ai[1]}(점수 밖 표시)"
+    return text
+
+
+def f2_gap_text(rules: Any, vals: dict[str, Any], company_type: str | None) -> str:
+    """② 세대 격차 개월 수(임계)와 독립 측정 여부. 임계는 결과가 주면 그것을, 없으면 규칙과 회사 유형에서 읽는다."""
+    out = []
+    if vals.get("generation_gap_months") is not None:
+        thr = vals.get("generation_gap_months_threshold")
+        g = rules.factor("F2").get("generation_gap_months") or {}
+        if thr is None and g:
+            thr = (g.get("by_company_type") or {}).get(company_type or "", g.get("default"))
+        out.append(f"세대 격차 {vals['generation_gap_months']}개월" + (f"(임계 {thr}개월)" if thr is not None else ""))
+    if vals.get("leap_independent") is not None:
+        out.append(f"독립 측정 {INDEPENDENT_LABELS.get(vals['leap_independent'], vals['leap_independent'])}"
+                   # 엔진이 성능 도약을 부분으로 내렸으면(`performance_leap_used`) 그 사실을 붙인다.
+                   + ("(성능 도약은 부분 통과로 계산)" if vals.get("performance_leap_used") == "partial" else ""))
+    return " · ".join(out)
+
+
+def f3_tier_text(rules: Any, vals: dict[str, Any], calc: dict[str, Any] | None = None) -> str:
+    """③ 가속도 지표 단계와 성장률 두 개. 성장률은 다른 비율 관측처럼 소수(0.12 = 12%)로 읽는다.
+
+    단계 상한 때문에 엔진이 가속도를 낮췄으면(`acceleration_input` 이 입력값, `criteria.acceleration` 이 계산값) 그것도 적는다.
+    """
+    tier = vals.get("acceleration_tier")
+    if tier is None:
+        return ""
+    tiers = ((rules.factor("F3").get("acceleration_tiers") or {}).get("tiers") or {})
+    label = (tiers.get(tier) or {}).get("label")
+    text = f"지표 단계 {tier}" + (f" — {label}" if label else "")
+    rates = vals.get("acceleration_growth_rates")
+    if isinstance(rates, list) and rates:
+        text += " · 성장률 " + " → ".join(f"{float(r) * 100:.1f}%" for r in rates)
+    given, used = (calc or {}).get("acceleration_input"), ((calc or {}).get("criteria") or {}).get("acceleration")
+    if given and used and given != used:
+        text += (f" · 가속도는 입력 {fix_josa(VERDICT_LABELS.get(given, given), '', '을')} 단계 상한에 맞춰 "
+                 f"{fix_josa(VERDICT_LABELS.get(used, used), '', '으로')} 계산")
+    return text
+
+
+def factor_calc_text(f: str, fr: dict[str, Any], rules: Any = None, inputs: dict[str, Any] | None = None,
+                     company_type: str | None = None) -> str:
+    """산식 줄. `rules` 를 주면 규칙 v2.0 의 판단 입력(① 네 질문·② 세대 격차·③ 지표 단계)도 싣는다."""
     calc = fr.get("calc") or {}
     text = ""
     cov = calc.get("coverage") if f == "F6" else None
@@ -960,6 +1101,8 @@ def factor_calc_text(f: str, fr: dict[str, Any]) -> str:
             text += " ⚠️ 구간 경계 ±3% 이내"
     elif f == "F6" and "valuation_over_arr" in calc:
         text = f"밸류÷ARR {fmt_num(calc['valuation_over_arr'])}x · ARR÷조달 {fmt_num(calc.get('arr_over_cumulative_raised'), 2)}"
+    elif f == "F1" and rules is not None and fr.get("basis") == "lockin":
+        text = lockin_calc_text(rules, fr, judgment_values(fr, inputs))
     elif f == "F3" and "pass_points" in calc:
         text = str(calc.get("ladder_note") or f"통과점 {calc['pass_points']:g}")
     elif f == "F5" and "A" in calc:
@@ -968,6 +1111,11 @@ def factor_calc_text(f: str, fr: dict[str, Any]) -> str:
         text = f"조달 의존 고객 비중 {SHARE_LABELS.get(calc['funding_dependent_share'], calc['funding_dependent_share'])} · 내 돈 환류 {YESNO_LABELS.get(calc['own_money_returns'], calc['own_money_returns'])}"
     elif f == "F9" and calc.get("path"):
         text = " → ".join(f9_gate_text(p) for p in calc["path"])
+    if rules is not None and f in ("F2", "F3"):
+        vals = judgment_values(fr, inputs)
+        extra = f2_gap_text(rules, vals, company_type) if f == "F2" else f3_tier_text(rules, vals, calc)
+        if extra:
+            text = f"{text} · {extra}" if text else extra
     pending = fr.get("pending") or {}
     if pending:
         text = (text + " · " if text else "") + pending.get("message", "")
@@ -1187,6 +1335,8 @@ JUDGMENT_ROLES = {
     "grade": "동맹과 적대 등급",
     "matrix": "두 축의 판정",
     "gate_inputs": "관문 입력",
+    # 2026-10-08 규칙 v2.0: ① 은 채널과 네 질문을 판정한다.
+    "lockin": "채널과 네 질문의 판정",
 }
 # 사람이 매긴 것을 엔진이 어떤 장치로 환산하는지. 규칙의 산식 자체는 아래 `mode` 색인에 있고
 # 여기서는 **판단과 점수 사이에 무엇이 끼어 있는지**만 한 마디로 적는다.
@@ -1197,6 +1347,8 @@ MATRIX_AXIS_LABELS = {
     "large|no": "의존 큼/환류 없음", "large|yes": "의존 큼/환류 있음",
 }
 CONVERSION_NOTES = {
+    # 2026-10-08 규칙 v2.0: ① 판단이 `lockin` 일 때만 닿는다(옛 실행의 ① 은 점수 자체라 이 표를 읽지 않는다).
+    "F1": "엔진은 회수 루프와 전환비용 중 높은 판정으로 기본 점수를 정하고 가격 실측·대체 공급·지속성 할인을 더해 0~5 로 자른다",
     "F3": "엔진은 그 결과를 사다리에 태워 칸을 고른다",
     "F5": "엔진은 기본 3점에 동맹을 더하고 적대를 뺀다",
     "F7": "엔진은 그 조합을 표에서 찾아 칸을 고른다",
@@ -1222,6 +1374,19 @@ JUDGMENT_INPUT_NAMES = {
     "revenue_model": "수익모델",
     "acceleration": "가속도",
     "door_closed": "문이 닫혔는지",
+    # 2026-10-08 규칙 v2.0: ③ 가속도 지표 단계, ① 채널·네 질문·지속성 할인. 이름은 규칙 `factors.F1.questions`·
+    # `channels.labels`·`factors.F3.acceleration_tiers` 와 `rules.md` 3절 ① 이 쓰는 말이다. AI 수익화는 점수 밖이라 넣지 않는다.
+    "acceleration_tier": "가속도 지표 단계",
+    "acceleration_growth_rates": "가속도 성장률 두 개",
+    "channel_consumer": "소비자 채널",
+    "channel_work": "업무 채널",
+    "channel_trade": "거래 채널",
+    "loop": "회수 루프",
+    "switching": "전환비용",
+    "substitutes": "대체 공급",
+    "pricing": "가격 실측",
+    "pricing_sustained_quarters": "가격 실측 지속 분기 수",
+    "durability_discount": "지속성 할인",
 }
 
 
@@ -1322,6 +1487,9 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
     # 2026-09-17 FIX-76 S2: 여기 규칙 `note` 를 그대로 실었더니 `HANDOVER 사다리`·`C-03 확정`·
     # `carried_score` 같은 **작업 메모**가 본문에 실렸다(사용자 지적). 기준은 **별표 원문**에서 가져오고
     # 규칙 `note` 는 감사 기록으로 보낸다.
+    # 2026-10-08 규칙 v2.0: ① 락인은 원본 지표 문장(부품 상한을 담고 있다) 대신 규칙의 채널·네 질문·사다리를 싣는다.
+    if f.get("mode") == "lockin":
+        return lockin_criteria(f)
     metrics = (factor_concept(ctx, fid) or {}).get("metrics") or ""
     if metrics:
         out.append(strip_worknotes(metrics))
@@ -1357,6 +1525,34 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
     if not out:
         out.append("**이 항목은 규칙이 채점 기준을 적어 두지 않았다.** 범위와 점수를 만드는 방식만 정해져 "
                    "있어, 무엇을 보고 그 점수를 주었는지는 각 회사 카드의 근거 문장에서 읽어야 한다.")
+    return out
+
+
+def lockin_criteria(f: dict[str, Any]) -> list[str]:
+    """① 락인과 가격결정력을 무엇을 보고 매기는지. 문장의 값은 규칙 `factors.F1` 에서 읽는다(`rules.md` 3절 ①)."""
+    channels = f.get("channels") or {}
+    names = [str(channels.get("labels", {}).get(k, k)) for k in channels.get("keys") or []]
+    ladder = f.get("ladder") or {}
+    base = ladder.get("base_by_strength") or {}
+    strength = " · ".join(f"{VERDICT_LABELS.get(k, k)} {v}" for k, v in base.items())
+    out = [f"**실질 채널은 {'·'.join(names)} 셋이다.** 고객이 조직인 공급자(칩·파운드리·클라우드 인프라·기업 소프트웨어)는 "
+           f"업무 채널로 본다. 매출·사용자 기여가 유의미한 채널만 세고, 셋 다 없으면 {channels.get('none_score', 0)}점이다. "
+           "채널 유형만을 이유로 상한을 두지 않는다.",
+           "**가장 강한 채널에 네 질문을 판정한다** — " + " · ".join(
+               f"**{q.get('label', k)}**: {q.get('question', '')}" for k, q in (f.get("questions") or {}).items()) + "."]
+    pricing = ladder.get("pricing_step") or {}
+    subs = ladder.get("substitutes_step") or {}
+    out.append(f"락인 강도는 회수 루프와 전환비용 중 높은 판정이다({strength}). 여기에 가격 실측 통과 {int(pricing.get('pass', 0)):+d} · "
+               f"실패 {int(pricing.get('fail', 0)):+d}, 대체 공급 실패 {int(subs.get('fail', 0)):+d}, "
+               f"지속성 할인 {int(ladder.get('durability_discount_step', -1)):+d} 을 더해 {f['range'][0]}~{f['range'][1]} 로 자른다. "
+               f"**최고점은 가격 실측 통과가 있어야만 나오고**, 회수 루프와 전환비용이 둘 다 미확인이면 점수를 만들지 않는다.")
+    cond = (f.get("durability_discount") or {}).get("condition")
+    if cond:
+        out.append(f"지속성 할인은 {cond}일 때 건다. 공급 부족에서 나온 가격결정력을 영구 해자로 읽지 않기 위한 장치다.")
+    ai = (f.get("display_only_inputs") or {}).get("ai_monetized_in_channel")
+    if ai:
+        out.append(f"**{ai.get('label', 'AI 수익화')}**({ai.get('question', '')})는 점수에 들어가지 않고 표시만 한다. "
+                   "같은 점수라도 AI 로 가격을 올려 받은 경우와 AI 없이 받은 경우를 가른다.")
     return out
 
 
@@ -1526,7 +1722,7 @@ def method_sections(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None,
     judged_company_count = len(set.intersection(*judged_company_sets)) if judged_company_sets else 0
 
     def _names(ids: list[str]) -> str:
-        return " · ".join(FACTOR_LABELS[f] for f in ids)
+        return " · ".join(factor_label(ctx.rules, f) for f in ids)
 
     def carried_note(fid: str) -> str:
         """같은 항목 안에서 판정 입력이 남지 않아 숫자만 넘어온 회사가 있으면 그 수를 적는다."""
@@ -1561,6 +1757,15 @@ def method_sections(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None,
         f"정해 두었다({', '.join(f'{k}개 {v}점' for k, v in sorted(ctx.rules.factor('F2')['path_mapping'].items()))}, "
         "최고점은 통과 수만으로 닿지 않고 세대 격차를 따로 채워야 한다)."
     )
+    # 2026-10-08 규칙 v2.0: 세대 격차를 시간으로 정하고 벤더 발표만 있는 성능 주장은 부분 통과로 계산한다. 규칙 키가 있을 때만 적는다.
+    gap = ctx.rules.factor("F2").get("generation_gap_months") or {}
+    if gap:
+        part = (gap.get("by_company_type") or {}).get("부품")
+        f2_rule += (f" 세대 격차는 세 축 가운데 두 축 이상에서 독립 측정 1위이고 2위가 그 수준에 도달하는 데 "
+                    f"{gap.get('default')}개월" + (f"(칩·파운드리는 대량 출하 기준 {part}개월)" if part else "")
+                    + " 이상 걸린 경우다.")
+    if ctx.rules.factor("F2").get("leap_requires_independent_measurement"):
+        f2_rule += " 벤더 발표만 있는 성능 주장은 통과로 적어도 성능 도약 부분 통과로 계산한다."
     if f2_carried:
         if f2_carried == f2_judged:
             execution = (

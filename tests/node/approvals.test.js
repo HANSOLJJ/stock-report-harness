@@ -670,3 +670,85 @@ test('POST /judge: CLI 가 거부하면 안내 없이 stderr 를 보인다', asy
     server.close();
   }
 });
+
+// 2026-10-08 규칙 v2.0: summary 의 factor_labels 가 있으면 ① 이름과 질문이 바뀌고, lockin·paths 판단은 입력란으로 고친다
+test('GET 규칙 v2.0: factor_labels 로 ① 이름이 바뀌고 lockin·paths 입력란이 그려진다', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  process.env.FAKE_SUMMARY = 'summary.v20.json';
+  const server = await startServer({ enabled: true, code: '123456' });
+  try {
+    const page = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F1&company=nvidia' });
+    assert.equal(page.statusCode, 200);
+    assert.ok(page.body.includes('① 락인과 가격결정력'), 'factor 안내 막대와 탭이 규칙의 ① 이름을 쓴다');
+    assert.ok(!page.body.includes('① 네트워크 효과'), '옛 ① 이름이 남지 않는다');
+    assert.match(page.body, /회수 루프·전환비용·대체 공급·가격 실측 네 질문/, '① 질문은 네 질문 요약');
+    assert.match(page.body, /data-judge-tab="F1" aria-selected="true">① 락인과 가격결정력<\/button>/);
+    assert.match(page.body, /고치는 것: 채널과 네 질문\(lockin\)/);
+    // 지금 값은 한국어 이름과 값으로
+    assert.match(page.body, /회수 루프<\/span> <strong>충족<\/strong>/);
+    assert.match(page.body, /지속성 할인<\/span> <strong>예<\/strong>/);
+    // 열린 수정 칸: 입력마다 선택 상자, 점수 칸은 없다. 분기·개월 수는 + 를 붙이지 않는다
+    const form = page.body.split('id="judge-form"')[1].split('</form>')[0];
+    for (const key of ['channel_consumer', 'channel_work', 'channel_trade', 'loop', 'switching', 'substitutes', 'pricing',
+      'durability_discount', 'ai_monetized_in_channel', 'pricing_sustained_quarters']) {
+      assert.match(form, new RegExp(`<select id="judge-form_in_${key}" name="in_${key}">`), `${key} 선택 상자`);
+    }
+    assert.match(form, /<option value="partial" selected>절반 \(partial\)<\/option>/, '전환비용 지금 값이 골라져 있다');
+    assert.match(form, /<option value="9" selected>9<\/option>/, '분기 수는 +9 가 아니라 9');
+    assert.match(form, /가격 실측 지속 분기 수/);
+    assert.match(form, /비교 가능한 대체재가 있는데도 고객이 남는 것/, '전환비용 도움말');
+    assert.doesNotMatch(form, /name="score"/, 'lockin 판단에는 점수 입력란이 없다');
+
+    const paths = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F2&company=nvidia' });
+    const pform = paths.body.split('id="judge-form"')[1].split('</form>')[0];
+    for (const key of ['performance_leap', 'paradigm_adaptation', 'standard_capture', 'leap_independent']) {
+      assert.match(pform, new RegExp(`name="in_${key}"`), `${key} 입력란`);
+    }
+    assert.match(pform, /<select id="judge-form_in_generation_gap_months" name="in_generation_gap_months">/);
+    assert.match(pform, /<option value="14" selected>14<\/option>/);
+    assert.match(paths.body, /세대 격차 개월 수<\/span> <strong>14<\/strong>/, '지금 값도 + 없이');
+    assert.match(pform, /독립 측정/);
+    assert.match(paths.body, /고치는 것: 경로 입력\(paths\)/);
+  } finally {
+    delete process.env.FAKE_SUMMARY;
+    server.close();
+  }
+});
+
+test('GET 옛 규칙: factor_labels 가 옛 라벨(또는 없음)이면 ① 이름과 질문이 그대로다', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  delete process.env.FAKE_SUMMARY;
+  const server = await startServer({ enabled: true, code: '123456' });
+  try {
+    const page = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x' });
+    assert.ok(page.body.includes('① 네트워크 효과'));
+    assert.ok(!page.body.includes('① 락인과 가격결정력'));
+    assert.match(page.body, /락인 강도·데이터 루프/, '옛 ① 질문');
+    // 용어집의 ① 채널 규칙은 지금 규칙(네 질문, 부품 상한 없음)을 설명한다
+    assert.match(page.body, /<dt id="ref-star-A">① 채널 규칙<\/dt><dd>[^<]*네 질문[^<]*<\/dd>/);
+    assert.doesNotMatch(page.body, /<dd>[^<]*소비자·업무·거래·부품[^<]*<\/dd>/);
+  } finally {
+    server.close();
+  }
+});
+
+// 2026-10-08 규칙 v2.0(rules.md 2.9): 재확인 제안은 값이 객체({evidence_ids})라 [object Object] 가 아니라 근거 ID 목록으로 그린다
+test('GET 규칙 v2.0: 재확인 제안은 "재확인 — 다시 읽은 근거" 와 근거 ID 목록으로 보인다', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  process.env.FAKE_SUMMARY = 'summary.v20.json';
+  const server = await startServer({ enabled: true, code: '123456' });
+  try {
+    const page = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x' });
+    const card = page.body.split('id="proposal-PRP-002"')[1].split('class="prop-card')[0];
+    assert.match(card, /<li><span class="muted">재확인<\/span> — 다시 읽은 근거 <strong class="to">EV-nvidia-001 · EV-nvidia-002<\/strong><\/li>/);
+    assert.doesNotMatch(page.body, /\[object Object\]/);
+    assert.doesNotMatch(card, /근거 문장만 고칩니다/, '재확인은 근거 문장 수정이 아니다');
+    assert.doesNotMatch(card, /바뀌는 줄/, '근거 칸을 바꾸지 않는 제안(null)은 줄 비교를 그리지 않는다');
+  } finally {
+    delete process.env.FAKE_SUMMARY;
+    server.close();
+  }
+});

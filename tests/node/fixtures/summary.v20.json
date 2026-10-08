@@ -1,0 +1,757 @@
+{
+  "run_id": "ai-scorecard-2026-11-x",
+  "as_of": "2026-11-02",
+  "rule_version": "v2.0",
+  "companies": [
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "baseline": {
+        "total": 9,
+        "rank": 8
+      },
+      "current": {
+        "total": 10,
+        "rank": 6
+      },
+      "changed_factors": [
+        {
+          "factor": "F2",
+          "from": 4,
+          "to": 5
+        }
+      ],
+      "carried_factors": [
+        "F1",
+        "F3"
+      ],
+      "pending": [
+        "F6: pending_rule_decision"
+      ]
+    }
+  ],
+  "review": {
+    "status": "pass",
+    "areas": [
+      {
+        "area": "fact-sources",
+        "reviewer": "Reviewer A",
+        "result": "pass"
+      },
+      {
+        "area": "financial-calc",
+        "reviewer": "Reviewer B",
+        "result": "pass"
+      },
+      {
+        "area": "rule-consistency",
+        "reviewer": "Reviewer C",
+        "result": "pass"
+      },
+      {
+        "area": "presentation",
+        "reviewer": "Reviewer D",
+        "result": "pass"
+      }
+    ],
+    "checklist_fail": 0
+  },
+  "evidence": {
+    "candidates": 40,
+    "selected": 12,
+    "confirmed": 0,
+    "items": [
+      {
+        "evidence_id": "EV-nvidia-001",
+        "company_id": "nvidia",
+        "factors": [
+          "F2"
+        ],
+        "kind": "news",
+        "title": "NVIDIA Blackwell 수요 급증 및 생산 확대 발표",
+        "url": "https://example.com/news/nvidia-blackwell",
+        "published_at_utc": "2026-10-30T12:00:00Z",
+        "excerpt": "NVIDIA는 주요 클라우드 사업자들의 수요 확대에 대응하여 칩 출하를 증대한다고 발표했다.",
+        "status": "candidate",
+        "relevance": "추론: Blackwell 출하 확대는 별표 F 의 성능 도약 경로로 nvidia.F2 를 다시 볼 계기다. P3 와 게이트 2 는 무관하다. ⑤ 조달·동맹 네 질문도 닿지 않는다 (선별 확신: 중간)",
+        "channel": "company_statement",
+        "conditional_impact": "독립 측정이 따라오면 ② 판단을 다시 본다",
+        "horizon": "medium: 다음 분기 출하 확인",
+        "counter_evidence": [
+          "벤더 발표 수치다"
+        ],
+        "unverified": [
+          "제목·매체·날짜만 보고 판정함(원문 미열람)"
+        ]
+      },
+      {
+        "evidence_id": "EV-nvidia-002",
+        "company_id": "nvidia",
+        "factors": [
+          "F5"
+        ],
+        "kind": "news",
+        "title": "확정된 시험 근거",
+        "url": null,
+        "published_at_utc": null,
+        "excerpt": "확정된 시험 근거",
+        "status": "confirmed",
+        "relevance": "추론: 확정된 근거 예시",
+        "channel": "press",
+        "conditional_impact": "지금은 유지: 예시",
+        "horizon": "short",
+        "counter_evidence": [],
+        "unverified": []
+      }
+    ]
+  },
+  "triggers": [
+    {
+      "trigger_id": "TRG-001",
+      "company_id": "nvidia",
+      "factors": [
+        "F2"
+      ],
+      "condition": "분기 매출액 400억 달러 초과 달성 여부 확인",
+      "deadline": "2027-02-01",
+      "status": "watching",
+      "observation": "Blackwell 생산 확대 발표",
+      "recheck_what": "출하량과 독립 벤치마크"
+    }
+  ],
+  "company_names": [
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA"
+    },
+    {
+      "company_id": "openai",
+      "display_name": "OpenAI"
+    }
+  ],
+  "pending_rule_decisions": [
+    "C-03"
+  ],
+  "judgments": [
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F1",
+      "kind": "lockin",
+      "score": null,
+      "score_range": [
+        0,
+        5
+      ],
+      "inputs": [
+        {
+          "key": "channel_consumer",
+          "value": "no"
+        },
+        {
+          "key": "channel_work",
+          "value": "yes"
+        },
+        {
+          "key": "channel_trade",
+          "value": "no"
+        },
+        {
+          "key": "loop",
+          "value": "pass"
+        },
+        {
+          "key": "switching",
+          "value": "partial"
+        },
+        {
+          "key": "substitutes",
+          "value": "partial"
+        },
+        {
+          "key": "pricing",
+          "value": "pass"
+        },
+        {
+          "key": "pricing_sustained_quarters",
+          "value": 9
+        },
+        {
+          "key": "durability_discount",
+          "value": "yes"
+        },
+        {
+          "key": "ai_monetized_in_channel",
+          "value": "yes"
+        }
+      ],
+      "evidence": [
+        "NVIDIA ① 은 업무 채널에서 회수 루프가 통과다"
+      ],
+      "evidence_up": [],
+      "evidence_down": [],
+      "three_way": false,
+      "status": "new",
+      "reviewer": "legacy:v1.5",
+      "reviewed_at": "2026-10-09",
+      "edit_kind": "lockin",
+      "revisions": 0,
+      "last_revision_session": null
+    },
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F2",
+      "kind": "paths",
+      "score": null,
+      "score_range": [
+        2,
+        5
+      ],
+      "inputs": [
+        {
+          "key": "performance_leap",
+          "value": "pass"
+        },
+        {
+          "key": "paradigm_adaptation",
+          "value": "pass"
+        },
+        {
+          "key": "standard_capture",
+          "value": "partial"
+        },
+        {
+          "key": "top_rank",
+          "value": "no"
+        },
+        {
+          "key": "generation_gap",
+          "value": "no"
+        },
+        {
+          "key": "generation_gap_months",
+          "value": 14
+        },
+        {
+          "key": "leap_independent",
+          "value": "no"
+        }
+      ],
+      "evidence": [
+        "NVIDIA ② 는 성능 도약과 패러다임 적응 두 경로를 통과했다"
+      ],
+      "evidence_up": [],
+      "evidence_down": [],
+      "three_way": false,
+      "status": "new",
+      "reviewer": "legacy:v1.5",
+      "reviewed_at": "2026-10-09",
+      "edit_kind": "paths",
+      "revisions": 0,
+      "last_revision_session": null
+    },
+    {
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "score_range": [
+        0,
+        5
+      ],
+      "inputs": [
+        {
+          "key": "imitation",
+          "value": "fail"
+        },
+        {
+          "key": "revenue_model",
+          "value": "pass"
+        },
+        {
+          "key": "acceleration",
+          "value": "fail"
+        },
+        {
+          "key": "door_closed",
+          "value": "fail"
+        }
+      ],
+      "evidence": [
+        "❌모방 불가능성 — 시험용 근거 문장 <b>태그</b>는 그대로 글자로 보여야 한다"
+      ],
+      "evidence_up": [
+        "데이터센터 매출의 전년 대비 성장률이 +92% 에서 +117% 로 올랐다"
+      ],
+      "evidence_down": [
+        "직전 분기 대비 성장률은 +21% 에서 +18% 로 내렸다 — 시험용 <i>태그</i>"
+      ],
+      "three_way": true,
+      "status": "new",
+      "reviewer": "사용자",
+      "reviewed_at": "2026-10-01",
+      "edit_kind": "criteria",
+      "revisions": 1,
+      "last_revision_session": "agent"
+    },
+    {
+      "company_id": "openai",
+      "display_name": "OpenAI",
+      "factor": "F3",
+      "kind": "criteria",
+      "score": null,
+      "score_range": [
+        0,
+        5
+      ],
+      "inputs": [
+        {
+          "key": "imitation",
+          "value": "partial"
+        },
+        {
+          "key": "revenue_model",
+          "value": "pass"
+        },
+        {
+          "key": "acceleration",
+          "value": "pass"
+        },
+        {
+          "key": "door_closed",
+          "value": "fail"
+        }
+      ],
+      "evidence": [
+        "✅별도 수익모델 — 구독 매출"
+      ],
+      "evidence_up": [],
+      "evidence_down": [],
+      "three_way": false,
+      "status": "carried",
+      "reviewer": "legacy:v1.5",
+      "reviewed_at": "2026-09-02",
+      "edit_kind": "criteria",
+      "revisions": 0,
+      "last_revision_session": null
+    }
+  ],
+  "judgment_choices": {
+    "criteria": {
+      "imitation": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "revenue_model": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "acceleration": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "door_closed": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "acceleration_tier": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ]
+    },
+    "lockin": {
+      "channel_consumer": [
+        "yes",
+        "no"
+      ],
+      "channel_work": [
+        "yes",
+        "no"
+      ],
+      "channel_trade": [
+        "yes",
+        "no"
+      ],
+      "loop": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "switching": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "substitutes": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "pricing": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "durability_discount": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "ai_monetized_in_channel": [
+        "yes",
+        "partial",
+        "no",
+        "unknown"
+      ],
+      "pricing_sustained_quarters": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ]
+    },
+    "paths": {
+      "performance_leap": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "paradigm_adaptation": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "standard_capture": [
+        "pass",
+        "partial",
+        "fail",
+        "unknown"
+      ],
+      "top_rank": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "generation_gap": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "leap_independent": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "generation_gap_months": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ]
+    },
+    "grade": {
+      "A": [
+        0,
+        1,
+        2
+      ],
+      "H": [
+        0,
+        -1,
+        -2,
+        -3
+      ]
+    },
+    "matrix": {
+      "funding_dependent_share": [
+        "large",
+        "small",
+        "unknown"
+      ],
+      "own_money_returns": [
+        "yes",
+        "no",
+        "unknown"
+      ]
+    },
+    "gate_inputs": {
+      "fcf_trend": [
+        "stable",
+        "deteriorating",
+        "unknown"
+      ],
+      "bep_retreat": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "buffer_erosion": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "direction_A": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "direction_B": [
+        "pass",
+        "fail",
+        "unknown"
+      ],
+      "coverage_comparable": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "operating_result_reviewed": [
+        "profit",
+        "loss",
+        "unknown"
+      ]
+    }
+  },
+  "factor_labels": {
+    "F1": "① 락인과 가격결정력",
+    "F2": "② 신기술 게임체인저",
+    "F3": "③ Last Mover",
+    "F4": "④ 호황 이후 비전",
+    "F5": "⑤ 아군 확보",
+    "F6": "⑥ 가격",
+    "F7": "⑦ 순환금융",
+    "F8": "⑧ 비대칭 의존",
+    "F9": "⑨ 적자 깊이"
+  },
+  "proposals": [
+    {
+      "proposal_id": "PRP-001",
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F5",
+      "edit_kind": "grade",
+      "changes": [
+        {
+          "key": "H",
+          "value": -1
+        }
+      ],
+      "evidence_after": [
+        "적대 등급은 비용형이다 — 시험용 <b>태그</b> 문장(EV-nvidia-001, 별표 G)"
+      ],
+      "evidence_up_after": [
+        "주요 고객과의 공동개발이 이어진다"
+      ],
+      "evidence_down_after": null,
+      "reason": "고객이 경쟁자라는 근거가 약해졌다",
+      "evidence_ids": [
+        "EV-nvidia-001"
+      ],
+      "before": {
+        "kind": "grade",
+        "score": null,
+        "inputs": [
+          {
+            "key": "A",
+            "value": 1
+          },
+          {
+            "key": "H",
+            "value": -2
+          }
+        ],
+        "evidence": [
+          "주요 고객이 곧 경쟁자"
+        ],
+        "evidence_up": [],
+        "evidence_down": [
+          "주요 고객이 자체 칩을 만든다"
+        ]
+      },
+      "stale": false,
+      "proposed_by": "agent",
+      "proposed_at": "2026-10-01",
+      "status": "pending",
+      "decided_by": null,
+      "decided_at": null,
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-002",
+      "company_id": "nvidia",
+      "display_name": "NVIDIA",
+      "factor": "F1",
+      "edit_kind": "lockin",
+      "changes": [
+        {
+          "key": "reconfirmed",
+          "value": {
+            "evidence_ids": [
+              "EV-nvidia-001",
+              "EV-nvidia-002"
+            ]
+          }
+        }
+      ],
+      "evidence_after": null,
+      "evidence_up_after": null,
+      "evidence_down_after": null,
+      "reason": "10월 근거를 다시 읽었고 네 질문 판정은 그대로다",
+      "evidence_ids": [
+        "EV-nvidia-001",
+        "EV-nvidia-002"
+      ],
+      "before": {
+        "kind": "lockin",
+        "score": null,
+        "inputs": [
+          {
+            "key": "channel_consumer",
+            "value": "no"
+          },
+          {
+            "key": "channel_work",
+            "value": "yes"
+          },
+          {
+            "key": "channel_trade",
+            "value": "no"
+          },
+          {
+            "key": "loop",
+            "value": "pass"
+          },
+          {
+            "key": "switching",
+            "value": "partial"
+          },
+          {
+            "key": "substitutes",
+            "value": "partial"
+          },
+          {
+            "key": "pricing",
+            "value": "pass"
+          },
+          {
+            "key": "pricing_sustained_quarters",
+            "value": 9
+          },
+          {
+            "key": "durability_discount",
+            "value": "yes"
+          },
+          {
+            "key": "ai_monetized_in_channel",
+            "value": "yes"
+          }
+        ],
+        "evidence": [
+          "NVIDIA ① 은 업무 채널에서 회수 루프가 통과다"
+        ],
+        "evidence_up": [],
+        "evidence_down": []
+      },
+      "stale": false,
+      "proposed_by": "agent",
+      "proposed_at": "2026-10-09",
+      "status": "pending",
+      "decided_by": null,
+      "decided_at": null,
+      "decision_note": null
+    }
+  ],
+  "hashes": {
+    "rules": "345c3353372d0f95d98eef5ed918c31e7a3f7878185a24f1e4edfa9870d58d21",
+    "observations": "02dcd2ab605542d8bb2b14a2f956eb4d38d4e764df409087bec2c67409f53b05",
+    "judgments": "2403fb3748edd85310c299ef3022ae756a6a25f2f5664db1f05ab767ebf325d6",
+    "run": "71a83f40e92ea8969da919e9a07ff9561cd60b72e6b934a1d2678367922129be",
+    "results": "4a3f6c05b206ef81f370ac7765a1a948fe1e9cf6d1999c142bac4f124e04910b",
+    "draft": "94215e94def972072ea280547adfcb3acbf11241fcfb2d2a1e1e69c64ad64dfb",
+    "sources": "8a7c2b3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b",
+    "evidence": "1f2e3d4c5b6a7089123456789abcdef0123456789abcdef0123456789abcdef0",
+    "triggers": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+  },
+  "approval_ready": {
+    "ready": true,
+    "blockers": []
+  },
+  "approval": {
+    "exists": false,
+    "valid": false,
+    "approved_by": null,
+    "approved_at": null
+  }
+}

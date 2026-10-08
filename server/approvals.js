@@ -13,6 +13,9 @@ const EDIT_KIND_LABELS = {
   grade: '등급(A·H)',
   matrix: '매트릭스',
   gate_inputs: '게이트 입력',
+  // 2026-10-08 규칙 v2.0: ① 은 채널과 네 질문, ② 는 경로 입력을 고친다.
+  lockin: '채널과 네 질문(lockin)',
+  paths: '경로 입력(paths)',
 };
 // 2026-10-01 사용자 요청(가독성): factor 코드만으로는 뜻을 알 수 없다. 이름과 핵심 판별 질문을 함께 보인다.
 // 출처는 docs/scorecard/rules.md 3·4절의 각 항목 "핵심 질문"이다(2026-10-06 전에는 옛 규칙 v1.7 문서의 factor 표).
@@ -27,6 +30,22 @@ const FACTOR_GUIDE = {
   F8: { label: '⑧ 비대칭 의존', group: 'trap', question: '끊기면 매출이 주나, 회사가 멈추나? 공급자가 곧 경쟁자인가' },
   F9: { label: '⑨ 적자 깊이', group: 'trap', question: '본업이 버나 → 현금이 새나 → 얼마나 버티나 → 약정이 덮이나' },
 };
+// 2026-10-08 규칙 v2.0: ① 이름이 "락인과 가격결정력"으로 바뀌고 네 질문 사다리로 계산한다. summary 의 factor_labels(규칙의 label)를
+// 우선 쓰고, ① 라벨이 위의 옛 라벨과 다르면 아래 질문을 보인다(옛 실행의 승인 페이지는 지금 문구 그대로다).
+const LOCKIN_F1_QUESTION = '가격을 올려도 남는가? 가장 강한 채널에 회수 루프·전환비용·대체 공급·가격 실측 네 질문을 판정하고 규칙이 사다리로 점수를 낸다';
+// 지금 그리는 페이지의 안내. renderSummaryPage 가 페이지마다 summary 로 다시 세운다(렌더는 동기라 요청끼리 섞이지 않는다).
+let factorGuide = FACTOR_GUIDE;
+
+function guideFor(labels) {
+  if (!labels || typeof labels !== 'object') return FACTOR_GUIDE;
+  const out = {};
+  for (const f of Object.keys(FACTOR_GUIDE)) {
+    const label = typeof labels[f] === 'string' && labels[f] ? labels[f] : FACTOR_GUIDE[f].label;
+    out[f] = Object.assign({}, FACTOR_GUIDE[f], { label });
+  }
+  if (out.F1.label !== FACTOR_GUIDE.F1.label) out.F1.question = LOCKIN_F1_QUESTION;
+  return out;
+}
 const CHANNEL_LABELS = {
   disclosure: '공시',
   press: '언론 보도',
@@ -40,7 +59,8 @@ const CHANNEL_LABELS = {
 // 이어받은 기준선 판단·트리거 문장에 남은 "별표 X" 는 화면에서 새 이름으로 바꿔 같은 풀이에 연결한다.
 const RULES_DOC = 'docs/scorecard/rules.md';
 const GLOSSARY = {
-  'star-A': { term: '① 채널 규칙', text: '① 은 회사의 모든 실질 채널(소비자·업무·거래·부품)을 보고 가장 강한 락인으로 매긴다. 얕은 채널이 깊은 채널을 깎지 않는다. (채점 규칙 3절 ①)' },
+  // 2026-10-08 규칙 v2.0 의 ① 절에 맞췄다. 채널은 소비자·업무·거래 셋이고 채널 유형만으로 상한을 두지 않는다.
+  'star-A': { term: '① 채널 규칙', text: '① 은 회사의 실질 채널(소비자·업무·거래) 가운데 가장 강한 채널에 네 질문을 판정한다. 회수 루프(사용자가 늘수록 기존 사용자 편익이 커지는가), 전환비용(대체재가 있는데도 고객이 남는가), 대체 공급(대체재가 출하되고 격차가 좁은가), 가격 실측(올리거나 유지한 가격에 고객이 8개 분기 이상 남았는가)이다. 고객이 조직인 공급자는 업무 채널로 보고, 채널 유형만을 이유로 상한을 두지 않는다. 얕은 채널이 깊은 채널을 깎지 않는다. (채점 규칙 3절 ①)' },
   'star-B': { term: '③ 두 동작 규칙', text: '③ 은 "안 만든 자" 에게 주는 점수가 아니다. 선두가 못 따라 하는 방식으로 들어가기와, 내 뒤 진입로를 닫기 두 동작을 본다. (채점 규칙 3절 ③)' },
   'star-C': { term: '⑤ 적대 성격 규칙', text: '⑤ 의 적대세력은 수가 아니라 성격을 본다. 고객이 적이 되면 존립 위협이고, 규제기관·경쟁사 소송은 비용이다. (채점 규칙 3절 ⑤)' },
   'star-D': { term: '계획 0점 원칙', text: '미래 계획은 현재 점수에 넣지 않는다. 출하·매출·채택처럼 지금 측정되는 것만 세고, 계획·발표·예정은 0 이다. (채점 규칙 2.1)' },
@@ -97,14 +117,14 @@ function renderGlossary() {
 
 function factorLabel(f) {
   if (f === 'SUMMARY') return '한 줄 요약';   // 2026-10-06: 기업 요약 제안(factor 가 아니다)
-  return FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].label : String(f);
+  return factorGuide[f] ? factorGuide[f].label : String(f);
 }
 
 function factorChips(list) {
   const factors = Array.isArray(list) ? list : [];
   return factors.map((f) => {
-    const g = FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].group : 'other';
-    return `<span class="fchip fchip-${g}" title="${escapeHtml(FACTOR_GUIDE[f] ? FACTOR_GUIDE[f].question : '')}">${escapeHtml(factorLabel(f))}</span>`;
+    const g = factorGuide[f] ? factorGuide[f].group : 'other';
+    return `<span class="fchip fchip-${g}" title="${escapeHtml(factorGuide[f] ? factorGuide[f].question : '')}">${escapeHtml(factorLabel(f))}</span>`;
   }).join(' ');
 }
 
@@ -118,7 +138,7 @@ function formatKst(iso) {
 }
 
 function renderFactorBar() {
-  const items = Object.keys(FACTOR_GUIDE).map((f) => `<div class="factor-item">${factorChips([f])}<span class="fq">${escapeHtml(FACTOR_GUIDE[f].question)}</span></div>`).join('');
+  const items = Object.keys(factorGuide).map((f) => `<div class="factor-item">${factorChips([f])}<span class="fq">${escapeHtml(factorGuide[f].question)}</span></div>`).join('');
   return `
   <nav class="factor-bar" aria-label="factor 안내">
     <details open>
@@ -283,6 +303,30 @@ const INPUT_LABELS = {
   direction_B: { label: '방향 B (게이트 1 완화)', help: '매출 성장률이 비용 성장률보다 큰가' },
   fcf_trend: { label: 'FCF 추세 (게이트 2)', help: '최근 1년 잉여현금흐름이 흑자일 때 그 추세가 안정적인가' },
   coverage_comparable: { label: '커버리지 비교 가능 (게이트 4)', help: '약정 지출과 계약 수입을 같은 범위로 비교할 수 있는가' },
+  // 2026-10-08 규칙 v2.0 ① 락인과 가격결정력(lockin). 문장은 docs/scorecard/rules.md 3절 ① 에서 왔다.
+  channel_consumer: { label: '소비자 채널', help: '개인 소비자 채널이 매출·사용자에 유의미하게 기여하는가' },
+  channel_work: { label: '업무 채널', help: '조직 고객 채널이 유의미한가. 칩·파운드리·클라우드 인프라·기업 소프트웨어처럼 고객이 조직인 공급자도 업무 채널이다' },
+  channel_trade: { label: '거래 채널', help: '거래 채널(API 단가·장터)이 매출·사용자에 유의미하게 기여하는가' },
+  loop: { label: '회수 루프', help: '사용자·개발자가 늘수록 기존 사용자의 편익이 커지는가(네트워크 효과). 충족은 두 변이 서로 끌어당기고 참여자가 늘고 있음' },
+  switching: { label: '전환비용', help: '충족은 비교 가능한 대체재가 있는데도 고객이 남는 것이 관측됨(관계 수준), 절반은 지금 설계·계약 동안만 묶임, 미충족은 이탈 관측' },
+  substitutes: { label: '대체 공급', help: '충족은 동급 대체재가 없거나 격차가 큼, 절반은 출하되지만 격차가 남음, 미충족은 대체재가 출하 중이고 격차가 좁음(−1)' },
+  pricing: { label: '가격 실측', help: '가격을 올리거나 할인 없이 유지했는데 고객이 남았는가. 충족은 8개 분기 이상 유지(+1), 미충족은 인상 뒤 이탈·가격 인하(−1)' },
+  pricing_sustained_quarters: { label: '가격 실측 지속 분기 수', help: '인상된 가격이나 총마진이 유지된 분기 수. 충족에는 8 이상이 필요하다' },
+  durability_discount: { label: '지속성 할인', help: '10-K 공시 매출 10% 이상 고객이 있고 그 고객의 자체 대체재가 출하 중(발표가 아니라 출하)이면 예(−1)' },
+  ai_monetized_in_channel: { label: 'AI 수익화', help: '가장 강한 채널 안에서 AI 가 수익화되고 있는가. 점수에 들어가지 않고 리포트에 표시한다' },
+  // 2026-10-08 규칙 v2.0 ② 신기술 게임체인저(paths). 문장은 rules.md 3절 ② 에서 왔다.
+  performance_leap: { label: '성능 도약', help: '벤치마크에서 세대 격차를 만드는가. 벤더 발표만 있으면 통과로 적어도 부분 통과로 계산한다' },
+  paradigm_adaptation: { label: '패러다임 적응', help: '남이 바꾼 판(에이전트·추론·코딩)에 빨리 올라탔는가' },
+  standard_capture: { label: '표준 선점', help: '산업 인터페이스를 정의하는가' },
+  top_rank: { label: '종합 지수 1위', help: '종합 지수에서 1위인가. 5점 자격은 이 값이 아니라 세대 격차로 정한다' },
+  generation_gap: { label: '세대 격차', help: '세 축(종합 지능·에이전트 실무·코딩) 가운데 두 축 이상에서 독립 측정 1위이고, 2위가 따라오는 데 모델 6개월·칩·파운드리 12개월 이상 걸렸는가' },
+  generation_gap_months: { label: '세대 격차 개월 수', help: '2위가 그 수준에 도달하는 데 걸린 개월 수. 임계는 모델 6개월, 칩·파운드리 12개월(대량 출하 기준)' },
+  leap_independent: { label: '독립 측정', help: '성능 도약 주장이 독립 측정으로 확인됐는가. 아니면 성능 도약을 통과로 적어도 부분 통과로 계산한다' },
+  // 2026-10-08 규칙 v2.0 ③ 가속도 지표 단계. 문장은 rules.md 3절 ③ 의 단계 표에서 왔다.
+  acceleration_tier: { label: '가속도 지표 단계', help: 'a 매출 전부가 AI · b AI 지배 세그먼트·제품선 · c 대리 지표(최대 절반) · d AI 제품 사용량 시계열 · e 없음(점수 없음)' },
+  acceleration_growth_rates: { label: '가속도 성장률 두 개', help: '같은 정의의 성장률 두 개(수준값 세 개)' },
+  // 2026-10-08 규칙 v2.0(rules.md 2.9): 판정 값을 바꾸지 않고 다시 읽은 근거를 남기는 재확인 기록.
+  reconfirmed: { label: '재확인', help: '다시 읽었으나 판정 값을 바꾸지 않았다. 다시 읽은 근거 ID 를 날짜·검토자와 함께 남긴다' },
 };
 const VALUE_LABELS = {
   pass: '충족', partial: '절반', fail: '미충족', unknown: '모름', yes: '예', no: '아니오',
@@ -294,9 +338,14 @@ function inputLabel(key) {
   return INPUT_LABELS[key] ? INPUT_LABELS[key].label : key;
 }
 
-function valueText(v) {
+// 2026-10-08 규칙 v2.0: 분기·개월 수(pricing_sustained_quarters·generation_gap_months)도 숫자 값이다. 양수에 + 를 붙이는 것은
+// 등급처럼 더하는 값에만 한다. key 를 주지 않는 자리는 지금처럼 붙인다.
+const COUNT_KEYS = new Set(['pricing_sustained_quarters', 'generation_gap_months']);
+
+function valueText(v, key) {
   const s = String(v);
   if (VALUE_LABELS[s]) return VALUE_LABELS[s];
+  if (COUNT_KEYS.has(key)) return s;
   return /^[0-9]+$/.test(s) && s !== '0' ? `+${s}` : s;
 }
 
@@ -309,7 +358,7 @@ function judgmentValueHtml(j) {
     return `<div class="judge-value"><strong>점수 ${escapeHtml(j.score)}</strong>${range}</div>${note}`;
   }
   const inputs = Array.isArray(j.inputs) ? j.inputs : [];
-  const parts = inputs.map((pr) => `<span class="judge-input"><span class="muted">${escapeHtml(inputLabel(pr.key))}</span> <strong>${escapeHtml(valueText(pr.value))}</strong></span>`).join('');
+  const parts = inputs.map((pr) => `<span class="judge-input"><span class="muted">${escapeHtml(inputLabel(pr.key))}</span> <strong>${escapeHtml(valueText(pr.value, pr.key))}</strong></span>`).join('');
   let total = '';
   if (j.kind === 'grade') {
     const map = Object.fromEntries(inputs.map((pr) => [pr.key, Number(pr.value)]));
@@ -339,7 +388,7 @@ function renderJudgeForm(runId, j, choices, formId) {
     fields = Object.keys(keys).map((key) => {
       const has = Object.prototype.hasOwnProperty.call(current, key);
       const opts = (has ? '' : '<option value="">(값 없음 — 고르지 않으면 바꾸지 않음)</option>')
-        + keys[key].map((v) => `<option value="${escapeHtml(v)}"${has && current[key] === String(v) ? ' selected' : ''}>${escapeHtml(valueText(v))}${VALUE_LABELS[String(v)] ? ` (${escapeHtml(v)})` : ''}</option>`).join('');
+        + keys[key].map((v) => `<option value="${escapeHtml(v)}"${has && current[key] === String(v) ? ' selected' : ''}>${escapeHtml(valueText(v, key))}${VALUE_LABELS[String(v)] ? ` (${escapeHtml(v)})` : ''}</option>`).join('');
       const help = INPUT_LABELS[key] && INPUT_LABELS[key].help ? `<div class="field-help">${escapeHtml(INPUT_LABELS[key].help)}</div>` : '';
       return `
         <div class="form-group">
@@ -398,9 +447,14 @@ function proposalChangeHtml(pr) {
   const beforeInputs = pairsToMap(before.inputs);
   const changes = Array.isArray(pr.changes) ? pr.changes : [];
   const rows = changes.map((c) => {
+    // 2026-10-08 규칙 v2.0(rules.md 2.9): 재확인 제안은 판정 값을 바꾸지 않고 다시 읽은 근거 ID 를 남긴다. 값이 객체라 따로 그린다.
+    if (c.key === 'reconfirmed') {
+      const ids = c.value && Array.isArray(c.value.evidence_ids) ? c.value.evidence_ids : [];
+      return `<li><span class="muted">${escapeHtml(inputLabel(c.key))}</span> — 다시 읽은 근거 <strong class="to">${escapeHtml(ids.join(' · ') || '없음')}</strong></li>`;
+    }
     const from = c.key === 'score' ? before.score : beforeInputs[c.key];
     const label = c.key === 'score' ? '점수' : inputLabel(c.key);
-    return `<li><span class="muted">${escapeHtml(label)}</span> <strong>${escapeHtml(from === undefined || from === null ? '없음' : valueText(from))}</strong> → <strong class="to">${escapeHtml(valueText(c.value))}</strong></li>`;
+    return `<li><span class="muted">${escapeHtml(label)}</span> <strong>${escapeHtml(from === undefined || from === null ? '없음' : valueText(from, c.key))}</strong> → <strong class="to">${escapeHtml(valueText(c.value, c.key))}</strong></li>`;
   }).join('');
   let total = '';
   if (before.kind === 'grade' || pr.edit_kind === 'grade') {
@@ -522,7 +576,7 @@ function renderJudgeSection(data, judgeFactor, judgeCompany, termCtx) {
   const ctx = termCtx || { runId, companyNames: {} };
   const tabs = editable.map((e) => `<button type="button" class="judge-tab" data-judge-tab="${escapeHtml(e.factor)}" aria-selected="${e.factor === active}">${escapeHtml(factorLabel(e.factor))}</button>`).join('');
   const panels = editable.map((e) => {
-    const guide = FACTOR_GUIDE[e.factor];
+    const guide = factorGuide[e.factor];
     const cards = judgments.filter((j) => j.factor === e.factor).map((j) => {
       const selected = j.factor === judgeFactor && j.company_id === judgeCompany;
       const formId = selected ? 'judge-form' : `judge-form-${j.factor}-${j.company_id}`;
@@ -618,6 +672,7 @@ function buildJudgeArgs(runId, params) {
 
 function renderSummaryPage(data, options = {}) {
   const { lastResult, notice, judgeFactor, judgeCompany } = options;
+  factorGuide = guideFor(data.factor_labels);
   const runId = data.run_id || '';
   const asOf = data.as_of || '-';
   const ruleVersion = data.rule_version || '-';

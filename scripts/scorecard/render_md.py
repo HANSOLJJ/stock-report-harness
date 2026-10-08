@@ -8,7 +8,7 @@ from report_contract_lib import rel
 from .paths import run_paths
 
 from . import render_common as rc
-from .render_common import FACTOR_LABELS, fmt_num, fmt_usd
+from .render_common import fmt_num, fmt_usd
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS
 
 # 2026-09-17 FIX-78 S1: `승계` 가 근거 머리줄의 `사용자의 판단` 과 **같은 화면에** 있어 둘이
@@ -83,7 +83,7 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
         ("rule_version", rules.version), ("rule_hash", rules.hash), ("baseline_id", run["baseline_id"]),
         ("companies", run["companies"]), ("created_at", run["created_at"]), ("assumptions", run["assumptions"]),
     ])
-    factor_rows = [[FACTOR_LABELS[f], rules.factor(f)["mode"], f"{rules.factor(f)['range'][0]}~{rules.factor(f)['range'][1]}", ", ".join(rules.factor(f).get("decision_ids", [])) or "—"] for f in FACTOR_IDS]
+    factor_rows = [[rc.factor_label(rules, f), rules.factor(f)["mode"], f"{rules.factor(f)['range'][0]}~{rules.factor(f)['range'][1]}", ", ".join(rules.factor(f).get("decision_ids", [])) or "—"] for f in FACTOR_IDS]
     company_rows = [[cid, companies[cid]["display_name"], companies[cid]["type"], "상장" if companies[cid]["listed"] else "비상장", companies[cid]["scope"]] for cid in run["companies"]]
     pending = [d for d in rules.pending_decisions() if d.get("blocking")]
     decision_rows = [[d["id"], d["summary"], ", ".join(d.get("affects", [])), next((r["choice"] for r in run["decisions"] if r["id"] == d["id"]), "미결")] for d in pending]
@@ -160,7 +160,7 @@ def _evidence_lines(ctx: Any) -> list[str]:
             url = urls.get(e["source_id"])
             title = f"[{e['title']}]({url})" if url else e["title"]
             relevance = e["relevance"] if e["relevance"].startswith("(추론)") else f"(추론) {e['relevance']}"
-            rows.append([e["evidence_id"], ", ".join(FACTOR_LABELS[f] for f in e["factors"]), e["kind"], title,
+            rows.append([e["evidence_id"], ", ".join(rc.factor_label(ctx.rules, f) for f in e["factors"]), e["kind"], title,
                          e["published_at_utc"] or "—", e.get("status", "candidate"), relevance])
         lines += [f"### {ctx.companies[cid]['display_name']}", "",
                   table(["근거 ID", "Factor", "종류", "제목", "발행시각(UTC)", "상태", "관련성"], rows), ""]
@@ -175,7 +175,7 @@ TRIGGER_C14_NOTE = "트리거는 미래 점수를 저장하지 않는다(C-14). 
 def active_trigger_rows(ctx: Any) -> tuple[list[list[str]], int]:
     """triggers.json 의 감시 중(watching) 트리거 행과 그 밖의 상태 건수. 연구·초안·HTML 이 같은 열을 쓴다."""
     active = sorted((t for t in ctx.triggers if t["status"] == "watching"), key=lambda t: t["trigger_id"])
-    rows = [[t["trigger_id"], ctx.companies[t["company_id"]]["display_name"], ", ".join(FACTOR_LABELS[f] for f in t["factors"]),
+    rows = [[t["trigger_id"], ctx.companies[t["company_id"]]["display_name"], ", ".join(rc.factor_label(ctx.rules, f) for f in t["factors"]),
              t["observation"], t["condition"], t["deadline"], ", ".join(t["evidence_ids"]) or "—", t["recheck"]["what"]]
             for t in active]
     return rows, len(ctx.triggers) - len(active)
@@ -234,7 +234,7 @@ def _carry_lines(ctx: Any, previous: list[dict[str, Any]] | None) -> list[str]:
                     state = "이번 실행에서 수정함"
                 else:
                     state = "수정하지 않음 — 유지 이유를 리뷰에서 확인"
-                rows.append([trg["trigger_id"], ctx.companies[trg["company_id"]]["display_name"], FACTOR_LABELS[factor],
+                rows.append([trg["trigger_id"], ctx.companies[trg["company_id"]]["display_name"], rc.factor_label(ctx.rules, factor),
                              trg["recheck"]["what"], state])
         lines += ["### 발동 트리거 재검토 대상", "", table(["트리거", "기업", "Factor", "다시 볼 것", "이번 실행"], rows), ""]
     return lines
@@ -281,7 +281,7 @@ def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[d
         rows = []
         for j in sorted(by_c_j.get(cid, []), key=lambda x: x["factor"]):
             inputs = ", ".join(f"{k}={v}" for k, v in j["inputs"].items()) or "—"
-            rows.append([FACTOR_LABELS[j["factor"]], j["kind"], fmt_score(j["score"]), inputs, j["status"], f"{j['reviewer']} {j['reviewed_at']}", (j.get("note") or "")[:80]])
+            rows.append([rc.factor_label(ctx.rules, j["factor"]), j["kind"], fmt_score(j["score"]), inputs, j["status"], f"{j['reviewer']} {j['reviewed_at']}", (j.get("note") or "")[:80]])
         lines += [f"### {company['display_name']}", "", table(["Factor", "종류", "점수", "입력", "상태", "검토", "비고"], rows), ""]
     lines += _evidence_lines(ctx)
     lines += _trigger_lines(ctx, legacy_triggers)
@@ -297,7 +297,7 @@ def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[d
     for j in ctx.judgments:
         unknowns = [k for k, v in j["inputs"].items() if v == "unknown"]
         if unknowns:
-            pending_rows.append([j["company_id"], FACTOR_LABELS[j["factor"]], "unknown 입력", ", ".join(unknowns)])
+            pending_rows.append([j["company_id"], rc.factor_label(ctx.rules, j["factor"]), "unknown 입력", ", ".join(unknowns)])
     legacy = sum(1 for o in ctx.observations if o["status"] == "legacy_unverified")
     lines += [table(["기업", "항목", "상태", "내용"], pending_rows) if pending_rows else "- 없음", "",
               f"- legacy_unverified 관측 {legacy}건은 기준선 열람용이며 이번 실행에서 재검증되지 않았다.",
@@ -307,10 +307,12 @@ def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[d
 
 # ------------------------------------------------------------------ draft
 
-def _factor_row(f: str, fr: dict[str, Any]) -> list[Any]:
+def _factor_row(f: str, fr: dict[str, Any], rules: Any = None, inputs: dict[str, Any] | None = None,
+                company_type: str | None = None) -> list[Any]:
     # 2026-09-15 FIX-54 1단계 S3: 산식 텍스트를 HTML 과 같은 함수로. v1.7 parameters(P1~P4)가 초안에서도 비어 있었다.
-    return [FACTOR_LABELS[f], fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), rc.BASIS_LABELS.get(fr["basis"], fr["basis"]),
-            rc.rename_codes(rc.factor_calc_text(f, fr))]
+    # 2026-10-08 규칙 v2.0: 항목 이름을 규칙에서 읽고, 판단 입력(① 네 질문·② 세대 격차·③ 지표 단계)을 카드와 같은 산식 줄에 싣는다.
+    return [rc.factor_label(rules, f), fmt_score(fr["score"]), STATUS_LABEL.get(fr["status"], fr["status"]), rc.BASIS_LABELS.get(fr["basis"], fr["basis"]),
+            rc.rename_codes(rc.factor_calc_text(f, fr, rules, inputs, company_type))]
 
 
 def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]]) -> str:
@@ -373,7 +375,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     lines += [table(["순위", "기업", "①", "②", "③", "④", "⑤", "과점", "⑥", "⑦", "⑧", "⑨", "함정", "조정총점"], rows,
                     ["---:", "---"] + ["---:"] * 12), ""]
     if population["incomplete"]:
-        inc_rows = [[i["display_name"], fmt_score(i["moat"]), fmt_score(i["trap"]), "; ".join(f"{FACTOR_LABELS[p['factor']]} {STATUS_LABEL.get(p['status'], p['status'])}" + (f"({p['decision_id']})" if p.get("decision_id") else "") for p in i["reasons"])] for i in population["incomplete"]]
+        inc_rows = [[i["display_name"], fmt_score(i["moat"]), fmt_score(i["trap"]), "; ".join(f"{rc.factor_label(ctx.rules, p['factor'])} {STATUS_LABEL.get(p['status'], p['status'])}" + (f"({p['decision_id']})" if p.get("decision_id") else "") for p in i["reasons"])] for i in population["incomplete"]]
         lines += ["미완료(순위 제외):", "", table(["기업", "과점(부분)", "함정(부분)", "대기 사유"], inc_rows), ""]
     # 기업별 상세
     lines += ["## 기업별 상세", ""]
@@ -391,7 +393,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         if summary:
             lines += [f"> {summary}", ""]
-        lines += [table(["Factor", "점수", "상태", "근거 종류", "산식·경로"], [_factor_row(f, c["factors"][f]) for f in FACTOR_IDS]), ""]
+        lines += [table(["Factor", "점수", "상태", "근거 종류", "산식·경로"],
+                       [_factor_row(f, c["factors"][f], ctx.rules,
+                                    (judgments_by_id.get(c["factors"][f].get("judgment_id") or "") or {}).get("inputs"), c["type"])
+                        for f in FACTOR_IDS]), ""]
         incompatible_g4 = rc.g4_incompatible(ctx.observations, c["company_id"])
         for f in FACTOR_IDS:
             fr = c["factors"][f]
@@ -399,7 +404,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             block = rc.evidence_block(fr, judgments_by_id, base_evidence, run["baseline_id"], c["company_id"], reps,
                                       run_created=run.get("created_at"))
             if block is not None:
-                lines.append(f"- **{FACTOR_LABELS[f]}** {block['header']}:")
+                lines.append(f"- **{rc.factor_label(ctx.rules, f)}** {block['header']}:")
                 # 2026-09-17 FIX-67: 근거 문장에 번호가 데이터로 들어 있다. 초안도 HTML 과 같은 이름을 쓴다.
                 if block.get("three_way"):
                     # 2026-10-07 사용자 지시: 세 칸 판단은 판정·올릴 근거·내릴 근거를 소제목으로 나눈다. 빈 칸은 '없음'.
@@ -417,7 +422,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             notes = rc.factor_notes(ctx, f, fr)      # 사유가 앞에 오도록 factor_notes 가 정렬해 준다
             if notes and block is None:
                 # 2026-10-07 출력 리뷰: 근거 블록이 없는 항목(관측에서 계산한 ⑥ 등)의 사유가 앞 항목 아래에 붙었다.
-                lines.append(f"- **{FACTOR_LABELS[f]}**:")
+                lines.append(f"- **{rc.factor_label(ctx.rules, f)}**:")
             for n in notes:
                 lines.append(f"  - {rc.NOTE_KINDS[n['kind']]} — {n['text']}")
         lines.append("")
@@ -434,7 +439,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         # 2026-09-15 FIX-54 2단계: 'undrawn_credit 관측이 있어 선택에 따라 런웨이가 달라질 수 있다' 는 실제 동작과 달랐다(RC3-06).
         f"- {rc.c04_line(ctx)}",
         "",
-        table(["Factor", "자동화", "범위"], [[FACTOR_LABELS[f], ctx.rules.factor(f)["mode"], f"{ctx.rules.factor(f)['range'][0]}~{ctx.rules.factor(f)['range'][1]}"] for f in FACTOR_IDS]),
+        table(["Factor", "자동화", "범위"], [[rc.factor_label(ctx.rules, f), ctx.rules.factor(f)["mode"], f"{ctx.rules.factor(f)['range'][0]}~{ctx.rules.factor(f)['range'][1]}"] for f in FACTOR_IDS]),
         "",
         # 2026-09-15 FIX-52: v1.5 문구(NTM PER 구간표 · 하한 -5)가 박혀 있었다. FIX-54 에서 HTML 과 같은 목록(render_common)으로 옮겼다.
     ]
@@ -586,12 +591,17 @@ def render_review_template(ctx: Any, results: dict[str, Any], *, draft_hash: str
         ("review_type", "separate-session-4way"), ("review_execution", "separate_subagent_sessions"),
         ("reviewers", [f"{key}: pending" for key, _, _ in REVIEW_AREAS]),
     ])
+    # 2026-10-08 규칙 v2.0(rules.md 2.9): 승계 판단 예외는 기업 추가 실행에만 쓴다. 재판단 조항이 있는 규칙의 실행에서만 그 한정을 적는다.
+    extend_only = bool(((ctx.rules.payload.get("policies") or {}).get("rejudge") or {}).get("review_carried_exception_only_in_extend_runs"))
+    exception_head = ("**승계 판단 예외(AGENTS.md 리뷰 범위 · 기업 추가 실행에만, rules.md 2.9)** — 정기 실행에서는 체크리스트 fail 이 하나라도 "
+                      "있으면 `status: pass` 가 아니다. 기업 추가 실행에서는 체크리스트 fail 의 사유가"
+                      if extend_only else "**승계 판단 예외(AGENTS.md 리뷰 범위)** — 체크리스트 fail 의 사유가")
     lines = [f"# 리뷰 — {ctx.run['title']}", "",
              "각 영역은 가능하면 독립 세션에서 검토하고 실제 수행자·결과를 남긴다. 수행하지 않은 검토를 pass 로 표시하지 않는다.", "",
              "## 검토 영역", "",
              table(["영역", "검토 대상", "검토자", "결과", "요약"], [[label, scope, "", "pending", ""] for _, label, scope in REVIEW_AREAS]), "",
              "결과는 pass / needs_fix / blocked 중 하나. 네 영역이 모두 pass 이고 체크리스트에 fail 이 없을 때만 frontmatter `status: pass`.",
-             "**승계 판단 예외(AGENTS.md 리뷰 범위)** — 체크리스트 fail 의 사유가 `carried_score` 로 승계한 판단의 기존 논리이고, 이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며, 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 이때 해당 fail 과 **긴장 번호**(예: `TEN-RC-02`)를 근거 칸에 그대로 적는다. 이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다 — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(Q03).", "",
+             exception_head + " `carried_score` 로 승계한 판단의 기존 논리이고, 이번 실행이 그 판단에 쓰인 잣대를 바꾸지 않았으며, 규칙 파일 `open_tensions` 에 재검토 시점과 함께 등록됐다면 `status: pass` 를 막지 않는다. 이때 해당 fail 과 **긴장 번호**(예: `TEN-RC-02`)를 근거 칸에 그대로 적는다. 이번 실행이 바꾼 잣대가 닿는 승계 판단은 이 예외가 아니다 — 한 회사에 새 잣대를 댔으면 같은 잣대가 닿는 모든 회사에 대야 한다(Q03).", "",
              "## 체크리스트", "",
              table(["ID", "검사 초점", "결과", "근거"], [[q["id"], q["focus"], "pending", ""] for q in ctx.rules.checklist()]), "",
              "결과는 pass / fail / not_applicable. not_applicable 도 근거가 필요하다.", "",
@@ -616,11 +626,11 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
             new = c["factors"][f]["score"]
             old = (b or {}).get("scores", {}).get(f)
             if b and new is not None and old is not None and new != old:
-                changed.append(f"{FACTOR_LABELS[f]} {old}→{new}")
+                changed.append(f"{rc.factor_label(ctx.rules, f)} {old}→{new}")
             elif new is None:
-                changed.append(f"{FACTOR_LABELS[f]} 대기")
+                changed.append(f"{rc.factor_label(ctx.rules, f)} 대기")
         rows.append([c["display_name"], f"{fmt_score((b or {}).get('total'))} / {fmt_score((b or {}).get('rank_raw'))}", f"{fmt_score(c['total'])} / {fmt_score(c['rank'])}",
-                     "; ".join(changed) or "변경 없음", ", ".join(FACTOR_LABELS[f] for f in c["carried_factors"]) or "—"])
+                     "; ".join(changed) or "변경 없음", ", ".join(rc.factor_label(ctx.rules, f) for f in c["carried_factors"]) or "—"])
     lines += [table(["기업", "기준선 조정/순위", "이번 조정/순위", "변경·대기 factor", "승계 점수"], rows), ""]
     if results["pending_rule_decisions"]:
         lines += ["## 필요한 규칙 결정", ""]
@@ -671,7 +681,7 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
                     else:
                         cause = "📐 규칙"
                     causes[cause] = causes.get(cause, 0) + 1
-                    diffs.append(f"{FACTOR_LABELS[f]} {fmt_score(old)}→{fmt_score(new)} ({cause})")
+                    diffs.append(f"{rc.factor_label(ctx.rules, f)} {fmt_score(old)}→{fmt_score(new)} ({cause})")
                 if diffs or p.get("total") != c["total"] or p.get("rank") != c["rank"]:
                     prow.append([c["display_name"], f"{fmt_score(p.get('total'))} / {fmt_score(p.get('rank'))}",
                                  f"{fmt_score(c['total'])} / {fmt_score(c['rank'])}", "; ".join(diffs) or "factor 같음(순위만 이동)"])

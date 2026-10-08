@@ -16,7 +16,7 @@ from .inputs import ObsLookup
 from .render_csv import append_history, history_rows
 from . import render_common as rc
 from .render_common import GATE_LABELS, METHOD_LABELS, SHARE_LABELS, YESNO_LABELS, factor_calc_text, inline_html  # noqa: F401 — 테스트·호환용 재노출
-from .render_md import (DISCLAIMER, FACTOR_LABELS, REVIEW_AREAS, STATUS_LABEL, TRIGGER_C14_NOTE, TRIGGER_COLUMNS, active_trigger_rows, fmt_num,
+from .render_md import (DISCLAIMER, REVIEW_AREAS, STATUS_LABEL, TRIGGER_C14_NOTE, TRIGGER_COLUMNS, active_trigger_rows, fmt_num,
                         fmt_pct, fmt_score, fmt_usd)
 from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS, SchemaError, load_json_strict, sha256_file, validate_approval
 from .stages import approval_mismatches, current_hashes, load_baseline, lock_path
@@ -39,6 +39,11 @@ TABS = (("summary", "요약"), ("companies", "기업 상세"), ("raw", "원자�
         ("method", "방법·규칙"), ("sources", "출처"))
 def esc(value: Any) -> str:
     return html_lib.escape(str(value), quote=True)
+
+
+def _flabel(rules: Any, fid: str) -> str:
+    """항목 이름. 결정의 `affects` 처럼 항목이 아닌 값이 섞일 수 있는 자리는 그 값을 그대로 둔다(2026-10-08)."""
+    return rc.factor_label(rules, fid) if fid in rc.FACTOR_LABELS else str(fid)
 
 
 # ------------------------------------------------------------------ 색 도우미
@@ -662,6 +667,26 @@ def _previous_results(ctx: Any) -> dict[str, Any] | None:
         return None
 
 
+def _last_review(judgment: dict[str, Any]) -> str:
+    """판단을 마지막으로 본 날 — 검토일과 재확인 기록(`reconfirmed`)의 날짜 가운데 가장 늦은 것."""
+    return max([str(judgment.get("reviewed_at") or "")] + [str(r.get("at") or "") for r in judgment.get("reconfirmed") or []])
+
+
+def _closed_by_rejudge(tension: dict[str, Any], by_pair: dict[tuple[str, str], dict[str, Any]], prior_as_of: str) -> bool:
+    """쟁점이 걸린 판단이 모두 새 판단이고 이어받은 실행의 기준일 뒤에 매겨졌거나 다시 확인됐는가.
+
+    쟁점의 판단 ID(`openai.F5.impl48`)는 다시 매기면 바뀔 수 있어 (기업, 항목) 쌍으로 지금 판단을 찾는다.
+    """
+    pairs = [tuple(str(jid).split(".")[:2]) for jid in tension.get("judgment_ids") or []]
+    if not pairs:
+        return False
+    for pair in pairs:
+        j = by_pair.get(pair)   # type: ignore[arg-type]
+        if j is None or j.get("status") != "new" or _last_review(j) <= prior_as_of:
+            return False
+    return True
+
+
 def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
     """첫 화면 상자 — 이 점수들이 언제 매겨졌는지.
 
@@ -677,7 +702,8 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
     by_pair = {(j["company_id"], j["factor"]): j for j in ctx.judgments}
 
     def dates(group: list[tuple[dict[str, Any], str, dict[str, Any]]]) -> str:
-        ds = sorted({str(by_pair[(c["company_id"], fid)].get("reviewed_at") or "") for c, fid, _fr in group if (c["company_id"], fid) in by_pair} - {""})
+        # 2026-10-08: 다시 확인만 한 판단(`reconfirmed`)은 그 확인일을 검토일로 본다. 옛 판단에는 그 키가 없어 검토일 그대로다.
+        ds = sorted({_last_review(by_pair[(c["company_id"], fid)]) for c, fid, _fr in group if (c["company_id"], fid) in by_pair} - {""})
         return "" if not ds else (ds[0] if len(ds) == 1 else f"{ds[0]} ~ {ds[-1]}")
 
     def per_factor(group: list[tuple[dict[str, Any], str, dict[str, Any]]]) -> str:
@@ -688,7 +714,7 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
     # 이어지면 new 로 남는다. 그래서 이번 실행 기간(지난 실행 기준일 이후) 검토분을 따로 센다.
     prev = _previous_results(ctx)
     this_run = [(c, fid, fr) for c, fid, fr in judged
-                if prev and str(by_pair.get((c["company_id"], fid), {}).get("reviewed_at") or "") > str(prev["as_of"])]
+                if prev and _last_review(by_pair.get((c["company_id"], fid), {})) > str(prev["as_of"])]
     lines: list[str] = []
     if carried:
         judged_text = (f"기준선 이후 다시 매긴 판단은 {len(judged)}칸(검토일 {esc(dates(judged))})"
@@ -713,7 +739,18 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
         more = f" 외 {len(changed) - 12}칸" if len(changed) > 12 else ""
         lines.append(f"지난 실행(기준일 {esc(prev['as_of'])}) 대비 점수가 바뀐 칸은 <b>{len(changed)}칸</b>이다" + (f": {shown}{more}." if changed else "."))
     tens = [t for t in (ctx.rules.payload.get("open_tensions") or []) if t.get("status") == "open"]
-    if tens:
+    prior_as_of = str((ctx.run.get("continued_from") or {}).get("as_of") or "")
+    rejudge = bool((ctx.rules.payload.get("policies") or {}).get("rejudge"))
+    if tens and prior_as_of and rejudge:
+        # 2026-10-08 규칙 v2.0(rules.md 2.9): 정기 실행은 모든 판단을 다시 매긴다. 쟁점이 걸린 판단이 모두 이번 실행 기간
+        # (이어받은 실행의 기준일 뒤)에 새로 매겨졌거나 다시 확인됐으면 그 쟁점은 재판단으로 닫힌 것으로 센다.
+        # 재판단 조항(`policies.rejudge`)이 없는 옛 규칙의 실행은 쟁점을 판단과 따로 넘겼으므로 아래 옛 문장을 그대로 쓴다.
+        closed = [t for t in tens if _closed_by_rejudge(t, by_pair, prior_as_of)]
+        left = [t for t in tens if t not in closed]
+        months = sorted({str(t.get("recheck_at")) for t in left if t.get("recheck_at")})
+        lines.append(f"리뷰에서 지적된 쟁점 {len(tens)}건 가운데 이번 실행의 재판단으로 닫힌 것은 <b>{len(closed)}건</b>, "
+                     f"남은 것은 <b>{len(left)}건</b>이다" + (f". 남은 쟁점은 {esc(' · '.join(months))} 에 다시 본다." if months else "."))
+    elif tens:
         n_j = len({j for t in tens for j in (t.get("judgment_ids") or [])})
         months = sorted({str(t.get("recheck_at")) for t in tens if t.get("recheck_at")})
         lines.append(f"리뷰에서 지적됐으나 이번 실행에서 고치지 않고 재검토로 넘긴 쟁점은 <b>{len(tens)}건</b>(판단 {n_j}개)이고, "
@@ -722,9 +759,15 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
             f'data-new="{len(judged)}" data-computed="{len(computed)}"><b>이 점수는 언제 매겨졌나.</b> ' + "<br>".join(lines) + "</div>")
 
 
-def render_ranking(results: dict[str, Any]) -> str:
+def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
     rows = []
     by_id = {c["company_id"]: c for c in results["companies"]}
+    rules = ctx.rules if ctx is not None else None
+    # 2026-10-08 규칙 v2.0: ① 옆에 AI 수익화 열을 둔다(점수 밖 표시). 같은 ① 5점이라도 AI 로 가격을 올려 받은 회사와
+    # AI 없이 받은 회사가 갈리게 한다. 규칙에 그 표시 필드가 없는 옛 실행에는 열이 없다.
+    ai_spec = (((rules.factor("F1").get("display_only_inputs") or {}).get("ai_monetized_in_channel"))
+               if rules is not None else None)
+    judgments_by_id = {j["judgment_id"]: j for j in (getattr(ctx, "judgments", None) or [])}
     for r in results["ranking"]:
         c = by_id[r["company_id"]]
         f = c["factors"]
@@ -733,6 +776,11 @@ def render_ranking(results: dict[str, Any]) -> str:
         for x in MOAT_FACTORS:
             s = f[x]["score"]
             cells.append(f'<td data-k="{x}" data-v="{s}"><span class="sc bg-{score_class(s)}">{fmt_score(s)}</span></td>')
+            if x == "F1" and ai_spec:
+                j = judgments_by_id.get(f["F1"].get("judgment_id") or "")
+                ai = rc.ai_monetized(rules, rc.judgment_values(f["F1"], (j or {}).get("inputs")))
+                shown = ai[1] if ai else "—"
+                cells.append(f'<td data-k="F1ai" data-v="{esc(shown)}">{f"<span class=\"pill\">{esc(shown)}</span>" if ai else shown}</td>')
         cells.append(f'<td class="divider mono keep" data-k="moat" data-v="{r["moat"]}"><b class="big">{r["moat"]}</b></td>')
         for x in TRAP_FACTORS:
             s = f[x]["score"]
@@ -740,10 +788,12 @@ def render_ranking(results: dict[str, Any]) -> str:
         cells.append(f'<td class="mono keep b" data-k="trap" data-v="{r["trap"]}">{r["trap"]}</td>')
         cells.append(f'<td class="divider mono tot keep c-{total_class(r["total"])}" data-k="total" data-v="{r["total"]}">{r["total"]}</td>')
         rows.append(f'<tr class="row" data-company="{esc(r["company_id"])}">{"".join(cells)}</tr>')
+    ai_head = f'<th data-k="F1ai">{esc(ai_spec.get("label") or "AI 수익화")}</th>' if ai_spec else ""
     head = ('<tr><th class="keep" data-k="rank">#</th><th class="name keep" data-k="name">기업</th>'
-            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(FACTOR_LABELS[x][2:])}</th>' for x in MOAT_FACTORS)
+            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' + (ai_head if x == "F1" else "")
+                      for x in MOAT_FACTORS)
             + '<th class="divider keep" data-k="moat">과점</th>'
-            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(FACTOR_LABELS[x][2:])}</th>' for x in TRAP_FACTORS)
+            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' for x in TRAP_FACTORS)
             + '<th class="keep" data-k="trap">함정</th><th class="divider keep" data-k="total">조정총점</th></tr>')
     return f'<div class="tablewrap"><table id="mainTable"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
 
@@ -757,7 +807,7 @@ def render_incomplete(results: dict[str, Any], rules: Any) -> str:
         return (f'<h3>필요한 규칙 결정</h3><ul class="tight">{decisions}</ul>') if decisions else ""
     lis = []
     for i in items:
-        reasons = "; ".join(f"{FACTOR_LABELS[p['factor']]} {STATUS_LABEL.get(p['status'], p['status'])}" + (f" ({p['decision_id']})" if p.get("decision_id") else "") for p in i["reasons"])
+        reasons = "; ".join(f"{rc.factor_label(rules, p['factor'])} {STATUS_LABEL.get(p['status'], p['status'])}" + (f" ({p['decision_id']})" if p.get("decision_id") else "") for p in i["reasons"])
         lis.append(f'<li><b>{esc(i["display_name"])}</b> — {esc(reasons)}</li>')
     return (f'<div class="notice bad mt-14"><b>미완료 {len(items)}개사는 순위에서 제외했다.</b> 0점으로 채우지 않는다.</div>'
             f'<ul class="pending-list">{"".join(lis)}</ul>'
@@ -812,6 +862,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
     observations = observations or []
     HISTORY_BY_COMPANY.clear()   # 한 번 그릴 때마다 새로 모은다 — 두 번 부르면 쌓인다
     judgments_by_id = {j["judgment_id"]: j for j in (judgments or [])}
+    rules = ctx.rules if ctx is not None else None
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
     out = []
@@ -869,7 +920,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                     item = (f'<li class="warn {n["kind"]}"><b class="wk">{esc(rc.NOTE_KINDS[n["kind"]])}</b> '
                             f'{inline_html(n["text"])}</li>')
                     (why if n["kind"] in ("cut", "cap") else pts).append(item)
-                calc = factor_calc_text(f, fr)
+                # 2026-10-08 규칙 v2.0: 판단 입력(① 네 질문·② 세대 격차·③ 지표 단계)을 산식 줄에 싣는다.
+                calc = factor_calc_text(f, fr, rules, (judgments_by_id.get(fr.get("judgment_id") or "") or {}).get("inputs"), c["type"])
                 src = f'<div class="fsrc">{inline_html(block["header"])}</div>' if block is not None else ""
                 # 2026-09-17 FIX-77: 근거에 남은 C-번호는 **그 결정 때문에 이 점수가 됐다**는 뜻이라
                 # 지우지 않는다. 눌러서 뜻을 보는 통로는 `link_decision_codes` 가 이미 만든다 —
@@ -877,7 +929,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 body = ((f'<ul class="fpts why">{"".join(why)}</ul>' if why else "")
                         + ((src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else "")
                         + (_direction_html(block) if block is not None and block.get("three_way") else ""))
-                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(FACTOR_LABELS[f])}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
+                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(rc.factor_label(rules, f))}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
@@ -1173,7 +1225,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             lines.append(
                 f"| `{d['id']}` | {DECISION_STATUS.get(d['status'], d['status'])} | {cell(d.get('summary'))} | "
                 f"{cell(d.get('recommendation'))} | {cell(pick_txt)} | "
-                f"{cell(', '.join(rc.FACTOR_LABELS.get(f, f) for f in d.get('affects', [])))} |")
+                f"{cell(', '.join(_flabel(rules, f) for f in d.get('affects', [])))} |")
 
     # 2026-09-17 FIX-77: 기업 카드의 근거에서 내린 작업 메모. **버리지 않고 여기서 찾을 수 있게** 한다.
     if HISTORY_BY_COMPANY:
@@ -1194,7 +1246,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
                 if key in seen or not key[1]:
                     continue
                 seen.add(key)
-                lines.append(f"| `{cid}` | {rc.FACTOR_LABELS.get(fid, fid)} | {key[1].replace('|', '/')} |")
+                lines.append(f"| `{cid}` | {_flabel(rules, fid)} | {key[1].replace('|', '/')} |")
 
     # 2026-09-17 FIX-76 S2: 규칙 `factors.*.note` 에는 채점 기준과 **작업 메모**가 섞여 있다.
     # 본문은 별표 원문을 쓰고, 이 원문 메모는 감사·대조용으로 여기 모은다.
@@ -1213,7 +1265,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             "| --- | --- |",
         ]
         for fid, n in notes:
-            lines.append(f"| `{fid}` {rc.FACTOR_LABELS[fid]} | {' '.join(n.replace('|', r'\|').split())} |")
+            lines.append(f"| `{fid}` {rc.factor_label(rules, fid)} | {' '.join(n.replace('|', r'\|').split())} |")
 
     lines += [
         "",
@@ -1326,7 +1378,7 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     # 2026-09-17 FIX-76 S3: 방식·범위·사람 판단 여부가 표와 카드 머리에 두 번, 카드 머리에서만 세 번
     # 나왔다(사용자 지적). **표 한 곳에 모으고** 카드 머리에는 번호·이름·한 줄 정의만 남긴다.
     rows = "".join(
-        f'<tr><td class="name"><a class="frowlink" href="#method-{f}">{esc(FACTOR_LABELS[f])}</a></td>'
+        f'<tr><td class="name"><a class="frowlink" href="#method-{f}">{esc(rc.factor_label(rules, f))}</a></td>'
         f'<td class="text narrow">{_mode_cell(rules.factor(f)["mode"])}</td>'
         f'<td class="text narrow">{_source_badge(ctx, f, judged)}</td>'
         f'<td class="mono">{rules.factor(f)["range"][0]}~{rules.factor(f)["range"][1]}</td></tr>' for f in FACTOR_IDS)
@@ -1466,6 +1518,12 @@ BASIS_DOC = {
     "criteria": ("기준 사다리", "③ Last Mover 처럼 기준을 순서대로 통과해야 다음 칸으로 올라가는 사다리를 태운 "
                  "점수다. **기준마다 통과인지 아닌지를 정하는 것은 사람이다** — 사다리는 그 결과를 칸으로 "
                  "옮길 뿐이다.", "calc_qual.py:134"),
+    # 2026-10-08 규칙 v2.0: ① 락인과 가격결정력. 문장은 rules.md 3절 ① 의 사다리 표를 한 문단으로 옮겼다.
+    "lockin": ("네 질문 사다리", "① 락인과 가격결정력처럼 가장 강한 채널에 네 질문(회수 루프·전환비용·대체 공급·가격 실측)을 "
+               "판정해 사다리에 태운 점수다. 회수 루프와 전환비용 중 높은 판정이 기본 점수가 되고(통과 4 · 부분 3 · 실패 1, "
+               "실질 채널이 없으면 0), 가격 실측 통과 +1 · 실패 −1, 대체 공급 실패 −1, 지속성 할인 −1 을 더해 0~5 로 자른다. "
+               "5점은 가격 실측 통과가 있어야만 나오고, 회수 루프와 전환비용이 둘 다 미확인이면 점수를 만들지 않는다. "
+               "**네 질문을 판정하는 것은 사람이다** — 사다리는 그 판정을 점수로 옮길 뿐이다.", "calc_qual.compute_f1"),
 }
 
 
@@ -1499,7 +1557,32 @@ MODE_DOC = {
               "재무 수치와 사람 판정이 함께 들어간다** — 흑자 전환 후퇴 여부, 현금흐름 추세, 커버리지를 "
               "견줄 수 있는지가 사람이 정하는 값이다.",
               "factors.F9.mode · calc_f9.compute_f9 · calc_f9.py:129"),
+    # 2026-10-08 규칙 v2.0: ① 은 네 질문 판정을 사다리로 환산한다.
+    "lockin": ("네 질문을 사다리에 태운다", "회수 루프와 전환비용 중 높은 판정으로 기본 점수를 정하고(통과 4 · 부분 3 · "
+               "실패 1), 가격 실측·대체 공급·지속성 할인으로 한 칸씩 더하거나 빼 0~5 로 자른다. 5점은 가격 실측 통과가 "
+               "있어야 열린다. **채널과 네 질문을 판정하는 것은 사람이다.**",
+               "factors.F1.ladder · durability_discount"),
 }
+# 2026-10-08 규칙 v2.0: ② 가 경로 입력으로만 판단되는 규칙(벤더 발표 조항 `leap_requires_independent_measurement` 가 있다)에서는
+# "판정 입력이 기록돼 있지 않다" 는 문장이 맞지 않다. 그 규칙의 실행에서만 끝 문장을 바꾼다.
+PATHS_DOC_CARRIED_TAIL = "지금은 그 판정 입력이 기록돼 있지 않아 사람이 매긴 점수 숫자를 쓴다."
+PATHS_DOC_INPUT_TAIL = "엔진은 그 판정 입력으로 점수를 계산한다."
+
+
+def _mode_doc(rules: Any, mode: str) -> tuple[str, str, str]:
+    """방식 색인 한 줄. 규칙에 따라 갈리는 문장(사람이 직접 매기는 항목 목록·② 경로 입력)을 그 실행의 규칙으로 맞춘다."""
+    name, note, src = MODE_DOC[mode]
+    if mode == "paths" and rules.factor("F2").get("leap_requires_independent_measurement"):
+        note = note.replace(PATHS_DOC_CARRIED_TAIL, PATHS_DOC_INPUT_TAIL)
+    return name, note, src
+
+
+_MANUAL_COUNT = {1: "하나", 2: "둘", 3: "셋", 4: "넷"}
+
+
+def _manual_marks(rules: Any) -> str:
+    """규칙이 `mode: manual` 로 둔 항목의 번호(옛 규칙은 ①④⑧, 규칙 v2.0 은 ④⑧)."""
+    return "".join(SHORT[f] for f in FACTOR_IDS if rules.factor(f)["mode"] == "manual")
 
 
 def _mode_cell(mode: str) -> str:
@@ -1584,10 +1667,12 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
         ("needs_rule_decision", STATUS_LABEL["needs_rule_decision"], "미결 규칙 결정(C-번호)이 걸려 점수를 만들지 않았다"),
     ] if k in {c["factors"][f]["status"] for c in results["companies"] for f in FACTOR_IDS} or k in {"ok", "carried_score"}]
     used_basis = {c["factors"][f]["basis"] for c in results["companies"] for f in FACTOR_IDS}
-    bases = [(rc.BASIS_LABELS.get(k, k), BASIS_DOC[k][0], BASIS_DOC[k][1], BASIS_DOC[k][2], k)
+    # 2026-10-08 규칙 v2.0: 사람이 직접 매기는 항목이 ①④⑧ 에서 ④⑧ 로 줄었다. 그 목록을 규칙의 `mode` 에서 읽는다.
+    marks = _manual_marks(rules)
+    bases = [(rc.BASIS_LABELS.get(k, k), BASIS_DOC[k][0], BASIS_DOC[k][1].replace("(①④⑧)", f"({marks})"), BASIS_DOC[k][2], k)
              for k in BASIS_DOC if k in used_basis]
     used_modes = [m for m in MODE_DOC if any(rules.factor(f)["mode"] == m for f in FACTOR_IDS)]
-    modes = [(rc.MODE_LABELS.get(m, m), MODE_DOC[m][0], MODE_DOC[m][1], MODE_DOC[m][2], m) for m in used_modes]
+    modes = [(rc.MODE_LABELS.get(m, m), *_mode_doc(rules, m), m) for m in used_modes]
     # 2026-09-17 FIX-78 S3: 긴장 제목에 `HANDOVER` 가 그대로 들어 있었다. 문서 이름으로 옮긴다.
     tensions = [(x["id"], rc.source_names(str(x.get("subject", ""))), f"재검토 {x.get('recheck_at', '—')}"
                  f"{' · 해소됨' if x.get('status') == 'resolved' else ''}")
@@ -1595,7 +1680,8 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     groups = [
         ("factor", "Factor F1~F9", "점수를 내는 9개 항목이다. 본문에서는 ①~⑨ 로도 쓴다.", factors),
         ("mode", "점수를 만드는 방식", "Factor 표의 두 번째 칸이 이 값이다. "
-         "<b>사람이 직접 매기는 셋(①④⑧)은 근거 문장을 읽어야 하고, 나머지는 입력이 같으면 기계가 같은 답을 낸다.</b>", modes),
+         f"<b>사람이 직접 매기는 {_MANUAL_COUNT.get(len(marks), str(len(marks)))}({marks}){'는' if len(marks) == 1 else '은'} "
+         "근거 문장을 읽어야 하고, 나머지는 입력이 같으면 기계가 같은 답을 낸다.</b>", modes),
         ("param", "⑥ 가격을 만드는 네 칸", "앞 셋을 더해 소계를 내고 입력 신뢰도가 소계를 한 칸 내린다.", params),
         ("gate", "⑨ 적자 깊이의 관문 넷", "이 순서대로 통과·실패를 판정한다. 앞에서 막히면 뒤는 생략하거나 진단만 한다.", gates),
         ("status", "상태(status)", "그 칸이 <b>이번 실행에서 어떻게 처리됐는지</b>를 말한다.", statuses),
@@ -1653,7 +1739,7 @@ def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> s
         else:
             state = "규칙 파일에 이미 반영된 항목이라 실행 단위 선택이 필요하지 않다."
         if hits:
-            impact = " · ".join(f"{esc(n)} {esc(FACTOR_LABELS[f])} {esc(STATUS_LABEL.get(s, s))}" for n, f, s in hits)
+            impact = " · ".join(f"{esc(n)} {esc(rc.factor_label(ctx.rules, f))} {esc(STATUS_LABEL.get(s, s))}" for n, f, s in hits)
             impact = f"{impact} — 이 기업들은 순위에서 제외되며 0 점으로 채우지 않는다."
         elif choice:
             impact = "적용한 선택이 채점 경로에 반영되었다."
@@ -1668,7 +1754,7 @@ def render_glossary(ctx: Any, results: dict[str, Any], used_ids: list[str]) -> s
             summary_html += f'<span class="runnote">{note}</span>'
         rows = [("무엇에 대한 결정인가", summary_html), ("권고", inline_html(d.get("recommendation") or "—")),
                 ("선택지", ", ".join(esc(x) for x in d.get("choices", [])) or "규칙 파일에 선택지 정의 없음"),
-                ("영향 factor", ", ".join(esc(FACTOR_LABELS.get(f, f)) for f in d.get("affects", [])) or "—"),
+                ("영향 factor", ", ".join(esc(_flabel(ctx.rules, f)) for f in d.get("affects", [])) or "—"),
                 ("이번 실행 상태", state), ("점수 영향", impact)]
         dl = "".join(f"<dt>{k}</dt><dd>{v}</dd>" for k, v in rows)
         # 글자 수로 자르면 `**` 쌍이 열린 채 끊긴다. 문장 단위로 잘라 온 뒤 표시 변환을 건다.
@@ -1886,7 +1972,9 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     for c in results["companies"]:
         if c["complete"] and not c["reference"] and c["type"] not in present:
             present.append(c["type"])
-    legend = "".join(f'<span><i style="background:var(--cat-{TYPE_CLASS.get(t, "mix")})"></i>{esc(t)}{" (① 상한 2점)" if t == "부품" else ""}</span>' for t in present)
+    # 2026-10-08: 부품 채널 상한 표기는 규칙 F1 에 `component_only_cap` 이 있을 때만 단다(규칙 v2.0 에는 없다).
+    cap = ctx.rules.factor("F1").get("component_only_cap")
+    legend = "".join(f'<span><i style="background:var(--cat-{TYPE_CLASS.get(t, "mix")})"></i>{esc(t)}{f" (① 상한 {cap}점)" if t == "부품" and cap is not None else ""}</span>' for t in present)
     # 2026-10-08 사용자 지시: 리포트 머리의 이해상충 고지 상자를 싣지 않는다(10-07 Mac mini 공개본에서 먼저 지움).
     # 한계 절의 이해상충 문장과 출처 줄의 표기는 그대로 둔다.
     anthropic_note = ""
@@ -1935,7 +2023,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_judgment_status(ctx, results)}
 <h2><span class="num">01</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
-{render_ranking(results)}
+{render_ranking(results, ctx)}
 {render_incomplete(results, ctx.rules)}
 <h2><span class="num">02</span>과점 × 함정 지도</h2>
 <div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
