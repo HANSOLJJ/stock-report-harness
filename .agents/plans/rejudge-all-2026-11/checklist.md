@@ -62,6 +62,8 @@
 - [x] research 통과(승계 0, 트리거 56/56, 기한 초과 0) → diff(전부 재판단이라 2층 "실패"는 변경 목록 역할) → calculate: 13사 순위, Meta 미완료(③ e·unknown) → draft → review-template
 - [x] 4영역 리뷰(사실·출처 A/B, 규칙 일관성, 재무 계산, 출력·가독성) → review.md 채움 → 수정 한 묶음 → 확인 리뷰 → status pass (2026-10-09, 계약 검증 PASS. NVIDIA 10→9 공동 4위, Meta ④ 4, 나머지 그대로)
 - [x] 승인 대기 보고(사람이 승인 페이지에서) → build → push → 맥미니 3단계 (2026-10-09 승인 정한솔 → build 계약 검증 10항목 통과 → origin main a48a710 push → 맥미니 ff pull. 9월 리포트 2개의 수동 수정은 pull 이 건드리지 않아 그대로 남았고 패치 사본은 맥미니 /tmp/sep-reports-20261009.patch)
+- [x] 승인 취소(사용자, 같은 사건을 회사마다 다르게 읽음) → 같은 잣대 수정 → 확인 리뷰 3·4차 → 재승인(정한솔, 결과 해시 037f6be5…) → 재빌드 → push 2962120 → 맥미니 ff pull (2026-10-09)
+- [ ] 승인 서버 원격 모드(`--remote`: Tailscale 주소 바인딩 + `.env` 비밀구절) — 사용자가 나중에 하기로 함(2026-10-09)
 - [ ] 10월 미해결 12건(Q02·Q03·Q05·Q08·Q09·Q10·Q12·Q13·Q16·Q19·Q20·Q23) 처리
 - [ ] research → `diff --against ai-scorecard-2026-10-rescore` → calculate → draft
 - [ ] review (승계 예외 없이) → 승인 대기 보고
