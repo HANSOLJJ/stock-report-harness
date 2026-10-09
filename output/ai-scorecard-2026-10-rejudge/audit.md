@@ -15,14 +15,14 @@
 | 대상 | 해시 |
 | --- | --- |
 | observations | `d65211f087719e723b5068661381f3013b11bfc46d3e5cd5fe19b32c7007418f` |
-| judgments | `e916d16aa4ebe15b136b9dde84166b87624bf8947ce3fc0684e3eefdcac43af0` |
-| results | `b466a98c43bccef948b8f27ddf1027a1ec5499f71ea36dae715bb747dc2c09d4` |
+| judgments | `00ce006149b58e1a68df7c74e91497203df2c96b541b911ab3030878407854f2` |
+| results | `037f6be5692564d52a09c0c2c9de857d6561fb8c8615d18bf4ee186427b9a25a` |
 | run | `531a71410ecf11d62c8f19ad6077158827c2f58997eab3e9b5170a8e2f0ca9ad` |
-| draft | `2ae12bf6ac545060e4b07c3dd6d8a31944b2600930b3efb483a1d40338d55b34` |
+| draft | `15a9f074fe1a9f9eaf870ceccba92b7fc83aef498e826e9685e6e383e433d8a4` |
 
 ## 승인
 
-- 승인 `da704069d06b41e8` · 정한솔 · 2026-10-09
+- 승인 `e30bcbe2f29e2321` · 정한솔 · 2026-10-09
 - 승인 시점 입력과 현재 입력이 모두 같다.
 
 ## 실행 단위 결정
@@ -63,13 +63,15 @@
 
 ## 검토 기록
 
-검토 방식 `separate-session-4way` · 실행 `separate_subagent_sessions` · 검토한 초안 `2ae12bf6ac545060e4b07c3dd6d8a31944b2600930b3efb483a1d40338d55b34`
+검토 방식 `separate-session-4way` · 실행 `separate_subagent_sessions` · 검토한 초안 `15a9f074fe1a9f9eaf870ceccba92b7fc83aef498e826e9685e6e383e433d8a4`
 
 - fact-sources: fact-checker fs-a-rejudge-20261009-r1 · fs-b-rejudge-20261009-r1 → pass
 - financial-calc: general-purpose fc-rejudge-20261009-r1 → needs_fix → 수정 → pass
 - rule-consistency: general-purpose rc-rejudge-20261009-r1 → needs_fix → 수정 → pass
 - output-readability: report-designer or-rejudge-20261009-r1 → needs_fix → 수정 → pass
-- confirm: general-purpose cf-rejudge-20261009-r2 → pass
+- confirm: general-purpose cf-rejudge-20261009-r2 → pass (승인 뒤 사용자 지적으로 승인 취소)
+- confirm: general-purpose cf-rejudge-20261009-r3 (사건 교차표·미확인 방향표·근거 등급표) → blocked 5건 → 수정
+- confirm: general-purpose cf-rejudge-20261009-r4 → pass
 
 ## 정정 이력
 
