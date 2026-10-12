@@ -26,6 +26,8 @@
 
 ## 5. 리뷰
 - [x] 4영역 리뷰 다섯 세션 띄움
-- [ ] review.md 채움, 수정 한 묶음
+- [x] 1차 결과: 규칙 일관성·재무 계산·사실·출처 A needs_fix, 사실·출처 B·출력 pass (A·B 는 사용량 한도로 끊겼다가 이어서 끝냄)
+- [x] 수정 한 묶음(make_fix1.py·summaries_r2.py, 근거 3건 추가) → research·calculate·draft·review-template --force → 커밋
+- [ ] review.md 채움(확인 리뷰 결과까지)
 - [ ] 확인 리뷰 → pass
 - [ ] 계약 검증 → 승인 대기 보고

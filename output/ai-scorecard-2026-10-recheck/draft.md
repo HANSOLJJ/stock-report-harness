@@ -12,7 +12,7 @@ rule_hash: 3bf9418cf3eb43f9b91152f7e11249808658d80d4944c15222217b72b4be3cc5
 baseline_id: v1.5
 plan_source: output/ai-scorecard-2026-10-recheck/plan.md
 research_source: output/ai-scorecard-2026-10-recheck/research.md
-results_hash: 90671057092bf44c7a4414ec8ebf92dc77d2a1bb4877e308f445e70ae8edeaca
+results_hash: 1a433c3842adb967a8b6bc4d816955c65d90a4936bf681bf9a5b85742b4ba1ea
 level: intermediate
 duration_minutes: 15
 created_at: 2026-10-12
@@ -36,8 +36,8 @@ created_at: 2026-10-12
 | 순위 | 기업 | ① | ② | ③ | ④ | ⑤ | 과점 | ⑥ | ⑦ | ⑧ | ⑨ | 함정 | 조정총점 |
 | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 1 | Amazon / AWS | 5 | 3 | 3 | 5 | 4 | 20 | -2 | -1 | -1 | -2 | -6 | **14** |
-| 2 | Microsoft | 5 | 4 | 3 | 5 | 4 | 21 | -3 | -2 | -2 | -1 | -8 | **13** |
-| 3 | Alphabet / Google | 5 | 4 | 2 | 5 | 4 | 20 | -3 | -1 | -3 | -1 | -8 | **12** |
+| 2 | Microsoft | 5 | 4 | 3 | 5 | 4 | 21 | -3 | -2 | -3 | -1 | -9 | **12** |
+| 2 | Alphabet / Google | 5 | 4 | 2 | 5 | 4 | 20 | -3 | -1 | -3 | -1 | -8 | **12** |
 | 4 | NVIDIA | 4 | 4 | 2 | 4 | 3 | 17 | -2 | -2 | -4 | 0 | -8 | **9** |
 | 4 | TSMC | 3 | 3 | 4 | 2 | 3 | 15 | -2 | 0 | -4 | 0 | -6 | **9** |
 | 6 | Apple | 4 | 2 | 2 | 3 | 4 | 15 | -4 | 0 | -4 | 0 | -8 | **7** |
@@ -246,12 +246,12 @@ created_at: 2026-10-12
   - 내릴 근거
     - 최근 1년 잉여현금흐름은 영업현금흐름 $161.4B 에서 설비투자 $173.0B 를 뺀 값이 -$11.6B 다. [EV-amazon-013]
     - 여신 $37.5B 는 2028-11 만기 무담보 리볼빙 $15.0B, 2026-10 만기이고 연장에 대주단 승인이 필요한 364일 리볼빙 $5.0B, 2026-09-30 까지 한 번만 인출할 수 있고 그 뒤 미인출 약정이 자동 소멸하는 지연인출 정기대출 $17.5B 로 이뤄진다. 세 시설 모두 2026-06-30 에 인출 잔액이 없었다. [EV-amazon-002, EV-amazon-010, EV-amazon-011]
-    - 지연인출 정기대출 $17.5B 는 2026-09-30 에 미인출 약정으로서의 시한이 끝났고, 364일 리볼빙 $5.0B 는 2026-10 에 만기가 온다. [EV-amazon-011, EV-amazon-001, EV-amazon-010]
+    - 지연인출 정기대출 $17.5B 는 2026-09-30 에 미인출 약정으로서의 시한이 끝났고, 364일 리볼빙 $5.0B 는 2026-10 에 만기가 온다. [EV-amazon-011, EV-amazon-001, EV-amazon-002, EV-amazon-010]
   - 참고 — 런웨이를 잴 때 완충에는 현금과 조건이 확인된 확정 미인출 여신만 넣었다 — 신용등급이 좋아 더 빌릴 수 있다는 추정은 넣지 않는다.
 
-### Microsoft — 2위(완료 13개사 기준) · 조정 13 (과점 21 / 함정 -8)
+### Microsoft — 2위(완료 13개사 기준) · 조정 12 (과점 21 / 함정 -9)
 
-> Microsoft 는 Microsoft 365 업무 채널의 전환비용과 16분기 가격 실측(① 5), 다섯 자리를 모두 가진 다각화(④ 5), 지분·편입 동맹(⑤ 4)으로 과점 21점을 쌓지만, OpenAI 의 Azure $250B 추가 구매 계약으로 조달 의존 고객 몫이 커진 ⑦ −2, 매출의 약 1.7배인 데이터센터 약정과 OpenAI 계약 잔고에 기댄 ⑧ −2, 밸류에이션 −3, 적자 깊이 −1 로 함정 −8 이라 조정 13점, 2위다.
+> Microsoft 는 Microsoft 365 업무 채널의 전환비용과 16분기 가격 실측(① 5), 다섯 자리를 모두 가진 다각화(④ 5), 지분·편입 동맹(⑤ 4)으로 과점 21점을 쌓지만, OpenAI 의 Azure $250B 추가 구매 계약으로 조달 의존 고객 몫이 커진 ⑦ −2, OpenAI 계약 잔고를 연환산하면 매출의 30% 를 넘는 고객 집중(⑧ −3), 밸류에이션 −3, 적자 깊이 −1 로 함정 −9 라 조정 12점, 공동 2위다.
 
 | Factor | 점수 | 상태 | 근거 종류 | 산식·경로 |
 | --- | --- | --- | --- | --- |
@@ -262,7 +262,7 @@ created_at: 2026-10-12
 | ⑤ 아군 | 4 | 이번 실행 산출 | 등급 산식 | 3 + A(2) + H(-1) |
 | ⑥ 가격 | -3 | 이번 실행 산출 | 산식 계산 | PER 29.7 → -1 + EV/매출 12.1x → -1 + 매출 성장 17.8% → -1 = 소계 -3 |
 | ⑦ 순환금융 | -2 | 이번 실행 산출 | 조합표 | 조달 의존 고객 비중 큼 · 내 돈 환류 있음 |
-| ⑧ 비대칭 의존 | -2 | 이번 실행 산출 | 사람 판단 |  |
+| ⑧ 비대칭 의존 | -3 | 이번 실행 산출 | 사람 판단 |  |
 | ⑨ 적자 깊이 | -1 | 이번 실행 산출 | 산식 계산 | 본업 통과 → 현금 FCF 흑자·추세 악화 |
 
 - **① 락인** 근거 · 판단 · claude · 2026-10-12 · 판단 기록 `microsoft.F1`:
@@ -406,13 +406,13 @@ created_at: 2026-10-12
     - 약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.
     - 같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.
     - 고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.
-    - 마이크로소프트 ⑧ 은 −2 이고 점수를 정한 축은 약정 축과 고객 축이다. 아직 개시되지 않은 데이터센터 리스와 구매·건설 약정을 더한 약 $5,578억이 2026 회계연도 매출의 약 1.68배이고, OpenAI 계약 잔고의 12개월 인식분이 매출의 약 21~28% 다.
+    - 마이크로소프트 ⑧ 은 −3 이고 점수를 정한 축은 고객 축, 곧 OpenAI 계약 잔고를 연환산한 값이 2026 회계연도 매출의 30% 를 넘는 것이다. 아직 개시되지 않은 데이터센터 리스와 구매·건설 약정을 더한 약 $5,578억은 매출의 약 1.68배로 약정 축은 −2 다.
     - 약정 축은 −2 다. 2026-06-30 10-K 주석 13 의 미개시 리스 $329.1B 와 경영진 논의 계약상 의무 표의 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). 구매 약정에는 주문서가 섞여 있어 2027 회계연도에 갚을 몫을 빼면 약 1.08배로 내려가지만 어느 쪽이든 0.5배 이상 2배 미만이다(계산).
-    - 고객 축은 −2 다. 회사는 2025-12-31 상업 RPO $625B 의 약 45% 가 OpenAI 몫이고 상업 RPO 의 약 25% 를 12개월 안에 인식한다고 밝혔다(회사 1차 발표). OpenAI 몫이 같은 비율로 인식된다고 보면 12개월 인식분은 약 $703억으로 2026 회계연도 매출 $3,318억의 약 21% 이고, 2026-06-30 상업 RPO $678B 와 12개월 인식 약 30%(10-K)에 같은 45% 를 대면 약 $915억, 약 28% 다(추론 계산). 어느 쪽이든 10~30% 이고 범용 클라우드 설비라 물량을 다른 고객에게 돌릴 수 있어 −2 다. 인식 매출 기준으로는 2026 회계연도 OpenAI 상업 계약 매출 $24.1B 가 약 7% 다.
+    - 고객 축은 −3 이다. 회사는 2025-12-31 상업 RPO $625B 의 약 45%(약 $2,813억)가 OpenAI 몫이라고 밝혔고(회사 1차 발표), 그 가운데 Azure 서비스 $250B 추가 구매 계약은 기간이 밝혀지지 않았다. 계약액을 계약 기간으로 펴되 OpenAI 몫의 기간은 공시되지 않아 회사가 밝힌 상업 RPO 가중평균 잔여 기간(2025-12-31 약 2.5년, 2026-06-30 약 2.3년)으로 펴면 연환산은 약 $1,125억~$1,223억으로 2026 회계연도 매출 $3,318억의 약 34~37% 이고(추론 계산), 기간이 공시되지 않은 약정을 한 해에 다 넣은 상한으로 견주면 $250B 만으로 약 75% 다(계산). 범용 클라우드 설비라 물량을 다른 고객에게 돌릴 경로가 있어 −4 에는 대지 않는다. 인식 매출 기준으로는 2026 회계연도 OpenAI 상업 계약 매출 $24.1B 가 약 7% 다.
     - 공급 축은 −1 이다. 최상위 모델 성능을 OpenAI·Anthropic 에서 받지만 자체 MAI 모델과 함께 서로 바꿔 쓸 수 있게 짰고, 오픈웨이트 Qwen 을 후학습한 자체 모델도 내 모델 공급자 한 곳에 묶이지 않는다. AI 칩은 Maia 200 과 GPU 를 쓰며 그 생산이 TSMC 대만에 몰려 끊기면 증설이 멈추지만 기존 운영은 이어진다.
     - 공급자가 곧 경쟁자라는 위험, 곧 모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 낸 것은 ⑧ 에서만 센다.
     - 지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. EU 의 Azure 게이트키퍼 지정 예비 판단과 노동부의 영주권 노동 인증 정지는 ⑤ 에서 센다.
-    - OpenAI 몫의 인식 일정과 2026-06-30 현재 비중은 따로 공시되지 않아 평균 비율로 추론했다(미확인). OpenAI 몫의 12개월 인식분이 매출의 30% 를 넘는다는 공시나 회사 1차 자료가 나오면 고객 축을 −3 으로 다시 본다.
+    - OpenAI 몫의 계약 기간과 2026-06-30 현재 금액은 따로 공시되지 않았다(미확인). 2026 회계연도 4분기 실적 콜은 그 분기의 상업 RPO 증가가 모두 프론티어 모델 회사 밖에서 왔다고 밝혀, 6-30 의 OpenAI 몫이 12-31 보다 크지 않다. OpenAI 몫의 연환산이 매출의 30% 아래라는 공시나 회사 1차 자료가 나오면 고객 축을 다시 잰다.
   - 올릴 근거
     - FY2024~FY2026 매출 10% 이상 고객이 없다. [EV-microsoft-033]
     - 자체 MAI 모델을 제품에 쓰면서 모델을 서로 바꿔 쓸 수 있게 설계했다고 회사가 밝혔다. [EV-microsoft-010]
@@ -420,10 +420,12 @@ created_at: 2026-10-12
     - Microsoft 는 직원들을 Anthropic Claude 에서 자체 AI 도구로 돌려 올해 사내 Claude 지출 전망 약 $10억을 3분의 1 줄였다는 2차 보도가 있다. [EV-anthropic-011]
     - Anthropic 은 Azure 컴퓨트 $30B 구매를 약정했고 Microsoft 는 Copilot 제품군에 Claude 를 계속 넣는다. [EV-microsoft-015]
     - 자체 AI 가속기 Maia 200 이 아이오와·애리조나 데이터센터에서 가동 중이다. [EV-microsoft-008]
+    - 2026 회계연도 4분기 상업 RPO 의 직전 분기 대비 증가는 모두 프론티어 모델 회사 밖 고객의 약정에서 왔다. [EV-microsoft-048]
   - 내릴 근거
     - 2026-06-30 미개시 리스 $329.1B 와 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). [EV-microsoft-044]
     - 2026 회계연도 OpenAI 상업 계약 매출 $24.1B 는 그해 매출 $331.8B 의 약 7% 이고 OpenAI 매출채권은 $6.0B 다(계산). [EV-microsoft-014, EV-microsoft-019]
     - 2025-12-31 상업 RPO $625B 의 약 45% 가 OpenAI 몫이고, 상업 RPO 의 약 25% 는 12개월 안에 매출로 인식된다. [EV-microsoft-046]
+    - 2026-06-30 상업 RPO 는 $678B 이고 가중평균 잔여 기간은 약 2.3년이며 약 30% 를 12개월 안에 인식한다. [EV-microsoft-047]
     - 모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 냈다. [EV-microsoft-003]
     - Maia 200 은 TSMC 3나노로 만든다. [EV-tsmc-034]
     - TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]
@@ -441,9 +443,9 @@ created_at: 2026-10-12
     - 분기 잉여현금흐름이 2026년 1~3월 $15.8B, 4~6월 $19.6B 로 전년 같은 분기($20.3B·$25.6B)보다 각각 22%·23% 줄었고, 4~6월 분기 설비투자는 $35.8B 로 전년 같은 분기 $17.1B 의 두 배를 넘었다(10-Q·10-K 현금흐름표 누계의 차로 구한 분기 값). [EV-microsoft-023, EV-microsoft-020]
     - 최근 1년 잉여현금흐름은 2025 회계연도 $71.6B 에서 2026 회계연도 $67.0B 로 줄었다. [EV-microsoft-020]
 
-### Alphabet / Google — 3위(완료 13개사 기준) · 조정 12 (과점 20 / 함정 -8)
+### Alphabet / Google — 2위(완료 13개사 기준) · 조정 12 (과점 20 / 함정 -8)
 
-> Alphabet 은 검색·지도·Gmail·YouTube 소비자 채널의 락인과 8분기 가격 실측(① 5), 독립 측정 상위 모델과 A2A 표준 선점(② 4), 다섯 자리 다각화(④ 5), Anthropic 의 Google Cloud 편입(⑤ 4)으로 과점 20점이고, ③ 은 AI 귀속 지표의 가속이 확인되지 않아 2점이며, 매출의 약 2배인 구매 약정·미개시 리스(⑧ −3)를 포함한 함정 −8 로 조정 12점, 3위다.
+> Alphabet 은 검색·지도·Gmail·YouTube 소비자 채널의 락인과 8분기 가격 실측(① 5), 독립 측정 상위 모델과 A2A 표준 선점(② 4), 다섯 자리 다각화(④ 5), Anthropic 의 Google Cloud 편입(⑤ 4)으로 과점 20점이고, ③ 은 AI 귀속 지표의 가속이 확인되지 않아 2점이며, 매출의 약 2배인 구매 약정·미개시 리스(⑧ −3)를 포함한 함정 −8 로 조정 12점, 공동 2위다.
 
 | Factor | 점수 | 상태 | 근거 종류 | 산식·경로 |
 | --- | --- | --- | --- | --- |
@@ -610,8 +612,8 @@ created_at: 2026-10-12
     - 같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.
     - 고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.
     - 알파벳 ⑧ 은 −3 이고 점수를 정한 축은 약정 축, 곧 아직 개시되지 않은 데이터센터 리스와 구매 약정·기타 계약상 의무를 더한 약 $9,020억이 최근 1년 매출의 약 2.02배인 것이다.
-    - 약정 축은 −3 이다. 2026-06-30 10-Q 경영진 논의의 구매 약정·기타 계약상 의무 $811.0B(1년 안에 끝나는 $200.7B 포함, 장기 공급 계약과 열린 구매 주문)와 주석 4 의 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $9,020억은 최근 1년 매출 $4,458.66억(2025년 $4,028.36억 − 전년 상반기 $1,866.62억 + 올해 상반기 $2,296.92억)의 약 2.02배다(계산).
-    - 구매 약정의 범위는 마이크로소프트(열린 구매 주문과 인수 의무를 담은 구매 약정)·메타(단기·장기 해지 불가 약정)와 같게 단기 계약과 열린 구매 주문까지 넣은 총액이다. 주석 10 의 고정·보장된 장기 약정 $707.0B 만 쓰면 약 1.79배로 −2 이고, 총액 기준 2.02배는 2배 경계 바로 위다(계산).
+    - 약정 축은 −3 이다. 2026-06-30 10-Q 경영진 논의의 구매 약정·기타 계약상 의무 $811.0B(그 가운데 단기 몫 $200.7B, 장기 공급 계약과 열린 구매 주문 포함)와 주석 4 의 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $9,020억은 최근 1년 매출 $4,458.66억(2025년 $4,028.36억 − 전년 상반기 $1,866.62억 + 올해 상반기 $2,296.92억)의 약 2.02배다(계산).
+    - 10-Q 는 가변 조건 계약의 해지 불가 의무를 최소 수량까지만 센다고 밝혀, $811.0B 는 단기 몫과 열린 구매 주문을 포함한 해지할 수 없는 의무의 총액이고 메타(단기·장기 해지 불가 약정)와 같은 범위다. 주석 10 의 1년 넘는 고정·보장 약정 $707.0B 만 쓰면 약 1.79배로 −2 이고, 총액 기준 2.02배는 2배 경계 바로 위다(계산).
     - 공급 축은 −1 이다. 8세대 TPU 를 TSMC 에서 만들고 TSMC 생산이 대만에 몰려 있어 끊기면 AI 용량 증설이 멈추지만, 기존 서비스는 이미 깔린 설비로 이어지고 인프라·모델·유통 계층을 모두 자체 보유한다. Gemini agent 가 경쟁사 Anthropic 의 Claude 모델을 함께 돌리지만 작업마다 고르는 선택지 가운데 하나라 공급 축을 무겁게 하지 않는다.
     - 고객 축은 공시로 잰다. 2023~2025년 매출 10% 이상 고객이 없어 한 고객이 끊겨도 흔들리는 매출이 10% 미만이므로 −1 을 넘지 않는다. Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 백로그의 40% 넘게를 차지한다는 것은 익명 소식통을 인용한 2차 보도라 보도가 있다는 사실로만 두고 고객 축의 등급을 가르는 수치로 쓰지 않는다.
     - 유통 쪽으로는 검색 기본 설정을 Apple·Samsung 같은 기기 제조사 계약과 유통 파트너에게 내는 TAC 에 기대지만, 그 비중은 공시되지 않아 점수를 바꾸지 않는다.
@@ -2389,7 +2391,7 @@ created_at: 2026-10-12
 
 ### OpenAI — 12위(완료 13개사 기준) · 조정 1 (과점 12 / 함정 -11)
 
-> OpenAI 는 ARC 순위표 1위 모델과 패러다임 적응·표준 선점(② 4), 회사 기준 연환산 매출의 재가속(③ 3)으로 과점 12점이지만, 소비자 채널에서 회수 루프와 대체 공급이 실패해 ① 0점이며, 구속력이 확인된 클라우드 약정만으로도 매출의 약 14배인 의존(⑧ −3), 비상장 밸류에이션 −4, 기준일에 아직 고객인 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 공동 12위다.
+> OpenAI 는 ARC 순위표 1위 모델과 패러다임 적응·표준 선점(② 4), 회사 기준 연환산 매출의 재가속(③ 3)으로 과점 12점이지만, 소비자 채널에서 회수 루프와 대체 공급이 실패해 ① 0점이며, 구속력이 확인된 AWS·Azure 약정만으로 연환산 매출의 약 8배이고 2차 보도된 Oracle 계약을 더하면 약 14배인 의존(⑧ −3), 비상장 밸류에이션 −4, 기준일에 아직 고객인 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 공동 12위다.
 
 | Factor | 점수 | 상태 | 근거 종류 | 산식·경로 |
 | --- | --- | --- | --- | --- |
@@ -2866,7 +2868,7 @@ created_at: 2026-10-12
 ## 방법과 규칙
 
 - 규칙 파일 `scorecard/rules/v2.0.json` 해시 `3bf9418cf3eb43f9b91152f7e11249808658d80d4944c15222217b72b4be3cc5` · 원문 규칙 `AI기업_채점규칙_v1.5.md` 은 sha256 `57beb84ad8c2…`(SRC-v15-rule)
-- 입력 해시: observations `49ccaa48c0096eea…`, judgments `531ab2f487aa3ddf…`, results `90671057092bf44c…`
+- 입력 해시: observations `49ccaa48c0096eea…`, judgments `444325c40f5a4a54…`, results `1a433c3842adb967…`
 - 실행 단위 결정: C-05:apply, C-06:proposed_v15_boundaries, C-16:downgrade, C-12:p2_with_capped_promotion, C-20:defer_to_private_g2, C-03:paths_with_generation_gap_5, C-11:block_carryover, C-13:reject_proxy, C-24:compute_p2_when_inputs_exist, C-28:optional_parameters_for_all_listed_tracks, C-29:c20_private_route_first
 - 미결 결정: 없음
 - **런웨이를 잴 때 완충으로 세는 것은 현금과 조건이 확인된 확정 미인출 여신뿐이다.** 신용등급이 좋아 더 빌릴 수 있을 것이라는 추정은 넣지 않는다 — 금액과 조건이 공시로 확인된 것만 센다. 다만 여신이 확인된 기업이라도 **현금흐름이 흑자로 판정되면 런웨이를 계산하지 않아** 그 여신이 점수에 닿지 않는다.
@@ -2992,7 +2994,7 @@ created_at: 2026-10-12
 | TRG-089 | Oracle | ⑨ 적자 깊이 | WSJ 를 인용한 보도(2026-10-07)에 따르면 오라클은 아폴로·골드만삭스와 AI 칩 구매 자금을 마련하는 차입을 협의 중이다. 회사 공시는 없다. 오라클 ⑨ 판단은 지금 게이트 2(최근 1년 잉여현금흐름) 마이너스, 게이트 3(현금과 확정 미인출 여신으로 버티는 기간) 1.61년으로 한 단계 하향된 상태이고, 등록된 확정 미인출 여신은 회전 신용 한도 100억 달러다. | 오라클 8-K·10-Q 가 칩 구매용 차입의 규모·만기·담보·소구 여부를 공시하면, 확정 미인출 여신으로 셀 수 있는지와 부외 약정에 더할지를 본다. 협의 보도만으로는 판단을 바꾸지 않는다. | 2026-12-20 | — | ⑨ 게이트 3(현금과 확정 미인출 여신으로 몇 년 버티는가)의 여신 값과 게이트 4(약정 커버리지 = 계약 수입 ÷ 미개시 약정)의 약정 값에 새 차입을 넣을지 |
 | TRG-090 | Palantir | ① 락인, ⑧ 비대칭 의존 | 영국 정부는 NHS 연합 데이터 플랫폼(팔란티어 운영, 3.3억 파운드) 계약의 2027년 해지 조항 적용을 검토하며 넘겨받을 영국 업체 후보를 찾았다(FT 2026-10-08). 의회 위원회 두 곳이 해지 조항 검토를 권고했고, 정부 기관은 이 사업의 총비용 추정을 11억 파운드로 올리고 편익 추정을 8.08억 파운드로 낮췄다(Computing 2026-08-10). | 영국 정부가 NHS 플랫폼 계약의 해지 조항을 행사하거나 연장을 결정해 발표하면 ① 전환비용(정부 고객이 대체재로 옮기는가)과 ⑧ 정부 계약 의존을 다시 본다. 검토와 대체 업체 탐색 보도만으로는 판단을 바꾸지 않는다. | 2027-03-31 | — | 팔란티어 ① 전환비용 입력(대체재가 있는데도 남는가, 이탈이 관측되는가)과 ⑧ 정부 계약 의존 판단 |
 | TRG-091 | Meta | ② 게임체인저 | 메타가 Walmart·Stripe·Sierra Technologies 와 AI 에이전트 상거래 표준 Personal Agent Protocol 을 함께 내놓았고(SiliconANGLE 2026-10-06), Sierra 공동창업자 브렛 테일러는 누구나 구현할 수 있는 개방 표준이라고 밝혔다. 메타 ② 판단은 성능 도약 실패, 패러다임 적응 통과, 표준 선점 통과(PyTorch)로 4점이고, 이 상거래 표준은 공동 개발사 밖의 채택이 확인되지 않아 판단에 쓰지 않았다. | 메타·시에라 밖의 다른 회사(에이전트·상거래 플랫폼)가 이 프로토콜 채택을 공식 발표하거나 실제 연동을 출시하면 ② 표준 선점 입력을 다시 본다. 공동 발표 회사만 쓰는 형식은 표준으로 세지 않는다. | 2027-01-31 | — | 메타 ② 표준 선점 경로(다른 회사가 그 인터페이스를 채택했는가) |
-| TRG-092 | OpenAI | ⑧ 비대칭 의존, ⑨ 적자 깊이 | Bloomberg 는 2026-10-07 Broadcom 이 OpenAI 맞춤 칩 구매를 돕는 약 $300억 부채 조달을 초기 논의 중이라고 보도했고, 공식 절차는 시작되지 않았다. OpenAI ⑧ 판단은 지금 −4, ⑨ 는 −2(비상장 경로)다. | 조달이 확정되거나 OpenAI 가 칩 임차·구매 약정을 공개하면 ⑧(비대칭 의존 — 공급자 Broadcom 에 대한 의존과 약정 ÷ 매출)과 ⑨ 게이트 4(약정 커버리지 — 미개시 확정 약정)를 다시 본다. 칩 임차 조달은 OpenAI 가 직접 쓰는 미인출 여신이 아니므로 ⑨ 완충에 넣지 않는다. 논의·보도만으로는 다시 보지 않는다. | 2027-03-31 | — | Broadcom 주선 칩 조달의 확정 여부·규모와 OpenAI 측 약정 형태 |
+| TRG-092 | OpenAI | ⑧ 비대칭 의존, ⑨ 적자 깊이 | Bloomberg 는 2026-10-07 Broadcom 이 OpenAI 맞춤 칩 구매를 돕는 약 $300억 부채 조달을 초기 논의 중이라고 보도했고, 공식 절차는 시작되지 않았다. OpenAI ⑧ 판단은 구속력이 공시·회사 1차 발표로 확인된 클라우드 약정이 연환산 매출의 2배 이상 20배 미만이라 −3 이고, ⑨ 는 −2(비상장 경로)다. | 조달이 확정되거나 OpenAI 가 칩 임차·구매 약정을 공개하면 ⑧(비대칭 의존 — 공급자 Broadcom 에 대한 의존과 약정 ÷ 매출)과 ⑨ 게이트 4(약정 커버리지 — 미개시 확정 약정)를 다시 본다. 칩 임차 조달은 OpenAI 가 직접 쓰는 미인출 여신이 아니므로 ⑨ 완충에 넣지 않는다. 논의·보도만으로는 다시 보지 않는다. | 2027-03-31 | — | Broadcom 주선 칩 조달의 확정 여부·규모와 OpenAI 측 약정 형태 |
 | TRG-093 | OpenAI | ③ Last Mover, ⑥ 가격, ⑨ 적자 깊이 | OpenAI 는 비상장이라 실제 매출과 영업손익을 공시하지 않고, 런레이트 ARR 보도만 있다. 거래 채널에서는 GPT-6 Astra 가 2026-10-01~10-07 OpenRouter 지출이 가장 큰 OpenAI 모델이다. | OpenAI 가 실제로 거둔 매출이나 영업손익을 회사 발표나 공개 제출본으로 밝히면 ③(같은 정의 성장률 두 개로 본 후발 가속도), ⑥(최근 1년 보정 매출 분모), ⑨ 게이트 1(본업 이익 — 흑자 전환 목표 후퇴 조항 포함)을 다시 본다. 런레이트 ARR 은 ⑥ 분모로 쓰지 않는다. | 2026-12-31 | — | OpenAI 실제 매출·영업손익 공개 여부와 같은 정의의 성장률 |
 | TRG-094 | OpenAI | ① 락인 | OpenAI 는 Pro 200 의 월 가격을 $200 으로 두고 포함 사용량을 줄였다. 신규 가입분은 2026-09-29 부터, 기존 가입자는 2026-10-29 뒤 줄어든 사용량을 쓴다. Plus 는 월 $20 이다. | OpenAI 가 유료 구독자 수를 새로 공개하거나 Pro 해지 증가가 신뢰할 매체로 확인되면 ①(가격 실측 — 실질 인상 뒤 고객이 남았는가)을 다시 본다. 구독자가 줄지 않았으면 인상 유지 사실로, 이탈이 확인되면 실패 쪽 사실로 적는다. | 2027-01-31 | — | 실질 인상 뒤 유료 구독자 수와 Pro 해지 |
 | TRG-095 | OpenAI | ② 게임체인저 | OpenAI 는 상위 모델 GPT-6.1 Astra 의 출시를 안전 문제로 멈췄다. 2026-10-08 독립 측정에서 OpenAI 최신 모델은 종합 지수 GPT-6 Astra 53·GPT-6.1 Sol 52 로 Claude Opus 5.5(58)보다 낮고, ARC-AGI-2·3 에서는 GPT-6 Astra 가 1위다. | GPT-6.1 Astra 나 다음 상위 모델이 출시돼 Artificial Analysis·ARC Prize 같은 독립 측정에 같은 하네스로 실리면 ②(신기술 게임체인저)의 성능 도약 경로를 세 축(종합 지능·에이전트 실무·코딩)별로 다시 본다. 벤더 발표 벤치마크만으로는 다시 보지 않는다. | 2026-12-31 | — | OpenAI 상위 모델 출시와 그 독립 측정 결과 |
@@ -3020,7 +3022,7 @@ created_at: 2026-10-12
 
 ## 인용 근거
 
-본문이 인용한 근거 697건. 전체 목록과 선별 이유는 `research.md` 의 근거 자료 절에 있다.
+본문이 인용한 근거 699건. 전체 목록과 선별 이유는 `research.md` 의 근거 자료 절에 있다.
 
 | 근거 ID | 기업 | 제목(원문) | 본문 발췌 · 위치 | 발행일 | 상태 |
 | --- | --- | --- | --- | --- | --- |
@@ -3143,7 +3145,7 @@ created_at: 2026-10-12
 | EV-alphabet-072 | Alphabet / Google | [Alphabet and Unity Level Up Game Development - Yahoo Finance](https://finance.yahoo.com/technology/ai/articles/alphabet-unity-level-game-development-115500149.html) | “Alphabet and Unity announced a partnership on Oct. 7 to build a generative AI gaming platform that lets users create games via text prompts. … The Alphabet and Unity partnership operates in two distinct phases, beginning with a platform called Playground. Available to creators aged 18 and older, Playground allows users to generate and customize playable games using natural language. The system requires no coding background and integrates directly into Google Play Games for immediate multiplayer matchmaking, leaderboards, and community sharing.” (위치: 기사 'Key Points' 첫 항목과 본문 'two distinct phases' 문단) | 2026-10-09 | 확정 |
 | EV-alphabet-073 | Alphabet / Google | [Alphabet 10-Q (2026-06-30)](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm) | “As of June 30, 2026, expected future fixed or guaranteed commitments under these agreements were $ 707.0 billion, the significant majority of which related to long-term supply agreements. We expect contractual commitments under the long-term supply agreements and content licenses to generally be fulfilled through 2030.” (위치: Part I Item 1, Note 10 Commitments and Contingencies 의 Commitments 문단) | 2026-07-23 | 확정 |
 | EV-alphabet-074 | Alphabet / Google | [Alphabet 10-Q (2026-06-30)](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm) | “As of June 30, 2026, we have entered into leases, primarily related to data centers, that have not yet commenced with future lease payments of $ 85.2 billion that are not yet recorded. These leases will commence between 2026 and 2031 with non-cancelable lease terms between one and 26 years. Additionally, in June 2026, we entered into a short-term lease agreement with a non-cancelable commitment of approximately $ 5.8 billion, which will commence in the third quarter of 2026.” (위치: Part I Item 1, Note 4 Leases 의 미래 리스 지급액 표 다음 문단) | 2026-07-23 | 확정 |
-| EV-alphabet-075 | Alphabet / Google | [Alphabet 10-Q (2026-06-30)](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm) | “As of June 30, 2026, we had material purchase commitments and other contractual obligations totaling $811.0 billion, of which $200.7 billion was short-term. These purchase commitments primarily relate to costs for technical infrastructure and inventory through long-term supply agreements and open purchase orders.” (위치: Part I Item 2 MD&A, Liquidity and Capital Resources 의 Purchase Commitments and Other Contractual Obligations 문단) | 2026-07-23 | 확정 |
+| EV-alphabet-075 | Alphabet / Google | [Alphabet 10-Q (2026-06-30)](https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm) | “As of June 30, 2026, we had material purchase commitments and other contractual obligations totaling $811.0 billion, of which $200.7 billion was short-term. These purchase commitments primarily relate to costs for technical infrastructure and inventory through long-term supply agreements and open purchase orders.” (위치: Part I Item 2 MD&A, Liquidity and Material Cash Requirements 절의 Purchase Commitments and Other Contractual Obligations 문단) | 2026-07-23 | 확정 |
 | EV-amazon-001 | Amazon / AWS | [8-K 2026-06-10 · Items 1.01, 2.03, 9.01](https://www.sec.gov/Archives/edgar/data/1018724/000110465926072140/tm2613616d4_8k.htm) | “The DDTL Credit Agreement provides the Company with a $17.5 billion senior unsecured delayed draw term loan credit facility (the “DDTL Facility”). Commitments to provide the DDTL Facility will expire on September 30, 2026 unless fully borrowed prior to such date.” (위치: 8-K (2026-06-10) Item 1.01, DDTL Credit Agreement 둘째 문단) | — | 확정 |
 | EV-amazon-002 | Amazon / AWS | [10-Q 2026-07-31](https://www.sec.gov/Archives/edgar/data/1018724/000101872426000026/amzn-20260630.htm) | “We have an aggregate $20.0 billion in unsecured revolving credit facilities with syndicates of lenders, consisting of a $15.0 billion facility (the “Credit Agreement”) and a $5.0 billion 364-day facility (the “Short-Term Credit Agreement”). The Credit Agreement has a term that extends to November 2028 and may be extended for one or more additional one-year terms subject to approval by the lenders.” (위치: 10-Q (2026-06-30) Part I Item 1 Note 5 — Debt, 리볼빙 신용한도 문단(‘We have an aggregate $20.0 billion…’) 첫 두 문장) | — | 확정 |
 | EV-amazon-004 | Amazon / AWS | [AI agents are fighting over your shopping cart: Meta’s Muse blocked by Amazon and Walmart - NBC News](https://www.nbcnews.com/tech/tech-news/ai-agent-muse-shop-e-commerce-amazon-wal-mart-wayfair-buy-rcna599069) | “Meta’s new AI agent, Muse, is supposed to handle everyday online errands, including shopping. At several of the country’s biggest retailers, it can’t get through the door.” (위치: 기사 첫 문단(구독자 전용 기사의 공개 리드)) | 2026-09-29 | 확정 |
@@ -3369,8 +3371,10 @@ created_at: 2026-10-12
 | EV-microsoft-042 | Microsoft | [Microsoft stock (MSFT) falls as US targets green card filings for H-1B workers and Italy probes gaming bus - The Economic Times](https://m.economictimes.com/news/international/us/microsoft-stock-msft-falls-as-us-targets-green-card-filings-for-h-1b-workers-and-italy-probes-gaming-business/articleshow/134798406.cms) | “Italy’s antitrust authority has launched an EU-backed investigation into several Microsoft-owned video-game companies, which includes Activision Blizzard, over concerns about the use of virtual currencies in games, as per a Reuters report. … Italy is leading the investigation alongside consumer-protection authorities in Norway and Denmark, the wider action is being coordinated through the European Commission’s Consumer Protection Cooperation Network.” (위치: 기사 본문 'Microsoft Stock Falls: Italy Opens Probe Into Microsoft-Owned Gaming Companies' 소제목 아래 첫째 문단과 넷째 문단) | 2026-10-08 | 확정 |
 | EV-microsoft-043 | Microsoft | [Introducing Microsoft-Decision-1, our model for fast decision-making - Microsoft](https://commandline.microsoft.com/microsoft-decision-1-model-foundry/) | “Today we’re introducing Microsoft-Decision-1, our new model for fast decision-scoring, available in Microsoft Foundry and through OpenRouter. This model is designed for routing, classification, prioritization, verification, and workflow control, making it easier to incorporate decision intelligence into existing applications, agents, and workflows in a secure, trusted environment. … To build Microsoft-Decision-1, we post trained Qwen3.5-9B for fast, single-pass decision scoring and will soon rebase it on other models, including Microsoft AI (MAI) and OpenAI.” (위치: 블로그 본문 셋째 문단 첫 두 문장과 여섯째 문단 첫 문장) | 2026-10-09 | 확정 |
 | EV-microsoft-044 | Microsoft | [Microsoft 10-K (FY2026)](https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm) | “As of June 30, 2026, we had additional leases, primarily for datacenters, that had not yet commenced of $ 329.1 billion, with some arrangements subject to certain contractual conditions being met. … Construction commitments (b) 29,848 4,718 34,566 … Purchase commitments (d) 169,008 25,052 194,060 … (d) Purchase commitments primarily relate to datacenters and include open purchase orders and take-or-pay contracts that are not presented as construction commitments above.” (위치: Part II Item 8 Note 13 Leases 마지막 문단과 Item 7 Contractual Obligations 표(백만 달러, 2027·이후·합계 열)) | 2026-07-29 | 확정 |
-| EV-microsoft-045 | Microsoft | [The next chapter of the Microsoft–OpenAI partnership](https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/) | “OpenAI has contracted to purchase an incremental $250B of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI’s compute provider.” (위치: 본문 합의 내용 글머리표 목록의 여섯째 항목) | 2025-10-28 | 확정 |
+| EV-microsoft-045 | Microsoft | [The next chapter of the Microsoft–OpenAI partnership](https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/) | “OpenAI has contracted to purchase an incremental $250B of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI’s compute provider.” (위치: 본문 'What has evolved:' 글머리표 목록(11개)의 아홉째 항목) | 2025-10-28 | 확정 |
 | EV-microsoft-046 | Microsoft | [Microsoft Fiscal Year 2026 Second Quarter Earnings Conference Call](https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q2) | “Commercial remaining performance obligation, which continues to be reported net of reserves, increased to $625 billion and was up 110% year-over-year with a weighted average duration of approximately two and a half years. Roughly 25% will be recognized in revenue in the next 12 months, up 39% year-over-year. … Approximately 45% of our commercial RPO balance is from OpenAI.” (위치: CFO 발언 중 commercial remaining performance obligation 문단) | 2026-01-28 | 확정 |
+| EV-microsoft-047 | Microsoft | [Microsoft 10-K (FY2026)](https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm) | “Revenue allocated to remaining performance obligations related to the commercial portion of revenue was $ 678 billion as of June 30, 2026, with a weighted average duration of approximately 2.3 years. We expect to recognize approximately 30 % of both our total company remaining performance obligation revenue and commercial remaining performance obligation revenue over the next 12 months and the remainder thereafter.” (위치: Part II Item 8, Note 12 Unearned Revenue 마지막 문단) | 2026-07-29 | 확정 |
+| EV-microsoft-048 | Microsoft | [Microsoft Fiscal Year 2026 Fourth Quarter Earnings Conference Call](https://www.microsoft.com/en-us/investor/events/fy-2026/earnings-fy-2026-q4) | “Commercial remaining performance obligation grew 84% to $678 billion. All sequential commercial RPO growth was driven by commitments from customers outside of frontier model companies. And RPO increased 25% when excluding OpenAI.” (위치: CFO 발언 중 commercial remaining performance obligation 문단) | 2026-07-29 | 확정 |
 | EV-nvidia-004 | NVIDIA | [OpenAI sparked Hugging Face bids with early investment offer ahead of Nvidia's $13 billion deal - cnbc.com](https://www.cnbc.com/2026/09/28/openai-spark-hugging-face-bid-war-early-investment-bid-ahead-of-nvidia.html) | “Before Nvidia agreed to pay roughly $13 billion to buy open-source platform Hugging Face this month, OpenAI tried to invest $100 million into the startup, according to sources with knowledge of the matter. … It was Nvidia's second-biggest purchase ever, following the $20 billion acquisition of assets from AI chip startup Groq in December.” (위치: CNBC 기사 첫째 문단과 넷째 문단 둘째 문장) | 2026-09-28 | 확정 |
 | EV-nvidia-008 | NVIDIA | [CoreWeave Delivers NVIDIA Vera Rubin NVL72 Performance at Production Scale, Starting With Cognition - CoreWeave](https://www.coreweave.com/news/coreweave-delivers-nvidia-vera-rubin-nvl72-performance-at-production-scale-starting-with-cognition) | “SAN FRANCISCO — Sept. 30, 2026 — CoreWeave Inc. (Nasdaq: CRWV), The Essential Cloud for AI™, today announced the availability of NVIDIA Vera Rubin NVL72 on CoreWeave, with Cognition as the first customer anywhere running production workloads on the system.” (위치: CoreWeave 보도자료 1번째 문단 첫 문장(coreweave.com 원문으로 확인)) | 2026-09-30 | 확정 |
 | EV-nvidia-009 | NVIDIA | [8-K 2026-09-03 · Items 8.01](https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm) | “On September 2, 2026, NVIDIA Corporation (“NVIDIA”) entered into a definitive agreement to acquire Hugging Face, Inc. (“Hugging Face”). Hugging Face operates a platform and community for developing, sharing and deploying open-source models, datasets and applications.” (위치: 8-K (2026-09-02) Item 8.01 Other Events 첫 문단) | 2026-09-03 | 확정 |

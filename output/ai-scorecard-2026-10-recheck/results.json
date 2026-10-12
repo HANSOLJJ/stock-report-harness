@@ -8,10 +8,10 @@
   "input_hashes": {
     "run": "4e871c04732b228d909d5bed5181f46faada0e192891a21731d629103b5caf60",
     "observations": "49ccaa48c0096eea3528a163b496a120742c4f6a87b7c51c541e4e792ddd1865",
-    "judgments": "531ab2f487aa3ddfc2e92a17c0fccb347873a4398cef682fd159956f5d87b7ba",
+    "judgments": "444325c40f5a4a54b0dec17c8f09cf27104c5529c560123bc20b19f2aec0577f",
     "sources": "d9285567fe4930f6632f0b537679da40ec792b887337339152ece2aac9a738d7",
-    "evidence": "9250f2bf41e1070d09b0e8148b713852dd7f6a6a3f10afeb32b193e09efe7c10",
-    "triggers": "835755a98e5d5b7aef7694fd8e0685f85d44976215bedd758170d47f921b686f",
+    "evidence": "060d47744f776e5c63385048e63879cb42dccd8e6c7442023129cb36302da561",
+    "triggers": "a05abe9b74a2abc23357932333430db6fc49fb7ef3e172d9c19f2536f87bcd29",
     "rules": "3bf9418cf3eb43f9b91152f7e11249808658d80d4944c15222217b72b4be3cc5"
   },
   "decisions_applied": [
@@ -352,7 +352,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 3
+      "rank": 2
     },
     {
       "company_id": "amazon",
@@ -1300,7 +1300,7 @@
         },
         "F8": {
           "factor": "F8",
-          "score": -2,
+          "score": -3,
           "status": "ok",
           "basis": "manual",
           "judgment_id": "microsoft.F8",
@@ -1349,8 +1349,8 @@
         }
       },
       "moat": 21,
-      "trap": -8,
-      "total": 13,
+      "trap": -9,
+      "total": 12,
       "complete": true,
       "pending": [],
       "carried_factors": [],
@@ -4761,11 +4761,11 @@
       "company_id": "microsoft",
       "display_name": "Microsoft",
       "moat": 21,
-      "trap": -8,
-      "total": 13
+      "trap": -9,
+      "total": 12
     },
     {
-      "rank": 3,
+      "rank": 2,
       "company_id": "alphabet",
       "display_name": "Alphabet / Google",
       "moat": 20,
@@ -4876,5 +4876,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 49,
-  "results_hash": "90671057092bf44c7a4414ec8ebf92dc77d2a1bb4877e308f445e70ae8edeaca"
+  "results_hash": "1a433c3842adb967a8b6bc4d816955c65d90a4936bf681bf9a5b85742b4ba1ea"
 }
