@@ -1745,6 +1745,18 @@
         ]
       }
     },
+    "diagnostics": {
+      "cash_chain": {
+        "scored": false,
+        "note": "현금 연결표는 회사마다 매출 → 영업이익 → 영업현금흐름 → 설비투자 → FCF → 주식보상 → 희석 주식 → 주당 FCF 를 한 줄로 보인다. 이익이 현금과 주주 몫으로 얼마나 이어지는지 보는 진단이며 점수에 넣지 않는다. FCF 는 ⑨ 가 쓰는 관측과 같다.",
+        "ai_contribution": "AI 가 이 현금 가운데 얼마를 만들었는지는 공시로 가를 수 없어 비워 둔다. 추정으로 채우지 않는다.",
+        "fcf_check_tolerance": 0.01,
+        "consumers": [
+          "cash_chain.cash_chain_rows",
+          "render_common.cash_chain_table → 초안·HTML ⑨ 원자료 뒤"
+        ]
+      }
+    },
     "rejudge": {
       "regular_run_rejudges_all": true,
       "qualitative_factors": [

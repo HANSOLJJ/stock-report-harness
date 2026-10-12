@@ -1058,6 +1058,58 @@ def comparison_groups(results: dict[str, Any]) -> dict[str, list[dict[str, Any]]
     return groups
 
 
+CASH_CHAIN_HEAD = ["기업", "매출", "영업이익", "영업현금흐름", "설비투자", "FCF(⑨)", "주식보상", "희석 주식", "주당 FCF",
+                   "주식보상 뺀 주당 FCF", "OCF − 설비투자 대조", "기준 시점"]
+
+
+def _shares_text(value: float | None) -> str:
+    if value is None:
+        return "미확인"
+    return f"{value / 1e9:.2f}B주" if value >= 1e9 else f"{value / 1e6:.0f}M주"
+
+
+def _per_share_text(value: float | None) -> str:
+    return "미확인" if value is None else f"{'-' if value < 0 else ''}${abs(value):,.2f}"
+
+
+def _check_text(check: dict[str, Any]) -> str:
+    if check["status"] == "match":
+        return "일치"
+    if check["status"] == "mismatch":
+        return f"차이 {fmt_usd(check['diff'])}(OCF − 설비투자 {fmt_usd(check['derived'])})"
+    if check["status"] == "period_mismatch":
+        names = {"ocf_ttm": "OCF", "capex_ttm": "설비투자", "fcf_ttm": "FCF"}
+        return "기간 다름(" + " · ".join(f"{names[m]} {e}" for m, e in check["ends"].items()) + ")"
+    names = {"ocf_ttm": "영업현금흐름", "capex_ttm": "설비투자", "fcf_ttm": "FCF"}
+    if check["status"] == "period_unknown":
+        return "대조 불가(" + "·".join(names[m] for m in check["missing"]) + " 관측에 회계기간 없음)"
+    return "대조 불가(" + "·".join(names[m] for m in check["missing"]) + " 없음)"
+
+
+def cash_chain_table(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None:
+    """2026-10-12 규칙 v2.1 2-E: 현금 연결표(점수 없음). 초안과 HTML 이 같은 글자를 쓴다. 규칙에 진단 선언이 없으면 None."""
+    from .cash_chain import cash_chain_rows, cash_chain_spec
+
+    spec = cash_chain_spec(ctx.rules)
+    if spec is None:
+        return None
+    rows = []
+    for r in cash_chain_rows(ctx.observations, results["companies"], spec):
+        v = r["values"]
+        money = [fmt_usd(v[m]) if v[m] is not None else "미확인"
+                 for m in ("revenue_ttm", "operating_income_ttm", "ocf_ttm", "capex_ttm", "fcf_ttm", "sbc_ttm")]
+        ends = sorted({e for e in r["ends"].values() if e})
+        when = ends[0] if len(ends) == 1 else ("—" if not ends else "섞임 " + "·".join(ends))
+        if None in r["ends"].values():
+            when += " · 기간 없는 관측 포함"
+        rows.append([r["display_name"], *money, _shares_text(v["shares_diluted"]), _per_share_text(r["fcf_per_share"]),
+                     _per_share_text(r["fcf_less_sbc_per_share"]), _check_text(r["check"]), when])
+    notes = [spec["note"], spec["ai_contribution"],
+             f"대조는 OCF − 설비투자와 ⑨ 가 쓰는 FCF 관측의 차이가 FCF 의 {spec['fcf_check_tolerance'] * 100:g}% 안이면 일치로 본다. "
+             "회사 정의 FCF(설비 처분·인센티브를 뺀 값)를 쓰는 회사와 기준 시점이 다른 관측은 차이로 나온다."]
+    return {"head": CASH_CHAIN_HEAD, "rows": rows, "notes": notes}
+
+
 def axes_calc_text(rules: Any, calc: dict[str, Any]) -> str:
     """⑧ 산식 줄(규칙 v2.1): 네 축의 칸과 근거 종류, 가장 낮은 칸."""
     spec = rules.factor("F8") if rules is not None else {}

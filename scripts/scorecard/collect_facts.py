@@ -24,8 +24,8 @@ COMPANYFACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.jso
 TAXONOMY = "us-gaap"
 UNIT = "USD"
 
-# 지표 → 후보 개념(앞이 우선, 단 마지막 사실이 더 늦은 개념이 있으면 그것). fcf_ttm 은 내지 않는다 — Amazon 은 회사 정의 FCF 공시값을
-# 쓰고 있어 산식으로 다시 만들면 ⑨ 입력이 조용히 바뀐다. 현금 연결표가 OCF − 설비투자와 fcf_ttm 을 대조한다.
+# 지표 → 후보 개념(앞이 우선, 단 마지막 사실이 더 늦은 개념이 있으면 그것). fcf_ttm 은 내지 않는다 — ⑨ 입력은 수동·공시 관측(SpaceX
+# S-1, TSMC·Alibaba 환산 등)이 섞여 있어 수집기가 덮지 않고, 현금 연결표가 OCF − 설비투자를 그 fcf_ttm 과 따로 대조한다.
 FACT_METRICS: dict[str, tuple[str, ...]] = {
     "ocf_ttm": ("NetCashProvidedByUsedInOperatingActivities",),
     "capex_ttm": ("PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"),

@@ -1056,6 +1056,16 @@ def render_raw_tables(ctx: Any, results: dict[str, Any]) -> str:
                  f'<div class="notice info">{inline_html(rc.cash_definition_note(ctx))}</div>'
                  + "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in rc.credit_lines(ctx, results)) +
                  f'<p class="sub mt-8">{esc(rc.CREDIT_NOTE)} 부외 약정은 A(개시 리스)/B(미개시 확정)/C(우발) 분류 후 B종만 약정 커버리지에 쓴다.</p>')
+    # 2026-10-12 규칙 v2.1 2-E: 현금 연결표(점수 없음). 초안과 같은 글자를 render_common 에서 읽는다.
+    chain = rc.cash_chain_table(ctx, results)
+    if chain:
+        head = "".join(f'<th class="name">{esc(h)}</th>' if i == 0 else (f'<th class="text">{esc(h)}</th>' if i >= 10 else f"<th>{esc(h)}</th>")
+                       for i, h in enumerate(chain["head"]))
+        body = "".join("<tr>" + "".join(f'<td class="name"><b>{esc(c)}</b></td>' if i == 0 else
+                                        (f'<td class="text">{esc(c)}</td>' if i >= 10 else f'<td class="mono">{esc(c)}</td>')
+                                        for i, c in enumerate(row)) + "</tr>" for row in chain["rows"])
+        parts.append(f'<h3>현금 연결표 — 점수 없음</h3><div class="tablewrap"><table class="figures"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>'
+                     + "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in chain["notes"]))
     if borr_rows:
         parts.append('<h3>TTM 순차입</h3><div class="tablewrap"><table class="figures"><thead><tr><th class="name">기업</th><th>TTM 순차입</th><th>TTM capex</th></tr></thead><tbody>' + "".join(borr_rows) + "</tbody></table></div>")
     return "".join(parts)

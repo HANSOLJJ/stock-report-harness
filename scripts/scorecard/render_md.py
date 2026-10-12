@@ -609,6 +609,11 @@ def _raw_tables(ctx: Any, results: dict[str, Any]) -> list[str]:
               f"- {rc.cash_definition_note(ctx)}"]
     lines += [f"- {x}" for x in rc.credit_lines(ctx, results)]
     lines += [f"- {rc.CREDIT_NOTE}", ""]
+    # 2026-10-12 규칙 v2.1 2-E: 현금 연결표. 규칙에 진단 선언이 없는 옛 실행에는 이 절이 없다.
+    chain = rc.cash_chain_table(ctx, results)
+    if chain:
+        lines += ["### 현금 연결표 — 점수 없음", "", table(chain["head"], chain["rows"], ["---"] + ["---:"] * 9 + ["---", "---"]), ""]
+        lines += [f"- {x}" for x in chain["notes"]] + [""]
     if borr_rows:
         lines += ["### TTM 순차입", "", table(["기업", "TTM 순차입", "TTM capex"], borr_rows), ""]
     return lines

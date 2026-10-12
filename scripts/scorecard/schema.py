@@ -439,6 +439,8 @@ def validate_rules(payload: Any) -> dict[str, Any]:
     _validate_f9_policy(payload["policies"]["f9"], factors["F9"])
     if "missing_types" in payload["policies"]:
         _validate_missing_types_policy(payload["policies"]["missing_types"])
+    if "diagnostics" in payload["policies"]:
+        _validate_diagnostics_policy(payload["policies"]["diagnostics"])
     for item in payload["checklist"]:
         _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
     ids = [d["id"] for d in payload["decisions"]]
@@ -695,6 +697,18 @@ def _validate_f6_bands(bands: Any, where: str, comparison: str) -> None:
     _require(all(_is_number(e) for e in edges), f"{where}: 경계는 숫자")
     ordered = sorted(edges) if key == "upper" else sorted(edges, reverse=True)
     _require(edges == ordered, f"{where}: {key} 경계 정렬 오류 — {'오름차순' if key == 'upper' else '내림차순'} 이어야 함")
+
+
+def _validate_diagnostics_policy(spec: Any) -> None:
+    """2026-10-12 규칙 v2.1 2-E: 점수 없는 진단. 점수에 닿지 않는다는 선언과 소비자(cash_chain)가 읽는 키를 확인한다."""
+    _require(isinstance(spec, dict), "rules.policies.diagnostics: object 여야 함")
+    if "cash_chain" in spec:
+        where = "rules.policies.diagnostics.cash_chain"
+        cc = spec["cash_chain"]
+        _expect_keys(cc, ["scored", "note", "ai_contribution", "fcf_check_tolerance"], where, optional=["consumers"])
+        _require(cc["scored"] is False, f"{where}: scored 는 false — 진단은 점수에 닿지 않는다")
+        tol = cc["fcf_check_tolerance"]
+        _require(_is_number(tol) and 0 < tol <= 0.1, f"{where}: fcf_check_tolerance 는 0 초과 0.1 이하 ({tol!r})")
 
 
 def _validate_missing_types_policy(spec: Any) -> None:

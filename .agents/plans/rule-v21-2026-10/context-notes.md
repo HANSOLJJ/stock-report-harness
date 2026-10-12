@@ -49,8 +49,9 @@
 - recheck 의 검증된 fcf_ttm 15건은 basis 에 ocf_ttm·capex_ttm 성분과 accession 을 이미 담고 있다(CASH-FCF-35 작업). 그러나 그 관측을 만든 스크립트는
   하네스 밖(validation/fix-54 등)에 있어 11월에 3분기 자료로 갱신할 도구가 없다. 그래서 `collect --kind facts` 를 새로 만든다. 2-C-1 의 분기 설비투자
   시계열도 같은 수집기가 낸다.
-- 수집기는 ocf_ttm·capex_ttm·income_tax_ttm 만 낸다. fcf_ttm 은 내지 않는다 — Amazon 의 FCF 는 회사 정의(설비 구입 − 처분·인센티브)로 공시값을
-  쓰고 있어 산식으로 다시 만들면 ⑨ 입력이 조용히 바뀐다. 현금 연결표가 OCF − 설비투자와 ⑨ 의 fcf_ttm 을 대조해 어긋나면 표시한다.
+- 수집기는 ocf_ttm·capex_ttm·income_tax_ttm 만 낸다. fcf_ttm 은 내지 않는다 — ⑨ 입력은 수동·공시 관측(SpaceX S-1, TSMC·Alibaba 환산 등)이
+  섞여 있어 수집기가 덮지 않고, 현금 연결표가 OCF − 설비투자를 그 fcf_ttm 과 따로 대조해 어긋나면 표시한다. (E1 커밋 메시지는 "Amazon 이 회사 정의
+  FCF 를 쓴다"를 이유로 적었으나 틀렸다. 미리보기에서 Amazon 의 fcf_ttm 은 OCF − PaymentsToAcquireProductiveAssets 와 같았다.)
 - income_tax_ttm 은 2-E 범위 밖이지만 같은 경로·같은 산식이라 넣는다(11월 v2.1 ⑥ 이익 조정의 입력, TODO 1). equity_investment_gains_ttm 은 회사마다 구성
   태그가 다르고 주석 대조가 필요해(Amazon 셋 합) 수집기에 넣지 않는다.
 - USD 로 보고하는 회사만 수집한다. TSMC·Alibaba 는 20-F 현지통화라 지금처럼 수동 USD 환산 관측을 쓴다.

@@ -68,7 +68,9 @@ class DiffTest(unittest.TestCase):
         changed = {k for k in self.v21 if self.v21[k] != self.v20[k]}
         self.assertEqual(changed, {"rule_version", "note", "factors", "policies", "scoring", "decisions", "checklist"})
         self.assertEqual({i["id"] for i in self.v21["checklist"] if i not in self.v20["checklist"]}, {"Q01"})
-        self.assertEqual({k for k in self.v21["policies"] if self.v21["policies"][k] != self.v20["policies"][k]}, {"f6"})
+        # 2-E: 점수 밖 진단(현금 연결표) 선언은 v2.1 에만 있다
+        self.assertEqual({k for k in self.v21["policies"] if self.v21["policies"].get(k) != self.v20["policies"].get(k)},
+                         {"f6", "diagnostics"})
         self.assertEqual({d["id"] for d in self.v21["decisions"] if d not in self.v20["decisions"]}, {"C-12"})
         self.assertEqual(self.v21["scoring"]["trap_min_active"], -17)
         self.assertEqual(self.v21["rule_version"], "v2.1")

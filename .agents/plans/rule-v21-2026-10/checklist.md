@@ -31,7 +31,7 @@
 ## 2-E. 현금 연결표
 - [x] E1 `collect --kind facts`: companyfacts 에서 ocf_ttm·capex_ttm·income_tax_ttm 최근 1년 복원(누계 산식), 제출일 ≤ 정보 기준일, USD 보고 회사만,
       sec_get 캐시가 정보 기준일보다 오래되면 다시 받음 → 실제 캐시 12사로 FCF basis 성분과 대조, T-08(누계·분기 혼재, 재작성, 52/53주) 테스트 → 커밋
-- [ ] E2 현금 연결표: `cash_chain.py`(관측 → 행), v2.1 `policies.diagnostics.cash_chain` 이 있을 때만 draft·HTML 렌더, OCF − 설비투자 ≈ FCF 대조 → 테스트 → 커밋
+- [x] E2 현금 연결표: `cash_chain.py`(관측 → 행), v2.1 `policies.diagnostics.cash_chain` 이 있을 때만 draft·HTML 렌더, OCF − 설비투자 ≈ FCF 대조 → 테스트 → 커밋
 
 ## 2-C. 국면 지표
 - [ ] 2-C-1 설비투자 분기 시계열·금융리스·장부 밖, NVIDIA 공급자 지원, SDLLMTK
