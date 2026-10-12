@@ -32,3 +32,12 @@
   바뀌는 회사는 Alphabet·Meta 둘. rules.md 에 규칙 문장으로 올리는 일은 다음 실행 과제다.
 - 기업 요약(company_summaries)은 init --from-run 이 이어받지 않는다 — 새로 써야 한다(다음 실행 과제 후보: init 이 요약을 옮기거나 비었음을 경고).
 - 도구는 `.agents/plans/rejudge-all-2026-11/work/` 의 merge_group_outputs.py·apply_judgments.py 를 이 폴더 work/ 로 복사해 경로·날짜만 바꿔 쓴다.
+- 2026-10-12 3배 경계를 적용하니 Meta 는 2026-07 추가 리스(약 $68B, EV-meta-059)로 3.05배라 −3 을 유지했다. 위의 "바뀌는 회사는 Alphabet·Meta 둘" 은
+  Alphabet 하나로 고친다. 기간 뒤라도 기준일 전에 공시된 체결 리스·구매 약정은 넣고, 보증·조건부 구매 같은 우발 의무와 본계약 전 협약·MOU 는 뺀다(확인 4차가
+  아홉 상장사에 대 보고 Meta 만 해당함을 확인).
+- **2026-10-12 사용자 결정: 이 실행은 승인하지 않는다.** 규칙 v2.1(① 만점 AI 수익화 조건, ④⑧ 판정 입력화, ⑥ 성장 조정 배수, ⑦ 네 칸 −3)이 11월에 14사를
+  다시 매기게 하므로 점수는 곧 대체되고, 규칙 버전이 다르면 추세를 잇지 않으며, 승인된 실행은 결과 해시 재현 제약을 하나 더 만든다. 가치 있는 것은 자료(원문 발췌
+  근거, 푼 주소, 비상장 재무, 트리거, ⑧ 판단)이고 `init --from-run` 은 승인 여부와 무관하게 이어받는다. 승인된 10월 기록은 rejudge 다. 계획은
+  `.agents/plans/rule-v21-2026-10/`.
+- SpaceX 표시 이름(사용자 지시 "SpaceX 로만")은 이 실행에 적용하지 않았다. work/apply_display_name.py·check_rename_only.py 는 11월 실행 init 때
+  run.json display_names 에 넣는 데 쓴다.

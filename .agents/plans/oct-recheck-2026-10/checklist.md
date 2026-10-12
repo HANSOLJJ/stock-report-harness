@@ -28,6 +28,9 @@
 - [x] 4영역 리뷰 다섯 세션 띄움
 - [x] 1차 결과: 규칙 일관성·재무 계산·사실·출처 A needs_fix, 사실·출처 B·출력 pass (A·B 는 사용량 한도로 끊겼다가 이어서 끝냄)
 - [x] 수정 한 묶음(make_fix1.py·summaries_r2.py, 근거 3건 추가) → research·calculate·draft·review-template --force → 커밋
-- [ ] review.md 채움(확인 리뷰 결과까지)
-- [ ] 확인 리뷰 → pass
-- [ ] 계약 검증 → 승인 대기 보고
+- [x] 확인 리뷰 2차 blocked(C1) → 수정(make_fix2.py) → 확인 리뷰 3차 pass
+- [x] 사용자 결정 ⑧ 약정 축 3배 경계 → make_fix3.py → 확인 리뷰 4차 pass(confirm-r4.md)
+- [x] review.md 채움(확인 4차까지, fill_review.py)
+- [x] 계약 검증 PASS
+- [x] 사용자 결정: 승인 보류(v2.1 개정으로 대체, 11월 실행이 from-run 으로 이어받음). SpaceX 표시 이름은 11월 실행 init 때 run.json display_names 로
+- [ ] (11월 실행 과제) confirm-r4 N2 Anthropic ⑧ 옛 2배 표현, N3 NVIDIA SB Energy 보증 문장. N1 은 v2.1 ⑧ 입력화에 흡수
