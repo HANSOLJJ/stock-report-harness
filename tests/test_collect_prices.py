@@ -82,6 +82,15 @@ class MarketCapTimingTest(unittest.TestCase):
                 obs = self.cap(NVIDIA, fetched_at=fetched)
                 self.assertEqual((obs["basis"]["method"], obs["value"]), ("vendor_market_cap", 5000.0))
 
+    def test_weekend_does_not_count(self):
+        # 2026-10-12: 금요일(2026-09-25) 종가를 월요일에 조회하면 그사이 거래일이 없어 벤더 시총이 그 종가의 값이다. 화요일은 아니다.
+        for fetched, fresh in (("2026-09-26", True), ("2026-09-27", True), ("2026-09-28", True), ("2026-09-29", False)):
+            with self.subTest(fetched=fetched):
+                obs = self.cap(self.TSMC, fetched_at=fetched)
+                self.assertEqual(obs["status"], "verified" if fresh else "collection_failed")
+                self.assertEqual(obs["value"], 5000.0 if fresh else None)
+        self.assertEqual(self.cap(self.TSMC, fetched_at="2026-09-24")["status"], "collection_failed", "종가보다 앞선 조회는 아니다")
+
     def test_historical_as_of_does_not_use_vendor(self):
         for fetched in ("2026-09-30", None):
             with self.subTest(fetched=fetched):

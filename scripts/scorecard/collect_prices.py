@@ -68,12 +68,18 @@ def fetch_quote(ticker: str, price_as_of: str) -> dict[str, Any]:
 
 
 def _vendor_cap_is_fresh(quote: dict[str, Any]) -> bool:
-    """조회일(UTC)이 종가 날짜와 같거나 하루 뒤일 때만 벤더 시총이 그 날짜의 값이다."""
+    """조회일(UTC)이 종가 날짜와 같거나 다음 평일까지일 때만 벤더 시총이 그 날짜의 값이다.
+    2026-10-12: 금요일 종가를 월요일에 조회하면 달력으로 사흘이라 TSMC·Alibaba 시총이 실패했다. 그사이 거래일이 없으므로
+    주말은 세지 않는다(다음 날 조회를 허용하던 정밀도와 같다)."""
     fetched = quote.get("fetched_at")
     if not fetched:
         return False
-    gap = (date.fromisoformat(fetched) - date.fromisoformat(quote["close_date"])).days
-    return 0 <= gap <= 1
+    close, got = date.fromisoformat(quote["close_date"]), date.fromisoformat(fetched)
+    if got < close:
+        return False
+    weekdays_after_close = sum(1 for n in range(1, (got - close).days + 1)
+                               if (close + timedelta(days=n)).weekday() < 5)
+    return weekdays_after_close <= 1
 
 
 def price_observations(company: dict[str, Any], quote: dict[str, Any], *, source_id: str) -> list[dict[str, Any]]:
