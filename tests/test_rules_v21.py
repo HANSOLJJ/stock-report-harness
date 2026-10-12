@@ -546,7 +546,7 @@ class SurvivalAxesSchemaTest(unittest.TestCase):
 
     def test_share_evidence_cross_ref(self):
         j = validate(survival("nvidia", non_ai_share_evidence=["EV-nvidia-009"]))
-        with self.assertRaisesRegex(SchemaError, "AI 무관 매출 몫 근거"):
+        with self.assertRaisesRegex(SchemaError, "AI 무관 매출 몫·보유표 근거"):
             validate_cross_refs([], j, [], [{"source_id": "S"}])
         validate_cross_refs([], j, [{"evidence_id": "EV-nvidia-009", "source_id": "S", "status": "confirmed"}], [{"source_id": "S"}])
 
@@ -566,6 +566,55 @@ class SurvivalAxesTextTest(unittest.TestCase):
                                                        geopolitics={"status": "confirmed", "rung": -4})]), V21)
         self.assertEqual(axes_calc_text(V21, r["calc"]),
                          "고객 -1(탐색 미완, 정책 기본값) · 약정 0 · 공급 -1 · 지정학 -4 → 가장 낮은 축 지정학 = -4")
+
+
+class SurvivalReportTest(unittest.TestCase):
+    """④ 보유표 표·비교 그룹 안 순위·산점도 색. 옛 실행의 초안은 한 글자도 바뀌지 않는다."""
+
+    def results(self) -> dict:
+        def summary(cid, name, layers, primary, share, total, rank):
+            f4 = compute_f4({**company(), "company_id": cid}, JudgmentLookup([survival(cid, layers=layers, primary_layer=primary,
+                                                                   non_ai_revenue_share=share)]), V21)
+            return {"company_id": cid, "display_name": name, "type": "업무", "factors": {"F4": f4}, "total": total,
+                    "rank": rank, "complete": rank is not None}
+        model_only = {"chip": "none", "server": "none", "platform": "none", "cloud": "none", "model": "sold", "app": "sold"}
+        return {"companies": [
+            summary("openai", "OpenAI", model_only, "model", 0.0, 1, 3),
+            summary("anthropic", "Anthropic", model_only, "model", 0.0, 2, 2),
+            summary("amazon", "Amazon", dict(ALL_SOLD), "cloud", 0.9, 13, 1),
+            summary("meta", "Meta", model_only, "app", 0.98, None, None)]}
+
+    def test_rows_and_groups(self):
+        from scorecard.render_common import comparison_groups, survival_rows
+        res = self.results()
+        self.assertEqual([r["company_id"] for r in survival_rows(res)], ["amazon", "anthropic", "openai", "meta"])
+        groups = comparison_groups(res)
+        self.assertEqual({k: [m["company_id"] for m in v] for k, v in groups.items()},
+                         {"model": ["anthropic", "openai"], "cloud": ["amazon"]})      # 미완료(Meta)는 그룹 순위에 없다
+
+    def test_dot_class_uses_group_only_when_present(self):
+        from scorecard.render_html import dot_class
+        res = self.results()
+        self.assertEqual(dot_class(res["companies"][0]), "layer-model")
+        self.assertEqual(dot_class({"type": "업무", "factors": {"F4": {"score": 4, "calc": None}}}), "work")
+
+    def test_cell_evidence_in_formula_line(self):
+        from scorecard.render_common import survival_calc_text
+        j = survival(layers={"chip": "sold", "server": "none", "platform": "none", "cloud": "none", "model": "none", "app": "none"},
+                     layer_evidence={"chip": ["EV-acme-001", "EV-acme-002"]}, non_ai_revenue_share=0.0)
+        r = compute_f4(company(), JudgmentLookup([j]), V21)
+        self.assertIn("칩 판매 [EV-acme-001, EV-acme-002]", survival_calc_text(V21, r["calc"]))
+
+    def test_v20_draft_rerender_is_unchanged(self):
+        from scorecard.engine import load_context
+        from scorecard.render_md import render_draft
+        from scorecard.stages import load_baseline
+        slug = "ai-scorecard-2026-10-recheck"
+        ctx = load_context(slug)
+        results = json.loads((ROOT / "output" / slug / "results.json").read_text(encoding="utf-8"))
+        scores, _o, triggers = load_baseline(ctx.run["baseline_id"])
+        committed = (ROOT / "output" / slug / "draft.md").read_text(encoding="utf-8").replace("\r\n", "\n")
+        self.assertEqual(render_draft(ctx, results, scores, triggers), committed)
 
 
 class HalfStepTest(unittest.TestCase):

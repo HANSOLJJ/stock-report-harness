@@ -24,6 +24,12 @@ from .stages import approval_mismatches, current_hashes, load_baseline, lock_pat
 GENERATOR = "stock-report-harness scorecard-builder"
 SHORT = {"F1": "①", "F2": "②", "F3": "③", "F4": "④", "F5": "⑤", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
 TYPE_CLASS = {"소비자": "consumer", "업무": "work", "거래": "trade", "부품": "part", "소비자·업무": "mix", "혼합": "mix"}
+
+
+def dot_class(c: dict[str, Any]) -> str:
+    """산점도 점의 색 이름. 규칙 v2.1 ④ 보유표가 있으면 비교 그룹(주 레이어), 없으면 지금처럼 주채널 유형이다."""
+    layer = ((c["factors"].get("F4") or {}).get("calc") or {}).get("primary_layer")
+    return f"layer-{layer}" if layer else TYPE_CLASS.get(c["type"], "mix")
 OBS_STATUS_LABELS = {
     "verified": "검증 완료", "legacy_unverified": "사용자 원본 값·다시 확인 안 함", "not_applicable": "해당 없음",
     "not_disclosed": "미공시", "collection_failed": "수집 실패", "source_conflict": "출처 충돌",
@@ -97,6 +103,9 @@ def css() -> str:
   --bad-soft:rgba(224,78,82,.09);--bad-line:rgba(224,78,82,.28);--bad-text:#f4a5a7;
   --warn-soft:rgba(230,162,60,.10);--warn-line:rgba(230,162,60,.32);--warn-text:#f6d8a3;
   --cat-consumer:#5ea6f6;--cat-work:#4ad39c;--cat-trade:#b195f5;--cat-part:#f0a05c;--cat-mix:#f28cc0;
+  /* 2026-10-12 규칙 v2.1: 산점도를 비교 그룹(④ 주 레이어)으로 칠한다. */
+  --cat-layer-chip:#f0a05c;--cat-layer-server:#e6c35c;--cat-layer-platform:#b195f5;--cat-layer-cloud:#4ad39c;
+  --cat-layer-model:#5ea6f6;--cat-layer-app:#f28cc0;
   /* 2026-09-17 FIX-75: 방법 절의 아홉 항목이 똑같이 생긴 블록으로 이어져 구분이 되지 않았다(사용자 지적).
      과점 다섯은 차가운 쪽, 함정 넷은 따뜻한 쪽에서 고르되 서로 섞이지 않는 색조를 준다. */
   --f1:#5ea6f6;--f2:#b195f5;--f3:#4ad39c;--f4:#6fd0d8;--f5:#f28cc0;
@@ -401,6 +410,10 @@ tr.priv{opacity:.75}
   #availTable th.name,#availTable td.name{position:sticky;left:0;z-index:2;background:var(--bg2);max-width:132px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #availTable th.name{background:var(--bg3)}
   #availTable td.text{min-width:150px}
+  /* 2026-10-12 규칙 v2.1: 층별 보유표도 가로로 스크롤되므로 기업명을 고정한다. */
+  table.layers{border-collapse:separate;border-spacing:0}
+  table.layers th.name,table.layers td.name{position:sticky;left:0;z-index:2;background:var(--bg2);max-width:132px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  table.layers th.name{background:var(--bg3)}
 }
 @media(max-width:640px){
   .cards{grid-template-columns:1fr}
@@ -535,7 +548,7 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
     for (moat, trap), group in sorted(groups.items()):
         sizes = [(caps.get(c["company_id"]) or 0.5e12) / 1e12 for c in group]
         r = max(7.0, min(30.0, 8 + math.sqrt(max(sizes)) * 9))
-        color = f"var(--cat-{TYPE_CLASS.get(group[0]['type'], 'mix')})"
+        color = f"var(--cat-{dot_class(group[0])})"
         names = " · ".join(short_name(c["display_name"]) for c in group)
         entries.append({"x": X(moat), "y": Y(trap), "r": r, "color": color, "names": names, "total": group[0]["total"], "group": group})
     placed = [{"x": e["x"], "y": e["y"], "w": e["r"] * 2 + 8, "h": e["r"] * 2 + 8} for e in entries]
@@ -544,7 +557,7 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
         parts.append(f'<g><title>{esc(desc)}</title><circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="{e["r"]:.1f}" style="fill:{e["color"]}" opacity=".18"/><circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="{e["r"]:.1f}" fill="none" style="stroke:{e["color"]}" stroke-width="2" opacity=".9"/></g>')
         if len(e["group"]) > 1:
             for k, c in enumerate(e["group"]):
-                parts.append(f'<circle cx="{e["x"] + (k - (len(e["group"]) - 1) / 2) * 8:.1f}" cy="{e["y"]:.1f}" r="2.6" style="fill:var(--cat-{TYPE_CLASS.get(c["type"], "mix")})"/>')
+                parts.append(f'<circle cx="{e["x"] + (k - (len(e["group"]) - 1) / 2) * 8:.1f}" cy="{e["y"]:.1f}" r="2.6" style="fill:var(--cat-{dot_class(c)})"/>')
         else:
             parts.append(f'<circle cx="{e["x"]:.1f}" cy="{e["y"]:.1f}" r="3" style="fill:{e["color"]}"/>')
     for e in sorted(entries, key=lambda x: x["y"]):
@@ -807,6 +820,37 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
             + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' for x in TRAP_FACTORS)
             + '<th class="keep" data-k="trap">함정</th><th class="divider keep" data-k="total">조정총점</th></tr>')
     return f'<div class="tablewrap"><table id="mainTable"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
+
+
+def render_layers(results: dict[str, Any], ctx: Any) -> str:
+    """규칙 v2.1 ④ 층별 보유표(전 기업 한 장)와 비교 그룹 안 순위. 보유표가 없는 옛 실행에는 빈 문자열이다."""
+    rows = rc.survival_rows(results)
+    if not rows:
+        return ""
+    names = rc.layer_labels(ctx.rules)
+    keys = list(names)
+    cell_cls = {"sold": "c-g5", "self": "c-g3", "preparing": "c-g2", "none": "c-g0", "unknown": "c-g0"}
+    body = []
+    for r in rows:
+        share = r["non_ai_revenue_share"]
+        cells = "".join(f'<td class="{cell_cls.get(r["layers"].get(k), "")}">{esc(rc.LAYER_VALUE_LABELS.get(r["layers"].get(k), "—"))}</td>' for k in keys)
+        body.append(f'<tr data-company="{esc(r["company_id"])}"><td class="name keep"><b>{esc(r["display_name"])}</b></td>{cells}'
+                    f'<td><span class="pill" style="color:var(--cat-layer-{esc(r["primary_layer"] or "")})">{esc(names.get(r["primary_layer"], "—"))}</span></td>'
+                    f'<td class="mono">{esc(f"{share * 100:.0f}%" if isinstance(share, (int, float)) else str(share))}</td>'
+                    f'<td class="mono"><b>{fmt_score(r["score"])}</b></td></tr>')
+    head = ('<tr><th class="name keep">기업</th>' + "".join(f"<th>{esc(names[k])}</th>" for k in keys)
+            + "<th>비교 그룹</th><th>AI 무관 매출</th><th>④</th></tr>")
+    groups = rc.comparison_groups(results)
+    group_items = "".join(
+        f'<li><b style="color:var(--cat-layer-{k})">{esc(names[k])}</b> '
+        + " · ".join(f'{esc(m["display_name"])} {fmt_score(m["total"])}({m["rank"]}위)' for m in groups[k]) + "</li>"
+        for k in keys if k in groups)
+    return ('<h3>층별 보유표와 비교 그룹</h3>'
+            '<p class="sub">회사마다 AI 사업 여섯 층을 판매·자체 사용·없음·준비 중으로 적은 표다. ④ 의 수직계열화 축은 이 표의 합(판매 1 · 자체 사용 0.5, '
+            '상한 2.5)이고 다각화 축은 AI 와 무관한 최종 수요에서 나오는 매출 몫이다. 비교 그룹은 판매 칸 가운데 외부 매출이 가장 큰 층이며, '
+            '잣대는 모든 회사에 같고 비교만 그룹 안에서 한다.</p>'
+            f'<div class="tablewrap"><table class="layers"><thead>{head}</thead><tbody>{"".join(body)}</tbody></table></div>'
+            + (f'<h3>비교 그룹 안 순위</h3><ul class="fpts">{group_items}</ul>' if group_items else ""))
 
 
 def render_incomplete(results: dict[str, Any], rules: Any) -> str:
@@ -1997,6 +2041,11 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     # 2026-10-08: 부품 채널 상한 표기는 규칙 F1 에 `component_only_cap` 이 있을 때만 단다(규칙 v2.0 에는 없다).
     cap = ctx.rules.factor("F1").get("component_only_cap")
     legend = "".join(f'<span><i style="background:var(--cat-{TYPE_CLASS.get(t, "mix")})"></i>{esc(t)}{f" (① 상한 {cap}점)" if t == "부품" and cap is not None else ""}</span>' for t in present)
+    # 2026-10-12 규칙 v2.1: ④ 보유표가 있으면 점을 비교 그룹으로 칠하고 범례도 그룹으로 바꾼다.
+    groups = rc.comparison_groups(results)
+    if groups:
+        names = rc.layer_labels(ctx.rules)
+        legend = "".join(f'<span><i style="background:var(--cat-layer-{k})"></i>{esc(names[k])}</span>' for k in names if k in groups)
     # 2026-10-08 사용자 지시: 리포트 머리의 이해상충 고지 상자를 싣지 않는다(10-07 Mac mini 공개본에서 먼저 지움).
     # 한계 절의 이해상충 문장과 출처 줄의 표기는 그대로 둔다.
     anthropic_note = ""
@@ -2047,6 +2096,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results, ctx)}
 {render_incomplete(results, ctx.rules)}
+{render_layers(results, ctx)}
 <h2><span class="num">02</span>과점 × 함정 지도</h2>
 <div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
 <h3>기업별 과점 합계와 함정 합계</h3>

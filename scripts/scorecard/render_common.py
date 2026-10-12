@@ -1016,13 +1016,46 @@ def survival_calc_text(rules: Any, calc: dict[str, Any]) -> str:
     spec = rules.factor("F4") if rules is not None else {}
     names = ((spec.get("layers") or {}).get("labels") or {})
     layers = calc.get("layers") or {}
-    held = [f"{names.get(k, k)} {LAYER_VALUE_LABELS.get(v, v)}" for k, v in layers.items() if v in ("sold", "self", "preparing")]
+    cell_ev = calc.get("layer_evidence") or {}
+    held = [f"{names.get(k, k)} {LAYER_VALUE_LABELS.get(v, v)}" + (f" [{', '.join(cell_ev[k])}]" if cell_ev.get(k) else "")
+            for k, v in layers.items() if v in ("sold", "self", "preparing")]
     share = calc.get("non_ai_revenue_share")
     share_text = f"{share * 100:.0f}%" if isinstance(share, (int, float)) else str(share)
     vertical = calc.get("vertical")
     head = f"수직 {vertical:g}" + (f"(합 {calc['vertical_raw']:g}에서 상한)" if calc.get("vertical_raw", 0) > vertical else "")
     return (f"{head}: {' · '.join(held) if held else '보유 층 없음'} + 다각화 {calc.get('diversification'):g}: AI 무관 매출 {share_text}"
             f" = {calc['score']:g}")
+
+
+def layer_labels(rules: Any) -> dict[str, str]:
+    """규칙 v2.1 ④ 보유표의 층 이름(칩·서버·네트워크·…)."""
+    return dict(((rules.factor("F4").get("layers") or {}).get("labels") or {})) if rules is not None else {}
+
+
+def survival_rows(results: dict[str, Any]) -> list[dict[str, Any]]:
+    """규칙 v2.1 ④ 보유표가 있는 회사의 행. 순위 순(완료 먼저), 같은 순위는 이름 순이다."""
+    rows = []
+    ordered = sorted(results["companies"], key=lambda c: (c.get("rank") is None, c.get("rank") or 0, c["display_name"]))
+    for c in ordered:
+        f4 = c["factors"]["F4"]
+        calc = f4.get("calc") or {}
+        if f4.get("basis") != "survival" or not calc.get("layers"):
+            continue
+        rows.append({"company_id": c["company_id"], "display_name": c["display_name"], "layers": calc["layers"],
+                     "primary_layer": calc.get("primary_layer"), "non_ai_revenue_share": calc.get("non_ai_revenue_share"),
+                     "score": f4.get("score"), "total": c.get("total"), "rank": c.get("rank"), "complete": c.get("complete")})
+    return rows
+
+
+def comparison_groups(results: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
+    """비교 그룹(④ 의 주 레이어)별 완료 회사. 그룹 안은 조정총점 순이다. 잣대는 모든 회사에 같고 비교만 그룹 안에서 한다."""
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for row in survival_rows(results):
+        if row["complete"] and row["primary_layer"]:
+            groups.setdefault(row["primary_layer"], []).append(row)
+    for rows in groups.values():
+        rows.sort(key=lambda r: (-(r["total"] or 0), r["display_name"]))
+    return groups
 
 
 def axes_calc_text(rules: Any, calc: dict[str, Any]) -> str:

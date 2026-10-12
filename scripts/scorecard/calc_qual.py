@@ -79,7 +79,8 @@ def compute_f4(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSe
     score = _half_step(max(lo, min(hi, vertical + diversification)))
     calc.update({"vertical_raw": vertical_raw, "vertical": vertical, "diversification": diversification, "score": score,
                  "preparing": sorted(k for k, v in layers.items() if v == "preparing"),
-                 "layer_triggers": dict(inputs.get("layer_triggers") or {})})
+                 "layer_triggers": dict(inputs.get("layer_triggers") or {}),
+                 "layer_evidence": {k: list(v) for k, v in (inputs.get("layer_evidence") or {}).items()}})
     return factor_result(fid, score=score, status=_status_for(judgment), basis="survival", judgment=judgment, calc=calc,
                          warnings=carried_note(judgment))
 

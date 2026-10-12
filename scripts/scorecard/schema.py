@@ -141,7 +141,8 @@ JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {
     # 2026-10-12 규칙 v2.1 ①: AI 수익화 '예' 의 판정 재료(기준 채널·측정 단위·몫·기간·근거 두 목록). 필수 여부는 규칙이 정한다.
     "lockin": LOCKIN_MONETIZATION_KEYS,
     # 2026-10-12 규칙 v2.1 ④·⑧.
-    "survival": ("layers", "layer_triggers", "primary_layer", "non_ai_revenue_share", "non_ai_share_basis", "non_ai_share_evidence"),
+    "survival": ("layers", "layer_triggers", "layer_evidence", "primary_layer", "non_ai_revenue_share", "non_ai_share_basis",
+                 "non_ai_share_evidence"),
     "axes": F8_AXES,
 }
 # CLI 로만 받는 재료의 모양. stages._judgment_change_kind 가 쓰기 전에 거르고, 허용값은 스키마가 본다.
@@ -150,7 +151,7 @@ JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
     "ai_monetized_channel": "string", "ai_monetized_measure": "string", "ai_monetized_period": "string",
     "ai_monetized_share": "number",
     "ai_separate_billing_evidence": "string_list", "ai_price_uplift_evidence": "string_list",
-    "layers": "object", "layer_triggers": "object", "primary_layer": "string", "non_ai_revenue_share": "number_or_unknown",
+    "layers": "object", "layer_triggers": "object", "layer_evidence": "object", "primary_layer": "string", "non_ai_revenue_share": "number_or_unknown",
     "non_ai_share_basis": "string", "non_ai_share_evidence": "string_list",
     "customer": "object", "commitment": "object", "supply": "object", "geopolitics": "object",
 }
@@ -1278,7 +1279,7 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
     if kind == "survival":
         # 2026-10-12 규칙 v2.1 ④: 층별 보유표·준비 중 칸의 트리거·주 레이어·AI 무관 매출 몫.
         _expect_keys(inputs, ["layers", "primary_layer", "non_ai_revenue_share"], where,
-                     optional=["layer_triggers", "non_ai_share_basis", "non_ai_share_evidence"])
+                     optional=["layer_triggers", "layer_evidence", "non_ai_share_basis", "non_ai_share_evidence"])
         layers = inputs["layers"]
         _require(isinstance(layers, dict) and set(layers) == set(SURVIVAL_LAYERS),
                  f"{where}: layers 는 {list(SURVIVAL_LAYERS)} 여섯 칸을 모두 적는다 ({sorted(layers) if isinstance(layers, dict) else layers!r})")
@@ -1289,6 +1290,11 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
         for layer, tid in triggers.items():
             _require(layer in SURVIVAL_LAYERS and isinstance(tid, str) and bool(TRIGGER_ID_RE.match(tid)),
                      f"{where}: layer_triggers.{layer} 는 층 이름과 TRG-NNN ({tid!r})")
+        cell_ev = inputs.get("layer_evidence") or {}
+        _require(isinstance(cell_ev, dict), f"{where}: layer_evidence 는 {{층: [EV-…]}} object")
+        for layer, ids in cell_ev.items():
+            _require(layer in SURVIVAL_LAYERS and isinstance(ids, list) and all(isinstance(e, str) and EVIDENCE_ID_RE.match(e) for e in ids),
+                     f"{where}: layer_evidence.{layer} 는 층 이름과 근거 ID(EV-…) 목록 ({ids!r})")
         preparing = sorted(k for k, v in layers.items() if v == "preparing")
         missing = [k for k in preparing if k not in triggers]
         _require(not missing, f"{where}: 준비 중 칸 {missing} 은 어떤 공시가 나오면 바뀌는지 적은 트리거(layer_triggers)가 있어야 한다")
@@ -1952,13 +1958,14 @@ def validate_cross_refs(observations: list[dict[str, Any]], judgments: list[dict
         if j["status"] == "new":
             unconfirmed = [e for e in mon if ev_status[e] != "confirmed"]
             _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 AI 수익화 근거 {unconfirmed} 가 확정되지 않았다")
-        # 2026-10-12 규칙 v2.1 ④: AI 무관 매출 몫의 근거도 같은 조건이다.
-        share_ev = list(inputs.get("non_ai_share_evidence") or [])
+        # 2026-10-12 규칙 v2.1 ④: AI 무관 매출 몫과 보유표 칸의 근거도 같은 조건이다.
+        share_ev = list(inputs.get("non_ai_share_evidence") or []) + [
+            e for ids in (inputs.get("layer_evidence") or {}).values() for e in ids]
         missing = [e for e in share_ev if e not in ev_status]
-        _require(not missing, f"교차 참조: {j['judgment_id']} 의 AI 무관 매출 몫 근거 {missing} 가 evidence.json 에 없음")
+        _require(not missing, f"교차 참조: {j['judgment_id']} 의 AI 무관 매출 몫·보유표 근거 {missing} 가 evidence.json 에 없음")
         if j["status"] == "new":
             unconfirmed = [e for e in share_ev if ev_status[e] != "confirmed"]
-            _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 AI 무관 매출 몫 근거 {unconfirmed} 가 확정되지 않았다")
+            _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 AI 무관 매출 몫·보유표 근거 {unconfirmed} 가 확정되지 않았다")
 
 
 # ------------------------------------------------------------------ run / approval

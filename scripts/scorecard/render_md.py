@@ -318,6 +318,33 @@ def _factor_row(f: str, fr: dict[str, Any], rules: Any = None, inputs: dict[str,
             rc.rename_codes(rc.factor_calc_text(f, fr, rules, inputs, company_type))]
 
 
+def _survival_section(ctx: Any, results: dict[str, Any], rows: list[dict[str, Any]]) -> list[str]:
+    """규칙 v2.1 ④ 층별 보유표(전 기업 한 장)와 비교 그룹 안 순위."""
+    names = rc.layer_labels(ctx.rules)
+    keys = list(names)
+    head = ["기업", *(names[k] for k in keys), "비교 그룹", "AI 무관 매출", "④"]
+    body = []
+    for r in rows:
+        share = r["non_ai_revenue_share"]
+        body.append([r["display_name"], *(rc.LAYER_VALUE_LABELS.get(r["layers"].get(k), r["layers"].get(k)) for k in keys),
+                     names.get(r["primary_layer"], r["primary_layer"] or "—"),
+                     f"{share * 100:.0f}%" if isinstance(share, (int, float)) else str(share), fmt_score(r["score"])])
+    out = ["## 층별 보유표와 비교 그룹", "",
+           "회사마다 AI 사업 여섯 층을 판매·자체 사용·없음·준비 중으로 적은 표다. ④ 의 수직계열화 축은 이 표의 합(판매 1 · 자체 사용 0.5, "
+           "상한 2.5)이고, 다각화 축은 AI 와 무관한 최종 수요에서 나오는 매출 몫이다. 비교 그룹은 판매 칸 가운데 외부 매출이 가장 큰 층이다. "
+           "잣대는 모든 회사에 같고 비교만 그룹 안에서 한다.", "",
+           table(head, body, ["---"] + ["---"] * len(keys) + ["---", "---:", "---:"]), ""]
+    groups = rc.comparison_groups(results)
+    if groups:
+        out += ["### 비교 그룹 안 순위", ""]
+        for layer in keys:
+            members = groups.get(layer)
+            if members:
+                out.append(f"- **{names[layer]}**: " + " · ".join(f"{m['display_name']} {fmt_score(m['total'])}({m['rank']}위)" for m in members))
+        out.append("")
+    return out
+
+
 def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]]) -> str:
     run = ctx.run
     title = run["title"]
@@ -380,6 +407,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     if population["incomplete"]:
         inc_rows = [[i["display_name"], fmt_score(i["moat"]), fmt_score(i["trap"]), "; ".join(f"{rc.factor_label(ctx.rules, p['factor'])} {STATUS_LABEL.get(p['status'], p['status'])}" + (f"({p['decision_id']})" if p.get("decision_id") else "") for p in i["reasons"])] for i in population["incomplete"]]
         lines += ["미완료(순위 제외):", "", table(["기업", "과점(부분)", "함정(부분)", "대기 사유"], inc_rows), ""]
+    # 2026-10-12 규칙 v2.1: ④ 층별 보유표와 비교 그룹 안 순위. 보유표가 없는 옛 실행에는 이 절이 없다.
+    survival = rc.survival_rows(results)
+    if survival:
+        lines += _survival_section(ctx, results, survival)
     # 기업별 상세
     lines += ["## 기업별 상세", ""]
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
