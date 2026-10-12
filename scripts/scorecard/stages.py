@@ -6,6 +6,7 @@ import getpass
 import json
 import os
 import re
+import time
 from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import date, timedelta
@@ -644,6 +645,54 @@ def register_evidence_sources(slug: str) -> list[str]:
     return [e["source_id"] for e in entries]
 
 
+def _evidence_source_urls(slug: str) -> dict[str, str | None]:
+    """근거의 source_id → URL. 장부(sources.json)에 있으면 그 값, 아직 등록 전이면 후보 파일의 URL."""
+    paths = run_paths(slug)
+    urls: dict[str, str | None] = {}
+    if paths.candidates.is_file():
+        urls.update({c["source_id"]: c.get("url") for c in load_json_strict(paths.candidates).get("items", [])})
+    src_path = run_dir(slug) / "sources.json"
+    if src_path.is_file():
+        urls.update({s["source_id"]: s.get("url") for s in load_json_strict(src_path).get("items", [])})
+    return urls
+
+
+def resolve_source_urls(slug: str, *, resolve: Any = None, pause: float = 0.5) -> dict[str, Any]:
+    """2026-10-12 사용자 지시: 근거가 인용한 출처 중 Google News 중계 주소를 원문 URL 로 바꾼다. 옛 주소는 `relay_url` 에 남긴다.
+    먼저 근거의 출처를 장부에 등록한다(register_evidence_sources). 풀지 못한 출처는 그대로 두고 실패 목록으로 돌려준다 —
+    research 가 중계 주소로 남은 확정 근거를 막으므로, 실패한 것은 원문을 직접 찾아 고친다."""
+    from .collect_news import is_google_relay_url, resolve_google_news_url
+    resolve = resolve or resolve_google_news_url
+    protect_approved_run(slug, "출처 주소 풀기(resolve-urls)")
+    register_evidence_sources(slug)
+    paths = run_paths(slug)
+    evidence = load_json_strict(paths.evidence).get("items", []) if paths.evidence.is_file() else []
+    cited = {e["source_id"] for e in evidence}
+    src_path = run_dir(slug) / "sources.json"
+    if not src_path.is_file():
+        return {"resolved": [], "failed": []}
+    sources = load_json_strict(src_path)
+    resolved, failed = [], []
+    targets = [s for s in sources.get("items", []) if s["source_id"] in cited and is_google_relay_url(s.get("url"))]
+    for i, s in enumerate(targets):
+        if i and pause:
+            time.sleep(pause)
+        try:
+            original = resolve(s["url"])
+        except Exception as exc:  # noqa: BLE001 — 출처 하나가 실패해도 나머지는 푼다
+            failed.append({"source_id": s["source_id"], "reason": f"{type(exc).__name__}: {exc}"})
+            continue
+        s["relay_url"] = s["url"]
+        s["url"] = original
+        if s.get("note") == "Google News RSS 후보에서 선별. url 은 Google 리다이렉트 링크다":
+            s["note"] = "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다"
+        resolved.append({"source_id": s["source_id"], "url": original})
+    if resolved:
+        validate_sources(sources, slug)
+        write_json(src_path, sources)
+    return {"resolved": resolved, "failed": failed}
+
+
 # 2026-10-01 이전 트리거 처리. 10월 시험 실행이 트리거를 새로 뽑으면서 기준선 트리거 39건을 하나도 처리하지 않았고
 # 어디서도 막히지 않았다. 트리거 목록을 새로 쓰는 실행(triggers.json)은 이전 트리거마다 carry 로 확인 결과를 남긴다.
 TRIGGER_CARRY_MIN_RULE = (1, 8)
@@ -711,6 +760,13 @@ def research(slug: str, *, register: bool = True) -> Path:
                 else "기업 추가 실행은 더한 기업의 정성 판단을 새로 매긴다(rules.md 2.9)")
         raise SchemaError(f"{head} — 다시 매기지 않은 판단 {len(ids)}건: {shown}. 첫 사유: {findings[0][1]}. "
                           "판정 입력을 고치거나(judge·propose), 값을 그대로 두고 다시 읽었으면 --reconfirm EV-… 로 재확인한다")
+    # 2026-10-12 사용자 지시: 원문을 읽지 않은 확정 근거(제목뿐·중계 주소)와 '제목만' 사유는 이어받은 것도 여기서 멈춘다.
+    from .validate import unread_evidence_findings
+    unread = unread_evidence_findings(ctx)
+    if unread:
+        shown = "; ".join(unread[:10]) + (f" 외 {len(unread) - 10}건" if len(unread) > 10 else "")
+        raise SchemaError(f"원문을 읽지 않은 근거·판단 {len(unread)}건: {shown}. "
+                          f"`scorecard_cli.py resolve-urls {slug}` 로 원문 주소를 붙이고, 원문을 열어 발췌·인용 위치를 채운다")
     gaps = trigger_carry_gaps(ctx)
     if gaps:
         shown = "; ".join(f"{g['ref']} {g['title']}" for g in gaps[:10])
@@ -1070,6 +1126,18 @@ def confirm(slug: str, *, evidence_ids: list[str] | tuple[str, ...] = (), reject
     if not_confirmed:
         raise SchemaError(f"확정된 근거만 번복할 수 있다: {not_confirmed}")
     protect_approved_run(slug, "근거 확정·거부(confirm)")
+    # 2026-10-12 사용자 지시: 원문을 읽지 않은 근거(발췌가 제목뿐, 출처가 Google News 중계 주소)는 확정하지 않는다.
+    # 10월 재실행에 이전 실행에서 그렇게 확정된 근거 29건이 이어져 판단이 "제목만 확인"으로 미확인 처리했다.
+    # 규칙 v2.0 이상만 본다(research 검사와 같다). v1.x 실행은 그때 계약대로 고정한다.
+    from .validate import BODY_CHECK_MIN_RULE, unread_evidence_violation
+    run = load_json_strict(run_dir(slug) / "run.json")
+    unread: list[str] = []
+    if _rule_tuple(run["rule_version"]) >= BODY_CHECK_MIN_RULE:
+        urls = _evidence_source_urls(slug)
+        unread = [f"{e['evidence_id']}: {why}" for e in payload["items"] if e["evidence_id"] in ids and e.get("status") != "confirmed"
+                  for why in [unread_evidence_violation(e, urls.get(e["source_id"]))] if why]
+    if unread:
+        raise SchemaError(f"원문을 읽지 않은 근거는 확정하지 않는다: {'; '.join(unread)}")
     reviewer = (reviewer or "").strip() or (os.environ.get("SCORECARD_AGENT") or "").strip() or getpass.getuser()
     reviewed_at = reviewed_at or utc_now_iso()[:10]   # UTC 날짜
     confirmed, already = [], []
@@ -1189,6 +1257,12 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
     rules = load_rules(run["rule_version"])
     kind = _check_judgment_changes(factor, changes, rules)
+    # 2026-10-12 사용자 지시: '제목만 확인' 은 미확인 사유가 아니다. 원문을 열고, 유료 기사라 막혔으면 그 사실을 적는다.
+    from .validate import BODY_CHECK_MIN_RULE, title_only_reason_lines
+    if _rule_tuple(run["rule_version"]) >= BODY_CHECK_MIN_RULE and isinstance(changes, Mapping):
+        bad = title_only_reason_lines(changes)
+        if bad:
+            raise SchemaError(f"'제목만' 을 사유로 쓴 문장은 받지 않는다 — 원문을 열어 확인하고, 유료 기사라 막혔으면 그 사실을 적는다: {bad[0][:60]}")
     reconfirm = reconfirm_evidence_ids(changes[RECONFIRM_KEY]) if RECONFIRM_KEY in changes else None
     changes = {k: v for k, v in changes.items() if k != RECONFIRM_KEY}
 

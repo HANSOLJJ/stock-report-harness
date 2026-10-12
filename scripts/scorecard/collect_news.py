@@ -1,4 +1,4 @@
-# Google News RSS 수집기(기사 메타데이터만, 본문 조회 없음)
+# Google News RSS 수집기(기사 메타데이터만, 본문 조회 없음)와 중계 주소를 원문 주소로 푸는 도우미
 from __future__ import annotations
 
 import hashlib
@@ -101,6 +101,44 @@ def normalize_article(
         article["unverified"] = ["published_at"]
         article["note"] = "published_at 미확인, first_seen 날짜로 source_id 생성"
     return article
+
+
+# 2026-10-12 사용자 지시: RSS 의 기사 링크는 Google News 중계 주소라 그대로 열면 원문으로 넘어가지 않는다. 그래서 10월 재실행에
+# 발췌가 제목뿐인 확정 근거 29건이 남았고, 판단은 "제목만 확인"이라며 미확인으로 돌렸다. 근거로 올리는 기사는 원문 주소로 바꾼다.
+# 방식: 기사 페이지의 서명(data-n-a-sg)·시각(data-n-a-ts)으로 batchexecute 의 Fbv4je 요청을 보내면 원문 URL 이 돌아온다.
+GOOGLE_RELAY_RE = re.compile(r"^https?://news\.google\.com/(?:rss/)?articles/([^?/#]+)")
+GOOGLE_BATCH_URL = "https://news.google.com/_/DotsSplashUi/data/batchexecute"
+
+
+def is_google_relay_url(url: str | None) -> bool:
+    return bool(GOOGLE_RELAY_RE.match(url or ""))
+
+
+def resolve_google_news_url(url: str, *, fetch: Callable[..., bytes] = fetch_bytes, user_agent: str | None = None) -> str:
+    """Google News 중계 주소를 원문 URL 로 푼다. 풀지 못하면 ValueError(중계 주소를 원문처럼 돌려주지 않는다)."""
+    m = GOOGLE_RELAY_RE.match(url or "")
+    if not m:
+        raise ValueError(f"Google News 중계 주소가 아니다: {url}")
+    aid = m.group(1)
+    ua = user_agent if user_agent is not None else evidence_lib.user_agent_for("news")
+    page = fetch(f"https://news.google.com/rss/articles/{aid}", user_agent=ua).decode("utf-8", "replace")
+    sig = re.search(r'data-n-a-sg="([^"]+)"', page)
+    ts = re.search(r'data-n-a-ts="(\d+)"', page)
+    if not sig or not ts:
+        raise ValueError(f"기사 페이지에 서명·시각이 없다: {url}")
+    inner = ('["garturlreq",[["X","X",["X","X"],null,null,1,1,"US:en",null,1,null,null,null,null,null,0,1],'
+             f'"X","X",1,[1,1,1],1,1,null,0,0,null,0],"{aid}",{ts.group(1)},"{sig.group(1)}"]')
+    body = urllib.parse.urlencode({"f.req": json.dumps([[["Fbv4je", inner, None, "generic"]]])}).encode()
+    raw = fetch(GOOGLE_BATCH_URL, user_agent=ua, data=body,
+                headers={"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"}).decode("utf-8", "replace")
+    try:
+        payload = json.loads(raw.split("\n\n", 1)[1])
+        original = json.loads(payload[0][2])[1]
+    except (IndexError, TypeError, ValueError) as exc:
+        raise ValueError(f"원문 URL 응답을 읽지 못했다: {url}") from exc
+    if not isinstance(original, str) or not original.startswith(("https://", "http://")) or is_google_relay_url(original):
+        raise ValueError(f"원문 URL 이 아니다: {original!r}")
+    return original
 
 
 def default_queries(company: dict[str, Any]) -> list[str]:

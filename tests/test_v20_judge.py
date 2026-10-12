@@ -30,6 +30,16 @@ class V20Base(V19Base):
 
     RULE = "v2.0"
 
+    def before_confirm(self) -> None:
+        # 2026-10-12: v2.0 은 Google News 중계 주소인 근거를 확정하지 않는다. 시험 후보·출처의 주소를 원문 주소로 바꾼다.
+        for path in (self.paths.candidates, self.box.run_dir / "sources.json"):
+            if path.is_file():
+                payload = json.loads(path.read_text(encoding="utf-8"))
+                for item in payload["items"]:
+                    if "news.google.com" in (item.get("url") or ""):
+                        item["url"] = f"https://example.com/news/{item['source_id']}"
+                path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
+
     @property
     def jpath(self) -> Path:
         return self.box.run_dir / "judgments.json"

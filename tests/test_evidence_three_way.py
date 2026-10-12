@@ -32,7 +32,11 @@ class V19Base(ProposalBase):
 
     def setUp(self) -> None:
         super().setUp()
+        self.before_confirm()
         stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="사용자")
+
+    def before_confirm(self) -> None:
+        """확정 전에 시험 자료를 다듬는 자리. v2.0 은 중계 주소를 원문 주소로 바꾼다(2026-10-12)."""
 
     def propose3(self, **kw) -> dict:
         kw.setdefault("evidence_after", ["적대 등급은 비용형이다(EV-nvidia-001)"])

@@ -290,6 +290,30 @@ def cmd_confirm(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_resolve_urls(args: argparse.Namespace) -> int:
+    """2026-10-12: Google News 중계 주소를 원문 주소로 푼다. 실행을 주면 근거 출처를 고쳐 쓰고, --url 만 주면 출력만 한다."""
+    if args.url:
+        from scorecard.collect_news import resolve_google_news_url
+        bad = 0
+        for u in args.url:
+            try:
+                print(resolve_google_news_url(u))
+            except Exception as exc:  # noqa: BLE001 — 주소 하나가 실패해도 나머지를 푼다
+                bad += 1
+                print(f"실패: {u} — {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1 if bad else 0
+    if not args.slug:
+        raise SchemaError("실행 ID 나 --url 이 필요하다")
+    from scorecard.stages import resolve_source_urls
+    out = resolve_source_urls(args.slug)
+    print(f"resolve-urls: 원문 주소로 바꿈 {len(out['resolved'])} · 실패 {len(out['failed'])}")
+    for f in out["failed"]:
+        print(f"  실패 {f['source_id']}: {f['reason']}")
+    if out["resolved"]:
+        print("출처 장부가 바뀌었다. 원문을 열어 발췌·인용 위치를 채운 뒤 research 부터 다시 돌린다")
+    return 1 if out["failed"] else 0
+
+
 def _judge_value(text: str) -> object:
     """`--set` 값. 정수 모양이면 정수(score·A·H), 아니면 문자열이다. 형식 검증은 스키마가 한다."""
     return int(text) if re.fullmatch(r"-?\d+", text) else text
@@ -710,6 +734,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--by", help="검토자(없으면 SCORECARD_AGENT 또는 사용자명)")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_confirm)
+
+    p = sub.add_parser("resolve-urls", help="Google News 중계 주소를 원문 주소로 푼다(근거 출처를 고치거나, --url 로 출력만)")
+    p.add_argument("slug", nargs="?", help="근거 출처를 고칠 실행 ID")
+    p.add_argument("--url", action="append", help="풀어서 출력만 할 중계 주소(여러 번). 후보를 고를 때 원문을 여는 데 쓴다")
+    p.set_defaults(func=cmd_resolve_urls)
 
     p = sub.add_parser("propose", help="판단 변경 제안을 쓴다(에이전트도 쓴다). 반영·거부는 proposal 로 한다")
     p.add_argument("slug")

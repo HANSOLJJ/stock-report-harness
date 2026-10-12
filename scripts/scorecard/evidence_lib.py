@@ -102,12 +102,14 @@ def user_agent_for(kind: str) -> str:
     return f"{TOOL_NAME}/0.1 ({contact})"
 
 
-def fetch_bytes(url: str, *, user_agent: str, timeout: int = 20, retries: int = 2) -> bytes:
-    """저장소에서 유일한 urllib 사용 지점. 실패는 예외로 올리고 빈 바이트를 돌려주지 않는다."""
+def fetch_bytes(url: str, *, user_agent: str, timeout: int = 20, retries: int = 2,
+                data: bytes | None = None, headers: dict[str, str] | None = None) -> bytes:
+    """저장소에서 유일한 urllib 사용 지점. 실패는 예외로 올리고 빈 바이트를 돌려주지 않는다.
+    2026-10-12: Google News 중계 주소 풀기가 POST(`data`)와 Content-Type 머리글(`headers`)을 쓴다."""
     last: Exception | None = None
     for attempt in range(retries + 1):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": user_agent})
+            req = urllib.request.Request(url, data=data, headers={**(headers or {}), "User-Agent": user_agent})
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 body = resp.read()
             if not body:

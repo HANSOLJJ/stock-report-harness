@@ -198,11 +198,50 @@ def citable_evidence_violation(e: Mapping[str, Any] | None, url: str | None) -> 
         return "확정되지 않은 근거"
     if not (url or "").startswith(("https://", "http://")):
         return "출처에 URL 이 없다"
-    if " ".join(e["excerpt"].split()).casefold() == " ".join(e["title"].split()).casefold():
+    if excerpt_is_title(e):
         return "excerpt 가 제목과 같다(본문에서 발췌한다)"
     if not (e.get("locator") or "").strip():
         return "인용 위치(locator)가 없다"
     return None
+
+
+def excerpt_is_title(e: Mapping[str, Any]) -> bool:
+    return " ".join(e["excerpt"].split()).casefold() == " ".join(e["title"].split()).casefold()
+
+
+# 2026-10-12 사용자 지시("제목만 확인한 게 문제면 내용을 보면 되지 않냐"): 위 검사는 판단이 인용한 근거만 봐서, 인용하지 않은
+# 확정 근거는 Google News 중계 주소에 발췌가 제목뿐이어도 통과했다. 10월 재실행에 그런 근거가 29건 남았고, 판단은 원문을 열지
+# 않고 "제목만 확인"이라며 미확인으로 돌렸다(OpenAI 연환산 매출 $70B 기사). 확정(confirm)과 research 가 아래 두 함수로 막는다.
+BODY_CHECK_MIN_RULE = (2, 0)
+TITLE_ONLY_REASON_RE = re.compile(r"제목만")
+
+
+def unread_evidence_violation(e: Mapping[str, Any], url: str | None) -> str | None:
+    """확정 근거가 원문을 읽은 근거인지. 아니면 사유(발췌가 제목뿐, 출처가 Google News 중계 주소)."""
+    from .collect_news import is_google_relay_url
+    if excerpt_is_title(e):
+        return "발췌가 제목과 같다 — 원문을 열어 본문에서 발췌한다"
+    if is_google_relay_url(url):
+        return "출처 URL 이 Google News 중계 주소다 — resolve-urls 로 원문 주소로 바꾼다"
+    return None
+
+
+def title_only_reason_lines(item: Mapping[str, Any]) -> list[str]:
+    """판단 문장 중 '제목만' 을 미확인 사유로 쓴 줄."""
+    return [line for key in ("evidence", "evidence_up", "evidence_down") for line in (item.get(key) or [])
+            if TITLE_ONLY_REASON_RE.search(line)]
+
+
+def unread_evidence_findings(ctx: Any) -> list[str]:
+    """규칙 v2.0 이상 실행에서 원문을 읽지 않은 확정 근거와 '제목만' 사유를 쓴 판단. research 단계가 부른다."""
+    if tuple(int(x) for x in re.findall(r"\d+", ctx.run["rule_version"])) < BODY_CHECK_MIN_RULE:
+        return []
+    urls = {s["source_id"]: s.get("url") for s in ctx.sources.get("items", [])}
+    out = [f"{e['evidence_id']}: {why}" for e in (ctx.evidence or []) if e.get("status") == "confirmed"
+           for why in [unread_evidence_violation(e, urls.get(e["source_id"]))] if why]
+    out += [f"{j['judgment_id']}: '제목만' 을 사유로 쓴 문장 — 원문을 열어 확인하고, 유료 기사라 막혔으면 그 사실을 적는다 — {line[:40]}"
+            for j in ctx.judgments for line in title_only_reason_lines(j)]
+    return out
 
 
 def citation_item_violations(item: Mapping[str, Any], evidence: Mapping[str, Mapping[str, Any]],

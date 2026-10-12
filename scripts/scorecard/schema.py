@@ -1413,7 +1413,8 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
 # 항목 8키만 쓴다 — 그 모양을 그대로 받고, 수집기가 붙이는 선택 키만 더 허용한다.
 
 SOURCE_REQUIRED_KEYS = ["source_id", "title", "publisher", "url", "accessed_at", "sha256", "conflict_of_interest", "note"]
-SOURCE_OPTIONAL_KEYS = ["kind", "company_id", "published_at_utc", "publisher_url", "raw_ref"]
+# 2026-10-12: relay_url 은 resolve-urls 가 원문 주소로 바꾸기 전의 Google News 중계 주소다.
+SOURCE_OPTIONAL_KEYS = ["kind", "company_id", "published_at_utc", "publisher_url", "raw_ref", "relay_url"]
 SOURCE_KINDS = {"news", "filing", "price"}
 ISO_UTC_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
 EVIDENCE_KINDS = {"news", "filing"}
