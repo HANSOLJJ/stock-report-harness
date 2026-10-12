@@ -8,10 +8,10 @@
   "input_hashes": {
     "run": "4e871c04732b228d909d5bed5181f46faada0e192891a21731d629103b5caf60",
     "observations": "49ccaa48c0096eea3528a163b496a120742c4f6a87b7c51c541e4e792ddd1865",
-    "judgments": "444325c40f5a4a54b0dec17c8f09cf27104c5529c560123bc20b19f2aec0577f",
+    "judgments": "1cfc41fa9600a2753bd4d132e03456b6c23d189239c11e7b03b22a618d48fa16",
     "sources": "d9285567fe4930f6632f0b537679da40ec792b887337339152ece2aac9a738d7",
-    "evidence": "060d47744f776e5c63385048e63879cb42dccd8e6c7442023129cb36302da561",
-    "triggers": "a05abe9b74a2abc23357932333430db6fc49fb7ef3e172d9c19f2536f87bcd29",
+    "evidence": "68adaf19296f8506e63bc10158199ce7b4bcf4a021bfc0283a4be9f4e79d0ade",
+    "triggers": "3a7ae4c0bf22c347c86676c43c33ed5e8033d2e71abb8a1919f395f25d2da3c2",
     "rules": "3bf9418cf3eb43f9b91152f7e11249808658d80d4944c15222217b72b4be3cc5"
   },
   "decisions_applied": [
@@ -298,7 +298,7 @@
         },
         "F8": {
           "factor": "F8",
-          "score": -3,
+          "score": -2,
           "status": "ok",
           "basis": "manual",
           "judgment_id": "alphabet.F8",
@@ -347,8 +347,8 @@
         }
       },
       "moat": 20,
-      "trap": -8,
-      "total": 12,
+      "trap": -7,
+      "total": 13,
       "complete": true,
       "pending": [],
       "carried_factors": [],
@@ -1354,7 +1354,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 2
+      "rank": 3
     },
     {
       "company_id": "tsmc",
@@ -4758,18 +4758,18 @@
     },
     {
       "rank": 2,
+      "company_id": "alphabet",
+      "display_name": "Alphabet / Google",
+      "moat": 20,
+      "trap": -7,
+      "total": 13
+    },
+    {
+      "rank": 3,
       "company_id": "microsoft",
       "display_name": "Microsoft",
       "moat": 21,
       "trap": -9,
-      "total": 12
-    },
-    {
-      "rank": 2,
-      "company_id": "alphabet",
-      "display_name": "Alphabet / Google",
-      "moat": 20,
-      "trap": -8,
       "total": 12
     },
     {
@@ -4876,5 +4876,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 49,
-  "results_hash": "1a433c3842adb967a8b6bc4d816955c65d90a4936bf681bf9a5b85742b4ba1ea"
+  "results_hash": "0b3fe1402a8a0c2872a268c62b312e6e8d63f16c0f072d20414231786fb55576"
 }

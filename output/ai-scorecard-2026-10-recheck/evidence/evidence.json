@@ -20066,6 +20066,29 @@
       "horizon": "2026Q4",
       "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
       "reviewed_at": "2026-10-12"
+    },
+    {
+      "evidence_id": "EV-meta-059",
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30)",
+      "excerpt": "In July 2026, we entered into additional data center leases with lease obligations of approximately $ 68 billion, which are expected to commence in 2027 and 2028, with lease terms of 18 to 20 years.",
+      "locator": "Part I Item 1, Note 9 Commitments and Contingencies 의 Leases and Contractual Commitments 문단(미개시 리스 문장 다음)",
+      "relevance": "사실: Meta 는 2026-07 에 리스 의무 약 $68B 의 데이터센터 리스를 더 맺었다. 추론: 기준일 전에 공시된 구속력 있는 약정이라 ⑧ 약정 축의 분자에 더한다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 이 실행의 ⑧ 약정 축 판정에 쓰는 공시 수치다.",
+      "horizon": "2027H1",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-12"
     }
   ]
 }
