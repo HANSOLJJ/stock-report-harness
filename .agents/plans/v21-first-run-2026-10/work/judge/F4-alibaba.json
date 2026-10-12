@@ -1,0 +1,88 @@
+{
+  "changes": {
+    "layers": {
+      "chip": "self",
+      "server": "self",
+      "platform": "sold",
+      "cloud": "sold",
+      "model": "sold",
+      "app": "sold"
+    },
+    "layer_evidence": {
+      "chip": [
+        "EV-alibaba-071",
+        "EV-alibaba-075",
+        "EV-alibaba-074"
+      ],
+      "server": [
+        "EV-alibaba-077",
+        "EV-alibaba-075",
+        "EV-alibaba-078"
+      ],
+      "platform": [
+        "EV-alibaba-076",
+        "EV-alibaba-078"
+      ],
+      "cloud": [
+        "EV-alibaba-079",
+        "EV-alibaba-081",
+        "EV-alibaba-078"
+      ],
+      "model": [
+        "EV-alibaba-078",
+        "EV-alibaba-018"
+      ],
+      "app": [
+        "EV-alibaba-081",
+        "EV-alibaba-082",
+        "EV-alibaba-083"
+      ]
+    },
+    "layer_triggers": {},
+    "primary_layer": "cloud",
+    "non_ai_revenue_share": 0.855,
+    "non_ai_share_basis": "20-F(회계 2026년 2025-04-01~2026-03-31) 유형별 매출 표에서 Cloud services RMB112,077M 과 Other revenue RMB36,427M 을 AI 로, 고객관리 459,917·멤버십·부가서비스 47,638·물류 139,864·상품 판매 227,747 을 AI 무관으로 셌다. (1,023,670 − 112,077 − 36,427) ÷ 1,023,670 = 85.5%. 기타 매출은 Qwen 소비자 사업 같은 AI 서비스 매출이 들어갈 수 있어 AI 로 넣었다. 2026년 6월 분기 새 세그먼트(AI Cloud and Compute Services 48,437 + AI Labs and Applications 3,338, 세그먼트 간 거래 포함)를 AI 로 세고 내부거래 제거분을 모두 비AI 쪽에서 빼도 (268,953 − 51,775) ÷ 268,953 = 80.8% 로 같은 구간이다.",
+    "non_ai_share_evidence": [
+      "EV-alibaba-079",
+      "EV-alibaba-081"
+    ]
+  },
+  "evidence_after": [
+    "Alibaba ④ 는 수직계열화 2.5(칸 값 합 5 를 상한에서 자름)와 다각화 2.5(AI 무관 85.5%)를 더해 5.0 이다. 주 레이어는 클라우드다(클라우드 서비스 매출 회계 2026년 RMB112,077M). 모델·응용 층은 따로 공시된 매출이 클라우드보다 작다.",
+    "칩은 자체 사용이다. T-Head 의 Zhenwu 칩을 외부 고객 650곳 넘게 쓰지만 알리바바 클라우드 서비스를 통해 쓰고, 칩을 하드웨어로 판 매출은 공시에 없다. Amazon Trainium 과 같은 사실이라 같은 칸 값이다. 칩 칸은 칩이나 칩을 담은 시스템을 하드웨어로 남에게 팔아 매출을 인식하거나 파운드리처럼 남의 설계를 만들어 줄 때 판매로 적고, 자기가 설계한 칩을 자기 클라우드 인스턴스나 자기 제품 안에서만 수익화하면 자체 사용으로 적는다. 칩을 빌려주는 매출은 클라우드 칸이 판매로 센다.",
+    "서버·네트워크는 자체 사용이다. 자체 운영체제 Apsara 의 네트워크 구조(Luoshen)와 Lingjun 지능형 컴퓨팅 클러스터를 설계해 클라우드와 자사 사업에 쓴다. 비공용 클라우드 매출에 하드웨어가 들어 있으나 AI 장비 판매 금액이 따로 없어 판매로 올리지 않았다. 서버·네트워크 칸은 자기가 설계한 시스템·네트워크 장비를 팔면 판매, 자기가 설계한 장비를 대규모로 자기만 쓰면 자체 사용, 남이 만든 장비를 사 오거나 남의 데이터센터를 빌려 쓰면 없음으로 적는다.",
+    "소프트웨어 플랫폼(PAI·Model Studio)과 클라우드는 판매다. 모델은 판매다. 자체 Qwen 모델을 Model Studio 로 소비량·구독 방식으로 판다.",
+    "응용은 판매다. 모델 랩·Qwen 소비자 사업·QwenWork 를 묶은 AI Labs and Applications 세그먼트가 2026년 6월 분기 매출 RMB3,338M 을 냈다. 그 매출을 모델 랩과 응용으로 가르는 공시는 없고, 응용 칸을 자체 사용으로 읽어도 수직계열화는 상한 2.5 에 걸려 점수가 같다.",
+    "AI 무관 몫 85.5% 는 다각화 2.5 구간이다. AI 무관 몫은 공시된 매출 줄을 그 줄의 수요 성격으로 가른다. 클라우드 인프라 줄은 범용 연산과 AI 연산이 섞여 있고 그 비율이 회사마다 같은 기준으로 공시되지 않으므로 줄 전체를 AI 수요로 센다. 광고·소비자 기기·소비자 구독·리테일·자동차·에너지·발사·통신·기업용 소프트웨어 줄은 AI 기능이 들어 있어도 AI 무관으로 세고, AI 서비스 매출이 들어갈 수 있는 기타 줄은 AI 로 센다.",
+    "근거 등급: 층 칸과 매출 줄은 20-F·6-K 공시이고 모델·응용 연 환산 반복 매출 RMB160억 초과는 2차 보도로만 확인했다. 칩 자체 사용·클라우드 판매라 ⑧ 공급 축 하한 조건에 걸리지 않는다."
+  ],
+  "evidence_up_after": [
+    "Zhenwu 칩은 알리바바 클라우드 서비스를 통해 20개 넘는 업종의 외부 고객 650곳 넘게 쓴다. [EV-alibaba-071]",
+    "T-Head 는 GPU·CPU·스토리지·네트워킹 칩 포트폴리오를 자체 설계했다. [EV-alibaba-075]",
+    "알리바바는 자체 분산 운영체제 Apsara 와 Lingjun 지능형 컴퓨팅 클러스터를 만들었다. [EV-alibaba-077]",
+    "자체 AI 플랫폼 PAI 가 모델 미세조정·평가·배포를 서버리스로 지원한다. [EV-alibaba-076]",
+    "공용 클라우드는 Model Studio(Bailian)를 포함한 서비스를 소비량·구독으로 판다. [EV-alibaba-078]",
+    "2026년 6월 분기 AI Labs and Applications 세그먼트 매출은 RMB3,338M 이다. [EV-alibaba-081]",
+    "회계 2026년 고객관리·멤버십·물류·상품 판매 매출 합은 전체의 85.5% 다. [EV-alibaba-079]"
+  ],
+  "evidence_down_after": [
+    "Zhenwu 칩의 외부 고객은 칩을 사지 않고 알리바바 클라우드 서비스로 쓴다. [EV-alibaba-071]",
+    "AI Labs and Applications 세그먼트는 2026년 6월 분기 조정 EBITA 가 RMB13,861M 적자다. [EV-alibaba-082]",
+    "2026년 6월 분기 AI Cloud and Compute Services 매출은 RMB48,437M 로 45% 늘었다. [EV-alibaba-081]"
+  ],
+  "cite": [
+    "EV-alibaba-071",
+    "EV-alibaba-075",
+    "EV-alibaba-077",
+    "EV-alibaba-076",
+    "EV-alibaba-078",
+    "EV-alibaba-081",
+    "EV-alibaba-079",
+    "EV-alibaba-082",
+    "EV-alibaba-074",
+    "EV-alibaba-018",
+    "EV-alibaba-083"
+  ],
+  "reconfirm": [],
+  "reason": "④ 를 층별 보유표와 AI 무관 매출 몫으로 처음부터 판정했다(칩·서버 자체 사용, 플랫폼·클라우드·모델·응용 판매, AI 무관 85.5%)."
+}

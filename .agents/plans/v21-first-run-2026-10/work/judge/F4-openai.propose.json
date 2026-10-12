@@ -1,0 +1,83 @@
+{
+  "changes": {
+    "layers": {
+      "chip": "preparing",
+      "server": "none",
+      "platform": "self",
+      "cloud": "none",
+      "model": "sold",
+      "app": "sold"
+    },
+    "layer_evidence": {
+      "chip": [
+        "EV-openai-072",
+        "EV-openai-074",
+        "EV-openai-090",
+        "EV-openai-075"
+      ],
+      "server": [
+        "EV-openai-077",
+        "EV-openai-078"
+      ],
+      "platform": [
+        "EV-openai-094",
+        "EV-openai-092",
+        "EV-openai-096",
+        "EV-openai-097"
+      ],
+      "cloud": [
+        "EV-openai-084",
+        "EV-openai-085",
+        "EV-openai-083"
+      ],
+      "model": [
+        "EV-openai-149",
+        "EV-openai-011",
+        "EV-openai-039"
+      ],
+      "app": [
+        "EV-openai-098",
+        "EV-openai-101",
+        "EV-openai-151"
+      ]
+    },
+    "layer_triggers": {
+      "chip": "TRG-119"
+    },
+    "primary_layer": "model",
+    "non_ai_revenue_share": 0.025,
+    "non_ai_share_basis": "AI 무관 매출 후보는 ChatGPT 광고뿐이다. 광고 연 환산 매출 $10억(2026-08-31 회사 발표) ÷ 회사 연 환산 매출 $400억 초과(2026-09-03 Axios 가 전한 회사 발언) = 2.5% 이하이고, 2026-09 말 연 환산 약 $500억(2차 보도)으로 나누면 약 2.0% 다(연 환산 대 연 환산 계산). 상한 2.5% 를 적었고 어느 분모로도 5% 에 이르지 못한다. 커머스는 매출 미공개, 소비자 기기는 2027-02 이후 출하라 매출이 없다.",
+    "non_ai_share_evidence": [
+      "EV-openai-151",
+      "EV-anthropic-140",
+      "EV-openai-065",
+      "EV-openai-027"
+    ]
+  },
+  "evidence_after": [
+    "OpenAI ④ 는 수직계열화 2.5(칸 값 합 2.5)와 다각화 0(AI 무관 2.5% 이하)을 더해 2.5 이다. 주 레이어는 모델이다. 회사가 사업 줄을 소비자·팀 구독, 광고·커머스가 받치는 무료 요금제, 종량 API 로 적고 줄별 금액을 내지 않으며, 작업형 제품(ChatGPT Work·Codex)은 Business 좌석과 Enterprise 토큰 요율 안에 함께 잡혀 응용 매출이 따로 보이지 않는다.",
+    "칩은 준비 중이다. 자체 설계 가속기 Jalapeño 를 Broadcom 이 2026년 회계 3분기에 출하했고 출하가 이어지지만, OpenAI 는 올해 말까지 자사 컴퓨트 인프라에 배치를 시작할 계획이고 생산 자격 검증을 계속한다고 밝혔다. 돈이 나간 실행된 투자(출하된 칩)이나 서비스 트래픽을 처리한다는 발표가 없어 대규모 자체 사용이 아니다. 배치가 확인되면 자체 사용으로 바꾸는 트리거를 단다.",
+    "서버·네트워크는 없음이다. 랙당 128칩 시스템을 직접 설계하고 Celestica 가 올해 안에 맞춤 랙 초기 인도를 시작할 것으로 예상한다고 했으나 인도 개시는 확인되지 않았고 확정 계약 공시도 찾지 못했다. Stargate 부지 하드웨어는 Oracle·SoftBank 가 소유한다. 서버·네트워크 칸은 자기가 설계한 시스템·네트워크 장비를 팔면 판매, 자기가 설계한 장비를 대규모로 자기만 쓰면 자체 사용, 남이 만든 장비를 사 오거나 남의 데이터센터를 빌려 쓰면 없음으로 적는다.",
+    "소프트웨어 플랫폼은 자체 사용이다. ChatGPT 기능을 만드는 데 쓰는 플랫폼을 플러그인 확장으로 개발자에게 열었고 Agents API 는 OpenAI 가 하니스와 샌드박스를 운영하지만, 플랫폼 자체에 매기는 요금이나 OpenAI 수수료는 찾지 못했다(플러그인 수익화는 개발자 자체 도메인의 외부 결제). 자기가 만든 층을 돈을 받지 않고 내주거나 자기 제품 안에서만 대규모로 쓰면 자체 사용으로 적는다. Anthropic 의 플랫폼 칸이 판매인 이유는 Managed Agents 세션 런타임·컨테이너 요금이 회사 가격 문서에 있다는 사실이다.",
+    "클라우드는 없음이다. OpenAI 가 파는 용량은 모델 처리 용량(Reserved Tier·Guaranteed Capacity)이라 모델 칸에 속하고, 원시 컴퓨트 판매는 검토 중이라는 CEO 글뿐이다. 컴퓨트는 Microsoft·AWS·CoreWeave·Cerebras 에게서 사 온다.",
+    "모델과 응용은 판매다. API 토큰 과금과 ChatGPT 구독(Go·Plus·Pro·Business·Enterprise)을 팔고, Business 좌석이 ChatGPT Work 와 Codex 를 담아 월 $25(연간 $20)에 팔린다. 광고도 응용에서 판다.",
+    "AI 무관 몫 2.5% 이하는 다각화 0 구간이다. 광고는 광고주의 광고 구매라 규칙대로 AI 무관으로 셌다. AI 무관 몫은 공시된 매출 줄을 그 줄의 수요 성격으로 가른다. 클라우드 인프라 줄은 범용 연산과 AI 연산이 섞여 있고 그 비율이 회사마다 같은 기준으로 공시되지 않으므로 줄 전체를 AI 수요로 센다. 광고·소비자 기기·소비자 구독·리테일·자동차·에너지·발사·통신·기업용 소프트웨어 줄은 AI 기능이 들어 있어도 AI 무관으로 세고, AI 서비스 매출이 들어갈 수 있는 기타 줄은 AI 로 센다.",
+    "근거 등급: 칩·플랫폼·모델·광고는 회사 1차 발표와 공급사(Broadcom·Celestica) 실적 통화, 회사 연 환산 매출 분모는 회사 발언을 전한 보도와 2차 보도다. 칩은 준비 중이고 클라우드가 없음이므로 ⑧ 공급 축을 0 으로 적을 수 없다."
+  ],
+  "evidence_up_after": [
+    "Jalapeño 엔지니어링 샘플이 실험실에서 생산 목표 주파수·전력으로 ML 워크로드를 돌린다. [EV-openai-072]",
+    "Broadcom 은 OpenAI 용 Jalapeño 출하가 이어진다고 말했다. [EV-openai-090]",
+    "OpenAI 는 ChatGPT 기능을 만드는 데 쓰는 플랫폼을 개발자에게 열었다. [EV-openai-094]",
+    "Agents API 는 OpenAI 가 운영하는 오픈소스 Codex 하니스로 움직인다. [EV-openai-092]",
+    "ChatGPT 는 주간 사용자 12억 명이 넘고 유료 요금제마다 GPT-6 모델을 쓴다. [EV-openai-149]",
+    "ChatGPT Business Standard 좌석은 월 $25(연간 $20)이고 ChatGPT Work 와 Codex 를 담는다. [EV-openai-098]",
+    "ChatGPT 광고는 출시 200일 안에 연 환산 매출 $10억에 이르렀다. [EV-openai-151]"
+  ],
+  "evidence_down_after": [
+    "OpenAI 는 Jalapeño 를 올해 말까지 자사 컴퓨트 인프라에 배치하기 시작할 계획이며 생산 자격 검증을 계속한다. [EV-openai-074]",
+    "Celestica 는 OpenAI 맞춤 랙의 초기 인도를 올해 안에 시작할 것으로 예상한다고 말했고 양산은 2027년 계획이다. [EV-openai-077]",
+    "Stargate 부지의 하드웨어는 SoftBank 와 Oracle 이 소유한다. [EV-openai-078]",
+    "플러그인 수익화의 일반 방식은 개발자 자체 도메인의 외부 결제이고 OpenAI 수수료 문장이 없다. [EV-openai-097]",
+    "Cerebras 는 OpenAI 가 750MW 추론 컴퓨트 구매를 계약상 확약했다고 공시했다. [EV-openai-083]"
+  ]
+}

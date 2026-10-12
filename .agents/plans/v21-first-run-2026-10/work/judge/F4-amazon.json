@@ -1,0 +1,98 @@
+{
+  "changes": {
+    "layers": {
+      "chip": "self",
+      "server": "self",
+      "platform": "sold",
+      "cloud": "sold",
+      "model": "sold",
+      "app": "sold"
+    },
+    "layer_evidence": {
+      "chip": [
+        "EV-amazon-063",
+        "EV-amazon-064",
+        "EV-amazon-065",
+        "EV-amazon-066",
+        "EV-amazon-022"
+      ],
+      "server": [
+        "EV-amazon-033",
+        "EV-amazon-034",
+        "EV-amazon-073"
+      ],
+      "platform": [
+        "EV-amazon-072",
+        "EV-amazon-025"
+      ],
+      "cloud": [
+        "EV-amazon-027",
+        "EV-amazon-079"
+      ],
+      "model": [
+        "EV-amazon-061",
+        "EV-amazon-030"
+      ],
+      "app": [
+        "EV-amazon-070",
+        "EV-amazon-083",
+        "EV-amazon-084"
+      ]
+    },
+    "layer_triggers": {},
+    "primary_layer": "cloud",
+    "non_ai_revenue_share": 0.809,
+    "non_ai_share_basis": "제품·서비스군별 매출 표(최근 1년 2025-07-01~2026-06-30 = FY2025 + 2026 상반기 − 2025 상반기)에서 AWS $148,404M 을 AI 수요로, Online stores $285,081M·Physical stores $23,012M·Third-party seller services $183,660M·Advertising services $76,072M·Subscription services $52,853M·Other $6,598M 을 AI 무관으로 셌다. (775,680 − 148,404) ÷ 775,680 = 80.9%. AWS 안의 AI 사업 연 환산 $250억 초과는 회사 정의 런레이트이고 다른 클라우드 회사에 같은 값이 없어 떼어 내지 않았다.",
+    "non_ai_share_evidence": [
+      "EV-amazon-079",
+      "EV-amazon-080",
+      "EV-amazon-022"
+    ]
+  },
+  "evidence_after": [
+    "Amazon ④ 는 수직계열화 2.5(칸 값 합 5 를 상한에서 자름)와 다각화 2.5(AI 무관 80.9%)를 더해 5.0 이다. 주 레이어는 클라우드다(AWS 최근 1년 $148,404M).",
+    "칩은 자체 사용이다. Trainium·Graviton 은 지금 EC2 로만 수익화한다고 회사가 밝혔고 칩·랙의 제3자 판매는 가능성 언급뿐이다. 칩 사업 연 환산 $250억 초과(Nitro 포함 회사 정의)는 EC2 매출을 칩 기준으로 다시 센 값이라 클라우드 칸이 이미 판매로 센다. 칩 칸은 칩이나 칩을 담은 시스템을 하드웨어로 남에게 팔아 매출을 인식하거나 파운드리처럼 남의 설계를 만들어 줄 때 판매로 적고, 자기가 설계한 칩을 자기 클라우드 인스턴스나 자기 제품 안에서만 수익화하면 자체 사용으로 적는다. 칩을 빌려주는 매출은 클라우드 칸이 판매로 센다.",
+    "서버·네트워크는 자체 사용이다. Trn3 UltraServer·Nitro·자체 네트워크를 설계해 EC2 를 운영하고 고객에게는 장비가 아니라 EC2 서비스로 판다. 서버·네트워크 칸은 자기가 설계한 시스템·네트워크 장비를 팔면 판매, 자기가 설계한 장비를 대규모로 자기만 쓰면 자체 사용, 남이 만든 장비를 사 오거나 남의 데이터센터를 빌려 쓰면 없음으로 적는다.",
+    "소프트웨어 플랫폼(SageMaker·Bedrock AgentCore·Strands)과 클라우드(AWS)는 판매다. 모델은 판매다. 자체 Nova 모델을 Bedrock 에서 팔고 범용 비서 Alexa+ 를 월 $19.99(Prime 회원은 추가 요금 없음)에 판다. Bedrock 에서 남의 모델을 되파는 것은 모델 칸에 세지 않았다. 모델 칸은 자기 모델의 사용에 돈을 받을 때 판매다. 남의 모델을 자기 매대에서 되파는 것은 모델 칸 판매가 아니다.",
+    "응용은 판매다. AI 상담 도구 Amazon Connect 가 연 환산 매출 $10억(2025년 4분기 발표)이고, AI 쇼핑 비서 Rufus 안에서 광고 상품을 판다. Zoox 는 2026-07-30 요금 징수 면제 승인을 받은 단계로 유료 운행 매출이 0 이지만, 응용 칸이 이미 판매라 칸 값을 바꾸지 않아 준비 중 칸과 트리거를 두지 않았다.",
+    "AI 무관 몫 80.9% 는 다각화 2.5 구간의 하한(80%)에 가깝다. AWS 줄 전체를 AI 로 센 값이다. AI 무관 몫은 공시된 매출 줄을 그 줄의 수요 성격으로 가른다. 클라우드 인프라 줄은 범용 연산과 AI 연산이 섞여 있고 그 비율이 회사마다 같은 기준으로 공시되지 않으므로 줄 전체를 AI 수요로 센다. 광고·소비자 기기·소비자 구독·리테일·자동차·에너지·발사·통신·기업용 소프트웨어 줄은 AI 기능이 들어 있어도 AI 무관으로 세고, AI 서비스 매출이 들어갈 수 있는 기타 줄은 AI 로 센다.",
+    "근거 등급: 층 칸과 매출 줄은 10-K·10-Q·8-K 와 회사 1차 발표다. 칩 칸이 자체 사용이고 클라우드 칸이 판매라 ⑧ 공급 축 하한 조건(칩이나 클라우드가 없음)에는 걸리지 않는다."
+  ],
+  "evidence_up_after": [
+    "Amazon 은 Graviton·Trainium·Nitro 칩 사업의 연 환산 매출이 $200억을 넘었다고 밝혔고 칩을 지금 EC2 로만 수익화한다. [EV-amazon-063]",
+    "Trainium2 는 대부분 매진됐고 2026년 초 출하를 시작한 Trainium3 는 거의 전량 구독됐다. [EV-amazon-064]",
+    "Trn3 UltraServer 는 Trainium3 칩을 최대 144개 묶는 AWS 설계 시스템이다. [EV-amazon-034]",
+    "AWS 는 SageMaker·Bedrock·Strands·AgentCore 를 서비스로 판다. [EV-amazon-072]",
+    "2026년 2분기 AWS 세그먼트 매출은 37% 늘어 $42.2B 다. [EV-amazon-027]",
+    "Bedrock 에 자체 Nova 모델을 포함한 20개 넘는 관리형 모델을 더했다. [EV-amazon-061]",
+    "Alexa+ 는 미국에서 월 $19.99 에 팔리고 Prime 회원에게는 추가 요금 없이 포함된다. [EV-amazon-030]",
+    "Amazon Connect 는 연 환산 매출 $10억에 30% 넘게 성장하는 AI 상담 도구다. [EV-amazon-070]",
+    "최근 1년 AWS 를 뺀 리테일·판매자 서비스·광고·구독 매출이 전체의 80.9% 다. [EV-amazon-079, EV-amazon-080]"
+  ],
+  "evidence_down_after": [
+    "Amazon 은 칩을 EC2 로만 수익화하고 칩·랙의 제3자 판매는 앞으로의 가능성으로만 언급했다. [EV-amazon-065]",
+    "Zoox 는 요금 징수 면제 승인을 받은 단계로 유료 상용 운행은 아직 시작 전이다. [EV-amazon-084]"
+  ],
+  "cite": [
+    "EV-amazon-063",
+    "EV-amazon-064",
+    "EV-amazon-034",
+    "EV-amazon-072",
+    "EV-amazon-027",
+    "EV-amazon-061",
+    "EV-amazon-030",
+    "EV-amazon-070",
+    "EV-amazon-079",
+    "EV-amazon-080",
+    "EV-amazon-065",
+    "EV-amazon-084",
+    "EV-amazon-066",
+    "EV-amazon-022",
+    "EV-amazon-033",
+    "EV-amazon-073",
+    "EV-amazon-025",
+    "EV-amazon-083"
+  ],
+  "reconfirm": [],
+  "reason": "④ 를 층별 보유표와 AI 무관 매출 몫으로 처음부터 판정했다(칩·서버 자체 사용, 플랫폼·클라우드·모델·응용 판매, AI 무관 80.9%)."
+}

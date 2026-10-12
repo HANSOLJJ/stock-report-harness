@@ -1,0 +1,68 @@
+{
+  "changes": {
+    "customer": {
+      "status": "not_found",
+      "note": "EDGAR 에 Anthropic 운영 법인의 제출본이 없고(2026-10-12 회사명·전문 검색) 회사 1차 발표에 최대 고객 비중이 없다. 고객 집중을 전한 보도는 유출 초안 인용과 2차 보도라 쓰지 않는다. 비상장이라는 이유로 비공개로 올리지 않는다."
+    },
+    "commitment": {
+      "status": "confirmed",
+      "multiple": 3.48,
+      "note": "상대방 공시·회사 1차 발표로 금액과 지급 약정이 확인되는 몫: AWS 10년 $100B 초과(하한)·Azure $30B·TeraWulf 20년 임대 약 $19B·Akamai 7년 약 $11.6B·Nscale 최대 약 $44.6B(인도 조건)·Broadcom TPU 랙 주문 $21B = 약 $226.2B ÷ 2026-07 말 연환산 매출 $65B(총액 기준). SpaceX 계약(90일 해지)·Google TPU(금액 없음, 소비 조건부)·AMD·NVIDIA(최대 용량, 금액 없음)·Riot(임차인 미기재)은 넣지 않았다. 해지할 수 없는 몫만 합산한 문장은 없다."
+    },
+    "supply": {
+      "status": "confirmed",
+      "rung": -3,
+      "supplier_is_competitor": "yes",
+      "note": "자체 보유 컴퓨트가 확인되지 않고 주 클라우드 Amazon 을 비롯한 주요 컴퓨트 공급자 넷(Amazon·Google·Microsoft·SpaceX)이 모두 자체 모델 경쟁자다. 한 곳이 끊기면 칩 계열이 달라 가까운 대체가 없고, 공급자가 여럿이라 회사 전체가 멈추지는 않는다."
+    },
+    "geopolitics": {
+      "status": "confirmed",
+      "rung": -1,
+      "note": "대만 생산 집중은 공급자(NVIDIA·Broadcom) 공시로만 닿고 AI 증설에 걸린다. 국방부의 공급망 위험 지정은 ⑤ 에서 센다."
+    }
+  },
+  "evidence_after": [
+    "Anthropic ⑧ 은 −3 이고 점수를 정한 축은 공급 축과 약정 축이다. 컴퓨트를 모두 남에게서 빌리고 주요 공급자 넷이 자체 모델을 내는 경쟁자이며, 상대방 공시와 회사 1차 발표로 금액이 확인되는 약정이 연환산 매출의 약 3.48배다(계산).",
+    "공급 축은 −3 이다. 자체 보유 컴퓨트는 확인되지 않고, AWS 가 주 클라우드이자 훈련 파트너로 Trainium2 칩 100만 개 이상을 쓰며 Google·Broadcom(TPU), Microsoft·NVIDIA, SpaceX(Colossus), AMD, Akamai, CoreWeave, Nscale 에서 용량을 사 온다. Amazon(Nova)·Google(Gemini)·Microsoft(MAI)·SpaceX(Grok)가 모두 자체 모델을 내는 경쟁자라 공급자가 곧 경쟁자이고, 이 위험은 ⑧ 에서만 센다. 한 곳이 끊기면 훈련·서빙 용량의 큰 몫이 빠지고 칩 계열이 달라 가까운 대체가 없지만, 칩 계열이 Trainium·TPU·NVIDIA·AMD 로 나뉘고 공급자가 여럿이라 회사 전체가 멈추는 칸에는 이르지 않는다. ④ 보유표의 칩·클라우드 칸이 없음이라 공급 축을 0 으로 적을 수 없고, OpenAI 에도 같은 잣대를 댄다.",
+    "약정 축은 −3 이다. 해지할 수 없는 몫만 합산한 문장은 회사 1차 발표와 상대방 공시 어디에도 없어, 금액과 지급 약정이 상대방 공시나 회사 1차 발표로 확인되는 몫을 더했다. AWS 의 기존 다년 약정 10년 $1,000억 초과 확대(Amazon 10-Q, 하한), Azure 컴퓨트 $300억 구매 약정(회사 1차 발표), TeraWulf 20년 미개시 임대의 초기 기간 계약 수익 약 $190억(TeraWulf 공시), Akamai 7년 약 $116억 지급 약정(Akamai 8-K), Nscale 서비스 계약 최대 약 $446억(Nscale S-1, 인도·가용성 요건 충족 전제), Broadcom 이 받은 TPU Ironwood 랙 주문 $100억과 $110억(Broadcom 실적 통화)을 더한 약 $2,262억은 2026-07 말 연환산 매출 $650억의 약 3.48배로 3배 이상 20배 미만이다(계산).",
+    "Nscale 계약은 인도가 늦으면 Anthropic 이 그 트랑슈를 책임 없이 해지할 수 있지만, Akamai 계약도 인도·가용성 요건을 전제로 한 지급 약정이라 두 계약을 같은 성격으로 넣었고 OpenAI 의 CoreWeave 계약(최대 금액 약정)도 같은 잣대로 넣는다. Nscale 을 빼면 약 2.79배로 −2 가 된다(계산). 분모는 클라우드 파트너 판매를 총액으로 잡은 값이라 OpenAI 의 순액 기준보다 크고, 순액으로 맞추면 배수는 더 커진다.",
+    "넣지 않은 것: SpaceX 클라우드 계약(월 $12.5억)은 최초 3개월 뒤 어느 쪽이든 90일 통지로 해지할 수 있어 떠나지 못하게 하는 약정이 아니다. Google·Broadcom 차세대 TPU 수 GW 계약은 공시·1차 발표에 금액이 없고 Broadcom 8-K 가 소비를 Anthropic 의 지속적인 상업적 성공에 달린 것으로 적으며, 5년 $200B 는 익명 소식통 2차 보도다. AMD·NVIDIA 는 최대 용량만 있고 금액이 없다. Riot 191MW 임대는 공시에 임차인 이름이 없고 Hut 8 River Bend 는 임차인이 Fluidstack 이다. Broadcom 의 고객 임대 채무 백스톱·전환사채 한도, Apollo 의 자본 지원, AMD·NVIDIA·Microsoft 의 지분 투자 약속은 공급자 쪽 부담이나 고객에게 가는 돈이라 ⑦ 에서 센다. 넣지 않은 몫을 모두 더해도 20배(약 $1.3조)에 이르는 근거는 없다.",
+    "같은 TPU 랙이 Broadcom 주문과 이후의 금융 파트너 임대 구조에 함께 들어 있을 수 있고, Fluidstack 500억 달러 데이터센터 발표와 여러 임대가 같은 용량일 수 있어 합계에는 금액이 따로 확인된 몫만 넣었다. 연도별 지급표가 없어 가까운 24개월 부담은 잴 수 없다. TeraWulf 임대료는 2027년 말 인도 뒤 시작한다.",
+    "고객 축은 탐색 미완으로 적는다. 공개 제출본에 공시된 10% 이상 고객이 없는 것은 EDGAR 에 Anthropic 운영 법인 제출본이 없기 때문이고(2026-10-12 회사명·전문 검색), 회사 1차 발표는 고객 수와 대형 계정 수만 적고 최대 고객 비중은 없다. 매출의 약 4분의 1 이 고객 두 곳에서 나온다거나 2025년 매출의 약 47% 가 Amazon·Google 클라우드를 거쳤다는 것은 유출된 상장 신청서 초안을 인용한 보도라 쓰지 않는다. 회사가 공시하지 않는다고 밝힌 것은 아니라 비공개로 올리지 않고, 계산에서는 정책 기본값 −1 로 들어간다. OpenAI 도 같은 이유로 탐색 미완이다.",
+    "지정학 축은 −1 이다. 대만 생산 집중은 공급자 쪽 공시로만 닿는다. NVIDIA 10-Q 는 대만·한국 협력사 공급 의존과 외국 기업의 대형 GPU 클러스터 서비스에 붙은 미국 허가 조건을 적고 Broadcom 10-K 는 위탁 웨이퍼의 약 95% 를 TSMC 가 만든다고 적는다. 대만이 끊기면 새 컴퓨트 증설이 막히지만 이미 깔린 용량으로 서비스는 이어진다. Anthropic 용 칩이 어느 파운드리에서 나오는지는 두 문서에 없다. 회사는 중국 등 비지원 지역이 지배하는 조직의 이용을 금지한다. 미국 국방부의 공급망 위험 지정과 항소심 판결은 정부의 거래 배제라 ⑤ 에서 세고 ⑧ 에서 다시 세지 않는다.",
+    "Microsoft·Meta 가 사내 Claude 사용을 줄였다는 보도는 고객이 자체 대체재로 옮기는 것이라 ⑤ 에서 센다. 큰 고객이 경쟁사 소유라는 속성도 ⑤ 소관이다.",
+    "해지할 수 없는 약정 금액, AWS 기존 약정 금액, Google TPU 계약 금액, 자체 데이터센터 보유 여부, 최대 고객 비중은 확인하지 못했다(미확인).",
+    "근거 등급: 약정 금액은 Amazon 10-Q·TeraWulf·Akamai·Nscale 공시와 회사·Broadcom 1차 발표이고, 분모 연환산 매출 $650억은 회사가 확인한 2차 보도다. OpenAI 의 분모도 같은 등급(회사가 투자자에게 알린 값을 전한 2차 보도)이다. 유출 초안을 인용한 보도(설비 지출 $5,180억 가운데 약 80% 해지 불가, Broadcom 관련 리스·대출, 고객 집중)는 보도가 있다는 사실로만 둔다."
+  ],
+  "evidence_up_after": [
+    "Claude 를 AWS Trainium·Google TPU·NVIDIA GPU 로 훈련·서빙해 칩 계열이 셋으로 나뉜다. [EV-anthropic-038]",
+    "AMD MI355X 를 이미 쓰고 있다. [EV-anthropic-073]",
+    "Claude 는 세 대형 클라우드 모두에서 제공되는 유일한 프런티어 모델이다. [EV-amazon-038]",
+    "SpaceX 컴퓨트 계약은 최초 3개월 뒤 어느 쪽이든 90일 통지로 해지할 수 있다. [EV-anthropic-117]",
+    "Nscale 이 트랑슈를 기한 안에 인도하지 못하면 Anthropic 은 그 트랑슈를 책임 없이 해지할 수 있다. [EV-anthropic-116]",
+    "Broadcom 경유 약 3.5GW TPU 컴퓨트의 소비는 Anthropic 의 지속적인 상업적 성공에 달려 있다. [EV-anthropic-106]"
+  ],
+  "evidence_down_after": [
+    "AWS 와의 기존 다년 약정은 10년에 걸쳐 $1,000억 넘게 늘었다. [EV-anthropic-035]",
+    "AWS 는 Anthropic 의 주 클라우드이자 훈련 파트너이고, Anthropic 은 Trainium2 칩 100만 개 이상으로 Claude 를 훈련·서빙한다. [EV-anthropic-084, EV-anthropic-076]",
+    "Anthropic 은 Azure 컴퓨트 $300억 구매를 약정했다. [EV-anthropic-031]",
+    "TeraWulf 와 맺은 20년 임대는 초기 기간 계약 수익 약 $190억이고 아직 개시되지 않았다. [EV-anthropic-110, EV-anthropic-109]",
+    "Anthropic 은 Akamai 에 7년 동안 약 $116억 지급을 약정했고 해지 사유는 중대한 미시정 위반·경쟁사로의 지배권 변경·중대한 장애로 열거돼 있다. [EV-anthropic-114]",
+    "Nscale 과의 서비스 계약은 인도·가용성 요건을 채우면 최대 약 $446억을 내는 구조다. [EV-anthropic-115]",
+    "Broadcom 은 TPU Ironwood 랙을 Anthropic 에 시스템으로 팔기로 $100억과 추가 $110억 주문을 받았다. [EV-anthropic-072]",
+    "여섯 몫을 더한 약 $2,262억은 2026-07 말 연환산 매출 $650억의 약 3.48배다(계산). [EV-anthropic-035, EV-anthropic-031, EV-anthropic-110, EV-anthropic-114, EV-anthropic-115, EV-anthropic-072, EV-anthropic-040]",
+    "SpaceX 는 Anthropic 에 약 325,000개 NVIDIA GPU 의 컴퓨트를 2029-05 까지 월 $12.5억에 제공한다. [EV-spacex-xai-042]",
+    "Google 은 Gemini, Amazon 은 Nova, Microsoft 는 MAI, SpaceX 는 Grok 모델을 낸다. [EV-alphabet-007, EV-amazon-061, EV-microsoft-010, EV-spacex-xai-018]",
+    "SpaceX S-1/A 는 Anthropic 을 AI 경쟁자로 적는다. [EV-spacex-xai-012]",
+    "NVIDIA 는 대만·한국 협력사의 공급에 기대고 미국 정부는 외국 기업의 대형 GPU 클러스터 서비스에 허가 조건을 붙였다. [EV-anthropic-125]",
+    "Broadcom 위탁 웨이퍼의 약 95% 를 TSMC 가 만든다. [EV-anthropic-126]"
+  ],
+  "cite": [
+    "EV-anthropic-038", "EV-anthropic-073", "EV-amazon-038", "EV-anthropic-117", "EV-anthropic-116", "EV-anthropic-106",
+    "EV-anthropic-035", "EV-anthropic-084", "EV-anthropic-076", "EV-anthropic-031", "EV-anthropic-110", "EV-anthropic-109",
+    "EV-anthropic-114", "EV-anthropic-115", "EV-anthropic-072", "EV-anthropic-040", "EV-spacex-xai-042", "EV-alphabet-007",
+    "EV-amazon-061", "EV-microsoft-010", "EV-spacex-xai-018", "EV-spacex-xai-012", "EV-anthropic-125", "EV-anthropic-126"
+  ],
+  "reconfirm": [],
+  "reason": "⑧ 을 네 축 판정 입력으로 처음부터 판정했다(고객 탐색 미완·약정 3.48배·공급 −3·지정학 −1, 약정은 금액과 지급 약정이 확인된 몫만 합산)."
+}

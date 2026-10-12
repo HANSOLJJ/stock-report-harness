@@ -1,0 +1,95 @@
+{
+  "group": "J1",
+  "new_triggers": [
+    {
+      "key": "alphabet-search-hollowing",
+      "company_id": "alphabet",
+      "factors": ["F1"],
+      "observation": "Google 의 전 세계 검색 점유율은 2026년 9월 89.94% 로 2년째 약 90% 를 유지한다. OpenAI 는 ChatGPT 의 검색 사용이 1년 새 거의 세 배가 됐다고 밝혔으나 질의 수·검색 광고 매출의 절대값은 공개하지 않았다.",
+      "condition": "AI 답변 서비스를 파는 신흥 기업(OpenAI·Perplexity 등)이 검색 질의 수나 검색 광고 매출을 공시하거나, 독립 집계가 AI 답변 서비스의 검색 대체 몫을 수치로 내면",
+      "deadline": "2027-04-30",
+      "source_ids": [],
+      "evidence_ids": ["EV-alphabet-064", "EV-openai-011"],
+      "status": "watching",
+      "recheck": {
+        "factors": ["F1"],
+        "what": "Alphabet ① 전환비용 — 정보 검색 업무 흐름에서 비교 가능한 대체재가 생긴 뒤에도 검색 사용자·광고주가 남는지"
+      }
+    },
+    {
+      "key": "amazon-shopping-agent-hollowing",
+      "company_id": "amazon",
+      "factors": ["F1"],
+      "observation": "UBS 는 AI 챗봇이 쇼핑 추천에서 Amazon 보다 월마트·코스트코를 더 자주 권한다고 분석했고, Meta 의 쇼핑 에이전트 Muse 는 월마트·Shopify 등과 제휴한 반면 Amazon 은 Muse 의 접속을 막았다. OpenAI 는 ChatGPT 의 결제 기능을 판매자 자체 결제로 돌리고 상품 탐색에 집중한다.",
+      "condition": "AI 쇼핑 에이전트를 운영하는 신흥 기업(OpenAI·Perplexity 등)이 에이전트 경유 거래액·수수료 매출이나 제휴 소매업체 매출을 공시하거나, Amazon 이 에이전트 경유 트래픽 감소를 공시하면",
+      "deadline": "2027-04-30",
+      "source_ids": [],
+      "evidence_ids": ["EV-amazon-009", "EV-amazon-048", "EV-openai-152"],
+      "status": "watching",
+      "recheck": {
+        "factors": ["F1"],
+        "what": "Amazon ① 전환비용 — 상품 탐색·구매 업무 흐름이 제3자 AI 에이전트로 옮겨 갈 때 소비자와 판매자가 마켓플레이스·Prime 에 남는지"
+      }
+    },
+    {
+      "key": "apple-ai-assistant-hollowing",
+      "company_id": "apple",
+      "factors": ["F1"],
+      "observation": "Apple 은 iOS 27 에서 제3자 AI 챗봇이 Siri 와 연동되도록 열 계획이라는 보도가 있고, OpenAI 는 io 팀을 합쳐 자체 소비자 기기를 준비한다. 신흥 AI 기업의 소비자 기기 출하와 앱 대신 AI 에이전트 안에서 쓰는 서비스의 개발자 매출은 아직 공시되지 않았다.",
+      "condition": "신흥 AI 기업이 자체 소비자 기기의 출하량·매출을 공시하거나, AI 에이전트 플랫폼(ChatGPT 플러그인·Marketplace 등)의 개발자 매출이 App Store 와 견줄 수 있는 수치로 공시되면",
+      "deadline": "2027-06-30",
+      "source_ids": [],
+      "evidence_ids": ["EV-openai-136", "EV-openai-081"],
+      "status": "watching",
+      "recheck": {
+        "factors": ["F1"],
+        "what": "Apple ① 회수 루프·전환비용 — 앱 사용과 기기 선택이 AI 에이전트 쪽으로 옮겨 갈 때 개발자와 사용자가 App Store·iPhone 에 남는지"
+      }
+    },
+    {
+      "key": "meta-ai-chat-ads-hollowing",
+      "company_id": "meta",
+      "factors": ["F1"],
+      "observation": "ChatGPT 광고는 출시 200일 안에 연환산 매출 $10억을 넘었고 광고주가 수만 곳이다. OpenAI 는 ChatGPT 의 총 AI 이용 시간이 다음 AI 앱의 4배라고 밝혔다. Meta 의 광고 노출과 광고당 가격은 2026년 2분기에도 늘었다.",
+      "condition": "AI 챗봇을 운영하는 신흥 기업(OpenAI 등)이 광고 매출·광고주 수를 Meta 광고 매출과 견줄 수 있는 규모로 공시하거나, 독립 집계가 소셜 앱에서 AI 챗봇으로 옮겨 간 이용 시간을 수치로 내면",
+      "deadline": "2027-04-30",
+      "source_ids": [],
+      "evidence_ids": ["EV-openai-151", "EV-openai-011", "EV-meta-041"],
+      "status": "watching",
+      "recheck": {
+        "factors": ["F1"],
+        "what": "Meta ① 회수 루프·가격 실측 — 소셜 피드 이용과 광고 예산이 AI 챗봇 광고로 옮겨 갈 때 사용자와 광고주가 남고 광고당 가격이 유지되는지"
+      }
+    },
+    {
+      "key": "microsoft-office-ai-hollowing",
+      "company_id": "microsoft",
+      "factors": ["F1"],
+      "observation": "OpenAI 는 Word 에 맞설 문서 도구 Pages 와 업무 에이전트 ChatGPT Work 를 내놓았고, 돈을 내는 비즈니스 사용자가 900만 명을 넘었다고 밝혔다. Microsoft 365 상업용 유료 좌석은 4.5억 개를 넘고 FY2026 에 6% 늘었다.",
+      "condition": "OpenAI·Anthropic 같은 신흥 AI 기업이 문서·업무 작성 도구의 유료 좌석이나 매출을 공시하고 그 고객이 Microsoft 365 좌석을 줄였다는 사실이 회사 발표나 공시로 확인되면",
+      "deadline": "2027-04-30",
+      "source_ids": [],
+      "evidence_ids": ["EV-microsoft-003", "EV-openai-100", "EV-openai-139", "EV-microsoft-031"],
+      "status": "watching",
+      "recheck": {
+        "factors": ["F1"],
+        "what": "Microsoft ① 전환비용 — 문서·업무 작성 흐름에서 AI 대체재가 팔릴 때 상업용 좌석이 남는지"
+      }
+    },
+    {
+      "key": "oracle-database-hollowing",
+      "company_id": "oracle",
+      "factors": ["F1"],
+      "observation": "Oracle 은 고객 거의 전부가 해마다 지원 계약을 갱신한다고 적지만 지원 매출은 고정환율 기준 늘지 않는다. AWS 관리형 데이터베이스로 Oracle 데이터베이스 약 7,500개를 옮긴 사례가 있다. AI 에이전트용 데이터 플랫폼을 파는 신흥 기업의 Oracle 대체 매출은 아직 공시되지 않았다.",
+      "condition": "신흥 데이터 플랫폼 기업(Databricks·Snowflake·Supabase 등)이 Oracle 데이터베이스에서 옮겨 온 고객 수나 그 매출을 공시하거나 상장 서류에 적으면",
+      "deadline": "2027-06-30",
+      "source_ids": [],
+      "evidence_ids": ["EV-oracle-026", "EV-oracle-038", "EV-oracle-040"],
+      "status": "watching",
+      "recheck": {
+        "factors": ["F1"],
+        "what": "Oracle ① 전환비용 — 기간계 데이터베이스 업무 흐름에서 신흥 대체재가 팔릴 때 지원 계약 갱신이 유지되는지"
+      }
+    }
+  ]
+}

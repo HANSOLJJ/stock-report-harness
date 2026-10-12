@@ -1,0 +1,84 @@
+{
+  "changes": {
+    "layers": {
+      "chip": "self",
+      "server": "self",
+      "platform": "sold",
+      "cloud": "sold",
+      "model": "sold",
+      "app": "sold"
+    },
+    "layer_evidence": {
+      "chip": [
+        "EV-microsoft-008",
+        "EV-microsoft-050",
+        "EV-microsoft-052"
+      ],
+      "server": [
+        "EV-microsoft-049"
+      ],
+      "platform": [
+        "EV-microsoft-053",
+        "EV-microsoft-052"
+      ],
+      "cloud": [
+        "EV-microsoft-067",
+        "EV-microsoft-064"
+      ],
+      "model": [
+        "EV-microsoft-055",
+        "EV-microsoft-010"
+      ],
+      "app": [
+        "EV-microsoft-005"
+      ]
+    },
+    "layer_triggers": {},
+    "primary_layer": "cloud",
+    "non_ai_revenue_share": 0.61,
+    "non_ai_share_basis": "10-K(회계연도 2026 = 2025-07-01~2026-06-30) 제품·서비스군별 매출 표에서 Server products and cloud services $129,425M(Azure and other cloud services 포함)을 AI 수요로, Microsoft 365 Commercial $101,997M·XBOX $21,790M·LinkedIn $19,817M·Windows and Devices $17,084M·Search advertising $15,176M·Microsoft 365 Consumer $9,175M·Dynamics $9,006M·Enterprise and partner services $8,260M·Other $109M 을 AI 무관으로 셌다. (331,839 − 129,425) ÷ 331,839 = 61.0%. Microsoft 365 Commercial 줄에 Microsoft 365 Copilot 이 들어 있으나 줄의 수요는 Office·업무용 구독이라 떼어 내지 않았다. 8-K(2026-09-02) 재편 기준의 Azure $101,938M 만 AI 로 세면 69.3% 로 같은 구간이다.",
+    "non_ai_share_evidence": [
+      "EV-microsoft-064",
+      "EV-microsoft-067",
+      "EV-microsoft-012"
+    ]
+  },
+  "evidence_after": [
+    "Microsoft ④ 는 수직계열화 2.5(칸 값 합 5 를 상한에서 자름)와 다각화 2(AI 무관 61.0%)를 더해 4.5 이다. 주 레이어는 클라우드다(Azure). 응용 칸의 AI 매출은 Microsoft 365 Copilot 이고 Office 매출은 비AI 사업이라 보유표에 넣지 않으므로 응용 층 외부 매출은 Azure 보다 작다.",
+    "칩은 자체 사용이다. Maia 200 이 Iowa·Arizona 데이터센터에서 OpenAI 모델과 MAI 모델을 돌리고 칩을 외부에 판 공시는 없다. 칩 칸은 칩이나 칩을 담은 시스템을 하드웨어로 남에게 팔아 매출을 인식하거나 파운드리처럼 남의 설계를 만들어 줄 때 판매로 적고, 자기가 설계한 칩을 자기 클라우드 인스턴스나 자기 제품 안에서만 수익화하면 자체 사용으로 적는다. 칩을 빌려주는 매출은 클라우드 칸이 판매로 센다.",
+    "서버·네트워크는 자체 사용이다. 서버 수백만 대가 자체 설계한 네트워킹·보안·가상화 실리콘(Azure Boost)과 자체 CPU·가속기로 움직인다. 서버·네트워크 칸은 자기가 설계한 시스템·네트워크 장비를 팔면 판매, 자기가 설계한 장비를 대규모로 자기만 쓰면 자체 사용, 남이 만든 장비를 사 오거나 남의 데이터센터를 빌려 쓰면 없음으로 적는다.",
+    "소프트웨어 플랫폼(Foundry 고객 10만 곳, 매출 2배 이상)과 클라우드(Azure)는 판매다. 모델은 판매다. 자체 MAI 계열 모델을 Foundry 로 누구에게나 제공한다. Foundry 가 OpenAI·Anthropic·xAI 모델을 함께 파는 것은 모델 칸에 세지 않았다. 모델 칸은 자기 모델의 사용에 돈을 받을 때 판매다. 남의 모델을 자기 매대에서 되파는 것은 모델 칸 판매가 아니다.",
+    "응용은 판매다. Microsoft 365 Copilot 유료 좌석이 3,000만 개를 넘는다(2026-06-30).",
+    "AI 무관 몫 61.0% 는 다각화 2 구간이다. AI 무관 몫은 공시된 매출 줄을 그 줄의 수요 성격으로 가른다. 클라우드 인프라 줄은 범용 연산과 AI 연산이 섞여 있고 그 비율이 회사마다 같은 기준으로 공시되지 않으므로 줄 전체를 AI 수요로 센다. 광고·소비자 기기·소비자 구독·리테일·자동차·에너지·발사·통신·기업용 소프트웨어 줄은 AI 기능이 들어 있어도 AI 무관으로 세고, AI 서비스 매출이 들어갈 수 있는 기타 줄은 AI 로 센다. Alphabet 의 Google Cloud 줄은 Workspace 를 품은 채 AI 로 세어지고 Microsoft 의 Microsoft 365 상업용 줄은 AI 무관으로 세어지는데, 이는 공시 줄 구성의 차이다.",
+    "근거 등급: 층 칸은 실적 통화 1차 발언과 10-K, 매출 줄은 10-K 감사 재무제표 주석이다. 칩 자체 사용·클라우드 판매라 ⑧ 공급 축 하한 조건에 걸리지 않는다."
+  ],
+  "evidence_up_after": [
+    "Maia 200 AI 가속기는 Iowa·Arizona 데이터센터에서 가동 중이다. [EV-microsoft-008]",
+    "Maia 200 은 확대되고 있고 OpenAI 와 MAI 모델을 함께 돌린다. [EV-microsoft-050]",
+    "서버 수백만 대가 Azure Boost 를 포함한 자체 네트워킹·보안·가상화 실리콘과 자체 CPU·가속기로 움직인다. [EV-microsoft-049]",
+    "Foundry 고객은 10만 곳이고 매출이 1년 새 두 배 넘게 늘었다. [EV-microsoft-053]",
+    "회계연도 2026 Azure and other cloud services 매출은 41% 늘었다. [EV-microsoft-067]",
+    "Foundry 는 자체 MAI 계열을 포함한 모델 1만 1천 개를 누구에게나 제공한다. [EV-microsoft-055]",
+    "Microsoft 365 Copilot 유료 좌석은 3,000만 개를 넘는다. [EV-microsoft-005]",
+    "회계연도 2026 매출 가운데 Server products and cloud services 를 뺀 Office·게임·LinkedIn·Windows·검색 광고 매출이 61.0% 다. [EV-microsoft-064]"
+  ],
+  "evidence_down_after": [
+    "Microsoft 는 함대에서 자체 실리콘을 NVIDIA·AMD 의 최신 장비와 함께 쓴다. [EV-microsoft-050]",
+    "회계연도 2026 매출의 39.0% 가 Server products and cloud services 줄이다. [EV-microsoft-064]"
+  ],
+  "cite": [
+    "EV-microsoft-008",
+    "EV-microsoft-050",
+    "EV-microsoft-049",
+    "EV-microsoft-053",
+    "EV-microsoft-067",
+    "EV-microsoft-055",
+    "EV-microsoft-005",
+    "EV-microsoft-064",
+    "EV-microsoft-052",
+    "EV-microsoft-010",
+    "EV-microsoft-012"
+  ],
+  "reconfirm": [],
+  "reason": "④ 를 층별 보유표와 AI 무관 매출 몫으로 처음부터 판정했다(칩·서버 자체 사용, 플랫폼·클라우드·모델·응용 판매, AI 무관 61.0%)."
+}

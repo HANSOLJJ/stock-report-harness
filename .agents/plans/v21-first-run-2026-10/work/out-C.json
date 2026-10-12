@@ -1,0 +1,1903 @@
+{
+  "group": "C",
+  "sources": [
+    {
+      "source_id": "SRC-WEB-meta-911",
+      "company_id": "meta",
+      "kind": "news",
+      "title": "Meta Platforms 2025년 4분기 실적 콜 녹취록 (2026-01-28)",
+      "publisher": "Meta Platforms IR",
+      "url": "https://s21.q4cdn.com/399680738/files/doc_financials/2025/q4/META-Q4-2025-Earnings-Call-Transcript.pdf",
+      "published_at_utc": "2026-01-28T00:00:00Z",
+      "accessed_at": "2026-10-12",
+      "sha256": "2def106046fcde215f214ac0689aff6fa6c432d7016bf9315b4a831b2041a14b",
+      "note": "회사 IR 이 올린 실적 콜 녹취록 PDF. 게시 시각은 콜 날짜만 적었다. sha256 은 2026-10-12 받은 파일 값이다"
+    },
+    {
+      "source_id": "SRC-WEB-oracle-911",
+      "company_id": "oracle",
+      "kind": "news",
+      "title": "Oracle unveils next-generation AI Database 26ai",
+      "publisher": "Oracle",
+      "url": "https://www.oracle.com/database/ai-native-database-26ai/",
+      "published_at_utc": "2025-10-16T00:00:00Z",
+      "accessed_at": "2026-10-12",
+      "sha256": "8ace27897ba706699fc33c1355f576862f39fe4e2452fed1bad850f2e07df91d",
+      "note": "오라클 공식 발표 페이지. 게시일 2025-10-16(본문 작성자 줄). sha256 은 2026-10-12 받은 HTML 값이다(동적 페이지는 다시 받으면 달라질 수 있다)"
+    },
+    {
+      "source_id": "SRC-WEB-oracle-912",
+      "company_id": "oracle",
+      "kind": "news",
+      "title": "Oracle Advances Enterprise AI with New Agents Across Fusion Applications",
+      "publisher": "Oracle",
+      "url": "https://www.oracle.com/news/announcement/ai-world-oracle-advances-enterprise-ai-with-new-agents-across-fusion-applications-2025-10-15/",
+      "published_at_utc": "2025-10-15T00:00:00Z",
+      "accessed_at": "2026-10-12",
+      "sha256": "afe8440d20e56f556b37068e364125d3c7d6f91fa3f26647b1d31255ee6fa60b",
+      "note": "오라클 공식 보도자료(Oracle AI World, 2025-10-15). sha256 은 2026-10-12 받은 HTML 값이다(동적 페이지는 다시 받으면 달라질 수 있다)"
+    },
+    {
+      "source_id": "SRC-WEB-oracle-913",
+      "company_id": "oracle",
+      "kind": "news",
+      "title": "Oracle and AMD Expand Partnership to Help Customers Achieve Next-Generation AI Scale",
+      "publisher": "Oracle",
+      "url": "https://oracle.com/news/announcement/ai-world-oracle-and-amd-expand-partnership-to-help-customers-achieve-next-generation-ai-scale-2025-10-14",
+      "published_at_utc": "2025-10-14T00:00:00Z",
+      "accessed_at": "2026-10-12",
+      "sha256": "4ae4b6f29b07881b42e862cfd7d935a7ccd706d802aec89afbbd0d47280c44d9",
+      "note": "오라클 공식 보도자료(2025-10-14). sha256 은 2026-10-12 받은 HTML 값이다(동적 페이지는 다시 받으면 달라질 수 있다)"
+    },
+    {
+      "source_id": "SRC-WEB-oracle-914",
+      "company_id": "oracle",
+      "kind": "news",
+      "title": "Oracle Unveils Next-Generation Oracle Cloud Infrastructure Zettascale10 Cluster for AI",
+      "publisher": "Oracle",
+      "url": "https://www.oracle.com/news/announcement/ai-world-oracle-unveils-next-generation-oci-zettascale10-cluster-for-ai-2025-10-14/",
+      "published_at_utc": "2025-10-14T00:00:00Z",
+      "accessed_at": "2026-10-12",
+      "sha256": "e43dcde5b7411c3910a3ecb70e7c8fbb13180b1f8a8b75d58654caaede15efc2",
+      "note": "오라클 공식 보도자료(2025-10-14). sha256 은 2026-10-12 받은 HTML 값이다(동적 페이지는 다시 받으면 달라질 수 있다)"
+    },
+    {
+      "source_id": "SRC-WEB-oracle-915",
+      "company_id": "oracle",
+      "kind": "news",
+      "title": "OCI Enterprise AI (Oracle Cloud Infrastructure)",
+      "publisher": "Oracle",
+      "url": "https://www.oracle.com/artificial-intelligence/generative-ai/generative-ai-service/",
+      "published_at_utc": "2026-03-24T00:00:00Z",
+      "accessed_at": "2026-10-12",
+      "sha256": "ab14cd9aee0e6dc1e2d8ae8f81c47c5d5f47add1cd48149a5b282d21a55e01f3",
+      "note": "오라클 제품 페이지. 페이지 문구의 게시일은 표시되지 않아 같은 페이지의 날짜가 있는 최근 항목(2026-03-24 정식 출시 글)을 게시 시각으로 적었다. sha256 은 2026-10-12 받은 HTML 값이다(동적 페이지는 다시 받으면 달라질 수 있다)"
+    },
+    {
+      "source_id": "SRC-SEC-palantir-000132165526000039",
+      "company_id": "palantir",
+      "kind": "filing",
+      "title": "Palantir 8-K Exhibit 99.1 Q2 2026 실적 보도자료 (2026-08-03)",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000039/a2026q2ex991pressrelease.htm",
+      "published_at_utc": "2026-08-03T00:00:00Z",
+      "accessed_at": "2026-10-12",
+      "sha256": "e4153cef2c778d342bc6e778eabf12ca17854fb1bdfff7aa41377d794d684fdb",
+      "note": "원문 캐시 data/_sec/docs/052567a0541a7ad4-a2026q2ex991pressrelease.htm(gitignore). sec-get 으로 받았고 sha256 은 캐시 파일 값이다"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) Note 12 부문 정보 — Family of Apps·Reality Labs 부문 매출",
+      "excerpt": "We report our financial results for our two reportable segments: Family of Apps (FoA) and Reality Labs (RL). … Three Months Ended June 30, Six Months Ended June 30, 2026 2025 2026 2025 … Family of Apps: Revenue | $ | 60,370 | $ | 47,146 | $ | 116,278 | $ | 89,048 … Reality Labs: Revenue | $ | 431 | $ | 370 | $ | 833 | $ | 782 … Total: Revenue | $ | 60,801 | $ | 47,516 | $ | 117,111 | $ | 89,830",
+      "relevance": "추론: 메타 매출은 광고가 대부분인 Family of Apps 부문과 AR·VR 기기를 파는 Reality Labs 부문 둘로 공시되고, 2026년 2분기 Reality Labs 매출은 전체의 약 0.7%다(431 ÷ 60,801, 계산). ④ 호황 이후 비전의 다각화 축은 AI 와 무관한 최종 수요에서 나오는 매출 몫을 세그먼트 공시로 가르는데, 어느 부문을 AI 무관으로 볼지는 판단이 정한다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ④ 다각화 축(AI 와 무관한 수요에서 나오는 매출 몫)의 입력을 이 부문 매출로 다시 계산한다. 광고 매출을 AI 와 무관한 수요로 읽을지는 판단이 근거를 달아 정한다.",
+      "horizon": "short — 2026년 3분기 10-Q(2026-10 말~11월)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Family of Apps 안에서 AI 서비스(구독·API) 매출을 따로 떼는 공시는 없다",
+        "AI 무관 매출 몫을 가르는 부문 구분은 판단 몫이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 12 Segment Information — 부문 표(Family of Apps·Reality Labs·Total 매출 행)와 서문 첫 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026003942",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Meta 10-K (2025) 매출원천별·부문별 매출 — 광고·기타·Reality Labs",
+      "excerpt": "Advertising | $ | 196,175 | $ | 160,633 | $ | 131,948 … Other revenue | 2,584 | 1,722 | 1,058 … Family of Apps | 198,759 | 162,355 | 133,006 … Reality Labs: Revenue | $ | 2,207 | $ | 2,146 | $ | 1,896",
+      "relevance": "추론: 2025년 매출 $200,966M 가운데 광고가 $196,175M(약 97.6%), 기타 매출이 $2,584M, Reality Labs 가 $2,207M 이다(계산). 최근 1년(2025-07~2026-06) 부문 매출은 이 값에 2026년 상반기와 전년 상반기를 더하고 빼서 구한다. Family of Apps 225,989, 광고 222,607, 기타 3,382, Reality Labs 2,258 이고 합계 228,247 은 관측 revenue_ttm 과 같다(계산).",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ④ 다각화 축의 최근 1년 세그먼트 매출 입력을 연간 값과 반기 값에서 맞춘다. 광고를 AI 와 무관한 수요로 읽는지에 따라 몫이 크게 갈리므로 판단이 읽는 방식을 근거 문장에 적는다.",
+      "horizon": "short — 2026년 3분기 10-Q까지",
+      "counter_evidence": [],
+      "unverified": [
+        "최근 1년 세그먼트 값은 연간·반기 공시 값을 더하고 뺀 계산이며 회사가 직접 낸 최근 1년 값이 아니다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (2025) Part II Item 8 Note 2 Revenue 매출원천별 표(Advertising·Other revenue·Family of Apps 행)와 Note 15 Segment and Geographical Information 부문 표(Reality Labs 매출 행)",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-911",
+      "published_at_utc": "2026-01-28T00:00:00Z",
+      "title": "Meta 2025년 4분기 실적 콜 — MTIA 가 광고 검색 엔진과 추론을 돌리고 순위·추천 학습으로 넓힌다",
+      "excerpt": "in Q4 we extended our Andromeda ads retrieval engine so it can now run on Nvidia, AMD, and MTIA. … In Q1, we will extend our MTIA program to support our core … ranking and recommendation training workloads, in addition to the inference workloads it currently runs.",
+      "relevance": "추론: 메타 CFO 는 자체 AI 가속기 MTIA 가 이미 추론 작업을 돌리고 있고 2026년 1분기에는 순위·추천 학습으로 넓힌다고 밝혔다. 칩 층의 자체 사용 근거가 되는 실제 배치 설명이지만 배치 물량은 이 문장에 없다. 뒷문장은 계획이다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 메타 ④ 층별 보유표의 칩 칸을 자체 사용으로 읽는 근거로 쓴다. 외부에 파는 사실은 아니므로 판매 칸의 근거로는 쓰지 않는다.",
+      "horizon": "medium — MTIA 물량이 공시되거나 외부에 팔릴 때까지",
+      "counter_evidence": [],
+      "unverified": [
+        "MTIA 배치 물량·비중 미공시",
+        "1분기 확장은 계획이라 이 발췌의 둘째 문장은 실측이 아니다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 CFO Susan Li 발표 7~8쪽(Andromeda 문장과 MTIA 확장 문장, 쪽 경계에서 문장이 갈려 두 조각으로 옮겼다)",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-010",
+      "published_at_utc": "2026-04-29T00:00:00Z",
+      "title": "Meta 2026년 1분기 실적 콜 — Broadcom 과 만든 자체 칩 1GW 이상과 AMD·NVIDIA 칩을 함께 들인다",
+      "excerpt": "we're rolling out more than 1GW of our own custom silicon that we're developing with Broadcom as well as significant amounts of AMD chips to compliment the new Nvidia systems that we're rolling out as well.",
+      "relevance": "추론: 메타는 Broadcom 과 함께 설계한 자체 칩 1GW 이상을 들이는 중이고 AMD 칩과 NVIDIA 시스템을 함께 들인다고 밝혔다. 칩 층에서는 자체 사용 근거이고, ⑧ 공급 축에서는 칩 공급사가 NVIDIA·AMD·Broadcom 셋으로 나뉜다는 사실이다. 단위는 전력 용량이고 개수가 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 메타 ④ 칩 칸(자체 사용)의 근거와 ⑧ 공급 축의 칩 공급사 구성을 이 문장으로 다시 읽는다.",
+      "horizon": "medium — 배치 물량이 공시될 때까지",
+      "counter_evidence": [],
+      "unverified": [
+        "'rolling out' 이 어느 시점까지 배치된 양인지 밝히지 않았다",
+        "공급사별 금액은 공개되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 CEO Mark Zuckerberg 발표 2쪽 둘째 문단 마지막 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 2026년 2분기 실적 콜 — 자체 칩 개발은 장기 유연성과 공급망 협상력을 위한 투자",
+      "excerpt": "In addition, we have been making strategic investments in areas like our internal custom silicon effort, which will provide long-term strategic flexibility and supply chain leverage.",
+      "relevance": "추론: 메타 CFO 는 자체 칩 개발을 공급망 협상력과 장기 유연성을 위한 전략 투자로 설명한다. 칩 층의 자체 사용 근거를 보강하는 문장이며 출하·배치 수치는 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 메타 칩 층 판단은 2025년 4분기·2026년 1분기 콜의 배치 설명이 근거이고 이 문장은 방향 설명만 더한다.",
+      "horizon": "medium — 자체 칩 매출·배치 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "투자 금액·배치 물량 미공시"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 CFO Susan Li 발표 8쪽 용량 전략 문단 끝",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 2026년 2분기 실적 콜 질의응답 — 컴퓨트를 팔라는 제안은 많지만 직접 팔고 있지는 않다",
+      "excerpt": "we are getting a large number of offers for the compute that we have, but also we have a lot of internal uses that we think are going to be quite valuable. … having confidence that we have the ability to monetize the compute directly when that makes sense",
+      "relevance": "추론: 메타 CEO 는 컴퓨트를 사겠다는 제안을 많이 받는다고 말하면서도 직접 파는 것은 '그럴 때가 오면' 하겠다는 태도다. 클라우드 층(연산 인프라를 빌려주는 사업)에서 메타는 아직 판매 매출이 없고, 같은 콜에서 제3자 용량을 사 온다는 질문도 나왔다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 메타 ④ 클라우드 칸을 남에게 사 오는 쪽(없음)으로 읽는 근거로 쓴다. 외부에 컴퓨트를 팔기 시작했다는 공시나 1차 발표가 나오면 판매 칸 여부를 다시 본다.",
+      "horizon": "short — 다음 분기 실적 콜까지",
+      "counter_evidence": [],
+      "unverified": [
+        "컴퓨트 판매 계약이 체결됐는지는 밝히지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 질의응답 Mark Zuckerberg 답변 15쪽(둘째·셋째 문단)",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 2026년 2분기 실적 콜 CFO 발표 — 구독과 모델 API 를 새 수익원으로 삼고 API 는 출시 초기",
+      "excerpt": "Two additional revenue streams are subscriptions and monetizing our competitive models through an API. … We also recently launched a high intelligence model API at a competitive price and are encouraged by the initial results. … We soon expect to roll out the model API to more distribution channels, make it available in more countries, and open it up for enterprises.",
+      "relevance": "추론: 메타는 모델 API 를 막 출시했고 기업 고객에게 여는 것은 앞으로 할 일이라고 밝혔다. 모델 층(API 토큰 과금·범용 비서 구독)에서 판매가 시작됐다는 사실이지만 매출은 공시되지 않았다. 구독과 API 매출은 기타 매출 안에 들어간다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 메타 ④ 모델 칸을 판매로 읽을지 판단이 이 문장과 가격·구독 근거로 다시 본다. 매출 규모는 없으므로 규모를 근거로 쓰지 않는다.",
+      "horizon": "short — 다음 분기 실적 콜까지",
+      "counter_evidence": [],
+      "unverified": [
+        "API·구독 매출 미공시",
+        "API 의 기업 고객 개방은 예정이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 CFO Susan Li 발표 8쪽 'additional ways to monetize' 문단과 그 아래 두 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 2026년 2분기 실적 콜 — Business Agent 를 주 100만 곳 넘게 쓰고 수익은 구독과 사용량 과금",
+      "excerpt": "We made Meta Business Agents available globally this quarter on WhatsApp and Messenger, and there are already more than 1 million businesses using them to talk to their customers or complete sales every week. … In terms of how we will monetize these, we have a mix of subscriptions, volume-based pricing, and I expect that we're going to evolve more of these products to be like our ad systems where businesses only pay us when we achieve results for them.",
+      "relevance": "추론: 메타의 업무용 AI 비서 Business Agent 는 주 100만 곳 넘는 사업체가 쓰고, 과금은 구독·사용량 방식이라고 밝혔다. 응용 층(특정 일을 끝내 주는 제품)에서 판매가 시작된 정황이지만 유료 비중과 매출은 공시되지 않았다. 과금 방식 설명의 뒷부분은 앞으로의 방향이다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 메타 ④ 응용 칸과 ① AI 수익화 근거에 이 문장을 쓴다. 광고 매출 안의 AI 도구(Advantage+)와 따로 센다.",
+      "horizon": "short — 다음 분기 실적 콜까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Business Agent 유료 사업체 수·매출 미공시",
+        "'only pay us when we achieve results' 는 기대 표현이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 CEO Mark Zuckerberg 발표 3쪽 business agents 문단과 그 아래 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-005",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Meta 2026년 2분기 실적 콜 CFO 발표 — 광고당 가격 상승 12% 의 원인 설명",
+      "excerpt": "The global average price per ad increased 12% year-over-year, driven by ad performance gains, improvements in macro conditions relative to Q2 of last year, and currency tailwinds. This was partially offset by strong impression growth, particularly from lower-monetizing surfaces and regions.",
+      "relevance": "추론: 메타 CFO 는 광고당 가격이 전년보다 12% 올랐다고 하며 원인으로 광고 성과 개선, 지난해 2분기보다 나아진 경기, 환율 효과를 든다. 광고 성과 개선은 같은 콜에서 AI 순위 모델의 효과로 설명되지만 이 문장은 AI 를 이름으로 들지 않는다. 가격 인상을 AI 때문이라고 한 직접 문장은 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 메타 ① AI 수익화 조건(AI 로 채널의 가격·단가를 올렸다는 공시나 1차 발표)을 판정할 때 이 문장과 10-Q 의 설명 문장을 함께 읽는다. 원인이 셋으로 나뉘어 AI 몫은 가르지 못한다.",
+      "horizon": "short — 다음 분기 실적 콜까지",
+      "counter_evidence": [],
+      "unverified": [
+        "광고 성과 개선·경기·환율이 가격 상승에서 차지하는 몫은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 CFO Susan Li 발표 4쪽 광고 노출·가격 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) MD&A 광고당 가격 상승 원인 — 광고 타기팅·측정 도구 개선에 따른 광고 수요 증가",
+      "excerpt": "The increases in average price per ad in the three and six months ended June 30, 2026 were driven by an increase in advertising demand, which we believe is mostly due to ongoing improvements to our ad performance from our ad targeting and measurement tools, and a favorable foreign currency exchange impact.",
+      "relevance": "추론: 메타 10-Q 는 광고당 가격 상승을 광고 수요 증가 때문이라고 하고, 그 수요 증가가 '대부분' 광고 타기팅·측정 도구의 성과 개선에서 온다고 믿는다고 적는다. 광고 타기팅·측정 도구는 AI 순위·예측 모델이라 AI 가 단가를 올렸다는 회사 설명에 가장 가깝지만 문장이 AI 를 이름으로 들지는 않고 믿음 표현이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ① AI 수익화 조건 (나)(AI 로 가격·단가를 올렸다는 공시) 를 이 문장으로 읽을지 판단이 정한다. 환율 효과가 같이 적혀 있어 AI 몫은 가르지 못한다.",
+      "horizon": "short — 다음 분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "'we believe' 표현이라 회사가 인과를 측정해 확정한 값이 아니다",
+        "광고 타기팅·측정 도구가 AI 모델로 구현된다는 점은 이 문장이 아니라 실적 콜 설명에서 나온다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A Results of Operations — Revenue 'Advertising' 문단 다섯째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) Note 9 해지할 수 없는 약정의 연도별 지급과 조건부 클라우드 구매 의무",
+      "excerpt": "These commitments mostly relate to third-party cloud capacity arrangements and investments in servers and network infrastructure, data centers, and consumer hardware products in Reality Labs, with approximately $53.52 billion and $81.65 billion due in 2026 and 2027, respectively. … In addition, as of June 30, 2026, we have contingent obligations to purchase up to $14.72 billion of cloud capacity over a five-year period, which may be reduced if the cloud service provider is able to sell such capacity to other customers.",
+      "relevance": "추론: 해지할 수 없는 약정 $349.31B 중 2026년 몫이 약 $53.52B, 2027년 몫이 약 $81.65B 이고(합 약 $135.17B, 계산) 나머지 약 $214.14B 는 2028년 이후다(계산). 가까운 12~24개월 부담은 최근 1년 매출 $228.25B 의 약 59%다(계산). 조건부 클라우드 구매 의무 최대 $14.72B 는 우발 의무라 ⑧ 약정 합계에서 따로 적는다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ⑧ 약정 축의 지급 기간과 가까운 12~24개월 부담 표시를 이 숫자로 채운다. 조건부 구매 의무는 약정 합계에 넣지 않고 따로 둔다.",
+      "horizon": "short — 다음 분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "2026년 몫이 2026-06-30 이후 잔여분인지 주석이 명시하지 않았다(기준일이 분기 말이라 잔여분으로 읽힌다)",
+        "2028년 이후 연도별 지급 시점은 주석에 없다",
+        "$349.31B 가운데 클라우드 용량과 서버·네트워크·데이터센터 몫의 구분은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 9 Commitments and Contingencies — Leases and Contractual Commitments 둘째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) Note 5 루이지애나 데이터센터 합작 — 잔존가치 보증 약 $28B 와 최대 손실 노출 $46.03B",
+      "excerpt": "In addition, we have provided residual value guarantees (RVG) with an aggregate threshold of approximately $28 billion that decreases over time. … If we decide to terminate or not renew a lease, and if certain other conditions are met, our maximum RVG payment would equal … any shortfall between the fair value at that time and the RVG threshold for that property. … RVG payments are not probable, and therefore no liability has been recorded to date. … our maximum exposure to loss related to the Venture was $46.03 billion and $45.95 billion, respectively",
+      "relevance": "추론: 메타는 지분 20% 를 가진 루이지애나 데이터센터 합작(Venture)에 잔존가치 보증의 기준액 약 $28B 를 제공했다. 메타가 임대를 끝내거나 갱신하지 않고 다른 조건이 맞으면 낼 최대 지급은 그 시점 시장가치가 이 기준액에 모자라는 만큼이고, 회사는 지급 가능성이 낮다고 보아 부채로 잡지 않았다. 합작에 대한 최대 손실 노출 $46.03B 는 지분 장부가, 임대 약정, 앞으로 낼 출자, 보증 기준액을 합친 값이라 약정 합계와 겹친다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 장부 밖 설비 잔존가치 보증 관측(residual_value_guarantee)의 값을 이 기준액으로 채운다. ⑧ 약정 축은 보증을 약정에 넣지 않으므로 보증은 약정 합계에서 따로 적는다. 같은 합작의 임대 약정은 별도 근거에 있다.",
+      "horizon": "medium — 보증 기준액이 줄어드는 시점과 합작 임대 개시(2029)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "보증 기준액이 줄어드는 일정과 연도별 금액은 주석에 없다",
+        "'지급 가능성이 낮다' 는 회사 판단이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 5 Non-Marketable Equity Investments — Equity Method 절 둘째 문단(보증 기준액·최대 지급·지급 가능성, 쪽 경계에서 문장이 갈려 두 조각으로 옮겼다)과 넷째 문단(최대 손실 노출)",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) Note 5 루이지애나 합작 임대 약정 약 $12.31B(2029년 개시)와 개발비 약 $27B 출자 분담",
+      "excerpt": "The parties have committed to fund their respective pro rata share of approximately $27 billion in total estimated development costs. … Our lease agreements with the Venture, which cover the right to use properties on the data center campus, will commence in 2029 and have an aggregate initial lease commitment of approximately $12.31 billion.",
+      "relevance": "추론: 루이지애나 합작의 총 개발비는 약 $27B 이고 출자자가 지분 비율대로 낸다. 메타가 합작과 맺은 임대 약정은 2029년에 개시하며 최초 약정 합계가 약 $12.31B 다. 아직 개시되지 않은 리스에 해당하지만 Note 9 의 미개시 리스 약 $278.99B 에 포함되는지는 주석이 밝히지 않았다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ⑧ 약정 축의 약정 합계에서 이 합작 임대 약정이 이미 미개시 리스에 들어 있는지에 따라 합계가 달라지므로 판단이 겹침 여부를 근거 문장에 적는다. 겹침이 확인되지 않으면 합계에 더하지 않는다.",
+      "horizon": "medium — 합작 임대 개시(2029)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "합작 임대 약정 약 $12.31B 가 Note 9 미개시 리스 약 $278.99B 에 포함되는지 밝히지 않았다",
+        "앞으로 낼 출자 가운데 메타 몫의 금액은 주석에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 5 Non-Marketable Equity Investments — Equity Method 절 첫째 문단 마지막 문장과 둘째 문단 첫 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) Note 13 후속 사건 — 엘패소 데이터센터 합작 독점 협약과 최대 약 $13B 잔존가치 보증 예정",
+      "excerpt": "In July 2026, we entered into an exclusivity agreement to co-develop a data center campus in El Paso, Texas, through a venture in which we would hold a 20% membership interest. The transaction is subject to the execution of definitive agreements and customary closing conditions. … We will also provide residual value guarantees with a maximum aggregate exposure of approximately $13 billion.",
+      "relevance": "추론: 2026-07 에 맺은 엘패소 데이터센터 합작은 독점 협약 단계이고 본계약과 종결 조건이 남아 있다. 종결되면 메타는 최대 약 $13B 의 잔존가치 보증을 새로 제공한다. 기준일(2026-06-30)에는 아직 효력이 없는 예정 보증이므로 약정이 아니라 우발 의무 계획으로 적는다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 종결(2026년 3분기 예상) 공시가 나오면 메타 잔존가치 보증 관측과 ⑧ 약정 축의 예외 처리를 다시 본다. 지금은 보증 관측 값에 넣지 않는다.",
+      "horizon": "short — 종결 예정 2026년 3분기 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "본계약 체결과 종결은 확정되지 않았다",
+        "엘패소 합작의 임대 약정 규모는 이 주석에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 13 Subsequent Event 첫째·둘째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) 위험 요인 — 매출 대부분이 모바일이고 Apple·Google 운영체제에 기댄다",
+      "excerpt": "The substantial majority of our revenue is generated from advertising on mobile devices. … Apple previously released an update to its Safari browser that limits the use of third-party cookies, which reduces our ability to provide the most relevant ads to our users and impacts monetization, and also released changes to iOS that limit our ability to target and measure ads effectively, while expanding their own advertising business.",
+      "relevance": "추론: 메타는 광고 매출 대부분이 모바일에서 나오고 Android·iOS 운영체제의 상호운용성에 기댄다고 적는다. Apple 은 iOS 변경으로 메타의 광고 타기팅·측정을 제한하면서 자기 광고 사업을 키웠다고 적어, 운영체제 공급자가 곧 경쟁자인 관계가 공시에 있다. 매출 감소 크기는 공시되지 않았다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ⑧ 공급 축(OS 공급자와 공급자가 곧 경쟁자라는 위험)을 판정할 때 이 문장을 근거로 읽는다. 과거 영향의 금액이 없어 칸을 정하는 데는 판단이 닿는 범위를 따로 적는다.",
+      "horizon": "medium — 운영체제 정책 변경 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Apple·Google 정책 변경이 매출에 준 영향의 금액은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 'Our user growth, engagement, and monetization on mobile devices depend upon effective operation with mobile operating systems…' 위험 요인 첫 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) 위험 요인 — 기술 인프라 상당 부분을 제3자가 제공하고 자체 데이터센터도 짓는다",
+      "excerpt": "A substantial portion of our technical infrastructure is provided by third parties. … We may not be able to secure sufficient components, equipment, or services from third parties to satisfy our needs, or we may be required to procure such components, equipment, or services on unfavorable terms. … We have designed and built our own data centers and key portions of our technical infrastructure through which we serve our products",
+      "relevance": "추론: 메타는 자체 데이터센터와 기술 인프라의 핵심 부분을 직접 설계·구축하면서 인프라 상당 부분을 제3자에게서 받는다고 적는다. 서버·네트워크 층은 남에게 팔지 않고 자기 서비스를 돌리는 데 쓰는 자체 사용이고, 클라우드 층은 제3자 용량을 사 오는 쪽이다. 서버·네트워크 장비도 외부에서 산다는 사실은 Note 9 약정 설명에 있다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ④ 서버·네트워크 칸(자체 사용)과 클라우드 칸(없음) 판단에 이 문장을 쓴다. ⑧ 공급 축에서는 제3자 의존의 크기를 따로 정한다.",
+      "horizon": "medium — 장비 판매나 클라우드 판매가 공시될 때까지",
+      "counter_evidence": [],
+      "unverified": [
+        "서버·네트워크 장비의 자체 설계 비중은 공시되지 않았다",
+        "제3자 클라우드 공급자 이름은 10-Q 에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 'A substantial portion of our technical infrastructure is provided by third parties' 문단과 'We have experienced, and could experience in the future, difficulties in building and operating key portions of our technical infrastructure' 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) MD&A — 제3자 클라우드 비용과 제3자 AI 토큰 비용이 비용 증가 요인",
+      "excerpt": "The increase in costs and expenses was primarily due to increases in employee compensation, including severance expenses; infrastructure expenses related to our data centers, technical infrastructure, and third-party cloud services; legal-related costs; and third-party AI token costs. … The increases were primarily due to higher third-party AI token costs and severance expenses.",
+      "relevance": "추론: 메타는 제3자 클라우드 서비스 비용과 제3자 AI 토큰 비용이 늘었다고 적어, 남의 클라우드 용량과 남의 모델 사용량을 사서 쓴다는 사실을 공시한다. 모델 층에서는 메타가 자체 모델을 팔면서 동시에 외부 모델 토큰을 산다는 뜻이고, ⑧ 공급 축에서는 모델 공급자가 존재한다는 근거다. 토큰 공급자 이름과 금액은 없다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ⑧ 공급 축에 모델 공급자(제3자 AI 토큰)를 넣을지와 ④ 클라우드 칸(없음) 판단에 이 문장을 쓴다.",
+      "horizon": "short — 다음 분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "제3자 AI 토큰 공급자와 금액은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A — Executive Overview 둘째 문단과 Marketing and sales 비용 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) 위험 요인 — 중국 광고주를 상대하는 소수 대리점에서 의미 있는 매출",
+      "excerpt": "we generate meaningful revenue from a small number of resellers serving advertisers based in China, and it is possible that the Chinese, United States, or other government could take action that reduces or eliminates our China-based advertising revenue",
+      "relevance": "추론: 메타는 중국 광고주를 상대하는 소수 대리점에서 의미 있는 매출을 얻고, 중국·미국 등 정부 조치로 이 매출이 줄거나 없어질 수 있다고 적는다. 한 나라 정부에 걸린 위험의 공시된 근거이지만 비중(%)은 공시되지 않았고, 대만 생산 집중은 이 10-Q 에 언급이 없다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ⑧ 지정학 축(한 나라나 정부에 걸린 위험)을 정할 때 이 문장을 근거로 읽는다. 비중이 없어 칸을 정하는 데는 판단이 닿는 범위를 따로 적는다.",
+      "horizon": "medium — 중국 광고 매출 비중이 공시될 때까지",
+      "counter_evidence": [],
+      "unverified": [
+        "중국 기반 광고 매출의 비중과 금액은 공시되지 않았다",
+        "10-K·10-Q 위험 요인에 대만·TSMC 언급은 없다(검색 범위: 두 문서 전체)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 정부가 서비스·광고 판매를 막을 수 있다는 위험 요인 둘째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026003942",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Meta 10-K (2025) 위험 요인 — 소비자 기기 제조가 아시아 단일 지역의 소수 제3자에 기댄다",
+      "excerpt": "The manufacturing of our consumer hardware products depends on a small number of third parties, often with significant operations in a single region such as Asia.",
+      "relevance": "추론: 메타는 소비자 기기(Reality Labs) 제조가 아시아 단일 지역의 소수 제3자에 기댄다고 적는다. Reality Labs 는 2025년 매출의 약 1.1%($2,207M ÷ $200,966M, 계산)라 매출이 걸린 지정학 위험의 크기는 작고, AI 칩 제조 의존은 이 문서에 쓰여 있지 않다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 메타 ⑧ 지정학 축은 이 문장으로 단독 판정하지 않고 중국 대리점 문장과 함께 읽는다. 기기 제조 의존은 매출 비중이 작아 칸을 바꾸는 근거가 되기 어렵다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "AI 칩 제조(TSMC 등) 의존에 관한 10-K 문장은 없다(검색 범위: 문서 전체에서 Taiwan·TSMC·NVIDIA 검색)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (2025) Part I Item 1A Risk Factors — 'We rely on third parties to manufacture and manage the logistics of transporting and distributing our consumer hardware products…' 위험 요인 둘째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "published_at_utc": "2026-07-30T00:00:00Z",
+      "title": "Meta 10-Q (2026-06-30) MD&A 기타 매출 구성 — WhatsApp 유료 메시징·구독",
+      "excerpt": "Other revenue. Other revenue consists of revenue from paid messaging from WhatsApp, subscriptions, and revenue from various other sources. … FoA other revenue in the three and six months ended June 30, 2026 increased $424 million, or 73%, and $798 million, or 73%, respectively, compared to the same periods in 2025. The increases were primarily driven by paid messaging from WhatsApp and subscriptions.",
+      "relevance": "추론: 메타의 기타 매출(2026년 2분기 $1,007M)은 WhatsApp 유료 메시징과 구독이 중심이며 AI 구독·API 매출을 따로 밝히지 않는다. WhatsApp 유료 메시징은 기업이 메시지 단위로 돈을 내는 사업용 플랫폼이라, 소프트웨어 플랫폼 층으로 읽을지는 판단이 정한다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 메타 ④ 소프트웨어 플랫폼 칸과 모델 칸의 매출 근거로 읽을 때 이 구성 설명을 쓴다. AI 구독과 API 매출을 떼는 공시는 없다.",
+      "horizon": "short — 다음 분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "기타 매출 안의 AI 구독·API 몫은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A — Components of Results of Operations 'Other revenue' 문단과 Results of Operations 'Other revenue' 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-911",
+      "published_at_utc": "2026-01-28T00:00:00Z",
+      "title": "Meta 2025년 4분기 실적 콜 — WhatsApp 유료 메시징 연환산 매출 $20억 돌파",
+      "excerpt": "Paid messaging within WhatsApp continues to scale as well, crossing a $2 billion annual run-rate in Q4.",
+      "relevance": "추론: 메타 CFO 는 WhatsApp 유료 메시징이 2025년 4분기에 연환산 $20억을 넘었다고 밝혔다. 연환산 값은 실측 매출이 아니라 런레이트다. 소프트웨어 플랫폼 층 근거로 읽을지는 판단 몫이며 AI 상품이라고 밝힌 사업은 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 메타 ④ 판단은 기타 매출 구성 설명을 근거로 쓰고 이 런레이트는 규모 참고로만 둔다.",
+      "horizon": "short — 다음 분기 실적 콜까지",
+      "counter_evidence": [],
+      "unverified": [
+        "런레이트라 회계 기간 매출이 아니다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "실적 콜 녹취록 CFO Susan Li 발표 7쪽 Other revenue 문단 둘째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-meta-000162828026003942",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Meta 10-K (2025) Item 1 — Llama 등 AI 모델·도구를 오픈소스로 공개해 왔고 일부는 닫는다",
+      "excerpt": "We have a history of open-sourcing in AI, including releasing our Llama foundation models as well as other models and tools, and continue to believe in the power of open source innovation. … We have not released everything we have developed historically and expect to continue training a combination of open and closed models going forward.",
+      "relevance": "추론: 메타는 Llama 같은 모델과 도구를 오픈소스로 공개해 왔고 앞으로는 열린 모델과 닫힌 모델을 함께 학습한다고 적는다. 공개한 소프트웨어에서 매출을 얻는다는 공시는 없어, 소프트웨어 플랫폼 층(개발자가 그 위에서 만드는 소프트웨어 층)에서 판매 근거로 읽히지 않는다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 메타 ④ 소프트웨어 플랫폼 칸은 판매 매출 공시가 나오기 전까지 이 문장을 판매 근거로 쓰지 않는다.",
+      "horizon": "medium — 플랫폼 매출 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "오픈소스 공개 자산의 외부 사용량·간접 수익은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (2025) Part I Item 1 Business — Technology 절 셋째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000119312526389274",
+      "published_at_utc": "2026-09-11T00:00:00Z",
+      "title": "Oracle 10-Q (2026-08-31) MD&A 하드웨어 사업 — Engineered Systems·서버·스토리지 판매와 최근 1년 매출 4%",
+      "excerpt": "Our hardware business, which represented 4% of our total revenues on a trailing four-quarter basis, provides a broad selection of enterprise hardware products and hardware-related software products including Oracle Engineered Systems, servers, storage, industry-specific hardware offerings, operating systems, virtualization, management and other hardware-related software and related hardware support.",
+      "relevance": "추론: 오라클은 하드웨어 사업(최근 4분기 매출의 4%)으로 Oracle Engineered Systems·서버·스토리지를 남에게 판다고 공시한다. 서버·네트워크 층(칩을 묶는 시스템·네트워크 장비)의 판매 근거에 가깝지만 이 제품이 AI 연산용인지 일반 기업용인지는 공시가 가르지 않는다. 하드웨어 매출은 2027 회계연도 1분기 $774M 이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 오라클 ④ 서버·네트워크 칸을 판매로 읽을지 판단이 이 문장으로 다시 본다. AI 전용 장비 매출이 아니라는 점을 근거 문장에 적는다.",
+      "horizon": "short — 2027 회계연도 2분기 10-Q(2026-12)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "하드웨어 매출 가운데 AI 연산용 서버·네트워크 몫은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-08-31) Part I Item 2 MD&A — Business Overview 'Hardware Business' 절 첫 문단 첫 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000119312526389274",
+      "published_at_utc": "2026-09-11T00:00:00Z",
+      "title": "Oracle 10-Q (2026-08-31) Note 9 사업별 매출 — 클라우드·소프트웨어, 하드웨어, 서비스",
+      "excerpt": "We have three businesses: (1) cloud and software, (2) hardware and (3) services—each of which is comprised of a single operating segment. … Three Months Ended August 31, (in millions) 2026 2025 Cloud and software: Revenues $ 17,157 $ 12,907 … Hardware: Revenues $ 774 $ 670 … Services: Revenues $ 1,414 $ 1,349 … Totals: Revenues $ 19,345 $ 14,926",
+      "relevance": "추론: 오라클은 클라우드·소프트웨어, 하드웨어, 서비스 세 사업을 세그먼트로 공시한다. 2027 회계연도 1분기 매출은 $19,345M 이고 클라우드·소프트웨어가 약 89%(17,157 ÷ 19,345, 계산)다. 최근 1년(2025-09~2026-08) 사업별 매출은 연간 값에 올해 1분기를 더하고 전년 1분기를 빼서 구하면 클라우드·소프트웨어 62,780, 하드웨어 3,188, 서비스 5,808 이고 합 71,776 은 관측 revenue_ttm 과 같다(계산).",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 오라클 ④ 다각화 축(AI 와 무관한 최종 수요에서 나오는 매출 몫)과 주 레이어(판매 칸 가운데 외부 매출이 가장 큰 층)를 이 세그먼트 매출에서 다시 계산한다. 클라우드·소프트웨어 안에서 AI 수요와 무관한 몫을 가르는 공시는 없다.",
+      "horizon": "short — 2027 회계연도 2분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "클라우드·소프트웨어 안에서 AI 수요 매출을 따로 떼는 공시는 없다",
+        "최근 1년 사업별 값은 연간·분기 공시 값을 더하고 뺀 계산이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-08-31) Part I Item 1 Note 9 Segment Information — 사업별 요약 표(Cloud and software·Hardware·Services·Totals 매출 행)",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-ORCL-10K-FY2026",
+      "published_at_utc": "2026-06-22T00:00:00Z",
+      "title": "Oracle 10-K (FY2026) Note 13 사업별 매출 — 클라우드·소프트웨어 $58,530M, 하드웨어 $3,084M, 서비스 $5,743M",
+      "excerpt": "The following table presents summary results for each of our three businesses for each of fiscal 2026, 2025 and 2024: … Year Ended May 31, (in millions) 2026 2025 2024 Cloud and software: Revenues $ 58,530 $ 49,230 $ 44,464 … Hardware: Revenues $ 3,084 $ 2,936 $ 3,066 … Services: Revenues $ 5,743 $ 5,233 $ 5,431",
+      "relevance": "추론: 2026 회계연도(2026-05-31 종료) 매출 $67,357M 의 87%가 클라우드·소프트웨어, 5%가 하드웨어, 9%가 서비스다(계산). 연간 값은 최근 1년 사업별 매출을 구하는 기준 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 오라클 ④ 판단의 사업별 매출 입력은 10-Q 사업별 표와 이 연간 표를 함께 쓴다. 이 근거만으로 칸 값을 바꾸지 않는다.",
+      "horizon": "medium — 2027 회계연도 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "사업별 매출 안에서 AI 관련 몫은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (FY2026) Item 8 Note 13 Segment Information — 사업별 요약 표(Cloud and software·Hardware·Services 매출 행)",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-oracle-000119312526387905",
+      "published_at_utc": "2026-09-10T00:00:00Z",
+      "title": "Oracle 8-K (2026-09-10) 2027 회계연도 1분기 — 데이터센터 850MW 추가 가동과 AI 클라우드 고객에게 GPU 30만 개 넘게 인도",
+      "excerpt": "Total quarterly revenues increased 30% to $19.3 billion, reflecting strong execution in our infrastructure business, with the delivery of 850MW additional datacenter capacity. … Since the end of Q4, Oracle also delivered more than 300,000 GPUs to its AI Cloud customers and almost triple the capacity delivered in Q4 FY26.",
+      "relevance": "추론: 오라클은 2027 회계연도 1분기에 데이터센터 용량 850MW 를 더 가동했고 4분기 말 이후 AI 클라우드 고객에게 GPU 30만 개 넘게를 인도했다고 밝혔다. 클라우드 층(연산 인프라를 빌려주는 사업)이 매출을 내는 판매 칸이라는 실제 배치·인도 근거다. 인도라는 표현이 임대 시작을 뜻하는지 장비 이전을 뜻하는지는 문장에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 오라클 ④ 클라우드 칸의 판매 근거를 이 인도 문장과 클라우드 인프라 매출(분기 $7.39B)로 다시 읽는다.",
+      "horizon": "short — 2027 회계연도 2분기 실적 발표(2026-12)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "인도한 GPU 의 공급사와 고객별 배분은 밝히지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "8-K Exhibit 99.1 (2026-09-10) 보도자료 본문 첫째 문단 둘째 문장과 'Remaining Performance Obligations' 절 셋째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-oracle-000119312526387905",
+      "published_at_utc": "2026-09-10T00:00:00Z",
+      "title": "Oracle 8-K (2026-09-10) 매출 보충 표 — 소프트웨어 라이선스·지원, 하드웨어, 서비스 분기 매출",
+      "excerpt": "Software license 766 939 1,150 1,881 4,737 655 655 … Software support 4,955 4,938 4,969 4,943 19,804 4,895 4,895 … Software 5,721 5,877 6,119 6,824 24,541 5,550 5,550 … Hardware 670 776 714 924 3,084 774 774 … Services 1,349 1,428 1,443 1,523 5,743 1,414 1,414",
+      "relevance": "추론: 2027 회계연도 1분기 오라클 소프트웨어 매출은 $5,550M(라이선스 $655M, 지원 $4,895M)이고 클라우드 $11,607M, 하드웨어 $774M, 서비스 $1,414M 를 더하면 $19,345M 다(계산). 소프트웨어 매출은 Oracle Database·미들웨어·Java·애플리케이션 라이선스와 지원을 합친 값이라 데이터베이스(플랫폼)와 애플리케이션 몫으로 나뉘어 공시되지 않는다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 오라클 ④ 소프트웨어 플랫폼 칸과 응용 칸의 판매 매출 근거, 주 레이어 판단의 입력으로 이 표를 쓴다. 두 층의 몫을 가르는 공시가 없다는 점을 근거 문장에 적는다.",
+      "horizon": "short — 2027 회계연도 2분기 실적 발표까지",
+      "counter_evidence": [],
+      "unverified": [
+        "소프트웨어 매출을 데이터베이스·미들웨어(플랫폼)와 애플리케이션으로 가르는 공시는 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "8-K Exhibit 99.1 (2026-09-10) Supplemental Analysis of GAAP Revenues 표 — Software license·Software support·Software·Hardware·Services 행(분기·연간·2027 회계연도 1분기 열)",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000119312526389274",
+      "published_at_utc": "2026-09-11T00:00:00Z",
+      "title": "Oracle 10-Q (2026-08-31) MD&A 클라우드·소프트웨어 사업 — 최근 4분기 매출의 88%, Database·Middleware·Java·Applications 라이선스",
+      "excerpt": "Our cloud and software business, which represented 88% of our total revenues on a trailing four-quarter basis, markets, sells and delivers a broad spectrum of enterprise applications and infrastructure technologies through our cloud and software offerings. … software license revenues, which are generated from licensing our software products, including Oracle Applications, Oracle Database, Oracle Middleware and Java, among others, for deployment by our customers in cloud-based, on-premise or other IT environments",
+      "relevance": "추론: 오라클은 Oracle Database·Middleware·Java 와 애플리케이션을 라이선스로 팔고 지원 계약으로 해마다 갱신받는다고 공시한다. 소프트웨어 플랫폼 층(개발자가 그 위에서 소프트웨어를 만드는 층)의 판매 근거로 읽히는 문장이며 이 사업이 최근 4분기 매출의 88%를 차지하는 클라우드·소프트웨어 사업 안에 있다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 오라클 ④ 소프트웨어 플랫폼 칸을 판매로 읽는 근거로 쓴다. 클라우드 매출과 겹치지 않게 소프트웨어 라이선스와 지원 매출만 이 층의 매출로 센다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Database·Middleware·Java 라이선스를 애플리케이션 라이선스와 떼는 매출은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-08-31) Part I Item 2 MD&A — Business Overview 'Cloud and Software Business' 절 첫 문단과 'Software revenues' 글머리표",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-oracle-915",
+      "published_at_utc": "2026-03-24T00:00:00Z",
+      "title": "Oracle OCI Enterprise AI 안내 — 외부 모델에 대한 관리형 접근을 제공한다",
+      "excerpt": "Oracle Cloud Infrastructure (OCI) Enterprise AI helps developers build and deploy production-ready agents across data sources. Build agentic workflows with open standards and open source frameworks, plus managed access to leading models with zero data retention endpoints. … January 21, 2026 OCI Generative AI adds X.ai Grok 4.1 Fast model … January 21, 2026 OCI Generative AI adds Cohere Command A Vision and Command A Reasoning models … December 15, 2025 OCI Generative AI Introduces gpt-oss models and Model Import for greater flexibility",
+      "relevance": "추론: 오라클은 자체 모델을 내놓지 않고 xAI Grok·Cohere Command·OpenAI gpt-oss 같은 외부 모델에 대한 관리형 접근을 OCI 서비스로 제공한다. 모델 층(모델 사용 자체에 돈을 받는 것)에서 오라클이 파는 것은 남의 모델을 돌려 주는 호스팅이며 자체 모델의 토큰 과금이 아니다. 이 서비스의 매출은 공시되지 않았다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 오라클 ④ 모델 칸을 남에게서 사 온 모델을 호스팅하는 것으로 읽을지 판단이 이 페이지 문구와 10-K 의 모델 선택 문장으로 정한다. 호스팅 매출은 클라우드 인프라 매출에 들어 있다.",
+      "horizon": "short — 다음 분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "페이지 문구의 게시일은 표시되지 않는다. 같은 페이지에서 날짜가 있는 가장 최근 항목(OCI Enterprise AI 정식 출시 글 2026-03-24)을 게시 시각으로 적었다",
+        "호스팅 모델의 과금 방식과 매출은 확인하지 못했다(가격 페이지는 스크립트로 그려져 열리지 않았다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "oracle.com 'OCI Enterprise AI' 제품 페이지 첫 소개 문단과 'Featured Generative AI blogs' 목록 첫 세 항목(열람일 2026-10-12)",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-oracle-911",
+      "published_at_utc": "2025-10-16T00:00:00Z",
+      "title": "Oracle AI Database 26ai 발표 — 고급 AI 기능은 추가 요금 없이 포함",
+      "excerpt": "Oracle AI Database 26ai is a long-term support release that replaces Oracle Database 23ai. … Advanced AI features, including Oracle AI Vector Search and many more, are included at no additional charge, and a free tier is available.",
+      "relevance": "추론: 오라클은 Oracle AI Database 26ai 의 고급 AI 기능(AI Vector Search 포함)을 추가 요금 없이 포함한다고 밝혔다. 오라클 ① 의 가장 강한 채널인 업무용 데이터베이스에서 AI 에 따로 돈을 받지 않는다는 회사 1차 발표이므로 AI 수익화 조건 (가)(채널 고객·매출 과반이 AI 에 따로 돈을 낸다)를 세우는 근거가 아니라 세우지 못하는 근거다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 오라클 ① AI 수익화(가장 강한 채널 안에서 AI 가 수익화되는가) 판정에서 데이터베이스 채널의 AI 기능이 무료 포함이라는 이 문장을 '예' 를 막는 근거로 읽는다. 데이터베이스 안의 AI 매출을 따로 공시하는 문장이 나오면 다시 본다.",
+      "horizon": "medium — AI 기능 과금 변경 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "이 발표 이후 AI 기능 과금이 바뀌었는지는 확인하지 못했다(검색 범위: 오라클 10-K·10-Q·8-K 와 oracle.com 뉴스룸)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "oracle.com 'Oracle unveils next-generation AI Database 26ai' 발표문(Jeff Erickson, 2025-10-16) 본문 중 26ai 설명 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-oracle-912",
+      "published_at_utc": "2025-10-15T00:00:00Z",
+      "title": "Oracle Fusion Applications 새 AI 에이전트 발표 — 추가 비용 없이 통합",
+      "excerpt": "Running on Oracle Cloud Infrastructure, Oracle AI agents are prebuilt with advanced security and natively integrated within Oracle Fusion Applications at no additional cost.",
+      "relevance": "추론: 오라클은 Fusion 애플리케이션의 AI 에이전트를 추가 비용 없이 통합한다고 발표했다. 응용 층(업무용 소프트웨어)의 AI 기능이 별도 과금이 아니라 기존 구독에 포함된다는 회사 1차 발표라서, 응용 칸의 AI 판매 근거로 읽기 어렵고 ① AI 수익화 조건 (가)를 세우지 못한다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 오라클 ① AI 수익화와 ④ 응용 칸 판단에서 이 문장을 AI 에 따로 돈을 받지 않는다는 근거로 읽는다. 응용 매출은 AI 와 무관하게 이미 판매 칸이라 응용 칸 판단은 이 문장으로 바뀌지 않을 수 있다.",
+      "horizon": "medium — AI 에이전트 과금 정책 변경 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "이 발표 이후 과금 정책 변경 여부는 확인하지 못했다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "oracle.com 보도자료 'Oracle Advances Enterprise AI with New Agents Across Fusion Applications'(Oracle AI World, 2025-10-15) 본문 둘째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F8",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-oracle-913",
+      "published_at_utc": "2025-10-14T00:00:00Z",
+      "title": "Oracle·AMD 협력 확대 발표 — AMD MI300X·MI355X 인스턴스를 고객에게 제공하고 MI450 5만 개 배치를 예고",
+      "excerpt": "Oracle Cloud Infrastructure (OCI) will be a launch partner for the first publicly available AI supercluster powered by AMD Instinct™ MI450 Series GPUs—with an initial deployment of 50,000 GPUs starting in calendar Q3 2026 and expanding in 2027 and beyond. … beginning with the launch of AMD Instinct MI300X powered shapes in 2024 and extending to the general availability of OCI Compute with AMD Instinct MI355X GPUs.",
+      "relevance": "추론: 오라클은 2024년부터 AMD Instinct MI300X 기반 인스턴스를 고객에게 제공했고 MI355X 인스턴스를 정식 출시했으며, 2026년 3분기부터 MI450 5만 개를 배치할 계획이다. ⑧ 공급 축(칩 공급사)에서 오라클의 GPU 공급사에 NVIDIA 말고 AMD 가 있다는 회사 1차 근거이지만 MI450 배치는 아직 계획이다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 오라클 ⑧ 공급 축의 칩 공급사 구성을 이 발표와 NVIDIA 발표로 다시 읽는다. MI450 배치 사실은 가동 공시가 나올 때까지 계획으로만 둔다.",
+      "horizon": "short — MI450 배치 공시(2026년 3분기 이후)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "MI450 배치가 실제로 시작됐는지는 확인하지 못했다",
+        "AMD 칩 구매 금액과 약정은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "oracle.com 보도자료 'Oracle and AMD Expand Partnership to Help Customers Achieve Next-Generation AI Scale'(2025-10-14) 첫째·둘째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F8",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-oracle-914",
+      "published_at_utc": "2025-10-14T00:00:00Z",
+      "title": "Oracle OCI Zettascale10 발표 — NVIDIA GPU 수십만 개를 잇는 클러스터와 자체 Acceleron 네트워킹",
+      "excerpt": "OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers to form multi-gigawatt clusters that deliver up to an unprecedented 16 zettaFLOPS of peak performance. … Built on next-generation Oracle Acceleron RoCE networking architecture, OCI Zettascale10 is powered by NVIDIA AI infrastructure … OCI is now taking orders for OCI Zettascale10, which will be available in the second half of next calendar year, with up to 800,000 NVIDIA AI infrastructure GPU platforms.",
+      "relevance": "추론: 오라클의 대규모 AI 클러스터는 NVIDIA GPU 를 쓰고 네트워킹은 오라클이 자체 설계한 Acceleron RoCE 구조다. ⑧ 공급 축에서는 칩 공급사가 NVIDIA 와 AMD 둘이라는 근거이고, 서버·네트워크 층에서는 자체 네트워킹을 클라우드 서비스에 쓰는 자체 사용 정황이다. 800,000 개와 2026년 하반기 제공은 주문 접수 단계의 계획이다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 오라클 ⑧ 공급 축과 ④ 서버·네트워크 칸 판단에서 이 발표를 읽는다. 클러스터 가동 공시 전에는 규모를 계획으로만 쓴다.",
+      "horizon": "short — Zettascale10 제공 개시(2026년 하반기) 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "NVIDIA 와의 구매 약정 규모는 공시되지 않았다",
+        "Acceleron 네트워킹을 외부에 장비로 파는지는 확인하지 못했다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "oracle.com 보도자료 'Oracle Unveils Next-Generation Oracle Cloud Infrastructure Zettascale10 Cluster for AI'(2025-10-14) 첫째 문단과 마지막 제품 제공 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-ORCL-10K-FY2026",
+      "published_at_utc": "2026-06-22T00:00:00Z",
+      "title": "Oracle 10-K (FY2026) 위험 요인 — 하드웨어·클라우드 부품을 단일 공급자에게서만 사는 것이 있고 중국·대만 긴장이 공급망에 영향",
+      "excerpt": "We depend on suppliers to develop, manufacture and deliver on a timely basis the necessary technologies and components for our hardware products that we market and sell to our customers and that we use as a part of our cloud infrastructure to deliver our cloud offerings, and there are some technologies and components that can only be purchased from a single vendor due to price, quality, technology, availability or other business constraints. … political unrest (such as conflicts in the Middle East and the tensions between China and Taiwan)",
+      "relevance": "추론: 오라클은 하드웨어와 클라우드 인프라 부품 중 일부를 단일 공급자에게서만 살 수 있고 중국·대만 긴장 같은 정치 불안이 공급망에 영향을 줄 수 있다고 적는다. ⑧ 공급 축과 지정학 축(대만 생산 집중)의 공시된 근거이지만 공급자 이름과 비중은 공시되지 않았다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 오라클 ⑧ 공급 축(칩·컴퓨트 공급자)과 지정학 축을 정할 때 이 문장을 근거로 읽는다. 대만 생산 집중이 매출에 닿는 크기는 이 문장으로 가르지 못한다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "단일 공급자 부품의 종류·비중은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (FY2026) Item 1A Risk Factors — 'Our cloud offerings and hardware offerings are complex…' 위험 요인 둘째 문장과 셋째 문장 중 정치 불안 구절",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-ORCL-10K-FY2026",
+      "published_at_utc": "2026-06-22T00:00:00Z",
+      "title": "Oracle 10-K (FY2026) 위험 요인 — 수출 통제가 GPU 서비스를 특정 고객에게 제공하는 것을 막을 수 있고 미중 관계 악화 위험",
+      "excerpt": "Evolving restrictions and rules governing access to cloud-based infrastructure or GPU-enabled services by customers in certain jurisdictions, could require additional compliance controls or limit our ability to provide, lease, host or otherwise make available such resources to affected customers. … the potential for worsening trade and economic relations between the U.S. and China, including the imposition of additional tariffs, export controls, sanctions, retaliatory measures or other trade restrictions;",
+      "relevance": "추론: 오라클은 특정 지역 고객이 GPU 서비스를 쓰는 것을 막는 수출 통제가 OCI 판매를 제한할 수 있다고 적는다. 지정학 축(한 나라나 정부에 걸린 위험)의 공시된 근거이지만 영향받는 매출 비중은 공시되지 않았다. 중국 기업 Tencent 가 오라클 칩을 임차했다는 FT 보도는 2차 보도 단계라 이 문장 옆의 사실로만 둔다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 오라클 ⑧ 지정학 축을 정할 때 이 문장을 근거로 읽는다. 영향받는 매출 비중이 없어 칸을 정하는 범위는 판단이 따로 적는다.",
+      "horizon": "medium — 수출 통제 변경 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "영향받는 고객·매출의 크기는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (FY2026) Item 1A Risk Factors — 제재·수출 통제 문단 셋째 문장과 '다른 위험과 과제' 목록 넷째 글머리표",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F8",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-ORCL-10K-FY2026",
+      "published_at_utc": "2026-06-22T00:00:00Z",
+      "title": "Oracle 10-K (FY2026) 위험 요인 — 데이터센터 용량·GPU·전력을 제3자에 기대고 건설 지연이 용량 확보를 늦춘다",
+      "excerpt": "Our data center expansion depends on access to suitable, permitted build sites; reliable and predictable power sources; networking hardware; and server availability, including graphics processing units, memory devices and other critical components. … In addition, we depend on third parties to develop and deliver certain data center capacity and related infrastructure, and their inability to obtain financing, complete construction on schedule or manage construction cost overruns could delay the availability of data center space or increase our costs.",
+      "relevance": "추론: 오라클은 데이터센터 건설과 용량 인도를 제3자에 기대고 서버·GPU·메모리 같은 핵심 부품 확보에도 기댄다고 적는다. 클라우드 층은 오라클이 파는 칸이지만 설비 공급은 남에게 기대는 구조라 ⑧ 공급 축에서 칩·컴퓨트 의존을 0 으로 적을 수 없다는 근거가 된다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 오라클 ⑧ 공급 축 판단에서 데이터센터·GPU 공급 의존을 읽는 근거로 쓴다. 공급이 끊길 때 줄어드는 매출 비중은 공시가 가르지 않는다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "데이터센터 공급자 이름과 구속력 있는 약정 금액은 10-K 에 없다(10-Q 에 미개시 리스 합계만 있다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (FY2026) Item 1A Risk Factors — 'If we are unable to secure data center capacity…' 위험 요인 뒤 두 문단(데이터센터 확장 의존 문단 첫 문장, 다음 문단 'In addition, we depend on third parties…' 첫 문장)",
+      "verified_original": true
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F8",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-oracle-000119312526387905",
+      "published_at_utc": "2026-09-10T00:00:00Z",
+      "title": "Oracle 8-K (2026-09-10) — 1분기에 AI 클라우드 계약 $300억 넘게를 추가로 수주해 RPO $6,640억",
+      "excerpt": "Oracle booked more than $30 billion of additional AI cloud contracts in Q1 increasing its RPO to $664 billion.",
+      "relevance": "추론: 오라클은 2027 회계연도 1분기에 AI 클라우드 계약 $300억 넘게를 더 수주해 RPO(계약으로 확정된 미인식 매출)가 $6,640억이 되었다고 밝힌다. 고객 이름과 고객별 비중은 없다. ⑧ 고객 축은 공개 제출본의 10% 이상 고객이나 회사 1차 발표로만 재므로 이 문장은 규모 정보이고 고객 집중 근거가 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 오라클 ⑧ 고객 축은 고객별 RPO 비중이 공시되거나 회사가 밝힐 때까지 확인되지 않음으로 읽는 근거로 쓴다. RPO 규모는 약정 축과 분리해 읽는다.",
+      "horizon": "short — 다음 분기 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "신규 AI 클라우드 계약의 고객 이름과 고객별 RPO 비중은 밝히지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "8-K Exhibit 99.1 (2026-09-10) 'Remaining Performance Obligations' 절 둘째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) MD&A — 네 플랫폼과 AIP 가 제3자 LLM 에 연결된다",
+      "excerpt": "We have built four principal software platforms, Gotham, Foundry, Apollo, and our Artificial Intelligence Platform (“AIP”). … AIP is our generative AI platform, which provides secure connectivity to third-party-provided large language models (“LLMs”), a development toolchain for building AI-powered agents and automations, an array of AI-enabled end user applications, a broad evaluations framework for governing AI workflows in production, and more.",
+      "relevance": "추론: 팔란티어는 소프트웨어 플랫폼 네 개(Gotham·Foundry·Apollo·AIP)를 팔고 AIP 는 제3자가 제공하는 LLM 에 연결하는 구조라고 밝힌다. 소프트웨어 플랫폼 층은 판매 칸의 근거이고 모델 층은 남에게서 쓰는 쪽(없음)이라는 회사 공시다. AIP 안에 최종 사용자용 응용이 들어 있다고 적어 응용 층과 플랫폼 층의 구분은 판단이 정한다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 팔란티어 ④ 소프트웨어 플랫폼 칸(판매)과 모델 칸(없음) 판단의 근거로 이 문장을 쓴다. 응용 칸을 플랫폼과 따로 셀지는 판단이 정한다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "AIP 매출을 Foundry·Gotham 매출과 떼는 공시는 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 2 MD&A — Overview 첫째 문단 둘째·셋째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) 위험 요인 — AWS·Microsoft Azure 위에서 플랫폼을 호스팅하고 컴퓨터 하드웨어를 사서 쓴다",
+      "excerpt": "We rely on the technology, infrastructure, and software applications, including software-as-a-service offerings, of certain third parties, such as AWS and Microsoft Azure, in order to host or operate some or all of certain key technology platform features or functions of our business … Additionally, we rely on computer hardware purchased in order to deliver our platforms and services.",
+      "relevance": "추론: 팔란티어는 클라우드 서비스(Palantir Cloud)와 AI 기능을 AWS·Microsoft Azure 같은 제3자 인프라에서 호스팅하고 컴퓨터 하드웨어도 사서 쓴다고 적는다. 클라우드 층(연산 인프라를 빌려주는 사업)과 서버·네트워크 층 모두 남에게서 쓰는 쪽(없음)이라는 공시된 근거이고, ⑧ 공급 축에서는 클라우드 공급자가 AWS·Azure 라는 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 팔란티어 ④ 클라우드 칸·서버·네트워크 칸(없음)과 ⑧ 공급 축 판단에서 이 문장을 읽는다. Palantir Cloud 는 호스팅된 소프트웨어 구독이며 연산 인프라를 빌려주는 사업이 아니라는 점을 근거 문장에 적는다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "제3자 클라우드 공급자별 비중은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 'We rely on the technology, infrastructure, and software applications… of certain third parties' 위험 요인 첫 문단 첫째·셋째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) Note 12 부문 정보 — 정부 $990M·상업 $945M(2026년 2분기)",
+      "excerpt": "Three Months Ended June 30, Six Months Ended June 30, 2026 2025 2026 2025 … Government revenue | $990,032 | $552,983 | $1,848,442 | $1,039,946 … Commercial revenue | 945,432 | 450,714 | 1,719,605 | 847,606 … Total revenue | $1,935,464 | 100 | % | $1,003,697 | 100 | % | $3,568,047 | 100 | % | $1,887,552",
+      "relevance": "추론: 팔란티어는 정부와 상업 두 세그먼트로 공시하고 2026년 2분기 정부 매출이 전체의 51%, 상업이 49%다(계산). 두 세그먼트 모두 같은 소프트웨어 플랫폼 구독에서 나오는 매출이라 AI 호황과 무관한 수요를 따로 떼어 낼 세그먼트는 공시되지 않는다. 어느 세그먼트를 AI 무관으로 볼지는 판단 몫이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 팔란티어 ④ 다각화 축(AI 와 무관한 최종 수요에서 나오는 매출 몫) 입력을 이 세그먼트 매출로 다시 계산한다. 정부 세그먼트를 AI 무관 수요로 읽을지 판단이 근거를 달아 정한다.",
+      "horizon": "short — 2026년 3분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "세그먼트 안의 AI 플랫폼(AIP) 매출은 따로 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 12 Segment and Geographic Information — 세그먼트 표(Government revenue·Commercial revenue 행)와 Geographic Information 표(Total revenue 행)",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000011",
+      "published_at_utc": "2026-02-17T00:00:00Z",
+      "title": "Palantir 10-K (2025) Note 13 부문·지역 정보 — 정부 $2,402M·상업 $2,073M, 미국 74%·영국 10%",
+      "excerpt": "Years Ended December 31, 2025 2024 2023 … Government revenue | $2,402,287 | $1,569,605 | $1,222,215 … Commercial revenue | 2,073,159 | 1,295,902 | 1,002,797 … United States | $3,320,043 | 74 | % | $1,900,247 | 66 | % | $1,378,247 | 62 | % … United Kingdom | 427,398 | 10 | % | 304,575 | 11 | % | 235,257 | 11 | %",
+      "relevance": "추론: 2025년 매출 $4,475M 은 정부 $2,402M(54%)과 상업 $2,073M(46%)이고, 미국이 $3,320M(74%), 영국이 $427.4M(10%)다. Guardian 기사가 영국 연 매출을 '£427m'으로 적은 값은 이 10-K 의 영국 매출 $427,398 천 달러와 숫자가 같고, 10-K 의 값은 미국 달러이며 기사의 통화 표기가 맞는지는 확인되지 않았다. 최근 1년(2025-07~2026-06) 세그먼트 값은 연간 값에 2026년 상반기를 더하고 전년 상반기를 빼서 구하면 정부 3,210.8M, 상업 2,945.2M 이고 합 6,155.9M 은 관측 revenue_ttm 과 같다(계산).",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 팔란티어 ④ 다각화 축 입력(세그먼트 최근 1년 매출)과 ⑧ 고객·지정학 축의 영국 정부 비중 계산을 이 값으로 다시 맞춘다. 영국 비중은 10-K 의 미국 달러 값(약 9.6%)으로 계산한다. 영국 매출 가운데 정부 몫은 공시되지 않았다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "영국 매출 가운데 정부 고객 몫은 공시되지 않았다",
+        "최근 1년 세그먼트 값은 연간·반기 공시 값을 더하고 뺀 계산이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (2025) Item 8 Note 13 Segment and Geographic Information — 세그먼트 표(Government revenue·Commercial revenue 행)와 Geographic Information 표(United States·United Kingdom 행)",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) Note 7 — 제3자 클라우드 계약을 개정해 2036년까지 최소 $56억 지출 약정",
+      "excerpt": "In March 2026, the Company amended one of its third-party cloud services agreements. Under the amended agreement, the Company has committed to spend at least $5.6 billion, with annual minimum commitments of $268 million to $979 million, over ten contract years through February 29, 2036, among other things. Any and all previous payment obligations related to such third-party cloud hosting services agreement were terminated concurrently with the signing of this amendment.",
+      "relevance": "추론: 팔란티어는 제3자 클라우드 호스팅 계약을 개정해 2036-02-29 까지 10개 계약 연도에 최소 $5.6B(연 최소 $268M~$979M)를 쓰기로 했고 이전 지급 의무는 개정 때 소멸했다. 최근 1년 매출 $6,156M 의 약 0.91배다(계산). ⑧ 약정 축의 '해지할 수 없거나 고정된 구매 약정' 재료이며 어느 해가 $268M 이고 어느 해가 $979M 인지는 주석에 없다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 팔란티어 ⑧ 약정 축의 약정 합계를 이 최소 지출 약정으로 채우고 지급 기간 10년, 연 최소 부담 표시를 함께 적는다. 미개시 리스는 10-K·10-Q 에서 찾지 못했다.",
+      "horizon": "short — 다음 분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "연도별 최소 금액의 배분은 공시되지 않았다",
+        "계약 상대(클라우드 공급자) 이름은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 7 Commitments and Contingencies — Purchase Commitments 첫 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000011",
+      "published_at_utc": "2026-02-17T00:00:00Z",
+      "title": "Palantir 10-K (2025) Material Cash Requirements — 해지할 수 없는 구매 약정 $1,759M 과 운영리스 $221M",
+      "excerpt": "Payments Due by Period Total Less than 1 year 1-3 years 3-5 years More than 5 years … Noncancelable purchase commitments(1) | $1,758,951 | $132,682 | $515,169 | $411,100 | $700,000 … Operating lease commitments, net of sublease income amounts(2) | 221,098 | 48,293 | 53,090 | 37,754 | 81,961",
+      "relevance": "추론: 2025-12-31 기준 해지할 수 없는 구매 약정은 $1,759M(대부분 클라우드 호스팅), 운영리스 약정은 서브리스 수입을 뺀 $221M 이다. 2026-03 계약 개정으로 구매 약정의 합계와 기간이 바뀌었으므로 이 표의 구매 약정 값은 개정 전이다. 아직 개시되지 않은 리스는 10-K 에서 찾지 못했다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 팔란티어 ⑧ 약정 축은 개정 뒤 10-Q 의 최소 지출 약정을 쓰고 이 표는 개정 전 값과 운영리스 약정 규모를 보는 참고로만 둔다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "아직 개시되지 않은 리스가 있는지는 10-K 본문 검색에서 찾지 못했으나 없다고 밝힌 문장도 찾지 못했다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K (2025) Part II Item 7 MD&A — Material Cash Requirements 표(Noncancelable purchase commitments·Operating lease commitments 행)",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000039",
+      "published_at_utc": "2026-08-03T00:00:00Z",
+      "title": "Palantir 8-K (2026-08-03) 2026년 2분기 — 미국 정부 매출 $809M, 미국 상업 $764M, 계약 체결액 $3.373B",
+      "excerpt": "U.S. revenue grew 115% year-over-year and 23% quarter-over-quarter to $1.573 billion … U.S. commercial revenue grew 149% year-over-year and 28% quarter-over-quarter to $764 million … U.S. government revenue grew 90% year-over-year and 18% quarter-over-quarter to $809 million … Closed total contract value (“TCV”) of $3.373 billion, up 49% year-over-year",
+      "relevance": "추론: 2026년 2분기 미국 정부 매출은 $809M 으로 그 분기 매출 $1,935M 의 약 41.8%(계산)이고 미국 상업은 $764M 이다. ⑧ 고객 축에서 미국 정부는 공시상 한 고객(10% 이상 고객)이 아니라 기관 여럿의 합이다. 같은 값은 10-Q MD&A 에도 있어 둘이 일치한다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 팔란티어 ⑧ 고객 축의 미국 정부 몫 계산(분자 $809M, 분모 $1,935M, 2026년 2분기)에 이 값을 쓴다. 미국 정부 매출의 기관별 분포와 계약 해지 조건은 공시되지 않았다.",
+      "horizon": "short — 2026년 3분기 실적 발표까지",
+      "counter_evidence": [],
+      "unverified": [
+        "미국 정부 매출 $809M 의 기관별 분포는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "8-K Exhibit 99.1 (2026-08-03) 'Q2 2026 Highlights' 첫 글머리표와 두 하위 글머리표, TCV 글머리표",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) 위험 요인 — 미국 연방정부 기관에서 매출 상당 부분을 얻고 미국 정부와의 관계가 해외 영업에 불리할 수 있다",
+      "excerpt": "we have historically derived, and expect to continue to derive, a significant portion of our revenue from sales to agencies of the U.S. federal government, either directly by us or through other government contractors. Our perceived relationship with the U.S. government could adversely affect our business prospects in certain non-U.S. geographies or with certain non-U.S. governments.",
+      "relevance": "추론: 팔란티어는 미국 연방정부 기관에서 매출의 상당 부분을 얻고, 미국 정부와의 관계가 일부 해외 지역·정부와의 영업에 불리하게 작용할 수 있다고 적는다. ⑧ 고객 축의 한 정부 집중과 지정학 축을 함께 읽는 공시 근거이며 비중(%)은 이 문장에 없다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 팔란티어 ⑧ 고객 축(미국 정부)과 지정학 축(한 정부에 걸린 위험)의 판정에서 이 문장을 근거로 읽는다. 해지 조건은 별도 근거로 본다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "해외 정부 영업에 미친 실제 영향의 크기는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 'We derive a significant portion of our revenue from contracts with federal, state, local, and foreign governments…' 위험 요인 첫 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F1",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) Note 3 — RPO $49억과 12개월 미만 통지로 해지할 수 있는 고객 계약",
+      "excerpt": "The Company’s remaining performance obligations were $4.9 billion as of June 30, 2026, of which the Company expects to recognize approximately 43% as revenue over the next 12 months, 36% as revenue over the subsequent 13 to 36 months, and the remainder thereafter. … the Company allows many of its customers to terminate contracts for convenience prior to the end of the stated term with less than twelve months’ notice.",
+      "relevance": "추론: 팔란티어 RPO 는 $4.9B 로 최근 1년 매출 $6.16B 보다 작고, 고객 다수가 12개월 미만 통지로 계약을 해지할 수 있다고 적는다. ① 전환비용(바꾸는 데 드는 비용·시간)은 계약 기간 동안만 묶인다는 쪽 근거이고, ⑧ 고객 축에서는 미국 정부 매출이 계약 해지에 열려 있다는 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 팔란티어 ① 전환비용 판정과 ⑧ 고객 축의 해지 위험 표현에 이 문장을 쓴다. RPO 규모는 약정이 아니라 매출 가시성이므로 ⑧ 약정 축에 넣지 않는다.",
+      "horizon": "short — 다음 분기 10-Q 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "해지가 실제로 일어난 계약 금액은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 3 Contract Liabilities and Remaining Performance Obligations — Remaining Performance Obligations 첫째·둘째 문단",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) 위험 요인 — AIP 같은 새 제품의 가격 구조를 정하는 데 어려움이 있을 수 있다",
+      "excerpt": "Similarly, as we introduce new platforms, products, and services, such as our Artificial Intelligence Platform (“AIP”), or as a result of the evolution of our existing platforms, products, and services, we may have difficulty determining the appropriate price structure for our products and services, or customers may request or demand different pricing structures.",
+      "relevance": "추론: 팔란티어는 AIP 같은 새 제품의 적정 가격 구조를 정하기 어려울 수 있다고 적을 뿐 AIP 가격을 올렸다는 공시나 AIP 에만 따로 돈을 내는 고객·매출 몫을 밝히지 않는다. ① AI 수익화 조건 (나)(AI 로 채널 가격·단가를 올렸다는 공시)를 세우는 근거가 아니다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 팔란티어 ① AI 수익화는 AI 에 따로 돈을 내는 몫과 가격 인상 근거가 공시되기 전까지 이 문장을 조건 충족 근거로 쓰지 않는다.",
+      "horizon": "medium — AIP 매출·가격 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "AIP 에 귀속되는 매출·고객 수는 공시되지 않았다(검색 범위: 10-K·10-Q·2026년 1·2분기 8-K 보도자료)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 'Our pricing structures for our platforms and services change from time to time…' 위험 요인 첫 문단 둘째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) 위험 요인 — 외국 정부의 현지 계약 요구와 투자 심사가 판매를 막을 수 있다",
+      "excerpt": "foreign governments may take administrative, legislative, or regulatory action that could materially interfere with our ability to sell our platforms in certain countries. … both the U.S. government and foreign governments may regulate the acquisition of or import of our technologies or our entry into certain foreign markets or partnership with foreign third parties through investment screening or other regulations.",
+      "relevance": "추론: 팔란티어는 외국 정부가 현지 계약 비율 요구나 투자 심사로 판매를 막을 수 있다고 적는다. 한 나라 정부에 걸린 위험의 공시이며 영국이 2025년 매출의 10%(10-K)라는 사실 외에 어느 나라 매출이 걸렸는지 크기는 없다. 한 지역에 생산이 몰린 사업은 아니다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 팔란티어 ⑧ 지정학 축은 미국·영국 정부 매출 비중에 대한 별도 근거와 함께 읽고 이 문장 하나로 칸을 정하지 않는다.",
+      "horizon": "medium — 다음 10-K 까지",
+      "counter_evidence": [],
+      "unverified": [
+        "영향받는 국가별 매출은 영국 10%(2025년) 외에는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q (2026-06-30) Part II Item 1A Risk Factors — 국제 영업 위험 요인 목록 다음 문단 첫째·셋째 문장",
+      "verified_original": true
+    }
+  ],
+  "observations": [
+    {
+      "company_id": "meta",
+      "metric": "residual_value_guarantee",
+      "value": 28000000000,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-EDGAR-000162828026050705",
+      "status": "verified",
+      "observation_id": "meta.residual_value_guarantee.2026-06-30.v21",
+      "raw": "In addition, we have provided residual value guarantees (RVG) with an aggregate threshold of approximately $28 billion that decreases over time. … RVG payments are not probable, and therefore no liability has been recorded to date.",
+      "note": "루이지애나 데이터센터 합작(Venture, 메타 지분 20%, 총 개발비 약 $27B)에 제공한 잔존가치 보증의 기준액(약 $28B, 시간이 지나면 줄어든다). 메타가 임대를 끝내거나 갱신하지 않을 때 조건이 맞으면 낼 최대 지급은 그 시점 시장가치가 이 기준액에 모자라는 만큼이다. 10-Q (2026-06-30) Note 5 Non-Marketable Equity Investments. 합작에 대한 최대 손실 노출 $46.03B 는 지분 장부가·임대 약정·앞으로의 출자·보증 기준액을 합친 값이라 보증 값으로 쓰지 않았다. 2026-07 에 협약한 엘패소 합작의 보증 최대 약 $13B 는 기준일에 효력이 없는 예정 보증이라 넣지 않았다",
+      "basis": {
+        "measure": "rvg_aggregate_threshold",
+        "location": "10-Q (2026-06-30) Note 5 Non-Marketable Equity Investments — Equity Method",
+        "components": [
+          {
+            "item": "루이지애나 합작 잔존가치 보증 기준액(RVG aggregate threshold)",
+            "value_usd": 28000000000,
+            "approximate": true,
+            "as_of": "2026-06-30"
+          }
+        ],
+        "not_included": [
+          {
+            "item": "루이지애나 합작 최대 손실 노출(지분 장부가 $2.92B + 합작 임대 약정 약 $12.31B + 앞으로의 출자 + 보증 기준액)",
+            "value_usd": 46030000000,
+            "as_of": "2026-06-30",
+            "reason": "보증 외 항목을 포함하고 임대 약정은 ⑧ 약정 축에 속한다"
+          },
+          {
+            "item": "엘패소 합작 잔존가치 보증 최대 노출(2026-07 독점 협약, 종결 2026년 3분기 예상)",
+            "value_usd": 13000000000,
+            "as_of": "2026-07",
+            "reason": "기준일(2026-06-30) 뒤 후속 사건이고 본계약·종결 전이다"
+          }
+        ],
+        "recorded_liability_usd": 0,
+        "statement": "RVG payments are not probable, and therefore no liability has been recorded to date."
+      }
+    }
+  ],
+  "layer_map": [
+    {
+      "company_id": "meta",
+      "layers": {
+        "chip": {
+          "facts": "자체 AI 가속기 MTIA 를 데이터센터에 배치해 프로덕션 모델과 광고 검색 엔진(Andromeda)의 추론을 돌리고(2024 엔지니어링 블로그, 2025년 4분기 콜), 2026년 1분기에 순위·추천 학습으로 넓힌다고 밝혔고, 2026년 1분기 콜에서 Broadcom 과 만든 자체 칩 1GW 이상을 AMD·NVIDIA 칩과 함께 들이는 중이라고 밝혔다. 남에게 파는 사실과 배치 물량은 공시되지 않았다.",
+          "evidence": [
+            "EV-meta-056",
+            "EV-nvidia-038",
+            "new:Meta 2025년 4분기 실적 콜 — MTIA 가 광고 검색 엔진과 추론을 돌리고 순위·추천 학습으로 넓힌다",
+            "new:Meta 2026년 1분기 실적 콜 — Broadcom 과 만든 자체 칩 1GW 이상과 AMD·NVIDIA 칩을 함께 들인다",
+            "new:Meta 2026년 2분기 실적 콜 — 자체 칩 개발은 장기 유연성과 공급망 협상력을 위한 투자"
+          ]
+        },
+        "server": {
+          "facts": "자체 데이터센터와 기술 인프라의 핵심 부분을 직접 설계·구축해 자기 서비스를 돌리는 데 쓰고, 서버·네트워크 장비는 외부에서도 사서 들이며(Note 9 약정 설명), 남에게 파는 서버·네트워크 장비 매출은 공시에 없다.",
+          "evidence": [
+            "EV-meta-058",
+            "new:Meta 10-Q (2026-06-30) 위험 요인 — 기술 인프라 상당 부분을 제3자가 제공하고 자체 데이터센터도 짓는다"
+          ]
+        },
+        "platform": {
+          "facts": "소프트웨어 플랫폼에서 매출을 얻는다는 공시는 AI 상품으로 밝히지 않은 WhatsApp 유료 메시징(기타 매출 2026년 2분기 $1,007M 에 포함, 2025년 4분기 연환산 $20억 돌파)뿐이다. Llama·PyTorch 같은 소프트웨어는 오픈소스로 공개하고 그 매출은 공시되지 않았다.",
+          "evidence": [
+            "EV-meta-054",
+            "new:Meta 10-Q (2026-06-30) MD&A 기타 매출 구성 — WhatsApp 유료 메시징·구독",
+            "new:Meta 2025년 4분기 실적 콜 — WhatsApp 유료 메시징 연환산 매출 $20억 돌파",
+            "new:Meta 10-K (2025) Item 1 — Llama 등 AI 모델·도구를 오픈소스로 공개해 왔고 일부는 닫는다"
+          ]
+        },
+        "cloud": {
+          "facts": "연산 인프라를 남에게 파는 매출은 없다. 컴퓨트를 사겠다는 제안을 많이 받는다고 밝혔고 직접 파는 것은 '그럴 때가 오면'이라는 태도다. 반대로 해지할 수 없는 약정 $349.31B 대부분이 제3자 클라우드 용량이고, 제3자 클라우드 비용이 늘었다고 10-Q 가 적는다.",
+          "evidence": [
+            "EV-meta-058",
+            "new:Meta 2026년 2분기 실적 콜 질의응답 — 컴퓨트를 팔라는 제안은 많지만 직접 팔고 있지는 않다",
+            "new:Meta 10-Q (2026-06-30) Note 9 해지할 수 없는 약정의 연도별 지급과 조건부 클라우드 구매 의무",
+            "new:Meta 10-Q (2026-06-30) MD&A — 제3자 클라우드 비용과 제3자 AI 토큰 비용이 비용 증가 요인"
+          ]
+        },
+        "model": {
+          "facts": "자체 모델 Muse Spark 의 공개 API(100만 토큰당 입력 $1.25·출력 $4.25)를 출시했고 월 $20·$100 구독을 팔며 Meta One 구독도 출시했다. 매출은 기타 매출 안에 들어가 따로 공시되지 않고 API 의 기업 고객 개방은 앞으로의 일이다. 동시에 제3자 AI 토큰을 사서 쓴다고 10-Q 가 적는다.",
+          "evidence": [
+            "EV-meta-019",
+            "EV-meta-017",
+            "EV-meta-051",
+            "EV-meta-012",
+            "new:Meta 2026년 2분기 실적 콜 CFO 발표 — 구독과 모델 API 를 새 수익원으로 삼고 API 는 출시 초기",
+            "new:Meta 10-Q (2026-06-30) MD&A — 제3자 클라우드 비용과 제3자 AI 토큰 비용이 비용 증가 요인"
+          ]
+        },
+        "app": {
+          "facts": "매출의 대부분이 광고다(2026년 2분기 광고 $59,363M, 총매출 $60,801M). AI 자동화 광고 상품 Advantage+ 의 연환산 매출이 2026년 2분기에 $75B 를 넘었고(런레이트), 사업체 900만 곳이 AI 광고 소재 도구를 쓰며, 업무용 AI 비서 Business Agent 를 주 100만 곳 넘는 사업체가 쓴다. 광고 매출 자체는 2026년 2분기 $59,363M 이다.",
+          "evidence": [
+            "EV-meta-025",
+            "EV-meta-048",
+            "EV-meta-047",
+            "EV-meta-020",
+            "new:Meta 2026년 2분기 실적 콜 — Business Agent 를 주 100만 곳 넘게 쓰고 수익은 구독과 사용량 과금",
+            "new:Meta 10-Q (2026-06-30) Note 12 부문 정보 — Family of Apps·Reality Labs 부문 매출"
+          ]
+        }
+      },
+      "segments": [
+        {
+          "name": "Family of Apps 매출",
+          "revenue": {
+            "usd_millions": 60370
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-EDGAR-000162828026050705 Note 12",
+          "note": "전년 같은 분기 47,146"
+        },
+        {
+          "name": "Family of Apps 광고 매출",
+          "revenue": {
+            "usd_millions": 59363
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-meta-000162828026050596(8-K 99.1) · EV-meta-020",
+          "note": "전년 같은 분기 46,563"
+        },
+        {
+          "name": "Family of Apps 기타 매출(WhatsApp 유료 메시징·구독 등)",
+          "revenue": {
+            "usd_millions": 1007
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "EV-meta-020",
+          "note": "전년 같은 분기 583"
+        },
+        {
+          "name": "Reality Labs 매출",
+          "revenue": {
+            "usd_millions": 431
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-EDGAR-000162828026050705 Note 12",
+          "note": "전년 같은 분기 370"
+        },
+        {
+          "name": "Family of Apps 매출",
+          "revenue": {
+            "usd_millions": 116278
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "SRC-EDGAR-000162828026050705 Note 12",
+          "note": "전년 같은 기간 89,048"
+        },
+        {
+          "name": "Reality Labs 매출",
+          "revenue": {
+            "usd_millions": 833
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "SRC-EDGAR-000162828026050705 Note 12",
+          "note": "전년 같은 기간 782"
+        },
+        {
+          "name": "Family of Apps 매출",
+          "revenue": {
+            "usd_millions": 198759
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "SRC-SEC-meta-000162828026003942 Note 15",
+          "note": "광고 196,175 + 기타 2,584"
+        },
+        {
+          "name": "Reality Labs 매출",
+          "revenue": {
+            "usd_millions": 2207
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "SRC-SEC-meta-000162828026003942 Note 15"
+        },
+        {
+          "name": "최근 1년 Family of Apps 매출(계산)",
+          "revenue": {
+            "usd_millions": 225989
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "연간 198,759 + 올해 상반기 116,278 − 전년 상반기 89,048",
+          "note": "광고 222,607(196,175 + 114,387 − 87,955), 기타 3,382(2,584 + 1,891 − 1,093)"
+        },
+        {
+          "name": "최근 1년 Reality Labs 매출(계산)",
+          "revenue": {
+            "usd_millions": 2258
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "연간 2,207 + 올해 상반기 833 − 전년 상반기 782"
+        },
+        {
+          "name": "최근 1년 전체 매출(계산, 관측 revenue_ttm 과 같다)",
+          "revenue": {
+            "usd_millions": 228247
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "meta.revenue_ttm.SRC-SEC-FACTS-F6"
+        }
+      ],
+      "monetization": {
+        "strongest_channel": "소비자 채널(Family of Apps 광고)",
+        "part_a_numerator_denominator": {
+          "advantage_plus": "Advantage+ 연환산 매출 $75B 초과(2026년 2분기 콜, 런레이트이며 인식 매출 아님) [EV-meta-025]. 같은 분기 광고 매출 $59,363M 의 연환산 $237.5B 에 대한 비율은 약 31.6%이나 분자는 런레이트·분모는 인식 매출 환산이라 같은 기준이 아니다(계산)",
+          "value_optimization": "가치 최적화 제품군 연환산 매출 $20B 초과(2026년 1분기 콜) [EV-meta-047]",
+          "ai_creative_tools": "AI 광고 소재 도구를 쓰는 사업체 900만 곳(2026년 2분기 콜) [EV-meta-048]. 1분기 콜은 광고주 800만 곳 넘게 [EV-meta-047]. 분모인 전체 광고주 수는 '수백만 곳(many millions)'이라고만 밝혀 숫자가 없다 [EV-meta-032]",
+          "subscriptions_and_api": "AI 구독·API 매출은 기타 매출 안에 들어 따로 공시되지 않는다(기타 매출 2026년 2분기 $1,007M, WhatsApp 유료 메시징과 구독이 증가를 주도)",
+          "conclusion_fact": "광고주가 AI 에 따로 돈을 낸다는 공시는 없다. Advantage+ 는 광고 매출 안의 자동화 상품이다"
+        },
+        "part_b_price_increase": {
+          "10Q_2026Q2": "광고당 가격 +12%, '광고 수요 증가(대부분 광고 타기팅·측정 도구의 성과 개선)와 우호적 환율 효과' 때문이라고 믿는다 [new:Meta 10-Q (2026-06-30) MD&A 광고당 가격 상승 원인 — 광고 타기팅·측정 도구 개선에 따른 광고 수요 증가] (2026년 1분기 10-Q 에도 같은 문장 [EV-meta-042])",
+          "call_2026Q2": "CFO: 광고 성과 개선, 지난해보다 나아진 경기, 환율 효과가 원인이고 노출 증가가 일부 상쇄 [new:Meta 2026년 2분기 실적 콜 CFO 발표 — 광고당 가격 상승 12% 의 원인 설명]",
+          "conclusion_fact": "AI 를 이름으로 들어 가격·단가 인상을 설명한 문장은 찾지 못했다. 광고 타기팅·측정 도구 개선(AI 순위 모델이 근거라고 실적 콜이 설명)을 원인으로 든 문장은 있다. 경기·환율과 몫을 가르지 못한다"
+        },
+        "search_scope": "10-K(2025)·10-Q(2026 1·2분기)·8-K 99.1·2025년 4분기~2026년 2분기 실적 콜 녹취록·확정 근거 전체"
+      },
+      "f8": {
+        "customer": {
+          "fact": "10% 이상 고객 없음(2025·2024·2023, 매출·매출채권) [EV-meta-053]. 광고주는 장기 광고 약정이 없다 [EV-meta-034]. 중국 광고주를 상대하는 소수 대리점에서 의미 있는 매출이 있고 정부 조치로 줄 수 있다 [new:Meta 10-Q (2026-06-30) 위험 요인 — 중국 광고주를 상대하는 소수 대리점에서 의미 있는 매출]. 해당 비중은 공시되지 않았다",
+          "grade": "공개 제출본 공시(10-K·10-Q)"
+        },
+        "commitment": {
+          "unstarted_leases_usd_b": 278.99,
+          "unstarted_leases_commence": "2026년 하반기~2036년, 리스 기간 1년 초과~30년",
+          "july_2026_leases_usd_b": 68,
+          "july_2026_leases_commence": "2027~2028년 개시, 리스 기간 18~20년",
+          "noncancelable_commitments_usd_b": 349.31,
+          "due_2026_usd_b": 53.52,
+          "due_2027_usd_b": 81.65,
+          "due_2028_and_later_usd_b_calc": 214.14,
+          "contingent_cloud_purchase_usd_b": 14.72,
+          "contingent_period": "5년, 클라우드 공급자가 용량을 다른 고객에게 팔면 줄어든다",
+          "escrow_restricted_cash_usd_b": 10.8,
+          "escrow_release": "2028~2030년, 기초 구매 의무를 이행한 뒤",
+          "ttm_revenue_usd_b": 228.247,
+          "calc_sum_without_july": "(278.99 + 349.31) ÷ 228.247 = 약 2.75배(계산)",
+          "calc_sum_with_july": "(278.99 + 68 + 349.31) ÷ 228.247 = 약 3.05배(계산)",
+          "near_term_burden_calc": "2026·2027년 약정 지급 합 135.17 ÷ 228.247 = 약 59%(계산, 미개시 리스 개시 시점별 지급은 공시되지 않음)",
+          "evidence": [
+            "EV-meta-058",
+            "EV-meta-059",
+            "new:Meta 10-Q (2026-06-30) Note 9 해지할 수 없는 약정의 연도별 지급과 조건부 클라우드 구매 의무",
+            "new:Meta 10-Q (2026-06-30) Note 5 루이지애나 합작 임대 약정 약 $12.31B(2029년 개시)와 개발비 약 $27B 출자 분담",
+            "new:Meta 10-Q (2026-06-30) Note 5 루이지애나 데이터센터 합작 — 잔존가치 보증 약 $28B 와 최대 손실 노출 $46.03B",
+            "new:Meta 10-Q (2026-06-30) Note 13 후속 사건 — 엘패소 데이터센터 합작 독점 협약과 최대 약 $13B 잔존가치 보증 예정"
+          ],
+          "excluded_contingent_or_guarantee": "조건부 클라우드 구매 의무 최대 $14.72B 와 루이지애나 합작 잔존가치 보증 기준액 약 $28B(관측 residual_value_guarantee), 엘패소 합작 예정 보증 최대 약 $13B 는 약정 합계에서 따로 적었다",
+          "open_question": "루이지애나 합작 임대 약정 약 $12.31B(2029 개시)가 미개시 리스 $278.99B 에 들어 있는지 주석이 밝히지 않았다"
+        },
+        "supply": {
+          "chips": "NVIDIA 시스템·AMD 칩·Broadcom 과 만든 자체 칩을 함께 들인다 [new:Meta 2026년 1분기 실적 콜 — Broadcom 과 만든 자체 칩 1GW 이상과 AMD·NVIDIA 칩을 함께 들인다]. Google TPU 임차 보도(2차) [EV-meta-033, EV-nvidia-028]",
+          "compute": "해지할 수 없는 약정 대부분이 제3자 클라우드 용량 [EV-meta-058]. 공급자 이름은 10-Q 에 없다",
+          "model": "제3자 AI 토큰 비용이 늘었다 [new:Meta 10-Q (2026-06-30) MD&A — 제3자 클라우드 비용과 제3자 AI 토큰 비용이 비용 증가 요인]. 토큰 공급자 이름은 공시에 없다",
+          "os": "광고 매출 대부분이 모바일이고 Android·iOS 상호운용성에 기댄다. Apple 은 iOS 변경으로 메타의 광고 타기팅·측정을 제한하면서 자기 광고 사업을 키웠다고 적는다 [new:Meta 10-Q (2026-06-30) 위험 요인 — 매출 대부분이 모바일이고 Apple·Google 운영체제에 기댄다]",
+          "supplier_is_competitor": "Google(TPU·클라우드·Android·Chrome)과 Apple(iOS·광고)은 공급자이면서 경쟁자다. 공급량·금액 공시는 없다"
+        },
+        "geopolitics": {
+          "fact": "10-K·10-Q 위험 요인에 대만·TSMC 언급은 없다. 한 정부에 걸린 위험으로 공시된 것은 중국 광고 대리점 매출, 러시아·이란의 서비스 제한(2026년 1분기 일일 활성 사용자 감소 설명 [EV-meta-046]), Reality Labs 기기 제조의 아시아 단일 지역 의존이다 [new:Meta 10-K (2025) 위험 요인 — 소비자 기기 제조가 아시아 단일 지역의 소수 제3자에 기댄다]"
+        }
+      }
+    },
+    {
+      "company_id": "oracle",
+      "layers": {
+        "chip": {
+          "facts": "AI 연산 칩 설계는 공시에 없다. 2026 회계연도에 Ampere 칩 사업을 팔았고(10-K 는 Ampere 지분 매각 이익 $2.7B 를 적는다) 칩은 외부 공급자에게서 산다. GPU 공급사는 NVIDIA(Zettascale10)와 AMD(MI300X·MI355X 제공 중, MI450 5만 개는 2026년 3분기 배치 예정)다.",
+          "evidence": [
+            "EV-oracle-021",
+            "EV-oracle-020",
+            "new:Oracle·AMD 협력 확대 발표 — AMD MI300X·MI355X 인스턴스를 고객에게 제공하고 MI450 5만 개 배치를 예고",
+            "new:Oracle OCI Zettascale10 발표 — NVIDIA GPU 수십만 개를 잇는 클러스터와 자체 Acceleron 네트워킹"
+          ]
+        },
+        "server": {
+          "facts": "하드웨어 사업이 Oracle Engineered Systems·서버·스토리지를 남에게 판다(2027 회계연도 1분기 $774M, 전년 $670M, 최근 4분기 매출의 4%). 이 제품이 AI 연산용인지 일반 기업용인지는 공시가 가르지 않는다. 자체 설계 네트워킹(Acceleron RoCE)은 OCI 서비스에 쓴다.",
+          "evidence": [
+            "new:Oracle 10-Q (2026-08-31) MD&A 하드웨어 사업 — Engineered Systems·서버·스토리지 판매와 최근 1년 매출 4%",
+            "new:Oracle 10-Q (2026-08-31) Note 9 사업별 매출 — 클라우드·소프트웨어, 하드웨어, 서비스",
+            "new:Oracle OCI Zettascale10 발표 — NVIDIA GPU 수십만 개를 잇는 클러스터와 자체 Acceleron 네트워킹"
+          ]
+        },
+        "platform": {
+          "facts": "Oracle Database·Middleware·Java 를 라이선스로 팔고 지원 계약을 해마다 갱신받는다. 소프트웨어 매출은 2027 회계연도 1분기 $5,550M(라이선스 $655M·지원 $4,895M)이고 데이터베이스(플랫폼)와 애플리케이션 몫으로 나뉘어 공시되지 않는다. AI Database 26ai 의 AI 기능은 추가 요금 없이 포함된다.",
+          "evidence": [
+            "EV-oracle-025",
+            "EV-oracle-038",
+            "EV-oracle-026",
+            "new:Oracle 10-Q (2026-08-31) MD&A 클라우드·소프트웨어 사업 — 최근 4분기 매출의 88%, Database·Middleware·Java·Applications 라이선스",
+            "new:Oracle 8-K (2026-09-10) 매출 보충 표 — 소프트웨어 라이선스·지원, 하드웨어, 서비스 분기 매출"
+          ]
+        },
+        "cloud": {
+          "facts": "OCI 클라우드 인프라 매출이 2027 회계연도 1분기 $7,388M(+121%)이고 클라우드 전체는 $11,607M 로 매출의 60%다. 같은 분기에 데이터센터 850MW 를 더 가동했고 4분기 말 이후 AI 클라우드 고객에게 GPU 30만 개 넘게를 인도했다. RPO 는 $664B 다.",
+          "evidence": [
+            "EV-oracle-037",
+            "EV-oracle-003",
+            "new:Oracle 8-K (2026-09-10) 2027 회계연도 1분기 — 데이터센터 850MW 추가 가동과 AI 클라우드 고객에게 GPU 30만 개 넘게 인도",
+            "new:Oracle 8-K (2026-09-10) — 1분기에 AI 클라우드 계약 $300억 넘게를 추가로 수주해 RPO $6,640억"
+          ]
+        },
+        "model": {
+          "facts": "자체 모델을 팔지 않는다. OCI 서비스로 xAI Grok·Cohere Command·OpenAI gpt-oss 같은 외부 모델에 대한 관리형 접근을 제공하고, Oracle AI Database 는 고객이 고른 LLM 을 쓰게 한다. 이 호스팅 매출은 따로 공시되지 않았다.",
+          "evidence": [
+            "EV-oracle-035",
+            "new:Oracle OCI Enterprise AI 안내 — 외부 모델에 대한 관리형 접근을 제공한다"
+          ]
+        },
+        "app": {
+          "facts": "Fusion ERP·NetSuite·Oracle Health 같은 클라우드 애플리케이션 매출이 2027 회계연도 1분기 $4,219M(+10%)이고 소프트웨어 라이선스·지원 안에도 애플리케이션 몫이 있다. Fusion AI 에이전트는 추가 비용 없이 통합된다.",
+          "evidence": [
+            "EV-oracle-027",
+            "EV-oracle-037",
+            "new:Oracle Fusion Applications 새 AI 에이전트 발표 — 추가 비용 없이 통합"
+          ]
+        }
+      },
+      "segments": [
+        {
+          "name": "클라우드·소프트웨어",
+          "revenue": {
+            "usd_millions": 17157
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "SRC-EDGAR-000119312526389274 Note 9",
+          "note": "전년 같은 분기 12,907"
+        },
+        {
+          "name": "하드웨어",
+          "revenue": {
+            "usd_millions": 774
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "SRC-EDGAR-000119312526389274 Note 9",
+          "note": "전년 같은 분기 670"
+        },
+        {
+          "name": "서비스",
+          "revenue": {
+            "usd_millions": 1414
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "SRC-EDGAR-000119312526389274 Note 9",
+          "note": "전년 같은 분기 1,349"
+        },
+        {
+          "name": "합계",
+          "revenue": {
+            "usd_millions": 19345
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "SRC-EDGAR-000119312526389274 Note 9",
+          "note": "전년 같은 분기 14,926"
+        },
+        {
+          "name": "클라우드 인프라(IaaS)",
+          "revenue": {
+            "usd_millions": 7388
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "EV-oracle-037",
+          "note": "전년 같은 분기 3,347, 매출의 38.2%(계산)"
+        },
+        {
+          "name": "클라우드 애플리케이션(SaaS)",
+          "revenue": {
+            "usd_millions": 4219
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "EV-oracle-037",
+          "note": "전년 같은 분기 3,839"
+        },
+        {
+          "name": "소프트웨어 라이선스",
+          "revenue": {
+            "usd_millions": 655
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "SRC-SEC-oracle-000119312526387905 보충 표",
+          "note": "전년 같은 분기 766"
+        },
+        {
+          "name": "소프트웨어 지원",
+          "revenue": {
+            "usd_millions": 4895
+          },
+          "period": "2026-06-01~2026-08-31",
+          "source": "EV-oracle-038",
+          "note": "전년 같은 분기 4,955"
+        },
+        {
+          "name": "클라우드·소프트웨어",
+          "revenue": {
+            "usd_millions": 58530
+          },
+          "period": "2025-06-01~2026-05-31",
+          "source": "SRC-SEC-ORCL-10K-FY2026 Note 13",
+          "note": "전년 49,230"
+        },
+        {
+          "name": "하드웨어",
+          "revenue": {
+            "usd_millions": 3084
+          },
+          "period": "2025-06-01~2026-05-31",
+          "source": "SRC-SEC-ORCL-10K-FY2026 Note 13",
+          "note": "전년 2,936"
+        },
+        {
+          "name": "서비스",
+          "revenue": {
+            "usd_millions": 5743
+          },
+          "period": "2025-06-01~2026-05-31",
+          "source": "SRC-SEC-ORCL-10K-FY2026 Note 13",
+          "note": "전년 5,233"
+        },
+        {
+          "name": "클라우드 인프라(IaaS)",
+          "revenue": {
+            "usd_millions": 18101
+          },
+          "period": "2025-06-01~2026-05-31",
+          "source": "EV-oracle-037",
+          "note": "클라우드 애플리케이션 15,888, 클라우드 합 33,989"
+        },
+        {
+          "name": "최근 1년 클라우드·소프트웨어(계산)",
+          "revenue": {
+            "usd_millions": 62780
+          },
+          "period": "2025-09-01~2026-08-31",
+          "source": "58,530 + 17,157 − 12,907"
+        },
+        {
+          "name": "최근 1년 하드웨어(계산)",
+          "revenue": {
+            "usd_millions": 3188
+          },
+          "period": "2025-09-01~2026-08-31",
+          "source": "3,084 + 774 − 670"
+        },
+        {
+          "name": "최근 1년 서비스(계산)",
+          "revenue": {
+            "usd_millions": 5808
+          },
+          "period": "2025-09-01~2026-08-31",
+          "source": "5,743 + 1,414 − 1,349"
+        },
+        {
+          "name": "최근 1년 전체 매출(계산, 관측 revenue_ttm 과 같다)",
+          "revenue": {
+            "usd_millions": 71776
+          },
+          "period": "2025-09-01~2026-08-31",
+          "source": "oracle.revenue_ttm.SRC-SEC-FACTS-ORCL-20261006"
+        }
+      ],
+      "monetization": {
+        "strongest_channel": "업무 채널(Oracle Database·애플리케이션·OCI)",
+        "part_a_numerator_denominator": {
+          "database_ai": "Oracle AI Database 26ai 의 고급 AI 기능은 추가 요금 없이 포함된다고 오라클이 밝혔다 [new:Oracle AI Database 26ai 발표 — 고급 AI 기능은 추가 요금 없이 포함]",
+          "fusion_ai_agents": "Fusion 애플리케이션의 AI 에이전트는 추가 비용 없이 통합된다 [new:Oracle Fusion Applications 새 AI 에이전트 발표 — 추가 비용 없이 통합]",
+          "oci": "AI 클라우드 훈련·추론 서비스는 과금 대상이다. 클라우드 인프라 매출은 2027 회계연도 1분기 $7,388M 로 전체 매출의 38.2%, 클라우드 매출의 63.7%(계산)이나 이 가운데 AI 워크로드 몫은 공시되지 않았다 [EV-oracle-037]. 멀티클라우드 AI 데이터베이스는 2026 회계연도 4분기에 404% 늘었다는 성장률만 있고 매출액은 없다 [EV-oracle-039]",
+          "conclusion_fact": "데이터베이스·애플리케이션 채널 고객이나 매출의 과반이 AI 에 따로 돈을 낸다는 공시는 없고, 오라클은 두 채널의 AI 기능을 추가 요금 없이 포함한다고 밝혔다"
+        },
+        "part_b_price_increase": {
+          "fact": "AI 로 채널 가격·단가를 올렸다는 오라클 공시나 1차 발표는 찾지 못했다. 간접 거래 2년차 지원료 인상률을 10% 에서 15% 로 올렸다는 근거는 오라클 파트너사 페이지(2차)이고 AI 와 연결된 설명이 없다 [EV-oracle-041]",
+          "conclusion_fact": "AI 를 이유로 든 가격 인상 근거는 찾지 못했다"
+        },
+        "search_scope": "10-K(FY2026)·10-Q(2027 회계연도 1분기)·8-K 99.1(2026-06-10, 2026-09-10) 전체와 oracle.com 뉴스룸·제품 페이지(AI Database 26ai, Fusion AI 에이전트, OCI Enterprise AI)"
+      },
+      "f8": {
+        "customer": {
+          "fact": "매출 10% 이상 고객 없음(2026·2025·2024 회계연도) [EV-oracle-043]. 일부 OCI 사업이 소수 대형 고객에 집중돼 있다고 회사가 밝힌다 [EV-oracle-023]. 10-Q(2027 회계연도 1분기)에는 고객 집중·고객 이름 문구가 없고 고객별 RPO 비중은 공시되지 않았다. 신규 AI 클라우드 계약 $300억 넘게의 고객도 밝히지 않았다 [new:Oracle 8-K (2026-09-10) — 1분기에 AI 클라우드 계약 $300억 넘게를 추가로 수주해 RPO $6,640억]. OpenAI 계약 $300B 는 2차 보도뿐이다 [EV-oracle-031]",
+          "grade": "공개 제출본 공시. 비공개(고객별 RPO 비중 미공시)"
+        },
+        "commitment": {
+          "unstarted_leases_usd_b": 288,
+          "unstarted_leases_commence": "2027 회계연도 2분기~2029 회계연도, 리스 기간 15~19년, 대부분 데이터센터",
+          "evidence_unstarted": "EV-oracle-013",
+          "unconditional_purchase_usd_b": 34.15,
+          "unconditional_schedule_usd_m": {
+            "FY2027 잔여": 5449,
+            "FY2028": 6176,
+            "FY2029": 3863,
+            "FY2030": 4318,
+            "FY2031": 6768,
+            "FY2032": 954,
+            "이후": 6622
+          },
+          "evidence_unconditional": "EV-oracle-036",
+          "ttm_revenue_usd_b": 71.776,
+          "calc_ratio": "(288 + 34.15) ÷ 71.776 = 약 4.49배(계산)",
+          "near_term_burden_calc": "무조건 구매 약정 지급 2027 회계연도 잔여 5.449 + 2028 회계연도 6.176 = 11.625 ÷ 71.776 = 약 16%(계산). 미개시 리스는 개시 후 지급 일정이 공시되지 않는다",
+          "existing_leases_not_in_axis": "대차대조표에 있는 운영리스 지급 합 $48,050M·금융리스 $15,195M 는 약정 축에 넣지 않는다(10-Q Note 6)",
+          "contingent_guarantee_note": "10-K Guarantees 절은 지식재산 면책만 적고 잔존가치 보증은 없다. 10-K·10-Q 에서 VIE·잔존가치 보증 문구를 찾지 못했다(문서 전체 검색)"
+        },
+        "supply": {
+          "chips": "NVIDIA GPU(Zettascale10, 최대 80만 개 주문 접수)와 AMD(MI300X·MI355X 제공 중, MI450 5만 개 예정) [new:Oracle OCI Zettascale10 발표 — NVIDIA GPU 수십만 개를 잇는 클러스터와 자체 Acceleron 네트워킹, new:Oracle·AMD 협력 확대 발표 — AMD MI300X·MI355X 인스턴스를 고객에게 제공하고 MI450 5만 개 배치를 예고]. 칩 공급사와의 약정 금액은 공시되지 않았다",
+          "datacenter": "데이터센터 용량·전력·부품을 제3자에 기대고 건설 지연이 용량을 늦춘다 [new:Oracle 10-K (FY2026) 위험 요인 — 데이터센터 용량·GPU·전력을 제3자에 기대고 건설 지연이 용량 확보를 늦춘다]. 단일 공급자 부품이 있다 [new:Oracle 10-K (FY2026) 위험 요인 — 하드웨어·클라우드 부품을 단일 공급자에게서만 사는 것이 있고 중국·대만 긴장이 공급망에 영향]",
+          "model": "자체 모델이 없고 외부 모델을 호스팅한다(공급 의존이 아니라 판매 대상) [new:Oracle OCI Enterprise AI 안내 — 외부 모델에 대한 관리형 접근을 제공한다]",
+          "supplier_is_competitor": "공급자가 곧 경쟁자라는 공시 문장은 찾지 못했다(멀티클라우드로 Microsoft·AWS·Google 과 협력하는 관계는 EV-oracle-042)"
+        },
+        "geopolitics": {
+          "fact": "수출 통제가 특정 지역 고객의 GPU 서비스 이용을 막을 수 있고 미중 관계 악화·중국–대만 긴장이 공급망 위험으로 적혀 있다 [new:Oracle 10-K (FY2026) 위험 요인 — 수출 통제가 GPU 서비스를 특정 고객에게 제공하는 것을 막을 수 있고 미중 관계 악화 위험, new:Oracle 10-K (FY2026) 위험 요인 — 하드웨어·클라우드 부품을 단일 공급자에게서만 사는 것이 있고 중국·대만 긴장이 공급망에 영향]. Tencent 의 칩 임차 약 $7B 는 2차 보도다 [EV-oracle-005]"
+        }
+      }
+    },
+    {
+      "company_id": "palantir",
+      "layers": {
+        "chip": {
+          "facts": "AI 칩 설계나 출하를 밝힌 공시는 없다. 10-K·10-Q 는 컴퓨터 하드웨어를 사서 쓴다고만 적는다. 소버린 AI 엔진은 NVIDIA 의 Nemotron 모델과 AI 인프라 위에서 돌아가는 제품이다.",
+          "evidence": [
+            "EV-palantir-023",
+            "new:Palantir 10-Q (2026-06-30) 위험 요인 — AWS·Microsoft Azure 위에서 플랫폼을 호스팅하고 컴퓨터 하드웨어를 사서 쓴다"
+          ]
+        },
+        "server": {
+          "facts": "서버·네트워크 장비를 파는 공시는 없고 컴퓨터 하드웨어를 산다. 2026-10-01 Armada 를 첫 인증 모듈형 데이터센터 파트너로 지정했다는 파트너십 발표는 있으나 투자나 매출 공시는 없다.",
+          "evidence": [
+            "EV-palantir-008",
+            "new:Palantir 10-Q (2026-06-30) 위험 요인 — AWS·Microsoft Azure 위에서 플랫폼을 호스팅하고 컴퓨터 하드웨어를 사서 쓴다"
+          ]
+        },
+        "platform": {
+          "facts": "Gotham·Foundry·Apollo·AIP 네 플랫폼을 구독·온프레미스 소프트웨어로 팔고 2026년 2분기 매출이 $1,935M(+93%)이다. 플랫폼별 매출은 공시되지 않는다.",
+          "evidence": [
+            "EV-palantir-019",
+            "EV-palantir-013",
+            "new:Palantir 10-Q (2026-06-30) MD&A — 네 플랫폼과 AIP 가 제3자 LLM 에 연결된다",
+            "new:Palantir 10-Q (2026-06-30) Note 12 부문 정보 — 정부 $990M·상업 $945M(2026년 2분기)"
+          ]
+        },
+        "cloud": {
+          "facts": "연산 인프라를 빌려주는 사업은 없다. Palantir Cloud 는 호스팅된 소프트웨어 구독이고 호스팅은 AWS·Azure 에서 하며, 2026-03 계약 개정으로 2036년까지 최소 $5.6B 를 쓰기로 했다.",
+          "evidence": [
+            "EV-palantir-019",
+            "new:Palantir 10-Q (2026-06-30) 위험 요인 — AWS·Microsoft Azure 위에서 플랫폼을 호스팅하고 컴퓨터 하드웨어를 사서 쓴다",
+            "new:Palantir 10-Q (2026-06-30) Note 7 — 제3자 클라우드 계약을 개정해 2036년까지 최소 $56억 지출 약정"
+          ]
+        },
+        "model": {
+          "facts": "자체 모델이 없다. AIP 는 제3자가 제공하는 LLM 에 연결하고, 국방부 Maven 은 xAI·OpenAI·NVIDIA Nemotron 등을 쓰며 Claude 를 다른 모델로 바꿨다고 회사 CTO 가 밝혔다.",
+          "evidence": [
+            "EV-palantir-038",
+            "EV-palantir-023",
+            "new:Palantir 10-Q (2026-06-30) MD&A — 네 플랫폼과 AIP 가 제3자 LLM 에 연결된다"
+          ]
+        },
+        "app": {
+          "facts": "AIP 가 최종 사용자용 AI 응용을 포함하고 팔지만(10-Q 문장) 응용 매출은 플랫폼 구독 매출과 나뉘어 공시되지 않는다. 플랫폼 층과 응용 층을 가를지는 판단이 정한다.",
+          "evidence": [
+            "new:Palantir 10-Q (2026-06-30) MD&A — 네 플랫폼과 AIP 가 제3자 LLM 에 연결된다",
+            "EV-palantir-036"
+          ]
+        }
+      },
+      "segments": [
+        {
+          "name": "정부 매출",
+          "revenue": {
+            "usd_thousands": 990032
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-palantir-000132165526000041 Note 12",
+          "note": "전년 같은 분기 552,983"
+        },
+        {
+          "name": "상업 매출",
+          "revenue": {
+            "usd_thousands": 945432
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-palantir-000132165526000041 Note 12",
+          "note": "전년 같은 분기 450,714"
+        },
+        {
+          "name": "미국 정부 매출",
+          "revenue": {
+            "usd_millions": 809
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-palantir-000132165526000039 · 10-Q MD&A",
+          "note": "전년 같은 분기 426, 그 분기 매출의 41.8%(계산)"
+        },
+        {
+          "name": "미국 상업 매출",
+          "revenue": {
+            "usd_millions": 764
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-palantir-000132165526000039 · EV-palantir-013",
+          "note": "전년 같은 분기 306"
+        },
+        {
+          "name": "정부 매출",
+          "revenue": {
+            "usd_thousands": 1848442
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "SRC-SEC-palantir-000132165526000041 Note 12",
+          "note": "전년 같은 기간 1,039,946"
+        },
+        {
+          "name": "상업 매출",
+          "revenue": {
+            "usd_thousands": 1719605
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "SRC-SEC-palantir-000132165526000041 Note 12",
+          "note": "전년 같은 기간 847,606"
+        },
+        {
+          "name": "정부 매출",
+          "revenue": {
+            "usd_thousands": 2402287
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "SRC-SEC-palantir-000132165526000011 Note 13",
+          "note": "전년 1,569,605"
+        },
+        {
+          "name": "상업 매출",
+          "revenue": {
+            "usd_thousands": 2073159
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "SRC-SEC-palantir-000132165526000011 Note 13",
+          "note": "전년 1,295,902"
+        },
+        {
+          "name": "영국 매출(미국 달러)",
+          "revenue": {
+            "usd_thousands": 427398
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "SRC-SEC-palantir-000132165526000011 Note 13",
+          "note": "전체 매출의 10%, 파운드가 아니라 미국 달러 값"
+        },
+        {
+          "name": "최근 1년 정부 매출(계산)",
+          "revenue": {
+            "usd_thousands": 3210783
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "2,402,287 + 1,848,442 − 1,039,946"
+        },
+        {
+          "name": "최근 1년 상업 매출(계산)",
+          "revenue": {
+            "usd_thousands": 2945158
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "2,073,159 + 1,719,605 − 847,606"
+        },
+        {
+          "name": "최근 1년 전체 매출(계산, 관측 revenue_ttm 과 같다)",
+          "revenue": {
+            "usd_thousands": 6155941
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "palantir.revenue_ttm.SRC-SEC-FACTS-F6"
+        }
+      ],
+      "monetization": {
+        "strongest_channel": "업무 채널(정부 기관·기업의 데이터 업무)",
+        "part_a_numerator_denominator": {
+          "fact": "AIP 에 따로 돈을 내는 고객 수·매출 몫은 공시되지 않았다. 10-Q 는 '고객이 소프트웨어 플랫폼 사용료를 낸다'고 적고 최근 12개월 매출을 낸 고객은 1,049곳(전년 849곳)이다 [EV-palantir-029]. 계약 체결액 TCV 는 2026년 2분기 $3.373B, 미국 상업 RDV 는 $6.238B 이다 [new:Palantir 8-K (2026-08-03) 2026년 2분기 — 미국 정부 매출 $809M, 미국 상업 $764M, 계약 체결액 $3.373B]",
+          "conclusion_fact": "AI 에 따로 돈을 내는 몫을 잴 분자·분모 공시는 없다"
+        },
+        "part_b_price_increase": {
+          "fact": "AIP 가격 인상 공지나 공시는 없고 10-Q 는 AIP 같은 새 제품의 적정 가격 구조를 정하기 어려울 수 있다고만 적는다 [new:Palantir 10-Q (2026-06-30) 위험 요인 — AIP 같은 새 제품의 가격 구조를 정하는 데 어려움이 있을 수 있다]. 총마진은 2026년 2분기 85%(전년 81%)이나 회사는 가격으로 설명하지 않는다 [EV-palantir-032]",
+          "conclusion_fact": "AI 를 이유로 든 가격 인상 근거는 찾지 못했다"
+        },
+        "search_scope": "10-K(2025)·10-Q(2026 2분기)·8-K 99.1(2026-05-04, 2026-08-03) 전체. 실적 콜 녹취록·CEO 서한은 SEC 에 없어 열지 못했다(2차 요약 EV-palantir-030 만 있다)"
+      },
+      "f8": {
+        "customer": {
+          "fact": "매출 10% 이상 고객 없음(2026년 상반기·2025년 상반기, 2025년) [EV-palantir-033]. 미국 정부 기관 합계는 한 고객이 아니라 기관 여럿이다: 2026년 2분기 $809M(그 분기 매출의 41.8%, 계산), 2025년 $1.9B [EV-palantir-018], 2026년 1분기 $687M [EV-palantir-031]. 최근 12개월 상위 20개 고객 평균 매출 $124M 이므로 합 약 $2.48B 는 최근 1년 매출 $6.156B 의 약 40.3%(계산, 상위 20곳 합이며 한 고객 몫이 아니다) [EV-palantir-029]. 영국 매출은 2025년 $427.4M(10%)이고 정부 몫은 공시되지 않았다 [new:Palantir 10-K (2025) Note 13 부문·지역 정보 — 정부 $2,402M·상업 $2,073M, 미국 74%·영국 10%]",
+          "grade": "공개 제출본 공시"
+        },
+        "commitment": {
+          "purchase_commitment_usd_b": 5.6,
+          "annual_minimum_usd_m": "268~979(연도별 배분 미공시)",
+          "period": "2026-03 개정 계약, 10개 계약 연도, 2036-02-29 까지",
+          "evidence": "new:Palantir 10-Q (2026-06-30) Note 7 — 제3자 클라우드 계약을 개정해 2036년까지 최소 $56억 지출 약정",
+          "ttm_revenue_usd_b": 6.156,
+          "calc_ratio": "5.6 ÷ 6.156 = 약 0.91배(계산)",
+          "pre_amendment": "2025-12-31 해지할 수 없는 구매 약정 $1,759M(1년 미만 $132.7M, 1~3년 $515.2M, 3~5년 $411.1M, 5년 초과 $700M)와 운영리스 $221.1M [new:Palantir 10-K (2025) Material Cash Requirements — 해지할 수 없는 구매 약정 $1,759M 과 운영리스 $221M]. 개정으로 이전 지급 의무가 소멸했다",
+          "unstarted_leases": "아직 개시되지 않은 리스를 10-K·10-Q 에서 찾지 못했다(없다고 밝힌 문장도 찾지 못함)",
+          "near_term_burden_note": "연 최소 $268M~$979M 이므로 가까운 12~24개월 부담은 이 범위 안이다. 어느 해가 어느 금액인지는 공시되지 않았다"
+        },
+        "supply": {
+          "compute": "클라우드 호스팅은 AWS·Microsoft Azure 에 기댄다 [new:Palantir 10-Q (2026-06-30) 위험 요인 — AWS·Microsoft Azure 위에서 플랫폼을 호스팅하고 컴퓨터 하드웨어를 사서 쓴다]. 2026년 2분기 매출원가 증가의 주된 원인이 제3자 클라우드 호스팅 비용 $89M 증가다 [EV-palantir-032]",
+          "model": "AIP 는 제3자 LLM 에 연결하며 특정 모델 공급자에 묶이지 않는다고 CTO 가 밝혔다 [EV-palantir-038, new:Palantir 10-Q (2026-06-30) MD&A — 네 플랫폼과 AIP 가 제3자 LLM 에 연결된다]",
+          "supplier_is_competitor": "공급자가 곧 경쟁자라는 공시 문장은 찾지 못했다"
+        },
+        "geopolitics": {
+          "fact": "미국 정부 의존과 미국 정부와의 관계가 해외 영업에 불리할 수 있다는 위험 [new:Palantir 10-Q (2026-06-30) 위험 요인 — 미국 연방정부 기관에서 매출 상당 부분을 얻고 미국 정부와의 관계가 해외 영업에 불리할 수 있다], 외국 정부의 현지 계약 요구·투자 심사 위험 [new:Palantir 10-Q (2026-06-30) 위험 요인 — 외국 정부의 현지 계약 요구와 투자 심사가 판매를 막을 수 있다], 고객 계약의 12개월 미만 통지 해지 [new:Palantir 10-Q (2026-06-30) Note 3 — RPO $49억과 12개월 미만 통지로 해지할 수 있는 고객 계약]. 생산이 한 지역에 몰린 사업은 아니다"
+        }
+      }
+    }
+  ],
+  "notes": [
+    "[Meta 잔존가치 보증 관측] residual_value_guarantee 값은 루이지애나 합작(Venture)의 잔존가치 보증 기준액 약 $28B(10-Q 2026-06-30 Note 5, 시간이 지나면 줄어드는 기준액)로 등록했다. 같은 주석의 '합작에 대한 최대 손실 노출 $46.03B' 는 지분 장부가 $2.92B·합작 임대 약정 약 $12.31B·앞으로의 출자·보증 기준액을 합친 값이라 보증 값으로 쓰지 않았다(basis.not_included 에 적었다). 2026-07 협약한 엘패소 합작의 보증 최대 약 $13B 는 기준일(2026-06-30) 뒤 후속 사건이고 본계약·종결 전이라 넣지 않았다. 조율자가 엘패소를 포함한 합계($41B)나 $46.03B 를 쓰고 싶으면 값만 바꾸면 되며 근거 두 건이 이미 올라가 있다.",
+    "[Oracle·Palantir 잔존가치 보증] 두 회사 모두 residual value guarantee·VIE·variable interest 문구를 10-K·10-Q 전체에서 찾지 못해 관측을 등록하지 않았다. Oracle 10-K Guarantees 절은 지식재산 면책만 적는다. 이것은 부재 확인이 아니라 두 회사의 해당 제출본 검색 결과다(검색 범위: Oracle 10-K FY2026·10-Q 2027 회계연도 1분기, Palantir 10-K 2025·10-Q 2026년 2분기).",
+    "[팔란티어 영국 매출 단위] Guardian 기사(EV-palantir-039)의 '£427m' 을 환율 1.33 으로 곱해 2025년 매출의 약 13%로 계산한 문장은 근거가 약하다. Palantir 10-K(2025) Note 13 Geographic Information 표의 영국 매출은 $427,398 천(미국 달러, 전체의 10%)이고 숫자가 기사와 같다. 영국 비중은 약 9.6%(427.4 ÷ 4,475.4, 계산)로 쓰는 것이 공시에 맞다. 영국 법인의 파운드 결산 매출이 우연히 같은 숫자일 가능성은 배제하지 못했다. 영국 매출 가운데 정부 몫은 공시되지 않았다. 판단 세션이 영국 정부 축 문장을 이 값으로 다시 써야 한다.",
+    "[팔란티어 약정 축] 10-Q Note 7 이 2026-03 클라우드 계약 개정으로 2036-02-29 까지 최소 $5.6B(연 최소 $268M~$979M) 지출 약정을 공시한다. 확정 근거에 약정 합계가 없었으므로 새 근거 'Palantir 10-Q (2026-06-30) Note 7 — 제3자 클라우드 계약을 개정해 2036년까지 최소 $56억 지출 약정' 이 약정 축의 입력이다. 최근 1년 매출 대비 약 0.91배(계산)이고 미개시 리스는 찾지 못했다.",
+    "[Meta ⑧ 약정 합계] 약정 합계의 분자는 Note 9 의 미개시 리스 $278.99B, 해지할 수 없는 약정 $349.31B, 2026-07 추가 리스 $68B 이다. 새 근거는 연도별 지급(2026년 $53.52B, 2027년 $81.65B), 조건부 클라우드 구매 의무 최대 $14.72B, 에스크로 $10.80B(10-Q Note 9 셋째 문단에 있고 발췌 분량 때문에 근거 문장에 넣지 않았다)는 layer_map 에만 적었다. 루이지애나 합작 임대 약정 $12.31B(별도 새 근거)가 미개시 리스 $278.99B 에 들어 있는지는 주석이 밝히지 않았다.",
+    "[Oracle 고객 축] Oracle 10-Q(2027 회계연도 1분기)에는 고객 집중·고객 이름 문구가 없고 10-K 는 10% 이상 고객이 없다고만 적는다. OpenAI·Tencent 같은 고객 이름은 공시에 없고 2차 보도뿐이라 고객 축 근거로 새로 올리지 않았다. 신규 근거는 규모 정보(AI 클라우드 계약 $300억 넘게 추가 수주)와 미공시 사실이다.",
+    "[Oracle ① AI 수익화] 가장 강한 채널(업무)에서 오라클이 두 채널(데이터베이스, Fusion 애플리케이션)의 AI 기능을 '추가 요금 없이' 포함한다고 1차 발표했다(2025-10 발표, 이후 변경 여부는 확인하지 못했다). AI 에 따로 돈을 받는 몫을 재는 공시는 OCI 의 AI 워크로드 비중도 없다. 가격 인상은 AI 와 연결된 근거를 찾지 못했다.",
+    "[Palantir ① AI 수익화] AIP 에 따로 돈을 내는 고객·매출 몫과 AI 를 이유로 한 가격 인상 모두 SEC 공시(10-K·10-Q·8-K 보도자료)에서 찾지 못했다. 이것은 미확인이다. 회사가 공시하지 않는다고 밝힌 문장은 찾지 못했다. 실적 콜 녹취록과 CEO 서한은 SEC 에 없고 열지 못했다.",
+    "[Meta ① AI 수익화] 광고당 가격 상승 설명은 10-Q 가 '광고 타기팅·측정 도구 개선이 대부분'이라고 믿는다고 적고(믿음 표현) 실적 콜 CFO 는 '광고 성과 개선·경기·환율'을 든다. AI 를 이름으로 들어 가격을 올렸다고 한 문장은 없고, 광고주가 AI 에 따로 돈을 낸다는 공시도 없다. Advantage+ 런레이트 $75B 는 인식 매출이 아니라 연환산 값이다.",
+    "[주 레이어 입력] Meta 는 판매 칸 후보인 응용(광고 도구) 매출이 사실상 광고 매출 전체이고 모델 API·구독 매출은 기타 매출 안에 있어 공시로 가를 수 없다. Oracle 은 클라우드 인프라 $7,388M·클라우드 애플리케이션 $4,219M·소프트웨어 라이선스·지원 $5,550M·하드웨어 $774M 이 2027 회계연도 1분기 값이고 소프트웨어 매출을 플랫폼(데이터베이스)과 응용으로 가르는 공시는 없다. Palantir 는 단일 소프트웨어 플랫폼 구독이라 매출 전부가 플랫폼 또는 응용 한 층에 걸린다.",
+    "[열지 못한 원문] OCI Generative AI 가격 페이지는 스크립트로 그려져 과금 방식을 확인하지 못했다. Palantir 2026년 2분기 실적 콜 녹취록은 열지 못했고 Oracle 의 NVIDIA 구매 약정 금액은 공시·1차 발표에서 찾지 못했다. Meta 10-Q 는 제3자 클라우드 공급자와 AI 토큰 공급자 이름을 밝히지 않는다.",
+    "[절차] SEC 원문은 모두 scorecard_cli.py sec-get 으로 받았다(Meta 10-Q·10-K, Oracle 10-Q·10-K·8-K 99.1, Palantir 10-Q·10-K·8-K 99.1). 비SEC 원문(Meta 실적 콜 PDF, oracle.com 발표·제품 페이지)은 읽기 전용으로 내려받아 본문에서 발췌했다. 모든 발췌는 원문 정규화 텍스트의 부분 문자열인지 기계로 확인했다. 실행 폴더 파일은 읽기만 했고 confirm·judge·propose·research·collect 를 부르지 않았다."
+  ]
+}

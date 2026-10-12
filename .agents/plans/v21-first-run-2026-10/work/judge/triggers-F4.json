@@ -1,0 +1,57 @@
+{
+  "group": "J2",
+  "new_triggers": [
+    {
+      "key": "openai-jalapeno-deploy",
+      "company_id": "openai",
+      "factors": [
+        "F4"
+      ],
+      "observation": "OpenAI 가 설계한 가속기 Jalapeño 를 Broadcom 이 2026년 회계 3분기(2026-08-02 종료)에 출하했고 출하가 이어진다. OpenAI 는 올해 말까지 자사 컴퓨트 인프라에 배치를 시작할 계획이며 생산 자격 검증을 계속한다고 밝혔다. ChatGPT·API 트래픽을 Jalapeño 가 처리한다는 회사 발표는 2026-10-12 까지 없어 OpenAI ④ 보유표의 칩 칸은 준비 중이다.",
+      "condition": "OpenAI 나 Broadcom 이 Jalapeño 가 OpenAI 서비스 트래픽을 처리하기 시작했다거나 배치 규모를 1차 자료로 밝히면 칩 칸을 자체 사용으로 다시 본다. 칩이나 랙을 외부에 팔았다는 사실이 확인되면 판매로 본다. 배치 취소나 무기한 연기가 1차 자료로 확인되면 칸을 없음으로 다시 본다.",
+      "deadline": "2027-03-31",
+      "source_ids": [
+        "SRC-WEB-openai-012",
+        "SRC-WEB-openai-013",
+        "SRC-WEB-openai-921"
+      ],
+      "evidence_ids": [
+        "EV-openai-072",
+        "EV-openai-074",
+        "EV-openai-090"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4"
+        ],
+        "what": "OpenAI 자체 설계 칩의 서비스 배치 실측(배치 규모·처리 트래픽)과 외부 판매 여부"
+      }
+    },
+    {
+      "key": "spacex-cursor-revenue",
+      "company_id": "spacex-xai",
+      "factors": [
+        "F4"
+      ],
+      "observation": "SpaceX 는 코딩 에이전트 Cursor 인수를 2026-08-14 종결했다. 2026-06-30 까지의 10-Q 에는 Cursor 매출이 없어 SpaceX ④ 보유표의 응용 칸은 준비 중이다.",
+      "condition": "SpaceX 의 2026년 3분기 10-Q 나 그 뒤 제출본에 Cursor 매출이나 AI 응용 제품 매출이 공시되면 응용 칸을 판매로 다시 본다.",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-SEC-spacex-xai-000162828026052535",
+        "SRC-SEC-spacex-xai-000162828026056945"
+      ],
+      "evidence_ids": [
+        "EV-spacex-xai-013",
+        "EV-spacex-xai-067"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4"
+        ],
+        "what": "SpaceX 제출본의 Cursor·AI 응용 매출 공시"
+      }
+    }
+  ]
+}

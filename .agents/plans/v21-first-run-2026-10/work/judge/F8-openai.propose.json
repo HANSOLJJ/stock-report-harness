@@ -1,0 +1,64 @@
+{
+  "changes": {
+    "customer": {
+      "status": "not_found",
+      "note": "EDGAR 에 OpenAI 운영 법인의 제출본이 없고(2026-10-12 회사명·전문 검색) 회사 1차 발표에 최대 고객 비중이 없다. 고객 집중 수치는 보도에서도 찾지 못했다. 비상장이라는 이유로 비공개로 올리지 않는다."
+    },
+    "commitment": {
+      "status": "confirmed",
+      "multiple": 12.5,
+      "note": "상대방 공시·회사 1차 발표로 금액과 지급 약정이 확인되는 몫: AWS 기존 $38B + 8년 $100B(Amazon 10-Q)·Azure $250B(구매 계약)·CoreWeave 최대 $11.9B·$6.5B·SB Energy PORTS-Pike 17개 미개시 임대(구속력 있는 수주잔고 $439B 의 상당한 대부분 → $219.5B 초과, 하한) = 약 $625.9B 이상 ÷ 2026-09 말 연환산 매출 약 $50B(순액 기준). Oracle '5년 $3,000억 넘는 협력'(최대 4.5GW, 지급 의무 미기재)·Cerebras 750MW(금액 미공시)·AMD·NVIDIA·Broadcom(의향·텀시트)은 넣지 않았다."
+    },
+    "supply": {
+      "status": "confirmed",
+      "rung": -3,
+      "supplier_is_competitor": "yes",
+      "note": "자체 보유 컴퓨트가 확인되지 않고 주 클라우드 Microsoft 가 투자자·수익 배분 수취자이면서 자체 모델 경쟁자다. Oracle·AWS·CoreWeave·Cerebras 로 나눴으나 한 곳이 끊기면 가까운 대체가 없고, 공급자가 여럿이라 회사 전체가 멈추지는 않는다."
+    },
+    "geopolitics": {
+      "status": "confirmed",
+      "rung": -1,
+      "note": "대만 생산 집중은 공급자(NVIDIA·Broadcom) 공시로만 닿고 AI 증설에 걸린다. 미국 관보 UAE 우대 규칙 표에 OpenAI Group PBC 가 열거됐고 Stargate UAE 가동은 확인되지 않았다."
+    }
+  },
+  "evidence_after": [
+    "OpenAI ⑧ 은 −3 이고 점수를 정한 축은 약정 축과 공급 축이다. 상대방 공시와 회사 1차 발표로 금액이 확인되는 약정이 연환산 매출의 약 12.5배이고, 컴퓨트를 모두 남에게서 빌리며 주 클라우드 Microsoft 가 자체 모델을 내는 경쟁자다.",
+    "약정 축은 −3 이다. 해지할 수 없는 몫만 합산한 문장은 회사 1차 발표와 상대방 공시 어디에도 없어, 금액과 지급 약정이 상대방 공시나 회사 1차 발표로 확인되는 몫을 더했다. AWS 의 기존 $380억 다년 약정과 8년 $1,000억 확대(Amazon 10-Q), Azure 서비스 $2,500억 추가 구매 계약(두 회사 발표), CoreWeave 에 2030-10 까지 최대 약 $119억과 2031-05-31 까지 최대 약 $65억 지급 약정(CoreWeave 10-K, 확정 계약은 take-or-pay), SB Energy 와 맺은 PORTS-Pike 17개 미개시 임대(약 8.0GW-IT, 각 20년, 편의 해지권 없음)다. PORTS-Pike 임대료 총액은 서류에 없지만 구속력 있는 계약만 담은 SB Energy 수주잔고 약 $4,390억의 상당한 대부분을 차지해 그 절반인 약 $2,195억을 하한으로 넣었다(계산). 합계 약 $6,259억 이상은 2026-09 말 연환산 매출 약 $500억의 약 12.5배로 3배 이상 20배 미만이다(계산).",
+    "CoreWeave 의 두 금액이 같은 용량인지는 문서에 없어 둘 다 넣었고, 빼도 약 12.2배다(계산). Anthropic 의 Nscale 계약(최대 금액, 인도 조건)과 같은 잣대로 최대 금액 약정을 넣었다. 분모는 일부 파트너 판매를 자기 몫만 잡는 순액 기준이라 Anthropic 의 총액 기준보다 작다. 투자자가 Anthropic 식으로 맞춘 연환산 $700억으로 나누면 약 8.9배라 구간이 같다(계산).",
+    "넣지 않은 것: OpenAI 는 Oracle 과 최대 4.5GW 의 Stargate 용량을 개발하기로 하고 이를 5년 동안 $3,000억을 넘는 협력이라고 표현했지만 지급 의무를 밝히지 않아 넣지 않고, Oracle 고객 축에서도 같은 이유로 쓰지 않는다. 넣어도 약 18.5배로 20배에 이르지 않는다(계산). Cerebras 750MW 는 계약상 구매 확약이지만 금액이 공시되지 않아 합계에 넣지 못했고(배수를 키우는 방향의 미확인), Milam County 임대도 금액이 없다. AMD 6GW 는 배치 의사, NVIDIA 10GW 는 의향서, Broadcom 10GW 는 텀시트, Samsung·SK hynix 는 양해각서라 본계약 전 협약이다. NVIDIA 의 PORTS-Pike 잔존가치 보증 상한 $1,050억과 OpenAI 의 구상·면책 합의, Cerebras 에 준 $10억 대출은 ⑦ 에서 센다. CEO 가 밝힌 향후 8년 약 $1.4조 약정은 연환산 매출의 약 28배이지만 그 가운데 해지할 수 없거나 고정·보장된 몫이 밝혀지지 않아 구간을 정하는 데 쓰지 않는다.",
+    "지급 시점은 멀다. PORTS-Pike 임대는 2028~2032년에 단계 개시해 20년에 걸쳐 내고 SB Energy 수주잔고 가운데 24개월 안에 인식될 몫은 약 $10억이다. AWS·Azure 약정의 연도별 지급은 공시되지 않아 가까운 24개월 부담은 잴 수 없다. OpenAI 는 2026-04 Stargate Norway·UK 파트너십에서 철수했고 Microsoft 가 Norway 물량을 넘겨받았다.",
+    "공급 축은 −3 이다. 자체 보유 컴퓨트는 확인되지 않고(Stargate Abilene 의 칩은 Oracle 소유), Microsoft 가 주 클라우드 파트너로 지분 약 27% 를 가진 투자자이며 2030년까지 수익 배분을 받고 2032년까지 OpenAI 모델·제품 지식재산 라이선스를 갖는다. Microsoft 는 자체 MAI 모델을 제품에 쓰고 모델을 서로 바꿔 쓸 수 있게 설계해 공급자가 곧 경쟁자이고, AWS(Nova)도 자체 모델을 낸다. 2026-04 개정 합의로 어느 클라우드에서든 제품을 낼 수 있게 됐고 Oracle·AWS·CoreWeave·Cerebras 로 공급을 나눴지만, 한 곳이 끊기면 서빙 용량의 큰 몫이 빠지고 다른 공급자 용량은 이미 약정된 물량이라 가까운 대체가 없다. 공급자가 여럿이라 회사 전체가 멈추지는 않는다. 자체 설계 가속기 Jalapeño 는 서비스 투입 전이라 점수를 덜지 않는다. ④ 보유표의 클라우드 칸이 없음이라 공급 축을 0 으로 적을 수 없고, Anthropic 에도 같은 잣대를 댄다.",
+    "고객 축은 탐색 미완으로 적는다. 공개 제출본에 공시된 10% 이상 고객이 없는 것은 EDGAR 에 OpenAI 운영 법인 제출본이 없기 때문이고(2026-10-12 회사명·전문 검색), 회사 1차 발표는 사용자·구독자·기업 매출 몫만 적고 최대 고객 비중은 없으며 고객 집중 수치는 보도에서도 찾지 못했다. 회사가 공시하지 않는다고 밝힌 것은 아니라 비공개로 올리지 않고, 계산에서는 정책 기본값 −1 로 들어간다. Anthropic 도 같은 이유로 탐색 미완이다.",
+    "지정학 축은 −1 이다. 대만 생산 집중은 공급자 쪽 공시로만 닿는다. NVIDIA 10-Q 는 대만·한국 협력사 공급 의존과 외국 기업의 대형 GPU 클러스터 서비스에 붙은 미국 허가 조건을 적고 Broadcom 10-K 는 위탁 웨이퍼의 약 95% 를 TSMC 가 만든다고 적는다. 대만이 끊기면 새 컴퓨트 증설이 막히지만 이미 깔린 용량으로 서비스는 이어진다. 미국 상무부 관보의 UAE 우대 규칙 표에 OpenAI Group PBC 가 허가 없이 첨단 컴퓨팅 품목을 받을 수 있는 주체로 열거돼 있지만 이것이 UAE 클러스터 반입 허가 자체인지는 규칙 문면에 없고 Stargate UAE 첫 가동은 확인하지 못했다(미확인).",
+    "조달이 끊겨 못 버티는 것은 ⑨ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서 세고, ⑧ 에서는 약정의 크기와 공급자에 묶인 정도만 센다.",
+    "PORTS-Pike 임대료 총액, AWS·Azure 약정의 연도별 지급, Cerebras 계약 금액, 해지할 수 없는 약정 금액, 최대 고객 비중은 확인하지 못했다(미확인).",
+    "근거 등급: 약정 금액은 Amazon 10-Q·CoreWeave 10-K·SB Energy S-1/A·Cerebras 10-Q 공시와 두 회사 공동 발표이고, 분모 연환산 매출 약 $500억은 회사가 투자자에게 알린 값을 전한 2차 보도로 Anthropic 의 분모와 같은 등급이다. Stargate Abilene 칩 소유는 2차 자료다."
+  ],
+  "evidence_up_after": [
+    "2026-04-27 개정 합의로 OpenAI 는 모든 제품을 어느 클라우드에서든 제공할 수 있게 됐다. [EV-openai-120]",
+    "Cerebras 가 인도나 서비스 수준을 지키지 못하면 OpenAI 는 계약 일부나 전부를 해지할 수 있다. [EV-openai-119]",
+    "OpenAI 는 2026-04 Stargate Norway·UK 파트너십에서 철수했고 Microsoft 가 Norway 물량을 넘겨받았다. [EV-openai-129]",
+    "SB Energy 수주잔고 약 $4,390억 가운데 24개월 안에 인식될 몫은 약 $10억이다. [EV-openai-114]",
+    "미국 상무부 UAE 우대 규칙 표에 OpenAI Group PBC 가 허가 없이 첨단 컴퓨팅 품목을 받을 수 있는 주체로 열거돼 있다. [EV-openai-131]"
+  ],
+  "evidence_down_after": [
+    "AWS 와의 기존 $380억 다년 약정이 8년 동안 $1,000억 늘었다. [EV-amazon-017]",
+    "OpenAI 는 AWS 를 통해 약 2GW 의 Trainium 용량을 쓰기로 약속했다. [EV-openai-123]",
+    "OpenAI 는 Azure 서비스 $2,500억을 추가로 사기로 계약했다. [EV-microsoft-045]",
+    "OpenAI 는 CoreWeave 에 2030-10 까지 최대 약 $119억, 2031-05-31 까지 최대 약 $65억을 내기로 약정했다. [EV-openai-106]",
+    "CoreWeave 의 확정 계약은 take-or-pay 다. [EV-openai-107]",
+    "OpenAI 계열사는 SB Energy 와 PORTS-Pike 17개 임대(약 8.0GW-IT, 각 20년)를 맺었고 2028~2032년에 단계 개시한다. [EV-openai-111]",
+    "PORTS-Pike 임대에서 임차인은 일반적인 편의 해지권이 없다. [EV-openai-112]",
+    "PORTS-Pike 는 구속력 있는 계약만 담은 SB Energy 수주잔고 약 $4,390억의 상당한 대부분을 차지한다. [EV-openai-113]",
+    "약정 몫을 더한 약 $6,259억 이상은 2026-09 말 연환산 매출 약 $500억의 약 12.5배다(계산). [EV-amazon-017, EV-microsoft-045, EV-openai-106, EV-openai-113, EV-openai-065]",
+    "OpenAI 는 Cerebras 에서 750MW 를 계약상 구매하기로 확약했다. [EV-openai-117]",
+    "CEO 는 향후 8년 약 $1.4조의 컴퓨트 약정을 말했다. [EV-openai-035]",
+    "Microsoft 는 OpenAI 의 주 클라우드 파트너이고 2030년까지 수익 배분을 받으며 2032년까지 OpenAI 모델·제품 지식재산 라이선스를 갖는다. [EV-openai-120]",
+    "Microsoft 는 자체 MAI 모델을 제품에 쓰고 모든 모델을 서로 바꿔 쓸 수 있게 설계했다. [EV-microsoft-010]",
+    "Amazon 은 자체 모델 Nova 를 낸다. [EV-amazon-061]",
+    "Stargate Abilene 의 AI 칩은 Oracle 이 소유하고 OpenAI 가 쓴다(2차). [EV-openai-026]",
+    "OpenAI 의 투자 라운드는 Amazon·NVIDIA·SoftBank 가 이끌고 Microsoft 가 참여해 컴퓨트 공급자가 곧 투자자다. [EV-openai-038]",
+    "NVIDIA 는 대만·한국 협력사의 공급에 기대고 미국 정부는 외국 기업의 대형 GPU 클러스터 서비스에 허가 조건을 붙였다. [EV-openai-133]",
+    "Broadcom 위탁 웨이퍼의 약 95% 를 TSMC 가 만든다. [EV-openai-134]"
+  ]
+}

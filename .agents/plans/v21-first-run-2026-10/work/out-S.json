@@ -1,0 +1,832 @@
+{
+  "group": "S",
+  "sources": [
+    {
+      "source_id": "SRC-SEC-nvidia-000104581025000230",
+      "company_id": "nvidia",
+      "kind": "filing",
+      "publisher": "SEC EDGAR",
+      "title": "NVIDIA Form 10-Q (2025-10-26)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
+      "accessed_at": "2026-10-12",
+      "sha256": "8c8f308db3d96b48d7a0e8b7082186aefe4f7e7c04ce2ed7cfcb9d04f11eb6a0",
+      "note": "sec-get 으로 2026-10-12 수집. 원문 캐시 data/_sec/docs/fd3330fe7f24bda0-nvda-20251026.htm(gitignore). 제출일 2025-11-19",
+      "published_at_utc": "2025-11-19T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-SEC-tesla-000162828026026673",
+      "company_id": "tesla",
+      "kind": "filing",
+      "publisher": "SEC EDGAR",
+      "title": "Tesla Form 10-Q (2026-03-31)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026026673/tsla-20260331.htm",
+      "accessed_at": "2026-10-12",
+      "sha256": "6a75495bb9e2ddbdb72af48cc987e7b84bb8ec4727ea6ec636e58c9754083e82",
+      "note": "sec-get 으로 2026-10-12 수집. 원문 캐시 data/_sec/docs/cad742ae70e0f995-tsla-20260331.htm(gitignore). 제출일 2026-04-23",
+      "published_at_utc": "2026-04-23T00:00:00Z"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Item 1.01 — 잔존가치 보증의 효력 발생 시점·누적 한도·추가 신용 지원 선택권",
+      "relevance": "사실: NVIDIA 는 SB Energy 와 맺은 잔존가치 보증이 각 임대차가 개시될 때 효력이 생기고, 초기 약정의 누적 지급 한도가 $105B 이며, 약 3.8GW 를 더 받쳐 줄 신용 지원을 NVIDIA 의 단독 재량으로 줄 수 있다고 공시했다. 추론: 고객(OpenAI 계열)이 낼 데이터센터 임대료를 NVIDIA 가 대신 책임지는 보증이라, NVIDIA 가 넣는 신용이 고객 대금으로 돌아오는 구조의 크기를 보여 주는 ⑦ 순환금융 입력이다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 보증의 효력 시점·한도·추가 선택권을 8-K 원문으로 확인해 근거 문장만 보강한다.",
+      "horizon": "long — 보증은 임대차 개시 때 효력이 생기며 개시는 임대인의 서비스 준비 완료 이후다",
+      "counter_evidence": [
+        "추가 3.8GW 는 NVIDIA 가 단독 재량으로 행사하는 선택권이라 확정 약정이 아니다."
+      ],
+      "unverified": [
+        "한도 $105B 가 실제로 지급될 가능성과 시점은 공시되지 않았다."
+      ],
+      "locator": "8-K (2026-08-17) Item 1.01 'Residual Value Guaranties' 첫 문단 둘째·셋째 문장과 둘째 문단 첫 문장",
+      "excerpt": "An Agreement generally will become effective upon commencement of the applicable lease. NVIDIA also can provide credit support to secure approximately an additional 3.8 gigawatts at the Portsmouth Site, exercisable in its sole discretion. NVIDIA’s aggregate payment obligation is cumulatively capped at $105 billion for its initial commitment under the Agreements.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Item 1.01 — 보증 지급 조건(임대인의 서비스 준비 완료, 2028년 시작 예상)",
+      "relevance": "사실: NVIDIA 의 보증 지급 의무는 임대인(SB Energy)이 임대차의 서비스 준비 완료 조건을 충족했을 때 생기며, 그 시점은 2028년부터로 예상된다고 공시했다. 추론: 한도 $105B 는 지금의 부담이 아니라 2028년 이후 임대차별로 효력을 얻는 먼 약정이다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 지급 조건과 2028년 시작 예상을 확인해 근거 문장만 보강한다.",
+      "horizon": "long — 서비스 준비 완료 조건의 충족은 2028년 이후로 예상된다",
+      "counter_evidence": [
+        "지급액은 한도 전액이 아니라 지급 사유가 생겼을 때 보증된 임대 최소가치와 재임대·매각 회수액의 차액이다."
+      ],
+      "unverified": [
+        "임대인이 준비 완료 조건을 충족할 실제 시점은 공시되지 않았다."
+      ],
+      "locator": "8-K (2026-08-17) Item 1.01 'Residual Value Guaranties' 둘째 문단 둘째 문장",
+      "excerpt": "NVIDIA’s payment obligations are subject to specified conditions, including among other things, that the Lessor has satisfied applicable ready-for-service conditions under the lease for the relevant premises, expected beginning in 2028.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Item 1.01 — 보증 지급 사유(OpenAI 의 지급 불능·미지급)와 지급액",
+      "relevance": "사실: NVIDIA 는 세입자 OpenAI 가 지급 불능으로 임대 채무를 어기거나 임대료를 내지 못하면(지급 사유) 보증된 임대 최소가치와 재임대·매각으로 회수한 금액의 차액을 낸다고 공시했다. 추론: NVIDIA 의 지급은 OpenAI 의 지급 능력에 달려 있어, OpenAI 의 조달 의존이 NVIDIA 의 보증 부담으로 이어지는 경로다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 지급 사유가 OpenAI 의 지급 불능·미지급임을 확인해 세로축(내 돈이 돌아오는가) 근거 문장을 보강한다.",
+      "horizon": "long — 지급 사유는 임대 개시 이후 20년 임대 기간 동안 유효하다",
+      "counter_evidence": [
+        "지급 사유가 생기기 전에는 NVIDIA 에 지급 의무가 없다."
+      ],
+      "unverified": [
+        "OpenAI 가 지급 사유에 이를 가능성에 대한 회사 평가는 이 문단에 없다."
+      ],
+      "locator": "8-K (2026-08-17) Item 1.01 'Residual Value Guaranties' 셋째 문단",
+      "excerpt": "Pursuant to the Agreements, OpenAI is the tenant; however, in the event of (i) OpenAI’s insolvency resulting in a default under a lease, or (ii) OpenAI’s failure to make payments under a lease (each a “Trigger Event”), NVIDIA will pay an amount generally equal to any shortfall between the guaranteed minimum value of a lease (as set forth in the Agreements) and amounts recovered through a replacement lease or sale.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Item 1.01 — 보증 종료 사유와 OpenAI 의 보상·면책",
+      "relevance": "사실: NVIDIA 의 보증 의무는 임대 개시 20주년, OpenAI 의 임대 해지, OpenAI 의 만족스러운 신용등급 달성 같은 사유 가운데 가장 이른 때 끝나고, OpenAI 는 NVIDIA 가 임대인에게 실제로 낸 모든 금액을 보상하고 면책하기로 했다고 공시했다. 추론: 보증을 지급해도 OpenAI 에 대한 구상권이 남아 최종 손실은 OpenAI 가 갚지 못하는 몫에 한정되지만, 그 구상권도 OpenAI 의 지급 능력에 달려 있다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 OpenAI 의 보상·면책을 확인해 준다. 구상권이 있어도 구상 상대가 같은 조달 의존 고객이라 칸을 바꾸지 않고 근거 문장만 보강한다.",
+      "horizon": "long — 종료 사유는 임대 개시 후 최장 20년 안에 판가름난다",
+      "counter_evidence": [
+        "OpenAI 가 NVIDIA 에 낸 금액을 보상·면책하기로 했으므로 보증 지급이 곧 최종 손실은 아니다."
+      ],
+      "unverified": [
+        "OpenAI 의 보상·면책 약속을 받치는 담보나 제3자 보증이 있는지는 공시되지 않았다."
+      ],
+      "locator": "8-K (2026-08-17) Item 1.01 'Residual Value Guaranties' 넷째 문단 마지막 두 문장",
+      "excerpt": "NVIDIA’s obligations under an Agreement will terminate upon the earliest to occur of (i) the 20th anniversary of the commencement of the applicable lease, (ii) the termination of the applicable lease by OpenAI in accordance with its terms, (iii) OpenAI achieving a satisfactory credit rating, and (iv) other customary termination events. OpenAI has agreed to reimburse and indemnify NVIDIA for any and all amounts actually paid by NVIDIA to the Lessor under the Agreements.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000069",
+      "published_at_utc": "2026-08-17T00:00:00Z",
+      "title": "NVIDIA 8-K (2026-08-17) Item 1.01 — OpenAI 의 DSX AI 공장 플랫폼 배치",
+      "relevance": "사실: NVIDIA 는 세입자 OpenAI 가 약 4.25GW 의 IT 부하를 수용하는 이 부지에 NVIDIA 의 풀스택 DSX AI 공장 플랫폼을 배치한다고 공시했다(일부 예외 있음). 추론: 보증의 대가로 NVIDIA 플랫폼이 고객에게 쓰이는 구조라 NVIDIA 가 넣은 신용이 NVIDIA 제품 매출로 돌아오는 경로다. 배치는 임대 개시 뒤에 이뤄질 계획이다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 배치는 아직 실행된 출하가 아니라 계획이라 ④ 층별 보유표의 소프트웨어 플랫폼 칸 근거로는 쓰지 않는다.",
+      "horizon": "long — 배치는 임대 개시(2028년 이후 예상) 뒤에 시작된다",
+      "counter_evidence": [
+        "DSX 플랫폼 배치는 예외를 둔 계획이고, 출하나 매출로 공시된 사실이 아니다."
+      ],
+      "unverified": [
+        "DSX 플랫폼 매출의 규모와 인식 시점은 공시되지 않았다."
+      ],
+      "locator": "8-K (2026-08-17) Item 1.01 'Residual Value Guaranties' 마지막 문단",
+      "excerpt": "OpenAI, as the tenant, will utilize capacity at the Portsmouth Site supporting approximately 4.25 gigawatts of IT load to deploy NVIDIA’s full-stack DSX AI factory platform, subject to limited exceptions.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26) Note 10 — SB Energy 보증의 대상 고객(OpenAI 계열)과 임대 규모",
+      "relevance": "사실: NVIDIA 는 2026년 8월 SB Energy 계열과 총 $105B 한도의 보증을 맺었고, 보증은 NVIDIA 의 고객인 OpenAI 계열을 대신해 오하이오주 PORTS 기술 캠퍼스의 약 4.25GW IT 부하 임대차에 신용 지원을 하는 것이라고 분기 보고서 주석에 적었다. 추론: 주석이 보증 대상을 'NVIDIA 의 고객' 으로 적어, 이 보증이 고객을 위한 공급자의 신용 지원임을 감사받는 재무제표 주석 수준에서 확인해 준다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 보증이 고객 OpenAI 계열을 위한 것임을 분기 보고서 주석으로 확인해 근거 문장을 보강한다.",
+      "horizon": "long — 보증은 임대 개시 때 효력이 생긴다",
+      "counter_evidence": [
+        "보증은 고객 대신 임대인에게 신용을 제공하는 것이고 NVIDIA 가 현금을 건네는 것이 아니다.",
+        "보증은 분기 말(2026-07-26) 뒤인 2026년 8월에 서명돼 분기 말 보증 한도 $3.5B 에는 들어가지 않는다."
+      ],
+      "unverified": [
+        "보증이 실제로 지급될 가능성과 시점은 공시되지 않았다."
+      ],
+      "locator": "10-Q (2026-07-26) Part I Item 1 Note 10 Commitments and Contingencies — Guarantees 절 'SB Energy Corp. guarantees' 문단 첫 문장",
+      "excerpt": "In August 2026, we entered into guarantees, capped at a total of $105 billion, to provide credit support on a land, power, and shell buildout with affiliates of SB Energy Corp. (SB Energy) on behalf of a customer, an affiliate of OpenAI Group PBC (OpenAI), related to leases for approximately 4.25 gigawatts of IT load in the aggregate at SB Energy’s PORTS Technology Campus in Pike County, Ohio.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26) Note 10 — SB Energy 보증의 발효 시점(2029 회계연도 첫 단계)·지급 사유·보증 범위",
+      "relevance": "사실: 각 보증은 임대차가 개시될 때 효력이 생기고, 보증 금액은 아홉 단계의 데이터센터 건설이 끝날 때마다 늘며 첫 단계는 2029 회계연도에 예상된다. NVIDIA 의 지급 의무는 세입자의 일정한 채무불이행 때 생기고 금액은 단계별 20년 임대 기간에 걸쳐 줄어들 것으로 예상되며, 보증은 임대료와 전력 대금의 일정 부분으로 한정된다. 추론: 노출은 단계별로 늘었다가 줄어드는 모양이고 가까운 12~24개월에는 효력이 없다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 발효 시점과 지급 사유를 분기 보고서 주석으로 확인해 근거 문장을 보강한다.",
+      "horizon": "long — 첫 단계 효력은 2029 회계연도(2028년 2월~2029년 1월)에 예상된다",
+      "counter_evidence": [
+        "보증은 부지 전체 비용이나 세입자의 모든 의무가 아니라 임대료와 전력 대금의 정해진 부분만 덮는다."
+      ],
+      "unverified": [
+        "단계별 보증 금액과 정해진 부분의 비율은 공시되지 않았다."
+      ],
+      "locator": "10-Q (2026-07-26) Part I Item 1 Note 10 Commitments and Contingencies — Guarantees 절 'SB Energy Corp. guarantees' 문단 둘째~넷째 문장",
+      "excerpt": "Each guarantee generally becomes effective upon commencement of the applicable lease, with corresponding guarantee amounts increasing, as each of the nine phases of data center construction is completed, the first of which is expected in fiscal year 2029. Our payment obligations under the guarantees are triggered upon certain tenant defaults and the amount is expected to decrease over the course of each phase’s 20-year lease term. Our guarantees are limited to defined portions of lease and power payments and not the full cost of the site or all of the tenant’s obligations.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "published_at_utc": "2026-08-26T00:00:00Z",
+      "title": "NVIDIA 10-Q (2026-07-26) Note 10 — SB Energy 보증의 종료 사유와 NVIDIA 인프라 전용 호스팅 조건",
+      "relevance": "사실: SB Energy 보증은 OpenAI 가 만족스러운 신용등급을 얻거나 각 임대 기간이 끝나면 종료되고, 보증의 대가로 이 부지는 일부 예외를 두고 NVIDIA AI 인프라만 호스팅한다고 주석에 적었다. 추론: 보증이 부지를 NVIDIA 제품 전용으로 묶어, NVIDIA 가 건 신용이 NVIDIA 제품 구매로 돌아오는 구조임을 보여 준다.",
+      "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 전용 호스팅 조건을 분기 보고서 주석으로 확인해 세로축 근거 문장을 보강한다.",
+      "horizon": "long — 종료 사유는 OpenAI 의 신용등급 변화와 20년 임대 기간 만료에 달려 있다",
+      "counter_evidence": [
+        "호스팅은 예외를 둔 조건이라 부지의 모든 용량이 NVIDIA 제품으로 채워진다고 보증된 것은 아니다."
+      ],
+      "unverified": [
+        "NVIDIA 제품으로 채워질 용량의 매출 환산액은 공시되지 않았다."
+      ],
+      "locator": "10-Q (2026-07-26) Part I Item 1 Note 10 Commitments and Contingencies — Guarantees 절 'SB Energy Corp. guarantees' 문단 다섯째·여섯째 문장",
+      "excerpt": "The guarantees terminate upon certain events, including OpenAI achieving a satisfactory credit rating or after each respective lease term has completed. In exchange for the guarantees, the site will exclusively host NVIDIA AI infrastructure, subject to limited exceptions.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30) Note 2 — Anthropic 금융 한도의 인출 조건(컴퓨트 인도 이정표)과 인출 형태",
+      "relevance": "사실: Amazon 이 Anthropic 에 열어 둔 금융 한도는 처음에는 인출 가능한 금액이 없고, AWS 컴퓨트 용량 인도 이정표에 이를 때마다 Anthropic 이 임의로 인출할 수 있는 금액이 생기며, 인출은 새 Anthropic 전환사채로, 기업공개 등 유동화 사건 뒤에는 보유 한도 안에서 현금과 맞바꾼 Anthropic 보통주로 이뤄진다고 공시했다. 추론: 한도가 컴퓨트 인도에 묶여 있어 Amazon 이 Anthropic 에 넣을 돈이 Anthropic 의 AWS 이용과 같은 방향으로 움직이는 구조다.",
+      "conditional_impact": "지금은 유지: 아마존 ⑦ 순환금융 판단은 조달 의존 고객 비중이 작고 내 돈이 돌아오는 칸이라 −1 이다. 이 문단은 한도가 컴퓨트 인도 이정표에 따라 열린다는 점을 확인해 세로축 근거 문장을 보강한다. Anthropic 대금이 아마존 매출의 큰 몫으로 공시되면 가로축을 다시 본다.",
+      "horizon": "medium — 이정표가 달성되는 분기마다 인출 가능 금액이 늘어난다",
+      "counter_evidence": [
+        "최초에는 인출 가능한 금액이 없고 인출은 Anthropic 의 선택이라 실제 인출 규모가 확정되지 않았다."
+      ],
+      "unverified": [
+        "이정표별 금액과 일정은 공시되지 않았다."
+      ],
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 2 Financial Instruments — Non-Marketable Investments, Anthropic 항목 'In Q2 2026, we invested…' 문단 넷째·다섯째 문장",
+      "excerpt": "At inception, there is no amount available to be drawn against and as we reach certain delivery milestones of compute capacity under the amended commercial arrangement, amounts under this facility are made available for Anthropic to draw upon at its discretion. Draws against the facility will be in the form of new Anthropic convertible notes or, after an IPO or other liquidity event and subject to our ownership cap, Anthropic common stock, which will be issued to us in exchange for cash.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "amazon",
+      "factors": [
+        "F7"
+      ],
+      "source_id": "SRC-EDGAR-000101872426000026",
+      "published_at_utc": "2026-07-31T00:00:00Z",
+      "title": "Amazon 10-Q (2026-06-30) Note 2 — Anthropic 시리즈 H $5.0B 투자와 금융 한도 잔액 $15.0B",
+      "relevance": "사실: Amazon 은 2026년 2분기에 금융 한도 아래에서 Anthropic 후속 지분 조달에 참여하는 선택권을 행사해 시리즈 H 비의결권 우선주에 $5.0B 를 투자했고, 그 결과 한도의 잔여 금액이 $15.0B 로 줄었다고 공시했다. 같은 주석 문단은 시리즈 G 비의결권 우선주에 대한 $5.0B 투자도 따로 적는다. 추론: 시리즈 H 투자는 시리즈 G 투자와 별개이고 한도 $20.0B 에서 차감됐다.",
+      "conditional_impact": "지금은 유지: 아마존 ⑦ 순환금융 판단은 조달 의존 고객 비중이 작고 내 돈이 돌아오는 칸이라 −1 이다. 이 문단은 한도 사용 실적(시리즈 H $5.0B 차감)을 확인해 세로축 근거 문장을 보강한다.",
+      "horizon": "medium — 한도는 Anthropic 유동화 사건 뒤 30개월에 만료된다",
+      "counter_evidence": [
+        "시리즈 H 투자는 한도 안의 지분 투자라 컴퓨트 인도 이정표에 따라 열린 인출과는 성격이 다르다."
+      ],
+      "unverified": [
+        "한도 잔여 $15.0B 가 전부 이정표 달성을 전제로 열릴지 여부는 공시되지 않았다."
+      ],
+      "locator": "10-Q (2026-06-30) Part I Item 1 Note 2 Financial Instruments — Non-Marketable Investments, Anthropic 항목 'In Q2 2026, we invested…' 문단 마지막 문장",
+      "excerpt": "Under this financing arrangement, in Q2 2026, we exercised our option to participate in subsequent Anthropic equity financings by investing $5.0 billion in Anthropic Series H nonvoting preferred stock, which reduced the amount available under the facility to $15.0 billion.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F3"
+      ],
+      "source_id": "SRC-SEC-nvidia-000104581026000021",
+      "published_at_utc": "2026-02-25T00:00:00Z",
+      "title": "NVIDIA 10-K (FY2026) Item 1 — 경쟁사 목록 첫째 항목(AMD·Huawei·Intel)",
+      "relevance": "사실: NVIDIA 는 10-K 경쟁 절의 첫째 항목에서 개별·통합 GPU, 맞춤 칩 등 AI 용 가속 컴퓨팅 솔루션을 공급하거나 라이선스하는 경쟁사로 AMD, Huawei, Intel 을 이름으로 든다. 추론: 경쟁사 둘 이상이 이미 같은 종류의 가속기를 공급한다는 회사 자신의 공시라, ③ 모방 불가능성 기준에서 경쟁사 둘 이상이 같은 일을 하고 있다는 판정을 받친다.",
+      "conditional_impact": "지금은 유지: NVIDIA ③ 판단은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 실패로 통과점이 1 이다. 이 항목은 모방 불가능성 실패 문장이 든 경쟁사 목록을 회사 공시 원문으로 확인해 근거 문장을 보강한다.",
+      "horizon": "short — 다음 10-K 의 경쟁사 목록 변화로 확인한다",
+      "counter_evidence": [
+        "경쟁사 명단은 회사가 사업 설명에 적은 목록이라 각 경쟁사의 실제 출하량이나 점유율을 보여 주지 않는다."
+      ],
+      "unverified": [
+        "각 경쟁사의 NVIDIA 대비 출하 규모는 이 문단에 없다."
+      ],
+      "locator": "10-K (FY2026) Part I Item 1 Business — Competition 절 'Our current competitors include' 목록 첫째 항목",
+      "excerpt": "suppliers and licensors of hardware and software for discrete and integrated GPUs, custom chips and other accelerated computing solutions, including solutions offered for AI, such as Advanced Micro Devices, Inc., or AMD, Huawei Technologies Co. Ltd., or Huawei, and Intel Corporation, or Intel;",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F3"
+      ],
+      "source_id": "SRC-SEC-nvidia-000104581026000021",
+      "published_at_utc": "2026-02-25T00:00:00Z",
+      "title": "NVIDIA 10-K (FY2026) Item 1 — 경쟁사 목록 넷째 항목 뒷부분(Tesla 의 자체 SoC 설계 팀)",
+      "relevance": "사실: NVIDIA 는 경쟁사 목록의 넷째 항목 뒷부분에서 자기 제품과 서비스용 SoC 를 내부 팀으로 설계하는 회사로 Tesla 를 든다. 추론: 자체 SoC 설계 팀을 둔 Tesla 를 회사가 경쟁 요인으로 직접 적었다는 사실이며, 자체 칩 설계가 NVIDIA 대체재가 될 수 있다는 ③ 모방 불가능성 판정의 근거를 넓힌다.",
+      "conditional_impact": "지금은 유지: NVIDIA ③ 판단은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 실패로 통과점이 1 이다. 이 항목은 경쟁사 목록에서 Tesla 의 자체 SoC 팀을 확인해 근거 문장만 보강한다.",
+      "horizon": "short — 다음 10-K 의 경쟁사 목록 변화로 확인한다",
+      "counter_evidence": [
+        "Tesla 의 자체 SoC 가 NVIDIA 제품을 얼마나 대체하는지는 이 문단에 없다."
+      ],
+      "unverified": [
+        "Tesla 자체 SoC 의 출하 규모와 NVIDIA 제품과 겹치는 범위는 공시되지 않았다."
+      ],
+      "locator": "10-K (FY2026) Part I Item 1 Business — Competition 절 'Our current competitors include' 목록 넷째 항목 뒷부분",
+      "excerpt": "companies with internal teams designing SoC products for their own products and services, such as Tesla, Inc.; and",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F3"
+      ],
+      "source_id": "SRC-SEC-nvidia-000104581026000021",
+      "published_at_utc": "2026-02-25T00:00:00Z",
+      "title": "NVIDIA 10-K (FY2026) Item 1 — 경쟁사 목록 다섯째 항목(네트워킹 제품 경쟁사)",
+      "relevance": "사실: NVIDIA 는 네트워킹 제품(스위치, DPU 를 포함한 네트워크 어댑터, 광모듈을 포함한 케이블)의 경쟁사로 AMD, Arista Networks, Broadcom, Cisco, HPE, Huawei, Intel, Lumentum, Marvell 과 시스템 업체·대형 클라우드 기업의 내부 팀을 든다. 추론: 서버·네트워크 층의 네트워킹 제품에는 외부 경쟁사 아홉 곳과 고객의 내부 팀이 있다는 회사 공시다.",
+      "conditional_impact": "지금은 유지: NVIDIA ③ 판단은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 실패로 통과점이 1 이다. 이 항목은 네트워킹 제품 경쟁사 목록을 회사 공시 원문으로 확인해 근거 문장만 보강한다.",
+      "horizon": "short — 다음 10-K 의 경쟁사 목록 변화로 확인한다",
+      "counter_evidence": [
+        "경쟁사 명단은 회사가 사업 설명에 적은 목록이라 네트워킹 매출 점유율을 보여 주지 않는다."
+      ],
+      "unverified": [
+        "네트워킹 제품별 NVIDIA 점유율과 경쟁사 출하 규모는 이 문단에 없다."
+      ],
+      "locator": "10-K (FY2026) Part I Item 1 Business — Competition 절 'Our current competitors include' 목록 다섯째 항목",
+      "excerpt": "networking products consisting of switches, network adapters (including DPUs), and cable solutions (including optical modules) include such as AMD, Arista Networks, Broadcom, Cisco Systems, Inc., Hewlett Packard Enterprise Company, Huawei, Intel, Lumentum Holdings Inc., and Marvell Technology, Inc, as well as internal teams of system vendors and large cloud services companies.",
+      "kind": "filing",
+      "channel": "disclosure",
+      "change_vs_previous": "new",
+      "verified_original": true
+    }
+  ],
+  "observations": [
+    {
+      "company_id": "nvidia",
+      "metric": "equity_investment_gains_ttm",
+      "value": 30552000000.0,
+      "unit": "USD",
+      "as_of": "2026-07-26",
+      "kind": "derived",
+      "source_id": "SRC-EDGAR-000104581026000075",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-28",
+        "end": "2026-07-26"
+      },
+      "raw": "Gains from equity securities, net — FY2026 연간 8,918 − 2025년 상반기 2,073 + 2026년 상반기 23,707 = 30,552 (백만 달러). 분기: 1,353 · 5,492 · 15,936 · 7,771",
+      "note": "NVIDIA 가 영업외 손익 주석(Other Income, Net)과 현금흐름표에 적는 '지분증권 이익(순)' 줄의 네 분기 합이다. 비시장성 지분증권의 관측가 상향·손상·처분 손익과 상장 지분증권의 평가·처분 손익이 한 줄에 들어 있다. 공정가치 Level 2 상장 지분증권에 상장사의 미등록 워런트와 전환우선주가 들어 있어 그 평가손익이 이 줄에 섞일 수 있고 크기는 공시되지 않았다(basis.not_separable).",
+      "basis": {
+        "period_basis": "ttm",
+        "concept": "us-gaap:GainLossOnInvestments",
+        "definition": "ASC 321 지분증권(시장성 지분증권 공정가치 평가, 비시장성 지분증권 측정대안 상향·하향·손상)의 평가·처분 손익 순액, 세전. 지분법·채무증권·워런트·파생은 정의 밖",
+        "formula": "네 분기 합(2025-07-28~2026-07-26) = FY2026 연간 − FY2026 상반기 + FY2027 상반기. 분기 값은 같은 줄의 누계 차이로 만든다",
+        "scope": "연결",
+        "components": [
+          {
+            "tag": "us-gaap:GainLossOnInvestments",
+            "label": "Gains from equity securities, net (영업외 손익 주석 줄이며 현금흐름표에서는 'Gains on non-marketable equity securities and publicly-held equity securities, net' 등 같은 값의 줄)",
+            "val": 30552000000,
+            "quarters": [
+              {
+                "period": {
+                  "start": "2025-07-28",
+                  "end": "2025-10-26"
+                },
+                "val": 1353000000,
+                "accession": "0001045810-25-000230",
+                "form": "10-Q",
+                "filed": "2025-11-19",
+                "how": "9개월 누계 3,426(Q3 FY2026 10-Q 현금흐름표 'Gains on non-marketable equity securities and publicly-held equity securities, net') − 상반기 2,073(Q2 FY2026 10-Q 0001045810-25-000209 같은 줄, Q2 FY2027 10-Q 비교 칸 0001045810-26-000075 'Gains from equity securities, net' 과 같은 값)"
+              },
+              {
+                "period": {
+                  "start": "2025-10-27",
+                  "end": "2026-01-25"
+                },
+                "val": 5492000000,
+                "accession": "0001045810-26-000021",
+                "form": "10-K",
+                "filed": "2026-02-25",
+                "how": "연간 8,918(10-K 현금흐름표 같은 줄) − 9개월 3,426(0001045810-25-000230)"
+              },
+              {
+                "period": {
+                  "start": "2026-01-26",
+                  "end": "2026-04-26"
+                },
+                "val": 15936000000,
+                "accession": "0001045810-26-000052",
+                "form": "10-Q",
+                "filed": "2026-05-20",
+                "how": "3개월 사실 그대로(Q1 FY2027 10-Q 현금흐름표 '(Gains) losses from equity securities, net' (15,936))"
+              },
+              {
+                "period": {
+                  "start": "2026-04-27",
+                  "end": "2026-07-26"
+                },
+                "val": 7771000000,
+                "accession": "0001045810-26-000075",
+                "form": "10-Q",
+                "filed": "2026-08-26",
+                "how": "3개월 사실 그대로(Q2 FY2027 10-Q Note 7 Other Income, Net 표 'Gains from equity securities, net' 7,771)"
+              }
+            ]
+          }
+        ],
+        "reconciliation": "(1) 네 분기 합 1,353 + 5,492 + 15,936 + 7,771 = 30,552. (2) 연간 방식 8,918 − 2,073 + 23,707 = 30,552 로 같다. (3) 2026년 상반기 23,707 은 Q1 15,936 + Q2 7,771 이며 Q2 FY2027 10-Q 의 6개월 칸 값과 같다. (4) 분기 값은 companyfacts 의 같은 태그 GainLossOnInvestments 값(상반기 2,073 · 9개월 3,426 · 연간 8,918 · Q1 15,936 · Q2 7,771 · 상반기 23,707)과 같다. (5) 영업외 손익 합계와의 관계: FY2026 연간 영업외 기타(Other income, net) 9,022 = 이 줄 8,918 + 나머지 104.",
+        "not_included": [
+          {
+            "item": "지분법 투자 손익",
+            "reason": "Q2 FY2027 10-Q Note 6 은 지분법 투자 손익이 Other income, net 에 들어가며 2분기와 상반기에 유의하지 않다고 적는다. 이 줄이 아니라 Other 줄에 있다"
+          },
+          {
+            "item": "채무증권 손익",
+            "reason": "이자수익과 채무증권은 Interest income 줄이고 이 줄에 들어 있지 않다"
+          }
+        ],
+        "not_separable": "공정가치 Level 2 상장 지분증권(2026-07-26 현재 $10.8B)에는 상장사의 미등록 워런트와 전환우선주가 들어 있다(Q2 FY2027 10-Q Note 5 주 3). 회사는 이 증권의 평가손익을 지분증권 이익 줄에 함께 적고 워런트 몫을 따로 공시하지 않는다. 정의가 빼는 워런트 평가손익이 섞였을 수 있으며 크기는 알 수 없다.",
+        "accession_sources": [
+          "SRC-SEC-nvidia-000104581025000209",
+          "SRC-SEC-nvidia-000104581025000230",
+          "SRC-SEC-nvidia-000104581026000021",
+          "SRC-SEC-nvidia-000104581026000052",
+          "SRC-EDGAR-000104581026000075"
+        ],
+        "coordinator_note": "조율자 결정(2026-10-12): 'Gains from equity securities, net' 줄을 쓴다. Level 2 상장 지분증권에 섞인 미등록 워런트·전환우선주의 평가손익이 이 줄에 들어가는지와 그 크기는 공시되지 않았다(한계)."
+      }
+    },
+    {
+      "company_id": "tesla",
+      "metric": "equity_investment_gains_ttm",
+      "value": 1005000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "raw": "SpaceX equity investment unrealized gain — 2026년 상반기 현금흐름표 줄 (1,005) 백만 달러. 2분기 순이익 $1.00 billion",
+      "note": "Tesla 가 2026-03 에 $2.0B 로 취득한 SpaceX 보통주의 공정가치 평가이익이다. 회사는 이 지분을 ASC 323 지분법 투자로 보되 ASC 825 공정가치 옵션으로 분기마다 시장 관측값으로 평가하고 평가손익을 Other income, net 에 둔다. 피투자자 순이익의 몫(지분법 손익)이 아니라 주식의 평가이익이며, 같은 SpaceX 주식의 평가이익을 Alphabet 은 지분증권 평가손익(ASC 321)으로 적는다. 같은 사건을 같은 성격으로 읽기 위해 이 정의에 넣었다(basis.classification). 확인한 범위(FY2025 10-K, 2026년 1·2분기 10-Q)에서 그 밖의 지분증권 평가손익 줄은 없다.",
+      "basis": {
+        "period_basis": "ttm",
+        "concept": "us-gaap:UnrealizedGainLossOnInvestments",
+        "definition": "지분증권의 평가·처분 손익 순액, 세전. 피투자자 순이익의 몫(지분법 손익)과 채무증권·워런트·파생은 정의 밖",
+        "formula": "네 분기 합(2025-07-01~2026-06-30). 2025년 3분기·4분기는 해당 지분이 없었고 2026년 1분기는 평가이익 인식이 없다",
+        "scope": "연결",
+        "components": [
+          {
+            "tag": "us-gaap:UnrealizedGainLossOnInvestments",
+            "label": "SpaceX equity investment unrealized gain(현금흐름표 줄, ASC 825 공정가치 옵션 평가이익)",
+            "val": 1005000000,
+            "quarters": [
+              {
+                "period": {
+                  "start": "2026-01-01",
+                  "end": "2026-03-31"
+                },
+                "val": 0,
+                "accession": "0001628280-26-026673",
+                "form": "10-Q",
+                "filed": "2026-04-23",
+                "how": "Q1 10-Q 현금흐름표에 SpaceX 평가이익 줄이 없고 공정가치표의 SpaceX 지분 2,002 가 취득원가 2,002 와 같다(평가이익 인식 없음)"
+              },
+              {
+                "period": {
+                  "start": "2026-04-01",
+                  "end": "2026-06-30"
+                },
+                "val": 1005000000,
+                "accession": "0001628280-26-049270",
+                "form": "10-Q",
+                "filed": "2026-07-23",
+                "how": "상반기 현금흐름표 줄 (1,005) 이 2분기 값이다. 공정가치표 각주는 2분기 순이익을 $1.00 billion 으로 적는다"
+              }
+            ]
+          }
+        ],
+        "pre_investment_quarters": "2025-07-01~2025-12-31 에는 해당 지분이 없었다(2026-01 약정, 2026-03 취득). FY2025 10-K 에는 지분증권 평가손익 줄이 없다",
+        "classification": "Tesla 10-Q Note 1: '…presumed to have significant influence over our equity method investment in SpaceX under ASC 323 … we have elected the fair value option in accordance with ASC 825'. 정의의 'ASC 321 지분증권' 으로는 분류되지 않지만(지분법 투자 + 공정가치 옵션), 정의가 빼는 것은 지분법 지분 손익과 그 처분 손익이고 이 이익은 주식 평가이익이라 포함했다. ASC 321 로만 좁게 읽으면 이 이익은 정의 밖이다.",
+        "reconciliation": "2026년 상반기 1,005 = Q1 0 + Q2 1,005. companyfacts 의 UnrealizedGainLossOnInvestments 2026-01-01~2026-06-30 값 1,005 와 같다(Q2 10-Q 0001628280-26-049270). 같은 태그의 2025년 연간 −7 과 2026년 1분기 −10 은 단기 투자(채무증권)의 미실현 손익이라 지분증권이 아니다.",
+        "coordinator_note": "조율자 결정(2026-10-12): SpaceX 지분은 회사가 공정가치 옵션(ASC 825)을 쓴 지분법(ASC 323) 투자라 고정 정의(ASC 321)의 문언 밖이지만, 같은 SpaceX 주식의 평가이익을 Alphabet 쪽은 넣으므로 같은 사건을 같은 성격으로 읽어 넣는다."
+      }
+    },
+    {
+      "company_id": "alibaba",
+      "metric": "income_tax_ttm",
+      "value": 4925775587.126703,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "kind": "actual",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "raw": "TTM 법인세 비용 RMB33,978M (2025-07-01~2026-06-30) ÷ 6.8980",
+      "note": "알리바바 세전이익 관측(alibaba.pretax_income_ttm.rs1006)과 같은 조립이다: 20-F 회계연도 값 − 전년 같은 분기 + 올해 같은 분기, 위안 원값을 20-F 선언 환율 6.8980 으로 환산, 연결 범위. 세전이익 관측의 basis 에 ownership_scope 키가 없어 이 관측도 그 키를 두지 않는다. 연결 법인세라 비지배지분 몫을 따로 떼지 않았다.",
+      "basis": {
+        "period_basis": "ttm",
+        "reconstruction_path": "누계 형식 FY(20-F, 감사) − 전년 같은 분기(2025 보도자료) + 올해 같은 분기(2026 보도자료). 세전이익 관측 alibaba.pretax_income_ttm.rs1006 과 같은 조립",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. FY 성분은 20-F 감사 재무제표 값이다.",
+        "restatement_generation": "2025-04~06 값 8,865 는 2025 보도자료 당해 칸과 2026 보도자료 비교 칸이 같다. FY2026 값은 20-F 감사 재무제표 값이다. 재작성 없음 — 같은 세대.",
+        "scope_note": "연결 법인세 비용이다. 같은 연결 범위의 세전이익 관측과 짝을 이룬다",
+        "original_value": 33978000000,
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 같은 알리바바의 세전이익·순이익·매출 관측(rs1006 계열)과 같은 환율 6.8980 을 당해·전년 창에 모두 쓴다",
+        "fx_uniform_rate_note": "연간 값과 분기 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다",
+        "component_accessions": {
+          "items": [
+            {
+              "role": "fy_current",
+              "line": "Income tax expenses",
+              "tag": "us-gaap:IncomeTaxExpenseBenefit",
+              "start": "2025-04-01",
+              "end": "2026-03-31",
+              "val": 30045000000,
+              "val_unit": "CNY",
+              "accession": "0001193125-26-231755",
+              "form": "20-F",
+              "filed": "2026-05-20",
+              "source_id": "SRC-SEC-BABA-20F-FY2026",
+              "audited": true,
+              "location": "20-F 연결손익계산서(Consolidated Income Statements, F-5), 열 'Year ended March 31, 2026 RMB' — Income tax expenses (30,045)"
+            },
+            {
+              "role": "minus_prior_year_same_quarter",
+              "line": "Income tax expenses",
+              "start": "2025-04-01",
+              "end": "2025-06-30",
+              "val": 8865000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-25-085638",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2025-08-29",
+              "source_id": "SRC-SEC-BABA-6K-2025Q1",
+              "audited": false,
+              "location": "2025 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.17), 열 'Three months ended June 30, 2025 RMB' — Income tax expenses (8,865)"
+            },
+            {
+              "role": "plus_current_year_quarter",
+              "line": "Income tax expenses",
+              "start": "2026-04-01",
+              "end": "2026-06-30",
+              "val": 12798000000,
+              "val_unit": "CNY",
+              "accession": "0001104659-26-099220",
+              "form": "6-K (Ex.99.1)",
+              "filed": "2026-08-20",
+              "source_id": "SRC-SEC-BABA-6K-2026Q1",
+              "audited": false,
+              "location": "2026 보도자료 'UNAUDITED CONSOLIDATED INCOME STATEMENTS'(p.18), 열 'Three months ended June 30, 2026 RMB' — Income tax expenses (12,798)"
+            }
+          ]
+        },
+        "arithmetic": {
+          "formula": "30,045 − 8,865 + 12,798 (RMB 백만)",
+          "sum": 33978000000,
+          "matches_value": true
+        },
+        "cross_check": {
+          "formula": "세전 = 순이익(전체) + 법인세 − 지분법 손익",
+          "pretax_ttm_cny_m": 101461,
+          "net_income_total_ttm_cny_m": 70189,
+          "income_tax_ttm_cny_m": 33978,
+          "equity_method_ttm_cny_m": 2706,
+          "recomputed_pretax_cny_m": 101461,
+          "matches": true,
+          "effective_tax_rate": 0.3349
+        }
+      }
+    }
+  ],
+  "observation_fixes": [
+    {
+      "observation_id": "amazon.equity_investment_gains_ttm.2026-06-30.v21",
+      "action": "replace",
+      "replacement": {
+        "observation_id": "amazon.equity_investment_gains_ttm.2026-06-30.v21",
+        "company_id": "amazon",
+        "metric": "equity_investment_gains_ttm",
+        "value": 72056000000.0,
+        "unit": "USD",
+        "as_of": "2026-06-30",
+        "kind": "derived",
+        "source_id": "SRC-EDGAR-000101872426000026",
+        "status": "verified",
+        "period": {
+          "start": "2025-07-01",
+          "end": "2026-06-30"
+        },
+        "raw": "Other income (expense), net 표 — 시장성 지분증권 평가 1,619 + 비상장 지분 상향 조정 70,437 = 72,056 (최근 1년, 백만 달러)",
+        "note": "Amazon 10-Q·10-K '기타 영업외 손익' 주석 표의 지분증권 두 줄(시장성 지분증권 평가, 비상장 지분 상향 조정)의 네 분기 합이다. 두 줄은 대부분 Anthropic 투자에서 나왔다. 매도가능 채무증권 재분류 이익 6,794 는 채무증권 줄이라 정의 밖이고, 지분 워런트 평가 줄 1,392 는 파생이라 뺐다. 비상장 지분의 하향 조정·손상은 이 표에 따로 줄이 없다(basis.coverage).",
+        "basis": {
+          "period_basis": "ttm",
+          "definition": "ASC 321 지분증권(시장성 지분증권 공정가치 평가, 비시장성 지분증권 측정대안 상향·하향·손상)의 평가·처분 손익 순액, 세전. 지분법·채무증권·워런트·파생은 정의 밖",
+          "formula": "두 줄 각각의 네 분기 합(2025년 3분기 + 4분기 + 2026년 1분기 + 2분기)을 더한 값, 세전",
+          "scope": "연결",
+          "components": [
+            {
+              "tag": "Other income (expense), net 주석 표 · Marketable equity securities valuation gains (losses), net",
+              "label": "Marketable equity securities valuation gains (losses), net",
+              "val": 1619000000,
+              "quarters": [
+                {
+                  "period": {
+                    "start": "2025-07-01",
+                    "end": "2025-09-30"
+                  },
+                  "val": 220000000,
+                  "accession": "0001018724-25-000123",
+                  "form": "10-Q",
+                  "filed": "2025-10-31",
+                  "how": "3개월 사실 그대로"
+                },
+                {
+                  "period": {
+                    "start": "2025-10-01",
+                    "end": "2025-12-31"
+                  },
+                  "val": 969000000,
+                  "accession": "0001018724-26-000004",
+                  "form": "10-K",
+                  "filed": "2026-02-06",
+                  "how": "연간 1,439 − 9개월 470(0001018724-25-000123)"
+                },
+                {
+                  "period": {
+                    "start": "2026-01-01",
+                    "end": "2026-03-31"
+                  },
+                  "val": -889000000,
+                  "accession": "0001018724-26-000014",
+                  "form": "10-Q",
+                  "filed": "2026-04-30",
+                  "how": "3개월 사실 그대로"
+                },
+                {
+                  "period": {
+                    "start": "2026-04-01",
+                    "end": "2026-06-30"
+                  },
+                  "val": 1319000000,
+                  "accession": "0001018724-26-000026",
+                  "form": "10-Q",
+                  "filed": "2026-07-31",
+                  "how": "3개월 사실 그대로"
+                }
+              ]
+            },
+            {
+              "tag": "Other income (expense), net 주석 표 · Upward adjustments relating to equity investments in private companies",
+              "label": "Upward adjustments relating to equity investments in private companies",
+              "val": 70437000000,
+              "quarters": [
+                {
+                  "period": {
+                    "start": "2025-07-01",
+                    "end": "2025-09-30"
+                  },
+                  "val": 7226000000,
+                  "accession": "0001018724-25-000123",
+                  "form": "10-Q",
+                  "filed": "2025-10-31",
+                  "how": "3개월 사실 그대로"
+                },
+                {
+                  "period": {
+                    "start": "2025-10-01",
+                    "end": "2025-12-31"
+                  },
+                  "val": 397000000,
+                  "accession": "0001018724-26-000004",
+                  "form": "10-K",
+                  "filed": "2026-02-06",
+                  "how": "연간 7,709 − 9개월 7,312(0001018724-25-000123)"
+                },
+                {
+                  "period": {
+                    "start": "2026-01-01",
+                    "end": "2026-03-31"
+                  },
+                  "val": 12328000000,
+                  "accession": "0001018724-26-000014",
+                  "form": "10-Q",
+                  "filed": "2026-04-30",
+                  "how": "3개월 사실 그대로"
+                },
+                {
+                  "period": {
+                    "start": "2026-04-01",
+                    "end": "2026-06-30"
+                  },
+                  "val": 50486000000,
+                  "accession": "0001018724-26-000026",
+                  "form": "10-Q",
+                  "filed": "2026-07-31",
+                  "how": "3개월 사실 그대로"
+                }
+              ]
+            }
+          ],
+          "excluded": [
+            {
+              "tag": "Other income (expense), net 주석 표 · Reclassification adjustments for gains (losses) on available-for-sale debt securities, net",
+              "val": 6794000000,
+              "quarters": [
+                {
+                  "period": {
+                    "start": "2025-07-01",
+                    "end": "2025-09-30"
+                  },
+                  "val": 2307000000
+                },
+                {
+                  "period": {
+                    "start": "2025-10-01",
+                    "end": "2025-12-31"
+                  },
+                  "val": 8000000
+                },
+                {
+                  "period": {
+                    "start": "2026-01-01",
+                    "end": "2026-03-31"
+                  },
+                  "val": 4479000000
+                },
+                {
+                  "period": {
+                    "start": "2026-04-01",
+                    "end": "2026-06-30"
+                  },
+                  "val": 0
+                }
+              ],
+              "reason": "매도가능 채무증권(Anthropic 전환사채)이 우선주로 전환될 때 기타포괄손익에서 손익으로 옮긴 이익이다. 채무증권 줄이라 정의 밖이다(경제적으로는 같은 Anthropic 투자 이익이지만 정의를 따랐다). 넣으면 합계가 78,850M 이다"
+            },
+            {
+              "tag": "Other income (expense), net 주석 표 · Equity warrant valuation gains (losses), net",
+              "val": 1392000000,
+              "quarters": [
+                {
+                  "period": {
+                    "start": "2025-07-01",
+                    "end": "2025-09-30"
+                  },
+                  "val": 441000000
+                },
+                {
+                  "period": {
+                    "start": "2025-10-01",
+                    "end": "2025-12-31"
+                  },
+                  "val": -100000000
+                },
+                {
+                  "period": {
+                    "start": "2026-01-01",
+                    "end": "2026-03-31"
+                  },
+                  "val": -398000000
+                },
+                {
+                  "period": {
+                    "start": "2026-04-01",
+                    "end": "2026-06-30"
+                  },
+                  "val": 1449000000
+                }
+              ],
+              "reason": "다른 회사의 주식을 살 권리(워런트) 평가손익이라 지분증권이 아니라 파생 평가로 읽어 뺐다"
+            },
+            {
+              "tag": "Other income (expense), net 주석 표 · Foreign currency gains (losses), net 과 Other, net",
+              "val": 183000000,
+              "reason": "지분과 무관한 줄(환 338 + 기타 −155)"
+            }
+          ],
+          "coverage": "비상장 지분의 하향 조정·손상은 최근 네 개 보고서의 주석 표에 따로 줄이 없다. 있다면 'Other, net'(최근 1년 −155M) 안에 있고, 그 한도는 155M 이다(72,056M 의 0.2%). 회사는 비상장 지분에 대해 '관측 가능한 가격 변화나 손상에 따른 조정'을 Other income (expense), net 에 적는다고 밝히지만 분리 공시는 없다.",
+          "reconciliation": "(1) 두 줄을 FY2025 + 2026 상반기 − 2025 상반기로 다시 계산하면 같다: 시장성 지분 1,439 + 430 − 250 = 1,619, 비상장 상향 7,709 + 62,814 − 86 = 70,437. (2) 분기별 줄의 합이 해당 10-Q 의 '기타 영업외 손익 합계'와 맞는다: 2026년 2분기 합계 53,415 = 1,319 + 1,449 + 0 + 50,486 + 227 − 66. (3) 최근 1년 기타 영업외 손익 합계 80,425(10,186 + 1,177 + 15,647 + 53,415)는 지분증권 두 줄 72,056 + 재분류 6,794 + 워런트 1,392 + 환·기타 183 과 같다. (4) XBRL 태그 EquitySecuritiesFvNiGainLoss 는 시장성 지분 줄과 값이 달라(2025 연간 1,200 대 표 1,439) 쓰지 않고 주석 표 줄을 썼다.",
+          "driver": "10-Q: 2026년 2분기 기타 영업외 손익 $53.4B 는 주로 Anthropic 비의결권 우선주의 관측 가능한 가격 변화에 따른 상향 조정이다"
+        },
+        "unit_note": "USD"
+      },
+      "reason": "정의는 채무증권을 빼는데 기존 78,850M 에 매도가능 채무증권 재분류 이익 6,794M(Anthropic 전환사채가 우선주로 전환될 때 기타포괄손익에서 옮긴 이익)이 들어 있었다. 그 줄을 빼고 지분증권 두 줄(시장성 평가 1,619M + 비상장 상향 조정 70,437M)만 남겨 72,056M 으로 고친다. 워런트 줄 1,392M 은 기존대로 뺀다. 비상장 지분의 하향 조정·손상은 주석 표에 따로 줄이 없고 있다면 'Other, net'(−155M) 안이라 한도가 0.2% 다."
+    },
+    {
+      "observation_id": "alibaba.equity_investment_gains_ttm.2026-06-30.v21",
+      "action": "remove",
+      "reason": "기존 66,652M(RMB, 최근 1년)은 회사의 비GAAP 조정표 줄 'Gain on deemed disposals/disposals/revaluation of investments' 의 네 분기 합이다. 이 줄에는 지분증권 평가·처분 이익 말고 종속기업 처분 이익과 지분법 투자 처분 손익이 섞여 있다. 20-F 감사 현금흐름표(회계 2026년)로 보면 비GAAP 줄 74,416 은 지분증권·기타 투자 이익 66,089 와 종속기업 처분 이익 8,387 의 합 74,476 에서 60 어긋나고, 지분법 투자 처분 손실 529 와 기존 지분 재평가 손실 99 까지 반영하면 73,848 로 568(0.8%) 어긋난다. 정의에 맞추려면 종속기업 처분 이익 8,387 을 빼고 지분증권·기타 투자 손상 7,724 를 따로 반영해야 하는데 분기 보도자료에는 이 구성이 없어 최근 1년(2025-07~2026-06) 값으로는 가를 수 없다. 20-F 의 연간 값(회계 2026년)은 있으나 다른 알리바바 TTM 관측과 기간이 어긋나 같은 이름으로 두지 않는다. 정의에 맞지 않는 값을 같은 지표 이름으로 두지 않기 위해 제거한다."
+    }
+  ],
+  "layer_map": [],
+  "notes": [
+    "[범위] 읽은 원문: Alphabet 10-Q(2025Q3·2026Q1·2026Q2)·FY2025 10-K 의 Note 3·7 지분증권 표, Amazon 10-Q(2025Q3·2026Q1·2026Q2)·FY2025 10-K 의 기타 영업외 손익 주석 표, Microsoft 10-Q(2025-09-30·2025-12-31·2026-03-31)·FY2026 10-K 의 Note 3 지분 투자 손익 표, NVIDIA 10-K(FY2026)·10-Q(2025-07-27·2025-10-26·2026-04-26·2026-07-26)의 영업외 손익 주석·현금흐름표·Note 6, Oracle FY2026 10-K·Q1 FY2027 10-Q 의 영업외 손익 주석·MD&A, Tesla FY2025 10-K·10-Q(2026-03-31·2026-06-30)의 SpaceX 투자 주석, Meta 10-K(FY2025)·10-Q(2025-09-30·2026-03-31·2026-06-30)의 Note 4·5·MD&A, Apple FY2025 10-K·10-Q(2026-06-27), Palantir FY2025 10-K·10-Q(2026-03-31·2026-06-30)의 Other income 설명과 지분증권 주석, Alibaba FY2026 20-F(Note 11·연결 현금흐름표)와 2025-06·2026-06 분기 6-K 보도자료. 새로 sec-get 으로 받은 SEC 원문은 NVIDIA 10-Q(2025-10-26)와 Tesla 10-Q(2026-03-31) 둘이다.",
+    "[정의] 지분 평가손익은 ASC 321 지분증권의 평가·손상·처분 손익 순액(세전, 최근 1년)이고, 지분법·채무증권·워런트·파생은 뺀다. Alphabet 의 EquitySecuritiesFvNiGainLoss 와 같은 범위다.",
+    "[Alphabet] 148,982M 은 정의와 같아 고치지 않는다. 네 분기 값(2025Q3 10,734 · 2025Q4 2,302 · 2026Q1 36,915 · 2026Q2 99,031)을 10-Q Note 3 표의 'Total gain (loss) on equity securities' 줄과 다시 대조했다. 그 줄은 비시장성 지분증권의 상향·하향 조정과 손상, 시장성 지분증권 평가, 처분 손익을 모두 담고 지분법 손익은 따로 줄('Income (loss) and impairment from equity method investments, net')에 있다.",
+    "[Amazon] 78,850M → 72,056M 으로 고친다(채무증권 재분류 6,794M 제외). 구성은 시장성 지분증권 평가 1,619M(분기 220 · 969 · −889 · 1,319)과 비상장 지분 상향 조정 70,437M(분기 7,226 · 397 · 12,328 · 50,486)이다. 주석 표에는 하향 조정·손상 줄이 없다. 한도는 'Other, net' 의 최근 1년 −155M 이다.",
+    "[Microsoft] 4,364M 은 정의와 같아 고치지 않는다. 10-K Note 3 의 'Net recognized gains (losses) on equity investments' 표(실현 125 · 미실현 4,391 · 손상 −152)이고 네 분기 값(−582 · 350 · 1,622 · 2,974)을 세 10-Q 의 같은 표와 다시 대조했다. OpenAI 지분법 순이익 6.5B 는 Other, net 에 있어 들어 있지 않다.",
+    "[NVIDIA] 30,552M 을 등록했다. 영업외 손익 주석의 'Gains from equity securities, net' 줄(현금흐름표의 같은 값 줄)이며 분기 값은 1,353 · 5,492 · 15,936 · 7,771 이다. 정의와 어긋날 수 있는 점은 하나다. 공정가치 Level 2 상장 지분증권에 상장사의 미등록 워런트와 전환우선주가 들어 있고 그 평가손익이 이 줄에 섞이는지와 크기는 공시되지 않았다. 판단 세션과 리뷰가 이 한계를 보고 조정에 쓸지 정한다.",
+    "[Tesla] 1,005M 을 등록했다. 2026-03 에 취득한 SpaceX 보통주($2.0B)의 평가이익이다. 회사는 이 지분을 ASC 323 지분법 투자로 보되 ASC 825 공정가치 옵션으로 시장 관측값으로 평가한다. 엄격한 ASC 321 분류는 아니지만 정의가 빼는 것은 지분법 지분 손익과 처분 손익이고, 같은 SpaceX 주식의 평가이익을 Alphabet 이 ASC 321 평가손익으로 적으므로 같은 사건을 같은 성격으로 읽으려고 포함했다. ASC 321 로만 좁게 읽으면 정의 밖이라 이 관측을 제거해야 한다. 이 세전 이익은 Tesla 최근 1년 순이익(약 3.9B)의 약 26% 다.",
+    "[Meta 미등록] 정의에 맞게 가를 수 없어 등록하지 않았다. 확인한 값은 시장성 지분증권의 순 미실현 손익뿐이다: 2025Q3 +922 · 2025Q4 −135(연간 +413 − 9개월 +548) · 2026Q1 −1,570 · 2026Q2 −733 = 최근 1년 −1,516M. 비시장성 지분증권(측정대안)의 상향·하향 조정은 기간별로 공시되지 않는다. 주석 표의 누적 조정 변화는 Q4 2025 +49 · Q1 2026 +129 · Q2 2026 +1(2025Q3 단독은 가를 수 없음)로 작지만, MD&A 는 2026년 상반기 지분 손실이 '시장성 지분의 미실현 손실이 비시장성 지분의 미실현 이익으로 일부 상쇄된 것'이라 적고 현금흐름표의 '지분투자 미실현 이익(손실)' 줄은 최근 1년 +273M 로 부호가 반대다. 그 줄에는 지분법 손익이 섞였을 수 있다. 시장성 값 −1,516M 만 쓰면 비시장성 몫이 빠지고 현금흐름표 줄을 쓰면 정의 밖 항목이 섞인다. 둘 다 같은 이름으로 두지 않았다. 빠졌을 때 크기는 Meta 최근 1년 세전이익 87.5B 의 약 1.7% 이하다.",
+    "[Oracle 미등록] 정의에 맞게 가를 수 없어 등록하지 않았다. '지분증권·채권 투자 손익(Gains (losses) from marketable and non-marketable investments, net)' 줄의 최근 1년 합은 2,916M(회계 2026년 2,811 − 2025-06~08 분기 −52 + 2026-06~08 분기 +53)이지만 회사 정의가 이 줄에 '지분법 투자 손익'을 포함시키고, 2025-11 Ampere(지분법 투자) 매각 이익 $2.7B(지분·채권·콜옵션 지분의 합, 10-K 가 2.7B 로 반올림해 적음)가 줄의 대부분이다. 나머지 약 0.2B 안에서 ASC 321 몫과 지분법 손익을 가를 공시는 없다. Oracle 의 최근 1년 세전이익은 21.7B 이므로 빠졌을 때 크기는 최대 1% 안팎이다.",
+    "[Apple 해당 줄 없음] FY2025 10-K 와 2026-06-27 10-Q 의 영업외 손익은 'Other income/(expense), net' 한 줄(FY2025 −321M, 2026 9개월 +670M)이고 주석·MD&A·현금흐름표에 지분증권 평가손익 줄이 없다. 등록하지 않는다(0 으로 두지 않음). 한도: 그 한 줄의 크기가 세전이익 155.9B 의 1% 미만이다.",
+    "[Palantir 미등록] 정의에 맞게 가를 수 없어 등록하지 않았다. 확인한 조각: 현금흐름표 '미실현·실현 (이익) 손실(시장성 증권)' 최근 1년 +40.6M(2025 하반기 손실 21.7M — FY2025 손실 21.2M 에서 2025 상반기 이익 0.5M 을 걷어낸 값 — 에 2026 상반기 이익 62.2M 을 더함), 비상장 지분 상향 조정 2025 연간 30.7M(2025 상반기에는 중요한 조정 없음이라 전부 하반기). 그러나 2026년 1분기 기타 영업외 손익 68.2M 의 주된 원인이 '비상장 지분증권의 실현 이익'이라는 설명만 있고 금액이 없다. 최근 1년 기타 영업외 손익 합계는 170.8M(FY2025 14.2 − 2025 상반기 3.4 + 2026 상반기 160.0)이고 환차손익이 섞여 있다. 확인한 조각 71.3M 은 세전이익 3,071.8M 의 2.3% 이고 합계 상한은 5.6% 다.",
+    "[Alibaba 제거] 기존 지분 평가손익 관측(66,652M RMB, 9.66B USD)은 정의와 달라 제거한다. 비GAAP 조정표 줄에 지분법 투자 간주 처분과 종속기업 처분 이익이 섞여 있고 투자 손상은 영업권 손상과 합쳐져 분기별로 가를 수 없다. 20-F 회계 2026년(2025-04~2026-03) 연간 값은 있다: 감사 현금흐름표 '지분증권·기타 투자 관련 손실(이익)' 이익 66,089M, 투자 손상 7,724M, Note 11 의 보유 지분증권 미실현 순이익(손상 포함) 56,295M, 비상장(측정대안) 상향 39,416M·하향·손상 8,187M. 분기 보도자료에는 이 구성이 없어 2026-06 기준 최근 1년 값을 정의대로 만들 수 없다.",
+    "[Alibaba 법인세] 최근 1년 법인세 비용 RMB33,978M = 20-F 회계 2026년 30,045 − 2025-04~06 분기 8,865 + 2026-04~06 분기 12,798, ÷ 6.8980 = USD 4,925.8M 이다. 세전이익 관측(RMB101,461M)과 대면 실효세율 33.5% 다. 세전이익 관측의 basis 에 ownership_scope 키가 없어 이 관측도 그 키를 두지 않았다. 세전 = 순이익 70,189 + 법인세 33,978 − 지분법 2,706 = 101,461 로 닫힌다.",
+    "[Alphabet 보증 상대] 10-Q(2026-06-30) Note 3·5·10 과 MD&A 에는 금융보증 $7.6B·신용 파생 $43.8B·추가 보증 $24.1B·조건부 출자 $20.0B 의 상대가 이름으로 밝혀져 있지 않다. 신용 파생은 '데이터센터 관련 지급 의무를 받치는 certain third parties'(남은 기간 최대 15년, 채무불이행 시 임대차를 넘겨받거나 전대할 권리, 해지 지급 선택권), 금융보증은 '전력 구매·에너지 계약용 장납기 장비 조달을 받치는 certain counterparties'(2026-09 까지), 조건부 출자 $20.0B 는 'a private company'(운영·재무 이정표 달성 조건, 2030 년까지, 주식 파생으로 회계)로만 적혀 있다. 상대 이름이 공시돼 있지 않아 근거 항목으로 올리지 않았다.",
+    "[보강 근거] 새 근거 13건: NVIDIA 8-K(2026-08-17) Item 1.01 5건(효력·한도·추가 선택권 / 지급 조건·2028 / 지급 사유 / 종료 사유와 OpenAI 보상·면책 / DSX 플랫폼 배치), NVIDIA 10-Q(2026-07-26) Note 10 SB Energy 보증 3건(고객과 임대 규모 / 발효·지급 사유·범위 / 종료 사유와 전용 호스팅), Amazon 10-Q(2026-06-30) Note 2 Anthropic 금융 한도 2건(인출 조건·형태 / 시리즈 H $5.0B 와 잔액 $15.0B), NVIDIA 10-K(FY2026) Item 1 경쟁사 목록 3건(첫째 항목 / 넷째 항목 뒷부분 Tesla / 다섯째 항목 네트워킹). 이미 있는 근거와 겹치는 부분은 올리지 않았다: EV-nvidia-046(8-K 첫 문단), EV-nvidia-047(8-K 보증 첫 문장), EV-nvidia-099(10-Q 보증 표 $105.0B·$3.5B), EV-nvidia-102(10-K 경쟁사 목록 둘째·넷째 항목 앞부분), EV-amazon-078(Anthropic 한도 $20.0B 와 잔액 $15.0B 문장), EV-alphabet-088(MD&A 보증 금액).",
+    "[못 찾은 것] Alphabet 의 보증·조건부 출자 상대 이름은 공시에 없다. Meta·Oracle·Palantir 는 정의에 맞는 분기 값을 가를 공시가 없고, Apple 은 해당 줄이 없다. Alibaba 는 분기 단위 정의 값이 없다. NVIDIA 8-K 의 '둘째·셋째 문단' 표현은 'Residual Value Guaranties' 소제목 아래 문단 순서와 요청 내용이 어긋나 해당 소제목 아래 첫째~여섯째 문단의 요청 내용(효력 시점, 지급 사유, OpenAI 보상·면책, DSX 배치)을 모두 문단별로 올렸다."
+  ]
+}

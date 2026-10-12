@@ -1,0 +1,44 @@
+{
+  "changes": {},
+  "evidence_after": [
+    "아마존 ② 는 성능 도약 실패, 패러다임 적응 통과, 표준 선점 실패로 통과 경로가 하나다.",
+    "성능 도약은 실패다. 자체 모델 Nova 는 2026-10-08 Artificial Analysis 순위표의 회사별 최고 모델 목록에 없고, 사용자 투표형 Arena 텍스트 부문(2026-10-02, 참고)에서도 최고 117위다. 자체 칩 Trainium3 의 성능 수치는 회사 발표이고 선두 칩을 앞선다는 독립 측정이 없다. 모델이 없거나 뒤진다는 사실은 성능 도약에만 닿는다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 통과다. 에이전트·추론용으로 내놓은 Trainium3 와 에이전트 운영 기반 Bedrock AgentCore 가 있고, AI 사업 연환산 매출 $25B 초과와 Anthropic 의 Trainium2 학습·서비스라는 실측 채택 지표가 있다. OpenAI 의 Trainium 약 2GW 와 Anthropic 의 10년 $100B 넘는 약정은 계획이라 채택 지표로 세지 않는다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 다른 회사 제품이 그 인터페이스를 채택했다는 사실로 재고, 자기 제품을 사서 쓰거나 되파는 것과 자기 제품 안에서만 쓰이는 형식은 채택으로 세지 않는다. 표준 선점은 실패다. Google Cloud·OCI 가 정식으로, Azure 가 프리뷰로 AWS Interconnect 규격을 채택했지만 멀티클라우드 네트워크 연결 규격이라 AI 에 귀속되지 않아 ② 에 세지 않는다(규칙 2.4). 이번 실행의 확정 근거에서 아마존이 정의하고 다른 회사 제품이 채택한 AI 인터페이스는 찾지 못했다. AWS 가 Trainium4 를 NVIDIA NVLink Fusion 에 묶도록 설계하는 것은 다른 회사의 인터페이스를 쓰는 쪽이라 아마존의 표준 선점이 아니다."
+  ],
+  "evidence_up_after": [
+    "AWS 는 2025-12 4세대 AI 칩 Trainium3 를 에이전트·추론·영상 생성용 첫 3nm 칩으로 정식 출시했다. [EV-amazon-033]",
+    "2026년 2분기 AWS 는 전년보다 36.7% 성장했고 AI 사업과 칩 사업이 각각 연환산 매출 $25B 를 넘었다. [EV-amazon-022]",
+    "Anthropic 은 세계 최대급 AI 컴퓨트 클러스터 Project Rainier 의 Trainium2 로 Claude 를 학습하고 서비스한다. [EV-amazon-036]",
+    "OpenAI 는 Trainium3·Trainium4 약 2GW 사용을 약정했다. 약정이라 점수에 넣지 않는다. [EV-amazon-035]",
+    "Anthropic 은 AWS 기술에 10년간 $100B 넘게, 최대 5GW 를 약정했고 Trainium2~Trainium4 를 쓴다. 앞으로의 약정 몫은 점수에 넣지 않는다. [EV-amazon-040]",
+    "아마존은 2026년 2분기 에이전트 배치·운영 기반 Bedrock AgentCore 에 새 기능을 더했다. [EV-amazon-025]"
+  ],
+  "evidence_down_after": [
+    "사용자 투표형 Arena 텍스트 종합 순위(2026-10-02)에서 Amazon Nova 계열 최고 순위는 117위다. 참고 지표다. [EV-amazon-051]",
+    "2026-04 보도 기준 OpenAI 가 Trainium 에서 프런티어 모델을 처음부터 끝까지 학습했다는 공개 근거는 없었다. [EV-amazon-036]",
+    "AWS Interconnect 규격을 채택한 Google Cloud·OCI·Azure 의 연결은 네트워크 규격이라 AI 표준 선점으로 세지 않는다. [EV-amazon-031]"
+  ],
+  "cite": [
+    "EV-amazon-033",
+    "EV-amazon-022",
+    "EV-amazon-036",
+    "EV-amazon-035",
+    "EV-amazon-040",
+    "EV-amazon-025",
+    "EV-amazon-051",
+    "EV-amazon-031"
+  ],
+  "reconfirm": [
+    "EV-amazon-022",
+    "EV-amazon-025",
+    "EV-amazon-031",
+    "EV-amazon-033",
+    "EV-amazon-035",
+    "EV-amazon-036",
+    "EV-amazon-040",
+    "EV-amazon-051"
+  ],
+  "reason": "② 규칙 문언은 이 실행에서 바뀌지 않았고 같은 확정 근거를 다시 읽어 세 경로 판정 입력이 그대로임을 확인했다."
+}

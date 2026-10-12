@@ -1,0 +1,58 @@
+{
+  "changes": {
+    "channel_consumer": "yes",
+    "channel_work": "yes",
+    "channel_trade": "no",
+    "loop": "partial",
+    "switching": "fail",
+    "substitutes": "partial",
+    "pricing": "fail",
+    "durability_discount": "unknown",
+    "ai_monetized_in_channel": "partial",
+    "ai_monetized_channel": "consumer",
+    "ai_monetized_measure": "customers",
+    "ai_monetized_share": 0.011,
+    "ai_monetized_period": "2026-03-31 시점: 분자 X·Grok 활성 유료 구독자 약 630만 명 ÷ 분모 Grok·X 월간 사용자 약 5.5억 명(같은 S-1/A, Starlink 가입자는 분모에 넣지 않음)",
+    "ai_separate_billing_evidence": ["EV-spacex-xai-077"],
+    "ai_price_uplift_evidence": []
+  },
+  "evidence_after": [
+    "가장 강한 채널은 공시나 회사 1차 발표로 확인되는 매출·사용자 기여가 가장 큰 실질 채널로 정한다. AI 수익화 '예' 는 (가) 그 채널 고객이나 매출의 과반이 AI 에 따로 돈을 낸다는 공시 숫자와 (나) AI 가 그 채널의 가격·단가를 올렸다는 공시나 회사 1차 발표가 함께 설 때만 준다. 가격을 내려야 했거나 단가가 계속 떨어진 것은 가격 실측 실패의 사실로 보고, 회수 루프는 두 변이 서로 끌어당기는 구조가 있어도 참여자가 줄면 부분으로 본다. 지속성 할인의 10% 고객은 공개 제출본에서 그 고객이 누구인지 확인될 때만 할인 여부를 정한다.",
+    "가장 강한 채널은 소비자 채널이다. Starlink 가입자 1,200만 명과 X, Grok 구독이 여기에 있다. 업무 채널(Anthropic 연산 계약·Starshield·Cursor)은 연산 계약이 최초 3개월 뒤 90일 통지로 해지할 수 있고 Cursor 는 인수 직후라 소비자 채널보다 약하다.",
+    "회수 루프는 부분이다. X 는 사용자끼리 이어지는 관계망 구조가 있으나 EU 사용자가 다시 줄고 광고 매출이 줄어 성장이 멈췄다. Starlink 는 가입 회선마다 따로 제공되는 서비스라 사용자끼리 끌어당기는 구조가 없다.",
+    "전환비용은 실패다. 이 채널에서 사용자끼리의 묶임을 만드는 X 에서 EU 사용자 감소가 관측된다. Starlink 의 해지율은 공시되지 않아 미확인이고, 가입자 증가는 신규 유입과 유지를 가르지 못한다. 락인 강도는 회수 루프 부분에서 정해진다.",
+    "대체 공급은 부분이다. S-1/A 가 X 의 경쟁자로 Threads·Reddit·TikTok 을 들고 X 사용자가 줄지만, Starlink 와 견줄 위성 인터넷 대체재의 출하는 확정 근거에 없어 미확인이다.",
+    "가격 실측은 실패다. Starlink ARPU 가 2023년 $99 에서 2024년 $91, 2025년 $81, 2026년 6월 분기 $66 으로 떨어졌고, 회사는 북미 밖 가입자 비중 증가와 저가 요금제 추가, 월 요금 조정으로 ARPU 가 몇 년 더 내려갈 것이라고 적었다. X 광고 매출도 2026년 상반기에 줄었다.",
+    "지속성 할인은 미확인이다. 10-Q 의 10% 이상 고객은 고객 A(세 세그먼트, 상반기 17.9%)와 고객 B(AI 세그먼트, 2분기 19.5%)인데 이름이 공시되지 않아 그 고객의 자체 대체재가 출하 중인지 맞출 수 없다.",
+    "AI 수익화는 부분이다. (가) X·Grok 활성 유료 구독자 약 630만 명(X Premium 440만, SuperGrok 190만)은 Grok·X 월간 사용자 약 5.5억 명의 약 1.1% 이고 Grok 만 보면 190만 명이 Grok AI 기능 월간 사용자 1.17억 명의 약 1.6% 다(계산, 2026-03-31, S-1/A). 소비자 채널 매출의 중심인 Starlink 는 AI 에 따로 돈을 받지 않는다. (나) AI 를 이유로 가격·단가를 올렸다는 공시나 회사 1차 발표를 찾지 못했다(확인되지 않음). Grok·X 요금 체계를 바꾸는 안을 검토한다는 보도는 원문을 확인하지 못해 쓰지 않는다. 근거 등급은 공시(S-1/A·10-Q)다. 10월부터 Grok Bot 이 Anthropic 모델을 쓰는 것은 이 채널의 가격·유지 사실이 아니어서 판정에 넣지 않는다.",
+    "Starlink 해지율, X 의 전 세계 사용자 시계열, 2026-06-30 구독자 수는 미확인이다."
+  ],
+  "evidence_up_after": [
+    "Starlink 가입자는 2025-06-30 600만 명에서 2026-06-30 1,200만 명으로 늘었다. [EV-spacex-xai-010]",
+    "Starlink 가입자는 2023년 230만, 2024년 440만, 2025년 890만 명이다. [EV-spacex-xai-063]",
+    "Connectivity 세그먼트 매출은 2025년 $11,387M 으로 2024년 $7,599M 보다 많고 영업이익은 $4,423M 이다. [EV-spacex-xai-011]",
+    "2026년 1분기 AI 세그먼트에서 Grok·X 구독 매출이 $177M 늘었다. [EV-spacex-xai-064]",
+    "2026-03-31 활성 유료 구독자는 X Premium 계열 약 440만 명과 SuperGrok 계열 약 190만 명을 합쳐 약 630만 명이다. [EV-spacex-xai-077]"
+  ],
+  "evidence_down_after": [
+    "회사는 북미 밖 가입자 비중 증가, 저가 요금제 추가, 월 요금 조정으로 Starlink ARPU 가 몇 년 더 내려갈 것이라고 적었고, ARPU 는 2025년 1분기 $86 에서 2026년 1분기 $66 으로 내렸다. [EV-spacex-xai-061]",
+    "Starlink ARPU 는 2023년 $99, 2024년 $91, 2025년 $81 이다. [EV-spacex-xai-063]",
+    "2026년 6월 분기 Starlink ARPU 는 $66 으로 전년 같은 분기 $85 보다 낮다. [EV-spacex-xai-062]",
+    "X 는 최신 DSA 공시에서 EU 사용자가 다시 줄었다. [EV-spacex-xai-017]",
+    "AI 세그먼트의 광고 매출은 2026년 상반기 $160M 줄었다. [EV-spacex-xai-016]",
+    "Starlink 서비스는 가입 회선마다 단말기에 붙어 요금제로 따로 청구된다. [EV-spacex-xai-015]",
+    "S-1/A 는 X 의 경쟁자로 Threads·Reddit·TikTok 같은 소셜 네트워크를 든다. [EV-spacex-xai-012]",
+    "2026-03-31 Grok·X 월간 사용자는 약 5.5억 명이고 그 가운데 Grok AI 기능을 쓴 사용자는 약 1.17억 명이라, 유료 구독자 약 630만 명은 월간 사용자의 약 1% 다. [EV-spacex-xai-077]"
+  ],
+  "cite": [
+    "EV-spacex-xai-010", "EV-spacex-xai-063", "EV-spacex-xai-011", "EV-spacex-xai-064", "EV-spacex-xai-077",
+    "EV-spacex-xai-061", "EV-spacex-xai-062", "EV-spacex-xai-017", "EV-spacex-xai-016", "EV-spacex-xai-015",
+    "EV-spacex-xai-012"
+  ],
+  "reconfirm": [
+    "EV-spacex-xai-010", "EV-spacex-xai-063", "EV-spacex-xai-011", "EV-spacex-xai-064", "EV-spacex-xai-061",
+    "EV-spacex-xai-062", "EV-spacex-xai-017", "EV-spacex-xai-016", "EV-spacex-xai-015", "EV-spacex-xai-012",
+    "EV-spacex-xai-013", "EV-spacex-xai-065", "EV-anthropic-062", "EV-spacex-xai-077"
+  ],
+  "reason": "X·Grok 유료 구독자가 월간 사용자의 약 1.1% 이고 AI 를 이유로 한 가격 인상이 없어 AI 수익화를 부분으로 두고 판정 재료를 남겼으며, 네 질문은 같은 근거로 다시 읽어 그대로 판정했다."
+}

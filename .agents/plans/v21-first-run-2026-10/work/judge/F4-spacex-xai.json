@@ -1,0 +1,86 @@
+{
+  "changes": {
+    "layers": {
+      "chip": "none",
+      "server": "none",
+      "platform": "none",
+      "cloud": "sold",
+      "model": "sold",
+      "app": "preparing"
+    },
+    "layer_evidence": {
+      "chip": [
+        "EV-spacex-xai-074",
+        "EV-spacex-xai-047"
+      ],
+      "server": [
+        "EV-spacex-xai-047",
+        "EV-spacex-xai-073"
+      ],
+      "platform": [
+        "EV-spacex-xai-069"
+      ],
+      "cloud": [
+        "EV-spacex-xai-068",
+        "EV-spacex-xai-069",
+        "EV-spacex-xai-070"
+      ],
+      "model": [
+        "EV-spacex-xai-069",
+        "EV-spacex-xai-068",
+        "EV-spacex-xai-077"
+      ],
+      "app": [
+        "EV-spacex-xai-013",
+        "EV-spacex-xai-067"
+      ]
+    },
+    "layer_triggers": {
+      "app": "TRG-120"
+    },
+    "primary_layer": "cloud",
+    "non_ai_revenue_share": 0.851,
+    "non_ai_share_basis": "10-Q·S-1/A 유형·세그먼트별 매출의 최근 1년(2025-07~2026-06 = 2025년 + 2026 상반기 − 2025 상반기): Space $4,056M(발사)·Connectivity $13,873M(Starlink 통신)·AI 세그먼트의 Advertising $1,684M(X 광고)을 AI 무관으로, AI Solutions & Infrastructure $3,431M(구독·데이터 라이선스·Grok API·클라우드 서비스)을 AI 로 셌다. (4,056 + 13,873 + 1,684) ÷ 23,044 = 85.1%. X Premium 구독은 AI 솔루션 줄에 섞여 AI 로 들어갔다.",
+    "non_ai_share_evidence": [
+      "EV-spacex-xai-067",
+      "EV-spacex-xai-011",
+      "EV-spacex-xai-069"
+    ]
+  },
+  "evidence_after": [
+    "SpaceX ④ 는 수직계열화 2(클라우드·모델 판매)와 다각화 2.5(AI 무관 85.1%)를 더해 4.5 이다. 주 레이어는 클라우드다. 2026년 2분기 AI 인프라 매출이 클라우드 서비스 판매 시작으로 $1,600M 늘어 Grok·X 구독 증가분 $258M 보다 크다(분기 절대 금액은 미공시).",
+    "칩은 없음이다. GPU 를 모두 구매 주문으로 사 오고 직접 칩 공급자와 장기 계약이 없다. Terafab 은 Tesla 와 일반 틀만 합의한 발표 단계로 제출본에서 착공이나 자금 집행을 확인하지 못해 준비 중이 아니다.",
+    "서버·네트워크는 없음이다. AI 서버·네트워크 장비를 제3자 공급자에게서 조달해 자사 데이터센터에 쓴다고 S-1/A 가 적는다. 서버·네트워크 칸은 자기가 설계한 시스템·네트워크 장비를 팔면 판매, 자기가 설계한 장비를 대규모로 자기만 쓰면 자체 사용, 남이 만든 장비를 사 오거나 남의 데이터센터를 빌려 쓰면 없음으로 적는다.",
+    "소프트웨어 플랫폼은 없음이다. 개발자용으로 공시된 것은 Grok 모델 API 접근이고 이것은 모델 칸에서 센다.",
+    "클라우드는 판매다. AI 세그먼트가 고정 월 요금의 클라우드 서비스를 팔기 시작했다. 모델은 판매다. Grok API 접근과 Grok·X 유료 구독을 판다.",
+    "응용은 준비 중이다. 코딩 에이전트 Cursor 인수를 2026-08-14 종결했고(인수 종결은 준비 중의 요건이다) 2026-06-30 까지의 10-Q 에 Cursor 매출이 없다. X 광고는 소셜 플랫폼의 광고 판매이고 AI 응용 상품이라는 공시가 없어 응용 칸에 넣지 않았다. 제출본에 Cursor 매출이 나오면 판매로 바꾸는 트리거를 단다.",
+    "800MHz 주파수 확정 계약은 Starlink 통신(비AI 사업)이라 보유표에 넣지 않는다. 그 매출이 생기면 Connectivity 줄로 다각화 몫에 들어간다.",
+    "AI 무관 몫 85.1% 는 다각화 2.5 구간이다. X 광고는 광고주의 광고 구매라 AI 세그먼트 안에 있어도 AI 무관으로 셌다. AI 무관 몫은 공시된 매출 줄을 그 줄의 수요 성격으로 가른다. 클라우드 인프라 줄은 범용 연산과 AI 연산이 섞여 있고 그 비율이 회사마다 같은 기준으로 공시되지 않으므로 줄 전체를 AI 수요로 센다. 광고·소비자 기기·소비자 구독·리테일·자동차·에너지·발사·통신·기업용 소프트웨어 줄은 AI 기능이 들어 있어도 AI 무관으로 세고, AI 서비스 매출이 들어갈 수 있는 기타 줄은 AI 로 센다.",
+    "근거 등급: 층 칸과 매출 줄은 S-1/A·10-Q·8-K 공시다. 칩이 없음이므로 ⑧ 공급 축을 0 으로 적을 수 없다."
+  ],
+  "evidence_up_after": [
+    "2026년 2분기 AI 인프라 매출은 클라우드 서비스 판매 시작으로 $1,600M, Grok·X 구독 매출은 $258M 늘었다. [EV-spacex-xai-068]",
+    "AI 세그먼트는 구독·데이터 라이선스·Grok 모델 API 접근과 클라우드 서비스 판매로 매출을 낸다. [EV-spacex-xai-069]",
+    "SpaceX 는 2026-08-14 Cursor 인수를 종결했다. [EV-spacex-xai-013]",
+    "최근 1년 매출 $23,044M 가운데 발사·Starlink 통신·X 광고가 85.1% 다. [EV-spacex-xai-067, EV-spacex-xai-011]"
+  ],
+  "evidence_down_after": [
+    "SpaceX 는 GPU 를 모두 구매 주문으로 조달하고 직접 칩 공급자와 장기 계약이 없다. [EV-spacex-xai-074]",
+    "AI 서버·네트워크 장비는 제3자 공급자에게서 조달하고 그 제조·공급이 소수 공급자에 한정된다. [EV-spacex-xai-047]",
+    "AI 인프라 매출의 상당 부분이 소수 고객에 몰려 있고 클라우드 계약은 초기 기간 뒤 90일 통지로 해지될 수 있다. [EV-spacex-xai-070]"
+  ],
+  "cite": [
+    "EV-spacex-xai-068",
+    "EV-spacex-xai-069",
+    "EV-spacex-xai-013",
+    "EV-spacex-xai-067",
+    "EV-spacex-xai-011",
+    "EV-spacex-xai-074",
+    "EV-spacex-xai-047",
+    "EV-spacex-xai-070",
+    "EV-spacex-xai-073",
+    "EV-spacex-xai-077"
+  ],
+  "reconfirm": [],
+  "reason": "④ 를 층별 보유표와 AI 무관 매출 몫으로 처음부터 판정했다(클라우드·모델 판매, 응용 준비 중, 칩·서버·플랫폼 없음, AI 무관 85.1%)."
+}

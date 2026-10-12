@@ -1,0 +1,2532 @@
+{
+  "group": "E",
+  "sources": [
+    {
+      "source_id": "SRC-WEB-alibaba-921",
+      "company_id": "alibaba",
+      "kind": "news",
+      "title": "AI算力、存储等产品调价公告 (Alibaba Cloud 공식 사이트 공지, 2026-03-18)",
+      "publisher": "Alibaba Cloud (aliyun.com)",
+      "url": "https://www.aliyun.com/notice/118086",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "note": "회사 공식 사이트 공지 본문을 브라우저로 열어 읽었다. 게시 시각은 페이지가 적은 2026-03-18 13:16:29(베이징 시간)를 UTC 로 바꾼 값이다. 인상 폭 상세표(GPU·CPFS 목록)는 열지 못했다"
+    },
+    {
+      "source_id": "SRC-WEB-alibaba-922",
+      "company_id": "alibaba",
+      "kind": "news",
+      "title": "AI需求爆发，云厂商密集涨价 (중신경위, 중국신문망)",
+      "publisher": "중신경위 (chinanews.com.cn)",
+      "url": "https://www.chinanews.com.cn/cj/2026/03-19/10589212.shtml",
+      "published_at_utc": "2026-03-19T02:52:59Z",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "note": "중국 통신사 기사 본문을 브라우저로 열어 읽었다. 게시 시각은 페이지가 적은 2026-03-19 10:52(베이징 시간)를 UTC 로 바꾼 값이다. 알리바바 클라우드 공지를 전한 2차 보도다"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 4 AI + Cloud — T-Head 가 자체 GPU 를 양산하고 외부 고객 서비스와 클라우드 인프라 공급에 쓴다",
+      "excerpt": "T-Head, our chip design subsidiary, has brought its proprietary GPU into production at scale, supporting end-to-end AI workloads from training and fine-tuning to inference. Compatible with mainstream AI frameworks, T-Head enhances our long-term computing supply capacity. By combining its capabilities with our Qwen models and cloud computing, it delivers highly cost-effective AI services to external customers. This business has scaled rapidly and now contributes meaningfully to our cloud infrastructure supply.",
+      "relevance": "추론: 칩 설계 자회사가 만든 GPU 를 대규모로 양산해 외부 고객에게 AI 서비스를 파는 데 쓰고 클라우드 인프라 공급에 보탠다고 회사가 적었다. ④ 칩 층이 자체 사용인지 판매인지는 칩을 하드웨어로 따로 판 매출이 공시되지 않아 판단이 정한다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 칩 층 칸의 근거를 보강한다. 칩 단독 판매 매출이 공시되면 칩 층 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "칩을 하드웨어로 따로 판 매출은 공시되지 않았다",
+        "양산 규모(출하 수량)는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 4.B Business Overview — AI + Cloud Businesses, 'T-Head' 소제목 단락(p.88)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K (2026년 6월 분기) — T-Head 의 GPU·CPU·스토리지·네트워킹 칩 포트폴리오와 이기종 칩 클러스터 오케스트레이션 소프트웨어",
+      "excerpt": "T-Head has established a portfolio of proprietary silicon, spanning GPU, CPU, storage and networking chips. This comprehensive chip portfolio enables integrated hardware optimization across compute, storage and networking, strengthening our ability to deliver high performance and efficiency in AI infrastructure. … driven by growing customer adoption of our full-stack AI capabilities across AI agents, AI models, AI cloud infrastructure, and orchestration software that manages heterogeneous chip clusters, including our own proprietary chips.",
+      "relevance": "추론: 칩 설계 포트폴리오에 스토리지·네트워킹 칩이 들어 있고, 자사 칩을 포함한 이기종 칩 클러스터를 관리하는 오케스트레이션 소프트웨어를 클라우드 고객이 쓴다고 회사가 적었다. 서버·네트워크 층과 소프트웨어 플랫폼 층의 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 서버·네트워크 층과 소프트웨어 플랫폼 층 칸의 근거를 보강한다. 이 칩이나 소프트웨어를 따로 판 매출이 공시되면 두 층 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "네트워킹·스토리지 칩의 출하량과 외부 판매 여부는 공시되지 않았다",
+        "오케스트레이션 소프트웨어의 별도 매출은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "6-K Ex.99.1(2026-08-20) 'BUSINESS AND STRATEGIC UPDATES' — AI Cloud and Compute Services 의 Cloud 단락과 'Chip Design – T-Head' 첫 단락(p.3)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 4 — 자체 AI 플랫폼 PAI 가 모델 미세조정·평가·배포를 서버리스로 지원한다",
+      "excerpt": "Our self-developed AI platform, Platform for AI (PAI), and our Lingjun Intelligent Computing Service utilizes advanced software-hardware integrated optimization technology to achieve high performance and large-scale cluster scalability, to enable stability in large model training and near-linear acceleration. PAI provides a serverless service mode that offers end-to-end support for the fine-tuning, evaluation, and deployment of major open-source large models, as well as comprehensive inference optimization solutions.",
+      "relevance": "추론: 개발자가 오픈소스 대형 모델을 미세조정·평가·배포하는 자체 플랫폼을 클라우드 서비스로 제공한다고 회사가 적었다. ④ 소프트웨어 플랫폼 층의 사실이며 PAI 매출은 따로 공시되지 않았다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 소프트웨어 플랫폼 층 칸의 근거를 보강한다. PAI 나 Model Studio 의 매출이 따로 공시되면 이 층 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "PAI 의 매출과 이용 고객 수는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 4.B Business Overview — Cloud Intelligence Group, 'Our self-developed AI platform, PAI' 단락(p.88)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 4 Technology Infrastructure — 자체 분산 컴퓨팅 운영체제 Apsara 와 Lingjun 지능형 컴퓨팅 클러스터를 클라우드 고객과 자사 사업에 제공한다",
+      "excerpt": "We have developed a proprietary general-purpose distributed computing operating system, Apsara, inclusive of Shenlong Compute (our hardware virtualization architecture), Pangu (our distributed cloud storage system)and Luoshen (our cloud network structure), and have built the Lingjun Intelligent Computing Cluster and a global AI computing network,",
+      "relevance": "추론: 클라우드 네트워크 구조(Luoshen)와 AI 컴퓨팅 클러스터를 자체 설계해 고객과 자사 핵심 사업에 쓴다고 적었다. 서버·네트워크 장비를 따로 파는지는 이 문장에 없고 클라우드 서비스의 일부로 제공된다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 서버·네트워크 층과 소프트웨어 플랫폼 층 칸의 근거를 보강한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "클러스터·네트워크 장비를 클라우드 서비스와 따로 팔았다는 공시는 찾지 못했다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 4.B Business Overview — Technology Infrastructure, 'Cloud Operating System' 소제목 단락(p.91)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 5 Monetization Model — 공용 클라우드(Model Studio 포함)와 하드웨어·소프트웨어 라이선스를 담은 비공용 클라우드로 매출을 번다",
+      "excerpt": "Public cloud services, where we generate revenue from a wide range of cloud services, including traditional and AI-related, such as elastic computing, storage, network, database, big data, security, cloud native and Alibaba Cloud model studio (“Bailian”). Enterprise customers can pay for these services on a consumption or subscription basis … Non-public cloud services, where we generate revenue through packaged cloud services, including hardware, software license, software installation service, application development and maintenance service.",
+      "relevance": "추론: 클라우드 매출이 공용 클라우드(연산·저장·네트워크·데이터베이스·Model Studio 'Bailian' 등, 소비량·구독 과금)와 하드웨어·소프트웨어 라이선스를 포함한 비공용 패키지 클라우드로 나뉜다고 회사가 적었다. ④ 클라우드·모델·소프트웨어 플랫폼 층의 과금 방식 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 클라우드 층과 모델 층 칸의 근거를 보강한다. 비공용 클라우드의 하드웨어·라이선스 금액이 공시되면 서버·네트워크 층과 소프트웨어 플랫폼 층 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "공용·비공용 클라우드 매출 비중과 Model Studio 매출은 공시되지 않았다",
+        "비공용 클라우드 안의 하드웨어와 라이선스 금액은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 5 Operating and Financial Review — Our Monetization Model, 'Cloud Intelligence Group' 두 항목(p.125)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)",
+      "excerpt": "Revenue by type is as follows: Year ended March 31, 2024 | 2025 | 2026 RMB | RMB | RMB (in millions) Customer management services (i) | 386,571 | 424,877 | 459,917 Membership fees and value-added services | 41,956 | 46,613 | 47,638 Logistics services | 114,073 | 123,379 | 139,864 Cloud services | 76,459 | 84,517 | 112,077 Sales of goods | 283,273 | 274,276 | 227,747 Other revenue (ii) | 38,836 | 42,685 | 36,427 941,168 | 996,347 | 1,023,670",
+      "relevance": "추론: 회계 2026년(2025-04~2026-03) 매출 RMB1,023,670M 가운데 고객관리 서비스가 45%, 클라우드 서비스가 약 11%(112,077 ÷ 1,023,670, 계산)다. ④ 다각화 축의 AI 무관 매출 몫을 가르는 입력이며 어느 유형을 AI 무관으로 볼지는 판단이 정한다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ④ 다각화 축(AI 와 무관한 수요에서 나오는 매출 몫)의 입력을 이 유형별 매출로 다시 계산한다. 고객관리 서비스와 상품 판매를 AI 무관으로 읽을지는 판단이 근거를 달아 정한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "유형별 매출의 최근 1년 값(2025-07~2026-06)은 분기 보도자료에 유형별 표가 없어 만들지 못했다",
+        "AI 무관 매출 몫을 가르는 구분은 판단 몫이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Note 5 Revenue — 'Revenue by type is as follows' 표(F-39)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Note 5 — 부문별 매출 세부(전자상거래 고객관리 343,867·퀵커머스 78,520·도매 26,312 등, RMB 백만)",
+      "excerpt": "Revenue by segment is as follows: Year ended March 31, 2024 | 2025 | 2026 RMB | RMB | RMB (in millions) Alibaba China E-commerce Group: E-commerce (i) - Customer management | 307,950 | 326,769 | 343,867 - Direct sales, logistics and others (ii) | 110,820 | 103,722 | 105,518 418,770 | 430,491 | 449,385 Quick commerce (iii) | 50,852 | 53,588 | 78,520 China commerce wholesale (iv) | 20,479 | 24,301 | 26,312 Total Alibaba China E-commerce Group | 490,101 | 508,380 | 554,217",
+      "relevance": "추론: 중국 전자상거래 그룹 RMB554,217M 가운데 고객관리(광고) 343,867, 직접 판매·물류 105,518, 퀵커머스 78,520, 도매 26,312 로 나뉜다. ④ 다각화 축의 세그먼트 입력이고 AI 무관으로 볼 부문은 판단이 정한다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ④ 다각화 축의 입력을 이 세그먼트 세부 매출로 다시 계산한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "2026년 6월 분기부터 세그먼트 구조가 바뀌어 회계 2026년 값과 최근 1년 값을 같은 구조로 맞추지 못한다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Note 5 Revenue — 'Revenue by segment is as follows' 표 위쪽(F-38)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)",
+      "excerpt": "China Quick Commerce(3) | 36,725 | 53,295 | 7,855 | 45 International E-commerce | 28,177 | 27,761 | 4,091 | (1 | )% Global Wholesale | 13,036 | 13,906 | 2,049 | 7 Total Alibaba E-commerce Group | 198,812 | 205,862 | 30,340 | 4 … AI Cloud and Compute Services | 33,418 | 48,437 | 7,139 | 45 AI Labs and Applications | 2,882 | 3,338 | 492 | 16 All others | 28,629 | 28,803 | 4,245 | 1 Unallocated | 519 | 783 | 116 Inter-segment elimination | (16,608 | (18,270 | (2,693 Consolidated revenue | 247,652 | 268,953 | 39,639 | 9",
+      "relevance": "추론: 2026년 4~6월 분기 매출 RMB268,953M 가운데 전자상거래 그룹 205,862(퀵커머스 53,295 포함), AI Cloud and Compute Services 48,437, AI Labs and Applications 3,338, 기타 28,803 이다. 전년 같은 분기 값이 새 구조로 다시 정리돼 같은 표에 있다. ④ 주 레이어와 AI 무관 매출 몫을 가르는 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ④ 다각화 축과 주 레이어(판매 칸 가운데 외부 매출이 가장 큰 층)를 가르는 입력을 이 세그먼트 표로 다시 계산한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "AI Cloud and Compute Services 안의 외부 고객 매출 금액은 공시되지 않았고 성장률(45%)만 공시됐다",
+        "세그먼트 매출에는 세그먼트 간 거래가 포함돼 제거 줄(-18,270)을 거쳐야 연결 매출이 된다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "6-K Ex.99.1(2026-08-20) 'JUNE QUARTER SEGMENT RESULTS' 세그먼트별 매출 표(p.6)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000110465926099220",
+      "published_at_utc": "2026-08-20T00:00:00Z",
+      "title": "Alibaba 6-K (2026년 6월 분기) — AI Labs and Applications 는 모델 랩·Qwen 소비자 사업·QwenWork 를 묶었고 조정 EBITA 는 RMB13,861M 적자다",
+      "excerpt": "iii) AI Labs and Applications, where AI model labs, Qwen Consumer Business Group and QwenWork, formerly classified under All others, were brought together to integrate the full value chain from AI model innovation through to consumer applications and enterprise productivity solutions. … AI Labs and Applications adjusted EBITA was a loss of RMB13,861 million (US$2,043 million) in the quarter ended June 30, 2026, compared to a loss of RMB3,224 million in the same quarter of 2025, primarily due to our increased investment in AI capabilities, and higher inference cost related to Qwen app.",
+      "relevance": "추론: 모델·Qwen 앱·QwenWork 를 한 세그먼트로 묶었고 그 분기 매출은 RMB3,338M(6-K 세그먼트 매출 표)인데 조정 EBITA 손실이 RMB13,861M 이며 Qwen 앱 추론 비용이 늘었다고 회사가 적었다. ④ 모델 층과 응용 층의 매출 규모와 수익성 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 모델 층과 응용 층 칸의 근거를 보강한다. 이 세그먼트 안에서 모델 API 와 앱 구독 매출이 나뉘어 공시되면 두 층 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "세그먼트 안에서 모델 API 매출과 앱·에이전트 매출이 나뉘어 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "6-K Ex.99.1(2026-08-20) 세그먼트 구조 각주 (1) iii)(p.6)와 'AI Labs and Applications' 조정 EBITA 단락(p.9)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 4 — Qwen 앱 월간 사용자 2.95억 명(2026-03)과 기업용 에이전트 플랫폼 Wukong",
+      "excerpt": "In March 2026, consumer-facing Qwen has surpassed 295 million monthly active users across all platforms. … Wukong is our AI-native enterprise-grade AI-to-B agent platform. Wukong enables AI-powered upgrades to enterprise workflows",
+      "relevance": "추론: 소비자용 AI 앱 Qwen 이 2026-03 월간 사용자 2.95억 명을 넘었다고 회사가 적었다. 사용자 수이고 유료 구독자 수가 아니다. ④ 응용 층의 규모 사실이며 응용 층 칸을 판매로 볼지는 유료 매출이 있는지에 달려 있다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 응용 층 칸의 근거를 보강한다. Qwen 앱이나 Wukong 의 유료 매출이 공시되면 응용 층 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Qwen 앱의 유료 구독자 수와 구독 매출은 공시되지 않았다",
+        "월간 사용자 수는 회사 자체 집계다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 4.B Business Overview — AI + Cloud Businesses, 'Qwen App'·'Wukong' 소제목 단락(p.88)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 4 — Alibaba.com 상인의 AI 도구 채택이 늘어 플랫폼이 수익화할 길이 여럿 생겼다",
+      "excerpt": "During fiscal year 2026, Alibaba.com saw broader adoption by merchants of its AI-powered tools for marketing, procurement and product listing, which provided multiple ways for the platform to monetize. In fiscal year 2026, we released Accio, an AI-enabled business-to-business procurement engine, and Accio work, an agentic business platform designed to handle the full operating lifecycle of global small and medium – sized businesses beyond sourcing alone",
+      "relevance": "추론: 해외 도매 플랫폼에서 상인이 AI 마케팅·구매·상품 등록 도구를 더 쓰게 됐고 이것이 플랫폼의 수익화 길을 여럿 줬다고 회사가 적었다. 금액과 AI 도구를 쓰는 상인의 비중은 없다. ④ 응용 층과 ① 거래 채널의 AI 수익화 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 응용 층 칸과 ① AI 수익화 판정의 근거를 보강한다. AI 도구 매출이나 이용 상인 수가 공시되면 두 판단을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "AI 도구에서 나는 매출 금액과 이용 상인 수는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 4.B Business Overview — Alibaba International Digital Commerce Group, Alibaba.com 단락(p.87)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Note 27 — 자본약정 RMB54,136M 과 코로케이션·대역폭·저작권·마케팅 기타 약정 RMB200,062M(기간별)",
+      "excerpt": "Total capital commitments contracted but not provided for amounted to RMB45,321 million and RMB54,136 million as of March 31, 2025 and 2026, respectively. … No later than 1 year | 44,067 | 53,484 … The Company also has other commitments including commitments for co-location and bandwidth fees, licensed copyrights and marketing expenses. … No later than 1 year | 32,364 | 57,441 Later than 1 year and no later than 5 years | 46,768 | 133,598 More than 5 years | 5,094 | 9,023 84,226 | 200,062",
+      "relevance": "추론: 2026-03-31 기준 계약했으나 장부에 올리지 않은 자본약정이 RMB54,136M(1년 이내 53,484)이고, 코로케이션·대역폭·저작권·마케팅 기타 약정이 RMB200,062M(1년 이내 57,441, 1~5년 133,598, 5년 초과 9,023)이다. 합계 RMB254,198M 은 최근 1년 매출 RMB1,044,971M 의 약 0.24배(계산)다. ⑧ 약정 축의 입력이며 기타 약정이 모두 해지할 수 없는 구매인지는 주석이 밝히지 않는다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ⑧ 약정 축을 이 약정 합계(최근 1년 매출 대비)로 다시 계산한다. 미개시 리스는 20-F 에서 찾지 못했다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "기타 약정의 해지 가능 여부와 클라우드 인프라 관련 비중은 주석에 없다",
+        "20-F 전문에서 아직 개시되지 않은 리스 문구를 찾지 못했다(공시하지 않은 것인지 중요하지 않아 생략한 것인지 가르지 못한다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Note 27 Commitments (a) Capital commitments 와 (c) Other commitments 표(F-73)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 3 — 주요 VIE 와 그 자회사의 외부 매출 RMB119,561M(연결 매출 RMB1,023,670M 의 약 11.7%)",
+      "excerpt": "Year ended March 31, 2026 Parent | Other Subsidiariesand ConsolidatedEntities | Major VIEsand theirSubsidiaries | PrimaryBeneficiariesof MajorVIEs | Eliminations | ConsolidatedTotal RMB | RMB | RMB | RMB | RMB | RMB | US$ (in millions) Revenue from third parties | — | 857,477 | 119,561 | 46,632 | — | 1,023,670 | 148,401",
+      "relevance": "추론: 회계 2026년 외부 고객 매출 RMB1,023,670M 가운데 주요 VIE 와 그 자회사가 RMB119,561M, VIE 의 계약 상대인 1차 수익자 법인이 RMB46,632M 이고 나머지 RMB857,477M 은 그 밖의 자회사와 주요 VIE 가 아닌 VIE 가 낸다(이 열은 둘을 섞어 적는다, 주요 VIE 몫 약 11.7%, 계산). 중국 정부가 VIE 계약 효력을 판단하는 위험이 닿는 매출의 크기다. ⑧ 지정학 축의 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ⑧ 지정학 축(한 나라의 정부에 걸린 위험)의 판단이 VIE 를 거치는 매출 비중을 이 표로 다시 읽는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "주요 VIE 가 아닌 VIE 의 매출은 '그 밖의 자회사와 연결 주체' 열에 섞여 따로 나오지 않고 20-F 는 그것이 개별·합계로 중요하지 않다고만 적는다",
+        "이 표는 감사 재무제표와 직접 대조되지 않는다고 20-F 가 적는다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 3 Key Information — Condensed Consolidating Schedule, Year ended March 31, 2026 표(p.7)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Note 2(c) — 연결 VIE 와 그 자회사의 매출 RMB156,369M(클라우드·디지털 미디어·엔터테인먼트 등)",
+      "excerpt": "The following financial information of the consolidated VIEs and their subsidiaries was recorded in the accompanying consolidated financial statements: … Revenue (i) | 117,686 | 137,708 | 156,369 … Revenue generated by the VIEs are primarily from cloud services, digital media and entertainment services and others.",
+      "relevance": "추론: 감사 재무제표 주석이 연결 VIE 와 그 자회사의 매출을 회계 2026년 RMB156,369M(연결 매출의 약 15.3%, 계산)으로 적고 그 매출이 주로 클라우드·디지털 미디어·엔터테인먼트에서 난다고 밝혔다. Item 3 표의 주요 VIE 몫보다 범위가 넓은 값이다. ⑧ 지정학 축의 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ⑧ 지정학 축 판단이 VIE 를 거치는 매출 비중을 이 주석(감사 재무제표)으로 다시 읽는다. VIE 매출 가운데 클라우드 몫이 크다는 점이 AI 사업과 겹친다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "이 매출에 VIE 와 그 자회사 사이 거래가 얼마나 들어 있는지 주석이 밝히지 않는다",
+        "Item 3 표의 주요 VIE 값과 주석 값은 범위가 달라 직접 대조되지 않는다고 20-F 가 적는다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Note 2(c) Consolidation — 연결 VIE 재무정보 표(F-18)와 매출 표·각주 (i)(F-19)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 3.D 위험 요인 — 수출·제재 제한으로 칩과 데이터센터 서비스 접근이 이미 나빠졌고 중국 당국은 일부 칩 구매 중단을 요청했다",
+      "excerpt": "As a result of heightened restrictions, our supply chain has been and may be further disrupted, and our access to critical products and services, such as chips and data center services, have been and may be further negatively affected. … In September 2025, the Cyberspace Administration of China requested Chinese technology companies to halt purchases of certain chips.",
+      "relevance": "추론: 미국의 수출 제한과 제재가 알리바바의 공급망을 이미 흔들었고 칩과 데이터센터 서비스 접근에 부정적 영향을 줬으며, 중국 쪽에서도 2025-09 일부 칩 구매 중단 요청이 있었다고 회사가 위험 요인에 적었다. 금액이나 물량은 없다. ⑧ 공급 축과 지정학 축의 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ⑧ 공급 축(컴퓨트·칩 공급과 약정)과 지정학 축의 판단이 칩 접근 제한이 이미 일어났다는 이 문장을 다시 읽는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "어느 공급자의 어떤 물량이 막혔는지와 대체 조달 규모는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 3.D Risk Factors — 미국 수출 통제·제재 위험 요인 셋째 단락(p.27)와 첫 단락 끝 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 7.B 특수관계자 거래 — Ant Group 계열 클라우드 매출 RMB19,134M 과 투자 회사 클라우드 매출 RMB9,415M",
+      "excerpt": "Ant Group and its affiliates | Cloud services revenue | 8,814 | 11,113 | 19,134 | 2,774 … we recognized revenue of RMB984 million, RMB4,507 million and RMB9,415 million (US$1,365 million), respectively, for these cloud services. In fiscal year 2026, this revenue accounted for 0.9% of our revenue.",
+      "relevance": "추론: 지분을 가진 Ant Group 계열이 낸 클라우드 서비스 매출이 회계 2026년 RMB19,134M 으로 연결 매출의 약 1.9%, 클라우드 서비스 매출 RMB112,077M 의 약 17.1%(계산)이고, 그 밖의 투자 회사 클라우드 매출이 RMB9,415M(연결 매출의 0.9%)이다. 최대 고객 비중을 따로 공시한 문구는 없어 이 값이 가장 가까운 단서다. ⑧ 고객 축과 ⑦ 순환금융의 방증 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 알리바바 ⑧ 고객 축(최대 고객 비중)과 ⑦ 순환금융의 판단이 특수관계자 클라우드 매출을 방증으로 다시 읽는다. 연결 매출 대비 비중은 작다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Ant Group 이 최대 고객인지는 공시되지 않았다",
+        "특수관계자 아닌 최대 고객 비중은 20-F 에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "20-F Item 7.B Related Party Transactions — Ant Group 서비스 수수료 표와 투자 회사 클라우드 거래 단락(p.173)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-921",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "title": "Alibaba Cloud 공지 — 2026-04-18 부터 AI 연산과 CPFS 저장 서비스 가격을 조정한다(보도는 인상)",
+      "excerpt": "因全球AI需求爆发、供应链涨价，行业核心硬件采购成本显著上涨。经审慎评估，我们决定将于2026年4月18日起对AI算力、CPFS（智算版）等服务价格进行调整。 详细列表见：GPU、CPFS 如果您在2026年4月18日之前已购买了相关的服务，您在当前的订单/计费周期内将不受此次调整影响，新价格将在您下一个续费周期开始时适用。",
+      "relevance": "추론: 알리바바 클라우드가 회사 공식 사이트에 낸 가격 조정 공지로, AI 연산과 CPFS(지능형 컴퓨팅 저장) 서비스 가격을 2026-04-18 부터 조정한다고 알리고(조정 방향은 본문에 없고 같은 날 보도가 인상으로 전한다) 이유를 글로벌 AI 수요 폭증과 핵심 하드웨어 조달 비용 상승으로 적었다. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다. 가격 인상의 직접 이유는 하드웨어 비용이라 AI 수익화의 증거인지는 판단이 정한다. 가장 강한 채널이 소비자 채널이면 이 인상은 업무 채널의 사실이다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: 알리바바 ① AI 수익화 판정에서 (나) AI 로 가격·단가를 올렸다는 회사 발표 조건을 업무(클라우드) 채널에 대해 다시 읽는다. 인상 폭은 목록(GPU·CPFS 상세표)에 있고 이 공지 본문에는 없다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "조정 방향(인상)과 폭(5~34%)은 이 공지 본문이 아니라 같은 날 보도에 있다",
+        "공지 본문의 인상 이유는 AI 수요와 하드웨어 비용을 함께 든다",
+        "인상 뒤 고객 이탈 여부는 확인되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "공지 본문 '调整范围' 첫 단락과 이연 적용 단락(알리바바 클라우드 공지 118086)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 업데이트 AI & Software — AI4 의 FSD v14 를 AI3 하드웨어에 맞춘 FSD v14 lite 를 고객 차량에 배포한다",
+      "excerpt": "We began delivering FSD v14 lite to customers in the U.S. and South Korea (the latter in July) with AI3 hardware. This software build distills the driving behavior from AI4’s v14 series into both the camera and compute configuration of AI3",
+      "relevance": "추론: 고객 차량에 AI3 와 AI4 두 세대의 자체 컴퓨팅 하드웨어가 깔려 있고 그 위에서 FSD 소프트웨어를 배포한다는 사실이다. 자체 설계 칩이 차량 안에서 실제로 쓰인다는 ④ 칩 층 자체 사용 칸의 근거이며 칩을 남에게 파는 사실은 아니다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ④ 칩 층 자체 사용 칸의 근거를 보강한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "AI3·AI4 칩이 설치된 차량 수는 공시되지 않았다",
+        "칩의 외부 판매는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "Q2 2026 Update 8쪽 AI & Software, 'AI Software' 문단 첫 두 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025) Item 1 Infrastructure — 학습 클러스터 Cortex 확장과 Samsung 과의 AI 반도체 제조 협력",
+      "excerpt": "In 2025, we further expanded Cortex, our training cluster at Gigafactory Texas, and announced a new collaboration with Samsung to manufacture advanced semiconductors for AI inference and training in the U.S. We are currently building Cortex 2 at Gigafactory Texas to further increase our AI training compute capacity.",
+      "relevance": "추론: 자체 AI 학습 클러스터 Cortex 를 확장했고 Samsung 과 미국에서 AI 추론·학습용 첨단 반도체를 제조하는 협력을 발표했다고 회사가 적었다. 협력은 발표 단계이고 ④ 서버·네트워크 층 자체 사용과 칩 층 준비 중의 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ④ 서버·네트워크 층 자체 사용 칸과 칩 층의 근거를 보강한다. Samsung 제조가 시작돼 출하가 확인되면 칩 층 칸을 다시 본다.",
+      "horizon": "medium — 2027년 이후 반도체 위탁 제조 시작 예정까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Samsung 협력의 금액·물량·시작 시기는 이 문장에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K Part I Item 1 Business — Infrastructure 단락(p.4)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025) Note 10 — 미개시 운용리스 $849M 과 2025-07 AI 칩 위탁 제조 공급 계약(2027년 이후 시작 예정)",
+      "excerpt": "we have excluded from the table above additional operating leases that have not yet commenced with aggregate rent payments of $849 million. These operating leases will commence between fiscal year 2026 and 2028 with lease terms of 2 years to 20 years. … In July 2025, we entered into a supply agreement for semiconductor contract manufacturing of our AI chips, which is expected to commence in 2027 or later.",
+      "relevance": "추론: 2025-12-31 기준 아직 개시되지 않은 운용리스의 임차료 합계가 $849M(2026~2028년 개시, 기간 2~20년)이고, 2025-07 에 체결한 AI 칩 위탁 제조 공급 계약은 2027년 이후 시작 예정이며 제조 장비를 금융리스 자산으로 잡을 예정이라고 적었다. ⑧ 약정 축의 미개시 리스 입력이고 ④ 칩 층은 아직 매출·출하가 없는 준비 단계다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ⑧ 약정 축의 입력을 미개시 리스 $849M 으로 다시 계산한다. 칩 위탁 제조가 시작돼 출하가 확인되면 ④ 칩 층 칸과 ⑧ 공급 축을 다시 본다.",
+      "horizon": "medium — 2027년 이후 칩 위탁 제조 시작 예정까지",
+      "counter_evidence": [],
+      "unverified": [
+        "위탁 제조 계약의 금액과 상대방은 이 문장에 없다",
+        "2026-06-30 기준 미개시 리스 금액은 10-Q 에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K Note 10 Leases — 리스 만기표 아래 두 문단(p.77)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025) MD&A Material Cash Requirements — 부품 구매 계약에 단기를 넘는 구속력 있는 발주가 일반적으로 없고 최소 리스료 합계는 $7.96B",
+      "excerpt": "we generally do not have binding and enforceable purchase orders under such contracts beyond the short-term … As of December 31, 2025, our total minimum lease payments was $7.96 billion, of which $1.32 billion is due in the succeeding 12 months.",
+      "relevance": "추론: 회사가 부품·원재료 구매 계약에 구속력 있는 발주가 단기 밖에는 일반적으로 없다고 적었고, 이미 개시된 리스의 총 최소 리스료는 $7.96B(1년 이내 $1.32B)다. 해지할 수 없는 구매 약정 표는 10-K 에 없다. ⑧ 약정 축의 부재 쪽 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ⑧ 약정 축의 근거를 보강한다. 구속력 있는 구매 약정 합계가 공시되면 약정 축을 다시 계산한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "구속력 있는 구매 약정 금액은 공시되지 않았다(없다고 밝힌 것이 아니라 단기 밖에는 일반적으로 없다고 적었다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K Part II Item 7 MD&A — Material Cash Requirements 첫 단락과 셋째 단락(p.41~42)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025) Note 2 — 2025·2024년 말 매출채권 잔액의 10% 이상을 차지한 거래 상대 없음",
+      "excerpt": "As of December 31, 2025 and 2024, no entity represented 10% or more of our total receivables balance.",
+      "relevance": "추론: 연말 총 매출채권 잔액의 10% 이상을 차지한 거래 상대가 없다고 회사가 적었다. 매출 기준 최대 고객 문구는 아니다. ⑧ 고객 축의 부재 확인 쪽 단서이며 개인 소비자와 다수 에너지 고객을 상대하는 사업 구조와 맞는다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ⑧ 고객 축의 근거를 보강한다. 매출 10% 이상 고객이 공시되면 고객 축을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "매출 기준 10% 이상 고객 문구는 찾지 못했다(수취채권 기준 문구만 있다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K Note 2 Summary of Significant Accounting Policies — Concentration of Risk 단락(p.64)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025) Item 1 — 에너지 저장 제품을 운영하는 소프트웨어 플랫폼 Powerhub·Autobidder",
+      "excerpt": "every Tesla energy storage product is capable of being enhanced through firmware updates and optimized by our software platforms, particularly Powerhub (for distributed energy resources, including Powerwall-enabled virtual power plants) and Autobidder (for Megapack batteries).",
+      "relevance": "추론: 자사 에너지 저장 제품을 최적화하는 소프트웨어 플랫폼으로 Powerhub 와 Autobidder 를 든다. 개발자가 그 위에서 소프트웨어를 만드는 층이라는 공시는 없고 자사 제품용 운영 소프트웨어다. ④ 소프트웨어 플랫폼 층 칸의 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ④ 소프트웨어 플랫폼 층 칸의 근거를 보강한다. 외부 개발자가 만드는 플랫폼 매출이 공시되면 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Powerhub·Autobidder 의 외부 개발자 이용이나 별도 매출은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K Part I Item 1 Business — Energy Generation and Storage, Energy Storage Products 단락(p.4)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026003952",
+      "published_at_utc": "2026-01-29T00:00:00Z",
+      "title": "Tesla 10-K (2025) Note 16 — 지역별 매출(미국 47,627·중국 20,962·기타 26,238, $ 백만)",
+      "excerpt": "United States | 47,627 | 47,725 | 45,235 China | 20,962 | 20,944 | 21,745 Other international | 26,238 | 29,021 | 29,793",
+      "relevance": "추론: 2025년 매출 $94,827M 가운데 중국이 $20,962M 로 약 22.1%(계산)다. 판매 지역 기준이라 중국 생산(상하이 공장) 몫과는 다르다. ⑧ 지정학 축의 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ⑧ 지정학 축 판단이 중국 매출 비중과 상하이 생산 비중을 함께 다시 읽는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "중국 판매 비중은 판매 지역 기준이고 생산 위치 기준과 다르다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-K Segment Reporting and Information about Geographic Areas — 지역별 매출 표(p.93)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Tesla 10-Q (2026-06-30) Note 14 — 2026년 상반기 지역별 매출(미국 23,885·중국 8,859·기타 17,879, $ 백만)",
+      "excerpt": "The following table presents revenues by geographic area based on the sales location of our products (in millions): Three Months Ended June 30, | Six Months Ended June 30, 2026 | 2025 | 2026 | 2025 United States | 13,208 | 11,809 | 23,885 | 22,142 China | 4,675 | 4,305 | 8,859 | 8,608 Other international | 10,353 | 6,382 | 17,879 | 11,081 Total | 28,236 | 22,496 | 50,623 | 41,831",
+      "relevance": "추론: 2026년 상반기 매출 $50,623M 가운데 중국이 $8,859M 로 약 17.5%(계산)이고 전년 상반기 $8,608M 보다 소폭 늘었다. 판매 지역 기준이다. ⑧ 지정학 축의 최신 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ⑧ 지정학 축 판단이 중국 매출 비중의 최근 값을 다시 읽는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "판매 지역 기준이라 중국 생산 비중과 다르다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Note 14 Segment Reporting and Information about Geographic Areas — 지역별 매출 표(p.27)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4",
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Tesla 10-Q (2026-06-30) Note 1 — FSD(Supervised) 접근권 등을 포함한 이연수익 $4.05B(2026-06-30)",
+      "excerpt": "Deferred revenue related to internet connectivity, access to our Full Self-Driving (“FSD”) (Supervised) features and their ongoing maintenance, free Supercharging programs and over-the-air software updates primarily on automotive sales amounted to $4.05 billion and $3.87 billion as of June 30, 2026 and December 31, 2025, respectively.",
+      "relevance": "추론: 인터넷 연결·FSD(Supervised) 접근권과 유지 보수·무료 Supercharging·무선 업데이트에 관련한 이연수익이 2026-06-30 $4.05B(2025-12-31 $3.87B)다. FSD 몫만 따로 떼지 않은 합산 값이라 FSD 매출의 크기가 아니다. ④ 응용 층 판매 칸과 ① AI 수익화의 방증 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ④ 응용 층 칸과 ① AI 수익화 판정의 근거를 보강한다. FSD 매출이 따로 공시되면 두 판단을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "FSD 몫만의 이연수익과 FSD 매출은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Note 1 Summary of Significant Accounting Policies — Revenue Recognition, Automotive Segment, Automotive Sales 단락(p.10)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)",
+      "excerpt": "In millions of USD or shares as applicable, except per share data Q2-2025 Q3-2025 Q4-2025 Q1-2026 Q2-2026 REVENUES Automotive sales 15,787 20,359 16,750 15,473 20,006 Automotive regulatory credits 439 417 542 380 146 Automotive leasing 435 429 401 381 364 Total automotive revenues 16,661 21,205 17,693 16,234 20,516 Energy generation and storage 2,789 3,415 3,837 2,408 3,139 Services and other 3,046 3,475 3,371 3,745 4,581 Total revenues 22,496 28,095 24,901 22,387 28,236",
+      "relevance": "추론: 최근 네 분기(2025년 3분기~2026년 2분기) 매출은 자동차 판매 72,588, 규제 크레딧 1,485, 리스 1,575, 에너지 12,799, 서비스·기타 15,172 이고 합계 $103,619M 이다(계산). ④ 다각화 축의 세그먼트 입력이다. FSD 매출은 자동차 판매에 포함돼 따로 나오지 않는다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ④ 다각화 축(AI 와 무관한 수요에서 나오는 매출 몫)의 입력을 이 매출원천별 표로 다시 계산한다. 자동차·에너지·서비스를 AI 무관으로 읽는 범위는 판단이 정한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "자동차 판매 안의 FSD·커넥티비티 매출은 따로 공시되지 않아 AI 몫을 떼지 못한다",
+        "이 표는 감사·검토를 받지 않은 분기 보도자료 값이다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "Q2 2026 Update Financial Statements — 손익계산서 REVENUES 줄(열: Q2-2025~Q2-2026)",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 업데이트 Manufacturing & Hardware — 지역별 연 설치 생산 능력(Shanghai Model 3/Y 950,000 초과 등)",
+      "excerpt": "Installed Annual Manufacturing Capacity Region Product Capacity Status Automotive California Model 3 / Model Y >550,000 Production Shanghai Model 3 / Model Y >950,000 Production Berlin Model Y >375,000 Production Texas Model Y >250,000 Production Cybertruck >125,000 Production Cybercab >125,000 Production",
+      "relevance": "추론: Model 3/Y 설치 능력이 상하이 950,000 초과, 캘리포니아 550,000 초과, 베를린(Model Y) 375,000 초과, 텍사스(Model Y) 250,000 초과다. 상하이 공장 몫이 가장 크다. 설치 능력은 현재 생산량이 아니다. ⑧ 지정학 축의 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 테슬라 ⑧ 지정학 축 판단이 중국 생산 능력과 중국 매출 비중을 함께 다시 읽는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "설치 능력은 실제 생산량이나 중국 생산 차량 중 중국 판매 비중과 같지 않다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "Q2 2026 Update 6쪽 Manufacturing & Hardware, Installed Annual Manufacturing Capacity 표",
+      "verified_original": true
+    },
+    {
+      "company_id": "tesla",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-tesla-000162828026049213",
+      "published_at_utc": "2026-07-22T00:00:00Z",
+      "title": "Tesla Q2 2026 업데이트 AI & Software — 여름 업데이트가 차량에 Grok 기능을 더한다",
+      "excerpt": "The Summer Release also includes additional Grok functionality such as making phone calls, searching and playing music and adjusting climate controls.",
+      "relevance": "추론: 2026-07 차량 소프트웨어 업데이트에 통화·음악 검색·공조 조절을 하는 Grok 기능이 들어갔다고 회사가 적었다. Grok 은 SpaceX AI 부문의 모델이라 테슬라 ④ 모델 층은 자체 판매가 아니라 외부 모델을 쓰는 쪽의 사실이고, 테슬라가 SpaceX 지분 1% 미만을 가진 관계는 ⑤·⑦ 에서 본다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 테슬라 ④ 모델 층 칸의 근거를 보강한다. 테슬라가 모델 사용 자체에 돈을 받는 상품을 공시하면 칸을 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-10 말)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Grok 을 쓰는 대가나 계약 조건은 이 문장에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "Q2 2026 Update 8쪽 AI & Software, 'Automotive and Other Software' 문단 둘째 문장",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)",
+      "excerpt": "Revenue disaggregated by type and segment is as follows: Three Months Ended June 30, | Six Months Ended June 30, 2026 | 2025 | 2026 | 2025 Launch Services | 648 | 490 | 978 | 1,056 Launch & Development | 314 | 256 | 603 | 555 Space | 962 | 746 | 1,581 | 1,611 Consumer | 2,485 | 1,721 | 4,633 | 3,213 Enterprise & Government (1) | 1,806 | 867 | 2,915 | 1,849 Connectivity | 4,291 | 2,588 | 7,548 | 5,062 Advertising | 367 | 426 | 710 | 870 AI Solutions & Infrastructure | 2,194 | 311 | 2,669 | 595 AI | 2,561 | 737 | 3,379 | 1,465 Total revenues | 7,814 | 4,071 | 12,508 | 8,138",
+      "relevance": "추론: 2026년 2분기 매출 $7,814M 은 Space 962(발사 서비스 648·발사·개발 314), Connectivity 4,291(소비자 2,485·기업·정부 1,806), AI 2,561(광고 367·AI 솔루션과 인프라 2,194)이다. ④ 다각화 축과 주 레이어를 가르는 입력이다. 어느 세그먼트를 AI 무관으로 볼지는 판단이 정한다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ④ 다각화 축(AI 와 무관한 수요에서 나오는 매출 몫)과 주 레이어를 가르는 입력을 이 표로 다시 계산한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "AI 솔루션과 인프라 안에서 클라우드·구독·API·데이터 라이선스 금액은 나뉘어 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Note 3 Revenue — 유형·세그먼트별 매출 표(p.13)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F4",
+        "F1"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30) MD&A AI — 2분기 AI 인프라 매출이 클라우드 서비스 판매 시작으로 $1,600M, Grok·X 구독 매출이 $258M 늘었다",
+      "excerpt": "The increase in AI solutions and infrastructure was primarily due to an increase in AI infrastructure revenue of $1,600 million as we began to offer cloud services to customers and an increase in Grok and X subscription revenue of $258 million. The decrease in advertising revenue was due to the Company’s transition to a new advertising platform",
+      "relevance": "추론: 2026년 2분기 AI 솔루션·인프라 매출 증가의 대부분이 클라우드 서비스를 고객에게 팔기 시작해 생긴 AI 인프라 매출 $1,600M 이고 Grok·X 구독 매출은 $258M 늘었다. 전년 같은 분기에 클라우드 매출이 없어 증가분이 이 분기 클라우드 매출의 하한이다(추론). ④ 클라우드 층 판매 칸과 모델 층 칸의 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ④ 클라우드 층과 모델 층 칸을 이 매출 구성으로 다시 읽는다. 클라우드 매출은 아직 한 분기 값이다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "클라우드 매출의 분기 절대 금액은 공시되지 않았고 증가분만 있다",
+        "Grok 구독과 X 구독의 매출이 나뉘어 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Item 2 MD&A Results of Operations — AI 세그먼트 Revenue 첫 문단(p.44)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30) MD&A — AI 세그먼트 매출은 X 광고와 AI 솔루션·인프라(구독·데이터 라이선스·Grok API·클라우드 서비스)로 구성된다",
+      "excerpt": "AI segment generates revenue from (i) the sale of ad products displayed on its X platform, and (ii) providing AI solutions and infrastructure, which includes subscription-related offerings, data licensing arrangements, and API access to Grok models, as well as the sale of cloud services. … (iv) revenue from cloud services based on fixed monthly services fee which is recognized ratably over the contract term.",
+      "relevance": "추론: 회사가 AI 솔루션과 인프라 매출을 X·Grok 프리미엄 구독, 데이터 라이선스, Grok 모델 API 접근, 고정 월 요금 클라우드 서비스 넷으로 정의했다. ④ 모델 층(API·구독)과 클라우드 층의 과금 방식 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 스페이스X ④ 모델 층·클라우드 층·소프트웨어 플랫폼 층 칸의 근거를 보강한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "네 구성의 금액은 증가분 외에는 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Item 2 MD&A — AI, Revenue - AI 첫 문단과 셋째 문단(p.38)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F8",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30) 위험 요인 — AI 인프라 매출의 상당 부분이 소수 고객에 몰려 있고 클라우드 계약은 90일 통지로 해지될 수 있다",
+      "excerpt": "In addition, a significant portion of our AI infrastructure revenue is concentrated in a small number of customers. Our cloud services agreements generally provide for monthly fees and, after an initial period inclusive of capacity ramp (generally, a number of months), may be terminated by either party upon 90 days' notice.",
+      "relevance": "추론: AI 인프라 매출의 상당 부분이 소수 고객에 몰려 있고 클라우드 서비스 계약이 초기 기간(역량 증설 기간 포함) 뒤 어느 쪽이든 90일 통지로 해지할 수 있다고 회사가 10-Q 에 적었다. ⑧ 고객 축의 계약 방향 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ⑧ 고객 축 판단이 AI 인프라 매출의 소수 고객 집중과 90일 해지 조건을 함께 다시 읽는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "소수 고객의 이름과 몫은 10-Q 에서 밝히지 않는다(10-Q 의 고객 B 는 이름이 없다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Part II Item 1A Risk Factors — AI 인프라 매출 집중 문단(p.51)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30) Note 16 — 해지할 수 없는 무조건 약정 $27,955M 의 성격(AI 인프라·제3자 클라우드 용량·스펙트럼 거래)과 연도별 지급",
+      "excerpt": "The Company’s unconditional obligations are non-cancelable contractual commitments primarily related to the Company’s investments in AI infrastructure and third-party cloud capacity arrangements and other service arrangements. It also includes the Company’s commitments under the Spectrum Transaction, which are payable in cash and in the Company’s Class A common stock. … 2026 (remaining six months) | 2,728 2027 | 22,244 2028 | 2,172 2029 | 809 2030 | 2 Thereafter | — Total | 27,955",
+      "relevance": "추론: 해지할 수 없는 계약상 약정 합계가 $27,955M(2026년 하반기 2,728·2027 22,244·2028 2,172·2029 809·2030 2)이고 AI 인프라 투자·제3자 클라우드 용량·기타 서비스 약정과 현금·Class A 주식으로 내는 스펙트럼 거래 약정을 포함한다고 적었다. 최근 1년 매출 $23,044M 의 약 1.2배(계산)이고 2026년 하반기와 2027년이 89%를 차지한다. ⑧ 약정 축의 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ⑧ 약정 축을 이 무조건 약정과 미개시 리스(별도 근거)의 합으로 다시 계산한다. 스펙트럼 거래의 주식 지급분이 합계에 섞여 있다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "합계 안에서 현금 지급분과 주식 지급분, AI 인프라와 제3자 클라우드의 내역은 나뉘지 않는다",
+        "지급 기간 가까운 부담은 2027년에 몰려 있다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Note 16 Commitments and Contingencies — Unconditional Obligations 첫 문단과 연도별 표(p.27)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30) MD&A — EchoStar 스펙트럼 인수 총대가 약 $19.6B(주식 $11.1B·부채 상환 최대 $8.5B)와 2026·2027년 크레딧 계약 지급",
+      "excerpt": "The total consideration for the acquisition of the Spectrum Licenses is approximately $19.6 billion, consisting of (i) approximately $11.1 billion in equity … (ii) up to $8.5 billion related to the payoff of designated EchoStar debt, with any shortfall below $8.5 billion to be paid in cash. … Total payments expected to be made under the Spectrum Credit Agreement are $1,241 million in 2026, of which $856 million was paid as of June 30, 2026, and $828 million in 2027, assuming an expected closing date of November 30, 2027.",
+      "relevance": "추론: 스펙트럼 면허 인수 대가가 약 $19.6B(Class A 주식 약 $11.1B, EchoStar 부채 상환 최대 $8.5B 이고 모자란 만큼 현금)이고 2027-11-30 종결을 가정하면 크레딧 계약 지급이 2026년 $1,241M·2027년 $828M 이다. 무조건 약정 표(Note 16)에 들어 있는 항목이며 주식 지급분이 크다. ⑧ 약정 축 합계의 구성 설명이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 스페이스X ⑧ 약정 축의 근거를 보강한다. 종결 시점이나 지급 방식이 바뀌면 약정 합계와 가까운 부담을 다시 본다.",
+      "horizon": "medium — 2027-11-30 종결 가정 시점까지",
+      "counter_evidence": [],
+      "unverified": [
+        "약정 표 합계 안의 스펙트럼 금액이 얼마인지는 표가 나누지 않는다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Item 2 MD&A — Spectrum Transaction 단락(p.49)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052535",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 10-Q (2026-06-30) Key Business Metrics — AI 명목 컴퓨트 전력 1.4GW(2026-06-30, 전년 0.4GW)",
+      "excerpt": "Nameplate Compute Draw: We calculate nameplate compute draw for a period as the number of GPUs installed in our data centers at the end of the period multiplied by their respective all-in power draw. … (in gigawatts) | June 30, 2026 | June 30, 2025 Nameplate compute draw | 1.4 | 0.4",
+      "relevance": "추론: 데이터센터에 설치한 GPU 수에 전력 소모를 곱한 명목 컴퓨트 전력이 1.4GW 로 1년 전 0.4GW 의 3.5배(계산)다. 설치 용량이지 실제 이용률이 아니다. ④ 서버·네트워크 층 자체 사용과 클라우드 층 용량의 크기 사실이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 스페이스X ④ 클라우드 층과 서버·네트워크 층 칸의 근거를 보강한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "명목 용량 가운데 외부 고객에게 파는 몫과 자체 모델에 쓰는 몫은 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "10-Q Item 2 MD&A Key Business Metrics — Nameplate Compute Draw 정의와 표(p.36)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F8",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A 위험 요인 — GPU 를 구매 주문 방식으로만 조달하고 직접 칩 공급자와 장기 계약이 없다",
+      "excerpt": "We do not have any long-term or other material contractual arrangements with our direct chip suppliers, instead procuring all of our GPUs on a purchase-order basis. Our direct chip suppliers are dependent on a concentrated group of advanced semiconductor fabrication facilities, or “fabs.” Any disruption to our upstream supply chain, including fab capacity constraints, manufacturing issues, shortages of raw materials such as silicon wafers or rare earth elements, geopolitical tensions affecting fab operations",
+      "relevance": "추론: AI 칩을 공급자에게서 모두 구매 주문으로 사 오고 장기·중요 계약이 없으며, 공급자들이 소수의 첨단 팹에 기대 팹 용량·원재료·지정학 긴장이 공급을 막을 수 있다고 회사가 적었다. ④ 칩 층의 '없음(사 온다)' 쪽 사실이고 ⑧ 공급 축 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ④ 칩 층 칸과 ⑧ 공급 축(칩 공급과 약정)의 판단이 GPU 를 구매 주문으로만 조달한다는 이 문장을 다시 읽는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "이 위험 요인은 S-1/A(2026-06) 시점이며 10-Q 에서 같은 문장을 다시 찾지 못했다",
+        "GPU 공급자 이름은 이 문장에 없다(고객 용량 설명에 NVIDIA GPU 가 나온다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "S-1/A Risk Factors — 'Our ability to scale our AI products relies on our terrestrial and orbital AI compute infrastructure' 항목 둘째 문단(p.38)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A — 칩 제조 계획 Terafab 은 Tesla 와 일반 틀만 합의했고 구체 사업은 별도 협상 대상이다",
+      "excerpt": "We are building chip manufacturing capabilities to scale our access to AI compute hardware. We announced a collaboration with Tesla in March 2026 to build the Terafab initiative with a long-term goal of producing one terawatt of compute hardware each year. In connection with such collaboration, we have agreed with Tesla on a general framework for the future development of Terafab. Intel joined the project in April 2026",
+      "relevance": "추론: AI 컴퓨트 하드웨어 접근을 넓히려고 Tesla 와 2026-03 Terafab 협력을 발표했고 일반 틀에만 합의했으며 Intel 이 2026-04 합류했다고 회사가 적었다. 구체 사업은 별도 협상 대상이라 발표 단계다. ④ 칩 층에서 계획·발표는 점수 근거가 아니다. 2026-08 착공 보도는 SEC 제출본에서 확인하지 못했다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 스페이스X ④ 칩 층을 준비 중으로 읽을 근거는 아직 없다(발표 단계). 착공이나 자금 집행이 제출본에 공시되면 칩 층 칸을 다시 본다.",
+      "horizon": "medium — Terafab 구체 계약·착공 공시까지",
+      "counter_evidence": [],
+      "unverified": [
+        "Terafab 의 금액·일정은 제출본에 없다",
+        "2026-08 착공·초기 투자 $16.8B 보도(2차)는 제출본 근거가 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "S-1/A Prospectus Summary — Our Competitive Strengths 항목 'We are building chip manufacturing capabilities…'(p.10)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A Note 11 — 2025-12-31 기준 체결했으나 개시되지 않은 운용리스 임차료 합계 $1,627M(평균 7.2년)",
+      "excerpt": "The above tables exclude operating lease agreements that have been signed as of December 31, 2025, but not yet commenced for the aggregate lease payments of $1,627 million and an average lease term of 7.2 years, including the operating lease arrangement with Stateline.",
+      "relevance": "추론: 체결했으나 개시되지 않은 운용리스의 임차료 합계가 $1,627M 이고 평균 기간 7.2년이며 Stateline 임대 약정을 포함한다. 10-Q 는 2026년 상반기 리스 포트폴리오에 중요한 변화가 없다고 적는다. ⑧ 약정 축의 미개시 리스 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ⑧ 약정 축을 미개시 리스 $1,627M 과 무조건 약정 $27,955M 의 합으로 다시 계산한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "2026-06-30 기준 미개시 리스 금액은 10-Q 에 따로 없다(중요한 변화 없음 문구만 있다)"
+      ],
+      "change_vs_previous": "new",
+      "locator": "S-1/A Note 11 Leases — 리스 지급 표 아래 문단(F-36)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A MD&A — Grok·X 유료 구독자 약 630만 명과 월간 사용자 약 5.5억 명(2026-03-31)",
+      "excerpt": "including approximately 550 million and 520 million MAUs as of March 31, 2026 and December 31, 2025, respectively. Of our MAUs, we had approximately 117 million and 89 million MAUs that used Grok’s AI features … As of March 31, 2026, we reached approximately 6.3 million active paid subscribers, which was comprised of approximately 4.4 million X Premium Basic, X Premium and Premium+ paid subscribers and approximately 1.9 million SuperGrok, SuperGrok Heavy and SuperGrok Lite paid subscribers.",
+      "relevance": "추론: 2026-03-31 Grok·X 월간 사용자가 약 5.5억 명(Grok AI 기능 이용 1.17억 명)이고 활성 유료 구독자는 약 630만 명(X 440만·Grok 190만)이다. 유료 구독자 ÷ 월간 사용자는 약 1.1%(계산)이고 Grok 만 보면 190만 ÷ 1.17억 명 약 1.6%(계산)다. ① 소비자 채널의 AI 에 따로 돈을 내는 몫을 재는 분자·분모이고 ④ 모델 층 판매 칸의 근거다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ① AI 수익화 판정에서 (가) 채널 고객 과반이 AI 에 따로 돈을 낸다는 조건을 이 유료 비중으로 다시 읽는다. 과반에 크게 못 미친다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "월간 사용자는 회사 자체 추정이고 X 와 Grok 이용자의 중복을 완전히 걸러내지 못한다고 회사가 밝힌다",
+        "Starlink 가입자 12.0M 명은 AI 에 따로 돈을 내는 고객이 아니라 이 분모에 넣지 않았다",
+        "2026-06-30 기준 구독자 수는 10-Q 에 없다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "S-1/A MD&A Key Business Metrics — 월간 사용자 문단(p.85)과 'Conversion of Users to Paid Subscribers' 문단(p.98)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F8"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026040364",
+      "published_at_utc": "2026-06-03T00:00:00Z",
+      "title": "SpaceX S-1/A Note 19 — 2025년 거래 발생지 기준 지역별 매출(미국 12,966·아일랜드 1,827·캐나다 764·기타 3,117, $ 백만)",
+      "excerpt": "The following tables provide revenue by geography based on the country of domicile in which the transaction originated: Year Ended December 31, 2025 | 2024 | 2023 USA | $12,966 | $10,008 | $7,473 Ireland | 1,827 | 1,371 | 1,047 Canada | 764 | 582 | 447 All Other | 3,117 | 2,054 | 1,420 Total Revenues | $18,674 | $14,015 | $10,387",
+      "relevance": "추론: 2025년 매출 $18,674M 가운데 미국 발생분이 약 69.4%(계산)이고 장기 자산은 사실상 모두 미국에 있다고 회사가 적었다. 거래 발생지 기준이라 고객 소재지와 다를 수 있다. ⑧ 지정학 축의 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 스페이스X ⑧ 지정학 축의 근거를 보강한다. 한 나라 정부에 걸린 매출 집중은 이 표에서 나타나지 않는다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "2026년 상반기 지역별 매출은 10-Q 에서 찾지 못했다",
+        "미국 발생분 가운데 미국 정부 몫은 별도 공시되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "S-1/A Note 19 Segments — Revenue by geography 표(F-60)",
+      "verified_original": true
+    },
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F8",
+        "F4"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-spacex-xai-000162828026052515",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "SpaceX 8-K Ex.99.1 (2026년 2분기 실적) — 클라우드 서비스 계약 체결로 계약 매출 $14.1B",
+      "excerpt": "Closed multiple industry-leading Cloud Services Agreements resulting in $14.1 billion of contracted sales",
+      "relevance": "추론: 2026년 2분기에 복수의 클라우드 서비스 계약을 체결해 계약 매출이 $14.1B 가 됐다고 회사가 실적 발표문에 적었다. 계약 기간별 지급과 고객 이름은 이 문장에 없고 계약 매출은 인식 매출이 아니다. ④ 클라우드 층의 계약 규모와 ⑧ 고객 축의 계약액 입력이다.",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: 스페이스X ⑧ 고객 축에서 계약액이 인식 매출보다 큰 고객의 연환산 계약액을 이 계약 매출과 Anthropic 계약 조건으로 다시 계산한다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "$14.1B 가 몇 개 계약·몇 개 고객·몇 년치인지 이 발표문에 없다",
+        "발표문은 감사·검토를 받지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "8-K Exhibit 99.1 (2026-08-04) 첫 문단 둘째 항목(p.1)",
+      "verified_original": true
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-922",
+      "published_at_utc": "2026-03-19T02:52:59Z",
+      "title": "중신경위 — 알리바바 클라우드가 2026-04-18 부터 Zhenwu 등 연산 카드 서비스 가격을 5~34%, CPFS 를 30% 올린다고 공지했다",
+      "excerpt": "3月18日中午，阿里云官网宣布，将于2026年4月18日起对AI算力、CPFS(智算版)等服务价格进行调整。其中，平头哥真武810E等算力卡相关服务价格上涨5%-34%，CPFS(智算版)价格上涨30%。",
+      "relevance": "추론: 중국 통신사 기사가 알리바바 클라우드 공식 사이트 공지를 전하며 인상 폭을 연산 카드 관련 서비스 5~34%, CPFS 30% 로 적었다. 회사 공지 본문에는 없는 인상 폭의 출처이며 2차 보도다. 업무(클라우드) 채널의 사실이다.",
+      "channel": "secondary",
+      "conditional_impact": "재검토: 알리바바 ① AI 수익화 판정에서 업무 채널 가격 인상의 폭을 이 보도로 읽는다. 공지 본문과 같은 사실을 전한 2차 보도라 인상 폭 확인용으로만 쓴다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "인상 폭은 통신사 보도이고 공지 상세표(GPU·CPFS 목록)는 열지 못했다",
+        "인상 뒤 고객 이탈 여부는 확인되지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "locator": "기사 본문 둘째 문단('3月18日中午，阿里云官网宣布…' 로 시작)",
+      "verified_original": true
+    }
+  ],
+  "observations": [
+    {
+      "company_id": "alibaba",
+      "metric": "equity_investment_gains_ttm",
+      "value": 9662510872.71673,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-12",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "sign_convention": "이익이 양수(세전)",
+        "measure": "회사가 비GAAP 순이익 조정표에 따로 적는 'Gain on deemed disposals/disposals/revaluation of investments' — 지분증권 평가손익(상장 지분 시가 변동·비상장 지분 관측가 상향)과 지분 처분·간주 처분 손익을 합친 세전 줄. 투자 관련 손상은 같은 표의 'Impairment of goodwill and investments, and others' 에 따로 있어 포함하지 않았다",
+        "formula": "네 분기(2025-07~2026-06) 값의 합 = 66,652 RMB 백만 ÷ 6.8980",
+        "original_value_cny_m": 66652,
+        "components": [
+          {
+            "tag": "Alibaba non-GAAP reconciliation line — Gain on deemed disposals/disposals/revaluation of investments",
+            "item": "단일 줄(겹치는 구성 없음). 분기별 값을 quarters 에 적는다",
+            "quarters": [
+              {
+                "role": "q_2025_07_09",
+                "start": "2025-07-01",
+                "end": "2025-09-30",
+                "val": 16192,
+                "val_unit": "CNY_million",
+                "accession": "0001104659-25-115949",
+                "form": "6-K (Ex.99.1)",
+                "filed": "2025-11-25",
+                "source_id": "SRC-SEC-alibaba-000110465925115949",
+                "audited": false,
+                "location": "2025-11 보도자료 'Reconciliations… net income to non-GAAP net income' 표, 열 'Three months ended September 30, 2025 RMB'",
+                "line": "Gain on deemed disposals/disposals/revaluation of investments (비GAAP 순이익 조정표, 이익이 양수)"
+              },
+              {
+                "role": "q_2025_10_12",
+                "start": "2025-10-01",
+                "end": "2025-12-31",
+                "val": 14269,
+                "val_unit": "CNY_million",
+                "accession": "0001104659-26-032060",
+                "form": "6-K (Ex.99.1)",
+                "filed": "2026-03-19",
+                "source_id": "SRC-SEC-alibaba-000110465926032060",
+                "audited": false,
+                "location": "2026-03 보도자료 같은 표, 열 'Three months ended December 31, 2025 RMB'",
+                "line": "Gain on deemed disposals/disposals/revaluation of investments (비GAAP 순이익 조정표, 이익이 양수)"
+              },
+              {
+                "role": "q_2026_01_03",
+                "start": "2026-01-01",
+                "end": "2026-03-31",
+                "val": 30827,
+                "val_unit": "CNY_million",
+                "accession": "0001104659-26-060224",
+                "form": "6-K (Ex.99.1)",
+                "filed": "2026-05-13",
+                "source_id": "SRC-SEC-alibaba-000110465926060224",
+                "audited": false,
+                "location": "2026-05 보도자료 같은 표, 열 'Three months ended March 31, 2026 RMB'",
+                "line": "Gain on deemed disposals/disposals/revaluation of investments (비GAAP 순이익 조정표, 이익이 양수)"
+              },
+              {
+                "role": "q_2026_04_06",
+                "start": "2026-04-01",
+                "end": "2026-06-30",
+                "val": 5364,
+                "val_unit": "CNY_million",
+                "accession": "0001104659-26-099220",
+                "form": "6-K (Ex.99.1)",
+                "filed": "2026-08-20",
+                "source_id": "SRC-SEC-BABA-6K-2026Q1",
+                "audited": false,
+                "location": "2026-08 보도자료 같은 표(p.23), 열 'Three months ended June 30, 2026 RMB'",
+                "line": "Gain on deemed disposals/disposals/revaluation of investments (비GAAP 순이익 조정표, 이익이 양수)"
+              }
+            ]
+          }
+        ],
+        "reconciliation": {
+          "ttm_path_check": "회계 2026년 전체 74,416 (20-F MD&A 비GAAP 조정표, 3월 분기 6-K 와 같은 값) − 2025-04~06 분기 13,128 (2025 보도자료와 2026 보도자료 비교 칸이 같다) + 2026-04~06 분기 5,364 = 66,652 이고, 네 분기 합 16,192 + 14,269 + 30,827 + 5,364 = 66,652 와 같다",
+          "cumulative_tie": "2025-04~06 13,128 + 2025-07~09 16,192 = 반기 29,320, + 2025-10~12 14,269 = 9개월 43,589, + 2026-01~03 30,827 = 연간 74,416 으로 각 보도자료의 누계 칸과 닫힌다",
+          "note_table_check": "감사 현금흐름표(20-F F-12)의 'Loss (Gain) related to equity securities and other investments' 66,089 이익과 '(Gain) Loss on disposals of subsidiaries' 8,387 이익을 더하면 74,476 으로 비GAAP 줄 74,416 과 60(0.08%) 차이다. 지분법 투자 처분손실 529 와 기존 지분 재평가손실 99 까지 함께 보면 73,848 로 568(0.8%) 차이다. 비GAAP 줄은 회사 정의라 감사 재무제표 줄과 정확히 닫히지 않는다",
+          "note_11_context": "20-F Note 11: 2026-03-31 에도 보유한 지분증권의 미실현 순손익(손상 포함)이 회계 2026년 이익 56,295(전년 16,746, 전전년 손실 28,790)이고 모두 'interest and investment income, net' 에 들어간다. 비상장 지분(측정 대안)은 관측가 상향 39,416 과 손상·하향 8,187 이다"
+        },
+        "not_included": [
+          {
+            "item": "투자 관련 손상('Impairment of goodwill and investments, and others' 줄 안에 영업권 손상과 섞여 있음)",
+            "value_cny_m_by_quarter": {
+              "2025-07~09": 1442,
+              "2025-10~12": 13130,
+              "2026-01~03": 2161,
+              "2026-04~06": 9202
+            },
+            "reason": "줄이 영업권 손상·충당금과 섞여 분기별로 투자 손상만 떼지 못한다. 20-F 현금흐름표는 회계 2026년 'Impairment of equity securities and other investments' 를 7,724 로 따로 적는다. 이 손상을 빼면 순이익 조정에 쓸 순 평가이익이 줄지만 분기 값이 없어 반영하지 않았다"
+          },
+          {
+            "item": "지분법 투자 손익(Share of results of equity method investees, TTM 2,706 RMB 백만)",
+            "reason": "세전이익 아래에 놓이는 줄이라 세전 평가손익이 아니다"
+          },
+          {
+            "item": "이자 수익(회계 2026년 18,806)",
+            "reason": "투자 평가·처분 손익이 아니다"
+          }
+        ],
+        "ownership_note": "연결 기준 세전 값이다(비지배지분 몫을 따로 떼지 않았다). 같은 알리바바의 세전이익 관측(alibaba.pretax_income_ttm.rs1006)은 영업권 등 지분법 손익 앞의 연결 세전이익이다",
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 기존 알리바바 관측(fcf_ttm·net_income_ttm·pretax_income_ttm·revenue_ttm 의 rs1006 계열)과 같은 환율 6.8980 을 당해·전년 창과 시점 값 모두에 쓴다. 보도자료 달러 칸은 쓰지 않았다",
+        "fx_uniform_rate_note": "분기 값과 연간 값을 모두 같은 환율 6.8980 으로 환산한다. 보도자료 달러 칸(2026: 6.7851, 2025: 7.1636)은 위안 값 체크섬으로만 썼다"
+      },
+      "raw": "TTM 투자 평가·처분 이익 RMB66,652M (2025-07-01~2026-06-30) ÷ 6.8980",
+      "note": "묶음 E. 비GAAP 순이익 조정표의 투자 평가·처분 이익 줄을 네 분기 합으로 만들었다. 투자 관련 손상은 영업권 손상과 섞여 분기별로 뗄 수 없어 포함하지 않았다(basis.not_included). 이 관측으로 ⑥ 이익 조정을 하려면 법인세 TTM 관측도 필요하다 — 알리바바에는 income_tax_ttm 관측이 아직 없다(notes 참고)"
+    },
+    {
+      "company_id": "alibaba",
+      "metric": "ocf_ttm",
+      "value": 11378080603.073355,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-12",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "formula": "20-F 회계 2026년 − 전년 같은 분기(2025-04~06) + 올해 같은 분기(2026-04~06)",
+        "original_value_cny_m": 78486,
+        "components": [
+          {
+            "role": "ocf_fy_current",
+            "line": "Net cash provided by operating activities",
+            "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+            "start": "2025-04-01",
+            "end": "2026-03-31",
+            "val": 76213,
+            "val_unit": "CNY_million",
+            "accession": "0001193125-26-231755",
+            "form": "20-F",
+            "filed": "2026-05-20",
+            "source_id": "SRC-SEC-BABA-20F-FY2026",
+            "audited": true,
+            "location": "20-F 연결현금흐름표(F-12), 열 'Year ended March 31, 2026 RMB'"
+          },
+          {
+            "role": "ocf_minus_prior_year_same_quarter",
+            "line": "Net cash provided by operating activities",
+            "start": "2025-04-01",
+            "end": "2025-06-30",
+            "val": 20672,
+            "val_unit": "CNY_million",
+            "accession": "0001104659-25-085638",
+            "form": "6-K (Ex.99.1)",
+            "filed": "2025-08-29",
+            "source_id": "SRC-SEC-BABA-6K-2025Q1",
+            "audited": false,
+            "location": "2025 보도자료 'UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS', 열 'Three months ended June 30, 2025 RMB'"
+          },
+          {
+            "role": "ocf_plus_current_year_quarter",
+            "line": "Net cash provided by operating activities",
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "val": 22945,
+            "val_unit": "CNY_million",
+            "accession": "0001104659-26-099220",
+            "form": "6-K (Ex.99.1)",
+            "filed": "2026-08-20",
+            "source_id": "SRC-SEC-BABA-6K-2026Q1",
+            "audited": false,
+            "location": "2026 보도자료 같은 표, 열 'Three months ended June 30, 2026 RMB'"
+          }
+        ],
+        "arithmetic": {
+          "formula": "76,213 − 20,672 + 22,945 (RMB 백만)",
+          "sum": 78486,
+          "matches_value": true
+        },
+        "cross_check_four_quarters": {
+          "2025-07~09": 10099,
+          "2025-10~12": 36032,
+          "2026-01~03": 9410,
+          "2026-04~06": 22945,
+          "sum": 78486,
+          "note": "각 분기 보도자료의 'Net cash provided by operating activities' 분기 칸 합이 같다. 누계 칸(반기 30,771·9개월 66,803·연간 76,213)과도 닫힌다"
+        },
+        "same_components_as": "alibaba.fcf_ttm.rs1006 의 OCF 성분(ocf_ttm_cny_m 78,486)과 같은 출처·기간·환산이다",
+        "unaudited_components": "분기 성분 둘(2025-04~06, 2026-04~06)은 6-K 실적 보도자료 값으로 감사·검토를 받지 않았다. 연간 성분은 20-F 감사 값이다",
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 기존 알리바바 관측(fcf_ttm·net_income_ttm·pretax_income_ttm·revenue_ttm 의 rs1006 계열)과 같은 환율 6.8980 을 당해·전년 창과 시점 값 모두에 쓴다. 보도자료 달러 칸은 쓰지 않았다"
+      },
+      "raw": "TTM OCF RMB78,486M (2025-07-01~2026-06-30) ÷ 6.8980",
+      "note": "묶음 E. 기존 alibaba.fcf_ttm.rs1006 의 OCF 성분과 같은 값이다. 연간 성분은 20-F 감사 값이고 분기 성분 둘은 감사·검토 전 보도자료 값이다"
+    },
+    {
+      "company_id": "spacex-xai",
+      "metric": "ocf_ttm",
+      "value": 9900000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-12",
+      "kind": "derived",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "concept": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+        "formula": "당기 반기 누계 + 직전 연간 − 전기 같은 반기 누계 = 3,466 + 6,785 − 351 (USD 백만)",
+        "components": [
+          {
+            "role": "ocf_curr_ytd",
+            "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "val": 3466000000,
+            "accession": "0001628280-26-052535",
+            "form": "10-Q",
+            "filed": "2026-08-04",
+            "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+            "location": "10-Q 연결현금흐름표(p.9), 열 'Six Months Ended June 30, 2026'"
+          },
+          {
+            "role": "ocf_prior_fy",
+            "tag": "S-1/A 연결현금흐름표(companyfacts 미등재)",
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "val": 6785000000,
+            "accession": "0001628280-26-040364",
+            "form": "S-1/A",
+            "filed": "2026-06-03",
+            "source_id": "SRC-SEC-SPCX-S1A-2026",
+            "location": "S-1/A 연결현금흐름표(F-9), 열 'Year Ended December 31, 2025' — 'Net cash provided by operating activities $6,785'. MD&A 도 같은 값을 적는다"
+          },
+          {
+            "role": "ocf_prior_ytd",
+            "tag": "us-gaap:NetCashProvidedByUsedInOperatingActivities",
+            "start": "2025-01-01",
+            "end": "2025-06-30",
+            "val": 351000000,
+            "accession": "0001628280-26-052535",
+            "form": "10-Q",
+            "filed": "2026-08-04",
+            "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+            "location": "10-Q 연결현금흐름표(p.9), 열 'Six Months Ended June 30, 2025'"
+          }
+        ],
+        "arithmetic": {
+          "formula": "3,466 + 6,785 − 351 (USD 백만)",
+          "sum": 9900000000,
+          "matches_value": true
+        },
+        "same_components_as": "spacex-xai.fcf_ttm.cashfcf35 basis 의 ocf_components(curr_ytd_6m 3,466·prior_fy_12m 6,785·prior_ytd_6m 351)와 같은 성분·출처이고 그 basis 의 ocf_ttm 9,900,000,000 과 같다",
+        "generation_note": "S-1/A(2026-06-03)의 2025년 연간 값과 10-Q(2026-08-04)의 반기 비교 칸은 xAI 합병(2026-02-02) 뒤 같은 연결 범위로 쓴 값이다. 연간 성분은 감사 재무제표, 반기 성분은 검토 전 값이다"
+      },
+      "raw": "TTM OCF $9,900M = 3,466 + 6,785 − 351",
+      "note": "묶음 E. 기존 spacex-xai.fcf_ttm.cashfcf35 의 OCF 성분을 원문(10-Q p.9, S-1/A F-9)에서 다시 확인했다"
+    },
+    {
+      "company_id": "alibaba",
+      "metric": "capex_ttm",
+      "value": 22479704262.104958,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-12",
+      "kind": "derived",
+      "source_id": "SRC-SEC-BABA-6K-2026Q1",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "126,063 − 38,676 + 67,678 (RMB 백만)",
+        "original_value_cny_m": 155065,
+        "same_components_as": "alibaba.fcf_ttm.rs1006 의 capex 성분(capex_ttm_cny_m 155,065)과 같다. 분기 capex 는 보도자료 본문 서술값이라 분기 현금흐름표 줄로 확인한 값이 아니다",
+        "original_currency": "CNY",
+        "fx_rate": 6.898,
+        "fx_quote": "CNY per USD",
+        "fx_rate_as_of": "2026-03-31",
+        "fx_rate_source": "FY2026 20-F 'Exchange Rate Information' — RMB6.8980 to US$1.00, the exchange rate on March 31, 2026 set forth in the H.10 statistical release of the Federal Reserve Board",
+        "fx_rule": "발행사 선언 편의환산 환율 우선. 기존 알리바바 관측(fcf_ttm·net_income_ttm·pretax_income_ttm·revenue_ttm 의 rs1006 계열)과 같은 환율 6.8980 을 당해·전년 창과 시점 값 모두에 쓴다. 보도자료 달러 칸은 쓰지 않았다"
+      },
+      "raw": "TTM capex RMB155,065M ÷ 6.8980",
+      "note": "선택 후보. 현금 연결표의 OCF − 설비투자 대조에 쓴다"
+    },
+    {
+      "company_id": "spacex-xai",
+      "metric": "capex_ttm",
+      "value": 42248000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-12",
+      "kind": "derived",
+      "source_id": "SRC-SEC-SPCX-10Q-2026Q2",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "formula": "28,476 + 20,737 − 6,965 (USD 백만)",
+        "same_components_as": "spacex-xai.fcf_ttm.cashfcf35 의 capex 성분. 10-Q 현금흐름표(p.9) 'Purchases of property, plant, and equipment' 반기 칸과 S-1/A 현금흐름표(F-9) 연간 칸으로 다시 확인했다"
+      },
+      "raw": "TTM capex $42,248M",
+      "note": "선택 후보. 현금 연결표의 OCF − 설비투자 대조에 쓴다"
+    }
+  ],
+  "observations_optional": [
+    {
+      "company_id": "tesla",
+      "metric": "equity_investment_gains_ttm",
+      "value": 1005000000.0,
+      "unit": "USD",
+      "as_of": "2026-06-30",
+      "observed_at": "2026-10-12",
+      "kind": "derived",
+      "source_id": "SRC-EDGAR-000162828026049270",
+      "status": "verified",
+      "period": {
+        "start": "2025-07-01",
+        "end": "2026-06-30"
+      },
+      "basis": {
+        "period_basis": "ttm",
+        "sign_convention": "이익이 양수(세전)",
+        "measure": "SpaceX 보통주 투자(공정가치 선택, 2026-03 $2.00B 취득)의 미실현 평가이익. 손익계산서의 기타 영업외 수익(Other income, net)에 들어간다",
+        "components": [
+          {
+            "tag": "SpaceX equity investment unrealized gain",
+            "quarters": [
+              {
+                "period": "2025-07-01~2025-09-30",
+                "val_usd_m": 0,
+                "note": "Q2 2026 업데이트 현금흐름표 칸이 '—'"
+              },
+              {
+                "period": "2025-10-01~2025-12-31",
+                "val_usd_m": 0,
+                "note": "같은 표 '—'"
+              },
+              {
+                "period": "2026-01-01~2026-03-31",
+                "val_usd_m": 0,
+                "note": "같은 표 '—' (2026-03 취득 분기에 평가이익 없음)"
+              },
+              {
+                "period": "2026-04-01~2026-06-30",
+                "val_usd_m": 1005,
+                "accession_10q": "0001628280-26-049270",
+                "location": "10-Q 현금흐름표 'SpaceX equity investment unrealized gain (1,005)'(p.9)와 Note 2 각주 '$1.00 billion net gain'(p.16); Q2 2026 업데이트 현금흐름표 분기 칸 (1,005)"
+              }
+            ]
+          }
+        ],
+        "reconciliation": {
+          "tax_effect_in_update": "Q2 2026 업데이트 비GAAP 조정표는 이 이익의 세후 값을 763 으로 적는다(세전 1,005, 암묵 세율 약 24%)",
+          "balance_check": "2026-06-30 공정가치 $3,007M = 취득 $2,002M + 평가이익 $1,005M (10-Q Note 2 표 'SpaceX equity investment 3,007')"
+        },
+        "not_included": [
+          {
+            "item": "디지털 자산(Bitcoin) 미실현 손익 TTM 561 손실",
+            "reason": "지분증권이 아니다"
+          }
+        ]
+      },
+      "raw": "SpaceX 지분 미실현 평가이익 $1,005M (2026-04~06 한 분기, 나머지 세 분기 0)",
+      "note": "묶음 지시서의 E 관측 목록에 없는 후보다. 테슬라 최근 1년 순이익 $3,804M 에 이 이익이 세전 $1,005M 들어 있다. 같은 잣대를 모든 회사에 댄다는 규칙 2.3 때문에 조율자가 등록 여부를 정한다"
+    }
+  ],
+  "layer_map": [
+    {
+      "company_id": "alibaba",
+      "layers": {
+        "chip": {
+          "facts": "자회사 T-Head 가 설계한 GPU 를 대규모로 양산해 클라우드 인프라에 공급하고, 최신 AI 프로세서 Zhenwu M890 을 포함한 Zhenwu 칩을 알리바바 클라우드 서비스를 통해 20개 넘는 업종의 외부 고객 650곳 넘게 쓴다고 밝혔다. 외부 고객은 칩을 하드웨어로 사는 것이 아니라 클라우드 서비스로 쓰며, 칩을 따로 판 매출은 공시되지 않았다. 새 칩 Zhenwu V900 은 양산 전이다.",
+          "evidence": [
+            "EV-alibaba-071",
+            "EV-alibaba-007",
+            "EV-alibaba-031",
+            "new:Alibaba 20-F (FY2026) Item 4 AI + Cloud — T-Head 가 자체 GPU 를 양산하고 외부 고객 서비스와 클라우드 인프라 공급에 쓴다",
+            "new:Alibaba 6-K (2026년 6월 분기) — T-Head 의 GPU·CPU·스토리지·네트워킹 칩 포트폴리오와 이기종 칩 클러스터 오케스트레이션 소프트웨어"
+          ]
+        },
+        "server": {
+          "facts": "서버·네트워크 장비를 따로 파는 매출은 공시에 없다. T-Head 의 칩 포트폴리오에 스토리지·네트워킹 칩이 들어 있고, 20-F 는 자체 분산 컴퓨팅 운영체제 Apsara 안의 클라우드 네트워크 구조(Luoshen)와 Lingjun 지능형 컴퓨팅 클러스터를 클라우드 고객과 자사 사업에 제공한다고 적는다. 비공용 클라우드 서비스 매출에 하드웨어와 소프트웨어 라이선스가 포함된다고 밝히지만 금액은 따로 없다. 찾아본 범위는 20-F 전문과 분기 보도자료 다섯 건(2025-06·2025-09·2025-12·2026-03·2026-06 분기)이다.",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — T-Head 의 GPU·CPU·스토리지·네트워킹 칩 포트폴리오와 이기종 칩 클러스터 오케스트레이션 소프트웨어",
+            "new:Alibaba 20-F (FY2026) Item 4 Technology Infrastructure — 자체 분산 컴퓨팅 운영체제 Apsara 와 Lingjun 지능형 컴퓨팅 클러스터를 클라우드 고객과 자사 사업에 제공한다",
+            "new:Alibaba 20-F (FY2026) Item 5 Monetization Model — 공용 클라우드(Model Studio 포함)와 하드웨어·소프트웨어 라이선스를 담은 비공용 클라우드로 매출을 번다"
+          ]
+        },
+        "platform": {
+          "facts": "개발자가 모델을 미세조정·평가·배포하는 자체 AI 플랫폼 PAI(서버리스 방식)와 모델 서비스 Model Studio(Bailian)를 공용 클라우드 서비스로 소비량·구독 방식으로 판다고 20-F 가 적는다. 자사 칩을 포함한 이기종 칩 클러스터를 관리하는 오케스트레이션 소프트웨어도 클라우드 고객이 쓴다. PAI·Model Studio 의 매출은 따로 공시되지 않았고, 가장 가까운 수치는 회사가 실적 발표에서 말한 AI 모델·응용 서비스 연환산 반복 매출 RMB160억 초과(런레이트)다.",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Item 4 — 자체 AI 플랫폼 PAI 가 모델 미세조정·평가·배포를 서버리스로 지원한다",
+            "new:Alibaba 20-F (FY2026) Item 5 Monetization Model — 공용 클라우드(Model Studio 포함)와 하드웨어·소프트웨어 라이선스를 담은 비공용 클라우드로 매출을 번다",
+            "new:Alibaba 6-K (2026년 6월 분기) — T-Head 의 GPU·CPU·스토리지·네트워킹 칩 포트폴리오와 이기종 칩 클러스터 오케스트레이션 소프트웨어",
+            "EV-alibaba-018",
+            "EV-alibaba-019"
+          ]
+        },
+        "cloud": {
+          "facts": "공용·비공용 클라우드를 외부 기업 고객에게 팔아 매출을 낸다. 클라우드 서비스 매출은 회계 2026년 RMB112,077M 이고, 2026년 6월 분기 AI Cloud and Compute Services(Cloud Intelligence Group 과 T-Head 를 합친 세그먼트) 매출은 RMB48,437M 으로 외부 고객 매출 성장률이 45% 로 올랐다. AI 관련 제품 매출은 RMB12,376M 이다. 파리 가용영역 둘(2026-06)과 상파울루 첫 리전(2026-09)을 열었다.",
+          "evidence": [
+            "EV-alibaba-016",
+            "EV-alibaba-070",
+            "EV-alibaba-027",
+            "EV-alibaba-028",
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)",
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        "model": {
+          "facts": "자체 Qwen 모델 가족을 공용 클라우드의 Model Studio 로 소비량·구독 방식으로 과금해 팔고, 플래그십 Qwen3.8-Max 는 2026-08 오픈웨이트로 공개했다. 모델 API 매출만 따로 공시한 숫자는 없다. 모델·응용 서비스 연환산 반복 매출이 RMB160억을 넘었다는 회사 발언(2026-08)이 가장 가까운 수치이고 2차 보도로만 확인했다. 모델 랩·Qwen 앱·QwenWork 를 묶은 세그먼트는 2026년 6월 분기 조정 EBITA 가 RMB13,861M 적자다.",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Item 5 Monetization Model — 공용 클라우드(Model Studio 포함)와 하드웨어·소프트웨어 라이선스를 담은 비공용 클라우드로 매출을 번다",
+            "new:Alibaba 6-K (2026년 6월 분기) — AI Labs and Applications 는 모델 랩·Qwen 소비자 사업·QwenWork 를 묶었고 조정 EBITA 는 RMB13,861M 적자다",
+            "EV-alibaba-018",
+            "EV-alibaba-019",
+            "EV-alibaba-023",
+            "EV-alibaba-033"
+          ]
+        },
+        "app": {
+          "facts": "소비자용 AI 앱 Qwen 이 2026-03 월간 사용자 2.95억 명을 넘었고(사용자 수, 유료 구독자 수 아님), 기업용 업무 에이전트 QwenWork·Wukong, Taobao 앱의 Qwen 쇼핑 비서, Alibaba.com 의 AI 도구(Accio)가 있다. 응용을 묶은 세그먼트(AI Labs and Applications)의 2026년 6월 분기 매출은 RMB3,338M 이고 조정 EBITA 는 RMB13,861M 적자이며 Qwen 앱 추론 비용이 늘었다고 회사가 적었다. Qwen 앱·QwenWork 의 유료 매출과 구독자 수는 공시되지 않았다. Alibaba.com 은 AI 도구 채택으로 플랫폼이 수익화할 길이 여럿 생겼다고 적지만 금액은 없다.",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — AI Labs and Applications 는 모델 랩·Qwen 소비자 사업·QwenWork 를 묶었고 조정 EBITA 는 RMB13,861M 적자다",
+            "new:Alibaba 20-F (FY2026) Item 4 — Qwen 앱 월간 사용자 2.95억 명(2026-03)과 기업용 에이전트 플랫폼 Wukong",
+            "new:Alibaba 20-F (FY2026) Item 4 — Alibaba.com 상인의 AI 도구 채택이 늘어 플랫폼이 수익화할 길이 여럿 생겼다",
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        }
+      },
+      "segments": [
+        {
+          "name": "[2026년 6월 분기, 새 세그먼트 구조] China E-commerce(고객관리 82,547 + 직접 판매·물류·기타 28,353)",
+          "revenue": {
+            "rmb_millions": 110900,
+            "usd_millions_at_6.8980": 16077
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 6-K 세그먼트 매출 표(p.6)",
+          "note": "전년 같은 분기 120,874(고객관리 89,199 + 직접 판매 등 31,675)",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] China Quick Commerce",
+          "revenue": {
+            "rmb_millions": 53295,
+            "usd_millions_at_6.8980": 7726
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 36,725",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] International E-commerce",
+          "revenue": {
+            "rmb_millions": 27761,
+            "usd_millions_at_6.8980": 4024
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 28,177",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] Global Wholesale",
+          "revenue": {
+            "rmb_millions": 13906,
+            "usd_millions_at_6.8980": 2016
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 13,036",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] Alibaba E-commerce Group 합계",
+          "revenue": {
+            "rmb_millions": 205862,
+            "usd_millions_at_6.8980": 29844
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 198,812",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] AI Cloud and Compute Services (Cloud Intelligence Group + T-Head)",
+          "revenue": {
+            "rmb_millions": 48437,
+            "usd_millions_at_6.8980": 7022
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6·p.3",
+          "note": "전년 같은 분기 33,418, 전체·외부 고객 매출 성장률 모두 45%. AI 관련 제품 매출 RMB12,376M(전년 대비 세 자릿수 성장, 12분기 연속). 세그먼트 매출에는 세그먼트 간 거래가 들어 있다",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] AI Labs and Applications (모델 랩·Qwen 소비자 사업·QwenWork)",
+          "revenue": {
+            "rmb_millions": 3338,
+            "usd_millions_at_6.8980": 484
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6·p.9",
+          "note": "전년 같은 분기 2,882. 조정 EBITA 손실 13,861(전년 3,224)",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] All others(Alibaba Health·Hujing 디지털 미디어·Amap·Lingxi Games 등)",
+          "revenue": {
+            "rmb_millions": 28803,
+            "usd_millions_at_6.8980": 4176
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 28,629",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] Unallocated",
+          "revenue": {
+            "rmb_millions": 783,
+            "usd_millions_at_6.8980": 114
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 519",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] Inter-segment elimination",
+          "revenue": {
+            "rmb_millions": -18270,
+            "usd_millions_at_6.8980": -2649
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 -16,608",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 6월 분기] 연결 매출",
+          "revenue": {
+            "rmb_millions": 268953,
+            "usd_millions_at_6.8980": 38990
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-alibaba-000110465926099220 p.6",
+          "note": "전년 같은 분기 247,652",
+          "evidence": [
+            "new:Alibaba 6-K (2026년 6월 분기) — 새 세그먼트 구조의 분기 매출(전자상거래 205,862·AI 클라우드·컴퓨트 48,437·AI 랩·응용 3,338, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년, 옛 세그먼트 구조] Alibaba China E-commerce Group — E-commerce 고객관리",
+          "revenue": {
+            "rmb_millions": 343867,
+            "usd_millions_at_6.8980": 49850
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 Note 5 (F-38)",
+          "note": "전년 326,769. E-commerce 전체 449,385(직접 판매·물류·기타 105,518 포함)",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 부문별 매출 세부(전자상거래 고객관리 343,867·퀵커머스 78,520·도매 26,312 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년] China Quick commerce",
+          "revenue": {
+            "rmb_millions": 78520,
+            "usd_millions_at_6.8980": 11383
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 53,588",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년] China commerce wholesale(1688.com)",
+          "revenue": {
+            "rmb_millions": 26312,
+            "usd_millions_at_6.8980": 3814
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 24,301",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년] Total Alibaba China E-commerce Group",
+          "revenue": {
+            "rmb_millions": 554217,
+            "usd_millions_at_6.8980": 80345
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 508,380",
+          "evidence": [
+            "EV-alibaba-055",
+            "new:Alibaba 20-F (FY2026) Note 5 — 부문별 매출 세부(전자상거래 고객관리 343,867·퀵커머스 78,520·도매 26,312 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년] Alibaba International Digital Commerce Group(해외 소매 117,731 + 해외 도매 26,439)",
+          "revenue": {
+            "rmb_millions": 144170,
+            "usd_millions_at_6.8980": 20900
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 132,300",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년] Cloud Intelligence Group",
+          "revenue": {
+            "rmb_millions": 158132,
+            "usd_millions_at_6.8980": 22924
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 118,028. 세그먼트 간 거래 포함",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년] All others(Freshippo·Cainiao·Alibaba Health·Hujing·Amap·Qwen 소비자 사업·Lingxi Games·DingTalk 등)",
+          "revenue": {
+            "rmb_millions": 254367,
+            "usd_millions_at_6.8980": 36875
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 338,347(Sun Art·Intime 처분 영향)",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년] Unallocated",
+          "revenue": {
+            "rmb_millions": 2340,
+            "usd_millions_at_6.8980": 339
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 1,924",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년] Inter-segment elimination",
+          "revenue": {
+            "rmb_millions": -89556,
+            "usd_millions_at_6.8980": -12983
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 -102,632. 주로 Cloud Intelligence Group 과 Cainiao 매출",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년] 연결 매출",
+          "revenue": {
+            "rmb_millions": 1023670,
+            "usd_millions_at_6.8980": 148401
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-38",
+          "note": "전년 996,347",
+          "evidence": [
+            "EV-alibaba-055"
+          ]
+        },
+        {
+          "name": "[회계 2026년, 유형별] 고객관리 서비스",
+          "revenue": {
+            "rmb_millions": 459917,
+            "usd_millions_at_6.8980": 66674
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 Note 5 (F-39)",
+          "note": "전년 424,877. 연결 매출의 약 44.9%(계산)",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년, 유형별] 멤버십·부가서비스",
+          "revenue": {
+            "rmb_millions": 47638,
+            "usd_millions_at_6.8980": 6906
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-39",
+          "note": "전년 46,613",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년, 유형별] 물류 서비스",
+          "revenue": {
+            "rmb_millions": 139864,
+            "usd_millions_at_6.8980": 20276
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-39",
+          "note": "전년 123,379",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년, 유형별] 클라우드 서비스",
+          "revenue": {
+            "rmb_millions": 112077,
+            "usd_millions_at_6.8980": 16248
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-39",
+          "note": "전년 84,517. 연결 매출의 약 10.9%(계산). Cloud Intelligence Group 세그먼트 매출 158,132 보다 작은 것은 세그먼트 안에 비클라우드 매출·세그먼트 간 거래가 있기 때문이다",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년, 유형별] 상품 판매",
+          "revenue": {
+            "rmb_millions": 227747,
+            "usd_millions_at_6.8980": 33016
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-39",
+          "note": "전년 274,276",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[회계 2026년, 유형별] 기타 매출",
+          "revenue": {
+            "rmb_millions": 36427,
+            "usd_millions_at_6.8980": 5281
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-39",
+          "note": "전년 42,685",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)"
+          ]
+        },
+        {
+          "name": "[최근 1년] 연결 매출(계산, 관측 revenue_ttm 과 같다)",
+          "revenue": {
+            "rmb_millions": 1044971,
+            "usd_millions_at_6.8980": 151489
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "1,023,670 − 247,652 + 268,953",
+          "note": "알리바바 최근 1년 세그먼트·유형별 값은 새 세그먼트 구조 때문에 만들지 못한다. 분기 보도자료에 유형별 표가 없고 6월 분기 외 분기의 새 구조 재작성 값이 없다"
+        },
+        {
+          "name": "[주 레이어 후보] 클라우드 서비스 매출(유형별, 외부 고객 한정 여부는 유형 정의상 연결 매출)",
+          "revenue": {
+            "rmb_millions": 112077,
+            "usd_millions_at_6.8980": 16248
+          },
+          "period": "2025-04-01~2026-03-31",
+          "source": "SRC-SEC-alibaba-000119312526231755 F-39",
+          "note": "판매 칸 가운데 외부 매출이 가장 큰 층의 후보 값이다. 칩·서버·모델·응용 층은 따로 공시된 외부 매출이 없다. 모델 층의 가장 가까운 수치는 회사가 말한 MaaS 연환산 반복 매출 RMB160억 초과(2026-08, 런레이트이며 인식 매출 아님)이고, 응용 층은 AI Labs and Applications 2026년 6월 분기 매출 3,338",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 5 — 유형별 매출(고객관리 459,917·클라우드 서비스 112,077·상품 판매 227,747 등, RMB 백만)",
+            "EV-alibaba-016"
+          ]
+        }
+      ],
+      "monetization": {
+        "strongest_channel": "현재 ① 판단 문장은 소비자 채널(Taobao·Tmall 마켓플레이스)을 가장 강한 채널로 읽는다. 아래에 소비자 채널과 업무(클라우드) 채널을 둘 다 적는다.",
+        "consumer_channel": {
+          "part_a_numerator_denominator": {
+            "fact": "AI 에 따로 돈을 내는 소비자나 매출의 몫을 잴 공시 숫자는 없다. Qwen 앱 월간 사용자 295M 명(2026-03) [new:Alibaba 20-F (FY2026) Item 4 — Qwen 앱 월간 사용자 2.95억 명(2026-03)과 기업용 에이전트 플랫폼 Wukong] 과 Taobao 앱 월간 사용자 9.57억 명(QuestMobile, 2026-03) [EV-alibaba-059]은 사용자 수이고 유료 비중이 아니다. 6-K 는 Qwen 앱의 에이전트 기능으로 첫 AI 쇼핑 경험을 한 사용자가 2.5억 명이라고 적지만 유료 여부를 밝히지 않은 이용자 수다.",
+            "conclusion_fact": "소비자 채널의 AI 유료 고객·매출 몫은 공시되지 않았다(회사 미공시 확인이 아니라 공시에서 찾지 못한 것으로 둔다)."
+          },
+          "part_b_price_increase": {
+            "fact": "AI 때문에 소비자 채널의 가격·단가를 올렸다는 공시나 회사 1차 발표를 찾지 못했다. 소비자 채널 매출인 고객관리 매출(CMR)은 2026년 6월 분기 -7%(신규 사업 개발 프로그램의 차감 효과를 빼면 +1%)다 [EV-alibaba-065].",
+            "conclusion_fact": "소비자 채널에서 AI 를 이유로 든 단가 인상은 없다."
+          }
+        },
+        "work_channel_cloud": {
+          "part_a_numerator_denominator": {
+            "fact": "AI 관련 제품 매출 RMB12,376M ÷ AI Cloud and Compute Services 매출 RMB48,437M = 약 25.6%(계산, 2026-04~06) [EV-alibaba-016]. 분자는 회사 정의의 AI 관련 제품 매출(외부 고객 한정 여부 미공시)이고 분모는 세그먼트 매출(세그먼트 간 거래 포함)이라 같은 기준이 아니다. 고객 수 기준 AI 이용 비중은 공시되지 않았다.",
+            "conclusion_fact": "클라우드 채널에서 AI 에 따로 돈을 내는 매출 몫은 과반보다 크게 낮다(약 4분의 1)."
+          },
+          "part_b_price_increase": {
+            "fact": "Alibaba Cloud 가 2026-03-18 공식 공지로 AI 연산 서비스와 CPFS(지능형 컴퓨팅 저장) 가격을 2026-04-18 부터 조정한다고 알렸고(조정 방향은 공지 본문에 없다), 이유로 글로벌 AI 수요 폭증과 핵심 하드웨어 조달비 상승을 들었다 [new:Alibaba Cloud 공지 — 2026-04-18 부터 AI 연산과 CPFS 저장 서비스 가격을 조정한다(보도는 인상)]. 통신사 보도는 이를 연산 카드(Zhenwu 810E 등) 관련 서비스 5~34% 인상, CPFS 30% 인상으로 전한다 [new:중신경위 — 알리바바 클라우드가 2026-04-18 부터 Zhenwu 등 연산 카드 서비스 가격을 5~34%, CPFS 를 30% 올린다고 공지했다]. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다.",
+            "conclusion_fact": "AI 연산 서비스 가격을 조정한다는 회사 1차 공지가 있고 인상이라는 방향과 폭은 보도로만 확인했다. 이유가 AI 수요와 하드웨어 비용의 합이라 AI 수익화의 직접 증거인지는 판단이 정한다. 가격 인상 뒤 고객 이탈 여부는 확인되지 않았다."
+          }
+        },
+        "search_scope": "20-F(회계 2026) 전문·분기 보도자료 다섯 건(2025-06·2025-09·2025-12·2026-03·2026-06 분기, 'monetiz'·'price increase'·'pricing' 검색)·Alibaba Cloud 공지·중국 통신사 기사. 20-F 와 보도자료에 AI 로 단가를 올렸다는 문장은 없다."
+      },
+      "f8": {
+        "customer": {
+          "fact": "20-F 는 매출 10% 이상 고객이나 최대 고객을 밝히는 문구가 없다(전문에서 'largest customer'·'five largest'·'top five'·'major customer'·'significant customer'·'single customer'·'no customer' 검색 0건이고 '10% of' 는 고객과 무관한 문장에만 나온다). 부재를 확인하는 문장('10% 이상 고객 없음')도 없어 비공개인지 해당 없음인지는 가르지 못한다. 가장 가까운 단서는 특수관계자인 Ant Group 계열의 클라우드 서비스 매출 RMB19,134M(연결 매출의 약 1.9%, 클라우드 서비스 매출의 약 17.1%)과 투자 회사 클라우드 매출 RMB9,415M(0.9%)이다 [new:Alibaba 20-F (FY2026) Item 7.B 특수관계자 거래 — Ant Group 계열 클라우드 매출 RMB19,134M 과 투자 회사 클라우드 매출 RMB9,415M].",
+          "grade": "공개 제출본 공시(20-F) — 최대 고객 문구 없음"
+        },
+        "commitment": {
+          "unstarted_leases": "20-F 전문에서 아직 개시되지 않은 리스 문구를 찾지 못했다(공시하지 않은 것인지 중요하지 않아 생략한 것인지 가르지 못한다)",
+          "capital_commitments_cny_m": 54136,
+          "capital_commitments_by_term_cny_m": {
+            "1년 이내": 53484,
+            "1~5년": 652
+          },
+          "other_commitments_cny_m": 200062,
+          "other_commitments_scope": "코로케이션·대역폭 요금·저작권·마케팅 비용",
+          "other_commitments_by_term_cny_m": {
+            "1년 이내": 57441,
+            "1~5년": 133598,
+            "5년 초과": 9023
+          },
+          "sum_cny_m": 254198,
+          "sum_usd_m_at_6.8980": 36851,
+          "ttm_revenue_cny_m": 1044971,
+          "ratio_calc": "254,198 ÷ 1,044,971 = 약 0.24배(계산). 회계 2026년 연결 매출 1,023,670 으로 나누면 약 0.25배",
+          "near_term_burden_calc": "1년 이내 53,484 + 57,441 = 110,925 ÷ 1,044,971 = 약 10.6%(계산). 1~5년 구간(652 + 133,598)이 한 덩어리라 12~24개월 부담은 따로 나오지 않는다",
+          "excluded_investment_commitments_cny_m": 14501,
+          "excluded_reason": "지분투자·기업 인수 대금은 영업 약정이 아니라 투자 약정이라 합계에서 뺐다. 보증·조건부 구매·MOU 는 20-F 에서 찾지 못했다",
+          "open_question": "기타 약정이 모두 해지할 수 없는 구매 약정인지 주석이 밝히지 않는다. 1~5년 구간이 전년 46,768 에서 133,598 로 늘었다",
+          "evidence": [
+            "new:Alibaba 20-F (FY2026) Note 27 — 자본약정 RMB54,136M 과 코로케이션·대역폭·저작권·마케팅 기타 약정 RMB200,062M(기간별)"
+          ]
+        },
+        "supply": {
+          "chips": "미국의 첨단 칩 수출 통제로 NVIDIA 최상위 칩 접근이 제한됐고(EV-alibaba-036·035), 20-F 는 수출·제재 제한이 공급망을 이미 흔들고 칩과 데이터센터 서비스 접근을 해쳤다고 적는다 [new:Alibaba 20-F (FY2026) Item 3.D 위험 요인 — 수출·제재 제한으로 칩과 데이터센터 서비스 접근이 이미 나빠졌고 중국 당국은 일부 칩 구매 중단을 요청했다]. 자체 Zhenwu 칩이 외부 고객 650곳 넘게 쓰일 만큼 배치돼 있어 대체 경로가 있다(EV-alibaba-071). 칩 제조 공정 공급자는 이번에 연 제출본에서 찾지 못했다.",
+          "compute": "자체 클라우드 인프라(Apsara·Lingjun)를 쓰고 데이터센터 서비스는 위험 요인에서 접근이 해쳐졌다고 적는다 [new:Alibaba 20-F (FY2026) Item 3.D 위험 요인 — 수출·제재 제한으로 칩과 데이터센터 서비스 접근이 이미 나빠졌고 중국 당국은 일부 칩 구매 중단을 요청했다]. 2026년 6월 분기 설비투자 증가 원인에 '여러 칩 부품의 가격 상승'이 들어 있다(6-K p.4).",
+          "model": "자체 Qwen 모델을 쓰고 외부 모델 공급자는 공시되지 않았다.",
+          "os": "자체 클라우드 운영체제 Apsara 를 쓴다. 모바일 운영체제 의존은 20-F 에 따로 없다.",
+          "supplier_is_competitor": "공급자가 곧 경쟁자라는 문장은 이번에 연 제출본에서 찾지 못했다.",
+          "other": "2025-09 중국 사이버공간관리국이 중국 기술 기업에 일부 칩 구매 중단을 요청했다고 20-F 가 적는다(국내 쪽 제약) [new:Alibaba 20-F (FY2026) Item 3.D 위험 요인 — 수출·제재 제한으로 칩과 데이터센터 서비스 접근이 이미 나빠졌고 중국 당국은 일부 칩 구매 중단을 요청했다]."
+        },
+        "geopolitics": {
+          "fact": "미국 쪽은 첨단 GPU 수출 금지의 집행과 국방부 1260H 등재(2026-06-30 부터 직접 계약, 2027년부터 제3자 조달 금지)(EV-alibaba-036·072), 중국 쪽은 VIE 구조라 투자자가 VIE 지분을 갖지 못한다(EV-alibaba-038)와 자국 모델 해외 이용 제한 논의(EV-alibaba-037)다. 이번에 VIE 를 거치는 매출의 크기를 확인했다. 회계 2026년 외부 고객 매출 RMB1,023,670M 가운데 주요 VIE 와 그 자회사가 RMB119,561M(약 11.7%, 계산) [new:Alibaba 20-F (FY2026) Item 3 — 주요 VIE 와 그 자회사의 외부 매출 RMB119,561M(연결 매출 RMB1,023,670M 의 약 11.7%)], 감사 재무제표 주석의 연결 VIE 와 그 자회사 매출은 RMB156,369M(약 15.3%, 계산)이고 주로 클라우드·디지털 미디어·엔터테인먼트다 [new:Alibaba 20-F (FY2026) Note 2(c) — 연결 VIE 와 그 자회사의 매출 RMB156,369M(클라우드·디지털 미디어·엔터테인먼트 등)].",
+          "caution": "Item 3 표의 주요 VIE 값과 주석의 VIE 값은 범위가 달라 직접 대조되지 않는다고 20-F 가 적는다. 두 값은 각각 연결 매출의 약 11.7%와 15.3% 다."
+        }
+      }
+    },
+    {
+      "company_id": "tesla",
+      "layers": {
+        "chip": {
+          "facts": "고객 차량에 자체 설계한 추론 칩이 들어 있고(10-K: 신경망을 자체 설계 추론 칩이 가속) AI3·AI4 두 세대 하드웨어 위에서 FSD 를 배포한다(Q2 2026 업데이트). 칩을 남에게 파는 매출은 공시되지 않았다. 반도체 위탁 제조는 2025-07 체결한 공급 계약이 2027년 이후 시작 예정이고, 오스틴 반도체 팹은 건설·장비 구매 초기 단계이며, Samsung 과의 제조 협력은 발표 단계다. 차세대 AI5 는 테이프아웃했다는 보도가 있다.",
+          "evidence": [
+            "EV-tesla-058",
+            "new:Tesla Q2 2026 업데이트 AI & Software — AI4 의 FSD v14 를 AI3 하드웨어에 맞춘 FSD v14 lite 를 고객 차량에 배포한다",
+            "EV-tesla-026",
+            "new:Tesla 10-K (2025) Note 10 — 미개시 운용리스 $849M 과 2025-07 AI 칩 위탁 제조 공급 계약(2027년 이후 시작 예정)",
+            "new:Tesla 10-K (2025) Item 1 Infrastructure — 학습 클러스터 Cortex 확장과 Samsung 과의 AI 반도체 제조 협력",
+            "EV-tesla-035"
+          ]
+        },
+        "server": {
+          "facts": "AI 학습용 자체 클러스터 Cortex 1(90MW 초과)과 Cortex 2(115MW 초과)를 텍사스에서 가동해 자사 AI 개발에 쓰고 2026년 상반기 온사이트 컴퓨트를 두 배 넘게 늘렸다. 서버·네트워크 장비를 남에게 파는 매출은 공시에 없다. 클러스터에 쓰는 GPU 공급자 이름은 10-K·10-Q 에서 찾지 못했다.",
+          "evidence": [
+            "EV-tesla-023",
+            "new:Tesla 10-K (2025) Item 1 Infrastructure — 학습 클러스터 Cortex 확장과 Samsung 과의 AI 반도체 제조 협력"
+          ]
+        },
+        "platform": {
+          "facts": "개발자가 그 위에서 소프트웨어를 만드는 층으로 공시된 것은 없다. 10-K 에 나오는 소프트웨어 플랫폼 Powerhub·Autobidder 는 자사 에너지 저장 제품을 운영하는 용도다.",
+          "evidence": [
+            "new:Tesla 10-K (2025) Item 1 — 에너지 저장 제품을 운영하는 소프트웨어 플랫폼 Powerhub·Autobidder"
+          ]
+        },
+        "cloud": {
+          "facts": "연산 인프라를 남에게 빌려주는 사업은 공시되지 않았다. 찾아본 범위는 10-K(2025) 전문, 10-Q(2026-06-30) 전문, Q2 2026 업데이트 전문이다. 10-Q 는 자체 AI 컴퓨트 투자를 '자사 AI 제품·서비스 개발용' 이라고 적는다.",
+          "evidence": []
+        },
+        "model": {
+          "facts": "FSD 의 주행 신경망을 자체 개발해 차량 기능으로 제공하지만 API 토큰 과금이나 범용 비서 구독으로 모델 사용 자체에 돈을 받는다는 공시는 없다. 차량 음성 비서 기능에는 SpaceX AI 부문의 모델 Grok 이 들어간다(2026년 2분기 업데이트). 이것은 외부 모델을 쓰는 쪽의 사실이다.",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 AI & Software — 여름 업데이트가 차량에 Grok 기능을 더한다"
+          ]
+        },
+        "app": {
+          "facts": "FSD(Supervised)를 일시불·월 구독으로 판다(일시불 판매는 2026-02-14 종료됐다는 보도가 있으나 1차 확인 못 함). 활성 FSD 구독(일시불 포함, 무료 체험 제외)이 0.95백만(2025-06-30)에서 1.48백만(2026-06-30)으로 늘었고 북미 신차 인도의 55% 넘게 FSD 구독이 붙는다. FSD 접근권을 포함한 이연수익은 $4.05B 다. Robotaxi 는 2026-07 기준 오스틴·댈러스·휴스턴·마이애미·올랜도·탬파에서 무감독 운행을 늘리고 Bay Area 는 안전요원이 타며, Robotaxi 매출은 따로 공시되지 않았다. Optimus 는 첫 생산 라인을 설치하는 단계로 매출이 없다.",
+          "evidence": [
+            "EV-tesla-021",
+            "EV-tesla-022",
+            "EV-tesla-027",
+            "EV-tesla-055",
+            "EV-tesla-028",
+            "new:Tesla 10-Q (2026-06-30) Note 1 — FSD(Supervised) 접근권 등을 포함한 이연수익 $4.05B(2026-06-30)",
+            "EV-tesla-024",
+            "EV-tesla-025"
+          ]
+        }
+      },
+      "segments": [
+        {
+          "name": "[2026년 2분기] Automotive sales",
+          "revenue": {
+            "usd_millions": 20006
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "Q2 2026 업데이트 손익계산서(p.27)",
+          "note": "전년 같은 분기 15,787",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] Automotive regulatory credits",
+          "revenue": {
+            "usd_millions": 146
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "Q2 2026 업데이트 p.27",
+          "note": "전년 같은 분기 439",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] Automotive leasing",
+          "revenue": {
+            "usd_millions": 364
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "Q2 2026 업데이트 p.27",
+          "note": "전년 같은 분기 435",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] Total automotive revenues",
+          "revenue": {
+            "usd_millions": 20516
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "Q2 2026 업데이트 p.27",
+          "note": "전년 같은 분기 16,661",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] Energy generation and storage",
+          "revenue": {
+            "usd_millions": 3139
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "Q2 2026 업데이트 p.27",
+          "note": "전년 같은 분기 2,789",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] Services and other",
+          "revenue": {
+            "usd_millions": 4581
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "Q2 2026 업데이트 p.27",
+          "note": "전년 같은 분기 3,046",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] 총매출",
+          "revenue": {
+            "usd_millions": 28236
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "Q2 2026 업데이트 p.27; 10-Q 손익계산서",
+          "note": "전년 같은 분기 22,496",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[최근 1년, 계산] Automotive sales",
+          "revenue": {
+            "usd_millions": 72588
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "Q2 2026 업데이트 다섯 분기 표에서 최근 네 분기 합(20,359 + 16,750 + 15,473 + 20,006)",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[최근 1년, 계산] Automotive regulatory credits",
+          "revenue": {
+            "usd_millions": 1485
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "같은 표 네 분기 합(417 + 542 + 380 + 146)",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[최근 1년, 계산] Automotive leasing",
+          "revenue": {
+            "usd_millions": 1575
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "같은 표 네 분기 합(429 + 401 + 381 + 364)",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[최근 1년, 계산] Energy generation and storage",
+          "revenue": {
+            "usd_millions": 12799
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "같은 표 네 분기 합(3,415 + 3,837 + 2,408 + 3,139)",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[최근 1년, 계산] Services and other",
+          "revenue": {
+            "usd_millions": 15172
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "같은 표 네 분기 합(3,475 + 3,371 + 3,745 + 4,581)",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[최근 1년, 계산] 총매출",
+          "revenue": {
+            "usd_millions": 103619
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "같은 표 네 분기 합. 위 다섯 줄의 합과 같다",
+          "evidence": [
+            "new:Tesla Q2 2026 업데이트 손익계산서 — 매출원천별 다섯 분기 매출(자동차 판매·규제 크레딧·리스·에너지·서비스, $ 백만)"
+          ]
+        },
+        {
+          "name": "[2026년 상반기, 10-Q 세그먼트] Automotive 세그먼트(자동차·규제 크레딧·리스·서비스와 기타 포함)",
+          "revenue": {
+            "usd_millions": 45076
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "10-Q Note 14(p.27)",
+          "note": "2분기 25,097. 에너지 세그먼트 상반기 5,547(2분기 3,139)",
+          "evidence": [
+            "EV-tesla-009"
+          ]
+        },
+        {
+          "name": "[회계 2025년] Automotive sales 65,821 · regulatory credits 1,993 · leasing 1,712 · Energy 12,771 · Services and other 12,530 → 총매출",
+          "revenue": {
+            "usd_millions": 94827
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "10-K 연결손익계산서(Item 8)",
+          "note": "합이 총매출과 같다(계산)",
+          "evidence": [
+            "EV-tesla-013"
+          ]
+        },
+        {
+          "name": "[주 레이어 후보] 응용 층(FSD 구독·Robotaxi) 매출은 따로 공시되지 않는다",
+          "revenue": {},
+          "period": "2026-06-30",
+          "source": "10-Q Note 1(p.10)",
+          "note": "FSD 접근권을 포함한 이연수익이 $4.05B(2025-12-31 $3.87B)이고 FSD 몫만의 값은 없다. FSD 매출은 자동차 판매 매출에 들어 있고 'FSD 구독 증가' 가 자동차 판매 증가 요인이라는 서술만 있다. 판매 칸 가운데 외부 매출이 가장 큰 층을 가를 공시 숫자가 없다",
+          "evidence": [
+            "new:Tesla 10-Q (2026-06-30) Note 1 — FSD(Supervised) 접근권 등을 포함한 이연수익 $4.05B(2026-06-30)"
+          ]
+        }
+      ],
+      "monetization": {
+        "strongest_channel": "소비자 채널(개인에게 파는 차량과 FSD) — 현재 ① 판단 문장 기준",
+        "part_a_numerator_denominator": {
+          "numerator": "활성 FSD 구독 1.48백만(2026-06-30, 일시불과 월 구독 포함, 무료 체험 제외) [EV-tesla-021]",
+          "denominator_candidates": "누적 인도 대수 9.7백만(2026-06-30, 신차 인도와 무감독 Robotaxi 합산, Q2 2026 업데이트 운영 표) — 운행 중인 차량 수가 아니라 상한 분모다. 운행 중인 테슬라 차량 수는 공시되지 않았다.",
+          "ratio_calc": "1.48 ÷ 9.7 = 약 15.3%(계산, 분모가 운행 대수보다 커 실제 비중은 이보다 높다). 북미 신차 인도의 55% 넘게 FSD 구독이 붙는다는 문장은 신규 인도의 흐름 값이다 [EV-tesla-022]",
+          "revenue_basis": "FSD 매출은 따로 공시되지 않는다. FSD 접근권을 포함한 이연수익 $4.05B [new:Tesla 10-Q (2026-06-30) Note 1 — FSD(Supervised) 접근권 등을 포함한 이연수익 $4.05B(2026-06-30)]",
+          "conclusion_fact": "채널 고객 과반이 FSD 에 돈을 낸다는 공시 숫자는 없고 비중은 운행 대수를 알 수 없어 잴 수 없다."
+        },
+        "part_b_price_increase": {
+          "fact": "FSD 가격·단가를 올렸다는 공시나 회사 1차 발표를 찾지 못했다. 10-Q 와 Q2 업데이트는 FSD 구독 증가를 자동차 판매 매출과 ASP 상승 요인으로 적을 뿐 단가 인상을 적지 않는다. 월 $99 가 미국 표준 구독료로 보도되고 일시불 판매 종료(2026-02-14)는 2차 보도뿐이며 인상은 일정·금액 없이 향후 가능성으로만 언급된다.",
+          "conclusion_fact": "AI(FSD)로 단가를 올렸다는 1차 근거는 없다."
+        },
+        "search_scope": "10-K(2025)·10-Q(2026-06-30)·Q2 2026 업데이트 전문('FSD'·'price'·'subscription' 검색)과 웹 검색 한 번(2차 보도만 나왔고 1차 공지는 못 찾았다)"
+      },
+      "f8": {
+        "customer": {
+          "fact": "10-K 는 2025·2024년 말 총 매출채권 잔액의 10% 이상을 차지한 거래 상대가 없다고 적는다 [new:Tesla 10-K (2025) Note 2 — 2025·2024년 말 매출채권 잔액의 10% 이상을 차지한 거래 상대 없음]. 매출 기준 10% 이상 고객 문구는 찾지 못했다. 관계사 SpaceX 가 Megapack 을 사서 낸 매출은 2026년 2분기 $318M, 상반기 $405M(상반기 총매출의 약 0.8%, 계산)이다 [EV-tesla-011].",
+          "grade": "공개 제출본 공시(10-K·10-Q) — 매출채권 기준 문구만 있음"
+        },
+        "commitment": {
+          "unstarted_leases_usd_m": 849,
+          "unstarted_leases_commence": "2026~2028년 개시, 리스 기간 2~20년(2025-12-31 기준)",
+          "binding_purchase_commitments": "10-K 는 부품·원재료 구매 계약에 단기를 넘는 구속력 있는 발주가 일반적으로 없다고 적고 해지할 수 없는 구매 약정 표를 싣지 않는다 [new:Tesla 10-K (2025) MD&A Material Cash Requirements — 부품 구매 계약에 단기를 넘는 구속력 있는 발주가 일반적으로 없고 최소 리스료 합계는 $7.96B]",
+          "lease_obligations_usd_b": "이미 개시된 리스의 총 최소 리스료 $7.96B(1년 이내 $1.32B, 2025-12-31). 미개시 리스 합계 $849M 은 별도다",
+          "ai_chip_supply_agreement": "2025-07 체결한 AI 칩 위탁 제조 공급 계약은 2027년 이후 시작 예정이고 제조 장비를 금융리스 자산으로 잡을 예정이다. 금액은 공시되지 않았다 [new:Tesla 10-K (2025) Note 10 — 미개시 운용리스 $849M 과 2025-07 AI 칩 위탁 제조 공급 계약(2027년 이후 시작 예정)]",
+          "ttm_revenue_usd_m": 103619,
+          "ratio_calc": "849 ÷ 103,619 = 약 0.8%(계산). 총 최소 리스료 7,960 을 더해도 약 7.7%(계산, 개시된 리스는 ⑧ 약정 정의의 '미개시 리스' 가 아니다)",
+          "capex_plan_not_commitment": "2026년 설비투자가 $20B 를 넘을 것으로 본다고 10-K 가 적는다(계획이며 약정이 아니다)",
+          "update_2026_06_30": "10-Q 에는 미개시 리스 문구가 없어 2026-06-30 값은 확인하지 못했다",
+          "evidence": [
+            "new:Tesla 10-K (2025) Note 10 — 미개시 운용리스 $849M 과 2025-07 AI 칩 위탁 제조 공급 계약(2027년 이후 시작 예정)",
+            "new:Tesla 10-K (2025) MD&A Material Cash Requirements — 부품 구매 계약에 단기를 넘는 구속력 있는 발주가 일반적으로 없고 최소 리스료 합계는 $7.96B"
+          ]
+        },
+        "supply": {
+          "chips": "AI 칩은 자체 설계하고 위탁 제조 공급 계약(2027년 이후 시작 예정)과 Samsung 협력은 발표·준비 단계다. 현재 차량 칩의 제조 공급자는 이번에 연 제출본에서 찾지 못했다 [new:Tesla 10-K (2025) Item 1 Infrastructure — 학습 클러스터 Cortex 확장과 Samsung 과의 AI 반도체 제조 협력, new:Tesla 10-K (2025) Note 10 — 미개시 운용리스 $849M 과 2025-07 AI 칩 위탁 제조 공급 계약(2027년 이후 시작 예정)].",
+          "compute": "학습 클러스터 Cortex 는 자체 운영이고 GPU 공급자 이름은 찾지 못했다.",
+          "model": "차량 음성 비서는 SpaceX AI 부문의 Grok 을 쓴다 [new:Tesla Q2 2026 업데이트 AI & Software — 여름 업데이트가 차량에 Grok 기능을 더한다]. 계약 조건은 공시되지 않았다.",
+          "batteries": "배터리 셀은 Panasonic·CATL 에 기대고 인증한 공급자가 매우 적다(EV-tesla-017).",
+          "os": "차량·인포테인먼트 소프트웨어를 거의 모두 자체 개발한다(10-K). 모바일 운영체제 의존은 찾지 못했다.",
+          "supplier_is_competitor": "공급자가 곧 경쟁자라는 문장은 찾지 못했다. Grok 공급자 SpaceX 는 지분 1% 미만(EV-tesla-012)을 가진 관계사다."
+        },
+        "geopolitics": {
+          "fact": "중국 매출이 회계 2025년 $20,962M(총매출의 약 22.1%, 계산) [new:Tesla 10-K (2025) Note 16 — 지역별 매출(미국 47,627·중국 20,962·기타 26,238, $ 백만)], 2026년 상반기 $8,859M(약 17.5%, 계산) [new:Tesla 10-Q (2026-06-30) Note 14 — 2026년 상반기 지역별 매출(미국 23,885·중국 8,859·기타 17,879, $ 백만)]이다(판매 지역 기준). Model 3/Y 설치 생산 능력은 상하이 950,000 초과로 캘리포니아 550,000 초과·베를린 375,000 초과·텍사스 250,000 초과보다 크다 [new:Tesla Q2 2026 업데이트 Manufacturing & Hardware — 지역별 연 설치 생산 능력(Shanghai Model 3/Y 950,000 초과 등)]. 10-K 는 관세·수출 통제가 공급망과 비용에 영향을 줄 수 있다고 적는다(에너지 저장 사업이 더 크게 닿는다고 적음). 대만 생산 집중 문구는 10-K·10-Q 에서 찾지 못했다."
+        }
+      }
+    },
+    {
+      "company_id": "spacex-xai",
+      "layers": {
+        "chip": {
+          "facts": "AI 칩은 직접 설계·제조하지 않고 GPU 를 공급자에게서 모두 구매 주문으로 사 온다(S-1/A: 직접 칩 공급자와 장기·중요 계약 없음, 공급자는 소수 팹에 의존). 위성용 맞춤 실리콘은 설계해 왔다고 S-1/A 가 적는다. 칩 제조 계획 Terafab 은 Tesla 와 일반 틀만 합의했고 Intel 이 합류했으며 구체 사업은 별도 협상 대상이다. 2026-08 Tesla·SpaceX 가 초기 투자 $16.8B 로 짓는다는 보도가 있으나 SEC 제출본(S-1/A 이후 10-Q 포함)에서 착공이나 자금 집행을 확인하지 못했다.",
+          "evidence": [
+            "EV-spacex-xai-047",
+            "new:SpaceX S-1/A 위험 요인 — GPU 를 구매 주문 방식으로만 조달하고 직접 칩 공급자와 장기 계약이 없다",
+            "new:SpaceX S-1/A — 칩 제조 계획 Terafab 은 Tesla 와 일반 틀만 합의했고 구체 사업은 별도 협상 대상이다",
+            "EV-spacex-xai-029"
+          ]
+        },
+        "server": {
+          "facts": "AI 서버·네트워크 장비는 제3자 공급자에게서 조달해 자사 데이터센터(Colossus)에 쓰고, 제조·공급이 소수 공급자에 한정된다고 S-1/A 가 적는다. 설치 GPU 의 명목 전력은 1.4GW(2026-06-30, 전년 0.4GW)다. 서버·네트워크 장비를 남에게 파는 매출은 공시에 없다. Starlink 단말기 제품 매출(2026년 2분기 $461M)은 위성 인터넷 가입자용 기기이며 AI 서버·네트워크 장비가 아니다.",
+          "evidence": [
+            "EV-spacex-xai-047",
+            "new:SpaceX 10-Q (2026-06-30) Key Business Metrics — AI 명목 컴퓨트 전력 1.4GW(2026-06-30, 전년 0.4GW)",
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        "platform": {
+          "facts": "개발자가 그 위에서 만드는 소프트웨어 층으로 공시된 것은 Grok 모델 API 접근뿐이고 AI 솔루션·인프라 매출 안에 들어 금액이 따로 없다. 2026-04 Cursor 와 맺은 컴퓨트 계약(GPU 클러스터 제공)의 순 금액은 2분기에 중요하지 않다고 10-Q 가 적는다.",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) MD&A — AI 세그먼트 매출은 X 광고와 AI 솔루션·인프라(구독·데이터 라이선스·Grok API·클라우드 서비스)로 구성된다"
+          ]
+        },
+        "cloud": {
+          "facts": "2026년에 AI 세그먼트가 고정 월 요금의 클라우드 서비스를 고객에게 팔기 시작했고, 2분기 AI 인프라 매출이 $1,600M 늘었다. Anthropic 과 2026-05 맺은 클라우드 서비스 계약은 약 325,000 개 NVIDIA GPU 용량에 월 $1.25B 를 2029-05 까지 내는 조건이며 최초 3개월 뒤 어느 쪽이든 90일 통지로 해지할 수 있다. 2분기 실적 발표문은 클라우드 서비스 계약 체결로 계약 매출이 $14.1B 가 됐다고 적는다. AI 인프라 매출의 상당 부분이 소수 고객에 몰려 있다고 10-Q 가 적는다.",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) MD&A AI — 2분기 AI 인프라 매출이 클라우드 서비스 판매 시작으로 $1,600M, Grok·X 구독 매출이 $258M 늘었다",
+            "new:SpaceX 10-Q (2026-06-30) MD&A — AI 세그먼트 매출은 X 광고와 AI 솔루션·인프라(구독·데이터 라이선스·Grok API·클라우드 서비스)로 구성된다",
+            "new:SpaceX 10-Q (2026-06-30) 위험 요인 — AI 인프라 매출의 상당 부분이 소수 고객에 몰려 있고 클라우드 계약은 90일 통지로 해지될 수 있다",
+            "EV-spacex-xai-042",
+            "EV-spacex-xai-065",
+            "new:SpaceX 8-K Ex.99.1 (2026년 2분기 실적) — 클라우드 서비스 계약 체결로 계약 매출 $14.1B",
+            "new:SpaceX 10-Q (2026-06-30) Key Business Metrics — AI 명목 컴퓨트 전력 1.4GW(2026-06-30, 전년 0.4GW)"
+          ]
+        },
+        "model": {
+          "facts": "Grok 모델 API 접근과 X·Grok 프리미엄 구독, 데이터 라이선스를 판다(AI 솔루션·인프라 매출). Grok·X 구독 매출은 2026년 2분기 전년보다 $258M, 상반기 $449M 늘었다. 활성 유료 구독자는 2026-03-31 약 6.3M 명(X 4.4M·Grok 1.9M)이다. API·구독·데이터 라이선스의 금액은 증가분 외에는 따로 공시되지 않았다.",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) MD&A — AI 세그먼트 매출은 X 광고와 AI 솔루션·인프라(구독·데이터 라이선스·Grok API·클라우드 서비스)로 구성된다",
+            "new:SpaceX 10-Q (2026-06-30) MD&A AI — 2분기 AI 인프라 매출이 클라우드 서비스 판매 시작으로 $1,600M, Grok·X 구독 매출이 $258M 늘었다",
+            "new:SpaceX S-1/A MD&A — Grok·X 유료 구독자 약 630만 명과 월간 사용자 약 5.5억 명(2026-03-31)",
+            "EV-spacex-xai-064"
+          ]
+        },
+        "app": {
+          "facts": "X(광고 플랫폼, 2026년 2분기 광고 매출 $367M, 새 광고 플랫폼 전환으로 줄었다고 10-Q 가 적음)와 Cursor(코딩 에이전트)가 있다. Cursor 는 2026-08-14 인수가 종결돼 10-Q 기간(2026-06-30 까지)에는 매출이 없고 SEC 제출본에 Cursor 매출이 아직 없다. 2차 보도의 Cursor 연환산 매출(약 $2.6B B2B 또는 약 $4B)은 지표 정의가 달라 열어 읽지 않았다.",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)",
+            "new:SpaceX 10-Q (2026-06-30) MD&A AI — 2분기 AI 인프라 매출이 클라우드 서비스 판매 시작으로 $1,600M, Grok·X 구독 매출이 $258M 늘었다",
+            "EV-spacex-xai-013"
+          ]
+        }
+      },
+      "segments": [
+        {
+          "name": "[2026년 2분기] Space — Launch Services 648 · Launch & Development 314",
+          "revenue": {
+            "usd_millions": 962
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "SRC-SEC-spacex-xai-000162828026052535 10-Q Note 3(p.13)",
+          "note": "전년 같은 분기 746",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] Connectivity — Consumer 2,485 · Enterprise & Government 1,806",
+          "revenue": {
+            "usd_millions": 4291
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "10-Q Note 3 p.13",
+          "note": "전년 같은 분기 2,588. Enterprise & Government 에 Starlink Mobile 포함. 제품(단말기) 매출 $461M 은 모두 Connectivity",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] AI — Advertising 367 · AI Solutions & Infrastructure 2,194",
+          "revenue": {
+            "usd_millions": 2561
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "10-Q Note 3 p.13",
+          "note": "전년 같은 분기 737(광고 426·AI 솔루션과 인프라 311). 2분기 AI 인프라(클라우드 서비스) 매출 증가 $1,600M, Grok·X 구독 매출 증가 $258M",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[2026년 2분기] 총매출",
+          "revenue": {
+            "usd_millions": 7814
+          },
+          "period": "2026-04-01~2026-06-30",
+          "source": "10-Q Note 3 p.13",
+          "note": "전년 같은 분기 4,071",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[2026년 상반기] Space",
+          "revenue": {
+            "usd_millions": 1581
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "10-Q Note 3 p.13",
+          "note": "전년 같은 기간 1,611",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[2026년 상반기] Connectivity(Consumer 4,633 · Enterprise & Government 2,915)",
+          "revenue": {
+            "usd_millions": 7548
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "10-Q Note 3 p.13",
+          "note": "전년 같은 기간 5,062",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[2026년 상반기] AI(Advertising 710 · AI Solutions & Infrastructure 2,669)",
+          "revenue": {
+            "usd_millions": 3379
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "10-Q Note 3 p.13",
+          "note": "전년 같은 기간 1,465(광고 870·AI 솔루션과 인프라 595)",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[2026년 상반기] 총매출",
+          "revenue": {
+            "usd_millions": 12508
+          },
+          "period": "2026-01-01~2026-06-30",
+          "source": "10-Q Note 3 p.13",
+          "note": "전년 같은 기간 8,138",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 3 — 유형·세그먼트별 매출(Space 962·Connectivity 4,291·AI 2,561, $ 백만, 2026년 2분기)"
+          ]
+        },
+        {
+          "name": "[회계 2025년] Space(Launch Services 2,576 · Launch & Development 1,510)",
+          "revenue": {
+            "usd_millions": 4086
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "SRC-SEC-spacex-xai-000162828026040364 S-1/A Note 3(F-23)",
+          "evidence": [
+            "EV-spacex-xai-011"
+          ]
+        },
+        {
+          "name": "[회계 2025년] Connectivity(Consumer 7,208 · Enterprise & Government 4,179)",
+          "revenue": {
+            "usd_millions": 11387
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "S-1/A Note 3 F-23",
+          "evidence": [
+            "EV-spacex-xai-011"
+          ]
+        },
+        {
+          "name": "[회계 2025년] AI(Advertising 1,844 · AI Solutions & Infrastructure 1,357)",
+          "revenue": {
+            "usd_millions": 3201
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "S-1/A Note 3 F-23",
+          "evidence": [
+            "EV-spacex-xai-011"
+          ]
+        },
+        {
+          "name": "[회계 2025년] 총매출",
+          "revenue": {
+            "usd_millions": 18674
+          },
+          "period": "2025-01-01~2025-12-31",
+          "source": "S-1/A Note 3 F-23",
+          "evidence": [
+            "EV-spacex-xai-011"
+          ]
+        },
+        {
+          "name": "[최근 1년, 계산] Space",
+          "revenue": {
+            "usd_millions": 4056
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "4,086 + 1,581 − 1,611"
+        },
+        {
+          "name": "[최근 1년, 계산] Connectivity(Consumer 8,628 · Enterprise & Government 5,245)",
+          "revenue": {
+            "usd_millions": 13873
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "11,387 + 7,548 − 5,062 (소비자 7,208 + 4,633 − 3,213, 기업·정부 4,179 + 2,915 − 1,849)"
+        },
+        {
+          "name": "[최근 1년, 계산] AI(Advertising 1,684 · AI Solutions & Infrastructure 3,431)",
+          "revenue": {
+            "usd_millions": 5115
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "3,201 + 3,379 − 1,465 (광고 1,844 + 710 − 870, AI 솔루션·인프라 1,357 + 2,669 − 595)"
+        },
+        {
+          "name": "[최근 1년, 계산] 총매출(관측 revenue_ttm_full 과 같다)",
+          "revenue": {
+            "usd_millions": 23044
+          },
+          "period": "2025-07-01~2026-06-30",
+          "source": "18,674 + 12,508 − 8,138. 세 세그먼트 합과 같다"
+        },
+        {
+          "name": "[2026년 6월 말] 수주잔고(backlog)",
+          "revenue": {
+            "usd_millions": 47461
+          },
+          "period": "2026-06-30",
+          "source": "10-Q Note 3(p.13~14)",
+          "note": "이연수익 $14,286M 포함, 약 56% 1년 안·약 34% 1~3년·약 10% 그 뒤 인식 예상(회계 2025년 말 $28,377M)",
+          "evidence": [
+            "EV-spacex-xai-055"
+          ]
+        },
+        {
+          "name": "[주 레이어 후보] AI 인프라(클라우드 서비스) 매출",
+          "revenue": {},
+          "period": "2026-04-01~2026-06-30",
+          "source": "10-Q MD&A AI(p.44)",
+          "note": "클라우드 서비스 매출 금액은 따로 공시되지 않고 증가분 $1,600M 만 있다(전년 같은 분기에 클라우드 매출이 없었으므로 이 분기 클라우드 매출은 약 $1,600M 이상으로 읽을 수 있다, 추론). AI 솔루션과 인프라 2분기 $2,194M 가운데 나머지가 구독·데이터 라이선스·API(구독 증가분 $258M)다. 광고는 $367M. 판매 칸 가운데 외부 매출이 가장 큰 층은 Connectivity 의 Starlink 이지만 이것은 AI 층이 아니다",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) MD&A AI — 2분기 AI 인프라 매출이 클라우드 서비스 판매 시작으로 $1,600M, Grok·X 구독 매출이 $258M 늘었다"
+          ]
+        },
+        {
+          "name": "[고객 집중] Customer A / Customer B(이름 미공개)",
+          "revenue": {},
+          "period": "2026-04-01~2026-06-30",
+          "source": "10-Q Note 3 concentration(EV-spacex-xai-060)",
+          "note": "고객 A 는 세 세그먼트 모두에서 2분기 18.3%·상반기 17.9%(회계 2025년 20.9%·2024년 24.2%), 고객 B 는 AI 세그먼트에서 2분기 19.5%·상반기 12.2%",
+          "evidence": [
+            "EV-spacex-xai-060"
+          ]
+        }
+      ],
+      "monetization": {
+        "strongest_channel": "소비자 채널(Starlink 가입자 12.0M 명과 X·Grok 구독) — 현재 ① 판단 문장 기준",
+        "part_a_numerator_denominator": {
+          "ai_paying_share": "활성 유료 구독자 약 6.3M 명(X 4.4M + Grok 1.9M) ÷ Grok·X 월간 사용자 약 5.5억 명 = 약 1.1%(계산, 2026-03-31). Grok 만 보면 1.9M ÷ Grok AI 기능 이용 월간 사용자 1.17억 명 = 약 1.6%(계산). [new:SpaceX S-1/A MD&A — Grok·X 유료 구독자 약 630만 명과 월간 사용자 약 5.5억 명(2026-03-31)]",
+          "starlink": "Starlink 가입자 12.0M 명(2026-06-30)은 위성 인터넷 가입이고 AI 에 따로 돈을 내는 고객이 아니다 [EV-spacex-xai-010]",
+          "revenue": "AI 솔루션·인프라 매출 2026년 상반기 $2,669M 안에 구독 증가분 $449M 이 있다. 구독 매출 금액과 채널 총매출 대비 몫은 공시되지 않았다.",
+          "conclusion_fact": "소비자 채널 고객이나 매출의 과반이 AI 에 따로 돈을 낸다는 공시는 없고 유료 비중은 약 1%다."
+        },
+        "part_b_price_increase": {
+          "fact": "AI 를 이유로 가격·단가를 올렸다는 공시나 회사 1차 발표를 찾지 못했다. Starlink ARPU 는 2025년 2분기 $85 에서 2026년 2분기 $66 으로 내렸고 회사는 몇 년 더 내릴 것이라고 적는다 [EV-spacex-xai-061·062]. SpaceXAI 가 Grok·X 요금을 4단계로 나누는 안을 검토한다는 보도는 제목만 본 것이라 근거로 쓰지 않았다.",
+          "conclusion_fact": "AI 로 가격을 올렸다는 1차 근거는 없다."
+        },
+        "search_scope": "10-Q(2026-06-30) 전문·S-1/A(2026-06-03) 전문·8-K 실적 발표문('subscri'·'price'·'ARPU'·'API' 검색). 10-Q 에는 2026-06-30 구독자 수가 없다."
+      },
+      "f8": {
+        "customer": {
+          "fact": "10-Q: 고객 A 는 세 세그먼트에서 2분기 18.3%·상반기 17.9%, 고객 B 는 AI 세그먼트에서 2분기 19.5%·상반기 12.2% 이고 둘 다 이름이 공시되지 않았다 [EV-spacex-xai-060]. S-1/A 는 Anthropic 과의 클라우드 서비스 계약을 이름까지 밝히며 월 $1.25B 를 2029-05 까지 내는 조건이라고 적는다(연환산 $15.0B ÷ 최근 1년 매출 $23.044B = 약 65%, 계산) [EV-spacex-xai-065]. 10-Q 의 고객 B 가 Anthropic 인지는 제출본이 밝히지 않는다. 2분기 실적 발표문은 클라우드 서비스 계약으로 계약 매출 $14.1B 가 생겼다고 적으며 고객·기간은 없다 [new:SpaceX 8-K Ex.99.1 (2026년 2분기 실적) — 클라우드 서비스 계약 체결로 계약 매출 $14.1B]. 계약은 최초 3개월 뒤 90일 통지로 해지할 수 있고 AI 인프라 매출이 소수 고객에 몰려 있다 [new:SpaceX 10-Q (2026-06-30) 위험 요인 — AI 인프라 매출의 상당 부분이 소수 고객에 몰려 있고 클라우드 계약은 90일 통지로 해지될 수 있다]. Google 이 월 $9.2억을 낸다는 CNBC 보도(EV-spacex-xai-001)는 2차 보도다.",
+          "grade": "공개 제출본 공시(10-Q·S-1/A·8-K) — 이름은 S-1/A 가 밝힌 Anthropic 한 곳뿐"
+        },
+        "commitment": {
+          "unconditional_obligations_usd_m": 27955,
+          "by_year_usd_m": {
+            "2026 하반기": 2728,
+            "2027": 22244,
+            "2028": 2172,
+            "2029": 809,
+            "2030": 2
+          },
+          "scope": "AI 인프라 투자·제3자 클라우드 용량·기타 서비스 약정과 스펙트럼 거래 약정(현금과 Class A 주식으로 지급) [new:SpaceX 10-Q (2026-06-30) Note 16 — 해지할 수 없는 무조건 약정 $27,955M 의 성격(AI 인프라·제3자 클라우드 용량·스펙트럼 거래)과 연도별 지급]",
+          "spectrum": "스펙트럼 인수 총대가 약 $19.6B(주식 약 $11.1B, EchoStar 부채 상환 최대 $8.5B 모자란 만큼 현금), 크레딧 계약 지급 2026년 $1,241M(2026-06-30 까지 $856M 지급)·2027년 $828M(2027-11-30 종결 가정) [new:SpaceX 10-Q (2026-06-30) MD&A — EchoStar 스펙트럼 인수 총대가 약 $19.6B(주식 $11.1B·부채 상환 최대 $8.5B)와 2026·2027년 크레딧 계약 지급]. 이 가운데 무조건 약정 표에 얼마가 들어 있는지는 표가 나누지 않는다",
+          "unstarted_leases_usd_m": 1627,
+          "unstarted_leases_detail": "2025-12-31 기준 체결했으나 개시되지 않은 운용리스, 평균 7.2년, Stateline 임대 약정 포함 [new:SpaceX S-1/A Note 11 — 2025-12-31 기준 체결했으나 개시되지 않은 운용리스 임차료 합계 $1,627M(평균 7.2년)]. 10-Q 는 2026년 상반기 리스 포트폴리오에 중요한 변화가 없다고 적는다",
+          "ttm_revenue_usd_m": 23044,
+          "ratio_calc": "(27,955 + 1,627) ÷ 23,044 = 약 1.28배(계산)",
+          "near_term_burden_calc": "2026년 하반기 2,728 + 2027년 22,244 = 24,972 ÷ 23,044 = 약 1.08배(계산, 2026-06-30 부터 18개월). 지급이 2027년에 몰려 있다",
+          "guarantees_and_contingent": "신용장 $645M(제한 현금 담보)·보증보험 $465M(EV-spacex-xai-052)은 약정 합계에서 따로 적는다. Cursor 인수(주식 약 3.9억 주, 2026-08-14 종결)는 지급 약정이 아니라 종결된 주식 거래다 [EV-spacex-xai-013]",
+          "evidence": [
+            "new:SpaceX 10-Q (2026-06-30) Note 16 — 해지할 수 없는 무조건 약정 $27,955M 의 성격(AI 인프라·제3자 클라우드 용량·스펙트럼 거래)과 연도별 지급",
+            "new:SpaceX 10-Q (2026-06-30) MD&A — EchoStar 스펙트럼 인수 총대가 약 $19.6B(주식 $11.1B·부채 상환 최대 $8.5B)와 2026·2027년 크레딧 계약 지급",
+            "new:SpaceX S-1/A Note 11 — 2025-12-31 기준 체결했으나 개시되지 않은 운용리스 임차료 합계 $1,627M(평균 7.2년)"
+          ]
+        },
+        "supply": {
+          "chips": "GPU 를 모두 구매 주문으로 사 오고 직접 칩 공급자와 장기·중요 계약이 없으며 공급자는 소수 팹에 의존한다 [new:SpaceX S-1/A 위험 요인 — GPU 를 구매 주문 방식으로만 조달하고 직접 칩 공급자와 장기 계약이 없다]. 고객에게 내주는 용량 설명에 NVIDIA GPU 약 325,000 개가 나온다(EV-spacex-xai-042). Terafab 은 발표 단계다 [new:SpaceX S-1/A — 칩 제조 계획 Terafab 은 Tesla 와 일반 틀만 합의했고 구체 사업은 별도 협상 대상이다].",
+          "compute": "자체 데이터센터(Colossus)를 쓰고 제3자 클라우드 용량 약정도 무조건 약정에 들어 있다. 제3자 클라우드 공급자 이름은 10-Q 에서 찾지 못했다 [new:SpaceX 10-Q (2026-06-30) Note 16 — 해지할 수 없는 무조건 약정 $27,955M 의 성격(AI 인프라·제3자 클라우드 용량·스펙트럼 거래)과 연도별 지급].",
+          "model": "자체 모델 Grok 을 쓴다. 10월부터 Grok Bot 이 Anthropic 모델을 쓴다는 문장은 이번에 연 제출본에서 확인하지 못했다.",
+          "os": "운영체제 의존 문구는 찾지 못했다.",
+          "supplier_is_competitor": "GPU 공급자 NVIDIA 가 경쟁자라는 문장은 없다. 컴퓨트 고객 Anthropic 은 AI 모델 경쟁자이면서 고객이다(EV-spacex-xai-065 와 모델 층 사실의 조합, 추론)."
+        },
+        "geopolitics": {
+          "fact": "회계 2025년 매출 $18,674M 가운데 거래 발생지가 미국인 몫이 $12,966M(약 69.4%, 계산), 아일랜드 1,827·캐나다 764·기타 3,117 이다 [new:SpaceX S-1/A Note 19 — 2025년 거래 발생지 기준 지역별 매출(미국 12,966·아일랜드 1,827·캐나다 764·기타 3,117, $ 백만)]. 위험 요인에 칩 공급자가 소수 첨단 팹에 의존하고 지정학 긴장이 팹 운영에 영향을 줄 수 있다고 적는다 [new:SpaceX S-1/A 위험 요인 — GPU 를 구매 주문 방식으로만 조달하고 직접 칩 공급자와 장기 계약이 없다]. 궤도 AI 컴퓨트·위성 100만 기 계획은 각국 인허가에 달려 있다(EV-spacex-xai-027). 미국 정부 계약은 Starshield 로 $60억 넘게 수주했다(EV-spacex-xai-035). 한 나라 정부에 걸린 매출 집중은 이 표에서 나타나지 않는다."
+        }
+      }
+    }
+  ],
+  "notes": [
+    "[알리바바 지분 평가·처분 이익 관측] equity_investment_gains_ttm 값은 비GAAP 순이익 조정표의 'Gain on deemed disposals/disposals/revaluation of investments' 줄을 네 분기(2025-07~2026-06) 합한 RMB66,652M 을 6.8980 으로 환산한 $9.66B 다. 이 줄은 20-F MD&A 와 모든 분기 6-K 가 같은 정의로 싣는 유일한 투자 손익 줄이라 골랐다. 포함 범위는 회사가 지분증권 평가손익(상장 지분 시가 변동·비상장 지분 관측가 상향)과 지분 처분·간주 처분(종속회사 처분 포함) 이익으로 분류한 것이다. 투자 관련 손상은 같은 표의 '영업권·투자 손상 등' 줄에 영업권 손상과 섞여 있어 분기별로 못 떼고 포함하지 않았다(회계 2026년 현금흐름표의 투자 손상은 7,724). 따라서 Alphabet 의 EquitySecuritiesFvNiGainLoss(손상 포함 순액)보다 이익 쪽으로 크게 잡힌다. 4분기 합·누계 닫힘·감사 현금흐름표 대조는 basis.reconciliation 에 있고 현금흐름표 줄(66,089 + 8,387 = 74,476)과 비GAAP 줄(74,416)은 60(0.08%) 차이로 정확히 닫히지 않는다. 구성 요소는 겹침 검사(components 의 tag 중복) 때문에 단일 줄 한 개로 적고 분기 값은 그 안의 quarters 에 두었다.",
+    "[알리바바 ⑥ 이익 조정에 필요한 법인세 관측이 없다] 규칙의 이익 조정(순이익 − 평가이익 × (1 − 법인세 ÷ 세전이익))은 income_tax_ttm 관측을 읽는데 collect --kind facts 가 알리바바를 다루지 않아 알리바바에는 income_tax_ttm 관측이 없다. 이 관측 없이는 평가이익 관측이 있어도 조정이 '법인세 관측 없음' 으로 막혀 보고 순이익을 쓴다. 필요하면 알리바바 pretax_income_ttm.rs1006 의 basis 가 이미 적은 성분으로 TTM 법인세를 만들 수 있다 — 회계 2026년 30,045 − 2025-04~06 8,865 + 2026-04~06 12,798 = RMB33,978M(≈ $4.93B), 실효세율 33,978 ÷ 101,461 = 약 33.5% 로 규칙 범위(0~0.5) 안이다. 이번 묶음 지시서에 없어 등록하지 않았다. 세전이익 관측의 항목은 '지분법 손익 앞' 연결 세전이익이다.",
+    "[알리바바 OCF 관측] ocf_ttm RMB78,486M = 20-F 회계 2026년 76,213 − 2025-04~06 20,672 + 2026-04~06 22,945 을 6.8980 으로 환산한 $11.38B 다. 기존 alibaba.fcf_ttm.rs1006 의 OCF 성분과 같고, 각 분기 보도자료 분기 칸(10,099 + 36,032 + 9,410 + 22,945)의 합과도 같다. 연간 성분은 감사 값, 분기 성분 둘은 감사·검토 전 값이다.",
+    "[스페이스X OCF 관측] ocf_ttm $9,900M = 10-Q 반기 3,466 + S-1/A 2025년 연간 6,785 − 10-Q 전년 반기 351 이다. 원문(10-Q p.9 현금흐름표, S-1/A F-9 현금흐름표와 MD&A)에서 세 값을 다시 읽었고 기존 spacex-xai.fcf_ttm.cashfcf35 의 OCF 성분과 같다.",
+    "[observations_optional — 지시서 목록 밖, 조율자가 결정] ① 테슬라 equity_investment_gains_ttm $1,005M: 테슬라가 2026-03 SpaceX 보통주를 $2.00B 에 사서(공정가치 선택) 2026년 2분기에 미실현 평가이익 $1,005M 을 기타 영업외 수익으로 올렸다(10-Q 현금흐름표 p.9·Note 2 p.16, Q2 업데이트). 나머지 세 분기는 0 이다. 테슬라 최근 1년 순이익 $3,804M 에 세전으로 들어 있고 테슬라에는 pretax_income_ttm $5,217M·income_tax_ttm $1,353M 관측이 있어 등록하면 ⑥ 이익 조정이 실제로 돈다(조정 순이익 ≈ 3,804 − 1,005 × (1 − 0.259) ≈ $3,059M, 계산). 규칙 2.3(같은 잣대를 모든 회사에)상 등록하는 쪽이 일관되지만 점수에 닿으므로 넣지 않고 후보로만 둔다. ② 알리바바·스페이스X capex_ttm: 두 회사의 fcf_ttm 관측 basis 에 같은 성분이 있고 현금 연결표의 OCF − 설비투자 대조가 capex_ttm 관측을 읽는데 두 회사에는 검증된 capex_ttm 관측이 없다(알리바바는 기간 없는 옛 값만 있다). 알리바바 RMB155,065M(= 126,063 − 38,676 + 67,678, 분기 capex 는 보도자료 본문 서술값)·스페이스X $42,248M(= 28,476 + 20,737 − 6,965)로 후보를 만들어 두었다.",
+    "[알리바바 ① 재료] 가장 강한 채널을 소비자 채널로 읽으면 (가) AI 에 따로 돈을 내는 몫을 잴 공시 숫자는 없고(Qwen 앱 월간 사용자 295M 명은 사용자 수), (나) AI 로 단가를 올렸다는 공시도 찾지 못했다(검색 범위는 layer_map.monetization.search_scope). 업무(클라우드) 채널에서는 AI 관련 제품 매출 RMB12,376M ÷ AI Cloud and Compute Services 매출 RMB48,437M = 약 25.6% 이고, Alibaba Cloud 가 2026-03-18 공식 공지(https://www.aliyun.com/notice/118086)로 AI 연산·CPFS 가격을 2026-04-18 부터 조정한다고 알렸다(이유는 AI 수요 폭증과 핵심 하드웨어 조달비 상승이고, 공지 본문에는 방향이 없으며 인상 방향과 폭 5~34%·CPFS 30% 는 통신사 보도). 이 인상은 업무 채널의 사실이다. 판단 세션이 가장 강한 채널을 어느 쪽으로 읽는지에 따라 쓰는 재료가 갈린다.",
+    "[알리바바 ⑧ 지정학 축에 새 숫자] 현재 ⑧ 판단이 확인하지 못했다고 적은 VIE 를 거치는 매출 비중을 20-F 에서 찾았다. 회계 2026년 외부 고객 매출 1,023,670 가운데 주요 VIE 와 그 자회사 119,561(약 11.7%, Item 3 condensed consolidating schedule), 감사 재무제표 Note 2(c) 의 연결 VIE 와 그 자회사 매출 156,369(약 15.3%)다. 두 값은 범위가 달라 직접 대조되지 않는다고 20-F 가 적는다. 같은 문서에서 20-F 가 '대부분의 매출은 자회사가 직접 잡는다(the significant majority of our revenue is captured directly by our subsidiaries)'고 적는다. 미국 쪽 위험(칩 수출 통제·1260H)에 걸린 매출 비중은 따로 없다.",
+    "[알리바바 ⑧ 약정·고객 축] 약정: 자본약정 RMB54,136M + 기타 약정 RMB200,062M = RMB254,198M(최근 1년 매출 RMB1,044,971M 의 약 0.24배, 투자 약정 14,501 은 뺌), 1년 이내 110,925(약 10.6%). 미개시 리스 문구는 20-F 전문에서 찾지 못했다(공시하지 않은 것인지 중요하지 않아 생략한 것인지 가르지 못함). 기타 약정의 1~5년 구간이 전년 46,768 에서 133,598 로 늘었다. 고객: 최대 고객이나 10% 이상 고객을 밝힌 문구가 20-F 전문에 없다(부재를 확인하는 문장도 없음). 특수관계자 Ant Group 계열 클라우드 매출 RMB19,134M(연결 매출의 약 1.9%·클라우드 서비스 매출의 약 17.1%)이 가장 가까운 단서다. 같은 단락의 투자 회사 클라우드 매출 RMB9,415M(0.9%)은 ⑦ 순환금융 판단의 방증이다.",
+    "[알리바바 ④ 칩 층 읽는 순서] Zhenwu 칩의 외부 고객 650곳 이상은 '알리바바 클라우드 서비스를 통해' 쓰는 것이다. 칩을 하드웨어로 외부에 판 매출은 20-F·6-K 어디에도 없다. 20-F 는 T-Head 가 외부 고객에게 AI 서비스를 파는 데 쓰이고 클라우드 인프라 공급에 보탠다고 적는다. 판매 칸인지 자체 사용 칸인지는 판단이 정한다. 2026년 6월 분기부터 T-Head 가 Cloud Intelligence Group 과 한 세그먼트(AI Cloud and Compute Services)로 합쳐져 칩 단독 매출은 세그먼트 표에서도 보이지 않는다.",
+    "[알리바바 ④ 세그먼트] 2026년 6월 분기부터 세그먼트 구조가 바뀌어(Alibaba E-commerce Group·AI Cloud and Compute Services·AI Labs and Applications·All others) 전년 같은 분기만 새 구조로 다시 정리돼 있다. 회계 2026년(옛 구조)과 최근 1년(2025-07~2026-06)은 같은 구조로 맞추지 못한다. 최근 1년 연결 매출은 RMB1,044,971M($151.49B)이다. 유형별 매출 표(고객관리 459,917 등)는 20-F 에만 있고 분기 보도자료에는 없다. 2026년 6월 분기 AI Labs and Applications 는 매출 RMB3,338M 에 조정 EBITA 손실 RMB13,861M 이다.",
+    "[테슬라] ④ 칩 층: 고객 차량 AI3·AI4 자체 설계 칩 배치는 확인했으나 칩 외부 판매는 없고 위탁 제조는 2027년 이후 시작 예정이다. ④ 클라우드·소프트웨어 플랫폼·모델 층에는 판매 공시가 없다(찾아본 범위는 10-K·10-Q·Q2 업데이트 전문). ④ 다각화: 최근 1년 총매출 $103,619M 의 자동차 판매 72,588·규제 크레딧 1,485·리스 1,575·에너지 12,799·서비스·기타 15,172. FSD 매출은 자동차 판매에 포함돼 AI 몫을 떼지 못한다. ⑧ 약정: 미개시 리스 $849M(2025-12-31, 최근 1년 매출의 0.8%)과 구속력 있는 구매 약정 표가 10-K 에 없다는 사실이 전부이고 2026-06-30 미개시 리스는 10-Q 에 없다. ⑧ 고객: 매출채권 기준 10% 이상 거래 상대 없음만 있고 매출 기준 문구는 없다. ⑧ 지정학: 중국 매출 22.1%(2025)·17.5%(2026 상반기), 상하이 Model 3/Y 설치 능력 950,000 초과.",
+    "[스페이스X] ① (가): 유료 구독자 약 6.3M ÷ 월간 사용자 약 5.5억 = 약 1.1%(2026-03-31)이고 10-Q 에는 구독자 수가 없다. ④ 칩 층: GPU 는 구매 주문으로만 조달하고 Terafab 은 일반 틀만 합의된 발표 단계라 준비 중 근거(확정 계약·착공)는 제출본에 없다. ④ 클라우드·모델 층: 2026년 2분기 AI 인프라 매출이 $1,600M 늘었고(클라우드 서비스 판매 시작) Grok·X 구독 매출이 $258M 늘었다. ⑧ 고객: Anthropic 클라우드 계약 월 $1.25B(연환산 $15.0B ÷ 최근 1년 매출 $23.044B ≈ 65%)가 S-1/A 에서 이름까지 공시되고, 10-Q 고객 B 19.5% 는 이름이 없다. ⑧ 약정: 무조건 약정 $27,955M + 미개시 리스 $1,627M = 최근 1년 매출의 약 1.28배이고 2027년에 $22,244M 이 몰려 있다. Cursor 인수는 2026-08-14 종결이라 10-Q 기간 매출이 없다.",
+    "[세 회사를 가로지르는 같은 사건 — ⑤·⑦ 판단 세션 참고] 같은 사건이 두 회사에 닿으므로 같은 성격으로 읽어야 한다. (1) 테슬라가 SpaceX 지분 1% 미만을 보유(2026-03 $2.00B 투자, 2026-06-30 공정가치 $3,007M, 2분기 평가이익 $1,005M)하고 SpaceX 가 테슬라 Megapack 을 사서 테슬라 매출이 2026년 상반기 $405M 이다(EV-tesla-011·012). (2) 테슬라 차량에 SpaceX AI 부문의 Grok 기능이 들어간다(2026년 2분기 업데이트). (3) 두 회사가 Terafab 칩 제조 계획을 일반 틀로만 합의했다(S-1/A). (4) 알리바바 Qwen 오픈웨이트를 Microsoft 가 쓴 사실(EV-alibaba-073)은 계약 없는 사용이다.",
+    "[찾지 못한 것] 알리바바: 최대 고객 비중 문구, 소비자 채널의 AI 유료 몫, AI 를 이유로 든 소비자 채널 단가 인상, 칩·서버·네트워크 장비의 외부 판매 매출, 미개시 리스(문구 없음), 모델 API 단독 매출. 알리바바 MaaS ARR(RMB160억 초과)은 실적 발표 기사(EV-alibaba-018·019)로만 확인했고 회사 실적 발표 녹취 원문은 열지 못했다. 테슬라: 매출 기준 10% 이상 고객 문구, FSD 가격 인상의 1차 공지, FSD 단독 매출, Robotaxi 매출, 클라우드·모델 판매 매출, 칩·서버 외부 판매. 스페이스X: 10-Q 의 2026-06-30 구독자 수, 고객 B 의 이름, 클라우드 서비스 매출의 분기 절대 금액, Terafab 착공·자금 집행의 제출본 근거, Cursor 매출(제출본 없음). 제목만 본 보도(SpaceXAI 4단계 요금제 검토 Bloomberg 등)는 근거로 올리지 않았다.",
+    "[열어 읽은 원문] 알리바바 20-F(회계 2026) 전문, 6-K 다섯 건(2025-08·2025-11·2026-03·2026-05·2026-08 발표분), Alibaba Cloud 공지, 중신경위 기사. 테슬라 10-K(2025)·10-Q(2026-06-30)·Q2 2026 업데이트 전문, 스페이스X 10-Q(2026-06-30)·S-1/A(2026-06-03)·8-K Ex.99.1(2026-08-04)·8-K(2026-08-14) 전문. SEC 원문은 모두 sec-get 으로 받은 캐시(data/_sec/docs)이고 변환 텍스트는 스크래치 폴더에만 있다."
+  ]
+}

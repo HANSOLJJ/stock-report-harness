@@ -1,0 +1,41 @@
+{
+  "changes": {
+    "reconfirmed": {
+      "evidence_ids": [
+        "EV-spacex-xai-018",
+        "EV-spacex-xai-023",
+        "EV-spacex-xai-024",
+        "EV-spacex-xai-025",
+        "EV-spacex-xai-026",
+        "EV-spacex-xai-027",
+        "EV-spacex-xai-060",
+        "EV-spacex-xai-064",
+        "EV-spacex-xai-066",
+        "EV-anthropic-049",
+        "EV-anthropic-052"
+      ]
+    }
+  },
+  "evidence_after": [
+    "스페이스X ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+    "모방 불가능성은 AI 에 귀속되는 부분만 보고 실패로 판정했다. ④ 층별 보유표에서 AI 쪽 가진 칸(Colossus 컴퓨트를 Anthropic·Google 에 임대하는 클라우드, Grok 모델, Grok·X 구독과 Cursor 의 응용)을 모방 불가능 자산의 후보로 읽었고, 칩은 외부 공급자의 GPU 를 쓴다. Starlink 는 비AI 사업이라 이 기준에서 세지 않는다.",
+    "Colossus 를 빠르게 지은 데이터센터 규모는 Meta Hyperion·Stargate 처럼 자본이 있는 경쟁사들이 이미 짓고 있고, 궤도 AI 데이터센터는 대규모 위성군과 인허가가 필요한 계획이라 점수에 넣지 않는다. Grok 4.7 은 같은 날 종합 지수 46 으로 Anthropic·OpenAI·Google·Meta 모델보다 낮고 코딩 지수에서도 Grok Build 가 Anthropic·Google·OpenAI 제품보다 낮아 자산 덕에 앞서 있다고 볼 수 없다. Cursor 는 회사가 가장 앞선 AI 코딩 도구 가운데 하나라고 소개했으나 그 앞섬을 보여 주는 독립 측정은 확정 근거에 없어 미확인이다.",
+    "별도 수익모델은 통과다. Starlink(Connectivity 부문) 영업이익이 AI 부문 영업손실을 대고 있다.",
+    "후발 가속도는 지표 단계 b(AI 세그먼트 매출)의 전년 대비 성장률로 판정했다. 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)로 올라 가속이라 통과다. 저장한 성장률은 0.125 와 2.475 다. 2026-10-12 까지 AI 세그먼트의 새 분기 값은 나오지 않았다.",
+    "AI 세그먼트에는 줄고 있는 X 광고 매출(비AI)이 섞여 있고 그 비중은 확정 근거에 없다. 2분기 증가는 AI 세그먼트 고객 B 한 곳(연결 매출의 19.5%)의 새 계약에서 크게 왔다.",
+    "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없다."
+  ],
+  "evidence_up_after": [
+    "2026년 2분기 Connectivity 부문 영업이익은 $16.56억이고 AI 부문 영업손실은 $12.57억이라 Starlink 가 AI 를 대고 있다. [EV-spacex-xai-023]",
+    "AI 세그먼트 매출의 전년 대비 성장률은 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)다. [EV-spacex-xai-064, EV-spacex-xai-024]",
+    "회사는 3분기 첫 몇 주에 10월부터 램프하는 $67억 규모 클라우드 서비스 계약을 더 맺었다(계약이라 점수에 넣지 않는다). [EV-spacex-xai-025]"
+  ],
+  "evidence_down_after": [
+    "2026년 2분기 연결 매출의 19.5% 가 AI 세그먼트의 고객 B 한 곳에서 나왔다. [EV-spacex-xai-060]",
+    "Meta 는 5GW 규모의 Hyperion 데이터센터를 짓고 있고, OpenAI·Oracle·SoftBank 의 Stargate 도 xAI Colossus 와 나란히 꼽힌다. [EV-spacex-xai-026]",
+    "SpaceX 는 데이터센터 관리를 로켓·Starlink 부문 인력으로 바꾸고 구축 속도를 늦추고 있으며, 멤피스 시설의 가동 중단이 Grok 과 컴퓨트 임차 고객에 영향을 줬다는 보도가 있다(2차 보도를 옮긴 기사). [EV-spacex-xai-066]",
+    "궤도 AI 컴퓨트는 최대 100만 기에 이를 수 있는 위성군과 여러 인허가가 필요한 계획이다(계획이라 점수에 넣지 않는다). [EV-spacex-xai-027]",
+    "2026-10-08 Artificial Analysis 종합 지수 4.3.2판에서 SpaceXAI 최고 모델 Grok 4.7(xhigh)은 46 으로 Anthropic(58)·OpenAI·Google(53)·Meta(48) 모델보다 낮다. [EV-anthropic-049]",
+    "같은 날 Coding Agent Index 1.5판에서 Grok Build - Grok 4.7(xhigh) 56 은 Claude Code - Sonnet 5.5(max) 68, Antigravity CLI - Gemini 4 Argon 64, Codex - GPT-6.1 Sol(xhigh) 63 보다 낮다. [EV-anthropic-052]"
+  ]
+}

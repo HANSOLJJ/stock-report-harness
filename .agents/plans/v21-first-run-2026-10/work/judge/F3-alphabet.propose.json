@@ -1,0 +1,57 @@
+{
+  "changes": {
+    "reconfirmed": {
+      "evidence_ids": [
+        "EV-alphabet-011",
+        "EV-alphabet-012",
+        "EV-alphabet-013",
+        "EV-alphabet-038",
+        "EV-alphabet-039",
+        "EV-alphabet-060",
+        "EV-alphabet-061",
+        "EV-alphabet-062",
+        "EV-alphabet-063",
+        "EV-nvidia-038",
+        "EV-tesla-042",
+        "EV-alphabet-089",
+        "EV-anthropic-049",
+        "EV-oracle-032",
+        "EV-nvidia-102",
+        "EV-amazon-063",
+        "EV-amazon-061",
+        "EV-microsoft-050",
+        "EV-microsoft-010",
+        "EV-alphabet-092",
+        "EV-tesla-007",
+        "EV-amazon-084"
+      ]
+    }
+  },
+  "evidence_after": [
+    "알파벳 ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 실패로 통과점이 1 이고 사다리에서 2점이다.",
+    "모방 불가능성은 실패다. ④ 층별 보유표에서 알파벳은 여섯 칸을 모두 가진다(칩 TPU 를 클라우드 임대와 TPU 시스템 판매로 팔고, 서버·네트워크, 개발자 플랫폼 Vertex AI, Google Cloud, Gemini 모델, 검색·Workspace·Waymo 같은 응용). 이 칸들을 모방 불가능 자산의 후보로 읽었다.",
+    "검색 점유율 약 90% 와 10억 명 넘는 제품 배포망은 ① 의 자산이라 여기서 세지 않는다. 공급 쪽 자산인 자체 TPU 는 Amazon·Microsoft·Meta 도 자체 가속기를 운용하고 NVIDIA 10-K 도 Alibaba·Amazon·Baidu·Huawei·Microsoft 의 자체 가속기 팀을 경쟁사로 꼽아 경쟁사 둘 이상이 이미 하고 있다. TPU 위에서 도는 Gemini 는 같은 날 종합 지수 1위가 아니고 Google 클라우드 점유율은 셋째라 TPU 덕에 앞서 있다고 볼 근거도 없다. 칩부터 응용까지 여러 칸을 함께 쥔 구성도 Amazon(Trainium·AWS·Nova·응용)과 Microsoft(Maia 200·Azure·MAI·Copilot)가 함께 갖고 있다.",
+    "응용 칸의 Waymo 는 미국에서 무인 차량 4,000대 넘게 상업 운행하고 주 50만 회 넘는 유료 탑승을 기록해 무인 운행 규모에서 실제로 앞서 있다. 그러나 세 기준은 한 전략을 보고(별도 수익모델은 '그 전략을 먹여 살리는' 매출이다) 알파벳에서 그 전략은 광고가 먹여 살리는 Gemini 이며, Waymo 는 그 전략 밖의 Other Bets 사업이고 2026년 2분기 Other Bets 매출 $382M 은 총매출 $119,796M 의 약 0.3% 다. Waymo 의 앞섬은 운영 규모의 앞섬이지 수율·공정 같은 공급 쪽 자산이나 경쟁사가 자기 수익모델을 해치지 않고는 베낄 수 없는 구조가 아니고, 테슬라가 무인 유료 운행을 하고 Zoox 가 유료 운행 승인을 받아 같은 일을 하는 경쟁사도 둘 있다. 그래서 Waymo 를 통과 사유로 쓰지 않는다.",
+    "별도 수익모델은 통과다. 광고 매출이 Gemini 를 무료로 뿌리는 전략을 먹여 살린다.",
+    "후발 가속도는 지표 단계 d(Gemini 앱 월간 사용자, 회사 실적 발표)로 판정했다. 2026-02-04 7.5억 명 초과, 2026-05-19 9억 명 돌파, 2026-07-22 9.5억 명으로 두 구간(104일·64일)의 월 복리 성장률이 약 5.5% 에서 약 2.6% 로 내려 감속이라 실패다. 저장한 성장률은 월 복리 0.055 와 0.026 이다(구간 성장률로는 20% 와 5.6%).",
+    "2025-10-29 6.5억 명 초과를 끼우면 월 복리 성장률이 약 4.5%→약 5.5%→약 2.6% 로, 가장 늦은 두 구간이 감속이라는 결론이 같다. 7.5억·9억 명은 '넘었다'는 하한 표현이지만 하한을 조금 올려도 감속은 그대로다.",
+    "클라우드 매출 성장률은 c 단계 대리 지표라 d 지표가 있는 알파벳의 가속도 판정에는 쓰지 않는다.",
+    "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나, Gemini 앱은 월간 사용자를, ChatGPT 는 주간 사용자를 공개해 같은 정의로 견준 역전 실측이 없다."
+  ],
+  "evidence_up_after": [
+    "2026년 2분기 구글 광고 매출은 $81.6B 로 전년 같은 분기 $71.3B 보다 늘어, Gemini 를 무료로 뿌리는 전략을 광고가 먹여 살린다. [EV-alphabet-013]",
+    "Gemini 앱 월간 사용자의 월 복리 성장률은 2025-10-29(6.5억 명 초과)→2026-02-04(7.5억 명 초과) 약 4.5% 에서 2026-02-04→2026-05-19(9억 명 돌파) 약 5.5% 로 올랐다. [EV-alphabet-062, EV-alphabet-039, EV-alphabet-038]",
+    "구글 클라우드 매출 성장률은 2025년 3분기 34%, 4분기 48%, 2026년 1분기 63%, 2분기 82% 로 올랐다. 클라우드 전체는 c 단계 대리 지표이고 2분기부터 TPU 시스템 판매가 매출로 잡혀, d 지표가 있는 알파벳의 가속도 판정에는 쓰지 않는다. [EV-alphabet-062, EV-alphabet-061, EV-alphabet-060, EV-alphabet-011, EV-alphabet-063]",
+    "Waymo 는 미국에서 무인 차량 4,000대 넘게 상업 운행하고 주 50만 회 넘는 유료 탑승을 기록한다. [EV-tesla-042, EV-alphabet-089]"
+  ],
+  "evidence_down_after": [
+    "Gemini 앱 월간 사용자의 월 복리 성장률은 2026-02-04→2026-05-19 약 5.5%(구간 20%)에서 2026-05-19→2026-07-22(9.5억 명) 약 2.6%(구간 5.6%)로 내렸다. [EV-alphabet-039, EV-alphabet-038, EV-alphabet-012]",
+    "Amazon Trainium·Microsoft Maia 200·Meta MTIA 도 자체 AI 가속기라 TPU 와 같은 공급 쪽 자산을 경쟁사 셋이 이미 갖고 있다. [EV-nvidia-038]",
+    "같은 날 종합 지수 4.3.2판에서 Gemini 4 Argon(high) 53 은 1위 Claude Opus 5.5(max) 58 보다 낮다. [EV-anthropic-049]",
+    "2026년 2분기 세계 클라우드 점유율은 Amazon 28%, Microsoft 20%, Google 15% 다. [EV-oracle-032]",
+    "NVIDIA 10-K 는 가속 컴퓨팅 하드웨어를 자체 설계하는 Alibaba·Amazon·Baidu·Huawei·Microsoft 의 내부 팀을 경쟁사로 꼽는다. [EV-nvidia-102]",
+    "Amazon 은 Trainium 칩을 EC2 로 수익화하고 자체 Nova 모델을 Bedrock 에서 제공하며, Microsoft 는 Maia 200 을 자기 함대에서 돌리고 자체 MAI 모델을 GitHub Copilot 에 쓴다. [EV-amazon-063, EV-amazon-061, EV-microsoft-050, EV-microsoft-010]",
+    "2026년 2분기 Other Bets 매출은 $382M 으로 총매출 $119,796M 의 약 0.3% 다. [EV-alphabet-092]",
+    "테슬라는 2026-09-03 오스틴에서 Cybercab 무인 유료 운행을 시작했고, Zoox 는 NHTSA 에서 유료 운행 승인을 받았다. [EV-tesla-007, EV-amazon-084]"
+  ]
+}
