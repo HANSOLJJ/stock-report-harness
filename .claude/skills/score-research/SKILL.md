@@ -17,6 +17,7 @@ description: scorecard 실행의 원자료(observations)·판단(judgments)·출
    `uv run --frozen python -X utf8 scripts/scorecard_cli.py judge <run_id> --company <id> --factor F1..F9 (--set key=value … | --evidence "문장" … | --json 파일) --reason "…" --by <이름> [--take-lock]`
    - 인자는 `--help` 로 확인한다. 고친 뒤에는 `/score-research <run_id>` 부터 다시 돈다. 사람이 승인 페이지에서 판단을 고친 경우도 같다.
    - `status: new` 판단은 `evidence_ids` 로 **confirmed 근거만** 인용한다. candidate 근거를 인용하면 교차 참조 검증이 실패한다. 아직 확정되지 않은 후보는 인용하지 말고, 원문을 확인해 `confirm` 으로 확정한 뒤 인용한다.
+   - **제목만 보고 넘기지 않는다(2026-10-12 사용자 지시).** 후보와 수집 뉴스의 URL 은 Google News 중계 주소라 그대로 열면 원문으로 넘어가지 않는다. `scorecard_cli.py resolve-urls --url <중계 주소>` 로 원문 주소를 얻어 본문을 읽고 발췌·`locator` 를 채운다. 근거 출처를 한꺼번에 고칠 때는 `resolve-urls <run_id>` 를 쓴다. "제목만 확인"은 미확인 사유가 아니다. 유료 기사라 본문이 막혔을 때만 그 사실을 판정 칸에 적고 미확인으로 둔다. 규칙 v2.0 이상 실행은 발췌가 제목뿐이거나 출처가 중계 주소인 근거를 `confirm` 이 받지 않고, 이어받은 것까지 `research` 가 막으며, '제목만' 사유를 쓴 판단 문장은 `judge`·`proposal` 이 받지 않는다. 10월 재실행에서 이전 실행에 제목만으로 확정된 근거 29건이 이어졌고, OpenAI ③ 이 연환산 매출 $70B 기사를 "제목만 확인"으로 빼 두었다.
 4. 실행한다: `uv run --frozen python -X utf8 scripts/scorecard_cli.py research <run_id> [--no-register] [--take-lock]`.
    - 기본 동작은 `evidence.json` 이 인용한 후보의 출처를 `sources.json` 에 자동 등록하는 것이다. `--no-register` 는 이 등록을 하지 않는다. 등록 없이 검증만 보고 싶을 때만 쓴다.
    - 스키마 오류(`[FAIL]`)가 나면 입력을 고친다. 임의 해석으로 통과시키지 않는다.

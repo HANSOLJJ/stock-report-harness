@@ -21,7 +21,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
    - 리뷰어 입력: `output/<run_id>/` 의 `draft.md`, `research.md`, `results.json`, `observations.json`, `judgments.json`, `sources.json`, `evidence/evidence.json`, `triggers.json`, `preview.md`(HTML 이 있으면 `report.html`). 근거·트리거·출처를 읽지 않은 리뷰는 사실·출처 영역을 pass 로 쓰지 않는다.
    - 리뷰어 프롬프트에 "SEC 공시 원문은 `scorecard_cli.py sec-get <SEC 주소>` 로만 받고 SEC 요청이나 User-Agent 를 직접 만들지 않는다" 를 넣는다(2026-10-01 사고).
    - 리뷰어 프롬프트에 "큰 파일은 grep/sed 로 필요한 부분만 읽으라"를 넣는다. 네 개를 동시에 띄우면 세션 사용량 한도(HTTP 429)로 전부 중단되는 일이 있었다(2026-09-08). 한도가 걱정되면 2개씩 나눠 띄우고, 중단된 리뷰어는 같은 agent 에 이어서 진행을 요청한다.
-   - 사실·출처: `fact-checker` — 숫자·기업 귀속·기준 시점·출처·부재 주장, 근거의 `source_ids ⊆ sources`, URL, excerpt 원문 대조. 올릴·내릴 근거 줄마다 표지 `[EV-…]` 가 가리키는 근거의 본문 발췌가 원문 그 위치(`locator`)에 실제로 있고 그 줄의 사실을 받치는지 전수로 본다(2026-10-07, `guide.md` 5.7). 이해상충 표기는 보지 않는다(2026-10-02, AGENTS.md 「금지·주의」).
+   - 사실·출처: `fact-checker` — 숫자·기업 귀속·기준 시점·출처·부재 주장, 근거의 `source_ids ⊆ sources`, URL, excerpt 원문 대조. 올릴·내릴 근거 줄마다 표지 `[EV-…]` 가 가리키는 근거의 본문 발췌가 원문 그 위치(`locator`)에 실제로 있고 그 줄의 사실을 받치는지 전수로 본다(2026-10-07, `guide.md` 5.7). 판정 칸이 "미확인"으로 뺀 보도는 리뷰어가 원문을 직접 열어 보고, 열리는데 판단이 쓰지 않았으면 fail 로 적는다. Google News 중계 주소는 `scorecard_cli.py resolve-urls --url <주소>` 로 푼다(2026-10-12, OpenAI ③ 의 $70B 기사가 제목만 보고 미확인으로 빠졌다). 이해상충 표기는 보지 않는다(2026-10-02, AGENTS.md 「금지·주의」).
    - 근거 불릿: `evidence-editor` — `evidence.json` 과 draft 근거 절의 주장·출처 대응, 추론 표시, 금지 표현. 근거 불릿 검토는 이 에이전트에 맡기고 사실·출처 영역의 근거로 인용한다.
    - 재무 계산: EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호. results.json 의 calc.path 대조.
    - 규칙 일관성: 판정 입력↔규칙 판정표, 승계 표시(기업 추가 실행에만. 규칙 v2.0 이상 정기 실행은 승계 판단이 없어야 한다, `rules.md` 2.9), 미결 결정 처리, 체크리스트 Q01~Q23 전체. **회사별 사다리 적용 표만으로는 부족하다** — 아래 「회사를 가로지르는 표 셋」을 반드시 만든다(2026-10-09).

@@ -66,7 +66,7 @@ sequenceDiagram
 | 1 | 실행 생성 | 새로: `scripts/scorecard_cli.py init <run_id> --rule <현행 버전> --as-of YYYY-MM-DD --title "…" --request "…"`<br/>이어받기: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id> --as-of … --price-as-of … --info-cutoff …`<br/>현행 버전은 `rules.md` 머리말에 있습니다. 이어받기는 `--rule`·날짜를 주지 않으면 이전 실행 값을 그대로 씁니다. | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
 | 2 | 수집 | `scripts/scorecard_cli.py collect <run_id> --kind all` | `evidence/candidates.json`, ⑥ 가격 관측 |
 | 3 | 트리거 후보 보기 | `scripts/scorecard_cli.py trigger-candidates <run_id>` | 화면 출력만 (파일 변경 없음) |
-| 4 | 선별 | 에이전트가 후보를 골라 작성 | `evidence/evidence.json`, `triggers.json` |
+| 4 | 선별 | 에이전트가 후보를 골라 작성. 후보 URL 은 Google News 중계 주소라 `scripts/scorecard_cli.py resolve-urls --url <주소>` 로 원문 주소를 얻어 본문을 읽고, 근거 출처는 `resolve-urls <run_id>` 로 한꺼번에 원문 주소로 바꿉니다 | `evidence/evidence.json`, `triggers.json`, `sources.json` |
 | 5 | 리서치 | `scripts/scorecard_cli.py research <run_id>` | `research.md` |
 | 6 | 계산 | `scripts/scorecard_cli.py calculate <run_id>` | `results.json`, `preview.md` |
 | 7 | 초안 | `scripts/scorecard_cli.py draft <run_id>` | `draft.md` |
