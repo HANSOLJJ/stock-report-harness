@@ -1482,6 +1482,22 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
 TRI_RANK = {"fail": 0, "partial": 1, "pass": 2}
 
 
+def judgment_rule_conflict(item: dict[str, Any], rules_payload: dict[str, Any]) -> str | None:
+    """이 판단을 새 판단(status: new)으로 두면 이 규칙에서 막히는가. 막히면 이유, 통과하면 None.
+
+    2026-10-12 규칙 v2.1 첫 실행: 규칙이 바뀌는 이어받기에서 새 규칙의 형식 선언(④⑧ survival·axes)이나 판정 재료 요건
+    (① AI 수익화 '예' 의 재료 여섯)에 걸리는 새 판단을 init 이 carried 로 넘길 때 쓴다(stages._inputs_from_run)."""
+    spec = rules_payload["factors"][item["factor"]]
+    declared = spec.get("judgment_kinds")
+    if declared and item["kind"] not in declared:
+        return f"kind {item['kind']!r} 는 {sorted(declared)} 밖"
+    try:
+        _validate_judgment_inputs_for_rules(item["kind"], item["inputs"], spec, item["judgment_id"])
+    except SchemaError as exc:
+        return str(exc)
+    return None
+
+
 def _validate_judgment_inputs_for_rules(kind: str, inputs: dict[str, Any], spec: dict[str, Any], where: str) -> None:
     """규칙이 선언한 판정 입력 요건(2026-10-08 규칙 v2.0). 키가 없는 규칙(v1.9 이하)은 아무것도 보지 않는다.
 

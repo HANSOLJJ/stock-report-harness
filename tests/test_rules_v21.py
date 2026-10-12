@@ -647,6 +647,15 @@ class RuleChangeInheritTest(unittest.TestCase):
         self.assertTrue(any("carried 로 이어받았다" in a for a in run["assumptions"]))
         engine.load_context(new)                                 # 첫 load_context 에서 막히지 않는다
 
+    def test_rule_conflict_covers_inputs_too(self):
+        """형식이 맞아도 v2.1 판정 재료 요건(① '예' 의 재료 여섯)에 걸리면 충돌로 본다."""
+        from scorecard.schema import judgment_rule_conflict
+        bare = lockin(ai_monetized_in_channel="yes")
+        self.assertIn("AI 수익화", judgment_rule_conflict(bare, rules_json("v2.1")))
+        self.assertIsNone(judgment_rule_conflict(bare, rules_json("v2.0")))
+        self.assertIsNone(judgment_rule_conflict(lockin(ai_monetized_in_channel="yes", **MONETIZED), rules_json("v2.1")))
+        self.assertIsNotNone(judgment_rule_conflict({**bare, "factor": "F4", "kind": "score"}, rules_json("v2.1")))
+
 
 class ChangeTypeTest(unittest.TestCase):
     """TODO 9: history.csv 의 변경 사유를 실행 설정에 넣을 길."""

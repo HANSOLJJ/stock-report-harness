@@ -26,7 +26,7 @@ from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_CLI_ONLY_INPUTS, JUDGMENT_CLI_ONLY_TYPES, JUDGMENT_DIRECTION_FIELDS,
-                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, MARKET_COMPANY_ID, PROPOSAL_DIRECTION_AFTER, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, judgment_edit_kind, load_json_strict, reconfirm_evidence_ids,
+                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, MARKET_COMPANY_ID, PROPOSAL_DIRECTION_AFTER, judgment_rule_conflict, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, judgment_edit_kind, load_json_strict, reconfirm_evidence_ids,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
@@ -181,20 +181,19 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         moved = f"규칙이 이어받은 실행 이후 바뀌었다({prior_rule_hash[:12]}… → {rules.hash[:12]}…)"
         print(f"[경고] {moved} — 기존 기업 점수 불변은 diff 로 확인한다")
         assumptions.append(f"{moved} — 기존 기업 점수 불변은 diff 로 확인한다")
-    # 2026-10-12 규칙 v2.1 첫 실행: 새 규칙이 받지 않는 형식의 판단(v2.0 ④⑧ score → v2.1 survival·axes)이 status new 로
-    # 넘어오면 첫 load_context 에서 막혀 판단을 고칠 제안조차 쓸 수 없다. 그 판단만 carried 로 두어 옛 형식을 읽게 하고
-    # (검증기의 설계 의도: 이어받은 뒤 하나씩 새 판단으로 바꾼다) 정기 실행에 승계가 남으면 validate_scorecard 가 막는다.
-    # 형식이 맞는 판단에는 손대지 않는다 — 기업 추가 실행의 점수 상태를 움직이지 않는다(위 docstring).
+    # 2026-10-12 규칙 v2.1 첫 실행: 새 규칙이 받지 않는 새 판단(형식: v2.0 ④⑧ score → v2.1 survival·axes, 판정 재료: ① AI 수익화
+    # '예' 의 재료 여섯)이 status new 로 넘어오면 첫 load_context 에서 막혀 판단을 고칠 제안조차 쓸 수 없다. 그 판단만 carried 로
+    # 두어 옛 규칙으로 읽게 하고(검증기의 설계 의도: 이어받은 뒤 하나씩 새 판단으로 바꾼다) 정기 실행에 승계가 남으면
+    # validate_scorecard 가 막는다. 새 규칙에서도 통과하는 판단에는 손대지 않는다 — 기업 추가 실행의 점수 상태를 움직이지 않는다.
     stale = []
     for j in judgments["items"]:
-        declared = rules.factor(j["factor"]).get("judgment_kinds")
-        if declared and j["status"] == "new" and j["kind"] not in declared:
+        if j["status"] == "new" and judgment_rule_conflict(j, rules.payload) is not None:
             j["status"] = "carried"
             j["carried_from"] = f"{prior_slug}:{j['judgment_id']}"
             stale.append(j["judgment_id"])
     if stale:
-        assumptions.append(f"규칙 {rules.version} 이 받지 않는 형식의 판단 {len(stale)}건({', '.join(stale)})을 carried 로 이어받았다. "
-                           "이 실행에서 새 형식으로 다시 매겨야 한다")
+        assumptions.append(f"규칙 {rules.version} 이 받지 않는 판단 {len(stale)}건({', '.join(stale)})을 carried 로 이어받았다. "
+                           "이 실행에서 새 규칙의 형식과 판정 재료로 다시 매겨야 한다")
     if approval is None:
         assumptions.append(f"이전 실행 {prior_slug} 에는 승인 기록이 없다. 승인되지 않은 상태에서 이어받았다")
     else:
