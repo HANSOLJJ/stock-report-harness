@@ -1058,6 +1058,83 @@ def comparison_groups(results: dict[str, Any]) -> dict[str, list[dict[str, Any]]
     return groups
 
 
+REGIME_DIRECTION_LABELS = {"accelerating": "가속", "decelerating": "감속", "steady": "등속"}
+REGIME_DEFINITION_LABELS = {"cash_plus_finance_lease": "현금 + 금융리스", "cash_only": "현금만"}
+REGIME_TRIGGER_LABELS = {"met": "충족", "not_met": "미충족", "insufficient": "자료 부족"}
+TOKEN_SEGMENT_LABELS = {"broad": "전체", "frontier": "프런티어 모델", "open": "오픈 모델"}
+REGIME_CAPEX_HEAD = ["회사", "정의", "최근 분기", "분기 설비투자", "전년 대비", "직전 분기의 전년 대비", "변화", "방향", "2개 분기 연속 감속"]
+REGIME_SUPPLIER_HEAD = ["회사", "보증", "고객 출자", "용량 되사기", "합계", "매출(최근 1년)", "비중", "직전 비중", "기준일"]
+REGIME_TRIGGER_HEAD = ["조건", "지금", "충족하면 다시 볼 것"]
+
+
+def _pct_signed(value: float | None, unit: str = "%") -> str:
+    if value is None:
+        return "—"
+    shown = round(value * 100, 1)
+    return f"{shown:+.1f}{unit}" if shown else f"0.0{unit}"     # 반올림해 0 이 되면 부호를 붙이지 않는다(-0.0 방지)
+
+
+def _regime_capex_row(name: str, definition: str, ind: dict[str, Any], end: str | None) -> list[str]:
+    if ind["status"] != "ok":
+        gap = " · 전년 같은 분기 값 없음" if ind.get("gap") else ""
+        return [name, definition, f"자료 부족(분기 {ind['quarters']}개, {ind['need']}개 필요{gap})", *["—"] * 6]
+    from .regime import key_label
+
+    two = ind["two_quarter_deceleration"]
+    when = key_label(ind["latest"]) + (f"({end})" if end else "")
+    return [name, definition, when, fmt_usd(ind["value"]), _pct_signed(ind["growth"]), _pct_signed(ind["growth_prev"]),
+            _pct_signed(ind["change"], "%p"), REGIME_DIRECTION_LABELS[ind["direction"]],
+            "자료 부족(증가율 셋 필요)" if two is None else ("예" if two else "아니오")]
+
+
+def regime_view(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None:
+    """2026-10-12 규칙 v2.1 2-C-1: 국면 지표(점수 없음). 초안과 HTML 이 같은 글자를 쓴다. 규칙에 선언이 없으면 None."""
+    from .regime import regime_board, regime_spec
+
+    spec = regime_spec(ctx.rules)
+    if spec is None:
+        return None
+    names = {c["company_id"]: c["display_name"] for c in results["companies"]}
+    board = regime_board(ctx.observations, list(ctx.run["companies"]), spec)
+    cap = board["capex"]
+    capex_rows = []
+    for r in cap["rows"]:
+        definition = REGIME_DEFINITION_LABELS[r["definition"]] + ("(금융리스 분기 값 모자람)" if r["finance_lease_partial"] else "")
+        latest = r["indicator"].get("latest")
+        capex_rows.append(_regime_capex_row(names.get(r["company_id"], r["company_id"]), definition, r["indicator"],
+                                            r["ends"].get(latest) if latest else None))
+    capex_rows.append(_regime_capex_row(f"바스켓 합({len(cap['basket']['members'])}개사)", "회사별 정의의 합", cap["basket"]["indicator"], None))
+    supplier_rows = []
+    for s in board["supplier"]:
+        p = s["latest"]
+        if p is None:
+            supplier_rows.append([names.get(s["company_id"], s["company_id"]), *["미확인"] * 7, "—"])
+            continue
+        comp = [fmt_usd(p["components"][m]) if m in p["components"] else "미확인"
+                for m in ("supplier_guarantees", "supplier_customer_investments", "supplier_capacity_buyback")]
+        supplier_rows.append([names.get(s["company_id"], s["company_id"]), *comp,
+                              fmt_usd(p["total"]) if p["total"] is not None else "미확인",
+                              fmt_usd(p["revenue"]) if p["revenue"] is not None else "미확인",
+                              f"{p['ratio'] * 100:.1f}%" if p["ratio"] is not None else "미확인",
+                              f"{s['previous_ratio'] * 100:.1f}%" if s["previous_ratio"] is not None else "—", p["as_of"]])
+    label = spec["token_index"]["label"]
+    token_lines = [f"{label} {TOKEN_SEGMENT_LABELS.get(t['segment'], t['segment'])}: ${t['value']:.2f}({t['as_of']}, {t['source_id']})"
+                   + (f" · 직전 관측 ${t['previous']['value']:.2f}({t['previous']['as_of']}) 대비 {_pct_signed(t['change'])}" if t["previous"] else " · 직전 관측 없음")
+                   for t in board["token"]] or [f"{label}: 등록된 관측 없음. 실행마다 공개 페이지의 최신 값과 날짜를 수동 관측으로 적는다."]
+    token_lines.append(spec["token_index"]["caveat"])
+    off_lines = [f"장부 밖 설비 잔존가치 보증: {names.get(o['company_id'], o['company_id'])} {fmt_usd(o['value'])}({o['as_of']}). 설비투자에 더하지 않았다."
+                 for o in board["offbalance"]] or ["장부 밖 설비 잔존가치 보증: 등록된 관측 없음."]
+    notes = [spec["capex"]["note"], spec["capex"]["calendar_alignment"],
+             f"방향은 전년 대비 증가율의 변화가 ±{spec['capex']['flat_band'] * 100:g}%p 안이면 등속이다. 증가율 둘을 견주려면 분기 6개, "
+             "2개 분기 연속 감속을 판정하려면 분기 7개가 필요하다."]
+    if cap["missing_from_run"]:
+        notes.append("바스켓 가운데 이번 실행에 없는 회사: " + ", ".join(cap["missing_from_run"]) + ". 바스켓 합에서 빠졌다.")
+    triggers = [[t["condition"], REGIME_TRIGGER_LABELS[t["status"]], t["recheck"]] for t in board["triggers"]]
+    return {"note": spec["note"], "capex_head": REGIME_CAPEX_HEAD, "capex_rows": capex_rows, "capex_notes": off_lines + notes,
+            "supplier_head": REGIME_SUPPLIER_HEAD, "supplier_rows": supplier_rows, "supplier_note": spec["supplier_support"]["note"],
+            "token_lines": token_lines, "trigger_head": REGIME_TRIGGER_HEAD, "trigger_rows": triggers}
+
+
 CASH_CHAIN_HEAD = ["기업", "매출", "영업이익", "영업현금흐름", "설비투자", "FCF(⑨)", "주식보상", "희석 주식", "주당 FCF",
                    "주식보상 뺀 주당 FCF", "OCF − 설비투자 대조", "기준 시점"]
 

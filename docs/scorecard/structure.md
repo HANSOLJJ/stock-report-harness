@@ -119,6 +119,9 @@
 | 결정론·해시 | `engine.compute/load_results/recompute_matches` | validator "results deterministic recompute" |
 | 기준선 이관 검산 (T-17) | `baseline_import` + `import-report.md` MD 대조 | 14사 match |
 | 입력 검증 (T-03, T-05, T-06, R05, R06) | `schema.validate_*` | `TestReviewRegressions` |
+| 재무 사실 수집(SEC companyfacts 누계 복원: ocf_ttm·capex_ttm·income_tax_ttm, 바스켓 분기 설비투자·금융리스) | `collect_facts`, `stages._collect_facts` | `tests/test_collect_facts.py` |
+| 현금 연결표(점수 없음, 규칙 v2.1 `policies.diagnostics.cash_chain`) | `cash_chain.cash_chain_rows`, `render_common.cash_chain_table` | `tests/test_cash_chain.py` |
+| 국면 지표(점수 없음, 규칙 v2.1 `policies.regime_indicators`: 설비투자 가속도·공급자 지원 비중·토큰 단가 지수·트리거 조건) | `regime.regime_board`, `render_common.regime_view` | `tests/test_regime.py` |
 
 테스트는 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 로 실행한다. `tests/test_scorecard_calc.py` 는 v1.5 규칙으로 검사한다(T-01~T-12 의 원래 정의). 현행 규칙의 ⑥ 은 `test_scorecard_f6_v17.py`, ⑦ 재척도는 `test_scorecard_fix52_schema.py`, v1.8 로드와 재계산은 `test_rules_v18.py`, v1.9 의 트랙 판정은 `test_rules_v19.py` 가 본다. 독립 리뷰가 찾은 회귀 R01~R06 은 `test_scorecard_calc.py` 의 `TestReviewRegressions` 가 고정한다.
 

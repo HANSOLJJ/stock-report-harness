@@ -9,7 +9,7 @@ from .paths import run_paths
 
 from . import render_common as rc
 from .render_common import fmt_num, fmt_usd
-from .schema import FACTOR_IDS, MOAT_FACTORS, TRAP_FACTORS
+from .schema import FACTOR_IDS, MARKET_COMPANY_ID, MOAT_FACTORS, TRAP_FACTORS
 
 # 2026-09-17 FIX-78 S1: `승계` 가 근거 머리줄의 `사용자의 판단` 과 **같은 화면에** 있어 둘이
 # 다른 것처럼 읽혔다(사용자 지적). 같은 것은 같은 말로 부른다. `status` 값은 그대로이고 표시만 바꾼다.
@@ -259,8 +259,10 @@ def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[d
     by_company: dict[str, list[dict[str, Any]]] = {}
     for o in ctx.observations:
         by_company.setdefault(o["company_id"], []).append(o)
-    for cid in run["companies"]:
-        company = ctx.companies[cid]
+    # 2026-10-12 규칙 v2.1 2-C-1: 회사에 속하지 않는 시장 지표(토큰 지수)는 맨 뒤 '시장 지표' 소절에 싣는다.
+    market = [MARKET_COMPANY_ID] if by_company.get(MARKET_COMPANY_ID) else []
+    for cid in [*run["companies"], *market]:
+        company = ctx.companies[cid] if cid != MARKET_COMPANY_ID else {"display_name": "시장 지표"}
         lines += [f"### {company['display_name']}", ""]
         rows = []
         for o in sorted(by_company.get(cid, []), key=lambda x: (x["metric"], x["observation_id"])):
@@ -345,6 +347,19 @@ def _survival_section(ctx: Any, results: dict[str, Any], rows: list[dict[str, An
     return out
 
 
+def _regime_section(view: dict[str, Any]) -> list[str]:
+    """규칙 v2.1 국면 지표 절. 국면에 이름을 붙이지 않고 원값과 변화, 트리거 조건의 지금 상태만 싣는다."""
+    out = ["## 국면 지표 — 점수 없음", "", view["note"], "",
+           "### 설비투자 가속도(AI 컴퓨트를 사는 회사)", "",
+           table(view["capex_head"], view["capex_rows"], ["---", "---", "---", "---:", "---:", "---:", "---:", "---", "---"]), ""]
+    out += [f"- {x}" for x in view["capex_notes"]] + [""]
+    out += ["### 공급자 지원 비중", "", table(view["supplier_head"], view["supplier_rows"], ["---"] + ["---:"] * 7 + ["---"]), "",
+            f"- {view['supplier_note']}", ""]
+    out += ["### 토큰 단가 지수", ""] + [f"- {x}" for x in view["token_lines"]] + [""]
+    out += ["### 트리거 조건", "", table(view["trigger_head"], view["trigger_rows"]), ""]
+    return out
+
+
 def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None, triggers: list[dict[str, Any]]) -> str:
     run = ctx.run
     title = run["title"]
@@ -396,6 +411,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         lines.append(f"- 미결 규칙 결정: {', '.join(results['pending_rule_decisions'])} — 사용자 결정 전에는 해당 기업을 순위에 넣지 않는다")
     lines += ["", "과점 = ①~⑤ 합, 함정 = ⑥~⑨ 합(음수 또는 0), 조정총점 = 과점 + 함정. 순위는 1 + (조정총점이 더 높은 완료 기업 수)이며 동점은 공동 순위다.", ""]
     # 순위표
+    # 2026-10-12 규칙 v2.1 2-C-1: 국면 지표(점수 없음)를 리포트 머리에 싣는다. 규칙에 선언이 없는 옛 실행에는 이 절이 없다.
+    regime = rc.regime_view(ctx, results)
+    if regime:
+        lines += _regime_section(regime)
     lines += ["## 종합 순위표", ""]
     rows = []
     for r in ranking:

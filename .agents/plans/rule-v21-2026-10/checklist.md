@@ -34,10 +34,10 @@
 - [x] E2 현금 연결표: `cash_chain.py`(관측 → 행), v2.1 `policies.diagnostics.cash_chain` 이 있을 때만 draft·HTML 렌더, OCF − 설비투자 ≈ FCF 대조 → 테스트 → 커밋
 
 ## 2-C. 국면 지표
-- [ ] 2-C-1 설비투자 분기 시계열·금융리스·장부 밖, NVIDIA 공급자 지원, SDLLMTK
+- [x] 2-C-1 설비투자 분기 시계열·금융리스·장부 밖, NVIDIA 공급자 지원, SDLLMTK
   - [x] C1-a 수집기 분기 시계열(capex_quarterly·finance_lease_additions_quarterly, 바스켓만) + 스키마 지표 → 테스트 → 커밋
-  - [ ] C1-b 수동 지표(residual_value_guarantee·supplier_* 셋·token_price_index, `_market` ID), from-run·research.md → 테스트
-  - [ ] C1-c regime.py 계산 + v2.1 policies.regime_indicators + 초안·HTML 국면 지표 절 + rules.md → 캐시 자료 미리보기 → 테스트 → 커밋
+  - [x] C1-b 수동 지표(residual_value_guarantee·supplier_* 셋·token_price_index, `_market` ID), from-run·research.md → 테스트
+  - [x] C1-c regime.py 계산 + v2.1 policies.regime_indicators + 초안·HTML 국면 지표 절 + rules.md → 캐시 자료 미리보기 → 테스트 → 커밋
 - [ ] 2-C-2 모집단 밖 회사·클라우드 세그먼트 마진
 
 ## 운영

@@ -853,6 +853,33 @@ def render_layers(results: dict[str, Any], ctx: Any) -> str:
             + (f'<h3>비교 그룹 안 순위</h3><ul class="fpts">{group_items}</ul>' if group_items else ""))
 
 
+def _html_table(head: list[str], rows: list[list[str]], *, text_cols: set[int] = frozenset()) -> str:
+    """국면 지표 표. 첫 열은 이름, text_cols 는 문장 열, 나머지는 숫자 열."""
+    def cls(i: int) -> str:
+        return "name" if i == 0 else ("text" if i in text_cols else "mono")
+    th = "".join(f'<th class="{cls(i) if i == 0 or i in text_cols else ""}">{esc(h)}</th>' for i, h in enumerate(head))
+    body = "".join("<tr>" + "".join(f'<td class="{cls(i)}">{"<b>" + esc(c) + "</b>" if i == 0 else esc(c)}</td>'
+                                    for i, c in enumerate(r)) + "</tr>" for r in rows)
+    return f'<div class="tablewrap"><table class="figures"><thead><tr>{th}</tr></thead><tbody>{body}</tbody></table></div>'
+
+
+def render_regime(ctx: Any, results: dict[str, Any]) -> str:
+    """규칙 v2.1 국면 지표(점수 없음). 초안과 같은 글자를 render_common.regime_view 에서 읽는다. 선언이 없으면 빈 문자열이다."""
+    view = rc.regime_view(ctx, results)
+    if view is None:
+        return ""
+    sub = lambda items: "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in items)  # noqa: E731
+    return ('<section class="regime"><h3>국면 지표 — 점수 없음</h3>'
+            f'<p class="sub">{inline_html(view["note"])}</p>'
+            '<h3>설비투자 가속도(AI 컴퓨트를 사는 회사)</h3>'
+            + _html_table(view["capex_head"], view["capex_rows"], text_cols={1, 2, 7, 8}) + sub(view["capex_notes"])
+            + '<h3>공급자 지원 비중</h3>' + _html_table(view["supplier_head"], view["supplier_rows"], text_cols={8})
+            + sub([view["supplier_note"]])
+            + '<h3>토큰 단가 지수</h3>' + sub(view["token_lines"])
+            + '<h3>트리거 조건</h3>' + _html_table(view["trigger_head"], view["trigger_rows"], text_cols={1, 2})
+            + '</section>')
+
+
 def render_incomplete(results: dict[str, Any], rules: Any) -> str:
     items = results["population"]["incomplete"]
     decisions = "".join(f'<li><b>{esc(d)}</b> {inline_html((rules.decision(d) or {}).get("summary", ""))}</li>' for d in results["pending_rule_decisions"])
@@ -2102,6 +2129,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <section class="tabpanel" id="tab-summary" role="tabpanel" aria-labelledby="tabbtn-summary">
 <div class="kpis" id="kpis">{render_kpis(results)}</div>
 {render_judgment_status(ctx, results)}
+{render_regime(ctx, results)}
 <h2><span class="num">01</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results, ctx)}

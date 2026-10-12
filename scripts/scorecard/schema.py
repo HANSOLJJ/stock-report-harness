@@ -265,12 +265,30 @@ METRICS: dict[str, dict[str, str]] = {
     "capex_quarterly": {"unit": "USD", "type": "number"},
     # 2026-10-12 규칙 v2.1 2-C-1(점수 없음): 분기 금융리스 취득 자산. 사는 쪽은 현금 설비투자에 더해 본다(사용자 결정).
     "finance_lease_additions_quarterly": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 2-C-1(점수 없음, 수동): 사는 쪽의 장부 밖 설비 잔존가치 보증 최대 노출(Meta 특수목적법인 데이터센터 같은 것).
+    # 설비투자에 더하지 않고 따로 보인다. ⑨ 의 offbalance_B(미개시 확정 약정)와 다른 값이다.
+    "residual_value_guarantee": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 2-C-1(점수 없음, 수동): 파는 쪽(NVIDIA)의 공급자 지원 셋. 분기 말 잔액·한도이고 10-Q 주석에서 읽는다.
+    # 합 ÷ revenue_ttm 이 공급자 지원 비중이다. 산 회사 설비투자와 겹치므로 설비투자에 더하지 않는다.
+    "supplier_guarantees": {"unit": "USD", "type": "number"},
+    "supplier_customer_investments": {"unit": "USD", "type": "number"},
+    "supplier_capacity_buyback": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 2-C-1(점수 없음, 수동): SDLLMTK(Silicon Data LLM 토큰 지출 지수, 사용량 가중 100만 토큰당 달러).
+    # 회사 값이 아니라 company_id 는 MARKET_COMPANY_ID 다. basis.segment 에 구간(broad·frontier·open)을 적는다.
+    "token_price_index": {"unit": "USD", "type": "number"},
 }
+# 2026-10-12 규칙 v2.1 2-C-1: 회사에 속하지 않는 시장 지표의 company_id. 시장 지표는 이 ID 에만, 이 ID 는 시장 지표에만 쓴다.
+MARKET_COMPANY_ID = "_market"
+MARKET_METRICS = {"token_price_index"}
+TOKEN_INDEX_SEGMENTS = {"broad", "frontier", "open"}
 
 NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "revenue_ttm_full", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
 # 2026-10-08: 정의상 음수가 될 수 없는 새 관측(비중·단가·세는 수·선급금). 매출총이익률과 주식보상비용은 음수가 나올 수 있어 넣지 않는다.
 NON_NEGATIVE_METRICS |= {"top_customer_share", "rpo_next12m_share", "nrr", "customer_prepayments", "token_share", "price_per_m",
                          "paid_seats", "mau", "developer_count", "fsd_subscribers", "shares_diluted"}
+# 2026-10-12 규칙 v2.1 2-C-1: 보증·출자·되사기는 잔액·한도이고 지수는 가격이라 음수가 될 수 없다.
+NON_NEGATIVE_METRICS |= {"residual_value_guarantee", "supplier_guarantees", "supplier_customer_investments",
+                         "supplier_capacity_buyback", "token_price_index"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -734,6 +752,18 @@ def _validate_regime_policy(spec: Any) -> None:
              f"{where}.capex.quarters_kept: 7 이상 정수(2개 분기 연속 감속 판정에 증가율 셋이 필요)")
     _require(capex["min_quarters"] == 6, f"{where}.capex.min_quarters: 6(전년 대비 증가율 둘을 견주는 최소)")
     _require(_is_number(capex["flat_band"]) and 0 <= capex["flat_band"] < 0.1, f"{where}.capex.flat_band: 0 이상 0.1 미만")
+    _expect_keys(spec, ["scored", "capex", "supplier_support", "token_index", "trigger_conditions"], where, optional=["note"])
+    sup = spec["supplier_support"]
+    _expect_keys(sup, ["companies", "components", "denominator"], f"{where}.supplier_support", optional=["note"])
+    _require(sup["components"] == ["supplier_guarantees", "supplier_customer_investments", "supplier_capacity_buyback"]
+             and sup["denominator"] == "revenue_ttm", f"{where}.supplier_support: 구성 셋과 분모는 계산(regime.supplier_support)이 읽는 것과 같아야 함")
+    tok = spec["token_index"]
+    _expect_keys(tok, ["metric", "label", "caveat"], f"{where}.token_index")
+    _require(tok["metric"] in MARKET_METRICS, f"{where}.token_index.metric: 시장 지표 {sorted(MARKET_METRICS)} 중 하나")
+    known = {"capex_decel_2q", "supplier_support_rising"}   # regime.TRIGGER_IDS 와 같다 — 계산이 판정할 수 있는 조건만
+    for i, t in enumerate(spec["trigger_conditions"]):
+        _expect_keys(t, ["id", "condition", "recheck"], f"{where}.trigger_conditions[{i}]")
+        _require(t["id"] in known, f"{where}.trigger_conditions[{i}].id: {sorted(known)} 중 하나 ({t['id']!r})")
 
 
 def _validate_missing_types_policy(spec: Any) -> None:
@@ -1204,12 +1234,22 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
             # 2026-09-16 FIX-57 2단계: `확인된 미공시` 는 C-16 으로 한 칸을 깎는다. 규칙이 선언한 두 경로 중
             # 하나를 실제로 채우는지 여기서 확인한다 — 라벨만 붙이면 근거 없이 점수가 깎인다.
             if item["missing_type"] == MISSING_TYPE_FOR_DISCLOSURE_POLICY and missing_policy is not None:
+                # 시장 지표(_market)는 발행사가 없어 '확인된 미공시' 가 성립하지 않는다
+                _require(item["company_id"] in companies, f"{where}: 회사가 아닌 관측에는 {MISSING_TYPE_FOR_DISCLOSURE_POLICY} 를 달 수 없다")
                 _require_ndc_route(item, companies[item["company_id"]], missing_policy, where)
         oid = item["observation_id"]
         _require(isinstance(oid, str) and oid and oid not in seen, f"{where}: observation_id 누락/중복 {oid!r}")
         seen.add(oid)
-        _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
         metric = item["metric"]
+        if item["company_id"] == MARKET_COMPANY_ID or metric in MARKET_METRICS:
+            _require(item["company_id"] == MARKET_COMPANY_ID and metric in MARKET_METRICS,
+                     f"{where}: 시장 지표 {sorted(MARKET_METRICS)} 는 company_id {MARKET_COMPANY_ID!r} 로만, 그 ID 는 시장 지표로만 쓴다 "
+                     f"({item['company_id']!r}, {metric!r})")
+            if metric == "token_price_index" and item["value"] is not None:
+                _require(((item.get("basis") or {}).get("segment")) in TOKEN_INDEX_SEGMENTS,
+                         f"{where}: token_price_index 는 basis.segment 가 {sorted(TOKEN_INDEX_SEGMENTS)} 중 하나")
+        else:
+            _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
         _require(metric in METRICS, f"{where}: 알 수 없는 metric {metric!r}")
         _require(item["status"] in OBSERVATION_STATUSES, f"{where}: status {item['status']!r} 오류")
         _require(item["kind"] in OBSERVATION_KINDS, f"{where}: kind {item['kind']!r} 오류")

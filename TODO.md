@@ -7,6 +7,7 @@ README 의 "다음에 정할 것" 에서 옮겨 온 목록입니다. 끝난 항�
    - 새 관측: `equity_investment_gains_ttm`·`income_tax_ttm`(Alphabet 은 companyfacts `EquitySecuritiesFvNiGainLoss`, Amazon 은 그것 + `EquitySecuritiesWithoutReadilyDeterminableFairValueUpwardPriceAdjustmentAnnualAmount` + AFS 재분류 이익, Alibaba 는 20-F 주석), 비상장 보정 매출 `revenue_ttm`·`revenue_ttm_prior`(OpenAI·Anthropic, 2차 보도면 등급 표기). 없으면 ⑥ 이 보고 순이익·P/S 구간표로 돌아갑니다.
    - 판단: ① AI 수익화 재료(과반 몫·근거 둘)를 새 정의로 다시 판정하고, ④ 층별 보유표(14사 × 6층 = 84칸, 칸마다 근거)와 ⑧ 네 축을 새로 채웁니다. 판단 세션과 규칙 일관성·확인 리뷰는 Opus high, 기계적 작업은 Sonnet(AGENTS.md).
    - v2.0→v2.1 다리: 먼저 10월 사실(recheck 근거)로 v2.1 입력을 채워 계산하고, 11월 사실로 다시 판정해 둘을 가릅니다. 리포트 변화 절에 규칙 변경·실적 변화·가격 경계·정정 네 원인으로 나눠 싣습니다.
+   - 2-E·2-C-1 자료: `collect <run_id> --kind facts` 로 3분기 영업현금흐름·설비투자·법인세와 바스켓 분기 설비투자·금융리스를 받습니다. 국면 지표의 수동 관측(NVIDIA 공급자 지원 셋, Meta 같은 장부 밖 설비 잔존가치 보증, SDLLMTK 한 점)을 적습니다(방법은 `score-collect` 스킬). 없으면 리포트에 '미확인'·'자료 부족'으로 나옵니다.
    - 이어받은 과제: confirm-r4 N2(Anthropic ⑧ 옛 2배 표현)·N3(NVIDIA SB Energy 보증은 ⑦), confirm-r3 N1~N6. 3분기 실적으로 재무 관측을 갱신합니다.
 2. **근거 선별 평가 표본을 100건까지 늘리기** — 첫 표본 `tests/fixtures/evidence/labeling-2026-10.csv` 38건은 2026-10-01 에 라벨을 달았습니다(correct 37, wrong 1). 38건은 큰 실패와 오류 유형을 보는 진단용입니다. 정확도가 80% 일 때 95% 신뢰구간이 약 65~90% 로 넓어서, 통과 기준 숫자를 정하는 데는 쓰지 않습니다.
    - 정기 채점마다 새 기사 20~30건을 같은 열 구조로 더해 100건 이상으로 늘립니다. 파일마다 수집일과 건수를 적습니다.

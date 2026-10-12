@@ -62,7 +62,7 @@
 
 ## 2-C-1 결정(2026-10-12, 구현 중)
 - SDLLMTK 공개 페이지(silicondata.com LLM Token Expenditure Index)는 날짜가 붙은 최신 값 하나(조회 때 2026-08-16, 100만 토큰당 1.02달러)만 보이고
-  시계열·내려받기가 없다(시계열은 Bloomberg SDLLMTK·유료 포털). 그래서 수집하지 않고 사람이 값·날짜·출처를 적는 수동 관측 `token_price_index` 로 받는다.
+  시계열·내려받기가 없다(시계열은 Bloomberg SDLLMTK·유료 포털). 그래서 자동 수집하지 않고 값·날짜·출처를 적는 수동 관측 `token_price_index` 로 받는다.
   실행마다 한 점씩 쌓이고 from-run 이 이어받아 시계열이 된다.
 - 토큰 지수는 회사 값이 아니다. 관측은 회사 ID 가 필요하므로 시장 지표 전용 가상 ID `_market` 을 두고, 그 ID 는 시장 지표(`token_price_index`)에만,
   시장 지표는 그 ID 에만 허용한다. from-run 은 `_market` 관측도 이어받고, research.md 는 '시장 지표' 소절에 싣는다.

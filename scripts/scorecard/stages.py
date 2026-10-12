@@ -26,7 +26,7 @@ from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_CLI_ONLY_INPUTS, JUDGMENT_CLI_ONLY_TYPES, JUDGMENT_DIRECTION_FIELDS,
-                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, PROPOSAL_DIRECTION_AFTER, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, judgment_edit_kind, load_json_strict, reconfirm_evidence_ids,
+                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, MARKET_COMPANY_ID, PROPOSAL_DIRECTION_AFTER, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, judgment_edit_kind, load_json_strict, reconfirm_evidence_ids,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
@@ -131,7 +131,8 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         "run_id": slug,
         "as_of": as_of,
         "note": f"이전 실행 {prior_slug} 관측 이어받기. 새 관측은 status=verified 와 출처 ID 를 붙여 추가한다",
-        "items": [o for o in prior_obs["items"] if o["company_id"] in selected],
+        # 2026-10-12 규칙 v2.1 2-C-1: 시장 지표(_market, 토큰 지수)는 회사 선택과 무관하게 이어받아 실행마다 한 점씩 쌓는다.
+        "items": [o for o in prior_obs["items"] if o["company_id"] in selected or o["company_id"] == MARKET_COMPANY_ID],
     }
     validate_observations(observations, registry, slug)
     judgments = {

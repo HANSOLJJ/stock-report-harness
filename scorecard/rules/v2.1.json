@@ -1768,9 +1768,33 @@
         "calendar_alignment": "회계 분기 끝 달이 속한 달력 분기에 넣는다(Oracle 8·11·2·5월 → 3·4·1·2분기). 바스켓 합은 바스켓 회사가 모두 값이 있는 분기만 더한다.",
         "note": "AI 컴퓨트를 사는 회사의 분기 설비투자. 사는 쪽 금융리스 취득 자산은 현금 설비투자에 더하고(그 회사의 금융리스 분기 값이 필요한 분기에 모두 있을 때만), 장부 밖 설비 잔존가치 보증은 더하지 않고 따로 보인다. 파는 쪽 보증·출자·되사기는 산 회사 설비투자와 겹치므로 더하지 않고 공급자 지원 비중으로 잰다.",
         "consumers": [
-          "stages._collect_facts → collect_facts.quarterly_observations(바스켓 회사만, quarters_kept 개 분기)"
+          "stages._collect_facts → collect_facts.quarterly_observations(바스켓 회사만, quarters_kept 개 분기)",
+          "regime.capex_board → 초안·HTML 국면 지표 절"
         ]
-      }
+      },
+      "supplier_support": {
+        "companies": ["nvidia"],
+        "components": ["supplier_guarantees", "supplier_customer_investments", "supplier_capacity_buyback"],
+        "denominator": "revenue_ttm",
+        "note": "공급자 지원 비중 = (고객 설비·임차 보증 한도 + 고객 출자 + 용량 되사기 약정) ÷ 최근 1년 매출. 셋은 분기 말 10-Q 주석에서 읽어 수동 관측으로 적는다. 셋 중 하나라도 없으면 합을 만들지 않는다. 오르면 설비투자 가속을 공급자 지원으로 떠받친 가속으로 읽는다(2000년 통신 장비 공급자 금융)."
+      },
+      "token_index": {
+        "metric": "token_price_index",
+        "label": "SDLLMTK(Silicon Data LLM 토큰 지출 지수, 사용량 가중 100만 토큰당 달러)",
+        "caveat": "공개 페이지는 최신 값 하나만 보여 실행마다 값·날짜·출처를 수동 관측으로 적어 한 점씩 쌓는다. 하락은 가격 인하와 싼 모델로의 이동(구성 변화)이 섞인 값이고, 수요가 줄었다는 뜻으로 바로 읽지 않는다."
+      },
+      "trigger_conditions": [
+        {
+          "id": "capex_decel_2q",
+          "condition": "바스켓 설비투자(금융리스 포함)의 전년 대비 증가율이 2개 분기 연속 감속",
+          "recheck": "하드웨어 회사 ① 가격 실측과 ⑦, 클라우드 회사 ⑧ 약정 축, 응용 회사 ③ 가속도를 다시 본다"
+        },
+        {
+          "id": "supplier_support_rising",
+          "condition": "공급자 지원 비중이 직전 관측보다 오름",
+          "recheck": "설비투자 가속을 공급자 지원으로 떠받친 가속으로 읽고 공급자 ⑦ 을 다시 본다"
+        }
+      ]
     },
     "rejudge": {
       "regular_run_rejudges_all": true,
