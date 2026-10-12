@@ -1,0 +1,478 @@
+{
+  "group": "C",
+  "sources": [
+    {
+      "source_id": "SRC-WEB-palantir-901",
+      "title": "Britain Is Considering Dropping Palantir From the NHS Data System",
+      "publisher": "SFG Media",
+      "url": "https://sfg.media/en/a/uk-palantir-nhs-british-alternative/",
+      "accessed_at": "2026-10-12",
+      "sha256": "102d5266107bde938c8ba48243fdc87fbf1c0c13d482e621850fb5f33fc49a73",
+      "company_id": "palantir",
+      "kind": "news",
+      "published_at_utc": "2026-10-01T20:18:39Z",
+      "note": "FT 2026-10-01 'Andy Burnham searches for UK alternative to Palantir'(유료)를 전한 열리는 기사. 게시 시각은 HTML 메타데이터 값이다"
+    },
+    {
+      "source_id": "SRC-WEB-palantir-902",
+      "title": "Thursday Morning What's Up: Hundreds Protest Palantir In SF",
+      "publisher": "SFist",
+      "url": "https://sfist.com/2026/10/01/hundreds-protest-palantir-in-sf/",
+      "accessed_at": "2026-10-12",
+      "sha256": "4aa449914dff0569b5569a69adea2dfae5236e2ff601dc1bbbc2acd31b16ddfe",
+      "company_id": "palantir",
+      "kind": "news",
+      "published_at_utc": "2026-10-01T16:30:29Z",
+      "note": "CBS News Bay Area 영상 보도(본문 글 없음, 설명은 'John Ramos reports.' 뿐)와 같은 사건을 전한 글 기사"
+    },
+    {
+      "source_id": "SRC-WEB-oracle-901",
+      "title": "Project Jupiter Statement on Southern New Mexico Floods",
+      "publisher": "Oracle",
+      "url": "https://www.oracle.com/news/announcement/project-jupiter-statement-on-southern-new-mexico-floods-2026-09-30/",
+      "accessed_at": "2026-10-12",
+      "sha256": "9cfb4ce8327add993c084757c73613a0f25664987225abcbd76cf801d959bc36",
+      "company_id": "oracle",
+      "kind": "news",
+      "published_at_utc": "2026-10-01T01:55:05Z",
+      "note": "회사 보도자료 원문(머리 날짜 Austin, Texas—Sep 30, 2026). marketscreener 재게재본은 접근이 막혀(403) 원문으로 바꿨다. 게시 시각은 재게재본의 배포 시각(2026-10-01 01:55 UTC, 미 동부 9월 30일 밤)을 그대로 둔다"
+    },
+    {
+      "source_id": "SRC-WEB-meta-901",
+      "title": "Meta taps MongoDB CEO Desai to drive enterprise AI push",
+      "publisher": "The Star (Reuters)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/09/28/meta-taps-mongodb-ceo-desai-to-drive-enterprise-ai-push",
+      "accessed_at": "2026-10-12",
+      "sha256": "c745d817f556300ba9277042fad99366eb1406e3728e9ae503604e1a4827aed5",
+      "company_id": "meta",
+      "kind": "news",
+      "published_at_utc": "2026-09-28T14:55:00Z",
+      "note": "FT 2026-09-28(유료)와 같은 사건을 전한 Reuters 기사 전재본. 게시 시각은 HTML datePublished 값이다"
+    },
+    {
+      "source_id": "SRC-WEB-meta-902",
+      "title": "Norway to propose temporary ban on AI glasses in some public places",
+      "publisher": "The Star (Reuters)",
+      "url": "https://www.thestar.com.my/news/world/2026/10/05/norway-to-propose-temporary-ban-on-ai-glasses-in-some-public-places",
+      "accessed_at": "2026-10-12",
+      "sha256": "88e798f3b85a53e38e85963a1abdc10b429399547d71b0f4d5f4ffe633513891",
+      "company_id": "meta",
+      "kind": "news",
+      "published_at_utc": "2026-10-05T07:08:00Z",
+      "note": "Seeking Alpha 2026-10-05(접근 차단 403)와 같은 사건을 전한 Reuters 기사 전재본. 본문의 보이지 않는 줄바꿈 방지 문자(U+2060 등)는 발췌에서 뺐다"
+    }
+  ],
+  "evidence": [
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "meta",
+      "factors": [
+        "F3"
+      ],
+      "source_id": "SRC-NEWS-meta-20261009-05d189f6",
+      "published_at_utc": "2026-10-09T19:36:00Z",
+      "title": "Meta Muse Downloads Are Slowing — And Hunterbrook is Short - Benzinga",
+      "excerpt": "Hunterbrook highlighted data showing Muse downloads averaged about 165,000 a day in the latest seven-day stretch, down 8.1% from roughly 180,000 the week before. … Daily active users are still rising. TickerTrends put worldwide Muse DAUs at 2,730,919 on Oct. 6, the highest reading in its data. Hunterbrook pointed to the slow pace as a problem and calculated an average net gain of about 198,000 users a day from Sept. 15 to Sept. 22. Growth slowed to about 87,000 a day the next week, then to about 74,000 a day in the seven days through Oct. 6.",
+      "locator": "Benzinga 기사 다섯째 문단과 'Usage Climbs, Slowly' 소제목 아래 첫째·둘째 문단",
+      "relevance": "추론: 공매도 운용사 Hunterbrook 이 대체 데이터 업체 TickerTrends 자료로, Muse 일간 사용자는 10월 6일 약 273만 명으로 늘고 있지만 하루 순증이 9월 15~22일 약 19.8만 명에서 10월 초 약 7.4만 명으로 줄었다고 전했다. ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에 닿는 사용량 시계열이지만 회사 공시가 아닌 제3자 추정이고 메타 공매도 포지션을 밝힌 쪽이 낸 자료다. 메타 ③ 판단은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 미확인(같은 정의의 회사 공시 AI 사용자 시계열이 없어 지표 단계 e), 문 닫힘 실패라 점수를 만들지 않는다. (선별 확신: 중간)",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 제3자 대체 데이터의 일간 사용자 추정은 회사가 같은 정의로 분기마다 내는 지표가 아니어서 지표 단계 d(AI 제품 사용량 시계열)를 채우지 못하고, 메타 ③ 후발 가속도는 미확인 그대로다. 메타가 실적 발표에서 Muse·Meta AI 사용자를 같은 정의로 두 시점 이상 내놓으면 그 수치로 가속도를 다시 보고, 이 자료는 출시 초기 순증이 줄었다는 반대 방향 방증으로만 쓴다.",
+      "horizon": "short — 2026년 3분기 실적 발표(10월 말~11월 초)에서 회사 수치 공개 여부가 갈린다",
+      "unverified": [
+        "TickerTrends 의 추정 방법과 일간 사용자 정의 미확인",
+        "Hunterbrook Capital 은 메타 공매도 포지션을 밝혔다",
+        "메타 공식 수치가 아니다(Benzinga 는 메타에 논평을 요청했으나 즉답이 없었다고 적음)",
+        "같은 갈래 기사 가운데 하나만 골랐다(BofA 일간 사용자 약 200만 명 추정을 전한 Barchart·Yahoo Finance 2026-10-09 제외)"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "oracle",
+      "factors": [
+        "F9"
+      ],
+      "source_id": "SRC-NEWS-oracle-20261008-36a34d18",
+      "published_at_utc": "2026-10-08T18:08:00Z",
+      "title": "Oracle stock falls on more debt to fund AI chip buying, OpenAI revenue disclosure - Yahoo Finance",
+      "excerpt": "Oracle is reportedly in talks with Apollo (APO) and Goldman Sachs (GS) to arrange financing and wants a deal done as soon as this year. The deal would likely have investors fund a separate company that buys the chips, which Oracle would lease over time to avoid borrowing more money itself. … Much of that has been paid for with bonds: Oracle \"has nearly doubled its long-term debt to more than $160 billion over the past two years,\" Bloomberg reported Saturday, and the company now ranks as the fifth-largest borrower in the US corporate bond market.",
+      "locator": "Yahoo Finance 기사 본문 둘째 문단(공시 괄호 앞까지)과 Bloomberg 인용 문단",
+      "relevance": "추론: WSJ 보도를 옮긴 기사로, 투자자가 별도 회사에 돈을 대 칩을 사고 오라클이 그 칩을 시간에 걸쳐 임차하는 구조를 아폴로·골드만삭스와 협의 중이며 올해 안 체결을 원한다고 전했다. 실행되면 회사채가 아니라 리스 약정으로 잡혀 ⑨ 게이트 4(약정 커버리지 = 계약된 수입 ÷ 미개시 확정 약정)의 분모에 들어갈 수 있다. 지금 오라클 ⑨ 판단은 게이트 2(최근 1년 잉여현금흐름) 마이너스, 게이트 3(현금과 확정 미인출 여신으로 버티는 기간) 1.61년으로 한 단계 하향되어 -3 이고 게이트 4 는 약정 커버리지 2.06배로 유지다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 협의 단계이고 금액·기간·리스 분류가 보도되지 않아 오라클 ⑨ 의 완충과 미개시 확정 약정 입력을 바꾸지 않는다. 8-K·10-Q 가 계약 규모와 개시 시점을 공시하면 미개시 확정 약정에 더해 약정 커버리지를 다시 계산한다.",
+      "horizon": "medium — 체결 여부는 올해 안, 개시 시점은 공시로 확인",
+      "unverified": [
+        "금액·기간·담보 미보도",
+        "WSJ 원문(유료) 미열람, Yahoo Finance 전재로 확인",
+        "같은 갈래 기사 가운데 하나만 골랐다(TIKR·Moomoo 2026-10-08 제외)"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "oracle",
+      "factors": [
+        "F9"
+      ],
+      "source_id": "SRC-NEWS-oracle-20261009-b632ae32",
+      "published_at_utc": "2026-10-09T13:09:00Z",
+      "title": "Oracle is trucking natural gas to AI data centers as pipeline delays threaten key projects - Quartz",
+      "excerpt": "Oracle is now weighing the same strategy for a stalled New Mexico project known as Project Jupiter, where a pipeline delay is threatening the facility's timeline, according to Bloomberg. A plan to deliver compressed natural gas by truck would allow Oracle to bring early stages of the data center online before the pipeline enters service, Bloomberg reported. … The pipeline serving Project Jupiter, operated by Energy Transfer LP, had to be rerouted after state regulators rejected its original path, pushing the targeted in-service date to next year rather than this summer, according to Bloomberg.",
+      "locator": "Quartz 기사 본문 셋째 문단(첫 두 문장)과 넷째 문단 첫 문장",
+      "relevance": "추론: Bloomberg 보도를 옮긴 기사로, 뉴멕시코 Project Jupiter 의 가스관이 주 규제 당국의 경로 거부로 우회하게 되어 가동 목표가 올여름에서 내년으로 밀렸고, 오라클이 압축 천연가스를 트럭으로 실어 초기 단계를 먼저 돌리는 방안을 검토한다고 전했다. 회사가 2026-09-30 성명에서 밝힌 '계획한 일정 유지'와 별개로 전력 공급 일정이 늦어졌다는 보도라, ⑨ 게이트 4 의 미개시 리스 개시와 RPO(계약했으나 아직 인식하지 않은 매출) 인식이 함께 밀리는지 볼 재료다. 지금 오라클 ⑨ 판단은 -3(버티는 기간 1.61년으로 한 단계 하향, 약정 커버리지 2.06배로 유지)이다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 지연은 계약 수입과 미개시 약정을 함께 미루므로 약정 커버리지 비율을 바로 바꾸지 않고, 트럭 운송 비용은 공시된 수치가 없다. 다음 10-Q(2026-11-30 분기)에서 미개시 리스 개시 시점이나 RPO 인식 일정이 바뀐 것이 확인되면 오라클 ⑨ 게이트 4 를 다시 계산한다.",
+      "horizon": "medium — 가스관 가동은 내년, 일정 변경은 다음 10-Q 에서 확인",
+      "unverified": [
+        "Bloomberg 원문(유료) 미열람, Quartz 전재로 확인",
+        "Bloomberg 는 익명 소식통을 인용",
+        "같은 갈래 기사 가운데 하나만 골랐다(Investing.com·Seeking Alpha·Yahoo Finance·GuruFocus·Supply Chain Brain·marketscreener·Moomoo 제외)"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "source_id": "SRC-NEWS-palantir-20261008-76fae20e",
+      "published_at_utc": "2026-10-08T22:40:00Z",
+      "title": "ICE Emails Discuss Using Palantir-Supported Tool to Investigate Voter Fraud - WIRED",
+      "excerpt": "As the Trump administration has carried out a nonstop effort to undermine the midterm elections this year, the Department of Homeland Security appears to have looked into whether it could use a Palantir-supported tool to track people it believes have voted illegally. … “Coordination with iLab continues,” they wrote, “particularly on ingesting processed voter roll data into the ELITE enforcement system to enhance lead management, analytical review, and investigative tracking.” … “Voter roll data has never been integrated into ELITE,” a Palantir spokesman tells WIRED.",
+      "locator": "WIRED 기사 첫 문단, HSI 직원의 5월 26일 이메일 인용 문단, Palantir 대변인 답변 문단",
+      "relevance": "추론: 정보공개 청구 문서에 따르면 ICE 가 Palantir 가 지원하는 추방 대상 식별 도구 ELITE 에 유권자 명부 자료를 넣는 방안을 내부에서 논의했고, Palantir 는 유권자 명부 자료가 ELITE 에 들어간 적이 없다고 밝혔다. Palantir 의 ICE 업무를 겨냥한 정당성 비판이 선거 영역으로 넓어지는 사례라 ⑤ 적대 등급의 재료다. Palantir ⑤ 판단은 동맹 등급 +1, 적대 등급 -2(구조형: 사업 정당성을 겨냥한 적대와 영국 정부 고객 일부 이탈)다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 같은 성격(사업 정당성 비판)의 적대라 팔란티어 ⑤ 적대 등급은 구조형 그대로이고 근거 문장만 보강한다. 다발형은 구조형 적대가 복수 전선에서 동시에 진행되고 최대 파트너인 미 정부와도 긴장이 있어야 하는데, 이 문서는 미 정부 기관이 Palantir 도구 활용을 넓히려 한 쪽이라 최대 파트너와의 긴장 근거가 아니다.",
+      "horizon": "medium",
+      "unverified": [
+        "유권자 자료를 ELITE 에 실제로 넣었는지 미확인(문서상 개발 단계로 보인다는 전문가 해석이 기사에 있음)"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "source_id": "SRC-NEWS-palantir-20261010-3df524d3",
+      "published_at_utc": "2026-10-10T09:19:00Z",
+      "title": "Palantir AI probe leads to Met Police volunteer chief's dismissal - BBC",
+      "excerpt": "The London Mayor's Office for Policing and Crime (Mopac) blocked the Met from signing a two-year contract with Palantir to provide artificial intelligence technology for criminal investigations. Mopac said the force had failed to set out its procurement strategy, describing this as a \"clear and serious breach\" of procedure. Palantir is now suing Mopac, alleging it unlawfully blocked the deal after taking the company's \"values and ethics\" into account, which it said was an \"irrelevant consideration\".",
+      "locator": "BBC 기사 열일곱째~열아홉째 문단(Mopac 의 계약 차단과 Palantir 의 소송)",
+      "relevance": "추론: 런던 시장 경찰·범죄 사무국(Mopac)이 런던 경찰청의 Palantir AI 수사 도구 2년 계약 체결을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리'를 고려해 계약을 막은 것이 위법하다며 소송을 냈다. 고객 쪽 감독 기관이 회사의 정당성을 이유로 계약을 막았다고 회사가 주장하는 사례라 ⑤ 적대 등급의 구조형 재료다. 같은 기사는 런던 경찰청이 내부 비위 감시에 Palantir Foundry 를 쓰고 있다고 적는다. Palantir ⑤ 판단은 동맹 등급 +1, 적대 등급 -2(구조형)다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 영국 안의 전선이 하나 더 확인된 것이라 팔란티어 ⑤ 적대 등급은 구조형 그대로이고 근거 문장에 런던 경찰 계약 차단과 소송을 보강한다. 다발형 요건인 최대 파트너(미 정부)와의 긴장은 이 기사에 없다. 소송 결과나 Mopac 의 결정 변경이 나오면 다시 본다.",
+      "horizon": "medium — 소송은 수개월~1년",
+      "unverified": [
+        "Mopac 이 계약을 막은 날짜와 계약 금액은 이 기사에 없다(Guardian 2026-10-09 은 £50m 계약이라고 적음)",
+        "소송 진행 단계 미확인",
+        "Mopac 이 든 공식 사유는 조달 전략 미제출이고 '가치와 윤리' 고려는 Palantir 의 주장이다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "source_id": "SRC-NEWS-palantir-20261010-c0b24a12",
+      "published_at_utc": "2026-10-10T00:53:00Z",
+      "title": "ICE scraps visa vetting system recompete in favor of Palantir Foundry - Biometric Update",
+      "excerpt": "U.S. Immigration and Customs Enforcement (ICE) has canceled a planned competitive procurement for continued support of its Visa Security Program Tracking System (VSPTS) and decided instead to move the system’s operations onto Palantir’s Foundry platform, according to a newly disclosed contracting justification that reveals another expansion of Palantir’s role in federal immigration and national security screening. … “ICE leadership intends to transition VSPTS operations to Palantir’s Foundry platform,” the justification states.",
+      "locator": "기사 첫째 문단과 넷째 문단(수의계약 사유서 인용)",
+      "relevance": "추론: ICE 가 비자 심사 추적 시스템의 경쟁 입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 했다는 수의계약 사유서(2026-10-07 게시) 보도다. 정부 계약은 상업적 약속이라 ⑤ 동맹으로 세고, 최대 파트너인 미 정부가 Palantir 사용을 넓히는 사실이라 다발형 요건(최대 파트너와도 긴장)이 서지 않는다는 근거다. Palantir ⑤ 판단은 동맹 등급 +1, 적대 등급 -2(구조형)다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 미 정부 계약이 하나 늘어도 동맹 등급 +2 요건(지분 동맹 복수 또는 경쟁사 편입)과 무관해 팔란티어 ⑤ 는 그대로이고, 미 정부와의 긴장이 없다는 근거 문장만 보강한다. 같은 미 정부 관계는 팔란티어 ⑧ 판단(-3, 미 정부 매출 약 42%)에서 의존으로 따로 센다.",
+      "horizon": "medium",
+      "unverified": [
+        "계약 금액과 전환 일정 미공개(사유서의 가격 부분이 가려져 있다)",
+        "Palantir 측 발표 없음"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "source_id": "SRC-NEWS-palantir-20261011-c904fb7f",
+      "published_at_utc": "2026-10-11T14:31:00Z",
+      "title": "Transcript: Shyam Sankar, chief technology officer of Palantir, on \"Face the Nation with Margaret Brennan,\" Oct. 11, 2026 - CBS News",
+      "excerpt": "MARGARET BRENNAN: … But there was also, as you know, this horrific one in Minab that killed at least 123 schoolchildren. Bloomberg reported some personnel relied too much on the AI in the Maven system made by Palantir using AI-enabled software. Have you determined what happened there? … SHYAM SANKAR: Yeah, it's inaccurate, and actually, the likely cause is human error. … MARGARET BRENNAN: There are 120 House Democrats who wrote to Secretary Hegseth about this particular case and the use of AI in the strike, including Maven.",
+      "locator": "CBS 녹취록 중 진행자 질문(미나브 공습)·Sankar 답변·진행자 질문(하원 민주당 120명 서한) 세 문단",
+      "relevance": "추론: CBS Face the Nation 녹취록에서 진행자는 이란 미나브 학교 공습(어린이 123명 이상 사망)에 Palantir 가 만든 Maven 시스템의 AI 에 지나치게 기댄 정황이 있다는 Bloomberg 보도와 하원 민주당 의원 120명의 국방장관 앞 서한을 물었고, Palantir CTO 는 보도가 부정확하며 원인은 사람의 실수일 가능성이 크다고 답했다. 사업 정당성을 겨냥한 비판이 미 의회로 번진 사례라 ⑤ 적대 등급의 재료다. Palantir ⑤ 판단은 동맹 등급 +1, 적대 등급 -2(구조형)다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 의원 서한은 비판 단계이고 행정부(국방부)와 Palantir 의 계약 관계를 바꾸지 않아 다발형 요건인 최대 파트너와의 긴장으로 세지 않는다. 팔란티어 ⑤ 적대 등급은 구조형 그대로이고 근거 문장만 보강한다. 국방부가 Maven 사용을 줄이거나 의회가 조사·예산 제한에 나서면 최대 파트너와의 긴장 요건을 대 본다.",
+      "horizon": "medium",
+      "unverified": [
+        "Bloomberg 원 보도(유료) 미열람 — 녹취록의 진행자 질문으로만 확인",
+        "공습 원인 조사 결과 미공개"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "palantir",
+      "factors": [
+        "F8"
+      ],
+      "source_id": "SRC-NEWS-palantir-20261011-c904fb7f",
+      "published_at_utc": "2026-10-11T14:31:00Z",
+      "title": "Transcript: Shyam Sankar, chief technology officer of Palantir, on \"Face the Nation with Margaret Brennan,\" Oct. 11, 2026 - CBS News",
+      "excerpt": "They have recently ceased using Anthropic products as part of this dispute over the firm's insistence on safeguards for military use of AI. … Anthropic's Claude was part of the Maven platform, which Palantir uses. … SHYAM SANKAR: Well, the- the Department today has a wide range of model providers, everything from XAI and OpenAI to open-weight models like Nemotron from NVIDIA, so I don't think- I don't- there's been no operational impact from that. … SHYAM SANKAR: It's already been replaced.",
+      "locator": "CBS 녹취록 중 진행자 질문(국방부의 Anthropic 사용 중단)과 Sankar 답변 두 문단",
+      "relevance": "추론: 국방부가 Anthropic 제품 사용을 중단한 뒤 Palantir 가 쓰는 Maven 플랫폼에서 Claude 가 다른 모델로 이미 바뀌었고 운영 영향이 없었다는 Palantir CTO 의 말이다. Palantir 가 모델 공급자 하나에 묶이지 않았다는 회사 쪽 진술이라 ⑧ 공급 축(모델·컴퓨트 공급자 의존) 판정 재료다. Palantir ⑧ 판단은 -3 이고 점수를 정한 축은 미 정부 매출 약 42% 의 고객 축이며, 공급 축은 제3자 클라우드 호스팅을 바꿀 수 있는 조달로 보아 -1 이다. (선별 확신: 중간)",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 모델 공급자를 바꿔도 운영 영향이 없었다는 진술은 공급 축이 가장 무거운 축이 아니라는 지금 판단과 같은 방향이라 팔란티어 ⑧ 은 그대로이고 공급 축 근거 문장만 보강한다.",
+      "horizon": "short",
+      "unverified": [
+        "교체한 모델과 교체 시점은 진술에 없다",
+        "국방부의 Anthropic 사용 중단 경위는 진행자 질문으로만 확인",
+        "회사 경영진의 방송 진술이라 독립 확인이 없다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "kind": "news",
+      "company_id": "palantir",
+      "factors": [
+        "F1"
+      ],
+      "source_id": "SRC-NEWS-palantir-20261009-05829401",
+      "published_at_utc": "2026-10-09T13:52:00Z",
+      "title": "Palantir’s Tom Watson says ‘mob rule’ must not dictate awarding of government contracts - The Guardian",
+      "excerpt": "The prime minister, Andy Burnham, is under significant pressure from Labour MPs and unions to ditch Palantir from government contracts, including a £330m software deal with the NHS. The company is also fighting Sadiq Khan in court over the London mayor’s block on a £50m contract to use its AI in Metropolitan police investigations. It is seeking to win more public sector work in the UK, where it already has an annual turnover of £427m.",
+      "locator": "Guardian 기사 넷째·다섯째 문단(머리 사진 설명 뒤 기사 문단 기준)",
+      "relevance": "추론: Palantir 의 영국 연 매출이 £427m 이라는 기사 문장으로, 영국 공공 고객 이탈의 크기를 회사 전체 매출 기반에 견줄 재료다. 2025년 매출 $4,475M 에 견주면 약 13% 다(환율 1.33 가정, 추론 계산). Palantir ① 판단은 업무 채널에서 전환비용 부분(계약 기간 동안만 묶이고 영국 공공 고객 일부가 다음 선택 때 옮긴 사례가 있으나 이탈 규모가 기반에 견줘 작음)이다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 지금까지 끝난 영국 계약(주택·지역사회부 업무, 경찰 다섯 곳의 시범 사업)은 영국 매출 £427m 에 견줘도 작아 팔란티어 ① 전환비용 부분 판정은 그대로다. 영국 정부가 NHS 연합 데이터 플랫폼(£330m) 계약의 해지 조항을 행사하면 이탈 규모를 이 매출 기반에 견줘 다시 본다.",
+      "horizon": "medium — NHS 플랫폼 해지 조항 결정은 내년 초",
+      "unverified": [
+        "£427m 의 회계 기간과 범위(영국 법인 회계인지 영국 고객 매출인지) 미확인"
+      ]
+    }
+  ],
+  "evidence_fixes": [
+    {
+      "evidence_id": "EV-palantir-009",
+      "excerpt": "Prime Minister Andy Burnham's government is looking for a British alternative to U.S.-based Palantir for handling government data in healthcare and defense. … Sources familiar with the discussions told the FT that ministers are considering using a contractual mechanism next March to review the relationship with the company ahead of schedule. Three or four British technology companies are being examined as potential replacements, including Quantexa, which also bid for the platform in 2023.",
+      "locator": "SFG Media 기사 첫째 문단 첫 문장과 셋째 문단(FT 보도 인용)",
+      "source_id": "SRC-WEB-palantir-901",
+      "title": "Britain Is Considering Dropping Palantir From the NHS Data System",
+      "published_at_utc": "2026-10-01T20:18:39Z"
+    },
+    {
+      "evidence_id": "EV-palantir-006",
+      "excerpt": "Hundreds of people reportedly attended a protest Wednesday in San Francisco against Palantir, accusing the tech firm of aiding ICE in targeting and tracking individuals. It was billed as a \"march against tech fascism\" and was organized by a group of nurses.",
+      "locator": "SFist 아침 소식 묶음 첫 항목의 첫째·둘째 문장",
+      "source_id": "SRC-WEB-palantir-902",
+      "title": "Thursday Morning What's Up: Hundreds Protest Palantir In SF",
+      "published_at_utc": "2026-10-01T16:30:29Z"
+    },
+    {
+      "evidence_id": "EV-oracle-006",
+      "excerpt": "Flooding also reached the Project Jupiter campus. No critical infrastructure was damaged, and we are working with our partners and insurers to address any impacts at the site. Project Jupiter remains on our planned schedule.",
+      "locator": "Oracle 보도자료 본문 인용문(Michael Egbert·Nikki Wheeler 공동 성명)의 마지막 세 문장",
+      "source_id": "SRC-WEB-oracle-901",
+      "title": "Project Jupiter Statement on Southern New Mexico Floods",
+      "published_at_utc": "2026-10-01T01:55:05Z"
+    },
+    {
+      "evidence_id": "EV-oracle-007",
+      "excerpt": "Oracle's Wisconsin AI datacenter could miss its planned 2027 start date because the transmission infrastructure needed to power it is awaiting regulatory approval. Research company Aterio warns that Project Lighthouse, being developed by Vantage in Port Washington with Oracle as tenant, faces a real risk of slipping beyond Big Red's target of delivering capacity to customers in the second half of next year. … Its base case puts partial power in December 2027 and full supply in October 2028.",
+      "locator": "The Register 기사 본문 첫째·둘째 문단과 Aterio 기본 시나리오 문단(부제 다음 열셋째 문단)"
+    },
+    {
+      "evidence_id": "EV-meta-002",
+      "excerpt": "Sept 28 (Reuters) - Meta Platforms has poached MongoDB CEO Chirantan \"CJ\" Desai to spearhead a new business designed to bring the social media giant's AI tools to corporate customers. … Meta said on Monday it would bring its AI models, agents and tools to businesses under its new Meta Enterprise Platform, including the newly launched Muse, Meta Business Agent and coding tools.",
+      "locator": "Reuters 기사(The Star 전재) 첫째 문단과 다섯째 문단",
+      "source_id": "SRC-WEB-meta-901",
+      "title": "Meta taps MongoDB CEO Desai to drive enterprise AI push",
+      "published_at_utc": "2026-09-28T14:55:00Z"
+    },
+    {
+      "evidence_id": "EV-meta-004",
+      "excerpt": "More than 3 million people prompt Meta’s Muse at least once a week, according to internal data reviewed by The Information. More than 1 million send the AI agent a prompt every day, Jyoti Mann reported. The weekly figure is part of a wider group. More than 4 million people use Muse in some way each week, according to the data. Most prompts come through the Muse app. Meta launched the agent in the US three weeks ago. TNW has not independently verified the figures.",
+      "locator": "TNW 기사 본문 첫째·둘째 문단(The Information 보도 인용)",
+      "source_id": "SRC-WEB-meta-002",
+      "title": "Meta’s Muse reportedly passes 3 million weekly users and 5m downloads",
+      "published_at_utc": "2026-10-02T13:36:29Z"
+    },
+    {
+      "evidence_id": "EV-meta-006",
+      "excerpt": "Meta (NASDAQ:META) cut its taxes by $3.9 billion in 2025 with research tax credits, up from $2 billion in 2024 and $700 million in 2023, according to the company's securities filings. A New York Times investigation published Sept. 30 reported that Meta classifies its AI data centers as \"pilot models\" for tax purposes — the term federal tax rules use for test versions of a product built to resolve open questions during development. The Times cited four people familiar with Meta's operations.",
+      "locator": "Yahoo Finance(Moneywise) 기사 본문 첫째·둘째 문단"
+    },
+    {
+      "evidence_id": "EV-meta-007",
+      "excerpt": "COPENHAGEN, Oct 5 (Reuters) - Norway's government said on Monday it plans to propose a temporary ban on the use of AI glasses in selected places, saying it is concerned people could be photographed, filmed or audio-recorded without their knowledge. … The minority government said it would present a bill to parliament as soon as possible, and would also set up an expert group to advise on permanent national regulation of body-worn technology",
+      "locator": "Reuters 기사(The Star 전재) 첫째 문단과 마지막 요점 항목",
+      "source_id": "SRC-WEB-meta-902",
+      "title": "Norway to propose temporary ban on AI glasses in some public places",
+      "published_at_utc": "2026-10-05T07:08:00Z"
+    }
+  ],
+  "evidence_unreadable": [],
+  "triggers": [
+    {
+      "trigger_id": "TRG-010",
+      "status": "watching",
+      "deadline": "2026-11-10",
+      "evidence_ids": [],
+      "source_ids": [],
+      "finding": "2026년 3분기 10-Q 와 실적 발표가 아직 나오지 않아 최근 1년 잉여현금흐름의 부호와 추세를 다시 볼 수 없다(검색 범위: 메타 뉴스 후보 2026-10-08~10-12 117건 제목과 고른 기사 본문, 메타 공시 후보 2026-10-07 이후 0건). 실적 발표일은 보도마다 10월 28일(Benzinga 인용 TradingView 요약)과 11월 4일(Barchart 2026-10-09)로 갈려 정보 마감 뒤다. 이 기간 기사에는 증권사들이 2026년 설비투자 계획($130~145B)이 $5~10B 늘 것으로 본다는 AI 요약과 메타의 100년물 포함 회사채 발행 보도(MarketWatch 인용 TradingView 요약 2026-10-09)가 있으나 회사 공시가 아니고 현금흐름 수치도 아니다. 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-011",
+      "status": "watching",
+      "deadline": "2026-11-10",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-meta-20261009-05d189f6"
+      ],
+      "finding": "메타가 같은 정의로 분기마다 내는 AI 사용자·수익화 수치는 이 기간에도 나오지 않았다(검색 범위: 메타 뉴스 후보 2026-10-08~10-12 117건 제목과 고른 기사 본문, 메타 공시 후보 2026-10-07 이후 0건). 본문을 연 기사 두 건은 모두 제3자 추정이다. Benzinga(2026-10-09)는 TickerTrends 자료로 Muse 일간 사용자가 10월 6일 약 273만 명이지만 하루 순증이 9월 15~22일 약 19.8만 명에서 10월 초 약 7.4만 명으로 줄었다고 전했고(공매도 운용사 Hunterbrook 제공), Barchart(Yahoo Finance 2026-10-09)는 BofA 추정 일간 사용자 약 200만 명을 전했다. 회사 공시가 아니어서 지표 단계 d 를 채우지 못한다. 2026년 3분기 실적 콜까지 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-012",
+      "status": "watching",
+      "deadline": "2027-02-15",
+      "evidence_ids": [],
+      "source_ids": [],
+      "finding": "기업용 AI 매출이나 유료 고객 공시는 없다(검색 범위: 메타 뉴스 후보 2026-10-08~10-12 117건 제목과 고른 기사 본문, 메타 공시 후보 2026-10-07 이후 0건). 이 기간 제목에는 'Muse for Small Business' 설명 인터뷰(US Chamber 2026-10-09, 제목만 봄)와 Bambuser 라이브 쇼핑 광고 제휴(TradingView 요약 2026-10-09, 2026년 4분기 조기 이용·2027년 1분기 정식 출시 예정)가 있으나 둘 다 매출·고객 수가 아니다. 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-022",
+      "status": "watching",
+      "deadline": "2026-12-20",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-oracle-20261009-b632ae32",
+        "SRC-WEB-oracle-901"
+      ],
+      "finding": "10-Q·8-K 에서 자본지출 약정 일정, RPO 인식 시점, 고객 계약 조정의 변경은 확인되지 않았다(검색 범위: 오라클 뉴스 후보 2026-10-08~10-12 97건 제목과 고른 기사 본문, 오라클 공시 후보 2026-10-07 이후 0건). Quartz(2026-10-09, Bloomberg 전재)는 Project Jupiter 가스관이 주 규제 당국의 경로 거부로 우회하게 되어 가동 목표가 올여름에서 내년으로 밀렸고 오라클이 압축 천연가스 트럭 운송으로 초기 단계를 먼저 돌리는 방안을 검토한다고 전했다. 회사는 2026-09-30 성명에서 홍수 피해가 없고 계획한 일정을 유지한다고 밝혔다(회사 보도자료 원문 확인). The Register(2026-10-02)는 위스콘신 데이터센터 전력 연결이 승인 대기라 Aterio 기본 시나리오상 부분 전력 2027년 12월·전체 2028년 10월이라고 전했다. 모두 보도·외부 분석이고 공시된 일정 변경이 아니어서 다음 10-Q(2026-11-30 분기)까지 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-023",
+      "status": "watching",
+      "deadline": "2026-12-20",
+      "evidence_ids": [],
+      "source_ids": [],
+      "finding": "오라클 공시나 텐센트 측 확인으로 계약 규모·기간이 확인되지 않았다(검색 범위: 오라클 뉴스 후보 2026-10-08~10-12 97건 제목과 고른 기사 본문, 오라클 공시 후보 2026-10-07 이후 0건). 이 기간 제목에 텐센트 칩 임차의 새 보도는 없다. 다음 실적(2026-11-30 분기)까지 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-024",
+      "status": "watching",
+      "deadline": "2026-12-20",
+      "evidence_ids": [],
+      "source_ids": [],
+      "finding": "새 정기 보고서가 없어 최근 1년 잉여현금흐름의 세 번째 점을 얻지 못했다(검색 범위: 오라클 뉴스 후보 2026-10-08~10-12 97건 제목과 고른 기사 본문, 오라클 공시 후보 2026-10-07 이후 0건). TIKR(2026-10-08)는 최근 4개 분기 설비투자 $75.7B·잉여현금흐름 −$28.7B 를 다시 적었고 Quartz(2026-10-09)는 2026-08-31 분기 잉여현금흐름 −$5.4B 를 적었으나 이미 등록된 2026-08-31 10-Q 값과 같은 기간이다. 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-029",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-palantir-20261010-3df524d3",
+        "SRC-NEWS-palantir-20261010-c0b24a12",
+        "SRC-NEWS-palantir-20261011-c904fb7f",
+        "SRC-WEB-palantir-901"
+      ],
+      "finding": "다발형 요건은 아직 서지 않았다(검색 범위: 팔란티어 뉴스 후보 2026-10-08~10-12 112건 제목과 고른 기사 본문, 팔란티어 공시 후보 2026-10-07 이후 0건). 영국 전선에서는 런던 시장 경찰·범죄 사무국(Mopac)이 런던 경찰청의 Palantir AI 수사 도구 계약을 막았고 Palantir 가 소송을 냈다는 사실이 확인된다(BBC 2026-10-10). 미국에서는 하원 민주당 의원 120명이 미나브 학교 공습과 Maven 의 AI 사용을 두고 국방장관에게 서한을 보냈다(CBS 녹취록 2026-10-11, 진행자 질문). 그러나 최대 파트너인 미 행정부는 ICE 비자 심사 시스템을 경쟁 입찰 없이 Palantir Foundry 로 옮기기로 하는 등(Biometric Update 2026-10-09) 사용을 넓히고 있어 최대 파트너와의 긴장이 보이지 않는다. FT 보도를 전한 SFG Media(2026-10-01)는 프랑스·독일이 최근 몇 달 사이 일부 Palantir 계약을 끊거나 군·정보기관 사용을 제한했다고 적었으나 계약 이름과 시점이 없어 두 번째 지역의 실제 해지로는 확인하지 못했다(미확인). 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-056",
+      "status": "watching",
+      "deadline": "2026-11-10",
+      "evidence_ids": [],
+      "source_ids": [],
+      "finding": "오픈웨이트 출시를 확인하지 못했다(검색 범위: 메타 뉴스 후보 2026-10-08~10-12 117건 제목과 고른 기사 본문, 메타 공시 후보 2026-10-07 이후 0건 에서 open-weight·open source·weights·Llama·Muse Spark 를 찾음). 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-058",
+      "status": "watching",
+      "deadline": "2026-12-20",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-oracle-20261008-36a34d18"
+      ],
+      "finding": "신용 지표와 함정 판단의 방향은 여전히 맞는다(검색 범위: 오라클 뉴스 후보 2026-10-08~10-12 97건 제목과 고른 기사 본문, 오라클 공시 후보 2026-10-07 이후 0건). Yahoo Finance(2026-10-08)는 Bloomberg 를 인용해 오라클 장기 부채가 2년 새 거의 두 배인 $160B 를 넘었고 미 회사채 시장 다섯째 큰 차입자라고 전했다. MarketWatch(2026-10-10) 'AI 신용 공포가 브로드컴과 오라클을 짓누른다' 의견 기사는 유료라 본문을 열지 못했다. 등급사의 등급·전망 변경 발표는 후보에 없다. 신용 지표는 교차검증에만 쓰므로 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-089",
+      "status": "watching",
+      "deadline": "2026-12-20",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-NEWS-oracle-20261008-36a34d18",
+        "SRC-NEWS-oracle-20261008-68c86838"
+      ],
+      "finding": "오라클 8-K·10-Q 에 칩 구매용 자금 조달 공시는 없다(검색 범위: 오라클 뉴스 후보 2026-10-08~10-12 97건 제목과 고른 기사 본문, 오라클 공시 후보 2026-10-07 이후 0건). Yahoo Finance·TIKR(2026-10-08, WSJ 인용)은 투자자가 별도 회사에 돈을 대 칩을 사고 오라클이 그 칩을 시간에 걸쳐 임차하는 구조를 아폴로·골드만삭스와 협의 중이며 올해 안 체결을 원한다고 전했고, 금액은 보도되지 않았다. 리스 구조라면 확정 미인출 여신이 아니라 미개시 약정 쪽으로 볼 재료다. 협의 단계라 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-090",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "evidence_ids": [],
+      "source_ids": [
+        "SRC-WEB-palantir-901",
+        "SRC-NEWS-palantir-20261009-05829401"
+      ],
+      "finding": "영국 정부는 NHS 연합 데이터 플랫폼 계약의 해지 조항을 행사하거나 연장을 결정하지 않았다(검색 범위: 팔란티어 뉴스 후보 2026-10-08~10-12 112건 제목과 고른 기사 본문, 팔란티어 공시 후보 2026-10-07 이후 0건). FT 보도를 전한 SFG Media(2026-10-01)는 장관들이 내년 3월 계약 장치로 관계를 앞당겨 검토하는 방안을 생각 중이며 Quantexa 등 영국 업체 서너 곳을 후보로 보고, 대안 개발 시간을 벌려고 계약을 약 1년 연장하는 방안과 여러 공급자로 나누는 방안도 논의 중이라고 적었다. Guardian(2026-10-09)은 버넘 총리가 노동당 의원·노조에게서 £330m NHS 계약을 끊으라는 압력을 받고 있다고 전했다. 결정 전이라 관찰을 유지한다."
+    },
+    {
+      "trigger_id": "TRG-091",
+      "status": "watching",
+      "deadline": "2027-01-31",
+      "evidence_ids": [],
+      "source_ids": [],
+      "finding": "메타·시에라 밖 회사의 채택 발표나 실제 연동 출시는 확인되지 않았다(검색 범위: 메타 뉴스 후보 2026-10-08~10-12 117건 제목과 고른 기사 본문, 메타 공시 후보 2026-10-07 이후 0건, 웹 검색). Channel Insider(2026-10-07)에 따르면 이 표준의 이름은 Personal Agent Protocol 이고 Genesys·Instinct·Rocket·Shopify·Stripe·Walmart 가 메타·시에라와 함께 개발에 참여하며 OpenAI·Anthropic 은 참여 명단에 없다. 공동 개발 참여사는 공동 발표 회사라 채택으로 세지 않는다. 관찰을 유지한다."
+    }
+  ],
+  "new_triggers": [
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "observation": "런던 시장 경찰·범죄 사무국(Mopac)이 런던 경찰청의 Palantir AI 수사 도구 2년 계약(Guardian 에 따르면 £50m) 체결을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리'를 고려해 계약을 막은 것이 위법하다며 소송을 냈다(BBC 2026-10-10). 팔란티어 ⑤ 판단은 동맹 등급 +1, 적대 등급 -2(구조형)다.",
+      "condition": "법원이 Mopac 의 계약 차단을 위법으로 판단하거나 적법으로 확정하면, 또는 Mopac 이 결정을 바꿔 계약이 체결되면 다시 본다. 소송 제기 보도만으로는 판단을 바꾸지 않는다.",
+      "deadline": "2027-06-30",
+      "source_ids": [
+        "SRC-NEWS-palantir-20261010-3df524d3",
+        "SRC-NEWS-palantir-20261009-05829401"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "팔란티어 ⑤ 적대 등급의 영국 전선 — 정당성을 이유로 한 공공 계약 차단이 법적으로 유지되는지"
+      }
+    }
+  ],
+  "observations": []
+}

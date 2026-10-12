@@ -1,0 +1,657 @@
+{
+  "group": "A",
+  "sources": [
+    {
+      "source_id": "SRC-NEWS-nvidia-20261008-9589b8c0",
+      "title": "Nvidia (NVDA)’s $20 Billion Groq Deal Faces a Legal Test. Does It Matter for NVDA’s Valuation? - Yahoo Finance",
+      "publisher": "Yahoo Finance (Insider Monkey)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/nvidia-nvda-20-billion-groq-205449946.html",
+      "accessed_at": "2026-10-12",
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "nvidia",
+      "published_at_utc": "2026-10-08T20:54:49Z",
+      "publisher_url": "https://finance.yahoo.com",
+      "raw_ref": "data/nvidia/news/google/raw/20261012T010826Z-57246d17.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOM1YwNUxRbHFBRGh4RlJaazdlUlpMNm9RRU4xZ1lYZ1ZST2hRTEQ1Umt3SW9XZEVMN0xBNDF0X0h4U2RSalJjSFUxVEthVHhLTXVnY3NyOF9xRzN4YmhObVRJSUVGejI0aHBzWEdFTFBPaVVRQ0Z6M2Q0aTBZRV85N3lkLVVDV0djalYzRnpBeW9uWFBoMlE?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-nvidia-20261009-10a11a78",
+      "title": "Nvidia-backed Aussie AI firm Firmus withdraws historic IPO, citing market volatility - CNBC",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/09/nvidia-ai-firmus-ipo-.html",
+      "accessed_at": "2026-10-12",
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "nvidia",
+      "published_at_utc": "2026-10-09T01:02:00Z",
+      "publisher_url": "https://www.cnbc.com",
+      "raw_ref": "data/nvidia/news/google/raw/20261012T010826Z-65eea22a.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9tMmdLRHRyeDk3OGFjdHA2YkJjREFLZDNxNENsWFdpN3cyOW1xQTRkRUtvY1YybXg4UzVwNUw4R1hUTFFDVVFibTRIX1RVZTc3MGZzWTN6ZmxNWndfcFpyVVZXRFNLV2tuSEHSAW9BVV95cUxORUQtcGkxbXJITWdJV2NCbUtWbEliczgzdHhTbWVXX2Z4blcxdy04TmxseUZYOXh2ZjlCYmY4b0FKZ2sydnZaLVJvcENoVll3MXN5aktLRkdWWkRORU5xbGtHQzFyQzFnLTBCSzBJRVE?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-nvidia-20261011-a6600dbc",
+      "title": "NVIDIA’s CUDA Moat Is Accelerating RTX Spark Laptop Sales, Higher 128GB Unified Memory Options Belonging To Surface Laptop Ultra Already Out Of Stock - Wccftech",
+      "publisher": "Wccftech",
+      "url": "https://wccftech.com/nvidia-cuda-moat-rtx-spark-laptop-sales-surface-laptop-ultra-128gb-out-of-stock/",
+      "accessed_at": "2026-10-12",
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "nvidia",
+      "published_at_utc": "2026-10-11T09:26:15Z",
+      "publisher_url": "https://wccftech.com",
+      "raw_ref": "data/nvidia/news/google/raw/20261012T010826Z-65eea22a.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQWG84N1E5NmEwbzB1QVdCejM3SWxYTFJLaXNYa1l5ZGlUSlFEYng5bjhXd29faU8yUVh6NklpbEFkSlQ4bFFFUFYzSEZ6MGtibEhrNGw5RDZEU2lfOWtYa1dVOGtPc2lTeS1ZQjR1THRkQnRUejMzNl9pUXl2WVVZM1RsUGI0V293RF9rWHVXS3Z5UjhaR21PVUlUNUlfdm5DeF9F0gGoAUFVX3lxTE9zVUszc19JME9YZk9Uc0FPSy0tU1dzNFIxczZWU2t4T1lvcHRVb1FQSDV6Y0V2cFNGTDJ5X0pNS0MyenJxR1UxeVNEXzNfNXl3MXFxTFN2ckJWT29wR29VeU1vc2pDbVl0dC1kY2Nfc3N4RDZOME15T1JEa2xCU09JVWttUXQ5YzlRcnVGOF9MZEpoOHNJSTBBTVdxVW9rLXg1RHhKS2M2Qg?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-nvidia-20261011-6d664be5",
+      "title": "Nvidia reportedly in early talks to buy, acquihire or invest more in Reflection AI - SiliconANGLE",
+      "publisher": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/10/11/nvidia-reportedly-in-early-talks-to-buy-acqui-hire-or-invest-more-in-reflection-ai/",
+      "accessed_at": "2026-10-12",
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "nvidia",
+      "published_at_utc": "2026-10-11T22:38:00Z",
+      "publisher_url": "https://siliconangle.com",
+      "raw_ref": "data/nvidia/news/google/raw/20261012T010826Z-65eea22a.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOUE1IRUtLSnYtdUtYcTBObTNBVFliMWNLNEZydFRsaWpLY1lrWVdFcFJIUTZ3UHhxbGNpR3lNcGZ4QlpjMU02MTNoRnR6WUpXY19iaE9YdVVKY2xHNy1HSnYxX2V3bE5Iejc0UjFScmVXdE9JdFhlNHBxVFg4R3VKZkQzWHY0ckZWUC05TE05YWV1cko5OEVTSy1TcHNIUEg2eGNHOW95ZGhlblNMbTgzc29ieGxUVzBRV0VZ?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tsmc-20261009-c0b666fa",
+      "title": "[News] NVIDIA’s NVHBM Reshapes Base Die Strategies: How Micron, Samsung Are Bringing TSMC Into the Fold - TrendForce",
+      "publisher": "TrendForce",
+      "url": "https://www.trendforce.com/news/2026/10/09/news-nvidias-nvhbm-reshapes-memory-makers-base-die-strategies-as-micron-samsung-turn-to-external-foundries/",
+      "accessed_at": "2026-10-12",
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "tsmc",
+      "published_at_utc": "2026-10-09T01:26:30Z",
+      "publisher_url": "https://www.trendforce.com",
+      "raw_ref": "data/tsmc/news/google/raw/20261012T010820Z-ac769cb4.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxNWU1LOE91MnBaN2lTbEpwNEhmdkFZY2pHSDMtSjlHdTVOLVQ0X21VS2VQc2lXMWtMbFlfZDhZMGt3alllcnlFNExCZUpDZmlZUVdKNnM2cXVUNFZSSGQzckhwaVhCZEJXWm5pRE5ueW9wd05XSG5SOGZJamg2a1BfcFd3eG1kN3hsNjZZLWVpenRINFAxbjU4MEdHRWFJTDBtcGJvZ0o2aVJGdlc4dFV2MWFHMjJEYm0yTUZ2V01zTUNITDJtNm5xcWI2TjVFbzJNVHgtOVF5dlh6SGc0ejBMQUpUZTE?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-apple-20261009-982c3f38",
+      "title": "Apple stock falls on report that company is cutting component orders on soft iPhone 18 Pro demand - Yahoo Finance",
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/article/apple-stock-falls-on-report-that-company-is-cutting-component-orders-on-soft-iphone-18-pro-demand-132655752.html",
+      "accessed_at": "2026-10-12",
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "apple",
+      "published_at_utc": "2026-10-09T13:26:55Z",
+      "publisher_url": "https://finance.yahoo.com",
+      "raw_ref": "data/apple/news/google/raw/20261012T010824Z-fef99fad.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNdXRZODhUOUdIaGhYOXRmVnZLWGJCWlgtX0NacXhXYWxkalFkYXZPbEtjOEo3S3FhT0VMd3B2NktuOENFaThPOXAzUDBEOXpzSEdtcnJQNmpkZmh3RGtsdEVoRzEwSUY1ZnR3dThmcXh1cjBWTUhUTHBHRWtJOXRPSTVkanhWbVdCcVJTVUdyejZwSUlhQjBjS1ZvbXZwOVlSRWRMWk9vSzZ4bU0yQzExcGxOQjREdV96WURCbHBHWEt5QmxNeUFSYTRpVFpsbHY1LUN1OEpfcmlQRm9FODZFM0FfTjhNVG5WUVhSbUNB?oc=5"
+    },
+    {
+      "source_id": "SRC-EDGAR-000104617926000680",
+      "title": "6-K 2026-10-08",
+      "publisher": "SEC EDGAR",
+      "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000680/tsm-revenue20261008.htm",
+      "accessed_at": "2026-10-12",
+      "sha256": "1c2ebdd2f65892b39dca88a70d9e658e2a66ccba746b1444384e2c470c72ab6f",
+      "note": "6-K 제출일 2026-10-08(September 2026 Revenue Report). sha256 은 본문(data/_sec/docs/bed69544afcdf446-tsm-revenue20261008.htm) 값이다",
+      "kind": "filing",
+      "company_id": "tsmc",
+      "raw_ref": "data/tsmc/filings/raw/CIK0001046179-bbd5e352.json"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-901",
+      "title": "Amazon seeks to offload US$8 billion of Nvidia chips to investors, FT reports",
+      "publisher": "The Standard (Reuters 전재)",
+      "url": "https://www.thestandard.com.hk/innovation/article/344429/Amazon-seeks-to-offload-US8-billion-of-Nvidia-chips-to-investors-FT-reports",
+      "accessed_at": "2026-10-12",
+      "company_id": "nvidia",
+      "kind": "news",
+      "published_at_utc": "2026-10-02T06:05:48Z",
+      "note": "FT 원보도(유료, 403)를 대신해 같은 사실을 전한 Reuters 기사의 전재본을 열었다"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-902",
+      "title": "US officials question Nvidia’s oversight as restricted chips reach China",
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/us-officials-question-nvidia-chip-diversion-china/",
+      "accessed_at": "2026-10-12",
+      "company_id": "nvidia",
+      "kind": "news",
+      "published_at_utc": "2026-10-02T03:34:09Z",
+      "note": "Bloomberg 조사 보도(유료, 403)를 대신해 그 내용을 옮긴 2차 기사를 열었다"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-903",
+      "title": "Nvidia-Backed Reflection Unveils First AI Model to Take on Chinese Open Models",
+      "publisher": "Asharq Al-Awsat (Reuters 전재)",
+      "url": "https://english.aawsat.com/technology/5326401-nvidia-backed-reflection-unveils-first-ai-model-take-chinese-open-models",
+      "accessed_at": "2026-10-12",
+      "company_id": "nvidia",
+      "kind": "news",
+      "published_at_utc": "2026-10-05T22:21:24Z",
+      "note": "Reuters 원문(접근 차단 401)을 대신해 같은 Reuters 기사의 전재본을 열었다"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-904",
+      "title": "Groq engineer-shareholders sue board over $20 billion Nvidia deal",
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/groq-engineers-sue-board-nvidia-deal/",
+      "accessed_at": "2026-10-12",
+      "company_id": "nvidia",
+      "kind": "news",
+      "published_at_utc": "2026-10-05T11:42:25Z",
+      "note": "FT 원보도(유료)를 대신해 같은 소송을 전한 열리는 기사를 열었다"
+    },
+    {
+      "source_id": "SRC-WEB-nvidia-905",
+      "title": "Super Micro contractor pleads guilty in Nvidia AI chip rerouting scheme",
+      "publisher": "Crypto Briefing",
+      "url": "https://cryptobriefing.com/super-micro-contractor-pleads-guilty-nvidia-chips/",
+      "accessed_at": "2026-10-12",
+      "company_id": "nvidia",
+      "kind": "news",
+      "published_at_utc": "2026-10-09T22:11:20Z",
+      "note": "후보의 Reuters 원문(접근 차단 401)을 대신해 같은 사건을 전한 열리는 기사를 열었다"
+    },
+    {
+      "source_id": "SRC-WEB-apple-901",
+      "title": "IDC: Mac shipments drop 11% in Q3 as global PC market slides 20%",
+      "publisher": "9to5Mac",
+      "url": "https://9to5mac.com/2026/10/08/idc-mac-shipments-drop-11-in-q3-as-global-pc-market-slides-20/",
+      "accessed_at": "2026-10-12",
+      "company_id": "apple",
+      "kind": "news",
+      "published_at_utc": "2026-10-08T20:09:47Z",
+      "note": "후보의 Seeking Alpha 기사(403)를 대신해 같은 IDC 집계를 전한 열리는 기사를 열었다"
+    },
+    {
+      "source_id": "SRC-WEB-apple-902",
+      "title": "Apple ordered to pay $5.7bn in iPhone patent infringement case",
+      "publisher": "Al Jazeera",
+      "url": "https://www.aljazeera.com/economy/2026/9/28/apple-ordered-to-pay-5-7bn-in-patent-infringement-case",
+      "accessed_at": "2026-10-12",
+      "company_id": "apple",
+      "kind": "news",
+      "published_at_utc": "2026-09-28T20:11:30Z",
+      "note": "후보의 IAM 기사(2026-10-09, 구독 벽)를 대신해 같은 평결을 전한 열리는 기사를 열었다"
+    },
+    {
+      "source_id": "SRC-WEB-apple-903",
+      "title": "Apple settles lawsuit over late Siri AI features for $250 million",
+      "publisher": "Yahoo Finance (Reuters 전재)",
+      "url": "https://finance.yahoo.com/sectors/technology/articles/apple-settles-lawsuit-over-siri-213002287.html",
+      "accessed_at": "2026-10-12",
+      "company_id": "apple",
+      "kind": "news",
+      "published_at_utc": "2026-05-05T21:30:02Z",
+      "note": "후보의 Top Class Actions 합의 안내(2026-10-08, 403)를 대신해 합의 사실을 전한 Reuters 기사의 전재본을 열었다"
+    }
+  ],
+  "evidence": [
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-nvidia-20261008-9589b8c0",
+      "published_at_utc": "2026-10-08T20:54:49Z",
+      "title": "Nvidia (NVDA)’s $20 Billion Groq Deal Faces a Legal Test. Does It Matter for NVDA’s Valuation? - Yahoo Finance",
+      "excerpt": "Groq has called the lawsuit meritless. … The plaintiffs acknowledge that Delaware courts have not directly determined whether acqui-hire transactions like Groq's should face traditional M&A scrutiny. Separately, the U.S. Department of Justice was reportedly probing Nvidia's Groq transaction, while FTC Chair Andrew Ferguson has said the agency would examine deal structures potentially designed to escape conventional merger review.",
+      "locator": "기사 둘째 문단 셋째 문장과 열아홉째 문단",
+      "relevance": "추론: Groq 전 엔지니어 두 명이 Groq 이사회를 상대로 낸 소송과 별개로, 미 법무부가 NVIDIA 의 Groq 거래를 들여다보고 있다고 보도됐고 FTC 위원장은 기존 합병 심사를 피하려는 거래 구조를 살피겠다고 말했다. 규제 조사는 ⑤ 적대 등급의 재료이고 사업 구조를 건드리지 않으면 비용형(벌금·개별 소송·규제 조사)이다. 지금 NVIDIA ⑤ 판단은 동맹 등급 +2, 적대 등급 −2(구조형: 매출 약 절반을 내는 하이퍼스케일 고객과 OpenAI 가 대체 칩을 출하)로 3점이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 법무부 조사와 이사회 상대 소송은 비용형 적대라 이미 구조형인 적대 등급을 바꾸지 않는다. 조사가 거래 무효화나 Groq 기술 사용 제한으로 이어져 NVIDIA 추론 제품의 출하를 막으면 다시 본다.",
+      "horizon": "medium — 소송과 조사 진행",
+      "unverified": [
+        "법무부 조사는 이 기사가 '보도에 따르면'으로 전한 것이고 법무부 발표나 NVIDIA 공시로 확인하지 않았다",
+        "기사는 소송 피고 명단을 적지 않는다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "nvidia",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-nvidia-905",
+      "published_at_utc": "2026-10-09T22:11:20Z",
+      "title": "Super Micro contractor pleads guilty in Nvidia AI chip rerouting scheme",
+      "excerpt": "A former contractor for Super Micro Computer Inc. has admitted his part in a scheme to move Nvidia-powered AI servers into China. Ting-Wei ‘Willy’ Sun pleaded guilty on October 9, 2026, in a New York federal court to charges tied to violations of US export controls. … The hardware at issue is not ordinary office kit. The concerns center on advanced AI chips, including Nvidia’s H200 and B200 models, which sit squarely in the category of technology Washington has been trying to keep out of Chinese hands.",
+      "locator": "기사 둘째 문단과 'How the alleged scheme worked' 절 다섯째 문단",
+      "relevance": "추론: Super Micro 의 전 협력자가 NVIDIA 칩을 넣은 서버를 동남아를 거쳐 중국으로 돌린 수출 통제 위반에 유죄를 인정했다. 기소·유죄 인정의 대상은 제3자이고 NVIDIA 가 아니다. NVIDIA 자신이 조사·제재를 받으면 ⑤ 적대 등급의 비용형 재료가 된다. 지금 NVIDIA ⑤ 판단은 적대 등급 −2(구조형)이고 중국 수출 통제로 사라진 매출은 ⑧ 에서 센다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 제3자 형사 사건이라 NVIDIA 의 적대 등급을 바꾸지 않는다. 미 당국이 NVIDIA 의 수출 허가를 재검토하거나 NVIDIA 를 조사·제재한다는 1차 발표가 나오면 ⑤ 근거 문장에 더하고, 중국 시장 차단의 범위가 바뀌는지는 따로 관찰한다.",
+      "horizon": "medium — 관련 기소 사건 진행",
+      "unverified": [
+        "후보로 수집된 Reuters 원보도는 접근이 막혀 열지 못했고 같은 사건을 전한 Crypto Briefing 기사로 확인했다",
+        "서버 금액은 기소장의 주장이고 법원이 확정한 사실이 아니다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-nvidia-20261009-10a11a78",
+      "published_at_utc": "2026-10-09T01:02:00Z",
+      "title": "Nvidia-backed Aussie AI firm Firmus withdraws historic IPO, citing market volatility - CNBC",
+      "excerpt": "Australian AI data center operator Firmus, which is backed by Nvidia, has withdrawn its planned mega initial public offering, citing market volatility and conditions, the company said in an emailed statement to CNBC. … In August, the company announced a $2 billion funding round backed by Nvidia, Coatue Management, Blackstone and Jane Street, bringing its total equity raised over the preceding year to more than $3 billion and its valuation to over $10.5 billion.",
+      "locator": "CNBC 기사 첫째·다섯째 문단(Meta 계약은 여섯째 문단)",
+      "relevance": "추론: NVIDIA 가 투자한 호주 AI 데이터센터 운영사 Firmus 가 공모를 철회하고 사모 자금을 찾기로 했다. Firmus 는 2026-08 NVIDIA 등이 참여한 20억 달러 투자를 받았고, NVIDIA DSX 플랫폼 기반 데이터센터에서 Meta 에 GPU 캐파를 판다. NVIDIA 돈이 들어간 고객이 조달한 돈으로 NVIDIA 기반 설비를 짓는 구조이고 그 조달이 공모 시장에서 막혔다는 사실은 ⑦ 의 두 축(내 매출을 내는 고객이 조달로 연명하나, 내 돈이 고객을 거쳐 돌아오나)에 닿는다. 지금 NVIDIA ⑦ 판단은 −2(범위 하한: 조달 의존 고객 비중 큼, 환류 있음)다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: ⑦ 은 이미 범위 하한이라 점수가 바뀌지 않는다. '조달 의존 고객 비중 큼' 판단의 근거 문장에 공모 조달이 막힌 네오클라우드 사례로 더한다.",
+      "horizon": "short — 대체 자금 조달까지",
+      "unverified": [
+        "NVIDIA 의 Firmus 지분율과 Firmus 의 NVIDIA 제품 구매액은 기사에 없다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "nvidia",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-nvidia-20261011-6d664be5",
+      "published_at_utc": "2026-10-11T22:38:00Z",
+      "title": "Nvidia reportedly in early talks to buy, acquihire or invest more in Reflection AI - SiliconANGLE",
+      "excerpt": "The chipmaker led the startup’s $2 billion round in October 2025, and the FT said Nvidia has put $800 million into the company in total. … Beam’s training ran on Nvidia GB300 systems that Reflection rents from Space Exploration Technologies Corp. under a June agreement worth up to $6.3 billion. Payments of $150 million a month cover capacity at SpaceX’s Colossus 2 data center in Memphis through 2029. Nebius Group N.V. agreed in July to sell Reflection another $1 billion in AI capacity.",
+      "locator": "SiliconANGLE 기사 다섯째 문단 둘째 문장과 일곱째 문단",
+      "relevance": "추론: NVIDIA 는 Reflection AI 의 2025-10 투자 라운드를 이끌었고 지금까지 8억 달러를 넣었다(FT 인용). Reflection 은 SpaceX Colossus 2 의 NVIDIA GB300 을 최대 63억 달러 계약으로 빌리고 Nebius 에서 10억 달러 컴퓨트를 산다. NVIDIA 가 투자한 회사가 NVIDIA GPU 기반 컴퓨트를 장기 계약으로 사는 간접 경로로, ⑦ 세로축(내 돈이 고객 주머니로 갔다가 내 매출로 돌아오나)의 재료다. 지금 NVIDIA ⑦ 판단은 −2(범위 하한)다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: ⑦ 은 범위 하한이다. NVIDIA 가 투자한 모델 회사가 NVIDIA GPU 를 쓰는 클라우드와 장기 계약을 맺은 사례로 '내 돈이 돌아옴' 근거 문장에 더한다. 같은 기사의 인수 협상은 계획이라 근거가 아니다.",
+      "horizon": "medium — 계약 기간(2029)까지",
+      "unverified": [
+        "투자액과 인수 협상은 FT 보도를 옮긴 것이고 NVIDIA·Reflection 은 논평하지 않았다",
+        "SpaceX·Nebius 계약 금액은 이 기사가 전한 값이고 계약 원문을 보지 않았다",
+        "Reflection 이 낸 돈이 NVIDIA 매출로 돌아오는 몫은 클라우드 사업자를 거치므로 직접 잴 수 없다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "nvidia",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-nvidia-20261011-a6600dbc",
+      "published_at_utc": "2026-10-11T09:26:15Z",
+      "title": "NVIDIA’s CUDA Moat Is Accelerating RTX Spark Laptop Sales, Higher 128GB Unified Memory Options Belonging To Surface Laptop Ultra Already Out Of Stock - Wccftech",
+      "excerpt": "Microsoft’s product page for the Surface Laptop Ultra shows the RTX Spark, 128GB unified memory, and 1TB SSD configuration priced at $5,899.99 is already listed as out of stock. While the lower-tier options are up for grabs, it indicates that the sellout may partly reflect limited early supply, but that’s unconfirmed because Microsoft hasn’t shared any data. However, the demand behind these RTX Spark laptops makes sense when you sit down to contemplate that these machines are tailor-made for a bigger user base, and a lot has to do with CUDA support.",
+      "locator": "Wccftech 기사 첫째 문단",
+      "relevance": "추론: NVIDIA RTX Spark 칩을 넣은 Microsoft Surface Laptop Ultra 가 판매 중이고 최상위 구성은 Microsoft 제품 페이지에 품절로 표시됐다. 출하가 시작된 소비자 PC 칩이다. ④ 는 출하와 사업 부문만 세며, NVIDIA 는 이미 GeForce 로 PC 시장에 있으므로 PC용 통합 칩이 기존 제품군 안의 확장인지 새 사업 자리인지를 따져야 한다. 지금 NVIDIA ④ 판단은 4점(칩·모델·클라우드·AI 밖 매출 네 자리)이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 기존 PC 그래픽 제품군 안의 제품 확장이라 ④ 의 사업 자리 수를 늘리지 않는다. NVIDIA 가 PC 칩 매출을 별도 부문이나 제품선으로 공시하면 다시 본다.",
+      "horizon": "current",
+      "unverified": [
+        "판매량·매출은 공개되지 않았고 기사도 품절이 초기 공급 제한 때문일 수 있다고 적는다",
+        "Wccftech 는 2차 매체다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "tsmc",
+      "factors": [
+        "F3"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-EDGAR-000104617926000680",
+      "published_at_utc": "2026-10-08T00:00:00Z",
+      "title": "TSMC 6-K (2026-10-08) — September 2026 Revenue Report",
+      "excerpt": "On a consolidated basis, revenue for September 2026 was approximately NT$511.86 billion, a decrease of 0.6 percent from August 2026 and an increase of 54.6 percent from September 2025. Revenue for January through September 2026 totaled T$3,898.73 billion, an increase of 41.1 percent compared to the same period in 2025.",
+      "locator": "6-K (2026-10-08) TSMC September 2026 Revenue Report 본문 첫 문단 둘째·셋째 문장(원문의 'T$' 표기 그대로), 같은 쪽 Revenue Report (Consolidated) 표 Net Revenue 행",
+      "relevance": "(추론) TSMC 가 9월 연결 매출 NT$5,118.6억(전월 대비 −0.6%, 전년 같은 달 대비 +54.6%)과 1~9월 누계 NT$3조 8,987.3억(+41.1%)을 6-K 로 제출했다(감사 전 월 매출). 같은 날 회사 보도자료와 같은 값이다. 1~9월 누계에서 2026 상반기 연결 매출 NT$2조 4,044.8억을 뺀 3분기 매출은 약 NT$1조 4,942억이고 우리가 계산한 값이다. 월 매출 전년 대비 증가율은 8월 53.3%, 9월 54.6% 다. 전체 매출이라 ③ 후발 가속도의 지표 단계로는 대리 지표(c 단계, 최대 부분)이고, TSMC 는 HPC 플랫폼 매출 비중을 공시하므로 b 단계 판정의 보조 자료로만 쓴다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: TSMC ③ 판단의 후발 가속도는 HPC 플랫폼 매출의 직전 분기 대비 증가율(1분기 20%, 2분기 20%)로 b 단계 부분이고, 3분기 HPC 값은 2026-10-15 실적 발표에서 나온다. 월 매출은 그 판정을 대신하지 않으며 전체 매출 증가가 3분기에도 이어졌다는 보조 사실로만 근거 문장에 더한다. ⑥ 매출 성장 잣대는 분기 재무제표가 나온 뒤 갱신하고 월 매출로 바꾸지 않는다.",
+      "horizon": "current",
+      "unverified": []
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-apple-20261009-982c3f38",
+      "published_at_utc": "2026-10-09T13:26:55Z",
+      "title": "Apple stock falls on report that company is cutting component orders on soft iPhone 18 Pro demand - Yahoo Finance",
+      "excerpt": "Apple's (AAPL) iPhone 18 Pro demand is reportedly slowing due to higher prices, forcing the company to tell its suppliers to cut back on component production for the phones. … According to Nikkei Asia, Apple reduced orders for October by roughly 15% to 20% versus initial estimates. … Apple raised the price of its iPhone 18 Pro line by $100 to $1,199 for the iPhone 18 and $1,299 for the iPhone 18 Pro Max. It also increased prices on its various iPads and Macs. … Combined, he said, the lead times are about in line with last year's for the iPhone 17 Pro lineup.",
+      "locator": "Yahoo Finance 기사 첫째·둘째·일곱째·아홉째 문단",
+      "relevance": "추론: Yahoo Finance 가 Nikkei Asia 를 인용해 Apple 이 높아진 가격 때문에 iPhone 18 Pro 수요가 둔화해 10월 부품 주문을 처음 계획보다 15~20% 줄였다고 전한다. Apple 은 iPhone 18 Pro 시작가를 $100 올렸다. ① 가격 실측의 질문(가격을 올렸는데 고객이 남았는가)에서 인상 뒤 수요 쪽 관측이다. 같은 기사에서 Gene Munster 는 두 Pro 모델의 배송 대기 기간을 합치면 지난해 iPhone 17 Pro 와 비슷하다고 적었다. 지금 Apple ① 판단은 소비자 채널의 회수 루프 통과, 전환비용 미확인, 가격 실측 부분이다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 공급망 보도와 배송 대기 기간 추정은 회사 자료가 아니라 가격 실측을 실패로 내리지 못한다. 2026-09 분기 실적(10월 말 예정)에서 iPhone 매출이 줄거나 회사가 수요 둔화를 확인하면 ① 가격 실측을 아래쪽으로 다시 본다.",
+      "horizon": "short — 2026-09 분기 실적 발표까지",
+      "unverified": [
+        "주문 감축은 Nikkei Asia 보도를 옮긴 것이고 Apple 은 확인하지 않았다",
+        "감축은 처음 계획 대비이고 전년 대비 판매 감소인지는 모른다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-901",
+      "published_at_utc": "2026-10-08T20:09:47Z",
+      "title": "IDC: Mac shipments drop 11% in Q3 as global PC market slides 20%",
+      "excerpt": "According to IDC’s preliminary data, Apple shipped 5.9 million Macs during Q3 2026, down 11.3% from 6.7 million in the year-ago period. … The overall PC market, however, fell much more sharply, with worldwide shipments dropping 20.1% year over year to 62.7 million units. … As a result, Apple’s share of worldwide PC shipments actually increased from 8.5% to 9.5%. … Looking ahead, IDC says that “channel concern over high inventory and soft demand at elevated prices could bring promotions in the near term,” adding that “pricing will stay well above year-ago levels.”",
+      "locator": "9to5Mac 기사 셋째~다섯째 문단과 열째 문단(IDC 예비 집계 인용)",
+      "relevance": "추론: IDC 예비 집계로 2026년 3분기 Apple Mac 출하는 590만 대로 11.3% 줄었으나 PC 시장 전체(−20.1%)보다 덜 줄어 점유율이 8.5% 에서 9.5% 로 올랐다. Apple 은 메모리 가격 급등으로 Mac·iPad 가격을 올렸고, IDC 는 높아진 가격에서 수요가 약하다고 적었다. 독립 측정이라 ① 가격 실측의 '인상 뒤 고객이 남았는가' 에 쓰는 방증이다. 지금 Apple ① 판단은 소비자 채널의 회수 루프 통과, 가격 실측 부분이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: Mac 은 가장 강한 채널(iPhone 중심의 기기 설치기반)의 일부이고, 출하 감소에는 업계 전체의 선매입과 공급 제약이 섞여 가격 효과만 가르지 못한다. 인상 뒤 시장보다 덜 줄었다는 사실을 가격 실측 근거 문장에 방증으로 더한다.",
+      "horizon": "current",
+      "unverified": [
+        "IDC 예비 추정이고 소비자 판매가 아니라 출하다",
+        "다른 조사기관(Omdia)이 다른 대수를 냈다는 보도가 있으나 열어 보지 않았다",
+        "후보로 수집된 Seeking Alpha 기사는 열리지 않아 같은 집계를 전한 9to5Mac 기사로 확인했다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-902",
+      "published_at_utc": "2026-09-28T20:11:30Z",
+      "title": "Apple ordered to pay $5.7bn in iPhone patent infringement case",
+      "excerpt": "Apple has been ordered to pay more than $5.7bn for using patented technology from Taction Technology to power haptic feedback, the vibrations users feel when they receive a notification or press a button. … A jury in federal court in the Southern district of California found that the iPhone maker infringed two patents owned by the San Diego-based company. … The jury, however, found that Apple did not wilfully infringe the patents. … Apple said it plans to appeal the verdict.",
+      "locator": "Al Jazeera 기사 첫째·둘째 문단과 여덟째·아홉째 문단",
+      "relevance": "추론: 미 연방 배심이 Apple 의 Taptic Engine 이 Taction Technology 의 햅틱 특허 둘을 침해했다고 보고 57억 달러 넘는 배상을 평결했다. 고의 침해는 인정되지 않았고 Apple 은 항소한다고 밝혔다. 특허 소송은 ⑤ 적대 등급의 재료이고, 져도 iPhone 수요가 남으면 비용형이다. 지금 Apple ⑤ 판단은 동맹 등급 +2, 적대 등급 −1(비용형)로 4점이다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 배상액이 커도 특허 평결은 비용형 적대라 적대 등급을 바꾸지 않는다. Apple ⑤ 판단의 비용형 법적 전선에 이 평결을 더한다. 판매 금지 명령처럼 제품 판매를 막는 구제가 나오면 다시 본다.",
+      "horizon": "medium — 사후 신청과 항소",
+      "unverified": [
+        "평결은 확정 판결이 아니고 1심 사후 신청과 항소가 남았다",
+        "후보로 수집된 IAM 기사(2026-10-09)는 구독 벽에 막혀 같은 평결을 전한 Al Jazeera 기사로 확인했다"
+      ]
+    },
+    {
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-903",
+      "published_at_utc": "2026-05-05T21:30:02Z",
+      "title": "Apple settles lawsuit over late Siri AI features for $250 million",
+      "excerpt": "SAN FRANCISCO, May 5 (Reuters) - Apple on Tuesday settled for $250 million a consumer class action brought after the company delayed artificial-intelligence upgrades to its Siri voice assistant. … The iPhones launched without those features. The plantiffs' theory of harm in the case is that Apple misled class members into paying a price premium for their iPhones. … Apple did not admit to any fault in the settlement, which still needs approval from a judge. In a statement, Apple said it released numerous other AI features since the launch of what it calls Apple Intelligence in 2024.",
+      "locator": "Reuters 전재 기사 둘째·넷째·여섯째 문단(정정 안내 다음)",
+      "relevance": "추론: Apple 은 Siri AI 기능 출시 지연을 두고 제기된 소비자 집단소송을 2억 5천만 달러에 합의했고 잘못은 인정하지 않았다. 합의는 법원 승인이 필요하다. 소비자 집단소송은 ⑤ 적대 등급의 비용형 재료다. 지금 Apple ⑤ 판단은 적대 등급 −1(비용형)이다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 합의금은 비용형 적대라 적대 등급을 바꾸지 않는다. Apple ⑤ 판단의 비용형 법적 전선에 소비자 집단소송 합의를 더한다.",
+      "horizon": "short — 법원 승인과 지급",
+      "unverified": [
+        "법원 승인 여부를 확인하지 못했다",
+        "후보로 수집된 Top Class Actions 합의 안내(2026-10-08)는 열리지 않아 합의 당일 Reuters 기사로 확인했다"
+      ]
+    }
+  ],
+  "evidence_fixes": [
+    {
+      "evidence_id": "EV-nvidia-004",
+      "excerpt": "Before Nvidia agreed to pay roughly $13 billion to buy open-source platform Hugging Face this month, OpenAI tried to invest $100 million into the startup, according to sources with knowledge of the matter. … It was Nvidia's second-biggest purchase ever, following the $20 billion acquisition of assets from AI chip startup Groq in December.",
+      "locator": "CNBC 기사 첫째 문단과 넷째 문단 둘째 문장"
+    },
+    {
+      "evidence_id": "EV-nvidia-011",
+      "excerpt": "Amazon is seeking to offload about US$8 billion (HK$62.4 billion) of advanced Nvidia chips to investors through a new vehicle to strengthen its balance sheet, the Financial Times reported on Friday, citing people familiar with the matter. … The cloud giant will then lease the advanced AI chips back from the SPV, which would tap outside investors through debt issuance, the FT said, adding that the company could adopt a more asset-light approach to its balance sheet by unloading the expensive semiconductors to investors.",
+      "locator": "Reuters 전재 기사 첫째·셋째 문단(FT 보도 인용)",
+      "source_id": "SRC-WEB-nvidia-901",
+      "title": "Amazon seeks to offload US$8 billion of Nvidia chips to investors, FT reports",
+      "published_at_utc": "2026-10-02T06:05:48Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-012",
+      "excerpt": "US officials want to know how Nvidia missed the warning signs. … The questions follow a Bloomberg investigation published October 1, 2026. It detailed red flags that Nvidia’s oversight mechanisms apparently failed to catch, including surveillance imagery that captured labels being stripped off servers. … The most recent case came the same day as the Bloomberg report. On October 1, 2026, US authorities arrested Greg Lui, a California resident, on charges of conspiracy, smuggling, and money laundering.",
+      "locator": "기사 둘째 문단 첫 문장과 셋째·넷째 문단(Bloomberg 2026-10-01 조사 보도와 같은 날 체포를 옮김)",
+      "source_id": "SRC-WEB-nvidia-902",
+      "title": "US officials question Nvidia’s oversight as restricted chips reach China",
+      "published_at_utc": "2026-10-02T03:34:09Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-013",
+      "excerpt": "Nvidia-backed Reflection AI debuted its first open-weight model named Beam on Monday, as the startup aims to compete with lower-cost Chinese models such as DeepSeek and Kimi in coding and agentic tasks. … Reflection said Beam is competitive with Chinese AI startup Z.ai's GLM-5.2 and is closing in on Qwen3.8-Max on coding and agentic tasks.",
+      "locator": "Reuters 전재 기사 본문 첫째·둘째 문단(제목 반복 줄 다음)",
+      "source_id": "SRC-WEB-nvidia-903",
+      "title": "Nvidia-Backed Reflection Unveils First AI Model to Take on Chinese Open Models",
+      "published_at_utc": "2026-10-05T22:21:24Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-014",
+      "excerpt": "Groq’s board now faces a lawsuit over the deal that sent most of the company to Nvidia. The plaintiffs are two of the people who helped build Groq. … Benjamin Serebrin and Joshua Rubin, both former engineers and shareholders at the AI chip startup, filed suit in Delaware around October 3-4, 2026. They allege the board improperly structured a licensing arrangement with Nvidia valued at approximately $20 billion. … The shareholder suit is not the only scrutiny the deal faces. In September 2026, the US Department of Justice opened an antitrust investigation into the transaction.",
+      "locator": "기사 둘째·셋째 문단과 'The DOJ is also looking' 절 첫 문단",
+      "source_id": "SRC-WEB-nvidia-904",
+      "title": "Groq engineer-shareholders sue board over $20 billion Nvidia deal",
+      "published_at_utc": "2026-10-05T11:42:25Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-015",
+      "excerpt": "Confirmation that the firm’s big existing investors will speak for about half the AI group’s $8 billion float only serves to underscore how dependent the neocloud is on Nvidia for long-term success. … A book message sent to investors on Monday confirmed that a “select group of existing strategic and institutional shareholders” will speak for about half of the $US5.5 billion ($7.9 billion) the neocloud data centre operator plans to raise in its initial public offering.",
+      "locator": "AFR 기사 요약문과 본문 첫 문단(구독 벽 앞에 공개된 부분)"
+    }
+  ],
+  "evidence_unreadable": [],
+  "triggers": [
+    {
+      "trigger_id": "TRG-013",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 NVIDIA 후보(뉴스 169건 제목, 공시 없음)와 원문에서 중국 당국의 NVIDIA 칩 구매 허용 발표나 미 의회의 수출 차단 조항 확정을 전하는 1차 자료를 찾지 못했고, 웹 검색에서도 2026-10 국방수권법 수출 조항 확정 자료는 나오지 않았다. 이 기간 중국 관련 사건은 Super Micro 전 협력자가 NVIDIA 칩 서버의 중국 우회 수출에 유죄를 인정한 것(Crypto Briefing 원문 확인, 후보의 Reuters 원보도는 접근이 막힘)이고, 기소 대상은 제3자이며 NVIDIA 가 아니다. 2026-10-01 밀수 체포와 미 당국자의 NVIDIA 관리 부실 지적(Bloomberg 조사 보도를 옮긴 Crypto Briefing 원문 확인)도 NVIDIA 에 대한 조사·제재 발표가 아니다. 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-015",
+      "status": "watching",
+      "deadline": "2027-01-31",
+      "finding": "2026-10-08~10-12 NVIDIA 후보 169건 제목에서 'Hugging Face' 는 0건이고 인수 종결·규제 승인·해지 소식이 없다. 2026-09-28 CNBC 원문은 NVIDIA 가 약 130억 달러에 Hugging Face 를 사기로 했다고 적고, 2026-10-11 SiliconANGLE 원문도 Hugging Face 거래를 지분 투자가 아닌 인수(9-03 합의, 129억 달러)로 적어 거래 구조는 인수다. 종결 예정이 2027 상반기라 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-041",
+      "status": "watching",
+      "deadline": "2026-11-30",
+      "finding": "NVIDIA 의 다음 분기(2026-10 종료) 실적과 10-Q 는 2026-11 예정이라 2026-10-08~10-12 에 새 고객·지역 공시가 없다(검색 범위: NVIDIA 후보 뉴스 169건 제목, 공시 후보 없음). '2분기 연속 45% 이상' 조건을 판정할 자료가 없어 관찰을 유지한다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-042",
+      "status": "watching",
+      "deadline": "2026-11-30",
+      "finding": "2026-10-08~10-12 NVIDIA 후보(뉴스 169건 제목, 공시 없음)에서 보증 발동이나 부채 계상 전환을 전하는 공시·보도를 찾지 못했다. Amazon 이 NVIDIA 칩을 특수목적법인에 넘기고 되빌리는 구조를 협의한다는 FT 보도(Reuters 전재 원문 확인, 2026-10-02)에는 NVIDIA 의 보증·잔존가치 보장 참여가 없다. NVIDIA 가 투자한 Firmus 는 공모를 철회했으나(CNBC 원문 확인) NVIDIA 의 지급 의무는 기사에 없다. 다음 10-Q(2026-11 예정)에서 다시 본다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-081",
+      "status": "watching",
+      "deadline": "2027-01-31",
+      "finding": "2026-10-08 Yahoo Finance 원문은 SpaceX 의 NVIDIA 칩 구매 자금 400억 달러가 은행 대출 100억 달러와 투자등급 회사채 300억 달러로 협의 중이고 Apollo 주도·PIMCO 참여 검토, 2027 종결 예상이며 협의가 초기 단계이고 SpaceX 가 계획을 확인하지 않았다고 적는다. 같은 기사는 GPU 담보 구조를 전하나 NVIDIA 의 보증·출자 참여는 없고, NVIDIA 의 SpaceX 지분 가치를 약 210억 달러로 본 것은 애널리스트 추정이다. 검색 범위는 2026-10-08~10-12 NVIDIA 후보(뉴스 169건 제목, 'SpaceX' 7건)다. 종결이 공시되지 않아 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-082",
+      "status": "watching",
+      "deadline": "2027-05-31",
+      "finding": "2026-10-08~10-12 NVIDIA 후보 169건 제목에서 'MLPerf' 는 0건이고, Rubin 관련 제목은 인도 업체의 Rubin GPU 2만 개 주문 보도 1건(2차 매체)뿐이다. Rubin 매출 인식은 2026-11 예정 10-Q 에서 확인한다. 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-016",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 TSMC 후보(뉴스 156건 제목, 6-K 1건)에서 텍사스 투자를 확정하는 이사회 결의나 공식 발표를 찾지 못했고, 2026-10-08 6-K(원문 확인)에도 텍사스 투자 항목이 없다. 같은 기간 Musk 가 TSMC 의 Terafab 운영설을 부인하고 일부 공간 임차 가능성만 언급했다는 보도(제목 기준)는 TSMC 자체 공장 투자가 아니다. GlobalFoundries 는 TSMC CoWoS 용 실리콘 인터포저를 뉴욕 Malta 공장에서 만드는 5년 20억 달러 제조 계약을 발표했으나(GF 보도자료 원문 확인) 양산은 2028 상반기 예정인 계획이고 TSMC 가 사는 조달이다. 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-017",
+      "status": "watching",
+      "deadline": "2026-10-31",
+      "finding": "3분기 실적 발표는 2026-10-15 예정이라 정보 마감(2026-10-12)에 아직 없다. 2026-10-08 6-K(원문 확인)로 9월 매출 NT$5,118.6억(전년 같은 달 대비 +54.6%)과 1~9월 누계 NT$3조 8,987.3억(+41.1%)이 제출됐고, 누계에서 상반기 연결 매출을 뺀 3분기 매출은 약 NT$1조 4,942억이다. N2 매출 비중·매출총이익률·HPC 비중·최대 고객 비중은 실적 발표에서 나온다. 검색 범위는 2026-10-08~10-12 TSMC 후보(뉴스 156건 제목, 6-K 1건)다. 실적 발표 뒤 기한 안에 다시 본다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-018",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 TSMC 후보(뉴스 156건 제목, 6-K 1건)에서 Intel 의 TSMC 위탁 생산 물량·계약을 전하는 공시나 1차 발표를 찾지 못했다. Intel 관련 제목은 Intel 의 Terafab 참여 지속과 Applied Materials 연구시설 공동 참여다. 같은 기간 TrendForce(2026-10-09, 원문 확인)는 ZDNet 을 인용해 파운드리 경쟁사 Samsung 이 맞춤형 HBM 베이스 다이를 Samsung Foundry 나 TSMC 에서 만드는 이중 경로를 추진한다고 전했으나 보도·계획 단계라 이 조건의 확인이 아니다. 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-083",
+      "status": "watching",
+      "deadline": "2026-11-15",
+      "finding": "TSMC 3분기 실적 발표(2026-10-15)와 분기 재무제표 6-K 는 정보 마감 뒤에 나온다. 2026-10-08 6-K(원문 확인)는 월 매출만 담아 HPC 플랫폼 매출 비중·직전 분기 대비 증가율과 2026-09-30 까지의 최근 1년 매출을 주지 않는다. 검색 범위는 2026-10-08~10-12 TSMC 후보(뉴스 156건 제목, 6-K 1건)다. 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-019",
+      "status": "watching",
+      "deadline": "2027-02-15",
+      "finding": "2026-10-08~10-12 Apple 후보(뉴스 127건 제목, 공시 없음)에 LG 전자와 함께 스마트홈 기기를 내놓는다는 보도와 HomeView 허브 출시 보도(제목 기준)가 이어졌으나 출시 전 계획 단계다. 출하량·별도 매출은 2027년 초 회계 1분기 실적에서야 나오므로 기한을 그대로 둔다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-020",
+      "status": "watching",
+      "deadline": "2027-02-15",
+      "finding": "가격 인상은 Apple 1차 자료로 확인돼 있다. 2026-10-09 Yahoo Finance 원문은 Nikkei Asia 를 인용해 높아진 가격 때문에 iPhone 18 Pro 수요가 둔화해 Apple 이 10월 부품 주문을 처음 계획보다 15~20% 줄였다고 전하고, 같은 기사에서 Gene Munster 는 두 Pro 모델의 배송 대기 기간을 합치면 지난해 iPhone 17 Pro 와 비슷하다고 적었다. IDC 예비 집계(9to5Mac 원문 확인)로 2026년 3분기 Mac 출하는 11.3% 줄었으나 PC 시장(−20.1%)보다 덜 줄어 점유율이 8.5% 에서 9.5% 로 올랐다. 조건의 나머지인 인상 뒤 분기 실적(2026-09 분기, 10월 말 발표 예정)의 iPhone 매출·설치기반 변화는 아직 없다. 검색 범위는 2026-10-08~10-12 Apple 후보(뉴스 127건 제목, 공시 없음)다. 실적 발표 뒤 다시 본다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-021",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 Apple 후보 127건 제목과 묶음 세 회사 후보 제목에서 'Baltra' 는 0건이고 양산·지연을 전하는 기사를 찾지 못했다. 2026 하반기 양산 예정이라 연말까지 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-084",
+      "status": "watching",
+      "deadline": "2027-02-15",
+      "finding": "2026-10-08~10-12 Apple 후보(뉴스 127건 제목, 공시 없음)에서 Apple Intelligence 확장 이용의 유료 상품(가격·출시일) 발표를 찾지 못했다. 'Siri' 제목 2건은 애널리스트 논평과 2026-05 합의한 Siri 기능 지연 집단소송의 합의 안내다. 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-085",
+      "status": "watching",
+      "deadline": "2027-02-15",
+      "finding": "2026-10-08~10-12 Apple 후보(뉴스 127건 제목, 공시 없음)에서 Siri AI·Apple Intelligence 의 사용자 수·사용 빈도 같은 채택 지표를 찾지 못했다. 2026-09 분기 실적 발표는 10월 말 예정이다. 관찰을 이어 간다.",
+      "evidence_ids": [],
+      "source_ids": [],
+      "checked_at": "2026-10-12"
+    }
+  ],
+  "new_triggers": [
+    {
+      "company_id": "nvidia",
+      "factors": [
+        "F5",
+        "F7"
+      ],
+      "observation": "FT 는 2026-10-10 NVIDIA 가 오픈웨이트 모델 회사 Reflection AI 를 인수하거나 인력 영입·라이선스로 데려오거나 지분을 늘리는 협상을 초기 단계에서 하고 있고, 추가 투자에는 칩·컴퓨트 공급이 묶일 수 있으며 협상은 깨질 수 있다고 보도했다(SiliconANGLE 원문 확인). NVIDIA 는 Reflection 에 지금까지 8억 달러를 넣었고, Reflection 은 NVIDIA 가 동맹으로 세는 Nemotron 연합의 회원이다. 지금 NVIDIA ⑤ 판단은 동맹 등급 +2, 적대 등급 −2 로 3점이고, ⑦ 판단은 −2(범위 하한)다. 협상 단계라 점수 근거가 아니다.",
+      "condition": "NVIDIA 나 Reflection 의 공식 발표 또는 NVIDIA 공시로 인수·인력 영입과 라이선스·추가 투자 가운데 하나의 계약이 확인될 때.",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-NEWS-nvidia-20261011-6d664be5"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5",
+          "F7"
+        ],
+        "what": "인수로 끝나면 Reflection 은 같은 지배 아래 관계사가 되어 ⑤ 동맹에서 빠지므로 Nemotron 연합 근거 문장을 고친다. 추가 투자와 컴퓨트 공급이 묶이면 ⑦ 세로축(내 돈이 고객을 거쳐 내 매출로 돌아오나)의 근거 문장에 더한다. 인력 영입·라이선스 구조면 규제 조사 여부를 ⑤ 적대 등급(비용형)에서 본다."
+      }
+    },
+    {
+      "company_id": "tsmc",
+      "factors": [
+        "F5"
+      ],
+      "observation": "TrendForce(2026-10-09, 원문 확인)는 ZDNet 을 인용해 Samsung 이 NVIDIA 맞춤형 HBM 같은 제품에서 HBM 코어 다이를 Samsung Foundry 나 TSMC 가 만든 베이스 다이와 짝짓는 이중 경로를 추진한다고 전했고, The Elec 을 인용해 Micron 의 HBM4E 베이스 다이를 외부 파운드리가 만들며 TSMC 가 맡을 것으로 보인다고 전했다. Samsung 은 파운드리에서 TSMC 와 겨루는 경쟁사다. 보도·계획 단계라 점수 근거가 아니다. 지금 TSMC ⑤ 판단은 동맹 등급 +1, 적대 등급 −1 이고, TSMC 의 경쟁사가 TSMC 공정에 들어온 확정 근거는 없다고 본다.",
+      "condition": "Samsung 이나 Micron 이 TSMC 가 만든 베이스 다이를 쓴 HBM 의 출하나 계약을 회사 발표·공시로 확인할 때.",
+      "deadline": "2027-06-30",
+      "source_ids": [
+        "SRC-NEWS-tsmc-20261009-c0b666fa"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "동맹 등급 +2 의 '내 경쟁사까지 내 공정에 편입했다' 조항을 Samsung(파운드리 경쟁사)에 대 본다. 편입이 서도 Samsung Foundry 로 돌릴 이중 경로가 있어 상대가 떠날 수 있는지를 ⑤ 조달·동맹 네 질문의 셋째 질문(상대가 나를 떠날 수 있나)으로 따지고, 같은 잣대가 닿는 다른 회사가 있는지 함께 본다(한 회사에 댄 잣대는 같은 잣대가 닿는 모든 회사에 댄다)."
+      }
+    }
+  ],
+  "observations": [
+    {
+      "company_id": "tsmc",
+      "metric": "quarter_note",
+      "value": "2026-09 월 매출 NT$511,857백만(전월 대비 −0.6%, 전년 같은 달 대비 +54.6%) · 1~9월 누계 NT$3,898,727백만(전년 대비 +41.1%) · 3분기(7~9월) 합계 약 NT$1,494,243백만(누계 − 상반기 연결 매출, 감사 전)",
+      "unit": "text",
+      "as_of": "2026-09-30",
+      "kind": "text",
+      "source_id": "SRC-EDGAR-000104617926000680",
+      "status": "verified",
+      "raw": "TSMC September Revenue Report (Consolidated): (Unit:NT$ million) … Net Revenue 511,857 514,806 (0.6) 330,980 54.6 3,898,727 2,762,964 41.1",
+      "note": "6-K (2026-10-08) TSMC September 2026 Revenue Report 의 Revenue Report (Consolidated) 표(열: 2026-09, 2026-08, 전월 대비 %, 2025-09, 전년 대비 %, 2026 1~9월, 2025 1~9월, 전년 대비 %). 월 매출은 감사 전 값이다. 지표 목록에 월 매출 지표가 없어 문장 관측으로 둔다. 3분기 합계는 1~9월 누계 3,898,727 에서 2026 상반기 연결재무제표 매출 2,404,484(백만, 6-K 2026-08-14 의 2,404,483,690천)를 뺀 우리 계산이다. 최근 1년 매출을 대신하지 않는다."
+    }
+  ]
+}

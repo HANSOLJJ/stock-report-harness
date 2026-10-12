@@ -1,0 +1,623 @@
+{
+  "group": "B",
+  "sources": [
+    {
+      "source_id": "SRC-WEB-alphabet-901",
+      "title": "Polish regulator suspects Google abused dominant position in publisher payment talks (Reuters, The Star 전재)",
+      "publisher": "The Star (Reuters 전재)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/05/polish-regulator-suspects-google-abused-dominant-position-in-publisher-payment-talks",
+      "accessed_at": "2026-10-12",
+      "sha256": "55695d43e261d981dc9bf61de956f47ad837fb3570f52a72ceb8f7a573d0a053",
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-05T10:53:00Z",
+      "note": "Reuters 기사(Marta Maciag·Rafal Wojciech Nowak) 전재본. 페이지 표기 2026-10-05 6:53 PM MYT 를 UTC 로 바꿨다. reuters.com 원문은 WebFetch 접근이 막혀 열지 못했다"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-902",
+      "title": "Google announces Gemini 4 flagship AI model after months of delays (Reuters, The Star 전재)",
+      "publisher": "The Star (Reuters 전재)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/01/google-announces-gemini-4-flagship-ai-model-after-months-of-delays",
+      "accessed_at": "2026-10-12",
+      "sha256": "e70eaad2d161e870946cc0e8ba73ed64e823529fc9885fa420aea8b5c38dcd62",
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-09-30T23:48:00Z",
+      "note": "Reuters 기사(Kenrick Cai) 전재본. 페이지 표기 2026-10-01 7:48 AM MYT 를 UTC 로 바꿨다. reuters.com 원문은 WebFetch 접근이 막혀 열지 못했다"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-903",
+      "title": "Google accused of overcharging 20 million consumers in UK class action (Bloomberg, The Star 전재)",
+      "publisher": "The Star (Bloomberg 전재)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/07/google-accused-of-overcharging-20-million-consumers-in-uk-class-action",
+      "accessed_at": "2026-10-12",
+      "sha256": "0943813f88198963533d0b556eea9c24e2e1f1760477b75be4c27f21cabdfa2b",
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-07T05:00:00Z",
+      "note": "Bloomberg 기사 전재본(기사 끝 '– Bloomberg'). 페이지 표기 2026-10-07 1:00 PM MYT 를 UTC 로 바꿨다. 같은 사건의 Financial Times 2026-10-04 기사는 유료라 열지 못해 이 기사로 바꿨다"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-904",
+      "title": "Google escapes ad tech breakup in third Big Tech antitrust loss for US (Reuters, Tuoi Tre News 전재)",
+      "publisher": "Tuoi Tre News (Reuters 전재)",
+      "url": "https://news.tuoitre.vn/google-escapes-ad-tech-breakup-in-third-big-tech-antitrust-loss-for-us-103260903120007909.htm",
+      "accessed_at": "2026-10-12",
+      "sha256": "63b72e92f129e74955b3b920641e8b01be60649500b7347461736000840b71b2",
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-09-03T05:00:00Z",
+      "note": "Reuters 기사 전재본(사진 설명에 REUTERS 표기). 게시 2026-09-03 12:00 GMT+7 을 UTC 로 바꿨다"
+    },
+    {
+      "source_id": "SRC-WEB-alphabet-905",
+      "title": "Welcome to Gemini at Work 2026: Introducing the Gemini agent",
+      "publisher": "Google Cloud Blog (Thomas Kurian, Google Cloud CEO)",
+      "url": "https://cloud.google.com/blog/products/ai-machine-learning/welcome-to-gemini-at-work-2026",
+      "accessed_at": "2026-10-12",
+      "sha256": "b1620b621f7b130a1264f5884d0b17b860ae3e7753de1bc923f9537491856282",
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-08T00:00:00Z",
+      "note": "회사 1차 발표. 페이지 구조화 데이터 datePublished 2026-10-08(시각 없음), 화면 표기 October 9, 2026"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-901",
+      "title": "AWS and Azure face EU gatekeeper rules over cloud lock-in",
+      "publisher": "Cloud Computing News (TechForge)",
+      "url": "https://www.cloudcomputing-news.net/news/aws-azure-eu-gatekeeper-rules-cloud-lock-in/",
+      "accessed_at": "2026-10-12",
+      "sha256": "b9fdb764a3dba0ef36d9cf7459d226b95b3b0e5021fa933f05133f09215595e1",
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-10-05T09:00:00Z",
+      "note": "Bloomberg 2026-10-02 보도를 인용해 전한 기사. bloomberg.com 원문은 403 으로 막혀 열지 못해 이 기사로 바꿨다"
+    },
+    {
+      "source_id": "SRC-WEB-amazon-902",
+      "title": "Commission reaches preliminary position that Amazon's and Microsoft's market leading cloud services should be designated under the DMA",
+      "publisher": "European Commission (Shaping Europe's digital future)",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/commission-reaches-preliminary-position-amazons-and-microsofts-market-leading-cloud-services-should",
+      "accessed_at": "2026-10-12",
+      "sha256": "4bd7f3b493cb14919ef8ecc0ac60b5dbe0d7b4b04336af178112c681b43bdc61",
+      "kind": "news",
+      "company_id": "amazon",
+      "published_at_utc": "2026-06-25T00:00:00Z",
+      "note": "규제기관 1차 발표(보도자료). 게시일 25 June 2026 만 표기돼 시각은 없다"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-901",
+      "title": "AWS and Azure face EU gatekeeper rules over cloud lock-in",
+      "publisher": "Cloud Computing News (TechForge)",
+      "url": "https://www.cloudcomputing-news.net/news/aws-azure-eu-gatekeeper-rules-cloud-lock-in/",
+      "accessed_at": "2026-10-12",
+      "sha256": "b9fdb764a3dba0ef36d9cf7459d226b95b3b0e5021fa933f05133f09215595e1",
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-10-05T09:00:00Z",
+      "note": "Bloomberg 2026-10-02 보도를 인용해 전한 기사. bloomberg.com 원문은 403 으로 막혀 열지 못했다"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-902",
+      "title": "Commission reaches preliminary position that Amazon's and Microsoft's market leading cloud services should be designated under the DMA",
+      "publisher": "European Commission (Shaping Europe's digital future)",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/commission-reaches-preliminary-position-amazons-and-microsofts-market-leading-cloud-services-should",
+      "accessed_at": "2026-10-12",
+      "sha256": "4bd7f3b493cb14919ef8ecc0ac60b5dbe0d7b4b04336af178112c681b43bdc61",
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-06-25T00:00:00Z",
+      "note": "규제기관 1차 발표(보도자료). 게시일 25 June 2026 만 표기돼 시각은 없다"
+    },
+    {
+      "source_id": "SRC-NEWS-alphabet-20261008-5da084b7",
+      "title": "Finnish Authorities Order Google to Halt Construction on Massive AI Data Center Projects - TIKR.com",
+      "publisher": "TIKR.com",
+      "url": "https://www.tikr.com/blog/finnish-authorities-order-google-halt-ai-data-center-construction",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-08T12:46:34Z",
+      "relay_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOdkV0d09HMTVIWDJSNHlWcFlUdlRXYmdYV0dVZ0wyS1RrZ3ZHOXJ0UEE0NDZwZkxSZ1NZY0Z1NGxTc2dMVk9WLWUySk1iVm9acUt3MTNNZHc2ZHZsUDlOQlhjZHNkY1AzdnZsXzFWa2VoRTZ4SlZlNDRSZXRaTlYwM2N2QU1wUmhOYTE3QnFiTEtCM1ktVFE?oc=5",
+      "raw_ref": "data/alphabet/news/google/raw/20261012T010814Z-e93db868.xml",
+      "note": "Google News RSS 후보에서 선별. url 은 resolve-urls 로 중계 주소를 푼 원문 주소다"
+    },
+    {
+      "source_id": "SRC-NEWS-alphabet-20261009-580b858c",
+      "title": "Alphabet and Unity Level Up Game Development - Yahoo Finance",
+      "publisher": "Yahoo Finance (MarketBeat 전재)",
+      "url": "https://finance.yahoo.com/technology/ai/articles/alphabet-unity-level-game-development-115500149.html",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "kind": "news",
+      "company_id": "alphabet",
+      "published_at_utc": "2026-10-09T11:55:00Z",
+      "relay_url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOa1Jzb01Ga3B3NjFrV2RVSXkyMUJRLWZ5V1hTYTZJSXBPalJ4VFpPN1JpRGQ4SUxXbUdiYkNlV3JxbGl4SmNtUTVpOUxOT012b2hFLUdGY3BYc1BPZXFOa3ZDVlBvUW5Fd1hzRVJ4cjBIcTQwYy1Vano2V21Jb1N1WGplXzVPTGx2MnpTZmVxWFpjbWRIblJLUkVUalN3cERDTzQ0?oc=5",
+      "raw_ref": "data/alphabet/news/google/raw/20261012T010814Z-e93db868.xml",
+      "note": "Google News RSS 후보에서 선별. url 은 resolve-urls 로 중계 주소를 푼 원문 주소다"
+    },
+    {
+      "source_id": "SRC-NEWS-microsoft-20261008-f04281d1",
+      "title": "U.S. suspends Microsoft, Adobe from green card labor program in foreign worker crackdown - CNBC",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/08/microsoft-adobe-green-card-labor-suspension.html",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-10-08T15:24:25Z",
+      "relay_url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOVDF0UkZkaFdCWUpTV3V5c2RYZVNQak9rQVlxMHJfLWVrcGwxTTZHWWY2UUxrODZpQUhaaldPVUFNeFJ0Vlg5SXhrcmZRLVBWNW1uVzF5eWFRRjRqY0tibE5jTXZOZ0ZxMVBoUGMtRXlyamp4WDVHSkt5bTE0dUV1d2daUmdiREXSAYwBQVVfeXFMT1lDRXpaeUdqeThfZGRZYnBBcVdUR0RxWTVRY01GQVJlOU5iZURjWmIwdWpVS2hRY3JKZm9QMTZQdFR5c0VaaFpSR2EzYWZkVWZwdEE0MFJ4TWQzWHphQk94XzRaWHZkQkV6ZlI4MW9MNGxoNnctUl9Cb3FJcGpPaGtXbmFwY3RPSWhNTFA?oc=5",
+      "raw_ref": "data/microsoft/news/google/raw/20261012T010819Z-a4e40605.xml",
+      "note": "Google News RSS 후보에서 선별. url 은 resolve-urls 로 중계 주소를 푼 원문 주소다"
+    },
+    {
+      "source_id": "SRC-NEWS-microsoft-20261008-6199c8e5",
+      "title": "Microsoft stock (MSFT) falls as US targets green card filings for H-1B workers and Italy probes gaming bus - The Economic Times",
+      "publisher": "The Economic Times",
+      "url": "https://m.economictimes.com/news/international/us/microsoft-stock-msft-falls-as-us-targets-green-card-filings-for-h-1b-workers-and-italy-probes-gaming-business/articleshow/134798406.cms",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-10-08T18:28:32Z",
+      "relay_url": "https://news.google.com/rss/articles/CBMikwJBVV95cUxQYzFCN1prc0FQQ0RxRFNLeHZoNFZPX0lqZ3ZMSC1xLXE4bEttQ1FnN1NxeUxXODRiRFBDR1lPcUJjZWg0UzhyckJCV2JHSE5IcG9TZGZaN0s3V2YxZXkxd1pXZENzUFNMdVRXWWtaMExTMjRCdkJ0R0RtNERHVzA2ZDRWNVAweEFPUzFxS0UxeVJiNlNWYnJxVndtZlQ1U09BQ000N2tWdkozU1JEWTV1V3UteUV6WTQ5TGdzdEF0Q1pSTTRzWTFaYU5jb0ZFeUJnLXJQUlo5SENJZS1pREpfUnUwekpEWkZHOFRHbGNmcl9KMFZCSDVwcWc5dTJVY1FrQXp0YXoyTHFWR3U0S1RuNVFJVdIBmAJBVV95cUxQOVlBRTdDcjNpTllZQ2pMMkt3ci1GS2RXcEU5SjVsRnNnUG5vWm1QYS1lVXFEUUQ1WlpBbG02Q1ZYb2M5VGhTalBqOG5sUC1LWEZDOVdqTGZjY1UyZzR6M05uMVkxT1lEeGxqVDFFNG1fcTloM1cwbElCVC1CYlVhSURVMlFvREZFbm9naWtVdmhRWWV3MWM2SWxWb3VUdEtDUzR4Y09IaVVfRHlsMVhOcVc4WE9IQVktSHpDSkxqRUUtbGhsLUY4aVRWZ18zc3NRYlFsc1BZRW9Nb01FQmZ1Qi1nN29UemxzZFJOZE05VjhCX282X3RwMDd4c3E2UF95TVkyMHdIR3h6cXlRcG03Q05OT3A2MkZV?oc=5",
+      "raw_ref": "data/microsoft/news/google/raw/20261012T010819Z-54dbb861.xml",
+      "note": "Google News RSS 후보에서 선별. url 은 resolve-urls 로 중계 주소를 푼 원문 주소다"
+    },
+    {
+      "source_id": "SRC-NEWS-microsoft-20261009-a7a6c51b",
+      "title": "Introducing Microsoft-Decision-1, our model for fast decision-making - Microsoft",
+      "publisher": "Microsoft (Command Line 블로그)",
+      "url": "https://commandline.microsoft.com/microsoft-decision-1-model-foundry/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2026-10-09T18:48:17Z",
+      "relay_url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1jQVpWd2UtQllkVWRKNDNlZm9JdzR3b09fTm5GdjNmb2FTTmRHZ1NJMHA0bDZ6S1hjdmNmNTluM01zcnZpM1d0dlRmb3JZUWgyR194NlZPSTBjNGVkeTRRUGNUZGlUbUE5UnJLU25CLXVHTGFTNnpJWA?oc=5",
+      "raw_ref": "data/microsoft/news/google/raw/20261012T010819Z-a4e40605.xml",
+      "note": "Google News RSS 후보에서 선별. url 은 resolve-urls 로 중계 주소를 푼 원문 주소다. 페이지 메타의 게시 시각은 2026-10-10T01:35:51Z 다"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-904",
+      "published_at_utc": "2026-09-03T05:00:00Z",
+      "title": "Google escapes ad tech breakup in third Big Tech antitrust loss for US (Reuters, Tuoi Tre News 전재)",
+      "excerpt": "Alphabet's Google escaped a breakup of its advertising technology business on Wednesday, marking the third time in recent years that U.S. antitrust enforcers have tried to force a Big Tech breakup and lost. … U.S. Judge Leonie Brinkema in Alexandria, Virginia, declined to make Google sell AdX, where publishers pay Google a 20% fee to sell ads in auctions that happen instantly when users load websites. … The judge accepted behavioral remedies. She will release a detailed ruling in 14 days to give time to redact confidential information.",
+      "locator": "기사 본문 첫째·셋째·넷째 문단(둘째 줄 사진 설명은 세지 않음)",
+      "relevance": "추론: 미국 연방법원이 2026-09-02 애드테크 독점 사건에서 법무부의 AdX 매각 요구를 거부하고 행위 처분만 받아들였다는 Reuters 보도의 전재본이다. 2차 매체가 '알파벳의 반독점 승소'라고 쓴 사건이 검색 독점 사건이 아니라 이 애드테크 구제 판결임을 주요 언론으로 확인한다. 규제 소송의 처분이 사업 분리까지 가지 않았으므로 ⑤ 적대 성격 규칙상 비용형 쪽 사실이다. 알파벳 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 판사가 매각 같은 구조 처분을 거부하고 행위 처분만 받아들여 광고기술 사업의 소유 구조가 그대로이므로 알파벳 ⑤ 적대 등급 비용형과 같은 방향이다. 적대 근거 문장의 애드테크 항목을 손해배상 소송에 더해 '구조 분리 거부·행위 처분'으로 적는 데 쓴다. 항소에서 구조 처분이 되살아나면 그때 구조형(사업의 정당성 자체를 겨냥한 적대)으로 볼지 다시 본다.",
+      "horizon": "medium — 상세 판결문 공개와 법무부 항소 여부 결정이 수주~수개월 안에 나온다",
+      "counter_evidence": [],
+      "unverified": [
+        "행위 처분의 세부(이행 기한·감시 방식)는 이 기사에 없고 상세 판결문으로 미뤄졌다",
+        "법무부 항소 여부는 기사 시점에 정해지지 않았다",
+        "Ad Manager 매출 비중(4.1%)은 2020년 Wedbush 분석치이고 최근 값은 법원 문서에서 가려졌다고 기사가 적는다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alphabet",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-905",
+      "published_at_utc": "2026-10-08T00:00:00Z",
+      "title": "Welcome to Gemini at Work 2026: Introducing the Gemini agent",
+      "excerpt": "Bringing the best technology to all of you is what drives us at Google Cloud. In the last year, nearly 500 Google Cloud customers each processed more than one trillion tokens. Today, nearly 80% of all Google Cloud customers are using our AI products, and nearly 90% of the Fortune 100 use Gemini Enterprise. At that kind of scale, organizations have moved past experimentation and are running their business on it.",
+      "locator": "Google Cloud 블로그 본문, 'Customer use cases' 안내 뒤 첫 문단(Thomas Kurian 기조연설 각색문)",
+      "relevance": "추론: 구글 클라우드 CEO 가 업무용 단일 AI 에이전트(Gemini agent)를 발표하면서 Google Cloud 고객의 약 80% 가 AI 제품을, Fortune 100 의 약 90% 가 Gemini Enterprise 를 쓴다고 밝혔다. ② 패러다임 적응 경로(남이 바꾼 판 — 에이전트·추론·코딩 — 에 올라타 출시와 채택 지표가 함께 있는가)의 채택 지표를 보태는 회사 1차 발표다. 새 에이전트 자체는 출시 발표라 채택 지표가 아니다. 알파벳 ② 판단은 성능 도약 부분, 패러다임 적응 통과, 표준 선점 통과로 4점이다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 알파벳 ② 패러다임 적응은 Gemini Enterprise 유료 좌석·Gemini 앱 월간 사용자로 이미 통과이고, 이 발표는 기업 고객 사이의 채택 범위를 보태는 근거로만 쓴다. 성능 도약·표준 선점 판정은 이 발표로 바뀌지 않는다.",
+      "horizon": "short — 3분기 실적(10월 말)에서 Gemini Enterprise 지표가 다시 나온다",
+      "counter_evidence": [],
+      "unverified": [
+        "'nearly 80%'·'nearly 90%' 는 회사가 밝힌 수치이고 독립 집계가 아니다",
+        "Fortune 100 기업 안의 사용 범위(유료 좌석 수·부서 규모)는 밝히지 않았다",
+        "Gemini agent 의 일반 공개 시점은 이 글에 없다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alphabet-905",
+      "published_at_utc": "2026-10-08T00:00:00Z",
+      "title": "Welcome to Gemini at Work 2026: Introducing the Gemini agent",
+      "excerpt": "Model choice flexibility: Gemini is the agent, and the model underneath it is a separate choice. It runs each job on the model that fits best — orchestrating across our Gemini family of models and Claude models from Anthropic today, and other leading private and open models in the future — to deliver optimal quality and lower your costs.",
+      "locator": "Google Cloud 블로그 본문, Gemini agent 설계 원칙 목록의 'Model choice flexibility' 항목",
+      "relevance": "추론: 구글이 기업용 업무 에이전트 안에서 모델 경쟁사 Anthropic 의 Claude 모델을 자기 Gemini 모델과 함께 돌린다고 밝혔다. ⑤ 조달·동맹 네 질문(돈 주고 사는 관계는 동맹이 아니다)에서 상대 모델을 내 매대에 올려 파는 재판매 관계는 동맹 후보이고, 경쟁사가 내 매대에 들어온 사실이다. 알파벳 ⑤ 판단은 동맹 등급 +2(경쟁사 편입 조항: Anthropic 의 Google Cloud 약정과 TPU 사용), 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 알파벳 ⑤ 동맹 등급 +2 는 Anthropic 의 Google Cloud 다년 약정으로 이미 서 있고, 이 사실은 같은 경쟁사가 구글의 업무용 에이전트 매대에도 올라 있다는 근거를 보탠다. 대금·수수료 분배 조건이 밝혀지지 않아 등급을 바꾸는 근거로 쓰지 않는다.",
+      "horizon": "medium — 에이전트 일반 공개와 모델 추가는 수개월에 걸친다",
+      "counter_evidence": [],
+      "unverified": [
+        "구글과 Anthropic 사이의 대금·수수료 분배 조건은 글에 없다",
+        "Claude 를 쓰는 작업의 비중은 밝히지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-alphabet-20261008-5da084b7",
+      "published_at_utc": "2026-10-08T12:46:34Z",
+      "title": "Finnish Authorities Order Google to Halt Construction on Massive AI Data Center Projects - TIKR.com",
+      "excerpt": "Finland has told Google (GOOGL) to pause work on two AI data centers. … Finland’s Licensing and Supervision Agency (LVV) sent the notice to Google’s subsidiary, Tuike Finland Oy. … It covers projects planned in Muhos and Kajaani. Work must stop until the environmental impact assessments are done. The deadline is Oct. 23. … Google said it fell short of its own standards. It also said it acted in good faith under the Forestry Act and will follow the agency’s guidance.",
+      "locator": "기사 본문 첫째·셋째·넷째·일곱째 문단(머리 안내 두 줄은 세지 않음)",
+      "relevance": "추론: 핀란드 인허가·감독청이 구글 자회사에 무호스·카야니 두 AI 데이터센터 부지의 공사를 환경영향평가가 끝날 때까지 멈추라고 통지했다. 규제기관의 시장 일부 차단이라 ⑤ 적대 등급의 재료이고, 두 부지 공사만 멈추고 사업 구조를 건드리지 않으므로 ⑤ 적대 성격 규칙상 비용형이다. 알파벳 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 두 부지의 공사 중지라 알파벳 ⑤ 적대 등급 비용형과 같은 방향이고, 적대 근거 문장에 데이터센터 인허가 전선을 더하는 데 쓴다. 여러 나라에서 같은 이유의 인허가 차단이 이어져 증설 자체가 막히는 수준이 되면 그때 다시 본다.",
+      "horizon": "short — 환경영향평가 일정에 따라 수주~수개월",
+      "counter_evidence": [],
+      "unverified": [
+        "2차 매체(TIKR) 기사다. 핀란드 당국의 결정문 원문은 열지 않았다",
+        "기사의 'The deadline is Oct. 23' 이 무엇의 기한인지 기사만으로 분명하지 않다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-alphabet-20261009-580b858c",
+      "published_at_utc": "2026-10-09T11:55:00Z",
+      "title": "Alphabet and Unity Level Up Game Development - Yahoo Finance",
+      "excerpt": "Alphabet and Unity announced a partnership on Oct. 7 to build a generative AI gaming platform that lets users create games via text prompts. … The Alphabet and Unity partnership operates in two distinct phases, beginning with a platform called Playground. Available to creators aged 18 and older, Playground allows users to generate and customize playable games using natural language. The system requires no coding background and integrates directly into Google Play Games for immediate multiplayer matchmaking, leaderboards, and community sharing.",
+      "locator": "기사 'Key Points' 첫 항목과 본문 'two distinct phases' 문단",
+      "relevance": "추론: 알파벳과 Unity 가 2026-10-07 생성형 AI 게임 제작 플랫폼을 함께 만들기로 했고 첫 단계 Playground 가 Google Play Games 와 바로 연결된다는 2차 보도다. ⑤ 조달·동맹 네 질문으로 보면 공동개발이고(1번), Unity 엔진 이용이 늘면 Google Play Games 와 구글 모델 이용도 늘어 연동된다(2번). 다만 지분이 걸리지 않았고 Unity 는 알파벳과 겨루는 경쟁사가 아니다. 알파벳 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 지분 없는 공동개발이고 상대가 경쟁사가 아니어서 알파벳 ⑤ 동맹 등급 +2 의 두 조항(복수 지분 동맹·경쟁사 편입) 어느 쪽도 바꾸지 않는다. 동맹 근거 문장에 게임 엔진 공동개발을 더하는 데만 쓴다.",
+      "horizon": "medium — 두 번째 단계(Unity Spark)는 연내 예정",
+      "counter_evidence": [],
+      "unverified": [
+        "2차 매체(MarketBeat 기사의 Yahoo Finance 전재)다. 두 회사의 1차 발표문은 열지 않았다",
+        "수익 배분·지분 조건은 기사에 없다",
+        "Playground 의 이용 규모는 확인하지 못했다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "amazon",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-amazon-902",
+      "published_at_utc": "2026-06-25T00:00:00Z",
+      "title": "Commission reaches preliminary position that Amazon's and Microsoft's market leading cloud services should be designated under the DMA",
+      "excerpt": "The Commission has informed Amazon and Microsoft of its preliminary view that they should be designated as gatekeepers under the Digital Markets Act (DMA), for their cloud computing services, Amazon Web Services (AWS) and Microsoft Azure (Azure) respectively. … In both cases, the Commission preliminarily finds that AWS and Azure, the largest and second largest cloud computing services in the EU respectively, are an important gateway between businesses and their customers in the EU. This is the case despite them not meeting the DMA's quantitative thresholds for designation.",
+      "locator": "보도자료 첫째·둘째 문단('PRESS RELEASE Publication 25 June 2026' 머리 다음)",
+      "relevance": "추론: EU 집행위원회가 AWS 를 디지털시장법(DMA) 게이트키퍼로 지정해야 한다는 예비 판단을 아마존에 알렸다는 규제기관 1차 발표다. 규제 조사라 ⑤ 적대 등급의 재료이고, 지정되면 상호운용·데이터 이동 같은 행위 의무가 걸리지만 판매 금지나 사업 분리는 아니므로 ⑤ 적대 성격 규칙상 비용형 쪽이다. 같은 결정이 마이크로소프트 Azure 에도 걸려 두 회사에 같은 성격으로 읽는다. 아마존 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 예비 판단 단계이고 지정 뒤 의무가 AWS 의 영업 조건을 바꾸더라도 사업을 나누거나 판매를 막지 않아 아마존 ⑤ 적대 등급 비용형과 같은 방향이다. 적대 근거 문장에 EU 클라우드 규제 전선을 더한다. 최종 지정 뒤 의무가 AWS 사업 구조를 건드리는 수준으로 확인되면 그때 구조형으로 볼지 다시 본다.",
+      "horizon": "medium — 최종 결정은 2026년 11월 예정으로 보도되고, 지정 뒤 준수 기한은 6개월이다",
+      "counter_evidence": [],
+      "unverified": [
+        "최종 지정 결정은 기준일까지 없다",
+        "지정 뒤 AWS 에 걸릴 구체 의무는 위원회가 아직 밝히지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-902",
+      "published_at_utc": "2026-06-25T00:00:00Z",
+      "title": "Commission reaches preliminary position that Amazon's and Microsoft's market leading cloud services should be designated under the DMA",
+      "excerpt": "The Commission has informed Amazon and Microsoft of its preliminary view that they should be designated as gatekeepers under the Digital Markets Act (DMA), for their cloud computing services, Amazon Web Services (AWS) and Microsoft Azure (Azure) respectively. … In both cases, the Commission preliminarily finds that AWS and Azure, the largest and second largest cloud computing services in the EU respectively, are an important gateway between businesses and their customers in the EU. This is the case despite them not meeting the DMA's quantitative thresholds for designation.",
+      "locator": "보도자료 첫째·둘째 문단('PRESS RELEASE Publication 25 June 2026' 머리 다음)",
+      "relevance": "추론: EU 집행위원회가 Azure 를 디지털시장법(DMA) 게이트키퍼로 지정해야 한다는 예비 판단을 마이크로소프트에 알렸다는 규제기관 1차 발표다. 규제 조사라 ⑤ 적대 등급의 재료이고, 지정되면 상호운용·데이터 이동 같은 행위 의무가 걸리지만 판매 금지나 사업 분리는 아니므로 ⑤ 적대 성격 규칙상 비용형 쪽이다. 같은 결정이 아마존 AWS 에도 걸려 두 회사에 같은 성격으로 읽는다. 마이크로소프트 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 예비 판단 단계이고 지정 뒤 의무가 Azure 의 영업 조건을 바꾸더라도 사업을 나누거나 판매를 막지 않아 마이크로소프트 ⑤ 적대 등급 비용형과 같은 방향이다. 적대 근거 문장에 EU 클라우드 규제 전선을 더한다. 최종 지정 뒤 의무가 Azure 사업 구조를 건드리는 수준으로 확인되면 그때 구조형으로 볼지 다시 본다.",
+      "horizon": "medium — 최종 결정은 2026년 11월 예정으로 보도되고, 지정 뒤 준수 기한은 6개월이다",
+      "counter_evidence": [],
+      "unverified": [
+        "최종 지정 결정은 기준일까지 없다",
+        "지정 뒤 Azure 에 걸릴 구체 의무는 위원회가 아직 밝히지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-901",
+      "published_at_utc": "2026-10-05T09:00:00Z",
+      "title": "AWS and Azure face EU gatekeeper rules over cloud lock-in",
+      "excerpt": "The European Commission is preparing to conclude its investigations into Azure and AWS, with draft findings that the two services meet the requirements for designation, Bloomberg reported on October 2, citing people familiar with the matter. A decision is expected in November, although the findings remain in draft form and the timing could change. … Microsoft has raised concerns about the treatment of Google Cloud. The company said in June that excluding Google’s cloud and AI businesses from comparable scrutiny risked creating an uneven market.",
+      "locator": "기사 본문 둘째 문단과 스물둘째 문단(Amazon 반대 입장 다음 문단)",
+      "relevance": "추론: EU 집행위원회가 Azure·AWS 가 게이트키퍼 지정 요건을 충족한다는 결론 초안으로 조사를 마무리하고 있으며 결정은 11월로 예상된다는 Bloomberg 보도를 전한 기사다. 마이크로소프트는 Google Cloud 가 같은 심사를 받지 않는 점을 문제 삼았다. 규제 조사라 ⑤ 적대 등급의 재료이고 ⑤ 적대 성격 규칙상 비용형 쪽이다. 같은 조치가 아마존 AWS 에도 걸린다. 마이크로소프트 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 결론 초안 단계라 마이크로소프트 ⑤ 적대 등급 비용형과 같은 방향이고, 적대 근거 문장에 EU 클라우드 규제 전선을 더한다. 최종 지정 뒤 의무가 Azure 사업 구조를 건드리는 수준으로 확인되면 그때 구조형으로 볼지 다시 본다.",
+      "horizon": "medium — 결정은 2026년 11월 예정이나 일정은 바뀔 수 있다고 기사가 적는다",
+      "counter_evidence": [],
+      "unverified": [
+        "Bloomberg 원문은 403 으로 막혀 열지 못했고 그 내용을 전한 기사로 확인했다",
+        "위원회는 11월 일정을 공식 확인하지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-microsoft-20261008-f04281d1",
+      "published_at_utc": "2026-10-08T15:24:25Z",
+      "title": "U.S. suspends Microsoft, Adobe from green card labor program in foreign worker crackdown - CNBC",
+      "excerpt": "The U.S. Department of Labor announced it would suspend Microsoft and Adobe from its Permanent Labor Certification program on Thursday, Labor Secretary Keith Sonderling said, as the Trump administration continues to take aim at immigration and foreign hiring programs ahead of November's midterm elections. … The secretary said Adobe and Microsoft were also suspended \"due to multiple active federal investigations.\"",
+      "locator": "기사 본문 첫째·셋째 문단(머리 메뉴 줄은 세지 않음)",
+      "relevance": "추론: 미국 노동부가 마이크로소프트를 영주권 노동 인증(PERM) 프로그램에서 정지했고 그 이유로 '여러 진행 중인 연방 조사'를 들었다. 정부의 규제 조치라 ⑤ 적대 등급의 재료이고, 채용·인력 확보 비용에 닿지만 판매나 사업 구조를 건드리지 않으므로 ⑤ 적대 성격 규칙상 비용형이다. 같은 조치가 Adobe 와 인도계 IT 서비스 회사들에도 걸렸으나 그 회사들은 채점 대상이 아니다. 마이크로소프트 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 이민 프로그램 정지는 마이크로소프트 ⑤ 적대 등급 비용형과 같은 방향이고, 적대 근거 문장에 미국 정부의 영주권 신청 정지와 연방 조사를 더하는 데 쓴다. 그 조사가 정부 조달 배제처럼 판매를 막는 처분으로 이어지면 그때 다시 본다.",
+      "horizon": "medium — 정지 해제 조건과 연방 조사 결과는 수개월에 걸친다",
+      "counter_evidence": [],
+      "unverified": [
+        "'여러 진행 중인 연방 조사'가 무엇인지 기사에 없다",
+        "정지 기간과 해제 조건은 부통령 발언 밖에 확인되지 않는다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-microsoft-20261008-6199c8e5",
+      "published_at_utc": "2026-10-08T18:28:32Z",
+      "title": "Microsoft stock (MSFT) falls as US targets green card filings for H-1B workers and Italy probes gaming bus - The Economic Times",
+      "excerpt": "Italy’s antitrust authority has launched an EU-backed investigation into several Microsoft-owned video-game companies, which includes Activision Blizzard, over concerns about the use of virtual currencies in games, as per a Reuters report. … Italy is leading the investigation alongside consumer-protection authorities in Norway and Denmark, the wider action is being coordinated through the European Commission’s Consumer Protection Cooperation Network.",
+      "locator": "기사 본문 'Microsoft Stock Falls: Italy Opens Probe Into Microsoft-Owned Gaming Companies' 소제목 아래 첫째 문단과 넷째 문단",
+      "relevance": "추론: 이탈리아 경쟁·소비자 당국이 노르웨이·덴마크 당국과 함께 EU 소비자보호협력망을 통해 Activision Blizzard 등 마이크로소프트 소유 게임사의 가상 화폐 표시 관행을 조사한다는 보도다. 규제 조사라 ⑤ 적대 등급의 재료이고, 게임 결제 표시 관행을 다루며 사업 구조를 건드리지 않으므로 ⑤ 적대 성격 규칙상 비용형이다. ⑤ 는 AI 밖 사업의 관계에도 같은 잣대를 댄다. 마이크로소프트 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 게임 사업의 소비자 보호 조사라 마이크로소프트 ⑤ 적대 등급 비용형과 같은 방향이고, 적대 근거 문장에 유럽 게임 소비자 보호 조사를 더하는 데 쓴다.",
+      "horizon": "medium — 소비자 보호 조사는 수개월~1년",
+      "counter_evidence": [],
+      "unverified": [
+        "Reuters 보도를 옮긴 Economic Times 기사다. 이탈리아 당국의 발표 원문은 열지 않았다",
+        "제재 상한과 조사 기간은 기사에 없다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-microsoft-20261009-a7a6c51b",
+      "published_at_utc": "2026-10-09T18:48:17Z",
+      "title": "Introducing Microsoft-Decision-1, our model for fast decision-making - Microsoft",
+      "excerpt": "Today we’re introducing Microsoft-Decision-1, our new model for fast decision-scoring, available in Microsoft Foundry and through OpenRouter. This model is designed for routing, classification, prioritization, verification, and workflow control, making it easier to incorporate decision intelligence into existing applications, agents, and workflows in a secure, trusted environment. … To build Microsoft-Decision-1, we post trained Qwen3.5-9B for fast, single-pass decision scoring and will soon rebase it on other models, including Microsoft AI (MAI) and OpenAI.",
+      "locator": "블로그 본문 셋째 문단 첫 두 문장과 여섯째 문단 첫 문장",
+      "relevance": "추론: 마이크로소프트가 라우팅·분류용 소형 의사결정 모델 Microsoft-Decision-1 을 Foundry 와 OpenRouter 에 내놓았고, 이 모델은 Alibaba 의 오픈웨이트 Qwen3.5-9B 를 후학습해 만들었다고 밝혔다. 신모델 벤더 발표라 ② 를 다시 볼 계기일 뿐이고, 성능 비교는 회사가 고른 36개 벤치마크라 독립 측정이 아니다(규칙 2.7). 마이크로소프트 ② 판단은 성능 도약 실패, 패러다임 적응 통과, 표준 선점 통과로 4점이다. (선별 확신: 중간)",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 프런티어 범용 모델이 아니고 성능 비교가 회사 자체 측정이라 마이크로소프트 ② 성능 도약 실패 판정을 바꾸지 않는다. 자체 모델이 다른 회사의 오픈웨이트 모델을 후학습한 것이라는 사실은 성능 도약 판정 칸의 보조 사실로만 쓴다.",
+      "horizon": "short — OpenRouter 사용량과 독립 측정은 출시 뒤 몇 주 안에 쌓인다",
+      "counter_evidence": [],
+      "unverified": [
+        "36개 벤치마크 비교와 속도 비교는 회사가 잰 것이다",
+        "출시 뒤 사용량·채택 수치는 없다"
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    }
+  ],
+  "evidence_fixes": [
+    {
+      "evidence_id": "EV-alphabet-004",
+      "excerpt": "A federal judge’s decision to block a forced breakup of Alphabet (GOOGL)’s advertising assets keeps its core ad engine intact and gives the company room to keep funding AI projects, Google Cloud, and Waymo.",
+      "locator": "기사 본문 첫 문단(원문 주소 https://simplywall.st/stocks/us/media/nasdaq-googl/alphabet/news/alphabet-googl-could-be-28-undervalued-following-its-antitru)"
+    },
+    {
+      "evidence_id": "EV-alphabet-007",
+      "source_id": "SRC-WEB-alphabet-902",
+      "title": "Google announces Gemini 4 flagship AI model after months of delays (Reuters, The Star 전재)",
+      "published_at_utc": "2026-09-30T23:48:00Z",
+      "excerpt": "SAN FRANCISCO, Sept 30 (Reuters) - Alphabet's Google on Wednesday announced a new top-tier artificial intelligence model to anchor its Gemini 4 generation of models in a fresh bid to catch up to rivals Anthropic and OpenAI in the AI race. … Google said it was providing the model to select cybersecurity partners and was participating in the Trump administration's voluntary process for pre-release model access. It did not provide a timeline for the model's public release.",
+      "locator": "기사 첫째·넷째 문단(첫 문단 'Stay signed in' 안내문은 세지 않음)"
+    },
+    {
+      "evidence_id": "EV-alphabet-009",
+      "source_id": "SRC-WEB-alphabet-901",
+      "title": "Polish regulator suspects Google abused dominant position in publisher payment talks (Reuters, The Star 전재)",
+      "published_at_utc": "2026-10-05T10:53:00Z",
+      "excerpt": "Poland, Oct 5 (Reuters) - Poland's antitrust watchdog said on Monday it suspected Alphabet's Google of abusing its dominant market position while negotiating content payments with domestic media publishers. … The Office of Competition and Consumer Protection, known by its Polish abbreviation UOKiK, said the charges relate to how Google negotiates remuneration for displaying articles and snippets in search results, Google News and Discover services. … The maximum fine for abusing a dominant market position may amount to 10% of a company's turnover, the regulator said.",
+      "locator": "기사 첫째·둘째·여덟째 문단(첫 문단 'Stay signed in' 안내문은 세지 않음)"
+    },
+    {
+      "evidence_id": "EV-alphabet-010",
+      "source_id": "SRC-WEB-alphabet-903",
+      "title": "Google accused of overcharging 20 million consumers in UK class action (Bloomberg, The Star 전재)",
+      "published_at_utc": "2026-10-07T05:00:00Z",
+      "excerpt": "The US giant’s 30% levy for digital purchases violated competition law and consumers affected since 2015 could be in line for a £1.2bil (US$1.6bil or RM6.5bil) payout, lawyers representing them said on Oct 6 at the start of a class action case at the Competition Appeal Tribunal in London. … Google has consistently denied that it has engaged in any anti-competitive conduct and called for the claim to be dismissed. … Google’s Play Store was fined €430mil (RM1.95bil) this year for restricting app developers from freely communicating and directing users to cheaper alternative purchase channels.",
+      "locator": "기사 둘째·넷째·여덟째 문단(첫 문단 'Stay signed in' 안내문은 세지 않음)"
+    },
+    {
+      "evidence_id": "EV-amazon-008",
+      "source_id": "SRC-WEB-amazon-901",
+      "title": "AWS and Azure face EU gatekeeper rules over cloud lock-in",
+      "published_at_utc": "2026-10-05T09:00:00Z",
+      "excerpt": "Microsoft Azure and AWS are moving closer to being designated as gatekeepers under the European Union’s Digital Markets Act, which would bring the two cloud platforms under additional competition rules. … The European Commission is preparing to conclude its investigations into Azure and AWS, with draft findings that the two services meet the requirements for designation, Bloomberg reported on October 2, citing people familiar with the matter. A decision is expected in November, although the findings remain in draft form and the timing could change.",
+      "locator": "기사 본문 첫째·둘째 문단"
+    },
+    {
+      "evidence_id": "EV-microsoft-004",
+      "excerpt": "On September 2, 2026, Microsoft Corporation (the “Company”) posted presentation materials to its Investor Relations website titled “FY27 Segments and Investor Metrics” announcing a change in reportable segments and investor metrics. Beginning in fiscal year 2027, the Company will manage its operations under this updated reporting structure and report its financial performance based on two reportable segments: (1) Agents and Infra and (2) Devices and Consumer.",
+      "locator": "8-K 본문 Item 7.01 Regulation FD Disclosure 첫 문단(과거 분기 재작성 Azure 매출 표는 첨부 Exhibit 99.1 'As Restated' 표에 있다)"
+    }
+  ],
+  "evidence_unreadable": [],
+  "triggers": [
+    {
+      "trigger_id": "TRG-002",
+      "status": "fired",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-WEB-alphabet-904",
+        "SRC-WEB-alphabet-901",
+        "SRC-WEB-alphabet-903",
+        "SRC-NEWS-alphabet-20261008-5da084b7"
+      ],
+      "finding": "조건의 셋째 갈래(승소한 사건이 무엇인지 주요 언론으로 확인되면)가 채워졌다. 2차 매체가 '반독점 승소'라고 쓴 사건은 미국 버지니아 동부 연방법원의 Brinkema 판사가 2026-09-02 애드테크 독점 사건에서 법무부의 AdX 매각 요구를 거부하고 행위 처분만 받아들인 판결이고, 검색 독점 사건이 아니다. 이를 Reuters 기사 전재본(Tuoi Tre News 2026-09-03)과 Simply Wall St 기사 본문 첫 문단으로 확인했다. EU 법원의 집행정지 판단이나 검색 데이터 공유 명령의 이행 개시 보도는 이 창에 없다. 이 창의 다른 적대 사실은 핀란드 인허가·감독청의 데이터센터 두 곳 공사 중지 명령(TIKR 2026-10-08)이고, 폴란드 경쟁당국 조사와 영국 경쟁항소심판소의 Play 스토어 소비자 집단소송 재판(2026-10-06 개시)은 본문으로 다시 확인했다. 모두 사업 구조를 건드리지 않는 비용형이라 알파벳 ⑤ 적대 등급의 방향은 그대로다. 판단 세션은 적대 근거 문장의 애드테크 항목을 손해배상 소송에 더해 '구조 분리 거부·행위 처분'으로 적을지 정한다. EU 명령과 영국 소송 갈래는 새 관찰 항목으로 계속 본다(검색 범위: 알파벳 뉴스 후보 2026-10-08~10-12 105건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 알파벳 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-003",
+      "status": "watching",
+      "deadline": "2026-11-30",
+      "finding": "알파벳 뉴스 후보에 Anthropic 공개 S-1 제출이나 구글 쪽 컴퓨트 약정·매출 규모를 1차 자료로 전한 기사는 없고, 이 창의 공시 후보 전체(알리바바·TSMC 6-K 두 건)에 알파벳·Anthropic 제출본이 없다. 알파벳 3분기 10-Q 는 기준일까지 나오지 않았다. 조건 미충족이라 관찰을 유지한다(검색 범위: 알파벳 뉴스 후보 2026-10-08~10-12 105건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 알파벳 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-005",
+      "status": "watching",
+      "deadline": "2026-11-10",
+      "finding": "아마존 3분기 10-Q 는 기준일까지 공시되지 않았다. 엔비디아 칩 80억 달러어치를 외부 투자자에게 넘기고 계속 쓰는 금융 구조는 Yahoo Finance(2026-10-10) 기사 본문에서도 '제안된(proposed)' 단계로 적혀 있고 실행 보도는 없다. 최대 420억 달러 회사채 발행 완료 보도도 이 창에 없다. 관찰을 유지한다(검색 범위: 아마존 뉴스 후보 2026-10-08~10-12 162건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 아마존 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-006",
+      "status": "watching",
+      "deadline": "2027-02-15",
+      "finding": "Barron's(2026-10-08)가 아마존의 AI 쇼핑 에이전트 차단이 경쟁사에 기회라는 분석을 냈으나 유료 기사라 본문을 열지 못했다(401). 다른 후보에도 쇼핑 에이전트 경로로의 Prime 회원·쇼핑 트래픽 이탈 수치는 없고, 이 창의 Prime 관련 후보는 10월 Prime 행사 할인 기사들이다. 조건 미충족이라 관찰을 유지한다(검색 범위: 아마존 뉴스 후보 2026-10-08~10-12 162건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 아마존 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-007",
+      "status": "watching",
+      "deadline": "2026-11-10",
+      "finding": "마이크로소프트 FY27 1분기 실적은 2026-10-28 발표 예정이라는 기사(Motley Fool 등 2026-10-12)만 있고 Copilot 유료 좌석 수나 이탈 공시는 없다. Copilot 과금 구조 변경에 관한 새 보도도 이 창에 없다. 관찰을 유지한다(검색 범위: 마이크로소프트 뉴스 후보 2026-10-08~10-12 145건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 마이크로소프트 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-008",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "이 창에 마이크로소프트–OpenAI 계약 변경 공시나 M365 고객 이탈 수치는 없다. The Decoder(2026-10-11) 논평은 마이크로소프트가 Office 제품에서 OpenAI·Anthropic 모델을 더 싼 자체 모델로 바꾸고 있다고 주장하지만 근거 출처를 밝히지 않은 논평이라 근거로 올리지 않았다. 관찰을 유지한다(검색 범위: 마이크로소프트 뉴스 후보 2026-10-08~10-12 145건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 마이크로소프트 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-009",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "마이크로소프트는 라우팅·분류용 소형 모델 Microsoft-Decision-1 을 내놓았으나(2026-10-09) 성능 비교는 회사 자체 측정이고, 에이전트 실무 독립 측정(OSWorld·Terminal-Bench 등)이나 Autopilot 채택 수치는 이 창에 없다. 관찰을 유지한다(검색 범위: 마이크로소프트 뉴스 후보 2026-10-08~10-12 145건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 마이크로소프트 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-055",
+      "status": "watching",
+      "deadline": "2026-11-10",
+      "finding": "알파벳 3분기 10-Q 는 기준일까지 공시되지 않았다. 이 창의 기사(TIKR 2026-10-08 등)는 2분기 잉여현금흐름이 마이너스였다는 사실을 다시 옮겼을 뿐 새 분기 현금흐름 사실은 없다. 관찰을 유지한다(검색 범위: 알파벳 뉴스 후보 2026-10-08~10-12 105건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 알파벳 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-086",
+      "status": "watching",
+      "deadline": "2027-02-15",
+      "finding": "FY27 1분기 실적이 2026-10-28 발표 예정이라 2026-07 정가 인상 뒤의 Microsoft 365 상업용 좌석 증가율은 아직 공시되지 않았다. 관찰을 유지한다(검색 범위: 마이크로소프트 뉴스 후보 2026-10-08~10-12 145건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 마이크로소프트 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-087",
+      "status": "watching",
+      "deadline": "2026-11-15",
+      "finding": "알파벳 3분기 실적은 기준일까지 나오지 않았다. 이 창의 'Gemini 앱 월간 사용자 9.5억' 기사들(2026-10-10)은 2분기 실적 발표 수치를 다시 옮긴 것이다. Google Cloud 블로그(2026-10-08)는 Google Cloud 고객의 약 80% 가 AI 제품을, Fortune 100 의 약 90% 가 Gemini Enterprise 를 쓴다고 밝혔지만 같은 정의의 시계열이 아니라 ③ 후발 가속도(성장률이 오르는가) 판정에 쓰지 못한다. 관찰을 유지한다(검색 범위: 알파벳 뉴스 후보 2026-10-08~10-12 105건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 알파벳 제출본 없음)."
+    },
+    {
+      "trigger_id": "TRG-088",
+      "status": "watching",
+      "deadline": "2027-06-30",
+      "finding": "이 창의 마이크로소프트 후보에 유럽 정부기관의 Microsoft 365 이탈이 좌석 수와 함께 실행 단계로 확인된 새 보도는 없고, 마이크로소프트의 유럽 상업용 좌석 감소 공시도 없다. 관찰을 유지한다(검색 범위: 마이크로소프트 뉴스 후보 2026-10-08~10-12 145건(제목 전수, 고른 기사는 resolve-urls 로 원문을 열었다), 이 창 공시 후보에 마이크로소프트 제출본 없음)."
+    }
+  ],
+  "new_triggers": [
+    {
+      "company_id": "alphabet",
+      "factors": [
+        "F5"
+      ],
+      "observation": "구글은 EU 의 검색 데이터 공유·안드로이드 AI 상호운용 명령에 이의를 제기했다. 영국 경쟁항소심판소에서는 Play 스토어의 최대 30% 수수료가 경쟁법을 어겼다며 약 2천만 명을 대신해 12억 파운드를 청구한 소비자 집단소송 재판이 2026-10-06 시작됐고, 구글은 위반을 부인한다. 알파벳 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "condition": "EU 법원이 명령의 집행정지 여부를 판단하거나 명령 이행이 시작되면, 또는 영국 경쟁항소심판소가 Play 스토어 수수료 구조를 바꾸도록 하는 판결을 내리면",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-NEWS-alphabet-20260930-623b47a2",
+        "SRC-WEB-alphabet-903"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "알파벳 ⑤ 적대 등급을 비용형으로 둘지 — 명령이나 판결이 검색·앱 장터 사업의 구조(데이터 공유 의무·수수료 체계)를 바꾸도록 강제하는 수준이면 구조형(사업의 정당성 자체를 겨냥한 적대)을 검토한다"
+      }
+    },
+    {
+      "company_id": "amazon",
+      "factors": [
+        "F5"
+      ],
+      "observation": "EU 집행위원회는 2026-06-25 AWS 를 디지털시장법 게이트키퍼로 지정해야 한다는 예비 판단을 아마존에 알렸고, 2026-10-02 Bloomberg 보도에 따르면 지정 요건을 충족한다는 결론 초안으로 조사를 마무리하고 있으며 결정은 11월로 예상된다. 같은 절차가 마이크로소프트 Azure 에도 걸려 있다. 아마존 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "condition": "EU 집행위원회가 AWS 의 게이트키퍼 지정을 최종 결정하고 적용할 의무를 밝히면",
+      "deadline": "2026-12-15",
+      "source_ids": [
+        "SRC-WEB-amazon-901",
+        "SRC-WEB-amazon-902"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "아마존 ⑤ 적대 등급을 비용형으로 둘지 — 지정 뒤 의무(상호운용·데이터 이동·끼워팔기 제한)가 AWS 사업 구조를 건드리는 수준인지 본다. 같은 결정이 Azure 에도 걸리므로 마이크로소프트와 같은 성격으로 읽는다"
+      }
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "observation": "EU 집행위원회는 2026-06-25 Azure 를 디지털시장법 게이트키퍼로 지정해야 한다는 예비 판단을 마이크로소프트에 알렸고, 2026-10-02 Bloomberg 보도에 따르면 지정 요건을 충족한다는 결론 초안으로 조사를 마무리하고 있으며 결정은 11월로 예상된다. 같은 절차가 아마존 AWS 에도 걸려 있고 Google Cloud 는 대상이 아니다. 마이크로소프트 ⑤ 판단은 동맹 등급 +2, 적대 등급 -1(비용형)로 4점이다.",
+      "condition": "EU 집행위원회가 Azure 의 게이트키퍼 지정을 최종 결정하고 적용할 의무를 밝히면",
+      "deadline": "2026-12-15",
+      "source_ids": [
+        "SRC-WEB-microsoft-901",
+        "SRC-WEB-microsoft-902"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "마이크로소프트 ⑤ 적대 등급을 비용형으로 둘지 — 지정 뒤 의무(상호운용·데이터 이동·끼워팔기 제한)가 Azure 사업 구조를 건드리는 수준인지 본다. 같은 결정이 AWS 에도 걸리므로 아마존과 같은 성격으로 읽는다"
+      }
+    }
+  ],
+  "observations": []
+}

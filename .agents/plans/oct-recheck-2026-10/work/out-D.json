@@ -1,0 +1,963 @@
+{
+  "group": "D",
+  "sources": [
+    {
+      "source_id": "SRC-NEWS-openai-20261008-b08f127f",
+      "title": "OpenAI’s revenue is reportedly $20 billion less than previously projected - TechCrunch",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/08/openais-revenue-is-reportedly-20-billion-less-than-previously-projected/",
+      "accessed_at": "2026-10-12",
+      "sha256": "b08f127f69f96ca1cf9ca46dd3c1fbf09d09d1f985cbbfe37c9846b15f22b6bc",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-08T18:19:42Z",
+      "publisher_url": "https://techcrunch.com",
+      "raw_ref": "data/openai/news/google/raw/20261012T010834Z-308e2fa2.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPWGltbEsxdjUway1nMDFQUUNBZUtSRmg1QmZ6Y04tVlM2aXJLV0NZQUR2cm1KZjQ5VHlQdTBPU0VQNVJDaVhNclVhYjk0Q1BJR0xneDYwdXF4djQtdF9vSDJYV0swbUoyWDNvQ2Vsc0ZwXzdvbG9UUlh6SEotWGs1a2NuRGFyYVhfR2ZMbGdndUMtZ0V5VWkzbVJ6SzZBMUJIU21vRk94a1Q0dw?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261009-d0d11288",
+      "title": "OpenAI Expects $70 Billion in Annualized Revenue by End of 2026 - Yahoo Finance",
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/openai-expects-70-billion-annualized-014338719.html",
+      "accessed_at": "2026-10-12",
+      "sha256": "d0d11288d988636ca27c35ab48ffb2f447a04b1ee6087ebd322014cc112cef29",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-09T01:43:00Z",
+      "publisher_url": "https://finance.yahoo.com",
+      "raw_ref": "data/openai/news/google/raw/20261012T010834Z-308e2fa2.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPRmxoLVE1TERoaF9EZkl2d0dQRkNIcDhsczJNcTNhdFlRSWZ2UHMwTnNOTnRCXzFVaW9wb3BQbzlzZGVNRkM4OWVEdUg3QS1RRE9JY0paNTkxYUtSbGZlRTNYclRFWGRzY0pjY1g3UnZvTzF1QXlHMXZOalF4TC1VMW5RZ2JUNDRwZ19xUWttYmNJZUlYT3NWeWlPOWd3S2tCaGc?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261008-abc249fb",
+      "title": "OpenAI annualized revenue $20 billion less than previously reported - Axios",
+      "publisher": "Axios",
+      "url": "https://www.axios.com/2026/10/08/openai-50-billion-arr-anthropic-revenue-accounting",
+      "accessed_at": "2026-10-12",
+      "sha256": "abc249fbce23262f4f3a220de4c08febf4bad42ed993d7ee01d4f3e919455c52",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-08T19:54:54Z",
+      "publisher_url": "https://www.axios.com",
+      "raw_ref": "data/openai/news/google/raw/20261012T010834Z-308e2fa2.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxObmZsdFJwamstSi1rSFdObVV6VHp1MU5lTkpYek5sY09Pc09Na2U1UWZYTGV6dmVwSVUyRnhZbzM4VXE0MEh0NGlZX0lwNGg5U01kTjFXRzRxNllMS3FQSlptV202SjYxbTc2M3NRd0sydkwtdmFoR1NFejh4RHRlT2NGS1dlUW9RdTI4?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-openai-20261008-4661f054",
+      "title": "AT&T Launches Flagship Collaboration with OpenAI to Transform AI-Powered Legal Services - AT&T Newsroom",
+      "publisher": "AT&T Newsroom",
+      "url": "https://about.att.com/story/2026/att-legaledge.html",
+      "accessed_at": "2026-10-12",
+      "sha256": "4661f054fcfe7d3eff4f46bb5e9d40a76a8ed52989a616461af80bcf97e770d1",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-08T13:00:00Z",
+      "publisher_url": "https://about.att.com",
+      "raw_ref": "data/openai/news/google/raw/20261012T010834Z-308e2fa2.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE16TFZBOUJSVmF6aG43N005bGhhbEJFclV5bEhZY3lUUnpmVkRYUTlsQXh3S1hJeGRJSEhEcl9yQmtPWlNHdnBjRUFGenZpNWdnM2FpUFhXb2Z6UHR1QkVRMA?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-anthropic-20261011-51195cb7",
+      "title": "Anthropic halved Sonnet 5.5 cache reads, and its own tool showed the old price for two days - MIXED Reality News",
+      "publisher": "MIXED Reality News",
+      "url": "https://mixed-news.com/en/anthropic-sonnet-5-5-cache-reads-halved-claude-code-2-1-296-cost/",
+      "accessed_at": "2026-10-12",
+      "sha256": "51195cb7c8b1f62c9f8b6c1bb1ccf3828f009b7be7f4119425b478c8c32dc9ff",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-11T19:58:28Z",
+      "publisher_url": "https://mixed-news.com",
+      "raw_ref": "data/anthropic/news/google/raw/20261012T010823Z-11026672.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQMUFuWXF1Wk5Ca1ZzV3BpX3hnRVlWeHVHcUt5ZHJ2ZkJhTXZWQ3hBUGMzemY1YjE3eG05SHdEdldGQk5aalA3QmlEMDRENDRsczRDTFRBNnZkSHVDYXpLdXZqRHZqdGFhTUxmajZ5WmY1dnQxR1c0dE80WUpRWmdCaUpWNEM1NTRkRUw2VFJoSy0yZHBKZHc?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-anthropic-20261009-f0c02efc",
+      "title": "Exclusive: Anthropic breaches spark White House AI reporting mandate - Axios",
+      "publisher": "Axios",
+      "url": "https://www.axios.com/2026/10/09/anthropic-ai-security-white-house",
+      "accessed_at": "2026-10-12",
+      "sha256": "f0c02efc85b085f48a5161cb7270c5c8c6dd730607bd46f15f87873925106f19",
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 푼 원문 주소다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-09T22:53:04Z",
+      "publisher_url": "https://www.axios.com",
+      "raw_ref": "data/anthropic/news/google/raw/20261012T010823Z-11026672.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5BVTFycXRsQ3h2aC1KaGZaUlB4clFpdEFHUVVWQ2podDZoRG9RR0NxNUF1U0g3ckZkRFVHd05XQjI5WFU1aHpQRTVFV254VTVFOE5xSS1iUlRLSUpnOGJZRUF6akN2QVBDa3NYNngwaDNqOWVm?oc=5"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-901",
+      "title": "US appeals court upholds Pentagon's blacklisting of Anthropic (Reuters 전재)",
+      "publisher": "The Star (Reuters 전재)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/09/26/us-appeals-court-upholds-pentagon039s-blacklisting-of-anthropic",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Reuters 원문(reuters.com)이 자동 접근을 막아 같은 기사를 전재한 The Star 본문을 열었다. 기사 머리 'NEW YORK, Sept 25 (Reuters)'",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-25T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-902",
+      "title": "Anthropic plans $518bn AI infrastructure spend — 80% non-cancellable (Reuters 전재)",
+      "publisher": "BusinessDay (Reuters 전재, Echo Wang·Sabrina Valle)",
+      "url": "https://www.businessday.co.za/world/international-companies/2026-09-29-anthropic-plans-518bn-ai-infrastructure-spend-80-non-cancellable/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Reuters 원문이 자동 접근을 막아 같은 기사를 전재한 BusinessDay 본문을 열었다",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-29T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-903",
+      "title": "FTC Probing OpenAI, Anthropic Over Product Safety Concerns (1)",
+      "publisher": "Bloomberg Law (Bloomberg 기사)",
+      "url": "https://news.bloomberglaw.com/tech-and-telecom-law/ftc-probing-openai-and-anthropic-over-product-safety-concerns",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "bloomberg.com 기사가 유료라 같은 기사를 실은 Bloomberg Law 본문을 열었다. 표시 시각 'Sept. 30, 2026, 3:31 PM UTC'(갱신판)",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-09-30T15:31:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-904",
+      "title": "Exclusive-Broadcom to lend Anthropic up to $42 billion to lease its chips, filing says (Reuters 전재)",
+      "publisher": "The Star (Reuters 전재)",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/10/01/exclusive-broadcom-to-lend-anthropic-up-to-42-billion-to-lease-its-chips-filing-says",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Reuters 원문이 자동 접근을 막아 같은 기사를 전재한 The Star 본문을 열었다. 기사 머리 'NEW YORK/SAN FRANCISCO, Oct 1 (Reuters)'",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-01T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-905",
+      "title": "Microsoft, Meta Push Staff Away From Anthropic's Claude To In-House AI Tool",
+      "publisher": "Free Press Journal",
+      "url": "https://www.freepressjournal.in/tech/microsoft-meta-push-staff-away-from-anthropics-claude-to-in-house-ai-tool",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "The Information 원문이 유료라 같은 보도를 전한 기사를 열었다. 표시 시각 'Updated: Tuesday, October 06, 2026, 09:05 AM IST'",
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-10-06T03:35:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-906",
+      "title": "Anthropic raises $30B Series G at $380B valuation",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2026-02-12T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-anthropic-907",
+      "title": "Anthropic raises $13B Series F at $183B valuation",
+      "publisher": "Anthropic",
+      "url": "https://www.anthropic.com/news/anthropic-raises-series-f-at-usd183b-post-money-valuation",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": null,
+      "kind": "news",
+      "company_id": "anthropic",
+      "published_at_utc": "2025-09-02T00:00:00Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-901",
+      "title": "Anthropic’s revenue passed OpenAI’s for the first time last quarter",
+      "publisher": "The Next Web",
+      "url": "https://thenextweb.com/news/openai-q2-revenue-anthropic-surpasses",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "WSJ(Berber Jin·Corrie Driebusch) 보도를 전한 기사. 두 회사 2분기 매출이 한 기사에 같은 출처로 실려 있다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-08-19T14:26:42Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-902",
+      "title": "OpenAI tripled revenue to $5.7 billion in Q1 but burned through $3.7 billion to get there",
+      "publisher": "The Decoder",
+      "url": "https://the-decoder.com/openai-tripled-revenue-to-5-7-billion-in-q1-but-burned-through-3-7-billion-to-get-there/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "The Information 보도(주주에게 공유한 문서 인용)를 전한 기사",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-06-20T08:02:07Z"
+    },
+    {
+      "source_id": "SRC-WEB-openai-903",
+      "title": "USA TODAY Co. sues OpenAI over training on 19 publications",
+      "publisher": "RuntimeWire",
+      "url": "https://runtimewire.com/article/usa-today-openai-copyright-lawsuit-october-2026",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Reuters 원문은 자동 접근이 막히고 Forbes 는 403 이라 같은 사건을 전한 열리는 기사를 열었다",
+      "kind": "news",
+      "company_id": "openai",
+      "published_at_utc": "2026-10-09T03:20:07Z"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "openai",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261008-b08f127f",
+      "published_at_utc": "2026-10-08T18:19:00Z",
+      "title": "OpenAI’s revenue is reportedly $20 billion less than previously projected - TechCrunch",
+      "excerpt": "The Financial Times reports that the company has told investors that its annualized revenue is “approaching $50 billion.” The $70 billion figure was previously reported by news outlets and based on information that had been shared with OpenAI investors, the outlet writes. That figure was devised via “attempts by OpenAI’s own investors to produce a direct comparison with Anthropic’s annualised revenues,” per the FT. It’s worth pointing out that OpenAI and Anthropic calculate their annualized revenue differently — with Anthropic counting sales made by its cloud partners. OpenAI doesn’t do this.",
+      "locator": "기사 둘째·셋째 문단(FT 2026-10-08 보도 인용 문단과 두 회사 산정 방식 차이 문단)",
+      "relevance": "사실: OpenAI 는 투자자에게 연환산 매출이 $50B 에 가깝다고 알렸고, 9월에 보도된 $70B 는 투자자들이 Anthropic 산정 방식(클라우드 파트너 판매를 매출에 넣음)으로 맞춰 본 값이다. 추론: OpenAI 자체 정의의 연환산 매출은 약 $50B 이고, $70B 는 같은 회사의 다른 정의 값이라 두 값을 이어 성장률을 만들면 안 된다. ③ 후발 가속도(같은 정의의 성장률 두 개)와 ⑥ 비상장 매출 분모의 근거 문장은 회사 자체 정의 값으로 다시 써야 한다.",
+      "channel": "press",
+      "conditional_impact": "재검토: ③ 후발 가속도의 성장률 입력이 $70B 보도(투자자 환산 정의)를 섞었는지 보고, 섞었으면 회사 자체 정의 값끼리로 다시 계산한다. ⑥ 은 연환산 매출을 분모로 쓰지 않고 밸류÷연환산 매출 배수를 근거로만 남기므로 점수 경로는 그대로이고, 근거 문장의 연환산 매출을 $50B(회사 자체 정의)로 고친다.",
+      "horizon": "short — 다음 계산의 근거 문장",
+      "unverified": [
+        "FT 원문은 유료라 TechCrunch 전재 본문으로 확인했다.",
+        "회사 공식 발표가 아니라 투자자 대상 자료를 전한 2차 보도다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261009-d0d11288",
+      "published_at_utc": "2026-10-09T01:43:00Z",
+      "title": "OpenAI Expects $70 Billion in Annualized Revenue by End of 2026 - Yahoo Finance",
+      "excerpt": "The ChatGPT-maker's annualized revenue was roughly $50 billion at the end of September, the people said. The figure represents a projection of OpenAI's yearly sales based on a shorter period. The company shared the numbers with investors as part of discussions for its latest fundraising effort, said the people, requesting anonymity to discuss private information. The company is in talks to raise $30 billion or more at a $1.4 trillion valuation before the new money, Bloomberg first reported in September.",
+      "locator": "기사 둘째·셋째 문단(Bloomberg, Rebecca Torrence·Shirin Ghaffary)",
+      "relevance": "사실: 9월 말 OpenAI 연환산 매출은 약 $50B 이고, 회사가 새 조달 협상 중 투자자에게 공유한 수치다. 조달은 $1.4T(조달 전) 기준으로 협상 중이다. 추론: 회사 자체 정의의 최신 연환산 매출 시점이 9월 말로 정해져 ⑥ 근거 문장과 ③ 가속도 계산의 수준값으로 쓸 수 있다. 조달은 마감 전이라 ⑥ 분자(기업가치)를 바꾸지 않는다.",
+      "channel": "press",
+      "conditional_impact": "재검토: ③ 후발 가속도에 회사 자체 정의 연환산 매출(9월 말 약 $50B)을 수준값으로 넣고 같은 정의의 앞선 값과 성장률을 다시 본다. ⑥ 의 기업가치는 마감된 라운드($852B)를 유지하고 $1.4T 협상은 마감 전이라 넣지 않는다.",
+      "horizon": "short — 조달 마감 시 ⑥ 분자 갱신",
+      "counter_evidence": [],
+      "unverified": [
+        "익명 관계자 인용이라 회사 공식 수치가 아니다.",
+        "같은 기사 첫 문단의 '연말 $70B 이상' 은 회사 전망이라 근거로 쓰지 않는다."
+      ],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-901",
+      "published_at_utc": "2026-08-19T14:26:42Z",
+      "title": "Anthropic’s revenue passed OpenAI’s for the first time last quarter",
+      "excerpt": "OpenAI told investors its revenue rose 18 percent from the first quarter to the second, to $6.7bn, The Wall Street Journal reported. Its losses deepened over the same stretch. … OpenAI’s revenue rose to $6.7bn from $5.7bn in the first quarter, the Journal said. Its operating loss, which includes stock-based compensation, widened from $9.3bn to $12.3bn.",
+      "locator": "기사 첫 문단과 셋째 문단(WSJ 보도 인용)",
+      "relevance": "사실: OpenAI 의 2026년 2분기 매출은 $6.7B, 1분기는 $5.7B 로 투자자에게 보고됐다(WSJ). 추론: 연환산이 아닌 분기 실매출이라 ⑥ 비상장 분모(최근 1년 보정 매출)의 2026년 상반기 성분이 된다. 분기 대비 18% 성장은 ③ 후발 가속도의 수준값 재료다.",
+      "channel": "press",
+      "conditional_impact": "재검토: ⑥ 최근 1년 보정 매출을 이 분기 실매출로 다시 추정한다(2025년 하반기 성분은 회사 발표 런레이트로 범위를 정한다). ③ 후발 가속도는 같은 정의의 분기 매출 세 개가 모이면 성장률 두 개로 판정한다.",
+      "horizon": "short — 다음 계산의 분모",
+      "unverified": [
+        "WSJ 원문은 유료라 The Next Web 기사로 확인했다.",
+        "감사받지 않은 투자자 대상 수치다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-902",
+      "published_at_utc": "2026-06-20T08:02:07Z",
+      "title": "OpenAI tripled revenue to $5.7 billion in Q1 but burned through $3.7 billion to get there",
+      "excerpt": "OpenAI burned through about $3.7 billion in the first quarter of 2026, more than half of its $5.7 billion in revenue. Both figures tripled year over year, according to The Information, citing documents OpenAI shared with shareholders.",
+      "locator": "기사 첫 문단 첫째·둘째 문장",
+      "relevance": "사실: OpenAI 의 2026년 1분기 매출은 $5.7B 이고 전년 같은 분기의 약 3배다(주주 공유 문서를 인용한 The Information 보도). 추론: ⑥ 비상장 분모(최근 1년 보정 매출)의 1분기 성분이다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: ⑥ 최근 1년 보정 매출 추정의 1분기 성분으로 근거 문장을 보강한다. 이 값 하나로는 판단을 바꾸지 않는다.",
+      "horizon": "현재",
+      "unverified": [
+        "The Information 원문은 유료라 The Decoder 기사로 확인했다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-903",
+      "published_at_utc": "2026-10-09T03:20:07Z",
+      "title": "USA TODAY Co. sues OpenAI over training on 19 publications",
+      "excerpt": "USA TODAY Co. and several newspapers it owns sued OpenAI in Manhattan federal court on October 8th, alleging that the AI company copied hundreds of thousands of articles and other materials to train ChatGPT without permission. The complaint seeks damages of more than $250 million and a court order blocking the alleged infringement.",
+      "locator": "기사 본문 첫 문단",
+      "relevance": "사실: USA TODAY Co. 와 계열 신문들이 2026-10-08 맨해튼 연방법원에 OpenAI 를 저작권 침해로 제소했고 $2.5억 넘는 손해배상과 침해 금지 명령을 청구했다. 추론: 개별 저작권 소송이라 ⑤ 적대 등급의 비용형(사업 구조는 건드리지 않는 적대) 근거가 하나 늘어난다. 청구한 금지 명령이 인용돼 학습 데이터 사용이 막히면 구조형 검토 대상이 된다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: OpenAI ⑤ 적대 등급은 비용형 −1 이고 이 소송도 판결 전 개별 소송이라 같은 비용형이다. 판결이나 합의가 학습 데이터 사용 금지처럼 사업 구조를 건드리면 그때 구조형으로 다시 본다.",
+      "horizon": "long — 판결까지 수년",
+      "unverified": [
+        "Reuters 원문은 자동 접근이 막히고 Forbes 는 403 이라 RuntimeWire 기사로 확인했다.",
+        "소장 원문(사건 번호)은 열지 않았다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261008-4661f054",
+      "published_at_utc": "2026-10-08T13:00:00Z",
+      "title": "AT&T Launches Flagship Collaboration with OpenAI to Transform AI-Powered Legal Services - AT&T Newsroom",
+      "excerpt": "AT&T is collaborating as a flagship in-house legal design partner with OpenAI to build the AI-enabled in-house legal department of the future. Together, the companies will design, build, and evaluate practical legal workflows grounded in real-world experience and attorney oversight.",
+      "locator": "보도자료 본문 첫 문단",
+      "relevance": "사실: AT&T 가 사내 법무 업무에서 OpenAI 와 공동 설계 파트너 관계를 맺었다고 발표했다. 추론: 한 고객과의 공동 설계 관계로, ⑤ 동맹 등급에서 의미 있는 상업 동맹의 사례 하나다. 지분·독점·재판매 권리는 발표에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: OpenAI ⑤ 동맹 등급은 +1(의미 있는 상업 동맹이 있으나 소수이거나 한 방향)이고, 고객 한 곳의 공동 설계 관계는 등급 기준(지분 동맹 복수 또는 경쟁사 편입)을 바꾸지 않는다.",
+      "horizon": "현재",
+      "unverified": [
+        "계약 금액과 기간은 발표에 없다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-openai-20261008-abc249fb",
+      "published_at_utc": "2026-10-08T19:54:54Z",
+      "title": "OpenAI annualized revenue $20 billion less than previously reported - Axios",
+      "excerpt": "The big picture: The $70 billion figure, widely reported in September by Axios and other media outlets, was based on information shared with investors in an attempt to create a more direct comparison to rival Anthropic, Axios has learned. Anthropic includes revenue from cloud partner sales in its tally. Zoom in: Both companies are GAAP compliant, but they account for revenue through partner sales differently. … OpenAI records only its share of certain partner sales.",
+      "locator": "기사 둘째~넷째 문단과 여섯째 문단",
+      "relevance": "사실: Anthropic 은 클라우드 파트너를 통한 판매를 매출 총액으로 잡고, OpenAI 는 일부 파트너 판매에서 자기 몫만 잡는다. 추론: 같은 사건이 Anthropic 에도 닿는다. Anthropic 의 연환산 매출($65B)과 분기 매출은 총액 기준이라 OpenAI 값과 같은 정의가 아니다. ⑥ 의 밸류÷매출 배수와 ③ 성장률을 두 회사 사이에서 견줄 때 이 정의 차이를 판정 칸에 적어야 한다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: Anthropic 의 ⑥ 배수는 총액 기준 매출로 계산돼 순액 기준이면 더 커지므로 같은 구간(30배 이상) 안에서 판정이 바뀌지 않는다. ③ 은 Anthropic 자체 정의 값끼리만 성장률을 만들고, 두 회사 성장률을 견주는 문장에는 정의 차이를 적는다.",
+      "horizon": "현재",
+      "unverified": [
+        "두 회사 모두 감사 재무제표가 공개되지 않아 총액·순액 차이의 크기는 미확인이다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-901",
+      "published_at_utc": "2026-08-19T14:26:42Z",
+      "title": "Anthropic’s revenue passed OpenAI’s for the first time last quarter",
+      "excerpt": "Anthropic more than doubled its revenue to $11.6bn in the same period, the Journal reported. It was the first time its sales have passed OpenAI’s. Anthropic also swung to a small operating profit. … The Journal said it is unclear how Anthropic calculated its adjusted profit, and noted the company has previously excluded stock-based compensation from that figure. Its preliminary revenue has also been reported at $11.5bn by Bloomberg, a shade below the Journal’s $11.6bn.",
+      "locator": "기사 둘째 문단과 열넷째 문단(WSJ·Bloomberg 보도 인용)",
+      "relevance": "사실: Anthropic 의 2026년 2분기 매출은 $11.6B(WSJ), 잠정 $11.5B(Bloomberg)로 1분기의 두 배를 넘었다. 추론: 분기 실매출이라 ⑥ 비상장 분모(최근 1년 보정 매출)의 2분기 성분이고, ③ 후발 가속도의 수준값 재료다. OpenAI 2분기 값과 같은 기사·같은 출처라 두 회사에 같은 등급의 근거다.",
+      "channel": "press",
+      "conditional_impact": "재검토: ⑥ 최근 1년 보정 매출을 1분기 $4.8B·2분기 $11.5~11.6B 와 2025년 하반기 범위(회사 발표 런레이트로 정함)로 다시 추정한다. ③ 후발 가속도는 같은 정의의 분기 매출 세 개가 모이면 성장률 두 개로 판정한다.",
+      "horizon": "short — 다음 계산의 분모",
+      "unverified": [
+        "WSJ·Bloomberg 원문은 유료라 The Next Web 기사로 확인했다.",
+        "감사받지 않은 투자자 대상 수치이고 클라우드 파트너 판매를 총액으로 잡은 값이다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-906",
+      "published_at_utc": "2026-02-12T00:00:00Z",
+      "title": "Anthropic raises $30B Series G at $380B valuation",
+      "excerpt": "It has been less than three years since Anthropic earned its first dollar in revenue. Today, our run-rate revenue is $14 billion, with this figure growing over 10x annually in each of those past three years.",
+      "locator": "발표문 넷째 문단",
+      "relevance": "사실: 2026-02-12 Anthropic 의 런레이트 매출은 $14B 다. 추론: 런레이트가 계속 늘어 왔으므로 2025년 하반기 월매출은 $14B÷12 를 넘지 않았다고 보고, ⑥ 최근 1년 보정 매출 추정에서 2025년 하반기 성분의 위 끝($7.0B)으로 쓴다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: ⑥ 최근 1년 보정 매출 추정의 범위 위 끝을 받친다. 이 값 하나로는 판단을 바꾸지 않는다.",
+      "horizon": "현재",
+      "unverified": [
+        "런레이트가 2025년 하반기 동안 줄지 않았다는 가정에 기댄 범위다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F6"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-907",
+      "published_at_utc": "2025-09-02T00:00:00Z",
+      "title": "Anthropic raises $13B Series F at $183B valuation",
+      "excerpt": "At the beginning of 2025, less than two years after launch, Anthropic’s run-rate revenue had grown to approximately $1 billion. By August 2025, just eight months later, our run-rate revenue reached over $5 billion—making Anthropic one of the fastest-growing technology companies in history.",
+      "locator": "발표문 둘째 문단",
+      "relevance": "사실: Anthropic 런레이트 매출은 2025년 초 약 $1B, 2025년 8월 $5B 를 넘었다. 추론: ⑥ 최근 1년 보정 매출 추정에서 2025년 하반기 성분의 아래 끝(7월 $1B÷12 + 8~12월 $5B÷12×5 ≈ $2.17B)으로 쓴다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: ⑥ 최근 1년 보정 매출 추정의 범위 아래 끝을 받친다. 이 값 하나로는 판단을 바꾸지 않는다.",
+      "horizon": "현재",
+      "unverified": [
+        "런레이트가 2025년 하반기 동안 줄지 않았다는 가정에 기댄 범위다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-anthropic-20261011-51195cb7",
+      "published_at_utc": "2026-10-11T19:58:28Z",
+      "title": "Anthropic halved Sonnet 5.5 cache reads, and its own tool showed the old price for two days - MIXED Reality News",
+      "excerpt": "Anthropic halved the price of prompt cache reads on Claude Sonnet 5.5 on October 7, and for the next two days its own coding tool priced them at the old rate. The cut is in Anthropic's platform release notes: \"We've lowered the price of prompt cache reads on Claude Sonnet 5.5 from $0.20 USD to $0.10 USD per million tokens: 0.05x the base input price instead of 0.1x. Cache writes and all other prices are unchanged.\"",
+      "locator": "기사 첫 문단(Anthropic 플랫폼 릴리스 노트 인용)",
+      "relevance": "사실: Anthropic 은 2026-10-07 Claude Sonnet 5.5 의 프롬프트 캐시 읽기 가격을 100만 토큰당 $0.20 에서 $0.10 으로 내렸고 다른 가격은 그대로다. 추론: 거래 채널(사용량 기반 API)에서 정가를 내린 사례라 ① 가격 실측(가격을 올리거나 유지했는데 고객이 남았는가)의 실패 쪽 사실이다.",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: Anthropic ① 가격 실측은 정가 인하로 이미 실패이고, 이 인하는 같은 방향의 사실을 하나 더한다.",
+      "horizon": "현재",
+      "unverified": [
+        "Anthropic 릴리스 노트 원문은 따로 열지 않았고 기사 인용으로 확인했다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-NEWS-anthropic-20261009-f0c02efc",
+      "published_at_utc": "2026-10-09T22:53:04Z",
+      "title": "Exclusive: Anthropic breaches spark White House AI reporting mandate - Axios",
+      "excerpt": "Trump administration officials say they are now mandating that AI companies notify and correct security incidents following Anthropic's \"fraudulent\" use of government systems. … State of play: The White House requirements apply to all AI companies. … Yes, but: The statement did not make clear what enforcement mechanisms or penalties would look like if AI companies failed to disclose incidents and remediate them.",
+      "locator": "기사 첫 문단, 'State of play' 문단, 'Yes, but' 문단",
+      "relevance": "사실: 백악관 초지능 태스크포스는 Anthropic 모델이 정부 시스템을 무단 사용한 사건 뒤 모든 AI 회사에 사고 통보·시정을 의무로 요구했고, 위반 시 제재는 밝히지 않았다. 추론: 요구는 모든 AI 회사에 같이 적용되는 규제라 회사 사이의 차이를 만들지 않는다. Anthropic 에는 사건 당사자로서 비용형(사업 구조는 건드리지 않는 적대) 규제 압력이 하나 늘어난 것이다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: Anthropic ⑤ 적대 등급은 비용형 −1 이고, 제재 수단이 없는 통보 의무는 같은 비용형이다. 정부가 Anthropic 제품 판매나 배포를 제한하면 그때 구조형으로 다시 본다.",
+      "horizon": "short — 시행 방식이 정해질 때",
+      "unverified": [
+        "의무의 법적 근거와 제재 수단은 기사에 없다."
+      ],
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true
+    }
+  ],
+  "evidence_fixes": [
+    {
+      "evidence_id": "EV-openai-002",
+      "excerpt": "OpenAI's annual recurring revenue is nearing $70 billion, as enterprise sales more than doubled since July, sources familiar with the financials tell Axios. … By the numbers: OpenAI's annualized revenue run rate has grown more than 70% since the beginning of the third quarter, reaching almost $70 billion.",
+      "locator": "기사 첫 문단과 'By the numbers' 문단"
+    },
+    {
+      "evidence_id": "EV-anthropic-002",
+      "source_id": "SRC-WEB-anthropic-901",
+      "title": "US appeals court upholds Pentagon's blacklisting of Anthropic (Reuters 전재, The Star)",
+      "published_at_utc": "2026-09-25T00:00:00Z",
+      "excerpt": "NEW YORK, Sept 25 (Reuters) - A federal appeals court upheld on Friday the Pentagon's blacklisting of Anthropic from military contracts, handing a victory to President Donald Trump and Defense Secretary Pete Hegseth in their battle with the AI startup over safety guardrails on its technology. … US District Judge Rita Lin in San Francisco also blocked Trump's government-wide ban on Anthropic and Hegseth's order barring military contractors from doing any business with the startup.",
+      "locator": "기사 첫 문단과 일곱째 문단 둘째 문장"
+    },
+    {
+      "evidence_id": "EV-anthropic-003",
+      "excerpt": "A leaked IPO prospectus is giving investors the first detailed view of Anthropic’s finances ahead of an upcoming public listing. The company is burning cash—losing $42 billion last year—while bringing in $4.6 billion in revenue, according to the leaked filing reviewed by Reuters. … Revenue rose 1,088% in 2025, while its operating loss widened to $8.06 billion from $2.98 billion a year earlier.",
+      "locator": "기사 첫째·둘째 문단"
+    },
+    {
+      "evidence_id": "EV-anthropic-004",
+      "source_id": "SRC-WEB-anthropic-902",
+      "title": "Anthropic plans $518bn AI infrastructure spend — 80% non-cancellable (Reuters 전재, BusinessDay)",
+      "published_at_utc": "2026-09-29T00:00:00Z",
+      "excerpt": "New York — Anthropic said it expects to spend at least $518bn over a decade building AI infrastructure with six partners, according to a confidential initial public offering (IPO) prospectus seen by Reuters — a plan that ranks among the largest AI buildout commitments on record. The AI lab said in the prospectus that about 80% of that sum is non-cancellable or requires payment regardless of usage. … Anthropic is separately carrying about $161.2bn of Broadcom-related equipment lease obligations that are largely non-cancellable, according to the prospectus.",
+      "locator": "기사 첫째 문단, 둘째 문단 첫 문장, 넷째 문단 첫 문장"
+    },
+    {
+      "evidence_id": "EV-anthropic-006",
+      "source_id": "SRC-WEB-anthropic-903",
+      "title": "FTC Probing OpenAI, Anthropic Over Product Safety Concerns (Bloomberg Law)",
+      "published_at_utc": "2026-09-30T15:31:00Z",
+      "excerpt": "The Federal Trade Commission is scrutinizing OpenAI, Anthropic PBC and other artificial intelligence companies about the safety of their products amid high-profile cybersecurity incidents, according to a person familiar with the matter. The agency is preparing to send formal demands for information to the companies as part of a probe into whether firms are abiding by consumer protection laws, said the person, who wasn’t authorized to speak on the record about a confidential investigation. The demands are likely to be sent in the coming weeks, the person said.",
+      "locator": "기사 첫째·둘째 문단"
+    },
+    {
+      "evidence_id": "EV-anthropic-009",
+      "source_id": "SRC-WEB-anthropic-904",
+      "title": "Exclusive-Broadcom to lend Anthropic up to $42 billion to lease its chips, filing says (Reuters 전재, The Star)",
+      "published_at_utc": "2026-10-01T00:00:00Z",
+      "excerpt": "As part of that complex relationship, revealed in the IPO filing,Broadcom has agreedto lend Anthropic up to $42 billion to finance infrastructure spending. … Anthropic said in its filing it doesn't expect any notes to be sold before it completes its IPO. … Related to the convertible debt, Anthropic said it deposited cash into a restricted account for Broadcom's benefit in April 2026 and may be required to contribute additional amounts in certain circumstances, according to the filing.",
+      "locator": "기사 셋째 문단, 여섯째 문단 둘째 문장, 마지막 문단"
+    },
+    {
+      "evidence_id": "EV-anthropic-011",
+      "source_id": "SRC-WEB-anthropic-905",
+      "title": "Microsoft, Meta Push Staff Away From Anthropic's Claude To In-House AI Tool",
+      "published_at_utc": "2026-10-06T03:35:00Z",
+      "excerpt": "Microsoft and Meta have each scaled back internal use of Anthropic's Claude by steering employees toward their own AI products. The two companies are among Anthropic's biggest corporate customers, which makes any pullback a challenge for the AI firm's efforts to keep its rapid growth going. Microsoft had been on course to spend $1 billion this year on internal use of Anthropic's technology, a report by The Information said. That projection has since been cut by a third.",
+      "locator": "기사 첫째·둘째 문단(The Information 보도 인용)"
+    }
+  ],
+  "evidence_unreadable": [],
+  "triggers": [
+    {
+      "trigger_id": "TRG-036",
+      "status": "watching",
+      "deadline": "2026-11-30",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. EDGAR 전문 검색(S-1, 2026-09-01~10-12, 'Anthropic')은 8건을 돌려주고 모두 다른 발행사(Iambic Therapeutics·NSCALE·Oura 등)이며 Anthropic 공개 제출본은 없다. Bloomberg 2026-10-09 기사는 Anthropic 상장이 빠르면 11월이라고만 적는다. 공개 S-1 과 확정 상장일이 없어 관찰을 이어 간다.",
+      "source_ids": [
+        "SRC-NEWS-openai-20261009-d0d11288"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-037",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. 후보 'Trump orders US government to cut ties with Anthropic'(ABC, 수집일 2026-10-11)은 원문을 열어 보니 2026-02-28 기사이고 새 사건이 아니다. Reuters 2026-09-25 기사(The Star 전재)는 샌프란시스코 연방법원이 정부 전반의 Anthropic 사용 금지와 국방 계약업체 거래 금지 명령을 막았다고 적는다. 국방부 배제의 해제나 연방 조달 전반 확대는 창 안에 없다.",
+      "source_ids": [
+        "SRC-WEB-anthropic-901"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-038",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. FTC 의 민사조사명령·제소·동의명령 보도는 없다. 백악관 초지능 태스크포스(FTC 위원장이 공동 의장)가 2026-10-09 모든 AI 회사에 사고 통보·시정 의무를 요구했으나 제재 수단은 밝히지 않았다(Axios). 처분 단계가 아니라 관찰을 이어 간다.",
+      "source_ids": [
+        "SRC-NEWS-anthropic-20261009-f0c02efc"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-039",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. Bloomberg 2026-10-09 는 OpenAI 가 $1.4T(조달 전) 기준 $30B 이상 조달을 아직 협상 중이고 UAE 펀드 MGX 등과 논의한다고 적는다. 라운드가 마감되지 않아 ⑥ 분자는 $852B 그대로다. 같은 기사와 FT·TechCrunch·Axios 2026-10-08 보도로 연환산 매출은 회사 자체 정의 약 $50B(9월 말)이고 $70B 는 투자자가 Anthropic 방식으로 환산한 값임이 확인됐다.",
+      "source_ids": [
+        "SRC-NEWS-openai-20261009-d0d11288",
+        "SRC-NEWS-openai-20261008-b08f127f"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-062",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. MDL No. 3143 의 판결·합의 보도는 없다. 별도로 USA TODAY Co. 가 2026-10-08 맨해튼 연방법원에 OpenAI 를 제소해 $2.5억 넘는 손해배상과 침해 금지 명령을 청구했다(RuntimeWire). 판결 전 개별 소송이라 비용형 근거가 하나 늘었을 뿐이다.",
+      "source_ids": [
+        "SRC-WEB-openai-903"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-070",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. 제목에 Cursor 가 들어간 후보는 묶음 D 와 전체 후보 모두 2026-10-08 이후 없고, Cursor 가 기본 모델을 Grok 으로 바꿨다는 보도도 찾지 못했다.",
+      "source_ids": [],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-071",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. Anthropic 자체 칩의 샘플링·출하 보도는 없다. 창 안의 설비 보도(텍사스 Bastrop·Cedar Creek 데이터센터 인허가)는 데이터센터 계획이라 칩 출하가 아니다.",
+      "source_ids": [],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-092",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. 후보 'Broadcom in talks for $50B+ financing deal to fund OpenAI's custom chips'(Seeking Alpha, 2026-10-08)는 제목부터 협상 단계이고, 조달 확정이나 OpenAI 측 약정 공개 보도는 없다.",
+      "source_ids": [],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-093",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. 회사 발표나 공개 제출본으로 밝힌 실매출·영업손익은 없다. 투자자 대상 수치를 전한 2차 보도만 있다 — 연환산 매출 약 $50B(9월 말, Bloomberg 2026-10-09), 2026년 1분기 매출 $5.7B(The Information, The Decoder 2026-06-20), 2분기 매출 $6.7B·영업손실 $12.3B(WSJ, The Next Web 2026-08-19). 회사 공식 공개가 아니라 조건(회사 발표나 공개 제출본)이 서지 않는다.",
+      "source_ids": [
+        "SRC-NEWS-openai-20261009-d0d11288",
+        "SRC-WEB-openai-901",
+        "SRC-WEB-openai-902"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-094",
+      "status": "watching",
+      "deadline": "2027-01-31",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. OpenAI 유료 구독자 수 새 공개나 Pro 해지 증가 보도는 없다. 기존 가입자에게 줄어든 사용량이 적용되는 날(2026-10-29)이 아직 오지 않았다.",
+      "source_ids": [],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-095",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "2026-10-12 Artificial Analysis 모델 순위표와 ARC Prize 순위표를 다시 열었다. 종합 지수는 Claude Opus 5.5 58, GPT-6 Astra 53, GPT-6.1 Sol 52 로 2026-10-08 과 같고, ARC-AGI-2·3 은 GPT-6 Astra(95.0%·62.7%)가 1위로 같다. GPT-6.1 Astra 나 다음 상위 모델의 출시 보도는 2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문 안에 없다.",
+      "source_ids": [
+        "SRC-WEB-anthropic-018",
+        "SRC-WEB-anthropic-021"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-096",
+      "status": "watching",
+      "deadline": "2026-11-30",
+      "finding": "2026-10-08~10-12 묶음 D 후보 187건 제목 전수와 연 원문을 봤다. 상장 신청서 공개 제출본이 없어(EDGAR 전문 검색 S-1, 2026-09-01~10-12) 매출 10% 이상 고객의 이름·비중이 공개되지 않았다.",
+      "source_ids": [],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    },
+    {
+      "trigger_id": "TRG-097",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "2026-10-12 Artificial Analysis 종합 지수(Claude Opus 5.5 58 1위), GDPval-AA v2.1(Claude Opus 5.5 1866 1위), Coding Agent Index v1.5(Claude Code - Sonnet 5.5 68 1위)를 다시 열었고 세 축 모두 2026-10-08 과 같다. 2위가 같은 수준에 도달하지 않았고 1위 성립(2026-09-22) 뒤 6개월이 되지 않았다.",
+      "source_ids": [
+        "SRC-WEB-anthropic-018",
+        "SRC-WEB-anthropic-019",
+        "SRC-WEB-anthropic-020"
+      ],
+      "evidence_ids": [],
+      "checked_at": "2026-10-12"
+    }
+  ],
+  "new_triggers": [
+    {
+      "company_id": "openai",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "observation": "OpenAI 의 분기 실매출은 투자자 대상 수치를 전한 보도로 2026년 1분기 $5.7B·2분기 $6.7B 까지 알려졌고, 3분기(7~9월) 값은 보도되지 않았다. ⑥ 최근 1년 보정 매출은 2025-07-01~2026-06-30 창으로 추정했고 2025년 하반기 성분은 회사 발표 런레이트로 범위만 정했다.",
+      "condition": "OpenAI 2026년 3분기 실매출이 회사 발표나 신뢰할 매체의 투자자 자료 보도로 나오면 ⑥ 최근 1년 보정 매출 창을 2025-10-01~2026-09-30 으로 옮겨 배수를 다시 추정하고, ③ 후발 가속도(같은 정의의 분기 매출 성장률 두 개)를 1·2·3분기 값으로 다시 본다. 연환산 매출은 분모로 쓰지 않는다.",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-WEB-openai-901",
+        "SRC-WEB-openai-902"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F3",
+          "F6"
+        ],
+        "what": "OpenAI 2026년 3분기 실매출과 그것으로 옮긴 최근 1년 보정 매출"
+      }
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F3",
+        "F6"
+      ],
+      "observation": "Anthropic 의 분기 실매출은 투자자 대상 수치를 전한 보도로 2026년 1분기 $4.8B·2분기 $11.5~11.6B 까지 알려졌고, 3분기(7~9월) 값은 보도되지 않았다. ⑥ 최근 1년 보정 매출은 2025-07-01~2026-06-30 창으로 추정했고 2025년 하반기 성분은 회사 발표 런레이트로 범위만 정했다. 2025년 연매출 $4.6B 는 유출된 상장 신청서 초안의 값이라 쓰지 않았다.",
+      "condition": "Anthropic 2026년 3분기 실매출이 회사 발표·공개 제출본이나 신뢰할 매체의 투자자 자료 보도로 나오면 ⑥ 최근 1년 보정 매출 창을 2025-10-01~2026-09-30 으로 옮겨 배수를 다시 추정하고, ③ 후발 가속도를 1·2·3분기 값으로 다시 본다. 공개 S-1 이 나오면 그 감사 재무제표 값이 보도 값을 대신한다.",
+      "deadline": "2026-12-31",
+      "source_ids": [
+        "SRC-WEB-openai-901",
+        "SRC-WEB2-anthropic-005"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F3",
+          "F6"
+        ],
+        "what": "Anthropic 2026년 3분기 실매출과 그것으로 옮긴 최근 1년 보정 매출"
+      }
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F5"
+      ],
+      "observation": "백악관 초지능 태스크포스가 2026-10-09 Anthropic 모델의 정부 시스템 무단 사용 사건 뒤 모든 AI 회사에 사고 통보·시정 의무를 요구했고 제재 수단은 밝히지 않았다. Anthropic ⑤ 판단의 적대 등급은 비용형 −1 이다.",
+      "condition": "정부가 이 의무를 근거로 Anthropic 에 벌금·계약 제한 같은 처분을 내리면 그 성격으로 ⑤ 적대 등급을 다시 본다. 처분이 벌금·개별 제재면 비용형이고, 제품 판매·배포 제한처럼 사업 구조를 건드리면 구조형이다. 같은 의무가 다른 AI 회사에 같은 방식으로 적용되면 회사 사이의 차이로 읽지 않는다.",
+      "deadline": "2027-03-31",
+      "source_ids": [
+        "SRC-NEWS-anthropic-20261009-f0c02efc"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F5"
+        ],
+        "what": "초지능 태스크포스 통보 의무의 집행·처분 여부와 그 성격"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "anthropic.post_money_valuation.2026-05-28.recheck",
+      "company_id": "anthropic",
+      "metric": "post_money_valuation",
+      "value": 965000000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-28",
+      "kind": "actual",
+      "source_id": "SRC-WEB-anthropic-015",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "raw": "Anthropic has raised $65 billion in Series H funding led by Altimeter Capital, Dragoneer, Greenoaks, and Sequoia Capital, valuing the company at $965 billion post-money.",
+      "note": "근거 등급: 회사 1차 발표(Series H 발표문 첫 문단). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. 가장 최근에 마감된 라운드다. 2026-10-12 까지 더 늦게 마감된 라운드는 없다(검색 범위: 묶음 D 후보 2026-10-06~10-12, 웹 검색 'Anthropic new funding round valuation after Series H'). 상장 목표 기업가치 $2T 와 장외 거래 가격은 확정 라운드가 아니라 쓰지 않는다."
+    },
+    {
+      "observation_id": "openai.post_money_valuation.2026-03-31.recheck",
+      "company_id": "openai",
+      "metric": "post_money_valuation",
+      "value": 852000000000.0,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "kind": "actual",
+      "source_id": "SRC-WEB-openai-001",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "raw": "Today, we closed our latest funding round with $122 billion in committed capital at a post money valuation of $852 billion.",
+      "note": "근거 등급: 회사 1차 발표(조달 발표문 첫 문단). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. 가장 최근에 마감된 라운드다. $1.4T(조달 전) 기준 $30B 이상 조달은 2026-10-09 기준 협상 중이라 쓰지 않는다(Bloomberg 2026-10-09)."
+    },
+    {
+      "observation_id": "anthropic.arr.2026-07-31.recheck",
+      "company_id": "anthropic",
+      "metric": "arr",
+      "value": 65000000000.0,
+      "unit": "USD",
+      "as_of": "2026-07-31",
+      "kind": "run_rate",
+      "source_id": "SRC-WEB2-anthropic-001",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "raw": "Anthropic’s annualized revenue run rate hit $65 billion at the end of July, CNBC confirmed on Monday, a sevenfold increase from a year ago. The Claude creator, which has seen its enterprise popularity surge, shared the figure in an update to investors over the weekend, according to three sources familiar with the matter",
+      "note": "근거 등급: 2차 보도(CNBC 2026-08-17 첫째·둘째 문단, 투자자 업데이트를 본 관계자 셋, Bloomberg 첫 보도). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. 정의: Anthropic 회사 기준 런레이트이고 클라우드 파트너 판매를 총액으로 매출에 넣는다(Axios 2026-10-08). OpenAI 의 연환산 매출(파트너 판매는 자기 몫만)과 정의가 다르다. 2026-10-12 까지 이보다 늦은 Anthropic 회사 기준 값은 보도되지 않았다(Bloomberg 2026-10-09 도 7월 말 $65B 를 최신으로 인용). NYT 9월 '연내 $100B 돌파 예상'은 전망이라 쓰지 않는다."
+    },
+    {
+      "observation_id": "openai.arr.2026-09-30.recheck",
+      "company_id": "openai",
+      "metric": "arr",
+      "value": 50000000000.0,
+      "unit": "USD",
+      "as_of": "2026-09-30",
+      "kind": "run_rate",
+      "source_id": "SRC-NEWS-openai-20261009-d0d11288",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "raw": "The ChatGPT-maker's annualized revenue was roughly $50 billion at the end of September, the people said. The figure represents a projection of OpenAI's yearly sales based on a shorter period.",
+      "note": "근거 등급: 2차 보도(Bloomberg 2026-10-09, Yahoo Finance 전재 둘째 문단, 투자자에게 공유한 수치를 본 관계자). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. 정의: OpenAI 회사 기준이고 일부 파트너 판매는 자기 몫만 매출로 잡는다(Axios 2026-10-08). Axios 2026-09-29 의 '$70B 근접'은 투자자들이 Anthropic 방식(파트너 판매 총액)으로 환산한 값이라 같은 지표로 쓰지 않는다(FT·TechCrunch·Axios 2026-10-08). 같은 기사의 '연말 $70B 이상 예상'은 전망이라 쓰지 않는다."
+    },
+    {
+      "observation_id": "anthropic.arr_prior.2026-05-28.recheck",
+      "company_id": "anthropic",
+      "metric": "arr_prior",
+      "value": 47000000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-28",
+      "kind": "run_rate",
+      "source_id": "SRC-WEB-anthropic-015",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "raw": "Since our Series G in February, adoption has continued to grow across global enterprise customers, and our run-rate revenue crossed $47 billion earlier this month.",
+      "note": "근거 등급: 회사 1차 발표(Series H 발표문 둘째 문단). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. 'earlier this month' 는 2026년 5월 초~중순이고 정확한 날짜는 발표문에 없다. arr($65B, 7월 말)과 같은 Anthropic 회사 기준 런레이트다. 두 값 사이 성장률은 약 2.5개월에 0.383 이고 연환산 성장률이 아니다."
+    },
+    {
+      "observation_id": "openai.arr_prior.2026-03-31.recheck",
+      "company_id": "openai",
+      "metric": "arr_prior",
+      "value": 24000000000.0,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "kind": "run_rate",
+      "source_id": "SRC-WEB-openai-001",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "basis": {
+        "formula": "월매출 × 12",
+        "derivation": "발표문의 'We are now generating $2B in revenue per month' 에 12 를 곱했다($2B × 12 = $24B).",
+        "definition_note": "OpenAI 회사 기준 매출이다. 투자자에게 알린 9월 말 약 $50B 와 같은 회사 기준으로 본다(둘 다 파트너 판매 총액 환산이 아니다). 같은 산정식인지는 원문에 없어 추론이다.",
+        "not_used": "2026-08 보도 '$40B 돌파'(PYMNTS·CNBC)는 회사 기준인지 투자자 환산인지 원문에서 가를 수 없어 직전 값으로 쓰지 않았다. 2~4월 '$25B 근처 정체'(The Information 인용)는 2차 보도라 같은 시점의 회사 1차 발표를 썼다."
+      },
+      "raw": "We are now generating $2B in revenue per month.",
+      "note": "근거 등급: 회사 1차 발표(조달 발표문 'OpenAI was the fastest' 문단). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. arr($50B, 9월 말)과 같은 회사 기준의 직전 값이다. 두 값 사이 성장률은 6개월에 1.08 이고 연환산 성장률이 아니다."
+    },
+    {
+      "observation_id": "anthropic.cumulative_raised.2026-05-28.recheck",
+      "company_id": "anthropic",
+      "metric": "cumulative_raised",
+      "value": 144000000000.0,
+      "unit": "USD",
+      "as_of": "2026-05-28",
+      "kind": "estimate",
+      "source_id": "SRC-WEB2-openai-009",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "raw": "Total raised: ~$144 billion across all rounds · Current valuation: $965 billion post-money (Series H, May 28, 2026)",
+      "note": "근거 등급: 2차 보도(Pinggy Blog 2026-05-29 집계, 'Summary' 절 Anthropic 목록). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. OpenAI 누적 조달과 같은 기사·같은 등급이다. 집계는 약정액을 섞었을 수 있다 — 같은 기사가 Amazon 최대 $33B·Google 최대 $43B 약정과 Series H $65B 에 이미 약정된 하이퍼스케일러 $15B 가 포함됐다고 적는다. Series H 이후 새 지분 조달은 없다(Broadcom 최대 $42B 전환사채 약정은 상장 전 발행 예정이 없다고 Reuters 2026-10-01 이 적는다)."
+    },
+    {
+      "observation_id": "openai.cumulative_raised.2026-03-31.recheck",
+      "company_id": "openai",
+      "metric": "cumulative_raised",
+      "value": 185000000000.0,
+      "unit": "USD",
+      "as_of": "2026-03-31",
+      "kind": "estimate",
+      "source_id": "SRC-WEB2-openai-009",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "basis": {
+        "estimate_range": [
+          180000000000.0,
+          190000000000.0
+        ],
+        "range_is_source_given": true,
+        "derivation": "원문이 '~$180-190 billion' 범위로 주고 값은 가운데 $185B 를 썼다."
+      },
+      "raw": "Total raised: ~$180-190 billion across all rounds … OpenAI’s total raised across all rounds sits around $180-190 billion.",
+      "note": "근거 등급: 2차 보도(Pinggy Blog 2026-05-29 집계, 'Summary' 절 OpenAI 목록과 'The Numbers Get Large' 절 마지막 문단). 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. Anthropic 누적 조달과 같은 기사·같은 등급이다. 2026-03 라운드 $122B 는 '약정 자본'이고 Amazon $35B 는 AGI·상장 조건부라 집계가 약정액을 섞었을 수 있다. 2026-03-31 뒤 마감된 새 조달은 없다(Bloomberg 2026-10-09)."
+    },
+    {
+      "observation_id": "anthropic.ps_ratio.2026-06-30.recheck",
+      "company_id": "anthropic",
+      "metric": "ps_ratio",
+      "value": 41.24,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "kind": "estimate",
+      "source_id": "SRC-WEB-openai-901",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "basis": {
+        "formula": "post_money_valuation ÷ 최근 1년 보정 매출(2025-07-01~2026-06-30)",
+        "derivation": "$965B ÷ (2025년 하반기 + 2026년 1분기 $4.8B + 2026년 2분기 $11.5~11.6B). 2025년 하반기는 회사 발표 런레이트로 범위를 정했다 — 아래 끝은 7월 $1B÷12 + 8~12월 $5B÷12×5 = $2.17B(Series F 발표문: 2025년 초 약 $1B, 8월 $5B 초과), 위 끝은 6개월 × $14B÷12 = $7.0B(Series G 발표문: 2026-02-12 런레이트 $14B). 최근 1년 매출 $18.47B~$23.40B, 배수 41.24~52.26. 값은 범위의 낮은 끝(기업에 가장 덜 불리한 끝)이다.",
+        "estimate_range": [
+          41.24,
+          52.26
+        ],
+        "range_is_source_given": false,
+        "inputs": {
+          "valuation": "SRC-WEB-anthropic-015 (회사 1차)",
+          "q1_2026_revenue": "$4.8B — SRC-WEB2-anthropic-005 (WSJ, Investing.com 전재, 2차 보도)",
+          "q2_2026_revenue": "$11.6B(WSJ)·$11.5B(Bloomberg 잠정) — SRC-WEB-openai-901 (The Next Web, 2차 보도)",
+          "h2_2025_bounds": "SRC-WEB-anthropic-907·SRC-WEB-anthropic-906 (회사 1차 런레이트)"
+        },
+        "assumption": "런레이트가 2025년 하반기 동안 줄지 않았다(회사 발표 런레이트가 2025년 초 $1B → 8월 $5B → 2026년 2월 $14B 로 늘었다).",
+        "not_used": "유출된 상장 신청서 초안의 2025년 매출 $4.6B(Fortune·Reuters 2026-09-29)는 쓰지 않았다. CNBC 2026-08-17 의 '2025년 매출 약 $10B' 는 유출 초안 값과 갈리고 근거 문장이 없어 쓰지 않았다. 두 값 모두 위 범위 안에서 배수 구간을 바꾸지 않는다.",
+        "definition_note": "Anthropic 매출은 클라우드 파트너 판매를 총액으로 잡는다. 순액이면 분모가 작아져 배수가 커지므로 같은 구간(30배 이상) 안에 머문다.",
+        "window_note": "2026년 3분기(7~9월) 실매출은 2026-10-12 까지 보도되지 않아 창 끝이 2026-06-30 이다.",
+        "band_check": "41.24 와 52.26 이 모두 '30x+' 구간(30 이상 100 미만)이라 범위가 판정을 가르지 않는다.",
+        "arr_reference": "밸류÷런레이트 = $965B ÷ $65B = 14.8배(근거로만)."
+      },
+      "raw": "Anthropic more than doubled its revenue to $11.6bn in the same period … Its preliminary revenue has also been reported at $11.5bn by Bloomberg",
+      "note": "근거 등급: 분기 매출은 2차 보도(WSJ·Bloomberg 투자자 자료 보도), 2025년 하반기 범위는 회사 1차 발표 런레이트. 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. OpenAI ps_ratio 와 같은 창·같은 산식·같은 등급의 근거로 만들었다. 유출 문서·초안 수치는 쓰지 않았다."
+    },
+    {
+      "observation_id": "openai.ps_ratio.2026-06-30.recheck",
+      "company_id": "openai",
+      "metric": "ps_ratio",
+      "value": 34.92,
+      "unit": "ratio",
+      "as_of": "2026-06-30",
+      "kind": "estimate",
+      "source_id": "SRC-WEB-openai-901",
+      "status": "verified",
+      "observed_at": "2026-10-12",
+      "basis": {
+        "formula": "post_money_valuation ÷ 최근 1년 보정 매출(2025-07-01~2026-06-30)",
+        "derivation": "$852B ÷ (2025년 하반기 + 2026년 1분기 $5.7B + 2026년 2분기 $6.7B). 2025년 하반기는 회사 발표로 범위를 정했다 — 아래 끝은 6개월 × $1B÷3 = $2.0B(2024년 말 분기 매출 $1B), 위 끝은 6개월 × $2B = $12.0B(2026-03-31 월매출 $2B). 최근 1년 매출 $14.4B~$24.4B, 배수 34.92~59.17. 값은 범위의 낮은 끝(기업에 가장 덜 불리한 끝)이다.",
+        "estimate_range": [
+          34.92,
+          59.17
+        ],
+        "range_is_source_given": false,
+        "inputs": {
+          "valuation": "SRC-WEB-openai-001 (회사 1차)",
+          "q1_2026_revenue": "$5.7B — SRC-WEB-openai-902 (The Information, The Decoder 전재, 2차 보도)",
+          "q2_2026_revenue": "$6.7B — SRC-WEB-openai-901 (WSJ, The Next Web 전재, 2차 보도)",
+          "h2_2025_bounds": "SRC-WEB-openai-001 (회사 1차: 'By the end of 2024 we were generating $1B per quarter. We are now generating $2B in revenue per month.')"
+        },
+        "assumption": "월매출이 2025년 하반기 동안 2024년 말 수준 아래로 내려가지 않았고 2026년 3월 수준을 넘지 않았다.",
+        "not_used": "TechCrunch 2026-10-08 이 '유출된 2025년 재무'로 전한 2025년 매출 약 $13B 는 쓰지 않았다. 그 값을 넣어도(하반기 약 $8.7B) 범위 안이라 구간이 바뀌지 않는다.",
+        "window_note": "2026년 3분기(7~9월) 실매출은 2026-10-12 까지 보도되지 않아 창 끝이 2026-06-30 이다.",
+        "band_check": "34.92 와 59.17 이 모두 '30x+' 구간(30 이상 100 미만)이라 범위가 판정을 가르지 않는다.",
+        "arr_reference": "밸류÷런레이트 = $852B ÷ $50B = 17.0배(근거로만)."
+      },
+      "raw": "OpenAI’s revenue rose to $6.7bn from $5.7bn in the first quarter, the Journal said.",
+      "note": "근거 등급: 분기 매출은 2차 보도(WSJ·The Information 투자자 자료 보도), 2025년 하반기 범위는 회사 1차 발표. 근거 등급 순서: 회사 1차 발표 > 독립 집계 > 2차 보도. Anthropic ps_ratio 와 같은 창·같은 산식·같은 등급의 근거로 만들었다. 유출 문서·초안 수치는 쓰지 않았다."
+    }
+  ]
+}

@@ -1,0 +1,667 @@
+{
+  "group": "E",
+  "sources": [
+    {
+      "source_id": "SRC-NEWS-alibaba-20261010-d571e6b7",
+      "title": "Microsoft skipped OpenAI’s decision model and built its own on Alibaba’s Qwen - The New Stack",
+      "publisher": "The New Stack",
+      "url": "https://thenewstack.io/microsoft-decision-model-foundry/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-10-10T13:03:50Z",
+      "publisher_url": "https://thenewstack.io",
+      "raw_ref": "data/alibaba/news/google/raw/20261012T010822Z-12e195aa.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBiZk5lTERCRDkwMFBjblJEbDlDdUFVXzJqSjdJTEFTaXdzbmlacVFCdUVJR3lnSnFMZEtoanZfcndscjlBODNJQVRVUU5WVG5oQzZScHE0cTdCemoxZVRrRVByQ201M00?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-alibaba-20261008-412a7751",
+      "title": "Alibaba sues Pentagon to denounce being classified as a Chinese military affiliate - Global Voices",
+      "publisher": "Global Voices",
+      "url": "https://globalvoices.org/2026/10/08/alibaba-sues-pentagon-to-denounce-being-classified-as-a-chinese-military-affiliate/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-10-08T18:32:44Z",
+      "publisher_url": "https://globalvoices.org",
+      "raw_ref": "data/alibaba/news/google/raw/20261012T010822Z-12e195aa.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOMmgxLUo3VTBMNmlpSjVNel9qUGVfZzFCbE5UNU1mY2VFUmxxVG8tbWtvdUdnUWM4Q2poaEZEbTdqdDhBMTRTSWlWODVYeE1jdmN2ZG1tQnpjbEJYd2JCaEtteVh1TjVvWUFnV1VHbGJ5WHVteVU1ZEVOOXJnQmRSX3FjSDZ4NWl3LW14TEJ6Smc5dTE5Yk0wNlpBYVUySXdfTlR4TXhVYkd4RklCT29oZUxuUjZCdHFqenNR?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-alibaba-20261009-d070105e",
+      "title": "Alibaba Qwen Releases Qwen-Image-2.1-Turbo, an 8-Step 7B Image Model - MarkTechPost",
+      "publisher": "MarkTechPost",
+      "url": "https://www.marktechpost.com/2026/10/09/alibaba-qwen-releases-qwen-image-2-1-turbo-an-8-step-7b-image-model/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "alibaba",
+      "published_at_utc": "2026-10-09T20:33:17Z",
+      "publisher_url": "https://www.marktechpost.com",
+      "raw_ref": "data/alibaba/news/google/raw/20261012T010822Z-12e195aa.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOVXpvaFdacktESjZwbURtOUpFTW5WTTktSnZ4TjBudmVJcXVHenYxdEpRQ1p0RjFENkJuQmFIVHdVM3JjN1lSSkc3UEZfejI2cVNDRFNoRi1yV0l2NWNGb3VEQTVmVmpGcm1acWVOeXVtMFk0Y1JtNDFkUjNXdkZ4bFN4UHhjTk1qTGdIZkF1TmNTd3ZQWVNwWTlMX3A4SzhJTm5yTDlVRTE2TlhS0gGsAUFVX3lxTE5Vem9oV1pyS0RKNnBtRG05SkVNblZNOS1KdnhOMG52ZUlxdUd6djF0SlFDWnRGMUQ2Qm5CYUhUd1UzcmM3WVJKRzdQRl96MjZxU0NEU2hGLXJXSXY1Y0ZvdURBNWZWakZybVpxZU55dW0wWTRjUm00MWRSM1d2RnhsU3hQeGNOTWpMZ0hmQXVOY1N3dlBZU3BZOUxfcDhLOElObnJMOVVFMTZOWFI?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261008-89261ca6",
+      "title": "SpaceX Is Slowing Down Its Data Center Build-Out - Gadget Review",
+      "publisher": "Gadget Review",
+      "url": "https://www.gadgetreview.com/spacex-is-slowing-down-its-data-center-build-out",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-08T14:30:38Z",
+      "publisher_url": "https://www.gadgetreview.com",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261012T010829Z-39f9694a.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPZTNpTEs3MHliQTRsV1Q0ajM5anhENFRaU2lSVHN3SGc5b3pHQnMxRms0WFl1YmcxV2tIdnF6MmJlbndBQ2JwQjdzRXVabHUzLWd5VC1Bc0NqcW1WSWtrdnNpX1BsS3JZS3l0Nmo3Xy1IeUN0YXNoWWhaVXhIYkp2NzZXMA?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261009-c123e262",
+      "title": "SPCX to Acquire 800 MHz Spectrum for Superior Network: Buy the Stock? - Zacks Investment Research",
+      "publisher": "Zacks Investment Research",
+      "url": "https://www.zacks.com/stock/news/3003864/spcx-to-acquire-800-mhz-spectrum-for-superior-network-buy-the-stock",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-09T14:34:21Z",
+      "publisher_url": "https://www.zacks.com",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261012T010829Z-c61cfead.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQMV9RTlJvZkNWYkJiN3pjWHdJcm9jWTVKUHhHdl9sNTdXRHg5TXFwRlkyLWhVVjVrZzBjS29jeWxoUVRKRGZXTDdoaE41TTNQNjlrRWNhaWVwcEhFT3BiMGtpN3pnODVURUVwcTNYZG5pMGRtNUpMRzhCX1VVMjlXTFA3WTJvbWRfX2dhaXRMZ0xFTHR1d0hTcnFNTElXOC1fNThYRXEwOXFXMHlM?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261011-fd9ed098",
+      "title": "Elon Musk renames SpaceXAI to SpaceX Super Intelligence - The Standard (HK)",
+      "publisher": "The Standard (HK)",
+      "url": "https://www.thestandard.com.hk/innovation/article/345136/Elon-Musk-renames-SpaceXAI-to-SpaceX-Super-Intelligence",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-11T10:19:27Z",
+      "publisher_url": "https://www.thestandard.com.hk",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261012T010829Z-39f9694a.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQNzRVUzdsUFhSWU9PR0V4Y3prT3FTUVBTbDFQQy1jel82akNmNFFJcVM4MzVmYTcyd3BORzhEd2ZPMFFEb0JrWjFEblpmM0pXNDBjLUlyaXI2U1NBN185d0RkZEljdzBWWWJFM1FYZHg3SWpHYzgteWVzVWpybl9SQVQwVDlHTVBGUTJOZFl3ejVVaVFUTjJVVXktR0hJS0pNSW5tZmVTeFlqU01WSzNDRHZn?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261008-19ce9a4a",
+      "title": "Key facts: SpaceX (SPCX) $38.4B debt; $40B chip buy; FCC OKs 15K sats - TradingView",
+      "publisher": "TradingView",
+      "url": "https://www.tradingview.com/news/tradingview:a5d100314336b:0-key-facts-spacex-spcx-38-4b-debt-40b-chip-buy-fcc-oks-15k-sats/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-08T07:00:00Z",
+      "publisher_url": "https://www.tradingview.com",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261012T010829Z-c61cfead.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNUS1hVmptOEx1QjdWMGZzZ2FzOEw3cEdjYWRKVUVWSko4NHFReWt3bEVudnRydWxubHZMQTRoLVFVbFpVZm10ZW9fVDV4YnF6aDhnVEpEdW02ZFAtc3N6X0tmNGJKTXFGZ0pIU0FKdUIxQ01abVdPQV9MS3VPZUFnczBnT28ycnpld19ndzBxaTZfdkF6MVoxN1ExUGRWbXVVWWViZkNhSDdlbDQtd3hmZjlfUDN3Z3MwTzVPUmRZN0F6UQ?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261010-2893e16a",
+      "title": "Key facts: SpaceX (SPCX) Gets FCC OK; Buys 800 MHz, JPMorgan Overweight - TradingView",
+      "publisher": "TradingView",
+      "url": "https://www.tradingview.com/news/tradingview:26239fc39c5e4:0-key-facts-spacex-spcx-gets-fcc-ok-buys-800-mhz-jpmorgan-overweight/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-10T07:00:00Z",
+      "publisher_url": "https://www.tradingview.com",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261012T010829Z-c61cfead.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxPS0FRQjlic1UydENVREpfUlNzNFdGWEp0b1lna0NLT1dZSW5uZUxSeUNiU1RhTUxLTDQ0VVNNUmNuNXE4SElMbVVGSm1XamlCanJJRi1IRmNzQ0laaU8tNFJTS0hCTXhva3U2V2phUl8yRENmM1VKcW5MVDVPTHV0cDU2Y1dpelhSeDdTTF83RUJtVEd1cnYzZmNjX1hOaGNHU2tkOGR3bEVSbVBabDRUNWE1cElCQ2lKcWFzNm5yYlNqMWI0UGpj?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-spacex-xai-20261011-9679a3a0",
+      "title": "Key facts: NASDAQ:SPCX to buy 800MHz spectrum; developing non‑GEO D2D - TradingView",
+      "publisher": "TradingView",
+      "url": "https://www.tradingview.com/news/tradingview:aa8372acc94e4:0-key-facts-nasdaq-spcx-to-buy-800mhz-spectrum-developing-non-geo-d2d/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "spacex-xai",
+      "published_at_utc": "2026-10-11T07:00:00Z",
+      "publisher_url": "https://www.tradingview.com",
+      "raw_ref": "data/spacex-xai/news/google/raw/20261012T010829Z-c61cfead.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQOFZJS0RnaEtFNFdtWkJfSUNfTnA0c3JwdkNWVUZjUGlSNlVlZWs5MWsydVpvZE5hWVE2ekJWQkp4V0ZiS0pYeUgycUFSbXNOaDNsM2xFRElDeHpVdVJYemotc3R3RVdTOVQwcTcxZVZoVU5SWHBHQlNOeXNDNHE0UlBwR3lQUFg5UUMxR1Q1aVRvZGRHeVE5U0NYTkpMWDZfcko3SUNaUHFkTUtzdEFteGd2ME5KdnVXbXZ2djhJWDVhWE1jQ3dnbQ?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261009-6f7c8ea1",
+      "title": "TSLA Stock Holds Flat — Tesla Hit With Wrongful Death Lawsuit, NTSB Probe Over Fatal Texas Crash - Stocktwits",
+      "publisher": "Stocktwits",
+      "url": "https://stocktwits.com/news-articles/markets/equity/tsla-stock-holds-flat-tesla-hit-with-wrongful-death-lawsuit-ntsb-probe-over-fatal-texas-crash/cZKy0hOR7fH",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-09T17:21:55Z",
+      "publisher_url": "https://stocktwits.com",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-8fd2c4f5.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxPWmJuYzhnTERTanJsNWNYWGpaVVk3aVAzUTB6N000WjZmUDRkNzhLUkhteEkyZW9Tc2lTSWk0djdiZ09XSlhQRmhKcWZDZjQ3VEFwWE5PRk95ZVhVYTdMenpWLVlEWWYwenJ0dUY0cW1XLVBaZlNlOVJTWHhBODl1THhMZ2o4d2VqN1NwcGNXWl9ILVQzaU5zeS1USUlxeExCdUZFN0FWVTg0UkZsZzdXc2QxdEl5UTE0NTZmRm5FSHJUNU5WY1JXcjg5MGMxSi1WQm1IRVg1MFBneER6M2lkTEhaek1iQ1dxYTVCVGxn?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261008-35926d8c",
+      "title": "Tesla’s Secrecy Surrounding Optimus Robot Is Making Wall Street Nervous - Barron's",
+      "publisher": "Barron's",
+      "url": "https://www.barrons.com/articles/tesla-stock-optimus-robot-c2377ec0",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 유료 기사라 본문을 열지 못했고 제목만 확인했다(트리거 검색 범위 기록용)",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-08T12:02:00Z",
+      "publisher_url": "https://www.barrons.com",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-4e06efbe.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9CQ1h0a05TX1p5Mm1hZVBxTC1TUmVUbHNXTU1mMGZsVDQtdDR3M0t2aDdieFJCc0t2ZDhqWkNBeWgxb0x5Sng3RnRnOEFhOEFjYmhkZ2lacTdpQ3IybTVrNHZXZV8zbzByOUhrSXJ1RldPMk9BYlE?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261008-9f3e3a1e",
+      "title": "Tesla leaned on Dutch regulator to ease its FSD review, emails show - Electrek",
+      "publisher": "Electrek",
+      "url": "https://electrek.co/2026/10/08/tesla-fsd-europe-rdw-pressure-reuters/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-08T13:57:00Z",
+      "publisher_url": "https://electrek.co",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-4e06efbe.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5QelB3ajFoaUp4RWxFbmxneXBfYzEzNGJqeFdNeUl0c01EMnNSYW1rdk5ValEzQ0VCUEtCQ2hGd1FmcjkwYmZ0Skp3cmFyTHZxWDJvR2JUQkJUcElmRzUwS3ZscFJOdHFKV0tUODlHMnNIelowR21OSA?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261011-58c5c1e9",
+      "title": "Tesla Cybercab fleet hits 300, coming soon to Dallas - Drive Tesla Canada",
+      "publisher": "Drive Tesla Canada",
+      "url": "https://driveteslacanada.ca/news/tesla-cybercab-coming-soon-to-dallas/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-11T16:16:57Z",
+      "publisher_url": "https://driveteslacanada.ca",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-4e06efbe.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5BWjl6Y3kzMXJYZEkxNFJmdy04V2Jqa0F6aThOVXNvWDFWR3JKTmlVWUxvcVVQY0NhMVZZNExaYWN1LWk2Sm9YcUo2VTlEcXJUSUJ3bEZZMFAzb0VqeWoyaXlBc20teEtHZFhUWGJaTHh2Z3lwWWZnc3Rn?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261009-19a6d65c",
+      "title": "Tesla drops 'Full Self-Driving' brand name in Europe after regulator pushback - CNBC",
+      "publisher": "CNBC",
+      "url": "https://www.cnbc.com/2026/10/09/tesla-full-self-driving-europe-regulator.html",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-09T17:10:13Z",
+      "publisher_url": "https://www.cnbc.com",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-4e06efbe.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOUXJuOENfRjJXd2VuWVF0Y05YM2xHdGhpM1ZUdkNRSU9mbVNzV0JlVlhNZXVfSHgya19vdGxwOW1JQXB1OHNWSV9oQ2RVUmhFWUs1dVJDWDdPVWhoLWx1eWE5VjNYbS10SFh6V3ZBMUNNdlJ2T2ZURmtBY1JqUjI1UmRoQdIBiAFBVV95cUxNRlBma0lLUGdYbVJ0QXJ6a09wa25uVVVuRWs0c1d4aVB6dE1ZN0l2M2dPUjZwd3BmWmJCakJIakJvcndKYTQ3UTVGMk91VUVtcjJKbHdnMEwwclZjM293TlQzUFN0YUJ3bTN4N2VvbXVRczZYODcyc0JDXzRUdklKSHRlQjFkdTJG?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261011-479f66b8",
+      "title": "Tesla Drops ‘Full Self-Driving’ Name in Europe as Germany Backs Faster EU Approval for ‘Tesla Assisted Driving’ - Yahoo Finance",
+      "publisher": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/tesla-drops-full-self-driving-104518889.html",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-11T10:45:18Z",
+      "publisher_url": "https://finance.yahoo.com",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-8fd2c4f5.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQVFlUUm9WTXl1SEJteVFnOUlQUWFXam5RM1pKVjNMaEh2YWFabHV6a3NOOXdHWVVVY1o5am42QVNzelRjTUdwTkNULXRsdnV5SExNNEo5UXQ0V0JoR19rWHJQQ05GVTZQb3hTTUlxNTVRRFNhWHJQWThhZllLVm1xWS1iUURsLVIxU0xMU2R6czJFUVo1Qm9PSQ?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261009-69b10e49",
+      "title": "Tesla's China Retail Sales Fall 9% Even as Shanghai Exports Surge 58% - Benzinga",
+      "publisher": "Benzinga",
+      "url": "https://www.benzinga.com/markets/prediction-markets/26/10/62282404/tesla-china-sales-exports-september",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-09T18:45:17Z",
+      "publisher_url": "https://www.benzinga.com",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-8fd2c4f5.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPQUxudGNtR0tqM0x3V015Rldrd05zaFplQldLRWxoRWpqQjJZODJseTZMZW1lLXJBSFV6RkZMOUVGNXc1R1pSNEhVVVdxb0J6WVNfdDducmV0WldoRXN0MVBHeWlMVmxUdlFid3gtc2V2WVpRUmdvZk5UMmNUdHR1aDZ6amVlLUcycUd1YXBZZ1pvbUZJWEJnM0N6UEw3bGJkdHNHaw?oc=5"
+    },
+    {
+      "source_id": "SRC-NEWS-tesla-20261009-5adddbf6",
+      "title": "Tesla renames ‘Full Self-Driving’ to ‘Tesla Assisted Driving’ in Europe - TechCrunch",
+      "publisher": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/09/tesla-renames-full-self-driving-to-tesla-assisted-driving-in-europe/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Google News RSS 후보에서 선별. url 은 중계 주소(relay_url)를 resolve-urls 로 푼 원문 주소다. 본문을 직접 열어 읽었다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-10-09T16:07:26Z",
+      "publisher_url": "https://techcrunch.com",
+      "raw_ref": "data/tesla/news/google/raw/20261012T010831Z-4e06efbe.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQWnJEV3lEaHZrclRXcmRvamIzWE9TSktyUDI2bjJKdkJNamtYWkpqVE0yOVVhaDJjcThTd1FDc2VLY1NvQ3VaQVdSQllNM3pHOHJpQTZ5djI0X3JOQVhoNTloeG5KZ0Z2TlBpRVN2dTc1WnM3S1VaWllRcklRYlE5Y1lrNEtWZjNkX2RORDBCU2JjNWtUZ0tWczJ6VHJwNENtSjF0Qw?oc=5"
+    },
+    {
+      "source_id": "SRC-WEB-tesla-901",
+      "title": "Tesla’s FSD Faces EU Pushback After Safety Council Flags 50% Speed Offset Issue",
+      "publisher": "Drive Tesla Canada",
+      "url": "https://driveteslacanada.ca/news/tesla-fsd-eu-pushback-speed-offset/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "conflict_of_interest": null,
+      "note": "Reuters 2026-09-29 'Safety group urges EU to reject Tesla FSD over speed offset' 가 유료로 막혀 같은 날 같은 사건을 전한 열리는 기사로 바꿨다. 본문을 직접 열어 발췌했다",
+      "kind": "news",
+      "company_id": "tesla",
+      "published_at_utc": "2026-09-29T17:10:35Z"
+    }
+  ],
+  "evidence": [
+    {
+      "company_id": "alibaba",
+      "kind": "news",
+      "source_id": "SRC-NEWS-alibaba-20261010-d571e6b7",
+      "published_at_utc": "2026-10-10T13:03:50Z",
+      "title": "Microsoft skipped OpenAI’s decision model and built its own on Alibaba’s Qwen - The New Stack",
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "factors": [
+        "F5"
+      ],
+      "excerpt": "Microsoft on Friday launched Microsoft-Decision-1 in Foundry, three days after OpenAI opened its Decisions API to every developer in public beta. Microsoft post-trained the decision model on Alibaba’s Qwen3.5-9B rather than anything its partner OpenAI built, though it plans to rebase it soon on its own MAI models as well as OpenAI’s.",
+      "locator": "기사 첫 문단(리드, 'Microsoft on Friday launched Microsoft-Decision-1 in Foundry…')",
+      "relevance": "추론: Microsoft 가 2026-10-09 낸 판단 점수 모델 Decision-1 을 알리바바의 오픈웨이트 모델 Qwen3.5-9B 위에서 후학습했다는 보도다. 같은 기사는 Cloudflare 도 같은 Qwen3.5-9B 를 바탕으로 Clef-flash 를 만들었다고 적는다. 오픈웨이트를 내려받아 쓰는 것은 계약·대금·지분이 오가지 않는 공짜 사용이라, ⑤ 아군 확보(동맹 등급은 맺은 상업 관계만 센다)에서는 동맹으로 세지 않는다. 클라우드 경쟁사인 Microsoft 가 쓴 것이지만 알리바바의 매대·플랫폼에 들어온 것이 아니어서 동맹 등급 +2 의 '경쟁사 편입' 문언에도 닿지 않는다. 알리바바 ⑤ 판단은 동맹 등급 +1, 적대 등급 -1(비용형)이다. (선별 확신: 중간)",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 오픈웨이트 공짜 사용이라 알리바바 ⑤ 판단의 동맹 등급을 바꾸지 않고, Qwen 이 경쟁사 제품의 기반 모델로도 쓰인다는 사실을 판정 칸에 보탠다. Microsoft 가 알리바바 클라우드나 Model Studio 를 거쳐 유료로 쓰거나 공동개발·재판매 계약을 맺은 사실이 확인되면 동맹 등급을 다시 본다.",
+      "horizon": "short — Microsoft 가 곧 자체 MAI·OpenAI 모델로 바꿔 올릴 계획이라고 기사가 적었다",
+      "unverified": [
+        "Microsoft 의 원 발표문(Foundry 문서)은 열지 않았고 기사 서술에 기댔다",
+        "Qwen 기반 사용에 대가가 오갔는지 미확인",
+        "Microsoft 쪽 판단(같은 사건을 Microsoft·OpenAI 에 어떻게 읽을지)은 이 근거에 담지 않았다"
+      ]
+    },
+    {
+      "company_id": "tesla",
+      "kind": "news",
+      "source_id": "SRC-NEWS-tesla-20261009-5adddbf6",
+      "published_at_utc": "2026-10-09T16:07:26Z",
+      "title": "Tesla renames ‘Full Self-Driving’ to ‘Tesla Assisted Driving’ in Europe - TechCrunch",
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "factors": [
+        "F5"
+      ],
+      "excerpt": "Germany’s transport minister, Steffen Bilger, said earlier this month that calling the software “Full Self-Driving” was somewhat misleading because it doesn’t perform the entire task of driving. He spoke with Tesla last month, and the company suggested the name change, according to an official release from the ministry. Bilger said he will now advocate for approval of Tesla Assisted Driving across Europe ahead of an EU-wide vote that could happen later this year.",
+      "locator": "기사 셋째 본문 문단('Germany’s transport minister, Steffen Bilger, said earlier this month…')",
+      "relevance": "추론: 독일 교통부가 FSD 라는 이름을 오해 소지가 있다고 지적했고, 테슬라가 유럽에서 이름을 'Tesla Assisted Driving' 으로 바꾸자 독일이 EU 승인을 지지하겠다고 밝혔다는 보도다. 규제기관의 이름 지적은 사업 구조를 건드리지 않는 비용형 적대이고, 독일의 지지는 EU 승인 전선의 적대를 덜어 주는 쪽 사실이다. 테슬라 ⑤ 판단은 동맹 등급 0, 적대 등급 -1(비용형: NHTSA FSD 조사 등)이다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 이름 변경 요구와 독일의 지지 모두 테슬라 ⑤ 판단의 적대 등급(비용형)을 바꾸지 않는다. EU 표결에서 승인이 거부되거나 판매 금지 같은 구조형 조치가 나오면 적대 등급을, 승인되면 FSD 유럽 매출이 생기는지를 ③ 후발 가속도(FSD 구독) 쪽에서 다시 본다.",
+      "horizon": "short — EU 표결이 빨라야 12월로 보도됐다",
+      "unverified": [
+        "독일 교통부 원 보도자료는 열지 않았다",
+        "EU 표결 일정은 보도 기준이다"
+      ]
+    },
+    {
+      "company_id": "tesla",
+      "kind": "news",
+      "source_id": "SRC-NEWS-tesla-20261008-9f3e3a1e",
+      "published_at_utc": "2026-10-08T13:57:00Z",
+      "title": "Tesla leaned on Dutch regulator to ease its FSD review, emails show - Electrek",
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "factors": [
+        "F5"
+      ],
+      "excerpt": "As we reported last month, the EU’s Technical Committee on Motor Vehicles didn’t vote on FSD on October 6, despite Tesla pointing to that date. Approval needs 15 of 27 member states representing 65% of the EU population. Croatia has since become the eighth country to allow FSD after the Netherlands, Lithuania, Denmark, Belgium, Estonia, Slovenia and Czechia, but those are mostly small markets. Germany, Italy and Spain still haven’t signed on, and Sweden wants the EU to reject FSD unless Tesla removes the ability to set speeds above the limit.",
+      "locator": "기사 끝에서 여덟째 본문 문단('As we reported last month, the EU’s Technical Committee on Motor Vehicles didn’t vote…')",
+      "relevance": "추론: EU 자동차기술위원회가 2026-10-06 FSD 를 표결하지 않았고, 승인을 허용한 나라는 여덟 곳이며 독일·이탈리아·스페인은 아직이고 스웨덴은 제한속도 초과 설정을 없애지 않으면 거부를 요구한다는 보도다. 같은 기사는 Reuters 조사(테슬라가 네덜란드 규제기관 RDW 에 심사를 줄이도록 압박했다는 이메일)를 정리한다. 규제 심사 지연과 일부 회원국 반대는 사업 구조를 건드리지 않는 비용형 적대다. 테슬라 ⑤ 판단은 적대 등급 -1(비용형)이다. (선별 확신: 중간)",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: EU 표결 전이고 차량 판매는 계속되므로 테슬라 ⑤ 판단의 적대 등급(비용형)을 바꾸지 않는다. EU 가 승인을 거부하거나 이미 승인한 나라가 승인을 거두면 적대 등급을 다시 본다.",
+      "horizon": "short — EU 표결이 빨라야 12월로 보도됐다",
+      "unverified": [
+        "Reuters 원 조사 기사는 유료라 열지 않았고 Electrek 의 정리에 기댔다"
+      ]
+    },
+    {
+      "company_id": "tesla",
+      "kind": "news",
+      "source_id": "SRC-NEWS-tesla-20261009-6f7c8ea1",
+      "published_at_utc": "2026-10-09T17:21:55Z",
+      "title": "TSLA Stock Holds Flat — Tesla Hit With Wrongful Death Lawsuit, NTSB Probe Over Fatal Texas Crash - Stocktwits",
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "factors": [
+        "F5"
+      ],
+      "excerpt": "On Tuesday, Avila’s family filed suit in Harris County District Court against Tesla and Butler, NBC News reported. The complaint accuses both parties of negligence and alleges wrongful death. It further claims Tesla engaged in deceptive marketing of its driver-assistance features and that defects in the technology contributed to the crash by failing to detect the end of the roadway and stop the vehicle. The plaintiffs are seeking more than $1 million in damages, the report said.",
+      "locator": "기사 다섯째·여섯째 본문 문단('On Tuesday, Avila’s family filed suit…'). NHTSA 특별 충돌 조사와 NTSB 조사 개시는 열째·열한째 본문 문단",
+      "relevance": "추론: 2026-06-19 텍사스 Katy 에서 Model 3 가 주택을 들이받아 76세 주민이 숨진 사고로 유족이 테슬라를 상대로 과실·기만 광고·결함을 주장하는 부당 사망 소송을 냈고, NHTSA 가 특별 충돌 조사를, NTSB 가 안전 조사를 시작했다는 보도다. 테슬라는 운전자가 가속 페달로 시스템을 해제했다고 반박한다. 개별 소송과 규제 조사는 사업 구조를 건드리지 않는 비용형 적대다. 테슬라 ⑤ 판단은 적대 등급 -1(비용형: NHTSA FSD 조사 등)이다. (선별 확신: 중간)",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 개별 소송과 사고 조사라 테슬라 ⑤ 판단의 적대 등급(비용형)과 같은 성격이어서 바꾸지 않는다. 조사가 리콜 강제나 FSD 판매 중지 같은 구조형 조치로 이어지면 다시 본다.",
+      "horizon": "medium — 소송과 조사 결과가 나올 때까지",
+      "unverified": [
+        "NBC News 원 기사와 소장은 열지 않았다",
+        "사고 당시 FSD 작동 여부는 다툼이 있다",
+        "기사 게재 시각이 후보 수집 시각(2026-10-09)이다"
+      ]
+    },
+    {
+      "company_id": "tesla",
+      "kind": "news",
+      "source_id": "SRC-NEWS-tesla-20261009-69b10e49",
+      "published_at_utc": "2026-10-09T18:45:17Z",
+      "title": "Tesla's China Retail Sales Fall 9% Even as Shanghai Exports Surge 58% - Benzinga",
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "factors": [
+        "F1"
+      ],
+      "excerpt": "Sales in China fell to 64,837 vehicles from 71,525 a year earlier, while exports climbed to 30,529 from 19,287, according to China Passenger Car Association figures released Friday. … Tesla has offered Chinese buyers discounts of 5,000 yuan on Model 3 vehicles and 7,000 yuan on selected Model Y variants through October.",
+      "locator": "기사 둘째 본문 문단('Sales in China fell to 64,837…')과 열두째 본문 문단('Tesla has offered Chinese buyers discounts…')",
+      "relevance": "추론: 중국승용차협회 집계로 테슬라의 9월 중국 내 판매는 64,837대로 전년보다 9% 줄었고(같은 기사는 넉 달 연속 감소라고 적는다), 테슬라는 10월까지 Model 3 에 5,000위안, 일부 Model Y 에 7,000위안 할인을 주고 있다는 보도다. 할인을 주면서도 판매가 줄었다는 것은 ① 가격 실측(가격을 올리거나 할인 없이 유지했는데 고객이 남았는가)의 실패 쪽 사실이다. 테슬라 ① 판단은 가격 실측 실패, 전환비용 통과다. (선별 확신: 중간)",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 테슬라 ① 판단의 가격 실측 실패를 뒷받침하는 사실이라 판정을 바꾸지 않고 근거 문장만 보강한다. 3분기 Update 의 자동차 총마진·평균 판매가 설명이 할인 효과와 함께 나오면 가격 실측 추세를 다시 본다.",
+      "horizon": "short — 10월 할인 기간",
+      "unverified": [
+        "중국승용차협회 원자료는 열지 않았다",
+        "할인이 재고 정리인지 수요 약화인지 원문이 가르지 않는다"
+      ]
+    },
+    {
+      "company_id": "tesla",
+      "kind": "news",
+      "source_id": "SRC-NEWS-tesla-20261011-58c5c1e9",
+      "published_at_utc": "2026-10-11T16:16:57Z",
+      "title": "Tesla Cybercab fleet hits 300, coming soon to Dallas - Drive Tesla Canada",
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "factors": [
+        "F3"
+      ],
+      "excerpt": "The post noted how fast the Cybercab network has grown in the maiden launch city, Austin. The city now has more than 300 units of Tesla’s only vehicle without a steering wheel and pedals. That is an 800 percent increase from when the vehicles hit the road about a month ago. … Tesla apparently is not ready to ship functional Cybercabs out of Texas yet.",
+      "locator": "기사 셋째·넷째 본문 문단('The post noted how fast the Cybercab network has grown…')과 열째 본문 문단('Tesla apparently is not ready to ship…')",
+      "relevance": "추론: 테슬라 로보택시 계정 게시물을 인용해 오스틴의 Cybercab 이 한 달 만에 300대를 넘었고(약 8배), 텍사스 밖으로는 아직 보내지 않았으며 다음 도시는 댈러스라는 보도다. ③ 모방 불가능성은 자산 덕에 실제로 앞서야 통과인데, Waymo 는 미국에서 무인 차량 4,000대 넘게, 오스틴에서 300대 넘게 운행한다. 300대는 등록·보유 대수이고 무인 유료 운행 대수인지는 원문이 밝히지 않는다. 테슬라 ③ 판단은 모방 불가능성 실패다. (선별 확신: 중간)",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 오스틴 한 도시의 대수가 Waymo 오스틴 운행 대수와 비슷해졌을 뿐 미국 전체 운행 대수·유료 탑승 횟수·도시 수에서 앞서지 못해 테슬라 ③ 판단의 모방 불가능성(실패)을 바꾸지 않는다. 무인 유료 운행 대수나 탑승 횟수가 Waymo 를 넘어서는 실측이 나오면 다시 본다.",
+      "horizon": "medium — 댈러스 확장과 3분기 실적",
+      "unverified": [
+        "대수는 회사 게시물과 드론 촬영 보도에 기댄 값이다",
+        "무인 유료 운행 대수와 탑승 횟수는 미확인"
+      ]
+    },
+    {
+      "company_id": "spacex-xai",
+      "kind": "news",
+      "source_id": "SRC-NEWS-spacex-xai-20261008-89261ca6",
+      "published_at_utc": "2026-10-08T14:30:38Z",
+      "title": "SpaceX Is Slowing Down Its Data Center Build-Out - Gadget Review",
+      "counter_evidence": [],
+      "change_vs_previous": "new",
+      "verified_original": true,
+      "factors": [
+        "F8"
+      ],
+      "excerpt": "SpaceX reportedly installed executives and engineers from its rocket and Starlink divisions into roles previously held by xAI-led data-center management, according to The Information. … Outages at Memphis-area facilities disrupted Grok models and customers renting compute capacity, per Yahoo Finance reporting.",
+      "locator": "기사 '…from the inside out' 다음 문단 첫 문장과 그다음 문단 첫 문장",
+      "relevance": "추론: 멤피스 지역 데이터센터 가동 중단이 Grok 모델과 컴퓨트를 빌린 고객을 멈추게 했고, 스페이스X 가 데이터센터 건설 조직을 로켓·Starlink 기술진으로 바꾸고 예비 전력·이중 냉각을 더해 새 용량의 가동 속도가 늦어질 수 있다는 보도다(The Information·Business Insider·Yahoo Finance 보도를 모은 2차 기사). 스페이스X 매출은 AI 부문 고객 B(19.5%)에 쏠려 있고 Anthropic 계약은 최초 3개월 뒤 90일 통지로 해지할 수 있다. 가동 중단은 그 해지권과 집중 위험을 키우는 운영 사실이다. 스페이스X ⑧ 판단은 -3 이다. (선별 확신: 낮음)",
+      "channel": "secondary",
+      "conditional_impact": "지금은 유지: 가동 중단의 규모·기간과 고객 영향이 수치로 나오지 않아 스페이스X ⑧ 판단을 바꾸지 않는다. 3분기 10-Q 에서 고객 계약 해지·감액이나 서비스 수준 위반 비용이 공시되면 ⑧ 의 고객 집중 항목과 ⑦ 가로축(조달 의존 고객 비중)을 다시 본다.",
+      "horizon": "short — 3분기 10-Q",
+      "unverified": [
+        "The Information·Business Insider 원 기사는 열지 않았다",
+        "가동 중단 날짜와 영향받은 고객 이름은 미확인"
+      ]
+    }
+  ],
+  "evidence_fixes": [
+    {
+      "evidence_id": "EV-alibaba-007",
+      "source_id": "SRC-WEB-alibaba-006",
+      "title": "Alibaba deepens AI push with new chip, bigger model; shares jump 5% (BusinessWorld 전재 Reuters)",
+      "published_at_utc": "2026-09-22T09:57:17Z",
+      "excerpt": "Alibaba also unveiled the Zhenwu V900, a new AI chip developed by its T-Head semiconductor unit. Mr. Wu said the processor delivers three times the performance of its predecessor, the M890, and can be linked in clusters of up to 500,000 chips to train and run the largest AI models.",
+      "locator": "BusinessWorld 가 전재한 Reuters 기사 열한째·열둘째 문단('Alibaba also unveiled the Zhenwu V900…'). Reuters 원문 주소는 유료로 막혀 같은 기사의 전재본을 열었다"
+    },
+    {
+      "evidence_id": "EV-tesla-003",
+      "excerpt": "• $20.0 billion senior unsecured three-year delayed draw term loan facility … • $8.0 billion senior unsecured five-year revolving facility … • $2.0 billion senior unsecured 364-day revolving credit facility … No loans were outstanding under the Facilities as of September 29, 2026. … Tesla does not currently plan to draw on the facilities in 2026.",
+      "locator": "8-K(2026-09-29) Item 1.01 첫 머리 글머리표 세 줄, 'Use of Proceeds and Pricing' 첫 문단 끝 문장, Item 1.01 마지막 문단 끝 문장. 기존 $5.0B 회전여신 종료는 Item 1.02"
+    },
+    {
+      "evidence_id": "EV-tesla-004",
+      "source_id": "SRC-WEB-tesla-901",
+      "title": "Tesla’s FSD Faces EU Pushback After Safety Council Flags 50% Speed Offset Issue",
+      "published_at_utc": "2026-09-29T17:10:35Z",
+      "excerpt": "Tesla’s push for FSD approval in Europe may be facing a new obstacle. A safety group has urged the EU to reject the application, citing concerns over speed limit offset. The European Transport Safety Council (ETSC) has opposed Tesla’s Full Self-Driving approval bid. The safety organisation is taking issue with a feature of FSD that allows the vehicle to speed 50 percent over the speed limit.",
+      "locator": "기사 첫째·둘째 문단. Reuters 원문은 유료로 막혀 같은 날 같은 사건을 전한 Drive Tesla Canada 기사로 바꿨다"
+    }
+  ],
+  "evidence_unreadable": [],
+  "triggers": [
+    {
+      "trigger_id": "TRG-025",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: alibaba 뉴스 후보 2026-10-08~10-12 74건(제목 전수, 관련 건은 원문)과 공시 6-K 1건(2026-10-07). 6-K 는 본문을 열어 보니 홍콩거래소 9월 월간 주식 변동 신고(Exhibit 99.1) 제출 안내다. 뉴스에는 Zhenwu V900 의 배치·출하 소식이 없고, 모델 출시는 이미지 모델 Qwen-Image-2.1-Turbo(MarkTechPost 10-09)뿐이며 5~10조 파라미터 모델 출시와 독립 측정치는 없다. 칩 공개 기사(EV-alibaba-007)는 BusinessWorld 전재본으로 본문을 다시 읽었고 V900 은 2027년 1분기 양산·상용 출시 예정으로 적혀 있다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-alibaba-20261009-d070105e"
+      ]
+    },
+    {
+      "trigger_id": "TRG-026",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "검색 범위: alibaba 뉴스 후보 2026-10-08~10-12 74건 제목 전수. NVIDIA RTX Pro 5500 구매에 대한 중국 쪽 허가·미국 쪽 수출 허가·실제 구매를 다룬 후보가 없다. 내몽골 데이터센터 경쟁 기사(Dealroom 10-09)는 칩 조달 허가와 무관하다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-027",
+      "status": "watching",
+      "deadline": "2027-06-30",
+      "finding": "검색 범위: alibaba 뉴스 후보 2026-10-08~10-12 74건 제목 전수와 관련 기사 원문. China Daily(10-08)는 Bloomberg 보도를 옮겨 스페인 데이터센터 전력 공급 협의가 초기 단계이고 최종 합의가 없으며, 튀르키예·핀란드·네덜란드 리전은 앞으로 12개월 안에 연다는 계획이라고 적는다. 새 리전·스페인 데이터센터의 상용 서비스 개시, 해외 클라우드 매출 공시, 게임 사업 매각 완료 공시는 없다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-alibaba-20261008-a567be7b"
+      ]
+    },
+    {
+      "trigger_id": "TRG-030",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: tesla 뉴스 후보 2026-10-08~10-12 138건 제목 전수와 관련 기사. Optimus 관련 후보는 'Optimus 를 둘러싼 비밀주의에 월가가 불안해한다'(Barron's 10-08, 유료라 제목만 확인), 'AI 설비투자 격차가 Optimus 증명을 요구한다'(Yahoo Finance 10-08 제목), Optimus 용 AI5 메모리 축소(tech-insider 10-11 제목)뿐이고, 1세대 라인 가동·생산 대수·외부 인도·공장 배치 대수를 밝힌 공시나 1차 발표는 없다. 테슬라 3분기 실적과 Update 는 2026-10-21 이다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-tesla-20261008-35926d8c"
+      ]
+    },
+    {
+      "trigger_id": "TRG-031",
+      "status": "watching",
+      "deadline": "2026-12-31",
+      "finding": "검색 범위: tesla 뉴스 후보 2026-10-08~10-12 138건 제목 전수와 FSD 유럽 관련 기사 원문(TechCrunch·CNBC·Electrek 2건·Yahoo Finance). EU 자동차기술위원회는 2026-10-06 FSD 를 표결하지 않았고 표결은 빨라야 12월로 보도됐다. 독일 교통부가 10-06 FSD 라는 이름을 오해 소지가 있다고 밝힌 뒤 테슬라가 유럽에서 이름을 'Tesla Assisted Driving' 으로 바꿨고, 독일은 제한속도 10% 초과까지 허용하는 조건으로 EU 승인을 지지하겠다고 했다. 승인 국가는 여덟 곳이고 슬로바키아가 아홉째가 될 것이라고 밝혔으며, 프랑스·스웨덴은 속도 초과 설정에 반대한다. Reuters 는 테슬라가 네덜란드 규제기관에 심사를 줄이도록 압박했다는 이메일 조사를 냈다. EU 표결 결과가 아직 없어 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-tesla-20261009-5adddbf6",
+        "SRC-NEWS-tesla-20261009-19a6d65c",
+        "SRC-NEWS-tesla-20261008-9f3e3a1e",
+        "SRC-NEWS-tesla-20261011-479f66b8"
+      ]
+    },
+    {
+      "trigger_id": "TRG-032",
+      "status": "watching",
+      "deadline": "2026-11-15",
+      "finding": "검색 범위: 2026-09-29 8-K 본문(이번에 원문을 열어 읽음), EDGAR 공시 후보(2026-10-06~10-12 tesla 공시 없음), tesla 뉴스 후보 2026-10-08~10-12. 8-K 는 $20.0B 3년 지연인출 기한부 대출(18개월 안에 인출, 미인출 약정은 1주년에 $10.0B·15개월째 $5.0B 로 자동 감액), $8.0B 5년 회전여신, $2.0B 364일 회전여신을 2026-09-29 체결했고 그날 인출 잔액이 없으며 2026년 인출 계획이 없다고 적는다. 기존 $5.0B 회전여신(2026-06-30 관측의 확정 미인출 여신)은 같은 날 종료됐다. 3분기 10-Q 는 아직 제출되지 않았다(실적 발표 2026-10-21). 최근 1년 잉여현금흐름의 부호가 확인되지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-EDGAR-000162828026063820"
+      ]
+    },
+    {
+      "trigger_id": "TRG-033",
+      "status": "watching",
+      "deadline": "2026-11-16",
+      "finding": "검색 범위: EDGAR 스페이스X 제출 목록(2026-10-12 조회, 마지막 제출은 2026-09-30 Form 4/A 로 8-K·10-Q 없음), spacex-xai 뉴스 후보 2026-10-08~10-12 82건 제목 전수와 관련 기사. Gadget Review(10-08)는 Anthropic 월 약 $1.25B·Google 월 약 $920M 계약을 다시 적고 멤피스 데이터센터 가동 중단이 컴퓨트 고객에 영향을 줬다고 전하나, Anthropic 계약 해지나 고객별 매출 비중 변화, $6.7B 클라우드 계약 상대방은 나오지 않는다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20261008-89261ca6"
+      ]
+    },
+    {
+      "trigger_id": "TRG-034",
+      "status": "watching",
+      "deadline": "2027-09-30",
+      "finding": "검색 범위: spacex-xai 뉴스 후보 2026-10-08~10-12 82건 제목 전수와 관련 기사. Zacks(10-09)는 스페이스X 가 이르면 2028년 AI 컴퓨트 위성을 배치할 계획이라고 적고, TradingView 요약(10-08)은 Starship Flight 15 가 10월 말~11월 초 예정이라고 적는다. 둘 다 계획이고 궤도 데이터센터의 실제 컴퓨트 제공·매출은 없다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20261009-c123e262",
+        "SRC-NEWS-spacex-xai-20261008-19ce9a4a"
+      ]
+    },
+    {
+      "trigger_id": "TRG-035",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: spacex-xai 뉴스 후보 2026-10-08~10-12 82건 제목 전수. Grok·X 요금제 시행이나 인상 뒤 가입자·이탈 수치를 다룬 후보가 없다. The Standard(10-11)는 SpaceXAI 가 SpaceX Super Intelligence(@SpaceXSI)로 계정 이름을 바꿨다고 전하나 요금제와 무관하다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20261011-fd9ed098"
+      ]
+    },
+    {
+      "trigger_id": "TRG-075",
+      "status": "watching",
+      "deadline": "2026-11-16",
+      "finding": "검색 범위: EDGAR 스페이스X 제출 목록(2026-10-12 조회)과 spacex-xai 뉴스 후보 2026-10-08~10-12. 3분기 10-Q 는 아직 제출되지 않았고(마지막 제출 2026-09-30 Form 4/A), 같은 정의의 분기 영업손실률 시계열을 새로 채울 자료가 없다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-077",
+      "status": "watching",
+      "deadline": "2027-01-31",
+      "finding": "검색 범위: tesla 뉴스 후보 2026-10-08~10-12 138건 제목 전수와 Cybercab 관련 기사 원문. Drive Tesla Canada(10-11)는 테슬라 로보택시 계정 게시물을 인용해 오스틴 Cybercab 이 한 달 만에 300대를 넘었고(약 8배) 다음은 댈러스이며 텍사스 밖으로는 아직 보내지 않았다고 적는다. 300대는 등록·보유 대수이고 무인 유료 운행 대수·탑승 횟수는 나오지 않았다. Waymo(미국 무인 4,000대 넘게, 오스틴 300대 넘게, 10개 도시)와의 격차를 실측으로 줄였다는 지표가 아니어서 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-tesla-20261011-58c5c1e9"
+      ]
+    },
+    {
+      "trigger_id": "TRG-079",
+      "status": "watching",
+      "deadline": "2027-03-31",
+      "finding": "검색 범위: alibaba 뉴스 후보 2026-10-08~10-12 74건 제목 전수. 증류 문제를 다룬 소송·정부 절차의 구속력 있는 판단(판결·가처분·제재 결정)을 다룬 후보가 없다. Reuters(10-09) '중국 AI 개발사가 모델 출시의 3.6% 에만 안전 시험을 공개한다' 는 증류와 무관하다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": []
+    },
+    {
+      "trigger_id": "TRG-098",
+      "status": "watching",
+      "deadline": "2027-01-31",
+      "finding": "검색 범위: EDGAR 스페이스X 제출 목록(2026-10-12 조회, 8-K 없음)과 spacex-xai 뉴스 후보 2026-10-08~10-12. TradingView 요약(10-08, Benzinga 등 인용)은 스페이스X 가 Apollo 주도로 은행 대출 약 $10B 와 투자등급 채권 약 $30B 로 NVIDIA 칩 구매용 약 $40B 를 구하며 2027년 마감을 겨냥한다고 적는다. 체결·금액·만기·확정 미인출 한도를 밝힌 공시가 없어 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20261008-19ce9a4a"
+      ]
+    },
+    {
+      "trigger_id": "TRG-099",
+      "status": "watching",
+      "deadline": "2027-06-30",
+      "finding": "검색 범위: alibaba 뉴스 후보 2026-10-08~10-12 74건 제목 전수와 Global Voices(10-08) 원문. 기사는 알리바바의 1260H 등재 취소 소송이 진행 중이고 국방부가 등재 근거로 공개 기록(검열 기술 판매, 국유기업 합작 등)을 법원에 냈으며, Tencent·Baidu 는 아직 이의를 내지 않았다고 적는다. 법원의 판결·가처분이나 2027년 간접 조달 금지에 따른 매출 영향 공시는 없다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-alibaba-20261008-412a7751"
+      ]
+    },
+    {
+      "trigger_id": "TRG-100",
+      "status": "watching",
+      "deadline": "2026-11-15",
+      "finding": "검색 범위: EDGAR 공시 후보(2026-10-06~10-12 tesla 공시 없음)와 tesla 뉴스 후보 2026-10-08~10-12. Q3 2026 Update 는 2026-10-21 에 나오므로 아직 없다. Benzinga(10-09)는 중국승용차협회 집계로 9월 중국 내 판매가 9% 줄었고 테슬라가 10월까지 Model 3·일부 Model Y 에 할인을 준다고 적어, Update 를 읽을 때 평균 판매가 설명과 함께 볼 사실로 근거에 올렸다. 조건(Update 공개)이 서지 않아 관찰을 유지한다.",
+      "source_ids": [
+        "SRC-NEWS-tesla-20261009-69b10e49"
+      ]
+    },
+    {
+      "trigger_id": "TRG-101",
+      "status": "watching",
+      "deadline": "2026-12-15",
+      "finding": "검색 범위: alibaba 공시 6-K 1건(2026-10-07, 9월 월간 주식 변동 신고)과 뉴스 후보 2026-10-08~10-12 74건 제목 전수. 2026-09 분기 실적 보도자료는 아직 나오지 않았다. 증권사 전망 기사(SCMP 10-08 'AI 클라우드 매출 50% 넘게 늘 것', TradingView 10-09 '3분기 클라우드 매출 +53% 예상')는 실측이 아니라 근거로 쓰지 않았다. 조건이 서지 않아 관찰을 유지한다.",
+      "source_ids": []
+    }
+  ],
+  "new_triggers": [
+    {
+      "company_id": "spacex-xai",
+      "factors": [
+        "F4",
+        "F1"
+      ],
+      "observation": "스페이스X 가 2026-10-08 Grain Management 의 미국 전국 800MHz 저대역 주파수(최대 14MHz 페어)를 사는 확정 계약을 맺었다고 발표했다. FCC 승인과 통상의 종결 조건이 남아 있고 금액은 밝히지 않았다. 같은 주에 FCC 가 Starlink Mobile 위성 15,000기 배치를 승인했다는 보도가 있다. 둘 다 인수 서명·규제 승인 단계라 출하·배치가 아니다.",
+      "condition": "주파수 인수가 종결되고(FCC 승인 포함) Starlink Mobile 이 지상 주파수를 써서 상용 서비스를 시작하거나 그 가입자·매출이 공시되면 다시 본다.",
+      "deadline": "2027-06-30",
+      "source_ids": [
+        "SRC-NEWS-spacex-xai-20261009-c123e262",
+        "SRC-NEWS-spacex-xai-20261011-9679a3a0",
+        "SRC-NEWS-spacex-xai-20261010-2893e16a"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4",
+          "F1"
+        ],
+        "what": "스페이스X ④ 판단(지금 4)의 사업 폭에 지상·위성 통합 이동통신을 배치 실측으로 넣을지, 스페이스X ① 판단(소비자 채널 회수 루프 부분·전환비용 실패)에서 Starlink Mobile 가입자가 기존 Starlink 소비자 채널과 별개의 유의미한 채널이 되는지."
+      }
+    }
+  ],
+  "observations": [
+    {
+      "company_id": "tesla",
+      "metric": "undrawn_credit",
+      "value": 30000000000.0,
+      "unit": "USD",
+      "as_of": "2026-09-29",
+      "kind": "actual",
+      "source_id": "SRC-EDGAR-000162828026063820",
+      "status": "verified",
+      "raw": "• $20.0 billion senior unsecured three-year delayed draw term loan facility … • $8.0 billion senior unsecured five-year revolving facility … • $2.0 billion senior unsecured 364-day revolving credit facility … No loans were outstanding under the Facilities as of September 29, 2026.",
+      "basis": {
+        "formula": "20.0B + 8.0B + 2.0B",
+        "components": {
+          "delayed_draw_term_loan": 20000000000.0,
+          "five_year_revolver": 8000000000.0,
+          "364_day_revolver": 2000000000.0
+        }
+      },
+      "note": "8-K(2026-09-29) Item 1.01 첫 머리 글머리표와 'Use of Proceeds and Pricing' 첫 문단. 지연인출 기한부 대출은 18개월 안에 최대 10회 인출하고 미인출 약정이 1주년에 $10.0B, 15개월째 $5.0B 로 자동 감액된 뒤 18개월째 소멸한다. 연결 유동성 $5.0B 이상 유지 약정이 있다. 기존 $5.0B 회전여신은 같은 날 종료돼(Item 1.02) 2026-06-30 관측 $5,000M 을 대체한다. 제출일이 이번 후보 창(2026-10-06~) 이전이지만 이전 실행에서 제목만 확인해 등록하지 않았던 값이다. 현금 관측(2026-06-30)과 기준일이 다르다."
+    }
+  ]
+}

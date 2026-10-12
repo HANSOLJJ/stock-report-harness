@@ -1,0 +1,297 @@
+{
+  "alibaba": [
+    {
+      "evidence_id": "EV-alibaba-007",
+      "title": "Alibaba deepens AI push with new chip, bigger model; shares jump 5% - Reuters",
+      "url": "https://www.reuters.com/business/retail-consumer/alibaba-plans-ai-model-with-5-trillion-10-trillion-parameters-unveils-new-chip-2026-09-22/",
+      "factors": [
+        "F4"
+      ],
+      "published_at_utc": "2026-09-21T07:00:00Z"
+    }
+  ],
+  "alphabet": [
+    {
+      "evidence_id": "EV-alphabet-004",
+      "title": "Alphabet (GOOGL) Could Be 28% Undervalued Following Its Antitrust Win - simplywall.st",
+      "url": "https://simplywall.st/stocks/us/media/nasdaq-googl/alphabet/news/alphabet-googl-could-be-28-undervalued-following-its-antitru",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-09-20T15:43:09Z"
+    },
+    {
+      "evidence_id": "EV-alphabet-007",
+      "title": "Google announces Gemini 4 flagship AI model after months of delays - Reuters",
+      "url": "https://www.reuters.com/legal/litigation/google-announces-gemini-4-flagship-ai-model-after-months-delays-2026-09-30/",
+      "factors": [
+        "F2"
+      ],
+      "published_at_utc": "2026-09-30T22:16:26Z"
+    },
+    {
+      "evidence_id": "EV-alphabet-009",
+      "title": "Polish regulator suspects Google abused dominant position in publisher payment talks - Reuters",
+      "url": "https://www.reuters.com/legal/litigation/polish-regulator-suspects-google-abused-dominant-position-publisher-payment-2026-10-05/",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-05T16:52:12Z"
+    },
+    {
+      "evidence_id": "EV-alphabet-010",
+      "title": "Google set to defend £1.2bn UK lawsuit over ‘excessive’ app download charges - Financial Times",
+      "url": "https://www.ft.com/content/25272ffd-fd7e-4a69-97b3-cfcb3f98e646?syn-25a6b1a6=1",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-04T04:01:05Z"
+    }
+  ],
+  "anthropic": [
+    {
+      "evidence_id": "EV-anthropic-002",
+      "title": "US appeals court upholds Pentagon's blacklisting of Anthropic - Reuters",
+      "url": "https://www.reuters.com/world/us-appeals-court-declines-block-pentagons-blacklisting-anthropic-2026-09-25/",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-09-25T17:54:58Z"
+    },
+    {
+      "evidence_id": "EV-anthropic-003",
+      "title": "Anthropic’s leaked IPO prospectus details steep losses, rapid growth, and a fear that AI could end humanity - Fortune",
+      "url": "https://fortune.com/2026/09/29/anthropic-leaked-ipo-prospectus-losses-growth-ai-end-humanity/",
+      "factors": [
+        "F9"
+      ],
+      "published_at_utc": "2026-09-29T10:03:00Z"
+    },
+    {
+      "evidence_id": "EV-anthropic-004",
+      "title": "Anthropic's $518 billion AI buildout hinges largely on deals that cannot be canceled, filing shows - Reuters",
+      "url": "https://www.reuters.com/business/anthropics-518-billion-ai-buildout-hinges-largely-deals-that-cannot-be-canceled-2026-09-29/",
+      "factors": [
+        "F8",
+        "F9"
+      ],
+      "published_at_utc": "2026-09-29T16:48:56Z"
+    },
+    {
+      "evidence_id": "EV-anthropic-006",
+      "title": "FTC Probing OpenAI and Anthropic Over Product Safety Concerns - bloomberg.com",
+      "url": "https://www.bloomberg.com/news/articles/2026-09-30/ftc-probing-openai-and-anthropic-over-product-safety-concerns",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-09-30T15:01:25Z"
+    },
+    {
+      "evidence_id": "EV-anthropic-009",
+      "title": "EXCLUSIVE: Broadcom to lend Anthropic up to $42 billion to lease its chips, filing says - Reuters",
+      "url": "https://www.reuters.com/business/broadcom-lend-anthropic-up-42-billion-lease-its-chips-filing-says-2026-10-01/",
+      "factors": [
+        "F8",
+        "F9"
+      ],
+      "published_at_utc": "2026-10-01T10:11:37Z"
+    },
+    {
+      "evidence_id": "EV-anthropic-011",
+      "title": "Microsoft Slashes Internal Claude Spending by a Third - The Information",
+      "url": "https://www.theinformation.com/articles/meta-microsoft-work-wean-staff-anthropics-claude",
+      "factors": [
+        "F1",
+        "F5"
+      ],
+      "published_at_utc": "2026-10-05T18:14:00Z"
+    }
+  ],
+  "meta": [
+    {
+      "evidence_id": "EV-meta-002",
+      "title": "Meta launches enterprise AI business seeking to cash in on vast spending - Financial Times",
+      "url": "https://www.ft.com/content/fbe0a48f-4d33-42eb-8d2c-79f662c88678?syn-25a6b1a6=1",
+      "factors": [
+        "F4"
+      ],
+      "published_at_utc": "2026-09-28T15:54:34Z"
+    },
+    {
+      "evidence_id": "EV-meta-004",
+      "title": "Exclusive: Meta’s Muse Tops 3 Million Weekly Users - The Information",
+      "url": "https://www.theinformation.com/briefings/exclusive-metas-muse-tops-3-million-weekly-users",
+      "factors": [
+        "F3"
+      ],
+      "published_at_utc": "2026-09-30T22:48:00Z"
+    },
+    {
+      "evidence_id": "EV-meta-006",
+      "title": "Meta reportedly calls its AI data centers ‘pilot models’ — its research tax credits jumped from $700M to $3.9B - Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/meta-reportedly-calls-ai-data-035500665.html",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-01T03:55:00Z"
+    },
+    {
+      "evidence_id": "EV-meta-007",
+      "title": "Norway plans temporary AI glasses ban over privacy concerns (META:NASDAQ) - Seeking Alpha",
+      "url": "https://seekingalpha.com/news/4650098-norway-plans-temporary-ai-glasses-ban-over-privacy-concerns",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-05T10:41:47Z"
+    }
+  ],
+  "nvidia": [
+    {
+      "evidence_id": "EV-nvidia-004",
+      "title": "OpenAI sparked Hugging Face bids with early investment offer ahead of Nvidia's $13 billion deal - cnbc.com",
+      "url": "https://www.cnbc.com/2026/09/28/openai-spark-hugging-face-bid-war-early-investment-bid-ahead-of-nvidia.html",
+      "factors": [
+        "F4"
+      ],
+      "published_at_utc": "2026-09-28T18:44:49Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-011",
+      "title": "Amazon seeks to offload $8bn of Nvidia chips to investors - Financial Times",
+      "url": "https://www.ft.com/content/97d8d346-519e-48fb-8df8-66cf5f12ef62?syn-25a6b1a6=1",
+      "factors": [
+        "F7"
+      ],
+      "published_at_utc": "2026-10-02T06:42:49Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-012",
+      "title": "Nvidia’s Blind Spots Exposed by China Chip Smuggling - Bloomberg.com",
+      "url": "https://www.bloomberg.com/news/features/2026-10-01/nvidia-faces-questions-over-china-ai-chip-smuggling-cases",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-02T06:49:00Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-013",
+      "title": "Nvidia-backed Reflection unveils first AI model to take on Chinese open models - Reuters",
+      "url": "https://www.reuters.com/technology/nvidia-backed-reflection-unveils-first-ai-model-take-chinese-open-models-2026-10-05/",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-05T20:54:09Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-014",
+      "title": "Nvidia’s $20bn licensing deal with Groq faces lawsuit from jilted engineers - Financial Times",
+      "url": "https://www.ft.com/content/93ee425d-9ac7-4543-8cc9-fef2e0670787?syn-25a6b1a6=1",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-05T09:00:03Z"
+    },
+    {
+      "evidence_id": "EV-nvidia-015",
+      "title": "Firmus IPO and future success are greatly dependent on Nvidia’s Jensen Huang - AFR",
+      "url": "https://www.afr.com/chanticleer/this-man-holds-the-key-to-firmus-44b-dream-and-he-s-not-a-founder-20261006-p612ze",
+      "factors": [
+        "F7"
+      ],
+      "published_at_utc": "2026-10-05T18:00:00Z"
+    }
+  ],
+  "openai": [
+    {
+      "evidence_id": "EV-openai-002",
+      "title": "Scoop: OpenAI's annual recurring revenue nears $70B - axios.com",
+      "url": "https://www.axios.com/2026/09/29/scoop-openais-annual-recurring-revenue-nears-70b",
+      "factors": [
+        "F6"
+      ],
+      "published_at_utc": "2026-09-29T14:15:48Z"
+    }
+  ],
+  "palantir": [
+    {
+      "evidence_id": "EV-palantir-006",
+      "title": "San Francisco nurses protest ICE connection with Palantir - CBS News",
+      "url": "https://www.cbsnews.com/sanfrancisco/video/san-francisco-nurses-protest-ice-connection-with-palantir/",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-01T01:24:00Z"
+    },
+    {
+      "evidence_id": "EV-palantir-009",
+      "title": "Andy Burnham searches for UK alternative to Palantir - Financial Times",
+      "url": "https://www.ft.com/content/9a6e17fe-55e4-4a6d-8761-8346ec765ba9?syn-25a6b1a6=1",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-01T20:00:09Z"
+    }
+  ],
+  "tesla": [
+    {
+      "evidence_id": "EV-tesla-003",
+      "title": "8-K 2026-09-29 · Items 1.01, 1.02, 2.03, 9.01",
+      "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026063820/tsla-20260929.htm",
+      "factors": [
+        "F9"
+      ],
+      "published_at_utc": null
+    },
+    {
+      "evidence_id": "EV-tesla-004",
+      "title": "Safety group urges EU to reject Tesla FSD over speed offset - Reuters",
+      "url": "https://www.reuters.com/business/autos-transportation/safety-group-urges-eu-reject-tesla-fsd-over-speed-offset-2026-09-29/",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-09-29T07:39:43Z"
+    }
+  ],
+  "amazon": [
+    {
+      "evidence_id": "EV-amazon-008",
+      "title": "Microsoft, Amazon Cloud Arms Set to Face Deeper Scrutiny Under EU’s Tech Rules - Bloomberg.com",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-02/microsoft-amazon-cloud-arms-set-to-face-deeper-scrutiny-under-eu-s-tech-rules",
+      "factors": [
+        "F5"
+      ],
+      "published_at_utc": "2026-10-02T11:16:13Z"
+    }
+  ],
+  "microsoft": [
+    {
+      "evidence_id": "EV-microsoft-004",
+      "title": "8-K 2026-09-02 · Items 7.01, 9.01",
+      "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526380280/d291965d8k.htm",
+      "factors": [
+        "F3"
+      ],
+      "published_at_utc": null
+    }
+  ],
+  "oracle": [
+    {
+      "evidence_id": "EV-oracle-006",
+      "title": "Oracle : Project Jupiter Statement on Southern New Mexico Floods - marketscreener.com",
+      "url": "https://www.marketscreener.com/news/oracle-project-jupiter-statement-on-southern-new-mexico-floods-ce785ad3da8ef323",
+      "factors": [
+        "F9"
+      ],
+      "published_at_utc": "2026-10-01T01:55:05Z"
+    },
+    {
+      "evidence_id": "EV-oracle-007",
+      "title": "Power approval set to delay Oracle's Wisconsin AI datacenter - The Register",
+      "url": "https://www.theregister.com/on-prem/2026/10/02/power-approval-set-to-delay-oracles-wisconsin-ai-datacenter/5300832",
+      "factors": [
+        "F9"
+      ],
+      "published_at_utc": "2026-10-02T13:50:39Z"
+    }
+  ]
+}
