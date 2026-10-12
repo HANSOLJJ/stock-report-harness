@@ -620,6 +620,34 @@ class SurvivalReportTest(unittest.TestCase):
         self.assertEqual(render_draft(ctx, results, scores, triggers), committed)
 
 
+class RuleChangeInheritTest(unittest.TestCase):
+    """v2.0 실행의 새 판단을 v2.1 로 이어받을 때, 새 규칙이 받지 않는 형식(④⑧ score)만 carried 로 넘어간다."""
+
+    def test_incompatible_new_judgment_becomes_carried(self):
+        import os
+        os.environ["SCORECARD_DOTENV"] = ""
+        from scorecard import engine, stages
+        from scorecard.schema import write_json
+        from tests.test_collect_stage import SLUG, Sandbox
+        box = Sandbox(("nvidia",), rule_version="v2.0")
+        self.addCleanup(box.close)
+        path = box.run_dir / "judgments.json"
+        payload = load_json_strict(path)
+        for j in payload["items"]:
+            if j["factor"] in ("F4", "F5"):
+                j["status"] = "new"
+                j.pop("carried_from", None)
+        write_json(path, payload)
+        new = "ai-scorecard-2026-10-inherit"
+        stages.init_run(new, from_run=SLUG, rule_version="v2.1", title="규칙 변경 이어받기")
+        items = {j["factor"]: j for j in load_json_strict(box.dir / "output" / new / "judgments.json")["items"]}
+        self.assertEqual((items["F4"]["status"], items["F4"]["carried_from"]), ("carried", f"{SLUG}:{items['F4']['judgment_id']}"))
+        self.assertEqual(items["F5"]["status"], "new")          # ⑤ 는 형식 선언이 없어 그대로 둔다
+        run = load_json_strict(box.dir / "output" / new / "run.json")
+        self.assertTrue(any("carried 로 이어받았다" in a for a in run["assumptions"]))
+        engine.load_context(new)                                 # 첫 load_context 에서 막히지 않는다
+
+
 class ChangeTypeTest(unittest.TestCase):
     """TODO 9: history.csv 의 변경 사유를 실행 설정에 넣을 길."""
 

@@ -230,6 +230,12 @@ class CollectStageTest(unittest.TestCase):
         self.assertIn("다른 값", bad["nvidia"]["error"])
         self.assertEqual(len(self.facts_obs()), 3)
 
+    def test_nothing_collected_is_not_reported_as_existing(self):
+        self.write({OCF: [r for r in CAL if r["form"] != "10-K"]})     # 직전 연간 값이 없다
+        out = {r["company_id"]: r for r in self.collect(from_file=str(self.files))}
+        self.assertEqual(out["nvidia"]["status"], "nothing_collected")
+        self.assertIn("직전 회계연도의 연간 값이 없다", " ".join(out["nvidia"]["missing"]))
+
     def test_non_usd_reporter_is_skipped(self):
         registry.set_company_field("tsmc", "cik", 1046179, path=self.box.companies)
         out = {r["company_id"]: r for r in self.collect(from_file=str(self.files))}

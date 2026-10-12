@@ -181,6 +181,20 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         moved = f"규칙이 이어받은 실행 이후 바뀌었다({prior_rule_hash[:12]}… → {rules.hash[:12]}…)"
         print(f"[경고] {moved} — 기존 기업 점수 불변은 diff 로 확인한다")
         assumptions.append(f"{moved} — 기존 기업 점수 불변은 diff 로 확인한다")
+    # 2026-10-12 규칙 v2.1 첫 실행: 새 규칙이 받지 않는 형식의 판단(v2.0 ④⑧ score → v2.1 survival·axes)이 status new 로
+    # 넘어오면 첫 load_context 에서 막혀 판단을 고칠 제안조차 쓸 수 없다. 그 판단만 carried 로 두어 옛 형식을 읽게 하고
+    # (검증기의 설계 의도: 이어받은 뒤 하나씩 새 판단으로 바꾼다) 정기 실행에 승계가 남으면 validate_scorecard 가 막는다.
+    # 형식이 맞는 판단에는 손대지 않는다 — 기업 추가 실행의 점수 상태를 움직이지 않는다(위 docstring).
+    stale = []
+    for j in judgments["items"]:
+        declared = rules.factor(j["factor"]).get("judgment_kinds")
+        if declared and j["status"] == "new" and j["kind"] not in declared:
+            j["status"] = "carried"
+            j["carried_from"] = f"{prior_slug}:{j['judgment_id']}"
+            stale.append(j["judgment_id"])
+    if stale:
+        assumptions.append(f"규칙 {rules.version} 이 받지 않는 형식의 판단 {len(stale)}건({', '.join(stale)})을 carried 로 이어받았다. "
+                           "이 실행에서 새 형식으로 다시 매겨야 한다")
     if approval is None:
         assumptions.append(f"이전 실행 {prior_slug} 에는 승인 기록이 없다. 승인되지 않은 상태에서 이어받았다")
     else:
@@ -562,7 +576,9 @@ def _collect_facts(slug: str, run: dict[str, Any], registry: dict[str, dict[str,
         except Exception as exc:  # noqa: BLE001 — 기업 하나의 실패로 나머지를 멈추지 않는다
             rows.append({"company_id": cid, "status": "failed", "error": str(exc)})
             continue
-        row: dict[str, Any] = {"company_id": cid, "status": "collected" if fresh else "skipped_existing",
+        # 만든 관측이 하나도 없으면(직전 연간 값이 없는 신규 상장 등) 이미 있어 건너뛴 것과 구분한다
+        status = "collected" if fresh else ("skipped_existing" if existing else "nothing_collected")
+        row: dict[str, Any] = {"company_id": cid, "status": status,
                                "added": list(dict.fromkeys(o["metric"] for o in fresh)), "existing": list(dict.fromkeys(existing)),
                                "missing": [f"{r['metric']}({r['reason']})" for r in results if r["status"] != "collected"]}
         rows.append(row)
