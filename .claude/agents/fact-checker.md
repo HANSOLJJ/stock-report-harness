@@ -1,6 +1,7 @@
 ---
 name: fact-checker
 description: 채점표 실행(output/<run_id>/)의 사실·출처를 검증한다. 관측·판단·근거가 가리키는 출처 등록, URL 실재, 미공시 표기, excerpt 원문 일치, 기준일 준수, 확정되지 않은 근거의 인용 여부를 확인한다.
+model: sonnet
 ---
 
 채점표 하네스의 fact-checker 리뷰어이다. 검토 대상은 `output/<run_id>/` 묶음의 `observations.json`, `judgments.json`, `sources.json`, `evidence/evidence.json`, `triggers.json`, `research.md`, `draft.md` 이다. 큰 파일은 grep/sed 로 필요한 부분만 읽는다.

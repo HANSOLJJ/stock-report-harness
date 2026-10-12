@@ -25,8 +25,8 @@
 - [x] rules.md ③④⑧ 절, 2.6 ⑧ 기본값, 5절 0.5 단위, 체크리스트는 번호를 늘리지 않고 Q01 사례에 보유표 이중 계산을 더함 → 테스트 → 커밋
 
 ## 2-D. 다리 · change_type
-- [ ] init --change-type, 스키마 허용값 → 테스트
-- [ ] 다리 표 방법(11월 판단 세션이 10월 사실로 v2.1 입력을 먼저 채움)을 11월 실행 계획에 적기
+- [x] init --change-type, 스키마 허용값(baseline-recompute·rule-change·fact-update·correction·company-add) → 테스트
+- [x] 다리 표 방법을 TODO 1(11월 실행)에 적음
 
 ## 2-E. 현금 연결표
 - [ ] ocf_ttm 관측, 연결표 계산(results 밖), 렌더 → ⑨ 와 숫자 대조 → 테스트
@@ -36,6 +36,6 @@
 - [ ] 2-C-2 모집단 밖 회사·클라우드 세그먼트 마진
 
 ## 운영
-- [ ] .claude/agents/*.md model: sonnet, 스킬·AGENTS.md 에 모델 분담 한 줄
-- [ ] score-research·score-review·guide.md 갱신
-- [ ] TODO 5·13 닫기, ASIC 침투율·⑦ 숫자 입력(v2.2) 새 항목
+- [x] .claude/agents/*.md model: sonnet, AGENTS.md 「서브에이전트 모델」, score-review·score-research 에 분담
+- [x] score-research(v2.1 판정 재료)·score-review(교차표 셋 추가)·score-approve·guide.md 5.5·structure.md 갱신
+- [x] TODO 5·9·13 닫기, 1(11월 v2.1 실행 준비) 다시 씀, 14~17 새 항목(남은 단계·ASIC 보류·⑦ 숫자 입력·바스켓 대기)

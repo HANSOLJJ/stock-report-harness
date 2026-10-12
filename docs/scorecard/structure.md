@@ -88,7 +88,9 @@
 | | `needs_rule_decision` | 규칙 미결. 해당 계산 분기를 활성화하지 않는다 |
 | | `error` · `unavailable` | 입력이 규칙과 모순되거나 산출할 수 없다 |
 | factor 결과 `basis` | `computed` | 관측에서 산식으로 계산(⑥·⑨) |
-| | `manual` | 사람이 적은 점수 그대로(④⑧, 규칙 v1.9 이하는 ① 도) |
+| | `manual` | 사람이 적은 점수 그대로(규칙 v2.0 이하의 ④⑧, v1.9 이하는 ① 도) |
+| | `survival` | ④ 층별 보유표 칸 값 합(상한 2.5) + AI 무관 매출 몫 구간(상한 2.5), 0.5 단위(규칙 v2.1) |
+| | `axes` | ⑧ 고객·약정·공급·지정학 네 축의 사다리 칸 가운데 최저, 비공개·탐색 미완 축은 정책 기본값 −1(규칙 v2.1) |
 | | `criteria` · `grade` · `matrix` · `paths` | 판정 입력을 사다리·산식·조합표·경로 수로 환산(③⑤⑦②) |
 | | `lockin` | ① 네 질문 판정을 사다리로 환산(규칙 v2.0). `calc` 에 입력과 단계별 보정이 담긴다 |
 | | `carried` | 판정 입력 없이 점수 숫자만 있다(기업 추가 실행의 기존 기업에만 생긴다) |
@@ -101,7 +103,8 @@
 
 | 요구 | 모듈 | 테스트 |
 |---|---|---|
-| F4·F8 정성 점수 (규칙 v1.9 이하는 F1 도 여기서, 부품 상한 2) | `calc_qual.compute_manual` | `test_f1_component_cap` |
+| F4·F8 정성 점수 (규칙 v2.0 이하. v1.9 이하는 F1 도 여기서, 부품 상한 2) | `calc_qual.compute_manual` | `test_f1_component_cap` |
+| F4 보유표 두 축 · F8 네 축 (규칙 v2.1) | `calc_qual.compute_f4` · `compute_f8` | `test_rules_v21` |
 | F1 네 질문 사다리 (규칙 v2.0: 락인 강도 = 회수 루프·전환비용 중 높은 판정 통과 4·부분 3·실패 1, 가격 실측 ±1, 대체 공급 실패 −1, 지속성 할인 −1, 0~5 로 자름. 둘 다 미확인이면 판단 대기) | `calc_qual.compute_f1` | `tests/test_v20_*.py` |
 | F2 경로 환산 (C-03 확정: 경로 수 0·1·2 → 2·3·4, 세대 격차 → 5. 규칙 v2.0 정기 실행은 경로 입력 `paths` 로만 판단하고, 세대 격차는 개월 수 `generation_gap_months`, 벤더 발표만 있으면 성능 도약 부분 통과. 점수 숫자만 넘어온 `score` 판단은 기업 추가 실행의 기존 기업에만 남는다) | `calc_qual.compute_f2`, `_f2_generation_gap` | `tests/test_scorecard_c03.py`, `test_f2_requires_decision_and_carried_allowed`, `tests/test_v20_*.py` |
 | F3 사다리 + 모방불가 상한 + 문 닫힘 | `calc_qual.compute_f3`, `rules.f3_ladder` | T-04 `test_t04_f3_all_combinations` |
@@ -167,7 +170,7 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 
 ### 판단 수정
 
-정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. F1·F4·F8 은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 근거 세 칸(`evidence`·`evidence_up`·`evidence_down`)만 바꾸는 수정은 모든 factor 에 되고 판정 값·상태를 유지한다. 규칙 v1.9 이상 실행이면 쓰기 전에 `validate.three_way_item_violations` 로 세 칸 형식을 검사한다. 제안은 `evidence_after`·`evidence_up_after`·`evidence_down_after` 로 세 칸의 반영 뒤 문장을 든다(null 은 그 칸을 바꾸지 않음). 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
+정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. 규칙 v2.0 이하의 F4·F8(v1.9 이하는 F1 도)은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs`·F1 `lockin`·F2 `paths` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), 규칙 v2.1 의 F4 `survival`·F8 `axes` 와 ① AI 수익화 재료는 CLI 전용 키(`schema.JUDGMENT_CLI_ONLY_INPUTS`, 모양은 `JUDGMENT_CLI_ONLY_TYPES`)로 받는다. F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 근거 세 칸(`evidence`·`evidence_up`·`evidence_down`)만 바꾸는 수정은 모든 factor 에 되고 판정 값·상태를 유지한다. 규칙 v1.9 이상 실행이면 쓰기 전에 `validate.three_way_item_violations` 로 세 칸 형식을 검사한다. 제안은 `evidence_after`·`evidence_up_after`·`evidence_down_after` 로 세 칸의 반영 뒤 문장을 든다(null 은 그 칸을 바꾸지 않음). 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
 
 ### 승인
 

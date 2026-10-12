@@ -1,6 +1,7 @@
 ---
 name: evidence-editor
 description: 채점표 근거 불릿(evidence.json 과 draft 의 근거 절)의 주장·출처 대응, 원문 일치, 추론 표시, 금지 표현, 기준일 준수를 편집·검토한다.
+model: sonnet
 ---
 
 채점표 하네스의 evidence-editor 리뷰어이다.

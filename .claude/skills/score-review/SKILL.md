@@ -24,6 +24,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
    - 사실·출처: `fact-checker` — 숫자·기업 귀속·기준 시점·출처·부재 주장, 근거의 `source_ids ⊆ sources`, URL, excerpt 원문 대조. 올릴·내릴 근거 줄마다 표지 `[EV-…]` 가 가리키는 근거의 본문 발췌가 원문 그 위치(`locator`)에 실제로 있고 그 줄의 사실을 받치는지 전수로 본다(2026-10-07, `guide.md` 5.7). 판정 칸이 "미확인"으로 뺀 보도는 리뷰어가 원문을 직접 열어 보고, 열리는데 판단이 쓰지 않았으면 fail 로 적는다. Google News 중계 주소는 `scorecard_cli.py resolve-urls --url <주소>` 로 푼다(2026-10-12, OpenAI ③ 의 $70B 기사가 제목만 보고 미확인으로 빠졌다). 이해상충 표기는 보지 않는다(2026-10-02, AGENTS.md 「금지·주의」).
    - 근거 불릿: `evidence-editor` — `evidence.json` 과 draft 근거 절의 주장·출처 대응, 추론 표시, 금지 표현. 근거 불릿 검토는 이 에이전트에 맡기고 사실·출처 영역의 근거로 인용한다.
    - 재무 계산: EPS·환율·ADR·TTM·FCF·런웨이·약정·단위·부호. results.json 의 calc.path 대조.
+   - 리뷰어 모델: 사실·출처·근거 불릿·출력·가독성 리뷰는 Sonnet(에이전트 정의의 `model: sonnet`), 규칙 일관성 리뷰와 확인 리뷰는 Opus 노력 high 로 띄운다(AGENTS.md 「서브에이전트 모델」).
    - 규칙 일관성: 판정 입력↔규칙 판정표, 승계 표시(기업 추가 실행에만. 규칙 v2.0 이상 정기 실행은 승계 판단이 없어야 한다, `rules.md` 2.9), 미결 결정 처리, 체크리스트 Q01~Q23 전체. **회사별 사다리 적용 표만으로는 부족하다** — 아래 「회사를 가로지르는 표 셋」을 반드시 만든다(2026-10-09).
    - 출력·가독성: `report-designer` — draft·HTML(있으면) 숫자 일치, 낡은 비교 문장(C-19), 근거·트리거 절 가독성, dashboard-design 기준.
    - 각 `review-parts/<영역>.md` 는 frontmatter 에 `reviewer_agent`(예: `fact-checker`), `session`(리뷰 세션 식별자), `reviewed_at`(YYYY-MM-DD)을 둔다. 본문 첫머리의 `검토자:`·`결과:` 줄은 승인 페이지 요약이 읽으므로 그대로 둔다.
@@ -41,6 +42,12 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
 
 직접 경쟁사 쌍(OpenAI–Anthropic, Alphabet–Microsoft–Amazon, NVIDIA–AMD 류, TSMC–Intel·Samsung)은 항목별로 나란히 놓고 점수가 다른 칸마다 차이의 이유를 한 줄로 쓴다. 이유를 한 줄로 못 쓰면 그 칸이 발견이다.
 
+규칙 v2.1 실행이면 셋을 더 만든다(2026-10-12).
+
+4. **AI 수익화 비율 교차표.** ① 이 5점이거나 '예'인 회사마다 기준 채널·측정 단위·몫·기간·근거 둘을 나란히 놓는다. 같은 성격의 채널(예: 업무용 좌석)을 회사마다 같은 단위로 쟀는지, 과반 판정이 공시 숫자로 서는지 본다.
+5. **층별 보유표 교차표.** 같은 층을 회사마다 같은 정의로 적었는지(모델/응용 경계, 칩=설계, 자체 사용=대규모 배치) 보고, 보유표의 한 칸이 ③·④·⑧ 에서 같은 속성으로 세지지 않았는지 본다(Q01).
+6. **⑧ 축 상태표.** 회사·축마다 상태(확인됨·부재 확인·해당 없음·비공개·탐색 미완)와 칸을 적는다. 부재 확인이 실제로 "그 조건이 없다"는 공시인지, 비상장이라는 이유만으로 탐색 미완을 비공개로 올리지 않았는지 본다.
+
 ## 판단 수정을 제안할 때
 
 리뷰에서 정성 판단(F1·F3·F4·F5·F7·F8·F9)의 입력이 틀렸다고 보면, 점수나 `draft.md` 를 고치지 않고 판단 입력을 고친다. 에이전트는 판단 변경 제안을 쓰고, 근거를 원문과 대조한 뒤 `proposal` 로 반영하거나 거부한다(2026-10-07 사용자 지시: 사람은 최종 승인만 한다). 사람은 9절 「전체 판단 표」에서 직접 고칠 수도 있다. 제안은 리뷰가 끝난 뒤 한 묶음으로 올린다. 규칙 일관성 리뷰는 근거 세 칸의 분류(판정·올릴 근거·내릴 근거, `guide.md` 5.6)가 판정 재료와 맞는지와 방향이 뒤바뀐 줄이 없는지도 본다(2026-10-07).
@@ -51,7 +58,7 @@ uv run --frozen python -X utf8 scripts/scorecard_cli.py propose <run_id> --compa
 
 사람이 바꿀 값을 정확히 지시한 경우에만 같은 인자로 `judge` 를 써서 바로 기록한다(`--by` 에 지시한 사람의 이름).
 
-- F1·F4·F8 은 `--set score=N`, F3 은 `--set imitation=pass` 같은 `criteria` 키, F5 는 `A`·`H`, F7 은 `funding_dependent_share`·`own_money_returns`, F9 는 `gate_inputs` 키를 준다. F3·F5·F7·F9 에 `score` 를 주면 거부된다. F2·F6 은 대상이 아니다.
+- 규칙 v1.9 이하의 F1, v2.0 이하의 F4·F8 은 `--set score=N`, F3 은 `--set imitation=pass` 같은 `criteria` 키, F5 는 `A`·`H`, F7 은 `funding_dependent_share`·`own_money_returns`, F9 는 `gate_inputs` 키를 준다. 규칙 v2.1 의 ① AI 수익화 재료·④ `survival`·⑧ `axes` 는 `--json` 으로 준다(`score-research` 스킬 4). 계산되는 항목에 `score` 를 주면 거부된다. F2·F6 은 대상이 아니다.
 - `--evidence` 는 여러 번 주면 그 목록으로 근거를 통째로 바꾼다. 판정 재료를 바꿨다면 근거 문장도 함께 맞춘다.
 - `--reason` 에 사유를, `--by` 에 수정을 정한 사람의 이름을 적는다. 이전 값은 `revision_history` 에 남는다.
 - 새 판단은 확정된 근거만 인용한다. 후보 근거를 인용하는 수정은 거부된다.
