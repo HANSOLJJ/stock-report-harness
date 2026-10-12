@@ -21,17 +21,20 @@ class GuidelineRangeTableTest(unittest.TestCase):
     # 사람용 규칙은 rules.md 하나가 됐으므로, **사람용 문서의 범위가 규칙 JSON 과 같은지**를 rules.md 에서 본다.
     def test_rules_doc_ranges_match_the_rule_file(self):
         text = (ROOT / "docs" / "scorecard" / "rules.md").read_text(encoding="utf-8")
-        current = load_rules("v1.8").payload["factors"]
+        # 2026-10-12 규칙 v2.1: 고정 버전(v1.8)이 아니라 rules.md 머리말이 현행이라고 적은 버전의 JSON 과 대조한다.
+        version = re.search(r"\*\*규칙 버전 (v\d+\.\d+)\.\*\*", text).group(1)
+        current = load_rules(version).payload["factors"]
         marks = {"F2": "②", "F6": "⑥", "F7": "⑦", "F8": "⑧", "F9": "⑨"}
+        spans = {}
         for fid, mark in marks.items():
             with self.subTest(fid=fid):
                 lo, hi = current[fid]["range"]
-                span = f"{lo}~{hi}".replace("-", "−")
+                spans[fid] = f"{lo}~{hi}".replace("-", "−")
                 self.assertIn(f"### {mark} ", text)
-                self.assertIn(f"({span},", text.split(f"### {mark} ", 1)[1].splitlines()[0])
-        # 옛 범위가 현행처럼 남아 있으면 안 된다.
-        for old in ("−5~0, ⑦", "⑦ −3~0", "⑨ −5~0"):
-            self.assertNotIn(old, text)
+                self.assertIn(f"({spans[fid]},", text.split(f"### {mark} ", 1)[1].splitlines()[0])
+        # 1절 총점 표의 함정 행도 같은 범위를 적어야 한다(옛 범위가 현행처럼 남지 않게).
+        row = f"⑥ {spans['F6']}, ⑦ {spans['F7']}, ⑧ {spans['F8']}, ⑨ {spans['F9']}"
+        self.assertIn(row, text)
 
 
 class F2OldYardstickTest(unittest.TestCase):

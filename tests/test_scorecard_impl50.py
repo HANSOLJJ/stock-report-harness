@@ -84,7 +84,8 @@ class BothSidesTest(unittest.TestCase):
         # 같은 결론(영업외 비중은 ⑥ 소관이고 ⑦ 입력이 아니다)이 사람용 규칙 문서에 적혀 있는지 본다.
         text = (ROOT / "docs" / "scorecard" / "rules.md").read_text(encoding="utf-8")
         f7 = text.split("### ⑦ ", 1)[1].split("\n### ", 1)[0]
-        self.assertIn("지분 평가이익(⑥ 의 영업외 비중 소관", f7)
+        # 2026-10-12 규칙 v2.1: 지분 평가이익은 ⑥ P1 의 이익 조정이 맡는다(영업외 비중 조건은 조정하지 못했을 때만 본다).
+        self.assertIn("지분 평가이익(⑥ P1 의 이익 조정 소관", f7)
         self.assertIn("입력·점수에는 넣지 않는다", f7)
 
 
