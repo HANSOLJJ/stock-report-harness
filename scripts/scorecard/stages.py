@@ -1725,7 +1725,8 @@ def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
     path = run_dir(slug) / "judgments.json"
     if not path.is_file():
         return []
-    registry = load_companies()
+    from .engine import companies_for_run
+    registry = companies_for_run(validate_run(load_json_strict(run_dir(slug) / "run.json"), slug))
     out = []
     for j in load_json_strict(path).get("items", []):
         out.append({
@@ -1776,7 +1777,8 @@ def summary(slug: str) -> dict[str, Any]:
     candidates = load_json_strict(paths.candidates).get("items", []) if paths.candidates.is_file() else []
     evidence = load_json_strict(paths.evidence).get("items", []) if paths.evidence.is_file() else []
     triggers = load_json_strict(paths.triggers).get("items", []) if paths.triggers.is_file() else []
-    registry = load_companies()
+    from .engine import companies_for_run
+    registry = companies_for_run(run)
     rules = load_rules(run["rule_version"])
     hashes = current_hashes(slug)
     if approval_file_present(paths.run_dir):

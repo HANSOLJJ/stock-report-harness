@@ -67,6 +67,17 @@ def load_companies() -> dict[str, dict[str, Any]]:
     return validate_companies(load_json_strict(COMPANIES_PATH))
 
 
+def companies_for_run(run: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """실행의 회사 목록. 2026-10-12 사용자 지시("SpaceX + xAI 말고 SpaceX 로만"): run.json `display_names` 로 그 실행의 표시 이름만 덮어쓴다.
+    공유 목록(companies.json)의 표시 이름은 승인된 실행의 결과 해시에 묶여 있어 바꾸지 않는다. 키가 없는 실행은 그대로다."""
+    companies = load_companies()
+    for cid, name in (run.get("display_names") or {}).items():
+        if cid not in companies:
+            raise SchemaError(f"run.json display_names 에 알 수 없는 기업 {cid!r}")
+        companies[cid] = {**companies[cid], "display_name": name}
+    return companies
+
+
 def input_hashes(slug: str) -> dict[str, str]:
     from .paths import run_paths  # paths 가 engine 을 import 하므로 여기서 부른다
 
@@ -94,7 +105,7 @@ def load_context(slug: str) -> RunContext:
         raise SchemaError(
             f"run.json rule_hash {run['rule_hash'][:12]}… 와 규칙 파일 해시 {rules.hash[:12]}… 불일치 — 규칙이 바뀌었으면 새 실행을 만든다"
         )
-    companies = load_companies()
+    companies = companies_for_run(run)
     unknown = [cid for cid in run["companies"] if cid not in companies]
     if unknown:
         raise SchemaError(f"run.json companies 에 알 수 없는 기업 {unknown}")

@@ -1743,9 +1743,16 @@ def validate_run(payload: Any, slug: str | None = None) -> dict[str, Any]:
         payload,
         ["schema", "run_id", "report_type", "title", "as_of", "rule_version", "baseline_id", "companies", "decisions", "created_at", "purpose", "assumptions"],
         "run.json",
-        optional=["price_as_of", "info_cutoff", "reference_companies", "rule_hash", "note", "sources_file", "continued_from"],
+        optional=["price_as_of", "info_cutoff", "reference_companies", "rule_hash", "note", "sources_file", "continued_from",
+                  "display_names"],
     )
     _require(payload["schema"] == "scorecard.run/1", "run.json: schema 불일치")
+    # 2026-10-12: 그 실행에서만 쓰는 표시 이름 {company_id: 이름}. 실행 대상 기업만 받는다(engine.companies_for_run).
+    if "display_names" in payload:
+        names = payload["display_names"]
+        _require(isinstance(names, dict) and all(isinstance(k, str) and isinstance(v, str) and v.strip() for k, v in names.items()),
+                 "run.json: display_names 는 {company_id: 비어 있지 않은 이름}")
+        _require(set(names) <= set(payload["companies"]), f"run.json: display_names 에 실행 대상이 아닌 기업 {sorted(set(names) - set(payload['companies']))}")
     _require(payload["report_type"] == "ai_scorecard", "run.json: report_type 은 ai_scorecard")
     if slug is not None:
         _require(payload["run_id"] == slug, f"run.json: run_id {payload['run_id']!r} != slug {slug!r}")
