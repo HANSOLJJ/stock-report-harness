@@ -8,10 +8,10 @@
   "input_hashes": {
     "run": "4e871c04732b228d909d5bed5181f46faada0e192891a21731d629103b5caf60",
     "observations": "49ccaa48c0096eea3528a163b496a120742c4f6a87b7c51c541e4e792ddd1865",
-    "judgments": "ae46c330d087f8cb9259726c0aa1ed68ce5983cb7fc91dfc1e530d6ef9ccfd4c",
-    "sources": "b4549911021095c156efba347ba99483591eff1878c66a3444a275d6e58b267e",
-    "evidence": "46b039aae60d52faa21ddfb0a42deb2d5da853abf23a344d5d0cbb5dfd06e01e",
-    "triggers": "c919043ec0178a1e074595efe0160dde0acb5de2549a880846b2b41dc55faa75",
+    "judgments": "531ab2f487aa3ddfc2e92a17c0fccb347873a4398cef682fd159956f5d87b7ba",
+    "sources": "d9285567fe4930f6632f0b537679da40ec792b887337339152ece2aac9a738d7",
+    "evidence": "9250f2bf41e1070d09b0e8148b713852dd7f6a6a3f10afeb32b193e09efe7c10",
+    "triggers": "835755a98e5d5b7aef7694fd8e0685f85d44976215bedd758170d47f921b686f",
     "rules": "3bf9418cf3eb43f9b91152f7e11249808658d80d4944c15222217b72b4be3cc5"
   },
   "decisions_applied": [
@@ -298,7 +298,7 @@
         },
         "F8": {
           "factor": "F8",
-          "score": -2,
+          "score": -3,
           "status": "ok",
           "basis": "manual",
           "judgment_id": "alphabet.F8",
@@ -347,8 +347,8 @@
         }
       },
       "moat": 20,
-      "trap": -7,
-      "total": 13,
+      "trap": -8,
+      "total": 12,
       "complete": true,
       "pending": [],
       "carried_factors": [],
@@ -1286,13 +1286,13 @@
         },
         "F7": {
           "factor": "F7",
-          "score": -1,
+          "score": -2,
           "status": "ok",
           "basis": "matrix",
           "judgment_id": "microsoft.F7",
           "observation_ids": [],
           "calc": {
-            "funding_dependent_share": "small",
+            "funding_dependent_share": "large",
             "own_money_returns": "yes"
           },
           "warnings": [],
@@ -1349,12 +1349,12 @@
         }
       },
       "moat": 21,
-      "trap": -7,
-      "total": 14,
+      "trap": -8,
+      "total": 13,
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 1
+      "rank": 2
     },
     {
       "company_id": "tsmc",
@@ -4666,7 +4666,7 @@
         },
         "F8": {
           "factor": "F8",
-          "score": -4,
+          "score": -3,
           "status": "ok",
           "basis": "manual",
           "judgment_id": "openai.F8",
@@ -4739,23 +4739,15 @@
         }
       },
       "moat": 12,
-      "trap": -12,
-      "total": 0,
+      "trap": -11,
+      "total": 1,
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 13
+      "rank": 12
     }
   ],
   "ranking": [
-    {
-      "rank": 1,
-      "company_id": "microsoft",
-      "display_name": "Microsoft",
-      "moat": 21,
-      "trap": -7,
-      "total": 14
-    },
     {
       "rank": 1,
       "company_id": "amazon",
@@ -4765,12 +4757,20 @@
       "total": 14
     },
     {
+      "rank": 2,
+      "company_id": "microsoft",
+      "display_name": "Microsoft",
+      "moat": 21,
+      "trap": -8,
+      "total": 13
+    },
+    {
       "rank": 3,
       "company_id": "alphabet",
       "display_name": "Alphabet / Google",
       "moat": 20,
-      "trap": -7,
-      "total": 13
+      "trap": -8,
+      "total": 12
     },
     {
       "rank": 4,
@@ -4845,12 +4845,12 @@
       "total": 1
     },
     {
-      "rank": 13,
+      "rank": 12,
       "company_id": "openai",
       "display_name": "OpenAI",
       "moat": 12,
-      "trap": -12,
-      "total": 0
+      "trap": -11,
+      "total": 1
     }
   ],
   "population": {
@@ -4876,5 +4876,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 49,
-  "results_hash": "5d0c5181750beeeab491399cc439af7bc151c1c429f6fcbaf7ff05be46e68766"
+  "results_hash": "90671057092bf44c7a4414ec8ebf92dc77d2a1bb4877e308f445e70ae8edeaca"
 }

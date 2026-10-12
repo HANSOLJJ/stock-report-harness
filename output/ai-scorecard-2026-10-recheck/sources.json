@@ -7373,7 +7373,7 @@
       "source_id": "SRC-NEWS-meta-20261007-c3c25276",
       "title": "Meta teams up with Bret Taylor's Sierra Technologies on new standards for AI agent commerce - SiliconANGLE",
       "publisher": "SiliconANGLE",
-      "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQdzhGdzdSTFZ1djVuZkFhQzdFY1F3TzVacXhRVE9uZm1aQUZYNHNMUzI2VW9lZEZyWFBXUVhjNTdRRG9OblhlV3FPWWs3VklsVWgwcnhBUmdGU2w5NTFDLWZRRXdVbldjWC1hOEVRY3kwX2R4NnAtY3hKRWhQRVNrV3dtUWFtZ3Y3UHQ0SkphTXg0aU9lcURGTnNFQlcxc2pLNkNwSkJVWmtMZkVMNHhuNFBoVHRLZGkzQ0lpem5XSFhneHU2SkE?oc=5",
+      "url": "https://siliconangle.com/2026/10/06/meta-teams-up-with-bret-taylors-sierra-technologies-on-new-standards-for-ai-agent-commerce/",
       "accessed_at": "2026-10-08T06:03:01Z",
       "sha256": "b441296ac306af4e2187ee1efe5e36699df8d106980436b9233b69c7f25bdfe8",
       "conflict_of_interest": null,
@@ -7382,7 +7382,8 @@
       "company_id": "meta",
       "published_at_utc": "2026-10-07T00:54:00Z",
       "publisher_url": "https://siliconangle.com",
-      "raw_ref": "data/meta/news/google/raw/20261008T060301Z-b441296a.xml"
+      "raw_ref": "data/meta/news/google/raw/20261008T060301Z-b441296a.xml",
+      "relay_url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQdzhGdzdSTFZ1djVuZkFhQzdFY1F3TzVacXhRVE9uZm1aQUZYNHNMUzI2VW9lZEZyWFBXUVhjNTdRRG9OblhlV3FPWWs3VklsVWgwcnhBUmdGU2w5NTFDLWZRRXdVbldjWC1hOEVRY3kwX2R4NnAtY3hKRWhQRVNrV3dtUWFtZ3Y3UHQ0SkphTXg0aU9lcURGTnNFQlcxc2pLNkNwSkJVWmtMZkVMNHhuNFBoVHRLZGkzQ0lpem5XSFhneHU2SkE?oc=5"
     },
     {
       "source_id": "SRC-NEWS-oracle-20261007-bca1c00b",
@@ -9347,6 +9348,19 @@
       "publisher_url": "https://www.cbsnews.com",
       "raw_ref": "data/palantir/news/google/raw/20261012T010827Z-d3502e92.xml",
       "relay_url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPdXJZc1VzVXphbXp5LUsta2tOYWN0RjI2ZUtBdm11Y2Vlc1dYck9PTjA4djRaNXJxcnp1UF8xSkJoWlFXM1NDeUYxR3FrYzlhLXl2SnNQMzQ5WExPcEhOdVY2SFh4WDRyTjZNSkcyTFJUZlpING5aY0ZfT2UtNzVESG9lLVkwYkZJdDFaWkdjdEtmZUtEeUNoRHVGblJpLWJ6MkswdkNlZmViaGpGc0ZZQWRZV0w?oc=5"
+    },
+    {
+      "source_id": "SRC-WEB-microsoft-903",
+      "title": "The next chapter of the Microsoft–OpenAI partnership",
+      "publisher": "Microsoft (The Official Microsoft Blog)",
+      "url": "https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/",
+      "accessed_at": "2026-10-12",
+      "sha256": null,
+      "kind": "news",
+      "company_id": "microsoft",
+      "published_at_utc": "2025-10-28T00:00:00Z",
+      "note": "회사 1차 발표(공식 블로그). 게시일만 표기돼 시각은 없다",
+      "conflict_of_interest": null
     }
   ]
 }

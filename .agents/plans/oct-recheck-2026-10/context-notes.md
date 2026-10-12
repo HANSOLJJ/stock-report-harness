@@ -12,4 +12,11 @@
 - 비상장 재무: 묶음 D 가 회사 1차(기업가치·직전 런레이트)와 2차 보도(최근 런레이트·분기 실매출·누적 조달)를 등급을 적어 등록했다.
   유출 S-1·유출 재무 수치는 쓰지 않았다. ps_ratio 는 범위 하한(Anthropic 41.24, OpenAI 34.92)이고 두 회사 모두 30배 이상 구간이라 ⑥ −4 유지.
   Anthropic 누적 조달 약 $144B 는 블로그 집계(2차)라 등급이 낮다 — 자본효율 0.45 로 P4 조건 미충족이지만 보정은 require_all 이라 점수 무관.
+- 2026-10-12 ⑦ OpenAI 큼: 판단 세션이 Wccftech 원문에서 OpenAI 성명("wind down … proposed shutoff date of November 12, 2026 … maximum
+  notice")을 확인했다. 기준일에 Cursor 는 아직 고객이라 Anthropic 과 같은 잣대로 큼. 조율자가 성명을 EV-openai-070 으로 올리고 TRG-112 를 걸었다.
+  방향: OpenAI 에서는 조달 의존 고객과의 계약 정리라 올릴 근거, Anthropic 에서는 Cursor 가 더 기댈 곳이라 내릴 근거.
+- ⑧ 약정 축: 직전 실행의 공유 사다리 문장("약정 합계 ÷ 연 매출이 수십 배 −4, 몇 배 −3, 1배 안팎 −2")을 Oracle·NVIDIA·SpaceX 에만 대고
+  Alphabet·Microsoft·Meta 는 "확정 근거에 약정 합계가 없어" 재지 않았다. 캐시된 10-Q/10-K 에 있었다. 판단 세션이 같은 잣대를 대며 경계를 20배·2배·0.5배로
+  좁혔다(좁혔다는 사실을 판단 문장에 남김). 조율자가 공시 문장을 원문 대조 뒤 근거 4건으로 올렸다. 2배 경계는 규칙 일관성 리뷰에 따로 보게 했다.
+- 기업 요약(company_summaries)은 init --from-run 이 이어받지 않는다 — 새로 써야 한다(다음 실행 과제 후보: init 이 요약을 옮기거나 비었음을 경고).
 - 도구는 `.agents/plans/rejudge-all-2026-11/work/` 의 merge_group_outputs.py·apply_judgments.py 를 이 폴더 work/ 로 복사해 경로·날짜만 바꿔 쓴다.

@@ -14,16 +14,18 @@
 
 ## 3. 판단 (①②③④⑤⑦⑧ × 14)
 - [x] 판단 세션 일곱 띄움(group-notes.md 로 묶음 사실 전달)
-- [ ] apply_judgments → proposal accept
-- [ ] research 통과(재판단·트리거·원문)
+- [x] 조율자 근거 추가 6건(EV-openai-070·071, EV-alphabet-073·074, EV-microsoft-044, EV-meta-058) 확정, TRG-112 추가
+- [x] apply_judgments → proposal accept (98건)
+- [x] research 통과(재판단·트리거·원문)
 
 ## 4. 계산·초안
-- [ ] diff --against rejudge, calculate
-- [ ] 기업 요약 14건
-- [ ] draft, review-template
+- [x] calculate (바뀐 칸: alphabet·microsoft·meta ⑧, alibaba ⑥, openai ⑦)
+- [x] 기업 요약 14건(init 이 이어받지 않아 새로 씀)
+- [x] Tesla 신용한도 관측 basis 모양 수정(렌더러가 목록을 기대) → draft, review-template
+- [x] 중간 커밋
 
 ## 5. 리뷰
-- [ ] 4영역 리뷰 다섯 세션
+- [x] 4영역 리뷰 다섯 세션 띄움
 - [ ] review.md 채움, 수정 한 묶음
 - [ ] 확인 리뷰 → pass
 - [ ] 계약 검증 → 승인 대기 보고

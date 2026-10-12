@@ -19946,6 +19946,80 @@
       "status": "confirmed",
       "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
       "reviewed_at": "2026-10-12"
+    },
+    {
+      "evidence_id": "EV-microsoft-045",
+      "company_id": "microsoft",
+      "factors": [
+        "F7",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-903",
+      "published_at_utc": "2025-10-28T00:00:00Z",
+      "title": "The next chapter of the Microsoft–OpenAI partnership",
+      "excerpt": "OpenAI has contracted to purchase an incremental $250B of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI’s compute provider.",
+      "locator": "본문 합의 내용 글머리표 목록의 여섯째 항목",
+      "relevance": "사실: Microsoft 는 OpenAI 가 Azure 서비스 $250B 를 추가로 사기로 계약했다고 밝혔다. 기간은 적혀 있지 않다. 추론: OpenAI 는 투자 유치로 대금을 내는 조달 의존 고객이라 ⑦ 가로축(조달 의존 고객의 연간 약정 몫)의 분자이고, ⑧ 고객 축의 재료다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 이 실행의 ⑦ 가로축 판정에 쓰는 회사 1차 수치다. 약정 기간이 공시되면 연간 몫을 다시 잰다.",
+      "horizon": "2026Q4",
+      "counter_evidence": [],
+      "unverified": [
+        "약정 기간과 연도별 금액은 적혀 있지 않다"
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-12"
+    },
+    {
+      "kind": "filing",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "evidence_id": "EV-alphabet-075",
+      "company_id": "alphabet",
+      "factors": [
+        "F8"
+      ],
+      "source_id": "SRC-EDGAR-000165204426000071",
+      "published_at_utc": "2026-07-23T00:00:00Z",
+      "title": "Alphabet 10-Q (2026-06-30)",
+      "excerpt": "As of June 30, 2026, we had material purchase commitments and other contractual obligations totaling $811.0 billion, of which $200.7 billion was short-term. These purchase commitments primarily relate to costs for technical infrastructure and inventory through long-term supply agreements and open purchase orders.",
+      "locator": "Part I Item 2 MD&A, Liquidity and Capital Resources 의 Purchase Commitments and Other Contractual Obligations 문단",
+      "relevance": "사실: 10-Q 가 구매 약정과 기타 계약상 의무의 총액(단기 몫과 열린 구매 주문 포함)을 밝힌다. 추론: ⑧ 약정 축의 분자를 다른 회사와 같은 범위로 잴 때 쓰는 값이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 이 실행의 ⑧ 약정 축 판정에 쓰는 공시 수치다.",
+      "horizon": "2026Q3",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-12"
+    },
+    {
+      "kind": "news",
+      "counter_evidence": [],
+      "unverified": [
+        "OpenAI 몫의 인식 일정은 따로 밝히지 않았다"
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "evidence_id": "EV-microsoft-046",
+      "company_id": "microsoft",
+      "factors": [
+        "F8"
+      ],
+      "source_id": "SRC-WEB-microsoft-008",
+      "published_at_utc": "2026-01-28T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Second Quarter Earnings Conference Call",
+      "excerpt": "Commercial remaining performance obligation, which continues to be reported net of reserves, increased to $625 billion and was up 110% year-over-year with a weighted average duration of approximately two and a half years. Roughly 25% will be recognized in revenue in the next 12 months, up 39% year-over-year. … Approximately 45% of our commercial RPO balance is from OpenAI.",
+      "locator": "CFO 발언 중 commercial remaining performance obligation 문단",
+      "relevance": "사실: 회사가 2025-12-31 상업 RPO $625B 의 약 45% 가 OpenAI 몫이고 약 25% 를 12개월 안에 인식한다고 밝혔다. 추론: ⑧ 고객 축(한 고객의 연환산 계약액 ÷ 최근 1년 매출)의 재료다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: OpenAI 몫의 인식 일정이 공시되면 고객 축을 다시 잰다.",
+      "horizon": "2026Q4",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-12"
     }
   ]
 }

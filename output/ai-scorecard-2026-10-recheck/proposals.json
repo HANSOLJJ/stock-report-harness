@@ -22942,6 +22942,2520 @@
       "decided_by": "claude (사용자 위임 2026-10-12)",
       "decided_at": "2026-10-12",
       "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-113",
+      "company_id": "spacex-xai",
+      "factor": "F3",
+      "changes": {},
+      "evidence_after": [
+        "스페이스X ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+        "모방 불가능성은 AI 에 귀속되는 부분만 보고 실패로 판정했다. Colossus 를 빠르게 지은 데이터센터 규모는 Meta Hyperion·Stargate 처럼 자본이 있는 경쟁사들이 이미 짓고 있고, 궤도 AI 데이터센터는 대규모 위성군과 인허가가 필요한 계획이라 점수에 넣지 않는다. Grok 모델은 독립 지수에서 공동 3위라 자산 덕에 앞서 있다고 볼 수 없다. Starlink 는 비AI 사업이라 이 기준에서 세지 않는다.",
+        "별도 수익모델은 통과다. Starlink(Connectivity 부문) 영업이익이 AI 부문 영업손실을 대고 있다.",
+        "후발 가속도는 지표 단계 b(AI 세그먼트 매출)의 전년 대비 성장률로 판정했다. 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)로 올라 가속이라 통과다. 저장한 성장률은 0.125 와 2.475 다. 2026-10-12 까지 AI 세그먼트의 새 분기 값은 나오지 않았다.",
+        "AI 세그먼트에는 줄고 있는 X 광고 매출(비AI)이 섞여 있고 그 비중은 확정 근거에 없다. 2분기 증가는 AI 세그먼트 고객 B 한 곳(연결 매출의 19.5%)의 새 계약에서 크게 왔다.",
+        "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없다."
+      ],
+      "reason": "② 와 같은 날짜의 지수 판으로 고친다(출력 리뷰 B9)",
+      "evidence_ids": [
+        "EV-anthropic-049",
+        "EV-spacex-xai-023",
+        "EV-spacex-xai-024",
+        "EV-spacex-xai-025",
+        "EV-spacex-xai-026",
+        "EV-spacex-xai-027",
+        "EV-spacex-xai-060",
+        "EV-spacex-xai-064",
+        "EV-spacex-xai-066"
+      ],
+      "before": {
+        "kind": "criteria",
+        "score": null,
+        "inputs": {
+          "imitation": "fail",
+          "revenue_model": "pass",
+          "acceleration": "pass",
+          "door_closed": "fail",
+          "acceleration_tier": "b",
+          "acceleration_growth_rates": [
+            0.125,
+            2.475
+          ]
+        },
+        "evidence": [
+          "스페이스X ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+          "모방 불가능성은 AI 에 귀속되는 부분만 보고 실패로 판정했다. Colossus 를 빠르게 지은 데이터센터 규모는 Meta Hyperion·Stargate 처럼 자본이 있는 경쟁사들이 이미 짓고 있고, 궤도 AI 데이터센터는 대규모 위성군과 인허가가 필요한 계획이라 점수에 넣지 않는다. Grok 모델은 독립 지수에서 공동 3위라 자산 덕에 앞서 있다고 볼 수 없다. Starlink 는 비AI 사업이라 이 기준에서 세지 않는다.",
+          "별도 수익모델은 통과다. Starlink(Connectivity 부문) 영업이익이 AI 부문 영업손실을 대고 있다.",
+          "후발 가속도는 지표 단계 b(AI 세그먼트 매출)의 전년 대비 성장률로 판정했다. 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)로 올라 가속이라 통과다. 저장한 성장률은 0.125 와 2.475 다. 2026-10-12 까지 AI 세그먼트의 새 분기 값은 나오지 않았다.",
+          "AI 세그먼트에는 줄고 있는 X 광고 매출(비AI)이 섞여 있고 그 비중은 확정 근거에 없다. 2분기 증가는 AI 세그먼트 고객 B 한 곳(연결 매출의 19.5%)의 새 계약에서 크게 왔다.",
+          "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없다."
+        ],
+        "evidence_up": [
+          "2026년 2분기 Connectivity 부문 영업이익은 $16.56억이고 AI 부문 영업손실은 $12.57억이라 Starlink 가 AI 를 대고 있다. [EV-spacex-xai-023]",
+          "AI 세그먼트 매출의 전년 대비 성장률은 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)다. [EV-spacex-xai-064, EV-spacex-xai-024]",
+          "회사는 3분기 첫 몇 주에 10월부터 램프하는 $67억 규모 클라우드 서비스 계약을 더 맺었다(계약이라 점수에 넣지 않는다). [EV-spacex-xai-025]"
+        ],
+        "evidence_down": [
+          "2026년 2분기 연결 매출의 19.5% 가 AI 세그먼트의 고객 B 한 곳에서 나왔다. [EV-spacex-xai-060]",
+          "Meta 는 5GW 규모의 Hyperion 데이터센터를 짓고 있고, OpenAI·Oracle·SoftBank 의 Stargate 도 xAI Colossus 와 나란히 꼽힌다. [EV-spacex-xai-026]",
+          "SpaceX 는 데이터센터 관리를 로켓·Starlink 부문 인력으로 바꾸고 구축 속도를 늦추고 있으며, 멤피스 시설의 가동 중단이 Grok 과 컴퓨트 임차 고객에 영향을 줬다는 보도가 있다(2차 보도를 옮긴 기사). [EV-spacex-xai-066]",
+          "궤도 AI 컴퓨트는 최대 100만 기에 이를 수 있는 위성군과 여러 인허가가 필요한 계획이다(계획이라 점수에 넣지 않는다). [EV-spacex-xai-027]",
+          "Grok 4.6 은 Artificial Analysis 지능 지수 61 로 GPT-5.6 Sol Max 와 공동 3위이고 1·2위는 Anthropic 모델이다. [EV-spacex-xai-018]"
+        ],
+        "reconfirmed": [
+          {
+            "at": "2026-10-12",
+            "by": "claude (사용자 위임 2026-10-12)",
+            "evidence_ids": [
+              "EV-spacex-xai-018",
+              "EV-spacex-xai-023",
+              "EV-spacex-xai-024",
+              "EV-spacex-xai-025",
+              "EV-spacex-xai-026",
+              "EV-spacex-xai-027",
+              "EV-spacex-xai-060",
+              "EV-spacex-xai-064",
+              "EV-spacex-xai-066"
+            ]
+          }
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "2026년 2분기 Connectivity 부문 영업이익은 $16.56억이고 AI 부문 영업손실은 $12.57억이라 Starlink 가 AI 를 대고 있다. [EV-spacex-xai-023]",
+        "AI 세그먼트 매출의 전년 대비 성장률은 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)다. [EV-spacex-xai-064, EV-spacex-xai-024]",
+        "회사는 3분기 첫 몇 주에 10월부터 램프하는 $67억 규모 클라우드 서비스 계약을 더 맺었다(계약이라 점수에 넣지 않는다). [EV-spacex-xai-025]"
+      ],
+      "evidence_down_after": [
+        "2026년 2분기 연결 매출의 19.5% 가 AI 세그먼트의 고객 B 한 곳에서 나왔다. [EV-spacex-xai-060]",
+        "Meta 는 5GW 규모의 Hyperion 데이터센터를 짓고 있고, OpenAI·Oracle·SoftBank 의 Stargate 도 xAI Colossus 와 나란히 꼽힌다. [EV-spacex-xai-026]",
+        "SpaceX 는 데이터센터 관리를 로켓·Starlink 부문 인력으로 바꾸고 구축 속도를 늦추고 있으며, 멤피스 시설의 가동 중단이 Grok 과 컴퓨트 임차 고객에 영향을 줬다는 보도가 있다(2차 보도를 옮긴 기사). [EV-spacex-xai-066]",
+        "궤도 AI 컴퓨트는 최대 100만 기에 이를 수 있는 위성군과 여러 인허가가 필요한 계획이다(계획이라 점수에 넣지 않는다). [EV-spacex-xai-027]",
+        "2026-10-08 Artificial Analysis 종합 지수 4.3.2판에서 SpaceXAI 최고 모델 Grok 4.7(xhigh)은 46 으로 Anthropic(58)·OpenAI·Google(53)·Meta(48) 모델보다 낮다. [EV-anthropic-049]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "criteria",
+          "score": null,
+          "inputs": {
+            "imitation": "fail",
+            "revenue_model": "pass",
+            "acceleration": "pass",
+            "door_closed": "fail",
+            "acceleration_tier": "b",
+            "acceleration_growth_rates": [
+              0.125,
+              2.475
+            ]
+          },
+          "evidence": [
+            "스페이스X ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+            "모방 불가능성은 AI 에 귀속되는 부분만 보고 실패로 판정했다. Colossus 를 빠르게 지은 데이터센터 규모는 Meta Hyperion·Stargate 처럼 자본이 있는 경쟁사들이 이미 짓고 있고, 궤도 AI 데이터센터는 대규모 위성군과 인허가가 필요한 계획이라 점수에 넣지 않는다. Grok 모델은 독립 지수에서 공동 3위라 자산 덕에 앞서 있다고 볼 수 없다. Starlink 는 비AI 사업이라 이 기준에서 세지 않는다.",
+            "별도 수익모델은 통과다. Starlink(Connectivity 부문) 영업이익이 AI 부문 영업손실을 대고 있다.",
+            "후발 가속도는 지표 단계 b(AI 세그먼트 매출)의 전년 대비 성장률로 판정했다. 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)로 올라 가속이라 통과다. 저장한 성장률은 0.125 와 2.475 다. 2026-10-12 까지 AI 세그먼트의 새 분기 값은 나오지 않았다.",
+            "AI 세그먼트에는 줄고 있는 X 광고 매출(비AI)이 섞여 있고 그 비중은 확정 근거에 없다. 2분기 증가는 AI 세그먼트 고객 B 한 곳(연결 매출의 19.5%)의 새 계약에서 크게 왔다.",
+            "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없다."
+          ],
+          "status": "new",
+          "reviewer": "claude (사용자 위임 2026-10-12)",
+          "reviewed_at": "2026-10-12",
+          "evidence_up": [
+            "2026년 2분기 Connectivity 부문 영업이익은 $16.56억이고 AI 부문 영업손실은 $12.57억이라 Starlink 가 AI 를 대고 있다. [EV-spacex-xai-023]",
+            "AI 세그먼트 매출의 전년 대비 성장률은 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)다. [EV-spacex-xai-064, EV-spacex-xai-024]",
+            "회사는 3분기 첫 몇 주에 10월부터 램프하는 $67억 규모 클라우드 서비스 계약을 더 맺었다(계약이라 점수에 넣지 않는다). [EV-spacex-xai-025]"
+          ],
+          "evidence_down": [
+            "2026년 2분기 연결 매출의 19.5% 가 AI 세그먼트의 고객 B 한 곳에서 나왔다. [EV-spacex-xai-060]",
+            "Meta 는 5GW 규모의 Hyperion 데이터센터를 짓고 있고, OpenAI·Oracle·SoftBank 의 Stargate 도 xAI Colossus 와 나란히 꼽힌다. [EV-spacex-xai-026]",
+            "SpaceX 는 데이터센터 관리를 로켓·Starlink 부문 인력으로 바꾸고 구축 속도를 늦추고 있으며, 멤피스 시설의 가동 중단이 Grok 과 컴퓨트 임차 고객에 영향을 줬다는 보도가 있다(2차 보도를 옮긴 기사). [EV-spacex-xai-066]",
+            "궤도 AI 컴퓨트는 최대 100만 기에 이를 수 있는 위성군과 여러 인허가가 필요한 계획이다(계획이라 점수에 넣지 않는다). [EV-spacex-xai-027]",
+            "Grok 4.6 은 Artificial Analysis 지능 지수 61 로 GPT-5.6 Sol Max 와 공동 3위이고 1·2위는 Anthropic 모델이다. [EV-spacex-xai-018]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-spacex-xai-018",
+                "EV-spacex-xai-023",
+                "EV-spacex-xai-024",
+                "EV-spacex-xai-025",
+                "EV-spacex-xai-026",
+                "EV-spacex-xai-027",
+                "EV-spacex-xai-060",
+                "EV-spacex-xai-064",
+                "EV-spacex-xai-066"
+              ]
+            }
+          ],
+          "evidence_ids": [
+            "EV-spacex-xai-018",
+            "EV-spacex-xai-023",
+            "EV-spacex-xai-024",
+            "EV-spacex-xai-025",
+            "EV-spacex-xai-026",
+            "EV-spacex-xai-027",
+            "EV-spacex-xai-060",
+            "EV-spacex-xai-064",
+            "EV-spacex-xai-066"
+          ]
+        },
+        "after": {
+          "kind": "criteria",
+          "score": null,
+          "inputs": {
+            "imitation": "fail",
+            "revenue_model": "pass",
+            "acceleration": "pass",
+            "door_closed": "fail",
+            "acceleration_tier": "b",
+            "acceleration_growth_rates": [
+              0.125,
+              2.475
+            ]
+          },
+          "evidence": [
+            "스페이스X ③ 은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 통과로 통과점이 2 이고 사다리에서 3점이다.",
+            "모방 불가능성은 AI 에 귀속되는 부분만 보고 실패로 판정했다. Colossus 를 빠르게 지은 데이터센터 규모는 Meta Hyperion·Stargate 처럼 자본이 있는 경쟁사들이 이미 짓고 있고, 궤도 AI 데이터센터는 대규모 위성군과 인허가가 필요한 계획이라 점수에 넣지 않는다. Grok 모델은 독립 지수에서 공동 3위라 자산 덕에 앞서 있다고 볼 수 없다. Starlink 는 비AI 사업이라 이 기준에서 세지 않는다.",
+            "별도 수익모델은 통과다. Starlink(Connectivity 부문) 영업이익이 AI 부문 영업손실을 대고 있다.",
+            "후발 가속도는 지표 단계 b(AI 세그먼트 매출)의 전년 대비 성장률로 판정했다. 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)로 올라 가속이라 통과다. 저장한 성장률은 0.125 와 2.475 다. 2026-10-12 까지 AI 세그먼트의 새 분기 값은 나오지 않았다.",
+            "AI 세그먼트에는 줄고 있는 X 광고 매출(비AI)이 섞여 있고 그 비중은 확정 근거에 없다. 2분기 증가는 AI 세그먼트 고객 B 한 곳(연결 매출의 19.5%)의 새 계약에서 크게 왔다.",
+            "문 닫힘은 실패다. 선두의 가격 결정력 붕괴나 점유율 실측 역전을 검토했으나 그런 증거가 없다."
+          ],
+          "evidence_up": [
+            "2026년 2분기 Connectivity 부문 영업이익은 $16.56억이고 AI 부문 영업손실은 $12.57억이라 Starlink 가 AI 를 대고 있다. [EV-spacex-xai-023]",
+            "AI 세그먼트 매출의 전년 대비 성장률은 2026년 1분기 12.5%($8.18억), 2분기 247.5%($25.61억)다. [EV-spacex-xai-064, EV-spacex-xai-024]",
+            "회사는 3분기 첫 몇 주에 10월부터 램프하는 $67억 규모 클라우드 서비스 계약을 더 맺었다(계약이라 점수에 넣지 않는다). [EV-spacex-xai-025]"
+          ],
+          "evidence_down": [
+            "2026년 2분기 연결 매출의 19.5% 가 AI 세그먼트의 고객 B 한 곳에서 나왔다. [EV-spacex-xai-060]",
+            "Meta 는 5GW 규모의 Hyperion 데이터센터를 짓고 있고, OpenAI·Oracle·SoftBank 의 Stargate 도 xAI Colossus 와 나란히 꼽힌다. [EV-spacex-xai-026]",
+            "SpaceX 는 데이터센터 관리를 로켓·Starlink 부문 인력으로 바꾸고 구축 속도를 늦추고 있으며, 멤피스 시설의 가동 중단이 Grok 과 컴퓨트 임차 고객에 영향을 줬다는 보도가 있다(2차 보도를 옮긴 기사). [EV-spacex-xai-066]",
+            "궤도 AI 컴퓨트는 최대 100만 기에 이를 수 있는 위성군과 여러 인허가가 필요한 계획이다(계획이라 점수에 넣지 않는다). [EV-spacex-xai-027]",
+            "2026-10-08 Artificial Analysis 종합 지수 4.3.2판에서 SpaceXAI 최고 모델 Grok 4.7(xhigh)은 46 으로 Anthropic(58)·OpenAI·Google(53)·Meta(48) 모델보다 낮다. [EV-anthropic-049]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-spacex-xai-018",
+                "EV-spacex-xai-023",
+                "EV-spacex-xai-024",
+                "EV-spacex-xai-025",
+                "EV-spacex-xai-026",
+                "EV-spacex-xai-027",
+                "EV-spacex-xai-060",
+                "EV-spacex-xai-064",
+                "EV-spacex-xai-066"
+              ]
+            }
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-114",
+      "company_id": "alphabet",
+      "factor": "F5",
+      "changes": {},
+      "evidence_after": [
+        "알파벳 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 −1 로 4점이다.",
+        "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+        "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+        "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+        "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+        "동맹 등급 +2 는 경쟁사 편입 조항으로 선다. 모델 시장에서 Gemini 와 겨루는 Anthropic 이 TPU 최대 100만 개와 Google Cloud 5GW 이상을 약정했고(5년 $200B 라는 수치는 2차 보도), Google 은 Gemini agent 에서 Claude 모델을 함께 돌려 경쟁사 모델을 자기 플랫폼에 들였다. Anthropic 의 자체 칩은 설계팀을 꾸린 계획 단계라 대체품을 출하하지 않았고 Google 지출은 늘고 있어 떠날 수 없는 관계로 본다.",
+        "지분 동맹 조항은 Anthropic 하나라 서지 않는다. Google 이 SpaceX 지분을 가진 관계에서 Google 은 SpaceX 컴퓨트를 사는 쪽이라 동맹이 아니라 조달이다.",
+        "Meta 의 TPU 임차는 Meta 가 단일 칩 공급사에 묶이지 않으려 AMD 와도 손잡은 다중 공급이라 떠날 수 있는 관계로 보고 등급에 넣지 않는다. Unity 와 함께 만드는 생성형 게임 플랫폼은 공동개발 제휴이지만 등급이 이미 +2 라 결과를 바꾸지 않는다.",
+        "국방부 CDAO 계약과 기밀망 배치 협약은 여러 회사가 함께 받아 등급의 차이를 만들지 않는다.",
+        "적대 등급 −1 은 비용형이다. 검색 독점 소송 항소, 애드테크 손해배상 청구, EU 데이터 공유·상호운용 결정, 영국 Play 장터 소비자 집단소송, 폴란드 언론사 사용료 조사, 핀란드 데이터센터 공사 중지 명령은 모두 규제기관·소송 상대가 낸 것으로 져도 검색·광고·클라우드 수요가 남는다.",
+        "애드테크 사건에서 법원은 AdX 매각을 거부하고 행위 처분만 받아들여, 사업 분할로 구조를 건드릴 수 있던 전선이 비용형으로 정리됐다.",
+        "Anthropic 은 큰 클라우드 고객이자 모델 경쟁사이지만 Google 이 파는 컴퓨트의 대체품을 내놓지 않아 '주요 고객이 곧 경쟁자'인 구조형이 아니다. Alphabet 공시에는 매출 10% 이상 고객이 없다.",
+        "직원 600명 이상이 기밀 계약 거부를 요구한 서한은 내부 갈등이라 적대에 넣지 않는다. EU 집행위원회의 클라우드 게이트키퍼 예비 판단은 AWS·Azure 에만 나왔고 Google Cloud 는 그 대상이 아니다.",
+        "폴란드 조사와 영국 Play 소송은 같은 사건을 전한 기사가 둘씩이라 한 줄로 묶어 한 번만 센다.",
+        "TSMC 대만 생산 의존은 ⑧ 에서 셌으므로 여기서 다시 세지 않는다. Anthropic 약정이 Google Cloud 백로그에서 차지하는 비중은 2차 보도뿐이라 ⑧ 고객 축도 등급을 가르는 수치로 쓰지 않았고, 여기서도 적대 등급의 재료로 쓰지 않는다.",
+        "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+      ],
+      "reason": "⑧ 이 Anthropic 약정 비중을 세지 않게 된 뒤의 교차 참조로 고친다(출력 리뷰 B6)",
+      "evidence_ids": [
+        "EV-alphabet-004",
+        "EV-alphabet-005",
+        "EV-alphabet-008",
+        "EV-alphabet-009",
+        "EV-alphabet-010",
+        "EV-alphabet-018",
+        "EV-alphabet-019",
+        "EV-alphabet-040",
+        "EV-alphabet-041",
+        "EV-alphabet-042",
+        "EV-alphabet-044",
+        "EV-alphabet-045",
+        "EV-alphabet-046",
+        "EV-alphabet-048",
+        "EV-alphabet-049",
+        "EV-alphabet-050",
+        "EV-alphabet-068",
+        "EV-alphabet-070",
+        "EV-alphabet-071",
+        "EV-alphabet-072",
+        "EV-anthropic-049",
+        "EV-meta-033",
+        "EV-nvidia-028"
+      ],
+      "before": {
+        "kind": "grade",
+        "score": null,
+        "inputs": {
+          "A": 2,
+          "H": -1
+        },
+        "evidence": [
+          "알파벳 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 −1 로 4점이다.",
+          "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+          "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+          "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+          "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+          "동맹 등급 +2 는 경쟁사 편입 조항으로 선다. 모델 시장에서 Gemini 와 겨루는 Anthropic 이 TPU 최대 100만 개와 Google Cloud 5GW 이상을 약정했고(5년 $200B 라는 수치는 2차 보도), Google 은 Gemini agent 에서 Claude 모델을 함께 돌려 경쟁사 모델을 자기 플랫폼에 들였다. Anthropic 의 자체 칩은 설계팀을 꾸린 계획 단계라 대체품을 출하하지 않았고 Google 지출은 늘고 있어 떠날 수 없는 관계로 본다.",
+          "지분 동맹 조항은 Anthropic 하나라 서지 않는다. Google 이 SpaceX 지분을 가진 관계에서 Google 은 SpaceX 컴퓨트를 사는 쪽이라 동맹이 아니라 조달이다.",
+          "Meta 의 TPU 임차는 Meta 가 단일 칩 공급사에 묶이지 않으려 AMD 와도 손잡은 다중 공급이라 떠날 수 있는 관계로 보고 등급에 넣지 않는다. Unity 와 함께 만드는 생성형 게임 플랫폼은 공동개발 제휴이지만 등급이 이미 +2 라 결과를 바꾸지 않는다.",
+          "국방부 CDAO 계약과 기밀망 배치 협약은 여러 회사가 함께 받아 등급의 차이를 만들지 않는다.",
+          "적대 등급 −1 은 비용형이다. 검색 독점 소송 항소, 애드테크 손해배상 청구, EU 데이터 공유·상호운용 결정, 영국 Play 장터 소비자 집단소송, 폴란드 언론사 사용료 조사, 핀란드 데이터센터 공사 중지 명령은 모두 규제기관·소송 상대가 낸 것으로 져도 검색·광고·클라우드 수요가 남는다.",
+          "애드테크 사건에서 법원은 AdX 매각을 거부하고 행위 처분만 받아들여, 사업 분할로 구조를 건드릴 수 있던 전선이 비용형으로 정리됐다.",
+          "Anthropic 은 큰 클라우드 고객이자 모델 경쟁사이지만 Google 이 파는 컴퓨트의 대체품을 내놓지 않아 '주요 고객이 곧 경쟁자'인 구조형이 아니다. Alphabet 공시에는 매출 10% 이상 고객이 없다.",
+          "직원 600명 이상이 기밀 계약 거부를 요구한 서한은 내부 갈등이라 적대에 넣지 않는다. EU 집행위원회의 클라우드 게이트키퍼 예비 판단은 AWS·Azure 에만 나왔고 Google Cloud 는 그 대상이 아니다.",
+          "폴란드 조사와 영국 Play 소송은 같은 사건을 전한 기사가 둘씩이라 한 줄로 묶어 한 번만 센다.",
+          "⑧ 에서 센 TSMC 대만 생산 의존과 Anthropic 약정의 고객 비중은 여기서 다시 세지 않는다.",
+          "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+        ],
+        "evidence_up": [
+          "Alphabet 이 2023-04 $300M 으로 시작한 Anthropic 투자는 $13.3B 로 불었고 최대 $30B 추가 약정이 있으며, Anthropic 은 Google Cloud 에서 5GW 이상의 컴퓨팅을 사기로 약정했다. [EV-alphabet-018]",
+          "Anthropic 이 Google Cloud 에 5년간 $200B 를 쓰기로 약정했고 이 약정이 Google 이 공개한 매출 백로그의 40% 를 넘는다는 2차 보도가 있다. [EV-alphabet-042]",
+          "Anthropic 은 Google Cloud 역사상 가장 큰 계약으로 TPU 최대 100만 개를 약정했다. [EV-alphabet-019]",
+          "Google 은 2026-10-08 Gemini agent 가 작업마다 Gemini 모델과 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다고 밝혔다. [EV-alphabet-070]",
+          "2026-10-08 Artificial Analysis 종합 지수에서 Claude Opus 5.5 가 58, Gemini 4 Argon 이 53 으로, Anthropic 은 Gemini 와 같은 순위표에서 겨루는 모델 경쟁사다. [EV-anthropic-049]",
+          "Alphabet 과 Unity 는 2026-10-07 텍스트로 게임을 만드는 생성형 AI 플랫폼을 함께 만들기로 했고, 첫 단계 Playground 는 Google Play Games 에 바로 붙는다. [EV-alphabet-072]",
+          "Meta 가 Google Cloud 의 자체 AI 칩을 수십억 달러 규모로 빌려 쓰기로 했다는 보도가 있으나, Meta 는 단일 칩 공급사에 묶이지 않으려 AMD 와도 관계를 맺어 떠날 수 있는 관계라 등급에 넣지 않는다. [EV-nvidia-028, EV-meta-033]",
+          "미 국방부 CDAO 는 2025-07 Google·OpenAI·Anthropic·xAI 네 회사에 각각 상한 $200M 계약을 줬고, 2026-05-01 국방부는 Google 을 포함한 8개사와 기밀 네트워크 AI 배치 협약을 맺었으나, 여러 회사가 함께 받은 계약이라 등급의 차이를 만들지 않는다. [EV-alphabet-044, EV-alphabet-048]",
+          "구글은 2026-04-27 국방부 계약을 고쳐 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 정부 요청 시 AI 안전 설정과 필터 수정을 돕기로 했다. [EV-alphabet-045, EV-alphabet-046]",
+          "Brinkema 판사는 2026-09-02 AdX 매각을 거부하고 행위 처분만 받아들여 구글이 광고 기술 사업 분할을 피했다. [EV-alphabet-068, EV-alphabet-004]"
+        ],
+        "evidence_down": [
+          "DOJ 와 주 정부들이 검색 독점 소송 구제 판결에 항소했고(지지한 38개 주·지역 가운데 35곳), 구글도 항소해 D.C. 항소법원 절차가 서면 단계에 있다. [EV-alphabet-040, EV-alphabet-041]",
+          "구글은 검색 데이터 공유와 Android·AI 서비스 상호운용을 요구한 EU 결정 두 건에 이의를 제기했다(2026-09-30 보도). [EV-alphabet-005]",
+          "미국 법원은 출판사들의 애드테크 손해배상 청구 약 $3.2B 를 재판에 넘겼다(2026-10-01 보도). [EV-alphabet-008]",
+          "영국 경쟁항소법원에서 2015년 이후 영향을 받은 소비자를 대리한 집단소송이 2026-10-06 시작됐고, 원고 측은 Play 장터의 디지털 구매 수수료 30% 가 경쟁법 위반이라며 £10억 넘는(원고 측 추산 £12억) 배상을 구한다. [EV-alphabet-010, EV-alphabet-049]",
+          "폴란드 경쟁당국 UOKiK 는 2026-10-05 구글이 언론사 기사 사용료 협상에서 지배적 지위를 남용했다고 의심한다고 밝혔고, 지배력 남용 벌금은 최대 매출의 10% 다. [EV-alphabet-009, EV-alphabet-050]",
+          "핀란드 인허가감독청은 구글 자회사에 Muhos·Kajaani 두 AI 데이터센터 공사를 환경영향평가가 끝날 때까지 멈추라고 통지했다. [EV-alphabet-071]"
+        ],
+        "reconfirmed": [
+          {
+            "at": "2026-10-08",
+            "by": "claude (사용자 위임 2026-10-08)",
+            "evidence_ids": [
+              "EV-alphabet-018",
+              "EV-alphabet-042",
+              "EV-alphabet-019",
+              "EV-anthropic-049",
+              "EV-nvidia-028",
+              "EV-meta-033",
+              "EV-alphabet-044",
+              "EV-alphabet-048",
+              "EV-alphabet-045",
+              "EV-alphabet-046",
+              "EV-alphabet-040",
+              "EV-alphabet-041",
+              "EV-alphabet-005",
+              "EV-alphabet-008",
+              "EV-alphabet-049",
+              "EV-alphabet-050",
+              "EV-alphabet-004",
+              "EV-alphabet-009",
+              "EV-alphabet-010",
+              "EV-alphabet-047"
+            ]
+          },
+          {
+            "at": "2026-10-12",
+            "by": "claude (사용자 위임 2026-10-12)",
+            "evidence_ids": [
+              "EV-alphabet-018",
+              "EV-alphabet-042",
+              "EV-alphabet-019",
+              "EV-alphabet-070",
+              "EV-anthropic-049",
+              "EV-alphabet-072",
+              "EV-nvidia-028",
+              "EV-meta-033",
+              "EV-alphabet-044",
+              "EV-alphabet-048",
+              "EV-alphabet-045",
+              "EV-alphabet-046",
+              "EV-alphabet-068",
+              "EV-alphabet-004",
+              "EV-alphabet-040",
+              "EV-alphabet-041",
+              "EV-alphabet-005",
+              "EV-alphabet-008",
+              "EV-alphabet-010",
+              "EV-alphabet-049",
+              "EV-alphabet-009",
+              "EV-alphabet-050",
+              "EV-alphabet-071",
+              "EV-alphabet-047",
+              "EV-alphabet-006",
+              "EV-anthropic-024",
+              "EV-amazon-062"
+            ]
+          }
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "Alphabet 이 2023-04 $300M 으로 시작한 Anthropic 투자는 $13.3B 로 불었고 최대 $30B 추가 약정이 있으며, Anthropic 은 Google Cloud 에서 5GW 이상의 컴퓨팅을 사기로 약정했다. [EV-alphabet-018]",
+        "Anthropic 이 Google Cloud 에 5년간 $200B 를 쓰기로 약정했고 이 약정이 Google 이 공개한 매출 백로그의 40% 를 넘는다는 2차 보도가 있다. [EV-alphabet-042]",
+        "Anthropic 은 Google Cloud 역사상 가장 큰 계약으로 TPU 최대 100만 개를 약정했다. [EV-alphabet-019]",
+        "Google 은 2026-10-08 Gemini agent 가 작업마다 Gemini 모델과 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다고 밝혔다. [EV-alphabet-070]",
+        "2026-10-08 Artificial Analysis 종합 지수에서 Claude Opus 5.5 가 58, Gemini 4 Argon 이 53 으로, Anthropic 은 Gemini 와 같은 순위표에서 겨루는 모델 경쟁사다. [EV-anthropic-049]",
+        "Alphabet 과 Unity 는 2026-10-07 텍스트로 게임을 만드는 생성형 AI 플랫폼을 함께 만들기로 했고, 첫 단계 Playground 는 Google Play Games 에 바로 붙는다. [EV-alphabet-072]",
+        "Meta 가 Google Cloud 의 자체 AI 칩을 수십억 달러 규모로 빌려 쓰기로 했다는 보도가 있으나, Meta 는 단일 칩 공급사에 묶이지 않으려 AMD 와도 관계를 맺어 떠날 수 있는 관계라 등급에 넣지 않는다. [EV-nvidia-028, EV-meta-033]",
+        "미 국방부 CDAO 는 2025-07 Google·OpenAI·Anthropic·xAI 네 회사에 각각 상한 $200M 계약을 줬고, 2026-05-01 국방부는 Google 을 포함한 8개사와 기밀 네트워크 AI 배치 협약을 맺었으나, 여러 회사가 함께 받은 계약이라 등급의 차이를 만들지 않는다. [EV-alphabet-044, EV-alphabet-048]",
+        "구글은 2026-04-27 국방부 계약을 고쳐 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 정부 요청 시 AI 안전 설정과 필터 수정을 돕기로 했다. [EV-alphabet-045, EV-alphabet-046]",
+        "Brinkema 판사는 2026-09-02 AdX 매각을 거부하고 행위 처분만 받아들여 구글이 광고 기술 사업 분할을 피했다. [EV-alphabet-068, EV-alphabet-004]"
+      ],
+      "evidence_down_after": [
+        "DOJ 와 주 정부들이 검색 독점 소송 구제 판결에 항소했고(지지한 38개 주·지역 가운데 35곳), 구글도 항소해 D.C. 항소법원 절차가 서면 단계에 있다. [EV-alphabet-040, EV-alphabet-041]",
+        "구글은 검색 데이터 공유와 Android·AI 서비스 상호운용을 요구한 EU 결정 두 건에 이의를 제기했다(2026-09-30 보도). [EV-alphabet-005]",
+        "미국 법원은 출판사들의 애드테크 손해배상 청구 약 $3.2B 를 재판에 넘겼다(2026-10-01 보도). [EV-alphabet-008]",
+        "영국 경쟁항소법원에서 2015년 이후 영향을 받은 소비자를 대리한 집단소송이 2026-10-06 시작됐고, 원고 측은 Play 장터의 디지털 구매 수수료 30% 가 경쟁법 위반이라며 £10억 넘는(원고 측 추산 £12억) 배상을 구한다. [EV-alphabet-010, EV-alphabet-049]",
+        "폴란드 경쟁당국 UOKiK 는 2026-10-05 구글이 언론사 기사 사용료 협상에서 지배적 지위를 남용했다고 의심한다고 밝혔고, 지배력 남용 벌금은 최대 매출의 10% 다. [EV-alphabet-009, EV-alphabet-050]",
+        "핀란드 인허가감독청은 구글 자회사에 Muhos·Kajaani 두 AI 데이터센터 공사를 환경영향평가가 끝날 때까지 멈추라고 통지했다. [EV-alphabet-071]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "grade",
+          "score": null,
+          "inputs": {
+            "A": 2,
+            "H": -1
+          },
+          "evidence": [
+            "알파벳 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 −1 로 4점이다.",
+            "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+            "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+            "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+            "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+            "동맹 등급 +2 는 경쟁사 편입 조항으로 선다. 모델 시장에서 Gemini 와 겨루는 Anthropic 이 TPU 최대 100만 개와 Google Cloud 5GW 이상을 약정했고(5년 $200B 라는 수치는 2차 보도), Google 은 Gemini agent 에서 Claude 모델을 함께 돌려 경쟁사 모델을 자기 플랫폼에 들였다. Anthropic 의 자체 칩은 설계팀을 꾸린 계획 단계라 대체품을 출하하지 않았고 Google 지출은 늘고 있어 떠날 수 없는 관계로 본다.",
+            "지분 동맹 조항은 Anthropic 하나라 서지 않는다. Google 이 SpaceX 지분을 가진 관계에서 Google 은 SpaceX 컴퓨트를 사는 쪽이라 동맹이 아니라 조달이다.",
+            "Meta 의 TPU 임차는 Meta 가 단일 칩 공급사에 묶이지 않으려 AMD 와도 손잡은 다중 공급이라 떠날 수 있는 관계로 보고 등급에 넣지 않는다. Unity 와 함께 만드는 생성형 게임 플랫폼은 공동개발 제휴이지만 등급이 이미 +2 라 결과를 바꾸지 않는다.",
+            "국방부 CDAO 계약과 기밀망 배치 협약은 여러 회사가 함께 받아 등급의 차이를 만들지 않는다.",
+            "적대 등급 −1 은 비용형이다. 검색 독점 소송 항소, 애드테크 손해배상 청구, EU 데이터 공유·상호운용 결정, 영국 Play 장터 소비자 집단소송, 폴란드 언론사 사용료 조사, 핀란드 데이터센터 공사 중지 명령은 모두 규제기관·소송 상대가 낸 것으로 져도 검색·광고·클라우드 수요가 남는다.",
+            "애드테크 사건에서 법원은 AdX 매각을 거부하고 행위 처분만 받아들여, 사업 분할로 구조를 건드릴 수 있던 전선이 비용형으로 정리됐다.",
+            "Anthropic 은 큰 클라우드 고객이자 모델 경쟁사이지만 Google 이 파는 컴퓨트의 대체품을 내놓지 않아 '주요 고객이 곧 경쟁자'인 구조형이 아니다. Alphabet 공시에는 매출 10% 이상 고객이 없다.",
+            "직원 600명 이상이 기밀 계약 거부를 요구한 서한은 내부 갈등이라 적대에 넣지 않는다. EU 집행위원회의 클라우드 게이트키퍼 예비 판단은 AWS·Azure 에만 나왔고 Google Cloud 는 그 대상이 아니다.",
+            "폴란드 조사와 영국 Play 소송은 같은 사건을 전한 기사가 둘씩이라 한 줄로 묶어 한 번만 센다.",
+            "⑧ 에서 센 TSMC 대만 생산 의존과 Anthropic 약정의 고객 비중은 여기서 다시 세지 않는다.",
+            "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+          ],
+          "status": "new",
+          "reviewer": "claude (사용자 위임 2026-10-12)",
+          "reviewed_at": "2026-10-12",
+          "evidence_up": [
+            "Alphabet 이 2023-04 $300M 으로 시작한 Anthropic 투자는 $13.3B 로 불었고 최대 $30B 추가 약정이 있으며, Anthropic 은 Google Cloud 에서 5GW 이상의 컴퓨팅을 사기로 약정했다. [EV-alphabet-018]",
+            "Anthropic 이 Google Cloud 에 5년간 $200B 를 쓰기로 약정했고 이 약정이 Google 이 공개한 매출 백로그의 40% 를 넘는다는 2차 보도가 있다. [EV-alphabet-042]",
+            "Anthropic 은 Google Cloud 역사상 가장 큰 계약으로 TPU 최대 100만 개를 약정했다. [EV-alphabet-019]",
+            "Google 은 2026-10-08 Gemini agent 가 작업마다 Gemini 모델과 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다고 밝혔다. [EV-alphabet-070]",
+            "2026-10-08 Artificial Analysis 종합 지수에서 Claude Opus 5.5 가 58, Gemini 4 Argon 이 53 으로, Anthropic 은 Gemini 와 같은 순위표에서 겨루는 모델 경쟁사다. [EV-anthropic-049]",
+            "Alphabet 과 Unity 는 2026-10-07 텍스트로 게임을 만드는 생성형 AI 플랫폼을 함께 만들기로 했고, 첫 단계 Playground 는 Google Play Games 에 바로 붙는다. [EV-alphabet-072]",
+            "Meta 가 Google Cloud 의 자체 AI 칩을 수십억 달러 규모로 빌려 쓰기로 했다는 보도가 있으나, Meta 는 단일 칩 공급사에 묶이지 않으려 AMD 와도 관계를 맺어 떠날 수 있는 관계라 등급에 넣지 않는다. [EV-nvidia-028, EV-meta-033]",
+            "미 국방부 CDAO 는 2025-07 Google·OpenAI·Anthropic·xAI 네 회사에 각각 상한 $200M 계약을 줬고, 2026-05-01 국방부는 Google 을 포함한 8개사와 기밀 네트워크 AI 배치 협약을 맺었으나, 여러 회사가 함께 받은 계약이라 등급의 차이를 만들지 않는다. [EV-alphabet-044, EV-alphabet-048]",
+            "구글은 2026-04-27 국방부 계약을 고쳐 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 정부 요청 시 AI 안전 설정과 필터 수정을 돕기로 했다. [EV-alphabet-045, EV-alphabet-046]",
+            "Brinkema 판사는 2026-09-02 AdX 매각을 거부하고 행위 처분만 받아들여 구글이 광고 기술 사업 분할을 피했다. [EV-alphabet-068, EV-alphabet-004]"
+          ],
+          "evidence_down": [
+            "DOJ 와 주 정부들이 검색 독점 소송 구제 판결에 항소했고(지지한 38개 주·지역 가운데 35곳), 구글도 항소해 D.C. 항소법원 절차가 서면 단계에 있다. [EV-alphabet-040, EV-alphabet-041]",
+            "구글은 검색 데이터 공유와 Android·AI 서비스 상호운용을 요구한 EU 결정 두 건에 이의를 제기했다(2026-09-30 보도). [EV-alphabet-005]",
+            "미국 법원은 출판사들의 애드테크 손해배상 청구 약 $3.2B 를 재판에 넘겼다(2026-10-01 보도). [EV-alphabet-008]",
+            "영국 경쟁항소법원에서 2015년 이후 영향을 받은 소비자를 대리한 집단소송이 2026-10-06 시작됐고, 원고 측은 Play 장터의 디지털 구매 수수료 30% 가 경쟁법 위반이라며 £10억 넘는(원고 측 추산 £12억) 배상을 구한다. [EV-alphabet-010, EV-alphabet-049]",
+            "폴란드 경쟁당국 UOKiK 는 2026-10-05 구글이 언론사 기사 사용료 협상에서 지배적 지위를 남용했다고 의심한다고 밝혔고, 지배력 남용 벌금은 최대 매출의 10% 다. [EV-alphabet-009, EV-alphabet-050]",
+            "핀란드 인허가감독청은 구글 자회사에 Muhos·Kajaani 두 AI 데이터센터 공사를 환경영향평가가 끝날 때까지 멈추라고 통지했다. [EV-alphabet-071]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-alphabet-018",
+                "EV-alphabet-042",
+                "EV-alphabet-019",
+                "EV-anthropic-049",
+                "EV-nvidia-028",
+                "EV-meta-033",
+                "EV-alphabet-044",
+                "EV-alphabet-048",
+                "EV-alphabet-045",
+                "EV-alphabet-046",
+                "EV-alphabet-040",
+                "EV-alphabet-041",
+                "EV-alphabet-005",
+                "EV-alphabet-008",
+                "EV-alphabet-049",
+                "EV-alphabet-050",
+                "EV-alphabet-004",
+                "EV-alphabet-009",
+                "EV-alphabet-010",
+                "EV-alphabet-047"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-alphabet-018",
+                "EV-alphabet-042",
+                "EV-alphabet-019",
+                "EV-alphabet-070",
+                "EV-anthropic-049",
+                "EV-alphabet-072",
+                "EV-nvidia-028",
+                "EV-meta-033",
+                "EV-alphabet-044",
+                "EV-alphabet-048",
+                "EV-alphabet-045",
+                "EV-alphabet-046",
+                "EV-alphabet-068",
+                "EV-alphabet-004",
+                "EV-alphabet-040",
+                "EV-alphabet-041",
+                "EV-alphabet-005",
+                "EV-alphabet-008",
+                "EV-alphabet-010",
+                "EV-alphabet-049",
+                "EV-alphabet-009",
+                "EV-alphabet-050",
+                "EV-alphabet-071",
+                "EV-alphabet-047",
+                "EV-alphabet-006",
+                "EV-anthropic-024",
+                "EV-amazon-062"
+              ]
+            }
+          ],
+          "evidence_ids": [
+            "EV-alphabet-004",
+            "EV-alphabet-005",
+            "EV-alphabet-008",
+            "EV-alphabet-009",
+            "EV-alphabet-010",
+            "EV-alphabet-018",
+            "EV-alphabet-019",
+            "EV-alphabet-040",
+            "EV-alphabet-041",
+            "EV-alphabet-042",
+            "EV-alphabet-044",
+            "EV-alphabet-045",
+            "EV-alphabet-046",
+            "EV-alphabet-048",
+            "EV-alphabet-049",
+            "EV-alphabet-050",
+            "EV-alphabet-068",
+            "EV-alphabet-070",
+            "EV-alphabet-071",
+            "EV-alphabet-072",
+            "EV-anthropic-049",
+            "EV-meta-033",
+            "EV-nvidia-028"
+          ]
+        },
+        "after": {
+          "kind": "grade",
+          "score": null,
+          "inputs": {
+            "A": 2,
+            "H": -1
+          },
+          "evidence": [
+            "알파벳 ⑤ 는 3 + 동맹 등급 +2 + 적대 등급 −1 로 4점이다.",
+            "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+            "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+            "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+            "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+            "동맹 등급 +2 는 경쟁사 편입 조항으로 선다. 모델 시장에서 Gemini 와 겨루는 Anthropic 이 TPU 최대 100만 개와 Google Cloud 5GW 이상을 약정했고(5년 $200B 라는 수치는 2차 보도), Google 은 Gemini agent 에서 Claude 모델을 함께 돌려 경쟁사 모델을 자기 플랫폼에 들였다. Anthropic 의 자체 칩은 설계팀을 꾸린 계획 단계라 대체품을 출하하지 않았고 Google 지출은 늘고 있어 떠날 수 없는 관계로 본다.",
+            "지분 동맹 조항은 Anthropic 하나라 서지 않는다. Google 이 SpaceX 지분을 가진 관계에서 Google 은 SpaceX 컴퓨트를 사는 쪽이라 동맹이 아니라 조달이다.",
+            "Meta 의 TPU 임차는 Meta 가 단일 칩 공급사에 묶이지 않으려 AMD 와도 손잡은 다중 공급이라 떠날 수 있는 관계로 보고 등급에 넣지 않는다. Unity 와 함께 만드는 생성형 게임 플랫폼은 공동개발 제휴이지만 등급이 이미 +2 라 결과를 바꾸지 않는다.",
+            "국방부 CDAO 계약과 기밀망 배치 협약은 여러 회사가 함께 받아 등급의 차이를 만들지 않는다.",
+            "적대 등급 −1 은 비용형이다. 검색 독점 소송 항소, 애드테크 손해배상 청구, EU 데이터 공유·상호운용 결정, 영국 Play 장터 소비자 집단소송, 폴란드 언론사 사용료 조사, 핀란드 데이터센터 공사 중지 명령은 모두 규제기관·소송 상대가 낸 것으로 져도 검색·광고·클라우드 수요가 남는다.",
+            "애드테크 사건에서 법원은 AdX 매각을 거부하고 행위 처분만 받아들여, 사업 분할로 구조를 건드릴 수 있던 전선이 비용형으로 정리됐다.",
+            "Anthropic 은 큰 클라우드 고객이자 모델 경쟁사이지만 Google 이 파는 컴퓨트의 대체품을 내놓지 않아 '주요 고객이 곧 경쟁자'인 구조형이 아니다. Alphabet 공시에는 매출 10% 이상 고객이 없다.",
+            "직원 600명 이상이 기밀 계약 거부를 요구한 서한은 내부 갈등이라 적대에 넣지 않는다. EU 집행위원회의 클라우드 게이트키퍼 예비 판단은 AWS·Azure 에만 나왔고 Google Cloud 는 그 대상이 아니다.",
+            "폴란드 조사와 영국 Play 소송은 같은 사건을 전한 기사가 둘씩이라 한 줄로 묶어 한 번만 센다.",
+            "TSMC 대만 생산 의존은 ⑧ 에서 셌으므로 여기서 다시 세지 않는다. Anthropic 약정이 Google Cloud 백로그에서 차지하는 비중은 2차 보도뿐이라 ⑧ 고객 축도 등급을 가르는 수치로 쓰지 않았고, 여기서도 적대 등급의 재료로 쓰지 않는다.",
+            "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+          ],
+          "evidence_up": [
+            "Alphabet 이 2023-04 $300M 으로 시작한 Anthropic 투자는 $13.3B 로 불었고 최대 $30B 추가 약정이 있으며, Anthropic 은 Google Cloud 에서 5GW 이상의 컴퓨팅을 사기로 약정했다. [EV-alphabet-018]",
+            "Anthropic 이 Google Cloud 에 5년간 $200B 를 쓰기로 약정했고 이 약정이 Google 이 공개한 매출 백로그의 40% 를 넘는다는 2차 보도가 있다. [EV-alphabet-042]",
+            "Anthropic 은 Google Cloud 역사상 가장 큰 계약으로 TPU 최대 100만 개를 약정했다. [EV-alphabet-019]",
+            "Google 은 2026-10-08 Gemini agent 가 작업마다 Gemini 모델과 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다고 밝혔다. [EV-alphabet-070]",
+            "2026-10-08 Artificial Analysis 종합 지수에서 Claude Opus 5.5 가 58, Gemini 4 Argon 이 53 으로, Anthropic 은 Gemini 와 같은 순위표에서 겨루는 모델 경쟁사다. [EV-anthropic-049]",
+            "Alphabet 과 Unity 는 2026-10-07 텍스트로 게임을 만드는 생성형 AI 플랫폼을 함께 만들기로 했고, 첫 단계 Playground 는 Google Play Games 에 바로 붙는다. [EV-alphabet-072]",
+            "Meta 가 Google Cloud 의 자체 AI 칩을 수십억 달러 규모로 빌려 쓰기로 했다는 보도가 있으나, Meta 는 단일 칩 공급사에 묶이지 않으려 AMD 와도 관계를 맺어 떠날 수 있는 관계라 등급에 넣지 않는다. [EV-nvidia-028, EV-meta-033]",
+            "미 국방부 CDAO 는 2025-07 Google·OpenAI·Anthropic·xAI 네 회사에 각각 상한 $200M 계약을 줬고, 2026-05-01 국방부는 Google 을 포함한 8개사와 기밀 네트워크 AI 배치 협약을 맺었으나, 여러 회사가 함께 받은 계약이라 등급의 차이를 만들지 않는다. [EV-alphabet-044, EV-alphabet-048]",
+            "구글은 2026-04-27 국방부 계약을 고쳐 Gemini 를 기밀 네트워크에서 '모든 합법적 정부 목적'에 쓰도록 했고, 정부 요청 시 AI 안전 설정과 필터 수정을 돕기로 했다. [EV-alphabet-045, EV-alphabet-046]",
+            "Brinkema 판사는 2026-09-02 AdX 매각을 거부하고 행위 처분만 받아들여 구글이 광고 기술 사업 분할을 피했다. [EV-alphabet-068, EV-alphabet-004]"
+          ],
+          "evidence_down": [
+            "DOJ 와 주 정부들이 검색 독점 소송 구제 판결에 항소했고(지지한 38개 주·지역 가운데 35곳), 구글도 항소해 D.C. 항소법원 절차가 서면 단계에 있다. [EV-alphabet-040, EV-alphabet-041]",
+            "구글은 검색 데이터 공유와 Android·AI 서비스 상호운용을 요구한 EU 결정 두 건에 이의를 제기했다(2026-09-30 보도). [EV-alphabet-005]",
+            "미국 법원은 출판사들의 애드테크 손해배상 청구 약 $3.2B 를 재판에 넘겼다(2026-10-01 보도). [EV-alphabet-008]",
+            "영국 경쟁항소법원에서 2015년 이후 영향을 받은 소비자를 대리한 집단소송이 2026-10-06 시작됐고, 원고 측은 Play 장터의 디지털 구매 수수료 30% 가 경쟁법 위반이라며 £10억 넘는(원고 측 추산 £12억) 배상을 구한다. [EV-alphabet-010, EV-alphabet-049]",
+            "폴란드 경쟁당국 UOKiK 는 2026-10-05 구글이 언론사 기사 사용료 협상에서 지배적 지위를 남용했다고 의심한다고 밝혔고, 지배력 남용 벌금은 최대 매출의 10% 다. [EV-alphabet-009, EV-alphabet-050]",
+            "핀란드 인허가감독청은 구글 자회사에 Muhos·Kajaani 두 AI 데이터센터 공사를 환경영향평가가 끝날 때까지 멈추라고 통지했다. [EV-alphabet-071]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-alphabet-018",
+                "EV-alphabet-042",
+                "EV-alphabet-019",
+                "EV-anthropic-049",
+                "EV-nvidia-028",
+                "EV-meta-033",
+                "EV-alphabet-044",
+                "EV-alphabet-048",
+                "EV-alphabet-045",
+                "EV-alphabet-046",
+                "EV-alphabet-040",
+                "EV-alphabet-041",
+                "EV-alphabet-005",
+                "EV-alphabet-008",
+                "EV-alphabet-049",
+                "EV-alphabet-050",
+                "EV-alphabet-004",
+                "EV-alphabet-009",
+                "EV-alphabet-010",
+                "EV-alphabet-047"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-alphabet-018",
+                "EV-alphabet-042",
+                "EV-alphabet-019",
+                "EV-alphabet-070",
+                "EV-anthropic-049",
+                "EV-alphabet-072",
+                "EV-nvidia-028",
+                "EV-meta-033",
+                "EV-alphabet-044",
+                "EV-alphabet-048",
+                "EV-alphabet-045",
+                "EV-alphabet-046",
+                "EV-alphabet-068",
+                "EV-alphabet-004",
+                "EV-alphabet-040",
+                "EV-alphabet-041",
+                "EV-alphabet-005",
+                "EV-alphabet-008",
+                "EV-alphabet-010",
+                "EV-alphabet-049",
+                "EV-alphabet-009",
+                "EV-alphabet-050",
+                "EV-alphabet-071",
+                "EV-alphabet-047",
+                "EV-alphabet-006",
+                "EV-anthropic-024",
+                "EV-amazon-062"
+              ]
+            }
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-115",
+      "company_id": "palantir",
+      "factor": "F5",
+      "changes": {},
+      "evidence_after": [
+        "Palantir ⑤ 는 3 + 동맹 등급 +1 + 적대 등급 −2 로 2점이다.",
+        "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+        "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+        "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+        "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+        "동맹 등급 +1 은 Nvidia·SAP·Accenture·Armada 와의 공동 제공·공동개발 제휴와 미 정부 계약에서 나온다. 정부 계약은 상업적 약속이라 동맹으로 센다. ICE 는 비자 심사 추적 시스템의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 해 미 정부와의 관계가 넓어지고 있다.",
+        "지분이 걸린 동맹이 둘 이상이거나 경쟁사를 Palantir 플랫폼에 묶은 사실은 없어 +2 가 아니다. 영국 정부 고객 일부는 실제로 떠나 동맹에서 뺀다.",
+        "적대 등급 −2 는 구조형이다. 유럽 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했고, 샌프란시스코 간호사들이 ICE 와의 연계를 이유로 병원 등 공공기관의 관계 단절을 요구했으며, 영국에서는 노동당 의원과 노조가 총리에게 정부 계약에서 Palantir 를 빼라고 압박하고 있다. 특정 시장이나 거래 조건이 아니라 Palantir 가 하는 사업 자체를 부당하다고 표적으로 삼은 적대라 규칙 ⑤ 표의 구조형이다.",
+        "런던 시장 산하 경찰감독청(Mopac)은 조달 절차 위반을 들어 런던 경찰청의 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 계약을 막았다며 소송을 냈다. 차단 사유는 두 쪽 주장이 갈려 이 사건만으로 정당성 공격이라 확정하지 않으며, 시장 일부 차단으로 읽더라도 구조형 판정은 정당성 공격 자체로 선다.",
+        "영국에서는 경찰 다섯 곳의 시범 사업 종료, NHS 트러스트 20곳 넘는 도구 중단, 우크라이나 난민 주거 사업의 자체 시스템 전환으로 실제 이탈이 생겼다. 그 직접 사유는 예산 중단과 자체 시스템 구축으로 보도돼 정당성 공격이 이탈을 낳았다는 인과는 확인하지 못했으나, 구조형은 사업의 정당성 자체를 겨냥한 적대로 서고 이탈의 인과는 요건이 아니다.",
+        "영국 정부가 Palantir 와의 관계를 내년 3월 계약 조항으로 앞당겨 재검토하고 영국 업체 서너 곳을 대체 후보로 살핀다는 보도는 FT 를 옮긴 2차 보도이고 검토 단계라, 이탈 실측이 아니라 적대의 정황으로만 읽는다.",
+        "다발형은 서지 않는다. 정당성 공격은 유럽·영국·미국 여러 전선에서 함께 진행되지만 다발형은 최대 파트너와의 긴장도 요구한다. 최대 파트너인 미 정부의 매출은 2024년 $1.2B 에서 2025년 $1.9B 로 늘었고 ICE 는 경쟁 입찰 없이 Foundry 사용을 넓히고 있다. 하원 민주당 의원 120명이 미나브 공습의 AI 사용을 국방장관에게 따진 서한은 계약 당사자인 행정부가 아니라 의회 소수당의 문제 제기라 최대 파트너와의 긴장으로 세지 않는다. 영국의 연 매출 £4.27억은 미 정부 매출보다 작다.",
+        "FT 를 인용한 SFG Media 기사는 프랑스·독일이 일부 Palantir 계약을 끊거나 사용을 제한했다고 적지만(2차 보도), 계약 이름과 시점이 없어 어느 계약인지는 확인하지 못했다. 이 보도를 써도 다발형은 최대 파트너인 미 정부와의 긴장을 따로 요구하므로 적대 등급은 구조형에 머문다.",
+        "⑧ 에서 센 미 정부 매출 집중과 Maven 모델 공급자 교체는 여기서 다시 세지 않는다. 같은 미 정부 관계를 ⑤ 에서는 동맹으로, ⑧ 에서는 의존으로 따로 센다.",
+        "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+      ],
+      "reason": "원문 본문에 있는 프랑스·독일 계약 보도를 판정 칸에 반영한다(사실·출처 B 리뷰)",
+      "evidence_ids": [
+        "EV-palantir-004",
+        "EV-palantir-005",
+        "EV-palantir-006",
+        "EV-palantir-007",
+        "EV-palantir-008",
+        "EV-palantir-009",
+        "EV-palantir-010",
+        "EV-palantir-011",
+        "EV-palantir-018",
+        "EV-palantir-021",
+        "EV-palantir-023",
+        "EV-palantir-024",
+        "EV-palantir-025",
+        "EV-palantir-026",
+        "EV-palantir-027",
+        "EV-palantir-028",
+        "EV-palantir-034",
+        "EV-palantir-035",
+        "EV-palantir-036",
+        "EV-palantir-037",
+        "EV-palantir-039"
+      ],
+      "before": {
+        "kind": "grade",
+        "score": null,
+        "inputs": {
+          "A": 1,
+          "H": -2
+        },
+        "evidence": [
+          "Palantir ⑤ 는 3 + 동맹 등급 +1 + 적대 등급 −2 로 2점이다.",
+          "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+          "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+          "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+          "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+          "동맹 등급 +1 은 Nvidia·SAP·Accenture·Armada 와의 공동 제공·공동개발 제휴와 미 정부 계약에서 나온다. 정부 계약은 상업적 약속이라 동맹으로 센다. ICE 는 비자 심사 추적 시스템의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 해 미 정부와의 관계가 넓어지고 있다.",
+          "지분이 걸린 동맹이 둘 이상이거나 경쟁사를 Palantir 플랫폼에 묶은 사실은 없어 +2 가 아니다. 영국 정부 고객 일부는 실제로 떠나 동맹에서 뺀다.",
+          "적대 등급 −2 는 구조형이다. 유럽 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했고, 샌프란시스코 간호사들이 ICE 와의 연계를 이유로 병원 등 공공기관의 관계 단절을 요구했으며, 영국에서는 노동당 의원과 노조가 총리에게 정부 계약에서 Palantir 를 빼라고 압박하고 있다. 특정 시장이나 거래 조건이 아니라 Palantir 가 하는 사업 자체를 부당하다고 표적으로 삼은 적대라 규칙 ⑤ 표의 구조형이다.",
+          "런던 시장 산하 경찰감독청(Mopac)은 조달 절차 위반을 들어 런던 경찰청의 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 계약을 막았다며 소송을 냈다. 차단 사유는 두 쪽 주장이 갈려 이 사건만으로 정당성 공격이라 확정하지 않으며, 시장 일부 차단으로 읽더라도 구조형 판정은 정당성 공격 자체로 선다.",
+          "영국에서는 경찰 다섯 곳의 시범 사업 종료, NHS 트러스트 20곳 넘는 도구 중단, 우크라이나 난민 주거 사업의 자체 시스템 전환으로 실제 이탈이 생겼다. 그 직접 사유는 예산 중단과 자체 시스템 구축으로 보도돼 정당성 공격이 이탈을 낳았다는 인과는 확인하지 못했으나, 구조형은 사업의 정당성 자체를 겨냥한 적대로 서고 이탈의 인과는 요건이 아니다.",
+          "영국 정부가 Palantir 와의 관계를 내년 3월 계약 조항으로 앞당겨 재검토하고 영국 업체 서너 곳을 대체 후보로 살핀다는 보도는 FT 를 옮긴 2차 보도이고 검토 단계라, 이탈 실측이 아니라 적대의 정황으로만 읽는다.",
+          "다발형은 서지 않는다. 정당성 공격은 유럽·영국·미국 여러 전선에서 함께 진행되지만 다발형은 최대 파트너와의 긴장도 요구한다. 최대 파트너인 미 정부의 매출은 2024년 $1.2B 에서 2025년 $1.9B 로 늘었고 ICE 는 경쟁 입찰 없이 Foundry 사용을 넓히고 있다. 하원 민주당 의원 120명이 미나브 공습의 AI 사용을 국방장관에게 따진 서한은 계약 당사자인 행정부가 아니라 의회 소수당의 문제 제기라 최대 파트너와의 긴장으로 세지 않는다. 영국의 연 매출 £4.27억은 미 정부 매출보다 작다.",
+          "프랑스·독일 정부가 Palantir 계약을 끊었다는 사실은 확정 근거에 없어 미확인이다.",
+          "⑧ 에서 센 미 정부 매출 집중과 Maven 모델 공급자 교체는 여기서 다시 세지 않는다. 같은 미 정부 관계를 ⑤ 에서는 동맹으로, ⑧ 에서는 의존으로 따로 센다.",
+          "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+        ],
+        "evidence_up": [
+          "Palantir 는 2026-06 Nvidia 와 소버린 환경에서 Nemotron 오픈 모델을 구동하는 엔진을 함께 내놓기로 했다. [EV-palantir-023]",
+          "SAP 와 Palantir 는 데이터 이전 도구를 함께 내는 전략적 제휴를 넓혔고 Accenture 가 첫 글로벌 전략 서비스 파트너로 참여했다. [EV-palantir-024]",
+          "Palantir 는 2026-10-01 Armada 를 첫 인증 모듈형 데이터센터 파트너로 정하고 소버린 AI 인프라를 함께 공급하기로 했다. [EV-palantir-008]",
+          "미 정부 고객 매출은 2025년 $1.9B 로 전년 $1.2B 에서 늘었다. [EV-palantir-018]",
+          "ICE 는 Palantir 에 $29.9M 규모 ImmigrationOS 구축 계약을 줬다. [EV-palantir-025]",
+          "ICE 는 비자 보안 프로그램 추적 시스템(VSPTS)의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 했다. [EV-palantir-036]"
+        ],
+        "evidence_down": [
+          "2026-09-28 유럽 여러 나라의 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했다. [EV-palantir-005]",
+          "샌프란시스코 간호사 1,500명이 ICE 와의 연계를 이유로 병원 등 공공기관이 Palantir 와 관계를 끊으라고 요구하며 '기술 파시즘 반대 행진' 을 벌였다. [EV-palantir-026, EV-palantir-006]",
+          "영국 총리는 NHS 와의 £3.3억 소프트웨어 계약을 포함한 정부 계약에서 Palantir 를 빼라는 노동당 의원과 노조의 압박을 크게 받고 있고, Palantir 는 런던 경찰청 AI 계약 £5,000만을 막은 런던 시장과 법정에서 다투고 있다. [EV-palantir-039]",
+          "런던 시장 산하 경찰감독청(Mopac)은 조달 전략 미비를 '명백하고 중대한 절차 위반' 이라며 런던 경찰청의 2년 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 위법하게 막았다며 소송을 냈다. [EV-palantir-035]",
+          "영국 정부가 의료·국방 데이터 처리에서 Palantir 를 대신할 영국 업체를 찾고 있고, 내년 3월 계약 조항으로 관계를 앞당겨 재검토하며 Quantexa 등 서너 곳을 후보로 살핀다는 FT 인용 2차 보도가 있다. [EV-palantir-009]",
+          "영국 NHS 연합 데이터 플랫폼에 자기 건강 데이터를 넘기지 말라는 법적 이의 제기가 44,000건 넘게 접수됐다. [EV-palantir-007]",
+          "일부 봉인이 풀린 법원 문서는 ICE 가 감시 대상 시민의 사진·번호판 정보를 Palantir 소프트웨어로 만든 사건관리 데이터베이스에 쌓았다고 주장한다. [EV-palantir-010]",
+          "ICE 내부 이메일에 유권자 명부 자료를 Palantir 가 지원하는 ELITE 시스템에 넣는 협의가 적혀 있다는 보도가 있고, Palantir 는 유권자 명부 자료가 ELITE 에 들어간 적이 없다고 답했다. [EV-palantir-034]",
+          "CBS 인터뷰에서 진행자는 미나브 학교 공습에 Maven 의 AI 가 쓰였다는 Bloomberg 보도와 하원 민주당 의원 120명의 서한을 물었고, Palantir CTO 는 그 보도가 부정확하며 사람의 실수가 원인일 가능성이 높다고 답했다. [EV-palantir-037]",
+          "국무부의 표현의 자유·감시 대응 자문 프로그램 파트너 선정은 시민단체의 비판을 받았다. [EV-palantir-027]",
+          "영국 경찰 다섯 곳은 내무부 예산이 끊기자 2년 시범 사업을 끝냈고, NHS 트러스트 20곳 넘게가 대기자 명단 도구를 버렸으며, 주택·지역사회부는 2025-09 우크라이나 난민 주거 사업을 자체 시스템으로 옮겼다. [EV-palantir-021, EV-palantir-011, EV-palantir-028]",
+          "FT 는 영국 경찰 다섯 곳의 사업 종료를 영국 법 집행 핵심 공급자가 되려던 Palantir 에 큰 차질이라고 평했다. [EV-palantir-004]"
+        ],
+        "reconfirmed": [
+          {
+            "at": "2026-10-08",
+            "by": "claude (사용자 위임 2026-10-08)",
+            "evidence_ids": [
+              "EV-palantir-023",
+              "EV-palantir-024",
+              "EV-palantir-008",
+              "EV-palantir-018",
+              "EV-palantir-025",
+              "EV-palantir-005",
+              "EV-palantir-007",
+              "EV-palantir-026",
+              "EV-palantir-010",
+              "EV-palantir-027",
+              "EV-palantir-021",
+              "EV-palantir-011",
+              "EV-palantir-028",
+              "EV-palantir-004",
+              "EV-palantir-006",
+              "EV-palantir-009"
+            ]
+          },
+          {
+            "at": "2026-10-12",
+            "by": "claude (사용자 위임 2026-10-12)",
+            "evidence_ids": [
+              "EV-palantir-023",
+              "EV-palantir-024",
+              "EV-palantir-008",
+              "EV-palantir-018",
+              "EV-palantir-025",
+              "EV-palantir-036",
+              "EV-palantir-005",
+              "EV-palantir-026",
+              "EV-palantir-006",
+              "EV-palantir-039",
+              "EV-palantir-035",
+              "EV-palantir-009",
+              "EV-palantir-007",
+              "EV-palantir-010",
+              "EV-palantir-034",
+              "EV-palantir-037",
+              "EV-palantir-027",
+              "EV-palantir-021",
+              "EV-palantir-011",
+              "EV-palantir-028",
+              "EV-palantir-004",
+              "EV-palantir-038"
+            ]
+          }
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "Palantir 는 2026-06 Nvidia 와 소버린 환경에서 Nemotron 오픈 모델을 구동하는 엔진을 함께 내놓기로 했다. [EV-palantir-023]",
+        "SAP 와 Palantir 는 데이터 이전 도구를 함께 내는 전략적 제휴를 넓혔고 Accenture 가 첫 글로벌 전략 서비스 파트너로 참여했다. [EV-palantir-024]",
+        "Palantir 는 2026-10-01 Armada 를 첫 인증 모듈형 데이터센터 파트너로 정하고 소버린 AI 인프라를 함께 공급하기로 했다. [EV-palantir-008]",
+        "미 정부 고객 매출은 2025년 $1.9B 로 전년 $1.2B 에서 늘었다. [EV-palantir-018]",
+        "ICE 는 Palantir 에 $29.9M 규모 ImmigrationOS 구축 계약을 줬다. [EV-palantir-025]",
+        "ICE 는 비자 보안 프로그램 추적 시스템(VSPTS)의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 했다. [EV-palantir-036]"
+      ],
+      "evidence_down_after": [
+        "2026-09-28 유럽 여러 나라의 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했다. [EV-palantir-005]",
+        "샌프란시스코 간호사 1,500명이 ICE 와의 연계를 이유로 병원 등 공공기관이 Palantir 와 관계를 끊으라고 요구하며 '기술 파시즘 반대 행진' 을 벌였다. [EV-palantir-026, EV-palantir-006]",
+        "영국 총리는 NHS 와의 £3.3억 소프트웨어 계약을 포함한 정부 계약에서 Palantir 를 빼라는 노동당 의원과 노조의 압박을 크게 받고 있고, Palantir 는 런던 경찰청 AI 계약 £5,000만을 막은 런던 시장과 법정에서 다투고 있다. [EV-palantir-039]",
+        "런던 시장 산하 경찰감독청(Mopac)은 조달 전략 미비를 '명백하고 중대한 절차 위반' 이라며 런던 경찰청의 2년 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 위법하게 막았다며 소송을 냈다. [EV-palantir-035]",
+        "영국 정부가 의료·국방 데이터 처리에서 Palantir 를 대신할 영국 업체를 찾고 있고, 내년 3월 계약 조항으로 관계를 앞당겨 재검토하며 Quantexa 등 서너 곳을 후보로 살핀다는 FT 인용 2차 보도가 있다. [EV-palantir-009]",
+        "영국 NHS 연합 데이터 플랫폼에 자기 건강 데이터를 넘기지 말라는 법적 이의 제기가 44,000건 넘게 접수됐다. [EV-palantir-007]",
+        "일부 봉인이 풀린 법원 문서는 ICE 가 감시 대상 시민의 사진·번호판 정보를 Palantir 소프트웨어로 만든 사건관리 데이터베이스에 쌓았다고 주장한다. [EV-palantir-010]",
+        "ICE 내부 이메일에 유권자 명부 자료를 Palantir 가 지원하는 ELITE 시스템에 넣는 협의가 적혀 있다는 보도가 있고, Palantir 는 유권자 명부 자료가 ELITE 에 들어간 적이 없다고 답했다. [EV-palantir-034]",
+        "CBS 인터뷰에서 진행자는 미나브 학교 공습에 Maven 의 AI 가 쓰였다는 Bloomberg 보도와 하원 민주당 의원 120명의 서한을 물었고, Palantir CTO 는 그 보도가 부정확하며 사람의 실수가 원인일 가능성이 높다고 답했다. [EV-palantir-037]",
+        "국무부의 표현의 자유·감시 대응 자문 프로그램 파트너 선정은 시민단체의 비판을 받았다. [EV-palantir-027]",
+        "영국 경찰 다섯 곳은 내무부 예산이 끊기자 2년 시범 사업을 끝냈고, NHS 트러스트 20곳 넘게가 대기자 명단 도구를 버렸으며, 주택·지역사회부는 2025-09 우크라이나 난민 주거 사업을 자체 시스템으로 옮겼다. [EV-palantir-021, EV-palantir-011, EV-palantir-028]",
+        "FT 는 영국 경찰 다섯 곳의 사업 종료를 영국 법 집행 핵심 공급자가 되려던 Palantir 에 큰 차질이라고 평했다. [EV-palantir-004]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "grade",
+          "score": null,
+          "inputs": {
+            "A": 1,
+            "H": -2
+          },
+          "evidence": [
+            "Palantir ⑤ 는 3 + 동맹 등급 +1 + 적대 등급 −2 로 2점이다.",
+            "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+            "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+            "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+            "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+            "동맹 등급 +1 은 Nvidia·SAP·Accenture·Armada 와의 공동 제공·공동개발 제휴와 미 정부 계약에서 나온다. 정부 계약은 상업적 약속이라 동맹으로 센다. ICE 는 비자 심사 추적 시스템의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 해 미 정부와의 관계가 넓어지고 있다.",
+            "지분이 걸린 동맹이 둘 이상이거나 경쟁사를 Palantir 플랫폼에 묶은 사실은 없어 +2 가 아니다. 영국 정부 고객 일부는 실제로 떠나 동맹에서 뺀다.",
+            "적대 등급 −2 는 구조형이다. 유럽 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했고, 샌프란시스코 간호사들이 ICE 와의 연계를 이유로 병원 등 공공기관의 관계 단절을 요구했으며, 영국에서는 노동당 의원과 노조가 총리에게 정부 계약에서 Palantir 를 빼라고 압박하고 있다. 특정 시장이나 거래 조건이 아니라 Palantir 가 하는 사업 자체를 부당하다고 표적으로 삼은 적대라 규칙 ⑤ 표의 구조형이다.",
+            "런던 시장 산하 경찰감독청(Mopac)은 조달 절차 위반을 들어 런던 경찰청의 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 계약을 막았다며 소송을 냈다. 차단 사유는 두 쪽 주장이 갈려 이 사건만으로 정당성 공격이라 확정하지 않으며, 시장 일부 차단으로 읽더라도 구조형 판정은 정당성 공격 자체로 선다.",
+            "영국에서는 경찰 다섯 곳의 시범 사업 종료, NHS 트러스트 20곳 넘는 도구 중단, 우크라이나 난민 주거 사업의 자체 시스템 전환으로 실제 이탈이 생겼다. 그 직접 사유는 예산 중단과 자체 시스템 구축으로 보도돼 정당성 공격이 이탈을 낳았다는 인과는 확인하지 못했으나, 구조형은 사업의 정당성 자체를 겨냥한 적대로 서고 이탈의 인과는 요건이 아니다.",
+            "영국 정부가 Palantir 와의 관계를 내년 3월 계약 조항으로 앞당겨 재검토하고 영국 업체 서너 곳을 대체 후보로 살핀다는 보도는 FT 를 옮긴 2차 보도이고 검토 단계라, 이탈 실측이 아니라 적대의 정황으로만 읽는다.",
+            "다발형은 서지 않는다. 정당성 공격은 유럽·영국·미국 여러 전선에서 함께 진행되지만 다발형은 최대 파트너와의 긴장도 요구한다. 최대 파트너인 미 정부의 매출은 2024년 $1.2B 에서 2025년 $1.9B 로 늘었고 ICE 는 경쟁 입찰 없이 Foundry 사용을 넓히고 있다. 하원 민주당 의원 120명이 미나브 공습의 AI 사용을 국방장관에게 따진 서한은 계약 당사자인 행정부가 아니라 의회 소수당의 문제 제기라 최대 파트너와의 긴장으로 세지 않는다. 영국의 연 매출 £4.27억은 미 정부 매출보다 작다.",
+            "프랑스·독일 정부가 Palantir 계약을 끊었다는 사실은 확정 근거에 없어 미확인이다.",
+            "⑧ 에서 센 미 정부 매출 집중과 Maven 모델 공급자 교체는 여기서 다시 세지 않는다. 같은 미 정부 관계를 ⑤ 에서는 동맹으로, ⑧ 에서는 의존으로 따로 센다.",
+            "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+          ],
+          "status": "new",
+          "reviewer": "claude (사용자 위임 2026-10-12)",
+          "reviewed_at": "2026-10-12",
+          "evidence_up": [
+            "Palantir 는 2026-06 Nvidia 와 소버린 환경에서 Nemotron 오픈 모델을 구동하는 엔진을 함께 내놓기로 했다. [EV-palantir-023]",
+            "SAP 와 Palantir 는 데이터 이전 도구를 함께 내는 전략적 제휴를 넓혔고 Accenture 가 첫 글로벌 전략 서비스 파트너로 참여했다. [EV-palantir-024]",
+            "Palantir 는 2026-10-01 Armada 를 첫 인증 모듈형 데이터센터 파트너로 정하고 소버린 AI 인프라를 함께 공급하기로 했다. [EV-palantir-008]",
+            "미 정부 고객 매출은 2025년 $1.9B 로 전년 $1.2B 에서 늘었다. [EV-palantir-018]",
+            "ICE 는 Palantir 에 $29.9M 규모 ImmigrationOS 구축 계약을 줬다. [EV-palantir-025]",
+            "ICE 는 비자 보안 프로그램 추적 시스템(VSPTS)의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 했다. [EV-palantir-036]"
+          ],
+          "evidence_down": [
+            "2026-09-28 유럽 여러 나라의 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했다. [EV-palantir-005]",
+            "샌프란시스코 간호사 1,500명이 ICE 와의 연계를 이유로 병원 등 공공기관이 Palantir 와 관계를 끊으라고 요구하며 '기술 파시즘 반대 행진' 을 벌였다. [EV-palantir-026, EV-palantir-006]",
+            "영국 총리는 NHS 와의 £3.3억 소프트웨어 계약을 포함한 정부 계약에서 Palantir 를 빼라는 노동당 의원과 노조의 압박을 크게 받고 있고, Palantir 는 런던 경찰청 AI 계약 £5,000만을 막은 런던 시장과 법정에서 다투고 있다. [EV-palantir-039]",
+            "런던 시장 산하 경찰감독청(Mopac)은 조달 전략 미비를 '명백하고 중대한 절차 위반' 이라며 런던 경찰청의 2년 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 위법하게 막았다며 소송을 냈다. [EV-palantir-035]",
+            "영국 정부가 의료·국방 데이터 처리에서 Palantir 를 대신할 영국 업체를 찾고 있고, 내년 3월 계약 조항으로 관계를 앞당겨 재검토하며 Quantexa 등 서너 곳을 후보로 살핀다는 FT 인용 2차 보도가 있다. [EV-palantir-009]",
+            "영국 NHS 연합 데이터 플랫폼에 자기 건강 데이터를 넘기지 말라는 법적 이의 제기가 44,000건 넘게 접수됐다. [EV-palantir-007]",
+            "일부 봉인이 풀린 법원 문서는 ICE 가 감시 대상 시민의 사진·번호판 정보를 Palantir 소프트웨어로 만든 사건관리 데이터베이스에 쌓았다고 주장한다. [EV-palantir-010]",
+            "ICE 내부 이메일에 유권자 명부 자료를 Palantir 가 지원하는 ELITE 시스템에 넣는 협의가 적혀 있다는 보도가 있고, Palantir 는 유권자 명부 자료가 ELITE 에 들어간 적이 없다고 답했다. [EV-palantir-034]",
+            "CBS 인터뷰에서 진행자는 미나브 학교 공습에 Maven 의 AI 가 쓰였다는 Bloomberg 보도와 하원 민주당 의원 120명의 서한을 물었고, Palantir CTO 는 그 보도가 부정확하며 사람의 실수가 원인일 가능성이 높다고 답했다. [EV-palantir-037]",
+            "국무부의 표현의 자유·감시 대응 자문 프로그램 파트너 선정은 시민단체의 비판을 받았다. [EV-palantir-027]",
+            "영국 경찰 다섯 곳은 내무부 예산이 끊기자 2년 시범 사업을 끝냈고, NHS 트러스트 20곳 넘게가 대기자 명단 도구를 버렸으며, 주택·지역사회부는 2025-09 우크라이나 난민 주거 사업을 자체 시스템으로 옮겼다. [EV-palantir-021, EV-palantir-011, EV-palantir-028]",
+            "FT 는 영국 경찰 다섯 곳의 사업 종료를 영국 법 집행 핵심 공급자가 되려던 Palantir 에 큰 차질이라고 평했다. [EV-palantir-004]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-palantir-023",
+                "EV-palantir-024",
+                "EV-palantir-008",
+                "EV-palantir-018",
+                "EV-palantir-025",
+                "EV-palantir-005",
+                "EV-palantir-007",
+                "EV-palantir-026",
+                "EV-palantir-010",
+                "EV-palantir-027",
+                "EV-palantir-021",
+                "EV-palantir-011",
+                "EV-palantir-028",
+                "EV-palantir-004",
+                "EV-palantir-006",
+                "EV-palantir-009"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-palantir-023",
+                "EV-palantir-024",
+                "EV-palantir-008",
+                "EV-palantir-018",
+                "EV-palantir-025",
+                "EV-palantir-036",
+                "EV-palantir-005",
+                "EV-palantir-026",
+                "EV-palantir-006",
+                "EV-palantir-039",
+                "EV-palantir-035",
+                "EV-palantir-009",
+                "EV-palantir-007",
+                "EV-palantir-010",
+                "EV-palantir-034",
+                "EV-palantir-037",
+                "EV-palantir-027",
+                "EV-palantir-021",
+                "EV-palantir-011",
+                "EV-palantir-028",
+                "EV-palantir-004",
+                "EV-palantir-038"
+              ]
+            }
+          ],
+          "evidence_ids": [
+            "EV-palantir-004",
+            "EV-palantir-005",
+            "EV-palantir-006",
+            "EV-palantir-007",
+            "EV-palantir-008",
+            "EV-palantir-009",
+            "EV-palantir-010",
+            "EV-palantir-011",
+            "EV-palantir-018",
+            "EV-palantir-021",
+            "EV-palantir-023",
+            "EV-palantir-024",
+            "EV-palantir-025",
+            "EV-palantir-026",
+            "EV-palantir-027",
+            "EV-palantir-028",
+            "EV-palantir-034",
+            "EV-palantir-035",
+            "EV-palantir-036",
+            "EV-palantir-037",
+            "EV-palantir-039"
+          ]
+        },
+        "after": {
+          "kind": "grade",
+          "score": null,
+          "inputs": {
+            "A": 1,
+            "H": -2
+          },
+          "evidence": [
+            "Palantir ⑤ 는 3 + 동맹 등급 +1 + 적대 등급 −2 로 2점이다.",
+            "동맹 등급은 내가 맺은 관계만 센다. 사 오는 관계(조달), 받은 투자, 같은 지배주주 아래 관계사, 공짜 사용자는 세지 않고, 지분·공동개발·재판매·수수료 분배가 걸린 관계 가운데 상대가 떠날 수 없는 것만 동맹으로 센다.",
+            "상대가 떠날 수 있는지는 계약 문구보다 실측으로 본다. 상대가 내 물량을 자기 대체품이나 다른 곳으로 옮기거나 지출을 줄였다는 실측이 있거나, 묶인 것 없이 이미 자기 대체품을 출하하고 있으면 뺀다. 지분·다년 약정·공동개발·플랫폼 필수성으로 묶여 있으면 세고, 해지 조항이나 출하 전 대체품 계획만으로는 빼지 않는다.",
+            "동맹 등급 +2 는 내가 지분을 건 동맹이 둘 이상이거나, 다른 시장에서 나와 겨루는 경쟁사가 내 매대·공정·플랫폼을 떠나지 못하는 조건으로 쓰고 있을 때만 준다.",
+            "적대 등급은 전선 수가 아니라 성격으로 센다. 규제기관·경쟁사의 소송과 조사, 벌금, 시장 일부 차단은 져도 본업 수요가 남는 비용형이다. 구조형은 규칙 ⑤ 표대로 주요 고객이 곧 경쟁자이거나 사업의 정당성 자체를 겨냥한 적대일 때다. 주요 고객이 곧 경쟁자라는 것은 주요 고객이 나에게서 사는 바로 그 제품의 대체품을 스스로 내놓고 물량을 옮기는 것이고, 주요 고객인지는 공개 제출본의 고객 집중 공시나 회사 1차 발표로만 확정한다. 사업의 정당성 자체를 겨냥한 적대는 특정 시장·거래 조건·개별 행위가 아니라 회사가 하는 사업 자체를 부당하다고 표적으로 삼는 적대이고, 그 적대로 고객이 실제로 떠났는지는 요건이 아니다. 다발형은 구조형이 둘 이상의 전선에서 동시에 진행되고 최대 파트너와도 긴장이 있을 때다.",
+            "동맹 등급 +1 은 Nvidia·SAP·Accenture·Armada 와의 공동 제공·공동개발 제휴와 미 정부 계약에서 나온다. 정부 계약은 상업적 약속이라 동맹으로 센다. ICE 는 비자 심사 추적 시스템의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 해 미 정부와의 관계가 넓어지고 있다.",
+            "지분이 걸린 동맹이 둘 이상이거나 경쟁사를 Palantir 플랫폼에 묶은 사실은 없어 +2 가 아니다. 영국 정부 고객 일부는 실제로 떠나 동맹에서 뺀다.",
+            "적대 등급 −2 는 구조형이다. 유럽 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했고, 샌프란시스코 간호사들이 ICE 와의 연계를 이유로 병원 등 공공기관의 관계 단절을 요구했으며, 영국에서는 노동당 의원과 노조가 총리에게 정부 계약에서 Palantir 를 빼라고 압박하고 있다. 특정 시장이나 거래 조건이 아니라 Palantir 가 하는 사업 자체를 부당하다고 표적으로 삼은 적대라 규칙 ⑤ 표의 구조형이다.",
+            "런던 시장 산하 경찰감독청(Mopac)은 조달 절차 위반을 들어 런던 경찰청의 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 계약을 막았다며 소송을 냈다. 차단 사유는 두 쪽 주장이 갈려 이 사건만으로 정당성 공격이라 확정하지 않으며, 시장 일부 차단으로 읽더라도 구조형 판정은 정당성 공격 자체로 선다.",
+            "영국에서는 경찰 다섯 곳의 시범 사업 종료, NHS 트러스트 20곳 넘는 도구 중단, 우크라이나 난민 주거 사업의 자체 시스템 전환으로 실제 이탈이 생겼다. 그 직접 사유는 예산 중단과 자체 시스템 구축으로 보도돼 정당성 공격이 이탈을 낳았다는 인과는 확인하지 못했으나, 구조형은 사업의 정당성 자체를 겨냥한 적대로 서고 이탈의 인과는 요건이 아니다.",
+            "영국 정부가 Palantir 와의 관계를 내년 3월 계약 조항으로 앞당겨 재검토하고 영국 업체 서너 곳을 대체 후보로 살핀다는 보도는 FT 를 옮긴 2차 보도이고 검토 단계라, 이탈 실측이 아니라 적대의 정황으로만 읽는다.",
+            "다발형은 서지 않는다. 정당성 공격은 유럽·영국·미국 여러 전선에서 함께 진행되지만 다발형은 최대 파트너와의 긴장도 요구한다. 최대 파트너인 미 정부의 매출은 2024년 $1.2B 에서 2025년 $1.9B 로 늘었고 ICE 는 경쟁 입찰 없이 Foundry 사용을 넓히고 있다. 하원 민주당 의원 120명이 미나브 공습의 AI 사용을 국방장관에게 따진 서한은 계약 당사자인 행정부가 아니라 의회 소수당의 문제 제기라 최대 파트너와의 긴장으로 세지 않는다. 영국의 연 매출 £4.27억은 미 정부 매출보다 작다.",
+            "FT 를 인용한 SFG Media 기사는 프랑스·독일이 일부 Palantir 계약을 끊거나 사용을 제한했다고 적지만(2차 보도), 계약 이름과 시점이 없어 어느 계약인지는 확인하지 못했다. 이 보도를 써도 다발형은 최대 파트너인 미 정부와의 긴장을 따로 요구하므로 적대 등급은 구조형에 머문다.",
+            "⑧ 에서 센 미 정부 매출 집중과 Maven 모델 공급자 교체는 여기서 다시 세지 않는다. 같은 미 정부 관계를 ⑤ 에서는 동맹으로, ⑧ 에서는 의존으로 따로 센다.",
+            "⑤ 는 회사 전체의 동맹과 적대를 세며 AI 밖 사업의 관계에도 같은 잣대를 댄다."
+          ],
+          "evidence_up": [
+            "Palantir 는 2026-06 Nvidia 와 소버린 환경에서 Nemotron 오픈 모델을 구동하는 엔진을 함께 내놓기로 했다. [EV-palantir-023]",
+            "SAP 와 Palantir 는 데이터 이전 도구를 함께 내는 전략적 제휴를 넓혔고 Accenture 가 첫 글로벌 전략 서비스 파트너로 참여했다. [EV-palantir-024]",
+            "Palantir 는 2026-10-01 Armada 를 첫 인증 모듈형 데이터센터 파트너로 정하고 소버린 AI 인프라를 함께 공급하기로 했다. [EV-palantir-008]",
+            "미 정부 고객 매출은 2025년 $1.9B 로 전년 $1.2B 에서 늘었다. [EV-palantir-018]",
+            "ICE 는 Palantir 에 $29.9M 규모 ImmigrationOS 구축 계약을 줬다. [EV-palantir-025]",
+            "ICE 는 비자 보안 프로그램 추적 시스템(VSPTS)의 경쟁 재입찰을 취소하고 운영을 Palantir Foundry 로 옮기기로 했다. [EV-palantir-036]"
+          ],
+          "evidence_down": [
+            "2026-09-28 유럽 여러 나라의 노조·인권단체 연합이 Palantir 를 민주주의와 시민 자유에 대한 위협이라 부르며 각국 정부에 관계를 끊으라고 요구했다. [EV-palantir-005]",
+            "샌프란시스코 간호사 1,500명이 ICE 와의 연계를 이유로 병원 등 공공기관이 Palantir 와 관계를 끊으라고 요구하며 '기술 파시즘 반대 행진' 을 벌였다. [EV-palantir-026, EV-palantir-006]",
+            "영국 총리는 NHS 와의 £3.3억 소프트웨어 계약을 포함한 정부 계약에서 Palantir 를 빼라는 노동당 의원과 노조의 압박을 크게 받고 있고, Palantir 는 런던 경찰청 AI 계약 £5,000만을 막은 런던 시장과 법정에서 다투고 있다. [EV-palantir-039]",
+            "런던 시장 산하 경찰감독청(Mopac)은 조달 전략 미비를 '명백하고 중대한 절차 위반' 이라며 런던 경찰청의 2년 Palantir 계약을 막았고, Palantir 는 Mopac 이 회사의 '가치와 윤리' 를 고려해 위법하게 막았다며 소송을 냈다. [EV-palantir-035]",
+            "영국 정부가 의료·국방 데이터 처리에서 Palantir 를 대신할 영국 업체를 찾고 있고, 내년 3월 계약 조항으로 관계를 앞당겨 재검토하며 Quantexa 등 서너 곳을 후보로 살핀다는 FT 인용 2차 보도가 있다. [EV-palantir-009]",
+            "영국 NHS 연합 데이터 플랫폼에 자기 건강 데이터를 넘기지 말라는 법적 이의 제기가 44,000건 넘게 접수됐다. [EV-palantir-007]",
+            "일부 봉인이 풀린 법원 문서는 ICE 가 감시 대상 시민의 사진·번호판 정보를 Palantir 소프트웨어로 만든 사건관리 데이터베이스에 쌓았다고 주장한다. [EV-palantir-010]",
+            "ICE 내부 이메일에 유권자 명부 자료를 Palantir 가 지원하는 ELITE 시스템에 넣는 협의가 적혀 있다는 보도가 있고, Palantir 는 유권자 명부 자료가 ELITE 에 들어간 적이 없다고 답했다. [EV-palantir-034]",
+            "CBS 인터뷰에서 진행자는 미나브 학교 공습에 Maven 의 AI 가 쓰였다는 Bloomberg 보도와 하원 민주당 의원 120명의 서한을 물었고, Palantir CTO 는 그 보도가 부정확하며 사람의 실수가 원인일 가능성이 높다고 답했다. [EV-palantir-037]",
+            "국무부의 표현의 자유·감시 대응 자문 프로그램 파트너 선정은 시민단체의 비판을 받았다. [EV-palantir-027]",
+            "영국 경찰 다섯 곳은 내무부 예산이 끊기자 2년 시범 사업을 끝냈고, NHS 트러스트 20곳 넘게가 대기자 명단 도구를 버렸으며, 주택·지역사회부는 2025-09 우크라이나 난민 주거 사업을 자체 시스템으로 옮겼다. [EV-palantir-021, EV-palantir-011, EV-palantir-028]",
+            "FT 는 영국 경찰 다섯 곳의 사업 종료를 영국 법 집행 핵심 공급자가 되려던 Palantir 에 큰 차질이라고 평했다. [EV-palantir-004]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-palantir-023",
+                "EV-palantir-024",
+                "EV-palantir-008",
+                "EV-palantir-018",
+                "EV-palantir-025",
+                "EV-palantir-005",
+                "EV-palantir-007",
+                "EV-palantir-026",
+                "EV-palantir-010",
+                "EV-palantir-027",
+                "EV-palantir-021",
+                "EV-palantir-011",
+                "EV-palantir-028",
+                "EV-palantir-004",
+                "EV-palantir-006",
+                "EV-palantir-009"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-palantir-023",
+                "EV-palantir-024",
+                "EV-palantir-008",
+                "EV-palantir-018",
+                "EV-palantir-025",
+                "EV-palantir-036",
+                "EV-palantir-005",
+                "EV-palantir-026",
+                "EV-palantir-006",
+                "EV-palantir-039",
+                "EV-palantir-035",
+                "EV-palantir-009",
+                "EV-palantir-007",
+                "EV-palantir-010",
+                "EV-palantir-034",
+                "EV-palantir-037",
+                "EV-palantir-027",
+                "EV-palantir-021",
+                "EV-palantir-011",
+                "EV-palantir-028",
+                "EV-palantir-004",
+                "EV-palantir-038"
+              ]
+            }
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-116",
+      "company_id": "microsoft",
+      "factor": "F7",
+      "changes": {
+        "funding_dependent_share": "large"
+      },
+      "evidence_after": [
+        "마이크로소프트 ⑦ 은 조달 의존 고객 비중 큼, 내 돈이 돌아옴 칸이라 −2 이며, 비중이 큰 쪽에서는 세로축이 점수를 가르지 않는다.",
+        "가로축은 조달 의존 고객(자기 영업이익이 아니라 투자 유치나 차입으로 대금을 내는 고객)의 연간 약정과 실제 매출 몫을 회사 전체의 최근 1년 매출에 견주어 판정하고, 규칙 ⑦ 에 따라 큼·작음에 수치 임계를 두지 않는다. 조달 의존 고객이 확인되고 그 몫을 작게 좁힐 실측이 없으면 큼, 확인된 몫이 매출에 견줘 작거나 조달 의존 고객이 확인되지 않으면 작음이며, 열네 회사에 같은 잣대를 댄다.",
+        "연간 약정은 계약 대금을 계약 기간으로 편 값이다. 기간이 공시되지 않은 약정은 한 해에 다 넣은 상한으로 견주고, 고객 약정이 공시되지 않은 회사는 공시된 실제 매출 몫으로 잰다. 몫을 작게 좁히는 사실은 공개 제출본의 공시나 회사 1차 발표만 쓰고, 넓히는 쪽에는 발표된 약정을 2차 보도로도 쓰되 근거 등급을 적는다(규칙 2.1).",
+        "세로축은 내가 투자·대출·보증으로 고객(또는 고객을 위한 합작법인)에 넣은 돈이 있고 그 고객이 내게 대금을 내는 구조가 실행된 계약이나 공시로 확인될 때 돌아옴이다. 받은 투자, 내 설비 투자, 관계사라는 사실, 서로 사고파는 대금 거래만으로는 돌아옴으로 세지 않는다.",
+        "조달 의존 고객은 OpenAI 와 Anthropic 이다. OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했고(회사 1차) 2026년 2분기 영업손실이 $12.3B 라는 2차 보도(WSJ 인용)가 있어 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 OpenAI 를 조달 의존 고객으로 읽는다. Anthropic 이 2026년 2분기에 작은 영업흑자를 냈다는 2차 보도가 있으나, 2026-05 시리즈 H 로 $65B 를 조달했고(회사 1차) Broadcom 이 받친 $60B 차입이 설비 자금으로 모이고 있어(2차 보도) 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 Anthropic 을 조달 의존 고객으로 읽는다.",
+        "10-K 가 공시한 OpenAI 상업 거래 매출(수익 배분 포함) $24.1B 는 같은 회계연도(2025-07-01~2026-06-30) 매출 $331.8B 의 7.3% 이지만, 이미 인식한 매출이라 앞으로 대금을 낼 약정의 몫을 좁히지 못한다.",
+        "OpenAI 는 Azure 서비스 $250B 를 추가로 사기로 계약했고(회사 1차 발표) 기간은 밝혀지지 않았다. 기간이 공시되지 않은 약정은 한 해에 다 넣은 상한으로 견주므로 Anthropic 의 Azure 컴퓨트 $30B 구매 약정(회사 1차 발표, 기간 미공시)을 더한 상한은 매출의 84.4% 이고, 이 몫을 작게 좁힐 공시나 회사 1차 발표가 없어 가로축은 큼이다.",
+        "OpenAI 의 Azure 추가 약정이 2026-04-27 개정 계약 뒤에도 같은 금액으로 남아 있는지와 연도별 이행 일정은 확인하지 못했다(미확인). 기간이 공시되거나 약정이 줄었다는 회사 1차 자료가 나오면 가로축을 다시 잰다.",
+        "세로축은 돌아옴이다. 마이크로소프트는 OpenAI 투자 자금 약정 $13.0B 가운데 $11.9B 를 집행했고(10-K), OpenAI 는 마이크로소프트에 상업 거래 대금을 내는 고객이다."
+      ],
+      "reason": "회사 1차 발표인 OpenAI 의 Azure $250B 추가 구매 계약을 분자에 넣어 가로축을 큼으로 고친다(규칙 일관성 리뷰 N1, Q03)",
+      "evidence_ids": [
+        "EV-anthropic-039",
+        "EV-anthropic-063",
+        "EV-anthropic-065",
+        "EV-microsoft-014",
+        "EV-microsoft-015",
+        "EV-microsoft-033",
+        "EV-microsoft-045",
+        "EV-openai-034",
+        "EV-openai-066",
+        "EV-spacex-xai-043"
+      ],
+      "before": {
+        "kind": "matrix",
+        "score": null,
+        "inputs": {
+          "funding_dependent_share": "small",
+          "own_money_returns": "yes"
+        },
+        "evidence": [
+          "마이크로소프트 ⑦ 은 조달 의존 고객 비중 작음, 내 돈이 돌아옴 칸이라 -1 이다.",
+          "가로축은 조달 의존 고객(자기 영업이익이 아니라 투자 유치나 차입으로 대금을 내는 고객)의 연간 약정과 실제 매출 몫을 회사 전체의 최근 1년 매출에 견주어 판정하고, 규칙 ⑦ 에 따라 큼·작음에 수치 임계를 두지 않는다. 조달 의존 고객이 확인되고 그 몫을 작게 좁힐 실측이 없으면 큼, 확인된 몫이 매출에 견줘 작거나 조달 의존 고객이 확인되지 않으면 작음이며, 열네 회사에 같은 잣대를 댄다.",
+          "연간 약정은 계약 대금을 계약 기간으로 편 값이다. 기간이 공시되지 않은 약정은 한 해에 다 넣은 상한으로 견주고, 고객 약정이 공시되지 않은 회사는 공시된 실제 매출 몫으로 잰다. 몫을 작게 좁히는 사실은 공개 제출본의 공시나 회사 1차 발표만 쓰고, 넓히는 쪽에는 발표된 약정을 2차 보도로도 쓰되 근거 등급을 적는다(규칙 2.1).",
+          "세로축은 내가 투자·대출·보증으로 고객(또는 고객을 위한 합작법인)에 넣은 돈이 있고 그 고객이 내게 대금을 내는 구조가 실행된 계약이나 공시로 확인될 때 돌아옴이다. 받은 투자, 내 설비 투자, 관계사라는 사실, 서로 사고파는 대금 거래만으로는 돌아옴으로 세지 않는다.",
+          "조달 의존 고객은 OpenAI 와 Anthropic 이다. OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했고(회사 1차) 2026년 2분기 영업손실이 $12.3B 라는 2차 보도(WSJ 인용)가 있어 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 OpenAI 를 조달 의존 고객으로 읽는다. Anthropic 이 2026년 2분기에 작은 영업흑자를 냈다는 2차 보도가 있으나, 2026-05 시리즈 H 로 $65B 를 조달했고(회사 1차) Broadcom 이 받친 $60B 차입이 설비 자금으로 모이고 있어(2차 보도) 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 Anthropic 을 조달 의존 고객으로 읽는다.",
+          "마이크로소프트의 비율은 10-K 가 공시한 OpenAI 상업 거래 매출(수익 배분 포함) $24.1B 를 같은 회계연도(2025-07-01~2026-06-30) 매출 $331.8B 로 나눈 7.3% 다. OpenAI 의 Azure 약정은 금액과 기간이 이 실행의 확정 근거에 없어 공시된 실제 매출로 쟀다.",
+          "Anthropic 의 Azure 컴퓨트 $30B 구매 약정(회사 1차 발표)은 기간이 적혀 있지 않아 한 해에 다 넣은 상한으로 견주면 두 회사 합계가 매출의 16.3% 다. 이 상한으로도 확인된 조달 의존 고객의 약정이 매출에 견줘 작아 가로축은 작음이다.",
+          "OpenAI 가 Azure 를 추가로 사기로 한 약정의 금액·기간은 원문을 이 실행의 확정 근거로 갖추지 못해 분자에 넣지 않았다(미확인).",
+          "세로축은 돌아옴이다. 마이크로소프트는 OpenAI 투자 자금 약정 $13.0B 가운데 $11.9B 를 집행했고(10-K), OpenAI 는 마이크로소프트에 상업 거래 대금을 내는 고객이다."
+        ],
+        "evidence_up": [
+          "2024~2026 회계연도에 미국을 뺀 개별 고객이나 국가가 매출의 10% 를 넘은 적이 없다. [EV-microsoft-033]",
+          "Anthropic 이 2026년 2분기에 작은 영업흑자로 돌아섰다는 2차 보도(WSJ 인용)가 있다. [EV-anthropic-065]"
+        ],
+        "evidence_down": [
+          "2026 회계연도 OpenAI 상업 거래 매출(수익 배분 포함)은 $24.1B 이고 2026-06-30 OpenAI 매출채권은 $6.0B 다. [EV-microsoft-014]",
+          "마이크로소프트는 OpenAI 투자에 자금 약정 $13.0B 를 했고 2026-06-30 까지 $11.9B 를 집행해 전환 기준 약 25% 지분을 지분법으로 갖는다. [EV-microsoft-014]",
+          "Anthropic 은 Azure 컴퓨트 $30B 를 사고 최대 1GW 를 추가로 계약하기로 약정했다. [EV-microsoft-015]",
+          "OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했다. [EV-openai-034]",
+          "OpenAI 의 2026년 2분기 매출은 $6.7B, 영업손실은 $12.3B 라는 2차 보도(WSJ 인용)가 있다. [EV-openai-066]",
+          "Anthropic 은 2026-05 시리즈 H 로 $65B 를 조달했다. [EV-anthropic-039]",
+          "Broadcom 이 받친 $60B 차입이 Anthropic 인프라 구축 자금으로 모이고 있다(2차 보도). [EV-anthropic-063]",
+          "유출된 상장 신청서를 인용해 Anthropic 이 2025년 순손실 $42B 를 냈고 클라우드·컴퓨팅·인프라에 $518B 를 쓸 계획이라는 보도가 있다. [EV-spacex-xai-043]"
+        ],
+        "reconfirmed": [
+          {
+            "at": "2026-10-08",
+            "by": "claude (사용자 위임 2026-10-08)",
+            "evidence_ids": [
+              "EV-microsoft-014",
+              "EV-microsoft-015",
+              "EV-microsoft-019",
+              "EV-microsoft-033"
+            ]
+          },
+          {
+            "at": "2026-10-12",
+            "by": "claude (사용자 위임 2026-10-12)",
+            "evidence_ids": [
+              "EV-microsoft-033",
+              "EV-anthropic-065",
+              "EV-microsoft-014",
+              "EV-microsoft-015",
+              "EV-openai-034",
+              "EV-openai-066",
+              "EV-anthropic-039",
+              "EV-anthropic-063",
+              "EV-spacex-xai-043",
+              "EV-openai-040",
+              "EV-microsoft-019"
+            ]
+          }
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "2024~2026 회계연도에 미국을 뺀 개별 고객이나 국가가 매출의 10% 를 넘은 적이 없다. [EV-microsoft-033]",
+        "Anthropic 이 2026년 2분기에 작은 영업흑자로 돌아섰다는 2차 보도(WSJ 인용)가 있다. [EV-anthropic-065]"
+      ],
+      "evidence_down_after": [
+        "2026 회계연도 OpenAI 상업 거래 매출(수익 배분 포함)은 $24.1B 이고 2026-06-30 OpenAI 매출채권은 $6.0B 다. [EV-microsoft-014]",
+        "마이크로소프트는 OpenAI 투자에 자금 약정 $13.0B 를 했고 2026-06-30 까지 $11.9B 를 집행해 전환 기준 약 25% 지분을 지분법으로 갖는다. [EV-microsoft-014]",
+        "Anthropic 은 Azure 컴퓨트 $30B 를 사고 최대 1GW 를 추가로 계약하기로 약정했다. [EV-microsoft-015]",
+        "OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했다. [EV-openai-034]",
+        "OpenAI 의 2026년 2분기 매출은 $6.7B, 영업손실은 $12.3B 라는 2차 보도(WSJ 인용)가 있다. [EV-openai-066]",
+        "Anthropic 은 2026-05 시리즈 H 로 $65B 를 조달했다. [EV-anthropic-039]",
+        "Broadcom 이 받친 $60B 차입이 Anthropic 인프라 구축 자금으로 모이고 있다(2차 보도). [EV-anthropic-063]",
+        "유출된 상장 신청서를 인용해 Anthropic 이 2025년 순손실 $42B 를 냈고 클라우드·컴퓨팅·인프라에 $518B 를 쓸 계획이라는 보도가 있다. [EV-spacex-xai-043]",
+        "OpenAI 는 Azure 서비스 $250B 를 추가로 사기로 계약했고 기간은 밝히지 않았다. [EV-microsoft-045]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "matrix",
+          "score": null,
+          "inputs": {
+            "funding_dependent_share": "small",
+            "own_money_returns": "yes"
+          },
+          "evidence": [
+            "마이크로소프트 ⑦ 은 조달 의존 고객 비중 작음, 내 돈이 돌아옴 칸이라 -1 이다.",
+            "가로축은 조달 의존 고객(자기 영업이익이 아니라 투자 유치나 차입으로 대금을 내는 고객)의 연간 약정과 실제 매출 몫을 회사 전체의 최근 1년 매출에 견주어 판정하고, 규칙 ⑦ 에 따라 큼·작음에 수치 임계를 두지 않는다. 조달 의존 고객이 확인되고 그 몫을 작게 좁힐 실측이 없으면 큼, 확인된 몫이 매출에 견줘 작거나 조달 의존 고객이 확인되지 않으면 작음이며, 열네 회사에 같은 잣대를 댄다.",
+            "연간 약정은 계약 대금을 계약 기간으로 편 값이다. 기간이 공시되지 않은 약정은 한 해에 다 넣은 상한으로 견주고, 고객 약정이 공시되지 않은 회사는 공시된 실제 매출 몫으로 잰다. 몫을 작게 좁히는 사실은 공개 제출본의 공시나 회사 1차 발표만 쓰고, 넓히는 쪽에는 발표된 약정을 2차 보도로도 쓰되 근거 등급을 적는다(규칙 2.1).",
+            "세로축은 내가 투자·대출·보증으로 고객(또는 고객을 위한 합작법인)에 넣은 돈이 있고 그 고객이 내게 대금을 내는 구조가 실행된 계약이나 공시로 확인될 때 돌아옴이다. 받은 투자, 내 설비 투자, 관계사라는 사실, 서로 사고파는 대금 거래만으로는 돌아옴으로 세지 않는다.",
+            "조달 의존 고객은 OpenAI 와 Anthropic 이다. OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했고(회사 1차) 2026년 2분기 영업손실이 $12.3B 라는 2차 보도(WSJ 인용)가 있어 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 OpenAI 를 조달 의존 고객으로 읽는다. Anthropic 이 2026년 2분기에 작은 영업흑자를 냈다는 2차 보도가 있으나, 2026-05 시리즈 H 로 $65B 를 조달했고(회사 1차) Broadcom 이 받친 $60B 차입이 설비 자금으로 모이고 있어(2차 보도) 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 Anthropic 을 조달 의존 고객으로 읽는다.",
+            "마이크로소프트의 비율은 10-K 가 공시한 OpenAI 상업 거래 매출(수익 배분 포함) $24.1B 를 같은 회계연도(2025-07-01~2026-06-30) 매출 $331.8B 로 나눈 7.3% 다. OpenAI 의 Azure 약정은 금액과 기간이 이 실행의 확정 근거에 없어 공시된 실제 매출로 쟀다.",
+            "Anthropic 의 Azure 컴퓨트 $30B 구매 약정(회사 1차 발표)은 기간이 적혀 있지 않아 한 해에 다 넣은 상한으로 견주면 두 회사 합계가 매출의 16.3% 다. 이 상한으로도 확인된 조달 의존 고객의 약정이 매출에 견줘 작아 가로축은 작음이다.",
+            "OpenAI 가 Azure 를 추가로 사기로 한 약정의 금액·기간은 원문을 이 실행의 확정 근거로 갖추지 못해 분자에 넣지 않았다(미확인).",
+            "세로축은 돌아옴이다. 마이크로소프트는 OpenAI 투자 자금 약정 $13.0B 가운데 $11.9B 를 집행했고(10-K), OpenAI 는 마이크로소프트에 상업 거래 대금을 내는 고객이다."
+          ],
+          "status": "new",
+          "reviewer": "claude (사용자 위임 2026-10-12)",
+          "reviewed_at": "2026-10-12",
+          "evidence_up": [
+            "2024~2026 회계연도에 미국을 뺀 개별 고객이나 국가가 매출의 10% 를 넘은 적이 없다. [EV-microsoft-033]",
+            "Anthropic 이 2026년 2분기에 작은 영업흑자로 돌아섰다는 2차 보도(WSJ 인용)가 있다. [EV-anthropic-065]"
+          ],
+          "evidence_down": [
+            "2026 회계연도 OpenAI 상업 거래 매출(수익 배분 포함)은 $24.1B 이고 2026-06-30 OpenAI 매출채권은 $6.0B 다. [EV-microsoft-014]",
+            "마이크로소프트는 OpenAI 투자에 자금 약정 $13.0B 를 했고 2026-06-30 까지 $11.9B 를 집행해 전환 기준 약 25% 지분을 지분법으로 갖는다. [EV-microsoft-014]",
+            "Anthropic 은 Azure 컴퓨트 $30B 를 사고 최대 1GW 를 추가로 계약하기로 약정했다. [EV-microsoft-015]",
+            "OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했다. [EV-openai-034]",
+            "OpenAI 의 2026년 2분기 매출은 $6.7B, 영업손실은 $12.3B 라는 2차 보도(WSJ 인용)가 있다. [EV-openai-066]",
+            "Anthropic 은 2026-05 시리즈 H 로 $65B 를 조달했다. [EV-anthropic-039]",
+            "Broadcom 이 받친 $60B 차입이 Anthropic 인프라 구축 자금으로 모이고 있다(2차 보도). [EV-anthropic-063]",
+            "유출된 상장 신청서를 인용해 Anthropic 이 2025년 순손실 $42B 를 냈고 클라우드·컴퓨팅·인프라에 $518B 를 쓸 계획이라는 보도가 있다. [EV-spacex-xai-043]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-microsoft-014",
+                "EV-microsoft-015",
+                "EV-microsoft-019",
+                "EV-microsoft-033"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-microsoft-033",
+                "EV-anthropic-065",
+                "EV-microsoft-014",
+                "EV-microsoft-015",
+                "EV-openai-034",
+                "EV-openai-066",
+                "EV-anthropic-039",
+                "EV-anthropic-063",
+                "EV-spacex-xai-043",
+                "EV-openai-040",
+                "EV-microsoft-019"
+              ]
+            }
+          ],
+          "evidence_ids": [
+            "EV-anthropic-039",
+            "EV-anthropic-063",
+            "EV-anthropic-065",
+            "EV-microsoft-014",
+            "EV-microsoft-015",
+            "EV-microsoft-033",
+            "EV-openai-034",
+            "EV-openai-040",
+            "EV-openai-066",
+            "EV-spacex-xai-043"
+          ]
+        },
+        "after": {
+          "kind": "matrix",
+          "score": null,
+          "inputs": {
+            "funding_dependent_share": "large",
+            "own_money_returns": "yes"
+          },
+          "evidence": [
+            "마이크로소프트 ⑦ 은 조달 의존 고객 비중 큼, 내 돈이 돌아옴 칸이라 −2 이며, 비중이 큰 쪽에서는 세로축이 점수를 가르지 않는다.",
+            "가로축은 조달 의존 고객(자기 영업이익이 아니라 투자 유치나 차입으로 대금을 내는 고객)의 연간 약정과 실제 매출 몫을 회사 전체의 최근 1년 매출에 견주어 판정하고, 규칙 ⑦ 에 따라 큼·작음에 수치 임계를 두지 않는다. 조달 의존 고객이 확인되고 그 몫을 작게 좁힐 실측이 없으면 큼, 확인된 몫이 매출에 견줘 작거나 조달 의존 고객이 확인되지 않으면 작음이며, 열네 회사에 같은 잣대를 댄다.",
+            "연간 약정은 계약 대금을 계약 기간으로 편 값이다. 기간이 공시되지 않은 약정은 한 해에 다 넣은 상한으로 견주고, 고객 약정이 공시되지 않은 회사는 공시된 실제 매출 몫으로 잰다. 몫을 작게 좁히는 사실은 공개 제출본의 공시나 회사 1차 발표만 쓰고, 넓히는 쪽에는 발표된 약정을 2차 보도로도 쓰되 근거 등급을 적는다(규칙 2.1).",
+            "세로축은 내가 투자·대출·보증으로 고객(또는 고객을 위한 합작법인)에 넣은 돈이 있고 그 고객이 내게 대금을 내는 구조가 실행된 계약이나 공시로 확인될 때 돌아옴이다. 받은 투자, 내 설비 투자, 관계사라는 사실, 서로 사고파는 대금 거래만으로는 돌아옴으로 세지 않는다.",
+            "조달 의존 고객은 OpenAI 와 Anthropic 이다. OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했고(회사 1차) 2026년 2분기 영업손실이 $12.3B 라는 2차 보도(WSJ 인용)가 있어 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 OpenAI 를 조달 의존 고객으로 읽는다. Anthropic 이 2026년 2분기에 작은 영업흑자를 냈다는 2차 보도가 있으나, 2026-05 시리즈 H 로 $65B 를 조달했고(회사 1차) Broadcom 이 받친 $60B 차입이 설비 자금으로 모이고 있어(2차 보도) 클라우드·컴퓨트 대금의 원천은 투자 유치와 차입이다. 그래서 Anthropic 을 조달 의존 고객으로 읽는다.",
+            "10-K 가 공시한 OpenAI 상업 거래 매출(수익 배분 포함) $24.1B 는 같은 회계연도(2025-07-01~2026-06-30) 매출 $331.8B 의 7.3% 이지만, 이미 인식한 매출이라 앞으로 대금을 낼 약정의 몫을 좁히지 못한다.",
+            "OpenAI 는 Azure 서비스 $250B 를 추가로 사기로 계약했고(회사 1차 발표) 기간은 밝혀지지 않았다. 기간이 공시되지 않은 약정은 한 해에 다 넣은 상한으로 견주므로 Anthropic 의 Azure 컴퓨트 $30B 구매 약정(회사 1차 발표, 기간 미공시)을 더한 상한은 매출의 84.4% 이고, 이 몫을 작게 좁힐 공시나 회사 1차 발표가 없어 가로축은 큼이다.",
+            "OpenAI 의 Azure 추가 약정이 2026-04-27 개정 계약 뒤에도 같은 금액으로 남아 있는지와 연도별 이행 일정은 확인하지 못했다(미확인). 기간이 공시되거나 약정이 줄었다는 회사 1차 자료가 나오면 가로축을 다시 잰다.",
+            "세로축은 돌아옴이다. 마이크로소프트는 OpenAI 투자 자금 약정 $13.0B 가운데 $11.9B 를 집행했고(10-K), OpenAI 는 마이크로소프트에 상업 거래 대금을 내는 고객이다."
+          ],
+          "evidence_up": [
+            "2024~2026 회계연도에 미국을 뺀 개별 고객이나 국가가 매출의 10% 를 넘은 적이 없다. [EV-microsoft-033]",
+            "Anthropic 이 2026년 2분기에 작은 영업흑자로 돌아섰다는 2차 보도(WSJ 인용)가 있다. [EV-anthropic-065]"
+          ],
+          "evidence_down": [
+            "2026 회계연도 OpenAI 상업 거래 매출(수익 배분 포함)은 $24.1B 이고 2026-06-30 OpenAI 매출채권은 $6.0B 다. [EV-microsoft-014]",
+            "마이크로소프트는 OpenAI 투자에 자금 약정 $13.0B 를 했고 2026-06-30 까지 $11.9B 를 집행해 전환 기준 약 25% 지분을 지분법으로 갖는다. [EV-microsoft-014]",
+            "Anthropic 은 Azure 컴퓨트 $30B 를 사고 최대 1GW 를 추가로 계약하기로 약정했다. [EV-microsoft-015]",
+            "OpenAI 는 2026-03-31 약정 자본 $122B 를 조달했다. [EV-openai-034]",
+            "OpenAI 의 2026년 2분기 매출은 $6.7B, 영업손실은 $12.3B 라는 2차 보도(WSJ 인용)가 있다. [EV-openai-066]",
+            "Anthropic 은 2026-05 시리즈 H 로 $65B 를 조달했다. [EV-anthropic-039]",
+            "Broadcom 이 받친 $60B 차입이 Anthropic 인프라 구축 자금으로 모이고 있다(2차 보도). [EV-anthropic-063]",
+            "유출된 상장 신청서를 인용해 Anthropic 이 2025년 순손실 $42B 를 냈고 클라우드·컴퓨팅·인프라에 $518B 를 쓸 계획이라는 보도가 있다. [EV-spacex-xai-043]",
+            "OpenAI 는 Azure 서비스 $250B 를 추가로 사기로 계약했고 기간은 밝히지 않았다. [EV-microsoft-045]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-microsoft-014",
+                "EV-microsoft-015",
+                "EV-microsoft-019",
+                "EV-microsoft-033"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-microsoft-033",
+                "EV-anthropic-065",
+                "EV-microsoft-014",
+                "EV-microsoft-015",
+                "EV-openai-034",
+                "EV-openai-066",
+                "EV-anthropic-039",
+                "EV-anthropic-063",
+                "EV-spacex-xai-043",
+                "EV-openai-040",
+                "EV-microsoft-019"
+              ]
+            }
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-117",
+      "company_id": "alphabet",
+      "factor": "F8",
+      "changes": {
+        "score": -3
+      },
+      "evidence_after": [
+        "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+        "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+        "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+        "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+        "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+        "알파벳 ⑧ 은 −3 이고 점수를 정한 축은 약정 축, 곧 아직 개시되지 않은 데이터센터 리스와 구매 약정·기타 계약상 의무를 더한 약 $9,020억이 최근 1년 매출의 약 2.02배인 것이다.",
+        "약정 축은 −3 이다. 2026-06-30 10-Q 경영진 논의의 구매 약정·기타 계약상 의무 $811.0B(1년 안에 끝나는 $200.7B 포함, 장기 공급 계약과 열린 구매 주문)와 주석 4 의 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $9,020억은 최근 1년 매출 $4,458.66억(2025년 $4,028.36억 − 전년 상반기 $1,866.62억 + 올해 상반기 $2,296.92억)의 약 2.02배다(계산).",
+        "구매 약정의 범위는 마이크로소프트(열린 구매 주문과 인수 의무를 담은 구매 약정)·메타(단기·장기 해지 불가 약정)와 같게 단기 계약과 열린 구매 주문까지 넣은 총액이다. 주석 10 의 고정·보장된 장기 약정 $707.0B 만 쓰면 약 1.79배로 −2 이고, 총액 기준 2.02배는 2배 경계 바로 위다(계산).",
+        "공급 축은 −1 이다. 8세대 TPU 를 TSMC 에서 만들고 TSMC 생산이 대만에 몰려 있어 끊기면 AI 용량 증설이 멈추지만, 기존 서비스는 이미 깔린 설비로 이어지고 인프라·모델·유통 계층을 모두 자체 보유한다. Gemini agent 가 경쟁사 Anthropic 의 Claude 모델을 함께 돌리지만 작업마다 고르는 선택지 가운데 하나라 공급 축을 무겁게 하지 않는다.",
+        "고객 축은 공시로 잰다. 2023~2025년 매출 10% 이상 고객이 없어 한 고객이 끊겨도 흔들리는 매출이 10% 미만이므로 −1 을 넘지 않는다. Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 백로그의 40% 넘게를 차지한다는 것은 익명 소식통을 인용한 2차 보도라 보도가 있다는 사실로만 두고 고객 축의 등급을 가르는 수치로 쓰지 않는다.",
+        "유통 쪽으로는 검색 기본 설정을 Apple·Samsung 같은 기기 제조사 계약과 유통 파트너에게 내는 TAC 에 기대지만, 그 비중은 공시되지 않아 점수를 바꾸지 않는다.",
+        "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. Anthropic 이 대금을 투자 유치로 마련하는지는 ⑦ 에서, 검색·애드테크 독점 소송과 핀란드 데이터센터 공사 중지는 ⑤ 에서 센다.",
+        "Safari 등 기기 제조사 기본 설정으로 들어오는 검색 매출의 비중은 확정 근거로 확인하지 못했다(미확인)."
+      ],
+      "reason": "약정 분자를 마이크로소프트·메타와 같은 범위로 맞춘다(사실·출처 A 리뷰 1, 재무 계산 리뷰 F1, Q03)",
+      "evidence_ids": [
+        "EV-alphabet-023",
+        "EV-alphabet-024",
+        "EV-alphabet-025",
+        "EV-alphabet-026",
+        "EV-alphabet-040",
+        "EV-alphabet-042",
+        "EV-alphabet-043",
+        "EV-alphabet-059",
+        "EV-alphabet-070",
+        "EV-alphabet-073",
+        "EV-alphabet-074",
+        "EV-alphabet-075",
+        "EV-tsmc-047"
+      ],
+      "before": {
+        "kind": "score",
+        "score": -2,
+        "inputs": {},
+        "evidence": [
+          "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+          "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+          "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+          "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+          "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+          "알파벳 ⑧ 은 −2 이고 점수를 정한 축은 약정 축, 곧 아직 개시되지 않은 데이터센터 리스와 고정·보장된 장기 공급 약정을 더한 약 $7,980억이 최근 1년 매출의 약 1.79배인 것이다.",
+          "약정 축은 −2 다. 2026-06-30 10-Q 주석 10 의 고정·보장된 장기 약정 $707.0B(대부분 기술 인프라 장기 공급 계약)와 주석 4 의 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $7,980억은 최근 1년 매출 $4,458.66억(2025년 $4,028.36억 − 전년 상반기 $1,866.62억 + 올해 상반기 $2,296.92억)의 약 1.79배다(계산).",
+          "같은 10-Q 경영진 논의의 구매 약정 총액 $811.0B 는 1년 안에 끝나는 $200.7B(주문서 포함)까지 더한 값이고, 같은 제출본 안에서 값이 갈리면 재무제표 주석을 앞세우므로 주석 값으로 잰다. 총액으로 재면 약 2.02배로 −3 경계에 닿는다(계산).",
+          "공급 축은 −1 이다. 8세대 TPU 를 TSMC 에서 만들고 TSMC 생산이 대만에 몰려 있어 끊기면 AI 용량 증설이 멈추지만, 기존 서비스는 이미 깔린 설비로 이어지고 인프라·모델·유통 계층을 모두 자체 보유한다. Gemini agent 가 경쟁사 Anthropic 의 Claude 모델을 함께 돌리지만 작업마다 고르는 선택지 가운데 하나라 공급 축을 무겁게 하지 않는다.",
+          "고객 축은 공시로 잰다. 2023~2025년 매출 10% 이상 고객이 없어 한 고객이 끊겨도 흔들리는 매출이 10% 미만이므로 −1 을 넘지 않는다. Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 백로그의 40% 넘게를 차지한다는 것은 익명 소식통을 인용한 2차 보도라 보도가 있다는 사실로만 두고 고객 축의 등급을 가르는 수치로 쓰지 않는다.",
+          "유통 쪽으로는 검색 기본 설정을 Apple·Samsung 같은 기기 제조사 계약과 유통 파트너에게 내는 TAC 에 기대지만, 그 비중은 공시되지 않아 점수를 바꾸지 않는다.",
+          "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. Anthropic 이 대금을 투자 유치로 마련하는지는 ⑦ 에서, 검색·애드테크 독점 소송과 핀란드 데이터센터 공사 중지는 ⑤ 에서 센다.",
+          "Safari 등 기기 제조사 기본 설정으로 들어오는 검색 매출의 비중은 확정 근거로 확인하지 못했다(미확인)."
+        ],
+        "evidence_up": [
+          "2023~2025년 매출의 10% 를 넘는 고객이나 관계 고객 묶음이 없다. [EV-alphabet-026]",
+          "인프라·모델·제품을 모두 자체 보유한 풀스택 구조이고, 자체 칩 TPU(7세대 Ironwood)와 GPU 를 함께 쓴다. [EV-alphabet-023, EV-alphabet-024]",
+          "Android·Chrome·Gmail·Search·YouTube 같은 유통 계층을 자체 보유한다. [EV-alphabet-025]"
+        ],
+        "evidence_down": [
+          "2026-06-30 고정·보장된 장기 약정 $707.0B 와 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $7,980억은 최근 1년 매출 $4,458.66억의 약 1.79배다(계산). [EV-alphabet-073, EV-alphabet-074]",
+          "Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 구글 백로그의 40% 넘게를 차지한다는 2차 보도가 있다. [EV-alphabet-042]",
+          "8세대 TPU 는 TSMC N3 계열 공정으로 만든다. [EV-alphabet-043]",
+          "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]",
+          "Gemini agent 는 작업마다 Gemini 모델과 경쟁사 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다. [EV-alphabet-070]",
+          "검색 독점 판결은 구글이 Apple·Samsung 같은 스마트폰 제조사와 독점 계약을 맺는 방식을 바꾸게 했다. [EV-alphabet-040]",
+          "TAC 증가는 유통 파트너에게 내는 TAC 증가가 주도했다. [EV-alphabet-059]"
+        ],
+        "reconfirmed": [
+          {
+            "at": "2026-10-08",
+            "by": "claude (사용자 위임 2026-10-08)",
+            "evidence_ids": [
+              "EV-alphabet-023",
+              "EV-alphabet-024",
+              "EV-alphabet-025",
+              "EV-alphabet-021",
+              "EV-alphabet-026"
+            ]
+          },
+          {
+            "at": "2026-10-12",
+            "by": "claude (사용자 위임 2026-10-12)",
+            "evidence_ids": [
+              "EV-alphabet-026",
+              "EV-alphabet-023",
+              "EV-alphabet-024",
+              "EV-alphabet-025",
+              "EV-alphabet-042",
+              "EV-alphabet-043",
+              "EV-tsmc-047",
+              "EV-alphabet-070",
+              "EV-alphabet-040",
+              "EV-alphabet-059",
+              "EV-alphabet-027",
+              "EV-alphabet-028",
+              "EV-alphabet-021"
+            ]
+          }
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "2023~2025년 매출의 10% 를 넘는 고객이나 관계 고객 묶음이 없다. [EV-alphabet-026]",
+        "인프라·모델·제품을 모두 자체 보유한 풀스택 구조이고, 자체 칩 TPU(7세대 Ironwood)와 GPU 를 함께 쓴다. [EV-alphabet-023, EV-alphabet-024]",
+        "Android·Chrome·Gmail·Search·YouTube 같은 유통 계층을 자체 보유한다. [EV-alphabet-025]"
+      ],
+      "evidence_down_after": [
+        "2026-06-30 구매 약정·기타 계약상 의무 $811.0B 와 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $9,020억은 최근 1년 매출 $4,458.66억의 약 2.02배다(계산). [EV-alphabet-075, EV-alphabet-074]",
+        "구매 약정 가운데 고정·보장된 장기 약정은 $707.0B 다. [EV-alphabet-073]",
+        "Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 구글 백로그의 40% 넘게를 차지한다는 2차 보도가 있다. [EV-alphabet-042]",
+        "8세대 TPU 는 TSMC N3 계열 공정으로 만든다. [EV-alphabet-043]",
+        "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]",
+        "Gemini agent 는 작업마다 Gemini 모델과 경쟁사 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다. [EV-alphabet-070]",
+        "검색 독점 판결은 구글이 Apple·Samsung 같은 스마트폰 제조사와 독점 계약을 맺는 방식을 바꾸게 했다. [EV-alphabet-040]",
+        "TAC 증가는 유통 파트너에게 내는 TAC 증가가 주도했다. [EV-alphabet-059]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "score",
+          "score": -2,
+          "inputs": {},
+          "evidence": [
+            "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+            "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+            "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+            "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+            "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+            "알파벳 ⑧ 은 −2 이고 점수를 정한 축은 약정 축, 곧 아직 개시되지 않은 데이터센터 리스와 고정·보장된 장기 공급 약정을 더한 약 $7,980억이 최근 1년 매출의 약 1.79배인 것이다.",
+            "약정 축은 −2 다. 2026-06-30 10-Q 주석 10 의 고정·보장된 장기 약정 $707.0B(대부분 기술 인프라 장기 공급 계약)와 주석 4 의 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $7,980억은 최근 1년 매출 $4,458.66억(2025년 $4,028.36억 − 전년 상반기 $1,866.62억 + 올해 상반기 $2,296.92억)의 약 1.79배다(계산).",
+            "같은 10-Q 경영진 논의의 구매 약정 총액 $811.0B 는 1년 안에 끝나는 $200.7B(주문서 포함)까지 더한 값이고, 같은 제출본 안에서 값이 갈리면 재무제표 주석을 앞세우므로 주석 값으로 잰다. 총액으로 재면 약 2.02배로 −3 경계에 닿는다(계산).",
+            "공급 축은 −1 이다. 8세대 TPU 를 TSMC 에서 만들고 TSMC 생산이 대만에 몰려 있어 끊기면 AI 용량 증설이 멈추지만, 기존 서비스는 이미 깔린 설비로 이어지고 인프라·모델·유통 계층을 모두 자체 보유한다. Gemini agent 가 경쟁사 Anthropic 의 Claude 모델을 함께 돌리지만 작업마다 고르는 선택지 가운데 하나라 공급 축을 무겁게 하지 않는다.",
+            "고객 축은 공시로 잰다. 2023~2025년 매출 10% 이상 고객이 없어 한 고객이 끊겨도 흔들리는 매출이 10% 미만이므로 −1 을 넘지 않는다. Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 백로그의 40% 넘게를 차지한다는 것은 익명 소식통을 인용한 2차 보도라 보도가 있다는 사실로만 두고 고객 축의 등급을 가르는 수치로 쓰지 않는다.",
+            "유통 쪽으로는 검색 기본 설정을 Apple·Samsung 같은 기기 제조사 계약과 유통 파트너에게 내는 TAC 에 기대지만, 그 비중은 공시되지 않아 점수를 바꾸지 않는다.",
+            "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. Anthropic 이 대금을 투자 유치로 마련하는지는 ⑦ 에서, 검색·애드테크 독점 소송과 핀란드 데이터센터 공사 중지는 ⑤ 에서 센다.",
+            "Safari 등 기기 제조사 기본 설정으로 들어오는 검색 매출의 비중은 확정 근거로 확인하지 못했다(미확인)."
+          ],
+          "status": "new",
+          "reviewer": "claude (사용자 위임 2026-10-12)",
+          "reviewed_at": "2026-10-12",
+          "evidence_up": [
+            "2023~2025년 매출의 10% 를 넘는 고객이나 관계 고객 묶음이 없다. [EV-alphabet-026]",
+            "인프라·모델·제품을 모두 자체 보유한 풀스택 구조이고, 자체 칩 TPU(7세대 Ironwood)와 GPU 를 함께 쓴다. [EV-alphabet-023, EV-alphabet-024]",
+            "Android·Chrome·Gmail·Search·YouTube 같은 유통 계층을 자체 보유한다. [EV-alphabet-025]"
+          ],
+          "evidence_down": [
+            "2026-06-30 고정·보장된 장기 약정 $707.0B 와 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $7,980억은 최근 1년 매출 $4,458.66억의 약 1.79배다(계산). [EV-alphabet-073, EV-alphabet-074]",
+            "Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 구글 백로그의 40% 넘게를 차지한다는 2차 보도가 있다. [EV-alphabet-042]",
+            "8세대 TPU 는 TSMC N3 계열 공정으로 만든다. [EV-alphabet-043]",
+            "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]",
+            "Gemini agent 는 작업마다 Gemini 모델과 경쟁사 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다. [EV-alphabet-070]",
+            "검색 독점 판결은 구글이 Apple·Samsung 같은 스마트폰 제조사와 독점 계약을 맺는 방식을 바꾸게 했다. [EV-alphabet-040]",
+            "TAC 증가는 유통 파트너에게 내는 TAC 증가가 주도했다. [EV-alphabet-059]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-alphabet-023",
+                "EV-alphabet-024",
+                "EV-alphabet-025",
+                "EV-alphabet-021",
+                "EV-alphabet-026"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-alphabet-026",
+                "EV-alphabet-023",
+                "EV-alphabet-024",
+                "EV-alphabet-025",
+                "EV-alphabet-042",
+                "EV-alphabet-043",
+                "EV-tsmc-047",
+                "EV-alphabet-070",
+                "EV-alphabet-040",
+                "EV-alphabet-059",
+                "EV-alphabet-027",
+                "EV-alphabet-028",
+                "EV-alphabet-021"
+              ]
+            }
+          ],
+          "evidence_ids": [
+            "EV-alphabet-023",
+            "EV-alphabet-024",
+            "EV-alphabet-025",
+            "EV-alphabet-026",
+            "EV-alphabet-027",
+            "EV-alphabet-028",
+            "EV-alphabet-040",
+            "EV-alphabet-042",
+            "EV-alphabet-043",
+            "EV-alphabet-059",
+            "EV-alphabet-070",
+            "EV-alphabet-073",
+            "EV-alphabet-074",
+            "EV-tsmc-047"
+          ]
+        },
+        "after": {
+          "kind": "score",
+          "score": -3,
+          "inputs": {},
+          "evidence": [
+            "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+            "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+            "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+            "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+            "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+            "알파벳 ⑧ 은 −3 이고 점수를 정한 축은 약정 축, 곧 아직 개시되지 않은 데이터센터 리스와 구매 약정·기타 계약상 의무를 더한 약 $9,020억이 최근 1년 매출의 약 2.02배인 것이다.",
+            "약정 축은 −3 이다. 2026-06-30 10-Q 경영진 논의의 구매 약정·기타 계약상 의무 $811.0B(1년 안에 끝나는 $200.7B 포함, 장기 공급 계약과 열린 구매 주문)와 주석 4 의 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $9,020억은 최근 1년 매출 $4,458.66억(2025년 $4,028.36억 − 전년 상반기 $1,866.62억 + 올해 상반기 $2,296.92억)의 약 2.02배다(계산).",
+            "구매 약정의 범위는 마이크로소프트(열린 구매 주문과 인수 의무를 담은 구매 약정)·메타(단기·장기 해지 불가 약정)와 같게 단기 계약과 열린 구매 주문까지 넣은 총액이다. 주석 10 의 고정·보장된 장기 약정 $707.0B 만 쓰면 약 1.79배로 −2 이고, 총액 기준 2.02배는 2배 경계 바로 위다(계산).",
+            "공급 축은 −1 이다. 8세대 TPU 를 TSMC 에서 만들고 TSMC 생산이 대만에 몰려 있어 끊기면 AI 용량 증설이 멈추지만, 기존 서비스는 이미 깔린 설비로 이어지고 인프라·모델·유통 계층을 모두 자체 보유한다. Gemini agent 가 경쟁사 Anthropic 의 Claude 모델을 함께 돌리지만 작업마다 고르는 선택지 가운데 하나라 공급 축을 무겁게 하지 않는다.",
+            "고객 축은 공시로 잰다. 2023~2025년 매출 10% 이상 고객이 없어 한 고객이 끊겨도 흔들리는 매출이 10% 미만이므로 −1 을 넘지 않는다. Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 백로그의 40% 넘게를 차지한다는 것은 익명 소식통을 인용한 2차 보도라 보도가 있다는 사실로만 두고 고객 축의 등급을 가르는 수치로 쓰지 않는다.",
+            "유통 쪽으로는 검색 기본 설정을 Apple·Samsung 같은 기기 제조사 계약과 유통 파트너에게 내는 TAC 에 기대지만, 그 비중은 공시되지 않아 점수를 바꾸지 않는다.",
+            "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. Anthropic 이 대금을 투자 유치로 마련하는지는 ⑦ 에서, 검색·애드테크 독점 소송과 핀란드 데이터센터 공사 중지는 ⑤ 에서 센다.",
+            "Safari 등 기기 제조사 기본 설정으로 들어오는 검색 매출의 비중은 확정 근거로 확인하지 못했다(미확인)."
+          ],
+          "evidence_up": [
+            "2023~2025년 매출의 10% 를 넘는 고객이나 관계 고객 묶음이 없다. [EV-alphabet-026]",
+            "인프라·모델·제품을 모두 자체 보유한 풀스택 구조이고, 자체 칩 TPU(7세대 Ironwood)와 GPU 를 함께 쓴다. [EV-alphabet-023, EV-alphabet-024]",
+            "Android·Chrome·Gmail·Search·YouTube 같은 유통 계층을 자체 보유한다. [EV-alphabet-025]"
+          ],
+          "evidence_down": [
+            "2026-06-30 구매 약정·기타 계약상 의무 $811.0B 와 미개시 리스 $85.2B·단기 리스 약정 $5.8B 를 더한 약 $9,020억은 최근 1년 매출 $4,458.66억의 약 2.02배다(계산). [EV-alphabet-075, EV-alphabet-074]",
+            "구매 약정 가운데 고정·보장된 장기 약정은 $707.0B 다. [EV-alphabet-073]",
+            "Anthropic 이 Google Cloud 에 5년 $200B 를 약정해 구글 백로그의 40% 넘게를 차지한다는 2차 보도가 있다. [EV-alphabet-042]",
+            "8세대 TPU 는 TSMC N3 계열 공정으로 만든다. [EV-alphabet-043]",
+            "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]",
+            "Gemini agent 는 작업마다 Gemini 모델과 경쟁사 Anthropic 의 Claude 모델 가운데 맞는 것을 골라 돌린다. [EV-alphabet-070]",
+            "검색 독점 판결은 구글이 Apple·Samsung 같은 스마트폰 제조사와 독점 계약을 맺는 방식을 바꾸게 했다. [EV-alphabet-040]",
+            "TAC 증가는 유통 파트너에게 내는 TAC 증가가 주도했다. [EV-alphabet-059]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-alphabet-023",
+                "EV-alphabet-024",
+                "EV-alphabet-025",
+                "EV-alphabet-021",
+                "EV-alphabet-026"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-alphabet-026",
+                "EV-alphabet-023",
+                "EV-alphabet-024",
+                "EV-alphabet-025",
+                "EV-alphabet-042",
+                "EV-alphabet-043",
+                "EV-tsmc-047",
+                "EV-alphabet-070",
+                "EV-alphabet-040",
+                "EV-alphabet-059",
+                "EV-alphabet-027",
+                "EV-alphabet-028",
+                "EV-alphabet-021"
+              ]
+            }
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-118",
+      "company_id": "microsoft",
+      "factor": "F8",
+      "changes": {},
+      "evidence_after": [
+        "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+        "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+        "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+        "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+        "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+        "마이크로소프트 ⑧ 은 −2 이고 점수를 정한 축은 약정 축과 고객 축이다. 아직 개시되지 않은 데이터센터 리스와 구매·건설 약정을 더한 약 $5,578억이 2026 회계연도 매출의 약 1.68배이고, OpenAI 계약 잔고의 12개월 인식분이 매출의 약 21~28% 다.",
+        "약정 축은 −2 다. 2026-06-30 10-K 주석 13 의 미개시 리스 $329.1B 와 경영진 논의 계약상 의무 표의 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). 구매 약정에는 주문서가 섞여 있어 2027 회계연도에 갚을 몫을 빼면 약 1.08배로 내려가지만 어느 쪽이든 0.5배 이상 2배 미만이다(계산).",
+        "고객 축은 −2 다. 회사는 2025-12-31 상업 RPO $625B 의 약 45% 가 OpenAI 몫이고 상업 RPO 의 약 25% 를 12개월 안에 인식한다고 밝혔다(회사 1차 발표). OpenAI 몫이 같은 비율로 인식된다고 보면 12개월 인식분은 약 $703억으로 2026 회계연도 매출 $3,318억의 약 21% 이고, 2026-06-30 상업 RPO $678B 와 12개월 인식 약 30%(10-K)에 같은 45% 를 대면 약 $915억, 약 28% 다(추론 계산). 어느 쪽이든 10~30% 이고 범용 클라우드 설비라 물량을 다른 고객에게 돌릴 수 있어 −2 다. 인식 매출 기준으로는 2026 회계연도 OpenAI 상업 계약 매출 $24.1B 가 약 7% 다.",
+        "공급 축은 −1 이다. 최상위 모델 성능을 OpenAI·Anthropic 에서 받지만 자체 MAI 모델과 함께 서로 바꿔 쓸 수 있게 짰고, 오픈웨이트 Qwen 을 후학습한 자체 모델도 내 모델 공급자 한 곳에 묶이지 않는다. AI 칩은 Maia 200 과 GPU 를 쓰며 그 생산이 TSMC 대만에 몰려 끊기면 증설이 멈추지만 기존 운영은 이어진다.",
+        "공급자가 곧 경쟁자라는 위험, 곧 모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 낸 것은 ⑧ 에서만 센다.",
+        "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. EU 의 Azure 게이트키퍼 지정 예비 판단과 노동부의 영주권 노동 인증 정지는 ⑤ 에서 센다.",
+        "OpenAI 몫의 인식 일정과 2026-06-30 현재 비중은 따로 공시되지 않아 평균 비율로 추론했다(미확인). OpenAI 몫의 12개월 인식분이 매출의 30% 를 넘는다는 공시나 회사 1차 자료가 나오면 고객 축을 −3 으로 다시 본다."
+      ],
+      "reason": "회사 1차 발표인 OpenAI 의 상업 RPO 비중으로 고객 축을 잰다(사실·출처 A 리뷰 3). 점수는 그대로다",
+      "evidence_ids": [
+        "EV-anthropic-011",
+        "EV-microsoft-003",
+        "EV-microsoft-008",
+        "EV-microsoft-010",
+        "EV-microsoft-014",
+        "EV-microsoft-015",
+        "EV-microsoft-019",
+        "EV-microsoft-033",
+        "EV-microsoft-043",
+        "EV-microsoft-044",
+        "EV-microsoft-046",
+        "EV-tsmc-034",
+        "EV-tsmc-047"
+      ],
+      "before": {
+        "kind": "score",
+        "score": -2,
+        "inputs": {},
+        "evidence": [
+          "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+          "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+          "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+          "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+          "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+          "마이크로소프트 ⑧ 은 −2 이고 점수를 정한 축은 약정 축, 곧 아직 개시되지 않은 데이터센터 리스와 구매·건설 약정을 더한 약 $5,578억이 2026 회계연도 매출의 약 1.68배인 것이다.",
+          "약정 축은 −2 다. 2026-06-30 10-K 주석 13 의 미개시 리스 $329.1B 와 경영진 논의 계약상 의무 표의 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). 구매 약정에는 주문서가 섞여 있어 2027 회계연도에 갚을 몫을 빼면 약 1.08배로 내려가지만 어느 쪽이든 0.5배 이상 2배 미만이다(계산).",
+          "고객 축은 −1 이다. 매출 10% 이상 고객이 없고, 2026 회계연도 OpenAI 상업 계약 매출 $24.1B 는 매출 $3,318억의 약 7% 다(계산).",
+          "공급 축은 −1 이다. 최상위 모델 성능을 OpenAI·Anthropic 에서 받지만 자체 MAI 모델과 함께 서로 바꿔 쓸 수 있게 짰고, 오픈웨이트 Qwen 을 후학습한 자체 모델도 내 모델 공급자 한 곳에 묶이지 않는다. AI 칩은 Maia 200 과 GPU 를 쓰며 그 생산이 TSMC 대만에 몰려 끊기면 증설이 멈추지만 기존 운영은 이어진다.",
+          "공급자가 곧 경쟁자라는 위험, 곧 모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 낸 것은 ⑧ 에서만 센다.",
+          "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. EU 의 Azure 게이트키퍼 지정 예비 판단과 노동부의 영주권 노동 인증 정지는 ⑤ 에서 센다.",
+          "OpenAI 가 상업 RPO $678B 에서 차지하는 비중은 확정 근거로 확인하지 못했다(미확인). 그 몫의 연환산이 매출의 10% 를 넘는 것으로 확인되면 고객 축을 다시 잰다."
+        ],
+        "evidence_up": [
+          "FY2024~FY2026 매출 10% 이상 고객이 없다. [EV-microsoft-033]",
+          "자체 MAI 모델을 제품에 쓰면서 모델을 서로 바꿔 쓸 수 있게 설계했다고 회사가 밝혔다. [EV-microsoft-010]",
+          "Microsoft 는 오픈웨이트 Qwen3.5-9B 를 후학습한 자체 판단 모델 Microsoft-Decision-1 을 Foundry 에 냈다. [EV-microsoft-043]",
+          "Microsoft 는 직원들을 Anthropic Claude 에서 자체 AI 도구로 돌려 올해 사내 Claude 지출 전망 약 $10억을 3분의 1 줄였다는 2차 보도가 있다. [EV-anthropic-011]",
+          "Anthropic 은 Azure 컴퓨트 $30B 구매를 약정했고 Microsoft 는 Copilot 제품군에 Claude 를 계속 넣는다. [EV-microsoft-015]",
+          "자체 AI 가속기 Maia 200 이 아이오와·애리조나 데이터센터에서 가동 중이다. [EV-microsoft-008]"
+        ],
+        "evidence_down": [
+          "2026-06-30 미개시 리스 $329.1B 와 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). [EV-microsoft-044]",
+          "2026 회계연도 OpenAI 상업 계약 매출 $24.1B 는 그해 매출 $331.8B 의 약 7% 이고 OpenAI 매출채권은 $6.0B 다(계산). [EV-microsoft-014, EV-microsoft-019]",
+          "모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 냈다. [EV-microsoft-003]",
+          "Maia 200 은 TSMC 3나노로 만든다. [EV-tsmc-034]",
+          "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]"
+        ],
+        "reconfirmed": [
+          {
+            "at": "2026-10-08",
+            "by": "claude (사용자 위임 2026-10-08)",
+            "evidence_ids": [
+              "EV-microsoft-010",
+              "EV-microsoft-015"
+            ]
+          },
+          {
+            "at": "2026-10-12",
+            "by": "claude (사용자 위임 2026-10-12)",
+            "evidence_ids": [
+              "EV-microsoft-033",
+              "EV-microsoft-010",
+              "EV-microsoft-043",
+              "EV-anthropic-011",
+              "EV-microsoft-015",
+              "EV-microsoft-008",
+              "EV-microsoft-014",
+              "EV-microsoft-019",
+              "EV-microsoft-003",
+              "EV-tsmc-034",
+              "EV-tsmc-047"
+            ]
+          }
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "FY2024~FY2026 매출 10% 이상 고객이 없다. [EV-microsoft-033]",
+        "자체 MAI 모델을 제품에 쓰면서 모델을 서로 바꿔 쓸 수 있게 설계했다고 회사가 밝혔다. [EV-microsoft-010]",
+        "Microsoft 는 오픈웨이트 Qwen3.5-9B 를 후학습한 자체 판단 모델 Microsoft-Decision-1 을 Foundry 에 냈다. [EV-microsoft-043]",
+        "Microsoft 는 직원들을 Anthropic Claude 에서 자체 AI 도구로 돌려 올해 사내 Claude 지출 전망 약 $10억을 3분의 1 줄였다는 2차 보도가 있다. [EV-anthropic-011]",
+        "Anthropic 은 Azure 컴퓨트 $30B 구매를 약정했고 Microsoft 는 Copilot 제품군에 Claude 를 계속 넣는다. [EV-microsoft-015]",
+        "자체 AI 가속기 Maia 200 이 아이오와·애리조나 데이터센터에서 가동 중이다. [EV-microsoft-008]"
+      ],
+      "evidence_down_after": [
+        "2026-06-30 미개시 리스 $329.1B 와 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). [EV-microsoft-044]",
+        "2026 회계연도 OpenAI 상업 계약 매출 $24.1B 는 그해 매출 $331.8B 의 약 7% 이고 OpenAI 매출채권은 $6.0B 다(계산). [EV-microsoft-014, EV-microsoft-019]",
+        "2025-12-31 상업 RPO $625B 의 약 45% 가 OpenAI 몫이고, 상업 RPO 의 약 25% 는 12개월 안에 매출로 인식된다. [EV-microsoft-046]",
+        "모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 냈다. [EV-microsoft-003]",
+        "Maia 200 은 TSMC 3나노로 만든다. [EV-tsmc-034]",
+        "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "score",
+          "score": -2,
+          "inputs": {},
+          "evidence": [
+            "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+            "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+            "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+            "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+            "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+            "마이크로소프트 ⑧ 은 −2 이고 점수를 정한 축은 약정 축, 곧 아직 개시되지 않은 데이터센터 리스와 구매·건설 약정을 더한 약 $5,578억이 2026 회계연도 매출의 약 1.68배인 것이다.",
+            "약정 축은 −2 다. 2026-06-30 10-K 주석 13 의 미개시 리스 $329.1B 와 경영진 논의 계약상 의무 표의 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). 구매 약정에는 주문서가 섞여 있어 2027 회계연도에 갚을 몫을 빼면 약 1.08배로 내려가지만 어느 쪽이든 0.5배 이상 2배 미만이다(계산).",
+            "고객 축은 −1 이다. 매출 10% 이상 고객이 없고, 2026 회계연도 OpenAI 상업 계약 매출 $24.1B 는 매출 $3,318억의 약 7% 다(계산).",
+            "공급 축은 −1 이다. 최상위 모델 성능을 OpenAI·Anthropic 에서 받지만 자체 MAI 모델과 함께 서로 바꿔 쓸 수 있게 짰고, 오픈웨이트 Qwen 을 후학습한 자체 모델도 내 모델 공급자 한 곳에 묶이지 않는다. AI 칩은 Maia 200 과 GPU 를 쓰며 그 생산이 TSMC 대만에 몰려 끊기면 증설이 멈추지만 기존 운영은 이어진다.",
+            "공급자가 곧 경쟁자라는 위험, 곧 모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 낸 것은 ⑧ 에서만 센다.",
+            "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. EU 의 Azure 게이트키퍼 지정 예비 판단과 노동부의 영주권 노동 인증 정지는 ⑤ 에서 센다.",
+            "OpenAI 가 상업 RPO $678B 에서 차지하는 비중은 확정 근거로 확인하지 못했다(미확인). 그 몫의 연환산이 매출의 10% 를 넘는 것으로 확인되면 고객 축을 다시 잰다."
+          ],
+          "status": "new",
+          "reviewer": "claude (사용자 위임 2026-10-12)",
+          "reviewed_at": "2026-10-12",
+          "evidence_up": [
+            "FY2024~FY2026 매출 10% 이상 고객이 없다. [EV-microsoft-033]",
+            "자체 MAI 모델을 제품에 쓰면서 모델을 서로 바꿔 쓸 수 있게 설계했다고 회사가 밝혔다. [EV-microsoft-010]",
+            "Microsoft 는 오픈웨이트 Qwen3.5-9B 를 후학습한 자체 판단 모델 Microsoft-Decision-1 을 Foundry 에 냈다. [EV-microsoft-043]",
+            "Microsoft 는 직원들을 Anthropic Claude 에서 자체 AI 도구로 돌려 올해 사내 Claude 지출 전망 약 $10억을 3분의 1 줄였다는 2차 보도가 있다. [EV-anthropic-011]",
+            "Anthropic 은 Azure 컴퓨트 $30B 구매를 약정했고 Microsoft 는 Copilot 제품군에 Claude 를 계속 넣는다. [EV-microsoft-015]",
+            "자체 AI 가속기 Maia 200 이 아이오와·애리조나 데이터센터에서 가동 중이다. [EV-microsoft-008]"
+          ],
+          "evidence_down": [
+            "2026-06-30 미개시 리스 $329.1B 와 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). [EV-microsoft-044]",
+            "2026 회계연도 OpenAI 상업 계약 매출 $24.1B 는 그해 매출 $331.8B 의 약 7% 이고 OpenAI 매출채권은 $6.0B 다(계산). [EV-microsoft-014, EV-microsoft-019]",
+            "모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 냈다. [EV-microsoft-003]",
+            "Maia 200 은 TSMC 3나노로 만든다. [EV-tsmc-034]",
+            "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-microsoft-010",
+                "EV-microsoft-015"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-microsoft-033",
+                "EV-microsoft-010",
+                "EV-microsoft-043",
+                "EV-anthropic-011",
+                "EV-microsoft-015",
+                "EV-microsoft-008",
+                "EV-microsoft-014",
+                "EV-microsoft-019",
+                "EV-microsoft-003",
+                "EV-tsmc-034",
+                "EV-tsmc-047"
+              ]
+            }
+          ],
+          "evidence_ids": [
+            "EV-anthropic-011",
+            "EV-microsoft-003",
+            "EV-microsoft-008",
+            "EV-microsoft-010",
+            "EV-microsoft-014",
+            "EV-microsoft-015",
+            "EV-microsoft-019",
+            "EV-microsoft-033",
+            "EV-microsoft-043",
+            "EV-microsoft-044",
+            "EV-tsmc-034",
+            "EV-tsmc-047"
+          ]
+        },
+        "after": {
+          "kind": "score",
+          "score": -2,
+          "inputs": {},
+          "evidence": [
+            "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+            "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+            "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+            "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+            "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+            "마이크로소프트 ⑧ 은 −2 이고 점수를 정한 축은 약정 축과 고객 축이다. 아직 개시되지 않은 데이터센터 리스와 구매·건설 약정을 더한 약 $5,578억이 2026 회계연도 매출의 약 1.68배이고, OpenAI 계약 잔고의 12개월 인식분이 매출의 약 21~28% 다.",
+            "약정 축은 −2 다. 2026-06-30 10-K 주석 13 의 미개시 리스 $329.1B 와 경영진 논의 계약상 의무 표의 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). 구매 약정에는 주문서가 섞여 있어 2027 회계연도에 갚을 몫을 빼면 약 1.08배로 내려가지만 어느 쪽이든 0.5배 이상 2배 미만이다(계산).",
+            "고객 축은 −2 다. 회사는 2025-12-31 상업 RPO $625B 의 약 45% 가 OpenAI 몫이고 상업 RPO 의 약 25% 를 12개월 안에 인식한다고 밝혔다(회사 1차 발표). OpenAI 몫이 같은 비율로 인식된다고 보면 12개월 인식분은 약 $703억으로 2026 회계연도 매출 $3,318억의 약 21% 이고, 2026-06-30 상업 RPO $678B 와 12개월 인식 약 30%(10-K)에 같은 45% 를 대면 약 $915억, 약 28% 다(추론 계산). 어느 쪽이든 10~30% 이고 범용 클라우드 설비라 물량을 다른 고객에게 돌릴 수 있어 −2 다. 인식 매출 기준으로는 2026 회계연도 OpenAI 상업 계약 매출 $24.1B 가 약 7% 다.",
+            "공급 축은 −1 이다. 최상위 모델 성능을 OpenAI·Anthropic 에서 받지만 자체 MAI 모델과 함께 서로 바꿔 쓸 수 있게 짰고, 오픈웨이트 Qwen 을 후학습한 자체 모델도 내 모델 공급자 한 곳에 묶이지 않는다. AI 칩은 Maia 200 과 GPU 를 쓰며 그 생산이 TSMC 대만에 몰려 끊기면 증설이 멈추지만 기존 운영은 이어진다.",
+            "공급자가 곧 경쟁자라는 위험, 곧 모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 낸 것은 ⑧ 에서만 센다.",
+            "지정학 축의 대만 생산 집중은 공급 축에서 이미 셌다. EU 의 Azure 게이트키퍼 지정 예비 판단과 노동부의 영주권 노동 인증 정지는 ⑤ 에서 센다.",
+            "OpenAI 몫의 인식 일정과 2026-06-30 현재 비중은 따로 공시되지 않아 평균 비율로 추론했다(미확인). OpenAI 몫의 12개월 인식분이 매출의 30% 를 넘는다는 공시나 회사 1차 자료가 나오면 고객 축을 −3 으로 다시 본다."
+          ],
+          "evidence_up": [
+            "FY2024~FY2026 매출 10% 이상 고객이 없다. [EV-microsoft-033]",
+            "자체 MAI 모델을 제품에 쓰면서 모델을 서로 바꿔 쓸 수 있게 설계했다고 회사가 밝혔다. [EV-microsoft-010]",
+            "Microsoft 는 오픈웨이트 Qwen3.5-9B 를 후학습한 자체 판단 모델 Microsoft-Decision-1 을 Foundry 에 냈다. [EV-microsoft-043]",
+            "Microsoft 는 직원들을 Anthropic Claude 에서 자체 AI 도구로 돌려 올해 사내 Claude 지출 전망 약 $10억을 3분의 1 줄였다는 2차 보도가 있다. [EV-anthropic-011]",
+            "Anthropic 은 Azure 컴퓨트 $30B 구매를 약정했고 Microsoft 는 Copilot 제품군에 Claude 를 계속 넣는다. [EV-microsoft-015]",
+            "자체 AI 가속기 Maia 200 이 아이오와·애리조나 데이터센터에서 가동 중이다. [EV-microsoft-008]"
+          ],
+          "evidence_down": [
+            "2026-06-30 미개시 리스 $329.1B 와 구매 약정 $194.06B·건설 약정 $34.57B 를 더한 약 $5,578억은 2026 회계연도 매출 $3,318.39억의 약 1.68배다(계산). [EV-microsoft-044]",
+            "2026 회계연도 OpenAI 상업 계약 매출 $24.1B 는 그해 매출 $331.8B 의 약 7% 이고 OpenAI 매출채권은 $6.0B 다(계산). [EV-microsoft-014, EV-microsoft-019]",
+            "2025-12-31 상업 RPO $625B 의 약 45% 가 OpenAI 몫이고, 상업 RPO 의 약 25% 는 12개월 안에 매출로 인식된다. [EV-microsoft-046]",
+            "모델 공급자 OpenAI 가 M365 와 겹치는 오피스 제품을 냈다. [EV-microsoft-003]",
+            "Maia 200 은 TSMC 3나노로 만든다. [EV-tsmc-034]",
+            "TSMC 의 주요 생산 시설 대부분은 대만에 있다. [EV-tsmc-047]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-microsoft-010",
+                "EV-microsoft-015"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-microsoft-033",
+                "EV-microsoft-010",
+                "EV-microsoft-043",
+                "EV-anthropic-011",
+                "EV-microsoft-015",
+                "EV-microsoft-008",
+                "EV-microsoft-014",
+                "EV-microsoft-019",
+                "EV-microsoft-003",
+                "EV-tsmc-034",
+                "EV-tsmc-047"
+              ]
+            }
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-119",
+      "company_id": "openai",
+      "factor": "F8",
+      "changes": {
+        "score": -3
+      },
+      "evidence_after": [
+        "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+        "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+        "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+        "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+        "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+        "OpenAI ⑧ 은 −3 이고 점수를 정한 축은 공급 축이다. 약정과 컴퓨트 조달이 모두 −3 이다.",
+        "약정은 −3 이다. 구속력이 공시나 회사 1차 발표로 확인되는 몫은 AWS 의 7년 $38B 와 8년 $100.0B 증액(Amazon 10-Q)과 Azure 서비스 $250B 추가 구매 계약(Microsoft 1차 발표)이고, 여기에 Oracle 5년 $300B(2차 보도)를 더한 약 $6,880억은 2026-09 말 회사 기준 연환산 매출 약 $50B(회사가 투자자에게 알린 값을 전한 2차 보도)의 약 13.8배라 몇 배 구간이다(계산).",
+        "CEO 가 밝힌 향후 8년 약 $1.4T 의 컴퓨트 약정(회사 1차 발표)은 연환산 매출의 약 28배이지만, 그 가운데 해지할 수 없거나 고정·보장된 몫은 확정 근거로 확인하지 못했다(미확인). 규칙 2.1 은 감점에 구속력 있는 약정까지 세므로 공유 정의에 맞는 위 몫으로 재고, 다른 회사에서 해지할 수 있는 계약을 분자에서 뺀 것과 같은 잣대를 댄다. 구속력 있는 몫이 연환산 매출의 20배를 넘는다는 공시나 회사 1차 자료가 나오면 −4 로 다시 본다.",
+        "공급 축의 컴퓨트 조달은 −3 이다. 자체 보유 컴퓨트는 확정 근거로 확인되지 않고(Stargate Abilene 의 칩은 Oracle 소유), Oracle·Microsoft·AWS 가 컴퓨트를 대며 Amazon·NVIDIA·Microsoft 는 투자자이기도 해 떠나기 어렵다. 자체 설계 가속기 Jalapeño 가 출하됐으나 대규모 배치는 2027년 계획이라 점수를 덜지 않는다.",
+        "고객 축은 고객 집중을 공개 제출본이나 회사 1차 발표로 확인할 자료가 없어 재지 않았다(미확인).",
+        "지정학 축의 대만 생산 집중은 공급자들의 증설을 막는 경로라 공급 축에 들어간다. Broadcom 이 OpenAI 칩 구매 자금 약 $300억을 조달하는 방안은 초기 협의라는 2차 보도뿐이라 약정에 넣지 않는다.",
+        "조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, ⑧ 에서는 약정의 크기와 공급자에 묶인 정도만 센다."
+      ],
+      "reason": "약정 분자를 열네 회사 공유 정의(해지할 수 없거나 고정·보장된 약정)로 맞춘다(재무 계산 리뷰 F1, 규칙 2.1)",
+      "evidence_ids": [
+        "EV-amazon-017",
+        "EV-microsoft-045",
+        "EV-openai-025",
+        "EV-openai-026",
+        "EV-openai-035",
+        "EV-openai-036",
+        "EV-openai-037",
+        "EV-openai-038",
+        "EV-openai-041",
+        "EV-openai-048",
+        "EV-openai-061",
+        "EV-openai-064",
+        "EV-openai-065"
+      ],
+      "before": {
+        "kind": "score",
+        "score": -4,
+        "inputs": {},
+        "evidence": [
+          "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+          "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+          "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+          "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+          "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+          "OpenAI ⑧ 은 −4 이고 점수를 정한 축은 공급 축의 약정, 곧 컴퓨트 약정이 매출의 수십 배인 것이다.",
+          "약정은 −4 다. CEO 가 밝힌 향후 8년 약 $1.4T 의 컴퓨트 약정(회사 1차 발표)은 2026-09 말 회사 기준 연환산 매출 약 $50B(회사가 투자자에게 알린 값을 전한 2차 보도)의 약 28배다(계산). 투자자가 Anthropic 방식(파트너 판매 총액)으로 맞춘 약 $70B(2차 보도)로 나눠도 약 20배라 수십 배 구간의 하한에 닿는다.",
+          "구속력이 공시로 확인되는 몫만 보면 AWS 의 7년 $38B 와 8년 $100.0B 증액(Amazon 10-Q)이 연환산 매출의 약 2.8배이고, Oracle 5년 $300B(2차 보도)를 더하면 약 8.8배다(계산). 약 $1.4T 가운데 구속력 있는 확정 약정과 발표분의 구분은 확정 근거로 확인하지 못했다(미확인). 규칙은 발표된 약정을 감점에 세므로 회사가 밝힌 약정 총액으로 잰다.",
+          "공급 축의 컴퓨트 조달은 −3 이다. 자체 보유 컴퓨트는 확정 근거로 확인되지 않고(Stargate Abilene 의 칩은 Oracle 소유), Oracle·Microsoft·AWS 가 컴퓨트를 대며 Amazon·NVIDIA·Microsoft 는 투자자이기도 해 떠나기 어렵다. 자체 설계 가속기 Jalapeño 가 출하됐으나 대규모 배치는 2027년 계획이라 점수를 덜지 않는다.",
+          "고객 축은 고객 집중을 공개 제출본이나 회사 1차 발표로 확인할 자료가 없어 재지 않았다(미확인).",
+          "지정학 축의 대만 생산 집중은 공급자들의 증설을 막는 경로라 공급 축에 들어간다. Broadcom 이 OpenAI 칩 구매 자금 약 $300억을 조달하는 방안은 초기 협의라는 2차 보도뿐이라 약정에 넣지 않는다.",
+          "조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, ⑧ 에서는 약정의 크기와 공급자에 묶인 정도만 센다."
+        ],
+        "evidence_up": [
+          "Broadcom 은 OpenAI 의 첫 자체 설계 가속기 Jalapeño 를 2026년 3분기에 출하했다. [EV-openai-025]",
+          "2026-04-27 개정 계약으로 OpenAI 는 Azure 밖의 모든 클라우드에서 제품을 낼 수 있게 됐다. [EV-openai-041]"
+        ],
+        "evidence_down": [
+          "CEO 가 밝힌 향후 8년 컴퓨트 약정 약 $1.4T 는 2026-09 말 연환산 매출 약 $50B 의 약 28배다(계산). [EV-openai-035, EV-openai-065]",
+          "회사가 투자자에게 알린 연환산 매출은 $50B 에 가깝고, 9월에 보도된 $70B 는 투자자가 Anthropic 산정 방식으로 맞춘 값이다(2차 보도). [EV-openai-064]",
+          "Oracle 과의 5년 $300B 계약이 2027년부터 시작한다는 2차 자료가 있다. [EV-openai-037]",
+          "OpenAI 는 Oracle 컴퓨트에 연 약 $60B 를 쓰기로 약정했다는 보도가 있다. [EV-openai-048]",
+          "OpenAI 는 AWS 와 7년 $38B 약정을 맺었고, AWS 는 그 약정을 8년에 걸쳐 $100.0B 늘렸다. [EV-openai-036, EV-amazon-017]",
+          "Stargate Abilene 의 AI 칩은 Oracle 이 소유하고 OpenAI 가 쓴다. [EV-openai-026]",
+          "OpenAI 의 투자 라운드는 Amazon·NVIDIA·SoftBank 가 이끌고 Microsoft 가 참여해 컴퓨트 공급자가 곧 투자자다. [EV-openai-038]",
+          "Broadcom 은 OpenAI 와 함께 만드는 자체 칩 구매 자금 약 $300억을 부채로 조달하는 방안을 초기 협의하고 있다는 2차 보도가 있다(계획이라 약정에 넣지 않는다). [EV-openai-061]"
+        ],
+        "reconfirmed": [
+          {
+            "at": "2026-10-08",
+            "by": "claude (사용자 위임 2026-10-08)",
+            "evidence_ids": [
+              "EV-openai-035",
+              "EV-openai-023",
+              "EV-openai-037",
+              "EV-openai-036",
+              "EV-openai-031",
+              "EV-openai-038",
+              "EV-openai-028"
+            ]
+          },
+          {
+            "at": "2026-10-12",
+            "by": "claude (사용자 위임 2026-10-12)",
+            "evidence_ids": [
+              "EV-openai-025",
+              "EV-openai-041",
+              "EV-openai-035",
+              "EV-openai-065",
+              "EV-openai-064",
+              "EV-openai-037",
+              "EV-openai-048",
+              "EV-openai-036",
+              "EV-amazon-017",
+              "EV-openai-026",
+              "EV-openai-038",
+              "EV-openai-061",
+              "EV-openai-023",
+              "EV-openai-031",
+              "EV-openai-028"
+            ]
+          }
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "Broadcom 은 OpenAI 의 첫 자체 설계 가속기 Jalapeño 를 2026년 3분기에 출하했다. [EV-openai-025]",
+        "2026-04-27 개정 계약으로 OpenAI 는 Azure 밖의 모든 클라우드에서 제품을 낼 수 있게 됐다. [EV-openai-041]"
+      ],
+      "evidence_down_after": [
+        "CEO 가 밝힌 향후 8년 컴퓨트 약정 약 $1.4T 는 2026-09 말 연환산 매출 약 $50B 의 약 28배다(계산). [EV-openai-035, EV-openai-065]",
+        "회사가 투자자에게 알린 연환산 매출은 $50B 에 가깝고, 9월에 보도된 $70B 는 투자자가 Anthropic 산정 방식으로 맞춘 값이다(2차 보도). [EV-openai-064]",
+        "Oracle 과의 5년 $300B 계약이 2027년부터 시작한다는 2차 자료가 있다. [EV-openai-037]",
+        "OpenAI 는 Oracle 컴퓨트에 연 약 $60B 를 쓰기로 약정했다는 보도가 있다. [EV-openai-048]",
+        "OpenAI 는 AWS 와 7년 $38B 약정을 맺었고, AWS 는 그 약정을 8년에 걸쳐 $100.0B 늘렸다. [EV-openai-036, EV-amazon-017]",
+        "Stargate Abilene 의 AI 칩은 Oracle 이 소유하고 OpenAI 가 쓴다. [EV-openai-026]",
+        "OpenAI 의 투자 라운드는 Amazon·NVIDIA·SoftBank 가 이끌고 Microsoft 가 참여해 컴퓨트 공급자가 곧 투자자다. [EV-openai-038]",
+        "Broadcom 은 OpenAI 와 함께 만드는 자체 칩 구매 자금 약 $300억을 부채로 조달하는 방안을 초기 협의하고 있다는 2차 보도가 있다(계획이라 약정에 넣지 않는다). [EV-openai-061]",
+        "OpenAI 는 Azure 서비스 $250B 를 추가로 사기로 계약했다. [EV-microsoft-045]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "score",
+          "score": -4,
+          "inputs": {},
+          "evidence": [
+            "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+            "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+            "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+            "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+            "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+            "OpenAI ⑧ 은 −4 이고 점수를 정한 축은 공급 축의 약정, 곧 컴퓨트 약정이 매출의 수십 배인 것이다.",
+            "약정은 −4 다. CEO 가 밝힌 향후 8년 약 $1.4T 의 컴퓨트 약정(회사 1차 발표)은 2026-09 말 회사 기준 연환산 매출 약 $50B(회사가 투자자에게 알린 값을 전한 2차 보도)의 약 28배다(계산). 투자자가 Anthropic 방식(파트너 판매 총액)으로 맞춘 약 $70B(2차 보도)로 나눠도 약 20배라 수십 배 구간의 하한에 닿는다.",
+            "구속력이 공시로 확인되는 몫만 보면 AWS 의 7년 $38B 와 8년 $100.0B 증액(Amazon 10-Q)이 연환산 매출의 약 2.8배이고, Oracle 5년 $300B(2차 보도)를 더하면 약 8.8배다(계산). 약 $1.4T 가운데 구속력 있는 확정 약정과 발표분의 구분은 확정 근거로 확인하지 못했다(미확인). 규칙은 발표된 약정을 감점에 세므로 회사가 밝힌 약정 총액으로 잰다.",
+            "공급 축의 컴퓨트 조달은 −3 이다. 자체 보유 컴퓨트는 확정 근거로 확인되지 않고(Stargate Abilene 의 칩은 Oracle 소유), Oracle·Microsoft·AWS 가 컴퓨트를 대며 Amazon·NVIDIA·Microsoft 는 투자자이기도 해 떠나기 어렵다. 자체 설계 가속기 Jalapeño 가 출하됐으나 대규모 배치는 2027년 계획이라 점수를 덜지 않는다.",
+            "고객 축은 고객 집중을 공개 제출본이나 회사 1차 발표로 확인할 자료가 없어 재지 않았다(미확인).",
+            "지정학 축의 대만 생산 집중은 공급자들의 증설을 막는 경로라 공급 축에 들어간다. Broadcom 이 OpenAI 칩 구매 자금 약 $300억을 조달하는 방안은 초기 협의라는 2차 보도뿐이라 약정에 넣지 않는다.",
+            "조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, ⑧ 에서는 약정의 크기와 공급자에 묶인 정도만 센다."
+          ],
+          "status": "new",
+          "reviewer": "claude (사용자 위임 2026-10-12)",
+          "reviewed_at": "2026-10-12",
+          "evidence_up": [
+            "Broadcom 은 OpenAI 의 첫 자체 설계 가속기 Jalapeño 를 2026년 3분기에 출하했다. [EV-openai-025]",
+            "2026-04-27 개정 계약으로 OpenAI 는 Azure 밖의 모든 클라우드에서 제품을 낼 수 있게 됐다. [EV-openai-041]"
+          ],
+          "evidence_down": [
+            "CEO 가 밝힌 향후 8년 컴퓨트 약정 약 $1.4T 는 2026-09 말 연환산 매출 약 $50B 의 약 28배다(계산). [EV-openai-035, EV-openai-065]",
+            "회사가 투자자에게 알린 연환산 매출은 $50B 에 가깝고, 9월에 보도된 $70B 는 투자자가 Anthropic 산정 방식으로 맞춘 값이다(2차 보도). [EV-openai-064]",
+            "Oracle 과의 5년 $300B 계약이 2027년부터 시작한다는 2차 자료가 있다. [EV-openai-037]",
+            "OpenAI 는 Oracle 컴퓨트에 연 약 $60B 를 쓰기로 약정했다는 보도가 있다. [EV-openai-048]",
+            "OpenAI 는 AWS 와 7년 $38B 약정을 맺었고, AWS 는 그 약정을 8년에 걸쳐 $100.0B 늘렸다. [EV-openai-036, EV-amazon-017]",
+            "Stargate Abilene 의 AI 칩은 Oracle 이 소유하고 OpenAI 가 쓴다. [EV-openai-026]",
+            "OpenAI 의 투자 라운드는 Amazon·NVIDIA·SoftBank 가 이끌고 Microsoft 가 참여해 컴퓨트 공급자가 곧 투자자다. [EV-openai-038]",
+            "Broadcom 은 OpenAI 와 함께 만드는 자체 칩 구매 자금 약 $300억을 부채로 조달하는 방안을 초기 협의하고 있다는 2차 보도가 있다(계획이라 약정에 넣지 않는다). [EV-openai-061]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-openai-035",
+                "EV-openai-023",
+                "EV-openai-037",
+                "EV-openai-036",
+                "EV-openai-031",
+                "EV-openai-038",
+                "EV-openai-028"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-openai-025",
+                "EV-openai-041",
+                "EV-openai-035",
+                "EV-openai-065",
+                "EV-openai-064",
+                "EV-openai-037",
+                "EV-openai-048",
+                "EV-openai-036",
+                "EV-amazon-017",
+                "EV-openai-026",
+                "EV-openai-038",
+                "EV-openai-061",
+                "EV-openai-023",
+                "EV-openai-031",
+                "EV-openai-028"
+              ]
+            }
+          ],
+          "evidence_ids": [
+            "EV-amazon-017",
+            "EV-openai-023",
+            "EV-openai-025",
+            "EV-openai-026",
+            "EV-openai-035",
+            "EV-openai-036",
+            "EV-openai-037",
+            "EV-openai-038",
+            "EV-openai-041",
+            "EV-openai-048",
+            "EV-openai-061",
+            "EV-openai-064",
+            "EV-openai-065"
+          ]
+        },
+        "after": {
+          "kind": "score",
+          "score": -3,
+          "inputs": {},
+          "evidence": [
+            "⑧ 사다리는 0 = 어느 한 공급자·고객·지역이 끊겨도 매출과 운영이 거의 줄지 않음, −1 = 한 축이 끊기면 매출의 10% 미만이나 성장 투입 하나가 줄고 기존 운영은 이어짐, −2 = 한 축이 끊기면 매출의 10~30% 가 흔들리지만 물량을 돌리거나 대체할 경로가 있음, −3 = 한 축이 끊기면 매출의 30% 이상이나 핵심 제품 하나가 멈추고 가까운 대체가 없음, −4 = 한 축이 끊기면 핵심 생산이나 매출(계약 기준 포함) 대부분이 멈추고 대체가 없거나 약정이 매출의 수십 배라 떠나지 못함, −5 = 공급자·고객·지역 가운데 하나가 끊기면 회사 전체가 멈춤이며, 공급(컴퓨트·칩·공정·OS·모델과 그 약정)·고객 집중·지정학(대만 생산 집중·미중 규제) 세 축 가운데 가장 무거운 축이 점수를 정한다.",
+            "고객 집중은 공개 제출본에 공시된 10% 이상 고객 비중이나 회사 1차 발표로만 재고, 계약액이 인식 매출보다 크면 한 고객의 연환산 계약액 ÷ 최근 1년 매출로도 재며, 고객 집중으로 −4 를 대는 것은 그 고객을 위해 들인 자산·약정을 다른 데 돌리지 못할 때뿐이다.",
+            "약정은 아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정을 더한 합계 ÷ 최근 1년 매출(비상장사는 연환산 매출)로 재고, 20배 이상(수십 배)이면 −4, 2배 이상 20배 미만(몇 배)이면 −3, 0.5배 이상 2배 미만(1배 안팎)이면 −2 이며 0.5배 미만은 점수에 닿지 않는다.",
+            "같은 입력에는 회사마다 같은 등급의 근거를 대고, 2차 보도 수치는 그 등급을 적어 쓰며, 유출 문서·초안의 수치는 보도가 있다는 사실로만 두고 등급을 가르는 데 쓰지 않는다.",
+            "고객이 자체 대체재를 만든다는 것과 규제 조사·소송은 ⑤ 에서, 고객이 대금을 조달로 마련하는지는 ⑦ 에서, 조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, 경영자 개인과 지배구조는 거래 상대가 아니라 ⑧ 에 넣지 않으며, 공급자가 곧 경쟁자라는 위험과 지정학은 ⑧ 에서만 센다.",
+            "OpenAI ⑧ 은 −3 이고 점수를 정한 축은 공급 축이다. 약정과 컴퓨트 조달이 모두 −3 이다.",
+            "약정은 −3 이다. 구속력이 공시나 회사 1차 발표로 확인되는 몫은 AWS 의 7년 $38B 와 8년 $100.0B 증액(Amazon 10-Q)과 Azure 서비스 $250B 추가 구매 계약(Microsoft 1차 발표)이고, 여기에 Oracle 5년 $300B(2차 보도)를 더한 약 $6,880억은 2026-09 말 회사 기준 연환산 매출 약 $50B(회사가 투자자에게 알린 값을 전한 2차 보도)의 약 13.8배라 몇 배 구간이다(계산).",
+            "CEO 가 밝힌 향후 8년 약 $1.4T 의 컴퓨트 약정(회사 1차 발표)은 연환산 매출의 약 28배이지만, 그 가운데 해지할 수 없거나 고정·보장된 몫은 확정 근거로 확인하지 못했다(미확인). 규칙 2.1 은 감점에 구속력 있는 약정까지 세므로 공유 정의에 맞는 위 몫으로 재고, 다른 회사에서 해지할 수 있는 계약을 분자에서 뺀 것과 같은 잣대를 댄다. 구속력 있는 몫이 연환산 매출의 20배를 넘는다는 공시나 회사 1차 자료가 나오면 −4 로 다시 본다.",
+            "공급 축의 컴퓨트 조달은 −3 이다. 자체 보유 컴퓨트는 확정 근거로 확인되지 않고(Stargate Abilene 의 칩은 Oracle 소유), Oracle·Microsoft·AWS 가 컴퓨트를 대며 Amazon·NVIDIA·Microsoft 는 투자자이기도 해 떠나기 어렵다. 자체 설계 가속기 Jalapeño 가 출하됐으나 대규모 배치는 2027년 계획이라 점수를 덜지 않는다.",
+            "고객 축은 고객 집중을 공개 제출본이나 회사 1차 발표로 확인할 자료가 없어 재지 않았다(미확인).",
+            "지정학 축의 대만 생산 집중은 공급자들의 증설을 막는 경로라 공급 축에 들어간다. Broadcom 이 OpenAI 칩 구매 자금 약 $300억을 조달하는 방안은 초기 협의라는 2차 보도뿐이라 약정에 넣지 않는다.",
+            "조달이 끊겨 못 버티는 것은 ⑨ 에서 세고, ⑧ 에서는 약정의 크기와 공급자에 묶인 정도만 센다."
+          ],
+          "evidence_up": [
+            "Broadcom 은 OpenAI 의 첫 자체 설계 가속기 Jalapeño 를 2026년 3분기에 출하했다. [EV-openai-025]",
+            "2026-04-27 개정 계약으로 OpenAI 는 Azure 밖의 모든 클라우드에서 제품을 낼 수 있게 됐다. [EV-openai-041]"
+          ],
+          "evidence_down": [
+            "CEO 가 밝힌 향후 8년 컴퓨트 약정 약 $1.4T 는 2026-09 말 연환산 매출 약 $50B 의 약 28배다(계산). [EV-openai-035, EV-openai-065]",
+            "회사가 투자자에게 알린 연환산 매출은 $50B 에 가깝고, 9월에 보도된 $70B 는 투자자가 Anthropic 산정 방식으로 맞춘 값이다(2차 보도). [EV-openai-064]",
+            "Oracle 과의 5년 $300B 계약이 2027년부터 시작한다는 2차 자료가 있다. [EV-openai-037]",
+            "OpenAI 는 Oracle 컴퓨트에 연 약 $60B 를 쓰기로 약정했다는 보도가 있다. [EV-openai-048]",
+            "OpenAI 는 AWS 와 7년 $38B 약정을 맺었고, AWS 는 그 약정을 8년에 걸쳐 $100.0B 늘렸다. [EV-openai-036, EV-amazon-017]",
+            "Stargate Abilene 의 AI 칩은 Oracle 이 소유하고 OpenAI 가 쓴다. [EV-openai-026]",
+            "OpenAI 의 투자 라운드는 Amazon·NVIDIA·SoftBank 가 이끌고 Microsoft 가 참여해 컴퓨트 공급자가 곧 투자자다. [EV-openai-038]",
+            "Broadcom 은 OpenAI 와 함께 만드는 자체 칩 구매 자금 약 $300억을 부채로 조달하는 방안을 초기 협의하고 있다는 2차 보도가 있다(계획이라 약정에 넣지 않는다). [EV-openai-061]",
+            "OpenAI 는 Azure 서비스 $250B 를 추가로 사기로 계약했다. [EV-microsoft-045]"
+          ],
+          "reconfirmed": [
+            {
+              "at": "2026-10-08",
+              "by": "claude (사용자 위임 2026-10-08)",
+              "evidence_ids": [
+                "EV-openai-035",
+                "EV-openai-023",
+                "EV-openai-037",
+                "EV-openai-036",
+                "EV-openai-031",
+                "EV-openai-038",
+                "EV-openai-028"
+              ]
+            },
+            {
+              "at": "2026-10-12",
+              "by": "claude (사용자 위임 2026-10-12)",
+              "evidence_ids": [
+                "EV-openai-025",
+                "EV-openai-041",
+                "EV-openai-035",
+                "EV-openai-065",
+                "EV-openai-064",
+                "EV-openai-037",
+                "EV-openai-048",
+                "EV-openai-036",
+                "EV-amazon-017",
+                "EV-openai-026",
+                "EV-openai-038",
+                "EV-openai-061",
+                "EV-openai-023",
+                "EV-openai-031",
+                "EV-openai-028"
+              ]
+            }
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-120",
+      "company_id": "amazon",
+      "factor": "F9",
+      "changes": {},
+      "evidence_after": [
+        "아마존 ⑨ 는 -2 다.",
+        "아마존은 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+        "게이트 2(최근 1년 잉여현금흐름)에서는 잉여현금흐름이 마이너스라 -2 에서 게이트 3 으로 간다.",
+        "게이트 3(버티는 기간)의 런웨이는 3년 이상으로 유지된다. 신용등급으로 추정한 조달 여력은 완충에 넣지 않는다.",
+        "여신을 어느 범위로 세어도 런웨이는 3년 이상이고 게이트 3 결론은 같다. 여신에 잔존 기간 요건을 둘지는 규칙 8절 미결 사항 C-23 으로 남아 있다.",
+        "게이트 4(미래 지출이 덮이는가)의 약정 커버리지는 1배 이상으로 유지된다. 계약된 수입과 미개시 확정 약정은 같은 2026-06-30 10-Q 에서 나와 비교 가능하다고 판정했다.",
+        "미개시 리스만 분모로 쓰면 3.615 이지만 게이트 4 가 묻는 것은 미래 지출 전체라서 구매약정을 합한 값을 쓴다."
+      ],
+      "reason": "지난 실행의 기준일 표기를 뺀 현재 상태 문장으로 고친다(출력 리뷰 B3)",
+      "evidence_ids": [
+        "EV-amazon-001",
+        "EV-amazon-002",
+        "EV-amazon-010",
+        "EV-amazon-011",
+        "EV-amazon-012",
+        "EV-amazon-013",
+        "EV-amazon-014",
+        "EV-amazon-015",
+        "EV-amazon-016",
+        "EV-amazon-021"
+      ],
+      "before": {
+        "kind": "gate_inputs",
+        "score": null,
+        "inputs": {
+          "fcf_trend": "unknown",
+          "bep_retreat": "no",
+          "buffer_erosion": "no",
+          "direction_A": "unknown",
+          "direction_B": "unknown",
+          "coverage_comparable": "yes",
+          "operating_result_reviewed": "profit"
+        },
+        "evidence": [
+          "아마존 ⑨ 는 -2 다.",
+          "아마존은 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+          "게이트 2(최근 1년 잉여현금흐름)에서는 잉여현금흐름이 마이너스라 -2 에서 게이트 3 으로 간다.",
+          "게이트 3(버티는 기간)의 런웨이는 3년 이상으로 유지된다. 신용등급으로 추정한 조달 여력은 완충에 넣지 않는다.",
+          "여신을 어느 범위로 세어도 런웨이는 3년 이상이고 게이트 3 결론은 같다. 여신에 잔존 기간 요건을 둘지는 규칙 8절 미결 사항 C-23 으로 남아 있다.",
+          "게이트 4(미래 지출이 덮이는가)의 약정 커버리지는 1배 이상으로 유지된다. 계약된 수입과 미개시 확정 약정은 같은 2026-06-30 10-Q 에서 나와 비교 가능하다고 판정했다.",
+          "미개시 리스만 분모로 쓰면 3.615 이지만 게이트 4 가 묻는 것은 미래 지출 전체라서 구매약정을 합한 값을 쓴다."
+        ],
+        "evidence_up": [
+          "아마존은 최근 1년(2026-06-30 기준) 영업이익 $93.7B, 매출 $775.7B 로 영업이익률이 12.1% 다. [EV-amazon-014, EV-amazon-021]",
+          "영업이익이 나는데 현금흐름이 마이너스인 것은 벌면서 더 크게 투자하는 선택의 문제이고, 설비투자는 줄일 수 있는 지출이다. [EV-amazon-014, EV-amazon-013]",
+          "버티는 기간의 완충은 2026-06-30 현금및현금성자산 $78.2B 와 확정 미인출 여신 $37.5B 를 더한 $115.7B 이고, 연 소진 $11.6B 로 나눈 런웨이는 9.95년이다. [EV-amazon-012, EV-amazon-002, EV-amazon-010, EV-amazon-011, EV-amazon-013]",
+          "2028-11 만기 $15.0B 만 세면 런웨이는 8.0년, 여신을 모두 빼고 현금만 세면 6.7년이다. [EV-amazon-002, EV-amazon-012, EV-amazon-013]",
+          "약정 커버리지는 계약된 수입 $496B(원계약 1년 초과 계약의 미인식 약정)를 미개시 확정 약정 $267.3B(미개시 리스 $137.2B + 무조건 구매약정 $130.1B)로 나눈 1.856 이다. [EV-amazon-015, EV-amazon-016]",
+          "분자는 1년 이하 계약이 빠져 과소계상되고 분모는 5년 이후(Thereafter) 열까지 담아 과대계상되므로 커버리지는 보수적으로 낮게 나온다. [EV-amazon-015, EV-amazon-016]"
+        ],
+        "evidence_down": [
+          "최근 1년 잉여현금흐름은 영업현금흐름 $161.4B 에서 설비투자 $173.0B 를 뺀 값이 -$11.6B 다. [EV-amazon-013]",
+          "여신 $37.5B 는 2028-11 만기 무담보 리볼빙 $15.0B, 2026-10 만기이고 연장에 대주단 승인이 필요한 364일 리볼빙 $5.0B, 2026-09-30 까지 한 번만 인출할 수 있고 그 뒤 미인출 약정이 자동 소멸하는 지연인출 정기대출 $17.5B 로 이뤄진다. 세 시설 모두 2026-06-30 에 인출 잔액이 없었다. [EV-amazon-002, EV-amazon-010, EV-amazon-011]",
+          "지연인출 약정은 기준일 2026-10-06 전인 2026-09-30 에 미인출 약정으로서의 시한이 끝났고 364일 리볼빙도 2026-10 에 만기가 온다. [EV-amazon-011, EV-amazon-001, EV-amazon-010]"
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "evidence_up_after": [
+        "아마존은 최근 1년(2026-06-30 기준) 영업이익 $93.7B, 매출 $775.7B 로 영업이익률이 12.1% 다. [EV-amazon-014, EV-amazon-021]",
+        "영업이익이 나는데 현금흐름이 마이너스인 것은 벌면서 더 크게 투자하는 선택의 문제이고, 설비투자는 줄일 수 있는 지출이다. [EV-amazon-014, EV-amazon-013]",
+        "버티는 기간의 완충은 2026-06-30 현금및현금성자산 $78.2B 와 확정 미인출 여신 $37.5B 를 더한 $115.7B 이고, 연 소진 $11.6B 로 나눈 런웨이는 9.95년이다. [EV-amazon-012, EV-amazon-002, EV-amazon-010, EV-amazon-011, EV-amazon-013]",
+        "2028-11 만기 $15.0B 만 세면 런웨이는 8.0년, 여신을 모두 빼고 현금만 세면 6.7년이다. [EV-amazon-002, EV-amazon-012, EV-amazon-013]",
+        "약정 커버리지는 계약된 수입 $496B(원계약 1년 초과 계약의 미인식 약정)를 미개시 확정 약정 $267.3B(미개시 리스 $137.2B + 무조건 구매약정 $130.1B)로 나눈 1.856 이다. [EV-amazon-015, EV-amazon-016]",
+        "분자는 1년 이하 계약이 빠져 과소계상되고 분모는 5년 이후(Thereafter) 열까지 담아 과대계상되므로 커버리지는 보수적으로 낮게 나온다. [EV-amazon-015, EV-amazon-016]"
+      ],
+      "evidence_down_after": [
+        "최근 1년 잉여현금흐름은 영업현금흐름 $161.4B 에서 설비투자 $173.0B 를 뺀 값이 -$11.6B 다. [EV-amazon-013]",
+        "여신 $37.5B 는 2028-11 만기 무담보 리볼빙 $15.0B, 2026-10 만기이고 연장에 대주단 승인이 필요한 364일 리볼빙 $5.0B, 2026-09-30 까지 한 번만 인출할 수 있고 그 뒤 미인출 약정이 자동 소멸하는 지연인출 정기대출 $17.5B 로 이뤄진다. 세 시설 모두 2026-06-30 에 인출 잔액이 없었다. [EV-amazon-002, EV-amazon-010, EV-amazon-011]",
+        "지연인출 정기대출 $17.5B 는 2026-09-30 에 미인출 약정으로서의 시한이 끝났고, 364일 리볼빙 $5.0B 는 2026-10 에 만기가 온다. [EV-amazon-011, EV-amazon-001, EV-amazon-010]"
+      ],
+      "applied": {
+        "previous": {
+          "kind": "gate_inputs",
+          "score": null,
+          "inputs": {
+            "fcf_trend": "unknown",
+            "bep_retreat": "no",
+            "buffer_erosion": "no",
+            "direction_A": "unknown",
+            "direction_B": "unknown",
+            "coverage_comparable": "yes",
+            "operating_result_reviewed": "profit"
+          },
+          "evidence": [
+            "아마존 ⑨ 는 -2 다.",
+            "아마존은 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+            "게이트 2(최근 1년 잉여현금흐름)에서는 잉여현금흐름이 마이너스라 -2 에서 게이트 3 으로 간다.",
+            "게이트 3(버티는 기간)의 런웨이는 3년 이상으로 유지된다. 신용등급으로 추정한 조달 여력은 완충에 넣지 않는다.",
+            "여신을 어느 범위로 세어도 런웨이는 3년 이상이고 게이트 3 결론은 같다. 여신에 잔존 기간 요건을 둘지는 규칙 8절 미결 사항 C-23 으로 남아 있다.",
+            "게이트 4(미래 지출이 덮이는가)의 약정 커버리지는 1배 이상으로 유지된다. 계약된 수입과 미개시 확정 약정은 같은 2026-06-30 10-Q 에서 나와 비교 가능하다고 판정했다.",
+            "미개시 리스만 분모로 쓰면 3.615 이지만 게이트 4 가 묻는 것은 미래 지출 전체라서 구매약정을 합한 값을 쓴다."
+          ],
+          "status": "new",
+          "reviewer": "noble",
+          "reviewed_at": "2026-10-01",
+          "evidence_up": [
+            "아마존은 최근 1년(2026-06-30 기준) 영업이익 $93.7B, 매출 $775.7B 로 영업이익률이 12.1% 다. [EV-amazon-014, EV-amazon-021]",
+            "영업이익이 나는데 현금흐름이 마이너스인 것은 벌면서 더 크게 투자하는 선택의 문제이고, 설비투자는 줄일 수 있는 지출이다. [EV-amazon-014, EV-amazon-013]",
+            "버티는 기간의 완충은 2026-06-30 현금및현금성자산 $78.2B 와 확정 미인출 여신 $37.5B 를 더한 $115.7B 이고, 연 소진 $11.6B 로 나눈 런웨이는 9.95년이다. [EV-amazon-012, EV-amazon-002, EV-amazon-010, EV-amazon-011, EV-amazon-013]",
+            "2028-11 만기 $15.0B 만 세면 런웨이는 8.0년, 여신을 모두 빼고 현금만 세면 6.7년이다. [EV-amazon-002, EV-amazon-012, EV-amazon-013]",
+            "약정 커버리지는 계약된 수입 $496B(원계약 1년 초과 계약의 미인식 약정)를 미개시 확정 약정 $267.3B(미개시 리스 $137.2B + 무조건 구매약정 $130.1B)로 나눈 1.856 이다. [EV-amazon-015, EV-amazon-016]",
+            "분자는 1년 이하 계약이 빠져 과소계상되고 분모는 5년 이후(Thereafter) 열까지 담아 과대계상되므로 커버리지는 보수적으로 낮게 나온다. [EV-amazon-015, EV-amazon-016]"
+          ],
+          "evidence_down": [
+            "최근 1년 잉여현금흐름은 영업현금흐름 $161.4B 에서 설비투자 $173.0B 를 뺀 값이 -$11.6B 다. [EV-amazon-013]",
+            "여신 $37.5B 는 2028-11 만기 무담보 리볼빙 $15.0B, 2026-10 만기이고 연장에 대주단 승인이 필요한 364일 리볼빙 $5.0B, 2026-09-30 까지 한 번만 인출할 수 있고 그 뒤 미인출 약정이 자동 소멸하는 지연인출 정기대출 $17.5B 로 이뤄진다. 세 시설 모두 2026-06-30 에 인출 잔액이 없었다. [EV-amazon-002, EV-amazon-010, EV-amazon-011]",
+            "지연인출 약정은 기준일 2026-10-06 전인 2026-09-30 에 미인출 약정으로서의 시한이 끝났고 364일 리볼빙도 2026-10 에 만기가 온다. [EV-amazon-011, EV-amazon-001, EV-amazon-010]"
+          ],
+          "evidence_ids": null
+        },
+        "after": {
+          "kind": "gate_inputs",
+          "score": null,
+          "inputs": {
+            "fcf_trend": "unknown",
+            "bep_retreat": "no",
+            "buffer_erosion": "no",
+            "direction_A": "unknown",
+            "direction_B": "unknown",
+            "coverage_comparable": "yes",
+            "operating_result_reviewed": "profit"
+          },
+          "evidence": [
+            "아마존 ⑨ 는 -2 다.",
+            "아마존은 ⑨ 게이트 1(본업이 버는가)을 통과한다.",
+            "게이트 2(최근 1년 잉여현금흐름)에서는 잉여현금흐름이 마이너스라 -2 에서 게이트 3 으로 간다.",
+            "게이트 3(버티는 기간)의 런웨이는 3년 이상으로 유지된다. 신용등급으로 추정한 조달 여력은 완충에 넣지 않는다.",
+            "여신을 어느 범위로 세어도 런웨이는 3년 이상이고 게이트 3 결론은 같다. 여신에 잔존 기간 요건을 둘지는 규칙 8절 미결 사항 C-23 으로 남아 있다.",
+            "게이트 4(미래 지출이 덮이는가)의 약정 커버리지는 1배 이상으로 유지된다. 계약된 수입과 미개시 확정 약정은 같은 2026-06-30 10-Q 에서 나와 비교 가능하다고 판정했다.",
+            "미개시 리스만 분모로 쓰면 3.615 이지만 게이트 4 가 묻는 것은 미래 지출 전체라서 구매약정을 합한 값을 쓴다."
+          ],
+          "evidence_up": [
+            "아마존은 최근 1년(2026-06-30 기준) 영업이익 $93.7B, 매출 $775.7B 로 영업이익률이 12.1% 다. [EV-amazon-014, EV-amazon-021]",
+            "영업이익이 나는데 현금흐름이 마이너스인 것은 벌면서 더 크게 투자하는 선택의 문제이고, 설비투자는 줄일 수 있는 지출이다. [EV-amazon-014, EV-amazon-013]",
+            "버티는 기간의 완충은 2026-06-30 현금및현금성자산 $78.2B 와 확정 미인출 여신 $37.5B 를 더한 $115.7B 이고, 연 소진 $11.6B 로 나눈 런웨이는 9.95년이다. [EV-amazon-012, EV-amazon-002, EV-amazon-010, EV-amazon-011, EV-amazon-013]",
+            "2028-11 만기 $15.0B 만 세면 런웨이는 8.0년, 여신을 모두 빼고 현금만 세면 6.7년이다. [EV-amazon-002, EV-amazon-012, EV-amazon-013]",
+            "약정 커버리지는 계약된 수입 $496B(원계약 1년 초과 계약의 미인식 약정)를 미개시 확정 약정 $267.3B(미개시 리스 $137.2B + 무조건 구매약정 $130.1B)로 나눈 1.856 이다. [EV-amazon-015, EV-amazon-016]",
+            "분자는 1년 이하 계약이 빠져 과소계상되고 분모는 5년 이후(Thereafter) 열까지 담아 과대계상되므로 커버리지는 보수적으로 낮게 나온다. [EV-amazon-015, EV-amazon-016]"
+          ],
+          "evidence_down": [
+            "최근 1년 잉여현금흐름은 영업현금흐름 $161.4B 에서 설비투자 $173.0B 를 뺀 값이 -$11.6B 다. [EV-amazon-013]",
+            "여신 $37.5B 는 2028-11 만기 무담보 리볼빙 $15.0B, 2026-10 만기이고 연장에 대주단 승인이 필요한 364일 리볼빙 $5.0B, 2026-09-30 까지 한 번만 인출할 수 있고 그 뒤 미인출 약정이 자동 소멸하는 지연인출 정기대출 $17.5B 로 이뤄진다. 세 시설 모두 2026-06-30 에 인출 잔액이 없었다. [EV-amazon-002, EV-amazon-010, EV-amazon-011]",
+            "지연인출 정기대출 $17.5B 는 2026-09-30 에 미인출 약정으로서의 시한이 끝났고, 364일 리볼빙 $5.0B 는 2026-10 에 만기가 온다. [EV-amazon-011, EV-amazon-001, EV-amazon-010]"
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-121",
+      "company_id": "amazon",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Amazon 은 Prime 요금 인상 뒤에도 구독 매출이 늘어난 가격 실측과 회수 루프(① 5), 다섯 자리 다각화(④ 5), Anthropic·OpenAI 에 건 지분 동맹(⑤ 4)으로 과점 20점이고, ② 는 패러다임 적응 한 경로로 3점, 함정은 최근 1년 잉여현금흐름 마이너스의 ⑨ −2 를 포함해 −6 으로 조정 14점, 1위다."
+      ],
+      "reason": "1차 리뷰 수정 묶음의 점수·순위와 ⑥ 성분을 기업 요약에 반영한다",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "Amazon 은 Prime 요금 인상 뒤에도 구독 매출이 늘어난 가격 실측과 회수 루프(① 5), 다섯 자리 다각화(④ 5), Anthropic·OpenAI 에 건 지분 동맹(⑤ 4)으로 과점 20점이고, ② 는 패러다임 적응 한 경로로 3점, 함정은 최근 1년 잉여현금흐름 마이너스의 ⑨ −2 를 포함해 −6 으로 조정 14점, 공동 1위다."
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "Amazon 은 Prime 요금 인상 뒤에도 구독 매출이 늘어난 가격 실측과 회수 루프(① 5), 다섯 자리 다각화(④ 5), Anthropic·OpenAI 에 건 지분 동맹(⑤ 4)으로 과점 20점이고, ② 는 패러다임 적응 한 경로로 3점, 함정은 최근 1년 잉여현금흐름 마이너스의 ⑨ −2 를 포함해 −6 으로 조정 14점, 공동 1위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Amazon 은 Prime 요금 인상 뒤에도 구독 매출이 늘어난 가격 실측과 회수 루프(① 5), 다섯 자리 다각화(④ 5), Anthropic·OpenAI 에 건 지분 동맹(⑤ 4)으로 과점 20점이고, ② 는 패러다임 적응 한 경로로 3점, 함정은 최근 1년 잉여현금흐름 마이너스의 ⑨ −2 를 포함해 −6 으로 조정 14점, 1위다."
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-122",
+      "company_id": "microsoft",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Microsoft 는 Microsoft 365 업무 채널의 전환비용과 16분기 가격 실측(① 5), 다섯 자리를 모두 가진 다각화(④ 5), 지분·편입 동맹(⑤ 4)으로 과점 21점을 쌓지만, OpenAI 의 Azure $250B 추가 구매 계약으로 조달 의존 고객 몫이 커진 ⑦ −2, 매출의 약 1.7배인 데이터센터 약정과 OpenAI 계약 잔고에 기댄 ⑧ −2, 밸류에이션 −3, 적자 깊이 −1 로 함정 −8 이라 조정 13점, 2위다."
+      ],
+      "reason": "1차 리뷰 수정 묶음의 점수·순위와 ⑥ 성분을 기업 요약에 반영한다",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "Microsoft 는 Microsoft 365 업무 채널의 전환비용과 16분기 가격 실측(① 5), 다섯 자리를 모두 가진 다각화(④ 5), 지분·편입 동맹(⑤ 4)으로 과점 21점을 쌓고, 함정은 밸류에이션 −3, 조달 의존 고객에 돈을 넣는 구조 −1, 매출의 약 1.7배인 미개시 데이터센터 리스·구매 약정(⑧ −2), 적자 깊이 −1 로 −7 이라 조정 14점, 공동 1위다."
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "Microsoft 는 Microsoft 365 업무 채널의 전환비용과 16분기 가격 실측(① 5), 다섯 자리를 모두 가진 다각화(④ 5), 지분·편입 동맹(⑤ 4)으로 과점 21점을 쌓고, 함정은 밸류에이션 −3, 조달 의존 고객에 돈을 넣는 구조 −1, 매출의 약 1.7배인 미개시 데이터센터 리스·구매 약정(⑧ −2), 적자 깊이 −1 로 −7 이라 조정 14점, 공동 1위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Microsoft 는 Microsoft 365 업무 채널의 전환비용과 16분기 가격 실측(① 5), 다섯 자리를 모두 가진 다각화(④ 5), 지분·편입 동맹(⑤ 4)으로 과점 21점을 쌓지만, OpenAI 의 Azure $250B 추가 구매 계약으로 조달 의존 고객 몫이 커진 ⑦ −2, 매출의 약 1.7배인 데이터센터 약정과 OpenAI 계약 잔고에 기댄 ⑧ −2, 밸류에이션 −3, 적자 깊이 −1 로 함정 −8 이라 조정 13점, 2위다."
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-123",
+      "company_id": "alphabet",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Alphabet 은 검색·지도·Gmail·YouTube 소비자 채널의 락인과 8분기 가격 실측(① 5), 독립 측정 상위 모델과 A2A 표준 선점(② 4), 다섯 자리 다각화(④ 5), Anthropic 의 Google Cloud 편입(⑤ 4)으로 과점 20점이고, ③ 은 AI 귀속 지표의 가속이 확인되지 않아 2점이며, 매출의 약 2배인 구매 약정·미개시 리스(⑧ −3)를 포함한 함정 −8 로 조정 12점, 3위다."
+      ],
+      "reason": "1차 리뷰 수정 묶음의 점수·순위와 ⑥ 성분을 기업 요약에 반영한다",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "Alphabet 은 검색·지도·Gmail·YouTube 소비자 채널의 락인과 8분기 가격 실측(① 5), 독립 측정 상위 모델과 A2A 표준 선점(② 4), 다섯 자리 다각화(④ 5), Anthropic 의 Google Cloud 편입(⑤ 4)으로 과점 20점이고, ③ 은 AI 귀속 지표의 가속이 확인되지 않아 2점이며, 매출의 약 1.8배인 장기 공급·미개시 리스 약정(⑧ −2)을 포함한 함정 −7 로 조정 13점, 3위다."
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "Alphabet 은 검색·지도·Gmail·YouTube 소비자 채널의 락인과 8분기 가격 실측(① 5), 독립 측정 상위 모델과 A2A 표준 선점(② 4), 다섯 자리 다각화(④ 5), Anthropic 의 Google Cloud 편입(⑤ 4)으로 과점 20점이고, ③ 은 AI 귀속 지표의 가속이 확인되지 않아 2점이며, 매출의 약 1.8배인 장기 공급·미개시 리스 약정(⑧ −2)을 포함한 함정 −7 로 조정 13점, 3위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Alphabet 은 검색·지도·Gmail·YouTube 소비자 채널의 락인과 8분기 가격 실측(① 5), 독립 측정 상위 모델과 A2A 표준 선점(② 4), 다섯 자리 다각화(④ 5), Anthropic 의 Google Cloud 편입(⑤ 4)으로 과점 20점이고, ③ 은 AI 귀속 지표의 가속이 확인되지 않아 2점이며, 매출의 약 2배인 구매 약정·미개시 리스(⑧ −3)를 포함한 함정 −8 로 조정 12점, 3위다."
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-124",
+      "company_id": "openai",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "OpenAI 는 ARC 순위표 1위 모델과 패러다임 적응·표준 선점(② 4), 회사 기준 연환산 매출의 재가속(③ 3)으로 과점 12점이지만, 소비자 채널에서 회수 루프와 대체 공급이 실패해 ① 0점이며, 구속력이 확인된 클라우드 약정만으로도 매출의 약 14배인 의존(⑧ −3), 비상장 밸류에이션 −4, 기준일에 아직 고객인 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 공동 12위다."
+      ],
+      "reason": "1차 리뷰 수정 묶음의 점수·순위와 ⑥ 성분을 기업 요약에 반영한다",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "OpenAI 는 ARC 순위표 1위 모델과 패러다임 적응·표준 선점(② 4), 회사 기준 연환산 매출의 재가속(③ 3)으로 과점 12점이지만, 소비자 채널에서 회수 루프와 대체 공급이 실패해 ① 0점이며, 매출의 수십 배에 이르는 컴퓨트 약정(⑧ −4), 비상장 밸류에이션 −4, 기준일에 아직 고객인 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −12 라 조정 0점, 13위다."
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "OpenAI 는 ARC 순위표 1위 모델과 패러다임 적응·표준 선점(② 4), 회사 기준 연환산 매출의 재가속(③ 3)으로 과점 12점이지만, 소비자 채널에서 회수 루프와 대체 공급이 실패해 ① 0점이며, 매출의 수십 배에 이르는 컴퓨트 약정(⑧ −4), 비상장 밸류에이션 −4, 기준일에 아직 고객인 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −12 라 조정 0점, 13위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "OpenAI 는 ARC 순위표 1위 모델과 패러다임 적응·표준 선점(② 4), 회사 기준 연환산 매출의 재가속(③ 3)으로 과점 12점이지만, 소비자 채널에서 회수 루프와 대체 공급이 실패해 ① 0점이며, 구속력이 확인된 클라우드 약정만으로도 매출의 약 14배인 의존(⑧ −3), 비상장 밸류에이션 −4, 기준일에 아직 고객인 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 공동 12위다."
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-125",
+      "company_id": "anthropic",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Anthropic 은 종합 지수 1위 모델(② 4)과 AWS·Google 재판매 동맹(⑤ 3)으로 과점 12점이지만(거래 채널의 정가 인하와 좁은 성능 격차로 ① 1점, 2분기 영업이익 전환 보도로 별도 수익모델은 통과했으나 연환산 매출 성장률이 꺾여 ③ 2점), 비상장 밸류에이션 −4, 모델 경쟁자 넷에게서 컴퓨트를 빌리는 의존 −3, 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 공동 12위다."
+      ],
+      "reason": "1차 리뷰 수정 묶음의 점수·순위와 ⑥ 성분을 기업 요약에 반영한다",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "Anthropic 은 종합 지수 1위 모델(② 4)과 AWS·Google 재판매 동맹(⑤ 3)으로 과점 12점이지만(거래 채널의 정가 인하와 좁은 성능 격차로 ① 1점, 2분기 영업이익 전환 보도로 별도 수익모델은 통과했으나 연환산 매출 성장률이 꺾여 ③ 2점), 비상장 밸류에이션 −4, 모델 경쟁자 넷에게서 컴퓨트를 빌리는 의존 −3, 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 12위다."
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "Anthropic 은 종합 지수 1위 모델(② 4)과 AWS·Google 재판매 동맹(⑤ 3)으로 과점 12점이지만(거래 채널의 정가 인하와 좁은 성능 격차로 ① 1점, 2분기 영업이익 전환 보도로 별도 수익모델은 통과했으나 연환산 매출 성장률이 꺾여 ③ 2점), 비상장 밸류에이션 −4, 모델 경쟁자 넷에게서 컴퓨트를 빌리는 의존 −3, 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 12위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Anthropic 은 종합 지수 1위 모델(② 4)과 AWS·Google 재판매 동맹(⑤ 3)으로 과점 12점이지만(거래 채널의 정가 인하와 좁은 성능 격차로 ① 1점, 2분기 영업이익 전환 보도로 별도 수익모델은 통과했으나 연환산 매출 성장률이 꺾여 ③ 2점), 비상장 밸류에이션 −4, 모델 경쟁자 넷에게서 컴퓨트를 빌리는 의존 −3, 조달 의존 고객 Cursor 의 몫을 좁힐 실측이 없어 큼으로 둔 ⑦ −2, 적자 깊이 −2 로 함정 −11 이라 조정 1점, 공동 12위다."
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
+    },
+    {
+      "proposal_id": "PRP-126",
+      "company_id": "alibaba",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Alibaba 는 Zhenwu 칩·Qwen 모델·클라우드·AI 유통·커머스 다섯 자리를 모두 가진 다각화(④ 5)로 과점 17점이지만, 최근 1년 매출 성장 4.4%(−3)와 2026-10-09 종가로 25배를 넘은 최근 1년 PER(−1), 세전이익의 약 70% 가 본업 밖에서 나온 입력 신뢰도 감점(−1)을 더한 밸류에이션 −5, 미국의 첨단 GPU 수출 금지·1260H 등재와 VIE 구조라는 지정학 의존(⑧ −3), 최근 1년 잉여현금흐름 마이너스와 1~3년 런웨이로 게이트를 모두 지난 ⑨ −4 로 함정 −12 라 조정 5점, 공동 8위다."
+      ],
+      "reason": "1차 리뷰 수정 묶음의 점수·순위와 ⑥ 성분을 기업 요약에 반영한다",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "Alibaba 는 Zhenwu 칩·Qwen 모델·클라우드·AI 유통·커머스 다섯 자리를 모두 가진 다각화(④ 5)로 과점 17점이지만, 2026-10-09 종가로 최근 1년 PER 이 25배를 넘은 밸류에이션 −5, 미국의 첨단 GPU 수출 금지·1260H 등재와 VIE 구조라는 지정학 의존(⑧ −3), 최근 1년 잉여현금흐름 마이너스와 1~3년 런웨이로 게이트를 모두 지난 ⑨ −4 로 함정 −12 라 조정 5점, 공동 8위다."
+        ]
+      },
+      "proposed_by": "claude (사용자 위임 2026-10-12)",
+      "proposed_at": "2026-10-12",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "Alibaba 는 Zhenwu 칩·Qwen 모델·클라우드·AI 유통·커머스 다섯 자리를 모두 가진 다각화(④ 5)로 과점 17점이지만, 2026-10-09 종가로 최근 1년 PER 이 25배를 넘은 밸류에이션 −5, 미국의 첨단 GPU 수출 금지·1260H 등재와 VIE 구조라는 지정학 의존(⑧ −3), 최근 1년 잉여현금흐름 마이너스와 1~3년 런웨이로 게이트를 모두 지난 ⑨ −4 로 함정 −12 라 조정 5점, 공동 8위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Alibaba 는 Zhenwu 칩·Qwen 모델·클라우드·AI 유통·커머스 다섯 자리를 모두 가진 다각화(④ 5)로 과점 17점이지만, 최근 1년 매출 성장 4.4%(−3)와 2026-10-09 종가로 25배를 넘은 최근 1년 PER(−1), 세전이익의 약 70% 가 본업 밖에서 나온 입력 신뢰도 감점(−1)을 더한 밸류에이션 −5, 미국의 첨단 GPU 수출 금지·1260H 등재와 VIE 구조라는 지정학 의존(⑧ −3), 최근 1년 잉여현금흐름 마이너스와 1~3년 런웨이로 게이트를 모두 지난 ⑨ −4 로 함정 −12 라 조정 5점, 공동 8위다."
+          ]
+        }
+      },
+      "decided_by": "claude (사용자 위임 2026-10-12)",
+      "decided_at": "2026-10-12",
+      "decision_note": null
     }
   ]
 }
