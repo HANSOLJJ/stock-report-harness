@@ -168,6 +168,7 @@ def cmd_init(args: argparse.Namespace) -> int:
         force=args.force,
         from_run=args.from_run,
         add_companies=add_companies,
+        change_type=args.change_type,
         carry_decisions=not args.no_carry_decisions,
     )
     claim_lock(args.slug, "init", take_lock=args.take_lock)
@@ -667,6 +668,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--by")
     p.add_argument("--price-as-of")
     p.add_argument("--info-cutoff")
+    p.add_argument("--change-type", choices=["baseline-recompute", "rule-change", "fact-update", "correction", "company-add"],
+                   help="history.csv 에 남길 변경 사유(규칙 5절의 원인 구분). 규칙 버전을 올린 첫 실행은 rule-change")
     p.add_argument("--force", action="store_true")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_init)

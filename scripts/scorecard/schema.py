@@ -60,6 +60,8 @@ MISSING_TYPE_FOR_DISCLOSURE_POLICY = "not_disclosed_confirmed"
 # 2026-10-12 규칙 v2.1: ④ 는 층별 보유표와 AI 무관 매출 몫(survival), ⑧ 은 네 축(axes)으로 계산한다.
 JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs", "lockin", "survival", "axes"}
 JUDGMENT_STATUSES = {"new", "carried"}
+# 2026-10-12(TODO 9): 실행의 변경 사유(history.csv change_type). 규칙 변경·실적과 사실 변화(가격 포함)·정정·기업 추가·기준선 재계산.
+RUN_CHANGE_TYPES = {"baseline-recompute", "rule-change", "fact-update", "correction", "company-add"}
 TRI = {"pass", "partial", "fail", "unknown"}
 YES_NO = {"yes", "no", "unknown"}
 PASS_FAIL = {"pass", "fail", "unknown"}
@@ -1976,10 +1978,14 @@ def validate_run(payload: Any, slug: str | None = None) -> dict[str, Any]:
         ["schema", "run_id", "report_type", "title", "as_of", "rule_version", "baseline_id", "companies", "decisions", "created_at", "purpose", "assumptions"],
         "run.json",
         optional=["price_as_of", "info_cutoff", "reference_companies", "rule_hash", "note", "sources_file", "continued_from",
-                  "display_names"],
+                  "display_names", "change_type"],
     )
     _require(payload["schema"] == "scorecard.run/1", "run.json: schema 불일치")
     # 2026-10-12: 그 실행에서만 쓰는 표시 이름 {company_id: 이름}. 실행 대상 기업만 받는다(engine.companies_for_run).
+    # 2026-10-12(TODO 9): history.csv 의 변경 사유. 넣을 길이 없어 늘 baseline-recompute 로 찍혔다. 규칙 5절의 원인 구분과 맞춘다.
+    if "change_type" in payload:
+        _require(payload["change_type"] in RUN_CHANGE_TYPES,
+                 f"run.json: change_type 은 {sorted(RUN_CHANGE_TYPES)} 중 하나 ({payload['change_type']!r})")
     if "display_names" in payload:
         names = payload["display_names"]
         _require(isinstance(names, dict) and all(isinstance(k, str) and isinstance(v, str) and v.strip() for k, v in names.items()),

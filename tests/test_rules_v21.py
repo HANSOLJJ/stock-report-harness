@@ -618,6 +618,37 @@ class SurvivalReportTest(unittest.TestCase):
         self.assertEqual(render_draft(ctx, results, scores, triggers), committed)
 
 
+class ChangeTypeTest(unittest.TestCase):
+    """TODO 9: history.csv 의 변경 사유를 실행 설정에 넣을 길."""
+
+    def test_run_schema(self):
+        from scorecard.schema import validate_run
+        run = json.loads((ROOT / "output" / "ai-scorecard-2026-10-recheck" / "run.json").read_text(encoding="utf-8"))
+        for value in ("rule-change", "fact-update", "correction", "company-add", "baseline-recompute"):
+            validate_run({**run, "change_type": value})
+        with self.assertRaisesRegex(SchemaError, "change_type"):
+            validate_run({**run, "change_type": "rules"})
+        validate_run(run)                               # 없어도 된다(옛 실행)
+
+    def test_cli_accepts_option(self):
+        import io
+        from contextlib import redirect_stderr
+        sys.path.insert(0, str(ROOT / "scripts"))
+        import scorecard_cli
+        with redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+            scorecard_cli.main(["init", "ai-scorecard-x", "--change-type", "nope"])
+
+    def test_history_row_uses_it(self):
+        from scorecard.render_csv import history_rows
+        scores = dict(zip(("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"), (4, 4, 3, 4.5, 4, -2, -1, -2, 0)))
+        company_row = {"company_id": "acme", "moat": 19.5, "trap": -5, "total": 14.5, "rank": 1, "complete": True,
+                       "carried_factors": [], "factors": {f: {"score": s} for f, s in scores.items()}}
+        res = {"run_id": "r", "as_of": "2026-11-01", "rule_version": "v2.1", "baseline_id": "b", "results_hash": "h",
+               "companies": [company_row]}
+        rows = history_rows(res, {"approval_id": "a", "approved_at": "x"}, "rh", "rule-change")
+        self.assertEqual((rows[0]["change_type"], rows[0]["F4"], rows[0]["total"]), ("rule-change", 4.5, 14.5))
+
+
 class HalfStepTest(unittest.TestCase):
     def test_sum_keeps_ints_and_halves(self):
         def fr(score):

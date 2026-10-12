@@ -241,6 +241,7 @@ def init_run(
     from_run: str | None = None,
     add_companies: list[str] | None = None,
     carry_decisions: bool = True,
+    change_type: str | None = None,
 ) -> dict[str, Path]:
     if not slug.startswith("ai-scorecard-"):
         raise SchemaError("scorecard slug 는 `ai-scorecard-` 로 시작해야 한다 (예: ai-scorecard-2026-09-baseline)")
@@ -320,6 +321,9 @@ def init_run(
         "purpose": purpose,
         "assumptions": inputs.assumptions,
     }
+    # 2026-10-12(TODO 9): 변경 사유를 넣으면 history.csv 에 그대로 찍힌다. 안 넣으면 지금처럼 빌더가 baseline-recompute 로 적는다.
+    if change_type is not None:
+        run["change_type"] = change_type
     if inputs.continued_from is not None:
         run["continued_from"] = inputs.continued_from
         _check_carried_refs(from_run, slug, inputs, registry)
