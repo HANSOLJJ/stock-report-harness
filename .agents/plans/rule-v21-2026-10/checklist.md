@@ -38,9 +38,9 @@
   - [x] C1-a 수집기 분기 시계열(capex_quarterly·finance_lease_additions_quarterly, 바스켓만) + 스키마 지표 → 테스트 → 커밋
   - [x] C1-b 수동 지표(residual_value_guarantee·supplier_* 셋·token_price_index, `_market` ID), from-run·research.md → 테스트
   - [x] C1-c regime.py 계산 + v2.1 policies.regime_indicators + 초안·HTML 국면 지표 절 + rules.md → 캐시 자료 미리보기 → 테스트 → 커밋
-- [ ] 2-C-2 모집단 밖 회사·클라우드 세그먼트 마진
+- [x] 2-C-2 모집단 밖 회사·클라우드 세그먼트 마진
   - [x] 마진 두 수열(NVIDIA 총마진 수집, 클라우드 세그먼트 수동 관측), 달력 분기를 분기 가운데 날짜로 맞춤
-  - [ ] 참고 회사(CoreWeave·AMD) — 사용자 결정 대기
+  - [x] 참고 회사(CoreWeave·AMD) — 사용자 보류(2026-10-12), TODO 18 로 넘김
 
 ## 운영
 - [x] .claude/agents/*.md model: sonnet, AGENTS.md 「서브에이전트 모델」, score-review·score-research 에 분담
