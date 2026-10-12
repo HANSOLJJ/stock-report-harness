@@ -622,6 +622,31 @@ class SurvivalReportTest(unittest.TestCase):
         self.assertEqual(render_draft(ctx, results, scores, triggers), committed)
 
 
+@unittest.skipUnless((ROOT / "output" / "ai-scorecard-2026-10-recheck" / "results.json").is_file(), "recheck 실행 없음")
+class F6MethodTextTest(unittest.TestCase):
+    """v2.1 규칙이면 ⑥ 방법 문장이 성장 조정 PER·이익 조정·비상장 성장 조정 배수를 적고, 한계 절에 이익 조정 가정과 구간표 복귀를 적는다."""
+
+    def test_v21_text_and_v20_unchanged(self):
+        import dataclasses
+        from scorecard import render_common as rc
+        from scorecard.engine import load_context
+        ctx = load_context("ai-scorecard-2026-10-recheck")
+        results = json.loads((ROOT / "output" / "ai-scorecard-2026-10-recheck" / "results.json").read_text(encoding="utf-8"))
+        old = "\n".join(rc.method_lines(ctx, results))
+        self.assertIn("**PER** — 시가총액을 최근 1년 순이익으로 나눈다", old)
+        new_ctx = dataclasses.replace(ctx, rules=V21)
+        new = "\n".join(rc.method_lines(new_ctx, results))
+        self.assertIn("**성장 조정 PER**", new)
+        self.assertIn("1 미만이면 0 · 2 미만이면 -1 · 4 미만이면 -2 · 그 밖은 -3", new)
+        self.assertIn("**이익 조정**", new)
+        self.assertNotIn("**PER** — 시가총액을 최근 1년 순이익으로 나눈다", new)
+        self.assertNotIn("한 칸 올려 준다", new)
+        lim = "\n".join(rc.limitations(new_ctx))
+        self.assertIn("**⑥ 이익 조정은 가정을 담는다.**", lim)
+        self.assertIn("**비상장 ⑥ 은 Anthropic, OpenAI 모두 P/S 구간표로 매겼다.**", lim)   # recheck 에는 보정 매출 관측이 없다
+        self.assertNotIn("이익 조정은 가정", "\n".join(rc.limitations(ctx)))
+
+
 class RuleChangeInheritTest(unittest.TestCase):
     """v2.0 실행의 새 판단을 v2.1 로 이어받을 때, 새 규칙이 받지 않는 형식(④⑧ score)만 carried 로 넘어간다."""
 

@@ -1542,6 +1542,61 @@ def _steps(step: int) -> str:
     return "감점이 없다" if int(step) == 0 else f"{_count(step)} 칸을 깎는다"
 
 
+def _f6_growth_adjusted_lines(ctx: Any, f6p: dict[str, Any], params: dict[str, Any], nonop: dict[str, Any], p4: dict[str, Any],
+                              tol: float, newly_names: list[str], newly_params: list[str], newly_by_basis: bool,
+                              population_count: int, newly_listed_count: int, f6_judgment_count: int) -> list[str]:
+    """규칙 v2.1 ⑥ 방법 문장. 산식·경계·문턱을 규칙 JSON 에서 읽는다(숫자를 박지 않는다)."""
+    p1 = params["P1"]
+    ga = p1["growth_adjusted"]
+    adj = p1.get("earnings_adjustment") or {}
+    lo, hi = adj.get("effective_tax_rate_range") or (0, 0.5)
+    floor = next((t.get("floor") for t in f6p["tracks"].values() if "P1" in (t.get("parameters") or [])), None)
+    pga = f6p.get("private_growth_adjusted") or {}
+    private_bands = (f6p.get("private_bands") or {}).get("bands") or []
+    p3 = params.get("P3") or {}
+    lines = [
+        "**⑥ 가격은 지금 값이 미래 성장을 얼마나 먼저 치렀는지를 본다.** 상장사는 성장 조정 PER 과 EV/매출을 재서 더하고, 마지막에 "
+        "입력을 믿을 수 있는지로 한 칸을 조정한다.",
+        "  - **아홉 항목 가운데 사람이 판단을 적지 않는 것은 이 항목 하나뿐이다.** 여기 들어가는 값은 모두 등록된 관측이고, 어느 회사가 "
+        "어떤 잣대를 받는지도 관측의 기간 단위가 정한다."
+        + (f" 판단 기록에는 비상장 {_count(f6_judgment_count)} 곳의 점수가 남아 있지만 **이번 규칙은 그 점수를 쓰지 않고 관측에서 다시 계산한다.**"
+           if f6_judgment_count else ""),
+        f"  - **성장 조정 PER** — 시가총액을 조정 순이익으로 나눈 PER 을 최근 1년 매출 성장률(%)로 나눈다. {_band_text(p1['bands'], '')}. "
+        f"조정 순이익이 0 이하이면 {ga['nonpositive_earnings_score']}, 매출 성장이 {ga['growth_floor']:.0%} 미만이면 {ga['below_floor_score']} 이다. "
+        "이익이 나빠져서 이 점수가 좋아지는 일은 없다. 매출 성장이 이익 성장을 대신한다는 한계가 있다.",
+    ]
+    if adj:
+        lines.append(f"  - **이익 조정** — 조정 순이익은 순이익에서 지분증권 평가·처분 손익을 세후로 뺀 값이다(실효세율 = 공시 법인세 ÷ 세전이익). "
+                     "회사 전체 실효세율을 그 손익에 적용하는 것은 조정 가정이다. 평가손익·법인세·세전이익 관측이 없거나 실효세율이 "
+                     f"{lo:.0%}~{hi:.0%} 밖이면 보고 순이익을 쓰고, 그때는 아래 입력 신뢰도의 영업외 조건이 살아 있다.")
+    lines += [
+        f"  - **EV/매출** — 시가총액에서 순현금을 뺀 값을 최근 1년 매출로 나눈다. {_band_text(params['P2']['bands'], '배')}.",
+        f"  - **입력 신뢰도** — 앞의 것들을 더한 값에서 한 칸을 더 깎는 자리다. 이익 조정을 하지 못한 회사는 **영업외 손익의 크기가** 세전이익의 "
+        f"{float(nonop['threshold']):.0%} **이상**이면 걸리고, 최근 1년이 아닌 기간을 썼거나 비교할 전년이 없거나 자료가 너무 오래됐어도 걸린다."
+        + (f" 여러 개가 걸려도 {_count(p4['cap_steps'])} 칸까지만 깎는다." if int(p4["cap_steps"]) else ""),
+    ]
+    if floor is not None:
+        lines.append(f"  - 상장사 합은 {floor} 아래로 내려가지 않는다.")
+    if newly_names and p3.get("bands"):
+        lines.append("  - **상장한 지 얼마 안 돼 전년 1년치 매출을 복원할 수 없는 회사는 " + "·".join(newly_names) + " 둘로 소계를 낸다.** "
+                     "매출 성장은 가장 최근 분기를 전년 같은 분기와 견주고 "
+                     + " · ".join(f"{b['lower']:.0%} 이상이면 {b['score']}" if b.get("lower") is not None else f"그 아래는 {b['score']}"
+                                  for b in p3["bands"])
+                     + f" 이다. 이번 {population_count}개사 중 {_count(newly_listed_count)} 곳이 그 경우다."
+                     + (" 어느 회사가 여기 드는지는 그 회사 매출 관측이 어느 기간 단위인지로 가른다." if newly_by_basis else ""))
+    lines.append(f"  - 구간 경계에서 {tol:.0%} 안에 든 값에는 표시를 달지만 **점수는 바꾸지 않는다.**")
+    if (f6p.get("net_cash") or {}).get("status") == "working_definition":
+        lines.append("  - **EV/매출의 순현금은 아직 확정되지 않은 작업 정의로 잰다.** 정의가 확정되면 EV/매출을 다시 계산한다.")
+    if pga:
+        lines.append(f"  - **비상장사는 P/S(기업가치 ÷ 보정 매출)를 보정 매출 성장률(%)로 나눈다.** {_band_text(pga['bands'], '')}. "
+                     f"성장이 {pga['growth_floor']:.0%} 미만이면 {pga['below_floor_score']} 이다. 보정 매출 성장은 실측 매출의 전년 대비이고 "
+                     "ARR·런레이트는 쓰지 않는다. **보정 매출과 그 전년 값 관측이 없으면 P/S 구간표("
+                     + " · ".join(f"{b['lower']:g}배 이상이면 {b['score']}" if b.get("lower") is not None else f"그 아래는 {b['score']}"
+                                  for b in private_bands)
+                     + ")로 점수를 내고 한 칸 승격 보정은 없다.** 이 배수는 상장사의 PER 과 직접 견줄 수 없는 수치다.")
+    return lines
+
+
 def _band_text(bands: list[dict[str, Any]], unit: str = "%") -> str:
     """구간표를 문장으로. 숫자를 박지 않고 규칙의 `bands` 를 그대로 읽는다."""
     parts = []
@@ -1890,6 +1945,11 @@ def method_sections(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None,
     ] if ctx.rules.f6_mode == "parameters" else [
         "**⑥ 가격은 지금 값이 비싼지를 본다.** 상장사는 예상 PER 구간으로, 비상장사는 배수를 계산하되 점수는 정성 예외로 정한다.",
     ])
+    # 2026-10-12 규칙 v2.1 첫 실행 재무 계산 리뷰: 위 문장은 P1 PER·P3 매출 성장·비상장 한 칸 승격을 적어 v2.1 계산과 달랐다.
+    # 규칙이 성장 조정 P1 을 선언하면 그 산식·이익 조정·비상장 성장 조정 배수를 규칙 값에서 읽어 적는다.
+    if ctx.rules.f6_mode == "parameters" and (params.get("P1") or {}).get("growth_adjusted"):
+        f6 = _f6_growth_adjusted_lines(ctx, f6p, params, nonop, p4, tol, newly_names, newly_params, newly_by_basis,
+                                       population_count, newly_listed_count, f6_judgment_count)
 
     g1 = [
         "**⑨ 적자 깊이는 관문 네 개를 차례로 지난다.** 앞 관문의 결과에 따라 뒤 관문이 달라진다.",
@@ -2122,6 +2182,26 @@ def limitations(ctx: Any) -> list[str]:
             # 취소한 문장은 빼고, 자를 때 강조·코드 표시가 반쯤 남지 않게 기호를 걷어 낸 뒤 자른다.
             q = re.sub(r"~~.*?~~\s*", "", q).replace("**", "").replace("`", "").strip()
             out.append("  - " + (q if len(q) <= 160 else q[:157] + "…"))
+    # 2026-10-12 규칙 v2.1 첫 실행 재무 계산 리뷰: 이익 조정의 가정과 비상장 ⑥ 의 구간표 복귀가 한계 절에 없었다.
+    adj = ((f6.get("parameters") or {}).get("P1") or {}).get("earnings_adjustment")
+    if adj:
+        listed = [c for c in ctx.run["companies"] if (ctx.companies.get(c) or {}).get("listed")]
+        with_gains = {o["company_id"] for o in ctx.observations
+                      if o["metric"] == adj["gains_metric"] and o["status"] in ("verified", "legacy_unverified") and o.get("value") is not None}
+        missing = [ctx.companies[c]["display_name"] for c in listed if c not in with_gains]
+        out.append("**⑥ 이익 조정은 가정을 담는다.** 지분증권 평가·처분 손익에 회사 전체 실효세율을 적용하고, 그 손익의 비지배 몫은 미미하다고 본다. "
+                   "평가손익을 같은 정의로 가를 수 있는 회사만 조정했고"
+                   + (f", 나머지({', '.join(missing)})는 보고 순이익을 썼다(신규 상장 트랙은 PER 을 재지 않는다)." if missing else "."))
+    pga = f6.get("private_growth_adjusted")
+    if pga:
+        rev, prior = pga["growth_inputs"]
+        have = {(o["company_id"], o["metric"]) for o in ctx.observations
+                if o["status"] in ("verified", "legacy_unverified") and o.get("value") is not None}
+        fallback = [ctx.companies[c]["display_name"] for c in ctx.run["companies"]
+                    if not (ctx.companies.get(c) or {}).get("listed") and not {(c, rev), (c, prior)} <= have]
+        if fallback:
+            out.append(f"**비상장 ⑥ 은 {', '.join(fallback)} 모두 P/S 구간표로 매겼다.** 성장 조정 배수에 필요한 실측 보정 매출과 그 전년 값이 "
+                       "같은 등급의 공개 자료로 확인되지 않아서다. 성장 조정 배수로 매기면 점수가 크게 달라질 수 있다.")
     # 2026-10-06 사용자 지시: 본문 한계 절에는 이해상충 고지만 둔다. 재검토 약속(규칙 긴장 목록)은 감사 기록으로 보낸다.
     out += [line for line in conflict_lines(ctx) if line.startswith("**이해상충**")]
     return out
