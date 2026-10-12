@@ -77,3 +77,15 @@
 - 장부 밖 설비 잔존가치 보증(`residual_value_guarantee`, Meta 특수목적법인 같은 것)은 설비투자에 더하지 않고 따로 보인다. NVIDIA 공급자 지원은 수동 관측 셋
   (`supplier_guarantees`·`supplier_customer_investments`·`supplier_capacity_buyback`)의 합 ÷ revenue_ttm 이고, 셋 중 하나라도 없으면 합을 만들지 않는다
   (미확인을 0 으로 보지 않음).
+
+## 2-C-2 조사·결정(2026-10-12)
+- 마진 두 수열: NVIDIA 총마진은 companyfacts 분기 사실(GrossProfit·Revenues, 3개월 단독 태깅)로 만든다. `collect --kind facts` 가 규칙
+  `regime_indicators.supplier_support.companies` 회사에 한해 `gross_profit_quarterly`·`revenue_quarterly` 를 낸다.
+- 클라우드 세그먼트 영업이익은 세그먼트 차원(SegmentsAxis) 사실이라 companyfacts·frames API 에 없다. 제출본 XBRL 인스턴스를 파싱하는 길은 회사마다
+  축·멤버 이름이 달라 깨지기 쉬워 쓰지 않고, 세그먼트 매출·영업이익을 수동 관측(`cloud_segment_revenue_quarterly`·
+  `cloud_segment_operating_income_quarterly`, basis.segment 필수)으로 받아 프로그램이 이익률을 계산한다. 세그먼트는 규칙에 고정한다
+  (Amazon AWS · Alphabet Google Cloud · Microsoft Intelligent Cloud. Oracle 은 클라우드를 라이선스와 묶은 cloud and license 세그먼트로만 공시해 뺀다).
+- 두 수열은 비용 범위가 달라(총마진 vs 세그먼트 영업이익률) 나누지 않고 달력 분기 열로 나란히 보인다. ai_7 의 M_Spread 비율·문턱 2.0 은 쓰지 않는다.
+- 모집단 밖 참고 회사(CoreWeave·AMD)는 레지스트리 의미를 바꾸는 일(채점하지 않는 회사의 등록, 이어받기·수집·조사 문서의 회사 범위)이라 사용자 결정을
+  받은 뒤에 한다.
+- 달력 분기 맞춤을 '끝 달' 에서 '분기 가운데 날짜' 로 바꿨다(2-C-2 중). NVIDIA 분기는 1·4·7·10월 말에 끝나 5~7월 분기가 끝 달 기준으로는 3분기가 되어 AWS 2분기와 어긋났다. Oracle(3~5월 → 2분기)은 두 기준이 같다.

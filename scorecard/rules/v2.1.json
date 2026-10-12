@@ -1765,7 +1765,7 @@
         "quarters_kept": 8,
         "min_quarters": 6,
         "flat_band": 0.01,
-        "calendar_alignment": "회계 분기 끝 달이 속한 달력 분기에 넣는다(Oracle 8·11·2·5월 → 3·4·1·2분기). 바스켓 합은 바스켓 회사가 모두 값이 있는 분기만 더한다.",
+        "calendar_alignment": "회계 분기의 가운데 날짜가 속한 달력 분기에 넣는다(Oracle 3~5월 → 2분기, NVIDIA 5~7월 → 2분기). 바스켓 합은 바스켓 회사가 모두 값이 있는 분기만 더한다.",
         "note": "AI 컴퓨트를 사는 회사의 분기 설비투자. 사는 쪽 금융리스 취득 자산은 현금 설비투자에 더하고(그 회사의 금융리스 분기 값이 필요한 분기에 모두 있을 때만), 장부 밖 설비 잔존가치 보증은 더하지 않고 따로 보인다. 파는 쪽 보증·출자·되사기는 산 회사 설비투자와 겹치므로 더하지 않고 공급자 지원 비중으로 잰다.",
         "consumers": [
           "stages._collect_facts → collect_facts.quarterly_observations(바스켓 회사만, quarters_kept 개 분기)",
@@ -1782,6 +1782,11 @@
         "metric": "token_price_index",
         "label": "SDLLMTK(Silicon Data LLM 토큰 지출 지수, 사용량 가중 100만 토큰당 달러)",
         "caveat": "공개 페이지는 최신 값 하나만 보여 실행마다 값·날짜·출처를 수동 관측으로 적어 한 점씩 쌓는다. 하락은 가격 인하와 싼 모델로의 이동(구성 변화)이 섞인 값이고, 수요가 줄었다는 뜻으로 바로 읽지 않는다."
+      },
+      "margins": {
+        "cloud_segments": {"amazon": "AWS", "alphabet": "Google Cloud", "microsoft": "Intelligent Cloud"},
+        "quarters_shown": 4,
+        "note": "마진 두 수열은 공급자(NVIDIA) 분기 총마진과 클라우드 세그먼트 분기 영업이익률을 달력 분기로 나란히 보인다. 비용 범위가 달라(총마진과 세그먼트 영업이익률) 둘을 나누지 않는다. 클라우드 세그먼트 값은 세그먼트 공시를 수동 관측으로 적고, Oracle 은 클라우드를 라이선스와 묶은 세그먼트(cloud and license)로만 공시해 같은 정의의 값이 없어 빠진다."
       },
       "trigger_conditions": [
         {

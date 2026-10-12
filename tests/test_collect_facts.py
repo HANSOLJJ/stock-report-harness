@@ -265,7 +265,9 @@ class CollectStageTest(unittest.TestCase):
 
 
 class BasketStageTest(unittest.TestCase):
-    """규칙에 국면 지표 바스켓이 있을 때만, 바스켓 회사에만 분기 관측을 낸다."""
+    """규칙에 국면 지표 바스켓이 있을 때만, 바스켓 회사에만 분기 관측을 낸다. 공급자(NVIDIA)는 매출총이익·매출 분기 값만 낸다."""
+
+    extra: dict = {}
 
     def run_collect(self, rule_version: str) -> list[dict]:
         box = Sandbox(("meta", "nvidia"), rule_version=rule_version)
@@ -273,7 +275,7 @@ class BasketStageTest(unittest.TestCase):
         registry.set_company_field("meta", "cik", 1326801, path=box.companies)
         files = Path(tempfile.mkdtemp())
         for name in ("CIK0001326801_META.json", "CIK0001045810_NVDA.json"):
-            (files / name).write_text(json.dumps(doc(**{OCF: CAL, CAPEX: CHAIN, TAX: CAL})), encoding="utf-8")
+            (files / name).write_text(json.dumps(doc(**{OCF: CAL, CAPEX: CHAIN, TAX: CAL, **self.extra.get(name, {})})), encoding="utf-8")
         stages.collect(SLUG, kinds=("facts",), from_file=str(files), now=NOW)
         return load_json_strict(box.run_dir / "observations.json")["items"]
 
@@ -283,6 +285,13 @@ class BasketStageTest(unittest.TestCase):
         self.assertEqual({o["company_id"] for o in quarters}, {"meta"})
         self.assertEqual([o["value"] for o in quarters], [10, 15, 20, 25, 20, 30])
 
+    def test_v21_supplier_gets_margin_quarters_only(self):
+        self.extra = {"CIK0001045810_NVDA.json": {"GrossProfit": CHAIN, "Revenues": CHAIN}}
+        items = self.run_collect("v2.1")
+        nvidia = {o["metric"] for o in items if o["company_id"] == "nvidia" and o["metric"].endswith("_quarterly")}
+        self.assertEqual(nvidia, {"gross_profit_quarterly", "revenue_quarterly"})     # 바스켓이 아니라 설비투자 분기 값은 없다
+        self.assertFalse({o["metric"] for o in items if o["company_id"] == "meta"} & {"gross_profit_quarterly", "revenue_quarterly"})
+
     def test_rules_without_regime_emit_no_quarters(self):
         self.assertFalse([o for o in self.run_collect("v2.0") if o["metric"] == "capex_quarterly"])
 
@@ -291,7 +300,8 @@ class BasketStageTest(unittest.TestCase):
         from scorecard.schema import SchemaError, validate_rules
         base = json.loads((ROOT / "scorecard" / "rules" / "v2.1.json").read_text(encoding="utf-8"))
         for path, value in ((("scored",), True), (("capex", "quarters_kept"), 6), (("capex", "min_quarters"), 4),
-                            (("capex", "flat_band"), 0.2), (("capex", "basket"), [])):
+                            (("capex", "flat_band"), 0.2), (("capex", "basket"), []),
+                            (("margins", "quarters_shown"), 9), (("margins", "cloud_segments"), {})):
             with self.subTest(path=path, value=value):
                 bad = copy.deepcopy(base)
                 node = bad["policies"]["regime_indicators"]

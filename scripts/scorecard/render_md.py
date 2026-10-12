@@ -355,6 +355,12 @@ def _regime_section(view: dict[str, Any]) -> list[str]:
     out += [f"- {x}" for x in view["capex_notes"]] + [""]
     out += ["### 공급자 지원 비중", "", table(view["supplier_head"], view["supplier_rows"], ["---"] + ["---:"] * 7 + ["---"]), "",
             f"- {view['supplier_note']}", ""]
+    if len(view["margin_head"]) > 1:
+        out += ["### 마진 두 수열(나누지 않음)", "", table(view["margin_head"], view["margin_rows"],
+                                                     ["---"] + ["---:"] * (len(view["margin_head"]) - 1)), ""]
+    else:
+        out += ["### 마진 두 수열(나누지 않음)", "", "- 분기 값이 아직 없다.", ""]
+    out += [f"- {view['margin_note']}", ""]
     out += ["### 토큰 단가 지수", ""] + [f"- {x}" for x in view["token_lines"]] + [""]
     out += ["### 트리거 조건", "", table(view["trigger_head"], view["trigger_rows"]), ""]
     return out

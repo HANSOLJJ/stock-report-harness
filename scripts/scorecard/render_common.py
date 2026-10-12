@@ -1130,7 +1130,16 @@ def regime_view(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None:
     if cap["missing_from_run"]:
         notes.append("바스켓 가운데 이번 실행에 없는 회사: " + ", ".join(cap["missing_from_run"]) + ". 바스켓 합에서 빠졌다.")
     triggers = [[t["condition"], REGIME_TRIGGER_LABELS[t["status"]], t["recheck"]] for t in board["triggers"]]
+    from .regime import key_label
+
+    mb = board["margins"]
+    margin_head = ["수열", *(key_label(k) for k in mb["keys"])]
+    margin_rows = [[f"{names.get(r['company_id'], r['company_id'])} 총마진" if r["kind"] == "gross_margin"
+                    else f"{r['segment']} 영업이익률({names.get(r['company_id'], r['company_id'])})",
+                    *(f"{r['values'][k] * 100:.1f}%" if k in r["values"] else "미확인" for k in mb["keys"])]
+                   for r in mb["rows"]]
     return {"note": spec["note"], "capex_head": REGIME_CAPEX_HEAD, "capex_rows": capex_rows, "capex_notes": off_lines + notes,
+            "margin_head": margin_head, "margin_rows": margin_rows, "margin_note": spec["margins"]["note"],
             "supplier_head": REGIME_SUPPLIER_HEAD, "supplier_rows": supplier_rows, "supplier_note": spec["supplier_support"]["note"],
             "token_lines": token_lines, "trigger_head": REGIME_TRIGGER_HEAD, "trigger_rows": triggers}
 

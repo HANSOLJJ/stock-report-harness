@@ -80,14 +80,17 @@ def q(cid: str, metric: str, end: str, value: float) -> dict:
 
 def series(values: list[float]) -> dict:
     """마지막 값이 최근 분기인 달력 분기 시계열."""
-    keys = [calendar_key(e) for e in QUARTER_ENDS[-len(values):]]
+    keys = [calendar_key(f"{e[:4]}-{e[5:7]}-01", e) for e in QUARTER_ENDS[-len(values):]]
     return dict(zip(keys, values))
 
 
 class AccelerationTest(unittest.TestCase):
     def test_calendar_key_aligns_offset_fiscal_quarters(self):
-        self.assertEqual([calendar_key(e) for e in ("2026-05-31", "2025-08-31", "2025-11-30", "2026-02-28")],
-                         [(2026, 2), (2025, 3), (2025, 4), (2026, 1)])
+        # Oracle(3~5월·6~8월·9~11월·12~2월)과 NVIDIA(5~7월·11~1월 말). 끝 달로 맞추면 NVIDIA 가 한 칸 뒤로 간다.
+        pairs = [("2026-03-01", "2026-05-31"), ("2025-06-01", "2025-08-31"), ("2025-09-01", "2025-11-30"), ("2025-12-01", "2026-02-28"),
+                 ("2026-04-27", "2026-07-26"), ("2025-10-27", "2026-01-25"), ("2026-04-01", "2026-06-30")]
+        self.assertEqual([calendar_key(a, b) for a, b in pairs],
+                         [(2026, 2), (2025, 3), (2025, 4), (2026, 1), (2026, 2), (2025, 4), (2026, 2)])
         self.assertEqual(shift((2026, 1), 4), (2025, 1))
         self.assertEqual(shift((2026, 1), 1), (2025, 4))
 
@@ -168,6 +171,37 @@ class SupplierTokenTest(unittest.TestCase):
         self.assertEqual((t["value"], t["previous"]["value"], t["change"]), (1.5, 2.0, -0.25))
 
 
+class MarginTest(unittest.TestCase):
+    def seg(self, cid: str, metric: str, end: str, value: float, segment: str) -> dict:
+        return {**q(cid, metric, end, value), "observation_id": f"{cid}.{metric}.{segment}.{end}", "basis": {"segment": segment}}
+
+    def test_gross_margin_and_segment_margin_side_by_side(self):
+        obs = [q("nvidia", "gross_profit_quarterly", e, 75) for e in QUARTER_ENDS[-2:]]
+        obs += [q("nvidia", "revenue_quarterly", e, 100) for e in QUARTER_ENDS[-2:]]
+        obs += [self.seg("amazon", "cloud_segment_operating_income_quarterly", QUARTER_ENDS[-1], 12, "AWS"),
+                self.seg("amazon", "cloud_segment_revenue_quarterly", QUARTER_ENDS[-1], 40, "AWS"),
+                # 이름이 다른 세그먼트는 읽지 않는다
+                self.seg("amazon", "cloud_segment_operating_income_quarterly", QUARTER_ENDS[-2], 99, "North America"),
+                self.seg("amazon", "cloud_segment_revenue_quarterly", QUARTER_ENDS[-2], 100, "North America")]
+        mb = regime_board(obs, ["nvidia", "amazon", "alphabet"], SPEC)["margins"]
+        self.assertEqual(mb["keys"], [(2026, 1), (2026, 2)])
+        rows = {(r["company_id"], r["kind"]): r["values"] for r in mb["rows"]}
+        self.assertEqual(rows[("nvidia", "gross_margin")], {(2026, 1): 0.75, (2026, 2): 0.75})
+        self.assertEqual(rows[("amazon", "segment_operating_margin")], {(2026, 2): 0.3})
+        self.assertEqual(rows[("alphabet", "segment_operating_margin")], {})
+
+    def test_mismatched_periods_make_no_ratio(self):
+        gp = q("nvidia", "gross_profit_quarterly", "2026-06-30", 75)
+        rev = {**q("nvidia", "revenue_quarterly", "2026-06-30", 100), "period": {"start": "2026-04-02", "end": "2026-06-30"}}
+        self.assertEqual(regime_board([gp, rev], ["nvidia"], SPEC)["margins"]["rows"][0]["values"], {})
+
+    def test_segment_metric_needs_segment_name(self):
+        bad = q("amazon", "cloud_segment_revenue_quarterly", "2026-06-30", 40)
+        with self.assertRaises(SchemaError):
+            validate_observations(payload(bad), COMPANIES)
+        validate_observations(payload(self.seg("amazon", "cloud_segment_revenue_quarterly", "2026-06-30", 40, "AWS")), COMPANIES)
+
+
 class RegimeRenderTest(unittest.TestCase):
     def test_trigger_ids_match_schema_whitelist(self):
         self.assertEqual({t["id"] for t in SPEC["trigger_conditions"]}, TRIGGER_IDS)
@@ -189,6 +223,7 @@ class RegimeRenderTest(unittest.TestCase):
         self.assertIn("2개 분기 연속 감속 | 충족 |", md)
         self.assertIn("프런티어 모델: $1.02(2026-08-16", md)
         self.assertNotIn("1국면", md)
+        self.assertIn("### 마진 두 수열(나누지 않음)\n\n- 분기 값이 아직 없다.", md)
         self.assertIn("<h3>국면 지표 — 점수 없음</h3>", render_regime(ctx, results))
         self.assertEqual(render_regime(SimpleNamespace(rules=V20, observations=obs, run=ctx.run), results), "")
 

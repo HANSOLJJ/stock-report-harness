@@ -493,13 +493,17 @@ def _collect_facts(slug: str, run: dict[str, Any], registry: dict[str, dict[str,
     가격 수집과 같이 회사 단위로 실패하고 덮어쓰지 않는다. 같은 (기업, 지표, 기준일, 기간) 관측이 같은 값으로 이미 있으면 건너뛰고,
     값이 다르면 그 회사를 `failed` 로 남긴다(어느 쪽이 맞는지는 사람이 가린다). `from_file` 은 `CIK##########*.json` 파일이 있는 폴더다.
     """
-    from .collect_facts import COMPANYFACTS_URL, fact_observations, facts_source_entry, quarterly_observations
+    from .collect_facts import (COMPANYFACTS_URL, MARGIN_QUARTERLY_METRICS, QUARTERLY_METRICS, fact_observations,
+                                facts_source_entry, quarterly_observations)
     from .collect_filings import sec_get
 
     filed_until = run.get("info_cutoff") or run["as_of"]
     # 2026-10-12 규칙 v2.1 2-C-1: 국면 지표 바스켓 회사는 분기 설비투자·금융리스 시계열도 낸다. 규칙에 선언이 없으면 내지 않는다.
-    capex_spec = ((load_rules(run["rule_version"]).payload.get("policies") or {}).get("regime_indicators") or {}).get("capex") or {}
+    regime = (load_rules(run["rule_version"]).payload.get("policies") or {}).get("regime_indicators") or {}
+    capex_spec = regime.get("capex") or {}
     basket = set(capex_spec.get("basket") or [])
+    # 2-C-2: 공급자(NVIDIA)는 마진 두 수열의 총마진용 분기 매출총이익·매출을 낸다.
+    suppliers = set((regime.get("supplier_support") or {}).get("companies") or [])
     d = run_dir(slug)
     observations = None if dry_run else load_json_strict(d / "observations.json")
     src_path = d / "sources.json"
@@ -532,10 +536,12 @@ def _collect_facts(slug: str, run: dict[str, Any], registry: dict[str, dict[str,
             entry = facts_source_entry(company, fetched, filed_until=filed_until, from_file=bool(from_file))
             obs, results = fact_observations(company, doc, source_id=entry["source_id"],
                                              observed_at=fetched["fetched_at"][:10], filed_until=filed_until)
-            if cid in basket:
+            for group, metrics in ((basket, QUARTERLY_METRICS), (suppliers, MARGIN_QUARTERLY_METRICS)):
+                if cid not in group:
+                    continue
                 q_obs, q_results = quarterly_observations(company, doc, source_id=entry["source_id"],
                                                           observed_at=fetched["fetched_at"][:10], filed_until=filed_until,
-                                                          keep=capex_spec["quarters_kept"])
+                                                          keep=capex_spec["quarters_kept"], metrics=metrics)
                 obs, results = obs + q_obs, results + q_results
             keyed = {(o["company_id"], o["metric"], o["as_of"], (o.get("period") or {}).get("start"),
                       (o.get("period") or {}).get("end")): o for o in observations["items"]}

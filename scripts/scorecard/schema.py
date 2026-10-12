@@ -46,6 +46,8 @@ PERIOD_REQUIRED_METRICS = {
     "equity_investment_gains_ttm", "income_tax_ttm",
     # 2026-10-12 규칙 v2.1 2-C-1: 국면 지표의 분기 시계열. 어느 분기인지가 값의 일부다.
     "capex_quarterly", "finance_lease_additions_quarterly",
+    # 2026-10-12 규칙 v2.1 2-C-2: 마진 두 수열의 분기 값.
+    "gross_profit_quarterly", "revenue_quarterly", "cloud_segment_revenue_quarterly", "cloud_segment_operating_income_quarterly",
 }
 OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
 # 결측 유형. status=not_disclosed 하나가 네 뜻(미확인·미공시·계산 대상 아님·산출 불가)으로 쓰여
@@ -276,7 +278,14 @@ METRICS: dict[str, dict[str, str]] = {
     # 2026-10-12 규칙 v2.1 2-C-1(점수 없음, 수동): SDLLMTK(Silicon Data LLM 토큰 지출 지수, 사용량 가중 100만 토큰당 달러).
     # 회사 값이 아니라 company_id 는 MARKET_COMPANY_ID 다. basis.segment 에 구간(broad·frontier·open)을 적는다.
     "token_price_index": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 2-C-2(점수 없음): 마진 두 수열. 공급자 분기 매출총이익·매출은 companyfacts 에서 수집하고,
+    # 클라우드 세그먼트 매출·영업이익은 세그먼트 차원 사실이라 companyfacts 에 없어 수동으로 적는다(basis.segment 필수).
+    "gross_profit_quarterly": {"unit": "USD", "type": "number"},
+    "revenue_quarterly": {"unit": "USD", "type": "number"},
+    "cloud_segment_revenue_quarterly": {"unit": "USD", "type": "number"},
+    "cloud_segment_operating_income_quarterly": {"unit": "USD", "type": "number"},
 }
+SEGMENT_METRICS = {"cloud_segment_revenue_quarterly", "cloud_segment_operating_income_quarterly"}
 # 2026-10-12 규칙 v2.1 2-C-1: 회사에 속하지 않는 시장 지표의 company_id. 시장 지표는 이 ID 에만, 이 ID 는 시장 지표에만 쓴다.
 MARKET_COMPANY_ID = "_market"
 MARKET_METRICS = {"token_price_index"}
@@ -288,7 +297,7 @@ NON_NEGATIVE_METRICS |= {"top_customer_share", "rpo_next12m_share", "nrr", "cust
                          "paid_seats", "mau", "developer_count", "fsd_subscribers", "shares_diluted"}
 # 2026-10-12 규칙 v2.1 2-C-1: 보증·출자·되사기는 잔액·한도이고 지수는 가격이라 음수가 될 수 없다.
 NON_NEGATIVE_METRICS |= {"residual_value_guarantee", "supplier_guarantees", "supplier_customer_investments",
-                         "supplier_capacity_buyback", "token_price_index"}
+                         "supplier_capacity_buyback", "token_price_index", "revenue_quarterly", "cloud_segment_revenue_quarterly"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -752,7 +761,13 @@ def _validate_regime_policy(spec: Any) -> None:
              f"{where}.capex.quarters_kept: 7 이상 정수(2개 분기 연속 감속 판정에 증가율 셋이 필요)")
     _require(capex["min_quarters"] == 6, f"{where}.capex.min_quarters: 6(전년 대비 증가율 둘을 견주는 최소)")
     _require(_is_number(capex["flat_band"]) and 0 <= capex["flat_band"] < 0.1, f"{where}.capex.flat_band: 0 이상 0.1 미만")
-    _expect_keys(spec, ["scored", "capex", "supplier_support", "token_index", "trigger_conditions"], where, optional=["note"])
+    _expect_keys(spec, ["scored", "capex", "supplier_support", "token_index", "trigger_conditions", "margins"], where, optional=["note"])
+    margins = spec["margins"]
+    _expect_keys(margins, ["cloud_segments", "quarters_shown", "note"], f"{where}.margins")
+    _require(isinstance(margins["cloud_segments"], dict) and margins["cloud_segments"]
+             and all(isinstance(v, str) and v for v in margins["cloud_segments"].values()),
+             f"{where}.margins.cloud_segments: 회사 ID → 세그먼트 이름")
+    _require(isinstance(margins["quarters_shown"], int) and 2 <= margins["quarters_shown"] <= 8, f"{where}.margins.quarters_shown: 2~8")
     sup = spec["supplier_support"]
     _expect_keys(sup, ["companies", "components", "denominator"], f"{where}.supplier_support", optional=["note"])
     _require(sup["components"] == ["supplier_guarantees", "supplier_customer_investments", "supplier_capacity_buyback"]
@@ -1250,6 +1265,9 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
                          f"{where}: token_price_index 는 basis.segment 가 {sorted(TOKEN_INDEX_SEGMENTS)} 중 하나")
         else:
             _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
+        if metric in SEGMENT_METRICS and item["value"] is not None:
+            _require(isinstance((item.get("basis") or {}).get("segment"), str) and item["basis"]["segment"].strip(),
+                     f"{where}: {metric} 은 basis.segment(공시한 세그먼트 이름)가 필요함")
         _require(metric in METRICS, f"{where}: 알 수 없는 metric {metric!r}")
         _require(item["status"] in OBSERVATION_STATUSES, f"{where}: status {item['status']!r} 오류")
         _require(item["kind"] in OBSERVATION_KINDS, f"{where}: kind {item['kind']!r} 오류")

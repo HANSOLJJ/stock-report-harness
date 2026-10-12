@@ -3,12 +3,14 @@
 
 - 국면에 이름(1국면·2국면)을 붙이지 않는다. 원값과 전년 대비 증가율, 그 변화만 보인다. Z 점수는 쓰지 않는다(2023년 이후 한 국면뿐인
   이력으로 기준 분포를 만들면 임의 숫자가 된다).
-- 설비투자는 달력 분기로 맞춘다. 회계 분기 끝 달이 속한 달력 분기에 넣는다(Oracle 8·11·2·5월 → 3·4·1·2분기).
+- 분기 값은 달력 분기로 맞춘다. 회계 분기의 가운데 날짜가 속한 달력 분기에 넣는다(Oracle 3~5월 → 2분기, NVIDIA 5~7월 → 2분기).
+  끝 달로 맞추면 NVIDIA 처럼 분기 끝이 달 초·말에 걸친 회사가 한 칸 어긋난다.
 - 사는 쪽 금융리스 취득 자산은 그 회사의 금융리스 분기 값이 필요한 분기에 모두 있을 때만 더한다. 모자라면 현금 설비투자만 쓰고 표시한다.
 - 자료가 모자라면 값을 만들지 않는다. 미확인을 0 으로 보지 않는다.
 """
 from __future__ import annotations
 
+from datetime import date
 from typing import Any
 
 from .inputs import USABLE_STATUSES, ObsLookup, recency_key
@@ -22,9 +24,11 @@ def regime_spec(rules: Any) -> dict[str, Any] | None:
     return (rules.payload.get("policies") or {}).get("regime_indicators")
 
 
-def calendar_key(end: str) -> tuple[int, int]:
-    """회계 분기 끝 날짜 → (연도, 달력 분기)."""
-    return int(end[:4]), (int(end[5:7]) - 1) // 3 + 1
+def calendar_key(start: str, end: str) -> tuple[int, int]:
+    """회계 분기 → (연도, 달력 분기). 분기의 가운데 날짜가 속한 달력 분기다."""
+    s, e = date.fromisoformat(start), date.fromisoformat(end)
+    mid = s + (e - s) / 2
+    return mid.year, (mid.month - 1) // 3 + 1
 
 
 def shift(key: tuple[int, int], back: int) -> tuple[int, int]:
@@ -41,13 +45,14 @@ def _usable(o: dict[str, Any]) -> bool:
     return o["status"] in USABLE_STATUSES and isinstance(v, (int, float)) and not isinstance(v, bool) and bool(o.get("period"))
 
 
-def quarter_values(obs: ObsLookup, cid: str, metric: str) -> dict[tuple[int, int], dict[str, Any]]:
-    """달력 분기 → 관측. 같은 분기에 관측이 여럿이면(다시 수집해 재작성된 값) verified 를 먼저, 그다음 최신을 고른다."""
+def quarter_values(obs: ObsLookup, cid: str, metric: str, segment: str | None = None) -> dict[tuple[int, int], dict[str, Any]]:
+    """달력 분기 → 관측. 같은 분기에 관측이 여럿이면(다시 수집해 재작성된 값) verified 를 먼저, 그다음 최신을 고른다.
+    `segment` 를 주면 basis.segment 가 그것인 관측만 본다."""
     best: dict[tuple[int, int], dict[str, Any]] = {}
     for o in obs.all(cid, metric):
-        if not _usable(o):
+        if not _usable(o) or (segment is not None and (o.get("basis") or {}).get("segment") != segment):
             continue
-        k = calendar_key(o["period"]["end"])
+        k = calendar_key(o["period"]["start"], o["period"]["end"])
         rank = (o["status"] == "verified", recency_key(o))
         prev = best.get(k)
         if prev is None or rank > (prev["status"] == "verified", recency_key(prev)):
@@ -165,6 +170,28 @@ def token_index(obs: ObsLookup) -> list[dict[str, Any]]:
     return out
 
 
+def _ratio(num: dict[tuple[int, int], dict[str, Any]], den: dict[tuple[int, int], dict[str, Any]]) -> dict[tuple[int, int], float]:
+    """같은 달력 분기·같은 회계기간의 분자 ÷ 분모. 분모가 0 이하면 만들지 않는다."""
+    return {k: num[k]["value"] / den[k]["value"] for k in num
+            if k in den and den[k]["value"] > 0 and num[k]["period"] == den[k]["period"]}
+
+
+def margin_board(obs: ObsLookup, run_companies: list[str], spec: dict[str, Any]) -> dict[str, Any]:
+    """마진 두 수열: 공급자 분기 총마진과 클라우드 세그먼트 분기 영업이익률. 비용 범위가 달라 나누지 않고 나란히 둔다."""
+    m = spec["margins"]
+    rows = []
+    for cid in [c for c in spec["supplier_support"]["companies"] if c in run_companies]:
+        rows.append({"company_id": cid, "kind": "gross_margin", "segment": None,
+                     "values": _ratio(quarter_values(obs, cid, "gross_profit_quarterly"), quarter_values(obs, cid, "revenue_quarterly"))})
+    for cid, segment in m["cloud_segments"].items():
+        if cid in run_companies:
+            rows.append({"company_id": cid, "kind": "segment_operating_margin", "segment": segment,
+                         "values": _ratio(quarter_values(obs, cid, "cloud_segment_operating_income_quarterly", segment),
+                                          quarter_values(obs, cid, "cloud_segment_revenue_quarterly", segment))})
+    keys = sorted(set().union(*(r["values"] for r in rows)))[-m["quarters_shown"]:] if rows else []
+    return {"keys": keys, "rows": rows}
+
+
 def trigger_status(trigger_id: str, board: dict[str, Any], supplier: list[dict[str, Any]]) -> str:
     """met | not_met | insufficient."""
     if trigger_id == "capex_decel_2q":
@@ -180,4 +207,5 @@ def regime_board(observations: list[dict[str, Any]], run_companies: list[str], s
     board = capex_board(obs, run_companies, spec)
     supplier = supplier_support(obs, run_companies, spec)
     return {"capex": board, "offbalance": offbalance(obs, run_companies), "supplier": supplier, "token": token_index(obs),
+            "margins": margin_board(obs, run_companies, spec),
             "triggers": [{**t, "status": trigger_status(t["id"], board, supplier)} for t in spec["trigger_conditions"]]}

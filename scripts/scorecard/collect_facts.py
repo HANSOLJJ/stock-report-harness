@@ -39,6 +39,11 @@ QUARTERLY_METRICS: dict[str, tuple[str, ...]] = {
     # 사는 쪽 금융리스로 들여온 설비. 현금 설비투자에 더해 본다(사용자 결정 2026-10-12)
     "finance_lease_additions_quarterly": ("RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability",),
 }
+# 2026-10-12 규칙 v2.1 2-C-2: 마진 두 수열의 공급자 쪽(NVIDIA 총마진). 규칙 `regime_indicators.supplier_support.companies` 회사에만 낸다.
+MARGIN_QUARTERLY_METRICS: dict[str, tuple[str, ...]] = {
+    "gross_profit_quarterly": ("GrossProfit",),
+    "revenue_quarterly": ("RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues"),
+}
 
 FY_DAYS = (350, 380)     # 회계연도 하나의 길이(종료일 − 시작일). 52/53주 회계연도를 받는다
 QUARTER_DAYS = (80, 100)  # 분기 하나의 길이
@@ -176,7 +181,8 @@ def quarter_series(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 
 def quarterly_observations(company: dict[str, Any], doc: dict[str, Any], *, source_id: str, observed_at: str,
-                           filed_until: str, keep: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+                           filed_until: str, keep: int,
+                           metrics: dict[str, tuple[str, ...]] = QUARTERLY_METRICS) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     """국면 지표용 분기 시계열 관측(최근 `keep` 개 분기). (관측, 지표별 결과).
 
     정보 기준일에서 (keep + 1) × 92일 안에 끝난 분기만 남긴다. 분기 태깅을 그만둔 개념(Meta 금융리스는 2023년까지)의 옛 분기가 '최근'으로
@@ -186,7 +192,7 @@ def quarterly_observations(company: dict[str, Any], doc: dict[str, Any], *, sour
     cutoff = (_d(filed_until) - timedelta(days=92 * (keep + 1))).isoformat()
     observations: list[dict[str, Any]] = []
     results: list[dict[str, Any]] = []
-    for metric, tags in QUARTERLY_METRICS.items():
+    for metric, tags in metrics.items():
         tag, rows = pick_concept(doc, tags, filed_until=filed_until)
         quarters = [q for q in quarter_series(rows) if q["end"] > cutoff][-keep:] if tag else []
         if not quarters:

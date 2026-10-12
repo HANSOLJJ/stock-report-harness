@@ -875,6 +875,9 @@ def render_regime(ctx: Any, results: dict[str, Any]) -> str:
             + _html_table(view["capex_head"], view["capex_rows"], text_cols={1, 2, 7, 8}) + sub(view["capex_notes"])
             + '<h3>공급자 지원 비중</h3>' + _html_table(view["supplier_head"], view["supplier_rows"], text_cols={8})
             + sub([view["supplier_note"]])
+            + '<h3>마진 두 수열(나누지 않음)</h3>'
+            + (_html_table(view["margin_head"], view["margin_rows"]) if len(view["margin_head"]) > 1 else sub(["분기 값이 아직 없다."]))
+            + sub([view["margin_note"]])
             + '<h3>토큰 단가 지수</h3>' + sub(view["token_lines"])
             + '<h3>트리거 조건</h3>' + _html_table(view["trigger_head"], view["trigger_rows"], text_cols={1, 2})
             + '</section>')
