@@ -65,6 +65,13 @@ LOCKIN_CHANNEL_KEYS = ("channel_consumer", "channel_work", "channel_trade")
 LOCKIN_QUESTION_KEYS = ("loop", "switching", "substitutes", "pricing")
 CHANNEL_VALUES = {"yes", "no"}
 AI_MONETIZED_VALUES = {"yes", "partial", "no", "unknown"}
+# 2026-10-12 규칙 v2.1 ①: AI 수익화 '예' 의 판정 재료. 형식은 모든 실행에서 보고, '예' 일 때 필수인지는 규칙(monetization_evidence)이 정한다.
+LOCKIN_MONETIZATION_KEYS = ("ai_monetized_channel", "ai_monetized_measure", "ai_monetized_share", "ai_monetized_period",
+                            "ai_separate_billing_evidence", "ai_price_uplift_evidence")
+LOCKIN_MONETIZATION_EVIDENCE_KEYS = ("ai_separate_billing_evidence", "ai_price_uplift_evidence")
+MONETIZED_CHANNELS = {"consumer": "channel_consumer", "work": "channel_work", "trade": "channel_trade"}
+MONETIZED_MEASURES = {"customers", "seats", "revenue"}
+EVIDENCE_ID_RE = re.compile(r"^EV-[a-z0-9-]+-\d{3}$")
 # 2026-10-08 규칙 v2.0 ③ 가속도 지표 단계. 단계별 허용 판정은 규칙 factors.F3.acceleration_tiers 가 정한다.
 ACCELERATION_TIERS = {"a", "b", "c", "d", "e"}
 
@@ -117,7 +124,18 @@ JUDGMENT_INPUT_CHOICES: dict[str, dict[str, list[Any]]] = {
 }
 # 2026-10-08 규칙 v2.0: 선택 상자로 그릴 수 없는 판정 재료(③ 성장률 두 개). 승인 페이지에는 싣지 않고 CLI(`judge --json`·
 # `propose --json`)로만 받는다. 형식(숫자 두 개)은 `_validate_judgment_inputs` 가 본다.
-JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {"criteria": ("acceleration_growth_rates",)}
+JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {
+    "criteria": ("acceleration_growth_rates",),
+    # 2026-10-12 규칙 v2.1 ①: AI 수익화 '예' 의 판정 재료(기준 채널·측정 단위·몫·기간·근거 두 목록). 필수 여부는 규칙이 정한다.
+    "lockin": LOCKIN_MONETIZATION_KEYS,
+}
+# CLI 로만 받는 재료의 모양. stages._judgment_change_kind 가 쓰기 전에 거르고, 허용값은 스키마가 본다.
+JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
+    "acceleration_growth_rates": "number_list",
+    "ai_monetized_channel": "string", "ai_monetized_measure": "string", "ai_monetized_period": "string",
+    "ai_monetized_share": "number",
+    "ai_separate_billing_evidence": "string_list", "ai_price_uplift_evidence": "string_list",
+}
 
 
 def judgment_edit_kind(rules_payload_or_factors: Any, factor: str) -> str | None:
@@ -1146,7 +1164,7 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
         # 2026-10-08 규칙 v2.0 ①: 채널 셋(있다/없다)·네 질문(통과·부분·실패·미확인)·지속성 할인·AI 수익화 표시.
         # 가격 실측 통과의 분기 임계는 규칙을 아는 validate_judgments 가 본다.
         _expect_keys(inputs, [*LOCKIN_CHANNEL_KEYS, *LOCKIN_QUESTION_KEYS, "durability_discount", "ai_monetized_in_channel"],
-                     where, optional=["pricing_sustained_quarters"])
+                     where, optional=["pricing_sustained_quarters", *LOCKIN_MONETIZATION_KEYS])
         for key in LOCKIN_CHANNEL_KEYS:
             _require(inputs[key] in CHANNEL_VALUES, f"{where}: {key} 는 {sorted(CHANNEL_VALUES)} ({inputs[key]!r})")
         for key in LOCKIN_QUESTION_KEYS:
@@ -1158,6 +1176,26 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
             q = inputs["pricing_sustained_quarters"]
             _require(isinstance(q, int) and not isinstance(q, bool) and q >= 0,
                      f"{where}: pricing_sustained_quarters 는 0 이상 정수 ({q!r})")
+        # 2026-10-12 규칙 v2.1 ①: AI 수익화 판정 재료의 형식. '예' 일 때 필수인지는 _validate_judgment_inputs_for_rules 가 본다.
+        if "ai_monetized_channel" in inputs:
+            ch = inputs["ai_monetized_channel"]
+            _require(ch in MONETIZED_CHANNELS, f"{where}: ai_monetized_channel 은 {sorted(MONETIZED_CHANNELS)} ({ch!r})")
+            _require(inputs[MONETIZED_CHANNELS[ch]] == "yes",
+                     f"{where}: ai_monetized_channel {ch!r} 는 실질 채널이어야 한다({MONETIZED_CHANNELS[ch]} 가 yes)")
+        if "ai_monetized_measure" in inputs:
+            _require(inputs["ai_monetized_measure"] in MONETIZED_MEASURES,
+                     f"{where}: ai_monetized_measure 는 {sorted(MONETIZED_MEASURES)} ({inputs['ai_monetized_measure']!r})")
+        if "ai_monetized_share" in inputs:
+            share = inputs["ai_monetized_share"]
+            _require(_is_number(share) and 0 <= share <= 1, f"{where}: ai_monetized_share 는 0~1 숫자 ({share!r})")
+        if "ai_monetized_period" in inputs:
+            _require(isinstance(inputs["ai_monetized_period"], str) and inputs["ai_monetized_period"].strip(),
+                     f"{where}: ai_monetized_period 는 비어 있지 않은 문자열(분자·분모 기간)")
+        for key in LOCKIN_MONETIZATION_EVIDENCE_KEYS:
+            if key in inputs:
+                ids = inputs[key]
+                _require(isinstance(ids, list) and all(isinstance(e, str) and EVIDENCE_ID_RE.match(e) for e in ids),
+                         f"{where}: {key} 는 근거 ID(EV-…) 목록 ({ids!r})")
         return
     if kind == "matrix":
         _expect_keys(inputs, ["funding_dependent_share", "own_money_returns"], where)
@@ -1211,6 +1249,18 @@ def _validate_judgment_inputs_for_rules(kind: str, inputs: dict[str, Any], spec:
             q = inputs.get("pricing_sustained_quarters")
             _require(q is not None, f"{where}: 가격 실측 통과는 지속 분기 수(pricing_sustained_quarters)가 있어야 한다 — 규칙은 {need}분기 이상")
             _require(q >= int(need), f"{where}: 가격 실측 통과는 {need}분기 이상 지속이어야 한다(입력 {q}분기) — 미만이면 부분이다")
+        # 2026-10-12 규칙 v2.1 ①: '예' 는 (가) 기준 채널 고객·매출 과반이 AI 에 따로 돈을 낸다는 숫자와 (나) AI 가 그 채널의
+        # 가격·단가를 올렸다는 근거가 함께 있어야 한다. 하나라도 비면 '부분' 이하로 적는다. 키가 없는 규칙(v2.0 이하)은 보지 않는다.
+        mon = spec.get("monetization_evidence")
+        if mon and inputs.get("ai_monetized_in_channel") == "yes":
+            missing = [k for k in LOCKIN_MONETIZATION_KEYS if k not in inputs]
+            _require(not missing, f"{where}: AI 수익화 '예' 는 판정 재료 {missing} 가 있어야 한다 — 없으면 '부분' 이하로 적는다")
+            floor = float(mon.get("share_min_exclusive", 0.5))
+            _require(inputs["ai_monetized_share"] > floor,
+                     f"{where}: AI 수익화 '예' 는 기준 채널의 {inputs['ai_monetized_measure']} 과반(> {floor:g})이 AI 에 따로 돈을 내야 한다 "
+                     f"(입력 {inputs['ai_monetized_share']!r}) — 일부면 '부분' 이다")
+            for key in LOCKIN_MONETIZATION_EVIDENCE_KEYS:
+                _require(bool(inputs[key]), f"{where}: AI 수익화 '예' 는 {key} 에 확정 근거가 하나 이상 있어야 한다")
     elif kind == "paths":
         if spec.get("leap_requires_independent_measurement") and inputs.get("performance_leap") == "pass":
             _require("leap_independent" in inputs,
@@ -1734,6 +1784,14 @@ def validate_cross_refs(observations: list[dict[str, Any]], judgments: list[dict
         _require(not missing, f"교차 참조: {j['judgment_id']} 의 reconfirmed 근거 {missing} 가 evidence.json 에 없음")
         unconfirmed = [e for e in reread if ev_status[e] != "confirmed"]
         _require(not unconfirmed, f"교차 참조: {j['judgment_id']} 의 reconfirmed 가 확정되지 않은 근거 {unconfirmed} 를 가리킴")
+        # 2026-10-12 규칙 v2.1 ①: AI 수익화 판정 재료의 근거 두 목록도 장부에 있고, 새 판단이면 확정된 것이어야 한다.
+        inputs = j.get("inputs") or {}
+        mon = [e for key in LOCKIN_MONETIZATION_EVIDENCE_KEYS for e in (inputs.get(key) or [])]
+        missing = [e for e in mon if e not in ev_status]
+        _require(not missing, f"교차 참조: {j['judgment_id']} 의 AI 수익화 근거 {missing} 가 evidence.json 에 없음")
+        if j["status"] == "new":
+            unconfirmed = [e for e in mon if ev_status[e] != "confirmed"]
+            _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 AI 수익화 근거 {unconfirmed} 가 확정되지 않았다")
 
 
 # ------------------------------------------------------------------ run / approval

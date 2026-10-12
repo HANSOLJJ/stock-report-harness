@@ -25,7 +25,7 @@ from .evidence_lib import source_entry, upsert_sources, utc_now_iso
 from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
-from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_CLI_ONLY_INPUTS, JUDGMENT_DIRECTION_FIELDS,
+from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_CLI_ONLY_INPUTS, JUDGMENT_CLI_ONLY_TYPES, JUDGMENT_DIRECTION_FIELDS,
                      JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, PROPOSAL_DIRECTION_AFTER, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, judgment_edit_kind, load_json_strict, reconfirm_evidence_ids,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
@@ -1218,11 +1218,19 @@ def _check_judgment_changes(factor: str, changes: Mapping[str, Any], rules: Any 
                       and (isinstance(v, bool) or not isinstance(v, (str, int))))
     if bad_type:
         raise SchemaError(f"{factor} 의 값은 문자열이나 정수여야 한다: {bad_type}")
-    bad_list = sorted(k for k in cli_only if k in changes
-                      and not (isinstance(changes[k], list) and all(isinstance(v, (int, float)) and not isinstance(v, bool)
-                                                                   for v in changes[k])))
-    if bad_list:
-        raise SchemaError(f"{factor} 의 {bad_list} 는 숫자 목록이어야 한다(예: [0.42, 0.55])")
+    # 2026-10-12 규칙 v2.1: CLI 로만 받는 재료가 숫자 목록 하나에서 여러 모양으로 늘었다(① AI 수익화 재료). 모양별로 거른다.
+    shape_ok = {
+        "number_list": lambda v: isinstance(v, list) and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in v),
+        "number": lambda v: isinstance(v, (int, float)) and not isinstance(v, bool),
+        "string": lambda v: isinstance(v, str) and bool(v.strip()),
+        "string_list": lambda v: isinstance(v, list) and all(isinstance(x, str) and x.strip() for x in v),
+    }
+    shape_hint = {"number_list": "숫자 목록(예: [0.42, 0.55])", "number": "숫자", "string": "비어 있지 않은 문자열",
+                  "string_list": "문자열 목록(예: [\"EV-acme-001\"])"}
+    bad_shape = sorted((k, JUDGMENT_CLI_ONLY_TYPES[k]) for k in cli_only if k in changes
+                       and not shape_ok[JUDGMENT_CLI_ONLY_TYPES[k]](changes[k]))
+    if bad_shape:
+        raise SchemaError(f"{factor} 의 값 모양이 틀렸다: " + ", ".join(f"{k} 는 {shape_hint[t]}" for k, t in bad_shape))
     return kind
 
 

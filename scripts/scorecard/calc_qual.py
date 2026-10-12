@@ -51,7 +51,8 @@ def compute_f1(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSe
 
     락인 강도 = 회수 루프·전환비용 중 높은 판정(통과 > 부분 > 실패). 둘 다 미확인이면 점수를 만들지 않고, 한쪽만 미확인이면
     아는 쪽을 쓴다. 실질 채널이 하나도 없으면 none_score 이고 보정을 적용하지 않는다. 기본 점수에 가격 실측·대체 공급·지속성
-    할인 보정을 더해 factor range 로 자른다. `ai_monetized_in_channel` 은 점수에 넣지 않고 calc 에만 옮긴다(표시 전용).
+    할인 보정을 더해 factor range 로 자른다. `ai_monetized_in_channel` 은 v2.0 에서는 점수에 넣지 않고 calc 에만 옮긴다(표시 전용).
+    규칙 v2.1 은 사다리에 `top_score_requires_ai_monetized` 를 두어 그 값이 '예' 가 아니면 상한(4)을 댄다(2026-10-12 사용자 결정).
     """
     fid = "F1"
     spec = rules.factor(fid)
@@ -99,6 +100,17 @@ def compute_f1(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSe
                 pricing_used=pricing, pricing_pass_requires_quarters=need, steps=steps, raw=raw, score=score)
     if score != raw:
         warnings.append(f"사다리 합 {raw} 를 범위 [{lo}, {hi}] 로 자름 → {score}")
+    # 2026-10-12 규칙 v2.1: 5점은 가장 강한 채널의 AI 수익화가 '예' 일 때만 준다. 키가 없는 규칙(v2.0 이하)은 지나간다.
+    gate = ladder.get("top_score_requires_ai_monetized")
+    if gate:
+        value = inputs.get(gate["input"])
+        cap = int(gate["cap"])
+        calc["ai_monetization_gate"] = {"input": gate["input"], "value": value, "requires": gate["requires"], "cap": cap,
+                                        "applied": value != gate["requires"] and score > cap}
+        if calc["ai_monetization_gate"]["applied"]:
+            warnings.append(f"AI 수익화 {value!r} — 5점은 {gate['requires']!r} 일 때만이라 {score} → {cap}")
+            score = cap
+            calc["score"] = score
     warnings.extend(carried_note(judgment))
     return factor_result(fid, score=score, status=_status_for(judgment), basis="lockin", judgment=judgment, calc=calc,
                          warnings=warnings)

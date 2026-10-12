@@ -953,6 +953,7 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
 # (`calc` 의 키 이름은 계산 코드가 정하므로 방어적으로 읽는다). 새 키가 없는 옛 실행에는 아무것도 덧붙지 않는다.
 VERDICT_LABELS = {"pass": "통과", "partial": "부분", "fail": "실패", "unknown": "미확인"}
 AI_MONETIZED_LABELS = {"yes": "예", "partial": "부분", "no": "아니오", "unknown": "미확인"}
+MONETIZED_MEASURE_LABELS = {"customers": "고객", "seats": "좌석", "revenue": "매출"}
 DURABILITY_LABELS = {"yes": "해당", "no": "없음", "unknown": "미확인"}
 INDEPENDENT_LABELS = {"yes": "예", "no": "아니오", "unknown": "미확인"}
 
@@ -990,10 +991,16 @@ def _lockin_trace(calc: dict[str, Any]) -> str:
     score = int(calc["score"])
     raw = int(calc.get("raw", base + sum(d for _n, d in moves)))
     lo, hi = calc.get("range") or (None, None)
+    # 2026-10-12 규칙 v2.1: AI 수익화가 '예' 가 아니면 5점 대신 상한을 댄다. 범위 자르기와 다른 사유라 따로 적는다.
+    gate = calc.get("ai_monetization_gate") or {}
+    clipped = max(lo, min(hi, raw)) if lo is not None and hi is not None else raw
     if not moves and raw == score:
         return f"사다리 {head}"            # 더하고 뺄 것이 없으면 기본 점수가 곧 점수다
-    return ("사다리 " + ", ".join([head, *(f"{name} {d:+d}" for name, d in moves)]) + f" = {score}"
-            + (f"({lo}~{hi} 로 자름)" if raw != score else ""))
+    text = "사다리 " + ", ".join([head, *(f"{name} {d:+d}" for name, d in moves)])
+    if gate.get("applied"):
+        text += f" = {clipped}" + (f"({lo}~{hi} 로 자름)" if raw != clipped else "")
+        return text + f", AI 수익화 '예' 아님 → 상한 {gate['cap']} = {score}"
+    return text + f" = {score}" + (f"({lo}~{hi} 로 자름)" if raw != score else "")
 
 
 def lockin_calc_text(rules: Any, fr: dict[str, Any], vals: dict[str, Any]) -> str:
@@ -1026,7 +1033,14 @@ def lockin_calc_text(rules: Any, fr: dict[str, Any], vals: dict[str, Any]) -> st
         text = f"{text} → {trace}" if text else trace
     ai = ai_monetized(rules, vals)
     if ai:
-        text += (" · " if text else "") + f"{ai[0]} {ai[1]}(점수 밖 표시)"
+        # 2026-10-12 규칙 v2.1: 사다리에 5점 조건이 있으면 AI 수익화는 점수에 닿는다. 그 몫과 측정 단위를 함께 적는다.
+        if (spec.get("ladder") or {}).get("top_score_requires_ai_monetized"):
+            share = vals.get("ai_monetized_share")
+            detail = (f", {MONETIZED_MEASURE_LABELS.get(vals.get('ai_monetized_measure'), vals.get('ai_monetized_measure'))} "
+                      f"{share * 100:.0f}%" if isinstance(share, (int, float)) else "")
+            text += (" · " if text else "") + f"{ai[0]} {ai[1]}{detail}(5점 조건)"
+        else:
+            text += (" · " if text else "") + f"{ai[0]} {ai[1]}(점수 밖 표시)"
     return text
 
 
