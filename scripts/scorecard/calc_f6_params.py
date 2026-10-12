@@ -150,7 +150,7 @@ def _stale_asof(rev_obs: dict[str, Any] | None, period_basis: str | None, rules:
 def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
         warnings: list[str], rev_obs: dict[str, Any] | None = None,
         period_basis: str | None = None, run: dict[str, Any] | None = None,
-        obs_ids: list[str] | None = None) -> dict[str, Any]:
+        obs_ids: list[str] | None = None, p1_adjusted: bool = False) -> dict[str, Any]:
     spec = rules.f6_p4()
     declared = {c["id"]: c for c in spec.get("conditions", [])}
     hit: list[str] = []
@@ -160,6 +160,10 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
     if cond is not None:
         value, d = _nonop_share(cid, obs, warnings, obs_ids)
         detail.update(d)
+        # 2026-10-12 규칙 v2.1: P1 이 평가손익을 세후로 빼 조정했으면 같은 왜곡을 두 번 깎지 않는다. 값은 표시용으로 남긴다.
+        if value is not None and cond.get("skip_when_p1_adjusted") and p1_adjusted:
+            detail["nonop_share_skipped"] = "P1 이 지분증권 평가손익을 세후로 빼 조정했다 — 이 조건을 보지 않는다"
+            value = None
         if value is not None:
             threshold = float(cond.get("threshold", 0.30))
             # **P4 임계에도 경계를 표시한다.** P1·P2·P3 에만 있고 여기만 없었다. 비교 대상은
@@ -278,12 +282,107 @@ def _parameter_value(pid: str, cid: str, obs: ObsLookup, rules: RuleSet,
             raw["not_computed_cause"] = "requires_positive"
             return None, f"{pid} 입력 {metric} 이 0 이하({raw[metric]!r}) — 대체값으로 채우지 않음", raw
     if pid == "P1":
+        if "growth_adjusted" in spec:
+            # 2026-10-12 규칙 v2.1: 성장 조정 PER 은 이익 조정·이익 부호·성장 문턱을 거쳐 점수가 정해진다. 입력만 모아 넘긴다.
+            return None, None, {**raw, "growth_adjusted": True}
         return raw["market_cap"] / raw["net_income_ttm"], None, raw
     if pid == "P2":
         return (raw["market_cap"] - raw["net_cash"]) / raw["revenue_ttm"], None, raw
     if pid == "P3":
         return raw["revenue_ttm"] / raw["revenue_ttm_prior"] - 1, None, raw
     return None, f"{pid} 산식이 구현되지 않음", raw
+
+
+def _adjusted_net_income(cid: str, net_income: float, spec: dict[str, Any] | None, obs: ObsLookup,
+                         obs_ids: list[str], warnings: list[str]) -> tuple[float, dict[str, Any]]:
+    """2026-10-12 규칙 v2.1 ⑥: 지분증권 평가·처분 손익을 세후로 뺀 모회사 귀속 순이익. (쓸 순이익, 상세)를 돌려준다.
+
+    실효세율은 **공시 법인세 ÷ 연결 세전이익**이다. 세전 − 모회사 귀속 순이익으로 유도하지 않는다 — 비지배주주 몫이 법인세에
+    섞인다(외부 검토 3차). 조정할 수 없으면 보고 순이익을 그대로 쓰고 P4 영업외 비중 조건이 살아 있게 `applied: False` 로 둔다.
+    """
+    detail: dict[str, Any] = {"applied": False, "net_income_reported": net_income}
+    if not spec:
+        detail["reason"] = "규칙에 이익 조정이 없음"
+        return net_income, detail
+    gains, g_obs = obs.number(cid, spec["gains_metric"])
+    if g_obs is None or gains is None:
+        detail["reason"] = f"{spec['gains_metric']} 관측 없음 — 보고 순이익을 쓴다"
+        return net_income, detail
+    obs_ids.append(g_obs["observation_id"])
+    detail["gains"] = gains
+    components = ((g_obs.get("basis") or {}).get("components") or [])
+    tags = [c.get("tag") if isinstance(c, dict) else c for c in components]
+    if len(tags) != len(set(tags)):
+        detail["reason"] = f"평가손익 구성 태그가 겹친다 {tags} — 조정하지 않는다"
+        warnings.append(f"이익 조정 불가 ⚠️ {detail['reason']}")
+        return net_income, detail
+    pretax, p_obs = obs.number(cid, spec["pretax_metric"])
+    tax, t_obs = obs.number(cid, spec["tax_metric"])
+    for o in (p_obs, t_obs):
+        if o is not None:
+            obs_ids.append(o["observation_id"])
+    if pretax is None or tax is None:
+        missing = [m for m, v in ((spec["pretax_metric"], pretax), (spec["tax_metric"], tax)) if v is None]
+        detail["reason"] = f"{', '.join(missing)} 관측 없음 — 실효세율을 만들 수 없어 조정하지 않는다"
+        warnings.append(f"이익 조정 불가 ⚠️ {detail['reason']}")
+        return net_income, detail
+    scopes = {((o or {}).get("basis") or {}).get("ownership_scope") for o in (p_obs, t_obs)} - {None}
+    if len(scopes) > 1:
+        detail["reason"] = f"세전이익·법인세 관측의 소유 범위가 다름 {sorted(scopes)} — 조정하지 않는다"
+        warnings.append(f"이익 조정 불가 ⚠️ {detail['reason']}")
+        return net_income, detail
+    detail.update({"pretax": pretax, "tax": tax})
+    if pretax <= 0:
+        detail["reason"] = f"세전이익 {pretax:,.0f} 이 0 이하 — 실효세율이 서지 않아 조정하지 않는다"
+        warnings.append(f"이익 조정 불가 ⚠️ {detail['reason']}")
+        return net_income, detail
+    rate = tax / pretax
+    lo, hi = spec["effective_tax_rate_range"]
+    detail["effective_tax_rate"] = rate
+    if not (lo <= rate <= hi):
+        detail["reason"] = f"실효세율 {rate:.3f} 이 {lo:g}~{hi:g} 밖 — 조정하지 않는다"
+        warnings.append(f"이익 조정 불가 ⚠️ {detail['reason']}")
+        return net_income, detail
+    adjusted = net_income - gains * (1 - rate)
+    detail.update({"applied": True, "net_income_adjusted": adjusted, "formula": spec.get("formula"),
+                   "assumption": spec.get("assumption_note")})
+    return adjusted, detail
+
+
+def _growth_adjusted_p1(cid: str, raw: dict[str, Any], spec: dict[str, Any], obs: ObsLookup, rules: RuleSet,
+                        obs_ids: list[str], warnings: list[str]) -> dict[str, Any]:
+    """2026-10-12 규칙 v2.1 ⑥ P1: (시가총액 ÷ 조정 순이익) ÷ (매출 성장률 × 100). 결과 항목(점수 포함)을 돌려준다.
+
+    조정 순이익이 0 이하면 −3, 성장이 문턱(5%) 미만이면 −3 이다. 이익이 0 으로 다가가면 PER 이 끝없이 커져 −3 이 되므로
+    0 이하도 −3 으로 이어 붙인다 — 이익이 나빠져서 ⑥ 이 좋아지는 일이 없다(외부 검토 2차의 단조성 요구).
+    """
+    ga = spec["growth_adjusted"]
+    inputs = {k: v for k, v in raw.items() if k != "growth_adjusted"}
+    growth = raw["revenue_ttm"] / raw["revenue_ttm_prior"] - 1
+    net_income, adj = _adjusted_net_income(cid, raw["net_income_ttm"], spec.get("earnings_adjustment"), obs, obs_ids, warnings)
+    entry: dict[str, Any] = {"inputs": inputs, "revenue_growth": growth, "earnings_adjustment": adj,
+                             "net_income_used": net_income,
+                             "per_reported": (raw["market_cap"] / raw["net_income_ttm"]) if raw["net_income_ttm"] > 0 else None}
+    if net_income <= 0:
+        score = int(ga["nonpositive_earnings_score"])
+        entry.update({"value": None, "score": score, "band": "이익 0 이하",
+                      "why": f"조정 순이익 {net_income:,.0f} 이 0 이하 — PER 이 서지 않아 가장 나쁜 칸 {score}"})
+        return entry
+    per = raw["market_cap"] / net_income
+    entry["per_used"] = per
+    floor = float(ga["growth_floor"])
+    if growth < floor:
+        score = int(ga["below_floor_score"])
+        entry.update({"value": None, "score": score, "band": f"성장 {floor * 100:g}% 미만",
+                      "why": f"매출 성장 {growth * 100:.1f}% 가 문턱 {floor * 100:g}% 미만 — 성장으로 정당화할 수 없어 {score}"})
+        return entry
+    value = per / (growth * float(ga["growth_multiplier"]))
+    score, band = rules.f6_parameter_band("P1", value)
+    boundary = rules.f6_parameter_boundary_flag("P1", value)
+    entry.update({"value": value, "score": score, "band": band, "boundary": boundary})
+    if boundary["flag"]:
+        warnings.append(f"P1 경계 ⚠️ {boundary['nearest_boundary']:g} 선까지 {boundary['distance_ratio'] * 100:+.1f}% — 점수는 그대로")
+    return entry
 
 
 # net_cash 처럼 **여러 관측을 합쳐 만드는 입력**은 구성요소 하나가 없으면 통째로 막힌다.
@@ -368,10 +467,18 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
         else:
             calc["c24_choice"] = {"choice": c24 or "compute_p2_when_inputs_exist(규칙 기본)",
                                   "effect": "입력이 성립하면 선택 파라미터를 만든다", "optional": ["P2"]}
+    p1_adjusted = False
     for pid in track["parameters"]:
         if pid == "P4":
             continue
         value, reason, raw = _parameter_value(pid, cid, obs, rules, obs_ids, unverified)
+        if raw.get("growth_adjusted") and reason is None:
+            # 2026-10-12 규칙 v2.1: 성장 조정 PER 은 이익이 0 이하이거나 성장이 문턱 미만이어도 점수(−3)를 낸다.
+            entry = _growth_adjusted_p1(cid, raw, rules.f6_parameters()[pid], obs, rules, obs_ids, warnings)
+            subtotal += int(entry["score"])
+            p1_adjusted = bool(entry["earnings_adjustment"].get("applied"))
+            calc["parameters"][pid] = entry
+            continue
         # 선택 파라미터라도 **모든 사유를 넘기지는 않는다.** 입력이 없는 것(missing_input)과 그 기업의 성질인
         # 순손실(requires_positive)은 넘기지만, **소유 범위 불일치는 자료 결함**이라 예전처럼 factor 를 pending 으로
         # 세운다(FC-04 가드). 사유를 문자열로 재지 않고 _parameter_value 가 적은 원인을 읽는다.
@@ -414,8 +521,13 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
     # 2026-09-16 FIX-56 1단계: 트랙이 쓰지 않는 파라미터는 **왜 빠졌는지**를 결과가 말해야 한다.
     # spacex-xai 는 P1 이 빠지는데(순이익 음수) 그 사실이 calc 어디에도 없어 "트랙이 그래서" 로만 읽혔다.
     excluded = {}
+    absorbed = track.get("parameters_absorbed") or {}
     for pid in rules.f6_parameters():
         if pid in track["parameters"]:
+            continue
+        if pid in absorbed:
+            # 2026-10-12 규칙 v2.1: 다른 파라미터에 흡수돼 쓰지 않는 것이다. "트랙 정의를 다시 볼 자리" 로 읽히지 않게 사유를 그대로 적는다.
+            excluded[pid] = {"absorbed": True, "why": absorbed[pid]}
             continue
         excluded[pid] = _excluded_reason(pid, cid, obs, rules)
     if excluded:
@@ -441,7 +553,8 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
                              observation_ids=obs_ids, calc=calc, warnings=warnings,
                              pending=pending_info("data", "; ".join(missing)))
 
-    p4 = _p4(cid, obs, rules, track, warnings, rev_obs=rev_obs, period_basis=basis, run=run, obs_ids=obs_ids)
+    p4 = _p4(cid, obs, rules, track, warnings, rev_obs=rev_obs, period_basis=basis, run=run, obs_ids=obs_ids,
+             p1_adjusted=p1_adjusted)
     calc["p4"] = p4
     calc["subtotal_before_p4"] = subtotal
     total = subtotal - p4["demotion_steps"]
@@ -458,6 +571,89 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
 
 
 C12_IMPLEMENTED_CHOICE = "p2_with_capped_promotion"
+# 2026-10-12 규칙 v2.1: 비상장 ⑥ 을 P/S ÷ 보정 매출 성장률로 잰다. 승격 보정은 없다.
+C12_GROWTH_ADJUSTED_CHOICE = "growth_adjusted_ps"
+
+
+def _upper_band(bands: list[dict[str, Any]], value: float) -> tuple[int, str]:
+    lower = 0.0
+    for band in bands:
+        upper = band["upper"]
+        if upper is None or value < upper:
+            return int(band["score"]), (f"{lower:g}~{upper:g}" if upper is not None else f"{lower:g}+")
+        lower = float(upper)
+    raise ValueError("bands 가 구간을 덮지 못함")
+
+
+def _private_growth_adjusted(cid: str, pga: dict[str, Any], multiple: float, rng: Any, p2_entry: dict[str, Any],
+                             obs: ObsLookup, track: dict[str, Any], calc: dict[str, Any], obs_ids: list[str],
+                             warnings: list[str], bands_spec: dict[str, Any]) -> dict[str, Any]:
+    """2026-10-12 규칙 v2.1 비상장 ⑥: P/S ÷ (보정 매출 성장률 × 100). 상장 P1 과 같은 질문(성장에 비해 비싼가)을 매출 배수로 묻는다.
+
+    보정 매출이나 전년 보정 매출 관측이 없으면 P/S 구간표(private_bands)로 점수를 낸다. 보정 매출이 0 이하면 성장률이 서지
+    않아 자료 대기다. 성장이 문턱(5%) 미만이면(0·음수 포함) 가장 나쁜 칸이다 — 음수 성장이 가장 유리한 구간에 들어가지 않게.
+    ARR·런레이트는 쓰지 않는다(상장사와 같은 잣대).
+    """
+    rev_metric, prior_metric = pga["growth_inputs"]
+    rev, r_obs = obs.number(cid, rev_metric)
+    prior, p_obs = obs.number(cid, prior_metric)
+    for o in (r_obs, p_obs):
+        if o is not None:
+            obs_ids.append(o["observation_id"])
+    detail: dict[str, Any] = {"label": pga.get("label"), "inputs": {rev_metric: rev, prior_metric: prior}}
+    calc["growth_adjusted"] = detail
+    floor, ceiling = int(track["floor"]), track.get("ceiling")
+    if rev is None or prior is None:
+        detail["path"] = "fallback_private_bands"
+        detail["why"] = f"{rev_metric if rev is None else prior_metric} 관측 없음 — P/S 구간표로 점수를 낸다(승격 보정 없음)"
+        warnings.append(f"비상장 성장 조정 불가 — {detail['why']}")
+        if (p2_entry.get("estimate_range") or {}).get("spans_bands"):
+            return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
+                                 observation_ids=obs_ids, calc=calc, warnings=warnings,
+                                 pending=pending_info("data", f"P2 구간 추정 {rng[0]}~{rng[1]} 이 P/S 구간표 밴드를 가른다 — 값을 고르지 않는다"))
+        score = int(p2_entry["score"])
+    elif rev <= 0 or prior <= 0:
+        detail["path"] = "pending"
+        return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
+                             observation_ids=obs_ids, calc=calc, warnings=warnings,
+                             pending=pending_info("data", f"보정 매출 {rev!r}·전년 {prior!r} 가 0 이하 — 성장률이 서지 않는다"))
+    else:
+        growth = rev / prior - 1
+        detail["revenue_growth"] = growth
+        g_floor = float(pga["growth_floor"])
+        if growth < g_floor:
+            detail["path"] = "below_growth_floor"
+            score = int(pga["below_floor_score"])
+            detail["why"] = f"보정 매출 성장 {growth * 100:.1f}% 가 문턱 {g_floor * 100:g}% 미만 — 가장 나쁜 칸 {score}"
+        else:
+            mult = float(pga["growth_multiplier"])
+            value = multiple / (growth * mult)
+            score, label = _upper_band(pga["bands"], value)
+            detail.update({"path": "growth_adjusted", "value": value, "band": label})
+            if isinstance(rng, (list, tuple)) and len(rng) == 2:
+                lo_v, hi_v = float(rng[0]) / (growth * mult), float(rng[1]) / (growth * mult)
+                lo_s, lo_l = _upper_band(pga["bands"], lo_v)
+                hi_s, hi_l = _upper_band(pga["bands"], hi_v)
+                detail["estimate_range"] = {"low": lo_v, "high": hi_v, "low_band": lo_l, "high_band": hi_l,
+                                            "spans_bands": lo_s != hi_s}
+                if lo_s != hi_s:
+                    return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
+                                         observation_ids=obs_ids, calc=calc, warnings=warnings,
+                                         pending=pending_info("data", f"P/S 구간 추정 {rng[0]}~{rng[1]} 을 성장으로 나눈 값이 밴드를 가른다"
+                                                                      f"({lo_l} 대 {hi_l}) — 값을 고르지 않는다"))
+    calc["subtotal_before_correction"] = score
+    total = score
+    if ceiling is not None and total > int(ceiling):
+        calc["ceiling_applied"] = True
+        warnings.append(f"비상장 천장 {ceiling} 로 절단 ({total}) — 비상장에는 0·-1 칸이 없다")
+        total = int(ceiling)
+    if total < floor:
+        calc["floor_applied"] = True
+        total = floor
+    calc["score"] = total
+    calc["boundary_rule"] = bands_spec.get("boundary_rule")
+    return factor_result(FACTOR, score=total, status="ok", basis="computed",
+                         observation_ids=obs_ids, calc=calc, warnings=warnings)
 
 
 def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, Any] | None,
@@ -510,11 +706,14 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
     # 구현된 경로는 p2_with_capped_promotion 하나다. 다른 선택이거나 선택이 없으면 기본값으로 채우지 않는다.
     choice = decision_choice(run, rules, "C-12")
     calc["c12_choice"] = choice
-    if choice != C12_IMPLEMENTED_CHOICE:
+    # 2026-10-12 규칙 v2.1: 성장 조정 P/S 를 선언한 규칙에서는 그 선택만 구현돼 있다. 승격 보정 경로는 v2.0 이하를 재현하는 데만 쓴다.
+    pga = rules.f6.get("private_growth_adjusted")
+    implemented = C12_GROWTH_ADJUSTED_CHOICE if pga else C12_IMPLEMENTED_CHOICE
+    if choice != implemented:
         return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
                              observation_ids=obs_ids, calc=calc, warnings=warnings,
-                             pending=pending_info("rule", f"C-12 선택 {choice!r} 는 구현된 경로가 없다 — 구현된 선택은 "
-                                                          f"{C12_IMPLEMENTED_CHOICE} 하나", "C-12"))
+                             pending=pending_info("rule", f"C-12 선택 {choice!r} 는 구현된 경로가 없다 — 규칙 {rules.version} 에서 "
+                                                          f"구현된 선택은 {implemented} 하나", "C-12"))
 
     # ---------------- P2 — 점수를 내는 파라미터
     multiple = values["ps_ratio"]
@@ -536,14 +735,19 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
         entry["estimate_range"] = {"low": rng[0], "high": rng[1],
                                    "low_band": lo_label, "high_band": hi_label,
                                    "spans_bands": lo_score != hi_score}
-        if lo_score != hi_score:
+        # 2026-10-12 규칙 v2.1: 성장 조정 경로는 자기 밴드에서 구간을 다시 본다. 여기서는 P/S 구간표 경로만 멈춘다.
+        if lo_score != hi_score and not pga:
             calc["parameters"]["P2"] = entry
             return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
                                  observation_ids=obs_ids, calc=calc, warnings=warnings,
                                  pending=pending_info("data", f"P2 구간 추정 {rng[0]}~{rng[1]} 이 밴드를 가른다"
                                                               f"({lo_label} 대 {hi_label}) — 값을 고르지 않는다"))
-        entry["range_note"] = f"구간 추정 {rng[0]}~{rng[1]} 의 양 끝이 모두 {lo_label} 라 판정이 갈리지 않는다"
+        if lo_score == hi_score:
+            entry["range_note"] = f"구간 추정 {rng[0]}~{rng[1]} 의 양 끝이 모두 {lo_label} 라 판정이 갈리지 않는다"
     calc["parameters"]["P2"] = entry
+
+    if pga:
+        return _private_growth_adjusted(cid, pga, multiple, rng, entry, obs, track, calc, obs_ids, warnings, spec)
 
     # ---------------- P3·P4 — 합쳐서 상한 1칸 보정
     corr = rules.f6_private_correction()

@@ -1,4 +1,4 @@
-# 규칙 v2.1 테스트: v2.0 대비 차이(① 5점 AI 수익화 조건과 판정 재료)와 계산·스키마·교차 참조·화면 문장을 잠근다
+# 규칙 v2.1 테스트: v2.0 대비 차이(① 5점 AI 수익화 조건, ⑥ 성장 조정 배수·이익 조정, ⑦ 네 칸 −3, 함정 −17)와 계산·스키마를 잠근다
 from __future__ import annotations
 
 import copy
@@ -66,13 +66,19 @@ class DiffTest(unittest.TestCase):
     def test_top_level_differs_only_where_declared(self):
         self.assertEqual(set(self.v20), set(self.v21))
         changed = {k for k in self.v21 if self.v21[k] != self.v20[k]}
-        self.assertEqual(changed, {"rule_version", "note", "factors"})
+        self.assertEqual(changed, {"rule_version", "note", "factors", "policies", "scoring", "decisions"})
+        self.assertEqual({k for k in self.v21["policies"] if self.v21["policies"][k] != self.v20["policies"][k]}, {"f6"})
+        self.assertEqual({d["id"] for d in self.v21["decisions"] if d not in self.v20["decisions"]}, {"C-12"})
+        self.assertEqual(self.v21["scoring"]["trap_min_active"], -17)
         self.assertEqual(self.v21["rule_version"], "v2.1")
         self.assertTrue(self.v21["note"].startswith(self.v20["note"] + " | v2.1: "))
 
-    def test_only_f1_changed_so_far(self):
+    def test_changed_factors(self):
         changed = {f for f in self.v21["factors"] if self.v21["factors"][f] != self.v20["factors"][f]}
-        self.assertEqual(changed, {"F1"})
+        self.assertEqual(changed, {"F1", "F6", "F7"})
+        ranges = {f: self.v21["factors"][f]["range"] for f in ("F6", "F7", "F8", "F9")}
+        self.assertEqual(ranges, {"F6": [-5, 0], "F7": [-3, 0], "F8": [-5, 0], "F9": [-4, 0]})
+        self.assertEqual(sum(r[0] for r in ranges.values()), self.v21["scoring"]["trap_min_active"])
 
     def test_f1_gate_and_evidence_spec(self):
         f1 = self.v21["factors"]["F1"]
@@ -194,6 +200,193 @@ class TraceTextTest(unittest.TestCase):
         j = lockin(ai_monetized_in_channel="yes", **MONETIZED)
         r = compute_f1(company(), JudgmentLookup([j]), V21)
         self.assertIn("좌석 62%(5점 조건)", lockin_calc_text(V21, r, dict(j["inputs"])))
+
+
+# ------------------------------------------------------------------ ⑥ · ⑦
+from scorecard.calc_f6 import compute_f6  # noqa: E402
+from scorecard.calc_qual import compute_f7  # noqa: E402
+from scorecard.inputs import ObsLookup  # noqa: E402
+
+PARENT = {"ownership_scope": "parent_attributable"}
+
+
+def obs(metric: str, value, cid: str = "acme", basis: dict | None = None, kind: str = "actual") -> dict:
+    return {"observation_id": f"{cid}.{metric}.t", "company_id": cid, "metric": metric, "value": value, "unit": "USD",
+            "as_of": "2026-10-12", "kind": kind, "source_id": "SRC-t", "status": "verified",
+            "period": {"start": "2025-07-01", "end": "2026-06-30"}, "basis": basis, "raw": None, "note": None}
+
+
+def listed_obs(*, market_cap=2000.0, net_income=10.0, revenue=130.0, revenue_prior=100.0, net_cash=0.0,
+               pretax=None, operating_income=None, gains=None, tax=None, gains_basis=None, tax_basis=None,
+               pretax_basis=None) -> ObsLookup:
+    items = [obs("market_cap", market_cap), obs("net_cash", net_cash), obs("net_income_ttm", net_income, basis=PARENT),
+             obs("revenue_ttm", revenue, basis={"period_basis": "ttm"}),
+             obs("revenue_ttm_prior", revenue_prior, basis={"period_basis": "ttm"})]
+    for metric, value, basis in (("pretax_income_ttm", pretax, pretax_basis), ("operating_income_ttm", operating_income, None),
+                                 ("equity_investment_gains_ttm", gains, gains_basis), ("income_tax_ttm", tax, tax_basis)):
+        if value is not None:
+            items.append(obs(metric, value, basis=basis))
+    return ObsLookup(items)
+
+
+def run21(c12: str | None = "growth_adjusted_ps") -> dict:
+    return {"run_id": "t", "rule_version": "v2.1", "as_of": "2026-10-12",
+            "decisions": [{"id": "C-12", "choice": c12}] if c12 else []}
+
+
+def private_company() -> dict:
+    return {**company(), "listed": False, "ticker": None, "exchange": None, "share_basis": "private"}
+
+
+class F6GrowthAdjustedTest(unittest.TestCase):
+    def f6(self, **kw) -> dict:
+        return compute_f6(company(), listed_obs(**kw), JudgmentLookup([]), V21, run21())
+
+    def test_p1_is_per_over_growth(self):
+        # PER 2000/40=50, 성장 30% → 50/30=1.67 → −1. EV/매출 2000/130=15.4 → −1. 합 −2.
+        r = self.f6(net_income=40.0)
+        p1 = r["calc"]["parameters"]["P1"]
+        self.assertAlmostEqual(p1["value"], 50 / 30)
+        self.assertEqual((p1["score"], r["calc"]["parameters"]["P2"]["score"], r["score"]), (-1, -1, -2))
+        self.assertNotIn("P3", r["calc"]["parameters"])
+        self.assertTrue(r["calc"]["parameters_not_in_track"]["P3"]["absorbed"])
+
+    def test_bands(self):
+        for value, want in ((0.99, 0), (1.0, -1), (1.99, -1), (2.0, -2), (3.99, -2), (4.0, -3), (40.0, -3)):
+            self.assertEqual(V21.f6_parameter_band("P1", value)[0], want, msg=f"P1 {value}")
+
+    def test_monotonic_when_earnings_turn_negative(self):
+        # 외부 검토 2차 사례: PER 200·성장 30% 가 −3 인데 같은 가격에 적자로 바뀌면 P3 0 으로 점수가 좋아지던 결함.
+        profit = self.f6(net_income=10.0)
+        self.assertEqual(profit["calc"]["parameters"]["P1"]["score"], -3)
+        for ni in (0.0, -10.0):
+            with self.subTest(net_income=ni):
+                r = self.f6(net_income=ni)
+                self.assertEqual(r["status"], "ok")
+                self.assertEqual(r["calc"]["parameters"]["P1"]["score"], -3)
+                self.assertLessEqual(r["score"], profit["score"])
+
+    def test_growth_floor(self):
+        self.assertEqual(self.f6(net_income=200.0)["calc"]["parameters"]["P1"]["score"], 0)       # 10/30 = 0.33
+        for revenue, prior in ((130.0, 130.0), (130.0, 160.0), (104.9, 100.0)):                    # 0%·−19%·4.9%
+            with self.subTest(revenue=revenue, prior=prior):
+                r = self.f6(net_income=200.0, revenue=revenue, revenue_prior=prior)
+                self.assertEqual(r["calc"]["parameters"]["P1"]["score"], -3)
+
+    def test_range_floor_minus_five(self):
+        r = self.f6(net_income=-1.0, market_cap=5000.0, revenue=101.0)
+        self.assertEqual(r["score"], -5)       # P1 −3 + P2 −2 = −5
+
+
+class F6EarningsAdjustmentTest(unittest.TestCase):
+    def f6(self, **kw) -> dict:
+        return compute_f6(company(), listed_obs(**kw), JudgmentLookup([]), V21, run21())
+
+    def test_alphabet_like_adjustment(self):
+        # 순이익 2442, 평가이익 1490, 법인세 551 / 세전 2993(18.4%) → 조정 순이익 ≈ 1226, 조정 PER 43008/1226 ≈ 35.1.
+        r = self.f6(market_cap=43008.0, net_income=2442.0, pretax=2993.0, operating_income=1476.0, gains=1490.0, tax=551.0,
+                    revenue=120.05, revenue_prior=100.0)
+        p1 = r["calc"]["parameters"]["P1"]
+        adj = p1["earnings_adjustment"]
+        self.assertTrue(adj["applied"])
+        self.assertAlmostEqual(adj["effective_tax_rate"], 551 / 2993)
+        self.assertAlmostEqual(p1["net_income_used"], 2442 - 1490 * (1 - 551 / 2993))
+        self.assertAlmostEqual(p1["per_used"], 35.1, delta=0.1)
+        self.assertAlmostEqual(p1["per_reported"], 43008 / 2442)
+        # 조정했으므로 영업외 비중(51%) 조건을 보지 않는다
+        self.assertEqual(r["calc"]["p4"]["conditions_hit"], [])
+        self.assertIn("nonop_share_skipped", r["calc"]["p4"])
+
+    def test_tax_is_not_derived_from_parent_net_income(self):
+        # 연결 세전 100, 법인세 20, 비지배 10 → 모회사 순이익 70. 세전 − 순이익(30)이 아니라 공시 법인세(20)로 20% 다.
+        r = self.f6(net_income=70.0, pretax=100.0, operating_income=60.0, gains=10.0, tax=20.0)
+        p1 = r["calc"]["parameters"]["P1"]
+        self.assertAlmostEqual(p1["earnings_adjustment"]["effective_tax_rate"], 0.20)
+        self.assertAlmostEqual(p1["net_income_used"], 70 - 10 * 0.8)
+
+    def test_not_adjustable_falls_back_to_reported_and_p4(self):
+        cases = {"세전 0 이하": dict(pretax=-5.0, tax=1.0), "세율 범위 밖": dict(pretax=100.0, tax=60.0),
+                 "법인세 없음": dict(pretax=100.0, tax=None),
+                 "태그 겹침": dict(pretax=100.0, tax=20.0, gains_basis={"components": [{"tag": "A"}, {"tag": "A"}]}),
+                 # 두 관측이 모두 범위를 밝혔는데 다를 때만 막는다(한쪽만 밝혔으면 비교할 것이 없다)
+                 "범위 다름": dict(pretax=100.0, tax=20.0, tax_basis={"ownership_scope": "parent_attributable"},
+                                pretax_basis={"ownership_scope": "consolidated_incl_nci"})}
+        for name, kw in cases.items():
+            with self.subTest(case=name):
+                r = self.f6(net_income=70.0, operating_income=30.0, gains=50.0, **kw)
+                p1 = r["calc"]["parameters"]["P1"]
+                self.assertFalse(p1["earnings_adjustment"]["applied"])
+                self.assertEqual(p1["net_income_used"], 70.0)
+                if kw["pretax"] > 0:
+                    # 보고 순이익으로 돌아가면 영업외 비중 조건이 살아 있다
+                    self.assertIn("nonop_share", r["calc"]["p4"]["conditions_hit"])
+
+    def test_no_gains_observation_is_v20_behaviour(self):
+        r = self.f6(net_income=70.0, pretax=100.0, operating_income=30.0)
+        self.assertFalse(r["calc"]["parameters"]["P1"]["earnings_adjustment"]["applied"])
+        self.assertIn("nonop_share", r["calc"]["p4"]["conditions_hit"])
+
+    def test_loss_raises_adjusted_income(self):
+        r = self.f6(net_income=70.0, pretax=100.0, operating_income=110.0, gains=-10.0, tax=20.0)
+        self.assertAlmostEqual(r["calc"]["parameters"]["P1"]["net_income_used"], 70 + 10 * 0.8)
+
+    def test_adjustment_to_nonpositive_is_minus_three(self):
+        r = self.f6(net_income=50.0, pretax=100.0, operating_income=-20.0, gains=120.0, tax=20.0)
+        p1 = r["calc"]["parameters"]["P1"]
+        self.assertLessEqual(p1["net_income_used"], 0)
+        self.assertEqual(p1["score"], -3)
+
+
+class F6PrivateGrowthTest(unittest.TestCase):
+    def f6(self, *, ps=40.0, rng=None, revenue=None, prior=None, c12="growth_adjusted_ps") -> dict:
+        items = [obs("ps_ratio", ps, basis={"estimate_range": rng} if rng else None, kind="estimate")]
+        if revenue is not None:
+            items.append(obs("revenue_ttm", revenue))
+        if prior is not None:
+            items.append(obs("revenue_ttm_prior", prior))
+        return compute_f6(private_company(), ObsLookup(items), JudgmentLookup([]), V21, run21(c12))
+
+    def test_growth_adjusted_bands_and_ceiling(self):
+        for revenue, want in ((200.0, -2), (130.0, -3), (108.0, -5)):     # 40/100=0.4 · 40/30=1.33 · 40/8=5
+            with self.subTest(revenue=revenue):
+                r = self.f6(ps=40.0, revenue=revenue, prior=100.0)
+                self.assertEqual((r["score"], r["calc"]["growth_adjusted"]["path"]), (want, "growth_adjusted"))
+                self.assertNotIn("correction", r["calc"])
+
+    def test_zero_and_negative_growth_are_worst(self):
+        for prior in (100.0, 120.0, 102.0):                      # 성장 0%·−17%·−2%
+            with self.subTest(prior=prior):
+                r = self.f6(ps=40.0, revenue=100.0, prior=prior)
+                self.assertEqual((r["score"], r["calc"]["growth_adjusted"]["path"]), (-5, "below_growth_floor"))
+
+    def test_fallback_without_revenue(self):
+        r = self.f6(ps=41.24)
+        self.assertEqual((r["score"], r["calc"]["growth_adjusted"]["path"]), (-4, "fallback_private_bands"))
+        self.assertNotIn("correction", r["calc"])
+
+    def test_nonpositive_revenue_is_pending(self):
+        self.assertEqual(self.f6(ps=40.0, revenue=0.0, prior=100.0)["status"], "pending_data")
+
+    def test_estimate_range_spanning_growth_bands_is_pending(self):
+        self.assertEqual(self.f6(ps=40.0, rng=[30.0, 90.0], revenue=130.0, prior=100.0)["status"], "pending_data")   # 1.0~3.0
+        self.assertEqual(self.f6(ps=40.0, rng=[31.0, 50.0], revenue=130.0, prior=100.0)["score"], -3)               # 1.03~1.67
+
+    def test_old_choice_is_refused_in_v21(self):
+        r = self.f6(c12="p2_with_capped_promotion", revenue=130.0, prior=100.0)
+        self.assertEqual(r["status"], "needs_rule_decision")
+
+
+class F7FourCellsTest(unittest.TestCase):
+    def test_four_cells(self):
+        want = {("small", "no"): 0, ("small", "yes"): -1, ("large", "no"): -2, ("large", "yes"): -3}
+        for (share, back), score in want.items():
+            j = {"judgment_id": "acme.F7", "company_id": "acme", "factor": "F7", "kind": "matrix", "score": None,
+                 "inputs": {"funding_dependent_share": share, "own_money_returns": back}, "evidence": ["시험"],
+                 "reviewer": "t", "reviewed_at": "2026-10-12", "status": "new"}
+            with self.subTest(cell=(share, back)):
+                self.assertEqual(compute_f7(company(), JudgmentLookup([j]), V21)["score"], score)
+        j["inputs"] = {"funding_dependent_share": "large", "own_money_returns": "yes"}
+        self.assertEqual(compute_f7(company(), JudgmentLookup([j]), V20)["score"], -2)
 
 
 if __name__ == "__main__":

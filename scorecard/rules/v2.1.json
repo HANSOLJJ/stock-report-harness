@@ -2,7 +2,7 @@
   "schema": "scorecard.rules/1",
   "rule_version": "v2.1",
   "status": "draft",
-  "note": "AI기업_채점규칙_v1.5.md(2026-09-02)의 기계 적용 부분을 구조화한 원본. 정성 정의·별표 본문은 docs/scorecard/design-guideline.md 와 원문을 참조한다. decisions 의 pending 항목은 승인 전 활성화하지 않으며, 실행 단위 run.json.decisions 로만 명시적으로 선택한다. | v1.6 초안: 자료 원천 allowlist 도입(F6-SOURCE-07). | v1.7 초안: F6 재정의(F6-SPEC-18). NTM PER 단일 지표를 P1 PER·P2 EV/Sales·P3 매출성장률·P4 입력신뢰도 네 파라미터로 분해하고 함정 배점을 F6 -7 / F7 -2 / F8 -5 / F9 -4 로 재배분한다(합 -18 보존). 무료·허용 원천 중 12개사 전부에 향후 4개 분기 컨센서스를 같은 기준으로 주는 곳이 없어 NTM PER 을 유지할 수 없다는 조사 결과(F6H-BATCH-10·AV-SOURCE-11)가 근거다. 밴드 경계는 표본이 아니라 통상 시장 기준에서 정했다(f6-band-decision.md). v1.5·v1.6 실행에는 영향을 주지 않는다. | v1.8: 원천 allowlist 폐지. 개인 사용 목적이라 host 등재 절차를 두지 않는다(사용자 결정 2026-09-30). 2026-09-30 구글 뉴스 robots·약관 검토 결과(robots 는 /rss 차단, 일반 약관은 robots 위반 자동 접근을 남용으로 정의, 뉴스 약관은 개인 피드 리더 용도 허용)를 알고 내린 결정이다. 수집기의 자제(식별 UA·낮은 빈도·본문 미수집)는 코드 상수로 지킨다. 프로즈 참조는 docs/scorecard/rules/AI기업_채점규칙_v1.7.md 를 계속 쓴다. | v1.9: ⑥ 상장 트랙을 revenue_ttm 관측의 기간 단위로 가른다(policies.f6.track_by_period_basis). 예탁증서 상장사도 6-K 분기 자료로 최근 1년을 복원하면 일반 트랙이다(사용자 결정 2026-10-06). 그 밖의 규칙은 v1.8 과 같다. 사람용 문서는 docs/scorecard/rules.md 다. | v2.0: 정기 실행은 정성 판단 일곱 항목을 모든 기업에 대해 다시 매기고 승계는 기업 추가 실행에만 남긴다(policies.rejudge). ① 을 '락인과 가격결정력' 으로 바꾸고 네 질문(회수 루프·전환비용·대체 공급·가격 실측) 입력과 사다리로 계산한다. 부품 채널 일괄 상한을 없애고 지속성 할인으로 바꾼다. ② 세대 격차를 시간(모델 6개월·하드웨어 12개월)으로 정의하고 벤더 발표만 있는 성능 주장은 부분 통과다. ③ 가속도에 지표 단계(a~e)를 적고 대리 지표는 최대 부분이며 성장률 두 개를 저장한다(2026-10-08 사용자 결정, docs/scorecard/notes/2026-10-08-investment-lens-review.md). | v2.1: ① 5점은 가장 강한 채널의 AI 수익화가 '예'일 때만 준다(그 밖에는 상한 4). '예'는 그 채널 고객이나 매출의 과반이 AI 에 따로 돈을 낸다는 공시 숫자와 AI 가 그 채널의 가격·단가를 올렸다는 근거가 함께 있어야 한다(2026-10-12 사용자 결정, .agents/plans/rule-v21-2026-10/plan.md).",
+  "note": "AI기업_채점규칙_v1.5.md(2026-09-02)의 기계 적용 부분을 구조화한 원본. 정성 정의·별표 본문은 docs/scorecard/design-guideline.md 와 원문을 참조한다. decisions 의 pending 항목은 승인 전 활성화하지 않으며, 실행 단위 run.json.decisions 로만 명시적으로 선택한다. | v1.6 초안: 자료 원천 allowlist 도입(F6-SOURCE-07). | v1.7 초안: F6 재정의(F6-SPEC-18). NTM PER 단일 지표를 P1 PER·P2 EV/Sales·P3 매출성장률·P4 입력신뢰도 네 파라미터로 분해하고 함정 배점을 F6 -7 / F7 -2 / F8 -5 / F9 -4 로 재배분한다(합 -18 보존). 무료·허용 원천 중 12개사 전부에 향후 4개 분기 컨센서스를 같은 기준으로 주는 곳이 없어 NTM PER 을 유지할 수 없다는 조사 결과(F6H-BATCH-10·AV-SOURCE-11)가 근거다. 밴드 경계는 표본이 아니라 통상 시장 기준에서 정했다(f6-band-decision.md). v1.5·v1.6 실행에는 영향을 주지 않는다. | v1.8: 원천 allowlist 폐지. 개인 사용 목적이라 host 등재 절차를 두지 않는다(사용자 결정 2026-09-30). 2026-09-30 구글 뉴스 robots·약관 검토 결과(robots 는 /rss 차단, 일반 약관은 robots 위반 자동 접근을 남용으로 정의, 뉴스 약관은 개인 피드 리더 용도 허용)를 알고 내린 결정이다. 수집기의 자제(식별 UA·낮은 빈도·본문 미수집)는 코드 상수로 지킨다. 프로즈 참조는 docs/scorecard/rules/AI기업_채점규칙_v1.7.md 를 계속 쓴다. | v1.9: ⑥ 상장 트랙을 revenue_ttm 관측의 기간 단위로 가른다(policies.f6.track_by_period_basis). 예탁증서 상장사도 6-K 분기 자료로 최근 1년을 복원하면 일반 트랙이다(사용자 결정 2026-10-06). 그 밖의 규칙은 v1.8 과 같다. 사람용 문서는 docs/scorecard/rules.md 다. | v2.0: 정기 실행은 정성 판단 일곱 항목을 모든 기업에 대해 다시 매기고 승계는 기업 추가 실행에만 남긴다(policies.rejudge). ① 을 '락인과 가격결정력' 으로 바꾸고 네 질문(회수 루프·전환비용·대체 공급·가격 실측) 입력과 사다리로 계산한다. 부품 채널 일괄 상한을 없애고 지속성 할인으로 바꾼다. ② 세대 격차를 시간(모델 6개월·하드웨어 12개월)으로 정의하고 벤더 발표만 있는 성능 주장은 부분 통과다. ③ 가속도에 지표 단계(a~e)를 적고 대리 지표는 최대 부분이며 성장률 두 개를 저장한다(2026-10-08 사용자 결정, docs/scorecard/notes/2026-10-08-investment-lens-review.md). | v2.1: ① 5점은 가장 강한 채널의 AI 수익화가 '예'일 때만 준다(그 밖에는 상한 4). '예'는 그 채널 고객이나 매출의 과반이 AI 에 따로 돈을 낸다는 공시 숫자와 AI 가 그 채널의 가격·단가를 올렸다는 근거가 함께 있어야 한다(2026-10-12 사용자 결정, .agents/plans/rule-v21-2026-10/plan.md). ⑥ 은 P1 을 성장 조정 PER(지분증권 평가손익을 세후로 뺀 조정 순이익 기준 PER ÷ 매출 성장률×100)로 바꾸고 일반 상장 트랙의 P3 를 흡수한다. 조정 순이익이 0 이하이거나 성장 5% 미만이면 P1 은 −3 이다. 비상장은 P/S ÷ 보정 매출 성장률로 재고 승격 보정을 없앤다. 함정 배점은 ⑥ −5 · ⑦ −3 · ⑧ −5 · ⑨ −4(합 −17)이고 ⑦ 의 큼×돌아옴 칸을 −3 으로 되돌린다.",
   "source": {
     "file": "AI기업_채점규칙_v1.5.md",
     "sha256": "57beb84ad8c291f3086a4b06483cebd1f614befa6e93daeb92657e522b3f7abb",
@@ -25,13 +25,13 @@
       "F9"
     ],
     "moat_max": 25,
-    "trap_min_active": -18,
+    "trap_min_active": -17,
     "trap_min_nominal": -20,
     "total_formula": "과점(F1..F5 합) + 함정(F6..F9 합, 음수 또는 0)",
     "rank_formula": "1 + (조정총점이 더 높은 완료 기업 수). 동점은 공동 순위, 다음 순위 건너뜀",
     "moat_candidate_threshold": 20,
     "moat_candidate_note": "과점 20점 이상은 강의의 분류 기준이며 조정총점에 적용하지 않는다",
-    "trap_min_note": "v1.7 구성: F6 -7 + F7 -2 + F8 -5 + F9 -4 = -18. v1.5 의 -18(F6 -5 + F7 -3 + F8 -5 + F9 -5)과 합계는 같고 배분만 바뀌었다. trap_min_nominal 의 -20 은 원문 개요가 네 factor 를 모두 -5 로 놓은 명목 설명이라 그대로 둔다."
+    "trap_min_note": "v1.7 구성: F6 -7 + F7 -2 + F8 -5 + F9 -4 = -18. v1.5 의 -18(F6 -5 + F7 -3 + F8 -5 + F9 -5)과 합계는 같고 배분만 바뀌었다. trap_min_nominal 의 -20 은 원문 개요가 네 factor 를 모두 -5 로 놓은 명목 설명이라 그대로 둔다. | v2.1 구성: F6 -5 + F7 -3 + F8 -5 + F9 -4 = -17(2026-10-12 사용자 결정). 범위는 측정 가능성을 반영하지 중요도를 반영하지 않는다 — 가장 거친 ⑦ 이 가장 좁다."
   },
   "factors": {
     "F1": {
@@ -321,20 +321,20 @@
       "label": "⑥ 가격",
       "short": "가격",
       "range": [
-        -7,
+        -5,
         0
       ],
       "mode": "parameters",
       "decision_ids": [
         "C-12"
       ],
-      "note": "상장: P1 PER + P2 EV/Sales + P3 매출성장률 합계에 P4 입력신뢰도 보정(한 칸) 후 트랙 하한으로 절단. 비상장: 배수는 자동 계산, 밴드 미정이라 점수는 pending_rule_decision. C-13(근사 NTM)은 v1.7 F6 가 NTM 을 쓰지 않아 F6 와 무관해졌다(결정 자체는 유지)."
+      "note": "상장: P1 성장 조정 PER(조정 순이익 기준) + P2 EV/Sales 에 P4 입력신뢰도 보정(한 칸) 후 트랙 하한으로 절단(일반 −5, 신규 상장 −3). 신규 상장 트랙은 P2 + P3. 비상장: P/S ÷ 보정 매출 성장률, 전년 보정 매출이 없으면 P/S 구간표, 천장 −2·바닥 −5(v2.1)."
     },
     "F7": {
       "label": "⑦ 순환금융",
       "short": "순환금융",
       "range": [
-        -2,
+        -3,
         0
       ],
       "mode": "matrix",
@@ -345,7 +345,7 @@
         "small|no": 0,
         "large|no": -2,
         "small|yes": -1,
-        "large|yes": -2
+        "large|yes": -3
       },
       "matrix_rescale": {
         "decided_at": "2026-09-15",
@@ -358,7 +358,15 @@
       },
       "judgment_kinds": [
         "matrix"
-      ]
+      ],
+      "matrix_restore": {
+        "change": "`large|yes` -2 → -3, range [-2,0] → [-3,0]. 나머지 세 칸은 그대로다.",
+        "why": "matrix_rescale(2026-09-15)이 변별력 손실과 재개 조건('large|no 에 해당하는 기업이 생기면 다시 본다')을 적어 두었다. 2026-10 재실행에서 OpenAI·Anthropic·SpaceX 가 large|no 라 조건이 충족됐다. 내 돈이 고객에게 갔다가 내 매출로 돌아오는 구조는 ⑦ 의 질문(매출의 진위)에서 가장 나쁜 칸이다.",
+        "effect_2026_10": "Microsoft·NVIDIA·Oracle(large|yes) −2 → −3. OpenAI·Anthropic·SpaceX(large|no)는 −2 그대로.",
+        "rebalance": "v1.7 이 ⑦ 에서 ⑥ 으로 옮긴 한 점을 되돌린다(⑥ −7 → −5, ⑦ −2 → −3).",
+        "decided_at": "2026-10-12",
+        "decided_by": "사용자"
+      }
     },
     "F8": {
       "label": "⑧ 비대칭 의존",
@@ -395,40 +403,79 @@
       "boundary_note": "±3% 는 표시 전용이다. 점수를 바꾸지 않는다. 파라미터마다 각자의 경계에 대해 계산한다.",
       "parameters": {
         "P1": {
-          "label": "PER",
-          "question": "이익 대비 비싼가",
+          "label": "성장 조정 PER",
+          "question": "번 것과 성장에 비해 비싼가",
           "score_range": [
-            -2,
+            -3,
             0
           ],
           "comparison": "upper_exclusive",
           "unit": "ratio",
-          "formula": "market_cap / net_income_ttm",
+          "formula": "(market_cap / adjusted_net_income) / (revenue_ttm / revenue_ttm_prior - 1) / 100",
           "inputs": [
             "market_cap",
-            "net_income_ttm"
+            "net_income_ttm",
+            "revenue_ttm",
+            "revenue_ttm_prior"
           ],
           "requires_positive": [
-            "net_income_ttm"
-          ],
-          "bands": [
-            {
-              "upper": 25,
-              "score": 0
-            },
-            {
-              "upper": 45,
-              "score": -1
-            },
-            {
-              "upper": null,
-              "score": -2
-            }
+            "revenue_ttm_prior"
           ],
           "input_scope": {
             "net_income_ttm": "parent_attributable"
           },
-          "input_scope_note": "[FIX-54 1단계 FC-04] P1 분자는 **모회사 귀속 순이익**이다 — 시총·EPS 가 모회사 보통주 범위라서다. 연결 전체(비지배 포함)를 쓰면 범위가 어긋난다. calc_f6_params 가 관측 basis.ownership_scope 를 읽어 다르면 P1 을 만들지 않는다."
+          "input_scope_note": "[FIX-54 1단계 FC-04] P1 분자는 **모회사 귀속 순이익**이다 — 시총·EPS 가 모회사 보통주 범위라서다. 연결 전체(비지배 포함)를 쓰면 범위가 어긋난다. calc_f6_params 가 관측 basis.ownership_scope 를 읽어 다르면 P1 을 만들지 않는다.",
+          "bands": [
+            {
+              "upper": 1,
+              "score": 0
+            },
+            {
+              "upper": 2,
+              "score": -1
+            },
+            {
+              "upper": 4,
+              "score": -2
+            },
+            {
+              "upper": null,
+              "score": -3
+            }
+          ],
+          "bands_note": "경계 1·2·4 는 2026-10-12 예시다. 11월 실행 전에 14사 실제 계산표를 보고 사용자가 확정한다.",
+          "growth_adjusted": {
+            "growth_multiplier": 100,
+            "growth_multiplier_note": "성장률 30% 는 30 으로 나눈다. 이 프로젝트의 자체 지표다.",
+            "growth_floor": 0.05,
+            "below_floor_score": -3,
+            "nonpositive_earnings_score": -3,
+            "monotonic_note": "조정 순이익이 0 으로 다가가면 PER 이 끝없이 커져 −3 이 된다. 0 이하에서도 −3 으로 이어 붙여 이익이 나빠져서 ⑥ 이 좋아지는 일이 없게 한다(외부 검토 2차: PER 200·성장 30% 가 −3 인데 적자로 바뀌면 P3 0 이 되던 결함).",
+            "growth_proxy_note": "매출 성장이 이익 성장을 대신한다. 이익률이 크게 움직이는 회사에서는 이 대리가 틀릴 수 있다.",
+            "decided_at": "2026-10-12",
+            "decided_by": "사용자"
+          },
+          "earnings_adjustment": {
+            "gains_metric": "equity_investment_gains_ttm",
+            "tax_metric": "income_tax_ttm",
+            "pretax_metric": "pretax_income_ttm",
+            "effective_tax_rate_range": [
+              0,
+              0.5
+            ],
+            "formula": "adjusted_net_income = net_income_ttm - equity_investment_gains_ttm × (1 - income_tax_ttm / pretax_income_ttm)",
+            "not_adjustable": [
+              "세전이익 0 이하",
+              "실효세율이 effective_tax_rate_range 밖",
+              "평가손익은 있는데 법인세·세전이익 관측이 없거나 두 관측의 소유 범위가 다름",
+              "평가손익 구성 태그가 겹침(basis.components 중복)"
+            ],
+            "fallback": "조정 불가나 평가손익 관측 없음이면 보고 순이익을 쓰고 P4 영업외 비중 조건을 살린다(v2.0 과 같은 동작).",
+            "assumption_note": "회사 전체 실효세율을 평가손익에 적용하는 것은 조정 가정이다. 평가손익의 비지배주주 몫은 미미하다고 본다.",
+            "why": "Alphabet 의 최근 1년 지분증권 평가손익 1,490억 달러(us-gaap EquitySecuritiesFvNiGainLoss)가 영업외 손익의 98% 라 보고 PER 17.6 이 본업 기준 약 35 로 바뀐다. P4 한 칸 보정은 왜곡이 클수록 덜 잡았다.",
+            "decided_at": "2026-10-12",
+            "decided_by": "사용자"
+          }
         },
         "P2": {
           "label": "EV/Sales",
@@ -504,7 +551,8 @@
               "lower": null,
               "score": -3
             }
-          ]
+          ],
+          "v2_1_note": "v2.1 에서는 신규 상장 트랙만 쓴다. 일반 상장 트랙의 성장은 P1(성장 조정 PER) 안에서 센다."
         }
       },
       "p4": {
@@ -805,7 +853,9 @@
               "operating_income_ttm"
             ],
             "scope": "F6 P4 전용. ⑦ 으로 이월하지 않는다 — 금지 범위는 C-11 confirmed_model.carryover_scope(산술 입력·증거 사용 금지, Q22 고객사 방증 문구는 허용)",
-            "scope_why": "별표 I 351~356행(평가이익은 ⑦ 증거가 아니고 ⑥ TTM PER 무효 처리) · 채점규칙 438행(⑦ `쓰지 않는 것` 지분 평가이익 ⑥ 소관). C-11 block_carryover."
+            "scope_why": "별표 I 351~356행(평가이익은 ⑦ 증거가 아니고 ⑥ TTM PER 무효 처리) · 채점규칙 438행(⑦ `쓰지 않는 것` 지분 평가이익 ⑥ 소관). C-11 block_carryover.",
+            "skip_when_p1_adjusted": true,
+            "skip_note": "v2.1: P1 이 평가손익을 세후로 빼 조정했으면 이 조건을 보지 않는다. 같은 왜곡을 두 번 깎지 않는다."
           },
           {
             "id": "period_basis_not_ttm",
@@ -845,40 +895,28 @@
           "label": "일반 상장",
           "parameters": [
             "P1",
-            "P2",
-            "P3"
+            "P2"
           ],
-          "floor": -7,
+          "floor": -5,
           "select": "listed 이고 revenue_ttm 관측의 basis.period_basis 가 ttm 인 기업. 예탁증서(adr·ads) 상장사도 분기 자료(6-K 등)로 최근 1년을 복원했으면 여기에 든다(v1.9)",
-          "optional_parameters": [
-            "P1"
-          ],
-          "optional_parameters_note": "[FIX-61 · obsreg 9차 재무 계산 재판정(Claude 독립 세션) low · C-28 닫음] P1 은 **입력이 성립할 때만** 만든다. 순이익이 `requires_positive` 를 넘지 못하면 만들지 않고 결과 `calc.parameters_optional_unmet.P1` 에 사유를 적으며, **P2·P3 로 소계를 낸다.** 전에는 P1 이 `missing` 으로 떨어져 이미 산출한 P2·P3 를 버리고 F6 전체가 `pending_data` 가 됐다 — 같은 순손실이 `listed_newly` 에서는 소계가 나오고 여기서는 미완료가 되는 비대칭이었다. **이번 실행 점수는 바뀌지 않는다** — 두 트랙 상장 11개사의 순이익이 전부 양수다. **사유는 `requires_positive` 하나로 좁혔다**(`optional_parameters_causes`) — 순이익 관측이 아예 없는 것은 우리 수집 공백이라 예전처럼 factor 를 pending 으로 세운다. 순손실은 그 기업의 성질이고 결측은 우리 문제다.",
-          "optional_parameters_causes": {
-            "P1": [
-              "requires_positive"
-            ]
-          }
+          "parameters_absorbed": {
+            "P3": "v2.1 에서 P1(성장 조정 PER)에 흡수했다. 성장은 한 번만 센다."
+          },
+          "note": "v2.1: P1 은 순이익이 0 이하여도 만든다(−3). 순이익 관측이 아예 없으면 수집 공백이라 pending 이다. 산식 최대 −6(P1 −3 + P2 −2 + P4 −1)을 −5 로 자른다."
         },
         "listed_annual": {
           "label": "ADR/FPI 연간",
           "parameters": [
             "P1",
-            "P2",
-            "P3"
+            "P2"
           ],
-          "floor": -7,
+          "floor": -5,
           "select": "listed 이고 예탁증서(adr·ads) 상장사인데 분기 기간 자료가 없어 revenue_ttm 관측이 연간(annual)인 기업. 티커가 아니라 관측의 기간 단위로 가른다(v1.9)",
           "p4_note": "[FIX-55 1단계] period_basis_not_ttm 은 관측 basis.period_basis 로 판정한다 — 트랙 자동 목록에 두지 않는다.",
-          "optional_parameters": [
-            "P1"
-          ],
-          "optional_parameters_note": "[FIX-61 · obsreg 9차 재무 계산 재판정(Claude 독립 세션) low · C-28 닫음] P1 은 **입력이 성립할 때만** 만든다. 순이익이 `requires_positive` 를 넘지 못하면 만들지 않고 결과 `calc.parameters_optional_unmet.P1` 에 사유를 적으며, **P2·P3 로 소계를 낸다.** 전에는 P1 이 `missing` 으로 떨어져 이미 산출한 P2·P3 를 버리고 F6 전체가 `pending_data` 가 됐다 — 같은 순손실이 `listed_newly` 에서는 소계가 나오고 여기서는 미완료가 되는 비대칭이었다. **이번 실행 점수는 바뀌지 않는다** — 두 트랙 상장 11개사의 순이익이 전부 양수다. **사유는 `requires_positive` 하나로 좁혔다**(`optional_parameters_causes`) — 순이익 관측이 아예 없는 것은 우리 수집 공백이라 예전처럼 factor 를 pending 으로 세운다. 순손실은 그 기업의 성질이고 결측은 우리 문제다.",
-          "optional_parameters_causes": {
-            "P1": [
-              "requires_positive"
-            ]
-          }
+          "parameters_absorbed": {
+            "P3": "v2.1 에서 P1(성장 조정 PER)에 흡수했다. 성장은 한 번만 센다."
+          },
+          "note": "v2.1: P1 은 순이익이 0 이하여도 만든다(−3). 순이익 관측이 아예 없으면 수집 공백이라 pending 이다. 산식 최대 −6(P1 −3 + P2 −2 + P4 −1)을 −5 로 자른다."
         },
         "listed_newly": {
           "label": "신규 상장",
@@ -895,7 +933,8 @@
             "P2"
           ],
           "optional_parameters_note": "[FIX-56 1단계] P2 는 시총·순현금·12개월 매출이 다 있을 때만 만든다. 하나라도 없으면 지금까지처럼 만들지 않고 결과 `calc.parameters_optional_unmet` 에 사유를 적는다 — 없다고 F6 전체를 pending 으로 세우지 않는다.",
-          "parameters_excluded_note": "[FIX-56 1단계] **P1 은 트랙에 두지 않았다.** 이 트랙에 든 기업의 순이익이 음수라 `requires_positive` 를 넘지 못한다(spacex-xai 순이익 TTM -8,218M). 트랙에서 뺀 것과 입력이 없어 못 만드는 것은 다르므로, 회사마다 어느 쪽인지를 결과 `calc.parameters_not_in_track.P1` 이 다시 적는다 — 흑자로 돌아서면 그 칸이 `would_compute=true` 로 바뀌고 트랙을 다시 볼 신호가 된다."
+          "parameters_excluded_note": "[FIX-56 1단계] **P1 은 트랙에 두지 않았다.** 이 트랙에 든 기업의 순이익이 음수라 `requires_positive` 를 넘지 못한다(spacex-xai 순이익 TTM -8,218M). 트랙에서 뺀 것과 입력이 없어 못 만드는 것은 다르므로, 회사마다 어느 쪽인지를 결과 `calc.parameters_not_in_track.P1` 이 다시 적는다 — 흑자로 돌아서면 그 칸이 `would_compute=true` 로 바뀌고 트랙을 다시 볼 신호가 된다.",
+          "note": "v2.1: 이 트랙은 P2 + P3 를 그대로 쓴다. 순이익을 쓰지 않아 이익 부호에 따른 경로 전환이 없으므로 단조성 문제가 없다. 바닥 −3."
         },
         "private": {
           "label": "비상장",
@@ -906,7 +945,7 @@
           ],
           "floor": -5,
           "select": "listed 가 false",
-          "note": "P1 은 주가가 없어 불가. **P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다**(C-12 확정, 2026-09-11). P2 는 post_money_valuation ÷ TTM 보정 매출(ps_ratio), P3 는 직전 대비 arr 증가율, P4 는 자본효율 arr ÷ cumulative_raised 다. 밴드는 private_bands, 보정은 private_correction 에 있다.",
+          "note": "v2.1: P/S ÷ 보정 매출 성장. 승격 보정 없음. 천장 −2·바닥 −5.",
           "ceiling": -2
         }
       },
@@ -952,7 +991,7 @@
         "boundary_rule": "미적용. v1.5 678행이 '비상장에는 적용하지 않는다 — 밸류가 반년~1년에 한 번 갱신되므로 하루 변동폭이라는 3% 의 논리가 성립하지 않는다' 고 명시한다.",
         "range_guard": "관측이 구간 추정(basis.estimate_range)을 선언하면 **양 끝이 같은 밴드에 드는지 확인한다.** 갈리면 값을 고르지 않고 보류한다. anthropic 의 30~39 는 양 끝이 모두 '30x+' 라 갈리지 않는다."
       },
-      "private_score_mode": "p2_with_capped_promotion",
+      "private_score_mode": "growth_adjusted_ps",
       "private_note": "비상장 F6 는 **P2 가 점수를 내고 P3·P4 가 합쳐서 최대 한 칸 올린다**(C-12 확정, 2026-09-11, 사용자). 밴드는 private_bands(v1.5 비상장 구간표), 보정은 private_correction 에 있다. 천장 -2 · 하한 -5 다. 배수는 셋 다 계산해 근거로 남기되 **점수를 만드는 것은 P2 하나**이고 나머지 둘은 보정 조건이다. | C-12 확정 전(2026-09-11 이전) 서술은 '밴드는 미정이고 배수는 자동 계산해 근거로 남기고 점수는 만들지 않는다' 였다. 확정 뒤에도 그 문장이 남아 있어 **선언이 사실과 반대**인 상태가 있었고 설계진행 검토에서 잡혔다. 오늘 not_disclosed 네 뜻과 stale_asof 미소비로 고친 것과 같은 종류다 — 선언은 코드가 하는 일과 같아야 하고, 다르면 다음 사람이 선언을 믿는다.",
       "fx": {
         "status": "rule_revised_2026_09_11",
@@ -1116,7 +1155,8 @@
           }
         ],
         "weakness": "**이 보정의 결과가 v1.5 발표 점수 -3·-4 와 정확히 같다.** f6-band-decision.md 에서 상장 밴드를 정할 때 '경계를 정한 근거가 표본이면 그 점수는 표본 밖에서 의미가 없다' 고 적어 두었는데, 여기서는 **답을 먼저 알고 보정 방향을 정했다.** 완화 요소는 둘이다 — P2 밴드는 v1.5 구간표라는 외부 기준을 그대로 쓰고 표본에서 뽑지 않았고, 상한 1칸 보정은 상장 P4 에서 이미 쓰는 장치라 새로 만든 것이 아니다. 그래도 보정이 어느 방향으로 갈지는 답을 보고 정한 셈이고 숨기지 않는다. 다음 사람이 이 보정을 볼 때 어디서 왔는지 알아야 한다(설계진행 c12-c20-decision.md, 사용자 확정).",
-        "rejected_alternative": "안1(P2 만 쓰고 P3·P4 를 읽지 않음)은 표본에서 아무것도 끌어오지 않는 장점이 있었다. 기각 이유는 **트랙이 parameters 로 P3·P4 를 선언해 놓고 안 읽는 것이 결함**이기 때문이다(F6-FIX-21 의 '소비자가 있는데 안 읽는 선언은 결함'). 같은 날 stale_asof 에서 잡은 것과 같은 형태다."
+        "rejected_alternative": "안1(P2 만 쓰고 P3·P4 를 읽지 않음)은 표본에서 아무것도 끌어오지 않는 장점이 있었다. 기각 이유는 **트랙이 parameters 로 P3·P4 를 선언해 놓고 안 읽는 것이 결함**이기 때문이다(F6-FIX-21 의 '소비자가 있는데 안 읽는 선언은 결함'). 같은 날 stale_asof 에서 잡은 것과 같은 형태다.",
+        "v2_1_note": "v2.1 에서는 쓰지 않는다(private_score_mode growth_adjusted_ps). 성장이 잣대 안에 들어가 승격 보정은 두 번 세는 것이 된다."
       },
       "net_cash": {
         "status": "working_definition",
@@ -1370,6 +1410,50 @@
           "do_not_delete": "코드를 지우지 않는다 — 승인된 v1.5 실행(ai-scorecard-2026-09-baseline)이 이 경로로 계산됐고 해시가 그 결과에 묶여 있다."
         },
         "why": "무료·허용 원천 중 12개사 전부에 향후 4개 분기 컨센서스를 같은 기준으로 주는 곳이 없어 NTM PER 을 유지할 수 없다(F6H-BATCH-10·AV-SOURCE-11, F6-SPEC-18)."
+      },
+      "parameter_sum_rule": {
+        "mode": "track_floor_reachable",
+        "rule": "트랙마다 (그 트랙 파라미터의 하한 합 − P4 cap_steps) 가 트랙 floor 이하이고, floor 는 factor range 안이다.",
+        "why": "v2.1 은 P3 를 신규 상장 트랙에만 두고 일반 상장 산식 최대 −6 을 −5 로 자른다. 모든 파라미터 하한 합이 range 하한과 같아야 한다는 v1.7 검산이 성립하지 않는다.",
+        "decided_at": "2026-10-12",
+        "decided_by": "사용자"
+      },
+      "private_growth_adjusted": {
+        "label": "P/S ÷ 보정 매출 성장",
+        "question": "매출과 성장에 비해 비싼가",
+        "input": "ps_ratio",
+        "growth_inputs": [
+          "revenue_ttm",
+          "revenue_ttm_prior"
+        ],
+        "growth_inputs_note": "실측 보정 매출의 전년 대비다. ARR·런레이트를 쓰지 않는다 — 상장사와 같은 잣대(2.3).",
+        "growth_multiplier": 100,
+        "growth_floor": 0.05,
+        "below_floor_score": -5,
+        "comparison": "upper_exclusive",
+        "bands": [
+          {
+            "upper": 1,
+            "score": -2
+          },
+          {
+            "upper": 2,
+            "score": -3
+          },
+          {
+            "upper": 4,
+            "score": -4
+          },
+          {
+            "upper": null,
+            "score": -5
+          }
+        ],
+        "bands_note": "경계 1·2·4 는 2026-10-12 예시다. 천장 −2·바닥 −5 는 그대로다.",
+        "fallback": "전년 보정 매출(revenue_ttm_prior)이나 보정 매출(revenue_ttm) 관측이 없으면 private_bands(P/S 구간표)로 점수를 낸다. 승격 보정은 없다.",
+        "nonpositive_revenue": "보정 매출이 0 이하면 성장률이 서지 않아 pending_data 다.",
+        "decided_at": "2026-10-12",
+        "decided_by": "사용자"
       }
     },
     "f9": {
@@ -1897,8 +1981,10 @@
       "recommendation": "비상장 최종 점수는 정성 예외(manual_with_rationale)",
       "choices": [
         "p2_with_capped_promotion",
-        "manual_with_rationale"
-      ]
+        "manual_with_rationale",
+        "growth_adjusted_ps"
+      ],
+      "implementation_status": "v2.1: growth_adjusted_ps 를 구현했다(calc_f6_params.compute_private). v2.1 실행은 run.json decisions 에서 C-12 를 growth_adjusted_ps 로 고른다. p2_with_capped_promotion 은 v2.0 이하 실행을 재현하는 데만 쓴다."
     },
     {
       "id": "C-13",

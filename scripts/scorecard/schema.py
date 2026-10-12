@@ -42,6 +42,8 @@ PERIOD_REQUIRED_METRICS = {
     "ntm_eps_quarter",
     # 2026-10-08: 규칙 v2.0 재실행의 최근 1년 흐름 지표. operating_margin_ttm 과 같은 이유로 기간을 요구한다.
     "gross_margin_ttm", "gross_margin_ttm_prior", "sbc_ttm",
+    # 2026-10-12 규칙 v2.1 ⑥: 조정 순이익의 두 입력도 최근 1년 기간이 값의 일부다.
+    "equity_investment_gains_ttm", "income_tax_ttm",
 }
 OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
 # 결측 유형. status=not_disclosed 하나가 네 뜻(미확인·미공시·계산 대상 아님·산출 불가)으로 쓰여
@@ -232,6 +234,12 @@ METRICS: dict[str, dict[str, str]] = {
     "shares_diluted": {"unit": "count", "type": "number"},
     # 최근 1년 주식보상비용 — 자본 효율 진단 예비(2026-10-08 사용자 결정)
     "sbc_ttm": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 ⑥: 지분증권 평가·처분 손익(최근 1년, 세전, 연결 범위). P1′ 의 조정 순이익에서 세후로 뺀다.
+    # 회사마다 태그가 다르면 서로 겹치지 않는 구성 태그의 합을 basis 에 적는다(Alphabet EquitySecuritiesFvNiGainLoss 등).
+    "equity_investment_gains_ttm": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 ⑥: 공시 법인세 비용(최근 1년, 세전이익과 같은 연결 범위). 실효세율 = 이것 ÷ 세전이익.
+    # 세전 − 모회사 귀속 순이익으로 유도하지 않는다 — 비지배주주 몫이 법인세에 섞인다.
+    "income_tax_ttm": {"unit": "USD", "type": "number"},
 }
 
 NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "revenue_ttm_full", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
@@ -717,7 +725,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                                       # 입력 관측이 가져야 할 소유 범위(FIX-54 1단계 FC-04). calc_f6_params._parameter_value 가 읽는다.
                                       "input_scope", "input_scope_note",
                                       # 같은 뜻의 다른 지표로 대체해 읽는다(FIX-56 1단계). 신규 상장사의 revenue_ttm 이 분기값일 때 P2 가 12개월 매출을 찾는 길.
-                                      "input_alternatives", "input_alternatives_note"])
+                                      "input_alternatives", "input_alternatives_note",
+                                      # 2026-10-12 규칙 v2.1: 성장 조정 PER(P1)과 그 이익 조정. calc_f6_params 가 읽는다.
+                                      "growth_adjusted", "earnings_adjustment", "bands_note", "v2_1_note"])
         _require(spec["comparison"] in F6_COMPARISONS, f"{where}: comparison 은 {sorted(F6_COMPARISONS)} 중 하나")
         lo, hi = spec["score_range"]
         _require(_is_number(lo) and _is_number(hi) and lo <= hi <= 0, f"{where}: score_range 는 음수 구간이어야 함")
@@ -739,6 +749,23 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
         for m, scope in (spec.get("input_scope") or {}).items():
             _require(m in spec["inputs"], f"{where}.input_scope: inputs 에 없는 {m!r}")
             _require(scope in OWNERSHIP_SCOPES, f"{where}.input_scope.{m}: {sorted(OWNERSHIP_SCOPES)} 중 하나")
+        if "growth_adjusted" in spec:
+            ga = spec["growth_adjusted"]
+            gw = f"{where}.growth_adjusted"
+            _require(_is_number(ga.get("growth_multiplier")) and ga["growth_multiplier"] > 0, f"{gw}.growth_multiplier: 양수")
+            _require(_is_number(ga.get("growth_floor")) and ga["growth_floor"] >= 0, f"{gw}.growth_floor: 0 이상 숫자")
+            for key in ("below_floor_score", "nonpositive_earnings_score"):
+                _require(_is_number(ga.get(key)) and lo <= ga[key] <= hi, f"{gw}.{key}: score_range {spec['score_range']} 안의 숫자")
+            _require({"net_income_ttm", "revenue_ttm", "revenue_ttm_prior", "market_cap"} <= set(spec["inputs"]),
+                     f"{where}: 성장 조정 PER 은 market_cap·net_income_ttm·revenue_ttm·revenue_ttm_prior 를 입력으로 둔다")
+        if "earnings_adjustment" in spec:
+            ea = spec["earnings_adjustment"]
+            ew = f"{where}.earnings_adjustment"
+            for key in ("gains_metric", "tax_metric", "pretax_metric"):
+                _require(ea.get(key) in METRICS, f"{ew}.{key}: 알 수 없는 지표 {ea.get(key)!r}")
+            rng = ea.get("effective_tax_rate_range")
+            _require(isinstance(rng, list) and len(rng) == 2 and all(_is_number(x) for x in rng) and 0 <= rng[0] < rng[1] <= 1,
+                     f"{ew}.effective_tax_rate_range: [하한, 상한] 0~1 ({rng!r})")
         total_min += lo
 
     p4 = f6.get("p4")
@@ -759,7 +786,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                                # 이 조건의 값이 어느 factor 에 속하는지. 다른 factor 로 이월하지 않는다는 선언(IMPL-50 C-11).
                                "scope", "scope_why",
                                # 조건을 무엇에서 판정하는지. 관측에서 판정하는 조건은 트랙 자동 목록에 두지 않는다(FIX-55 1단계).
-                               "judged_from"])
+                               "judged_from",
+                               # 2026-10-12 규칙 v2.1: P1 이 평가손익을 세후로 빼 조정했으면 영업외 비중 조건을 보지 않는다.
+                               "skip_when_p1_adjusted", "skip_note"])
         for metric in cond.get("inputs", []):
             _require(metric in METRICS, f"{where}.inputs: 알 수 없는 지표 {metric!r}")
         # 코드가 구현하지 않은 조건 id 를 규칙에 적어 두면 선언만 있고 걸리지 않는 조건이 생긴다.
@@ -789,7 +818,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                                # 입력이 있을 때만 만드는 파라미터(FIX-56 1단계). 없으면 pending 이 아니라 미산출로 적는다.
                                "optional_parameters", "optional_parameters_note",
                                # 그 파라미터를 **어느 사유일 때** 넘길지(FIX-61). 선언이 없으면 scope_mismatch 만 뺀다.
-                               "optional_parameters_causes"])
+                               "optional_parameters_causes",
+                               # 2026-10-12 규칙 v2.1: 다른 파라미터에 흡수돼 이 트랙이 쓰지 않는 파라미터와 그 사유.
+                               "parameters_absorbed"])
         # 2026-09-16 FIX-55 1단계: 관측에서 판정한다고 선언한 조건을 트랙 자동 목록에도 두면 두 경로가 갈린다.
         for auto in spec.get("auto_p4_conditions", []):
             _require(auto not in judged_from_observation,
@@ -813,6 +844,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                      f"— `scope_mismatch` 는 자료 결함이라 넘길 수 없다 ({causes!r})")
         for cid in spec.get("auto_p4_conditions", []):
             _require(cid in seen, f"{where}.auto_p4_conditions: p4 에 없는 조건 {cid!r}")
+        for pid in (spec.get("parameters_absorbed") or {}):
+            _require(pid in params and pid not in spec["parameters"],
+                     f"{where}.parameters_absorbed: {pid!r} 는 규칙에 있고 이 트랙이 쓰지 않는 파라미터여야 함")
     private_bands = f6.get("private_bands")
     if private_bands:
         where = "rules.policies.f6.private_bands"
@@ -870,8 +904,36 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
         _validate_net_cash(net_cash, g3_metric=((f9 or {}).get("g3_cash_scope") or {}).get("metric"), parameter_consumers=consumers)
 
     # 파라미터 합계 하한이 factor range 하한과 맞아야 배점 재배분이 규칙 안에서 검산된다.
-    _require(total_min == factor_min,
-             f"rules.policies.f6: 파라미터 합계 하한 {total_min} 이 factors.F6.range 하한 {factor_min} 과 다름")
+    # 2026-10-12 규칙 v2.1: P3 가 신규 상장 트랙에만 남고 일반 상장 산식 최대를 range 로 자르므로, 정책이 선언하면 트랙마다
+    # 하한에 닿을 수 있는지로 검산한다. 선언이 없는 규칙(v2.0 이하)은 지금 검산 그대로다.
+    sum_rule = (f6.get("parameter_sum_rule") or {}).get("mode")
+    if sum_rule == "track_floor_reachable":
+        cap = int(p4["cap_steps"])
+        for tid, spec in tracks.items():
+            if tid == "private":
+                continue
+            reach = sum(params[pid]["score_range"][0] for pid in spec["parameters"] if pid in params) - cap
+            _require(reach <= spec["floor"],
+                     f"rules.policies.f6.tracks.{tid}: 파라미터 하한 합 − P4 {reach} 가 floor {spec['floor']} 에 닿지 못한다")
+    else:
+        _require(sum_rule is None, f"rules.policies.f6.parameter_sum_rule.mode: 알 수 없는 값 {sum_rule!r}")
+        _require(total_min == factor_min,
+                 f"rules.policies.f6: 파라미터 합계 하한 {total_min} 이 factors.F6.range 하한 {factor_min} 과 다름")
+
+    pga = f6.get("private_growth_adjusted")
+    if pga:
+        where = "rules.policies.f6.private_growth_adjusted"
+        _require(pga.get("input") in METRICS, f"{where}.input: 알 수 없는 지표 {pga.get('input')!r}")
+        _require(isinstance(pga.get("growth_inputs"), list) and len(pga["growth_inputs"]) == 2
+                 and all(m in METRICS for m in pga["growth_inputs"]), f"{where}.growth_inputs: 등록된 지표 둘")
+        _require(pga.get("comparison") == "upper_exclusive", f"{where}.comparison: upper_exclusive")
+        _validate_f6_bands(pga.get("bands"), f"{where}.bands", "upper_exclusive")
+        for b in pga["bands"]:
+            _require(factor_min <= b["score"] <= 0, f"{where}: 점수 {b['score']!r} 가 factor range 밖")
+        _require(_is_number(pga.get("below_floor_score")) and factor_min <= pga["below_floor_score"] <= 0,
+                 f"{where}.below_floor_score: factor range 안의 숫자")
+        _require(_is_number(pga.get("growth_floor")) and _is_number(pga.get("growth_multiplier")),
+                 f"{where}: growth_floor·growth_multiplier 는 숫자")
 
 
 NET_CASH_STATUSES = ("working_definition", "confirmed")
