@@ -41,8 +41,11 @@ def fmt_pct(value: float | None) -> str:
     return f"{value * 100:.0f}%"
 
 
-def fmt_score(value: int | None) -> str:
-    return "—" if value is None else str(int(value))
+def fmt_score(value: int | float | None) -> str:
+    # 2026-10-12 규칙 v2.1: 점수가 0.5 단위일 수 있다. 정수는 지금처럼 정수로 적는다(4.0 이 아니라 4).
+    if value is None:
+        return "—"
+    return str(int(value)) if float(value).is_integer() else f"{float(value):g}"
 
 
 def yaml_str(value: Any) -> str:

@@ -91,11 +91,14 @@ BASIS_LABELS = {
     "grade": "등급 산식", "matrix": "조합표", "criteria": "기준 사다리", "paths": "조건 통과 수",
     # 2026-10-08 규칙 v2.0: ① 은 네 질문 판정을 사다리로 환산한다.
     "lockin": "네 질문 사다리",
+    # 2026-10-12 규칙 v2.1: ④ 는 보유표와 AI 무관 매출 몫, ⑧ 은 네 축 가운데 가장 낮은 칸.
+    "survival": "보유표 두 축", "axes": "네 축 중 최저",
 }
 MODE_LABELS = {
     "manual": "사람 판단", "paths": "조건 통과 수", "ladder": "기준 사다리", "formula": "산식",
     "parameters": "수치 합산", "matrix": "조합표", "gates": "관문 통과",
     "lockin": "네 질문 사다리",
+    "survival": "보유표 두 축", "axes": "네 축 중 최저",
 }
 # 관측 지표·상태·조건의 내부 이름도 화면에서는 한국어로 옮긴다. **긴 이름부터** 바꾼다
 # (`not_disclosed_confirmed` 가 `not_disclosed` 를 품는다). 결정 선택지와 코드·규칙 경로는 감사 기록·
@@ -1003,6 +1006,43 @@ def _lockin_trace(calc: dict[str, Any]) -> str:
     return text + f" = {score}" + (f"({lo}~{hi} 로 자름)" if raw != score else "")
 
 
+LAYER_VALUE_LABELS = {"sold": "판매", "self": "자체 사용", "none": "없음", "preparing": "준비 중", "unknown": "미확인"}
+F8_STATUS_LABELS = {"confirmed": "확인됨", "absent_disclosed": "부재 확인", "not_applicable": "해당 없음",
+                    "not_disclosed": "비공개", "not_found": "탐색 미완"}
+
+
+def survival_calc_text(rules: Any, calc: dict[str, Any]) -> str:
+    """④ 산식 줄(규칙 v2.1): 수직계열화 축(보유표) + 다각화 축(AI 무관 매출 몫) = 점수."""
+    spec = rules.factor("F4") if rules is not None else {}
+    names = ((spec.get("layers") or {}).get("labels") or {})
+    layers = calc.get("layers") or {}
+    held = [f"{names.get(k, k)} {LAYER_VALUE_LABELS.get(v, v)}" for k, v in layers.items() if v in ("sold", "self", "preparing")]
+    share = calc.get("non_ai_revenue_share")
+    share_text = f"{share * 100:.0f}%" if isinstance(share, (int, float)) else str(share)
+    vertical = calc.get("vertical")
+    head = f"수직 {vertical:g}" + (f"(합 {calc['vertical_raw']:g}에서 상한)" if calc.get("vertical_raw", 0) > vertical else "")
+    return (f"{head}: {' · '.join(held) if held else '보유 층 없음'} + 다각화 {calc.get('diversification'):g}: AI 무관 매출 {share_text}"
+            f" = {calc['score']:g}")
+
+
+def axes_calc_text(rules: Any, calc: dict[str, Any]) -> str:
+    """⑧ 산식 줄(규칙 v2.1): 네 축의 칸과 근거 종류, 가장 낮은 칸."""
+    spec = rules.factor("F8") if rules is not None else {}
+    labels = spec.get("axis_labels") or {}
+    parts = []
+    for axis, a in calc["axes"].items():
+        tail = ""
+        if a.get("policy_default"):
+            tail = f"({F8_STATUS_LABELS.get(a['basis'], a['basis'])}, 정책 기본값)"
+        elif a.get("basis") in ("absent_disclosed", "not_applicable"):
+            tail = f"({F8_STATUS_LABELS.get(a['basis'], a['basis'])})"
+        parts.append(f"{labels.get(axis, axis)} {a['score']}{tail}")
+    if calc.get("score") is None:
+        return " · ".join(parts)
+    deciding = "·".join(labels.get(k, k) for k in calc.get("deciding_axes") or [])
+    return " · ".join(parts) + f" → 가장 낮은 축 {deciding} = {calc['score']}"
+
+
 def lockin_calc_text(rules: Any, fr: dict[str, Any], vals: dict[str, Any]) -> str:
     """① 락인 산식 줄 — 채널, 네 질문 판정, 가격 실측 분기 수, 지속성 할인, 사다리, AI 수익화(점수 밖)."""
     spec = rules.factor("F1")
@@ -1118,6 +1158,10 @@ def factor_calc_text(f: str, fr: dict[str, Any], rules: Any = None, inputs: dict
         text = f"밸류÷ARR {fmt_num(calc['valuation_over_arr'])}x · ARR÷조달 {fmt_num(calc.get('arr_over_cumulative_raised'), 2)}"
     elif f == "F1" and rules is not None and fr.get("basis") == "lockin":
         text = lockin_calc_text(rules, fr, judgment_values(fr, inputs))
+    elif f == "F4" and fr.get("basis") == "survival" and calc.get("score") is not None:
+        text = survival_calc_text(rules, calc)
+    elif f == "F8" and fr.get("basis") == "axes" and calc.get("axes"):
+        text = axes_calc_text(rules, calc)
     elif f == "F3" and "pass_points" in calc:
         text = str(calc.get("ladder_note") or f"통과점 {calc['pass_points']:g}")
     elif f == "F5" and "A" in calc:
@@ -1352,6 +1396,9 @@ JUDGMENT_ROLES = {
     "gate_inputs": "관문 입력",
     # 2026-10-08 규칙 v2.0: ① 은 채널과 네 질문을 판정한다.
     "lockin": "채널과 네 질문의 판정",
+    # 2026-10-12 규칙 v2.1
+    "survival": "층별 보유표와 AI 무관 매출 몫",
+    "axes": "네 축의 재료와 칸",
 }
 # 사람이 매긴 것을 엔진이 어떤 장치로 환산하는지. 규칙의 산식 자체는 아래 `mode` 색인에 있고
 # 여기서는 **판단과 점수 사이에 무엇이 끼어 있는지**만 한 마디로 적는다.

@@ -11,7 +11,7 @@ from . import SCHEMA_VERSION
 from .aggregate import rank_companies, summarize_company
 from .calc_f6 import compute_f6
 from .calc_f9 import compute_f9
-from .calc_qual import compute_f1, compute_f2, compute_f3, compute_f5, compute_f7, compute_manual
+from .calc_qual import compute_f1, compute_f2, compute_f3, compute_f4, compute_f5, compute_f7, compute_f8, compute_manual
 from .inputs import JudgmentLookup, ObsLookup
 from .rules import RuleSet, load_rules
 from .schema import (
@@ -142,11 +142,14 @@ def compute_company(company: dict[str, Any], obs: ObsLookup, judgments: Judgment
         "F1": f1,
         "F2": compute_f2(company, judgments, rules, run),
         "F3": compute_f3(company, judgments, rules),
-        "F4": compute_manual("F4", company, judgments, rules),
+        # 2026-10-12 규칙 v2.1: ④ survival·⑧ axes 모드면 판정 입력으로 계산한다. v2.0 이하(manual)는 지금 경로 그대로다.
+        "F4": (compute_f4(company, judgments, rules) if rules.factor("F4").get("mode") == "survival"
+               else compute_manual("F4", company, judgments, rules)),
         "F5": compute_f5(company, judgments, rules),
         "F6": compute_f6(company, obs, judgments, rules, run),
         "F7": compute_f7(company, judgments, rules),
-        "F8": compute_manual("F8", company, judgments, rules),
+        "F8": (compute_f8(company, judgments, rules) if rules.factor("F8").get("mode") == "axes"
+               else compute_manual("F8", company, judgments, rules)),
         "F9": compute_f9(company, obs, judgments, rules, run),
     }
 

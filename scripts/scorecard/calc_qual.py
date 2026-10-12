@@ -31,6 +31,121 @@ def compute_manual(fid: str, company: dict[str, Any], judgments: JudgmentLookup,
     return factor_result(fid, score=score, status=_status_for(judgment), basis="manual", judgment=judgment, warnings=warnings)
 
 
+def _lower_band(bands: list[dict[str, Any]], value: float) -> float:
+    """lower 이상이면 그 칸. 위에서부터 본다(마지막 칸 lower null 이 나머지를 덮는다)."""
+    for band in bands:
+        if band["lower"] is None or value >= band["lower"]:
+            return band["score"]
+    raise ValueError("bands 가 구간을 덮지 못함")
+
+
+def _half_step(value: float) -> float | int:
+    """0.5 단위 점수를 정수면 int 로 돌려준다(결과 JSON 이 13 과 13.0 으로 갈리지 않게)."""
+    return int(value) if float(value).is_integer() else float(value)
+
+
+def compute_f4(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet) -> dict[str, Any]:
+    """④ 호황 이후 비전(규칙 v2.1, 2026-10-12 사용자 결정). 수직계열화 축 + 다각화 축.
+
+    수직계열화 축은 층별 보유표의 칸 값 합(판매 1 · 자체 사용 0.5 · 없음·준비 중 0)을 상한으로 자르고, 다각화 축은 AI 와 무관한
+    최종 수요에서 나오는 매출 몫을 구간으로 바꿔 상한으로 자른다. 둘을 더한다(0.5 단위). 미확인 칸이나 몫이 미확인이면 점수를 만들지 않는다.
+    """
+    fid = "F4"
+    spec = rules.factor(fid)
+    judgment = judgments.get(company["company_id"], fid)
+    if judgment is None:
+        return factor_result(fid, score=None, status="needs_judgment", basis="survival",
+                             pending=pending_info("judgment", "층별 보유표·주 레이어·AI 무관 매출 몫 판정 입력 필요"))
+    mismatch = _kind_mismatch(fid, judgment, rules, "survival", "층별 보유표 입력(survival)")
+    if mismatch is not None:
+        return mismatch
+    inputs = judgment["inputs"]
+    layers = inputs["layers"]
+    calc: dict[str, Any] = {"layers": dict(layers), "primary_layer": inputs.get("primary_layer"),
+                            "non_ai_revenue_share": inputs.get("non_ai_revenue_share")}
+    unknown = sorted(k for k, v in layers.items() if v == "unknown")
+    if unknown:
+        return factor_result(fid, score=None, status="needs_judgment", basis="survival", judgment=judgment, calc=calc,
+                             pending=pending_info("judgment", f"보유표 칸 {unknown} 이 미확인 — 칸 값을 추정하지 않는다"))
+    share = inputs["non_ai_revenue_share"]
+    if share == "unknown":
+        return factor_result(fid, score=None, status="needs_judgment", basis="survival", judgment=judgment, calc=calc,
+                             pending=pending_info("judgment", "AI 무관 매출 몫이 미확인 — 세그먼트 공시로 최종 수요를 가른다"))
+    values = spec["cell_values"]
+    vertical_raw = sum(float(values[v]) for v in layers.values())
+    vertical = min(float(spec["vertical_cap"]), vertical_raw)
+    diversification = min(float(spec["diversification_cap"]), float(_lower_band(spec["non_ai_share_tiers"], float(share))))
+    lo, hi = rules.factor_range(fid)
+    score = _half_step(max(lo, min(hi, vertical + diversification)))
+    calc.update({"vertical_raw": vertical_raw, "vertical": vertical, "diversification": diversification, "score": score,
+                 "preparing": sorted(k for k, v in layers.items() if v == "preparing"),
+                 "layer_triggers": dict(inputs.get("layer_triggers") or {})})
+    return factor_result(fid, score=score, status=_status_for(judgment), basis="survival", judgment=judgment, calc=calc,
+                         warnings=carried_note(judgment))
+
+
+AXIS_DEFAULT_STATUSES = {"not_disclosed", "not_found"}
+
+
+def _f8_axis(axis: str, a: dict[str, Any], spec: dict[str, Any]) -> tuple[int, str]:
+    """축 하나의 사다리 칸과 근거 종류. 확인됨이면 재료로, 부재 확인·해당 없음이면 0, 비공개·탐색 미완이면 정책 기본값."""
+    status = a["status"]
+    if status in ("absent_disclosed", "not_applicable"):
+        return 0, status
+    if status in AXIS_DEFAULT_STATUSES:
+        return int(spec["unknown_default"]), status
+    if axis == "customer":
+        c = spec["customer"]
+        share = max(float(a.get("recognized_share") or 0), float(a.get("contract_share") or 0))
+        if a.get("dedicated_assets") == "yes":
+            if share >= c["dedicated_nearly_all"]["lower"]:
+                return int(c["dedicated_nearly_all"]["score"]), status
+            if share >= c["dedicated_majority"]["lower"]:
+                return int(c["dedicated_majority"]["score"]), status
+        return int(_lower_band(c["bands"], share)), status
+    if axis == "commitment":
+        return int(_lower_band(spec["commitment"]["bands"], float(a["multiple"]))), status
+    return int(a["rung"]), status
+
+
+def compute_f8(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet) -> dict[str, Any]:
+    """⑧ 비대칭 의존(규칙 v2.1, 2026-10-12 사용자 결정). 고객·약정·공급·지정학 네 축을 같은 사다리에 놓고 가장 낮은 칸을 쓴다.
+
+    고객 축은 최대 고객 비중(인식 매출과 연환산 계약액 중 큰 값)과 전용 자산, 약정 축은 약정 ÷ 매출 배수로 계산하고, 공급·지정학 축은
+    판단이 고른 칸을 쓴다. 비공개·탐색 미완 축은 정책 기본값(−1)이고, 네 축이 모두 그렇다면 점수를 만들지 않는다.
+    """
+    fid = "F8"
+    spec = rules.factor(fid)
+    judgment = judgments.get(company["company_id"], fid)
+    if judgment is None:
+        return factor_result(fid, score=None, status="needs_judgment", basis="axes",
+                             pending=pending_info("judgment", "고객·약정·공급·지정학 네 축 판정 입력 필요"))
+    mismatch = _kind_mismatch(fid, judgment, rules, "axes", "네 축 입력(axes)")
+    if mismatch is not None:
+        return mismatch
+    inputs = judgment["inputs"]
+    axes: dict[str, Any] = {}
+    for axis in spec["axes"]:
+        score, basis = _f8_axis(axis, inputs[axis], spec)
+        axes[axis] = {"score": score, "basis": basis, "inputs": dict(inputs[axis]),
+                      "policy_default": basis in AXIS_DEFAULT_STATUSES}
+    calc: dict[str, Any] = {"axes": axes}
+    if all(a["policy_default"] for a in axes.values()):
+        calc["assessment_complete"] = False
+        return factor_result(fid, score=None, status="needs_judgment", basis="axes", judgment=judgment, calc=calc,
+                             pending=pending_info("judgment", "네 축이 모두 비공개·탐색 미완 — 기본값만으로 점수를 만들지 않는다"))
+    lo, hi = rules.factor_range(fid)
+    worst = min(a["score"] for a in axes.values())
+    score = max(lo, min(hi, worst))
+    calc.update({"score": score, "deciding_axes": [k for k, a in axes.items() if a["score"] == worst],
+                 "assessment_complete": not any(a["policy_default"] for a in axes.values())})
+    labels = {"not_disclosed": "비공개", "not_found": "탐색 미완"}
+    warnings = [f"⑧ {spec['axis_labels'][k]} 축은 {labels[a['basis']]} — 정책 기본값 {a['score']}(실제 위험을 확인한 값이 아니다)"
+                for k, a in axes.items() if a["policy_default"]]
+    return factor_result(fid, score=score, status=_status_for(judgment), basis="axes", judgment=judgment, calc=calc,
+                         warnings=warnings + carried_note(judgment))
+
+
 STRENGTH_RANK = {"fail": 0, "partial": 1, "pass": 2}
 
 

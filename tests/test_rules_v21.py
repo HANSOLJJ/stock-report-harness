@@ -75,7 +75,9 @@ class DiffTest(unittest.TestCase):
 
     def test_changed_factors(self):
         changed = {f for f in self.v21["factors"] if self.v21["factors"][f] != self.v20["factors"][f]}
-        self.assertEqual(changed, {"F1", "F6", "F7"})
+        self.assertEqual(changed, {"F1", "F4", "F6", "F7", "F8"})
+        self.assertEqual((self.v21["factors"]["F4"]["mode"], self.v21["factors"]["F8"]["mode"]), ("survival", "axes"))
+        self.assertEqual(self.v21["scoring"]["score_step"], 0.5)
         ranges = {f: self.v21["factors"][f]["range"] for f in ("F6", "F7", "F8", "F9")}
         self.assertEqual(ranges, {"F6": [-5, 0], "F7": [-3, 0], "F8": [-5, 0], "F9": [-4, 0]})
         self.assertEqual(sum(r[0] for r in ranges.values()), self.v21["scoring"]["trap_min_active"])
@@ -387,6 +389,199 @@ class F7FourCellsTest(unittest.TestCase):
                 self.assertEqual(compute_f7(company(), JudgmentLookup([j]), V21)["score"], score)
         j["inputs"] = {"funding_dependent_share": "large", "own_money_returns": "yes"}
         self.assertEqual(compute_f7(company(), JudgmentLookup([j]), V20)["score"], -2)
+
+
+# ------------------------------------------------------------------ ④ · ⑧ · 0.5 단위
+from scorecard.aggregate import summarize_company  # noqa: E402
+from scorecard.calc_qual import compute_f4, compute_f8  # noqa: E402
+from scorecard.render_md import fmt_score  # noqa: E402
+
+ALL_SOLD = {"chip": "sold", "server": "sold", "platform": "sold", "cloud": "sold", "model": "sold", "app": "sold"}
+
+
+def survival(cid: str = "acme", status: str = "new", **inputs) -> dict:
+    base = {"layers": dict(ALL_SOLD), "primary_layer": "chip", "non_ai_revenue_share": 0.07}
+    base.update(inputs)
+    return {"judgment_id": f"{cid}.F4", "company_id": cid, "factor": "F4", "kind": "survival", "score": None, "inputs": base,
+            "evidence": ["시험"], "reviewer": "t", "reviewed_at": "2026-10-12", "status": status}
+
+
+def axes(cid: str = "acme", status: str = "new", **inputs) -> dict:
+    base = {"customer": {"status": "absent_disclosed"}, "commitment": {"status": "confirmed", "multiple": 0.3},
+            "supply": {"status": "confirmed", "rung": -1}, "geopolitics": {"status": "confirmed", "rung": -1}}
+    base.update(inputs)
+    return {"judgment_id": f"{cid}.F8", "company_id": cid, "factor": "F8", "kind": "axes", "score": None, "inputs": base,
+            "evidence": ["시험"], "reviewer": "t", "reviewed_at": "2026-10-12", "status": status}
+
+
+class F4SurvivalTest(unittest.TestCase):
+    def score(self, **inputs) -> dict:
+        return compute_f4(company(), JudgmentLookup([survival(**inputs)]), V21)
+
+    def test_nvidia_like_pickaxe(self):
+        # 여섯 층 판매(6 → 상한 2.5) + AI 무관 매출 7%(0.5) = 3
+        r = self.score()
+        self.assertEqual((r["score"], r["calc"]["vertical"], r["calc"]["diversification"]), (3, 2.5, 0.5))
+
+    def test_meta_like_ads_survive(self):
+        layers = {"chip": "self", "server": "self", "platform": "none", "cloud": "none", "model": "self", "app": "sold"}
+        r = self.score(layers=layers, primary_layer="app", non_ai_revenue_share=0.98)
+        self.assertEqual((r["calc"]["vertical"], r["calc"]["diversification"], r["score"]), (2.5, 2.5, 5))
+
+    def test_half_points(self):
+        layers = {"chip": "sold", "server": "self", "platform": "none", "cloud": "none", "model": "none", "app": "none"}
+        r = self.score(layers=layers, non_ai_revenue_share=0.85)          # 1.5 + 2.5 = 4
+        self.assertEqual(r["score"], 4)
+        self.assertIsInstance(r["score"], int)
+        r = self.score(layers=layers, non_ai_revenue_share=0.6)           # 1.5 + 2 = 3.5
+        self.assertEqual(r["score"], 3.5)
+
+    def test_tiers(self):
+        for share, want in ((0.8, 2.5), (0.79, 2), (0.5, 2), (0.2, 1), (0.05, 0.5), (0.049, 0), (0.0, 0)):
+            with self.subTest(share=share):
+                self.assertEqual(self.score(non_ai_revenue_share=share)["calc"]["diversification"], want)
+
+    def test_preparing_counts_zero(self):
+        layers = dict(ALL_SOLD, chip="preparing", server="none", platform="none", cloud="none", model="none")
+        r = self.score(layers=layers, primary_layer="app", layer_triggers={"chip": "TRG-111"}, non_ai_revenue_share=0.0)
+        self.assertEqual((r["calc"]["vertical"], r["calc"]["preparing"], r["score"]), (1.0, ["chip"], 1))
+
+    def test_unknowns_make_no_score(self):
+        self.assertEqual(self.score(layers=dict(ALL_SOLD, model="unknown"))["status"], "needs_judgment")
+        self.assertEqual(self.score(non_ai_revenue_share="unknown")["status"], "needs_judgment")
+
+    def test_carried_score_kind_is_not_used(self):
+        j = {**survival(), "kind": "score", "score": 5, "inputs": {}, "status": "carried", "carried_from": "run:x"}
+        self.assertEqual(compute_f4(company(), JudgmentLookup([j]), V21)["status"], "needs_judgment")
+
+
+class F8AxesTest(unittest.TestCase):
+    def score(self, **inputs) -> dict:
+        return compute_f8(company(), JudgmentLookup([axes(**inputs)]), V21)
+
+    def test_worst_axis_decides(self):
+        r = self.score(customer={"status": "confirmed", "recognized_share": 0.1, "contract_share": 0.36},
+                       commitment={"status": "confirmed", "multiple": 1.68})
+        self.assertEqual((r["score"], r["calc"]["deciding_axes"]), (-3, ["customer"]))
+        self.assertEqual(r["calc"]["axes"]["commitment"]["score"], -2)
+
+    def test_customer_bands(self):
+        for share, dedicated, want in ((0.09, "no", 0), (0.1, "no", -2), (0.3, "no", -3), (0.6, "no", -3),
+                                       (0.5, "yes", -4), (0.95, "yes", -5), (0.42, "yes", -3)):
+            with self.subTest(share=share, dedicated=dedicated):
+                r = self.score(customer={"status": "confirmed", "recognized_share": share, "dedicated_assets": dedicated},
+                               supply={"status": "absent_disclosed"}, geopolitics={"status": "absent_disclosed"})
+                self.assertEqual(r["calc"]["axes"]["customer"]["score"], want)
+
+    def test_commitment_bands(self):
+        for multiple, want in ((0.49, 0), (0.5, -2), (2.99, -2), (3.0, -3), (19.9, -3), (20.0, -4)):
+            with self.subTest(multiple=multiple):
+                r = self.score(commitment={"status": "confirmed", "multiple": multiple})
+                self.assertEqual(r["calc"]["axes"]["commitment"]["score"], want)
+
+    def test_geopolitics_axis(self):
+        r = self.score(geopolitics={"status": "confirmed", "rung": -4})
+        self.assertEqual((r["score"], r["calc"]["deciding_axes"]), (-4, ["geopolitics"]))
+
+    def test_policy_default_minus_one(self):
+        r = self.score(customer={"status": "not_disclosed"}, commitment={"status": "absent_disclosed"},
+                       supply={"status": "absent_disclosed"}, geopolitics={"status": "not_applicable"})
+        self.assertEqual(r["score"], -1)
+        self.assertTrue(r["calc"]["axes"]["customer"]["policy_default"])
+        self.assertFalse(r["calc"]["assessment_complete"])
+        self.assertIn("정책 기본값", " ".join(r["warnings"]))
+        # 다른 축이 더 깊으면 기본값은 영향이 없다
+        r = self.score(customer={"status": "not_found"}, geopolitics={"status": "confirmed", "rung": -3})
+        self.assertEqual(r["score"], -3)
+
+    def test_absent_disclosed_is_zero_not_default(self):
+        r = self.score(supply={"status": "absent_disclosed"}, geopolitics={"status": "absent_disclosed"})
+        self.assertEqual(r["score"], 0)
+        self.assertTrue(r["calc"]["assessment_complete"])
+
+    def test_all_defaults_make_no_score(self):
+        r = self.score(customer={"status": "not_found"}, commitment={"status": "not_disclosed"},
+                       supply={"status": "not_found"}, geopolitics={"status": "not_disclosed"})
+        self.assertEqual(r["status"], "needs_judgment")
+
+
+class SurvivalAxesSchemaTest(unittest.TestCase):
+    def test_valid_pair(self):
+        validate(survival("nvidia"), axes("nvidia"))
+
+    def test_survival_shapes(self):
+        bads = {"여섯 칸": dict(layers={"chip": "sold"}), "칸 값": dict(layers=dict(ALL_SOLD, chip="maybe")),
+                "주 레이어": dict(primary_layer="cloud", layers=dict(ALL_SOLD, cloud="self")),
+                "몫": dict(non_ai_revenue_share=1.3),
+                "트리거": dict(layers=dict(ALL_SOLD, model="preparing"))}
+        for name, kw in bads.items():
+            with self.subTest(case=name), self.assertRaises(SchemaError):
+                validate(survival("nvidia", **kw))
+        validate(survival("nvidia", layers=dict(ALL_SOLD, model="preparing"), layer_triggers={"model": "TRG-111"}))
+
+    def test_axes_shapes(self):
+        bads = {"상태": dict(customer={"status": "maybe"}), "확인됨 재료": dict(commitment={"status": "confirmed"}),
+                "칸": dict(supply={"status": "confirmed", "rung": -6}), "모르는 키": dict(geopolitics={"status": "confirmed", "rung": -1, "x": 1})}
+        for name, kw in bads.items():
+            with self.subTest(case=name), self.assertRaises(SchemaError):
+                validate(axes("nvidia", **kw))
+
+    def test_supply_floor_when_compute_is_bought(self):
+        no_compute = dict(ALL_SOLD, chip="none", cloud="none", server="none", platform="none")
+        with self.assertRaisesRegex(SchemaError, "공급 축을 0"):
+            validate(survival("anthropic", layers=no_compute, primary_layer="model", non_ai_revenue_share=0.0),
+                     axes("anthropic", supply={"status": "confirmed", "rung": 0}))
+        with self.assertRaisesRegex(SchemaError, "공급 축을 0"):
+            validate(survival("anthropic", layers=no_compute, primary_layer="model", non_ai_revenue_share=0.0),
+                     axes("anthropic", supply={"status": "absent_disclosed"}))
+        validate(survival("anthropic", layers=no_compute, primary_layer="model", non_ai_revenue_share=0.0),
+                 axes("anthropic", supply={"status": "confirmed", "rung": -3}))
+        # v2.0 규칙에는 이 검사가 없다(그 규칙은 survival·axes 를 새 판단으로 받지 않으므로 score 로 대조)
+
+    def test_v20_reads_but_does_not_score_survival(self):
+        # v1.9 가 lockin 을 받던 선례와 같다: 옛 규칙은 새 kind 를 읽되 계산 경로가 없어 점수를 만들지 않는다.
+        validate(survival("nvidia"), rules=V20)
+        from scorecard.calc_qual import compute_manual
+        self.assertEqual(compute_manual("F4", company(), JudgmentLookup([survival()]), V20)["status"], "needs_judgment")
+
+    def test_share_evidence_cross_ref(self):
+        j = validate(survival("nvidia", non_ai_share_evidence=["EV-nvidia-009"]))
+        with self.assertRaisesRegex(SchemaError, "AI 무관 매출 몫 근거"):
+            validate_cross_refs([], j, [], [{"source_id": "S"}])
+        validate_cross_refs([], j, [{"evidence_id": "EV-nvidia-009", "source_id": "S", "status": "confirmed"}], [{"source_id": "S"}])
+
+
+class SurvivalAxesTextTest(unittest.TestCase):
+    def test_survival_line(self):
+        from scorecard.render_common import survival_calc_text
+        layers = {"chip": "sold", "server": "self", "platform": "none", "cloud": "none", "model": "preparing", "app": "none"}
+        r = compute_f4(company(), JudgmentLookup([survival(layers=layers, layer_triggers={"model": "TRG-111"},
+                                                             non_ai_revenue_share=0.6)]), V21)
+        self.assertEqual(survival_calc_text(V21, r["calc"]),
+                         "수직 1.5: 칩 판매 · 서버·네트워크 자체 사용 · 모델 준비 중 + 다각화 2: AI 무관 매출 60% = 3.5")
+
+    def test_axes_line_names_defaults_and_deciding_axis(self):
+        from scorecard.render_common import axes_calc_text
+        r = compute_f8(company(), JudgmentLookup([axes(customer={"status": "not_found"},
+                                                       geopolitics={"status": "confirmed", "rung": -4})]), V21)
+        self.assertEqual(axes_calc_text(V21, r["calc"]),
+                         "고객 -1(탐색 미완, 정책 기본값) · 약정 0 · 공급 -1 · 지정학 -4 → 가장 낮은 축 지정학 = -4")
+
+
+class HalfStepTest(unittest.TestCase):
+    def test_sum_keeps_ints_and_halves(self):
+        def fr(score):
+            return {"score": score, "status": "ok", "pending": None}
+        factors = {f: fr(s) for f, s in zip(("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"), (4, 4, 3, 3.5, 4, -2, -1, -2, 0))}
+        s = summarize_company(company(), factors)
+        self.assertEqual((s["moat"], s["trap"], s["total"]), (18.5, -5, 13.5))
+        factors["F4"] = fr(4)
+        s = summarize_company(company(), factors)
+        self.assertEqual((s["moat"], s["total"]), (19, 14))
+        self.assertIsInstance(s["moat"], int)
+
+    def test_fmt_score(self):
+        self.assertEqual([fmt_score(v) for v in (None, 4, 4.0, 4.5, -2.5)], ["—", "4", "4", "4.5", "-2.5"])
 
 
 if __name__ == "__main__":

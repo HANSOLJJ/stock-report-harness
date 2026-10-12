@@ -1224,9 +1224,13 @@ def _check_judgment_changes(factor: str, changes: Mapping[str, Any], rules: Any 
         "number": lambda v: isinstance(v, (int, float)) and not isinstance(v, bool),
         "string": lambda v: isinstance(v, str) and bool(v.strip()),
         "string_list": lambda v: isinstance(v, list) and all(isinstance(x, str) and x.strip() for x in v),
+        # 2026-10-12 규칙 v2.1 ④·⑧: 보유표·축 재료는 중첩 object 다. 안의 값 범위는 스키마가 본다.
+        "object": lambda v: isinstance(v, dict),
+        "number_or_unknown": lambda v: v == "unknown" or (isinstance(v, (int, float)) and not isinstance(v, bool)),
     }
     shape_hint = {"number_list": "숫자 목록(예: [0.42, 0.55])", "number": "숫자", "string": "비어 있지 않은 문자열",
-                  "string_list": "문자열 목록(예: [\"EV-acme-001\"])"}
+                  "string_list": "문자열 목록(예: [\"EV-acme-001\"])", "object": "JSON object",
+                  "number_or_unknown": "숫자나 \"unknown\""}
     bad_shape = sorted((k, JUDGMENT_CLI_ONLY_TYPES[k]) for k in cli_only if k in changes
                        and not shape_ok[JUDGMENT_CLI_ONLY_TYPES[k]](changes[k]))
     if bad_shape:
@@ -1823,7 +1827,8 @@ def summary(slug: str) -> dict[str, Any]:
         "pending_rule_decisions": list((results or {}).get("pending_rule_decisions", [])),
         "judgments": _summary_judgments(slug, rules),
         "proposals": _summary_proposals(slug, registry, rules),
-        "judgment_choices": copy.deepcopy(JUDGMENT_INPUT_CHOICES),
+        # 2026-10-12 규칙 v2.1: ④ survival·⑧ axes 는 선택 상자가 없다(CLI 로만 고친다). 빈 표는 싣지 않는다.
+        "judgment_choices": copy.deepcopy({k: v for k, v in JUDGMENT_INPUT_CHOICES.items() if v}),
         # 2026-10-08 규칙 v2.0: 항목 이름은 규칙이 정한다(① 이 '락인과 가격결정력' 으로 바뀌었다). 승인 페이지가 읽는다.
         "factor_labels": {fid: rules.payload["factors"][fid]["label"] for fid in FACTOR_IDS},
         "hashes": hashes,

@@ -57,7 +57,8 @@ MISSING_TYPES = {"unverified", "not_disclosed_confirmed", "not_applicable", "ind
 # C-16(약정 커버리지 결측 정책)이 걸리는 유일한 유형. 우리가 안 찾은 것을 그 기업의 위험으로 둔갑시키지 않는다.
 MISSING_TYPE_FOR_DISCLOSURE_POLICY = "not_disclosed_confirmed"
 # 2026-10-08 사용자 결정(규칙 v2.0): ① 을 네 질문 판정 입력(lockin)과 사다리로 계산한다.
-JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs", "lockin"}
+# 2026-10-12 규칙 v2.1: ④ 는 층별 보유표와 AI 무관 매출 몫(survival), ⑧ 은 네 축(axes)으로 계산한다.
+JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs", "lockin", "survival", "axes"}
 JUDGMENT_STATUSES = {"new", "carried"}
 TRI = {"pass", "partial", "fail", "unknown"}
 YES_NO = {"yes", "no", "unknown"}
@@ -74,6 +75,12 @@ LOCKIN_MONETIZATION_EVIDENCE_KEYS = ("ai_separate_billing_evidence", "ai_price_u
 MONETIZED_CHANNELS = {"consumer": "channel_consumer", "work": "channel_work", "trade": "channel_trade"}
 MONETIZED_MEASURES = {"customers", "seats", "revenue"}
 EVIDENCE_ID_RE = re.compile(r"^EV-[a-z0-9-]+-\d{3}$")
+# 2026-10-12 규칙 v2.1 ④ 층별 보유표와 ⑧ 네 축의 값 범위.
+SURVIVAL_LAYERS = ("chip", "server", "platform", "cloud", "model", "app")
+SURVIVAL_CELL_VALUES = {"sold", "self", "none", "preparing", "unknown"}
+F8_AXES = ("customer", "commitment", "supply", "geopolitics")
+F8_AXIS_STATUSES = {"confirmed", "absent_disclosed", "not_applicable", "not_disclosed", "not_found"}
+F8_RUNGS = {0, -1, -2, -3, -4, -5}
 # 2026-10-08 규칙 v2.0 ③ 가속도 지표 단계. 단계별 허용 판정은 규칙 factors.F3.acceleration_tiers 가 정한다.
 ACCELERATION_TIERS = {"a", "b", "c", "d", "e"}
 
@@ -84,11 +91,11 @@ FACTOR_JUDGMENT_KINDS: dict[str, set[str]] = {
     "F1": {"lockin", "score"},
     "F2": {"paths", "score"},
     "F3": {"criteria"},
-    "F4": {"score"},
+    "F4": {"survival", "score"},
     "F5": {"grade"},
     "F6": {"score"},
     "F7": {"matrix", "score"},
-    "F8": {"score"},
+    "F8": {"axes", "score"},
     "F9": {"gate_inputs"},
 }
 
@@ -119,6 +126,9 @@ JUDGMENT_INPUT_CHOICES: dict[str, dict[str, list[Any]]] = {
               "leap_independent": ["yes", "no", "unknown"], "generation_gap_months": list(range(0, 37))},
     "grade": {"A": [0, 1, 2], "H": [0, -1, -2, -3]},
     "matrix": {"funding_dependent_share": ["large", "small", "unknown"], "own_money_returns": ["yes", "no", "unknown"]},
+    # 2026-10-12 규칙 v2.1: ④ 보유표와 ⑧ 네 축은 중첩 입력이라 선택 상자로 그리지 않고 CLI(--json)로만 받는다.
+    "survival": {},
+    "axes": {},
     "gate_inputs": {"fcf_trend": ["stable", "deteriorating", "unknown"], "bep_retreat": ["yes", "no", "unknown"],
                     "buffer_erosion": ["yes", "no", "unknown"], "direction_A": ["pass", "fail", "unknown"],
                     "direction_B": ["pass", "fail", "unknown"], "coverage_comparable": ["yes", "no", "unknown"],
@@ -130,6 +140,9 @@ JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {
     "criteria": ("acceleration_growth_rates",),
     # 2026-10-12 규칙 v2.1 ①: AI 수익화 '예' 의 판정 재료(기준 채널·측정 단위·몫·기간·근거 두 목록). 필수 여부는 규칙이 정한다.
     "lockin": LOCKIN_MONETIZATION_KEYS,
+    # 2026-10-12 규칙 v2.1 ④·⑧.
+    "survival": ("layers", "layer_triggers", "primary_layer", "non_ai_revenue_share", "non_ai_share_basis", "non_ai_share_evidence"),
+    "axes": F8_AXES,
 }
 # CLI 로만 받는 재료의 모양. stages._judgment_change_kind 가 쓰기 전에 거르고, 허용값은 스키마가 본다.
 JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
@@ -137,6 +150,9 @@ JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
     "ai_monetized_channel": "string", "ai_monetized_measure": "string", "ai_monetized_period": "string",
     "ai_monetized_share": "number",
     "ai_separate_billing_evidence": "string_list", "ai_price_uplift_evidence": "string_list",
+    "layers": "object", "layer_triggers": "object", "primary_layer": "string", "non_ai_revenue_share": "number_or_unknown",
+    "non_ai_share_basis": "string", "non_ai_share_evidence": "string_list",
+    "customer": "object", "commitment": "object", "supply": "object", "geopolitics": "object",
 }
 
 
@@ -1259,6 +1275,67 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
                 _require(isinstance(ids, list) and all(isinstance(e, str) and EVIDENCE_ID_RE.match(e) for e in ids),
                          f"{where}: {key} 는 근거 ID(EV-…) 목록 ({ids!r})")
         return
+    if kind == "survival":
+        # 2026-10-12 규칙 v2.1 ④: 층별 보유표·준비 중 칸의 트리거·주 레이어·AI 무관 매출 몫.
+        _expect_keys(inputs, ["layers", "primary_layer", "non_ai_revenue_share"], where,
+                     optional=["layer_triggers", "non_ai_share_basis", "non_ai_share_evidence"])
+        layers = inputs["layers"]
+        _require(isinstance(layers, dict) and set(layers) == set(SURVIVAL_LAYERS),
+                 f"{where}: layers 는 {list(SURVIVAL_LAYERS)} 여섯 칸을 모두 적는다 ({sorted(layers) if isinstance(layers, dict) else layers!r})")
+        for layer, value in layers.items():
+            _require(value in SURVIVAL_CELL_VALUES, f"{where}: layers.{layer} 는 {sorted(SURVIVAL_CELL_VALUES)} ({value!r})")
+        triggers = inputs.get("layer_triggers") or {}
+        _require(isinstance(triggers, dict), f"{where}: layer_triggers 는 {{층: TRG-…}} object")
+        for layer, tid in triggers.items():
+            _require(layer in SURVIVAL_LAYERS and isinstance(tid, str) and bool(TRIGGER_ID_RE.match(tid)),
+                     f"{where}: layer_triggers.{layer} 는 층 이름과 TRG-NNN ({tid!r})")
+        preparing = sorted(k for k, v in layers.items() if v == "preparing")
+        missing = [k for k in preparing if k not in triggers]
+        _require(not missing, f"{where}: 준비 중 칸 {missing} 은 어떤 공시가 나오면 바뀌는지 적은 트리거(layer_triggers)가 있어야 한다")
+        primary = inputs["primary_layer"]
+        _require(primary in SURVIVAL_LAYERS and layers.get(primary) == "sold",
+                 f"{where}: primary_layer 는 판매 칸 가운데 하나 ({primary!r})")
+        share = inputs["non_ai_revenue_share"]
+        _require(share == "unknown" or (_is_number(share) and 0 <= share <= 1),
+                 f"{where}: non_ai_revenue_share 는 0~1 숫자나 unknown ({share!r})")
+        if "non_ai_share_evidence" in inputs:
+            ids = inputs["non_ai_share_evidence"]
+            _require(isinstance(ids, list) and all(isinstance(e, str) and EVIDENCE_ID_RE.match(e) for e in ids),
+                     f"{where}: non_ai_share_evidence 는 근거 ID(EV-…) 목록 ({ids!r})")
+        if "non_ai_share_basis" in inputs:
+            _require(isinstance(inputs["non_ai_share_basis"], str) and inputs["non_ai_share_basis"].strip(),
+                     f"{where}: non_ai_share_basis 는 비어 있지 않은 문자열(어느 세그먼트를 AI 무관으로 셌나)")
+        return
+    if kind == "axes":
+        # 2026-10-12 규칙 v2.1 ⑧: 네 축(고객·약정·공급·지정학). 축마다 상태와, 확인됨이면 그 축의 재료.
+        _expect_keys(inputs, list(F8_AXES), where)
+        for axis in F8_AXES:
+            a = inputs[axis]
+            aw = f"{where}.{axis}"
+            _require(isinstance(a, dict) and a.get("status") in F8_AXIS_STATUSES,
+                     f"{aw}: status 는 {sorted(F8_AXIS_STATUSES)} ({a!r})")
+            allowed = {"customer": ["recognized_share", "contract_share", "dedicated_assets"],
+                       "commitment": ["multiple", "payment_years", "near_term_burden"],
+                       "supply": ["rung", "supplier_is_competitor"],
+                       "geopolitics": ["rung"]}[axis]
+            _expect_keys(a, ["status"], aw, optional=allowed + ["note"])
+            for key in ("recognized_share", "contract_share"):
+                if key in a:
+                    _require(_is_number(a[key]) and a[key] >= 0, f"{aw}.{key}: 0 이상 숫자 ({a[key]!r})")
+            for key in ("multiple", "payment_years", "near_term_burden"):
+                if key in a:
+                    _require(_is_number(a[key]) and a[key] >= 0, f"{aw}.{key}: 0 이상 숫자 ({a[key]!r})")
+            for key in ("dedicated_assets", "supplier_is_competitor"):
+                if key in a:
+                    _require(a[key] in YES_NO, f"{aw}.{key}: {sorted(YES_NO)} ({a[key]!r})")
+            if "rung" in a:
+                _require(a["rung"] in F8_RUNGS and not isinstance(a["rung"], bool), f"{aw}.rung: {sorted(F8_RUNGS)} ({a['rung']!r})")
+            if a["status"] == "confirmed":
+                need = {"customer": [k for k in ("recognized_share", "contract_share") if k in a] or ["recognized_share"],
+                        "commitment": ["multiple"], "supply": ["rung"], "geopolitics": ["rung"]}[axis]
+                missing = [k for k in need if k not in a]
+                _require(not missing, f"{aw}: 확인됨이면 {missing} 가 있어야 한다")
+        return
     if kind == "matrix":
         _expect_keys(inputs, ["funding_dependent_share", "own_money_returns"], where)
         _require(inputs["funding_dependent_share"] in {"large", "small", "unknown"}, f"{where}: funding_dependent_share 오류")
@@ -1517,7 +1594,28 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
                 _require(lo <= cell <= hi,
                          f"{where}: {item['company_id']} {factor} 매트릭스 출력 {key}={cell} 가 range [{lo}, {hi}] 밖")
         items.append(item)
+    _check_supply_floor(items, rules)
     return items
+
+
+def _check_supply_floor(items: list[dict[str, Any]], rules: dict[str, Any]) -> None:
+    """2026-10-12 규칙 v2.1 ⑧: 같은 회사 ④ 보유표에서 칩이나 클라우드가 '없음'이면 공급 축을 0 으로 적을 수 없다.
+
+    컴퓨트를 빌려 쓰는 회사가 공급 위험 없음으로 빠지지 않게 하는 장치다. 새 판단끼리만 보고, 규칙에 키가 없으면(v2.0 이하) 지나간다."""
+    floor = (((rules.get("factors") or {}).get("F8") or {}).get("supply") or {}).get("layers_none_floor")
+    if not floor:
+        return
+    f4 = {j["company_id"]: j for j in items if j["factor"] == "F4" and j["kind"] == "survival" and j["status"] == "new"}
+    for j in items:
+        if j["factor"] != "F8" or j["kind"] != "axes" or j["status"] != "new" or j["company_id"] not in f4:
+            continue
+        layers = f4[j["company_id"]]["inputs"]["layers"]
+        missing = [layer for layer in floor["layers"] if layers.get(layer) == "none"]
+        supply = j["inputs"]["supply"]
+        zero = supply["status"] in ("absent_disclosed", "not_applicable") or (supply["status"] == "confirmed" and supply.get("rung") == 0)
+        _require(not (missing and zero),
+                 f"judgments[{j['judgment_id']}]: ④ 보유표에서 {missing} 가 '없음'이라 공급 축을 0 으로 적을 수 없다 — "
+                 f"남에게 사 오는 층이 끊기면 무엇이 멈추는지 사다리 칸(최대 {floor['max_rung']})으로 적는다")
 
 
 # ------------------------------------------------------------------ sources / evidence / triggers
@@ -1854,6 +1952,13 @@ def validate_cross_refs(observations: list[dict[str, Any]], judgments: list[dict
         if j["status"] == "new":
             unconfirmed = [e for e in mon if ev_status[e] != "confirmed"]
             _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 AI 수익화 근거 {unconfirmed} 가 확정되지 않았다")
+        # 2026-10-12 규칙 v2.1 ④: AI 무관 매출 몫의 근거도 같은 조건이다.
+        share_ev = list(inputs.get("non_ai_share_evidence") or [])
+        missing = [e for e in share_ev if e not in ev_status]
+        _require(not missing, f"교차 참조: {j['judgment_id']} 의 AI 무관 매출 몫 근거 {missing} 가 evidence.json 에 없음")
+        if j["status"] == "new":
+            unconfirmed = [e for e in share_ev if ev_status[e] != "confirmed"]
+            _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 AI 무관 매출 몫 근거 {unconfirmed} 가 확정되지 않았다")
 
 
 # ------------------------------------------------------------------ run / approval

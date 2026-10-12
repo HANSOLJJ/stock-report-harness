@@ -8,10 +8,16 @@ from .schema import MOAT_FACTORS, TRAP_FACTORS
 COMPLETE_STATUSES = {"ok", "carried_score"}
 
 
+def _score_sum(values: list[Any]) -> int | float:
+    """2026-10-12 규칙 v2.1: 점수가 0.5 단위일 수 있다. 정수면 int 로 둬야 v2.0 이하 결과(와 그 해시)가 그대로다."""
+    total = sum(float(v) for v in values)
+    return int(total) if total.is_integer() else total
+
+
 def summarize_company(company: dict[str, Any], factors: dict[str, dict[str, Any]]) -> dict[str, Any]:
     complete = all(factors[f]["status"] in COMPLETE_STATUSES for f in MOAT_FACTORS + TRAP_FACTORS)
-    moat = sum(int(factors[f]["score"]) for f in MOAT_FACTORS) if all(factors[f]["score"] is not None for f in MOAT_FACTORS) else None
-    trap = sum(int(factors[f]["score"]) for f in TRAP_FACTORS) if all(factors[f]["score"] is not None for f in TRAP_FACTORS) else None
+    moat = _score_sum([factors[f]["score"] for f in MOAT_FACTORS]) if all(factors[f]["score"] is not None for f in MOAT_FACTORS) else None
+    trap = _score_sum([factors[f]["score"] for f in TRAP_FACTORS]) if all(factors[f]["score"] is not None for f in TRAP_FACTORS) else None
     total = moat + trap if complete and moat is not None and trap is not None else None
     pending = [
         {"factor": f, "status": factors[f]["status"], **(factors[f]["pending"] or {})}
