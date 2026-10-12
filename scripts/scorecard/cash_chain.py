@@ -54,15 +54,18 @@ def cash_chain_rows(observations: list[dict[str, Any]], companies: list[dict[str
         cid = c["company_id"]
         values: dict[str, float | None] = {}
         ends: dict[str, str | None] = {}
+        missing_status: dict[str, str] = {}   # 값은 없지만 관측이 있는 칸의 상태(not_disclosed 면 '미공시' 로 적는다)
         for m in CHAIN_METRICS:
             v, o = obs.number(cid, m)
             values[m] = v
             if v is not None:
                 ends[m] = _end(m, o)
+            elif o is not None:
+                missing_status[m] = o["status"]
         fcf, sbc, shares = values["fcf_ttm"], values["sbc_ttm"], values["shares_diluted"]
         per_share = fcf / shares if fcf is not None and shares else None
         per_share_after_sbc = (fcf - sbc) / shares if fcf is not None and sbc is not None and shares else None
-        out.append({"company_id": cid, "display_name": c["display_name"], "values": values, "ends": ends,
+        out.append({"company_id": cid, "display_name": c["display_name"], "values": values, "ends": ends, "missing_status": missing_status,
                     "fcf_per_share": per_share, "fcf_less_sbc_per_share": per_share_after_sbc,
                     "check": fcf_check(values, ends, spec["fcf_check_tolerance"])})
     return out

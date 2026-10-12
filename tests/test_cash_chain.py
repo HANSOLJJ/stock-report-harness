@@ -100,6 +100,16 @@ class RowsTest(unittest.TestCase):
         self.assertIsNone(r["ends"]["capex_ttm"])
         self.assertEqual(r["check"]["status"], "period_unknown")
 
+    def test_not_disclosed_value_is_labelled_as_such(self):
+        from types import SimpleNamespace
+        from scorecard import render_common as rc
+        obs = [o for o in full() if o["metric"] != "fcf_ttm"] + [{**ob("acme", "fcf_ttm", None, status="not_disclosed"), "value": None}]
+        self.assertEqual(row(obs)["missing_status"], {"fcf_ttm": "not_disclosed"})
+        ctx = SimpleNamespace(rules=V21, observations=obs)
+        table = rc.cash_chain_table(ctx, {"companies": [{"company_id": "acme", "display_name": "Acme"}]})
+        self.assertEqual(table["rows"][0][5], "미공시")
+        self.assertEqual(table["rows"][0][3], "$400.00")
+
     def test_uses_the_same_fcf_observation_as_f9(self):
         """⑨(calc_f9)는 ObsLookup.number 로 fcf_ttm 을 읽는다. 연결표도 같은 관측을 고른다 — verified 가 더 최신 옛 관측을 이긴다."""
         obs = full() + [ob("acme", "fcf_ttm", 999.0, status="legacy_unverified", end="2026-09-02", oid="acme.fcf_ttm.legacy")]

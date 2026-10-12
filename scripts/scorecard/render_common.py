@@ -933,8 +933,15 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
     labels = dict(F6_PARAM_LABELS, P2="밸류/매출") if calc.get("track") == "private" else F6_PARAM_LABELS
     for pid, p in (calc.get("parameters") or {}).items():
         value = p.get("value")
+        # 2026-10-12 규칙 v2.1 첫 실행 출력 리뷰: 성장 조정 P1 을 'PER' 로 적고, 값 없이 −3 인 사유(이익 0 이하·성장 문턱 미만)를 숨겼다.
+        growth_adjusted = pid == "P1" and "revenue_growth" in p
+        label = "성장 조정 PER" if growth_adjusted else labels.get(pid, pid)
         if value is None:
-            parts.append(f"{labels.get(pid, pid)} —")
+            parts.append(f"{label} {p.get('band')} → {p.get('score')}" if growth_adjusted and p.get("score") is not None else f"{label} —")
+            continue
+        if growth_adjusted:
+            parts.append(f"{label} {fmt_num(value, 2)}(PER {fmt_num(p.get('per_used'))} ÷ 성장 {p['revenue_growth'] * 100:.1f}) → {p.get('score')}"
+                         + (" ⚠️ 경계" if (p.get("boundary") or {}).get("flag") else ""))
             continue
         shown = f"{value * 100:.1f}%" if pid == "P3" else (f"{fmt_num(value)}x" if pid == "P2" else fmt_num(value))
         parts.append(f"{labels.get(pid, pid)} {shown} → {p.get('score')}"
@@ -1138,9 +1145,16 @@ def regime_view(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None:
                     else f"{r['segment']} 영업이익률({names.get(r['company_id'], r['company_id'])})",
                     *(f"{r['values'][k] * 100:.1f}%" if k in r["values"] else "미확인" for k in mb["keys"])]
                    for r in mb["rows"]]
+    supplier_notes = [spec["supplier_support"]["note"]]
+    for cid in spec["supplier_support"]["companies"]:
+        for o in ctx.observations:
+            ev = (o.get("basis") or {}).get("subsequent_event") if o["company_id"] == cid and o["metric"] == "supplier_guarantees" else None
+            if ev:
+                supplier_notes.append(f"{names.get(cid, cid)} 보증 {fmt_usd(o['value'])} 는 {o['as_of']} 분기 말 유효분이다. 분기 뒤 {ev.get('signed')} 서명한 "
+                                      f"{ev.get('name')} {fmt_usd(ev.get('value'))} 는 다음 분기 관측에 들어간다.")
     return {"note": spec["note"], "capex_head": REGIME_CAPEX_HEAD, "capex_rows": capex_rows, "capex_notes": off_lines + notes,
             "margin_head": margin_head, "margin_rows": margin_rows, "margin_note": spec["margins"]["note"],
-            "supplier_head": REGIME_SUPPLIER_HEAD, "supplier_rows": supplier_rows, "supplier_note": spec["supplier_support"]["note"],
+            "supplier_head": REGIME_SUPPLIER_HEAD, "supplier_rows": supplier_rows, "supplier_notes": supplier_notes,
             "token_lines": token_lines, "trigger_head": REGIME_TRIGGER_HEAD, "trigger_rows": triggers}
 
 
@@ -1182,7 +1196,9 @@ def cash_chain_table(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None
     rows = []
     for r in cash_chain_rows(ctx.observations, results["companies"], spec):
         v = r["values"]
-        money = [fmt_usd(v[m]) if v[m] is not None else "미확인"
+        def blank(m: str) -> str:
+            return "미공시" if r["missing_status"].get(m) == "not_disclosed" else "미확인"
+        money = [fmt_usd(v[m]) if v[m] is not None else blank(m)
                  for m in ("revenue_ttm", "operating_income_ttm", "ocf_ttm", "capex_ttm", "fcf_ttm", "sbc_ttm")]
         ends = sorted({e for e in r["ends"].values() if e})
         when = ends[0] if len(ends) == 1 else ("—" if not ends else "섞임 " + "·".join(ends))
@@ -1190,7 +1206,7 @@ def cash_chain_table(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None
             when += " · 기간 없는 관측 포함"
         rows.append([r["display_name"], *money, _shares_text(v["shares_diluted"]), _per_share_text(r["fcf_per_share"]),
                      _per_share_text(r["fcf_less_sbc_per_share"]), _check_text(r["check"]), when])
-    notes = [spec["note"], spec["ai_contribution"],
+    notes = [spec["note"], spec["ai_contribution"], "'미공시' 는 회사가 그 값을 공개하지 않은 칸이고, '미확인' 은 관측이 없는 칸이다.",
              f"대조는 OCF − 설비투자와 ⑨ 가 쓰는 FCF 관측의 차이가 FCF 의 {spec['fcf_check_tolerance'] * 100:g}% 안이면 일치로 본다. "
              "회사 정의 FCF(설비 처분·인센티브를 뺀 값)를 쓰는 회사와 기준 시점이 다른 관측은 차이로 나온다."]
     return {"head": CASH_CHAIN_HEAD, "rows": rows, "notes": notes}
@@ -1838,7 +1854,13 @@ def lockin_criteria(f: dict[str, Any]) -> list[str]:
     if cond:
         out.append(f"지속성 할인은 {cond}일 때 건다. 공급 부족에서 나온 가격결정력을 영구 해자로 읽지 않기 위한 장치다.")
     ai = (f.get("display_only_inputs") or {}).get("ai_monetized_in_channel")
-    if ai:
+    gate = (f.get("ladder") or {}).get("top_score_requires_ai_monetized")
+    if ai and gate:
+        # 2026-10-12 규칙 v2.1 첫 실행 출력 리뷰: v2.1 에서는 AI 수익화가 5점 조건이라 '점수에 들어가지 않는다' 는 문장이 틀렸다.
+        out.append(f"**{ai.get('label', 'AI 수익화')}**({ai.get('question', '')})는 5점 조건이다. 가장 강한 채널 고객·매출의 과반이 AI 에 따로 "
+                   "돈을 낸다는 공시 숫자와 AI 로 그 채널의 가격을 올렸다는 공시나 회사 1차 발표가 함께 있어야 '예'이고, '예' 가 아니면 "
+                   f"① 은 최고 {gate['cap']}점이다.")
+    elif ai:
         out.append(f"**{ai.get('label', 'AI 수익화')}**({ai.get('question', '')})는 점수에 들어가지 않고 표시만 한다. "
                    "같은 점수라도 AI 로 가격을 올려 받은 경우와 AI 없이 받은 경우를 가른다.")
     return out

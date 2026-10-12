@@ -848,7 +848,8 @@ def render_layers(results: dict[str, Any], ctx: Any) -> str:
     return ('<h3>층별 보유표와 비교 그룹</h3>'
             '<p class="sub">회사마다 AI 사업 여섯 층을 판매·자체 사용·없음·준비 중으로 적은 표다. ④ 의 수직계열화 축은 이 표의 합(판매 1 · 자체 사용 0.5, '
             '상한 2.5)이고 다각화 축은 AI 와 무관한 최종 수요에서 나오는 매출 몫이다. 비교 그룹은 판매 칸 가운데 외부 매출이 가장 큰 층이며, '
-            '잣대는 모든 회사에 같고 비교만 그룹 안에서 한다.</p>'
+            '잣대는 모든 회사에 같고 비교만 그룹 안에서 한다. 준비 중은 돈이 나간 실행된 투자인데 매출이 아직 0 인 칸이라 점수는 0 이고 '
+            '트리거로 지켜본다. 순위에서 빠진 회사는 그룹 안 순위에도 넣지 않는다.</p>'
             f'<div class="tablewrap"><table class="layers"><thead>{head}</thead><tbody>{"".join(body)}</tbody></table></div>'
             + (f'<h3>비교 그룹 안 순위</h3><ul class="fpts">{group_items}</ul>' if group_items else ""))
 
@@ -874,7 +875,7 @@ def render_regime(ctx: Any, results: dict[str, Any]) -> str:
             '<h3>설비투자 가속도(AI 컴퓨트를 사는 회사)</h3>'
             + _html_table(view["capex_head"], view["capex_rows"], text_cols={1, 2, 7, 8}) + sub(view["capex_notes"])
             + '<h3>공급자 지원 비중</h3>' + _html_table(view["supplier_head"], view["supplier_rows"], text_cols={8})
-            + sub([view["supplier_note"]])
+            + sub(view["supplier_notes"])
             + '<h3>마진 두 수열(나누지 않음)</h3>'
             + (_html_table(view["margin_head"], view["margin_rows"]) if len(view["margin_head"]) > 1 else sub(["분기 값이 아직 없다."]))
             + sub([view["margin_note"]])
@@ -1653,12 +1654,13 @@ MODE_DOC = {
     "formula": ("산식에 넣는다", "기본 3점에서 동맹을 더하고 적대를 뺀다(동맹 0~2 · 적대 0~-3). "
                 "**동맹과 적대 등급을 매기는 것은 사람이다.**",
                 "factors.F5.formula · A_allowed · H_allowed"),
-    "parameters": ("여러 수치를 재서 더한다", "PER · EV/매출 · 매출 성장 셋을 각각 구간표에 넣어 더하고, "
+    # 2026-10-12 규칙 v2.1 첫 실행 출력 리뷰: 잣대 이름과 칸 점수를 박아 두어 v2.1(성장 조정 PER, 큼·돌아옴 −3)과 어긋났다. 판마다 맞는 말로 쓴다.
+    "parameters": ("여러 수치를 재서 더한다", "가격 잣대(PER·EV/매출 등, 무엇을 쓰는지는 방법 절에 있다)를 각각 구간표에 넣어 더하고, "
                    "입력 신뢰도가 그 소계를 한 칸까지 내린다. **아홉 항목 가운데 사람 판단이 들어가지 않는 "
                    "것은 이 방식뿐이다** — 넣는 값이 전부 등록된 관측이다.",
                    "policies.f6.parameters · policies.f6.p4"),
     "matrix": ("두 축의 조합표에서 꺼낸다", "조달 의존 고객 비중과 자기 자금 환류 두 축으로 칸을 고른다"
-               "(작음·아니오 0 · 작음·예 -1 · 큼 -2). **두 축을 정하는 것은 사람이다.**", "factors.F7.matrix"),
+               "(칸마다 점수는 규칙의 조합표에 있다). **두 축을 정하는 것은 사람이다.**", "factors.F7.matrix"),
     "gates": ("관문을 차례로 통과시킨다", "앞 관문에서 막히면 뒤는 생략하거나 진단만 한다. **관문마다 "
               "재무 수치와 사람 판정이 함께 들어간다** — 흑자 전환 후퇴 여부, 현금흐름 추세, 커버리지를 "
               "견줄 수 있는지가 사람이 정하는 값이다.",

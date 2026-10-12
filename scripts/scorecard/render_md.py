@@ -334,7 +334,8 @@ def _survival_section(ctx: Any, results: dict[str, Any], rows: list[dict[str, An
     out = ["## 층별 보유표와 비교 그룹", "",
            "회사마다 AI 사업 여섯 층을 판매·자체 사용·없음·준비 중으로 적은 표다. ④ 의 수직계열화 축은 이 표의 합(판매 1 · 자체 사용 0.5, "
            "상한 2.5)이고, 다각화 축은 AI 와 무관한 최종 수요에서 나오는 매출 몫이다. 비교 그룹은 판매 칸 가운데 외부 매출이 가장 큰 층이다. "
-           "잣대는 모든 회사에 같고 비교만 그룹 안에서 한다.", "",
+           "잣대는 모든 회사에 같고 비교만 그룹 안에서 한다. 준비 중은 돈이 나간 실행된 투자인데 매출이 아직 0 인 칸이라 점수는 0 이고 트리거로 "
+           "지켜본다. 순위에서 빠진 회사는 그룹 안 순위에도 넣지 않는다.", "",
            table(head, body, ["---"] + ["---"] * len(keys) + ["---", "---:", "---:"]), ""]
     groups = rc.comparison_groups(results)
     if groups:
@@ -353,8 +354,8 @@ def _regime_section(view: dict[str, Any]) -> list[str]:
            "### 설비투자 가속도(AI 컴퓨트를 사는 회사)", "",
            table(view["capex_head"], view["capex_rows"], ["---", "---", "---", "---:", "---:", "---:", "---:", "---", "---"]), ""]
     out += [f"- {x}" for x in view["capex_notes"]] + [""]
-    out += ["### 공급자 지원 비중", "", table(view["supplier_head"], view["supplier_rows"], ["---"] + ["---:"] * 7 + ["---"]), "",
-            f"- {view['supplier_note']}", ""]
+    out += ["### 공급자 지원 비중", "", table(view["supplier_head"], view["supplier_rows"], ["---"] + ["---:"] * 7 + ["---"]), ""]
+    out += [f"- {x}" for x in view["supplier_notes"]] + [""]
     if len(view["margin_head"]) > 1:
         out += ["### 마진 두 수열(나누지 않음)", "", table(view["margin_head"], view["margin_rows"],
                                                      ["---"] + ["---:"] * (len(view["margin_head"]) - 1)), ""]

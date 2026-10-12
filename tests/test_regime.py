@@ -203,6 +203,16 @@ class MarginTest(unittest.TestCase):
 
 
 class RegimeRenderTest(unittest.TestCase):
+    def test_supplier_subsequent_event_note(self):
+        from types import SimpleNamespace
+        from scorecard import render_common as rc
+        g = {**stock("supplier_guarantees", 3.5e9, "2026-07-26"),
+             "basis": {"subsequent_event": {"name": "SB Energy Corp. guarantees", "value": 105e9, "signed": "2026-08-17"}}}
+        ctx = SimpleNamespace(rules=V21, observations=[g], run={"companies": ["nvidia"]})
+        view = rc.regime_view(ctx, {"companies": [{"company_id": "nvidia", "display_name": "NVIDIA"}]})
+        self.assertIn("NVIDIA 보증 $3.5B 는 2026-07-26 분기 말 유효분이다. 분기 뒤 2026-08-17 서명한 SB Energy Corp. guarantees $105.0B 는 "
+                      "다음 분기 관측에 들어간다.", view["supplier_notes"])
+
     def test_trigger_ids_match_schema_whitelist(self):
         self.assertEqual({t["id"] for t in SPEC["trigger_conditions"]}, TRIGGER_IDS)
 

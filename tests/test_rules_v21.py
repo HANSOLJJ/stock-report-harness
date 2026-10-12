@@ -645,6 +645,23 @@ class F6MethodTextTest(unittest.TestCase):
         self.assertIn("**⑥ 이익 조정은 가정을 담는다.**", lim)
         self.assertIn("**비상장 ⑥ 은 Anthropic, OpenAI 모두 P/S 구간표로 매겼다.**", lim)   # recheck 에는 보정 매출 관측이 없다
         self.assertNotIn("이익 조정은 가정", "\n".join(rc.limitations(ctx)))
+        # ① 은 v2.1 에서 AI 수익화가 5점 조건이고, v2.0 에서는 표시만이다(lockin_criteria 가 방법 절 ① 칸을 쓴다)
+        f1_new = " ".join(rc.lockin_criteria(V21.factor("F1")))
+        f1_old = " ".join(rc.lockin_criteria(V20.factor("F1")))
+        self.assertIn("5점 조건이다", f1_new)
+        self.assertNotIn("점수에 들어가지 않고 표시만 한다", f1_new)
+        self.assertIn("점수에 들어가지 않고 표시만 한다", f1_old)
+
+    def test_growth_adjusted_card_line(self):
+        from scorecard.render_common import _f6_parameters_text
+        calc = {"parameters": {
+            "P1": {"revenue_growth": 0.2, "per_used": 35.1, "value": 1.755, "score": -1, "band": "1~2"},
+            "P2": {"value": 9.0, "score": -1}}, "subtotal_before_p4": -2}
+        self.assertEqual(_f6_parameters_text(calc), "성장 조정 PER 1.75(PER 35.1 ÷ 성장 20.0) → -1 + EV/매출 9.0x → -1 = 소계 -2")
+        slow = {"parameters": {"P1": {"revenue_growth": 0.044, "value": None, "score": -3, "band": "성장 5% 미만"}}}
+        self.assertEqual(_f6_parameters_text(slow), "성장 조정 PER 성장 5% 미만 → -3")
+        old = {"parameters": {"P1": {"value": 26.9, "score": -1}}}
+        self.assertEqual(_f6_parameters_text(old), "PER 26.9 → -1")
 
 
 class RuleChangeInheritTest(unittest.TestCase):
