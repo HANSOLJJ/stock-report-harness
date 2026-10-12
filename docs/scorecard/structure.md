@@ -24,7 +24,7 @@
 - 빌드: `scripts/build_report.py` 가 `scorecard.render_html.build_scorecard` 로 위임한다.
 - 초안의 숫자는 생성물이라 출처 표식(`[S1]`)을 요구하지 않는다. 대신 draft frontmatter `results_hash` 가 results.json 과 결속되고 검증기가 순위표 행을 대조한다.
 - 투자 권유 표현 차단은 `guard.py` 의 `forbid_financial_advice` 가 `draft.md`·`judgments.json`·`evidence/evidence.json` 에 적용한다.
-- 가격은 `collect --kind prices` 가 실행 원자료(observations.json)에 넣는다. build 중에는 다시 수집하지 않는다(D-02).
+- 가격은 `collect --kind prices` 가, USD 보고 상장사의 영업현금흐름·설비투자·법인세 최근 1년 값은 `collect --kind facts`(SEC companyfacts 누계 복원, `scripts/scorecard/collect_facts.py`)가 실행 원자료(observations.json)에 넣는다. build 중에는 다시 수집하지 않는다(D-02).
 
 ## 2. 파일 소유권과 저장 스키마
 
@@ -138,7 +138,7 @@
 
 ```
 init --rule vN ──► plan.md + run.json·observations.json·judgments.json·sources.json
-collect ──► evidence/candidates.json (뉴스·공시 후보) ; --kind prices 는 observations.json 에 ⑥ price·market_cap 관측을 넣는다
+collect ──► evidence/candidates.json (뉴스·공시 후보) ; --kind prices 는 observations.json 에 ⑥ price·market_cap, --kind facts 는 ocf_ttm·capex_ttm·income_tax_ttm 관측을 넣는다
   └─ 에이전트가 후보를 골라 evidence/evidence.json(candidate)·triggers.json 작성
 research ──► research.md (observations_hash·judgments_hash 결속) ; 인용한 근거의 출처를 sources.json 에 등록(--no-register 로 끔)
 calculate ──► results.json(+results_hash) + preview.md ; 입력 해시가 바뀌면 이전 approval.json 자동 무효

@@ -5,7 +5,7 @@
   uv run --frozen python -X utf8 scripts/scorecard_cli.py import-baseline [--html PATH] [--md PATH]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py init <slug> --as-of 2026-09-02 --title "..." --request "..." [--purpose "..."] [--companies a,b] [--decision C-16=hold --rationale "..." --by NAME] [--force]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py init <slug> --from-run <prior_slug> [--add-companies a,b] [--title "..." --request "..." --as-of ... --rule v1.7 --decision C-16=hold --no-carry-decisions]
-  uv run --frozen python -X utf8 scripts/scorecard_cli.py collect <slug> [--company a,b] [--kind news|filings|prices|all] [--since YYYY-MM-DD] [--forms 8-K,10-Q] [--locale en-US] [--from-file PATH] [--dry-run]
+  uv run --frozen python -X utf8 scripts/scorecard_cli.py collect <slug> [--company a,b] [--kind news|filings|prices|facts|all] [--since YYYY-MM-DD] [--forms 8-K,10-Q] [--locale en-US] [--from-file PATH] [--dry-run]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py research <slug> [--no-register]
   uv run --frozen python -X utf8 scripts/scorecard_cli.py calculate <slug>
   uv run --frozen python -X utf8 scripts/scorecard_cli.py draft <slug>
@@ -677,11 +677,12 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("collect", help="근거 후보 수집. research 앞에서만 돈다(build 는 재수집하지 않는다)")
     p.add_argument("slug")
     p.add_argument("--company", help="run.companies 가운데 일부(쉼표)")
-    p.add_argument("--kind", choices=["news", "filings", "prices", "all"], default="all")
+    p.add_argument("--kind", choices=["news", "filings", "prices", "facts", "all"], default="all",
+                   help="facts 는 SEC companyfacts 에서 ocf_ttm·capex_ttm·income_tax_ttm 관측을 만든다(USD 보고 상장사, SEC_UA 필요)")
     p.add_argument("--since", help="후보 창 시작일(기본 as_of − 180일)")
     p.add_argument("--forms", help="공시 형식(쉼표). 기본 8-K,10-Q,10-K,20-F,6-K")
     p.add_argument("--locale", default="en-US")
-    p.add_argument("--from-file", help="네트워크 대신 읽을 파일(--kind 하나와 함께)")
+    p.add_argument("--from-file", help="네트워크 대신 읽을 파일(--kind 하나와 함께). facts 는 CIK##########*.json 이 있는 폴더")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_collect)

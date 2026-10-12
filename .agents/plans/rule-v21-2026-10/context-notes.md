@@ -44,3 +44,17 @@
 - 옛 규칙(v2.0)도 survival·axes 판단을 읽기는 하되 계산 경로가 없어 점수를 만들지 않는다. v1.9 가 lockin 을 받던 선례를 따랐다.
 - 승인 페이지 payload 의 judgment_choices 에서 빈 표(survival·axes)를 뺐다. 그 두 kind 는 CLI(--json)로만 고치고, payload 모양을 잠근 고정본
   (tests/node/fixtures)을 바꾸지 않기 위해서다.
+
+## 2-E 결정(2026-10-12, 구현 중)
+- recheck 의 검증된 fcf_ttm 15건은 basis 에 ocf_ttm·capex_ttm 성분과 accession 을 이미 담고 있다(CASH-FCF-35 작업). 그러나 그 관측을 만든 스크립트는
+  하네스 밖(validation/fix-54 등)에 있어 11월에 3분기 자료로 갱신할 도구가 없다. 그래서 `collect --kind facts` 를 새로 만든다. 2-C-1 의 분기 설비투자
+  시계열도 같은 수집기가 낸다.
+- 수집기는 ocf_ttm·capex_ttm·income_tax_ttm 만 낸다. fcf_ttm 은 내지 않는다 — Amazon 의 FCF 는 회사 정의(설비 구입 − 처분·인센티브)로 공시값을
+  쓰고 있어 산식으로 다시 만들면 ⑨ 입력이 조용히 바뀐다. 현금 연결표가 OCF − 설비투자와 ⑨ 의 fcf_ttm 을 대조해 어긋나면 표시한다.
+- income_tax_ttm 은 2-E 범위 밖이지만 같은 경로·같은 산식이라 넣는다(11월 v2.1 ⑥ 이익 조정의 입력, TODO 1). equity_investment_gains_ttm 은 회사마다 구성
+  태그가 다르고 주석 대조가 필요해(Amazon 셋 합) 수집기에 넣지 않는다.
+- USD 로 보고하는 회사만 수집한다. TSMC·Alibaba 는 20-F 현지통화라 지금처럼 수동 USD 환산 관측을 쓴다.
+- 제출일(filed)이 정보 기준일(info_cutoff, 없으면 as_of) 뒤인 사실은 버린다. companyfacts 는 받는 날의 전체 이력이라 늦게 받으면 기준일 뒤 공시가 섞인다.
+- sec_get 은 같은 주소를 다시 받지 않는다. companyfacts 는 주소가 늘 같아 11월에 10월 캐시가 돌아온다. 캐시가 정보 기준일보다 오래되면 다시 받고
+  옛 파일은 지우지 않는다(옛 출처의 sha256 대조용).
+- AI 기여분은 열로 두지 않고 표 아래 한 줄로 "공시로 가를 수 없어 비워 둔다"를 적는다. 모든 칸이 '미확인'인 열은 정보가 없다.

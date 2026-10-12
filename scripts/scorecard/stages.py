@@ -354,7 +354,8 @@ def init_run(
 # 뉴스·공시는 수집 캐시(DATA_ROOT)를 갱신하고 후보 파일만 쓴다 — sources.json 은 선별된 근거가
 # research 에서 등록될 때 바뀐다. 가격만 계산 입력이라 여기서 관측과 출처를 바로 등록한다.
 
-COLLECT_KINDS = ("news", "filings", "prices")
+# 2026-10-12 규칙 v2.1 2-E: facts 는 SEC companyfacts 에서 현금흐름·법인세 최근 1년 관측을 만든다(prices 처럼 관측·출처를 바로 쓴다).
+COLLECT_KINDS = ("news", "filings", "prices", "facts")
 CANDIDATE_WINDOW_DAYS = 180
 
 
@@ -484,6 +485,87 @@ def _merge_price_source(sources: dict[str, Any], entry: dict[str, Any]) -> None:
     items.append(entry)
 
 
+def _collect_facts(slug: str, run: dict[str, Any], registry: dict[str, dict[str, Any]], selected: list[str], *,
+                   from_file: str | None, dry_run: bool, now: str | None) -> list[dict[str, Any]]:
+    """SEC companyfacts 에서 ocf_ttm·capex_ttm·income_tax_ttm 을 복원해 observations.json 에 더한다(2026-10-12 규칙 v2.1 2-E).
+
+    가격 수집과 같이 회사 단위로 실패하고 덮어쓰지 않는다. 같은 (기업, 지표, 기준일, 기간) 관측이 같은 값으로 이미 있으면 건너뛰고,
+    값이 다르면 그 회사를 `failed` 로 남긴다(어느 쪽이 맞는지는 사람이 가린다). `from_file` 은 `CIK##########*.json` 파일이 있는 폴더다.
+    """
+    from .collect_facts import COMPANYFACTS_URL, fact_observations, facts_source_entry
+    from .collect_filings import sec_get
+
+    filed_until = run.get("info_cutoff") or run["as_of"]
+    d = run_dir(slug)
+    observations = None if dry_run else load_json_strict(d / "observations.json")
+    src_path = d / "sources.json"
+    sources = None
+    rows: list[dict[str, Any]] = []
+    for cid in selected:
+        company = registry[cid]
+        if not company.get("listed") or not company.get("cik"):
+            rows.append({"company_id": cid, "status": "skipped_no_cik"})
+            continue
+        if (company.get("reporting_currency") or "USD") != "USD":
+            rows.append({"company_id": cid, "status": "skipped_currency", "currency": company.get("reporting_currency")})
+            continue
+        url = COMPANYFACTS_URL.format(cik=int(company["cik"]))
+        if dry_run:
+            rows.append({"company_id": cid, "status": "dry_run", "urls": [url], "filed_until": filed_until})
+            continue
+        try:
+            if from_file:
+                hits = sorted(Path(from_file).glob(f"CIK{int(company['cik']):010d}*.json"))
+                if not hits:
+                    raise ValueError(f"{from_file} 에 CIK{int(company['cik']):010d}*.json 이 없다")
+                fetched = {"path": str(hits[0]), "sha256": sha256_file(hits[0]), "fetched_at": now or utc_now_iso()}
+            else:
+                fetched = sec_get(url, now=now)
+                # 주소가 늘 같아 캐시가 옛 이력을 돌려준다. 정보 기준일 전에 받은 캐시는 기준일까지의 공시를 다 담지 못한다.
+                if fetched["cached"] and fetched["fetched_at"][:10] < filed_until:
+                    fetched = sec_get(url, now=now, refresh=True)
+            doc = json.loads(Path(fetched["path"]).read_text(encoding="utf-8"))
+            entry = facts_source_entry(company, fetched, filed_until=filed_until, from_file=bool(from_file))
+            obs, results = fact_observations(company, doc, source_id=entry["source_id"],
+                                             observed_at=fetched["fetched_at"][:10], filed_until=filed_until)
+            keyed = {(o["company_id"], o["metric"], o["as_of"], (o.get("period") or {}).get("start"),
+                      (o.get("period") or {}).get("end")): o for o in observations["items"]}
+            taken_ids = {o["observation_id"] for o in observations["items"]}
+            fresh, existing = [], []
+            for o in obs:
+                prev = keyed.get((o["company_id"], o["metric"], o["as_of"], o["period"]["start"], o["period"]["end"]))
+                if prev is not None and prev["value"] == o["value"]:
+                    existing.append(o["metric"])
+                    continue
+                if prev is not None:
+                    raise SchemaError(f"{o['metric']} {o['as_of']} 관측이 다른 값({prev['observation_id']} {prev['value']} ≠ {o['value']})으로 "
+                                      "이미 있다 — 덮어쓰지 않는다")
+                if o["observation_id"] in taken_ids:
+                    raise SchemaError(f"observation_id {o['observation_id']} 가 이미 있다 — 덮어쓰지 않는다")
+                fresh.append(o)
+            validate_observations({**observations, "items": [*observations["items"], *fresh]}, registry, slug)
+        except Exception as exc:  # noqa: BLE001 — 기업 하나의 실패로 나머지를 멈추지 않는다
+            rows.append({"company_id": cid, "status": "failed", "error": str(exc)})
+            continue
+        row: dict[str, Any] = {"company_id": cid, "status": "collected" if fresh else "skipped_existing",
+                               "added": [o["metric"] for o in fresh], "existing": existing,
+                               "missing": [f"{r['metric']}({r['reason']})" for r in results if r["status"] != "collected"]}
+        rows.append(row)
+        if not fresh:
+            continue
+        observations["items"].extend(fresh)
+        if sources is None:
+            sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
+        upsert_sources(sources, [entry])
+    if dry_run or sources is None:
+        return rows
+    validate_observations(observations, registry, slug)
+    validate_sources(sources, slug)
+    write_json(d / "observations.json", observations)
+    write_json(src_path, sources)
+    return rows
+
+
 def collect(
     slug: str,
     *,
@@ -517,11 +599,13 @@ def collect(
         raise SchemaError(f"--since 는 YYYY-MM-DD ({since!r})") from exc
     if since > until:
         raise SchemaError(f"후보 창이 비어 있다: since {since} > info_cutoff {until}")
-    if "prices" in kinds and not dry_run:   # 가격만 관측·출처(승인 해시 대상)를 바로 쓴다
+    if "prices" in kinds and not dry_run:   # 가격·재무 사실만 관측·출처(승인 해시 대상)를 바로 쓴다
         protect_approved_run(slug, "가격 수집(collect --kind prices)")
+    if "facts" in kinds and not dry_run:
+        protect_approved_run(slug, "재무 사실 수집(collect --kind facts)")
 
     summary: dict[str, Any] = {"run_id": slug, "window": {"since": since, "until": until}, "dry_run": dry_run,
-                               "news": [], "filings": [], "prices": []}
+                               "news": [], "filings": [], "prices": [], "facts": []}
     for cid in selected if "news" in kinds else []:
         try:
             res = collect_company_news(registry[cid], from_file=from_file, dry_run=dry_run, now=now, locale=locale)
@@ -558,6 +642,8 @@ def collect(
         summary["candidates"] = write_candidates(slug, since=since, until=until, company_ids=run["companies"])
     if "prices" in kinds:
         summary["prices"] = _collect_prices(slug, run, registry, selected, from_file=from_file, dry_run=dry_run, now=now)
+    if "facts" in kinds:
+        summary["facts"] = _collect_facts(slug, run, registry, selected, from_file=from_file, dry_run=dry_run, now=now)
     return summary
 
 

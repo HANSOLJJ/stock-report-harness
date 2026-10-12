@@ -668,7 +668,8 @@ def _stage_changes_run(stage: str, rest: list[str]) -> bool:
     if stage == "collect":
         if any(len(a) >= 3 and "--dry-run".startswith(a) for a in rest):
             return False
-        return (_option_value(rest, "--kind") or "all") in ("prices", "all")
+        # 2026-10-12: facts(SEC companyfacts 재무 관측)도 prices 처럼 observations.json·sources.json 을 바로 쓴다.
+        return (_option_value(rest, "--kind") or "all") in ("prices", "facts", "all")
     return stage in _STAGE_WRITES
 
 

@@ -158,7 +158,7 @@ class HookStageCommandTest(unittest.TestCase):
             for args in (f"judge {slug} --company nvidia --factor F1 --set score=5 --reason x --by y", f"calculate {slug}",
                          f"draft {slug}", f"research {slug}", f"review-template {slug} --force", f"review-template {slug} --fo",
                          f"confirm {slug} --evidence EV-nvidia-001", f"collect {slug}", f"collect {slug} --kind prices",
-                         f"collect {slug} --k=all", f"calculate {slug}/"):
+                         f"collect {slug} --kind facts", f"collect {slug} --k=all", f"calculate {slug}/"):
                 for tool in ("Bash", "PowerShell"):
                     with self.subTest(args=args, tool=tool):
                         d = self.kind(f"{self.CLI} {args}", tool)

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import time
 from pathlib import Path
 from typing import Any, Callable
@@ -36,8 +37,13 @@ def require_user_agent() -> str:
 SEC_HOSTS = {"www.sec.gov", "sec.gov", "data.sec.gov", "efts.sec.gov"}
 
 
-def sec_get(url: str, *, fetch: Callable[..., bytes] = fetch_bytes, now: str | None = None) -> dict[str, Any]:
-    """SEC 문서 하나를 SEC_UA 로 받아 캐시한다. 같은 주소는 다시 요청하지 않는다. 결과에 SEC_UA 값은 넣지 않는다."""
+def sec_get(url: str, *, fetch: Callable[..., bytes] = fetch_bytes, now: str | None = None,
+            refresh: bool = False) -> dict[str, Any]:
+    """SEC 문서 하나를 SEC_UA 로 받아 캐시한다. 같은 주소는 다시 요청하지 않는다. 결과에 SEC_UA 값은 넣지 않는다.
+
+    `refresh` 는 캐시가 있어도 다시 받는다. companyfacts 처럼 주소가 같은데 내용이 계속 늘어나는 문서용이다(2026-10-12).
+    다시 받은 파일은 받은 시각을 이름에 넣어 따로 두고 옛 파일은 지우지 않는다 — 옛 출처의 sha256 을 대조할 원본이다.
+    """
     host = (urlparse(url).hostname or "").lower()
     if urlparse(url).scheme != "https" or host not in SEC_HOSTS:
         raise ValueError(f"SEC 주소(https, {sorted(SEC_HOSTS)})만 받는다: {url}")
@@ -45,17 +51,19 @@ def sec_get(url: str, *, fetch: Callable[..., bytes] = fetch_bytes, now: str | N
     index_path = docs / "index.json"
     index = json.loads(index_path.read_text(encoding="utf-8")) if index_path.is_file() else {}
     hit = index.get(url)
-    if hit and (docs / hit["file"]).is_file():
+    if hit and (docs / hit["file"]).is_file() and not refresh:
         return {"url": url, "path": str(docs / hit["file"]), "sha256": hit["sha256"], "bytes": hit["bytes"],
                 "fetched_at": hit["fetched_at"], "cached": True}
     user_agent = require_user_agent()
     time.sleep(evidence_lib.SEC_SLEEP_S)   # SEC 는 초당 10회까지 허용한다. 명령을 연달아 불러도 초당 1회로 둔다
     body = fetch(url, user_agent=user_agent)
+    fetched_at = now or utc_now_iso()
     name = Path(urlparse(url).path).name or "index.html"
-    file = f"{hashlib.sha256(url.encode('utf-8')).hexdigest()[:16]}-{name}"
+    stamp = f"-{re.sub(r'[^0-9]', '', fetched_at)[:14]}" if hit else ""
+    file = f"{hashlib.sha256(url.encode('utf-8')).hexdigest()[:16]}{stamp}-{name}"
     docs.mkdir(parents=True, exist_ok=True)
     (docs / file).write_bytes(body)
-    entry = {"file": file, "sha256": sha256_bytes(body), "bytes": len(body), "fetched_at": now or utc_now_iso()}
+    entry = {"file": file, "sha256": sha256_bytes(body), "bytes": len(body), "fetched_at": fetched_at}
     index[url] = entry
     index_path.write_text(json.dumps(index, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     return {"url": url, "path": str(docs / file), "sha256": entry["sha256"], "bytes": entry["bytes"],

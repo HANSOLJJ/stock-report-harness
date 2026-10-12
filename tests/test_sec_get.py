@@ -56,6 +56,19 @@ class SecGetTest(unittest.TestCase):
                          (first["path"], first["sha256"], "2026-10-02T00:00:00Z"))
         self.assertNotIn(UA, json.dumps([first, second], ensure_ascii=False))
 
+    def test_refresh_refetches_and_keeps_old_file(self):
+        """2026-10-12: companyfacts 처럼 주소가 같은 문서는 refresh 로 다시 받는다. 옛 파일은 지우지 않는다(옛 출처 sha256 대조용)."""
+        first = sec_get(URL, fetch=self.fetch, now="2026-10-02T00:00:00Z")
+        bodies = iter([b"<html>10-Q v2</html>"])
+        second = sec_get(URL, fetch=lambda url, *, user_agent, **kw: next(bodies), now="2026-11-03T05:06:07Z", refresh=True)
+        self.assertFalse(second["cached"])
+        self.assertNotEqual(second["path"], first["path"])
+        self.assertTrue(second["path"].endswith("-20261103050607-orcl-20260831.htm"))
+        self.assertEqual(Path(first["path"]).read_bytes(), b"<html>10-Q</html>")
+        self.assertEqual(Path(second["path"]).read_bytes(), b"<html>10-Q v2</html>")
+        third = sec_get(URL, fetch=self.fetch)
+        self.assertEqual((third["path"], third["fetched_at"], third["cached"]), (second["path"], "2026-11-03T05:06:07Z", True))
+
     def test_only_sec_https_urls(self):
         for url in ("https://example.com/a.htm", "http://www.sec.gov/a.htm", "https://sec.gov.evil.com/a.htm", "file:///etc/x"):
             with self.subTest(url=url):
