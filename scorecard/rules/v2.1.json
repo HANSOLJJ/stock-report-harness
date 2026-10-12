@@ -1757,6 +1757,21 @@
         ]
       }
     },
+    "regime_indicators": {
+      "scored": false,
+      "note": "국면 지표는 AI 사이클이 어디쯤인지를 공시 숫자로 보이는 점수 밖 표시다. 국면에 이름을 붙이지 않고 원값과 변화만 보이며, 변화는 트리거 조건으로만 쓴다. 기준 분포를 만들 이력이 짧아 Z 점수를 쓰지 않는다.",
+      "capex": {
+        "basket": ["microsoft", "alphabet", "amazon", "meta", "oracle"],
+        "quarters_kept": 8,
+        "min_quarters": 6,
+        "flat_band": 0.01,
+        "calendar_alignment": "회계 분기 끝 달이 속한 달력 분기에 넣는다(Oracle 8·11·2·5월 → 3·4·1·2분기). 바스켓 합은 바스켓 회사가 모두 값이 있는 분기만 더한다.",
+        "note": "AI 컴퓨트를 사는 회사의 분기 설비투자. 사는 쪽 금융리스 취득 자산은 현금 설비투자에 더하고(그 회사의 금융리스 분기 값이 필요한 분기에 모두 있을 때만), 장부 밖 설비 잔존가치 보증은 더하지 않고 따로 보인다. 파는 쪽 보증·출자·되사기는 산 회사 설비투자와 겹치므로 더하지 않고 공급자 지원 비중으로 잰다.",
+        "consumers": [
+          "stages._collect_facts → collect_facts.quarterly_observations(바스켓 회사만, quarters_kept 개 분기)"
+        ]
+      }
+    },
     "rejudge": {
       "regular_run_rejudges_all": true,
       "qualitative_factors": [

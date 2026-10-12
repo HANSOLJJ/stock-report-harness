@@ -33,13 +33,23 @@ FACT_METRICS: dict[str, tuple[str, ...]] = {
     "income_tax_ttm": ("IncomeTaxExpenseBenefit",),
 }
 
+# 2026-10-12 규칙 v2.1 2-C-1: 국면 지표의 분기 시계열. 규칙 `policies.regime_indicators.capex.basket` 회사에만 낸다.
+QUARTERLY_METRICS: dict[str, tuple[str, ...]] = {
+    "capex_quarterly": FACT_METRICS["capex_ttm"],
+    # 사는 쪽 금융리스로 들여온 설비. 현금 설비투자에 더해 본다(사용자 결정 2026-10-12)
+    "finance_lease_additions_quarterly": ("RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability",),
+}
+
 FY_DAYS = (350, 380)     # 회계연도 하나의 길이(종료일 − 시작일). 52/53주 회계연도를 받는다
+QUARTER_DAYS = (80, 100)  # 분기 하나의 길이
 START_TOL = 3            # 누계 시작일과 직전 연간 종료일 다음 날의 허용 차이
 DAY_TOL = 10             # 전기 같은 누계를 찾을 때 종료일·길이의 허용 차이(52/53주)
 
 FORMULAS = {
     "fy_direct": "회계연도 연간 값 그대로(끝이 회계연도 말)",
     "ytd": "당기 누계 + 직전 연간 − 전기 같은 누계",
+    "quarter_direct": "3개월 사실 그대로",
+    "quarter_ytd_diff": "같은 시작일의 누계끼리 뺀 값(뒤 누계 − 앞 누계)",
 }
 
 
@@ -129,6 +139,73 @@ def ttm(rows: list[dict[str, Any]]) -> dict[str, Any]:
     start = (_d(prior["end"]) + timedelta(days=1)).isoformat()
     return {"value": value, "period": {"start": start, "end": end}, "formula": "ytd",
             "components": [_part("curr_ytd", cur), _part("prior_fy", prior_fy), _part("prior_ytd", prior)]}
+
+
+def quarter_series(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """분기 값. 3개월 사실은 그대로 쓰고, 없으면 같은 시작일의 누계끼리 뺀다(현금흐름표는 누계로만 태깅된다).
+
+    둘 다 있으면 3개월 사실을 쓰고 누계 차이와 다르면 `ytd_check` 에 남긴다. 누계 하나가 빠진 분기(예: 9개월 누계가 없으면 3·4분기)는
+    만들지 않는다.
+    """
+    direct = {(r["start"], r["end"]): r for r in rows if QUARTER_DAYS[0] <= r["days"] <= QUARTER_DAYS[1]}
+    derived: dict[tuple[str, str], dict[str, Any]] = {}
+    by_start: dict[str, list[dict[str, Any]]] = {}
+    for r in rows:
+        if r["days"] <= FY_DAYS[1]:
+            by_start.setdefault(r["start"], []).append(r)
+    for group in by_start.values():
+        group.sort(key=lambda r: r["end"])
+        for prev, cur in zip(group, group[1:]):
+            if QUARTER_DAYS[0] <= cur["days"] - prev["days"] <= QUARTER_DAYS[1]:
+                start = (_d(prev["end"]) + timedelta(days=1)).isoformat()
+                derived[(start, cur["end"])] = {"val": cur["val"] - prev["val"],
+                                                "components": [_part("ytd", cur), _part("earlier_ytd", prev)]}
+    out = []
+    for key in sorted(set(direct) | set(derived), key=lambda k: (k[1], k[0])):
+        if key in direct:
+            r = direct[key]
+            item = {"start": key[0], "end": key[1], "val": r["val"], "formula": "quarter_direct", "components": [_part("quarter", r)]}
+            d = derived.get(key)
+            if d is not None and d["val"] != r["val"]:
+                item["ytd_check"] = {"ytd_diff": d["val"], "components": d["components"]}
+        else:
+            d = derived[key]
+            item = {"start": key[0], "end": key[1], "val": d["val"], "formula": "quarter_ytd_diff", "components": d["components"]}
+        out.append(item)
+    return out
+
+
+def quarterly_observations(company: dict[str, Any], doc: dict[str, Any], *, source_id: str, observed_at: str,
+                           filed_until: str, keep: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """국면 지표용 분기 시계열 관측(최근 `keep` 개 분기). (관측, 지표별 결과).
+
+    정보 기준일에서 (keep + 1) × 92일 안에 끝난 분기만 남긴다. 분기 태깅을 그만둔 개념(Meta 금융리스는 2023년까지)의 옛 분기가 '최근'으로
+    잡히지 않게 한다.
+    """
+    cid = company["company_id"]
+    cutoff = (_d(filed_until) - timedelta(days=92 * (keep + 1))).isoformat()
+    observations: list[dict[str, Any]] = []
+    results: list[dict[str, Any]] = []
+    for metric, tags in QUARTERLY_METRICS.items():
+        tag, rows = pick_concept(doc, tags, filed_until=filed_until)
+        quarters = [q for q in quarter_series(rows) if q["end"] > cutoff][-keep:] if tag else []
+        if not quarters:
+            results.append({"metric": metric, "status": "insufficient" if tag else "no_concept",
+                            "reason": f"{cutoff} 뒤에 끝난 분기 값이 없다" if tag else f"{TAXONOMY} {'/'.join(tags)} [{UNIT}] 사실이 없다"})
+            continue
+        for q in quarters:
+            basis = {"period_basis": "quarter", "concept": f"{TAXONOMY}:{tag}", "formula": FORMULAS[q["formula"]],
+                     "components": q["components"], "filed_until": filed_until, "collector": "collect --kind facts"}
+            if "ytd_check" in q:
+                basis["ytd_check"] = q["ytd_check"]
+            observations.append({
+                "observation_id": f"{cid}.{metric}.sec{q['end'].replace('-', '')}",
+                "company_id": cid, "metric": metric, "value": q["val"], "unit": UNIT, "as_of": q["end"],
+                "observed_at": observed_at, "kind": "actual" if q["formula"] == "quarter_direct" else "derived",
+                "source_id": source_id, "status": "verified", "period": {"start": q["start"], "end": q["end"]}, "basis": basis,
+            })
+        results.append({"metric": metric, "status": "collected", "concept": tag, "quarters": len(quarters)})
+    return observations, results
 
 
 def fact_observations(company: dict[str, Any], doc: dict[str, Any], *, source_id: str, observed_at: str,

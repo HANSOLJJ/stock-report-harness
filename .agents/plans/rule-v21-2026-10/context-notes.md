@@ -59,3 +59,21 @@
 - sec_get 은 같은 주소를 다시 받지 않는다. companyfacts 는 주소가 늘 같아 11월에 10월 캐시가 돌아온다. 캐시가 정보 기준일보다 오래되면 다시 받고
   옛 파일은 지우지 않는다(옛 출처의 sha256 대조용).
 - AI 기여분은 열로 두지 않고 표 아래 한 줄로 "공시로 가를 수 없어 비워 둔다"를 적는다. 모든 칸이 '미확인'인 열은 정보가 없다.
+
+## 2-C-1 결정(2026-10-12, 구현 중)
+- SDLLMTK 공개 페이지(silicondata.com LLM Token Expenditure Index)는 날짜가 붙은 최신 값 하나(조회 때 2026-08-16, 100만 토큰당 1.02달러)만 보이고
+  시계열·내려받기가 없다(시계열은 Bloomberg SDLLMTK·유료 포털). 그래서 수집하지 않고 사람이 값·날짜·출처를 적는 수동 관측 `token_price_index` 로 받는다.
+  실행마다 한 점씩 쌓이고 from-run 이 이어받아 시계열이 된다.
+- 토큰 지수는 회사 값이 아니다. 관측은 회사 ID 가 필요하므로 시장 지표 전용 가상 ID `_market` 을 두고, 그 ID 는 시장 지표(`token_price_index`)에만,
+  시장 지표는 그 ID 에만 허용한다. from-run 은 `_market` 관측도 이어받고, research.md 는 '시장 지표' 소절에 싣는다.
+- 분기 설비투자 시계열(`capex_quarterly`)과 금융리스 취득 자산(`finance_lease_additions_quarterly`, RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability)은
+  `collect --kind facts` 가 규칙의 `policies.regime_indicators` 바스켓 회사에 한해 낸다(규칙에 선언이 없으면 내지 않음 → v2.0 실행 불변). 분기 값은 같은
+  시작일의 누계끼리 뺀 값이고, 3개월 단독 사실이 있으면 그것을 쓰고 누계 차이와 대조한다. 8개 분기를 남긴다.
+- 전년 대비 증가율 비교는 달력 분기로 맞춘다. 회계 분기 끝 달이 속한 달력 분기에 넣는다(Oracle 8·11·2·5월 → 3·4·1·2분기). 바스켓 합은 바스켓 회사가
+  모두 값이 있는 분기만 더한다.
+- 금융리스를 더한 정의는 그 회사의 금융리스 분기 값이 필요한 분기에 모두 있을 때만 쓴다. 모자라면 그 회사는 현금 설비투자만 쓰고 표시한다(정의를 섞지 않음).
+- 방향은 증가율 변화가 ±1%p(규칙 `flat_band`) 안이면 등속, 밖이면 가속·감속. '2개 분기 연속 감속' 은 증가율 셋(7개 분기)이 필요하고 모자라면 자료 부족이다.
+  이 조건은 트리거 조건으로만 표시하고 점수·국면 이름에 쓰지 않는다.
+- 장부 밖 설비 잔존가치 보증(`residual_value_guarantee`, Meta 특수목적법인 같은 것)은 설비투자에 더하지 않고 따로 보인다. NVIDIA 공급자 지원은 수동 관측 셋
+  (`supplier_guarantees`·`supplier_customer_investments`·`supplier_capacity_buyback`)의 합 ÷ revenue_ttm 이고, 셋 중 하나라도 없으면 합을 만들지 않는다
+  (미확인을 0 으로 보지 않음).

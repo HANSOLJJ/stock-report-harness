@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 os.environ["SCORECARD_DOTENV"] = ""
 
 from scorecard import collect_filings, engine, registry, stages  # noqa: E402
-from scorecard.collect_facts import duration_facts, fact_observations, pick_concept, ttm  # noqa: E402
+from scorecard.collect_facts import duration_facts, fact_observations, pick_concept, quarter_series, quarterly_observations, ttm  # noqa: E402
 from scorecard.schema import load_json_strict  # noqa: E402
 from tests.test_collect_stage import NOW, SLUG, Sandbox  # noqa: E402
 
@@ -134,6 +134,43 @@ class ConceptTest(unittest.TestCase):
                          {"ocf_ttm": "collected", "capex_ttm": "no_concept", "income_tax_ttm": "insufficient"})
 
 
+# 누계만 있는 현금흐름 항목의 두 회계연도: 분기 값은 2025년 10·15·20·25, 2026년 20·30
+CHAIN = [
+    f("2025-01-01", "2025-03-31", 10, "2025-04-30"), f("2025-01-01", "2025-06-30", 25, "2025-07-30"),
+    f("2025-01-01", "2025-09-30", 45, "2025-10-30"), f("2025-01-01", "2025-12-31", 70, "2026-02-01", form="10-K"),
+    f("2026-01-01", "2026-03-31", 20, "2026-04-30"), f("2026-01-01", "2026-06-30", 50, "2026-07-30"),
+]
+FL = "RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability"
+
+
+class QuarterTest(unittest.TestCase):
+    def test_ytd_chain_becomes_quarters_with_q4_from_fy(self):
+        qs = quarter_series(rows(CHAIN))
+        self.assertEqual([(q["start"], q["end"], q["val"]) for q in qs],
+                         [("2025-01-01", "2025-03-31", 10), ("2025-04-01", "2025-06-30", 15), ("2025-07-01", "2025-09-30", 20),
+                          ("2025-10-01", "2025-12-31", 25), ("2026-01-01", "2026-03-31", 20), ("2026-04-01", "2026-06-30", 30)])
+        self.assertEqual([q["formula"] for q in qs][:2], ["quarter_direct", "quarter_ytd_diff"])
+
+    def test_direct_quarter_wins_and_mismatch_is_recorded(self):
+        qs = {q["end"]: q for q in quarter_series(rows([*CHAIN, f("2026-04-01", "2026-06-30", 31, "2026-07-30")]))}
+        self.assertEqual((qs["2026-06-30"]["val"], qs["2026-06-30"]["ytd_check"]["ytd_diff"]), (31, 30))
+
+    def test_missing_ytd_leaves_gap(self):
+        qs = quarter_series(rows([r for r in CHAIN if r["end"] != "2025-09-30"]))
+        self.assertEqual([q["end"] for q in qs], ["2025-03-31", "2025-06-30", "2026-03-31", "2026-06-30"])
+
+    def test_window_drops_stale_quarters_and_keeps_last_n(self):
+        stale = [f("2022-01-01", "2022-03-31", 5, "2022-04-30")]
+        obs, res = quarterly_observations({"company_id": "meta"}, doc(**{CAPEX: CHAIN, FL: stale}), source_id="SRC-T",
+                                          observed_at="2026-09-30", filed_until="2026-09-29", keep=4)
+        self.assertEqual([o["as_of"] for o in obs], ["2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"])
+        self.assertEqual({o["metric"] for o in obs}, {"capex_quarterly"})
+        self.assertEqual({r["metric"]: r["status"] for r in res},
+                         {"capex_quarterly": "collected", "finance_lease_additions_quarterly": "insufficient"})
+        self.assertEqual(obs[-1]["period"], {"start": "2026-04-01", "end": "2026-06-30"})
+        self.assertEqual(obs[-1]["observation_id"], "meta.capex_quarterly.sec20260630")
+
+
 @unittest.skipUnless((CACHE / "CIK0001652044_GOOGL.json").is_file(), "캐시 companyfacts 없음")
 class RealCacheTest(unittest.TestCase):
     """저장소에 보존된 Alphabet companyfacts(2026-09-10 수집)로 원자료 성분과 대조한다."""
@@ -225,6 +262,45 @@ class CollectStageTest(unittest.TestCase):
         self.assertEqual(len(calls), 2)
         self.assertEqual(out["nvidia"]["status"], "collected")
         self.assertEqual({o["metric"]: o["as_of"] for o in self.facts_obs()}, {"ocf_ttm": "2026-06-30"})
+
+
+class BasketStageTest(unittest.TestCase):
+    """규칙에 국면 지표 바스켓이 있을 때만, 바스켓 회사에만 분기 관측을 낸다."""
+
+    def run_collect(self, rule_version: str) -> list[dict]:
+        box = Sandbox(("meta", "nvidia"), rule_version=rule_version)
+        self.addCleanup(box.close)
+        registry.set_company_field("meta", "cik", 1326801, path=box.companies)
+        files = Path(tempfile.mkdtemp())
+        for name in ("CIK0001326801_META.json", "CIK0001045810_NVDA.json"):
+            (files / name).write_text(json.dumps(doc(**{OCF: CAL, CAPEX: CHAIN, TAX: CAL})), encoding="utf-8")
+        stages.collect(SLUG, kinds=("facts",), from_file=str(files), now=NOW)
+        return load_json_strict(box.run_dir / "observations.json")["items"]
+
+    def test_v21_basket_company_gets_quarters(self):
+        items = self.run_collect("v2.1")
+        quarters = [o for o in items if o["metric"] == "capex_quarterly"]
+        self.assertEqual({o["company_id"] for o in quarters}, {"meta"})
+        self.assertEqual([o["value"] for o in quarters], [10, 15, 20, 25, 20, 30])
+
+    def test_rules_without_regime_emit_no_quarters(self):
+        self.assertFalse([o for o in self.run_collect("v2.0") if o["metric"] == "capex_quarterly"])
+
+    def test_regime_policy_validator(self):
+        import copy
+        from scorecard.schema import SchemaError, validate_rules
+        base = json.loads((ROOT / "scorecard" / "rules" / "v2.1.json").read_text(encoding="utf-8"))
+        for path, value in ((("scored",), True), (("capex", "quarters_kept"), 6), (("capex", "min_quarters"), 4),
+                            (("capex", "flat_band"), 0.2), (("capex", "basket"), [])):
+            with self.subTest(path=path, value=value):
+                bad = copy.deepcopy(base)
+                node = bad["policies"]["regime_indicators"]
+                for key in path[:-1]:
+                    node = node[key]
+                node[path[-1]] = value
+                with self.assertRaises(SchemaError):
+                    validate_rules(bad)
+        validate_rules(base)
 
 
 if __name__ == "__main__":

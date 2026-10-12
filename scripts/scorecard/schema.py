@@ -44,6 +44,8 @@ PERIOD_REQUIRED_METRICS = {
     "gross_margin_ttm", "gross_margin_ttm_prior", "sbc_ttm",
     # 2026-10-12 규칙 v2.1 ⑥: 조정 순이익의 두 입력도 최근 1년 기간이 값의 일부다.
     "equity_investment_gains_ttm", "income_tax_ttm",
+    # 2026-10-12 규칙 v2.1 2-C-1: 국면 지표의 분기 시계열. 어느 분기인지가 값의 일부다.
+    "capex_quarterly", "finance_lease_additions_quarterly",
 }
 OBSERVATION_KINDS = {"actual", "estimate", "run_rate", "derived", "text"}
 # 결측 유형. status=not_disclosed 하나가 네 뜻(미확인·미공시·계산 대상 아님·산출 불가)으로 쓰여
@@ -259,6 +261,10 @@ METRICS: dict[str, dict[str, str]] = {
     # 2026-10-12 규칙 v2.1 ⑥: 공시 법인세 비용(최근 1년, 세전이익과 같은 연결 범위). 실효세율 = 이것 ÷ 세전이익.
     # 세전 − 모회사 귀속 순이익으로 유도하지 않는다 — 비지배주주 몫이 법인세에 섞인다.
     "income_tax_ttm": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 2-C-1(점수 없음): 분기 설비투자(현금). 국면 지표의 설비투자 가속도 입력이다.
+    "capex_quarterly": {"unit": "USD", "type": "number"},
+    # 2026-10-12 규칙 v2.1 2-C-1(점수 없음): 분기 금융리스 취득 자산. 사는 쪽은 현금 설비투자에 더해 본다(사용자 결정).
+    "finance_lease_additions_quarterly": {"unit": "USD", "type": "number"},
 }
 
 NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "revenue_ttm_full", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
@@ -441,6 +447,8 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         _validate_missing_types_policy(payload["policies"]["missing_types"])
     if "diagnostics" in payload["policies"]:
         _validate_diagnostics_policy(payload["policies"]["diagnostics"])
+    if "regime_indicators" in payload["policies"]:
+        _validate_regime_policy(payload["policies"]["regime_indicators"])
     for item in payload["checklist"]:
         _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
     ids = [d["id"] for d in payload["decisions"]]
@@ -709,6 +717,23 @@ def _validate_diagnostics_policy(spec: Any) -> None:
         _require(cc["scored"] is False, f"{where}: scored 는 false — 진단은 점수에 닿지 않는다")
         tol = cc["fcf_check_tolerance"]
         _require(_is_number(tol) and 0 < tol <= 0.1, f"{where}: fcf_check_tolerance 는 0 초과 0.1 이하 ({tol!r})")
+
+
+def _validate_regime_policy(spec: Any) -> None:
+    """2026-10-12 규칙 v2.1 2-C-1: 국면 지표(점수 없음). 수집기·계산이 읽는 키를 확인한다."""
+    where = "rules.policies.regime_indicators"
+    _require(isinstance(spec, dict), f"{where}: object 여야 함")
+    _require(spec.get("scored") is False, f"{where}: scored 는 false — 국면 지표는 점수에 닿지 않는다")
+    capex = spec.get("capex")
+    _require(isinstance(capex, dict), f"{where}.capex: object 여야 함")
+    _expect_keys(capex, ["basket", "quarters_kept", "min_quarters", "flat_band", "calendar_alignment"], f"{where}.capex",
+                 optional=["note", "consumers"])
+    _require(isinstance(capex["basket"], list) and capex["basket"] and all(isinstance(x, str) for x in capex["basket"]),
+             f"{where}.capex.basket: 회사 ID 목록")
+    _require(isinstance(capex["quarters_kept"], int) and capex["quarters_kept"] >= 7,
+             f"{where}.capex.quarters_kept: 7 이상 정수(2개 분기 연속 감속 판정에 증가율 셋이 필요)")
+    _require(capex["min_quarters"] == 6, f"{where}.capex.min_quarters: 6(전년 대비 증가율 둘을 견주는 최소)")
+    _require(_is_number(capex["flat_band"]) and 0 <= capex["flat_band"] < 0.1, f"{where}.capex.flat_band: 0 이상 0.1 미만")
 
 
 def _validate_missing_types_policy(spec: Any) -> None:
