@@ -1,6 +1,7 @@
 # ai_scorecard 계약 검증: plan·run 입력·results 결정론·draft 결속·review 4영역/체크리스트·승인 해시·HTML·이력을 검사한다
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 from typing import Any, Mapping
@@ -287,6 +288,7 @@ def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
     added = set(cont.get("added_companies") or [])
     regular = is_regular_run(ctx.run)
     prior_as_of = cont.get("as_of")
+    prior_revisions = _prior_revision_counts(cont.get("run_id"))
     out: list[tuple[str, str]] = []
     for j in ctx.judgments:
         if j["factor"] not in factors or not (regular or j["company_id"] in added):
@@ -297,11 +299,25 @@ def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
             continue
         if prior_as_of and policy.get("reviewed_at_after_prior_as_of"):
             reconfirmed = (j.get("reconfirmed") or [{}])[-1].get("at")
-            if max(d for d in (j["reviewed_at"], reconfirmed) if d) <= prior_as_of:
+            # 2026-10-12 규칙 v2.1 첫 실행: 이전 실행과 기준일이 같은 실행(사실은 같고 규칙만 바꾼 실행)은 날짜로 가를 수 없다.
+            # 이 실행에서 판단을 고쳤으면(제안 반영·직접 수정은 revision_history 에 한 줄을 더한다) 다시 매긴 것으로 본다.
+            revised_here = (prior_revisions is not None
+                            and len(j.get("revision_history") or []) > prior_revisions.get(j["judgment_id"], 0))
+            if max(d for d in (j["reviewed_at"], reconfirmed) if d) <= prior_as_of and not revised_here:
                 out.append((j["judgment_id"], f"이번 실행에서 다시 매기지 않은 판단 — 검토일 {j['reviewed_at']}"
                             + (f"·재확인 {reconfirmed}" if reconfirmed else "")
                             + f" 이 이전 실행 기준일 {prior_as_of} 보다 뒤가 아니다"))
     return out
+
+
+def _prior_revision_counts(prior_slug: str | None) -> dict[str, int] | None:
+    """이전 실행의 판단별 수정 이력 길이. 이전 실행 파일이 없으면 None(날짜 검사만 한다)."""
+    if not prior_slug:
+        return None
+    path = run_paths(prior_slug).run_dir / "judgments.json"
+    if not path.is_file():
+        return None
+    return {j["judgment_id"]: len(j.get("revision_history") or []) for j in json.loads(path.read_text(encoding="utf-8"))["items"]}
 
 
 def rejudge_violations(ctx: Any) -> list[str]:

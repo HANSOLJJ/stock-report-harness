@@ -1816,7 +1816,7 @@
       "reviewed_at_after_prior_as_of": true,
       "review_carried_exception_only_in_extend_runs": true,
       "reconfirmed_field": "reconfirmed",
-      "note": "정기 실행(run.json.continued_from.added_companies 가 비어 있거나 continued_from 이 없는 실행)은 정성 판단 일곱 항목을 모든 기업에 대해 다시 매긴다. status: carried 는 기업 추가 실행의 기존 기업에만 허용한다. 이전 실행이 있으면 모든 정성 판단의 reviewed_at 또는 reconfirmed 마지막 날짜가 이전 실행 기준일보다 뒤여야 한다. 리뷰의 승계 판단 예외는 기업 추가 실행에만 적용한다(rules.md 2.9, 2026-10-08 사용자 결정)."
+      "note": "정기 실행(run.json.continued_from.added_companies 가 비어 있거나 continued_from 이 없는 실행)은 정성 판단 일곱 항목을 모든 기업에 대해 다시 매긴다. status: carried 는 기업 추가 실행의 기존 기업에만 허용한다. 이전 실행이 있으면 모든 정성 판단의 reviewed_at 또는 reconfirmed 마지막 날짜가 이전 실행 기준일보다 뒤여야 한다. 이전 실행과 기준일이 같은 실행(사실은 같고 규칙만 바꾼 실행)은 날짜로 가를 수 없어, 이 실행에서 판단을 고친 기록(revision_history 가 이전 실행보다 늘었음)으로 가른다. 리뷰의 승계 판단 예외는 기업 추가 실행에만 적용한다(rules.md 2.9, 2026-10-08 사용자 결정)."
     }
   },
   "checklist": [

@@ -68,9 +68,11 @@ class DiffTest(unittest.TestCase):
         changed = {k for k in self.v21 if self.v21[k] != self.v20[k]}
         self.assertEqual(changed, {"rule_version", "note", "factors", "policies", "scoring", "decisions", "checklist"})
         self.assertEqual({i["id"] for i in self.v21["checklist"] if i not in self.v20["checklist"]}, {"Q01"})
-        # 2-E·2-C: 점수 밖 진단(현금 연결표)과 국면 지표 선언은 v2.1 에만 있다
+        # 2-E·2-C: 점수 밖 진단(현금 연결표)과 국면 지표 선언은 v2.1 에만 있다. rejudge 는 같은 기준일 실행의 판정 문구만 더했다.
         self.assertEqual({k for k in self.v21["policies"] if self.v21["policies"].get(k) != self.v20["policies"].get(k)},
-                         {"f6", "diagnostics", "regime_indicators"})
+                         {"f6", "diagnostics", "regime_indicators", "rejudge"})
+        changed_rejudge = {k for k in self.v21["policies"]["rejudge"] if self.v21["policies"]["rejudge"][k] != self.v20["policies"]["rejudge"].get(k)}
+        self.assertEqual(changed_rejudge, {"note"})
         self.assertEqual({d["id"] for d in self.v21["decisions"] if d not in self.v20["decisions"]}, {"C-12"})
         self.assertEqual(self.v21["scoring"]["trap_min_active"], -17)
         self.assertEqual(self.v21["rule_version"], "v2.1")
@@ -646,6 +648,40 @@ class RuleChangeInheritTest(unittest.TestCase):
         run = load_json_strict(box.dir / "output" / new / "run.json")
         self.assertTrue(any("carried 로 이어받았다" in a for a in run["assumptions"]))
         engine.load_context(new)                                 # 첫 load_context 에서 막히지 않는다
+
+    def test_same_as_of_run_counts_revisions_made_here(self):
+        """이전 실행과 기준일이 같으면 날짜로 가를 수 없다. 이 실행에서 수정 이력이 늘어난 판단만 다시 매긴 것으로 본다."""
+        import os
+        os.environ["SCORECARD_DOTENV"] = ""
+        from scorecard import engine, stages
+        from scorecard.schema import write_json
+        from scorecard.validate import rejudge_findings
+        from tests.test_collect_stage import SLUG, Sandbox
+        box = Sandbox(("nvidia",), rule_version="v2.0")
+        self.addCleanup(box.close)
+        prior = load_json_strict(box.run_dir / "judgments.json")
+        for j in prior["items"]:
+            j["status"] = "new"
+            j.pop("carried_from", None)
+            j["reviewed_at"] = "2026-09-29"
+        write_json(box.run_dir / "judgments.json", prior)
+        new = "ai-scorecard-2026-10-sameday"
+        stages.init_run(new, from_run=SLUG, rule_version="v2.0", title="같은 기준일 이어받기")   # as_of 2026-09-29 를 이어받는다
+        flagged = {jid.split(".")[1] for jid, _ in rejudge_findings(engine.load_context(new))}
+        self.assertIn("F5", flagged)
+        path = box.dir / "output" / new / "judgments.json"
+        payload = load_json_strict(path)
+        for j in payload["items"]:
+            if j["factor"] == "F5":
+                from scorecard.schema import JUDGMENT_REVISION_FIELDS
+                previous = {k: copy.deepcopy(j.get(k)) for k in JUDGMENT_REVISION_FIELDS}
+                j["revision_history"] = [*(j.get("revision_history") or []),
+                                         {"revised_at": "2026-09-29", "revised_by": "t", "reason": "다시 매김", "previous": previous,
+                                          "session": "agent"}]
+        write_json(path, payload)
+        flagged = {jid.split(".")[1] for jid, _ in rejudge_findings(engine.load_context(new))}
+        self.assertNotIn("F5", flagged)
+        self.assertIn("F3", flagged)
 
     def test_rule_conflict_covers_inputs_too(self):
         """형식이 맞아도 v2.1 판정 재료 요건(① '예' 의 재료 여섯)에 걸리면 충돌로 본다."""
