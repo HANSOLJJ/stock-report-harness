@@ -524,6 +524,26 @@ class SurvivalAxesSchemaTest(unittest.TestCase):
                 validate(survival("nvidia", **kw))
         validate(survival("nvidia", layers=dict(ALL_SOLD, model="preparing"), layer_triggers={"model": "TRG-111"}))
 
+    def test_no_sold_cell_means_no_group(self):
+        """판매 칸이 없으면 주 레이어는 null 이고, 판매 칸이 있으면 null 을 받지 않는다(2026-10-13 Apple ④)."""
+        from scorecard.render_html import dot_class
+        from scorecard.stages import _check_judgment_changes
+        all_self = {k: "self" for k in ALL_SOLD}
+        validate(survival("apple", layers=all_self, primary_layer=None, non_ai_revenue_share=1.0))
+        for name, kw in {"판매 없는데 주 레이어": dict(layers=all_self, primary_layer="model"),
+                         "판매 있는데 null": dict(primary_layer=None)}.items():
+            with self.subTest(case=name), self.assertRaises(SchemaError):
+                validate(survival("apple", **kw))
+        self.assertEqual(_check_judgment_changes("F4", {"primary_layer": None}, V21), "survival")
+        with self.assertRaises(SchemaError):
+            _check_judgment_changes("F4", {"primary_layer": ""}, V21)
+        r = compute_f4(company(), JudgmentLookup([survival(layers=all_self, primary_layer=None, non_ai_revenue_share=1.0)]), V21)
+        self.assertEqual((r["score"], r["calc"]["primary_layer"]), (5, None))
+        card = {"type": "소비자", "factors": {"F4": {"calc": r["calc"]}}}
+        self.assertEqual(dot_class(card), "layer-none")
+        card["factors"]["F4"]["calc"] = {}
+        self.assertEqual(dot_class(card), "consumer")
+
     def test_axes_shapes(self):
         bads = {"상태": dict(customer={"status": "maybe"}), "확인됨 재료": dict(commitment={"status": "confirmed"}),
                 "칸": dict(supply={"status": "confirmed", "rung": -6}), "모르는 키": dict(geopolitics={"status": "confirmed", "rung": -1, "x": 1})}

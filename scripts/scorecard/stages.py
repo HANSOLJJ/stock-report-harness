@@ -1347,10 +1347,12 @@ def _check_judgment_changes(factor: str, changes: Mapping[str, Any], rules: Any 
         # 2026-10-12 규칙 v2.1 ④·⑧: 보유표·축 재료는 중첩 object 다. 안의 값 범위는 스키마가 본다.
         "object": lambda v: isinstance(v, dict),
         "number_or_unknown": lambda v: v == "unknown" or (isinstance(v, (int, float)) and not isinstance(v, bool)),
+        # 2026-10-13: ④ 주 레이어는 판매 칸이 없으면 null 이다(허용 조건은 스키마가 본다).
+        "string_or_null": lambda v: v is None or (isinstance(v, str) and bool(v.strip())),
     }
     shape_hint = {"number_list": "숫자 목록(예: [0.42, 0.55])", "number": "숫자", "string": "비어 있지 않은 문자열",
                   "string_list": "문자열 목록(예: [\"EV-acme-001\"])", "object": "JSON object",
-                  "number_or_unknown": "숫자나 \"unknown\""}
+                  "number_or_unknown": "숫자나 \"unknown\"", "string_or_null": "비어 있지 않은 문자열이나 null"}
     bad_shape = sorted((k, JUDGMENT_CLI_ONLY_TYPES[k]) for k in cli_only if k in changes
                        and not shape_ok[JUDGMENT_CLI_ONLY_TYPES[k]](changes[k]))
     if bad_shape:

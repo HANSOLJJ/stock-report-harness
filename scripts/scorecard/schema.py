@@ -157,7 +157,7 @@ JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
     "ai_monetized_channel": "string", "ai_monetized_measure": "string", "ai_monetized_period": "string",
     "ai_monetized_share": "number",
     "ai_separate_billing_evidence": "string_list", "ai_price_uplift_evidence": "string_list",
-    "layers": "object", "layer_triggers": "object", "layer_evidence": "object", "primary_layer": "string", "non_ai_revenue_share": "number_or_unknown",
+    "layers": "object", "layer_triggers": "object", "layer_evidence": "object", "primary_layer": "string_or_null", "non_ai_revenue_share": "number_or_unknown",
     "non_ai_share_basis": "string", "non_ai_share_evidence": "string_list",
     "customer": "object", "commitment": "object", "supply": "object", "geopolitics": "object",
 }
@@ -1398,8 +1398,12 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
         missing = [k for k in preparing if k not in triggers]
         _require(not missing, f"{where}: 준비 중 칸 {missing} 은 어떤 공시가 나오면 바뀌는지 적은 트리거(layer_triggers)가 있어야 한다")
         primary = inputs["primary_layer"]
-        _require(primary in SURVIVAL_LAYERS and layers.get(primary) == "sold",
-                 f"{where}: primary_layer 는 판매 칸 가운데 하나 ({primary!r})")
+        if any(v == "sold" for v in layers.values()):
+            _require(primary in SURVIVAL_LAYERS and layers.get(primary) == "sold",
+                     f"{where}: primary_layer 는 판매 칸 가운데 하나 ({primary!r})")
+        else:
+            # 2026-10-13: 비교 그룹은 판매 칸에서 고르므로 판매 칸이 없으면 그룹도 없다(Apple ④, 모델 칸의 유료 확대가 계획).
+            _require(primary is None, f"{where}: 판매 칸이 없으면 primary_layer 는 null 이다 — 비교 그룹 없음 ({primary!r})")
         share = inputs["non_ai_revenue_share"]
         _require(share == "unknown" or (_is_number(share) and 0 <= share <= 1),
                  f"{where}: non_ai_revenue_share 는 0~1 숫자나 unknown ({share!r})")

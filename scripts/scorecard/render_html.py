@@ -28,8 +28,12 @@ TYPE_CLASS = {"소비자": "consumer", "업무": "work", "거래": "trade", "부
 
 def dot_class(c: dict[str, Any]) -> str:
     """산점도 점의 색 이름. 규칙 v2.1 ④ 보유표가 있으면 비교 그룹(주 레이어), 없으면 지금처럼 주채널 유형이다."""
-    layer = ((c["factors"].get("F4") or {}).get("calc") or {}).get("primary_layer")
-    return f"layer-{layer}" if layer else TYPE_CLASS.get(c["type"], "mix")
+    calc = (c["factors"].get("F4") or {}).get("calc") or {}
+    layer = calc.get("primary_layer")
+    if layer:
+        return f"layer-{layer}"
+    # 2026-10-13: 보유표는 있는데 판매 칸이 없어 비교 그룹이 없는 회사는 범례의 '비교 그룹 없음' 색이다.
+    return "layer-none" if calc.get("layers") else TYPE_CLASS.get(c["type"], "mix")
 OBS_STATUS_LABELS = {
     "verified": "검증 완료", "legacy_unverified": "사용자 원본 값·다시 확인 안 함", "not_applicable": "해당 없음",
     "not_disclosed": "미공시", "collection_failed": "수집 실패", "source_conflict": "출처 충돌",
@@ -105,7 +109,7 @@ def css() -> str:
   --cat-consumer:#5ea6f6;--cat-work:#4ad39c;--cat-trade:#b195f5;--cat-part:#f0a05c;--cat-mix:#f28cc0;
   /* 2026-10-12 규칙 v2.1: 산점도를 비교 그룹(④ 주 레이어)으로 칠한다. */
   --cat-layer-chip:#f0a05c;--cat-layer-server:#e6c35c;--cat-layer-platform:#b195f5;--cat-layer-cloud:#4ad39c;
-  --cat-layer-model:#5ea6f6;--cat-layer-app:#f28cc0;
+  --cat-layer-model:#5ea6f6;--cat-layer-app:#f28cc0;--cat-layer-none:#8a93a3;
   /* 2026-09-17 FIX-75: 방법 절의 아홉 항목이 똑같이 생긴 블록으로 이어져 구분이 되지 않았다(사용자 지적).
      과점 다섯은 차가운 쪽, 함정 넷은 따뜻한 쪽에서 고르되 서로 섞이지 않는 색조를 준다. */
   --f1:#5ea6f6;--f2:#b195f5;--f3:#4ad39c;--f4:#6fd0d8;--f5:#f28cc0;
@@ -835,7 +839,7 @@ def render_layers(results: dict[str, Any], ctx: Any) -> str:
         share = r["non_ai_revenue_share"]
         cells = "".join(f'<td class="{cell_cls.get(r["layers"].get(k), "")}">{esc(rc.LAYER_VALUE_LABELS.get(r["layers"].get(k), "—"))}</td>' for k in keys)
         body.append(f'<tr data-company="{esc(r["company_id"])}"><td class="name keep"><b>{esc(r["display_name"])}</b></td>{cells}'
-                    f'<td><span class="pill" style="color:var(--cat-layer-{esc(r["primary_layer"] or "")})">{esc(names.get(r["primary_layer"], "—"))}</span></td>'
+                    f'<td><span class="pill" style="color:var(--cat-layer-{esc(r["primary_layer"] or "none")})">{esc(names.get(r["primary_layer"], "—"))}</span></td>'
                     f'<td class="mono">{esc(f"{share * 100:.0f}%" if isinstance(share, (int, float)) else str(share))}</td>'
                     f'<td class="mono"><b>{fmt_score(r["score"])}</b></td></tr>')
     head = ('<tr><th class="name keep">기업</th>' + "".join(f"<th>{esc(names[k])}</th>" for k in keys)
@@ -848,7 +852,7 @@ def render_layers(results: dict[str, Any], ctx: Any) -> str:
     return ('<h3>층별 보유표와 비교 그룹</h3>'
             '<p class="sub">회사마다 AI 사업 여섯 층을 판매·자체 사용·없음·준비 중으로 적은 표다. ④ 의 수직계열화 축은 이 표의 합(판매 1 · 자체 사용 0.5, '
             '상한 2.5)이고 다각화 축은 AI 와 무관한 최종 수요에서 나오는 매출 몫이다. 비교 그룹은 판매 칸 가운데 외부 매출이 가장 큰 층이며, '
-            '잣대는 모든 회사에 같고 비교만 그룹 안에서 한다. 준비 중은 돈이 나간 실행된 투자인데 매출이 아직 0 인 칸이라 점수는 0 이고 '
+            '잣대는 모든 회사에 같고 비교만 그룹 안에서 한다. 판매 칸이 없는 회사는 비교 그룹이 없다(—). 준비 중은 돈이 나간 실행된 투자인데 매출이 아직 0 인 칸이라 점수는 0 이고 '
             '트리거로 지켜본다. 순위에서 빠진 회사는 그룹 안 순위에도 넣지 않는다.</p>'
             f'<div class="tablewrap"><table class="layers"><thead>{head}</thead><tbody>{"".join(body)}</tbody></table></div>'
             + (f'<h3>비교 그룹 안 순위</h3><ul class="fpts">{group_items}</ul>' if group_items else ""))
@@ -2088,6 +2092,8 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     if groups:
         names = rc.layer_labels(ctx.rules)
         legend = "".join(f'<span><i style="background:var(--cat-layer-{k})"></i>{esc(names[k])}</span>' for k in names if k in groups)
+        if any(r["complete"] and not r["primary_layer"] for r in rc.survival_rows(results)):
+            legend += '<span><i style="background:var(--cat-layer-none)"></i>비교 그룹 없음</span>'
     # 2026-10-08 사용자 지시: 리포트 머리의 이해상충 고지 상자를 싣지 않는다(10-07 Mac mini 공개본에서 먼저 지움).
     # 한계 절의 이해상충 문장과 출처 줄의 표기는 그대로 둔다.
     anthropic_note = ""
