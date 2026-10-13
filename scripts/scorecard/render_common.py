@@ -1155,7 +1155,9 @@ def regime_view(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None:
     return {"note": spec["note"], "capex_head": REGIME_CAPEX_HEAD, "capex_rows": capex_rows, "capex_notes": off_lines + notes,
             "margin_head": margin_head, "margin_rows": margin_rows, "margin_note": spec["margins"]["note"],
             "supplier_head": REGIME_SUPPLIER_HEAD, "supplier_rows": supplier_rows, "supplier_notes": supplier_notes,
-            "token_lines": token_lines, "trigger_head": REGIME_TRIGGER_HEAD, "trigger_rows": triggers}
+            "token_lines": token_lines, "trigger_head": REGIME_TRIGGER_HEAD, "trigger_rows": triggers,
+            # 2026-10-13 사용자 지시: HTML 은 토큰 단가 지수를 큰 숫자 카드로 보인다. 초안은 token_lines 를 그대로 쓴다.
+            "token_items": board["token"], "token_label": label, "token_caveat": spec["token_index"]["caveat"]}
 
 
 CASH_CHAIN_HEAD = ["기업", "매출", "영업이익", "영업현금흐름", "설비투자", "FCF(⑨)", "주식보상", "희석 주식", "주당 FCF",

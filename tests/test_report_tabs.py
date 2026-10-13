@@ -176,6 +176,15 @@ class V21LayoutTest(unittest.TestCase):
         self.assertNotIn("설비투자 가속도", got["tab-summary"])
         self.assertNotIn('id="tabbtn-regime"', self.old, "국면 지표 선언이 없는 실행에는 탭이 없다")
 
+    def test_token_index_is_a_hero_card_at_top_of_regime_tab(self):
+        tab = panels(self.html)["tab-regime"]
+        hero = re.search(r'<div class="tokhero">(.*?)</div>\s*<p class="sub">', tab, re.S)
+        self.assertIsNotNone(hero, "토큰 단가 카드가 없다")
+        self.assertLess(tab.index('class="tokhero"'), tab.index("설비투자 가속도"), "카드가 국면 지표 탭 맨 위에 있어야 한다")
+        self.assertIn('<div class="v">$0.97<span class="u"> / 100만 토큰</span></div>', tab)
+        self.assertIn('href="https://www.silicondata.com/products/silicon-index/llm-token-expenditure-index"', tab)
+        self.assertEqual(tab.count("토큰 단가 지수</h3>"), 1, "아래쪽의 한 줄 문장 절은 없어졌다")
+
     def test_ranking_has_no_rank_column(self):
         head = re.search(r'<table id="mainTable"><thead>(.*?)</thead>', self.html, re.S).group(1)
         self.assertNotIn('data-k="rank"', head)

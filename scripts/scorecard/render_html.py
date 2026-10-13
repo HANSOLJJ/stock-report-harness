@@ -174,6 +174,13 @@ tbody tr.row:hover{background:var(--acc-soft)}
 .condrow .cond{font-size:var(--fs-lg);padding:4px 12px}
 .condrow p{margin:6px 0 0}
 .condres{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+/* 2026-10-13 사용자 지시: 토큰 단가 지수는 국면 지표 탭 맨 위에 큰 숫자로 */
+.tokhero{margin:16px 0 28px;padding:18px 20px;border:1px solid var(--acc-line);border-radius:12px;background:var(--acc-soft)}
+.tokhero h3{margin:0 0 4px}
+.tokhero .kpis{margin:14px 0 10px}
+.kpi.tok .v{font-size:calc(var(--fs-3xl) * 1.3);color:var(--acc-text)}
+.kpi.tok .v .u{font-size:var(--fs-md);font-weight:600;color:var(--tx2);letter-spacing:0}
+.kpi.tok .d.src{font-size:var(--fs-sm);color:var(--tx3);margin-top:6px}
 .sc{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:24px;padding:0 4px;border-radius:6px;font-weight:700;font-size:var(--fs-md);color:#0b0d11}
 .sc.g0{color:var(--tx)}
 .bg-g5{background:var(--g5)}.bg-g4{background:var(--g4)}.bg-g3{background:var(--g3)}.bg-g2{background:var(--g2)}.bg-g1{background:var(--g1)}.bg-g0{background:var(--g0)}
@@ -916,6 +923,28 @@ def _html_table(head: list[str], rows: list[list[str]], *, text_cols: set[int] =
     return f'<div class="tablewrap"><table class="figures"><thead><tr>{th}</tr></thead><tbody>{body}</tbody></table></div>'
 
 
+def _token_hero(ctx: Any, view: dict[str, Any]) -> str:
+    """토큰 단가 지수를 국면 지표 탭 맨 위에 큰 숫자 카드로 보인다(2026-10-13 사용자 지시: 다른 메모와 같은 한 줄이라 묻혔다)."""
+    items = view.get("token_items") or []
+    urls = {s["source_id"]: s.get("url") for s in ((getattr(ctx, "sources", None) or {}).get("items") or [])}
+    cards = []
+    for t in items:
+        seg = rc.TOKEN_SEGMENT_LABELS.get(t["segment"], t["segment"])
+        prev = t.get("previous")
+        change = (f'직전 ${prev["value"]:.2f}({esc(prev["as_of"])}) 대비 <b>{esc(rc._pct_signed(t["change"]))}</b>' if prev
+                  else "직전 관측 없음(다음 실행부터 변화를 보인다)")
+        url = urls.get(t["source_id"])
+        src = (f'<a href="{esc(url)}" target="_blank" rel="noopener">{esc(t["source_id"])}</a>' if url else esc(t["source_id"]))
+        cards.append(f'<div class="kpi tok"><div class="k">토큰 단가 지수 · {esc(seg)}</div>'
+                     f'<div class="v">${t["value"]:.2f}<span class="u"> / 100만 토큰</span></div>'
+                     f'<div class="d">{esc(t["as_of"])} 기준 · {change}</div><div class="d src">출처 {src}</div></div>')
+    if not cards:
+        cards.append('<div class="kpi tok"><div class="k">토큰 단가 지수</div><div class="v">미확인</div>'
+                     '<div class="d">등록된 관측이 없다. 실행마다 공개 페이지의 최신 값과 날짜를 수동 관측으로 적는다.</div></div>')
+    return (f'<div class="tokhero"><h3>토큰 단가 지수</h3><p class="sub">{esc(view.get("token_label") or "")}</p>'
+            f'<div class="kpis">{"".join(cards)}</div><p class="sub">{inline_html(view.get("token_caveat") or "")}</p></div>')
+
+
 def render_regime(ctx: Any, results: dict[str, Any]) -> str:
     """규칙 v2.1 국면 지표(점수 없음). 초안과 같은 글자를 render_common.regime_view 에서 읽는다. 선언이 없으면 빈 문자열이다."""
     view = rc.regime_view(ctx, results)
@@ -925,14 +954,14 @@ def render_regime(ctx: Any, results: dict[str, Any]) -> str:
     # 2026-10-13 사용자 지시: 국면 지표는 요약 탭에서 빼 자기 탭에 둔다. 제목은 그 탭의 h2 가 맡는다.
     return ('<section class="regime">'
             f'<p class="sub">{inline_html(view["note"])}</p>'
-            '<h3>설비투자 가속도(AI 컴퓨트를 사는 회사)</h3>'
+            + _token_hero(ctx, view)
+            + '<h3>설비투자 가속도(AI 컴퓨트를 사는 회사)</h3>'
             + _html_table(view["capex_head"], view["capex_rows"], text_cols={1, 2, 7, 8}) + sub(view["capex_notes"])
             + '<h3>공급자 지원 비중</h3>' + _html_table(view["supplier_head"], view["supplier_rows"], text_cols={8})
             + sub(view["supplier_notes"])
             + '<h3>마진 두 수열(나누지 않음)</h3>'
             + (_html_table(view["margin_head"], view["margin_rows"]) if len(view["margin_head"]) > 1 else sub(["분기 값이 아직 없다."]))
             + sub([view["margin_note"]])
-            + '<h3>토큰 단가 지수</h3>' + sub(view["token_lines"])
             + '<h3>트리거 조건</h3>' + _html_table(view["trigger_head"], view["trigger_rows"], text_cols={1, 2})
             + '</section>')
 
