@@ -163,6 +163,17 @@ tbody tr.row{cursor:pointer}
 tbody tr.row:hover{background:var(--acc-soft)}
 .rk{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 6px;border-radius:6px;background:var(--bg3);font-size:var(--fs-sm);font-weight:700;color:var(--tx2)}
 .rk.top{background:var(--good-soft);color:var(--g4)}
+/* 2026-10-13 사용자 지시: ① AI 수익화 두 조건 설명 상자와, 판정 줄의 (가)·(나) 표지 색 */
+.cond{display:inline-block;padding:0 6px;margin:0 1px;border-radius:6px;font-weight:700;border:1px solid transparent;white-space:nowrap}
+.cond-a{background:var(--acc-soft);color:var(--acc-text);border-color:var(--acc-line)}
+.cond-b{background:var(--warn-soft);color:var(--warn-text);border-color:var(--warn-line)}
+.condbox{margin:24px 0;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);line-height:1.75}
+.condbox h3{margin:0 0 12px}
+.condbox>p{margin:8px 0}
+.condrow{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;margin:18px 0}
+.condrow .cond{font-size:var(--fs-lg);padding:4px 12px}
+.condrow p{margin:6px 0 0}
+.condres{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
 .sc{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:24px;padding:0 4px;border-radius:6px;font-weight:700;font-size:var(--fs-md);color:#0b0d11}
 .sc.g0{color:var(--tx)}
 .bg-g5{background:var(--g5)}.bg-g4{background:var(--g4)}.bg-g3{background:var(--g3)}.bg-g2{background:var(--g2)}.bg-g1{background:var(--g1)}.bg-g0{background:var(--g0)}
@@ -404,9 +415,8 @@ tr.priv{opacity:.75}
   /* 표가 가로로 스크롤되는 폭이면 행 이름을 놓치지 않게 첫 두 열을 고정한다.
      sticky 는 border-collapse:collapse 에서 테두리를 못 끌고 오므로 separate 로 바꾼다. */
   #mainTable{border-collapse:separate;border-spacing:0}
-  #mainTable th:first-child,#mainTable td:first-child{position:sticky;left:0;z-index:2;background:var(--bg2);width:48px;min-width:48px}
-  #mainTable th:first-child{background:var(--bg3)}
-  #mainTable th.name,#mainTable td.name{position:sticky;left:48px;z-index:2;background:var(--bg2)}
+  /* 2026-10-13: 순위 열을 빼서 기업명 열이 첫 열이다. */
+  #mainTable th.name,#mainTable td.name{position:sticky;left:0;z-index:2;background:var(--bg2)}
   #mainTable th.name{background:var(--bg3)}
   #mainTable tbody tr.row:hover td{background:var(--bg2)}
   /* 자료 확보 표도 가로로 스크롤되므로 기업명을 고정한다. 열은 숨기지 않는다 — 모든 항목이 그대로 남아야 한다. */
@@ -799,8 +809,8 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
     for r in results["ranking"]:
         c = by_id[r["company_id"]]
         f = c["factors"]
-        cells = [f'<td class="keep" data-k="rank" data-v="{r["rank"]}"><span class="rk{" top" if r["rank"] <= 3 else ""}">{r["rank"]}</span></td>',
-                 f'<td class="name keep" data-k="name" data-v="{esc(r["display_name"])}"><b>{esc(r["display_name"])}</b></td>']
+        # 2026-10-13 사용자 지시: 순위(#) 열을 뺀다. 행 순서와 조정총점 열이 순위를 보이고, 그 열 때문에 가로 스크롤이 생겼다.
+        cells = [f'<td class="name keep" data-k="name" data-v="{esc(r["display_name"])}"><b>{esc(r["display_name"])}</b></td>']
         for x in MOAT_FACTORS:
             s = f[x]["score"]
             cells.append(f'<td data-k="{x}" data-v="{s}"><span class="sc bg-{score_class(s)}">{fmt_score(s)}</span></td>')
@@ -817,13 +827,51 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
         cells.append(f'<td class="divider mono tot keep c-{total_class(r["total"])}" data-k="total" data-v="{r["total"]}">{r["total"]}</td>')
         rows.append(f'<tr class="row" data-company="{esc(r["company_id"])}">{"".join(cells)}</tr>')
     ai_head = f'<th data-k="F1ai">{esc(ai_spec.get("label") or "AI 수익화")}</th>' if ai_spec else ""
-    head = ('<tr><th class="keep" data-k="rank">#</th><th class="name keep" data-k="name">기업</th>'
+    head = ('<tr><th class="name keep" data-k="name">기업</th>'
             + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' + (ai_head if x == "F1" else "")
                       for x in MOAT_FACTORS)
             + '<th class="divider keep" data-k="moat">과점</th>'
             + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' for x in TRAP_FACTORS)
             + '<th class="keep" data-k="trap">함정</th><th class="divider keep" data-k="total">조정총점</th></tr>')
     return f'<div class="tablewrap"><table id="mainTable"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
+
+
+COND_MARKS = (("(가)", "a"), ("(나)", "b"))
+
+
+def render_ai_conditions(ctx: Any) -> str:
+    """규칙 v2.1 ① AI 수익화 '예' 의 두 조건을 따로 풀어 쓴 설명 상자. 5점 조건이 없는 규칙이면 빈 문자열이다.
+
+    2026-10-13 사용자 지시: 판정 줄마다 한 문장으로 반복되는 (가)·(나) 정의가 읽히지 않는다. 한 번 넉넉하게 풀어 쓰고
+    판정 줄의 표지는 같은 색으로 맞춘다. HTML 에만 둔다 — 초안 문구는 승인 해시에 묶인다."""
+    gate = ((ctx.rules.factor("F1").get("ladder") or {}).get("top_score_requires_ai_monetized")) if ctx is not None else None
+    if not gate:
+        return ""
+    rows = (("a", "(가)", "AI 에 따로 돈을 내는 쪽이 과반이다",
+             "가장 강한 채널의 고객이나 매출 가운데 절반을 넘는 몫이 AI 에 <b>따로</b> 돈을 낸다는 사실이 <b>공시 숫자</b>로 확인된다. "
+             "분자와 분모는 같은 범위·같은 기간이어야 한다(예: 유료 AI 좌석 ÷ 전체 유료 좌석)."),
+            ("b", "(나)", "AI 때문에 값이 올랐다",
+             "회사가 <b>AI 를 이유로</b> 그 채널의 가격·단가를 올렸다는 사실이 <b>공시나 회사 1차 발표</b>로 확인된다. "
+             "원가 상승처럼 다른 이유를 든 인상은 (나)가 아니다."))
+    items = "".join(f'<div class="condrow"><span class="cond cond-{k}">{tag}</span><div><b>{head}</b><p>{body}</p></div></div>'
+                    for k, tag, head, body in rows)
+    return ('<div class="condbox"><h3>① AI 수익화 \'예\' 의 두 조건</h3>'
+            '<p>① 은 가장 강한 채널에서 AI 수익화가 <b>예</b> 일 때만 5점까지 받는다. 예는 아래 두 조건이 <b>함께</b> 설 때만이다.</p>'
+            f'{items}'
+            '<p class="condres"><b>둘 다 서면</b> 예 · <b>하나만 서거나 일부만 서면</b> 부분 · <b>둘 다 안 서면</b> 아니오 · '
+            f'<b>찾지 못하면</b> 미확인. 예가 아니면 ① 은 최고 {esc(gate["cap"])}점이다.</p>'
+            f'<p class="sub">{esc(gate.get("not_a_value_judgment") or "")} 기업 카드의 ① 판정 줄에서도 '
+            '<span class="cond cond-a">(가)</span>·<span class="cond cond-b">(나)</span> 를 같은 색으로 표시했다.</p></div>')
+
+
+def _mark_conditions(fragment: str) -> str:
+    """① 판정 줄의 (가)·(나) 표지에 설명 상자와 같은 색을 입힌다. 태그 속성은 건드리지 않고 글자 마디만 바꾼다."""
+    def sub(m: re.Match[str]) -> str:
+        text = m.group(0)
+        for tok, k in COND_MARKS:
+            text = text.replace(tok, f'<span class="cond cond-{k}">{tok}</span>')
+        return text
+    return re.sub(r">[^<]+", sub, fragment)
 
 
 def render_layers(results: dict[str, Any], ctx: Any) -> str:
@@ -874,7 +922,8 @@ def render_regime(ctx: Any, results: dict[str, Any]) -> str:
     if view is None:
         return ""
     sub = lambda items: "".join(f'<p class="sub mt-8">{inline_html(x)}</p>' for x in items)  # noqa: E731
-    return ('<section class="regime"><h3>국면 지표 — 점수 없음</h3>'
+    # 2026-10-13 사용자 지시: 국면 지표는 요약 탭에서 빼 자기 탭에 둔다. 제목은 그 탭의 h2 가 맡는다.
+    return ('<section class="regime">'
             f'<p class="sub">{inline_html(view["note"])}</p>'
             '<h3>설비투자 가속도(AI 컴퓨트를 사는 회사)</h3>'
             + _html_table(view["capex_head"], view["capex_rows"], text_cols={1, 2, 7, 8}) + sub(view["capex_notes"])
@@ -1019,6 +1068,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 body = ((f'<ul class="fpts why">{"".join(why)}</ul>' if why else "")
                         + ((src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else "")
                         + (_direction_html(block) if block is not None and block.get("three_way") else ""))
+                if f == "F1" and (rules.factor("F1").get("ladder") or {}).get("top_score_requires_ai_monetized"):
+                    body = _mark_conditions(body)   # 2026-10-13 사용자 지시: (가)·(나) 표지를 설명 상자와 같은 색으로
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(rc.factor_label(rules, f))}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
         out.append(
@@ -2110,6 +2161,12 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
         )
     availability = (f'<h2 id="availability"><span class="num">05</span>자료 확보 현황</h2>{render_availability(avail, ctx, results)}') if avail else ""
     n = 5 if avail else 4
+    # 2026-10-13 사용자 지시: 국면 지표(점수 없음)가 순위표를 밀어내지 않게 자기 탭에 둔다. 선언이 없는 옛 실행에는 탭이 없다.
+    regime = render_regime(ctx, results)
+    tabs = (TABS[0], ("regime", "국면 지표"), *TABS[1:]) if regime else TABS
+    regime_panel = (f'<section class="tabpanel" id="tab-regime" role="tabpanel" aria-labelledby="tabbtn-regime">\n'
+                    f'<h2>국면 지표 — 점수 없음</h2>\n{regime}\n</section>\n') if regime else ""
+    conditions = render_ai_conditions(ctx)
     document = f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -2136,14 +2193,14 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
   {anthropic_note}
 </div></header>
 <div class="wrap">
-<nav class="tabs" role="tablist" aria-label="리포트 구역" hidden>{"".join(f'<button type="button" role="tab" id="tabbtn-{tid}" data-tab="tab-{tid}" aria-controls="tab-{tid}" aria-selected="{"true" if i == 0 else "false"}">{esc(label)}</button>' for i, (tid, label) in enumerate(TABS))}</nav>
+<nav class="tabs" role="tablist" aria-label="리포트 구역" hidden>{"".join(f'<button type="button" role="tab" id="tabbtn-{tid}" data-tab="tab-{tid}" aria-controls="tab-{tid}" aria-selected="{"true" if i == 0 else "false"}">{esc(label)}</button>' for i, (tid, label) in enumerate(tabs))}</nav>
 <section class="tabpanel" id="tab-summary" role="tabpanel" aria-labelledby="tabbtn-summary">
 <div class="kpis" id="kpis">{render_kpis(results)}</div>
 {render_judgment_status(ctx, results)}
-{render_regime(ctx, results)}
 <h2><span class="num">01</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
 {render_ranking(results, ctx)}
+{conditions}
 {render_incomplete(results, ctx.rules)}
 {render_layers(results, ctx)}
 <h2><span class="num">02</span>과점 × 함정 지도</h2>
@@ -2151,9 +2208,10 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <h3>기업별 과점 합계와 함정 합계</h3>
 <div class="chartbox"><div class="mtwrap">{moat_trap_svg(results)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
 </section>
-<section class="tabpanel" id="tab-companies" role="tabpanel" aria-labelledby="tabbtn-companies">
+{regime_panel}<section class="tabpanel" id="tab-companies" role="tabpanel" aria-labelledby="tabbtn-companies">
 <h2><span class="num">03</span>기업별 상세</h2>
 <p class="sub">카드를 누르면 9개 factor 의 점수·상태·산식·근거가 펼쳐진다. {inline_html(rc.card_evidence_note(run["baseline_id"], html=True, three_way=rc.has_three_way(ctx), has_summaries=bool(getattr(ctx, "company_summaries", None))))}</p>
+{conditions}
 <div class="cards" id="cards">{render_cards(results, baseline, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)}</div>
 </section>
 <section class="tabpanel" id="tab-raw" role="tabpanel" aria-labelledby="tabbtn-raw">

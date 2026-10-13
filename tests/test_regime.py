@@ -234,7 +234,9 @@ class RegimeRenderTest(unittest.TestCase):
         self.assertIn("프런티어 모델: $1.02(2026-08-16", md)
         self.assertNotIn("1국면", md)
         self.assertIn("### 마진 두 수열(나누지 않음)\n\n- 분기 값이 아직 없다.", md)
-        self.assertIn("<h3>국면 지표 — 점수 없음</h3>", render_regime(ctx, results))
+        # 2026-10-13: HTML 은 국면 지표를 자기 탭에 두고 제목(h2)은 그 탭이 단다
+        self.assertIn("<h3>설비투자 가속도(AI 컴퓨트를 사는 회사)</h3>", render_regime(ctx, results))
+        self.assertIn("<h3>트리거 조건</h3>", render_regime(ctx, results))
         self.assertEqual(render_regime(SimpleNamespace(rules=V20, observations=obs, run=ctx.run), results), "")
 
     @unittest.skipUnless((ROOT / "output" / "ai-scorecard-2026-10-recheck" / "run.json").is_file(), "recheck 실행 없음")

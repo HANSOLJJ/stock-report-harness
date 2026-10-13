@@ -155,5 +155,43 @@ class ReportTabsTest(unittest.TestCase):
             self.assertTrue(lines[i + 1].startswith("  - "), lines[i + 1])
 
 
+V21 = "ai-scorecard-2026-10-v21"
+
+
+@unittest.skipUnless((ROOT / "output" / V21 / "results.json").is_file(), "v2.1 실행 없음")
+class V21LayoutTest(unittest.TestCase):
+    """2026-10-13 사용자 지시: 국면 지표는 자기 탭, 순위표 # 열 제거, ① AI 수익화 두 조건 설명 상자와 (가)·(나) 색 표지."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.html = render(V21)
+        cls.old = render("ai-scorecard-2026-10-rescore")
+
+    def test_regime_has_its_own_tab_after_summary(self):
+        buttons = re.findall(r'role="tab" id="tabbtn-([a-z]+)"', self.html)
+        self.assertEqual(buttons, ["summary", "regime", *[t for t, _l in TABS[1:]]])
+        got = panels(self.html)
+        self.assertIn("<h2>국면 지표 — 점수 없음</h2>", got["tab-regime"])
+        self.assertIn("<h3>트리거 조건</h3>", got["tab-regime"])
+        self.assertNotIn("설비투자 가속도", got["tab-summary"])
+        self.assertNotIn('id="tabbtn-regime"', self.old, "국면 지표 선언이 없는 실행에는 탭이 없다")
+
+    def test_ranking_has_no_rank_column(self):
+        head = re.search(r'<table id="mainTable"><thead>(.*?)</thead>', self.html, re.S).group(1)
+        self.assertNotIn('data-k="rank"', head)
+        self.assertTrue(head.startswith('<tr><th scope="col" class="name keep" data-k="name">기업</th>'), head[:80])
+        self.assertNotIn('data-k="rank"', re.search(r'<table id="mainTable">.*?</table>', self.html, re.S).group(0))
+
+    def test_ai_conditions_box_and_marks(self):
+        got = panels(self.html)
+        for pid in ("tab-summary", "tab-companies"):
+            self.assertIn('<div class="condbox"><h3>① AI 수익화 \'예\' 의 두 조건</h3>', got[pid])
+        self.assertIn("최고 4점이다", got["tab-summary"])
+        # 카드의 ① 판정 줄 표지가 색을 입었고, 태그 속성 안에는 들어가지 않았다
+        self.assertIn('<span class="cond cond-b">(나)</span>는 선다', got["tab-companies"])
+        self.assertNotRegex(self.html, r'="[^"]*<span class="cond')
+        self.assertNotIn('class="condbox"', self.old, "5점 조건이 없는 규칙의 실행에는 상자가 없다")
+
+
 if __name__ == "__main__":
     unittest.main()
