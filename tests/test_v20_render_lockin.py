@@ -201,11 +201,13 @@ class LockinPageTest(unittest.TestCase):
 
     def test_ranking_has_ai_column_that_splits_equal_f1_scores(self):
         head = re.search(r'<table id="mainTable"><thead>(.*?)</thead>', self.html, re.S).group(1)
-        self.assertIn('data-k="F1">①락인</th><th scope="col" data-k="F1ai">AI 수익화</th>', head)
+        # 2026-10-13: AI 수익화는 ① 의 부가 조건으로 ① 열에 붙여 보인다(f1grp·f1sub, 머리글 "① 부가 조건").
+        self.assertIn('data-k="F1" class="f1grp">①락인</th><th scope="col" data-k="F1ai" class="f1sub"', head)
+        self.assertIn('<span class="subof">① 부가 조건</span>AI 수익화</th>', head)
         for cid, shown in (("microsoft", "예"), ("apple", "아니오")):
             row = re.search(rf'<tr class="row" data-company="{cid}">(.*?)</tr>', self.html, re.S).group(1)
-            self.assertIn('<td data-k="F1" data-v="5">', row)
-            self.assertIn(f'<td data-k="F1ai" data-v="{shown}">', row)
+            self.assertIn('<td data-k="F1" data-v="5" class="f1grp">', row)
+            self.assertIn(f'<td data-k="F1ai" data-v="{shown}" class="f1sub">', row)
         self.assertNotIn('data-k="F1ai"', self.old_html, "옛 규칙의 실행에는 AI 수익화 열이 없다")
         self.assertIn('data-k="F1">①네트워크</th>', self.old_html)
 

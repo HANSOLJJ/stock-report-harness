@@ -190,6 +190,10 @@ tbody tr.row:hover{background:var(--acc-soft)}
 svg .c-g5{fill:var(--g5)}svg .c-g4{fill:var(--g4)}svg .c-g3{fill:var(--g3)}svg .c-g2{fill:var(--g2)}svg .c-g1{fill:var(--g1)}svg .c-g0{fill:var(--tx3)}
 .tot{font-weight:800;font-size:var(--fs-lg)}
 .divider{border-left:2px solid var(--line)}
+/* 2026-10-13 사용자 지시: AI 수익화는 ① 의 부가 조건이라 독립 항목처럼 보이지 않게 ① 열과 같은 바탕으로 묶는다 */
+th.f1grp,td.f1grp,th.f1sub,td.f1sub{background:var(--bg3)}
+th.f1sub,td.f1sub{border-left:1px dashed var(--line)}
+.subof{display:block;font-size:var(--fs-sm);font-weight:400;color:var(--tx3)}
 .pending-list{list-style:none;margin:12px 0 0}
 .pending-list li{padding:11px 14px;border:1px solid var(--warn-line);background:var(--warn-soft);border-radius:8px;margin:6px 0;font-size:var(--fs-md);color:var(--warn-text)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:12px;margin-top:14px}
@@ -820,12 +824,13 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
         cells = [f'<td class="name keep" data-k="name" data-v="{esc(r["display_name"])}"><b>{esc(r["display_name"])}</b></td>']
         for x in MOAT_FACTORS:
             s = f[x]["score"]
-            cells.append(f'<td data-k="{x}" data-v="{s}"><span class="sc bg-{score_class(s)}">{fmt_score(s)}</span></td>')
+            grp = ' class="f1grp"' if x == "F1" and ai_spec else ""
+            cells.append(f'<td data-k="{x}" data-v="{s}"{grp}><span class="sc bg-{score_class(s)}">{fmt_score(s)}</span></td>')
             if x == "F1" and ai_spec:
                 j = judgments_by_id.get(f["F1"].get("judgment_id") or "")
                 ai = rc.ai_monetized(rules, rc.judgment_values(f["F1"], (j or {}).get("inputs")))
                 shown = ai[1] if ai else "—"
-                cells.append(f'<td data-k="F1ai" data-v="{esc(shown)}">{f"<span class=\"pill\">{esc(shown)}</span>" if ai else shown}</td>')
+                cells.append(f'<td data-k="F1ai" data-v="{esc(shown)}" class="f1sub">{f"<span class=\"pill\">{esc(shown)}</span>" if ai else shown}</td>')
         cells.append(f'<td class="divider mono keep" data-k="moat" data-v="{r["moat"]}"><b class="big">{r["moat"]}</b></td>')
         for x in TRAP_FACTORS:
             s = f[x]["score"]
@@ -833,9 +838,12 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
         cells.append(f'<td class="mono keep b" data-k="trap" data-v="{r["trap"]}">{r["trap"]}</td>')
         cells.append(f'<td class="divider mono tot keep c-{total_class(r["total"])}" data-k="total" data-v="{r["total"]}">{r["total"]}</td>')
         rows.append(f'<tr class="row" data-company="{esc(r["company_id"])}">{"".join(cells)}</tr>')
-    ai_head = f'<th data-k="F1ai">{esc(ai_spec.get("label") or "AI 수익화")}</th>' if ai_spec else ""
+    # 2026-10-13 사용자 지시: AI 수익화는 ① 의 부가 조건(5점 조건)이지 독립 항목이 아니다. 머리글에 그 관계를 적는다.
+    ai_head = (f'<th data-k="F1ai" class="f1sub" title="① 의 5점 조건이다. 점수에 더하지 않는다.">'
+               f'<span class="subof">① 부가 조건</span>{esc(ai_spec.get("label") or "AI 수익화")}</th>') if ai_spec else ""
     head = ('<tr><th class="name keep" data-k="name">기업</th>'
-            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' + (ai_head if x == "F1" else "")
+            + "".join(f'<th data-k="{x}"{" class=\"f1grp\"" if x == "F1" and ai_spec else ""}>{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>'
+                      + (ai_head if x == "F1" else "")
                       for x in MOAT_FACTORS)
             + '<th class="divider keep" data-k="moat">과점</th>'
             + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' for x in TRAP_FACTORS)

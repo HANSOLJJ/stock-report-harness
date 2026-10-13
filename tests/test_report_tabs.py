@@ -201,6 +201,15 @@ class V21LayoutTest(unittest.TestCase):
         self.assertNotRegex(self.html, r'="[^"]*<span class="cond')
         self.assertNotIn('class="condbox"', self.old, "5점 조건이 없는 규칙의 실행에는 상자가 없다")
 
+    def test_ai_column_is_shown_as_factor1_addon(self):
+        # 2026-10-13 사용자 지시: AI 수익화는 ① 의 부가 조건이라 독립 열처럼 보이지 않게 ① 열에 붙인다.
+        head = re.search(r'<table id="mainTable"><thead>(.*?)</thead>', self.html, re.S).group(1)
+        self.assertRegex(head, r'<th[^>]*data-k="F1"[^>]*class="f1grp"')
+        self.assertIn('<span class="subof">① 부가 조건</span>AI 수익화</th>', head)
+        self.assertLess(head.index('data-k="F1"'), head.index('data-k="F1ai"'))
+        self.assertLess(head.index('data-k="F1ai"'), head.index('data-k="F2"'))
+        self.assertNotIn('data-k="F1ai"', self.old, "AI 수익화 표시 필드가 없는 옛 실행에는 열이 없다")
+
     def test_method_table_links_have_factor_cards(self):
         # 2026-10-13 사용자 지적: 규칙 v2.1 에서 ④⑧ 카드가 빠져 방법 절 표의 두 링크가 갈 곳이 없었다.
         for html in (self.html, self.old):
