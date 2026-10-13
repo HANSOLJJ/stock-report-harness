@@ -138,3 +138,5 @@
 - 확인 리뷰 2차(confirm-r2): pass, Q01~Q23 전부 pass. HEAD 대비 results 차이는 해시와 Oracle F4 근거 목록뿐. 두 저작권 소송·Oracle 타사 모델·Alibaba (나)·EU 사건 모두 같은 잣대.
   점수 무관 과제 6건(Oracle 타사 모델을 클라우드 칸 vs 다른 회사는 플랫폼 칸, Apple ① 한 줄 표현, OpenAI ⑤ 폐기 청구 문장의 무게와 MDL 줄 중복, Oracle 단위 서술, 새 출처 열람일 표기,
   Seeking Alpha 막힌 사유 표현)은 confirm-r2.md 「다음 실행 과제」. review.md 를 fill_review.py(confirm-r2)로 채움, 계약 검증 PASS. 승인 대기.
+- 2026-10-13 사용자가 승인 페이지에서 승인(조율자는 사용자 터미널 탭에서 서버만 띄우고 코드는 읽지 않음). status approval_valid → build_report 통과(계약 13항목),
+  history.csv +14행(change_type rule-change). 승인 기록 파일 경로가 든 python 읽기 명령은 보호 경로 훅이 막아 우회하지 않았다.

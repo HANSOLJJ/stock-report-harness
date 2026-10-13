@@ -31,3 +31,6 @@
 - [x] 인용 판단 수정(Opus high) → 새 근거 2건 대조·확정 → apply_judgments --dir reopen1(9건) → 치환 16건
 - [x] research → calculate(점수 불변, 요약 변경 없음) → draft → review-template --force
 - [x] 바뀐 부분 확인 리뷰 1회(Opus high, confirm-r2 pass) → review.md → 계약 검증 PASS → 커밋 → 승인 대기 보고
+
+## 7. 승인·빌드
+- [x] 사용자 승인(2026-10-13) → build_report 통과 → history.csv +14행 → 커밋
