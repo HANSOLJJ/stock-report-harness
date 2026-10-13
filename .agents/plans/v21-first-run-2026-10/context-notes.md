@@ -140,3 +140,5 @@
   Seeking Alpha 막힌 사유 표현)은 confirm-r2.md 「다음 실행 과제」. review.md 를 fill_review.py(confirm-r2)로 채움, 계약 검증 PASS. 승인 대기.
 - 2026-10-13 사용자가 승인 페이지에서 승인(조율자는 사용자 터미널 탭에서 서버만 띄우고 코드는 읽지 않음). status approval_valid → build_report 통과(계약 13항목),
   history.csv +14행(change_type rule-change). 승인 기록 파일 경로가 든 python 읽기 명령은 보호 경로 훅이 막아 우회하지 않았다.
+- 배포(2026-10-13, 사용자 지시 "맥미니에 올리자"): origin main push 0a58b50..7fb251e(37커밋) → 맥미니 ~/projects/stock-report-harness ff pull. 9월 리포트 두 개
+  (2026-09-baseline·obsreg report.html)의 맥미니 수동 수정은 push 범위가 그 파일을 건드리지 않아 보존. fin.hansoljj.com/reports 목록 맨 위·리포트 열림 확인.
