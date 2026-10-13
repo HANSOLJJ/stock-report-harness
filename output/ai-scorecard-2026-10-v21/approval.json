@@ -1,0 +1,20 @@
+{
+  "schema": "scorecard.approval/1",
+  "run_id": "ai-scorecard-2026-10-v21",
+  "approval_id": "85269ed2f9575a25",
+  "approved_by": "정한솔",
+  "approved_at": "2026-10-13",
+  "hashes": {
+    "rules": "b264ded4af1180c74fffb6ee335eed44b6f3c1ae3a3456d789d560095df27c45",
+    "observations": "85f7626a2e72d05492719d2649f4d960c8838576c8712ae244d61fef74c49170",
+    "judgments": "ae91b79ad2d75465a64d84d508d9693d4e6dc48d2be2305a317f10faa2b6c5fd",
+    "run": "8dc42f37ac75abddc36581d172e535918d1b49022ec67a9f9a399d749c678eaa",
+    "results": "7ebbb329bb1b7ffe2cd50fd6cfae599d9bb29ac8ad2f6b71798f4013a4d60eb4",
+    "draft": "a7e7ec8ca9ec9975246d99e50cacebb08cf86be9ca03c98562c15faefe6e6869",
+    "sources": "934a6536757a1a0fb0f1c22a6fc8e0f7eace35b4f885efe768c556da0db542d6",
+    "evidence": "bff2fdfeb5220e1bef736f064bb4118d99672a3068cc972cb9bde5545ec86842",
+    "triggers": "4f8d81453492d035aa895133f77e2ab76ff203bf0278b898c91bbb50b7784b6f"
+  },
+  "note": null,
+  "approved_via": "browser"
+}

@@ -15,14 +15,14 @@
 | 대상 | 해시 |
 | --- | --- |
 | observations | `85f7626a2e72d05492719d2649f4d960c8838576c8712ae244d61fef74c49170` |
-| judgments | `903b2ed8d9592e67b41d6092727250b6ecc8634a0444828529b9fdd8f22baf4d` |
-| results | `3efffdce62fa6530d8035e924ad2b7832c64f31653464a9bd1fbbc2f3aba882a` |
+| judgments | `ae91b79ad2d75465a64d84d508d9693d4e6dc48d2be2305a317f10faa2b6c5fd` |
+| results | `7ebbb329bb1b7ffe2cd50fd6cfae599d9bb29ac8ad2f6b71798f4013a4d60eb4` |
 | run | `8dc42f37ac75abddc36581d172e535918d1b49022ec67a9f9a399d749c678eaa` |
-| draft | `d487c2f002eac173e5e0f2476b88231a310345986463fb498b9ea61aaed52024` |
+| draft | `a7e7ec8ca9ec9975246d99e50cacebb08cf86be9ca03c98562c15faefe6e6869` |
 
 ## 승인
 
-- 승인 `342d44b22e0dcb41` · 정한솔 · 2026-10-13
+- 승인 `85269ed2f9575a25` · 정한솔 · 2026-10-13
 - 승인 시점 입력과 현재 입력이 모두 같다.
 
 ## 실행 단위 결정
@@ -63,14 +63,15 @@
 
 ## 검토 기록
 
-검토 방식 `separate-session-4way` · 실행 `separate_subagent_sessions` · 검토한 초안 `d487c2f002eac173e5e0f2476b88231a310345986463fb498b9ea61aaed52024`
+검토 방식 `separate-session-4way` · 실행 `separate_subagent_sessions` · 검토한 초안 `a7e7ec8ca9ec9975246d99e50cacebb08cf86be9ca03c98562c15faefe6e6869`
 
 - fact-sources: fact-checker fs-a-v21-20261013-r1 → pass · fs-b-v21-20261013-r1 → needs_fix 3건(⑦ 세로축) → 수정 → pass · evidence-editor ev-v21-20261013-r1 → pass
 - financial-calc: general-purpose(Sonnet) fc-v21-20261013-r1 → pass
 - rule-consistency: general-purpose(Opus high) rc-v21-20261013-rule → needs_fix 1건(Palantir ④) → 수정 → pass
 - output-readability: report-designer or-v21-20261013-r1 → pass(트리거 점수 문장·렌더러 설명 수정)
 - confirm: general-purpose(Opus high) confirm-v21-20261013-r1 → pass
-- confirm: general-purpose(Opus high) confirm-v21-20261013-r2 → 막혔던 원문 재열람 뒤 변경분 확인
+- confirm: general-purpose(Opus high) confirm-v21-20261013-r2 → 막혔던 원문 재열람 뒤 변경분 확인 → pass
+- confirm: general-purpose(Opus high) confirm-v21-20261013-r3 → 승인 취소·Meta ③ 사용자 확정 뒤 변경분 확인
 
 ## 정정 이력
 
