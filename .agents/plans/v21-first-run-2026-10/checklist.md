@@ -20,7 +20,7 @@
 ## 5. 리뷰
 - [x] 1차 여섯 영역 끝(needs_fix: 규칙 일관성 N1, 사실 b ⑦ 셋 / pass: 사실 a·재무·근거 불릿·출력)
 - [x] Maia 발표(사용자 지시 2026-10-13) 근거 4건 확정 EV-microsoft-070~073
-- [ ] 수정 한 묶음: 판단 세션(Opus) → add_fix_items·confirm → apply_judgments --dir judge-fix1 / 치환 목록(Sonnet) → apply_subst
-- [ ] research → calculate → 바뀐 회사 기업 요약 → draft → review-template --force
-- [ ] 확인 리뷰 1회(Opus high) → review.md → 계약 검증
-- [ ] 커밋, 승인 대기 보고
+- [x] 수정 한 묶음: 판단 세션(Opus) → add_fix_items·confirm(원문 대조 뒤 12건) → apply_judgments --dir judge-fix1(19건) / 치환 70건 → apply_subst
+- [x] research → calculate → 기업 요약 4건 → draft → review-template --force → 중간 커밋 4580197(코드 59d59e3)
+- [x] 확인 리뷰 1회(Opus high) pass → review.md(fill_review.py) → 계약 검증 PASS
+- [x] 커밋, 승인 대기 보고

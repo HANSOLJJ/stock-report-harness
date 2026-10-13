@@ -102,3 +102,8 @@
   " … " 로 남겼고, channel 은 기존 관례(TechCrunch press, Artificial Analysis secondary, 2차 인용 보도 secondary)로 맞췄다. 새 근거 12건은 fact-checker 원문 대조 뒤 확정한다.
 - 판매 칸이 없을 때 primary_layer null 을 허용하는 코드(schema·stages·render·rules.md·테스트) 커밋 59d59e3. 전체 테스트 1611·node 24 통과.
 - 치환 목록의 판정 의존 7건(Apple ④ 5건은 '모델은 판매' 를 '다섯 칸 자체 사용, 판매 칸 없음' 으로 고쳐, EV-microsoft-002 2건은 그대로) 적용 → 치환 70건 모두 반영.
+- 확인 리뷰 1차(Opus high, confirm-r1): pass, Q01~Q23 전부 pass. ② 는 14개사가 2026-10-08 표에 10-12 Muse Wonder 평가를 더한 같은 시점으로 비교하고(그 사이 새로
+  평가된 회사는 Meta 하나), 마감 뒤 근거 0건. 점수 무관 표시 결함(TRG-023 Oracle ⑦ −2, TRG-091·097 이 ② 변경을 못 따라옴, research.md 근거 relevance 24건)은
+  다음 실행 과제 — 고치면 초안 해시가 바뀌어 리뷰를 다시 해야 하므로 한 라운드 원칙대로 넘긴다. 경계: Oracle ⑦ TikTok 연결은 추론으로 선 무거운 쪽 '돌아옴'.
+- review.md 를 fill_review.py 로 채움(체크리스트 행은 템플릿의 검사 초점 칸을 살리고 결과·근거만). 치환 적용 수는 76항목(44+19+7+6, 확인 리뷰의 83 은 미룬 7건 중복).
+  validate_report_contract PASS. 승인 대기.
