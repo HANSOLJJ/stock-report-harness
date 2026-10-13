@@ -446,9 +446,9 @@
       "published_at_utc": "2026-10-02T13:36:29Z",
       "title": "Meta’s Muse reportedly passes 3 million weekly users and 5m downloads",
       "excerpt": "More than 3 million people prompt Meta’s Muse at least once a week, according to internal data reviewed by The Information. More than 1 million send the AI agent a prompt every day, Jyoti Mann reported. The weekly figure is part of a wider group. More than 4 million people use Muse in some way each week, according to the data. Most prompts come through the Muse app. Meta launched the agent in the US three weeks ago. TNW has not independently verified the figures.",
-      "relevance": "추론: Meta 의 새 AI 앱 Muse 주간 사용자가 300만을 넘었다는 The Information 단독 보도다. Meta ① 은 소비자 채널(하루 활성 사용자 36억 명)의 사다리 합이 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 이고, ① 은 가장 강한 채널로 점수를 매기므로 새 앱 지표로 움직이지 않는다. ② 패러다임 적응 경로는 Meta ② 판단에서 이미 통과다. 그래서 이 카드는 후발 서비스가 빨리 크는 소식으로서 ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에만 쓴다(2026-10 라벨링 사람 판정). Meta ③ 판단은 별도 수익모델 통과, 모방 불가능성 실패, 후발 가속도 미확인(같은 정의의 성장률 두 개를 만들 수 없다)이고 문이 닫힌 증거는 없어 점수를 만들지 않는다. (선별 확신: 중간)",
+      "relevance": "추론: Meta 의 새 AI 앱 Muse 주간 사용자가 300만을 넘었다는 The Information 단독 보도다. Meta ① 은 소비자 채널(하루 활성 사용자 36억 명)의 사다리 합이 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 이고, ① 은 가장 강한 채널로 점수를 매기므로 새 앱 지표로 움직이지 않는다. ② 패러다임 적응 경로는 Meta ② 판단에서 이미 통과다. 그래서 이 카드는 후발 서비스가 빨리 크는 소식으로서 ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에만 쓴다(2026-10 라벨링 사람 판정). Meta ③ 판단은 별도 수익모델 통과, 모방 불가능성 실패, 후발 가속도 실패(같은 정의의 성장률 두 개를 만들 수 없어 가장 낮은 판정으로 둔 사용자 결정)이고 문이 닫힌 증거는 없어 2점이다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "재검토: Meta ③ 후발 가속도를 미확인에서 판정 가능한 값으로 다시 볼지 본다. 같은 정의의 Muse 사용자나 수익화(광고·구독) 수치를 Meta 가 두 시점 이상 공식 공시해 성장률 두 개를 만들 수 있으면 그렇다. 단일 보도 수치 하나로는 바꾸지 않는다.",
+      "conditional_impact": "재검토: Meta ③ 후발 가속도를 사용자 결정(실패)에서 실측 판정으로 다시 볼지 본다. 같은 정의의 Muse 사용자나 수익화(광고·구독) 수치를 Meta 가 두 시점 이상 공식 공시해 성장률 두 개를 만들 수 있으면 그렇다. 단일 보도 수치 하나로는 바꾸지 않는다.",
       "horizon": "medium — 사용 지속성은 1~2 분기 지나야 보인다",
       "counter_evidence": [
         "주간 사용자 300만은 메타 전체 사용자 30억+ 에 비해 작다.",
@@ -19087,9 +19087,9 @@
       "title": "Meta Muse Downloads Are Slowing — And Hunterbrook is Short - Benzinga",
       "excerpt": "Hunterbrook highlighted data showing Muse downloads averaged about 165,000 a day in the latest seven-day stretch, down 8.1% from roughly 180,000 the week before. … Daily active users are still rising. TickerTrends put worldwide Muse DAUs at 2,730,919 on Oct. 6, the highest reading in its data. Hunterbrook pointed to the slow pace as a problem and calculated an average net gain of about 198,000 users a day from Sept. 15 to Sept. 22. Growth slowed to about 87,000 a day the next week, then to about 74,000 a day in the seven days through Oct. 6.",
       "locator": "Benzinga 기사 다섯째 문단과 'Usage Climbs, Slowly' 소제목 아래 첫째·둘째 문단",
-      "relevance": "추론: 공매도 운용사 Hunterbrook 이 대체 데이터 업체 TickerTrends 자료로, Muse 일간 사용자는 10월 6일 약 273만 명으로 늘고 있지만 하루 순증이 9월 15~22일 약 19.8만 명에서 10월 초 약 7.4만 명으로 줄었다고 전했다. ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에 닿는 사용량 시계열이지만 회사 공시가 아닌 제3자 추정이고 메타 공매도 포지션을 밝힌 쪽이 낸 자료다. 메타 ③ 판단은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 미확인(같은 정의의 회사 공시 AI 사용자 시계열이 없어 지표 단계 e), 문 닫힘 실패라 점수를 만들지 않는다. (선별 확신: 중간)",
+      "relevance": "추론: 공매도 운용사 Hunterbrook 이 대체 데이터 업체 TickerTrends 자료로, Muse 일간 사용자는 10월 6일 약 273만 명으로 늘고 있지만 하루 순증이 9월 15~22일 약 19.8만 명에서 10월 초 약 7.4만 명으로 줄었다고 전했다. ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에 닿는 사용량 시계열이지만 회사 공시가 아닌 제3자 추정이고 메타 공매도 포지션을 밝힌 쪽이 낸 자료다. 메타 ③ 판단은 모방 불가능성 실패, 별도 수익모델 통과, 후발 가속도 실패(같은 정의의 회사 공시 AI 사용자 시계열이 없어 지표 단계 e 이고 가장 낮은 판정으로 둔 사용자 결정), 문 닫힘 실패라 2점이다. (선별 확신: 중간)",
       "channel": "secondary",
-      "conditional_impact": "지금은 유지: 제3자 대체 데이터의 일간 사용자 추정은 회사가 같은 정의로 분기마다 내는 지표가 아니어서 지표 단계 d(AI 제품 사용량 시계열)를 채우지 못하고, 메타 ③ 후발 가속도는 미확인 그대로다. 메타가 실적 발표에서 Muse·Meta AI 사용자를 같은 정의로 두 시점 이상 내놓으면 그 수치로 가속도를 다시 보고, 이 자료는 출시 초기 순증이 줄었다는 반대 방향 방증으로만 쓴다.",
+      "conditional_impact": "지금은 유지: 제3자 대체 데이터의 일간 사용자 추정은 회사가 같은 정의로 분기마다 내는 지표가 아니어서 지표 단계 d(AI 제품 사용량 시계열)를 채우지 못하고, 메타 ③ 후발 가속도는 사용자 결정(실패)대로 둔다. 메타가 실적 발표에서 Muse·Meta AI 사용자를 같은 정의로 두 시점 이상 내놓으면 그 수치로 가속도를 다시 보고, 이 자료는 출시 초기 순증이 줄었다는 반대 방향 방증으로만 쓴다.",
       "horizon": "short — 2026년 3분기 실적 발표(10월 말~11월 초)에서 회사 수치 공개 여부가 갈린다",
       "unverified": [
         "TickerTrends 의 추정 방법과 일간 사용자 정의 미확인",

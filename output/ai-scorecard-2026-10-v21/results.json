@@ -8,10 +8,10 @@
   "input_hashes": {
     "run": "8dc42f37ac75abddc36581d172e535918d1b49022ec67a9f9a399d749c678eaa",
     "observations": "85f7626a2e72d05492719d2649f4d960c8838576c8712ae244d61fef74c49170",
-    "judgments": "903b2ed8d9592e67b41d6092727250b6ecc8634a0444828529b9fdd8f22baf4d",
+    "judgments": "ae91b79ad2d75465a64d84d508d9693d4e6dc48d2be2305a317f10faa2b6c5fd",
     "sources": "934a6536757a1a0fb0f1c22a6fc8e0f7eace35b4f885efe768c556da0db542d6",
-    "evidence": "685208933a27783a50232127820083981b3b05c2ccde12f9b0762e0e1520daf9",
-    "triggers": "e6750df0805627c87ddac5430d8c6b404eb5e60d1c630119d2bdca2f32bf98a8",
+    "evidence": "bff2fdfeb5220e1bef736f064bb4118d99672a3068cc972cb9bde5545ec86842",
+    "triggers": "4f8d81453492d035aa895133f77e2ab76ff203bf0278b898c91bbb50b7784b6f",
     "rules": "b264ded4af1180c74fffb6ee335eed44b6f3c1ae3a3456d789d560095df27c45"
   },
   "decisions_applied": [
@@ -1026,20 +1026,25 @@
         },
         "F3": {
           "factor": "F3",
-          "score": null,
-          "status": "needs_judgment",
+          "score": 2,
+          "status": "ok",
           "basis": "criteria",
           "judgment_id": "meta.F3",
           "observation_ids": [],
           "calc": {
+            "criteria": {
+              "imitation": "fail",
+              "revenue_model": "pass",
+              "acceleration": "fail"
+            },
+            "door_closed": "fail",
+            "pass_points": 1.0,
+            "ladder_note": "통과점 1 → 2",
             "acceleration_tier": "e",
             "acceleration_growth_rates": null
           },
           "warnings": [],
-          "pending": {
-            "kind": "judgment",
-            "message": "세 기준 중 unknown 이 있음 — 자동으로 0.5 를 주지 않음"
-          }
+          "pending": null
         },
         "F4": {
           "factor": "F4",
@@ -1352,20 +1357,13 @@
           "pending": null
         }
       },
-      "moat": null,
+      "moat": 18,
       "trap": -5,
-      "total": null,
-      "complete": false,
-      "pending": [
-        {
-          "factor": "F3",
-          "status": "needs_judgment",
-          "kind": "judgment",
-          "message": "세 기준 중 unknown 이 있음 — 자동으로 0.5 를 주지 않음"
-        }
-      ],
+      "total": 13,
+      "complete": true,
+      "pending": [],
       "carried_factors": [],
-      "rank": null
+      "rank": 1
     },
     {
       "company_id": "microsoft",
@@ -1809,7 +1807,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 3
+      "rank": 4
     },
     {
       "company_id": "tsmc",
@@ -2236,7 +2234,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 5
+      "rank": 6
     },
     {
       "company_id": "alibaba",
@@ -2695,7 +2693,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 9
+      "rank": 10
     },
     {
       "company_id": "anthropic",
@@ -3102,7 +3100,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 12
+      "rank": 13
     },
     {
       "company_id": "apple",
@@ -3552,7 +3550,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 4
+      "rank": 5
     },
     {
       "company_id": "nvidia",
@@ -3989,7 +3987,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 6
+      "rank": 7
     },
     {
       "company_id": "palantir",
@@ -4436,7 +4434,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 8
+      "rank": 9
     },
     {
       "company_id": "spacex-xai",
@@ -4920,7 +4918,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 11
+      "rank": 12
     },
     {
       "company_id": "tesla",
@@ -5347,7 +5345,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 10
+      "rank": 11
     },
     {
       "company_id": "oracle",
@@ -5809,7 +5807,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 7
+      "rank": 8
     },
     {
       "company_id": "openai",
@@ -6228,7 +6226,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 12
+      "rank": 13
     }
   ],
   "ranking": [
@@ -6249,7 +6247,15 @@
       "total": 13
     },
     {
-      "rank": 3,
+      "rank": 1,
+      "company_id": "meta",
+      "display_name": "Meta",
+      "moat": 18,
+      "trap": -5,
+      "total": 13
+    },
+    {
+      "rank": 4,
       "company_id": "microsoft",
       "display_name": "Microsoft",
       "moat": 19.5,
@@ -6257,7 +6263,7 @@
       "total": 10.5
     },
     {
-      "rank": 4,
+      "rank": 5,
       "company_id": "apple",
       "display_name": "Apple",
       "moat": 17,
@@ -6265,7 +6271,7 @@
       "total": 10
     },
     {
-      "rank": 5,
+      "rank": 6,
       "company_id": "tsmc",
       "display_name": "TSMC",
       "moat": 15,
@@ -6273,7 +6279,7 @@
       "total": 9
     },
     {
-      "rank": 6,
+      "rank": 7,
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "moat": 16,
@@ -6281,7 +6287,7 @@
       "total": 8
     },
     {
-      "rank": 7,
+      "rank": 8,
       "company_id": "oracle",
       "display_name": "Oracle",
       "moat": 17.5,
@@ -6289,7 +6295,7 @@
       "total": 7.5
     },
     {
-      "rank": 8,
+      "rank": 9,
       "company_id": "palantir",
       "display_name": "Palantir",
       "moat": 14.5,
@@ -6297,7 +6303,7 @@
       "total": 6.5
     },
     {
-      "rank": 9,
+      "rank": 10,
       "company_id": "alibaba",
       "display_name": "Alibaba",
       "moat": 17,
@@ -6305,7 +6311,7 @@
       "total": 6
     },
     {
-      "rank": 10,
+      "rank": 11,
       "company_id": "tesla",
       "display_name": "Tesla",
       "moat": 14.5,
@@ -6313,7 +6319,7 @@
       "total": 5.5
     },
     {
-      "rank": 11,
+      "rank": 12,
       "company_id": "spacex-xai",
       "display_name": "SpaceX",
       "moat": 15.5,
@@ -6321,7 +6327,7 @@
       "total": 4.5
     },
     {
-      "rank": 12,
+      "rank": 13,
       "company_id": "anthropic",
       "display_name": "Anthropic",
       "moat": 12.5,
@@ -6329,7 +6335,7 @@
       "total": 1.5
     },
     {
-      "rank": 12,
+      "rank": 13,
       "company_id": "openai",
       "display_name": "OpenAI",
       "moat": 12.5,
@@ -6338,27 +6344,12 @@
     }
   ],
   "population": {
-    "scored": 13,
-    "incomplete": [
-      {
-        "company_id": "meta",
-        "display_name": "Meta",
-        "reasons": [
-          {
-            "factor": "F3",
-            "status": "needs_judgment",
-            "kind": "judgment",
-            "message": "세 기준 중 unknown 이 있음 — 자동으로 0.5 를 주지 않음"
-          }
-        ],
-        "moat": null,
-        "trap": -5
-      }
-    ],
+    "scored": 14,
+    "incomplete": [],
     "reference_excluded": [],
     "note": "미완료 기업은 0점으로 채우지 않고 공식 순위에서 제외한다. 동점은 공동 순위이며 다음 순위를 건너뛴다."
   },
   "pending_rule_decisions": [],
   "warnings_count": 61,
-  "results_hash": "3efffdce62fa6530d8035e924ad2b7832c64f31653464a9bd1fbbc2f3aba882a"
+  "results_hash": "7ebbb329bb1b7ffe2cd50fd6cfae599d9bb29ac8ad2f6b71798f4013a4d60eb4"
 }
