@@ -17,7 +17,9 @@ CLI = ["uv", "run", "--frozen", "python", "-X", "utf8", str(ROOT / "scripts" / "
 def main() -> int:
     slug = sys.argv[1]
     reason = sys.argv[sys.argv.index("--reason") + 1] if "--reason" in sys.argv else "이 실행의 점수·순위로 기업 요약을 쓴다"
-    texts = json.loads((Path(__file__).resolve().parent / "summaries.json").read_text(encoding="utf-8"))
+    # 2026-10-13: 리뷰 뒤 수정 묶음은 바뀐 회사만 담은 파일(--file)로 다시 쓴다.
+    name = sys.argv[sys.argv.index("--file") + 1] if "--file" in sys.argv else "summaries.json"
+    texts = json.loads((Path(__file__).resolve().parent / name).read_text(encoding="utf-8"))
     for cid, text in texts.items():
         r = subprocess.run([*CLI, "propose", slug, "--company", cid, "--factor", "SUMMARY", "--evidence", text,
                             "--reason", reason, "--by", BY], capture_output=True, text=True, encoding="utf-8", cwd=ROOT)

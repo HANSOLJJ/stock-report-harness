@@ -8,10 +8,10 @@
   "input_hashes": {
     "run": "8dc42f37ac75abddc36581d172e535918d1b49022ec67a9f9a399d749c678eaa",
     "observations": "85f7626a2e72d05492719d2649f4d960c8838576c8712ae244d61fef74c49170",
-    "judgments": "58278fbca38a9cf63f953cf0054cb81813a0d015c0c0ad2e338888939b5066ce",
-    "sources": "c81af0c00d89d743a1f4c1b6f6af4fda5a855a2e6a81cde9c4ed5041852fd4b6",
-    "evidence": "87b111d6da0257b7752d464110ffac45b5964cc2e50c4836b3a3ba377e90ce26",
-    "triggers": "1edfd4276e8a4cf97ece4e4db1ae6c161dc0d551e61cac07b85c5b6caac91431",
+    "judgments": "b751191502297a491f88efe9892d0952c9362e8e58919cd25ff39bdbeca72862",
+    "sources": "12eb77c467b174392a55186fbde78863d2649a4603279b6548d578fdbc0089e2",
+    "evidence": "46c568163b2e133b91f3f201d6f7b977f6bbe5697946c33410a823227f68f12e",
+    "triggers": "e6750df0805627c87ddac5430d8c6b404eb5e60d1c630119d2bdca2f32bf98a8",
     "rules": "b264ded4af1180c74fffb6ee335eed44b6f3c1ae3a3456d789d560095df27c45"
   },
   "decisions_applied": [
@@ -97,14 +97,14 @@
           "observation_ids": [],
           "calc": {
             "paths": {
-              "performance_leap": "partial",
+              "performance_leap": "fail",
               "paradigm_adaptation": "pass",
               "standard_capture": "pass",
               "top_rank": "no",
               "generation_gap": "no"
             },
             "passed": 2,
-            "partial": 1,
+            "partial": 0,
             "mapping": {
               "0": 2,
               "1": 3,
@@ -1003,14 +1003,14 @@
           "observation_ids": [],
           "calc": {
             "paths": {
-              "performance_leap": "fail",
+              "performance_leap": "partial",
               "paradigm_adaptation": "pass",
               "standard_capture": "pass",
               "top_rank": "no",
               "generation_gap": "no"
             },
             "passed": 2,
-            "partial": 0,
+            "partial": 1,
             "mapping": {
               "0": 2,
               "1": 3,
@@ -1521,7 +1521,9 @@
               "chip": [
                 "EV-microsoft-008",
                 "EV-microsoft-050",
-                "EV-microsoft-052"
+                "EV-microsoft-052",
+                "EV-microsoft-071",
+                "EV-microsoft-072"
               ],
               "server": [
                 "EV-microsoft-049"
@@ -2544,14 +2546,14 @@
         },
         "F7": {
           "factor": "F7",
-          "score": 0,
+          "score": -1,
           "status": "ok",
           "basis": "matrix",
           "judgment_id": "alibaba.F7",
           "observation_ids": [],
           "calc": {
             "funding_dependent_share": "small",
-            "own_money_returns": "no"
+            "own_money_returns": "yes"
           },
           "warnings": [],
           "pending": null
@@ -2688,12 +2690,12 @@
         }
       },
       "moat": 17,
-      "trap": -10,
-      "total": 7,
+      "trap": -11,
+      "total": 6,
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 8
+      "rank": 9
     },
     {
       "company_id": "anthropic",
@@ -3224,12 +3226,12 @@
               "server": "self",
               "platform": "self",
               "cloud": "none",
-              "model": "sold",
+              "model": "self",
               "app": "self"
             },
-            "primary_layer": "model",
+            "primary_layer": null,
             "non_ai_revenue_share": 1.0,
-            "vertical_raw": 3.0,
+            "vertical_raw": 2.5,
             "vertical": 2.5,
             "diversification": 2.5,
             "score": 5,
@@ -3254,10 +3256,11 @@
                 "EV-apple-012"
               ],
               "model": [
-                "EV-apple-051",
                 "EV-apple-050",
                 "EV-apple-014",
-                "EV-apple-037"
+                "EV-apple-051",
+                "EV-apple-037",
+                "EV-apple-064"
               ],
               "app": [
                 "EV-apple-052",
@@ -4102,7 +4105,7 @@
         },
         "F4": {
           "factor": "F4",
-          "score": 2,
+          "score": 4.5,
           "status": "ok",
           "basis": "survival",
           "judgment_id": "palantir.F4",
@@ -4117,11 +4120,11 @@
               "app": "sold"
             },
             "primary_layer": "app",
-            "non_ai_revenue_share": 0.0,
+            "non_ai_revenue_share": 1.0,
             "vertical_raw": 2.0,
             "vertical": 2.0,
-            "diversification": 0.0,
-            "score": 2,
+            "diversification": 2.5,
+            "score": 4.5,
             "preparing": [],
             "layer_triggers": {},
             "layer_evidence": {
@@ -4316,14 +4319,14 @@
         },
         "F7": {
           "factor": "F7",
-          "score": 0,
+          "score": -1,
           "status": "ok",
           "basis": "matrix",
           "judgment_id": "palantir.F7",
           "observation_ids": [],
           "calc": {
             "funding_dependent_share": "small",
-            "own_money_returns": "no"
+            "own_money_returns": "yes"
           },
           "warnings": [],
           "pending": null
@@ -4427,13 +4430,13 @@
           "pending": null
         }
       },
-      "moat": 12,
-      "trap": -7,
-      "total": 5,
+      "moat": 14.5,
+      "trap": -8,
+      "total": 6.5,
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 10
+      "rank": 8
     },
     {
       "company_id": "spacex-xai",
@@ -4509,14 +4512,14 @@
           "observation_ids": [],
           "calc": {
             "paths": {
-              "performance_leap": "partial",
+              "performance_leap": "fail",
               "paradigm_adaptation": "pass",
               "standard_capture": "fail",
               "top_rank": "no",
               "generation_gap": "no"
             },
             "passed": 1,
-            "partial": 1,
+            "partial": 0,
             "mapping": {
               "0": 2,
               "1": 3,
@@ -5344,7 +5347,7 @@
       "complete": true,
       "pending": [],
       "carried_factors": [],
-      "rank": 9
+      "rank": 10
     },
     {
       "company_id": "oracle",
@@ -6286,27 +6289,27 @@
     },
     {
       "rank": 8,
-      "company_id": "alibaba",
-      "display_name": "Alibaba",
-      "moat": 17,
-      "trap": -10,
-      "total": 7
+      "company_id": "palantir",
+      "display_name": "Palantir",
+      "moat": 14.5,
+      "trap": -8,
+      "total": 6.5
     },
     {
       "rank": 9,
+      "company_id": "alibaba",
+      "display_name": "Alibaba",
+      "moat": 17,
+      "trap": -11,
+      "total": 6
+    },
+    {
+      "rank": 10,
       "company_id": "tesla",
       "display_name": "Tesla",
       "moat": 14.5,
       "trap": -9,
       "total": 5.5
-    },
-    {
-      "rank": 10,
-      "company_id": "palantir",
-      "display_name": "Palantir",
-      "moat": 12,
-      "trap": -7,
-      "total": 5
     },
     {
       "rank": 11,
@@ -6356,5 +6359,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 61,
-  "results_hash": "55d4a0cc8452c05d9a54551659a32c73d2b02f5c1b1347bb49398c746acca737"
+  "results_hash": "0a4d9739e259929974f5bf091e811bd5faa1e990572e58795fa0158a3aa08662"
 }

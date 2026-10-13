@@ -11,12 +11,16 @@
 - [x] D·E 끝 → 합치기 → 확정(E +43, D +156) / 보강 세션 S(지분 평가손익 같은 정의, Alibaba 법인세, 근거 +13)
 
 ## 3. 판단 (Opus high)
-- [ ] J4 ②③ 끝 · J5 ⑤⑦ 끝 / J1 ① · J2 ④ 띄움 / J3 ⑧ 은 J2 뒤
-- [ ] apply_judgments → proposal accept → research 통과
+- [x] J4 ②③ · J5 ⑤⑦ · J1 ① · J2 ④ · J3 ⑧ 끝(J1·J2 는 사용량 한도로 한 번 멈춤)
+- [x] apply_judgments(98건) → 트리거 8건 번호 → research 통과
 
 ## 4. 계산·초안
-- [ ] calculate → 기업 요약 → draft → review-template → 중간 커밋
+- [x] calculate → 기업 요약 14 → draft → review-template → 중간 커밋 1258437
 
 ## 5. 리뷰
-- [ ] 다섯 영역 → 수정 한 묶음 → 확인 리뷰 1회 → review.md → 계약 검증
+- [x] 1차 여섯 영역 끝(needs_fix: 규칙 일관성 N1, 사실 b ⑦ 셋 / pass: 사실 a·재무·근거 불릿·출력)
+- [x] Maia 발표(사용자 지시 2026-10-13) 근거 4건 확정 EV-microsoft-070~073
+- [ ] 수정 한 묶음: 판단 세션(Opus) → add_fix_items·confirm → apply_judgments --dir judge-fix1 / 치환 목록(Sonnet) → apply_subst
+- [ ] research → calculate → 바뀐 회사 기업 요약 → draft → review-template --force
+- [ ] 확인 리뷰 1회(Opus high) → review.md → 계약 검증
 - [ ] 커밋, 승인 대기 보고

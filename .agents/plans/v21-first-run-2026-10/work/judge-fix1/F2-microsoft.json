@@ -1,0 +1,58 @@
+{
+  "changes": {},
+  "evidence_after": [
+    "마이크로소프트 ② 는 성능 도약 실패, 패러다임 적응 통과, 표준 선점 통과로 판정한다. 통과로 세는 경로는 둘이다.",
+    "성능 도약은 실패다. 자체 모델은 2026-10-08 Artificial Analysis 순위표의 회사별 최고 모델 목록에 없고 사용자 투표형 Arena 텍스트 부문(2026-10-02, 참고) 최고 순위도 317위이며, 최상위 성능은 OpenAI·Anthropic 모델을 받아 쓴다. 2026-10-09 낸 판단 점수 모델 Microsoft-Decision-1 은 Alibaba 공개 모델 Qwen3.5-9B 를 후학습한 소형 모델이고 성능 비교는 회사가 고른 벤치마크라 독립 측정이 아니다. Maia 200 의 달러당 성능 30% 개선과 최신 GPU 대비 와트당 토큰 최대 1.7배는 회사가 잰 값이라 독립 측정이 아니다.",
+    "Maia 200 은 Microsoft Copilot 등 자사 생산 작업을 처리하며 OpenAI·MAI·오픈소스 모델을 돌리고 미국·유럽·호주에 배치되고 있다고 회사가 밝혔고 배치 수량은 공개되지 않았다(미확인). 2027년부터 Maia 를 다기가와트 규모로 늘려 자사 제품·서비스의 주력 추론 시스템으로 삼겠다는 발표는 계획이라 점수에 넣지 않는다.",
+    "세대 격차는 성능 도약이 통과가 아니어서 '아니오'다.",
+    "패러다임 적응은 통과다. 업무용 AI 비서 Microsoft 365 Copilot 유료 좌석이 1,500만(2025년 10~12월 분기)에서 2,000만, 3,000만(2026-06-30 분기 말)으로 늘었고 코딩 도구 GitHub Copilot 에서 자체 모델 MAI-Code-1-Flash 를 수백만 개발자가 써 출시와 채택 지표가 함께 있다. 에이전트(Autopilot)·코딩(Code)을 묶은 새 Copilot 은 2026-09-25 발표 뒤 시범 배포 단계라 채택 지표로 세지 않는다. 직원을 Anthropic Claude 에서 자체 도구로 옮긴다는 보도는 사내 사용이라 외부 채택 지표로 세지 않는다. 선두 대비 출시 지연 개월 수는 출시일을 비교할 확정 근거가 없어 적지 않는다.",
+    "표준 선점은 다른 회사 제품이 그 인터페이스를 채택했다는 사실로 재고, 자기 제품을 사서 쓰거나 되파는 것과 자기 제품 안에서만 쓰이는 형식은 채택으로 세지 않는다. 표준 선점은 통과다. Microsoft 가 Facebook 과 함께 2017-09 발표한 AI 모델 교환 형식 ONNX 를 다른 회사 NVIDIA(TensorRT)와 Intel(OpenVINO)이 2026년 문서에서 주된 또는 직접 입력 형식으로 쓴다. ONNX 는 Facebook(지금의 Meta)과 함께 정의한 형식이라 Microsoft 단독 정의는 아니다. Microsoft Copilot Studio 가 Google 의 A2A 를 지원하는 것은 다른 회사 인터페이스를 쓰는 쪽이라 Microsoft 의 표준 선점이 아니다."
+  ],
+  "evidence_up_after": [
+    "2026-06-30 분기 말 Microsoft 365 Copilot 유료 좌석은 3,000만 개를 넘었고 분기 순증이 직전 분기의 두 배를 넘었다. [EV-microsoft-005]",
+    "2026-03-31 분기 말 Microsoft 365 Copilot 유료 좌석은 2,000만 개를 넘었다. [EV-microsoft-006]",
+    "2025년 10~12월 분기 Microsoft 365 Copilot 유료 좌석은 1,500만 개였다. [EV-microsoft-031]",
+    "수백만 개발자가 GitHub Copilot 에서 자체 모델 MAI-Code-1-Flash 를 썼고 코드 수락률이 올랐다. [EV-microsoft-010]",
+    "자체 AI 가속기 Maia 200 은 Microsoft Copilot 등 자사 생산 작업을 처리하며 OpenAI·MAI·오픈소스 모델을 돌리고, 미국·유럽·호주에 배치되고 있다. 배치 수량은 밝히지 않았다. [EV-microsoft-008, EV-microsoft-071, EV-microsoft-072]",
+    "Microsoft 는 2017-09-07 Facebook 과 함께 AI 모델 교환 형식 ONNX 를 발표했고 두 회사가 오픈소스로 함께 개발했다고 밝혔다. [EV-microsoft-036]",
+    "NVIDIA TensorRT 문서(2026-09-08 갱신)는 학습한 모델을 들여오는 주된 방법이 ONNX 교환 형식이고 ONNX 파서 라이브러리를 함께 낸다고 적는다. [EV-microsoft-037]",
+    "Intel OpenVINO 2026 문서는 OpenVINO 런타임이 ONNX 모델 파일을 자체 중간 표현으로 바꾸지 않고 바로 읽는다고 적는다. [EV-microsoft-038]"
+  ],
+  "evidence_down_after": [
+    "사용자 투표형 Arena 텍스트 종합 순위(2026-10-02)에서 마이크로소프트 모델 최고 순위는 317위(phi-4)다. 참고 지표다. [EV-microsoft-009]",
+    "마이크로소프트는 최상위 성능을 OpenAI 와 Anthropic 모델에서 받고 모델을 서로 바꿔 쓸 수 있게 설계했다고 밝혔다. [EV-microsoft-010]",
+    "Microsoft 는 2026-10-09 판단 점수 모델 Microsoft-Decision-1 을 Alibaba 의 공개 모델 Qwen3.5-9B 를 후학습해 내놓았다고 밝혔다. [EV-microsoft-043]",
+    "에이전트·코딩을 묶은 새 Copilot 의 Home·Code 는 Frontier 프로그램에서 배포를 시작할 예정이고 Autopilot 은 2026-09 말 비공개 프리뷰로 넓히는 단계다. [EV-microsoft-002]",
+    "Maia 의 다기가와트 배치와 주력 추론 시스템 전환은 2027년에 시작하는 계획이다. [EV-microsoft-070]"
+  ],
+  "cite": [
+    "EV-microsoft-002",
+    "EV-microsoft-005",
+    "EV-microsoft-006",
+    "EV-microsoft-008",
+    "EV-microsoft-009",
+    "EV-microsoft-010",
+    "EV-microsoft-031",
+    "EV-microsoft-036",
+    "EV-microsoft-037",
+    "EV-microsoft-038",
+    "EV-microsoft-043",
+    "EV-microsoft-070",
+    "EV-microsoft-071",
+    "EV-microsoft-072"
+  ],
+  "reconfirm": [
+    "EV-microsoft-002",
+    "EV-microsoft-005",
+    "EV-microsoft-006",
+    "EV-microsoft-008",
+    "EV-microsoft-009",
+    "EV-microsoft-010",
+    "EV-microsoft-031",
+    "EV-microsoft-036",
+    "EV-microsoft-037",
+    "EV-microsoft-038",
+    "EV-microsoft-043"
+  ],
+  "reason": "사용자 지시(2026-10-13) Maia 추적: Maia 200 의 생산 작업·배치 지역(실측)과 2027년 다기가와트 계획을 나눠 적는다(입력 그대로)"
+}

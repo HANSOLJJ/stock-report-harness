@@ -1,0 +1,84 @@
+{
+  "items": [
+    {
+      "file": "triggers",
+      "id": "TRG-019",
+      "field": "observation",
+      "old": "지금 Apple ④ 판단은 3 이다(다각화 빈약, Baltra 는 내부 전용).",
+      "new": "지금 Apple ④ 판단은 5점이다. 칩·서버·소프트웨어 플랫폼·모델·응용은 자체 사용이라 수직계열화 2.5(칸 값 합 2.5)이고, AI 무관 매출 100% 로 다각화 2.5 다. 판매 칸이 없어 비교 그룹이 없다.",
+      "finding": "출력 B1",
+      "checked": "results apple.F4 score 5, layers chip·server·platform·app self / model sold / cloud none, vertical_raw 3.0→2.5, non_ai_revenue_share 1.0, diversification 2.5. 조율자가 Apple ④ 를 다시 세우면 칸 구성·점수를 다시 대조한다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-019",
+      "field": "recheck.what",
+      "old": "새 제품군이 ④(호황 이후 비전 — 사업 부문 수·자체 칩 출하)의 사업 부문으로 셀 만큼 매출·배치가 생겼는지 본다.",
+      "new": "새 제품군이 ④ 보유표의 어느 칸을 판매로 바꾸거나 새 칸을 채울 만큼 매출·배치가 생겼는지 본다(④ 는 이미 상한이라 근거 문장과 비교 그룹만 고친다).",
+      "finding": "출력 B1",
+      "checked": "apple.F4 점수 5(상한 5)와 보유표 구조(rules.md ④)에 대조. 점수 이동 표기는 쓰지 않았다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-021",
+      "field": "observation",
+      "old": "지금 Apple ④ 판단은 3 이고, 근거는 다각화가 빈약하고 Baltra 는 내부 전용이라 외판 수익이 없다는 것이다.",
+      "new": "지금 Apple ④ 판단은 5점이고 이미 만점이다. Baltra 양산이 확인돼도 칩 칸은 지금도 자체 사용이다.",
+      "finding": "출력 B1",
+      "checked": "results apple.F4 score 5·layers.chip self(judgments apple.F4: A20 Pro Neural Engine 자체 설계 칩을 자기 기기에만 대규모 출하). 조율자가 Apple ④ 를 다시 세우면 다시 대조한다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-021",
+      "field": "condition",
+      "old": "반대로 양산 지연·취소가 1차 자료나 신뢰할 매체로 확인되면 ④ 상향 경로가 닫힌 것으로 기록하고, ② 판단 근거의 실리콘 역량 문장을 다시 본다.",
+      "new": "반대로 양산 지연·취소가 1차 자료나 신뢰할 매체로 확인되면 ② 판단 근거의 실리콘 역량 문장을 다시 본다.",
+      "finding": "출력 B1",
+      "checked": "④ 가 이미 5(상한)라 닫을 상향 경로가 없다. 리뷰 제안 문장 그대로.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-021",
+      "field": "recheck.what",
+      "old": "④ 의 수직계열화 입력인 자체 칩 출하가 생겼는지 보고, 확인되면 ④ 를 위쪽으로 다시 본다.",
+      "new": "Baltra 가 외부에 팔리면 ④ 칩 칸을 판매로 다시 본다(④ 는 이미 상한이라 근거 문장과 비교 그룹만 고친다).",
+      "finding": "출력 B1",
+      "checked": "apple.F4 칩 칸 자체 사용·점수 5. 이어지는 ② 문장(범위 하한)은 results apple.F2 2(범위 2~5)와 같아 그대로 뒀다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "evidence",
+      "id": "EV-microsoft-002",
+      "field": "relevance",
+      "old": "마이크로소프트 ② 판단은 3점이고, Maia 200 배포 물량이 확인되지 않았고 Arena 상위권에 자체 모델이 없으며 모델을 OpenAI·Anthropic 양쪽에서 조달한다는 것을 근거로 든다.",
+      "new": "마이크로소프트 ② 판단은 4점이다. 성능 도약은 자체 모델이 독립 측정 순위의 회사별 최고 모델 목록에 없고 최상위 성능을 OpenAI·Anthropic 모델에서 받아 실패이고, 패러다임 적응과 표준 선점은 통과다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results microsoft.F2 score 4, calc paths performance_leap fail·paradigm_adaptation pass·standard_capture pass. judgments microsoft.F2 판정 칸(2026-10-08 Artificial Analysis 목록에 자체 모델 없음, 최상위 성능은 OpenAI·Anthropic 에서 받음). 'Maia 200 배포 물량 미확인' 은 올릴 근거 칸의 사실이라 이 문장에서 뺐다. 조율자가 Microsoft ② 를 다시 세우면 다시 대조한다.",
+      "depends_on": [
+        "microsoft.F2"
+      ]
+    },
+    {
+      "file": "evidence",
+      "id": "EV-microsoft-002",
+      "field": "conditional_impact",
+      "old": "재검토: 마이크로소프트 ② 의 패러다임 적응 경로 통과 여부를 위쪽으로 다시 볼지 본다.",
+      "new": "재검토: 마이크로소프트 ② 의 패러다임 적응 경로 근거에 새 Copilot 의 채택 지표를 더할지 본다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "패러다임 적응은 지금 통과(results microsoft.F2 paths)라 '통과 여부를 위쪽으로' 가 맞지 않는다. judgments microsoft.F2 는 새 Copilot 을 시범 배포 단계라 채택 지표로 세지 않는다고 적는다. 점수 표기 없음.",
+      "depends_on": []
+    }
+  ]
+}

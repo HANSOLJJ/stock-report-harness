@@ -11107,6 +11107,76 @@
       "sha256": "16ae0eb2ad3aaf5198b2bf8d750f84c63008d9f30d1dd538ac6d6a36c3655448",
       "note": "원문을 2026-10-12 열어 발췌했다. sha256 은 그때 받은 파일 값이다",
       "conflict_of_interest": null
+    },
+    {
+      "company_id": "microsoft",
+      "kind": "news",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments - The Official Microsoft Blog",
+      "publisher": "The Official Microsoft Blog",
+      "publisher_url": "https://blogs.microsoft.com",
+      "url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "사용자가 2026-10-13 추적을 지시한 CNBC 보도(2026-10-12, 'Microsoft will mainly use its Maia chips for AI inference')의 1차 발표다. CNBC 본문은 접근 거부(Akamai)로 열지 못해 회사 블로그 원문을 근거로 쓴다. 게시 시각은 페이지의 article:published_time 이다.",
+      "source_id": "SRC-WEB-microsoft-904",
+      "sha256": null,
+      "conflict_of_interest": null
+    },
+    {
+      "company_id": "openai",
+      "kind": "news",
+      "title": "About · OpenAI Startup Fund",
+      "publisher": "OpenAI Startup Fund",
+      "publisher_url": "https://openai.fund",
+      "url": "https://openai.fund/about",
+      "published_at_utc": "2026-09-15T11:35:01Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "펀드 자신의 소개 페이지이고 날짜 표기가 없다. 2026-10-13 직접 열었고, 정보 마감 전 같은 문장이 있었음을 인터넷 아카이브 2026-09-15 11:35:01 UTC 스냅숏(web.archive.org/web/20260915113501/https://openai.fund/about)으로 확인했다. 게시 시각은 그 스냅숏 시각이다.",
+      "source_id": "SRC-WEB-openai-969",
+      "sha256": null,
+      "conflict_of_interest": null
+    },
+    {
+      "company_id": "openai",
+      "kind": "news",
+      "title": "Anysphere raises $8M from OpenAI to build an AI-powered IDE | TechCrunch",
+      "publisher": "TechCrunch",
+      "publisher_url": "https://techcrunch.com",
+      "url": "https://techcrunch.com/2023/10/11/anysphere-raises-8m-from-openai-to-build-an-ai-powered-ide/",
+      "published_at_utc": "2023-10-11T19:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "기사 머리의 게시 시각 12:00 PM PDT · October 11, 2023 을 UTC 로 옮겼다.",
+      "source_id": "SRC-WEB-openai-970",
+      "sha256": null,
+      "conflict_of_interest": null
+    },
+    {
+      "company_id": "openai",
+      "kind": "news",
+      "title": "Altman offers $2 million in AI credits to Y Combinator startups for equity | The Daily Star",
+      "publisher": "The Daily Star",
+      "publisher_url": "https://www.thedailystar.net",
+      "url": "https://www.thedailystar.net/news/tech-startup/news/altman-offers-2-million-ai-credits-y-combinator-startups-equity-4183461",
+      "published_at_utc": "2026-05-24T00:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "TechCrunch·The Verge·The Information 보도를 인용한 2차 보도다. 페이지는 게시일 24 May 2026 만 적고 시각은 없다.",
+      "source_id": "SRC-WEB-openai-971",
+      "sha256": null,
+      "conflict_of_interest": null
+    },
+    {
+      "company_id": "meta",
+      "kind": "news",
+      "title": "Muse Wonder and Muse Wonder Full: a material jump in intelligence over previous Meta models | Artificial Analysis",
+      "publisher": "Artificial Analysis",
+      "publisher_url": "https://artificialanalysis.ai",
+      "url": "https://artificialanalysis.ai/articles/muse-wonder",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "페이지의 article:published_time 은 2026-10-12(시각 없음)이고 홈페이지 변경 기록도 12 Oct 로 적는다. 정보 마감일 당일의 독립 측정 글이다.",
+      "source_id": "SRC-WEB-meta-912",
+      "sha256": null,
+      "conflict_of_interest": null
     }
   ]
 }

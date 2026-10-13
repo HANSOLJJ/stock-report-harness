@@ -1,0 +1,502 @@
+{
+  "items": [
+    {
+      "file": "triggers",
+      "id": "TRG-006",
+      "field": "observation",
+      "old": "아마존 ① 판단은 5점(Prime 2억+ 소비자 락인)이다.",
+      "new": "아마존 ① 판단은 4점이다. 소비자 채널(마켓플레이스·Prime 구독)의 사다리 합은 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 에 걸린다.",
+      "finding": "출력 B1",
+      "checked": "results amazon.F1 score 4, calc raw 5·ai_monetization_gate applied cap 4(value partial). 가장 강한 채널은 소비자(judgments amazon.F1). 'Prime 2억+' 는 2020 주주서한 숫자라 현재 판단 근거에 없어 뺐다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-007",
+      "field": "observation",
+      "old": "마이크로소프트 ① 판단은 5점이고, 업무 채널(Microsoft 365 상업용 유료 좌석 4.5억 개 초과)의 전환비용 통과와 가격 실측 통과(16분기)를 근거로 들며, Windows·M365 기본 탑재는 배포 전략이라 회수 루프로 세지 않는다.",
+      "new": "마이크로소프트 ① 판단은 4점이다. 업무 채널(Microsoft 365 상업용 유료 좌석 4.5억 개 초과)의 전환비용 통과와 가격 실측 통과(16분기)로 사다리 합은 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 에 걸리고, Windows·M365 기본 탑재는 배포 전략이라 회수 루프로 세지 않는다.",
+      "finding": "출력 B1",
+      "checked": "results microsoft.F1 score 4, calc raw 5·gate applied cap 4(ai_monetized partial)·switching pass·pricing pass 16분기·loop unknown. judgments microsoft.F1 판정 칸이 '회수 루프 미확인, 기본 탑재는 세지 않음' 이라 마지막 절은 그대로 뒀다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-012",
+      "field": "observation",
+      "old": "메타 ④ 판단은 자체 칩(MTIA)·자체 모델(Muse)·AI 유통·AI 밖 매출(광고) 네 자리로 4점이고, 기업용 AI 플랫폼은 매출·고객 배치가 공시되지 않아 자리로 세지 않았다.",
+      "new": "메타 ④ 판단은 5점이다. 칩·서버·소프트웨어 플랫폼은 자체 사용, 모델·응용은 판매라 수직계열화 2.5(칸 값 합 3.5 를 상한에서 자름)이고, AI 무관 매출 98.7% 로 다각화 2.5 다. 기업용 AI 플랫폼은 매출·고객 배치가 공시되지 않아 보유표 칸의 근거로 세지 않았다.",
+      "finding": "출력 B1",
+      "checked": "results meta.F4 score 5, layers chip·server·platform self / cloud none / model·app sold, vertical_raw 3.5→2.5, non_ai_revenue_share 0.987, diversification 2.5.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-012",
+      "field": "recheck.what",
+      "old": "메타 ④ 다각화 — 광고 밖 사업 부문이 실질 매출을 내는지",
+      "new": "메타 ④ 보유표의 소프트웨어 플랫폼·모델·응용 칸에 기업용 AI 매출이 공시로 더해지는지",
+      "finding": "출력 B1",
+      "checked": "다각화 축은 이미 구간 최대(98.7%)라 재검토 대상이 아니다. 리뷰 제안은 '모델·응용 칸' 이었으나 meta.F4 에서 모델·응용은 이미 판매이고 자체 사용인 칸은 소프트웨어 플랫폼이라 그 칸을 더했다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-015",
+      "field": "observation",
+      "old": "⑤ 판단도 종결 전인 이 인수를 근거로 세지 않으며, ④ 는 칩·모델·클라우드·AI 밖 매출 네 자리로 4점이다.",
+      "new": "⑤ 판단도 종결 전인 이 인수를 근거로 세지 않는다. ④ 판단은 3점이다. 칩·서버·소프트웨어 플랫폼·응용은 판매, 모델은 자체 사용이라 수직계열화 2.5(칸 값 합 4.5 를 상한에서 자름)이고, AI 무관 매출 7.7% 로 다각화 0.5 다.",
+      "finding": "출력 B1",
+      "checked": "results nvidia.F4 score 3, layers chip·server·platform·app sold / model self / cloud none, vertical_raw 4.5→2.5, non_ai_revenue_share 0.077(리뷰의 8% 는 반올림), diversification 0.5. 같은 관찰 칸의 ① 문장(4점)은 지금 results nvidia.F1 4 와 같아 건드리지 않았다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-015",
+      "field": "condition",
+      "old": "종결되면 ① 의 회수 루프·업무 채널 입력과 ④ 자리를 다시 보고, 규제 불허나 계약 해지로 무산되면 판단에서 이 거래를 언급한 문장을 고친다.",
+      "new": "종결되면 ① 의 회수 루프·업무 채널 입력과 ④ 보유표를 다시 보고, 규제 불허나 계약 해지로 무산되면 판단에서 이 거래를 언급한 문장을 고친다.",
+      "finding": "출력 B1(같은 트리거의 낡은 ④ 용어)",
+      "checked": "④ 는 지금 자리 사다리가 아니라 층별 보유표다(rules.md ④). 점수·숫자는 바꾸지 않았다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-015",
+      "field": "recheck.what",
+      "old": "인수로 종결되고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 자리 근거를 보강한다.",
+      "new": "인수로 종결되고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 보유표 칸 근거를 보강한다.",
+      "finding": "출력 B1",
+      "checked": "리뷰 제안 '④ 보유표 칸 근거'. nvidia.F4 클라우드 칸은 지금 없음이라 칸 이름은 적지 않았다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-019",
+      "field": "observation",
+      "old": "지금 Apple ④ 판단은 3 이다(다각화 빈약, Baltra 는 내부 전용).",
+      "new": "지금 Apple ④ 판단은 5점이다. 칩·서버·소프트웨어 플랫폼·모델·응용은 자체 사용이라 수직계열화 2.5(칸 값 합 2.5)이고, AI 무관 매출 100% 로 다각화 2.5 다. 판매 칸이 없어 비교 그룹이 없다.",
+      "finding": "출력 B1",
+      "checked": "results apple.F4 score 5, layers chip·server·platform·app self / model sold / cloud none, vertical_raw 3.0→2.5, non_ai_revenue_share 1.0, diversification 2.5. 조율자가 Apple ④ 를 다시 세우면 칸 구성·점수를 다시 대조한다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-019",
+      "field": "recheck.what",
+      "old": "새 제품군이 ④(호황 이후 비전 — 사업 부문 수·자체 칩 출하)의 사업 부문으로 셀 만큼 매출·배치가 생겼는지 본다.",
+      "new": "새 제품군이 ④ 보유표의 어느 칸을 판매로 바꾸거나 새 칸을 채울 만큼 매출·배치가 생겼는지 본다(④ 는 이미 상한이라 근거 문장과 비교 그룹만 고친다).",
+      "finding": "출력 B1",
+      "checked": "apple.F4 점수 5(상한 5)와 보유표 구조(rules.md ④)에 대조. 점수 이동 표기는 쓰지 않았다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-021",
+      "field": "observation",
+      "old": "지금 Apple ④ 판단은 3 이고, 근거는 다각화가 빈약하고 Baltra 는 내부 전용이라 외판 수익이 없다는 것이다.",
+      "new": "지금 Apple ④ 판단은 5점이고 이미 만점이다. Baltra 양산이 확인돼도 칩 칸은 지금도 자체 사용이다.",
+      "finding": "출력 B1",
+      "checked": "results apple.F4 score 5·layers.chip self(judgments apple.F4: A20 Pro Neural Engine 자체 설계 칩을 자기 기기에만 대규모 출하). 조율자가 Apple ④ 를 다시 세우면 다시 대조한다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-021",
+      "field": "condition",
+      "old": "반대로 양산 지연·취소가 1차 자료나 신뢰할 매체로 확인되면 ④ 상향 경로가 닫힌 것으로 기록하고, ② 판단 근거의 실리콘 역량 문장을 다시 본다.",
+      "new": "반대로 양산 지연·취소가 1차 자료나 신뢰할 매체로 확인되면 ② 판단 근거의 실리콘 역량 문장을 다시 본다.",
+      "finding": "출력 B1",
+      "checked": "④ 가 이미 5(상한)라 닫을 상향 경로가 없다. 리뷰 제안 문장 그대로.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-021",
+      "field": "recheck.what",
+      "old": "④ 의 수직계열화 입력인 자체 칩 출하가 생겼는지 보고, 확인되면 ④ 를 위쪽으로 다시 본다.",
+      "new": "Baltra 가 외부에 팔리면 ④ 칩 칸을 판매로 다시 본다(④ 는 이미 상한이라 근거 문장과 비교 그룹만 고친다).",
+      "finding": "출력 B1",
+      "checked": "apple.F4 칩 칸 자체 사용·점수 5. 이어지는 ② 문장(범위 하한)은 results apple.F2 2(범위 2~5)와 같아 그대로 뒀다.",
+      "depends_on": [
+        "apple.F4"
+      ]
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-026",
+      "field": "recheck.what",
+      "old": "알리바바 ⑧ 판단(지금 −3)의 근거인 양방향 지정학, 곧 미국의 첨단 칩 금수와 중국의 자국 모델 해외 접근 제한이 그대로인지, 칩 조달 길이 열려 의존이 덜 치우쳤는지.",
+      "new": "알리바바 ⑧ 판단(지금 −2, 지정학 축)의 근거인 미국의 첨단 칩 수출 금지와 1260H 등재가 그대로인지, 칩 조달 길이 열려 지정학 위험이 덜해졌는지.",
+      "finding": "출력 B1",
+      "checked": "results alibaba.F8 score −2·deciding_axes geopolitics(rung −2: 미국 수출 금지 집행·1260H 등재·VIE 매출 11.7~15.3%). judgments alibaba.F8 은 '중국의 자국 모델 해외 이용 제한 논의는 법률·결정 전이라 점수에 넣지 않는다' 고 적어 옛 문장의 그 절을 판단 근거에 맞게 고쳤다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-030",
+      "field": "recheck.what",
+      "old": "테슬라 ④ 판단(지금 4, 배치 전인 Optimus·Terafab 은 자리에서 뺐다)에 Optimus 생산·배치 실측을 넣어 사업 폭을 다시 볼지.",
+      "new": "테슬라 ④ 판단(지금 4.5, Optimus 는 응용 칸 안의 제품이라 칸 값을 바꾸지 않는다)의 응용 칸 근거에 Optimus 생산·배치 실측을 더할지.",
+      "finding": "출력 B1",
+      "checked": "results tesla.F4 score 4.5(vertical 2.0 + diversification 2.5). judgments tesla.F4 가 'Robotaxi 와 Optimus 는 응용 칸 안의 제품이라 칸 값을 바꾸지 않는다' 고 적는다. 리뷰 제안의 'Terafab 은 보유표 칸에서 뺐다' 는 tesla.F4 에 근거가 없어 쓰지 않았다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-034",
+      "field": "condition",
+      "old": "Starship 페이로드는 2026-09-28 Flight 14 의 Starlink 위성 배치로 이미 실측됐으나, 비AI 사업 귀속 원칙(로켓·위성 통신은 ①·③ 별도 수익모델·④ 에서만 센다)에 따라 ② 근거가 아니라 ④ 근거이고 스페이스X ④ 판단은 4점이다.",
+      "new": "Starship 페이로드는 2026-09-28 Flight 14 의 Starlink 위성 배치로 이미 실측됐으나, 비AI 사업 귀속 원칙(로켓·위성 통신은 ①·③ 별도 수익모델·④ 에서만 센다)에 따라 ② 근거가 아니라 ④ 근거이고 스페이스X ④ 판단은 4.5점이다(수직계열화 2.0, AI 무관 매출 85.1% 로 다각화 2.5).",
+      "finding": "출력 B1",
+      "checked": "results spacex-xai.F4 score 4.5, vertical 2.0(cloud·model sold)·non_ai_revenue_share 0.851·diversification 2.5. 귀속 원칙 괄호는 rules.md 2.4 와 같다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-058",
+      "field": "observation",
+      "old": "지금 Oracle 함정 판단은 ⑦ -2(범위 최저), ⑧ −3, ⑨ −3 으로 깊다.",
+      "new": "지금 Oracle 함정 판단은 ⑦ −3(범위 하한), ⑧ −3, ⑨ −3 으로 깊다.",
+      "finding": "출력 B1",
+      "checked": "results oracle F7 −3·F8 −3·F9 −3. ⑦ 범위는 −3~0(rules.md ⑦).",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-071",
+      "field": "observation",
+      "old": "Anthropic ④ 판단은 모델·AI 유통 두 자리로 2점, ⑧ 판단은 −3(컴퓨트를 모델 경쟁자 넷에게서 빌리는 공급 축)이다.",
+      "new": "Anthropic ④ 판단은 2.5점이다. 소프트웨어 플랫폼·모델·응용 판매로 수직계열화 2.5(칸 값 합 3 을 상한에서 자름)이고, AI 무관 매출 0% 로 다각화 0 이다. ⑧ 판단은 −3(컴퓨트를 모델 경쟁자 넷에게서 빌리는 공급 축)이다.",
+      "finding": "출력 B1",
+      "checked": "results anthropic.F4 score 2.5, layers platform·model·app sold, vertical_raw 3.0→2.5, non_ai_revenue_share 0.0, diversification 0. anthropic.F8 score −3·deciding_axes commitment·supply(supply rung −3, 공급자 넷이 모두 모델 경쟁자)라 ⑧ 절은 그대로다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-071",
+      "field": "condition",
+      "old": "자체 칩의 실물 샘플링이나 출하가 1차 자료로 확인되면 ④(호황 이후 비전 — 자체 칩 출하 여부)를 상향 방향으로 다시 본다.",
+      "new": "자체 칩의 실물 샘플링이나 출하가 1차 자료로 확인되면 ④ 보유표의 칩 칸(지금 없음)을 다시 본다.",
+      "finding": "출력 B1",
+      "checked": "results anthropic.F4 layers.chip none. 리뷰 제안은 '칩 칸을 자체 사용으로' 였으나 샘플링은 대규모 자체 사용이 아니라 칸 값을 미리 적지 않았다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-102",
+      "field": "observation",
+      "old": "지금 NVIDIA ⑤ 판단은 동맹 등급 +2, 적대 등급 −2 로 3점이고, ⑦ 판단은 −2(범위 하한)다.",
+      "new": "지금 NVIDIA ⑤ 판단은 동맹 등급 +2, 적대 등급 −2 로 3점이고, ⑦ 판단은 −3(범위 하한)이다.",
+      "finding": "출력 B1",
+      "checked": "results nvidia.F5 score 3(calc 3 + A 2 + H −2)·F7 −3.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-025",
+      "field": "recheck.what",
+      "old": "알리바바 ④ 판단(지금 5, 칩·모델·클라우드·AI 유통·커머스 다섯 자리)에 자체 칩 출하를 수직계열화 근거로 더할지",
+      "new": "알리바바 ④ 판단(지금 5, 보유표 여섯 층 가운데 판매 넷·자체 사용 둘, AI 무관 매출 85.5%)의 칩 칸이 새 칩의 외부 판매로 자체 사용에서 판매로 바뀌는지",
+      "finding": "출력 B1 아래 문단",
+      "checked": "results alibaba.F4 score 5, layers chip·server self / platform·cloud·model·app sold, non_ai_revenue_share 0.855. alibaba.F4 칩 칸은 Zhenwu 칩 배치로 이미 자체 사용이라 '출하를 더할지' 대신 판매로 바뀌는지로 썼다. 이어지는 ② 절(지금 3)은 results alibaba.F2 3 과 같다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-027",
+      "field": "recheck.what",
+      "old": "알리바바 ④ 판단(지금 5, 다섯 자리)이 센 자리와 해외 배치(브라질·프랑스·네덜란드 데이터센터)에 새 리전·스페인 데이터센터가 더해지는지, 게임 사업이 빠지면서 사업 폭이 줄어드는지. 네덜란드는 판단에 이미 있으므로 중복을 가린다.",
+      "new": "알리바바 ④ 판단(지금 5, 보유표 여섯 층 가운데 판매 넷·자체 사용 둘, AI 무관 매출 85.5%)에서 새 리전·스페인 데이터센터가 클라우드 칸의 판매 근거를 넓히는지, 게임 사업이 빠지면서 AI 무관 매출 몫이 달라지는지.",
+      "finding": "출력 B1 아래 문단",
+      "checked": "results alibaba.F4 값은 TRG-025 와 같다. '브라질·프랑스·네덜란드 데이터센터' 는 judgments alibaba.F4 의 현재 문장에 없고(이전 판단 기록에만 있다) 옛 사다리 말('센 자리·사업 폭')이라 문장 전체를 보유표·AI 무관 몫 말로 다시 썼다. 게임 매각이 AI 무관 몫 줄에 닿는지는 원문으로 가리지 못해 질문으로만 뒀다.",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-017",
+      "field": "observation",
+      "old": "TSMC ⑥ 은 6-K 반기 재무제표로 복원한 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 값으로 계산하는 일반 트랙이고, 매출 성장 잣대(P3)는 30.56% 로 30% 경계 바로 위다.",
+      "new": "TSMC ⑥ 은 6-K 반기 재무제표로 복원한 최근 1년(2025-07-01~2026-06-30, 대만 IFRS) 값으로 계산하는 일반 트랙이고, 성장 조정 PER 은 1.08(PER 33.0 ÷ 최근 1년 매출 성장 30.6)로 구간 경계 1.0(1 미만이면 0)에 가장 가깝다.",
+      "finding": "출력 B1(지시서 대상 3)",
+      "checked": "results tsmc.F6 calc.parameters.P1: per_used 32.97, revenue_growth 0.30557, value 1.0789(band 1~2), boundary.nearest_boundary 1.0. P3 는 parameters_not_in_track.P3.absorbed(성장은 P1 에 흡수).",
+      "depends_on": []
+    },
+    {
+      "file": "triggers",
+      "id": "TRG-017",
+      "field": "recheck.what",
+      "old": "P3(최근 1년 매출 ÷ 그 전 1년 − 1)가 30% 경계 바로 위(30.56%)라 다음 실행에서 밴드가 바뀔 수 있다.",
+      "new": "성장 조정 PER(PER 을 최근 1년 매출 성장률의 % 숫자로 나눈 값)이 1.08 로 경계 1.0 에 가장 가까워(1 미만이면 0 구간) 다음 실행에서 구간이 바뀔 수 있다.",
+      "finding": "출력 B1(지시서 대상 3)",
+      "checked": "results tsmc.F6 P1 value 1.0789·nearest_boundary 1.0(경계 표지 flag false, 거리 +7.9%). 산식은 rules.md ⑥ 성장 조정 PER 과 같다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tsmc-086",
+      "field": "relevance",
+      "old": "추론: ⑧ 지정학 축에서 TSMC 생산자산의 약 80% 가 대만에 있다는 수치 근거이며, 미국 비중은 약 14% 로 늘어나는 중이다.",
+      "new": "추론: ⑧ 지정학 축에서 TSMC 생산자산의 약 80% 가 대만에 있다는 수치 근거이며, 2024-12-31 에서 2025-12-31 사이 대만 비중은 77.2% 에서 80.0% 로 높아지고 미국 비중은 16.0% 에서 13.9% 로 낮아졌다(계산).",
+      "finding": "근거 A",
+      "checked": "20-F(tsm-20251231.htm) Note 38 표 머리글 'December 31, 2024 / December 31, 2025'(캐시 원문 확인). 대만 2,613,112.2/3,383,106.4=77.2%→3,102,343.0/3,876,339.8=80.0%, 미국 541,836.3→540,057.4 로 16.0%→13.9%.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tsmc-086",
+      "field": "conditional_impact",
+      "old": "미국·일본 분산 속도를 다음 연간 표로 다시 본다.",
+      "new": "대만 집중이 높아지는지 낮아지는지를 다음 연간 표로 다시 본다.",
+      "finding": "근거 A",
+      "checked": "같은 표에서 대만 비중이 늘고 미국 비중이 줄어 '분산 속도' 서술이 방향과 어긋났다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-anthropic-076",
+      "field": "unverified[0]",
+      "old": "같은 발표문은 이 약정을 AWS 기술에 대한 100억 달러 초과 10년 약정으로 적는다.",
+      "new": "같은 발표문은 새 협약에서 10년간 AWS 기술에 1,000억 달러($100B) 넘게 쓰기로 했다고 적는다.",
+      "finding": "근거 A",
+      "checked": "anthropic.com/news/anthropic-amazon-compute 를 직접 받아 확인: 'We are committing more than $100 billion over the next ten years to AWS technologies'. EV-anthropic-004 relevance 의 $100B 초과와 같다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tesla-063",
+      "field": "relevance",
+      "old": "(약 8배)",
+      "new": "(원문은 한 달 전보다 800% 늘었다고 적으며 약 9배다)",
+      "finding": "근거 A",
+      "checked": "발췌 'That is an 800 percent increase from when the vehicles hit the road about a month ago' — 800% 증가는 처음 값의 9배.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tesla-063",
+      "field": "relevance",
+      "old": "③ 모방 불가능성은 자산 덕에 실제로 앞서야 통과인데, Waymo 는 미국에서 무인 차량 4,000대 넘게, 오스틴에서 300대 넘게 운행한다.",
+      "new": "③ 모방 불가능성은 자산 덕에 실제로 앞서야 통과인데, 이 기사에는 Waymo 와 견줄 운행 대수가 없다.",
+      "finding": "근거 A",
+      "checked": "이 근거의 발췌·위치에 Waymo 수치가 없다(발췌는 Cybercab 문단 둘과 'not ready to ship' 문단). Waymo 4,000대·오스틴 300대는 EV-tesla-040 발췌에 있어 이 근거에서는 뺐다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-114",
+      "field": "relevance",
+      "old": "지급이 대부분 8년 뒤에 몰린다는 사실이라",
+      "new": "매출 인식이 대부분 8년 뒤에 몰린다는 사실이라",
+      "finding": "근거 A",
+      "checked": "SB Energy S-1/A(캐시 원문): backlog 는 'revenue that has been contracted but not yet billed' 이고 시기표는 'recognized' 기준. 96개월 뒤 $357B/$439B=81%.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-114",
+      "field": "conditional_impact",
+      "old": "24개월 안 약 10억 달러는 전체의 1% 안팎이라는 계산을 적되",
+      "new": "24개월 안 약 10억 달러는 전체의 1% 미만(약 0.2%)이라는 계산을 적되",
+      "finding": "근거 A",
+      "checked": "$1B ÷ $439B = 0.23%. 점수 표기 없음(SCORE_TEXT_RE 통과).",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-112",
+      "field": "relevance",
+      "old": "감사받는 재무제표 주석 수준에서 확인해 준다.",
+      "new": "분기 재무제표 주석(미감사) 수준에서 확인해 준다.",
+      "finding": "근거 A",
+      "checked": "10-Q(nvda-20260726.htm, 캐시 원문) Item 1 'Financial Statements (Unaudited)'.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-149",
+      "field": "relevance",
+      "old": "분자인 구독자 수는 2026-03-31 이후 갱신되지 않았다.",
+      "new": "분자인 구독자 수는 2026-03-31 이후 갱신된 공개 숫자를 찾지 못했다.",
+      "finding": "근거 A",
+      "checked": "회사가 안 냈다는 단정을 우리가 찾지 못했다는 표현으로 바꿨다. judgments openai.F1 판정 칸도 '2026-03-31 뒤 구독자 수는 미확인' 이라 적는다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-149",
+      "field": "conditional_impact",
+      "old": "분모는 12억 명(2026-10), 분자는 구독자 5,000만 명 이상(2026-03-31)이라 시점이 다르므로 구독자 수 갱신이 나오기 전에는 비율(약 5.6%)을 2026-03-31 의 같은 발표 기준으로만 적는다.",
+      "new": "분모는 12억 명(2026-10), 분자는 구독자 5,000만 명 이상(2026-03-31)이라 시점이 다르므로 구독자 수 갱신이 나오기 전에는 비율을 2026-03-31 같은 발표의 분모(주간 사용자 9억 명 이상)로 나눈 약 5.6% 로만 적는다. 12억 명으로 나누면 약 4.2% 이지만 분자와 시점이 다른 값이다.",
+      "finding": "근거 A",
+      "checked": "EV-openai-011 발췌 '900 million weekly active users, and over 50 million subscribers'(2026-03-31). 50÷900=5.56%, 50÷1,200=4.17%. results openai.F1 calc ai_monetized_share 0.056 과 같다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-microsoft-058",
+      "field": "conditional_impact",
+      "old": "(나)의 직접 근거는 2026-07-01 정가 인상 공지로 둔다.",
+      "new": "(나)의 직접 근거는 2025-12-04 정가 인상 공지(2026-07-01 시행)로 둔다.",
+      "finding": "근거 A",
+      "checked": "EV-microsoft-025 published_at 2025-12-04, 발췌 'effective July 1, 2026'.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-007",
+      "field": "relevance",
+      "old": "④ 호황 이후 비전은 자체 칩을 출하가 확인될 때만 수직계열화 근거로 세므로, 이 칩은 출하 여부에 따라 ④ 근거가 될 수 있다.",
+      "new": "④ 호황 이후 비전의 층별 보유표는 출하·배치가 확인된 것만 칸 값으로 세는데, 알리바바 칩 칸은 이미 배치된 Zhenwu 칩으로 '자체 사용' 이라 새 칩의 공개만으로는 칸 값이 바뀌지 않는다.",
+      "finding": "근거 B",
+      "checked": "results alibaba.F4 layers.chip self. judgments alibaba.F4 와 EV-alibaba-071: Zhenwu 칩을 알리바바 클라우드로 외부 고객 650곳 넘게 쓰고 하드웨어 판매 매출은 공시에 없다. rules.md ④ 판정 지침(출하·배치와 계획을 나눈다).",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-007",
+      "field": "relevance",
+      "old": "알리바바 ④ 판단은 4점이고 클라우드 성장(+45%)·AI 제품 매출·해외 데이터센터로 폭을 셌다.",
+      "new": "알리바바 ④ 판단은 5점이고 칩·서버는 자체 사용, 소프트웨어 플랫폼·클라우드·모델·응용은 판매라 수직계열화 2.5(칸 값 합 5 를 상한에서 자름)이며, AI 무관 매출 85.5% 로 다각화 2.5 다.",
+      "finding": "근거 B",
+      "checked": "results alibaba.F4 score 5, vertical_raw 5.0→2.5, non_ai_revenue_share 0.855, diversification 2.5.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-007",
+      "field": "conditional_impact",
+      "old": "칩이 자사 클라우드에 배치됐거나 외부에 팔리고 있다는 사실이 1차 발표나 공시로 확인되면 ④ 에 자체 칩 출하를 수직계열화 근거로 더하는 쪽으로 다시 본다. 판단이 이미 높은 구간이라 출하가 확인돼도 결론이 달라지지 않을 수 있다.",
+      "new": "칩이 하드웨어로 외부에 팔려 매출이 인식된다는 사실이 1차 발표나 공시로 확인되면 ④ 보유표의 칩 칸을 판매로 다시 본다. 수직계열화는 이미 상한이라 칸 값이 바뀌어도 결론이 달라지지 않을 수 있다.",
+      "finding": "근거 B",
+      "checked": "칩 칸 자체 사용→판매의 조건은 rules.md ④ 칸 값 정의(남에게 팔아 매출을 인식). 수직계열화 raw 5.0 이 상한 2.5 를 넘는다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-002",
+      "field": "relevance",
+      "old": "④ 는 출하와 사업 부문만 세고 새 사업은 매출이나 고객 배치가 생길 때 근거가 된다.",
+      "new": "④ 호황 이후 비전의 층별 보유표는 출하·실제 배포가 확인된 칸만 값으로 세므로, 기업용 AI 플랫폼은 출범만으로는 칸 근거가 아니고 매출이나 고객 배치가 생길 때 근거가 된다.",
+      "finding": "근거 B",
+      "checked": "rules.md ④(층별 보유표·판정 지침)와 judgments meta.F4(기업용 AI 플랫폼을 칸 근거로 세지 않음)에 대조.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-002",
+      "field": "relevance",
+      "old": "메타 ④ 판단은 3점이고 근거는 “AI 광고 최적화로 매출 +28%, 그러나 광고 의존 약 98%”다.",
+      "new": "메타 ④ 판단은 5점이고 칩·서버·소프트웨어 플랫폼은 자체 사용, 모델·응용은 판매라 수직계열화 2.5(칸 값 합 3.5 를 상한에서 자름)이며, AI 무관 매출 98.7% 로 다각화 2.5 다.",
+      "finding": "근거 B",
+      "checked": "results meta.F4 score 5, layers·vertical_raw 3.5→2.5, non_ai_revenue_share 0.987, diversification 2.5.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-002",
+      "field": "conditional_impact",
+      "old": "기업용 매출이나 고객 배치가 공시되면 그때 Meta ④ 의 광고 의존을 낮춰 볼지 다시 본다.",
+      "new": "기업용 매출이나 고객 배치가 공시되면 그때 Meta ④ 보유표의 소프트웨어 플랫폼·모델·응용 칸에 반영할지 다시 본다.",
+      "finding": "근거 B",
+      "checked": "광고 의존 서술은 옛 ④ 말이다. 다각화는 이미 구간 최대(98.7%)라 보유표 칸을 대상으로 썼다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-004",
+      "field": "relevance",
+      "old": "Meta ① 은 이미 소비자 채널 락인 최고 칸(5점, 30억+ 사용자)이고 ① 은 가장 강한 채널로 점수를 매기므로 새 앱 지표로 움직이지 않는다.",
+      "new": "Meta ① 은 소비자 채널(하루 활성 사용자 36억 명)의 사다리 합이 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 이고, ① 은 가장 강한 채널로 점수를 매기므로 새 앱 지표로 움직이지 않는다.",
+      "finding": "근거 B",
+      "checked": "results meta.F1 score 4, calc raw 5·gate applied cap 4(ai_monetized partial). judgments meta.F1: 하루 활성 사용자 2026-06 평균 36억 명.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-004",
+      "field": "relevance",
+      "old": "Meta ③ 판단은 별도 수익모델 통과, 모방 불가능성 부분, 후발 가속도 부분(“AI 매출 미공시, 채택 증거 아직 없음”), 문이 닫힌 증거 없음이다.",
+      "new": "Meta ③ 판단은 별도 수익모델 통과, 모방 불가능성 실패, 후발 가속도 미확인(같은 정의의 성장률 두 개를 만들 수 없다)이고 문이 닫힌 증거는 없어 점수를 만들지 않는다.",
+      "finding": "근거 B",
+      "checked": "judgments meta.F3 inputs revenue_model pass·imitation fail·acceleration unknown(tier e)·door_closed fail, results meta.F3 score null(needs_judgment).",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-004",
+      "field": "conditional_impact",
+      "old": "Meta ③ 후발 가속도를 부분에서 통과로 다시 볼지 본다. Muse 주간 사용자가 분기마다 더 빠르게 늘고 Meta 가 사용자나 수익화(광고·구독) 수치를 공식 공시하면 그렇다.",
+      "new": "Meta ③ 후발 가속도를 미확인에서 판정 가능한 값으로 다시 볼지 본다. 같은 정의의 Muse 사용자나 수익화(광고·구독) 수치를 Meta 가 두 시점 이상 공식 공시해 성장률 두 개를 만들 수 있으면 그렇다.",
+      "finding": "근거 B",
+      "checked": "judgments meta.F3 판정 칸: 같은 정의의 성장률 두 개를 만들 수 없어 미확인. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-004",
+      "field": "relevance",
+      "old": "인수가 끝나면 GPU 밖 사업 부문이 늘어 ④(호황 이후 비전 — 사업 부문 수·자체 칩 출하)의 근거가 된다.",
+      "new": "인수가 끝나고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 층별 보유표의 칸 근거가 될 수 있다.",
+      "finding": "근거 B",
+      "checked": "옛 ④ 정의(사업 부문 수·자체 칩 출하)를 rules.md ④ 층별 보유표 말로 바꿨다. 어느 칸인지는 원문으로 가르지 못해 적지 않았다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-004",
+      "field": "relevance",
+      "old": "지금 NVIDIA ④ 판단은 10개 영역 진출로 최상단 5점이다.",
+      "new": "지금 NVIDIA ④ 판단은 3점이고 칩·서버·소프트웨어 플랫폼·응용은 판매, 모델은 자체 사용이라 수직계열화 2.5(칸 값 합 4.5 를 상한에서 자름)이며, AI 무관 매출 7.7% 로 다각화 0.5 다.",
+      "finding": "근거 B",
+      "checked": "results nvidia.F4 score 3, vertical_raw 4.5→2.5, non_ai_revenue_share 0.077, diversification 0.5.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-004",
+      "field": "conditional_impact",
+      "old": "④ 근거가 아니고, ④ 는 이미 최상단이다.",
+      "new": "④ 근거가 아니다.",
+      "finding": "근거 B",
+      "checked": "NVIDIA ④ 는 3(상한 5 아님)이라 '이미 최상단' 이 틀렸다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-083",
+      "field": "relevance",
+      "old": "④ 는 출하와 사업 부문만 세며, NVIDIA 는 이미 GeForce 로 PC 시장에 있으므로 PC용 통합 칩이 기존 제품군 안의 확장인지 새 사업 자리인지를 따져야 한다.",
+      "new": "④ 층별 보유표는 여섯 층의 칸 값과 AI 무관 매출 몫으로 매기며, NVIDIA 는 이미 GeForce 로 PC 시장에 있으므로 PC용 통합 칩이 기존 소비자 기기 매출 안의 확장인지 새 층의 매출인지를 따져야 한다.",
+      "finding": "근거 B",
+      "checked": "judgments nvidia.F4 non_ai_share_basis: Gaming $16,042M·OEM and Other $619M 을 소비자 기기 수요(AI 무관)로 셌다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-083",
+      "field": "relevance",
+      "old": "지금 NVIDIA ④ 판단은 4점(칩·모델·클라우드·AI 밖 매출 네 자리)이다.",
+      "new": "지금 NVIDIA ④ 판단은 3점이고 칩·서버·소프트웨어 플랫폼·응용은 판매, 모델은 자체 사용이라 수직계열화 2.5(칸 값 합 4.5 를 상한에서 자름)이며, AI 무관 매출 7.7% 로 다각화 0.5 다.",
+      "finding": "근거 B",
+      "checked": "results nvidia.F4 score 3(EV-nvidia-004 와 같은 값).",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-083",
+      "field": "conditional_impact",
+      "old": "기존 PC 그래픽 제품군 안의 제품 확장이라 ④ 의 사업 자리 수를 늘리지 않는다.",
+      "new": "기존 PC 그래픽 제품군 안의 제품 확장이라 ④ 보유표의 칸 값을 바꾸지 않는다.",
+      "finding": "근거 B",
+      "checked": "사업 자리 수는 옛 ④ 말이다. 점수 표기 없음.",
+      "depends_on": []
+    }
+  ]
+}

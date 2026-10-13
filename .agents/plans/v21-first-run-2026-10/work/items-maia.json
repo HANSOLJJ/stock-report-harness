@@ -1,0 +1,103 @@
+{
+  "sources": [
+    {
+      "key": "src-maia",
+      "company_id": "microsoft",
+      "kind": "news",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments - The Official Microsoft Blog",
+      "publisher": "The Official Microsoft Blog",
+      "publisher_url": "https://blogs.microsoft.com",
+      "url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "사용자가 2026-10-13 추적을 지시한 CNBC 보도(2026-10-12, 'Microsoft will mainly use its Maia chips for AI inference')의 1차 발표다. CNBC 본문은 접근 거부(Akamai)로 열지 못해 회사 블로그 원문을 근거로 쓴다. 게시 시각은 페이지의 article:published_time 이다."
+    }
+  ],
+  "evidence": [
+    {
+      "key": "ev-maia-primary",
+      "company_id": "microsoft",
+      "factors": ["F4", "F8"],
+      "kind": "news",
+      "source_id": "NEW:src-maia",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — 다기가와트 배치와 주력 추론 시스템 문단",
+      "excerpt": "We will scale our Azure Maia family to multi-gigawatt deployments starting in 2027, making Maia the primary inference system for Microsoft products and services.",
+      "relevance": "Microsoft 가 2027년부터 자체 AI 가속기 Maia 를 다기가와트 규모로 늘려 Microsoft 제품·서비스의 주력 추론 시스템으로 삼겠다고 밝힌 회사 발표다. 시작 시점이 2027년인 계획이라 지금의 배치 규모나 GPU 대체 몫을 보여 주지는 않는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Maia 배치가 실제로 다기가와트 규모에 이르고 Microsoft 추론 작업의 주력이 됐다는 사실이 실적 발표나 10-K·10-Q 로 확인되면, Microsoft ⑧ 공급 축(GPU 공급자 의존)과 NVIDIA 의 대체 공급 판단을 다시 본다. 계획 발표만으로는 바꾸지 않는다.",
+      "horizon": "long — 배치 시작은 2027년",
+      "counter_evidence": [
+        "같은 글은 학습용 칩이나 NVIDIA·AMD 구매 계획을 언급하지 않는다.",
+        "회사 블로그 발표라 배치 물량·투자액이 없다."
+      ],
+      "unverified": [
+        "Maia 가 맡을 추론 작업의 몫과 배치 수량은 공개되지 않았다."
+      ],
+      "locator": "본문 첫 문단(부제 'Azure Maia 200 now in production; Azure Maia 300 coming in 2027' 다음) 둘째 문장"
+    },
+    {
+      "key": "ev-maia-200-workloads",
+      "company_id": "microsoft",
+      "factors": ["F2", "F4"],
+      "kind": "news",
+      "source_id": "NEW:src-maia",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — Maia 200 생산 작업 문단",
+      "excerpt": "Maia 200 is now serving Microsoft production workloads, including Microsoft Copilot, and supporting the MAI team as they develop next-generation models, with GitHub Copilot and Microsoft Foundry to follow by end of year. Across these workloads, Maia 200 runs OpenAI models, Microsoft’s own MAI models and leading open-source model families.",
+      "relevance": "Maia 200 이 Microsoft Copilot 같은 Microsoft 의 생산 작업을 처리하고 있고, OpenAI 모델·자체 MAI 모델·오픈소스 모델을 돌린다는 회사 발표다. 추론: 자체 칩이 Microsoft 자기 서비스 안에서 쓰이는 자체 사용이며, 외부 Azure 고객에게 칩이나 Maia 인스턴스를 판다는 문장은 글에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: Microsoft ④ 칩 칸을 자체 사용으로 읽는 사실을 보강한다. Maia 를 외부 Azure 고객에게 인스턴스로 팔기 시작했다는 발표가 나오면 칩 칸을 판매로 다시 본다.",
+      "horizon": "short — 이미 가동 중",
+      "counter_evidence": [
+        "GitHub Copilot·Microsoft Foundry 이전은 연말 계획이다."
+      ],
+      "unverified": [
+        "Maia 200 이 처리하는 Copilot 요청의 몫은 공개되지 않았다."
+      ],
+      "locator": "본문 둘째 문단(첫 두 문장)"
+    },
+    {
+      "key": "ev-maia-200-deploy",
+      "company_id": "microsoft",
+      "factors": ["F2", "F4"],
+      "kind": "news",
+      "source_id": "NEW:src-maia",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — Maia 200 배치 지역과 효율 문단",
+      "excerpt": "Maia 200 is deploying across the United States, Europe and Australia and delivering up to 1.7x more tokens per watt for built-in AI capabilities in Microsoft Teams, Copilot and Cowork experiences compared with leading GPU infrastructure.",
+      "relevance": "Maia 200 이 미국·유럽·호주에 배치되고 있으며, Teams·Copilot·Cowork 의 내장 AI 기능에서 최신 GPU 인프라보다 와트당 토큰을 최대 1.7배 낸다는 회사 발표다. 효율 수치는 회사가 잰 값이고 독립 측정이 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 배치 지역이 넓어졌다는 사실이며 배치 수량은 없다. 배치 수량이나 Maia 가 맡는 추론 몫이 공개되면 Microsoft ② 의 자체 실리콘 서술과 ⑧ 공급 축을 다시 본다.",
+      "horizon": "short — 이미 배치 중",
+      "counter_evidence": [
+        "효율 비교의 기준(어느 GPU 세대인지)과 측정 조건이 공개되지 않았다."
+      ],
+      "unverified": [
+        "Maia 200 배치 수량은 공개되지 않았다."
+      ],
+      "locator": "소제목 'Maia 200: Driving the workloads that Microsoft runs at scale' 아래 둘째 문단 첫 문장"
+    },
+    {
+      "key": "ev-maia-300-perf",
+      "company_id": "microsoft",
+      "factors": ["F4"],
+      "kind": "news",
+      "source_id": "NEW:src-maia",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — Maia 300 성능 예상 문단",
+      "excerpt": "By improving efficiency across the system, we expect Maia 300 to deliver 40% more tokens per megawatt compared to leading GPU-based systems. And in a full 96-accelerator configuration, it delivers up to 7x the rack-scale token throughput of Maia 200.",
+      "relevance": "Microsoft 가 3세대 Maia 300 이 최신 GPU 기반 시스템보다 메가와트당 토큰을 40% 더 낼 것으로 예상한다는 회사 발표다. 2027년 배치 전의 예상치라 실측이 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 예상 성능이라 점수 근거가 아니다. 배치 뒤 독립 측정이나 회사 실적 자료로 GPU 대비 효율이 확인되면 NVIDIA 의 대체 공급 판단에서 이 사실을 쓴다.",
+      "horizon": "long — 배치 시작은 2027년",
+      "counter_evidence": [
+        "회사 예상치이고 비교 대상 GPU 시스템이 특정되지 않았다."
+      ],
+      "unverified": [
+        "Maia 300 의 실측 성능은 아직 없다."
+      ],
+      "locator": "본문 셋째 문단(소제목 앞, 'Maia 300 is a complete intelligent system' 로 시작) 둘째·셋째 문장"
+    }
+  ]
+}

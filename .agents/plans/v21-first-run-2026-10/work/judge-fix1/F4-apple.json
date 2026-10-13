@@ -1,0 +1,128 @@
+{
+  "changes": {
+    "layers": {
+      "chip": "self",
+      "server": "self",
+      "platform": "self",
+      "cloud": "none",
+      "model": "self",
+      "app": "self"
+    },
+    "layer_evidence": {
+      "chip": [
+        "EV-apple-046"
+      ],
+      "server": [
+        "EV-apple-047",
+        "EV-apple-048",
+        "EV-apple-010"
+      ],
+      "platform": [
+        "EV-apple-050",
+        "EV-apple-051"
+      ],
+      "cloud": [
+        "EV-apple-047",
+        "EV-apple-049",
+        "EV-apple-012"
+      ],
+      "model": [
+        "EV-apple-050",
+        "EV-apple-014",
+        "EV-apple-051",
+        "EV-apple-037",
+        "EV-apple-064"
+      ],
+      "app": [
+        "EV-apple-052",
+        "EV-apple-011",
+        "EV-apple-037"
+      ]
+    },
+    "layer_triggers": {},
+    "primary_layer": null,
+    "non_ai_revenue_share": 1.0,
+    "non_ai_share_basis": "제품·서비스별 순매출 표의 다섯 줄(iPhone·Mac·iPad·Wearables, Home and Accessories·Services)을 모두 AI 무관으로 셌다. 최근 12개월(2025-06-29~2026-06-27) 순매출 $466,823M = FY2025 $416,161M − 9개월 전년 $313,695M + 9개월 올해 $364,357M 이고, 앞 넷은 소비자 기기, Services 는 광고·App Store·iCloud·AppleCare·결제 같은 소비자 구독·서비스 수요다. AI 만의 매출 줄이나 AI 구독 줄은 공시에 없다. iCloud+ 에 얹힌 서버 모델 한도 상향은 iCloud 저장 구독 안에 들어 있어 떼어 내지 않는다.",
+    "non_ai_share_evidence": [
+      "EV-apple-054",
+      "EV-apple-055",
+      "EV-apple-049"
+    ]
+  },
+  "evidence_after": [
+    "Apple ④ 는 수직계열화 2.5(칸 값 합 2.5)와 다각화 2.5(AI 무관 100%)를 더해 5.0 이다. 판매 칸이 없어 비교 그룹이 없다.",
+    "모델은 자체 사용이다. Apple Foundation Models 는 Google·Gemini 와 협력해 맞춤 제작됐고 Apple 기기와 Private Cloud Compute 에서 돌아가며, Apple Intelligence·Siri AI 같은 자기 기능 안에서 대규모로 쓰인다. 2026-06 WWDC 개발자 세션은 사용자가 iCloud+ 로 올려 더 높은 한도를 얻는다고 안내했지만, 2026-09-09 iPhone 18 Pro 보도자료는 서버 모델 기능의 확장 이용을 앞으로 유료로 제공한다고 적고 같은 보도자료의 iCloud+ 소개는 저장 공간과 Apple Invites·Private Relay·Hide My Email·사용자 지정 메일 도메인·HomeKit Secure Video 를 포함 기능으로 들 뿐 AI 한도 상향을 들지 않는다. 그래서 모델 사용 한도를 파는 상품은 지금 팔리는 것이 아니라 계획으로 읽고, ① 이 같은 각주를 계획으로 읽은 것과 같은 성격으로 둔다.",
+    "모델 칸 판매는 Alphabet 의 Google One 처럼 가장 강한 모델 접근을 값이 붙은 구독으로 지금 팔 때 적는다. 유료 한도 상향이 실제로 팔리기 시작했다는 회사 발표나 요금 안내가 나오면 모델 칸을 판매로 다시 본다. 모델 칸을 자체 사용으로 읽어도 수직계열화는 칸 값 합 2.5 로 같은 점수다.",
+    "칩은 자체 사용이다. A20 Pro 의 Neural Engine 처럼 AI 연산 블록을 넣은 자체 설계 칩을 자기 기기에만 넣어 대규모로 출하하고 칩을 따로 팔지 않는다. 칩 칸은 칩이나 칩을 담은 시스템을 하드웨어로 남에게 팔아 매출을 인식하거나 파운드리처럼 남의 설계를 만들어 줄 때 판매로 적고, 자기가 설계한 칩을 자기 클라우드 인스턴스나 자기 제품 안에서만 수익화하면 자체 사용으로 적는다. 칩을 빌려주는 매출은 클라우드 칸이 판매로 센다.",
+    "서버·네트워크는 자체 사용이다. Apple 은 자체 데이터센터 인프라를 갖고 있다고 10-Q 에 적고, Private Cloud Compute 서버를 자체 M5 칩으로 올린다는 보도가 있다(Apple 칩 서버는 2차 보도 등급). 같은 시기 Private Cloud Compute 가 Google Cloud 인프라에서 Nvidia·Intel 칩을 쓴다는 보도도 있어 두 방식이 섞여 있다. 서버·네트워크 칸은 자기가 설계한 시스템·네트워크 장비를 팔면 판매, 자기가 설계한 장비를 대규모로 자기만 쓰면 자체 사용, 남이 만든 장비를 사 오거나 남의 데이터센터를 빌려 쓰면 없음으로 적는다. 이 칸을 없음으로 읽어도 수직계열화는 상한 2.5 에 걸려 점수가 같다.",
+    "소프트웨어 플랫폼은 자체 사용이다. Foundation Models 프레임워크로 개발자에게 모델 접근을 주되 소규모 개발자에게 API 비용을 받지 않는다. 자기가 만든 층을 돈을 받지 않고 내주거나 자기 제품 안에서만 대규모로 쓰면 자체 사용으로 적는다.",
+    "클라우드는 없음이다. Apple 은 자기 데이터센터 외에 외부 클라우드 사업자에게서 연산 용량을 빌려 쓰고, iCloud 는 콘텐츠 저장·동기화 소비자 서비스이며 연산 인프라 임대가 아니다.",
+    "응용은 자체 사용이다. Siri AI 는 iOS 27 과 함께 베타로 도입돼 사용자가 켜는 OS 기능이고 따로 값이 붙은 상품이라는 공시가 없다.",
+    "AI 무관 몫은 100% 로 다각화 2.5 구간이다. AI 무관 몫은 공시된 매출 줄을 그 줄의 수요 성격으로 가른다. 클라우드 인프라 줄은 범용 연산과 AI 연산이 섞여 있고 그 비율이 회사마다 같은 기준으로 공시되지 않으므로 줄 전체를 AI 수요로 센다. 광고·소비자 기기·소비자 구독·리테일·자동차·에너지·발사·통신·기업용 소프트웨어 줄은 AI 기능이 들어 있어도 AI 무관으로 세고, AI 서비스 매출이 들어갈 수 있는 기타 줄은 AI 로 센다.",
+    "근거 등급: 데이터센터·외부 클라우드 의존·매출 표는 10-Q·10-K 공시, 모델 한도는 Apple 1차 개발자 세션, Apple 칩 서버는 2차 보도다. 클라우드 칸이 없음이므로 ⑧ 공급 축을 0 으로 적을 수 없다."
+  ],
+  "evidence_up_after": [
+    "2026-06 개발자 세션에서 Apple 은 사용자가 iCloud+ 로 올려 Apple Foundation Model 의 일일 한도를 높일 수 있다고 안내했다. [EV-apple-051]",
+    "A20 Pro 는 온디바이스 AI 모델을 가속하는 Neural Engine 을 넣은 Apple 자체 설계 칩이다. [EV-apple-046]",
+    "Apple 은 AI 를 포함한 사업이 자체 데이터센터 인프라와 외부 클라우드 용량에 기댄다고 적는다. [EV-apple-047]",
+    "Apple 은 Private Cloud Compute 서버를 M5 칩으로 올린다고 보도됐다. [EV-apple-010]",
+    "개발자는 Foundation Models API 로 차세대 Apple Foundation Models 를 쓸 수 있다. [EV-apple-050]",
+    "Apple 은 2026년 3분기에 Siri AI 를 도입했다. [EV-apple-052]",
+    "최근 12개월 순매출 $466,823M 은 iPhone·Mac·iPad·웨어러블 기기와 Services 로만 나뉘고 AI 만의 매출 줄이 없다. [EV-apple-054, EV-apple-055]",
+    "Apple Foundation Models 는 Apple 기기와 Private Cloud Compute 에서 계속 돌아간다고 Apple 과 Google 이 함께 밝혔다. [EV-apple-014]"
+  ],
+  "evidence_down_after": [
+    "Apple 은 컴퓨팅 수요를 채우려고 외부 클라우드 사업자에 기댄다. [EV-apple-047]",
+    "Private Cloud Compute 는 복잡한 Siri AI 질의에 Google Cloud 인프라와 Nvidia·Intel 칩을 쓴다고 보도됐다. [EV-apple-012]",
+    "차세대 Apple Foundation Models 는 Google 과 Gemini 모델의 협력으로 맞춤 제작됐다. [EV-apple-050]",
+    "서버 모델 기능의 확장 이용은 앞으로 유료로 제공된다고 보도자료 각주가 적는다. [EV-apple-037]",
+    "소규모 개발자는 Private Cloud Compute 의 Apple Foundation Models 를 API 비용 없이 쓴다. [EV-apple-050]",
+    "iPhone 18 Pro 보도자료의 iCloud+ 소개는 저장 공간과 Apple Invites·Private Relay·Hide My Email·사용자 지정 메일 도메인·HomeKit Secure Video 를 포함 기능으로 들고 AI 한도 상향은 들지 않는다. [EV-apple-064]"
+  ],
+  "cite": [
+    "EV-apple-006",
+    "EV-apple-008",
+    "EV-apple-010",
+    "EV-apple-011",
+    "EV-apple-012",
+    "EV-apple-013",
+    "EV-apple-014",
+    "EV-apple-019",
+    "EV-apple-020",
+    "EV-apple-021",
+    "EV-apple-037",
+    "EV-apple-046",
+    "EV-apple-047",
+    "EV-apple-048",
+    "EV-apple-049",
+    "EV-apple-050",
+    "EV-apple-051",
+    "EV-apple-052",
+    "EV-apple-054",
+    "EV-apple-055",
+    "EV-apple-064"
+  ],
+  "reconfirm": [
+    "EV-apple-006",
+    "EV-apple-008",
+    "EV-apple-010",
+    "EV-apple-011",
+    "EV-apple-012",
+    "EV-apple-013",
+    "EV-apple-014",
+    "EV-apple-019",
+    "EV-apple-020",
+    "EV-apple-021",
+    "EV-apple-037",
+    "EV-apple-046",
+    "EV-apple-047",
+    "EV-apple-048",
+    "EV-apple-049",
+    "EV-apple-050",
+    "EV-apple-051",
+    "EV-apple-052",
+    "EV-apple-054",
+    "EV-apple-055"
+  ],
+  "reason": "1차 리뷰 사실·출처 a F3: 유료 한도 상향은 보도자료 각주대로 앞으로의 일이라 ① 과 같은 성격(계획)으로 읽어 모델 칸을 자체 사용으로, 판매 칸이 없어 주 레이어를 비운다"
+}

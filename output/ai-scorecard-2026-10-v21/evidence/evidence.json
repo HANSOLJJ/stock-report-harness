@@ -13,9 +13,9 @@
       "published_at_utc": "2026-09-22T09:57:17Z",
       "title": "Alibaba deepens AI push with new chip, bigger model; shares jump 5% (BusinessWorld 전재 Reuters)",
       "excerpt": "Alibaba also unveiled the Zhenwu V900, a new AI chip developed by its T-Head semiconductor unit. Mr. Wu said the processor delivers three times the performance of its predecessor, the M890, and can be linked in clusters of up to 500,000 chips to train and run the largest AI models.",
-      "relevance": "추론: 알리바바가 자체 AI 가속기를 공개하고 더 큰 모델을 예고했다는 보도다. ④ 호황 이후 비전은 자체 칩을 출하가 확인될 때만 수직계열화 근거로 세므로, 이 칩은 출하 여부에 따라 ④ 근거가 될 수 있다. 더 큰 모델(10조 파라미터)은 예고라 계획 0점 원칙(규칙 2.1, 계획·발표는 현재 점수에 넣지 않는다)에 따라 근거가 아니며 트리거로만 지켜본다. 알리바바 ④ 판단은 4점이고 클라우드 성장(+45%)·AI 제품 매출·해외 데이터센터로 폭을 셌다. (선별 확신: 중간)",
+      "relevance": "추론: 알리바바가 자체 AI 가속기를 공개하고 더 큰 모델을 예고했다는 보도다. ④ 호황 이후 비전의 층별 보유표는 출하·배치가 확인된 것만 칸 값으로 세는데, 알리바바 칩 칸은 이미 배치된 Zhenwu 칩으로 '자체 사용' 이라 새 칩의 공개만으로는 칸 값이 바뀌지 않는다. 더 큰 모델(10조 파라미터)은 예고라 계획 0점 원칙(규칙 2.1, 계획·발표는 현재 점수에 넣지 않는다)에 따라 근거가 아니며 트리거로만 지켜본다. 알리바바 ④ 판단은 5점이고 칩·서버는 자체 사용, 소프트웨어 플랫폼·클라우드·모델·응용은 판매라 수직계열화 2.5(칸 값 합 5 를 상한에서 자름)이며, AI 무관 매출 85.5% 로 다각화 2.5 다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: 공개·예고 단계라 알리바바 ④ 판단을 바꾸지 않는다. 칩이 자사 클라우드에 배치됐거나 외부에 팔리고 있다는 사실이 1차 발표나 공시로 확인되면 ④ 에 자체 칩 출하를 수직계열화 근거로 더하는 쪽으로 다시 본다. 판단이 이미 높은 구간이라 출하가 확인돼도 결론이 달라지지 않을 수 있다.",
+      "conditional_impact": "지금은 유지: 공개·예고 단계라 알리바바 ④ 판단을 바꾸지 않는다. 칩이 하드웨어로 외부에 팔려 매출이 인식된다는 사실이 1차 발표나 공시로 확인되면 ④ 보유표의 칩 칸을 판매로 다시 본다. 수직계열화는 이미 상한이라 칸 값이 바뀌어도 결론이 달라지지 않을 수 있다.",
       "horizon": "medium — 출하가 확인될 때까지",
       "counter_evidence": [
         "'중국에서 가장 강력한' 은 회사 주장이지 독립 측정이 아니다."
@@ -213,7 +213,7 @@
       "published_at_utc": "2026-09-29T16:00:41Z",
       "title": "AI agents are fighting over your shopping cart: Meta’s Muse blocked by Amazon and Walmart - NBC News",
       "excerpt": "Meta’s new AI agent, Muse, is supposed to handle everyday online errands, including shopping. At several of the country’s biggest retailers, it can’t get through the door.",
-      "relevance": "추론: 메타의 쇼핑 에이전트 Muse 가 아마존 소비자 채널을 거치려 했고 아마존(·월마트)이 이를 막았다는 NBC 보도다. ① 은 채널별로 재며 회사의 실질 채널 가운데 가장 강한 락인이 점수를 정하므로 아마존은 소비자 락인(가격을 올려도 남는가)으로 매기는데, 제3자 에이전트가 그 채널을 우회하는 경로가 생겼다는 반대 방향 사례다. 아마존 ① 판단은 5점(Prime 2억+ 락인, Alexa+ 무료 개방, Bedrock AgentCore)이다. (선별 확신: 낮음)",
+      "relevance": "추론: 메타의 쇼핑 에이전트 Muse 가 아마존 소비자 채널을 거치려 했고 아마존(·월마트)이 이를 막았다는 NBC 보도다. ① 은 채널별로 재며 회사의 실질 채널 가운데 가장 강한 락인이 점수를 정하므로 아마존은 소비자 락인(가격을 올려도 남는가)으로 매기는데, 제3자 에이전트가 그 채널을 우회하는 경로가 생겼다는 반대 방향 사례다. 아마존 ① 판단은 4점이다. 소비자 채널(마켓플레이스·Prime 구독)의 사다리 합은 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 에 걸린다. (선별 확신: 낮음)",
       "channel": "press",
       "conditional_impact": "재검토: 아마존 ① 소비자 채널 락인을 아래쪽으로 다시 볼지 본다. 차단이 효과를 내지 못하고 소비자가 에이전트 경로로 빠져나간다는 수치(Prime 회원 수·쇼핑 트래픽)가 공시되거나 보도되면 그렇다. 지금은 사건만 있고 이탈 수치가 없다.",
       "horizon": "long — 에이전트 쇼핑의 영향은 수년에 걸쳐 드러난다",
@@ -418,16 +418,16 @@
       "published_at_utc": "2026-09-28T14:55:00Z",
       "title": "Meta taps MongoDB CEO Desai to drive enterprise AI push",
       "excerpt": "Sept 28 (Reuters) - Meta Platforms has poached MongoDB CEO Chirantan \"CJ\" Desai to spearhead a new business designed to bring the social media giant's AI tools to corporate customers. … Meta said on Monday it would bring its AI models, agents and tools to businesses under its new Meta Enterprise Platform, including the newly launched Muse, Meta Business Agent and coding tools.",
-      "relevance": "추론: 메타가 광고 밖 새 사업으로 기업용 AI 플랫폼을 출범했다는 FT 보도다. ④ 는 출하와 사업 부문만 세고 새 사업은 매출이나 고객 배치가 생길 때 근거가 된다. 메타 ④ 판단은 3점이고 근거는 “AI 광고 최적화로 매출 +28%, 그러나 광고 의존 약 98%”다. (선별 확신: 낮음)",
+      "relevance": "추론: 메타가 광고 밖 새 사업으로 기업용 AI 플랫폼을 출범했다는 Reuters 보도(The Star 전재본)다. ④ 호황 이후 비전의 층별 보유표는 출하·실제 배포가 확인된 칸만 값으로 세므로, 기업용 AI 플랫폼은 출범만으로는 칸 근거가 아니고 매출이나 고객 배치가 생길 때 근거가 된다. 메타 ④ 판단은 5점이고 칩·서버·소프트웨어 플랫폼은 자체 사용, 모델·응용은 판매라 수직계열화 2.5(칸 값 합 3.5 를 상한에서 자름)이며, AI 무관 매출 98.7% 로 다각화 2.5 다. (선별 확신: 낮음)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: 출범과 책임자 영입(MongoDB CEO)만으로는 규칙 2.1(계획·발표는 현재 점수에 넣지 않으며 인사·조직 개편도 같다)에 따라 점수 근거가 아니다. 기업용 매출이나 고객 배치가 공시되면 그때 Meta ④ 의 광고 의존을 낮춰 볼지 다시 본다.",
+      "conditional_impact": "지금은 유지: 출범과 책임자 영입(MongoDB CEO)만으로는 규칙 2.1(계획·발표는 현재 점수에 넣지 않으며 인사·조직 개편도 같다)에 따라 점수 근거가 아니다. 기업용 매출이나 고객 배치가 공시되면 그때 Meta ④ 보유표의 소프트웨어 플랫폼·모델·응용 칸에 반영할지 다시 본다.",
       "horizon": "long — 기업용 매출은 여러 분기에 걸쳐 생긴다",
       "counter_evidence": [
         "사업 책임자 영입은 조직 개편이라 계획 0점 원칙(규칙 2.1)에 따라 근거가 아니다(2026-10 라벨링 사람 판정)."
       ],
       "unverified": [
         "출범이 판매 개시인지 발표인지 미확인",
-        "같은 사건 보도(WSJ·TechCrunch·Reuters·CNBC 등) 중 FT 를 고름"
+        "같은 사건을 다룬 FT·WSJ·TechCrunch·CNBC 기사가 여럿 있어 Reuters 기사(The Star 전재본) 하나를 골랐다"
       ],
       "change_vs_previous": "new",
       "status": "confirmed",
@@ -446,9 +446,9 @@
       "published_at_utc": "2026-10-02T13:36:29Z",
       "title": "Meta’s Muse reportedly passes 3 million weekly users and 5m downloads",
       "excerpt": "More than 3 million people prompt Meta’s Muse at least once a week, according to internal data reviewed by The Information. More than 1 million send the AI agent a prompt every day, Jyoti Mann reported. The weekly figure is part of a wider group. More than 4 million people use Muse in some way each week, according to the data. Most prompts come through the Muse app. Meta launched the agent in the US three weeks ago. TNW has not independently verified the figures.",
-      "relevance": "추론: Meta 의 새 AI 앱 Muse 주간 사용자가 300만을 넘었다는 The Information 단독 보도다. Meta ① 은 이미 소비자 채널 락인 최고 칸(5점, 30억+ 사용자)이고 ① 은 가장 강한 채널로 점수를 매기므로 새 앱 지표로 움직이지 않는다. ② 패러다임 적응 경로는 Meta ② 판단에서 이미 통과다. 그래서 이 카드는 후발 서비스가 빨리 크는 소식으로서 ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에만 쓴다(2026-10 라벨링 사람 판정). Meta ③ 판단은 별도 수익모델 통과, 모방 불가능성 부분, 후발 가속도 부분(“AI 매출 미공시, 채택 증거 아직 없음”), 문이 닫힌 증거 없음이다. (선별 확신: 중간)",
+      "relevance": "추론: Meta 의 새 AI 앱 Muse 주간 사용자가 300만을 넘었다는 The Information 단독 보도다. Meta ① 은 소비자 채널(하루 활성 사용자 36억 명)의 사다리 합이 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 이고, ① 은 가장 강한 채널로 점수를 매기므로 새 앱 지표로 움직이지 않는다. ② 패러다임 적응 경로는 Meta ② 판단에서 이미 통과다. 그래서 이 카드는 후발 서비스가 빨리 크는 소식으로서 ③ 후발 가속도(AI 귀속 지표의 성장률이 오르는가)에만 쓴다(2026-10 라벨링 사람 판정). Meta ③ 판단은 별도 수익모델 통과, 모방 불가능성 실패, 후발 가속도 미확인(같은 정의의 성장률 두 개를 만들 수 없다)이고 문이 닫힌 증거는 없어 점수를 만들지 않는다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "재검토: Meta ③ 후발 가속도를 부분에서 통과로 다시 볼지 본다. Muse 주간 사용자가 분기마다 더 빠르게 늘고 Meta 가 사용자나 수익화(광고·구독) 수치를 공식 공시하면 그렇다. 단일 보도 수치 하나로는 바꾸지 않는다.",
+      "conditional_impact": "재검토: Meta ③ 후발 가속도를 미확인에서 판정 가능한 값으로 다시 볼지 본다. 같은 정의의 Muse 사용자나 수익화(광고·구독) 수치를 Meta 가 두 시점 이상 공식 공시해 성장률 두 개를 만들 수 있으면 그렇다. 단일 보도 수치 하나로는 바꾸지 않는다.",
       "horizon": "medium — 사용 지속성은 1~2 분기 지나야 보인다",
       "counter_evidence": [
         "주간 사용자 300만은 메타 전체 사용자 30억+ 에 비해 작다.",
@@ -477,9 +477,9 @@
       "published_at_utc": "2026-09-25T12:15:07Z",
       "title": "Introducing the new Copilot with Home, Code and Autopilot - The Official Microsoft Blog",
       "excerpt": "Code lets everyone build their own solutions with the tools to run them safely, and it’s powered by the same underlying technology as GitHub Copilot. And Autopilot is a persistent, proactive and personal agent that keeps working even when you’re not. Home and Code will start rolling out in our Frontier program in the coming weeks and Autopilot is expanding to private preview at the end of the month.",
-      "relevance": "추론: 마이크로소프트가 에이전트(Autopilot)·코딩(Code)을 묶은 새 Copilot 을 냈다는 공식 블로그 발표로, ② 의 패러다임 적응 경로(남이 바꾼 판 — 에이전트·추론·코딩 — 에 빨리 올라타는가)를 다시 볼 계기다. 마이크로소프트 ② 판단은 3점이고, Maia 200 배포 물량이 확인되지 않았고 Arena 상위권에 자체 모델이 없으며 모델을 OpenAI·Anthropic 양쪽에서 조달한다는 것을 근거로 든다. (선별 확신: 낮음)",
+      "relevance": "추론: 마이크로소프트가 에이전트(Autopilot)·코딩(Code)을 묶은 새 Copilot 을 냈다는 공식 블로그 발표로, ② 의 패러다임 적응 경로(남이 바꾼 판 — 에이전트·추론·코딩 — 에 빨리 올라타는가)를 다시 볼 계기다. 마이크로소프트 ② 판단은 4점이다. 성능 도약은 자체 모델이 독립 측정 순위의 회사별 최고 모델 목록에 없고 최상위 성능을 OpenAI·Anthropic 모델에서 받아 실패이고, 패러다임 적응과 표준 선점은 통과다. (선별 확신: 낮음)",
       "channel": "company_statement",
-      "conditional_impact": "재검토: 마이크로소프트 ② 의 패러다임 적응 경로 통과 여부를 위쪽으로 다시 볼지 본다. 에이전트 실무 독립 측정(OSWorld·Terminal-Bench 등)이나 Autopilot 채택 수치가 공개되면 그렇다. 제품 출시와 벤더 발표만으로는 바꾸지 않는다.",
+      "conditional_impact": "재검토: 마이크로소프트 ② 의 패러다임 적응 경로 근거에 새 Copilot 의 채택 지표를 더할지 본다. 에이전트 실무 독립 측정(OSWorld·Terminal-Bench 등)이나 Autopilot 채택 수치가 공개되면 그렇다. 제품 출시와 벤더 발표만으로는 바꾸지 않는다.",
       "horizon": "medium — 채택 수치는 1~2 분기 뒤",
       "counter_evidence": [
         "Copilot 의 모델은 OpenAI·Anthropic 에서 조달한 것이라 마이크로소프트 자기 기술 경로로 셀지 논쟁 여지가 있다.",
@@ -536,9 +536,9 @@
       "published_at_utc": "2026-09-28T18:44:49Z",
       "title": "OpenAI sparked Hugging Face bids with early investment offer ahead of Nvidia's $13 billion deal - cnbc.com",
       "excerpt": "Before Nvidia agreed to pay roughly $13 billion to buy open-source platform Hugging Face this month, OpenAI tried to invest $100 million into the startup, according to sources with knowledge of the matter. … It was Nvidia's second-biggest purchase ever, following the $20 billion acquisition of assets from AI chip startup Groq in December.",
-      "relevance": "추론: CNBC 보도가 NVIDIA 의 Hugging Face 관련 130억 달러 거래와 그 앞의 OpenAI 투자 제안을 전한다. NVIDIA 는 2026-09-02 Hugging Face 인수 계약에 서명했고, 종결은 2027 상반기 예정이며 규제 승인 조건부다. 인수가 끝나면 GPU 밖 사업 부문이 늘어 ④(호황 이후 비전 — 사업 부문 수·자체 칩 출하)의 근거가 된다. 지금 NVIDIA ④ 판단은 10개 영역 진출로 최상단 5점이다. (선별 확신: 낮음)",
+      "relevance": "추론: CNBC 보도가 NVIDIA 의 Hugging Face 관련 130억 달러 거래와 그 앞의 OpenAI 투자 제안을 전한다. NVIDIA 는 2026-09-02 Hugging Face 인수 계약에 서명했고, 종결은 2027 상반기 예정이며 규제 승인 조건부다. 인수가 끝나고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 층별 보유표의 칸 근거가 될 수 있다. 지금 NVIDIA ④ 판단은 3점이고 칩·서버·소프트웨어 플랫폼·응용은 판매, 모델은 자체 사용이라 수직계열화 2.5(칸 값 합 4.5 를 상한에서 자름)이며, AI 무관 매출 7.7% 로 다각화 0.5 다. (선별 확신: 낮음)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: 거래가 종결 전이라 계획·발표·서명은 점수 근거가 아니라는 원칙(rules.md 2.1)에 따라 ④ 근거가 아니고, ④ 는 이미 최상단이다. 종결되고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 근거 문장을 보강한다. NVIDIA ⑤ 판단도 종결 전인 이 인수를 ⑤ 근거로 세지 않는다.",
+      "conditional_impact": "지금은 유지: 거래가 종결 전이라 계획·발표·서명은 점수 근거가 아니라는 원칙(rules.md 2.1)에 따라 ④ 근거가 아니다. 종결되고 Hugging Face 매출이 NVIDIA 부문으로 잡히면 ④ 근거 문장을 보강한다. NVIDIA ⑤ 판단도 종결 전인 이 인수를 ⑤ 근거로 세지 않는다.",
       "horizon": "medium — 거래 종결 시점까지",
       "counter_evidence": [
         "기사의 주어는 OpenAI 의 선행 투자 제안이다.",
@@ -564,9 +564,9 @@
       "published_at_utc": "2026-09-30T16:21:03Z",
       "title": "CoreWeave Delivers NVIDIA Vera Rubin NVL72 Performance at Production Scale, Starting With Cognition - CoreWeave",
       "excerpt": "SAN FRANCISCO — Sept. 30, 2026 — CoreWeave Inc. (Nasdaq: CRWV), The Essential Cloud for AI™, today announced the availability of NVIDIA Vera Rubin NVL72 on CoreWeave, with Cognition as the first customer anywhere running production workloads on the system.",
-      "relevance": "추론: 고객사 CoreWeave 가 Vera Rubin NVL72 를 '생산 규모'로 제공한다고 밝혔다. 지금 NVIDIA ② 판단은 5점(최상단)이고, Rubin 의 성능 수치는 NVIDIA 발표이며 NVIDIA 실적이나 공시로 양산·출하가 확인된 적은 없다. 이 기사는 그 출하 여부의 공백을 건드린다. (선별 확신: 중간)",
+      "relevance": "추론: 고객사 CoreWeave 가 Vera Rubin NVL72 를 '생산 규모'로 제공한다고 밝혔다. 지금 NVIDIA ② 판단은 4점이고 성능 도약은 MLPerf 독립 측정으로 통과다. 이 기사는 MLPerf 에 미리보기 등급으로 올랐던 Vera Rubin 이 NVIDIA 10-Q 의 생산 출하 시작 문장에 이어 고객의 생산 작업에 제공되기 시작했다는 출하 확인 재료다. Rubin 의 성능 수치는 NVIDIA 발표라 쓰지 않는다. (선별 확신: 중간)",
       "channel": "company_statement",
-      "conditional_impact": "지금은 유지: ② 는 이미 최상단이고, 세대 격차 판정은 고객·벤더 발표 수치가 아니라 독립 측정이 있어야 한다. Rubin 출하가 NVIDIA 실적이나 공시로 확인되면 ② 근거 문장에서 Rubin 을 발표가 아니라 출하로 적는다.",
+      "conditional_impact": "지금은 유지: 세대 격차 판정은 고객·벤더 발표 수치가 아니라 독립 측정이 있어야 하므로 이 기사로 ② 근거를 바꾸지 않는다. NVIDIA 실적이나 공시에서 Vera Rubin 의 출하 규모가 확인되면 ② 근거 문장에 그 규모를 더한다.",
       "horizon": "short — 다음 분기 실적(2026-11 말)에서 Rubin 매출 인식 여부로 확인 가능",
       "counter_evidence": [
         "상대 회사(CoreWeave) 발표이지 NVIDIA 1차 공시가 아니다.",
@@ -771,9 +771,9 @@
       "published_at_utc": "2026-09-21T07:00:00Z",
       "title": "Five UK police forces end Palantir project after two years - Financial Times",
       "excerpt": "Significant setback for US technology company’s bid to establish itself as key supplier to British law enforcement",
-      "relevance": "추론: 영국 경찰 다섯 곳이 2년 만에 팔란티어 프로젝트를 끝냈다는 보도다. 고객이 실제로 떠난 사례라 ① 의 판별 질문('가격을 올려도 남는가', 업무 채널 락인)에 대한 반대 증거다. 팔란티어 ① 판단은 2점으로, 전환비용은 있으나 스노우볼이 없는 가짜 해자라고 적었다. (선별 확신: 중간)",
+      "relevance": "추론: 영국 경찰 다섯 곳이 2년 만에 팔란티어 프로젝트를 끝냈다는 보도다. 고객이 실제로 떠난 사례라 ① 의 판별 질문('가격을 올려도 남는가', 업무 채널 락인)에 대한 반대 증거다. 팔란티어 ① 판단은 3점이고 전환비용은 부분이다. 영국 경찰 다섯 곳의 시범 종료는 다음 선택 때 옮긴 사례로 읽지만 옮겨 간 규모는 고객 기반에 견줘 작다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: 이탈은 팔란티어 ① 판단이 이미 낮게 둔 방향과 같아 판단을 바꾸지 않고 근거 문장만 보강한다. 계약 규모가 크거나 다른 공공·기업 고객의 이탈이 이어지면 업무 채널 락인을 더 낮게 다시 본다.",
+      "conditional_impact": "지금은 유지: 이탈은 팔란티어 ① 판단의 전환비용 부분(다음 선택 때 옮긴 사례)에 이미 반영된 방향과 같아 판단을 바꾸지 않고 근거 문장만 보강한다. 계약 규모가 크거나 다른 공공·기업 고객의 이탈이 이어지면 업무 채널 락인을 더 낮게 다시 본다.",
       "horizon": "short — 이미 종료된 프로젝트",
       "counter_evidence": [
         "다섯 곳이 영국 경찰 전체에서 차지하는 비중과 계약 금액을 모른다.",
@@ -918,9 +918,9 @@
       "published_at_utc": "2026-09-28T20:55:00Z",
       "title": "SpaceX Launches Starship Flight 14, Deploys Starlink Satellites. - Investor's Business Daily",
       "excerpt": "SpaceX during the mission deployed 26 Starlink V3 satellites into orbit to join its larger constellation. There was a brief period during ascent where SpaceX considered calling off its orbital maneuver after losing an engine.",
-      "relevance": "추론: Starship 14차 비행이 처음 궤도에 올라 Starlink 위성을 배치했다는 보도다. 실현된 성과라 ④ 호황 이후 비전(비AI 사업도 사업 부문으로 센다)의 근거다. 스페이스X ④ 판단은 5점으로 최고 구간이고 Starlink·Starship·xAI·X·Cursor·Terafab 을 부문으로 센다. (선별 확신: 중간)",
+      "relevance": "추론: Starship 14차 비행이 처음 궤도에 올라 Starlink 위성을 배치했다는 보도다. 실현된 성과라 ④ 다각화 축에서 AI 와 무관한 발사·위성 통신 매출을 읽는 재료다. 스페이스X ④ 판단은 4.5점이고 클라우드·모델은 판매라 수직계열화 2.0, AI 무관 매출 85.1% 로 다각화 2.5 다. (선별 확신: 중간)",
       "channel": "press",
-      "conditional_impact": "지금은 유지: Starship 은 이미 사업 부문으로 세고 있고 판단이 최고 구간이라 스페이스X ④ 판단을 바꾸지 않는다. 스페이스X ② 판단은 궤도 데이터센터가 실현되기 전까지 로켓을 ② 에 세지 않는다고 적었으므로 ② 에도 쓰지 않는다.",
+      "conditional_impact": "지금은 유지: 발사 매출은 이미 ④ 의 AI 무관 매출 몫에 들어 있어 스페이스X ④ 판단을 바꾸지 않는다. 스페이스X ② 판단은 궤도 데이터센터가 실현되기 전까지 로켓을 ② 에 세지 않는다고 적었으므로 ② 에도 쓰지 않는다.",
       "horizon": "medium — 상업 운용까지",
       "counter_evidence": [
         "Moomoo(2026-09-29) 제목은 엔진 고장으로 임무가 조기 종료됐다고 적는다. 시험 비행 성격이다."
@@ -1061,9 +1061,9 @@
       "published_at_utc": "2026-09-18T15:31:56Z",
       "title": "Taiwan Semiconductor Manufacturing (TSM) Starts Commercial 2 Nm Production - simplywall.st",
       "excerpt": "The foundry begins commercial 2nm production while relying on ASML equipment that remains without a direct competing supplier.",
-      "relevance": "추론: 2나노 상업 양산 시작은 출하된 공정 도약이라 ② 성능 도약 경로의 재료다. 지금 TSMC ② 판단은 5점(최상단)이고, 근거에 'N2 양산 시작(2분기 웨이퍼 매출 3%, 하반기 가파른 증산)' 이 이미 적혀 있다. (선별 확신: 중간)",
+      "relevance": "추론: 2나노 상업 양산 시작은 출하된 공정 도약이라 ② 성능 도약 경로의 재료다. 지금 TSMC ② 판단은 3점이고 성능 도약은 통과이나 독립 측정이 없어 부분으로 계산되며, 근거에 N2 양산 시작(2025년 4분기)과 2026년 2분기 웨이퍼 매출 3% 가 이미 적혀 있다. (선별 확신: 중간)",
       "channel": "secondary",
-      "conditional_impact": "지금은 유지: 같은 사실이 이미 ② 근거에 있고 ② 는 최상단이다. TSMC 1차 발표나 3분기 실적에서 N2 매출 비중이 확인되면 그 수치로 근거 문장을 보강한다.",
+      "conditional_impact": "지금은 유지: 같은 사실이 이미 ② 근거에 있다. TSMC 1차 발표나 3분기 실적에서 N2 매출 비중이 확인되면 그 수치로 근거 문장을 보강한다.",
       "horizon": "short — 3분기 실적(2026-10-15)에서 N2 매출 비중 확인 가능",
       "counter_evidence": [
         "2차 매체 전달이고 TSMC 1차 발표가 이 묶음에 없다.",
@@ -1462,7 +1462,7 @@
       "published_at_utc": "2026-10-05T19:35:04Z",
       "title": "AI chatbots are steering shoppers to Walmart and Costco over Amazon, UBS finds - qz.com",
       "excerpt": "UBS analysts have found that AI chatbots are more likely to recommend Walmart $WMT and Costco $COST to shoppers than Amazon $AMZN, a development the firm says signals a new battleground for retailers vying for consumer attention.",
-      "relevance": "추론: UBS 조사에서 AI 챗봇이 쇼핑을 추천할 때 아마존보다 월마트·코스트코로 소비자를 보낸다는 결과가 나왔다는 보도다. 제3자 쇼핑 에이전트 경로에서 아마존 소비자 채널 락인이 유지되는지를 보는 ① 의 재료다. 아마존 ① 판단은 5점(Prime 2억+ 소비자 락인)이다. (선별 확신: 낮음)",
+      "relevance": "추론: UBS 조사에서 AI 챗봇이 쇼핑을 추천할 때 아마존보다 월마트·코스트코로 소비자를 보낸다는 결과가 나왔다는 보도다. 제3자 쇼핑 에이전트 경로에서 아마존 소비자 채널 락인이 유지되는지를 보는 ① 의 재료다. 아마존 ① 판단은 4점이다. 소비자 채널(마켓플레이스·Prime 구독)의 사다리 합은 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 에 걸린다. (선별 확신: 낮음)",
       "channel": "secondary",
       "conditional_impact": "지금은 유지: 챗봇의 추천 비중은 아마존의 Prime 회원 수나 쇼핑 트래픽 이탈을 잰 수치가 아니라 아마존 ① 판단을 바꾸지 않는다. 같은 경로에서 Prime 회원 감소나 쇼핑 트래픽 이탈이 실측되면 ① 소비자 채널 락인을 다시 본다.",
       "horizon": "medium — 에이전트 쇼핑 확산 속도에 달림",
@@ -2046,7 +2046,7 @@
       "published_at_utc": null,
       "title": "8-K 2026-10-02 · Items 2.02, 9.01",
       "excerpt": "In the third quarter, we produced over 464,000 vehicles, delivered over 486,000 vehicles and deployed 13.7 GWh of energy storage products.",
-      "relevance": "추론: 테슬라가 2026-10-02 Item 2.02(실적 관련 공시)·9.01(첨부)로 8-K 를 냈다. 접수 시각(13:04 UTC)과 같은 시각 보도 제목들(Stock Titan '3분기 생산 464,391대·인도 486,532대', Electrek '인도 전년 대비 2% 감소', Moomoo '에너지 저장 13.7GWh 배치')로 보아 3분기 생산·인도 보고다. 에너지 저장 배치 13.7GWh 는 ④ 가 세는 에너지 저장 사업의 실측 배치다. 테슬라 ④ 판단은 3점(차량·에너지 저장·소규모 로보택시, 배치 전인 Optimus·Terafab 은 폭에서 뺐다)이다. 인도가 생산보다 22,141대 많아 재고가 줄었다는 점은 3분기 영업현금흐름에 유리한 단서이지만 인도 대수는 현금흐름이 아니다. 테슬라 ⑨ 판단은 -1(게이트 1 영업흑자, 게이트 2 최근 1년 잉여현금흐름 흑자이나 추세 악화)이다. (선별 확신: 낮음)",
+      "relevance": "추론: 테슬라가 2026-10-02 Item 2.02(실적 관련 공시)·9.01(첨부)로 8-K 를 냈다. 접수 시각(13:04 UTC)과 같은 시각 보도 제목들(Stock Titan '3분기 생산 464,391대·인도 486,532대', Electrek '인도 전년 대비 2% 감소', Moomoo '에너지 저장 13.7GWh 배치')로 보아 3분기 생산·인도 보고다. 에너지 저장 배치 13.7GWh 는 ④ 다각화 축에서 AI 무관 매출로 세는 에너지 저장 사업의 실측 배치다. 테슬라 ④ 판단은 4.5점이고 칩·모델은 자체 사용, 응용은 판매라 수직계열화 2.0, AI 무관 매출 100% 로 다각화 2.5 다. 인도가 생산보다 22,141대 많아 재고가 줄었다는 점은 3분기 영업현금흐름에 유리한 단서이지만 인도 대수는 현금흐름이 아니다. 테슬라 ⑨ 판단은 -1(게이트 1 영업흑자, 게이트 2 최근 1년 잉여현금흐름 흑자이나 추세 악화)이다. (선별 확신: 낮음)",
       "channel": "disclosure",
       "conditional_impact": "지금은 유지: 에너지 저장은 테슬라 ④ 판단에 이미 들어 있어 배치 수치는 근거 문장만 보강한다. 인도·생산 대수만으로는 ⑨ 게이트 2(최근 1년 잉여현금흐름이 마이너스인가)의 판정 재료가 생기지 않으므로 ⑨ 판단도 바꾸지 않는다. 3분기 10-Q 에서 영업현금흐름과 현금 설비투자가 나오면 최근 1년 잉여현금흐름의 부호와 추세를 다시 본다.",
       "horizon": "short — 3분기 실적 발표 전 선행 공시",
@@ -17716,9 +17716,9 @@
       "title": "Alibaba 6-K Ex.99.1 — June Quarter 2026 Results",
       "excerpt": "The Zhenwu chips, including Zhenwu M890, the latest AI processor, have achieved broad commercial adoption via Alibaba Cloud services from more than 650 external customers across over 20 industries, including autonomous driving, Internet, and financial services. This broad adoption demonstrates its ability to support AI workloads from training and fine-tuning to inference.",
       "locator": "6-K Ex.99.1(2026-08-20) 'BUSINESS AND STRATEGIC UPDATES — Chip Design – T-Head Semiconductor' 둘째 문단 (p.3)",
-      "relevance": "추론: 자체 AI 가속기 Zhenwu(최신 M890 포함)가 알리바바 클라우드를 통해 20개 넘는 업종의 외부 고객 650곳 넘게 상용으로 쓰이고 있다는 공시다. 자체 칩이 자사 클라우드에 배치되어 외부 고객 작업을 돌린다는 배치 사실이라 ④ 호황 이후 비전(자체 칩은 출하가 확인될 때 수직계열화 근거로 센다)의 재료다. 이어받은 알리바바 ④ 판단은 4점이다.",
+      "relevance": "추론: 자체 AI 가속기 Zhenwu(최신 M890 포함)가 알리바바 클라우드를 통해 20개 넘는 업종의 외부 고객 650곳 넘게 상용으로 쓰이고 있다는 공시다. 자체 칩이 자사 클라우드에 배치되어 외부 고객 작업을 돌린다는 배치 사실이라 ④ 호황 이후 비전의 층별 보유표에서 칩 칸을 '자체 사용' 으로 적는 재료다. 알리바바 ④ 판단은 5점이고 칩·서버는 자체 사용, 소프트웨어 플랫폼·클라우드·모델·응용은 판매라 수직계열화 2.5(칸 값 합 5 를 상한에서 자름)이며, AI 무관 매출 85.5% 로 다각화 2.5 다.",
       "channel": "disclosure",
-      "conditional_impact": "재검토: 알리바바 ④ 판단에 자체 칩의 자사 클라우드 배치를 수직계열화 근거로 더할지 본다. 2026-09 공개한 Zhenwu V900 의 배치는 아직 확인되지 않아 그 칩은 따로 지켜본다.",
+      "conditional_impact": "지금은 유지: 알리바바 ④ 판단의 칩 칸은 이 배치 사실로 이미 자체 사용이다. 2026-09 공개한 Zhenwu V900 의 배치는 아직 확인되지 않아 그 칩은 따로 지켜본다.",
       "horizon": "medium — 배치가 이어지는 동안",
       "counter_evidence": [
         "칩 출하 대수와 클라우드 매출 가운데 자체 칩이 차지하는 비중을 보도자료에서 찾지 못했다."
@@ -17969,7 +17969,7 @@
       "title": "Tesla Q2 2026 Update",
       "excerpt": "Storage deployed (GWh) 9.6 12.5 14.2 8.8 13.5 41%",
       "locator": "Q2 2026 Update 5쪽 Operational Summary 표, Storage deployed (GWh) 줄(열: Q2-2025 · Q3-2025 · Q4-2025 · Q1-2026 · Q2-2026 · YoY)",
-      "relevance": "추론: 테슬라 에너지 저장 배치량이 2025-06 분기 9.6GWh → 12.5 → 14.2 → 8.8 → 2026-06 분기 13.5GWh(전년 대비 +41%)라는 분기 표다. 2026년 7~9월 분기 13.7GWh(같은 회사 8-K 첨부 보도자료)와 이어 보면 에너지 저장 사업이 실측 배치를 이어 가고 있어 ④ 호황 이후 비전(비AI 사업도 매출·배치가 있으면 센다)의 재료다. 이어받은 테슬라 ④ 판단은 3점이다.",
+      "relevance": "추론: 테슬라 에너지 저장 배치량이 2025-06 분기 9.6GWh → 12.5 → 14.2 → 8.8 → 2026-06 분기 13.5GWh(전년 대비 +41%)라는 분기 표다. 2026년 7~9월 분기 13.7GWh(같은 회사 8-K 첨부 보도자료)와 이어 보면 에너지 저장 사업이 실측 배치를 이어 가고 있어 ④ 다각화 축에서 AI 무관 매출로 세는 사업의 재료다. 테슬라 ④ 판단은 4.5점이고 칩·모델은 자체 사용, 응용은 판매라 수직계열화 2.0, AI 무관 매출 100% 로 다각화 2.5 다.",
       "channel": "disclosure",
       "conditional_impact": "지금은 유지: 에너지 저장은 테슬라 ④ 판단에 이미 들어 있어 배치 시계열은 근거 문장만 보강한다.",
       "horizon": "short — 분기 배치 실적",
@@ -18644,9 +18644,9 @@
       "title": "NVIDIA’s CUDA Moat Is Accelerating RTX Spark Laptop Sales, Higher 128GB Unified Memory Options Belonging To Surface Laptop Ultra Already Out Of Stock - Wccftech",
       "excerpt": "Microsoft’s product page for the Surface Laptop Ultra shows the RTX Spark, 128GB unified memory, and 1TB SSD configuration priced at $5,899.99 is already listed as out of stock. While the lower-tier options are up for grabs, it indicates that the sellout may partly reflect limited early supply, but that’s unconfirmed because Microsoft hasn’t shared any data. However, the demand behind these RTX Spark laptops makes sense when you sit down to contemplate that these machines are tailor-made for a bigger user base, and a lot has to do with CUDA support.",
       "locator": "Wccftech 기사 첫째 문단",
-      "relevance": "추론: NVIDIA RTX Spark 칩을 넣은 Microsoft Surface Laptop Ultra 가 판매 중이고 최상위 구성은 Microsoft 제품 페이지에 품절로 표시됐다. 출하가 시작된 소비자 PC 칩이다. ④ 는 출하와 사업 부문만 세며, NVIDIA 는 이미 GeForce 로 PC 시장에 있으므로 PC용 통합 칩이 기존 제품군 안의 확장인지 새 사업 자리인지를 따져야 한다. 지금 NVIDIA ④ 판단은 4점(칩·모델·클라우드·AI 밖 매출 네 자리)이다.",
+      "relevance": "추론: NVIDIA RTX Spark 칩을 넣은 Microsoft Surface Laptop Ultra 가 판매 중이고 최상위 구성은 Microsoft 제품 페이지에 품절로 표시됐다. 출하가 시작된 소비자 PC 칩이다. ④ 층별 보유표는 여섯 층의 칸 값과 AI 무관 매출 몫으로 매기며, NVIDIA 는 이미 GeForce 로 PC 시장에 있으므로 PC용 통합 칩이 기존 소비자 기기 매출 안의 확장인지 새 층의 매출인지를 따져야 한다. 지금 NVIDIA ④ 판단은 3점이고 칩·서버·소프트웨어 플랫폼·응용은 판매, 모델은 자체 사용이라 수직계열화 2.5(칸 값 합 4.5 를 상한에서 자름)이며, AI 무관 매출 7.7% 로 다각화 0.5 다.",
       "channel": "secondary",
-      "conditional_impact": "지금은 유지: 기존 PC 그래픽 제품군 안의 제품 확장이라 ④ 의 사업 자리 수를 늘리지 않는다. NVIDIA 가 PC 칩 매출을 별도 부문이나 제품선으로 공시하면 다시 본다.",
+      "conditional_impact": "지금은 유지: 기존 PC 그래픽 제품군 안의 제품 확장이라 ④ 보유표의 칸 값을 바꾸지 않는다. NVIDIA 가 PC 칩 매출을 별도 부문이나 제품선으로 공시하면 다시 본다.",
       "horizon": "current",
       "unverified": [
         "판매량·매출은 공개되지 않았고 기사도 품절이 초기 공급 제한 때문일 수 있다고 적는다",
@@ -19766,7 +19766,7 @@
       ],
       "excerpt": "The post noted how fast the Cybercab network has grown in the maiden launch city, Austin. The city now has more than 300 units of Tesla’s only vehicle without a steering wheel and pedals. That is an 800 percent increase from when the vehicles hit the road about a month ago. … Tesla apparently is not ready to ship functional Cybercabs out of Texas yet.",
       "locator": "기사 셋째·넷째 본문 문단('The post noted how fast the Cybercab network has grown…')과 열째 본문 문단('Tesla apparently is not ready to ship…')",
-      "relevance": "추론: 테슬라 로보택시 계정 게시물을 인용해 오스틴의 Cybercab 이 한 달 만에 300대를 넘었고(약 8배), 텍사스 밖으로는 아직 보내지 않았으며 다음 도시는 댈러스라는 보도다. ③ 모방 불가능성은 자산 덕에 실제로 앞서야 통과인데, Waymo 는 미국에서 무인 차량 4,000대 넘게, 오스틴에서 300대 넘게 운행한다. 300대는 등록·보유 대수이고 무인 유료 운행 대수인지는 원문이 밝히지 않는다. 테슬라 ③ 판단은 모방 불가능성 실패다. (선별 확신: 중간)",
+      "relevance": "추론: 테슬라 로보택시 계정 게시물을 인용해 오스틴의 Cybercab 이 한 달 만에 300대를 넘었고(원문은 한 달 전보다 800% 늘었다고 적으며 약 9배다), 텍사스 밖으로는 아직 보내지 않았으며 다음 도시는 댈러스라는 보도다. ③ 모방 불가능성은 자산 덕에 실제로 앞서야 통과인데, 이 기사에는 Waymo 와 견줄 운행 대수가 없다. 300대는 등록·보유 대수이고 무인 유료 운행 대수인지는 원문이 밝히지 않는다. 테슬라 ③ 판단은 모방 불가능성 실패다. (선별 확신: 중간)",
       "channel": "secondary",
       "conditional_impact": "지금은 유지: 오스틴 한 도시의 대수가 Waymo 오스틴 운행 대수와 비슷해졌을 뿐 미국 전체 운행 대수·유료 탑승 횟수·도시 수에서 앞서지 못해 테슬라 ③ 판단의 모방 불가능성(실패)을 바꾸지 않는다. 무인 유료 운행 대수나 탑승 횟수가 Waymo 를 넘어서는 실측이 나오면 다시 본다.",
       "horizon": "medium — 댈러스 확장과 3분기 실적",
@@ -20972,9 +20972,9 @@
       "published_at_utc": "2026-04-16T00:00:00Z",
       "title": "TSMC Form 20-F (FY2025) — Note 38 지역별 비유동자산 표",
       "excerpt": "Noncurrent Assets | (In Millions) | (In Millions) Taiwan | $ 2,613,112.2 | $ 3,102,343.0 United States | 541,836.3 | 540,057.4 Japan | 126,600.6 | 117,403.2 China | 82,405.8 | 65,019.9 Europe, the Middle East and Africa | 19,150.1 | 51,515.1 Others | 1.4 | 1.2 | $ 3,383,106.4 | $ 3,876,339.8",
-      "relevance": "사실: 2025-12-31 현재 비유동자산 NT$3,876,340M 가운데 대만이 NT$3,102,343M, 미국 NT$540,057M, 일본 NT$117,403M, 중국 NT$65,020M 이다. 추론: ⑧ 지정학 축에서 TSMC 생산자산의 약 80% 가 대만에 있다는 수치 근거이며, 미국 비중은 약 14% 로 늘어나는 중이다.",
+      "relevance": "사실: 2025-12-31 현재 비유동자산 NT$3,876,340M 가운데 대만이 NT$3,102,343M, 미국 NT$540,057M, 일본 NT$117,403M, 중국 NT$65,020M 이다. 추론: ⑧ 지정학 축에서 TSMC 생산자산의 약 80% 가 대만에 있다는 수치 근거이며, 2024-12-31 에서 2025-12-31 사이 대만 비중은 77.2% 에서 80.0% 로 높아지고 미국 비중은 16.0% 에서 13.9% 로 낮아졌다(계산).",
       "channel": "disclosure",
-      "conditional_impact": "재검토: TSMC ⑧ 지정학 축의 칸을 고를 때 대만 자산 집중 80% 를 핵심 근거로 쓰고, 미국·일본 분산 속도를 다음 연간 표로 다시 본다.",
+      "conditional_impact": "재검토: TSMC ⑧ 지정학 축의 칸을 고를 때 대만 자산 집중 80% 를 핵심 근거로 쓰고, 대만 집중이 높아지는지 낮아지는지를 다음 연간 표로 다시 본다.",
       "horizon": "현재",
       "counter_evidence": [],
       "unverified": [
@@ -22764,7 +22764,7 @@
       "excerpt": "And we have been encouraged by the response to our new E7 suite, as customers increasingly go “all in” on an integrated AI offering that brings together Copilot, E5, Entra, and Agent 365. Just two months after launch, hundreds of enterprise customers have already purchased millions of seats.",
       "relevance": "Microsoft 가 Copilot·E5·Entra·Agent 365 를 묶은 새 상위 제품군 E7 을 출시 두 달 만에 수백 곳의 기업이 수백만 좌석 구매했다고 밝힌 회사 발언이다. 추론: AI 를 묶어 더 높은 좌석 단가의 제품군으로 파는 사실이다. 좌석 단가는 이 문장에 없다.",
       "channel": "company_statement",
-      "conditional_impact": "재검토: 마이크로소프트 ① AI 수익화의 (나)(AI 로 채널 단가를 올렸다는 공시나 회사 1차 발표)를 보강하는 사실이다. E7 단가와 기존 요금제 대비 인상폭이 이 문장에 없어 (나)의 직접 근거는 2026-07-01 정가 인상 공지로 둔다.",
+      "conditional_impact": "재검토: 마이크로소프트 ① AI 수익화의 (나)(AI 로 채널 단가를 올렸다는 공시나 회사 1차 발표)를 보강하는 사실이다. E7 단가와 기존 요금제 대비 인상폭이 이 문장에 없어 (나)의 직접 근거는 2025-12-04 정가 인상 공지(2026-07-01 시행)로 둔다.",
       "horizon": "short — 다음 분기 실적 발표까지",
       "counter_evidence": [],
       "unverified": [
@@ -25534,7 +25534,7 @@
       "source_id": "SRC-EDGAR-000104581026000075",
       "published_at_utc": "2026-08-26T00:00:00Z",
       "title": "NVIDIA 10-Q (2026-07-26) Note 10 — SB Energy 보증의 대상 고객(OpenAI 계열)과 임대 규모",
-      "relevance": "사실: NVIDIA 는 2026년 8월 SB Energy 계열과 총 $105B 한도의 보증을 맺었고, 보증은 NVIDIA 의 고객인 OpenAI 계열을 대신해 오하이오주 PORTS 기술 캠퍼스의 약 4.25GW IT 부하 임대차에 신용 지원을 하는 것이라고 분기 보고서 주석에 적었다. 추론: 주석이 보증 대상을 'NVIDIA 의 고객' 으로 적어, 이 보증이 고객을 위한 공급자의 신용 지원임을 감사받는 재무제표 주석 수준에서 확인해 준다.",
+      "relevance": "사실: NVIDIA 는 2026년 8월 SB Energy 계열과 총 $105B 한도의 보증을 맺었고, 보증은 NVIDIA 의 고객인 OpenAI 계열을 대신해 오하이오주 PORTS 기술 캠퍼스의 약 4.25GW IT 부하 임대차에 신용 지원을 하는 것이라고 분기 보고서 주석에 적었다. 추론: 주석이 보증 대상을 'NVIDIA 의 고객' 으로 적어, 이 보증이 고객을 위한 공급자의 신용 지원임을 분기 재무제표 주석(미감사) 수준에서 확인해 준다.",
       "conditional_impact": "지금은 유지: NVIDIA ⑦ 순환금융 판단은 조달 의존 고객 비중이 큰 칸에 내 돈이 돌아오는 구조라 범위 하한인 −3 이다. 이 문단은 보증이 고객 OpenAI 계열을 위한 것임을 분기 보고서 주석으로 확인해 근거 문장을 보강한다.",
       "horizon": "long — 보증은 임대 개시 때 효력이 생긴다",
       "counter_evidence": [
@@ -25924,7 +25924,7 @@
       "horizon": "medium — 소유 관계 공시까지",
       "counter_evidence": [],
       "unverified": [
-        "이 칩들은 Amazon 이 운영하는 클러스터이며 소유 관계는 발표문에 없다. 같은 발표문은 이 약정을 AWS 기술에 대한 100억 달러 초과 10년 약정으로 적는다."
+        "이 칩들은 Amazon 이 운영하는 클러스터이며 소유 관계는 발표문에 없다. 같은 발표문은 새 협약에서 10년간 AWS 기술에 1,000억 달러($100B) 넘게 쓰기로 했다고 적는다."
       ],
       "change_vs_previous": "new",
       "locator": "발표문 둘째 문단 둘째 문장",
@@ -28313,9 +28313,9 @@
       "published_at_utc": "2026-09-21T00:00:00Z",
       "title": "SB Energy S-1/A (2026-09-21) — 수주잔고 $4,390억의 인식 시기: 24개월 안 $10억, 96개월 뒤 $3,570억",
       "excerpt": "As of the date of this prospectus, our consolidated backlog was approximately $439 billion, of which approximately $1 billion is expected to be recognized within 24 months, approximately $12 billion is expected to be recognized between 25 and 48 months, approximately $30 billion is expected to be recognized between 49 and 72 months, approximately $39 billion is expected to be recognized between 73 and 96 months, and approximately $357 billion is expected to be recognized thereafter.",
-      "relevance": "추론: SB Energy S-1/A 가 수주잔고 약 4,390억 달러 가운데 24개월 안에 약 10억 달러, 25~48개월에 약 120억 달러, 49~72개월에 약 300억 달러, 73~96개월에 약 390억 달러, 그 뒤에 약 3,570억 달러가 인식될 것으로 본다고 밝혔다. 이 시기별 금액은 OpenAI 뿐 아니라 SoftBank 임대와 전력 부문 계약을 합친 값이다. 지급이 대부분 8년 뒤에 몰린다는 사실이라 ⑧ 비대칭 의존의 약정 축(아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정의 합 ÷ 최근 1년 매출, 비상장사는 연환산 매출)에서 가까운 12~24개월 부담이 작다는 점을 읽는 재료다. (선별 확신: 높음)",
+      "relevance": "추론: SB Energy S-1/A 가 수주잔고 약 4,390억 달러 가운데 24개월 안에 약 10억 달러, 25~48개월에 약 120억 달러, 49~72개월에 약 300억 달러, 73~96개월에 약 390억 달러, 그 뒤에 약 3,570억 달러가 인식될 것으로 본다고 밝혔다. 이 시기별 금액은 OpenAI 뿐 아니라 SoftBank 임대와 전력 부문 계약을 합친 값이다. 매출 인식이 대부분 8년 뒤에 몰린다는 사실이라 ⑧ 비대칭 의존의 약정 축(아직 개시되지 않은 리스와 해지할 수 없거나 고정·보장된 구매 약정의 합 ÷ 최근 1년 매출, 비상장사는 연환산 매출)에서 가까운 12~24개월 부담이 작다는 점을 읽는 재료다. (선별 확신: 높음)",
       "channel": "disclosure",
-      "conditional_impact": "재검토: OpenAI ⑧ 약정 축의 지급 기간·가까운 12~24개월 부담 칸을 이 인식 시기표로 적는다. 24개월 안 약 10억 달러는 전체의 1% 안팎이라는 계산을 적되 이 값이 OpenAI 몫만이 아니라는 점을 함께 적는다. 같은 3배 구간이라도 몇 년에 걸친 약정인지 구분해 읽는다.",
+      "conditional_impact": "재검토: OpenAI ⑧ 약정 축의 지급 기간·가까운 12~24개월 부담 칸을 이 인식 시기표로 적는다. 24개월 안 약 10억 달러는 전체의 1% 미만(약 0.2%)이라는 계산을 적되 이 값이 OpenAI 몫만이 아니라는 점을 함께 적는다. 같은 3배 구간이라도 몇 년에 걸친 약정인지 구분해 읽는다.",
       "horizon": "long — 임대 개시와 임대인 공시 갱신까지",
       "counter_evidence": [],
       "unverified": [
@@ -29544,9 +29544,9 @@
       "published_at_utc": "2026-10-07T00:00:00Z",
       "title": "GPT-6 and Intelligent UI for everyone — 주간 사용자 12억 명 넘음, 요금제별 구동 모델(Free·Go 는 Luna) — GPT-6 for everyone: 주간 사용자 12억 명과 요금제별 구동 모델",
       "excerpt": "Last month we introduced the first GPT‑6 models for paid customers and today we're bringing that next generation of intelligence to more people with a new GPT‑6 model built for more than 1.2 billion people who use ChatGPT each week. … GPT‑6 in ChatGPT is powered by GPT‑6 Sol for Plus, Pro, Business, and Enterprise tiers, and GPT‑6 Luna for Free and Go tiers.",
-      "relevance": "추론: OpenAI 가 2026-10-07 ChatGPT 를 매주 쓰는 사람이 12억 명을 넘는다고 적고 새 GPT-6 가 Plus·Pro·Business·Enterprise 에서는 GPT-6 Sol 로, Free·Go 에서는 GPT-6 Luna 로 구동된다고 밝혔다. 12억 명 가운데 유료 구독자 수는 글에 없다. 소비자 채널 분모(주간 사용자)의 최신 회사 1차 숫자이고, 분자인 구독자 수는 2026-03-31 이후 갱신되지 않았다. (선별 확신: 높음)",
+      "relevance": "추론: OpenAI 가 2026-10-07 ChatGPT 를 매주 쓰는 사람이 12억 명을 넘는다고 적고 새 GPT-6 가 Plus·Pro·Business·Enterprise 에서는 GPT-6 Sol 로, Free·Go 에서는 GPT-6 Luna 로 구동된다고 밝혔다. 12억 명 가운데 유료 구독자 수는 글에 없다. 소비자 채널 분모(주간 사용자)의 최신 회사 1차 숫자이고, 분자인 구독자 수는 2026-03-31 이후 갱신된 공개 숫자를 찾지 못했다. (선별 확신: 높음)",
       "channel": "company_statement",
-      "conditional_impact": "재검토: OpenAI ① 판단의 AI 수익화 칸에서 소비자 채널의 분자·분모를 같은 시점으로 맞출 수 있는지 본다. 분모는 12억 명(2026-10), 분자는 구독자 5,000만 명 이상(2026-03-31)이라 시점이 다르므로 구독자 수 갱신이 나오기 전에는 비율(약 5.6%)을 2026-03-31 의 같은 발표 기준으로만 적는다.",
+      "conditional_impact": "재검토: OpenAI ① 판단의 AI 수익화 칸에서 소비자 채널의 분자·분모를 같은 시점으로 맞출 수 있는지 본다. 분모는 12억 명(2026-10), 분자는 구독자 5,000만 명 이상(2026-03-31)이라 시점이 다르므로 구독자 수 갱신이 나오기 전에는 비율을 2026-03-31 같은 발표의 분모(주간 사용자 9억 명 이상)로 나눈 약 5.6% 로만 적는다. 12억 명으로 나누면 약 4.2% 이지만 분자와 시점이 다른 값이다.",
       "horizon": "medium — 구독자 수 갱신까지",
       "counter_evidence": [],
       "unverified": [
@@ -29743,6 +29743,416 @@
       "status": "confirmed",
       "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
       "reviewed_at": "2026-10-12"
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-904",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — 다기가와트 배치와 주력 추론 시스템 문단",
+      "excerpt": "We will scale our Azure Maia family to multi-gigawatt deployments starting in 2027, making Maia the primary inference system for Microsoft products and services.",
+      "relevance": "Microsoft 가 2027년부터 자체 AI 가속기 Maia 를 다기가와트 규모로 늘려 Microsoft 제품·서비스의 주력 추론 시스템으로 삼겠다고 밝힌 회사 발표다. 시작 시점이 2027년인 계획이라 지금의 배치 규모나 GPU 대체 몫을 보여 주지는 않는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Maia 배치가 실제로 다기가와트 규모에 이르고 Microsoft 추론 작업의 주력이 됐다는 사실이 실적 발표나 10-K·10-Q 로 확인되면, Microsoft ⑧ 공급 축(GPU 공급자 의존)과 NVIDIA 의 대체 공급 판단을 다시 본다. 계획 발표만으로는 바꾸지 않는다.",
+      "horizon": "long — 배치 시작은 2027년",
+      "counter_evidence": [
+        "같은 글은 학습용 칩이나 NVIDIA·AMD 구매 계획을 언급하지 않는다.",
+        "회사 블로그 발표라 배치 물량·투자액이 없다."
+      ],
+      "unverified": [
+        "Maia 가 맡을 추론 작업의 몫과 배치 수량은 공개되지 않았다."
+      ],
+      "locator": "본문 첫 문단(부제 'Azure Maia 200 now in production; Azure Maia 300 coming in 2027' 다음) 둘째 문장",
+      "evidence_id": "EV-microsoft-070",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-904",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — Maia 200 생산 작업 문단",
+      "excerpt": "Maia 200 is now serving Microsoft production workloads, including Microsoft Copilot, and supporting the MAI team as they develop next-generation models, with GitHub Copilot and Microsoft Foundry to follow by end of year. Across these workloads, Maia 200 runs OpenAI models, Microsoft’s own MAI models and leading open-source model families.",
+      "relevance": "Maia 200 이 Microsoft Copilot 같은 Microsoft 의 생산 작업을 처리하고 있고, OpenAI 모델·자체 MAI 모델·오픈소스 모델을 돌린다는 회사 발표다. 추론: 자체 칩이 Microsoft 자기 서비스 안에서 쓰이는 자체 사용이며, 외부 Azure 고객에게 칩이나 Maia 인스턴스를 판다는 문장은 글에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: Microsoft ④ 칩 칸을 자체 사용으로 읽는 사실을 보강한다. Maia 를 외부 Azure 고객에게 인스턴스로 팔기 시작했다는 발표가 나오면 칩 칸을 판매로 다시 본다.",
+      "horizon": "short — 이미 가동 중",
+      "counter_evidence": [
+        "GitHub Copilot·Microsoft Foundry 이전은 연말 계획이다."
+      ],
+      "unverified": [
+        "Maia 200 이 처리하는 Copilot 요청의 몫은 공개되지 않았다."
+      ],
+      "locator": "본문 둘째 문단(첫 두 문장)",
+      "evidence_id": "EV-microsoft-071",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F2",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-904",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — Maia 200 배치 지역과 효율 문단",
+      "excerpt": "Maia 200 is deploying across the United States, Europe and Australia and delivering up to 1.7x more tokens per watt for built-in AI capabilities in Microsoft Teams, Copilot and Cowork experiences compared with leading GPU infrastructure.",
+      "relevance": "Maia 200 이 미국·유럽·호주에 배치되고 있으며, Teams·Copilot·Cowork 의 내장 AI 기능에서 최신 GPU 인프라보다 와트당 토큰을 최대 1.7배 낸다는 회사 발표다. 효율 수치는 회사가 잰 값이고 독립 측정이 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 배치 지역이 넓어졌다는 사실이며 배치 수량은 없다. 배치 수량이나 Maia 가 맡는 추론 몫이 공개되면 Microsoft ② 의 자체 실리콘 서술과 ⑧ 공급 축을 다시 본다.",
+      "horizon": "short — 이미 배치 중",
+      "counter_evidence": [
+        "효율 비교의 기준(어느 GPU 세대인지)과 측정 조건이 공개되지 않았다."
+      ],
+      "unverified": [
+        "Maia 200 배치 수량은 공개되지 않았다."
+      ],
+      "locator": "소제목 'Maia 200: Driving the workloads that Microsoft runs at scale' 아래 둘째 문단 첫 문장",
+      "evidence_id": "EV-microsoft-072",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-904",
+      "published_at_utc": "2026-10-12T13:01:29Z",
+      "title": "Microsoft to expand Azure Maia system to multi-gigawatt deployments — Maia 300 성능 예상 문단",
+      "excerpt": "By improving efficiency across the system, we expect Maia 300 to deliver 40% more tokens per megawatt compared to leading GPU-based systems. And in a full 96-accelerator configuration, it delivers up to 7x the rack-scale token throughput of Maia 200.",
+      "relevance": "Microsoft 가 3세대 Maia 300 이 최신 GPU 기반 시스템보다 메가와트당 토큰을 40% 더 낼 것으로 예상한다는 회사 발표다. 2027년 배치 전의 예상치라 실측이 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 예상 성능이라 점수 근거가 아니다. 배치 뒤 독립 측정이나 회사 실적 자료로 GPU 대비 효율이 확인되면 NVIDIA 의 대체 공급 판단에서 이 사실을 쓴다.",
+      "horizon": "long — 배치 시작은 2027년",
+      "counter_evidence": [
+        "회사 예상치이고 비교 대상 GPU 시스템이 특정되지 않았다."
+      ],
+      "unverified": [
+        "Maia 300 의 실측 성능은 아직 없다."
+      ],
+      "locator": "본문 셋째 문단(소제목 앞, 'Maia 300 is a complete intelligent system' 로 시작) 둘째·셋째 문장",
+      "evidence_id": "EV-microsoft-073",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 확인, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "palantir",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) Item 1A — 투자 계약과 묶어 맺은 Strategic Commercial Contracts 누적 매출 $325M",
+      "excerpt": "Additionally, in connection with approving and signing the Investment Agreements, we and each Investee or an associated entity entered into a commercial contract for access to our products and services (collectively, the “Strategic Commercial Contracts”). … As of June 30, 2026, the cumulative amount of revenue recognized from Strategic Commercial Contracts was $325 million, of which $3 million was recognized by us during the six months ended June 30, 2026.",
+      "relevance": "Palantir 가 투자 계약(Investment Agreements)으로 여러 회사의 지분을 사거나 사기로 약정했고, 그 투자 계약을 승인·서명하면서 투자 대상마다 Palantir 제품·서비스 이용 계약(Strategic Commercial Contracts)을 맺었으며, 그 계약에서 2026-06-30 까지 누적 매출 $325M(2026년 상반기 $3M)을 인식했다는 공시다. 내가 넣은 투자 돈의 상대가 내 고객이 되어 대금을 낸 구조가 공시로 확인된다. 2026년 상반기 몫은 같은 기간 매출에 견줘 작다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: ⑦ 세로축 돌아옴을 받친다. 투자 대상 상업 계약의 매출이 커져 조달 의존 고객 몫을 작게 좁힐 수 없게 되면 가로축을 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "초기 투자 대상 고객 일부가 파산하거나 계약을 끝냈다고 같은 문단이 적는다.",
+        "10-Q 는 특수목적인수회사 지분을 사는 새 투자 계약은 맺을 계획이 없다고 적는다."
+      ],
+      "unverified": [
+        "투자 대상의 이름과 회사별 투자액은 이 문단에 없다."
+      ],
+      "locator": "10-Q (2026-06-30) Part II Item 1A 위험 요인, 비현금 대가·전략적 투자 문단(p.55)",
+      "evidence_id": "EV-palantir-051",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 7.B 특수관계자 표 — 투자 대상에 대한 대출·보증과 공동 투자",
+      "excerpt": "Investees • We extended loans to and provided guarantees for certain of our investees. • We have made co‑investments with certain of our investees.",
+      "relevance": "20-F 특수관계자 표는 Ant Group 과 따로 투자 대상(Investees) 줄을 두고, 알리바바가 일부 투자 대상에 대출과 보증을 제공했으며 일부 투자 대상과 공동 투자했다고 적는다. 같은 절의 투자 대상 클라우드 매출(RMB9,415M)은 Ant Group 의 클라우드 매출(RMB19,134M)과 따로 적혀, 투자 대상은 SAPA 로 받은 Ant Group 지분과 다른 묶음이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: ⑦ 세로축 돌아옴을 받친다. 투자 대상 클라우드 매출이 커져 매출에서 차지하는 몫이 늘면 가로축을 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "클라우드 계약을 맺은 투자 대상의 이름과 회사별 매출은 공시되지 않았다."
+      ],
+      "locator": "20-F Item 7.B Related Party Transactions — 특수관계자 거래 설명 표의 Investees 줄(p.172)",
+      "evidence_id": "EV-alibaba-092",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) 연결재무제표 주석 4(e) — Moonshot AI 지분 약 36% 에 약 US$0.8B 투자",
+      "excerpt": "(e) Investment in Moonshot AI Ltd (“Moonshot”) Moonshot is an artificial intelligence company in the PRC. During the year ended March 31, 2024, the Company invested a total of approximately US$ 0.8 billion (approximately RMB 5.9 billion) for an approximately 36 % equity interest.",
+      "relevance": "알리바바가 중국 AI 회사 Moonshot AI 에 약 US$0.8B(약 RMB5.9B)를 투자해 지분 약 36% 를 가졌다는 감사 재무제표 주석이다. 알리바바의 투자 대상에는 알리바바가 직접 투자한 AI 회사가 있다는 사실을 보인다. Moonshot 이 Alibaba Cloud 고객인지는 이 주석에 없다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Moonshot AI 가 Alibaba Cloud 에 내는 대금은 공시되지 않았다."
+      ],
+      "locator": "20-F 연결재무제표 주석 4 Significant mergers and acquisitions, investments and dispositions (e) Investment in Moonshot AI Ltd(p.F-36)",
+      "evidence_id": "EV-alibaba-093",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-001",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Fourth Quarter Earnings Conference Call — Anthropic 투자 이익 $3.2B 문단",
+      "excerpt": "These include a $3.2 billion gain from our investment in Anthropic and lower-than-expected expenses related to the Voluntary Retirement Program, which were partially offset by severance expense and impairment charges in XBOX. … When adjusted for the impact of our investments in OpenAI, other income and expense was $2.8 billion driven by the gain on investment in Anthropic noted earlier.",
+      "relevance": "Microsoft CFO 가 2026 회계연도 4분기 실적에 Anthropic 투자에서 난 이익 $3.2B 가 들어 있고 영업외 손익 $2.8B 가 그 이익에서 나왔다고 밝힌 회사 1차 발표다. Microsoft 가 Anthropic 지분을 가지고 있다는 사실을 보인다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Microsoft 의 Anthropic 지분율과 투자 집행액은 이 발언에 없다."
+      ],
+      "locator": "통화록 CFO Amy Hood 준비 발언, 가이던스 대비 일회성 항목(discrete items) 문단과 영업외 손익(other income and expense) 문단",
+      "evidence_id": "EV-microsoft-074",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-003",
+      "published_at_utc": "2025-11-18T00:00:00Z",
+      "title": "Microsoft, NVIDIA and Anthropic announce strategic partnerships — NVIDIA·Microsoft 의 Anthropic 투자 약정 문단",
+      "excerpt": "As part of the partnership, NVIDIA and Microsoft are committing to invest up to $10 billion and up to $5 billion respectively in Anthropic.",
+      "relevance": "NVIDIA 와 Microsoft 가 제휴의 일부로 Anthropic 에 각각 최대 $10B·$5B 를 투자하기로 약정했다는 세 회사 공동 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "약정 가운데 집행된 금액은 이 발표에 없다."
+      ],
+      "locator": "블로그 본문, Claude 제공 확대 문단 다음의 투자 약정 문장(영상 소개 문장 앞)",
+      "evidence_id": "EV-microsoft-075",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-969",
+      "published_at_utc": "2026-09-15T11:35:01Z",
+      "title": "About · OpenAI Startup Fund — 펀드 출자자에 Microsoft 와 OpenAI 협력사가 포함되고 OpenAI 는 출자하지 않는다",
+      "excerpt": "The OpenAI Startup Fund is investing $175 million to help AI companies have a profound, positive impact on the world. … The fund’s investors include Microsoft and other OpenAI partners, although OpenAI itself is not an investor.",
+      "relevance": "OpenAI Startup Fund 의 출자자에 Microsoft 와 다른 OpenAI 협력사가 포함되고 OpenAI 자신은 출자자가 아니라고 펀드가 밝힌 1차 자료다. Startup Fund 가 투자한 회사가 OpenAI 고객이어도 OpenAI 가 넣은 돈이 돌아오는 구조가 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금 유지: OpenAI ⑦ 세로축을 돌아오지 않음으로 두는 이유다. OpenAI 가 Startup Fund 에 출자했다는 1차 자료가 나오면 세로축을 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "펀드 출자자별 금액은 공개되지 않았다."
+      ],
+      "locator": "소개 페이지 본문 첫째 문단 첫 문장과 둘째 문단 둘째 문장",
+      "evidence_id": "EV-openai-157",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-970",
+      "published_at_utc": "2023-10-11T19:00:00Z",
+      "title": "Anysphere raises $8M from OpenAI to build an AI-powered IDE — OpenAI Startup Fund 가 Cursor 시드를 이끔",
+      "excerpt": "Anysphere, a startup building what it describes as an “AI-native” software development environment, called Cursor, today announced that it raised $8 million in seed funding led by OpenAI’s Startup Fund with participation from former GitHub CEO Nat Friedman, Dropbox co-founder Arash Ferdowsi and other angel investors. … generative AI capabilities powered by OpenAI models",
+      "relevance": "Cursor 를 만드는 Anysphere 의 시드 $8M 을 OpenAI Startup Fund 가 이끌었고 Cursor 의 생성형 AI 기능이 OpenAI 모델로 돌아간다는 2차 보도다. 투자한 쪽은 OpenAI 가 아니라 Startup Fund 다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "과거(2023)",
+      "counter_evidence": [],
+      "unverified": [
+        "시드 가운데 Startup Fund 가 낸 금액은 기사에 없다."
+      ],
+      "locator": "기사 첫 문단과 Cursor 기능 소개 문단",
+      "evidence_id": "EV-openai-158",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-971",
+      "published_at_utc": "2026-05-24T00:00:00Z",
+      "title": "Altman offers $2 million in AI credits to Y Combinator startups for equity — API 토큰과 미래 지분 교환 제안",
+      "excerpt": "OpenAI Chief Executive Sam Altman has pledged two million dollars worth of application programming interface (API) tokens to every startup in the current Y Combinator batch in exchange for a future equity stake. … According to reports by TechCrunch, The Verge, and The Information, the arrangement covers roughly 169 early-stage companies and is structured as an uncapped Simple Agreement for Future Equity (SAFE). … The deal is notable because it treats processing power as a form of venture capital, exchanging operational infrastructure rather than cash for corporate ownership.",
+      "relevance": "Altman 이 Y Combinator 이번 배치 스타트업(약 169곳)마다 OpenAI API 토큰 $2M 어치를 미래 지분(상한 없는 SAFE)과 바꾸겠다고 제안했다는 2차 보도다. 현금이 아니라 연산 크레딧을 주는 구조이고, SAFE 체결과 토큰 소진은 보도에 없다.",
+      "channel": "secondary",
+      "conditional_impact": "지금 유지: 크레딧이라 ⑦ 세로축의 돈으로 세지 않는다. OpenAI 가 스타트업에 현금을 투자하고 그 스타트업이 OpenAI 에 대금을 낸다는 공시나 1차 발표가 나오면 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "SAFE 체결 수와 토큰 소진액은 확인되지 않았다."
+      ],
+      "locator": "기사 본문 첫째 문단 첫 문장, 둘째 문단 첫째·넷째 문장",
+      "evidence_id": "EV-openai-159",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "apple",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-019",
+      "published_at_utc": "2026-09-09T00:00:00Z",
+      "title": "Apple debuts iPhone 18 Pro and iPhone 18 Pro Max — iCloud+ 요금과 포함 기능 문단",
+      "excerpt": "iCloud+ plans start at just $0.99 (U.S.) per month, providing additional storage to keep photos, videos, files, and more safe in the cloud and accessible across devices. iCloud+ also gives access to premium features such as event creation in the Apple Invites app, as well as Private Relay, Hide My Email, custom email domains, and HomeKit Secure Video.",
+      "relevance": "iPhone 18 Pro 보도자료가 iCloud+ 를 월 $0.99 부터의 저장 구독으로 소개하고 포함 기능으로 Apple Invites 일정 만들기·Private Relay·Hide My Email·사용자 지정 메일 도메인·HomeKit Secure Video 를 든다. Apple Intelligence 서버 모델 한도 상향은 이 목록에 없고, 같은 보도자료 각주는 확장 이용을 앞으로 유료로 제공한다고 적는다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "iCloud+ 가입자 가운데 AI 한도 상향을 쓰는 사람 수는 공개되지 않았다."
+      ],
+      "locator": "보도자료 'Pricing and Availability' 절의 iCloud+ 문단 첫 두 문장",
+      "evidence_id": "EV-apple-064",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-912",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "title": "Muse Wonder and Muse Wonder Full — 종합 지수 4.3판 52·56 과 제공 범위",
+      "excerpt": "Meta has released Muse Wonder and Muse Wonder Full, achieving Artificial Analysis Intelligence Index v4.3 scores of 52 and 56 at max reasoning effort - each a material gain over Muse Spark 1.3 (max) at 48, with a release gap of only 6 weeks … Muse Wonder is available for users on Meta's first-party API, while Muse Wonder Full is currently only available for Muse Code users.",
+      "relevance": "Artificial Analysis 가 2026-10-12 Meta 의 Muse Wonder(max)·Muse Wonder Full(max)을 종합 지수 4.3판에서 52·56 으로 쟀고, Muse Wonder 는 Meta 1차 API 로, Muse Wonder Full 은 Muse Code 사용자에게만 제공된다고 적은 독립 측정이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "locator": "글 첫 문단(부제)과 둘째 문단",
+      "evidence_id": "EV-meta-082",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-912",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "title": "Muse Wonder and Muse Wonder Full — GDPval-AA 2.1판 2위(1857)와 신뢰구간",
+      "excerpt": "In agentic knowledge work, it narrowly leads on GDP.pdf (33%), ranks #2 on GDPval-AA v2.1 (1857 Elo), and #3 on both AA-Briefcase (1729 Elo) and AutomationBench-AA (71%). … On GDPval-AA v2.1, its result is within the confidence intervals of Claude Opus 5.5 (max w/ fallback, 1866) and Claude Sonnet 5.5 (max w/ fallback, 1838)",
+      "relevance": "Muse Wonder Full(max)이 GDPval-AA 2.1판에서 1857 로 2위이고 Claude Opus 5.5(max) 1866·Claude Sonnet 5.5(max) 1838 과 신뢰구간이 겹친다는 독립 측정이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "locator": "글 'Key takeaways' 둘째 항목과 'top three' 목록 뒤 GDPval-AA 문장",
+      "evidence_id": "EV-meta-083",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-meta-912",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "title": "Muse Wonder and Muse Wonder Full — Coding Agents Index 68(Claude Code Sonnet 5.5 와 같음)",
+      "excerpt": "Muse Wonder Full achieves 68 on the Artificial Analysis Coding Agents Index at max effort in Muse Code, alongside Claude Code with Sonnet 5.5 (max, 68) and Opus 5.5 (max, 66). Muse Wonder (max) scores 63.",
+      "relevance": "Muse Code 의 Muse Wonder Full(max)이 Coding Agents Index 68 로 Claude Code·Sonnet 5.5(max) 68 과 같고 Claude Code·Opus 5.5(max) 66 보다 높다는 독립 측정이다. 참가자마다 자기 제품 하네스로 잰 지표다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "locator": "글 'Key takeaways' 다섯째 항목(Coding Agent performance)",
+      "evidence_id": "EV-meta-084",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
     }
   ]
 }

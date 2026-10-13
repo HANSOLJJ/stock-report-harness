@@ -1,0 +1,363 @@
+{
+  "sources": [
+    {
+      "key": "src-oai-fund",
+      "company_id": "openai",
+      "kind": "news",
+      "title": "About · OpenAI Startup Fund",
+      "publisher": "OpenAI Startup Fund",
+      "publisher_url": "https://openai.fund",
+      "url": "https://openai.fund/about",
+      "published_at_utc": "2026-09-15T11:35:01Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "펀드 자신의 소개 페이지이고 날짜 표기가 없다. 2026-10-13 직접 열었고, 정보 마감 전 같은 문장이 있었음을 인터넷 아카이브 2026-09-15 11:35:01 UTC 스냅숏(web.archive.org/web/20260915113501/https://openai.fund/about)으로 확인했다. 게시 시각은 그 스냅숏 시각이다."
+    },
+    {
+      "key": "src-tc-anysphere",
+      "company_id": "openai",
+      "kind": "news",
+      "title": "Anysphere raises $8M from OpenAI to build an AI-powered IDE | TechCrunch",
+      "publisher": "TechCrunch",
+      "publisher_url": "https://techcrunch.com",
+      "url": "https://techcrunch.com/2023/10/11/anysphere-raises-8m-from-openai-to-build-an-ai-powered-ide/",
+      "published_at_utc": "2023-10-11T19:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "기사 머리의 게시 시각 12:00 PM PDT · October 11, 2023 을 UTC 로 옮겼다."
+    },
+    {
+      "key": "src-ds-yc",
+      "company_id": "openai",
+      "kind": "news",
+      "title": "Altman offers $2 million in AI credits to Y Combinator startups for equity | The Daily Star",
+      "publisher": "The Daily Star",
+      "publisher_url": "https://www.thedailystar.net",
+      "url": "https://www.thedailystar.net/news/tech-startup/news/altman-offers-2-million-ai-credits-y-combinator-startups-equity-4183461",
+      "published_at_utc": "2026-05-24T00:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "TechCrunch·The Verge·The Information 보도를 인용한 2차 보도다. 페이지는 게시일 24 May 2026 만 적고 시각은 없다."
+    },
+    {
+      "key": "src-aa-musewonder",
+      "company_id": "meta",
+      "kind": "news",
+      "title": "Muse Wonder and Muse Wonder Full: a material jump in intelligence over previous Meta models | Artificial Analysis",
+      "publisher": "Artificial Analysis",
+      "publisher_url": "https://artificialanalysis.ai",
+      "url": "https://artificialanalysis.ai/articles/muse-wonder",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "페이지의 article:published_time 은 2026-10-12(시각 없음)이고 홈페이지 변경 기록도 12 Oct 로 적는다. 정보 마감일 당일의 독립 측정 글이다."
+    }
+  ],
+  "evidence": [
+    {
+      "key": "ev-pltr-scc",
+      "company_id": "palantir",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) Item 1A — 투자 계약과 묶어 맺은 Strategic Commercial Contracts 누적 매출 $325M",
+      "excerpt": "Additionally, in connection with approving and signing the Investment Agreements, we and each Investee or an associated entity entered into a commercial contract for access to our products and services (collectively, the “Strategic Commercial Contracts”). … As of June 30, 2026, the cumulative amount of revenue recognized from Strategic Commercial Contracts was $325 million, of which $3 million was recognized by us during the six months ended June 30, 2026.",
+      "relevance": "Palantir 가 투자 계약(Investment Agreements)으로 여러 회사의 지분을 사거나 사기로 약정했고, 그 투자 계약을 승인·서명하면서 투자 대상마다 Palantir 제품·서비스 이용 계약(Strategic Commercial Contracts)을 맺었으며, 그 계약에서 2026-06-30 까지 누적 매출 $325M(2026년 상반기 $3M)을 인식했다는 공시다. 내가 넣은 투자 돈의 상대가 내 고객이 되어 대금을 낸 구조가 공시로 확인된다. 2026년 상반기 몫은 같은 기간 매출에 견줘 작다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: ⑦ 세로축 돌아옴을 받친다. 투자 대상 상업 계약의 매출이 커져 조달 의존 고객 몫을 작게 좁힐 수 없게 되면 가로축을 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "초기 투자 대상 고객 일부가 파산하거나 계약을 끝냈다고 같은 문단이 적는다.",
+        "10-Q 는 특수목적인수회사 지분을 사는 새 투자 계약은 맺을 계획이 없다고 적는다."
+      ],
+      "unverified": [
+        "투자 대상의 이름과 회사별 투자액은 이 문단에 없다."
+      ],
+      "locator": "10-Q (2026-06-30) Part II Item 1A 위험 요인, 비현금 대가·전략적 투자 문단(p.55)"
+    },
+    {
+      "key": "ev-baba-investees",
+      "company_id": "alibaba",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) Item 7.B 특수관계자 표 — 투자 대상에 대한 대출·보증과 공동 투자",
+      "excerpt": "Investees • We extended loans to and provided guarantees for certain of our investees. • We have made co‑investments with certain of our investees.",
+      "relevance": "20-F 특수관계자 표는 Ant Group 과 따로 투자 대상(Investees) 줄을 두고, 알리바바가 일부 투자 대상에 대출과 보증을 제공했으며 일부 투자 대상과 공동 투자했다고 적는다. 같은 절의 투자 대상 클라우드 매출(RMB9,415M)은 Ant Group 의 클라우드 매출(RMB19,134M)과 따로 적혀, 투자 대상은 SAPA 로 받은 Ant Group 지분과 다른 묶음이다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: ⑦ 세로축 돌아옴을 받친다. 투자 대상 클라우드 매출이 커져 매출에서 차지하는 몫이 늘면 가로축을 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "클라우드 계약을 맺은 투자 대상의 이름과 회사별 매출은 공시되지 않았다."
+      ],
+      "locator": "20-F Item 7.B Related Party Transactions — 특수관계자 거래 설명 표의 Investees 줄(p.172)"
+    },
+    {
+      "key": "ev-baba-moonshot",
+      "company_id": "alibaba",
+      "factors": [
+        "F7"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-alibaba-000119312526231755",
+      "published_at_utc": "2026-05-20T00:00:00Z",
+      "title": "Alibaba 20-F (FY2026) 연결재무제표 주석 4(e) — Moonshot AI 지분 약 36% 에 약 US$0.8B 투자",
+      "excerpt": "(e) Investment in Moonshot AI Ltd (“Moonshot”) Moonshot is an artificial intelligence company in the PRC. During the year ended March 31, 2024, the Company invested a total of approximately US$ 0.8 billion (approximately RMB 5.9 billion) for an approximately 36 % equity interest.",
+      "relevance": "알리바바가 중국 AI 회사 Moonshot AI 에 약 US$0.8B(약 RMB5.9B)를 넣어 지분 약 36% 를 가졌다는 감사 재무제표 주석이다. 알리바바의 투자 대상에는 현금을 넣은 AI 회사가 있다는 사실을 보인다. Moonshot 이 Alibaba Cloud 고객인지는 이 주석에 없다.",
+      "channel": "disclosure",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Moonshot AI 가 Alibaba Cloud 에 내는 대금은 공시되지 않았다."
+      ],
+      "locator": "20-F 연결재무제표 주석 4 Significant mergers and acquisitions, investments and dispositions (e) Investment in Moonshot AI Ltd(p.F-36)"
+    },
+    {
+      "key": "ev-msft-anthropic-gain",
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-001",
+      "published_at_utc": "2026-07-29T00:00:00Z",
+      "title": "Microsoft Fiscal Year 2026 Fourth Quarter Earnings Conference Call — Anthropic 투자 이익 $3.2B 문단",
+      "excerpt": "These include a $3.2 billion gain from our investment in Anthropic and lower-than-expected expenses related to the Voluntary Retirement Program, which were partially offset by severance expense and impairment charges in XBOX. … When adjusted for the impact of our investments in OpenAI, other income and expense was $2.8 billion driven by the gain on investment in Anthropic noted earlier.",
+      "relevance": "Microsoft CFO 가 2026 회계연도 4분기 실적에 Anthropic 투자에서 난 이익 $3.2B 가 들어 있고 영업외 손익 $2.8B 가 그 이익에서 나왔다고 밝힌 회사 1차 발표다. Microsoft 가 Anthropic 지분을 가지고 있다는 사실을 보인다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Microsoft 의 Anthropic 지분율과 투자 집행액은 이 발언에 없다."
+      ],
+      "locator": "통화록 CFO Amy Hood 준비 발언, 가이던스 대비 일회성 항목(discrete items) 문단과 영업외 손익(other income and expense) 문단"
+    },
+    {
+      "key": "ev-msft-anthropic-invest",
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-003",
+      "published_at_utc": "2025-11-18T00:00:00Z",
+      "title": "Microsoft, NVIDIA and Anthropic announce strategic partnerships — NVIDIA·Microsoft 의 Anthropic 투자 약정 문단",
+      "excerpt": "As part of the partnership, NVIDIA and Microsoft are committing to invest up to $10 billion and up to $5 billion respectively in Anthropic.",
+      "relevance": "NVIDIA 와 Microsoft 가 제휴의 일부로 Anthropic 에 각각 최대 $10B·$5B 를 투자하기로 약정했다는 세 회사 공동 발표다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "약정 가운데 집행된 금액은 이 발표에 없다."
+      ],
+      "locator": "블로그 본문, Claude 제공 확대 문단 다음의 투자 약정 문장(영상 소개 문장 앞)"
+    },
+    {
+      "key": "ev-oai-fund-lp",
+      "company_id": "openai",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-oai-fund",
+      "published_at_utc": "2026-09-15T11:35:01Z",
+      "title": "About · OpenAI Startup Fund — 펀드 출자자는 Microsoft 와 OpenAI 협력사이고 OpenAI 는 출자하지 않는다",
+      "excerpt": "The OpenAI Startup Fund is investing $175 million to help AI companies have a profound, positive impact on the world. … The fund’s investors include Microsoft and other OpenAI partners, although OpenAI itself is not an investor.",
+      "relevance": "OpenAI Startup Fund 의 돈은 Microsoft 와 다른 OpenAI 협력사가 낸 것이고 OpenAI 자신은 출자자가 아니라고 펀드가 밝힌 1차 자료다. Startup Fund 가 투자한 회사가 OpenAI 고객이어도 OpenAI 가 넣은 돈이 돌아오는 구조가 아니다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금 유지: OpenAI ⑦ 세로축을 돌아오지 않음으로 두는 이유다. OpenAI 가 Startup Fund 에 출자했다는 1차 자료가 나오면 세로축을 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "펀드 출자자별 금액은 공개되지 않았다."
+      ],
+      "locator": "소개 페이지 본문 첫 문단(첫 문장과 넷째 문장)"
+    },
+    {
+      "key": "ev-tc-cursor-seed",
+      "company_id": "openai",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-tc-anysphere",
+      "published_at_utc": "2023-10-11T19:00:00Z",
+      "title": "Anysphere raises $8M from OpenAI to build an AI-powered IDE — OpenAI Startup Fund 가 Cursor 시드를 이끔",
+      "excerpt": "Anysphere, a startup building what it describes as an “AI-native” software development environment, called Cursor, today announced that it raised $8 million in seed funding led by OpenAI’s Startup Fund with participation from former GitHub CEO Nat Friedman, Dropbox co-founder Arash Ferdowsi and other angel investors. … generative AI capabilities powered by OpenAI models",
+      "relevance": "Cursor 를 만드는 Anysphere 의 시드 $8M 을 OpenAI Startup Fund 가 이끌었고 Cursor 의 생성형 AI 기능이 OpenAI 모델로 돌아간다는 2차 보도다. 투자한 쪽은 OpenAI 가 아니라 Startup Fund 다.",
+      "channel": "press",
+      "conditional_impact": null,
+      "horizon": "과거(2023)",
+      "counter_evidence": [],
+      "unverified": [
+        "시드 가운데 Startup Fund 가 낸 금액은 기사에 없다."
+      ],
+      "locator": "기사 첫 문단과 Cursor 기능 소개 문단"
+    },
+    {
+      "key": "ev-ds-yc-tokens",
+      "company_id": "openai",
+      "factors": [
+        "F7"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-ds-yc",
+      "published_at_utc": "2026-05-24T00:00:00Z",
+      "title": "Altman offers $2 million in AI credits to Y Combinator startups for equity — API 토큰과 미래 지분 교환 제안",
+      "excerpt": "OpenAI Chief Executive Sam Altman has pledged two million dollars worth of application programming interface (API) tokens to every startup in the current Y Combinator batch in exchange for a future equity stake. … According to reports by TechCrunch, The Verge, and The Information, the arrangement covers roughly 169 early-stage companies and is structured as an uncapped Simple Agreement for Future Equity (SAFE). … The deal is notable because it treats processing power as a form of venture capital, exchanging operational infrastructure rather than cash for corporate ownership.",
+      "relevance": "Altman 이 Y Combinator 이번 배치 스타트업(약 169곳)마다 OpenAI API 토큰 $2M 어치를 미래 지분(상한 없는 SAFE)과 바꾸겠다고 제안했다는 2차 보도다. 현금이 아니라 연산 크레딧을 주는 구조이고, SAFE 체결과 토큰 소진은 보도에 없다.",
+      "channel": "secondary",
+      "conditional_impact": "지금 유지: 크레딧이라 ⑦ 세로축의 돈으로 세지 않는다. OpenAI 가 스타트업에 현금을 투자하고 그 스타트업이 OpenAI 에 대금을 낸다는 공시나 1차 발표가 나오면 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "SAFE 체결 수와 토큰 소진액은 확인되지 않았다."
+      ],
+      "locator": "기사 첫째·둘째·넷째 문단"
+    },
+    {
+      "key": "ev-apple-icloud-plan",
+      "company_id": "apple",
+      "factors": [
+        "F1",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-019",
+      "published_at_utc": "2026-09-09T00:00:00Z",
+      "title": "Apple debuts iPhone 18 Pro and iPhone 18 Pro Max — iCloud+ 요금과 포함 기능 문단",
+      "excerpt": "iCloud+ plans start at just $0.99 (U.S.) per month, providing additional storage to keep photos, videos, files, and more safe in the cloud and accessible across devices. iCloud+ also gives access to premium features such as event creation in the Apple Invites app, as well as Private Relay, Hide My Email, custom email domains, and HomeKit Secure Video.",
+      "relevance": "iPhone 18 Pro 보도자료가 iCloud+ 를 월 $0.99 부터의 저장 구독으로 소개하고 포함 기능으로 Apple Invites 일정 만들기·Private Relay·Hide My Email·사용자 지정 메일 도메인·HomeKit Secure Video 를 든다. Apple Intelligence 서버 모델 한도 상향은 이 목록에 없고, 같은 보도자료 각주는 확장 이용을 앞으로 유료로 제공한다고 적는다.",
+      "channel": "company_statement",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "iCloud+ 가입자 가운데 AI 한도 상향을 쓰는 사람 수는 공개되지 않았다."
+      ],
+      "locator": "보도자료 'Pricing and Availability' 절의 iCloud+ 문단 첫 두 문장"
+    },
+    {
+      "key": "ev-aa-mw-intel",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-aa-musewonder",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "title": "Muse Wonder and Muse Wonder Full — 종합 지수 4.3판 52·56 과 제공 범위",
+      "excerpt": "Meta has released Muse Wonder and Muse Wonder Full, achieving Artificial Analysis Intelligence Index v4.3 scores of 52 and 56 at max reasoning effort - each a material gain over Muse Spark 1.3 (max) at 48, with a release gap of only 6 weeks … Muse Wonder is available for users on Meta's first-party API, while Muse Wonder Full is currently only available for Muse Code users.",
+      "relevance": "Artificial Analysis 가 2026-10-12 Meta 의 Muse Wonder(max)·Muse Wonder Full(max)을 종합 지수 4.3판에서 52·56 으로 쟀고, Muse Wonder 는 Meta 1차 API 로, Muse Wonder Full 은 Muse Code 사용자에게만 제공된다고 적은 독립 측정이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "locator": "글 첫 문단(부제)과 둘째 문단"
+    },
+    {
+      "key": "ev-aa-mw-agentic",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-aa-musewonder",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "title": "Muse Wonder and Muse Wonder Full — GDPval-AA 2.1판 2위(1857)와 신뢰구간",
+      "excerpt": "In agentic knowledge work, it narrowly leads on GDP.pdf (33%), ranks #2 on GDPval-AA v2.1 (1857 Elo), and #3 on both AA-Briefcase (1729 Elo) and AutomationBench-AA (71%). … On GDPval-AA v2.1, its result is within the confidence intervals of Claude Opus 5.5 (max w/ fallback, 1866) and Claude Sonnet 5.5 (max w/ fallback, 1838)",
+      "relevance": "Muse Wonder Full(max)이 GDPval-AA 2.1판에서 1857 로 2위이고 Claude Opus 5.5(max) 1866·Claude Sonnet 5.5(max) 1838 과 신뢰구간이 겹친다는 독립 측정이다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "locator": "글 'Key takeaways' 둘째 항목과 'top three' 목록 뒤 GDPval-AA 문장"
+    },
+    {
+      "key": "ev-aa-mw-coding",
+      "company_id": "meta",
+      "factors": [
+        "F2"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-aa-musewonder",
+      "published_at_utc": "2026-10-12T00:00:00Z",
+      "title": "Muse Wonder and Muse Wonder Full — Coding Agents Index 68(Claude Code Sonnet 5.5 와 같음)",
+      "excerpt": "Muse Wonder Full achieves 68 on the Artificial Analysis Coding Agents Index at max effort in Muse Code, alongside Claude Code with Sonnet 5.5 (max, 68) and Opus 5.5 (max, 66). Muse Wonder (max) scores 63.",
+      "relevance": "Muse Code 의 Muse Wonder Full(max)이 Coding Agents Index 68 로 Claude Code·Sonnet 5.5(max) 68 과 같고 Claude Code·Opus 5.5(max) 66 보다 높다는 독립 측정이다. 참가자마다 자기 제품 하네스로 잰 지표다.",
+      "channel": "secondary",
+      "conditional_impact": null,
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "locator": "글 'Key takeaways' 다섯째 항목(Coding Agent performance)"
+    }
+  ],
+  "new_triggers": [
+    {
+      "key": "trg-maia-msft",
+      "company_id": "microsoft",
+      "factors": [
+        "F4",
+        "F8"
+      ],
+      "observation": "Microsoft 는 2026-10-12 Maia 200 이 Microsoft Copilot 등 자사 생산 작업을 처리하며 OpenAI·MAI·오픈소스 모델을 돌리고 미국·유럽·호주에 배치되고 있다고 밝혔고, 2027년부터 Maia 를 다기가와트 규모로 늘려 자사 제품·서비스의 주력 추론 시스템으로 삼겠다고 발표했다. 배치 수량, Maia 가 맡는 추론 몫, 외부 고객 판매는 공개되지 않았다. Microsoft ④ 칩 칸은 자체 사용, ⑧ 공급 축은 NVIDIA·AMD·Maia 를 함께 쓰는 사실로 판정했다.",
+      "condition": "Microsoft 실적 발표나 10-K·10-Q 에서 Maia 배치 규모나 Microsoft 추론 작업 가운데 Maia 가 맡는 몫이 숫자로 공시되거나, Maia 칩·Maia 인스턴스를 외부 Azure 고객에게 팔기 시작했다는 회사 발표가 나올 때.",
+      "deadline": "2027-01-31",
+      "evidence_ids": [
+        "EV-microsoft-070",
+        "EV-microsoft-071",
+        "EV-microsoft-072",
+        "EV-microsoft-073"
+      ],
+      "source_ids": [
+        "SRC-WEB-microsoft-904"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F4",
+          "F8"
+        ],
+        "what": "④ 칩 칸(외부 판매면 판매)과 ⑧ 공급 축(GPU 공급자 의존이 줄었는지)"
+      }
+    },
+    {
+      "key": "trg-maia-nvda",
+      "company_id": "nvidia",
+      "factors": [
+        "F1",
+        "F8"
+      ],
+      "observation": "NVIDIA 의 하이퍼스케일 고객 Microsoft 가 2026-10-12 Maia 200 이 Copilot 등 자사 생산 작업을 처리하고 있고 2027년부터 Maia 를 다기가와트 규모의 주력 추론 시스템으로 삼겠다고 발표했다. Microsoft 는 2026-07-29 실적 통화에서 자체 실리콘을 NVIDIA·AMD 최신 장비와 함께 쓴다고 밝혔고, Maia 가 대신하는 GPU 물량은 공개되지 않았다. NVIDIA ① 대체 공급은 하이퍼스케일러 자체 칩이 출하 중이지만 격차가 남은 부분으로 판정했다.",
+      "condition": "Microsoft 나 다른 하이퍼스케일 고객의 주력 추론 작업이 자체 칩으로 옮겨 갔다는 사실(배치 규모·추론 몫)이 그 회사의 실적 자료나 공시로 확인되거나, NVIDIA 10-Q·10-K 에서 하이퍼스케일 매출이나 최대 고객 비중의 감소가 그 이유와 함께 공시될 때.",
+      "deadline": "2027-02-28",
+      "evidence_ids": [
+        "EV-microsoft-070",
+        "EV-microsoft-071",
+        "EV-microsoft-072",
+        "EV-microsoft-050"
+      ],
+      "source_ids": [
+        "SRC-WEB-microsoft-904",
+        "SRC-WEB-microsoft-001"
+      ],
+      "status": "watching",
+      "recheck": {
+        "factors": [
+          "F1",
+          "F8"
+        ],
+        "what": "① 대체 공급(격차가 좁혀졌는지)과 ⑧ 고객 축(최대 고객 비중과 물량을 돌릴 경로)"
+      }
+    }
+  ]
+}

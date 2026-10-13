@@ -1,0 +1,46 @@
+{
+  "items": [
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-093",
+      "field": "relevance",
+      "old": "약 US$0.8B(약 RMB5.9B)를 넣어 지분 약 36% 를 가졌다는",
+      "new": "약 US$0.8B(약 RMB5.9B)를 투자해 지분 약 36% 를 가졌다는"
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-093",
+      "field": "relevance",
+      "old": "알리바바의 투자 대상에는 현금을 넣은 AI 회사가 있다는 사실을 보인다.",
+      "new": "알리바바의 투자 대상에는 알리바바가 직접 투자한 AI 회사가 있다는 사실을 보인다."
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-157",
+      "field": "title",
+      "old": "펀드 출자자는 Microsoft 와 OpenAI 협력사이고 OpenAI 는 출자하지 않는다",
+      "new": "펀드 출자자에 Microsoft 와 OpenAI 협력사가 포함되고 OpenAI 는 출자하지 않는다"
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-157",
+      "field": "relevance",
+      "old": "OpenAI Startup Fund 의 돈은 Microsoft 와 다른 OpenAI 협력사가 낸 것이고 OpenAI 자신은 출자자가 아니라고 펀드가 밝힌 1차 자료다.",
+      "new": "OpenAI Startup Fund 의 출자자에 Microsoft 와 다른 OpenAI 협력사가 포함되고 OpenAI 자신은 출자자가 아니라고 펀드가 밝힌 1차 자료다."
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-157",
+      "field": "locator",
+      "old": "소개 페이지 본문 첫 문단(첫 문장과 넷째 문장)",
+      "new": "소개 페이지 본문 첫째 문단 첫 문장과 둘째 문단 둘째 문장"
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-159",
+      "field": "locator",
+      "old": "기사 첫째·둘째·넷째 문단",
+      "new": "기사 본문 첫째 문단 첫 문장, 둘째 문단 첫째·넷째 문장"
+    }
+  ]
+}

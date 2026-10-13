@@ -60,3 +60,45 @@
 - research 통과, calculate: Alphabet·Amazon 13 공동 1위, Microsoft 10.5, Apple 10, TSMC 9, NVIDIA 8, Oracle 7.5, Alibaba 7, Tesla 5.5, Palantir 5,
   SpaceX 4.5, Anthropic·OpenAI 1.5, Meta 미완료(③ 가속도 자료 없음). 규칙 변경 몫: ① 상한으로 빅테크 넷 −1, ⑦ 큼·돌아옴 −3 으로 Microsoft·NVIDIA·Oracle −1,
   ④ 형식 변경으로 Apple +2·Oracle +2.5·Meta +1·NVIDIA −1, ⑥ 성장 조정으로 Alphabet·Meta·Microsoft·Apple·NVIDIA·Alibaba·Tesla +1(Meta +2).
+- 1차 리뷰 규칙 일관성(Opus): needs_fix 1건 — N1 Palantir ④ AI 무관 몫 0 은 14개사 공통 잣대(기업용 소프트웨어 줄은 AI 무관)와 어긋난다. 공통 잣대대로면 1.0 →
+  ④ 2→4.5, 총점 5→7.5(Oracle 과 공동 7위). 고칠 입력·문안은 review-parts/rule-consistency.md 에 있다. 경계 사례 나머지는 통과. 점수 무관 L1~L10 은 다음 실행 과제.
+- 1차 리뷰 재무 계산(Sonnet): pass. 출력·가독성(report-designer): pass, 빌드 전 권고 — 트리거 12건(TRG-006·007·012·015·019·021·026·030·034·058·071·102)이
+  v2.0 점수를 지금 점수로 적음, 렌더러 설명이 v2.1 이전 내용(⑥ 방법·① AI 수익화·⑥ 카드 'PER'·HTML 방식 설명). 렌더러는 고쳐 커밋했다(9a32236, 774bd3a).
+  트리거 12건과 TRG-017(옛 P3 경계)은 데이터 수정 묶음에 넣는다. 모양 문제(320px 순위표 잘림, 국면 지표가 순위표를 밀어냄, 새 표 sticky 열, 출처 표시)는
+  다음 실행 과제.
+- 근거 불릿(evidence-editor): pass. 이번 묶음에 고칠 근거 문장 12건(사실 오류 7: EV-tsmc-086·anthropic-076·tesla-063·openai-114·nvidia-112·openai-149·microsoft-058,
+  낡은 점수 5: EV-alibaba-007·meta-002·meta-004·nvidia-004·nvidia-083). 점수 무관 243건은 다음 실행 과제.
+- 수정 묶음 준비: Palantir ④(work/judge-fix1/F4-palantir.json, EV-palantir-042·019 원문 대조 끝). 트리거 14건(B1 12 + TRG-025·027 '다섯 자리' 표현 + TRG-017)과
+  근거 12건은 정확한 치환 목록을 Sonnet 에게 만들게 해 적용한다(사실·출처 리뷰 결과 합친 뒤).
+- 사실·출처 b(fact-checker): needs_fix 3건, 모두 ⑦ 세로축. Palantir(Strategic Commercial Contracts 누적 $325M, 10-K·10-Q 공시 → 돌아옴이면 0→−1),
+  Alibaba(투자 대상과의 클라우드 계약 매출 RMB9,415M 이 EV-alibaba-089 발췌에 이미 있는데 미확인을 유리하게 풀었음 → 0→−1),
+  OpenAI(Startup Fund 의 Cursor 시드·YC 토큰 지분 교환 보도 — 기금 돈이 OpenAI 자신의 돈인지에 따라 −2→−3). 점수 무관: 열리는 원문을 '열지 못해' 로 둔 두 건
+  (Palantir ① 통화 전사본·CEO 서한, SpaceX ① Yahoo 전재), EV-alibaba-074 locator 쪽수, EV-tesla-008 발췌·날짜, 낡은 unverified 20건, Oracle ⑦ TikTok 연결 추론.
+  → ⑦ 셋은 Opus 수정 판단 세션이 다른 회사의 투자 조직 읽기와 맞춰 판정한다(사실·출처 a 결과 합친 뒤).
+- 사실·출처 a(fact-checker): pass, 점수 불변. 고칠 문장 넷 — F1 Microsoft ⑤ 판정 칸 "Anthropic 지분 투자 미확인" 은 틀림(FY26 4분기 콜 $3.2B 이익),
+  F2 Meta ⑧ 분기 뒤 리스 $68B 포함(3.05배) ↔ NVIDIA 분기 뒤 SB Energy 보증 제외의 잣대 확인, F3 Apple ④ 모델 '판매' 근거(iCloud+ 한도)와 ① 의 계획 처리가 갈림,
+  F4 Alphabet·Meta ② 판정 칸의 Artificial Analysis 최고 모델 서술이 12 Oct Muse Wonder(52)와 어긋남. 다음 실행 과제 10건은 리뷰 파일에.
+- 사용자 지시(2026-10-13): CNBC 'Microsoft will mainly use its Maia chips for AI inference'(2026-10-12)를 추적한다. CNBC 는 WebFetch 403·앱 브라우저 Akamai 접근
+  거부라 우회하지 않고, 1차 발표인 Microsoft 공식 블로그(Scott Guthrie, 2026-10-12T13:01:29Z, 정보 마감 안)를 원문으로 근거 4건 확정(EV-microsoft-070~073,
+  출처 SRC-WEB-microsoft-904). 2027년 다기가와트·주력 추론은 계획이라 점수에 넣지 않고 트리거로 지켜본다. 판단 반영과 트리거 문구는 수정 판단 세션이 정한다.
+- merge_group_outputs.py 는 트리거를 이전 실행의 관찰 항목으로 다시 만들어 이 실행의 TRG-113~120 을 지운다 → 수정 묶음은 덧붙이기 전용 add_fix_items.py 를 쓴다.
+  문장 치환은 apply_subst.py(old 가 정확히 한 번 나와야 적용, 실패하면 되돌림).
+- Apple ④ 에서 판매 칸이 하나도 남지 않으면 primary_layer 를 null 로 두고 "비교 그룹 없음" 으로 다룬다(규칙의 비교 그룹 정의가 판매 칸에서 출발하므로 판매 칸이
+  없으면 그룹도 없다). 그렇게 판정될 때만 검증기·렌더러를 고친다.
+- 수정 묶음 띄움: 수정 판단 세션(Opus high, FIX-INSTRUCTIONS.md — ⑦ 셋·Microsoft ⑤·Meta ⑧·Apple ④·Alphabet·Meta ②·Maia 반영과 트리거)과
+  문장 치환 목록 세션(Sonnet, SUBST-INSTRUCTIONS.md — 트리거 15건·근거 12건). 치환 목록 가운데 다시 세우는 칸의 점수를 적는 항목은 depends_on 으로 표시해
+  판단 반영 뒤 다시 맞춘다.
+- 치환 목록 1(Sonnet, 49건) 검증·적용: 44건 적용, TRG-019·021 다섯 건은 Apple ④ 판정 뒤에 적용. TRG-017 의 산식 표현("÷ 성장률 × 100" 은 곱하기로 읽힘)을
+  렌더러 표기("PER 33.0 ÷ 성장 30.6")로 고쳐 적용했다. P1′ 경계는 upper_exclusive 라 "1 미만이면 0" 이 맞다. 같은 B 부류(근거 relevance 의 낡은 자기 회사 점수)를
+  리뷰가 10건 더 놓쳐 둘째 목록(subst-fix2.json)으로 함께 고친다. EV-meta-002 의 "FT" 표기는 실제 출처(Reuters 전재)와 어긋나 같이 고친다.
+- 치환 목록 2(21건) 검증·적용: 19건 적용, EV-microsoft-002 두 건은 Microsoft ② 판정 뒤. 판정 재료를 풀어 쓴 문장(TSMC·Microsoft·NVIDIA ② 경로, Palantir ① 전환비용,
+  Tesla·SpaceX ④ 칸)은 results calc 와 대조해 맞았다. 확정 근거에 남은 "제목·매체·날짜만 보고 판정함" unverified 문장은 사실·출처 b 가 다음 실행 과제로 적은 낡은 unverified 와 같은 부류라 이번에 손대지 않는다.
+- 수정 판단 세션 결과: 점수가 바뀌는 칸은 Palantir ⑦(돌아옴, 0→−1)·Alibaba ⑦(돌아옴, 0→−1). OpenAI ⑦ 은 Startup Fund 가 "OpenAI itself is not an investor"
+  (openai.fund, 2026-09-15 아카이브로 마감 전 확인)이고 YC 토큰은 체결 미확인 크레딧이라 돌아오지 않음 유지. Microsoft ⑤ 문장 정정(Anthropic 투자 이익 $3.2B), Meta ⑧ 은
+  "체결 리스는 기간 뒤 것도 넣고 우발 의무는 ⑦" 이라 같은 잣대로 구분 문장만. Apple ④ 모델 칸 판매→자체 사용(①과 같은 계획 읽기), primary_layer null.
+  ② 는 정보 마감 당일 Artificial Analysis 평가(Muse Wonder)를 넣으며 회사 간 상대 순위가 바뀌어 Meta·Alphabet·SpaceX 성능 도약 경로와 Anthropic·OpenAI·Alibaba
+  문장을 함께 고쳤다(점수 불변). 확인 리뷰가 ② 의 같은 날 스냅숏 원칙과 맞는지 본다. Maia 트리거 TRG-121(Microsoft ④⑧)·122(NVIDIA ①⑧).
+- add_fix_items 첫 실행이 발췌 600자 초과(Palantir 936·OpenAI 614)와 channel 'news'(허용 밖) 로 두 번 되돌려졌다. 발췌는 원문 문장을 바꾸지 않고 판정에 쓰는 문장만
+  " … " 로 남겼고, channel 은 기존 관례(TechCrunch press, Artificial Analysis secondary, 2차 인용 보도 secondary)로 맞췄다. 새 근거 12건은 fact-checker 원문 대조 뒤 확정한다.
+- 판매 칸이 없을 때 primary_layer null 을 허용하는 코드(schema·stages·render·rules.md·테스트) 커밋 59d59e3. 전체 테스트 1611·node 24 통과.
+- 치환 목록의 판정 의존 7건(Apple ④ 5건은 '모델은 판매' 를 '다섯 칸 자체 사용, 판매 칸 없음' 으로 고쳐, EV-microsoft-002 2건은 그대로) 적용 → 치환 70건 모두 반영.

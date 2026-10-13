@@ -1,0 +1,216 @@
+{
+  "items": [
+    {
+      "file": "evidence",
+      "id": "EV-amazon-004",
+      "field": "relevance",
+      "old": "아마존 ① 판단은 5점(Prime 2억+ 락인, Alexa+ 무료 개방, Bedrock AgentCore)이다.",
+      "new": "아마존 ① 판단은 4점이다. 소비자 채널(마켓플레이스·Prime 구독)의 사다리 합은 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 에 걸린다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results amazon.F1 score 4, calc raw 5·ai_monetization_gate applied cap 4(value partial), 가장 강한 채널은 소비자(judgments amazon.F1). 'Prime 2억+ 락인·Alexa+ 무료 개방·Bedrock AgentCore' 는 현재 판단의 올릴 근거에 없어 뺐다(Alexa+ 무료 개방은 내릴 근거 칸의 사실이다).",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-amazon-009",
+      "field": "relevance",
+      "old": "아마존 ① 판단은 5점(Prime 2억+ 소비자 락인)이다.",
+      "new": "아마존 ① 판단은 4점이다. 소비자 채널(마켓플레이스·Prime 구독)의 사다리 합은 5 이지만 AI 수익화 '예' 가 아니어서 상한 4 에 걸린다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results amazon.F1 score 4, calc raw 5·gate applied cap 4. 첫 목록의 TRG-006 과 같은 값이다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-microsoft-002",
+      "field": "relevance",
+      "old": "마이크로소프트 ② 판단은 3점이고, Maia 200 배포 물량이 확인되지 않았고 Arena 상위권에 자체 모델이 없으며 모델을 OpenAI·Anthropic 양쪽에서 조달한다는 것을 근거로 든다.",
+      "new": "마이크로소프트 ② 판단은 4점이다. 성능 도약은 자체 모델이 독립 측정 순위의 회사별 최고 모델 목록에 없고 최상위 성능을 OpenAI·Anthropic 모델에서 받아 실패이고, 패러다임 적응과 표준 선점은 통과다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results microsoft.F2 score 4, calc paths performance_leap fail·paradigm_adaptation pass·standard_capture pass. judgments microsoft.F2 판정 칸(2026-10-08 Artificial Analysis 목록에 자체 모델 없음, 최상위 성능은 OpenAI·Anthropic 에서 받음). 'Maia 200 배포 물량 미확인' 은 올릴 근거 칸의 사실이라 이 문장에서 뺐다. 조율자가 Microsoft ② 를 다시 세우면 다시 대조한다.",
+      "depends_on": [
+        "microsoft.F2"
+      ]
+    },
+    {
+      "file": "evidence",
+      "id": "EV-microsoft-002",
+      "field": "conditional_impact",
+      "old": "재검토: 마이크로소프트 ② 의 패러다임 적응 경로 통과 여부를 위쪽으로 다시 볼지 본다.",
+      "new": "재검토: 마이크로소프트 ② 의 패러다임 적응 경로 근거에 새 Copilot 의 채택 지표를 더할지 본다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "패러다임 적응은 지금 통과(results microsoft.F2 paths)라 '통과 여부를 위쪽으로' 가 맞지 않는다. judgments microsoft.F2 는 새 Copilot 을 시범 배포 단계라 채택 지표로 세지 않는다고 적는다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-008",
+      "field": "relevance",
+      "old": "지금 NVIDIA ② 판단은 5점(최상단)이고, Rubin 의 성능 수치는 NVIDIA 발표이며 NVIDIA 실적이나 공시로 양산·출하가 확인된 적은 없다. 이 기사는 그 출하 여부의 공백을 건드린다.",
+      "new": "지금 NVIDIA ② 판단은 4점이고 성능 도약은 MLPerf 독립 측정으로 통과다. 이 기사는 MLPerf 에 미리보기 등급으로 올랐던 Vera Rubin 이 NVIDIA 10-Q 의 생산 출하 시작 문장에 이어 고객의 생산 작업에 제공되기 시작했다는 출하 확인 재료다. Rubin 의 성능 수치는 NVIDIA 발표라 쓰지 않는다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results nvidia.F2 score 4, calc performance_leap pass·leap_independent yes. judgments nvidia.F2: 10-Q 가 Vera Rubin 생산 출하를 FY2027 3분기에 시작했다고 적었고(EV-nvidia-023) 이 근거(EV-nvidia-008)가 올릴 근거로 인용돼, 옛 문장의 '공시로 출하가 확인된 적은 없다' 도 현재와 어긋나 문장 전체를 고쳤다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-008",
+      "field": "conditional_impact",
+      "old": "지금은 유지: ② 는 이미 최상단이고, 세대 격차 판정은 고객·벤더 발표 수치가 아니라 독립 측정이 있어야 한다.",
+      "new": "지금은 유지: 세대 격차 판정은 고객·벤더 발표 수치가 아니라 독립 측정이 있어야 하므로 이 기사로 ② 근거를 바꾸지 않는다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "NVIDIA ② 는 4(상한 5 아님)라 '이미 최상단' 이 틀렸다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-nvidia-008",
+      "field": "conditional_impact",
+      "old": "Rubin 출하가 NVIDIA 실적이나 공시로 확인되면 ② 근거 문장에서 Rubin 을 발표가 아니라 출하로 적는다.",
+      "new": "NVIDIA 실적이나 공시에서 Vera Rubin 의 출하 규모가 확인되면 ② 근거 문장에 그 규모를 더한다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "judgments nvidia.F2 가 10-Q 의 생산 출하 시작 문장을 이미 인용하므로 '출하 확인' 대신 '출하 규모' 를 조건으로 썼다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-palantir-004",
+      "field": "relevance",
+      "old": "팔란티어 ① 판단은 2점으로, 전환비용은 있으나 스노우볼이 없는 가짜 해자라고 적었다.",
+      "new": "팔란티어 ① 판단은 3점이고 전환비용은 부분이다. 영국 경찰 다섯 곳의 시범 종료는 다음 선택 때 옮긴 사례로 읽지만 옮겨 간 규모는 고객 기반에 견줘 작다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results palantir.F1 score 3(base 3, strength partial from switching). judgments palantir.F1 전환비용 부분: 영국 경찰 다섯 곳의 시범 종료를 다음 선택 때 옮긴 사례로 들되 옮겨 간 규모는 기반에 견줘 작아 실패로 보지 않는다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-palantir-004",
+      "field": "conditional_impact",
+      "old": "이탈은 팔란티어 ① 판단이 이미 낮게 둔 방향과 같아 판단을 바꾸지 않고 근거 문장만 보강한다.",
+      "new": "이탈은 팔란티어 ① 판단의 전환비용 부분(다음 선택 때 옮긴 사례)에 이미 반영된 방향과 같아 판단을 바꾸지 않고 근거 문장만 보강한다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "'이미 낮게 둔' 은 옛 2점 서술이다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-spacex-xai-007",
+      "field": "relevance",
+      "old": "실현된 성과라 ④ 호황 이후 비전(비AI 사업도 사업 부문으로 센다)의 근거다. 스페이스X ④ 판단은 5점으로 최고 구간이고 Starlink·Starship·xAI·X·Cursor·Terafab 을 부문으로 센다.",
+      "new": "실현된 성과라 ④ 다각화 축에서 AI 와 무관한 발사·위성 통신 매출을 읽는 재료다. 스페이스X ④ 판단은 4.5점이고 클라우드·모델은 판매라 수직계열화 2.0, AI 무관 매출 85.1% 로 다각화 2.5 다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results spacex-xai.F4 score 4.5, layers cloud·model sold(vertical 2.0), non_ai_revenue_share 0.851(Space $4,056M 발사·Connectivity $13,873M 통신이 AI 무관), diversification 2.5. '사업 부문으로 센다' 는 옛 ④ 말이라 문장 전체를 고쳤다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-spacex-xai-007",
+      "field": "conditional_impact",
+      "old": "지금은 유지: Starship 은 이미 사업 부문으로 세고 있고 판단이 최고 구간이라 스페이스X ④ 판단을 바꾸지 않는다.",
+      "new": "지금은 유지: 발사 매출은 이미 ④ 의 AI 무관 매출 몫에 들어 있어 스페이스X ④ 판단을 바꾸지 않는다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "SpaceX ④ 는 4.5(최고 구간 아님). judgments spacex-xai.F4 non_ai_share_basis 가 발사 매출을 AI 무관으로 센다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tsmc-004",
+      "field": "relevance",
+      "old": "지금 TSMC ② 판단은 5점(최상단)이고, 근거에 'N2 양산 시작(2분기 웨이퍼 매출 3%, 하반기 가파른 증산)' 이 이미 적혀 있다.",
+      "new": "지금 TSMC ② 판단은 3점이고 성능 도약은 통과이나 독립 측정이 없어 부분으로 계산되며, 근거에 N2 양산 시작(2025년 4분기)과 2026년 2분기 웨이퍼 매출 3% 가 이미 적혀 있다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results tsmc.F2 score 3, calc performance_leap pass → performance_leap_used partial(leap_independent no)·paradigm_adaptation pass·standard_capture fail. judgments tsmc.F2 올릴 근거 EV-tsmc-018(N2 2025년 4분기 양산)·EV-tsmc-012(2026년 2분기 웨이퍼 매출 2나노 3%). 옛 따옴표 문구의 '하반기 가파른 증산' 은 현재 판단에 없어 뺐다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tsmc-004",
+      "field": "conditional_impact",
+      "old": "지금은 유지: 같은 사실이 이미 ② 근거에 있고 ② 는 최상단이다.",
+      "new": "지금은 유지: 같은 사실이 이미 ② 근거에 있다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "TSMC ② 는 3(최상단 아님).",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tesla-008",
+      "field": "relevance",
+      "old": "에너지 저장 배치 13.7GWh 는 ④ 가 세는 에너지 저장 사업의 실측 배치다.",
+      "new": "에너지 저장 배치 13.7GWh 는 ④ 다각화 축에서 AI 무관 매출로 세는 에너지 저장 사업의 실측 배치다.",
+      "finding": "점수 불일치 스캔(같은 문단의 옛 ④ 말)",
+      "checked": "judgments tesla.F4 non_ai_share_basis: Energy generation and storage $12,799M 을 AI 무관(에너지 수요)으로 셌다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tesla-008",
+      "field": "relevance",
+      "old": "테슬라 ④ 판단은 3점(차량·에너지 저장·소규모 로보택시, 배치 전인 Optimus·Terafab 은 폭에서 뺐다)이다.",
+      "new": "테슬라 ④ 판단은 4.5점이고 칩·모델은 자체 사용, 응용은 판매라 수직계열화 2.0, AI 무관 매출 100% 로 다각화 2.5 다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results tesla.F4 score 4.5, layers chip·model self / app sold, vertical 2.0, non_ai_revenue_share 1.0, diversification 2.5. 같은 칸의 ⑨ −1 서술은 results tesla.F9 −1 과 같아 그대로 뒀다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tesla-057",
+      "field": "relevance",
+      "old": "④ 호황 이후 비전(비AI 사업도 매출·배치가 있으면 센다)의 재료다.",
+      "new": "④ 다각화 축에서 AI 무관 매출로 세는 사업의 재료다.",
+      "finding": "점수 불일치 스캔(같은 문단의 옛 ④ 말)",
+      "checked": "judgments tesla.F4: Energy generation and storage 줄을 AI 무관 매출로 센다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-tesla-057",
+      "field": "relevance",
+      "old": "이어받은 테슬라 ④ 판단은 3점이다.",
+      "new": "테슬라 ④ 판단은 4.5점이고 칩·모델은 자체 사용, 응용은 판매라 수직계열화 2.0, AI 무관 매출 100% 로 다각화 2.5 다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results tesla.F4 score 4.5(위 EV-tesla-008 과 같은 값). '이어받은' 은 이전 판을 가리키는 표현이라 뺐다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-071",
+      "field": "relevance",
+      "old": "④ 호황 이후 비전(자체 칩은 출하가 확인될 때 수직계열화 근거로 센다)의 재료다. 이어받은 알리바바 ④ 판단은 4점이다.",
+      "new": "④ 호황 이후 비전의 층별 보유표에서 칩 칸을 '자체 사용' 으로 적는 재료다. 알리바바 ④ 판단은 5점이고 칩·서버는 자체 사용, 소프트웨어 플랫폼·클라우드·모델·응용은 판매라 수직계열화 2.5(칸 값 합 5 를 상한에서 자름)이며, AI 무관 매출 85.5% 로 다각화 2.5 다.",
+      "finding": "점수 불일치 스캔",
+      "checked": "results alibaba.F4 score 5, layers·vertical_raw 5.0→2.5, non_ai_revenue_share 0.855. judgments alibaba.F4 칩은 자체 사용(Zhenwu 를 클라우드 서비스로만 수익화, 하드웨어 판매 매출 없음)이고 이 근거(EV-alibaba-071)가 그 칸 근거다. 첫 목록의 EV-alibaba-007 과 같은 값이다.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-071",
+      "field": "conditional_impact",
+      "old": "재검토: 알리바바 ④ 판단에 자체 칩의 자사 클라우드 배치를 수직계열화 근거로 더할지 본다.",
+      "new": "지금은 유지: 알리바바 ④ 판단의 칩 칸은 이 배치 사실로 이미 자체 사용이다.",
+      "finding": "점수 불일치 스캔(같은 근거의 낡은 서술)",
+      "checked": "이 근거가 칩 칸(자체 사용)의 근거라 '더할지 본다' 가 맞지 않는다. 이어지는 V900 문장은 그대로다. 점수 표기 없음.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-002",
+      "field": "relevance",
+      "old": "추론: 메타가 광고 밖 새 사업으로 기업용 AI 플랫폼을 출범했다는 FT 보도다.",
+      "new": "추론: 메타가 광고 밖 새 사업으로 기업용 AI 플랫폼을 출범했다는 Reuters 보도(The Star 전재본)다.",
+      "finding": "출처 표기",
+      "checked": "source_id SRC-WEB-meta-901: publisher 'The Star (Reuters)', url thestar.com.my, note 'FT 2026-09-28(유료)와 같은 사건을 전한 Reuters 기사 전재본'. 근거의 excerpt 가 'Sept 28 (Reuters)' 로 시작하고 locator 도 'Reuters 기사(The Star 전재)'.",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-meta-002",
+      "field": "unverified[1]",
+      "old": "같은 사건 보도(WSJ·TechCrunch·Reuters·CNBC 등) 중 FT 를 고름",
+      "new": "같은 사건을 다룬 FT·WSJ·TechCrunch·CNBC 기사가 여럿 있어 Reuters 기사(The Star 전재본) 하나를 골랐다",
+      "finding": "출처 표기",
+      "checked": "위와 같은 source_id 대조. FT 기사는 유료라 같은 사건의 Reuters 전재본을 열었다는 출처 장부 note 와 맞춘다.",
+      "depends_on": []
+    }
+  ]
+}
