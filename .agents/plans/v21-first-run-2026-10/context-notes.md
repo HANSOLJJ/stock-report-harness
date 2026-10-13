@@ -107,3 +107,34 @@
   다음 실행 과제 — 고치면 초안 해시가 바뀌어 리뷰를 다시 해야 하므로 한 라운드 원칙대로 넘긴다. 경계: Oracle ⑦ TikTok 연결은 추론으로 선 무거운 쪽 '돌아옴'.
 - review.md 를 fill_review.py 로 채움(체크리스트 행은 템플릿의 검사 초점 칸을 살리고 결과·근거만). 치환 적용 수는 76항목(44+19+7+6, 확인 리뷰의 83 은 미룬 7건 중복).
   validate_report_contract PASS. 승인 대기.
+- 사용자 결정(2026-10-13): 403 규칙을 "스크립트 403 → 실제 브라우저로 다시 열기, 거기서도 막히면 우회하지 않음" 으로 정했다(커밋 dc60e3b). User-Agent 위장으로 바꾸자는
+  요청은 봇 차단 우회라 받지 않았다. 이어서 "규칙 바뀌기 전 스크립트만 막혀 다른 기사로 대신한 원문(1번 아홉 건)을 열어 지금 평가를 고친다" 로 정했다.
+  승인 대기 상태가 풀리는 것을 알고 정한 것이다. 순서: Sonnet 이 브라우저로 원문 열기(REOPEN-INSTRUCTIONS.md) → 원문 대조·확정 → Opus 판단 수정 →
+  research·calculate·draft → 바뀐 부분 확인 리뷰 1회 → 승인 대기.
+- 사용자가 USA TODAY 소장 PDF 를 줬다(docs/USA TODAY OPENAI COPYRIGHT lawsuit.pdf, 79쪽). CourtListener 문서 1 공개 사본을 출처로 근거 EV-openai-160 확정(pdftotext 로
+  발췌 두 조각 순서 대조). 2차 기사(EV-openai-068)가 "금지명령" 만 적은 것과 달리 청구 취지 4항이 원고 콘텐츠가 들어간 GPT·LLM 모델과 학습 데이터셋의 폐기를 청구하고,
+  피고는 OpenAI 법인 일곱 곳뿐(Microsoft 없음), MDL 3143 관련 사건 신청. OpenAI ⑤ 의 비용형 읽기가 이 청구와 언론사 병합 소송의 같은 청구에 같은 잣대인지 판단 세션이 본다.
+- Seeking Alpha IDC 기사: 앱 브라우저에서는 첫 문단만 보이고 구독 안내로 가려졌고(봇 차단 아님), 사용자가 본문을 붙여 줬다. 6,270만 대(−20.1%), Apple 점유율 8.5%→9.5%,
+  출하 670만→590만 대로 Apple ① 문장(EV-apple-043, 9to5Mac)과 같아 판단 변화 없음. 원 집계인 IDC 발표문은 브라우저 세션이 확인한다.
+- "5,180억 달러" 기사 = Reuters 2026-09-28 'Anthropic's IPO prospectus shows sweeping AI vision, surging costs'(구독 장벽, 사용자도 결제 요구로 못 엶). CNBC 전재본이
+  EV-spacex-xai-043(SpaceX ⑦)으로 이미 확정돼 있다. 유출된 상장 신청서 초안 보도라 AGENTS.md(2026-10-09) 대로 등급을 가르는 숫자로 쓰면 안 된다 → 판단 세션이
+  SpaceX ⑦ 의 '조달 의존 고객' 판정과 Anthropic 판단들이 순손실 $42B·약정 $518B 같은 유출 숫자를 결정적 근거로 썼는지 점검하고, 썼으면 공개 자료로 다시 세운다.
+  → 점검 끝(조율자): SpaceX ⑦ 의 '조달 의존 고객 Anthropic' 은 시리즈 H $65B(회사 1차)·Broadcom 받친 $60B 차입(2차)·S-1/A 계약(공시)으로 서고, 유출 숫자는
+    Alphabet·Amazon·Microsoft·SpaceX ⑦ 과 Anthropic ⑧ 에서 모두 "보도가 있다" 줄로만 쓰인다. 규칙 위반 없음, 판단 세션 지시에서 뺀다.
+- 원문 다시 열기 결과(work/reopen1/report.md): 여덟 건 열림. 새 근거 9건 확정(EV-openai-161, EV-anthropic-141, EV-apple-065·066·067, EV-microsoft-076, EV-oracle-061,
+  EV-alibaba-094·095). Alibaba 이미지 표 두 건은 조율자가 Playwright 로 열어 직접 대조했다(CPFS 글자 그대로, GPU 위쪽 행 일치. 아래쪽에 PAI·RDS·PolarDB·百炼 MU 도 같은 인상).
+  판단에 닿을 수 있는 새 사실: OpenAI ② 발언 주체(회사 글에 Altman 발언 서술 없음), OpenAI ⑤ 소장의 모델 폐기 청구, Apple ① IDC 원문에 Apple 가격 인상 서술 없음,
+  Siri 합의 예비 승인·최종 심리일, Oracle ④ 타사 모델 종량 과금, Alibaba ① 목록가 인상 표. Top Class Actions 는 Cloudflare 국가 차단, Seeking Alpha·합의 사이트는 봇 확인이라 우회하지 않았다.
+- 사고: 브라우저 세션이 Reuters 기사 안의 소장 PDF 링크를 앱 안 브라우저로 열어 사용자 화면에 저장 대화상자가 떴다(다운로드 안 함). 앱 브라우저에서 img.alicdn.com·aliyun.com
+  이동은 거부·실패라 다시 시도하지 않고 Playwright 로 열었다.
+- 판단 세션(Opus high, REOPEN-JUDGE-INSTRUCTIONS.md) 띄움. 판단 파일·치환 목록은 work/reopen1/.
+- 판단 세션 결과: 판단 9건 문장·근거 표지만(입력은 oracle ④ 모델 칸 근거 목록에 EV-oracle-061), 점수 불변. openai ⑤·microsoft ⑤ 는 USA TODAY·NYT 두 소송의 모델 폐기 청구를
+  판결 전 청구라 비용형으로 같은 잣대(NYT 소장 EV-openai-162 신설), oracle ④ 타사 모델 판매는 Bedrock·Foundry·Vertex 처럼 모델 칸이 아니라 클라우드 칸, alibaba ① 가격 인상은
+  공지가 든 이유(하드웨어 조달비)와 규격 따라 제품 가리지 않는 인상 폭이 원가 전가라 (나) 아님(Microsoft 는 AI 기능 포함 정가 인상이라 (나)). 치환 16건(낡은 '열지 못했다' 메모).
+- 조율자 대조: NYT 소장은 WebFetch 가 저장한 PDF 를 pdftotext 로 세 조각 순서 대조(청구 취지 67~68쪽), 발췌 725자 → 피고 명단과 청구 취지 2·3항만 남겨 519자.
+  Alibaba 표 아래쪽은 Playwright 로 원해상도 잘라 대조(百炼 MU6 이 맞고, 조율자가 축소 화면에서 본 MU8 은 잘못 읽은 것). 확정 2건(EV-openai-162, EV-alibaba-096).
+- 반영·재계산: 판단 9건, 치환 16건(EV-apple-043 unverified[2] 한 건은 '열리지 않음' 사실을 앞에 두도록 조율자가 고침), research·calculate(점수·순위 불변, results 3efffdce…)·draft·
+  review-template. 확인 리뷰 2차(Opus high) 띄움.
+- 확인 리뷰 2차(confirm-r2): pass, Q01~Q23 전부 pass. HEAD 대비 results 차이는 해시와 Oracle F4 근거 목록뿐. 두 저작권 소송·Oracle 타사 모델·Alibaba (나)·EU 사건 모두 같은 잣대.
+  점수 무관 과제 6건(Oracle 타사 모델을 클라우드 칸 vs 다른 회사는 플랫폼 칸, Apple ① 한 줄 표현, OpenAI ⑤ 폐기 청구 문장의 무게와 MDL 줄 중복, Oracle 단위 서술, 새 출처 열람일 표기,
+  Seeking Alpha 막힌 사유 표현)은 confirm-r2.md 「다음 실행 과제」. review.md 를 fill_review.py(confirm-r2)로 채움, 계약 검증 PASS. 승인 대기.

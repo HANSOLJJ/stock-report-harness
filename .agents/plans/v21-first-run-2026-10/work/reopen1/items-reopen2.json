@@ -1,0 +1,65 @@
+{
+  "sources": [
+    {
+      "key": "src-nyt-complaint",
+      "company_id": "openai",
+      "kind": "news",
+      "title": "The New York Times Company v. Microsoft Corporation et al. (S.D.N.Y.) — Complaint (2023-12-27)",
+      "publisher": "U.S. District Court for the Southern District of New York (CourtListener RECAP 사본)",
+      "url": "https://storage.courtlistener.com/recap/gov.uscourts.nysd.612697/gov.uscourts.nysd.612697.1.0.pdf",
+      "published_at_utc": "2023-12-27T00:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "sha256": "ea782ad54d5a1e7b9fb86ac9b78439de46dc1a5d8bbc9644022985e502451f46",
+      "note": "소장 원문(69쪽, 서명일 2023-12-27). 2026-10-13 CourtListener 공개 사본을 받아 1쪽 사건 머리와 67~68쪽 PRAYER FOR RELIEF 를 읽었다. 첫 쪽의 Civil Action No. 칸은 비어 있어 사건 번호를 적지 않는다. 이 사건은 MDL No. 3143 이송 결정이 'New York \"News\" cases' 로 부르는 사건 가운데 하나다. sha256 은 그때 받은 파일 값이다."
+    }
+  ],
+  "evidence": [
+    {
+      "key": "ev-nyt-complaint",
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-nyt-complaint",
+      "published_at_utc": "2023-12-27T00:00:00Z",
+      "title": "The New York Times Company v. Microsoft·OpenAI 소장 — 피고에 Microsoft 포함, 영구 금지명령과 GPT·LLM 모델·학습 데이터셋 폐기 청구",
+      "excerpt": "for its complaint against Defendants Microsoft Corporation (“Microsoft”) and OpenAI, Inc., OpenAI LP, OpenAI GP LLC, OpenAI LLC, OpenAI OpCo LLC, OpenAI Global LLC, OAI Corporation, LLC, OpenAI Holdings, LLC, (collectively “OpenAI” and, with Microsoft, “Defendants”), alleges as follows: … 2. Permanently enjoining Defendants from the unlawful, unfair, and infringing conduct alleged herein; 3. Ordering destruction under 17 U.S.C. § 503(b) of all GPT or other LLM models and training sets that incorporate Times Works;",
+      "relevance": "사실: The New York Times Company 가 2023-12-27 뉴욕 남부 연방지법에 Microsoft 와 OpenAI 법인 여덟 곳을 상대로 낸 저작권 소장이다. 청구 취지는 손해배상과 함께 영구 금지명령, Times 저작물이 들어간 모든 GPT·LLM 모델과 학습 데이터셋의 폐기(17 U.S.C. § 503(b))를 구한다. 이 사건은 언론사 저작권 소송을 모은 MDL No. 3143 에 들어 있다. 추론: USA TODAY 소장과 같은 모델·학습 데이터셋 폐기 청구가 병합 소송에도 있고, 이 소송의 피고에는 Microsoft 가 함께 있다. 판결 전 청구라 사업 구조를 바꾼 사실이 아니다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 청구 단계라 OpenAI ⑤ 와 Microsoft ⑤ 의 적대 성격을 바꾸지 않는다. 법원이 모델 폐기나 학습 데이터 사용 금지를 명하거나 합의가 그런 조건을 담으면 두 회사 모두 구조형으로 다시 본다.",
+      "horizon": "long — 병합 소송 판결까지 수년",
+      "counter_evidence": [
+        "청구 취지의 모델 폐기가 인용된 판결은 아직 없다."
+      ],
+      "unverified": [
+        "소장 이후 수정 소장에서 청구 취지가 바뀌었는지는 확인하지 않았다.",
+        "소장 첫 쪽에 사건 번호가 적혀 있지 않다."
+      ],
+      "locator": "소장 1쪽 도입 문단(피고 명단), 68쪽 청구 취지 2·3항"
+    },
+    {
+      "key": "ev-aliyun-gpu-table-lower",
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-923",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "title": "Alibaba Cloud 가격 조정 공지 GPU 상세표 아래쪽 행 — PAI·RDS·PolarDB 등의 GPU 규격과 百炼 모델 단위(MU)도 같은 폭(5%, 21%, 25%–34%)",
+      "excerpt": "人工智能平台 PAI … ml.gu8tef.* 5% … ml.gx8xf.* 21% … ml.gp7vf.* 25%–34% … 云数据库 RDS … rds.gn8v.* 5% … rds.gu8tef.* 5% … rds.efg10.* 25%–34% … 云原生数据库 PolarDB … polar.mysql.*.guh polar.pg.*.guh 5% … polar.mysql.*.guu polar.pg.*.guu 25%–34% … 大模型服务平台百炼 中国站 公共云 全Region MU1 5% MU2 5% MU6 25%–34% … 大模型服务平台百炼 国际站 公共云 全Region MU1 5% MU2 5%",
+      "relevance": "사실: 알리바바 클라우드 가격 조정 공지(2026-03-18)가 가리키는 GPU 상세표의 아래쪽 행은 인공지능 플랫폼 PAI, 데이터베이스 RDS·PolarDB·Tair·Lindorm·AnalyticDB, 데이터 서비스 DAS·DTS, MaxCompute, Hologres, 함수 컴퓨팅 FC 의 GPU 규격과 대형 모델 서비스 플랫폼 百炼 의 모델 단위(MU1·MU2·MU6 등)에 목록가 인상 폭을 적는다. 폭은 제품과 관계없이 규격 계열에 따라 5%·21%·25%–34% 로 같고, 같은 폭이 표 위쪽의 ECS·灵骏·ACS 규격에도 걸린다. 추론: 인상은 제품별 가치가 아니라 밑에 깔린 GPU 규격을 따라 매겨졌고, 데이터베이스의 GPU 규격과 모델 플랫폼의 모델 단위에 같은 폭이 걸린다. 공지 본문이 든 이유(AI 수요 폭증과 핵심 하드웨어 조달 비용 상승)와 맞는 원가 전가의 모양이다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: Alibaba ① 의 가장 강한 채널은 소비자 채널이라 업무·거래 채널의 이 인상은 판정에 들지 않는다. 업무·거래 채널이 가장 강한 채널이 되더라도 회사가 든 인상 이유가 하드웨어 조달 비용이고 인상 폭이 GPU 규격을 따르므로 AI 수익화 (나)의 근거로 읽지 않는다. 인상 뒤 고객이 남았는지는 클라우드 부문 매출·고객 지표가 공시되면 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "표는 이미지라 텍스트 대조가 불가능해 셀 값을 눈으로 옮겼다. 범위 기호는 이미지에서 en dash(–)로 보인다.",
+        "MU(모델 단위)가 어떤 GPU 규격에 대응하는지는 표가 설명하지 않는다.",
+        "인상 뒤 고객 이탈 여부는 표에 없다."
+      ],
+      "locator": "공지 '详细列表见：GPU' 링크 이미지(2466×3634)의 人工智能平台 PAI·云数据库 RDS·云原生数据库 PolarDB 행(이미지 중간)과 맨 아래 大模型服务平台百炼 세 묶음 행(中国站 MU1·MU2·MU6, 国际站 MU1·MU2, 中国站 MU1S·MU2S·MU6S)"
+    }
+  ]
+}

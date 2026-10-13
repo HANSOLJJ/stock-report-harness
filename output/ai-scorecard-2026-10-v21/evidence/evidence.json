@@ -17290,7 +17290,7 @@
       "horizon": "현재 — 2026-09-29",
       "counter_evidence": [],
       "unverified": [
-        "OpenAI 의 DevDay 공식 자료는 열지 못했고 실시간 기사 문장에 근거한다."
+        "OpenAI 의 DevDay 공식 요약 글은 주간 이용자 12억 명을 회사 문장으로 적고 Altman 의 발언이나 무대 그래픽은 서술하지 않아, 발언 주체는 이 실시간 기사의 서술이다."
       ],
       "change_vs_previous": "new",
       "locator": "실시간 기사 'September 29th @ 1:47 PM EDT'·'September 29th @ 1:02 PM EDT' 항목",
@@ -18719,14 +18719,14 @@
       "title": "IDC: Mac shipments drop 11% in Q3 as global PC market slides 20%",
       "excerpt": "According to IDC’s preliminary data, Apple shipped 5.9 million Macs during Q3 2026, down 11.3% from 6.7 million in the year-ago period. … The overall PC market, however, fell much more sharply, with worldwide shipments dropping 20.1% year over year to 62.7 million units. … As a result, Apple’s share of worldwide PC shipments actually increased from 8.5% to 9.5%. … Looking ahead, IDC says that “channel concern over high inventory and soft demand at elevated prices could bring promotions in the near term,” adding that “pricing will stay well above year-ago levels.”",
       "locator": "9to5Mac 기사 셋째~다섯째 문단과 열째 문단(IDC 예비 집계 인용)",
-      "relevance": "추론: IDC 예비 집계로 2026년 3분기 Apple Mac 출하는 590만 대로 11.3% 줄었으나 PC 시장 전체(−20.1%)보다 덜 줄어 점유율이 8.5% 에서 9.5% 로 올랐다. Apple 은 메모리 가격 급등으로 Mac·iPad 가격을 올렸고, IDC 는 높아진 가격에서 수요가 약하다고 적었다. 독립 측정이라 ① 가격 실측의 '인상 뒤 고객이 남았는가' 에 쓰는 방증이다. 지금 Apple ① 판단은 소비자 채널의 회수 루프 통과, 가격 실측 부분이다.",
+      "relevance": "추론: IDC 예비 집계로 2026년 3분기 Apple Mac 출하는 590만 대로 11.3% 줄었으나 PC 시장 전체(−20.1%)보다 덜 줄어 점유율이 8.5% 에서 9.5% 로 올랐다. IDC 는 높아진 가격에서 채널 수요가 약하다고 적었으나, 이 발췌에는 Apple 의 Mac·iPad 가격 인상도, Apple 이 시장보다 덜 줄어든 이유도 없다. 출하 집계라 ① 가격 실측의 근거가 아니고, Apple 이 시장보다 덜 줄었다는 사실로만 읽는다. 지금 Apple ① 판단은 소비자 채널의 회수 루프 통과, 가격 실측 부분이다.",
       "channel": "secondary",
-      "conditional_impact": "지금은 유지: Mac 은 가장 강한 채널(iPhone 중심의 기기 설치기반)의 일부이고, 출하 감소에는 업계 전체의 선매입과 공급 제약이 섞여 가격 효과만 가르지 못한다. 인상 뒤 시장보다 덜 줄었다는 사실을 가격 실측 근거 문장에 방증으로 더한다.",
+      "conditional_impact": "지금은 유지: Mac 은 가장 강한 채널(iPhone 중심의 기기 설치기반)의 일부이고, 출하 감소에는 업계 전체의 선매입과 공급 제약이 섞여 가격 효과만 가르지 못한다. 시장보다 덜 줄었다는 사실은 전환비용 판정 칸에 한 분기 출하 값으로 적고 가격 실측의 근거로 쓰지 않는다.",
       "horizon": "current",
       "unverified": [
         "IDC 예비 추정이고 소비자 판매가 아니라 출하다",
         "다른 조사기관(Omdia)이 다른 대수를 냈다는 보도가 있으나 열어 보지 않았다",
-        "후보로 수집된 Seeking Alpha 기사는 열리지 않아 같은 집계를 전한 9to5Mac 기사로 확인했다"
+        "후보로 수집된 Seeking Alpha 기사는 봇 확인·구독 장벽으로 본문이 열리지 않았고, 이 기사의 숫자는 IDC 보도자료 원문의 Apple 행(590만 대, 전년 670만 대, 점유율 9.5%·8.5%, −11.3%)과 시장 전체(6,270만 대, −20.1%)와 같다"
       ],
       "evidence_id": "EV-apple-043",
       "status": "confirmed",
@@ -18775,10 +18775,10 @@
       "relevance": "추론: Apple 은 Siri AI 기능 출시 지연을 두고 제기된 소비자 집단소송을 2억 5천만 달러에 합의했고 잘못은 인정하지 않았다. 합의는 법원 승인이 필요하다. 소비자 집단소송은 ⑤ 적대 등급의 비용형 재료다. 지금 Apple ⑤ 판단은 적대 등급 −1(비용형)이다.",
       "channel": "press",
       "conditional_impact": "지금은 유지: 합의금은 비용형 적대라 적대 등급을 바꾸지 않는다. Apple ⑤ 판단의 비용형 법적 전선에 소비자 집단소송 합의를 더한다.",
-      "horizon": "short — 법원 승인과 지급",
+      "horizon": "medium — 최종 승인 심리 2027-02-24",
       "unverified": [
-        "법원 승인 여부를 확인하지 못했다",
-        "후보로 수집된 Top Class Actions 합의 안내(2026-10-08)는 열리지 않아 합의 당일 Reuters 기사로 확인했다"
+        "합의 뒤 법원 단계는 이 기사에 없다. Fox News 소비자 칼럼(2차)은 2026-07-17 예비 승인과 2027-02-24 최종 승인 심리를 적고, 법원 결정문은 열지 못했다",
+        "후보로 수집된 Top Class Actions 합의 안내(2026-10-08)는 접속 국가 차단(Cloudflare 1009)으로, 공식 합의 사이트는 봇 확인 화면으로 열리지 않아 합의 당일 Reuters 기사로 확인했다"
       ],
       "evidence_id": "EV-apple-045",
       "status": "confirmed",
@@ -18987,7 +18987,7 @@
       "horizon": "medium — 결정은 2026년 11월 예정이나 일정은 바뀔 수 있다고 기사가 적는다",
       "counter_evidence": [],
       "unverified": [
-        "Bloomberg 원문은 403 으로 막혀 열지 못했고 그 내용을 전한 기사로 확인했다",
+        "Bloomberg 원문은 앞 두 문단만 열려 지정 예정과 11월 결정(초안, 늦춰질 수 있음)까지 같은 내용으로 확인되고, Google Cloud 대우에 관한 마이크로소프트 입장은 이 기사의 서술이다",
         "위원회는 11월 일정을 공식 확인하지 않았다"
       ],
       "change_vs_previous": "new",
@@ -19429,13 +19429,13 @@
       "title": "USA TODAY Co. sues OpenAI over training on 19 publications",
       "excerpt": "USA TODAY Co. and several newspapers it owns sued OpenAI in Manhattan federal court on October 8th, alleging that the AI company copied hundreds of thousands of articles and other materials to train ChatGPT without permission. The complaint seeks damages of more than $250 million and a court order blocking the alleged infringement.",
       "locator": "기사 본문 첫 문단",
-      "relevance": "사실: USA TODAY Co. 와 계열 신문들이 2026-10-08 맨해튼 연방법원에 OpenAI 를 저작권 침해로 제소했고 $2.5억 넘는 손해배상과 침해 금지 명령을 청구했다. 추론: 개별 저작권 소송이라 ⑤ 적대 등급의 비용형(사업 구조는 건드리지 않는 적대) 근거가 하나 늘어난다. 청구한 금지 명령이 인용돼 학습 데이터 사용이 막히면 구조형 검토 대상이 된다.",
+      "relevance": "사실: USA TODAY Co. 와 계열 신문들이 2026-10-08 맨해튼 연방법원에 OpenAI 를 저작권 침해로 제소했고 $2.5억 넘는 손해배상과 침해 금지 명령을 청구했다. 추론: 판결 전 저작권 소송이라 ⑤ 적대 등급의 비용형(사업 구조는 건드리지 않는 적대) 근거가 하나 늘어난다. 금지명령이나 모델 폐기가 인용돼 학습 데이터 사용이 막히면 구조형 검토 대상이 된다.",
       "channel": "secondary",
       "conditional_impact": "지금은 유지: OpenAI ⑤ 적대 등급은 비용형 −1 이고 이 소송도 판결 전 개별 소송이라 같은 비용형이다. 판결이나 합의가 학습 데이터 사용 금지처럼 사업 구조를 건드리면 그때 구조형으로 다시 본다.",
       "horizon": "long — 판결까지 수년",
       "unverified": [
         "Reuters 원문은 자동 접근이 막히고 Forbes 는 403 이라 RuntimeWire 기사로 확인했다.",
-        "소장 원문(사건 번호)은 열지 않았다."
+        "소장 원문(No. 1:26-cv-08892)의 청구 취지에는 영구 금지명령과 함께 원고 콘텐츠가 들어간 모든 GPT·LLM 모델과 학습 데이터셋의 폐기 청구가 있고 피고에 Microsoft 는 없으나, 이 기사는 폐기 청구를 적지 않는다."
       ],
       "counter_evidence": [],
       "change_vs_previous": "new",
@@ -23786,7 +23786,7 @@
       "counter_evidence": [],
       "unverified": [
         "페이지 문구의 게시일은 표시되지 않는다. 같은 페이지에서 날짜가 있는 가장 최근 항목(OCI Enterprise AI 정식 출시 글 2026-03-24)을 게시 시각으로 적었다",
-        "호스팅 모델의 과금 방식과 매출은 확인하지 못했다(가격 페이지는 스크립트로 그려져 열리지 않았다)"
+        "호스팅 모델의 과금 방식은 OCI 가격표(2026-10-06 아카이브)에서 토큰·문자 단위 종량과 전용 AI 클러스터 시간으로 확인되고, 이 서비스의 매출은 공시되지 않았다"
       ],
       "change_vs_previous": "new",
       "locator": "oracle.com 'OCI Enterprise AI' 제품 페이지 첫 소개 문단과 'Featured Generative AI blogs' 목록 첫 세 항목(열람일 2026-10-12)",
@@ -24705,7 +24705,7 @@
       "published_at_utc": "2026-03-18T05:16:29Z",
       "title": "Alibaba Cloud 공지 — 2026-04-18 부터 AI 연산과 CPFS 저장 서비스 가격을 조정한다(보도는 인상)",
       "excerpt": "因全球AI需求爆发、供应链涨价，行业核心硬件采购成本显著上涨。经审慎评估，我们决定将于2026年4月18日起对AI算力、CPFS（智算版）等服务价格进行调整。 详细列表见：GPU、CPFS 如果您在2026年4月18日之前已购买了相关的服务，您在当前的订单/计费周期内将不受此次调整影响，新价格将在您下一个续费周期开始时适用。",
-      "relevance": "추론: 알리바바 클라우드가 회사 공식 사이트에 낸 가격 조정 공지로, AI 연산과 CPFS(지능형 컴퓨팅 저장) 서비스 가격을 2026-04-18 부터 조정한다고 알리고(조정 방향은 본문에 없고 같은 날 보도가 인상으로 전한다) 이유를 글로벌 AI 수요 폭증과 핵심 하드웨어 조달 비용 상승으로 적었다. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다. 가격 인상의 직접 이유는 하드웨어 비용이라 AI 수익화의 증거인지는 판단이 정한다. 가장 강한 채널이 소비자 채널이면 이 인상은 업무 채널의 사실이다.",
+      "relevance": "추론: 알리바바 클라우드가 회사 공식 사이트에 낸 가격 조정 공지로, AI 연산과 CPFS(지능형 컴퓨팅 저장) 서비스 가격을 2026-04-18 부터 조정한다고 알리고(조정 방향은 본문에 없고, 공지가 가리키는 GPU·CPFS 상세표의 열 이름이 '목록가 인상 폭' 이라 인상이다) 이유를 글로벌 AI 수요 폭증과 핵심 하드웨어 조달 비용 상승으로 적었다. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다. 가격 인상의 직접 이유는 하드웨어 비용이라 AI 수익화의 증거인지는 판단이 정한다. 가장 강한 채널이 소비자 채널이면 이 인상은 업무 채널의 사실이다.",
       "channel": "company_statement",
       "conditional_impact": "재검토: 알리바바 ① AI 수익화 판정에서 (나) AI 로 가격·단가를 올렸다는 회사 발표 조건을 업무(클라우드) 채널에 대해 다시 읽는다. 인상 폭은 목록(GPU·CPFS 상세표)에 있고 이 공지 본문에는 없다.",
       "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
@@ -25375,13 +25375,13 @@
       "published_at_utc": "2026-03-19T02:52:59Z",
       "title": "중신경위 — 알리바바 클라우드가 2026-04-18 부터 Zhenwu 등 연산 카드 서비스 가격을 5~34%, CPFS 를 30% 올린다고 공지했다",
       "excerpt": "3月18日中午，阿里云官网宣布，将于2026年4月18日起对AI算力、CPFS(智算版)等服务价格进行调整。其中，平头哥真武810E等算力卡相关服务价格上涨5%-34%，CPFS(智算版)价格上涨30%。",
-      "relevance": "추론: 중국 통신사 기사가 알리바바 클라우드 공식 사이트 공지를 전하며 인상 폭을 연산 카드 관련 서비스 5~34%, CPFS 30% 로 적었다. 회사 공지 본문에는 없는 인상 폭의 출처이며 2차 보도다. 업무(클라우드) 채널의 사실이다.",
+      "relevance": "추론: 중국 통신사 기사가 알리바바 클라우드 공식 사이트 공지를 전하며 인상 폭을 연산 카드 관련 서비스 5~34%, CPFS 30% 로 적었다. 공지 본문에는 인상 폭이 없고, 공지가 가리키는 GPU·CPFS 상세표가 규격별 목록가 인상 폭(5%, 21%, 25%–34%, CPFS 30%)을 적어 이 2차 보도의 범위(5~34%, 30%)와 같다. 업무(클라우드) 채널의 사실이다.",
       "channel": "secondary",
       "conditional_impact": "재검토: 알리바바 ① AI 수익화 판정에서 업무 채널 가격 인상의 폭을 이 보도로 읽는다. 공지 본문과 같은 사실을 전한 2차 보도라 인상 폭 확인용으로만 쓴다.",
       "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
       "counter_evidence": [],
       "unverified": [
-        "인상 폭은 통신사 보도이고 공지 상세표(GPU·CPFS 목록)는 열지 못했다",
+        "이 보도는 규격별 차등(5%, 21%, 25%–34%)과 인상이 목록가 기준이라는 점을 적지 않는다",
         "인상 뒤 고객 이탈 여부는 확인되지 않았다"
       ],
       "change_vs_previous": "new",
@@ -26492,14 +26492,14 @@
       "published_at_utc": "2026-03-07T02:44:00Z",
       "title": "TNW — 출시 시점 Marketplace 는 Anthropic 이 거래 수수료를 받지 않는다",
       "excerpt": "Enterprise customers with committed annual spending on Anthropic’s API and services will be able to use a portion of that spend to purchase third-party software applications built on Claude, without Anthropic taking a commission on those transactions. … The difference is that Anthropic, at least at launch, is forgoing the revenue cut those cloud giants typically collect.",
-      "relevance": "추론: The Next Web 이 출시 시점 Marketplace 에서 Anthropic 이 거래 수수료를 받지 않는다고 전했다. Anthropic 원 발표문을 열지 못한 언론 보도이고 2026-10-12 현재 조건은 확인되지 않는다. 소프트웨어 플랫폼 층의 수수료 매출이 출시 시점에는 없었다는 사실이다. (선별 확신: 중간)",
+      "relevance": "추론: The Next Web 이 출시 시점 Marketplace 에서 Anthropic 이 거래 수수료를 받지 않는다고 전했다. Anthropic 의 공식 Marketplace 글(2026-09-23)과 제품 페이지에는 수수료를 받지 않는다는 문장이 없어 수수료 면제는 이 언론 보도로만 확인되고, 2026-10-12 현재 조건도 확인되지 않는다. 소프트웨어 플랫폼 층의 수수료 매출이 출시 시점에는 없었다는 사실이다. (선별 확신: 중간)",
       "channel": "press",
       "conditional_impact": "재검토: Anthropic ④ 판단의 소프트웨어 플랫폼 층에서 수수료 매출이 없다는 읽기를 현재 조건이 확인될 때까지 보도 등급으로 둔다. 회사 문서에 수수료가 적히면 다시 본다.",
       "horizon": "medium — 현재 조건 확인까지",
       "counter_evidence": [],
       "unverified": [
         "수수료 면제는 '출시 시점' 기준이며 2026-10-12 현재 조건은 Anthropic 페이지에서 확인되지 않는다.",
-        "Anthropic 원 발표문을 열지 못하고 언론 보도로만 확인했다."
+        "Anthropic 의 공식 Marketplace 글·제품 페이지 FAQ·2026-03 페이지 스냅숏 어디에도 수수료·거래 몫 문장이 없다."
       ],
       "change_vs_previous": "new",
       "locator": "기사 본문 'The product, called Anthropic Marketplace' 문단과 그 아래 'The difference is' 문단",
@@ -30152,6 +30152,332 @@
       "status": "confirmed",
       "change_vs_previous": "new",
       "reviewer": "claude (원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-972",
+      "published_at_utc": "2026-10-08T00:00:00Z",
+      "title": "USA Today Co. v. OpenAI Foundation 소장 — 배상 2억 5천만 달러 초과·영구 금지명령·모델과 학습 데이터셋 폐기 청구",
+      "excerpt": "13. In this lawsuit, the USA TODAY Plaintiffs seek damages in excess of $250 million. Upon information and belief, OpenAI's models have copied hundreds of thousands of articles and other materials from the USA TODAY Publications. … 3. Permanently enjoining Defendants from the unlawful, unfair, and infringing conduct alleged herein; 4. Ordering destruction under 17 U.S.C. § 503(b) of all GPT or other LLM models and training sets that incorporate the USA TODAY Plaintiffs' content;",
+      "relevance": "사실: USA TODAY Co. 와 계열 신문사들이 2026-10-08 뉴욕 남부 연방지법에 OpenAI 법인 일곱 곳을 상대로 낸 소장이다. 2억 5천만 달러 넘는 배상, 영구 금지명령, 원고 콘텐츠가 들어간 모든 GPT·LLM 모델과 학습 데이터셋의 폐기를 청구한다. 피고에 Microsoft 는 없다. 추론: 모델 폐기는 판결 전 청구라 아직 사업 구조를 바꾼 사실이 아니다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 청구 단계라 OpenAI ⑤ 적대의 성격을 바꾸지 않는다. 법원이 모델 폐기나 학습 데이터 사용 금지를 명하거나 합의가 그런 조건을 담으면 구조형으로 다시 본다.",
+      "horizon": "long — 판결까지 수년",
+      "counter_evidence": [
+        "언론사 저작권 소송 다수가 MDL No. 3143 으로 병합돼 있고 이 사건도 관련 사건으로 신청됐다. 청구 취지의 모델 폐기가 인용된 판결은 아직 없다."
+      ],
+      "unverified": [
+        "법원이 관련 사건 신청을 받아들였는지는 확인하지 않았다."
+      ],
+      "locator": "소장 5쪽 13항(배상액·복제 규모), 78쪽 PRAYER FOR RELIEF 3·4항(영구 금지명령·모델과 학습 데이터셋 폐기)",
+      "evidence_id": "EV-openai-160",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (소장 원문 대조, 사용자 제공 PDF·CourtListener 사본, 2026-10-13)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-934",
+      "published_at_utc": "2026-09-29T00:00:00Z",
+      "title": "DevDay 2026 Recap — ChatGPT 주간 이용자 12억 명과 DevDay 규모 문단",
+      "excerpt": "DevDay 2026 is our biggest yet, with more than 20 major announcements across ChatGPT, Codex, our models, and entirely new forms of working with AI. … We also expanded our commitment to an open ecosystem by opening up ChatGPT as a shared surface where humans and agents can collaborate and where developers can directly launch new native experiences to our collective 1.2B weekly users.",
+      "relevance": "사실: OpenAI 가 2026-09-29 DevDay 요약 글에서 ChatGPT 의 주간 이용자를 12억 명(1.2B)으로 적었다. 회사 공식 페이지의 문장이며, 발표자가 무대에서 말했다는 서술은 이 글에 없다. 추론: 소비자 채널 사용자 시계열의 2026-09 시점 값이다. 유료 구독자 수와 전환 비율은 글에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 주간 이용자 12억 명은 소비자 채널 규모의 사실이며 구독자 수·전환비용·가격 실측은 이 글에 없다. 구독자 수가 갱신 공개되면 소비자 채널의 분자와 분모를 같은 시점으로 다시 맞춘다.",
+      "horizon": "current — 2026-09-29",
+      "counter_evidence": [],
+      "unverified": [
+        "12억 명 가운데 유료 구독자 수는 글에 없다.",
+        "'weekly users' 의 정의(로그인 여부·플랫폼 범위)는 글에 없다."
+      ],
+      "locator": "도입부 첫 문단('DevDay 2026 is our biggest yet…')과 셋째 문단('Today, we introduced agents…')",
+      "evidence_id": "EV-openai-161",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "anthropic",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-anthropic-956",
+      "published_at_utc": "2026-09-23T00:00:00Z",
+      "title": "Claude Marketplace — 약정 지출로 Claude 기반 파트너 제품을 사는 거래 장터 공개 글",
+      "excerpt": "Starting today, the Claude Marketplace brings plugins and connectors, agents and products, and service partners into one place. … Buy agents and products. Use a portion of your committed Anthropic spend on Claude-powered software from companies like CrowdStrike, Cursor, Harvey, Legora, Lovable, and Snowflake. … Selling a Claude-powered agent or product? Apply to list it on the marketplace. Teams can then use a portion of their committed Anthropic spend to buy it.",
+      "relevance": "사실: Anthropic 이 2026-09-23 Claude Marketplace 를 플러그인·커넥터, 에이전트·제품, 서비스 파트너 세 갈래로 묶어 공개했고, 고객이 약정한 Anthropic 지출의 일부로 CrowdStrike, Cursor, Harvey, Legora, Lovable, Snowflake 같은 회사의 Claude 기반 소프트웨어를 살 수 있다고 밝혔다. 추론: 소프트웨어 플랫폼 층의 거래 장터다. Anthropic 이 이 거래에서 받는 수수료·몫과 거래액은 글에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Anthropic ④ 판단의 소프트웨어 플랫폼 층에서 Marketplace 수수료·거래액이 회사 문서나 공시로 나오는지 본다. 나오기 전에는 수수료 조건을 미공개로 두고, 같은 형태의 OpenAI Marketplace 와 같은 근거 등급(회사 1차 발표, 수수료 미공개)으로 읽는다.",
+      "horizon": "medium — 수수료·거래액 공개까지",
+      "counter_evidence": [],
+      "unverified": [
+        "이 글은 수수료·거래 몫을 언급하지 않는다. 수수료 면제 여부는 확인되지 않는다.",
+        "고객이 실제로 쓴 거래액과 파트너별 매출은 글에 없다."
+      ],
+      "locator": "본문 첫 문단, 'For customers' 절의 'Buy agents and products.' 항목, 'For builders and partners' 절의 둘째 항목",
+      "evidence_id": "EV-anthropic-141",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-904",
+      "published_at_utc": "2026-10-08T17:08:05Z",
+      "title": "IDC 2026년 3분기 PC 출하 보도자료 — 전체 −20.1%, Apple 590만 대(−11.3%)·점유율 9.5%",
+      "excerpt": "Worldwide PC shipments fell 20.1% year over year in Q3 2026 to 62.7 million units, according to preliminary results from IDC Research (IDC), the second consecutive decline and a deeper one than the 3.8% drop in Q2. … Channel concern over high inventory and soft demand at elevated prices could bring promotions in the near term, but pricing will stay well above year-ago levels. … Company 3Q26 Shipments 3Q26 Market Share 3Q25 Shipments 3Q25 Market Share 3Q26/3Q25 Growth … 4. Apple 5.9 9.5% 6.7 8.5% -11.3%",
+      "relevance": "사실: IDC 예비 집계로 2026년 3분기 전 세계 PC 출하는 6,270만 대로 전년보다 20.1% 줄었고, Apple 출하는 590만 대로 전년 670만 대보다 11.3% 줄었으며 점유율은 8.5% 에서 9.5% 로 올랐다. IDC 는 채널이 높은 재고와 높은 가격의 약한 수요를 걱정해 단기 판촉이 나올 수 있지만 가격은 전년보다 훨씬 높게 유지된다고 적었다. 추론: Apple 의 Mac 출하는 시장 전체보다 덜 줄었다. 출하(유통 채널 포함) 집계라 소비자 판매가 아니며, 감소에는 연초 선매입 되돌림과 공급 제약이 섞여 있다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: Apple ① 판단의 가격 실측에서 '인상 뒤에 고객이 남았는가' 를 보는 독립 방증이다. 출하 집계이고 선매입 되돌림과 공급 제약이 섞여 가격 효과만 가르지 못한다. 후속 분기 IDC 집계나 Apple 실적에서 Mac 매출이 확인되면 다시 본다.",
+      "horizon": "current — 2026년 3분기",
+      "counter_evidence": [
+        "IDC 는 시장 전체 하락의 원인으로 연초 선매입 되돌림·공급 제약·높은 가격을 들고, Apple 의 가격 인상이나 고객 충성을 점유율 상승의 이유로 적지 않는다."
+      ],
+      "unverified": [
+        "IDC 예비 추정이며 확정치가 아니다.",
+        "출하(유통 채널 포함)이고 소비자 판매가 아니다.",
+        "Apple 의 Mac 가격 인상과 출하 감소 사이의 인과는 글에 없다."
+      ],
+      "locator": "첫 문단, 'What is IDC’s outlook?' 절 첫 문단, 'Vendor Rankings and Market Share' 절의 표 헤더 행과 4번째 'Apple' 행(표 셀은 탭으로 구분돼 있어 공백으로 이었다)",
+      "evidence_id": "EV-apple-065",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-904",
+      "published_at_utc": "2026-10-08T17:08:05Z",
+      "title": "IDC 2026년 3분기 PC 출하 보도자료 — 하락 원인(선매입 되돌림·공급 제약·높은 가격)과 업체별 점유율 이동",
+      "excerpt": "Primary drivers of the decline: Strategic inventory pull-in across the entire industry as a result of on-going supply constraints and higher price points driven by AI data center build out … Lenovo, HP Inc, and Dell Technologies all fell faster than the market and together ceded 4.2 points of share as they were likely facing the effects of pull-in from earlier in the year. … Shipments include shipments to distribution channels or end users.",
+      "relevance": "사실: IDC 는 2026년 3분기 PC 출하 감소의 주된 원인으로 산업 전체의 전략적 재고 선매입(공급 제약과 AI 데이터센터 구축이 끌어올린 가격 때문)을 들었고, Lenovo·HP·Dell 이 시장보다 빠르게 줄어 점유율 4.2%포인트를 내줬다고 적었다. 집계는 유통 채널 또는 최종 사용자에게 간 출하다. 추론: Apple 이 시장보다 덜 줄어든 이유를 IDC 는 설명하지 않는다. 점유율 상승에는 경쟁사의 선매입 되돌림이 섞였을 수 있다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: Apple 출하의 상대적 선방을 가격 효과로 읽을 근거가 이 보도자료에는 없다. Apple 의 Mac 수요와 가격에 관한 서술이 회사 발표나 후속 집계로 나오면 다시 본다.",
+      "horizon": "current — 2026년 3분기",
+      "counter_evidence": [],
+      "unverified": [
+        "Apple 이 시장보다 덜 줄어든 이유는 보도자료에 없다.",
+        "IDC 예비 추정이며 확정치가 아니다."
+      ],
+      "locator": "'Worldwide PC Market at a Glance: Q3 2026' 목록의 'Primary drivers of the decline' 줄, 'Vendor Rankings and Market Share' 절 첫 문단, 'Notes' 절 둘째 문단",
+      "evidence_id": "EV-apple-066",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-apple-905",
+      "published_at_utc": "2026-09-29T14:57:38Z",
+      "title": "Fox News — Siri AI 기능 지연 합의의 법원 승인 단계와 청구 절차",
+      "excerpt": "Apple denies the allegations and says it did nothing improper or unlawful. … The lawsuit is called Landsheft, et al. v. Apple Inc. and is pending in federal court in Northern California. … The company agreed to put $250 million into a settlement fund rather than continue litigating the case. The agreement received preliminary court approval on July 17, 2026. The court has scheduled a final approval hearing for Feb. 24, 2027. … The claims period officially opened on Sept. 21, 2026.",
+      "relevance": "사실: Fox News 소비자 안내 칼럼이 Apple 의 Siri AI 기능 지연 집단소송(Landsheft 외 대 Apple, 캘리포니아 북부 연방법원) 합의를 $250M 합의 기금으로 적고, 합의가 2026-07-17 예비 승인을 받았으며 최종 승인 심리가 2027-02-24 로 잡혀 있고 청구 접수가 2026-09-21 에 열렸다고 전한다. Apple 은 혐의를 부인한다. 추론: 합의는 예비 승인 단계이고 최종 승인이 남았다. 칼럼이라 법원 문서가 아니다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 소비자 집단소송 합의금은 비용형 법적 전선이며 최종 승인 전에는 확정된 비용이 아니다. 최종 승인이나 합의 조건 변경이 법원 문서로 확인되면 다시 본다.",
+      "horizon": "medium — 최종 승인 심리 2027-02-24",
+      "counter_evidence": [],
+      "unverified": [
+        "법원 결정문과 공식 합의 사이트 원문은 열지 못했다.",
+        "예비 승인일과 최종 심리일은 이 칼럼의 서술이다."
+      ],
+      "locator": "본문 둘째 문단 끝 문장, 'Why Apple agreed to a $250 million Siri settlement' 절 첫 문단, 'How to file your Apple Siri settlement claim' 절 첫 문장",
+      "evidence_id": "EV-apple-067",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-microsoft-905",
+      "published_at_utc": "2026-10-02T11:16:13Z",
+      "title": "Bloomberg — Azure·AWS 의 EU 디지털시장법 지정 예정 보도(첫 두 문단)",
+      "excerpt": "Microsoft Corp.’s Azure and Amazon Web Services are set to be designated under the European Union’s strict rulebook for Big Tech. … Regulators are putting the final touches to a Digital Markets Act investigation into the two firms that will conclude that Azure and AWS meet the requirements to fall under the scope of its rules, according to people familiar with the matter. The decision is set to be issued in November but still in draft form and timing could slip, they said asking not to be identified because the process is private.",
+      "relevance": "사실: Bloomberg 는 2026-10-02 익명 소식통을 인용해, EU 규제 당국이 Microsoft Azure 와 Amazon Web Services 가 디지털시장법(DMA) 적용 요건을 충족한다고 결론 내리는 조사를 마무리하고 있으며, 결정은 11월에 나올 예정이나 초안 단계이고 일정이 늦춰질 수 있다고 전했다. 추론: 규제 조사의 결과로 지정이 예상되는 사건이며 같은 조치가 두 회사에 함께 걸린다. 지정 뒤 의무의 내용은 이 글에 없다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 결정이 초안 단계라 확정된 부담이 아니다. 최종 지정과 의무 내용이 위원회 발표로 확인되면 Azure 사업 구조에 닿는지 다시 본다. 같은 사건은 AWS 를 가진 Amazon 에도 같은 성격으로 읽는다.",
+      "horizon": "medium — 결정은 11월 예정이나 일정이 늦춰질 수 있다고 기사가 적는다",
+      "counter_evidence": [],
+      "unverified": [
+        "위원회가 11월 일정을 공식 확인한 것이 아니다(익명 소식통).",
+        "본문은 앞 두 문단만 열려 지정 뒤 의무의 내용과 두 회사의 반응은 확인하지 못했다."
+      ],
+      "locator": "본문 첫째·둘째 문단('Takeaways by Bloomberg AI' 상자 다음)",
+      "evidence_id": "EV-microsoft-076",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-oracle-916",
+      "published_at_utc": "2026-10-06T03:56:48Z",
+      "title": "OCI 가격표 — 호스팅 모델의 토큰·문자 단위 종량 과금과 전용 클러스터 시간 과금",
+      "excerpt": "Oracle Cloud Infrastructure Generative AI - xAI - Grok 4.7 - Input Tokens Short Context … Oracle Cloud Infrastructure Generative AI - OpenAI - gpt-oss-120b - Input Tokens … Foundational models can be consumed on demand, where you pay per character based on the length of the prompt and the response from the model (except for the embedding models, where the response from the model isn’t accounted for). … Additionally, you can host private replicas of foundational models and create fine-tuned models on dedicated AI clusters.",
+      "relevance": "사실: 오라클 OCI 가격표의 Generative AI 절은 Cohere·Meta·xAI·Google·OpenAI 모델을 나열하고, xAI Grok·Google Gemini·OpenAI gpt-oss 행은 100만 토큰 단위(예: Grok 4.7 입력 토큰, gpt-oss-120b 입력 토큰), Cohere·Meta 행은 1만 거래 단위로 값을 매기고, 표 아래 설명은 기본 모델을 프롬프트와 응답 길이에 따라 문자당 종량으로 쓰거나 전용 AI 클러스터에 비공개 복제본을 호스팅·미세조정할 수 있다고 적는다. 나열된 공급자 다섯 곳에 오라클 자체 모델은 없다. 추론: 오라클이 파는 것은 남의 모델을 돌려 주는 호스팅 서비스이며 과금은 사용량(토큰·문자)과 클러스터 시간이다. 이 서비스의 매출은 공시되지 않았다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Oracle ④ 판단의 모델 층 칸에서 호스팅 모델의 과금 방식(토큰·문자 종량, 전용 클러스터 시간)을 이 가격표로 읽는다. 호스팅 매출이 공시에서 따로 나오는지, 오라클 자체 모델이 가격표에 오르는지를 본다.",
+      "horizon": "current — 2026-10 가격표",
+      "counter_evidence": [],
+      "unverified": [
+        "가격표에는 게시일이 없어 Internet Archive 스냅숏 시각을 게시 시각으로 적었다.",
+        "가격 숫자는 스크립트로 채워져 스냅숏의 정적 HTML 에는 없다. 현재 판(2026-10-13)에서는 Grok 4.7 입력 $2.00·gpt-oss-120b 입력 $0.15(각 100만 토큰당)로 보였으나 정보 마감 전 값은 확인하지 못했다.",
+        "호스팅 모델 서비스의 매출은 공시되지 않았다.",
+        "'transaction = character' 설명은 Cohere·Meta 종량에 적용되며 xAI·Google·OpenAI 행은 토큰 단위로 적혀 있다."
+      ],
+      "locator": "'OCI Generative AI' 절 표의 xAI Grok 4.7 입력(Short Context) 행, OpenAI gpt-oss-120b 입력 행(두 행의 단가 칸은 스크립트로 채워져 정적 HTML 에는 비어 있다), 표 바로 아래 설명 문단('A transaction is a character…' 다음 두 문단)",
+      "evidence_id": "EV-oracle-061",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-923",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "title": "Alibaba Cloud 가격 조정 공지 GPU 상세표 — ECS·灵骏·ACS 규격별 목록가 인상 폭(5%, 21%, 25%–34%)",
+      "excerpt": "产品名称 站点 业务类型 地域 规格/规格族 目录价涨幅 … ecs.gn8v ecs.ebmgn8v ecs.gn8v-tee 5% … efg2.nvgh8bn 21% … efg2.p16en 25%–34% … H2* 5% … PPU810E 25%–34%",
+      "relevance": "사실: 알리바바 클라우드 공지(2026-03-18)가 가리키는 GPU 상세표는 2026-04-18 부터 적용되는 규격별 '목록가 인상 폭(目录价涨幅)'을 적는다. 표 위쪽 행(중국 사이트·국제 사이트, 공공·금융·정무·자동차 규제 클라우드, 전 리전)에서 클라우드 서버 ECS 의 ecs.gn8v 계열은 5%, 지능형 컴퓨팅 灵骏 의 efg2.nvgh8bn 은 21%, efg2.p16en 은 25%–34%, 컨테이너 컴퓨팅 서비스 ACS 의 H2* 는 5%, PPU810E 는 25%–34% 다. 추론: 목록가 인상이며 규격에 따라 폭이 다르다. 표의 PPU810E 가 T-Head 진우 810E 와 같은 카드인지는 표가 설명하지 않는다. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다는 공지 본문과 함께 읽는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Alibaba ① 판단의 업무(클라우드) 채널 가격 실측에서 인상 폭을 이 표로 읽는다. 인상 뒤 고객이 남았는지(이탈·구매 감소)는 표에 없으므로 클라우드 부문 매출·고객 지표가 공시되면 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "인상 뒤 고객 이탈 여부는 표에 없다.",
+        "표는 이미지라 텍스트 대조가 불가능해 셀 값을 눈으로 옮겼다. 범위 기호는 이미지에서 en dash(–)로 보인다.",
+        "표 아래쪽(Hologres, 함수 컴퓨팅 FC, 대모형 서비스 플랫폼 百炼 등) 행은 옮기지 않았다."
+      ],
+      "locator": "공지 '详细列表见：GPU' 링크 이미지의 표 헤더 행과 云服务器 ECS·智能计算灵骏·容器计算服务 ACS 행(이미지 맨 위 구간). 'efg2.nvgh8bn'·'efg2.p16en' 은 灵骏 행, 'H2*'·'PPU810E' 는 ACS 행이다",
+      "evidence_id": "EV-alibaba-094",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-924",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "title": "Alibaba Cloud 가격 조정 공지 CPFS 상세표 — 智算版 CPFS 세 과금 항목 목록가 30% 인상",
+      "excerpt": "产品名称 站点 业务类型 地域 商品名称 计费项名称 目录价涨幅 … CPFS（智算版） 中国站&国际站 公共云/金融云/政务云/汽车合规云 全Region 智算CPFS 智算CPFS配置容量 30% … 容量型 30% … 低频介质存储容量 30%",
+      "relevance": "사실: 알리바바 클라우드 공지(2026-03-18)가 가리키는 CPFS 상세표는 지능형 컴퓨팅용 CPFS(智算版)의 세 과금 항목(配置容量·容量型·低频介质存储容量)이 모두 중국 사이트·국제 사이트, 공공·금융·정무·자동차 규제 클라우드, 전 리전에서 목록가 30% 인상이라고 적는다. 추론: 저장 서비스의 목록가 인상이며 인상 폭이 세 항목 모두 같다. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다는 공지 본문과 함께 읽는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Alibaba ① 판단의 업무(클라우드) 채널 가격 실측에서 CPFS 인상 폭을 이 표로 읽는다. 인상 뒤 고객이 남았는지는 표에 없으므로 클라우드 부문 매출·고객 지표가 공시되면 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "인상 뒤 고객 이탈 여부는 표에 없다.",
+        "표는 이미지라 텍스트 대조가 불가능해 셀 값을 눈으로 옮겼다."
+      ],
+      "locator": "공지 '详细列表见：…、CPFS' 링크 이미지(1790×274) 전체 표의 헤더 행과 세 데이터 행(행마다 计费项名称 칸만 다르고 나머지 칸과 30% 는 같다)",
+      "evidence_id": "EV-alibaba-095",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (브라우저 원문 대조, 사용자 위임 2026-10-12)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "openai",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-973",
+      "published_at_utc": "2023-12-27T00:00:00Z",
+      "title": "The New York Times Company v. Microsoft·OpenAI 소장 — 피고에 Microsoft 포함, 영구 금지명령과 GPT·LLM 모델·학습 데이터셋 폐기 청구",
+      "excerpt": "for its complaint against Defendants Microsoft Corporation (“Microsoft”) and OpenAI, Inc., OpenAI LP, OpenAI GP LLC, OpenAI LLC, OpenAI OpCo LLC, OpenAI Global LLC, OAI Corporation, LLC, OpenAI Holdings, LLC, (collectively “OpenAI” and, with Microsoft, “Defendants”), alleges as follows: … 2. Permanently enjoining Defendants from the unlawful, unfair, and infringing conduct alleged herein; 3. Ordering destruction under 17 U.S.C. § 503(b) of all GPT or other LLM models and training sets that incorporate Times Works;",
+      "relevance": "사실: The New York Times Company 가 2023-12-27 뉴욕 남부 연방지법에 Microsoft 와 OpenAI 법인 여덟 곳을 상대로 낸 저작권 소장이다. 청구 취지는 손해배상과 함께 영구 금지명령, Times 저작물이 들어간 모든 GPT·LLM 모델과 학습 데이터셋의 폐기(17 U.S.C. § 503(b))를 구한다. 이 사건은 언론사 저작권 소송을 모은 MDL No. 3143 에 들어 있다. 추론: USA TODAY 소장과 같은 모델·학습 데이터셋 폐기 청구가 병합 소송에도 있고, 이 소송의 피고에는 Microsoft 가 함께 있다. 판결 전 청구라 사업 구조를 바꾼 사실이 아니다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 청구 단계라 OpenAI ⑤ 와 Microsoft ⑤ 의 적대 성격을 바꾸지 않는다. 법원이 모델 폐기나 학습 데이터 사용 금지를 명하거나 합의가 그런 조건을 담으면 두 회사 모두 구조형으로 다시 본다.",
+      "horizon": "long — 병합 소송 판결까지 수년",
+      "counter_evidence": [
+        "청구 취지의 모델 폐기가 인용된 판결은 아직 없다."
+      ],
+      "unverified": [
+        "소장 이후 수정 소장에서 청구 취지가 바뀌었는지는 확인하지 않았다.",
+        "소장 첫 쪽에 사건 번호가 적혀 있지 않다."
+      ],
+      "locator": "소장 1쪽 도입 문단(피고 명단), 68쪽 청구 취지 2·3항",
+      "evidence_id": "EV-openai-162",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조: NYT 소장 텍스트, Alibaba 표 원해상도, 2026-10-13)",
+      "reviewed_at": "2026-10-13"
+    },
+    {
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-alibaba-923",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "title": "Alibaba Cloud 가격 조정 공지 GPU 상세표 아래쪽 행 — PAI·RDS·PolarDB 등의 GPU 규격과 百炼 모델 단위(MU)도 같은 폭(5%, 21%, 25%–34%)",
+      "excerpt": "人工智能平台 PAI … ml.gu8tef.* 5% … ml.gx8xf.* 21% … ml.gp7vf.* 25%–34% … 云数据库 RDS … rds.gn8v.* 5% … rds.gu8tef.* 5% … rds.efg10.* 25%–34% … 云原生数据库 PolarDB … polar.mysql.*.guh polar.pg.*.guh 5% … polar.mysql.*.guu polar.pg.*.guu 25%–34% … 大模型服务平台百炼 中国站 公共云 全Region MU1 5% MU2 5% MU6 25%–34% … 大模型服务平台百炼 国际站 公共云 全Region MU1 5% MU2 5%",
+      "relevance": "사실: 알리바바 클라우드 가격 조정 공지(2026-03-18)가 가리키는 GPU 상세표의 아래쪽 행은 인공지능 플랫폼 PAI, 데이터베이스 RDS·PolarDB·Tair·Lindorm·AnalyticDB, 데이터 서비스 DAS·DTS, MaxCompute, Hologres, 함수 컴퓨팅 FC 의 GPU 규격과 대형 모델 서비스 플랫폼 百炼 의 모델 단위(MU1·MU2·MU6 등)에 목록가 인상 폭을 적는다. 폭은 제품과 관계없이 규격 계열에 따라 5%·21%·25%–34% 로 같고, 같은 폭이 표 위쪽의 ECS·灵骏·ACS 규격에도 걸린다. 추론: 인상은 제품별 가치가 아니라 밑에 깔린 GPU 규격을 따라 매겨졌고, 데이터베이스의 GPU 규격과 모델 플랫폼의 모델 단위에 같은 폭이 걸린다. 공지 본문이 든 이유(AI 수요 폭증과 핵심 하드웨어 조달 비용 상승)와 맞는 원가 전가의 모양이다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: Alibaba ① 의 가장 강한 채널은 소비자 채널이라 업무·거래 채널의 이 인상은 판정에 들지 않는다. 업무·거래 채널이 가장 강한 채널이 되더라도 회사가 든 인상 이유가 하드웨어 조달 비용이고 인상 폭이 GPU 규격을 따르므로 AI 수익화 (나)의 근거로 읽지 않는다. 인상 뒤 고객이 남았는지는 클라우드 부문 매출·고객 지표가 공시되면 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "표는 이미지라 텍스트 대조가 불가능해 셀 값을 눈으로 옮겼다. 범위 기호는 이미지에서 en dash(–)로 보인다.",
+        "MU(모델 단위)가 어떤 GPU 규격에 대응하는지는 표가 설명하지 않는다.",
+        "인상 뒤 고객 이탈 여부는 표에 없다."
+      ],
+      "locator": "공지 '详细列表见：GPU' 링크 이미지(2466×3634)의 人工智能平台 PAI·云数据库 RDS·云原生数据库 PolarDB 행(이미지 중간)과 맨 아래 大模型服务平台百炼 세 묶음 행(中国站 MU1·MU2·MU6, 国际站 MU1·MU2, 中国站 MU1S·MU2S·MU6S)",
+      "evidence_id": "EV-alibaba-096",
+      "status": "confirmed",
+      "change_vs_previous": "new",
+      "reviewer": "claude (원문 대조: NYT 소장 텍스트, Alibaba 표 원해상도, 2026-10-13)",
       "reviewed_at": "2026-10-13"
     }
   ]

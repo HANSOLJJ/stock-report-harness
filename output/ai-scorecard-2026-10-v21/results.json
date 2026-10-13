@@ -8,9 +8,9 @@
   "input_hashes": {
     "run": "8dc42f37ac75abddc36581d172e535918d1b49022ec67a9f9a399d749c678eaa",
     "observations": "85f7626a2e72d05492719d2649f4d960c8838576c8712ae244d61fef74c49170",
-    "judgments": "b751191502297a491f88efe9892d0952c9362e8e58919cd25ff39bdbeca72862",
-    "sources": "12eb77c467b174392a55186fbde78863d2649a4603279b6548d578fdbc0089e2",
-    "evidence": "46c568163b2e133b91f3f201d6f7b977f6bbe5697946c33410a823227f68f12e",
+    "judgments": "903b2ed8d9592e67b41d6092727250b6ecc8634a0444828529b9fdd8f22baf4d",
+    "sources": "934a6536757a1a0fb0f1c22a6fc8e0f7eace35b4f885efe768c556da0db542d6",
+    "evidence": "685208933a27783a50232127820083981b3b05c2ccde12f9b0762e0e1520daf9",
     "triggers": "e6750df0805627c87ddac5430d8c6b404eb5e60d1c630119d2bdca2f32bf98a8",
     "rules": "b264ded4af1180c74fffb6ee335eed44b6f3c1ae3a3456d789d560095df27c45"
   },
@@ -5508,7 +5508,8 @@
               ],
               "model": [
                 "EV-oracle-035",
-                "EV-oracle-052"
+                "EV-oracle-052",
+                "EV-oracle-061"
               ],
               "app": [
                 "EV-oracle-054",
@@ -6359,5 +6360,5 @@
   },
   "pending_rule_decisions": [],
   "warnings_count": 61,
-  "results_hash": "0a4d9739e259929974f5bf091e811bd5faa1e990572e58795fa0158a3aa08662"
+  "results_hash": "3efffdce62fa6530d8035e924ad2b7832c64f31653464a9bd1fbbc2f3aba882a"
 }

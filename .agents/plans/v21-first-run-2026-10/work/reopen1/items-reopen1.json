@@ -1,0 +1,298 @@
+{
+  "sources": [
+    {
+      "key": "src-claude-mkt-sep23",
+      "company_id": "anthropic",
+      "kind": "news",
+      "title": "Claude Marketplace: one place to discover plugins, agents, and services from our partners",
+      "publisher": "Anthropic (claude.com)",
+      "publisher_url": "https://claude.com",
+      "url": "https://claude.com/resources/articles/claude-marketplace",
+      "published_at_utc": "2026-09-23T00:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "Anthropic 공식 글. 플러그인·커넥터, 에이전트·제품, 서비스 파트너를 한곳에 모은 Claude Marketplace 를 2026-09-23 에 공개했다고 알린다. 게시일은 페이지 메타의 article:published_time(2026-09-23)이라 시각은 00:00:00Z 로 적었다. 수수료·거래 몫에 대한 문장은 글에 없다."
+    },
+    {
+      "key": "src-idc-pr",
+      "company_id": "apple",
+      "kind": "news",
+      "title": "PC Market Woes Continue: Shipments Fall 20.1% in Q3 2026 as Pull-In Hangover and Supply Constraints Bite",
+      "publisher": "IDC",
+      "publisher_url": "https://www.idc.com",
+      "url": "https://www.idc.com/resource-center/press-releases/idc-pc-tracker-3q26/",
+      "published_at_utc": "2026-10-08T17:08:05Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "IDC 보도자료 원문(독립 조사기관 발표, Apple 의 발표가 아니다). 게시 시각은 페이지 JSON-LD 의 datePublished 다. 업체별 표(Company / 3Q26 Shipments / 3Q26 Market Share / 3Q25 Shipments / 3Q25 Market Share / 3Q26/3Q25 Growth)가 텍스트로 열린다."
+    },
+    {
+      "key": "src-fox-siri",
+      "company_id": "apple",
+      "kind": "news",
+      "title": "Apple's $250M Siri settlement: How to claim up to $95",
+      "publisher": "Fox News (CyberGuy)",
+      "publisher_url": "https://www.foxnews.com",
+      "url": "https://www.foxnews.com/tech/apple-250m-siri-settlement-claim-95",
+      "published_at_utc": "2026-09-29T14:57:38Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "Top Class Actions 합의 안내(2026-10-08)는 Cloudflare 국가 차단(오류 1009, 접속 국가 KR)으로, 공식 합의 사이트 smartphoneaisettlement.com 은 Cloudflare 봇 확인 화면으로 두 브라우저에서 모두 열지 못했다. 같은 합의의 법원 승인 단계와 청구 절차를 전하는 Fox News 소비자 안내 칼럼을 대신 열었다. 게시 시각은 페이지 JSON-LD 의 datePublished(2026-09-29T10:57:38-04:00)를 UTC 로 바꾼 값이다."
+    },
+    {
+      "key": "src-bloomberg-eu",
+      "company_id": "microsoft",
+      "kind": "news",
+      "title": "Microsoft, Amazon Cloud Arms Set to Face Deeper Scrutiny Under EU’s Tech Rules",
+      "publisher": "Bloomberg",
+      "publisher_url": "https://www.bloomberg.com",
+      "url": "https://www.bloomberg.com/news/articles/2026-10-02/microsoft-amazon-cloud-arms-set-to-face-deeper-scrutiny-under-eu-s-tech-rules",
+      "published_at_utc": "2026-10-02T11:16:13Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "Bloomberg 원문. 본문은 앞 두 문단만 열리고 그 아래는 다른 기사 목록으로 이어진다. 전체 기사인지 구독 장벽으로 잘렸는지는 가를 수 없다(구독 안내 문구는 찾지 못했다). 'Takeaways by Bloomberg AI' 요약은 Bloomberg 가 만든 요약이라 인용하지 않았다. 게시 시각은 페이지 JSON-LD 의 datePublished 다."
+    },
+    {
+      "key": "src-oci-pricelist",
+      "company_id": "oracle",
+      "kind": "news",
+      "title": "Cloud Price List — OCI Generative AI (Internet Archive 2026-10-06 스냅숏)",
+      "publisher": "Oracle (Internet Archive 보존본)",
+      "publisher_url": "https://www.oracle.com",
+      "url": "https://web.archive.org/web/20261006035648/https://www.oracle.com/cloud/price-list/",
+      "published_at_utc": "2026-10-06T03:56:48Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "오라클 OCI 가격표 페이지(스크립트로 그려지는 페이지)의 Internet Archive 2026-10-06 03:56:48 UTC 스냅숏이다. 정보 마감(2026-10-12) 전 상태라 이 스냅숏을 썼다. 스냅숏의 정적 HTML 에는 모델 행·단위·설명 문단이 있고 가격 숫자는 없다(스크립트가 채운다). 같은 페이지의 현재 판(https://www.oracle.com/cloud/price-list/#genai, 2026-10-13 열람)도 열렸고 같은 모델 공급자와 같은 과금 문구를 보였으며 행이 더 많고 가격 숫자가 보인다. 가격표에는 게시일이 없어 스냅숏 시각을 게시 시각으로 적었다."
+    },
+    {
+      "key": "src-aliyun-gpu-table",
+      "company_id": "alibaba",
+      "kind": "news",
+      "title": "AI算力、存储等产品调价公告 — GPU 상세표(공지 118086 첨부 이미지)",
+      "publisher": "Alibaba Cloud (aliyun.com)",
+      "publisher_url": "https://www.aliyun.com",
+      "url": "https://img.alicdn.com/imgextra/i1/O1CN01THZxty1PNH8XYiEmW_!!6000000001828-2-tps-2466-3634.png",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "공지 https://www.aliyun.com/notice/118086 본문의 '详细列表见：GPU' 링크가 가리키는 이미지(2466×3634)다. 이미지라 텍스트 계층이 없어 표 셀을 눈으로 옮겼다. 게시 시각은 공지가 적은 2026-03-18 13:16:29(베이징 시간)를 UTC 로 바꾼 값이다."
+    },
+    {
+      "key": "src-aliyun-cpfs-table",
+      "company_id": "alibaba",
+      "kind": "news",
+      "title": "AI算力、存储等产品调价公告 — CPFS 상세표(공지 118086 첨부 이미지)",
+      "publisher": "Alibaba Cloud (aliyun.com)",
+      "publisher_url": "https://www.aliyun.com",
+      "url": "https://img.alicdn.com/imgextra/i1/O1CN011x1OBW1cK9RL9fK5W_!!6000000003581-0-tps-1790-274.jpg",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "공지 https://www.aliyun.com/notice/118086 본문의 '详细列表见：…、CPFS' 링크가 가리키는 이미지(1790×274)다. 이미지라 텍스트 계층이 없어 표 셀을 눈으로 옮겼다. 게시 시각은 공지가 적은 2026-03-18 13:16:29(베이징 시간)를 UTC 로 바꾼 값이다."
+    }
+  ],
+  "evidence": [
+    {
+      "key": "ev-devday-1p2b",
+      "company_id": "openai",
+      "factors": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "SRC-WEB-openai-934",
+      "published_at_utc": "2026-09-29T00:00:00Z",
+      "title": "DevDay 2026 Recap — ChatGPT 주간 이용자 12억 명과 DevDay 규모 문단",
+      "excerpt": "DevDay 2026 is our biggest yet, with more than 20 major announcements across ChatGPT, Codex, our models, and entirely new forms of working with AI. … We also expanded our commitment to an open ecosystem by opening up ChatGPT as a shared surface where humans and agents can collaborate and where developers can directly launch new native experiences to our collective 1.2B weekly users.",
+      "relevance": "사실: OpenAI 가 2026-09-29 DevDay 요약 글에서 ChatGPT 의 주간 이용자를 12억 명(1.2B)으로 적었다. 회사 공식 페이지의 문장이며, 발표자가 무대에서 말했다는 서술은 이 글에 없다. 추론: 소비자 채널 사용자 시계열의 2026-09 시점 값이다. 유료 구독자 수와 전환 비율은 글에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "지금은 유지: 주간 이용자 12억 명은 소비자 채널 규모의 사실이며 구독자 수·전환비용·가격 실측은 이 글에 없다. 구독자 수가 갱신 공개되면 소비자 채널의 분자와 분모를 같은 시점으로 다시 맞춘다.",
+      "horizon": "current — 2026-09-29",
+      "counter_evidence": [],
+      "unverified": [
+        "12억 명 가운데 유료 구독자 수는 글에 없다.",
+        "'weekly users' 의 정의(로그인 여부·플랫폼 범위)는 글에 없다."
+      ],
+      "locator": "도입부 첫 문단('DevDay 2026 is our biggest yet…')과 셋째 문단('Today, we introduced agents…')"
+    },
+    {
+      "key": "ev-mkt-sep23",
+      "company_id": "anthropic",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-claude-mkt-sep23",
+      "published_at_utc": "2026-09-23T00:00:00Z",
+      "title": "Claude Marketplace — 약정 지출로 Claude 기반 파트너 제품을 사는 거래 장터 공개 글",
+      "excerpt": "Starting today, the Claude Marketplace brings plugins and connectors, agents and products, and service partners into one place. … Buy agents and products. Use a portion of your committed Anthropic spend on Claude-powered software from companies like CrowdStrike, Cursor, Harvey, Legora, Lovable, and Snowflake. … Selling a Claude-powered agent or product? Apply to list it on the marketplace. Teams can then use a portion of their committed Anthropic spend to buy it.",
+      "relevance": "사실: Anthropic 이 2026-09-23 Claude Marketplace 를 플러그인·커넥터, 에이전트·제품, 서비스 파트너 세 갈래로 묶어 공개했고, 고객이 약정한 Anthropic 지출의 일부로 CrowdStrike, Cursor, Harvey, Legora, Lovable, Snowflake 같은 회사의 Claude 기반 소프트웨어를 살 수 있다고 밝혔다. 추론: 소프트웨어 플랫폼 층의 거래 장터다. Anthropic 이 이 거래에서 받는 수수료·몫과 거래액은 글에 없다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Anthropic ④ 판단의 소프트웨어 플랫폼 층에서 Marketplace 수수료·거래액이 회사 문서나 공시로 나오는지 본다. 나오기 전에는 수수료 조건을 미공개로 두고, 같은 형태의 OpenAI Marketplace 와 같은 근거 등급(회사 1차 발표, 수수료 미공개)으로 읽는다.",
+      "horizon": "medium — 수수료·거래액 공개까지",
+      "counter_evidence": [],
+      "unverified": [
+        "이 글은 수수료·거래 몫을 언급하지 않는다. 수수료 면제 여부는 확인되지 않는다.",
+        "고객이 실제로 쓴 거래액과 파트너별 매출은 글에 없다."
+      ],
+      "locator": "본문 첫 문단, 'For customers' 절의 'Buy agents and products.' 항목, 'For builders and partners' 절의 둘째 항목"
+    },
+    {
+      "key": "ev-idc-shipments",
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-idc-pr",
+      "published_at_utc": "2026-10-08T17:08:05Z",
+      "title": "IDC 2026년 3분기 PC 출하 보도자료 — 전체 −20.1%, Apple 590만 대(−11.3%)·점유율 9.5%",
+      "excerpt": "Worldwide PC shipments fell 20.1% year over year in Q3 2026 to 62.7 million units, according to preliminary results from IDC Research (IDC), the second consecutive decline and a deeper one than the 3.8% drop in Q2. … Channel concern over high inventory and soft demand at elevated prices could bring promotions in the near term, but pricing will stay well above year-ago levels. … Company 3Q26 Shipments 3Q26 Market Share 3Q25 Shipments 3Q25 Market Share 3Q26/3Q25 Growth … 4. Apple 5.9 9.5% 6.7 8.5% -11.3%",
+      "relevance": "사실: IDC 예비 집계로 2026년 3분기 전 세계 PC 출하는 6,270만 대로 전년보다 20.1% 줄었고, Apple 출하는 590만 대로 전년 670만 대보다 11.3% 줄었으며 점유율은 8.5% 에서 9.5% 로 올랐다. IDC 는 채널이 높은 재고와 높은 가격의 약한 수요를 걱정해 단기 판촉이 나올 수 있지만 가격은 전년보다 훨씬 높게 유지된다고 적었다. 추론: Apple 의 Mac 출하는 시장 전체보다 덜 줄었다. 출하(유통 채널 포함) 집계라 소비자 판매가 아니며, 감소에는 연초 선매입 되돌림과 공급 제약이 섞여 있다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: Apple ① 판단의 가격 실측에서 '인상 뒤에 고객이 남았는가' 를 보는 독립 방증이다. 출하 집계이고 선매입 되돌림과 공급 제약이 섞여 가격 효과만 가르지 못한다. 후속 분기 IDC 집계나 Apple 실적에서 Mac 매출이 확인되면 다시 본다.",
+      "horizon": "current — 2026년 3분기",
+      "counter_evidence": [
+        "IDC 는 시장 전체 하락의 원인으로 연초 선매입 되돌림·공급 제약·높은 가격을 들고, Apple 의 가격 인상이나 고객 충성을 점유율 상승의 이유로 적지 않는다."
+      ],
+      "unverified": [
+        "IDC 예비 추정이며 확정치가 아니다.",
+        "출하(유통 채널 포함)이고 소비자 판매가 아니다.",
+        "Apple 의 Mac 가격 인상과 출하 감소 사이의 인과는 글에 없다."
+      ],
+      "locator": "첫 문단, 'What is IDC’s outlook?' 절 첫 문단, 'Vendor Rankings and Market Share' 절의 표 헤더 행과 4번째 'Apple' 행(표 셀은 탭으로 구분돼 있어 공백으로 이었다)"
+    },
+    {
+      "key": "ev-idc-drivers",
+      "company_id": "apple",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-idc-pr",
+      "published_at_utc": "2026-10-08T17:08:05Z",
+      "title": "IDC 2026년 3분기 PC 출하 보도자료 — 하락 원인(선매입 되돌림·공급 제약·높은 가격)과 업체별 점유율 이동",
+      "excerpt": "Primary drivers of the decline: Strategic inventory pull-in across the entire industry as a result of on-going supply constraints and higher price points driven by AI data center build out … Lenovo, HP Inc, and Dell Technologies all fell faster than the market and together ceded 4.2 points of share as they were likely facing the effects of pull-in from earlier in the year. … Shipments include shipments to distribution channels or end users.",
+      "relevance": "사실: IDC 는 2026년 3분기 PC 출하 감소의 주된 원인으로 산업 전체의 전략적 재고 선매입(공급 제약과 AI 데이터센터 구축이 끌어올린 가격 때문)을 들었고, Lenovo·HP·Dell 이 시장보다 빠르게 줄어 점유율 4.2%포인트를 내줬다고 적었다. 집계는 유통 채널 또는 최종 사용자에게 간 출하다. 추론: Apple 이 시장보다 덜 줄어든 이유를 IDC 는 설명하지 않는다. 점유율 상승에는 경쟁사의 선매입 되돌림이 섞였을 수 있다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: Apple 출하의 상대적 선방을 가격 효과로 읽을 근거가 이 보도자료에는 없다. Apple 의 Mac 수요와 가격에 관한 서술이 회사 발표나 후속 집계로 나오면 다시 본다.",
+      "horizon": "current — 2026년 3분기",
+      "counter_evidence": [],
+      "unverified": [
+        "Apple 이 시장보다 덜 줄어든 이유는 보도자료에 없다.",
+        "IDC 예비 추정이며 확정치가 아니다."
+      ],
+      "locator": "'Worldwide PC Market at a Glance: Q3 2026' 목록의 'Primary drivers of the decline' 줄, 'Vendor Rankings and Market Share' 절 첫 문단, 'Notes' 절 둘째 문단"
+    },
+    {
+      "key": "ev-siri-status",
+      "company_id": "apple",
+      "factors": [
+        "F2",
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-fox-siri",
+      "published_at_utc": "2026-09-29T14:57:38Z",
+      "title": "Fox News — Siri AI 기능 지연 합의의 법원 승인 단계와 청구 절차",
+      "excerpt": "Apple denies the allegations and says it did nothing improper or unlawful. … The lawsuit is called Landsheft, et al. v. Apple Inc. and is pending in federal court in Northern California. … The company agreed to put $250 million into a settlement fund rather than continue litigating the case. The agreement received preliminary court approval on July 17, 2026. The court has scheduled a final approval hearing for Feb. 24, 2027. … The claims period officially opened on Sept. 21, 2026.",
+      "relevance": "사실: Fox News 소비자 안내 칼럼이 Apple 의 Siri AI 기능 지연 집단소송(Landsheft 외 대 Apple, 캘리포니아 북부 연방법원) 합의를 $250M 합의 기금으로 적고, 합의가 2026-07-17 예비 승인을 받았으며 최종 승인 심리가 2027-02-24 로 잡혀 있고 청구 접수가 2026-09-21 에 열렸다고 전한다. Apple 은 혐의를 부인한다. 추론: 합의는 예비 승인 단계이고 최종 승인이 남았다. 칼럼이라 법원 문서가 아니다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 소비자 집단소송 합의금은 비용형 법적 전선이며 최종 승인 전에는 확정된 비용이 아니다. 최종 승인이나 합의 조건 변경이 법원 문서로 확인되면 다시 본다.",
+      "horizon": "medium — 최종 승인 심리 2027-02-24",
+      "counter_evidence": [],
+      "unverified": [
+        "법원 결정문과 공식 합의 사이트 원문은 열지 못했다.",
+        "예비 승인일과 최종 심리일은 이 칼럼의 서술이다."
+      ],
+      "locator": "본문 둘째 문단 끝 문장, 'Why Apple agreed to a $250 million Siri settlement' 절 첫 문단, 'How to file your Apple Siri settlement claim' 절 첫 문장"
+    },
+    {
+      "key": "ev-bloomberg-eu",
+      "company_id": "microsoft",
+      "factors": [
+        "F5"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-bloomberg-eu",
+      "published_at_utc": "2026-10-02T11:16:13Z",
+      "title": "Bloomberg — Azure·AWS 의 EU 디지털시장법 지정 예정 보도(첫 두 문단)",
+      "excerpt": "Microsoft Corp.’s Azure and Amazon Web Services are set to be designated under the European Union’s strict rulebook for Big Tech. … Regulators are putting the final touches to a Digital Markets Act investigation into the two firms that will conclude that Azure and AWS meet the requirements to fall under the scope of its rules, according to people familiar with the matter. The decision is set to be issued in November but still in draft form and timing could slip, they said asking not to be identified because the process is private.",
+      "relevance": "사실: Bloomberg 는 2026-10-02 익명 소식통을 인용해, EU 규제 당국이 Microsoft Azure 와 Amazon Web Services 가 디지털시장법(DMA) 적용 요건을 충족한다고 결론 내리는 조사를 마무리하고 있으며, 결정은 11월에 나올 예정이나 초안 단계이고 일정이 늦춰질 수 있다고 전했다. 추론: 규제 조사의 결과로 지정이 예상되는 사건이며 같은 조치가 두 회사에 함께 걸린다. 지정 뒤 의무의 내용은 이 글에 없다.",
+      "channel": "press",
+      "conditional_impact": "지금은 유지: 결정이 초안 단계라 확정된 부담이 아니다. 최종 지정과 의무 내용이 위원회 발표로 확인되면 Azure 사업 구조에 닿는지 다시 본다. 같은 사건은 AWS 를 가진 Amazon 에도 같은 성격으로 읽는다.",
+      "horizon": "medium — 결정은 11월 예정이나 일정이 늦춰질 수 있다고 기사가 적는다",
+      "counter_evidence": [],
+      "unverified": [
+        "위원회가 11월 일정을 공식 확인한 것이 아니다(익명 소식통).",
+        "본문은 앞 두 문단만 열려 지정 뒤 의무의 내용과 두 회사의 반응은 확인하지 못했다."
+      ],
+      "locator": "본문 첫째·둘째 문단('Takeaways by Bloomberg AI' 상자 다음)"
+    },
+    {
+      "key": "ev-oci-pricing",
+      "company_id": "oracle",
+      "factors": [
+        "F4"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-oci-pricelist",
+      "published_at_utc": "2026-10-06T03:56:48Z",
+      "title": "OCI 가격표 — 호스팅 모델의 토큰·문자 단위 종량 과금과 전용 클러스터 시간 과금",
+      "excerpt": "Oracle Cloud Infrastructure Generative AI - xAI - Grok 4.7 - Input Tokens Short Context … Oracle Cloud Infrastructure Generative AI - OpenAI - gpt-oss-120b - Input Tokens … Foundational models can be consumed on demand, where you pay per character based on the length of the prompt and the response from the model (except for the embedding models, where the response from the model isn’t accounted for). … Additionally, you can host private replicas of foundational models and create fine-tuned models on dedicated AI clusters.",
+      "relevance": "사실: 오라클 OCI 가격표의 Generative AI 절은 Cohere·Meta·xAI·Google·OpenAI 모델을 나열하고, xAI Grok·Google Gemini·OpenAI gpt-oss 행은 100만 토큰 단위(예: Grok 4.7 입력 토큰, gpt-oss-120b 입력 토큰), Cohere·Meta 행은 1만 거래 단위로 값을 매기고, 표 아래 설명은 기본 모델을 프롬프트와 응답 길이에 따라 문자당 종량으로 쓰거나 전용 AI 클러스터에 비공개 복제본을 호스팅·미세조정할 수 있다고 적는다. 나열된 공급자 다섯 곳에 오라클 자체 모델은 없다. 추론: 오라클이 파는 것은 남의 모델을 돌려 주는 호스팅 서비스이며 과금은 사용량(토큰·문자)과 클러스터 시간이다. 이 서비스의 매출은 공시되지 않았다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Oracle ④ 판단의 모델 층 칸에서 호스팅 모델의 과금 방식(토큰·문자 종량, 전용 클러스터 시간)을 이 가격표로 읽는다. 호스팅 매출이 공시에서 따로 나오는지, 오라클 자체 모델이 가격표에 오르는지를 본다.",
+      "horizon": "current — 2026-10 가격표",
+      "counter_evidence": [],
+      "unverified": [
+        "가격표에는 게시일이 없어 Internet Archive 스냅숏 시각을 게시 시각으로 적었다.",
+        "가격 숫자는 스크립트로 채워져 스냅숏의 정적 HTML 에는 없다. 현재 판(2026-10-13)에서는 Grok 4.7 입력 $2.00·gpt-oss-120b 입력 $0.15(각 100만 토큰당)로 보였으나 정보 마감 전 값은 확인하지 못했다.",
+        "호스팅 모델 서비스의 매출은 공시되지 않았다.",
+        "'transaction = character' 설명은 Cohere·Meta 종량에 적용되며 xAI·Google·OpenAI 행은 토큰 단위로 적혀 있다."
+      ],
+      "locator": "'OCI Generative AI' 절 표의 xAI Grok 4.7 입력(Short Context) 행, OpenAI gpt-oss-120b 입력 행(두 행의 단가 칸은 스크립트로 채워져 정적 HTML 에는 비어 있다), 표 바로 아래 설명 문단('A transaction is a character…' 다음 두 문단)"
+    },
+    {
+      "key": "ev-aliyun-gpu-table",
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-aliyun-gpu-table",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "title": "Alibaba Cloud 가격 조정 공지 GPU 상세표 — ECS·灵骏·ACS 규격별 목록가 인상 폭(5%, 21%, 25%–34%)",
+      "excerpt": "产品名称 站点 业务类型 地域 规格/规格族 目录价涨幅 … ecs.gn8v ecs.ebmgn8v ecs.gn8v-tee 5% … efg2.nvgh8bn 21% … efg2.p16en 25%–34% … H2* 5% … PPU810E 25%–34%",
+      "relevance": "사실: 알리바바 클라우드 공지(2026-03-18)가 가리키는 GPU 상세표는 2026-04-18 부터 적용되는 규격별 '목록가 인상 폭(目录价涨幅)'을 적는다. 표 위쪽 행(중국 사이트·국제 사이트, 공공·금융·정무·자동차 규제 클라우드, 전 리전)에서 클라우드 서버 ECS 의 ecs.gn8v 계열은 5%, 지능형 컴퓨팅 灵骏 의 efg2.nvgh8bn 은 21%, efg2.p16en 은 25%–34%, 컨테이너 컴퓨팅 서비스 ACS 의 H2* 는 5%, PPU810E 는 25%–34% 다. 추론: 목록가 인상이며 규격에 따라 폭이 다르다. 표의 PPU810E 가 T-Head 진우 810E 와 같은 카드인지는 표가 설명하지 않는다. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다는 공지 본문과 함께 읽는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Alibaba ① 판단의 업무(클라우드) 채널 가격 실측에서 인상 폭을 이 표로 읽는다. 인상 뒤 고객이 남았는지(이탈·구매 감소)는 표에 없으므로 클라우드 부문 매출·고객 지표가 공시되면 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "인상 뒤 고객 이탈 여부는 표에 없다.",
+        "표는 이미지라 텍스트 대조가 불가능해 셀 값을 눈으로 옮겼다. 범위 기호는 이미지에서 en dash(–)로 보인다.",
+        "표 아래쪽(Hologres, 함수 컴퓨팅 FC, 대모형 서비스 플랫폼 百炼 등) 행은 옮기지 않았다."
+      ],
+      "locator": "공지 '详细列表见：GPU' 링크 이미지의 표 헤더 행과 云服务器 ECS·智能计算灵骏·容器计算服务 ACS 행(이미지 맨 위 구간). 'efg2.nvgh8bn'·'efg2.p16en' 은 灵骏 행, 'H2*'·'PPU810E' 는 ACS 행이다"
+    },
+    {
+      "key": "ev-aliyun-cpfs-table",
+      "company_id": "alibaba",
+      "factors": [
+        "F1"
+      ],
+      "kind": "news",
+      "source_id": "NEW:src-aliyun-cpfs-table",
+      "published_at_utc": "2026-03-18T05:16:29Z",
+      "title": "Alibaba Cloud 가격 조정 공지 CPFS 상세표 — 智算版 CPFS 세 과금 항목 목록가 30% 인상",
+      "excerpt": "产品名称 站点 业务类型 地域 商品名称 计费项名称 目录价涨幅 … CPFS（智算版） 中国站&国际站 公共云/金融云/政务云/汽车合规云 全Region 智算CPFS 智算CPFS配置容量 30% … 容量型 30% … 低频介质存储容量 30%",
+      "relevance": "사실: 알리바바 클라우드 공지(2026-03-18)가 가리키는 CPFS 상세표는 지능형 컴퓨팅용 CPFS(智算版)의 세 과금 항목(配置容量·容量型·低频介质存储容量)이 모두 중국 사이트·국제 사이트, 공공·금융·정무·자동차 규제 클라우드, 전 리전에서 목록가 30% 인상이라고 적는다. 추론: 저장 서비스의 목록가 인상이며 인상 폭이 세 항목 모두 같다. 이미 산 서비스는 현재 과금 주기 동안 영향이 없다는 공지 본문과 함께 읽는다.",
+      "channel": "company_statement",
+      "conditional_impact": "재검토: Alibaba ① 판단의 업무(클라우드) 채널 가격 실측에서 CPFS 인상 폭을 이 표로 읽는다. 인상 뒤 고객이 남았는지는 표에 없으므로 클라우드 부문 매출·고객 지표가 공시되면 다시 본다.",
+      "horizon": "short — 2026년 9월 분기 실적(2026-11)까지",
+      "counter_evidence": [],
+      "unverified": [
+        "인상 뒤 고객 이탈 여부는 표에 없다.",
+        "표는 이미지라 텍스트 대조가 불가능해 셀 값을 눈으로 옮겼다."
+      ],
+      "locator": "공지 '详细列表见：…、CPFS' 링크 이미지(1790×274) 전체 표의 헤더 행과 세 데이터 행(행마다 计费项名称 칸만 다르고 나머지 칸과 30% 는 같다)"
+    }
+  ]
+}

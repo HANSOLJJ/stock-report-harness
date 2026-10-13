@@ -1,0 +1,164 @@
+{
+  "items": [
+    {
+      "file": "evidence",
+      "id": "EV-openai-055",
+      "field": "unverified[0]",
+      "old": "OpenAI 의 DevDay 공식 자료는 열지 못했고 실시간 기사 문장에 근거한다.",
+      "new": "OpenAI 의 DevDay 공식 요약 글은 주간 이용자 12억 명을 회사 문장으로 적고 Altman 의 발언이나 무대 그래픽은 서술하지 않아, 발언 주체는 이 실시간 기사의 서술이다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-openai-161 발췌(OpenAI DevDay 2026 Recap 도입부 '…our collective 1.2B weekly users.')와 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-068",
+      "field": "unverified[1]",
+      "old": "소장 원문(사건 번호)은 열지 않았다.",
+      "new": "소장 원문(No. 1:26-cv-08892)의 청구 취지에는 영구 금지명령과 함께 원고 콘텐츠가 들어간 모든 GPT·LLM 모델과 학습 데이터셋의 폐기 청구가 있고 피고에 Microsoft 는 없으나, 이 기사는 폐기 청구를 적지 않는다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-openai-160 발췌(소장 78쪽 청구 취지 3·4항)·출처 SRC-WEB-openai-972 제목의 사건 번호와 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-openai-068",
+      "field": "relevance",
+      "old": "추론: 개별 저작권 소송이라 ⑤ 적대 등급의 비용형(사업 구조는 건드리지 않는 적대) 근거가 하나 늘어난다. 청구한 금지 명령이 인용돼 학습 데이터 사용이 막히면 구조형 검토 대상이 된다.",
+      "new": "추론: 판결 전 저작권 소송이라 ⑤ 적대 등급의 비용형(사업 구조는 건드리지 않는 적대) 근거가 하나 늘어난다. 금지명령이나 모델 폐기가 인용돼 학습 데이터 사용이 막히면 구조형 검토 대상이 된다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-openai-160 발췌의 청구 취지 3·4항과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-anthropic-098",
+      "field": "relevance",
+      "old": "Anthropic 원 발표문을 열지 못한 언론 보도이고 2026-10-12 현재 조건은 확인되지 않는다.",
+      "new": "Anthropic 의 공식 Marketplace 글(2026-09-23)과 제품 페이지에는 수수료를 받지 않는다는 문장이 없어 수수료 면제는 이 언론 보도로만 확인되고, 2026-10-12 현재 조건도 확인되지 않는다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-anthropic-141 발췌·unverified('이 글은 수수료·거래 몫을 언급하지 않는다')와 reopen1 보고서 2절(세 공식 자료에서 commission·take rate·revenue share 검색 일치 없음)과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-anthropic-098",
+      "field": "unverified[1]",
+      "old": "Anthropic 원 발표문을 열지 못하고 언론 보도로만 확인했다.",
+      "new": "Anthropic 의 공식 Marketplace 글·제품 페이지 FAQ·2026-03 페이지 스냅숏 어디에도 수수료·거래 몫 문장이 없다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "reopen1 보고서 2절(claude.com 글·marketplace/agents-products·Internet Archive 2026-03-11 스냅숏 검색 결과)과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-apple-043",
+      "field": "relevance",
+      "old": "Apple 은 메모리 가격 급등으로 Mac·iPad 가격을 올렸고, IDC 는 높아진 가격에서 수요가 약하다고 적었다. 독립 측정이라 ① 가격 실측의 '인상 뒤 고객이 남았는가' 에 쓰는 방증이다.",
+      "new": "IDC 는 높아진 가격에서 채널 수요가 약하다고 적었으나, 이 발췌에는 Apple 의 Mac·iPad 가격 인상도, Apple 이 시장보다 덜 줄어든 이유도 없다. 출하 집계라 ① 가격 실측의 근거가 아니고, Apple 이 시장보다 덜 줄었다는 사실로만 읽는다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "9to5Mac 발췌 본문과 IDC 보도자료 원문(EV-apple-065·066: 하락 원인은 산업 전반 선매입·공급 제약·높은 가격, Apple 이 덜 줄어든 이유 서술 없음)과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-apple-043",
+      "field": "conditional_impact",
+      "old": "인상 뒤 시장보다 덜 줄었다는 사실을 가격 실측 근거 문장에 방증으로 더한다.",
+      "new": "시장보다 덜 줄었다는 사실은 전환비용 판정 칸에 한 분기 출하 값으로 적고 가격 실측의 근거로 쓰지 않는다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "고친 apple ① 판단(work/reopen1/F1-apple.json 판정 칸 전환비용·가격 실측 문장)과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-apple-043",
+      "field": "unverified[2]",
+      "old": "후보로 수집된 Seeking Alpha 기사는 열리지 않아 같은 집계를 전한 9to5Mac 기사로 확인했다",
+      "new": "후보로 수집된 Seeking Alpha 기사는 봇 확인·구독 장벽으로 본문이 열리지 않았고, 이 기사의 숫자는 IDC 보도자료 원문의 Apple 행(590만 대, 전년 670만 대, 점유율 9.5%·8.5%, −11.3%)과 시장 전체(6,270만 대, −20.1%)와 같다",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-apple-065 발췌의 표 Apple 행과 첫 문단 숫자와 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-apple-045",
+      "field": "unverified[0]",
+      "old": "법원 승인 여부를 확인하지 못했다",
+      "new": "합의 뒤 법원 단계는 이 기사에 없다. Fox News 소비자 칼럼(2차)은 2026-07-17 예비 승인과 2027-02-24 최종 승인 심리를 적고, 법원 결정문은 열지 못했다",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-apple-067 발췌('preliminary court approval on July 17, 2026'·'final approval hearing for Feb. 24, 2027')와 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-apple-045",
+      "field": "unverified[1]",
+      "old": "후보로 수집된 Top Class Actions 합의 안내(2026-10-08)는 열리지 않아 합의 당일 Reuters 기사로 확인했다",
+      "new": "후보로 수집된 Top Class Actions 합의 안내(2026-10-08)는 접속 국가 차단(Cloudflare 1009)으로, 공식 합의 사이트는 봇 확인 화면으로 열리지 않아 합의 당일 Reuters 기사로 확인했다",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "reopen1 보고서 5절(두 브라우저 모두 Cloudflare 1009, smartphoneaisettlement.com 봇 확인)과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-apple-045",
+      "field": "horizon",
+      "old": "short — 법원 승인과 지급",
+      "new": "medium — 최종 승인 심리 2027-02-24",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-apple-067 발췌의 최종 승인 심리일과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-microsoft-040",
+      "field": "unverified[0]",
+      "old": "Bloomberg 원문은 403 으로 막혀 열지 못했고 그 내용을 전한 기사로 확인했다",
+      "new": "Bloomberg 원문은 앞 두 문단만 열려 지정 예정과 11월 결정(초안, 늦춰질 수 있음)까지 같은 내용으로 확인되고, Google Cloud 대우에 관한 마이크로소프트 입장은 이 기사의 서술이다",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-microsoft-076 발췌(Bloomberg 첫째·둘째 문단)와 이 근거의 둘째 발췌(스물둘째 문단)를 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-oracle-052",
+      "field": "unverified[1]",
+      "old": "호스팅 모델의 과금 방식과 매출은 확인하지 못했다(가격 페이지는 스크립트로 그려져 열리지 않았다)",
+      "new": "호스팅 모델의 과금 방식은 OCI 가격표(2026-10-06 아카이브)에서 토큰·문자 단위 종량과 전용 AI 클러스터 시간으로 확인되고, 이 서비스의 매출은 공시되지 않았다",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-oracle-061 발췌·relevance(100만 토큰·1만 거래 단위, 전용 AI 클러스터 호스팅·미세조정)와 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-091",
+      "field": "relevance",
+      "old": "회사 공지 본문에는 없는 인상 폭의 출처이며 2차 보도다.",
+      "new": "공지 본문에는 인상 폭이 없고, 공지가 가리키는 GPU·CPFS 상세표가 규격별 목록가 인상 폭(5%, 21%, 25%–34%, CPFS 30%)을 적어 이 2차 보도의 범위(5~34%, 30%)와 같다.",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-alibaba-094·095 발췌(目录价涨幅 열의 5%·21%·25%–34%, CPFS 세 항목 30%)와 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-091",
+      "field": "unverified[0]",
+      "old": "인상 폭은 통신사 보도이고 공지 상세표(GPU·CPFS 목록)는 열지 못했다",
+      "new": "이 보도는 규격별 차등(5%, 21%, 25%–34%)과 인상이 목록가 기준이라는 점을 적지 않는다",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-alibaba-094 발췌의 열 머리글 '目录价涨幅' 과 규격별 값과 대조",
+      "depends_on": []
+    },
+    {
+      "file": "evidence",
+      "id": "EV-alibaba-090",
+      "field": "relevance",
+      "old": "(조정 방향은 본문에 없고 같은 날 보도가 인상으로 전한다)",
+      "new": "(조정 방향은 본문에 없고, 공지가 가리키는 GPU·CPFS 상세표의 열 이름이 '목록가 인상 폭' 이라 인상이다)",
+      "finding": "다시 연 원문(reopen1)",
+      "checked": "EV-alibaba-094·095 발췌의 열 머리글 '目录价涨幅' 과 대조",
+      "depends_on": []
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "key": "src-usatoday-complaint",
+      "company_id": "openai",
+      "kind": "news",
+      "title": "USA Today Co., Inc. v. OpenAI Foundation, No. 1:26-cv-08892 (S.D.N.Y.) — Complaint (Document 1)",
+      "publisher": "U.S. District Court for the Southern District of New York (CourtListener RECAP 사본)",
+      "publisher_url": "https://www.courtlistener.com/docket/74935682/usa-today-co-inc-v-openai-foundation/",
+      "url": "https://storage.courtlistener.com/recap/gov.uscourts.nysd.674652/gov.uscourts.nysd.674652.1.0_1.pdf",
+      "published_at_utc": "2026-10-08T00:00:00Z",
+      "accessed_at": "2026-10-13T00:00:00Z",
+      "note": "소장 원문(79쪽, 2026-10-08 접수). 사용자가 2026-10-13 준 PDF(docs/USA TODAY OPENAI COPYRIGHT lawsuit.pdf)와 같은 문서이고, CourtListener 사건 기록의 문서 1 공개 사본 주소를 출처로 적는다. 사건 기록에는 MDL No. 3143(1:25-md-03143)과 관련 사건이라는 신청이 있다. 접수 시각은 사건 기록에 날짜만 있어 날짜만 적었다."
+    }
+  ],
+  "evidence": [
+    {
+      "key": "ev-usatoday-complaint",
+      "company_id": "openai",
+      "factors": ["F5"],
+      "kind": "news",
+      "source_id": "NEW:src-usatoday-complaint",
+      "published_at_utc": "2026-10-08T00:00:00Z",
+      "title": "USA Today Co. v. OpenAI Foundation 소장 — 배상 2억 5천만 달러 초과·영구 금지명령·모델과 학습 데이터셋 폐기 청구",
+      "excerpt": "13. In this lawsuit, the USA TODAY Plaintiffs seek damages in excess of $250 million. Upon information and belief, OpenAI's models have copied hundreds of thousands of articles and other materials from the USA TODAY Publications. … 3. Permanently enjoining Defendants from the unlawful, unfair, and infringing conduct alleged herein; 4. Ordering destruction under 17 U.S.C. § 503(b) of all GPT or other LLM models and training sets that incorporate the USA TODAY Plaintiffs' content;",
+      "relevance": "사실: USA TODAY Co. 와 계열 신문사들이 2026-10-08 뉴욕 남부 연방지법에 OpenAI 법인 일곱 곳을 상대로 낸 소장이다. 2억 5천만 달러 넘는 배상, 영구 금지명령, 원고 콘텐츠가 들어간 모든 GPT·LLM 모델과 학습 데이터셋의 폐기를 청구한다. 피고에 Microsoft 는 없다. 추론: 모델 폐기는 판결 전 청구라 아직 사업 구조를 바꾼 사실이 아니다.",
+      "channel": "disclosure",
+      "conditional_impact": "지금은 유지: 청구 단계라 OpenAI ⑤ 적대의 성격을 바꾸지 않는다. 법원이 모델 폐기나 학습 데이터 사용 금지를 명하거나 합의가 그런 조건을 담으면 구조형으로 다시 본다.",
+      "horizon": "long — 판결까지 수년",
+      "counter_evidence": [
+        "언론사 저작권 소송 다수가 MDL No. 3143 으로 병합돼 있고 이 사건도 관련 사건으로 신청됐다. 청구 취지의 모델 폐기가 인용된 판결은 아직 없다."
+      ],
+      "unverified": [
+        "법원이 관련 사건 신청을 받아들였는지는 확인하지 않았다."
+      ],
+      "locator": "소장 5쪽 13항(배상액·복제 규모), 78쪽 PRAYER FOR RELIEF 3·4항(영구 금지명령·모델과 학습 데이터셋 폐기)"
+    }
+  ]
+}

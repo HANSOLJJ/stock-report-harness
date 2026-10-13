@@ -24,3 +24,10 @@
 - [x] research → calculate → 기업 요약 4건 → draft → review-template --force → 중간 커밋 4580197(코드 59d59e3)
 - [x] 확인 리뷰 1회(Opus high) pass → review.md(fill_review.py) → 계약 검증 PASS
 - [x] 커밋, 승인 대기 보고
+
+## 6. 막혔던 원문 다시 열기(사용자 지시 2026-10-13, 403 규칙 변경 뒤)
+- [x] 브라우저로 원문 아홉 건 열기(Sonnet, REOPEN-INSTRUCTIONS.md) → work/reopen1/ (여덟 건 열림, 소장은 사용자 PDF)
+- [x] 원문 대조 확인 → add_fix_items → confirm (EV-openai-160 + 9건)
+- [x] 인용 판단 수정(Opus high) → 새 근거 2건 대조·확정 → apply_judgments --dir reopen1(9건) → 치환 16건
+- [x] research → calculate(점수 불변, 요약 변경 없음) → draft → review-template --force
+- [x] 바뀐 부분 확인 리뷰 1회(Opus high, confirm-r2 pass) → review.md → 계약 검증 PASS → 커밋 → 승인 대기 보고

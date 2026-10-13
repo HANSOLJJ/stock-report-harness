@@ -7,7 +7,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 RUN = ROOT / "output" / "ai-scorecard-2026-10-v21"
-CONFIRM = RUN / "review-parts" / "confirm-r1.md"
+# 2026-10-13: 막혔던 원문을 다시 열어 판단을 고친 뒤 확인 리뷰 2차가 최종 판정이다.
+CONFIRM = RUN / "review-parts" / "confirm-r2.md"
 
 REVIEWERS = """reviewers:
   - "fact-sources: fact-checker fs-a-v21-20261013-r1 → pass · fs-b-v21-20261013-r1 → needs_fix 3건(⑦ 세로축) → 수정 → pass · evidence-editor ev-v21-20261013-r1 → pass"
@@ -15,6 +16,7 @@ REVIEWERS = """reviewers:
   - "rule-consistency: general-purpose(Opus high) rc-v21-20261013-rule → needs_fix 1건(Palantir ④) → 수정 → pass"
   - "output-readability: report-designer or-v21-20261013-r1 → pass(트리거 점수 문장·렌더러 설명 수정)"
   - "confirm: general-purpose(Opus high) confirm-v21-20261013-r1 → pass"
+  - "confirm: general-purpose(Opus high) confirm-v21-20261013-r2 → 막혔던 원문 재열람 뒤 변경분 확인"
 """
 
 FINDINGS = """## 발견 사항
@@ -36,6 +38,10 @@ FINDINGS = """## 발견 사항
 - Apple ④ 는 모델 칸의 유료 한도 확대가 계획이라 판매 칸이 없어 비교 그룹이 없다. 이 경우를 받도록 검증기·렌더러를 고쳤다(커밋 59d59e3).
 - ② 는 정보 마감 당일 Artificial Analysis 의 Muse Wonder 평가를 2026-10-08 순위표에 더해 14개사를 같은 시점으로 비교한다(점수 불변).
 - 경계 사례: Oracle ⑦ 의 TikTok 합작 연결은 추론으로 선 '돌아옴'(무거운 쪽)이다. 돌아오지 않음으로 읽으면 Oracle 은 −3→−2, 조정 8.5(6위)다.
+- 사용자 결정(2026-10-13): 스크립트 요청이 403 이면 실제 브라우저로 다시 열고, 거기서도 막히면 우회하지 않는다(AGENTS.md 「원자료 조사 규율」). 이 규칙 이전에
+  스크립트만 막혀 2차 기사로 대신했던 원문 아홉 건을 다시 열었다(`.agents/plans/v21-first-run-2026-10/work/reopen1/report.md`). 사용자가 USA TODAY 소장 PDF 와
+  Seeking Alpha 본문을 직접 줬다. 원문 근거 12건을 확정하고 판단 9건의 문장·근거 표지와 근거 메모 16건을 고쳤다. 점수·순위는 바뀌지 않았다.
+  확인 리뷰 2차(`confirm-r2.md`)가 이 변경분을 봤다.
 """
 
 
