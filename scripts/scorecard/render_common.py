@@ -1656,8 +1656,11 @@ CONVERSION_NOTES = {
     # 2026-10-08 규칙 v2.0: ① 판단이 `lockin` 일 때만 닿는다(옛 실행의 ① 은 점수 자체라 이 표를 읽지 않는다).
     "F1": "엔진은 회수 루프와 전환비용 중 높은 판정으로 기본 점수를 정하고 가격 실측·대체 공급·지속성 할인을 더해 0~5 로 자른다",
     "F3": "엔진은 그 결과를 사다리에 태워 칸을 고른다",
+    # 2026-10-13: 규칙 v2.1 에서 ④⑧ 이 판정 입력 환산이 됐는데 이 표에 줄이 없어 방법 절에 두 항목 카드가 빠졌다(사용자 지적).
+    "F4": "엔진은 수직계열화 축(보유표 칸 값의 합)과 다각화 축(AI 무관 매출 몫의 구간)을 각각 상한으로 자른 뒤 더한다",
     "F5": "엔진은 기본 3점에 동맹을 더하고 적대를 뺀다",
     "F7": "엔진은 그 조합을 표에서 찾아 칸을 고른다",
+    "F8": "엔진은 고객·약정 축은 숫자로, 공급·지정학 축은 고른 칸으로 정하고 네 축 가운데 가장 낮은 칸을 점수로 쓴다",
 }
 # 사람이 정하는 **판단 입력**이 각각 무엇을 묻는지. ⑨ 의 뜻은 `calc_f9` 가 그 값을 읽어 무엇을
 # 가르는지에서 가져왔고 이 절의 관문 설명과 같은 말을 쓴다. ⑦ 의 두 축은 `factors.F7.matrix` 의
@@ -1796,6 +1799,11 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
     # 2026-10-08 규칙 v2.0: ① 락인은 원본 지표 문장(부품 상한을 담고 있다) 대신 규칙의 채널·네 질문·사다리를 싣는다.
     if f.get("mode") == "lockin":
         return lockin_criteria(f)
+    # 2026-10-13 규칙 v2.1: ④⑧ 은 원본 지표 문장(사업 부문 수·자체 칩 출하 등) 대신 규칙의 보유표·네 축을 싣는다.
+    if f.get("mode") == "survival":
+        return survival_criteria(f)
+    if f.get("mode") == "axes":
+        return axes_criteria(f)
     metrics = (factor_concept(ctx, fid) or {}).get("metrics") or ""
     if metrics:
         out.append(strip_worknotes(metrics))
@@ -1865,6 +1873,64 @@ def lockin_criteria(f: dict[str, Any]) -> list[str]:
     elif ai:
         out.append(f"**{ai.get('label', 'AI 수익화')}**({ai.get('question', '')})는 점수에 들어가지 않고 표시만 한다. "
                    "같은 점수라도 AI 로 가격을 올려 받은 경우와 AI 없이 받은 경우를 가른다.")
+    return out
+
+
+def _band_list(bands: list[dict[str, Any]], fmt: Any) -> str:
+    """`lower` 내림차순 구간표를 '문턱 이상 점수 · … · 그 아래 점수' 로 적는다."""
+    return " · ".join(f"{fmt(b['lower'])} 이상 {b['score']:g}" if b.get("lower") is not None else f"그 아래 {b['score']:g}"
+                      for b in bands)
+
+
+def survival_criteria(f: dict[str, Any]) -> list[str]:
+    """④ 호황 이후 비전을 무엇을 보고 매기는지(규칙 v2.1). 문장의 값은 규칙 `factors.F4` 에서 읽는다."""
+    layers = f.get("layers") or {}
+    labels = [str((layers.get("labels") or {}).get(k, k)) for k in layers.get("keys") or []]
+    cells = f.get("cell_values") or {}
+    cell_names = {"sold": "판매", "self": "자체 사용", "none": "없음", "preparing": "준비 중"}
+    out = [f"**층별 보유표** — {' · '.join(labels)} 여섯 층마다 "
+           + " · ".join(f"{cell_names.get(k, k)} {v:g}" for k, v in cells.items()) + " 으로 적는다. "
+           + str(f.get("cell_value_note", ""))]
+    if layers.get("model_vs_app"):
+        out.append(f"모델 층과 응용 층은 {layers['model_vs_app']}")
+    out.append(f"**수직계열화 축**은 보유표 칸 값의 합이고 상한 {f['vertical_cap']:g} 이다. **다각화 축**은 AI 무관 매출 몫의 구간"
+               f"({_band_list(f.get('non_ai_share_tiers') or [], lambda x: f'{x:.0%}')})이고 상한 {f['diversification_cap']:g} 이다. "
+               f"두 축을 더해 {f['range'][0]}~{f['range'][1]} 가 된다. " + str(f.get("non_ai_share_note", "")))
+    if f.get("comparison_group"):
+        # 규칙 문장에 든 내부 키 이름은 화면에 싣지 않는다.
+        out.append(f"비교 그룹은 {str(f['comparison_group']).replace('(primary_layer)', '')}")
+    if f.get("double_count_rule"):
+        out.append(str(f["double_count_rule"]))
+    return out
+
+
+def axes_criteria(f: dict[str, Any]) -> list[str]:
+    """⑧ 비대칭 의존을 무엇을 보고 매기는지(규칙 v2.1). 문장의 값은 규칙 `factors.F8` 에서 읽는다."""
+    names = f.get("axis_labels") or {}
+    ladder = f.get("ladder") or {}
+    out = [f"**{' · '.join(str(names.get(k, k)) for k in f.get('axes') or [])} 네 축**을 본다. "
+           + str(f.get("combine_note", "")),
+           "사다리는 " + " · ".join(f"**{k}** {v}" for k, v in ladder.items()) + "."]
+    cust = f.get("customer") or {}
+    if cust:
+        out.append(f"**고객 축**은 {cust.get('share', '')}으로 잰다({_band_list(cust.get('bands') or [], lambda x: f'{x:.0%}')}). "
+                   f"전용 자산·약정이면 {cust['dedicated_majority']['lower']:.0%} 이상 {cust['dedicated_majority']['score']} · "
+                   f"{cust['dedicated_nearly_all']['lower']:.0%} 이상 {cust['dedicated_nearly_all']['score']} 이다. "
+                   + str(cust.get("dedicated_note", "")))
+    com = f.get("commitment") or {}
+    if com:
+        out.append(f"**약정 축**은 {com.get('multiple', '')}이다({_band_list(com.get('bands') or [], lambda x: f'{x:g}배')}). "
+                   + str(com.get("scope_note", "")) + " " + str(com.get("display_note", "")))
+    sup = f.get("supply") or {}
+    if sup:
+        out.append(f"**공급 축**은 {sup.get('rung_choice', '')} " + str((sup.get("layers_none_floor") or {}).get("rule", "")))
+    geo = f.get("geopolitics") or {}
+    if geo:
+        out.append(f"**지정학 축**은 {geo.get('rung_choice', '')}")
+    st = f.get("statuses") or {}
+    if st:
+        out.append("축의 상태는 " + " · ".join(str(v) for v in st.values())
+                   + f" 이다(기본값 {f.get('unknown_default')}). " + str(f.get("unknown_default_note", "")))
     return out
 
 

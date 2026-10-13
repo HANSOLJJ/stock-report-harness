@@ -201,6 +201,14 @@ class V21LayoutTest(unittest.TestCase):
         self.assertNotRegex(self.html, r'="[^"]*<span class="cond')
         self.assertNotIn('class="condbox"', self.old, "5점 조건이 없는 규칙의 실행에는 상자가 없다")
 
+    def test_method_table_links_have_factor_cards(self):
+        # 2026-10-13 사용자 지적: 규칙 v2.1 에서 ④⑧ 카드가 빠져 방법 절 표의 두 링크가 갈 곳이 없었다.
+        for html in (self.html, self.old):
+            links = re.findall(r'href="#method-(F\d)"', html)
+            self.assertEqual(sorted(set(links)), [f"F{i}" for i in range(1, 10)])
+            for fid in links:
+                self.assertIn(f'id="method-{fid}"', html, f"{fid} 카드가 없다")
+
 
 if __name__ == "__main__":
     unittest.main()
