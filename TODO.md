@@ -2,13 +2,10 @@
 
 README 의 "다음에 정할 것" 에서 옮겨 온 목록입니다. 끝난 항목은 지웁니다.
 
-1. **다음 정기 채점(2026-11, 규칙 v2.1 첫 실행)** — `ai-scorecard-2026-10-recheck`(v2.0, 리뷰 통과·미승인)을 `init --from-run ai-scorecard-2026-10-recheck --rule v2.1 --change-type rule-change` 로 이어받습니다. 승인된 10월 기록은 `ai-scorecard-2026-10-rejudge` 입니다. 계획과 결정은 `.agents/plans/rule-v21-2026-10/` 에 있습니다. 실행 전·중에 할 일:
-   - run.json: C-12 를 `growth_adjusted_ps` 로 고르고(v2.1 은 다른 선택을 계산하지 않음), `display_names` 에 SpaceX 이름을 넣습니다(`.agents/plans/oct-recheck-2026-10/work/apply_display_name.py` 참고). from-run 이 display_names 를 이어받는지 확인합니다.
-   - 새 관측: `equity_investment_gains_ttm`·`income_tax_ttm`(Alphabet 은 companyfacts `EquitySecuritiesFvNiGainLoss`, Amazon 은 그것 + `EquitySecuritiesWithoutReadilyDeterminableFairValueUpwardPriceAdjustmentAnnualAmount` + AFS 재분류 이익, Alibaba 는 20-F 주석), 비상장 보정 매출 `revenue_ttm`·`revenue_ttm_prior`(OpenAI·Anthropic, 2차 보도면 등급 표기). 없으면 ⑥ 이 보고 순이익·P/S 구간표로 돌아갑니다.
-   - 판단: ① AI 수익화 재료(과반 몫·근거 둘)를 새 정의로 다시 판정하고, ④ 층별 보유표(14사 × 6층 = 84칸, 칸마다 근거)와 ⑧ 네 축을 새로 채웁니다. 판단 세션과 규칙 일관성·확인 리뷰는 Opus high, 기계적 작업은 Sonnet(AGENTS.md).
-   - v2.0→v2.1 다리: 먼저 10월 사실(recheck 근거)로 v2.1 입력을 채워 계산하고, 11월 사실로 다시 판정해 둘을 가릅니다. 리포트 변화 절에 규칙 변경·실적 변화·가격 경계·정정 네 원인으로 나눠 싣습니다.
-   - 2-E·2-C-1 자료: `collect <run_id> --kind facts` 로 3분기 영업현금흐름·설비투자·법인세와 바스켓 분기 설비투자·금융리스를 받습니다. 국면 지표의 수동 관측(NVIDIA 공급자 지원 셋, Meta 같은 장부 밖 설비 잔존가치 보증, SDLLMTK 한 점, AWS·Google Cloud·Intelligent Cloud 분기 세그먼트 매출·영업이익)을 적습니다(방법은 `score-collect` 스킬). 없으면 리포트에 '미확인'·'자료 부족'으로 나옵니다.
-   - 이어받은 과제: confirm-r4 N2(Anthropic ⑧ 옛 2배 표현)·N3(NVIDIA SB Energy 보증은 ⑦), confirm-r3 N1~N6. 3분기 실적으로 재무 관측을 갱신합니다.
+1. **다음 정기 채점(2026-11, 규칙 v2.1)** — 규칙 v2.1 첫 실행 `ai-scorecard-2026-10-v21`(10월 사실, 2026-10-13 승인·배포)을 `init --from-run ai-scorecard-2026-10-v21 --rule v2.1` 로 이어받습니다. 첫 실행의 계획·결정은 `.agents/plans/v21-first-run-2026-10/`, 규칙 개정 기록은 `.agents/plans/rule-v21-2026-10/` 에 있습니다. 실행 전·중에 할 일:
+   - 3분기 실적으로 재무 관측을 갱신합니다. `collect <run_id> --kind facts` 로 영업현금흐름·설비투자·법인세와 바스켓 분기 설비투자·금융리스를 받고, 국면 지표 수동 관측(NVIDIA 공급자 지원 셋, Meta 장부 밖 설비 잔존가치 보증, SDLLMTK, 클라우드 세그먼트 분기 매출·영업이익)을 적습니다(방법은 `score-collect` 스킬).
+   - 정기 실행이라 ①②③④⑤⑦⑧ 판단을 모두 다시 매깁니다. 판단 세션과 규칙 일관성·확인 리뷰는 Opus high, 기계적 작업은 Sonnet(AGENTS.md).
+   - 첫 실행 리뷰가 넘긴 과제는 아래 「v2.1 첫 실행 리뷰의 다음 실행 과제」 절에 한 목록으로 있습니다. 점수에 닿을 수 있는 항목부터 판단 세션 지시서에 넣습니다.
 2. **근거 선별 평가 표본을 100건까지 늘리기** — 첫 표본 `tests/fixtures/evidence/labeling-2026-10.csv` 38건은 2026-10-01 에 라벨을 달았습니다(correct 37, wrong 1). 38건은 큰 실패와 오류 유형을 보는 진단용입니다. 정확도가 80% 일 때 95% 신뢰구간이 약 65~90% 로 넓어서, 통과 기준 숫자를 정하는 데는 쓰지 않습니다.
    - 정기 채점마다 새 기사 20~30건을 같은 열 구조로 더해 100건 이상으로 늘립니다. 파일마다 수집일과 건수를 적습니다.
    - 100건이 넘으면 선별 정확도의 기준선을 정합니다. 100건이면 신뢰구간이 ±8%p 안팎으로 줄어듭니다.
@@ -21,7 +18,7 @@ README 의 "다음에 정할 것" 에서 옮겨 온 목록입니다. 끝난 항�
    - **리뷰 전 기계 점검 명령(코드)** — 리뷰어에게 보내기 전에 기계로 전수 확인하는 CLI 명령과 테스트를 만듭니다. 중심은 판단 문장 속 숫자와 확정 관측값·엔진 계산값의 대조이고, 트리거 출처 등록과 초안 근거 ID 연결도 봅니다. 1차 리뷰 전에 한 번, 수정 뒤 확인 리뷰 전에 한 번 돌립니다. 두 번째 실행이 수정하면서 생긴 결함을 리뷰어보다 먼저 잡습니다. 출처 이해상충 표기는 점검하지 않습니다(2026-10-02, AGENTS.md 「금지·주의」).
    - **확인 리뷰의 범위 정의(`score-review` 스킬 절차 4번)** — 지금은 수정하면 해시가 바뀌어 `review-template --force` 가 네 영역을 모두 pending 으로 되돌리므로, 재리뷰가 새 전체 리뷰가 되고 새 지적이 또 수정을 부릅니다. 두 번째 리뷰는 1차 발견이 닫혔는지와 수정으로 바뀐 항목에 새 결함이 없는지만 보도록 정합니다. 바뀐 항목의 목록은 `proposals.json` 의 반영된 제안과 조율자가 고친 근거·트리거·렌더러 목록으로 넘깁니다. 그 밖에 새로 보인 것은 점수·순위·체크리스트 판정을 바꾸지 않으면 "다음 실행 과제" 절에 적습니다.
    - **리뷰어 정의 보강(`.claude/agents/`)** — "전부 보고 한 번에 다 적는다, `needs_fix` 는 점수에 닿는 발견에만 쓴다"는 원칙이 조율자가 읽는 `score-review` 스킬에만 있습니다. `fact-checker`·`evidence-editor`·`report-designer` 정의에 같은 원칙과 확인 리뷰 방식을 넣습니다. 재무 계산과 규칙 일관성 리뷰어는 정의 파일이 없어 조율자가 매번 지시문을 새로 쓰므로, 두 정의 파일을 새로 만듭니다.
-8. **리뷰의 다음 실행 과제** — 점수·순위에 닿지 않아 승인을 막지 않은 발견들입니다. 최신은 `output/ai-scorecard-2026-10-rescore/review-parts/` 네 파일의 "다음 실행 과제" 절이고, 그 전 것은 `output/ai-scorecard-2026-10-test/review-parts/` 에 있습니다. 2026-10-06 재채점에서 남은 주요 과제: 트리거 절에 발동 항목을 따로 싣기, Alibaba ⑨ 가 8월 증자 하나로 갈리는 민감도 표시, 제안으로 바뀐 판단의 `source_ids` 를 새 SEC 출처로, 아마존 여신 문구와 HTML 방법 절 ⑨ 개념 문장(`factor-concepts.json` stale 표지), 미리보기 원인 칸의 트랙 코드 이름. 이해상충 표기가 빈 출처는 과제에서 뺍니다(2026-10-02).
+8. **리뷰의 다음 실행 과제** — 점수·순위에 닿지 않아 승인을 막지 않은 발견들입니다. 최신(규칙 v2.1 첫 실행)은 이 파일 끝의 「v2.1 첫 실행 리뷰의 다음 실행 과제」 절에 한 목록으로 합쳤고, 원문은 `output/ai-scorecard-2026-10-v21/review-parts/` 여덟 파일입니다. 그 전 것은 `output/ai-scorecard-2026-10-rescore/review-parts/` 네 파일과 `output/ai-scorecard-2026-10-test/review-parts/` 에 있습니다. 2026-10-06 재채점에서 남은 주요 과제: 트리거 절에 발동 항목을 따로 싣기, Alibaba ⑨ 가 8월 증자 하나로 갈리는 민감도 표시, 제안으로 바뀐 판단의 `source_ids` 를 새 SEC 출처로, 아마존 여신 문구와 HTML 방법 절 ⑨ 개념 문장(`factor-concepts.json` stale 표지), 미리보기 원인 칸의 트랙 코드 이름. 이해상충 표기가 빈 출처는 과제에서 뺍니다(2026-10-02).
 10. **관측의 원문 위치 구조화** — 관측마다 원문의 행·열·페이지(locator)를 구조화합니다. 지금도 출처 ID·문서 제목·해시가 있어 추적이 끊기지는 않습니다(옛 open-items P6).
 11. **② 신규 판정 경로** — ② 를 새로 판정할 때 평가기관·평가일·모델 버전·지수 버전·순위·측정값을 관측으로 받습니다. 지금 ② 는 14사 모두 승계 점수입니다. 경로 환산 규칙(C-03, 경로 수 0·1·2 → 2·3·4, 세대 격차 → 5)은 2026-09-14 에 확정됐지만, 기준선에서 경로 판정 입력이 넘어오지 않아 아직 쓰이지 않습니다. 세대 격차가 세 축 가운데 몇 개에서 서야 하는지도 미정입니다(`rules.md` 8절, 옛 open-items P7).
 12. **재무 관측 혼재 테스트(T-08)** — `collect --kind facts`(2026-10-12)의 누계·분기 혼재, 재작성(정정 공시), 기준일 뒤 제출, 52/53주 회계연도는 `tests/test_collect_facts.py` 가 봅니다. 남은 것은 연결/세그먼트 범위 혼재입니다. companyfacts 는 세그먼트(차원) 사실을 싣지 않아 지금 수집기에는 닿지 않고, 세그먼트 관측을 수집하게 되면 그때 채웁니다.
@@ -29,3 +26,111 @@ README 의 "다음에 정할 것" 에서 옮겨 온 목록입니다. 끝난 항�
 16. **⑦ 숫자 입력(v2.2 후보)** — ⑦ 은 '큼/작음 × 돌아옴/안 돌아옴' 네 칸뿐이라 범위를 −3 보다 넓힐 눈금이 없습니다. 실행된 공급자 금융 ÷ 매출, RPO 집중도 같은 숫자 입력을 만든 뒤 범위를 다시 봅니다. 순환금융은 이 사이클의 핵심 위험이지만 측정이 가장 거칠어 배점이 가장 좁습니다(2026-10-12).
 17. **R_Action·E_Token 분자(사용자 바스켓 대기)** — 실행형/레거시 SaaS 순매출 유지율 차이와 응용 회사 총마진 변화는 비교 바스켓을 사용자가 정하면 국면 지표에 더합니다.
 18. **국면 지표의 모집단 밖 참고 회사(보류)** — CoreWeave(상장 GPU 클라우드, 설비투자 바스켓)와 AMD(공급자 지원 비중·총마진)를 채점하지 않는 참고 회사로 들이는 일입니다. 하려면 레지스트리에 '채점하지 않음' 표시를 두고, `collect --kind facts`·`init --from-run`·research.md 가 그 회사도 다루게 하며, `regime.capex_board`·`supplier_support` 가 실행 회사 밖의 참고 회사를 읽게 해야 합니다. 바스켓 다섯 회사가 AI 설비투자 대부분이라 지금은 하지 않습니다. 다시 볼 때: GPU 클라우드의 차입으로 조달한 설비투자가 바스켓 판단을 바꿀 만큼 커지거나, AMD 가 고객 출자·보증 같은 공급자 지원을 10-Q 에 공시해 NVIDIA 와 나란히 볼 필요가 생길 때(2026-10-12 사용자 보류).
+
+## v2.1 첫 실행 리뷰의 다음 실행 과제
+
+`ai-scorecard-2026-10-v21` 리뷰 여덟 파일(`output/ai-scorecard-2026-10-v21/review-parts/`)의 「다음 실행 과제」와 조율자 메모를 중복 없이 합친 목록입니다(2026-10-13, 89건). 괄호는 원문 파일과 번호이고, "점수에 닿을 수 있다" 가 붙은 항목은 다음 실행의 판단 세션 지시서에 먼저 넣습니다. 끝낸 항목은 지웁니다.
+
+### 가. 판단·근거·트리거 문장(데이터, 다음 실행의 판단 세션이 고침)
+
+1. Oracle ⑦ 세로축 '돌아옴' 은 TikTok USDS 합작법인 지분 15% 와 'TikTok 은 OCI 최대 계약 고객 가운데 하나' 를 한 구조로 묶었으나 합작법인이 Oracle 에 대금을 낸다는 문장이 없습니다. 1차 문장을 찾거나 판정 칸에 추론임을 표시합니다. 점수에 닿을 수 있다(돌아오지 않음이면 Oracle ⑦ −3→−2, 조정 +1). (confirm-r1 5, fact-sources-b 11)
+2. Microsoft ⑧ 고객 축 판정 칸에 OpenAI 몫 33.9% 가 상업 RPO 전체의 가중 평균 기간 2.5년을 빌린 추론이라는 점과 30% 경계(기간 2.83년)를 적습니다. 점수에 닿을 수 있다(⑧ −3→−2, 조정 +1). (financial-calc 2·B1)
+3. Anthropic ④ 플랫폼 칸 '판매'(Managed Agents 별도 과금)와 OpenAI ④ 플랫폼 칸 '자체 사용'(플랫폼 요금을 찾지 못함)이 갈리는 이유가 관계의 종류인지 자료의 유무인지 판정 칸에 적고, 형제 근거 EV-anthropic-093~097 의 conditional·relevance 를 판단과 맞춥니다. 점수에 닿을 수 있다(Anthropic 플랫폼이 없음이면 ④ 2.5→2.0). (evidence-bullets N1·과제 9)
+4. Tesla·SpaceX ④ 서버·네트워크 칸은 '없음' 인데 근거 EV-tesla-065·EV-spacex-xai-073 의 relevance 가 '자체 사용' 이라 적으므로 맞추고, Oracle ④ 서버·네트워크 '자체 사용' 근거(EV-oracle-056, Zettascale10)는 발표·주문 접수 단계로 고쳐 '자체 설계' 를 추론으로 표시하며 Tesla 와 같은 잣대인지 적습니다. 점수에 닿을 수 있다(서버를 자체 사용으로 읽으면 Tesla·SpaceX ④ 4.5→5.0). (evidence-bullets N2·N3, fact-sources-b 8, rule-consistency 경계 6)
+5. Alphabet ③ 판정 칸의 Waymo 사유에서 규칙 문언에 없는 '광고가 먹여 살리는 Gemini 라는 한 전략' 과 'Tesla·Zoox 가 같은 일을 한다' 를 빼고 '공급 쪽 자산도 카운터 포지셔닝 구조도 아니다' 중심으로 다시 씁니다. 점수에 닿을 수 있다(모방 불가능성 통과로 읽으면 ③ 3, 총점 14). (rule-consistency 8·L8)
+6. ⑧ 약정 축 칸 값을 규칙 정의(해지할 수 없거나 고정·보장된 구매 약정 + 미개시 리스)에 맞춥니다. Alphabet 은 입력 배수를 1.79 로 두고 열린 구매주문 포함 2.02배는 민감도로 적으며, Microsoft·Apple 은 열린 구매주문·12개월 안 의무를 가르거나 못 가르면 하한·상한 두 값을 적습니다. 약정 축 점수는 같습니다. (rule-consistency 6·L6, financial-calc 1)
+7. Palantir ③ c 단계는 ④ 가 AI 무관으로 센 미국 상업 매출을 AI 귀속 대리 지표로 씁니다. 두 질문이 다르다는 한 줄을 ③ 판정 칸에 적고, AI 전용 지표가 없는 기업용 소프트웨어 회사 전반에 같은 단계를 대는지 봅니다. (confirm-r1 6)
+8. ② 14개 판단의 공유 문장에서 Meta 종합 지수 회사 기준 2위(56 대 53)가 'v4.3'(2026-10-12 글)과 'v4.3.2'(2026-10-08 홈페이지)의 절대값을 잇는 것을 2026-10-12 홈페이지 차트로 받치거나 같은 판임을 적고, '같은 날(2026-10-08) 열람한 순위표 한 장' 을 '2026-10-08 순위표와 2026-10-12 변경 기록' 으로 맞춥니다. (confirm-r1 2)
+9. NVIDIA ⑤ 의 'OpenAI 는 자체 칩을 이미 출하해 물량을 옮기고 있어' 를 'Broadcom 이 Jalapeño 를 출하했고 OpenAI 서비스 배치는 연말 계획' 으로 고치고, 'Anthropic 은 NVIDIA 와 직접 맺은 다년 약정이 확인되지 않고' 는 2025-11-18 3사 발표(최대 1GW)와 엇갈릴 여지가 있어 '직접 약정인지 Azure 를 거치는지 문안에 없다' 로 좁힙니다. 점수는 같습니다. (rule-consistency 2·L2, fact-sources-a 3)
+10. Microsoft ⑤ 가 OpenAI 의 Azure 독점 종료 뒤 Bedrock 이동 실측을 적고도 '떠날 수 없는 지분 동맹' 으로 둔 문장을 공유 원칙(실측 우선)에 맞춰 다시 씁니다(OpenAI ⑤ 는 Microsoft 를 동맹에서 뺌). 동맹 +2 는 경쟁사 편입 조항으로 서서 점수는 같습니다. (rule-consistency 3·L3, confirm-r1 11)
+11. Oracle ⑤ 에서 2차 보도 $300B 를 '떠날 수 없는' 구속 사실로 쓴 부분을 빼고 Stargate 공동 구축·운영(회사 1차)만 남깁니다(Oracle ⑧·OpenAI ⑧ 은 지급 의무 미확인이라 약정으로 쓰지 않음). 점수는 같습니다. (rule-consistency 4·L4)
+12. Oracle ④ 는 타사 모델 판매(OCI Generative AI)를 클라우드 칸에서 세고 Microsoft Foundry·Google Vertex AI 는 플랫폼 칸, Amazon Bedrock 은 칸 문장이 없습니다. 네 회사를 같은 칸으로 맞추거나 Oracle 문장을 '모델 칸이 아니며 플랫폼·클라우드 칸은 이미 판매' 로 고칩니다. 칸 값은 같습니다. (confirm-r2 1)
+13. Oracle ④ 내릴 근거의 '100만 토큰·1만 거래 단위' 는 EV-oracle-061 발췌에 없으므로 발췌에 단위 머리글을 넣거나 줄을 '토큰·문자 단위 종량' 으로 맞춥니다. (confirm-r2 4)
+14. ④ AI 무관 몫의 기타·자동차 줄을 공유 문장('자동차 줄은 AI 무관, AI 서비스가 들어갈 수 있는 기타 줄은 AI')에 맞춰 NVIDIA Automotive·Professional Visualization(AI 로 셈)과 Amazon Other·Tesla Services and other·Alphabet Other Bets·Microsoft Other(AI 무관으로 셈)를 정리합니다. Amazon 은 AI 로 세면 80.02% 로 2.5 구간 하한에 0.02%p 차이라 줄 내용을 근거에 적습니다. (rule-consistency 5·L5)
+15. Apple ⑦ 의 '공시 의무상 해당 고객이 없다고 읽은 추론' 문장을 뺍니다(⑧ 은 같은 공백을 비공개로 둠). 점수는 같습니다. (rule-consistency 7·L7)
+16. Amazon ⑦ 에 AWS 세그먼트 최근 1년 매출 상한 19.1% 를 적어 '작음' 이 미확인 해소가 아니라 공시 상한에서 섬을 보입니다(Alphabet ⑦ 은 클라우드 전체 상한 20.1% 를 적음). (rule-consistency 11)
+17. 점수를 움직이지 않는 사실을 방향 칸에서 판정 칸으로 옮깁니다. 대상은 Alibaba ⑤ 의 Qwen 파생모델 두 줄, 방향 칸에서 '점수에 넣지 않는다' 로 끝나는 줄(24개 판단 30줄), 유출 상장 신청서 초안을 인용한 줄(anthropic ⑤⑦, spacex-xai ⑦)입니다. 단서 달린 계획 줄을 허용할지는 나-12 가 정합니다. (rule-consistency 10·L10, output-readability N4, fact-sources-b 10)
+18. Palantir ⑦ 의 '투자 유치나 차입으로 대금을 내는 고객은 확인되지 않아' 가 투자 대상 고객(초기 기업, 일부 파산) 줄과 엇갈리므로 '투자 대상 고객 몫이 확인됐으나 매출에 견줘 작아' 로 맞춥니다. 결론은 같습니다. (confirm-r1 7)
+19. Alphabet·NVIDIA ⑦ 판정 칸의 지분 평가이익 '⑥ 의 영업외 비중에서 다루고' 를 '⑥ 의 이익 조정' 으로 맞춥니다. (financial-calc 8·N9)
+20. NVIDIA ⑧ 의 '22%·16% 고객' 은 2026 회계연도 22%·14% 와 2027 회계연도 상반기 16% 를 섞으므로 기간을 붙이고, Meta ⑧ 의 '⑦ 에서 센다' 는 '⑦ 소관이고 ⑦ 은 고객 대상이 아니라 세로축에 넣지 않는다' 로 맞춥니다. (confirm-r1 8·9)
+21. OpenAI ⑧ 판정 칸의 'Cerebras 에 준 $10억 대출은 ⑦ 에서 센다' 는 Cerebras 가 공급자라 세로축에 맞지 않고 ⑦ 에도 그 문장이 없으므로 고칩니다. (fact-sources-b 12)
+22. OpenAI ⑤ 판정 칸 '폐기 청구도 자기 저작물이 들어간 모델로 한정돼' 는 청구의 무게를 덜어 읽히므로 '청구 대상은 원고 저작물이 들어간 모델이고 권리자가 자기 저작물의 사용을 다투는 소송이다' 꼴로 고치고, MDL 병합 줄 둘(EV-openai-044)을 하나로 합칩니다. 결론은 같습니다. (confirm-r2 3)
+23. Apple ① 내릴 근거의 EV-apple-066 줄에서 '덜 줄어든 이유는 적지 않는다' 는 판정 칸으로 옮기고, 방향 줄에는 'Lenovo·HP·Dell 이 시장보다 빠르게 줄어 점유율 4.2%포인트를 내줬다' 만 남깁니다. (confirm-r2 2)
+24. Apple ①·⑧ 의 매출채권 집중 '한 고객 12%, 이동통신사 34%' 는 2025-09-27 10-K 값이므로 2026-06-27 10-Q 의 한 고객 18%, 이동통신사 27% 로 고칩니다. 점수는 같습니다. (fact-sources-a 5)
+25. Microsoft ⑧ 의 '구매 약정을 모두 빼도 약 0.99배' 는 리스만 남긴 값이고 건설 약정 $34.566B 가 남으면 1.10배입니다. Microsoft ① 근거 줄 '2026년 1월 상업용 유료 좌석 4.5억 개' 는 '2025-12-31 현재(2026-01-28 통화)' 로 맞춥니다. 점수는 같습니다. (fact-sources-a 6·7)
+26. Meta ⑤ 내릴 근거가 뉴멕시코 평결 $375M(EV-meta-027)과 주 정부의 $35~40B 요구(EV-meta-009)를 한 사건처럼 잇는 것을 두 사건이면 나누고, Meta ③ 의 '주간 이용자 300만 명'(EV-meta-004)은 원문의 '주 1회 이상 프롬프트를 보내는 사람' 으로 맞춥니다. (fact-sources-a 2·8)
+27. 판정 칸의 숫자·사실 가운데 인용 근거 발췌에 없는 것을 근거 줄로 올리거나 지웁니다(tsmc ② '3Dblox', alphabet ② 'Arena 4,932표 잠정 1위', alphabet·meta ② 'Alibaba 45', nvidia ④ 'Edge Computing $25,172M', nvidia ① 의 Hopper $18B·Vera Rubin $40B/GW). 점수는 같습니다. (fact-sources-a 4)
+28. tsmc ⑧ '최대 고객 비중 2023년 25%·2024년 22%·2025년 19%'(EV-tsmc-079)에 같은 문장이 있는 EV-tsmc-040 도 함께 인용하고, EV-nvidia-079 locator 두 조각의 세는 기준을 맞춥니다. (fact-sources-a 9)
+29. Palantir ① 판정 칸 '실적 통화 녹취와 CEO 서한은 열지 못해' 는 열어서 AIP 몫·가격 인상 서술이 있는지로 고치고, SpaceX ① 의 'Grok·X 요금 체계 보도는 원문을 확인하지 못해' 는 '내부 문서를 인용한 계획 단계 2차 보도(Yahoo Finance 2026-10-01)라 쓰지 않는다' 로 고칩니다. 점수는 같습니다. (fact-sources-b 발견 4·5)
+30. EV-alibaba-074 locator 를 p.88 에서 81쪽으로, EV-tesla-008 출처를 같은 제출본의 Exhibit 99.1 로 옮기고 published_at_utc 에 2026-10-02 를 넣습니다. (fact-sources-b 1·발견 6·7)
+31. 확정 근거에 남은 낡은 unverified 문구(제목만·본문 미열람 류, 현재 41건)를 지우되, FT 부제만 확인한 EV-openai-010·EV-palantir-004·011 은 '부제만' 으로 고칩니다. (fact-sources-b 2·발견 9)
+32. 판정 칸에서 표지 없이 쓴 수치(Tesla ③ 'FSD 월 구독 연환산 매출 약 $7.9억', Anthropic ⑦ '$1,000 크레딧')를 받치는 근거를 문장에 적습니다. (fact-sources-b 8)
+33. 트리거 네 건을 고칩니다. TRG-023 의 Oracle ⑦ '−2' 를 '−3(범위 하한)' 으로, TRG-097 을 지금 Anthropic ② 판정에 맞춰 다시 쓰고 관찰을 끝낼지 정하며, TRG-091 의 Meta ② 성능 도약 '실패' 를 '부분' 으로, TRG-062 의 '구조형이면 −2 로 내린다' 를 '구조형이면 그 성격으로 적대 등급을 다시 매긴다' 로 바꿉니다. (confirm-r1 1·3, output-readability N7)
+34. 근거 relevance 의 옛 점수·칸 값·이전 판 참조를 지금 판단에 맞추거나 점수 언급을 뺍니다. 확인 리뷰가 꼽은 24건(EV-nvidia-009~013·015·081·082, EV-apple-005, EV-oracle-003~005, EV-palantir-011·038, EV-anthropic-011, EV-openai-009·059·061, EV-alibaba-062·072, EV-spacex-xai-061·065, EV-tesla-050, EV-alphabet-069)과 EV-openai-003(옛 지수 61)·EV-microsoft-003('OpenAI 지분 27%')이 대상이고, 근거 불릿 리뷰가 낡다고 한 근거는 지금 판단과 대조해 남은 것만 고칩니다. 앞으로 relevance·conditional_impact 에는 현재 점수를 적지 않고 사건과 읽는 칸만 적습니다. (confirm-r1 4, evidence-bullets B·과제 1)
+35. OpenAI ⑥ 판단 문장이 ARR $40B·약 39배·0.22·21.3배를 말하는데 results 는 ps_ratio 34.92·ARR÷조달 0.27·분모 ARR $50B 이므로, 이 문장과 EV-openai-002 relevance 를 현재 계산(P/S 구간표 −4)에 맞춥니다. (evidence-bullets 8·B)
+36. 근거 relevance 가 발췌 밖 사실이나 다른 근거의 사실을 말하는 약 70건(EV-openai-064·081·090·116, EV-oracle-058, EV-meta-065·066, EV-nvidia-079·101, EV-anthropic-081, EV-spacex-xai-066 등)은 발췌를 늘리거나 relevance 에서 빼고, 표 발췌에는 합계 행·열 머리글을 넣습니다. EV-openai-113 의 '유일한 공시 숫자' 는 과한 비교이고, EV-amazon-078·087 locator 의 '마지막 문장' 은 여섯째 문장입니다. (evidence-bullets C·과제 3·4·A)
+37. unverified 한 문장에서 발행사 비공시 단정과 탐색 실패가 겹친 근거 40건 이상(microsoft·amazon·alphabet 에 몰림)을 미공시(확인됨)와 미확인(못 찾음)으로 갈라 쓰고, 원문이 명시한 사실을 미확인으로 적은 EV-anthropic-002, EV-alphabet-007·010, EV-microsoft-004, EV-spacex-xai-070 은 사실로 고칩니다. (evidence-bullets D)
+38. conditional_impact 가 '재검토:' 로 시작하나 조건이 없는 곳(Meta·Apple·Alibaba·Anthropic·OpenAI 다수)은 '지금은 유지:' 로 쓰거나 무엇이 달라지면 다시 보는지 적고, '판단 세션이 정한다' 로 적은 microsoft·amazon·alphabet 근거는 정해진 결과로 씁니다. 판단과 반대 방향을 가리키는 EV-openai-113·119·120, EV-anthropic-115·116, EV-nvidia-013, EV-tsmc-074·078 도 맞춥니다. (evidence-bullets F)
+39. 근거 channel 값을 나-11 의 정의대로 재분류합니다(전재가 press 인 곳과 secondary 인 곳이 섞임, 통화록이 press 인 곳, SEC 8-K 첨부문서가 company_statement 인 곳). (evidence-bullets E)
+40. 근거 메타를 정리합니다. published_at_utc 가 빈 EV-tesla-003·EV-microsoft-004 를 제출일로 채우고, 같은 요약을 두 번 잇는 EV-anthropic-128~139·EV-openai-139~149·155, 완전 중복 EV-anthropic-136, 같은 출처·발췌인 EV-spacex-xai-057·076 을 합치며, EV-anthropic-002·006 relevance 의 제안 번호와 이전 등급 경위 표기를 지웁니다. (evidence-bullets G)
+41. 데이터 위생을 정리합니다. judgments.json 머리 note 를 이 실행의 성격(98칸 전부 재판단)으로 고치고, 판단 note 34건의 취소선·superseded·[FIX-…], 근거 relevance 11건의 작업 표기, 트리거 note 의 '기준선 v1.5 문장…'·'시험 실행 근거…'(TRG-055·075·077·079)를 지워 경위는 revision_history 로 옮깁니다. (output-readability N6)
+42. EV-apple-043 unverified 의 Seeking Alpha 차단 사유('봇 확인·구독 장벽')와 결정 기록('구독 안내로 가려졌고 봇 차단 아님')을 실제 화면 기준으로 한쪽에 맞춥니다. (confirm-r2 6)
+
+### 나. 규칙·판정 기준(rules.md·규칙 JSON 이 정할 것)
+
+1. ④ 보유표에서 설계 공시가 없는 서버·칩 칸을 '없음' 으로 둘지 '미확인' 으로 둘지 정합니다('칸이 미확인이면 점수를 만들지 않는다' 와 '가점은 실측만' 이 부딪힙니다. 지금은 Tesla·Anthropic·SpaceX 에 같게 '없음'). 점수에 닿을 수 있다(Tesla·SpaceX ④ 4.5→5.0). (rule-consistency 13·경계 6, fact-sources-b 8)
+2. ③ 모방 불가능성에 공급 쪽 자산 밖에서 인정하는 범주('선두가 자기 수익모델을 해치지 않고는 못 베끼는 구조' 등)를 적어 Waymo 같은 운영 규모의 앞섬을 가를 기준을 둡니다. 점수에 닿을 수 있다(Alphabet ③ 3, 총점 14). (rule-consistency 8·L8)
+3. rules.md ③ 에 가속도 지표 단계의 우열('더 좋은 지표가 있는 회사에 더 낮은 단계를 쓰지 않는다' 가 a > b > d > c 인지)을 문언으로 적습니다. 점수에 닿을 수 있다(Alphabet 이 c 단계 클라우드 매출을 쓰면 ③ 3, 총점 14). (rule-consistency 9·L9)
+4. ③ 지표 단계 e(같은 정의의 수준값 없음)의 처리를 같은 문장으로 정합니다. Apple 은 출시 지연 조항으로 fail 입니다. Meta 는 2026-10-13 사용자가 승인 취소 뒤 직접 가속도를 fail(③ 2점)로 확정했습니다(사유 "일단 2점 확정 후 보기 위함"). 지표가 없는 회사의 가속도를 '실패' 로 둘지 '미확인(점수 없음)' 으로 둘지를 규칙 문장으로 정하고, 3분기 실적에 같은 정의의 값이 나오면 마-5 대로 다시 판정합니다. (financial-calc 13·B6)
+5. 조달 의존 고객이 확인되면 몫이 아무리 작아도 '큼' 이 되는 ⑦ 비대칭을 규칙 결정으로 올립니다. 점수에 닿을 수 있다(OpenAI ⑦ 작음이면 총점 +1). (rule-consistency 15)
+6. 공동화 트리거(TRG-113~118)가 빅테크 여섯에만 달렸으므로 규칙의 '빅테크' 범위를 적고 NVIDIA ① 에 같은 트리거가 필요한지 정합니다. (rule-consistency 14)
+7. ⑥ 지분 평가손익 정의의 경계를 정합니다. 공정가치 옵션 지분법 투자(Tesla 의 SpaceX 평가이익)와 지분법 재편 이익(Microsoft 의 OpenAI, TSMC 의 VIS)을 넣을지, 미등록인 Meta 마켓터블 지분증권 순손실(약 −$1.5B)을 등록할지, Alibaba 20-F 비GAAP 조정표의 처분·재평가 이익을 지분증권만 가를 수 있는지가 대상입니다. 점수에 닿을 수 있다(Alibaba ⑥ −4→−3). (financial-calc 10·B3·N10)
+8. 기준일 뒤 사건의 규약을 한 문장으로 맞춥니다. ⑧ 은 기준일 전에 공시된 미개시 리스를 기간 뒤 것도 넣고 ⑨ 완충은 입금된 현금만 넣는 차이를 규칙에 적어 Alibaba 증자(HK$80B)와 Meta 2026-07 리스($68B)에 같은 설명이 붙게 합니다. 점수에 닿을 수 있다(Alibaba ⑨ −4→−3, Meta ⑧ −3→−2). (financial-calc 11·B2·B6)
+9. 비상장 ⑥ 에 쓸 보정 매출(`revenue_ttm`·`revenue_ttm_prior`)로 인정할 값의 등급을 정합니다(유출 초안·런레이트 추정은 실측·같은 등급 요건을 못 맞춰 미등록). 점수에 닿을 수 있다(OpenAI·Anthropic ⑥ −4 → 후보 값이면 천장 −2). (조율자, financial-calc 12·B5)
+10. Microsoft 가 회계연도 2027 부터 Intelligent Cloud 부문을 없애므로 `margins.cloud_segments` 의 Microsoft 정의를 새 부문 기준으로 다시 정하고 FY2026 이전 수열과 이을지 정합니다. ④ 가 쓰는 줄 구분에도 닿는지 봅니다. (조율자)
+11. 근거 `channel` 값(press·secondary·company_statement·disclosure)의 정의를 규칙·스키마·스킬에 한 줄로 못 박습니다(전재는 secondary, SEC 8-K 첨부문서는 disclosure, 회사 자사 사이트·통화록은 company_statement 안). (evidence-bullets 2⑤·E)
+12. 방향 칸에 '점수에 넣지 않는다' 단서를 달고 계획·세지 않는 사실을 두는 관행을 guide.md 5.6 이 허용하는지 정하고, 허용하지 않으면 판정 칸으로 옮기게 하고 검증기가 막게 합니다. (rule-consistency Q09·10, output-readability N4)
+
+### 다. 검증기·코드
+
+1. 검증기가 트리거·판정 칸·근거 문장의 '<항목> 판단은 N'·'(지금 N'·'N점'·'조정 N점'·'N위' 를 results 와 대조하게 하고, 걸려야 하는 값·걸리면 안 되는 값·일부 행에만 넣은 값으로 판정이 따라오는지 봅니다(이번에 트리거 12건과 근거 다수가 통과했습니다). (confirm-r1 1, output-readability N1, evidence-bullets 2①)
+2. 읽는 코드가 없는 규칙 JSON 선언(`scorecard/rules/v2.1.json` 의 `v2_1_note` 셋)을 렌더러가 읽게 하거나 지웁니다. (output-readability N1)
+3. `unverified` 한 문장에 '공시되지 않았다' 류와 '확인되지 않음' 류가 함께 있으면 검증기가 막습니다. (evidence-bullets 2②·D)
+4. 근거 메타 검사를 넣습니다. published_at_utc 가 null 이면 막고, 직전 실행과 ID·내용이 같은 근거는 change_vs_previous 를 'unchanged' 로 두며, 금지 표기 목록에 'PRP-' 를 더합니다. (evidence-bullets 2③④·G)
+5. 근거 확정 단계에서 relevance 의 숫자·이름·시점이 발췌·locator 안에 있는지 검사하고, 한 근거에 두 출처의 사실이 섞이면 막습니다. (evidence-bullets 3·C)
+6. 근거 확정 단계에 `unverified` 를 새로 쓰는 단계를 둡니다(확정하고도 '제목만 보고 판정함' 이 남았습니다). (fact-sources-b 2)
+7. '투자한 곳이 고객인가' 를 열네 회사 모두에 같은 키워드(investee·strategic investment·commercial contract 등)로 묻는 점검을 근거 확정 단계에 넣고, 판정 칸의 '찾지 못했다' 가 같은 실행의 확정 근거 문서에 있는지 한 번 더 검색합니다. 이번에는 일곱 회사만 검색했습니다. 점수에 닿을 수 있다(⑦ 세로축). (fact-sources-b 6)
+8. relevance 머리말 형식을 하나로 정하고('추론:'·'사실: … 추론: …'·'(추론)'·없음이 섞이고 research.md 에서 '(추론) 추론:' 으로 겹침), relevance 전체가 '추론:' 한 머리말이라 숫자 점검이 돌지 않는 근거를 '사실: … 추론: …' 으로 가르게 합니다. (evidence-bullets 6·7)
+
+### 라. 리포트 렌더러·HTML
+
+1. HTML 순위표가 모바일(320px)에서 합계 열을 자르는지 다시 잽니다. 2026-10-13 에 순위(#) 열을 뺐으므로 남은 기업 열 폭과 패딩만 줄이면 됩니다. (output-readability R6, 조율자)
+2. 국면 지표 탭의 표 4개와 현금 연결표에 층별 보유표와 같은 sticky 첫 열을 쓰고, 모바일에서 숫자 열(전년 대비·변화·방향)을 글 열보다 앞에 둡니다. (output-readability R7, 조율자)
+3. 국면 지표·현금 연결표·층별 보유표 표 아래에 읽은 공시(10-Q·8-K 이름과 기준일)를 한 줄로 적고 SRC ID 를 References 링크로 걸며, 토큰 단가 줄의 `SRC-WEB-market-921` 도 링크로 만듭니다. (output-readability S4, 조율자)
+4. 현황 상자의 '지난 실행 대비 점수가 바뀐 칸은 N칸' 에 두 실행의 규칙 버전이 다르면(v2.0→v2.1) 한 줄을 붙이고, 리뷰 진행 기록 문장은 감사 기록으로 옮깁니다. (output-readability R8)
+5. 확정 미인출 여신에서 Tesla 줄이 둘이므로 엔진이 쓴 관측 하나만 싣고, 관측 ID 정리가 날짜를 잘라 꼬리가 남는 것을 고칩니다. (output-readability N3·R9)
+6. HTML 표가 미공시·적자를 '—' 로 줄여 초안과 어긋나므로(⑨ 표 Anthropic·OpenAI 현금, ⑥ 표 SpaceX TTM PER·영업외 비중) 초안처럼 상태를 그대로 적습니다. (output-readability R9)
+7. 개요의 '승계 근거·트리거 일부는 컷오프 이후 사건이 있으며 재검증하지 않았다' 고정 문장은 그 상태가 있을 때만 싣습니다(이번 실행은 해당 없음). (output-readability R5)
+8. 「비상장 — ⑥ 배수」 표에 점수에 쓴 배수 '밸류÷최근 1년 매출' 열과 분모 한 줄을 더합니다(지금은 표 값에서 −4 를 다시 낼 수 없음). (output-readability R4)
+9. ④ 카드 산식 줄의 '… + 다각화 2.5: AI 무관 매출 83% = 5' 를 '… → ④ 5' 꼴로 밝힙니다. (output-readability S5)
+10. 트리거 표 '근거' 칸이 85건 중 49건에서 '—' 이므로 근거가 없을 때 출처 제목·원문 링크를 싣습니다. (output-readability N5)
+11. 카드 근거 머리의 판단 ID 꼬리(`tsmc.F5.strict54` 등), 여신 줄의 관측 ID 꼬리(fix53·rs1006·recheck 등), '알려진 한계' 의 '[정정 2026-09-15 FIX-53]' 를 화면에 싣지 않습니다. (output-readability N6)
+12. 남은 초안 쟁점을 고칩니다. ② 카드 '산식·경로' 칸이 14사 모두 빈칸, 초안 순위표에 AI 수익화 열 없음, 카드 머리가 공동 순위를 '1위' 로만 적음, 카드 ③ 엔진 메시지의 영어 'unknown'·'0.5', 초안 원자료 '산출 방법' 열이 코드 문자열, ⑨ 원자료의 백틱입니다. (output-readability N8)
+13. 현금 연결표에서 기간 없는 관측이 섞이면 '대조 불가' 로 가리지 말고 값 차이를 함께 보입니다(TSMC OCF − 설비투자 $37.09B 와 FCF $36.45B 의 1.74% 차이). (financial-calc 3·N1)
+14. 현금 연결표 주당 지표의 분모를 정합니다. SpaceX 는 가중평균 희석 주식이 표지 주식 수의 45% 라 주당 FCF 가 크게 다르고, ADR·ADS 회사(TSMC·Alibaba)의 주당 값은 보통주 기준이라 달러 주가와 견줄 수 없다는 안내를 적습니다. (financial-calc 4·N2)
+15. 국면 지표 표시를 고칩니다. Microsoft 변화 −1.008%p 가 '−1.0%p'·'감속' 으로 보여 '±1%p 안이면 등속' 과 어긋나므로 소수 둘째 자리까지 보이고, Meta 설비투자 정의(금융리스 원금 빠짐)를 적으며, Oracle 행의 분기가 바스켓과 다른 이유를 적습니다. (financial-calc 14·N11)
+16. HTML 산점도가 회사 레지스트리 유형을 '주채널' 로 적어 Anthropic 이 '업무' 로 보이므로(① 의 가장 강한 채널은 거래) 이름을 '유형' 으로 바꾸거나 ① 의 채널을 읽습니다. (confirm-r1 10)
+
+### 마. 수집·관측
+
+1. 출처 ID 이름이 회사와 어긋난 것을 바로잡습니다. `SRC-SEC-anthropic-000101872426000002`·`000101872426000026` 은 Amazon 8-K·10-Q(EV-amazon-082·083), `SRC-SEC-anthropic-000162828026040364` 는 SpaceX S-1/A 로 중복 등록이고, 처음 인용한 회사 이름이 붙은 공용 웹 출처도 있습니다. 공시 출처는 제출 회사 slug 로, 공용 웹 출처는 회사 없는 이름으로 옮깁니다. (조율자, fact-sources-b 3)
+2. Microsoft 의 회계연도 2027 새 부문 기준으로 클라우드 세그먼트 분기 관측을 수집하고 FY2026 Intelligent Cloud 수열과 잇는 방법을 관측 basis 에 적습니다. (조율자)
+3. TSMC 설비투자 관측 `tsmc.capex_ttm.v15` 는 기간 없는 옛 값이므로, 6-K 현금흐름표의 NT$1,491,123M ÷ 31.37 = $47.53B 를 검증 관측으로 등록해 현금 연결표 대조가 돌게 합니다. (조율자, financial-calc 3·N1)
+4. OpenAI·Anthropic 직전 1년 실측 매출이 공개 제출본이나 회사 1차 발표로 나오면 같은 등급의 값으로 등록해 ⑥ 성장 조정 경로가 돌게 합니다. (조율자, financial-calc 12)
+5. Meta ③ 의 가속도 지표는 Advantage+ 연환산 매출($60B·$75B)과 Meta AI 월간 사용자(하한 둘)뿐입니다. 2026-3분기 실적에서 같은 정의의 세 번째 값이 나오면 바로 수집해 사용자 결정(지금 fail, 2점)을 실측으로 다시 판정합니다. 점수에 닿을 수 있다(③ 3 이면 Meta 단독 1위). (rule-consistency 16)
+6. OpenAI 의 YC 토큰-지분 교환 제안(API 토큰 $2M 과 uncapped SAFE)의 체결 여부를 1차 자료로 확인합니다. 점수에 닿을 수 있다(돌아옴이면 OpenAI ⑦ −2→−3). (fact-sources-b 7·발견 3)
+7. Microsoft 10-K(2026-06-30)의 상업 RPO $678B 에서 OpenAI 몫과 기간이 공시되는지 확인합니다(45%·$625B 는 2025-12-31 값). 점수에 닿을 수 있다(⑧ 고객 축 30% 경계). (financial-calc 2·B1)
+8. ⑨ 원자료 표 '부외 약정' 칸이 사용자 원본 문자열이라 ⑧ 분자와 값이 다르므로(Alphabet $707B 대 $902B 등), ⑧ 약정 축에 쓴 값을 실측 관측으로 등록해 ⑨ 표가 읽게 하거나 원본 표기에 '사용자 원본(2026-09-02)' 꼬리표를 답니다. (financial-calc 9·N8, output-readability N2)
+9. 다시 볼 수 없는 원문은 확정 때 본문 스냅숏을 저장합니다. 라이브 순위·가격 페이지(EV-anthropic-049·051·052·055·057, EV-amazon-051, EV-openai-051, EV-microsoft-009)와 구독 장벽에 막힌 EV-palantir-028(FT 본문)이 대상입니다. (fact-sources-b 4·5, fact-sources-a 4·F4)
+10. 판단이 인용하지 않은 확정 근거가 153건(33%)이므로, 쓰지 않은 근거는 확정하지 않거나 인용하지 않은 이유를 research.md 에 둡니다. (evidence-bullets 5)
+11. 새 출처의 열람일 표시를 맞춥니다. 마감 뒤 열람한 출처가 '2026-10-13T00:00:00Z' 형식으로 보여 기존(`2026-10-12`)과 다르므로 형식을 통일하고 note 에 '발행일 기준, 열람은 마감 뒤' 를 적으며, 살아 있는 문서의 published_at_utc 가 접근일인 EV-anthropic-091·094 는 발행일과 열람일 필드를 가릅니다. (confirm-r2 5, evidence-bullets G)
