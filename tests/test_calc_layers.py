@@ -10,7 +10,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from scorecard.calc_layers import _f3_layer, compute_f2_layers, compute_f3_layers, compute_f4_holdings, layer_weights  # noqa: E402
+from scorecard.calc_layers import (_f3_layer, compute_f1_business, compute_f2_layers, compute_f3_layers,  # noqa: E402
+                                   compute_f4_holdings, layer_weights)
 from scorecard.engine import compute_company  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
@@ -332,6 +333,93 @@ class F3LayersTest(unittest.TestCase):
         out = compute_company(AMAZON, ObsLookup([]), JudgmentLookup(items), V30, RUN)
         self.assertEqual((out["F2"]["basis"], out["F2"]["score"]), ("layer_paths", 8))
         self.assertEqual((out["F3"]["basis"], out["F3"]["score"]), ("layer_cp", 18))
+
+
+def comp(name: str, layer: str, lines: list[str], customer: str = "consumer", ai: str = "partial") -> dict:
+    return {"name": name, "layer": layer, "customer": customer, "lines": lines, "market": None, "ai_monetized": ai}
+
+
+def business(bid: str, comps: list[dict], participant="partial", switching="stay_unmeasured", pricing="no_change",
+             substitutes="gap_remains", **kw) -> dict:
+    inputs = {"components": comps, "participant": participant, "switching": switching, "pricing": pricing,
+              "substitutes": substitutes, **kw}
+    if len(comps) > 1:
+        inputs.setdefault("bundle_reason", "하나를 떠나면 다른 서비스의 편익도 잃는다")
+    j = {"judgment_id": f"amazon.F1.{bid}", "company_id": "amazon", "factor": "F1", "business": bid, "kind": "business",
+         "score": None, "inputs": inputs, "evidence": TEXT, "reviewer": "agent", "reviewed_at": "2026-10-14", "status": "new"}
+    return j
+
+
+def run_f1(*businesses: dict, h: dict | None = None, rules=V30) -> dict:
+    items = [judgment(h or holdings()), *businesses]
+    validate_judgments({"schema": "scorecard.judgments/1", "run_id": "t", "items": items}, COMPANIES, V30.payload, "t")
+    return compute_f1_business(AMAZON, JudgmentLookup(items), rules, RUN)
+
+
+class F1BusinessTest(unittest.TestCase):
+    def test_layer_then_company_average_equals_business_revenue_average(self):
+        # rules.md 2.10 예시의 구성: 온라인 스토어 40·제3자 판매자 30(사용자 플랫폼), AWS 30(클라우드). D·E 는 미확인 1.6 + 1.6
+        stores = business("online_stores", [comp("온라인 스토어", "user_platform", ["online_stores"])],
+                          participant="partial", pricing="no_change", substitutes="gap_remains")            # 4 + 2 + 1 + 3.2 = 10.2
+        sellers = business("third_party", [comp("제3자 판매자", "user_platform", ["third_party"], "trade")],
+                           participant="core_measured", pricing="sustained_or_short_explained", pricing_growth_quarters=8,
+                           pricing_explained="no", substitutes="no_substitute")                                # 6 + 3 + 2 + 3.2 = 14.2
+        aws = business("aws", [comp("AWS", "cloud", ["aws"], "work")], participant="none", switching="stay_unmeasured",
+                       substitutes="no_substitute")                                                            # 4 + 2 + 2 + 3.2 = 11.2
+        r = run_f1(stores, sellers, aws)
+        self.assertEqual((r["status"], r["basis"]), ("ok", "business"))
+        self.assertEqual([c["score"] for b in ("online_stores", "third_party", "aws") for c in r["calc"]["businesses"][b]["components"]],
+                         [10.2, 14.2, 11.2])
+        self.assertAlmostEqual(r["calc"]["layer_scores"]["user_platform"], (40 * 10.2 + 30 * 14.2) / 70, places=5)
+        self.assertEqual(r["score"], 11.7)   # 0.7 × 11.914 + 0.3 × 11.2 = 0.4 × 10.2 + 0.3 × 14.2 + 0.3 × 11.2
+        self.assertIn("시장 정의표가 없어 D·E 는 모든 사업이 미확인이다(각 1.6)", r["warnings"])
+
+    def test_bundle_shares_a_to_c_across_layers(self):
+        bundle = business("marketplace", [comp("온라인 스토어", "user_platform", ["online_stores", "third_party"]),
+                                          comp("AWS", "cloud", ["aws"], "work")], participant="core_measured")
+        r = run_f1(bundle)
+        scores = [c["score"] for c in r["calc"]["businesses"]["marketplace"]["components"]]
+        self.assertEqual(scores, [12.2, 12.2])   # 6 + 2 + 1 + 3.2, 묶음은 A~C 를 함께 쓴다
+        self.assertEqual(r["score"], 12.2)
+
+    def test_unknown_parts_get_forty_percent(self):
+        b = business("all", [comp("전체", "user_platform", ["online_stores", "third_party"]), comp("AWS", "cloud", ["aws"], "work")],
+                     participant="unknown", switching="unknown", pricing="unknown", substitutes="unknown")
+        r = run_f1(b)
+        d = r["calc"]["businesses"]["all"]
+        self.assertEqual((d["A"], d["B"], d["C"], d["unknown_parts"]), (2.4, 1.6, 0.8, ["A", "B", "C", "D", "E"]))
+        self.assertEqual(r["score"], 8)   # 2.4 + 1.6 + 0.8 + 1.6 + 1.6
+        one_side = business("all", [comp("전체", "user_platform", ["online_stores", "third_party"]), comp("AWS", "cloud", ["aws"], "work")],
+                            participant="unknown", switching="stay_measured")
+        self.assertEqual(run_f1(one_side)["calc"]["businesses"]["all"]["A"], 6, "한쪽만 미확인이면 아는 쪽")
+
+    def test_ai_cap_per_component(self):
+        capped_rules = copy.deepcopy(V30)
+        capped_rules.payload["factors"]["F1"]["ai_cap"]["cap"] = 10
+        monetized = comp("AWS", "cloud", ["aws"], "work", ai="yes")
+        monetized.update({"ai_monetized_measure": "revenue", "ai_monetized_share": 0.6, "ai_monetized_period": "2026Q2",
+                          "ai_separate_billing_evidence": ["EV-amazon-001"], "ai_price_uplift_evidence": ["EV-amazon-002"]})
+        b = business("all", [comp("전체", "user_platform", ["online_stores", "third_party"]), monetized], participant="core_measured")
+        r = run_f1(b, rules=capped_rules)
+        comps = r["calc"]["businesses"]["all"]["components"]
+        self.assertEqual([(c["raw"], c["ai_cap_applied"], c["score"]) for c in comps], [(12.2, True, 10), (12.2, False, 12.2)])
+
+    def test_pending_cases(self):
+        r = run_f1(business("stores", [comp("온라인 스토어", "user_platform", ["online_stores"])]))
+        self.assertIn("['aws', 'third_party'] 이 어느 사업에도 붙지 않았다", r["pending"]["message"])
+        self.assertIn("사업 판단이 없다", run_f1()["pending"]["message"])
+        self.assertIn("④ 층별 보유표(holdings)가 있어야", compute_f1_business(AMAZON, JudgmentLookup([]), V30, RUN)["pending"]["message"])
+
+    def test_excluded_lines_need_no_business(self):
+        h = holdings()
+        h["revenue_lines"].append(line("launch", "rocket_launch", 50))
+        b = business("all", [comp("전체", "user_platform", ["online_stores", "third_party"]), comp("AWS", "cloud", ["aws"], "work")])
+        self.assertEqual(run_f1(b, h=h)["status"], "ok", "로켓 발사 줄은 ① 에서 빠진다")
+
+    def test_engine_dispatches_business_mode(self):
+        b = business("all", [comp("전체", "user_platform", ["online_stores", "third_party"]), comp("AWS", "cloud", ["aws"], "work")])
+        out = compute_company(AMAZON, ObsLookup([]), JudgmentLookup([judgment(holdings()), b]), V30, RUN)
+        self.assertEqual((out["F1"]["basis"], out["F1"]["status"]), ("business", "ok"))
 
 
 if __name__ == "__main__":

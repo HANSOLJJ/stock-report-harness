@@ -307,6 +307,99 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
     return score, detail, None, warnings
 
 
+def _f1_shared(inputs: dict[str, Any], parts: dict[str, Any], rules: RuleSet) -> tuple[float, dict[str, Any], list[str]]:
+    """① 사업(묶음)의 A·B·C. A 는 참여자 효과·전환비용 가운데 높은 쪽, 한쪽만 미확인이면 아는 쪽, 둘 다 미확인이면 만점의 40%.
+    B·C 가 미확인이면 각 만점의 40% 다(rules.md ①, 2.6)."""
+    a = parts["A"]
+    known = [float(a[k][inputs[k]]) for k in ("participant", "switching") if a[k][inputs[k]] is not None]
+    unknown: list[str] = []
+    if known:
+        a_points = max(known)
+    else:
+        a_points = rules.unknown_points(a["max"])
+        unknown.append("A")
+    b_points = float(parts["B"]["levels"][inputs["pricing"]]) if inputs["pricing"] != "unknown" else None
+    c_points = float(parts["C"]["levels"][inputs["substitutes"]]) if inputs["substitutes"] != "unknown" else None
+    if b_points is None:
+        b_points = rules.unknown_points(parts["B"]["max"])
+        unknown.append("B")
+    if c_points is None:
+        c_points = rules.unknown_points(parts["C"]["max"])
+        unknown.append("C")
+    detail = {"participant": inputs["participant"], "switching": inputs["switching"], "A": _tidy(a_points),
+              "pricing": inputs["pricing"], "B": _tidy(b_points), "substitutes": inputs["substitutes"], "C": _tidy(c_points)}
+    return a_points + b_points + c_points, detail, unknown
+
+
+def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
+    """① 네트워크 효과(규칙 v3.0). 사업 점수 = A + B + C(사업·묶음 공유) + D + E(구성 사업마다), AI 수익화가 '예'가 아닌 구성
+    사업은 상한 16. 층 점수는 그 층 구성 사업 점수의 매출 몫 평균, 회사 ① 은 층 점수의 층 매출 몫 가중 평균이다(rules.md 2.10, ①).
+
+    시장 정의표(scorecard/markets/)가 아직 없어 D·E 는 모든 구성 사업이 미확인(각 만점의 40%)이다. 판매 층의 매출 줄이 어느
+    사업에도 붙지 않았으면 판정 대기다."""
+    fid, basis = "F1", "business"
+    spec = rules.factor(fid)
+    parts = spec["parts"]
+    cid = company["company_id"]
+    holdings = judgments.get(cid, "F4")
+    if holdings is None or holdings["kind"] != "holdings":
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis,
+                             pending=pending_info("judgment", "④ 층별 보유표(holdings)가 있어야 사업 매출 몫을 낸다"))
+    w = layer_weights(holdings["inputs"], rules)
+    if not w["ok"]:
+        message = (f"④ 매출 줄 {w['unknown_lines']} 의 금액이 미확인 — 사업 매출 몫을 어림하지 않는다" if w["unknown_lines"]
+                   else "④ 보유표에 층에 붙은 매출 줄이 없다 — 사업 매출 몫을 낼 수 없다")
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis, pending=pending_info("judgment", message))
+    layers = rules.payload["layers"]
+    order = [*layers["order"], layers["outside"]["id"]]
+    lines = {line["line"]: line for line in holdings["inputs"]["revenue_lines"] if line["layer"] in order}
+    businesses = judgments.units(cid, fid)
+    attached = {line_id for b in businesses for comp in b["inputs"]["components"] for line_id in comp["lines"]}
+    loose = sorted(line_id for line_id, line in lines.items() if float(line["amount"]) > 0 and line_id not in attached)
+    calc: dict[str, Any] = {"layer_weights": {u: _tidy(x) for u, x in w["weights"].items()}, "businesses": {}}
+    if not businesses or loose:
+        message = (f"판매 층의 매출 줄 {loose} 이 어느 사업에도 붙지 않았다 — 사업 판단을 더한다" if businesses
+                   else "사업 판단이 없다 — 판매 층의 매출 줄을 사업으로 나눠 판정한다")
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis, calc=calc, pending=pending_info("judgment", message))
+    markets = spec.get("markets")
+    cap = spec["ai_cap"]
+    warnings: list[str] = []
+    if not markets:
+        warnings.append(f"시장 정의표가 없어 D·E 는 모든 사업이 미확인이다(각 {_tidy(rules.unknown_points(parts['D']['max']))})")
+    by_layer: dict[str, list[tuple[float, float]]] = {}
+    for b in businesses:
+        shared, detail, unknown = _f1_shared(b["inputs"], parts, rules)
+        comps = []
+        for comp in b["inputs"]["components"]:
+            revenue = sum(float(lines[line_id]["amount"]) for line_id in comp["lines"])
+            # 시장 정의표가 생기면 calc_market 이 D·E 를 잰다. 그 전에는 미확인(만점의 40%, rules.md 2.6).
+            d_points = rules.unknown_points(parts["D"]["max"])
+            e_points = rules.unknown_points(parts["E"]["max"])
+            raw = shared + d_points + e_points
+            capped = comp["ai_monetized"] != cap["requires"] and raw > float(cap["cap"])
+            score = min(raw, float(cap["cap"])) if comp["ai_monetized"] != cap["requires"] else raw
+            comps.append({"name": comp["name"], "layer": comp["layer"], "customer": comp["customer"], "lines": list(comp["lines"]),
+                          "revenue": _tidy(revenue), "D": _tidy(d_points), "E": _tidy(e_points), "ai_monetized": comp["ai_monetized"],
+                          "raw": _tidy(raw), "ai_cap_applied": capped, "score": _tidy(score)})
+            by_layer.setdefault(comp["layer"], []).append((revenue, score))
+        calc["businesses"][b["business"]] = {"judgment_id": b["judgment_id"], **detail, "shared": _tidy(shared),
+                                            "unknown_parts": [*unknown, "D", "E"] if not markets else unknown, "components": comps}
+        warnings.extend(f"{b['business']}: {x}" for x in carried_note(b))
+    layer_scores = {}
+    for layer, rows in by_layer.items():
+        total = sum(r for r, _s in rows)
+        layer_scores[layer] = sum(r * s for r, s in rows) / total if total > 0 else None
+    calc["layer_scores"] = {u: (None if s is None else _tidy(s)) for u, s in layer_scores.items()}
+    weights = w["weights"]
+    counted = [u for u, s in layer_scores.items() if s is not None and weights.get(u, 0) > 0]
+    value = sum(weights[u] * layer_scores[u] for u in counted) / sum(weights[u] for u in counted)
+    lo, hi = rules.factor_range(fid)
+    total = rules.round_score(max(lo, min(hi, value)))
+    calc["score"] = total
+    status = "carried_score" if any(b["status"] == "carried" for b in businesses) else "ok"
+    return factor_result(fid, score=total, status=status, basis=basis, calc=calc, warnings=warnings)
+
+
 def compute_f3_layers(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
     """③ Last Mover (카운터 포지셔닝)(규칙 v3.0). 판매 층마다 매기고 층 매출 몫으로 가중 평균한다."""
     return _layered("F3", "layer_cp", "카운터 포지셔닝", company, judgments, rules,

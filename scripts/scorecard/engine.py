@@ -11,7 +11,7 @@ from . import SCHEMA_VERSION
 from .aggregate import rank_companies, summarize_company
 from .calc_f6 import compute_f6
 from .calc_f9 import compute_f9
-from .calc_layers import compute_f2_layers, compute_f3_layers, compute_f4_holdings
+from .calc_layers import compute_f1_business, compute_f2_layers, compute_f3_layers, compute_f4_holdings
 from .calc_qual import compute_f1, compute_f2, compute_f3, compute_f4, compute_f5, compute_f7, compute_f8, compute_manual
 from .inputs import JudgmentLookup, ObsLookup
 from .rules import RuleSet, load_rules
@@ -137,7 +137,10 @@ def load_context(slug: str) -> RunContext:
 
 def compute_company(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, dict[str, Any]]:
     # 2026-10-08 규칙 v2.0: ① 이 lockin 모드면 네 질문 사다리로 계산한다. v1.9 이하(manual)는 지금 경로 그대로다.
-    f1 = (compute_f1(company, judgments, rules) if rules.factor("F1").get("mode") == "lockin"
+    # 2026-10-14 규칙 v3.0: ① business 모드는 사업 단위 판단을 층·회사로 합친다(calc_layers).
+    f1_mode = rules.factor("F1").get("mode")
+    f1 = (compute_f1(company, judgments, rules) if f1_mode == "lockin"
+          else compute_f1_business(company, judgments, rules, run) if f1_mode == "business"
           else compute_manual("F1", company, judgments, rules))
     return {
         "F1": f1,
