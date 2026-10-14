@@ -8,6 +8,7 @@ const {
   createApprovals,
   isLoopback,
   isValidRunId,
+  valueText,
 } = require('../../server/approvals');
 
 const FAKE_CLI_PATH = path.resolve(__dirname, 'fake_scorecard_cli.js');
@@ -732,6 +733,27 @@ test('GET 옛 규칙: factor_labels 가 옛 라벨(또는 없음)이면 ① 이�
   } finally {
     server.close();
   }
+});
+
+// 2026-10-14 규칙 v3.0 계획 S0b: 객체 판정 재료(④ 층별 보유표·⑧ 축)를 [object Object] 가 아니라 짧은 요약으로 그린다
+test('valueText: 객체 판정 재료는 요약으로, 스칼라는 지금 그대로', () => {
+  assert.equal(valueText({ chip: 'sold', cloud: 'none', model: 'self' }, 'layers'), 'chip 판매 · cloud 없음 · model 자체 사용');
+  const axes = valueText({
+    customer: { status: 'confirmed', recognized_share: 0.22, note: '최대 고객 비중을 설명하는 긴 문장 '.repeat(5) },
+    supply: { status: 'confirmed', rung: -4, supplier_is_competitor: 'yes' },
+  }, 'axes');
+  assert.equal(axes, 'customer status 확인됨, recognized_share 0.22 · supply status 확인됨, rung -4, supplier_is_competitor 예');
+  assert.doesNotMatch(axes, /object Object|긴 문장/);
+  // 둘째 층의 목록은 건수로, 빈 객체는 "없음" 으로
+  assert.equal(valueText({ chip: ['EV-1', 'EV-2'], app: [] }, 'layer_evidence'), 'chip 2건 · app 0건');
+  assert.equal(valueText({}, 'layer_triggers'), '없음');
+  // 첫 층의 스칼라 목록은 그대로 잇는다
+  assert.equal(valueText(['EV-1', 'EV-2'], 'evidence_ids'), 'EV-1, EV-2');
+  // 스칼라는 바뀌지 않는다
+  assert.equal(valueText('pass', 'x'), '충족');
+  assert.equal(valueText(2, 'A'), '+2');
+  assert.equal(valueText(9, 'generation_gap_months'), '9');
+  assert.equal(valueText('none', 'x'), 'none', '스칼라 선택지의 표시는 객체 요약용 표를 쓰지 않는다');
 });
 
 // 2026-10-08 규칙 v2.0(rules.md 2.9): 재확인 제안은 값이 객체({evidence_ids})라 [object Object] 가 아니라 근거 ID 목록으로 그린다

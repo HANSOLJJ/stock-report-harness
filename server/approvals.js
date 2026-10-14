@@ -342,7 +342,35 @@ function inputLabel(key) {
 // 등급처럼 더하는 값에만 한다. key 를 주지 않는 자리는 지금처럼 붙인다.
 const COUNT_KEYS = new Set(['pricing_sustained_quarters', 'generation_gap_months']);
 
+// 2026-10-14 규칙 v3.0 계획 S0b: ④ 층별 보유표({chip: 'sold', ...})·⑧ 축({customer: {status, rung, ...}})처럼 객체인
+// 판정 재료가 String(v) 를 거쳐 [object Object] 로 보였다. 객체는 짧은 요약으로 그리고, 고치기는 CLI(--json)로 한다.
+// 이 표는 객체 요약 안에서만 쓴다. 스칼라 선택지의 표시(VALUE_LABELS)는 바꾸지 않는다.
+const NESTED_VALUE_LABELS = { sold: '판매', self: '자체 사용', none: '없음', preparing: '준비 중', confirmed: '확인됨' };
+
+function nestedScalarText(x) {
+  const s = String(x);
+  return NESTED_VALUE_LABELS[s] || VALUE_LABELS[s] || s;
+}
+
+function objectValueText(v, depth) {
+  if (Array.isArray(v)) {
+    if (depth === 0 && v.every((x) => x === null || typeof x !== 'object')) return v.length ? v.map(String).join(', ') : '없음';
+    return `${v.length}건`;
+  }
+  const entries = Object.entries(v);
+  if (!entries.length) return '없음';
+  if (depth >= 1) {
+    // 둘째 층부터는 짧은 스칼라만 보인다. 긴 설명 문장(note 등)은 근거 칸에서 읽는다.
+    const short = entries.filter(([, x]) => x !== null && typeof x !== 'object' && String(x).length <= 40);
+    return short.length ? short.map(([k, x]) => `${inputLabel(k)} ${nestedScalarText(x)}`).join(', ') : `${entries.length}개 값`;
+  }
+  return entries
+    .map(([k, x]) => `${inputLabel(k)} ${x !== null && typeof x === 'object' ? objectValueText(x, depth + 1) : nestedScalarText(x)}`)
+    .join(' · ');
+}
+
 function valueText(v, key) {
+  if (v !== null && typeof v === 'object') return objectValueText(v, 0);
   const s = String(v);
   if (VALUE_LABELS[s]) return VALUE_LABELS[s];
   if (COUNT_KEYS.has(key)) return s;
@@ -1462,4 +1490,5 @@ module.exports = {
   isValidRunId,
   escapeHtml,
   defaultRunCli,
+  valueText,
 };
