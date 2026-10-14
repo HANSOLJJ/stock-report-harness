@@ -240,6 +240,7 @@
         "foundry": "같은 공정 세대의 외부 고객 대량 출하 시점과 독립 분석 기관의 성능 비교"
       },
       "no_benchmark_layers": [
+        "power",
         "cloud",
         "data_platform",
         "application",
@@ -3351,6 +3352,7 @@
   ],
   "layers": {
     "order": [
+      "power",
       "foundry",
       "chip_design",
       "systems",
@@ -3363,6 +3365,7 @@
       "device"
     ],
     "labels": {
+      "power": "전력",
       "foundry": "반도체 제조",
       "chip_design": "AI 칩 설계",
       "systems": "시스템·네트워크",
@@ -3377,7 +3380,7 @@
     "outside": {
       "id": "outside",
       "label": "층 밖 사업",
-      "note": "열 층에 들지 않는 사업(예: 위성 통신, 에너지 저장). ①②③ 을 매기고 ④ 수직계열화에서는 빠지며 다각화에서 센다"
+      "note": "열한 층에 들지 않는 사업(예: 위성 통신). ①②③ 을 매기고 ④ 수직계열화에서는 빠지며 다각화에서 센다"
     },
     "excluded_lines": {
       "rocket_launch": "로켓 발사는 ①②③ 과 층 매출 몫의 분모에서 뺀다(rules.md 2.4)"
@@ -3390,6 +3393,7 @@
     },
     "cell_value_note": "자기 클라우드로만 빌려주는 자체 칩은 자체 사용(self)이다. 준비 중(preparing)은 트리거를 단다",
     "ai_chain_conditional": {
+      "power": "AI 데이터센터에 전력을 만들거나 저장해 대는 공급이 출하나 계약으로 확인될 때",
       "data_platform": "AI 학습·추론에 데이터를 대는 기능이 출시돼 실제로 쓰일 때",
       "user_platform": "AI 기능이 그 플랫폼으로 대규모 사용자에게 출시되고 사용량·채택 지표가 있을 때",
       "device": "기기 안에서 AI 가 돌아가는 제품이 출하될 때"

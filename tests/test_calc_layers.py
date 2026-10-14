@@ -106,7 +106,7 @@ class HoldingsScoreTest(unittest.TestCase):
         h = set_cells(holdings(), chip_design="self", model="self", dev_platform="self")   # 1 + 1 + 0.5 × 3 = 3.5
         r = compute(h)
         self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (3.5, 4))
-        h = set_cells(holdings(), **{layer: "sold" for layer in ORDER if layer not in ("data_platform", "device")})
+        h = set_cells(holdings(), **{layer: "sold" for layer in ORDER if layer not in ("power", "data_platform", "device")})
         h["cells"]["user_platform"]["ai_chain"] = "yes"
         r = compute(h)
         self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (8, 8), "합 8 은 8 에서 자른다")
@@ -116,6 +116,18 @@ class HoldingsScoreTest(unittest.TestCase):
         r = compute(h)
         self.assertEqual(r["calc"]["vertical_counted"], {"cloud": 1})
         self.assertAlmostEqual(r["calc"]["layer_weights"]["user_platform"], 0.7)
+
+    def test_power_layer_counts_only_when_it_feeds_ai_data_centers(self):
+        # 2026-10-14 사용자 결정: 전력은 AI 사슬 조건 층이다. 전력회사에만 팔면 칸은 판매여도 수직계열화에 세지 않는다.
+        utility = set_cells(holdings(), power={"cell": "sold", "ai_chain": "no", "evidence_ids": []})
+        utility["revenue_lines"].append(line("storage", "power", 20))
+        r = compute(utility)
+        self.assertNotIn("power", r["calc"]["vertical_counted"])
+        self.assertAlmostEqual(r["calc"]["layer_weights"]["power"], 0.2 / 1.2, places=6)
+        feeds = set_cells(utility, power={"cell": "sold", "ai_chain": "yes", "evidence_ids": []})
+        self.assertEqual(compute(feeds)["calc"]["vertical_counted"]["power"], 1)
+        with self.assertRaisesRegex(Exception, "ai_chain\\(AI 사슬로 작동하는가\\)"):
+            compute(set_cells(utility, power="sold"))
 
     def test_outside_and_excluded_lines_count_in_diversification_not_vertical(self):
         h = holdings()

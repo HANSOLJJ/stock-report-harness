@@ -86,7 +86,7 @@ class CreateAndReviseTest(V30Base):
 
     def test_business_judgment_key(self):
         holdings_cells = {layer: {"cell": "none", "evidence_ids": []} for layer in
-                          ("foundry", "chip_design", "systems", "cloud", "dev_platform", "data_platform", "model", "application",
+                          ("power", "foundry", "chip_design", "systems", "cloud", "dev_platform", "data_platform", "model", "application",
                            "user_platform", "device")}
         holdings_cells["chip_design"] = {"cell": "sold", "evidence_ids": ["EV-nvidia-001"]}
         holdings = {"cells": holdings_cells, "currency": "USD", "non_ai_margin": "not_applicable",

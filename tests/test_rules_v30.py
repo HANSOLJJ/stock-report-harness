@@ -41,13 +41,15 @@ class StructureTest(unittest.TestCase):
             "F5": ("company", "alliance", ["alliance"]),
         })
 
-    def test_ten_layers_and_outside(self):
+    def test_eleven_layers_and_outside(self):
+        # 2026-10-14 사용자 결정: 전력을 AI 사슬 조건 층으로 맨 아래에 더해 열한 층이다.
         layers = V30.payload["layers"]
-        self.assertEqual(len(layers["order"]), 10)
-        self.assertEqual(layers["order"][0], "foundry")
+        self.assertEqual(len(layers["order"]), 11)
+        self.assertEqual(layers["order"][:2], ["power", "foundry"])
         self.assertEqual(layers["order"][-1], "device")
         self.assertEqual(layers["outside"]["id"], "outside")
-        self.assertEqual(set(layers["ai_chain_conditional"]), {"data_platform", "user_platform", "device"})
+        self.assertEqual(set(layers["ai_chain_conditional"]), {"power", "data_platform", "user_platform", "device"})
+        self.assertIn("power", V30.payload["factors"]["F2"]["no_benchmark_layers"])
         self.assertEqual(layers["time_window_months"], 24)
 
     def test_traps_are_four_times_v21(self):
