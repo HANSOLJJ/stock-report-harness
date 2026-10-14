@@ -414,6 +414,119 @@ def compute_f5(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSe
                          calc={"A": A, "H": H, "formula": "3 + A + H"}, warnings=carried_note(judgment))
 
 
+def _count_points(table: dict[str, Any], n: int) -> float:
+    """'0'·'1'·'2+'·'1-2' 같은 상대 수 칸에서 n 이 드는 칸의 점수."""
+    for key, points in table.items():
+        if key.endswith("+") and n >= int(key[:-1]):
+            return float(points)
+        if "-" in key:
+            lo, hi = (int(x) for x in key.split("-"))
+            if lo <= n <= hi:
+                return float(points)
+        elif key.isdigit() and n == int(key):
+            return float(points)
+    raise ValueError(f"상대 수 {n} 이 칸 {sorted(table)} 에 없다")
+
+
+def _assign_alliance(relations: list[dict[str, Any]], spec: dict[str, Any]) -> tuple[float, dict[str, str], dict[str, float]]:
+    """한 관계는 한 부분에서만 센다(rules.md ⑤). 지분 동맹(2곳에서 포화)·경쟁사 편입(1곳)에 넣을 관계를 모두 따져 보고 나머지는
+    상업 동맹 폭(정부는 나라마다 한 상대)에 넣어, 점수가 가장 높은 배정을 고른다. 동점이면 상대 이름순으로 먼저 나온 배정이다."""
+    from itertools import combinations
+
+    rels = sorted(relations, key=lambda r: r["counterparty"])
+    equity_ok = [r for r in rels if "equity" in r["qualifies"]]
+    onboard_ok = [r for r in rels if "competitor_onboard" in r["qualifies"]]
+    best: tuple[float, dict[str, str], dict[str, float]] | None = None
+    for e_n in range(min(2, len(equity_ok)) + 1):
+        for e_set in combinations(equity_ok, e_n):
+            for c_n in range(min(1, len(onboard_ok)) + 1):
+                for c_set in combinations([r for r in onboard_ok if r not in e_set], c_n):
+                    assign: dict[str, str] = {}
+                    for r in rels:
+                        if r in e_set:
+                            assign[r["counterparty"]] = "equity"
+                        elif r in c_set:
+                            assign[r["counterparty"]] = "competitor_onboard"
+                        else:
+                            assign[r["counterparty"]] = next(p for p in ("commercial", "equity", "competitor_onboard") if p in r["qualifies"])
+                    commercial = {r.get("government_country") or r["counterparty"] for r in rels if assign[r["counterparty"]] == "commercial"}
+                    points = {"equity": _count_points(spec["equity"], sum(1 for p in assign.values() if p == "equity")),
+                              "competitor_onboard": float(spec["competitor_onboard"]) if "competitor_onboard" in assign.values() else 0.0,
+                              "commercial": _count_points(spec["commercial"], len(commercial))}
+                    total = min(float(spec["max"]), sum(points.values()))
+                    if best is None or total > best[0]:
+                        best = (total, assign, points)
+    return best if best is not None else (0.0, {}, {"equity": 0.0, "competitor_onboard": 0.0, "commercial": 0.0})
+
+
+def _hostility(inputs: dict[str, Any], spec: dict[str, Any], share: float) -> tuple[float, dict[str, Any], list[str]]:
+    """적대 띠(rules.md ⑤). 진행 중인 전선만 센다. 구조형이 있으면 구조형 띠(하나 −8, 둘 이상 −10, 둘 이상이고 최대 파트너 긴장이면
+    다발형 −12), 비용형만 있으면 −2 에 구제 조치 진행 −2, 관할 셋 이상 −2. 긴장·구제 조치가 미확인이면 나쁜 쪽에서 좋은 쪽으로
+    `share`(40%)만큼 간 값이다(rules.md 2.6: 미확인을 감점 완화 쪽으로 풀지 않되 가장 나쁜 값으로도 두지 않는다)."""
+    ongoing = [f for f in inputs["fronts"] if f["status"] == "ongoing"]
+    structural = [f for f in ongoing if f["nature"] == "structural"]
+    cost = [f for f in ongoing if f["nature"] == "cost"]
+    warnings: list[str] = []
+    detail: dict[str, Any] = {"ongoing": [f["name"] for f in ongoing], "ended_ignored": [f["name"] for f in inputs["fronts"] if f["status"] != "ongoing"]}
+    if structural:
+        s = spec["structural"]
+        if len(structural) == 1:
+            band, value = "structural", float(s["base"])
+        else:
+            tension = inputs["partner_tension"]
+            worst, best = float(spec["multi"]), float(s["multi_front"])
+            if tension == "yes":
+                band, value = "multi", worst
+            elif tension == "no":
+                band, value = "structural_multi_front", best
+            else:
+                band, value = "structural_multi_front", worst + share * (best - worst)
+                warnings.append(f"구조형 전선이 둘 이상인데 최대 파트너와의 긴장이 미확인 — {value:g}(−10 과 −12 사이 40% 지점)")
+        detail.update(structural_fronts=len(structural))
+    elif cost:
+        c = spec["cost"]
+        band, value = "cost", float(c["base"])
+        remedies = [f["remedy_in_progress"] for f in cost]
+        if "yes" in remedies:
+            value += float(c["remedy_in_progress"])
+        elif "unknown" in remedies:
+            value += float(c["remedy_in_progress"]) * (1 - share)
+            warnings.append("구제 조치 진행 여부가 미확인인 비용형 전선이 있다 — 그 감점의 60% 를 댄다")
+        jurisdictions = sorted({f["jurisdiction"] for f in cost})
+        if len(jurisdictions) >= int(c["jurisdictions_at_least"]):
+            value += float(c["jurisdictions"])
+        detail.update(jurisdictions=jurisdictions)
+    else:
+        band, value = "minimal", float(spec["minimal"])
+    value = max(float(spec["min"]), value)
+    detail.update(band=band, H=round(value, 6))
+    return value, detail, warnings
+
+
+def compute_f5_alliance(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet) -> dict[str, Any]:
+    """⑤ 아군 확보(규칙 v3.0). ⑤ = 중립점 12 + 동맹 A(지분 0/2/3 + 경쟁사 편입 0/3 + 상업 동맹 폭 0/1/2, 최고 8) + 적대 H(−12~0).
+    금액은 쓰지 않는다(rules.md ⑤)."""
+    fid, basis = "F5", "alliance"
+    spec = rules.factor(fid)
+    judgment = judgments.get(company["company_id"], fid)
+    if judgment is None:
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis,
+                             pending=pending_info("judgment", "동맹 관계와 적대 전선 판정 입력 필요"))
+    mismatch = _kind_mismatch(fid, judgment, rules, basis, "동맹 관계·적대 전선 입력(alliance)")
+    if mismatch is not None:
+        return mismatch
+    inputs = judgment["inputs"]
+    A, assign, part_points = _assign_alliance(inputs["relations"], spec["alliance"])
+    share = float(rules.payload["scoring"].get("unknown_share", 0))
+    H, hostility, warnings = _hostility(inputs, spec["hostility"], share)
+    lo, hi = rules.factor_range(fid)
+    score = rules.round_score(max(lo, min(hi, float(spec["neutral"]) + A + H)))
+    calc = {"neutral": spec["neutral"], "A": round(A, 6), "assignment": assign, "part_points": part_points, **hostility,
+            "formula": "12 + A + H", "score": score}
+    warnings.extend(carried_note(judgment))
+    return factor_result(fid, score=score, status=_status_for(judgment), basis=basis, judgment=judgment, calc=calc, warnings=warnings)
+
+
 def compute_f7(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet) -> dict[str, Any]:
     fid = "F7"
     judgment = judgments.get(company["company_id"], fid)

@@ -12,7 +12,8 @@ from .aggregate import rank_companies, summarize_company
 from .calc_f6 import compute_f6
 from .calc_f9 import compute_f9
 from .calc_layers import compute_f1_business, compute_f2_layers, compute_f3_layers, compute_f4_holdings
-from .calc_qual import compute_f1, compute_f2, compute_f3, compute_f4, compute_f5, compute_f7, compute_f8, compute_manual
+from .calc_qual import (compute_f1, compute_f2, compute_f3, compute_f4, compute_f5, compute_f5_alliance, compute_f7, compute_f8,
+                        compute_manual)
 from .inputs import JudgmentLookup, ObsLookup
 from .rules import RuleSet, load_rules
 from .schema import (
@@ -154,7 +155,9 @@ def compute_company(company: dict[str, Any], obs: ObsLookup, judgments: Judgment
         "F4": (compute_f4(company, judgments, rules) if rules.factor("F4").get("mode") == "survival"
                else compute_f4_holdings(company, judgments, rules) if rules.factor("F4").get("mode") == "holdings"
                else compute_manual("F4", company, judgments, rules)),
-        "F5": compute_f5(company, judgments, rules),
+        # 2026-10-14 규칙 v3.0: ⑤ alliance 모드는 동맹 세 부분과 적대 띠로 계산한다.
+        "F5": (compute_f5_alliance(company, judgments, rules) if rules.factor("F5").get("mode") == "alliance"
+               else compute_f5(company, judgments, rules)),
         "F6": compute_f6(company, obs, judgments, rules, run),
         "F7": compute_f7(company, judgments, rules),
         "F8": (compute_f8(company, judgments, rules) if rules.factor("F8").get("mode") == "axes"
