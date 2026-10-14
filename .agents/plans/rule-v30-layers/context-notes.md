@@ -47,3 +47,9 @@ v2.2 까지의 논의는 `../rule-v22-pool-first/context-notes.md` 에 있다. �
 - **회사를 골라 이어받을 때 다른 회사 근거를 인용한 트리거·판단이 init 을 막던 기존 결함을 고쳤다.** v21 에서 Alphabet 트리거가 EV-openai-011 을, Alphabet ⑤ 재확인이 Anthropic·Amazon 근거를 인용해 v2.1 로도 5개사 시범 init 이 멈췄다. 인용된 근거는 회사와 무관하게 옮기고, "인용"에는 evidence_ids 칸뿐 아니라 재확인 기록·판정 재료 안 근거도 넣는다(`schema.judgment_evidence_ids`). 5개사 init 이 v2.1·v3.0 둘 다 통과한다(v3.0 판단 26건).
 - **승인 페이지는 층·사업 판단을 읽기만 한다.** 요약의 판단·제안에 `unit`(층 id·사업 id, 회사 단위는 null)을 더하고 카드 id 에 붙였다. 수정 칸은 기업·factor 만 넘기므로 층·사업 판단 카드에는 CLI(`judge --layer`·`--business`) 안내를 둔다. 층별 수정 화면은 뒤로 미룬 일이다.
 - **`diff` 는 v3.0 실행(규칙에 `layers` 가 있음)을 거부한다.** 입력 가법성·점수 투영이 (기업, 항목) 단위라서다. 거부 문구는 기업 추가 실행의 축약 리뷰를 쓰지 말고 전체 리뷰를 하라고 안내한다.
+
+## 2026-10-14 사용자 결정 (S6 전 ④ 두 가지)
+
+- **AI 무관 부문 이익률을 공시하지 않으면 회사 전체 영업이익률로 대신하고, 대신했다고 표시한다.** 계기: 판정 대기로 두면 TSMC·Apple 처럼 세그먼트가 하나인 회사가 공시 형식 때문에 순위에서 빠지고, 0 은 rules.md 2.6 과 부딪힌다. ④ 보유표 입력에 `non_ai_margin_source`(segment·company)를 두고, 이익률이 숫자면 반드시 적는다. v3.0.json `F4.field_strength.margin_basis_policy` 는 `company_margin_substitute`.
+- **기업용 소프트웨어 매출은 AI 무관이다.** AI 호황과 상관없이 업무에 쓰려고 돈을 내는 수요다. AI 를 따로 과금하는 제품(Copilot·AIP 등)의 매출은 공시된 매출 줄로 나뉘어 있을 때 그 줄만 AI 수요로 본다. 코드에는 닿지 않고 매출 줄의 `non_ai` 판정에 닿는다.
+- 두 항목을 rules.md 8절 미결 표에서 빼고 ④ 절 본문에 적었다.

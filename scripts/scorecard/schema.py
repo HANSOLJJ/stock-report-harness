@@ -160,7 +160,8 @@ JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {
                  "non_ai_share_evidence"),
     "axes": F8_AXES,
     # 2026-10-14 규칙 v3.0: 다섯 판정 재료의 최상위 키. 안의 모양은 _validate_v3_inputs 가 본다.
-    "holdings": ("cells", "revenue_lines", "currency", "non_ai_margin", "non_ai_margin_basis", "non_ai_margin_evidence"),
+    "holdings": ("cells", "revenue_lines", "currency", "non_ai_margin", "non_ai_margin_source", "non_ai_margin_basis",
+                 "non_ai_margin_evidence"),
     "business": ("components", "bundle_reason", "participant", "switching", "pricing", "pricing_growth_quarters", "pricing_explained",
                  "substitutes"),
     "layer_paths": ("leap", "gap_months", "adaptation", "adoption_multiple", "standards", "note"),
@@ -179,7 +180,7 @@ JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
     "customer": "object", "commitment": "object", "supply": "object", "geopolitics": "object",
     # 2026-10-14 규칙 v3.0. 같은 이름의 ① lockin·③ criteria 키는 선택 상자 재료라 이 표를 보지 않는다.
     "cells": "object", "revenue_lines": "object_list", "currency": "string", "non_ai_margin": "number_or_string",
-    "non_ai_margin_basis": "string", "non_ai_margin_evidence": "string_list",
+    "non_ai_margin_source": "string", "non_ai_margin_basis": "string", "non_ai_margin_evidence": "string_list",
     "components": "object_list", "bundle_reason": "string_or_null", "participant": "string", "switching": "string", "pricing": "string",
     "pricing_growth_quarters": "number", "pricing_explained": "string", "substitutes": "string",
     "leap": "string", "gap_months": "number", "adaptation": "string", "adoption_multiple": "number", "standards": "object_list",
@@ -1628,6 +1629,8 @@ STANDARD_HOLDERS = {"company", "neutral"}
 ACCELERATION_BASES = {"yoy_quarter", "consecutive_equal", "none"}
 FRONT_NATURES = {"cost", "structural"}
 FRONT_STATUSES = {"ongoing", "ended"}
+# ④ 그 분야의 힘: AI 무관 부문 이익률(segment) 또는 그 부문을 공시하지 않아 대신 쓴 회사 전체 이익률(company).
+MARGIN_SOURCES = {"segment", "company"}
 
 
 def judgment_key(item: dict[str, Any]) -> tuple[str, str, str | None, str | None]:
@@ -1682,7 +1685,7 @@ def _validate_v3_inputs(kind: str, inputs: Any, rules: dict[str, Any], factor: s
 def _validate_holdings(inputs: dict[str, Any], rules: dict[str, Any], where: str) -> None:
     """④ 층별 보유표와 매출 줄. 층 매출 몫(①②③ 의 무게)의 원천도 이 매출 줄이다(rules.md 2.10, ④)."""
     _expect_keys(inputs, ["cells", "revenue_lines", "currency", "non_ai_margin"], where,
-                 optional=["non_ai_margin_basis", "non_ai_margin_evidence"])
+                 optional=["non_ai_margin_source", "non_ai_margin_basis", "non_ai_margin_evidence"])
     spec = rules["layers"]
     order = list(spec["order"])
     conditional = set(spec.get("ai_chain_conditional") or {})
@@ -1732,6 +1735,11 @@ def _validate_holdings(inputs: dict[str, Any], rules: dict[str, Any], where: str
     margin = inputs["non_ai_margin"]
     _require(margin in ("unknown", "not_applicable") or _is_number(margin),
              f"{where}.non_ai_margin: AI 무관 부문 영업이익률(소수, 0.1 = 10%)이나 unknown·not_applicable ({margin!r})")
+    # 2026-10-14 사용자 결정: 그 부문 이익률을 공시하지 않으면 회사 전체 영업이익률로 대신하고 대신했다고 표시한다(rules.md ④).
+    if _is_number(margin):
+        _expect_choice(inputs.get("non_ai_margin_source"), sorted(MARGIN_SOURCES), f"{where}.non_ai_margin_source(이익률이 숫자면 출처를 적는다)")
+    else:
+        _require("non_ai_margin_source" not in inputs, f"{where}: non_ai_margin_source 는 이익률이 숫자일 때만 적는다")
     if "non_ai_margin_basis" in inputs:
         _expect_str(inputs["non_ai_margin_basis"], f"{where}.non_ai_margin_basis", nonempty=True)
     if "non_ai_margin_evidence" in inputs:

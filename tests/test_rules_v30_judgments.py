@@ -45,7 +45,7 @@ def holdings_inputs() -> dict:
     cells["chip_design"] = {"cell": "self", "evidence_ids": ["EV-amazon-003"]}
     return {"cells": cells,
             "revenue_lines": [line("aws", "cloud", 30, "no"), line("online_stores", "user_platform", 40), line("third_party", "user_platform", 30)],
-            "currency": "USD", "non_ai_margin": 0.1}
+            "currency": "USD", "non_ai_margin": 0.1, "non_ai_margin_source": "segment"}
 
 
 def business_inputs(lines=("aws",), layer: str = "cloud", **kw) -> dict:
@@ -137,6 +137,10 @@ class HoldingsInputTest(unittest.TestCase):
         h["revenue_lines"].append(line("launch", "rocket_launch", 5))
         h["revenue_lines"].append(line("starlink", "outside", 5))
         h["non_ai_margin"] = "not_applicable"
+        del h["non_ai_margin_source"]
+        self.check(h)
+        h = holdings_inputs()
+        h["non_ai_margin_source"] = "company"   # 2026-10-14: 부문 이익률 미공시면 회사 전체 이익률로 대신한다
         self.check(h)
 
     def test_rejections(self):
@@ -151,6 +155,9 @@ class HoldingsInputTest(unittest.TestCase):
         h = holdings_inputs(); h["revenue_lines"].append(line("aws", "cloud")); cases.append((h, "매출 줄 id 중복"))
         h = holdings_inputs(); h["revenue_lines"][0]["non_ai"] = "maybe"; cases.append((h, "non_ai"))
         h = holdings_inputs(); h["non_ai_margin"] = "10%"; cases.append((h, "non_ai_margin"))
+        h = holdings_inputs(); del h["non_ai_margin_source"]; cases.append((h, "이익률이 숫자면 출처를 적는다"))
+        h = holdings_inputs(); h["non_ai_margin_source"] = "estimate"; cases.append((h, "non_ai_margin_source"))
+        h = holdings_inputs(); h["non_ai_margin"] = "unknown"; cases.append((h, "이익률이 숫자일 때만"))
         h = holdings_inputs(); h["cells"]["cloud"]["evidence_ids"] = ["EV-1"]; cases.append((h, "근거 ID"))
         for inputs, pattern in cases:
             with self.subTest(pattern=pattern), self.assertRaisesRegex(SchemaError, pattern):
