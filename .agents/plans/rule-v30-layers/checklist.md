@@ -1,6 +1,6 @@
 # 규칙 v3.0 체크리스트
 
-설계는 `plan.md`(2026-10-14 대화의 설계안 사본), 구현 순서는 2026-10-14 Plan 에이전트 보고(context-notes 에 요약)를 따른다. 단계 하나가 커밋 하나다. 단계마다 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 와 `npm run test:node` 를 돌린다.
+설계는 `plan.md`(2026-10-14 대화의 설계안 사본, 규칙 문언의 원본은 rules.md), 구현 순서는 `implementation.md`(2026-10-14 승인된 구현 계획)를 따른다. 단계 하나가 커밋 하나다. 이정표(기반 S0~S5, 계산 S6~S9, 출력·시범 S10~P1)마다 사용자에게 보고한다. 단계마다 `uv run --frozen python -X utf8 -m unittest discover -s tests -t .` 와 `npm run test:node` 를 돌린다.
 
 ## 문서
 - [x] v2.2 초안의 커밋하지 않은 ②③ 수정과 context-notes 를 `draft/rules-v2.2` 에 기록용으로 커밋
@@ -9,21 +9,28 @@
 - [x] S1b rules.md 를 v3.0 으로 절 단위 개정(머리말, 1 총점, 2.10 층과 단위·2.11 끝난 싸움, 3 ①~⑤, 4 ⑥~⑨, 5 합산, 7 체크리스트 Q24·Q25, 8 미결). `test_scorecard_fix52_docs` 는 v3.0.json 이 생길 때(S2)까지 빨강
 
 ## 코드 (시험 실행까지 최소 경로)
+### 이정표 1: 기반
 - [ ] S0 승인된 rejudge(v2.0)·v21(v2.1) 실행을 재계산 해시 테스트에 넣기(main)
 - [ ] S0b 승인 페이지의 중첩 재료 `[object Object]` 표시 고치기(main, 선택)
-- [ ] S2 `scorecard/rules/v3.0.json` 과 스키마 수용(layers, unit, curve, 새 judgment kind)
+- [ ] main 을 `draft/rules-v3.0` 에 병합
+- [ ] S2 `scorecard/rules/v3.0.json` 과 스키마 수용(layers, unit, curve, 새 judgment kind, 체크리스트 Q24·Q25)
 - [ ] S3 연속 구간 도우미와 ⑥·⑨ 곡선, ⑦·⑧ ×4
-- [ ] S4 판단 키에 layer·business, `JudgmentLookup` 확장
-- [ ] S5 층·사업 판단 생성·수정 경로, init 단위 전환, CLI `--layer`·`--business`
+- [ ] S4 판단 키에 layer·business, `JudgmentLookup` 확장, `rejudge_findings` 를 판단 키 단위로
+- [ ] S5 층·사업 판단 생성·수정 경로, init 단위 전환, 트리거·근거 교차 참조 처리, CLI `--layer`·`--business`, v3.0 실행의 `diff` 거부
+- [ ] 이정표 1 보고
+### 이정표 2: 계산
 - [ ] S6 ④ 보유표와 층 무게(`calc_layers.py`)
 - [ ] S7 ②③ 층 계산
 - [ ] S8 ① 사업 단위 계산(시장 자료 전)
 - [ ] S9 ⑤ 동맹 세 부분·적대 띠
+- [ ] 이정표 2 보고
+### 이정표 3: 출력·문서·시범 실행
 - [ ] S10 초안·미리보기 렌더 최소
 - [ ] S11 structure·guide·score-research·score-review 문서
+- [ ] P0 시범 init 전 규칙 값 확정(rules.md 8절, implementation.md 「구현 전에 정할 것」)
 
 ## 시험 실행
-- [ ] 시범 `init ai-scorecard-2026-10-v30pilot --from-run ai-scorecard-2026-10-v21 --rule v3.0 --companies alphabet,apple,tsmc,spacex-xai,anthropic` 으로 draft 까지
+- [ ] P1 시범 `init ai-scorecard-2026-10-v30pilot --from-run ai-scorecard-2026-10-v21 --rule v3.0 --companies alphabet,apple,tsmc,spacex-xai,anthropic` 으로 draft 까지
 - [ ] 전체 14개사 시험 실행
 
 ## 뒤로 미룸
