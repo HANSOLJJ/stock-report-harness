@@ -27,7 +27,7 @@
 ### 이정표 3: 출력·문서·시범 실행
 - [x] S10 초안·미리보기 렌더 최소(층 표, 층·사업 판단 근거, v3.0 방법 절, 연속값 안내, 미리보기 척도 환산 참고값). v21·rejudge 초안·미리보기는 바이트 그대로
 - [x] S11 structure·guide·score-research·score-review 문서(`.claude/skills` 원본만. `.agents/skills` Codex 사본은 v2.1 부터 뒤처져 있어 별도 과제)
-- [ ] P0 시범 init 전 규칙 값 확정(rules.md 8절, implementation.md 「구현 전에 정할 것」)
+- [x] P0 시범 init 전 규칙 값 확정 — 비상장 범위는 가운데 배수(`estimate_range_end: mid`). 나머지(④ 문턱, ⑥ P2·5% 절벽·신규 상장 P4, 기준선 80·56)는 시범 결과를 보고 정한다(사용자 결정)
 
 ## 시험 실행
 - [ ] P1 시범 `init ai-scorecard-2026-10-v30pilot --from-run ai-scorecard-2026-10-v21 --rule v3.0 --companies alphabet,apple,tsmc,spacex-xai,anthropic` 으로 draft 까지

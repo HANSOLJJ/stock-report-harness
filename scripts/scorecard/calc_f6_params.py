@@ -598,17 +598,19 @@ def _pga_score(pga: dict[str, Any], value: float) -> tuple[int | float, str]:
 
 # 2026-10-14 규칙 v3.0: 배수가 범위 추정이면 연속값에서는 양 끝 점수가 거의 늘 갈린다. 어느 끝을 쓸지는 규칙
 # `policies.f6.estimate_range_end` 가 정한다(rules.md ⑥ 비상장, 8절 미결). 정하지 않았으면 값을 고르지 않는다.
-RANGE_END_LABELS = {"low": "낮은 끝 배수", "high": "높은 끝 배수", "mid": "양 끝의 가운데"}
+RANGE_END_LABELS = {"low": "낮은 끝 배수", "high": "높은 끝 배수", "mid": "범위 가운데 배수"}
 
 
-def _range_end_score(f6: dict[str, Any], lo_score: float, hi_score: float) -> tuple[float | None, str | None]:
+def _range_end_score(f6: dict[str, Any], lo_value: float, hi_value: float, score_of: Any) -> tuple[float | None, str | None]:
+    """범위 추정의 어느 값으로 점수를 낼지. 2026-10-14 사용자 결정: 가운데(mid)는 두 끝 배수의 가운데 값에서 잰 점수다
+    (두 끝 점수의 평균이 아니다 — 로그 축이나 꺾인 곡선에서는 둘이 다르다)."""
     end = f6.get("estimate_range_end")
     if end == "low":
-        return lo_score, RANGE_END_LABELS[end]
+        return score_of(lo_value), RANGE_END_LABELS[end]
     if end == "high":
-        return hi_score, RANGE_END_LABELS[end]
+        return score_of(hi_value), RANGE_END_LABELS[end]
     if end == "mid":
-        return (lo_score + hi_score) / 2, RANGE_END_LABELS[end]
+        return score_of((lo_value + hi_value) / 2), RANGE_END_LABELS[end]
     return None, None
 
 
@@ -672,7 +674,7 @@ def _private_growth_adjusted(cid: str, pga: dict[str, Any], multiple: float, rng
                 detail["estimate_range"] = {"low": lo_v, "high": hi_v, "low_band": lo_l, "high_band": hi_l,
                                             "spans_bands": lo_s != hi_s}
                 if lo_s != hi_s and pga.get("curve") is not None:
-                    picked, how = _range_end_score(rules.f6, lo_s, hi_s)
+                    picked, how = _range_end_score(rules.f6, lo_v, hi_v, lambda v: _pga_score(pga, v)[0])
                     detail["estimate_range"].update({"low_score": lo_s, "high_score": hi_s})
                     if picked is None:
                         return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
@@ -783,7 +785,7 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
                                    "low_band": lo_label, "high_band": hi_label,
                                    "spans_bands": lo_score != hi_score}
         if lo_score != hi_score and spec.get("curve") is not None:
-            picked, how = _range_end_score(rules.f6, lo_score, hi_score)
+            picked, how = _range_end_score(rules.f6, float(rng[0]), float(rng[1]), lambda v: rules.f6_private_score(v)[0])
             entry["estimate_range"].update({"low_score": lo_score, "high_score": hi_score})
             if picked is not None:
                 entry["score"] = score = picked

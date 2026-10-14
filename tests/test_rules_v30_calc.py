@@ -160,9 +160,24 @@ class F6PrivateContinuousTest(unittest.TestCase):
         self.assertEqual((r["score"], r["calc"]["growth_adjusted"]["path"]), (-13.28, "fallback_private_bands"))
 
     def test_range_needs_a_rule_choice(self):
-        r = self.f6(rng=[30.0, 50.0], revenue=130.0, prior=100.0)
+        payload = copy.deepcopy(V30.payload)
+        del payload["policies"]["f6"]["estimate_range_end"]
+        undecided = RuleSet(payload, RULES_DIR / "v3.0.json")
+        r = self.f6(rules=undecided, rng=[30.0, 50.0], revenue=130.0, prior=100.0)
         self.assertEqual(r["status"], "needs_rule_decision")
         self.assertIn("estimate_range_end", r["pending"]["message"])
+
+    def test_range_mid_is_the_score_at_the_middle_multiple(self):
+        # 2026-10-14 사용자 결정: v3.0 은 범위의 가운데 배수로 잰다. 20~60 의 가운데 40 → 40 ÷ 30 = 1.333 → −9.66
+        self.assertEqual(V30.f6["estimate_range_end"], "mid")
+        r = self.f6(ps=40.0, rng=[20.0, 60.0], revenue=130.0, prior=100.0)
+        self.assertEqual((r["status"], r["score"]), ("ok", -9.66))
+        self.assertEqual(r["calc"]["growth_adjusted"]["estimate_range"]["picked"], "범위 가운데 배수")
+        # 두 끝 점수의 평균(−8·log 축의 비대칭 때문에 다르다)이 아니다
+        ends = [V30.round_score(piecewise(V30.f6["private_growth_adjusted"]["curve"], x / 30)) for x in (20.0, 60.0)]
+        self.assertNotEqual(r["score"], V30.round_score(sum(ends) / 2))
+        fallback = self.f6(ps=40.0, rng=[20.0, 60.0])            # 성장 자료가 없으면 P/S 곡선의 가운데 배수
+        self.assertEqual((fallback["status"], fallback["score"]), ("ok", V30.round_score(V30.f6_private_score(40.0)[0])))
 
     def test_range_end_choice_picks_that_end(self):
         payload = copy.deepcopy(V30.payload)
