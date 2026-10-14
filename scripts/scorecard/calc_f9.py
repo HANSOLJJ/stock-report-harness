@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from .inputs import JudgmentLookup, ObsLookup, factor_result, obs_note, pending_info
-from .rules import RuleSet, decision_choice
+from .rules import RuleSet, decision_choice, piecewise
 from .schema import MISSING_TYPE_FOR_DISCLOSURE_POLICY
 
 FACTOR = "F9"
@@ -28,7 +28,11 @@ def _clamp(score: int, floor: int) -> int:
     return max(floor, score)
 
 
-def _g1_loss_band(margin: float, rules: RuleSet) -> int:
+def _g1_loss_band(margin: float, rules: RuleSet) -> int | float:
+    # 2026-10-14 규칙 v3.0: 손실률 곡선(g1_loss_curve)이 있으면 연속값이다(손실률 0% −8, 30% 이상 −16). 없으면 지금 구간표.
+    curve = rules.f9.get("g1_loss_curve")
+    if curve is not None:
+        return piecewise(curve, -float(margin))
     for band in rules.f9["g1_bands_proposed"]:
         lower = band["min_margin"]
         if lower is None or margin >= lower:
@@ -52,6 +56,10 @@ def _runway_boundary(runway: float, rules: RuleSet) -> dict[str, Any]:
     같은 잣대 문제가 된다. 거리 자체는 초안이 `임계 3년 대비 +3.3%` 로 늘 보여 주므로 읽는 사람이 놓치지 않는다.
     폭 적정성은 미결 C-27 이다.
     """
+    # 2026-10-14 규칙 v3.0: 런웨이 곡선이 있으면 임계에서 점수가 뚝 떨어지지 않아 표시하지 않는다.
+    if rules.f9.get("g3_runway_curve") is not None:
+        return {"flag": False, "nearest_boundary": None, "distance_ratio": None,
+                "tolerance": float(rules.f6["boundary_tolerance"]), "continuous": True}
     marks = [float(rules.f9["g3_runway_keep_years"]), float(rules.f9["g3_runway_one_step_years"])]
     nearest = min(marks, key=lambda b: abs(runway - b) / b)
     return rules.f6_threshold_boundary_flag(runway, nearest)
@@ -61,12 +69,26 @@ def _runway_boundary(runway: float, rules: RuleSet) -> dict[str, Any]:
 G4_MISSING_DOWNGRADE_STEP = -1
 
 
-def _coverage_step(coverage: float, rules: RuleSet) -> int:
-    """약정 커버리지 감점. 2026-09-17 FIX-68 S2: 설명 문장이 이 값을 읽어 쓰도록 함수로 뽑았다."""
+def _coverage_step(coverage: float, rules: RuleSet) -> int | float:
+    """약정 커버리지 감점. 2026-09-17 FIX-68 S2: 설명 문장이 이 값을 읽어 쓰도록 함수로 뽑았다.
+
+    2026-10-14 규칙 v3.0: 커버리지 곡선(g4_coverage_curve)이 있으면 연속값이다(1배 이상 0, 0배 −4)."""
+    curve = rules.f9.get("g4_coverage_curve")
+    if curve is not None:
+        return piecewise(curve, coverage)
     return 0 if coverage >= float(rules.f9["g4_coverage_keep"]) else -1
 
 
-def _runway_step(runway: float, rules: RuleSet) -> int:
+def _g4_not_disclosed_step(rules: RuleSet) -> int:
+    """확인된 미공시에 C-16 `downgrade` 가 깎는 점수. 2026-10-14 규칙 v3.0 은 정책 값(−4)을, 옛 규칙은 한 칸(−1)을 쓴다."""
+    return int(rules.f9.get("g4_not_disclosed_score", G4_MISSING_DOWNGRADE_STEP))
+
+
+def _runway_step(runway: float, rules: RuleSet) -> int | float:
+    # 2026-10-14 규칙 v3.0: 런웨이 곡선(g3_runway_curve)이 있으면 연속값이다(3년 이상 0, 1년 −4, 0년 −8).
+    curve = rules.f9.get("g3_runway_curve")
+    if curve is not None:
+        return piecewise(curve, runway)
     if runway >= float(rules.f9["g3_runway_keep_years"]):
         return 0
     if runway >= float(rules.f9["g3_runway_one_step_years"]):
@@ -95,6 +117,8 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
         calc = {"path": path, "inputs": gi}
         if extra:
             calc.update(extra)
+        # 2026-10-14 규칙 v3.0: 연속값이면 소수 둘째 자리에서 한 번 반올림한다. 옛 규칙은 그대로 돌려준다.
+        score = rules.round_score(score)
         return factor_result(FACTOR, score=score, status=status, basis="computed", judgment=judgment,
                              observation_ids=obs_ids, calc=calc, warnings=warnings, pending=pending)
 
@@ -183,6 +207,10 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
                             "**C-20 비상장 경로가 앞서고**(C-29, 사용자 결정 2026-09-17으로 앞선 결정 뒤집음) "
                             "이 자리는 상장사이거나 구조적 미공시가 아닌 경우에만 선다. 그때는 손실률 밴드보다 앞선다. "
                             "C-06 의 남은 미결은 FCF·영업손익 0 처리와 완충 잠식·G2 추세 정의다")
+        elif pol.get("g1_loss_curve") is not None:
+            # 2026-10-14 규칙 v3.0: 손실률을 연속값으로 재므로 경계를 고르는 C-06 결정이 필요 없다(rules.md 8절 C-06).
+            base = _g1_loss_band(float(margin), rules)
+            path.append({"gate": "G1", "result": "fail", "operating_margin_ttm": margin, "band": "연속값(g1_loss_curve)", "score": base})
         else:
             choice = decision_choice(run, rules, "C-06")
             if choice != "proposed_v15_boundaries":
@@ -295,11 +323,12 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
         return done(None, "pending_data", pending_info("data", f"TTM FCF 관측 {mtype_text} — 미수집과 확인된 비공개를 구분한다. {hint}"))
     if fcf > 0:
         trend = gi["fcf_trend"]
+        # 2026-10-14 규칙 v3.0: 경로 기록의 점수도 정책 값을 읽는다(전에는 0·−1 이 글자로 박혀 ×4 규칙에서 점수와 어긋났다).
         if trend == "stable":
-            path.append({"gate": "G2", "result": "positive_stable", "fcf_ttm": fcf, "score": 0})
+            path.append({"gate": "G2", "result": "positive_stable", "fcf_ttm": fcf, "score": int(pol["g2_fcf_positive_stable"])})
             return done(int(pol["g2_fcf_positive_stable"]), "ok")
         if trend == "deteriorating":
-            path.append({"gate": "G2", "result": "positive_deteriorating", "fcf_ttm": fcf, "score": -1})
+            path.append({"gate": "G2", "result": "positive_deteriorating", "fcf_ttm": fcf, "score": int(pol["g2_fcf_positive_deteriorating"])})
             return done(int(pol["g2_fcf_positive_deteriorating"]), "ok")
         path.append({"gate": "G2", "result": "pending", "fcf_ttm": fcf, "reason": "추세 안정/악화 판정 입력 필요"})
         return done(None, "needs_judgment", pending_info("judgment", "TTM FCF 흑자 — 추세(stable/deteriorating) 검토 입력 필요"))
@@ -414,7 +443,7 @@ def _g4(cid: str, obs: ObsLookup, gi: dict[str, Any], rules: RuleSet, run: dict[
                 "reason": f"확인된 미공시({MISSING_TYPE_FOR_DISCLOSURE_POLICY})"})
     choice = decision_choice(run, rules, "C-16")
     if choice == "downgrade":
-        out["step"] = G4_MISSING_DOWNGRADE_STEP
+        out["step"] = _g4_not_disclosed_step(rules)
         out["policy"] = "downgrade (C-16 실행 결정)"
     elif choice == "hold":
         out["step"] = 0

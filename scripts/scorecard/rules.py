@@ -1,6 +1,8 @@
 # 규칙 원본(scorecard/rules/*.json) 로드·해시와 구간표·사다리·매트릭스·실행 단위 결정 조회 헬퍼
 from __future__ import annotations
 
+import math
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
@@ -10,6 +12,30 @@ from report_contract_lib import ROOT
 from .schema import SchemaError, load_json_strict, sha256_file, validate_rules
 
 RULES_DIR = ROOT / "scorecard" / "rules"
+
+
+def piecewise(curve: dict[str, Any], x: float) -> float:
+    """2026-10-14 규칙 v3.0: 기준점 사이를 선형으로 잇는 연속값. 끝점 밖은 끝점 점수로 자른다.
+
+    `x_transform: log2` 면 log2(x) 축에서 잇는다(두 배마다 같은 폭). 그때 x ≤ 0 은 첫 기준점 점수다.
+    모양(기준점 오름차순·점수 범위)은 스키마 `_validate_curve` 가 이미 봤다."""
+    use_log = curve.get("x_transform") == "log2"
+    if use_log and x <= 0:
+        return float(curve["anchors"][0][1])
+
+    def axis(v: float) -> float:
+        return math.log2(v) if use_log else float(v)
+
+    points = [(axis(a), float(b)) for a, b in curve["anchors"]]
+    xv = axis(x)
+    if xv <= points[0][0]:
+        return points[0][1]
+    if xv >= points[-1][0]:
+        return points[-1][1]
+    for (x0, y0), (x1, y1) in zip(points, points[1:]):
+        if x0 <= xv <= x1:
+            return y0 + (y1 - y0) * (xv - x0) / (x1 - x0)
+    raise SchemaError(f"곡선이 값 {x!r} 를 덮지 못함")   # 기준점이 오름차순이면 오지 않는다
 
 
 class RuleSet:
@@ -92,6 +118,16 @@ class RuleSet:
     def checklist(self) -> list[dict[str, Any]]:
         return list(self.payload["checklist"])
 
+    def round_score(self, value: Any) -> Any:
+        """2026-10-14 규칙 v3.0: 항목 점수를 소수 `scoring.score_decimals` 자리에서 한 번 반올림한다(사사오입). 정수면 int.
+
+        자릿수를 선언하지 않은 옛 규칙은 값을 그대로 돌려준다 — 승인된 실행의 결과(와 그 해시)가 바뀌지 않게."""
+        digits = self.payload["scoring"].get("score_decimals")
+        if digits is None or value is None:
+            return value
+        rounded = float(Decimal(str(value)).quantize(Decimal(1).scaleb(-int(digits)), rounding=ROUND_HALF_UP))
+        return int(rounded) if rounded.is_integer() else rounded
+
     # ------------------------------------------------------------ F6 band
     def f6_band(self, per: float) -> tuple[int, str]:
         """PER 을 반개방 구간표에 넣어 (점수, 구간 라벨) 반환. 표시 반올림은 개입하지 않는다."""
@@ -152,6 +188,15 @@ class RuleSet:
                 upper = float(low)
         raise SchemaError(f"F6 파라미터 {pid} 구간표가 값을 덮지 못함: {value!r}")
 
+    def f6_parameter_score(self, pid: str, value: float) -> tuple[int | float, str]:
+        """2026-10-14 규칙 v3.0: 파라미터에 `curve` 가 있으면 연속값, 없으면 지금 구간표(`f6_parameter_band`)."""
+        spec = self.f6_parameters().get(pid)
+        if spec is None:
+            raise SchemaError(f"F6 파라미터 {pid!r} 가 규칙에 없음")
+        if spec.get("curve") is None:
+            return self.f6_parameter_band(pid, value)
+        return piecewise(spec["curve"], value), f"연속값 {value:.4g}"
+
     def f6_parameter_boundaries(self, pid: str) -> list[float]:
         spec = self.f6_parameters().get(pid) or {}
         key = "upper" if spec.get("comparison") == "upper_exclusive" else "lower"
@@ -160,6 +205,9 @@ class RuleSet:
     def f6_parameter_boundary_flag(self, pid: str, value: float) -> dict[str, Any]:
         """경계 ±tolerance 표시. 점수를 바꾸지 않는다."""
         tol = float(self.f6["boundary_tolerance"])
+        # 2026-10-14 규칙 v3.0: 연속값 파라미터는 경계에서 점수가 뚝 떨어지지 않아 표시하지 않는다(rules.md ⑥ 경계 표시).
+        if (self.f6_parameters().get(pid) or {}).get("curve") is not None:
+            return {"flag": False, "nearest_boundary": None, "distance_ratio": None, "tolerance": tol, "continuous": True}
         edges = self.f6_parameter_boundaries(pid)
         if not edges:
             return {"flag": False, "nearest_boundary": None, "distance_ratio": None, "tolerance": tol}
@@ -253,6 +301,13 @@ class RuleSet:
             if lower is None or value >= float(lower):
                 return int(band["score"]), str(band.get("label") or lower)
         raise SchemaError(f"F6 비상장 밴드가 값 {value!r} 를 덮지 않음")
+
+    def f6_private_score(self, value: float) -> tuple[int | float, str]:
+        """2026-10-14 규칙 v3.0: 비상장 구간표에 `curve` 가 있으면 연속값, 없으면 지금 구간표(`f6_private_band`)."""
+        curve = self.f6_private_bands().get("curve")
+        if curve is None:
+            return self.f6_private_band(value)
+        return piecewise(curve, value), f"연속값 {value:.4g}"
 
     def f6_ttm_window(self) -> dict[str, Any]:
         return self.f6.get("ttm_window") or {}

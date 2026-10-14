@@ -21,7 +21,7 @@ from datetime import date
 from typing import Any
 
 from .inputs import ObsLookup, factor_result, obs_note, pending_info
-from .rules import RuleSet, decision_choice
+from .rules import RuleSet, decision_choice, piecewise
 
 FACTOR = "F6"
 # 선택 파라미터를 만들지 못한 사유 중 **factor 를 pending 으로 세우지 않는 것**(FIX-61).
@@ -377,7 +377,8 @@ def _growth_adjusted_p1(cid: str, raw: dict[str, Any], spec: dict[str, Any], obs
                       "why": f"매출 성장 {growth * 100:.1f}% 가 문턱 {floor * 100:g}% 미만 — 성장으로 정당화할 수 없어 {score}"})
         return entry
     value = per / (growth * float(ga["growth_multiplier"]))
-    score, band = rules.f6_parameter_band("P1", value)
+    # 2026-10-14 규칙 v3.0: 파라미터에 curve 가 있으면 연속값이다. 없으면 지금 구간표 그대로.
+    score, band = rules.f6_parameter_score("P1", value)
     boundary = rules.f6_parameter_boundary_flag("P1", value)
     entry.update({"value": value, "score": score, "band": band, "boundary": boundary})
     if boundary["flag"]:
@@ -475,7 +476,8 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
         if raw.get("growth_adjusted") and reason is None:
             # 2026-10-12 규칙 v2.1: 성장 조정 PER 은 이익이 0 이하이거나 성장이 문턱 미만이어도 점수(−3)를 낸다.
             entry = _growth_adjusted_p1(cid, raw, rules.f6_parameters()[pid], obs, rules, obs_ids, warnings)
-            subtotal += int(entry["score"])
+            # 2026-10-14 규칙 v3.0: 연속값이면 끝수가 있다. 구간표 규칙에서는 점수가 이미 정수라 결과가 같다.
+            subtotal += entry["score"]
             p1_adjusted = bool(entry["earnings_adjustment"].get("applied"))
             calc["parameters"][pid] = entry
             continue
@@ -495,7 +497,7 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
             entry["reason"] = reason
             missing.append(reason or pid)
         else:
-            score, band = rules.f6_parameter_band(pid, value)
+            score, band = rules.f6_parameter_score(pid, value)
             boundary = rules.f6_parameter_boundary_flag(pid, value)
             entry.update({"value": value, "score": score, "band": band, "boundary": boundary})
             subtotal += score
@@ -563,6 +565,7 @@ def compute_listed(company: dict[str, Any], obs: ObsLookup, judgment: dict[str, 
         calc["floor_applied"] = True
         warnings.append(f"트랙 하한 {floor} 로 절단 (보정 전 {total})")
         total = floor
+    total = rules.round_score(total)
     calc["score"] = total
     if p4["conditions_hit"]:
         warnings.append(f"P4 보정 한 칸 — 조건 {', '.join(p4['conditions_hit'])}")
@@ -585,9 +588,36 @@ def _upper_band(bands: list[dict[str, Any]], value: float) -> tuple[int, str]:
     raise ValueError("bands 가 구간을 덮지 못함")
 
 
+def _pga_score(pga: dict[str, Any], value: float) -> tuple[int | float, str]:
+    """2026-10-14 규칙 v3.0: 성장 조정 P/S 에 curve 가 있으면 연속값, 없으면 지금 구간표."""
+    curve = pga.get("curve")
+    if curve is None:
+        return _upper_band(pga["bands"], value)
+    return piecewise(curve, value), f"연속값 {value:.4g}"
+
+
+# 2026-10-14 규칙 v3.0: 배수가 범위 추정이면 연속값에서는 양 끝 점수가 거의 늘 갈린다. 어느 끝을 쓸지는 규칙
+# `policies.f6.estimate_range_end` 가 정한다(rules.md ⑥ 비상장, 8절 미결). 정하지 않았으면 값을 고르지 않는다.
+RANGE_END_LABELS = {"low": "낮은 끝 배수", "high": "높은 끝 배수", "mid": "양 끝의 가운데"}
+
+
+def _range_end_score(f6: dict[str, Any], lo_score: float, hi_score: float) -> tuple[float | None, str | None]:
+    end = f6.get("estimate_range_end")
+    if end == "low":
+        return lo_score, RANGE_END_LABELS[end]
+    if end == "high":
+        return hi_score, RANGE_END_LABELS[end]
+    if end == "mid":
+        return (lo_score + hi_score) / 2, RANGE_END_LABELS[end]
+    return None, None
+
+
+RANGE_END_PENDING = "어느 끝을 쓸지 규칙(policies.f6.estimate_range_end)이 정하지 않았다 — 값을 고르지 않는다(rules.md 8절 미결)"
+
+
 def _private_growth_adjusted(cid: str, pga: dict[str, Any], multiple: float, rng: Any, p2_entry: dict[str, Any],
                              obs: ObsLookup, track: dict[str, Any], calc: dict[str, Any], obs_ids: list[str],
-                             warnings: list[str], bands_spec: dict[str, Any]) -> dict[str, Any]:
+                             warnings: list[str], bands_spec: dict[str, Any], rules: RuleSet) -> dict[str, Any]:
     """2026-10-12 규칙 v2.1 비상장 ⑥: P/S ÷ (보정 매출 성장률 × 100). 상장 P1 과 같은 질문(성장에 비해 비싼가)을 매출 배수로 묻는다.
 
     보정 매출이나 전년 보정 매출 관측이 없으면 P/S 구간표(private_bands)로 점수를 낸다. 보정 매출이 0 이하면 성장률이 서지
@@ -608,10 +638,15 @@ def _private_growth_adjusted(cid: str, pga: dict[str, Any], multiple: float, rng
         detail["why"] = f"{rev_metric if rev is None else prior_metric} 관측 없음 — P/S 구간표로 점수를 낸다(승격 보정 없음)"
         warnings.append(f"비상장 성장 조정 불가 — {detail['why']}")
         if (p2_entry.get("estimate_range") or {}).get("spans_bands"):
+            if bands_spec.get("curve") is not None:
+                return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
+                                     observation_ids=obs_ids, calc=calc, warnings=warnings,
+                                     pending=pending_info("rule", f"P2 범위 추정 {rng[0]}~{rng[1]} 의 양 끝 점수가 다르다 — {RANGE_END_PENDING}"))
             return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
                                  observation_ids=obs_ids, calc=calc, warnings=warnings,
                                  pending=pending_info("data", f"P2 구간 추정 {rng[0]}~{rng[1]} 이 P/S 구간표 밴드를 가른다 — 값을 고르지 않는다"))
-        score = int(p2_entry["score"])
+        # 2026-10-14 규칙 v3.0: 연속값이면 끝수가 있다. 구간표 규칙에서는 이미 정수다.
+        score = p2_entry["score"]
     elif rev <= 0 or prior <= 0:
         detail["path"] = "pending"
         return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
@@ -628,15 +663,25 @@ def _private_growth_adjusted(cid: str, pga: dict[str, Any], multiple: float, rng
         else:
             mult = float(pga["growth_multiplier"])
             value = multiple / (growth * mult)
-            score, label = _upper_band(pga["bands"], value)
+            score, label = _pga_score(pga, value)
             detail.update({"path": "growth_adjusted", "value": value, "band": label})
             if isinstance(rng, (list, tuple)) and len(rng) == 2:
                 lo_v, hi_v = float(rng[0]) / (growth * mult), float(rng[1]) / (growth * mult)
-                lo_s, lo_l = _upper_band(pga["bands"], lo_v)
-                hi_s, hi_l = _upper_band(pga["bands"], hi_v)
+                lo_s, lo_l = _pga_score(pga, lo_v)
+                hi_s, hi_l = _pga_score(pga, hi_v)
                 detail["estimate_range"] = {"low": lo_v, "high": hi_v, "low_band": lo_l, "high_band": hi_l,
                                             "spans_bands": lo_s != hi_s}
-                if lo_s != hi_s:
+                if lo_s != hi_s and pga.get("curve") is not None:
+                    picked, how = _range_end_score(rules.f6, lo_s, hi_s)
+                    detail["estimate_range"].update({"low_score": lo_s, "high_score": hi_s})
+                    if picked is None:
+                        return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
+                                             observation_ids=obs_ids, calc=calc, warnings=warnings,
+                                             pending=pending_info("rule", f"P/S 범위 추정 {rng[0]}~{rng[1]} 을 성장으로 나눈 값의 양 끝 점수가 "
+                                                                          f"{lo_s:.2f} 대 {hi_s:.2f} — {RANGE_END_PENDING}"))
+                    score = picked
+                    detail["estimate_range"].update({"spans_bands": False, "picked": how})
+                elif lo_s != hi_s:
                     return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
                                          observation_ids=obs_ids, calc=calc, warnings=warnings,
                                          pending=pending_info("data", f"P/S 구간 추정 {rng[0]}~{rng[1]} 을 성장으로 나눈 값이 밴드를 가른다"
@@ -650,6 +695,7 @@ def _private_growth_adjusted(cid: str, pga: dict[str, Any], multiple: float, rng
     if total < floor:
         calc["floor_applied"] = True
         total = floor
+    total = rules.round_score(total)
     calc["score"] = total
     calc["boundary_rule"] = bands_spec.get("boundary_rule")
     return factor_result(FACTOR, score=total, status="ok", basis="computed",
@@ -724,19 +770,31 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
                              observation_ids=obs_ids, calc=calc, warnings=warnings,
                              pending=pending_info("data", "비상장 P2 입력 ps_ratio(밸류÷TTM 보정 매출) 관측 없음 — "
                                                           "arr 로 대체하지 않는다"))
-    score, label = rules.f6_private_band(multiple)
+    # 2026-10-14 규칙 v3.0: 비상장 구간표에 curve 가 있으면 연속값이다. 없으면 지금 구간표 그대로.
+    score, label = rules.f6_private_score(multiple)
     entry: dict[str, Any] = {"value": multiple, "score": score, "band": label,
                              "input": "ps_ratio", "formula": spec.get("input")}
     # 구간 추정이면 양 끝이 같은 밴드에 드는지 본다. 갈리면 값을 고르지 않는다.
     rng = ((p2_obs or {}).get("basis") or {}).get("estimate_range")
     if isinstance(rng, (list, tuple)) and len(rng) == 2:
-        lo_score, lo_label = rules.f6_private_band(float(rng[0]))
-        hi_score, hi_label = rules.f6_private_band(float(rng[1]))
+        lo_score, lo_label = rules.f6_private_score(float(rng[0]))
+        hi_score, hi_label = rules.f6_private_score(float(rng[1]))
         entry["estimate_range"] = {"low": rng[0], "high": rng[1],
                                    "low_band": lo_label, "high_band": hi_label,
                                    "spans_bands": lo_score != hi_score}
+        if lo_score != hi_score and spec.get("curve") is not None:
+            picked, how = _range_end_score(rules.f6, lo_score, hi_score)
+            entry["estimate_range"].update({"low_score": lo_score, "high_score": hi_score})
+            if picked is not None:
+                entry["score"] = score = picked
+                entry["estimate_range"].update({"spans_bands": False, "picked": how})
+            elif not pga:
+                calc["parameters"]["P2"] = entry
+                return factor_result(FACTOR, score=None, status="needs_rule_decision", basis="computed",
+                                     observation_ids=obs_ids, calc=calc, warnings=warnings,
+                                     pending=pending_info("rule", f"P2 범위 추정 {rng[0]}~{rng[1]} 의 양 끝 점수가 다르다 — {RANGE_END_PENDING}"))
         # 2026-10-12 규칙 v2.1: 성장 조정 경로는 자기 밴드에서 구간을 다시 본다. 여기서는 P/S 구간표 경로만 멈춘다.
-        if lo_score != hi_score and not pga:
+        if lo_score != hi_score and not pga and spec.get("curve") is None:
             calc["parameters"]["P2"] = entry
             return factor_result(FACTOR, score=None, status="pending_data", basis="computed",
                                  observation_ids=obs_ids, calc=calc, warnings=warnings,
@@ -747,7 +805,7 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
     calc["parameters"]["P2"] = entry
 
     if pga:
-        return _private_growth_adjusted(cid, pga, multiple, rng, entry, obs, track, calc, obs_ids, warnings, spec)
+        return _private_growth_adjusted(cid, pga, multiple, rng, entry, obs, track, calc, obs_ids, warnings, spec, rules)
 
     # ---------------- P3·P4 — 합쳐서 상한 1칸 보정
     corr = rules.f6_private_correction()
@@ -804,6 +862,7 @@ def compute_private(company: dict[str, Any], obs: ObsLookup, judgment: dict[str,
     if total < floor:
         calc["floor_applied"] = True
         total = floor
+    total = rules.round_score(total)
     calc["score"] = total
     if detail["promotion_steps"]:
         warnings.append(f"비상장 보정 한 칸 — 조건 {', '.join(met)} 충족")

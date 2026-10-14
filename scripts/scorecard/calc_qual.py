@@ -137,9 +137,13 @@ def compute_f8(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSe
                              pending=pending_info("judgment", "네 축이 모두 비공개·탐색 미완 — 기본값만으로 점수를 만들지 않는다"))
     lo, hi = rules.factor_range(fid)
     worst = min(a["score"] for a in axes.values())
-    score = max(lo, min(hi, worst))
+    # 2026-10-14 규칙 v3.0: 판단은 칸(0~−5)을 고르고 점수는 칸 × score_multiplier(4)다. 배수가 없는 옛 규칙은 칸이 곧 점수다.
+    multiplier = spec.get("score_multiplier")
+    score = max(lo, min(hi, worst * multiplier if multiplier is not None else worst))
     calc.update({"score": score, "deciding_axes": [k for k, a in axes.items() if a["score"] == worst],
                  "assessment_complete": not any(a["policy_default"] for a in axes.values())})
+    if multiplier is not None:
+        calc.update({"rung": worst, "score_multiplier": multiplier})
     labels = {"not_disclosed": "비공개", "not_found": "탐색 미완"}
     warnings = [f"⑧ {spec['axis_labels'][k]} 축은 {labels[a['basis']]} — 정책 기본값 {a['score']}(실제 위험을 확인한 값이 아니다)"
                 for k, a in axes.items() if a["policy_default"]]
