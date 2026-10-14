@@ -93,12 +93,17 @@ BASIS_LABELS = {
     "lockin": "네 질문 사다리",
     # 2026-10-12 규칙 v2.1: ④ 는 보유표와 AI 무관 매출 몫, ⑧ 은 네 축 가운데 가장 낮은 칸.
     "survival": "보유표 두 축", "axes": "네 축 중 최저",
+    # 2026-10-14 규칙 v3.0: ①②③ 은 층·사업 단위로 매겨 층 매출 몫으로 합치고, ④⑤ 는 세 부분을 더한다.
+    "business": "사업 단위 합산", "layer_paths": "층별 세 경로", "layer_cp": "층별 카운터 포지셔닝",
+    "holdings": "보유표 세 부분", "alliance": "동맹 세 부분·적대 띠",
 }
 MODE_LABELS = {
     "manual": "사람 판단", "paths": "조건 통과 수", "ladder": "기준 사다리", "formula": "산식",
     "parameters": "수치 합산", "matrix": "조합표", "gates": "관문 통과",
     "lockin": "네 질문 사다리",
     "survival": "보유표 두 축", "axes": "네 축 중 최저",
+    "business": "사업 단위 합산", "layer_paths": "층별 세 경로", "layer_cp": "층별 카운터 포지셔닝",
+    "holdings": "보유표 세 부분", "alliance": "동맹 세 부분·적대 띠",
 }
 # 관측 지표·상태·조건의 내부 이름도 화면에서는 한국어로 옮긴다. **긴 이름부터** 바꾼다
 # (`not_disclosed_confirmed` 가 `not_disclosed` 를 품는다). 결정 선택지와 코드·규칙 경로는 감사 기록·
@@ -733,6 +738,9 @@ def factor_notes(ctx: Any, fid: str, fr: dict[str, Any]) -> list[dict[str, Any]]
                                                "신용등급이 좋아 더 빌릴 수 있다는 추정은 넣지 않는다."})
             continue
         if w.startswith("C-06"):
+            # 2026-10-14 규칙 v3.0: 손실률은 곡선이라 구간표 문장이 맞지 않는다. 곡선은 방법 절에 있다.
+            if is_layered(ctx.rules):
+                continue
             bands = ctx.rules.payload["policies"]["f9"].get("g1_bands_proposed") or []
             txt = " · ".join(f"손실률 {abs(b['min_margin']):.0%} 까지 {b['score']}" for b in bands if b.get("min_margin") is not None)
             out.append({"kind": "note", "text": "본업 손실률 구간은 제안된 새 구간을 이번 실행에서 적용했다"
@@ -1345,6 +1353,8 @@ def factor_calc_text(f: str, fr: dict[str, Any], rules: Any = None, inputs: dict
             text += " ⚠️ 구간 경계 ±3% 이내"
     elif f == "F6" and "valuation_over_arr" in calc:
         text = f"밸류÷ARR {fmt_num(calc['valuation_over_arr'])}x · ARR÷조달 {fmt_num(calc.get('arr_over_cumulative_raised'), 2)}"
+    elif rules is not None and fr.get("basis") in V3_BASES:
+        text = layered_calc_text(fr, rules)
     elif f == "F1" and rules is not None and fr.get("basis") == "lockin":
         text = lockin_calc_text(rules, fr, judgment_values(fr, inputs))
     elif f == "F4" and fr.get("basis") == "survival" and calc.get("score") is not None:
@@ -1359,7 +1369,7 @@ def factor_calc_text(f: str, fr: dict[str, Any], rules: Any = None, inputs: dict
         text = f"조달 의존 고객 비중 {SHARE_LABELS.get(calc['funding_dependent_share'], calc['funding_dependent_share'])} · 내 돈 환류 {YESNO_LABELS.get(calc['own_money_returns'], calc['own_money_returns'])}"
     elif f == "F9" and calc.get("path"):
         text = " → ".join(f9_gate_text(p) for p in calc["path"])
-    if rules is not None and f in ("F2", "F3"):
+    if rules is not None and f in ("F2", "F3") and fr.get("basis") not in V3_BASES:
         vals = judgment_values(fr, inputs)
         extra = f2_gap_text(rules, vals, company_type) if f == "F2" else f3_tier_text(rules, vals, calc)
         if extra:
@@ -1418,6 +1428,12 @@ def raw_caption(ctx: Any) -> str:
 
 
 def price_notice(ctx: Any) -> str:
+    if is_layered(ctx.rules):
+        # 2026-10-14 규칙 v3.0: 잣대마다 곡선(연속값)이라 한 칸 조정·구간 경계 표시가 없다.
+        return ("⑥ 상장 점수는 **PER(성장 조정) · EV/매출(시총에서 순현금을 뺀 값 ÷ 매출) · 매출 성장**을 곡선으로 재서 더한 뒤 "
+                "**입력 신뢰도**로 깎은 값이다. "
+                "아래 표의 NTM PER·TTM PER·P/S·영업외 비중 열은 사용자 원본 참고값이고 점수는 이 열이 아니라 원자료에서 다시 계산한다. "
+                "곡선은 연속값이라 구간 경계 표시가 없다.")
     if ctx.rules.f6_mode == "parameters":
         return ("⑥ 상장 점수는 **PER · EV/매출(시총에서 순현금을 뺀 값 ÷ 매출) · 매출 성장** 셋을 더한 뒤 "
                 "**입력 신뢰도**로 한 칸을 조정한 값이다. "
@@ -1428,6 +1444,9 @@ def price_notice(ctx: Any) -> str:
 
 
 def private_notice(ctx: Any) -> str:
+    if is_layered(ctx.rules):
+        return ("비상장 배수는 상장사 PER과 직접 견줄 수 없다. 점수는 규칙의 비상장 곡선(성장 조정 배수, 그 재료가 없으면 P/S 곡선)으로 낸다. "
+                "경계 표시는 붙이지 않는다.")
     if ctx.rules.f6_mode == "parameters":
         return ("비상장 배수는 상장사 PER과 직접 견줄 수 없다. 점수는 **밸류/매출 구간표**로 내고, "
                 "**매출 성장과 자본 효율을 둘 다 채울 때만** 한 칸 올려 준다. 경계 표시는 붙이지 않는다.")
@@ -1643,6 +1662,12 @@ JUDGMENT_ROLES = {
     # 2026-10-12 규칙 v2.1
     "survival": "층별 보유표와 AI 무관 매출 몫",
     "axes": "네 축의 재료와 칸",
+    # 2026-10-14 규칙 v3.0
+    "business": "사업마다 락인·가격·대체 공급과 구성 사업",
+    "layer_paths": "층마다 세 경로의 칸",
+    "layer_cp": "층마다 상대와 수익모델·모방·가속도",
+    "holdings": "열한 층 보유표와 매출 줄",
+    "alliance": "동맹 관계와 적대 전선",
 }
 # 사람이 매긴 것을 엔진이 어떤 장치로 환산하는지. 규칙의 산식 자체는 아래 `mode` 색인에 있고
 # 여기서는 **판단과 점수 사이에 무엇이 끼어 있는지**만 한 마디로 적는다.
@@ -1941,6 +1966,9 @@ def method_sections(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None,
     규칙·계산 코드에서 읽어 쓴다(FIX-69 L1). 결정 번호는 문장에서 빼 `관련 결정` 줄로 보낸다.
     2026-09-17 FIX-75: 평평한 목록이라 어느 문장이 어느 항목 것인지 읽는 사람이 알 수 없었다.
     """
+    # 2026-10-14 규칙 v3.0: 아래 문장은 v2.x 의 구간표·칸 수를 전제로 한다. 층 정의가 있는 규칙은 v3.0 방법 절을 쓴다.
+    if is_layered(ctx.rules):
+        return method_sections_v3(ctx, results)
     from .calc_f9 import G4_MISSING_DOWNGRADE_STEP, _coverage_step, _runway_step
     f9 = ctx.rules.payload["policies"]["f9"]
     f6p = ctx.rules.payload["policies"]["f6"]
@@ -2290,8 +2318,178 @@ def limitations(ctx: Any) -> list[str]:
         fallback = [ctx.companies[c]["display_name"] for c in ctx.run["companies"]
                     if not (ctx.companies.get(c) or {}).get("listed") and not {(c, rev), (c, prior)} <= have]
         if fallback:
-            out.append(f"**비상장 ⑥ 은 {', '.join(fallback)} 모두 P/S 구간표로 매겼다.** 성장 조정 배수에 필요한 실측 보정 매출과 그 전년 값이 "
+            ps = "P/S 곡선으로" if is_layered(ctx.rules) else "P/S 구간표로"
+            out.append(f"**비상장 ⑥ 은 {', '.join(fallback)} 모두 {ps} 매겼다.** 성장 조정 배수에 필요한 실측 보정 매출과 그 전년 값이 "
                        "같은 등급의 공개 자료로 확인되지 않아서다. 성장 조정 배수로 매기면 점수가 크게 달라질 수 있다.")
     # 2026-10-06 사용자 지시: 본문 한계 절에는 이해상충 고지만 둔다. 재검토 약속(규칙 긴장 목록)은 감사 기록으로 보낸다.
     out += [line for line in conflict_lines(ctx) if line.startswith("**이해상충**")]
     return out
+
+
+# ------------------------------------------------------------------ 규칙 v3.0 (2026-10-14)
+# 층·사업 단위 판단과 연속값을 초안이 읽는 최소 경로. 규칙에 layers 가 있는 실행에서만 탄다 — 옛 실행의 출력은 그대로다.
+
+V3_BASES = {"business", "layer_paths", "layer_cp", "holdings", "alliance"}
+HOSTILITY_BAND_LABELS = {"minimal": "최소", "cost": "비용형", "structural": "구조형", "structural_multi_front": "구조형 복수 전선",
+                         "multi": "다발형"}
+
+
+def is_layered(rules: Any) -> bool:
+    return bool((getattr(rules, "payload", None) or {}).get("layers"))
+
+
+def v3_layer_names(rules: Any) -> dict[str, str]:
+    """열한 층과 층 밖 사업의 이름(rules.layers)."""
+    spec = rules.payload["layers"]
+    return {**spec["labels"], spec["outside"]["id"]: spec["outside"]["label"]}
+
+
+def _score_text(value: Any) -> str:
+    """표시용 점수. 계산은 반올림하지 않은 값으로 하고, 화면에는 소수 둘째 자리까지만 보인다."""
+    return "—" if value is None else f"{round(float(value), 2):g}"
+
+
+def _anchor_text(curve: dict[str, Any], fmt: Any) -> str:
+    """곡선 기준점을 '0% −8, 30% 이상 −16' 처럼 읽는다. 마지막 기준점 뒤는 그 점수로 잘린다."""
+    points = curve["anchors"]
+    return ", ".join(f"{fmt(x)}{' 이상' if i == len(points) - 1 else ''} {s:g}" for i, (x, s) in enumerate(points))
+
+
+def layered_calc_text(fr: dict[str, Any], rules: Any) -> str:
+    """v3.0 산식 줄. 층·사업 항목은 층마다 점수 × 층 매출 몫, ④ 는 세 부분, ⑤ 는 12 + 동맹 + 적대다."""
+    calc = fr.get("calc") or {}
+    names = v3_layer_names(rules)
+    basis = fr.get("basis")
+    if basis == "holdings" and calc.get("score") is not None:
+        text = (f"수직계열화 {_score_text(calc['vertical'])}(칸 합 {_score_text(calc['vertical_raw'])}) + "
+                f"다각화 {_score_text(calc['diversification'])}(AI 무관 {calc['non_ai_share'] * 100:.0f}%) + "
+                f"그 분야의 힘 {_score_text(calc['field_strength'])}")
+        if calc.get("non_ai_margin_source") == "company":
+            text += "(회사 전체 이익률로 대신)"
+        return text
+    if basis in ("layer_paths", "layer_cp") and calc.get("layers"):
+        return " + ".join(f"{names.get(u, u)} {_score_text(d.get('score'))} × {d['weight'] * 100:.0f}%" for u, d in calc["layers"].items())
+    if basis == "business" and calc.get("layer_scores"):
+        weights = calc.get("layer_weights") or {}
+        return (f"사업 {len(calc.get('businesses') or {})}개 → "
+                + " + ".join(f"{names.get(u, u)} {_score_text(s)} × {weights.get(u, 0) * 100:.0f}%"
+                             for u, s in calc["layer_scores"].items()))
+    if basis == "alliance" and "A" in calc:
+        return (f"{calc['neutral']} + 동맹 {_score_text(calc['A'])} + 적대 {_score_text(calc['H'])}"
+                f"({HOSTILITY_BAND_LABELS.get(calc.get('band'), calc.get('band'))})")
+    return ""
+
+
+def unit_judgments(ctx: Any, company_id: str, factor: str) -> list[dict[str, Any]]:
+    """한 회사·항목의 층·사업 판단. 층 순서(열한 층, 층 밖 사업)·사업 id 순이다."""
+    order = [*ctx.rules.payload["layers"]["order"], ctx.rules.payload["layers"]["outside"]["id"]]
+    items = [j for j in ctx.judgments if j["company_id"] == company_id and j["factor"] == factor and ("layer" in j or "business" in j)]
+    return sorted(items, key=lambda j: (order.index(j["layer"]) if j.get("layer") in order else len(order), j.get("business") or ""))
+
+
+def unit_name(ctx: Any, judgment: dict[str, Any]) -> str:
+    """층 판단은 층 이름, 사업 판단은 구성 사업 이름들."""
+    if judgment.get("layer"):
+        return v3_layer_names(ctx.rules).get(judgment["layer"], judgment["layer"])
+    return " · ".join(c["name"] for c in judgment["inputs"].get("components") or []) or judgment.get("business", "")
+
+
+def layer_table_rows(rules: Any, factors: dict[str, dict[str, Any]]) -> list[list[str]]:
+    """회사 한 곳의 층별 점수 표. 층 매출 몫은 ④ 보유표의 매출 줄에서 온다. 무게가 없으면 빈 목록이다."""
+    weights = (factors["F4"].get("calc") or {}).get("layer_weights") or {}
+    if not weights:
+        return []
+    names = v3_layer_names(rules)
+    f1 = (factors["F1"].get("calc") or {}).get("layer_scores") or {}
+    f2 = {u: d.get("score") for u, d in ((factors["F2"].get("calc") or {}).get("layers") or {}).items()}
+    f3 = {u: d.get("score") for u, d in ((factors["F3"].get("calc") or {}).get("layers") or {}).items()}
+    order = [*rules.payload["layers"]["order"], rules.payload["layers"]["outside"]["id"]]
+    return [[names.get(u, u), f"{weights[u] * 100:.0f}%", _score_text(f1.get(u)), _score_text(f2.get(u)), _score_text(f3.get(u))]
+            for u in order if u in weights]
+
+
+def rescaled_text(rules: Any, fid: str, old: Any, old_rules: Any) -> str | None:
+    """척도가 다른 옛 규칙의 점수를 범위 비율로 환산한 참고값('2(×4 환산 8)'). v3.0 실행에서 범위가 다를 때만, 아니면 None.
+    환산값은 점수가 아니다 — 옛 판단을 새 규칙으로 다시 매긴 값이 아니라 눈금만 맞춘 것이다."""
+    if not is_layered(rules) or old_rules is None or old is None:
+        return None
+    lo_n, hi_n = rules.factor_range(fid)
+    lo_o, hi_o = old_rules.factor_range(fid)
+    if (lo_n, hi_n) == (lo_o, hi_o) or hi_o == lo_o:
+        return None
+    ratio = (hi_n - lo_n) / (hi_o - lo_o)
+    return f"{old:g}(×{ratio:g} 환산 {round(old * ratio, 2):g})"
+
+
+RESCALED_NOTE = ("척도가 다른 규칙과 견준 칸은 괄호에 범위 비율로 환산한 참고값을 적었다. 환산값은 옛 판단을 새 규칙으로 다시 매긴 점수가 "
+                 "아니라 눈금만 맞춘 것이다.")
+
+
+def _curve_note(curve: dict[str, Any] | None) -> str:
+    if not curve:
+        return ""
+    if curve.get("note"):
+        return str(curve["note"])
+    return ", ".join(f"{x:g} → {s:g}" for x, s in curve["anchors"]) + (" (로그 축)" if curve.get("x_transform") == "log2" else "")
+
+
+def method_sections_v3(ctx: Any, results: dict[str, Any]) -> list[tuple[str | None, list[str]]]:
+    """규칙 v3.0 방법 절. 숫자는 규칙 파일에서 읽는다(rules.md 원문이 원본이다)."""
+    rules = ctx.rules
+    f = rules.payload["factors"]
+    layers = rules.payload["layers"]
+    share = float(rules.payload["scoring"].get("unknown_share", 0))
+    months = layers["time_window_months"]
+    names = v3_layer_names(rules)
+    p1, p2, p3 = (f["F1"]["parts"][k] for k in ("A", "B", "C"))
+    d_unknown = rules.unknown_points(f["F1"]["parts"]["D"]["max"])
+    f2, f3, f4, f5 = f["F2"], f["F3"], f["F4"], f["F5"]
+    gates = f3["gates"]
+    acc = f3["acceleration"]["curve"]["anchors"]
+    f6p = rules.payload["policies"]["f6"]
+    f9 = rules.payload["policies"]["f9"]
+
+    def pct(x: float) -> str:
+        return f"{x:.0%}"
+
+    overview = [
+        "**①~⑤ 는 사람이 판정 재료를 적고 엔진이 규칙의 사다리·곡선·관문으로 환산한다.** ①②③ 은 회사가 파는 층마다"
+        "(① 은 층 안의 사업마다) 매기고, ④ 보유표의 매출 줄로 낸 층 매출 몫으로 가중 평균한다. 항목 점수는 소수 둘째 자리에서 한 번 "
+        "반올림하고 총점은 반올림한 항목 점수를 더한다.",
+    ]
+    sections: dict[str, list[str]] = {
+        "F1": [f"사업마다 A 락인(0~{p1['max']})·B 가격 실측(0~{p2['max']})·C 대체 공급(0~{p3['max']})을 함께 매기고, "
+               f"D 시장 순위·E 점유율 방향(각 0~{f['F1']['parts']['D']['max']})을 구성 사업마다 더한다. AI 수익화가 '예'가 아닌 구성 사업은 "
+               f"최고 {f['F1']['ai_cap']['cap']}점이다. 시장 정의표가 아직 없어 D·E 는 모든 사업이 미확인({_score_text(d_unknown)}점씩)이다."],
+        "F2": [f"층마다 성능 도약(0~{max(f2['leap'].values())})·패러다임 적응(0~{max(f2['adaptation'].values())})·표준 선점"
+               f"(0~{max(f2['standard'].values())})을 더한다. 독립 측정이 없는 층({', '.join(names.get(x, x) for x in f2['no_benchmark_layers'])})은 "
+               f"(적응 + 표준) × {f2['no_benchmark_formula']['multiplier']} 다. 표준은 최근 {months}개월 안에 새로 지원한 주요 회사가 있을 때만 센다."],
+        "F3": [f"층마다 별도 수익모델(0~{max(f3['revenue_model'].values())})·모방 불가능성(0~{max(f3['imitation'].values())})·가속도"
+               f"(0~{f3['acceleration']['max']})를 더한다. 가속도는 두 기간 성장 배수의 비가 {acc[0][0]:g} 이하면 {acc[0][1]:g}, "
+               f"{acc[-1][0]:g} 이상이면 {acc[-1][1]:g} 이고 그 사이는 비례한다. 가속도가 {gates['slow_cap']['below']} 미만이면 층 최고 "
+               f"{gates['slow_cap']['cap']}, 모방 불가능성이 만점이 아니면 최고 {gates['imitation_gate']['cap']}, 최근 {months}개월 안에 문 닫힘 "
+               f"증거가 없으면 최고 {gates['door_closed_gate']['cap']} 이다. 수입원이 위협받는 상대가 지금 시장에 없으면 수익모델·모방은 0 이다."],
+        "F4": [f"수직계열화(AI 사슬 조건을 채운 칸 값 합 ÷ {f4['vertical']['full_at']} × {f4['vertical']['max']}, 최고 {f4['vertical']['max']}) + "
+               f"다각화(AI 무관 매출 몫 {_anchor_text(f4['diversification']['curve'], pct)}) + 그 분야의 힘(AI 무관 부문 영업이익률 "
+               f"{_anchor_text(f4['field_strength']['curve'], pct)})이다. 부문 이익률을 공시하지 않으면 회사 전체 영업이익률로 대신하고 표시한다."],
+        "F5": [f"중립점 {f5['neutral']} + 동맹(지분 동맹·경쟁사 편입·상업 동맹 폭, 최고 {f5['alliance']['max']}) + 적대"
+               f"({f5['hostility']['min']}~0)다. 한 관계는 점수가 가장 높아지는 한 부분에만 넣고, 적대는 진행 중인 전선만 센다. 금액은 쓰지 않는다."],
+        "F6": ["관측에서 계산한다. 상장사는 잣대마다 곡선으로 점수를 내 더한다. "
+               + " · ".join(f"{prm.get('label') or F6_PARAM_LABELS.get(pid, pid)} 곡선은 {_curve_note(prm.get('curve'))}"
+                            for pid, prm in f6p["parameters"].items() if prm.get("curve"))
+               + f". 입력 신뢰도로 최대 {f6p['p4']['cap_steps']} 를 깎는다. 비상장사의 곡선과 트랙별 바닥은 규칙 파일 policies.f6 에 있다."],
+        "F7": ["두 축의 판정(조달 의존 고객 비중 · 내 돈 환류)을 조합표에서 찾는다. "
+               + ", ".join(f"비중 {SHARE_LABELS.get(k.split('|')[0])}·환류 {YESNO_LABELS.get(k.split('|')[1])} {v}"
+                           for k, v in f["F7"]["matrix"].items()) + " 이다."],
+        "F8": [f"고객·약정·공급·지정학 네 축 가운데 가장 낮은 칸에 {f['F8']['score_multiplier']} 를 곱한다."],
+        "F9": [f"관문 넷을 차례로 지난다. 본업 영업손실률({_anchor_text(f9['g1_loss_curve'], pct)}, 이익이면 통과), "
+               f"런웨이({_anchor_text(f9['g3_runway_curve'], lambda x: f'{x:g}년')}), "
+               f"약정 커버리지({_anchor_text(f9['g4_coverage_curve'], lambda x: f'{x:g}배')})를 곡선으로 잇고, 약정 커버리지의 미공시가 확인되면 "
+               f"{f9.get('g4_not_disclosed_score')} 다. 이 항목의 최저점은 {f9['floor']} 이다."],
+    }
+    common = [
+        f"**과점 점수 부분의 값이 미확인이면 그 부분 만점의 {share:.0%} 로 계산하고 미확인을 표시한다.** 층 매출 몫·AI 무관 몫을 내는 "
+        "재료가 미확인이면 판정 대기이고 그 회사는 공식 순위에서 빠진다. 함정 항목은 각 항목의 처리를 따른다.",
+    ]
+    labelled = {fid: [f"**{factor_label(rules, fid)}.** {text}" for text in lines] for fid, lines in sections.items()}
+    return [(None, overview)] + [(fid, labelled[fid]) for fid in FACTOR_LABELS if labelled.get(fid)] + [(None, common)]

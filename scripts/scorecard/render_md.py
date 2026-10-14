@@ -395,13 +395,15 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         # 2026-10-01 출력·가독성 리뷰(high): 동점 가운데 첫 기업만 적었다. 같은 함정 점수의 기업을 모두 적는다.
         worst_trap = min(r["trap"] for r in ranking)
         worst_all = [r for r in ranking if r["trap"] == worst_trap]
-        candidates = [c["display_name"] + ("" if c["complete"] else "(미완료)") for c in moat_pool if c["moat"] >= 20]
+        # 2026-10-14 규칙 v3.0: 과점 후보 기준선을 규칙(scoring.moat_candidate_threshold)에서 읽는다. v2.x 규칙은 20 이다.
+        threshold = ctx.rules.payload["scoring"].get("moat_candidate_threshold", 20)
+        candidates = [c["display_name"] + ("" if c["complete"] else "(미완료)") for c in moat_pool if c["moat"] >= threshold]
         lines += [
             f"- 조정총점 1위: {top_names} ({top[0]['total']}점){' — 공동' if len(top) > 1 else ''}",
             f"- 과점 factor 최고: {moat_top} ({max_moat}점) — 과점이 완결된 전 기업 기준",
             f"- 함정 최심(완료 {population['scored']}개사 기준): {worst_trap}점 — "
             + " · ".join(f"{r['display_name']}(조정 {r['total']}점)" for r in worst_all) + (" — 공동" if len(worst_all) > 1 else ""),
-            f"- 과점 후보군(과점 20점 이상): {', '.join(candidates) if candidates else '없음'}",
+            f"- 과점 후보군(과점 {threshold}점 이상): {', '.join(candidates) if candidates else '없음'}",
         ]
     lines += [f"- 모집단: 완료 {population['scored']}개사 순위 / 미완료 {len(population['incomplete'])}개사 제외 (미완료는 0점으로 채우지 않는다)."]   # 2026-10-06: 기준선 순위 비교 안내를 싣지 않는다
     lines += [f"- 기준 시점: 분석 기준일 {run['as_of']} · 가격 기준일 {run.get('price_as_of') or run['as_of']} · 정보 컷오프 {run.get('info_cutoff') or run['as_of']} (C-17). 승계 근거·트리거 일부는 원문에 컷오프 이후 사건이 그대로 있으며 이번 실행에서 재검증하지 않았다."]
@@ -457,6 +459,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
                        [_factor_row(f, c["factors"][f], ctx.rules,
                                     (judgments_by_id.get(c["factors"][f].get("judgment_id") or "") or {}).get("inputs"), c["type"])
                         for f in FACTOR_IDS]), ""]
+        # 2026-10-14 규칙 v3.0: 층별 점수 표(층 매출 몫 · ①②③ 층 점수). 층 정의가 없는 옛 실행에는 없다.
+        layer_rows = rc.layer_table_rows(ctx.rules, c["factors"]) if rc.is_layered(ctx.rules) else []
+        if layer_rows:
+            lines += [table(["층", "층 매출 몫", "①", "②", "③"], layer_rows, ["---", "---:", "---:", "---:", "---:"]), ""]
         incompatible_g4 = rc.g4_incompatible(ctx.observations, c["company_id"])
         for f in FACTOR_IDS:
             fr = c["factors"][f]
@@ -476,6 +482,19 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
                     lines += [("  " * depth) + f"- {rc.rename_codes(text)}" for depth, text in block["lines"]]
                 if f == "F9" and incompatible_g4:
                     lines.append(f"  - {rc.G4_INCOMPATIBLE_NOTE}")
+            # 2026-10-14 규칙 v3.0: ①②③ 은 층·사업 판단이 여럿이라 판단마다 근거를 싣는다.
+            unit_blocks = []
+            if block is None and rc.is_layered(ctx.rules):
+                for uj in rc.unit_judgments(ctx, c["company_id"], f):
+                    ub = rc.evidence_block({"judgment_id": uj["judgment_id"]}, judgments_by_id, [], run["baseline_id"], c["company_id"], reps,
+                                           run_created=run.get("created_at"))
+                    if ub is not None:
+                        unit_blocks.append((rc.unit_name(ctx, uj), ub))
+            for name, ub in unit_blocks:
+                lines.append(f"- **{rc.factor_label(ctx.rules, f)} — {name}** {ub['header']}:")
+                for label, rows in (("판정", ub["lines"]), *((lab, ub.get(key) or []) for key, lab in rc.EVIDENCE_DIRECTION_LABELS)):
+                    lines.append(f"  - {label}")
+                    lines += [f"    - {rc.rename_codes(text)}" for _depth, text in rows] or ["    - 없음"]
             # 2026-09-17 FIX-77: 초안도 카드와 같은 규칙을 쓴다. 승계 표기는 근거 머리줄이 이미 말하고,
             # `⚠️` 는 글자로 밝히며, 작업 메모는 본문에서 내린다(감사 기록에 남는다).
             # 2026-09-18 FIX-79 S1: HTML 카드와 같은 문장이다 — 한쪽만 고치면 둘이 갈린다.
@@ -499,7 +518,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         # 2026-09-15 FIX-54 2단계: 'undrawn_credit 관측이 있어 선택에 따라 런웨이가 달라질 수 있다' 는 실제 동작과 달랐다(RC3-06).
         f"- {rc.c04_line(ctx)}",
         "",
-        table(["Factor", "자동화", "범위"], [[rc.factor_label(ctx.rules, f), ctx.rules.factor(f)["mode"], f"{ctx.rules.factor(f)['range'][0]}~{ctx.rules.factor(f)['range'][1]}"] for f in FACTOR_IDS]),
+        table(["Factor", "자동화", "범위"], [[rc.factor_label(ctx.rules, f),
+                                            (rc.MODE_LABELS.get(ctx.rules.factor(f)["mode"], ctx.rules.factor(f)["mode"]) if rc.is_layered(ctx.rules)
+                                             else ctx.rules.factor(f)["mode"]),
+                                            f"{ctx.rules.factor(f)['range'][0]}~{ctx.rules.factor(f)['range'][1]}"] for f in FACTOR_IDS]),
         "",
         # 2026-09-15 FIX-52: v1.5 문구(NTM PER 구간표 · 하한 -5)가 박혀 있었다. FIX-54 에서 HTML 과 같은 목록(render_common)으로 옮겼다.
     ]
@@ -680,9 +702,22 @@ def render_review_template(ctx: Any, results: dict[str, Any], *, draft_hash: str
 
 # ------------------------------------------------------------------ preview
 
+def _old_rules(version: str | None) -> Any:
+    """척도 환산에 쓸 옛 규칙. 없거나 읽을 수 없으면 None(환산하지 않는다)."""
+    from .rules import load_rules
+
+    try:
+        return load_rules(version) if version else None
+    except Exception:  # noqa: BLE001 — 환산은 참고값이라 옛 규칙이 없으면 빼고 그린다
+        return None
+
+
 def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None) -> str:
     lines = [f"# 변경 미리보기 — {ctx.slug}", "", f"기준선 `{ctx.run['baseline_id']}` 대비 이번 계산 결과. 승인 전 검토용이며 이력을 바꾸지 않는다.", ""]
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
+    # 2026-10-14 규칙 v3.0: 기준선·이전 실행과 척도가 다르면(① 0~5 → 0~20) 옛 점수 옆에 범위 비율 환산 참고값을 적는다.
+    base_rules = _old_rules(ctx.run["baseline_id"]) if rc.is_layered(ctx.rules) else None
+    rescaled_used = False
     rows = []
     for c in sorted(results["companies"], key=lambda x: (x["rank"] is None, x["rank"] or 0, x["company_id"])):
         b = base.get(c["company_id"])
@@ -691,12 +726,16 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
             new = c["factors"][f]["score"]
             old = (b or {}).get("scores", {}).get(f)
             if b and new is not None and old is not None and new != old:
-                changed.append(f"{rc.factor_label(ctx.rules, f)} {old}→{new}")
+                old_text = rc.rescaled_text(ctx.rules, f, old, base_rules)
+                rescaled_used = rescaled_used or old_text is not None
+                changed.append(f"{rc.factor_label(ctx.rules, f)} {old_text or old}→{new}")
             elif new is None:
                 changed.append(f"{rc.factor_label(ctx.rules, f)} 대기")
         rows.append([c["display_name"], f"{fmt_score((b or {}).get('total'))} / {fmt_score((b or {}).get('rank_raw'))}", f"{fmt_score(c['total'])} / {fmt_score(c['rank'])}",
                      "; ".join(changed) or "변경 없음", ", ".join(rc.factor_label(ctx.rules, f) for f in c["carried_factors"]) or "—"])
     lines += [table(["기업", "기준선 조정/순위", "이번 조정/순위", "변경·대기 factor", "승계 점수"], rows), ""]
+    if rescaled_used:
+        lines += [f"- {rc.RESCALED_NOTE}", ""]
     if results["pending_rule_decisions"]:
         lines += ["## 필요한 규칙 결정", ""]
         for did in results["pending_rule_decisions"]:
@@ -712,9 +751,11 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
         from .engine import load_results
 
         try:
-            prev = {c["company_id"]: c for c in load_results(prior)["companies"]}
+            prev_results = load_results(prior)
+            prev = {c["company_id"]: c for c in prev_results["companies"]}
         except Exception:  # noqa: BLE001 — 이전 실행 결과가 없으면 이 표만 뺀다
-            prev = {}
+            prev_results, prev = {}, {}
+        prev_rules = _old_rules(prev_results.get("rule_version")) if rc.is_layered(ctx.rules) and prev_results else None
         if prev:
             created = ctx.run.get("created_at") or ""
             # 2026-10-06 출력·가독성 리뷰(medium): 근거 문장만 바꾼 수정(PRP-003)도 '판단 수정' 으로 분류했다.
@@ -746,7 +787,8 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
                     else:
                         cause = "📐 규칙"
                     causes[cause] = causes.get(cause, 0) + 1
-                    diffs.append(f"{rc.factor_label(ctx.rules, f)} {fmt_score(old)}→{fmt_score(new)} ({cause})")
+                    diffs.append(f"{rc.factor_label(ctx.rules, f)} {rc.rescaled_text(ctx.rules, f, old, prev_rules) or fmt_score(old)}"
+                                 f"→{fmt_score(new)} ({cause})")
                 if diffs or p.get("total") != c["total"] or p.get("rank") != c["rank"]:
                     prow.append([c["display_name"], f"{fmt_score(p.get('total'))} / {fmt_score(p.get('rank'))}",
                                  f"{fmt_score(c['total'])} / {fmt_score(c['rank'])}", "; ".join(diffs) or "factor 같음(순위만 이동)"])

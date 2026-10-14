@@ -23,9 +23,9 @@
 - [x] S7 ②③ 층 계산(`calc_layers._layered`·`compute_f2_layers`·`compute_f3_layers`). 미확인 경로는 판정 대기, ③ 가속도 결측만 0 + 자료 없음
 - [x] S8 ① 사업 단위 계산(시장 자료 전, D·E 는 미확인 1.6 씩). AI 상한 16 은 시장 자료 전에는 걸릴 수 없다(최고 15.2)
 - [x] S9 ⑤ 동맹 세 부분·적대 띠(`calc_qual.compute_f5_alliance`). 긴장·구제 조치 미확인은 나쁜 쪽에서 40% 간 값
-- [ ] 이정표 2 보고
+- [x] 이정표 2 보고
 ### 이정표 3: 출력·문서·시범 실행
-- [ ] S10 초안·미리보기 렌더 최소
+- [x] S10 초안·미리보기 렌더 최소(층 표, 층·사업 판단 근거, v3.0 방법 절, 연속값 안내, 미리보기 척도 환산 참고값). v21·rejudge 초안·미리보기는 바이트 그대로
 - [ ] S11 structure·guide·score-research·score-review 문서
 - [ ] P0 시범 init 전 규칙 값 확정(rules.md 8절, implementation.md 「구현 전에 정할 것」)
 
