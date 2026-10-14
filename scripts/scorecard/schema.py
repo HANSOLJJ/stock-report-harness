@@ -62,7 +62,10 @@ MISSING_TYPES = {"unverified", "not_disclosed_confirmed", "not_applicable", "ind
 MISSING_TYPE_FOR_DISCLOSURE_POLICY = "not_disclosed_confirmed"
 # 2026-10-08 사용자 결정(규칙 v2.0): ① 을 네 질문 판정 입력(lockin)과 사다리로 계산한다.
 # 2026-10-12 규칙 v2.1: ④ 는 층별 보유표와 AI 무관 매출 몫(survival), ⑧ 은 네 축(axes)으로 계산한다.
-JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs", "lockin", "survival", "axes"}
+# 2026-10-14 규칙 v3.0: ① 사업 단위(business), ②③ 층 단위(layer_paths·layer_cp), ④ 층별 보유표(holdings), ⑤ 동맹 세 부분·적대 띠(alliance).
+# 판정 재료의 모양 검증은 계획 S4 에서 붙인다. 지금은 규칙이 이 이름을 선언할 수 있게만 한다.
+JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs", "lockin", "survival", "axes",
+                  "business", "layer_paths", "layer_cp", "holdings", "alliance"}
 JUDGMENT_STATUSES = {"new", "carried"}
 # 2026-10-12(TODO 9): 실행의 변경 사유(history.csv change_type). 규칙 변경·실적과 사실 변화(가격 포함)·정정·기업 추가·기준선 재계산.
 RUN_CHANGE_TYPES = {"baseline-recompute", "rule-change", "fact-update", "correction", "company-add"}
@@ -94,11 +97,11 @@ ACCELERATION_TIERS = {"a", "b", "c", "d", "e"}
 # 2026-10-08: F1 에 lockin 을 더한다. 옛 실행(v1.9 이하)의 F1 score 판단은 계속 읽힌다. 규칙이 factor 의
 # judgment_kinds 를 선언하면 새 판단(status: new)은 그 목록만 허용한다(validate_judgments).
 FACTOR_JUDGMENT_KINDS: dict[str, set[str]] = {
-    "F1": {"lockin", "score"},
-    "F2": {"paths", "score"},
-    "F3": {"criteria"},
-    "F4": {"survival", "score"},
-    "F5": {"grade"},
+    "F1": {"lockin", "score", "business"},
+    "F2": {"paths", "score", "layer_paths"},
+    "F3": {"criteria", "layer_cp"},
+    "F4": {"survival", "score", "holdings"},
+    "F5": {"grade", "alliance"},
     "F6": {"score"},
     "F7": {"matrix", "score"},
     "F8": {"axes", "score"},
@@ -135,6 +138,12 @@ JUDGMENT_INPUT_CHOICES: dict[str, dict[str, list[Any]]] = {
     # 2026-10-12 규칙 v2.1: ④ 보유표와 ⑧ 네 축은 중첩 입력이라 선택 상자로 그리지 않고 CLI(--json)로만 받는다.
     "survival": {},
     "axes": {},
+    # 2026-10-14 규칙 v3.0: 다섯 판정 종류 모두 중첩 입력이라 CLI(--json)로만 받는다.
+    "business": {},
+    "layer_paths": {},
+    "layer_cp": {},
+    "holdings": {},
+    "alliance": {},
     "gate_inputs": {"fcf_trend": ["stable", "deteriorating", "unknown"], "bep_retreat": ["yes", "no", "unknown"],
                     "buffer_erosion": ["yes", "no", "unknown"], "direction_A": ["pass", "fail", "unknown"],
                     "direction_B": ["pass", "fail", "unknown"], "coverage_comparable": ["yes", "no", "unknown"],
@@ -448,7 +457,8 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         payload,
         ["schema", "rule_version", "status", "source", "scoring", "factors", "policies", "checklist", "decisions"],
         "rules.json",
-        optional=["note", "sources", "open_tensions", "source_text_corrections"],
+        # 2026-10-14 규칙 v3.0: 층 열 개와 칸 값·AI 사슬 조건·층 매출 몫 배정(rules.md 2.10). 선언한 규칙에서만 층 단위 계산이 탄다.
+        optional=["note", "sources", "open_tensions", "source_text_corrections", "layers"],
     )
     _require(payload["schema"] == "scorecard.rules/1", "rules.json: schema 불일치")
     _require(payload["status"] in {"active", "draft", "retired"}, "rules.json: status 오류")
@@ -511,7 +521,108 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         _validate_open_tensions(payload["open_tensions"], {d["id"] for d in payload["decisions"]})
     if "source_text_corrections" in payload:
         _validate_source_text_corrections(payload["source_text_corrections"])
+    _validate_v3_structure(payload)
     return payload
+
+
+# 2026-10-14 규칙 v3.0: 항목을 매기는 단위(rules.md 1절 표)와 연속값 곡선의 변환.
+FACTOR_UNITS = {"company", "layer", "business"}
+CURVE_TRANSFORMS = {"log2"}
+LAYER_ID_RE = re.compile(r"^[a-z][a-z_]*$")
+LAYER_CELL_KEYS = {"sold", "self", "none", "preparing"}
+
+
+def _validate_curve(curve: Any, where: str, lo: float, hi: float) -> None:
+    """기준점 사이를 잇는 연속값. x 는 엄격한 오름차순, 점수는 [lo, hi] 안. log2 변환이면 x 는 양수다."""
+    _expect_keys(curve, ["anchors"], where, optional=["x_transform", "input", "note"])
+    anchors = curve["anchors"]
+    _require(isinstance(anchors, list) and len(anchors) >= 2, f"{where}.anchors: 기준점이 둘 이상이어야 함")
+    for idx, point in enumerate(anchors):
+        _require(isinstance(point, list) and len(point) == 2 and all(_is_number(v) for v in point),
+                 f"{where}.anchors[{idx}]: [x, 점수] 숫자 둘이어야 함 ({point!r})")
+        _require(lo <= point[1] <= hi, f"{where}.anchors[{idx}]: 점수 {point[1]} 가 범위 [{lo}, {hi}] 밖")
+    xs = [point[0] for point in anchors]
+    _require(all(a < b for a, b in zip(xs, xs[1:])), f"{where}.anchors: x 는 엄격한 오름차순이어야 함 ({xs})")
+    transform = curve.get("x_transform")
+    if transform is not None:
+        _require(transform in CURVE_TRANSFORMS, f"{where}.x_transform: {sorted(CURVE_TRANSFORMS)} 중 하나 ({transform!r})")
+        _require(xs[0] > 0, f"{where}: {transform} 변환이면 x 는 양수여야 함 ({xs[0]})")
+
+
+def _validate_layers(spec: Any) -> set[str]:
+    """`layers` 블록(rules.md 2.10). 층 id 와 층 밖 id 를 돌려준다."""
+    where = "rules.layers"
+    _expect_keys(spec, ["order", "labels", "outside", "cell_values", "ai_chain_conditional", "assignment", "time_window_months"],
+                 where, optional=["excluded_lines", "cell_value_note", "assignment_note", "time_window_note"])
+    order = spec["order"]
+    _require(isinstance(order, list) and order and all(isinstance(x, str) and LAYER_ID_RE.fullmatch(x) for x in order),
+             f"{where}.order: 소문자 층 id 목록이어야 함")
+    _require(len(set(order)) == len(order), f"{where}.order: 층 id 중복")
+    _require(isinstance(spec["labels"], dict) and set(spec["labels"]) == set(order), f"{where}.labels: order 와 같은 층 id 마다 이름")
+    outside = spec["outside"]
+    _expect_keys(outside, ["id", "label"], f"{where}.outside", optional=["note"])
+    _require(isinstance(outside["id"], str) and LAYER_ID_RE.fullmatch(outside["id"]) and outside["id"] not in order,
+             f"{where}.outside.id: 층 id 와 겹치지 않는 소문자 id ({outside['id']!r})")
+    cells = spec["cell_values"]
+    _require(isinstance(cells, dict) and set(cells) == LAYER_CELL_KEYS and all(_is_number(v) and 0 <= v <= 1 for v in cells.values()),
+             f"{where}.cell_values: {sorted(LAYER_CELL_KEYS)} 마다 0~1 숫자")
+    _require(isinstance(spec["ai_chain_conditional"], dict) and set(spec["ai_chain_conditional"]) <= set(order),
+             f"{where}.ai_chain_conditional: order 안의 층 id 만")
+    _require(spec["assignment"] == "line_to_majority_layer", f"{where}.assignment: 지금 구현은 line_to_majority_layer 하나다")
+    _require(isinstance(spec["time_window_months"], int) and spec["time_window_months"] > 0,
+             f"{where}.time_window_months: 양의 정수")
+    return set(order) | {outside["id"]}
+
+
+def _part_curves(spec: Any, where: str, lo: float, hi: float) -> Iterable[tuple[Any, str, float, float]]:
+    """항목 사양 안의 `curve` 를 찾는다. 곡선을 품은 부분에 `max` 가 있으면 범위는 [0, max], 없으면 항목 범위다."""
+    if not isinstance(spec, dict):
+        return
+    part_lo, part_hi = (0, spec["max"]) if _is_number(spec.get("max")) else (lo, hi)
+    for key, value in spec.items():
+        if key == "curve":
+            yield value, f"{where}.curve", part_lo, part_hi
+        elif isinstance(value, dict):
+            yield from _part_curves(value, f"{where}.{key}", part_lo, part_hi)
+
+
+def _validate_v3_structure(payload: dict[str, Any]) -> None:
+    """규칙 v3.0 의 새 키(layers·unit·curve)를 본다. 선언하지 않은 옛 규칙에는 아무것도 요구하지 않는다."""
+    layer_ids = _validate_layers(payload["layers"]) if "layers" in payload else None
+    factors = payload["factors"]
+    for fid, spec in factors.items():
+        where = f"rules.json.factors.{fid}"
+        unit = spec.get("unit")
+        if unit is not None:
+            _require(unit in FACTOR_UNITS, f"{where}.unit: {sorted(FACTOR_UNITS)} 중 하나 ({unit!r})")
+            _require(unit == "company" or layer_ids is not None, f"{where}.unit={unit!r} 이면 최상위 layers 가 있어야 함")
+        lo, hi = spec["range"]
+        for curve, cwhere, clo, chi in _part_curves(spec, where, lo, hi):
+            _validate_curve(curve, cwhere, clo, chi)
+        if fid == "F2" and layer_ids is not None:
+            for lid in spec.get("no_benchmark_layers") or []:
+                _require(lid in layer_ids, f"{where}.no_benchmark_layers: 알 수 없는 층 id {lid!r}")
+            for lid in ((spec.get("gap_months") or {}).get("by_layer") or {}):
+                _require(lid in layer_ids, f"{where}.gap_months.by_layer: 알 수 없는 층 id {lid!r}")
+        if fid == "F8" and "score_multiplier" in spec:
+            mult = spec["score_multiplier"]
+            _require(_is_number(mult) and mult > 0 and min(F8_RUNGS) * mult >= lo,
+                     f"{where}.score_multiplier: 가장 낮은 칸 × 배수가 range {spec['range']} 안이어야 함 ({mult!r})")
+    f6 = payload["policies"]["f6"]
+    f6_lo, f6_hi = factors["F6"]["range"]
+    for pid, pspec in (f6.get("parameters") or {}).items():
+        if "curve" in pspec:
+            plo, phi = pspec["score_range"]
+            _validate_curve(pspec["curve"], f"rules.policies.f6.parameters.{pid}.curve", plo, phi)
+    for key in ("private_bands", "private_growth_adjusted"):
+        curve = (f6.get(key) or {}).get("curve")
+        if curve is not None:
+            _validate_curve(curve, f"rules.policies.f6.{key}.curve", f6_lo, f6_hi)
+    f9 = payload["policies"]["f9"]
+    f9_lo, f9_hi = factors["F9"]["range"]
+    for key in ("g1_loss_curve", "g3_runway_curve", "g4_coverage_curve"):
+        if key in f9:
+            _validate_curve(f9[key], f"rules.policies.f9.{key}", f9_lo, f9_hi)
 
 
 def _validate_source_text_corrections(items: Any) -> None:
@@ -830,7 +941,9 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                                       # 같은 뜻의 다른 지표로 대체해 읽는다(FIX-56 1단계). 신규 상장사의 revenue_ttm 이 분기값일 때 P2 가 12개월 매출을 찾는 길.
                                       "input_alternatives", "input_alternatives_note",
                                       # 2026-10-12 규칙 v2.1: 성장 조정 PER(P1)과 그 이익 조정. calc_f6_params 가 읽는다.
-                                      "growth_adjusted", "earnings_adjustment", "bands_note", "v2_1_note"])
+                                      "growth_adjusted", "earnings_adjustment", "bands_note", "v2_1_note",
+                                      # 2026-10-14 규칙 v3.0: 기준점 사이를 잇는 연속값. 모양은 _validate_curve 가 본다.
+                                      "curve"])
         _require(spec["comparison"] in F6_COMPARISONS, f"{where}: comparison 은 {sorted(F6_COMPARISONS)} 중 하나")
         lo, hi = spec["score_range"]
         _require(_is_number(lo) and _is_number(hi) and lo <= hi <= 0, f"{where}: score_range 는 음수 구간이어야 함")

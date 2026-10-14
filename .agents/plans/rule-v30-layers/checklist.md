@@ -10,10 +10,10 @@
 
 ## 코드 (시험 실행까지 최소 경로)
 ### 이정표 1: 기반
-- [ ] S0 승인된 rejudge(v2.0)·v21(v2.1) 실행을 재계산 해시 테스트에 넣기(main)
-- [ ] S0b 승인 페이지의 중첩 재료 `[object Object]` 표시 고치기(main, 선택)
-- [ ] main 을 `draft/rules-v3.0` 에 병합
-- [ ] S2 `scorecard/rules/v3.0.json` 과 스키마 수용(layers, unit, curve, 새 judgment kind, 체크리스트 Q24·Q25)
+- [x] S0 승인된 rejudge(v2.0)·v21(v2.1) 실행을 재계산 해시 테스트에 넣기(main e1e4d30, `tests/test_approved_runs_recompute.py`)
+- [x] S0b 승인 페이지의 중첩 재료 `[object Object]` 표시 고치기(main 29e1167)
+- [x] main 을 `draft/rules-v3.0` 에 병합
+- [x] S2 `scorecard/rules/v3.0.json` 과 스키마 수용(layers, unit, curve, 새 judgment kind, 체크리스트 Q24·Q25). v2.1.json 을 출발점으로 생성했고 함정 구간표는 ×4 값을 함께 둔다. 계산은 아직 옛 경로(S3~S9 에서 붙임)
 - [ ] S3 연속 구간 도우미와 ⑥·⑨ 곡선, ⑦·⑧ ×4
 - [ ] S4 판단 키에 layer·business, `JudgmentLookup` 확장, `rejudge_findings` 를 판단 키 단위로
 - [ ] S5 층·사업 판단 생성·수정 경로, init 단위 전환, 트리거·근거 교차 참조 처리, CLI `--layer`·`--business`, v3.0 실행의 `diff` 거부
