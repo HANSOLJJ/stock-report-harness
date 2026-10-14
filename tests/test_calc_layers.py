@@ -1,0 +1,177 @@
+# 규칙 v3.0 ④ 보유표 계산과 층 매출 몫(계획 S6) — 기준점·제외 줄·층 밖 사업·AI 사슬 조건·판정 대기를 잠근다
+from __future__ import annotations
+
+import copy
+import json
+import sys
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from scorecard.calc_layers import compute_f4_holdings, layer_weights  # noqa: E402
+from scorecard.engine import compute_company  # noqa: E402
+from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
+from scorecard.rules import load_rules  # noqa: E402
+from scorecard.schema import validate_companies, validate_judgments  # noqa: E402
+
+V30 = load_rules("v3.0")
+ORDER = V30.payload["layers"]["order"]
+COMPANIES = validate_companies(json.loads((ROOT / "scorecard" / "companies.json").read_text(encoding="utf-8")))
+AMAZON = COMPANIES["amazon"]
+
+
+def line(line_id: str, layer: str, amount, non_ai: str = "yes") -> dict:
+    return {"line": line_id, "label": line_id, "amount": amount, "period": "2025-07-01~2026-06-30", "layer": layer,
+            "non_ai": non_ai, "evidence_ids": []}
+
+
+def holdings(**kw) -> dict:
+    """rules.md 2.10 의 설명용 예시: 온라인 스토어 40·제3자 판매자 30(사용자 플랫폼), AWS 30(클라우드)."""
+    cells = {layer: {"cell": "none", "evidence_ids": []} for layer in ORDER}
+    cells["cloud"] = {"cell": "sold", "evidence_ids": []}
+    cells["user_platform"] = {"cell": "sold", "ai_chain": "yes", "evidence_ids": []}
+    base = {"cells": cells, "currency": "USD", "non_ai_margin": 0.1, "non_ai_margin_source": "segment",
+            "revenue_lines": [line("online_stores", "user_platform", 40), line("third_party", "user_platform", 30),
+                              line("aws", "cloud", 30, "no")]}
+    base.update(kw)
+    return base
+
+
+def judgment(inputs: dict, status: str = "new", kind: str = "holdings") -> dict:
+    j = {"judgment_id": "amazon.F4", "company_id": "amazon", "factor": "F4", "kind": kind, "score": None, "inputs": inputs,
+         "evidence": ["판정 문장이다."], "reviewer": "agent", "reviewed_at": "2026-10-14", "status": status}
+    if status == "carried":
+        j["carried_from"] = "x"
+    return j
+
+
+def compute(inputs: dict, **kw) -> dict:
+    j = judgment(inputs, **kw)
+    validate_judgments({"schema": "scorecard.judgments/1", "run_id": "t", "items": [j]}, COMPANIES, V30.payload, "t")
+    return compute_f4_holdings(AMAZON, JudgmentLookup([j]), V30)
+
+
+def set_cells(h: dict, **cells) -> dict:
+    h = copy.deepcopy(h)
+    for layer, value in cells.items():
+        h["cells"][layer] = value if isinstance(value, dict) else {"cell": value, "evidence_ids": []}
+    return h
+
+
+class LayerWeightTest(unittest.TestCase):
+    def test_40_30_30_example(self):
+        w = layer_weights(holdings(), V30)
+        self.assertTrue(w["ok"])
+        self.assertAlmostEqual(w["weights"]["user_platform"], 0.7)
+        self.assertAlmostEqual(w["weights"]["cloud"], 0.3)
+        self.assertEqual(w["primary_layer"], "user_platform")
+
+    def test_excluded_line_is_outside_the_denominator_and_outside_line_has_weight(self):
+        h = holdings()
+        h["revenue_lines"] += [line("launch", "rocket_launch", 50), line("starlink", "outside", 100)]
+        w = layer_weights(h, V30)
+        self.assertNotIn("rocket_launch", w["weights"])
+        self.assertAlmostEqual(w["weights"]["outside"], 0.5)
+        self.assertAlmostEqual(w["weights"]["user_platform"], 0.35)
+        self.assertEqual(w["primary_layer"], "user_platform", "층 밖 사업은 주 층이 아니다")
+
+    def test_sold_layer_without_lines_has_zero_weight(self):
+        h = set_cells(holdings(), model="sold")
+        w = layer_weights(h, V30)
+        self.assertEqual((w["weights"]["model"], w["zero_weight_sold"]), (0.0, ["model"]))
+
+    def test_unknown_amount_gives_no_weights(self):
+        h = holdings()
+        h["revenue_lines"][2]["amount"] = "unknown"
+        w = layer_weights(h, V30)
+        self.assertEqual((w["ok"], w["unknown_lines"], w["weights"]), (False, ["aws"], {}))
+
+
+class HoldingsScoreTest(unittest.TestCase):
+    def test_reference_points(self):
+        # 칸 합 7(판매 6 + 자체 사용 2 칸) → 수직계열화 8, AI 무관 25% → 다각화 4, 이익률 10% → 힘 2
+        h = set_cells(holdings(), foundry="self", chip_design="sold", systems="self", dev_platform="sold", model="sold",
+                      application="sold")
+        h["revenue_lines"] = [line("ads", "user_platform", 25), line("aws", "cloud", 75, "no")]
+        r = compute(h)
+        self.assertEqual((r["status"], r["basis"]), ("ok", "holdings"))
+        c = r["calc"]
+        self.assertEqual((c["vertical_raw"], c["vertical"], c["non_ai_share"], c["diversification"], c["field_strength"]),
+                         (7, 8, 0.25, 4, 2))
+        self.assertEqual(r["score"], 14)
+
+    def test_vertical_proportional_and_cap(self):
+        h = set_cells(holdings(), chip_design="self", model="self", dev_platform="self")   # 1 + 1 + 0.5 × 3 = 3.5
+        r = compute(h)
+        self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (3.5, 4))
+        h = set_cells(holdings(), **{layer: "sold" for layer in ORDER if layer not in ("data_platform", "device")})
+        h["cells"]["user_platform"]["ai_chain"] = "yes"
+        r = compute(h)
+        self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (8, 8), "합 8 은 8 에서 자른다")
+
+    def test_ai_chain_unmet_cell_is_not_vertical_but_keeps_weight(self):
+        h = set_cells(holdings(), user_platform={"cell": "sold", "ai_chain": "no", "evidence_ids": []})
+        r = compute(h)
+        self.assertEqual(r["calc"]["vertical_counted"], {"cloud": 1})
+        self.assertAlmostEqual(r["calc"]["layer_weights"]["user_platform"], 0.7)
+
+    def test_outside_and_excluded_lines_count_in_diversification_not_vertical(self):
+        h = holdings()
+        h["revenue_lines"] = [line("aws", "cloud", 50, "no"), line("launch", "rocket_launch", 25), line("starlink", "outside", 25)]
+        r = compute(h)
+        self.assertEqual(r["calc"]["non_ai_share"], 0.5)
+        self.assertEqual(r["calc"]["diversification"], 8)
+        self.assertEqual(r["calc"]["vertical_counted"], {"cloud": 1, "user_platform": 1})
+        self.assertTrue(any("그 분야 순위 비교는 시장 정의표가 생긴 뒤" in w for w in r["warnings"]))
+
+    def test_margin_substitute_and_no_non_ai_business(self):
+        r = compute(holdings(non_ai_margin=0.3, non_ai_margin_source="company"))
+        self.assertEqual(r["calc"]["field_strength"], 4)
+        self.assertIn("회사 전체 영업이익률로 대신했다", " ".join(r["warnings"]))
+        h = holdings(non_ai_margin=0.3)
+        for x in h["revenue_lines"]:
+            x["non_ai"] = "no"
+        r = compute(h)
+        self.assertEqual((r["calc"]["field_strength"], r["calc"]["field_strength_note"]), (0, "AI 무관 사업이 없다(해당 없음)"))
+
+    def test_pending_cases(self):
+        h_unknown_amount = holdings()
+        h_unknown_amount["revenue_lines"][0]["amount"] = "unknown"
+        h_unknown_non_ai = holdings()
+        h_unknown_non_ai["revenue_lines"][1]["non_ai"] = "unknown"
+        h_na = holdings(non_ai_margin="not_applicable")
+        del h_na["non_ai_margin_source"]
+        h_unknown_margin = holdings(non_ai_margin="unknown")
+        del h_unknown_margin["non_ai_margin_source"]
+        cases = [
+            (set_cells(holdings(), model="unknown"), "보유표 칸 \\['model'\\] 이 미확인"),
+            (set_cells(holdings(), user_platform={"cell": "sold", "ai_chain": "unknown", "evidence_ids": []}), "AI 를 나르는지 미확인"),
+            (h_unknown_amount, "금액이나 AI 무관 여부가 미확인"),
+            (h_unknown_non_ai, "금액이나 AI 무관 여부가 미확인"),
+            (h_na, "이익률이 '해당 없음'"),
+            (h_unknown_margin, "모두 확인하지 못했다"),
+            (holdings(revenue_lines=[]), "매출 줄이 없다"),
+        ]
+        for inputs, pattern in cases:
+            with self.subTest(pattern=pattern):
+                r = compute(inputs)
+                self.assertEqual((r["status"], r["score"]), ("needs_judgment", None))
+                self.assertRegex(r["pending"]["message"], pattern)
+
+    def test_carried_survival_judgment_is_not_scored(self):
+        survival = {"layers": {k: "none" for k in ("chip", "server", "platform", "cloud", "model", "app")}, "primary_layer": None,
+                    "non_ai_revenue_share": 0.3}
+        r = compute_f4_holdings(AMAZON, JudgmentLookup([judgment(survival, status="carried", kind="survival")]), V30)
+        self.assertEqual((r["status"], r["score"]), ("needs_judgment", None))
+        self.assertIn("이어받은 점수는 쓰지 않는다", r["pending"]["message"])
+
+    def test_engine_dispatches_holdings_mode(self):
+        j = judgment(holdings())
+        out = compute_company(AMAZON, ObsLookup([]), JudgmentLookup([j]), V30, {"as_of": "2026-10-14", "decisions": []})
+        self.assertEqual((out["F4"]["basis"], out["F4"]["status"]), ("holdings", "ok"))
+
+
+if __name__ == "__main__":
+    unittest.main()

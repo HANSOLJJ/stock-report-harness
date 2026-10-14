@@ -17,9 +17,9 @@
 - [x] S3 연속 구간 도우미와 ⑥·⑨ 곡선, ⑦·⑧ ×4. 비상장 기업가치가 범위면 `policies.f6.estimate_range_end`(low·high·mid)가 정할 때만 점수, 없으면 needs_rule_decision(P0 에서 정함)
 - [x] S4 판단 키에 layer·business, 다섯 판정 재료의 모양 검사, 매출 줄 교차 검사, `JudgmentLookup.units`, 중첩 근거 교차 참조, 제안의 layer·business 키(`rejudge_findings` 는 이미 판단 ID 단위라 테스트로만 잠금)
 - [x] S5 층·사업 판단 생성·수정 경로, init 단위 전환, 트리거·근거 교차 참조 처리(다른 회사 근거 인용 결함 수정), CLI `--layer`·`--business`, v3.0 실행의 `diff` 거부, 승인 페이지 카드 id 와 층·사업 판단 읽기 전용
-- [ ] 이정표 1 보고
+- [x] 이정표 1 보고(2026-10-14, ④ 부문 이익률 미공시·기업용 소프트웨어 결정 받음)
 ### 이정표 2: 계산
-- [ ] S6 ④ 보유표와 층 무게(`calc_layers.py`)
+- [x] S6 ④ 보유표와 층 무게(`calc_layers.py`). 로켓 발사의 그 분야 순위 비교는 시장 정의표가 생긴 뒤(경고만)
 - [ ] S7 ②③ 층 계산
 - [ ] S8 ① 사업 단위 계산(시장 자료 전)
 - [ ] S9 ⑤ 동맹 세 부분·적대 띠
