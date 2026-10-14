@@ -63,7 +63,7 @@ MISSING_TYPE_FOR_DISCLOSURE_POLICY = "not_disclosed_confirmed"
 # 2026-10-08 사용자 결정(규칙 v2.0): ① 을 네 질문 판정 입력(lockin)과 사다리로 계산한다.
 # 2026-10-12 규칙 v2.1: ④ 는 층별 보유표와 AI 무관 매출 몫(survival), ⑧ 은 네 축(axes)으로 계산한다.
 # 2026-10-14 규칙 v3.0: ① 사업 단위(business), ②③ 층 단위(layer_paths·layer_cp), ④ 층별 보유표(holdings), ⑤ 동맹 세 부분·적대 띠(alliance).
-# 판정 재료의 모양 검증은 계획 S4 에서 붙인다. 지금은 규칙이 이 이름을 선언할 수 있게만 한다.
+# 이 다섯 판정 재료의 모양은 층 정의를 알아야 해서 `_validate_v3_inputs` 가 규칙과 함께 본다.
 JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs", "lockin", "survival", "axes",
                   "business", "layer_paths", "layer_cp", "holdings", "alliance"}
 JUDGMENT_STATUSES = {"new", "carried"}
@@ -1596,6 +1596,348 @@ def _validate_judgment_inputs(kind: str, inputs: Any, where: str) -> None:
     raise SchemaError(f"{where}: 알 수 없는 kind {kind!r}")
 
 
+# ------------------------------------------------------------------ 규칙 v3.0 판정 재료 (2026-10-14, rules.md 2.10·3절)
+# 다섯 판정 종류는 층 정의(rules.layers)와 사다리 칸 이름(rules.factors)을 알아야 검사할 수 있어 규칙을 받는다.
+# 사다리 칸은 판단이 고르고, 칸을 받치는 수치(분기 수·개월 수·채택 배수)가 칸과 맞는지는 여기서 본다.
+# 기간 창(2년)·곡선·관문·배정은 계산(calc_layers)이 한다.
+V3_JUDGMENT_KINDS = {"business", "layer_paths", "layer_cp", "holdings", "alliance"}
+UNIT_KEYS = ("layer", "business")
+BUSINESS_ID_RE = re.compile(r"^[a-z][a-z0-9_-]*$")
+CUSTOMER_TYPES = {"consumer", "work", "trade"}
+BUSINESS_MONETIZATION_KEYS = ("ai_monetized_measure", "ai_monetized_share", "ai_monetized_period",
+                              "ai_separate_billing_evidence", "ai_price_uplift_evidence")
+STANDARD_HOLDERS = {"company", "neutral"}
+ACCELERATION_BASES = {"yoy_quarter", "consecutive_equal", "none"}
+FRONT_NATURES = {"cost", "structural"}
+FRONT_STATUSES = {"ongoing", "ended"}
+
+
+def judgment_key(item: dict[str, Any]) -> tuple[str, str, str | None, str | None]:
+    """판단 하나를 가리키는 키. 회사 단위 판단은 층·사업이 None 이다(2026-10-14 규칙 v3.0)."""
+    return (item["company_id"], item["factor"], item.get("layer"), item.get("business"))
+
+
+def factor_unit(rules: dict[str, Any], factor: str) -> str:
+    """항목을 매기는 단위(rules.md 1절 표). 규칙이 선언하지 않으면(v2.1 이하) 회사다."""
+    return rules["factors"][factor].get("unit") or "company"
+
+
+def layer_ids(rules: dict[str, Any], *, outside: bool = True) -> set[str]:
+    spec = rules.get("layers") or {}
+    ids = set(spec.get("order") or [])
+    if outside and spec.get("outside"):
+        ids.add(spec["outside"]["id"])
+    return ids
+
+
+def _expect_evidence_ids(value: Any, where: str) -> None:
+    _require(isinstance(value, list) and all(isinstance(e, str) and EVIDENCE_ID_RE.match(e) for e in value),
+             f"{where}: 근거 ID(EV-…) 목록 ({value!r})")
+
+
+def _expect_choice(value: Any, choices: Iterable[Any], where: str) -> None:
+    choices = list(choices)
+    _require(value in choices, f"{where}: {choices} 중 하나 ({value!r})")
+
+
+def _expect_count(value: Any, where: str) -> None:
+    _require(isinstance(value, int) and not isinstance(value, bool) and value >= 0, f"{where}: 0 이상 정수 ({value!r})")
+
+
+def _validate_v3_inputs(kind: str, inputs: Any, rules: dict[str, Any], factor: str, layer: str | None, where: str) -> None:
+    _require(isinstance(inputs, dict), f"{where}: inputs 는 object")
+    spec = rules["factors"][factor]
+    if kind == "holdings":
+        _validate_holdings(inputs, rules, where)
+    elif kind == "business":
+        _validate_business(inputs, spec, rules, where)
+    elif kind == "layer_paths":
+        _validate_layer_paths(inputs, spec, layer, where)
+    elif kind == "layer_cp":
+        _validate_layer_cp(inputs, spec, where)
+    elif kind == "alliance":
+        _validate_alliance(inputs, spec, where)
+    else:
+        raise SchemaError(f"{where}: 알 수 없는 kind {kind!r}")
+
+
+def _validate_holdings(inputs: dict[str, Any], rules: dict[str, Any], where: str) -> None:
+    """④ 층별 보유표와 매출 줄. 층 매출 몫(①②③ 의 무게)의 원천도 이 매출 줄이다(rules.md 2.10, ④)."""
+    _expect_keys(inputs, ["cells", "revenue_lines", "currency", "non_ai_margin"], where,
+                 optional=["non_ai_margin_basis", "non_ai_margin_evidence"])
+    spec = rules["layers"]
+    order = list(spec["order"])
+    conditional = set(spec.get("ai_chain_conditional") or {})
+    cell_values = sorted(spec["cell_values"]) + ["unknown"]
+    cells = inputs["cells"]
+    _require(isinstance(cells, dict) and set(cells) == set(order),
+             f"{where}.cells: 층 {order} 열 칸을 모두 적는다 ({sorted(cells) if isinstance(cells, dict) else cells!r})")
+    for layer in order:
+        cw = f"{where}.cells.{layer}"
+        cell = cells[layer]
+        _expect_keys(cell, ["cell", "evidence_ids"], cw, optional=["ai_chain", "trigger", "note"])
+        _expect_choice(cell["cell"], cell_values, f"{cw}.cell")
+        _expect_evidence_ids(cell["evidence_ids"], f"{cw}.evidence_ids")
+        if cell["cell"] == "preparing":
+            _require(isinstance(cell.get("trigger"), str) and bool(TRIGGER_ID_RE.match(cell["trigger"])),
+                     f"{cw}: 준비 중 칸은 어떤 공시가 나오면 바뀌는지 적은 트리거(TRG-NNN)가 있어야 한다")
+        elif "trigger" in cell:
+            _require(isinstance(cell["trigger"], str) and bool(TRIGGER_ID_RE.match(cell["trigger"])), f"{cw}.trigger: TRG-NNN ({cell['trigger']!r})")
+        if layer in conditional:
+            if cell["cell"] in ("sold", "self"):
+                _require("ai_chain" in cell, f"{cw}: AI 사슬 조건 층의 판매·자체 사용 칸은 ai_chain(AI 사슬로 작동하는가)을 적는다")
+            if "ai_chain" in cell:
+                _expect_choice(cell["ai_chain"], sorted(YES_NO), f"{cw}.ai_chain")
+        else:
+            _require("ai_chain" not in cell, f"{cw}: ai_chain 은 AI 사슬 조건 층 {sorted(conditional)} 에만 적는다")
+    _expect_str(inputs["currency"], f"{where}.currency", nonempty=True)
+    line_layers = order + [spec["outside"]["id"], *sorted(spec.get("excluded_lines") or {})]
+    lines = inputs["revenue_lines"]
+    _require(isinstance(lines, list), f"{where}.revenue_lines: 배열 필요")
+    seen: set[str] = set()
+    for idx, line in enumerate(lines):
+        lw = f"{where}.revenue_lines[{idx}]"
+        _expect_keys(line, ["line", "label", "amount", "period", "layer", "non_ai", "evidence_ids"], lw, optional=["note"])
+        _require(isinstance(line["line"], str) and bool(BUSINESS_ID_RE.match(line["line"])), f"{lw}.line: 소문자 id ({line['line']!r})")
+        _require(line["line"] not in seen, f"{lw}: 매출 줄 id 중복 {line['line']!r}")
+        seen.add(line["line"])
+        _expect_str(line["label"], f"{lw}.label", nonempty=True)
+        _require(line["amount"] == "unknown" or (_is_number(line["amount"]) and line["amount"] >= 0),
+                 f"{lw}.amount: 0 이상 숫자나 unknown ({line['amount']!r}) — 어림이나 균등 비중으로 채우지 않는다")
+        _expect_str(line["period"], f"{lw}.period", nonempty=True)
+        _expect_choice(line["layer"], line_layers, f"{lw}.layer")
+        if line["layer"] in order:
+            _require(cells[line["layer"]]["cell"] == "sold",
+                     f"{lw}: 매출 줄이 붙은 층 {line['layer']!r} 의 칸은 판매(sold)여야 한다 ({cells[line['layer']]['cell']!r})")
+        _expect_choice(line["non_ai"], sorted(YES_NO), f"{lw}.non_ai")
+        _expect_evidence_ids(line["evidence_ids"], f"{lw}.evidence_ids")
+    margin = inputs["non_ai_margin"]
+    _require(margin in ("unknown", "not_applicable") or _is_number(margin),
+             f"{where}.non_ai_margin: AI 무관 부문 영업이익률(소수, 0.1 = 10%)이나 unknown·not_applicable ({margin!r})")
+    if "non_ai_margin_basis" in inputs:
+        _expect_str(inputs["non_ai_margin_basis"], f"{where}.non_ai_margin_basis", nonempty=True)
+    if "non_ai_margin_evidence" in inputs:
+        _expect_evidence_ids(inputs["non_ai_margin_evidence"], f"{where}.non_ai_margin_evidence")
+
+
+def _validate_business(inputs: dict[str, Any], spec: dict[str, Any], rules: dict[str, Any], where: str) -> None:
+    """① 사업(묶음이면 묶음 하나). A~C 는 묶음 전체, AI 수익화와 D·E 의 시장은 구성 사업마다 적는다(rules.md ①)."""
+    parts = spec["parts"]
+    _expect_keys(inputs, ["components", "participant", "switching", "pricing", "substitutes"], where,
+                 optional=["bundle_reason", "pricing_growth_quarters", "pricing_explained"])
+    comps = inputs["components"]
+    _require(isinstance(comps, list) and comps, f"{where}.components: 구성 사업이 하나 이상이어야 한다")
+    for idx, comp in enumerate(comps):
+        cw = f"{where}.components[{idx}]"
+        _expect_keys(comp, ["name", "layer", "customer", "lines", "market", "ai_monetized"], cw,
+                     optional=[*BUSINESS_MONETIZATION_KEYS, "note"])
+        _expect_str(comp["name"], f"{cw}.name", nonempty=True)
+        _expect_choice(comp["layer"], [*rules["layers"]["order"], rules["layers"]["outside"]["id"]], f"{cw}.layer")
+        _expect_choice(comp["customer"], sorted(CUSTOMER_TYPES), f"{cw}.customer")
+        _require(isinstance(comp["lines"], list) and comp["lines"] and all(isinstance(x, str) and BUSINESS_ID_RE.match(x) for x in comp["lines"]),
+                 f"{cw}.lines: ④ 보유표의 매출 줄 id 가 하나 이상 ({comp['lines']!r})")
+        _expect_str(comp["market"], f"{cw}.market", allow_none=True, nonempty=True)
+        _expect_choice(comp["ai_monetized"], sorted(AI_MONETIZED_VALUES), f"{cw}.ai_monetized")
+        if comp["ai_monetized"] == "yes":
+            missing = [k for k in BUSINESS_MONETIZATION_KEYS if k not in comp]
+            _require(not missing, f"{cw}: AI 수익화 '예' 는 판정 재료 {missing} 가 있어야 한다 — 없으면 '부분' 이하로 적는다")
+        if "ai_monetized_measure" in comp:
+            _expect_choice(comp["ai_monetized_measure"], sorted(MONETIZED_MEASURES), f"{cw}.ai_monetized_measure")
+        if "ai_monetized_share" in comp:
+            share = comp["ai_monetized_share"]
+            _require(_is_number(share) and 0 <= share <= 1, f"{cw}.ai_monetized_share: 0~1 숫자 ({share!r})")
+            if comp["ai_monetized"] == "yes":
+                floor = float((spec.get("monetization_evidence") or {}).get("share_min_exclusive", 0.5))
+                _require(share > floor, f"{cw}: AI 수익화 '예' 는 과반(> {floor:g})이 AI 에 따로 돈을 내야 한다 ({share!r}) — 일부면 '부분' 이다")
+        if "ai_monetized_period" in comp:
+            _expect_str(comp["ai_monetized_period"], f"{cw}.ai_monetized_period", nonempty=True)
+        for key in ("ai_separate_billing_evidence", "ai_price_uplift_evidence"):
+            if key in comp:
+                _expect_evidence_ids(comp[key], f"{cw}.{key}")
+                _require(comp["ai_monetized"] != "yes" or bool(comp[key]), f"{cw}: AI 수익화 '예' 는 {key} 에 확정 근거가 하나 이상 있어야 한다")
+    if len(comps) > 1:
+        _require(isinstance(inputs.get("bundle_reason"), str) and inputs["bundle_reason"].strip(),
+                 f"{where}: 묶은 사업은 하나를 떠나면 다른 서비스의 편익도 잃는 연결의 근거(bundle_reason)를 적는다")
+    elif "bundle_reason" in inputs:
+        _expect_str(inputs["bundle_reason"], f"{where}.bundle_reason", allow_none=True)
+    a = parts["A"]
+    _expect_choice(inputs["participant"], list(a["participant"]), f"{where}.participant")
+    _expect_choice(inputs["switching"], list(a["switching"]), f"{where}.switching")
+    _expect_choice(inputs["pricing"], [*parts["B"]["levels"], "unknown"], f"{where}.pricing")
+    _expect_choice(inputs["substitutes"], [*parts["C"]["levels"], "unknown"], f"{where}.substitutes")
+    # B 의 두 '지속' 칸은 늘어난 분기 수와 원가·구성 요인과 가른 설명 여부로 받친다(rules.md ① B).
+    long_q, short_q = int(parts["B"]["sustained_quarters"]), int(parts["B"]["short_quarters"])
+    if "pricing_growth_quarters" in inputs:
+        _expect_count(inputs["pricing_growth_quarters"], f"{where}.pricing_growth_quarters")
+    if "pricing_explained" in inputs:
+        _expect_choice(inputs["pricing_explained"], ["yes", "no"], f"{where}.pricing_explained")
+    if inputs["pricing"] in ("sustained_explained", "sustained_or_short_explained"):
+        missing = [k for k in ("pricing_growth_quarters", "pricing_explained") if k not in inputs]
+        _require(not missing, f"{where}: 가격 실측 {inputs['pricing']!r} 는 {missing} 가 있어야 한다")
+        q, explained = inputs["pricing_growth_quarters"], inputs["pricing_explained"] == "yes"
+        if inputs["pricing"] == "sustained_explained":
+            _require(q >= long_q and explained, f"{where}: 가격 실측 4 는 {long_q}분기 이상 늘고 설명이 있어야 한다(입력 {q}분기·설명 {inputs['pricing_explained']})")
+        else:
+            _require(q >= long_q or (q >= short_q and explained),
+                     f"{where}: 가격 실측 3 은 {long_q}분기 이상이거나 {short_q}~{long_q - 1}분기에 설명이 있어야 한다(입력 {q}분기·설명 {inputs['pricing_explained']})")
+
+
+def _validate_layer_paths(inputs: dict[str, Any], spec: dict[str, Any], layer: str | None, where: str) -> None:
+    """② 한 판매 층의 세 경로. 벤치마크가 없는 층은 성능 도약을 적지 않는다(rules.md ②)."""
+    no_bench = layer in set(spec.get("no_benchmark_layers") or [])
+    _expect_keys(inputs, ["adaptation", "standards"], where,
+                 optional=["adoption_multiple", "note"] + ([] if no_bench else ["leap", "gap_months"]))
+    if not no_bench:
+        _require("leap" in inputs, f"{where}: 층 {layer!r} 는 독립 측정이 있어 성능 도약(leap)을 적는다")
+        _expect_choice(inputs["leap"], [*spec["leap"], "unknown"], f"{where}.leap")
+        if "gap_months" in inputs:
+            _expect_count(inputs["gap_months"], f"{where}.gap_months")
+        need = {"generation_gap": int((spec["gap_months"].get("by_layer") or {}).get(layer, spec["gap_months"]["default"])),
+                "first_3m": int(spec["first_3m_months"])}.get(inputs["leap"])
+        if need is not None:
+            _require("gap_months" in inputs, f"{where}: 성능 도약 {inputs['leap']!r} 는 2위가 도달하는 데 걸린 개월 수(gap_months)를 적는다")
+            _require(inputs["gap_months"] >= need, f"{where}: 성능 도약 {inputs['leap']!r} 는 {need}개월 이상이어야 한다(입력 {inputs['gap_months']}개월)")
+    _expect_choice(inputs["adaptation"], [*spec["adaptation"], "unknown"], f"{where}.adaptation")
+    if "adoption_multiple" in inputs:
+        _require(_is_number(inputs["adoption_multiple"]) and inputs["adoption_multiple"] >= 0,
+                 f"{where}.adoption_multiple: 0 이상 숫자 ({inputs['adoption_multiple']!r})")
+    if inputs["adaptation"] == "doubled":
+        need_x = float(spec["adaptation_double_multiple"])
+        _require(inputs.get("adoption_multiple", 0) >= need_x,
+                 f"{where}: 패러다임 적응 'doubled' 는 채택 지표가 1년 사이 {need_x:g}배 이상(adoption_multiple)이어야 한다")
+    standards = inputs["standards"]
+    _require(isinstance(standards, list), f"{where}.standards: 배열 필요(규격이 없으면 빈 배열)")
+    for idx, std in enumerate(standards):
+        sw = f"{where}.standards[{idx}]"
+        _expect_keys(std, ["name", "holder", "support", "first_adopted", "latest_new_major_adopter", "latest_new_major_adopted_at",
+                           "evidence_ids"], sw, optional=["note"])
+        _expect_str(std["name"], f"{sw}.name", nonempty=True)
+        _expect_choice(std["holder"], sorted(STANDARD_HOLDERS), f"{sw}.holder")
+        _expect_choice(std["support"], list(spec["standard"]), f"{sw}.support")
+        _expect_date(std["first_adopted"], f"{sw}.first_adopted")
+        _expect_str(std["latest_new_major_adopter"], f"{sw}.latest_new_major_adopter", allow_none=True, nonempty=True)
+        _expect_date(std["latest_new_major_adopted_at"], f"{sw}.latest_new_major_adopted_at", allow_none=True)
+        _require((std["latest_new_major_adopter"] is None) == (std["latest_new_major_adopted_at"] is None),
+                 f"{sw}: 가장 최근에 새로 지원한 주요 회사와 그 날짜는 함께 적거나 함께 비운다")
+        _expect_evidence_ids(std["evidence_ids"], f"{sw}.evidence_ids")
+
+
+def _validate_layer_cp(inputs: dict[str, Any], spec: dict[str, Any], where: str) -> None:
+    """③ 한 판매 층의 카운터 포지셔닝. 수익모델·모방은 칸, 가속도는 두 성장 배수, 문 닫힘은 증거 날짜로 받는다(rules.md ③)."""
+    _expect_keys(inputs, ["strategy", "counterparty", "counterparty_present", "revenue_model", "imitation", "door_closed_at",
+                          "acceleration"], where, optional=["entry_order", "note"])
+    _expect_str(inputs["strategy"], f"{where}.strategy", nonempty=True)
+    _expect_str(inputs["counterparty"], f"{where}.counterparty", allow_none=True, nonempty=True)
+    _expect_choice(inputs["counterparty_present"], sorted(YES_NO), f"{where}.counterparty_present")
+    _require(inputs["counterparty"] is not None or inputs["counterparty_present"] == "no",
+             f"{where}: 수입원이 위협받는 상대(counterparty)가 없으면 counterparty_present 는 no 다")
+    _expect_choice(inputs["revenue_model"], [*spec["revenue_model"], "unknown"], f"{where}.revenue_model")
+    _expect_choice(inputs["imitation"], [*spec["imitation"], "unknown"], f"{where}.imitation")
+    _expect_date(inputs["door_closed_at"], f"{where}.door_closed_at", allow_none=True)
+    if "entry_order" in inputs:
+        _expect_str(inputs["entry_order"], f"{where}.entry_order", nonempty=True)
+    acc = inputs["acceleration"]
+    aw = f"{where}.acceleration"
+    _expect_keys(acc, ["metric", "tier", "basis", "prior_multiple", "current_multiple", "delayed", "evidence_ids"], aw,
+                 optional=["one_off_excluded", "note"])
+    _expect_str(acc["metric"], f"{aw}.metric", allow_none=True, nonempty=True)
+    _expect_choice(acc["tier"], sorted(spec["acceleration_tiers"]["tiers"]), f"{aw}.tier")
+    _expect_choice(acc["basis"], sorted(ACCELERATION_BASES), f"{aw}.basis")
+    for key in ("prior_multiple", "current_multiple"):
+        _require(acc[key] is None or (_is_number(acc[key]) and acc[key] > 0), f"{aw}.{key}: 양수 성장 배수나 null ({acc[key]!r})")
+    _require((acc["prior_multiple"] is None) == (acc["current_multiple"] is None),
+             f"{aw}: 두 성장 배수는 함께 적거나 함께 비운다 — 하나로는 가속인지 가를 수 없다")
+    has_values = acc["prior_multiple"] is not None
+    _require(has_values == (acc["basis"] != "none"), f"{aw}: 기간 기준이 none 이면 배수를 비우고, 배수가 있으면 기간 기준을 적는다")
+    _require(not has_values or acc["metric"] is not None, f"{aw}: 배수를 적으면 지표(metric)를 적는다")
+    _require(not has_values or acc["tier"] != "e", f"{aw}: 지표 단계 e(없음)는 배수를 적지 않는다")
+    _expect_choice(acc["delayed"], ["yes", "no"], f"{aw}.delayed")
+    if "one_off_excluded" in acc:
+        _expect_str(acc["one_off_excluded"], f"{aw}.one_off_excluded", allow_none=True, nonempty=True)
+    _expect_evidence_ids(acc["evidence_ids"], f"{aw}.evidence_ids")
+
+
+def _validate_alliance(inputs: dict[str, Any], spec: dict[str, Any], where: str) -> None:
+    """⑤ 동맹 관계와 적대 전선. 한 관계를 어느 부분에 넣을지와 적대 유형·띠는 계산이 정한다(rules.md ⑤)."""
+    _expect_keys(inputs, ["relations", "fronts", "partner_tension"], where, optional=["note"])
+    parts = [k for k in ("equity", "competitor_onboard", "commercial") if k in spec["alliance"]]
+    rels = inputs["relations"]
+    _require(isinstance(rels, list), f"{where}.relations: 배열 필요")
+    names: set[str] = set()
+    for idx, rel in enumerate(rels):
+        rw = f"{where}.relations[{idx}]"
+        _expect_keys(rel, ["counterparty", "qualifies", "evidence_ids"], rw, optional=["government_country", "note"])
+        _expect_str(rel["counterparty"], f"{rw}.counterparty", nonempty=True)
+        _require(rel["counterparty"] not in names, f"{rw}: 상대 {rel['counterparty']!r} 중복 — 한 상대와의 관계는 한 줄에 적는다")
+        names.add(rel["counterparty"])
+        q = rel["qualifies"]
+        _require(isinstance(q, list) and q and len(set(q)) == len(q) and set(q) <= set(parts),
+                 f"{rw}.qualifies: {parts} 가운데 이 관계가 채우는 부분(중복 없이 하나 이상) ({q!r})")
+        if "government_country" in rel:
+            _expect_str(rel["government_country"], f"{rw}.government_country", nonempty=True)
+        _require(bool(rel["evidence_ids"]), f"{rw}: 확정 근거가 하나 이상 있어야 한다")
+        _expect_evidence_ids(rel["evidence_ids"], f"{rw}.evidence_ids")
+    fronts = inputs["fronts"]
+    _require(isinstance(fronts, list), f"{where}.fronts: 배열 필요")
+    for idx, front in enumerate(fronts):
+        fw = f"{where}.fronts[{idx}]"
+        _expect_keys(front, ["name", "nature", "status", "evidence_ids"], fw, optional=["jurisdiction", "remedy_in_progress", "note"])
+        _expect_str(front["name"], f"{fw}.name", nonempty=True)
+        _expect_choice(front["nature"], sorted(FRONT_NATURES), f"{fw}.nature")
+        _expect_choice(front["status"], sorted(FRONT_STATUSES), f"{fw}.status")
+        if front["nature"] == "cost":
+            _expect_str(front.get("jurisdiction"), f"{fw}.jurisdiction(비용형은 관할을 적는다)", nonempty=True)
+            _expect_choice(front.get("remedy_in_progress"), sorted(YES_NO), f"{fw}.remedy_in_progress")
+        else:
+            _require("remedy_in_progress" not in front, f"{fw}: remedy_in_progress 는 비용형 전선에만 적는다")
+            if "jurisdiction" in front:
+                _expect_str(front["jurisdiction"], f"{fw}.jurisdiction", nonempty=True)
+        _require(bool(front["evidence_ids"]), f"{fw}: 확정 근거가 하나 이상 있어야 한다")
+        _expect_evidence_ids(front["evidence_ids"], f"{fw}.evidence_ids")
+    _expect_choice(inputs["partner_tension"], sorted(YES_NO), f"{where}.partner_tension")
+
+
+def v3_input_evidence_ids(kind: str, inputs: dict[str, Any]) -> list[str]:
+    """규칙 v3.0 판정 재료 안에 든 근거 ID 전부. 교차 참조(validate_cross_refs)와 인용 목록이 같이 쓴다."""
+    out: list[str] = []
+    if kind == "holdings":
+        out += [e for cell in inputs["cells"].values() for e in cell["evidence_ids"]]
+        out += [e for line in inputs["revenue_lines"] for e in line["evidence_ids"]]
+        out += list(inputs.get("non_ai_margin_evidence") or [])
+    elif kind == "business":
+        out += [e for comp in inputs["components"] for key in ("ai_separate_billing_evidence", "ai_price_uplift_evidence")
+                for e in (comp.get(key) or [])]
+    elif kind == "layer_paths":
+        out += [e for std in inputs["standards"] for e in std["evidence_ids"]]
+    elif kind == "layer_cp":
+        out += list(inputs["acceleration"]["evidence_ids"])
+    elif kind == "alliance":
+        out += [e for rel in inputs["relations"] for e in rel["evidence_ids"]]
+        out += [e for front in inputs["fronts"] for e in front["evidence_ids"]]
+    return out
+
+
+def _check_business_lines(items: list[dict[str, Any]]) -> None:
+    """① 사업의 구성 사업이 가리키는 매출 줄은 같은 회사 ④ 보유표에 있고, 그 줄의 층과 같은 층이며, 한 사업에만 붙는다(rules.md ①).
+    두 판단이 다 있을 때만 본다. 매출 줄이 어느 사업에도 붙지 않은 것은 계산이 판정 대기로 둔다."""
+    holdings = {j["company_id"]: {line["line"]: line for line in j["inputs"]["revenue_lines"]}
+                for j in items if j["kind"] == "holdings"}
+    used: dict[tuple[str, str], str] = {}
+    for j in items:
+        if j["kind"] != "business" or j["company_id"] not in holdings:
+            continue
+        lines = holdings[j["company_id"]]
+        for idx, comp in enumerate(j["inputs"]["components"]):
+            where = f"judgments[{j['judgment_id']}].inputs.components[{idx}]"
+            for line_id in comp["lines"]:
+                _require(line_id in lines, f"{where}: 매출 줄 {line_id!r} 가 같은 회사 ④ 보유표에 없다")
+                _require(lines[line_id]["layer"] == comp["layer"],
+                         f"{where}: 매출 줄 {line_id!r} 는 층 {lines[line_id]['layer']!r} 에 붙었는데 구성 사업의 층은 {comp['layer']!r} 이다")
+                owner = used.get((j["company_id"], line_id))
+                _require(owner is None, f"{where}: 매출 줄 {line_id!r} 가 사업 {owner!r} 에도 붙었다 — 매출 줄 하나는 한 사업에만 붙는다")
+                used[(j["company_id"], line_id)] = j["business"]
+
+
 TRI_RANK = {"fail": 0, "partial": 1, "pass": 2}
 
 
@@ -1746,7 +2088,7 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
         _require(payload["run_id"] == run_id, f"judgments.json: run_id 불일치 {payload['run_id']!r} != {run_id!r}")
     _require(isinstance(payload["items"], list), "judgments.json: items 배열 필요")
     seen: set[str] = set()
-    pairs: set[tuple[str, str]] = set()
+    keys: set[tuple[str, str, str | None, str | None]] = set()
     items: list[dict[str, Any]] = []
     for idx, item in enumerate(payload["items"]):
         where = f"judgments[{idx}]"
@@ -1755,7 +2097,7 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
             ["judgment_id", "company_id", "factor", "kind", "score", "inputs", "evidence", "reviewer", "reviewed_at", "status"],
             where,
             optional=["counter_evidence", "source_ids", "carried_from", "note", "previous_judgment_id", "superseded",
-                      "evidence_ids", "revision_history", *JUDGMENT_DIRECTION_FIELDS, "reconfirmed"],
+                      "evidence_ids", "revision_history", *JUDGMENT_DIRECTION_FIELDS, "reconfirmed", *UNIT_KEYS],
         )
         for key in JUDGMENT_DIRECTION_FIELDS:
             if key in item:
@@ -1788,11 +2130,27 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
         _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
         factor = item["factor"]
         _require(factor in FACTOR_IDS, f"{where}: factor {factor!r} 오류")
-        pair = (item["company_id"], factor)
-        _require(pair not in pairs, f"{where}: {pair} 판단 중복 — 기업·factor 당 하나")
-        pairs.add(pair)
         kind = item["kind"]
         _require(kind in FACTOR_JUDGMENT_KINDS[factor], f"{where}: {factor} 에 kind {kind!r} 불허 (허용 {sorted(FACTOR_JUDGMENT_KINDS[factor])})")
+        # 2026-10-14 규칙 v3.0: 층 단위 항목(②③)은 판단이 층(layer)을, 사업 단위 항목(①)은 사업(business)을 키로 갖는다.
+        # 회사 단위 항목과 규칙이 단위를 선언하지 않은 실행(v2.1 이하)에는 두 키를 둘 수 없다.
+        unit = factor_unit(rules, factor)
+        for unit_key in UNIT_KEYS:
+            if unit == unit_key:
+                _require(unit_key in item, f"{where}: {factor} 는 {unit_key} 단위라 판단에 {unit_key} 키가 있어야 한다")
+            else:
+                _require(unit_key not in item, f"{where}: {factor} 는 {unit} 단위라 {unit_key} 키를 둘 수 없다")
+        if unit != "company" or kind in V3_JUDGMENT_KINDS:
+            _require(bool(rules.get("layers")), f"{where}: kind {kind!r} 는 층 정의(layers)가 있는 규칙에서만 쓴다")
+        if "layer" in item:
+            _require(item["layer"] in layer_ids(rules), f"{where}: 층 {item['layer']!r} 는 규칙의 층 {sorted(layer_ids(rules))} 이 아니다")
+        if "business" in item:
+            _require(isinstance(item["business"], str) and bool(BUSINESS_ID_RE.match(item["business"])),
+                     f"{where}: business 는 소문자 사업 id ({item['business']!r})")
+        key = judgment_key(item)
+        label = (item["company_id"], factor) + tuple(k for k in key[2:] if k is not None)
+        _require(key not in keys, f"{where}: {label} 판단 중복 — 기업·factor" + {"layer": "·층", "business": "·사업"}.get(unit, "") + " 당 하나")
+        keys.add(key)
         _require(item["status"] in JUDGMENT_STATUSES, f"{where}: status {item['status']!r} 오류")
         # 2026-10-08 규칙 v2.0: 규칙이 factor 의 judgment_kinds 를 선언하면 새 판단은 그 목록만 허용한다(① lockin, ② paths,
         # ⑦ matrix). 이어받은 판단(carried)은 옛 kind 를 그대로 읽는다 — 재실행이 옛 판단을 이어받은 뒤 하나씩 새 판단으로
@@ -1802,6 +2160,9 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
         if declared and item["status"] == "new":
             _require(kind in declared, f"{where}: 규칙 {rules.get('rule_version')} 의 {factor} 새 판단은 kind {sorted(declared)} 만 받는다 "
                                        f"({kind!r}) — 이어받은 점수가 아니라 판정 입력으로 다시 매긴다")
+        if unit != "company":
+            # 회사 단위로 매긴 옛 판단은 층·사업 단위 계산이 읽을 수 없어 이어받기도 받지 않는다(init 이 옮기지 않는다).
+            _require(kind in (declared or []), f"{where}: {unit} 단위 {factor} 판단은 승계여도 kind {sorted(declared or [])} 만 받는다 ({kind!r})")
         if item["status"] == "carried":
             _require(isinstance(item.get("carried_from"), str) and item["carried_from"], f"{where}: carried 판단은 carried_from 필요")
         _expect_date(item["reviewed_at"], f"{where}.reviewed_at")
@@ -1821,7 +2182,10 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
                 _require(item["status"] == "carried", f"{where}: {factor} 의 수동 score 는 승계(carried) 판단에만 허용 — 신규는 paths/matrix 입력 필요")
         else:
             _require(score is None, f"{where}: kind {kind!r} 판단의 score 는 null (자동 산출)")
-        _validate_judgment_inputs(kind, item["inputs"], f"{where}.inputs")
+        if kind in V3_JUDGMENT_KINDS:
+            _validate_v3_inputs(kind, item["inputs"], rules, factor, item.get("layer"), f"{where}.inputs")
+        else:
+            _validate_judgment_inputs(kind, item["inputs"], f"{where}.inputs")
         if item["status"] == "new":
             _validate_judgment_inputs_for_rules(kind, item["inputs"], rules["factors"][factor], f"{where}.inputs")
         if kind == "matrix":
@@ -1833,6 +2197,7 @@ def validate_judgments(payload: Any, companies: dict[str, dict[str, Any]], rules
                          f"{where}: {item['company_id']} {factor} 매트릭스 출력 {key}={cell} 가 range [{lo}, {hi}] 밖")
         items.append(item)
     _check_supply_floor(items, rules)
+    _check_business_lines(items)
     return items
 
 
@@ -2097,7 +2462,14 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         where = f"proposals[{idx}]"
         _expect_keys(item, ["proposal_id", "company_id", "factor", "changes", "evidence_after", "reason", "evidence_ids",
                             "before", "proposed_by", "proposed_at", "status"],
-                     where, optional=["decided_by", "decided_at", "decision_note", "applied", *PROPOSAL_DIRECTION_AFTER])
+                     where, optional=["decided_by", "decided_at", "decision_note", "applied", *PROPOSAL_DIRECTION_AFTER, *UNIT_KEYS])
+        # 2026-10-14 규칙 v3.0: 층·사업 단위 판단을 가리키는 제안은 판단과 같은 키를 든다. 단위와 맞는지는 반영할 때 판단 검증이 본다.
+        if "layer" in item:
+            _require(isinstance(item["layer"], str) and bool(LAYER_ID_RE.match(item["layer"])), f"{where}.layer: 소문자 층 id ({item['layer']!r})")
+        if "business" in item:
+            _require(isinstance(item["business"], str) and bool(BUSINESS_ID_RE.match(item["business"])),
+                     f"{where}.business: 소문자 사업 id ({item['business']!r})")
+        _require(not ("layer" in item and "business" in item), f"{where}: layer 와 business 는 함께 둘 수 없다")
         # 2026-10-07: 올릴·내릴 근거 칸의 반영 뒤 문장. null(키 없음)이면 그 칸을 바꾸지 않고, 빈 배열이면 '없음'으로 바꾼다.
         for key in PROPOSAL_DIRECTION_AFTER:
             if item.get(key) is not None:
@@ -2198,6 +2570,14 @@ def validate_cross_refs(observations: list[dict[str, Any]], judgments: list[dict
         if j["status"] == "new":
             unconfirmed = [e for e in share_ev if ev_status[e] != "confirmed"]
             _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 AI 무관 매출 몫·보유표 근거 {unconfirmed} 가 확정되지 않았다")
+        # 2026-10-14 규칙 v3.0: 보유표 칸·매출 줄·규격·가속도·동맹 관계·적대 전선마다 단 근거도 같은 조건이다.
+        if j.get("kind") in V3_JUDGMENT_KINDS:
+            nested = v3_input_evidence_ids(j["kind"], inputs)
+            missing = sorted({e for e in nested if e not in ev_status})
+            _require(not missing, f"교차 참조: {j['judgment_id']} 의 판정 재료 근거 {missing} 가 evidence.json 에 없음")
+            if j["status"] == "new":
+                unconfirmed = sorted({e for e in nested if ev_status[e] != "confirmed"})
+                _require(not unconfirmed, f"교차 참조: 새 판단 {j['judgment_id']} 의 판정 재료 근거 {unconfirmed} 가 확정되지 않았다")
 
 
 # ------------------------------------------------------------------ run / approval

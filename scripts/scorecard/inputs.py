@@ -52,13 +52,25 @@ class ObsLookup:
 
 
 class JudgmentLookup:
+    """2026-10-14 규칙 v3.0: 층·사업 단위 판단(layer·business 키가 있는 판단)은 `get` 이 아니라 `units` 로 읽는다.
+    한 (회사, 항목)에 여럿이라 `get` 에 넣으면 마지막 것이 앞의 것을 조용히 덮는다."""
+
     def __init__(self, judgments: list[dict[str, Any]]):
         self._by_pair: dict[tuple[str, str], dict[str, Any]] = {}
+        self._units: dict[tuple[str, str], list[dict[str, Any]]] = {}
         for item in judgments:
-            self._by_pair[(item["company_id"], item["factor"])] = item
+            if "layer" in item or "business" in item:
+                self._units.setdefault((item["company_id"], item["factor"]), []).append(item)
+            else:
+                self._by_pair[(item["company_id"], item["factor"])] = item
 
     def get(self, company_id: str, factor: str) -> dict[str, Any] | None:
         return self._by_pair.get((company_id, factor))
+
+    def units(self, company_id: str, factor: str) -> list[dict[str, Any]]:
+        """그 회사·항목의 층·사업 판단. 층 id·사업 id 순이라 계산과 출력의 순서가 입력 순서에 매이지 않는다."""
+        items = self._units.get((company_id, factor), [])
+        return sorted(items, key=lambda j: (j.get("layer") or "", j.get("business") or ""))
 
 
 def factor_result(
