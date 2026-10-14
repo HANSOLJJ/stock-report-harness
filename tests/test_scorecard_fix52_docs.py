@@ -20,7 +20,8 @@ class GuidelineRangeTableTest(unittest.TestCase):
     # 2026-10-06 규칙 문서 재편: 이 검사는 design-guideline 4.1절 범위표에 붙인 낡음 표시를 봤다. 그 문서를 지우고
     # 사람용 규칙은 rules.md 하나가 됐으므로, **사람용 문서의 범위가 규칙 JSON 과 같은지**를 rules.md 에서 본다.
     def test_rules_doc_ranges_match_the_rule_file(self):
-        text = (ROOT / "docs" / "scorecard" / "rules.md").read_text(encoding="utf-8")
+        # 2026-10-14: 범위의 물결표는 마크다운 취소선으로 읽히지 않게 `\~` 로 적는다. 비교는 글자 그대로의 `~` 로 한다.
+        text = (ROOT / "docs" / "scorecard" / "rules.md").read_text(encoding="utf-8").replace("\\~", "~")
         # 2026-10-12 규칙 v2.1: 고정 버전(v1.8)이 아니라 rules.md 머리말이 현행이라고 적은 버전의 JSON 과 대조한다.
         version = re.search(r"\*\*규칙 버전 (v\d+\.\d+)\.\*\*", text).group(1)
         current = load_rules(version).payload["factors"]
