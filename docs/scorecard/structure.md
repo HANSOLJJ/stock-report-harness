@@ -30,7 +30,7 @@
 
 | 경로 | 누가 쓰나 | 추적 | 내용 |
 |---|---|---|---|
-| `scorecard/rules/v1.5.json` ~ `vN.json` | 규칙 개정 때 새 버전을 더한다 | git | factor 모드·범위, ⑥ 잣대·트랙, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트 Q01~Q23, 결정(C-xx) 상태·선택지, 긴장 목록. 새 실행은 현행 버전(`rules.md` 머리말)을 쓴다. 승인 해시에 파일 바이트 해시가 들어가므로 이미 쓰인 파일은 고치지 않는다. 사람용 설명은 `rules.md` |
+| `scorecard/rules/v1.5.json` ~ `vN.json` | 규칙 개정 때 새 버전을 더한다 | git | factor 모드·범위, ⑥ 잣대·트랙, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트(v2.1 이하 Q01~Q23, v3.0 은 Q01~Q25), 결정(C-xx) 상태·선택지, 긴장 목록. v3.0 은 층 정의(`layers`: 열한 층·층 밖 사업·칸 값·AI 사슬 조건·2년 창), 항목 단위(`unit`), 연속값 곡선(`curve`), 미확인 비율(`scoring.unknown_share`)을 더한다. 새 실행은 현행 버전(`rules.md` 머리말)을 쓴다. 승인 해시에 파일 바이트 해시가 들어가므로 이미 쓰인 파일은 고치지 않는다. 사람용 설명은 `rules.md` |
 | `scorecard/companies.json` | `add-company`, `resolve-cik --apply` | git | 안정 company_id, 표시명·별칭, 유형, 상장, 티커, share_basis, adr_ratio, 통화, 평가 범위, `news_queries`, `cik` |
 | `scorecard/baseline/v1.5/` | 이관(끝남). 보호 경로 | git | `scores.json`(점수·근거 불릿), `observations.json`, `triggers.json`, `import-report.md` |
 | `output/<run_id>/` | 각 단계 | git(입력·결과·승인), 일부 gitignore(`.lock`) | 실행 묶음 한 폴더. 아래 표 |
@@ -60,8 +60,9 @@
 | 객체 | 파일 | 필수 필드 |
 |---|---|---|
 | 관측 | observations.json items | observation_id, company_id, metric(카탈로그 `METRICS`), value, unit, as_of, kind, source_id, status(verified / legacy_unverified / not_applicable / not_disclosed / collection_failed / source_conflict / incompatible_basis / parse_failed), basis, raw, note |
-| 판단 | judgments.json items | judgment_id, company_id, factor, kind(score/grade/criteria/matrix/paths/gate_inputs/lockin), score, inputs, evidence(판정 칸, 비어 있으면 안 됨), evidence_up·evidence_down(선택: 올릴·내릴 근거 칸, 빈 목록은 '없음'. 규칙 v1.9 이상은 필수, `guide.md` 5.6), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`, previous 는 방향 칸이 있던 판단이면 그것도 담는다), reconfirmed(선택: 다시 읽었으나 바꾸지 않은 기록 `[{at, by, evidence_ids}]`, `rules.md` 2.9) |
+| 판단 | judgments.json items | judgment_id, company_id, factor, layer·business(규칙 v3.0 의 층 단위 ②③ 은 layer, 사업 단위 ① 은 business 가 필수이고 그 밖에는 둘 수 없다. 판단 키는 (회사, 항목, 층, 사업)), kind(score/grade/criteria/matrix/paths/gate_inputs/lockin/survival/axes, v3.0 은 business/layer_paths/layer_cp/holdings/alliance), score, inputs, evidence(판정 칸, 비어 있으면 안 됨), evidence_up·evidence_down(선택: 올릴·내릴 근거 칸, 빈 목록은 '없음'. 규칙 v1.9 이상은 필수, `guide.md` 5.6), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`, previous 는 방향 칸이 있던 판단이면 그것도 담는다), reconfirmed(선택: 다시 읽었으나 바꾸지 않은 기록 `[{at, by, evidence_ids}]`, `rules.md` 2.9) |
 | 판단 입력(규칙 v2.0) | judgments.json items[].inputs | ① `lockin`: channel_consumer·channel_work·channel_trade(yes/no), loop·switching·substitutes·pricing(pass/partial/fail/unknown), durability_discount(yes/no/unknown), ai_monetized_in_channel(yes/partial/no/unknown, 점수 밖 표시), pricing_sustained_quarters(선택, 정수). ② `paths` 선택 키: generation_gap_months(정수), leap_independent(yes/no/unknown). ③ `criteria` 선택 키: acceleration_tier(a~e), acceleration_growth_rates(숫자 2개) |
+| 판단 입력(규칙 v3.0) | judgments.json items[].inputs | ④ `holdings`: cells(열한 층마다 cell sold/self/none/preparing/unknown·evidence_ids, AI 사슬 조건 층의 판매·자체 사용은 ai_chain, 준비 중은 trigger), revenue_lines[{line, label, amount(숫자나 unknown), period, layer(열한 층·outside·제외 줄), non_ai, evidence_ids}], currency, non_ai_margin(숫자·unknown·not_applicable)과 숫자면 non_ai_margin_source(segment/company). ① `business`: components[{name, layer, customer, lines(④ 매출 줄 id), market, ai_monetized(예면 재료 다섯)}], participant·switching·pricing·substitutes(규칙 사다리 칸), 묶음이면 bundle_reason. ② `layer_paths`: leap(벤치마크 있는 층만)·gap_months, adaptation·adoption_multiple, standards[{name, holder, support, first_adopted, latest_new_major_adopter, latest_new_major_adopted_at, evidence_ids}]. ③ `layer_cp`: strategy, counterparty·counterparty_present, revenue_model, imitation, door_closed_at, acceleration{metric, tier, basis, prior_multiple, current_multiple, delayed, evidence_ids}. ⑤ `alliance`: relations[{counterparty, qualifies(equity/competitor_onboard/commercial), government_country, evidence_ids}], fronts[{name, nature(cost/structural), status(ongoing/ended), jurisdiction, remedy_in_progress, evidence_ids}], partner_tension. 모양은 `schema._validate_v3_inputs` 가 본다 |
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
@@ -93,6 +94,8 @@
 | | `axes` | ⑧ 고객·약정·공급·지정학 네 축의 사다리 칸 가운데 최저, 비공개·탐색 미완 축은 정책 기본값 −1(규칙 v2.1) |
 | | `criteria` · `grade` · `matrix` · `paths` | 판정 입력을 사다리·산식·조합표·경로 수로 환산(③⑤⑦②) |
 | | `lockin` | ① 네 질문 판정을 사다리로 환산(규칙 v2.0). `calc` 에 입력과 단계별 보정이 담긴다 |
+| | `business` · `layer_paths` · `layer_cp` | ①②③ 을 사업·층마다 매겨 ④ 매출 줄의 층 매출 몫으로 가중 평균(규칙 v3.0). `calc` 에 층별 무게·점수와 판단 ID 가 담긴다 |
+| | `holdings` · `alliance` | ④ 수직계열화 + 다각화 + 그 분야의 힘, ⑤ 12 + 동맹 + 적대 띠(규칙 v3.0) |
 | | `carried` | 판정 입력 없이 점수 숫자만 있다(기업 추가 실행의 기존 기업에만 생긴다) |
 
 `data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 승인해야 한다.
@@ -115,6 +118,11 @@
 | F6 NTM PER 구간표 (`bands` 모드, v1.5·v1.6 실행 재현용) | `calc_f6._listed`, `rules.f6_band/f6_boundary_flag` | T-01~T-03(구버전), R01 |
 | F9 G1~G4, 정책·결정 오버라이드 | `calc_f9.compute_f9`, `_g4` | T-07(`baseline_import.standard_fcf`), T-09~T-11, R02~R04, `TestV17F9Rescaled` |
 | 관측 상태 의미(적용 제외 ≠ 미공시), 흐름 지표 period, 승인자 문자열 | `schema.validate_observations`, `validate_approval` | `TestReviewRegressions` |
+| 판단 키(층·사업)·v3.0 판정 재료·매출 줄 교차·중첩 근거 교차 참조 (규칙 v3.0) | `schema.validate_judgments`, `_validate_v3_inputs`, `_check_business_lines`, `validate_cross_refs` | `tests/test_rules_v30_judgments.py` |
+| 층·사업 판단 생성·수정, init 단위 전환 (규칙 v3.0) | `stages.revise_judgment`·`add_proposal`·`decide_proposal`·`undo_proposal`, `_drop_company_level_unit_judgments` | `tests/test_rules_v30_unit_paths.py` |
+| ④ 열한 층 보유표·층 매출 몫, ②③ 층별 계산, ① 사업 단위 (규칙 v3.0) | `calc_layers.layer_weights`·`compute_f4_holdings`·`compute_f2_layers`·`compute_f3_layers`·`compute_f1_business` | `tests/test_calc_layers.py` |
+| ⑤ 동맹 세 부분·적대 띠 (규칙 v3.0) | `calc_qual.compute_f5_alliance` | `tests/test_calc_f5_alliance.py` |
+| ⑥·⑨ 연속값 곡선, ⑦·⑧ × 4, 한 번 반올림, 미확인 40% (규칙 v3.0) | `rules.piecewise`·`RuleSet.round_score`·`unknown_points`, `calc_f6_params`, `calc_f9`, `calc_qual.compute_f8` | `tests/test_rules_v30.py`, `tests/test_rules_v30_calc.py` |
 | 합산·동점 순위·미완료 제외 | `aggregate` | T-12 |
 | 결정론·해시 | `engine.compute/load_results/recompute_matches` | validator "results deterministic recompute" |
 | 기준선 이관 검산 (T-17) | `baseline_import` + `import-report.md` MD 대조 | 14사 match |
@@ -146,14 +154,14 @@ collect ──► evidence/candidates.json (뉴스·공시 후보) ; --kind pric
 research ──► research.md (observations_hash·judgments_hash 결속) ; 인용한 근거의 출처를 sources.json 에 등록(--no-register 로 끔)
 calculate ──► results.json(+results_hash) + preview.md ; 입력 해시가 바뀌면 이전 approval.json 자동 무효
 draft ──► draft.md (results_hash 결속)
-review-template ──► review.md (4 영역 + Q01~Q23, status: needs_fix) → 리뷰어가 review-parts/ 를 채움 → status: pass
+review-template ──► review.md (4 영역 + Q01~Q23, 규칙 v3.0 은 Q25 까지, status: needs_fix) → 리뷰어가 review-parts/ 를 채움 → status: pass
 [사람] 승인 페이지 ──► 근거 확정(candidate → confirmed) · 판단 수정(judge) · 승인 · 취소 → approval.json (rules/observations/judgments/run/results/draft 해시 결합)
 build_report.py ──► 승인 해시 == 현재 해시 검증 → report.html·audit.md → history.csv append(중복 방지) → 사후 검증
 
 [기업 추가 갈래]
 add-company ──► scorecard/companies.json 등록
 init --from-run ──► 이전 실행 계승 + plan + 입력 생성 (continued_from 기록)
-collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 승인 ──► build
+collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증. 규칙 v3.0 실행은 diff 가 거부한다) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 승인 ──► build
 ```
 
 모든 단계(`init`·`collect`·`research`·`calculate`·`draft`·`review-template`)와 에이전트 세션의 `confirm`·`judge` 는 실행 잠금 `.lock` 을 검사하고 기록한다. 다른 소유자의 잠금이면 거부하고 `--take-lock` 으로 넘겨받는다.
@@ -174,6 +182,8 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) 
 ### 판단 수정
 
 정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. 규칙 v2.0 이하의 F4·F8(v1.9 이하는 F1 도)은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs`·F1 `lockin`·F2 `paths` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), 규칙 v2.1 의 F4 `survival`·F8 `axes` 와 ① AI 수익화 재료는 CLI 전용 키(`schema.JUDGMENT_CLI_ONLY_INPUTS`, 모양은 `JUDGMENT_CLI_ONLY_TYPES`)로 받는다. F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 근거 세 칸(`evidence`·`evidence_up`·`evidence_down`)만 바꾸는 수정은 모든 factor 에 되고 판정 값·상태를 유지한다. 규칙 v1.9 이상 실행이면 쓰기 전에 `validate.three_way_item_violations` 로 세 칸 형식을 검사한다. 제안은 `evidence_after`·`evidence_up_after`·`evidence_down_after` 로 세 칸의 반영 뒤 문장을 든다(null 은 그 칸을 바꾸지 않음). 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
+
+규칙 v3.0 의 층·사업 판단은 `judge`·`propose` 에 `--layer`·`--business` 를 붙여 가리킨다. 그 판단이 없으면 판정 재료(`--json`)와 근거로 새로 만들고(ID `{회사}.{항목}.{층|사업}`, 이전 값이 없어 `revision_history` 없음), 새로 만드는 제안은 `before` 가 null 이며 번복하면 그 판단을 지운다. 다섯 판정 재료의 최상위 키는 CLI 전용이고 승인 페이지는 층·사업 판단을 읽기만 한다. `init` 은 규칙 v3.0 에서 회사 단위 ①②③ 판단을 옮기지 않는다.
 
 ### 승인
 
@@ -235,4 +245,6 @@ T 번호는 설계 시점(2026-09-08)에 v1.5 규칙을 기준으로 정의됐�
 |---|---|---|
 | RC3-06 | `decisions_applied` 를 근거로 무엇을 주장할 때 | **소비 증명이 아니다.** `results.decisions_applied` 는 run.json `decisions` 를 `id:choice` 로 옮긴 목록일 뿐이다(engine.py). 선택을 읽는 분기가 없거나(C-11) 현재 모드에서 효력이 없는(C-13 은 bands 모드 전용) 선택도 들어 있다. 적용 여부는 factor 산식·경고에서 확인한다. 소비 추적(선택마다 읽은 factor 기록)은 구현하지 않았다 |
 | RC3-08 | 관측 kind·metric 의미를 스키마로 막으려 할 때 | **단어 의미는 스키마가 아니라 소비 코드가 막는다.** `metric=arr` 에 `kind=run_rate` 를 `actual` 로 바꿔도 스키마는 통과한다. 비상장 P2 보정의 `arr_growth` 는 `accepted_kinds: ["actual"]` 을 calc_f6_params 가 읽어 run_rate 를 거부한다. kind 를 새로 쓰는 소비자를 만들면 그 코드에 같은 거부를 넣는다 |
+| v3.0-시장 | 규칙 v3.0 ① 을 읽을 때 | 시장 정의표(`scorecard/markets/`)와 `calc_market.py` 가 아직 없어 ① D 시장 순위·E 점유율 방향은 모든 사업이 미확인(각 1.6)이다. 시장 자료 전에는 사업 점수가 최고 15.2 라 AI 수익화 상한 16 이 걸리지 않는다 |
+| v3.0-출력 | 규칙 v3.0 실행을 승인·빌드하려 할 때 | HTML 리포트(층별 화면·산점도 축·80점 선), 승인 페이지의 층별 수정 화면, `diff` 의 층 단위 비교가 아직 없다. 초안·미리보기는 최소 렌더(층 표·층·사업 판단 근거·v3.0 방법 절)까지 된다 |
 | 재빌드 | 승인 뒤 리뷰 파일을 고쳤을 때 | 승인 해시 여섯 가지에 `review.md` 는 들지 않아 승인은 유효하지만, HTML References 의 검토자·리뷰 유형은 빌드 시점의 리뷰 파일에서 읽는다. 리뷰 파일을 고쳤으면 빌드를 다시 돌린다. 같은 승인본이면 `history.csv` 에 행이 추가되지 않는다 |

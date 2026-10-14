@@ -26,7 +26,7 @@
 - [x] 이정표 2 보고
 ### 이정표 3: 출력·문서·시범 실행
 - [x] S10 초안·미리보기 렌더 최소(층 표, 층·사업 판단 근거, v3.0 방법 절, 연속값 안내, 미리보기 척도 환산 참고값). v21·rejudge 초안·미리보기는 바이트 그대로
-- [ ] S11 structure·guide·score-research·score-review 문서
+- [x] S11 structure·guide·score-research·score-review 문서(`.claude/skills` 원본만. `.agents/skills` Codex 사본은 v2.1 부터 뒤처져 있어 별도 과제)
 - [ ] P0 시범 init 전 규칙 값 확정(rules.md 8절, implementation.md 「구현 전에 정할 것」)
 
 ## 시험 실행

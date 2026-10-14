@@ -71,7 +71,7 @@ sequenceDiagram
 | 6 | 계산 | `scripts/scorecard_cli.py calculate <run_id>` | `results.json`, `preview.md` |
 | 7 | 초안 | `scripts/scorecard_cli.py draft <run_id>` | `draft.md` |
 | 8 | 리뷰 | `scripts/scorecard_cli.py review-template <run_id>` 뒤 4영역 리뷰 | `review.md`, `review-parts/` |
-| 9 | 판단 변경 제안 | `scripts/scorecard_cli.py propose <run_id> --company <id> --factor F5 --set … --evidence "…" --reason "…"` | `proposals.json` |
+| 9 | 판단 변경 제안 | `scripts/scorecard_cli.py propose <run_id> --company <id> --factor F5 --set … --evidence "…" --reason "…"`<br/>규칙 v3.0 의 층·사업 판단은 `--layer <층 id>`·`--business <사업 id>` 를 붙이고 판정 재료는 `--json` 으로 줍니다. 그 판단이 없으면 반영할 때 새로 만듭니다 | `proposals.json` |
 | 10 | 승인 | 사람이 승인 페이지에서 (5절) | `approval.json` |
 | 11 | 빌드 | `scripts/build_report.py <run_id>` | `report.html`, `audit.md`, `scorecard/history.csv` 에 행 추가 |
 
@@ -88,6 +88,8 @@ sequenceDiagram
 | 기준선에서 새로 | `init --rule <현행 버전> …` | 기준선 트리거 전부 (TRIG-001~039) |
 
 정기 재채점은 이어받아도 정성 판단 일곱 항목(①②③④⑤⑦⑧)을 모든 기업에 대해 그 실행의 근거로 다시 매깁니다. 점수가 같으면 새 판단으로 두고 다시 읽은 근거를 `reconfirmed` 에 남기며, 이전 판단을 그대로 가져오는 승계는 기업 추가 실행의 기존 기업에만 씁니다(`rules.md` 2.9).
+
+규칙 v3.0 으로 이어받으면 `init` 이 회사 단위 ①②③ 판단을 옮기지 않습니다(층·사업마다 새로 매깁니다). 판단은 ④ 보유표와 매출 줄 → ②③ 층 → ① 사업 순서로 매깁니다. ①②③ 의 무게와 ① 사업의 매출 몫이 ④ 매출 줄에서 나오기 때문입니다(`score-research` 스킬). `diff` 는 v3.0 실행을 견주지 못하므로 기업 추가 실행의 축약 리뷰를 쓸 수 없고 전체 리뷰를 합니다.
 
 ## 4. 트리거 처리 (2026-10-01 도입)
 
@@ -238,6 +240,7 @@ stateDiagram-v2
 | ⑦ | 매트릭스(`matrix`)와 근거 문장 |
 | ⑨ | 게이트 입력(`gate_inputs`)과 근거 문장 |
 | ⑥ | 대상이 아닙니다 (공시 숫자로만 계산) |
+| ①~⑤ (규칙 v3.0) | ① 사업(`business`), ②③ 층(`layer_paths`·`layer_cp`), ④ 열한 층 보유표와 매출 줄(`holdings`), ⑤ 동맹 관계와 적대 전선(`alliance`)과 근거 문장. 모두 중첩 입력이라 승인 페이지에서는 읽기만 하고 `judge --json`·`propose --json` 으로 고칩니다. ①②③ 은 `--business`·`--layer` 로 판단을 가리킵니다. 점수는 규칙이 계산합니다 |
 
 ### 5.6 근거 세 칸 (2026-10-07)
 
