@@ -207,9 +207,15 @@ def _f2_layer(j: dict[str, Any], layer: str, rules: RuleSet, as_of: str) -> Laye
     inputs = j["inputs"]
     no_bench = layer in set(spec.get("no_benchmark_layers") or [])
     unknown = [k for k in ("leap", "adaptation") if inputs.get(k) == "unknown"]
-    detail: dict[str, Any] = {"no_benchmark": no_bench}
-    if unknown:
+    detail: dict[str, Any] = {"no_benchmark": no_bench, "unknown_parts": unknown}
+    warnings = [f"{k} 미확인 — 그 경로 만점의 {rules.payload['scoring']['unknown_share']:.0%}" for k in unknown]
+    if unknown and rules.unknown_points(1) is None:
         return None, detail, f"경로 {unknown} 이 미확인 — 0 으로 두지 않는다", []
+
+    def points(key: str) -> float:
+        table = spec[key]
+        return rules.unknown_points(max(table.values())) if inputs[key] == "unknown" else float(table[inputs[key]])
+
     months = int(rules.payload["layers"]["time_window_months"])
     standards = []
     for std in inputs["standards"]:
@@ -218,7 +224,7 @@ def _f2_layer(j: dict[str, Any], layer: str, rules: RuleSet, as_of: str) -> Laye
                           "latest_new_major_adopted_at": std["latest_new_major_adopted_at"], "active": active,
                           "points": float(spec["standard"][std["support"]]) if active else 0.0})
     standard = max((s["points"] for s in standards), default=0.0)
-    adaptation = float(spec["adaptation"][inputs["adaptation"]])
+    adaptation = points("adaptation")
     detail.update(adaptation=_tidy(adaptation), standard=_tidy(standard), standards=standards)
     if no_bench:
         formula = spec["no_benchmark_formula"]
@@ -226,10 +232,10 @@ def _f2_layer(j: dict[str, Any], layer: str, rules: RuleSet, as_of: str) -> Laye
         score = sum(parts[k] for k in formula["sum_of"]) * float(formula["multiplier"])
         detail["multiplier"] = formula["multiplier"]
     else:
-        leap = float(spec["leap"][inputs["leap"]])
+        leap = points("leap")
         detail["leap"] = _tidy(leap)
         score = leap + adaptation + standard
-    return score, detail, None, []
+    return score, detail, None, warnings
 
 
 def compute_f2_layers(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
@@ -242,17 +248,26 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
     """③ 한 층의 카운터 포지셔닝. 별도 수익모델 + 모방 불가능성 + 가속도에 관문 셋(작동 증거·모방·문 닫힘)을 댄다.
 
     상대가 지금 그 시장에 없으면(진행 중이 아님) 수익모델·모방은 0 이다. 가속도는 두 성장 배수의 비를 곡선으로 바꾸고, 값이 없으면
-    0 에 '자료 없음', 출시 지연이면 0(감속)이다. 상대 유무·수익모델·모방이 미확인이면 그 층은 판정 대기다(rules.md ③, 2.11)."""
+    만점의 40% 에 '자료 없음', 출시 지연이면 0(감속)이다. 수익모델·모방이 미확인이면 만점의 40% 이고(rules.md 2.6), 상대가 지금
+    있는지가 미확인이면 진행 중인 싸움인지 가를 수 없어 그 층은 판정 대기다(rules.md ③, 2.11)."""
     spec = rules.factor("F3")
     inputs = j["inputs"]
     detail: dict[str, Any] = {"counterparty": inputs["counterparty"]}
-    unknown = [k for k in ("counterparty_present", "revenue_model", "imitation") if inputs[k] == "unknown"]
-    if unknown:
+    if inputs["counterparty_present"] == "unknown":
+        return None, detail, "상대가 지금 시장에 있는지 미확인 — 진행 중인 싸움인지 가를 수 없다", []
+    unknown = [k for k in ("revenue_model", "imitation") if inputs[k] == "unknown"]
+    if unknown and rules.unknown_points(1) is None:
         return None, detail, f"{unknown} 이 미확인 — 0 으로 두지 않는다", []
-    warnings: list[str] = []
+    share = rules.payload["scoring"].get("unknown_share")
+    warnings: list[str] = [f"{k} 미확인 — 만점의 {share:.0%}" for k in unknown]
     active = inputs["counterparty_present"] == "yes"
-    revenue_model = float(spec["revenue_model"][inputs["revenue_model"]]) if active else 0.0
-    imitation = float(spec["imitation"][inputs["imitation"]]) if active else 0.0
+
+    def points(key: str) -> float:
+        table = spec[key]
+        return rules.unknown_points(max(table.values())) if inputs[key] == "unknown" else float(table[inputs[key]])
+
+    revenue_model = points("revenue_model") if active else 0.0
+    imitation = points("imitation") if active else 0.0
     if not active:
         warnings.append("수입원이 위협받는 상대가 지금 시장에 없다(끝난 싸움) — 수익모델·모방 불가능성 0")
     acc_spec = spec["acceleration"]
@@ -263,8 +278,10 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
         acceleration = 0.0
         warnings.append("출시 지연은 감속으로 본다 — 가속도 0")
     elif a["prior_multiple"] is None:
-        acceleration, no_data = float(acc_spec.get("missing_points", 0)), True
-        warnings.append("가속도 자료 없음 — 0 으로 계산하고 다음 수집에서 채운다")
+        missing = rules.unknown_points(acc_spec["max"])
+        acceleration, no_data = (0.0 if missing is None else missing), True
+        unknown.append("acceleration")
+        warnings.append(f"가속도 자료 없음 — {_tidy(acceleration)} 로 계산하고 다음 수집에서 채운다")
     else:
         ratio = float(a["current_multiple"]) / float(a["prior_multiple"])
         acceleration = piecewise(acc_spec["curve"], ratio)
@@ -283,7 +300,7 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
     if not door:
         caps["door_closed"] = float(gates["door_closed_gate"]["cap"])
     score = min([raw, *caps.values()])
-    detail.update(active=active, revenue_model=_tidy(revenue_model), imitation=_tidy(imitation),
+    detail.update(active=active, unknown_parts=unknown, revenue_model=_tidy(revenue_model), imitation=_tidy(imitation),
                   acceleration_ratio=None if ratio is None else _tidy(ratio), acceleration=_tidy(acceleration),
                   acceleration_no_data=no_data, raw=_tidy(raw), door_closed=door,
                   caps_applied=sorted(k for k, c in caps.items() if c < raw))

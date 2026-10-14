@@ -147,6 +147,17 @@ class RejectTest(unittest.TestCase):
         del p["layers"]["cell_values"]["preparing"]
         self.assertRejected(p, "cell_values")
 
+    def test_unknown_share_below_half(self):
+        # 2026-10-14 사용자 결정: 미확인은 만점의 40%(가운데보다 조금 낮게)
+        self.assertEqual(V30.payload["scoring"]["unknown_share"], 0.4)
+        self.assertAlmostEqual(V30.unknown_points(4), 1.6)
+        self.assertIsNone(V21.unknown_points(4), "선언하지 않은 옛 규칙은 미확인 점수가 없다")
+        for bad in (0.5, 0, -0.1, "0.4"):
+            p = payload()
+            p["scoring"]["unknown_share"] = bad
+            with self.subTest(bad=bad):
+                self.assertRejected(p, "unknown_share")
+
     def test_f8_supply_floor_uses_v30_layer_ids(self):
         self.assertEqual(V30.payload["factors"]["F8"]["supply"]["layers_none_floor"]["layers"], ["chip_design", "cloud"])
         p = payload()

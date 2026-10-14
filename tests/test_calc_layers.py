@@ -246,9 +246,14 @@ class F2LayersTest(unittest.TestCase):
         r = run_layers(compute_f2_layers, cloud)
         self.assertEqual((r["status"], r["score"]), ("needs_judgment", None))
         self.assertIn("층 ['user_platform'] 의 세 경로 판단이 없다", r["pending"]["message"])
+        # 2026-10-14 사용자 결정: 미확인 경로는 판정 대기가 아니라 그 경로 만점의 40% 에 미확인 표시(rules.md 2.6)
         unknown = unit("F2", "layer_paths", "user_platform", {"adaptation": "unknown", "standards": []})
         r = run_layers(compute_f2_layers, cloud, unknown)
-        self.assertIn("user_platform: 경로 ['adaptation'] 이 미확인", r["pending"]["message"])
+        layer = r["calc"]["layers"]["user_platform"]
+        self.assertEqual((r["status"], layer["adaptation"], layer["score"], layer["unknown_parts"]), ("ok", 2, 4, ["adaptation"]))
+        self.assertIn("user_platform: adaptation 미확인 — 그 경로 만점의 40%", r["warnings"])
+        leap = unit("F2", "layer_paths", "chip_design", {"leap": "unknown", "adaptation": "none", "standards": []})
+        self.assertEqual(run_layers(compute_f2_layers, leap, h=chip_holdings())["score"], 4)
         platform = unit("F2", "layer_paths", "user_platform", {"adaptation": "adopted", "standards": []})
         model = unit("F2", "layer_paths", "model", {"leap": "first", "adaptation": "adopted", "standards": []})
         h = set_cells(holdings(), device={"cell": "sold", "ai_chain": "yes", "evidence_ids": []})
@@ -286,8 +291,8 @@ class F3LayersTest(unittest.TestCase):
         _s, detail, _p, warnings = f3_layer(cp(prior=9, current=13, tier="c"))
         self.assertEqual(detail["acceleration"], 3)
         _s, detail, _p, warnings = f3_layer(cp(prior=None, current=None))
-        self.assertEqual((detail["acceleration"], detail["acceleration_no_data"]), (0, True))
-        self.assertIn("가속도 자료 없음", " ".join(warnings))
+        self.assertEqual((detail["acceleration"], detail["acceleration_no_data"], detail["unknown_parts"]), (2.4, True, ["acceleration"]))
+        self.assertIn("가속도 자료 없음 — 2.4 로 계산", " ".join(warnings))
         _s, detail, _p, warnings = f3_layer(cp(delayed="yes"))
         self.assertEqual(detail["acceleration"], 0)
         self.assertIn("출시 지연은 감속", " ".join(warnings))
@@ -306,8 +311,13 @@ class F3LayersTest(unittest.TestCase):
         self.assertEqual((detail["revenue_model"], detail["imitation"], detail["acceleration"], score), (0, 0, 6, 6))
         self.assertIn("끝난 싸움", " ".join(warnings))
 
-    def test_unknown_is_pending_and_company_is_weighted(self):
-        self.assertIsNotNone(f3_layer(cp(rm="unknown"))[2])
+    def test_unknown_parts_get_forty_percent_and_company_is_weighted(self):
+        score, detail, pending, _w = f3_layer(cp(rm="unknown", im="unknown", door="2026-06-01"))
+        self.assertIsNone(pending)
+        self.assertEqual((detail["revenue_model"], detail["imitation"], detail["unknown_parts"]), (2.4, 3.2, ["revenue_model", "imitation"]))
+        self.assertAlmostEqual(score, 2.4 + 3.2 + 6)   # 모방이 미확인이라 '8점일 때만 16 이상' 관문도 걸릴 수 있다
+        self.assertEqual(f3_layer(cp(rm="recovered", im="unknown", door="2026-06-01"))[0], 15, "미확인 모방은 모방 관문을 통과하지 못한다")
+        self.assertIsNotNone(f3_layer(cp(present="unknown"))[2], "상대가 지금 있는지 미확인이면 판정 대기")
         cloud = unit("F3", "layer_cp", "cloud", cp(door="2026-06-01"))                       # 20
         platform = unit("F3", "layer_cp", "user_platform", cp(prior=None, current=None))      # 6 + 8 + 0 → 작동 증거 관문 12
         r = run_layers(compute_f3_layers, cloud, platform)

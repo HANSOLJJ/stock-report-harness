@@ -128,6 +128,12 @@ class RuleSet:
         rounded = float(Decimal(str(value)).quantize(Decimal(1).scaleb(-int(digits)), rounding=ROUND_HALF_UP))
         return int(rounded) if rounded.is_integer() else rounded
 
+    def unknown_points(self, part_max: float) -> float | None:
+        """2026-10-14 규칙 v3.0(rules.md 2.6): 점수 부분의 값이 미확인이면 그 부분 만점 × `scoring.unknown_share`(0.4).
+        선언하지 않은 규칙은 None 이다(미확인은 판정 대기)."""
+        share = self.payload["scoring"].get("unknown_share")
+        return None if share is None else float(part_max) * float(share)
+
     # ------------------------------------------------------------ F6 band
     def f6_band(self, per: float) -> tuple[int, str]:
         """PER 을 반개방 구간표에 넣어 (점수, 구간 라벨) 반환. 표시 반올림은 개입하지 않는다."""

@@ -608,6 +608,10 @@ def _part_curves(spec: Any, where: str, lo: float, hi: float) -> Iterable[tuple[
 def _validate_v3_structure(payload: dict[str, Any]) -> None:
     """규칙 v3.0 의 새 키(layers·unit·curve)를 본다. 선언하지 않은 옛 규칙에는 아무것도 요구하지 않는다."""
     layer_ids = _validate_layers(payload["layers"]) if "layers" in payload else None
+    share = payload["scoring"].get("unknown_share")
+    if share is not None:
+        # 2026-10-14 사용자 결정: 미확인은 가운데보다 조금 낮게(만점의 40%). 가운데 이상이면 미확인이 확인된 값을 이긴다.
+        _require(_is_number(share) and 0 < share < 0.5, f"rules.json.scoring.unknown_share: 0 초과 0.5 미만 숫자 ({share!r})")
     factors = payload["factors"]
     for fid, spec in factors.items():
         where = f"rules.json.factors.{fid}"
