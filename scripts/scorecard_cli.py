@@ -342,17 +342,20 @@ def cmd_judge(args: argparse.Namespace) -> int:
         changes["evidence"] = list(args.evidence)
     changes.update(_direction_args(args, suffix=""))
     changes.update(_reconfirm_arg(args))
-    out = revise_judgment(args.slug, company_id=args.company, factor=args.factor, changes=changes, reason=args.reason, by=args.by)
+    out = revise_judgment(args.slug, company_id=args.company, factor=args.factor, changes=changes, reason=args.reason, by=args.by,
+                          layer=args.layer, business=args.business)
     if agent:
         _claim(args, "judge")
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    print(f"judge: {out['judgment_id']} ({out['kind']}) 수정 — 수정자 {out['current']['reviewer']}, {out['current']['reviewed_at']}")
+    action = "생성" if out["created"] else "수정"
+    print(f"judge: {out['judgment_id']} ({out['kind']}) {action} — 수정자 {out['current']['reviewer']}, {out['current']['reviewed_at']}")
+    previous = out["previous"] or {}   # 2026-10-14: 새로 만든 층·사업 판단은 이전 값이 없다
     for key in ("score", "inputs"):
-        if out["previous"][key] != out["current"][key]:
-            print(f"  {key}: {json.dumps(out['previous'][key], ensure_ascii=False)} → {json.dumps(out['current'][key], ensure_ascii=False)}")
+        if previous.get(key) != out["current"][key]:
+            print(f"  {key}: {json.dumps(previous.get(key), ensure_ascii=False)} → {json.dumps(out['current'][key], ensure_ascii=False)}")
     for key, label in (("evidence", "판정"), ("evidence_up", "올릴 근거"), ("evidence_down", "내릴 근거")):
-        before, after = out["previous"].get(key), out["current"].get(key)
+        before, after = previous.get(key), out["current"].get(key)
         if before != after:
             print(f"  {label}: {len(before) if before is not None else '없던 칸'}문장 → {len(after or [])}문장")
     if "reconfirmed" in changes:
@@ -406,10 +409,13 @@ def cmd_propose(args: argparse.Namespace) -> int:
     out = add_proposal(args.slug, company_id=args.company, factor=args.factor, changes=changes, evidence_after=evidence_after,
                        reason=args.reason, evidence_ids=_id_list(args.cite), by=args.by,
                        evidence_up_after=directions.get("evidence_up_after"),
-                       evidence_down_after=directions.get("evidence_down_after"))
+                       evidence_down_after=directions.get("evidence_down_after"),
+                       layer=args.layer, business=args.business)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
-    print(f"propose: {out['proposal_id']} {out['company_id']} {out['factor']} — `proposal` 명령이나 승인 페이지의 '판단 변경 제안' 절에서 반영하거나 거부한다")
+    target = " ".join(x for x in (out["company_id"], out["factor"], out.get("layer"), out.get("business")) if x)
+    created = " (새 판단)" if out["before"] is None else ""
+    print(f"propose: {out['proposal_id']} {target}{created} — `proposal` 명령이나 승인 페이지의 '판단 변경 제안' 절에서 반영하거나 거부한다")
     return 0
 
 
@@ -617,6 +623,9 @@ def cmd_status(args: argparse.Namespace) -> int:
 
 
 TAKE_LOCK_HELP = "다른 소유자의 실행 잠금(output/<slug>/.lock)을 인수한다"
+# 2026-10-14 규칙 v3.0: ②③ 은 층마다, ① 은 사업마다 판단이 하나다. 그 판단이 없으면 판정 재료(--json)와 근거로 새로 만든다.
+LAYER_HELP = "층 단위 항목(규칙 v3.0 의 F2·F3)의 층 id(예: cloud, outside). 그 층 판단이 없으면 새로 만든다"
+BUSINESS_HELP = "사업 단위 항목(규칙 v3.0 의 F1)의 사업 id(소문자, 예: aws). 그 사업 판단이 없으면 새로 만든다"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -763,6 +772,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--reason", required=True, help="제안 사유")
     p.add_argument("--cite", help="인용 근거 ID(쉼표). 반영하면 판단의 evidence_ids 에 더한다(확정 근거만)")
     p.add_argument("--by", help="제안자(기본 SCORECARD_AGENT 또는 사용자 이름)")
+    p.add_argument("--layer", help=LAYER_HELP)
+    p.add_argument("--business", help=BUSINESS_HELP)
     p.set_defaults(func=cmd_propose)
 
     p = sub.add_parser("proposal", help="판단 변경 제안 반영·거부(에이전트도 한다). 거부는 --note 필수")
@@ -793,6 +804,8 @@ def main(argv: list[str] | None = None) -> int:
                                   "(--set·--evidence·--up·--down·--reconfirm 이 덮어쓴다)")
     p.add_argument("--reason", required=True, help="수정 사유(revision_history 에 남는다)")
     p.add_argument("--by", required=True, help="수정자. 승인 페이지는 사람 이름을 넣는다")
+    p.add_argument("--layer", help=LAYER_HELP)
+    p.add_argument("--business", help=BUSINESS_HELP)
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_judge)
 

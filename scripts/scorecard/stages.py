@@ -26,7 +26,7 @@ from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_CLI_ONLY_INPUTS, JUDGMENT_CLI_ONLY_TYPES, JUDGMENT_DIRECTION_FIELDS,
-                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, MARKET_COMPANY_ID, PROPOSAL_DIRECTION_AFTER, judgment_rule_conflict, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, judgment_edit_kind, load_json_strict, reconfirm_evidence_ids,
+                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, MARKET_COMPANY_ID, PROPOSAL_DIRECTION_AFTER, judgment_rule_conflict, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, factor_unit, judgment_edit_kind, judgment_evidence_ids, judgment_key, load_json_strict, reconfirm_evidence_ids,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
@@ -80,6 +80,7 @@ def _inputs_from_baseline(slug: str, *, baseline_id: str, selected: list[str], a
         "note": f"기준선 {baseline_id} 판정표 승계(status=carried). 신규 판단은 status=new 로 교체한다",
         "items": [j for j in baseline_judgments(scores, slug, registry) if j["company_id"] in selected],
     }
+    unit_note = _drop_company_level_unit_judgments(judgments, rules)
     sources = {
         "schema": "scorecard.sources/1",
         "run_id": slug,
@@ -98,8 +99,26 @@ def _inputs_from_baseline(slug: str, *, baseline_id: str, selected: list[str], a
         "미결 규칙 결정(C-xx)은 run.json.decisions 에 명시된 것만 적용한다",
         "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
     ]
+    if unit_note:
+        assumptions.append(unit_note)
     note = f"기준선 `{baseline_id}` ({scores['as_of']}, HTML `{scores['source']['html_sha256'][:12]}…`)의 점수·판정표·원자료를 승계"
     return _Inputs(observations, judgments, sources, assumptions, note)
+
+
+def _drop_company_level_unit_judgments(judgments: dict[str, Any], rules: Any) -> str | None:
+    """2026-10-14 규칙 v3.0: 층·사업 단위 항목(①②③)의 회사 단위 판단은 옮기지 않는다. 층·사업 계산이 읽을 수 없고, 남기면
+    승계 검사가 research 를 막는데 지울 길이 없다. 근거·트리거는 그대로 옮겨 새 층·사업 판단이 다시 인용한다.
+    옮기지 않은 것이 있으면 run.json assumptions 에 넣을 문장을 돌려준다."""
+    keep, dropped = [], []
+    for j in judgments["items"]:
+        unit = factor_unit(rules.payload, j["factor"])
+        (dropped if unit != "company" and unit not in j else keep).append(j)
+    if not dropped:
+        return None
+    judgments["items"] = keep
+    factors = sorted({j["factor"] for j in dropped})
+    return (f"규칙 {rules.version} 은 {', '.join(factors)} 를 층·사업마다 매긴다. 회사 단위로 매긴 판단 {len(dropped)}건은 옮기지 않았고, "
+            "이 실행에서 층·사업 판단을 새로 매긴다")
 
 
 def _load_prior_run(prior_slug: str) -> dict[str, Any]:
@@ -141,6 +160,7 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         "note": f"이전 실행 {prior_slug} 판단 이어받기 — 항목은 한 글자도 바꾸지 않았다. 신규 기업 판단만 추가한다",
         "items": [j for j in prior_jud["items"] if j["company_id"] in selected],
     }
+    unit_note = _drop_company_level_unit_judgments(judgments, rules)
     # 출처는 **통째로** 옮긴다. 기준선 4건으로 덮으면 실행 도중 늘어난 출처가 사라져
     # 관측의 `source_id` 가 장부에서 사라진다.
     sources = {**load_json_strict(src_path), "run_id": slug}
@@ -152,7 +172,8 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         prior_trg = load_json_strict(prior_paths.triggers)
         items = [t for t in prior_trg.get("items", []) if t.get("company_id") in selected]
         triggers = {**prior_trg, "run_id": slug, "items": items} if items else None
-    cited = {e for j in judgments["items"] for e in (j.get("evidence_ids") or [])}
+    # 2026-10-14: evidence_ids 칸만이 아니라 재확인 기록·판정 재료 안의 근거도 인용이다(v21 의 Alphabet ⑤ 재확인이 Anthropic·Amazon 근거를 가리킨다).
+    cited = {e for j in judgments["items"] for e in judgment_evidence_ids(j)}
     cited |= {e for t in (triggers or {}).get("items", []) for e in (t.get("evidence_ids") or [])}
     # 2026-10-08: 올릴·내릴 근거 문장 끝의 [EV-…] 표지가 가리키는 근거도 옮긴다. 세 칸·표지(2026-10-07)가 들어온 뒤 판단은
     # evidence_ids 칸보다 표지로 훨씬 많은 근거를 인용하는데(10월 재채점 570건 대 56건) 칸만 보고 옮겨 다음 실행에서
@@ -162,8 +183,10 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
     cited |= {e for j in judgments["items"] for key in JUDGMENT_DIRECTION_FIELDS for line in (j.get(key) or []) for e in cited_ids(line)}
     if prior_paths.evidence.is_file():
         prior_ev = load_json_strict(prior_paths.evidence)
+        # 2026-10-14: 회사를 골라 이어받으면 고른 회사의 트리거·판단이 다른 회사 근거를 인용하는 일이 있다(v21 의 Alphabet 트리거가
+        # EV-openai-011 을 인용). 인용된 근거는 회사와 무관하게 옮긴다. 옮기지 않으면 교차 참조에서 init 이 멈춘다.
         items = [e for e in prior_ev.get("items", [])
-                 if e.get("company_id") in selected and (e.get("evidence_id") in cited or e.get("status") == "confirmed")]
+                 if e.get("evidence_id") in cited or (e.get("company_id") in selected and e.get("status") == "confirmed")]
         evidence = {**prior_ev, "run_id": slug, "items": items} if items else None
 
     hashes = input_hashes(prior_slug)
@@ -176,6 +199,8 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
          if added else "이번 실행은 기업을 더하지 않았고 이전 실행의 입력을 그대로 쓴다"),
         "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
     ]
+    if unit_note:
+        assumptions.append(unit_note)
     prior_rule_hash = prior_run.get("rule_hash")
     if prior_rule_hash and prior_rule_hash != rules.hash:
         moved = f"규칙이 이어받은 실행 이후 바뀌었다({prior_rule_hash[:12]}… → {rules.hash[:12]}…)"
@@ -1349,10 +1374,14 @@ def _check_judgment_changes(factor: str, changes: Mapping[str, Any], rules: Any 
         "number_or_unknown": lambda v: v == "unknown" or (isinstance(v, (int, float)) and not isinstance(v, bool)),
         # 2026-10-13: ④ 주 레이어는 판매 칸이 없으면 null 이다(허용 조건은 스키마가 본다).
         "string_or_null": lambda v: v is None or (isinstance(v, str) and bool(v.strip())),
+        # 2026-10-14 규칙 v3.0: 매출 줄·구성 사업·규격·관계·전선은 object 목록, ④ AI 무관 이익률은 숫자나 unknown·not_applicable.
+        "object_list": lambda v: isinstance(v, list) and all(isinstance(x, dict) for x in v),
+        "number_or_string": lambda v: (isinstance(v, str) and bool(v.strip())) or (isinstance(v, (int, float)) and not isinstance(v, bool)),
     }
     shape_hint = {"number_list": "숫자 목록(예: [0.42, 0.55])", "number": "숫자", "string": "비어 있지 않은 문자열",
                   "string_list": "문자열 목록(예: [\"EV-acme-001\"])", "object": "JSON object",
-                  "number_or_unknown": "숫자나 \"unknown\"", "string_or_null": "비어 있지 않은 문자열이나 null"}
+                  "number_or_unknown": "숫자나 \"unknown\"", "string_or_null": "비어 있지 않은 문자열이나 null",
+                  "object_list": "JSON object 목록", "number_or_string": "숫자나 비어 있지 않은 문자열"}
     bad_shape = sorted((k, JUDGMENT_CLI_ONLY_TYPES[k]) for k in cli_only if k in changes
                        and not shape_ok[JUDGMENT_CLI_ONLY_TYPES[k]](changes[k]))
     if bad_shape:
@@ -1371,9 +1400,24 @@ def _check_evidence_texts(changes: Mapping[str, Any]) -> None:
             raise SchemaError(f"{key} 는 문장 목록이어야 한다(빈 목록은 '없음')")
 
 
+def _unit_label(company_id: str, factor: str, layer: str | None = None, business: str | None = None) -> str:
+    return " ".join(x for x in (company_id, factor, layer, business) if x)
+
+
+def _index_judgment(items: list[dict[str, Any]], company_id: str, factor: str, layer: str | None = None,
+                    business: str | None = None) -> int | None:
+    """판단 키(회사·항목·층·사업)가 같은 판단의 위치. 2026-10-14 규칙 v3.0: 층·사업 판단은 한 (회사, 항목)에 여럿이다."""
+    key = (company_id, factor, layer, business)
+    return next((i for i, j in enumerate(items) if judgment_key(j) == key), None)
+
+
 def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any], reason: str, by: str,
-                    revised_at: str | None = None, cite_evidence_ids: list[str] | None = None) -> dict[str, Any]:
+                    revised_at: str | None = None, cite_evidence_ids: list[str] | None = None,
+                    layer: str | None = None, business: str | None = None) -> dict[str, Any]:
     """`judgments.json` 의 (기업, factor) 판단 하나를 고친다. 이전 값은 그 항목의 `revision_history` 에 남긴다.
+
+    2026-10-14 규칙 v3.0: `layer`·`business` 를 주면 그 층·사업 판단을 고치고, 없으면 새로 만든다(이전 값 없음,
+    `previous: None`, 수정 이력 없이). 회사 단위 판단은 지금처럼 있는 것만 고친다.
 
     F1·F4·F8 은 `score`·`evidence`, F3·F5·F7·F9 는 판정 재료(inputs 키)·`evidence` 만 받는다. 그 factor 들의 점수 칸은
     규칙이 계산하므로 받지 않는다. 형식은 쓰기 전에 스키마로 검증하고, 실행 전체 검증(교차 참조)이 실패하면 원래 파일로 되돌린다.
@@ -1404,9 +1448,19 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
     path = run_dir(slug) / "judgments.json"
     original = path.read_bytes()
     payload = load_json_strict(path)
-    idx = next((i for i, j in enumerate(payload["items"]) if j["company_id"] == company_id and j["factor"] == factor), None)
-    if idx is None:
-        raise SchemaError(f"judgments.json 에 {company_id} {factor} 판단이 없다")
+    label = _unit_label(company_id, factor, layer, business)
+    idx = _index_judgment(payload["items"], company_id, factor, layer, business)
+    created = idx is None
+    if created:
+        if layer is None and business is None:
+            raise SchemaError(f"judgments.json 에 {company_id} {factor} 판단이 없다")
+        if kind in ("evidence_only", "reconfirm"):
+            raise SchemaError(f"{label} 판단이 아직 없어 근거만 바꾸거나 재확인할 수 없다 — 판정 재료와 근거 문장을 함께 준다")
+        unit = {"layer": layer} if layer is not None else {"business": business}
+        payload["items"].append({"judgment_id": ".".join((company_id, factor, layer or business)), "company_id": company_id,
+                                 "factor": factor, **unit, "kind": kind, "score": None, "inputs": {}, "evidence": [],
+                                 "reviewer": by.strip(), "reviewed_at": "", "status": "new"})
+        idx = len(payload["items"]) - 1
     item = payload["items"][idx]
     previous = {k: copy.deepcopy(item.get(k)) for k in JUDGMENT_REVISION_FIELDS}
     # 2026-10-07: 방향 칸이 있던 판단은 그 값도 이력에 남긴다(번복이 되돌린다). 없던 판단의 이력은 7키 그대로다.
@@ -1436,13 +1490,13 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         new["evidence_ids"] = sorted({*(item.get("evidence_ids") or []), *cite_evidence_ids})
     # 2026-10-08: 재확인은 값이 그대로인 것이 정상이다. 재확인이 없을 때만 '바뀐 값이 없다' 로 거부한다.
     if reconfirm is None and all(new.get(k) == item.get(k) for k in ("kind", "score", "inputs", "evidence", *JUDGMENT_DIRECTION_FIELDS, "counter_evidence")):
-        raise SchemaError(f"{company_id} {factor}: 바뀐 값이 없다(값을 그대로 두고 다시 읽었으면 --reconfirm 으로 재확인한다)")
+        raise SchemaError(f"{label}: 바뀐 값이 없다(값을 그대로 두고 다시 읽었으면 --reconfirm 으로 재확인한다)")
     # 2026-10-07 사용자 지시: 규칙 v1.9 이상 실행은 근거를 세 칸으로 쓰는 시점에 막는다(검증기와 같은 기준).
     from .validate import THREE_WAY_MIN_RULE, _rule_at_least, three_way_item_violations
     if _rule_at_least(run["rule_version"], THREE_WAY_MIN_RULE):
         bad = three_way_item_violations(new)
         if bad:
-            raise SchemaError(f"{company_id} {factor}: 근거 세 칸 형식 위반 — " + "; ".join(bad)
+            raise SchemaError(f"{label}: 근거 세 칸 형식 위반 — " + "; ".join(bad)
                               + " (판정은 --evidence, 올릴 근거는 --up, 내릴 근거는 --down. 기준은 guide.md 5.6)")
     # 2026-10-07 사용자 지시: 올릴·내릴 근거의 줄마다 원문 근거 표지를 쓰는 시점에 막는다(검증기와 같은 기준).
     from .validate import CITATION_MIN_RULE, citation_item_violations
@@ -1452,7 +1506,7 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         urls = {s["source_id"]: s.get("url") for s in (load_json_strict(src_path)["items"] if src_path.is_file() else [])}
         bad = citation_item_violations(new, evidence, urls)
         if bad:
-            raise SchemaError(f"{company_id} {factor}: 올릴·내릴 근거가 원문 근거와 이어지지 않는다 — " + "; ".join(bad[:5])
+            raise SchemaError(f"{label}: 올릴·내릴 근거가 원문 근거와 이어지지 않는다 — " + "; ".join(bad[:5])
                               + (f" 외 {len(bad) - 5}건" if len(bad) > 5 else "")
                               + " (줄 끝에 [EV-…] 를 달고, 그 근거는 확정·URL·본문 발췌·locator 를 갖춘다. 기준은 guide.md 5.7)")
     revised_at = revised_at or utc_now_iso()[:10]   # UTC 날짜
@@ -1462,10 +1516,14 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         new[RECONFIRM_KEY] = [*copy.deepcopy(item.get(RECONFIRM_KEY) or []),
                               {"at": revised_at, "by": by.strip(), "evidence_ids": reconfirm}]
     # 2026-10-01 V2-11: --by 는 확인할 수 없는 이름이다. 누가 고쳤는지 가리도록 세션 종류를 함께 남긴다.
+    # 2026-10-14: 새로 만든 층·사업 판단은 이전 값이 없어 이력을 남기지 않는다. 만든 경위는 제안 기록과 커밋에 있다.
     session = "agent" if agent_session_markers() else "human"
-    new["revision_history"] = [*item.get("revision_history", []),
-                               {"revised_at": revised_at, "revised_by": by.strip(), "reason": reason.strip(), "previous": previous,
-                                "session": session}]
+    if created:
+        previous = None
+    else:
+        new["revision_history"] = [*item.get("revision_history", []),
+                                   {"revised_at": revised_at, "revised_by": by.strip(), "reason": reason.strip(), "previous": previous,
+                                    "session": session}]
     payload["items"][idx] = new
 
     validate_judgments(payload, load_companies(), rules.payload, slug)   # 쓰기 전에 형식 검증
@@ -1476,7 +1534,8 @@ def revise_judgment(slug: str, *, company_id: str, factor: str, changes: Mapping
         path.write_bytes(original)
         raise
     return {"judgment_id": new["judgment_id"], "company_id": company_id, "factor": factor, "kind": new["kind"],
-            "previous": previous,
+            **{k: v for k, v in (("layer", layer), ("business", business)) if v is not None},
+            "created": created, "previous": previous,
             "current": {k: new.get(k) for k in (*JUDGMENT_REVISION_FIELDS, *JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY) if k in new},
             "judgments_hash": sha256_file(path)}
 
@@ -1512,12 +1571,24 @@ def _load_proposals(slug: str) -> dict[str, Any]:
     return payload
 
 
-def _find_judgment(slug: str, company_id: str, factor: str) -> dict[str, Any]:
+def _find_judgment(slug: str, company_id: str, factor: str, layer: str | None = None, business: str | None = None,
+                   *, missing_ok: bool = False) -> dict[str, Any] | None:
+    """판단 키로 찾는다. `missing_ok` 이면 아직 없는 층·사업 판단에 None 을 돌려준다(2026-10-14, 새로 만드는 제안)."""
     items = load_json_strict(run_dir(slug) / "judgments.json")["items"]
-    j = next((x for x in items if x["company_id"] == company_id and x["factor"] == factor), None)
-    if j is None:
-        raise SchemaError(f"judgments.json 에 {company_id} {factor} 판단이 없다")
-    return j
+    idx = _index_judgment(items, company_id, factor, layer, business)
+    if idx is None:
+        if missing_ok and (layer is not None or business is not None):
+            return None
+        raise SchemaError(f"judgments.json 에 {_unit_label(company_id, factor, layer, business)} 판단이 없다")
+    return items[idx]
+
+
+def _snapshot_or_none(j: Mapping[str, Any] | None) -> dict[str, Any] | None:
+    return _judgment_snapshot(j) if j is not None else None
+
+
+def _unit_keys(item: Mapping[str, Any]) -> dict[str, str]:
+    return {k: item[k] for k in ("layer", "business") if item.get(k) is not None}
 
 
 def _summary_snapshot(slug: str, company_id: str) -> dict[str, Any]:
@@ -1570,12 +1641,16 @@ def set_company_summary(slug: str, *, company_id: str, text: str | None, reason:
 def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[str, Any] | None = None,
                  evidence_after: list[str] | None = None, reason: str, evidence_ids: list[str] | tuple[str, ...] = (),
                  by: str | None = None, proposed_at: str | None = None,
-                 evidence_up_after: list[str] | None = None, evidence_down_after: list[str] | None = None) -> dict[str, Any]:
+                 evidence_up_after: list[str] | None = None, evidence_down_after: list[str] | None = None,
+                 layer: str | None = None, business: str | None = None) -> dict[str, Any]:
     """판단 변경 제안 하나를 proposals.json 에 더한다. 지금 판단 값(before)을 함께 적어 두어, 반영 시점에 판단이 그사이
     바뀌었는지 가린다. 같은 (기업, factor) 에 결정 전 제안이 이미 있으면 거부한다.
 
     2026-10-07: `evidence_up_after`·`evidence_down_after` 는 올릴·내릴 근거 칸의 반영 뒤 문장이다. None 이면 그 칸을 바꾸지
-    않고, 빈 목록이면 '없음'으로 바꾼다."""
+    않고, 빈 목록이면 '없음'으로 바꾼다.
+
+    2026-10-14 규칙 v3.0: `layer`·`business` 는 층·사업 판단을 가리킨다. 그 판단이 아직 없으면 before 가 null 이고,
+    반영하면 판단을 새로 만든다. 결정 전 제안의 중복은 판단 키(회사·항목·층·사업)로 가린다."""
     changes = dict(changes or {})
     if evidence_after is not None:
         evidence_after = [s.strip() for s in evidence_after]
@@ -1596,15 +1671,17 @@ def add_proposal(slug: str, *, company_id: str, factor: str, changes: Mapping[st
             raise SchemaError(f"알 수 없는 company_id {company_id!r}")
         before = _summary_snapshot(slug, company_id)
     else:
-        before = _judgment_snapshot(_find_judgment(slug, company_id, factor))
+        before = _snapshot_or_none(_find_judgment(slug, company_id, factor, layer, business, missing_ok=True))
     payload = _load_proposals(slug)
-    if any(p["status"] == "pending" and p["company_id"] == company_id and p["factor"] == factor for p in payload["items"]):
-        raise SchemaError(f"{company_id} {factor} 에 결정 전 제안이 이미 있다 — 그 제안을 먼저 반영하거나 거부한다")
+    key = (company_id, factor, layer, business)
+    if any(p["status"] == "pending" and (p["company_id"], p["factor"], p.get("layer"), p.get("business")) == key for p in payload["items"]):
+        raise SchemaError(f"{_unit_label(*key)} 에 결정 전 제안이 이미 있다 — 그 제안을 먼저 반영하거나 거부한다")
     nums = [int(p["proposal_id"][4:]) for p in payload["items"]]
     item = {
         "proposal_id": f"PRP-{(max(nums) + 1 if nums else 1):03d}",
         "company_id": company_id,
         "factor": factor,
+        **{k: v for k, v in (("layer", layer), ("business", business)) if v is not None},
         "changes": changes,
         "evidence_after": evidence_after,
         "reason": reason.strip(),
@@ -1652,9 +1729,11 @@ def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None
         item["applied"] = {"previous": {"text": previous}, "after": _summary_snapshot(slug, item["company_id"])}
         item.update(status="accepted", decided_by=by, decided_at=decided_at, decision_note=note)
     else:
-        current = _find_judgment(slug, item["company_id"], item["factor"])
-        if _judgment_snapshot(current) != item["before"]:
-            raise SchemaError(f"{proposal_id} 를 쓴 뒤 {item['company_id']} {item['factor']} 판단이 바뀌었다 — "
+        units = _unit_keys(item)
+        label = _unit_label(item["company_id"], item["factor"], *units.values())
+        current = _find_judgment(slug, item["company_id"], item["factor"], **units, missing_ok=True)
+        if _snapshot_or_none(current) != item["before"]:
+            raise SchemaError(f"{proposal_id} 를 쓴 뒤 {label} 판단이 바뀌었다 — "
                               "이 제안은 거부하고 지금 판단을 기준으로 다시 제안받는다")
         changes = dict(item["changes"])
         if item["evidence_after"] is not None:
@@ -1664,11 +1743,13 @@ def decide_proposal(slug: str, proposal_id: str, *, accept: bool, by: str | None
                 changes[key[: -len("_after")]] = list(item[key])
         reason = f"제안 {proposal_id} 반영: {item['reason']}" + (f" (메모: {note})" if note else "")
         out["judgment"] = revise_judgment(slug, company_id=item["company_id"], factor=item["factor"], changes=changes,
-                                          reason=reason, by=by, cite_evidence_ids=list(item["evidence_ids"]))
-        after = _find_judgment(slug, item["company_id"], item["factor"])
+                                          reason=reason, by=by, cite_evidence_ids=list(item["evidence_ids"]), **units)
+        after = _find_judgment(slug, item["company_id"], item["factor"], **units)
         # 번복(undo_proposal)이 판단을 반영 전으로 되돌릴 때 쓴다. evidence_ids 가 없던 판단은 null 로 둔다.
-        item["applied"] = {"previous": {**copy.deepcopy(out["judgment"]["previous"]), "evidence_ids": current.get("evidence_ids")},
-                           "after": _judgment_snapshot(after)}
+        # 2026-10-14: 반영이 새로 만든 층·사업 판단은 previous 가 null 이고, 번복은 그 판단을 지운다.
+        previous = (None if current is None
+                    else {**copy.deepcopy(out["judgment"]["previous"]), "evidence_ids": current.get("evidence_ids")})
+        item["applied"] = {"previous": previous, "after": _judgment_snapshot(after)}
         item.update(status="accepted", decided_by=by, decided_at=decided_at, decision_note=note)
     write_json(run_paths(slug).proposals, payload)
     out["proposal"] = item
@@ -1702,35 +1783,39 @@ def undo_proposal(slug: str, proposal_id: str, *, by: str | None = None, allow_a
         path = run_dir(slug) / "judgments.json"
         original = path.read_bytes()
         jpayload = load_json_strict(path)
-        idx = next(i for i, j in enumerate(jpayload["items"])
-                   if j["company_id"] == item["company_id"] and j["factor"] == item["factor"])
-        cur = jpayload["items"][idx]
-        if _judgment_snapshot(cur) != applied["after"]:
-            raise SchemaError(f"{proposal_id} 를 반영한 뒤 {item['company_id']} {item['factor']} 판단이 또 바뀌었다 — "
-                              "번복하지 않는다. 전체 판단 표에서 직접 고친다")
+        units = _unit_keys(item)
+        idx = _index_judgment(jpayload["items"], item["company_id"], item["factor"], **units)
+        cur = jpayload["items"][idx] if idx is not None else None
+        if cur is None or _judgment_snapshot(cur) != applied["after"]:
+            raise SchemaError(f"{proposal_id} 를 반영한 뒤 {_unit_label(item['company_id'], item['factor'], *units.values())} "
+                              "판단이 또 바뀌었다 — 번복하지 않는다. 전체 판단 표에서 직접 고친다")
         protect_approved_run(slug, "판단 변경 제안 번복")
         prev = applied["previous"]
-        new = dict(cur)
-        for k in JUDGMENT_REVISION_FIELDS:
-            new[k] = copy.deepcopy(prev[k])
-        # 2026-10-07: 방향 칸은 반영 전에 있었으면 되돌리고, 없었으면 지운다(옛 applied.previous 는 7키라 지운다).
-        # 2026-10-08: 재확인 목록도 같은 규칙이다.
-        for k in (*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY):
-            if k in prev:
-                new[k] = copy.deepcopy(prev[k])
-            else:
-                new.pop(k, None)
-        if prev.get("evidence_ids") is None:
-            new.pop("evidence_ids", None)
+        if prev is None:
+            # 2026-10-14: 반영이 새로 만든 층·사업 판단이다. 번복은 그 판단을 지워 반영 전 파일로 돌아간다.
+            jpayload["items"].pop(idx)
         else:
-            new["evidence_ids"] = list(prev["evidence_ids"])
-        undone_from = {k: copy.deepcopy(cur.get(k)) for k in JUDGMENT_REVISION_FIELDS}
-        undone_from.update({k: copy.deepcopy(cur[k]) for k in (*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY) if k in cur})
-        new["revision_history"] = [*cur.get("revision_history", []),
-                                   {"revised_at": utc_now_iso()[:10], "revised_by": by, "reason": f"제안 {proposal_id} 번복",
-                                    "previous": undone_from,
-                                    "session": "agent" if agent_session_markers() else "human"}]
-        jpayload["items"][idx] = new
+            new = dict(cur)
+            for k in JUDGMENT_REVISION_FIELDS:
+                new[k] = copy.deepcopy(prev[k])
+            # 2026-10-07: 방향 칸은 반영 전에 있었으면 되돌리고, 없었으면 지운다(옛 applied.previous 는 7키라 지운다).
+            # 2026-10-08: 재확인 목록도 같은 규칙이다.
+            for k in (*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY):
+                if k in prev:
+                    new[k] = copy.deepcopy(prev[k])
+                else:
+                    new.pop(k, None)
+            if prev.get("evidence_ids") is None:
+                new.pop("evidence_ids", None)
+            else:
+                new["evidence_ids"] = list(prev["evidence_ids"])
+            undone_from = {k: copy.deepcopy(cur.get(k)) for k in JUDGMENT_REVISION_FIELDS}
+            undone_from.update({k: copy.deepcopy(cur[k]) for k in (*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY) if k in cur})
+            new["revision_history"] = [*cur.get("revision_history", []),
+                                       {"revised_at": utc_now_iso()[:10], "revised_by": by, "reason": f"제안 {proposal_id} 번복",
+                                        "previous": undone_from,
+                                        "session": "agent" if agent_session_markers() else "human"}]
+            jpayload["items"][idx] = new
         run = validate_run(load_json_strict(run_dir(slug) / "run.json"), slug)
         validate_judgments(jpayload, load_companies(), load_rules(run["rule_version"]).payload, slug)
         write_json(path, jpayload)
@@ -1757,15 +1842,17 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]], rules: An
     rules = rules if rules is not None else _run_rules(slug)
     if not payload["items"]:
         return []
-    judgments = {(j["company_id"], j["factor"]): j for j in load_json_strict(run_dir(slug) / "judgments.json")["items"]}
+    judgments = {judgment_key(j): j for j in load_json_strict(run_dir(slug) / "judgments.json")["items"]}
     out = []
     for p in payload["items"]:
         before = p["before"]
         if p["factor"] == SUMMARY_FACTOR:
             current = _summary_snapshot(slug, p["company_id"])
         else:
-            j = judgments.get((p["company_id"], p["factor"]))
+            j = judgments.get((p["company_id"], p["factor"], p.get("layer"), p.get("business")))
             current = _judgment_snapshot(j) if j is not None else None
+        # 2026-10-14: 아직 없는 층·사업 판단을 만드는 제안은 이전 값이 없다(빈 칸으로 보인다).
+        shown = before or {"kind": None, "score": None, "inputs": {}, "evidence": []}
         out.append({
             "proposal_id": p["proposal_id"],
             "company_id": p["company_id"],
@@ -1780,12 +1867,12 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]], rules: An
             "evidence_down_after": p.get("evidence_down_after"),
             "reason": p["reason"],
             "evidence_ids": list(p["evidence_ids"]),
-            "before": {"kind": before["kind"], "score": before["score"], "inputs": _pairs(before["inputs"]),
-                       "evidence": list(before["evidence"]),
-                       "evidence_up": list(before.get("evidence_up") or []),
-                       "evidence_down": list(before.get("evidence_down") or [])},
-            # 결정 전 제안인데 그사이 판단이 바뀌었으면 반영할 수 없다
-            "stale": p["status"] == "pending" and (current is None or current != before),
+            "before": {"kind": shown["kind"], "score": shown["score"], "inputs": _pairs(shown["inputs"]),
+                       "evidence": list(shown["evidence"]),
+                       "evidence_up": list(shown.get("evidence_up") or []),
+                       "evidence_down": list(shown.get("evidence_down") or [])},
+            # 결정 전 제안인데 그사이 판단이 바뀌었으면(없어졌거나, 없던 판단이 생겼으면) 반영할 수 없다
+            "stale": p["status"] == "pending" and current != before,
             "proposed_by": p["proposed_by"],
             "proposed_at": p["proposed_at"],
             "status": p["status"],

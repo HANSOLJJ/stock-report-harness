@@ -159,6 +159,14 @@ JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {
     "survival": ("layers", "layer_triggers", "layer_evidence", "primary_layer", "non_ai_revenue_share", "non_ai_share_basis",
                  "non_ai_share_evidence"),
     "axes": F8_AXES,
+    # 2026-10-14 규칙 v3.0: 다섯 판정 재료의 최상위 키. 안의 모양은 _validate_v3_inputs 가 본다.
+    "holdings": ("cells", "revenue_lines", "currency", "non_ai_margin", "non_ai_margin_basis", "non_ai_margin_evidence"),
+    "business": ("components", "bundle_reason", "participant", "switching", "pricing", "pricing_growth_quarters", "pricing_explained",
+                 "substitutes"),
+    "layer_paths": ("leap", "gap_months", "adaptation", "adoption_multiple", "standards", "note"),
+    "layer_cp": ("strategy", "counterparty", "counterparty_present", "revenue_model", "imitation", "door_closed_at", "acceleration",
+                 "entry_order", "note"),
+    "alliance": ("relations", "fronts", "partner_tension", "note"),
 }
 # CLI 로만 받는 재료의 모양. stages._judgment_change_kind 가 쓰기 전에 거르고, 허용값은 스키마가 본다.
 JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
@@ -169,6 +177,16 @@ JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
     "layers": "object", "layer_triggers": "object", "layer_evidence": "object", "primary_layer": "string_or_null", "non_ai_revenue_share": "number_or_unknown",
     "non_ai_share_basis": "string", "non_ai_share_evidence": "string_list",
     "customer": "object", "commitment": "object", "supply": "object", "geopolitics": "object",
+    # 2026-10-14 규칙 v3.0. 같은 이름의 ① lockin·③ criteria 키는 선택 상자 재료라 이 표를 보지 않는다.
+    "cells": "object", "revenue_lines": "object_list", "currency": "string", "non_ai_margin": "number_or_string",
+    "non_ai_margin_basis": "string", "non_ai_margin_evidence": "string_list",
+    "components": "object_list", "bundle_reason": "string_or_null", "participant": "string", "switching": "string", "pricing": "string",
+    "pricing_growth_quarters": "number", "pricing_explained": "string", "substitutes": "string",
+    "leap": "string", "gap_months": "number", "adaptation": "string", "adoption_multiple": "number", "standards": "object_list",
+    "note": "string",
+    "strategy": "string", "counterparty": "string_or_null", "counterparty_present": "string", "revenue_model": "string",
+    "imitation": "string", "door_closed_at": "string_or_null", "acceleration": "object", "entry_order": "string",
+    "relations": "object_list", "fronts": "object_list", "partner_tension": "string",
 }
 
 
@@ -1917,6 +1935,19 @@ def v3_input_evidence_ids(kind: str, inputs: dict[str, Any]) -> list[str]:
     return out
 
 
+def judgment_evidence_ids(j: dict[str, Any]) -> set[str]:
+    """판단이 칸으로 가리키는 근거 ID 전부: evidence_ids·재확인 기록·판정 재료 안(① AI 수익화, ④ 보유표, v3.0 다섯 재료).
+    올릴·내릴 근거 문장 끝의 [EV-…] 표지는 validate.cited_ids 가 따로 읽는다. init 이 이어받을 근거를 고를 때 쓴다(2026-10-14)."""
+    inputs = j.get("inputs") or {}
+    ids = set(j.get("evidence_ids") or [])
+    ids |= {e for r in (j.get("reconfirmed") or []) for e in (r.get("evidence_ids") or [])}
+    ids |= {e for key in (*LOCKIN_MONETIZATION_EVIDENCE_KEYS, "non_ai_share_evidence") for e in (inputs.get(key) or [])}
+    ids |= {e for v in (inputs.get("layer_evidence") or {}).values() for e in v}
+    if j.get("kind") in V3_JUDGMENT_KINDS:
+        ids |= set(v3_input_evidence_ids(j["kind"], inputs))
+    return ids
+
+
 def _check_business_lines(items: list[dict[str, Any]]) -> None:
     """① 사업의 구성 사업이 가리키는 매출 줄은 같은 회사 ④ 보유표에 있고, 그 줄의 층과 같은 층이며, 한 사업에만 붙는다(rules.md ①).
     두 판단이 다 있을 때만 본다. 매출 줄이 어느 사업에도 붙지 않은 것은 계산이 판정 대기로 둔다."""
@@ -2507,8 +2538,13 @@ def validate_proposals(payload: Any, companies: dict[str, dict[str, Any]], evide
         _expect_str_list(item["evidence_ids"], f"{where}.evidence_ids")
         unknown = [e for e in item["evidence_ids"] if e not in evidence_ids]
         _require(not unknown, f"{where}: evidence.json 에 없는 evidence_ids {unknown}")
-        _expect_keys(item["before"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.before",
-                     optional=[*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY])
+        # 2026-10-14 규칙 v3.0: 아직 없는 층·사업 판단을 새로 만드는 제안은 before 가 null 이다.
+        if item["before"] is None:
+            _require("layer" in item or "business" in item, f"{where}.before: 판단을 새로 만드는 제안(before null)은 층·사업 판단에만 있다")
+            _require(not (set(item["changes"] or {}) & {RECONFIRM_KEY}), f"{where}: 아직 없는 판단은 재확인하지 않는다")
+        else:
+            _expect_keys(item["before"], list(PROPOSAL_SNAPSHOT_KEYS), f"{where}.before",
+                         optional=[*JUDGMENT_DIRECTION_FIELDS, RECONFIRM_KEY])
         _expect_str(item["proposed_by"], f"{where}.proposed_by", nonempty=True)
         _expect_date(item["proposed_at"], f"{where}.proposed_at")
         status = item["status"]
