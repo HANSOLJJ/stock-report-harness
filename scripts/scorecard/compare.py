@@ -185,8 +185,14 @@ def compare_runs(slug: str, prior_slug: str) -> dict[str, Any]:
     """세 층으로 견준다. 1층·2층 위반이 하나라도 있으면 `ok` 가 거짓이다."""
     if slug == prior_slug:
         raise SchemaError("같은 실행끼리는 견줄 수 없다")
-    new_ids = set(load_context(slug).run["companies"])
-    prior_ids = set(load_context(prior_slug).run["companies"])
+    new_ctx, prior_ctx = load_context(slug), load_context(prior_slug)
+    # 2026-10-14 규칙 v3.0: 입력 가법성·점수 투영은 (기업, 항목) 단위로 견준다. 층·사업 판단이 있는 실행은 아직 견줄 수 없다.
+    layered = [s for s, c in ((slug, new_ctx), (prior_slug, prior_ctx)) if c.rules.payload.get("layers")]
+    if layered:
+        raise SchemaError(f"diff 는 층·사업 단위 규칙(v3.0 이상) 실행을 아직 견주지 못한다: {', '.join(layered)} — "
+                          "기업 추가 실행의 축약 리뷰를 쓰지 말고 전체 리뷰를 한다")
+    new_ids = set(new_ctx.run["companies"])
+    prior_ids = set(prior_ctx.run["companies"])
     new_companies = new_ids - prior_ids
     inputs = compare_inputs(slug, prior_slug, new_companies)
     scores = compare_scores(slug, prior_slug, new_companies)

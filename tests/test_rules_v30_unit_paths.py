@@ -139,6 +139,20 @@ class CreateByProposalTest(V30Base):
                                 reason="r", evidence_ids=["EV-nvidia-001"])
 
 
+class SummaryUnitTest(V30Base):
+    def test_summary_carries_unit_for_layer_judgments_and_proposals(self):
+        self.judge("nvidia", "F2", {"adaptation": "beta", "standards": [], **TEXT}, layer="cloud")
+        self.judge("nvidia", "F2", {**PATHS, **TEXT}, layer="chip_design")
+        stages.add_proposal(SLUG, company_id="nvidia", factor="F3", layer="cloud", changes=CP, evidence_after=TEXT["evidence"],
+                            evidence_up_after=UP, evidence_down_after=DOWN, reason="층 판정", evidence_ids=["EV-nvidia-001"])
+        s = stages.summary(SLUG)
+        f2 = [(j["company_id"], j["unit"]) for j in s["judgments"] if j["factor"] == "F2"]
+        self.assertEqual(f2, [("nvidia", "chip_design"), ("nvidia", "cloud")])
+        self.assertTrue(all(j["unit"] is None for j in s["judgments"] if j["factor"] != "F2"))
+        p = s["proposals"][0]
+        self.assertEqual((p["unit"], p["before"]["kind"], p["stale"]), ("cloud", None, False))
+
+
 class CliTest(V30Base):
     def test_judge_with_layer_prints_created(self):
         path = self.box.dir / "paths.json"
@@ -171,6 +185,9 @@ class FromRunTest(unittest.TestCase):
             for f in ("F7", "F8", "F9"):
                 self.assertEqual(new[(cid, f)], prior[(cid, f)], f"{cid} {f} 는 한 글자도 바뀌지 않는다")
         engine.load_context("ai-scorecard-2026-10-v30t")   # 이어받은 입력이 v3.0 검증을 통과한다
+        from scorecard.compare import compare_runs
+        with self.assertRaisesRegex(SchemaError, "diff 는 층·사업 단위 규칙\\(v3.0 이상\\) 실행을 아직 견주지 못한다: ai-scorecard-2026-10-v30t"):
+            compare_runs("ai-scorecard-2026-10-v30t", V21)
 
 
 if __name__ == "__main__":

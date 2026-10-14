@@ -717,6 +717,30 @@ test('GET 규칙 v2.0: factor_labels 로 ① 이름이 바뀌고 lockin·paths �
   }
 });
 
+// 2026-10-14 규칙 v3.0: 한 기업의 층 판단이 여럿이어도 카드 id 가 겹치지 않고, 층 판단은 읽기만 한다(수정은 CLI --layer)
+test('GET 규칙 v3.0: 층 판단 카드는 층 id 로 구분되고 수정 칸 대신 CLI 안내가 나온다', async () => {
+  process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
+  delete process.env.FAKE_CLI_FAIL;
+  process.env.FAKE_SUMMARY = 'summary.v30.json';
+  const server = await startServer({ enabled: true, code: '123456' });
+  try {
+    const page = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F2&company=nvidia' });
+    assert.equal(page.statusCode, 200);
+    assert.match(page.body, /id="judge-F2-nvidia-chip_design"/);
+    assert.match(page.body, /id="judge-F2-nvidia-cloud"/);
+    assert.doesNotMatch(page.body, /id="judge-F2-nvidia"/, '층 판단 카드에 기업·factor 만의 id 를 쓰지 않는다');
+    assert.doesNotMatch(page.body, /id="judge-form"/, '층 판단은 이 화면에서 수정 칸을 열지 않는다');
+    assert.match(page.body, /--layer chip_design 를 붙여 고칩니다/);
+    assert.match(page.body, /<h3>NVIDIA <span class="muted">cloud<\/span><\/h3>/, '제안·판단 카드 머리에 층 id 가 보인다');
+    // 회사 단위 판단(F3)은 그대로 수정 칸을 연다
+    const f3 = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x?factor=F3&company=nvidia' });
+    assert.match(f3.body, /id="judge-form"/);
+  } finally {
+    delete process.env.FAKE_SUMMARY;
+    server.close();
+  }
+});
+
 test('GET 옛 규칙: factor_labels 가 옛 라벨(또는 없음)이면 ① 이름과 질문이 그대로다', async () => {
   process.env.SCORECARD_CLI = `node ${FAKE_CLI_PATH}`;
   delete process.env.FAKE_CLI_FAIL;

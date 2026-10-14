@@ -137,6 +137,7 @@
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "factor": "F1",
+      "unit": null,
       "kind": "lockin",
       "score": null,
       "score_range": [
@@ -202,6 +203,7 @@
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "factor": "F2",
+      "unit": null,
       "kind": "paths",
       "score": null,
       "score_range": [
@@ -255,6 +257,7 @@
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "factor": "F3",
+      "unit": null,
       "kind": "criteria",
       "score": null,
       "score_range": [
@@ -300,6 +303,7 @@
       "company_id": "openai",
       "display_name": "OpenAI",
       "factor": "F3",
+      "unit": null,
       "kind": "criteria",
       "score": null,
       "score_range": [
@@ -601,6 +605,7 @@
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "factor": "F5",
+      "unit": null,
       "edit_kind": "grade",
       "changes": [
         {
@@ -653,6 +658,7 @@
       "company_id": "nvidia",
       "display_name": "NVIDIA",
       "factor": "F1",
+      "unit": null,
       "edit_kind": "lockin",
       "changes": [
         {

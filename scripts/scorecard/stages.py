@@ -1858,6 +1858,7 @@ def _summary_proposals(slug: str, registry: dict[str, dict[str, Any]], rules: An
             "company_id": p["company_id"],
             "display_name": (registry.get(p["company_id"]) or {}).get("display_name") or p["company_id"],
             "factor": p["factor"],
+            "unit": p.get("layer") or p.get("business"),
             "edit_kind": ("summary" if p["factor"] == SUMMARY_FACTOR
                           else "evidence_only" if not p["changes"] else judgment_edit_kind(rules, p["factor"])),
             "changes": _pairs(p["changes"]),
@@ -1954,6 +1955,8 @@ def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
             "company_id": j["company_id"],
             "display_name": (registry.get(j["company_id"]) or {}).get("display_name") or j["company_id"],
             "factor": j["factor"],
+            # 2026-10-14 규칙 v3.0: 층·사업 판단의 층 id·사업 id. 회사 단위 판단은 null 이다.
+            "unit": j.get("layer") or j.get("business"),
             "kind": j["kind"],
             "score": j["score"],
             "score_range": list(rules.payload["factors"][j["factor"]]["range"]),
@@ -1972,7 +1975,7 @@ def _summary_judgments(slug: str, rules: Any) -> list[dict[str, Any]]:
             # 2026-10-01 V2-11: 마지막 수정이 에이전트 세션이었는지. 이력이 없거나 기록 전 수정이면 null.
             "last_revision_session": ((j.get("revision_history") or [{}])[-1]).get("session"),
         })
-    return sorted(out, key=lambda x: (x["factor"], x["company_id"]))
+    return sorted(out, key=lambda x: (x["factor"], x["company_id"], x["unit"] or ""))
 
 
 def _approval_readiness(slug: str) -> dict[str, Any]:

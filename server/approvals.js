@@ -566,7 +566,7 @@ function renderProposalSection(data, ctx) {
     return `
       <div class="prop-card prop-${escapeHtml(pr.status)}" id="proposal-${escapeHtml(pr.proposal_id)}">
         <div class="judge-head">
-          <h3>${escapeHtml(pr.display_name || pr.company_id)}</h3>${factorChips([pr.factor])}
+          <h3>${escapeHtml(pr.display_name || pr.company_id)}${pr.unit ? ` <span class="muted">${escapeHtml(pr.unit)}</span>` : ''}</h3>${factorChips([pr.factor])}
           <span class="badge${pr.status === 'accepted' ? ' badge-ok' : pr.status === 'rejected' ? ' badge-warn' : ''}">${escapeHtml(PROPOSAL_STATUS_LABELS[pr.status] || pr.status)}</span>
           <span class="muted">${escapeHtml(pr.proposal_id)} · 제안 ${escapeHtml(pr.proposed_by)} · ${escapeHtml(pr.proposed_at)}</span>
         </div>
@@ -606,21 +606,27 @@ function renderJudgeSection(data, judgeFactor, judgeCompany, termCtx) {
   const panels = editable.map((e) => {
     const guide = factorGuide[e.factor];
     const cards = judgments.filter((j) => j.factor === e.factor).map((j) => {
-      const selected = j.factor === judgeFactor && j.company_id === judgeCompany;
-      const formId = selected ? 'judge-form' : `judge-form-${j.factor}-${j.company_id}`;
+      // 2026-10-14 규칙 v3.0: 층·사업 판단(unit 이 있음)은 한 기업에 여럿이라 카드 id 에 unit 을 붙인다. 수정 칸은 아직 기업·factor
+      // 만 넘기므로 층·사업 판단은 읽기만 하고 CLI(judge --layer·--business)로 고친다.
+      const unit = j.unit ? `-${j.unit}` : '';
+      const selected = !j.unit && j.factor === judgeFactor && j.company_id === judgeCompany;
+      const formId = selected ? 'judge-form' : `judge-form-${j.factor}-${j.company_id}${unit}`;
       const evidence = Array.isArray(j.evidence) ? j.evidence : [];
       const agent = j.last_revision_session === 'agent' ? ' <span class="badge badge-warn">에이전트 세션에서 수정</span>' : '';
+      const edit = j.unit
+        ? `<p class="muted">층·사업 판단은 이 화면에서 고치지 않습니다. CLI 의 judge·propose 에 --${j.factor === 'F1' ? 'business' : 'layer'} ${escapeHtml(j.unit)} 를 붙여 고칩니다.</p>`
+        : `<button type="button" class="btn btn-secondary judge-open" data-open-form="${formId}" aria-expanded="${selected}">${selected ? '수정 칸 닫기' : '이 판단 고치기'}</button>
+        <div class="judge-form-wrap"${selected ? '' : ' hidden'}>${renderJudgeForm(runId, j, choices, formId)}</div>`;
       return `
-      <div class="judge-card${selected ? ' judge-card-open' : ''}" id="judge-${escapeHtml(j.factor)}-${escapeHtml(j.company_id)}">
+      <div class="judge-card${selected ? ' judge-card-open' : ''}" id="judge-${escapeHtml(j.factor)}-${escapeHtml(j.company_id)}${escapeHtml(unit)}">
         <div class="judge-head">
-          <h3>${escapeHtml(j.display_name || j.company_id)}</h3>
+          <h3>${escapeHtml(j.display_name || j.company_id)}${j.unit ? ` <span class="muted">${escapeHtml(j.unit)}</span>` : ''}</h3>
           <span class="badge">${escapeHtml(STATUS_LABELS[j.status] || j.status)}</span>${agent}
           <span class="muted">검토 ${escapeHtml(j.reviewer)} · ${escapeHtml(j.reviewed_at)}${j.revisions ? ` · 수정 ${escapeHtml(j.revisions)}회` : ''}</span>
         </div>
         ${judgmentValueHtml(j)}
         ${judgmentEvidenceHtml(j, evidence, ctx)}
-        <button type="button" class="btn btn-secondary judge-open" data-open-form="${formId}" aria-expanded="${selected}">${selected ? '수정 칸 닫기' : '이 판단 고치기'}</button>
-        <div class="judge-form-wrap"${selected ? '' : ' hidden'}>${renderJudgeForm(runId, j, choices, formId)}</div>
+        ${edit}
       </div>`;
     }).join('');
     return `
