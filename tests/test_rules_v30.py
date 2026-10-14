@@ -147,6 +147,12 @@ class RejectTest(unittest.TestCase):
         del p["layers"]["cell_values"]["preparing"]
         self.assertRejected(p, "cell_values")
 
+    def test_f8_supply_floor_uses_v30_layer_ids(self):
+        self.assertEqual(V30.payload["factors"]["F8"]["supply"]["layers_none_floor"]["layers"], ["chip_design", "cloud"])
+        p = payload()
+        p["factors"]["F8"]["supply"]["layers_none_floor"]["layers"] = ["chip", "cloud"]
+        self.assertRejected(p, "layers_none_floor.layers: 알 수 없는 층 id 'chip'")
+
 
 class OldRulesUntouchedTest(unittest.TestCase):
     def test_old_rule_files_still_load(self):

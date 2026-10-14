@@ -321,6 +321,21 @@ class AllianceInputTest(unittest.TestCase):
                 self.check(inputs)
 
 
+class SupplyFloorTest(unittest.TestCase):
+    """⑧ 공급 축 하한: 같은 회사 ④ 보유표에서 AI 칩 설계나 클라우드가 '없음'이면 공급 축을 0 으로 적을 수 없다(v3.0 은 holdings 칸)."""
+
+    AXES = {"customer": {"status": "not_applicable"}, "commitment": {"status": "not_applicable"},
+            "supply": {"status": "absent_disclosed"}, "geopolitics": {"status": "not_applicable"}}
+
+    def test_floor_reads_holdings_cells(self):
+        f8 = judgment("J-8", "F8", "axes", self.AXES)
+        none_chip = holdings_inputs()   # chip_design 은 자체 사용, cloud 는 판매
+        none_chip["cells"]["chip_design"] = {"cell": "none", "evidence_ids": []}
+        with self.assertRaisesRegex(SchemaError, "\\['chip_design'\\] 가 '없음'이라 공급 축을 0 으로 적을 수 없다"):
+            validate([judgment("J-4", "F4", "holdings", none_chip), f8])
+        validate([judgment("J-4", "F4", "holdings", holdings_inputs()), f8])
+
+
 class CrossRefsTest(unittest.TestCase):
     SOURCES = [{"source_id": "SRC-1"}]
 

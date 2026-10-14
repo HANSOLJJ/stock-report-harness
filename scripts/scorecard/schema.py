@@ -623,6 +623,11 @@ def _validate_v3_structure(payload: dict[str, Any]) -> None:
                 _require(lid in layer_ids, f"{where}.no_benchmark_layers: 알 수 없는 층 id {lid!r}")
             for lid in ((spec.get("gap_months") or {}).get("by_layer") or {}):
                 _require(lid in layer_ids, f"{where}.gap_months.by_layer: 알 수 없는 층 id {lid!r}")
+        floor = (spec.get("supply") or {}).get("layers_none_floor") if fid == "F8" else None
+        if floor and layer_ids is not None:
+            # 2026-10-14: v3.0 은 ④ 보유표가 열한 층이다. 옛 층 이름(chip)이 남으면 하한 검사가 조용히 아무것도 보지 않는다.
+            for lid in floor.get("layers") or []:
+                _require(lid in layer_ids, f"{where}.supply.layers_none_floor.layers: 알 수 없는 층 id {lid!r}")
         if fid == "F8" and "score_multiplier" in spec:
             mult = spec["score_multiplier"]
             _require(_is_number(mult) and mult > 0 and min(F8_RUNGS) * mult >= lo,
@@ -2247,11 +2252,13 @@ def _check_supply_floor(items: list[dict[str, Any]], rules: dict[str, Any]) -> N
     floor = (((rules.get("factors") or {}).get("F8") or {}).get("supply") or {}).get("layers_none_floor")
     if not floor:
         return
-    f4 = {j["company_id"]: j for j in items if j["factor"] == "F4" and j["kind"] == "survival" and j["status"] == "new"}
+    # 2026-10-14 규칙 v3.0: ④ 보유표가 holdings(열한 층 칸)이면 그 칸 값을 읽는다.
+    f4 = {j["company_id"]: j for j in items if j["factor"] == "F4" and j["kind"] in ("survival", "holdings") and j["status"] == "new"}
     for j in items:
         if j["factor"] != "F8" or j["kind"] != "axes" or j["status"] != "new" or j["company_id"] not in f4:
             continue
-        layers = f4[j["company_id"]]["inputs"]["layers"]
+        f4_inputs = f4[j["company_id"]]["inputs"]
+        layers = f4_inputs["layers"] if "layers" in f4_inputs else {k: v["cell"] for k, v in f4_inputs["cells"].items()}
         missing = [layer for layer in floor["layers"] if layers.get(layer) == "none"]
         supply = j["inputs"]["supply"]
         zero = supply["status"] in ("absent_disclosed", "not_applicable") or (supply["status"] == "confirmed" and supply.get("rung") == 0)
