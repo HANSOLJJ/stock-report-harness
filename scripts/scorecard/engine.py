@@ -11,7 +11,7 @@ from . import SCHEMA_VERSION
 from .aggregate import rank_companies, summarize_company
 from .calc_f6 import compute_f6
 from .calc_f9 import compute_f9
-from .calc_layers import compute_f4_holdings
+from .calc_layers import compute_f2_layers, compute_f3_layers, compute_f4_holdings
 from .calc_qual import compute_f1, compute_f2, compute_f3, compute_f4, compute_f5, compute_f7, compute_f8, compute_manual
 from .inputs import JudgmentLookup, ObsLookup
 from .rules import RuleSet, load_rules
@@ -141,8 +141,11 @@ def compute_company(company: dict[str, Any], obs: ObsLookup, judgments: Judgment
           else compute_manual("F1", company, judgments, rules))
     return {
         "F1": f1,
-        "F2": compute_f2(company, judgments, rules, run),
-        "F3": compute_f3(company, judgments, rules),
+        # 2026-10-14 규칙 v3.0: ②③ 은 판매 층마다 매겨 층 매출 몫으로 가중 평균한다(calc_layers).
+        "F2": (compute_f2_layers(company, judgments, rules, run) if rules.factor("F2").get("mode") == "layer_paths"
+               else compute_f2(company, judgments, rules, run)),
+        "F3": (compute_f3_layers(company, judgments, rules, run) if rules.factor("F3").get("mode") == "layer_cp"
+               else compute_f3(company, judgments, rules)),
         # 2026-10-12 규칙 v2.1: ④ survival·⑧ axes 모드면 판정 입력으로 계산한다. v2.0 이하(manual)는 지금 경로 그대로다.
         # 2026-10-14 규칙 v3.0: ④ holdings 모드는 열 층 보유표와 매출 줄로 계산한다(calc_layers).
         "F4": (compute_f4(company, judgments, rules) if rules.factor("F4").get("mode") == "survival"

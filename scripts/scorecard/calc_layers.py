@@ -1,7 +1,9 @@
 # 규칙 v3.0 층 단위 계산: ④ 보유표의 매출 줄로 층 매출 몫(①②③ 의 무게)을 내고 ④ 수직계열화·다각화·그 분야의 힘을 계산한다
 from __future__ import annotations
 
-from typing import Any
+from calendar import monthrange
+from datetime import date
+from typing import Any, Callable
 
 from .calc_qual import _kind_mismatch, _status_for
 from .inputs import JudgmentLookup, carried_note, factor_result, pending_info
@@ -124,3 +126,171 @@ def compute_f4_holdings(company: dict[str, Any], judgments: JudgmentLookup, rule
     warnings.extend(carried_note(judgment))
     return factor_result(fid, score=score, status=_status_for(judgment), basis=basis, judgment=judgment, calc=calc,
                          warnings=warnings)
+
+
+def within_window(day: str | None, as_of: str, months: int) -> bool:
+    """`day` 가 기준일로부터 `months` 개월 안(기준일 포함, 기준일 뒤는 아님)인가. 끝난 싸움과 진행 중인 싸움을 가르는 창(rules.md 2.11)."""
+    if day is None:
+        return False
+    end = date.fromisoformat(as_of)
+    years, month0 = divmod(end.month - 1 - months, 12)
+    year, month = end.year + years, month0 + 1
+    start = date(year, month, min(end.day, monthrange(year, month)[1]))
+    return start <= date.fromisoformat(day) <= end
+
+
+LayerScore = tuple[float | None, dict[str, Any], str | None, list[str]]
+
+
+def _layered(fid: str, basis: str, what: str, company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet,
+             score_layer: Callable[[dict[str, Any], str], LayerScore]) -> dict[str, Any]:
+    """층 단위 항목(②③)의 공통 합치기. 판매 층마다 판단 하나를 점수로 바꾸고 층 매출 몫으로 가중 평균해 한 번 반올림한다(rules.md 2.10).
+
+    무게가 있는 층의 판단이 없거나 어느 층이 판정 대기면 항목 전체가 판정 대기다. 무게 0 판매 층의 판단 누락은 계산을 막지 않고
+    경고로 남긴다(계약 검증이 막는다). 판매 층이 아닌 층의 판단은 계산에 쓰지 않는다."""
+    cid = company["company_id"]
+    holdings = judgments.get(cid, "F4")
+    if holdings is None or holdings["kind"] != "holdings":
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis,
+                             pending=pending_info("judgment", "④ 층별 보유표(holdings)가 있어야 층 매출 몫을 낸다"))
+    w = layer_weights(holdings["inputs"], rules)
+    if not w["ok"]:
+        message = (f"④ 매출 줄 {w['unknown_lines']} 의 금액이 미확인 — 층 매출 몫을 어림하지 않는다" if w["unknown_lines"]
+                   else "④ 보유표에 층에 붙은 매출 줄이 없다 — 층 매출 몫을 낼 수 없다")
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis, pending=pending_info("judgment", message))
+    weights = w["weights"]
+    spec = rules.payload["layers"]
+    order = [*spec["order"], spec["outside"]["id"]]
+    units = {j["layer"]: j for j in judgments.units(cid, fid)}
+    calc: dict[str, Any] = {"layer_weights": {u: _tidy(x) for u, x in weights.items()}, "layers": {}}
+    warnings: list[str] = []
+    extra = [u for u in order if u in units and u not in weights]
+    if extra:
+        warnings.append(f"판매 층이 아닌 층 {extra} 의 판단은 계산에 쓰지 않는다")
+    zero_missing = [u for u in order if u in weights and weights[u] == 0 and u not in units]
+    if zero_missing:
+        warnings.append(f"무게 0 판매 층 {zero_missing} 의 {what} 판단이 없다")
+    missing = [u for u in order if weights.get(u, 0) > 0 and u not in units]
+    if missing:
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis, calc=calc, warnings=warnings,
+                             pending=pending_info("judgment", f"층 {missing} 의 {what} 판단이 없다"))
+    scores: dict[str, float] = {}
+    pendings: list[str] = []
+    for u in order:
+        if u not in weights or u not in units:
+            continue
+        score, detail, pending_message, layer_warnings = score_layer(units[u], u)
+        calc["layers"][u] = {"judgment_id": units[u]["judgment_id"], "weight": _tidy(weights[u]), **detail,
+                             "score": None if score is None else _tidy(score)}
+        warnings.extend(f"{u}: {x}" for x in layer_warnings)
+        warnings.extend(f"{u}: {x}" for x in carried_note(units[u]))
+        if pending_message is not None:
+            pendings.append(f"{u}: {pending_message}")
+        else:
+            scores[u] = float(score)
+    if pendings:
+        return factor_result(fid, score=None, status="needs_judgment", basis=basis, calc=calc, warnings=warnings,
+                             pending=pending_info("judgment", "; ".join(pendings)))
+    counted = [u for u in scores if weights[u] > 0]
+    value = sum(weights[u] * scores[u] for u in counted) / sum(weights[u] for u in counted)
+    lo, hi = rules.factor_range(fid)
+    total = rules.round_score(max(lo, min(hi, value)))
+    calc["score"] = total
+    status = "carried_score" if any(units[u]["status"] == "carried" for u in counted) else "ok"
+    return factor_result(fid, score=total, status=status, basis=basis, calc=calc, warnings=warnings)
+
+
+def _f2_layer(j: dict[str, Any], layer: str, rules: RuleSet, as_of: str) -> LayerScore:
+    """② 한 층의 세 경로. 벤치마크가 없는 층은 (패러다임 적응 + 표준 선점) × 배수다. 표준은 최근 2년 안에 새로 지원한 주요
+    회사가 있을 때만 센다(rules.md ② 「표준의 시점」). 미확인 경로가 있으면 그 층은 판정 대기다."""
+    spec = rules.factor("F2")
+    inputs = j["inputs"]
+    no_bench = layer in set(spec.get("no_benchmark_layers") or [])
+    unknown = [k for k in ("leap", "adaptation") if inputs.get(k) == "unknown"]
+    detail: dict[str, Any] = {"no_benchmark": no_bench}
+    if unknown:
+        return None, detail, f"경로 {unknown} 이 미확인 — 0 으로 두지 않는다", []
+    months = int(rules.payload["layers"]["time_window_months"])
+    standards = []
+    for std in inputs["standards"]:
+        active = within_window(std["latest_new_major_adopted_at"], as_of, months)
+        standards.append({"name": std["name"], "support": std["support"], "holder": std["holder"],
+                          "latest_new_major_adopted_at": std["latest_new_major_adopted_at"], "active": active,
+                          "points": float(spec["standard"][std["support"]]) if active else 0.0})
+    standard = max((s["points"] for s in standards), default=0.0)
+    adaptation = float(spec["adaptation"][inputs["adaptation"]])
+    detail.update(adaptation=_tidy(adaptation), standard=_tidy(standard), standards=standards)
+    if no_bench:
+        formula = spec["no_benchmark_formula"]
+        parts = {"adaptation": adaptation, "standard": standard}
+        score = sum(parts[k] for k in formula["sum_of"]) * float(formula["multiplier"])
+        detail["multiplier"] = formula["multiplier"]
+    else:
+        leap = float(spec["leap"][inputs["leap"]])
+        detail["leap"] = _tidy(leap)
+        score = leap + adaptation + standard
+    return score, detail, None, []
+
+
+def compute_f2_layers(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
+    """② 게임체인저(규칙 v3.0). 판매 층마다 세 경로를 더하고 층 매출 몫으로 가중 평균한다."""
+    return _layered("F2", "layer_paths", "세 경로", company, judgments, rules,
+                    lambda j, layer: _f2_layer(j, layer, rules, run["as_of"]))
+
+
+def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
+    """③ 한 층의 카운터 포지셔닝. 별도 수익모델 + 모방 불가능성 + 가속도에 관문 셋(작동 증거·모방·문 닫힘)을 댄다.
+
+    상대가 지금 그 시장에 없으면(진행 중이 아님) 수익모델·모방은 0 이다. 가속도는 두 성장 배수의 비를 곡선으로 바꾸고, 값이 없으면
+    0 에 '자료 없음', 출시 지연이면 0(감속)이다. 상대 유무·수익모델·모방이 미확인이면 그 층은 판정 대기다(rules.md ③, 2.11)."""
+    spec = rules.factor("F3")
+    inputs = j["inputs"]
+    detail: dict[str, Any] = {"counterparty": inputs["counterparty"]}
+    unknown = [k for k in ("counterparty_present", "revenue_model", "imitation") if inputs[k] == "unknown"]
+    if unknown:
+        return None, detail, f"{unknown} 이 미확인 — 0 으로 두지 않는다", []
+    warnings: list[str] = []
+    active = inputs["counterparty_present"] == "yes"
+    revenue_model = float(spec["revenue_model"][inputs["revenue_model"]]) if active else 0.0
+    imitation = float(spec["imitation"][inputs["imitation"]]) if active else 0.0
+    if not active:
+        warnings.append("수입원이 위협받는 상대가 지금 시장에 없다(끝난 싸움) — 수익모델·모방 불가능성 0")
+    acc_spec = spec["acceleration"]
+    a = inputs["acceleration"]
+    ratio = None
+    no_data = False
+    if a["delayed"] == "yes":
+        acceleration = 0.0
+        warnings.append("출시 지연은 감속으로 본다 — 가속도 0")
+    elif a["prior_multiple"] is None:
+        acceleration, no_data = float(acc_spec.get("missing_points", 0)), True
+        warnings.append("가속도 자료 없음 — 0 으로 계산하고 다음 수집에서 채운다")
+    else:
+        ratio = float(a["current_multiple"]) / float(a["prior_multiple"])
+        acceleration = piecewise(acc_spec["curve"], ratio)
+        cap = (acc_spec.get("tier_caps") or {}).get(a["tier"])
+        if cap is not None and acceleration > float(cap):
+            warnings.append(f"지표 단계 {a['tier']} 의 가속도는 최고 {cap}")
+            acceleration = float(cap)
+    raw = revenue_model + imitation + acceleration
+    gates = spec["gates"]
+    caps: dict[str, float] = {}
+    if acceleration < float(gates["slow_cap"]["below"]):
+        caps["slow"] = float(gates["slow_cap"]["cap"])
+    if inputs["imitation"] != gates["imitation_gate"]["requires"]:
+        caps["imitation"] = float(gates["imitation_gate"]["cap"])
+    door = within_window(inputs["door_closed_at"], as_of, int(rules.payload["layers"]["time_window_months"]))
+    if not door:
+        caps["door_closed"] = float(gates["door_closed_gate"]["cap"])
+    score = min([raw, *caps.values()])
+    detail.update(active=active, revenue_model=_tidy(revenue_model), imitation=_tidy(imitation),
+                  acceleration_ratio=None if ratio is None else _tidy(ratio), acceleration=_tidy(acceleration),
+                  acceleration_no_data=no_data, raw=_tidy(raw), door_closed=door,
+                  caps_applied=sorted(k for k, c in caps.items() if c < raw))
+    return score, detail, None, warnings
+
+
+def compute_f3_layers(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
+    """③ Last Mover (카운터 포지셔닝)(규칙 v3.0). 판매 층마다 매기고 층 매출 몫으로 가중 평균한다."""
+    return _layered("F3", "layer_cp", "카운터 포지셔닝", company, judgments, rules,
+                    lambda j, layer: _f3_layer(j, rules, run["as_of"]))

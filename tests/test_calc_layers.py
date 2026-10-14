@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from scorecard.calc_layers import compute_f4_holdings, layer_weights  # noqa: E402
+from scorecard.calc_layers import _f3_layer, compute_f2_layers, compute_f3_layers, compute_f4_holdings, layer_weights  # noqa: E402
 from scorecard.engine import compute_company  # noqa: E402
 from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
 from scorecard.rules import load_rules  # noqa: E402
@@ -183,6 +183,145 @@ class HoldingsScoreTest(unittest.TestCase):
         j = judgment(holdings())
         out = compute_company(AMAZON, ObsLookup([]), JudgmentLookup([j]), V30, {"as_of": "2026-10-14", "decisions": []})
         self.assertEqual((out["F4"]["basis"], out["F4"]["status"]), ("holdings", "ok"))
+
+
+RUN = {"as_of": "2026-10-14", "decisions": []}
+TEXT = ["판정 문장이다."]
+
+
+def unit(factor: str, kind: str, layer: str, inputs: dict, status: str = "new") -> dict:
+    j = {"judgment_id": f"amazon.{factor}.{layer}", "company_id": "amazon", "factor": factor, "layer": layer, "kind": kind,
+         "score": None, "inputs": inputs, "evidence": TEXT, "reviewer": "agent", "reviewed_at": "2026-10-14", "status": status}
+    if status == "carried":
+        j["carried_from"] = "x"
+    return j
+
+
+def run_layers(fn, *units: dict, h: dict | None = None) -> dict:
+    items = [judgment(h or holdings()), *units]
+    validate_judgments({"schema": "scorecard.judgments/1", "run_id": "t", "items": items}, COMPANIES, V30.payload, "t")
+    return fn(AMAZON, JudgmentLookup(items), V30, RUN)
+
+
+def std(adopted_at: str | None, support: str = "three_plus") -> dict:
+    return {"name": "규격", "holder": "neutral", "support": support, "first_adopted": "2023-01-01",
+            "latest_new_major_adopter": None if adopted_at is None else "주요 회사", "latest_new_major_adopted_at": adopted_at,
+            "evidence_ids": []}
+
+
+def chip_holdings() -> dict:
+    h = set_cells(holdings(), chip_design="sold")
+    h["revenue_lines"] = [line("chips", "chip_design", 100, "no")]
+    return h
+
+
+class F2LayersTest(unittest.TestCase):
+    def test_no_benchmark_layers_double_and_weighted_average(self):
+        cloud = unit("F2", "layer_paths", "cloud", {"adaptation": "adopted", "standards": [std("2026-01-01")]})
+        platform = unit("F2", "layer_paths", "user_platform", {"adaptation": "beta", "standards": []})
+        r = run_layers(compute_f2_layers, cloud, platform)
+        self.assertEqual((r["status"], r["basis"]), ("ok", "layer_paths"))
+        self.assertEqual((r["calc"]["layers"]["cloud"]["score"], r["calc"]["layers"]["user_platform"]["score"]), (14, 4))
+        self.assertEqual(r["score"], 7)   # 0.7 × 4 + 0.3 × 14
+
+    def test_standard_counts_only_within_two_years(self):
+        def standard_points(adopted_at):
+            cloud = unit("F2", "layer_paths", "cloud", {"adaptation": "none", "standards": [std(adopted_at)]})
+            platform = unit("F2", "layer_paths", "user_platform", {"adaptation": "none", "standards": []})
+            return run_layers(compute_f2_layers, cloud, platform)["calc"]["layers"]["cloud"]["standard"]
+        self.assertEqual(standard_points("2024-09-13"), 0, "25개월 전이면 굳은 규격")
+        self.assertEqual(standard_points("2024-11-14"), 3, "23개월 전이면 퍼지는 중")
+        self.assertEqual(standard_points("2024-10-14"), 3, "정확히 2년 전 같은 날은 창 안")
+        self.assertEqual(standard_points("2026-10-15"), 0, "기준일 뒤 사건은 세지 않는다")
+
+    def test_benchmark_layer_adds_leap(self):
+        chip = unit("F2", "layer_paths", "chip_design",
+                    {"leap": "generation_gap", "gap_months": 12, "adaptation": "doubled", "adoption_multiple": 2.1,
+                     "standards": [std("2026-03-01", "must_be_compatible")]})
+        r = run_layers(compute_f2_layers, chip, h=chip_holdings())
+        self.assertEqual((r["calc"]["layers"]["chip_design"]["leap"], r["score"]), (10, 20))
+
+    def test_missing_unknown_and_extra_layers(self):
+        cloud = unit("F2", "layer_paths", "cloud", {"adaptation": "adopted", "standards": []})
+        r = run_layers(compute_f2_layers, cloud)
+        self.assertEqual((r["status"], r["score"]), ("needs_judgment", None))
+        self.assertIn("층 ['user_platform'] 의 세 경로 판단이 없다", r["pending"]["message"])
+        unknown = unit("F2", "layer_paths", "user_platform", {"adaptation": "unknown", "standards": []})
+        r = run_layers(compute_f2_layers, cloud, unknown)
+        self.assertIn("user_platform: 경로 ['adaptation'] 이 미확인", r["pending"]["message"])
+        platform = unit("F2", "layer_paths", "user_platform", {"adaptation": "adopted", "standards": []})
+        model = unit("F2", "layer_paths", "model", {"leap": "first", "adaptation": "adopted", "standards": []})
+        h = set_cells(holdings(), device={"cell": "sold", "ai_chain": "yes", "evidence_ids": []})
+        r = run_layers(compute_f2_layers, cloud, platform, model, h=h)
+        self.assertEqual(r["status"], "ok")
+        self.assertIn("판매 층이 아닌 층 ['model'] 의 판단은 계산에 쓰지 않는다", r["warnings"])
+        self.assertIn("무게 0 판매 층 ['device'] 의 세 경로 판단이 없다", r["warnings"])
+
+    def test_needs_holdings(self):
+        r = compute_f2_layers(AMAZON, JudgmentLookup([]), V30, RUN)
+        self.assertIn("④ 층별 보유표(holdings)가 있어야", r["pending"]["message"])
+
+
+def cp(rm: str = "recovered", im: str = "blocked", prior=1.0, current=1.2, tier: str = "b", door=None, present: str = "yes",
+       delayed: str = "no") -> dict:
+    basis = "none" if prior is None else "yoy_quarter"
+    return {"strategy": "전략", "counterparty": "상대" if present != "no" else None, "counterparty_present": present,
+            "revenue_model": rm, "imitation": im, "door_closed_at": door,
+            "acceleration": {"metric": None if prior is None else "지표", "tier": "e" if prior is None else tier, "basis": basis,
+                             "prior_multiple": prior, "current_multiple": current, "delayed": delayed, "evidence_ids": []}}
+
+
+def f3_layer(inputs: dict) -> tuple:
+    return _f3_layer(unit("F3", "layer_cp", "cloud", inputs), V30, RUN["as_of"])
+
+
+class F3LayersTest(unittest.TestCase):
+    def test_acceleration_ratio_points(self):
+        for prior, current, expected in ((1.409, 1.480, 4.51), (2.180, 2.166, 2.81), (9, 13, 6), (1.0, 0.85, 0)):
+            with self.subTest(prior=prior, current=current):
+                _score, detail, _p, _w = f3_layer(cp(prior=prior, current=current))
+                self.assertAlmostEqual(detail["acceleration"], expected, places=2)
+
+    def test_tier_c_cap_missing_values_and_delay(self):
+        _s, detail, _p, warnings = f3_layer(cp(prior=9, current=13, tier="c"))
+        self.assertEqual(detail["acceleration"], 3)
+        _s, detail, _p, warnings = f3_layer(cp(prior=None, current=None))
+        self.assertEqual((detail["acceleration"], detail["acceleration_no_data"]), (0, True))
+        self.assertIn("가속도 자료 없음", " ".join(warnings))
+        _s, detail, _p, warnings = f3_layer(cp(delayed="yes"))
+        self.assertEqual(detail["acceleration"], 0)
+        self.assertIn("출시 지연은 감속", " ".join(warnings))
+
+    def test_three_gates(self):
+        slow = 0.9 + 2.9 / 30   # 가속도 2.9
+        self.assertEqual(f3_layer(cp(prior=1.0, current=slow, door="2026-06-01"))[0], 12, "가속도 3 미만이면 최고 12")
+        self.assertEqual(f3_layer(cp(im="conflict_pending", door="2026-06-01"))[0], 15, "모방 5 면 최고 15")
+        self.assertEqual(f3_layer(cp())[0], 18, "문 닫힘 증거가 없으면 최고 18")
+        self.assertEqual(f3_layer(cp(door="2023-01-01"))[0], 18, "2년 전보다 오래된 문 닫힘 증거는 세지 않는다")
+        score, detail, _p, _w = f3_layer(cp(door="2026-06-01"))
+        self.assertEqual((score, detail["caps_applied"]), (20, []))
+
+    def test_finished_contest_zeroes_revenue_model_and_imitation(self):
+        score, detail, _p, warnings = f3_layer(cp(present="no", door="2026-06-01"))
+        self.assertEqual((detail["revenue_model"], detail["imitation"], detail["acceleration"], score), (0, 0, 6, 6))
+        self.assertIn("끝난 싸움", " ".join(warnings))
+
+    def test_unknown_is_pending_and_company_is_weighted(self):
+        self.assertIsNotNone(f3_layer(cp(rm="unknown"))[2])
+        cloud = unit("F3", "layer_cp", "cloud", cp(door="2026-06-01"))                       # 20
+        platform = unit("F3", "layer_cp", "user_platform", cp(prior=None, current=None))      # 6 + 8 + 0 → 작동 증거 관문 12
+        r = run_layers(compute_f3_layers, cloud, platform)
+        self.assertEqual((r["calc"]["layers"]["cloud"]["score"], r["calc"]["layers"]["user_platform"]["score"]), (20, 12))
+        self.assertEqual(r["score"], 14.4)   # 0.7 × 12 + 0.3 × 20
+
+    def test_engine_dispatches_layer_modes(self):
+        items = [judgment(holdings()),
+                 unit("F2", "layer_paths", "cloud", {"adaptation": "adopted", "standards": []}),
+                 unit("F2", "layer_paths", "user_platform", {"adaptation": "adopted", "standards": []}),
+                 unit("F3", "layer_cp", "cloud", cp()), unit("F3", "layer_cp", "user_platform", cp())]
+        out = compute_company(AMAZON, ObsLookup([]), JudgmentLookup(items), V30, RUN)
+        self.assertEqual((out["F2"]["basis"], out["F2"]["score"]), ("layer_paths", 8))
+        self.assertEqual((out["F3"]["basis"], out["F3"]["score"]), ("layer_cp", 18))
 
 
 if __name__ == "__main__":
