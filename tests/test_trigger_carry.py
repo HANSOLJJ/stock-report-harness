@@ -114,6 +114,27 @@ class ChainTest(FlowBase):
         refs = [p["ref"] for p in stages.previous_triggers(load_json_strict(engine.run_dir(self.NEW) / "run.json"))]
         self.assertEqual(refs, [f"{SLUG}:TRG-001"])
 
+    def test_copy_in_an_unprocessed_run_stands_for_the_earlier_trigger(self):
+        # 2026-10-15: research 를 거치지 않은 실행을 다시 이어받으면 같은 번호의 트리거가 두 실행에서 함께 넘어왔다
+        stages.init_run(self.NEW, from_run=SLUG, title="이어받기")
+        stages.init_run(f"{self.NEW}2", from_run=self.NEW, title="다시 이어받기")
+        refs = [p["ref"] for p in stages.previous_triggers(load_json_strict(engine.run_dir(f"{self.NEW}2") / "run.json"))]
+        self.assertEqual(refs, [f"{self.NEW}:TRG-001"])
+
+    def test_company_subset_takes_only_its_companies_triggers(self):
+        # 2026-10-15: 회사를 골라 이어받은 실행이 고르지 않은 회사의 트리거까지 처리하라고 요구받았다
+        payload = load_json_strict(run_paths(SLUG).triggers)
+        first = next(t for t in payload["items"] if t["trigger_id"] == "TRG-001")
+        other = next(c for c in load_json_strict(engine.run_dir(SLUG) / "run.json")["companies"] if c != first["company_id"])
+        payload["items"].append({**{k: v for k, v in first.items() if k != "carry"}, "trigger_id": "TRG-901", "company_id": other})
+        write_json(run_paths(SLUG).triggers, payload)
+        stages.init_run(self.NEW, from_run=SLUG, title="이어받기", companies=[first["company_id"]])
+        refs = [p["ref"] for p in stages.previous_triggers(load_json_strict(engine.run_dir(self.NEW) / "run.json"))]
+        self.assertEqual(refs, [f"{SLUG}:TRG-001"])
+        stages.init_run(f"{self.NEW}2", from_run=SLUG, title="전부 이어받기")
+        refs = [p["ref"] for p in stages.previous_triggers(load_json_strict(engine.run_dir(f"{self.NEW}2") / "run.json"))]
+        self.assertEqual(refs, [f"{SLUG}:TRG-001", f"{SLUG}:TRG-901"])
+
 
 class AppliesTest(unittest.TestCase):
     def test_only_rule_v18_and_up_with_triggers_file(self):

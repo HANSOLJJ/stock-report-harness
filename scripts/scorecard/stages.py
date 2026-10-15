@@ -921,7 +921,15 @@ def previous_triggers(run: dict[str, Any]) -> list[dict[str, Any]]:
         # 39건이 다시 빠지므로, 직전 실행이 carry 로 처리하지 않은 더 이전 트리거는 계속 남긴다.
         handled = {t["carry"]["ref"] for t in items if "carry" in t}
         prev_run = load_json_strict(run_dir(prev) / "run.json")
-        return out + [p for p in previous_triggers(prev_run) if p["ref"] not in handled]
+        # 2026-10-15: init 은 트리거를 번호 그대로 복사한다. 직전 실행이 research 를 거치지 않았어도 같은 번호의 복사본이 있으면
+        # 그 복사본을 처리하는 것이 더 이전 원본을 처리하는 것이다(v3.0 시범 실행 둘이 이어지며 v21 트리거가 두 번 넘어왔다).
+        earlier = (prev_run.get("continued_from") or {}).get("run_id")
+        if earlier:
+            handled |= {f"{earlier}:{t['trigger_id']}" for t in items}
+        # 회사를 골라 이어받은 실행은 고른 회사의 트리거만 처리한다. 기준선 트리거는 회사가 없어 그대로 남긴다.
+        companies = set(run["companies"])
+        return [p for p in out + [p for p in previous_triggers(prev_run) if p["ref"] not in handled]
+                if p["company_id"] is None or p["company_id"] in companies]
     _scores, _obs, legacy = load_baseline(run["baseline_id"])
     return [{"ref": f"baseline/{run['baseline_id']}:{t['trigger_id']}", "title": t["title"], "company_id": None,
              "deadline": None} for t in legacy]
