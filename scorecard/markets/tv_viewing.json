@@ -1,0 +1,105 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "tv_viewing",
+  "label": "미국 TV 시청 시간 점유율(배급사별, Nielsen Media Distributor Gauge, 분기 평균)",
+  "measure": "usage",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "Nielsen The Gauge™ 월간 Media Distributor Gauge(배급사별 TV 시청 시간 점유율) 무료 보도자료",
+      "url": "https://www.nielsen.com/data-center/the-gauge/",
+      "role": "primary",
+      "note": "Nielsen 이 매달 내는 무료 보도자료 안의 'The Media Distributor Gauge' 차트(Source: Nielsen NPOWER, Total Day·Persons 2+ 시청 분)에서 월별 값을 읽는다. 월별 보도자료 주소는 sources 초안에 있다(2026년 4·5·6월과 2025년 4·5·6월). 데이터센터 페이지(위 주소)의 'Viewing by distributor' 월별 차트가 같은 값을 싣는다."
+    },
+    {
+      "label": "Nielsen The Gauge™ 플랫폼별 월간 보도(Viewing by platform)",
+      "url": "https://www.nielsen.com/data-center/the-gauge/",
+      "role": "alternate",
+      "note": "같은 발행사의 플랫폼별 표(YouTube·Netflix·Prime Video 등)다. 배급사별 표가 끊기면 구성이 다른 시장이 되므로 정의표를 새로 만들어 모든 회사에 함께 바꾼다. 배급사 단위의 다른 무료 정기 자료는 찾지 못했다(Samba TV 는 2025년 플랫폼 보고서, Comscore·Antenna 는 2026 무료 자료 미확인)."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "youtube",
+      "name": "YouTube",
+      "company_id": "alphabet"
+    },
+    {
+      "key": "disney",
+      "name": "The Walt Disney Company"
+    },
+    {
+      "key": "nbcu_versant",
+      "name": "NBCUniversal + Versant"
+    },
+    {
+      "key": "netflix",
+      "name": "Netflix"
+    },
+    {
+      "key": "paramount",
+      "name": "Paramount"
+    },
+    {
+      "key": "fox",
+      "name": "FOX"
+    },
+    {
+      "key": "wbd",
+      "name": "Warner Bros. Discovery"
+    },
+    {
+      "key": "amazon",
+      "name": "Amazon",
+      "company_id": "amazon"
+    },
+    {
+      "key": "roku_channel",
+      "name": "The Roku Channel"
+    },
+    {
+      "key": "scripps",
+      "name": "Scripps"
+    },
+    {
+      "key": "weigel",
+      "name": "Weigel Broadcasting"
+    },
+    {
+      "key": "ae_networks",
+      "name": "A+E Networks"
+    },
+    {
+      "key": "hallmark",
+      "name": "Hallmark"
+    },
+    {
+      "key": "amc_networks",
+      "name": "AMC Networks"
+    }
+  ],
+  "lists_top_n": true,
+  "outside": [
+    {
+      "name": "Nielsen 보고 문턱 아래의 미디어 배급사",
+      "note": "Nielsen 은 차트에 오른 14곳만 낸다(2024년 5월 출시 보도자료의 최소 보고 문턱은 TV 시청 시간의 1.0% 였고 차트 맨 아래는 0.6~0.9%). 그 아래 배급사는 표에 없다."
+    },
+    {
+      "name": "휴대폰·PC 등 TV 화면 밖 시청",
+      "note": "The Gauge 는 TV 화면을 통한 방송·케이블·스트리밍 시청만 잰다. YouTube 의 휴대폰·PC 시청은 들지 않는다."
+    },
+    {
+      "name": "vMVPD·MVPD 앱(YouTube TV, Hulu Live, Sling, Spectrum 앱 등)의 시청",
+      "note": "방송·케이블 콘텐츠를 앱으로 본 시청은 YouTube 가 아니라 해당 방송·케이블 배급사로 잡힌다. YouTube 는 'YouTube Main'(vMVPD 제외)이다."
+    },
+    {
+      "name": "Nielsen 'other'(미측정 채널·게임·오디오 스트리밍 등)",
+      "note": "배급사로 귀속되지 않는 시청이라 표의 구성 회사 합은 100% 가 아니다."
+    }
+  ],
+  "precision": 0.001,
+  "note": "범위는 Nielsen 이 매달 내는 무료 보도자료의 Media Distributor Gauge 표를 그대로 쓴다. Nielsen 은 월간 값만 낸다. 분기 값은 각 분기의 세 달 값을 산술 평균해 적었다(Nielsen 월간 Media Distributor Gauge 값의 3개월 산술 평균이며 시청 시간 가중 분기 값과 다를 수 있다). 미국 TV 화면 시청만 재고 휴대폰 시청은 들지 않는다. 구성 회사는 2026년 2분기(4·5·6월) 표에 세 달 모두 오른 배급사 14곳이다. 표가 Nielsen 의 최소 보고 문턱 이상 배급사만 싣는 상위 목록이라 lists_top_n 을 쓴다. 기간은 기준일 2026-10-14 까지 세 달이 모두 발표된 가장 최근 분기(2026년 2분기, period 2026-04-01~2026-06-30)와 1년 전 같은 분기(2025년 2분기)다. Nielsen 의 월은 방송 달력 구간(4월 2026은 03/30~04/26, 5월 04/27~05/31, 6월 06/01~06/28)이라 달력 분기와 며칠 어긋난다. 2026년 7월은 2026-09-10 에 발표됐으나 8월은 기준일 뒤이고 9월은 10월 하순 발표 예정이라 2026년 3분기는 쓸 수 없다. 월 값이 소수 첫째 자리 %로 반올림돼 발표되고 세 달 평균의 반올림 폭도 같으므로 precision 은 0.001 이다. NBCUniversal 은 2026-01-02 의 Versant 분리 뒤에도 Nielsen 이 합산해 낸다(2026 표는 NBCU+Versant, 2025 표는 NBCUniversal 로 같은 범위). Nielsen 은 2026년 가을에 Gauge·Media Distributor Gauge 의 방법론을 갱신하고 소급 값을 낸다고 밝혔다. 그 뒤 분기는 이번 값과 방법이 다를 수 있다."
+}

@@ -50,6 +50,8 @@
 - [x] 초안 렌더(9efecb0)
 - [x] 시범 시장 자료 수집(Sonnet 셋), 정의표 일곱 개(df78efd). 소셜 광고는 같은 단위 공시가 없어 만들지 않음
 - [x] `ai-scorecard-2026-10-v30pilot4` 로 이어받아 시장 관측 96건, 사업 판단 21건 연결(PRP-001~021), research → calculate → draft
+- [ ] 미확인 사업 가운데 기준에 맞는 두 시장 추가: YouTube → Nielsen The Gauge(미국 TV 시청 배급사별, 분기 = 세 달 평균), X 광고 → StatCounter 소셜 미디어 유입(분기)
+- [ ] 14개사 전: 한 회사의 여러 구성 회사(소셜 미디어의 Facebook·Instagram 처럼)를 합쳐 재는 계산(지금은 company_id 를 하나에만 단다)
 - [ ] 보고 뒤: 리뷰(4영역) 또는 14개사 확장
 
 ## 뒤로 미룸
