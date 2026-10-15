@@ -185,6 +185,11 @@ class FromRunTest(unittest.TestCase):
             for f in ("F7", "F8", "F9"):
                 self.assertEqual(new[(cid, f)], prior[(cid, f)], f"{cid} {f} 는 한 글자도 바뀌지 않는다")
         engine.load_context("ai-scorecard-2026-10-v30t")   # 이어받은 입력이 v3.0 검증을 통과한다
+        confirmed = {e["evidence_id"] for e in load_json_strict(engine.run_dir(V21) / "evidence" / "evidence.json")["items"]
+                     if e["status"] == "confirmed"}
+        carried = {e["evidence_id"] for e in load_json_strict(engine.run_dir("ai-scorecard-2026-10-v30t") / "evidence" / "evidence.json")["items"]}
+        self.assertTrue(any(e.startswith("EV-meta-") for e in confirmed), "v21 에 고르지 않은 회사의 확정 근거가 있어야 검사가 뜻이 있다")
+        self.assertLessEqual(confirmed, carried, "층 판단이 견줄 다른 회사의 확정 근거도 옮긴다")
         assumptions = load_json_strict(engine.run_dir("ai-scorecard-2026-10-v30t") / "run.json")["assumptions"]
         self.assertTrue(any("diff 로 견주지 못하므로 모든 기업을 다시 매기고" in a for a in assumptions))
         self.assertFalse(any("diff 로 확인한다" in a for a in assumptions), "diff 가 거부하는 실행에 diff 를 안내하지 않는다")

@@ -185,8 +185,9 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         prior_ev = load_json_strict(prior_paths.evidence)
         # 2026-10-14: 회사를 골라 이어받으면 고른 회사의 트리거·판단이 다른 회사 근거를 인용하는 일이 있다(v21 의 Alphabet 트리거가
         # EV-openai-011 을 인용). 인용된 근거는 회사와 무관하게 옮긴다. 옮기지 않으면 교차 참조에서 init 이 멈춘다.
-        items = [e for e in prior_ev.get("items", [])
-                 if e.get("evidence_id") in cited or (e.get("company_id") in selected and e.get("status") == "confirmed")]
+        # 2026-10-15: 확정 근거도 회사와 무관하게 옮긴다. 층 판단은 같은 층 경쟁사와 견주는데(② 순위, ③ 상대), v3.0 시범 실행이
+        # 회사 단위 ①②③ 판단을 버리면서 그 판단이 인용하던 Meta 모델 평가·Oracle 클라우드 점유율 근거까지 잃었다.
+        items = [e for e in prior_ev.get("items", []) if e.get("evidence_id") in cited or e.get("status") == "confirmed"]
         evidence = {**prior_ev, "run_id": slug, "items": items} if items else None
 
     hashes = input_hashes(prior_slug)
