@@ -325,7 +325,8 @@ MARKET_COMPANY_ID = "_market"
 MARKET_METRICS = {"token_price_index", "market_share", "market_revenue", "market_volume"}
 # 2026-10-15 규칙 v3.0: 시장 정의표의 구성 회사 값. 같은 시장·기간에 구성 회사마다 한 건이다.
 MARKET_POSITION_METRICS = {"market_share", "market_revenue", "market_volume"}
-MARKET_MEASURES = {"revenue": "market_revenue", "shipments": "market_volume", "subscribers": "market_volume"}
+# usage(검색 질의 같은 사용량 점유율)는 조사기관이 점유율로만 내므로 value_kind share 로만 쓴다(2026-10-15).
+MARKET_MEASURES = {"revenue": "market_revenue", "shipments": "market_volume", "subscribers": "market_volume", "usage": "market_volume"}
 MARKET_PERIOD_BASES = {"quarter_yoy", "ttm_yoy", "quarter_end_yoy", "annual"}
 MARKET_SOURCE_PRIORITIES = ("disclosure_sum", "research_firm", "government")
 MARKET_SCOPE_BASES = {"research_firm_unit", "company_named_competitors"}
@@ -439,7 +440,7 @@ def validate_market_definition(payload: Any, market_id: str) -> dict[str, Any]:
     기간별 값은 실행의 관측(market_share·market_revenue·market_volume)이고 여기에 두지 않는다(rules.md ① 「D·E 의 시장」)."""
     where = f"scorecard/markets/{market_id}.json"
     _expect_keys(payload, ["schema", "market_id", "label", "measure", "value_kind", "period_basis", "source_priority", "scope_basis",
-                           "sources", "constituents"], where, optional=["outside", "precision", "note"])
+                           "sources", "constituents"], where, optional=["outside", "precision", "lists_top_n", "note"])
     _require(payload["schema"] == "scorecard.market/1", f"{where}.schema 는 scorecard.market/1")
     _require(payload["market_id"] == market_id, f"{where}.market_id {payload['market_id']!r} 가 파일 이름과 다름")
     _expect_str(payload["label"], f"{where}.label", nonempty=True)
@@ -467,6 +468,10 @@ def validate_market_definition(payload: Any, market_id: str) -> dict[str, Any]:
         _expect_str(m["name"], f"{where}.constituents[{i}].name", nonempty=True)
     for i, o in enumerate(payload.get("outside") or []):
         _expect_keys(o, ["name", "note"], f"{where}.outside[{i}]")
+    # 2026-10-15: 구성 회사가 출처의 상위 N 목록이면 목록 밖 회사는 N 위 밖이라 D 를 "그 밖"으로 확정할 수 있다(N 은 3 이상).
+    if "lists_top_n" in payload:
+        _require(payload["lists_top_n"] is True and len(members) >= 3, f"{where}.lists_top_n: true 이고 구성 회사가 셋 이상이어야 함")
+    _require(payload["measure"] != "usage" or payload["value_kind"] == "share", f"{where}: 사용량(usage)은 점유율(share)로만 적는다")
     if "precision" in payload:
         _require(_is_number(payload["precision"]) and 0 < payload["precision"] < 0.05,
                  f"{where}.precision: 점유율 반올림 폭(0 초과 0.05 미만) ({payload['precision']!r})")

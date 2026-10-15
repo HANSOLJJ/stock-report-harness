@@ -148,6 +148,16 @@ class PositionTest(unittest.TestCase):
         self.assertEqual((missing["D"], missing["E"]), (None, None))
         self.assertTrue(any("['oracle']" in n for n in missing["notes"]))
 
+    def test_outside_a_top_n_list_is_other_and_usage_needs_share(self):
+        now = {"aws": 0.30, "azure": 0.21, "gcp": 0.13, "oracle": 0.03}
+        top = position(definition(lists_top_n=True), shares(now), company_id="apple")
+        self.assertEqual((top["D_level"], top["D"], top["E"]), ("other", 0, None))
+        self.assertIsNone(position(definition(), shares(now), company_id="apple")["D"], "상위 목록이 아니면 확정하지 않는다")
+        validate_market_definition(definition(measure="usage"), "cloud_infra")
+        for change, pattern in [({"measure": "usage", "value_kind": "amount"}, "사용량"), ({"lists_top_n": False}, "lists_top_n")]:
+            with self.subTest(change=change), self.assertRaisesRegex(SchemaError, pattern):
+                validate_market_definition(definition(**change), "cloud_infra")
+
     def test_unknown_cases(self):
         m = definition()
         now = {"aws": 0.30, "azure": 0.21, "gcp": 0.13, "oracle": 0.03}

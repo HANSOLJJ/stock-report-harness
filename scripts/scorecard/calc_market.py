@@ -81,7 +81,13 @@ def market_position(market: dict[str, Any], obs: ObsLookup, company_id: str, as_
                            "outside": [o["name"] for o in market.get("outside") or []]}
     me = next((m["key"] for m in market["constituents"] if m.get("company_id") == company_id), None)
     if me is None:
-        out["notes"].append(f"이 회사가 시장 {market['market_id']} 의 구성 회사에 없다")
+        # 2026-10-15: 구성 회사가 출처의 상위 N 목록이면 목록 밖 회사는 N 위 밖이다. D 는 "그 밖"으로 확정하고 E 는 잴 수 없다.
+        if market.get("lists_top_n"):
+            out["D_level"], out["D"] = "other", float(parts["D"]["levels"]["other"])
+            out["notes"].append(f"출처의 상위 {len(market['constituents'])}곳 목록에 없어 {len(market['constituents'])}위 밖이다(D 그 밖). "
+                                "점유율 방향은 잴 수 없다")
+        else:
+            out["notes"].append(f"이 회사가 시장 {market['market_id']} 의 구성 회사에 없다")
         return out
     out["constituent"] = me
     periods = _periods(market, obs, as_of)
