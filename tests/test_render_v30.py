@@ -73,6 +73,22 @@ class V30RenderTest(V30Base):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, text)
 
+    def test_zero_weight_layer_judgment_is_not_shown_and_shares_keep_small_values(self):
+        # 2026-10-15 시범 실행: 매출 몫 0 층의 판단이 근거로 실렸고, 0.34% 층이 '× 0%' 로 보였고, ⑥ 산식에 긴 소수가 나왔다
+        from scorecard.render_common import _share_text
+        holdings = next(j for j in self.ctx.judgments if j["judgment_id"] == "nvidia.F4")["inputs"]
+        cells = {**holdings["cells"], "model": {"cell": "sold", "evidence_ids": []}}
+        self.judge("nvidia", "F4", {**{k: v for k, v in holdings.items() if k not in ("evidence", "evidence_up", "evidence_down")},
+                                    "cells": cells, **TEXT})
+        self.judge("nvidia", "F2", {**PATHS, **TEXT}, layer="model")
+        ctx = engine.load_context(SLUG)
+        results = engine.compute(ctx)
+        text = render_draft(ctx, results, self.scores, ctx.triggers)
+        self.assertIn("- **② 게임체인저 — AI 칩 설계** 근거", text)
+        self.assertNotIn("- **② 게임체인저 — 모델** 근거", text)
+        self.assertEqual((_share_text(0.0034), _share_text(0.8227), _share_text(0)), ("0.3%", "82%", "0%"))
+        self.assertNotRegex(text, r"→ -?\d+\.\d{3,}")
+
     def test_preview_rescales_old_scores(self):
         text = render_preview(self.ctx, self.results, self.scores)
         self.assertIn("① 네트워크 2(×4 환산 8)→12.2", text)

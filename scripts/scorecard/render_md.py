@@ -485,7 +485,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             # 2026-10-14 규칙 v3.0: ①②③ 은 층·사업 판단이 여럿이라 판단마다 근거를 싣는다.
             unit_blocks = []
             if block is None and rc.is_layered(ctx.rules):
-                for uj in rc.unit_judgments(ctx, c["company_id"], f):
+                for uj in rc.unit_judgments(ctx, c["company_id"], f, used_layers=(fr.get("calc") or {}).get("layers")):
                     ub = rc.evidence_block({"judgment_id": uj["judgment_id"]}, judgments_by_id, [], run["baseline_id"], c["company_id"], reps,
                                            run_created=run.get("created_at"))
                     if ub is not None:

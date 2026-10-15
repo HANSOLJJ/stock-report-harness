@@ -948,20 +948,20 @@ def _f6_parameters_text(calc: dict[str, Any]) -> str:
             parts.append(f"{label} {p.get('band')} → {p.get('score')}" if growth_adjusted and p.get("score") is not None else f"{label} —")
             continue
         if growth_adjusted:
-            parts.append(f"{label} {fmt_num(value, 2)}(PER {fmt_num(p.get('per_used'))} ÷ 성장 {p['revenue_growth'] * 100:.1f}) → {p.get('score')}"
+            parts.append(f"{label} {fmt_num(value, 2)}(PER {fmt_num(p.get('per_used'))} ÷ 성장 {p['revenue_growth'] * 100:.1f}) → {_score_text(p.get('score'))}"
                          + (" ⚠️ 경계" if (p.get("boundary") or {}).get("flag") else ""))
             continue
         shown = f"{value * 100:.1f}%" if pid == "P3" else (f"{fmt_num(value)}x" if pid == "P2" else fmt_num(value))
-        parts.append(f"{labels.get(pid, pid)} {shown} → {p.get('score')}"
+        parts.append(f"{labels.get(pid, pid)} {shown} → {_score_text(p.get('score'))}"
                      + (" ⚠️ 경계" if (p.get("boundary") or {}).get("flag") else ""))
     text = " + ".join(parts)
     if "subtotal_before_p4" in calc:
         # 2026-09-18 FIX-80 S1: 산식 줄 꼬리(`· 입력 신뢰도 -1(영업외 비중) — 영업외 비중 하나가 강등을 정한다`)가
         # 바로 아래 감점 사유와 같은 말을 사용자가 뜻을 모르겠다던 형태로 한 번 더 했다. 소계까지만 적고
         # 입력 신뢰도는 감점 사유 한 곳에서 값·기준·이유와 함께 말한다(`_p4_note`).
-        text += f" = 소계 {calc['subtotal_before_p4']}"
+        text += f" = 소계 {_score_text(calc['subtotal_before_p4'])}"
     if "subtotal_before_correction" in calc:
-        text += f" = 소계 {calc['subtotal_before_correction']} · 비상장 보정 +{(calc.get('correction') or {}).get('promotion_steps', 0)}"
+        text += f" = 소계 {_score_text(calc['subtotal_before_correction'])} · 비상장 보정 +{(calc.get('correction') or {}).get('promotion_steps', 0)}"
     # 2026-09-18 FIX-79: `승계 입력 시가총액(PER·EV/매출)` 은 카드의 참고 문구가 무엇이 왜 그런지 말한다.
     return text
 
@@ -2349,6 +2349,11 @@ def _score_text(value: Any) -> str:
     return "—" if value is None else f"{round(float(value), 2):g}"
 
 
+def _share_text(weight: float) -> str:
+    """층 매출 몫. 1% 미만이면 소수 한 자리로 보인다(2026-10-15: Alphabet 응용 0.34% 가 '× 0%' 로 보였다)."""
+    return f"{weight * 100:.1f}%" if 0 < weight < 0.01 else f"{weight * 100:.0f}%"
+
+
 def _anchor_text(curve: dict[str, Any], fmt: Any) -> str:
     """곡선 기준점을 '0% −8, 30% 이상 −16' 처럼 읽는다. 마지막 기준점 뒤는 그 점수로 잘린다."""
     points = curve["anchors"]
@@ -2368,11 +2373,11 @@ def layered_calc_text(fr: dict[str, Any], rules: Any) -> str:
             text += "(회사 전체 이익률로 대신)"
         return text
     if basis in ("layer_paths", "layer_cp") and calc.get("layers"):
-        return " + ".join(f"{names.get(u, u)} {_score_text(d.get('score'))} × {d['weight'] * 100:.0f}%" for u, d in calc["layers"].items())
+        return " + ".join(f"{names.get(u, u)} {_score_text(d.get('score'))} × {_share_text(d['weight'])}" for u, d in calc["layers"].items())
     if basis == "business" and calc.get("layer_scores"):
         weights = calc.get("layer_weights") or {}
         return (f"사업 {len(calc.get('businesses') or {})}개 → "
-                + " + ".join(f"{names.get(u, u)} {_score_text(s)} × {weights.get(u, 0) * 100:.0f}%"
+                + " + ".join(f"{names.get(u, u)} {_score_text(s)} × {_share_text(weights.get(u, 0))}"
                              for u, s in calc["layer_scores"].items()))
     if basis == "alliance" and "A" in calc:
         return (f"{calc['neutral']} + 동맹 {_score_text(calc['A'])} + 적대 {_score_text(calc['H'])}"
@@ -2380,10 +2385,14 @@ def layered_calc_text(fr: dict[str, Any], rules: Any) -> str:
     return ""
 
 
-def unit_judgments(ctx: Any, company_id: str, factor: str) -> list[dict[str, Any]]:
-    """한 회사·항목의 층·사업 판단. 층 순서(열한 층, 층 밖 사업)·사업 id 순이다."""
+def unit_judgments(ctx: Any, company_id: str, factor: str, *, used_layers: Any = None) -> list[dict[str, Any]]:
+    """한 회사·항목의 층·사업 판단. 층 순서(열한 층, 층 밖 사업)·사업 id 순이다.
+
+    2026-10-15: `used_layers`(②③ 결과의 calc.layers)를 주면 계산에 쓴 층의 판단만 돌려준다. 매출 몫 0 층은 매기지 않고
+    그 층의 판단은 계산에 쓰지 않으므로, 초안에 근거로 실으면 점수와 무관한 낡은 문장이 읽힌다."""
     order = [*ctx.rules.payload["layers"]["order"], ctx.rules.payload["layers"]["outside"]["id"]]
-    items = [j for j in ctx.judgments if j["company_id"] == company_id and j["factor"] == factor and ("layer" in j or "business" in j)]
+    items = [j for j in ctx.judgments if j["company_id"] == company_id and j["factor"] == factor and ("layer" in j or "business" in j)
+             and (used_layers is None or "layer" not in j or j["layer"] in used_layers)]
     return sorted(items, key=lambda j: (order.index(j["layer"]) if j.get("layer") in order else len(order), j.get("business") or ""))
 
 
@@ -2404,7 +2413,7 @@ def layer_table_rows(rules: Any, factors: dict[str, dict[str, Any]]) -> list[lis
     f2 = {u: d.get("score") for u, d in ((factors["F2"].get("calc") or {}).get("layers") or {}).items()}
     f3 = {u: d.get("score") for u, d in ((factors["F3"].get("calc") or {}).get("layers") or {}).items()}
     order = [*rules.payload["layers"]["order"], rules.payload["layers"]["outside"]["id"]]
-    return [[names.get(u, u), f"{weights[u] * 100:.0f}%", _score_text(f1.get(u)), _score_text(f2.get(u)), _score_text(f3.get(u))]
+    return [[names.get(u, u), _share_text(weights[u]), _score_text(f1.get(u)), _score_text(f2.get(u)), _score_text(f3.get(u))]
             for u in order if u in weights]
 
 
