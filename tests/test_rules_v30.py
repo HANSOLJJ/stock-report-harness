@@ -97,6 +97,19 @@ class RejectTest(unittest.TestCase):
         p["factors"]["F2"]["no_benchmark_layers"] = ["cloud", "data_platform", "aplication", "device"]
         self.assertRejected(p, "'aplication'")
 
+    def test_every_layer_in_exactly_one_benchmark_list(self):
+        # 2026-10-15: 개발 플랫폼이 두 목록 어디에도 없었다. 빠진 층·겹친 층·하나만 빠진 층을 각각 거부한다.
+        p = payload()
+        p["factors"]["F2"]["no_benchmark_layers"].remove("dev_platform")
+        self.assertRejected(p, "['dev_platform'] 이 benchmarks 와 no_benchmark_layers 어디에도 없음")
+        p = payload()
+        p["factors"]["F2"]["no_benchmark_layers"].append("model")
+        self.assertRejected(p, "['model'] 이 benchmarks 와 no_benchmark_layers 에 함께 있음")
+        p = payload()
+        p["factors"]["F2"]["benchmarks"]["chiplet"] = "없는 층"
+        self.assertRejected(p, "benchmarks: 알 수 없는 층 id ['chiplet']")
+        self.assertIn("dev_platform", V30.payload["factors"]["F2"]["no_benchmark_layers"])
+
     def test_gap_months_layer_typo(self):
         p = payload()
         p["factors"]["F2"]["gap_months"]["by_layer"] = {"chip": 12}

@@ -261,7 +261,13 @@ class F2LayersTest(unittest.TestCase):
         r = run_layers(compute_f2_layers, cloud, platform, model, h=h)
         self.assertEqual(r["status"], "ok")
         self.assertIn("판매 층이 아닌 층 ['model'] 의 판단은 계산에 쓰지 않는다", r["warnings"])
-        self.assertIn("무게 0 판매 층 ['device'] 의 세 경로 판단이 없다", r["warnings"])
+        self.assertFalse(any("device" in w for w in r["warnings"]), "매출 몫 0 층은 매기지 않으므로 판단이 없어도 경고하지 않는다")
+        # 2026-10-15 사용자 결정: 매출 몫 0 층의 판단은 계산에 쓰지 않는다
+        device = unit("F2", "layer_paths", "device", {"adaptation": "doubled", "adoption_multiple": 2.5, "standards": []})
+        r2 = run_layers(compute_f2_layers, cloud, platform, device, h=h)
+        self.assertEqual((r2["status"], r2["score"]), (r["status"], r["score"]))
+        self.assertNotIn("device", r2["calc"]["layers"])
+        self.assertIn("매출 몫 0 층 ['device'] 의 세 경로 판단은 계산에 쓰지 않는다(④ 보유표로만 센다)", r2["warnings"])
 
     def test_needs_holdings(self):
         r = compute_f2_layers(AMAZON, JudgmentLookup([]), V30, RUN)
@@ -324,6 +330,11 @@ class F3LayersTest(unittest.TestCase):
         r = run_layers(compute_f3_layers, cloud, platform)
         self.assertEqual((r["calc"]["layers"]["cloud"]["score"], r["calc"]["layers"]["user_platform"]["score"]), (20, 12))
         self.assertEqual(r["score"], 14.4)   # 0.7 × 12 + 0.3 × 20
+        # 2026-10-15: 매출 몫 0 층의 판단은 판정 대기(상대 유무 미확인)여도 항목을 막지 않는다
+        device = unit("F3", "layer_cp", "device", cp(present="unknown"))
+        h = set_cells(holdings(), device={"cell": "sold", "ai_chain": "yes", "evidence_ids": []})
+        r2 = run_layers(compute_f3_layers, cloud, platform, device, h=h)
+        self.assertEqual((r2["status"], r2["score"]), ("ok", 14.4))
 
     def test_engine_dispatches_layer_modes(self):
         items = [judgment(holdings()),

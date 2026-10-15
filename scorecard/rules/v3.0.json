@@ -240,6 +240,7 @@
       "no_benchmark_layers": [
         "power",
         "cloud",
+        "dev_platform",
         "data_platform",
         "application",
         "user_platform",

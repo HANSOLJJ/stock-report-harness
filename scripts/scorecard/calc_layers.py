@@ -146,8 +146,8 @@ def _layered(fid: str, basis: str, what: str, company: dict[str, Any], judgments
              score_layer: Callable[[dict[str, Any], str], LayerScore]) -> dict[str, Any]:
     """층 단위 항목(②③)의 공통 합치기. 판매 층마다 판단 하나를 점수로 바꾸고 층 매출 몫으로 가중 평균해 한 번 반올림한다(rules.md 2.10).
 
-    무게가 있는 층의 판단이 없거나 어느 층이 판정 대기면 항목 전체가 판정 대기다. 무게 0 판매 층의 판단 누락은 계산을 막지 않고
-    경고로 남긴다(계약 검증이 막는다). 판매 층이 아닌 층의 판단은 계산에 쓰지 않는다."""
+    무게가 있는 층의 판단이 없거나 어느 층이 판정 대기면 항목 전체가 판정 대기다. 무게 0 판매 층은 매기지 않는다(2026-10-15 사용자
+    결정, ④ 보유표로만 센다). 그 층이나 판매 층이 아닌 층에 판단이 있어도 계산에 쓰지 않는다."""
     cid = company["company_id"]
     holdings = judgments.get(cid, "F4")
     if holdings is None or holdings["kind"] != "holdings":
@@ -167,9 +167,9 @@ def _layered(fid: str, basis: str, what: str, company: dict[str, Any], judgments
     extra = [u for u in order if u in units and u not in weights]
     if extra:
         warnings.append(f"판매 층이 아닌 층 {extra} 의 판단은 계산에 쓰지 않는다")
-    zero_missing = [u for u in order if u in weights and weights[u] == 0 and u not in units]
-    if zero_missing:
-        warnings.append(f"무게 0 판매 층 {zero_missing} 의 {what} 판단이 없다")
+    unused = [u for u in order if u in units and weights.get(u) == 0]
+    if unused:
+        warnings.append(f"매출 몫 0 층 {unused} 의 {what} 판단은 계산에 쓰지 않는다(④ 보유표로만 센다)")
     missing = [u for u in order if weights.get(u, 0) > 0 and u not in units]
     if missing:
         return factor_result(fid, score=None, status="needs_judgment", basis=basis, calc=calc, warnings=warnings,
@@ -177,7 +177,7 @@ def _layered(fid: str, basis: str, what: str, company: dict[str, Any], judgments
     scores: dict[str, float] = {}
     pendings: list[str] = []
     for u in order:
-        if u not in weights or u not in units:
+        if not weights.get(u) or u not in units:
             continue
         score, detail, pending_message, layer_warnings = score_layer(units[u], u)
         calc["layers"][u] = {"judgment_id": units[u]["judgment_id"], "weight": _tidy(weights[u]), **detail,
@@ -269,7 +269,7 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
     revenue_model = points("revenue_model") if active else 0.0
     imitation = points("imitation") if active else 0.0
     if not active:
-        warnings.append("수입원이 위협받는 상대가 지금 시장에 없다(끝난 싸움) — 수익모델·모방 불가능성 0")
+        warnings.append("수입원이 위협받는 상대가 지금 시장에 없다(끝난 싸움이거나 카운터 포지셔닝이 없음) — 수익모델·모방 불가능성 0")
     acc_spec = spec["acceleration"]
     a = inputs["acceleration"]
     ratio = None

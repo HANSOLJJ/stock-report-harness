@@ -625,6 +625,13 @@ def _validate_v3_structure(payload: dict[str, Any]) -> None:
         if fid == "F2" and layer_ids is not None:
             for lid in spec.get("no_benchmark_layers") or []:
                 _require(lid in layer_ids, f"{where}.no_benchmark_layers: 알 수 없는 층 id {lid!r}")
+            # 2026-10-15: 개발 플랫폼이 두 목록 어디에도 없어 판단 세션이 잴 측정 없이 leap 을 적어야 했다. 층마다 정확히 한 곳에 든다.
+            if "benchmarks" in spec:
+                bench, no_bench = set(spec["benchmarks"]), set(spec.get("no_benchmark_layers") or [])
+                _require(bench <= layer_ids, f"{where}.benchmarks: 알 수 없는 층 id {sorted(bench - layer_ids)}")
+                _require(not bench & no_bench, f"{where}: 층 {sorted(bench & no_bench)} 이 benchmarks 와 no_benchmark_layers 에 함께 있음")
+                _require(bench | no_bench == layer_ids,
+                         f"{where}: 층 {sorted(layer_ids - bench - no_bench)} 이 benchmarks 와 no_benchmark_layers 어디에도 없음")
             for lid in ((spec.get("gap_months") or {}).get("by_layer") or {}):
                 _require(lid in layer_ids, f"{where}.gap_months.by_layer: 알 수 없는 층 id {lid!r}")
         floor = (spec.get("supply") or {}).get("layers_none_floor") if fid == "F8" else None
