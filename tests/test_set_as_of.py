@@ -1,10 +1,12 @@
 # 승인 전 실행의 기준일을 뒤로 옮기는 set-as-of(stages.move_as_of)를 임시 샌드박스에서 잠근다
 from __future__ import annotations
 
+import io
 import json
 import os
 import sys
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest import mock
 
@@ -12,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 os.environ["SCORECARD_DOTENV"] = ""
 
+import scorecard_cli  # noqa: E402
 from report_contract_lib import frontmatter_value, read_markdown  # noqa: E402
 from scorecard import stages  # noqa: E402
 from scorecard.paths import run_paths  # noqa: E402
@@ -47,6 +50,14 @@ class MoveAsOfTest(unittest.TestCase):
         self.assertIn("분석 기준일 `as_of` 2026-10-02 · 가격 기준일 2026-09-29 · 정보 컷오프 2026-10-02", body)
         self.assertNotIn("2026-09-29 · 정보 컷오프 2026-09-29", body)
         self.assertEqual(self._baseline_line(), baseline)
+
+    def test_cli_takes_the_lock_and_prints_the_move(self) -> None:
+        out, err = io.StringIO(), io.StringIO()
+        with redirect_stdout(out), redirect_stderr(err):
+            code = scorecard_cli.main(["set-as-of", SLUG, "--as-of", "2026-10-02", "--reason", REASON])
+        self.assertEqual(code, 0, err.getvalue())
+        self.assertIn("as_of: 2026-09-29 → 2026-10-02", out.getvalue())
+        self.assertEqual(json.loads((self.box.run_dir / ".lock").read_text(encoding="utf-8"))["stage"], "set-as-of")
 
     def test_collect_window_follows_new_cutoff(self) -> None:
         stages.move_as_of(SLUG, "2026-10-02", reason=REASON)
