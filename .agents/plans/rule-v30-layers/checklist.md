@@ -52,6 +52,8 @@
 - [x] `ai-scorecard-2026-10-v30pilot4` 로 이어받아 시장 관측 96건, 사업 판단 21건 연결(PRP-001~021), research → calculate → draft
 - [x] 미확인 사업 가운데 기준에 맞는 두 시장 추가: YouTube → Nielsen The Gauge(미국 TV 시청 배급사별, 분기 = 세 달 평균), X 광고 → StatCounter 소셜 미디어 유입(분기) — 6338da4, pilot5
 - [x] 한 회사의 여러 구성 회사를 합쳐 재는 계산(95f20c4)과 소셜 미디어 Meta 표시(60355db) — pilot6
+- [x] 정의표 9개 원문 재대조(fact-checker, Sonnet) — 값 146건 일치, 순위 판정 결함·기록 넷 수정, pilot7
+- [ ] 나머지 9개사 매출 줄별 시장·무료 정기 출처 조사(Sonnet) → 새 정의표 목록과 사용자 결정 거리 정리
 - [ ] 보고 뒤: 리뷰(4영역) 또는 14개사 확장
 
 ## 뒤로 미룸
