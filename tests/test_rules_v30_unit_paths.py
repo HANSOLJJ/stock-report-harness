@@ -197,6 +197,25 @@ class FromRunTest(unittest.TestCase):
         with self.assertRaisesRegex(SchemaError, "diff 는 층·사업 단위 규칙\\(v3.0 이상\\) 실행을 아직 견주지 못한다: ai-scorecard-2026-10-v30t"):
             compare_runs("ai-scorecard-2026-10-v30t", V21)
 
+    def test_layer_judgment_that_no_longer_fits_the_rule_is_not_carried(self):
+        # 2026-10-15: 개발 플랫폼이 벤치마크 없는 층이 되자 그 층 판단의 leap 이 모양 검사에 걸려 이어받은 실행이 열리지 않았다
+        stages.init_run("ai-scorecard-2026-10-v30t", from_run=V21, rule_version="v3.0", companies=["alphabet", "tsmc"])
+        jpath = engine.run_dir("ai-scorecard-2026-10-v30t") / "judgments.json"
+        payload = load_json_strict(jpath)
+        payload["items"].append({"judgment_id": "alphabet.F2.dev_platform", "company_id": "alphabet", "factor": "F2",
+                                 "layer": "dev_platform", "kind": "layer_paths", "score": None,
+                                 "inputs": {"leap": "unknown", "adaptation": "adopted", "standards": []}, **TEXT,
+                                 "reviewer": "agent", "reviewed_at": DAY, "status": "new"})
+        jpath.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        stages.init_run("ai-scorecard-2026-10-v30t2", from_run="ai-scorecard-2026-10-v30t")
+        d = engine.run_dir("ai-scorecard-2026-10-v30t2")
+        ids = {j["judgment_id"] for j in load_json_strict(d / "judgments.json")["items"]}
+        self.assertNotIn("alphabet.F2.dev_platform", ids)
+        self.assertIn("alphabet.F4", ids, "모양에 맞는 판단은 그대로 옮긴다")
+        notes = load_json_strict(d / "run.json")["assumptions"]
+        self.assertTrue(any("판정 재료 모양에 맞지 않는 판단 1건(alphabet.F2.dev_platform)" in a for a in notes))
+        engine.load_context("ai-scorecard-2026-10-v30t2")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -2012,6 +2012,20 @@ def judgment_rule_conflict(item: dict[str, Any], rules_payload: dict[str, Any]) 
     return None
 
 
+def v3_shape_conflict(item: dict[str, Any], rules_payload: dict[str, Any]) -> str | None:
+    """층·사업 단위 판정 재료(v3.0 kind)가 이 규칙의 모양 검사에 걸리면 이유, 통과하거나 v3.0 kind 가 아니면 None.
+
+    2026-10-15: 모양 검사는 상태와 관계없이 막는다(예: 개발 플랫폼이 벤치마크 없는 층이 되자 그 층 판단의 leap). carried 로 넘겨도
+    실행이 열리지 않으므로 init 이 옮기지 않는다(stages._drop_v3_shape_conflicts)."""
+    if item.get("kind") not in V3_JUDGMENT_KINDS or "layers" not in rules_payload:
+        return None
+    try:
+        _validate_v3_inputs(item["kind"], item["inputs"], rules_payload, item["factor"], item.get("layer"), item["judgment_id"])
+    except SchemaError as exc:
+        return str(exc)
+    return None
+
+
 def _validate_judgment_inputs_for_rules(kind: str, inputs: dict[str, Any], spec: dict[str, Any], where: str) -> None:
     """규칙이 선언한 판정 입력 요건(2026-10-08 규칙 v2.0). 키가 없는 규칙(v1.9 이하)은 아무것도 보지 않는다.
 

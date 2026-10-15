@@ -26,7 +26,7 @@ from .paths import run_paths
 from .render_md import REVIEW_AREAS, render_draft, render_plan, render_preview, render_research, render_review_template
 from .rules import load_rules
 from .schema import (APPROVAL_REQUIRED_HASHES, APPROVAL_VIA, FACTOR_IDS, JUDGMENT_CLI_ONLY_INPUTS, JUDGMENT_CLI_ONLY_TYPES, JUDGMENT_DIRECTION_FIELDS,
-                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, MARKET_COMPANY_ID, PROPOSAL_DIRECTION_AFTER, judgment_rule_conflict, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, factor_unit, judgment_edit_kind, judgment_evidence_ids, judgment_key, load_json_strict, reconfirm_evidence_ids,
+                     JUDGMENT_INPUT_CHOICES, JUDGMENT_REVISION_FIELDS, MARKET_COMPANY_ID, PROPOSAL_DIRECTION_AFTER, judgment_rule_conflict, v3_shape_conflict, RECONFIRM_KEY, SUMMARY_FACTOR, SchemaError, approval_file_present, approval_id_for, factor_unit, judgment_edit_kind, judgment_evidence_ids, judgment_key, load_json_strict, reconfirm_evidence_ids,
                      sha256_file, sha256_obj, validate_approval, validate_cross_refs, validate_evidence, validate_judgments,
                      validate_observations, validate_proposals, validate_run, validate_sources, validate_triggers, write_json)
 
@@ -121,6 +121,19 @@ def _drop_company_level_unit_judgments(judgments: dict[str, Any], rules: Any) ->
             "이 실행에서 층·사업 판단을 새로 매긴다")
 
 
+def _drop_v3_shape_conflicts(judgments: dict[str, Any], rules: Any) -> str | None:
+    """2026-10-15: 새 규칙의 판정 재료 모양에 맞지 않는 층·사업 판단은 옮기지 않는다. 모양 검사는 상태와 관계없이 막아 carried 로
+    넘겨도 실행이 열리지 않는다. 옮기지 않은 것이 있으면 run.json assumptions 에 넣을 문장을 돌려준다."""
+    keep, dropped = [], []
+    for j in judgments["items"]:
+        (dropped if v3_shape_conflict(j, rules.payload) is not None else keep).append(j)
+    if not dropped:
+        return None
+    judgments["items"] = keep
+    ids = ", ".join(j["judgment_id"] for j in dropped)
+    return f"규칙 {rules.version} 의 판정 재료 모양에 맞지 않는 판단 {len(dropped)}건({ids})은 옮기지 않았고, 이 실행에서 필요하면 새로 매긴다"
+
+
 def _load_prior_run(prior_slug: str) -> dict[str, Any]:
     path = run_dir(prior_slug) / "run.json"
     if not path.is_file():
@@ -161,6 +174,7 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         "items": [j for j in prior_jud["items"] if j["company_id"] in selected],
     }
     unit_note = _drop_company_level_unit_judgments(judgments, rules)
+    shape_note = _drop_v3_shape_conflicts(judgments, rules)
     # 출처는 **통째로** 옮긴다. 기준선 4건으로 덮으면 실행 도중 늘어난 출처가 사라져
     # 관측의 `source_id` 가 장부에서 사라진다.
     sources = {**load_json_strict(src_path), "run_id": slug}
@@ -202,6 +216,8 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
     ]
     if unit_note:
         assumptions.append(unit_note)
+    if shape_note:
+        assumptions.append(shape_note)
     prior_rule_hash = prior_run.get("rule_hash")
     if prior_rule_hash and prior_rule_hash != rules.hash:
         moved = f"규칙이 이어받은 실행 이후 바뀌었다({prior_rule_hash[:12]}… → {rules.hash[:12]}…)"
