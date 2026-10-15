@@ -206,14 +206,14 @@ class BusinessInputTest(unittest.TestCase):
             self.check(b)
 
     def test_pricing_levels_are_backed_by_quarters(self):
-        self.check(business_inputs(pricing="sustained_explained", pricing_growth_quarters=8, pricing_explained="yes"))
-        self.check(business_inputs(pricing="sustained_or_short_explained", pricing_growth_quarters=5, pricing_explained="yes"))
-        self.check(business_inputs(pricing="sustained_or_short_explained", pricing_growth_quarters=9, pricing_explained="no"))
+        # 2026-10-15 사용자 결정: 최근 2개 분기가 모두 1년 전 같은 분기보다 늘었는가로 본다(8분기는 자료가 모자란다)
+        self.check(business_inputs(pricing="sustained_explained", pricing_growth_quarters=2, pricing_explained="yes"))
+        self.check(business_inputs(pricing="sustained_or_short_explained", pricing_growth_quarters=2, pricing_explained="no"))
+        self.check(business_inputs(pricing="sustained_or_short_explained", pricing_growth_quarters=8, pricing_explained="yes"))
         for kw, pattern in [
-            ({"pricing": "sustained_explained", "pricing_growth_quarters": 6, "pricing_explained": "yes"}, "가격 실측 4 는 8분기"),
-            ({"pricing": "sustained_explained", "pricing_growth_quarters": 9, "pricing_explained": "no"}, "가격 실측 4 는 8분기"),
-            ({"pricing": "sustained_or_short_explained", "pricing_growth_quarters": 5, "pricing_explained": "no"}, "가격 실측 3 은"),
-            ({"pricing": "sustained_or_short_explained", "pricing_growth_quarters": 3, "pricing_explained": "yes"}, "가격 실측 3 은"),
+            ({"pricing": "sustained_explained", "pricing_growth_quarters": 1, "pricing_explained": "yes"}, "가격 실측 4 는 2분기"),
+            ({"pricing": "sustained_explained", "pricing_growth_quarters": 9, "pricing_explained": "no"}, "가격 실측 4 는 2분기"),
+            ({"pricing": "sustained_or_short_explained", "pricing_growth_quarters": 1, "pricing_explained": "yes"}, "가격 실측 3 은"),
             ({"pricing": "sustained_explained"}, "pricing_growth_quarters"),
             ({"participant": "strong"}, "participant"),
             ({"substitutes": "none"}, "substitutes"),
@@ -295,6 +295,21 @@ class LayerCpInputTest(unittest.TestCase):
         ]:
             with self.subTest(pattern=pattern), self.assertRaisesRegex(SchemaError, pattern):
                 self.check(inputs)
+
+    def test_imitators_count_bounds_the_imitation_level(self):
+        # 2026-10-15 사용자 결정: 나 말고 같은 방식을 쓰는 회사가 1 곳이면 최고 5, 2 곳 이상이면 0(상대·경쟁사를 가르지 않는다)
+        def cp(level: str, n: int) -> dict:
+            inputs = cp_inputs()
+            inputs.update(imitation=level, imitators=n)
+            return inputs
+        for level, n in (("blocked", 0), ("conflict_pending", 1), ("costly", 1), ("copied", 2), ("copied", 3), ("unknown", 1)):
+            with self.subTest(ok=(level, n)):
+                self.check(cp(level, n))
+        for level, n in (("blocked", 1), ("copied", 1), ("copied", 0), ("conflict_pending", 2), ("unknown", 2)):
+            with self.subTest(bad=(level, n)), self.assertRaisesRegex(SchemaError, f"같은 방식을 쓰는 회사가 {n}곳이면"):
+                self.check(cp(level, n))
+        with self.assertRaisesRegex(SchemaError, "imitators"):
+            self.check(cp("costly", -1))
 
 
 class AllianceInputTest(unittest.TestCase):

@@ -92,7 +92,8 @@ class LayerWeightTest(unittest.TestCase):
 
 class HoldingsScoreTest(unittest.TestCase):
     def test_reference_points(self):
-        # 칸 합 7(판매 6 + 자체 사용 2 칸) → 수직계열화 8, AI 무관 25% → 다각화 4, 이익률 10% → 힘 2
+        # 2026-10-15 사용자 결정(문턱 칸 합 8·AI 무관 80%·이익률 40%): 칸 합 7(판매 6 + 자체 사용 2 칸) → 수직계열화 7,
+        # AI 무관 25% → 다각화 2.5, 이익률 10% → 힘 1
         h = set_cells(holdings(), foundry="self", chip_design="sold", systems="self", dev_platform="sold", model="sold",
                       application="sold")
         h["revenue_lines"] = [line("ads", "user_platform", 25), line("aws", "cloud", 75, "no")]
@@ -100,17 +101,18 @@ class HoldingsScoreTest(unittest.TestCase):
         self.assertEqual((r["status"], r["basis"]), ("ok", "holdings"))
         c = r["calc"]
         self.assertEqual((c["vertical_raw"], c["vertical"], c["non_ai_share"], c["diversification"], c["field_strength"]),
-                         (7, 8, 0.25, 4, 2))
-        self.assertEqual(r["score"], 14)
+                         (7, 7, 0.25, 2.5, 1))
+        self.assertEqual(r["score"], 10.5)
 
     def test_vertical_proportional_and_cap(self):
         h = set_cells(holdings(), chip_design="self", model="self", dev_platform="self")   # 1 + 1 + 0.5 × 3 = 3.5
         r = compute(h)
-        self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (3.5, 4))
-        h = set_cells(holdings(), **{layer: "sold" for layer in ORDER if layer not in ("power", "data_platform", "device")})
+        self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (3.5, 3.5))
+        h = set_cells(holdings(), **{layer: "sold" for layer in ORDER if layer not in ("power", "device")})
         h["cells"]["user_platform"]["ai_chain"] = "yes"
+        h["cells"]["data_platform"]["ai_chain"] = "yes"
         r = compute(h)
-        self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (8, 8), "합 8 은 8 에서 자른다")
+        self.assertEqual((r["calc"]["vertical_raw"], r["calc"]["vertical"]), (9, 8), "합 9 는 8 에서 자른다")
 
     def test_ai_chain_unmet_cell_is_not_vertical_but_keeps_weight(self):
         h = set_cells(holdings(), user_platform={"cell": "sold", "ai_chain": "no", "evidence_ids": []})
@@ -135,13 +137,13 @@ class HoldingsScoreTest(unittest.TestCase):
         h["revenue_lines"] = [line("aws", "cloud", 50, "no"), line("launch", "rocket_launch", 25), line("starlink", "outside", 25)]
         r = compute(h)
         self.assertEqual(r["calc"]["non_ai_share"], 0.5)
-        self.assertEqual(r["calc"]["diversification"], 8)
+        self.assertEqual(r["calc"]["diversification"], 5)
         self.assertEqual(r["calc"]["vertical_counted"], {"cloud": 1, "user_platform": 1})
         self.assertTrue(any("그 분야 순위 비교는 시장 정의표가 생긴 뒤" in w for w in r["warnings"]))
 
     def test_margin_substitute_and_no_non_ai_business(self):
         r = compute(holdings(non_ai_margin=0.3, non_ai_margin_source="company"))
-        self.assertEqual(r["calc"]["field_strength"], 4)
+        self.assertEqual(r["calc"]["field_strength"], 3)
         self.assertIn("회사 전체 영업이익률로 대신했다", " ".join(r["warnings"]))
         h = holdings(non_ai_margin=0.3)
         for x in h["revenue_lines"]:

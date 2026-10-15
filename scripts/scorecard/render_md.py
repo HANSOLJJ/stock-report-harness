@@ -403,7 +403,9 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             f"- 과점 factor 최고: {moat_top} ({max_moat}점) — 과점이 완결된 전 기업 기준",
             f"- 함정 최심(완료 {population['scored']}개사 기준): {worst_trap}점 — "
             + " · ".join(f"{r['display_name']}(조정 {r['total']}점)" for r in worst_all) + (" — 공동" if len(worst_all) > 1 else ""),
-            f"- 과점 후보군(과점 {threshold}점 이상): {', '.join(candidates) if candidates else '없음'}",
+            f"- 과점 후보군(과점 {threshold}점 이상): {', '.join(candidates) if candidates else '없음'}"
+            # 2026-10-15 사용자 결정: v3.0 기준선은 잠정이라 참고로만 적는다(규칙의 scoring.baseline_note 가 있을 때만).
+            + (" — 기준선은 잠정이며 시장 정의표가 생긴 뒤 다시 정한다(참고)" if ctx.rules.payload["scoring"].get("baseline_note") else ""),
         ]
     lines += [f"- 모집단: 완료 {population['scored']}개사 순위 / 미완료 {len(population['incomplete'])}개사 제외 (미완료는 0점으로 채우지 않는다)."]   # 2026-10-06: 기준선 순위 비교 안내를 싣지 않는다
     lines += [f"- 기준 시점: 분석 기준일 {run['as_of']} · 가격 기준일 {run.get('price_as_of') or run['as_of']} · 정보 컷오프 {run.get('info_cutoff') or run['as_of']} (C-17). 승계 근거·트리거 일부는 원문에 컷오프 이후 사건이 그대로 있으며 이번 실행에서 재검증하지 않았다."]

@@ -165,8 +165,8 @@ JUDGMENT_CLI_ONLY_INPUTS: dict[str, tuple[str, ...]] = {
     "business": ("components", "bundle_reason", "participant", "switching", "pricing", "pricing_growth_quarters", "pricing_explained",
                  "substitutes"),
     "layer_paths": ("leap", "gap_months", "adaptation", "adoption_multiple", "standards", "note"),
-    "layer_cp": ("strategy", "counterparty", "counterparty_present", "revenue_model", "imitation", "door_closed_at", "acceleration",
-                 "entry_order", "note"),
+    "layer_cp": ("strategy", "counterparty", "counterparty_present", "revenue_model", "imitation", "imitators", "door_closed_at",
+                 "acceleration", "entry_order", "note"),
     "alliance": ("relations", "fronts", "partner_tension", "note"),
 }
 # CLI 로만 받는 재료의 모양. stages._judgment_change_kind 가 쓰기 전에 거르고, 허용값은 스키마가 본다.
@@ -186,7 +186,7 @@ JUDGMENT_CLI_ONLY_TYPES: dict[str, str] = {
     "leap": "string", "gap_months": "number", "adaptation": "string", "adoption_multiple": "number", "standards": "object_list",
     "note": "string",
     "strategy": "string", "counterparty": "string_or_null", "counterparty_present": "string", "revenue_model": "string",
-    "imitation": "string", "door_closed_at": "string_or_null", "acceleration": "object", "entry_order": "string",
+    "imitation": "string", "imitators": "number", "door_closed_at": "string_or_null", "acceleration": "object", "entry_order": "string",
     "relations": "object_list", "fronts": "object_list", "partner_tension": "string",
 }
 
@@ -1071,7 +1071,11 @@ def _validate_f6_policy(f6: Any, factor: dict[str, Any], f9: Any = None) -> None
                                # 그 파라미터를 **어느 사유일 때** 넘길지(FIX-61). 선언이 없으면 scope_mismatch 만 뺀다.
                                "optional_parameters_causes",
                                # 2026-10-12 규칙 v2.1: 다른 파라미터에 흡수돼 이 트랙이 쓰지 않는 파라미터와 그 사유.
-                               "parameters_absorbed"])
+                               "parameters_absorbed",
+                               # 2026-10-15 규칙 v3.0: 트랙이 이미 반영한 자료 부족이라 이 트랙에서는 걸지 않는 P4 조건.
+                               "p4_excluded_conditions"])
+        for cid in spec.get("p4_excluded_conditions", []):
+            _require(cid in P4_CONDITION_IDS, f"{where}.p4_excluded_conditions: 알 수 없는 P4 조건 {cid!r}")
         # 2026-09-16 FIX-55 1단계: 관측에서 판정한다고 선언한 조건을 트랙 자동 목록에도 두면 두 경로가 갈린다.
         for auto in spec.get("auto_p4_conditions", []):
             _require(auto not in judged_from_observation,
@@ -1820,8 +1824,11 @@ def _validate_business(inputs: dict[str, Any], spec: dict[str, Any], rules: dict
         if inputs["pricing"] == "sustained_explained":
             _require(q >= long_q and explained, f"{where}: 가격 실측 4 는 {long_q}분기 이상 늘고 설명이 있어야 한다(입력 {q}분기·설명 {inputs['pricing_explained']})")
         else:
+            # 2026-10-15: v3.0 은 두 문턱이 같다(2분기). 그때는 짧은 기간의 설명 조건이 없다.
+            need = (f"{long_q}분기 이상 늘어야 한다" if short_q >= long_q
+                    else f"{long_q}분기 이상이거나 {short_q}~{long_q - 1}분기에 설명이 있어야 한다")
             _require(q >= long_q or (q >= short_q and explained),
-                     f"{where}: 가격 실측 3 은 {long_q}분기 이상이거나 {short_q}~{long_q - 1}분기에 설명이 있어야 한다(입력 {q}분기·설명 {inputs['pricing_explained']})")
+                     f"{where}: 가격 실측 3 은 {need}(입력 {q}분기·설명 {inputs['pricing_explained']})")
 
 
 def _validate_layer_paths(inputs: dict[str, Any], spec: dict[str, Any], layer: str | None, where: str) -> None:
@@ -1867,8 +1874,16 @@ def _validate_layer_paths(inputs: dict[str, Any], spec: dict[str, Any], layer: s
 def _validate_layer_cp(inputs: dict[str, Any], spec: dict[str, Any], where: str) -> None:
     """③ 한 판매 층의 카운터 포지셔닝. 수익모델·모방은 칸, 가속도는 두 성장 배수, 문 닫힘은 증거 날짜로 받는다(rules.md ③)."""
     _expect_keys(inputs, ["strategy", "counterparty", "counterparty_present", "revenue_model", "imitation", "door_closed_at",
-                          "acceleration"], where, optional=["entry_order", "note"])
+                          "acceleration"], where, optional=["entry_order", "note", "imitators"])
     _expect_str(inputs["strategy"], f"{where}.strategy", nonempty=True)
+    # 2026-10-15 사용자 결정: 모방 불가능성은 나 말고 같은 방식을 이미 쓰는 회사 수로 가른다(상대·경쟁사를 가르지 않는다).
+    # 0 곳이면 copied 를 쓸 수 없고, 1 곳이면 blocked·copied 를 쓸 수 없으며(최고 5), 2 곳 이상이면 copied 다.
+    if "imitators" in inputs:
+        n = inputs["imitators"]
+        _expect_count(n, f"{where}.imitators")
+        allowed = (["blocked", "conflict_pending", "costly"] if n == 0 else ["conflict_pending", "costly"] if n == 1 else ["copied"])
+        _require(inputs["imitation"] in allowed + ["unknown"] if n < 2 else inputs["imitation"] in allowed,
+                 f"{where}: 같은 방식을 쓰는 회사가 {n}곳이면 모방 불가능성은 {allowed} 가운데 하나다(입력 {inputs['imitation']!r})")
     _expect_str(inputs["counterparty"], f"{where}.counterparty", allow_none=True, nonempty=True)
     _expect_choice(inputs["counterparty_present"], sorted(YES_NO), f"{where}.counterparty_present")
     _require(inputs["counterparty"] is not None or inputs["counterparty_present"] == "no",

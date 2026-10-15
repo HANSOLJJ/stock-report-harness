@@ -197,6 +197,11 @@ def _p4(cid: str, obs: ObsLookup, rules: RuleSet, track: dict[str, Any],
     for auto in track.get("auto_p4_conditions", []):
         if auto in declared and auto not in hit:
             hit.append(auto)
+    # 2026-10-15 규칙 v3.0 사용자 결정: 트랙이 이미 반영한 자료 부족(신규 상장의 이력 부족·분기 기준)은 P4 로 다시 깎지 않는다.
+    excluded = set(track.get("p4_excluded_conditions", []))
+    if excluded:
+        detail["conditions_excluded_by_track"] = [h for h in hit if h in excluded]
+        hit = [h for h in hit if h not in excluded]
 
     detail["conditions_hit"] = hit
     detail["demotion_steps"] = int(spec.get("cap_steps", 1)) if hit else 0
@@ -371,10 +376,14 @@ def _growth_adjusted_p1(cid: str, raw: dict[str, Any], spec: dict[str, Any], obs
     per = raw["market_cap"] / net_income
     entry["per_used"] = per
     floor = float(ga["growth_floor"])
-    if growth < floor:
+    # 2026-10-15 규칙 v3.0: 문턱이 0 이면(5% 절벽 폐지) 성장 0% 이하만 막는다. 성장이 0 이하면 PER 을 성장으로 나눌 수 없다.
+    # 문턱이 양수인 옛 규칙에서는 성장 0 이하가 이미 문턱 미만이라 결과가 같다.
+    if growth < floor or growth <= 0:
         score = int(ga["below_floor_score"])
-        entry.update({"value": None, "score": score, "band": f"성장 {floor * 100:g}% 미만",
-                      "why": f"매출 성장 {growth * 100:.1f}% 가 문턱 {floor * 100:g}% 미만 — 성장으로 정당화할 수 없어 {score}"})
+        band, why = ((f"성장 {floor * 100:g}% 미만", f"매출 성장 {growth * 100:.1f}% 가 문턱 {floor * 100:g}% 미만 — 성장으로 정당화할 수 없어 {score}")
+                     if floor > 0 else
+                     ("성장 0% 이하", f"매출 성장 {growth * 100:.1f}% 가 0% 이하 — PER 을 성장으로 나눌 수 없어 {score}"))
+        entry.update({"value": None, "score": score, "band": band, "why": why})
         return entry
     value = per / (growth * float(ga["growth_multiplier"]))
     # 2026-10-14 규칙 v3.0: 파라미터에 curve 가 있으면 연속값이다. 없으면 지금 구간표 그대로.
@@ -658,10 +667,12 @@ def _private_growth_adjusted(cid: str, pga: dict[str, Any], multiple: float, rng
         growth = rev / prior - 1
         detail["revenue_growth"] = growth
         g_floor = float(pga["growth_floor"])
-        if growth < g_floor:
+        # 2026-10-15 규칙 v3.0: 상장 P1 과 같이 문턱이 0 이면 성장 0% 이하만 막는다(옛 규칙에서는 결과가 같다).
+        if growth < g_floor or growth <= 0:
             detail["path"] = "below_growth_floor"
             score = int(pga["below_floor_score"])
-            detail["why"] = f"보정 매출 성장 {growth * 100:.1f}% 가 문턱 {g_floor * 100:g}% 미만 — 가장 나쁜 칸 {score}"
+            detail["why"] = (f"보정 매출 성장 {growth * 100:.1f}% 가 문턱 {g_floor * 100:g}% 미만 — 가장 나쁜 칸 {score}" if g_floor > 0
+                             else f"보정 매출 성장 {growth * 100:.1f}% 가 0% 이하 — 가장 나쁜 칸 {score}")
         else:
             mult = float(pga["growth_multiplier"])
             value = multiple / (growth * mult)

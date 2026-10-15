@@ -129,6 +129,30 @@ class F6ListedContinuousTest(unittest.TestCase):
         self.assertEqual(r["calc"]["p4"]["demotion_steps"], 4)
         self.assertEqual(r["score"], V30.round_score(r["calc"]["subtotal_before_p4"] - 4))
 
+    def test_no_five_percent_cliff_but_zero_growth_is_floor(self):
+        # 2026-10-15 사용자 결정: 성장 3% 는 곡선이 정한다. PER 10 ÷ 3 = 3.33 → −4·log2(3.33) = −6.95. 옛 규칙은 5% 절벽이다.
+        r = self.f6(market_cap=400.0, revenue=103.0)
+        p1 = r["calc"]["parameters"]["P1"]
+        self.assertAlmostEqual(p1["score"], -6.947, places=2)
+        self.assertNotIn("미만", str(p1.get("band")))
+        self.assertTrue(self.f6(rules=V21, market_cap=400.0, revenue=103.0)["calc"]["parameters"]["P1"]["band"].startswith("성장 5% 미만"))
+        for revenue in (100.0, 99.0):   # 성장 0%·−1% 는 PER 을 성장으로 나눌 수 없어 −12
+            with self.subTest(revenue=revenue):
+                p1 = self.f6(market_cap=400.0, revenue=revenue)["calc"]["parameters"]["P1"]
+                self.assertEqual((p1["score"], p1["band"]), (-12, "성장 0% 이하"))
+
+    def test_newly_listed_track_takes_no_p4_for_its_own_data_shortage(self):
+        # 2026-10-15 사용자 결정: 신규 상장 트랙은 이력 부족·분기 기준을 이미 반영한다. SpaceX 는 −8 → −12 였다.
+        from tests.test_scorecard_f6_v17 import f6obs
+        obs = f6obs(market_cap=1000.0, net_cash=0.0, net_income=-50.0, revenue=100.0, revenue_prior=80.0, period_basis="quarterly_yoy")
+        r = compute_f6(company(), obs, JudgmentLookup([]), V30, run("v3.0"))
+        self.assertEqual(r["calc"]["track"], "listed_newly")
+        self.assertEqual((r["calc"]["p4"]["conditions_hit"], r["calc"]["p4"]["demotion_steps"]), ([], 0))
+        # 이력 부족은 트랙 자동 목록에서 뺐고, 관측이 판정하는 분기 기준은 걸린 뒤 트랙이 덜어 낸다
+        self.assertEqual(r["calc"]["p4"]["conditions_excluded_by_track"], ["period_basis_not_ttm"])
+        old = compute_f6(company(), obs, JudgmentLookup([]), V21, run("v2.1"))
+        self.assertGreater(old["calc"]["p4"]["demotion_steps"], 0, "옛 규칙은 그대로 깎는다")
+
     def test_same_inputs_under_v21_stay_integer_bands(self):
         r = self.f6(rules=V21)
         self.assertEqual((r["calc"]["parameters"]["P1"]["score"], r["calc"]["parameters"]["P2"]["score"], r["score"]), (-1, -1, -2))
