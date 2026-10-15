@@ -1,0 +1,83 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "foundry",
+  "label": "파운드리(반도체 위탁 생산) 매출",
+  "measure": "revenue",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "TrendForce 분기 파운드리 상위 10곳 매출 순위 보도자료",
+      "url": "https://www.trendforce.com/presscenter/news/20260909-13225.html",
+      "role": "primary",
+      "note": "2Q26 호(2026-09-09). 1년 전 같은 분기는 같은 시리즈의 2Q25 호 https://www.trendforce.com/presscenter/news/20250901-12691.html (2025-09-01). 순위표는 두 호 모두 본문 이미지다."
+    },
+    {
+      "label": "Counterpoint Research 순수 파운드리 점유율 분기 페이지",
+      "url": "https://counterpointresearch.com/en/insights/global-pure-foundry-market-share-q2-2026",
+      "role": "alternate",
+      "note": "2026-08-28 게재. 2025 1분기~2026 2분기 6개 분기 표(정수 %, TSMC·Samsung Foundry·SMIC·UMC·GlobalFoundries·기타). 방법이 달라 값이 TrendForce 와 다르다(2Q26 Samsung 7% 대 5.9%). TrendForce 가 끊기면 모든 회사에 함께 이쪽으로 바꾸고 precision 은 0.01 로 한다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "tsmc",
+      "name": "TSMC",
+      "company_id": "tsmc"
+    },
+    {
+      "key": "samsung",
+      "name": "Samsung Foundry",
+      "note": "표 주석: Samsung 수치는 파운드리 사업 매출만 담는다."
+    },
+    {
+      "key": "smic",
+      "name": "SMIC"
+    },
+    {
+      "key": "umc",
+      "name": "UMC"
+    },
+    {
+      "key": "globalfoundries",
+      "name": "GlobalFoundries"
+    },
+    {
+      "key": "huahong_group",
+      "name": "HuaHong Group",
+      "note": "표 주석: HHGrace·HLMC 등 그룹 사업 매출을 합친 값이다."
+    },
+    {
+      "key": "tower",
+      "name": "Tower"
+    },
+    {
+      "key": "vis",
+      "name": "VIS"
+    },
+    {
+      "key": "nexchip",
+      "name": "Nexchip"
+    },
+    {
+      "key": "psmc",
+      "name": "PSMC",
+      "note": "표 주석: 논리·메모리 파운드리 매출만 담는다."
+    }
+  ],
+  "lists_top_n": true,
+  "outside": [
+    {
+      "name": "상위 10곳 밖 사업자 전체",
+      "note": "TrendForce 표의 'Total of Top 10' 이 2Q26 96.5%(2Q25 97%)라 상위 10곳 밖 합계는 약 3.5%(2Q25 약 3%)다. 점유율의 분모는 상위 10곳 합이 아니라 전체 파운드리 시장이다."
+    },
+    {
+      "name": "Intel Foundry",
+      "note": "TrendForce 상위 10곳 표에 오르지 않았다. 보도자료에 제외 이유가 적혀 있지 않아 이유는 확인하지 못했다."
+    }
+  ],
+  "precision": 0.001,
+  "note": "범위는 TrendForce 가 분기마다 내는 파운드리 상위 10곳 순위표를 그대로 쓴다(조사기관 시장 단위). 구성 회사는 2Q26 표의 10곳이고 2Q25 표에도 같은 10곳이 있다. 점유율은 출처가 발표한 소수 첫째 자리 %를 그대로 옮긴다. 출처가 끊기면 대체 출처 Counterpoint 로 모든 회사에 함께 바꾼다."
+}

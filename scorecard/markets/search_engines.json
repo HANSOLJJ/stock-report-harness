@@ -1,0 +1,104 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "search_engines",
+  "label": "검색 엔진 사용량 점유율(전 세계·전 플랫폼, 분기)",
+  "measure": "usage",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "StatCounter Global Stats 검색 엔진 점유율(전 세계·전 플랫폼·분기)",
+      "url": "https://gs.statcounter.com/search-engine-market-share/all/worldwide/#quarterly-202503-202603",
+      "role": "primary",
+      "note": "차트 페이지에서 기간을 Quarterly(Q3 2025~Q3 2026)로 정하면 페이지가 만드는 'Download Data (.csv)' 주소(chart.php, granularity=quarterly, fromInt=202503, toInt=202603, Platform: All platforms, Region: Worldwide)로 받은 한 파일에서 두 분기를 모두 읽었다. 같은 기간으로 페이지가 보낸 차트 요청의 응답(툴팁 문구와 요약 문장)과도 대조했다."
+    },
+    {
+      "label": "Cloudflare Radar 검색 엔진 점유율 분기 보고서",
+      "url": "https://radar.cloudflare.com/reports/search-engines",
+      "role": "alternate",
+      "note": "무료 분기 보고서이고 링크 클릭 참조(referrer) 기반이다. 검색 결과로 확인한 최신 호는 2025년 4분기이며 2026년 3분기 호는 확인하지 못했다. 이 보고서를 열어 값을 읽지는 않았다. StatCounter 가 끊기면 모든 회사에 함께 이쪽으로 바꾼다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "google",
+      "name": "Google",
+      "company_id": "alphabet"
+    },
+    {
+      "key": "bing",
+      "name": "Bing",
+      "company_id": "microsoft"
+    },
+    {
+      "key": "yahoo",
+      "name": "Yahoo!"
+    },
+    {
+      "key": "yandex",
+      "name": "Yandex"
+    },
+    {
+      "key": "duckduckgo",
+      "name": "DuckDuckGo"
+    },
+    {
+      "key": "baidu",
+      "name": "Baidu"
+    },
+    {
+      "key": "naver",
+      "name": "Naver"
+    },
+    {
+      "key": "coccoc",
+      "name": "Coc Coc"
+    },
+    {
+      "key": "ecosia",
+      "name": "Ecosia"
+    },
+    {
+      "key": "haosou",
+      "name": "Haosou"
+    },
+    {
+      "key": "seznam",
+      "name": "Seznam"
+    },
+    {
+      "key": "qwant",
+      "name": "Qwant"
+    },
+    {
+      "key": "sogou",
+      "name": "Sogou"
+    },
+    {
+      "key": "startpage",
+      "name": "StartPage"
+    },
+    {
+      "key": "petal_search",
+      "name": "Petal Search"
+    }
+  ],
+  "outside": [
+    {
+      "name": "AI 챗봇·AI 검색 도우미(ChatGPT, Gemini 앱, Copilot, Perplexity 등)",
+      "note": "StatCounter 가 별도 통계(AI Chatbot Market Share)로 따로 낸다. 검색 엔진 표에 들지 않는다. 앱 안 검색도 이 표에 들지 않는다."
+    },
+    {
+      "name": "StatCounter 표의 'Other'",
+      "note": "이름 없는 나머지(2026 Q3 0.03%, 2025 Q3 0.04%)라 구성 회사로 두지 않았다."
+    },
+    {
+      "name": "AOL",
+      "note": "2025 Q3 표에는 0.02% 로 있으나 2026 Q3 표에는 0 으로 나와 최근 기간 표의 구성 회사에서 뺐다."
+    }
+  ],
+  "precision": 0.0001,
+  "note": "범위는 StatCounter 가 내는 전 세계·전 플랫폼 검색 엔진 점유율 표를 그대로 쓴다. StatCounter 는 추적 코드를 단 웹사이트들의 검색 유입을 재는 정기 측정이고, 앱 안 검색은 들지 않는다. 구성 회사는 2026 Q3 표에 오른 이름 있는 검색 엔진 15곳이다. 표가 거의 전체(Other 0.03%)라 lists_top_n 을 쓰지 않는다. 기간은 기준일까지 끝난 가장 최근 분기(2026 Q3, 2026-07-01~2026-09-30)와 1년 전 같은 분기(2025 Q3)이고 StatCounter 가 직접 내는 분기 값이다. 점유율은 소수 둘째 자리 %이므로 precision 은 0.0001 이다. 출처가 끊기면 Cloudflare Radar 분기 보고서로 모든 회사에 함께 바꾼다."
+}

@@ -185,7 +185,18 @@
         "share_min_exclusive": 0.5,
         "boundary_with_pricing": "가격 실측은 '인상·유지 뒤 고객이 남았다'(사실)를, (나)는 '그 인상을 회사가 AI 로 설명한다'(이유)를 본다. 같은 사실을 두 번 세는 것이 아니다(Q01)."
       },
-      "markets": null,
+      "markets": {
+        "dir": "scorecard/markets",
+        "files": {
+          "cloud_infra": "a3ecf5f6bbe4d1d54e022f6ed442f0424e450275d9ca62622c79a46f6a68b4d5",
+          "foundry": "16ea8765f41849dde93908331e88be2974b72638a57ff30b67449a87dbd422f7",
+          "pcs": "f7dbe1d4ae6e74dc498511ef5873e8aacf14a82c869ec829a182c5c076e68ade",
+          "search_engines": "9887df3646c32f4a4522b473272aa86fa0cdc01cae4076bcc225c0831e1d9268",
+          "smartphones": "89c1bea1296f03a57c213e0acf109f3833620d535f73874b48b4c3d50c2f0fd4",
+          "tablets": "9e83b4c3c17ec6dd78c4962151ba9c626d20b2ce6640b57778c2b180396b1fdf",
+          "wearables": "f95300ff2da3e99e9e0c528c4a927497f8f0aa96e7c5efb0950049d5893ac426"
+        }
+      },
       "markets_note": "시장 정의표(scorecard/markets/<id>.json)의 sha256 을 markets.files 에 둔다(markets.dir 는 저장소 기준 경로). 기간별 값은 실행의 관측(market_share·market_revenue·market_volume)이다. 정의표가 없거나 구성 사업의 시장이 정해지지 않았거나 자료가 모자라면 그 D·E 는 미확인(만점의 40%)이다(2026-10-15)",
       "note": "사업 점수 = A + B + C + D + E (0~20). 층 점수 = 그 층 안 사업 점수의 매출 몫 평균. 회사 ① = 층 점수의 층 매출 몫 가중 평균"
     },

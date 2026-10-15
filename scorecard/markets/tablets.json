@@ -1,0 +1,58 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "tablets",
+  "label": "전 세계 태블릿 출하 대수 (Omdia 상위 5개 회사)",
+  "measure": "shipments",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "Omdia 2Q26 태블릿 보도자료 (2026-08-06)",
+      "url": "https://omdia.tech.informa.com/pr/2026/aug/supply-pressures-weigh-on-global-tablet-market-as-shipments-decline-10-percent-in-q2-2026",
+      "role": "primary"
+    }
+  ],
+  "constituents": [
+    {
+      "key": "apple",
+      "name": "Apple",
+      "company_id": "apple",
+      "note": "iPad 출하"
+    },
+    {
+      "key": "samsung",
+      "name": "Samsung"
+    },
+    {
+      "key": "lenovo",
+      "name": "Lenovo"
+    },
+    {
+      "key": "xiaomi",
+      "name": "Xiaomi"
+    },
+    {
+      "key": "huawei",
+      "name": "Huawei"
+    }
+  ],
+  "lists_top_n": true,
+  "outside": [
+    {
+      "name": "Amazon(Fire 태블릿)",
+      "note": "채점 대상 amazon 의 태블릿 사업이다. Omdia 상위 5곳 밖이라 '기타'에 묶이고 개별 값이 없다. IDC 블로그는 Amazon 이 미국에서 줄었다고만 적는다."
+    },
+    {
+      "name": "Google(Alphabet, Pixel Tablet)",
+      "note": "채점 대상 alphabet 의 태블릿이다. 상위 5곳 밖이라 '기타'에 묶인다."
+    },
+    {
+      "name": "기타(Others)",
+      "note": "출처는 상위 5곳 밖을 합쳐 Q2 2026 19.1%, Q2 2025 22.5% 로만 낸다."
+    }
+  ],
+  "precision": 0.001,
+  "note": "조사기관 Omdia(옛 Canalys)가 분기마다 무료로 내는 보도자료의 시장 단위(전 세계 태블릿 sell-in 출하, 회사 상위 5곳)를 그대로 쓴다. 2026-10-14 까지 나온 가장 최근 분기는 2분기이다. 3분기 태블릿 자료는 확인한 범위(Omdia·IDC 보도자료 목록과 검색)에서 아직 나오지 않았다. 1년 전 같은 분기는 같은 표의 Q2 2025 열이다. 점유율은 소수 첫째 자리 %로 발표되어 precision 은 0.001 이다. IDC 는 회사별 점유율을 무료로 내지 않아 대체 출처로 쓸 수 없고 조사기관을 섞지 않는다."
+}

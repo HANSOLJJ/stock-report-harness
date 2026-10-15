@@ -1,0 +1,58 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "cloud_infra",
+  "label": "클라우드 인프라 서비스(IaaS·PaaS·호스티드 프라이빗 클라우드) 매출",
+  "measure": "revenue",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "Synergy Research Group 분기 클라우드 인프라 서비스 시장 보도자료",
+      "url": "https://www.srgresearch.com/articles/q2-cloud-market-passes-143-billion-highest-growth-rate-in-eight-years",
+      "role": "primary",
+      "note": "2Q26 호(2026-07-30). 1년 전 같은 분기는 같은 시리즈의 2Q25 호 https://www.srgresearch.com/articles/q2-cloud-market-nears-100-billion-milestone-and-its-still-growing-by-25-year-over-year (2025-07-31). 두 호 모두 상위 3곳 점유율을 본문 문장으로만 낸다."
+    },
+    {
+      "label": "Omdia(옛 Canalys) 분기 글로벌 클라우드 인프라 지출 보도자료",
+      "url": "https://www.businesswire.com/news/home/20260326200238/en/omdia-global-cloud-infrastructure-spending-rose-29-in-q4-2025-as-hyperscalers-scaled-ai-infrastructure-investment/",
+      "role": "alternate",
+      "note": "확인한 최신 호는 2025년 4분기(2026-03-26)이고 2026년 2분기 호는 찾지 못했다. 점유율은 본문 차트 이미지에 있어 값은 읽지 않았다. 스크립트 요청은 403 이었고 앱 안 브라우저(Playwright)로는 열렸다. Synergy 가 끊기면 모든 회사에 함께 이쪽으로 바꾼다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "amazon",
+      "name": "Amazon (AWS)",
+      "company_id": "amazon"
+    },
+    {
+      "key": "microsoft",
+      "name": "Microsoft",
+      "company_id": "microsoft"
+    },
+    {
+      "key": "google",
+      "name": "Google",
+      "company_id": "alphabet"
+    }
+  ],
+  "lists_top_n": true,
+  "outside": [
+    {
+      "name": "Oracle (company_id oracle)",
+      "note": "Synergy 2Q26 보도자료가 '2차(tier two) 클라우드 사업자'로 꼽았다. 상위 3곳 목록에 없다."
+    },
+    {
+      "name": "Alibaba (company_id alibaba)",
+      "note": "2Q26 보도자료에 이름이 나오지 않는다. 2025-11-19 Synergy 보도자료가 Alibaba 를 4위로 적었고 2Q26 보도자료의 주요 3사 서술과 어긋나지 않는다."
+    },
+    {
+      "name": "OpenAI · Anthropic · CoreWeave 등 신흥 사업자",
+      "note": "2Q26 보도자료가 성장률이 높은 2차 사업자로 CoreWeave, OpenAI, Oracle, Crusoe, Nebius, Anthropic, Nscale 을 꼽았다. 상위 3곳 목록에 없다."
+    }
+  ],
+  "precision": 0.01,
+  "note": "범위는 Synergy 가 분기마다 내는 클라우드 인프라 서비스 시장 점유율을 그대로 쓴다. 무료 보도자료는 상위 3곳(Amazon·Microsoft·Google) 점유율만 정수 %로 문장에 적는다. 그래서 구성 회사는 그 3곳이고 lists_top_n 이다. 목록에 없는 Oracle·Alibaba 는 3위 밖이라 D 는 0(그 밖), E 는 잴 수 없다. 반올림 폭은 1%p(0.01)다. 출처가 끊기면 Omdia 로 모든 회사에 함께 바꾼다."
+}

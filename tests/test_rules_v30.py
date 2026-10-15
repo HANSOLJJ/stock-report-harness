@@ -52,6 +52,14 @@ class StructureTest(unittest.TestCase):
         self.assertIn("power", V30.payload["factors"]["F2"]["no_benchmark_layers"])
         self.assertEqual(layers["time_window_months"], 24)
 
+    def test_every_market_definition_matches_its_hash(self):
+        # 2026-10-15: 규칙이 품은 시장 정의표 해시가 저장소의 파일과 맞아야 한다(정의를 고치면 해시도 고친다)
+        files = V30.payload["factors"]["F1"]["markets"]["files"]
+        self.assertGreaterEqual(len(files), 7)
+        for mid in files:
+            with self.subTest(market=mid):
+                self.assertEqual(V30.market(mid)["market_id"], mid)
+
     def test_traps_are_four_times_v21(self):
         f30, f21 = V30.payload["factors"], V21.payload["factors"]
         self.assertEqual(f30["F7"]["matrix"], {k: v * 4 for k, v in f21["F7"]["matrix"].items()})

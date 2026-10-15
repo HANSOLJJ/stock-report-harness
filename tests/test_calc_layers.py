@@ -385,7 +385,8 @@ class F1BusinessTest(unittest.TestCase):
                          [10.2, 14.2, 11.2])
         self.assertAlmostEqual(r["calc"]["layer_scores"]["user_platform"], (40 * 10.2 + 30 * 14.2) / 70, places=5)
         self.assertEqual(r["score"], 11.7)   # 0.7 × 11.914 + 0.3 × 11.2 = 0.4 × 10.2 + 0.3 × 14.2 + 0.3 × 11.2
-        self.assertIn("시장 정의표가 없어 D·E 는 모든 사업이 미확인이다(각 1.6)", r["warnings"])
+        # 2026-10-15: 규칙에 시장 정의표가 생겨, 시장을 정하지 않은 구성마다 미확인을 알린다
+        self.assertIn("aws: 구성 AWS 의 시장이 정해지지 않아 D·E 는 미확인이다", r["warnings"])
 
     def test_bundle_shares_a_to_c_across_layers(self):
         bundle = business("marketplace", [comp("온라인 스토어", "user_platform", ["online_stores", "third_party"]),

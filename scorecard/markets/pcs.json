@@ -1,0 +1,74 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "pcs",
+  "label": "전 세계 전통 PC 출하 대수 (IDC 상위 5개 회사)",
+  "measure": "shipments",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "IDC Quarterly Personal Computing Device Tracker 3Q26 보도자료 (2026-10-08)",
+      "url": "https://www.idc.com/resource-center/press-releases/idc-pc-tracker-3q26/",
+      "role": "primary"
+    },
+    {
+      "label": "Gartner 3Q26 PC 출하 보도자료 (2026-10-12)",
+      "url": "https://www.gartner.com/en/newsroom/press-releases/2026-10-12-gartner-says-worldwide-pc-shipments-declined-22-point-4-percent-in-third-quarter-of-2026-as-component-cost-inflation-raised-asps",
+      "role": "alternate",
+      "note": "상위 6곳(Acer 포함)과 천 대 단위 값을 준다. Windows·macOS·Chrome OS 데스크톱·노트북이라 IDC 와 총량이 다르다(55.4M 대 62.7M)."
+    },
+    {
+      "label": "Omdia 3Q26 PC 출하 보도자료 (2026-10-09)",
+      "url": "https://omdia.tech.informa.com/pr/2026/oct/global-pc-shipments-fall-21percent-in-3q26-as-pull-forward-demand-subsides",
+      "role": "alternate",
+      "note": "데스크톱·노트북·워크스테이션 58.1M. 본문에 상위 5곳 대수와 정수 %가 있다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "lenovo",
+      "name": "Lenovo"
+    },
+    {
+      "key": "hp",
+      "name": "HP Inc"
+    },
+    {
+      "key": "dell",
+      "name": "Dell Technologies"
+    },
+    {
+      "key": "apple",
+      "name": "Apple",
+      "company_id": "apple",
+      "note": "Mac 출하"
+    },
+    {
+      "key": "asus",
+      "name": "ASUS"
+    }
+  ],
+  "lists_top_n": true,
+  "outside": [
+    {
+      "name": "Acer",
+      "note": "IDC 상위 5곳 밖이라 '기타'에 묶인다. Gartner 는 6위로 따로 공표한다(3Q26 7.0%)."
+    },
+    {
+      "name": "Google(Alphabet)",
+      "note": "채점 대상 alphabet(Chrome OS·Pixel)은 IDC 상위 5곳 목록에 없어 '기타'에 묶이고 개별 값이 없다."
+    },
+    {
+      "name": "Microsoft(Surface)",
+      "note": "채점 대상 microsoft 의 PC(Surface)이다. IDC 상위 5곳 밖이라 '기타'에 묶이고 개별 값이 없다."
+    },
+    {
+      "name": "기타(Others)",
+      "note": "출처는 상위 5곳 밖을 합쳐 3Q26 29.4%, 3Q25 27.3% 로만 낸다."
+    }
+  ],
+  "precision": 0.001,
+  "note": "조사기관 IDC 가 분기마다 무료로 내는 보도자료의 시장 단위(전 세계 전통 PC 출하, 회사 상위 5곳)를 그대로 쓴다. 1년 전 같은 분기는 같은 표의 3Q25 열이다. 점유율은 소수 첫째 자리 %로 발표되어 precision 은 0.001 이다. 대체 출처는 Gartner 와 Omdia 이고 총량 정의가 달라 두 조사기관을 섞지 않는다."
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "smartphones",
+  "label": "전 세계 스마트폰 출하 대수 (Counterpoint 브랜드 상위 5곳)",
+  "measure": "shipments",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "Counterpoint Research, Global Smartphone Shipments Q3 2026 보도자료 (2026-10-12)",
+      "url": "https://counterpointresearch.com/en/insights/global-smartphone-shipments-hit-a-new-low-with-20-percent-yoy-decline-lowest-in-14-years",
+      "role": "primary"
+    },
+    {
+      "label": "IDC Worldwide Quarterly Mobile Phone Tracker 3Q26 보도자료 (IDC 날짜 줄 2026-10-14, 웹 게시일 10-15)",
+      "url": "https://www.idc.com/resource-center/press-releases/smartphone-shipments-decline-3q26/",
+      "role": "alternate",
+      "note": "대수·소수 첫째 자리 %를 준다. 웹 게시 시각이 UTC 2026-10-15 03:49 라 기준일 경계에 걸린다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "samsung",
+      "name": "Samsung"
+    },
+    {
+      "key": "apple",
+      "name": "Apple",
+      "company_id": "apple"
+    },
+    {
+      "key": "xiaomi",
+      "name": "Xiaomi"
+    },
+    {
+      "key": "oppo",
+      "name": "OPPO",
+      "note": "Counterpoint 주: OnePlus·realme 포함"
+    },
+    {
+      "key": "vivo",
+      "name": "vivo"
+    }
+  ],
+  "lists_top_n": true,
+  "outside": [
+    {
+      "name": "Google(Alphabet, Pixel)",
+      "note": "채점 대상 alphabet 의 스마트폰 사업이다. 출처 상위 5곳 목록 밖이고 개별 점유율을 공표하지 않아 '기타'에 묶인다."
+    },
+    {
+      "name": "Transsion(Tecno·Infinix·itel)",
+      "note": "대형 저가 사업자이다. 이 출처의 상위 5곳 표에 없어 '기타'에 묶인다. IDC 는 2025-10-13 발표 3Q25 표에서 4위(9.0%)로 공표했다."
+    },
+    {
+      "name": "기타(Others)",
+      "note": "출처는 상위 5곳 밖을 합쳐 Q3 2026 27%, Q3 2025 29% 로만 낸다. 개별 회사 값은 없다."
+    }
+  ],
+  "precision": 0.01,
+  "note": "조사기관 Counterpoint Research 가 분기마다 무료로 내는 보도자료의 시장 단위(전 세계 스마트폰 sell-in 출하, 브랜드 상위 5곳)를 그대로 쓴다. 구성 회사는 최근 분기 표의 상위 5곳이다. 같은 표에서 1년 전 같은 분기(Q3 2025)를 가져온다. 점유율은 정수 %로 발표되어 precision 은 0.01 이다. 대체 출처는 IDC Worldwide Quarterly Mobile Phone Tracker 보도자료(대수와 소수 첫째 자리 % 제공)이고 두 조사기관을 섞지 않는다. Omdia(Canalys)는 2026-10-14 까지 전 세계 3분기 스마트폰 자료를 내지 않았다."
+}
