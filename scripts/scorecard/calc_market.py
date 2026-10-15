@@ -77,7 +77,9 @@ def _rank_level(shares: dict[str, float], me: str, spec: dict[str, Any], err: di
     mine = shares[me]
     others = sorted(((g, v) for g, v in shares.items() if g != me), key=lambda x: -x[1])
     rank = 1 + sum(1 for _g, v in others if v > mine)
-    if any(round(abs(v - mine), DIGITS) <= round(err[me] + err[g], DIGITS) for g, v in others):
+    # 2026-10-15: 두 반올림 구간이 한 점에서 맞닿기만 하면 겹치지 않는다(23% → [22.5, 23.5), 22% → [21.5, 22.5)).
+    # 차이가 오차 합보다 작을 때만 순위가 바뀔 수 있다. 값이 똑같으면(공시 합산의 동률) 공동 순위라 확정하지 않는다.
+    if any(round(abs(v - mine), DIGITS) < round(err[me] + err[g], DIGITS) or round(abs(v - mine), DIGITS) == 0 for g, v in others):
         return None, rank, "다른 회사와 점유율 차이가 반올림 폭 안이라 순위를 확정하지 않는다"
     if rank > 1:
         return {2: "second", 3: "third"}.get(rank, "other"), rank, None
