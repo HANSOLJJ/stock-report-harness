@@ -31,6 +31,14 @@
 
 ## 시험 실행
 - [ ] P1 시범 `init ai-scorecard-2026-10-v30pilot --from-run ai-scorecard-2026-10-v21 --rule v3.0 --companies alphabet,apple,tsmc,spacex-xai,anthropic` 으로 draft 까지
+  - [x] Alphabet 판단 세션(판단 29건, 판정 대기 없음)
+  - [x] 기준일 10-14 로 이동(`set-as-of`), 확정 근거 회사 무관 이월, init diff 안내 수정
+  - [x] 규칙 빈틈 넷(개발 플랫폼, 몫 0 층, 가속도 20%, 정부 계약) 사용자 결정 반영 → `ai-scorecard-2026-10-v30pilot2` 로 이어받기(모양 맞지 않는 판단 제외)
+  - [x] 다섯 세션 1단계(조사·초안, 병렬) → 사건 교차 대조 → 2단계(반영, 한 회사씩), Antigravity 사건 추가(사용자 지시)
+  - [x] research 트리거 검사 결함·조정총점 부동소수·초안 표시 셋 수정
+  - [x] research → calculate → draft(`ai-scorecard-2026-10-v30pilot2`, 5개사 완료·판정 대기 0)
+  - [ ] 보고 뒤: 남은 규칙 값 결정(④ 문턱, ⑥ P2·5% 절벽·신규 상장 P4, 기준선 80·56) + 시범에서 나온 규칙 빈칸(① B '4~7분기·설명 없음', ③ 모방 0 칸 문언, ② 표준의 층 기준)
+  - [ ] 리뷰(4영역)는 결정 반영 뒤 새 실행에서
 - [ ] 전체 14개사 시험 실행
 
 ## 뒤로 미룸
