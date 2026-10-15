@@ -65,6 +65,7 @@ class DefinitionTest(unittest.TestCase):
             ({"constituents": [{"key": "aws", "name": "AWS"}]}, "구성 회사 둘 이상"),
             ({"constituents": [{"key": "aws", "name": "AWS"}, {"key": "aws", "name": "AWS2"}]}, "겹치지 않는 소문자 id"),
             ({"precision": 0.2}, "precision"),
+            ({"measure_fit": "indirect"}, "measure_fit"),
         ]:
             with self.subTest(change=change), self.assertRaisesRegex(SchemaError, pattern):
                 validate_market_definition(definition(**change), "cloud_infra")
@@ -85,7 +86,7 @@ class HashBindingTest(unittest.TestCase):
 
     def ruleset(self, digest: str) -> RuleSet:
         payload = copy.deepcopy(V30.payload)
-        payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": digest}}
+        payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": digest}, "partial_weight": 0.5}
         return RuleSet(payload, V30.path)
 
     def test_matching_hash_loads_and_changed_file_is_refused(self):
@@ -101,6 +102,18 @@ class HashBindingTest(unittest.TestCase):
     def test_bad_digest_in_rules_is_refused(self):
         with self.assertRaisesRegex(SchemaError, "sha256"):
             self.ruleset("abc")
+
+    def test_partial_weight_must_be_between_zero_and_one(self):
+        # 2026-10-15 사용자 결정: 일부만 재는 자료의 고정 반영 비율. 빠지거나 0·1·문자열이면 거부한다.
+        digest = sha256_file(self.file)
+        for bad in (None, 0, 1, 1.5, "0.5"):
+            payload = copy.deepcopy(V30.payload)
+            payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": digest}}
+            if bad is not None:
+                payload["factors"]["F1"]["markets"]["partial_weight"] = bad
+            with self.subTest(bad=bad), self.assertRaisesRegex(SchemaError, "partial_weight"):
+                RuleSet(payload, V30.path)
+        self.assertEqual(V30.payload["factors"]["F1"]["markets"]["partial_weight"], 0.5)
 
 
 class PositionTest(unittest.TestCase):
@@ -208,7 +221,7 @@ class F1IntegrationTest(unittest.TestCase):
         patcher.start()
         self.addCleanup(patcher.stop)
         payload = copy.deepcopy(V30.payload)
-        payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": sha256_file(f)}}
+        payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": sha256_file(f)}, "partial_weight": 0.5}
         self.rules = RuleSet(payload, V30.path)
 
     def test_market_replaces_unknown_points(self):
@@ -232,8 +245,84 @@ class F1IntegrationTest(unittest.TestCase):
         without = compute_f1_business(AMAZON, JudgmentLookup(items), self.rules, RUN)   # 관측을 넘기지 않으면 미확인
         self.assertEqual(without["calc"]["businesses"]["aws"]["components"][0]["D"], 1.6)
         from scorecard.render_common import market_table_rows
-        self.assertEqual(market_table_rows({"F1": r}), [["AWS", "클라우드 인프라 서비스 매출", "1위", "30.0% ← 32.0%", "-2.0%p", "3", "0"]],
+        self.assertEqual(market_table_rows({"F1": r}), [["AWS", "클라우드 인프라 서비스 매출", "1위", "30.0% ← 32.0%", "-2.0%p", "100%", "3", "0"]],
                          "시장이 정해진 구성만 표에 싣는다")
+
+
+class PartialWeightTest(unittest.TestCase):
+    """2026-10-15 사용자 결정(rules.md ① 「부분 반영」): 시장이 사업의 일부만 재거나 정의표가 간접 자료면
+    반영 비율 × 잰 점수 + (1 − 반영 비율) × 미확인 1.6 이다. 덮는 비율을 알면 그 비율, 모르면 0.5, 둘이 걸리면 곱한다."""
+
+    OBS = {"aws": 0.30, "azure": 0.21, "gcp": 0.13, "oracle": 0.03}, {"aws": 0.32, "azure": 0.20, "gcp": 0.12, "oracle": 0.03}
+
+    def rules_for(self, market: dict) -> RuleSet:
+        d = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, d, True)
+        (d / "markets").mkdir()
+        f = d / "markets" / "cloud_infra.json"
+        f.write_bytes((json.dumps(market, ensure_ascii=False, indent=2) + "\n").encode())
+        patcher = mock.patch.object(rules_mod, "ROOT", d)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        payload = copy.deepcopy(V30.payload)
+        payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": sha256_file(f)}, "partial_weight": 0.5}
+        rules = RuleSet(payload, V30.path)
+        rules.market("cloud_infra")   # 이 임시 폴더에서 읽어 둔다(다음 rules_for 가 ROOT 를 다시 바꾼다)
+        return rules
+
+    def run_aws(self, rules: RuleSet, coverage=None, obs: ObsLookup | None = None) -> tuple[dict, dict]:
+        aws_comp = comp("AWS", "cloud", ["aws"], "work")
+        aws_comp["market"] = "cloud_infra"
+        if coverage is not None:
+            aws_comp["coverage"] = coverage
+        items = [judgment(holdings()),
+                 business("stores", [comp("온라인 스토어", "user_platform", ["online_stores"]),
+                                     comp("제3자 판매자", "user_platform", ["third_party"], "trade")]),
+                 business("aws", [aws_comp], participant="none", substitutes="no_substitute")]
+        validate_judgments({"schema": "scorecard.judgments/1", "run_id": "t", "items": items}, COMPANIES, rules.payload, "t")
+        r = compute_f1_business(AMAZON, JudgmentLookup(items), rules, RUN, obs if obs is not None else shares(*self.OBS))
+        return r, r["calc"]["businesses"]["aws"]["components"][0]
+
+    def test_weights(self):
+        direct, proxy = self.rules_for(definition()), self.rules_for(definition(measure_fit="proxy"))
+        # 잰 값은 D 3(1위)·E 0(−2%p). 반영 비율별 기대값.
+        for rules, coverage, weight, d, e in [
+            (direct, None, None, 3, 0),
+            (direct, 0.58, 0.58, 2.412, 0.672),      # 0.58 × 3 + 0.42 × 1.6, 0.42 × 1.6
+            (direct, "partial", 0.5, 2.3, 0.8),
+            (proxy, None, 0.5, 2.3, 0.8),
+            (proxy, "partial", 0.25, 1.95, 1.2),     # 0.5 × 0.5, 0.25 × 3 + 0.75 × 1.6
+            (proxy, 0.58, 0.29, 2.006, 1.136),      # 0.29 × 3 + 0.71 × 1.6
+        ]:
+            with self.subTest(coverage=coverage, proxy=rules is proxy):
+                r, c = self.run_aws(rules, coverage)
+                self.assertEqual((c.get("weight"), c["D"], c["E"]), (weight, d, e))
+                if weight is not None:
+                    self.assertEqual((c["D_measured"], c["E_measured"]), (3, 0))
+                stores = r["calc"]["businesses"]["stores"]["components"]
+                self.assertEqual([x["D"] for x in stores], [1.6, 1.6], "부분 반영은 그 구성에만 걸린다")
+
+    def test_unmeasurable_part_stays_unknown(self):
+        # 잴 수 없으면(관측 없음) 반영 비율과 무관하게 미확인 1.6 이고 미확인으로 표시한다.
+        r, c = self.run_aws(self.rules_for(definition(measure_fit="proxy")), "partial", obs=ObsLookup([]))
+        self.assertEqual((c["D"], c["E"], c["D_measured"], c["E_measured"]), (1.6, 1.6, None, None))
+        self.assertIn("D", r["calc"]["businesses"]["aws"]["unknown_parts"])
+
+    def test_table_shows_weight(self):
+        from scorecard.render_common import market_table_rows
+        r, _c = self.run_aws(self.rules_for(definition()), 0.58)
+        self.assertEqual(market_table_rows({"F1": r})[0][5:], ["58%", "2.41", "0.67"])
+
+    def test_coverage_rejections(self):
+        rules = self.rules_for(definition())
+        for bad, pattern in [(0, "coverage"), (1, "coverage"), (1.2, "coverage"), ("half", "coverage"), (True, "coverage")]:
+            with self.subTest(bad=bad), self.assertRaisesRegex(SchemaError, pattern):
+                self.run_aws(rules, bad)
+        no_market = comp("온라인 스토어", "user_platform", ["online_stores"])
+        no_market["coverage"] = "partial"
+        items = [judgment(holdings()), business("stores", [no_market, comp("제3자 판매자", "user_platform", ["third_party"], "trade")])]
+        with self.assertRaisesRegex(SchemaError, "시장이 없는 구성은 덮는 비율"):
+            validate_judgments({"schema": "scorecard.judgments/1", "run_id": "t", "items": items}, COMPANIES, rules.payload, "t")
 
 
 if __name__ == "__main__":

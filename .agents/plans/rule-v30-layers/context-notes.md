@@ -159,3 +159,8 @@ v2.2 까지의 논의는 `../rule-v22-pool-first/context-notes.md` 에 있다. �
 - **pilot7.** 위 (1)~(5) 반영. Apple iPhone 판정 문장은 Opus 세션이 고친다.
 - **pilot7 결과.** Apple iPhone D 2(구성 15.4→15.8, Apple ① 13.95→14.16, 조정 23.76). 순위: Alphabet 43.36 · TSMC 30.49 · Apple 23.76 · SpaceX + xAI −1.44 · Anthropic −7.88.
 - **9개사 시장 조사(2026-10-15).** 결과는 `market-survey-9.md`. 기존 정의표로 값이 나오는 사업은 AWS·Azure 줄·Bing·LinkedIn·Meta 광고·Amazon 구독(TV 시청)과 Oracle·Alibaba 클라우드(D0)뿐이다. 새 정의표 후보(AI 챗봇·데스크톱 OS·XR·미국 SVOD·연간 Gartner·ARTW)는 모두 사용자 기준 밖의 판단이 걸려 결정을 받은 뒤 만든다. cloud_infra 의 Omdia 대체 출처 설명이 틀렸다(4Q25 본문에 상위 3곳이 글자로 있음) — 다음 정의표 수정 때 함께 고친다.
+- **9개사 조사 뒤 사용자 결정(2026-10-15).** Windows and Devices 는 StatCounter 데스크톱 OS 사용 점유율(PC 출하표가 아님). Amazon 구독은 기존 tv_viewing(Nielsen). Tesla 자동차는 Counterpoint BEV 표의 Tesla·BYD 행을 본문(BYD 선두, Tesla 약 12%)에 맞춰 바꿔 읽는다(사용자 결정, 정의표 note 에 좁힌 사실과 근거를 적는다). 다음 순서는 5개사 4영역 리뷰가 먼저이고 14개사 확장은 그 뒤다. 그래서 9개사용 새 정의표(desktop_os·Tesla BEV)와 cloud_infra Omdia 설명 정정은 확장 때 한 묶음으로 넣는다(규칙 해시가 바뀌어 시범 실행을 다시 이어받아야 하므로).
+- **Gartner 반도체 표의 NVIDIA 값이 공시 매출의 58% 인 이유는 무료 보도자료에 없다.** 2025 125,703 대 FY26 2,159억, 2024 76,692 대 FY25 1,305억으로 두 해 모두 58~59% 라 집계 규칙 차이로 보인다. NVIDIA 가 사서 보드에 얹는 HBM 메모리(Gartner 는 SK hynix 등의 매출로 셈)·시스템·소프트웨어를 빼고 칩 값만 센다는 것은 추정이다(방법론은 유료 보고서).
+- **부분 반영(2026-10-15 사용자 제안·결정).** 자료가 시장을 일부만 잴 때 쓰거나 안 쓰거나 둘 중 하나로 가르지 않고, 반영 점수 = 반영 비율 × 자료 점수 + (1 − 반영 비율) × 미확인 1.6 으로 준다(사용자: "전부를 집계할 수 있는 곳은 없을 거다, 부분적으로 적용하는 만큼 점수를 부분으로 주자"). 덮는 비율을 숫자로 알면 그 비율(Gartner → NVIDIA 58%, 기존 묶음 계산과 같음), 모르는 간접 자료(클릭 유입·중계 서비스 토큰)는 고정 50%. 검색·데스크톱 OS 의 StatCounter 는 측정 방식이 시장과 맞아 100%.
+- **출처 신뢰도도 본다(사용자).** Gartner·OpenRouter 는 신뢰한다고 했고 StatCounter 소셜·챗봇과 Apps Run The World 는 잘 모르겠다고 했다. 네 개를 모두 고르면서 덧붙인 말이라 확인을 받는다.
+

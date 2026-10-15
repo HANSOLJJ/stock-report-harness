@@ -440,7 +440,7 @@ def validate_market_definition(payload: Any, market_id: str) -> dict[str, Any]:
     기간별 값은 실행의 관측(market_share·market_revenue·market_volume)이고 여기에 두지 않는다(rules.md ① 「D·E 의 시장」)."""
     where = f"scorecard/markets/{market_id}.json"
     _expect_keys(payload, ["schema", "market_id", "label", "measure", "value_kind", "period_basis", "source_priority", "scope_basis",
-                           "sources", "constituents"], where, optional=["outside", "precision", "lists_top_n", "note"])
+                           "sources", "constituents"], where, optional=["outside", "precision", "lists_top_n", "measure_fit", "note"])
     _require(payload["schema"] == "scorecard.market/1", f"{where}.schema 는 scorecard.market/1")
     _require(payload["market_id"] == market_id, f"{where}.market_id {payload['market_id']!r} 가 파일 이름과 다름")
     _expect_str(payload["label"], f"{where}.label", nonempty=True)
@@ -472,6 +472,9 @@ def validate_market_definition(payload: Any, market_id: str) -> dict[str, Any]:
     if "lists_top_n" in payload:
         _require(payload["lists_top_n"] is True and len(members) >= 3, f"{where}.lists_top_n: true 이고 구성 회사가 셋 이상이어야 함")
     _require(payload["measure"] != "usage" or payload["value_kind"] == "share", f"{where}: 사용량(usage)은 점유율(share)로만 적는다")
+    if "measure_fit" in payload:
+        # 2026-10-15: 시장의 일부만 재고 그 비율을 모르는 자료(클릭 유입·중계 서비스 토큰)는 간접 자료로 적어 일부만 반영한다.
+        _expect_choice(payload["measure_fit"], ["direct", "proxy"], f"{where}.measure_fit")
     if "precision" in payload:
         _require(_is_number(payload["precision"]) and 0 < payload["precision"] < 0.05,
                  f"{where}.precision: 점유율 반올림 폭(0 초과 0.05 미만) ({payload['precision']!r})")
@@ -696,8 +699,11 @@ def _validate_v3_structure(payload: dict[str, Any]) -> None:
         if fid == "F1" and spec.get("markets") is not None:
             # 2026-10-15: 규칙이 시장 정의표 파일의 sha256 을 품어 점수를 본 뒤 시장을 바꿀 수 없게 한다(rules.md ① 「D·E 의 시장」).
             markets = spec["markets"]
-            _expect_keys(markets, ["dir", "files"], f"{where}.markets", optional=["note"])
+            _expect_keys(markets, ["dir", "files", "partial_weight"], f"{where}.markets", optional=["note"])
             _expect_str(markets["dir"], f"{where}.markets.dir", nonempty=True)
+            # 2026-10-15 사용자 결정: 시장이나 사업의 일부만 재는 자료는 이 고정 비율만큼만 반영한다(rules.md ① 「부분 반영」).
+            pw = markets["partial_weight"]
+            _require(_is_number(pw) and 0 < pw < 1, f"{where}.markets.partial_weight: 0 초과 1 미만 숫자 ({pw!r})")
             _require(isinstance(markets["files"], dict), f"{where}.markets.files 는 object")
             for mid, digest in markets["files"].items():
                 _require(isinstance(mid, str) and MARKET_ID_RE.fullmatch(mid), f"{where}.markets.files: 시장 id {mid!r}")
@@ -1854,7 +1860,7 @@ def _validate_business(inputs: dict[str, Any], spec: dict[str, Any], rules: dict
     for idx, comp in enumerate(comps):
         cw = f"{where}.components[{idx}]"
         _expect_keys(comp, ["name", "layer", "customer", "lines", "market", "ai_monetized"], cw,
-                     optional=[*BUSINESS_MONETIZATION_KEYS, "note"])
+                     optional=[*BUSINESS_MONETIZATION_KEYS, "coverage", "note"])
         _expect_str(comp["name"], f"{cw}.name", nonempty=True)
         _expect_choice(comp["layer"], [*rules["layers"]["order"], rules["layers"]["outside"]["id"]], f"{cw}.layer")
         _expect_choice(comp["customer"], sorted(CUSTOMER_TYPES), f"{cw}.customer")
@@ -1865,6 +1871,12 @@ def _validate_business(inputs: dict[str, Any], spec: dict[str, Any], rules: dict
             # 2026-10-15: 시장은 규칙이 해시로 묶은 정의표의 id 만 가리킨다. 정의표에 없으면 D·E 는 미확인(null)으로 둔다.
             defined = set(((spec.get("markets") or {}).get("files") or {}))
             _require(comp["market"] in defined, f"{cw}.market: 규칙의 시장 정의표에 없는 시장 {comp['market']!r} (정의된 시장 {sorted(defined)})")
+        if "coverage" in comp:
+            # 2026-10-15: 시장이 사업 매출의 일부만 잴 때. 비율을 알면 숫자, 공시되지 않았으면 partial(고정 비율). 전체면 적지 않는다.
+            cov = comp["coverage"]
+            _require(comp["market"] is not None, f"{cw}.coverage: 시장이 없는 구성은 덮는 비율을 적지 않는다")
+            _require(cov == "partial" or (_is_number(cov) and 0 < cov < 1),
+                     f"{cw}.coverage: 0 초과 1 미만 숫자이거나 'partial' ({cov!r}) — 시장이 사업 전체를 재면 적지 않는다")
         _expect_choice(comp["ai_monetized"], sorted(AI_MONETIZED_VALUES), f"{cw}.ai_monetized")
         if comp["ai_monetized"] == "yes":
             missing = [k for k in BUSINESS_MONETIZATION_KEYS if k not in comp]

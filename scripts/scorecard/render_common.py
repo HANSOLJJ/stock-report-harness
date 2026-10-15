@@ -2429,7 +2429,9 @@ def market_table_rows(factors: dict[str, dict[str, Any]]) -> list[list[str]]:
             prior = f"{m['share_prior'] * 100:.1f}%" if m.get("share_prior") is not None else "—"
             change = f"{m['change_pp']:+.1f}%p" if m.get("change_pp") is not None else "—"
             rank = f"{m['rank']}위" if m.get("rank") is not None else ("상위 목록 밖" if m.get("D_level") == "other" else "—")
-            rows.append([c["name"], m.get("label", m.get("market_id", "")), rank, f"{share} ← {prior}", change,
+            # 2026-10-15: 부분 반영이면 반영 비율과 잰 값을 함께 보인다(rules.md ① 「부분 반영」).
+            weight = f"{_score_text(c['weight'] * 100)}%" if "weight" in c else "100%"
+            rows.append([c["name"], m.get("label", m.get("market_id", "")), rank, f"{share} ← {prior}", change, weight,
                          _score_text(c["D"]) + ("" if "D" not in b.get("unknown_parts", []) else "(미확인)"),
                          _score_text(c["E"]) + ("" if "E" not in b.get("unknown_parts", []) else "(미확인)")])
     return rows
@@ -2489,7 +2491,9 @@ def method_sections_v3(ctx: Any, results: dict[str, Any]) -> list[tuple[str | No
                f"D 시장 순위·E 점유율 방향(각 0~{f['F1']['parts']['D']['max']})을 구성 사업마다 더한다. AI 수익화가 '예'가 아닌 구성 사업은 "
                f"최고 {f['F1']['ai_cap']['cap']}점이다. "
                + (f"D·E 는 구성 사업의 시장 정의표(시장 {len(f['F1']['markets']['files'])}개, 규칙이 파일 해시로 묶음)와 시장 관측으로 잰다. "
-                  f"시장이 정해지지 않았거나 자료가 모자란 부분은 미확인({_score_text(d_unknown)}점)이고, 조사기관 상위 목록 밖이면 D 는 0 이다."
+                  f"시장이 정해지지 않았거나 자료가 모자란 부분은 미확인({_score_text(d_unknown)}점)이고, 조사기관 상위 목록 밖이면 D 는 0 이다. "
+                  f"시장이 사업의 일부만 재거나 시장의 일부만 재는 간접 자료면 반영 비율 × 잰 점수 + (1 − 반영 비율) × 미확인 점수로 반영한다"
+                  f"(덮는 비율을 모르면 {_score_text(f['F1']['markets']['partial_weight'] * 100)}%)."
                   if (f["F1"].get("markets") or {}).get("files") else
                   f"시장 정의표가 아직 없어 D·E 는 모든 사업이 미확인({_score_text(d_unknown)}점씩)이다.")],
         "F2": [f"층마다 성능 도약(0~{max(f2['leap'].values())})·패러다임 적응(0~{max(f2['adaptation'].values())})·표준 선점"

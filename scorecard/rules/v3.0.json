@@ -193,13 +193,14 @@
           "pcs": "f7dbe1d4ae6e74dc498511ef5873e8aacf14a82c869ec829a182c5c076e68ade",
           "search_engines": "9887df3646c32f4a4522b473272aa86fa0cdc01cae4076bcc225c0831e1d9268",
           "smartphones": "89c1bea1296f03a57c213e0acf109f3833620d535f73874b48b4c3d50c2f0fd4",
-          "social_media": "57e4ae2777f2d4b49502599acb03668724c56d15f962eaf7453c99b1b36368df",
+          "social_media": "c811af26dd06063ae142d28bcc067269c07fe1cc2d1422f9dd744a09f60e8220",
           "tablets": "9e83b4c3c17ec6dd78c4962151ba9c626d20b2ce6640b57778c2b180396b1fdf",
-          "tv_viewing": "3a4fcc101cd66de9c51043e366c556e227f424431d17279e99da285f78173947",
+          "tv_viewing": "67f921048f082baee21ea4a95b7ecf8f0e1d5a25f6c8e57053ae2902ef8ed2e8",
           "wearables": "f95300ff2da3e99e9e0c528c4a927497f8f0aa96e7c5efb0950049d5893ac426"
-        }
+        },
+        "partial_weight": 0.5
       },
-      "markets_note": "시장 정의표(scorecard/markets/<id>.json)의 sha256 을 markets.files 에 둔다(markets.dir 는 저장소 기준 경로). 기간별 값은 실행의 관측(market_share·market_revenue·market_volume)이다. 정의표가 없거나 구성 사업의 시장이 정해지지 않았거나 자료가 모자라면 그 D·E 는 미확인(만점의 40%)이다(2026-10-15)",
+      "markets_note": "시장 정의표(scorecard/markets/<id>.json)의 sha256 을 markets.files 에 둔다(markets.dir 는 저장소 기준 경로). 기간별 값은 실행의 관측(market_share·market_revenue·market_volume)이다. 정의표가 없거나 구성 사업의 시장이 정해지지 않았거나 자료가 모자라면 그 D·E 는 미확인(만점의 40%)이다(2026-10-15). 시장이 사업의 일부만 재거나(구성 사업의 coverage) 정의표가 간접 자료(measure_fit proxy)면 반영 비율 × 잰 점수 + (1 − 반영 비율) × 미확인 점수로 반영한다. 덮는 비율을 알면 그 비율, 모르면 partial_weight 이고 둘이 함께 걸리면 곱한다(2026-10-15 사용자 결정)",
       "note": "사업 점수 = A + B + C + D + E (0~20). 층 점수 = 그 층 안 사업 점수의 매출 몫 평균. 회사 ① = 층 점수의 층 매출 몫 가중 평균"
     },
     "F2": {

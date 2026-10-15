@@ -81,6 +81,7 @@
       "name": "AMC Networks"
     }
   ],
+  "measure_fit": "proxy",
   "lists_top_n": true,
   "outside": [
     {

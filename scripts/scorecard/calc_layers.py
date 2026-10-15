@@ -332,6 +332,15 @@ def _f1_shared(inputs: dict[str, Any], parts: dict[str, Any], rules: RuleSet) ->
     return a_points + b_points + c_points, detail, unknown
 
 
+def _partial_weight(comp: dict[str, Any], market: dict[str, Any], markets: dict[str, Any]) -> float:
+    """2026-10-15 사용자 결정: 시장이 사업 매출의 일부만 재거나(coverage), 정의표가 시장의 일부만 재는 간접 자료(measure_fit proxy)면
+    재는 만큼만 반영한다. 덮는 비율을 알면 그 비율, 모르면 규칙의 고정 비율이고 둘이 함께 걸리면 곱한다(rules.md ① 「부분 반영」)."""
+    fixed = float(markets["partial_weight"])
+    cov = comp.get("coverage")
+    weight = 1.0 if cov is None else (fixed if cov == "partial" else float(cov))
+    return weight * fixed if market.get("measure_fit") == "proxy" else weight
+
+
 def _market_summary(pos: dict[str, Any] | None) -> dict[str, Any] | None:
     """결과에 남길 시장 위치 요약(점유율·순위·1년 변화·기간·관측 ID)."""
     if pos is None:
@@ -388,10 +397,16 @@ def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rule
         for comp in b["inputs"]["components"]:
             revenue = sum(float(lines[line_id]["amount"]) for line_id in comp["lines"])
             # 2026-10-15: 시장이 정해진 구성은 calc_market 이 D·E 를 잰다. 잴 수 없는 부분은 미확인(만점의 40%, rules.md 2.6).
-            pos = (market_position(rules.market(comp["market"]), obs, cid, run["as_of"], rules)
-                   if markets and comp.get("market") and obs is not None else None)
-            d_points = pos["D"] if pos is not None and pos["D"] is not None else rules.unknown_points(parts["D"]["max"])
-            e_points = pos["E"] if pos is not None and pos["E"] is not None else rules.unknown_points(parts["E"]["max"])
+            market = rules.market(comp["market"]) if markets and comp.get("market") else None
+            pos = market_position(market, obs, cid, run["as_of"], rules) if market is not None and obs is not None else None
+            weight = _partial_weight(comp, market, markets) if market is not None else 1.0
+            points = {}
+            for k in ("D", "E"):
+                unknown_k = rules.unknown_points(parts[k]["max"])
+                measured = pos[k] if pos is not None else None
+                # 부분 반영: 반영 비율 × 잰 점수 + (1 − 반영 비율) × 미확인 점수. 잴 수 없으면 미확인 점수 그대로다.
+                points[k] = unknown_k if measured is None else weight * measured + (1 - weight) * unknown_k
+            d_points, e_points = points["D"], points["E"]
             de_unknown |= {k for k in ("D", "E") if pos is None or pos[k] is None}
             if markets and not comp.get("market"):
                 warnings.append(f"{b['business']}: 구성 {comp['name']} 의 시장이 정해지지 않아 D·E 는 미확인이다")
@@ -403,6 +418,8 @@ def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rule
             comps.append({"name": comp["name"], "layer": comp["layer"], "customer": comp["customer"], "lines": list(comp["lines"]),
                           "revenue": _tidy(revenue), "D": _tidy(d_points), "E": _tidy(e_points), "ai_monetized": comp["ai_monetized"],
                           "market": _market_summary(pos),
+                          **({"weight": _tidy(weight), "D_measured": _tidy(pos["D"]) if pos and pos["D"] is not None else None,
+                              "E_measured": _tidy(pos["E"]) if pos and pos["E"] is not None else None} if weight < 1 else {}),
                           "raw": _tidy(raw), "ai_cap_applied": capped, "score": _tidy(score)})
             by_layer.setdefault(comp["layer"], []).append((revenue, score))
         calc["businesses"][b["business"]] = {"judgment_id": b["judgment_id"], **detail, "shared": _tidy(shared),

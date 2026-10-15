@@ -468,8 +468,8 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         # 2026-10-15 규칙 v3.0 ① D·E: 시장이 정해진 구성 사업의 시장 위치(정의표가 없거나 시장이 없으면 표도 없다).
         market_rows = rc.market_table_rows(c["factors"]) if rc.is_layered(ctx.rules) else []
         if market_rows:
-            lines += [table(["구성 사업", "시장", "순위", "점유율(최근 ← 1년 전)", "변화", "D", "E"], market_rows,
-                            ["---", "---", "---:", "---:", "---:", "---:", "---:"]), ""]
+            lines += [table(["구성 사업", "시장", "순위", "점유율(최근 ← 1년 전)", "변화", "반영", "D", "E"], market_rows,
+                            ["---", "---", "---:", "---:", "---:", "---:", "---:", "---:"]), ""]
         incompatible_g4 = rc.g4_incompatible(ctx.observations, c["company_id"])
         for f in FACTOR_IDS:
             fr = c["factors"][f]
