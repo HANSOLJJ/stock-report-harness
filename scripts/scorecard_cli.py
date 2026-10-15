@@ -181,6 +181,20 @@ def cmd_init(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_set_as_of(args: argparse.Namespace) -> int:
+    """승인 전 실행의 분석 기준일을 뒤로 옮긴다(2026-10-15)."""
+    from scorecard.stages import move_as_of
+
+    _claim(args, "set-as-of")
+    out = move_as_of(args.slug, args.as_of, reason=args.reason)
+    for key, (before, after) in out["moved"].items():
+        print(f"{key}: {before} → {after}")
+    print(f"run: {rel(out['run'])}")
+    print(f"plan: {rel(out['plan'])}")
+    print(f"다음: uv run --frozen python -X utf8 scripts/scorecard_cli.py collect {args.slug} --since <날짜> 로 새 창의 후보를 모은다")
+    return 0
+
+
 def cmd_collect(args: argparse.Namespace) -> int:
     """근거 후보를 모은다. 뉴스·공시는 후보 파일만, 가격은 관측·출처까지 쓴다(2026-09-30 레인 E)."""
     from scorecard.stages import COLLECT_KINDS, collect
@@ -682,6 +696,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--force", action="store_true")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_init)
+
+    p = sub.add_parser("set-as-of", help="승인 전 실행의 분석 기준일을 뒤로 옮긴다. 정보 컷오프가 같았으면 함께, 가격 기준일은 그대로")
+    p.add_argument("slug")
+    p.add_argument("--as-of", required=True)
+    p.add_argument("--reason", required=True, help="가정 목록에 남길 사유(완결된 문장)")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
+    p.set_defaults(func=cmd_set_as_of)
 
     p = sub.add_parser("collect", help="근거 후보 수집. research 앞에서만 돈다(build 는 재수집하지 않는다)")
     p.add_argument("slug")

@@ -13,7 +13,7 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
-from report_contract_lib import read_markdown, rel
+from report_contract_lib import frontmatter_value, read_markdown, rel
 
 from . import evidence_lib
 from .baseline_import import BASELINE_AS_OF, SRC_HANDOVER, SRC_HANDOVER_SHA256, SRC_HTML, SRC_MD, SRC_RULE, baseline_judgments
@@ -386,6 +386,47 @@ def init_run(
     plan_path.write_text(plan_text, encoding="utf-8", newline="\n")
     return {"plan": plan_path, "run": d / "run.json", "observations": d / "observations.json", "judgments": d / "judgments.json",
             "sources": d / "sources.json", **carried_files}
+
+
+# ------------------------------------------------------------------ set-as-of
+# 2026-10-15: 기준일 뒤 사건(Anthropic 3분기 투자자 설명회 보도)을 근거로 넣으려면 init --force 로 실행을 다시 만들어야 했고,
+# 그러면 진행 중인 판단이 사라졌다. 앞당기면 이미 확정한 근거가 기준일 뒤로 밀려나므로 뒤로만 옮긴다.
+_PLAN_BASELINE_RE = re.compile(r"^## 기준선\n\n- (?P<note>.+)$", re.MULTILINE)
+
+
+def move_as_of(slug: str, as_of: str, *, reason: str) -> dict[str, Any]:
+    """분석 기준일을 뒤로 옮긴다. 정보 컷오프가 기준일과 같았으면 함께 옮기고 가격 기준일은 그대로 둔다. plan.md 는 다시 그린다."""
+    d = run_dir(slug)
+    run = validate_run(load_json_strict(d / "run.json"), slug)
+    try:
+        date.fromisoformat(as_of)
+    except ValueError as exc:
+        raise SchemaError(f"--as-of 는 YYYY-MM-DD ({as_of!r})") from exc
+    old = run["as_of"]
+    if as_of <= old:
+        raise SchemaError(f"기준일은 뒤로만 옮긴다(지금 {old}, 요청 {as_of})")
+    if not reason.strip():
+        raise SchemaError("--reason 이 비었다")
+    rules = load_rules(run["rule_version"])
+    if run.get("rule_hash") and run["rule_hash"] != rules.hash:
+        raise SchemaError("규칙 파일이 실행을 만든 뒤 바뀌었다 — 새 slug 로 init 한다")
+    plan_path = run_paths(slug).plan
+    plan_fm, plan_body, _, _ = read_markdown(plan_path)
+    baseline = _PLAN_BASELINE_RE.search(plan_body)
+    if baseline is None:
+        raise SchemaError(f"{rel(plan_path)} 에서 기준선 줄을 찾지 못했다")
+    protect_approved_run(slug, "기준일 변경")
+    moved = {"as_of": [old, as_of]}
+    run["as_of"] = as_of
+    if run.get("info_cutoff") in (None, old):
+        moved["info_cutoff"] = [run.get("info_cutoff"), as_of]
+        run["info_cutoff"] = as_of
+    run["assumptions"].append(f"분석 기준일은 {as_of} 이다({reason.strip()})")
+    write_json(d / "run.json", run)
+    plan_text = render_plan(run, rules, load_companies(), request=frontmatter_value(plan_fm, "request"),
+                            baseline_note=baseline.group("note"))
+    plan_path.write_text(plan_text, encoding="utf-8", newline="\n")
+    return {"run": d / "run.json", "plan": plan_path, "moved": moved}
 
 
 # ------------------------------------------------------------------ collect
