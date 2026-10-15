@@ -185,6 +185,9 @@ class FromRunTest(unittest.TestCase):
             for f in ("F7", "F8", "F9"):
                 self.assertEqual(new[(cid, f)], prior[(cid, f)], f"{cid} {f} 는 한 글자도 바뀌지 않는다")
         engine.load_context("ai-scorecard-2026-10-v30t")   # 이어받은 입력이 v3.0 검증을 통과한다
+        assumptions = load_json_strict(engine.run_dir("ai-scorecard-2026-10-v30t") / "run.json")["assumptions"]
+        self.assertTrue(any("diff 로 견주지 못하므로 모든 기업을 다시 매기고" in a for a in assumptions))
+        self.assertFalse(any("diff 로 확인한다" in a for a in assumptions), "diff 가 거부하는 실행에 diff 를 안내하지 않는다")
         from scorecard.compare import compare_runs
         with self.assertRaisesRegex(SchemaError, "diff 는 층·사업 단위 규칙\\(v3.0 이상\\) 실행을 아직 견주지 못한다: ai-scorecard-2026-10-v30t"):
             compare_runs("ai-scorecard-2026-10-v30t", V21)

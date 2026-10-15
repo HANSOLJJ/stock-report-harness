@@ -134,6 +134,8 @@ def cmd_import_baseline(args: argparse.Namespace) -> int:
 
 
 def cmd_init(args: argparse.Namespace) -> int:
+    from scorecard.rules import load_rules
+    from scorecard.schema import load_json_strict
     from scorecard.stages import init_run, today
 
     decisions = []
@@ -174,7 +176,8 @@ def cmd_init(args: argparse.Namespace) -> int:
     claim_lock(args.slug, "init", take_lock=args.take_lock)
     for name, path in paths.items():
         print(f"{name}: {rel(path)}")
-    if args.from_run:
+    # 2026-10-15: diff 는 기업 추가 실행의 축약 리뷰용이고 층·사업 단위 규칙 실행은 견주지 못한다. 두 경우에만 안내한다.
+    if args.from_run and add_companies and not load_rules(load_json_strict(paths["run"])["rule_version"]).payload.get("layers"):
         print(f"다음: research 로 새 기업만 조사한 뒤 "
               f"uv run --frozen python -X utf8 scripts/scorecard_cli.py diff {args.slug} --against {args.from_run} 으로 기존 기업 불변을 확인한다")
     print(f"다음: uv run --frozen python -X utf8 scripts/scorecard_cli.py collect {args.slug} → 후보 선별 → research {args.slug}")

@@ -204,8 +204,11 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
     prior_rule_hash = prior_run.get("rule_hash")
     if prior_rule_hash and prior_rule_hash != rules.hash:
         moved = f"규칙이 이어받은 실행 이후 바뀌었다({prior_rule_hash[:12]}… → {rules.hash[:12]}…)"
-        print(f"[경고] {moved} — 기존 기업 점수 불변은 diff 로 확인한다")
-        assumptions.append(f"{moved} — 기존 기업 점수 불변은 diff 로 확인한다")
+        # 2026-10-15: diff 는 층·사업 단위 규칙 실행을 견주지 못한다(compare.compare_runs). 그 실행에는 diff 를 안내하지 않는다.
+        check = ("층·사업 단위 규칙이라 diff 로 견주지 못하므로 모든 기업을 다시 매기고 전체 리뷰를 한다"
+                 if rules.payload.get("layers") else "기존 기업 점수 불변은 diff 로 확인한다")
+        print(f"[경고] {moved} — {check}")
+        assumptions.append(f"{moved} — {check}")
     # 2026-10-12 규칙 v2.1 첫 실행: 새 규칙이 받지 않는 새 판단(형식: v2.0 ④⑧ score → v2.1 survival·axes, 판정 재료: ① AI 수익화
     # '예' 의 재료 여섯)이 status new 로 넘어오면 첫 load_context 에서 막혀 판단을 고칠 제안조차 쓸 수 없다. 그 판단만 carried 로
     # 두어 옛 규칙으로 읽게 하고(검증기의 설계 의도: 이어받은 뒤 하나씩 새 판단으로 바꾼다) 정기 실행에 승계가 남으면
