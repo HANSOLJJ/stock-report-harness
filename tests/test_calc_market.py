@@ -162,6 +162,26 @@ class PositionTest(unittest.TestCase):
             with self.subTest(change=change), self.assertRaisesRegex(SchemaError, pattern):
                 validate_market_definition(definition(**change), "cloud_infra")
 
+    def test_one_company_with_several_constituents_is_ranked_as_one(self):
+        # 2026-10-15: 소셜 미디어의 Facebook·Instagram 은 Meta 한 회사다. 따로 세면 X 가 4위, 합치면 3위(D 1)다.
+        members = [{"key": "facebook", "name": "Facebook", "company_id": "meta"}, {"key": "instagram", "name": "Instagram", "company_id": "meta"},
+                   {"key": "youtube", "name": "YouTube", "company_id": "alphabet"}, {"key": "twitter", "name": "X", "company_id": "spacex-xai"},
+                   {"key": "pinterest", "name": "Pinterest"}]
+        m = definition(market_id="social_media", measure="usage", constituents=members, precision=0.0001)
+        now = {"facebook": 0.72, "instagram": 0.0713, "youtube": 0.0837, "twitter": 0.0687, "pinterest": 0.0299}
+        prior = {"facebook": 0.733, "instagram": 0.0908, "youtube": 0.0431, "twitter": 0.0744, "pinterest": 0.0398}
+        obs = shares(now, prior, market_id="social_media")
+        x = position(m, obs, company_id="spacex-xai")
+        self.assertEqual((x["rank"], x["D_level"], x["D"]), (3, "third", 1))
+        meta = position(m, obs, company_id="meta")
+        self.assertAlmostEqual(meta["share"], 0.7913)
+        self.assertEqual((meta["constituent"], meta["D"]), ("facebook+instagram", 4))
+        # 두 구성 회사의 반올림 오차가 더해져 낮은 끝이 두 배로 내려간다: (0.7913 − 0.8238) × 100 − 2 × 0.0001 × 100
+        self.assertAlmostEqual(meta["change_pp_low"], (0.7913 - 0.8238) * 100 - 0.02, places=6)
+        apart = definition(market_id="social_media", measure="usage", precision=0.0001,
+                           constituents=[{k: v for k, v in c.items() if not (c["key"] in ("facebook", "instagram") and k == "company_id")} for c in members])
+        self.assertEqual(position(apart, obs, company_id="spacex-xai")["rank"], 4, "회사를 표시하지 않으면 따로 센다")
+
     def test_unknown_cases(self):
         m = definition()
         now = {"aws": 0.30, "azure": 0.21, "gcp": 0.13, "oracle": 0.03}

@@ -55,20 +55,38 @@ def _shares(market: dict[str, Any], values: dict[str, tuple[float, str]]) -> tup
     return {k: v / total for k, (v, _oid) in values.items()}, None
 
 
-def _rank_level(shares: dict[str, float], me: str, spec: dict[str, Any], precision: float) -> tuple[str | None, int | None, str | None]:
-    """D 칸. 반올림 폭 안에서 순위나 지배 조건이 갈리면 확정하지 않는다(rules.md ① 「반올림 경계」)."""
+def _groups(market: dict[str, Any]) -> dict[str, list[str]]:
+    """회사별 구성 회사 묶음. company_id 가 있으면 그 회사로 묶고, 없으면 구성 회사 하나가 한 묶음이다.
+
+    2026-10-15: 시장 순위는 회사끼리 견준다. 소셜 미디어의 Facebook·Instagram 처럼 한 회사가 여러 구성 회사로 잡히면 합친다."""
+    groups: dict[str, list[str]] = {}
+    for m in market["constituents"]:
+        groups.setdefault(m.get("company_id") or m["key"], []).append(m["key"])
+    return groups
+
+
+def _grouped(shares: dict[str, float], groups: dict[str, list[str]]) -> dict[str, float]:
+    """구성 회사가 모두 있는 묶음의 합친 점유율."""
+    return {g: sum(shares[k] for k in keys) for g, keys in groups.items() if all(k in shares for k in keys)}
+
+
+def _rank_level(shares: dict[str, float], me: str, spec: dict[str, Any], err: dict[str, float]) -> tuple[str | None, int | None, str | None]:
+    """D 칸. 반올림 폭 안에서 순위나 지배 조건이 갈리면 확정하지 않는다(rules.md ① 「반올림 경계」).
+
+    `err` 는 묶음마다 반올림 오차의 끝(구성 회사 수 × 반올림 폭의 절반)이다. 두 값의 차이는 두 오차를 더한 만큼 흔들린다."""
     mine = shares[me]
-    others = sorted((v for k, v in shares.items() if k != me), reverse=True)
-    rank = 1 + sum(1 for v in others if v > mine)
-    if any(round(abs(v - mine), DIGITS) <= precision for v in others):
-        return None, rank, f"다른 구성 회사와 점유율 차이가 반올림 폭({precision:.1%}) 안이라 순위를 확정하지 않는다"
+    others = sorted(((g, v) for g, v in shares.items() if g != me), key=lambda x: -x[1])
+    rank = 1 + sum(1 for _g, v in others if v > mine)
+    if any(round(abs(v - mine), DIGITS) <= round(err[me] + err[g], DIGITS) for g, v in others):
+        return None, rank, "다른 회사와 점유율 차이가 반올림 폭 안이라 순위를 확정하지 않는다"
     if rank > 1:
         return {2: "second", 3: "third"}.get(rank, "other"), rank, None
-    second = others[0] if others else 0.0
+    g2, second = others[0] if others else (me, 0.0)
+    e_me, e_2 = err[me], (err[g2] if others else 0.0)
     dom = spec["dominant_if"]
     lead, floor = float(dom["lead_multiple"]), float(dom["share_at_least"])
-    sure = (round(mine - precision - lead * (second + precision), DIGITS) >= 0 or round(mine - precision - floor, DIGITS) >= 0)
-    maybe = (round(mine + precision - lead * max(second - precision, 0.0), DIGITS) >= 0 or round(mine + precision - floor, DIGITS) >= 0)
+    sure = (round(mine - e_me - lead * (second + e_2), DIGITS) >= 0 or round(mine - e_me - floor, DIGITS) >= 0)
+    maybe = (round(mine + e_me - lead * max(second - e_2, 0.0), DIGITS) >= 0 or round(mine + e_me - floor, DIGITS) >= 0)
     if sure:
         return "dominant", rank, None
     if not maybe:
@@ -82,17 +100,17 @@ def market_position(market: dict[str, Any], obs: ObsLookup, company_id: str, as_
     out: dict[str, Any] = {"market_id": market["market_id"], "label": market["label"], "measure": market["measure"],
                            "D": None, "E": None, "notes": [], "observation_ids": [],
                            "outside": [o["name"] for o in market.get("outside") or []]}
-    me = next((m["key"] for m in market["constituents"] if m.get("company_id") == company_id), None)
+    groups = _groups(market)
+    me = company_id if company_id in groups and any(m.get("company_id") == company_id for m in market["constituents"]) else None
     if me is None:
         # 2026-10-15: 구성 회사가 출처의 상위 N 목록이면 목록 밖 회사는 N 위 밖이다. D 는 "그 밖"으로 확정하고 E 는 잴 수 없다.
         if market.get("lists_top_n"):
             out["D_level"], out["D"] = "other", float(parts["D"]["levels"]["other"])
-            out["notes"].append(f"출처의 상위 {len(market['constituents'])}곳 목록에 없어 {len(market['constituents'])}위 밖이다(D 그 밖). "
-                                "점유율 방향은 잴 수 없다")
+            out["notes"].append(f"출처의 상위 {len(groups)}곳 목록에 없어 {len(groups)}위 밖이다(D 그 밖). 점유율 방향은 잴 수 없다")
         else:
             out["notes"].append(f"이 회사가 시장 {market['market_id']} 의 구성 회사에 없다")
         return out
-    out["constituent"] = me
+    out["constituent"] = "+".join(groups[me])
     periods = _periods(market, obs, as_of)
     if not periods:
         out["notes"].append(f"기준일 {as_of} 까지 시장 {market['market_id']} 의 검증된 관측이 없다")
@@ -100,15 +118,17 @@ def market_position(market: dict[str, Any], obs: ObsLookup, company_id: str, as_
     latest = max(periods, key=lambda p: (p[1], p[0]))
     out["period"] = {"start": latest[0], "end": latest[1]}
     precision = float(market.get("precision", 0.001 if market["value_kind"] == "share" else 0.0))
-    shares, why = _shares(market, periods[latest])
+    err = {g: len(keys) * precision / 2 for g, keys in groups.items()}
+    raw, why = _shares(market, periods[latest])
+    shares = _grouped(raw, groups) if raw is not None else None
     if shares is None or me not in shares:
         out["notes"].append(why or f"최근 기간 {latest[1]} 에 이 회사의 값이 없다")
         return out
     out["observation_ids"] += [oid for _v, oid in periods[latest].values()]
     out["share"] = shares[me]
-    complete = market["value_kind"] == "amount" or all(m["key"] in shares for m in market["constituents"])
+    complete = len(shares) == len(groups)
     if complete:
-        level, rank, note = _rank_level(shares, me, parts["D"], precision)
+        level, rank, note = _rank_level(shares, me, parts["D"], err)
         out["rank"] = rank
         if level is not None:
             out["D_level"] = level
@@ -116,13 +136,14 @@ def market_position(market: dict[str, Any], obs: ObsLookup, company_id: str, as_
         else:
             out["notes"].append(note)
     else:
-        missing = [m["key"] for m in market["constituents"] if m["key"] not in shares]
+        missing = [m["key"] for m in market["constituents"] if m["key"] not in raw]
         out["notes"].append(f"최근 기간에 구성 회사 {missing} 의 점유율이 없어 순위를 확정하지 않는다")
     prior = _year_before(latest, list(periods))
     if prior is None:
         out["notes"].append(f"최근 기간 {latest[0]}~{latest[1]} 의 1년 전 기간 관측이 없어 점유율 방향을 잴 수 없다")
         return out
-    prior_shares, why = _shares(market, periods[prior])
+    prior_raw, why = _shares(market, periods[prior])
+    prior_shares = _grouped(prior_raw, groups) if prior_raw is not None else None
     if prior_shares is None or me not in prior_shares:
         out["notes"].append(why or f"1년 전 기간 {prior[1]} 에 이 회사의 값이 없다")
         return out
@@ -130,7 +151,7 @@ def market_position(market: dict[str, Any], obs: ObsLookup, company_id: str, as_
     out["prior_period"] = {"start": prior[0], "end": prior[1]}
     out["share_prior"] = prior_shares[me]
     change = (shares[me] - prior_shares[me]) * 100
-    low = change - precision * 100
+    low = change - 2 * err[me] * 100   # 두 기간의 반올림 오차 끝을 더한 낮은 쪽
     out["change_pp"], out["change_pp_low"] = change, low
     # 반올림 폭이 있으면 두 끝을 함께 적고 낮은 쪽으로 잰다(rules.md ① 「반올림 경계」).
     out["E"] = piecewise(parts["E"]["curve"], low)
