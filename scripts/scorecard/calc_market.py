@@ -10,6 +10,8 @@ from .schema import MARKET_COMPANY_ID, MARKET_MEASURES
 
 # 1년 전 기간은 최근 기간의 시작·끝에서 365일 앞이고, 달력 분기와 회계 분기의 어긋남을 이만큼 받는다.
 YEAR_TOLERANCE_DAYS = 31
+# 2026-10-15: 반올림 폭과 견줄 때 부동소수 끝자리를 지운다(0.23 − 0.22 = 0.010000000000000009 가 폭 0.01 보다 크게 나왔다).
+DIGITS = 9
 
 
 def _metric(market: dict[str, Any]) -> str:
@@ -58,14 +60,15 @@ def _rank_level(shares: dict[str, float], me: str, spec: dict[str, Any], precisi
     mine = shares[me]
     others = sorted((v for k, v in shares.items() if k != me), reverse=True)
     rank = 1 + sum(1 for v in others if v > mine)
-    if any(abs(v - mine) <= precision for v in others):
+    if any(round(abs(v - mine), DIGITS) <= precision for v in others):
         return None, rank, f"다른 구성 회사와 점유율 차이가 반올림 폭({precision:.1%}) 안이라 순위를 확정하지 않는다"
     if rank > 1:
         return {2: "second", 3: "third"}.get(rank, "other"), rank, None
     second = others[0] if others else 0.0
     dom = spec["dominant_if"]
-    sure = (mine - precision) >= float(dom["lead_multiple"]) * (second + precision) or (mine - precision) >= float(dom["share_at_least"])
-    maybe = (mine + precision) >= float(dom["lead_multiple"]) * max(second - precision, 0.0) or (mine + precision) >= float(dom["share_at_least"])
+    lead, floor = float(dom["lead_multiple"]), float(dom["share_at_least"])
+    sure = (round(mine - precision - lead * (second + precision), DIGITS) >= 0 or round(mine - precision - floor, DIGITS) >= 0)
+    maybe = (round(mine + precision - lead * max(second - precision, 0.0), DIGITS) >= 0 or round(mine + precision - floor, DIGITS) >= 0)
     if sure:
         return "dominant", rank, None
     if not maybe:

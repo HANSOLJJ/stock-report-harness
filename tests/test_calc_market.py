@@ -126,6 +126,10 @@ class PositionTest(unittest.TestCase):
         self.assertTrue(any("반올림 폭" in n for n in tie["notes"]))
         double = position(m, shares({"aws": 0.30, "azure": 0.15, "gcp": 0.12, "oracle": 0.03}))   # 정확히 2배
         self.assertIsNone(double["D"])
+        # 2026-10-15: 정수 % 출처(반올림 폭 1%p)에서 23% 와 22% 는 순위를 가를 수 없다. 0.23 − 0.22 의 부동소수 끝자리에 속지 않는다.
+        coarse = definition(precision=0.01)
+        self.assertIsNone(position(coarse, shares({"aws": 0.22, "azure": 0.23, "gcp": 0.12, "oracle": 0.09}))["D"])
+        self.assertEqual(position(coarse, shares({"aws": 0.21, "azure": 0.23, "gcp": 0.12, "oracle": 0.09}))["D"], 2)
 
     def test_share_direction_uses_the_low_end(self):
         m = definition()
