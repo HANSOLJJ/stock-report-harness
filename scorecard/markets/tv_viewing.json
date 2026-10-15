@@ -12,7 +12,7 @@
       "label": "Nielsen The Gauge™ 월간 Media Distributor Gauge(배급사별 TV 시청 시간 점유율) 무료 보도자료",
       "url": "https://www.nielsen.com/data-center/the-gauge/",
       "role": "primary",
-      "note": "Nielsen 이 매달 내는 무료 보도자료 안의 'The Media Distributor Gauge' 차트(Source: Nielsen NPOWER, Total Day·Persons 2+ 시청 분)에서 월별 값을 읽는다. 월별 보도자료 주소는 sources 초안에 있다(2026년 4·5·6월과 2025년 4·5·6월). 데이터센터 페이지(위 주소)의 'Viewing by distributor' 월별 차트가 같은 값을 싣는다."
+      "note": "Nielsen 이 매달 내는 무료 보도자료 안의 'The Media Distributor Gauge' 차트(Source: Nielsen NPOWER, Total Day·Persons 2+ 시청 분)에서 월별 값을 읽는다. 월별 보도자료는 달마다 새 주소로 나온다. 실행은 쓴 달의 보도자료를 모두 출처 장부에 등록하고, 분기 관측의 basis 에 세 달 출처를 함께 적는다. 데이터센터 페이지(위 주소)의 'Viewing by distributor' 월별 차트가 같은 값을 싣는다."
     },
     {
       "label": "Nielsen The Gauge™ 플랫폼별 월간 보도(Viewing by platform)",
