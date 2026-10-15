@@ -206,6 +206,9 @@ class F1IntegrationTest(unittest.TestCase):
         self.assertTrue(any("시장이 정해지지 않아" in w for w in r["warnings"]))
         without = compute_f1_business(AMAZON, JudgmentLookup(items), self.rules, RUN)   # 관측을 넘기지 않으면 미확인
         self.assertEqual(without["calc"]["businesses"]["aws"]["components"][0]["D"], 1.6)
+        from scorecard.render_common import market_table_rows
+        self.assertEqual(market_table_rows({"F1": r}), [["AWS", "클라우드 인프라 서비스 매출", "1위", "30.0% ← 32.0%", "-2.0%p", "3", "0"]],
+                         "시장이 정해진 구성만 표에 싣는다")
 
 
 if __name__ == "__main__":

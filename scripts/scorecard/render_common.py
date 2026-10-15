@@ -2417,6 +2417,24 @@ def layer_table_rows(rules: Any, factors: dict[str, dict[str, Any]]) -> list[lis
             for u in order if u in weights]
 
 
+def market_table_rows(factors: dict[str, dict[str, Any]]) -> list[list[str]]:
+    """2026-10-15 규칙 v3.0 ① D·E: 시장이 정해진 구성 사업의 시장 위치 표. 시장이 하나도 없으면 빈 목록이다."""
+    rows = []
+    for _bid, b in ((factors["F1"].get("calc") or {}).get("businesses") or {}).items():
+        for c in b.get("components") or []:
+            m = c.get("market")
+            if not m:
+                continue
+            share = f"{m['share'] * 100:.1f}%" if m.get("share") is not None else "—"
+            prior = f"{m['share_prior'] * 100:.1f}%" if m.get("share_prior") is not None else "—"
+            change = f"{m['change_pp']:+.1f}%p" if m.get("change_pp") is not None else "—"
+            rank = f"{m['rank']}위" if m.get("rank") is not None else ("상위 목록 밖" if m.get("D_level") == "other" else "—")
+            rows.append([c["name"], m.get("label", m.get("market_id", "")), rank, f"{share} ← {prior}", change,
+                         _score_text(c["D"]) + ("" if "D" not in b.get("unknown_parts", []) else "(미확인)"),
+                         _score_text(c["E"]) + ("" if "E" not in b.get("unknown_parts", []) else "(미확인)")])
+    return rows
+
+
 def rescaled_text(rules: Any, fid: str, old: Any, old_rules: Any) -> str | None:
     """척도가 다른 옛 규칙의 점수를 범위 비율로 환산한 참고값('2(×4 환산 8)'). v3.0 실행에서 범위가 다를 때만, 아니면 None.
     환산값은 점수가 아니다 — 옛 판단을 새 규칙으로 다시 매긴 값이 아니라 눈금만 맞춘 것이다."""
@@ -2469,7 +2487,11 @@ def method_sections_v3(ctx: Any, results: dict[str, Any]) -> list[tuple[str | No
     sections: dict[str, list[str]] = {
         "F1": [f"사업마다 A 락인(0~{p1['max']})·B 가격 실측(0~{p2['max']})·C 대체 공급(0~{p3['max']})을 함께 매기고, "
                f"D 시장 순위·E 점유율 방향(각 0~{f['F1']['parts']['D']['max']})을 구성 사업마다 더한다. AI 수익화가 '예'가 아닌 구성 사업은 "
-               f"최고 {f['F1']['ai_cap']['cap']}점이다. 시장 정의표가 아직 없어 D·E 는 모든 사업이 미확인({_score_text(d_unknown)}점씩)이다."],
+               f"최고 {f['F1']['ai_cap']['cap']}점이다. "
+               + (f"D·E 는 구성 사업의 시장 정의표(시장 {len(f['F1']['markets']['files'])}개, 규칙이 파일 해시로 묶음)와 시장 관측으로 잰다. "
+                  f"시장이 정해지지 않았거나 자료가 모자란 부분은 미확인({_score_text(d_unknown)}점)이고, 조사기관 상위 목록 밖이면 D 는 0 이다."
+                  if (f["F1"].get("markets") or {}).get("files") else
+                  f"시장 정의표가 아직 없어 D·E 는 모든 사업이 미확인({_score_text(d_unknown)}점씩)이다.")],
         "F2": [f"층마다 성능 도약(0~{max(f2['leap'].values())})·패러다임 적응(0~{max(f2['adaptation'].values())})·표준 선점"
                f"(0~{max(f2['standard'].values())})을 더한다. 독립 측정이 없는 층({', '.join(names.get(x, x) for x in f2['no_benchmark_layers'])})은 "
                f"(적응 + 표준) × {f2['no_benchmark_formula']['multiplier']} 다. 표준은 최근 {months}개월 안에 새로 지원한 주요 회사가 있을 때만 센다."],
