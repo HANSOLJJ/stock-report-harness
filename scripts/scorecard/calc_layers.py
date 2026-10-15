@@ -6,7 +6,8 @@ from datetime import date
 from typing import Any, Callable
 
 from .calc_qual import _kind_mismatch, _status_for
-from .inputs import JudgmentLookup, carried_note, factor_result, pending_info
+from .calc_market import market_position
+from .inputs import JudgmentLookup, ObsLookup, carried_note, factor_result, pending_info
 from .rules import RuleSet, piecewise
 
 
@@ -331,12 +332,25 @@ def _f1_shared(inputs: dict[str, Any], parts: dict[str, Any], rules: RuleSet) ->
     return a_points + b_points + c_points, detail, unknown
 
 
-def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any]) -> dict[str, Any]:
+def _market_summary(pos: dict[str, Any] | None) -> dict[str, Any] | None:
+    """결과에 남길 시장 위치 요약(점유율·순위·1년 변화·기간·관측 ID)."""
+    if pos is None:
+        return None
+    keep = ("market_id", "label", "measure", "constituent", "period", "prior_period", "rank", "D_level", "outside", "observation_ids")
+    out = {k: pos[k] for k in keep if k in pos}
+    for k in ("share", "share_prior", "change_pp", "change_pp_low"):
+        if k in pos:
+            out[k] = _tidy(pos[k])
+    return out
+
+
+def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rules: RuleSet, run: dict[str, Any],
+                        obs: ObsLookup | None = None) -> dict[str, Any]:
     """① 네트워크 효과(규칙 v3.0). 사업 점수 = A + B + C(사업·묶음 공유) + D + E(구성 사업마다), AI 수익화가 '예'가 아닌 구성
     사업은 상한 16. 층 점수는 그 층 구성 사업 점수의 매출 몫 평균, 회사 ① 은 층 점수의 층 매출 몫 가중 평균이다(rules.md 2.10, ①).
 
-    시장 정의표(scorecard/markets/)가 아직 없어 D·E 는 모든 구성 사업이 미확인(각 만점의 40%)이다. 판매 층의 매출 줄이 어느
-    사업에도 붙지 않았으면 판정 대기다."""
+    D·E 는 구성 사업의 시장(규칙이 해시로 묶은 정의표)과 시장 관측으로 calc_market 이 잰다. 정의표가 없거나 시장을 정하지 않았거나
+    자료가 모자라면 그 부분은 미확인(만점의 40%)이다. 판매 층의 매출 줄이 어느 사업에도 붙지 않았으면 판정 대기다."""
     fid, basis = "F1", "business"
     spec = rules.factor(fid)
     parts = spec["parts"]
@@ -370,20 +384,29 @@ def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rule
     for b in businesses:
         shared, detail, unknown = _f1_shared(b["inputs"], parts, rules)
         comps = []
+        de_unknown: set[str] = set()
         for comp in b["inputs"]["components"]:
             revenue = sum(float(lines[line_id]["amount"]) for line_id in comp["lines"])
-            # 시장 정의표가 생기면 calc_market 이 D·E 를 잰다. 그 전에는 미확인(만점의 40%, rules.md 2.6).
-            d_points = rules.unknown_points(parts["D"]["max"])
-            e_points = rules.unknown_points(parts["E"]["max"])
+            # 2026-10-15: 시장이 정해진 구성은 calc_market 이 D·E 를 잰다. 잴 수 없는 부분은 미확인(만점의 40%, rules.md 2.6).
+            pos = (market_position(rules.market(comp["market"]), obs, cid, run["as_of"], rules)
+                   if markets and comp.get("market") and obs is not None else None)
+            d_points = pos["D"] if pos is not None and pos["D"] is not None else rules.unknown_points(parts["D"]["max"])
+            e_points = pos["E"] if pos is not None and pos["E"] is not None else rules.unknown_points(parts["E"]["max"])
+            de_unknown |= {k for k in ("D", "E") if pos is None or pos[k] is None}
+            if markets and not comp.get("market"):
+                warnings.append(f"{b['business']}: 구성 {comp['name']} 의 시장이 정해지지 않아 D·E 는 미확인이다")
+            if pos is not None:
+                warnings.extend(f"{b['business']}: {comp['name']} — {n}" for n in pos["notes"])
             raw = shared + d_points + e_points
             capped = comp["ai_monetized"] != cap["requires"] and raw > float(cap["cap"])
             score = min(raw, float(cap["cap"])) if comp["ai_monetized"] != cap["requires"] else raw
             comps.append({"name": comp["name"], "layer": comp["layer"], "customer": comp["customer"], "lines": list(comp["lines"]),
                           "revenue": _tidy(revenue), "D": _tidy(d_points), "E": _tidy(e_points), "ai_monetized": comp["ai_monetized"],
+                          "market": _market_summary(pos),
                           "raw": _tidy(raw), "ai_cap_applied": capped, "score": _tidy(score)})
             by_layer.setdefault(comp["layer"], []).append((revenue, score))
         calc["businesses"][b["business"]] = {"judgment_id": b["judgment_id"], **detail, "shared": _tidy(shared),
-                                            "unknown_parts": [*unknown, "D", "E"] if not markets else unknown, "components": comps}
+                                            "unknown_parts": [*unknown, *sorted(de_unknown)], "components": comps}
         warnings.extend(f"{b['business']}: {x}" for x in carried_note(b))
     layer_scores = {}
     for layer, rows in by_layer.items():

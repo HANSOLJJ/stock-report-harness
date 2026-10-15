@@ -186,7 +186,7 @@
         "boundary_with_pricing": "가격 실측은 '인상·유지 뒤 고객이 남았다'(사실)를, (나)는 '그 인상을 회사가 AI 로 설명한다'(이유)를 본다. 같은 사실을 두 번 세는 것이 아니다(Q01)."
       },
       "markets": null,
-      "markets_note": "시장 정의표(scorecard/markets/)와 그 sha256 은 아직 없다. 그 전까지 D·E 는 정책 기본값 0",
+      "markets_note": "시장 정의표(scorecard/markets/<id>.json)의 sha256 을 markets.files 에 둔다(markets.dir 는 저장소 기준 경로). 기간별 값은 실행의 관측(market_share·market_revenue·market_volume)이다. 정의표가 없거나 구성 사업의 시장이 정해지지 않았거나 자료가 모자라면 그 D·E 는 미확인(만점의 40%)이다(2026-10-15)",
       "note": "사업 점수 = A + B + C + D + E (0~20). 층 점수 = 그 층 안 사업 점수의 매출 몫 평균. 회사 ① = 층 점수의 층 매출 몫 가중 평균"
     },
     "F2": {

@@ -141,7 +141,7 @@ def compute_company(company: dict[str, Any], obs: ObsLookup, judgments: Judgment
     # 2026-10-14 규칙 v3.0: ① business 모드는 사업 단위 판단을 층·회사로 합친다(calc_layers).
     f1_mode = rules.factor("F1").get("mode")
     f1 = (compute_f1(company, judgments, rules) if f1_mode == "lockin"
-          else compute_f1_business(company, judgments, rules, run) if f1_mode == "business"
+          else compute_f1_business(company, judgments, rules, run, obs) if f1_mode == "business"
           else compute_manual("F1", company, judgments, rules))
     return {
         "F1": f1,

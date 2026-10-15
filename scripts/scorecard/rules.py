@@ -9,7 +9,7 @@ from urllib.parse import urlsplit
 
 from report_contract_lib import ROOT
 
-from .schema import SchemaError, load_json_strict, sha256_file, validate_rules
+from .schema import SchemaError, load_json_strict, sha256_file, validate_market_definition, validate_rules
 
 RULES_DIR = ROOT / "scorecard" / "rules"
 
@@ -44,6 +44,26 @@ class RuleSet:
         self.path = path
         self.version: str = payload["rule_version"]
         self.hash: str = sha256_file(path)
+        self._markets: dict[str, dict[str, Any]] = {}
+
+    # ------------------------------------------------------------ markets
+    def market(self, market_id: str) -> dict[str, Any]:
+        """2026-10-15 규칙 v3.0 ① D·E: 시장 정의표. 파일 바이트의 sha256 이 규칙에 적힌 값과 다르면 거부한다 — 점수를 본 뒤
+        시장(구성 회사·단위·출처)을 바꿀 수 없게 하는 장치다(rules.md ① 「D·E 의 시장」)."""
+        if market_id not in self._markets:
+            spec = (self.payload["factors"].get("F1") or {}).get("markets") or {}
+            files = spec.get("files") or {}
+            if market_id not in files:
+                raise SchemaError(f"규칙 {self.version} 에 시장 정의표 {market_id!r} 가 없다")
+            path = ROOT / spec["dir"] / f"{market_id}.json"
+            if not path.is_file():
+                raise SchemaError(f"시장 정의표 파일이 없다: {path}")
+            digest = sha256_file(path)
+            if digest != files[market_id]:
+                raise SchemaError(f"시장 정의표 {market_id} 의 해시({digest[:12]}…)가 규칙에 적힌 값({files[market_id][:12]}…)과 다르다 — "
+                                  "정의를 바꿨으면 규칙의 해시를 고쳐 새 실행으로 이어받는다")
+            self._markets[market_id] = validate_market_definition(load_json_strict(path), market_id)
+        return self._markets[market_id]
 
     # ------------------------------------------------------------ lookups
     def factor(self, fid: str) -> dict[str, Any]:

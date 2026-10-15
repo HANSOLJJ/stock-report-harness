@@ -184,8 +184,13 @@ class BusinessInputTest(unittest.TestCase):
         self.check(business_inputs())
         bundle = business_inputs(lines=("online_stores",), layer="user_platform", bundle_reason="장터를 떠나면 Prime 배송 편익도 잃는다")
         bundle["components"].append({"name": "Prime", "layer": "user_platform", "customer": "consumer", "lines": ["third_party"],
-                                     "market": "us-ecommerce", "ai_monetized": "no"})
+                                     "market": None, "ai_monetized": "no"})
         self.check(bundle)
+        # 2026-10-15: 시장은 규칙이 해시로 묶은 정의표의 id 만 가리킨다
+        bundle["components"][-1]["market"] = "us_ecommerce"
+        with self.assertRaisesRegex(SchemaError, "규칙의 시장 정의표에 없는 시장 'us_ecommerce'"):
+            self.check(bundle)
+        bundle["components"][-1]["market"] = None
         del bundle["bundle_reason"]
         with self.assertRaisesRegex(SchemaError, "bundle_reason"):
             self.check(bundle)

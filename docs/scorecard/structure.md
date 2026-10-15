@@ -31,6 +31,7 @@
 | 경로 | 누가 쓰나 | 추적 | 내용 |
 |---|---|---|---|
 | `scorecard/rules/v1.5.json` ~ `vN.json` | 규칙 개정 때 새 버전을 더한다 | git | factor 모드·범위, ⑥ 잣대·트랙, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트(v2.1 이하 Q01~Q23, v3.0 은 Q01~Q25), 결정(C-xx) 상태·선택지, 긴장 목록. v3.0 은 층 정의(`layers`: 열한 층·층 밖 사업·칸 값·AI 사슬 조건·2년 창), 항목 단위(`unit`), 연속값 곡선(`curve`), 미확인 비율(`scoring.unknown_share`)을 더한다. 새 실행은 현행 버전(`rules.md` 머리말)을 쓴다. 승인 해시에 파일 바이트 해시가 들어가므로 이미 쓰인 파일은 고치지 않는다. 사람용 설명은 `rules.md` |
+| `scorecard/markets/<market_id>.json` | 규칙 v3.0 ① D·E 의 시장 정의표. 고치면 규칙 JSON 의 `factors.F1.markets.files` 해시도 고치고 새 실행으로 이어받는다 | git | 시장 이름, 측정 단위(`measure`: revenue·shipments·subscribers), 값 종류(`value_kind`: share·amount), 기간 기준, 출처 우선순위·범위 기준(`scope_basis`), 출처(1순위 하나), 구성 회사(`key`·`name`·선택 `company_id`), 구성 밖 대형 사업자, 반올림 폭(`precision`). 기간별 값은 실행의 관측(`market_share`·`market_revenue`·`market_volume`, company_id `_market`, basis.market_id·basis.constituent)이다. 해시가 다르면 `RuleSet.market` 이 거부한다 |
 | `scorecard/companies.json` | `add-company`, `resolve-cik --apply` | git | 안정 company_id, 표시명·별칭, 유형, 상장, 티커, share_basis, adr_ratio, 통화, 평가 범위, `news_queries`, `cik` |
 | `scorecard/baseline/v1.5/` | 이관(끝남). 보호 경로 | git | `scores.json`(점수·근거 불릿), `observations.json`, `triggers.json`, `import-report.md` |
 | `output/<run_id>/` | 각 단계 | git(입력·결과·승인), 일부 gitignore(`.lock`) | 실행 묶음 한 폴더. 아래 표 |

@@ -312,11 +312,23 @@ METRICS: dict[str, dict[str, str]] = {
     "revenue_quarterly": {"unit": "USD", "type": "number"},
     "cloud_segment_revenue_quarterly": {"unit": "USD", "type": "number"},
     "cloud_segment_operating_income_quarterly": {"unit": "USD", "type": "number"},
+    # 2026-10-15 규칙 v3.0 ① D·E: 시장 정의표(scorecard/markets/)의 구성 회사 값. company_id 는 MARKET_COMPANY_ID 이고
+    # basis.market_id·basis.constituent 로 어느 시장의 어느 구성 회사인지 적는다. 조사기관이 점유율을 주면 market_share,
+    # 공시 합산이면 매출(market_revenue)이나 대수·가입자(market_volume)를 적는다.
+    "market_share": {"unit": "ratio", "type": "number"},
+    "market_revenue": {"unit": "USD", "type": "number"},
+    "market_volume": {"unit": "count", "type": "number"},
 }
 SEGMENT_METRICS = {"cloud_segment_revenue_quarterly", "cloud_segment_operating_income_quarterly"}
 # 2026-10-12 규칙 v2.1 2-C-1: 회사에 속하지 않는 시장 지표의 company_id. 시장 지표는 이 ID 에만, 이 ID 는 시장 지표에만 쓴다.
 MARKET_COMPANY_ID = "_market"
-MARKET_METRICS = {"token_price_index"}
+MARKET_METRICS = {"token_price_index", "market_share", "market_revenue", "market_volume"}
+# 2026-10-15 규칙 v3.0: 시장 정의표의 구성 회사 값. 같은 시장·기간에 구성 회사마다 한 건이다.
+MARKET_POSITION_METRICS = {"market_share", "market_revenue", "market_volume"}
+MARKET_MEASURES = {"revenue": "market_revenue", "shipments": "market_volume", "subscribers": "market_volume"}
+MARKET_PERIOD_BASES = {"quarter_yoy", "ttm_yoy", "quarter_end_yoy", "annual"}
+MARKET_SOURCE_PRIORITIES = ("disclosure_sum", "research_firm", "government")
+MARKET_SCOPE_BASES = {"research_firm_unit", "company_named_competitors"}
 TOKEN_INDEX_SEGMENTS = {"broad", "frontier", "open"}
 
 NON_NEGATIVE_METRICS = {"price", "market_cap", "revenue_ttm", "revenue_ttm_full", "capex_ttm", "cash", "undrawn_credit", "offbalance_B", "contracted_revenue", "runway_years", "post_money_valuation", "arr", "ttm_revenue_est", "cumulative_raised", "cds_5y_bp"}
@@ -418,6 +430,48 @@ def _expect_date(value: Any, where: str, allow_none: bool = False) -> None:
 
 
 # ------------------------------------------------------------------ companies
+
+MARKET_ID_RE = re.compile(r"^[a-z][a-z0-9_]*$")
+
+
+def validate_market_definition(payload: Any, market_id: str) -> dict[str, Any]:
+    """2026-10-15 규칙 v3.0 ① D·E 의 시장 정의표(scorecard/markets/<id>.json). 시장·측정 단위·기간 기준·출처·구성 회사를 고정한다.
+    기간별 값은 실행의 관측(market_share·market_revenue·market_volume)이고 여기에 두지 않는다(rules.md ① 「D·E 의 시장」)."""
+    where = f"scorecard/markets/{market_id}.json"
+    _expect_keys(payload, ["schema", "market_id", "label", "measure", "value_kind", "period_basis", "source_priority", "scope_basis",
+                           "sources", "constituents"], where, optional=["outside", "precision", "note"])
+    _require(payload["schema"] == "scorecard.market/1", f"{where}.schema 는 scorecard.market/1")
+    _require(payload["market_id"] == market_id, f"{where}.market_id {payload['market_id']!r} 가 파일 이름과 다름")
+    _expect_str(payload["label"], f"{where}.label", nonempty=True)
+    _expect_choice(payload["measure"], sorted(MARKET_MEASURES), f"{where}.measure")
+    _expect_choice(payload["value_kind"], ["share", "amount"], f"{where}.value_kind")
+    _expect_choice(payload["period_basis"], sorted(MARKET_PERIOD_BASES), f"{where}.period_basis")
+    _expect_choice(payload["source_priority"], list(MARKET_SOURCE_PRIORITIES), f"{where}.source_priority")
+    _expect_choice(payload["scope_basis"], sorted(MARKET_SCOPE_BASES), f"{where}.scope_basis")
+    sources = payload["sources"]
+    _require(isinstance(sources, list) and sources, f"{where}.sources: 비어 있을 수 없음")
+    for i, s in enumerate(sources):
+        _expect_keys(s, ["label", "url", "role"], f"{where}.sources[{i}]", optional=["note"])
+        _expect_str(s["label"], f"{where}.sources[{i}].label", nonempty=True)
+        _expect_str(s["url"], f"{where}.sources[{i}].url", nonempty=True)
+        _expect_choice(s["role"], ["primary", "alternate"], f"{where}.sources[{i}].role")
+    _require(sum(1 for s in sources if s["role"] == "primary") == 1, f"{where}.sources: 1순위(primary) 출처는 하나")
+    members = payload["constituents"]
+    _require(isinstance(members, list) and len(members) >= 2, f"{where}.constituents: 구성 회사 둘 이상")
+    keys = set()
+    for i, m in enumerate(members):
+        _expect_keys(m, ["key", "name"], f"{where}.constituents[{i}]", optional=["company_id", "note"])
+        _require(isinstance(m["key"], str) and MARKET_ID_RE.fullmatch(m["key"]) and m["key"] not in keys,
+                 f"{where}.constituents[{i}].key: 겹치지 않는 소문자 id ({m['key']!r})")
+        keys.add(m["key"])
+        _expect_str(m["name"], f"{where}.constituents[{i}].name", nonempty=True)
+    for i, o in enumerate(payload.get("outside") or []):
+        _expect_keys(o, ["name", "note"], f"{where}.outside[{i}]")
+    if "precision" in payload:
+        _require(_is_number(payload["precision"]) and 0 < payload["precision"] < 0.05,
+                 f"{where}.precision: 점유율 반올림 폭(0 초과 0.05 미만) ({payload['precision']!r})")
+    return payload
+
 
 def validate_companies(payload: Any) -> dict[str, dict[str, Any]]:
     _expect_keys(payload, ["schema", "as_of", "companies"], "companies.json", optional=["note", "reference_policy"])
@@ -634,6 +688,15 @@ def _validate_v3_structure(payload: dict[str, Any]) -> None:
                          f"{where}: 층 {sorted(layer_ids - bench - no_bench)} 이 benchmarks 와 no_benchmark_layers 어디에도 없음")
             for lid in ((spec.get("gap_months") or {}).get("by_layer") or {}):
                 _require(lid in layer_ids, f"{where}.gap_months.by_layer: 알 수 없는 층 id {lid!r}")
+        if fid == "F1" and spec.get("markets") is not None:
+            # 2026-10-15: 규칙이 시장 정의표 파일의 sha256 을 품어 점수를 본 뒤 시장을 바꿀 수 없게 한다(rules.md ① 「D·E 의 시장」).
+            markets = spec["markets"]
+            _expect_keys(markets, ["dir", "files"], f"{where}.markets", optional=["note"])
+            _expect_str(markets["dir"], f"{where}.markets.dir", nonempty=True)
+            _require(isinstance(markets["files"], dict), f"{where}.markets.files 는 object")
+            for mid, digest in markets["files"].items():
+                _require(isinstance(mid, str) and MARKET_ID_RE.fullmatch(mid), f"{where}.markets.files: 시장 id {mid!r}")
+                _require(isinstance(digest, str) and bool(SHA256_RE.match(digest)), f"{where}.markets.files.{mid}: sha256 16진 64자")
         floor = (spec.get("supply") or {}).get("layers_none_floor") if fid == "F8" else None
         if floor and layer_ids is not None:
             # 2026-10-14: v3.0 은 ④ 보유표가 열한 층이다. 옛 층 이름(chip)이 남으면 하한 검사가 조용히 아무것도 보지 않는다.
@@ -1415,6 +1478,13 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
             if metric == "token_price_index" and item["value"] is not None:
                 _require(((item.get("basis") or {}).get("segment")) in TOKEN_INDEX_SEGMENTS,
                          f"{where}: token_price_index 는 basis.segment 가 {sorted(TOKEN_INDEX_SEGMENTS)} 중 하나")
+            if metric in MARKET_POSITION_METRICS:
+                basis = item.get("basis") or {}
+                for key in ("market_id", "constituent"):
+                    _require(isinstance(basis.get(key), str) and basis[key].strip(), f"{where}: {metric} 은 basis.{key} 가 필요함")
+                _require(isinstance(item.get("period"), dict), f"{where}: {metric} 은 period(start·end)가 필요함")
+                if metric == "market_share" and item["value"] is not None:
+                    _require(0 <= item["value"] <= 1, f"{where}: market_share 는 0~1 ({item['value']!r})")
         else:
             _require(item["company_id"] in companies, f"{where}: 알 수 없는 company_id {item['company_id']!r}")
         if metric in SEGMENT_METRICS and item["value"] is not None:
@@ -1458,6 +1528,9 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
         # 같은 지표·같은 조회일이라도 회계기간이 다르면 서로 다른 값이다(분기 EPS). 기간을 키에 넣어야 오탐이 없다.
         period = item.get("period") or {}
         key = (item["company_id"], item["metric"], item["as_of"], period.get("start"), period.get("end"))
+        if item["metric"] in MARKET_POSITION_METRICS:
+            # 2026-10-15: 같은 시장·기간에 구성 회사마다 한 건이라 시장과 구성 회사까지 키에 넣는다.
+            key += (item["basis"]["market_id"], item["basis"]["constituent"])
         if key in seen_values and seen_values[key][1] != item["value"]:
             raise SchemaError(f"observations: {key} 에 서로 다른 값의 관측이 둘 이상 ({seen_values[key][0]}, {item['observation_id']}) — 하나를 source_conflict 로 표시하거나 제거")
         seen_values.setdefault(key, (item["observation_id"], item["value"]))
@@ -1783,6 +1856,10 @@ def _validate_business(inputs: dict[str, Any], spec: dict[str, Any], rules: dict
         _require(isinstance(comp["lines"], list) and comp["lines"] and all(isinstance(x, str) and BUSINESS_ID_RE.match(x) for x in comp["lines"]),
                  f"{cw}.lines: ④ 보유표의 매출 줄 id 가 하나 이상 ({comp['lines']!r})")
         _expect_str(comp["market"], f"{cw}.market", allow_none=True, nonempty=True)
+        if comp["market"] is not None:
+            # 2026-10-15: 시장은 규칙이 해시로 묶은 정의표의 id 만 가리킨다. 정의표에 없으면 D·E 는 미확인(null)으로 둔다.
+            defined = set(((spec.get("markets") or {}).get("files") or {}))
+            _require(comp["market"] in defined, f"{cw}.market: 규칙의 시장 정의표에 없는 시장 {comp['market']!r} (정의된 시장 {sorted(defined)})")
         _expect_choice(comp["ai_monetized"], sorted(AI_MONETIZED_VALUES), f"{cw}.ai_monetized")
         if comp["ai_monetized"] == "yes":
             missing = [k for k in BUSINESS_MONETIZATION_KEYS if k not in comp]

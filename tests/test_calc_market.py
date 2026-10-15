@@ -1,0 +1,202 @@
+# 규칙 v3.0 ① D·E: 시장 정의표 검증·해시 결속과 시장 순위·점유율 방향 계산(calc_market)을 잠근다
+from __future__ import annotations
+
+import copy
+import json
+import shutil
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+from unittest import mock
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from scorecard import rules as rules_mod  # noqa: E402
+from scorecard.calc_layers import compute_f1_business  # noqa: E402
+from scorecard.calc_market import market_position  # noqa: E402
+from scorecard.inputs import JudgmentLookup, ObsLookup  # noqa: E402
+from scorecard.rules import RuleSet, load_rules  # noqa: E402
+from scorecard.schema import SchemaError, sha256_file, validate_judgments, validate_market_definition  # noqa: E402
+from tests.test_calc_layers import AMAZON, COMPANIES, RUN, business, comp, holdings, judgment  # noqa: E402
+
+V30 = load_rules("v3.0")
+
+
+def definition(market_id: str = "cloud_infra", value_kind: str = "share", measure: str = "revenue", **kw) -> dict:
+    d = {"schema": "scorecard.market/1", "market_id": market_id, "label": "클라우드 인프라 서비스 매출", "measure": measure,
+         "value_kind": value_kind, "period_basis": "quarter_yoy", "source_priority": "research_firm", "scope_basis": "research_firm_unit",
+         "sources": [{"label": "조사기관 분기 보도자료", "url": "https://example.com/q", "role": "primary"}],
+         "constituents": [{"key": "aws", "name": "AWS", "company_id": "amazon"}, {"key": "azure", "name": "Microsoft Azure"},
+                          {"key": "gcp", "name": "Google Cloud"}, {"key": "oracle", "name": "Oracle"}],
+         "outside": [{"name": "Alibaba Cloud", "note": "중국 시장 위주라 조사기관 표에 따로 있다"}], "precision": 0.001}
+    d.update(kw)
+    return d
+
+
+def mobs(constituent: str, value: float, start: str, end: str, *, market_id: str = "cloud_infra", metric: str = "market_share",
+         status: str = "verified") -> dict:
+    return {"observation_id": f"_market.{market_id}.{constituent}.{end}", "company_id": "_market", "metric": metric, "value": value,
+            "unit": "ratio" if metric == "market_share" else "USD", "as_of": end, "kind": "actual", "source_id": "SRC-T",
+            "status": status, "period": {"start": start, "end": end}, "basis": {"market_id": market_id, "constituent": constituent}}
+
+
+Q_NOW, Q_PRIOR = ("2026-04-01", "2026-06-30"), ("2025-04-01", "2025-06-30")
+
+
+def shares(now: dict[str, float], prior: dict[str, float] | None = None, **kw) -> ObsLookup:
+    items = [mobs(k, v, *Q_NOW, **kw) for k, v in now.items()]
+    items += [mobs(k, v, *Q_PRIOR, **kw) for k, v in (prior or {}).items()]
+    return ObsLookup(items)
+
+
+def position(market: dict, obs: ObsLookup, company_id: str = "amazon") -> dict:
+    return market_position(market, obs, company_id, "2026-10-14", V30)
+
+
+class DefinitionTest(unittest.TestCase):
+    def test_valid_and_rejections(self):
+        validate_market_definition(definition(), "cloud_infra")
+        for change, pattern in [
+            ({"market_id": "foundry"}, "파일 이름과 다름"),
+            ({"measure": "users"}, "measure"),
+            ({"sources": [{"label": "a", "url": "u", "role": "alternate"}]}, "1순위\\(primary\\) 출처는 하나"),
+            ({"constituents": [{"key": "aws", "name": "AWS"}]}, "구성 회사 둘 이상"),
+            ({"constituents": [{"key": "aws", "name": "AWS"}, {"key": "aws", "name": "AWS2"}]}, "겹치지 않는 소문자 id"),
+            ({"precision": 0.2}, "precision"),
+        ]:
+            with self.subTest(change=change), self.assertRaisesRegex(SchemaError, pattern):
+                validate_market_definition(definition(**change), "cloud_infra")
+
+
+class HashBindingTest(unittest.TestCase):
+    """규칙이 정의표의 sha256 을 품는다. 파일을 바꾸면 거부한다(점수를 본 뒤 시장을 바꿀 수 없다)."""
+
+    def setUp(self) -> None:
+        self.dir = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, self.dir, True)
+        (self.dir / "markets").mkdir()
+        self.file = self.dir / "markets" / "cloud_infra.json"
+        self.file.write_bytes((json.dumps(definition(), ensure_ascii=False, indent=2) + "\n").encode())
+        patcher = mock.patch.object(rules_mod, "ROOT", self.dir)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def ruleset(self, digest: str) -> RuleSet:
+        payload = copy.deepcopy(V30.payload)
+        payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": digest}}
+        return RuleSet(payload, V30.path)
+
+    def test_matching_hash_loads_and_changed_file_is_refused(self):
+        rs = self.ruleset(sha256_file(self.file))
+        self.assertEqual(rs.market("cloud_infra")["label"], "클라우드 인프라 서비스 매출")
+        stale = self.ruleset(sha256_file(self.file))
+        self.file.write_bytes(self.file.read_bytes().replace("AWS".encode(), "Amazon".encode()))
+        with self.assertRaisesRegex(SchemaError, "해시.*규칙에 적힌 값.*다르다"):
+            stale.market("cloud_infra")
+        with self.assertRaisesRegex(SchemaError, "시장 정의표 'foundry' 가 없다"):
+            rs.market("foundry")
+
+    def test_bad_digest_in_rules_is_refused(self):
+        with self.assertRaisesRegex(SchemaError, "sha256"):
+            self.ruleset("abc")
+
+
+class PositionTest(unittest.TestCase):
+    def test_rank_levels(self):
+        m = definition()
+        cases = [
+            ({"aws": 0.60, "azure": 0.20, "gcp": 0.12, "oracle": 0.03}, "dominant", 4),   # 50% 이상
+            ({"aws": 0.40, "azure": 0.19, "gcp": 0.12, "oracle": 0.03}, "dominant", 4),   # 2위의 2배 이상
+            ({"aws": 0.40, "azure": 0.25, "gcp": 0.12, "oracle": 0.03}, "first", 3),
+            ({"aws": 0.25, "azure": 0.40, "gcp": 0.12, "oracle": 0.03}, "second", 2),
+            ({"aws": 0.12, "azure": 0.40, "gcp": 0.25, "oracle": 0.03}, "third", 1),
+            ({"aws": 0.02, "azure": 0.40, "gcp": 0.25, "oracle": 0.03}, "other", 0),
+        ]
+        for now, level, points in cases:
+            with self.subTest(level=level, now=now):
+                r = position(m, shares(now))
+                self.assertEqual((r.get("D_level"), r["D"]), (level, points))
+
+    def test_rounding_boundaries_are_not_settled(self):
+        m = definition()
+        tie = position(m, shares({"aws": 0.300, "azure": 0.2995, "gcp": 0.12, "oracle": 0.03}))
+        self.assertIsNone(tie["D"])
+        self.assertTrue(any("반올림 폭" in n for n in tie["notes"]))
+        double = position(m, shares({"aws": 0.30, "azure": 0.15, "gcp": 0.12, "oracle": 0.03}))   # 정확히 2배
+        self.assertIsNone(double["D"])
+
+    def test_share_direction_uses_the_low_end(self):
+        m = definition()
+        now = {"aws": 0.30, "azure": 0.21, "gcp": 0.13, "oracle": 0.03}
+        for prior_aws, expected in ((0.30, 1.9), (0.25, 4.0), (0.33, 0.0), (0.31, 0.9)):
+            with self.subTest(prior=prior_aws):
+                r = position(m, shares(now, {**now, "aws": prior_aws}))
+                self.assertAlmostEqual(r["E"], expected, places=6)
+                self.assertAlmostEqual(r["change_pp_low"], r["change_pp"] - 0.1, places=6)
+
+    def test_disclosure_sum_needs_every_constituent(self):
+        m = definition(value_kind="amount", precision=None)
+        del m["precision"]
+        now = {"aws": 30.0, "azure": 30.0, "gcp": 15.0, "oracle": 5.0}
+        r = position(m, shares(now, {k: v * 0.8 for k, v in now.items()}, metric="market_revenue"))
+        self.assertAlmostEqual(r["share"], 30 / 80)
+        self.assertIsNone(r["D"], "AWS 와 Azure 가 같아 순위를 확정하지 않는다(공시 합산은 반올림 폭 0 이라 정확히 같을 때만)")
+        self.assertEqual(r["E"], 2.0)
+        missing = position(m, shares({k: v for k, v in now.items() if k != "oracle"}, metric="market_revenue"))
+        self.assertEqual((missing["D"], missing["E"]), (None, None))
+        self.assertTrue(any("['oracle']" in n for n in missing["notes"]))
+
+    def test_unknown_cases(self):
+        m = definition()
+        now = {"aws": 0.30, "azure": 0.21, "gcp": 0.13, "oracle": 0.03}
+        self.assertIsNone(position(m, shares(now))["E"], "1년 전 기간이 없으면 방향을 잴 수 없다")
+        self.assertTrue(position(m, shares(now), company_id="apple")["notes"][0].startswith("이 회사가 시장 cloud_infra 의 구성 회사에 없다"))
+        self.assertIsNone(position(m, shares(now, status="legacy_unverified"))["D"], "검증되지 않은 관측은 쓰지 않는다")
+        partial = position(m, shares({k: v for k, v in now.items() if k != "gcp"}))
+        self.assertIsNone(partial["D"])
+        late = ObsLookup([mobs(k, v, "2026-10-01", "2026-12-31") for k, v in now.items()])
+        self.assertTrue(position(m, late)["notes"][0].startswith("기준일 2026-10-14 까지"))
+
+
+class F1IntegrationTest(unittest.TestCase):
+    """구성 사업이 시장을 가리키면 D·E 가 미확인 1.6 대신 계산값이 된다."""
+
+    def setUp(self) -> None:
+        self.dir = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, self.dir, True)
+        (self.dir / "markets").mkdir()
+        f = self.dir / "markets" / "cloud_infra.json"
+        f.write_bytes((json.dumps(definition(), ensure_ascii=False, indent=2) + "\n").encode())
+        patcher = mock.patch.object(rules_mod, "ROOT", self.dir)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        payload = copy.deepcopy(V30.payload)
+        payload["factors"]["F1"]["markets"] = {"dir": "markets", "files": {"cloud_infra": sha256_file(f)}}
+        self.rules = RuleSet(payload, V30.path)
+
+    def test_market_replaces_unknown_points(self):
+        aws_comp = comp("AWS", "cloud", ["aws"], "work")
+        aws_comp["market"] = "cloud_infra"
+        items = [judgment(holdings()),
+                 business("stores", [comp("온라인 스토어", "user_platform", ["online_stores"]),
+                                     comp("제3자 판매자", "user_platform", ["third_party"], "trade")]),
+                 business("aws", [aws_comp], participant="none", substitutes="no_substitute")]
+        validate_judgments({"schema": "scorecard.judgments/1", "run_id": "t", "items": items}, COMPANIES, self.rules.payload, "t")
+        obs = shares({"aws": 0.30, "azure": 0.21, "gcp": 0.13, "oracle": 0.03}, {"aws": 0.32, "azure": 0.20, "gcp": 0.12, "oracle": 0.03})
+        r = compute_f1_business(AMAZON, JudgmentLookup(items), self.rules, RUN, obs)
+        aws = r["calc"]["businesses"]["aws"]
+        c = aws["components"][0]
+        # 1위이나 2배·50% 미달 → D 3, 점유율 −2%p(낮은 끝 −2.1) → E 0
+        self.assertEqual((c["D"], c["E"], c["market"]["rank"], c["market"]["D_level"]), (3, 0, 1, "first"))
+        self.assertNotIn("D", aws["unknown_parts"])
+        stores = r["calc"]["businesses"]["stores"]["components"]
+        self.assertEqual([x["D"] for x in stores], [1.6, 1.6], "시장을 정하지 않은 구성은 미확인 1.6")
+        self.assertTrue(any("시장이 정해지지 않아" in w for w in r["warnings"]))
+        without = compute_f1_business(AMAZON, JudgmentLookup(items), self.rules, RUN)   # 관측을 넘기지 않으면 미확인
+        self.assertEqual(without["calc"]["businesses"]["aws"]["components"][0]["D"], 1.6)
+
+
+if __name__ == "__main__":
+    unittest.main()
