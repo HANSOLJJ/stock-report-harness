@@ -1,0 +1,75 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "ai_chatbots",
+  "label": "AI 챗봇 유입 점유율(전 세계·전 플랫폼, 분기)",
+  "measure": "usage",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "StatCounter Global Stats AI 챗봇 점유율(전 세계·전 플랫폼·분기)",
+      "url": "https://gs.statcounter.com/ai-chatbot-market-share/all/worldwide/#quarterly-202503-202603",
+      "role": "primary",
+      "note": "차트 페이지에서 기간을 Quarterly(Q3 2025~Q3 2026)로 정하면 페이지가 만드는 'Download Data (.csv)' 주소 https://gs.statcounter.com/chart.php?device=Desktop%20%26%20Mobile%20%26%20Tablet%20%26%20Console&device_hidden=desktop%2Bmobile%2Btablet%2Bconsole&multi-device=true&statType_hidden=ai_chatbot&region_hidden=ww&granularity=quarterly&statType=AI%20Chatbot&region=Worldwide&fromInt=202503&toInt=202603&fromQuarterYear=2025-03&toQuarterYear=2026-03&csv=1 (Platform: Desktop & Mobile & Tablet & Console, Region: Worldwide)로 받은 한 파일에서 두 분기를 모두 읽었다. 같은 기간으로 페이지가 보낸 차트 요청(forceJson=true)의 응답 툴팁 문구와도 대조했다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "chatgpt",
+      "name": "ChatGPT",
+      "company_id": "openai",
+      "note": "CSV 열 이름 \"ChatGPT\""
+    },
+    {
+      "key": "gemini",
+      "name": "Google Gemini",
+      "company_id": "alphabet",
+      "note": "CSV 열 이름 \"Google Gemini\""
+    },
+    {
+      "key": "perplexity",
+      "name": "Perplexity",
+      "note": "CSV 열 이름 \"Perplexity\""
+    },
+    {
+      "key": "copilot",
+      "name": "Microsoft Copilot",
+      "company_id": "microsoft",
+      "note": "CSV 열 이름 \"Microsoft Copilot\""
+    },
+    {
+      "key": "claude",
+      "name": "Claude",
+      "company_id": "anthropic",
+      "note": "CSV 열 이름 \"Claude\""
+    },
+    {
+      "key": "deepseek",
+      "name": "DeepSeek",
+      "note": "CSV 열 이름 \"Deepseek\""
+    }
+  ],
+  "outside": [
+    {
+      "name": "Grok (xAI)",
+      "note": "StatCounter 가 데이터에 넣지 못한다고 밝힌다. 보도자료 'Note: Grok cannot be included in the data, as unlike the other chatbots, it does not provide referral data in its header.' 는 2026-05-07 호(ChatGPT falls to all-time low … )의 Notes to Editors 둘째 문단, 2026-04-02 호(Google Gemini overtakes Perplexity …)의 Notes to Editors 둘째 문단, 2025-06-11 호(New Statcounter AI data … )의 본문 끝 'Statcounter Global Stats data is based on …' 문단 바로 다음 'Note:' 문단에 같은 문장으로 있다. 그래서 spacex-xai 의 챗봇은 이 시장의 구성 회사가 아니다."
+    },
+    {
+      "name": "Meta AI",
+      "note": "StatCounter 표(CSV 열 7개)에 Meta AI 열이 없다. 빠진 이유는 FAQ 와 위 보도자료 세 건에서 찾지 못했다(Grok 만 이유를 적는다). 이유는 미확인이다. 그래서 meta 의 챗봇은 이 시장의 구성 회사가 아니다."
+    },
+    {
+      "name": "챗봇 안의 사용량·앱 사용·API 사용과 표에 이름이 없는 챗봇",
+      "note": "StatCounter 표는 챗봇에서 추적 코드를 단 웹사이트로 넘어간 클릭만 센다. 챗봇 안에서 쓰는 양, 앱 사용, API 사용은 재지 않는다."
+    },
+    {
+      "name": "StatCounter 표의 'Other'",
+      "note": "이름 없는 나머지(2025 Q3 0%, 2026 Q3 0%)라 구성 회사로 두지 않았다."
+    }
+  ],
+  "measure_fit": "proxy",
+  "precision": 0.0001,
+  "note": "범위는 StatCounter 가 내는 전 세계·전 플랫폼 AI 챗봇 점유율 표를 그대로 쓴다. 이 표는 AI 챗봇에서 링크를 눌러 StatCounter 추적 코드를 단 웹사이트로 넘어간 클릭(referral)의 점유율이다(2025-06-11 보도자료 첫 문단: 'measures the number of referrals from individual AI chatbots to websites'). 챗봇 안에서 쓰는 양·앱 사용·API 사용은 재지 않으므로 시장의 일부만 재고 그 비율을 알 수 없는 간접 자료(measure_fit: proxy)로 적는다. 구성 회사는 2026 Q3 표에서 값이 있는 이름 있는 챗봇 6곳이다. 표는 상위 N 곳 순위가 아니라 StatCounter 가 추적하는 챗봇 목록이므로 lists_top_n 을 쓰지 않는다. 목록에 없는 챗봇은 순위 밖이 아니라 표가 재지 않은 것이다. ChatGPT 는 openai, Google Gemini 는 alphabet, Microsoft Copilot 은 microsoft, Claude 는 anthropic 으로 잇는다. 기간은 기준일까지 끝난 가장 최근 분기(2026 Q3, 2026-07-01~2026-09-30)와 1년 전 같은 분기(2025 Q3, 2025-07-01~2025-09-30)이고 StatCounter 가 직접 내는 분기 값이다. 점유율은 소수 둘째 자리 %이므로 precision 은 0.0001 이다. StatCounter 는 값을 게시한 뒤 45일 동안 고칠 수 있다고 적는다(https://gs.statcounter.com/faq 의 'How often are Statcounter Global Stats updated?' 항목 둘째 문장 'our stats are subject to quality assurance testing and revision for 45 days from first publication', 같은 페이지 'What do you mean by stats are \"subject to quality assurance testing and revision for 45 days from publication\"?' 항목(앵커 #quality-assurance)은 첫 게시 뒤 45일이 지나면 데이터를 바꾸지 않는다고 적는다). 값은 조회 시각과 함께 관측 note 에 남긴다. 같은 측정(챗봇에서 웹사이트로 넘어간 클릭의 챗봇별 점유율)을 무료로 분기마다 내는 대체 출처는 찾지 못했다. 출처가 끊기면 그 분기의 D·E 는 확인되지 않음이다."
+}

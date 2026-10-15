@@ -188,6 +188,7 @@
       "markets": {
         "dir": "scorecard/markets",
         "files": {
+          "ai_chatbots": "88311232fca011cff8d55f23110a05191276a8616a2c917a7f468e7acf2afecc",
           "cloud_infra": "a3ecf5f6bbe4d1d54e022f6ed442f0424e450275d9ca62622c79a46f6a68b4d5",
           "foundry": "16ea8765f41849dde93908331e88be2974b72638a57ff30b67449a87dbd422f7",
           "pcs": "f7dbe1d4ae6e74dc498511ef5873e8aacf14a82c869ec829a182c5c076e68ade",
