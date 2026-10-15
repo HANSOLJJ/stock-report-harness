@@ -21,7 +21,8 @@ def summarize_company(company: dict[str, Any], factors: dict[str, dict[str, Any]
     complete = all(factors[f]["status"] in COMPLETE_STATUSES for f in MOAT_FACTORS + TRAP_FACTORS)
     moat = _score_sum([factors[f]["score"] for f in MOAT_FACTORS]) if all(factors[f]["score"] is not None for f in MOAT_FACTORS) else None
     trap = _score_sum([factors[f]["score"] for f in TRAP_FACTORS]) if all(factors[f]["score"] is not None for f in TRAP_FACTORS) else None
-    total = moat + trap if complete and moat is not None and trap is not None else None
+    # 2026-10-15: 과점·함정만 정리하고 조정총점은 그냥 더해 v3.0 시범 실행에 22.220000000000002 가 남았다
+    total = _score_sum([moat, trap]) if complete and moat is not None and trap is not None else None
     pending = [
         {"factor": f, "status": factors[f]["status"], **(factors[f]["pending"] or {})}
         for f in MOAT_FACTORS + TRAP_FACTORS

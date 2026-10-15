@@ -260,6 +260,16 @@ class ScoreSumTest(unittest.TestCase):
 
     def test_integers_and_halves_unchanged(self):
         self.assertEqual(_score_sum([4, 3, 2.5, 0.5]), 10)
+
+    def test_adjusted_total_has_no_float_noise(self):
+        # 2026-10-15: 시범 실행 Apple 의 과점 44.7 + 함정 −22.48 이 22.220000000000002 로 저장됐다
+        from scorecard.aggregate import summarize_company
+        scores = dict(zip(("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"), (12.27, 4, 3.43, 16, 9, -6.48, 0, -16, 0)))
+        factors = {f: {"score": s, "status": "ok", "pending": None} for f, s in scores.items()}
+        company = {"company_id": "apple", "display_name": "Apple", "type": "소비자", "listed": True}
+        s = summarize_company(company, factors)
+        self.assertEqual((s["moat"], s["trap"], s["total"]), (44.7, -22.48, 22.22))
+        self.assertEqual(repr(s["total"]), "22.22")
         self.assertIs(type(_score_sum([4, 3])), int)
         self.assertEqual(_score_sum([4, 0.5]), 4.5)
 
