@@ -173,4 +173,5 @@ v2.2 까지의 논의는 `../rule-v22-pool-first/context-notes.md` 에 있다. �
 - **수정 뒤 점수.** Alphabet 42.52 · TSMC 30.43 · Apple 23.82 · SpaceX + xAI 0.61 · Anthropic −12.20(순위 그대로). 확인 리뷰(Opus) 진행 중.
 - **확인 리뷰(2026-10-19).** 1차 발견은 모두 규칙대로 고쳐졌고 숫자도 맞았다. 남은 하나(C-1): Anthropic ⑤ 에 댄 '경쟁자인 고객이 주요 고객인지 미확인 → 구조형 여부 미확인' 잣대가 SpaceX 의 Google(월 약 $920M 컴퓨트 고객, Google Cloud·TPU 로 대체품을 냄)에 닿지 않았다. 사용자가 같은 잣대를 대기로 정해 SpaceX ⑤ 에 Google 전선을 더했다(PRP-042, ⑤ 6.8→5.12). Anthropic 은 Colossus 고객이지만 컴퓨트를 만들어 팔지 않아 이 전선에 넣지 않는다. review.md pass, 계약 검증 통과.
 - **pilot8 최종.** Alphabet 42.52 · TSMC 30.43 · Apple 23.82 · SpaceX + xAI −1.07 · Anthropic −12.20. v3.0 은 HTML 렌더가 없어 빌드할 수 없고, 승인은 사람이 한다.
+- **pilot8 승인(2026-10-19).** 사용자가 승인 페이지에서 승인했고 status 의 approval_valid 가 true 다. 시범 실행 폴더는 커밋하지 않는 방침이라 승인 파일도 git 에 없다. 빌드는 v3.0 HTML 렌더를 만든 뒤에 한다.
 
