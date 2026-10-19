@@ -475,7 +475,7 @@ def _hostility(inputs: dict[str, Any], spec: dict[str, Any], share: float) -> tu
         {**inputs, "fronts": [f for f in inputs["fronts"] if f not in unknown]}, spec, share)
     value = max(float(spec["min"]), bad + share * (good - bad))
     warnings = [*warnings, *(w for w in good_warnings if w not in warnings),
-                f"구조형인지 미확인인 전선 {[f['name'] for f in unknown]} — 구조형으로 센 {bad:g} 와 뺀 {good:g} 사이 40% 지점 {value:g}"]
+                f"구조형인지 미확인인 전선 {' · '.join(f['name'] for f in unknown)} — 구조형으로 센 {bad:g} 와 뺀 {good:g} 사이 40% 지점 {value:g}"]
     detail = {**bad_detail, "band": "structural_unknown", "structural_unknown_fronts": [f["name"] for f in unknown],
               "H_if_structural": round(bad, 6), "H_if_not_front": round(good, 6), "H": round(value, 6)}
     return value, detail, warnings

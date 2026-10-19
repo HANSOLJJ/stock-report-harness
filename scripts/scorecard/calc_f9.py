@@ -226,6 +226,10 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
             relieved = min(base + int(pol["g1_direction_relief_step"]), int(pol["g1_direction_relief_cap"]))
             path.append({"gate": "G1", "adjust": f"방향 완화 A·B 충족 → 한 단계(상한 {int(pol['g1_direction_relief_cap'])})", "score": relieved})
             base = relieved
+        elif rules.payload.get("layers") and "fail" in (gi["direction_A"], gi["direction_B"]):
+            # 2026-10-19 pilot8 확인 리뷰: A 가 미충족이면 B 와 상관없이 완화가 서지 않는데 B 가 미확인이라 '판정 불가' 로 적혔다.
+            # 층 규칙(v3.0)부터 고친다 — 옛 규칙의 승인된 결과(경로 문구)가 바뀌지 않게.
+            path.append({"gate": "G1", "adjust": "방향 완화 조건 미충족 → 유지"})
         elif "unknown" in (gi["direction_A"], gi["direction_B"]):
             path.append({"gate": "G1", "adjust": "방향 완화 판정 불가 → 유지"})
         score = _clamp(base, floor)

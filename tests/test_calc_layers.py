@@ -139,7 +139,9 @@ class HoldingsScoreTest(unittest.TestCase):
         self.assertEqual(r["calc"]["non_ai_share"], 0.5)
         self.assertEqual(r["calc"]["diversification"], 5)
         self.assertEqual(r["calc"]["vertical_counted"], {"cloud": 1, "user_platform": 1})
-        self.assertTrue(any("그 분야 순위 비교는 시장 정의표가 생긴 뒤" in w for w in r["warnings"]))
+        # 2026-10-19 pilot9 출력 리뷰(N3): 미래 서술 대신 지금 재지 않았다는 사실과 그 결과의 방향을 적고, 줄은 이름으로 든다
+        self.assertTrue(any(w.startswith("제외 줄 launch 의 그 분야 순위는 이 실행에 그 시장의 정의표가 없어 재지 않았다")
+                            and "낮은 쪽일 수 있다" in w for w in r["warnings"]), r["warnings"])
 
     def test_margin_substitute_and_no_non_ai_business(self):
         r = compute(holdings(non_ai_margin=0.3, non_ai_margin_source="company"))
@@ -255,13 +257,13 @@ class F2LayersTest(unittest.TestCase):
         cloud = unit("F2", "layer_paths", "cloud", {"adaptation": "adopted", "standards": []})
         r = run_layers(compute_f2_layers, cloud)
         self.assertEqual((r["status"], r["score"]), ("needs_judgment", None))
-        self.assertIn("층 ['user_platform'] 의 세 경로 판단이 없다", r["pending"]["message"])
+        self.assertIn("층 사용자 플랫폼 의 세 경로 판단이 없다", r["pending"]["message"])
         # 2026-10-14 사용자 결정: 미확인 경로는 판정 대기가 아니라 그 경로 만점의 40% 에 미확인 표시(rules.md 2.6)
         unknown = unit("F2", "layer_paths", "user_platform", {"adaptation": "unknown", "standards": []})
         r = run_layers(compute_f2_layers, cloud, unknown)
         layer = r["calc"]["layers"]["user_platform"]
         self.assertEqual((r["status"], layer["adaptation"], layer["score"], layer["unknown_parts"]), ("ok", 2, 4, ["adaptation"]))
-        self.assertIn("user_platform: adaptation 미확인 — 그 경로 만점의 40%", r["warnings"])
+        self.assertIn("사용자 플랫폼: 패러다임 적응 미확인 — 그 경로 만점의 40%", r["warnings"])
         leap = unit("F2", "layer_paths", "chip_design", {"leap": "unknown", "adaptation": "none", "standards": []})
         self.assertEqual(run_layers(compute_f2_layers, leap, h=chip_holdings())["score"], 4)
         platform = unit("F2", "layer_paths", "user_platform", {"adaptation": "adopted", "standards": []})
@@ -269,14 +271,15 @@ class F2LayersTest(unittest.TestCase):
         h = set_cells(holdings(), device={"cell": "sold", "ai_chain": "yes", "evidence_ids": []})
         r = run_layers(compute_f2_layers, cloud, platform, model, h=h)
         self.assertEqual(r["status"], "ok")
-        self.assertIn("판매 층이 아닌 층 ['model'] 의 판단은 계산에 쓰지 않는다", r["warnings"])
+        self.assertIn("판매 층이 아닌 층 모델 의 판단은 계산에 쓰지 않는다", r["warnings"])
         self.assertFalse(any("device" in w for w in r["warnings"]), "매출 몫 0 층은 매기지 않으므로 판단이 없어도 경고하지 않는다")
         # 2026-10-15 사용자 결정: 매출 몫 0 층의 판단은 계산에 쓰지 않는다
         device = unit("F2", "layer_paths", "device", {"adaptation": "doubled", "adoption_multiple": 2.5, "standards": []})
         r2 = run_layers(compute_f2_layers, cloud, platform, device, h=h)
         self.assertEqual((r2["status"], r2["score"]), (r["status"], r["score"]))
         self.assertNotIn("device", r2["calc"]["layers"])
-        self.assertIn("매출 몫 0 층 ['device'] 의 세 경로 판단은 계산에 쓰지 않는다(④ 보유표로만 센다)", r2["warnings"])
+        self.assertIn("매출 몫 0 층 기기 의 세 경로 판단은 계산에 쓰지 않는다(④ 보유표로만 센다)", r2["warnings"])
+        self.assertFalse(any("['" in w for w in r["warnings"] + r2["warnings"]), "경고에 id 목록이 파이썬 목록 그대로 남지 않는다")
 
     def test_needs_holdings(self):
         r = compute_f2_layers(AMAZON, JudgmentLookup([]), V30, RUN)
@@ -393,7 +396,7 @@ class F1BusinessTest(unittest.TestCase):
         self.assertAlmostEqual(r["calc"]["layer_scores"]["user_platform"], (40 * 10.2 + 30 * 14.2) / 70, places=5)
         self.assertEqual(r["score"], 12)   # 0.7 × 11.914 + 0.3 × 11.2 = 0.4 × 10.2 + 0.3 × 14.2 + 0.3 × 11.2 = 11.7 → 정수 12
         # 2026-10-15: 규칙에 시장 정의표가 생겨, 시장을 정하지 않은 구성마다 미확인을 알린다
-        self.assertIn("aws: 구성 AWS 의 시장이 정해지지 않아 D·E 는 미확인이다", r["warnings"])
+        self.assertIn("구성 AWS 의 시장이 정해지지 않아 D·E 는 미확인이다", r["warnings"])
 
     def test_bundle_shares_a_to_c_across_layers(self):
         bundle = business("marketplace", [comp("온라인 스토어", "user_platform", ["online_stores", "third_party"]),

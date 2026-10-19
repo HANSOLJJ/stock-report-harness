@@ -36,6 +36,16 @@ def layer_weights(holdings: dict[str, Any], rules: RuleSet) -> dict[str, Any]:
             "unknown_lines": [], "primary_layer": primary}
 
 
+_PART_NAMES = {"leap": "성능 도약", "adaptation": "패러다임 적응", "revenue_model": "수익모델", "imitation": "모방 불가능성"}
+
+
+def _unit_names(rules: RuleSet, ids: list[str]) -> str:
+    """경고 문구에 쓰는 층 이름. 2026-10-19 pilot9 출력 리뷰(N3): 초안 참고 줄에 층 id 목록이 파이썬 목록 그대로 실렸다."""
+    spec = rules.payload["layers"]
+    names = {**spec["labels"], spec["outside"]["id"]: spec["outside"]["label"]}
+    return "·".join(names.get(u, u) for u in ids)
+
+
 def _tidy(value: float) -> float | int:
     """calc 표시용으로 부동소수 찌꺼기만 정리한다. 점수 반올림은 합에서 한 번 한다(RuleSet.round_score)."""
     value = round(float(value), 6)
@@ -99,7 +109,7 @@ def compute_f4_holdings(company: dict[str, Any], judgments: JudgmentLookup, rule
 
     warnings: list[str] = []
     if unsure:
-        warnings.append(f"매출 줄 {[line['line'] for line in unsure]} 의 AI 무관 여부가 미확인 — 그 금액의 "
+        warnings.append(f"매출 줄 {'·'.join(line.get('label') or line['line'] for line in unsure)} 의 AI 무관 여부가 미확인 — 그 금액의 "
                         f"{unknown_share * 100:g}% 를 AI 무관으로 셌다")
     margin = inputs["non_ai_margin"]
     if share == 0:
@@ -115,11 +125,14 @@ def compute_f4_holdings(company: dict[str, Any], judgments: JudgmentLookup, rule
             warnings.append("AI 무관 부문 이익률을 공시하지 않아 회사 전체 영업이익률로 대신했다")
     excluded = sorted({line["layer"] for line in lines if line["layer"] in (layers.get("excluded_lines") or {})})
     if excluded and spec["field_strength"].get("launch_uses_rank"):
-        warnings.append(f"제외 줄 {excluded} 의 그 분야 순위 비교는 시장 정의표가 생긴 뒤 적용한다 — 지금은 이익률만 쓴다")
+        # 2026-10-19 pilot9 출력 리뷰(N3): '정의표가 생긴 뒤 적용한다' 는 미래 서술이고 미적용이 어느 쪽 결과인지 적지 않았다.
+        labels = "·".join(sorted({line.get("label") or line["layer"] for line in lines if line["layer"] in excluded}))
+        warnings.append(f"제외 줄 {labels} 의 그 분야 순위는 이 실행에 그 시장의 정의표가 없어 재지 않았다 — 순위와 이익률 가운데 "
+                        "높은 쪽을 쓰는 자리라 이익률만 쓴 지금 값은 낮은 쪽일 수 있다")
 
     weights = layer_weights(inputs, rules)
     if weights["zero_weight_sold"]:
-        warnings.append(f"판매 칸 {weights['zero_weight_sold']} 에 붙은 매출 줄이 없어 층 매출 몫이 0 이다")
+        warnings.append(f"판매 칸 {_unit_names(rules, weights['zero_weight_sold'])} 에 붙은 매출 줄이 없어 층 매출 몫이 0 이다")
     preparing = {layer: cells[layer].get("trigger") for layer in order if cells[layer]["cell"] == "preparing"}
     lo, hi = rules.factor_range(fid)
     score = rules.round_score(max(lo, min(hi, vertical + diversification + field)))
@@ -175,14 +188,14 @@ def _layered(fid: str, basis: str, what: str, company: dict[str, Any], judgments
     warnings: list[str] = []
     extra = [u for u in order if u in units and u not in weights]
     if extra:
-        warnings.append(f"판매 층이 아닌 층 {extra} 의 판단은 계산에 쓰지 않는다")
+        warnings.append(f"판매 층이 아닌 층 {_unit_names(rules, extra)} 의 판단은 계산에 쓰지 않는다")
     unused = [u for u in order if u in units and weights.get(u) == 0]
     if unused:
-        warnings.append(f"매출 몫 0 층 {unused} 의 {what} 판단은 계산에 쓰지 않는다(④ 보유표로만 센다)")
+        warnings.append(f"매출 몫 0 층 {_unit_names(rules, unused)} 의 {what} 판단은 계산에 쓰지 않는다(④ 보유표로만 센다)")
     missing = [u for u in order if weights.get(u, 0) > 0 and u not in units]
     if missing:
         return factor_result(fid, score=None, status="needs_judgment", basis=basis, calc=calc, warnings=warnings,
-                             pending=pending_info("judgment", f"층 {missing} 의 {what} 판단이 없다"))
+                             pending=pending_info("judgment", f"층 {_unit_names(rules, missing)} 의 {what} 판단이 없다"))
     scores: dict[str, float] = {}
     pendings: list[str] = []
     for u in order:
@@ -191,10 +204,11 @@ def _layered(fid: str, basis: str, what: str, company: dict[str, Any], judgments
         score, detail, pending_message, layer_warnings = score_layer(units[u], u)
         calc["layers"][u] = {"judgment_id": units[u]["judgment_id"], "weight": _tidy(weights[u]), **detail,
                              "score": None if score is None else _tidy(score)}
-        warnings.extend(f"{u}: {x}" for x in layer_warnings)
-        warnings.extend(f"{u}: {x}" for x in carried_note(units[u]))
+        name = _unit_names(rules, [u])
+        warnings.extend(f"{name}: {x}" for x in layer_warnings)
+        warnings.extend(f"{name}: {x}" for x in carried_note(units[u]))
         if pending_message is not None:
-            pendings.append(f"{u}: {pending_message}")
+            pendings.append(f"{name}: {pending_message}")
         else:
             scores[u] = float(score)
     if pendings:
@@ -217,7 +231,7 @@ def _f2_layer(j: dict[str, Any], layer: str, rules: RuleSet, as_of: str) -> Laye
     no_bench = layer in set(spec.get("no_benchmark_layers") or [])
     unknown = [k for k in ("leap", "adaptation") if inputs.get(k) == "unknown"]
     detail: dict[str, Any] = {"no_benchmark": no_bench, "unknown_parts": unknown}
-    warnings = [f"{k} 미확인 — 그 경로 만점의 {rules.payload['scoring']['unknown_share']:.0%}" for k in unknown]
+    warnings = [f"{_PART_NAMES[k]} 미확인 — 그 경로 만점의 {rules.payload['scoring']['unknown_share']:.0%}" for k in unknown]
     if unknown and rules.unknown_points(1) is None:
         return None, detail, f"경로 {unknown} 이 미확인 — 0 으로 두지 않는다", []
 
@@ -268,7 +282,7 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
     if unknown and rules.unknown_points(1) is None:
         return None, detail, f"{unknown} 이 미확인 — 0 으로 두지 않는다", []
     share = rules.payload["scoring"].get("unknown_share")
-    warnings: list[str] = [f"{k} 미확인 — 만점의 {share:.0%}" for k in unknown]
+    warnings: list[str] = [f"{_PART_NAMES[k]} 미확인 — 만점의 {share:.0%}" for k in unknown]
     active = inputs["counterparty_present"] == "yes"
 
     def points(key: str) -> float:
@@ -296,7 +310,8 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
         acceleration = piecewise(acc_spec["curve"], ratio)
         cap = (acc_spec.get("tier_caps") or {}).get(a["tier"])
         if cap is not None and acceleration > float(cap):
-            warnings.append(f"지표 단계 {a['tier']} 의 가속도는 최고 {cap}")
+            tier = (spec["acceleration_tiers"]["tiers"].get(a["tier"]) or {}).get("label") or a["tier"]
+            warnings.append(f"가속도 지표가 {tier} 단계라 최고 {cap}")
             acceleration = float(cap)
     raw = revenue_model + imitation + acceleration
     gates = spec["gates"]
@@ -417,9 +432,9 @@ def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rule
             d_points, e_points = points["D"], points["E"]
             de_unknown |= {k for k in ("D", "E") if pos is None or pos[k] is None}
             if markets and not comp.get("market"):
-                warnings.append(f"{b['business']}: 구성 {comp['name']} 의 시장이 정해지지 않아 D·E 는 미확인이다")
+                warnings.append(f"구성 {comp['name']} 의 시장이 정해지지 않아 D·E 는 미확인이다")
             if pos is not None:
-                warnings.extend(f"{b['business']}: {comp['name']} — {n}" for n in pos["notes"])
+                warnings.extend(f"{comp['name']} — {n}" for n in pos["notes"])
             raw = shared + d_points + e_points
             capped = comp["ai_monetized"] != cap["requires"] and raw > float(cap["cap"])
             score = min(raw, float(cap["cap"])) if comp["ai_monetized"] != cap["requires"] else raw

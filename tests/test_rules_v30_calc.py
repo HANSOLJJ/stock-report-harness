@@ -253,6 +253,18 @@ class F9ContinuousTest(unittest.TestCase):
                     gi={"coverage_comparable": "yes"}, decisions={"C-16": "downgrade"})
         self.assertEqual(r["score"], -12)                 # G2 −8, 런웨이 6년 0, 확인된 미공시 −4
 
+    def test_direction_relief_fail_is_not_undetermined(self):
+        """2026-10-19 pilot8 확인 리뷰: A 가 미충족이면 B 가 미확인이어도 완화는 서지 않는다. v3.0 은 '조건 미충족' 으로 적고
+        옛 규칙은 승인된 결과의 경로 문구가 바뀌지 않게 '판정 불가' 그대로다."""
+        items = (obs("operating_margin_ttm", -0.15), obs("fcf_ttm", -1e9), obs("cash", 100e9))
+        gi = {"direction_A": "fail", "direction_B": "unknown"}
+        adjust = [p.get("adjust") for p in self.f9(*items, gi=gi, decisions={"C-05": "diagnose_only"})["calc"]["path"] if p.get("adjust")]
+        self.assertIn("방향 완화 조건 미충족 → 유지", adjust)
+        old = self.f9(*items, gi=gi, decisions={"C-05": "diagnose_only", "C-06": "proposed_v15_boundaries"}, rules=V21)
+        self.assertNotIn("방향 완화 조건 미충족 → 유지", [p.get("adjust") for p in old["calc"]["path"]])
+        both_unknown = self.f9(*items, decisions={"C-05": "diagnose_only"})
+        self.assertIn("방향 완화 판정 불가 → 유지", [p.get("adjust") for p in both_unknown["calc"]["path"]])
+
     def test_positive_deteriorating_path_shows_policy_score(self):
         r = self.f9(obs("operating_margin_ttm", 0.3), obs("fcf_ttm", 50e9), gi={"fcf_trend": "deteriorating"})
         self.assertEqual(r["score"], -4)
