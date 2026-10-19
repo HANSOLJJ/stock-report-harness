@@ -95,8 +95,28 @@ def total_class(total: int | None) -> str:
 
 # ------------------------------------------------------------------ CSS
 
-def css() -> str:
-    return """
+# 2026-10-19 규칙 v3.0: 층·사업 단위 카드 블록과 카드 안 표. 층 정의가 있는 실행에만 붙여 옛 실행의 HTML 은 바이트 그대로다.
+V3_CSS = """
+.cv3{grid-column:1/-1;margin-bottom:6px}
+.ctab{margin:14px 0 6px;font-size:var(--fs-sm);color:var(--tx2);font-weight:600}
+.cnote{color:var(--tx3);font-size:var(--fs-sm);margin:6px 0 0;line-height:1.6}
+details.unit{margin:8px 0 0;border-left:2px solid var(--line);padding:2px 0 2px 12px}
+details.unit[open]{border-left-color:var(--acc)}
+details.unit>summary{cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:baseline;list-style:none;min-height:24px;padding:2px 0}
+details.unit>summary::-webkit-details-marker{display:none}
+details.unit>summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+details.unit>summary .uname{font-weight:600;color:var(--tx)}
+details.unit>summary .uname::before{content:"▸ ";color:var(--tx3)}
+details.unit[open]>summary .uname::before{content:"▾ "}
+details.unit>summary .usc{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap}
+"""
+
+
+def css(layered: bool = False) -> str:
+    return _BASE_CSS.strip() + ("\n" + V3_CSS.strip() if layered else "")
+
+
+_BASE_CSS = """
 :root{
   --bg:#0e1116;--bg2:#161a22;--bg3:#1d222c;--line:#2b313d;
   --tx:#e6e9ee;--tx2:#a3abba;--tx3:#7c8595;
@@ -447,7 +467,7 @@ tr.priv{opacity:.75}
   #mainTable th:not(.keep),#mainTable td:not(.keep){display:none}
   #mainTable th.name,#mainTable td.name{max-width:132px;overflow:hidden;text-overflow:ellipsis}
 }
-""".strip()
+"""
 
 
 # ------------------------------------------------------------------ JS
@@ -1031,6 +1051,69 @@ def _direction_html(block: dict[str, Any]) -> str:
     return f'<div class="fdir">{"".join(boxes)}</div>'
 
 
+def _unit_score_text(f: str, calc: dict[str, Any], judgment: dict[str, Any]) -> str:
+    """층 판단은 그 층 점수, 사업 판단은 구성 사업 점수(묶음이면 구성마다)."""
+    if judgment.get("layer"):
+        return rc._score_text(((calc.get("layers") or {}).get(judgment["layer"]) or {}).get("score"))
+    comps = ((calc.get("businesses") or {}).get(judgment.get("business")) or {}).get("components") or []
+    if len(comps) == 1:
+        return rc._score_text(comps[0].get("score"))
+    return " · ".join(f'{c["name"]} {rc._score_text(c.get("score"))}' for c in comps)
+
+
+def _unit_blocks_html(ctx: Any, c: dict[str, Any], f: str, fr: dict[str, Any], judgments_by_id: dict[str, Any],
+                      reps: list[dict[str, Any]] | None, baseline_id: str, history: list[tuple[str, str]]) -> str:
+    """2026-10-19 규칙 v3.0: ①②③ 은 층·사업 판단이 여럿이라 판단마다 근거를 접는 블록으로 싣는다(초안과 같은 판단·순서).
+    매출 몫 0 층의 판단은 계산에 쓰지 않으므로 싣지 않는다. 판단 ID·관측 ID 는 본문에서 떼어 감사 기록으로 보낸다."""
+    calc = fr.get("calc") or {}
+    out = []
+    for uj in rc.unit_judgments(ctx, c["company_id"], f, used_layers=calc.get("layers")):
+        ub = rc.evidence_block({"judgment_id": uj["judgment_id"]}, judgments_by_id, [], baseline_id, c["company_id"], reps,
+                               run_created=ctx.run.get("created_at"))
+        if ub is None:
+            continue
+        header = str(ub.get("header") or "")
+        m = re.search(r" · 판단 기록 `([^`]+)`", header)
+        if m:
+            history.append((f, f"판단 기록 {m.group(1)}"))
+            header = header.replace(m.group(0), "")
+        rows = [*ub.get("lines", []), *ub.get("up", []), *ub.get("down", [])]
+        history += [(f, n) for n in ub.get("notes", [])]
+        history += [(f, mm.group(0)) for _d, t in rows for mm in rc.OBS_ID_RE.finditer(str(t))]
+        history += [(f, mm.group(0).strip()) for _d, t in rows for mm in rc.INTERNAL_REF_RE.finditer(str(t))]
+        pts = "".join(f'<li{" class=\"d2\"" if depth > 1 else ""}>{inline_html(text)}</li>' for depth, text in ub.get("lines", []))
+        out.append(f'<details class="unit"><summary><span class="uname">{esc(rc.unit_name(ctx, uj))}</span>'
+                   f'<span class="usc">{esc(_unit_score_text(f, calc, uj))}</span></summary>'
+                   f'<div class="fsrc">{inline_html(header)}</div>'
+                   + (f'<ul class="fpts">{pts}</ul>' if pts else "")
+                   + (_direction_html(ub) if ub.get("three_way") else "") + "</details>")
+    return "".join(out)
+
+
+def _v3_card_tables(ctx: Any, c: dict[str, Any]) -> str:
+    """2026-10-19 규칙 v3.0: 기업 카드 머리의 층별 점수 표와 ① 시장 위치 표(초안과 같은 행)."""
+    out = ""
+    layer_rows = rc.layer_table_rows(ctx.rules, c["factors"])
+    if layer_rows:
+        # 판매 칸인데 붙은 매출 줄이 없어 몫이 0 인 층은 점수 칸이 모두 비어 표를 길게만 만든다. 표에서 빼고 한 줄로 모은다.
+        weights = (c["factors"]["F4"].get("calc") or {}).get("layer_weights") or {}
+        layers = ctx.rules.payload["layers"]
+        keys = [u for u in [*layers["order"], layers["outside"]["id"]] if u in weights]
+        kept = [row for u, row in zip(keys, layer_rows) if weights[u] > 0]
+        zero = [row[0] for u, row in zip(keys, layer_rows) if not weights[u] > 0]
+        out += ('<div class="ctab">층별 점수 — ①②③ 은 층마다 매기고 층 매출 몫으로 가중 평균한다</div>'
+                + _html_table(["층", "층 매출 몫", "①", "②", "③"], kept)
+                + (f'<p class="cnote">판매하지만 붙은 매출 줄이 없어 몫이 0 인 층: {esc(" · ".join(zero))}. '
+                   '이 층들은 ④ 수직계열화에만 들고 ①②③ 은 매기지 않는다.</p>' if zero else ""))
+    market_rows = rc.market_table_rows(c["factors"])
+    if market_rows:
+        out += ('<div class="ctab">① 시장 위치 — D 시장 순위 · E 점유율 방향</div>'
+                + _html_table(["구성 사업", "시장", "순위", "점유율(최근 ← 1년 전)", "변화", "반영", "D", "E"], market_rows, text_cols={1})
+                + '<p class="cnote">반영은 시장 자료가 사업이나 시장의 일부만 잴 때 점수에 넣은 비율이다. 나머지는 미확인 점수(1.6)로 채운다.</p>')
+    # 카드 본문은 넓은 화면에서 과점·함정 두 칸 격자라 표 묶음이 격자 한 줄 전체를 쓰게 감싼다.
+    return f'<div class="cv3">{out}</div>' if out else ""
+
+
 def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]],
                  observations: list[dict[str, Any]] | None = None, judgments: list[dict[str, Any]] | None = None,
                  reps: list[dict[str, Any]] | None = None, ctx: Any = None) -> str:
@@ -1039,6 +1122,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
     HISTORY_BY_COMPANY.clear()   # 한 번 그릴 때마다 새로 모은다 — 두 번 부르면 쌓인다
     judgments_by_id = {j["judgment_id"]: j for j in (judgments or [])}
     rules = ctx.rules if ctx is not None else None
+    layered = rules is not None and rc.is_layered(rules)
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
     ordered = sorted(results["companies"], key=lambda c: (c["rank"] is None, c["rank"] or 0, -(c["moat"] or 0), c["company_id"]))
     out = []
@@ -1105,6 +1189,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 body = ((f'<ul class="fpts why">{"".join(why)}</ul>' if why else "")
                         + ((src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else "")
                         + (_direction_html(block) if block is not None and block.get("three_way") else ""))
+                if layered and block is None and f in ("F1", "F2", "F3"):
+                    body += _unit_blocks_html(ctx, c, f, fr, judgments_by_id, reps, results["baseline_id"], history)
                 if f == "F1" and (rules.factor("F1").get("ladder") or {}).get("top_score_requires_ai_monetized"):
                     body = _mark_conditions(body)   # 2026-10-13 사용자 지시: (가)·(나) 표지를 설명 상자와 같은 색으로
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(rc.factor_label(rules, f))}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
@@ -1117,7 +1203,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
             + (f'<div class="cquote">{esc(summary)}</div>' if summary else "")
             + f'<div class="crank">{esc(rank_text)}</div>'
             + f'</div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(score_text)}</div></div></summary>'
-            f'<div class="cbody">{"".join(groups)}</div></details>'
+            f'<div class="cbody">{_v3_card_tables(ctx, c) if layered else ""}{"".join(groups)}</div></details>'
         )
     return "".join(out)
 
@@ -2219,7 +2305,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <meta property="og:description" content="{esc(subtitle)}">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
-<style>{css()}</style>
+<style>{css(rc.is_layered(ctx.rules))}</style>
 </head>
 <body>
 <header><div class="wrap">

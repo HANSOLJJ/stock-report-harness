@@ -89,6 +89,24 @@ class V30RenderTest(V30Base):
         self.assertEqual((_share_text(0.0034), _share_text(0.8227), _share_text(0)), ("0.3%", "82%", "0%"))
         self.assertNotRegex(text, r"→ -?\d+\.\d{3,}")
 
+    def test_html_card_shows_layer_tables_and_unit_blocks(self):
+        # 2026-10-19: v3.0 HTML 카드에 층·사업 판단 근거와 층 표가 없었다(초안에만 있었다)
+        from scorecard import render_common as rc
+        from scorecard.render_html import V3_CSS, css, render_cards
+        html = render_cards(self.results, self.scores, self.ctx.companies, self.ctx.observations, self.ctx.judgments,
+                            rc.replacements(self.ctx), self.ctx)
+        card = html[html.index('id="card-nvidia"'):]
+        for needle in ('<div class="cv3">', "층별 점수", "<td class=\"name\"><b>AI 칩 설계</b></td><td class=\"mono\">80%</td>",
+                       '<span class="uname">AI 칩 설계</span><span class="usc">10</span>',
+                       '<span class="uname">기기</span><span class="usc">8</span>',
+                       '<span class="uname">Gaming</span><span class="usc">12.2</span>',
+                       '<div class="fdh">올릴 근거</div>'):
+            with self.subTest(needle=needle[:40]):
+                self.assertIn(needle, card)
+        self.assertNotIn("판단 기록 `nvidia.F2.", card, "판단 ID 는 감사 기록으로 보낸다")
+        self.assertIn("details.unit", css(True))
+        self.assertNotIn(V3_CSS.strip()[:20], css(False), "층 정의가 없는 옛 실행의 CSS 는 그대로다")
+
     def test_preview_rescales_old_scores(self):
         text = render_preview(self.ctx, self.results, self.scores)
         self.assertIn("① 네트워크 2(×4 환산 8)→12.2", text)
