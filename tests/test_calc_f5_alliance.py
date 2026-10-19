@@ -92,6 +92,18 @@ class HostilityTest(unittest.TestCase):
         one = self.h([front("주요 고객의 자체 모델", "structural"), front("FTC", remedy="yes")])
         self.assertEqual((one["band"], one["H"]), ("structural", -8), "구조형이 있으면 비용형 조건은 더하지 않는다")
 
+    def test_structural_unknown_goes_40_percent_from_the_bad_side(self):
+        # 2026-10-15 규칙 일관성 리뷰: '주요 고객' 인지가 미확인인 전선을 구조형이 아닌 쪽으로 끝까지 풀었다(rules.md 2.6 위반).
+        costs = [front("국방부", remedy="yes"), front("FTC"), front("EU", jurisdiction="EU")]   # 비용형 −4
+        one = self.h([*costs, front("경쟁사 소유 고객", "structural_unknown")])
+        self.assertEqual((one["band"], one["H_if_structural"], one["H_if_not_front"], one["H"]), ("structural_unknown", -8, -4, -6.4))
+        two = self.h([*costs, front("고객 A", "structural_unknown"), front("고객 B", "structural_unknown")], "unknown")
+        self.assertEqual((two["H_if_structural"], two["H_if_not_front"], two["H"]), (-11.2, -4, -8.32), "−11.2 + 0.4 × 7.2")
+        mixed = self.h([front("저작권 소송", "structural"), front("고객 A", "structural_unknown")])
+        self.assertEqual((mixed["H_if_structural"], mixed["H_if_not_front"], mixed["H"]), (-10, -8, -9.2))
+        ended = self.h([front("FTC"), front("옛 고객", "structural_unknown", status="ended")])
+        self.assertEqual((ended["band"], ended["H"]), ("cost", -2), "끝난 전선은 미확인이어도 세지 않는다")
+
     def test_ended_fronts_do_not_count(self):
         c = self.h([front("옛 소송", status="ended"), front("옛 구조형", "structural", status="ended")])
         self.assertEqual((c["band"], c["H"], c["ended_ignored"]), ("minimal", 0, ["옛 소송", "옛 구조형"]))

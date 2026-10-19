@@ -2331,7 +2331,7 @@ def limitations(ctx: Any) -> list[str]:
 
 V3_BASES = {"business", "layer_paths", "layer_cp", "holdings", "alliance"}
 HOSTILITY_BAND_LABELS = {"minimal": "최소", "cost": "비용형", "structural": "구조형", "structural_multi_front": "구조형 복수 전선",
-                         "multi": "다발형"}
+                         "multi": "다발형", "structural_unknown": "구조형 여부 미확인"}
 
 
 def is_layered(rules: Any) -> bool:
