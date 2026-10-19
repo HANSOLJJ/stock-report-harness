@@ -93,7 +93,7 @@ class HostilityTest(unittest.TestCase):
         self.assertEqual((one["band"], one["H"]), ("structural", -8), "구조형이 있으면 비용형 조건은 더하지 않는다")
 
     def test_structural_unknown_goes_40_percent_from_the_bad_side(self):
-        # 2026-10-15 규칙 일관성 리뷰: '주요 고객' 인지가 미확인인 전선을 구조형이 아닌 쪽으로 끝까지 풀었다(rules.md 2.6 위반).
+        # 2026-10-19 pilot8 규칙 일관성 리뷰: '주요 고객' 인지가 미확인인 전선을 구조형이 아닌 쪽으로 끝까지 풀었다(rules.md 2.6 위반).
         costs = [front("국방부", remedy="yes"), front("FTC"), front("EU", jurisdiction="EU")]   # 비용형 −4
         one = self.h([*costs, front("경쟁사 소유 고객", "structural_unknown")])
         self.assertEqual((one["band"], one["H_if_structural"], one["H_if_not_front"], one["H"]), ("structural_unknown", -8, -4, -6.4))

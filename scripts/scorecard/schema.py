@@ -1731,7 +1731,7 @@ BUSINESS_MONETIZATION_KEYS = ("ai_monetized_measure", "ai_monetized_share", "ai_
                               "ai_separate_billing_evidence", "ai_price_uplift_evidence")
 STANDARD_HOLDERS = {"company", "neutral"}
 ACCELERATION_BASES = {"yoy_quarter", "consecutive_equal", "none"}
-# structural_unknown: 구조형인지(상대가 주요 고객인지 등)가 미확인인 전선(2026-10-15, rules.md ⑤·2.6)
+# structural_unknown: 구조형인지(상대가 주요 고객인지 등)가 미확인인 전선(2026-10-19, rules.md ⑤·2.6)
 FRONT_NATURES = {"cost", "structural", "structural_unknown"}
 FRONT_STATUSES = {"ongoing", "ended"}
 # ④ 그 분야의 힘: AI 무관 부문 이익률(segment) 또는 그 부문을 공시하지 않아 대신 쓴 회사 전체 이익률(company).

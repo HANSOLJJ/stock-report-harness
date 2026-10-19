@@ -464,7 +464,7 @@ def _hostility(inputs: dict[str, Any], spec: dict[str, Any], share: float) -> tu
     다발형 −12), 비용형만 있으면 −2 에 구제 조치 진행 −2, 관할 셋 이상 −2. 긴장·구제 조치가 미확인이면 나쁜 쪽에서 좋은 쪽으로
     `share`(40%)만큼 간 값이다(rules.md 2.6: 미확인을 감점 완화 쪽으로 풀지 않되 가장 나쁜 값으로도 두지 않는다).
 
-    2026-10-15: 전선이 구조형인지(예: 상대가 '주요 고객'인지)가 미확인이면(nature structural_unknown) 그 전선을 구조형으로 센 값(나쁜 쪽)과
+    2026-10-19: 전선이 구조형인지(예: 상대가 '주요 고객'인지)가 미확인이면(nature structural_unknown) 그 전선을 구조형으로 센 값(나쁜 쪽)과
     그 전선을 빼고 센 값(좋은 쪽) 사이에서 나쁜 쪽부터 `share` 만큼 간 값이다. 구조형이 아니면 적대 전선이 아니기 때문이다."""
     unknown = [f for f in inputs["fronts"] if f["status"] == "ongoing" and f["nature"] == "structural_unknown"]
     if not unknown:
