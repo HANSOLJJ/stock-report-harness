@@ -156,6 +156,15 @@ class V30RenderTest(V30Base):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, " ".join(criteria.values()))
 
+    def test_score_colors_scale_with_the_v30_ranges(self):
+        # 2026-10-19 pilot9 출력 리뷰 F-2: 0~5 눈금이라 ④ 만점 20 이 회색, ① 5 가 초록으로 칠해졌다
+        from scorecard.render_html import score_class, total_class, trap_class
+        rules = self.ctx.rules
+        self.assertEqual([score_class(s, rules, "F4") for s in (20, 16, 12, 9, 3, 0)], ["g5", "g4", "g3", "g2", "g1", "g0"])
+        self.assertEqual([trap_class(s, rules, "F8") for s in (0, -4, -8, -12, -16)], ["g5", "g4", "g3", "g2", "g1"])
+        self.assertEqual([total_class(t, rules) for t in (60, 48, 43, 4, 0)], ["g5", "g4", "g3", "g2", "g1"])
+        self.assertEqual((score_class(4), trap_class(-1), total_class(15)), ("g4", "g4", "g5"), "옛 규칙의 눈금은 그대로다")
+
     def test_html_notes_use_names_not_ids(self):
         # 2026-10-19: 카드의 '참고' 줄에 ['chip_design', …] 목록과 사업 id 앞머리가 그대로 보였다(HTML 표시만 바꾼다)
         from scorecard.render_html import _readable_note

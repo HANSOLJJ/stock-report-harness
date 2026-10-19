@@ -58,16 +58,24 @@ def _flabel(rules: Any, fid: str) -> str:
 
 # ------------------------------------------------------------------ 색 도우미
 
-def score_class(score: int | float | None) -> str:
+def score_class(score: int | float | None, rules: Any = None, fid: str | None = None) -> str:
     if score is None:
         return "g0"
+    # 2026-10-19 규칙 v3.0: 항목이 0~20 이라 0~5 눈금이 맞지 않는다. 만점 대비 비율로 같은 다섯 칸을 쓴다(20% 마다 한 칸).
+    if rules is not None and fid and rc.is_layered(rules):
+        hi = rules.factor_range(fid)[1]
+        return "g0" if score <= 0 else f"g{min(5, max(1, math.floor(score / hi * 5 + 1e-9)))}"
     # 2026-10-12 규칙 v2.1: 0.5 단위 점수(예: 4.5)는 아래 정수 칸의 색을 쓴다.
     return {5: "g5", 4: "g4", 3: "g3", 2: "g2", 1: "g1"}.get(math.floor(score), "g0")
 
 
-def trap_class(score: int | None) -> str:
+def trap_class(score: int | None, rules: Any = None, fid: str | None = None) -> str:
     if score is None:
         return "g0"
+    # 2026-10-19 규칙 v3.0: 함정 항목 범위(−12~−20)의 비율로 옛 칸(0·−1·−2·−3 ÷ −5)을 그대로 옮긴다.
+    if rules is not None and fid and rc.is_layered(rules):
+        frac = score / rules.factor_range(fid)[0] if score else 0
+        return "g5" if frac == 0 else "g4" if frac <= 0.2 else "g3" if frac <= 0.4 else "g2" if frac <= 0.6 else "g1"
     if score == 0:
         return "g5"
     if score >= -1:
@@ -79,9 +87,13 @@ def trap_class(score: int | None) -> str:
     return "g1"
 
 
-def total_class(total: int | None) -> str:
+def total_class(total: int | None, rules: Any = None) -> str:
     if total is None:
         return "g0"
+    # 2026-10-19 규칙 v3.0: 과점 만점이 25 에서 100 으로 4배라 총점 문턱(15·12·6·1)도 같은 비율로 늘린다.
+    if rules is not None and rc.is_layered(rules):
+        k = rules.payload["scoring"]["moat_max"] / 25
+        total = total / k
     if total >= 15:
         return "g5"
     if total >= 12:
@@ -97,6 +109,9 @@ def total_class(total: int | None) -> str:
 
 # 2026-10-19 규칙 v3.0: 층·사업 단위 카드 블록과 카드 안 표. 층 정의가 있는 실행에만 붙여 옛 실행의 HTML 은 바이트 그대로다.
 V3_CSS = """
+:root{--g1:#ec6a6d}
+.sc.bg-g0{color:var(--tx)}
+.card[open] .cbody>*{min-width:0}
 :root{--cat-layer-power:#c9b458;--cat-layer-foundry:#f0a05c;--cat-layer-chip_design:#e6c35c;--cat-layer-systems:#e08a6c;
   --cat-layer-dev_platform:#6fc7d9;--cat-layer-data_platform:#8fb0f0;--cat-layer-application:#f28cc0;
   --cat-layer-user_platform:#b195f5;--cat-layer-device:#9ad16a;--cat-layer-outside:#8a93a3}
@@ -650,7 +665,7 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None], rules: A
         placed.append({"x": px, "y": py - hh / 2 + 7, "w": w, "h": hh})
         if math.hypot(px - e["x"], py - e["y"]) > e["r"] + 24:
             parts.append(f'<line x1="{e["x"]:.1f}" y1="{e["y"]:.1f}" x2="{px:.1f}" y2="{py + (5 if py < e["y"] else -11):.1f}" style="stroke:{e["color"]}" stroke-width="1" opacity=".4"/>')
-        parts.append(f'<text x="{px:.1f}" y="{py:.1f}" text-anchor="middle" font-size="14" font-weight="700"><tspan style="fill:var(--tx)">{esc(e["names"])}</tspan> <tspan class="c-{total_class(e["total"])}" font-weight="800">{e["total"]}점</tspan></text>')
+        parts.append(f'<text x="{px:.1f}" y="{py:.1f}" text-anchor="middle" font-size="14" font-weight="700"><tspan style="fill:var(--tx)">{esc(e["names"])}</tspan> <tspan class="c-{total_class(e["total"], rules)}" font-weight="800">{e["total"]}점</tspan></text>')
     parts.append("</svg>")
     return "".join(parts)
 
@@ -664,7 +679,7 @@ def _baseline_sub(ctx: Any) -> str:
             '14개사 분포를 본 뒤 다시 정하며, 조정총점에는 적용하지 않는다.')
 
 
-def moat_trap_svg(results: dict[str, Any]) -> str:
+def moat_trap_svg(results: dict[str, Any], rules: Any = None) -> str:
     """2026-09-17 FIX-65 S4: 기업별 과점 합계와 함정 합계를 0 기준 좌우 발산 막대로 그린다.
 
     산점도를 대신하지 않는다 — 산점도는 두 축의 **조합**을, 이 막대는 각 합계의 **크기**를 보여 준다.
@@ -702,7 +717,7 @@ def moat_trap_svg(results: dict[str, Any]) -> str:
         # 숫자는 막대 끝 바깥에 둔다. SVG 글자는 `fill` 로 칠한다(FIX-65 S1 에서 고친 것과 같은 규칙).
         parts.append(f'<text x="{zero + mw + 6:.1f}" y="{mid + 5:.1f}" style="fill:var(--g4)" font-size="14" font-weight="700">{c["moat"]}</text>')
         parts.append(f'<text x="{zero - tw - 6:.1f}" y="{mid + 5:.1f}" style="fill:var(--g1)" font-size="14" font-weight="700" text-anchor="end">{c["trap"]}</text>')
-        parts.append(f'<text x="{W - 6}" y="{mid + 5:.1f}" class="c-{total_class(c["total"])}" font-size="15" font-weight="800" text-anchor="end">{c["total"]}</text>')
+        parts.append(f'<text x="{W - 6}" y="{mid + 5:.1f}" class="c-{total_class(c["total"], rules)}" font-size="15" font-weight="800" text-anchor="end">{c["total"]}</text>')
     parts.append(f'<line x1="{zero:.1f}" y1="{TOP - 8}" x2="{zero:.1f}" y2="{H - BOT + 8}" style="stroke:var(--tx3)" stroke-width="1.5"/>')
     parts.append(f'<text x="{zero:.1f}" y="{H - 12}" style="fill:var(--tx3)" font-size="14" text-anchor="middle">0</text>')
     parts.append("</svg>")
@@ -878,7 +893,7 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
         for x in MOAT_FACTORS:
             s = f[x]["score"]
             grp = ' class="f1grp"' if x == "F1" and ai_spec else ""
-            cells.append(f'<td data-k="{x}" data-v="{s}"{grp}><span class="sc bg-{score_class(s)}">{fmt_score(s)}</span></td>')
+            cells.append(f'<td data-k="{x}" data-v="{s}"{grp}><span class="sc bg-{score_class(s, rules, x)}">{fmt_score(s)}</span></td>')
             if x == "F1" and ai_spec:
                 j = judgments_by_id.get(f["F1"].get("judgment_id") or "")
                 ai = rc.ai_monetized(rules, rc.judgment_values(f["F1"], (j or {}).get("inputs")))
@@ -887,9 +902,9 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
         cells.append(f'<td class="divider mono keep" data-k="moat" data-v="{r["moat"]}"><b class="big">{r["moat"]}</b></td>')
         for x in TRAP_FACTORS:
             s = f[x]["score"]
-            cells.append(f'<td data-k="{x}" data-v="{s}"><span class="mono c-{trap_class(s)}" >{fmt_score(s)}</span></td>')
+            cells.append(f'<td data-k="{x}" data-v="{s}"><span class="mono c-{trap_class(s, rules, x)}" >{fmt_score(s)}</span></td>')
         cells.append(f'<td class="mono keep b" data-k="trap" data-v="{r["trap"]}">{r["trap"]}</td>')
-        cells.append(f'<td class="divider mono tot keep c-{total_class(r["total"])}" data-k="total" data-v="{r["total"]}">{r["total"]}</td>')
+        cells.append(f'<td class="divider mono tot keep c-{total_class(r["total"], rules)}" data-k="total" data-v="{r["total"]}">{r["total"]}</td>')
         rows.append(f'<tr class="row" data-company="{esc(r["company_id"])}">{"".join(cells)}</tr>')
     # 2026-10-13 사용자 지시: AI 수익화는 ① 의 부가 조건(5점 조건)이지 독립 항목이 아니다. 머리글에 그 관계를 적는다.
     ai_head = (f'<th data-k="F1ai" class="f1sub" title="① 의 5점 조건이다. 점수에 더하지 않는다.">'
@@ -1011,10 +1026,11 @@ def render_holdings_v3(results: dict[str, Any], ctx: Any) -> str:
             + f"<th>{esc(names.get(layers['outside']['id'], '층 밖 사업'))}</th><th>주 층</th><th>AI 무관 매출</th><th>④</th></tr>")
     values = layers["cell_values"]
     full_at = ctx.rules.factor("F4")["vertical"]["full_at"]
+    # 괄호에는 그룹 안 순위와 전체 순위를 함께 적는다(전체 순위만 적으면 그룹 안 순위로 읽힌다).
     group_items = "".join(
         f'<li><b>{esc(names[k])}</b> '
-        + " · ".join(f'{esc(m["display_name"])} {fmt_score(m["total"])}({m["rank"]}위)'
-                     for m in sorted(groups[k], key=lambda m: (-(m["total"] or 0), m["display_name"]))) + "</li>"
+        + " · ".join(f'{esc(m["display_name"])} {fmt_score(m["total"])}(그룹 안 {i}위 · 전체 {m["rank"]}위)'
+                     for i, m in enumerate(sorted(groups[k], key=lambda m: (-(m["total"] or 0), m["display_name"])), 1)) + "</li>"
         for k in keys if k in groups)
     return ('<h3>열한 층 보유표와 비교 그룹</h3>'
             f'<p class="sub">회사마다 AI 사슬 열한 층을 판매·자체 사용·준비 중·없음으로 적은 표다. 칸 옆 숫자는 그 층에 붙은 매출 줄의 몫이고, '
@@ -1243,7 +1259,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 fr = c["factors"][f]
                 history = HISTORY_BY_COMPANY.setdefault(c["company_id"], [])
                 score = fr["score"]
-                color = f"c-{score_class(score) if f in MOAT_FACTORS else trap_class(score)}"
+                color = f"c-{score_class(score, rules, f) if f in MOAT_FACTORS else trap_class(score, rules, f)}"
                 block = rc.evidence_block(fr, judgments_by_id, b.get("evidence", {}).get(f, []), results["baseline_id"], c["company_id"], reps,
                                           run_created=(ctx.run.get("created_at") if ctx is not None else None))
                 # 2026-09-18 FIX-80 S2: 자동 산출 항목에 붙던 v1.5 참고 문단은 `점수 근거가 아니다` 를 두 번 말하며
@@ -1304,7 +1320,7 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
             # 2026-10-06 사용자 지시: 요약은 이 실행에서 확정한 기업 요약만 싣는다(기준선 원문 tag 를 쓰지 않는다).
             + (f'<div class="cquote">{esc(summary)}</div>' if summary else "")
             + f'<div class="crank">{esc(rank_text)}</div>'
-            + f'</div><div class="cscore"><div class="t c-{total_class(c["total"])}">{fmt_score(c["total"])}</div><div class="s">{esc(score_text)}</div></div></summary>'
+            + f'</div><div class="cscore"><div class="t c-{total_class(c["total"], rules)}">{fmt_score(c["total"])}</div><div class="s">{esc(score_text)}</div></div></summary>'
             f'<div class="cbody">{_v3_card_tables(ctx, c) if layered else ""}{"".join(groups)}</div></details>'
         )
     return "".join(out)
@@ -2458,7 +2474,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <h2><span class="num">02</span>과점 × 함정 지도</h2>
 <div class="chartbox">{scatter_svg(results, market_caps(ctx), ctx.rules)}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.{_baseline_sub(ctx)}</p></div>
 <h3>기업별 과점 합계와 함정 합계</h3>
-<div class="chartbox"><div class="mtwrap">{moat_trap_svg(results)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
+<div class="chartbox"><div class="mtwrap">{moat_trap_svg(results, ctx.rules)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
 </section>
 {regime_panel}<section class="tabpanel" id="tab-companies" role="tabpanel" aria-labelledby="tabbtn-companies">
 <h2><span class="num">03</span>기업별 상세</h2>
