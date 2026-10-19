@@ -136,6 +136,25 @@ class V30RenderTest(V30Base):
         self.assertEqual(old, scatter_svg({"companies": [{**one["companies"][0], "moat": 18, "trap": -6, "total": 12}]}, {}),
                          "옛 규칙의 그림은 규칙을 넘기든 안 넘기든 같다")
 
+    def test_html_method_uses_v30_modes_and_criteria(self):
+        # 2026-10-19: 방법 절 방식 칸에 business·layer_paths 같은 내부 이름이, '무엇을 보고 매기는가' 에 옛 규칙 지표 문장이 나왔다
+        from scorecard.render_common import factor_criteria
+        from scorecard.render_html import _mode_cell
+        for mode, name in (("business", "사업마다 다섯 부분을 더한다"), ("layer_paths", "층마다 세 경로를 더한다"),
+                           ("layer_cp", "층마다 카운터 포지셔닝을 잰다"), ("holdings", "보유표 세 부분을 더한다"),
+                           ("alliance", "동맹 세 부분과 적대 띠")):
+            with self.subTest(mode=mode):
+                self.assertIn(name, _mode_cell(mode))
+        criteria = {fid: " ".join(factor_criteria(self.ctx, fid)) for fid in ("F1", "F2", "F3", "F4", "F5")}
+        self.assertIn("최근 2개 분기", criteria["F1"])
+        self.assertIn("최근 24개월", criteria["F2"])
+        self.assertIn("없으면 최고 8, 한 곳이면 최고 5, 두 곳 이상이면 0", criteria["F3"])
+        self.assertIn("AI 사슬 조건 층(전력 · 데이터 플랫폼 · 사용자 플랫폼 · 기기)은", criteria["F4"])
+        self.assertIn("회사가 원고인 소송", criteria["F5"])
+        for stale in ("통과점", "상한 2점", "부품:"):
+            with self.subTest(stale=stale):
+                self.assertNotIn(stale, " ".join(criteria.values()))
+
     def test_html_notes_use_names_not_ids(self):
         # 2026-10-19: 카드의 '참고' 줄에 ['chip_design', …] 목록과 사업 id 앞머리가 그대로 보였다(HTML 표시만 바꾼다)
         from scorecard.render_html import _readable_note

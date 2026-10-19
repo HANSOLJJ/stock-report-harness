@@ -1829,6 +1829,9 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
         return survival_criteria(f)
     if f.get("mode") == "axes":
         return axes_criteria(f)
+    # 2026-10-19 규칙 v3.0: 층·사업 단위 다섯 방식은 원본 지표 문장(① 부품 상한, ③ 통과점 0~3 등 옛 규칙) 대신 v3.0 판정 재료를 싣는다.
+    if f.get("mode") in V3_CRITERIA:
+        return V3_CRITERIA[f["mode"]](ctx.rules, f)
     metrics = (factor_concept(ctx, fid) or {}).get("metrics") or ""
     if metrics:
         out.append(strip_worknotes(metrics))
@@ -1865,6 +1868,60 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
         out.append("**이 항목은 규칙이 채점 기준을 적어 두지 않았다.** 범위와 점수를 만드는 방식만 정해져 "
                    "있어, 무엇을 보고 그 점수를 주었는지는 각 회사 카드의 근거 문장에서 읽어야 한다.")
     return out
+
+
+def _v3_business_criteria(rules: Any, f: dict[str, Any]) -> list[str]:
+    b = f["parts"]["B"]
+    return ["**사업 나누기** — 공시된 매출 줄을 기본 단위로 쓰고, 같은 층 안이라도 고객 유형(소비자·업무·거래)이 다르면 나눈다. "
+            "하나를 떠나면 다른 서비스의 실질적 편익도 잃는 연결이 근거로 확인될 때만 묶는다.",
+            f"**A 락인**은 참여자 효과(다른 참여자 때문에 생기는 편익)와 전환비용 가운데 높은 쪽이다. **B 가격 실측**은 가격 변화 뒤 최근 "
+            f"{b.get('sustained_quarters', 2)}개 분기 그 사업 매출이 1년 전 같은 분기보다 늘었는지다. **C 대체 공급**은 동급 대체재가 "
+            "출하되는지와 독립 측정의 격차다. **D 시장 순위·E 점유율 방향**은 시장 정의표가 정한 조사기관 정기 자료의 순위와 1년 점유율 변화다.",
+            f"AI 수익화가 '예'가 아닌 구성 사업은 최고 {f['ai_cap']['cap']}점이다. 미확인인 점수 부분은 그 부분 만점의 40% 로 센다."]
+
+
+def _v3_paths_criteria(rules: Any, f: dict[str, Any]) -> list[str]:
+    months = rules.payload["layers"]["time_window_months"]
+    return ["**성능 도약**은 독립 측정에서 1위가 되고 2위가 그 수준에 오기까지의 격차(개월)다. 벤더 발표는 1차 근거가 아니고, 비교는 같은 "
+            "하네스끼리만 한다.",
+            f"**패러다임 적응**은 새 판에 맞춘 제품의 채택과 그 1년 배수다. **표준 선점**은 최근 {months}개월 안에 주요 회사가 새로 지원한 "
+            "규격이 있을 때만 세고, 그 규격을 지원하는 주요 제품이 속한 층에서 센다.",
+            "독립 측정이 없는 층은 (패러다임 적응 + 표준 선점) × 2 다."]
+
+
+def _v3_cp_criteria(rules: Any, f: dict[str, Any]) -> list[str]:
+    im = f.get("imitation") or {}
+    return ["**별도 수익모델**은 상대가 내 방식을 따르면 상대 자신의 수입원이 무너지는가다. 그 상대가 지금 시장에 없으면 수익모델·모방 "
+            "불가능성은 0 이다.",
+            f"**모방 불가능성**은 나 말고 같은 방식을 이미 쓰는 회사 수로 가른다(없으면 최고 {im.get('blocked', 8)}, 한 곳이면 최고 "
+            f"{im.get('conflict_pending', 5)}, 두 곳 이상이면 {im.get('copied', 0)}). **가속도**는 같은 정의의 AI 귀속 지표로 두 기간 성장 "
+            "배수를 구해 나눈 값이다.",
+            "진입 순서는 점수에 넣지 않는다. 늦게 들어왔다는 사실만으로는 점수가 없다."]
+
+
+def _v3_holdings_criteria(rules: Any, f: dict[str, Any]) -> list[str]:
+    layers = rules.payload["layers"]
+    names = v3_layer_names(rules)
+    cells = layers["cell_values"]
+    cell_names = {"sold": "판매", "self": "자체 사용", "preparing": "준비 중", "none": "없음"}
+    return [f"**열한 층 보유표** — 열한 층({' · '.join(names[k] for k in layers['order'])})마다 "
+            + " · ".join(f"{cell_names.get(k, k)} {v:g}" for k, v in cells.items()) + " 으로 적는다. "
+            f"AI 사슬 조건 층({' · '.join(names[k] for k in layers['ai_chain_conditional'])})은 그 칸이 AI 를 나를 때만 수직계열화에 센다.",
+            "**매출 줄** — 공시 매출 줄의 최근 4개 분기 합을 층에 붙여 층 매출 몫을 낸다. ①②③ 은 이 몫으로 가중 평균한다.",
+            "**AI 무관 매출**은 누가 왜 돈을 내는지로 가른다. 광고·소비자 기기·구독·기업용 소프트웨어처럼 AI 호황이 꺼져도 남는 수요다. "
+            "금액은 알지만 AI 무관 여부를 모르는 줄은 그 금액의 40% 를 AI 무관으로 센다."]
+
+
+def _v3_alliance_criteria(rules: Any, f: dict[str, Any]) -> list[str]:
+    return ["**동맹**은 받은 것이 아니라 맺은 것을 센다. 조달과 동맹을 가르는 네 질문으로 거르고, 경쟁사 편입은 상대가 떠날 수 없을 때만 "
+            "센다. 금액은 쓰지 않는다.",
+            "**적대**는 진행 중인 규제 조사·소송·시장 차단만 센다. 비용형은 사업 구조를 건드리지 않는 벌금·조사이고, 구조형은 주요 고객이 곧 "
+            "경쟁자이거나 사업의 정당성 자체를 겨냥한 적대다. 회사가 원고인 소송과 끝난 사건은 세지 않는다.",
+            "긴장·구제 조치·구조형 여부가 미확인이면 나쁜 쪽에서 좋은 쪽으로 40% 간 값을 쓴다."]
+
+
+V3_CRITERIA = {"business": _v3_business_criteria, "layer_paths": _v3_paths_criteria, "layer_cp": _v3_cp_criteria,
+               "holdings": _v3_holdings_criteria, "alliance": _v3_alliance_criteria}
 
 
 def lockin_criteria(f: dict[str, Any]) -> list[str]:
