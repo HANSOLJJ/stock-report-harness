@@ -151,11 +151,19 @@ class HoldingsScoreTest(unittest.TestCase):
         r = compute(h)
         self.assertEqual((r["calc"]["field_strength"], r["calc"]["field_strength_note"]), (0, "AI 무관 사업이 없다(해당 없음)"))
 
+    def test_unknown_non_ai_counts_forty_percent(self):
+        # 2026-10-19 사용자 결정(pilot8 재무 리뷰 F-2): 금액은 알고 AI 무관 여부만 모르는 줄은 판정 대기가 아니라 그 금액의 40% 를
+        # AI 무관으로 센다. 제3자 판매자 30 이 미확인이면 AI 무관 몫은 (40 + 0.4 × 30) / 100 = 0.52, 다각화 0.52 ÷ 0.8 × 8 = 5.2.
+        h = holdings()
+        h["revenue_lines"][1]["non_ai"] = "unknown"
+        r = compute(h)
+        self.assertEqual((r["status"], r["calc"]["non_ai_share"], r["calc"]["diversification"]), ("ok", 0.52, 5.2))
+        self.assertTrue(any("40% 를 AI 무관으로" in w for w in r["warnings"]))
+        self.assertEqual(compute(holdings())["calc"]["non_ai_share"], 0.7, "모두 확인되면 그대로다")
+
     def test_pending_cases(self):
         h_unknown_amount = holdings()
         h_unknown_amount["revenue_lines"][0]["amount"] = "unknown"
-        h_unknown_non_ai = holdings()
-        h_unknown_non_ai["revenue_lines"][1]["non_ai"] = "unknown"
         h_na = holdings(non_ai_margin="not_applicable")
         del h_na["non_ai_margin_source"]
         h_unknown_margin = holdings(non_ai_margin="unknown")
@@ -163,8 +171,7 @@ class HoldingsScoreTest(unittest.TestCase):
         cases = [
             (set_cells(holdings(), model="unknown"), "보유표 칸 \\['model'\\] 이 미확인"),
             (set_cells(holdings(), user_platform={"cell": "sold", "ai_chain": "unknown", "evidence_ids": []}), "AI 를 나르는지 미확인"),
-            (h_unknown_amount, "금액이나 AI 무관 여부가 미확인"),
-            (h_unknown_non_ai, "금액이나 AI 무관 여부가 미확인"),
+            (h_unknown_amount, "금액이 미확인"),
             (h_na, "이익률이 '해당 없음'"),
             (h_unknown_margin, "모두 확인하지 못했다"),
             (holdings(revenue_lines=[]), "매출 줄이 없다"),

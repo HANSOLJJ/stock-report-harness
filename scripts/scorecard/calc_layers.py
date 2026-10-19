@@ -76,9 +76,9 @@ def compute_f4_holdings(company: dict[str, Any], judgments: JudgmentLookup, rule
     if chain_unknown:
         return pending(f"AI 사슬 조건 층 {chain_unknown} 이 AI 를 나르는지 미확인 — 수직계열화에 넣거나 빼지 않는다")
     lines = inputs["revenue_lines"]
-    bad_lines = [line["line"] for line in lines if line["amount"] == "unknown" or line["non_ai"] == "unknown"]
+    bad_lines = [line["line"] for line in lines if line["amount"] == "unknown"]
     if bad_lines:
-        return pending(f"매출 줄 {bad_lines} 의 금액이나 AI 무관 여부가 미확인 — AI 무관 몫을 어림하지 않는다")
+        return pending(f"매출 줄 {bad_lines} 의 금액이 미확인 — AI 무관 몫을 어림하지 않는다")
     total = sum(float(line["amount"]) for line in lines)
     if total <= 0:
         return pending("매출 줄이 없다 — 층 매출 몫과 AI 무관 몫을 낼 수 없다")
@@ -89,10 +89,18 @@ def compute_f4_holdings(company: dict[str, Any], judgments: JudgmentLookup, rule
     vertical_raw = sum(counted.values())
     v = spec["vertical"]
     vertical = min(float(v["max"]), vertical_raw / float(v["full_at"]) * float(v["max"]))
-    share = sum(float(line["amount"]) for line in lines if line["non_ai"] == "yes") / total
+    # 2026-10-19 사용자 결정: 금액은 확인했지만 AI 무관 여부를 모르는 줄은 나쁜 쪽(AI 수요)에서 좋은 쪽으로 40% 간 값으로,
+    # 그 금액의 40% 를 AI 무관으로 센다(rules.md 2.6·④). TSMC '기타' 줄은 구성이 공시되지 않는다.
+    unknown_share = float(rules.payload["scoring"].get("unknown_share", 0))
+    unsure = [line for line in lines if line["non_ai"] == "unknown"]
+    share = (sum(float(line["amount"]) for line in lines if line["non_ai"] == "yes")
+             + unknown_share * sum(float(line["amount"]) for line in unsure)) / total
     diversification = piecewise(spec["diversification"]["curve"], share)
 
     warnings: list[str] = []
+    if unsure:
+        warnings.append(f"매출 줄 {[line['line'] for line in unsure]} 의 AI 무관 여부가 미확인 — 그 금액의 "
+                        f"{unknown_share * 100:g}% 를 AI 무관으로 셌다")
     margin = inputs["non_ai_margin"]
     if share == 0:
         field, field_note = 0.0, "AI 무관 사업이 없다(해당 없음)"
