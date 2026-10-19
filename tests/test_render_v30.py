@@ -107,6 +107,19 @@ class V30RenderTest(V30Base):
         self.assertIn("details.unit", css(True))
         self.assertNotIn(V3_CSS.strip()[:20], css(False), "층 정의가 없는 옛 실행의 CSS 는 그대로다")
 
+    def test_html_summary_holdings_table(self):
+        # 2026-10-19: v3.0 요약에 열한 층 보유표가 없었다(v2.1 여섯 층 표만 있었다)
+        from types import SimpleNamespace
+        from scorecard.render_html import render_holdings_v3
+        from scorecard.rules import load_rules
+        html = render_holdings_v3(self.results, self.ctx)
+        for needle in ("열한 층 보유표와 비교 그룹", "<th>전력</th>", '<td class="c-g5">판매<span class="lw">80%</span></td>',
+                       '<td class="c-g0">없음</td>', "<td>AI 칩 설계</td>", "판매 1 · 자체 사용 0.5"):
+            with self.subTest(needle=needle[:30]):
+                self.assertIn(needle, html)
+        self.assertNotIn("비교 그룹 안 순위", html, "순위가 확정되지 않은(미완료) 회사는 그룹 안 순위에 넣지 않는다")
+        self.assertEqual(render_holdings_v3(self.results, SimpleNamespace(rules=load_rules("v2.1"))), "")
+
     def test_html_notes_use_names_not_ids(self):
         # 2026-10-19: 카드의 '참고' 줄에 ['chip_design', …] 목록과 사업 id 앞머리가 그대로 보였다(HTML 표시만 바꾼다)
         from scorecard.render_html import _readable_note

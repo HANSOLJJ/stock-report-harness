@@ -109,6 +109,7 @@ details.unit>summary .uname{font-weight:600;color:var(--tx)}
 details.unit>summary .uname::before{content:"▸ ";color:var(--tx3)}
 details.unit[open]>summary .uname::before{content:"▾ "}
 details.unit>summary .usc{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.layers td .lw{display:block;font-size:var(--fs-sm);font-variant-numeric:tabular-nums}
 """
 
 
@@ -937,6 +938,56 @@ def render_layers(results: dict[str, Any], ctx: Any) -> str:
             '상한 2.5)이고 다각화 축은 AI 와 무관한 최종 수요에서 나오는 매출 몫이다. 비교 그룹은 판매 칸 가운데 외부 매출이 가장 큰 층이며, '
             '잣대는 모든 회사에 같고 비교만 그룹 안에서 한다. 판매 칸이 없는 회사는 비교 그룹이 없다(—). 준비 중은 돈이 나간 실행된 투자인데 매출이 아직 0 인 칸이라 점수는 0 이고 '
             '트리거로 지켜본다. 순위에서 빠진 회사는 그룹 안 순위에도 넣지 않는다.</p>'
+            f'<div class="tablewrap"><table class="layers"><thead>{head}</thead><tbody>{"".join(body)}</tbody></table></div>'
+            + (f'<h3>비교 그룹 안 순위</h3><ul class="fpts">{group_items}</ul>' if group_items else ""))
+
+
+def render_holdings_v3(results: dict[str, Any], ctx: Any) -> str:
+    """2026-10-19 규칙 v3.0 ④ 열한 층 보유표(전 기업 한 장)와 비교 그룹 안 순위. 층 정의가 없는 실행에는 빈 문자열이다.
+    칸은 판매·자체 사용·준비 중·없음 글자와, 매출 줄이 붙은 층이면 그 층의 매출 몫을 함께 적는다(색만으로 뜻을 전하지 않는다)."""
+    if not rc.is_layered(ctx.rules):
+        return ""
+    layers = ctx.rules.payload["layers"]
+    names = rc.v3_layer_names(ctx.rules)
+    keys = list(layers["order"])
+    ordered = sorted(results["companies"], key=lambda c: (c.get("rank") is None, c.get("rank") or 0, c["display_name"]))
+    cell_cls = {"sold": "c-g5", "self": "c-g3", "preparing": "c-g2", "none": "c-g0", "unknown": "c-g0"}
+    body, groups = [], {}
+    for c in ordered:
+        f4 = c["factors"]["F4"]
+        calc = f4.get("calc") or {}
+        cells, weights = calc.get("cells") or {}, calc.get("layer_weights") or {}
+        if not cells:
+            continue
+        tds = []
+        for k in keys:
+            v = cells.get(k)
+            share = f'<span class="lw">{esc(rc._share_text(weights[k]))}</span>' if weights.get(k, 0) > 0 else ""
+            tds.append(f'<td class="{cell_cls.get(v, "")}">{esc(rc.LAYER_VALUE_LABELS.get(v, "—"))}{share}</td>')
+        primary = calc.get("primary_layer")
+        outside = weights.get(layers["outside"]["id"], 0)
+        body.append(f'<tr data-company="{esc(c["company_id"])}"><td class="name keep"><b>{esc(c["display_name"])}</b></td>{"".join(tds)}'
+                    f'<td class="mono">{esc(rc._share_text(outside)) if outside > 0 else "—"}</td>'
+                    f'<td>{esc(names.get(primary, "—"))}</td>'
+                    f'<td class="mono">{esc(rc._share_text(calc["non_ai_share"])) if isinstance(calc.get("non_ai_share"), (int, float)) else "—"}</td>'
+                    f'<td class="mono"><b>{fmt_score(f4.get("score"))}</b></td></tr>')
+        if c.get("complete") and primary:
+            groups.setdefault(primary, []).append(c)
+    if not body:
+        return ""
+    head = ('<tr><th class="name keep">기업</th>' + "".join(f"<th>{esc(names[k])}</th>" for k in keys)
+            + f"<th>{esc(names.get(layers['outside']['id'], '층 밖 사업'))}</th><th>주 층</th><th>AI 무관 매출</th><th>④</th></tr>")
+    values = layers["cell_values"]
+    full_at = ctx.rules.factor("F4")["vertical"]["full_at"]
+    group_items = "".join(
+        f'<li><b>{esc(names[k])}</b> '
+        + " · ".join(f'{esc(m["display_name"])} {fmt_score(m["total"])}({m["rank"]}위)'
+                     for m in sorted(groups[k], key=lambda m: (-(m["total"] or 0), m["display_name"]))) + "</li>"
+        for k in keys if k in groups)
+    return ('<h3>열한 층 보유표와 비교 그룹</h3>'
+            f'<p class="sub">회사마다 AI 사슬 열한 층을 판매·자체 사용·준비 중·없음으로 적은 표다. 칸 옆 숫자는 그 층에 붙은 매출 줄의 몫이고, '
+            f'몫이 있는 층만 ①②③ 을 매긴다. ④ 수직계열화는 AI 사슬 조건을 채운 칸 값(판매 {values["sold"]:g} · 자체 사용 {values["self"]:g})의 '
+            f'합이 {full_at:g} 이상이면 만점이다. 비교 그룹은 매출 몫이 가장 큰 판매 층(주 층)이고, 잣대는 모든 회사에 같으며 비교만 그룹 안에서 한다.</p>'
             f'<div class="tablewrap"><table class="layers"><thead>{head}</thead><tbody>{"".join(body)}</tbody></table></div>'
             + (f'<h3>비교 그룹 안 순위</h3><ul class="fpts">{group_items}</ul>' if group_items else ""))
 
@@ -2345,7 +2396,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_ranking(results, ctx)}
 {conditions}
 {render_incomplete(results, ctx.rules)}
-{render_layers(results, ctx)}
+{render_layers(results, ctx)}{render_holdings_v3(results, ctx)}
 <h2><span class="num">02</span>과점 × 함정 지도</h2>
 <div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
 <h3>기업별 과점 합계와 함정 합계</h3>
