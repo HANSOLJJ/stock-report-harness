@@ -41,10 +41,11 @@ _PART_NAMES = {"leap": "성능 도약", "adaptation": "패러다임 적응", "re
 
 
 def _unit_names(rules: RuleSet, ids: list[str]) -> str:
-    """경고 문구에 쓰는 층 이름. 2026-10-19 pilot9 출력 리뷰(N3): 초안 참고 줄에 층 id 목록이 파이썬 목록 그대로 실렸다."""
+    """경고 문구에 쓰는 층 이름. 2026-10-19 pilot9 출력 리뷰(N3): 초안 참고 줄에 층 id 목록이 파이썬 목록 그대로 실렸다.
+    이름 안에 가운뎃점이 있어(시스템·네트워크) 목록은 쉼표로 잇는다(pilot10 출력 리뷰 F-2)."""
     spec = rules.payload["layers"]
     names = {**spec["labels"], spec["outside"]["id"]: spec["outside"]["label"]}
-    return "·".join(names.get(u, u) for u in ids)
+    return ", ".join(names.get(u, u) for u in ids)
 
 
 def _tidy(value: float) -> float | int:
@@ -110,7 +111,7 @@ def compute_f4_holdings(company: dict[str, Any], judgments: JudgmentLookup, rule
 
     warnings: list[str] = []
     if unsure:
-        warnings.append(f"매출 줄 {'·'.join(line.get('label') or line['line'] for line in unsure)} 의 AI 무관 여부가 미확인 — 그 금액의 "
+        warnings.append(f"매출 줄 {', '.join(line.get('label') or line['line'] for line in unsure)} 의 AI 무관 여부가 미확인 — 그 금액의 "
                         f"{unknown_share * 100:g}% 를 AI 무관으로 셌다")
     margin = inputs["non_ai_margin"]
     if share == 0:
@@ -127,7 +128,7 @@ def compute_f4_holdings(company: dict[str, Any], judgments: JudgmentLookup, rule
     excluded = sorted({line["layer"] for line in lines if line["layer"] in (layers.get("excluded_lines") or {})})
     if excluded and spec["field_strength"].get("launch_uses_rank"):
         # 2026-10-19 pilot9 출력 리뷰(N3): '정의표가 생긴 뒤 적용한다' 는 미래 서술이고 미적용이 어느 쪽 결과인지 적지 않았다.
-        labels = "·".join(sorted({line.get("label") or line["layer"] for line in lines if line["layer"] in excluded}))
+        labels = ", ".join(sorted({line.get("label") or line["layer"] for line in lines if line["layer"] in excluded}))
         warnings.append(f"제외 줄 {labels} 의 그 분야 순위는 이 실행에 그 시장의 정의표가 없어 재지 않았다 — 순위와 이익률 가운데 "
                         "높은 쪽을 쓰는 자리라 이익률만 쓴 지금 값은 낮은 쪽일 수 있다")
 

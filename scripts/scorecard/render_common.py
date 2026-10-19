@@ -268,7 +268,8 @@ _LEFTOVER_C = re.compile(_C + r"C-\d+(?![/\w-])\s*")
 # 이미 말하므로(`실측 $267.3B`) 본문에서는 뗀다. ID 는 감사 기록의 작업 이력으로 간다.
 # 셋째 조각에 숫자가 있는 것만 잡는다 — `data.sec.gov` 같은 도메인과 구별된다. 가운데가 `F5` 인 것은
 # 판단 기록 식별자(`openai.F5.impl48`)라 추적용으로 남긴다(FIX-77).
-OBS_ID_RE = re.compile(r"(?<![\w./-])[a-z][a-z0-9-]*\.(?!F\d\.)[A-Za-z][A-Za-z_]*\.[a-z]*\d+[a-z0-9]*(?![\w.])")
+# 2026-10-19 pilot10 출력 리뷰 F-1: 꼬리가 날짜(2026-06-30)인 ID 를 2026 까지만 잡아 '-06-30' 이 본문에 남았다.
+OBS_ID_RE = re.compile(r"(?<![\w./-])[a-z][a-z0-9-]*\.(?!F\d\.)[A-Za-z][A-Za-z_]*\.[a-z]*\d[a-z0-9-]*(?:\.[a-z0-9]+)*(?![\w-])(?!\.\w)")
 
 
 def strip_obs_ids(text: str) -> str:
@@ -1886,7 +1887,7 @@ def f6_parameter_criteria(rules: Any) -> list[str]:
     names = {**{k: v["label"] for k, v in p["parameters"].items()}, "P4": p["p4"]["label"]}
     marks = " · ".join(f"**{v['label']}**({v['question']})" for v in p["parameters"].values())
     tracks = " · ".join(f"{t['label']} {'·'.join(names[x] for x in t['parameters'])}" for t in p["tracks"].values())
-    return [f"잣대는 {marks} 이고, **{p['p4']['label']}**({p['p4']['question']})이 점수를 깎는다.",
+    return [f"잣대는 {marks} 이고, **{p['p4']['label']}**({p['p4']['question']}) 판정으로 점수를 깎는다.",
             f"회사 종류마다 쓰는 잣대가 다르다 — {tracks}."]
 
 
@@ -2558,6 +2559,17 @@ def carried_cutoff_caveat(ctx: Any) -> bool:
 
 
 CAUSE_ROUNDING = "🔢 반올림 자릿수"
+
+
+def source_url_text(src: dict[str, Any]) -> str:
+    """출처의 주소 칸. 2026-10-19 pilot10 출력 리뷰 F-6: 여러 회사를 한 번에 받는 묶음 출처(SEC companyfacts·yfinance)는 단일 url 이
+    없어 'URL 미제공' 으로만 보였다. 회사별 주소(`publisher_url` 목록)가 있으면 그 수를 적는다."""
+    if src.get("url"):
+        return str(src["url"])
+    pub = src.get("publisher_url")
+    if isinstance(pub, list) and pub:
+        return f"회사별 주소 {len(pub)}개(출처 장부 publisher_url)"
+    return "URL 미제공"
 
 
 def score_change_causes(ctx: Any, results: dict[str, Any], prev_results: dict[str, Any]) -> dict[tuple[str, str], str]:

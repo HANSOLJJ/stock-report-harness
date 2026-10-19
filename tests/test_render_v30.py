@@ -102,6 +102,20 @@ class V30RenderTest(V30Base):
         self.assertTrue(any("최근 분기의 가중평균" in n for n in chain["notes"]))
         self.assertEqual(rc.f9_gate_text({"gate": "G1-after", "applied": True, "score": -12.318693333333334}), "본업 실패 뒤 정리 적용 → -12.32")
 
+    def test_pilot10_output_review_fixes(self):
+        """2026-10-19 pilot10 출력 리뷰: 날짜 꼬리 관측 ID(F-1), 묶음 출처 주소(F-6), 직접 매기는 항목 없는 색인 문장(F-4)."""
+        from scorecard import render_common as rc
+        from scorecard.render_html import render_code_index
+        self.assertEqual(rc.strip_obs_ids("여신 $4.4B(spacex-xai.undrawn_credit.2026-06-30, 2026-06-30)."), "여신 $4.4B(2026-06-30).")
+        self.assertEqual(rc.strip_obs_ids("값(tsmc.ocf_ttm.2026-06-30.v21)."), "값.")
+        self.assertEqual(rc.strip_obs_ids("EV-tsmc-100 과 v3.0.json"), "EV-tsmc-100 과 v3.0.json")
+        self.assertEqual(rc.source_url_text({"url": None, "publisher_url": ["a", "b"]}), "회사별 주소 2개(출처 장부 publisher_url)")
+        self.assertEqual(rc.source_url_text({"url": None}), "URL 미제공")
+        self.assertEqual(rc.source_url_text({"url": "https://x"}), "https://x")
+        index = render_code_index(self.ctx, self.results)
+        self.assertNotIn("0()", index)
+        self.assertIn("사람이 점수를 직접 매기는 항목은 없다", index)
+
     def test_zero_weight_layer_judgment_is_not_shown_and_shares_keep_small_values(self):
         # 2026-10-15 시범 실행: 매출 몫 0 층의 판단이 근거로 실렸고, 0.34% 층이 '× 0%' 로 보였고, ⑥ 산식에 긴 소수가 나왔다
         from scorecard.render_common import _share_text

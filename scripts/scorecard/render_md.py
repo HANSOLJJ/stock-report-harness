@@ -576,7 +576,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     # References
     lines += ["## References", ""]
     for src in ctx.sources.get("items", []):
-        url = src.get("url") or "URL 미제공"
+        url = rc.source_url_text(src)
         coi = f" · 이해상충: {src['conflict_of_interest']}" if src.get("conflict_of_interest") else ""
         sha = f" · sha256 {src['sha256'][:12]}…" if src.get("sha256") else ""
         lines.append(f"- {src.get('source_id')} — {src.get('title')} · {src.get('publisher') or ''} · {src.get('accessed_at') or ''} · {url}{sha}{coi}")

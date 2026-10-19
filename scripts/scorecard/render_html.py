@@ -2127,8 +2127,10 @@ def render_code_index(ctx: Any, results: dict[str, Any]) -> str:
     groups = [
         ("factor", "Factor F1~F9", "점수를 내는 9개 항목이다. 본문에서는 ①~⑨ 로도 쓴다.", factors),
         ("mode", "점수를 만드는 방식", "Factor 표의 두 번째 칸이 이 값이다. "
-         f"<b>사람이 직접 매기는 {_MANUAL_COUNT.get(len(marks), str(len(marks)))}({marks}){'는' if len(marks) == 1 else '은'} "
-         "근거 문장을 읽어야 하고, 나머지는 입력이 같으면 기계가 같은 답을 낸다.</b>", modes),
+         + (f"<b>사람이 직접 매기는 {_MANUAL_COUNT.get(len(marks), str(len(marks)))}({marks}){'는' if len(marks) == 1 else '은'} "
+            "근거 문장을 읽어야 하고, 나머지는 입력이 같으면 기계가 같은 답을 낸다.</b>" if marks else
+            # 2026-10-19 pilot10 출력 리뷰 F-4: 직접 매기는 항목이 없는 규칙(v2.1 이상)에서 '사람이 직접 매기는 0()은' 으로 깨졌다.
+            "<b>사람이 점수를 직접 매기는 항목은 없다. 사람은 판정 재료를 적고, 입력이 같으면 기계가 같은 답을 낸다.</b>"), modes),
         ("param", "⑥ 가격을 만드는 네 칸", "앞 셋을 더해 소계를 내고 입력 신뢰도가 소계를 한 칸 내린다.", params),
         ("gate", "⑨ 적자 깊이의 관문 넷", "이 순서대로 통과·실패를 판정한다. 앞에서 막히면 뒤는 생략하거나 진단만 한다.", gates),
         ("status", "상태(status)", "그 칸이 <b>이번 실행에서 어떻게 처리됐는지</b>를 말한다.", statuses),
@@ -2349,7 +2351,7 @@ def review_line(ctx: Any, review_fm: dict[str, Any]) -> str:
 
 
 def render_references(ctx: Any, review_fm: dict[str, Any]) -> str:
-    items = "".join(f'<li><b>{esc(s.get("source_id"))}</b> — {inline_html(s.get("title"))} · {esc(s.get("publisher") or "")} · {esc(s.get("accessed_at") or "")} · {esc(s.get("url") or "URL 미제공")}' + (f' · 이해상충: {inline_html(s["conflict_of_interest"])}' if s.get("conflict_of_interest") else "") + "</li>" for s in ctx.sources.get("items", []))
+    items = "".join(f'<li><b>{esc(s.get("source_id"))}</b> — {inline_html(s.get("title"))} · {esc(s.get("publisher") or "")} · {esc(s.get("accessed_at") or "")} · {esc(rc.source_url_text(s))}' + (f' · 이해상충: {inline_html(s["conflict_of_interest"])}' if s.get("conflict_of_interest") else "") + "</li>" for s in ctx.sources.get("items", []))
     return f'<ul class="tight">{items}</ul><p class="sub" style="margin-top:10px">{esc(review_line(ctx, review_fm))}</p>'
 
 
