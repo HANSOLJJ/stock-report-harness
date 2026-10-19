@@ -58,7 +58,9 @@
 - [x] 부분 반영 계산(사용자 제안): 덮는 비율을 알면 그 비율, 모르면 50%, 간접 자료 50%, 둘이면 곱함. 소셜·TV 시청을 간접 자료로 표시
 - [x] 새 정의표: AI 챗봇(StatCounter) 넣음. AI 모델 API(OpenRouter)는 1년 전 값·시험 모델 문제로 14개사 확장 때 다시 봄
 - [x] pilot8: 덮는 비율 partial(Google Cloud·Apple 웨어러블·xAI AI 솔루션), 판정 문장 여섯 건(PRP-001~006) → research → calculate → draft
-- [ ] 5개사 4영역 리뷰
+- [x] 5개사 4영역 1차 리뷰(영역 넷 + 회사별 사실·출처 다섯 + 근거 불릿)
+- [x] 수정 묶음(코드 다섯 커밋, 판단 PRP-007~041, 자료 수정) → research → calculate → draft
+- [ ] 확인 리뷰 1회 → review.md 채움 → 계약 검증
 - [ ] 14개사 확장 때: desktop_os·Tesla BEV(행 바로잡음)·Gartner 반도체(NVIDIA 58%)·Amazon 구독 연결·cloud_infra Omdia 설명 정정
 - [ ] 보고 뒤: 리뷰(4영역) 또는 14개사 확장
 
