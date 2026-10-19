@@ -720,7 +720,7 @@ def short_name(name: str) -> str:
 
 # ------------------------------------------------------------------ 섹션 렌더
 
-def render_kpis(results: dict[str, Any]) -> str:
+def render_kpis(results: dict[str, Any], rules: Any = None) -> str:
     ranking = results["ranking"]
     if not ranking:
         return '<div class="notice bad">완료 기업이 없어 KPI 를 계산하지 않는다.</div>'
@@ -732,7 +732,10 @@ def render_kpis(results: dict[str, Any]) -> str:
     # 2026-10-01 출력·가독성 리뷰(high): 동점 가운데 첫 기업만 보였다. 같은 함정 점수의 기업을 모두 보인다.
     worst_trap = min(r["trap"] for r in ranking)
     worst_all = [r for r in ranking if r["trap"] == worst_trap]
-    cands = [c for c in moat_pool if c["moat"] >= 20]
+    # 2026-10-19: 과점 후보 기준선을 규칙(scoring.moat_candidate_threshold)에서 읽는다. v2.x 는 20, v3.0 은 80(잠정)이다.
+    scoring = rules.payload["scoring"] if rules is not None else {}
+    threshold = scoring.get("moat_candidate_threshold", 20)
+    cands = [c for c in moat_pool if c["moat"] >= threshold]
     pop = results["population"]
     lead = f"{len(top)}개사 공동" if len(top) > 1 else top[0]["display_name"]
     lead_d = " · ".join(r["display_name"] for r in top) if len(top) > 1 else (f"2위와 {top[0]['total'] - second}점 차" if second is not None else "단독")
@@ -740,7 +743,7 @@ def render_kpis(results: dict[str, Any]) -> str:
         f'<div class="kpi"><div class="k">{"공동" if len(top) > 1 else "단독"} 1위 (조정 {top[0]["total"]}점)</div><div class="v">{esc(lead)}</div><div class="d">{esc(lead_d)}</div></div>',
         f'<div class="kpi"><div class="k">과점 factor 최고</div><div class="v">{max_moat}점</div><div class="d">{esc(" · ".join(moat_top))}</div></div>',
         f'<div class="kpi"><div class="k">함정 최심 (완료 {pop["scored"]}개사 기준)</div><div class="v c-g1">{worst_trap}</div><div class="d">{esc(" · ".join(f"{r['display_name']} — 조정 {r['total']}점" for r in worst_all))}</div></div>',
-        f'<div class="kpi"><div class="k">과점 후보군</div><div class="v">{len(cands)}개사</div><div class="d">과점 20점 이상 · {esc(" · ".join(c["display_name"] + ("" if c["complete"] else "(미완료)") for c in cands))}</div></div>',
+        f'<div class="kpi"><div class="k">과점 후보군</div><div class="v">{len(cands)}개사</div><div class="d">과점 {threshold:g}점 이상{" (잠정)" if scoring.get("baseline_note") else ""} · {esc(" · ".join(c["display_name"] + ("" if c["complete"] else "(미완료)") for c in cands))}</div></div>',
         f'<div class="kpi"><div class="k">모집단</div><div class="v">{pop["scored"]}개사</div><div class="d">미완료 {len(pop["incomplete"])}개사 순위 제외</div></div>',
     ])
 
@@ -1155,9 +1158,8 @@ def _unit_score_text(f: str, calc: dict[str, Any], judgment: dict[str, Any]) -> 
     if judgment.get("layer"):
         return rc._score_text(((calc.get("layers") or {}).get(judgment["layer"]) or {}).get("score"))
     comps = ((calc.get("businesses") or {}).get(judgment.get("business")) or {}).get("components") or []
-    if len(comps) == 1:
-        return rc._score_text(comps[0].get("score"))
-    return " · ".join(f'{c["name"]} {rc._score_text(c.get("score"))}' for c in comps)
+    # 묶음은 이름이 머리 왼쪽에 이미 있어 점수만 같은 순서로 잇는다(폰에서 머리가 길게 접히지 않게).
+    return " · ".join(rc._score_text(c.get("score")) for c in comps)
 
 
 def _unit_blocks_html(ctx: Any, c: dict[str, Any], f: str, fr: dict[str, Any], judgments_by_id: dict[str, Any],
@@ -2445,7 +2447,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <div class="wrap">
 <nav class="tabs" role="tablist" aria-label="리포트 구역" hidden>{"".join(f'<button type="button" role="tab" id="tabbtn-{tid}" data-tab="tab-{tid}" aria-controls="tab-{tid}" aria-selected="{"true" if i == 0 else "false"}">{esc(label)}</button>' for i, (tid, label) in enumerate(tabs))}</nav>
 <section class="tabpanel" id="tab-summary" role="tabpanel" aria-labelledby="tabbtn-summary">
-<div class="kpis" id="kpis">{render_kpis(results)}</div>
+<div class="kpis" id="kpis">{render_kpis(results, ctx.rules)}</div>
 {render_judgment_status(ctx, results)}
 <h2><span class="num">01</span>종합 순위표</h2>
 <p class="sub">열 제목을 누르면 정렬되고, 행을 누르면 해당 기업 카드가 열린다.<span class="m-only"> 폰에서는 합계 열만 보이고 factor 별 점수는 카드에서 본다.</span></p>
