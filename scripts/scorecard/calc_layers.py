@@ -1,6 +1,7 @@
 # 규칙 v3.0 층 단위 계산: ④ 보유표의 매출 줄로 층 매출 몫(①②③ 의 무게)을 내고 ④ 수직계열화·다각화·그 분야의 힘을 계산한다
 from __future__ import annotations
 
+import re
 from calendar import monthrange
 from datetime import date
 from typing import Any, Callable
@@ -310,7 +311,8 @@ def _f3_layer(j: dict[str, Any], rules: RuleSet, as_of: str) -> LayerScore:
         acceleration = piecewise(acc_spec["curve"], ratio)
         cap = (acc_spec.get("tier_caps") or {}).get(a["tier"])
         if cap is not None and acceleration > float(cap):
-            tier = (spec["acceleration_tiers"]["tiers"].get(a["tier"]) or {}).get("label") or a["tier"]
+            # 단계 이름의 괄호 예시('클라우드 전체 등')는 층마다 맞지 않아 뺀다(반도체 제조 층에도 붙었다).
+            tier = re.sub(r"\(.*?\)", "", (spec["acceleration_tiers"]["tiers"].get(a["tier"]) or {}).get("label") or a["tier"]).strip()
             warnings.append(f"가속도 지표가 {tier} 단계라 최고 {cap}")
             acceleration = float(cap)
     raw = revenue_model + imitation + acceleration

@@ -67,6 +67,12 @@ class PreviewCauseTest(unittest.TestCase):
         self.assertIn("PLTR", text)
         self.assertIn("factor 같음(순위만 이동)", text)
 
+    def test_no_change_says_so(self):
+        """이전 실행을 이어받아 바뀐 점수가 없으면 '기준선 이관 재계산' 이 아니라 바뀐 점수가 없다고 적는다."""
+        text = self.render([company("goog", {"F1": 12}, 43, 1)], [company("goog", {"F1": 12}, 43, 1)], [])
+        self.assertIn("- 이전 실행 대비 바뀐 점수가 없다.", text)
+        self.assertNotIn("기준선 이관 재계산", text)
+
     def test_rounding_only_change_is_rounding(self):
         """2026-10-19 pilot9 출력 리뷰(N1): 정수 반올림만으로 바뀐 칸을 판단·규칙·관측으로 갈라 적었다."""
         text = self.render([company("goog", {"F1": 11.93, "F6": -6.48, "F4": 19.93}, 42, 1)],

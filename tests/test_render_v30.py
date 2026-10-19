@@ -79,9 +79,14 @@ class V30RenderTest(V30Base):
         from scorecard import render_common as rc
         from scorecard.render_html import _scatter_wrap, render_method
         import dataclasses
-        # 이어받은 판단이 있으면 컷오프 단서를 적고, 모두 다시 매긴 정기 실행이면 뺀다
-        self.assertTrue(any(j.get("status") == "carried" for j in self.ctx.judgments))
-        self.assertIn("컷오프 이후 사건이", render_method(self.ctx, self.results))
+        # 정보 컷오프 뒤에 검토한 이어받은 판단이 있을 때만 컷오프 단서를 적는다(컷오프 앞 기준선 판단은 뒤 사건을 담을 수 없다)
+        cutoff = str(self.ctx.run.get("info_cutoff") or self.ctx.run["as_of"])
+        first = self.ctx.judgments[0]
+        for status, reviewed, shown in (("carried", "2099-01-01", True), ("carried", "2000-01-01", False), ("new", "2099-01-01", False)):
+            js = [{**j, "status": "new"} for j in self.ctx.judgments[1:]] + [{**first, "status": status, "reviewed_at": reviewed}]
+            variant = dataclasses.replace(self.ctx, judgments=js)
+            with self.subTest(status=status, reviewed=reviewed, cutoff=cutoff):
+                self.assertEqual("컷오프 이후 사건이" in render_method(variant, self.results), shown)
         ctx = dataclasses.replace(self.ctx, judgments=[{**j, "status": "new"} for j in self.ctx.judgments])
         draft = render_draft(ctx, self.results, self.scores, ctx.triggers)
         method = render_method(ctx, self.results)

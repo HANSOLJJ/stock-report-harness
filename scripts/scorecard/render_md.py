@@ -518,7 +518,9 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     # 방법
     lines += ["## 방법과 규칙", ""]
     lines += [
-        f"- 규칙 파일 `scorecard/rules/{ctx.rules.version}.json` 해시 `{ctx.rules.hash}` · 원문 규칙 `{ctx.rules.payload['source']['file']}` 은 sha256 `{ctx.rules.payload['source']['sha256'][:12]}…`(SRC-v15-rule)",
+        f"- 규칙 파일 `scorecard/rules/{ctx.rules.version}.json` 해시 `{ctx.rules.hash}` · 원문 규칙 `{ctx.rules.payload['source']['file']}` 은 sha256 `{ctx.rules.payload['source']['sha256'][:12]}…`"
+        # 2026-10-19: v3.0 의 원문은 rules.md 라 출처 장부의 v1.5 원문 항목(SRC-v15-rule)을 가리키지 않는다.
+        + ("" if rc.is_layered(ctx.rules) else "(SRC-v15-rule)"),
         f"- 입력 해시: observations `{ctx.hashes['observations'][:16]}…`, judgments `{ctx.hashes['judgments'][:16]}…`, results `{results['results_hash'][:16]}…`",
         f"- 실행 단위 결정: {', '.join(results['decisions_applied']) or '없음'}",
         f"- 미결 결정: {', '.join(results['pending_rule_decisions']) or '없음'}",
@@ -792,6 +794,9 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
                     if rc.CAUSE_ROUNDING in causes else "")
         lines += ["## 변동 원인 분류", "", f"- 이전 실행 대비 바뀐 factor 의 원인: {summary}. 원인은 이전 실행의 판정 재료·규칙 자릿수·자동 산출 factor 로 "
                   f"추정한 분류다.{rounding}", ""]
+    elif prior:
+        # 2026-10-19: 이전 실행을 이어받아 바뀐 점수가 없는데도 '기준선 이관 재계산' 문장이 실렸다.
+        lines += ["## 변동 원인 분류", "", "- 이전 실행 대비 바뀐 점수가 없다.", ""]
     else:
         lines += ["## 변동 원인 분류", "", "- 기준선 이관 재계산이라 변동 원인은 📐규칙(미결 결정·엄격 계약)이며 기업 실적 변화가 아니다. 규칙 버전이 같은 실행끼리만 추세로 연결한다.", ""]
     return "\n".join(lines)

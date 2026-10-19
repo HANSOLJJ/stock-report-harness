@@ -2548,9 +2548,13 @@ RESCALED_NOTE = ("척도가 다른 규칙과 견준 칸은 괄호에 범위 비�
 def carried_cutoff_caveat(ctx: Any) -> bool:
     """'이어받은 근거·트리거에 컷오프 이후 사건이 남아 있고 다시 확인하지 않았다' 는 단서를 적을지.
 
-    2026-10-19 pilot9 출력 리뷰(N5): 층 규칙의 정기 실행은 판단을 모두 다시 매겨 이어받은 판단이 없는데도 이 단서가 실렸다.
-    층 규칙에서는 이어받은 판단(`status: carried`)이 있을 때만 적는다. 옛 규칙은 승인된 초안이 바뀌지 않게 그대로 적는다."""
-    return not is_layered(ctx.rules) or any(j.get("status") == "carried" for j in ctx.judgments)
+    2026-10-19 pilot9 출력 리뷰(N5): 층 규칙의 정기 실행은 판단을 모두 다시 매기는데도 이 단서가 실렸다. 남는 이어받은 판단
+    (재판단 범위 밖의 ⑥·⑨ 입력)은 2026-09-02 기준선 판단이라 컷오프 뒤 사건을 담을 수 없다. 층 규칙에서는 정보 컷오프 뒤에
+    검토한 이어받은 판단(`status: carried`)이 있을 때만 적는다. 옛 규칙은 승인된 초안이 바뀌지 않게 그대로 적는다."""
+    if not is_layered(ctx.rules):
+        return True
+    cutoff = str(ctx.run.get("info_cutoff") or ctx.run.get("as_of") or "")
+    return any(j.get("status") == "carried" and str(j.get("reviewed_at") or "") > cutoff for j in ctx.judgments)
 
 
 CAUSE_ROUNDING = "🔢 반올림 자릿수"
