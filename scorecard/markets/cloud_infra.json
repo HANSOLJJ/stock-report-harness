@@ -18,7 +18,7 @@
       "label": "Omdia(옛 Canalys) 분기 글로벌 클라우드 인프라 지출 보도자료",
       "url": "https://www.businesswire.com/news/home/20260326200238/en/omdia-global-cloud-infrastructure-spending-rose-29-in-q4-2025-as-hyperscalers-scaled-ai-infrastructure-investment/",
       "role": "alternate",
-      "note": "확인한 최신 호는 2025년 4분기(2026-03-26)이고 2026년 2분기 호는 찾지 못했다. 점유율은 본문 차트 이미지에 있어 값은 읽지 않았다. 스크립트 요청은 403 이었고 앱 안 브라우저(Playwright)로는 열렸다. Synergy 가 끊기면 모든 회사에 함께 이쪽으로 바꾼다."
+      "note": "확인한 최신 호는 2025년 4분기(2026-03-26)이고 2026년 2분기 호는 찾지 못했다. 본문에 상위 3곳 점유율이 글자로 있다(AWS 32%·Azure 22%·Google Cloud 12%). 최신 호가 2025년 4분기라 대체 출처로 쓰면 세 분기 늦고 값도 Synergy 와 차이가 크다. 스크립트 요청은 403 이었고 앱 안 브라우저(Playwright)로는 열렸다. Synergy 가 끊기면 모든 회사에 함께 이쪽으로 바꾼다."
     }
   ],
   "constituents": [
