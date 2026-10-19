@@ -907,7 +907,8 @@ EVIDENCE_DIRECTION_LABELS = (("up", "올릴 근거"), ("down", "내릴 근거"))
 
 def f9_gate_text(p: dict[str, Any]) -> str:
     label = (GATE_LABELS.get(p.get("result"), p.get("result") or "") or p.get("adjust")
-             or (f"적용 → {p['score']}" if p.get("applied") and p.get("score") is not None else ""))
+             # 2026-10-19 pilot9 출력 리뷰(N7): 연속값 점수가 15자리 실수로 찍혔다. 소수 둘째 자리까지만 보인다.
+             or (f"적용 → {round(p['score'], 2):g}" if p.get("applied") and p.get("score") is not None else ""))
     gate = p["gate"]
     name = F9_STAGE_LABELS.get(gate) or F9_GATE_LABELS.get(gate, gate)
     # 2026-09-17 FIX-71 N1: 경로의 `mode` 를 읽지 않아 진단으로 계산한 칸이 본경로처럼 보였다.
@@ -1219,6 +1220,11 @@ def cash_chain_table(ctx: Any, results: dict[str, Any]) -> dict[str, Any] | None
     notes = [spec["note"], spec["ai_contribution"], "'미공시' 는 회사가 그 값을 공개하지 않은 칸이고, '미확인' 은 관측이 없는 칸이다.",
              f"대조는 OCF − 설비투자와 ⑨ 가 쓰는 FCF 관측의 차이가 FCF 의 {spec['fcf_check_tolerance'] * 100:g}% 안이면 일치로 본다. "
              "회사 정의 FCF(설비 처분·인센티브를 뺀 값)를 쓰는 회사와 기준 시점이 다른 관측은 차이로 나온다."]
+    if is_layered(ctx.rules):
+        # 2026-10-19 pilot8 재무 리뷰: SpaceX 희석 주식 5.86B 는 상장·xAI 주식 교환이 분기 중에 반영된 2분기 가중평균이라
+        # 기말 발행 주식(13.18B)과 2.2배 다르고, 최근 1년 FCF 를 그 수로 나눈 주당 값도 그만큼 달라진다. 기준을 표 아래에 밝힌다.
+        notes.append("희석 주식은 최근 분기의 가중평균이다. 분기 안에서 주식 수가 크게 바뀐 회사(상장·주식 교환 등)는 기말 발행 주식과 "
+                     "다르고, 최근 1년 FCF 를 그 수로 나눈 주당 값도 그만큼 달라진다.")
     return {"head": CASH_CHAIN_HEAD, "rows": rows, "notes": notes}
 
 
@@ -1832,6 +1838,10 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
     # 2026-10-19 규칙 v3.0: 층·사업 단위 다섯 방식은 원본 지표 문장(① 부품 상한, ③ 통과점 0~3 등 옛 규칙) 대신 v3.0 판정 재료를 싣는다.
     if f.get("mode") in V3_CRITERIA:
         return V3_CRITERIA[f["mode"]](ctx.rules, f)
+    # 2026-10-19 pilot9 출력 리뷰(N5): v3.0 ⑥ 카드가 원본 지표 문장('NTM PER … 이 둘만 점수에 개입')을 실어, 같은 카드의
+    # '지금 규칙은 NTM 을 쓰지 않는다' 와 어긋났다. 층 규칙에서는 네 잣대와 트랙을 규칙 값에서 읽는다.
+    if f.get("mode") == "parameters" and is_layered(ctx.rules):
+        return f6_parameter_criteria(ctx.rules)
     metrics = (factor_concept(ctx, fid) or {}).get("metrics") or ""
     if metrics:
         out.append(strip_worknotes(metrics))
@@ -1868,6 +1878,16 @@ def factor_criteria(ctx: Any, fid: str) -> list[str]:
         out.append("**이 항목은 규칙이 채점 기준을 적어 두지 않았다.** 범위와 점수를 만드는 방식만 정해져 "
                    "있어, 무엇을 보고 그 점수를 주었는지는 각 회사 카드의 근거 문장에서 읽어야 한다.")
     return out
+
+
+def f6_parameter_criteria(rules: Any) -> list[str]:
+    """⑥ 가격(네 잣대)을 무엇을 보고 매기는지. 잣대 이름·질문과 트랙별 잣대는 규칙 `policies.f6` 에서 읽는다."""
+    p = rules.payload["policies"]["f6"]
+    names = {**{k: v["label"] for k, v in p["parameters"].items()}, "P4": p["p4"]["label"]}
+    marks = " · ".join(f"**{v['label']}**({v['question']})" for v in p["parameters"].values())
+    tracks = " · ".join(f"{t['label']} {'·'.join(names[x] for x in t['parameters'])}" for t in p["tracks"].values())
+    return [f"잣대는 {marks} 이고, **{p['p4']['label']}**({p['p4']['question']})이 점수를 깎는다.",
+            f"회사 종류마다 쓰는 잣대가 다르다 — {tracks}."]
 
 
 def _v3_business_criteria(rules: Any, f: dict[str, Any]) -> list[str]:
@@ -2353,13 +2373,26 @@ def limitations(ctx: Any) -> list[str]:
         out.append("**순현금의 정의가 아직 확정되지 않았다.** 지금은 확정 정의가 아니라 작업용 정의"
                    "(현금과 시장성 유가증권을 더하고 총차입금과 리스부채를 뺀 값)를 쓴다. 확정 정의가 나오면 "
                    f"⑥ 의 EV/매출을 다시 계산해야 한다. 아직 답하지 못한 질문이 {len(questions)}건이다.")
+        skipped = 0
         for q in questions:
             # 취소한 문장은 빼고, 자를 때 강조·코드 표시가 반쯤 남지 않게 기호를 걷어 낸 뒤 자른다.
             q = re.sub(r"~~.*?~~\s*", "", q).replace("**", "").replace("`", "").strip()
             if is_layered(ctx.rules):
                 # 2026-10-19 pilot8 출력 리뷰 F-5: 규칙 파일 문장 앞의 정정 표지([정정 날짜 작업 번호])가 리포트에 실렸다.
                 q = re.sub(r"^\[정정[^\]]*\]\s*", "", q)
+                # 2026-10-19 pilot9 출력 리뷰(N11): 160자에서 문장이 끊기고("agreeme…") 이 실행에 없는 회사의 질문이 실렸다.
+                # 층 규칙에서는 자르지 않고, 회사를 들되 이 실행의 회사를 하나도 들지 않은 질문은 뺀다.
+                named = [cid for cid, c in ctx.companies.items()
+                         if re.search(rf"(?<![A-Za-z]){re.escape(str(c.get('display_name') or cid))}(?![A-Za-z])", q, re.I)
+                         or re.search(rf"(?<![A-Za-z-]){re.escape(cid)}(?![A-Za-z-])", q, re.I)]
+                if named and not set(named) & set(ctx.run["companies"]):
+                    skipped += 1
+                    continue
+                out.append("  - " + q)
+                continue
             out.append("  - " + (q if len(q) <= 160 else q[:157] + "…"))
+        if skipped:
+            out.append(f"  - 나머지 {skipped}건은 이 실행에 없는 회사에 관한 질문이다.")
     # 2026-10-12 규칙 v2.1 첫 실행 재무 계산 리뷰: 이익 조정의 가정과 비상장 ⑥ 의 구간표 복귀가 한계 절에 없었다.
     adj = ((f6.get("parameters") or {}).get("P1") or {}).get("earnings_adjustment")
     if adj:
@@ -2511,6 +2544,73 @@ def rescaled_text(rules: Any, fid: str, old: Any, old_rules: Any) -> str | None:
 
 RESCALED_NOTE = ("척도가 다른 규칙과 견준 칸은 괄호에 범위 비율로 환산한 참고값을 적었다. 환산값은 옛 판단을 새 규칙으로 다시 매긴 점수가 "
                  "아니라 눈금만 맞춘 것이다.")
+
+def carried_cutoff_caveat(ctx: Any) -> bool:
+    """'이어받은 근거·트리거에 컷오프 이후 사건이 남아 있고 다시 확인하지 않았다' 는 단서를 적을지.
+
+    2026-10-19 pilot9 출력 리뷰(N5): 층 규칙의 정기 실행은 판단을 모두 다시 매겨 이어받은 판단이 없는데도 이 단서가 실렸다.
+    층 규칙에서는 이어받은 판단(`status: carried`)이 있을 때만 적는다. 옛 규칙은 승인된 초안이 바뀌지 않게 그대로 적는다."""
+    return not is_layered(ctx.rules) or any(j.get("status") == "carried" for j in ctx.judgments)
+
+
+CAUSE_ROUNDING = "🔢 반올림 자릿수"
+
+
+def score_change_causes(ctx: Any, results: dict[str, Any], prev_results: dict[str, Any]) -> dict[tuple[str, str], str]:
+    """이전 실행 대비 점수가 바뀐 칸마다 원인을 추정한다. 키는 (회사, 항목)이다.
+
+    2026-10-19 pilot9 출력 리뷰(N1): 판단 수정 시각이 일 단위라 같은 날 앞선 실행에서 고친 판단까지 이번 실행의 수정으로 셌고,
+    정수 반올림만으로 바뀐 칸을 판단·규칙·관측으로 갈라 적었다. 판단 수정은 이전 실행의 같은 판단과 판정 재료를 견줘 가리고
+    (이전 실행의 판단 파일이 없으면 이번 실행 생성일 뒤의 수정 이력으로 가린다), 이전 점수를 이번 규칙의 자릿수로 반올림한 값이
+    이번 점수와 같으면 반올림 자릿수 때문으로 본다."""
+    import json
+
+    from . import engine
+    from .schema import FACTOR_IDS, judgment_key
+
+    prior = (ctx.run.get("continued_from") or {}).get("run_id")
+    prev_items: dict[Any, dict[str, Any]] | None = None
+    try:
+        payload = json.loads((engine.run_dir(prior) / "judgments.json").read_text(encoding="utf-8"))
+        prev_items = {judgment_key(j): j for j in payload.get("items") or []}
+    except (OSError, ValueError, TypeError, AttributeError):
+        prev_items = None
+    created = ctx.run.get("created_at") or ""
+    revised: set[tuple[str, str]] = set()
+    for j in ctx.judgments:
+        if prev_items is not None:
+            p = prev_items.get(judgment_key(j))
+            if p is None or p.get("inputs") != j.get("inputs") or p.get("score") != j.get("score"):
+                revised.add((j["company_id"], j["factor"]))
+        elif any(str(h.get("revised_at") or "") >= created
+                 and ((h.get("previous") or {}).get("inputs") != j.get("inputs")
+                      or (h.get("previous") or {}).get("score") != j.get("score"))
+                 for h in (j.get("revision_history") or [])):
+            revised.add((j["company_id"], j["factor"]))
+    prev = {c["company_id"]: c for c in prev_results.get("companies") or []}
+    causes: dict[tuple[str, str], str] = {}
+    for c in results["companies"]:
+        p = prev.get(c["company_id"])
+        if p is None:
+            continue
+        for f in FACTOR_IDS:
+            new, old = c["factors"][f]["score"], p["factors"][f]["score"]
+            if new == old:
+                continue
+            old_track = (p["factors"][f].get("calc") or {}).get("track")
+            new_track = (c["factors"][f].get("calc") or {}).get("track")
+            if (c["company_id"], f) in revised:
+                cause = "✍️ 판단 수정"
+            elif old is not None and new is not None and ctx.rules.round_score(old) == new:
+                cause = CAUSE_ROUNDING
+            elif f == "F6" and old_track and new_track and old_track != new_track:
+                cause = f"📐 규칙(트랙 {old_track}→{new_track})·📊 관측"
+            elif f in ("F6", "F9"):
+                cause = "📊 관측(가격·재무)"
+            else:
+                cause = "📐 규칙"
+            causes[(c["company_id"], f)] = cause
+    return causes
 
 
 def _curve_note(curve: dict[str, Any] | None) -> str:

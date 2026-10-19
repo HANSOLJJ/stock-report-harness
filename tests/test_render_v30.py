@@ -74,6 +74,29 @@ class V30RenderTest(V30Base):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, text)
 
+    def test_pilot9_output_review_fixes(self):
+        """2026-10-19 pilot9 출력 리뷰: 방법 절의 옛 문장(N5), 산점도 폰 폭(N2), 현금 연결표 주당 기준, ⑨ 산식 끝수(N7)."""
+        from scorecard import render_common as rc
+        from scorecard.render_html import _scatter_wrap, render_method
+        import dataclasses
+        # 이어받은 판단이 있으면 컷오프 단서를 적고, 모두 다시 매긴 정기 실행이면 뺀다
+        self.assertTrue(any(j.get("status") == "carried" for j in self.ctx.judgments))
+        self.assertIn("컷오프 이후 사건이", render_method(self.ctx, self.results))
+        ctx = dataclasses.replace(self.ctx, judgments=[{**j, "status": "new"} for j in self.ctx.judgments])
+        draft = render_draft(ctx, self.results, self.scores, ctx.triggers)
+        method = render_method(ctx, self.results)
+        for text in (draft, method):
+            self.assertNotIn("컷오프 이후 사건이", text)
+        for stale in ("3 + 동맹등급", "이 둘만 점수에 개입", "NTM PER을 구간표에", "세 경로 중 하나면 된다"):
+            with self.subTest(stale=stale):
+                self.assertNotIn(stale, method)
+        self.assertIn("<b>성장 조정 PER</b>(번 것과 성장에 비해 비싼가)", method)
+        self.assertIn("비상장 EV/Sales·매출 성장률·입력 신뢰도", method)
+        self.assertEqual(_scatter_wrap(self.ctx, "<svg></svg>"), '<div class="scwrap"><svg></svg></div>')
+        chain = rc.cash_chain_table(self.ctx, self.results)
+        self.assertTrue(any("최근 분기의 가중평균" in n for n in chain["notes"]))
+        self.assertEqual(rc.f9_gate_text({"gate": "G1-after", "applied": True, "score": -12.318693333333334}), "본업 실패 뒤 정리 적용 → -12.32")
+
     def test_zero_weight_layer_judgment_is_not_shown_and_shares_keep_small_values(self):
         # 2026-10-15 시범 실행: 매출 몫 0 층의 판단이 근거로 실렸고, 0.34% 층이 '× 0%' 로 보였고, ⑥ 산식에 긴 소수가 나왔다
         from scorecard.render_common import _share_text
@@ -189,14 +212,40 @@ class LimitationsTest(unittest.TestCase):
         from types import SimpleNamespace
         from scorecard.render_common import limitations
         from scorecard.rules import load_rules
-        for version, marked in (("v3.0", False), ("v2.1", True)):
-            rules = load_rules(version)
-            questions = rules.payload["policies"]["f6"]["net_cash"]["open_questions"]
-            self.assertTrue(any(q.startswith("[정정") or "[정정" in q for q in questions), "규칙 파일에 표지가 있는 질문이 있어야 시험이 뜻을 갖는다")
-            ctx = SimpleNamespace(rules=rules, run={"companies": []}, companies={}, observations=[], sources={"items": []})
-            text = " ".join(limitations(ctx))
-            with self.subTest(version=version):
-                self.assertEqual("[정정" in text, marked)
+        rules = load_rules("v2.1")
+        questions = rules.payload["policies"]["f6"]["net_cash"]["open_questions"]
+        self.assertTrue(any("[정정" in q for q in questions), "규칙 파일에 표지가 있는 질문이 있어야 시험이 뜻을 갖는다")
+        ctx = SimpleNamespace(rules=rules, run={"companies": []}, companies={}, observations=[], sources={"items": []})
+        self.assertIn("[정정", " ".join(limitations(ctx)))
+        # 2026-10-19: v3.0 규칙 파일은 질문을 현재 상태 문장으로 다시 썼다. 표지가 없어도 렌더러는 걷어 낸다.
+        v30 = load_rules("v3.0")
+        marked = json.loads(json.dumps(v30.payload))
+        marked["policies"]["f6"]["net_cash"]["open_questions"] = ["[정정 2026-09-15 FIX-53] 담보 예금의 몫"]
+        ctx = SimpleNamespace(rules=SimpleNamespace(payload=marked), run={"companies": []}, companies={}, observations=[],
+                              sources={"items": []})
+        text = " ".join(limitations(ctx))
+        self.assertNotIn("[정정", text)
+        self.assertIn("담보 예금의 몫", text)
+
+    def test_questions_are_whole_and_only_for_companies_in_the_run(self):
+        """2026-10-19 pilot9 출력 리뷰(N11): 160자에서 문장이 끊기고 이 실행에 없는 회사의 질문이 실렸다."""
+        from types import SimpleNamespace
+        from scorecard.render_common import limitations
+        from scorecard.rules import load_rules
+        payload = json.loads(json.dumps(load_rules("v3.0").payload))
+        long_q = "TSMC " + "가" * 200 + " 끝."
+        payload["policies"]["f6"]["net_cash"]["open_questions"] = [long_q, "Alibaba 의 혼합 줄", "회사를 들지 않는 질문"]
+        companies = {"tsmc": {"display_name": "TSMC"}, "alibaba": {"display_name": "Alibaba"}}
+        for run_companies, shown, hidden in ((["tsmc"], [long_q, "회사를 들지 않는 질문", "나머지 1건"], ["Alibaba 의 혼합 줄"]),
+                                             (["alibaba"], ["Alibaba 의 혼합 줄"], [long_q])):
+            ctx = SimpleNamespace(rules=SimpleNamespace(payload=payload), run={"companies": run_companies}, companies=companies,
+                                  observations=[], sources={"items": []})
+            text = "\n".join(limitations(ctx))
+            with self.subTest(run=run_companies):
+                for s in shown:
+                    self.assertIn(s, text)
+                for s in hidden:
+                    self.assertNotIn(s, text)
 
 
 class OldRunsUntouchedTest(unittest.TestCase):

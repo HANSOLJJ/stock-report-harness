@@ -408,7 +408,7 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
             + (" — 기준선은 잠정이며 시장 정의표가 생긴 뒤 다시 정한다(참고)" if ctx.rules.payload["scoring"].get("baseline_note") else ""),
         ]
     lines += [f"- 모집단: 완료 {population['scored']}개사 순위 / 미완료 {len(population['incomplete'])}개사 제외 (미완료는 0점으로 채우지 않는다)."]   # 2026-10-06: 기준선 순위 비교 안내를 싣지 않는다
-    lines += [f"- 기준 시점: 분석 기준일 {run['as_of']} · 가격 기준일 {run.get('price_as_of') or run['as_of']} · 정보 컷오프 {run.get('info_cutoff') or run['as_of']} (C-17). 승계 근거·트리거 일부는 원문에 컷오프 이후 사건이 그대로 있으며 이번 실행에서 재검증하지 않았다."]
+    lines += [f"- 기준 시점: 분석 기준일 {run['as_of']} · 가격 기준일 {run.get('price_as_of') or run['as_of']} · 정보 컷오프 {run.get('info_cutoff') or run['as_of']} (C-17)." + (" 승계 근거·트리거 일부는 원문에 컷오프 이후 사건이 그대로 있으며 이번 실행에서 재검증하지 않았다." if rc.carried_cutoff_caveat(ctx) else "")]
     if conflicts:
         # 2026-09-16 FIX-57 2단계(6차 리뷰 A 분담): 출처별 문구 다섯을 ` / ` 로 이어 붙여 **실행 차원 고지가 맨 끝에 묻혔다.**
         # 읽는 사람이 먼저 알아야 하는 것은 채점자와 채점 대상이 같은 곳이라는 사실이다. 출처별 문구는 References 에 그대로 있다.
@@ -764,14 +764,9 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
             prev_results, prev = {}, {}
         prev_rules = _old_rules(prev_results.get("rule_version")) if rc.is_layered(ctx.rules) and prev_results else None
         if prev:
-            created = ctx.run.get("created_at") or ""
             # 2026-10-06 출력·가독성 리뷰(medium): 근거 문장만 바꾼 수정(PRP-003)도 '판단 수정' 으로 분류했다.
-            # 이번 실행 중 수정 가운데 판정 재료(inputs·score)를 실제로 바꾼 것만 판단 수정으로 본다.
-            revised = {(j["company_id"], j["factor"]) for j in ctx.judgments
-                       if any(str(h.get("revised_at") or "") >= created
-                              and ((h.get("previous") or {}).get("inputs") != j.get("inputs")
-                                   or (h.get("previous") or {}).get("score") != j.get("score"))
-                              for h in (j.get("revision_history") or []))}
+            # 판정 재료(inputs·score)를 실제로 바꾼 것만 판단 수정으로 본다. 분류는 HTML 과 같은 함수가 한다.
+            cell_causes = rc.score_change_causes(ctx, results, prev_results)
             prow = []
             for c in sorted(results["companies"], key=lambda x: (x["rank"] is None, x["rank"] or 0, x["company_id"])):
                 p = prev.get(c["company_id"])
@@ -782,17 +777,7 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
                     new, old = c["factors"][f]["score"], p["factors"][f]["score"]
                     if new == old:
                         continue
-                    # 2026-10-06: 규칙 v1.9 처럼 ⑥ 트랙이 바뀌면 관측 변화와 함께 규칙 변경도 원인이다.
-                    old_track = (p["factors"][f].get("calc") or {}).get("track")
-                    new_track = (c["factors"][f].get("calc") or {}).get("track")
-                    if (c["company_id"], f) in revised:
-                        cause = "✍️ 판단 수정"
-                    elif f == "F6" and old_track and new_track and old_track != new_track:
-                        cause = f"📐 규칙(트랙 {old_track}→{new_track})·📊 관측"
-                    elif f in ("F6", "F9"):
-                        cause = "📊 관측(가격·재무)"
-                    else:
-                        cause = "📐 규칙"
+                    cause = cell_causes[(c["company_id"], f)]
                     causes[cause] = causes.get(cause, 0) + 1
                     diffs.append(f"{rc.factor_label(ctx.rules, f)} {rc.rescaled_text(ctx.rules, f, old, prev_rules) or fmt_score(old)}"
                                  f"→{fmt_score(new)} ({cause})")
@@ -803,7 +788,10 @@ def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] |
                       table(["기업", "이전 조정/순위", "이번 조정/순위", "바뀐 factor (원인)"], prow) if prow else "- 바뀐 점수 없음", ""]
     if causes:
         summary = " · ".join(f"{k} {v}건" for k, v in sorted(causes.items()))
-        lines += ["## 변동 원인 분류", "", f"- 이전 실행 대비 바뀐 factor 의 원인: {summary}. 원인은 판단 수정 이력·자동 산출 factor 로 추정한 분류다.", ""]
+        rounding = (f" {rc.CAUSE_ROUNDING} 칸은 이전 점수를 이번 규칙의 항목 점수 자릿수로 반올림하면 이번 점수와 같아지는 칸이다."
+                    if rc.CAUSE_ROUNDING in causes else "")
+        lines += ["## 변동 원인 분류", "", f"- 이전 실행 대비 바뀐 factor 의 원인: {summary}. 원인은 이전 실행의 판정 재료·규칙 자릿수·자동 산출 factor 로 "
+                  f"추정한 분류다.{rounding}", ""]
     else:
         lines += ["## 변동 원인 분류", "", "- 기준선 이관 재계산이라 변동 원인은 📐규칙(미결 결정·엄격 계약)이며 기업 실적 변화가 아니다. 규칙 버전이 같은 실행끼리만 추세로 연결한다.", ""]
     return "\n".join(lines)

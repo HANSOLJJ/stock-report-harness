@@ -112,6 +112,8 @@ V3_CSS = """
 :root{--g1:#ec6a6d}
 .sc.bg-g0{color:var(--tx)}
 .card[open] .cbody>*{min-width:0}
+.scwrap{overflow-x:auto}
+.scwrap svg{min-width:640px}
 :root{--cat-layer-power:#c9b458;--cat-layer-foundry:#f0a05c;--cat-layer-chip_design:#e6c35c;--cat-layer-systems:#e08a6c;
   --cat-layer-dev_platform:#6fc7d9;--cat-layer-data_platform:#8fb0f0;--cat-layer-application:#f28cc0;
   --cat-layer-user_platform:#b195f5;--cat-layer-device:#9ad16a;--cat-layer-outside:#8a93a3}
@@ -679,6 +681,12 @@ def _baseline_sub(ctx: Any) -> str:
             '14개사 분포를 본 뒤 다시 정하며, 조정총점에는 적용하지 않는다.')
 
 
+def _scatter_wrap(ctx: Any, svg: str) -> str:
+    """2026-10-19 pilot9 출력 리뷰(N2): 320px 에서 산점도가 231px 로 줄어 글자가 4px 가 됐다. 층 규칙에서는 막대 그림처럼
+    최소 폭을 주고 래퍼 안에서 가로로 민다. 옛 규칙의 그림은 그대로다."""
+    return f'<div class="scwrap">{svg}</div>' if rc.is_layered(ctx.rules) else svg
+
+
 def moat_trap_svg(results: dict[str, Any], rules: Any = None) -> str:
     """2026-09-17 FIX-65 S4: 기업별 과점 합계와 함정 합계를 0 기준 좌우 발산 막대로 그린다.
 
@@ -758,7 +766,7 @@ def render_kpis(results: dict[str, Any], rules: Any = None) -> str:
         f'<div class="kpi"><div class="k">{"공동" if len(top) > 1 else "단독"} 1위 (조정 {top[0]["total"]}점)</div><div class="v">{esc(lead)}</div><div class="d">{esc(lead_d)}</div></div>',
         f'<div class="kpi"><div class="k">과점 factor 최고</div><div class="v">{max_moat}점</div><div class="d">{esc(" · ".join(moat_top))}</div></div>',
         f'<div class="kpi"><div class="k">함정 최심 (완료 {pop["scored"]}개사 기준)</div><div class="v c-g1">{worst_trap}</div><div class="d">{esc(" · ".join(f"{r['display_name']} — 조정 {r['total']}점" for r in worst_all))}</div></div>',
-        f'<div class="kpi"><div class="k">과점 후보군</div><div class="v">{len(cands)}개사</div><div class="d">과점 {threshold:g}점 이상{" (잠정)" if scoring.get("baseline_note") else ""} · {esc(" · ".join(c["display_name"] + ("" if c["complete"] else "(미완료)") for c in cands))}</div></div>',
+        f'<div class="kpi"><div class="k">과점 후보군</div><div class="v">{len(cands)}개사</div><div class="d">과점 {threshold:g}점 이상{" (잠정)" if scoring.get("baseline_note") else ""}{" · " if cands else ""}{esc(" · ".join(c["display_name"] + ("" if c["complete"] else "(미완료)") for c in cands))}</div></div>',
         f'<div class="kpi"><div class="k">모집단</div><div class="v">{pop["scored"]}개사</div><div class="d">미완료 {len(pop["incomplete"])}개사 순위 제외</div></div>',
     ])
 
@@ -855,7 +863,19 @@ def render_judgment_status(ctx: Any, results: dict[str, Any]) -> str:
                    for c, fid, fr in cells if c["company_id"] in prev_by and prev_by[c["company_id"]]["factors"][fid]["score"] != fr["score"]]
         shown = " · ".join(f"{esc(name)} {SHORT[fid]} {fmt_score(a)}→{fmt_score(b)}" for name, fid, a, b in changed[:12])
         more = f" 외 {len(changed) - 12}칸" if len(changed) > 12 else ""
-        lines.append(f"지난 실행(기준일 {esc(prev['as_of'])}) 대비 점수가 바뀐 칸은 <b>{len(changed)}칸</b>이다" + (f": {shown}{more}." if changed else "."))
+        if not rc.is_layered(ctx.rules):
+            lines.append(f"지난 실행(기준일 {esc(prev['as_of'])}) 대비 점수가 바뀐 칸은 <b>{len(changed)}칸</b>이다" + (f": {shown}{more}." if changed else "."))
+        else:
+            # 2026-10-19 pilot9 출력 리뷰(N1·N4): 바뀐 칸 수만 적어 원인(정수 반올림)이 읽히지 않았고, 기준일이 같은 지난 실행을
+            # '기준일 2026-10-14' 로만 불러 어떤 실행인지 알 수 없었다. 원인은 미리보기와 같은 함수로 추정한다.
+            same_day = str(prev.get("as_of")) == str(ctx.run.get("as_of"))
+            label = "기준일이 같은 지난 실행" if same_day else f"지난 실행(기준일 {esc(prev['as_of'])})"
+            counts: dict[str, int] = {}
+            for cause in rc.score_change_causes(ctx, results, prev).values():
+                name = cause.split(" ", 1)[1] if " " in cause else cause
+                counts[name] = counts.get(name, 0) + 1
+            why = " · ".join(f"{esc(k)} {v}칸" for k, v in sorted(counts.items(), key=lambda kv: -kv[1]))
+            lines.append(f"{label} 대비 점수가 바뀐 칸은 <b>{len(changed)}칸</b>이다" + (f": {shown}{more}. 원인(추정)은 {why} 이다." if changed else "."))
     tens = [t for t in (ctx.rules.payload.get("open_tensions") or []) if t.get("status") == "open"]
     prior_as_of = str((ctx.run.get("continued_from") or {}).get("as_of") or "")
     if tens and prior_as_of and rejudge:
@@ -1495,7 +1515,7 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
         (f"- 분석 기준일 · 가격 기준일 · 정보 컷오프가 모두 `{base}` 로 같다"
          if base == price == cutoff else
          f"- 분석 기준일 `{base}` · 가격 기준일 `{price}` · 정보 컷오프 `{cutoff}`"),
-        "- 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있고 이번 실행에서 재검증하지 않았다.",
+        *(["- 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있고 이번 실행에서 재검증하지 않았다."] if rc.carried_cutoff_caveat(ctx) else []),
         "",
         "## 입력 해시",
         "",
@@ -1728,18 +1748,21 @@ def factor_card(ctx: Any, fid: str, lines: list[str], judged: set[str]) -> str:
     head_def = (f'<span class="fdef">{inline_html(con["definition"])}</span>' if con.get("definition") else "")
 
     secs = []
+    # 2026-10-19 pilot9 출력 리뷰(N5): 원본 질문의 둘째 줄부터는 옛 판정 방식('3 + 동맹등급 + 적대등급', 'NTM PER 을 구간표에')이라
+    # 층 규칙의 판정 재료와 같은 카드에서 어긋났다. 층 규칙이 기준을 규칙 값에서 읽는 ①~⑥ 은 질문 첫 줄만 싣고 원본이 낡았다는 경고도 뺀다.
+    quoted = not (rc.is_layered(ctx.rules) and (f.get("mode") in rc.V3_CRITERIA or f.get("mode") == "parameters"))
     if con:
         parts = []
         if con.get("question"):
-            parts.append('<p class="fq">' + "<br>".join(
-                inline_html(x) for x in str(con["question"]).splitlines() if x.strip()) + '</p>')
+            qlines = [x for x in str(con["question"]).splitlines() if x.strip()]
+            parts.append('<p class="fq">' + "<br>".join(inline_html(x) for x in (qlines if quoted else qlines[:1])) + '</p>')
         # 2026-10-06 사용자 지시: 원본 문서의 예시(examples)는 작성 당시의 기업·점수를 담아 지금 결과와 어긋나는
         # 옛 사실이 된다(예: ⑨ 'OpenAI -5', 'v1.5에서 걸린 곳은 Oracle 하나'). 리포트에는 싣지 않는다.
         if con.get("renamed"):
             parts.append(f'<p class="fnote">원본은 이 항목을 <b>{esc(con["renamed"]["source"])}</b> 라고 불렀다. '
                          f'지금 규칙의 이름은 <b>{esc(con["renamed"]["now"])}</b> 다.</p>')
         # 원본 서술이 지금 규칙과 달라진 자리에는 그 사실을 **그 자리에** 붙인다.
-        if "question" in ((con.get("stale") or {}).get("fields") or []):
+        if quoted and "question" in ((con.get("stale") or {}).get("fields") or []):
             parts.append(f'<p class="fnote warn">{inline_html(con["stale"]["text"])}</p>')
         secs.append(('무엇을 재는가', "".join(parts),
                      '사용자 원본 <b>9가지 factor 뜯어보기</b> 의 문장이다.'))
@@ -1747,7 +1770,7 @@ def factor_card(ctx: Any, fid: str, lines: list[str], judged: set[str]) -> str:
     criteria = rc.factor_criteria(ctx, fid)
     stale = con.get("stale") or {}
     warn = (f'<p class="fnote warn">{inline_html(stale["text"])}</p>'
-            if "metrics" in (stale.get("fields") or []) else "")
+            if quoted and "metrics" in (stale.get("fields") or []) else "")
     secs.append(('무엇을 보고 매기는가',
                  "".join(f'<p class="mtext">{inline_html(x)}</p>' for x in criteria) + warn,
                  '채점 규칙의 지표다.'))
@@ -1783,8 +1806,9 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
     # 본문에 남는 것은 기준 시점 한 줄, 어떻게 매겼는지, 알려진 한계 셋이다.
     return (
         # 2026-10-07 출력 리뷰: '앞서 매긴' 은 이전 판을 가리켜 화면 고정 문장에서 뺐다.
-        f'<p class="sub">{_asof_line(ctx)}. 사용자의 판단으로 이어받은 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
-        f'남아 있으며 이번 실행에서 다시 확인하지 않았다.</p>'
+        f'<p class="sub">{_asof_line(ctx)}.'
+        + (' 사용자의 판단으로 이어받은 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
+           '남아 있으며 이번 실행에서 다시 확인하지 않았다.' if rc.carried_cutoff_caveat(ctx) else '') + '</p>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th>'
         f'<th class="text narrow">점수를 만드는 방식</th><th class="text narrow">점수의 출처</th><th>범위</th></tr></thead><tbody>{rows}</tbody></table></div>'
         + loose
@@ -2472,7 +2496,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_incomplete(results, ctx.rules)}
 {render_layers(results, ctx)}{render_holdings_v3(results, ctx)}
 <h2><span class="num">02</span>과점 × 함정 지도</h2>
-<div class="chartbox">{scatter_svg(results, market_caps(ctx), ctx.rules)}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.{_baseline_sub(ctx)}</p></div>
+<div class="chartbox">{_scatter_wrap(ctx, scatter_svg(results, market_caps(ctx), ctx.rules))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.{_baseline_sub(ctx)}</p></div>
 <h3>기업별 과점 합계와 함정 합계</h3>
 <div class="chartbox"><div class="mtwrap">{moat_trap_svg(results, ctx.rules)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
 </section>
