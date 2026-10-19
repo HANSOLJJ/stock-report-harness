@@ -2299,6 +2299,9 @@ def limitations(ctx: Any) -> list[str]:
         for q in questions:
             # 취소한 문장은 빼고, 자를 때 강조·코드 표시가 반쯤 남지 않게 기호를 걷어 낸 뒤 자른다.
             q = re.sub(r"~~.*?~~\s*", "", q).replace("**", "").replace("`", "").strip()
+            if is_layered(ctx.rules):
+                # 2026-10-19 pilot8 출력 리뷰 F-5: 규칙 파일 문장 앞의 정정 표지([정정 날짜 작업 번호])가 리포트에 실렸다.
+                q = re.sub(r"^\[정정[^\]]*\]\s*", "", q)
             out.append("  - " + (q if len(q) <= 160 else q[:157] + "…"))
     # 2026-10-12 규칙 v2.1 첫 실행 재무 계산 리뷰: 이익 조정의 가정과 비상장 ⑥ 의 구간표 복귀가 한계 절에 없었다.
     adj = ((f6.get("parameters") or {}).get("P1") or {}).get("earnings_adjustment")

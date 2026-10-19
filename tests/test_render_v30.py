@@ -95,6 +95,23 @@ class V30RenderTest(V30Base):
         self.assertIn(RESCALED_NOTE, text)
 
 
+class LimitationsTest(unittest.TestCase):
+    def test_correction_marker_is_dropped_only_for_layered_rules(self):
+        """2026-10-19 pilot8 출력 리뷰 F-5: 규칙 파일 순현금 질문 앞의 '[정정 … FIX-53]' 표지가 v3.0 초안에 실렸다.
+        v3.0 은 걷어 내고, 승인된 옛 실행(v2.1)의 초안은 바이트 그대로 둔다."""
+        from types import SimpleNamespace
+        from scorecard.render_common import limitations
+        from scorecard.rules import load_rules
+        for version, marked in (("v3.0", False), ("v2.1", True)):
+            rules = load_rules(version)
+            questions = rules.payload["policies"]["f6"]["net_cash"]["open_questions"]
+            self.assertTrue(any(q.startswith("[정정") or "[정정" in q for q in questions), "규칙 파일에 표지가 있는 질문이 있어야 시험이 뜻을 갖는다")
+            ctx = SimpleNamespace(rules=rules, run={"companies": []}, companies={}, observations=[], sources={"items": []})
+            text = " ".join(limitations(ctx))
+            with self.subTest(version=version):
+                self.assertEqual("[정정" in text, marked)
+
+
 class OldRunsUntouchedTest(unittest.TestCase):
     """v2.x 승인 실행의 초안에는 v3.0 문장이 들어가지 않는다(분기는 규칙의 layers 에만 묶인다)."""
 
