@@ -54,7 +54,12 @@
 - [x] 한 회사의 여러 구성 회사를 합쳐 재는 계산(95f20c4)과 소셜 미디어 Meta 표시(60355db) — pilot6
 - [x] 정의표 9개 원문 재대조(fact-checker, Sonnet) — 값 146건 일치, 순위 판정 결함·기록 넷 수정, pilot7
 - [x] 나머지 9개사 매출 줄별 시장·무료 정기 출처 조사(Sonnet) → 새 정의표 목록과 사용자 결정 거리 정리(`market-survey-9.md`)
-- [ ] 조사 결정 거리 사용자 결정 → 새 정의표·cloud_infra Omdia 설명 정정
+- [x] 조사 결정 거리 사용자 결정(Windows→데스크톱 OS, Amazon 구독→TV 시청, Tesla 행 바로잡음, Gartner·StatCounter·OpenRouter 씀, ARTW 제외, 5개사 리뷰 먼저)
+- [x] 부분 반영 계산(사용자 제안): 덮는 비율을 알면 그 비율, 모르면 50%, 간접 자료 50%, 둘이면 곱함. 소셜·TV 시청을 간접 자료로 표시
+- [x] 새 정의표: AI 챗봇(StatCounter) 넣음. AI 모델 API(OpenRouter)는 1년 전 값·시험 모델 문제로 14개사 확장 때 다시 봄
+- [x] pilot8: 덮는 비율 partial(Google Cloud·Apple 웨어러블·xAI AI 솔루션), 판정 문장 여섯 건(PRP-001~006) → research → calculate → draft
+- [ ] 5개사 4영역 리뷰
+- [ ] 14개사 확장 때: desktop_os·Tesla BEV(행 바로잡음)·Gartner 반도체(NVIDIA 58%)·Amazon 구독 연결·cloud_infra Omdia 설명 정정
 - [ ] 보고 뒤: 리뷰(4영역) 또는 14개사 확장
 
 ## 뒤로 미룸
