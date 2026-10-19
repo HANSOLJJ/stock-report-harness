@@ -81,12 +81,13 @@ class PiecewiseTest(unittest.TestCase):
         curve = V30.payload["factors"]["F3"]["acceleration"]["curve"]
         for ratio, want in ((1.480 / 1.409, 4.51), (2.166 / 2.180, 2.81), (13 / 9, 6), (3.1 / 3.3, 1.18), (0.9, 0), (1.0, 3)):
             with self.subTest(ratio=ratio):
-                self.assertEqual(V30.round_score(piecewise(curve, ratio)), want)
+                self.assertEqual(round(piecewise(curve, ratio), 2), want)   # 곡선 값 자체(층 안의 한 부분이라 항목 반올림 전)
 
 
 class RoundScoreTest(unittest.TestCase):
     def test_v30_rounds_once_half_up(self):
-        for value, want in ((12.6049, 12.6), (12.605, 12.61), (12.0, 12), (-11.995, -12), (-5.408, -5.41)):
+        # 2026-10-19 사용자 결정: 항목 점수는 정수로 반올림한다(사사오입, 음수는 0 에서 먼 쪽).
+        for value, want in ((12.6049, 13), (12.5, 13), (12.4999, 12), (12.0, 12), (-11.995, -12), (-5.408, -5), (-12.5, -13)):
             with self.subTest(value=value):
                 got = V30.round_score(value)
                 self.assertEqual(got, want)
@@ -108,7 +109,7 @@ class F6ListedContinuousTest(unittest.TestCase):
         self.assertAlmostEqual(p1["value"], 50 / 30)
         self.assertAlmostEqual(p1["score"], -2.9475, places=3)
         self.assertAlmostEqual(p2["score"], -4 * (2000 / 130 - 8) / 12)
-        self.assertEqual(r["score"], -5.41)
+        self.assertEqual(r["score"], -5)   # −5.41 → 정수 −5
         self.assertTrue(p1["boundary"]["continuous"])
         self.assertFalse(any("경계 ⚠️" in w for w in r["warnings"]))
 
@@ -172,7 +173,7 @@ class F6PrivateContinuousTest(unittest.TestCase):
     def test_growth_adjusted_continuous(self):
         # 40 ÷ (30% × 100) = 1.333 → −8 − 4·log2(1.333) = −9.66
         r = self.f6(revenue=130.0, prior=100.0)
-        self.assertEqual(r["score"], -9.66)
+        self.assertEqual(r["score"], -10)   # −9.66 → 정수 −10
         self.assertEqual(r["calc"]["growth_adjusted"]["path"], "growth_adjusted")
 
     def test_ceiling_minus_eight(self):
@@ -181,7 +182,7 @@ class F6PrivateContinuousTest(unittest.TestCase):
 
     def test_fallback_without_revenue_uses_ps_curve(self):
         r = self.f6(ps=41.24)                                       # 30배 −12 와 100배 −20 사이 → −13.28
-        self.assertEqual((r["score"], r["calc"]["growth_adjusted"]["path"]), (-13.28, "fallback_private_bands"))
+        self.assertEqual((r["score"], r["calc"]["growth_adjusted"]["path"]), (-13, "fallback_private_bands"))   # −13.28 → −13
 
     def test_range_needs_a_rule_choice(self):
         payload = copy.deepcopy(V30.payload)
@@ -195,11 +196,13 @@ class F6PrivateContinuousTest(unittest.TestCase):
         # 2026-10-14 사용자 결정: v3.0 은 범위의 가운데 배수로 잰다. 20~60 의 가운데 40 → 40 ÷ 30 = 1.333 → −9.66
         self.assertEqual(V30.f6["estimate_range_end"], "mid")
         r = self.f6(ps=40.0, rng=[20.0, 60.0], revenue=130.0, prior=100.0)
-        self.assertEqual((r["status"], r["score"]), ("ok", -9.66))
+        self.assertEqual((r["status"], r["score"]), ("ok", -10))   # −9.66 → 정수 −10
         self.assertEqual(r["calc"]["growth_adjusted"]["estimate_range"]["picked"], "범위 가운데 배수")
-        # 두 끝 점수의 평균(−8·log 축의 비대칭 때문에 다르다)이 아니다
-        ends = [V30.round_score(piecewise(V30.f6["private_growth_adjusted"]["curve"], x / 30)) for x in (20.0, 60.0)]
-        self.assertNotEqual(r["score"], V30.round_score(sum(ends) / 2))
+        # 두 끝 점수의 평균(−8·log 축의 비대칭 때문에 다르다)이 아니다. 정수로 반올림하면 같아질 수 있어 곡선 값으로 견준다.
+        curve = V30.f6["private_growth_adjusted"]["curve"]
+        mid, ends = piecewise(curve, 40.0 / 30), [piecewise(curve, x / 30) for x in (20.0, 60.0)]
+        self.assertNotAlmostEqual(mid, sum(ends) / 2, places=2)
+        self.assertEqual(r["score"], V30.round_score(mid))
         fallback = self.f6(ps=40.0, rng=[20.0, 60.0])            # 성장 자료가 없으면 P/S 곡선의 가운데 배수
         self.assertEqual((fallback["status"], fallback["score"]), ("ok", V30.round_score(V30.f6_private_score(40.0)[0])))
 

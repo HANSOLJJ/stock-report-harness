@@ -102,7 +102,7 @@ class HoldingsScoreTest(unittest.TestCase):
         c = r["calc"]
         self.assertEqual((c["vertical_raw"], c["vertical"], c["non_ai_share"], c["diversification"], c["field_strength"]),
                          (7, 7, 0.25, 2.5, 1))
-        self.assertEqual(r["score"], 10.5)
+        self.assertEqual(r["score"], 11, "항목 점수는 정수로 반올림한다(7 + 2.5 + 1 = 10.5 → 11, 2026-10-19)")
 
     def test_vertical_proportional_and_cap(self):
         h = set_cells(holdings(), chip_design="self", model="self", dev_platform="self")   # 1 + 1 + 0.5 × 3 = 3.5
@@ -338,12 +338,12 @@ class F3LayersTest(unittest.TestCase):
         platform = unit("F3", "layer_cp", "user_platform", cp(prior=None, current=None))      # 6 + 8 + 0 → 작동 증거 관문 12
         r = run_layers(compute_f3_layers, cloud, platform)
         self.assertEqual((r["calc"]["layers"]["cloud"]["score"], r["calc"]["layers"]["user_platform"]["score"]), (20, 12))
-        self.assertEqual(r["score"], 14.4)   # 0.7 × 12 + 0.3 × 20
+        self.assertEqual(r["score"], 14)   # 0.7 × 12 + 0.3 × 20 = 14.4 → 정수 14
         # 2026-10-15: 매출 몫 0 층의 판단은 판정 대기(상대 유무 미확인)여도 항목을 막지 않는다
         device = unit("F3", "layer_cp", "device", cp(present="unknown"))
         h = set_cells(holdings(), device={"cell": "sold", "ai_chain": "yes", "evidence_ids": []})
         r2 = run_layers(compute_f3_layers, cloud, platform, device, h=h)
-        self.assertEqual((r2["status"], r2["score"]), ("ok", 14.4))
+        self.assertEqual((r2["status"], r2["score"]), ("ok", 14))
 
     def test_engine_dispatches_layer_modes(self):
         items = [judgment(holdings()),
@@ -391,7 +391,7 @@ class F1BusinessTest(unittest.TestCase):
         self.assertEqual([c["score"] for b in ("online_stores", "third_party", "aws") for c in r["calc"]["businesses"][b]["components"]],
                          [10.2, 14.2, 11.2])
         self.assertAlmostEqual(r["calc"]["layer_scores"]["user_platform"], (40 * 10.2 + 30 * 14.2) / 70, places=5)
-        self.assertEqual(r["score"], 11.7)   # 0.7 × 11.914 + 0.3 × 11.2 = 0.4 × 10.2 + 0.3 × 14.2 + 0.3 × 11.2
+        self.assertEqual(r["score"], 12)   # 0.7 × 11.914 + 0.3 × 11.2 = 0.4 × 10.2 + 0.3 × 14.2 + 0.3 × 11.2 = 11.7 → 정수 12
         # 2026-10-15: 규칙에 시장 정의표가 생겨, 시장을 정하지 않은 구성마다 미확인을 알린다
         self.assertIn("aws: 구성 AWS 의 시장이 정해지지 않아 D·E 는 미확인이다", r["warnings"])
 
@@ -400,8 +400,8 @@ class F1BusinessTest(unittest.TestCase):
                                           comp("AWS", "cloud", ["aws"], "work")], participant="core_measured")
         r = run_f1(bundle)
         scores = [c["score"] for c in r["calc"]["businesses"]["marketplace"]["components"]]
-        self.assertEqual(scores, [12.2, 12.2])   # 6 + 2 + 1 + 3.2, 묶음은 A~C 를 함께 쓴다
-        self.assertEqual(r["score"], 12.2)
+        self.assertEqual(scores, [12.2, 12.2])   # 6 + 2 + 1 + 3.2, 묶음은 A~C 를 함께 쓴다(사업 점수는 반올림 전 값)
+        self.assertEqual(r["score"], 12)
 
     def test_unknown_parts_get_forty_percent(self):
         b = business("all", [comp("전체", "user_platform", ["online_stores", "third_party"]), comp("AWS", "cloud", ["aws"], "work")],

@@ -56,8 +56,8 @@ class V30RenderTest(V30Base):
     def test_draft_shows_layers_units_and_v30_method(self):
         text = render_draft(self.ctx, self.results, self.scores, self.ctx.triggers)
         for needle in (
-            "| ① 네트워크 | 12.2 | 이번 실행 산출 | 사업 단위 합산 | 사업 2개 → AI 칩 설계 12.2 × 80% + 기기 12.2 × 20% |",
-            "| ② 게임체인저 | 9.6 | 이번 실행 산출 | 층별 세 경로 | AI 칩 설계 10 × 80% + 기기 8 × 20% |",
+            "| ① 네트워크 | 12 | 이번 실행 산출 | 사업 단위 합산 | 사업 2개 → AI 칩 설계 12.2 × 80% + 기기 12.2 × 20% |",   # 항목 점수는 정수(2026-10-19)
+            "| ② 게임체인저 | 10 | 이번 실행 산출 | 층별 세 경로 | AI 칩 설계 10 × 80% + 기기 8 × 20% |",
             "| ⑤ 아군 | 9 | 이번 실행 산출 | 동맹 세 부분·적대 띠 | 12 + 동맹 1 + 적대 -4(비용형) |",
             "| AI 칩 설계 | 80% | 12.2 | 10 | 11.14 |",
             "- **② 게임체인저 — AI 칩 설계** 근거",
@@ -65,6 +65,7 @@ class V30RenderTest(V30Base):
             "- **① 네트워크.** 사업마다 A 락인",
             "- **⑦ 순환금융.** 두 축의 판정(조달 의존 고객 비중 · 내 돈 환류)을 조합표에서 찾는다. 비중 작음·환류 없음 0",
             "만점의 40% 로 계산하고 미확인을 표시한다",
+            "항목 점수는 정수로 반올림하고 총점은 반올림한 항목 점수를 더한다",
             "| ① 네트워크 | 사업 단위 합산 | 0~20 |",
         ):
             with self.subTest(needle=needle[:40]):
@@ -168,7 +169,7 @@ class V30RenderTest(V30Base):
 
     def test_preview_rescales_old_scores(self):
         text = render_preview(self.ctx, self.results, self.scores)
-        self.assertIn("① 네트워크 2(×4 환산 8)→12.2", text)
+        self.assertIn("① 네트워크 2(×4 환산 8)→12", text)
         self.assertIn(RESCALED_NOTE, text)
 
 

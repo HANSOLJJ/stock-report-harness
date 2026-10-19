@@ -2405,7 +2405,7 @@ def v3_layer_names(rules: Any) -> dict[str, str]:
 
 
 def _score_text(value: Any) -> str:
-    """표시용 점수. 계산은 반올림하지 않은 값으로 하고, 화면에는 소수 둘째 자리까지만 보인다."""
+    """표시용 점수(층·사업 점수와 산식 줄). 계산은 반올림하지 않은 값으로 하고, 화면에는 소수 둘째 자리까지만 보인다."""
     return "—" if value is None else f"{round(float(value), 2):g}"
 
 
@@ -2542,8 +2542,11 @@ def method_sections_v3(ctx: Any, results: dict[str, Any]) -> list[tuple[str | No
 
     overview = [
         "**①~⑤ 는 사람이 판정 재료를 적고 엔진이 규칙의 사다리·곡선·관문으로 환산한다.** ①②③ 은 회사가 파는 층마다"
-        "(① 은 층 안의 사업마다) 매기고, ④ 보유표의 매출 줄로 낸 층 매출 몫으로 가중 평균한다. 항목 점수는 소수 둘째 자리에서 한 번 "
-        "반올림하고 총점은 반올림한 항목 점수를 더한다.",
+        "(① 은 층 안의 사업마다) 매기고, ④ 보유표의 매출 줄로 낸 층 매출 몫으로 가중 평균한다. "
+        # 2026-10-19 사용자 결정: 자릿수는 규칙의 scoring.score_decimals(0 이면 정수)에서 읽는다.
+        + ("항목 점수는 정수로 반올림하고" if not int(ctx.rules.payload["scoring"].get("score_decimals") or 0)
+           else f"항목 점수는 소수 {int(ctx.rules.payload['scoring']['score_decimals'])}자리로 한 번 반올림하고")
+        + " 총점은 반올림한 항목 점수를 더한다.",
     ]
     sections: dict[str, list[str]] = {
         "F1": [f"사업마다 A 락인(0~{p1['max']})·B 가격 실측(0~{p2['max']})·C 대체 공급(0~{p3['max']})을 함께 매기고, "

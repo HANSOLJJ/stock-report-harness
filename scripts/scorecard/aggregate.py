@@ -11,7 +11,7 @@ COMPLETE_STATUSES = {"ok", "carried_score"}
 def _score_sum(values: list[Any]) -> int | float:
     """2026-10-12 규칙 v2.1: 점수가 0.5 단위일 수 있다. 정수면 int 로 둬야 v2.0 이하 결과(와 그 해시)가 그대로다.
 
-    2026-10-14 규칙 v3.0: 항목 점수가 소수 둘째 자리라 더하면 부동소수 찌꺼기(12.600000000000001)가 생긴다. 여섯째 자리에서
+    2026-10-14 규칙 v3.0: 항목 점수가 소수면(규칙 scoring.score_decimals) 더할 때 부동소수 찌꺼기(12.600000000000001)가 생긴다. 여섯째 자리에서
     정리한다. 정수·0.5 단위의 합은 이 정리로 바뀌지 않는다."""
     total = round(sum(float(v) for v in values), 6)
     return int(total) if total.is_integer() else total

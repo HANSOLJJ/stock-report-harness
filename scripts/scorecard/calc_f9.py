@@ -117,7 +117,7 @@ def compute_f9(company: dict[str, Any], obs: ObsLookup, judgments: JudgmentLooku
         calc = {"path": path, "inputs": gi}
         if extra:
             calc.update(extra)
-        # 2026-10-14 규칙 v3.0: 연속값이면 소수 둘째 자리에서 한 번 반올림한다. 옛 규칙은 그대로 돌려준다.
+        # 2026-10-14 규칙 v3.0: 연속값이면 규칙의 자릿수(scoring.score_decimals)로 한 번 반올림한다. 옛 규칙은 그대로 돌려준다.
         score = rules.round_score(score)
         return factor_result(FACTOR, score=score, status=status, basis="computed", judgment=judgment,
                              observation_ids=obs_ids, calc=calc, warnings=warnings, pending=pending)
