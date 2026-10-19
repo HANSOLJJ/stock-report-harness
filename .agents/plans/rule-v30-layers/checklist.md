@@ -66,6 +66,16 @@
 - [ ] 14개사 확장 때: desktop_os·Tesla BEV(행 바로잡음)·Gartner 반도체(NVIDIA 58%)·Amazon 구독 연결·cloud_infra Omdia 설명 정정
 - [ ] 보고 뒤: 리뷰(4영역) 또는 14개사 확장
 
+## 시장 정의표 2차 (2026-10-19 착수, 사용자 "한도 떨어져서 못 찾은거 보강 + 정의표까지")
+- [x] Meta Reality Labs 는 미확인(정의표 만들지 않음)
+- [x] 검색 한도로 못 찾은 조사 보강(Sonnet): 전자상거래(Amazon 온라인 스토어·제3자 판매, Alibaba), 게임(Xbox), 에너지 저장(Tesla 에너지), 전기차 대체 출처(JATO·Dataforce) — 정의표가 되는 것 없음, 전자상거래 ECDB 는 사용자 결정 대기
+- [x] 정의표 초안(`data/_market/<id>/`, 검증기·calc_market 통과): desktop_os(StatCounter, MS D4·E0), ev_bev(Counterpoint 행 바로잡음, Tesla D2·E1.0), semiconductors(Gartner 2025 잠정, NVIDIA D3·E4), ai_models_api(OpenRouter Data API, OpenAI D1·E4)
+- [x] ev_bev 대체 출처: 없음(note 에 적음), TrendForce 2Q26 순위를 넷째 근거로. Tesla 에너지 저장은 정의표 없음(단위 불일치·출처별 순위 갈림)
+- [ ] 보강 조사에서 기준을 통과한 시장의 정의표: 없음. ECDB(전자상거래 회사 GMV) 를 쓸지 사용자 결정 대기
+- [x] v3.0.json `markets.files` 연결(823d3ec), 테스트 파이썬 1,801·Node 26 통과. pilot10 approval_valid → false(규칙 해시)
+- [x] 시장 관측·출처 초안(확장 실행에 넣을 것)은 gitignore 된 `data/_market/<id>/` 에
+- [ ] 보고
+
 ## v3.0 HTML 리포트 (계획 `html-report.md`, 2026-10-19 착수)
 - [x] 고치기 전 v21·rejudge·pilot8 HTML 을 스크래치에 그려 두기(바이트 대조 기준)
 - [x] 1 기업 카드: 층 표(몫 있는 층만, 몫 0 판매 층은 한 줄)·시장 표, ①②③ 층·사업 판단 근거 접는 블록
