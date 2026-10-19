@@ -1631,8 +1631,11 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
             "",
             "## 규칙 파일의 항목 메모",
             "",
-            "리포트 본문의 `무엇을 보고 매기는가` 는 항목 설명 원문(`scorecard/factor-concepts.json`)에서 가져온다. 이 표는 규칙 JSON 의 "
-            "`factors.*.note` 원문이며 **결정 번호와 작업 경위가 섞여 있어 본문에 싣지 않는다.** "
+            # 2026-10-19 규칙 v3.0: ①~⑤ 의 기준은 규칙 값으로 쓴 판정 재료라 출처 문장을 그 실행의 규칙에 맞춘다.
+            ("리포트 본문의 `무엇을 보고 매기는가` 는 ①~⑤ 는 규칙 값으로 쓴 판정 재료이고 나머지는 항목 설명 원문(`scorecard/factor-concepts.json`)"
+             "에서 가져온다. 이 표는 규칙 JSON 의 " if rc.is_layered(ctx.rules) else
+             "리포트 본문의 `무엇을 보고 매기는가` 는 항목 설명 원문(`scorecard/factor-concepts.json`)에서 가져온다. 이 표는 규칙 JSON 의 ")
+            + "`factors.*.note` 원문이며 **결정 번호와 작업 경위가 섞여 있어 본문에 싣지 않는다.** "
             "규칙 파일과 대조할 때 쓴다.",
             "",
             "| 항목 | `note` 원문 |",
