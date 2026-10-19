@@ -301,8 +301,16 @@ def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
             reconfirmed = (j.get("reconfirmed") or [{}])[-1].get("at")
             # 2026-10-12 규칙 v2.1 첫 실행: 이전 실행과 기준일이 같은 실행(사실은 같고 규칙만 바꾼 실행)은 날짜로 가를 수 없다.
             # 이 실행에서 판단을 고쳤으면(제안 반영·직접 수정은 revision_history 에 한 줄을 더한다) 다시 매긴 것으로 본다.
-            revised_here = (prior_revisions is not None
-                            and len(j.get("revision_history") or []) > prior_revisions.get(j["judgment_id"], 0))
+            history = j.get("revision_history") or []
+            if prior_revisions is None:
+                revised_here = False
+            elif j["judgment_id"] in prior_revisions:
+                revised_here = len(history) > prior_revisions[j["judgment_id"]]
+            else:
+                # 2026-10-19: 이전 실행에 없던 판단(다른 실행에서 옮겨 온 판단)은 옛 수정 이력까지 '이번 실행에서 고침'으로 세었다
+                # (14개사 확장에서 v21 의 ⑦⑧). 이 실행이 만들어진 날 이후의 수정만 센다.
+                created = ctx.run.get("created_at")
+                revised_here = bool(created) and any((r.get("revised_at") or "") >= created for r in history)
             if max(d for d in (j["reviewed_at"], reconfirmed) if d) <= prior_as_of and not revised_here:
                 out.append((j["judgment_id"], f"이번 실행에서 다시 매기지 않은 판단 — 검토일 {j['reviewed_at']}"
                             + (f"·재확인 {reconfirmed}" if reconfirmed else "")

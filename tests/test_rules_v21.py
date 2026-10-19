@@ -745,6 +745,47 @@ class RuleChangeInheritTest(unittest.TestCase):
         self.assertNotIn("F5", flagged)
         self.assertIn("F3", flagged)
 
+    def test_judgment_missing_from_prior_run_counts_only_revisions_made_here(self):
+        """2026-10-19: 이전 실행에 없던 판단(다른 실행에서 옮겨 온 판단)은 옛 수정 이력이 '이번 실행에서 고침'으로 세어져
+        다시 매기지 않아도 통과했다(14개사 확장에서 v21 의 ⑦⑧). 이 실행이 만들어진 날 이후의 수정만 센다."""
+        import os
+        os.environ["SCORECARD_DOTENV"] = ""
+        from scorecard import engine, stages
+        from scorecard.schema import JUDGMENT_REVISION_FIELDS, write_json
+        from scorecard.validate import rejudge_findings
+        from tests.test_collect_stage import SLUG, Sandbox
+        box = Sandbox(("nvidia",), rule_version="v2.0")
+        self.addCleanup(box.close)
+        prior = load_json_strict(box.run_dir / "judgments.json")
+        for j in prior["items"]:
+            j["status"] = "new"
+            j.pop("carried_from", None)
+            j["reviewed_at"] = "2026-09-29"
+        write_json(box.run_dir / "judgments.json", prior)
+        new = "ai-scorecard-2026-10-imported"
+        stages.init_run(new, from_run=SLUG, rule_version="v2.0", title="옮겨 온 판단")
+        created = load_json_strict(box.dir / "output" / new / "run.json")["created_at"]
+        # 이전 실행에서 ⑤ 를 빼 '이전 실행에 없던 판단' 으로 만든다(새 실행에는 남는다).
+        write_json(box.run_dir / "judgments.json", {**prior, "items": [j for j in prior["items"] if j["factor"] != "F5"]})
+        path = box.dir / "output" / new / "judgments.json"
+
+        def add_revision(at: str) -> None:
+            payload = load_json_strict(path)
+            for j in payload["items"]:
+                if j["factor"] == "F5":
+                    previous = {k: copy.deepcopy(j.get(k)) for k in JUDGMENT_REVISION_FIELDS}
+                    j["revision_history"] = [*(j.get("revision_history") or []),
+                                             {"revised_at": at, "revised_by": "t", "reason": "옮기기 전 수정", "previous": previous, "session": "agent"}]
+            write_json(path, payload)
+
+        add_revision("2026-09-01")            # 옮겨 오기 전의 수정 이력
+        flagged = {jid.split(".")[1] for jid, _ in rejudge_findings(engine.load_context(new))}
+        self.assertIn("F5", flagged)
+        add_revision(created)                 # 이 실행에서 다시 매김
+        flagged = {jid.split(".")[1] for jid, _ in rejudge_findings(engine.load_context(new))}
+        self.assertNotIn("F5", flagged)
+        self.assertIn("F3", flagged)
+
     def test_rule_conflict_covers_inputs_too(self):
         """형식이 맞아도 v2.1 판정 재료 요건(① '예' 의 재료 여섯)에 걸리면 충돌로 본다."""
         from scorecard.schema import judgment_rule_conflict
