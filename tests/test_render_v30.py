@@ -107,6 +107,17 @@ class V30RenderTest(V30Base):
         self.assertIn("details.unit", css(True))
         self.assertNotIn(V3_CSS.strip()[:20], css(False), "층 정의가 없는 옛 실행의 CSS 는 그대로다")
 
+    def test_html_notes_use_names_not_ids(self):
+        # 2026-10-19: 카드의 '참고' 줄에 ['chip_design', …] 목록과 사업 id 앞머리가 그대로 보였다(HTML 표시만 바꾼다)
+        from scorecard.render_html import _readable_note
+        for raw, shown in (("매출 몫 0 층 ['model', 'device'] 의 세 경로 판단", "매출 몫 0 층 모델 · 기기 의 세 경로 판단"),
+                           ("cloud: 지표 단계 c 의 가속도는 최고 3", "클라우드 — 지표 단계 c 의 가속도는 최고 3"),
+                           ("gaming: 구성 Gaming 의 시장이 정해지지 않아", "구성 Gaming 의 시장이 정해지지 않아"),
+                           ("전선 ['고객 A(경쟁사 소유)', '고객 B'] — 40% 지점", "전선 고객 A(경쟁사 소유) · 고객 B — 40% 지점"),
+                           ("unknown_id: 그대로 둔다", "unknown_id: 그대로 둔다")):
+            with self.subTest(raw=raw[:20]):
+                self.assertEqual(_readable_note(self.ctx, "nvidia", raw), shown)
+
     def test_preview_rescales_old_scores(self):
         text = render_preview(self.ctx, self.results, self.scores)
         self.assertIn("① 네트워크 2(×4 환산 8)→12.2", text)

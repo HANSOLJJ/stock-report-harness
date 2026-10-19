@@ -1051,6 +1051,25 @@ def _direction_html(block: dict[str, Any]) -> str:
     return f'<div class="fdir">{"".join(boxes)}</div>'
 
 
+_ID_LIST_RE = re.compile(r"\[('[^'\]]+'(?:, '[^'\]]+')*)\]")
+_ID_PREFIX_RE = re.compile(r"^([a-z0-9_]+): ")
+
+
+def _readable_note(ctx: Any, company_id: str, text: str) -> str:
+    """2026-10-19 규칙 v3.0: 계산 경고의 층 id 목록(['chip_design', …])과 앞머리의 층·사업 id 를 이름으로 바꾼다(HTML 표시만,
+    결과·초안은 그대로). 이름을 모르는 id 는 그대로 둔다."""
+    names = dict(rc.v3_layer_names(ctx.rules))
+    business = {j["business"]: rc.unit_name(ctx, j) for j in ctx.judgments
+                if j["company_id"] == company_id and j.get("business") and j["factor"] == "F1"}
+    text = _ID_LIST_RE.sub(lambda m: " · ".join(names.get(x, x) for x in re.findall(r"'([^']+)'", m.group(1))), text)
+    m = _ID_PREFIX_RE.match(text)
+    if m and m.group(1) in names:
+        return f"{names[m.group(1)]} — {text[m.end():]}"
+    if m and m.group(1) in business:
+        return text[m.end():]   # 사업 경고는 문장 안에 구성 사업 이름이 이미 있다
+    return text
+
+
 def _unit_score_text(f: str, calc: dict[str, Any], judgment: dict[str, Any]) -> str:
     """층 판단은 그 층 점수, 사업 판단은 구성 사업 점수(묶음이면 구성마다)."""
     if judgment.get("layer"):
@@ -1177,8 +1196,9 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 why = []
                 for n in rc.factor_notes(ctx, f, fr):
                     history += [(f, i) for i in n.get("ids") or []]
+                    note_text = _readable_note(ctx, c["company_id"], n["text"]) if layered else n["text"]
                     item = (f'<li class="warn {n["kind"]}"><b class="wk">{esc(rc.NOTE_KINDS[n["kind"]])}</b> '
-                            f'{inline_html(n["text"])}</li>')
+                            f'{inline_html(note_text)}</li>')
                     (why if n["kind"] in ("cut", "cap") else pts).append(item)
                 # 2026-10-08 규칙 v2.0: 판단 입력(① 네 질문·② 세대 격차·③ 지표 단계)을 산식 줄에 싣는다.
                 calc = factor_calc_text(f, fr, rules, (judgments_by_id.get(fr.get("judgment_id") or "") or {}).get("inputs"), c["type"])
