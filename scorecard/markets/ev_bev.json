@@ -1,0 +1,49 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "ev_bev",
+  "label": "순수 전기차(BEV) 판매 점유율(전 세계, 자동차 그룹, 분기)",
+  "measure": "shipments",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "Counterpoint Research 세계 전기차 분기 점유율(BEV, 상위 3곳)",
+      "url": "https://counterpointresearch.com/en/insights/global-electric-vehicle-market-share-quarterly",
+      "role": "primary",
+      "note": "분기마다 갱신되는 무료 페이지이고 표에 최근 여덟 분기가 함께 있어 한 페이지로 최근 분기와 1년 전 같은 분기를 읽는다. Tesla·BYD Auto 두 행은 이름을 바로잡아 읽는다(note)."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "byd",
+      "name": "BYD Auto",
+      "note": "영문 표의 'Tesla' 행 값을 읽는다(행 이름 바로잡음)"
+    },
+    {
+      "key": "tesla",
+      "name": "Tesla",
+      "company_id": "tesla",
+      "note": "영문 표의 'BYD Auto' 행 값을 읽는다(행 이름 바로잡음)"
+    },
+    {
+      "key": "geely",
+      "name": "Geely Holding Group",
+      "note": "영문 표의 'Geely Holding Group' 행"
+    }
+  ],
+  "outside": [
+    {
+      "name": "상위 3곳 밖 자동차 그룹(표의 'Others')",
+      "note": "2026 Q2 66%, 2025 Q2 60%. 회사별로 나눌 수 없다."
+    },
+    {
+      "name": "플러그인 하이브리드(PHEV)·주행거리 연장형(EREV)",
+      "note": "표는 BEV 만 센다('*Note: For EVs, we consider only BEVs.'). Tesla 의 자동차 판매는 모두 BEV 다."
+    }
+  ],
+  "lists_top_n": true,
+  "precision": 0.01,
+  "note": "범위는 Counterpoint 가 내는 전 세계 BEV 판매의 자동차 그룹별 점유율 표를 그대로 쓴다. 판매 대수 기준이다. 기간은 기준일까지 나온 가장 최근 분기(2026 Q2, 2026-04-01~2026-06-30, 2026-08-27 게시)와 1년 전 같은 분기(2025 Q2)이고 같은 표에서 읽는다. 영문 표는 'Tesla' 행과 'BYD Auto' 행의 이름이 뒤바뀌어 있다고 보고 바로잡아 읽는다(2026-10-15 사용자 결정). 근거는 넷이다. ① 같은 페이지 본문이 Q2 2026 에 BYD 를 선두('clear lead'), Tesla 를 2위·약 12%('nearly 12% market share')로 적는다. 표 그대로면 Tesla 13% 1위다. ② 같은 페이지의 독일어 판(앞선 호)은 행 순서가 BYD Auto·Tesla 이고, 겹치는 다섯 분기에서 BYD Auto 값이 영문 표의 Tesla 행과, Tesla 값이 영문 표의 BYD Auto 행과 모두 같다. ③ TrendForce 2Q25 보도자료가 BYD 의 BEV 점유율을 18.3% 로 적는다(영문 표의 Q2 2025 18% 는 'Tesla' 행에 있다). ④ TrendForce 2Q26 보도자료가 BYD 를 1위, Tesla 를 2위(25% 증가)로 적는다. 바로잡은 값은 2026 Q2 BYD 13%·Tesla 12%·Geely 9%, 2025 Q2 BYD 18%·Tesla 12%·Geely 11% 다. 구성 회사는 표의 상위 3곳이라 lists_top_n 이고 목록에 없는 회사는 3위 밖이다. 점유율이 정수 % 이므로 precision 은 0.01 이다. 같은 단위(전 세계 BEV 판매의 회사별 점유율)를 무료로 분기마다 내는 대체 출처는 찾지 못했다(2026-10-19 보강 조사: JATO 는 유럽 월간만, Dataforce 는 무료 승용 표가 없음, Rho Motion 은 지역 합계만, TrendForce 는 순위만 글자로 낸다). 출처가 끊기면 그 분기의 D·E 는 확인되지 않음이다."
+}

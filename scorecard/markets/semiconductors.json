@@ -1,0 +1,91 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "semiconductors",
+  "label": "반도체 매출 점유율(전 세계, 연간, Gartner 상위 10)",
+  "measure": "revenue",
+  "value_kind": "share",
+  "period_basis": "annual",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "Gartner 연간 반도체 매출 상위 10 보도자료(잠정치 1월, 확정치 4월 무렵)",
+      "url": "https://www.gartner.com/en/newsroom/press-releases/2026-01-12-gartner-says-worldwide-semiconductor-revenue-grew-21-percent-in-2025",
+      "role": "primary",
+      "note": "표에 최근 연도 매출·점유율과 전년 매출, 시장 전체 두 해 값이 함께 있어 한 보도자료로 두 해를 견준다. 스크립트 요청은 Cloudflare 확인 화면을 받아 앱 안 브라우저로 연다."
+    },
+    {
+      "label": "Gartner 연간 반도체 확정치 보도자료(2024 연도)",
+      "url": "https://www.gartner.com/en/newsroom/press-releases/2025-04-10-gartner-says-worldwide-semiconductor-revenue-grew-21-percent-in-2024",
+      "role": "alternate",
+      "note": "잠정치 보도자료가 없으면 가장 최근 확정치 보도자료의 표(최근 연도와 전년 매출)를 쓴다. 2024 값은 2026-01-12 잠정치 보도자료의 2024 열과 같다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "nvidia",
+      "name": "NVIDIA",
+      "company_id": "nvidia",
+      "note": "표의 회사 이름 \"NVIDIA\""
+    },
+    {
+      "key": "samsung",
+      "name": "Samsung Electronics",
+      "note": "표의 회사 이름 \"Samsung Electronics\""
+    },
+    {
+      "key": "sk_hynix",
+      "name": "SK Hynix",
+      "note": "표의 회사 이름 \"SK Hynix\""
+    },
+    {
+      "key": "intel",
+      "name": "Intel",
+      "note": "표의 회사 이름 \"Intel\""
+    },
+    {
+      "key": "micron",
+      "name": "Micron Technology",
+      "note": "표의 회사 이름 \"Micron Technology\""
+    },
+    {
+      "key": "qualcomm",
+      "name": "Qualcomm",
+      "note": "표의 회사 이름 \"Qualcomm\""
+    },
+    {
+      "key": "broadcom",
+      "name": "Broadcom",
+      "note": "표의 회사 이름 \"Broadcom\""
+    },
+    {
+      "key": "amd",
+      "name": "AMD",
+      "note": "표의 회사 이름 \"AMD\""
+    },
+    {
+      "key": "apple",
+      "name": "Apple",
+      "company_id": "apple",
+      "note": "표의 회사 이름 \"Apple\""
+    },
+    {
+      "key": "mediatek",
+      "name": "MediaTek",
+      "note": "표의 회사 이름 \"MediaTek\""
+    }
+  ],
+  "outside": [
+    {
+      "name": "상위 10 밖 회사(표의 'Others (outside top 10)')",
+      "note": "2025 298,315백만 달러(37.6%), 2024 270,536백만 달러. 회사별로 나눌 수 없다."
+    },
+    {
+      "name": "파운드리(TSMC 등)",
+      "note": "표에 파운드리가 없다. TSMC 는 foundry 시장으로 잰다."
+    }
+  ],
+  "lists_top_n": true,
+  "precision": 1e-05,
+  "note": "범위는 Gartner 가 내는 전 세계 반도체 매출 상위 10 표를 그대로 쓴다. 메모리·모바일 칩을 포함한 반도체 전체 시장이다. 연간 자료라 같은 연도끼리 견주고 1년 늦다. 최근 연도는 기준일까지 나온 가장 최근 표인 2025 잠정치(2026-01-12)이고 전년은 같은 표의 2024 Revenue 열이다(2025-04-10 확정치와 같다). 점유율은 표의 매출을 같은 표의 시장 전체로 나눈 값이다. 매출이 백만 달러 단위라 반올림 폭은 시장 전체의 약 백만분의 1이고 precision 은 넉넉히 0.00001 로 둔다. 2025 확정치 보도자료는 찾지 못했다(2026-10-19 검색). 2026-08-24 전망 보도자료는 2025 시장을 8,090억 달러로 적어 잠정 순위표의 시장 전체와 다르므로 확정치에서 값과 순위가 바뀔 수 있다(2024 연도는 2025-02-03 잠정치와 2025-04-10 확정치 사이에 시장 전체가 바뀐 전례가 있다). 구성 회사는 표의 상위 10곳이라 lists_top_n 이고, 목록에 없는 회사는 10위 밖(D 그 밖)이며 점유율 방향은 미확인이다. Gartner 의 NVIDIA 값은 NVIDIA 공시 매출의 약 58% 다(2025 연도 125,703 대 FY2026 215,938, 2024 연도 76,692 대 FY2025 130,497백만 달러). 차이의 이유는 무료 보도자료에 없다. 그래서 NVIDIA Data Center 줄을 이 시장으로 잴 때는 그 비율만큼만 반영한다(구성 사업의 coverage, 2026-10-15 사용자 결정). 출처가 끊기면 그 연도의 D·E 는 확인되지 않음이다."
+}

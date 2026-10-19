@@ -1,0 +1,186 @@
+{
+  "schema": "scorecard.market/1",
+  "market_id": "ai_models_api",
+  "label": "AI 모델 API 토큰 점유율(OpenRouter 경유·모델 제작사별, 분기)",
+  "measure": "usage",
+  "value_kind": "share",
+  "period_basis": "quarter_yoy",
+  "source_priority": "research_firm",
+  "scope_basis": "research_firm_unit",
+  "sources": [
+    {
+      "label": "OpenRouter Data API rankings-daily(일별 상위 50 모델 토큰 + other, 2025-01-01 부터)",
+      "url": "https://openrouter.ai/api/v1/datasets/rankings-daily",
+      "role": "primary",
+      "note": "start_date·end_date 로 분기를 하나씩 불러(한 번에 최대 366일) 최근 분기와 1년 전 같은 분기를 받는다. 유효한 OpenRouter API 키가 필요하다. 설명은 https://openrouter.ai/docs/cookbook/administration/data-api. 데이터는 CC BY 4.0 이고 출처 표기는 'Source: OpenRouter (openrouter.ai/rankings), as of <meta.as_of>.' 이다."
+    },
+    {
+      "label": "OpenRouter 순위 페이지 'Top Models' 리더보드(모델별 토큰, 오늘·이번 주·이번 달)",
+      "url": "https://openrouter.ai/rankings",
+      "role": "alternate",
+      "note": "키 없이 열리고 최근 30일 모델 전체(2026-10-14 기준 704행)를 준다. 지난 분기 값이 없어 이 출처만으로는 순위(D)만 낼 수 있고 점유율 방향(E)은 미확인이다."
+    }
+  ],
+  "constituents": [
+    {
+      "key": "deepseek",
+      "name": "DeepSeek",
+      "note": "model_permaslug 앞머리 'deepseek/'"
+    },
+    {
+      "key": "tencent",
+      "name": "Tencent",
+      "note": "model_permaslug 앞머리 'tencent/'"
+    },
+    {
+      "key": "openai",
+      "name": "OpenAI",
+      "company_id": "openai",
+      "note": "model_permaslug 앞머리 'openai/'"
+    },
+    {
+      "key": "z_ai",
+      "name": "Z.ai",
+      "note": "model_permaslug 앞머리 'z-ai/'"
+    },
+    {
+      "key": "xiaomi",
+      "name": "Xiaomi",
+      "note": "model_permaslug 앞머리 'xiaomi/'"
+    },
+    {
+      "key": "google",
+      "name": "Google",
+      "company_id": "alphabet",
+      "note": "model_permaslug 앞머리 'google/'"
+    },
+    {
+      "key": "anthropic",
+      "name": "Anthropic",
+      "company_id": "anthropic",
+      "note": "model_permaslug 앞머리 'anthropic/'"
+    },
+    {
+      "key": "stealth",
+      "name": "stealth(제작사를 밝히지 않은 시험 모델)",
+      "note": "model_permaslug 앞머리 'stealth/'"
+    },
+    {
+      "key": "nvidia",
+      "name": "NVIDIA",
+      "company_id": "nvidia",
+      "note": "model_permaslug 앞머리 'nvidia/'"
+    },
+    {
+      "key": "minimax",
+      "name": "MiniMax",
+      "note": "model_permaslug 앞머리 'minimax/'"
+    },
+    {
+      "key": "moonshotai",
+      "name": "Moonshot AI",
+      "note": "model_permaslug 앞머리 'moonshotai/'"
+    },
+    {
+      "key": "poolside",
+      "name": "poolside",
+      "note": "model_permaslug 앞머리 'poolside/'"
+    },
+    {
+      "key": "stepfun",
+      "name": "StepFun",
+      "note": "model_permaslug 앞머리 'stepfun/'"
+    },
+    {
+      "key": "inclusionai",
+      "name": "inclusionai",
+      "note": "model_permaslug 앞머리 'inclusionai/'"
+    },
+    {
+      "key": "meta",
+      "name": "Meta",
+      "company_id": "meta",
+      "note": "model_permaslug 앞머리 'meta/'"
+    },
+    {
+      "key": "qwen",
+      "name": "Qwen",
+      "company_id": "alibaba",
+      "note": "model_permaslug 앞머리 'qwen/'"
+    },
+    {
+      "key": "upstage",
+      "name": "upstage",
+      "note": "model_permaslug 앞머리 'upstage/'"
+    },
+    {
+      "key": "x_ai",
+      "name": "xAI",
+      "company_id": "spacex-xai",
+      "note": "model_permaslug 앞머리 'x-ai/'"
+    },
+    {
+      "key": "typesafe",
+      "name": "typesafe(jev 라우팅 모델)",
+      "note": "model_permaslug 앞머리 'typesafe/'"
+    },
+    {
+      "key": "dots_studio",
+      "name": "dots-studio",
+      "note": "model_permaslug 앞머리 'dots-studio/'"
+    },
+    {
+      "key": "mistralai",
+      "name": "Mistral AI",
+      "note": "model_permaslug 앞머리 'mistralai/'"
+    },
+    {
+      "key": "cohere",
+      "name": "cohere",
+      "note": "model_permaslug 앞머리 'cohere/'"
+    },
+    {
+      "key": "nex_agi",
+      "name": "nex-agi",
+      "note": "model_permaslug 앞머리 'nex-agi/'"
+    },
+    {
+      "key": "thinkingmachines",
+      "name": "thinkingmachines",
+      "note": "model_permaslug 앞머리 'thinkingmachines/'"
+    },
+    {
+      "key": "perplexity",
+      "name": "perplexity",
+      "note": "model_permaslug 앞머리 'perplexity/'"
+    },
+    {
+      "key": "baai",
+      "name": "baai",
+      "note": "model_permaslug 앞머리 'baai/'"
+    },
+    {
+      "key": "meta_llama",
+      "name": "Meta (meta-llama)",
+      "company_id": "meta",
+      "note": "model_permaslug 앞머리 'meta-llama/'"
+    }
+  ],
+  "outside": [
+    {
+      "name": "OpenRouter 를 거치지 않는 직접 판매와 클라우드 판매",
+      "note": "각 회사가 자체 API 와 클라우드(Bedrock·Vertex·Azure)로 파는 양, 소비자 앱 사용, OpenRouter 의 비공개 모델·비공개 엔드포인트·데이터 미보관 트래픽은 재지 않는다."
+    },
+    {
+      "name": "일별 상위 50 밖 모델의 토큰(other 행)",
+      "note": "제작사별로 나눌 수 없어 분모에만 든다(2026 Q3 6.16%, 2025 Q3 5.60%). 모델이 많은 제작사일수록 덜 잡힌다. 같은 API 의 최근 30일(2026-09-15~10-14)을 키 없는 리더보드 전체 704행과 견주면 OpenAI 9.62% 대 11.09%, Anthropic 4.27% 대 4.93%, Google 3.65% 대 4.38%, Qwen 0.85% 대 1.73% 다."
+    },
+    {
+      "name": "2025 Q3 에만 상위 50 에 든 제작사(alibaba, amazon, gryphe, microsoft, nousresearch, openrouter, tngtech)",
+      "note": "2026 Q3 의 상위 50 에 모델이 하나도 없어 구성 회사로 두지 않았다. 2025 Q3 의 openrouter/ 앞머리 모델(horizon-alpha·horizon-beta·sonoma-sky-alpha·sonoma-dusk-alpha·cypher-alpha)은 그때의 제작사 미공개 시험 모델이다. alibaba/(tongyi-deepresearch-30b-a3b, 2025 Q3 0.027%)·microsoft/(wizardlm-2-8x22b, 0.055%)·amazon/(nova-lite-v1, 0.004%)는 채점 대상 회사의 모델이다. Alibaba 의 1년 전 값은 qwen/ 만 담으므로 그만큼 낮게 잡힌다."
+    }
+  ],
+  "measure_fit": "proxy",
+  "precision": 1e-10,
+  "note": "범위는 OpenRouter 를 거친 공개 트래픽의 텍스트 모델 토큰(prompt + completion)이고, 모델 slug 앞머리의 제작사로 합산했다. 기간은 기준일까지 끝난 가장 최근 분기(2026 Q3, 2026-07-01~2026-09-30)와 1년 전 같은 분기(2025 Q3)이고, Data API rankings-daily 를 분기마다 한 번씩 불러 받았다. 분모는 각 응답의 전체 토큰(other 행 포함, 2026 Q3 1,203,668,912,329,357, 2025 Q3 47,781,062,620,937)이다. 1년 사이 시장 전체가 약 25배로 커졌다. 응답은 날마다 상위 50 모델만 따로 주므로 구성 회사의 값은 그 제작사 모델이 상위 50 에 든 날의 토큰 합이고 하한이다(outside 의 other 행 참고). 구성 회사는 2026 Q3 에 상위 50 에 든 모델이 있는 제작사다. 순위는 회사끼리 견주므로 meta 와 meta-llama 는 같은 company_id 로 합친다. meta/ 앞머리 모델은 2025 Q3 상위 50 에 없어 Meta 의 1년 전 합친 값이 없다(E 미확인). nvidia/ 도 2025 Q3 상위 50 에 없다. 제작사를 밝히지 않은 시험 모델(stealth/ 앞머리, 2026 Q3 의 space-bunny-alpha·ox-alpha·union-alpha)은 OpenRouter 가 붙인 제작사 이름 그대로 구성 회사 하나로 두고 company_id 를 달지 않는다. 이 몫이 어느 회사 것이냐와 상위 50 밖 몫에 따라 3위 경계(2026 Q3 Tencent·OpenAI·Z.ai)가 바뀔 수 있다. 무료(:free) 변형을 포함하므로 값싼·무료 모델 쪽으로 기운 값이다. OpenRouter 를 거치는 개발자의 토큰만 재므로 간접 자료(proxy)이고 일부만 재는 만큼만 반영한다. 2025 Q3 응답에는 2025-07-15 하루가 없다(91일). 데이터셋은 실시간으로 갱신되고 수치가 고쳐질 수 있어 관측의 출처에 meta.as_of 를 남긴다. 출처가 끊기면 그 실행의 D·E 는 확인되지 않음이다."
+}
