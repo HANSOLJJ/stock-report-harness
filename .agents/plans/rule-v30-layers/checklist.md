@@ -60,7 +60,8 @@
 - [x] pilot8: 덮는 비율 partial(Google Cloud·Apple 웨어러블·xAI AI 솔루션), 판정 문장 여섯 건(PRP-001~006) → research → calculate → draft
 - [x] 5개사 4영역 1차 리뷰(영역 넷 + 회사별 사실·출처 다섯 + 근거 불릿)
 - [x] 수정 묶음(코드 다섯 커밋, 판단 PRP-007~041, 자료 수정) → research → calculate → draft
-- [ ] 확인 리뷰 1회 → review.md 채움 → 계약 검증
+- [x] 확인 리뷰 1회(남은 발견 C-1 은 사용자 결정으로 PRP-042) → review.md pass → 계약 검증 통과
+- [ ] 승인·빌드: v3.0 HTML 렌더가 없어 빌드 불가(뒤로 미룸 항목). 승인은 사람 행위
 - [ ] 14개사 확장 때: desktop_os·Tesla BEV(행 바로잡음)·Gartner 반도체(NVIDIA 58%)·Amazon 구독 연결·cloud_infra Omdia 설명 정정
 - [ ] 보고 뒤: 리뷰(4영역) 또는 14개사 확장
 
