@@ -2432,8 +2432,7 @@ def market_table_rows(factors: dict[str, dict[str, Any]]) -> list[list[str]]:
             # 2026-10-15: 부분 반영이면 반영 비율과 잰 값을 함께 보인다(rules.md ① 「부분 반영」).
             weight = f"{_score_text(c['weight'] * 100)}%" if "weight" in c else "100%"
             rows.append([c["name"], m.get("label", m.get("market_id", "")), rank, f"{share} ← {prior}", change, weight,
-                         _score_text(c["D"]) + ("" if "D" not in b.get("unknown_parts", []) else "(미확인)"),
-                         _score_text(c["E"]) + ("" if "E" not in b.get("unknown_parts", []) else "(미확인)")])
+                         *(_score_text(c[k]) + ("(미확인)" if k in c.get("unknown_parts", b.get("unknown_parts", [])) else "") for k in ("D", "E"))])
     return rows
 
 

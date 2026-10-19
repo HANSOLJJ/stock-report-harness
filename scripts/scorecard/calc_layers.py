@@ -417,6 +417,8 @@ def compute_f1_business(company: dict[str, Any], judgments: JudgmentLookup, rule
             score = min(raw, float(cap["cap"])) if comp["ai_monetized"] != cap["requires"] else raw
             comps.append({"name": comp["name"], "layer": comp["layer"], "customer": comp["customer"], "lines": list(comp["lines"]),
                           "revenue": _tidy(revenue), "D": _tidy(d_points), "E": _tidy(e_points), "ai_monetized": comp["ai_monetized"],
+                          # 2026-10-19: 묶음 안에서 구성마다 미확인 여부가 다르다(iPhone 은 측정, Services 는 미확인).
+                          "unknown_parts": [k for k in ("D", "E") if pos is None or pos[k] is None],
                           "market": _market_summary(pos),
                           **({"weight": _tidy(weight), "D_measured": _tidy(pos["D"]) if pos and pos["D"] is not None else None,
                               "E_measured": _tidy(pos["E"]) if pos and pos["E"] is not None else None} if weight < 1 else {}),

@@ -110,6 +110,12 @@ class RowsTest(unittest.TestCase):
         self.assertEqual(table["rows"][0][5], "미공시")
         self.assertEqual(table["rows"][0][3], "$400.00")
 
+    def test_twelve_month_revenue_wins_over_quarterly_revenue_ttm(self):
+        """2026-10-19 pilot8 출력 리뷰 F-1: 신규 상장 트랙은 revenue_ttm 이 분기값이고 12개월 값은 revenue_ttm_full 이다.
+        ⑨ G1 처럼 12개월 값을 먼저 고르고, 없으면 revenue_ttm 그대로다."""
+        self.assertEqual(row(full() + [ob("acme", "revenue_ttm_full", 4000.0)])["values"]["revenue_ttm"], 4000.0)
+        self.assertEqual(row(full())["values"]["revenue_ttm"], 1000.0)
+
     def test_uses_the_same_fcf_observation_as_f9(self):
         """⑨(calc_f9)는 ObsLookup.number 로 fcf_ttm 을 읽는다. 연결표도 같은 관측을 고른다 — verified 가 더 최신 옛 관측을 이긴다."""
         obs = full() + [ob("acme", "fcf_ttm", 999.0, status="legacy_unverified", end="2026-09-02", oid="acme.fcf_ttm.legacy")]

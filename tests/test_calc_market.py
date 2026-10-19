@@ -313,6 +313,22 @@ class PartialWeightTest(unittest.TestCase):
         r, _c = self.run_aws(self.rules_for(definition()), 0.58)
         self.assertEqual(market_table_rows({"F1": r})[0][5:], ["58%", "2.41", "0.67"])
 
+    def test_unknown_marker_is_per_component(self):
+        # 2026-10-19 pilot8 출력 리뷰 F-2: 묶음에서 한 구성(Services)만 미확인이어도 다른 구성(iPhone) 행에 (미확인)이 붙었다.
+        from scorecard.render_common import market_table_rows
+        aws_comp = comp("AWS", "cloud", ["aws"], "work")
+        aws_comp["market"] = "cloud_infra"
+        rules = self.rules_for(definition())
+        items = [judgment(holdings()),
+                 business("stores", [comp("온라인 스토어", "user_platform", ["online_stores"])]),
+                 business("aws", [aws_comp, comp("제3자 판매자", "user_platform", ["third_party"], "trade")], participant="none",
+                          substitutes="no_substitute", bundle_reason="묶음 시험")]
+        validate_judgments({"schema": "scorecard.judgments/1", "run_id": "t", "items": items}, COMPANIES, rules.payload, "t")
+        r = compute_f1_business(AMAZON, JudgmentLookup(items), rules, RUN, shares(*self.OBS))
+        comps = r["calc"]["businesses"]["aws"]["components"]
+        self.assertEqual([c["unknown_parts"] for c in comps], [[], ["D", "E"]])
+        self.assertEqual(market_table_rows({"F1": r})[0][6:], ["3", "0"], "측정한 구성 행에는 (미확인)을 달지 않는다")
+
     def test_coverage_rejections(self):
         rules = self.rules_for(definition())
         for bad, pattern in [(0, "coverage"), (1, "coverage"), (1.2, "coverage"), ("half", "coverage"), (True, "coverage")]:

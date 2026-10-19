@@ -57,6 +57,12 @@ def cash_chain_rows(observations: list[dict[str, Any]], companies: list[dict[str
         missing_status: dict[str, str] = {}   # 값은 없지만 관측이 있는 칸의 상태(not_disclosed 면 '미공시' 로 적는다)
         for m in CHAIN_METRICS:
             v, o = obs.number(cid, m)
+            if m == "revenue_ttm":
+                # 2026-10-19: ⑨ G1 과 같은 선택 — 12개월 매출 지표가 있으면 먼저 본다. 신규 상장 트랙의 revenue_ttm 은 전년 동기
+                # 대조용 분기값이라, 그대로 쓰면 연결표의 매출만 한 분기가 된다(pilot8 출력 리뷰 F-1).
+                full, full_o = obs.number(cid, "revenue_ttm_full")
+                if full is not None:
+                    v, o = full, full_o
             values[m] = v
             if v is not None:
                 ends[m] = _end(m, o)
