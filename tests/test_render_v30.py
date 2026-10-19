@@ -120,6 +120,22 @@ class V30RenderTest(V30Base):
         self.assertNotIn("비교 그룹 안 순위", html, "순위가 확정되지 않은(미완료) 회사는 그룹 안 순위에 넣지 않는다")
         self.assertEqual(render_holdings_v3(self.results, SimpleNamespace(rules=load_rules("v2.1"))), "")
 
+    def test_scatter_uses_rule_baselines(self):
+        # 2026-10-19: v3.0 산점도에 25점 척도의 '과점 후보군 20점' 선이 그대로 그려졌다
+        from scorecard.render_html import scatter_svg
+        from scorecard.rules import load_rules
+        one = {"companies": [{"company_id": "nvidia", "display_name": "NVIDIA", "complete": True, "reference": False, "moat": 41.3,
+                              "trap": -22.7, "total": 18.6, "type": "부품", "factors": {"F4": {"calc": {"primary_layer": "chip_design"}}}}]}
+        v3 = scatter_svg(one, {}, self.ctx.rules)
+        for needle in ("과점 후보군 80점 (잠정)", "승자 되기 어려움 56점 (잠정)", ">80</text>", ">-24</text>"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, v3)
+        self.assertNotIn("과점 후보군 20점", v3)
+        old = scatter_svg({"companies": [{**one["companies"][0], "moat": 18, "trap": -6, "total": 12}]}, {}, load_rules("v2.1"))
+        self.assertIn("과점 후보군 20점", old)
+        self.assertEqual(old, scatter_svg({"companies": [{**one["companies"][0], "moat": 18, "trap": -6, "total": 12}]}, {}),
+                         "옛 규칙의 그림은 규칙을 넘기든 안 넘기든 같다")
+
     def test_html_notes_use_names_not_ids(self):
         # 2026-10-19: 카드의 '참고' 줄에 ['chip_design', …] 목록과 사업 id 앞머리가 그대로 보였다(HTML 표시만 바꾼다)
         from scorecard.render_html import _readable_note

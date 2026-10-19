@@ -33,7 +33,7 @@ def dot_class(c: dict[str, Any]) -> str:
     if layer:
         return f"layer-{layer}"
     # 2026-10-13: 보유표는 있는데 판매 칸이 없어 비교 그룹이 없는 회사는 범례의 '비교 그룹 없음' 색이다.
-    return "layer-none" if calc.get("layers") else TYPE_CLASS.get(c["type"], "mix")
+    return "layer-none" if calc.get("layers") or calc.get("cells") else TYPE_CLASS.get(c["type"], "mix")
 OBS_STATUS_LABELS = {
     "verified": "검증 완료", "legacy_unverified": "사용자 원본 값·다시 확인 안 함", "not_applicable": "해당 없음",
     "not_disclosed": "미공시", "collection_failed": "수집 실패", "source_conflict": "출처 충돌",
@@ -97,6 +97,9 @@ def total_class(total: int | None) -> str:
 
 # 2026-10-19 규칙 v3.0: 층·사업 단위 카드 블록과 카드 안 표. 층 정의가 있는 실행에만 붙여 옛 실행의 HTML 은 바이트 그대로다.
 V3_CSS = """
+:root{--cat-layer-power:#c9b458;--cat-layer-foundry:#f0a05c;--cat-layer-chip_design:#e6c35c;--cat-layer-systems:#e08a6c;
+  --cat-layer-dev_platform:#6fc7d9;--cat-layer-data_platform:#8fb0f0;--cat-layer-application:#f28cc0;
+  --cat-layer-user_platform:#b195f5;--cat-layer-device:#9ad16a;--cat-layer-outside:#8a93a3}
 .cv3{grid-column:1/-1;margin-bottom:6px}
 .ctab{margin:14px 0 6px;font-size:var(--fs-sm);color:var(--tx2);font-weight:600}
 .cnote{color:var(--tx3);font-size:var(--fs-sm);margin:6px 0 0;line-height:1.6}
@@ -561,7 +564,7 @@ def js() -> str:
 
 # ------------------------------------------------------------------ 산점도 (Python 결정론적 배치)
 
-def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
+def scatter_svg(results: dict[str, Any], caps: dict[str, float | None], rules: Any = None) -> str:
     W, H = 900, 470
     M = {"t": 24, "r": 28, "b": 52, "l": 62}
     iw, ih = W - M["l"] - M["r"], H - M["t"] - M["b"]
@@ -570,6 +573,15 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
         return '<p class="sub">완료 기업이 없어 산점도를 그리지 않는다.</p>'
     xs = (min(12, min(c["moat"] for c in scored)), max(23, max(c["moat"] for c in scored)))
     ys = (min(-19, min(c["trap"] for c in scored)), 1)
+    x_step, y_step = 2, 3
+    # 2026-10-19 규칙 v3.0: 100점 척도라 축을 과점 기준선(80·56)까지 넓히고 눈금 간격을 키운다. 옛 규칙의 그림은 그대로다.
+    layered = rules is not None and rc.is_layered(rules)
+    if layered:
+        scoring = rules.payload["scoring"]
+        hi, lo = scoring["moat_candidate_threshold"], scoring.get("moat_weak_threshold")
+        xs = (min(10 * math.floor(min(c["moat"] for c in scored) / 10), (lo or hi) - 6), max(hi + 6, max(c["moat"] for c in scored) + 4))
+        ys = (min(-24, 6 * math.floor(min(c["trap"] for c in scored) / 6)), 1)
+        x_step, y_step = 10, 6
 
     def X(v: float) -> float:
         return M["l"] + (v - xs[0]) / (xs[1] - xs[0]) * iw
@@ -578,13 +590,21 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
         return M["t"] + (ys[1] - v) / (ys[1] - ys[0]) * ih
 
     parts = [f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="과점 factor 대비 함정 감점 산점도. 오른쪽일수록 과점 구조가 강하고 위일수록 함정이 얕다">']
-    for v in range(int(math.floor(xs[0])), int(math.ceil(xs[1])) + 1, 2):
+    for v in range(int(math.floor(xs[0])), int(math.ceil(xs[1])) + 1, x_step):
         parts.append(f'<line x1="{X(v):.1f}" y1="{M["t"]}" x2="{X(v):.1f}" y2="{M["t"] + ih}" style="stroke:var(--line)"/><text x="{X(v):.1f}" y="{M["t"] + ih + 22}" style="fill:var(--tx3)" font-size="14" text-anchor="middle">{v}</text>')
     v = 0
     while v >= ys[0]:
         parts.append(f'<line x1="{M["l"]}" y1="{Y(v):.1f}" x2="{M["l"] + iw}" y2="{Y(v):.1f}" style="stroke:var(--line)"/><text x="{M["l"] - 12}" y="{Y(v) + 4:.1f}" style="fill:var(--tx3)" font-size="14" text-anchor="end">{v}</text>')
-        v -= 3
-    parts.append(f'<line x1="{X(20):.1f}" y1="{M["t"]}" x2="{X(20):.1f}" y2="{M["t"] + ih}" style="stroke:var(--g5)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".65"/><text x="{X(20) + 7:.1f}" y="{M["t"] + 14}" style="fill:var(--g5)" font-size="14" font-weight="600">과점 후보군 20점</text>')
+        v -= y_step
+    if not layered:
+        parts.append(f'<line x1="{X(20):.1f}" y1="{M["t"]}" x2="{X(20):.1f}" y2="{M["t"] + ih}" style="stroke:var(--g5)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".65"/><text x="{X(20) + 7:.1f}" y="{M["t"] + 14}" style="fill:var(--g5)" font-size="14" font-weight="600">과점 후보군 20점</text>')
+    else:
+        tag = " (잠정)" if scoring.get("baseline_note") else ""
+        for value, label, color in ((hi, f"과점 후보군 {hi:g}점{tag}", "var(--g5)"), (lo, f"승자 되기 어려움 {lo:g}점{tag}", "var(--g2)")):
+            if value is None:
+                continue
+            parts.append(f'<line x1="{X(value):.1f}" y1="{M["t"]}" x2="{X(value):.1f}" y2="{M["t"] + ih}" style="stroke:{color}" stroke-width="1.5" stroke-dasharray="5 4"/>'
+                         f'<text x="{X(value) - 7:.1f}" y="{M["t"] + 14}" style="fill:{color}" font-size="14" font-weight="600" text-anchor="end">{esc(label)}</text>')
     parts.append(f'<text x="{M["l"] + iw / 2:.1f}" y="{H - 10}" style="fill:var(--tx2)" font-size="15" text-anchor="middle" font-weight="600">과점 factor (높을수록 구조가 강함) →</text>')
     parts.append(f'<text transform="translate(17,{M["t"] + ih / 2:.1f}) rotate(-90)" style="fill:var(--tx2)" font-size="15" text-anchor="middle" font-weight="600">← 함정 감점 (위일수록 얕음)</text>')
     groups: dict[tuple[int, int], list[dict[str, Any]]] = {}
@@ -633,6 +653,15 @@ def scatter_svg(results: dict[str, Any], caps: dict[str, float | None]) -> str:
         parts.append(f'<text x="{px:.1f}" y="{py:.1f}" text-anchor="middle" font-size="14" font-weight="700"><tspan style="fill:var(--tx)">{esc(e["names"])}</tspan> <tspan class="c-{total_class(e["total"])}" font-weight="800">{e["total"]}점</tspan></text>')
     parts.append("</svg>")
     return "".join(parts)
+
+
+def _baseline_sub(ctx: Any) -> str:
+    """2026-10-19 규칙 v3.0: 산점도 아래 기준선 안내. 기준선이 잠정이면(scoring.baseline_note) 참고로만 읽는다고 적는다."""
+    scoring = ctx.rules.payload["scoring"]
+    if not rc.is_layered(ctx.rules) or not scoring.get("baseline_note"):
+        return ""
+    return (f' 점선은 과점 기준선 {scoring["moat_candidate_threshold"]:g}·{scoring.get("moat_weak_threshold", "—"):g} 이고 잠정이다. '
+            '14개사 분포를 본 뒤 다시 정하며, 조정총점에는 적용하지 않는다.')
 
 
 def moat_trap_svg(results: dict[str, Any]) -> str:
@@ -2339,6 +2368,14 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
         legend = "".join(f'<span><i style="background:var(--cat-layer-{k})"></i>{esc(names[k])}</span>' for k in names if k in groups)
         if any(r["complete"] and not r["primary_layer"] for r in rc.survival_rows(results)):
             legend += '<span><i style="background:var(--cat-layer-none)"></i>비교 그룹 없음</span>'
+    # 2026-10-19 규칙 v3.0: 점은 ④ 주 층(매출 몫이 가장 큰 판매 층) 색이라 범례도 열한 층 이름으로 바꾼다.
+    if rc.is_layered(ctx.rules):
+        names = rc.v3_layer_names(ctx.rules)
+        primaries = {(c["factors"]["F4"].get("calc") or {}).get("primary_layer") for c in results["companies"] if c["complete"] and not c["reference"]}
+        legend = "".join(f'<span><i style="background:var(--cat-layer-{k})"></i>{esc(names[k])}</span>'
+                         for k in ctx.rules.payload["layers"]["order"] if k in primaries)
+        if None in primaries:
+            legend += '<span><i style="background:var(--cat-layer-none)"></i>비교 그룹 없음</span>'
     # 2026-10-08 사용자 지시: 리포트 머리의 이해상충 고지 상자를 싣지 않는다(10-07 Mac mini 공개본에서 먼저 지움).
     # 한계 절의 이해상충 문장과 출처 줄의 표기는 그대로 둔다.
     anthropic_note = ""
@@ -2398,7 +2435,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 {render_incomplete(results, ctx.rules)}
 {render_layers(results, ctx)}{render_holdings_v3(results, ctx)}
 <h2><span class="num">02</span>과점 × 함정 지도</h2>
-<div class="chartbox">{scatter_svg(results, market_caps(ctx))}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.</p></div>
+<div class="chartbox">{scatter_svg(results, market_caps(ctx), ctx.rules)}<div class="legend">{legend}<span>원 크기 = 시총(비상장은 최근 post-money)</span></div><p class="sub mt-8">완료 {results["population"]["scored"]}개사만 표시한다. 미완료 {len(results["population"]["incomplete"])}개사는 함정 합계가 확정되지 않아 좌표가 없다.{_baseline_sub(ctx)}</p></div>
 <h3>기업별 과점 합계와 함정 합계</h3>
 <div class="chartbox"><div class="mtwrap">{moat_trap_svg(results)}</div><p class="sub mt-8">0 을 기준으로 오른쪽이 <b>과점 factor 5개</b>의 합계, 왼쪽이 <b>함정 factor 4개</b>의 합계다. 오른쪽 끝 숫자가 둘을 더한 조정 총점이고 위에서부터 그 순서로 세웠다. 산점도와 같은 값을 다른 방식으로 본다 — 산점도는 두 축의 조합을, 이 막대는 각 합계의 크기를 보여 준다.</p></div>
 </section>
