@@ -1264,7 +1264,7 @@ def approve(slug: str, *, approved_by: str, note: str | None = None, via: str = 
 
     result = validate_contract(slug, require_html=False, check_html_if_present=False)
     if not result.ok:
-        raise SchemaError("승인 전 계약 검증 실패: " + "; ".join(result.errors[:5]))
+        raise SchemaError("확인 전 계약 검증 실패: " + "; ".join(result.errors[:5]))
     hashes = current_hashes(slug)
     approval_id = approval_id_for(slug, hashes)
     payload = {

@@ -252,7 +252,7 @@ def cmd_draft(args: argparse.Namespace) -> int:
     _claim(args, "draft")
     print(f"draft: {rel(draft(args.slug))}")
     print(f"다음: uv run --frozen python -X utf8 scripts/scorecard_cli.py review-template {args.slug} → 4-way 리뷰 → "
-          "승인 대기 보고(사람이 승인 페이지에서 승인한다)")
+          "확인 대기 보고(사람이 확인 페이지에서 확인하면 곧바로 빌드된다)")
     return 0
 
 

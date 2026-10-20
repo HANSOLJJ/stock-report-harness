@@ -552,14 +552,14 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     # report.html 이 남은 실행에서 '사용자 승인 없음' 이 막힌 이유로 나와 다시 승인할 수 없었다.
     if require_html or (check_html_if_present and paths.html.is_file()):
         if not approval_path.is_file():
-            result.error("사용자 승인 없음: awaiting_user (사람이 `node server.js --approvals` 승인 페이지에서 승인한다)")
+            result.error("사용자 확인 없음: awaiting_user (사람이 `node server.js --approvals` 확인 페이지에서 확인하면 곧바로 빌드된다)")
         else:
             try:
                 approval = validate_approval(load_json_strict(approval_path), slug)
                 from .stages import approval_mismatches, current_hashes
 
                 if approval_mismatches(approval["hashes"], current_hashes(slug)):
-                    result.error("승인 이후 규칙/자료/판단/결과/초안이 바뀜 — 승인 무효(awaiting_user)")
+                    result.error("확인 이후 규칙/자료/판단/결과가 바뀜 — 확인 무효(awaiting_user)")
                 else:
                     result.check("approval hashes match current inputs")
             except SchemaError as exc:

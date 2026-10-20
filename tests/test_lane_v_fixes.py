@@ -198,7 +198,7 @@ class GuidanceTest(unittest.TestCase):
 
     def test_draft_next_step_is_awaiting_user_report(self):
         src = inspect.getsource(scorecard_cli.cmd_draft)
-        self.assertIn("승인 대기 보고", src)
+        self.assertIn("확인 대기 보고", src)
         self.assertNotIn("approve", src)
 
     def test_every_guidance_uses_uv_run(self):

@@ -139,7 +139,7 @@ def render_plan(run: dict[str, Any], rules: Any, companies: dict[str, dict[str, 
 
 기업이 순위에 못 들어가는 사유는 factor 상태로 구분한다. 규칙 결정이 없으면 `needs_rule_decision`, 사람의 판정이 없으면 `needs_judgment`, 관측이 없거나 수집·파싱에 실패했으면 `pending_data` 다. 셋 다 0점으로 채우지 않고 공식 순위에서만 제외한다.
 
-`awaiting_user` 는 이 셋과 다르다. 리뷰가 pass 이고 계산이 끝났는데 사용자 승인이 없거나, 승인 뒤 규칙·자료·판단·결과·초안 중 하나가 바뀌어 승인이 무효가 된 상태를 가리키며 build 단계에서만 나온다.
+`awaiting_user` 는 이 셋과 다르다. 리뷰가 pass 이고 계산이 끝났는데 사람의 확인이 없거나, 확인 뒤 규칙·자료·판단·결과 중 하나가 바뀌어 확인이 무효가 된 상태를 가리키며 build 단계에서만 나온다. 초안만 다시 렌더링하면 확인은 유지된다.
 """
     return fm + "\n" + body.lstrip("\n")
 
@@ -755,7 +755,7 @@ def _old_rules(version: str | None) -> Any:
 
 
 def render_preview(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | None) -> str:
-    lines = [f"# 변경 미리보기 — {ctx.slug}", "", f"기준선 `{ctx.run['baseline_id']}` 대비 이번 계산 결과. 승인 전 검토용이며 이력을 바꾸지 않는다.", ""]
+    lines = [f"# 변경 미리보기 — {ctx.slug}", "", f"기준선 `{ctx.run['baseline_id']}` 대비 이번 계산 결과. 확인 전 검토용이며 이력을 바꾸지 않는다.", ""]
     base = {b["company_id"]: b for b in (baseline or {}).get("companies", [])}
     # 2026-10-14 규칙 v3.0: 기준선·이전 실행과 척도가 다르면(① 0~5 → 0~20) 옛 점수 옆에 범위 비율 환산 참고값을 적는다.
     base_rules = _old_rules(ctx.run["baseline_id"]) if rc.is_layered(ctx.rules) else None

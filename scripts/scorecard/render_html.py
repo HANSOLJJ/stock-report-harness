@@ -1611,19 +1611,19 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
     lines += [f"| run | `{cur['run']}` |", f"| draft | `{cur['draft']}` |"]
     if approval:
         stale = {k: v for k, v in approval["hashes"].items() if cur.get(k) != v}
-        lines += ["", "## 승인", "",
-                  f"- 승인 `{approval['approval_id']}` · {approval['approved_by']} · {approval['approved_at']}"]
+        lines += ["", "## 확인", "",
+                  f"- 확인 `{approval['approval_id']}` · {approval['approved_by']} · {approval['approved_at']}"]
         if stale:
             lines += [
-                "- **이 승인은 현재 무효다.** 승인 뒤에 아래 입력이 바뀌었다.",
+                "- **이 확인은 현재 무효다.** 확인 뒤에 아래 입력이 바뀌었다.",
                 "",
-                "| 대상 | 승인 시점 | 현재 |",
+                "| 대상 | 확인 시점 | 현재 |",
                 "| --- | --- | --- |",
             ] + [f"| {k} | `{approval['hashes'][k]}` | `{cur.get(k, '—')}` |" for k in sorted(stale)]
             lines.append("")
-            lines.append("- 나머지 입력은 승인 시점과 같다. 재승인 전까지 리포트는 `awaiting_user` 상태다.")
+            lines.append("- 나머지 입력은 확인 시점과 같다. 다시 확인하기 전까지 리포트는 `awaiting_user` 상태다.")
         else:
-            lines.append("- 승인 시점 입력과 현재 입력이 모두 같다.")
+            lines.append("- 확인 시점 입력과 현재 입력이 모두 같다.")
     lines += [
         "",
         "## 실행 단위 결정",
@@ -2560,7 +2560,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </head>
 <body>
 <header><div class="wrap">
-  <div class="badge">{esc(ctx.rules.version)} · 기준일 {esc(run["as_of"])} · 채점 {len(run["companies"])}개사 · 순위 {results["population"]["scored"]}개사 · 승인 {esc(approval["approval_id"][:8])}</div>
+  <div class="badge">{esc(ctx.rules.version)} · 기준일 {esc(run["as_of"])} · 채점 {len(run["companies"])}개사 · 순위 {results["population"]["scored"]}개사 · 확인 {esc(approval["approval_id"][:8])}</div>
   <h1>{esc(title)}</h1>
   <p class="lede">AI 시대에 <b>누가 90년 과점을 만들 구조를 갖췄나</b>를 9개 항목으로 채점했다. <b>과점 factor 5개({esc(_range_text(ctx, MOAT_FACTORS))})</b>에서 더하고 <b>함정 factor 4개({esc(_range_text(ctx, TRAP_FACTORS))})</b>에서 뺀다.{_f6_note(ctx)} 점수는 규칙과 입력에서 계산된 결과이며 손으로 고치지 않는다.</p>
   {survey_note}
@@ -2609,7 +2609,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </section>
 <footer id="disclaimer" aria-label="투자 유의사항">
 <p>{esc(DISCLAIMER)}</p>
-<p>단위 — $M / $B / $T · 실행 {esc(ctx.slug)} · 승인 {esc(approval["approved_by"])} {esc(approval["approved_at"])} · 생성기 {GENERATOR}</p>
+<p>단위 — $M / $B / $T · 실행 {esc(ctx.slug)} · 확인 {esc(approval["approved_by"])} {esc(approval["approved_at"])} · 생성기 {GENERATOR}</p>
 </footer>
 </div>
 <script>{js(rc.is_layered(ctx.rules))}</script>
@@ -2644,10 +2644,10 @@ def build_scorecard(slug: str) -> tuple[Path, list[Path], None]:
         raise SystemExit("Cannot build until pre-build contract errors are fixed")
     approval_path = run_dir(slug) / "approval.json"
     if not approval_path.is_file():
-        raise SystemExit(f"awaiting_user: 사용자 승인 없음 — 사람이 `node server.js --approvals` 로 승인 페이지(http://127.0.0.1:3000/approve/{slug})를 열어 승인한다")
+        raise SystemExit(f"awaiting_user: 사용자 확인 없음 — 사람이 `node server.js --approvals` 로 확인 페이지(http://127.0.0.1:3000/approve/{slug})를 열어 확인하면 곧바로 빌드된다")
     approval = validate_approval(load_json_strict(approval_path), slug)
     if approval_mismatches(approval["hashes"], current_hashes(slug)):
-        raise SystemExit("awaiting_user: 승인 이후 규칙/자료/판단/결과/초안이 바뀌어 승인이 무효 — 다시 검토·승인")
+        raise SystemExit("awaiting_user: 확인 이후 규칙/자료/판단/결과가 바뀌어 확인이 무효 — 다시 검토·확인")
     ctx = load_context(slug)
     results = load_results(slug)
     baseline, _obs, triggers = load_baseline(ctx.run["baseline_id"])
