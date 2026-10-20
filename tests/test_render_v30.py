@@ -230,6 +230,10 @@ class V30RenderTest(V30Base):
         self.assertNotIn("scrollhint", js(False))
         self.assertIn(".tablewrap.more", css(True))
         self.assertNotIn(".tablewrap.more", css(False))
+        # 2026-10-20 사용자 지시: 층 규칙 카드는 과점·함정을 두 칸으로 나누지 않고 한 칸으로 쌓는다
+        one_column = "\n.card[open] .cbody{grid-template-columns:1fr}\n"
+        self.assertIn(one_column, css(True))
+        self.assertNotIn(one_column, css(False))
 
     def test_scatter_uses_rule_baselines(self):
         # 2026-10-19: v3.0 산점도에 25점 척도의 '과점 후보군 20점' 선이 그대로 그려졌다

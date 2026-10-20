@@ -148,7 +148,10 @@ table.layers th:not(.name),table.layers td:not(.name){padding:10px 6px;white-spa
 .scrollhint{font-size:var(--fs-sm);color:var(--tx2);margin:0 0 6px;text-align:right}
 /* 2026-10-20 사용자 지시: ①②③ 항목 안의 부분 정의와 부분 점수표 */
 .fparts{margin:6px 0 10px}
-/* 넓은 화면에서 카드 본문은 과점·함정 두 칸이라 표가 반쪽 폭에 든다. 글자를 줄이고 머리글·칸을 접어 넘치지 않게 한다. */
+/* 2026-10-20 사용자 지시: 과점·함정 두 칸이면 부분 점수표와 설명이 반쪽 폭에 갇혀 읽히지 않는다. 층 규칙 카드는 한 칸으로 쌓는다. */
+.card[open] .cbody{grid-template-columns:1fr}
+.cgrp+.cgrp{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
+/* 좁은 화면에서 덜 넘치게 부분 점수표의 글자를 줄이고 머리글·칸을 접는다. */
 .fparts table{font-size:var(--fs-sm)}
 .fparts th,.fparts td{padding:8px 6px;white-space:normal;word-break:keep-all}
 .fparts td.name{overflow-wrap:anywhere}
