@@ -56,25 +56,6 @@ def _flabel(rules: Any, fid: str) -> str:
     return rc.factor_label(rules, fid) if fid in rc.FACTOR_LABELS else str(fid)
 
 
-def _factor_max(rules: Any, fid: str) -> str:
-    """2026-10-20 사용자 지시: 점수 옆에 적는 만점. 과점 항목은 범위의 위 끝, 함정 항목은 아래 끝이다."""
-    lo, hi = rules.factor_range(fid)
-    return fmt_score(hi if fid in MOAT_FACTORS else lo)
-
-
-def _factor_bound(rules: Any, fid: str) -> str:
-    """점수 옆에 적는 끝값 글자. 과점 항목은 '만점 20', 함정 항목은 0 이 가장 좋아 '최저점 -20' 이다.
-    2026-10-20 사용자 지시: '/20' 처럼 사선으로 적으니 이름 뒤에 붙은 기호가 무슨 뜻인지 읽히지 않았다."""
-    lo, hi = rules.factor_range(fid)
-    return f"만점 {fmt_score(hi)}" if fid in MOAT_FACTORS else f"최저점 {fmt_score(lo)}"
-
-
-def _group_bound(rules: Any, moat: bool) -> str:
-    """과점 합계의 만점과 함정 합계의 최저(규칙 `scoring.moat_max`·`trap_min_active`)."""
-    scoring = rules.payload["scoring"]
-    return f"만점 {fmt_score(scoring['moat_max'])}" if moat else f"최저점 {fmt_score(scoring['trap_min_active'])}"
-
-
 # ------------------------------------------------------------------ 색 도우미
 
 def score_class(score: int | float | None, rules: Any = None, fid: str | None = None) -> str:
@@ -1010,13 +991,13 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
         return f'<span class="thmax">{text}</span>' if layered else ""
     head = ('<tr><th class="name keep" data-k="name">기업</th>'
             + "".join(f'<th data-k="{x}"{" class=\"f1grp\"" if x == "F1" and ai_spec else ""}>{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}'
-                      f'{mx(_factor_bound(rules, x)) if layered else ""}</th>'
+                      f'{mx(rc.factor_bound(rules, x)) if layered else ""}</th>'
                       + (ai_head if x == "F1" else "")
                       for x in MOAT_FACTORS)
-            + f'<th class="divider keep" data-k="moat">과점{mx(_group_bound(rules, True)) if layered else ""}</th>'
-            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}{mx(_factor_bound(rules, x)) if layered else ""}</th>'
+            + f'<th class="divider keep" data-k="moat">과점{mx(rc.group_bound(rules, True)) if layered else ""}</th>'
+            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}{mx(rc.factor_bound(rules, x)) if layered else ""}</th>'
                       for x in TRAP_FACTORS)
-            + f'<th class="keep" data-k="trap">함정{mx(_group_bound(rules, False)) if layered else ""}</th>'
+            + f'<th class="keep" data-k="trap">함정{mx(rc.group_bound(rules, False)) if layered else ""}</th>'
             '<th class="divider keep" data-k="total">조정총점</th></tr>')
     return f'<div class="tablewrap"><table id="mainTable"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
 
@@ -1318,180 +1299,29 @@ def _unit_blocks_html(ctx: Any, c: dict[str, Any], f: str, fr: dict[str, Any], j
 
 
 def _v3_card_tables(ctx: Any, c: dict[str, Any]) -> str:
-    """2026-10-19 규칙 v3.0: 기업 카드 머리의 층별 점수 표와 ① 시장 위치 표(초안과 같은 행)."""
+    """2026-10-19 규칙 v3.0: 기업 카드 머리의 층별 점수 표(초안과 같은 행). ① 시장 위치 표는 ① 항목 안으로 옮겼다(2026-10-20)."""
     out = ""
-    layer_rows = rc.layer_table_rows(ctx.rules, c["factors"])
-    if layer_rows:
-        # 판매 칸인데 붙은 매출 줄이 없어 몫이 0 인 층은 점수 칸이 모두 비어 표를 길게만 만든다. 표에서 빼고 한 줄로 모은다.
-        weights = (c["factors"]["F4"].get("calc") or {}).get("layer_weights") or {}
-        layers = ctx.rules.payload["layers"]
-        keys = [u for u in [*layers["order"], layers["outside"]["id"]] if u in weights]
-        kept = [row for u, row in zip(keys, layer_rows) if weights[u] > 0]
-        zero = [row[0] for u, row in zip(keys, layer_rows) if not weights[u] > 0]
-        # 2026-10-20 사용자 지시: 머리글이 ①②③ 기호뿐이라 무엇의 점수인지, 회사 점수와 어떻게 이어지는지 읽히지 않았다.
-        # 머리글에 항목 이름과 만점을 적고, 맨 아래 줄에 회사 점수(층 매출 몫 가중 평균)를 둔다. ① 시장 위치 표는 ① 항목 안으로 옮겼다.
-        fids = ("F1", "F2", "F3")
-        kept.append(["회사 점수", rc._share_text(sum(weights[u] for u in keys if weights[u] > 0)),
-                     *(fmt_score(c["factors"][f]["score"]) for f in fids)])
-        out += (f'<div class="ctab">층별 점수: 판매 층마다 매긴 ①②③ (각 만점 {_factor_max(ctx.rules, "F1")})</div>'
-                + _html_table(["층", "층 매출 몫", *(rc.factor_label(ctx.rules, f) for f in fids)], kept)
-                + '<p class="cnote">이 회사가 판매하는 층마다 ①②③ 을 따로 매긴 점수다. 맨 아래 회사 점수는 층 점수를 층 매출 몫으로 '
-                  '가중 평균해 정수로 반올림한 값이다. 층 점수가 어떻게 나왔는지는 아래 ①②③ 항목을 펼치면 보인다.</p>'
-                + (f'<p class="cnote">판매하지만 붙은 매출 줄이 없어 몫이 0 인 층: {esc(" · ".join(zero))}. '
-                   '이 층들은 ④ 수직계열화에만 들고 ①②③ 은 매기지 않는다.</p>' if zero else ""))
+    summary = rc.layer_summary(ctx.rules, c["factors"])
+    if summary:
+        # 2026-10-20 사용자 지시: 머리글에 항목 이름, 제목에 만점, 맨 아래 줄에 회사 점수를 둔다(render_common.layer_summary).
+        out += (f'<div class="ctab">{esc(summary["title"])}</div>' + _html_table(summary["head"], summary["rows"])
+                + "".join(f'<p class="cnote">{esc(n)}</p>' for n in summary["notes"]))
     # 카드 본문은 넓은 화면에서 과점·함정 두 칸 격자라 표 묶음이 격자 한 줄 전체를 쓰게 감싼다.
     return f'<div class="cv3">{out}</div>' if out else ""
 
 
-# 2026-10-20 사용자 지시: A~E 와 ②③ 의 부분이 무엇을 재는지 리포트 어디에도 없었다. 항목 안에 정의 한 줄과 부분 점수표를 싣는다.
-F1_PART_HINTS = {"A": "고객이 떠나기 어려운가", "B": "값을 올려도 그 사업 매출이 느는가", "C": "동급 대체재가 없는가",
-                 "D": "자기 시장에서 몇 위인가", "E": "1년 사이 점유율이 오르는가"}
-UNKNOWN_MARK_NOTE = "* 는 확인되지 않아 그 부분 만점의 {pct}% 로 계산한 값이다."
-# 2026-10-20 사용자 지시: 폰에서 표 한 행이 여러 줄로 접혀 점수 몇 개가 화면을 다 차지했다. 머리글은 짧게, 뜻은 표 위 목록에 둔다.
-F1_PART_SHORT = {"A": "A 락인", "B": "B 가격", "C": "C 대체", "D": "D 순위", "E": "E 점유율"}
-
-
-def _short_name(name: str) -> str:
-    """표에 쓰는 사업 이름은 괄호 앞까지다. 전체 이름은 바로 아래 사업별 근거의 머리에 있다."""
-    head = re.split(r"[(（]", str(name), maxsplit=1)[0].strip()
-    return head or str(name)
-
-
-def _pt(value: Any, unknown: bool) -> str:
-    """부분 점수 칸. 미확인으로 계산한 값에는 * 를 붙인다(표 아래 설명)."""
-    return rc._score_text(value) + ("*" if unknown else "")
-
-
-def _layer_rows_order(ctx: Any) -> list[str]:
-    layers = ctx.rules.payload["layers"]
-    return [*layers["order"], layers["outside"]["id"]]
-
-
-def _f1_parts_html(ctx: Any, c: dict[str, Any]) -> str:
-    """① 항목 안: A~E 정의, 사업별 부분 점수표, D·E 계산 자료(시장 위치 표)."""
-    rules = ctx.rules
-    spec = rules.factor("F1")
-    parts, cap = spec["parts"], spec["ai_cap"]["cap"]
-    pct = f"{rules.payload['scoring']['unknown_share'] * 100:g}"
-    names = rc.v3_layer_names(rules)
-    order = {u: i for i, u in enumerate(_layer_rows_order(ctx))}
-    rows = []
-    for b in ((c["factors"]["F1"].get("calc") or {}).get("businesses") or {}).values():
-        shared_unknown = set(b.get("unknown_parts") or [])
-        for comp in b.get("components") or []:
-            comp_unknown = set(comp.get("unknown_parts") or [])
-            total = rc._score_text(comp.get("score"))
-            if comp.get("ai_cap_applied"):
-                total += f"(상한, 원래 {rc._score_text(comp.get('raw'))})"
-            rows.append(((order.get(comp.get("layer"), len(order)), -(comp.get("revenue") or 0)),
-                         [_short_name(comp["name"]), names.get(comp.get("layer"), comp.get("layer") or "—"),
-                          *(_pt(b.get(k), k in shared_unknown) for k in ("A", "B", "C")),
-                          *(_pt(comp.get(k), k in comp_unknown) for k in ("D", "E")), total]))
-    if not rows:
+def _parts_html(ctx: Any, c: dict[str, Any], f: str) -> str:
+    """2026-10-20 사용자 지시: ①②③ 항목 안에 부분 정의와 부분 점수표를 싣는다(render_common.factor_parts 를 그린다)."""
+    p = rc.factor_parts(ctx.rules, c["factors"], f)
+    if not p:
         return ""
-    rows.sort(key=lambda r: r[0])
-    hi = _factor_max(rules, "F1")
-    items = "".join(f'<li><b>{k} {esc(p["label"])}</b>(만점 {fmt_score(p["max"])}): {F1_PART_HINTS[k]}</li>' for k, p in parts.items())
-    definition = (f'<p class="fdef"><b>① 은 사업마다 아래 다섯 부분을 더한다(만점 {hi}).</b></p><ul class="fdefl">{items}</ul>'
-                  f"<p class=\"fdef\">AI 수익화가 '예'가 아닌 사업은 최고 {fmt_score(cap)} 이다. 층 점수는 그 층 안 사업 점수를 매출 몫으로 평균한 값이다.</p>")
-    out = (definition + '<div class="ctab">사업별 점수</div>'
-           + _html_table(["사업", "층", *(F1_PART_SHORT[k] for k in parts), "사업 점수"], [r for _k, r in rows],
-                         head_sub=[None, None, *(f'만점 {fmt_score(p["max"])}' for p in parts.values()), f"만점 {hi}"])
-           + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p>')
-    market_rows = [[_short_name(r[0]), _short_name(r[1]), *r[2:]] for r in rc.market_table_rows(c["factors"])]
-    if market_rows:
-        d_max, e_max = fmt_score(parts["D"]["max"]), fmt_score(parts["E"]["max"])
-        out += ('<div class="ctab">D·E 계산 자료: 시장 순위와 점유율 방향</div>'
-                + _html_table(["구성 사업", "시장", "순위", "점유율", "변화", "반영", F1_PART_SHORT["D"], F1_PART_SHORT["E"]],
-                              market_rows, text_cols={1},
-                              head_sub=[None, None, None, "최근 ← 1년 전", None, None, f"만점 {d_max}", f"만점 {e_max}"])
-                + '<p class="cnote">반영은 시장 자료가 사업이나 시장의 일부만 잴 때 점수에 넣은 비율이다. 나머지는 미확인 점수(1.6)로 채운다. '
-                  '시장 정의표가 없는 사업은 이 표에 없고 D·E 가 미확인이다.</p>')
+    items = "".join(f"<li><b>{esc(name)}</b>({esc(bound)}): {esc(hint)}</li>" for name, bound, hint in p["items"])
+    out = f'<p class="fdef"><b>{esc(p["lead"])}</b></p><ul class="fdefl">{items}</ul><p class="fdef">{esc(p["after"])}</p>'
+    for tb in p["tables"]:
+        out += (f'<div class="ctab">{esc(tb["title"])}</div>'
+                + _html_table(tb["head"], tb["rows"], text_cols=tb["text_cols"], head_sub=tb["sub"])
+                + (f'<p class="cnote">{esc(tb["note"])}</p>' if tb.get("note") else ""))
     return f'<div class="fparts">{out}</div>'
-
-
-def _layer_parts_rows(ctx: Any, c: dict[str, Any], f: str) -> list[tuple[str, str, dict[str, Any]]]:
-    """②③ 층 계산 가운데 매출 몫이 있는 층만, 층 순서대로 (이름, 몫, 계산) 으로."""
-    names = rc.v3_layer_names(ctx.rules)
-    weights = (c["factors"]["F4"].get("calc") or {}).get("layer_weights") or {}
-    layers = (c["factors"][f].get("calc") or {}).get("layers") or {}
-    return [(names.get(u, u), rc._share_text(weights[u]), layers[u]) for u in _layer_rows_order(ctx)
-            if u in layers and weights.get(u, 0) > 0]
-
-
-def _f2_parts_html(ctx: Any, c: dict[str, Any]) -> str:
-    """② 항목 안: 세 경로 정의와 층별 경로 점수표."""
-    rules = ctx.rules
-    spec = rules.factor("F2")
-    rows = _layer_parts_rows(ctx, c, "F2")
-    if not rows:
-        return ""
-    leap_max, ad_max, st_max = (fmt_score(max(spec[k].values())) for k in ("leap", "adaptation", "standard"))
-    mult = fmt_score(spec["no_benchmark_formula"]["multiplier"])
-    pct = f"{rules.payload['scoring']['unknown_share'] * 100:g}"
-    names = rc.v3_layer_names(rules)
-    no_bench = " · ".join(names.get(u, u) for u in spec["no_benchmark_layers"])
-    hi = _factor_max(rules, "F2")
-    body = []
-    for name, share, d in rows:
-        unk = set(d.get("unknown_parts") or [])
-        nb = d.get("no_benchmark")
-        body.append([name, share, "측정 없음" if nb else _pt(d.get("leap"), "leap" in unk), _pt(d.get("adaptation"), "adaptation" in unk),
-                     _pt(d.get("standard"), False), rc._score_text(d.get("score")) + (f"(합 × {mult})" if nb else "")])
-    definition = (f'<p class="fdef"><b>② 는 층마다 아래 세 경로를 더한다(만점 {hi}).</b></p><ul class="fdefl">'
-                  f'<li><b>성능 도약</b>(만점 {leap_max}): 독립 측정에서 1위인가</li>'
-                  f'<li><b>패러다임 적응</b>(만점 {ad_max}): 새 판용 제품을 내고 채택이 느는가</li>'
-                  f'<li><b>표준 선점</b>(만점 {st_max}): 경쟁사가 내 규격을 따르는가</li></ul>'
-                  f'<p class="fdef">성능을 잴 독립 측정이 없는 층({esc(no_bench)})은 (패러다임 적응 + 표준 선점) × {mult} 로 계산한다. '
-                  '회사 ② 는 층 점수를 층 매출 몫으로 가중 평균한 값이다.</p>')
-    return ('<div class="fparts">' + definition + '<div class="ctab">층별 경로 점수</div>'
-            + _html_table(["층", "층 매출 몫", "성능 도약", "패러다임 적응", "표준 선점", "층 점수"], body,
-                          head_sub=[None, None, f"만점 {leap_max}", f"만점 {ad_max}", f"만점 {st_max}", f"만점 {hi}"])
-            + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p></div>')
-
-
-def _f3_parts_html(ctx: Any, c: dict[str, Any]) -> str:
-    """③ 항목 안: 세 부분·관문 정의와 층별 부분 점수표."""
-    rules = ctx.rules
-    spec = rules.factor("F3")
-    rows = _layer_parts_rows(ctx, c, "F3")
-    if not rows:
-        return ""
-    rm_max, im_max = (fmt_score(max(spec[k].values())) for k in ("revenue_model", "imitation"))
-    ac_max = fmt_score(spec["acceleration"]["max"])
-    g = spec["gates"]
-    years = fmt_score(int(rules.payload["layers"]["time_window_months"]) / 12)
-    # 관문 조건은 표 위 정의에 있다. 칸에는 상한과 관문 이름만 적어 한 줄에 둔다(2026-10-20 사용자 지시).
-    gate_text = {"slow": f"최고 {fmt_score(g['slow_cap']['cap'])}(가속도)",
-                 "imitation": f"최고 {fmt_score(g['imitation_gate']['cap'])}(모방)",
-                 "door_closed": f"최고 {fmt_score(g['door_closed_gate']['cap'])}(문 닫힘)"}
-    pct = f"{rules.payload['scoring']['unknown_share'] * 100:g}"
-    hi = _factor_max(rules, "F3")
-    body = []
-    for name, share, d in rows:
-        unk = set(d.get("unknown_parts") or [])
-        gates = " · ".join(gate_text.get(k, k) for k in d.get("caps_applied") or [])
-        if d.get("active") is False:
-            gates = "상대 없음(0)" + (f" · {gates}" if gates else "")
-        body.append([name, share, _pt(d.get("revenue_model"), "revenue_model" in unk), _pt(d.get("imitation"), "imitation" in unk),
-                     _pt(d.get("acceleration"), "acceleration" in unk), rc._score_text(d.get("raw")), gates or "—",
-                     rc._score_text(d.get("score"))])
-    definition = (f'<p class="fdef"><b>③ 은 층마다 아래 세 부분을 더한다(만점 {hi}).</b></p><ul class="fdefl">'
-                  f'<li><b>별도 수익모델</b>(만점 {rm_max}): 상대가 돈 받는 것을 공짜·헐값으로 주고 다른 곳에서 거두는가</li>'
-                  f'<li><b>모방 불가능성</b>(만점 {im_max}): 상대가 따라 하면 상대의 주 수입원이 무너지는가</li>'
-                  f'<li><b>가속도</b>(만점 {ac_max}): 그 층에서 내 성장이 빨라지는가</li></ul>'
-                  f'<p class="fdef">관문 셋이 층 점수의 상한을 건다. 가속도가 '
-                  f'{fmt_score(g["slow_cap"]["below"])} 미만이면 최고 {fmt_score(g["slow_cap"]["cap"])}, 모방 불가능성이 {im_max} 가 아니면 '
-                  f'최고 {fmt_score(g["imitation_gate"]["cap"])}, 최근 {years}년 안에 상대의 가격 결정력이 무너졌거나 점유율이 넘어온 증거가 없으면 '
-                  f'최고 {fmt_score(g["door_closed_gate"]["cap"])} 이다. 수입원이 위협받는 상대가 지금 시장에 없으면 수익모델·모방 불가능성은 0 이다. '
-                  '회사 ③ 은 층 점수를 층 매출 몫으로 가중 평균한 값이다.</p>')
-    return ('<div class="fparts">' + definition + '<div class="ctab">층별 부분 점수</div>'
-            + _html_table(["층", "층 매출 몫", "수익모델", "모방 불가능성", "가속도", "세 부분 합", "걸린 관문", "층 점수"], body, text_cols={6},
-                          head_sub=[None, None, f"만점 {rm_max}", f"만점 {im_max}", f"만점 {ac_max}", None, None, f"만점 {hi}"])
-            + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p></div>')
-
-
-V3_PARTS = {"F1": _f1_parts_html, "F2": _f2_parts_html, "F3": _f3_parts_html}
 
 
 def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, companies: dict[str, dict[str, Any]],
@@ -1515,8 +1345,8 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
         if layered:   # 2026-10-20 사용자 지시: 합계 옆에 만점(함정은 최저점)을 글자로 적고, 과점과 함정 사이는 가운뎃점으로 가른다
-            score_text = (f"과점 {fmt_score(c['moat'])} ({_group_bound(rules, True)}) · "
-                          f"함정 {fmt_score(c['trap'])} ({_group_bound(rules, False)})")
+            score_text = (f"과점 {fmt_score(c['moat'])} ({rc.group_bound(rules, True)}) · "
+                          f"함정 {fmt_score(c['trap'])} ({rc.group_bound(rules, False)})")
         groups = []
         # 2026-10-07 외부 분석: factor 마다 범위가 달라(② 2~5, ⑥ 0~-7 …) '각 0~5'·'각 0~-5' 표기를 뺐다. 범위는 머리말 리드에 규칙에서 읽어 싣는다
         for label, factors, klass, total in (("과점 — 더한다", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다", TRAP_FACTORS, "n", c["trap"])):
@@ -1573,15 +1403,15 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                 body = ((f'<ul class="fpts why">{"".join(why)}</ul>' if why else "")
                         + ((src + '<ul class="fpts">' + "".join(pts) + "</ul>") if pts else "")
                         + (_direction_html(block) if block is not None and block.get("three_way") else ""))
-                if layered and f in V3_PARTS:   # 2026-10-20 사용자 지시: 부분 정의와 부분 점수표를 항목 맨 앞에
-                    body = V3_PARTS[f](ctx, c) + body
+                if layered and f in ("F1", "F2", "F3"):   # 2026-10-20 사용자 지시: 부분 정의와 부분 점수표를 항목 맨 앞에
+                    body = _parts_html(ctx, c, f) + body
                 if layered and block is None and f in ("F1", "F2", "F3"):
                     body += _unit_blocks_html(ctx, c, f, fr, judgments_by_id, reps, results["baseline_id"], history)
                 if f == "F1" and (rules.factor("F1").get("ladder") or {}).get("top_score_requires_ai_monetized"):
                     body = _mark_conditions(body)   # 2026-10-13 사용자 지시: (가)·(나) 표지를 설명 상자와 같은 색으로
-                fmax = f'<span class="fmax"> ({_factor_bound(rules, f)})</span>' if layered else ""
+                fmax = f'<span class="fmax"> ({rc.factor_bound(rules, f)})</span>' if layered else ""
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(rc.factor_label(rules, f))}</span><span class="fsc {color}">{fmt_score(score)}{fmax}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
-            gmax = f" ({_group_bound(rules, klass == 'p')})" if layered else ""
+            gmax = f" ({rc.group_bound(rules, klass == 'p')})" if layered else ""
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}{gmax}</div>{"".join(rows)}</div>')
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'

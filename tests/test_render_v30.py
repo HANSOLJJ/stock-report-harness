@@ -56,10 +56,17 @@ class V30RenderTest(V30Base):
     def test_draft_shows_layers_units_and_v30_method(self):
         text = render_draft(self.ctx, self.results, self.scores, self.ctx.triggers)
         for needle in (
-            "| ① 네트워크 | 12 | 이번 실행 산출 | 사업 단위 합산 | 사업 2개 → AI 칩 설계 12.2 × 80% + 기기 12.2 × 20% |",   # 항목 점수는 정수(2026-10-19)
-            "| ② 게임체인저 | 10 | 이번 실행 산출 | 층별 세 경로 | AI 칩 설계 10 × 80% + 기기 8 × 20% |",
-            "| ⑤ 아군 | 9 | 이번 실행 산출 | 동맹 세 부분·적대 띠 | 12 + 동맹 1 + 적대 -4(비용형) |",
+            "| ① 네트워크 | 12 (만점 20) | 이번 실행 산출 | 사업 단위 합산 | 사업 2개 → AI 칩 설계 12.2 × 80% + 기기 12.2 × 20% |",   # 항목 점수는 정수(2026-10-19)
+            "| ② 게임체인저 | 10 (만점 20) | 이번 실행 산출 | 층별 세 경로 | AI 칩 설계 10 × 80% + 기기 8 × 20% |",
+            "| ⑤ 아군 | 9 (만점 20) | 이번 실행 산출 | 동맹 세 부분·적대 띠 | 12 + 동맹 1 + 적대 -4(비용형) |",
             "| AI 칩 설계 | 80% | 12.2 | 10 | 11.14 |",
+            # 2026-10-20 사용자 지시: 초안도 HTML 카드와 같은 만점 글자·층별 점수 표·부분 정의와 부분 점수표를 싣는다
+            "층별 점수: 판매 층마다 매긴 ①②③ (각 만점 20)", "| 층 | 층 매출 몫 | ① 네트워크 | ② 게임체인저 |", "| 회사 점수 | 100% | 12 | 10 |",
+            "만점은 ① 20 · ② 20 · ③ 20 · ④ 20 · ⑤ 20, 과점 합계 100 이다. 함정은 0 이 가장 좋고 최저점은 ⑥ -20",
+            "(만점 100) · 함정 ", "**① 은 사업마다 아래 다섯 부분을 더한다(만점 20).**", "- **A 락인 강도**(만점 6): 고객이 떠나기 어려운가",
+            "| 사업 | 층 | A 락인(만점 6) | B 가격(만점 4) |", "| Data Center | AI 칩 설계 | 6 | 2 | 1 | 1.6\* | 1.6\* | 12.2 |",
+            "별표(*)는 확인되지 않아 그 부분 만점의 40% 로 계산한 값이다.", "**② 는 층마다 아래 세 경로를 더한다(만점 20).**",
+            "| 층 | 층 매출 몫 | 성능 도약(만점 10) |", "**③ 은 층마다 아래 세 부분을 더한다(만점 20).**", "상대 없음(0)",
             "- **② 게임체인저 — AI 칩 설계** 근거",
             "- **① 네트워크 — Gaming** 근거",
             "- **① 네트워크.** 사업마다 A 락인",
@@ -70,7 +77,7 @@ class V30RenderTest(V30Base):
         ):
             with self.subTest(needle=needle[:40]):
                 self.assertIn(needle, text)
-        for stale in ("3 + A(", "제안된 새 구간", "| business |", "| layer_paths |", "한 칸을 조정한 값이다", "밸류/매출 구간표"):
+        for stale in ("시장 위치", "3 + A(", "제안된 새 구간", "| business |", "| layer_paths |", "한 칸을 조정한 값이다", "밸류/매출 구간표"):
             with self.subTest(stale=stale):
                 self.assertNotIn(stale, text)
 
@@ -213,7 +220,7 @@ class V30RenderTest(V30Base):
                        '<th class="">A 락인<span class="thmax">만점 6</span></th>',
                        '<td class="name"><b>Data Center</b></td><td class="mono">AI 칩 설계</td><td class="mono">6</td><td class="mono">2</td>'
                        '<td class="mono">1</td><td class="mono">1.6*</td><td class="mono">1.6*</td><td class="mono">12.2</td>',
-                       "* 는 확인되지 않아 그 부분 만점의 40% 로 계산한 값이다."):
+                       "별표(*)는 확인되지 않아 그 부분 만점의 40% 로 계산한 값이다."):
             with self.subTest(needle=needle[:40]):
                 self.assertIn(needle, f1)
         self.assertLess(f1.index("사업별 점수"), f1.index('<details class="unit">'), "부분 점수표가 사업별 근거보다 앞에 온다")
@@ -229,7 +236,8 @@ class V30RenderTest(V30Base):
 
     def test_part_tables_keep_one_line_per_row(self):
         # 2026-10-20 사용자 지시: 폰에서 이름 칸이 'Go ogl e' 처럼 쪼개지고 행 하나가 여러 줄이 됐다
-        from scorecard.render_html import _short_name, css
+        from scorecard.render_common import short_name as _short_name
+        from scorecard.render_html import css
         self.assertEqual(_short_name("Google Cloud(Google Cloud Platform·Workspace)"), "Google Cloud")
         self.assertEqual(_short_name("검색 광고(Google Search & other)"), "검색 광고")
         self.assertEqual(_short_name("Data Center"), "Data Center")

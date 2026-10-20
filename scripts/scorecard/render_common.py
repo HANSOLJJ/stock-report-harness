@@ -2706,3 +2706,188 @@ def method_sections_v3(ctx: Any, results: dict[str, Any]) -> list[tuple[str | No
     ]
     labelled = {fid: [f"**{factor_label(rules, fid)}.** {text}" for text in lines] for fid, lines in sections.items()}
     return [(None, overview)] + [(fid, labelled[fid]) for fid in FACTOR_LABELS if labelled.get(fid)] + [(None, common)]
+
+
+# ------------------------------------------------------------------ 층 규칙 카드의 점수 구조(2026-10-20)
+# 사용자 지시: 만점이 없어 점수의 높고 낮음이 읽히지 않았고, 층별 점수 표의 ①②③ 과 ① 의 A~E·②③ 의 부분이 무엇인지 리포트에
+# 없었다. 만점 글자, 층별 점수 표, 부분 정의와 부분 점수표를 여기서 만들고 HTML 카드와 초안이 같은 데이터를 그린다.
+
+F1_PART_HINTS = {"A": "고객이 떠나기 어려운가", "B": "값을 올려도 그 사업 매출이 느는가", "C": "동급 대체재가 없는가",
+                 "D": "자기 시장에서 몇 위인가", "E": "1년 사이 점유율이 오르는가"}
+# 폰에서 표 한 행이 여러 줄로 접혀 점수 몇 개가 화면을 다 차지했다. 머리글은 짧게 쓰고 뜻은 표 위 목록에 둔다.
+F1_PART_SHORT = {"A": "A 락인", "B": "B 가격", "C": "C 대체", "D": "D 순위", "E": "E 점유율"}
+# '* 는' 으로 시작하면 초안(마크다운)에서 목록 기호로 읽힌다.
+UNKNOWN_MARK_NOTE = "별표(*)는 확인되지 않아 그 부분 만점의 {pct}% 로 계산한 값이다."
+MARKET_PARTIAL_NOTE = ("반영은 시장 자료가 사업이나 시장의 일부만 잴 때 점수에 넣은 비율이다. 나머지는 미확인 점수(1.6)로 채운다. "
+                       "시장 정의표가 없는 사업은 이 표에 없고 D·E 가 미확인이다.")
+LAYER_SUMMARY_NOTE = ("이 회사가 판매하는 층마다 ①②③ 을 따로 매긴 점수다. 맨 아래 회사 점수는 층 점수를 층 매출 몫으로 "
+                      "가중 평균해 정수로 반올림한 값이다. 층 점수가 어떻게 나왔는지는 아래 ①②③ 항목에 있다.")
+
+
+def _num(value: Any) -> str:
+    return str(int(value)) if float(value).is_integer() else f"{float(value):g}"
+
+
+def factor_bound(rules: Any, fid: str) -> str:
+    """점수 옆에 적는 끝값 글자. 과점 항목은 '만점 20', 함정 항목은 0 이 가장 좋아 '최저점 -20' 이다.
+    '/20' 처럼 사선으로 적으니 이름 뒤에 붙은 기호가 무슨 뜻인지 읽히지 않았다(2026-10-20 사용자 지시)."""
+    lo, hi = rules.factor_range(fid)
+    return f"만점 {_num(hi)}" if fid in rules.payload["scoring"]["moat_factors"] else f"최저점 {_num(lo)}"
+
+
+def group_bound(rules: Any, moat: bool) -> str:
+    """과점 합계의 만점과 함정 합계의 최저점(규칙 `scoring.moat_max`·`trap_min_active`)."""
+    scoring = rules.payload["scoring"]
+    return f"만점 {_num(scoring['moat_max'])}" if moat else f"최저점 {_num(scoring['trap_min_active'])}"
+
+
+def short_name(name: str) -> str:
+    """표에 쓰는 사업·시장 이름은 괄호 앞까지다. 전체 이름은 사업별 근거의 머리와 근거 문장에 있다."""
+    head = re.split(r"[(（]", str(name), maxsplit=1)[0].strip()
+    return head or str(name)
+
+
+def _pt(value: Any, unknown: bool) -> str:
+    """부분 점수 칸. 미확인으로 계산한 값에는 * 를 붙인다(표 아래 설명)."""
+    return _score_text(value) + ("*" if unknown else "")
+
+
+def _layer_order(rules: Any) -> list[str]:
+    layers = rules.payload["layers"]
+    return [*layers["order"], layers["outside"]["id"]]
+
+
+def layer_summary(rules: Any, factors: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    """카드 머리의 층별 점수 표. 몫이 0 인 판매 층은 표에서 빼고 한 줄로 모으고, 맨 아래에 회사 점수 줄을 둔다."""
+    rows = layer_table_rows(rules, factors)
+    if not rows:
+        return None
+    weights = (factors["F4"].get("calc") or {}).get("layer_weights") or {}
+    keys = [u for u in _layer_order(rules) if u in weights]
+    kept = [row for u, row in zip(keys, rows) if weights[u] > 0]
+    zero = [row[0] for u, row in zip(keys, rows) if not weights[u] > 0]
+    fids = ("F1", "F2", "F3")
+    kept.append(["회사 점수", _share_text(sum(weights[u] for u in keys if weights[u] > 0)), *(_num(factors[f]["score"]) for f in fids)])
+    notes = [LAYER_SUMMARY_NOTE]
+    if zero:
+        notes.append(f"판매하지만 붙은 매출 줄이 없어 몫이 0 인 층: {' · '.join(zero)}. 이 층들은 ④ 수직계열화에만 들고 ①②③ 은 매기지 않는다.")
+    return {"title": f"층별 점수: 판매 층마다 매긴 ①②③ (각 만점 {_num(rules.factor_range('F1')[1])})",
+            "head": ["층", "층 매출 몫", *(factor_label(rules, f) for f in fids)], "rows": kept, "notes": notes}
+
+
+def _f1_parts(rules: Any, factors: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    spec = rules.factor("F1")
+    parts, cap = spec["parts"], spec["ai_cap"]["cap"]
+    pct = f"{rules.payload['scoring']['unknown_share'] * 100:g}"
+    names = v3_layer_names(rules)
+    order = {u: i for i, u in enumerate(_layer_order(rules))}
+    rows = []
+    for b in ((factors["F1"].get("calc") or {}).get("businesses") or {}).values():
+        shared_unknown = set(b.get("unknown_parts") or [])
+        for comp in b.get("components") or []:
+            comp_unknown = set(comp.get("unknown_parts") or [])
+            total = _score_text(comp.get("score"))
+            if comp.get("ai_cap_applied"):
+                total += f"(상한, 원래 {_score_text(comp.get('raw'))})"
+            rows.append(((order.get(comp.get("layer"), len(order)), -(comp.get("revenue") or 0)),
+                         [short_name(comp["name"]), names.get(comp.get("layer"), comp.get("layer") or "—"),
+                          *(_pt(b.get(k), k in shared_unknown) for k in ("A", "B", "C")),
+                          *(_pt(comp.get(k), k in comp_unknown) for k in ("D", "E")), total]))
+    if not rows:
+        return None
+    rows.sort(key=lambda r: r[0])
+    hi = _num(rules.factor_range("F1")[1])
+    tables = [{"title": "사업별 점수", "head": ["사업", "층", *(F1_PART_SHORT[k] for k in parts), "사업 점수"],
+               "sub": [None, None, *(f'만점 {_num(p["max"])}' for p in parts.values()), f"만점 {hi}"],
+               "rows": [r for _k, r in rows], "text_cols": set(), "note": UNKNOWN_MARK_NOTE.format(pct=pct)}]
+    market_rows = [[short_name(r[0]), short_name(r[1]), *r[2:]] for r in market_table_rows(factors)]
+    if market_rows:
+        tables.append({"title": "D·E 계산 자료: 시장 순위와 점유율 방향",
+                       "head": ["구성 사업", "시장", "순위", "점유율", "변화", "반영", F1_PART_SHORT["D"], F1_PART_SHORT["E"]],
+                       "sub": [None, None, None, "최근 ← 1년 전", None, None, f'만점 {_num(parts["D"]["max"])}', f'만점 {_num(parts["E"]["max"])}'],
+                       "rows": market_rows, "text_cols": {1}, "note": MARKET_PARTIAL_NOTE})
+    return {"lead": f"① 은 사업마다 아래 다섯 부분을 더한다(만점 {hi}).",
+            "items": [(f'{k} {p["label"]}', f'만점 {_num(p["max"])}', F1_PART_HINTS[k]) for k, p in parts.items()],
+            "after": f"AI 수익화가 '예'가 아닌 사업은 최고 {_num(cap)} 이다. 층 점수는 그 층 안 사업 점수를 매출 몫으로 평균한 값이다.",
+            "tables": tables}
+
+
+def _layer_parts_rows(rules: Any, factors: dict[str, dict[str, Any]], f: str) -> list[tuple[str, str, dict[str, Any]]]:
+    """②③ 층 계산 가운데 매출 몫이 있는 층만, 층 순서대로 (이름, 몫, 계산) 으로."""
+    names = v3_layer_names(rules)
+    weights = (factors["F4"].get("calc") or {}).get("layer_weights") or {}
+    layers = (factors[f].get("calc") or {}).get("layers") or {}
+    return [(names.get(u, u), _share_text(weights[u]), layers[u]) for u in _layer_order(rules) if u in layers and weights.get(u, 0) > 0]
+
+
+def _f2_parts(rules: Any, factors: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    spec = rules.factor("F2")
+    rows = _layer_parts_rows(rules, factors, "F2")
+    if not rows:
+        return None
+    leap_max, ad_max, st_max = (_num(max(spec[k].values())) for k in ("leap", "adaptation", "standard"))
+    mult = _num(spec["no_benchmark_formula"]["multiplier"])
+    pct = f"{rules.payload['scoring']['unknown_share'] * 100:g}"
+    names = v3_layer_names(rules)
+    no_bench = " · ".join(names.get(u, u) for u in spec["no_benchmark_layers"])
+    hi = _num(rules.factor_range("F2")[1])
+    body = []
+    for name, share, d in rows:
+        unk = set(d.get("unknown_parts") or [])
+        nb = d.get("no_benchmark")
+        body.append([name, share, "측정 없음" if nb else _pt(d.get("leap"), "leap" in unk), _pt(d.get("adaptation"), "adaptation" in unk),
+                     _pt(d.get("standard"), False), _score_text(d.get("score")) + (f"(합 × {mult})" if nb else "")])
+    return {"lead": f"② 는 층마다 아래 세 경로를 더한다(만점 {hi}).",
+            "items": [("성능 도약", f"만점 {leap_max}", "독립 측정에서 1위인가"),
+                      ("패러다임 적응", f"만점 {ad_max}", "새 판용 제품을 내고 채택이 느는가"),
+                      ("표준 선점", f"만점 {st_max}", "경쟁사가 내 규격을 따르는가")],
+            "after": (f"성능을 잴 독립 측정이 없는 층({no_bench})은 (패러다임 적응 + 표준 선점) × {mult} 로 계산한다. "
+                      "회사 ② 는 층 점수를 층 매출 몫으로 가중 평균한 값이다."),
+            "tables": [{"title": "층별 경로 점수", "head": ["층", "층 매출 몫", "성능 도약", "패러다임 적응", "표준 선점", "층 점수"],
+                        "sub": [None, None, f"만점 {leap_max}", f"만점 {ad_max}", f"만점 {st_max}", f"만점 {hi}"],
+                        "rows": body, "text_cols": set(), "note": UNKNOWN_MARK_NOTE.format(pct=pct)}]}
+
+
+def _f3_parts(rules: Any, factors: dict[str, dict[str, Any]]) -> dict[str, Any] | None:
+    spec = rules.factor("F3")
+    rows = _layer_parts_rows(rules, factors, "F3")
+    if not rows:
+        return None
+    rm_max, im_max = (_num(max(spec[k].values())) for k in ("revenue_model", "imitation"))
+    ac_max = _num(spec["acceleration"]["max"])
+    g = spec["gates"]
+    years = _num(int(rules.payload["layers"]["time_window_months"]) / 12)
+    # 관문 조건은 표 위 정의에 있다. 칸에는 상한과 관문 이름만 적어 한 줄에 둔다.
+    gate_text = {"slow": f"최고 {_num(g['slow_cap']['cap'])}(가속도)", "imitation": f"최고 {_num(g['imitation_gate']['cap'])}(모방)",
+                 "door_closed": f"최고 {_num(g['door_closed_gate']['cap'])}(문 닫힘)"}
+    pct = f"{rules.payload['scoring']['unknown_share'] * 100:g}"
+    hi = _num(rules.factor_range("F3")[1])
+    body = []
+    for name, share, d in rows:
+        unk = set(d.get("unknown_parts") or [])
+        gates = " · ".join(gate_text.get(k, k) for k in d.get("caps_applied") or [])
+        if d.get("active") is False:
+            gates = "상대 없음(0)" + (f" · {gates}" if gates else "")
+        body.append([name, share, _pt(d.get("revenue_model"), "revenue_model" in unk), _pt(d.get("imitation"), "imitation" in unk),
+                     _pt(d.get("acceleration"), "acceleration" in unk), _score_text(d.get("raw")), gates or "—", _score_text(d.get("score"))])
+    return {"lead": f"③ 은 층마다 아래 세 부분을 더한다(만점 {hi}).",
+            "items": [("별도 수익모델", f"만점 {rm_max}", "상대가 돈 받는 것을 공짜·헐값으로 주고 다른 곳에서 거두는가"),
+                      ("모방 불가능성", f"만점 {im_max}", "상대가 따라 하면 상대의 주 수입원이 무너지는가"),
+                      ("가속도", f"만점 {ac_max}", "그 층에서 내 성장이 빨라지는가")],
+            "after": (f"관문 셋이 층 점수의 상한을 건다. 가속도가 {_num(g['slow_cap']['below'])} 미만이면 최고 {_num(g['slow_cap']['cap'])}, "
+                      f"모방 불가능성이 {im_max} 가 아니면 최고 {_num(g['imitation_gate']['cap'])}, 최근 {years}년 안에 상대의 가격 결정력이 "
+                      f"무너졌거나 점유율이 넘어온 증거가 없으면 최고 {_num(g['door_closed_gate']['cap'])} 이다. 수입원이 위협받는 상대가 지금 "
+                      "시장에 없으면 수익모델·모방 불가능성은 0 이다. 회사 ③ 은 층 점수를 층 매출 몫으로 가중 평균한 값이다."),
+            "tables": [{"title": "층별 부분 점수", "head": ["층", "층 매출 몫", "수익모델", "모방 불가능성", "가속도", "세 부분 합", "걸린 관문", "층 점수"],
+                        "sub": [None, None, f"만점 {rm_max}", f"만점 {im_max}", f"만점 {ac_max}", None, None, f"만점 {hi}"],
+                        "rows": body, "text_cols": {6}, "note": UNKNOWN_MARK_NOTE.format(pct=pct)}]}
+
+
+_FACTOR_PARTS = {"F1": _f1_parts, "F2": _f2_parts, "F3": _f3_parts}
+
+
+def factor_parts(rules: Any, factors: dict[str, dict[str, Any]], f: str) -> dict[str, Any] | None:
+    """①②③ 항목의 부분 정의(lead·items·after)와 부분 점수표(tables). 층 규칙이 아니거나 그 항목이 아니면 None."""
+    if f not in _FACTOR_PARTS or not is_layered(rules):
+        return None
+    return _FACTOR_PARTS[f](rules, factors)

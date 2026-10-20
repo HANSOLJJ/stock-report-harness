@@ -320,6 +320,31 @@ def _factor_row(f: str, fr: dict[str, Any], rules: Any = None, inputs: dict[str,
             rc.rename_codes(rc.factor_calc_text(f, fr, rules, inputs, company_type))]
 
 
+def _md_cell(value: Any) -> str:
+    """부분 점수표 칸. 미확인 표시 별표가 마크다운 강조로 읽히지 않게 이스케이프한다."""
+    return str(value).replace("*", "\\*")
+
+
+def _parts_md(p: dict[str, Any]) -> list[str]:
+    """2026-10-20 사용자 지시: ①②③ 의 부분 정의와 부분 점수표(render_common.factor_parts). HTML 카드와 같은 데이터다."""
+    lines = ["", f"**{p['lead']}**", ""] + [f"- **{name}**({bound}): {hint}" for name, bound, hint in p["items"]] + ["", p["after"], ""]
+    for tb in p["tables"]:
+        head = [h + (f"({s})" if s else "") for h, s in zip(tb["head"], tb["sub"])]
+        align = ["---" if i == 0 or i in tb["text_cols"] or h == "층" else "---:" for i, h in enumerate(tb["head"])]
+        lines += [f"{tb['title']}", "", table(head, [[_md_cell(c) for c in r] for r in tb["rows"]], align), ""]
+        if tb.get("note"):
+            lines += [tb["note"], ""]
+    return lines
+
+
+def _bounds_line(rules: Any) -> str:
+    """2026-10-20 사용자 지시: 종합 순위표 아래에 항목·합계의 만점(함정은 최저점)을 적는다."""
+    moat = " · ".join(f"{rc.factor_label(rules, f)[:1]} {rc.factor_bound(rules, f).split()[-1]}" for f in MOAT_FACTORS)
+    trap = " · ".join(f"{rc.factor_label(rules, f)[:1]} {rc.factor_bound(rules, f).split()[-1]}" for f in TRAP_FACTORS)
+    return (f"만점은 {moat}, 과점 합계 {rc.group_bound(rules, True).split()[-1]} 이다. 함정은 0 이 가장 좋고 최저점은 {trap}, "
+            f"함정 합계 {rc.group_bound(rules, False).split()[-1]} 이다.")
+
+
 def _survival_section(ctx: Any, results: dict[str, Any], rows: list[dict[str, Any]]) -> list[str]:
     """규칙 v2.1 ④ 층별 보유표(전 기업 한 장)와 비교 그룹 안 순위."""
     names = rc.layer_labels(ctx.rules)
@@ -434,6 +459,8 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         rows.append([r["rank"], r["display_name"]] + [fmt_score(f[x]["score"]) for x in MOAT_FACTORS] + [r["moat"]] + [fmt_score(f[x]["score"]) for x in TRAP_FACTORS] + [r["trap"], f"**{r['total']}**"])
     lines += [table(["순위", "기업", "①", "②", "③", "④", "⑤", "과점", "⑥", "⑦", "⑧", "⑨", "함정", "조정총점"], rows,
                     ["---:", "---"] + ["---:"] * 12), ""]
+    if rc.is_layered(ctx.rules):
+        lines += [_bounds_line(ctx.rules), ""]
     if population["incomplete"]:
         inc_rows = [[i["display_name"], fmt_score(i["moat"]), fmt_score(i["trap"]), "; ".join(f"{rc.factor_label(ctx.rules, p['factor'])} {STATUS_LABEL.get(p['status'], p['status'])}" + (f"({p['decision_id']})" if p.get("decision_id") else "") for p in i["reasons"])] for i in population["incomplete"]]
         lines += ["미완료(순위 제외):", "", table(["기업", "과점(부분)", "함정(부분)", "대기 사유"], inc_rows), ""]
@@ -453,23 +480,26 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         b = baseline_scores.get(c["company_id"])
         # 2026-10-06 사용자 지시: 기준선 순위·기준선 요약을 싣지 않는다. 요약은 이 실행에서 확정한 기업 요약뿐이다.
         head = f"{c['rank']}위(완료 {population['scored']}개사 기준)" if c["rank"] else "미완료"
-        lines += [f"### {c['display_name']} — {head} · 조정 {fmt_score(c['total'])} (과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])})", ""]
+        if rc.is_layered(ctx.rules):   # 2026-10-20 사용자 지시: 합계 옆에 만점(함정은 최저점)을 글자로 적는다
+            lines += [f"### {c['display_name']} — {head} · 조정 {fmt_score(c['total'])} · 과점 {fmt_score(c['moat'])} "
+                      f"({rc.group_bound(ctx.rules, True)}) · 함정 {fmt_score(c['trap'])} ({rc.group_bound(ctx.rules, False)})", ""]
+        else:
+            lines += [f"### {c['display_name']} — {head} · 조정 {fmt_score(c['total'])} (과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])})", ""]
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         if summary:
             lines += [f"> {summary}", ""]
-        lines += [table(["Factor", "점수", "상태", "근거 종류", "산식·경로"],
-                       [_factor_row(f, c["factors"][f], ctx.rules,
-                                    (judgments_by_id.get(c["factors"][f].get("judgment_id") or "") or {}).get("inputs"), c["type"])
-                        for f in FACTOR_IDS]), ""]
+        factor_rows = [_factor_row(f, c["factors"][f], ctx.rules,
+                                   (judgments_by_id.get(c["factors"][f].get("judgment_id") or "") or {}).get("inputs"), c["type"])
+                       for f in FACTOR_IDS]
+        if rc.is_layered(ctx.rules):
+            factor_rows = [[r[0], f"{r[1]} ({rc.factor_bound(ctx.rules, f)})", *r[2:]] for f, r in zip(FACTOR_IDS, factor_rows)]
+        lines += [table(["Factor", "점수", "상태", "근거 종류", "산식·경로"], factor_rows), ""]
         # 2026-10-14 규칙 v3.0: 층별 점수 표(층 매출 몫 · ①②③ 층 점수). 층 정의가 없는 옛 실행에는 없다.
-        layer_rows = rc.layer_table_rows(ctx.rules, c["factors"]) if rc.is_layered(ctx.rules) else []
-        if layer_rows:
-            lines += [table(["층", "층 매출 몫", "①", "②", "③"], layer_rows, ["---", "---:", "---:", "---:", "---:"]), ""]
-        # 2026-10-15 규칙 v3.0 ① D·E: 시장이 정해진 구성 사업의 시장 위치(정의표가 없거나 시장이 없으면 표도 없다).
-        market_rows = rc.market_table_rows(c["factors"]) if rc.is_layered(ctx.rules) else []
-        if market_rows:
-            lines += [table(["구성 사업", "시장", "순위", "점유율(최근 ← 1년 전)", "변화", "반영", "D", "E"], market_rows,
-                            ["---", "---", "---:", "---:", "---:", "---:", "---:", "---:"]), ""]
+        # 2026-10-20 사용자 지시: 머리글에 항목 이름, 제목에 만점, 맨 아래 줄에 회사 점수를 둔다. ① 시장 위치 표는 ① 항목 안으로 옮겼다.
+        summary = rc.layer_summary(ctx.rules, c["factors"]) if rc.is_layered(ctx.rules) else None
+        if summary:
+            lines += [summary["title"], "", table(summary["head"], summary["rows"], ["---", "---:", "---:", "---:", "---:"]), ""]
+            lines += [n for note in summary["notes"] for n in (note, "")]
         incompatible_g4 = rc.g4_incompatible(ctx.observations, c["company_id"])
         for f in FACTOR_IDS:
             fr = c["factors"][f]
@@ -497,6 +527,9 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
                                            run_created=run.get("created_at"))
                     if ub is not None:
                         unit_blocks.append((rc.unit_name(ctx, uj), ub))
+            parts = rc.factor_parts(ctx.rules, c["factors"], f) if rc.is_layered(ctx.rules) else None
+            if parts:
+                lines += _parts_md(parts)
             for name, ub in unit_blocks:
                 lines.append(f"- **{rc.factor_label(ctx.rules, f)} — {name}** {ub['header']}:")
                 for label, rows in (("판정", ub["lines"]), *((lab, ub.get(key) or []) for key, lab in rc.EVIDENCE_DIRECTION_LABELS)):
