@@ -131,5 +131,13 @@
 - [x] D0 승인본 배포(6478d23 push, 맥미니 ff pull, fin.hansoljj.com 목록 맨 위·카드 14장 확인)
 - [x] D1 부분 점수표 데이터를 render_common 으로(c481a7a)
 - [x] D2 초안도 같은 데이터로(c481a7a)
-- [ ] D3 테스트·draft 재생성·review.md 갱신·계약 검증 → 승인 대기
+- [x] D3 테스트·draft 재생성(사용자 실행)·초안 재생성 확인 리뷰 pass·review.md 갱신·계약 검증(승인 무효만 남음) → 승인 대기
 - [ ] D4 (승인 뒤) build → 커밋 → push → 맥미니 pull
+
+## 확인 페이지 (confirm-page.md, 2026-10-20)
+
+- [x] C1 초안만 다르면 확인 유지·draft 해제·리뷰 draft_hash 경고
+- [x] C2 확인 페이지(코드 없음·확인 뒤 build·다시 빌드·취소 양식 제거·문구)
+- [x] C3 CLI build 하위 명령
+- [x] C4 AGENTS.md·guide.md·테스트(파이썬 1,809·Node 27 통과)
+- [ ] C5 v30full 확인 → build → 커밋·push·맥미니
