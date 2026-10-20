@@ -10,7 +10,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
 리뷰 → 수정 → 재리뷰를 되풀이하지 않는다(2026-10-01 시험 실행에서 세 바퀴 돌았다).
 
 - 리뷰어에게 표본 대조를 시키지 않는다. 이어받은 판단까지 전부 보게 하고, 발견을 한 번에 다 적게 한다. "바뀐 것 위주" 로 범위를 좁히지 않는다.
-- `needs_fix` 는 점수·순위·체크리스트 판정을 바꾸는 발견에만 쓴다. 나머지는 영역 파일의 "다음 실행 과제" 절에 적고 승인을 막지 않는다.
+- `needs_fix` 는 점수·순위·체크리스트 판정을 바꾸는 발견에만 쓴다. 나머지는 영역 파일의 "다음 실행 과제" 절에 적고 확인을 막지 않는다.
 - 고친 문장의 숫자는 사람에게 올리기 전에 확정 관측값과 대조한다. 고치면서 새 결함을 만들지 않는다.
 - 판단을 고치는 제안은 옛 문장 옆에 정정을 덧붙이지 않고 문장 전체를 현재 상태로 다시 쓴다. 버전 표기·변경 표시·작업 번호·다른 판을 가리키는 표현이 리포트에 남으면 출력·가독성 발견이다(2026-10-06 사용자 지시, AGENTS.md 「금지·주의」).
 
@@ -27,7 +27,7 @@ description: scorecard 4-way 리뷰 게이트. 사실·출처 / 재무 계산 / 
    - 리뷰어 모델: 사실·출처·근거 불릿·출력·가독성 리뷰는 Sonnet(에이전트 정의의 `model: sonnet`), 규칙 일관성 리뷰와 확인 리뷰는 Opus 노력 high 로 띄운다(AGENTS.md 「서브에이전트 모델」).
    - 규칙 일관성: 판정 입력↔규칙 판정표, 승계 표시(기업 추가 실행에만. 규칙 v2.0 이상 정기 실행은 승계 판단이 없어야 한다, `rules.md` 2.9), 미결 결정 처리, 체크리스트 Q01~Q23(규칙 v3.0 은 Q01~Q25) 전체. **회사별 사다리 적용 표만으로는 부족하다** — 아래 「회사를 가로지르는 표 셋」을 반드시 만든다(2026-10-09).
    - 출력·가독성: `report-designer` — draft·HTML(있으면) 숫자 일치, 낡은 비교 문장(C-19), 근거·트리거 절 가독성, dashboard-design 기준.
-   - 각 `review-parts/<영역>.md` 는 frontmatter 에 `reviewer_agent`(예: `fact-checker`), `session`(리뷰 세션 식별자), `reviewed_at`(YYYY-MM-DD)을 둔다. 본문 첫머리의 `검토자:`·`결과:` 줄은 승인 페이지 요약이 읽으므로 그대로 둔다.
+   - 각 `review-parts/<영역>.md` 는 frontmatter 에 `reviewer_agent`(예: `fact-checker`), `session`(리뷰 세션 식별자), `reviewed_at`(YYYY-MM-DD)을 둔다. 본문 첫머리의 `검토자:`·`결과:` 줄은 확인 페이지 요약이 읽으므로 그대로 둔다.
 3. 리뷰 파일의 "검토 영역" 표에 검토자·결과·요약을, "체크리스트" 표에 Q01~Q23(규칙 v3.0 은 Q25 까지) 결과와 근거를 채운다. not_applicable 도 사유를 쓴다. 수행하지 않은 검토를 pass 로 쓰지 않는다.
 4. 네 영역 모두 pass 이고 fail 항목이 없을 때만 frontmatter `status: pass`. 하나라도 needs_fix 면 `needs_fix` 로 두고 상위 단계(collect/research/calculate/draft/렌더러)로 돌아가 발견을 한 묶음으로 고친 뒤 재생성하고 **확인 리뷰를 한 번** 한다. 확인 리뷰에서도 점수·순위·체크리스트 판정을 바꾸는 발견이 남으면 `blocked` 로 사람에게 보고한다(2026-10-06). 자료·규칙·판단·초안이 바뀌면 리뷰는 무효이므로 템플릿의 `results_hash`·`draft_hash` 를 갱신한다(`review-template --force` 후 다시 채움).
 5. `uv run --frozen python -X utf8 scripts/validate_report_contract.py <run_id>` 를 실행해 통과를 확인한다.
@@ -71,14 +71,14 @@ uv run --frozen python -X utf8 scripts/scorecard_cli.py propose <run_id> --compa
 - `--reason` 에 사유를, `--by` 에 수정을 정한 사람의 이름을 적는다. 이전 값은 `revision_history` 에 남는다.
 - 새 판단은 확정된 근거만 인용한다. 후보 근거를 인용하는 수정은 거부된다.
 - 같은 factor 의 다른 기업 판단을 함께 보고 같은 잣대를 대는지 확인한다(Q03).
-- 고친 뒤에는 판단 해시가 바뀌므로 리뷰가 무효다. `research → calculate → draft → review-template --force` 부터 다시 돌리고 "승인 대기" 를 보고한다.
+- 고친 뒤에는 판단 해시가 바뀌므로 리뷰가 무효다. `research → calculate → draft → review-template --force` 부터 다시 돌리고 "확인 대기" 를 보고한다.
 
 ## 상태
 
-- `pass`: 승인 요청 가능.
+- `pass`: 확인 요청 가능.
 - `needs_fix`: 생성 단계에서 고칠 수 있는 문제.
 - `blocked`: 확인 리뷰 뒤에도 점수·순위·체크리스트 판정을 바꾸는 발견이 남았거나, 외부 자료·권한 한계.
 
 ## 완료 보고
 
-리뷰 상태, 영역별 결과, 수정 목록. pass 이면 "승인 대기" 를 보고하고, 사람이 승인 페이지에서 승인하도록 안내한다(`/score-approve <run_id>` 는 그 안내를 보여 준다). 에이전트는 승인하지 않는다.
+리뷰 상태, 영역별 결과, 수정 목록. pass 이면 "확인 대기" 를 보고하고, 사람이 확인 페이지에서 확인하도록 안내한다(`/score-approve <run_id>` 는 그 안내를 보여 준다). 확인하면 빌드가 곧바로 돈다. 에이전트는 확인하지 않는다.

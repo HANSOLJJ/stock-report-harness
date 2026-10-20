@@ -5,8 +5,8 @@ AI 기업 9-factor 채점을 한 번 돌리는 전 과정과 사용법을 정리
 ## 1. 한눈에 보기
 
 - **점수는 프로그램이 계산합니다.** 사람과 에이전트는 입력(공시 숫자, 정성 판단, 근거)만 다루고, 점수 칸을 직접 고치는 길은 없습니다.
-- **모든 단계가 지문(sha256)으로 묶여 있습니다.** 입력이 한 글자라도 바뀌면 뒤 단계의 리뷰와 승인이 무효가 됩니다.
-- **승인은 사람만 합니다.** 에이전트는 "승인 대기" 에서 멈추고, 사람이 승인 페이지에서 승인하면 빌드합니다.
+- **모든 단계가 지문(sha256)으로 묶여 있습니다.** 입력이 한 글자라도 바뀌면 뒤 단계의 리뷰와 확인이 무효가 됩니다. 초안만 다시 그린 경우는 확인이 유지됩니다.
+- **확인은 사람만 합니다.** 에이전트는 "확인 대기" 에서 멈추고, 사람이 확인 페이지에서 "확인"을 누르면 곧바로 빌드합니다.
 
 ```mermaid
 flowchart LR
@@ -17,21 +17,21 @@ flowchart LR
     E --> F["draft<br/>초안"]
     F --> G["review<br/>4영역 리뷰"]
     G -- "발견 → 에이전트가 근거 확정·제안 반영" --> D
-    G -- "pass" --> H{"사람<br/>승인 페이지"}
+    G -- "pass" --> H{"사람<br/>확인 페이지"}
     H -- "판단 직접 수정(선택)" --> D
-    H -- "승인" --> I["build<br/>report.html"]
+    H -- "확인(곧바로 빌드)" --> I["build<br/>report.html"]
     style H fill:#fde68a,stroke:#b45309
     style I fill:#bbf7d0,stroke:#15803d
 ```
 
-입력이 바뀌면 화살표가 research 로 돌아갑니다. 리뷰 발견을 에이전트가 반영했든 사람이 승인 페이지에서 판단을 직접 고쳤든, 바뀐 입력으로 계산과 리뷰를 다시 해야 승인할 수 있기 때문입니다.
+입력이 바뀌면 화살표가 research 로 돌아갑니다. 리뷰 발견을 에이전트가 반영했든 사람이 확인 페이지에서 판단을 직접 고쳤든, 바뀐 입력으로 계산과 리뷰를 다시 해야 확인할 수 있기 때문입니다.
 
 ## 2. 누가 무엇을 하나
 
 | 주체 | 하는 일 | 하지 않는 일 |
 | --- | --- | --- |
-| 사용자 | 승인·승인 취소(필요하면 판단 직접 수정) | 점수 칸 직접 수정 |
-| 조율 에이전트 (Claude Code) | 수집·선별·단계 실행, 리뷰어 지시, 근거 확정·거부, 판단 변경 제안 작성·반영·거부(2026-10-07 사용자 지시) | 승인·승인 취소 |
+| 사용자 | 확인(필요하면 판단 직접 수정) | 점수 칸 직접 수정 |
+| 조율 에이전트 (Claude Code) | 수집·선별·단계 실행, 리뷰어 지시, 근거 확정·거부, 판단 변경 제안 작성·반영·거부(2026-10-07 사용자 지시) | 확인·취소 |
 | 리뷰어 (별도 세션 4개) | 사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성 검토 | 입력 수정 |
 | 프로그램 | 검증, 계산, 지문 대조, 훅으로 금지 동작 차단 | 판단 |
 
@@ -40,7 +40,7 @@ sequenceDiagram
     actor U as 사용자
     participant A as 조율 에이전트
     participant R as 리뷰어 4명
-    participant P as 승인 페이지
+    participant P as 확인 페이지
     participant C as 프로그램
     U->>A: "11월 재채점 해줘"
     A->>C: init · collect
@@ -50,20 +50,19 @@ sequenceDiagram
     R-->>A: pass 또는 발견 목록
     A->>C: confirm · propose · proposal (근거 확정, 제안 작성·반영)
     A->>C: research → calculate → draft → review
-    A-->>U: 승인 대기 보고
+    A-->>U: 확인 대기 보고
     U->>P: node server.js --approvals (브라우저가 저절로 열림)
-    U->>P: 이름 + 6자리 코드로 승인
-    U->>A: "빌드해"
-    A->>C: build_report
+    U->>P: 확인 누름
+    P->>C: approve → build (곧바로)
 ```
 
 ## 3. 실행 순서와 명령
 
-명령은 모두 저장소 루트에서 `uv run --frozen python -X utf8` 뒤에 붙여 실행합니다. Claude Code 에서는 `/score-plan`, `/score-collect` 처럼 슬래시 명령으로도 부를 수 있고, `/score-goal "<요청>"` 은 plan 부터 review 까지 한 번에 돌린 뒤 승인 대기에서 멈춥니다.
+명령은 모두 저장소 루트에서 `uv run --frozen python -X utf8` 뒤에 붙여 실행합니다. Claude Code 에서는 `/score-plan`, `/score-collect` 처럼 슬래시 명령으로도 부를 수 있고, `/score-goal "<요청>"` 은 plan 부터 review 까지 한 번에 돌린 뒤 확인 대기에서 멈춥니다.
 
 | 순서 | 단계 | 명령 | 결과 (`output/<run_id>/`) |
 | --- | --- | --- | --- |
-| 1 | 실행 생성 | 새로: `scripts/scorecard_cli.py init <run_id> --rule <현행 버전> --as-of YYYY-MM-DD --title "…" --request "…"`<br/>이어받기: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id> --as-of … --price-as-of … --info-cutoff …`<br/>현행 버전은 `rules.md` 머리말에 있습니다. 이어받기는 `--rule`·날짜를 주지 않으면 이전 실행 값을 그대로 씁니다.<br/>승인 전 실행에 기준일 뒤 사건을 넣을 때: `scripts/scorecard_cli.py set-as-of <run_id> --as-of YYYY-MM-DD --reason "…"`. 기준일은 뒤로만 옮기고, 정보 컷오프가 기준일과 같았으면 함께 옮기며, 가격 기준일은 그대로 둡니다. | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
+| 1 | 실행 생성 | 새로: `scripts/scorecard_cli.py init <run_id> --rule <현행 버전> --as-of YYYY-MM-DD --title "…" --request "…"`<br/>이어받기: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id> --as-of … --price-as-of … --info-cutoff …`<br/>현행 버전은 `rules.md` 머리말에 있습니다. 이어받기는 `--rule`·날짜를 주지 않으면 이전 실행 값을 그대로 씁니다.<br/>확인 전 실행에 기준일 뒤 사건을 넣을 때: `scripts/scorecard_cli.py set-as-of <run_id> --as-of YYYY-MM-DD --reason "…"`. 기준일은 뒤로만 옮기고, 정보 컷오프가 기준일과 같았으면 함께 옮기며, 가격 기준일은 그대로 둡니다. | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
 | 2 | 수집 | `scripts/scorecard_cli.py collect <run_id> --kind all` | `evidence/candidates.json`, ⑥ 가격 관측 |
 | 3 | 트리거 후보 보기 | `scripts/scorecard_cli.py trigger-candidates <run_id>` | 화면 출력만 (파일 변경 없음) |
 | 4 | 선별 | 에이전트가 후보를 골라 작성. 후보 URL 은 Google News 중계 주소라 `scripts/scorecard_cli.py resolve-urls --url <주소>` 로 원문 주소를 얻어 본문을 읽고, 근거 출처는 `resolve-urls <run_id>` 로 한꺼번에 원문 주소로 바꿉니다 | `evidence/evidence.json`, `triggers.json`, `sources.json` |
@@ -72,10 +71,10 @@ sequenceDiagram
 | 7 | 초안 | `scripts/scorecard_cli.py draft <run_id>` | `draft.md` |
 | 8 | 리뷰 | `scripts/scorecard_cli.py review-template <run_id>` 뒤 4영역 리뷰 | `review.md`, `review-parts/` |
 | 9 | 판단 변경 제안 | `scripts/scorecard_cli.py propose <run_id> --company <id> --factor F5 --set … --evidence "…" --reason "…"`<br/>규칙 v3.0 의 층·사업 판단은 `--layer <층 id>`·`--business <사업 id>` 를 붙이고 판정 재료는 `--json` 으로 줍니다. 그 판단이 없으면 반영할 때 새로 만듭니다 | `proposals.json` |
-| 10 | 승인 | 사람이 승인 페이지에서 (5절) | `approval.json` |
-| 11 | 빌드 | `scripts/build_report.py <run_id>` | `report.html`, `audit.md`, `scorecard/history.csv` 에 행 추가 |
+| 10 | 확인 | 사람이 확인 페이지에서 "확인"을 누른다(5절). 누르면 11 의 빌드가 곧바로 돈다 | `approval.json` |
+| 11 | 빌드 | 확인 페이지가 `scripts/scorecard_cli.py build <run_id>` 로 곧바로 부른다. 손으로는 `scripts/build_report.py <run_id>` | `report.html`, `audit.md`, `scorecard/history.csv` 에 행 추가 |
 
-상태 확인은 `scripts/scorecard_cli.py status <run_id>` 로, 승인 전 계약 검사는 `scripts/validate_report_contract.py <run_id>` 로 합니다. 인자는 각 명령의 `--help` 로 확인합니다.
+상태 확인은 `scripts/scorecard_cli.py status <run_id>` 로, 확인 전 계약 검사는 `scripts/validate_report_contract.py <run_id>` 로 합니다. 인자는 각 명령의 `--help` 로 확인합니다.
 
 공시 수집에는 `SEC_UA`(SEC 가 요구하는 이름과 연락처, 영문)가 필요합니다. 원본 폴더 루트의 `.env` 에 사용자가 직접 적습니다.
 
@@ -156,7 +155,7 @@ flowchart TD
 
 ## 5. 확인 페이지 사용법
 
-2026-10-20 사용자 결정으로 승인 페이지를 확인 페이지로 바꿨습니다. 확인에는 코드가 없고, "확인"을 누르면 확인 기록을 남긴 뒤 곧바로 리포트를 빌드합니다. 이미 확인된 실행은 "다시 빌드" 버튼이 나옵니다. 취소 양식은 페이지에 없습니다. 초안만 다시 렌더링한 경우(다른 해시가 모두 같음)는 확인이 유지됩니다. 아래 절의 "승인"은 "확인"으로 읽습니다.
+2026-10-20 사용자 결정으로 승인 페이지를 확인 페이지로 바꿨습니다. 확인에는 코드가 없고, "확인"을 누르면 확인 기록을 남긴 뒤 곧바로 리포트를 빌드합니다. 이미 확인된 실행은 "다시 빌드" 버튼이 나옵니다. 취소 양식은 페이지에 없습니다. 초안만 다시 렌더링한 경우(다른 해시가 모두 같음)는 확인이 유지됩니다.
 
 ### 5.1 띄우기
 
@@ -178,9 +177,9 @@ flowchart TD
 | 8 | 무결성 지문 | 확인 | — |
 | 9 | 전체 판단 표 | factor 탭 → 기업 카드에서 직접 수정 | 아니요 |
 | 참조 | 근거 문장의 규칙 용어 | 뜻 확인 | — |
-| 10 | 승인 / 승인 취소 | 이름 + 6자리 코드 | 예 |
+| 10 | 확인(확인된 실행은 다시 빌드) | 확인 누르기, 이름은 미리 채워짐 | 아니요 |
 
-10절은 승인할 수 없는 상태이면 승인 폼 대신 막힌 이유와 다음 할 일을 보여 줍니다. 버튼을 눌러도 보던 위치는 그대로 유지되고, 결과는 알림 상자로 나옵니다.
+10절은 확인할 수 없는 상태이면 확인 양식 대신 막힌 이유와 다음 할 일을 보여 줍니다. 버튼을 눌러도 보던 위치는 그대로 유지되고, 결과는 알림 상자로 나옵니다.
 
 ### 5.3 무엇을 누르면 다시 돌려야 하나
 
@@ -206,7 +205,7 @@ flowchart LR
     style AP fill:#fde68a,stroke:#b45309
 ```
 
-4절·5절·9절에서 무엇이든 바꾸면 입력 지문이 바뀝니다. 그러면 에이전트에게 "다시 돌려" 라고 말하면 됩니다. 에이전트가 `research → calculate → draft → review-template --force → 리뷰` 를 다시 돌리고, 끝나면 페이지를 새로고침해 승인합니다. 결정은 한 번에 모아서 내리는 편이 반복을 줄입니다.
+4절·5절·9절에서 무엇이든 바꾸면 입력 지문이 바뀝니다. 그러면 에이전트에게 "다시 돌려" 라고 말하면 됩니다. 에이전트가 `research → calculate → draft → review-template --force → 리뷰` 를 다시 돌리고, 끝나면 페이지를 새로고침해 확인합니다. 결정은 한 번에 모아서 내리는 편이 반복을 줄입니다.
 
 ### 5.4 상태가 바뀌는 방식
 
@@ -237,12 +236,12 @@ stateDiagram-v2
 | ① | 규칙 v2.0 실행: 채널과 네 질문(`lockin`: 소비자·업무·거래 채널, 회수 루프·전환비용·대체 공급·가격 실측, 지속성 할인, AI 수익화, 가격 실측 지속 분기 수)과 근거 문장. 점수는 규칙이 사다리로 계산합니다. 규칙 v1.9 이하 실행은 점수(`score`)와 근거 문장 |
 | ② | 규칙 v2.0 실행: 경로 입력(`paths`: 성능 도약·패러다임 적응·표준 선점, 세대 격차와 그 개월 수, 독립 측정)과 근거 문장. 규칙 v1.9 이하 실행은 대상이 아닙니다 |
 | ③ | 네 기준(`criteria`)과 근거 문장 |
-| ④ ⑧ | 규칙 v2.0 이하 실행: 점수(`score`)와 근거 문장. 규칙 v2.1 실행: ④ 층별 보유표(`survival`: 여섯 층의 판매·자체 사용·없음·준비 중, 주 레이어, AI 무관 매출 몫, 준비 중 칸의 트리거, 칸별 근거)와 ⑧ 네 축(`axes`: 고객·약정·공급·지정학의 상태와 재료). 점수는 규칙이 계산합니다. 중첩 입력이라 승인 페이지 입력란이 없고 `judge --json` 으로 고칩니다 |
+| ④ ⑧ | 규칙 v2.0 이하 실행: 점수(`score`)와 근거 문장. 규칙 v2.1 실행: ④ 층별 보유표(`survival`: 여섯 층의 판매·자체 사용·없음·준비 중, 주 레이어, AI 무관 매출 몫, 준비 중 칸의 트리거, 칸별 근거)와 ⑧ 네 축(`axes`: 고객·약정·공급·지정학의 상태와 재료). 점수는 규칙이 계산합니다. 중첩 입력이라 확인 페이지 입력란이 없고 `judge --json` 으로 고칩니다 |
 | ⑤ | 등급(`grade`: A 0~2, H 0~−3)과 근거 문장 |
 | ⑦ | 매트릭스(`matrix`)와 근거 문장 |
 | ⑨ | 게이트 입력(`gate_inputs`)과 근거 문장 |
 | ⑥ | 대상이 아닙니다 (공시 숫자로만 계산) |
-| ①~⑤ (규칙 v3.0) | ① 사업(`business`), ②③ 층(`layer_paths`·`layer_cp`), ④ 열한 층 보유표와 매출 줄(`holdings`), ⑤ 동맹 관계와 적대 전선(`alliance`)과 근거 문장. 모두 중첩 입력이라 승인 페이지에서는 읽기만 하고 `judge --json`·`propose --json` 으로 고칩니다. ①②③ 은 `--business`·`--layer` 로 판단을 가리킵니다. 점수는 규칙이 계산합니다 |
+| ①~⑤ (규칙 v3.0) | ① 사업(`business`), ②③ 층(`layer_paths`·`layer_cp`), ④ 열한 층 보유표와 매출 줄(`holdings`), ⑤ 동맹 관계와 적대 전선(`alliance`)과 근거 문장. 모두 중첩 입력이라 확인 페이지에서는 읽기만 하고 `judge --json`·`propose --json` 으로 고칩니다. ①②③ 은 `--business`·`--layer` 로 판단을 가리킵니다. 점수는 규칙이 계산합니다 |
 
 ### 5.6 근거 세 칸 (2026-10-07)
 
@@ -297,9 +296,9 @@ stateDiagram-v2
 **한 번에 끝냅니다.** 2026-10-01 시험 실행에서 리뷰가 세 바퀴 돈 뒤 정한 원칙입니다(`score-review` 스킬의 「한 번에 끝낸다」 절).
 
 - 표본 대조를 하지 않습니다. 이어받은 판단까지 전부 보고, 발견은 한 번에 다 적습니다.
-- `needs_fix` 는 점수·순위·체크리스트 판정을 바꾸는 발견에만 씁니다. 나머지는 영역 파일의 "다음 실행 과제" 절로 넘기고 승인을 막지 않습니다.
+- `needs_fix` 는 점수·순위·체크리스트 판정을 바꾸는 발견에만 씁니다. 나머지는 영역 파일의 "다음 실행 과제" 절로 넘기고 확인을 막지 않습니다.
 - 사람에게 올릴 제안은 리뷰가 끝난 뒤 한 묶음으로 올립니다.
-- 기업 추가 실행에서는 체크리스트 fail 이 이전 실행에서 이어받은 판단의 기존 논리 때문이고, 이번에 잣대를 바꾸지 않았으며, 규칙 파일 긴장 목록(TEN-)에 재검토 시점과 함께 등록돼 있으면 승인을 막지 않습니다. 근거 칸에 TEN 번호를 적습니다. 정기 실행은 모든 판단을 다시 매기므로 이 예외가 없습니다(`rules.md` 2.9).
+- 기업 추가 실행에서는 체크리스트 fail 이 이전 실행에서 이어받은 판단의 기존 논리 때문이고, 이번에 잣대를 바꾸지 않았으며, 규칙 파일 긴장 목록(TEN-)에 재검토 시점과 함께 등록돼 있으면 확인을 막지 않습니다. 근거 칸에 TEN 번호를 적습니다. 정기 실행은 모든 판단을 다시 매기므로 이 예외가 없습니다(`rules.md` 2.9).
 
 ### 자동화 뒤에도 사람이 보는 것
 
@@ -319,7 +318,7 @@ flowchart TD
     ROOT --> OUT["output/run_id/"]
     ROOT --> DATA["data/company_id/<br/>수집 원문 캐시 (gitignore)"]
     ROOT --> SCR["scripts/<br/>scorecard_cli.py · build_report.py<br/>scorecard/ · hooks/guard.py"]
-    ROOT --> SRV["server.js · server/approvals.js<br/>승인 페이지"]
+    ROOT --> SRV["server.js · server/approvals.js<br/>확인 페이지"]
     OUT --> IN2["입력: run · observations · judgments<br/>sources · evidence/ · triggers"]
     OUT --> MID["중간: research · results · draft · preview<br/>review · review-parts/ · proposals"]
     OUT --> FIN["최종: approval · report.html · audit.md"]
@@ -328,17 +327,17 @@ flowchart TD
 | 파일 | 손으로 고치나 |
 | --- | --- |
 | `output/<run_id>/` 의 md·html | 아니요. 생성물입니다 |
-| `judgments.json` | 승인 페이지 또는 `judge`·`proposal` 명령으로만 |
-| `evidence.json`, `triggers.json` | 에이전트가 선별 단계에서 작성, 근거 확정은 에이전트가 `confirm` 으로(사람도 승인 페이지 4절에서 가능) |
+| `judgments.json` | 확인 페이지 또는 `judge`·`proposal` 명령으로만 |
+| `evidence.json`, `triggers.json` | 에이전트가 선별 단계에서 작성, 근거 확정은 에이전트가 `confirm` 으로(사람도 확인 페이지 4절에서 가능) |
 | `approval.json`, `scorecard/history.csv`, 기준선 | 아니요. 훅이 막습니다 |
 
 ## 8. 자주 막히는 곳
 
 | 증상 | 원인 | 할 일 |
 | --- | --- | --- |
-| `[FAIL] 승인 전 계약 검증 실패: research.md 가 현재 입력 해시와 다름` | 승인 페이지에서 근거·판단을 바꿔 지문이 바뀜 | 에이전트에게 "다시 돌려" |
-| 10절에 승인 폼 대신 "막힌 이유" | 리뷰가 pass 가 아니거나 해시가 맞지 않음 | 표시된 다음 할 일을 따름 |
-| 승인 뒤 "사이트에 연결할 수 없음" | 승인 성공 후 서버가 정상 종료 | 상태 명령으로 `approval_valid: true` 확인 |
+| `[FAIL] 확인 전 계약 검증 실패: research.md 가 현재 입력 해시와 다름` | 확인 페이지에서 근거·판단을 바꿔 지문이 바뀜 | 에이전트에게 "다시 돌려" |
+| 10절에 확인 양식 대신 "막힌 이유" | 리뷰가 pass 가 아니거나 해시가 맞지 않음 | 표시된 다음 할 일을 따름 |
+| 확인 뒤 "사이트에 연결할 수 없음" | 확인과 빌드가 성공한 뒤 서버가 정상 종료 | 상태 명령으로 `approval_valid: true` 확인 |
 | `이전 트리거 N건을 처리하지 않았다` | 확인 기록이 빠짐 | `trigger-candidates` 로 보고 `carry` 작성 |
 | `기한이 지났는데 계속 관찰인 트리거` | 기준일이 기한을 넘김 | 결론을 내거나 기한을 늦추고 `note` 에 이유 |
 | PowerShell 에 `! uv run …` 을 붙여 넣어 오류 | `!` 는 Claude Code 입력창 전용 접두어 | 터미널에서는 `!` 없이 실행 |
@@ -346,12 +345,12 @@ flowchart TD
 
 ## 9. 11월 정기 재채점 체크리스트
 
-1. `init <run_id> --from-run ai-scorecard-2026-10-rescore` (가장 최근에 승인된 실행을 이어받는다)
+1. `init <run_id> --from-run ai-scorecard-2026-10-v30full` (가장 최근에 확인된 실행을 이어받는다)
 2. `collect <run_id> --kind all`
 3. `trigger-candidates <run_id>` 로 이전 트리거 확인
 4. 근거·트리거 선별, 이전 트리거마다 `carry` 기록. 중복(TRIG-010·035 Anthropic 상장, TRIG-003·025 NVIDIA ACIE)과 ⑥ 경계(TRIG-030, v1.7 부터 구간표 없음)는 철회
 5. `research → calculate → draft`
 6. 리뷰 4영역을 한 번에, 전수로
 7. 리뷰 발견을 한 묶음으로 `propose` 하고, 원문과 대조한 뒤 에이전트가 `proposal` 로 반영·거부 → `research` 부터 다시
-8. "승인 대기" 보고 → 사람이 승인 페이지에서 승인
-9. 빌드
+8. "확인 대기" 보고 → 사람이 확인 페이지에서 확인
+9. 빌드(확인을 누르면 곧바로 돈다)

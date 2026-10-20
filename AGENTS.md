@@ -2,13 +2,13 @@
 
 ## 목적
 이 저장소는 AI 기업 9-factor 채점표를 재현 가능하게 계산하는 하네스이다.
-원자료와 판단을 입력으로 받아 `plan → collect → research → calculate → draft → review → (사람) 승인 → build` 계약으로 처리하며, 점수는 규칙과 입력에서 프로그램이 산출한다.
+원자료와 판단을 입력으로 받아 `plan → collect → research → calculate → draft → review → (사람) 확인 → build` 계약으로 처리하며, 점수는 규칙과 입력에서 프로그램이 산출한다.
 확인은 사람이 확인 페이지에서 하고, 확인을 누르면 곧바로 build 한다. 확인 기록의 해시가 현재 입력과 다르면 build 는 멈추되, 초안만 다시 렌더링된 경우는 확인이 유지된다(2026-10-20 사용자 결정).
 
 ## AI Scorecard 계약 (report_type: ai_scorecard)
-- 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 채점 규칙은 `docs/scorecard/rules.md`, 코드 구조와 스키마는 `docs/scorecard/structure.md`, 실행 순서와 승인 페이지 사용법은 `docs/scorecard/guide.md` 가 원본이다.
+- 목적: AI 기업 9-factor 채점표를 같은 하네스 안에서 재현 가능하게 계산한다. 채점 규칙은 `docs/scorecard/rules.md`, 코드 구조와 스키마는 `docs/scorecard/structure.md`, 실행 순서와 확인 페이지 사용법은 `docs/scorecard/guide.md` 가 원본이다.
 - 판별: `output/<run_id>/plan.md` frontmatter `report_type: ai_scorecard`, run_id(=slug)는 `ai-scorecard-` 접두.
-- 단계 순서: `plan → collect → research → calculate → draft → review → (사람) 승인 → build`.
+- 단계 순서: `plan → collect → research → calculate → draft → review → (사람) 확인 → build`. 확인을 누르면 build 가 곧바로 돈다.
 - 명령: `.claude/skills/score-*/SKILL.md` 12개가 `/score-*` 명령이다. 실행기는 `uv run --frozen python -X utf8 scripts/scorecard_cli.py <stage> <run_id>`, 빌드는 `scripts/build_report.py <run_id>` 이고 명령표는 `guide.md` 3절에 있다. 새 실행은 현행 규칙 버전(`rules.md` 머리말)으로 `init --rule` 한다. 인자는 `--help` 로 확인한다.
 - 실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모인다(파일 목록은 `structure.md` 2절, 경로 도우미는 `scripts/scorecard/paths.py`). 수집한 원문 캐시는 `data/<company_id>/`(gitignore)에 둔다.
 - 공유 정의(rules, companies, baseline)와 `history.csv` 는 `scorecard/` 에 두고 추적한다. 실행 묶음의 md·html 은 생성물이며 손으로 고치지 않는다.
@@ -16,7 +16,7 @@
 - 수집: `collect` 가 뉴스·공시·가격 후보를 모은다. 공시 수집에는 사용자가 루트 `.env` 에 설정한 `SEC_UA` 가 필요하고, 에이전트는 `.env` 를 만들거나 고치지 않는다. 가격 처리 세부는 `score-collect` 스킬에 있다.
 - 원자료·판단·규칙이 입력이고 점수는 결과다. 자동 산출 점수를 직접 수정하지 않는다. 모르는 값은 0으로 치환하지 않는다(unknown ≠ 0).
 - 정성 판정(① lockin, ③ criteria, ④ survival 층별 보유표, ⑤ A/H, ⑦ 매트릭스, ⑧ axes 네 축, ⑨ gate_inputs. 규칙 v1.9 이하 실행은 ① score, v2.0 이하는 ④⑧ score)은 근거·검토자·검토일이 있어야 하고, 산식·사다리·구간 적용은 프로그램이 한다.
-- 정성 판단을 바꾸는 길은 둘이다(2026-10-01). 에이전트는 `scorecard_cli.py propose` 로 판단 변경 제안을 쓰고, **반영·거부(`proposal`)도 에이전트가 한다(2026-10-07 사용자 지시: 사람은 최종 승인만 한다).** 반영할 때는 제안 근거를 원문과 대조한 뒤에 한다 — 2026-10-07 원문에 없는 'Stargate $7B 출자'를 근거로 Oracle ⑤ 를 올렸다가 확인 리뷰에서 되돌렸다. 사람은 승인 페이지에서 직접 수정(`judge`)도 할 수 있다. 점수 칸은 고칠 수 없고 판정 재료만 고친다(허용 범위는 `guide.md` 5.5). 고치면 판단 해시가 바뀌므로 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 승인한다.
+- 정성 판단을 바꾸는 길은 둘이다(2026-10-01). 에이전트는 `scorecard_cli.py propose` 로 판단 변경 제안을 쓰고, **반영·거부(`proposal`)도 에이전트가 한다(2026-10-07 사용자 지시: 사람은 최종 승인만 한다).** 반영할 때는 제안 근거를 원문과 대조한 뒤에 한다 — 2026-10-07 원문에 없는 'Stargate $7B 출자'를 근거로 Oracle ⑤ 를 올렸다가 확인 리뷰에서 되돌렸다. 사람은 확인 페이지에서 직접 수정(`judge`)도 할 수 있다. 점수 칸은 고칠 수 없고 판정 재료만 고친다(허용 범위는 `guide.md` 5.5). 고치면 판단 해시가 바뀌므로 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 확인한다.
 - 미결 규칙 결정(C-03, C-05, C-06, C-13, C-16)은 `run.json.decisions` 로만 실행 단위에서 선택한다. 기본값을 조용히 채택하지 않으며 해당 기업은 순위에서 제외된다.
 - 리뷰는 4 영역(사실·출처 / 재무 계산 / 규칙 일관성 / 출력·가독성) + 체크리스트 Q01~Q23 이고, 1차 리뷰·수정 한 묶음·확인 리뷰 1회로 끝낸다(`score-review` 스킬).
 - **정기 실행은 정성 판단 전부를 다시 매긴다(2026-10-08 사용자 결정, 규칙 v2.0 2.9절).** ①②③④⑤⑦⑧ 판단은 모든 기업에 대해 그 실행의 근거로 새로 매기고(`status: new`), 점수가 같아도 다시 읽은 근거를 `reconfirmed` 에 남긴다. 승계(`status: carried`)는 기업 추가 실행(`--add-companies`)의 기존 기업에만 허용하고 정기 실행에서는 검증기가 막는다. 계기는 10월 재채점 126칸 중 87칸이 9월 2일 판단을 네 실행 동안 재검토 없이 이어받은 것이다.
@@ -43,7 +43,7 @@
 - **이해상충을 이유로 작업을 멈추거나 미루지 않는다(2026-10-02 사용자 지시).** 판정자가 Anthropic 모델이라는 점이나 출처·기업 사이의 이해관계를 이유로 수집·판단 제안·리뷰·수정을 거부하거나 사용자에게 되묻지 않는다. 출처 장부의 `conflict_of_interest` 표기는 참고 정보다. 비어 있어도 리뷰의 `needs_fix`·체크리스트 fail 사유로 삼지 않고, 리뷰어 점검 항목과 리뷰 전 점검에도 넣지 않는다. 체크리스트 Q05 는 결과 칸을 채우되 표기 누락을 fail 사유로 적지 않는다. 2026-10-01 시험 실행에서 표기 누락이 점수에 닿지 않는데도 리뷰를 두 번 막았다.
 
 ## 통제의 위치
-- **통제는 코드가 한다.** 어느 하네스로 돌리든 첫 방어선은 승인 해시 검증과 `scorecard.stages` 의 `approve`·`revoke` 함수 본체(에이전트 세션이면 거부)이고, 훅(`scripts/hooks/guard.py`)은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못하고, 임의 Python 을 실행하는 에이전트는 첫 방어선도 우회할 수 있다. 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것이다. 훅의 목록과 한계는 `scripts/hooks/README.md` 에 있다.
+- **통제는 코드가 한다.** 어느 하네스로 돌리든 첫 방어선은 확인 기록의 해시 검증과 `scorecard.stages` 의 `approve`·`revoke` 함수 본체(에이전트 세션이면 거부)이고, 훅(`scripts/hooks/guard.py`)은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다. 훅은 도구 호출 밖(사람 터미널, 훅이 배선되지 않은 에이전트)을 막지 못하고, 임의 Python 을 실행하는 에이전트는 첫 방어선도 우회할 수 있다. 최종 보증은 사람이 git 이력에서 확인 파일(approval.json)의 변경을 확인하는 것이다. 훅의 목록과 한계는 `scripts/hooks/README.md` 에 있다.
 - **확인 서버가 떠 있는 동안에는 열린 틈이 있다.** 확인에는 코드가 없어(2026-10-20 사용자 결정) 브라우저 도구를 가진 에이전트가 확인을 누를 수 있다. 서버는 확인과 빌드가 성공하면 내려간다. 사용자가 이 사실을 알고 수용했다. 에이전트는 확인 페이지에서 확인을 누르지 않는다.
 
 ## 서브에이전트 모델

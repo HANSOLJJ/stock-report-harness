@@ -6,7 +6,7 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 
 ## 지금 상태
 
-최신 승인 실행은 `ai-scorecard-2026-10-rescore` 입니다(기준일 2026-10-06, 규칙 v1.9, 2026-10-06 승인). 점수와 순위는 그 실행의 `output/ai-scorecard-2026-10-rescore/report.html` 에 있고, 실행의 진행 상태는 `scripts/scorecard_cli.py status <run_id>` 로 봅니다. 이 줄은 실행이 새로 승인될 때마다 고칩니다.
+최신 확인 실행은 `ai-scorecard-2026-10-v30full` 입니다(기준일 2026-10-14, 규칙 v3.0, 2026-10-20 확인). 점수와 순위는 그 실행의 `output/ai-scorecard-2026-10-v30full/report.html` 에 있고, 실행의 진행 상태는 `scripts/scorecard_cli.py status <run_id>` 로 봅니다. 이 줄은 실행이 새로 확인될 때마다 고칩니다.
 
 ## 아홉 항목은 어떻게 매겨지나
 
@@ -24,16 +24,16 @@ AI 기업을 아홉 항목으로 채점하는 프레임워크입니다. **판단
 ## 쓰는 법
 
 ```
-plan → collect → research → calculate → draft → review → (사람) 승인 → build
+plan → collect → research → calculate → draft → review → (사람) 확인 → build
 ```
 
-전 과정, 승인 페이지 사용법, 트리거 처리, 자주 막히는 곳은 다이어그램과 함께 `docs/scorecard/guide.md` 에 정리돼 있습니다.
+전 과정, 확인 페이지 사용법, 트리거 처리, 자주 막히는 곳은 다이어그램과 함께 `docs/scorecard/guide.md` 에 정리돼 있습니다.
 
-실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모입니다. 단계별 명령과 산출물, 근거 수집(`SEC_UA` 설정 포함), 승인 페이지와 판단 수정 방법은 `guide.md` 에 있습니다. Claude Code 에서는 `/score-plan`, `/score-collect` 처럼 슬래시 명령으로 부를 수 있고, 각 단계의 에이전트 작업 계약은 `.claude/skills/score-*/SKILL.md` 에 있습니다. 명령마다 인자는 `--help` 로 확인합니다.
+실행 하나의 산출물은 `output/<run_id>/` 한 폴더에 모입니다. 단계별 명령과 산출물, 근거 수집(`SEC_UA` 설정 포함), 확인 페이지와 판단 수정 방법은 `guide.md` 에 있습니다. Claude Code 에서는 `/score-plan`, `/score-collect` 처럼 슬래시 명령으로 부를 수 있고, 각 단계의 에이전트 작업 계약은 `.claude/skills/score-*/SKILL.md` 에 있습니다. 명령마다 인자는 `--help` 로 확인합니다.
 
 - 점수는 사람이 고칠 수 없습니다. 사람은 판단의 입력(판정 재료)을 고치고, 점수는 규칙이 다시 계산합니다.
 - 근거는 후보로 들어오고 에이전트가 원문을 확인한 뒤 확정합니다. 새 판단은 확정된 근거만 인용합니다.
-- 승인과 승인 취소는 사람만 합니다. 에이전트는 "승인 대기" 를 보고하고 멈춥니다.
+- 확인은 사람만 합니다. 확인 페이지에서 "확인"을 누르면 곧바로 빌드됩니다. 에이전트는 "확인 대기" 를 보고하고 멈춥니다.
 
 ## 파일은 네 종류입니다
 
@@ -46,14 +46,14 @@ plan → collect → research → calculate → draft → review → (사람) �
 
 점수는 기준·입력·계산 셋만으로 결정됩니다. 지시 문서는 일하는 순서를 적은 안내서이고 점수에 영향을 주지 않습니다.
 
-사람용 규칙 문서 `rules.md` 는 현행 규칙만 담고, 옛 판은 git 이력에서 봅니다. v1.5 기준선의 원천 자료(채점표 HTML·MD, 인수인계 문서 등)와 옛 규칙 문서는 2026-10-06 에 작업 폴더에서 지웠습니다. 승인된 실행의 `sources.json` 이 그 파일들의 sha256 을 출처로 기록하고 있으므로, 원문이 필요하면 `rules.md` 9절의 복원 대응표대로 git 에서 꺼냅니다.
+사람용 규칙 문서 `rules.md` 는 현행 규칙만 담고, 옛 판은 git 이력에서 봅니다. v1.5 기준선의 원천 자료(채점표 HTML·MD, 인수인계 문서 등)와 옛 규칙 문서는 2026-10-06 에 작업 폴더에서 지웠습니다. 확인된 실행의 `sources.json` 이 그 파일들의 sha256 을 출처로 기록하고 있으므로, 원문이 필요하면 `rules.md` 9절의 복원 대응표대로 git 에서 꺼냅니다.
 
 문서는 내용마다 원본이 한 곳입니다.
 
 | 내용 | 원본 |
 | --- | --- |
 | 무엇을 보고 몇 점을 주는가 | `docs/scorecard/rules.md` |
-| 실행 순서, 명령, 승인 페이지 사용법 | `docs/scorecard/guide.md` |
+| 실행 순서, 명령, 확인 페이지 사용법 | `docs/scorecard/guide.md` |
 | 코드 구조, 스키마, 요구 ID | `docs/scorecard/structure.md` |
 | 훅의 동작과 한계 | `scripts/hooks/README.md` |
 | 에이전트의 계약과 금지 사항 | `AGENTS.md`, `.claude/skills/` |
@@ -61,7 +61,7 @@ plan → collect → research → calculate → draft → review → (사람) �
 
 ## 지문으로 묶여 있습니다
 
-각 단계의 산출물에는 앞 단계 파일의 지문(sha256)이 기록됩니다. 승인 파일은 규칙·숫자·판단·실행 설정·점수·초안 여섯 개의 지문을 담습니다. 앞 단계가 한 글자라도 바뀌면 리뷰와 승인이 자동으로 무효가 됩니다. 근거 문장만 고쳐도 같습니다. 그래서 승인된 리포트는 **어떤 입력에서 나온 점수인지 나중에도 증명**할 수 있습니다.
+각 단계의 산출물에는 앞 단계 파일의 지문(sha256)이 기록됩니다. 확인 파일(approval.json)은 규칙·숫자·판단·실행 설정·점수·초안 여섯 개의 지문을 담습니다. 앞 단계가 한 글자라도 바뀌면 리뷰와 확인이 자동으로 무효가 됩니다. 근거 문장만 고쳐도 같습니다. 다만 초안만 다시 렌더링한 경우(다른 지문이 모두 같음)는 확인이 유지됩니다. 그래서 확인된 리포트는 **어떤 입력에서 나온 점수인지 나중에도 증명**할 수 있습니다.
 
 리포트 본문에는 읽는 사람을 위한 내용만 싣습니다. 해시, 결정 번호(C-01~C-29), 긴장 번호, 리뷰 진행 기록, 정정 이력은 `output/<run_id>/audit.md` 에 있습니다.
 
@@ -69,7 +69,7 @@ plan → collect → research → calculate → draft → review → (사람) �
 
 가드레일 훅은 `scripts/hooks/guard.py` 한 모듈에 다섯 개가 있습니다(위험한 셸 명령 차단, 보호 파일 쓰기 차단, 단계 순서 강제, 투자 권유 표현 차단, 리뷰 알림). 보호 목록·동작·한계는 `scripts/hooks/README.md` 가 원본입니다. 배선은 Claude Code 가 `.claude/settings.json`, Codex 가 `.codex/hooks.json` 입니다.
 
-훅은 둘째 방어선입니다. 첫째는 승인 해시 검증과, 에이전트 세션이면 승인·취소를 거부하는 `scorecard.stages` 의 `approve`·`revoke` 함수 본체입니다. 훅은 도구 호출 밖의 동작을 막지 못하고, 임의 Python 을 실행할 수 있는 에이전트는 첫 방어선도 우회할 수 있으므로, 최종 보증은 사람이 git 이력에서 승인 파일의 변경을 확인하는 것입니다.
+훅은 둘째 방어선입니다. 첫째는 확인 기록의 해시 검증과, 에이전트 세션이면 확인·취소를 거부하는 `scorecard.stages` 의 `approve`·`revoke` 함수 본체입니다. 훅은 도구 호출 밖의 동작을 막지 못하고, 임의 Python 을 실행할 수 있는 에이전트는 첫 방어선도 우회할 수 있으므로, 최종 보증은 사람이 git 이력에서 확인 파일의 변경을 확인하는 것입니다.
 
 
 ## 다음에 정할 것
@@ -87,10 +87,10 @@ npm run check
 ```bash
 uv run --frozen python -X utf8 -m unittest discover -s tests -t .   # 채점표 테스트 (npm run test:scorecard)
 uv run --frozen pytest -q                                           # pytest (npm run test:pytest)
-npm run test:node                                                   # 승인 서버 테스트
+npm run test:node                                                   # 확인 서버 테스트
 uv run --frozen python -X utf8 scripts/validate_report_contract.py <run_id>   # 계약 검증
 node server.js                                                      # output/ 로컬 미리보기 (http://localhost:3000/<run_id>/report.html)
-node server.js --approvals                                          # 승인 페이지 (사람이 실행)
+node server.js --approvals                                          # 확인 페이지 (사람이 실행, 확인하면 곧바로 빌드)
 ```
 
 - 포트 3000 이 쓰이고 있으면 기존 프로세스를 끄지 말고 `PORT=<빈 포트>` 로 띄웁니다.

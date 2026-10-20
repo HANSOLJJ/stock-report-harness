@@ -1,6 +1,6 @@
 # 채점표 하네스 구조
 
-이 문서는 코드 구조, 저장 스키마, 요구 ID(D·T)를 실제 모듈·파일·테스트에 연결한다. 채점 규칙은 `rules.md`, 실행 순서와 승인 페이지 사용법은 `guide.md`, 훅의 동작과 한계는 `scripts/hooks/README.md` 에 있다. 남은 작업은 루트 `TODO.md` 에 모은다.
+이 문서는 코드 구조, 저장 스키마, 요구 ID(D·T)를 실제 모듈·파일·테스트에 연결한다. 채점 규칙은 `rules.md`, 실행 순서와 확인 페이지 사용법은 `guide.md`, 훅의 동작과 한계는 `scripts/hooks/README.md` 에 있다. 남은 작업은 루트 `TODO.md` 에 모은다.
 
 ## 1. 설계 원칙과 진입점
 
@@ -15,7 +15,7 @@
 | D-07 | 실현된 성과와 미래 계획을 구분한다 | 가점은 출하·매출·채택 등 확인된 성과로 판단한다. 계획은 트리거로 남긴다 |
 | D-08 | 과거 기록은 보존한다 | 원본 이관 중 불일치를 고쳐 과거 점수를 새로 만들지 않는다 |
 | D-09 | 출력은 한 실행의 결과를 공유한다 | 순위표·카드·MD·HTML·CSV·차트·이력을 따로 편집하지 않는다 |
-| D-10 | 검토·승인은 검토받은 내용에 연결한다 | 규칙·자료·판단·보고 내용 변경 시 해당 검토와 승인이 유효한지 다시 검사한다 |
+| D-10 | 검토·확인은 검토받은 내용에 연결한다 | 규칙·자료·판단·보고 내용 변경 시 해당 검토와 확인이 유효한지 다시 검사한다. 초안만 다시 렌더링하면 확인은 유지된다 |
 
 진입점은 다음과 같다.
 
@@ -30,13 +30,13 @@
 
 | 경로 | 누가 쓰나 | 추적 | 내용 |
 |---|---|---|---|
-| `scorecard/rules/v1.5.json` ~ `vN.json` | 규칙 개정 때 새 버전을 더한다 | git | factor 모드·범위, ⑥ 잣대·트랙, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트(v2.1 이하 Q01~Q23, v3.0 은 Q01~Q25), 결정(C-xx) 상태·선택지, 긴장 목록. v3.0 은 층 정의(`layers`: 열한 층·층 밖 사업·칸 값·AI 사슬 조건·2년 창), 항목 단위(`unit`), 연속값 곡선(`curve`), 미확인 비율(`scoring.unknown_share`)을 더한다. 새 실행은 현행 버전(`rules.md` 머리말)을 쓴다. 승인 해시에 파일 바이트 해시가 들어가므로 이미 쓰인 파일은 고치지 않는다. 사람용 설명은 `rules.md` |
+| `scorecard/rules/v1.5.json` ~ `vN.json` | 규칙 개정 때 새 버전을 더한다 | git | factor 모드·범위, ⑥ 잣대·트랙, ⑨ 게이트 정책, ③ 사다리, ⑤ 산식, ⑦ 매트릭스, 체크리스트(v2.1 이하 Q01~Q23, v3.0 은 Q01~Q25), 결정(C-xx) 상태·선택지, 긴장 목록. v3.0 은 층 정의(`layers`: 열한 층·층 밖 사업·칸 값·AI 사슬 조건·2년 창), 항목 단위(`unit`), 연속값 곡선(`curve`), 미확인 비율(`scoring.unknown_share`)을 더한다. 새 실행은 현행 버전(`rules.md` 머리말)을 쓴다. 확인 기록 해시에 파일 바이트 해시가 들어가므로 이미 쓰인 파일은 고치지 않는다. 사람용 설명은 `rules.md` |
 | `scorecard/markets/<market_id>.json` | 규칙 v3.0 ① D·E 의 시장 정의표. 고치면 규칙 JSON 의 `factors.F1.markets.files` 해시도 고치고 새 실행으로 이어받는다 | git | 시장 이름, 측정 단위(`measure`: revenue·shipments·subscribers·usage), 값 종류(`value_kind`: share·amount), 기간 기준, 출처 우선순위·범위 기준(`scope_basis`), 출처(1순위 하나), 구성 회사(`key`·`name`·선택 `company_id`, 같은 회사의 여러 구성은 합쳐 잼), 구성 밖 대형 사업자, 반올림 폭(`precision`), 상위 N 목록 여부(`lists_top_n`), 시장의 일부만 재는 간접 자료 표시(`measure_fit: proxy`, 규칙의 `factors.F1.markets.partial_weight` 만큼 반영). 기간별 값은 실행의 관측(`market_share`·`market_revenue`·`market_volume`, company_id `_market`, basis.market_id·basis.constituent)이다. 해시가 다르면 `RuleSet.market` 이 거부한다 |
 | `scorecard/companies.json` | `add-company`, `resolve-cik --apply` | git | 안정 company_id, 표시명·별칭, 유형, 상장, 티커, share_basis, adr_ratio, 통화, 평가 범위, `news_queries`, `cik` |
 | `scorecard/baseline/v1.5/` | 이관(끝남). 보호 경로 | git | `scores.json`(점수·근거 불릿), `observations.json`, `triggers.json`, `import-report.md` |
-| `output/<run_id>/` | 각 단계 | git(입력·결과·승인), 일부 gitignore(`.lock`) | 실행 묶음 한 폴더. 아래 표 |
+| `output/<run_id>/` | 각 단계 | git(입력·결과·확인), 일부 gitignore(`.lock`) | 실행 묶음 한 폴더. 아래 표 |
 | `data/<company_id>/` | `collect` | gitignore | 수집한 원문 캐시. `SCORECARD_DATA_ROOT` 로 위치를 바꾼다 |
-| `scorecard/history.csv` | 빌드 | git | 승인본 이력 (run_id, approval_id, 기업, F1~F9, 합계, 순위, 변동 원인) |
+| `scorecard/history.csv` | 빌드 | git | 확인본 이력 (run_id, approval_id, 기업, F1~F9, 합계, 순위, 변동 원인) |
 
 실행 묶음 `output/<run_id>/` 의 파일은 `scripts/scorecard/paths.py` 의 `run_paths()` 가 돌려준다. 단계별로 흩어진 옛 폴더는 없다.
 
@@ -45,13 +45,13 @@
 | `run.json` `observations.json` `judgments.json` `sources.json` | `init` | 실행 설정과 입력(원자료·판단·출처) |
 | `plan.md` | `init` | 실행 계획 (생성물) |
 | `evidence/candidates.json` | `collect` | 수집한 근거 후보 (뉴스·공시) |
-| `evidence/evidence.json` | 에이전트 선별 → 에이전트 확정(`confirm`) | 근거. `status: candidate` 로 올라오고 에이전트가 원문을 확인한 뒤 `confirmed` 로 바꾼다. 사람도 승인 페이지에서 바꿀 수 있다 |
+| `evidence/evidence.json` | 에이전트 선별 → 에이전트 확정(`confirm`) | 근거. `status: candidate` 로 올라오고 에이전트가 원문을 확인한 뒤 `confirmed` 로 바꾼다. 사람도 확인 페이지에서 바꿀 수 있다 |
 | `triggers.json` | 에이전트 선별 | 재채점 조건. 미래 점수를 저장하지 않는다(C-14) |
 | `research.md` | `research` | 입력 검증 결과와 미결 항목 |
 | `results.json` `preview.md` | `calculate` | 점수와 기준선 대비 미리보기 |
 | `draft.md` | `draft` | Markdown 초안 |
 | `review.md` `review-parts/` | `review-template` 과 리뷰어 | 4 영역 리뷰. 영역별 결과는 `review-parts/<영역>.md` |
-| `approval.json` `revocations.jsonl` | 승인 페이지 | 승인 해시와 취소 기록. 사람이 만든다 |
+| `approval.json` `revocations.jsonl` | 확인 페이지 | 확인 기록(해시)과 취소 기록. 사람이 확인을 눌러 만든다. 취소는 사람이 CLI `revoke` 로 한다(확인 페이지에는 취소 양식이 없다) |
 | `report.html` `audit.md` | 빌드 | 대시보드와 감사 문서 |
 | `data_availability.json` | 수동(선택) | 자료 확보 현황 표시용 기록. 아래 설명 |
 | `.lock` | 각 단계 | 실행 잠금(`{owner, started_utc, stage}`). 다른 소유자의 잠금은 `--take-lock` 으로 넘겨받는다 |
@@ -66,7 +66,7 @@
 | 판단 입력(규칙 v3.0) | judgments.json items[].inputs | ④ `holdings`: cells(열한 층마다 cell sold/self/none/preparing/unknown·evidence_ids, AI 사슬 조건 층의 판매·자체 사용은 ai_chain, 준비 중은 trigger), revenue_lines[{line, label, amount(숫자나 unknown), period, layer(열한 층·outside·제외 줄), non_ai, evidence_ids}], currency, non_ai_margin(숫자·unknown·not_applicable)과 숫자면 non_ai_margin_source(segment/company). ① `business`: components[{name, layer, customer, lines(④ 매출 줄 id), market, coverage(시장이 사업의 일부만 잴 때 0~1 숫자나 partial), ai_monetized(예면 재료 다섯)}], participant·switching·pricing·substitutes(규칙 사다리 칸), 묶음이면 bundle_reason. ② `layer_paths`: leap(벤치마크 있는 층만)·gap_months, adaptation·adoption_multiple, standards[{name, holder, support, first_adopted, latest_new_major_adopter, latest_new_major_adopted_at, evidence_ids}]. ③ `layer_cp`: strategy, counterparty·counterparty_present, revenue_model, imitation, door_closed_at, acceleration{metric, tier, basis, prior_multiple, current_multiple, delayed, evidence_ids}. ⑤ `alliance`: relations[{counterparty, qualifies(equity/competitor_onboard/commercial), government_country, evidence_ids}], fronts[{name, nature(cost/structural/structural_unknown), status(ongoing/ended), jurisdiction, remedy_in_progress, evidence_ids}], partner_tension. 모양은 `schema._validate_v3_inputs` 가 본다 |
 | 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
-| 승인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
+| 확인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
 | 근거 | evidence/evidence.json items | evidence_id(`EV-<company_id>-NNN`), company_id, factors, kind(news / filing), source_id, published_at_utc, title, excerpt(600자 이하), relevance(추론), channel(disclosure / press / company_statement / secondary), conditional_impact(점수 이동 금지), horizon, counter_evidence, unverified, change_vs_previous, status(candidate / confirmed), reviewer·reviewed_at(confirmed 는 필수), locator(선택: 원문 안 인용 위치. 규칙 v1.9 이상에서 표지 `[EV-…]` 가 가리키는 근거는 필수) |
 | 트리거 | triggers.json items | trigger_id(`TRG-NNN`), company_id, factors, observation, condition, deadline, evidence_ids, source_ids, status(watching / fired / expired / withdrawn), recheck{factors, what}. 점수처럼 보이는 키는 거부한다(C-14) |
 | 자료 확보 현황 | data_availability.json (선택) | schema, surveyed_at, scope, required_quarters, companies_with_full_quarters, headline, score_effect, not_re_surveyed, collection_note, materials[], companies[{company_id, quarter_ends, secured_quarters, missing, survey}], surveys{}, sources[], cautions[], references[] |
@@ -99,7 +99,7 @@
 | | `holdings` · `alliance` | ④ 수직계열화 + 다각화 + 그 분야의 힘, ⑤ 12 + 동맹 + 적대 띠(규칙 v3.0) |
 | | `carried` | 판정 입력 없이 점수 숫자만 있다(기업 추가 실행의 기존 기업에만 생긴다) |
 
-`data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 승인 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 승인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 승인해야 한다.
+`data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 확인 기록 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 확인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 확인해야 한다.
 
 화면에 노출되는 `C-NN` 은 렌더러가 후처리로 `#dec-C-NN` 앵커 링크로 바꾸고, 「C-번호 사전」 항목을 규칙 파일의 `decisions` 에서 생성한다. 치환은 태그 사이 텍스트에만 적용하고 속성·`<style>`·`<script>`·경로 문자열(`C-13/...`)은 건드리지 않는다.
 
@@ -118,7 +118,7 @@
 | F6 비상장 밸류÷보정 매출 + 보정 한 칸 (C-12) | `calc_f6_params.compute_private` | `tests/test_scorecard_f6_v17.py` `TestF6Private` |
 | F6 NTM PER 구간표 (`bands` 모드, v1.5·v1.6 실행 재현용) | `calc_f6._listed`, `rules.f6_band/f6_boundary_flag` | T-01~T-03(구버전), R01 |
 | F9 G1~G4, 정책·결정 오버라이드 | `calc_f9.compute_f9`, `_g4` | T-07(`baseline_import.standard_fcf`), T-09~T-11, R02~R04, `TestV17F9Rescaled` |
-| 관측 상태 의미(적용 제외 ≠ 미공시), 흐름 지표 period, 승인자 문자열 | `schema.validate_observations`, `validate_approval` | `TestReviewRegressions` |
+| 관측 상태 의미(적용 제외 ≠ 미공시), 흐름 지표 period, 확인자 문자열 | `schema.validate_observations`, `validate_approval` | `TestReviewRegressions` |
 | 판단 키(층·사업)·v3.0 판정 재료·매출 줄 교차·중첩 근거 교차 참조 (규칙 v3.0) | `schema.validate_judgments`, `_validate_v3_inputs`, `_check_business_lines`, `validate_cross_refs` | `tests/test_rules_v30_judgments.py` |
 | 층·사업 판단 생성·수정, init 단위 전환 (규칙 v3.0) | `stages.revise_judgment`·`add_proposal`·`decide_proposal`·`undo_proposal`, `_drop_company_level_unit_judgments` | `tests/test_rules_v30_unit_paths.py` |
 | ④ 열한 층 보유표·층 매출 몫, ②③ 층별 계산, ① 사업 단위 (규칙 v3.0) | `calc_layers.layer_weights`·`compute_f4_holdings`·`compute_f2_layers`·`compute_f3_layers`·`compute_f1_business` | `tests/test_calc_layers.py` |
@@ -144,7 +144,7 @@
 
 규칙 파일에서 아직 확정되지 않은 결정이 걸린 분기는 계산기가 `needs_rule_decision` 을 반환하고 그 기업을 공식 순위에서 제외한다. 실행 단위 `run.json.decisions` 에 `{id, choice, rationale, decided_by, decided_at}` 를 기록한 경우에만 그 실행에서 선택이 적용되며 results/preview/HTML 에 "실행 단위 결정"으로 표시된다. 규칙 파일의 status 를 `resolved` 로 바꾸는 것은 규칙 개정(새 버전)이다. 결정을 읽는 코드 분기는 각 `calc_*.py` 의 `decision_choice(run, rules, "C-xx")` 호출이다.
 
-## 5. 단계·상태·승인 흐름
+## 5. 단계·상태·확인 흐름
 
 아래 경로는 모두 `output/<run_id>/` 기준이다. 모든 명령은 `uv run --frozen python -X utf8 scripts/…` 로 실행한다.
 
@@ -156,13 +156,13 @@ research ──► research.md (observations_hash·judgments_hash 결속) ; 인�
 calculate ──► results.json(+results_hash) + preview.md ; 입력 해시가 바뀌면 이전 approval.json 자동 무효
 draft ──► draft.md (results_hash 결속)
 review-template ──► review.md (4 영역 + Q01~Q23, 규칙 v3.0 은 Q25 까지, status: needs_fix) → 리뷰어가 review-parts/ 를 채움 → status: pass
-[사람] 승인 페이지 ──► 근거 확정(candidate → confirmed) · 판단 수정(judge) · 승인 · 취소 → approval.json (rules/observations/judgments/run/results/draft 해시 결합)
-build_report.py ──► 승인 해시 == 현재 해시 검증 → report.html·audit.md → history.csv append(중복 방지) → 사후 검증
+[사람] 확인 페이지 ──► 근거 확정(candidate → confirmed) · 판단 수정(judge) · 확인 → approval.json (rules/observations/judgments/run/results/draft 해시 결합) → 곧바로 build
+build_report.py(확인 페이지는 scorecard_cli.py build 로 부른다) ──► 확인 해시 == 현재 해시 검증(초안 해시만 다르면 통과) → report.html·audit.md → history.csv append(중복 방지) → 사후 검증
 
 [기업 추가 갈래]
 add-company ──► scorecard/companies.json 등록
 init --from-run ──► 이전 실행 계승 + plan + 입력 생성 (continued_from 기록)
-collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증. 규칙 v3.0 실행은 diff 가 거부한다) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 승인 ──► build
+collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증. 규칙 v3.0 실행은 diff 가 거부한다) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 확인 ──► build
 ```
 
 모든 단계(`init`·`collect`·`research`·`calculate`·`draft`·`review-template`)와 에이전트 세션의 `confirm`·`judge` 는 실행 잠금 `.lock` 을 검사하고 기록한다. 다른 소유자의 잠금이면 거부하고 `--take-lock` 으로 넘겨받는다.
@@ -182,17 +182,17 @@ collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증. 
 
 ### 판단 수정
 
-정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. 규칙 v2.0 이하의 F4·F8(v1.9 이하는 F1 도)은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs`·F1 `lockin`·F2 `paths` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), 규칙 v2.1 의 F4 `survival`·F8 `axes` 와 ① AI 수익화 재료는 CLI 전용 키(`schema.JUDGMENT_CLI_ONLY_INPUTS`, 모양은 `JUDGMENT_CLI_ONLY_TYPES`)로 받는다. F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 근거 세 칸(`evidence`·`evidence_up`·`evidence_down`)만 바꾸는 수정은 모든 factor 에 되고 판정 값·상태를 유지한다. 규칙 v1.9 이상 실행이면 쓰기 전에 `validate.three_way_item_violations` 로 세 칸 형식을 검사한다. 제안은 `evidence_after`·`evidence_up_after`·`evidence_down_after` 로 세 칸의 반영 뒤 문장을 든다(null 은 그 칸을 바꾸지 않음). 승인 페이지에서 고치는 법은 `guide.md` 에 있다.
+정성 판단의 입력을 고치는 코드 경로는 `stages.revise_judgment` 하나다. 사람이 직접 고치는 것(`judge`)과 에이전트 제안(`propose`)을 반영하는 것(`proposal --accept`, 2026-10-07 부터 에이전트도 한다)이 모두 이 경로를 지난다. 점수 칸은 고치지 않는다. 규칙 v2.0 이하의 F4·F8(v1.9 이하는 F1 도)은 `score`, F3 `criteria`·F5 `grade`·F7 `matrix`·F9 `gate_inputs`·F1 `lockin`·F2 `paths` 는 판정 재료 키만 받고(허용값은 `schema.JUDGMENT_INPUT_CHOICES`), 규칙 v2.1 의 F4 `survival`·F8 `axes` 와 ① AI 수익화 재료는 CLI 전용 키(`schema.JUDGMENT_CLI_ONLY_INPUTS`, 모양은 `JUDGMENT_CLI_ONLY_TYPES`)로 받는다. F2·F6 은 대상이 아니다. 고치면 이전 값이 항목 안 `revision_history` 에 쌓이고, 교차 참조가 깨지면 쓰기 전 상태로 되돌린다. 근거 세 칸(`evidence`·`evidence_up`·`evidence_down`)만 바꾸는 수정은 모든 factor 에 되고 판정 값·상태를 유지한다. 규칙 v1.9 이상 실행이면 쓰기 전에 `validate.three_way_item_violations` 로 세 칸 형식을 검사한다. 제안은 `evidence_after`·`evidence_up_after`·`evidence_down_after` 로 세 칸의 반영 뒤 문장을 든다(null 은 그 칸을 바꾸지 않음). 확인 페이지에서 고치는 법은 `guide.md` 에 있다.
 
-규칙 v3.0 의 층·사업 판단은 `judge`·`propose` 에 `--layer`·`--business` 를 붙여 가리킨다. 그 판단이 없으면 판정 재료(`--json`)와 근거로 새로 만들고(ID `{회사}.{항목}.{층|사업}`, 이전 값이 없어 `revision_history` 없음), 새로 만드는 제안은 `before` 가 null 이며 번복하면 그 판단을 지운다. 다섯 판정 재료의 최상위 키는 CLI 전용이고 승인 페이지는 층·사업 판단을 읽기만 한다. `init` 은 규칙 v3.0 에서 회사 단위 ①②③ 판단을 옮기지 않는다.
+규칙 v3.0 의 층·사업 판단은 `judge`·`propose` 에 `--layer`·`--business` 를 붙여 가리킨다. 그 판단이 없으면 판정 재료(`--json`)와 근거로 새로 만들고(ID `{회사}.{항목}.{층|사업}`, 이전 값이 없어 `revision_history` 없음), 새로 만드는 제안은 `before` 가 null 이며 번복하면 그 판단을 지운다. 다섯 판정 재료의 최상위 키는 CLI 전용이고 확인 페이지는 층·사업 판단을 읽기만 한다. `init` 은 규칙 v3.0 에서 회사 단위 ①②③ 판단을 옮기지 않는다.
 
-### 승인
+### 확인
 
-승인과 취소는 사람 행위다. 막는 장치는 둘이다. 첫 방어선은 `scorecard.stages` 의 `approve`·`revoke` 함수 본체가 에이전트 세션(`agent_session_markers`)을 거부하는 것과 해시 검증이고, 둘째 방어선은 훅이다. 승인 있는 실행에 대한 `init --force` 도 에이전트 세션이면 `init_run` 이 거부한다. 승인 페이지 사용법은 `guide.md`, 남은 틈(승인 서버가 떠 있는 동안의 일회용 코드)은 AGENTS.md 「통제의 위치」에 있다.
+확인과 취소는 사람 행위다. 사람이 확인 페이지에서 "확인"을 누르면 `approve`(via browser)가 확인 기록을 쓰고 곧바로 `build` 가 돈다(2026-10-20 사용자 결정). 확인에는 코드가 없고 페이지에 취소 양식이 없다. 막는 장치는 둘이다. 첫 방어선은 `scorecard.stages` 의 `approve`·`revoke` 함수 본체가 에이전트 세션(`agent_session_markers`)을 거부하는 것과 해시 검증이고, 둘째 방어선은 훅이다. 확인 있는 실행에 대한 `init --force` 도 에이전트 세션이면 `init_run` 이 거부한다. 다른 해시가 모두 같고 초안 해시만 다르면 확인이 유지되고(`approval_mismatches`), `draft` 는 확인된 실행에서도 막히지 않는다. 확인 페이지 사용법은 `guide.md`, 남은 틈(확인 서버가 떠 있는 동안 브라우저 도구를 가진 에이전트가 확인을 누를 수 있음)은 AGENTS.md 「통제의 위치」에 있다.
 
-상태 이름: 자료 부족 `pending_data`, 판단 부족 `needs_judgment`, 규칙 미결 `needs_rule_decision`, 승인 필요 `awaiting_user`(빌더 메시지), 검토 미완 `needs_fix`(리뷰 frontmatter). 해시가 하나라도 바뀌면 검증기가 리뷰·승인을 무효로 판정한다(T-14). 같은 승인본 재빌드는 history.csv 에 행을 추가하지 않는다(T-15). 사전 검증 실패 시 HTML 을 쓰지 않으므로 최신 MD/HTML/CSV 가 갈라지지 않는다(T-16).
+상태 이름: 자료 부족 `pending_data`, 판단 부족 `needs_judgment`, 규칙 미결 `needs_rule_decision`, 확인 필요 `awaiting_user`(빌더 메시지), 검토 미완 `needs_fix`(리뷰 frontmatter). 해시가 하나라도 바뀌면 검증기가 리뷰·확인을 무효로 판정한다(T-14). 초안 해시만 다르면 확인은 유지되고 리뷰는 경고만 낸다. 같은 확인본 재빌드는 history.csv 에 행을 추가하지 않는다(T-15). 사전 검증 실패 시 HTML 을 쓰지 않으므로 최신 MD/HTML/CSV 가 갈라지지 않는다(T-16).
 
-> **해시는 파일 바이트에 걸린다(`sha256_file` = `read_bytes`).** 줄끝(LF/CRLF)이 바뀌면 내용이 같아도 `rule_hash` 와 승인 해시 6종이 갈린다. 그래서 `.gitattributes` 가 해시 대상 파일의 줄끝을 고정한다(승인된 baseline·v1.5 규칙은 CRLF, 나머지는 LF). 해시 함수를 줄끝 정규화 기반으로 바꾸면 기존 승인 해시가 모두 달라지므로 바꾸지 않는다.
+> **해시는 파일 바이트에 걸린다(`sha256_file` = `read_bytes`).** 줄끝(LF/CRLF)이 바뀌면 내용이 같아도 `rule_hash` 와 확인 기록 해시 6종이 갈린다. 그래서 `.gitattributes` 가 해시 대상 파일의 줄끝을 고정한다(확인된 baseline·v1.5 규칙은 CRLF, 나머지는 LF). 해시 함수를 줄끝 정규화 기반으로 바꾸면 기존 확인 해시가 모두 달라지므로 바꾸지 않는다.
 
 ## 6. 산출물 렌더러
 
@@ -206,8 +206,8 @@ HTML 검증(`scorecard.validate._validate_html`)은 generator 메타(`scorecard-
 
 ## 7. 훅·명령·스킬
 
-- 훅: `scripts/hooks/guard.py` 한 모듈이고 훅은 다섯 개다(`block_dangerous_bash`, `protect_sensitive_files`, `enforce_plan`, `forbid_financial_advice`, `remind_review`). 동작·보호 경로·한계는 `scripts/hooks/README.md` 가 원본이다. 핵심 통제는 `scorecard.stages` 의 승인 함수·검증기·빌더가 직접 하고 훅은 둘째 방어선이다.
-- 명령: `.claude/skills/score-*/SKILL.md` 12개가 곧 `/score-*` 명령이다(Claude Code 가 스킬 폴더 이름을 명령으로 올린다). `/score-approve` 는 승인을 실행하지 않고 "승인 대기" 보고와 승인 페이지 안내만 한다. Codex 는 같은 내용의 사본을 `.agents/skills/` 에서 읽으므로 스킬을 고치면 사본도 맞춘다.
+- 훅: `scripts/hooks/guard.py` 한 모듈이고 훅은 다섯 개다(`block_dangerous_bash`, `protect_sensitive_files`, `enforce_plan`, `forbid_financial_advice`, `remind_review`). 동작·보호 경로·한계는 `scripts/hooks/README.md` 가 원본이다. 핵심 통제는 `scorecard.stages` 의 확인 함수·검증기·빌더가 직접 하고 훅은 둘째 방어선이다.
+- 명령: `.claude/skills/score-*/SKILL.md` 12개가 곧 `/score-*` 명령이다(Claude Code 가 스킬 폴더 이름을 명령으로 올린다). `/score-approve` 는 확인을 실행하지 않고 "확인 대기" 보고와 확인 페이지 안내만 한다. Codex 는 같은 내용의 사본을 `.agents/skills/` 에서 읽으므로 스킬을 고치면 사본도 맞춘다.
 - 리뷰어 에이전트: `.claude/agents/`(`fact-checker`, `evidence-editor`, `report-designer`)와 같은 내용의 `.codex/agents/*.toml`.
 - 실행은 `uv run --frozen python -X utf8 scripts/…` 이다. 시스템 `python`·`python3` 를 직접 부르지 않는다. 훅 배선도 `uv run` 한 줄이라 bash 를 거치지 않는다.
 
@@ -230,8 +230,8 @@ T 번호는 설계 시점(2026-09-08)에 v1.5 규칙을 기준으로 정의됐�
 | T-11 | RPO 와 B종의 기간 차이, ARR 대체, B종 0·미확인, 미공시 중복 | 유효한 비교만 수행. 정책 미결 분기는 완료 처리하지 않음 | 같음 | `test_scorecard_calc.py` `TestF9`, `test_scorecard_missing_type.py` |
 | T-12 | 규칙이 다른 두 실행, 미완료 기업, 동점 셋 | 추세로 섞지 않음. 미완료는 공식 순위 제외, 1·2·2·2·5 방식 | 같음 | `test_scorecard_calc.py` `TestAggregate` |
 | T-13 | 체크리스트 누락, 근거 없는 적용 제외, 미수행 검토, 정성 판단 미입력 | 확정되지 않는다 | 같음 | 검증기: 체크리스트 23행·4 영역·검토자 없는 pass 차단 |
-| T-14 | 승인 뒤 자료·규칙·판단·보고 내용 변경 | 승인과 리뷰가 무효가 된다 | 같음 | 검증기: review results_hash·draft_hash, approval hashes 비교 |
-| T-15 | 같은 승인본 반복 실행 | 같은 점수·순위·출력, 이력 중복 없음 | 같음 | `render_csv.append_history` 중복 키 건너뜀 |
+| T-14 | 확인 뒤 자료·규칙·판단·보고 내용 변경 | 확인과 리뷰가 무효가 된다(초안만 다시 렌더링하면 확인 유지) | 같음 | 검증기: review results_hash·draft_hash, approval hashes 비교 |
+| T-15 | 같은 확인본 반복 실행 | 같은 점수·순위·출력, 이력 중복 없음 | 같음 | `render_csv.append_history` 중복 키 건너뜀 |
 | T-16 | 확정 중 실패 | 최신 MD·HTML·CSV 가 서로 다른 실행을 가리키지 않는다 | 같음 | 빌더 사전 검증 실패 시 파일 미생성 |
 | T-17 | 기준선 14사 이관 | 개별 점수와 합계 보존, 불일치·누락 원본 표시 | 이관 끝남 | `scorecard/baseline/v1.5/import-report.md` |
 | T-18 | MD·HTML·CSV·카드·원자료·트리거·차트 | 숫자·단위·현재 기업 참조가 일치 | 같음 | draft 순위표 ↔ results 대조, HTML `data-company` 대조 |
@@ -247,5 +247,5 @@ T 번호는 설계 시점(2026-09-08)에 v1.5 규칙을 기준으로 정의됐�
 | RC3-06 | `decisions_applied` 를 근거로 무엇을 주장할 때 | **소비 증명이 아니다.** `results.decisions_applied` 는 run.json `decisions` 를 `id:choice` 로 옮긴 목록일 뿐이다(engine.py). 선택을 읽는 분기가 없거나(C-11) 현재 모드에서 효력이 없는(C-13 은 bands 모드 전용) 선택도 들어 있다. 적용 여부는 factor 산식·경고에서 확인한다. 소비 추적(선택마다 읽은 factor 기록)은 구현하지 않았다 |
 | RC3-08 | 관측 kind·metric 의미를 스키마로 막으려 할 때 | **단어 의미는 스키마가 아니라 소비 코드가 막는다.** `metric=arr` 에 `kind=run_rate` 를 `actual` 로 바꿔도 스키마는 통과한다. 비상장 P2 보정의 `arr_growth` 는 `accepted_kinds: ["actual"]` 을 calc_f6_params 가 읽어 run_rate 를 거부한다. kind 를 새로 쓰는 소비자를 만들면 그 코드에 같은 거부를 넣는다 |
 | v3.0-시장 | 규칙 v3.0 ① 을 읽을 때 | ① D 시장 순위·E 점유율 방향은 규칙이 해시로 묶은 시장 정의표가 있는 사업만 잰다. 정의표가 없거나 구성 사업의 시장을 정하지 않은 사업은 미확인(각 1.6)이다. 갱신형 페이지(StatCounter·IDC 웨어러블 등)는 출처 장부의 sha256 이 비어 같은 주소가 나중에 다른 값을 보일 수 있다 |
-| v3.0-출력 | 규칙 v3.0 실행을 승인·빌드하려 할 때 | HTML 리포트(층별 화면·산점도 축·80점 선), 승인 페이지의 층별 수정 화면, `diff` 의 층 단위 비교가 아직 없다. 초안·미리보기는 최소 렌더(층 표·층·사업 판단 근거·v3.0 방법 절)까지 된다 |
-| 재빌드 | 승인 뒤 리뷰 파일을 고쳤을 때 | 승인 해시 여섯 가지에 `review.md` 는 들지 않아 승인은 유효하지만, HTML References 의 검토자·리뷰 유형은 빌드 시점의 리뷰 파일에서 읽는다. 리뷰 파일을 고쳤으면 빌드를 다시 돌린다. 같은 승인본이면 `history.csv` 에 행이 추가되지 않는다 |
+| v3.0-출력 | 규칙 v3.0 실행을 확인·빌드하려 할 때 | HTML 리포트(층별 화면·산점도 축·80점 선), 확인 페이지의 층별 수정 화면, `diff` 의 층 단위 비교가 아직 없다. 초안·미리보기는 최소 렌더(층 표·층·사업 판단 근거·v3.0 방법 절)까지 된다 |
+| 재빌드 | 확인 뒤 리뷰 파일을 고쳤을 때 | 확인 기록 해시 여섯 가지에 `review.md` 는 들지 않아 확인은 유효하지만, HTML References 의 검토자·리뷰 유형은 빌드 시점의 리뷰 파일에서 읽는다. 리뷰 파일을 고쳤으면 빌드를 다시 돌린다. 같은 확인본이면 `history.csv` 에 행이 추가되지 않는다 |

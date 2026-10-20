@@ -7,14 +7,14 @@
 | 이름 | 이벤트 | 하는 일 | 결과 |
 |---|---|---|---|
 | `block_dangerous_bash` | PreToolUse 셸 | `rm -rf /`, `sudo`, 원격 스크립트 파이프 실행, 강제 push, 작업 트리를 지우는 git 명령(`reset --hard`·`clean -f`·`checkout .`·`restore .`), 홈 폴더·드라이브 루트의 재귀 삭제 차단 | block |
-| `protect_sensitive_files` | PreToolUse 셸·파일 | 보호 경로(아래 절) 수정 차단, 승인·취소 명령 차단 | block |
+| `protect_sensitive_files` | PreToolUse 셸·파일 | 보호 경로(아래 절) 수정 차단, 확인(approve)·취소(revoke) 명령 차단 | block |
 | `enforce_plan` | PreToolUse 셸·파일 | `output/<slug>/` 단계 순서 강제, `report.html`·`audit.md` 직접 쓰기 차단, 빌드 명령은 리뷰 pass 필요, 다른 소유자의 실행 잠금이 있는 묶음 쓰기 차단 | block |
 | `forbid_financial_advice` | Pre·PostToolUse | `output/<run>/` 의 `draft.md`·`judgments.json`·`evidence/evidence.json` 에서 우리가 쓴 글의 투자 권유·수익 보장 표현 차단 | block |
 | `remind_review` | PostToolUse 파일, Stop | 리뷰 입력이 바뀌었거나 리뷰 해시가 현재 산출물과 다르면 경고 | warn |
 
 `enforce-citations` 는 종목 리포트 전용이라 만들지 않았고 배선에서도 뺐다. `enforce_memory`·`inject_memory_context` 는 2026-10-02 에 저장소 메모리(`memory/` 폴더, 검증기)와 함께 없앴다. 쓰는 기준이 모호했고 일지는 주입되지 않았으며 한 세션에 약 12만 자를 문맥에 넣었다. 교훈은 `AGENTS.md` 와 스킬에 규칙 한 줄로 적는다.
 
-## 보호 경로와 승인 명령 (`protect_sensitive_files`)
+## 보호 경로와 확인 명령 (`protect_sensitive_files`)
 
 **같은 저장소의 다른 체크아웃도 같은 규칙으로 본다(2026-10-02).** 훅은 세션이 열린 체크아웃의 `guard.py` 로 돌지만, 대상 경로가 원본 폴더나 다른 워크트리 아래에 있으면 `git worktree list --porcelain` 으로 그 체크아웃을 찾아 그 루트 기준 상대 경로로 판정한다. 전에는 세션 루트 기준으로만 판정해서, 워크트리 세션이 원본 폴더의 `.env`·이력 CSV·규칙·기준선을 쓰는 것이 모두 통과했다.
 
@@ -28,12 +28,12 @@
 
 - `.env*`, `.git/`, `.github/workflows/`
 - 어느 폴더에 있든 `approval.json` (2026-09-30 레인 F)
-- 승인된 실행이 쓰는 규칙 `scorecard/rules/v1.5.json`, `v1.6.json`, `v1.7.json`. **v1.8 과 그 뒤의 규칙, 새로 승인되는 실행 폴더는 목록에 더하지 않는다(2026-10-02 사용자 결정).** 고치면 지문이 달라져 승인이 무효가 되고 빌드가 멈추므로 지문 검증에 맡긴다. 이 목록은 지문이 못 잡는 것(`.env`, 기준선, 승인 파일, 이력 CSV)과 기존 항목만 지킨다.
+- 확인된 실행이 쓰는 규칙 `scorecard/rules/v1.5.json`, `v1.6.json`, `v1.7.json`. **v1.8 과 그 뒤의 규칙, 새로 확인되는 실행 폴더는 목록에 더하지 않는다(2026-10-02 사용자 결정).** 고치면 지문이 달라져 확인이 무효가 되고 빌드가 멈추므로 지문 검증에 맡긴다. 이 목록은 지문이 못 잡는 것(`.env`, 기준선, 확인 파일, 이력 CSV)과 기존 항목만 지킨다.
 - 이동한 기존 실행 두 폴더 `output/ai-scorecard-2026-09-baseline/`, `output/ai-scorecard-2026-09-obsreg/`
 - `scorecard/history.csv`
-- `scorecard/baseline/**` (2026-10-01 레인 H). 기준선 트리거는 승인 해시 밖의 재빌드 입력이다. 실행 묶음에 `triggers.json` 이 없으면 렌더러가 기준선 트리거를 그리므로, 바꾸면 승인이 유효한 채 재빌드 리포트가 바뀐다.
+- `scorecard/baseline/**` (2026-10-01 레인 H). 기준선 트리거는 확인 기록 해시 밖의 재빌드 입력이다. 실행 묶음에 `triggers.json` 이 없으면 렌더러가 기준선 트리거를 그리므로, 바꾸면 확인이 유효한 채 재빌드 리포트가 바뀐다.
 
-보호 경로 대조는 대소문자를 가리지 않는다(2026-10-01 레인 N, V2-3). Windows 파일 시스템은 `Approval.json`·`approval.JSON`·`.ENV` 를 `approval.json`·`.env` 와 같은 파일로 열기 때문이다. 파일 도구 경로, 셸 명령의 쓰기 대상, 글롭, 승인 파일을 품은 상위 폴더 판정이 모두 같다. 읽는 쪽도 맞춘다. `scorecard.schema.load_json_strict` 는 폴더 목록에 이름이 정확히 `approval.json` 인 항목이 있을 때만 승인 파일을 읽고, `validate_approval` 은 `approval_id` 를 실행·결과·초안 해시로 다시 계산해 대조한다. 대소문자만 바꾼 파일이나 손으로 쓴 임의 `approval_id` 는 승인으로 읽히지 않는다.
+보호 경로 대조는 대소문자를 가리지 않는다(2026-10-01 레인 N, V2-3). Windows 파일 시스템은 `Approval.json`·`approval.JSON`·`.ENV` 를 `approval.json`·`.env` 와 같은 파일로 열기 때문이다. 파일 도구 경로, 셸 명령의 쓰기 대상, 글롭, 확인 파일을 품은 상위 폴더 판정이 모두 같다. 읽는 쪽도 맞춘다. `scorecard.schema.load_json_strict` 는 폴더 목록에 이름이 정확히 `approval.json` 인 항목이 있을 때만 확인 파일을 읽고, `validate_approval` 은 `approval_id` 를 실행·결과·초안 해시로 다시 계산해 대조한다. 대소문자만 바꾼 파일이나 손으로 쓴 임의 `approval_id` 는 확인으로 읽히지 않는다.
 
 셸 명령은 같은 경로가 **쓰기 대상** 일 때만 막는다(2026-10-01 레인 H). 명령을 따옴표를 지켜 토큰으로 나누고(`shlex`) `;`·`&&`·`||`·`|`·`&`·괄호·줄바꿈마다 끊어 명령 하나씩 본다. `\` 는 `/` 로 바꿔 대조한다.
 
@@ -43,7 +43,7 @@
 | 변경 동사 `rm`·`mv`·`tee`·`touch`·`truncate`·`chmod`·`chown`, `sed -i`, `perl -pi`, `git checkout`·`git restore`·`git reset` 의 인자 | 보호 경로면 막는다 |
 | PowerShell `Set-Content`·`Add-Content`·`Out-File`·`Remove-Item`·`Move-Item`·`Copy-Item`·`New-Item`·`Rename-Item`·`Clear-Content` 와 기본 별칭(`sc`·`ac`·`ri`·`del`·`erase`·`rd`·`mi`·`move`·`cpi`·`copy`·`ni`·`rni`·`ren`·`clc`)의 경로 인자(`-Path x`, `-Path:x`, 위치 인자) | 보호 경로면 막는다(2026-10-01 레인 J) |
 | 복사 `cp`·`install`·`Copy-Item` | **목적지**(`-Destination`·`-t`·마지막 위치 인자)만 쓰기 대상이다. 보호 경로에서 복사해 나오는 것은 읽기라 통과한다(레인 J) |
-| 지우기 `rm`·`rmdir`·`Remove-Item` 계열, 옮기기 `mv`·`Move-Item`·`Rename-Item` 계열의 원본 | 보호 경로를 품은 상위 폴더(`rm -rf output`, `rm -rf .`, 승인 파일이 든 실행 폴더)도 막는다(레인 J) |
+| 지우기 `rm`·`rmdir`·`Remove-Item` 계열, 옮기기 `mv`·`Move-Item`·`Rename-Item` 계열의 원본 | 보호 경로를 품은 상위 폴더(`rm -rf output`, `rm -rf .`, 확인 파일이 든 실행 폴더)도 막는다(레인 J) |
 | `find … -delete`, `find … -exec <변경 동사>` | 시작 경로가 보호 경로이거나 보호 경로를 품으면 막는다. 경로 없는 `find . …` 는 저장소 전체라 막는다(레인 J) |
 | `… \| xargs <변경 동사>` | 대상이 앞 명령의 출력이라 알 수 없다. 명령 전체에 보호 경로가 나오거나, 같은 명령의 다른 명령이 받은 경로(find·ls·git ls-files 등)가 보호 경로를 품으면 막는다(레인 J) |
 | 글롭(`*`·`?`·`[`)이 든 쓰기 대상 | 보호 경로(아직 없는 파일 포함)와 맞거나 파일 시스템에서 전개한 결과가 보호 경로면 막는다. `*` 는 `/` 를 넘지 않는다(`rm *.md` 는 `docs/` 아래와 맞지 않는다)(레인 J) |
@@ -56,11 +56,11 @@
 - `cd`·`pushd`·`Set-Location` 뒤의 상대 경로는 바뀐 폴더 기준으로 푼다(`cd output/<보호 실행> && rm draft.md` 도 막는다). `git -C <폴더>` 도 같다.
 - 따옴표가 맞지 않아 나눌 수 없는 명령은 쓰기 대상을 가릴 수 없으므로 보호 경로를 언급하기만 해도 막는다.
 
-셸 명령에 `scorecard_cli.py approve`, `scorecard_cli.py revoke`, `stages.approve`, `stages.revoke` 가 있으면 변경 기호와 무관하게 막는다. 승인·취소는 사람이 `node server.js --approvals` 승인 페이지에서 한다. `confirm` 은 막지 않는다. 근거 확정은 승인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 승인해야 하기 때문이다. 훅은 둘째 방어선이고, 첫째는 `scorecard.stages.approve`·`revoke` **함수 본체** 가 에이전트 세션을 거부하는 것이다(2026-10-01 레인 H). CLI 든 import 든 같은 판정(`scorecard.stages.agent_session_markers`)을 거친다. 테스트만 키워드 인자 `allow_agent_session=True` 로 이 거부를 끈다.
+셸 명령에 `scorecard_cli.py approve`, `scorecard_cli.py revoke`, `stages.approve`, `stages.revoke` 가 있으면 변경 기호와 무관하게 막는다. 확인·취소는 사람이 한다. 확인은 `node server.js --approvals` 확인 페이지에서 "확인"을 누르면 기록되고 곧바로 빌드된다(2026-10-20). `confirm` 은 막지 않는다. 근거 확정은 확인이 아니고, 확정하면 해시가 바뀌어 사람이 다시 확인해야 하기 때문이다. 훅은 둘째 방어선이고, 첫째는 `scorecard.stages.approve`·`revoke` **함수 본체** 가 에이전트 세션을 거부하는 것이다(2026-10-01 레인 H). CLI 든 import 든 같은 판정(`scorecard.stages.agent_session_markers`)을 거친다. 테스트만 키워드 인자 `allow_agent_session=True` 로 이 거부를 끈다.
 
-`scorecard_cli.py init <slug> … --force` 는 `output/<slug>/approval.json` 이 있으면 막는다(2026-10-01 레인 H). 덮어쓰면 승인 기록이 지워지기 때문이다. 슬러그가 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더로 보고, argparse 의 줄임(`--fo`)도 `--force` 로 본다. `stages.init_run` 도 같은 경우 에이전트 세션을 거부하고, 사람 세션에는 경고한다.
+`scorecard_cli.py init <slug> … --force` 는 `output/<slug>/approval.json` 이 있으면 막는다(2026-10-01 레인 H). 덮어쓰면 확인 기록이 지워지기 때문이다. 슬러그가 맨 이름이든 `output/<slug>` 경로든 마지막 경로 조각을 실행 폴더로 보고, argparse 의 줄임(`--fo`)도 `--force` 로 본다. `stages.init_run` 도 같은 경우 에이전트 세션을 거부하고, 사람 세션에는 경고한다.
 
-실행의 입력·산출물을 바꾸는 단계 명령 `scorecard_cli.py judge`·`confirm`·`calculate`·`draft`·`research`·`review-template --force`·`collect`(`--kind prices`·`facts`·`all`·생략, `--dry-run` 이 아닐 때)·`set-as-of` 가 **유효한 승인** 이 있는 실행을 가리키면 막는다(2026-10-01 레인 N, V2-1). 실행 이름은 `init --force` 와 같이 맨 이름·`output/<이름>` 경로 모두 마지막 경로 조각을 `output/` 아래 폴더로 푼다. 유효성은 훅이 다시 계산하지 않고 `scorecard.stages.approval_is_valid` 를 불러 판정한다. 그래서 단계 명령이 승인 파일이 있는 실행을 가리킬 때만 해시를 센다. 판정하지 못하면(가져오기 실패, 폴더 불일치, 형식 오류) 훅 함수 안에서 예외를 잡아 막는다(fail-closed). 무효 승인은 막지 않는다. 사람이 승인 페이지에서 판단을 고치면 승인이 무효가 되고, 에이전트가 `research → calculate → draft → review` 를 다시 돌려야 하기 때문이다. 이때 `calculate` 가 무효 승인 파일을 지우면 그 사실을 출력하고 `revocations.jsonl` 에 `revoked_by: "calculate"` 로 남긴다. 같은 판정을 단계 함수 본체(`scorecard.stages.protect_approved_run`)도 하므로 import 로 불러도 에이전트 세션은 거부되고, 사람 세션은 경고를 받고 진행한다. `scorecard_cli.py import-baseline` 은 보호 트리 `scorecard/baseline/` 를 다시 쓰므로 훅이 항상 막고, CLI 도 그 기준선을 쓰는 유효 승인 실행이 있으면 에이전트 세션을 거부한다(`stages.protect_baseline_consumers`).
+실행의 입력·산출물을 바꾸는 단계 명령 `scorecard_cli.py judge`·`confirm`·`calculate`·`research`·`review-template --force`·`collect`(`--kind prices`·`facts`·`all`·생략, `--dry-run` 이 아닐 때)·`set-as-of` 가 **유효한 확인** 이 있는 실행을 가리키면 막는다(2026-10-01 레인 N, V2-1). `draft` 는 입력·결과의 렌더링이라 확인을 깨지 않아 막지 않는다(2026-10-20 사용자 결정). 실행 이름은 `init --force` 와 같이 맨 이름·`output/<이름>` 경로 모두 마지막 경로 조각을 `output/` 아래 폴더로 푼다. 유효성은 훅이 다시 계산하지 않고 `scorecard.stages.approval_is_valid` 를 불러 판정한다. 그래서 단계 명령이 확인 파일이 있는 실행을 가리킬 때만 해시를 센다. 판정하지 못하면(가져오기 실패, 폴더 불일치, 형식 오류) 훅 함수 안에서 예외를 잡아 막는다(fail-closed). 무효 확인은 막지 않는다. 사람이 확인 페이지에서 판단을 고치면 확인이 무효가 되고, 에이전트가 `research → calculate → draft → review` 를 다시 돌려야 하기 때문이다. 이때 `calculate` 가 무효 확인 파일을 지우면 그 사실을 출력하고 `revocations.jsonl` 에 `revoked_by: "calculate"` 로 남긴다. 같은 판정을 단계 함수 본체(`scorecard.stages.protect_approved_run`)도 하므로 import 로 불러도 에이전트 세션은 거부되고, 사람 세션은 경고를 받고 진행한다. `scorecard_cli.py import-baseline` 은 보호 트리 `scorecard/baseline/` 를 다시 쓰므로 훅이 항상 막고, CLI 도 그 기준선을 쓰는 유효 확인 실행이 있으면 에이전트 세션을 거부한다(`stages.protect_baseline_consumers`).
 
 ## 실행 잠금 (`enforce_plan`)
 
@@ -103,7 +103,7 @@
 - 저장소 루트는 cwd 기준 `git rev-parse --show-toplevel` 로 찾는다. 실패하거나 그 루트에 `scripts/hooks/guard.py` 가 없으면 조용히 exit 0 이다. 무관한 폴더에서 불려도 무해하다.
 - 모르는 훅 이름과 모르는 도구 이름도 통과한다.
 
-훅 인프라 오류로 모든 도구가 막히는 일을 없애려는 선택이다. 첫 방어선은 승인·해시 검증 코드(`scorecard.stages` 의 승인 함수, 빌더)이고 훅은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
+훅 인프라 오류로 모든 도구가 막히는 일을 없애려는 선택이다. 첫 방어선은 확인·해시 검증 코드(`scorecard.stages` 의 확인 함수, 빌더)이고 훅은 둘째 방어선이다. 훅이 통과시켰다고 검증이 끝난 것이 아니다.
 
 ## 도구 이름 별칭
 
@@ -125,6 +125,6 @@
 - 단계 순서(`enforce_plan`)와 리뷰 알림(`remind_review` 의 PostToolUse)은 Write·Edit 만 본다. 셸로 `output/<run>/report.html` 이나 `draft.md` 를 직접 쓰는 것은 막지 않는다. 단계 순서와 산출물 정합은 CLI(`_require_file`)와 계약 검증기(`validate_report_contract.py`)가 첫 방어선이고, 리뷰 해시 불일치는 Stop 때 `remind_review` 가 다시 본다.
 - 체크아웃 판정은 `git worktree list` 에 나오는 폴더만 안다. 같은 저장소를 따로 clone 한 폴더는 다른 저장소로 본다.
 - 작업 트리를 지우는 git 명령 차단은 `bash -c "git reset --hard"` 같은 중첩 실행을 놓친다.
-- `protect_sensitive_files` 는 셸 문자열만 본다. 경로가 변수·따옴표·명령 치환에 **통째로** 들어 있으면 쓰기와 함께 막지만(레인 N), 경로를 조각내 이어 붙이는 쓰기(`D=scorecard/rules; rm $D/v1.7.json`, `Join-Path`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(승인 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
+- `protect_sensitive_files` 는 셸 문자열만 본다. 경로가 변수·따옴표·명령 치환에 **통째로** 들어 있으면 쓰기와 함께 막지만(레인 N), 경로를 조각내 이어 붙이는 쓰기(`D=scorecard/rules; rm $D/v1.7.json`, `Join-Path`)·`Invoke-Expression`·스크립트 블록처럼 경로가 실행 중에 정해지는 쓰기는 가릴 수 없다. 첫 방어선(확인 기록 해시 검증)과 git 이력 확인이 이 틈을 덮는다.
 - 쓰기가 있는 명령은 따옴표 안의 보호 경로를 읽기 인자로 썼어도 막는다(`grep "approval.json" -r . > /tmp/out`). 쓰기와 읽기를 한 명령에 섞지 않거나 따옴표 없이 쓴다.
 - `xargs` 판정은 보수적이다. 대상 목록을 파일에서 읽는 `cat list.txt | xargs rm` 은 목록 안의 보호 경로를 볼 수 없어 통과한다.
