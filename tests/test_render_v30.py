@@ -224,6 +224,19 @@ class V30RenderTest(V30Base):
         self.assertIn(RESCALED_NOTE, text)
 
 
+class LongTokenWrapTest(unittest.TestCase):
+    """2026-10-20 14개사 확장 출력 리뷰 B-1·B-2: 공백 없는 긴 사업 이름(`LinkedIn(Talent·Marketing·…)`)과 트리거 문장
+    (`Alphabet(TPU)·Amazon(Trainium)·…`)이 한 낱말로 취급돼 320px 에서 카드와 트리거 표가 잘렸다."""
+
+    def test_unit_names_and_trigger_text_wrap(self):
+        import re
+        from scorecard import render_html as rh
+        uname = re.search(r"details\.unit>summary \.uname\{[^}]*\}", rh.V3_CSS).group(0)
+        self.assertIn("min-width:0", uname)
+        self.assertIn("overflow-wrap:anywhere", uname)
+        self.assertIn("overflow-wrap:anywhere", re.search(r"\.trig td\.text\{[^}]*\}", rh._BASE_CSS).group(0))
+
+
 class LimitationsTest(unittest.TestCase):
     def test_correction_marker_is_dropped_only_for_layered_rules(self):
         """2026-10-19 pilot8 출력 리뷰 F-5: 규칙 파일 순현금 질문 앞의 '[정정 … FIX-53]' 표지가 v3.0 초안에 실렸다.

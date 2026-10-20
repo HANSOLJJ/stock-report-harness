@@ -125,7 +125,7 @@ details.unit[open]{border-left-color:var(--acc)}
 details.unit>summary{cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:baseline;list-style:none;min-height:24px;padding:2px 0}
 details.unit>summary::-webkit-details-marker{display:none}
 details.unit>summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-details.unit>summary .uname{font-weight:600;color:var(--tx)}
+details.unit>summary .uname{font-weight:600;color:var(--tx);min-width:0;overflow-wrap:anywhere}
 details.unit>summary .uname::before{content:"▸ ";color:var(--tx3)}
 details.unit[open]>summary .uname::before{content:"▾ "}
 details.unit>summary .usc{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -319,7 +319,7 @@ th.f1sub,td.f1sub{border-left:1px dashed var(--line)}
 .trig td.tmeta{white-space:normal;text-align:left;vertical-align:top;line-height:1.6;color:var(--tx2);font-size:var(--fs-sm)}
 .trig td.tmeta .mono{color:var(--tx);font-weight:700}
 .trig td.tmeta a{white-space:nowrap;overflow-wrap:normal}
-.trig td.text{vertical-align:top}
+.trig td.text{vertical-align:top;overflow-wrap:anywhere}
 .trig td.text p{margin:0 0 8px}
 .trig td.text p:last-child{margin-bottom:0}
 .trig .tk{display:inline-block;font-size:var(--fs-sm);color:var(--tx2);margin-right:6px}
