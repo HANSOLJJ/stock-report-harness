@@ -125,3 +125,11 @@
 - [x] H4 ① 항목 안 A~E 정의·사업별 점수표·D·E 계산 자료
 - [x] H5 ②③ 항목 안 부분 정의·층별 점수표
 - [x] H6 테스트·다시 build·320/1280px 확인
+
+## 맥미니 배포와 초안 맞추기 (html-readability.md 2단계)
+
+- [x] D0 승인본 배포(6478d23 push, 맥미니 ff pull, fin.hansoljj.com 목록 맨 위·카드 14장 확인)
+- [ ] D1 부분 점수표 데이터를 render_common 으로
+- [ ] D2 초안도 같은 데이터로
+- [ ] D3 테스트·draft 재생성·review.md 갱신·계약 검증 → 승인 대기
+- [ ] D4 (승인 뒤) build → 커밋 → push → 맥미니 pull
