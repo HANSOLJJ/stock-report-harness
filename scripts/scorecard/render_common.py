@@ -2875,7 +2875,7 @@ def _f3_parts(rules: Any, factors: dict[str, dict[str, Any]]) -> dict[str, Any] 
                       ("모방 불가능성", f"만점 {im_max}", "상대가 따라 하면 상대의 주 수입원이 무너지는가"),
                       ("가속도", f"만점 {ac_max}", "그 층에서 내 성장이 빨라지는가")],
             "after": (f"관문 셋이 층 점수의 상한을 건다. 가속도가 {_num(g['slow_cap']['below'])} 미만이면 최고 {_num(g['slow_cap']['cap'])}, "
-                      f"모방 불가능성이 {im_max} 가 아니면 최고 {_num(g['imitation_gate']['cap'])}, 최근 {years}년 안에 상대의 가격 결정력이 "
+                      f"모방 불가능성이 만점({im_max})이 아니면 최고 {_num(g['imitation_gate']['cap'])}, 최근 {years}년 안에 상대의 가격 결정력이 "
                       f"무너졌거나 점유율이 넘어온 증거가 없으면 최고 {_num(g['door_closed_gate']['cap'])} 이다. 수입원이 위협받는 상대가 지금 "
                       "시장에 없으면 수익모델·모방 불가능성은 0 이다. 회사 ③ 은 층 점수를 층 매출 몫으로 가중 평균한 값이다."),
             "tables": [{"title": "층별 부분 점수", "head": ["층", "층 매출 몫", "수익모델", "모방 불가능성", "가속도", "세 부분 합", "걸린 관문", "층 점수"],
@@ -2890,4 +2890,9 @@ def factor_parts(rules: Any, factors: dict[str, dict[str, Any]], f: str) -> dict
     """①②③ 항목의 부분 정의(lead·items·after)와 부분 점수표(tables). 층 규칙이 아니거나 그 항목이 아니면 None."""
     if f not in _FACTOR_PARTS or not is_layered(rules):
         return None
-    return _FACTOR_PARTS[f](rules, factors)
+    parts = _FACTOR_PARTS[f](rules, factors)
+    # 별표 설명은 표에 별표가 있을 때만 붙인다(2026-10-20 초안 재생성 확인 리뷰: 별표 없는 ②③ 표 13개에도 붙었다).
+    for tb in (parts or {}).get("tables", []):
+        if str(tb.get("note") or "").startswith("별표(*)") and not any("*" in str(cell) for row in tb["rows"] for cell in row):
+            tb["note"] = None
+    return parts

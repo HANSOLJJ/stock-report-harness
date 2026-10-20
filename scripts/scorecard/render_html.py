@@ -141,12 +141,12 @@ table.layers th:not(.name),table.layers td:not(.name){padding:10px 6px;white-spa
 .cgrp+.cgrp{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
 /* 2026-10-20 사용자 지시: 칸을 접으면 폰에서 이름이 'Go ogl e' 처럼 쪼개지고 행 하나가 여러 줄이 됐다. 칸은 접지 않고
    한 행을 한 줄로 둔다(시장 이름·관문도 짧은 글자로 쓴다). 폰에서는 첫 열을 고정하고 옆으로 민다. */
-.fparts table{font-size:var(--fs-sm)}
-.fparts th,.fparts td{padding:8px 8px;white-space:nowrap}
+.fparts table,.cv3 table{font-size:var(--fs-sm)}
+.fparts th,.fparts td,.cv3 th,.cv3 td{padding:8px 8px;white-space:nowrap}
 @media(max-width:640px){
-  .fparts table{border-collapse:separate;border-spacing:0}
-  .fparts th.name,.fparts td.name{position:sticky;left:0;z-index:2;background:var(--bg2);max-width:9em;overflow:hidden;text-overflow:ellipsis}
-  .fparts th.name{background:var(--bg3)}
+  .fparts table,.cv3 table{border-collapse:separate;border-spacing:0}
+  .fparts th.name,.fparts td.name,.cv3 th.name,.cv3 td.name{position:sticky;left:0;z-index:2;background:var(--bg2);max-width:9em;overflow:hidden;text-overflow:ellipsis}
+  .fparts th.name,.cv3 th.name{background:var(--bg3)}
 }
 .fdef{color:var(--tx2);font-size:var(--fs-sm);line-height:1.6;margin:6px 0 0}
 .fdefl{color:var(--tx2);font-size:var(--fs-sm);line-height:1.6;margin:4px 0 0;padding-left:18px}

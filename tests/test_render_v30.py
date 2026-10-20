@@ -234,6 +234,22 @@ class V30RenderTest(V30Base):
             with self.subTest(needle=needle):
                 self.assertIn(needle, f3)
 
+    def test_part_notes_follow_the_tables(self):
+        # 2026-10-20 초안 재생성 확인 리뷰: '모방 불가능성이 8 가 아니면'(조사 오류), 별표 없는 표에도 별표 설명이 붙었다
+        import re
+        from scorecard import render_common as rc
+        from scorecard.render_html import render_cards
+        html = render_cards(self.results, self.scores, self.ctx.companies, self.ctx.observations, self.ctx.judgments,
+                            rc.replacements(self.ctx), self.ctx)
+        self.assertIn("모방 불가능성이 만점(8)이 아니면", html)
+        self.assertNotIn("8 가 아니면", html)
+        nv = next(c for c in self.results["companies"] if c["company_id"] == "nvidia")
+        for f in ("F1", "F2", "F3"):
+            for tb in rc.factor_parts(self.ctx.rules, nv["factors"], f)["tables"]:
+                starred = any("*" in str(cell) for row in tb["rows"] for cell in row)
+                with self.subTest(factor=f, table=tb["title"]):
+                    self.assertEqual(bool(re.match(r"별표\(\*\)", str(tb.get("note") or ""))), starred)
+
     def test_part_tables_keep_one_line_per_row(self):
         # 2026-10-20 사용자 지시: 폰에서 이름 칸이 'Go ogl e' 처럼 쪼개지고 행 하나가 여러 줄이 됐다
         from scorecard.render_common import short_name as _short_name
@@ -241,7 +257,7 @@ class V30RenderTest(V30Base):
         self.assertEqual(_short_name("Google Cloud(Google Cloud Platform·Workspace)"), "Google Cloud")
         self.assertEqual(_short_name("검색 광고(Google Search & other)"), "검색 광고")
         self.assertEqual(_short_name("Data Center"), "Data Center")
-        self.assertIn(".fparts th,.fparts td{padding:8px 8px;white-space:nowrap}", css(True))
+        self.assertIn(".fparts th,.fparts td,.cv3 th,.cv3 td{padding:8px 8px;white-space:nowrap}", css(True))
         self.assertNotIn("anywhere", css(True)[css(True).index(".fparts table"):])
 
     def test_scroll_hint_only_for_layered_reports(self):
