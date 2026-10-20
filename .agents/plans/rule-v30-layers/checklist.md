@@ -85,7 +85,9 @@
 - [x] E6 조율자 대조 — ③ 공짜 전략 선택은 사용자 결정(2026-10-20, 거둘 장치가 있으면 공짜 전략으로), 나머지는 규칙·선례로
 - [x] E7 2단계 반영(차례대로 9개, PRP-001~128) + 조율자 PRP-129(Microsoft 응용 ③ 같은 방식에 Oracle)·130(Anthropic ① ai_models_api partial)·131(Anthropic ⑤ Meta 전선)·132(Alphabet 클라우드 ③ Gemma 4), 시범 트리거 43건 pilot10 확인 기록, TRG-151(SpaceX 합병), 9개사 옛 note 28·대체 표시 8 정리. ai_chatbots 관측 12 추가
 - [x] E8 research → calculate → draft: 14개사 순위, 미완료 0. 시범 5개사 중 바뀐 곳은 Anthropic ① 5 → 4(합 −12 → −13)
-- [ ] E9 4영역 리뷰 → 수정 → 확인 리뷰 → 계약 검증
+- [x] E9a 1차 리뷰 일곱(사실·출처 셋·재무·규칙 일관성·근거 불릿·출력). 세션 한도(429)로 한 번 끊겨 이어 감
+- [x] E9b 수정 묶음(원 판단 세션 차례 재개, PRP-133~199) + 조율자 PRP-200~202 + 렌더러 CSS(9b829f1) → research·calculate·draft
+- [ ] E9c 확인 리뷰 1회(Opus) → review.md → 계약 검증
 - [ ] E10 승인 대기 보고
 
 ## v3.0 HTML 리포트 (계획 `html-report.md`, 2026-10-19 착수)
