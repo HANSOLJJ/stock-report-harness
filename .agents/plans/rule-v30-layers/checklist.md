@@ -87,8 +87,8 @@
 - [x] E8 research → calculate → draft: 14개사 순위, 미완료 0. 시범 5개사 중 바뀐 곳은 Anthropic ① 5 → 4(합 −12 → −13)
 - [x] E9a 1차 리뷰 일곱(사실·출처 셋·재무·규칙 일관성·근거 불릿·출력). 세션 한도(429)로 한 번 끊겨 이어 감
 - [x] E9b 수정 묶음(원 판단 세션 차례 재개, PRP-133~199) + 조율자 PRP-200~202 + 렌더러 CSS(9b829f1) → research·calculate·draft
-- [ ] E9c 확인 리뷰 1회(Opus) → review.md → 계약 검증
-- [ ] E10 승인 대기 보고
+- [x] E9c 확인 리뷰 1회(Opus) pass → review.md status pass → 계약 검증 통과
+- [x] E10 승인 대기 보고(2026-10-20)
 
 ## v3.0 HTML 리포트 (계획 `html-report.md`, 2026-10-19 착수)
 - [x] 고치기 전 v21·rejudge·pilot8 HTML 을 스크래치에 그려 두기(바이트 대조 기준)
