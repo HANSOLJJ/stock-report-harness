@@ -210,7 +210,7 @@ class V30RenderTest(V30Base):
         self.assertNotIn("시장 위치", card)
         f1 = card[card.index('<span class="flab">① 네트워크</span>'):card.index('<span class="flab">② ')]
         for needle in ("① 은 사업마다 아래 다섯 부분을 더한다(만점 20).", "<li><b>A 락인 강도</b>(만점 6): 고객이 떠나기 어려운가</li>",
-                       '<th class="">A 락인 강도<span class="thmax">만점 6</span></th>',
+                       '<th class="">A 락인<span class="thmax">만점 6</span></th>',
                        '<td class="name"><b>Data Center</b></td><td class="mono">AI 칩 설계</td><td class="mono">6</td><td class="mono">2</td>'
                        '<td class="mono">1</td><td class="mono">1.6*</td><td class="mono">1.6*</td><td class="mono">12.2</td>',
                        "* 는 확인되지 않아 그 부분 만점의 40% 로 계산한 값이다."):
@@ -226,6 +226,15 @@ class V30RenderTest(V30Base):
                        "상대 없음: 수익모델·모방 0"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, f3)
+
+    def test_part_tables_keep_one_line_per_row(self):
+        # 2026-10-20 사용자 지시: 폰에서 이름 칸이 'Go ogl e' 처럼 쪼개지고 행 하나가 여러 줄이 됐다
+        from scorecard.render_html import _short_name, css
+        self.assertEqual(_short_name("Google Cloud(Google Cloud Platform·Workspace)"), "Google Cloud")
+        self.assertEqual(_short_name("검색 광고(Google Search & other)"), "검색 광고")
+        self.assertEqual(_short_name("Data Center"), "Data Center")
+        self.assertIn(".fparts th,.fparts td{padding:8px 8px;white-space:nowrap}", css(True))
+        self.assertNotIn("anywhere", css(True)[css(True).index(".fparts table"):])
 
     def test_scroll_hint_only_for_layered_reports(self):
         # 2026-10-20 사용자 지시: 가로로 넘치는 표에 열이 더 있다는 안내를 띄운다. 옛 실행의 스크립트·CSS 는 그대로다.

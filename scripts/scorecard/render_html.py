@@ -158,10 +158,16 @@ table.layers th:not(.name),table.layers td:not(.name){padding:10px 6px;white-spa
 /* 2026-10-20 사용자 지시: 과점·함정 두 칸이면 부분 점수표와 설명이 반쪽 폭에 갇혀 읽히지 않는다. 층 규칙 카드는 한 칸으로 쌓는다. */
 .card[open] .cbody{grid-template-columns:1fr}
 .cgrp+.cgrp{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
-/* 좁은 화면에서 덜 넘치게 부분 점수표의 글자를 줄이고 머리글·칸을 접는다. */
+/* 2026-10-20 사용자 지시: 칸을 접으면 폰에서 이름이 'Go ogl e' 처럼 쪼개지고 행 하나가 여러 줄이 됐다. 점수 칸은 접지 않고
+   한 행을 한 줄로 둔다. 긴 문장 칸(시장·걸린 관문)만 최소 폭을 두고 접는다. 폰에서는 첫 열을 고정하고 옆으로 민다. */
 .fparts table{font-size:var(--fs-sm)}
-.fparts th,.fparts td{padding:8px 6px;white-space:normal;word-break:keep-all}
-.fparts td.name{overflow-wrap:anywhere}
+.fparts th,.fparts td{padding:8px 8px;white-space:nowrap}
+.fparts td.text{white-space:normal;word-break:keep-all;min-width:14em}
+@media(max-width:640px){
+  .fparts table{border-collapse:separate;border-spacing:0}
+  .fparts th.name,.fparts td.name{position:sticky;left:0;z-index:2;background:var(--bg2);max-width:9em;overflow:hidden;text-overflow:ellipsis}
+  .fparts th.name{background:var(--bg3)}
+}
 .fdef{color:var(--tx2);font-size:var(--fs-sm);line-height:1.6;margin:6px 0 0}
 .fdefl{color:var(--tx2);font-size:var(--fs-sm);line-height:1.6;margin:4px 0 0;padding-left:18px}
 /* 2026-10-20 사용자 지시: 점수 옆 만점. 점수보다 작고 흐리게 둔다. */
@@ -1342,6 +1348,14 @@ def _v3_card_tables(ctx: Any, c: dict[str, Any]) -> str:
 F1_PART_HINTS = {"A": "고객이 떠나기 어려운가", "B": "값을 올려도 그 사업 매출이 느는가", "C": "동급 대체재가 없는가",
                  "D": "자기 시장에서 몇 위인가", "E": "1년 사이 점유율이 오르는가"}
 UNKNOWN_MARK_NOTE = "* 는 확인되지 않아 그 부분 만점의 {pct}% 로 계산한 값이다."
+# 2026-10-20 사용자 지시: 폰에서 표 한 행이 여러 줄로 접혀 점수 몇 개가 화면을 다 차지했다. 머리글은 짧게, 뜻은 표 위 목록에 둔다.
+F1_PART_SHORT = {"A": "A 락인", "B": "B 가격", "C": "C 대체", "D": "D 순위", "E": "E 점유율"}
+
+
+def _short_name(name: str) -> str:
+    """표에 쓰는 사업 이름은 괄호 앞까지다. 전체 이름은 바로 아래 사업별 근거의 머리에 있다."""
+    head = re.split(r"[(（]", str(name), maxsplit=1)[0].strip()
+    return head or str(name)
 
 
 def _pt(value: Any, unknown: bool) -> str:
@@ -1371,7 +1385,7 @@ def _f1_parts_html(ctx: Any, c: dict[str, Any]) -> str:
             if comp.get("ai_cap_applied"):
                 total += f"(상한, 원래 {rc._score_text(comp.get('raw'))})"
             rows.append(((order.get(comp.get("layer"), len(order)), -(comp.get("revenue") or 0)),
-                         [comp["name"], names.get(comp.get("layer"), comp.get("layer") or "—"),
+                         [_short_name(comp["name"]), names.get(comp.get("layer"), comp.get("layer") or "—"),
                           *(_pt(b.get(k), k in shared_unknown) for k in ("A", "B", "C")),
                           *(_pt(comp.get(k), k in comp_unknown) for k in ("D", "E")), total]))
     if not rows:
@@ -1382,15 +1396,16 @@ def _f1_parts_html(ctx: Any, c: dict[str, Any]) -> str:
     definition = (f'<p class="fdef"><b>① 은 사업마다 아래 다섯 부분을 더한다(만점 {hi}).</b></p><ul class="fdefl">{items}</ul>'
                   f"<p class=\"fdef\">AI 수익화가 '예'가 아닌 사업은 최고 {fmt_score(cap)} 이다. 층 점수는 그 층 안 사업 점수를 매출 몫으로 평균한 값이다.</p>")
     out = (definition + '<div class="ctab">사업별 점수</div>'
-           + _html_table(["사업", "층", *(f'{k} {p["label"]}' for k, p in parts.items()), "사업 점수"], [r for _k, r in rows],
+           + _html_table(["사업", "층", *(F1_PART_SHORT[k] for k in parts), "사업 점수"], [r for _k, r in rows],
                          head_sub=[None, None, *(f'만점 {fmt_score(p["max"])}' for p in parts.values()), f"만점 {hi}"])
            + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p>')
-    market_rows = rc.market_table_rows(c["factors"])
+    market_rows = [[_short_name(r[0]), *r[1:]] for r in rc.market_table_rows(c["factors"])]
     if market_rows:
         d_max, e_max = fmt_score(parts["D"]["max"]), fmt_score(parts["E"]["max"])
         out += ('<div class="ctab">D·E 계산 자료: 시장 순위와 점유율 방향</div>'
-                + _html_table(["구성 사업", "시장", "순위", "점유율(최근 ← 1년 전)", "변화", "반영", "D 시장 순위", "E 점유율 방향"],
-                              market_rows, text_cols={1}, head_sub=[None] * 6 + [f"만점 {d_max}", f"만점 {e_max}"])
+                + _html_table(["구성 사업", "시장", "순위", "점유율", "변화", "반영", F1_PART_SHORT["D"], F1_PART_SHORT["E"]],
+                              market_rows, text_cols={1},
+                              head_sub=[None, None, None, "최근 ← 1년 전", None, None, f"만점 {d_max}", f"만점 {e_max}"])
                 + '<p class="cnote">반영은 시장 자료가 사업이나 시장의 일부만 잴 때 점수에 넣은 비율이다. 나머지는 미확인 점수(1.6)로 채운다. '
                   '시장 정의표가 없는 사업은 이 표에 없고 D·E 가 미확인이다.</p>')
     return f'<div class="fparts">{out}</div>'
