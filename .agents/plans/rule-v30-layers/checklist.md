@@ -129,7 +129,7 @@
 ## 맥미니 배포와 초안 맞추기 (html-readability.md 2단계)
 
 - [x] D0 승인본 배포(6478d23 push, 맥미니 ff pull, fin.hansoljj.com 목록 맨 위·카드 14장 확인)
-- [ ] D1 부분 점수표 데이터를 render_common 으로
-- [ ] D2 초안도 같은 데이터로
+- [x] D1 부분 점수표 데이터를 render_common 으로(c481a7a)
+- [x] D2 초안도 같은 데이터로(c481a7a)
 - [ ] D3 테스트·draft 재생성·review.md 갱신·계약 검증 → 승인 대기
 - [ ] D4 (승인 뒤) build → 커밋 → push → 맥미니 pull
