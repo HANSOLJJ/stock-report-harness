@@ -1039,7 +1039,7 @@ def draft(slug: str) -> Path:
     _require_file(paths.plan, "plan")
     _require_file(paths.research, "research")
     _require_file(results_path(slug), "results.json (calculate 먼저)")
-    protect_approved_run(slug, "초안 재생성(draft)")
+    # 2026-10-20 사용자 결정: 초안은 입력·결과의 렌더링이라 다시 만들어도 확인이 유지된다(approval_mismatches). 막지 않는다.
     ctx = load_context(slug)
     results = load_results(slug)
     if results["input_hashes"] != ctx.hashes:
@@ -1233,6 +1233,10 @@ def approval_mismatches(approved: dict[str, str], current: dict[str, str]) -> li
     differing = {k for k, v in approved.items() if current.get(k) != v}
     differing |= {k for k in APPROVAL_REQUIRED_HASHES if k not in approved}
     differing |= {k for k in ("evidence", "triggers") if k in current and k not in approved}
+    # 2026-10-20 사용자 결정("내용 변경 없으면 그냥 하라"): 초안은 해시가 매겨진 입력·결과의 렌더링이다. 다른 해시가 모두
+    # 같고 초안만 다르면 렌더러가 바뀐 것뿐이라 확인을 유지한다. 초안 키가 확인 기록에 아예 없으면 여전히 무효다.
+    if differing == {"draft"} and "draft" in approved:
+        return []
     return sorted(differing)
 
 

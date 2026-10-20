@@ -12,11 +12,28 @@ const isApprovals = process.argv.slice(2).includes('--approvals');
 const nonFlagArgs = process.argv.slice(2).filter((arg) => !arg.startsWith('--'));
 const REQUESTED_REPORT = nonFlagArgs[0] || process.env.REPORT_SLUG || process.env.REPORT;
 const approvalCode = isApprovals ? String(crypto.randomInt(0, 1e6)).padStart(6, '0') : null;
+// 2026-10-20 사용자 지시: 확인 양식 이름 칸에 가장 최근 확인 기록의 이름을 미리 넣는다.
+function lastApprover() {
+  let best = { at: '', by: '' };
+  try {
+    for (const name of fs.readdirSync(ROOT)) {
+      const file = path.join(ROOT, name, 'approval.json');
+      if (!fs.existsSync(file)) continue;
+      try {
+        const a = JSON.parse(fs.readFileSync(file, 'utf8'));
+        if (a && a.approved_by && String(a.approved_at || '') >= best.at) best = { at: String(a.approved_at || ''), by: String(a.approved_by) };
+      } catch (_) { /* 깨진 기록은 건너뛴다 */ }
+    }
+  } catch (_) { /* output 폴더가 없으면 기본값 없음 */ }
+  return best.by;
+}
+
 const approvals = createApprovals({
   enabled: isApprovals,
   code: approvalCode,
+  defaultBy: isApprovals ? lastApprover() : '',
   onApproved: () => {
-    console.log('Approval confirmed. Shutting down server...');
+    console.log('Confirmed and built. Shutting down server...');
     server.close();
   },
 });
@@ -240,14 +257,14 @@ function openInBrowser(url) {
 
 if (isApprovals) {
   server.listen(PORT, '127.0.0.1', () => {
-    console.log(`[승인 모드] 일회용 코드: ${approvalCode}`);
+    console.log('[확인 모드] 확인 페이지에서 확인을 누르면 곧바로 리포트를 빌드한다');
     const run = normalizeRequestedReport(REQUESTED_REPORT) || latestScorecardRun();
     if (run) {
       const url = `http://127.0.0.1:${server.address().port}/approve/${run}`;
-      console.log(`승인 페이지: ${url}`);
+      console.log(`확인 페이지: ${url}`);
       openInBrowser(url);
     } else {
-      console.log(`승인 페이지: http://127.0.0.1:${server.address().port}/approve/<run_id>`);
+      console.log(`확인 페이지: http://127.0.0.1:${server.address().port}/approve/<run_id>`);
     }
   });
 } else {

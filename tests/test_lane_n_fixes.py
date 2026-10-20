@@ -73,7 +73,6 @@ class ApprovedRunStageTest(FlowBase):
             "judge": lambda: stages.revise_judgment(SLUG, company_id="nvidia", factor="F1", changes={"score": 1}, reason="r", by="u"),
             "confirm": lambda: stages.confirm(SLUG, evidence_ids=["EV-nvidia-001"], reviewer="u"),
             "calculate": lambda: stages.calculate(SLUG),
-            "draft": lambda: stages.draft(SLUG),
             "research": lambda: stages.research(SLUG),
             "review_template": lambda: stages.review_template(SLUG, force=True),
             "collect prices": lambda: stages.collect(SLUG, kinds=("prices",), from_file=str(prices)),
@@ -115,11 +114,18 @@ class ApprovedRunStageTest(FlowBase):
         self.assertTrue(entry["note"].startswith("무효 승인 정리"), entry["note"])
         self.assertEqual(sorted(entry), ["approval_id", "hashes", "note", "revoked_at", "revoked_by"])
 
-    def test_human_session_warns_and_runs(self):
+    def test_draft_on_approved_run_keeps_approval(self):
+        # 2026-10-20 사용자 결정: 초안은 입력·결과의 렌더링이라 승인된 실행에서도 막지 않고 확인이 유지된다
         with human_env():
             out = self.cli("draft", SLUG)
-        self.assertIn("[경고] 승인이 유효한 실행", out)
-        self.assertTrue(stages.status(SLUG)["approval_valid"])   # 같은 입력이면 같은 초안이라 승인이 그대로 유효하다
+        self.assertNotIn("[경고]", out)
+        with human_env(CLAUDECODE="1"):
+            stages.draft(SLUG)
+        self.assertTrue(stages.status(SLUG)["approval_valid"])
+        # 렌더러가 바뀌어 초안 바이트만 달라져도 확인은 유효하다
+        with self.paths.draft.open("a", encoding="utf-8", newline="\n") as fh:
+            fh.write("\n")
+        self.assertTrue(stages.status(SLUG)["approval_valid"])
 
     def test_baseline_consumers(self):
         with human_env(CLAUDECODE="1"):
@@ -156,7 +162,7 @@ class HookStageCommandTest(unittest.TestCase):
     def test_changing_stages_on_existing_runs_blocked(self):
         for slug in EXISTING:
             for args in (f"judge {slug} --company nvidia --factor F1 --set score=5 --reason x --by y", f"calculate {slug}",
-                         f"draft {slug}", f"research {slug}", f"review-template {slug} --force", f"review-template {slug} --fo",
+                         f"research {slug}", f"review-template {slug} --force", f"review-template {slug} --fo",
                          f"confirm {slug} --evidence EV-nvidia-001", f"collect {slug}", f"collect {slug} --kind prices",
                          f"collect {slug} --kind facts", f"collect {slug} --k=all", f"calculate {slug}/"):
                 for tool in ("Bash", "PowerShell"):
@@ -168,7 +174,8 @@ class HookStageCommandTest(unittest.TestCase):
 
     def test_reading_or_unrelated_stage_commands_pass(self):
         for slug in EXISTING:
-            for args in (f"status {slug}", f"summary {slug} --json", f"diff {slug} --against {EXISTING[0]}",
+            # 2026-10-20 사용자 결정: draft 는 확인을 깨지 않아 막지 않는다
+            for args in (f"status {slug}", f"summary {slug} --json", f"diff {slug} --against {EXISTING[0]}", f"draft {slug}",
                          f"collect {slug} --kind news", f"collect {slug} --dry-run", f"review-template {slug}",
                          "calculate ai-scorecard-2026-10-absent"):
                 with self.subTest(args=args):
@@ -194,7 +201,7 @@ class HookStageCommandTest(unittest.TestCase):
     def test_main_returns_block_exit_code_when_validity_fails(self):
         with mock.patch.object(guard, "_approval_is_valid", side_effect=RuntimeError("boom")):
             out = io.StringIO()
-            code = guard.main(["protect_sensitive_files"], stdin=io.StringIO(json.dumps(shell("Bash", f"{self.CLI} draft {EXISTING[0]}"))),
+            code = guard.main(["protect_sensitive_files"], stdin=io.StringIO(json.dumps(shell("Bash", f"{self.CLI} calculate {EXISTING[0]}"))),
                               stdout=out, root=ROOT)
         self.assertEqual(code, 2)
 

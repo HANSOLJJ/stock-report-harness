@@ -72,6 +72,12 @@ class ApprovalRuleTest(unittest.TestCase):
         # 승인 뒤 파일을 지워도 무효다.
         self.assertEqual(approval_mismatches({**{k: k * 4 for k in SIX}, "triggers": "t"}, self.CUR), ["triggers"])
 
+    def test_draft_only_difference_keeps_approval(self):
+        # 2026-10-20 사용자 결정: 다른 해시가 모두 같고 초안만 다르면 렌더러가 바뀐 것뿐이라 확인을 유지한다
+        approved = {k: k * 4 for k in SIX}
+        self.assertEqual(approval_mismatches(approved, {**self.CUR, "draft": "re-rendered"}), [])
+        self.assertEqual(approval_mismatches(approved, {**self.CUR, "draft": "x", "results": "y"}), ["draft", "results"])
+
     def test_missing_required_key_is_never_valid(self):
         self.assertEqual(approval_mismatches({}, self.CUR), sorted(SIX))
         self.assertEqual(approval_mismatches({k: k * 4 for k in SIX if k != "draft"}, self.CUR), ["draft"])

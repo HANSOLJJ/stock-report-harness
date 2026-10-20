@@ -270,7 +270,7 @@ function renderErrorPage(statusCode, title, detail) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${escapeHtml(title)} - 승인 시스템</title>
+  <title>${escapeHtml(title)} - 확인 시스템</title>
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 16px; color: #1e293b; line-height: 1.5; }
     h1 { color: #dc2626; font-size: 24px; }
@@ -439,7 +439,7 @@ function renderJudgeForm(runId, j, choices, formId) {
   };
   return `
       <form method="POST" action="/approve/${escapeHtml(runId)}/judge" class="judge-form" id="${formId}">
-        <p class="form-desc">점수가 아니라 판단 입력을 고칩니다. 제출하면 판단 해시가 바뀌어 지금의 점수·초안·리뷰·승인이 무효가 되고, 이전 값은 수정 이력에 남습니다.</p>
+        <p class="form-desc">점수가 아니라 판단 입력을 고칩니다. 제출하면 판단 해시가 바뀌어 지금의 점수·초안·리뷰·확인이 무효가 되고, 이전 값은 수정 이력에 남습니다.</p>
         <input type="hidden" name="company" value="${escapeHtml(j.company_id)}" />
         <input type="hidden" name="factor" value="${escapeHtml(j.factor)}" />
         ${fields}
@@ -749,9 +749,12 @@ function renderSummaryPage(data, options = {}) {
   }
 
   // (1) 실행 머리
+  // 2026-10-20 사용자 지시: 승인 페이지를 확인 페이지로 바꿨다. 확인 기록(approval.json)이 지금 입력과 맞는지까지 보인다.
   const approvalStatusText = approval.exists
-    ? `승인 완료 (${approval.approved_by || '익명'}, ${approval.approved_at || '-'})`
-    : '미승인';
+    ? (approval.valid === false
+      ? `확인 뒤 입력이 바뀜 — 다시 확인 필요 (${approval.approved_by || '익명'}, ${approval.approved_at || '-'})`
+      : `확인됨 (${approval.approved_by || '익명'}, ${approval.approved_at || '-'})`)
+    : '미확인';
 
   // (2) 기업별 표
   const companyRows = companies.map((c) => {
@@ -841,32 +844,21 @@ function renderSummaryPage(data, options = {}) {
     .map((k) => `<tr><th>${escapeHtml(k)}</th><td><code>${escapeHtml(hashes[k])}</code></td></tr>`)
     .join('\n');
 
-  // (8) 승인 / 취소 폼
+  // (8) 확인 폼. 2026-10-20 사용자 지시: 확인을 누르면 기록을 남기고 곧바로 빌드한다. 코드는 받지 않는다.
+  // 승인 취소 양식은 뺐다 — 확인 기록이 지금 입력과 어긋난 실행에서 '승인 취소' 만 보여 확인이 취소된 일이 있었다.
   let approvalForm = '';
-  if (approval.exists) {
+  if (approval.exists && approval.valid !== false) {
     approvalForm = `
-      <form method="POST" action="/approve/${escapeHtml(runId)}/revoke" class="action-form">
-        <h3>승인 취소</h3>
-        <p class="form-desc">이미 승인된 실행입니다. 승인을 취소하려면 이름과 이유, 일회용 코드를 입력하십시오.</p>
-        <div class="form-group">
-          <label for="revoke_by">이름:</label>
-          <input type="text" id="revoke_by" name="by" required placeholder="취소자 성함" />
-        </div>
-        <div class="form-group">
-          <label for="revoke_note">취소 이유:</label>
-          <input type="text" id="revoke_note" name="note" required placeholder="취소 사유" />
-        </div>
-        <div class="form-group">
-          <label for="revoke_code">일회용 코드 (6자리):</label>
-          <input type="text" id="revoke_code" name="code" required pattern="[0-9]{6}" maxlength="6" placeholder="터미널 확인" />
-        </div>
-        <button type="submit" class="btn btn-danger">승인 취소</button>
+      <form method="POST" action="/approve/${escapeHtml(runId)}/build" class="action-form">
+        <h3>확인됨</h3>
+        <p class="form-desc">이 실행은 확인됐습니다. 리포트를 다시 만들려면 누르십시오.</p>
+        <button type="submit" class="btn btn-primary">다시 빌드</button>
       </form>`;
   } else if (!readiness.ready) {
     const blockers = Array.isArray(readiness.blockers) ? readiness.blockers : [];
     approvalForm = `
       <div class="warning-banner">
-        <strong>아직 승인할 수 없습니다.</strong> 근거 확정이나 판단 수정으로 입력이 바뀌었거나, 계산·초안·리뷰가 끝나지 않았습니다.
+        <strong>아직 확인할 수 없습니다.</strong> 근거 확정이나 판단 수정으로 입력이 바뀌었거나, 계산·초안·리뷰가 끝나지 않았습니다.
         에이전트에게 <code>research → calculate → draft → review</code> 를 돌리게 한 뒤 이 페이지를 새로고침하세요.
       </div>
       <details><summary>막힌 이유 ${blockers.length}건</summary>
@@ -876,23 +868,20 @@ function renderSummaryPage(data, options = {}) {
     approvalForm = `
       ${showReviewWarning ? `
       <div class="warning-banner">
-        <strong>승인 유의 안내:</strong> 리뷰 상태가 'pass'가 아니거나 체크리스트 실패 건수가 존재합니다 (실패: ${checklistFailCount}건). Python 승인 검증기가 해당 실행을 거부할 수 있습니다.
+        <strong>확인 유의 안내:</strong> 리뷰 상태가 'pass'가 아니거나 체크리스트 실패 건수가 존재합니다 (실패: ${checklistFailCount}건). 확인 검증기가 해당 실행을 거부할 수 있습니다.
       </div>` : ''}
       <form method="POST" action="/approve/${escapeHtml(runId)}/approve" class="action-form">
-        <h3>실행 승인</h3>
+        <h3>확인</h3>
+        <p class="form-desc">확인을 누르면 기록을 남기고 곧바로 리포트를 빌드합니다.</p>
         <div class="form-group">
-          <label for="approve_by">승인자 이름:</label>
-          <input type="text" id="approve_by" name="by" required placeholder="승인자 성함" />
+          <label for="approve_by">이름:</label>
+          <input type="text" id="approve_by" name="by" value="${escapeHtml(options.defaultBy || '')}" placeholder="이름" />
         </div>
         <div class="form-group">
           <label for="approve_note">메모 (선택):</label>
-          <input type="text" id="approve_note" name="note" placeholder="승인 메모" />
+          <input type="text" id="approve_note" name="note" placeholder="메모" />
         </div>
-        <div class="form-group">
-          <label for="approve_code">일회용 코드 (6자리):</label>
-          <input type="text" id="approve_code" name="code" required pattern="[0-9]{6}" maxlength="6" placeholder="터미널 확인" />
-        </div>
-        <button type="submit" class="btn btn-primary">승인 확정</button>
+        <button type="submit" class="btn btn-primary">확인</button>
       </form>`;
   }
 
@@ -901,7 +890,7 @@ function renderSummaryPage(data, options = {}) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>스코어카드 실행 승인: ${escapeHtml(runId)}</title>
+  <title>스코어카드 실행 확인: ${escapeHtml(runId)}</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     [hidden] { display: none !important; }   /* 2026-10-01: .prop-form 의 display:flex 가 hidden 을 덮어써 거부 칸이 처음부터 펼쳐졌다 */
@@ -1036,7 +1025,7 @@ function renderSummaryPage(data, options = {}) {
 </head>
 <body>
   <header>
-    <h1>AI 기업 스코어카드 승인 검토</h1>
+    <h1>AI 기업 스코어카드 확인</h1>
   </header>
   ${renderFactorBar()}
 
@@ -1049,7 +1038,7 @@ function renderSummaryPage(data, options = {}) {
       <div class="meta-card"><div class="label">실행 ID (run_id)</div><div class="value">${escapeHtml(runId)}</div></div>
       <div class="meta-card"><div class="label">기준일 (as_of)</div><div class="value">${escapeHtml(asOf)}</div></div>
       <div class="meta-card"><div class="label">규칙 버전 (rule_version)</div><div class="value">${escapeHtml(ruleVersion)}</div></div>
-      <div class="meta-card"><div class="label">승인 상태</div><div class="value">${escapeHtml(approvalStatusText)}</div></div>
+      <div class="meta-card"><div class="label">확인 상태</div><div class="value">${escapeHtml(approvalStatusText)}</div></div>
     </div>
   </section>
 
@@ -1158,9 +1147,9 @@ function renderSummaryPage(data, options = {}) {
     ${renderGlossary()}
   </section>
 
-  <!-- (9) 승인 / 취소 폼 -->
+  <!-- (9) 확인 폼 -->
   <section>
-    <h2>10. 실행 승인 / 승인 취소</h2>
+    <h2>10. 확인</h2>
     ${approvalForm}
   </section>
   <script>
@@ -1261,6 +1250,8 @@ function createApprovals(options = {}) {
   }
   const runCli = typeof options.runCli === 'function' ? options.runCli : defaultRunCli;
   const onApproved = typeof options.onApproved === 'function' ? options.onApproved : null;
+  // 확인 양식 이름 칸의 기본값(서버가 가장 최근 확인 기록의 이름을 넘긴다). 비면 '확인' 으로 기록한다.
+  const defaultBy = typeof options.defaultBy === 'string' ? options.defaultBy.trim() : '';
   const log = typeof options.log === 'function' ? options.log : (msg) => console.error(msg);
   // 잘못된 코드가 MAX_CODE_FAILURES 번 오면 이 서버의 모든 POST 를 막는다. 풀려면 서버를 다시 띄워 새 코드를 받는다.
   let codeFailures = 0;
@@ -1341,14 +1332,14 @@ function createApprovals(options = {}) {
         // 판단 수정 절의 선택. 형식이 아니면 무시한다(페이지는 그대로 그린다).
         const judgeFactor = FACTOR_REGEX.test(query.get('factor') || '') ? query.get('factor') : null;
         const judgeCompany = COMPANY_ID_REGEX.test(query.get('company') || '') ? query.get('company') : null;
-        sendHtml(res, 200, renderSummaryPage(summaryData, { judgeFactor, judgeCompany }));
+        sendHtml(res, 200, renderSummaryPage(summaryData, { judgeFactor, judgeCompany, defaultBy }));
       });
       return true;
     }
 
     if (req.method === 'POST' && segments.length === 2) {
       const action = segments[1];
-      if (!['confirm', 'approve', 'revoke', 'judge', 'proposal'].includes(action)) {
+      if (!['confirm', 'approve', 'build', 'revoke', 'judge', 'proposal'].includes(action)) {
         sendText(res, 404, 'Not Found: Invalid action');
         return true;
       }
@@ -1362,9 +1353,8 @@ function createApprovals(options = {}) {
         const params = new URLSearchParams(rawBody);
         const submittedCode = (params.get('code') || '').trim();
 
-        // 2026-10-01 사용자 요청: 일회용 코드는 승인·취소에만 받는다. 근거 확정·판단 수정·제안 결정은 코드 없이 처리한다.
-        // 승인·취소에 남기는 이유는 에이전트가 이 서버로 승인을 누르는 것을 막는 유일한 장치이기 때문이다.
-        if (['approve', 'revoke'].includes(action) && submittedCode !== code.trim()) {
+        // 2026-10-20 사용자 지시: 확인(approve)에는 코드를 받지 않는다. 코드는 페이지에서 뺀 승인 취소(revoke) 경로에만 남는다.
+        if (action === 'revoke' && submittedCode !== code.trim()) {
           codeFailures += 1;
           if (codeFailures === MAX_CODE_FAILURES) {
             log(`코드 실패 ${MAX_CODE_FAILURES}회 — 서버를 다시 띄우세요`);
@@ -1399,8 +1389,10 @@ function createApprovals(options = {}) {
           if (rejectList.length > 0) {
             cliArgs.push('--reject', rejectList.join(','));
           }
+        } else if (action === 'build') {
+          cliArgs.push('build', runId);
         } else if (action === 'approve') {
-          const by = (params.get('by') || params.get('name') || '').trim();
+          const by = (params.get('by') || params.get('name') || '').trim() || defaultBy || '확인';
           const note = (params.get('note') || '').trim();
           cliArgs.push('approve', runId, '--by', by);
           if (note) {
@@ -1430,7 +1422,8 @@ function createApprovals(options = {}) {
           if (note) cliArgs.push(`--note=${note}`);
         }
 
-        runCli(cliArgs, (cliErr, cliResult) => {
+        // 2026-10-20 사용자 지시: 확인이 성공하면 곧바로 빌드한다. 확인이 실패하면 빌드하지 않는다.
+        const finish = (cliErr, cliResult, build) => {
           runCli(['summary', runId, '--json'], (sumErr, sumResult) => {
             let summaryData = null;
             if (sumResult && sumResult.exitCode === 0) {
@@ -1441,22 +1434,31 @@ function createApprovals(options = {}) {
               }
             }
 
+            const buildResult = build ? build.result : null;
             const pageOptions = {
+              defaultBy,
               lastResult: {
-                command: cliArgs.join(' '),
-                exitCode: cliResult ? cliResult.exitCode : 1,
-                stdout: cliResult ? cliResult.stdout : '',
-                stderr: cliResult ? cliResult.stderr : (cliErr ? cliErr.message : ''),
+                command: cliArgs.join(' ') + (build ? ' → build' : ''),
+                exitCode: buildResult ? buildResult.exitCode : (cliResult ? cliResult.exitCode : 1),
+                stdout: (cliResult ? cliResult.stdout : '') + (buildResult ? `\n${buildResult.stdout}` : ''),
+                stderr: (cliResult ? cliResult.stderr : (cliErr ? cliErr.message : '')) + (buildResult && buildResult.stderr ? `\n${buildResult.stderr}` : ''),
               },
             };
+            const built = (action === 'build' && cliResult && cliResult.exitCode === 0)
+              || (action === 'approve' && buildResult && buildResult.exitCode === 0);
+            if (built) {
+              pageOptions.notice = '확인했고 리포트를 빌드했다. 확인 서버는 곧 내려간다.';
+            } else if (action === 'approve' && cliResult && cliResult.exitCode === 0 && buildResult) {
+              pageOptions.notice = '확인은 기록됐지만 빌드가 실패했다. 아래 오류를 에이전트에게 알린다.';
+            }
             if (action === 'proposal' && cliResult && cliResult.exitCode === 0 && ['--accept', '--undo'].includes(cliArgs[4])) {
-              pageOptions.notice = '제안을 반영해 판단이 바뀌었다 — 에이전트에게 research → calculate → draft → review 를 다시 돌리게 한 뒤 새로고침해 승인한다. 지금 페이지의 점수는 아직 반영 전 값이다.';
+              pageOptions.notice = '제안을 반영해 판단이 바뀌었다 — 에이전트에게 research → calculate → draft → review 를 다시 돌리게 한 뒤 새로고침해 확인한다. 지금 페이지의 점수는 아직 반영 전 값이다.';
             }
             if (action === 'judge') {
               pageOptions.judgeFactor = cliArgs[5];
               pageOptions.judgeCompany = cliArgs[3];
               if (cliResult && cliResult.exitCode === 0) {
-                pageOptions.notice = '판단 해시가 바뀌었다 — 에이전트에게 research → calculate → draft → review 를 다시 돌리게 한 뒤 새로고침해 승인한다. 지금 페이지의 점수는 아직 수정 전 값이다.';
+                pageOptions.notice = '판단 해시가 바뀌었다 — 에이전트에게 research → calculate → draft → review 를 다시 돌리게 한 뒤 새로고침해 확인한다. 지금 페이지의 점수는 아직 수정 전 값이다.';
               }
             }
 
@@ -1466,12 +1468,18 @@ function createApprovals(options = {}) {
               sendHtml(res, 200, renderErrorPage(200, '작업 결과', `명령 실행 완료: ${cliArgs.join(' ')}\n\n표준 출력:\n${cliResult ? cliResult.stdout : ''}\n\n표준 오류:\n${cliResult ? cliResult.stderr : ''}`));
             }
 
-            if (action === 'approve' && cliResult && cliResult.exitCode === 0) {
-              if (typeof onApproved === 'function') {
-                setTimeout(onApproved, 100);
-              }
+            if (built && typeof onApproved === 'function') {
+              setTimeout(onApproved, 100);
             }
           });
+        };
+        runCli(cliArgs, (cliErr, cliResult) => {
+          if (action === 'approve' && cliResult && cliResult.exitCode === 0) {
+            runCli(['build', runId], (bErr, bResult) => finish(cliErr, cliResult, {
+              result: bResult || { exitCode: 1, stdout: '', stderr: bErr ? bErr.message : '' } }));
+            return;
+          }
+          finish(cliErr, cliResult, null);
         });
       });
       return true;

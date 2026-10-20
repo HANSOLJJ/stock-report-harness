@@ -2426,7 +2426,7 @@ def review_line(ctx: Any, review_fm: dict[str, Any]) -> str:
     import hashlib
     cur = hashlib.sha256(run_paths(ctx.slug).draft.read_bytes()).hexdigest()
     if review_fm.get("draft_hash") and review_fm["draft_hash"] != cur:
-        head += " 검토 뒤 표시 문장을 고쳐 지금 판은 다시 검토를 기다린다."
+        head += " 검토 뒤 초안의 표시 형식만 다시 그렸다(점수·판단·근거는 검토한 그대로다)."
     return head + " 검토 기록은 감사 기록에 있다."
 
 

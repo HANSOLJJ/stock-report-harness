@@ -167,17 +167,21 @@ test('승인 모드 활성화: GET /approve/<run_id> → 200 및 요약 필드 �
   }
 });
 
-test('POST /approve: 코드 불일치 시 403 Forbidden 및 가짜 CLI 미호출', async () => {
-  let cliCalled = false;
+// 2026-10-20 사용자 지시: 승인 페이지를 확인 페이지로 바꿨다. 확인에는 코드를 받지 않고, 확인이 성공하면 곧바로 build 를 부른다.
+test('POST /approve: 코드 없이 확인하면 approve 다음 build 를 부르고 onApproved 1회', async () => {
+  const calls = [];
+  let approvedCount = 0;
   const dummyRunCli = (args, cb) => {
-    cliCalled = true;
-    cb(null, { exitCode: 0, stdout: 'ok', stderr: '' });
+    calls.push(args);
+    cb(null, { exitCode: 0, stdout: args[0] === 'summary' ? '{}' : 'ok', stderr: '' });
   };
 
   const approvals = createApprovals({
     enabled: true,
     code: '654321',
     runCli: dummyRunCli,
+    defaultBy: '정한솔',
+    onApproved: () => { approvedCount += 1; },
   });
 
   const server = http.createServer((req, res) => {
@@ -189,7 +193,7 @@ test('POST /approve: 코드 불일치 시 403 Forbidden 및 가짜 CLI 미호출
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
 
   try {
-    const body = 'code=000000&by=tester';
+    const body = 'by=';
     const res = await makeRequest(
       server,
       {
@@ -200,8 +204,11 @@ test('POST /approve: 코드 불일치 시 403 Forbidden 및 가짜 CLI 미호출
       body
     );
 
-    assert.equal(res.statusCode, 403);
-    assert.equal(cliCalled, false, '코드 불일치 시 CLI가 호출되면 안 됨');
+    assert.equal(res.statusCode, 200);
+    assert.deepEqual(calls[0], ['approve', 'ai-scorecard-2026-11-x', '--by', '정한솔', '--via', 'browser'], '이름이 비면 기본 이름으로 기록');
+    assert.deepEqual(calls[1], ['build', 'ai-scorecard-2026-11-x'], '확인 뒤 곧바로 build');
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    assert.equal(approvedCount, 1);
   } finally {
     server.close();
   }
@@ -338,14 +345,14 @@ test('코드 실패 5회 뒤 모든 POST 403, CLI 미호출, 터미널 안내 1�
   try {
     // 4번 틀린 뒤에는 아직 맞는 코드가 통한다.
     for (let i = 0; i < 4; i += 1) {
-      assert.equal((await post('approve', 'code=000000&by=x')).statusCode, 403);
+      assert.equal((await post('revoke', 'code=000000&by=x&note=n')).statusCode, 403);
     }
     assert.equal(logs.length, 0);
     assert.equal((await post('confirm', 'code=123456&evidence=EV-nvidia-001')).statusCode, 200);
     assert.ok(cliCalls > 0);
 
     // 5번째 실패에서 막힌다. 그 뒤에는 맞는 코드도, 다른 동작도 403 이다.
-    assert.equal((await post('approve', 'code=000000&by=x')).statusCode, 403);
+    assert.equal((await post('revoke', 'code=000000&by=x&note=n')).statusCode, 403);
     assert.deepEqual(logs, ['코드 실패 5회 — 서버를 다시 띄우세요']);
     const before = cliCalls;
     for (const action of ['approve', 'revoke', 'confirm']) {
@@ -444,7 +451,7 @@ test('GET ?factor=F3: 같은 factor 의 모든 기업 판단을 나란히, compa
   }
 });
 
-test('POST /judge: 일회용 코드 없이 처리한다(코드는 승인·취소에만)', async () => {
+test('POST /judge: 일회용 코드 없이 처리한다(확인도 코드 없음)', async () => {
   const calls = [];
   const server = await startServer({
     enabled: true,
@@ -457,10 +464,10 @@ test('POST /judge: 일회용 코드 없이 처리한다(코드는 승인·취소
     assert.equal(calls[0][0], 'judge');
     const confirm = await postForm(server, 'confirm', 'evidence=EV-nvidia-001');
     assert.equal(confirm.statusCode, 200);
-    // 승인은 여전히 코드가 필요하다
-    const approve = await postForm(server, 'approve', 'code=000000&by=x');
-    assert.equal(approve.statusCode, 403);
-    assert.ok(!calls.some((a) => a[0] === 'approve'), '코드가 틀린 승인은 CLI 를 부르면 안 됨');
+    // 2026-10-20: 확인도 코드 없이 처리하고 곧바로 build 를 부른다
+    const approve = await postForm(server, 'approve', 'by=x');
+    assert.equal(approve.statusCode, 200);
+    assert.ok(calls.some((a) => a[0] === 'approve') && calls.some((a) => a[0] === 'build'));
   } finally {
     server.close();
   }
@@ -559,7 +566,7 @@ test('GET: 승인할 수 없는 상태면 승인 폼 대신 막힌 이유와 다
   });
   try {
     const res = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x' });
-    assert.match(res.body, /아직 승인할 수 없습니다/);
+    assert.match(res.body, /아직 확인할 수 없습니다/);
     assert.match(res.body, /results\.json 없음 \(calculate 필요\)/);
     assert.doesNotMatch(res.body, /id="approve_code"/, '승인 폼이 없어야 함');
   } finally {
@@ -796,5 +803,32 @@ test('GET 규칙 v2.0: 재확인 제안은 "재확인 — 다시 읽은 근거" 
   } finally {
     delete process.env.FAKE_SUMMARY;
     server.close();
+  }
+});
+
+// 2026-10-20 사용자 지시: 확인 기록이 지금 입력과 어긋난 실행에서 '승인 취소' 만 보여 확인이 취소된 일이 있었다.
+// 확인된 실행은 '다시 빌드', 어긋난 실행은 '확인' 양식을 보이고 취소 양식은 어디에도 없다.
+test('GET: 확인 상태별 양식 — 유효하면 다시 빌드, 어긋나면 확인, 취소 양식 없음', async () => {
+  const fs = require('node:fs');
+  const sample = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'fixtures', 'summary.sample.json'), 'utf8'));
+  for (const [approval, expected, absent] of [
+    [{ exists: true, valid: true, approved_by: 'u', approved_at: '2026-10-20' }, /다시 빌드/, /name="code"/],
+    [{ exists: true, valid: false, approved_by: 'u', approved_at: '2026-10-20' }, /곧바로 리포트를 빌드합니다/, /다시 빌드/],
+  ]) {
+    const data = { ...sample, approval, approval_ready: { ready: true, blockers: [] } };
+    const server = await startServer({
+      enabled: true,
+      code: '123456',
+      runCli: (args, cb) => cb(null, { exitCode: 0, stdout: JSON.stringify(data), stderr: '' }),
+    });
+    try {
+      const res = await makeRequest(server, { path: '/approve/ai-scorecard-2026-11-x' });
+      assert.equal(res.statusCode, 200);
+      assert.match(res.body, expected);
+      assert.doesNotMatch(res.body, absent);
+      assert.doesNotMatch(res.body, /승인 취소/);
+    } finally {
+      server.close();
+    }
   }
 });

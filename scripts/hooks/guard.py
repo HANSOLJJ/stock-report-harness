@@ -649,7 +649,8 @@ def _init_force_approved(cmd: str, root: Path) -> list[str]:
 
 # 2026-10-01 레인 N(V2-1): 실행의 입력·산출물을 바꾸는 단계 명령. 맨 실행 이름도 `output/<이름>` 폴더로 풀어, 그 폴더에
 # 유효한 승인이 있으면 막는다. 무효 승인은 막지 않는다 — 사람이 승인 페이지에서 판단을 고친 뒤 에이전트가 다시 돌리는 흐름이다.
-_STAGE_WRITES = {"judge", "confirm", "calculate", "draft", "research", "review-template", "collect", "set-as-of"}
+# 2026-10-20 사용자 결정: draft 는 입력·결과의 렌더링이라 확인이 유지된다(stages.approval_mismatches). 목록에서 뺐다.
+_STAGE_WRITES = {"judge", "confirm", "calculate", "research", "review-template", "collect", "set-as-of"}
 
 
 def _option_value(rest: list[str], name: str) -> str | None:

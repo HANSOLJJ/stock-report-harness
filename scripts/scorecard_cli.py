@@ -471,6 +471,13 @@ def cmd_proposal(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_build(args: argparse.Namespace) -> int:
+    """2026-10-20 사용자 지시: 확인 페이지에서 확인을 누르면 곧바로 빌드한다. 진입점은 build_report.main 하나다."""
+    from build_report import main as build_main
+
+    return build_main([args.slug])
+
+
 def cmd_summary(args: argparse.Namespace) -> int:
     """승인 페이지용 요약. --json 은 tests/node/fixtures/summary.sample.json 과 같은 키 구조의 JSON 한 개다."""
     from scorecard.stages import summary
@@ -832,6 +839,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--business", help=BUSINESS_HELP)
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_judge)
+
+    p = sub.add_parser("build", help="확인된 실행을 리포트로 빌드한다(확인 페이지가 부른다. scripts/build_report.py 와 같다)")
+    p.add_argument("slug")
+    p.set_defaults(func=cmd_build)
 
     p = sub.add_parser("summary", help="승인 페이지용 요약")
     p.add_argument("slug")

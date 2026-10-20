@@ -487,7 +487,11 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
         result.error("review results_hash 가 results.json 과 다름 — 검토 대상이 바뀌었으므로 리뷰 무효")
     draft_hash = sha256_file(paths.draft)
     if frontmatter_value(vfm, "draft_hash") != draft_hash:
-        result.error("review draft_hash 가 현재 draft 와 다름 — 초안이 바뀌었으므로 리뷰 무효")
+        # 2026-10-20 사용자 결정: 검토한 결과(results_hash)가 같으면 초안은 표시 형식만 다시 그린 것이라 리뷰를 무효로 보지 않는다.
+        if frontmatter_value(vfm, "results_hash") == results["results_hash"]:
+            result.warn("review draft_hash 가 현재 draft 와 다름 — 검토한 결과는 같고 초안의 표시 형식만 다시 그렸다")
+        else:
+            result.error("review draft_hash 가 현재 draft 와 다름 — 초안이 바뀌었으므로 리뷰 무효")
     review_errors_before = len(result.errors)
     area_rows = _table_rows(_section(vbody, "검토 영역"))
     area_labels = {label for _, label, _ in REVIEW_AREAS}
