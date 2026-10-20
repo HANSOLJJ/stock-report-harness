@@ -162,6 +162,17 @@ class V30RenderTest(V30Base):
                 self.assertIn(needle, html)
         self.assertNotIn("비교 그룹 안 순위", html, "순위가 확정되지 않은(미완료) 회사는 그룹 안 순위에 넣지 않는다")
         self.assertEqual(render_holdings_v3(self.results, SimpleNamespace(rules=load_rules("v2.1"))), "")
+        # 2026-10-20 사용자 지시: 요약 열(주 층·AI 무관 매출·④)이 오른쪽 끝에 잘려 있었다. 기업 열 바로 뒤에 둔다.
+        self.assertIn('<th class="name keep">기업</th><th>주 층</th><th>AI 무관 매출</th><th>④ /20</th><th>전력</th>', html)
+
+    def test_scroll_hint_only_for_layered_reports(self):
+        # 2026-10-20 사용자 지시: 가로로 넘치는 표에 열이 더 있다는 안내를 띄운다. 옛 실행의 스크립트·CSS 는 그대로다.
+        from scorecard.render_html import css, js
+        self.assertIn("scrollhint", js(True))
+        self.assertIn("옆으로 밀면 열이 더 있다", js(True))
+        self.assertNotIn("scrollhint", js(False))
+        self.assertIn(".tablewrap.more", css(True))
+        self.assertNotIn(".tablewrap.more", css(False))
 
     def test_scatter_uses_rule_baselines(self):
         # 2026-10-19: v3.0 산점도에 25점 척도의 '과점 후보군 20점' 선이 그대로 그려졌다

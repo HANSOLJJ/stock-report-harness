@@ -130,6 +130,11 @@ details.unit>summary .uname::before{content:"▸ ";color:var(--tx3)}
 details.unit[open]>summary .uname::before{content:"▾ "}
 details.unit>summary .usc{color:var(--tx2);font-variant-numeric:tabular-nums;white-space:nowrap}
 table.layers td .lw{display:block;font-size:var(--fs-sm);font-variant-numeric:tabular-nums}
+/* 2026-10-20 사용자 지시: 열한 층 보유표가 오른쪽으로 잘린 줄 몰랐다. 머리글·칸을 접어 넓은 화면에서는 한 화면에 넣는다. */
+table.layers th:not(.name),table.layers td:not(.name){padding:10px 6px;white-space:normal;word-break:keep-all}
+/* 표가 화면보다 넓으면 위에 안내를 띄우고(JS 가 .scrollhint 를 만든다), 끝까지 밀지 않았으면 오른쪽 끝을 흐린다. */
+.scrollhint{font-size:var(--fs-sm);color:var(--tx2);margin:0 0 6px;text-align:right}
+.tablewrap.more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),rgba(0,0,0,.25));mask-image:linear-gradient(to right,#000 calc(100% - 40px),rgba(0,0,0,.25))}
 """
 
 
@@ -493,7 +498,38 @@ tr.priv{opacity:.75}
 
 # ------------------------------------------------------------------ JS
 
-def js() -> str:
+V3_JS = """
+(function(){
+  // 2026-10-20 사용자 지시: 가로로 넘치는 표는 처음 보는 사람이 옆에 열이 더 있는 줄 모른다.
+  // 넘칠 때만 표 위에 안내를 띄우고, 끝까지 밀지 않았으면 오른쪽 끝을 흐린다. 숨은 탭·닫힌 카드의 표는 열릴 때 다시 잰다.
+  const wraps=[...document.querySelectorAll('.tablewrap')]; if(!wraps.length) return;
+  function check(w){
+    if(!w.offsetParent) return;
+    const over=w.scrollWidth>w.clientWidth+2;
+    let hint=w.previousElementSibling;
+    if(!(hint&&hint.classList.contains('scrollhint'))){
+      if(!over) return;
+      hint=document.createElement('p'); hint.className='scrollhint'; hint.textContent='표가 화면보다 넓다. 옆으로 밀면 열이 더 있다 →'; w.before(hint);
+    }
+    hint.hidden=!over;
+    w.classList.toggle('more',over&&w.scrollLeft+w.clientWidth<w.scrollWidth-2);
+  }
+  function all(){wraps.forEach(check);}
+  wraps.forEach(w=>w.addEventListener('scroll',()=>check(w),{passive:true}));
+  addEventListener('resize',all);
+  document.addEventListener('toggle',all,true);
+  document.addEventListener('click',e=>{if(e.target.closest('.tabs [data-tab]')) setTimeout(all,0);});
+  addEventListener('hashchange',()=>setTimeout(all,0));
+  all();
+})();
+"""
+
+
+def js(layered: bool = False) -> str:
+    return _base_js() + ("\n" + V3_JS.strip() if layered else "")
+
+
+def _base_js() -> str:
     return """
 (function(){
   // 2026-10-07 사용자 요청: 한 페이지가 길어 절을 상단 탭으로 나눈다. JS 가 없으면 모든 패널이 보인다(hidden 은 JS 가 세운다).
@@ -1033,17 +1069,20 @@ def render_holdings_v3(results: dict[str, Any], ctx: Any) -> str:
             tds.append(f'<td class="{cell_cls.get(v, "")}">{esc(rc.LAYER_VALUE_LABELS.get(v, "—"))}{share}</td>')
         primary = calc.get("primary_layer")
         outside = weights.get(layers["outside"]["id"], 0)
-        body.append(f'<tr data-company="{esc(c["company_id"])}"><td class="name keep"><b>{esc(c["display_name"])}</b></td>{"".join(tds)}'
-                    f'<td class="mono">{esc(rc._share_text(outside)) if outside > 0 else "—"}</td>'
+        # 2026-10-20 사용자 지시: 표가 오른쪽으로 잘려 주 층·AI 무관 매출·④ 열이 있는 줄 몰랐다. 요약 열을 기업 열 바로 뒤로 옮긴다.
+        body.append(f'<tr data-company="{esc(c["company_id"])}"><td class="name keep"><b>{esc(c["display_name"])}</b></td>'
                     f'<td>{esc(names.get(primary, "—"))}</td>'
                     f'<td class="mono">{esc(rc._share_text(calc["non_ai_share"])) if isinstance(calc.get("non_ai_share"), (int, float)) else "—"}</td>'
-                    f'<td class="mono"><b>{fmt_score(f4.get("score"))}</b></td></tr>')
+                    f'<td class="mono"><b>{fmt_score(f4.get("score"))}</b></td>{"".join(tds)}'
+                    f'<td class="mono">{esc(rc._share_text(outside)) if outside > 0 else "—"}</td></tr>')
         if c.get("complete") and primary:
             groups.setdefault(primary, []).append(c)
     if not body:
         return ""
-    head = ('<tr><th class="name keep">기업</th>' + "".join(f"<th>{esc(names[k])}</th>" for k in keys)
-            + f"<th>{esc(names.get(layers['outside']['id'], '층 밖 사업'))}</th><th>주 층</th><th>AI 무관 매출</th><th>④</th></tr>")
+    f4_max = ctx.rules.factor_range("F4")[1]
+    head = (f'<tr><th class="name keep">기업</th><th>주 층</th><th>AI 무관 매출</th><th>④ /{f4_max:g}</th>'
+            + "".join(f"<th>{esc(names[k])}</th>" for k in keys)
+            + f"<th>{esc(names.get(layers['outside']['id'], '층 밖 사업'))}</th></tr>")
     values = layers["cell_values"]
     full_at = ctx.rules.factor("F4")["vertical"]["full_at"]
     # 괄호에는 그룹 안 순위와 전체 순위를 함께 적는다(전체 순위만 적으면 그룹 안 순위로 읽힌다).
@@ -2532,7 +2571,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <p>단위 — $M / $B / $T · 실행 {esc(ctx.slug)} · 승인 {esc(approval["approved_by"])} {esc(approval["approved_at"])} · 생성기 {GENERATOR}</p>
 </footer>
 </div>
-<script>{js()}</script>
+<script>{js(rc.is_layered(ctx.rules))}</script>
 </body>
 </html>
 """
