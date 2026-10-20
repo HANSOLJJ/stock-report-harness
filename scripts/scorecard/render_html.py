@@ -158,11 +158,10 @@ table.layers th:not(.name),table.layers td:not(.name){padding:10px 6px;white-spa
 /* 2026-10-20 사용자 지시: 과점·함정 두 칸이면 부분 점수표와 설명이 반쪽 폭에 갇혀 읽히지 않는다. 층 규칙 카드는 한 칸으로 쌓는다. */
 .card[open] .cbody{grid-template-columns:1fr}
 .cgrp+.cgrp{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}
-/* 2026-10-20 사용자 지시: 칸을 접으면 폰에서 이름이 'Go ogl e' 처럼 쪼개지고 행 하나가 여러 줄이 됐다. 점수 칸은 접지 않고
-   한 행을 한 줄로 둔다. 긴 문장 칸(시장·걸린 관문)만 최소 폭을 두고 접는다. 폰에서는 첫 열을 고정하고 옆으로 민다. */
+/* 2026-10-20 사용자 지시: 칸을 접으면 폰에서 이름이 'Go ogl e' 처럼 쪼개지고 행 하나가 여러 줄이 됐다. 칸은 접지 않고
+   한 행을 한 줄로 둔다(시장 이름·관문도 짧은 글자로 쓴다). 폰에서는 첫 열을 고정하고 옆으로 민다. */
 .fparts table{font-size:var(--fs-sm)}
 .fparts th,.fparts td{padding:8px 8px;white-space:nowrap}
-.fparts td.text{white-space:normal;word-break:keep-all;min-width:14em}
 @media(max-width:640px){
   .fparts table{border-collapse:separate;border-spacing:0}
   .fparts th.name,.fparts td.name{position:sticky;left:0;z-index:2;background:var(--bg2);max-width:9em;overflow:hidden;text-overflow:ellipsis}
@@ -1399,7 +1398,7 @@ def _f1_parts_html(ctx: Any, c: dict[str, Any]) -> str:
            + _html_table(["사업", "층", *(F1_PART_SHORT[k] for k in parts), "사업 점수"], [r for _k, r in rows],
                          head_sub=[None, None, *(f'만점 {fmt_score(p["max"])}' for p in parts.values()), f"만점 {hi}"])
            + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p>')
-    market_rows = [[_short_name(r[0]), *r[1:]] for r in rc.market_table_rows(c["factors"])]
+    market_rows = [[_short_name(r[0]), _short_name(r[1]), *r[2:]] for r in rc.market_table_rows(c["factors"])]
     if market_rows:
         d_max, e_max = fmt_score(parts["D"]["max"]), fmt_score(parts["E"]["max"])
         out += ('<div class="ctab">D·E 계산 자료: 시장 순위와 점유율 방향</div>'
@@ -1462,9 +1461,10 @@ def _f3_parts_html(ctx: Any, c: dict[str, Any]) -> str:
     ac_max = fmt_score(spec["acceleration"]["max"])
     g = spec["gates"]
     years = fmt_score(int(rules.payload["layers"]["time_window_months"]) / 12)
-    gate_text = {"slow": f"최고 {fmt_score(g['slow_cap']['cap'])}(가속도 {fmt_score(g['slow_cap']['below'])} 미만)",
-                 "imitation": f"최고 {fmt_score(g['imitation_gate']['cap'])}(모방 불가능성 {im_max} 아님)",
-                 "door_closed": f"최고 {fmt_score(g['door_closed_gate']['cap'])}(문 닫힘 증거 없음)"}
+    # 관문 조건은 표 위 정의에 있다. 칸에는 상한과 관문 이름만 적어 한 줄에 둔다(2026-10-20 사용자 지시).
+    gate_text = {"slow": f"최고 {fmt_score(g['slow_cap']['cap'])}(가속도)",
+                 "imitation": f"최고 {fmt_score(g['imitation_gate']['cap'])}(모방)",
+                 "door_closed": f"최고 {fmt_score(g['door_closed_gate']['cap'])}(문 닫힘)"}
     pct = f"{rules.payload['scoring']['unknown_share'] * 100:g}"
     hi = _factor_max(rules, "F3")
     body = []
@@ -1472,7 +1472,7 @@ def _f3_parts_html(ctx: Any, c: dict[str, Any]) -> str:
         unk = set(d.get("unknown_parts") or [])
         gates = " · ".join(gate_text.get(k, k) for k in d.get("caps_applied") or [])
         if d.get("active") is False:
-            gates = "상대 없음: 수익모델·모방 0" + (f" · {gates}" if gates else "")
+            gates = "상대 없음(0)" + (f" · {gates}" if gates else "")
         body.append([name, share, _pt(d.get("revenue_model"), "revenue_model" in unk), _pt(d.get("imitation"), "imitation" in unk),
                      _pt(d.get("acceleration"), "acceleration" in unk), rc._score_text(d.get("raw")), gates or "—",
                      rc._score_text(d.get("score"))])

@@ -223,7 +223,7 @@ class V30RenderTest(V30Base):
                 self.assertIn(needle, f2)
         f3 = card[card.index('<span class="flab">③ '):card.index('<span class="flab">④ ')]
         for needle in ("③ 은 층마다 아래 세 부분을 더한다(만점 20).", "가속도가 3 미만이면 최고 12", '<th class="text">걸린 관문</th>',
-                       "상대 없음: 수익모델·모방 0"):
+                       "상대 없음(0)"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, f3)
 
