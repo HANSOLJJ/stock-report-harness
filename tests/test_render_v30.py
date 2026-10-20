@@ -189,6 +189,39 @@ class V30RenderTest(V30Base):
         old = render_ranking(self.results, SimpleNamespace(rules=load_rules("v2.1"), judgments=[]))
         self.assertNotIn("thmax", old, "옛 실행의 순위표는 그대로다")
 
+    def test_card_explains_layer_and_part_scores(self):
+        # 2026-10-20 사용자 지시: 층별 점수 표 머리글이 ①②③ 기호뿐이고, A~E·②③ 부분의 뜻이 리포트 어디에도 없었다.
+        # ① 시장 위치 표가 ① 의 일부인데 카드 머리에 따로 떠 있었다.
+        from scorecard import render_common as rc
+        from scorecard.render_html import render_cards
+        html = render_cards(self.results, self.scores, self.ctx.companies, self.ctx.observations, self.ctx.judgments,
+                            rc.replacements(self.ctx), self.ctx)
+        card = html[html.index('id="card-nvidia"'):]
+        top = card[card.index('<div class="cv3">'):card.index('<div class="cgrp">')]
+        nv = next(c for c in self.results["companies"] if c["company_id"] == "nvidia")
+        for needle in ("<th>① 네트워크 /20</th>", "<th>② 게임체인저 /20</th>",
+                       f'<td class="name"><b>회사 점수</b></td><td class="mono">100%</td><td class="mono">{nv["factors"]["F1"]["score"]}</td>'):
+            with self.subTest(needle=needle):
+                self.assertIn(needle.replace("<th>", '<th class="">'), top)
+        self.assertNotIn("시장 위치", card)
+        f1 = card[card.index('<span class="flab">① 네트워크</span>'):card.index('<span class="flab">② ')]
+        for needle in ("① 은 사업마다 다섯 부분을 더한다(최고 20).", "A 락인 강도(고객이 떠나기 어려운가) 6", '<th class="">A 락인 강도 /6</th>',
+                       '<td class="name"><b>Data Center</b></td><td class="mono">AI 칩 설계</td><td class="mono">6</td><td class="mono">2</td>'
+                       '<td class="mono">1</td><td class="mono">1.6*</td><td class="mono">1.6*</td><td class="mono">12.2</td>',
+                       "* 는 확인되지 않아 그 부분 만점의 40% 로 계산한 값이다."):
+            with self.subTest(needle=needle[:40]):
+                self.assertIn(needle, f1)
+        self.assertLess(f1.index("사업별 점수"), f1.index('<details class="unit">'), "부분 점수표가 사업별 근거보다 앞에 온다")
+        f2 = card[card.index('<span class="flab">② '):card.index('<span class="flab">③ ')]
+        for needle in ("② 는 층마다 세 경로를 더한다(최고 20).", '<th class="">성능 도약 /10</th>', "층별 경로 점수"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, f2)
+        f3 = card[card.index('<span class="flab">③ '):card.index('<span class="flab">④ ')]
+        for needle in ("③ 은 층마다 세 부분을 더한다(최고 20).", "가속도가 3 미만이면 최고 12", '<th class="text">걸린 관문</th>',
+                       "상대 없음: 수익모델·모방 0"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, f3)
+
     def test_scroll_hint_only_for_layered_reports(self):
         # 2026-10-20 사용자 지시: 가로로 넘치는 표에 열이 더 있다는 안내를 띄운다. 옛 실행의 스크립트·CSS 는 그대로다.
         from scorecard.render_html import css, js
