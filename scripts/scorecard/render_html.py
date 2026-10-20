@@ -62,10 +62,17 @@ def _factor_max(rules: Any, fid: str) -> str:
     return fmt_score(hi if fid in MOAT_FACTORS else lo)
 
 
-def _group_max(rules: Any, moat: bool) -> str:
+def _factor_bound(rules: Any, fid: str) -> str:
+    """점수 옆에 적는 끝값 글자. 과점 항목은 '만점 20', 함정 항목은 0 이 가장 좋아 '최저점 -20' 이다.
+    2026-10-20 사용자 지시: '/20' 처럼 사선으로 적으니 이름 뒤에 붙은 기호가 무슨 뜻인지 읽히지 않았다."""
+    lo, hi = rules.factor_range(fid)
+    return f"만점 {fmt_score(hi)}" if fid in MOAT_FACTORS else f"최저점 {fmt_score(lo)}"
+
+
+def _group_bound(rules: Any, moat: bool) -> str:
     """과점 합계의 만점과 함정 합계의 최저(규칙 `scoring.moat_max`·`trap_min_active`)."""
     scoring = rules.payload["scoring"]
-    return fmt_score(scoring["moat_max"] if moat else scoring["trap_min_active"])
+    return f"만점 {fmt_score(scoring['moat_max'])}" if moat else f"최저점 {fmt_score(scoring['trap_min_active'])}"
 
 
 # ------------------------------------------------------------------ 색 도우미
@@ -156,6 +163,7 @@ table.layers th:not(.name),table.layers td:not(.name){padding:10px 6px;white-spa
 .fparts th,.fparts td{padding:8px 6px;white-space:normal;word-break:keep-all}
 .fparts td.name{overflow-wrap:anywhere}
 .fdef{color:var(--tx2);font-size:var(--fs-sm);line-height:1.6;margin:6px 0 0}
+.fdefl{color:var(--tx2);font-size:var(--fs-sm);line-height:1.6;margin:4px 0 0;padding-left:18px}
 /* 2026-10-20 사용자 지시: 점수 옆 만점. 점수보다 작고 흐리게 둔다. */
 .fsc .fmax{font-weight:600;font-size:var(--fs-sm);color:var(--tx3)}
 .thmax{display:block;font-size:var(--fs-sm);font-weight:400}
@@ -994,16 +1002,16 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
     layered = rules is not None and rc.is_layered(rules)
 
     def mx(text: str) -> str:
-        return f'<span class="thmax">/{text}</span>' if layered else ""
+        return f'<span class="thmax">{text}</span>' if layered else ""
     head = ('<tr><th class="name keep" data-k="name">기업</th>'
             + "".join(f'<th data-k="{x}"{" class=\"f1grp\"" if x == "F1" and ai_spec else ""}>{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}'
-                      f'{mx(_factor_max(rules, x)) if layered else ""}</th>'
+                      f'{mx(_factor_bound(rules, x)) if layered else ""}</th>'
                       + (ai_head if x == "F1" else "")
                       for x in MOAT_FACTORS)
-            + f'<th class="divider keep" data-k="moat">과점{mx(_group_max(rules, True)) if layered else ""}</th>'
-            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}{mx(_factor_max(rules, x)) if layered else ""}</th>'
+            + f'<th class="divider keep" data-k="moat">과점{mx(_group_bound(rules, True)) if layered else ""}</th>'
+            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}{mx(_factor_bound(rules, x)) if layered else ""}</th>'
                       for x in TRAP_FACTORS)
-            + f'<th class="keep" data-k="trap">함정{mx(_group_max(rules, False)) if layered else ""}</th>'
+            + f'<th class="keep" data-k="trap">함정{mx(_group_bound(rules, False)) if layered else ""}</th>'
             '<th class="divider keep" data-k="total">조정총점</th></tr>')
     return f'<div class="tablewrap"><table id="mainTable"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
 
@@ -1113,7 +1121,7 @@ def render_holdings_v3(results: dict[str, Any], ctx: Any) -> str:
     if not body:
         return ""
     f4_max = ctx.rules.factor_range("F4")[1]
-    head = (f'<tr><th class="name keep">기업</th><th>주 층</th><th>AI 무관 매출</th><th>④ /{f4_max:g}</th>'
+    head = (f'<tr><th class="name keep">기업</th><th>주 층</th><th>AI 무관 매출</th><th>④<span class="thmax">만점 {f4_max:g}</span></th>'
             + "".join(f"<th>{esc(names[k])}</th>" for k in keys)
             + f"<th>{esc(names.get(layers['outside']['id'], '층 밖 사업'))}</th></tr>")
     values = layers["cell_values"]
@@ -1132,11 +1140,16 @@ def render_holdings_v3(results: dict[str, Any], ctx: Any) -> str:
             + (f'<h3>비교 그룹 안 순위</h3><ul class="fpts">{group_items}</ul>' if group_items else ""))
 
 
-def _html_table(head: list[str], rows: list[list[str]], *, text_cols: set[int] = frozenset()) -> str:
-    """국면 지표 표. 첫 열은 이름, text_cols 는 문장 열, 나머지는 숫자 열."""
+def _html_table(head: list[str], rows: list[list[str]], *, text_cols: set[int] = frozenset(),
+                head_sub: list[str | None] | None = None) -> str:
+    """국면 지표 표. 첫 열은 이름, text_cols 는 문장 열, 나머지는 숫자 열. head_sub 는 머리글 아래 줄(만점 등)이다."""
     def cls(i: int) -> str:
         return "name" if i == 0 else ("text" if i in text_cols else "mono")
-    th = "".join(f'<th class="{cls(i) if i == 0 or i in text_cols else ""}">{esc(h)}</th>' for i, h in enumerate(head))
+
+    def sub_line(i: int) -> str:
+        text = (head_sub or [])[i] if i < len(head_sub or []) else None
+        return f'<span class="thmax">{esc(text)}</span>' if text else ""
+    th = "".join(f'<th class="{cls(i) if i == 0 or i in text_cols else ""}">{esc(h)}{sub_line(i)}</th>' for i, h in enumerate(head))
     body = "".join("<tr>" + "".join(f'<td class="{cls(i)}">{"<b>" + esc(c) + "</b>" if i == 0 else esc(c)}</td>'
                                     for i, c in enumerate(r)) + "</tr>" for r in rows)
     return f'<div class="tablewrap"><table class="figures"><thead><tr>{th}</tr></thead><tbody>{body}</tbody></table></div>'
@@ -1315,8 +1328,8 @@ def _v3_card_tables(ctx: Any, c: dict[str, Any]) -> str:
         fids = ("F1", "F2", "F3")
         kept.append(["회사 점수", rc._share_text(sum(weights[u] for u in keys if weights[u] > 0)),
                      *(fmt_score(c["factors"][f]["score"]) for f in fids)])
-        out += ('<div class="ctab">층별 점수: 판매 층마다 매긴 ①②③</div>'
-                + _html_table(["층", "층 매출 몫", *(f"{rc.factor_label(ctx.rules, f)} /{_factor_max(ctx.rules, f)}" for f in fids)], kept)
+        out += (f'<div class="ctab">층별 점수: 판매 층마다 매긴 ①②③ (각 만점 {_factor_max(ctx.rules, "F1")})</div>'
+                + _html_table(["층", "층 매출 몫", *(rc.factor_label(ctx.rules, f) for f in fids)], kept)
                 + '<p class="cnote">이 회사가 판매하는 층마다 ①②③ 을 따로 매긴 점수다. 맨 아래 회사 점수는 층 점수를 층 매출 몫으로 '
                   '가중 평균해 정수로 반올림한 값이다. 층 점수가 어떻게 나왔는지는 아래 ①②③ 항목을 펼치면 보인다.</p>'
                 + (f'<p class="cnote">판매하지만 붙은 매출 줄이 없어 몫이 0 인 층: {esc(" · ".join(zero))}. '
@@ -1365,19 +1378,19 @@ def _f1_parts_html(ctx: Any, c: dict[str, Any]) -> str:
         return ""
     rows.sort(key=lambda r: r[0])
     hi = _factor_max(rules, "F1")
-    definition = (f'<p class="fdef"><b>① 은 사업마다 다섯 부분을 더한다(최고 {hi}).</b> '
-                  + " · ".join(f'{k} {esc(p["label"])}({F1_PART_HINTS[k]}) {fmt_score(p["max"])}' for k, p in parts.items())
-                  + f". AI 수익화가 '예'가 아닌 사업은 최고 {fmt_score(cap)} 이다. 층 점수는 그 층 안 사업 점수를 매출 몫으로 평균한 값이다.</p>")
+    items = "".join(f'<li><b>{k} {esc(p["label"])}</b>(만점 {fmt_score(p["max"])}): {F1_PART_HINTS[k]}</li>' for k, p in parts.items())
+    definition = (f'<p class="fdef"><b>① 은 사업마다 아래 다섯 부분을 더한다(만점 {hi}).</b></p><ul class="fdefl">{items}</ul>'
+                  f"<p class=\"fdef\">AI 수익화가 '예'가 아닌 사업은 최고 {fmt_score(cap)} 이다. 층 점수는 그 층 안 사업 점수를 매출 몫으로 평균한 값이다.</p>")
     out = (definition + '<div class="ctab">사업별 점수</div>'
-           + _html_table(["사업", "층", *(f'{k} {p["label"]} /{fmt_score(p["max"])}' for k, p in parts.items()), f"사업 점수 /{hi}"],
-                         [r for _k, r in rows])
+           + _html_table(["사업", "층", *(f'{k} {p["label"]}' for k, p in parts.items()), "사업 점수"], [r for _k, r in rows],
+                         head_sub=[None, None, *(f'만점 {fmt_score(p["max"])}' for p in parts.values()), f"만점 {hi}"])
            + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p>')
     market_rows = rc.market_table_rows(c["factors"])
     if market_rows:
         d_max, e_max = fmt_score(parts["D"]["max"]), fmt_score(parts["E"]["max"])
         out += ('<div class="ctab">D·E 계산 자료: 시장 순위와 점유율 방향</div>'
-                + _html_table(["구성 사업", "시장", "순위", "점유율(최근 ← 1년 전)", "변화", "반영", f"D /{d_max}", f"E /{e_max}"],
-                              market_rows, text_cols={1})
+                + _html_table(["구성 사업", "시장", "순위", "점유율(최근 ← 1년 전)", "변화", "반영", "D 시장 순위", "E 점유율 방향"],
+                              market_rows, text_cols={1}, head_sub=[None] * 6 + [f"만점 {d_max}", f"만점 {e_max}"])
                 + '<p class="cnote">반영은 시장 자료가 사업이나 시장의 일부만 잴 때 점수에 넣은 비율이다. 나머지는 미확인 점수(1.6)로 채운다. '
                   '시장 정의표가 없는 사업은 이 표에 없고 D·E 가 미확인이다.</p>')
     return f'<div class="fparts">{out}</div>'
@@ -1411,12 +1424,15 @@ def _f2_parts_html(ctx: Any, c: dict[str, Any]) -> str:
         nb = d.get("no_benchmark")
         body.append([name, share, "측정 없음" if nb else _pt(d.get("leap"), "leap" in unk), _pt(d.get("adaptation"), "adaptation" in unk),
                      _pt(d.get("standard"), False), rc._score_text(d.get("score")) + (f"(합 × {mult})" if nb else "")])
-    definition = (f'<p class="fdef"><b>② 는 층마다 세 경로를 더한다(최고 {hi}).</b> 성능 도약(독립 측정에서 1위인가) {leap_max} · '
-                  f'패러다임 적응(새 판용 제품을 내고 채택이 느는가) {ad_max} · 표준 선점(경쟁사가 내 규격을 따르는가) {st_max}. '
-                  f'성능을 잴 독립 측정이 없는 층({esc(no_bench)})은 (패러다임 적응 + 표준 선점) × {mult} 로 계산한다. '
+    definition = (f'<p class="fdef"><b>② 는 층마다 아래 세 경로를 더한다(만점 {hi}).</b></p><ul class="fdefl">'
+                  f'<li><b>성능 도약</b>(만점 {leap_max}): 독립 측정에서 1위인가</li>'
+                  f'<li><b>패러다임 적응</b>(만점 {ad_max}): 새 판용 제품을 내고 채택이 느는가</li>'
+                  f'<li><b>표준 선점</b>(만점 {st_max}): 경쟁사가 내 규격을 따르는가</li></ul>'
+                  f'<p class="fdef">성능을 잴 독립 측정이 없는 층({esc(no_bench)})은 (패러다임 적응 + 표준 선점) × {mult} 로 계산한다. '
                   '회사 ② 는 층 점수를 층 매출 몫으로 가중 평균한 값이다.</p>')
     return ('<div class="fparts">' + definition + '<div class="ctab">층별 경로 점수</div>'
-            + _html_table(["층", "층 매출 몫", f"성능 도약 /{leap_max}", f"패러다임 적응 /{ad_max}", f"표준 선점 /{st_max}", f"층 점수 /{hi}"], body)
+            + _html_table(["층", "층 매출 몫", "성능 도약", "패러다임 적응", "표준 선점", "층 점수"], body,
+                          head_sub=[None, None, f"만점 {leap_max}", f"만점 {ad_max}", f"만점 {st_max}", f"만점 {hi}"])
             + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p></div>')
 
 
@@ -1445,16 +1461,18 @@ def _f3_parts_html(ctx: Any, c: dict[str, Any]) -> str:
         body.append([name, share, _pt(d.get("revenue_model"), "revenue_model" in unk), _pt(d.get("imitation"), "imitation" in unk),
                      _pt(d.get("acceleration"), "acceleration" in unk), rc._score_text(d.get("raw")), gates or "—",
                      rc._score_text(d.get("score"))])
-    definition = (f'<p class="fdef"><b>③ 은 층마다 세 부분을 더한다(최고 {hi}).</b> 별도 수익모델(상대가 돈 받는 것을 공짜·헐값으로 주고 '
-                  f'다른 곳에서 거두는가) {rm_max} · 모방 불가능성(상대가 따라 하면 상대의 주 수입원이 무너지는가) {im_max} · '
-                  f'가속도(그 층에서 내 성장이 빨라지는가) {ac_max}. 관문 셋이 층 점수의 상한을 건다. 가속도가 '
+    definition = (f'<p class="fdef"><b>③ 은 층마다 아래 세 부분을 더한다(만점 {hi}).</b></p><ul class="fdefl">'
+                  f'<li><b>별도 수익모델</b>(만점 {rm_max}): 상대가 돈 받는 것을 공짜·헐값으로 주고 다른 곳에서 거두는가</li>'
+                  f'<li><b>모방 불가능성</b>(만점 {im_max}): 상대가 따라 하면 상대의 주 수입원이 무너지는가</li>'
+                  f'<li><b>가속도</b>(만점 {ac_max}): 그 층에서 내 성장이 빨라지는가</li></ul>'
+                  f'<p class="fdef">관문 셋이 층 점수의 상한을 건다. 가속도가 '
                   f'{fmt_score(g["slow_cap"]["below"])} 미만이면 최고 {fmt_score(g["slow_cap"]["cap"])}, 모방 불가능성이 {im_max} 가 아니면 '
                   f'최고 {fmt_score(g["imitation_gate"]["cap"])}, 최근 {years}년 안에 상대의 가격 결정력이 무너졌거나 점유율이 넘어온 증거가 없으면 '
                   f'최고 {fmt_score(g["door_closed_gate"]["cap"])} 이다. 수입원이 위협받는 상대가 지금 시장에 없으면 수익모델·모방 불가능성은 0 이다. '
                   '회사 ③ 은 층 점수를 층 매출 몫으로 가중 평균한 값이다.</p>')
     return ('<div class="fparts">' + definition + '<div class="ctab">층별 부분 점수</div>'
-            + _html_table(["층", "층 매출 몫", f"수익모델 /{rm_max}", f"모방 불가능성 /{im_max}", f"가속도 /{ac_max}", "세 부분 합",
-                           "걸린 관문", f"층 점수 /{hi}"], body, text_cols={6})
+            + _html_table(["층", "층 매출 몫", "수익모델", "모방 불가능성", "가속도", "세 부분 합", "걸린 관문", "층 점수"], body, text_cols={6},
+                          head_sub=[None, None, f"만점 {rm_max}", f"만점 {im_max}", f"만점 {ac_max}", None, None, f"만점 {hi}"])
             + f'<p class="cnote">{UNKNOWN_MARK_NOTE.format(pct=pct)}</p></div>')
 
 
@@ -1481,9 +1499,9 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         rank_text = f"{c['rank']}위(완료 {results['population']['scored']}개사 기준)" if c["rank"] else "미완료"
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
-        if layered:   # 2026-10-20 사용자 지시: 합계 옆에 만점을 적는다. '/' 가 만점 표기라 둘 사이는 가운뎃점으로 가른다
-            score_text = (f"과점 {fmt_score(c['moat'])} / {_group_max(rules, True)} · "
-                          f"함정 {fmt_score(c['trap'])} / {_group_max(rules, False)}")
+        if layered:   # 2026-10-20 사용자 지시: 합계 옆에 만점(함정은 최저점)을 글자로 적고, 과점과 함정 사이는 가운뎃점으로 가른다
+            score_text = (f"과점 {fmt_score(c['moat'])} ({_group_bound(rules, True)}) · "
+                          f"함정 {fmt_score(c['trap'])} ({_group_bound(rules, False)})")
         groups = []
         # 2026-10-07 외부 분석: factor 마다 범위가 달라(② 2~5, ⑥ 0~-7 …) '각 0~5'·'각 0~-5' 표기를 뺐다. 범위는 머리말 리드에 규칙에서 읽어 싣는다
         for label, factors, klass, total in (("과점 — 더한다", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다", TRAP_FACTORS, "n", c["trap"])):
@@ -1546,9 +1564,9 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                     body += _unit_blocks_html(ctx, c, f, fr, judgments_by_id, reps, results["baseline_id"], history)
                 if f == "F1" and (rules.factor("F1").get("ladder") or {}).get("top_score_requires_ai_monetized"):
                     body = _mark_conditions(body)   # 2026-10-13 사용자 지시: (가)·(나) 표지를 설명 상자와 같은 색으로
-                fmax = f'<span class="fmax"> / {_factor_max(rules, f)}</span>' if layered else ""
+                fmax = f'<span class="fmax"> ({_factor_bound(rules, f)})</span>' if layered else ""
                 rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(rc.factor_label(rules, f))}</span><span class="fsc {color}">{fmt_score(score)}{fmax}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
-            gmax = f" / {_group_max(rules, klass == 'p')}" if layered else ""
+            gmax = f" ({_group_bound(rules, klass == 'p')})" if layered else ""
             groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}{gmax}</div>{"".join(rows)}</div>')
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'

@@ -163,10 +163,11 @@ class V30RenderTest(V30Base):
         self.assertNotIn("비교 그룹 안 순위", html, "순위가 확정되지 않은(미완료) 회사는 그룹 안 순위에 넣지 않는다")
         self.assertEqual(render_holdings_v3(self.results, SimpleNamespace(rules=load_rules("v2.1"))), "")
         # 2026-10-20 사용자 지시: 요약 열(주 층·AI 무관 매출·④)이 오른쪽 끝에 잘려 있었다. 기업 열 바로 뒤에 둔다.
-        self.assertIn('<th class="name keep">기업</th><th>주 층</th><th>AI 무관 매출</th><th>④ /20</th><th>전력</th>', html)
+        self.assertIn('<th class="name keep">기업</th><th>주 층</th><th>AI 무관 매출</th><th>④<span class="thmax">만점 20</span></th><th>전력</th>', html)
 
     def test_scores_show_their_maximum(self):
-        # 2026-10-20 사용자 지시: 항목·합계 점수 옆에 만점이 없어 높고 낮음을 읽을 수 없었다
+        # 2026-10-20 사용자 지시: 항목·합계 점수 옆에 만점이 없어 높고 낮음을 읽을 수 없었다.
+        # '/20' 사선 표기는 무슨 뜻인지 읽히지 않아 글자로 적는다. 함정은 0 이 가장 좋아 '최저점' 이다
         from types import SimpleNamespace
         from scorecard import render_common as rc
         from scorecard.render_html import render_cards, render_ranking
@@ -177,13 +178,14 @@ class V30RenderTest(V30Base):
         card = html[html.index('id="card-nvidia"'):]
         nv = next(c for c in self.results["companies"] if c["company_id"] == "nvidia")
         moat, trap = fmt_score(nv["moat"]), fmt_score(nv["trap"])
-        for needle in ('<span class="fmax"> / 20</span>', '<span class="fmax"> / -20</span>', '<span class="fmax"> / -12</span>',
-                       f"과점 — 더한다 · 합 {moat} / 100", f"함정 — 뺀다 · 합 {trap} / -68", f"과점 {moat} / 100 · 함정 {trap} / -68"):
+        for needle in ('<span class="fmax"> (만점 20)</span>', '<span class="fmax"> (최저점 -20)</span>', '<span class="fmax"> (최저점 -12)</span>',
+                       f"과점 — 더한다 · 합 {moat} (만점 100)", f"함정 — 뺀다 · 합 {trap} (최저점 -68)",
+                       f"과점 {moat} (만점 100) · 함정 {trap} (최저점 -68)"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, card)
         ranking = render_ranking(self.results, self.ctx)
-        for needle in ('①네트워크<span class="thmax">/20</span>', '⑥가격<span class="thmax">/-20</span>',
-                       '과점<span class="thmax">/100</span>', '함정<span class="thmax">/-68</span>'):
+        for needle in ('①네트워크<span class="thmax">만점 20</span>', '⑥가격<span class="thmax">최저점 -20</span>',
+                       '과점<span class="thmax">만점 100</span>', '함정<span class="thmax">최저점 -68</span>'):
             with self.subTest(needle=needle):
                 self.assertIn(needle, ranking)
         old = render_ranking(self.results, SimpleNamespace(rules=load_rules("v2.1"), judgments=[]))
@@ -199,13 +201,16 @@ class V30RenderTest(V30Base):
         card = html[html.index('id="card-nvidia"'):]
         top = card[card.index('<div class="cv3">'):card.index('<div class="cgrp">')]
         nv = next(c for c in self.results["companies"] if c["company_id"] == "nvidia")
-        for needle in ("<th>① 네트워크 /20</th>", "<th>② 게임체인저 /20</th>",
+        self.assertIn("층별 점수: 판매 층마다 매긴 ①②③ (각 만점 20)", top)
+        self.assertNotIn("/20", top, "열마다 만점을 붙이지 않고 제목에 한 번 적는다")
+        for needle in ("<th>① 네트워크</th>", "<th>② 게임체인저</th>",
                        f'<td class="name"><b>회사 점수</b></td><td class="mono">100%</td><td class="mono">{nv["factors"]["F1"]["score"]}</td>'):
             with self.subTest(needle=needle):
                 self.assertIn(needle.replace("<th>", '<th class="">'), top)
         self.assertNotIn("시장 위치", card)
         f1 = card[card.index('<span class="flab">① 네트워크</span>'):card.index('<span class="flab">② ')]
-        for needle in ("① 은 사업마다 다섯 부분을 더한다(최고 20).", "A 락인 강도(고객이 떠나기 어려운가) 6", '<th class="">A 락인 강도 /6</th>',
+        for needle in ("① 은 사업마다 아래 다섯 부분을 더한다(만점 20).", "<li><b>A 락인 강도</b>(만점 6): 고객이 떠나기 어려운가</li>",
+                       '<th class="">A 락인 강도<span class="thmax">만점 6</span></th>',
                        '<td class="name"><b>Data Center</b></td><td class="mono">AI 칩 설계</td><td class="mono">6</td><td class="mono">2</td>'
                        '<td class="mono">1</td><td class="mono">1.6*</td><td class="mono">1.6*</td><td class="mono">12.2</td>',
                        "* 는 확인되지 않아 그 부분 만점의 40% 로 계산한 값이다."):
@@ -213,11 +218,11 @@ class V30RenderTest(V30Base):
                 self.assertIn(needle, f1)
         self.assertLess(f1.index("사업별 점수"), f1.index('<details class="unit">'), "부분 점수표가 사업별 근거보다 앞에 온다")
         f2 = card[card.index('<span class="flab">② '):card.index('<span class="flab">③ ')]
-        for needle in ("② 는 층마다 세 경로를 더한다(최고 20).", '<th class="">성능 도약 /10</th>', "층별 경로 점수"):
+        for needle in ("② 는 층마다 아래 세 경로를 더한다(만점 20).", '<th class="">성능 도약<span class="thmax">만점 10</span></th>', "층별 경로 점수"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, f2)
         f3 = card[card.index('<span class="flab">③ '):card.index('<span class="flab">④ ')]
-        for needle in ("③ 은 층마다 세 부분을 더한다(최고 20).", "가속도가 3 미만이면 최고 12", '<th class="text">걸린 관문</th>',
+        for needle in ("③ 은 층마다 아래 세 부분을 더한다(만점 20).", "가속도가 3 미만이면 최고 12", '<th class="text">걸린 관문</th>',
                        "상대 없음: 수익모델·모방 0"):
             with self.subTest(needle=needle):
                 self.assertIn(needle, f3)
