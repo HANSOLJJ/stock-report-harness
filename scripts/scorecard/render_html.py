@@ -56,6 +56,18 @@ def _flabel(rules: Any, fid: str) -> str:
     return rc.factor_label(rules, fid) if fid in rc.FACTOR_LABELS else str(fid)
 
 
+def _factor_max(rules: Any, fid: str) -> str:
+    """2026-10-20 사용자 지시: 점수 옆에 적는 만점. 과점 항목은 범위의 위 끝, 함정 항목은 아래 끝이다."""
+    lo, hi = rules.factor_range(fid)
+    return fmt_score(hi if fid in MOAT_FACTORS else lo)
+
+
+def _group_max(rules: Any, moat: bool) -> str:
+    """과점 합계의 만점과 함정 합계의 최저(규칙 `scoring.moat_max`·`trap_min_active`)."""
+    scoring = rules.payload["scoring"]
+    return fmt_score(scoring["moat_max"] if moat else scoring["trap_min_active"])
+
+
 # ------------------------------------------------------------------ 색 도우미
 
 def score_class(score: int | float | None, rules: Any = None, fid: str | None = None) -> str:
@@ -134,6 +146,9 @@ table.layers td .lw{display:block;font-size:var(--fs-sm);font-variant-numeric:ta
 table.layers th:not(.name),table.layers td:not(.name){padding:10px 6px;white-space:normal;word-break:keep-all}
 /* 표가 화면보다 넓으면 위에 안내를 띄우고(JS 가 .scrollhint 를 만든다), 끝까지 밀지 않았으면 오른쪽 끝을 흐린다. */
 .scrollhint{font-size:var(--fs-sm);color:var(--tx2);margin:0 0 6px;text-align:right}
+/* 2026-10-20 사용자 지시: 점수 옆 만점. 점수보다 작고 흐리게 둔다. */
+.fsc .fmax{font-weight:600;font-size:var(--fs-sm);color:var(--tx3)}
+.thmax{display:block;font-size:var(--fs-sm);font-weight:400;color:var(--tx3)}
 .tablewrap.more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 40px),rgba(0,0,0,.25));mask-image:linear-gradient(to right,#000 calc(100% - 40px),rgba(0,0,0,.25))}
 """
 
@@ -965,13 +980,21 @@ def render_ranking(results: dict[str, Any], ctx: Any = None) -> str:
     # 2026-10-13 사용자 지시: AI 수익화는 ① 의 부가 조건(5점 조건)이지 독립 항목이 아니다. 머리글에 그 관계를 적는다.
     ai_head = (f'<th data-k="F1ai" class="f1sub" title="① 의 5점 조건이다. 점수에 더하지 않는다.">'
                f'<span class="subof">① 부가 조건</span>{esc(ai_spec.get("label") or "AI 수익화")}</th>') if ai_spec else ""
+    # 2026-10-20 사용자 지시: 층 규칙 실행은 머리글 아래 줄에 만점을 적는다(열 폭이 늘지 않게 줄을 나눈다).
+    layered = rules is not None and rc.is_layered(rules)
+
+    def mx(text: str) -> str:
+        return f'<span class="thmax">/{text}</span>' if layered else ""
     head = ('<tr><th class="name keep" data-k="name">기업</th>'
-            + "".join(f'<th data-k="{x}"{" class=\"f1grp\"" if x == "F1" and ai_spec else ""}>{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>'
+            + "".join(f'<th data-k="{x}"{" class=\"f1grp\"" if x == "F1" and ai_spec else ""}>{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}'
+                      f'{mx(_factor_max(rules, x)) if layered else ""}</th>'
                       + (ai_head if x == "F1" else "")
                       for x in MOAT_FACTORS)
-            + '<th class="divider keep" data-k="moat">과점</th>'
-            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}</th>' for x in TRAP_FACTORS)
-            + '<th class="keep" data-k="trap">함정</th><th class="divider keep" data-k="total">조정총점</th></tr>')
+            + f'<th class="divider keep" data-k="moat">과점{mx(_group_max(rules, True)) if layered else ""}</th>'
+            + "".join(f'<th data-k="{x}">{SHORT[x]}{esc(rc.factor_label(rules, x)[2:])}{mx(_factor_max(rules, x)) if layered else ""}</th>'
+                      for x in TRAP_FACTORS)
+            + f'<th class="keep" data-k="trap">함정{mx(_group_max(rules, False)) if layered else ""}</th>'
+            '<th class="divider keep" data-k="total">조정총점</th></tr>')
     return f'<div class="tablewrap"><table id="mainTable"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
 
 
@@ -1310,6 +1333,9 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         rank_text = f"{c['rank']}위(완료 {results['population']['scored']}개사 기준)" if c["rank"] else "미완료"
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
+        if layered:   # 2026-10-20 사용자 지시: 합계 옆에 만점을 적는다. '/' 가 만점 표기라 둘 사이는 가운뎃점으로 가른다
+            score_text = (f"과점 {fmt_score(c['moat'])} / {_group_max(rules, True)} · "
+                          f"함정 {fmt_score(c['trap'])} / {_group_max(rules, False)}")
         groups = []
         # 2026-10-07 외부 분석: factor 마다 범위가 달라(② 2~5, ⑥ 0~-7 …) '각 0~5'·'각 0~-5' 표기를 뺐다. 범위는 머리말 리드에 규칙에서 읽어 싣는다
         for label, factors, klass, total in (("과점 — 더한다", MOAT_FACTORS, "p", c["moat"]), ("함정 — 뺀다", TRAP_FACTORS, "n", c["trap"])):
@@ -1370,8 +1396,10 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
                     body += _unit_blocks_html(ctx, c, f, fr, judgments_by_id, reps, results["baseline_id"], history)
                 if f == "F1" and (rules.factor("F1").get("ladder") or {}).get("top_score_requires_ai_monetized"):
                     body = _mark_conditions(body)   # 2026-10-13 사용자 지시: (가)·(나) 표지를 설명 상자와 같은 색으로
-                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(rc.factor_label(rules, f))}</span><span class="fsc {color}">{fmt_score(score)}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
-            groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}</div>{"".join(rows)}</div>')
+                fmax = f'<span class="fmax"> / {_factor_max(rules, f)}</span>' if layered else ""
+                rows.append(f'<div class="frow"><div class="fhead"><span class="flab">{esc(rc.factor_label(rules, f))}</span><span class="fsc {color}">{fmt_score(score)}{fmax}</span><span class="fst">{status_basis(fr)}</span></div>{f"<div class=\"fcalc\">{inline_html(calc)}</div>" if calc else ""}{body}</div>')
+            gmax = f" / {_group_max(rules, klass == 'p')}" if layered else ""
+            groups.append(f'<div class="cgrp"><div class="cgh {klass}">{esc(label)} · 합 {fmt_score(total)}{gmax}</div>{"".join(rows)}</div>')
         out.append(
             f'<details class="card" id="card-{esc(c["company_id"])}" data-company="{esc(c["company_id"])}"><summary><div class="chead"><div class="cname">{esc(c["display_name"])}<span class="pill {cls}">{esc(c["type"])}</span>'
             + ("" if c["complete"] else '<span class="pill warn">미완료</span>')

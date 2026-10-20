@@ -165,6 +165,30 @@ class V30RenderTest(V30Base):
         # 2026-10-20 사용자 지시: 요약 열(주 층·AI 무관 매출·④)이 오른쪽 끝에 잘려 있었다. 기업 열 바로 뒤에 둔다.
         self.assertIn('<th class="name keep">기업</th><th>주 층</th><th>AI 무관 매출</th><th>④ /20</th><th>전력</th>', html)
 
+    def test_scores_show_their_maximum(self):
+        # 2026-10-20 사용자 지시: 항목·합계 점수 옆에 만점이 없어 높고 낮음을 읽을 수 없었다
+        from types import SimpleNamespace
+        from scorecard import render_common as rc
+        from scorecard.render_html import render_cards, render_ranking
+        from scorecard.render_md import fmt_score
+        from scorecard.rules import load_rules
+        html = render_cards(self.results, self.scores, self.ctx.companies, self.ctx.observations, self.ctx.judgments,
+                            rc.replacements(self.ctx), self.ctx)
+        card = html[html.index('id="card-nvidia"'):]
+        nv = next(c for c in self.results["companies"] if c["company_id"] == "nvidia")
+        moat, trap = fmt_score(nv["moat"]), fmt_score(nv["trap"])
+        for needle in ('<span class="fmax"> / 20</span>', '<span class="fmax"> / -20</span>', '<span class="fmax"> / -12</span>',
+                       f"과점 — 더한다 · 합 {moat} / 100", f"함정 — 뺀다 · 합 {trap} / -68", f"과점 {moat} / 100 · 함정 {trap} / -68"):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, card)
+        ranking = render_ranking(self.results, self.ctx)
+        for needle in ('①네트워크<span class="thmax">/20</span>', '⑥가격<span class="thmax">/-20</span>',
+                       '과점<span class="thmax">/100</span>', '함정<span class="thmax">/-68</span>'):
+            with self.subTest(needle=needle):
+                self.assertIn(needle, ranking)
+        old = render_ranking(self.results, SimpleNamespace(rules=load_rules("v2.1"), judgments=[]))
+        self.assertNotIn("thmax", old, "옛 실행의 순위표는 그대로다")
+
     def test_scroll_hint_only_for_layered_reports(self):
         # 2026-10-20 사용자 지시: 가로로 넘치는 표에 열이 더 있다는 안내를 띄운다. 옛 실행의 스크립트·CSS 는 그대로다.
         from scorecard.render_html import css, js
