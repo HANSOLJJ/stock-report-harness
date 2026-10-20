@@ -17,11 +17,11 @@
 | judgments | `0e60f77f309bc118dbd7bfc5388b7d01bd32cfed0f242eb02cf3243f2a1d54ac` |
 | results | `b8299899bf24b5ec62f89fc45160fa9af96d04af01590ebf0c692b7b149c90e7` |
 | run | `06f4be00af56a5b5ec247d45571144fc73e00969b1fc99add2c6a62ea3d1761f` |
-| draft | `1c3cdcef52cfd314e17bdca0b79a9b23e416cf79dc715ddd97828280faf81c02` |
+| draft | `6960b8270ce9145bad62ffcaab1306a54783a9c3e76e2444fb675eacd7bf368a` |
 
 ## 승인
 
-- 승인 `9bd1c9af54c5f225` · 정한솔 · 2026-10-20
+- 승인 `74acc7a3cbf1ffdf` · 정한솔 · 2026-10-20
 - 승인 시점 입력과 현재 입력이 모두 같다.
 
 ## 실행 단위 결정
