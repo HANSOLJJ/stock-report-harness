@@ -24,7 +24,7 @@ from validate_report_contract import ValidationResult  # noqa: E402
 PRIOR_AS_OF = "2026-10-01"
 QUALITATIVE = ("F1", "F2", "F3", "F4", "F5", "F7", "F8")
 REJUDGE_ERROR = "정기 실행은 정성 판단을 모두 다시 매긴다"
-NO_EXCEPTION = "정기 실행에는 승계 판단 예외를 적용하지 않는다"
+NO_EXCEPTION = "정기 실행과 실적 반영 실행에는 승계 판단 예외를 적용하지 않는다"
 
 
 def cont(added: list[str] | None = None) -> dict:
@@ -191,6 +191,17 @@ class ValidateScorecardTest(SandboxMixin, V20Base):
         result = validate()
         self.assertFalse(any("체크리스트 Q02" in e for e in result.errors), [e for e in result.errors if "Q02" in e])
         self.assertTrue(any("승계 예외로 통과한 체크리스트 fail 1건" in w for w in result.warnings))
+
+    def test_update_run_review_fail_has_no_carried_exception(self):
+        # 2026-10-22 규칙 v3.1(rules.md 2.9): 실적 반영 실행은 경쟁사와 잣대가 어긋나면 그 항목을 범위에 넣어 다시 매긴다.
+        path = self.box.run_dir / "run.json"
+        run = load_json_strict(path)
+        run["continued_from"] = {**cont([]), "updated_companies": ["openai"]}
+        run["update_scope"] = {"reason": "OpenAI 실적", "extra": []}
+        write_json(path, run)
+        self.write_review()
+        result = validate()
+        self.assertTrue(any("체크리스트 Q02 가 fail" in e and NO_EXCEPTION in e for e in result.errors), result.errors)
 
 
 class V19UnaffectedTest(SandboxMixin, V19Base):

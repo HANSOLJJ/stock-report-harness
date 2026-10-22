@@ -68,7 +68,8 @@ JUDGMENT_KINDS = {"score", "grade", "criteria", "matrix", "paths", "gate_inputs"
                   "business", "layer_paths", "layer_cp", "holdings", "alliance"}
 JUDGMENT_STATUSES = {"new", "carried"}
 # 2026-10-12(TODO 9): 실행의 변경 사유(history.csv change_type). 규칙 변경·실적과 사실 변화(가격 포함)·정정·기업 추가·기준선 재계산.
-RUN_CHANGE_TYPES = {"baseline-recompute", "rule-change", "fact-update", "correction", "company-add"}
+# 2026-10-22 규칙 v3.1: 실적 반영 실행(rules.md 2.9)은 earnings-update 로 찍는다.
+RUN_CHANGE_TYPES = {"baseline-recompute", "rule-change", "fact-update", "correction", "company-add", "earnings-update"}
 TRI = {"pass", "partial", "fail", "unknown"}
 YES_NO = {"yes", "no", "unknown"}
 PASS_FAIL = {"pass", "fail", "unknown"}
@@ -2791,7 +2792,7 @@ def validate_run(payload: Any, slug: str | None = None) -> dict[str, Any]:
         ["schema", "run_id", "report_type", "title", "as_of", "rule_version", "baseline_id", "companies", "decisions", "created_at", "purpose", "assumptions"],
         "run.json",
         optional=["price_as_of", "info_cutoff", "reference_companies", "rule_hash", "note", "sources_file", "continued_from",
-                  "display_names", "change_type"],
+                  "display_names", "change_type", "refreshed_at", "update_scope"],
     )
     _require(payload["schema"] == "scorecard.run/1", "run.json: schema 불일치")
     # 2026-10-12: 그 실행에서만 쓰는 표시 이름 {company_id: 이름}. 실행 대상 기업만 받는다(engine.companies_for_run).
@@ -2819,7 +2820,39 @@ def validate_run(payload: Any, slug: str | None = None) -> dict[str, Any]:
         _expect_date(d["decided_at"], f"run.decisions[{idx}].decided_at")
     if "continued_from" in payload:
         _validate_continued_from(payload["continued_from"], payload["companies"])
+    # 2026-10-22 규칙 v3.1(rules.md 2.9): 회사별 마지막 전체 갱신일. 판단 나이 상한과 리포트의 반영 기준일이 읽는다.
+    if "refreshed_at" in payload:
+        ref = payload["refreshed_at"]
+        _require(isinstance(ref, dict) and set(ref) == set(payload["companies"]),
+                 f"run.json: refreshed_at 은 실행 대상 기업마다 날짜 하나 ({sorted(ref) if isinstance(ref, dict) else ref!r})")
+        for cid, day in ref.items():
+            _expect_date(day, f"run.json.refreshed_at.{cid}")
+            _require(day <= payload["as_of"], f"run.json.refreshed_at.{cid}: 기준일 {payload['as_of']} 뒤일 수 없다 ({day})")
+    updated = (payload.get("continued_from") or {}).get("updated_companies")
+    _require(bool(updated) == ("update_scope" in payload),
+             "run.json: 실적 반영 실행은 continued_from.updated_companies 와 update_scope 를 함께 둔다")
+    if "update_scope" in payload:
+        _validate_update_scope(payload["update_scope"], payload["companies"])
     return payload
+
+
+def _validate_update_scope(value: Any, companies: list[str]) -> None:
+    """2026-10-22 규칙 v3.1: 실적 반영 실행의 범위 선언. 사유와, 리뷰가 범위에 더한 (회사, 항목) 목록이다."""
+    where = "run.update_scope"
+    _expect_keys(value, ["reason", "extra"], where)
+    _require(isinstance(value["reason"], str) and value["reason"].strip(), f"{where}.reason: 어떤 실적을 반영하는지 적는다")
+    _require(isinstance(value["extra"], list), f"{where}.extra: 배열 필요")
+    seen: set[tuple[str, str]] = set()
+    for idx, item in enumerate(value["extra"]):
+        at = f"{where}.extra[{idx}]"
+        _expect_keys(item, ["company_id", "factor", "reason", "declared_at"], at)
+        _require(item["company_id"] in companies, f"{at}.company_id: 실행 대상이 아닌 기업 {item['company_id']!r}")
+        _require(item["factor"] in FACTOR_IDS, f"{at}.factor: {FACTOR_IDS} 중 하나 ({item['factor']!r})")
+        _require(isinstance(item["reason"], str) and item["reason"].strip(), f"{at}.reason: 범위에 넣는 이유가 필요하다")
+        _expect_date(item["declared_at"], f"{at}.declared_at")
+        key = (item["company_id"], item["factor"])
+        _require(key not in seen, f"{at}: ({key[0]}, {key[1]}) 를 두 번 선언했다")
+        seen.add(key)
 
 
 def _validate_continued_from(value: Any, companies: list[str]) -> None:
@@ -2829,7 +2862,8 @@ def _validate_continued_from(value: Any, companies: list[str]) -> None:
     이미 점유돼 있고, 그것을 재작성하면 기존 기업의 factor 상태와 경고가 바뀐다.
     """
     where = "run.continued_from"
-    _expect_keys(value, ["run_id", "as_of", "rule_hash", "hashes", "results_hash", "approval_id", "added_companies"], where)
+    _expect_keys(value, ["run_id", "as_of", "rule_hash", "hashes", "results_hash", "approval_id", "added_companies"], where,
+                 optional=["updated_companies"])
     _require(isinstance(value["run_id"], str) and bool(ID_RE.match(value["run_id"])), f"{where}.run_id: 실행 slug 필요")
     _expect_date(value["as_of"], f"{where}.as_of")
     _expect_sha(value["rule_hash"], f"{where}.rule_hash")
@@ -2842,6 +2876,15 @@ def _validate_continued_from(value: Any, companies: list[str]) -> None:
     _require(isinstance(value["added_companies"], list), f"{where}.added_companies: 배열 필요")
     outside = [c for c in value["added_companies"] if c not in companies]
     _require(not outside, f"{where}.added_companies: run.companies 에 없는 기업 {outside}")
+    # 2026-10-22 규칙 v3.1: 실적 반영 실행의 갱신 회사. 기업 추가와 한 실행에 섞지 않는다.
+    if "updated_companies" in value:
+        updated = value["updated_companies"]
+        _require(isinstance(updated, list) and updated and all(isinstance(c, str) for c in updated),
+                 f"{where}.updated_companies: 비어 있지 않은 기업 ID 배열")
+        outside = [c for c in updated if c not in companies]
+        _require(not outside, f"{where}.updated_companies: run.companies 에 없는 기업 {outside}")
+        _require(len(set(updated)) == len(updated), f"{where}.updated_companies: 중복 기업")
+        _require(not value["added_companies"], f"{where}: 기업 추가(added_companies)와 실적 반영(updated_companies)을 한 실행에 섞지 않는다")
 
 
 def _expect_sha(value: Any, where: str, allow_none: bool = False) -> None:

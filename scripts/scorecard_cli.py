@@ -148,6 +148,7 @@ def cmd_init(args: argparse.Namespace) -> int:
         decisions.append({"id": did.strip(), "choice": choice.strip(), "rationale": args.rationale, "decided_by": args.by, "decided_at": today()})
     companies = [c.strip() for c in args.companies.split(",")] if args.companies else None
     add_companies = [c.strip() for c in args.add_companies.split(",")] if args.add_companies else None
+    update_companies = [c.strip() for c in args.update_companies.split(",")] if args.update_companies else None
     # 2026-09-21 ADD-03. 제목은 실행마다 달라야 한다. 이어받기에서 기본값으로 떨어지면 두 실행이 같은 제목을 갖는다.
     if args.from_run and not args.title:
         print(f"[경고] --title 을 주지 않아 이전 실행 {args.from_run} 의 제목을 그대로 쓴다. 실행마다 제목을 달리하는 편이 낫다")
@@ -172,6 +173,8 @@ def cmd_init(args: argparse.Namespace) -> int:
         add_companies=add_companies,
         change_type=args.change_type,
         carry_decisions=not args.no_carry_decisions,
+        update_companies=update_companies,
+        update_reason=args.update_reason,
     )
     claim_lock(args.slug, "init", take_lock=args.take_lock)
     for name, path in paths.items():
@@ -691,6 +694,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--request")
     p.add_argument("--from-run", help="이어받을 이전 실행의 slug. 관측·판단·출처·결정을 그대로 가져온다")
     p.add_argument("--add-companies", help="이어받기에 덧붙일 기업 ID(쉼표). --companies 는 통째 교체이고 이것은 덧붙이기다")
+    p.add_argument("--update-companies",
+                   help="실적 반영 실행의 갱신 회사(쉼표, 규칙 v3.1 이상). 이 회사들의 판단은 전부, 새 근거·발동 트리거가 닿는 항목은 "
+                        "그 항목만 다시 매기고 가격은 모든 회사를 새로 받는다(rules.md 2.9)")
+    p.add_argument("--update-reason", help="실적 반영 실행이 반영하는 실적(예: 'Alphabet·SpaceX-xAI 3분기 실적')")
     p.add_argument("--no-carry-decisions", action="store_true", help="이전 실행의 규칙 결정을 이어받지 않는다")
     p.add_argument("--purpose")
     p.add_argument("--companies")
@@ -701,8 +708,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--by")
     p.add_argument("--price-as-of")
     p.add_argument("--info-cutoff")
-    p.add_argument("--change-type", choices=["baseline-recompute", "rule-change", "fact-update", "correction", "company-add"],
-                   help="history.csv 에 남길 변경 사유(규칙 5절의 원인 구분). 규칙 버전을 올린 첫 실행은 rule-change")
+    p.add_argument("--change-type", choices=["baseline-recompute", "rule-change", "fact-update", "correction", "company-add",
+                                             "earnings-update"],
+                   help="history.csv 에 남길 변경 사유(규칙 5절의 원인 구분). 규칙 버전을 올린 첫 실행은 rule-change, "
+                        "실적 반영 실행은 주지 않으면 earnings-update")
     p.add_argument("--force", action="store_true")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_init)

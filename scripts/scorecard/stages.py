@@ -143,7 +143,7 @@ def _load_prior_run(prior_slug: str) -> dict[str, Any]:
 
 def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, selected: list[str],
                      added: list[str], as_of: str, baseline_id: str, rules: Any,
-                     registry: dict[str, dict[str, Any]]) -> _Inputs:
+                     registry: dict[str, dict[str, Any]], updated: list[str] | None = None) -> _Inputs:
     """이전 실행의 관측·판단·출처를 그대로 이어받는다.
 
     2026-09-21 ADD-03. 기준선에서 다시 만들면 9라운드에 걸쳐 고친 것이 전부 사라진다.
@@ -211,7 +211,11 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         f"(observations {hashes['observations'][:12]}…, judgments {hashes['judgments'][:12]}…)."
         f" 이어받은 항목은 이번 실행에서 재검증되지 않았다",
         (f"이번 실행이 새로 조사한 대상은 {', '.join(registry[c]['display_name'] for c in added)} 뿐이다"
-         if added else "이번 실행은 기업을 더하지 않았고 이전 실행의 입력을 그대로 쓴다"),
+         if added else
+         # 2026-10-22 규칙 v3.1: 실적 반영 실행(rules.md 2.9).
+         f"실적 반영 실행이다. 갱신 회사는 {', '.join(registry[c]['display_name'] for c in updated)} 이고, 가격은 모든 회사를 새로 받는다. "
+         "새로 확정한 근거·발동한 트리거가 닿는 (회사, 항목)과 update_scope.extra 에 선언한 항목도 다시 매긴다"
+         if updated else "이번 실행은 기업을 더하지 않았고 이전 실행의 입력을 그대로 쓴다"),
         "가격 기준일·재무 기간·정보 컷오프는 분리 기록한다(C-17)",
     ]
     if unit_note:
@@ -265,6 +269,8 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
         "approval_id": approval["approval_id"] if approval else None,
         "added_companies": list(added),
     }
+    if updated:
+        continued_from["updated_companies"] = list(updated)
     return _Inputs(observations, judgments, sources, assumptions, note, continued_from, evidence, triggers)
 
 
@@ -281,6 +287,17 @@ def _check_carried_refs(prior_slug: str, slug: str, inputs: _Inputs, registry: d
     except SchemaError as exc:
         raise SchemaError(f"init --from-run {prior_slug}: 이어받은 입력의 교차 참조가 맞지 않아 실행을 만들지 않았다 — {exc}. "
                           f"이전 실행의 evidence/evidence.json·triggers.json·sources.json 을 확인한다") from exc
+
+
+def refreshed_here(run: dict[str, Any]) -> set[str]:
+    """이 실행이 판단 전부를 다시 매기는 회사(2026-10-22 규칙 v3.1). 실적 반영 실행은 갱신 회사, 기업 추가 실행은 더한 회사,
+    정기 실행과 기준선 실행은 전부다. run.refreshed_at 의 이번 기준일 칸이 이 회사들이다."""
+    cont = run.get("continued_from") or {}
+    if cont.get("updated_companies"):
+        return set(cont["updated_companies"])
+    if cont.get("added_companies"):
+        return set(cont["added_companies"])
+    return set(run["companies"])
 
 
 def init_run(
@@ -301,6 +318,8 @@ def init_run(
     add_companies: list[str] | None = None,
     carry_decisions: bool = True,
     change_type: str | None = None,
+    update_companies: list[str] | None = None,
+    update_reason: str | None = None,
 ) -> dict[str, Path]:
     if not slug.startswith("ai-scorecard-"):
         raise SchemaError("scorecard slug 는 `ai-scorecard-` 로 시작해야 한다 (예: ai-scorecard-2026-09-baseline)")
@@ -320,6 +339,17 @@ def init_run(
         prior_run = _load_prior_run(from_run)
     elif add_companies:
         raise SchemaError("--add-companies 는 --from-run 과 함께 쓴다 — 기준선에서 새로 만들 때는 --companies 로 대상을 정한다")
+    # 2026-10-22 규칙 v3.1(rules.md 2.9): 실적 반영 실행은 이전 실행의 기업을 그대로 두고 일부만 갱신한다.
+    updated = list(dict.fromkeys(update_companies or []))
+    if updated:
+        if prior_run is None:
+            raise SchemaError("--update-companies 는 --from-run 과 함께 쓴다 — 실적 반영 실행은 이전 실행을 이어받는다")
+        if add_companies or companies:
+            raise SchemaError("--update-companies 는 --add-companies·--companies 와 함께 쓰지 않는다 — "
+                              "실적 반영 실행은 이전 실행의 기업을 그대로 두고 일부만 갱신한다")
+        if not (update_reason or "").strip():
+            raise SchemaError("--update-reason 이 필요하다 — 어떤 실적을 반영하는지 적는다")
+        change_type = change_type or "earnings-update"
 
     # 기본값은 이전 실행에서 온다. `--rule` 을 안 주면 v1.5 로 떨어져 규칙이 뒷걸음질하는 것을 막는다.
     baseline_id = baseline_id or (prior_run["baseline_id"] if prior_run else "v1.5")
@@ -334,8 +364,10 @@ def init_run(
     if not request:
         raise SchemaError("--request 가 필요하다")
     purpose = purpose or (prior_run["purpose"] if prior_run else "기준선 승계 재계산과 규칙·자료·판단의 일관성 확인")
-    price_as_of = price_as_of or (prior_run.get("price_as_of") if prior_run else None)
-    info_cutoff = info_cutoff or (prior_run.get("info_cutoff") if prior_run else None)
+    # 2026-10-22: 실적 반영 실행은 가격을 모든 회사에서 새로 받고(D2) 정보 컷오프도 새 기준일을 따른다. 이전 실행 날짜를 물려받지 않는다.
+    inherit = prior_run is not None and not updated
+    price_as_of = price_as_of or (prior_run.get("price_as_of") if inherit else None)
+    info_cutoff = info_cutoff or (prior_run.get("info_cutoff") if inherit else None)
 
     rules = load_rules(rule_version)
     scores = base_obs = None
@@ -350,6 +382,17 @@ def init_run(
     unknown = [c for c in selected if c not in registry]
     if unknown:
         raise SchemaError(f"알 수 없는 기업 {unknown}")
+    from .validate import update_runs_policy
+    update_policy = update_runs_policy(rules.payload)
+    if updated:
+        if update_policy is None:
+            raise SchemaError(f"규칙 {rule_version} 에는 실적 반영 실행 정책(policies.rejudge.update_runs)이 없다 — "
+                              "v3.1 이상으로 init 한다")
+        outside = [c for c in updated if c not in selected]
+        if outside:
+            raise SchemaError(f"--update-companies 에 이전 실행 {from_run} 의 기업이 아닌 것이 있다: {outside}")
+        if as_of <= prior_run["as_of"]:
+            raise SchemaError(f"실적 반영 실행의 기준일은 이전 실행 기준일 {prior_run['as_of']} 보다 뒤여야 한다 (--as-of {as_of})")
     if prior_run is not None:
         carried = prior_run["decisions"] if carry_decisions else []
         overridden = {r["id"] for r in (decisions or [])}
@@ -360,7 +403,7 @@ def init_run(
                               rules=rules, registry=registry, scores=scores, base_obs=base_obs)
         if prior_run is None else
         _inputs_from_run(from_run, prior_run, slug=slug, selected=selected, added=added, as_of=as_of,
-                         baseline_id=baseline_id, rules=rules, registry=registry)
+                         baseline_id=baseline_id, rules=rules, registry=registry, updated=updated)
     )
     run = {
         "schema": "scorecard.run/1",
@@ -386,6 +429,15 @@ def init_run(
     if inputs.continued_from is not None:
         run["continued_from"] = inputs.continued_from
         _check_carried_refs(from_run, slug, inputs, registry)
+    # 2026-10-22 규칙 v3.1(rules.md 2.9): 회사별 마지막 전체 갱신일. 이 실행이 판단 전부를 다시 매기는 회사는 이번 기준일이고
+    # (정기 실행은 전부, 기업 추가 실행은 더한 회사, 실적 반영 실행은 갱신 회사), 나머지는 이전 실행 값을 잇는다.
+    # 이전 실행에 기록이 없으면(v3.0 이하) 그 실행의 기준일에 전부 다시 매긴 것으로 본다.
+    if update_policy is not None:
+        here = refreshed_here(run)
+        prior_ref = (prior_run or {}).get("refreshed_at") or {}
+        run["refreshed_at"] = {c: as_of if c in here else prior_ref.get(c, prior_run["as_of"]) for c in selected}
+    if updated:
+        run["update_scope"] = {"reason": update_reason.strip(), "extra": []}
     d.mkdir(parents=True, exist_ok=True)
     write_json(d / "run.json", run)
     write_json(d / "observations.json", inputs.observations)
@@ -441,6 +493,11 @@ def move_as_of(slug: str, as_of: str, *, reason: str) -> dict[str, Any]:
     if run.get("info_cutoff") in (None, old):
         moved["info_cutoff"] = [run.get("info_cutoff"), as_of]
         run["info_cutoff"] = as_of
+    # 2026-10-22 규칙 v3.1: 이 실행에서 판단 전부를 다시 매기는 회사의 마지막 전체 갱신일도 새 기준일로 옮긴다.
+    if "refreshed_at" in run:
+        for cid in sorted(refreshed_here(run)):
+            moved[f"refreshed_at.{cid}"] = [run["refreshed_at"][cid], as_of]
+            run["refreshed_at"][cid] = as_of
     run["assumptions"].append(f"분석 기준일은 {as_of} 이다({reason.strip()})")
     write_json(d / "run.json", run)
     plan_text = render_plan(run, rules, load_companies(), request=frontmatter_value(plan_fm, "request"),

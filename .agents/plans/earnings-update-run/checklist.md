@@ -18,11 +18,13 @@
 - [ ] 선언한 키의 소비자: price_refresh(U4 diff)·manual_check_forms(U3·U5)·나머지(U3) — 끝까지 읽는 코드가 없으면 뺀다
 
 ## U2 실행 선언
-- [ ] init --update-companies --update-reason
-- [ ] run.json continued_from.updated_companies, refreshed_at
-- [ ] validate_run, is_update_run
-- [ ] 테스트
-- [ ] 커밋
+- [x] init --update-companies --update-reason (from-run 필수, add·companies 와 배타, v3.1 이상, 기준일은 이전보다 뒤, 가격일·컷오프는 물려받지 않음)
+- [x] run.json continued_from.updated_companies, refreshed_at(v3.1 이상 모든 실행), update_scope{reason, extra}
+- [x] validate_run, is_update_run, update_runs_policy, refreshed_here(set-as-of 도 갱신일을 옮긴다)
+- [x] 리뷰 승계 예외는 기업 추가 실행에만 (실적 반영 실행도 막음)
+- [x] 테스트 (test_update_run_init 18개 + test_v20_validate 1개, 전체 1,837개)
+- [x] 커밋
+- [ ] U4 에서: `_inputs_from_run` 의 규칙 변경 경고("층·사업 단위 규칙이라 diff 로 견주지 못하므로…")를 diff 지원에 맞게 고친다
 
 ## U3 범위 계산과 검사
 - [ ] update_scope.py (필수 판단, 추가 항목, 실적 감지, 나이)

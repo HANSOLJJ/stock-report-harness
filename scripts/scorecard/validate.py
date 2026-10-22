@@ -272,9 +272,20 @@ def citation_violations(ctx: Any) -> list[str]:
 # 근거로 다시 매긴다. 승계(status: carried)는 기업 추가 실행의 기존 기업에만 남는다. 정책이 없는 규칙(v1.9 이하)은 보지 않는다.
 # 판단을 고치는 단계(init·judge·propose·proposal)는 막지 않고, 이 검사가 계약 검증(리뷰·승인·빌드)에서 막는다.
 def is_regular_run(run: Mapping[str, Any]) -> bool:
-    """정기 실행인가. 이어받지 않았거나(continued_from 없음) 이어받았어도 더한 기업이 없으면 정기 실행이다."""
+    """정기 실행인가. 이어받지 않았거나(continued_from 없음) 이어받았어도 더한 기업·갱신 기업이 없으면 정기 실행이다."""
     cont = run.get("continued_from")
-    return not cont or not cont.get("added_companies")
+    return not cont or not (cont.get("added_companies") or cont.get("updated_companies"))
+
+
+# 2026-10-22 사용자 결정(규칙 v3.1, rules.md 2.9): 세 번째 실행 종류. 실적을 낸 회사와 그 사건이 닿는 곳만 다시 매긴다.
+def is_update_run(run: Mapping[str, Any]) -> bool:
+    """실적 반영 실행인가. continued_from.updated_companies 가 비어 있지 않으면 그렇다."""
+    return bool((run.get("continued_from") or {}).get("updated_companies"))
+
+
+def update_runs_policy(rules_payload: Mapping[str, Any]) -> dict[str, Any] | None:
+    """규칙이 선언한 실적 반영 실행 정책(policies.rejudge.update_runs). v3.1 이전 규칙은 None."""
+    return ((rules_payload.get("policies") or {}).get("rejudge") or {}).get("update_runs")
 
 
 def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
@@ -527,9 +538,11 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"체크리스트 {qid} 결과 {res!r} 는 pass/fail/not_applicable 이어야 함")
         if status == "pass" and res == "fail":
             excepted, cited, why = _carried_exception(basis, tensions)
-            if excepted and rejudge and rejudge.get("review_carried_exception_only_in_extend_runs") and regular_run:
+            if (excepted and rejudge and rejudge.get("review_carried_exception_only_in_extend_runs")
+                    and (regular_run or is_update_run(ctx.run))):
                 # 2026-10-08 사용자 결정(rules.md 2.9): 승계 판단 예외는 기업 추가 실행에만 있다. 정기 실행의 fail 은 막는다.
-                excepted, why = False, "정기 실행에는 승계 판단 예외를 적용하지 않는다(rules.md 2.9)"
+                # 2026-10-22: 실적 반영 실행도 막는다. 경쟁사와 잣대가 어긋나면 그 항목을 범위에 넣어 다시 매긴다(update_scope.extra).
+                excepted, why = False, "정기 실행과 실적 반영 실행에는 승계 판단 예외를 적용하지 않는다(rules.md 2.9)"
             if excepted:
                 # **조용히 넘어가지 않는다.** 예외로 통과한 것을 세어 경고로 남긴다.
                 carried.append(f"{qid}({'·'.join(cited)})")
