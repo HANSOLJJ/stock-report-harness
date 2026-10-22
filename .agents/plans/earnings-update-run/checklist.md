@@ -27,12 +27,14 @@
 - [ ] U4 에서: `_inputs_from_run` 의 규칙 변경 경고("층·사업 단위 규칙이라 diff 로 견주지 못하므로…")를 diff 지원에 맞게 고친다
 
 ## U3 범위 계산과 검사
-- [ ] update_scope.py (필수 판단, 추가 항목, 실적 감지, 나이)
-- [ ] collect_filings 후보에 items·report_period
-- [ ] rejudge_findings·research·previous_triggers 연결
-- [ ] scorecard_cli.py scope
-- [ ] 테스트 (걸려야 할 값·걸리면 안 될 값·일부 행만)
-- [ ] 커밋 → 이정표 1 보고
+- [x] update_scope.py (필수 판단, 추가 항목, 실적 감지, 나이). "새로 확정·발동"은 이전 실행의 같은 ID 와 견준다
+- [x] 공시 후보에 items·report_period, 후보 파일에 회사별 공시 목록 수집 시각(filings_fetched_at)
+- [x] rejudge_findings·research·계약 검증·previous_triggers 연결. 계약 검증은 범위 계산 예외를 오류 한 줄로 남긴다
+- [x] v3.1 재판단 기준 강화: 이전 실행 판단과 내용이 다르고 검토·재확인일 ≥ 생성일 (v30full 판단이 기준일 뒤에 매겨져 옛 기준이 이어받기만 한 판단을 통과시키던 구멍)
+- [x] scorecard_cli.py scope (+ --add), stages.declare_scope_extra, 잠금 단계·훅(scope --add 만 막음)
+- [x] 테스트 (test_update_scope 21개, 훅 2건, 전체 1,858개)
+- [x] 커밋 → 이정표 1 보고
+- [ ] U6 에서: scripts/hooks/README.md 단계 목록에 scope --add
 
 ## U4 diff
 - [ ] 층 규칙 가드 해제 + v3.0 판단 ID 유일성 테스트

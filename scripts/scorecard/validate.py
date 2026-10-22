@@ -20,7 +20,7 @@ from .engine import HISTORY_CSV, compute, input_hashes, load_context, load_resul
 from .paths import RunPaths, run_paths
 from .render_md import REVIEW_AREAS
 from .rules import load_rules
-from .schema import SchemaError, load_json_strict, sha256_file, validate_approval
+from .schema import SchemaError, load_json_strict, sha256_file, sha256_obj, validate_approval
 
 REQUIRED_DRAFT_SECTIONS_SCORECARD = ["개요", "종합 순위표", "기업별 상세", "지표 원자료", "방법과 규칙", "References"]
 HTML_GENERATOR = "stock-report-harness scorecard-builder"
@@ -298,15 +298,46 @@ def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
     cont = ctx.run.get("continued_from") or {}
     added = set(cont.get("added_companies") or [])
     regular = is_regular_run(ctx.run)
+    # 2026-10-22 규칙 v3.1(rules.md 2.9): 실적 반영 실행은 갱신 범위(갱신 회사·새 근거와 트리거가 닿은 항목·선언한 항목)만 본다.
+    scope = None
+    if is_update_run(ctx.run):
+        from .update_scope import compute
+        scope = compute(ctx)
     prior_as_of = cont.get("as_of")
     prior_revisions = _prior_revision_counts(cont.get("run_id"))
+    # 2026-10-22 규칙 v3.1: 판단은 실행 기준일 뒤에 매기므로(v30full 은 기준일 10-14, 판단 10-15~10-20) "검토일 > 이전 기준일"은
+    # 고치지 않고 이어받은 판단도 통과시킨다. v3.1 이상은 이전 실행의 같은 판단과 내용이 다르고 검토일·재확인일이 이번 실행
+    # 생성일 이후여야 다시 매긴 것으로 본다. v3.0 이하(확인된 기존 실행)는 그때 계약대로 둔다.
+    strict = update_runs_policy(ctx.rules.payload) is not None
+    prior_judgments = _prior_judgments(cont.get("run_id")) if strict else None
+    created = ctx.run.get("created_at") or ""
     out: list[tuple[str, str]] = []
     for j in ctx.judgments:
-        if j["factor"] not in factors or not (regular or j["company_id"] in added):
+        if j["factor"] not in factors:
+            continue
+        in_scope = scope.why(j["company_id"], j["factor"]) if scope is not None else None
+        if scope is not None and in_scope is None:
+            continue
+        if scope is None and not (regular or j["company_id"] in added):
             continue
         if policy.get("carried_allowed_only_in_extend_runs") and j["status"] == "carried":
-            where = "정기 실행" if regular else "기업 추가 실행의 신규 기업"
+            where = ("정기 실행" if regular else f"실적 반영 실행의 갱신 범위({in_scope})" if scope is not None
+                     else "기업 추가 실행의 신규 기업")
             out.append((j["judgment_id"], f"{where}에 승계 판단(status: carried)이 남아 있다 — 이번 실행의 근거로 다시 매긴다"))
+            continue
+        if prior_as_of and policy.get("reviewed_at_after_prior_as_of") and strict:
+            reconfirmed = (j.get("reconfirmed") or [{}])[-1].get("at")
+            last = max(d for d in (j["reviewed_at"], reconfirmed) if d)
+            before = (prior_judgments or {}).get(j["judgment_id"])
+            same = before is not None and sha256_obj(before) == sha256_obj(j)
+            if prior_judgments is not None and before is None:
+                continue   # 이번 실행에서 새로 만든 판단
+            if same or last < created:
+                out.append((j["judgment_id"], "이번 실행에서 다시 매기지 않은 판단 — "
+                            + (f"이전 실행 {cont.get('run_id')} 의 판단과 같다" if same
+                               else f"검토일 {j['reviewed_at']}" + (f"·재확인 {reconfirmed}" if reconfirmed else "")
+                               + f" 이 이번 실행 생성일 {created} 보다 앞선다")
+                            + (f" (범위: {in_scope})" if in_scope else "")))
             continue
         if prior_as_of and policy.get("reviewed_at_after_prior_as_of"):
             reconfirmed = (j.get("reconfirmed") or [{}])[-1].get("at")
@@ -325,8 +356,19 @@ def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
             if max(d for d in (j["reviewed_at"], reconfirmed) if d) <= prior_as_of and not revised_here:
                 out.append((j["judgment_id"], f"이번 실행에서 다시 매기지 않은 판단 — 검토일 {j['reviewed_at']}"
                             + (f"·재확인 {reconfirmed}" if reconfirmed else "")
-                            + f" 이 이전 실행 기준일 {prior_as_of} 보다 뒤가 아니다"))
+                            + f" 이 이전 실행 기준일 {prior_as_of} 보다 뒤가 아니다"
+                            + (f" (범위: {in_scope})" if in_scope else "")))
     return out
+
+
+def _prior_judgments(prior_slug: str | None) -> dict[str, dict[str, Any]] | None:
+    """이전 실행의 판단을 ID 로. 이전 실행 파일이 없으면 None(생성일 검사만 한다)."""
+    if not prior_slug:
+        return None
+    path = run_paths(prior_slug).run_dir / "judgments.json"
+    if not path.is_file():
+        return None
+    return {j["judgment_id"]: j for j in json.loads(path.read_text(encoding="utf-8"))["items"]}
 
 
 def _prior_revision_counts(prior_slug: str | None) -> dict[str, int] | None:
@@ -409,15 +451,33 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
     # 정기 실행 재판단 -------------------------------------------------------
     rejudge = ctx.rules.payload["policies"].get("rejudge")
     regular_run = is_regular_run(ctx.run)
+    update_run = is_update_run(ctx.run)
     if rejudge:
-        bad = rejudge_violations(ctx)
+        head = ("실적 반영 실행은 갱신 범위의 정성 판단을 다시 매긴다(rules.md 2.9)" if update_run
+                else "정기 실행은 정성 판단을 모두 다시 매긴다(rules.md 2.9)")
+        try:
+            bad = rejudge_violations(ctx)
+        except SchemaError as exc:   # 범위를 계산하지 못하면(이전 실행 폴더 없음 등) 검증을 멈추지 않고 오류로 남긴다
+            bad = [f"갱신 범위를 계산하지 못했다 — {exc}"]
         for line in bad[:20]:
-            result.error(f"정기 실행은 정성 판단을 모두 다시 매긴다(rules.md 2.9) — {line}")
+            result.error(f"{head} — {line}")
         if len(bad) > 20:
             result.error(f"다시 매기지 않은 정성 판단이 {len(bad) - 20}건 더 있다")
         if not bad:
             result.check("rejudge policy: all qualitative judgments are new for this run" if regular_run else
+                         "rejudge policy: update scope's qualitative judgments are new for this run" if update_run else
                          "rejudge policy: added companies' qualitative judgments are new for this run")
+    # 2026-10-22 규칙 v3.1(rules.md 2.9): 가격 기준일까지 실적을 낸 회사와 판단 나이 상한을 넘긴 회사는 갱신 회사여야 한다.
+    if update_run:
+        from .update_scope import blocking_findings
+        try:
+            blocked = blocking_findings(ctx)
+        except SchemaError as exc:
+            blocked = [str(exc)]
+        for line in blocked:
+            result.error(f"실적 반영 실행의 갱신 회사가 모자란다(rules.md 2.9) — {line}")
+        if not blocked:
+            result.check("update run: earnings filers and stale companies are updated companies")
 
     # 자료 원천 allowlist --------------------------------------------------
     check_source_allowlist(ctx.rules, ctx.sources, result)

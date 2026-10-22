@@ -187,6 +187,46 @@ def cmd_init(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_scope(args: argparse.Namespace) -> int:
+    """실적 반영 실행의 갱신 범위를 보여 주고, --add 로 (회사, 항목)을 범위에 선언한다(2026-10-22 규칙 v3.1, rules.md 2.9)."""
+    from scorecard.engine import load_context
+    from scorecard.stages import declare_scope_extra
+    from scorecard.update_scope import age_findings, compute, earnings_findings
+    from scorecard.validate import is_update_run, rejudge_findings
+
+    if args.add:
+        _claim(args, "scope")
+        items = []
+        for raw in args.add:
+            cid, sep, factor = raw.partition(":")
+            if not sep or not cid.strip() or not factor.strip():
+                raise SystemExit(f"--add 형식은 company:F5 ({raw!r})")
+            items.append((cid.strip(), factor.strip().upper()))
+        out = declare_scope_extra(args.slug, items, reason=args.reason or "")
+        print("선언: " + ", ".join(f"{c} {f}" for c, f in out["added"]))
+    ctx = load_context(args.slug)
+    if not is_update_run(ctx.run):
+        raise SystemExit(f"{args.slug} 는 실적 반영 실행이 아니다")
+    sc = compute(ctx)
+    print(f"갱신 회사: {', '.join(sc.updated)}")
+    for (cid, factor), refs in sorted(sc.touched.items()):
+        if cid not in sc.updated:
+            print(f"닿은 항목: {cid} {factor} — {', '.join(refs)}")
+    for (cid, factor), why in sorted(sc.extra.items()):
+        print(f"선언한 항목: {cid} {factor} — {why}")
+    pending = rejudge_findings(ctx)
+    print(f"다시 매기지 않은 범위 판단: {len(pending)}건")
+    for jid, why in pending[:30]:
+        print(f"  {jid}: {why}")
+    earnings, manual = earnings_findings(ctx)
+    ages = age_findings(ctx)
+    for line in earnings + ages:
+        print(f"[막힘] {line}")
+    for m in manual:
+        print(f"[리뷰 확인] {m['company_id']} {m['form']} {m['filed_at']} {m.get('url') or ''}")
+    return 1 if earnings or ages else 0
+
+
 def cmd_set_as_of(args: argparse.Namespace) -> int:
     """승인 전 실행의 분석 기준일을 뒤로 옮긴다(2026-10-15)."""
     from scorecard.stages import move_as_of
@@ -715,6 +755,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--force", action="store_true")
     p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
     p.set_defaults(func=cmd_init)
+
+    p = sub.add_parser("scope", help="실적 반영 실행의 갱신 범위를 보여 주고, --add 로 리뷰가 찾은 경쟁사 항목을 범위에 선언한다")
+    p.add_argument("slug")
+    p.add_argument("--add", action="append", help="범위에 넣을 회사:항목(예: anthropic:F5). 여러 번 줄 수 있다")
+    p.add_argument("--reason", help="--add 의 이유. 어느 갱신 판단의 잣대가 이 항목에도 닿는지 적는다")
+    p.add_argument("--take-lock", action="store_true", help=TAKE_LOCK_HELP)
+    p.set_defaults(func=cmd_scope)
 
     p = sub.add_parser("set-as-of", help="승인 전 실행의 분석 기준일을 뒤로 옮긴다. 정보 컷오프가 같았으면 함께, 가격 기준일은 그대로")
     p.add_argument("slug")

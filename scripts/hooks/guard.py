@@ -671,6 +671,9 @@ def _stage_changes_run(stage: str, rest: list[str]) -> bool:
             return False
         # 2026-10-12: facts(SEC companyfacts 재무 관측)도 prices 처럼 observations.json·sources.json 을 바로 쓴다.
         return (_option_value(rest, "--kind") or "all") in ("prices", "facts", "all")
+    # 2026-10-22: scope 는 --add 가 있을 때만 run.json 을 고친다(없으면 범위를 보여 주기만 한다).
+    if stage == "scope":
+        return _option_value(rest, "--add") is not None
     return stage in _STAGE_WRITES
 
 

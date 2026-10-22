@@ -506,6 +506,41 @@ def move_as_of(slug: str, as_of: str, *, reason: str) -> dict[str, Any]:
     return {"run": d / "run.json", "plan": plan_path, "moved": moved}
 
 
+# ------------------------------------------------------------------ scope
+# 2026-10-22 규칙 v3.1(rules.md 2.9, 결정 D5·D7): 리뷰가 같은 층 경쟁사에도 새 잣대를 대야 한다고 보면 그 (회사, 항목)을
+# 이유와 함께 run.update_scope.extra 에 선언한다. 선언한 항목은 검증기가 재판단을 요구하고 diff 가 수정을 허용한다.
+
+def declare_scope_extra(slug: str, items: list[tuple[str, str]], *, reason: str) -> dict[str, Any]:
+    """실적 반영 실행의 갱신 범위에 (회사, 항목)을 더한다. 이미 범위인 항목도 이유를 남기려고 선언할 수 있다."""
+    if not items:
+        raise SchemaError("--add company:F5 형식으로 범위에 넣을 항목을 준다")
+    if not reason.strip():
+        raise SchemaError("--reason 이 비었다 — 어느 갱신 판단의 잣대가 이 항목에도 닿는지 적는다")
+    d = run_dir(slug)
+    run = validate_run(load_json_strict(d / "run.json"), slug)
+    from .validate import is_update_run
+    if not is_update_run(run):
+        raise SchemaError(f"{slug} 는 실적 반영 실행이 아니다 — 범위 선언은 init --update-companies 로 만든 실행에만 쓴다")
+    protect_approved_run(slug, "갱신 범위 선언(scope --add)")
+    rules = load_rules(run["rule_version"])
+    qual = set((rules.payload["policies"].get("rejudge") or {}).get("qualitative_factors") or [])
+    declared = {(x["company_id"], x["factor"]) for x in run["update_scope"]["extra"]}
+    added = []
+    for cid, factor in items:
+        if cid not in run["companies"]:
+            raise SchemaError(f"실행 대상이 아닌 기업 {cid!r}")
+        if factor not in qual:
+            raise SchemaError(f"{factor} 는 다시 매기는 정성 항목({', '.join(sorted(qual))})이 아니다")
+        if (cid, factor) in declared:
+            raise SchemaError(f"({cid}, {factor}) 는 이미 선언했다")
+        run["update_scope"]["extra"].append({"company_id": cid, "factor": factor, "reason": reason.strip(), "declared_at": today()})
+        declared.add((cid, factor))
+        added.append((cid, factor))
+    validate_run(run, slug)
+    write_json(d / "run.json", run)
+    return {"run": d / "run.json", "added": added}
+
+
 # ------------------------------------------------------------------ collect
 # 2026-09-30 레인 E. research 앞에서만 돈다. build 는 재수집하지 않는다(D-02).
 # 뉴스·공시는 수집 캐시(DATA_ROOT)를 갱신하고 후보 파일만 쓴다 — sources.json 은 선별된 근거가
@@ -541,15 +576,31 @@ def candidate_items(company_ids: list[str], *, since: str, until: str) -> list[d
                 stable = {k: f.get(k) for k in ("accession", "form", "filed_at", "report_period", "primary_document", "items")}
                 items_text = f" · Items {', '.join(f['items'])}" if f.get("items") else ""
                 # 공시는 제출일만 있다. 시각을 지어내지 않으므로 published_at_utc 는 null 이고 날짜는 filed_at 에 둔다.
+                # 2026-10-22 규칙 v3.1: 실적 감지(update_scope)가 8-K 항목 번호와 보고 기간을 실행 폴더 안에서 읽는다.
                 items.append({"candidate_id": f["filing_id"], "company_id": cid, "kind": "filing",
                               "title": f"{f['form']} {day}{items_text}", "url": f["primary_doc_url"],
                               "published_at_utc": None, "filed_at": day, "form": f["form"],
+                              "items": list(f.get("items") or []), "report_period": f.get("report_period"),
                               "raw_ref": f["raw_ref"], "content_hash": sha256_obj(stable), "source_id": f["source_id"]})
     return sorted(items, key=lambda x: (x["company_id"], x["kind"], x["candidate_id"]))
 
 
+def filings_fetched_at(company_ids: list[str]) -> dict[str, str]:
+    """회사별 공시 목록을 마지막으로 받은 시각(수집 캐시 state.json). 실적 감지가 그 목록이 가격 기준일 뒤의 것인지 본다(2026-10-22)."""
+    out: dict[str, str] = {}
+    for cid in sorted(set(company_ids)):
+        path = evidence_lib.DATA_ROOT / cid / "filings" / "state.json"
+        if not path.is_file():
+            continue
+        runs = [r.get("at") for r in json.loads(path.read_text(encoding="utf-8")).get("runs", []) if r.get("kind") == "filings"]
+        if any(runs):
+            out[cid] = max(r for r in runs if r)
+    return out
+
+
 def write_candidates(slug: str, *, since: str, until: str, company_ids: list[str]) -> Path:
     payload = {"schema": "scorecard.candidates/1", "run_id": slug, "window": {"since": since, "until": until},
+               "filings_fetched_at": filings_fetched_at(company_ids),
                "items": candidate_items(company_ids, since=since, until=until)}
     path = run_paths(slug).candidates
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -984,7 +1035,9 @@ def previous_triggers(run: dict[str, Any]) -> list[dict[str, Any]]:
         if earlier:
             handled |= {f"{earlier}:{t['trigger_id']}" for t in items}
         # 회사를 골라 이어받은 실행은 고른 회사의 트리거만 처리한다. 기준선 트리거는 회사가 없어 그대로 남긴다.
-        companies = set(run["companies"])
+        # 2026-10-22 규칙 v3.1: 실적 반영 실행은 갱신 회사의 트리거만 확인을 요구한다. 나머지 회사의 트리거는 번호 그대로 넘어가
+        # 그 회사가 갱신될 때 확인한다(기한이 지난 관찰 트리거는 trigger_overdue 가 회사와 무관하게 막는다).
+        companies = set((run.get("continued_from") or {}).get("updated_companies") or run["companies"])
         return [p for p in out + [p for p in previous_triggers(prev_run) if p["ref"] not in handled]
                 if p["company_id"] is None or p["company_id"] in companies]
     _scores, _obs, legacy = load_baseline(run["baseline_id"])
@@ -1022,12 +1075,22 @@ def research(slug: str, *, register: bool = True) -> Path:
     ctx = load_context(slug)
     # 2026-10-08 규칙 v2.0(rules.md 2.9): 정기 실행은 정성 판단 전부를 다시 매긴 뒤에 research 로 간다. 검사는 계약 검증과 같은
     # 함수(validate.rejudge_findings)다. calculate 는 막지 않는다 — 이어받은 판단은 needs_judgment 로 미완료가 된다.
-    from .validate import is_regular_run, rejudge_findings
+    from .validate import is_regular_run, is_update_run, rejudge_findings
+    # 2026-10-22 규칙 v3.1(rules.md 2.9): 실적 반영 실행은 범위를 정하는 갱신 회사부터 맞아야 한다. 가격 기준일까지 실적을 낸
+    # 회사나 판단 나이 상한을 넘긴 회사가 빠졌으면 재판단 검사보다 먼저 멈춘다 — 범위가 틀리면 재판단 목록도 틀린다.
+    if is_update_run(ctx.run):
+        from .update_scope import blocking_findings
+        blocked = blocking_findings(ctx)
+        if blocked:
+            raise SchemaError(f"실적 반영 실행의 갱신 회사가 모자란다(rules.md 2.9) — {len(blocked)}건: " + "; ".join(blocked[:10])
+                              + (f" 외 {len(blocked) - 10}건" if len(blocked) > 10 else "")
+                              + ". 빠진 회사를 갱신 회사로 넣어 실행을 다시 만들거나(init --force --update-companies), 공시 목록을 다시 받는다")
     findings = rejudge_findings(ctx)
     if findings:
         ids = list(dict.fromkeys(jid for jid, _why in findings))
         shown = ", ".join(ids[:30]) + (f" 외 {len(ids) - 30}건" if len(ids) > 30 else "")
         head = ("정기 실행은 정성 판단 전부를 다시 매긴다(rules.md 2.9)" if is_regular_run(ctx.run)
+                else "실적 반영 실행은 갱신 범위의 정성 판단을 다시 매긴다(rules.md 2.9)" if is_update_run(ctx.run)
                 else "기업 추가 실행은 더한 기업의 정성 판단을 새로 매긴다(rules.md 2.9)")
         raise SchemaError(f"{head} — 다시 매기지 않은 판단 {len(ids)}건: {shown}. 첫 사유: {findings[0][1]}. "
                           "판정 입력을 고치거나(judge·propose), 값을 그대로 두고 다시 읽었으면 --reconfirm EV-… 로 재확인한다")
@@ -1134,7 +1197,7 @@ def review_template(slug: str, *, force: bool = False) -> Path:
 AGENT_ENV_MARKERS = ("CLAUDECODE", "CLAUDE_CODE_ENTRYPOINT", "ORCA_AGENT_LAUNCH_TOKEN", "AI_AGENT", "MUSE_TOOL_USE_ID")
 # 잠금을 검사하고 쓰는 단계. approve·revoke·build 는 사람 행위라 잠금을 요구하지도 쓰지도 않는다.
 # 빌드가 성공하면 잠금을 지운다(render_html.build_scorecard, 2026-10-02).
-LOCK_STAGES = ("init", "set-as-of", "collect", "research", "calculate", "draft", "review-template", "confirm", "judge")
+LOCK_STAGES = ("init", "set-as-of", "collect", "research", "calculate", "draft", "review-template", "confirm", "judge", "scope")
 
 
 def agent_session_markers(env: Mapping[str, str] | None = None) -> list[str]:

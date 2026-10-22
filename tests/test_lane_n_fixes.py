@@ -164,7 +164,8 @@ class HookStageCommandTest(unittest.TestCase):
             for args in (f"judge {slug} --company nvidia --factor F1 --set score=5 --reason x --by y", f"calculate {slug}",
                          f"research {slug}", f"review-template {slug} --force", f"review-template {slug} --fo",
                          f"confirm {slug} --evidence EV-nvidia-001", f"collect {slug}", f"collect {slug} --kind prices",
-                         f"collect {slug} --kind facts", f"collect {slug} --k=all", f"calculate {slug}/"):
+                         f"collect {slug} --kind facts", f"collect {slug} --k=all", f"calculate {slug}/",
+                         f"scope {slug} --add anthropic:F5 --reason x", f"scope {slug} --ad=meta:F3"):
                 for tool in ("Bash", "PowerShell"):
                     with self.subTest(args=args, tool=tool):
                         d = self.kind(f"{self.CLI} {args}", tool)
@@ -177,7 +178,7 @@ class HookStageCommandTest(unittest.TestCase):
             # 2026-10-20 사용자 결정: draft 는 확인을 깨지 않아 막지 않는다
             for args in (f"status {slug}", f"summary {slug} --json", f"diff {slug} --against {EXISTING[0]}", f"draft {slug}",
                          f"collect {slug} --kind news", f"collect {slug} --dry-run", f"review-template {slug}",
-                         "calculate ai-scorecard-2026-10-absent"):
+                         "calculate ai-scorecard-2026-10-absent", f"scope {slug}"):
                 with self.subTest(args=args):
                     self.assertEqual(self.kind(f"{self.CLI} {args}").kind, "allow")
 
