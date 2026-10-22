@@ -567,6 +567,9 @@ def validate_rules(payload: Any) -> dict[str, Any]:
         _validate_diagnostics_policy(payload["policies"]["diagnostics"])
     if "regime_indicators" in payload["policies"]:
         _validate_regime_policy(payload["policies"]["regime_indicators"])
+    # 2026-10-22 규칙 v3.1: 실적 반영 실행(rules.md 2.9). 선언한 규칙에서만 범위 계산·검사가 탄다.
+    if "update_runs" in (payload["policies"].get("rejudge") or {}):
+        _validate_update_runs_policy(payload["policies"]["rejudge"]["update_runs"])
     for item in payload["checklist"]:
         _expect_keys(item, ["id", "focus"], "rules.checklist", optional=["case"])
     ids = [d["id"] for d in payload["decisions"]]
@@ -999,6 +1002,20 @@ def _validate_regime_policy(spec: Any) -> None:
     for i, t in enumerate(spec["trigger_conditions"]):
         _expect_keys(t, ["id", "condition", "recheck"], f"{where}.trigger_conditions[{i}]")
         _require(t["id"] in known, f"{where}.trigger_conditions[{i}].id: {sorted(known)} 중 하나 ({t['id']!r})")
+
+
+def _validate_update_runs_policy(spec: Any) -> None:
+    """2026-10-22 규칙 v3.1: 실적 반영 실행. 범위 계산(update_scope)과 diff 가 읽는 키를 확인한다."""
+    where = "rules.policies.rejudge.update_runs"
+    _expect_keys(spec, ["max_age_days", "earnings_forms", "earnings_8k_items", "manual_check_forms", "price_refresh"],
+                 where, optional=["note"])
+    age = spec["max_age_days"]
+    _require(isinstance(age, int) and not isinstance(age, bool) and age >= 1, f"{where}.max_age_days: 1 이상 정수 ({age!r})")
+    for key in ("earnings_forms", "earnings_8k_items", "manual_check_forms"):
+        value = spec[key]
+        _require(isinstance(value, list) and all(isinstance(x, str) and x for x in value), f"{where}.{key}: 문자열 목록 ({value!r})")
+    _require(bool(spec["earnings_forms"]), f"{where}.earnings_forms: 비어 있을 수 없음 — 실적 감지가 아무것도 못 잡는다")
+    _require(spec["price_refresh"] == "all_companies", f"{where}.price_refresh: all_companies 만 받는다(2026-10-22 사용자 결정)")
 
 
 def _validate_missing_types_policy(spec: Any) -> None:

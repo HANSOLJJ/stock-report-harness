@@ -7,14 +7,15 @@
 - [x] D4 판단 나이 상한 120일
 - [x] D5 리뷰 범위
 - [x] 흐름 문서(guide.md mermaid·workflow.html) 커밋 01d7009
-- [ ] 계획 사용자 확인
+- [x] 계획 사용자 확인 (2026-10-22 "좋아")
 
 ## U1 규칙 v3.1
-- [ ] v3.1.json (v3.0 + policies.rejudge.update_runs)
-- [ ] schema.validate_rules 새 키
-- [ ] rules.md 머리말·2.9·개정 이력
-- [ ] 테스트: v3.0 해시 불변, v3.1 점수 동일, 문서 대조
-- [ ] 커밋
+- [x] v3.1.json (v3.0 + policies.rejudge.update_runs)
+- [x] schema.validate_rules 새 키 (`_validate_update_runs_policy`)
+- [x] rules.md 머리말·2.9 (개정 이력 절은 없다 — 경위는 커밋에 남긴다)
+- [x] 테스트: v3.0 해시 불변·v30full 확인 유효, v3.1 점수 규칙 동일, 문서 대조 (1,818개 통과)
+- [x] 커밋
+- [ ] 선언한 키의 소비자: price_refresh(U4 diff)·manual_check_forms(U3·U5)·나머지(U3) — 끝까지 읽는 코드가 없으면 뺀다
 
 ## U2 실행 선언
 - [ ] init --update-companies --update-reason
