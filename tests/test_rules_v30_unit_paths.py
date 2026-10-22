@@ -191,11 +191,9 @@ class FromRunTest(unittest.TestCase):
         self.assertTrue(any(e.startswith("EV-meta-") for e in confirmed), "v21 에 고르지 않은 회사의 확정 근거가 있어야 검사가 뜻이 있다")
         self.assertLessEqual(confirmed, carried, "층 판단이 견줄 다른 회사의 확정 근거도 옮긴다")
         assumptions = load_json_strict(engine.run_dir("ai-scorecard-2026-10-v30t") / "run.json")["assumptions"]
-        self.assertTrue(any("diff 로 견주지 못하므로 모든 기업을 다시 매기고" in a for a in assumptions))
-        self.assertFalse(any("diff 로 확인한다" in a for a in assumptions), "diff 가 거부하는 실행에 diff 를 안내하지 않는다")
-        from scorecard.compare import compare_runs
-        with self.assertRaisesRegex(SchemaError, "diff 는 층·사업 단위 규칙\\(v3.0 이상\\) 실행을 아직 견주지 못한다: ai-scorecard-2026-10-v30t"):
-            compare_runs("ai-scorecard-2026-10-v30t", V21)
+        # 2026-10-22: diff 는 층·사업 판단도 견주지만, 판단 단위가 바뀐 실행은 모든 기업을 다시 매기므로 diff 를 안내하지 않는다.
+        self.assertTrue(any("판단 단위가 바뀌어 모든 기업을 다시 매기고 전체 리뷰를 한다" in a for a in assumptions))
+        self.assertFalse(any("diff 로 확인한다" in a for a in assumptions), "판단 단위가 바뀐 실행에 diff 를 안내하지 않는다")
 
     def test_layer_judgment_that_no_longer_fits_the_rule_is_not_carried(self):
         # 2026-10-15: 개발 플랫폼이 벤치마크 없는 층이 되자 그 층 판단의 leap 이 모양 검사에 걸려 이어받은 실행이 열리지 않았다

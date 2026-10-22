@@ -10,7 +10,7 @@
 """
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Callable
 
 from .engine import load_context, load_results, run_dir
 from .schema import FACTOR_IDS, SchemaError, load_json_strict, sha256_obj, validate_approval
@@ -21,6 +21,9 @@ from .stages import approval_mismatches, current_hashes
 INPUT_FILES = {"observations": "observations.json", "judgments": "judgments.json", "sources": "sources.json"}
 SUBTREE_NOTE = ("subtree 해시 차이는 실패 조건이 아니다 — `as_of` 만 바꿔도 달라진다"
                 "(`factors.F6.calc.p4.stale_asof.as_of`). 불변은 점수 투영으로 판정한다.")
+# 2026-10-22 규칙 v3.1(rules.md 2.9, 결정 D2): 실적 반영 실행은 가격을 모든 회사에서 새로 받는다. `collect --kind prices` 가 쓰는 지표다.
+PRICE_METRICS = {"price", "market_cap"}
+TOTAL_KEYS = ("moat", "trap", "total", "complete")
 
 
 def score_projection(company: dict[str, Any]) -> dict[str, Any]:
@@ -55,8 +58,11 @@ def _item_id(name: str, item: dict[str, Any]) -> str:
     return f"{name}[?]"
 
 
-def compare_inputs(slug: str, prior_slug: str, new_companies: set[str]) -> dict[str, Any]:
-    """1층 — 입력 가법성. 기존 항목이 사라지거나 바뀌지 않았고, 더해진 것은 신규 기업 것이어야 한다."""
+def compare_inputs(slug: str, prior_slug: str, new_companies: set[str],
+                   allow: Callable[[str, dict[str, Any]], bool] | None = None) -> dict[str, Any]:
+    """1층 — 입력 가법성. 기존 항목이 사라지거나 바뀌지 않았고, 더해진 것은 신규 기업 것이어야 한다.
+    `allow(장부 이름, 항목)` 이 참인 항목의 삭제·수정·추가는 위반으로 세지 않고 `allowed` 에 적는다(실적 반영 실행의 범위)."""
+    permitted = (lambda name, x: allow(name, x)) if allow else (lambda name, x: False)
     out: dict[str, Any] = {"violations": [], "by_file": {}}
     for name in INPUT_FILES:
         prior = {sha256_obj(x): x for x in _items(prior_slug, name)}
@@ -68,7 +74,11 @@ def compare_inputs(slug: str, prior_slug: str, new_companies: set[str]) -> dict[
         edited = [x for x in gone if _item_id(name, x) in new_ids]
         removed = [x for x in gone if _item_id(name, x) not in new_ids]
         added = [x for x in added if _item_id(name, x) not in {_item_id(name, y) for y in edited}]
-        unattributed = [x for x in added if x.get("company_id") and x["company_id"] not in new_companies]
+        allowed = sorted({_item_id(name, x) for x in removed + edited + added if permitted(name, x)})
+        removed = [x for x in removed if not permitted(name, x)]
+        edited = [x for x in edited if not permitted(name, x)]
+        unattributed = [x for x in added if x.get("company_id") and x["company_id"] not in new_companies
+                        and not permitted(name, x)]
         no_company = [x for x in added if not x.get("company_id")]
         out["by_file"][name] = {
             "prior": len(prior), "new": len(new),
@@ -79,6 +89,7 @@ def compare_inputs(slug: str, prior_slug: str, new_companies: set[str]) -> dict[
                                         if x.get("company_id") in new_companies],
             "added_for_existing_companies": [_item_id(name, x) for x in unattributed],
             "added_without_company": [_item_id(name, x) for x in no_company],
+            "allowed": allowed,
         }
         if removed:
             out["violations"].append(f"{name}: 기존 항목 {len(removed)}건이 사라졌다 "
@@ -96,28 +107,41 @@ def compare_inputs(slug: str, prior_slug: str, new_companies: set[str]) -> dict[
     return out
 
 
-def compare_scores(slug: str, prior_slug: str, new_companies: set[str]) -> dict[str, Any]:
-    """2층 — 점수 불변. 기업별 투영 해시를 견준다."""
+def compare_scores(slug: str, prior_slug: str, new_companies: set[str], scope: Any = None) -> dict[str, Any]:
+    """2층 — 점수 불변. 기업별 투영 해시를 견준다.
+    `scope`(실적 반영 실행의 update_scope.Scope)가 있으면 갱신 회사는 전부, 나머지 회사는 ⑥(가격)과 범위 항목만 움직여도 되고
+    그 변화는 `allowed` 에 적는다. 합계·완료 여부는 항목 점수에서 나오므로 위반을 항목에서만 센다."""
     new = {c["company_id"]: c for c in load_results(slug)["companies"]}
     prior = {c["company_id"]: c for c in load_results(prior_slug)["companies"]}
     shared = sorted(set(prior) & set(new))
     changed: list[dict[str, Any]] = []
+    allowed: list[dict[str, Any]] = []
     for cid in shared:
         before, after = score_projection(prior[cid]), score_projection(new[cid])
         if sha256_obj(before) == sha256_obj(after):
             continue
-        diffs = [f"{k}: {before.get(k)} → {after.get(k)}" for k in ("moat", "trap", "total", "complete")
-                 if before.get(k) != after.get(k)]
-        diffs += [f"{f} {key}: {before['factors'][f][key]} → {after['factors'][f][key]}"
-                  for f in FACTOR_IDS for key in ("score", "status")
-                  if before["factors"][f][key] != after["factors"][f][key]]
-        changed.append({"company_id": cid, "diffs": diffs})
+        totals = [f"{k}: {before.get(k)} → {after.get(k)}" for k in TOTAL_KEYS if before.get(k) != after.get(k)]
+        factors = [(f, f"{f} {key}: {before['factors'][f][key]} → {after['factors'][f][key]}")
+                   for f in FACTOR_IDS for key in ("score", "status")
+                   if before["factors"][f][key] != after["factors"][f][key]]
+        if scope is None:
+            changed.append({"company_id": cid, "diffs": totals + [text for _f, text in factors]})
+            continue
+        free = set(FACTOR_IDS) if cid in scope.updated else {"F6"} | {f for f in FACTOR_IDS if scope.why(cid, f)}
+        bad = [text for f, text in factors if f not in free]
+        moved = totals + [text for f, text in factors if f in free]
+        if bad:
+            changed.append({"company_id": cid, "diffs": bad})
+        if moved:
+            allowed.append({"company_id": cid, "diffs": moved,
+                            "why": "갱신 회사" if cid in scope.updated else "가격(⑥)·범위 항목"})
     return {
         "ok": not changed,
         "compared": len(shared),
         "dropped": sorted(set(prior) - set(new)),
         "added": sorted(set(new) - set(prior)),
         "changed": changed,
+        "allowed": allowed,
         "violations": ([f"{c['company_id']}: {'; '.join(c['diffs'])}" for c in changed]
                        + ([f"이전 실행에 있던 기업이 빠졌다: {', '.join(sorted(set(prior) - set(new)))}"]
                           if set(prior) - set(new) else [])),
@@ -181,29 +205,63 @@ def approval_state(slug: str) -> dict[str, Any]:
             "current_results_hash": current.get("results")}
 
 
+def _update_allowance(ctx: Any) -> tuple[Any, Callable[[str, dict[str, Any]], bool]]:
+    """실적 반영 실행이 바꿔도 되는 입력(2026-10-22, 결정 D2·D3). 갱신 회사의 모든 입력, 범위 항목의 판단,
+    가격을 모든 회사에서 새로 받는 규칙이면(price_refresh) 모든 회사의 가격 관측이다."""
+    from .update_scope import compute
+    from .validate import update_runs_policy
+    scope = compute(ctx)
+    price_all = (update_runs_policy(ctx.rules.payload) or {}).get("price_refresh") == "all_companies"
+
+    def allow(name: str, item: dict[str, Any]) -> bool:
+        cid = item.get("company_id")
+        if cid in scope.updated:
+            return True
+        if name == "observations":
+            return price_all and item.get("metric") in PRICE_METRICS
+        if name == "judgments":
+            return scope.why(cid, item.get("factor")) is not None
+        return False
+
+    return scope, allow
+
+
 def compare_runs(slug: str, prior_slug: str) -> dict[str, Any]:
     """세 층으로 견준다. 1층·2층 위반이 하나라도 있으면 `ok` 가 거짓이다."""
     if slug == prior_slug:
         raise SchemaError("같은 실행끼리는 견줄 수 없다")
     new_ctx, prior_ctx = load_context(slug), load_context(prior_slug)
-    # 2026-10-14 규칙 v3.0: 입력 가법성·점수 투영은 (기업, 항목) 단위로 견준다. 층·사업 판단이 있는 실행은 아직 견줄 수 없다.
-    layered = [s for s, c in ((slug, new_ctx), (prior_slug, prior_ctx)) if c.rules.payload.get("layers")]
-    if layered:
-        raise SchemaError(f"diff 는 층·사업 단위 규칙(v3.0 이상) 실행을 아직 견주지 못한다: {', '.join(layered)} — "
-                          "기업 추가 실행의 축약 리뷰를 쓰지 말고 전체 리뷰를 한다")
+    # 2026-10-22: 1층(입력 장부의 항목 ID·해시)과 2층(회사별 항목 점수)은 층·사업 판단도 그대로 견준다. v3.0 판단 ID 가
+    # 층·사업까지 담기 때문이다(alphabet.F2.cloud, alphabet.F1.search). 층 규칙 실행을 거부하던 가드(2026-10-14)를 걷었다.
     new_ids = set(new_ctx.run["companies"])
     prior_ids = set(prior_ctx.run["companies"])
     new_companies = new_ids - prior_ids
-    inputs = compare_inputs(slug, prior_slug, new_companies)
-    scores = compare_scores(slug, prior_slug, new_companies)
+    from .validate import is_update_run
+    scope = allow = None
+    if is_update_run(new_ctx.run):
+        expected = new_ctx.run["continued_from"]["run_id"]
+        if prior_slug != expected:
+            raise SchemaError(f"실적 반영 실행 {slug} 는 이어받은 실행 {expected} 과 견준다(--against {expected})")
+        scope, allow = _update_allowance(new_ctx)
+    inputs = compare_inputs(slug, prior_slug, new_companies, allow=allow)
+    scores = compare_scores(slug, prior_slug, new_companies, scope=scope)
     # 신규 기업이 0곳인데 위반까지 나면 기업을 더한 사이가 아니라 다시 조사한 사이다.
     # 그대로 이어받아 위반이 없는 경우에는 덧붙일 말이 없으므로 아무것도 적지 않는다.
-    note = ("신규 기업이 없다 — 이 비교는 **기업 추가** 사례가 아니라 같은 기업을 다시 조사한 사례로 보인다. "
-            "아래 위반은 재조사에서는 당연히 나온다."
-            if not new_companies and not (inputs["ok"] and scores["ok"]) else None)
+    if scope is not None:
+        note = (f"실적 반영 실행이다 — 갱신 회사({', '.join(scope.updated)})의 입력·점수, 범위 항목의 판단·점수, "
+                "모든 회사의 가격 관측과 ⑥ 변화는 허용하고 나머지가 움직이면 위반이다(rules.md 2.9)")
+    else:
+        note = ("신규 기업이 없다 — 이 비교는 **기업 추가** 사례가 아니라 같은 기업을 다시 조사한 사례로 보인다. "
+                "아래 위반은 재조사에서는 당연히 나온다."
+                if not new_companies and not (inputs["ok"] and scores["ok"]) else None)
     return {
         "slug": slug,
         "prior_slug": prior_slug,
+        "mode": "update" if scope is not None else "extend",
+        "updated_companies": list(scope.updated) if scope is not None else [],
+        "scope_items": ([{"company_id": c, "factor": f, "why": scope.why(c, f)}
+                         for c, f in sorted(set(scope.touched) | set(scope.extra)) if c not in scope.updated]
+                        if scope is not None else []),
         "new_companies": sorted(new_companies),
         "note": note,
         "inputs": inputs,

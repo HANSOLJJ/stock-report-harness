@@ -225,9 +225,10 @@ def _inputs_from_run(prior_slug: str, prior_run: dict[str, Any], *, slug: str, s
     prior_rule_hash = prior_run.get("rule_hash")
     if prior_rule_hash and prior_rule_hash != rules.hash:
         moved = f"규칙이 이어받은 실행 이후 바뀌었다({prior_rule_hash[:12]}… → {rules.hash[:12]}…)"
-        # 2026-10-15: diff 는 층·사업 단위 규칙 실행을 견주지 못한다(compare.compare_runs). 그 실행에는 diff 를 안내하지 않는다.
-        check = ("층·사업 단위 규칙이라 diff 로 견주지 못하므로 모든 기업을 다시 매기고 전체 리뷰를 한다"
-                 if rules.payload.get("layers") else "기존 기업 점수 불변은 diff 로 확인한다")
+        # 2026-10-22: diff 가 층·사업 판단도 견준다(compare.compare_runs). 판단 단위가 바뀐 규칙(회사 단위 ①②③ 을 버림)만
+        # 모든 기업을 다시 매기므로 diff 를 안내하지 않는다.
+        check = ("판단 단위가 바뀌어 모든 기업을 다시 매기고 전체 리뷰를 한다"
+                 if unit_note else "기존 기업 점수 불변은 diff 로 확인한다")
         print(f"[경고] {moved} — {check}")
         assumptions.append(f"{moved} — {check}")
     # 2026-10-12 규칙 v2.1 첫 실행: 새 규칙이 받지 않는 새 판단(형식: v2.0 ④⑧ score → v2.1 survival·axes, 판정 재료: ① AI 수익화

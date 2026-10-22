@@ -555,7 +555,12 @@ def cmd_diff(args: argparse.Namespace) -> int:
         return 0 if out["ok"] else 1
 
     print(f"diff: {args.slug} ← {args.against}")
-    print(f"신규 기업: {', '.join(out['new_companies']) or '없음'}")
+    if out["mode"] == "update":
+        print(f"실적 반영 실행 — 갱신 회사: {', '.join(out['updated_companies'])}")
+        for row in out["scope_items"]:
+            print(f"  범위 항목: {row['company_id']} {row['factor']} — {row['why']}")
+    else:
+        print(f"신규 기업: {', '.join(out['new_companies']) or '없음'}")
     if out["note"]:
         print(f"※ {out['note']}")
 
@@ -566,7 +571,8 @@ def cmd_diff(args: argparse.Namespace) -> int:
               f"고쳐짐 {len(row['edited'])} · "
               f"더함 {len(row['added'])}(신규 기업 {len(row['added_for_new_companies'])} · "
               f"기존 기업 {len(row['added_for_existing_companies'])} · "
-              f"기업 표기 없음 {len(row['added_without_company'])})")
+              f"기업 표기 없음 {len(row['added_without_company'])})"
+              + (f" | 범위 안 변화 {len(row['allowed'])}" if row["allowed"] else ""))
     for line in inputs["violations"]:
         print(f"  · {line}")
 
@@ -574,6 +580,8 @@ def cmd_diff(args: argparse.Namespace) -> int:
     print(f"\n[2층] 점수 불변: {'통과' if scores['ok'] else '실패'} (공통 {scores['compared']}개사 비교)")
     for line in scores["violations"]:
         print(f"  · {line}")
+    for row in scores["allowed"]:
+        print(f"  (허용) {row['company_id']} [{row['why']}]: {'; '.join(row['diffs'])}")
 
     rank = out["ranking"]
     print(f"\n[3층] 순위 이동(정보): {'같다' if rank['same_order'] else '달라졌다'}")
@@ -602,7 +610,8 @@ def cmd_diff(args: argparse.Namespace) -> int:
         print(f"  · `revenue_ttm` 기간이 없는 기업: {', '.join(gap['missing_period'])}{unlisted}")
 
     violations = len(inputs["violations"]) + len(scores["violations"])
-    print(f"\n판정: {'통과 — 기존 기업이 움직이지 않았다' if out['ok'] else f'실패 — 1층·2층 위반 {violations}건'}")
+    passed = "통과 — 범위 밖이 움직이지 않았다" if out["mode"] == "update" else "통과 — 기존 기업이 움직이지 않았다"
+    print(f"\n판정: {passed if out['ok'] else f'실패 — 1층·2층 위반 {violations}건'}")
     return 0 if out["ok"] else 1
 
 
