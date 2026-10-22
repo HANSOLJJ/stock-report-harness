@@ -9,22 +9,63 @@ AI 기업 9-factor 채점을 한 번 돌리는 전 과정과 사용법을 정리
 - **확인은 사람만 합니다.** 에이전트는 "확인 대기" 에서 멈추고, 사람이 확인 페이지에서 "확인"을 누르면 곧바로 빌드합니다.
 
 ```mermaid
-flowchart LR
-    A["plan<br/>실행 생성"] --> B["collect<br/>뉴스·공시·가격 수집"]
-    B --> C["선별<br/>근거·트리거 작성"]
-    C --> D["research<br/>입력 검증"]
-    D --> E["calculate<br/>점수 계산"]
-    E --> F["draft<br/>초안"]
-    F --> G["review<br/>4영역 리뷰"]
-    G -- "발견 → 에이전트가 근거 확정·제안 반영" --> D
-    G -- "pass" --> H{"사람<br/>확인 페이지"}
-    H -- "판단 직접 수정(선택)" --> D
-    H -- "확인(곧바로 빌드)" --> I["build<br/>report.html"]
-    style H fill:#fde68a,stroke:#b45309
-    style I fill:#bbf7d0,stroke:#15803d
+flowchart TD
+    S0["0 채점 요청<br/>/score-goal"] --> S1["1 실행 생성<br/>init"]
+    subgraph C["2 수집"]
+        direction LR
+        C1["2-1 뉴스"] ~~~ C2["2-2 공시"] ~~~ C3["2-3 가격"] ~~~ C4["2-4 재무"]
+    end
+    subgraph E["3 선별"]
+        direction LR
+        E1["3-1 근거 선별·확정"] ~~~ E2["3-2 관측 보충"] ~~~ E3["3-3 트리거 처리"]
+    end
+    subgraph J["4 판단 세션 (Opus high)"]
+        direction LR
+        J4["④ 보유표<br/>층 칸·매출 줄"] --> J23["②③ 층마다"] --> J1["① 사업마다"] --> J5["⑤ 회사마다"] --> J78["⑦⑧ 재확인"]
+    end
+    subgraph V["8 리뷰 4영역"]
+        direction LR
+        V1["8-1 사실·출처"] ~~~ V2["8-2 재무 계산"] ~~~ V3["8-3 규칙 일관성"] ~~~ V4["8-4 출력·가독성"]
+    end
+    S1 --> C --> E --> J --> R5["5 research 검사"] --> R6["6 계산"] --> R7["7 초안"] --> V --> V9{"9 리뷰 판정"}
+    V9 -- "needs_fix: 수정 한 묶음" --> L5(["↻ 5 research 부터 다시"])
+    V9 -- "pass" --> H10{"10 확인 페이지"}
+    H10 -- "판단 직접 수정(선택)" --> L5
+    H10 -- "확인" --> B11["11 빌드<br/>report.html"]
+    B11 -.->|사용자 지시| D12["12 배포<br/>맥미니"]
+    classDef code fill:#F1EFE8,stroke:#5F5E5A,color:#2C2C2A
+    classDef agent fill:#E1F5EE,stroke:#0F6E56,color:#04342C
+    classDef human fill:#FAECE7,stroke:#993C1D,color:#4A1B0C
+    class S1,C1,C2,C3,C4,R5,R6,R7,B11 code
+    class E1,E2,E3,J4,J23,J1,J5,J78,V1,V2,V3,V4,V9,D12 agent
+    class S0,H10 human
+    class L5 code
 ```
 
-입력이 바뀌면 화살표가 research 로 돌아갑니다. 리뷰 발견을 에이전트가 반영했든 사람이 확인 페이지에서 판단을 직접 고쳤든, 바뀐 입력으로 계산과 리뷰를 다시 해야 확인할 수 있기 때문입니다.
+색은 처리 주체를 가리킵니다. 회색은 코드, 초록은 에이전트, 주황은 사람입니다. 입력이 바뀌면 화살표가 research 로 돌아갑니다. 리뷰 발견을 에이전트가 반영했든 사람이 확인 페이지에서 판단을 직접 고쳤든, 바뀐 입력으로 계산과 리뷰를 다시 해야 확인할 수 있기 때문입니다. 단계 카드로 본 같은 흐름은 [workflow.html](workflow.html) 에 있습니다.
+
+| 단계 | 주체 | 모델 | 자료·도구 | 산출 | 회사만 골라 돌리기 |
+| --- | --- | --- | --- | --- | --- |
+| 1 실행 생성 | 코드 | — | 이전 실행, `rules/v3.0.json`, `companies.json` | `run.json`, `plan.md`, 이어받은 입력 | — |
+| 2-1 뉴스 수집 | 코드 | — | Google News, `news_queries`, 기준일 −180일 ~ 컷오프 | `candidates.json` | 됨 (`--company`) |
+| 2-2 공시 수집 | 코드 | — | SEC EDGAR (`SEC_UA`), 8-K·10-Q·10-K·20-F·6-K | `candidates.json` | 됨 |
+| 2-3 가격 수집 | 코드 | — | yfinance, price·market_cap | `observations.json` (⑥) | 됨 |
+| 2-4 재무 수집 | 코드 | — | SEC companyfacts, OCF·설비투자·법인세 최근 1년 | `observations.json` | 됨 |
+| 3-1 근거 선별·확정 | 에이전트 | Sonnet (`fact-checker`) | `resolve-urls`, 브라우저, `sec-get`, `confirm` | `evidence.json`, `sources.json` | 됨 |
+| 3-2 관측 보충 | 에이전트 | — | 10-Q·10-K·20-F 원문에서 매출·영업이익·현금 등을 손으로 입력 | `observations.json` | 됨 |
+| 3-3 트리거 처리 | 에이전트 | — | `trigger-candidates`, 이전 트리거마다 carry 기록 | `triggers.json` | 됨 |
+| 4 판단 세션 | 에이전트 | Opus · high | `propose` → `proposal`, 사람 지시는 `judge`. ④ → ②③ → ① → ⑤ 순서, ⑦⑧ 재확인 | `judgments.json` | **안 됨** (정기 실행은 14개사 전부) |
+| 5 research 검사 | 코드 | — | 스키마, 교차 참조, 재판단 누락, 트리거 빠짐·기한, 제목만 근거 | `research.md` | — |
+| 6 계산 | 코드 | — | 규칙 JSON, `calc_*.py` | `results.json`, `preview.md` | — |
+| 7 초안 | 코드 | — | `results.json` | `draft.md` | — |
+| 8-1 사실·출처 리뷰 | 에이전트 | Sonnet | `fact-checker`, `evidence-editor`. 근거 표지마다 원문 대조 | `review-parts/` | **안 됨** (실행 전체) |
+| 8-2 재무 계산 리뷰 | 에이전트 | Sonnet | 환율·TTM·FCF·런웨이·단위·부호 | `review-parts/` | **안 됨** |
+| 8-3 규칙 일관성 리뷰 | 에이전트 | Opus · high | 사건 교차표, 미확인 방향표, 근거 등급표, Q01~Q25 | `review-parts/` | **안 됨** |
+| 8-4 출력·가독성 리뷰 | 에이전트 | Sonnet | `report-designer`. 초안·HTML 숫자 일치, 모바일 표시 | `review-parts/` | **안 됨** |
+| 9 리뷰 판정 | 에이전트 | — | `validate_report_contract.py`. needs_fix 면 수정 한 묶음 뒤 5 부터, 확인 리뷰 1회 (Opus · high) | `review.md` | — |
+| 10 확인 | 사람 | — | `node server.js --approvals`. 판단 직접 수정 가능 | `approval.json` | — |
+| 11 빌드 | 코드 | — | 확인을 누르면 곧바로 | `report.html`, `audit.md`, `history.csv` | — |
+| 12 배포 | 에이전트 | — | 사용자가 지시할 때만. 커밋 → `push origin main` → 맥미니 `git pull` | fin.hansoljj.com/reports | — |
 
 ## 2. 누가 무엇을 하나
 

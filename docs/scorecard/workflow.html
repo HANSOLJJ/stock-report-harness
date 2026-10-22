@@ -1,0 +1,108 @@
+<!doctype html>
+<!-- 채점 하네스의 실행 흐름을 단계 카드(주체·모델·자료·산출물)로 보여 주는 문서 -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>채점 실행 흐름</title>
+<style>
+:root{--bg:#fbfaf7;--card:#ffffff;--card-2:#f4f2ec;--line:#cfccc2;--text:#232320;--text-2:#4f4e49;--muted:#6b6a64;--warn-line:#b06c12;--warn-text:#8a5208;
+--k-bg:#f1efe8;--k-fg:#444441;--a-bg:#e1f5ee;--a-fg:#085041;--h-bg:#faece7;--h-fg:#712b13}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161615;--card:#1f1f1d;--card-2:#262624;--line:#4a4944;--text:#ecebe6;--text-2:#c4c2ba;--muted:#a3a19a;--warn-line:#d9a24b;--warn-text:#f0c27a;
+--k-bg:#444441;--k-fg:#d3d1c7;--a-bg:#085041;--a-fg:#9fe1cb;--h-bg:#712b13;--h-fg:#f5c4b3}}
+:root[data-theme="dark"]{--bg:#161615;--card:#1f1f1d;--card-2:#262624;--line:#4a4944;--text:#ecebe6;--text-2:#c4c2ba;--muted:#a3a19a;--warn-line:#d9a24b;--warn-text:#f0c27a;
+--k-bg:#444441;--k-fg:#d3d1c7;--a-bg:#085041;--a-fg:#9fe1cb;--h-bg:#712b13;--h-fg:#f5c4b3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:13px;line-height:1.55}
+main{max-width:1080px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:20px;font-weight:600;margin:0 0 4px}
+.lead{color:var(--text-2);margin:0 0 16px}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.c{flex:1 1 180px;max-width:340px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.wide{max-width:440px}
+.t{font-size:15px;font-weight:600;margin:4px 0 6px}
+dl{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:0}
+dt{color:var(--muted)}dd{margin:0;color:var(--text-2)}
+.ar{text-align:center;color:var(--muted);font-size:16px;padding:4px 0}
+.id{font-size:12px;color:var(--muted);margin-right:6px}
+.tg{font-size:12px;padding:1px 7px;border-radius:6px;margin-right:4px}
+.k{background:var(--k-bg);color:var(--k-fg)}.a{background:var(--a-bg);color:var(--a-fg)}.h{background:var(--h-bg);color:var(--h-fg)}
+.heavy{border:1px dashed var(--warn-line);border-radius:12px;padding:10px;background:var(--card-2)}
+.mini{flex:1 1 110px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 8px;text-align:center}
+.mini b{display:block;font-weight:600}.mini span{color:var(--text-2)}
+.arrow{color:var(--muted);align-self:center}
+.note{text-align:center;color:var(--text-2);padding:6px 0}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.hd{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:8px}
+.warn{color:var(--warn-text);margin-left:auto}
+</style>
+</head>
+<body>
+<main>
+<h1>채점 실행 흐름</h1>
+<p class="lead">규칙 v3.0 정기 실행의 단계별 명세다. 단계 설명과 명령은 <code>guide.md</code> 3절, 규칙은 <code>rules.md</code> 가 원본이다. 건수는 v30full 실행(기준일 2026-10-14)의 규모다. (2026-10-22 기준)</p>
+
+<div class="legend"><span><span class="tg k">코드</span>프로그램이 결정론으로 처리</span><span><span class="tg a">에이전트</span>Claude 세션이 처리</span><span><span class="tg h">사람</span>사용자만 처리</span></div>
+
+<div class="row"><div class="c wide"><div><span class="id">0</span><span class="tg h">사람</span></div><div class="t">채점 요청</div><dl><dt>입력</dt><dd>/score-goal "11월 재채점" 같은 요청 문장</dd><dt>산출</dt><dd>조율 에이전트가 1~9 를 한 턴에 진행</dd></dl></div></div>
+<div class="ar">↓</div>
+
+<div class="row"><div class="c wide"><div><span class="id">1</span><span class="tg k">코드</span></div><div class="t">실행 생성 (init)</div><dl><dt>입력</dt><dd>이전 실행(--from-run), rules/v3.0.json, companies.json</dd><dt>날짜</dt><dd>기준일 · 가격 기준일 · 정보 컷오프</dd><dt>산출</dt><dd>run.json, plan.md, 이어받은 관측·판단·출처·근거·트리거</dd></dl></div></div>
+<div class="ar">↓</div>
+
+<div class="row">
+<div class="c"><div><span class="id">2-1</span><span class="tg k">코드</span></div><div class="t">뉴스 수집</div><dl><dt>자료</dt><dd>Google News</dd><dt>질의</dt><dd>news_queries</dd><dt>기간</dt><dd>기준일 −180일 ~ 컷오프</dd><dt>산출</dt><dd>candidates.json</dd></dl></div>
+<div class="c"><div><span class="id">2-2</span><span class="tg k">코드</span></div><div class="t">공시 수집</div><dl><dt>자료</dt><dd>SEC EDGAR (SEC_UA)</dd><dt>형식</dt><dd>8-K · 10-Q · 10-K · 20-F · 6-K</dd><dt>산출</dt><dd>candidates.json</dd></dl></div>
+<div class="c"><div><span class="id">2-3</span><span class="tg k">코드</span></div><div class="t">가격 수집</div><dl><dt>자료</dt><dd>yfinance</dd><dt>지표</dt><dd>price · market_cap</dd><dt>산출</dt><dd>observations.json (⑥)</dd></dl></div>
+<div class="c"><div><span class="id">2-4</span><span class="tg k">코드</span></div><div class="t">재무 수집</div><dl><dt>자료</dt><dd>SEC companyfacts</dd><dt>지표</dt><dd>OCF · 설비투자 · 법인세 TTM</dd><dt>산출</dt><dd>observations.json</dd></dl></div>
+</div>
+<div class="note">2-1 ~ 2-4 는 --company 로 회사를 골라 돌릴 수 있다 · v30full 후보 8,578건</div>
+<div class="ar">↓</div>
+
+<div class="row">
+<div class="c"><div><span class="id">3-1</span><span class="tg a">에이전트</span></div><div class="t">근거 선별·확정</div><dl><dt>모델</dt><dd>Sonnet (fact-checker)</dd><dt>도구</dt><dd>resolve-urls, 브라우저, sec-get, confirm</dd><dt>규칙</dt><dd>본문 발췌 + locator, 제목만이면 거부</dd><dt>산출</dt><dd>evidence.json 1,521건, sources.json</dd></dl></div>
+<div class="c"><div><span class="id">3-2</span><span class="tg a">에이전트</span></div><div class="t">관측 보충</div><dl><dt>자료</dt><dd>10-Q · 10-K · 20-F 원문</dd><dt>지표</dt><dd>매출 · 영업이익 · 현금 등 손 입력</dd><dt>산출</dt><dd>observations.json 994건</dd></dl></div>
+<div class="c"><div><span class="id">3-3</span><span class="tg a">에이전트</span></div><div class="t">트리거 처리</div><dl><dt>도구</dt><dd>trigger-candidates</dd><dt>판정</dt><dd>발동 · 관찰 · 만료 · 철회</dd><dt>규칙</dt><dd>이전 트리거마다 carry 기록</dd><dt>산출</dt><dd>triggers.json 136건</dd></dl></div>
+</div>
+<div class="ar">↓</div>
+
+<div class="heavy">
+<div class="hd"><span class="id">4</span><span class="tg a">에이전트</span><span class="t" style="margin:0">판단 세션</span><span style="color:var(--text-2)">Opus · 노력 high</span><span class="warn">14개사 전부 다시 매김 (규칙 2.9절)</span></div>
+<div class="row">
+<div class="mini"><b>④ 보유표</b><span>층 칸 · 매출 줄</span></div><span class="arrow">→</span>
+<div class="mini"><b>②③ 층마다</b><span>경로 · 카운터포지셔닝</span></div><span class="arrow">→</span>
+<div class="mini"><b>① 사업마다</b><span>락인 A~E</span></div><span class="arrow">→</span>
+<div class="mini"><b>⑤ 회사마다</b><span>동맹 · 적대</span></div><span class="arrow">→</span>
+<div class="mini"><b>⑦⑧ 재확인</b><span>⑥⑨ 재료 포함</span></div>
+</div>
+<dl style="margin-top:8px"><dt>명령</dt><dd>propose → proposal (에이전트), judge (사람 지시)</dd><dt>규칙</dt><dd>확정 근거만 인용, 판정 · 올릴 근거 · 내릴 근거 세 칸, 사건 교차표 먼저</dd><dt>산출</dt><dd>judgments.json 207건 (정성 191건)</dd></dl>
+</div>
+<div class="ar">↓</div>
+
+<div class="row">
+<div class="c"><div><span class="id">5</span><span class="tg k">코드</span></div><div class="t">research 검사</div><dl><dt>검사</dt><dd>스키마, 교차 참조, 재판단 누락, 트리거 빠짐·기한, 제목만 근거</dd><dt>산출</dt><dd>research.md</dd></dl></div>
+<div class="c"><div><span class="id">6</span><span class="tg k">코드</span></div><div class="t">계산 (calculate)</div><dl><dt>입력</dt><dd>규칙 JSON, 관측, 판단</dd><dt>처리</dt><dd>calc_*.py, 점수 칸 손 수정 없음</dd><dt>산출</dt><dd>results.json, preview.md</dd></dl></div>
+<div class="c"><div><span class="id">7</span><span class="tg k">코드</span></div><div class="t">초안 (draft)</div><dl><dt>입력</dt><dd>results.json</dd><dt>산출</dt><dd>draft.md</dd><dt>해시</dt><dd>다시 그려도 확인 유지</dd></dl></div>
+</div>
+<div class="ar">↓</div>
+
+<div class="row">
+<div class="c"><div><span class="id">8-1</span><span class="tg a">에이전트</span></div><div class="t">사실·출처 리뷰</div><dl><dt>모델</dt><dd>Sonnet</dd><dt>담당</dt><dd>fact-checker, evidence-editor</dd><dt>보는 것</dt><dd>근거 표지마다 원문 대조</dd></dl></div>
+<div class="c"><div><span class="id">8-2</span><span class="tg a">에이전트</span></div><div class="t">재무 계산 리뷰</div><dl><dt>모델</dt><dd>Sonnet</dd><dt>보는 것</dt><dd>환율 · TTM · FCF · 런웨이 · 단위 · 부호</dd></dl></div>
+<div class="c"><div><span class="id">8-3</span><span class="tg a">에이전트</span></div><div class="t">규칙 일관성 리뷰</div><dl><dt>모델</dt><dd>Opus · high</dd><dt>보는 것</dt><dd>사건 교차표, 미확인 방향표, 근거 등급표, Q01~Q25</dd></dl></div>
+<div class="c"><div><span class="id">8-4</span><span class="tg a">에이전트</span></div><div class="t">출력·가독성 리뷰</div><dl><dt>모델</dt><dd>Sonnet</dd><dt>담당</dt><dd>report-designer</dd><dt>보는 것</dt><dd>초안 · HTML 숫자 일치, 모바일</dd></dl></div>
+</div>
+<div class="ar">↓</div>
+
+<div class="row"><div class="c wide"><div><span class="id">9</span><span class="tg a">에이전트</span></div><div class="t">리뷰 판정</div><dl><dt>산출</dt><dd>review.md: pass · needs_fix · blocked</dd><dt>계약</dt><dd>validate_report_contract.py</dd></dl></div></div>
+<div class="note">↻ needs_fix 면 수정 한 묶음 뒤 5 부터 다시 돌리고, 확인 리뷰 1회 (Opus · high) 로 끝낸다</div>
+<div class="ar">↓</div>
+
+<div class="row">
+<div class="c"><div><span class="id">10</span><span class="tg h">사람</span></div><div class="t">확인 페이지</div><dl><dt>실행</dt><dd>node server.js --approvals</dd><dt>할 수 있는 것</dt><dd>판단 직접 수정 (→ 5), 확인</dd><dt>산출</dt><dd>approval.json (해시 결합)</dd></dl></div>
+<div class="c"><div><span class="id">11</span><span class="tg k">코드</span></div><div class="t">빌드 (자동)</div><dl><dt>시점</dt><dd>확인을 누르면 곧바로</dd><dt>산출</dt><dd>report.html, audit.md, history.csv</dd></dl></div>
+<div class="c"><div><span class="id">12</span><span class="tg a">에이전트</span></div><div class="t">배포</div><dl><dt>시점</dt><dd>사용자가 지시할 때만</dd><dt>경로</dt><dd>커밋 → push origin main → 맥미니 git pull</dd><dt>공개</dt><dd>fin.hansoljj.com/reports</dd></dl></div>
+</div>
+</main>
+</body>
+</html>
