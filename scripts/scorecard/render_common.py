@@ -2896,3 +2896,24 @@ def factor_parts(rules: Any, factors: dict[str, dict[str, Any]], f: str) -> dict
         if str(tb.get("note") or "").startswith("별표(*)") and not any("*" in str(cell) for row in tb["rows"] for cell in row):
             tb["note"] = None
     return parts
+
+
+# ------------------------------------------------------------------ 실적 반영 실행 표시(2026-10-22, 규칙 v3.1 rules.md 2.9)
+# 회사마다 마지막으로 판단 전부를 다시 매긴 날(run.refreshed_at)을 리포트에 적는다. 실적 반영 실행은 회사마다 이 날짜가 다르다.
+# refreshed_at 이 없는 실행(v3.0 이하)은 아무것도 붙이지 않아 확인된 실행의 초안 해시가 그대로다.
+
+def refreshed_label(ctx: Any, company_id: str) -> str | None:
+    """'반영 기준 YYYY-MM-DD'. 실행에 회사별 갱신일이 없으면 None."""
+    day = (ctx.run.get("refreshed_at") or {}).get(company_id)
+    return f"반영 기준 {day}" if day else None
+
+
+def update_run_sentence(ctx: Any) -> str | None:
+    """개요의 기준 시점 줄에 덧붙이는 한 문장. 실적 반영 실행이 아니면 None."""
+    updated = (ctx.run.get("continued_from") or {}).get("updated_companies") or []
+    if not updated:
+        return None
+    names = ", ".join(ctx.companies[c]["display_name"] if c in ctx.companies else c for c in updated)
+    reason = (ctx.run.get("update_scope") or {}).get("reason") or ""
+    return (f"이 실행은 실적 반영 실행이다({reason}). {names} 의 판단은 전부 이 기준일에 다시 매겼고, 가격은 모든 회사를 "
+            f"이 기준일에 새로 받았으며, 나머지 회사의 판단은 각 회사 카드의 반영 기준일에 매긴 것을 이어받았다.")

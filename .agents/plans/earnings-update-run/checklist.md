@@ -44,11 +44,16 @@
 - [x] 커밋
 
 ## U5 출력
-- [ ] research.md 갱신 범위 절
-- [ ] 초안·HTML 반영 기준일
-- [ ] history.csv change_type
-- [ ] 테스트 (v30full 초안 해시 불변)
-- [ ] 커밋 → 이정표 2 보고
+- [x] research.md 갱신 범위 절(범위 항목·회사별 마지막 전체 갱신일·리뷰가 확인할 6-K)
+- [x] 초안 회사 제목·HTML 카드의 "반영 기준 YYYY-MM-DD", 개요·방법·감사 기록의 실적 반영 문장
+- [x] history.csv change_type 은 init 이 earnings-update 로 적는다(U2)
+- [x] 테스트 (test_update_render 4개, v30full 초안 바이트 불변, 전체 1,870개)
+- [x] 커밋 → 이정표 2 보고
+
+## 실제 실행 상황 (2026-10-22)
+- 출력 폴더에 `ai-scorecard-2026-10-q3`(갱신 회사 alphabet·spacex-xai)를 만들고 공시 목록을 14개사 전부 받았다.
+- 실적 감지: Meta 8-K 2.02(10-21), Tesla 8-K 2.02(10-21), SpaceX 8-K 2.02(10-20) 막힘, TSMC 6-K(10-15, 보고 기간 09-30) 리뷰 목록. Alphabet 은 EDGAR 에 아직 없다(마지막 실적 공시 07-22).
+- 사용자 결정: Alphabet 공시가 잡힐 때까지 하루 기다렸다가 다섯(alphabet·spacex-xai·meta·tesla·tsmc)으로 진행한다. 내일 `collect --kind filings` 를 다시 받고 `init --force --update-companies` 로 다시 만든다.
 
 ## U6 리뷰·문서·스킬
 - [ ] score-review 실적 반영 실행 범위

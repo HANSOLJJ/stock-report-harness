@@ -208,6 +208,32 @@ def _trigger_lines(ctx: Any, legacy_triggers: list[dict[str, Any]] | None) -> li
 TRIGGER_STATUS_KO = {"watching": "계속 관찰", "fired": "발동", "expired": "만료", "withdrawn": "철회"}
 
 
+def _scope_lines(ctx: Any) -> list[str]:
+    """2026-10-22 규칙 v3.1 `## 갱신 범위` — 실적 반영 실행이 다시 매기는 범위, 회사별 판단 나이, 리뷰가 봐야 할 공시. 다른 실행에는 없다."""
+    from datetime import date
+    from .update_scope import compute, earnings_findings
+    from .validate import is_update_run
+    if not is_update_run(ctx.run):
+        return []
+    sc = compute(ctx)
+    name = lambda cid: ctx.companies[cid]["display_name"] if cid in ctx.companies else cid   # noqa: E731
+    lines = ["## 갱신 범위", "",
+             f"- 실적 반영 실행이다({ctx.run['update_scope']['reason']}). 갱신 회사 {', '.join(name(c) for c in sc.updated)} 의 정성 판단은 전부 다시 매겼다.",
+             "- 아래 항목은 갱신 회사가 아닌데 이번 실행에서 새로 확정한 근거·발동한 트리거가 닿았거나 리뷰가 선언해 다시 매긴 것이다. 그 밖의 회사·항목은 이전 실행의 판단을 그대로 이어받았고 움직이지 않았음은 `diff` 가 증명한다.", ""]
+    rows = [[name(c), rc.factor_label(ctx.rules, f), sc.why(c, f)] for c, f in sorted(set(sc.touched) | set(sc.extra)) if c not in sc.updated]
+    lines += [table(["기업", "Factor", "범위에 든 이유"], rows) if rows else "- 갱신 회사 밖에서 범위에 든 항목은 없다.", ""]
+    as_of = date.fromisoformat(ctx.run["as_of"])
+    age_rows = [[name(c), day, str((as_of - date.fromisoformat(day)).days), "갱신" if c in sc.updated else "이어받음"]
+                for c, day in sorted((ctx.run.get("refreshed_at") or {}).items(), key=lambda kv: (kv[1], kv[0]))]
+    lines += ["### 회사별 마지막 전체 갱신일", "", table(["기업", "마지막 전체 갱신", "나이(일)", "이번 실행"], age_rows), ""]
+    _blocked, manual = earnings_findings(ctx)
+    if manual:
+        lines += ["### 리뷰가 확인할 공시", "",
+                  "기계로 실적 공시인지 가를 수 없는 형식(6-K)이다. 실적 공시이면 그 회사를 갱신 회사로 넣어 실행을 다시 만든다.", "",
+                  table(["기업", "형식", "제출일", "주소"], [[name(m["company_id"]), m["form"], m["filed_at"], m.get("url") or "—"] for m in manual]), ""]
+    return lines
+
+
 def _carry_lines(ctx: Any, previous: list[dict[str, Any]] | None) -> list[str]:
     """2026-10-01 `## 이전 트리거 처리` — 이전 트리거마다 이번 실행의 결론과 확인 내용, 발동한 것이 가리키는 판단."""
     if previous is None:
@@ -288,6 +314,7 @@ def render_research(ctx: Any, *, hashes: dict[str, str], legacy_triggers: list[d
             inputs = ", ".join(f"{k}={v}" for k, v in j["inputs"].items()) or "—"
             rows.append([rc.factor_label(ctx.rules, j["factor"]), j["kind"], fmt_score(j["score"]), inputs, j["status"], f"{j['reviewer']} {j['reviewed_at']}", (j.get("note") or "")[:80]])
         lines += [f"### {company['display_name']}", "", table(["Factor", "종류", "점수", "입력", "상태", "검토", "비고"], rows), ""]
+    lines += _scope_lines(ctx)
     lines += _evidence_lines(ctx)
     lines += _trigger_lines(ctx, legacy_triggers)
     lines += _carry_lines(ctx, previous_triggers)
@@ -434,6 +461,8 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         ]
     lines += [f"- 모집단: 완료 {population['scored']}개사 순위 / 미완료 {len(population['incomplete'])}개사 제외 (미완료는 0점으로 채우지 않는다)."]   # 2026-10-06: 기준선 순위 비교 안내를 싣지 않는다
     lines += [f"- 기준 시점: 분석 기준일 {run['as_of']} · 가격 기준일 {run.get('price_as_of') or run['as_of']} · 정보 컷오프 {run.get('info_cutoff') or run['as_of']} (C-17)." + (" 승계 근거·트리거 일부는 원문에 컷오프 이후 사건이 그대로 있으며 이번 실행에서 재검증하지 않았다." if rc.carried_cutoff_caveat(ctx) else "")]
+    if rc.update_run_sentence(ctx):   # 2026-10-22 규칙 v3.1: 실적 반영 실행은 회사마다 반영 기준일이 다르다
+        lines += [f"- {rc.update_run_sentence(ctx)}"]
     if conflicts:
         # 2026-09-16 FIX-57 2단계(6차 리뷰 A 분담): 출처별 문구 다섯을 ` / ` 로 이어 붙여 **실행 차원 고지가 맨 끝에 묻혔다.**
         # 읽는 사람이 먼저 알아야 하는 것은 채점자와 채점 대상이 같은 곳이라는 사실이다. 출처별 문구는 References 에 그대로 있다.
@@ -481,8 +510,10 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
         # 2026-10-06 사용자 지시: 기준선 순위·기준선 요약을 싣지 않는다. 요약은 이 실행에서 확정한 기업 요약뿐이다.
         head = f"{c['rank']}위(완료 {population['scored']}개사 기준)" if c["rank"] else "미완료"
         if rc.is_layered(ctx.rules):   # 2026-10-20 사용자 지시: 합계 옆에 만점(함정은 최저점)을 글자로 적는다
+            refreshed = rc.refreshed_label(ctx, c["company_id"])   # 2026-10-22: 회사별 반영 기준일(실적 반영 실행)
             lines += [f"### {c['display_name']} — {head} · 조정 {fmt_score(c['total'])} · 과점 {fmt_score(c['moat'])} "
-                      f"({rc.group_bound(ctx.rules, True)}) · 함정 {fmt_score(c['trap'])} ({rc.group_bound(ctx.rules, False)})", ""]
+                      f"({rc.group_bound(ctx.rules, True)}) · 함정 {fmt_score(c['trap'])} ({rc.group_bound(ctx.rules, False)})"
+                      + (f" · {refreshed}" if refreshed else ""), ""]
         else:
             lines += [f"### {c['display_name']} — {head} · 조정 {fmt_score(c['total'])} (과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])})", ""]
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")

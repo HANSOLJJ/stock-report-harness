@@ -1342,6 +1342,9 @@ def render_cards(results: dict[str, Any], baseline: dict[str, Any] | None, compa
         incompatible_g4 = rc.g4_incompatible(observations, c["company_id"])
         # 2026-10-06 사용자 지시: 기준선 순위를 붙이지 않는다. 이 실행의 순위만 싣는다.
         rank_text = f"{c['rank']}위(완료 {results['population']['scored']}개사 기준)" if c["rank"] else "미완료"
+        refreshed = rc.refreshed_label(ctx, c["company_id"])   # 2026-10-22 규칙 v3.1: 회사별 반영 기준일(실적 반영 실행)
+        if refreshed:
+            rank_text += f" · {refreshed}"
         summary = ((getattr(ctx, "company_summaries", None) or {}).get(c["company_id"]) or {}).get("text")
         score_text = f"과점 {fmt_score(c['moat'])} / 함정 {fmt_score(c['trap'])}"
         if layered:   # 2026-10-20 사용자 지시: 합계 옆에 만점(함정은 최저점)을 글자로 적고, 과점과 함정 사이는 가운뎃점으로 가른다
@@ -1596,6 +1599,9 @@ def render_audit_md(ctx: Any, results: dict[str, Any], approval: dict[str, Any] 
          if base == price == cutoff else
          f"- 분석 기준일 `{base}` · 가격 기준일 `{price}` · 정보 컷오프 `{cutoff}`"),
         *(["- 승계 근거와 트리거에는 컷오프 이후 사건이 원문 그대로 남아 있고 이번 실행에서 재검증하지 않았다."] if rc.carried_cutoff_caveat(ctx) else []),
+        *([f"- {rc.update_run_sentence(ctx)}"] if rc.update_run_sentence(ctx) else []),
+        *([f"- 회사별 마지막 전체 갱신일: " + ", ".join(f"{cid} {day}" for cid, day in sorted(ctx.run["refreshed_at"].items()))]
+          if ctx.run.get("refreshed_at") else []),
         "",
         "## 입력 해시",
         "",
@@ -1888,7 +1894,8 @@ def render_method(ctx: Any, results: dict[str, Any]) -> str:
         # 2026-10-07 출력 리뷰: '앞서 매긴' 은 이전 판을 가리켜 화면 고정 문장에서 뺐다.
         f'<p class="sub">{_asof_line(ctx)}.'
         + (' 사용자의 판단으로 이어받은 근거와 재채점 트리거에는 컷오프 이후 사건이 원문 그대로 '
-           '남아 있으며 이번 실행에서 다시 확인하지 않았다.' if rc.carried_cutoff_caveat(ctx) else '') + '</p>'
+           '남아 있으며 이번 실행에서 다시 확인하지 않았다.' if rc.carried_cutoff_caveat(ctx) else '')
+        + (f' {esc(rc.update_run_sentence(ctx))}' if rc.update_run_sentence(ctx) else '') + '</p>'
         f'<div class="tablewrap mt-12"><table><thead><tr><th class="name">Factor</th>'
         f'<th class="text narrow">점수를 만드는 방식</th><th class="text narrow">점수의 출처</th><th>범위</th></tr></thead><tbody>{rows}</tbody></table></div>'
         + loose
