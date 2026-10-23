@@ -41803,6 +41803,261 @@
       "locator": "2026 상반기 연결재무제표(6-K 2026-08-14 첨부 99.1) 주석 4 Summary of Material Accounting Policy Information — Basis of Consolidation 의 연결 자회사 표, TSMC 투자분 JASM·ESMC 행(p.13)",
       "reviewer": "claude 조율 세션(원문 대조)",
       "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-palantir-067",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000036",
+      "published_at_utc": "2026-07-01T00:00:00Z",
+      "title": "Palantir Schedule 13G — Surf Air Mobility 보통주 8,248,989 주(7.4%) 보유(2026-06-24)",
+      "excerpt": "Surf Air Mobility Inc. … Palantir Technologies Inc. … 8,248,989 shares as of June 24, 2026. … Based on 110,994,594 shares of common stock outstanding, as stated by the Issuer in a Prospectus Supplement filed on June 26, 2026: 7.4%.",
+      "relevance": "사실: Palantir 는 2026-06-24 현재 Surf Air Mobility 보통주 8,248,989 주(발행 주식의 7.4%)를 가졌다고 보고인으로 신고했다. 추론: Palantir 가 지배하지 않는 상장사의 지분이라 ⑤ 의 맺은 출자 한 곳이다. (선별 확신: 높음)",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: Palantir 가 Surf Air 지분을 모두 팔았다는 공시가 나오면 Palantir ⑤ 지분 동맹에서 이 상대를 뺀다. 지분이 남아 있으면 비율과 관계없이 센다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "2026-03-31 에는 지분이 3.5%(3,487,084 주)로 5% 아래였다(13G/A 2026-05-15)."
+      ],
+      "unverified": [
+        "2026-06-24 뒤 기준일 2026-10-23 까지 지분이 바뀌었는지는 확인하지 못했다. Palantir 의 2026 3분기 10-Q 는 기준일까지 나오지 않았다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Schedule 13G (2026-07-01 접수, 사건일 2026-06-24) 표지 issuerName·reportingPersonName 과 Item 4(a)·4(b)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-palantir-068",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000119312526342741",
+      "published_at_utc": "2026-08-10T00:00:00Z",
+      "title": "Surf Air Mobility 10-Q (2026-06-30) Note 10 — Palantir 소프트웨어 라이선스 대금을 주식으로 정산, Part 135 운항사 대상 독점 파트너",
+      "excerpt": "On May 18, 2021, and later modified during July 2025, November 2025, and June 2026, the Company executed five agreements with Palantir Technologies Inc. (“Palantir”) to license a suite of software … During the three and six months ended June 30, 2026 , the Company settled $ 5.0 million in invoiced amounts from Palantir through the issuance of 4,761,905 shares of the Company's common stock. … In addition to a two-year extension, the Company will be Palantir’s exclusive partner with respect to the configuration and sale of software to part 135 operators and charter brokers.",
+      "relevance": "사실: Surf Air 는 Palantir 와 소프트웨어 라이선스 계약 다섯 건을 맺었고, 2026년 상반기에 Palantir 청구액 $5.0M 을 보통주 4,761,905 주를 발행해 정산했으며, Part 135 운항사·전세 중개사에 소프트웨어를 구성·판매하는 Palantir 의 독점 파트너다. 추론: Palantir 가 가진 Surf Air 지분은 자기 소프트웨어를 팔고 받은 고객 주식이다. 파는 쪽이 고객 지분을 가진 관계라, 사는 쪽이 공급자에게서 받은 지분(조달 대가)과 방향이 다르다. (선별 확신: 높음)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: Palantir ⑤ 의 Surf Air 지분을 맺은 출자로 읽는 근거다. Palantir 가 지분을 모두 팔면 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "Palantir 는 Surf Air 주식을 소프트웨어 대금으로 받았고 현금을 넣은 것이 아니다."
+      ],
+      "unverified": [
+        "Palantir 가 Surf Air 자회사 Surf Air Technologies 의 지분을 받을 권리를 행사했는지는 공시에 없다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Surf Air 10-Q (2026-06-30) Notes to Condensed Consolidated Financial Statements, Note 10 Commitments and Contingencies — Software License Agreements 첫째~셋째 문단(p.18)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-palantir-069",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) Item 3 — 상장 지분증권 $184M·비상장 지분증권 $167M 보유",
+      "excerpt": "As of June 30, 2026, we held publicly-traded equity securities valued at $184 million. We have sold, and may continue to sell, some or all of such equity securities. … As of June 30, 2026, we held privately-held equity securities valued at $167 million. Valuations of our privately-held equity securities are complex due to, among other things, the lack of liquidity and the lack of readily available market data.",
+      "relevance": "사실: Palantir 는 2026-06-30 상장 지분증권 $184M 과 비상장 회사 지분증권 $167M 을 가졌다. 추론: 지분 보유는 공시로 확인되지만 투자 대상의 이름과 회사 수는 이 문단과 재무제표 주석 4 에 없어 상대를 셀 수 없다. 이름이 확인된 지분은 Surf Air Mobility(13G) 하나다. (선별 확신: 높음)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: 이름이 없는 지분 묶음은 지분 동맹 상대로 세지 않는다. 투자 대상이 공시나 회사 발표로 이름과 함께 확인되면 그 상대를 맺은 출자로 더한다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "Palantir 는 상장 지분증권을 팔아 왔고 계속 팔 수 있다고 적는다."
+      ],
+      "unverified": [
+        "비상장 지분증권의 투자 대상 이름과 회사 수는 공시에 없다.",
+        "상장 지분증권 $184M 가운데 Surf Air 몫은 공시에 없다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "10-Q (2026-06-30) Part I Item 3 Quantitative and Qualitative Disclosures About Market Risk — Market Risk 의 지분증권 두 문단(p.34)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-palantir-070",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165526000041",
+      "published_at_utc": "2026-08-04T00:00:00Z",
+      "title": "Palantir 10-Q (2026-06-30) Item 1A — 고객 계약·파트너십·전략 투자로 증권을 비현금 대가로 받거나 투자",
+      "excerpt": "We have accepted, and may continue to accept, securities as noncash consideration or invest in securities, including but not limited to in connection with customer contracts, partnerships, or strategic investments. For example, we have made, and may continue to make, strategic investments pursuant to certain approved agreements (“Investment Agreements”) to purchase, or commit to purchase, shares of various entities, including special purpose acquisition companies and/or other privately-held or publicly-traded entities (each, an “Investee,” and such purchases, the “Investments”)",
+      "relevance": "사실: Palantir 는 고객 계약·파트너십·전략 투자와 관련해 증권을 비현금 대가로 받거나 증권에 투자해 왔고, 투자 계약으로 특수목적인수회사와 비상장·상장 회사들의 주식을 사거나 사기로 약정했다. 추론: Palantir 가 가진 지분증권은 Palantir 가 파는 쪽인 고객·파트너 관계에서 생긴 것이고, 투자 대상의 이름은 이 문단에 없다. (선별 확신: 높음)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: Palantir 의 지분 보유가 파는 쪽의 고객·파트너 지분이라는 성격을 받친다. 이름이 없어 상대 수는 이 문단으로 셀 수 없다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "Palantir 는 특수목적인수회사 주식을 사는 새 투자 계약은 맺을 계획이 없다고 같은 문단에 적는다."
+      ],
+      "unverified": [
+        "투자 대상 이름과 회사별 금액은 이 문단에 없다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "10-Q (2026-06-30) Part II Item 1A 위험 요인, 비현금 대가·전략적 투자 문단 첫머리(p.55)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-palantir-071",
+      "company_id": "palantir",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-palantir-000132165525000050",
+      "published_at_utc": "2025-04-08T00:00:00Z",
+      "title": "Palantir Schedule 13G/A — MSP Recovery Class A 보통주 593,438 주(13.4%) 보유(2025-04-08), 일부는 미수금 대가로 받음",
+      "excerpt": "MSP Recovery, Inc. … 593,438 shares as of April 8, 2025. The Reporting Person's number of securities beneficially owned includes 188,406 shares of Class A Common Stock received on April 4, 2025, as payment for certain outstanding receivables.",
+      "relevance": "사실: Palantir 는 2025-04-08 MSP Recovery Class A 보통주 593,438 주(13.4%)를 가졌고 그 가운데 188,406 주는 미수금 대가로 받았다고 신고했다. 그 뒤 Palantir 가 MSP Recovery 지분을 신고한 기록은 EDGAR 제출 목록에 없고, MSP Recovery 는 2026-05-18·2026-08-26 분기 보고서 제출 지연 통지(NT 10-Q)를 냈다. 추론: 기준일 보유를 보이는 자료가 아니라 Palantir ⑤ 지분 동맹에 넣지 않는다. (선별 확신: 중간)",
+      "channel": "disclosure",
+      "conditional_impact": "재검토: Palantir 가 2026 년에도 MSP Recovery 지분을 가진다는 공시가 나오면 맺은 출자로 더한다(그러면 지분 동맹이 두 곳이 되어 3).",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "2025-04-08 뒤 Palantir 의 MSP Recovery 지분 변동과 기준일 보유는 확인하지 못했다(미확인)."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Schedule 13G/A (2025-04-08 접수, 사건일 2025-04-04) 표지 issuerName 과 Item 4(a)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-apple-097",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000136686826000039",
+      "published_at_utc": "2026-08-06T00:00:00Z",
+      "title": "Globalstar 10-Q (2026-06-30) Note 2·3 — Apple 이 Globalstar SPE Class B 400,000 단위($4억, 지분 20%) 보유, Globalstar 80%",
+      "excerpt": "based on the Company's agreements with its customer, Apple, Inc. (the \"Customer\") … On the 2024 Closing Date, the Customer purchased 400,000 Class B Units in the Globalstar SPE (the \"Customer Class B Units\") for $ 400 million, representing a 20 % equity interest in the Globalstar SPE. … Acquisition Sub II will acquire all of the Customer Class B Units in the Globalstar SPE. … The Company holds 1,600,000 Class A Units in the Globalstar SPE, representing an 80 % equity ownership in the Globalstar SPE.",
+      "relevance": "사실: Globalstar 는 고객 Apple 이 2024-11-05 Globalstar SPE 의 Class B 400,000 단위를 $4억에 사 지분 20% 를 가졌고 Globalstar 가 Class A 1,600,000 단위(80%)를 가진다고 적는다. Amazon 과의 합병이 끝나면 Amazon 자회사가 Apple 의 Class B 단위를 모두 사들인다(합병 미종결). 추론: Apple 이 지배하지 않는 법인의 지분이지만, 그 법인이 Apple 에 서비스를 대는 위성망 자산을 담은 자금 조달 구조라 ⑤ 에서 조달로 읽는다. Apple 의 10-K·10-Q 는 이 지분을 적지 않는다. (선별 확신: 높음)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: Apple ⑤ 는 이 지분을 조달로 읽어 지분 동맹에 넣지 않는다. Globalstar SPE 가 Apple 서비스 밖의 상업 영업을 시작하거나 Apple 지분의 상환 조건이 없어지면 맺은 출자로 다시 본다. Amazon 합병이 끝나 Apple 지분이 팔리면 이 지분은 없어진다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Globalstar 10-Q (2026-06-30) Note 2 The Merger Agreement 의 Customer 정의 문장(p.12)과 Note 3 Special Purpose Entity — Customer Class B Units 두 문단(p.14)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-apple-098",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000136686826000039",
+      "published_at_utc": "2026-08-06T00:00:00Z",
+      "title": "Globalstar 10-Q (2026-06-30) Note 3 — Globalstar SPE 는 Apple 서비스용 위성망 자산을 갖고 상업 영업이 없으며 Apple 은 수동 지분 보유자",
+      "excerpt": "The Customer (i) has prepaid, and is required, subject to certain conditions, to continue to prepay for, certain services … (ii) is a passive equity holder in Globalstar SPE. … The Globalstar SPE holds and administers, or will administer in the future, certain spectrum licenses, satellites, ground stations and other network assets for use and operation by the Company and to enable and provide services to the Customer pursuant to the Updated Services Agreements. The Globalstar SPE does not have commercial operations.",
+      "relevance": "사실: 확장 위성망은 Globalstar SPE 가 소유하고 Globalstar 가 운영하며, Apple 은 그 망으로 받을 서비스 대금을 선급하고 SPE 의 수동 지분 보유자다. SPE 는 주파수·위성·지상국 등 망 자산을 Globalstar 가 운영하고 Apple 에 서비스를 대도록 보유하며 상업 영업이 없다. 추론: Apple 이 쓸 설비를 짓는 자금 조달 구조라 Apple 이 사는 쪽이다. Meta 가 자기가 임차할 데이터센터를 짓는 합작법인 지분을 조달로 읽은 것과 같은 원칙이다. (선별 확신: 높음)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: Apple ⑤ 의 Globalstar SPE 지분을 조달로 읽는 근거다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Globalstar 10-Q (2026-06-30) Note 3 Special Purpose Entity 둘째 문단과 넷째 문단(p.13)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-apple-099",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000136686826000039",
+      "published_at_utc": "2026-08-06T00:00:00Z",
+      "title": "Globalstar 10-Q (2026-06-30) Note 3 — Apple 지분 $4억은 상환 조건으로 부채 처리, 위성 수명 안 상환·서비스 대금과 상계 예상",
+      "excerpt": "Based on the redemption provision and other characteristics of the arrangement, the Company recorded the total equity contributions from the Customer of $ 400 million as … a non-current liability on the Company's consolidated balance sheet. … the Company expects (i) to fully pay off amounts owed under the 2024 Prepayment Agreement and to redeem the Customer Class B Units within the design useful life of the new satellites and (ii) that such amounts payable to the Customer will be fully offset by amounts payable by the Customer under the Updated Services Agreements.",
+      "relevance": "사실: Globalstar 는 상환 조항 등을 이유로 Apple 의 지분 출자 $4억을 연결재무상태표에서 비유동 부채로 적는다. 합병 여부와 관계없이 새 위성의 설계 수명 안에 Apple 의 Class B 단위를 상환하고, 그 지급액이 Apple 이 낼 서비스 대금과 모두 상계될 것으로 본다. 추론: Apple 의 지분은 상대 회사의 성과에 건 출자보다 서비스 대금으로 돌려받는 설비 자금에 가깝다. (선별 확신: 높음)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: Apple ⑤ 의 Globalstar SPE 지분을 조달로 읽는 근거다. 상환 조건이 없어지면 다시 본다.",
+      "horizon": "현재",
+      "counter_evidence": [
+        "Globalstar SPE 재무제표에서는 Apple 의 출자를 자본으로 적는다."
+      ],
+      "unverified": [],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Globalstar 10-Q (2026-06-30) Note 3 Special Purpose Entity — Customer Class B Units 둘째 문단과 Extended MSS Network Prepayments and 2024 Debt Repayment 문단(p.14)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-apple-100",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000136686826000039",
+      "published_at_utc": "2026-08-06T00:00:00Z",
+      "title": "Globalstar 10-Q (2026-06-30) Item 2 — 현재·미래 망 용량의 15% 를 다른 고객용으로 남김",
+      "excerpt": "We retain 15% of our current and future network capacity to support our other customers, including our existing and future Commercial IoT, SPOT and Duplex subscribers.",
+      "relevance": "사실: Globalstar 는 현재와 미래 망 용량의 15% 를 다른 고객(Commercial IoT·SPOT·Duplex 가입자)을 위해 남긴다. 추론: 나머지 용량이 Apple 서비스에 배정돼 위성망이 주로 Apple 이 쓰는 설비다. (선별 확신: 중간)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: Apple ⑤ 의 Globalstar SPE 지분을 조달로 읽는 보조 근거다.",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "나머지 85% 가 모두 Apple 몫이라는 문장은 원문에 없다(추론)."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Globalstar 10-Q (2026-06-30) Part I Item 2 MD&A — Wholesale Satellite Capacity Services 넷째 문단(p.30)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
+    },
+    {
+      "evidence_id": "EV-apple-101",
+      "company_id": "apple",
+      "factors": [
+        "F5"
+      ],
+      "kind": "filing",
+      "source_id": "SRC-SEC-apple-000136686826000039",
+      "published_at_utc": "2026-08-06T00:00:00Z",
+      "title": "Globalstar 10-Q (2026-06-30) — 서비스 계약으로 Apple 에 준 보통주 330만 주 워런트가 미행사로 남음",
+      "excerpt": "The Company's outstanding warrants include the warrants issued to the Customer that are exercisable in accordance with the Updated Services Agreements (as defined below) … (ii) the 3.3 million shares that may be purchased by the Customer pursuant to the warrants issued under the Service Agreements in 2022 based on the treasury stock method.",
+      "relevance": "사실: Globalstar 의 미행사 워런트에는 서비스 계약에 따라 고객 Apple 에 준 워런트가 있고, Apple 은 2022년 서비스 계약으로 받은 워런트로 Globalstar 보통주 330만 주를 살 수 있다. 추론: Apple 은 Globalstar 주식을 가진 것이 아니라 공급자에게서 서비스 계약의 대가로 받은 매입권을 가진다. OpenAI ⑤ 가 AMD 워런트처럼 공급자에게서 받은 지분을 조달 대가로 읽은 것과 같은 성격이다. (선별 확신: 중간)",
+      "channel": "disclosure",
+      "conditional_impact": "지금 유지: Apple ⑤ 지분 동맹에 넣지 않는다. Amazon 합병 직전 워런트는 자동 무현금 행사돼 합병 대가로 바뀐다(미래 사건).",
+      "horizon": "현재",
+      "counter_evidence": [],
+      "unverified": [
+        "Apple 이 기준일까지 워런트를 행사했다는 공시는 찾지 못했다. 원문은 2026-06-30 현재 미행사 워런트로 적는다."
+      ],
+      "change_vs_previous": "new",
+      "status": "confirmed",
+      "locator": "Globalstar 10-Q (2026-06-30) Note 2 Warrants; Preferred Stock 문단(p.12)과 주당이익 주석의 희석 주식 문단(p.28)",
+      "reviewer": "claude 조율 세션(원문 대조)",
+      "reviewed_at": "2026-10-23"
     }
   ]
 }

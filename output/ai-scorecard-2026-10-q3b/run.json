@@ -162,6 +162,18 @@
         "factor": "F5",
         "reason": "규칙 일관성 리뷰 F3: ⑤ 받은 투자 절충안(2026-10-23)을 적용하지 않은 옛 문장이 남았고, 합작법인(JASM·ESMC)을 받은 투자로 읽은 것이 OpenAI·Oracle 의 합작 읽기와 갈린다",
         "declared_at": "2026-10-23"
+      },
+      {
+        "company_id": "palantir",
+        "factor": "F5",
+        "reason": "확인 리뷰 C-1·C-2: TSMC ⑤ 에 댄 '맺은 출자는 그 자체로 센다' 잣대와 합작법인 원칙을 Palantir 의 지분증권 보유와 Apple 의 Globalstar SPE 지분에도 같이 댄다(2026-10-23 사용자 결정)",
+        "declared_at": "2026-10-23"
+      },
+      {
+        "company_id": "apple",
+        "factor": "F5",
+        "reason": "확인 리뷰 C-1·C-2: TSMC ⑤ 에 댄 '맺은 출자는 그 자체로 센다' 잣대와 합작법인 원칙을 Palantir 의 지분증권 보유와 Apple 의 Globalstar SPE 지분에도 같이 댄다(2026-10-23 사용자 결정)",
+        "declared_at": "2026-10-23"
       }
     ]
   }
