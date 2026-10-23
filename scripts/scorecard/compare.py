@@ -221,6 +221,9 @@ def _update_allowance(ctx: Any) -> tuple[Any, Callable[[str, dict[str, Any]], bo
             return price_all and item.get("metric") in PRICE_METRICS
         if name == "judgments":
             return scope.why(cid, item.get("factor")) is not None
+        if name == "sources":
+            # 2026-10-23 q3a: 닿은 항목·선언한 항목의 회사는 그 근거의 출처가 더해진다(리뷰 수정의 DMV·Unity 보도).
+            return any(scope.why(cid, f) for f in FACTOR_IDS)
         return False
 
     return scope, allow

@@ -116,6 +116,24 @@ class UpdateRunDiffTest(DiffBase):
         self.assertFalse(out["inputs"]["ok"])
         self.assertTrue(any("신규 기업이 아닌 곳에 1건이 더해졌다 (tsmc.revenue_ttm.q3t)" in v for v in out["inputs"]["violations"]))
 
+    def test_sources_for_touched_companies_are_allowed(self):
+        # 2026-10-23: 선언한 항목의 회사(tesla)에 새 보도 출처가 더해진다. 범위 밖 회사(oracle)의 출처는 위반이다.
+        stages.declare_scope_extra(NEW, [("tesla", "F5")], reason="리뷰가 찾은 DMV 보도")
+        def add(cid: str, sid: str):
+            def go(items):
+                items.append({"source_id": sid, "title": "t", "publisher": "p", "url": "https://example.com/" + cid,
+                              "accessed_at": "2026-10-23T00:00:00Z", "sha256": "0" * 64, "conflict_of_interest": None,
+                              "note": None, "kind": "news", "company_id": cid, "published_at_utc": "2026-10-20T00:00:00Z"})
+            return go
+        self.edit(NEW, "sources.json", add("tesla", "SRC-WEB-tesla-900"))
+        out = compare_runs(NEW, V30FULL)
+        self.assertTrue(out["inputs"]["ok"], out["inputs"]["violations"])
+        self.assertIn("SRC-WEB-tesla-900", out["inputs"]["by_file"]["sources"]["allowed"])
+        self.edit(NEW, "sources.json", add("oracle", "SRC-WEB-oracle-900"))
+        out = compare_runs(NEW, V30FULL)
+        self.assertFalse(out["inputs"]["ok"])
+        self.assertTrue(any("(SRC-WEB-oracle-900)" in v for v in out["inputs"]["violations"]))
+
     def forge(self, mutate) -> None:
         """결과 파일의 점수를 바꾸고 자가 해시를 맞춘다(2층만 시험하려고)."""
         path = engine.results_path(NEW)
