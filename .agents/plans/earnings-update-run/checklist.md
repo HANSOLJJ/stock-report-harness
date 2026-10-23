@@ -63,9 +63,13 @@
 - [x] 커밋
 
 ## P 첫 실적 반영 실행
-- [ ] init (v30full → q3a, v3.1)
-- [ ] 가격·공시 전부 수집, 실적 감지로 범위 확정
-- [ ] 판단 세션 (Opus high)
-- [ ] research → calculate → draft → diff
-- [ ] 리뷰 (D5 범위)
-- [ ] 확인 대기 보고 → 이정표 3 보고
+- [x] init (v30full → q3a, v3.1, 갱신 회사 spacex-xai·meta·tesla·tsmc, Alphabet 은 공시 전이라 제외)
+- [x] 가격·공시 전부 수집, 뉴스·재무는 넷만, scope 통과(범위 58건 → 근거 확정 뒤 Alphabet ⑤⑧·Anthropic ⑤⑦⑧·Apple ⑧·NVIDIA ⑧ 포함)
+- [x] 1단계(Sonnet 넷 병렬, 조각 → merge.py) → 근거 137건 확정
+- [x] 2단계 판단 세션(Opus high 다섯, judge_spec → apply.py) 58건 + SpaceX 후속 2건
+- [x] research → calculate → draft → diff 통과(범위 밖은 ⑥ 만 변화)
+- [x] 리뷰 (D5 범위) 네 영역 → 수정 한 묶음(⑨ 4, TSMC 문장 9, ⑤ 5 + Apple ⑤ scope --add, 근거 5, 가격 10-22) → 확인 리뷰 pass, 계약 검증 전 항목 ok
+- [x] 확인 대기 보고 → 이정표 3 보고
+- [x] 10-22 종가로 가격 다시 받기(14개사 벤더 시가총액, TSMC·Alibaba 해소)
+- [ ] 사람이 확인 페이지에서 확인 → 빌드 → HTML 검증(--require-html) → 배포(사용자 지시 시)
+- [ ] 기존 `output/ai-scorecard-2026-10-q3` 폴더(untracked, 첫 선언) 정리는 사용자에게 묻는다
