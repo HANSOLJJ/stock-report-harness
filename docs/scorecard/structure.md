@@ -64,7 +64,7 @@
 | 판단 | judgments.json items | judgment_id, company_id, factor, layer·business(규칙 v3.0 의 층 단위 ②③ 은 layer, 사업 단위 ① 은 business 가 필수이고 그 밖에는 둘 수 없다. 판단 키는 (회사, 항목, 층, 사업)), kind(score/grade/criteria/matrix/paths/gate_inputs/lockin/survival/axes, v3.0 은 business/layer_paths/layer_cp/holdings/alliance), score, inputs, evidence(판정 칸, 비어 있으면 안 됨), evidence_up·evidence_down(선택: 올릴·내릴 근거 칸, 빈 목록은 '없음'. 규칙 v1.9 이상은 필수, `guide.md` 5.6), reviewer, reviewed_at, status(new/carried), carried_from, revision_history(선택: `judge` 가 쌓는 `{revised_at, revised_by, reason, previous}`, previous 는 방향 칸이 있던 판단이면 그것도 담는다), reconfirmed(선택: 다시 읽었으나 바꾸지 않은 기록 `[{at, by, evidence_ids}]`, `rules.md` 2.9) |
 | 판단 입력(규칙 v2.0) | judgments.json items[].inputs | ① `lockin`: channel_consumer·channel_work·channel_trade(yes/no), loop·switching·substitutes·pricing(pass/partial/fail/unknown), durability_discount(yes/no/unknown), ai_monetized_in_channel(yes/partial/no/unknown, 점수 밖 표시), pricing_sustained_quarters(선택, 정수). ② `paths` 선택 키: generation_gap_months(정수), leap_independent(yes/no/unknown). ③ `criteria` 선택 키: acceleration_tier(a~e), acceleration_growth_rates(숫자 2개) |
 | 판단 입력(규칙 v3.0) | judgments.json items[].inputs | ④ `holdings`: cells(열한 층마다 cell sold/self/none/preparing/unknown·evidence_ids, AI 사슬 조건 층의 판매·자체 사용은 ai_chain, 준비 중은 trigger), revenue_lines[{line, label, amount(숫자나 unknown), period, layer(열한 층·outside·제외 줄), non_ai, evidence_ids}], currency, non_ai_margin(숫자·unknown·not_applicable)과 숫자면 non_ai_margin_source(segment/company). ① `business`: components[{name, layer, customer, lines(④ 매출 줄 id), market, coverage(시장이 사업의 일부만 잴 때 0~1 숫자나 partial), ai_monetized(예면 재료 다섯)}], participant·switching·pricing·substitutes(규칙 사다리 칸), 묶음이면 bundle_reason. ② `layer_paths`: leap(벤치마크 있는 층만)·gap_months, adaptation·adoption_multiple, standards[{name, holder, support, first_adopted, latest_new_major_adopter, latest_new_major_adopted_at, evidence_ids}]. ③ `layer_cp`: strategy, counterparty·counterparty_present, revenue_model, imitation, door_closed_at, acceleration{metric, tier, basis, prior_multiple, current_multiple, delayed, evidence_ids}. ⑤ `alliance`: relations[{counterparty, qualifies(equity/competitor_onboard/commercial), government_country, evidence_ids}], fronts[{name, nature(cost/structural/structural_unknown), status(ongoing/ended), jurisdiction, remedy_in_progress, evidence_ids}], partner_tension. 모양은 `schema._validate_v3_inputs` 가 본다 |
-| 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록) |
+| 실행 | run.json | run_id(=slug), report_type, title, as_of, price_as_of, info_cutoff, rule_version, rule_hash, baseline_id, companies, decisions[{id, choice, rationale, decided_by, decided_at}], created_at, purpose, assumptions, change_type(선택), continued_from(선택: 이어받은 실행이 무엇에서 왔는지 기록. added_companies 는 기업 추가 실행, updated_companies 는 실적 반영 실행), refreshed_at(규칙 v3.1 이상: 회사별 마지막 전체 갱신일, 판단 나이 상한과 리포트의 반영 기준일이 읽는다), update_scope{reason, extra[{company_id, factor, reason, declared_at}]}(실적 반영 실행만, `scope --add` 가 쓴다) |
 | 결과 | results.json | schema, run_id, input_hashes, decisions_applied, companies[{factors, moat, trap, total, complete, pending, rank}], ranking, population, pending_rule_decisions, results_hash |
 | 확인 | approval.json | approval_id, approved_by, approved_at, hashes{rules, observations, judgments, run, results, draft} |
 | 근거 | evidence/evidence.json items | evidence_id(`EV-<company_id>-NNN`), company_id, factors, kind(news / filing), source_id, published_at_utc, title, excerpt(600자 이하), relevance(추론), channel(disclosure / press / company_statement / secondary), conditional_impact(점수 이동 금지), horizon, counter_evidence, unverified, change_vs_previous, status(candidate / confirmed), reviewer·reviewed_at(confirmed 는 필수), locator(선택: 원문 안 인용 위치. 규칙 v1.9 이상에서 표지 `[EV-…]` 가 가리키는 근거는 필수) |
@@ -97,7 +97,7 @@
 | | `lockin` | ① 네 질문 판정을 사다리로 환산(규칙 v2.0). `calc` 에 입력과 단계별 보정이 담긴다 |
 | | `business` · `layer_paths` · `layer_cp` | ①②③ 을 사업·층마다 매겨 ④ 매출 줄의 층 매출 몫으로 가중 평균(규칙 v3.0). `calc` 에 층별 무게·점수와 판단 ID 가 담긴다 |
 | | `holdings` · `alliance` | ④ 수직계열화 + 다각화 + 그 분야의 힘, ⑤ 12 + 동맹 + 적대 띠(규칙 v3.0) |
-| | `carried` | 판정 입력 없이 점수 숫자만 있다(기업 추가 실행의 기존 기업에만 생긴다) |
+| | `carried` | 판정 입력 없이 점수 숫자만 있다(기업 추가 실행의 기존 기업과 실적 반영 실행의 갱신 범위 밖에만 생긴다) |
 
 `data_availability.json` 은 채점 입력이 아니라 표시용 기록이다. 확인 기록 해시 6종(rules·observations·judgments·run·results·draft)에 들어가지 않으므로 이 파일을 추가하거나 고쳐도 기존 확인은 무효가 되지 않는다. 대신 점수에도 개입하지 않는다. 렌더러는 이 파일이 있으면 「자료 확보 현황」 섹션을 만들고, 각 기업의 `ntm_per` 관측 기준일이 `surveyed_at` 보다 앞서면 그 조사가 점수에 반영되지 않았다고 표시한다. 조사 결과를 실제 점수에 넣으려면 관측을 새로 넣고 `research → calculate → draft → review` 를 다시 돌린 뒤 사람이 다시 확인해야 한다.
 
@@ -162,8 +162,14 @@ build_report.py(확인 페이지는 scorecard_cli.py build 로 부른다) ──
 [기업 추가 갈래]
 add-company ──► scorecard/companies.json 등록
 init --from-run ──► 이전 실행 계승 + plan + 입력 생성 (continued_from 기록)
-collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증. 규칙 v3.0 실행은 diff 가 거부한다) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 확인 ──► build
+collect·research(신규만) ──► diff (1층: 기존 기업 불변 검증) ──► calculate ──► diff (2층: 점수 투영 불변 검증) ──► draft ──► review ──► (사람) 확인 ──► build
+
+[실적 반영 갈래 (규칙 v3.1, 2026-10-22)]
+init --from-run … --update-companies ──► 이전 실행 계승 + refreshed_at·update_scope 기록
+collect(공시 목록·가격은 전 회사, 뉴스·재무는 갱신 회사) ──► scope (범위·실적 감지·판단 나이) ──► 갱신 범위 판단 ──► research (범위 재판단·실적 감지·나이로 막음) ──► calculate ──► diff (범위 밖 불변: 가격·⑥ 만 허용) ──► draft ──► review (갱신 범위 + 경쟁사 잣대) ──► (사람) 확인 ──► build
 ```
+
+`scorecard.update_scope` 가 범위(갱신 회사 전부 ∪ 새로 확정한 근거·발동한 트리거가 닿은 (회사, 항목) ∪ `update_scope.extra`)와 막는 검사(가격 기준일까지 실적 공시를 낸 회사, 마지막 전체 갱신일에서 `max_age_days` 가 지난 회사)를 계산하고, `validate.rejudge_findings`·`stages.research`·계약 검증·`compare.compare_runs` 가 같은 함수를 부른다. 실적 감지는 실행 폴더의 `evidence/candidates.json`(공시 후보의 `items`·`report_period`, 회사별 `filings_fetched_at`)만 읽는다.
 
 모든 단계(`init`·`collect`·`research`·`calculate`·`draft`·`review-template`)와 에이전트 세션의 `confirm`·`judge` 는 실행 잠금 `.lock` 을 검사하고 기록한다. 다른 소유자의 잠금이면 거부하고 `--take-lock` 으로 넘겨받는다.
 
@@ -207,7 +213,7 @@ HTML 검증(`scorecard.validate._validate_html`)은 generator 메타(`scorecard-
 ## 7. 훅·명령·스킬
 
 - 훅: `scripts/hooks/guard.py` 한 모듈이고 훅은 다섯 개다(`block_dangerous_bash`, `protect_sensitive_files`, `enforce_plan`, `forbid_financial_advice`, `remind_review`). 동작·보호 경로·한계는 `scripts/hooks/README.md` 가 원본이다. 핵심 통제는 `scorecard.stages` 의 확인 함수·검증기·빌더가 직접 하고 훅은 둘째 방어선이다.
-- 명령: `.claude/skills/score-*/SKILL.md` 12개가 곧 `/score-*` 명령이다(Claude Code 가 스킬 폴더 이름을 명령으로 올린다). `/score-approve` 는 확인을 실행하지 않고 "확인 대기" 보고와 확인 페이지 안내만 한다. Codex 는 같은 내용의 사본을 `.agents/skills/` 에서 읽으므로 스킬을 고치면 사본도 맞춘다.
+- 명령: `.claude/skills/score-*/SKILL.md` 13개가 곧 `/score-*` 명령이다(Claude Code 가 스킬 폴더 이름을 명령으로 올린다). `/score-approve` 는 확인을 실행하지 않고 "확인 대기" 보고와 확인 페이지 안내만 한다. Codex 는 같은 내용의 사본을 `.agents/skills/` 에서 읽으므로 스킬을 고치면 사본도 맞춘다.
 - 리뷰어 에이전트: `.claude/agents/`(`fact-checker`, `evidence-editor`, `report-designer`)와 같은 내용의 `.codex/agents/*.toml`.
 - 실행은 `uv run --frozen python -X utf8 scripts/…` 이다. 시스템 `python`·`python3` 를 직접 부르지 않는다. 훅 배선도 `uv run` 한 줄이라 bash 를 거치지 않는다.
 

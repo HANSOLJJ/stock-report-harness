@@ -47,7 +47,7 @@ dt{color:var(--muted)}dd{margin:0;color:var(--text-2)}
 <div class="row"><div class="c wide"><div><span class="id">0</span><span class="tg h">사람</span></div><div class="t">채점 요청</div><dl><dt>입력</dt><dd>/score-goal "11월 재채점" 같은 요청 문장</dd><dt>산출</dt><dd>조율 에이전트가 1~9 를 한 턴에 진행</dd></dl></div></div>
 <div class="ar">↓</div>
 
-<div class="row"><div class="c wide"><div><span class="id">1</span><span class="tg k">코드</span></div><div class="t">실행 생성 (init)</div><dl><dt>입력</dt><dd>이전 실행(--from-run), rules/v3.0.json, companies.json</dd><dt>날짜</dt><dd>기준일 · 가격 기준일 · 정보 컷오프</dd><dt>산출</dt><dd>run.json, plan.md, 이어받은 관측·판단·출처·근거·트리거</dd></dl></div></div>
+<div class="row"><div class="c wide"><div><span class="id">1</span><span class="tg k">코드</span></div><div class="t">실행 생성 (init)</div><dl><dt>입력</dt><dd>이전 실행(--from-run), rules/v3.1.json, companies.json</dd><dt>종류</dt><dd>정기 · 기업 추가(--add-companies) · 실적 반영(--update-companies)</dd><dt>날짜</dt><dd>기준일 · 가격 기준일 · 정보 컷오프 · 회사별 반영 기준일</dd><dt>산출</dt><dd>run.json, plan.md, 이어받은 관측·판단·출처·근거·트리거</dd></dl></div></div>
 <div class="ar">↓</div>
 
 <div class="row">
@@ -67,7 +67,7 @@ dt{color:var(--muted)}dd{margin:0;color:var(--text-2)}
 <div class="ar">↓</div>
 
 <div class="heavy">
-<div class="hd"><span class="id">4</span><span class="tg a">에이전트</span><span class="t" style="margin:0">판단 세션</span><span style="color:var(--text-2)">Opus · 노력 high</span><span class="warn">14개사 전부 다시 매김 (규칙 2.9절)</span></div>
+<div class="hd"><span class="id">4</span><span class="tg a">에이전트</span><span class="t" style="margin:0">판단 세션</span><span style="color:var(--text-2)">Opus · 노력 high</span><span class="warn">정기 실행은 14개사 전부 · 실적 반영 실행은 갱신 범위만 (규칙 2.9절)</span></div>
 <div class="row">
 <div class="mini"><b>④ 보유표</b><span>층 칸 · 매출 줄</span></div><span class="arrow">→</span>
 <div class="mini"><b>②③ 층마다</b><span>경로 · 카운터포지셔닝</span></div><span class="arrow">→</span>

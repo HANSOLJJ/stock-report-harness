@@ -56,11 +56,11 @@
 - 사용자 결정: Alphabet 공시가 잡힐 때까지 하루 기다렸다가 다섯(alphabet·spacex-xai·meta·tesla·tsmc)으로 진행한다. 내일 `collect --kind filings` 를 다시 받고 `init --force --update-companies` 로 다시 만든다.
 
 ## U6 리뷰·문서·스킬
-- [ ] score-review 실적 반영 실행 범위
-- [ ] score-update 스킬
-- [ ] AGENTS.md, guide.md, structure.md, workflow.html
-- [ ] .agents/skills 동기화
-- [ ] 커밋
+- [x] score-review 실적 반영 실행 범위, score-diff 갱신
+- [x] score-update 스킬
+- [x] AGENTS.md(실행 세 종류·스킬 13개), guide.md(실행 종류 표·명령표·명세 표), structure.md(run.json 스키마·실적 반영 갈래·carried), hooks README(scope --add), workflow.html
+- [x] .agents/skills 동기화
+- [x] 커밋
 
 ## P 첫 실적 반영 실행
 - [ ] init (v30full → q3a, v3.1)

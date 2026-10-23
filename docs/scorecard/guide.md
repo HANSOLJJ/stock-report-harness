@@ -54,14 +54,14 @@ flowchart TD
 | 3-1 근거 선별·확정 | 에이전트 | Sonnet (`fact-checker`) | `resolve-urls`, 브라우저, `sec-get`, `confirm` | `evidence.json`, `sources.json` | 됨 |
 | 3-2 관측 보충 | 에이전트 | — | 10-Q·10-K·20-F 원문에서 매출·영업이익·현금 등을 손으로 입력 | `observations.json` | 됨 |
 | 3-3 트리거 처리 | 에이전트 | — | `trigger-candidates`, 이전 트리거마다 carry 기록 | `triggers.json` | 됨 |
-| 4 판단 세션 | 에이전트 | Opus · high | `propose` → `proposal`, 사람 지시는 `judge`. ④ → ②③ → ① → ⑤ 순서, ⑦⑧ 재확인 | `judgments.json` | **안 됨** (정기 실행은 14개사 전부) |
+| 4 판단 세션 | 에이전트 | Opus · high | `propose` → `proposal`, 사람 지시는 `judge`. ④ → ②③ → ① → ⑤ 순서, ⑦⑧ 재확인 | `judgments.json` | 정기 실행은 14개사 전부. 실적 반영 실행은 갱신 범위만(`scope`) |
 | 5 research 검사 | 코드 | — | 스키마, 교차 참조, 재판단 누락, 트리거 빠짐·기한, 제목만 근거 | `research.md` | — |
 | 6 계산 | 코드 | — | 규칙 JSON, `calc_*.py` | `results.json`, `preview.md` | — |
 | 7 초안 | 코드 | — | `results.json` | `draft.md` | — |
-| 8-1 사실·출처 리뷰 | 에이전트 | Sonnet | `fact-checker`, `evidence-editor`. 근거 표지마다 원문 대조 | `review-parts/` | **안 됨** (실행 전체) |
-| 8-2 재무 계산 리뷰 | 에이전트 | Sonnet | 환율·TTM·FCF·런웨이·단위·부호 | `review-parts/` | **안 됨** |
-| 8-3 규칙 일관성 리뷰 | 에이전트 | Opus · high | 사건 교차표, 미확인 방향표, 근거 등급표, Q01~Q25 | `review-parts/` | **안 됨** |
-| 8-4 출력·가독성 리뷰 | 에이전트 | Sonnet | `report-designer`. 초안·HTML 숫자 일치, 모바일 표시 | `review-parts/` | **안 됨** |
+| 8-1 사실·출처 리뷰 | 에이전트 | Sonnet | `fact-checker`, `evidence-editor`. 근거 표지마다 원문 대조 | `review-parts/` | 실적 반영 실행은 갱신 범위의 새 근거만 |
+| 8-2 재무 계산 리뷰 | 에이전트 | Sonnet | 환율·TTM·FCF·런웨이·단위·부호 | `review-parts/` | 실적 반영 실행은 갱신 회사 재무 + 모든 회사 새 가격의 기준일·통화·주식 기준 |
+| 8-3 규칙 일관성 리뷰 | 에이전트 | Opus · high | 사건 교차표, 미확인 방향표, 근거 등급표, Q01~Q25 | `review-parts/` | 실적 반영 실행은 갱신 판단 + 같은 층 경쟁사와 잣대 비교 |
+| 8-4 출력·가독성 리뷰 | 에이전트 | Sonnet | `report-designer`. 초안·HTML 숫자 일치, 모바일 표시 | `review-parts/` | 실적 반영 실행은 갱신 회사 카드·⑥과 순위 변화·반영 기준일 |
 | 9 리뷰 판정 | 에이전트 | — | `validate_report_contract.py`. needs_fix 면 수정 한 묶음 뒤 5 부터, 확인 리뷰 1회 (Opus · high) | `review.md` | — |
 | 10 확인 | 사람 | — | `node server.js --approvals`. 판단 직접 수정 가능 | `approval.json` | — |
 | 11 빌드 | 코드 | — | 확인을 누르면 곧바로 | `report.html`, `audit.md`, `history.csv` | — |
@@ -103,7 +103,8 @@ sequenceDiagram
 
 | 순서 | 단계 | 명령 | 결과 (`output/<run_id>/`) |
 | --- | --- | --- | --- |
-| 1 | 실행 생성 | 새로: `scripts/scorecard_cli.py init <run_id> --rule <현행 버전> --as-of YYYY-MM-DD --title "…" --request "…"`<br/>이어받기: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id> --as-of … --price-as-of … --info-cutoff …`<br/>현행 버전은 `rules.md` 머리말에 있습니다. 이어받기는 `--rule`·날짜를 주지 않으면 이전 실행 값을 그대로 씁니다.<br/>확인 전 실행에 기준일 뒤 사건을 넣을 때: `scripts/scorecard_cli.py set-as-of <run_id> --as-of YYYY-MM-DD --reason "…"`. 기준일은 뒤로만 옮기고, 정보 컷오프가 기준일과 같았으면 함께 옮기며, 가격 기준일은 그대로 둡니다. | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
+| 1 | 실행 생성 | 새로: `scripts/scorecard_cli.py init <run_id> --rule <현행 버전> --as-of YYYY-MM-DD --title "…" --request "…"`<br/>이어받기: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id> --as-of … --price-as-of … --info-cutoff …`<br/>현행 버전은 `rules.md` 머리말에 있습니다. 이어받기는 `--rule`·날짜를 주지 않으면 이전 실행 값을 그대로 씁니다.<br/>확인 전 실행에 기준일 뒤 사건을 넣을 때: `scripts/scorecard_cli.py set-as-of <run_id> --as-of YYYY-MM-DD --reason "…"`. 기준일은 뒤로만 옮기고, 정보 컷오프가 기준일과 같았으면 함께 옮기며, 가격 기준일은 그대로 둡니다.<br/>실적 반영: `scripts/scorecard_cli.py init <run_id> --from-run <이전 run_id> --rule v3.1 --as-of … --update-companies a,b --update-reason "…"`. 가격 기준일·정보 컷오프는 새 기준일을 따르고 `change_type` 은 `earnings-update` 입니다. | `plan.md`, `run.json`, `observations.json`, `judgments.json`, `sources.json` |
+| 1-2 | 갱신 범위 (실적 반영 실행만) | `scripts/scorecard_cli.py scope <run_id>` 로 범위·다시 매기지 않은 판단·막힘 사유를 봅니다. 리뷰가 경쟁사 항목을 넣을 때 `scope <run_id> --add 회사:F5 --reason "…"`. | `run.json` 의 `update_scope.extra` |
 | 2 | 수집 | `scripts/scorecard_cli.py collect <run_id> --kind all` | `evidence/candidates.json`, ⑥ 가격 관측 |
 | 3 | 트리거 후보 보기 | `scripts/scorecard_cli.py trigger-candidates <run_id>` | 화면 출력만 (파일 변경 없음) |
 | 4 | 선별 | 에이전트가 후보를 골라 작성. 후보 URL 은 Google News 중계 주소라 `scripts/scorecard_cli.py resolve-urls --url <주소>` 로 원문 주소를 얻어 본문을 읽고, 근거 출처는 `resolve-urls <run_id>` 로 한꺼번에 원문 주소로 바꿉니다 | `evidence/evidence.json`, `triggers.json`, `sources.json` |
@@ -125,11 +126,14 @@ sequenceDiagram
 | --- | --- | --- |
 | 정기 재채점 | `init --from-run <직전 실행>` | 직전 실행의 관찰 중 트리거 + 직전 실행이 처리하지 않고 넘긴 더 이전 트리거 |
 | 기업 추가만 | `/score-extend` (`init --from-run … --add-companies a,b`) | 위와 같음. 기존 기업이 움직이지 않았음은 `diff` 가 증명 |
+| 실적 반영 (2026-10-22) | `/score-update` (`init --from-run … --rule v3.1 --as-of <새 기준일> --update-companies a,b --update-reason "…"`) | 갱신 회사의 트리거만. 나머지 회사의 트리거는 그 회사가 갱신될 때 확인 |
 | 기준선에서 새로 | `init --rule <현행 버전> …` | 기준선 트리거 전부 (TRIG-001~039) |
 
-정기 재채점은 이어받아도 정성 판단 일곱 항목(①②③④⑤⑦⑧)을 모든 기업에 대해 그 실행의 근거로 다시 매깁니다. 점수가 같으면 새 판단으로 두고 다시 읽은 근거를 `reconfirmed` 에 남기며, 이전 판단을 그대로 가져오는 승계는 기업 추가 실행의 기존 기업에만 씁니다(`rules.md` 2.9).
+정기 재채점은 이어받아도 정성 판단 일곱 항목(①②③④⑤⑦⑧)을 모든 기업에 대해 그 실행의 근거로 다시 매깁니다. 점수가 같으면 새 판단으로 두고 다시 읽은 근거를 `reconfirmed` 에 남기며, 이전 판단을 그대로 가져오는 승계는 기업 추가 실행의 기존 기업과 실적 반영 실행의 갱신 범위 밖에만 씁니다(`rules.md` 2.9).
 
-규칙 v3.0 으로 이어받으면 `init` 이 회사 단위 ①②③ 판단을 옮기지 않습니다(층·사업마다 새로 매깁니다). 판단은 ④ 보유표와 매출 줄 → ②③ 층 → ① 사업 순서로 매깁니다. ①②③ 의 무게와 ① 사업의 매출 몫이 ④ 매출 줄에서 나오기 때문입니다(`score-research` 스킬). `diff` 는 v3.0 실행을 견주지 못하므로 기업 추가 실행의 축약 리뷰를 쓸 수 없고 전체 리뷰를 합니다.
+실적 반영 실행은 실적이 나온 회사와 그 사건이 닿는 곳만 다시 매깁니다(규칙 v3.1, `rules.md` 2.9). 갱신 범위는 세 가지를 합친 것입니다. 갱신 회사(`--update-companies`)의 정성 판단 전부, 이번 실행에서 새로 확정한 근거·발동한 트리거가 가리키는 (회사, 항목)의 판단 전부, 리뷰가 `scope <run_id> --add 회사:항목 --reason "…"` 으로 선언한 항목입니다. 가격은 모든 회사를 새로 받습니다. `scope <run_id>` 가 범위와 다시 매기지 않은 판단을 보여 주고, 가격 기준일까지 실적 공시(10-Q·10-K·20-F, 8-K Item 2.02)를 낸 회사나 마지막 전체 갱신일에서 120일이 지난 회사가 갱신 회사에 빠져 있으면 `research` 가 막습니다. 6-K 만 내는 회사(TSMC·Alibaba)는 기계로 가를 수 없어 `research.md` 의 "리뷰가 확인할 공시" 목록을 리뷰가 봅니다. 범위 밖이 움직이지 않았음은 `diff <run_id> --against <이어받은 실행>` 이 증명하고, 리포트의 회사 카드에는 회사별 "반영 기준" 날짜가 붙습니다.
+
+규칙 v3.0 으로 이어받으면 `init` 이 회사 단위 ①②③ 판단을 옮기지 않습니다(층·사업마다 새로 매깁니다). 판단은 ④ 보유표와 매출 줄 → ②③ 층 → ① 사업 순서로 매깁니다. ①②③ 의 무게와 ① 사업의 매출 몫이 ④ 매출 줄에서 나오기 때문입니다(`score-research` 스킬). `diff` 는 층·사업 판단도 견줍니다(2026-10-22). 다만 판단 단위가 바뀐 실행(v2.x → v3.0)은 모든 기업을 다시 매기므로 축약 리뷰를 쓰지 않습니다.
 
 ## 4. 트리거 처리 (2026-10-01 도입)
 
