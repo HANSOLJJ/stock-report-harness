@@ -71,5 +71,13 @@
 - [x] 리뷰 (D5 범위) 네 영역 → 수정 한 묶음(⑨ 4, TSMC 문장 9, ⑤ 5 + Apple ⑤ scope --add, 근거 5, 가격 10-22) → 확인 리뷰 pass, 계약 검증 전 항목 ok
 - [x] 확인 대기 보고 → 이정표 3 보고
 - [x] 10-22 종가로 가격 다시 받기(14개사 벤더 시가총액, TSMC·Alibaba 해소)
-- [ ] 사람이 확인 페이지에서 확인 → 빌드 → HTML 검증(--require-html) → 배포(사용자 지시 시)
+- [x] 사람이 확인 페이지에서 확인(10-23 12:14) → 빌드 → HTML 검증(--require-html) 전 항목 ok → 커밋 8c737f8 → main push → 맥미니 pull → https://fin.hansoljj.com/reports/ai-scorecard-2026-10-q3a/ 200
 - [ ] 기존 `output/ai-scorecard-2026-10-q3` 폴더(untracked, 첫 선언) 정리는 사용자에게 묻는다
+
+## q3b: ⑤ 받은 투자 절충안 적용 (2026-10-23)
+- [x] rules.md ⑤ 절충안(367f7f5)·좁은 헤지 읽기(553186f)
+- [x] init q3b(갱신 회사 anthropic·openai) → 공시 전부·뉴스 둘 수집 → scope 범위 18건
+- [x] 판단 세션 Opus 둘 + 트리거·후보 Sonnet → 근거 16건 확정, 트리거 29건 carry + 새 4건
+- [x] 적용: anthropic 9(⑤ 는 좁은 읽기 후속), openai 9 → research·calculate·draft·diff 통과(Anthropic ⑤ 4→7, 나머지 불변)
+- [x] 리뷰 4영역 띄움. 재무·출력 pass(발견: TRG-163 문장, EV-172·165·169 문장, 개요 문구 → 고침)
+- [ ] 사실·규칙 리뷰 보고 → 수정 묶음 → 10-24 아침 가격(10-23 종가) → research·calculate·draft → 확인 리뷰 → review.md pass → 확인 대기 → 빌드·배포
