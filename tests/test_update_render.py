@@ -56,11 +56,11 @@ class UpdateRenderTest(unittest.TestCase):
         draft = render_draft(ctx, results, scores, triggers)
         self.assertRegex(draft, r"### Alphabet[^\n]* · 반영 기준 2026-10-22\n")
         self.assertRegex(draft, r"### Tesla[^\n]* · 반영 기준 2026-10-14\n")
-        self.assertIn("- 이 실행은 실적 반영 실행이다(Alphabet·SpaceX-xAI 3분기 실적). Alphabet / Google, SpaceX + xAI 의 판단은", draft)
+        self.assertIn("- 이 실행은 일부 회사만 다시 매긴 실행이다(Alphabet·SpaceX-xAI 3분기 실적). Alphabet / Google, SpaceX + xAI 의 판단은", draft)
         html = render_cards(results, scores, ctx.companies, ctx.observations, ctx.judgments, rc.replacements(ctx), ctx)
         self.assertIn("개사 기준) · 반영 기준 2026-10-22</div>", html[html.index('id="card-alphabet"'):])
         self.assertIn("개사 기준) · 반영 기준 2026-10-14</div>", html[html.index('id="card-tesla"'):])
-        self.assertIn("실적 반영 실행이다", render_method(ctx, results))
+        self.assertIn("일부 회사만 다시 매긴 실행이다", render_method(ctx, results))
         audit = render_audit_md(ctx, results, None)
         self.assertIn("회사별 마지막 전체 갱신일: alibaba 2026-10-14, alphabet 2026-10-22", audit)
 

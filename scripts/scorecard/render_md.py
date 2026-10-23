@@ -218,7 +218,7 @@ def _scope_lines(ctx: Any) -> list[str]:
     sc = compute(ctx)
     name = lambda cid: ctx.companies[cid]["display_name"] if cid in ctx.companies else cid   # noqa: E731
     lines = ["## 갱신 범위", "",
-             f"- 실적 반영 실행이다({ctx.run['update_scope']['reason']}). 갱신 회사 {', '.join(name(c) for c in sc.updated)} 의 정성 판단은 전부 다시 매겼다.",
+             f"- 일부 회사만 다시 매긴 실행이다({ctx.run['update_scope']['reason']}). 갱신 회사 {', '.join(name(c) for c in sc.updated)} 의 판단은 전부 다시 매겼다.",
              "- 아래 항목은 갱신 회사가 아닌데 이번 실행에서 새로 확정한 근거·발동한 트리거가 닿았거나 리뷰가 선언해 다시 매긴 것이다. 그 밖의 회사·항목은 이전 실행의 판단을 그대로 이어받았고 움직이지 않았음은 `diff` 가 증명한다.", ""]
     rows = [[name(c), rc.factor_label(ctx.rules, f), sc.why(c, f)] for c, f in sorted(set(sc.touched) | set(sc.extra)) if c not in sc.updated]
     lines += [table(["기업", "Factor", "범위에 든 이유"], rows) if rows else "- 갱신 회사 밖에서 범위에 든 항목은 없다.", ""]

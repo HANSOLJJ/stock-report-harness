@@ -2915,5 +2915,5 @@ def update_run_sentence(ctx: Any) -> str | None:
         return None
     names = ", ".join(ctx.companies[c]["display_name"] if c in ctx.companies else c for c in updated)
     reason = (ctx.run.get("update_scope") or {}).get("reason") or ""
-    return (f"이 실행은 실적 반영 실행이다({reason}). {names} 의 판단은 전부 이 기준일에 다시 매겼고, 가격은 모든 회사를 "
+    return (f"이 실행은 일부 회사만 다시 매긴 실행이다({reason}). {names} 의 판단은 전부 이 기준일에 다시 매겼고, 가격은 모든 회사를 "
             f"이 기준일에 새로 받았으며, 나머지 회사의 판단은 각 회사 카드의 반영 기준일에 매긴 것을 이어받았다.")
