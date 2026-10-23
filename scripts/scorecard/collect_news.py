@@ -114,6 +114,18 @@ def is_google_relay_url(url: str | None) -> bool:
     return bool(GOOGLE_RELAY_RE.match(url or ""))
 
 
+# 2026-10-23 사용자 결정: 스크립트 요청이 자주 막히는 매체는 처음부터 앱 안 브라우저로 연다(재시도를 줄인다). 그 밖의 매체는
+# 스크립트 먼저, 403 이면 브라우저다(AGENTS.md 「원자료 조사 규율」). 브라우저에서도 봇 확인 화면이면 우회하지 않는다.
+# q3a 실행에서 403·429 를 낸 매체 가운데 브라우저로는 열린 곳만 넣는다. 유료 벽(WSJ·FT·Bloomberg)은 브라우저로도 본문이 없어 넣지 않는다.
+BROWSER_FIRST_HOSTS = ("yahoo.com", "reuters.com", "apnews.com", "benzinga.com", "seekingalpha.com", "axios.com", "stocktwits.com")
+
+
+def browser_first(url: str | None) -> bool:
+    """원문 주소의 매체가 브라우저 우선 목록에 있는가(서브도메인 포함)."""
+    host = (urllib.parse.urlparse(url or "").hostname or "").lower()
+    return any(host == h or host.endswith("." + h) for h in BROWSER_FIRST_HOSTS)
+
+
 def resolve_google_news_url(url: str, *, fetch: Callable[..., bytes] = fetch_bytes, user_agent: str | None = None) -> str:
     """Google News 중계 주소를 원문 URL 로 푼다. 풀지 못하면 ValueError(중계 주소를 원문처럼 돌려주지 않는다)."""
     m = GOOGLE_RELAY_RE.match(url or "")

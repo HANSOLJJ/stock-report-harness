@@ -35,7 +35,7 @@ collect → 후보 선별(evidence.json) → triggers.json → research
    - 필수 필드: `evidence_id`(`EV-<company_id>-NNN`), `company_id`, `factors`, `kind`(news|filing), `source_id`(sources.json 에 등록된 것), `published_at_utc`, `title`, `excerpt`, `relevance`, `channel`(disclosure|press|company_statement|secondary), `conditional_impact`, `horizon`, `counter_evidence`, `unverified`, `change_vs_previous`.
    - `excerpt` 는 원문 그대로 600자 이하로 옮긴다. 요약하거나 고쳐 쓰지 않는다.
    - 판단 문장이 인용할 근거는 원문 본문을 열어 `excerpt` 를 본문에서 따고(제목과 달라야 한다), 선택 키 `locator` 에 발췌한 자리(공시는 항목·주석·표, 기사는 문단)를 적는다. 출처에는 `http(s)://` URL 이 있어야 한다. 제목만 확인한 근거는 판단 문장이 인용할 수 없다(2026-10-07, `guide.md` 5.7).
-   - 본문 요청이 403 으로 막히면 같은 주소를 앱 안 브라우저나 Playwright 로 연다. 실제 브라우저에서도 접근 거부·봇 확인 화면이 뜨면 우회하지 않고(User-Agent 를 바꿔 다시 받지 않는다) 막혔다고 `unverified` 에 적는다(2026-10-13, AGENTS.md 「원자료 조사 규율」).
+   - 본문 요청이 403 으로 막히면 같은 주소를 앱 안 브라우저나 Playwright 로 연다. 실제 브라우저에서도 접근 거부·봇 확인 화면이 뜨면 우회하지 않고(User-Agent 를 바꿔 다시 받지 않는다) 막혔다고 `unverified` 에 적는다(2026-10-13, AGENTS.md 「원자료 조사 규율」). 차단이 잦은 매체(Yahoo·Reuters·AP·Benzinga·Seeking Alpha·Axios·Stocktwits, `collect_news.BROWSER_FIRST_HOSTS`)는 처음부터 앱 안 브라우저로 연다. `resolve-urls --url` 이 그 매체면 "브라우저 우선 매체"라고 표시한다(2026-10-23). 브라우저로 읽은 근거는 출처 `note` 에 그 사실을 적는다.
    - `relevance` 는 추론이므로 추론임을 표시한다.
    - `conditional_impact` 에는 점수 이동(`-3→-4`, `+2점`)을 적지 않는다. 사건이 미치는 조건부 영향을 말로 쓴다.
    - `published_at_utc` 가 `run.info_cutoff` 보다 늦은 후보는 올리지 않는다.

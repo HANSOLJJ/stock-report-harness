@@ -354,11 +354,15 @@ def cmd_confirm(args: argparse.Namespace) -> int:
 def cmd_resolve_urls(args: argparse.Namespace) -> int:
     """2026-10-12: Google News 중계 주소를 원문 주소로 푼다. 실행을 주면 근거 출처를 고쳐 쓰고, --url 만 주면 출력만 한다."""
     if args.url:
-        from scorecard.collect_news import resolve_google_news_url
+        from scorecard.collect_news import browser_first, resolve_google_news_url
         bad = 0
         for u in args.url:
             try:
-                print(resolve_google_news_url(u))
+                resolved = resolve_google_news_url(u)
+                print(resolved)
+                # 2026-10-23: 스크립트 차단이 잦은 매체는 처음부터 앱 안 브라우저로 연다.
+                if browser_first(resolved):
+                    print("  브라우저 우선 매체 — 스크립트로 받지 말고 앱 안 브라우저로 연다")
             except Exception as exc:  # noqa: BLE001 — 주소 하나가 실패해도 나머지를 푼다
                 bad += 1
                 print(f"실패: {u} — {type(exc).__name__}: {exc}", file=sys.stderr)

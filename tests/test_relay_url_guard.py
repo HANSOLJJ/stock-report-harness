@@ -179,3 +179,26 @@ class ResolveSourceUrlsTest(RelayMixin, V20Base):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class BrowserFirstTest(unittest.TestCase):
+    """2026-10-23 사용자 결정: 스크립트 차단이 잦은 매체는 처음부터 앱 안 브라우저로 연다."""
+
+    def test_hosts_and_subdomains(self):
+        from scorecard.collect_news import browser_first
+        for url in ("https://finance.yahoo.com/news/x", "https://www.reuters.com/technology/x", "https://apnews.com/article/x",
+                    "https://www.benzinga.com/x", "https://seekingalpha.com/news/x", "https://www.axios.com/x", "https://stocktwits.com/x"):
+            self.assertTrue(browser_first(url), url)
+        for url in ("https://www.sec.gov/Archives/x.htm", "https://www.cnbc.com/x", "https://notreuters.com/x", "https://www.wsj.com/x", None, ""):
+            self.assertFalse(browser_first(url), url)
+
+    def test_cli_marks_browser_first_media(self):
+        import io
+        import contextlib
+        from unittest import mock
+        import scorecard_cli
+        with mock.patch("scorecard.collect_news.resolve_google_news_url", return_value="https://finance.yahoo.com/news/x"):
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                scorecard_cli.main(["resolve-urls", "--url", "https://news.google.com/rss/articles/AAA?oc=5"])
+        self.assertEqual(buf.getvalue().splitlines(), ["https://finance.yahoo.com/news/x", "  브라우저 우선 매체 — 스크립트로 받지 말고 앱 안 브라우저로 연다"])
