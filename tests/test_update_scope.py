@@ -67,9 +67,14 @@ class ScopeBase(unittest.TestCase):
                 j["reviewed_at"] = created
         return out
 
+    QUAL = {"F1", "F2", "F3", "F4", "F5", "F7", "F8"}
+
     def qual(self, judgments: list[dict], pred) -> set[str]:
-        factors = {"F1", "F2", "F3", "F4", "F5", "F7", "F8"}
-        return {j["judgment_id"] for j in judgments if j["factor"] in factors and pred(j)}
+        """범위 판단 ID. 갱신 회사는 ⑥⑨ 까지 전 항목, 그 밖은 정성 항목만(2026-10-23)."""
+        return {j["judgment_id"] for j in judgments if (j["factor"] in self.QUAL or j["company_id"] in UPDATED) and pred(j)}
+
+    def qual_only(self, judgments: list[dict], pred) -> set[str]:
+        return {j["judgment_id"] for j in judgments if j["factor"] in self.QUAL and pred(j)}
 
     def write_candidates(self, items: list[dict], fetched: dict[str, str] | None = None) -> None:
         payload = {"schema": "scorecard.candidates/1", "run_id": NEW, "window": {"since": "2026-04-25", "until": AS_OF},
@@ -143,6 +148,17 @@ class RejudgeInScopeTest(ScopeBase):
         self.assertIn("이전 실행 ai-scorecard-2026-10-v30full 의 판단과 같다", found[0][1])
         self.assertIn("범위: 갱신 회사", found[0][1])
 
+    def test_updated_company_covers_f9_but_touched_items_stay_qualitative(self):
+        """2026-10-23 q3a 출력 리뷰: 갱신 회사의 ⑨ 판정 재료가 옛 분기 숫자로 남았다. 갱신 회사는 ⑥⑨ 판단도 범위다."""
+        judgments = self.ctx().judgments
+        qual_ids = self.qual_only(judgments, lambda j: j["company_id"] in UPDATED)
+        found = {jid for jid, _ in rejudge_findings(self.ctx(judgments=self.rejudge(judgments, qual_ids)))}
+        self.assertEqual(found, {"alphabet.F9", "spacex-xai.F9"}, "갱신 회사의 ⑨ 는 정성 항목이 아니어도 다시 매긴다")
+        all_ids = self.qual(judgments, lambda j: j["company_id"] in UPDATED)
+        new = {"evidence_id": "EV-tesla-901", "company_id": "tesla", "factors": ["F9"], "status": "confirmed"}
+        found = {jid for jid, _ in rejudge_findings(self.ctx(judgments=self.rejudge(judgments, all_ids), evidence=self.ctx().evidence + [new]))}
+        self.assertEqual(found, set(), "닿은 항목은 정성 항목만 범위다 — 범위 밖 회사의 ⑨ 근거는 범위를 만들지 않는다")
+
     def test_out_of_scope_carried_and_unchanged_pass(self):
         judgments = self.ctx().judgments
         scope_ids = self.qual(judgments, lambda j: j["company_id"] in UPDATED)
@@ -191,7 +207,7 @@ class RejudgeInScopeTest(ScopeBase):
         ctx = SimpleNamespace(slug="ai-scorecard-2026-10-reg", run=load_json_strict(d / "run.json"), rules=load_rules("v3.1"),
                               companies=REGISTRY, judgments=load_json_strict(d / "judgments.json")["items"], evidence=None, triggers=None)
         found = {jid for jid, _ in rejudge_findings(ctx)}
-        self.assertEqual(found, self.qual(ctx.judgments, lambda j: True))
+        self.assertEqual(found, self.qual_only(ctx.judgments, lambda j: True))
 
 
 class EarningsDetectionTest(ScopeBase):

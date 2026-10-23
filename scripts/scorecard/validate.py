@@ -313,7 +313,10 @@ def rejudge_findings(ctx: Any) -> list[tuple[str, str]]:
     created = ctx.run.get("created_at") or ""
     out: list[tuple[str, str]] = []
     for j in ctx.judgments:
-        if j["factor"] not in factors:
+        # 2026-10-23 q3a 출력 리뷰: 갱신 회사의 ⑨ 판정 재료·문장이 6월 분기 숫자로 남아 카드의 표 줄과 어긋났다. 갱신 회사는
+        # 정성 항목만이 아니라 판단이 있는 모든 항목(⑥⑨ 의 판정 재료 포함)을 다시 매긴다. 닿은 항목·선언한 항목은 정성 항목만이다.
+        updated_company = scope is not None and j["company_id"] in scope.updated
+        if j["factor"] not in factors and not updated_company:
             continue
         in_scope = scope.why(j["company_id"], j["factor"]) if scope is not None else None
         if scope is not None and in_scope is None:
