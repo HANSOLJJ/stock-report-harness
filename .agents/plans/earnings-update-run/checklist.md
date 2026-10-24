@@ -80,4 +80,11 @@
 - [x] 판단 세션 Opus 둘 + 트리거·후보 Sonnet → 근거 16건 확정, 트리거 29건 carry + 새 4건
 - [x] 적용: anthropic 9(⑤ 는 좁은 읽기 후속), openai 9 → research·calculate·draft·diff 통과(Anthropic ⑤ 4→7, 나머지 불변)
 - [x] 리뷰 4영역 띄움. 재무·출력 pass(발견: TRG-163 문장, EV-172·165·169 문장, 개요 문구 → 고침)
-- [ ] 사실·규칙 리뷰 보고 → 수정 묶음 → 10-24 아침 가격(10-23 종가) → research·calculate·draft → 확인 리뷰 → review.md pass → 확인 대기 → 빌드·배포
+- [x] 사실·규칙 리뷰 → 수정 묶음(OpenAI ⑤ 좁은 읽기 6→5, TSMC ⑤ 12→15, SpaceX ⑤ 문장) → 가격은 10-22 종가 유지(사용자 결정) → 확인 리뷰 pass → Palantir·Apple ⑤ 같은 잣대(Palantir 3→5) → 보충 확인 리뷰 pass → review.md pass → 계약 검증 ok → 커밋
+- [x] 사람 확인(10-23 16:00) → 빌드 → --require-html ok → 커밋 e3439e7 → main push → 맥미니 pull → https://fin.hansoljj.com/reports/ai-scorecard-2026-10-q3b/
+
+## 기업 요약 복구 (2026-10-24 사용자 결정: 다음 실적 반영 실행에 넣는다)
+- [x] 계약 검증: 규칙 v3.0 이상 실행은 모든 회사에 요약이 있어야 한다(확인된 v3 실행 여섯은 예외 목록)
+- [x] score-draft·score-update 스킬, guide.md 실행 순서에 요약 작성 단계
+- [ ] 다음 실적 반영 실행(Microsoft 등 10-28 이후 실적)에서 calculate 뒤 14개사 요약을 쓴다
+- [ ] 같은 실행에서 Microsoft ③ 을 "모델은 범용재가 되고 중립 통제층·라우터로 거둔다" 관점으로 다시 읽는다(응용·클라우드 층의 상대와 모방 불가능성: 모델 업체가 자기 모델 장사 때문에 중립 라우터를 따라 하기 어려운지)

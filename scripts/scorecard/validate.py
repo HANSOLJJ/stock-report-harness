@@ -155,6 +155,22 @@ def _rule_at_least(version: str, minimum: tuple[int, ...]) -> bool:
     return tuple(int(x) for x in re.findall(r"\d+", version)) >= minimum
 
 
+# 2026-10-24 사용자 지적: 규칙 v3.0 시범 실행부터 q3b 까지 기업 한 줄 요약을 아무도 쓰지 않았다. init 은 요약을 옮기지 않고
+# (요약이 그 실행의 점수를 인용한다) 검증기는 있는 요약의 문장만 봐서 빠진 것이 걸리지 않았다. 규칙 v3.0 이상 실행은
+# 모든 회사에 요약이 있어야 한다. 아래 실행은 요약 없이 확인돼 승인 해시가 묶였으므로 이 검사에서 뺀다.
+SUMMARY_MIN_RULE = (3, 0)
+SUMMARY_EXEMPT_RUNS = frozenset({"ai-scorecard-2026-10-v30pilot8", "ai-scorecard-2026-10-v30pilot9", "ai-scorecard-2026-10-v30pilot10",
+                                 "ai-scorecard-2026-10-v30full", "ai-scorecard-2026-10-q3a", "ai-scorecard-2026-10-q3b"})
+
+
+def missing_summaries(ctx: Any) -> list[str]:
+    """요약이 없는 회사 ID 목록(실행 회사 순서). 규칙 v3.0 미만이거나 예외 실행이면 빈 목록이다."""
+    if not _rule_at_least(ctx.rules.version, SUMMARY_MIN_RULE) or ctx.run.get("run_id") in SUMMARY_EXEMPT_RUNS:
+        return []
+    have = ctx.company_summaries or {}
+    return [cid for cid in ctx.run["companies"] if cid not in have]
+
+
 # 2026-10-07 사용자 지시: 판단 근거는 판정(evidence)·올릴 근거(evidence_up)·내릴 근거(evidence_down) 세 칸으로 쓴다.
 # 규칙 v1.9 이상 실행에만 댄다. 같은 검사를 판단을 쓰는 시점(stages.revise_judgment)과 검증기가 함께 쓴다.
 THREE_WAY_MIN_RULE = (1, 9)
@@ -450,6 +466,15 @@ def validate_scorecard(slug: str, *, require_html: bool = False, check_html_if_p
             result.error(f"원문 근거와 이어지지 않는 줄이 {len(bad) - 20}건 더 있다")
         if not bad:
             result.check("judgment direction lines cite source evidence")
+
+    # 기업 요약 -------------------------------------------------------------
+    if _rule_at_least(ctx.rules.version, SUMMARY_MIN_RULE) and slug not in SUMMARY_EXEMPT_RUNS:
+        missing = missing_summaries(ctx)
+        if missing:
+            result.error(f"기업 한 줄 요약이 없다 — {', '.join(missing)}. calculate 뒤 회사마다 "
+                         "`propose --factor SUMMARY --evidence \"…\"` 로 쓰고 proposal 로 반영한다")
+        else:
+            result.check("every company has a one-line summary")
 
     # 정기 실행 재판단 -------------------------------------------------------
     rejudge = ctx.rules.payload["policies"].get("rejudge")

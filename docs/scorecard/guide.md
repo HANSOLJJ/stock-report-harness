@@ -394,7 +394,7 @@ flowchart TD
 2. `collect <run_id> --kind all`
 3. `trigger-candidates <run_id>` 로 이전 트리거 확인
 4. 근거·트리거 선별, 이전 트리거마다 `carry` 기록. 중복(TRIG-010·035 Anthropic 상장, TRIG-003·025 NVIDIA ACIE)과 ⑥ 경계(TRIG-030, v1.7 부터 구간표 없음)는 철회
-5. `research → calculate → draft`
+5. `research → calculate` 뒤 회사마다 한 줄 요약을 `propose --factor SUMMARY` 로 쓰고 반영한 다음 `draft`. 규칙 v3.0 이상 실행은 요약이 빠진 회사가 있으면 계약 검증이 막는다
 6. 리뷰 4영역을 한 번에, 전수로
 7. 리뷰 발견을 한 묶음으로 `propose` 하고, 원문과 대조한 뒤 에이전트가 `proposal` 로 반영·거부 → `research` 부터 다시
 8. "확인 대기" 보고 → 사람이 확인 페이지에서 확인
