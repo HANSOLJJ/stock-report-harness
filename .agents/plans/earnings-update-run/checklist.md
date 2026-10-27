@@ -88,3 +88,12 @@
 - [x] score-draft·score-update 스킬, guide.md 실행 순서에 요약 작성 단계
 - [ ] 다음 실적 반영 실행(Microsoft 등 10-28 이후 실적)에서 calculate 뒤 14개사 요약을 쓴다
 - [ ] 같은 실행에서 Microsoft ③ 을 "모델은 범용재가 되고 중립 통제층·라우터로 거둔다" 관점으로 다시 읽는다(응용·클라우드 층의 상대와 모방 불가능성: 모델 업체가 자기 모델 장사 때문에 중립 라우터를 따라 하기 어려운지)
+
+## q3c: Anthropic S-1 공개 제출 반영 (2026-10-27)
+- [x] companies.json anthropic cik 2130357
+- [x] init q3c(q3b 이어받음, 갱신 회사 anthropic, 기준일 10-27, 가격 10-26) → 공시 전부(+S-1)·가격 전부·뉴스 anthropic 수집 → scope 막힘 없음, 범위 9건
+- [x] 1단계(Sonnet): S-1 에서 관측 21건·근거 61건·트리거 carry 16+새 6 → merge → 발췌 전수 대조 → confirm 63건(Reuters·Axios 2건 포함)
+- [x] 2단계(Opus high): anthropic 9건 + 타사 10건 → apply(F9 키 하나 제외) + 재확인 4건 → scope 0건
+- [x] research → calculate → 14개사 요약(propose·proposal) → draft → diff 통과 → 계약 검증(review 만 남음)
+- [x] 리뷰 4영역(규칙만 needs_fix: ⑥ 성장 보정) → 수정 묶음(⑥ 전년 창 범위 관측, OpenAI ⑤⑦ scope --add 문장, ⑧ 지정학 근거 2건, 트리거·요약) → 확인 리뷰 pass → 문장 셋 추가 수정 → review.md pass → 계약 검증 PASS → 확인 대기(Anthropic 조정 1, 11위)
+- [ ] ③ 가속도 미확인 처리 사용자 결정 반영(규칙 결정이면 v3.2)

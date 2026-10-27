@@ -1,0 +1,586 @@
+{
+  "schema": "scorecard.proposals/1",
+  "run_id": "ai-scorecard-2026-10-q3c",
+  "items": [
+    {
+      "proposal_id": "PRP-001",
+      "company_id": "alphabet",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Alphabet 은 검색·YouTube·Network 광고와 구독·기기로 최근 1년 매출의 82.6% 를 AI 와 무관하게 벌고, 여기에 Google Cloud 와 자체 TPU 를 얹은 회사다. 과점은 AI 칩 설계부터 기기까지 아홉 칸을 쥔 데다 AI 무관 매출 몫 82.6% 와 부문 영업이익률 39.3% 를 받은 호황 이후 비전 ④ 20, Anthropic 지분 투자와 컴퓨트 약정으로 묶은 아군 확보 ⑤ 13 이 이끌어 합계 64점이다. 함정은 미개시 리스와 구매 약정이 최근 1년 매출의 약 2.02배인 비대칭 의존 ⑧ −8, Anthropic 에 넣은 출자가 컴퓨트 약정으로 돌아오는 순환금융 ⑦ −4 가 가장 커서 합계 −19점이다. 조정 45점, 1위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Alphabet 은 검색·YouTube·Network 광고와 구독·기기로 최근 1년 매출의 82.6% 를 AI 와 무관하게 벌고, 여기에 Google Cloud 와 자체 TPU 를 얹은 회사다. 과점은 AI 칩 설계부터 기기까지 아홉 칸을 쥔 데다 AI 무관 매출 몫 82.6% 와 부문 영업이익률 39.3% 를 받은 호황 이후 비전 ④ 20, Anthropic 지분 투자와 컴퓨트 약정으로 묶은 아군 확보 ⑤ 13 이 이끌어 합계 64점이다. 함정은 미개시 리스와 구매 약정이 최근 1년 매출의 약 2.02배인 비대칭 의존 ⑧ −8, Anthropic 에 넣은 출자가 컴퓨트 약정으로 돌아오는 순환금융 ⑦ −4 가 가장 커서 합계 −19점이다. 조정 45점, 1위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-002",
+      "company_id": "meta",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Meta 는 Facebook·Instagram·Messenger 광고가 최근 1년 매출 $241.6B 가운데 $235.6B 를 차지하고, WhatsApp 유료 메시징과 AI 안경이 그 뒤를 보태는 회사다. 과점은 AI 무관 매출 100% 와 영업이익률 32.86% 를 받은 호황 이후 비전 ④ 17, 일간 사용자 36.4억 명에 광고주가 닿으려 돈을 내는 네트워크 효과 ① 14 가 이끌어 합계 57점이다. 함정은 미개시 리스와 해지할 수 없는 약정이 최근 1년 매출의 약 3.35배인 비대칭 의존 ⑧ −12, 3분기 단일 분기 잉여현금흐름이 마이너스로 돌고 최근 1년 값이 줄어든 적자 깊이 ⑨ −4 가 가장 커서 합계 −16점이다. 조정 41점, 2위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Meta 는 Facebook·Instagram·Messenger 광고가 최근 1년 매출 $241.6B 가운데 $235.6B 를 차지하고, WhatsApp 유료 메시징과 AI 안경이 그 뒤를 보태는 회사다. 과점은 AI 무관 매출 100% 와 영업이익률 32.86% 를 받은 호황 이후 비전 ④ 17, 일간 사용자 36.4억 명에 광고주가 닿으려 돈을 내는 네트워크 효과 ① 14 가 이끌어 합계 57점이다. 함정은 미개시 리스와 해지할 수 없는 약정이 최근 1년 매출의 약 3.35배인 비대칭 의존 ⑧ −12, 3분기 단일 분기 잉여현금흐름이 마이너스로 돌고 최근 1년 값이 줄어든 적자 깊이 ⑨ −4 가 가장 커서 합계 −16점이다. 조정 41점, 2위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-003",
+      "company_id": "tsmc",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "TSMC 는 HPC·스마트폰·IoT·자동차 칩 설계사의 주문을 받아 반도체를 위탁 생산하는 파운드리로, HPC 가 최근 4개 분기 순매출의 59.99% 를 차지한다. 과점은 Synopsys·Cadence·Siemens EDA 와의 공정 인증 협력과 SSMC·GUC·Xintec·VIS 지분 관계를 받은 아군 확보 ⑤ 15, 고객이 칩 설계사인 HPC·스마트폰 사업의 락인을 잰 네트워크 효과 ① 14, 성능 도약과 패러다임 적응을 받은 게임체인저 ② 12 가 이끌어 합계 53점이다. 함정은 주요 생산 시설과 매출이 대만에 몰려 지정학 축이 −4 칸에 닿은 비대칭 의존 ⑧ −16 이 거의 전부이고 가격 ⑥ −2 를 더해 합계 −18점이다. 조정 35점, 3위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "TSMC 는 HPC·스마트폰·IoT·자동차 칩 설계사의 주문을 받아 반도체를 위탁 생산하는 파운드리로, HPC 가 최근 4개 분기 순매출의 59.99% 를 차지한다. 과점은 Synopsys·Cadence·Siemens EDA 와의 공정 인증 협력과 SSMC·GUC·Xintec·VIS 지분 관계를 받은 아군 확보 ⑤ 15, 고객이 칩 설계사인 HPC·스마트폰 사업의 락인을 잰 네트워크 효과 ① 14, 성능 도약과 패러다임 적응을 받은 게임체인저 ② 12 가 이끌어 합계 53점이다. 함정은 주요 생산 시설과 매출이 대만에 몰려 지정학 축이 −4 칸에 닿은 비대칭 의존 ⑧ −16 이 거의 전부이고 가격 ⑥ −2 를 더해 합계 −18점이다. 조정 35점, 3위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-004",
+      "company_id": "amazon",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Amazon 은 온라인 스토어·제3자 판매자 서비스·광고·구독으로 최근 1년 매출 $775.7B 의 80.9% 를 AI 와 무관하게 벌고, AWS 와 자체 칩(Graviton·Trainium)으로 AI 수요를 받는 회사다. 과점은 AI 사슬 아홉 칸 가운데 칩 설계·시스템을 자체 사용하고 나머지 일곱 칸을 파는 수직계열화에 다각화 몫 80.9% 를 더한 호황 이후 비전 ④ 17, Anthropic·OpenAI 두 곳에 투자해 묶은 아군 확보 ⑤ 11 이 이끌어 합계 53점이다. 함정은 설비투자가 영업현금흐름을 넘어 최근 1년 잉여현금흐름이 −$11.6B 인 적자 깊이 ⑨ −8 이 가장 크고, 성장 조정 PER 2.14 를 받은 가격 ⑥ −4 가 뒤따라 합계 −20점이다. 조정 33점, 4위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Amazon 은 온라인 스토어·제3자 판매자 서비스·광고·구독으로 최근 1년 매출 $775.7B 의 80.9% 를 AI 와 무관하게 벌고, AWS 와 자체 칩(Graviton·Trainium)으로 AI 수요를 받는 회사다. 과점은 AI 사슬 아홉 칸 가운데 칩 설계·시스템을 자체 사용하고 나머지 일곱 칸을 파는 수직계열화에 다각화 몫 80.9% 를 더한 호황 이후 비전 ④ 17, Anthropic·OpenAI 두 곳에 투자해 묶은 아군 확보 ⑤ 11 이 이끌어 합계 53점이다. 함정은 설비투자가 영업현금흐름을 넘어 최근 1년 잉여현금흐름이 −$11.6B 인 적자 깊이 ⑨ −8 이 가장 크고, 성장 조정 PER 2.14 를 받은 가격 ⑥ −4 가 뒤따라 합계 −20점이다. 조정 33점, 4위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-005",
+      "company_id": "microsoft",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Microsoft 는 Microsoft 365·Dynamics·LinkedIn·Windows 같은 업무용 소프트웨어와 Azure 클라우드(매출의 39.0%)로 돈을 버는 회사이고, AI 무관 매출 몫은 60.98% 다. 과점은 AI 사슬 아홉 칸을 쥔 수직계열화와 부문 영업이익률 50.6% 를 받은 호황 이후 비전 ④ 18, OpenAI 지분 약 25% 와 Anthropic 컴퓨트 약정으로 묶은 아군 확보 ⑤ 11 이 이끌어 합계 56점이다. 함정은 OpenAI 가 상업 RPO 의 약 45% 를 차지해 연환산 매출의 30% 를 넘는 비대칭 의존 ⑧ −12 와, 조달에 기대는 OpenAI 에 넣은 돈이 Azure 약정으로 돌아오는 순환금융 ⑦ −12 가 대부분이라 합계 −32점이다. 조정 24점, 5위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Microsoft 는 Microsoft 365·Dynamics·LinkedIn·Windows 같은 업무용 소프트웨어와 Azure 클라우드(매출의 39.0%)로 돈을 버는 회사이고, AI 무관 매출 몫은 60.98% 다. 과점은 AI 사슬 아홉 칸을 쥔 수직계열화와 부문 영업이익률 50.6% 를 받은 호황 이후 비전 ④ 18, OpenAI 지분 약 25% 와 Anthropic 컴퓨트 약정으로 묶은 아군 확보 ⑤ 11 이 이끌어 합계 56점이다. 함정은 OpenAI 가 상업 RPO 의 약 45% 를 차지해 연환산 매출의 30% 를 넘는 비대칭 의존 ⑧ −12 와, 조달에 기대는 OpenAI 에 넣은 돈이 Azure 약정으로 돌아오는 순환금융 ⑦ −12 가 대부분이라 합계 −32점이다. 조정 24점, 5위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-006",
+      "company_id": "apple",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Apple 은 iPhone($245.5B)·Mac·iPad·웨어러블과 Services($120.5B)로 최근 4개 분기 매출 전부를 AI 와 무관하게 버는 기기·생태계 회사다. 과점은 AI 무관 매출 100% 와 영업이익률 33.17% 를 받고 자체 설계 칩을 쓰는 호황 이후 비전 ④ 15, 활성 기기 설치기반 25억 대 초과가 받치는 네트워크 효과 ① 14 가 이끌어 합계 46점이다. 함정은 자체 설계 칩 생산이 한 파운드리와 대만에 몰려 끊기면 핵심 제품 생산 대부분이 멈추는 비대칭 의존 ⑧ −16 이 거의 전부이고, 성장 조정 PER 2.73 을 받은 가격 ⑥ −7 을 더해 합계 −23점이다. 조정 23점, 6위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Apple 은 iPhone($245.5B)·Mac·iPad·웨어러블과 Services($120.5B)로 최근 4개 분기 매출 전부를 AI 와 무관하게 버는 기기·생태계 회사다. 과점은 AI 무관 매출 100% 와 영업이익률 33.17% 를 받고 자체 설계 칩을 쓰는 호황 이후 비전 ④ 15, 활성 기기 설치기반 25억 대 초과가 받치는 네트워크 효과 ① 14 가 이끌어 합계 46점이다. 함정은 자체 설계 칩 생산이 한 파운드리와 대만에 몰려 끊기면 핵심 제품 생산 대부분이 멈추는 비대칭 의존 ⑧ −16 이 거의 전부이고, 성장 조정 PER 2.73 을 받은 가격 ⑥ −7 을 더해 합계 −23점이다. 조정 23점, 6위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-007",
+      "company_id": "nvidia",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "NVIDIA 는 AI 가속기와 시스템을 파는 회사로, Data Center 매출이 최근 4개 분기 $277.8B 로 매출의 91.69% 를 차지하고 나머지는 게임·자동차 같은 Edge Computing 이다. 과점은 Data Center 의 락인과 시장 점유를 받은 네트워크 효과 ① 12, 성능 도약 6 과 패러다임 적응 5 를 받은 게임체인저 ② 11 이 이끌고 ③ 10, ④ 10, ⑤ 7 을 더해 합계 50점이다. 함정은 데이터센터 GPU 웨이퍼를 TSMC 에 맡기고 생산이 대만에 몰려 지정학 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 조달에 기대는 AI 클라우드 고객의 몫이 크고 NVIDIA 가 그 용량을 되사는 약정이 있는 순환금융 ⑦ −12 가 대부분이라 합계 −31점이다. 조정 19점, 7위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "NVIDIA 는 AI 가속기와 시스템을 파는 회사로, Data Center 매출이 최근 4개 분기 $277.8B 로 매출의 91.69% 를 차지하고 나머지는 게임·자동차 같은 Edge Computing 이다. 과점은 Data Center 의 락인과 시장 점유를 받은 네트워크 효과 ① 12, 성능 도약 6 과 패러다임 적응 5 를 받은 게임체인저 ② 11 이 이끌고 ③ 10, ④ 10, ⑤ 7 을 더해 합계 50점이다. 함정은 데이터센터 GPU 웨이퍼를 TSMC 에 맡기고 생산이 대만에 몰려 지정학 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 조달에 기대는 AI 클라우드 고객의 몫이 크고 NVIDIA 가 그 용량을 되사는 약정이 있는 순환금융 ⑦ −12 가 대부분이라 합계 −31점이다. 조정 19점, 7위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-008",
+      "company_id": "alibaba",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Alibaba 는 커머스 사업이 최근 1년 매출 RMB1,110,886M 의 85.8% 를 차지하고 Cloud Intelligence Group(RMB158,132M)이 AI 수요를 받는 회사다. 과점은 AI 칩 설계·시스템을 자체 사용하고 일곱 칸을 파는 수직계열화에 다각화 몫 85.8% 를 더한 호황 이후 비전 ④ 16, Ant Group 지분 33% 와 Moonshot AI 지분을 받은 아군 확보 ⑤ 10 이 이끌어 합계 48점이다. 함정은 최근 1년 잉여현금흐름이 −US$11.1B 이고 런웨이가 2.17년인 적자 깊이 ⑨ −14, 성장 조정 PER 13.33 을 받은 가격 ⑥ −12 가 가장 커서 합계 −38점이다. 조정 10점, 공동 8위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Alibaba 는 커머스 사업이 최근 1년 매출 RMB1,110,886M 의 85.8% 를 차지하고 Cloud Intelligence Group(RMB158,132M)이 AI 수요를 받는 회사다. 과점은 AI 칩 설계·시스템을 자체 사용하고 일곱 칸을 파는 수직계열화에 다각화 몫 85.8% 를 더한 호황 이후 비전 ④ 16, Ant Group 지분 33% 와 Moonshot AI 지분을 받은 아군 확보 ⑤ 10 이 이끌어 합계 48점이다. 함정은 최근 1년 잉여현금흐름이 −US$11.1B 이고 런웨이가 2.17년인 적자 깊이 ⑨ −14, 성장 조정 PER 13.33 을 받은 가격 ⑥ −12 가 가장 커서 합계 −38점이다. 조정 10점, 공동 8위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-009",
+      "company_id": "palantir",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Palantir 는 정부(최근 4개 분기 매출의 52.2%)와 기업(47.8%)에 Foundry·Gotham·AIP 소프트웨어 플랫폼 구독을 파는 회사로 매출 전부가 AI 무관 매출이다. 과점은 개발·데이터 플랫폼·응용 세 칸을 팔고 AI 무관 매출 100% 와 영업이익률 42.8% 를 받은 호황 이후 비전 ④ 15, 정부와 기업 플랫폼의 락인을 재는 네트워크 효과 ① 12 가 이끌어 합계 38점이다. 함정은 EV/매출 76.1배와 성장 조정 PER 2.01 을 받은 가격 ⑥ −12, 매출의 약 42% 가 미국 연방정부 기관에서 나와 지정학 축이 −3 칸인 비대칭 의존 ⑧ −12 가 가장 커서 합계 −28점이다. 조정 10점, 공동 8위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Palantir 는 정부(최근 4개 분기 매출의 52.2%)와 기업(47.8%)에 Foundry·Gotham·AIP 소프트웨어 플랫폼 구독을 파는 회사로 매출 전부가 AI 무관 매출이다. 과점은 개발·데이터 플랫폼·응용 세 칸을 팔고 AI 무관 매출 100% 와 영업이익률 42.8% 를 받은 호황 이후 비전 ④ 15, 정부와 기업 플랫폼의 락인을 재는 네트워크 효과 ① 12 가 이끌어 합계 38점이다. 함정은 EV/매출 76.1배와 성장 조정 PER 2.01 을 받은 가격 ⑥ −12, 매출의 약 42% 가 미국 연방정부 기관에서 나와 지정학 축이 −3 칸인 비대칭 의존 ⑧ −12 가 가장 커서 합계 −28점이다. 조정 10점, 공동 8위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-010",
+      "company_id": "oracle",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Oracle 은 소프트웨어 라이선스·지원, 클라우드 애플리케이션과 OCI(최근 1년 클라우드 인프라 매출 $22.1B)로 돈을 버는 회사이고, AI 무관 매출 몫은 69.15% 다. 과점은 시스템·클라우드·개발·데이터 플랫폼·응용을 쥔 수직계열화에 영업이익률 32.1% 를 받은 호황 이후 비전 ④ 15, OpenAI·미국 정부와의 상업 관계와 TikTok 미국 합작법인 지분을 받은 아군 확보 ⑤ 9 가 이끌어 합계 40점이다. 함정은 OpenAI 가 5년 $300B 를 내기로 했다는 2차 보도가 받치는 순환금융 ⑦ −12, 미개시 리스와 구매 의무가 최근 1년 매출의 약 4.49배인 비대칭 의존 ⑧ −12, 최근 1년 잉여현금흐름 −$28.7B 에 런웨이 1.61년인 적자 깊이 ⑨ −11 이라 합계 −35점이다. 조정 5점, 10위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Oracle 은 소프트웨어 라이선스·지원, 클라우드 애플리케이션과 OCI(최근 1년 클라우드 인프라 매출 $22.1B)로 돈을 버는 회사이고, AI 무관 매출 몫은 69.15% 다. 과점은 시스템·클라우드·개발·데이터 플랫폼·응용을 쥔 수직계열화에 영업이익률 32.1% 를 받은 호황 이후 비전 ④ 15, OpenAI·미국 정부와의 상업 관계와 TikTok 미국 합작법인 지분을 받은 아군 확보 ⑤ 9 가 이끌어 합계 40점이다. 함정은 OpenAI 가 5년 $300B 를 내기로 했다는 2차 보도가 받치는 순환금융 ⑦ −12, 미개시 리스와 구매 의무가 최근 1년 매출의 약 4.49배인 비대칭 의존 ⑧ −12, 최근 1년 잉여현금흐름 −$28.7B 에 런웨이 1.61년인 적자 깊이 ⑨ −11 이라 합계 −35점이다. 조정 5점, 10위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-011",
+      "company_id": "tesla",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Tesla 는 차량 판매·리스($73.8B)가 최근 1년 매출 $103.6B 의 대부분이고 에너지 저장($12.3B)과 서비스·기타($16.3B)가 뒤를 잇는 회사로, 매출 전부가 AI 무관 매출이다. 과점은 AI 무관 매출 100% 를 받았으나 영업이익률 3.35% 라 힘이 작고 수직계열화 칸 값 합이 4 인 호황 이후 비전 ④ 12 가 가장 높고, 네트워크 효과 ① 7 과 게임체인저 ② 7 이 뒤따라 합계 37점이다. 함정은 지금 쓰는 자체 설계 추론 칩의 생산을 Samsung 에 기댄다는 2차 보도로 공급 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 성장 조정 PER 73.2배를 받은 가격 ⑥ −14 가 가장 커서 합계 −38점이다. 조정 −1점, 11위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Tesla 는 차량 판매·리스($73.8B)가 최근 1년 매출 $103.6B 의 대부분이고 에너지 저장($12.3B)과 서비스·기타($16.3B)가 뒤를 잇는 회사로, 매출 전부가 AI 무관 매출이다. 과점은 AI 무관 매출 100% 를 받았으나 영업이익률 3.35% 라 힘이 작고 수직계열화 칸 값 합이 4 인 호황 이후 비전 ④ 12 가 가장 높고, 네트워크 효과 ① 7 과 게임체인저 ② 7 이 뒤따라 합계 37점이다. 함정은 지금 쓰는 자체 설계 추론 칩의 생산을 Samsung 에 기댄다는 2차 보도로 공급 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 성장 조정 PER 73.2배를 받은 가격 ⑥ −14 가 가장 커서 합계 −38점이다. 조정 −1점, 11위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-012",
+      "company_id": "anthropic",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Anthropic 은 Claude 를 API 사용량 과금과 구독으로 팔아 최근 4개 분기 $19.7B 의 매출을 낸 비상장 모델 회사다. 과점은 MCP 표준 선점 4 와 패러다임 적응 5, 성능 도약 6 을 받은 게임체인저 ② 15, Amazon·Google 두 곳의 지분 투자와 컴퓨트 약정이 묶은 아군 확보 ⑤ 11 이 이끌어 합계 37점이다. 함정은 최근 1년 영업이익률 −33.6% 로 손실 곡선의 바닥에 닿은 적자 깊이 ⑨ −16, 해지할 수 없는 구매 약정과 개시 전 리스가 매출의 18배를 넘는 비대칭 의존 ⑧ −12, 매출 배수 27.47 을 받은 가격 ⑥ −11 이라 합계 −39점이다. 조정 −2점, 12위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Anthropic 은 Claude 를 API 사용량 과금과 구독으로 팔아 최근 4개 분기 $19.7B 의 매출을 낸 비상장 모델 회사다. 과점은 MCP 표준 선점 4 와 패러다임 적응 5, 성능 도약 6 을 받은 게임체인저 ② 15, Amazon·Google 두 곳의 지분 투자와 컴퓨트 약정이 묶은 아군 확보 ⑤ 11 이 이끌어 합계 37점이다. 함정은 최근 1년 영업이익률 −33.6% 로 손실 곡선의 바닥에 닿은 적자 깊이 ⑨ −16, 해지할 수 없는 구매 약정과 개시 전 리스가 매출의 18배를 넘는 비대칭 의존 ⑧ −12, 매출 배수 27.47 을 받은 가격 ⑥ −11 이라 합계 −39점이다. 조정 −2점, 12위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-013",
+      "company_id": "spacex-xai",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "SpaceX + xAI 는 로켓 발사와 Starlink 통신·X 광고가 최근 4개 분기 매출 $32.0B 의 68.5% 를 AI 와 무관하게 벌고, 클라우드 컴퓨트·Grok·Cursor 를 파는 SI 솔루션·인프라가 나머지를 채우는 회사다. 과점은 AI 무관 매출 68.5% 와 부문 영업이익률 23.8% 를 받은 호황 이후 비전 ④ 13, 독립 측정이 없는 층에서 패러다임 적응으로 매긴 게임체인저 ② 9 가 이끌어 합계 37점이다. 함정은 2026년 3분기 매출의 34.5% 를 한 고객이 내고 Anthropic 계약이 연환산 매출의 약 116% 에 이르는 비대칭 의존 ⑧ −12, 최근 1년 잉여현금흐름 −$39.2B 에 런웨이 1.40년인 적자 깊이 ⑨ −12 가 가장 커서 합계 −40점이다. 조정 −3점, 13위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "SpaceX + xAI 는 로켓 발사와 Starlink 통신·X 광고가 최근 4개 분기 매출 $32.0B 의 68.5% 를 AI 와 무관하게 벌고, 클라우드 컴퓨트·Grok·Cursor 를 파는 SI 솔루션·인프라가 나머지를 채우는 회사다. 과점은 AI 무관 매출 68.5% 와 부문 영업이익률 23.8% 를 받은 호황 이후 비전 ④ 13, 독립 측정이 없는 층에서 패러다임 적응으로 매긴 게임체인저 ② 9 가 이끌어 합계 37점이다. 함정은 2026년 3분기 매출의 34.5% 를 한 고객이 내고 Anthropic 계약이 연환산 매출의 약 116% 에 이르는 비대칭 의존 ⑧ −12, 최근 1년 잉여현금흐름 −$39.2B 에 런웨이 1.40년인 적자 깊이 ⑨ −12 가 가장 커서 합계 −40점이다. 조정 −3점, 13위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-014",
+      "company_id": "openai",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "OpenAI 는 ChatGPT 구독과 종량 API, 광고로 돈을 버는 비상장 모델 회사로, 2026년 2분기 매출이 $6.7B 다(2차 보도). 과점은 API 규격의 표준 3 과 패러다임 적응 5, 성능 도약 4 를 받은 게임체인저 ② 12 와 경쟁사와 다른 수익모델을 받은 Last Mover ③ 8 이 이끌어 합계 35점이다. 함정은 post-money $852B 를 보정 매출로 나눈 배수 34.92 를 받은 가격 ⑥ −14, 확인되는 약정이 연환산 매출의 약 12.5배이고 컴퓨트를 모두 남에게서 빌리는 비대칭 의존 ⑧ −12 가 가장 커서 합계 −42점이다. 조정 −7점, 14위다."
+      ],
+      "reason": "실적 반영 실행 q3c 의 점수로 기업 한 줄 요약을 새로 쓴다(규칙 v3.0 이상 실행은 14개사 요약 필수)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": []
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": null
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "OpenAI 는 ChatGPT 구독과 종량 API, 광고로 돈을 버는 비상장 모델 회사로, 2026년 2분기 매출이 $6.7B 다(2차 보도). 과점은 API 규격의 표준 3 과 패러다임 적응 5, 성능 도약 4 를 받은 게임체인저 ② 12 와 경쟁사와 다른 수익모델을 받은 Last Mover ③ 8 이 이끌어 합계 35점이다. 함정은 post-money $852B 를 보정 매출로 나눈 배수 34.92 를 받은 가격 ⑥ −14, 확인되는 약정이 연환산 매출의 약 12.5배이고 컴퓨트를 모두 남에게서 빌리는 비대칭 의존 ⑧ −12 가 가장 커서 합계 −42점이다. 조정 −7점, 14위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "14개사 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 기계로 대조했다"
+    },
+    {
+      "proposal_id": "PRP-015",
+      "company_id": "anthropic",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Anthropic 은 Claude 를 API 사용량 과금과 구독으로 팔아 최근 4개 분기 $19.7B 의 매출을 낸 비상장 모델 회사다. 과점은 MCP 표준 선점 4 와 패러다임 적응 5, 성능 도약 6 을 받은 게임체인저 ② 15, Amazon·Google 두 곳의 지분 투자와 컴퓨트 약정이 묶은 아군 확보 ⑤ 11 이 이끌어 합계 37점이다. 함정은 최근 1년 영업이익률 −33.6% 로 손실 곡선의 바닥에 닿은 적자 깊이 ⑨ −16, 해지할 수 없는 구매 약정과 개시 전 리스에 결산일 뒤 체결분을 더한 금액이 2026년 2분기 연환산 매출의 18배를 넘는 비대칭 의존 ⑧ −12, 매출 배수 27.47 을 매출 성장 12.5배로 나눠 천장에 닿은 가격 ⑥ −8 이라 합계 −36점이다. 조정 1점, 11위다."
+      ],
+      "reason": "리뷰 수정 뒤 ⑥·함정·조정·순위가 바뀌어 요약을 다시 쓴다(출력 리뷰 F7 약정 분모 표현 포함)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "Anthropic 은 Claude 를 API 사용량 과금과 구독으로 팔아 최근 4개 분기 $19.7B 의 매출을 낸 비상장 모델 회사다. 과점은 MCP 표준 선점 4 와 패러다임 적응 5, 성능 도약 6 을 받은 게임체인저 ② 15, Amazon·Google 두 곳의 지분 투자와 컴퓨트 약정이 묶은 아군 확보 ⑤ 11 이 이끌어 합계 37점이다. 함정은 최근 1년 영업이익률 −33.6% 로 손실 곡선의 바닥에 닿은 적자 깊이 ⑨ −16, 해지할 수 없는 구매 약정과 개시 전 리스가 매출의 18배를 넘는 비대칭 의존 ⑧ −12, 매출 배수 27.47 을 받은 가격 ⑥ −11 이라 합계 −39점이다. 조정 −2점, 12위다."
+        ]
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "Anthropic 은 Claude 를 API 사용량 과금과 구독으로 팔아 최근 4개 분기 $19.7B 의 매출을 낸 비상장 모델 회사다. 과점은 MCP 표준 선점 4 와 패러다임 적응 5, 성능 도약 6 을 받은 게임체인저 ② 15, Amazon·Google 두 곳의 지분 투자와 컴퓨트 약정이 묶은 아군 확보 ⑤ 11 이 이끌어 합계 37점이다. 함정은 최근 1년 영업이익률 −33.6% 로 손실 곡선의 바닥에 닿은 적자 깊이 ⑨ −16, 해지할 수 없는 구매 약정과 개시 전 리스가 매출의 18배를 넘는 비대칭 의존 ⑧ −12, 매출 배수 27.47 을 받은 가격 ⑥ −11 이라 합계 −39점이다. 조정 −2점, 12위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Anthropic 은 Claude 를 API 사용량 과금과 구독으로 팔아 최근 4개 분기 $19.7B 의 매출을 낸 비상장 모델 회사다. 과점은 MCP 표준 선점 4 와 패러다임 적응 5, 성능 도약 6 을 받은 게임체인저 ② 15, Amazon·Google 두 곳의 지분 투자와 컴퓨트 약정이 묶은 아군 확보 ⑤ 11 이 이끌어 합계 37점이다. 함정은 최근 1년 영업이익률 −33.6% 로 손실 곡선의 바닥에 닿은 적자 깊이 ⑨ −16, 해지할 수 없는 구매 약정과 개시 전 리스에 결산일 뒤 체결분을 더한 금액이 2026년 2분기 연환산 매출의 18배를 넘는 비대칭 의존 ⑧ −12, 매출 배수 27.47 을 매출 성장 12.5배로 나눠 천장에 닿은 가격 ⑥ −8 이라 합계 −36점이다. 조정 1점, 11위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "두 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 대조했다"
+    },
+    {
+      "proposal_id": "PRP-016",
+      "company_id": "tesla",
+      "factor": "SUMMARY",
+      "changes": {},
+      "evidence_after": [
+        "Tesla 는 차량 판매·리스($73.8B)가 최근 1년 매출 $103.6B 의 대부분이고 에너지 저장($12.3B)과 서비스·기타($16.3B)가 뒤를 잇는 회사로, 매출 전부가 AI 무관 매출이다. 과점은 AI 무관 매출 100% 를 받았으나 영업이익률 3.35% 라 힘이 작고 수직계열화 칸 값 합이 4 인 호황 이후 비전 ④ 12 가 가장 높고, 네트워크 효과 ① 7 과 게임체인저 ② 7 이 뒤따라 합계 37점이다. 함정은 지금 쓰는 자체 설계 추론 칩의 생산을 Samsung 에 기댄다는 2차 보도로 공급 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 성장 조정 PER 73.2배를 받은 가격 ⑥ −14 가 가장 커서 합계 −38점이다. 조정 −1점, 12위다."
+      ],
+      "reason": "리뷰 수정 뒤 ⑥·함정·조정·순위가 바뀌어 요약을 다시 쓴다(출력 리뷰 F7 약정 분모 표현 포함)",
+      "evidence_ids": [],
+      "before": {
+        "kind": "summary",
+        "score": null,
+        "inputs": {},
+        "evidence": [
+          "Tesla 는 차량 판매·리스($73.8B)가 최근 1년 매출 $103.6B 의 대부분이고 에너지 저장($12.3B)과 서비스·기타($16.3B)가 뒤를 잇는 회사로, 매출 전부가 AI 무관 매출이다. 과점은 AI 무관 매출 100% 를 받았으나 영업이익률 3.35% 라 힘이 작고 수직계열화 칸 값 합이 4 인 호황 이후 비전 ④ 12 가 가장 높고, 네트워크 효과 ① 7 과 게임체인저 ② 7 이 뒤따라 합계 37점이다. 함정은 지금 쓰는 자체 설계 추론 칩의 생산을 Samsung 에 기댄다는 2차 보도로 공급 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 성장 조정 PER 73.2배를 받은 가격 ⑥ −14 가 가장 커서 합계 −38점이다. 조정 −1점, 11위다."
+        ]
+      },
+      "proposed_by": "claude 조율 세션(요약)",
+      "proposed_at": "2026-10-27",
+      "status": "accepted",
+      "applied": {
+        "previous": {
+          "text": "Tesla 는 차량 판매·리스($73.8B)가 최근 1년 매출 $103.6B 의 대부분이고 에너지 저장($12.3B)과 서비스·기타($16.3B)가 뒤를 잇는 회사로, 매출 전부가 AI 무관 매출이다. 과점은 AI 무관 매출 100% 를 받았으나 영업이익률 3.35% 라 힘이 작고 수직계열화 칸 값 합이 4 인 호황 이후 비전 ④ 12 가 가장 높고, 네트워크 효과 ① 7 과 게임체인저 ② 7 이 뒤따라 합계 37점이다. 함정은 지금 쓰는 자체 설계 추론 칩의 생산을 Samsung 에 기댄다는 2차 보도로 공급 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 성장 조정 PER 73.2배를 받은 가격 ⑥ −14 가 가장 커서 합계 −38점이다. 조정 −1점, 11위다."
+        },
+        "after": {
+          "kind": "summary",
+          "score": null,
+          "inputs": {},
+          "evidence": [
+            "Tesla 는 차량 판매·리스($73.8B)가 최근 1년 매출 $103.6B 의 대부분이고 에너지 저장($12.3B)과 서비스·기타($16.3B)가 뒤를 잇는 회사로, 매출 전부가 AI 무관 매출이다. 과점은 AI 무관 매출 100% 를 받았으나 영업이익률 3.35% 라 힘이 작고 수직계열화 칸 값 합이 4 인 호황 이후 비전 ④ 12 가 가장 높고, 네트워크 효과 ① 7 과 게임체인저 ② 7 이 뒤따라 합계 37점이다. 함정은 지금 쓰는 자체 설계 추론 칩의 생산을 Samsung 에 기댄다는 2차 보도로 공급 축이 −4 칸인 비대칭 의존 ⑧ −16 과, 성장 조정 PER 73.2배를 받은 가격 ⑥ −14 가 가장 커서 합계 −38점이다. 조정 −1점, 12위다."
+          ]
+        }
+      },
+      "decided_by": "claude 조율 세션(요약 숫자 대조)",
+      "decided_at": "2026-10-27",
+      "decision_note": "두 요약의 항목 점수·과점·함정·조정·순위를 results.json 과 대조했다"
+    }
+  ]
+}
