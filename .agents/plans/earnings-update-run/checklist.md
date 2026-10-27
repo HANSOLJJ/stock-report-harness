@@ -97,3 +97,4 @@
 - [x] research → calculate → 14개사 요약(propose·proposal) → draft → diff 통과 → 계약 검증(review 만 남음)
 - [x] 리뷰 4영역(규칙만 needs_fix: ⑥ 성장 보정) → 수정 묶음(⑥ 전년 창 범위 관측, OpenAI ⑤⑦ scope --add 문장, ⑧ 지정학 근거 2건, 트리거·요약) → 확인 리뷰 pass → 문장 셋 추가 수정 → review.md pass → 계약 검증 PASS → 확인 대기(Anthropic 조정 1, 11위)
 - [ ] ③ 가속도 미확인 처리 사용자 결정 반영(규칙 결정이면 v3.2)
+- [x] 사람 확인(10-27 14:53) → 빌드 → --require-html PASS → 커밋 3d36fd9 → main push → 맥미니 pull → https://fin.hansoljj.com/reports/ai-scorecard-2026-10-q3c/ 200
