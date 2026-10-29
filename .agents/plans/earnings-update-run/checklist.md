@@ -98,3 +98,8 @@
 - [x] 리뷰 4영역(규칙만 needs_fix: ⑥ 성장 보정) → 수정 묶음(⑥ 전년 창 범위 관측, OpenAI ⑤⑦ scope --add 문장, ⑧ 지정학 근거 2건, 트리거·요약) → 확인 리뷰 pass → 문장 셋 추가 수정 → review.md pass → 계약 검증 PASS → 확인 대기(Anthropic 조정 1, 11위)
 - [ ] ③ 가속도 미확인 처리 사용자 결정 반영(규칙 결정이면 v3.2)
 - [x] 사람 확인(10-27 14:53) → 빌드 → --require-html PASS → 커밋 3d36fd9 → main push → 맥미니 pull → https://fin.hansoljj.com/reports/ai-scorecard-2026-10-q3c/ 200
+
+## 다음 실적 반영 실행에서 볼 칸 (2026-10-29, Alphabet·Microsoft 10-28 실적 뒤. Amazon·Apple 실적까지 나온 뒤 넷을 한 실행으로)
+- [ ] Alphabet ⑦⑧: TPU 시스템을 Anthropic 등 고객 데이터센터에 직접 판다는 보도가 있다. 10-Q 가 Anthropic 몫이나 10% 고객을 밝히면 ⑦ 가로축(지금 작음)과 ⑧ 고객 축(지금 비공개 기본값 −1)을 다시 잰다
+- [ ] Alphabet ⑨: 3분기 분기 잉여현금흐름이 적자라는 보도가 있다. 최근 4분기 합이 아직 흑자면 −4 그대로이고, 합이 마이너스면 게이트 3·4 를 계산한다
+- [ ] Microsoft ⑧ 고객 축: 회사가 상업 수주잔고의 OpenAI 몫을 새로 밝혔는지 본다. 연환산 몫이 매출의 30% 아래로 확인되면 −3 에서 한 칸 오른다
