@@ -242,9 +242,11 @@ class ImportPinTest(unittest.TestCase):
                     parse.add(path.relative_to(ROOT).as_posix())
         self.assertEqual(network, {"scripts/scorecard/evidence_lib.py"})
         # 2026-10-02 collect_filings.py 는 sec-get 의 SEC 주소 검사(urlparse)만 한다. 요청은 여전히 evidence_lib 하나다.
+        # 2026-11-15 market_now.py 는 vast.ai 질의 URL 인코딩(quote)만 한다. 요청은 evidence_lib.fetch_bytes 로 간다.
         self.assertEqual(parse, {"scripts/scorecard/rules.py",
                                  "scripts/scorecard/collect_news.py",
-                                 "scripts/scorecard/collect_filings.py"})
+                                 "scripts/scorecard/collect_filings.py",
+                                 "scripts/scorecard/market_now.py"})
 
 
 

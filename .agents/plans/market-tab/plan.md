@@ -23,6 +23,19 @@
 - AI 기업 CDS: 무료 원천이 없다(Markit·Bloomberg). 필요하면 발행사 회사채 스프레드로 대신한다.
 - D램 현물: TrendForce 공개 표. 약관을 확인한 뒤 2단계로.
 
+## 구현 (2026-11-15 "일단 만들어봐")
+확인한 사실: 공개 사이트는 맥미니의 finance 서버(HANSOLJJ/finance, pm2, 127.0.0.1:8787)가 내보내고, 같은 서버에 화이트리스트 프록시 `/api/proxy` 가 있으며 FRED 키를 서버가 주입한다. 리포트와 같은 주소라 리포트 스크립트가 그 프록시를 부를 수 있다. OpenRouter 는 CORS `*` 라 직접 부른다. vast.ai 는 CORS 가 없고 프록시 목록에도 없다(finance 저장소는 이 작업 범위 밖이라 고치지 않는다).
+
+1. 정의와 계산을 한 곳에: `scripts/scorecard/market_now.py`(받기·계산·관측 만들기)와 `scripts/scorecard/assets/market_live.js`(브라우저 계산). 같은 고정 자료로 두 구현이 같은 값을 내는지 테스트한다.
+   - 미국채 10년물 DGS10, 투자등급 스프레드 BAMLC0A0CM, 하이일드 스프레드 BAMLH0A0HYM2: 가격 기준일 이하의 가장 최근 값(FRED 의 "." 는 건너뜀). 스냅숏은 fredgraph.csv(키 없음), 지금 값은 프록시의 FRED API.
+   - GPU 임대료: vast.ai 대여 가능 on-demand 호가, GPU 종류별(H100 SXM·H200·B200) GPU 한 장 시간당 단가의 GPU 수 가중 중간값과 GPU 수.
+   - 토큰 단가: OpenRouter 에서 연구소 목록(openai·anthropic·google·x-ai·deepseek·qwen·moonshotai)마다 최근 180일 안에 나온 비배치 유료 모델 가운데 혼합 단가(입력 3 : 출력 1, 100만 토큰당)가 가장 높은 것을 고르고 그 중간값. 고른 모델을 함께 보인다.
+2. 스키마: 시장 지표 다섯(`ust10y_yield`·`ig_oas`·`hy_oas` 단위 percent, `gpu_rent_hourly` 단위 USD/GPU-hour + basis.gpu, `token_blended_price` 단위 USD/1M tokens + basis.picks)을 `_market` 에 둔다.
+3. `collect --kind market`: 관측과 출처(SRC-FRED-·SRC-VAST-·SRC-OPENROUTER-<날짜>)를 쓴다. `all` 에 들어간다.
+4. diff: 시장 스냅숏 지표는 어느 실행 종류에서든 더해져도 위반이 아니다(점수 밖).
+5. 렌더: render_common `market_view` → 초안 국면 절과 HTML 국면 탭에 표. HTML 은 지금 값·변화 칸과 갱신 버튼을 더한다. 스냅숏이 없는 실행은 표가 없다(옛 실행 렌더 바이트 불변).
+6. 문서·스킬(score-collect, guide.md, structure.md).
+
 ## 정할 것
 - 언제 만들지(실적 반영 실행 전·후).
 - 원천마다 원천 장부(sources) 등록 방식, 원천이 막혔을 때 칸 표시.

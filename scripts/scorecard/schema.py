@@ -319,11 +319,21 @@ METRICS: dict[str, dict[str, str]] = {
     "market_share": {"unit": "ratio", "type": "number"},
     "market_revenue": {"unit": "USD", "type": "number"},
     "market_volume": {"unit": "count", "type": "number"},
+    # 2026-11-15 사용자 요청(점수 없음): 국면 탭의 시장 지표 기준일 값. collect --kind market 이 market_now 로 찍는다.
+    # 금리·스프레드는 FRED 계열(basis.series), GPU 임대료는 GPU 종류(basis.gpu), 토큰 단가는 고른 모델(basis.picks)을 적는다.
+    "ust10y_yield": {"unit": "percent", "type": "number"},
+    "ig_oas": {"unit": "percent", "type": "number"},
+    "hy_oas": {"unit": "percent", "type": "number"},
+    "gpu_rent_hourly": {"unit": "USD/GPU-hour", "type": "number"},
+    "token_blended_price": {"unit": "USD/1M tokens", "type": "number"},
 }
 SEGMENT_METRICS = {"cloud_segment_revenue_quarterly", "cloud_segment_operating_income_quarterly"}
 # 2026-10-12 규칙 v2.1 2-C-1: 회사에 속하지 않는 시장 지표의 company_id. 시장 지표는 이 ID 에만, 이 ID 는 시장 지표에만 쓴다.
 MARKET_COMPANY_ID = "_market"
 MARKET_METRICS = {"token_price_index", "market_share", "market_revenue", "market_volume"}
+# 2026-11-15: 국면 탭 시장 지표(점수 밖). 어느 실행 종류에서든 diff 가 더해진 것을 위반으로 세지 않는다.
+MARKET_SNAPSHOT_METRICS = {"ust10y_yield", "ig_oas", "hy_oas", "gpu_rent_hourly", "token_blended_price"}
+MARKET_METRICS |= MARKET_SNAPSHOT_METRICS
 # 2026-10-15 규칙 v3.0: 시장 정의표의 구성 회사 값. 같은 시장·기간에 구성 회사마다 한 건이다.
 MARKET_POSITION_METRICS = {"market_share", "market_revenue", "market_volume"}
 # usage(검색 질의 같은 사용량 점유율)는 조사기관이 점유율로만 내므로 value_kind share 로만 쓴다(2026-10-15).
@@ -340,6 +350,8 @@ NON_NEGATIVE_METRICS |= {"top_customer_share", "rpo_next12m_share", "nrr", "cust
 # 2026-10-12 규칙 v2.1 2-C-1: 보증·출자·되사기는 잔액·한도이고 지수는 가격이라 음수가 될 수 없다.
 NON_NEGATIVE_METRICS |= {"residual_value_guarantee", "supplier_guarantees", "supplier_customer_investments",
                          "supplier_capacity_buyback", "token_price_index", "revenue_quarterly", "cloud_segment_revenue_quarterly"}
+# 2026-11-15: 스프레드·임대료·단가는 음수가 될 수 없다. 국채 금리는 음수가 될 수 있어 넣지 않는다.
+NON_NEGATIVE_METRICS |= {"ig_oas", "hy_oas", "gpu_rent_hourly", "token_blended_price"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -1507,6 +1519,10 @@ def validate_observations(payload: Any, companies: dict[str, dict[str, Any]], ru
             if metric == "token_price_index" and item["value"] is not None:
                 _require(((item.get("basis") or {}).get("segment")) in TOKEN_INDEX_SEGMENTS,
                          f"{where}: token_price_index 는 basis.segment 가 {sorted(TOKEN_INDEX_SEGMENTS)} 중 하나")
+            if metric in MARKET_SNAPSHOT_METRICS:
+                need = {"gpu_rent_hourly": "gpu", "token_blended_price": "segment"}.get(metric, "series")
+                _require(isinstance((item.get("basis") or {}).get(need), str) and item["basis"][need].strip(),
+                         f"{where}: {metric} 은 basis.{need} 가 필요함")
             if metric in MARKET_POSITION_METRICS:
                 basis = item.get("basis") or {}
                 for key in ("market_id", "constituent"):

@@ -548,7 +548,7 @@ def declare_scope_extra(slug: str, items: list[tuple[str, str]], *, reason: str)
 # research 에서 등록될 때 바뀐다. 가격만 계산 입력이라 여기서 관측과 출처를 바로 등록한다.
 
 # 2026-10-12 규칙 v2.1 2-E: facts 는 SEC companyfacts 에서 현금흐름·법인세 최근 1년 관측을 만든다(prices 처럼 관측·출처를 바로 쓴다).
-COLLECT_KINDS = ("news", "filings", "prices", "facts")
+COLLECT_KINDS = ("news", "filings", "prices", "facts", "market")
 CANDIDATE_WINDOW_DAYS = 180
 
 
@@ -668,6 +668,45 @@ def _collect_prices(slug: str, run: dict[str, Any], registry: dict[str, dict[str
     src_path = d / "sources.json"
     sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
     _merge_price_source(sources, price_source_entry(price_as_of, tickers=tickers, accessed_at=now or utc_now_iso()))
+    validate_sources(sources, slug)
+    write_json(d / "observations.json", observations)
+    write_json(src_path, sources)
+    return rows
+
+
+def _collect_market(slug: str, run: dict[str, Any], registry: dict[str, dict[str, Any]], *,
+                    from_file: str | None, dry_run: bool, now: str | None) -> list[dict[str, Any]]:
+    """2026-11-15: 국면 탭 시장 지표의 기준일 값을 `_market` 관측으로 찍는다(점수 밖). 같은 관측 ID 가 있으면 덮어쓰지 않는다.
+    `from_file` 은 {주소: 응답 본문} JSON 이고 테스트가 원천을 대신할 때만 쓴다."""
+    from .evidence_lib import fetch_bytes, user_agent_for
+    from .market_now import snapshot
+
+    price_as_of = run.get("price_as_of") or run["as_of"]
+    if dry_run:
+        return [{"status": "dry_run", "price_as_of": price_as_of}]
+    stamp = now or utc_now_iso()
+    if from_file:
+        bodies = json.loads(Path(from_file).read_text(encoding="utf-8"))
+        get = lambda url: bodies[url].encode("utf-8")  # noqa: E731
+    else:
+        ua = user_agent_for("web")
+        get = lambda url: fetch_bytes(url, user_agent=ua)  # noqa: E731
+    snap = snapshot(price_as_of, today=stamp[:10], now=stamp, get=get)
+    d = run_dir(slug)
+    observations = load_json_strict(d / "observations.json")
+    taken = {o["observation_id"] for o in observations["items"]}
+    fresh = [o for o in snap["observations"] if o["observation_id"] not in taken]
+    rows = list(snap["rows"]) + [{"observation_id": o["observation_id"], "status": "skipped_existing"}
+                                 for o in snap["observations"] if o["observation_id"] in taken]
+    if not fresh:
+        return rows
+    observations["items"].extend(fresh)
+    validate_observations(observations, registry, slug)
+    src_path = d / "sources.json"
+    sources = load_json_strict(src_path) if src_path.is_file() else {"schema": "scorecard.sources/1", "run_id": slug, "items": []}
+    have = {s["source_id"] for s in sources["items"]}
+    used = {o["source_id"] for o in fresh}
+    sources["items"].extend(s for s in snap["sources"] if s["source_id"] in used and s["source_id"] not in have)
     validate_sources(sources, slug)
     write_json(d / "observations.json", observations)
     write_json(src_path, sources)
@@ -828,9 +867,11 @@ def collect(
         protect_approved_run(slug, "가격 수집(collect --kind prices)")
     if "facts" in kinds and not dry_run:
         protect_approved_run(slug, "재무 사실 수집(collect --kind facts)")
+    if "market" in kinds and not dry_run:
+        protect_approved_run(slug, "시장 지표 수집(collect --kind market)")
 
     summary: dict[str, Any] = {"run_id": slug, "window": {"since": since, "until": until}, "dry_run": dry_run,
-                               "news": [], "filings": [], "prices": [], "facts": []}
+                               "news": [], "filings": [], "prices": [], "facts": [], "market": []}
     for cid in selected if "news" in kinds else []:
         try:
             res = collect_company_news(registry[cid], from_file=from_file, dry_run=dry_run, now=now, locale=locale)
@@ -869,6 +910,8 @@ def collect(
         summary["prices"] = _collect_prices(slug, run, registry, selected, from_file=from_file, dry_run=dry_run, now=now)
     if "facts" in kinds:
         summary["facts"] = _collect_facts(slug, run, registry, selected, from_file=from_file, dry_run=dry_run, now=now)
+    if "market" in kinds:
+        summary["market"] = _collect_market(slug, run, registry, from_file=from_file, dry_run=dry_run, now=now)
     return summary
 
 

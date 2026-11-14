@@ -13,7 +13,7 @@ from __future__ import annotations
 from typing import Any, Callable
 
 from .engine import load_context, load_results, run_dir
-from .schema import FACTOR_IDS, SchemaError, load_json_strict, sha256_obj, validate_approval
+from .schema import FACTOR_IDS, MARKET_SNAPSHOT_METRICS, SchemaError, load_json_strict, sha256_obj, validate_approval
 from .stages import approval_mismatches, current_hashes
 
 # 1층에서 견주는 입력 장부. `sources` 항목에는 `company_id` 가 없다 — 귀속을 따질 수 없으므로
@@ -62,7 +62,11 @@ def compare_inputs(slug: str, prior_slug: str, new_companies: set[str],
                    allow: Callable[[str, dict[str, Any]], bool] | None = None) -> dict[str, Any]:
     """1층 — 입력 가법성. 기존 항목이 사라지거나 바뀌지 않았고, 더해진 것은 신규 기업 것이어야 한다.
     `allow(장부 이름, 항목)` 이 참인 항목의 삭제·수정·추가는 위반으로 세지 않고 `allowed` 에 적는다(실적 반영 실행의 범위)."""
-    permitted = (lambda name, x: allow(name, x)) if allow else (lambda name, x: False)
+    # 2026-11-15: 국면 탭 시장 지표(점수 밖) 관측은 어느 실행 종류에서든 새로 찍는다. 위반으로 세지 않고 allowed 에 적는다.
+    def permitted(name: str, x: dict[str, Any]) -> bool:
+        if name == "observations" and x.get("metric") in MARKET_SNAPSHOT_METRICS:
+            return True
+        return bool(allow(name, x)) if allow else False
     out: dict[str, Any] = {"violations": [], "by_file": {}}
     for name in INPUT_FILES:
         prior = {sha256_obj(x): x for x in _items(prior_slug, name)}

@@ -480,6 +480,12 @@ def render_draft(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] | N
     regime = rc.regime_view(ctx, results)
     if regime:
         lines += _regime_section(regime)
+    # 2026-11-15 사용자 요청: 시장 지표 기준일 값(점수 밖). collect --kind market 을 돌린 실행에만 있다.
+    market = rc.market_view(ctx)
+    if market:
+        lines += ["### 시장 지표(기준일 값)" if regime else "## 시장 지표 — 점수 없음", "",
+                  table(market["head"], market["md_rows"], ["---", "---:", "---", "---"]), ""]
+        lines += [f"- {x}" for x in market["notes"]] + [""]
     lines += ["## 종합 순위표", ""]
     rows = []
     for r in ranking:

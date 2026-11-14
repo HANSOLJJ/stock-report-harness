@@ -254,7 +254,7 @@ def cmd_collect(args: argparse.Namespace) -> int:
     for kind in COLLECT_KINDS:
         for row in out[kind]:
             extra = " ".join(f"{k}={v}" for k, v in row.items() if k not in ("company_id", "status", "urls"))
-            print(f"  {kind:<8} {row['company_id']:<12} {row['status']}" + (f" {extra}" if extra else ""))
+            print(f"  {kind:<8} {row.get('company_id', '_market'):<12} {row['status']}" + (f" {extra}" if extra else ""))
             for url in row.get("urls") or []:
                 print(f"    {url}")
     if out.get("candidates"):
@@ -786,7 +786,7 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("collect", help="근거 후보 수집. research 앞에서만 돈다(build 는 재수집하지 않는다)")
     p.add_argument("slug")
     p.add_argument("--company", help="run.companies 가운데 일부(쉼표)")
-    p.add_argument("--kind", choices=["news", "filings", "prices", "facts", "all"], default="all",
+    p.add_argument("--kind", choices=["news", "filings", "prices", "facts", "market", "all"], default="all",
                    help="facts 는 SEC companyfacts 에서 ocf_ttm·capex_ttm·income_tax_ttm 관측을 만든다(USD 보고 상장사, SEC_UA 필요)")
     p.add_argument("--since", help="후보 창 시작일(기본 as_of − 180일)")
     p.add_argument("--forms", help="공시 형식(쉼표). 기본 8-K,10-Q,10-K,20-F,6-K")

@@ -150,7 +150,7 @@
 
 ```
 init --rule vN ──► plan.md + run.json·observations.json·judgments.json·sources.json
-collect ──► evidence/candidates.json (뉴스·공시 후보) ; --kind prices 는 observations.json 에 ⑥ price·market_cap, --kind facts 는 ocf_ttm·capex_ttm·income_tax_ttm 관측을 넣는다
+collect ──► evidence/candidates.json (뉴스·공시 후보) ; --kind prices 는 observations.json 에 ⑥ price·market_cap, --kind facts 는 ocf_ttm·capex_ttm·income_tax_ttm, --kind market 은 _market 시장 지표(점수 밖) 관측을 넣는다
   └─ 에이전트가 후보를 골라 evidence/evidence.json(candidate)·triggers.json 작성
 research ──► research.md (observations_hash·judgments_hash 결속) ; 인용한 근거의 출처를 sources.json 에 등록(--no-register 로 끔)
 calculate ──► results.json(+results_hash) + preview.md ; 입력 해시가 바뀌면 이전 approval.json 자동 무효

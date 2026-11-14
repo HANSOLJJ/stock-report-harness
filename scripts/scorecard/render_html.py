@@ -1184,6 +1184,45 @@ def render_regime(ctx: Any, results: dict[str, Any]) -> str:
             + '</section>')
 
 
+# 2026-11-15 사용자 요청: 국면 탭 시장 지표. 기준일 값 옆에 지금 값·변화 칸을 두고 버튼을 누를 때만 원천에서 받는다.
+# 받은 값은 화면에만 보이고 실행 파일에 쓰지 않는다. 관측이 없는 실행은 CSS·스크립트·표 모두 싣지 않는다(옛 실행 바이트 불변).
+MARKET_JS = Path(__file__).with_name("assets") / "market_live.js"
+MARKET_CSS = """
+.market{margin:8px 0 28px}
+.mktbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:12px 0}
+.mkt-btn{min-height:44px;padding:10px 18px;border:1px solid var(--acc-line);border-radius:8px;background:var(--acc-soft);color:var(--acc-text);font:inherit;font-size:var(--fs-md);font-weight:700;cursor:pointer}
+.mkt-btn:hover{background:var(--acc-line)}
+.mkt-btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.mkt-btn:disabled{opacity:.6;cursor:progress}
+.mkt-status{flex:1 1 220px;min-width:0}
+table.mkt td .dt{display:block;font-size:var(--fs-sm);color:var(--tx3)}
+table.mkt td.mkt-now,table.mkt td.mkt-chg{color:var(--tx2)}
+"""
+
+
+def render_market(ctx: Any) -> str:
+    view = rc.market_view(ctx)
+    if view is None:
+        return ""
+    body = []
+    for r in view["rows"]:
+        base = "" if r["value"] is None else repr(float(r["value"]))
+        body.append(f'<tr data-key="{esc(r["key"])}" data-kind="{esc(r["kind"])}" data-unit="{esc(r["unit"])}" data-base="{esc(base)}">'
+                    f'<td class="name"><b>{esc(r["label"])}</b></td>'
+                    f'<td class="mono">{esc(r["text"])}<span class="dt">{esc(r["as_of"])}</span></td>'
+                    f'<td class="mono mkt-now">—</td><td class="mono mkt-chg">—</td>'
+                    f'<td class="text">{esc(r["extra"])}<span class="dt">{esc(r["source_id"])}</span></td></tr>')
+    head = "".join(f'<th class="{c}">{esc(h)}</th>' for c, h in
+                   (("name", "지표"), ("", "기준일 값"), ("", "지금 값"), ("", "변화"), ("text", "원천")))
+    notes = "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in view["notes"])
+    return ('<section class="market" id="market-live"><h3>시장 지표(기준일 값과 지금 값)</h3>'
+            '<div class="mktbar"><button type="button" class="mkt-btn">지금 값 받기</button>'
+            '<p class="mkt-status sub" role="status" aria-live="polite">버튼을 누르면 원천에서 지금 값을 받아 기준일 값과 견준다. '
+            '받은 값은 이 화면에만 보이고 실행 기록에 남지 않는다. 금리·GPU 임대료는 공개 사이트의 중계 주소를 거치므로 공개 사이트에서 열었을 때만 받는다.</p></div>'
+            f'<div class="tablewrap"><table class="figures mkt"><thead><tr>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></div>'
+            f'<p class="sub mt-8">변화는 금리·스프레드가 bp(0.01%p), GPU 임대료·토큰 단가가 % 다.</p>{notes}</section>')
+
+
 def render_incomplete(results: dict[str, Any], rules: Any) -> str:
     items = results["population"]["incomplete"]
     decisions = "".join(f'<li><b>{esc(d)}</b> {inline_html((rules.decision(d) or {}).get("summary", ""))}</li>' for d in results["pending_rule_decisions"])
@@ -2543,7 +2582,8 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     availability = (f'<h2 id="availability"><span class="num">05</span>자료 확보 현황</h2>{render_availability(avail, ctx, results)}') if avail else ""
     n = 5 if avail else 4
     # 2026-10-13 사용자 지시: 국면 지표(점수 없음)가 순위표를 밀어내지 않게 자기 탭에 둔다. 선언이 없는 옛 실행에는 탭이 없다.
-    regime = render_regime(ctx, results)
+    market = render_market(ctx)
+    regime = market + render_regime(ctx, results)
     tabs = (TABS[0], ("regime", "국면 지표"), *TABS[1:]) if regime else TABS
     regime_panel = (f'<section class="tabpanel" id="tab-regime" role="tabpanel" aria-labelledby="tabbtn-regime">\n'
                     f'<h2>국면 지표 — 점수 없음</h2>\n{regime}\n</section>\n') if regime else ""
@@ -2563,7 +2603,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 <meta property="og:description" content="{esc(subtitle)}">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
-<style>{css(rc.is_layered(ctx.rules))}</style>
+<style>{css(rc.is_layered(ctx.rules)) + (chr(10) + MARKET_CSS.strip() if market else "")}</style>
 </head>
 <body>
 <header><div class="wrap">
@@ -2620,7 +2660,7 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
 </footer>
 </div>
 <script>{js(rc.is_layered(ctx.rules))}</script>
-</body>
+{("<script>" + MARKET_JS.read_text(encoding="utf-8") + "</script>" + chr(10)) if market else ""}</body>
 </html>
 """
     # 2026-10-01 꼬리말의 "정성적 평가이므로 1~3점 차이에 통계적 의미를 두지 않는다. 순위 자체보다 같은 규칙 버전 안에서

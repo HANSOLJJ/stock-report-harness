@@ -2918,3 +2918,60 @@ def update_run_sentence(ctx: Any) -> str | None:
     price_day = ctx.run.get("price_as_of") or ctx.run["as_of"]
     return (f"이 실행은 일부 회사만 다시 매긴 실행이다({reason}). {names} 의 판단은 전부 이 기준일에 다시 매겼고, 가격은 모든 회사가 "
             f"가격 기준일 {price_day} 의 종가이며, 나머지 회사의 판단은 각 회사 카드의 반영 기준일에 매긴 것을 이어받았다.")
+
+
+# 2026-11-15 사용자 요청: 국면 탭의 시장 지표(점수 밖). 기준일 값은 collect --kind market 이 찍은 관측이고,
+# HTML 은 같은 행에 지금 값·변화 칸을 더한다(assets/market_live.js). 관측이 하나도 없는 실행은 None 이라 표가 없다.
+MARKET_ROWS = (
+    ("ust10y_yield", None, "미국채 10년물 금리", "pct"),
+    ("ig_oas", None, "투자등급 회사채 스프레드", "pct"),
+    ("hy_oas", None, "하이일드 회사채 스프레드", "pct"),
+    ("gpu_rent_hourly", "H100 SXM", "GPU 임대료 H100 SXM", "usd"),
+    ("gpu_rent_hourly", "H200", "GPU 임대료 H200", "usd"),
+    ("gpu_rent_hourly", "B200", "GPU 임대료 B200", "usd"),
+    ("token_blended_price", None, "토큰 혼합 단가(프런티어)", "usd"),
+)
+MARKET_UNIT_TEXT = {"ust10y_yield": "%", "ig_oas": "%p", "hy_oas": "%p", "gpu_rent_hourly": "$/GPU·시간",
+                    "token_blended_price": "$/100만 토큰"}
+
+
+def market_value_text(metric: str, value: float | None) -> str:
+    if value is None:
+        return "미확인"
+    if metric in ("ust10y_yield", "ig_oas", "hy_oas"):
+        return f"{value:.2f}{MARKET_UNIT_TEXT[metric]}"
+    return f"${value:.2f}"
+
+
+def market_view(ctx: Any) -> dict[str, Any] | None:
+    from .schema import MARKET_COMPANY_ID
+
+    obs = [o for o in ctx.observations if o["company_id"] == MARKET_COMPANY_ID]
+    rows = []
+    for metric, gpu, label, kind in MARKET_ROWS:
+        items = [o for o in obs if o["metric"] == metric and (gpu is None or (o.get("basis") or {}).get("gpu") == gpu)]
+        o = max(items, key=lambda x: (x["as_of"], x["observation_id"])) if items else None
+        if o is None:
+            continue
+        basis = o.get("basis") or {}
+        if metric == "gpu_rent_hourly":
+            extra = f"호가 {basis.get('offers', 0)}건 · GPU {basis.get('gpus', 0)}장"
+        elif metric == "token_blended_price":
+            extra = f"연구소 {len(basis.get('picks') or [])}곳의 최고가 모델 중간값"
+        else:
+            extra = f"FRED {basis.get('series', '')}"
+        rows.append({"key": f"{metric}:{gpu}" if gpu else metric, "metric": metric, "gpu": gpu, "label": label, "kind": kind,
+                     "unit": MARKET_UNIT_TEXT[metric], "value": o["value"], "text": market_value_text(metric, o["value"]),
+                     "as_of": o["as_of"], "source_id": o["source_id"], "extra": extra, "picks": basis.get("picks")})
+    if not rows:
+        return None
+    picks = next((r["picks"] for r in rows if r["metric"] == "token_blended_price" and r["picks"]), None)
+    notes = ["점수에 쓰지 않는 참고 값이다. 기준일 값은 이 실행이 받은 값이고 확인 기록에 함께 묶인다.",
+             "금리·스프레드는 가격 기준일 이하 가장 최근 값이다. GPU 임대료와 토큰 단가는 지난날 값을 다시 받을 수 없어 받은 날 값이다.",
+             "GPU 임대료는 vast.ai 장터에서 지금 빌릴 수 있는 on-demand 호가의 GPU 한 장 시간당 단가를 GPU 수로 가중한 중간값이다. 공개 장터라 표본이 얇다.",
+             "토큰 혼합 단가는 OpenRouter 정가로 연구소마다 최근 180일 안에 나온 유료 텍스트 모델 가운데 입력 3 : 출력 1 혼합 단가가 가장 높은 모델을 골라 그 중간값을 낸 것이다."]
+    if picks:
+        notes.append("고른 모델: " + ", ".join(f"{p['model']} ${p['blended']:.2f}" for p in picks) + ".")
+    return {"rows": rows, "notes": notes,
+            "head": ["지표", "기준일 값", "값 날짜", "원천"],
+            "md_rows": [[r["label"], r["text"], r["as_of"], r["extra"]] for r in rows]}

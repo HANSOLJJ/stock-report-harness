@@ -1,0 +1,38 @@
+{
+  "_note": "market_now.py 와 assets/market_live.js 가 같은 값을 내는지 두 테스트가 함께 읽는 고정 자료다",
+  "offers": [
+    {"num_gpus": 1, "dph_total": 2.0},
+    {"num_gpus": 2, "dph_total": 5.0},
+    {"num_gpus": 0, "dph_total": 1.0},
+    {"num_gpus": 1.5, "dph_total": 1.0},
+    {"num_gpus": "1", "dph_total": 1.0},
+    {"num_gpus": 1, "dph_total": "3"}
+  ],
+  "expect_gpu": {"value": 2.5, "gpus": 3, "offers": 2},
+  "offers_even": [{"num_gpus": 1, "dph_total": 1.0}, {"num_gpus": 1, "dph_total": 3.0}],
+  "expect_gpu_even": 2.0,
+  "ref": "2026-11-15",
+  "models": [
+    {"id": "openai/a", "created": 1790856000, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000002", "completion": "0.00001"}},
+    {"id": "openai/b", "created": 1790942400, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000002", "completion": "0.00001"}},
+    {"id": "openai/c:free", "created": 1790942400, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.0001", "completion": "0.0001"}},
+    {"id": "anthropic/old", "created": 1775001600, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000003", "completion": "0.000015"}},
+    {"id": "anthropic/zero", "created": 1793491200, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0", "completion": "0.00001"}},
+    {"id": "anthropic/image", "created": 1793491200, "architecture": {"output_modalities": ["text", "image"]}, "pricing": {"prompt": "0.00005", "completion": "0.00005"}},
+    {"id": "anthropic/w", "created": 1788220800, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000001", "completion": "0.000005"}},
+    {"id": "google/b-model", "created": 1788220800, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000002", "completion": "0.000006"}},
+    {"id": "google/a-model", "created": 1788220800, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000002", "completion": "0.000006"}},
+    {"id": "meta-llama/big", "created": 1793491200, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.00009", "completion": "0.00009"}},
+    {"id": "x-ai/edge", "created": 1779148800, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000004", "completion": "0.00002"}},
+    {"id": "x-ai/before", "created": 1779147000, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.00004", "completion": "0.0002"}},
+    {"id": "deepseek/future", "created": 1794787200, "architecture": {"output_modalities": ["text"]}, "pricing": {"prompt": "0.000001", "completion": "0.000001"}},
+    {"id": "qwen/noprice", "created": 1785542400, "architecture": {"output_modalities": ["text"]}, "pricing": {}}
+  ],
+  "expect_picks": [
+    {"lab": "openai", "model": "openai/b", "blended": 4.0},
+    {"lab": "anthropic", "model": "anthropic/w", "blended": 2.0},
+    {"lab": "google", "model": "google/a-model", "blended": 3.0},
+    {"lab": "x-ai", "model": "x-ai/edge", "blended": 8.0}
+  ],
+  "expect_token": 3.5
+}
