@@ -239,3 +239,38 @@ test('엇갈림: 기준일에 10년물 값이 없으면 읽지 않는다', () =>
   assert.equal(d, null);
   assert.ok(live.divergenceText(d).includes('미국채 10년물 값이 없어'));
 });
+
+test('만기 이름: 지수·Baa·회사채 선의 범례에 만기를 붙이고, 모르는 선은 그대로 둔다', () => {
+  const out = live.withMaturity([{ id: 'ig', label: 'x', points: [] }, { id: 'baa', label: 'x', points: [] },
+    { id: 'bond:oracle', label: 'Oracle 2.875% 2031', points: [], hidden: false }, { id: 'ust10y', label: '미국채 10년물', points: [] }]);
+  assert.deepEqual(out.map((l) => l.label), ['투자등급 회사채(ICE 지수, 여러 만기)', '무디스 Baa 회사채(만기 20년 이상)',
+    'Oracle 2.875% 2031년 만기', '미국채 10년물']);
+  assert.equal(out[2].hidden, false);
+});
+
+test('가산금리 차트: 공개 방문자는 지수 선 셋, 로그인하면 회사별 G-spread 를 더하고 Baa−10년물은 꺼 둔다', () => {
+  const pts = [['2026-11-12', 1]];
+  const data = { series: { ig_oas: { lines: [{ points: pts }] }, hy_oas: { lines: [{ points: pts }] },
+    baa_spread: { lines: [{ points: pts }] }, ust10y_yield: { lines: [{ points: [['2026-11-12', 5.1]] }] } } };
+  const pub = live.spreadRow(data, null, '2026-10-27');
+  assert.deepEqual(pub.lines.map((l) => [l.id, l.hidden]), [['ig_oas', false], ['hy_oas', false], ['baa_spread', true]]);
+  assert.equal(pub.change, 'spread');
+  assert.deepEqual(pub.ref, [['2026-11-12', 5.1]]);
+  const priv = { series: { 'bond:oracle': { lines: [{ points: pts }] }, 'bond:apple': { lines: [{ points: pts }] }, dram_spot: { lines: [] } } };
+  const row = live.spreadRow(data, priv, '2026-10-27');
+  assert.deepEqual(row.lines.slice(3).map((l) => [l.label, l.hidden]),
+    [['Oracle 2.875% 2031년 만기 G-spread', false], ['Apple 4.9% 2031년 만기 G-spread', true]]);
+});
+
+test('가산금리 요약: 같은 기간 10년물 변화, 넓어진 선과 좁아진 선을 큰 순서로 적고 최근 방향을 붙인다', () => {
+  const spreads = [
+    { id: 'ig_oas', label: '투자등급 OAS', points: [['2026-10-13', 0.80], ['2026-11-04', 0.85], ['2026-11-12', 0.89]] },
+    { id: 'bond:oracle', label: 'Oracle', points: [['2026-10-13', 1.00], ['2026-11-04', 1.50], ['2026-11-12', 1.40]] },
+    { id: 'bond:meta', label: 'Meta', points: [['2026-10-13', 0.90], ['2026-11-04', 0.85], ['2026-11-12', 0.80]] },
+    { id: 'bond:late', label: 'Late', points: [['2026-10-30', 1.0], ['2026-11-12', 1.1]] }];
+  const s = live.spreadSummary(live.changeLines(spreads, 30), ust.points);
+  assert.equal(s.ref, -12);
+  const text = live.spreadText(s);
+  assert.equal(text, '2026-10-13 이후 미국채 10년물은 -12bp 움직였다. 가산금리가 넓어진 선은 Oracle +40bp(최근 8일은 다시 좁혀지는 중), ' +
+    '투자등급 OAS +9bp(최근 8일에도 더 넓어지는 중)이다. 좁아진 선은 Meta -10bp(최근 8일에도 더 좁혀지는 중)이다. 기준일에 값이 없는 Late은 뺐다.');
+});

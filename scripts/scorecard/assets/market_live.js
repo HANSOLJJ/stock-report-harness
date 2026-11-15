@@ -11,12 +11,13 @@
   var FRED_START = '2015-01-01';
   // 2026-11-15 사용자 요청: 미국채 10년물과 회사채 금리를 한 차트에서 본다. 스프레드가 아니라 금리 수준이라 같은 % 축에 놓인다.
   // ICE BofA 실효수익률 두 계열은 OAS 와 같이 최근 3년, 무디스 Baa(DBAA)는 2015년부터다.
-  var FRED_YIELDS = [['ig', 'BAMLC0A0CMEY', '투자등급 회사채(ICE 실효수익률)'], ['baa', 'DBAA', '무디스 Baa 회사채'],
-    ['hy', 'BAMLH0A0HYM2EY', '하이일드 회사채(ICE 실효수익률)']];
+  // 이름에 만기를 붙인다. 금리 수준은 만기가 다르면 신용 차이와 만기 차이가 섞이므로 어느 만기인지 이름에서 보이게 한다.
+  var FRED_YIELDS = [['ig', 'BAMLC0A0CMEY', '투자등급 회사채(ICE 지수, 여러 만기)'], ['baa', 'DBAA', '무디스 Baa 회사채(만기 20년 이상)'],
+    ['hy', 'BAMLH0A0HYM2EY', '하이일드 회사채(ICE 지수, 여러 만기)']];
   var FRED_FETCH = FRED_SERIES.map(function (p) { return p[1]; }).concat(FRED_YIELDS.map(function (p) { return p[1]; }));
   // 큰 차트의 선 색(dataviz 기본 범주 팔레트의 어두운 화면 값, 리포트 배경 #161a22 에서 검증 통과). 아홉째 선부터는 같은 색의 점선이다.
   var PALETTE = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#0ca30c', '#9085e9', '#e66767'];
-  // 금리 한눈에 차트에 붙는 회사별 채권 가운데 처음에 끈 것. 기준선 넷과 합쳐 선이 열넷이라, 신용도가 갈리는
+  // 금리 한눈에·가산금리 한눈에 차트에 붙는 회사별 채권 가운데 처음에 끈 것. 지수 선과 합쳐 선이 열셋·열넷이라, 신용도가 갈리는
   // CoreWeave·Oracle·Meta 만 켜 두고 나머지는 범례로 켠다.
   var BOND_YIELD_HIDDEN = ['bond:microsoft', 'bond:alphabet', 'bond:amazon', 'bond:apple', 'bond:nvidia', 'bond:alibaba', 'bond:tsmc'];
   // GetDeploying 무료 데이터(CC BY 4.0)의 GPU 이름. 공급자 여러 곳의 호가 중간값이라 우리 vast.ai 정의와 다른 숫자다.
@@ -42,6 +43,24 @@
     { key: 'bond:alibaba', isin: 'US01609WAX02', title: 'Alibaba 2.125% 2031 가산금리' },
     { key: 'bond:tsmc', isin: 'US872898AC52', title: 'TSMC Arizona 2.5% 2031 가산금리' }
   ];
+
+  // 큰 차트 범례의 이름. 채권은 "Oracle 2.875% 2031년 만기" 처럼 만기를 드러낸다. 서버 파일에 옛 이름이 남아 있어도 화면은 이 이름을 쓴다.
+  function bondName(key) {
+    var b = BONDS.filter(function (x) { return x.key === key; })[0];
+    return b ? b.title.replace(/ 가산금리$/, '').replace(/ (\d{4})$/, ' $1년 만기') : null;
+  }
+
+  function withMaturity(lines) {
+    return lines.map(function (l) {
+      var y = FRED_YIELDS.filter(function (p) { return p[0] === l.id; })[0];
+      var name = y ? y[2] : bondName(l.id);
+      if (!name) return l;
+      var out = {};
+      Object.keys(l).forEach(function (k) { out[k] = l[k]; });
+      out.label = name;
+      return out;
+    });
+  }
   // 2026-11-15: BondTerminal 은 한 요청의 기간이 730일을 넘으면 400 을 낸다(2015-01-01 부터 한 번에 받던 요청이 전부 실패했다).
   // 매일 최근 729일을 받아 직전 시계열과 날짜로 합치므로 날이 갈수록 2년보다 긴 기록이 쌓인다.
   // var BOND_START = '2015-01-01';
@@ -509,6 +528,66 @@
     return text;
   }
 
+  // 가산금리 차트의 요약 재료. 가산금리는 같은 만기 국채와 비교한 값이라 선끼리 기준이 같다.
+  // 선마다 기준일 이후 변화와 마지막 4분의 1 구간(최소 7일)의 변화를 재고, 같은 기간 미국채 10년물의 변화(ref)를 덧붙인다.
+  function spreadSummary(view, refPoints) {
+    var span = Math.round((Date.parse(view.end) - Date.parse(view.base)) / DAY_MS);
+    var recentDays = Math.max(7, Math.round(span / 4));
+    var cut = addDays(view.end, -recentDays);
+    var ref = null;
+    var pts = refPoints || [];
+    var i = 0;
+    while (i < pts.length && pts[i][0] < view.base) i += 1;
+    if (pts[i] && pts[i][0] <= addDays(view.base, BASE_SLACK_DAYS)) ref = round2((pts[pts.length - 1][1] - pts[i][1]) * 100);
+    var items = view.lines.filter(function (l) { return !l.excluded; }).map(function (l) {
+      var lineCut = valueAt(l.points, cut);
+      return { id: l.id, label: l.label, change: l.change, recent: lineCut === null ? null : round2(l.change - lineCut) };
+    });
+    return { base: view.base, recentDays: recentDays, ref: ref, items: items,
+      excluded: view.lines.filter(function (l) { return l.excluded; }).map(function (l) { return l.label; }) };
+  }
+
+  function spreadTrend(item, days) {
+    if (item.recent === null) return '';
+    var r = dirOf(item.recent);
+    if (r === 0) return '(최근 ' + days + '일은 거의 그대로)';
+    if (r > 0) return item.change > 0 ? '(최근 ' + days + '일에도 더 넓어지는 중)' : '(최근 ' + days + '일은 다시 넓어지는 중)';
+    return item.change < 0 ? '(최근 ' + days + '일에도 더 좁혀지는 중)' : '(최근 ' + days + '일은 다시 좁혀지는 중)';
+  }
+
+  // 넓어진 선과 좁아진 선을 큰 순서로 모두 적는다. 2bp 미만은 그대로로 친다.
+  function spreadText(s) {
+    var one = function (i) { return i.label + ' ' + bpText(i.change) + spreadTrend(i, s.recentDays); };
+    var wide = s.items.filter(function (i) { return dirOf(i.change) > 0; }).sort(function (a, b) { return b.change - a.change; });
+    var narrow = s.items.filter(function (i) { return dirOf(i.change) < 0; }).sort(function (a, b) { return a.change - b.change; });
+    var text = s.base + ' 이후 ' + (s.ref === null ? '미국채 10년물 값은 기준일에 없다. ' : '미국채 10년물은 ' + bpText(s.ref) + ' 움직였다. ');
+    text += wide.length ? '가산금리가 넓어진 선은 ' + wide.map(one).join(', ') + '이다.' : '가산금리가 넓어진 선은 없다.';
+    if (narrow.length) text += ' 좁아진 선은 ' + narrow.map(one).join(', ') + '이다.';
+    if (s.excluded.length) text += ' 기준일에 값이 없는 ' + s.excluded.join('·') + '은 뺐다.';
+    return text;
+  }
+
+  // 같은 만기 국채와 비교한 가산금리를 한 차트에 모은다. 공개 계열(ICE OAS 둘, Baa−10년물)에 로그인하면 회사별 G-spread 를 더한다.
+  // Baa−10년물은 20년 이상 채권에서 10년 국채를 뺀 값이라 만기가 맞지 않아 처음에는 끈다.
+  function spreadRow(data, priv, asOf) {
+    var series = data.series || {};
+    var first = function (key) { return (((series[key] || {}).lines) || [])[0] || null; };
+    var lines = [];
+    [['ig_oas', '투자등급 OAS(ICE 지수, 여러 만기)', false], ['hy_oas', '하이일드 OAS(ICE 지수, 여러 만기)', false],
+      ['baa_spread', '무디스 Baa−10년물(만기 안 맞음)', true]].forEach(function (p) {
+      var l = first(p[0]);
+      if (l) lines.push({ id: p[0], label: p[1], points: l.points, hidden: p[2] });
+    });
+    var ps = (priv && priv.series) || {};
+    BONDS.forEach(function (b) {
+      var l = (((ps[b.key] || {}).lines) || [])[0];
+      if (l) lines.push({ id: b.key, label: bondName(b.key) + ' G-spread', points: l.points, hidden: BOND_YIELD_HIDDEN.indexOf(b.key) >= 0 });
+    });
+    var ust = first('ust10y_yield');
+    return { key: 'spreads', kind: 'pct', unit: '%p', asOf: asOf, big: true, change: 'spread', lines: lines,
+      ref: ust ? ust.points : [], label: '가산금리 한눈에: 같은 만기 국채 대비(회사별 채권 선은 로그인한 사람에게만 보인다)' };
+  }
+
   // ---------------------------------------------------------------- 브라우저: 지금 값 칸과 추이 차트
 
   var RANGES = [['1년', 365], ['3년', 1095], ['10년', 3650]];
@@ -711,7 +790,7 @@
       if (change) {
         zero = sers[0].createPriceLine({ price: 0, color: token(doc, '--tx2', '#a3abba'), lineWidth: 1, lineStyle: LWC.LineStyle.Dotted, axisLabelVisible: false });
         chart.timeScale().setVisibleRange({ from: view.base, to: view.end });
-        sum.textContent = divergenceText(divergence(view));
+        sum.textContent = row.change === 'spread' ? spreadText(spreadSummary(view, row.ref)) : divergenceText(divergence(view));
       } else {
         applyRange([entry], entry.days);
       }
@@ -778,7 +857,7 @@
       var p = doc.createElement('p');
       p.className = 'sub';
       p.textContent = '회사채(BondTerminal)와 D램 현물가(DRAMeXchange)는 원천 약관이 게시를 막아 공개 방문자에게는 보이지 않는다. ' +
-        '회사채는 회사마다 대표 채권 하나의 국채 대비 가산금리(G-spread)이고, 같은 채권의 금리(YTW)는 맨 위 금리 차트에 함께 그린다. ' +
+        '회사채는 회사마다 대표 채권 하나의 금리(YTW)와 같은 만기 국채 대비 가산금리(G-spread)이고, 맨 위 두 큰 차트에 함께 그린다. ' +
         'D램 현물가는 과거 값이 유료라 서버가 날마다 쌓는다. ' +
         'Tesla·Palantir·SpaceX-xAI·Anthropic·OpenAI 는 BondTerminal 목록에 채권이 없어 차트가 없다. 공개 시장에서 거래되는 회사채를 ' +
         '찾지 못했다는 뜻이고, 빌린 돈이 없다는 뜻은 아니다(은행 대출·사모 채권·전환사채는 이 목록에 없을 수 있다).';
@@ -797,10 +876,11 @@
     return getJson(PRIVATE_URL).catch(function () { return null; });
   }
 
-  // 비공개 절. 회사채 금리(bond_yields)는 맨 위 금리 차트에 합쳐 그리므로 여기서는 뺀다.
+  // 비공개 절. 회사채 금리(bond_yields)와 회사별 가산금리(bond:*)는 맨 위 두 큰 차트에 합쳐 그리므로 여기서는 뺀다.
   function drawPrivate(doc, box, LWC, asOf, priv) {
     var old = box.parentNode.querySelector('.mkt-private');
-    var rows = priv ? extraRows(priv, ['bond_yields'], asOf) : [];
+    var skip = ['bond_yields'].concat(BONDS.map(function (b) { return b.key; }));
+    var rows = priv ? extraRows(priv, skip, asOf) : [];
     if (!rows.length) {
       if (old) old.parentNode.removeChild(old);
       return [];
@@ -841,19 +921,22 @@
         all.forEach(function (r) {
           if (r.key !== 'yields') return;
           r.change = true;
-          if (!bonds) return;
-          r.lines = (((data.series.yields || {}).lines) || []).concat(bonds.lines);
-          r.label = '금리 한눈에: 미국채 10년물과 회사채(회사별 채권 선은 로그인한 사람에게만)';
+          r.lines = withMaturity((((data.series.yields || {}).lines) || []).concat(bonds ? bonds.lines : []));
+          r.label = '금리 한눈에: 미국채 10년물과 회사채(회사별 채권 선은 로그인한 사람에게만 보인다)';
         });
+        // 2026-11-15 사용자 요청: 금리 수준은 만기가 달라 같은 기준이 아니므로, 같은 만기 국채 대비 가산금리를 금리 차트 바로 뒤에 둔다.
+        var at = all.map(function (r) { return r.key; }).indexOf('yields');
+        all.splice(at + 1, 0, spreadRow(data, priv, asOf));
         charts = drawCharts(doc, box, data, LWC, all);
         var privCharts = drawPrivate(doc, box, LWC, asOf, priv);
         charts = charts.concat(privCharts);
         rangeBar(doc, bar, function () { return charts; });
         setRange(charts, RANGES[1][1]);
-        var privCount = privCharts.length + (bonds ? 1 : 0);
+        var bondCount = BONDS.filter(function (b) { return priv && priv.series && priv.series[b.key]; }).length;
         status.textContent = '시계열은 ' + String(data.updated_at || '').slice(0, 16).replace('T', ' ') + '(UTC)에 갱신됐다. ' +
           rows.length + '개 가운데 ' + filled + '개에 지금 값이 있다.' +
-          (privCount ? ' 로그인한 사람에게만 보이는 지표 ' + privCount + '개를 더 그렸다.' : '');
+          (bondCount ? ' 로그인한 사람에게만 보이는 회사채 ' + bondCount + '곳을 위 두 차트에 더했다.' : '') +
+          (privCharts.length ? ' 로그인한 사람에게만 보이는 지표 ' + privCharts.length + '개를 아래에 더 그렸다.' : '');
       }).catch(function (e) {
         status.textContent = failText(e);
       }).then(function () {
@@ -883,6 +966,7 @@
     addPoint: addPoint, assemblePrivate: assemblePrivate, ecosUrl: ecosUrl, bondHistoryUrl: bondHistoryUrl,
     parseBondYield: parseBondYield, FRED_YIELDS: FRED_YIELDS, FRED_FETCH: FRED_FETCH,
     changeLines: changeLines, divergence: divergence, divergenceText: divergenceText, CHANGE_RANGES: CHANGE_RANGES,
+    spreadSummary: spreadSummary, spreadText: spreadText, spreadRow: spreadRow, withMaturity: withMaturity,
     BONDS: BONDS, DRAMX_URL: DRAMX_URL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (root && root.document) {
