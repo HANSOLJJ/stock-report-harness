@@ -22,13 +22,14 @@ FRED_SERIES = (
     ("ust10y_yield", "DGS10", "미국채 10년물 금리"),
     ("ig_oas", "BAMLC0A0CM", "투자등급 회사채 스프레드"),
     ("hy_oas", "BAMLH0A0HYM2", "하이일드 회사채 스프레드"),
+    ("baa_spread", "BAA10Y", "무디스 Baa 회사채 − 10년물 스프레드"),
 )
 FRED_LOOKBACK_DAYS = 30
 GPU_TYPES = ("H100 SXM", "H200", "B200")
 TOKEN_LABS = ("openai", "anthropic", "google", "x-ai", "deepseek", "qwen", "moonshotai")
 TOKEN_WINDOW_DAYS = 180
 SNAPSHOT_METRICS = frozenset(MARKET_SNAPSHOT_METRICS)
-UNITS = {"ust10y_yield": "percent", "ig_oas": "percent", "hy_oas": "percent",
+UNITS = {"ust10y_yield": "percent", "ig_oas": "percent", "hy_oas": "percent", "baa_spread": "percent",
          "gpu_rent_hourly": "USD/GPU-hour", "token_blended_price": "USD/1M tokens"}
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/models"

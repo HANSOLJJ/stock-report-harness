@@ -1184,11 +1184,16 @@ def render_regime(ctx: Any, results: dict[str, Any]) -> str:
             + '</section>')
 
 
-# 2026-11-15 사용자 요청: 국면 탭 시장 지표. 기준일 값 옆에 지금 값·변화 칸을 두고 버튼을 누를 때만 원천에서 받는다.
+# 2026-11-15 사용자 요청: 국면 탭 시장 지표. 기준일 값 옆에 지금 값·변화 칸을 두고, 버튼을 누를 때만 공개 사이트의
+# /reports/market-series.json(맥미니 finance 서버가 매일 쌓는 시계열)과 차트 라이브러리를 받아 추이를 그린다.
 # 받은 값은 화면에만 보이고 실행 파일에 쓰지 않는다. 관측이 없는 실행은 CSS·스크립트·표 모두 싣지 않는다(옛 실행 바이트 불변).
 MARKET_JS = Path(__file__).with_name("assets") / "market_live.js"
+MARKET_TREND_NOTE = ("추이: 미국채 10년물·무디스 Baa−10년물은 2015년부터, 투자등급·하이일드 스프레드는 FRED 가 내주는 최근 3년이다. "
+                     "GPU 임대료와 토큰 단가는 이 리포트 정의로 2026-11-15 부터 매일 쌓는다. 점선은 정의가 다른 참고 선이다. "
+                     "GPU 는 GetDeploying 주간 중간값(CC BY 4.0, 공급자 여러 곳의 호가), 토큰은 지금 모델 목록을 과거 날짜에 대입한 재구성이라 "
+                     "그 사이 사라진 모델과 가격 인하가 빠진다. 흰 점은 이 리포트의 기준일 값이다. 차트는 TradingView Lightweight Charts 로 그린다.")
 MARKET_CSS = """
-.market{margin:8px 0 28px}
+.market{margin:8px 0 28px;--mkt-a:#4f97e6;--mkt-b:#c97a38}
 .mktbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:12px 0}
 .mkt-btn{min-height:44px;padding:10px 18px;border:1px solid var(--acc-line);border-radius:8px;background:var(--acc-soft);color:var(--acc-text);font:inherit;font-size:var(--fs-md);font-weight:700;cursor:pointer}
 .mkt-btn:hover{background:var(--acc-line)}
@@ -1197,6 +1202,18 @@ MARKET_CSS = """
 .mkt-status{flex:1 1 220px;min-width:0}
 table.mkt td .dt{display:block;font-size:var(--fs-sm);color:var(--tx3)}
 table.mkt td.mkt-now,table.mkt td.mkt-chg{color:var(--tx2)}
+.mkt-range{display:flex;flex-wrap:wrap;gap:6px;margin:18px 0 10px}
+.mkt-range button{min-height:44px;min-width:56px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--tx2);font:inherit;font-size:var(--fs-md);font-weight:600;cursor:pointer}
+.mkt-range button[aria-pressed="true"]{color:var(--acc-text);background:var(--acc-soft);border-color:var(--acc-line)}
+.mkt-range button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.mkt-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));gap:12px;transition:opacity .15s}
+.mkt-fig{margin:0;padding:12px 12px 8px;border:1px solid var(--line);border-radius:10px;background:var(--bg2);min-width:0}
+.mkt-fig figcaption{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font-size:var(--fs-md);margin-bottom:6px}
+.mkt-legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:var(--fs-sm);color:var(--tx2)}
+.mkt-legend .lk{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px}
+.mkt-legend .lk.dash{border-top-style:dashed}
+.mkt-chart{height:220px}
+@media (prefers-reduced-motion:reduce){.mkt-charts{transition:none}}
 """
 
 
@@ -1207,7 +1224,8 @@ def render_market(ctx: Any) -> str:
     body = []
     for r in view["rows"]:
         base = "" if r["value"] is None else repr(float(r["value"]))
-        body.append(f'<tr data-key="{esc(r["key"])}" data-kind="{esc(r["kind"])}" data-unit="{esc(r["unit"])}" data-base="{esc(base)}">'
+        body.append(f'<tr data-key="{esc(r["key"])}" data-kind="{esc(r["kind"])}" data-unit="{esc(r["unit"])}" data-base="{esc(base)}" '
+                    f'data-asof="{esc(r["as_of"])}">'
                     f'<td class="name"><b>{esc(r["label"])}</b></td>'
                     f'<td class="mono">{esc(r["text"])}<span class="dt">{esc(r["as_of"])}</span></td>'
                     f'<td class="mono mkt-now">—</td><td class="mono mkt-chg">—</td>'
@@ -1216,11 +1234,13 @@ def render_market(ctx: Any) -> str:
                    (("name", "지표"), ("", "기준일 값"), ("", "지금 값"), ("", "변화"), ("text", "원천")))
     notes = "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in view["notes"])
     return ('<section class="market" id="market-live"><h3>시장 지표(기준일 값과 지금 값)</h3>'
-            '<div class="mktbar"><button type="button" class="mkt-btn">지금 값 받기</button>'
-            '<p class="mkt-status sub" role="status" aria-live="polite">버튼을 누르면 원천에서 지금 값을 받아 기준일 값과 견준다. '
-            '받은 값은 이 화면에만 보이고 실행 기록에 남지 않는다. 금리·GPU 임대료는 공개 사이트의 중계 주소를 거치므로 공개 사이트에서 열었을 때만 받는다.</p></div>'
+            '<div class="mktbar"><button type="button" class="mkt-btn">추이 받기</button>'
+            '<p class="mkt-status sub" role="status" aria-live="polite">버튼을 누르면 공개 사이트가 매일 쌓는 시계열을 받아 지금 값과 추이 차트를 보인다. '
+            '받은 값은 이 화면에만 보이고 실행 기록에 남지 않는다.</p></div>'
             f'<div class="tablewrap"><table class="figures mkt"><thead><tr>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></div>'
-            f'<p class="sub mt-8">변화는 금리·스프레드가 bp(0.01%p), GPU 임대료·토큰 단가가 % 다.</p>{notes}</section>')
+            f'<p class="sub mt-8">변화는 금리·스프레드가 bp(0.01%p), GPU 임대료·토큰 단가가 % 다.</p>{notes}'
+            '<div class="mkt-range" role="group" aria-label="차트 기간" hidden></div><div class="mkt-charts"></div>'
+            f'<p class="sub mt-8">{esc(MARKET_TREND_NOTE)}</p></section>')
 
 
 def render_incomplete(results: dict[str, Any], rules: Any) -> str:

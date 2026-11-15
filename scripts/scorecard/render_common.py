@@ -2926,19 +2926,20 @@ MARKET_ROWS = (
     ("ust10y_yield", None, "미국채 10년물 금리", "pct"),
     ("ig_oas", None, "투자등급 회사채 스프레드", "pct"),
     ("hy_oas", None, "하이일드 회사채 스프레드", "pct"),
+    ("baa_spread", None, "회사채 Baa − 10년물(무디스)", "pct"),
     ("gpu_rent_hourly", "H100 SXM", "GPU 임대료 H100 SXM", "usd"),
     ("gpu_rent_hourly", "H200", "GPU 임대료 H200", "usd"),
     ("gpu_rent_hourly", "B200", "GPU 임대료 B200", "usd"),
     ("token_blended_price", None, "토큰 혼합 단가(프런티어)", "usd"),
 )
-MARKET_UNIT_TEXT = {"ust10y_yield": "%", "ig_oas": "%p", "hy_oas": "%p", "gpu_rent_hourly": "$/GPU·시간",
+MARKET_UNIT_TEXT = {"ust10y_yield": "%", "ig_oas": "%p", "hy_oas": "%p", "baa_spread": "%p", "gpu_rent_hourly": "$/GPU·시간",
                     "token_blended_price": "$/100만 토큰"}
 
 
 def market_value_text(metric: str, value: float | None) -> str:
     if value is None:
         return "미확인"
-    if metric in ("ust10y_yield", "ig_oas", "hy_oas"):
+    if metric in ("ust10y_yield", "ig_oas", "hy_oas", "baa_spread"):
         return f"{value:.2f}{MARKET_UNIT_TEXT[metric]}"
     return f"${value:.2f}"
 

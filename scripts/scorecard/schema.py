@@ -324,6 +324,7 @@ METRICS: dict[str, dict[str, str]] = {
     "ust10y_yield": {"unit": "percent", "type": "number"},
     "ig_oas": {"unit": "percent", "type": "number"},
     "hy_oas": {"unit": "percent", "type": "number"},
+    "baa_spread": {"unit": "percent", "type": "number"},
     "gpu_rent_hourly": {"unit": "USD/GPU-hour", "type": "number"},
     "token_blended_price": {"unit": "USD/1M tokens", "type": "number"},
 }
@@ -332,7 +333,7 @@ SEGMENT_METRICS = {"cloud_segment_revenue_quarterly", "cloud_segment_operating_i
 MARKET_COMPANY_ID = "_market"
 MARKET_METRICS = {"token_price_index", "market_share", "market_revenue", "market_volume"}
 # 2026-11-15: 국면 탭 시장 지표(점수 밖). 어느 실행 종류에서든 diff 가 더해진 것을 위반으로 세지 않는다.
-MARKET_SNAPSHOT_METRICS = {"ust10y_yield", "ig_oas", "hy_oas", "gpu_rent_hourly", "token_blended_price"}
+MARKET_SNAPSHOT_METRICS = {"ust10y_yield", "ig_oas", "hy_oas", "baa_spread", "gpu_rent_hourly", "token_blended_price"}
 MARKET_METRICS |= MARKET_SNAPSHOT_METRICS
 # 2026-10-15 규칙 v3.0: 시장 정의표의 구성 회사 값. 같은 시장·기간에 구성 회사마다 한 건이다.
 MARKET_POSITION_METRICS = {"market_share", "market_revenue", "market_volume"}
@@ -351,7 +352,7 @@ NON_NEGATIVE_METRICS |= {"top_customer_share", "rpo_next12m_share", "nrr", "cust
 NON_NEGATIVE_METRICS |= {"residual_value_guarantee", "supplier_guarantees", "supplier_customer_investments",
                          "supplier_capacity_buyback", "token_price_index", "revenue_quarterly", "cloud_segment_revenue_quarterly"}
 # 2026-11-15: 스프레드·임대료·단가는 음수가 될 수 없다. 국채 금리는 음수가 될 수 있어 넣지 않는다.
-NON_NEGATIVE_METRICS |= {"ig_oas", "hy_oas", "gpu_rent_hourly", "token_blended_price"}
+NON_NEGATIVE_METRICS |= {"ig_oas", "hy_oas", "baa_spread", "gpu_rent_hourly", "token_blended_price"}
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")

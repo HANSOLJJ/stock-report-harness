@@ -82,7 +82,7 @@ class SnapshotTest(unittest.TestCase):
     def test_one_source_failing_keeps_others(self):
         snap = mn.snapshot("2026-09-29", today="2026-09-30", now=NOW, get=getter(bodies("2026-09-29", fail={"vast"})))
         metrics = {o["metric"] for o in snap["observations"]}
-        self.assertEqual(metrics, {"ust10y_yield", "ig_oas", "hy_oas", "token_blended_price"})
+        self.assertEqual(metrics, {"ust10y_yield", "ig_oas", "hy_oas", "baa_spread", "token_blended_price"})
         self.assertEqual([r["status"] for r in snap["rows"] if r["metric"] == "gpu_rent_hourly"], ["failed"] * 3)
         self.assertNotIn("SRC-VAST-2026-09-30", {s["source_id"] for s in snap["sources"]})
 
@@ -107,9 +107,9 @@ class CollectDiffTest(unittest.TestCase):
         self.assertEqual(self.market_obs(SLUG), [])
         stages.collect(SLUG, kinds=("market",), from_file=self.file, now=NOW)
         first = self.market_obs(SLUG)
-        self.assertEqual(len(first), 7)
+        self.assertEqual(len(first), 8)
         again = stages.collect(SLUG, kinds=("market",), from_file=self.file, now=NOW)
-        self.assertEqual(sum(1 for r in again["market"] if r["status"] == "skipped_existing"), 7)
+        self.assertEqual(sum(1 for r in again["market"] if r["status"] == "skipped_existing"), 8)
         self.assertEqual(self.market_obs(SLUG), first)
         srcs = {s["source_id"] for s in load_json_strict(self.box.run_dir / "sources.json")["items"]}
         self.assertTrue({"SRC-FRED-2026-09-29", "SRC-VAST-2026-09-30", "SRC-OPENROUTER-2026-09-30"} <= srcs)
@@ -121,7 +121,7 @@ class CollectDiffTest(unittest.TestCase):
         stages.collect(new, kinds=("market",), from_file=self.file, now=NOW)
         res = compare_inputs(new, SLUG, set())
         self.assertTrue(res["ok"], res["violations"])
-        self.assertEqual(len([x for x in res["by_file"]["observations"]["allowed"] if x.startswith("_market.")]), 7)
+        self.assertEqual(len([x for x in res["by_file"]["observations"]["allowed"] if x.startswith("_market.")]), 8)
 
 
 def obs(metric: str, value: float | None, as_of: str, basis: dict) -> dict:
@@ -150,7 +150,9 @@ class RenderTest(unittest.TestCase):
         self.assertIn("고른 모델: openai/b $4.00.", view["notes"])
         html = render_market(self.ctx(items))
         self.assertIn('data-key="gpu_rent_hourly:H200" data-kind="usd" data-unit="$/GPU·시간" data-base="2.5"', html)
-        self.assertIn('<button type="button" class="mkt-btn">지금 값 받기</button>', html)
+        self.assertIn('<button type="button" class="mkt-btn">추이 받기</button>', html)
+        self.assertIn('data-asof="2026-09-30"', html)
+        self.assertIn('<div class="mkt-range" role="group" aria-label="차트 기간" hidden></div><div class="mkt-charts"></div>', html)
         self.assertIn('role="status" aria-live="polite"', html)
 
 
