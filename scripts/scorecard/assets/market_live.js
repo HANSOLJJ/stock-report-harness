@@ -13,7 +13,23 @@
   var GETDEPLOYING_SLUGS = { 'H100 SXM': 'nvidia-h100', 'H200': 'nvidia-h200', 'B200': 'nvidia-b200' };
   var TOKEN_RECON_START = '2025-07-07';
   var OPENROUTER_URL = 'https://openrouter.ai/api/v1/models';
+  // 한국은행 ECOS 수출물가지수(품목별) D램, 달러 기준(2020=100) 월별. 환율 효과를 뺀 수출 계약 가격이다.
+  var ECOS_DRAM = { table: '402Y016', item: '30911201AA', basis: 'D', start: '201501' };
+  // 아래 두 원천은 약관이 게시를 막아 로그인한 사람에게만 보인다(BondTerminal 무료 키는 게시·표시 금지, DRAMeXchange 는 사전 동의 없는 표시 금지).
+  // 회사채는 회사마다 대표 채권 하나의 국채 대비 가산금리(G-spread)다. BondTerminal 에 실린 대상은 CoreWeave·Oracle·Meta 뿐이다.
+  var BONDS = [
+    { key: 'bond:coreweave', isin: 'US21873SAB43', title: 'CoreWeave 9.25% 2030 가산금리' },
+    { key: 'bond:oracle', isin: 'US68389XCE31', title: 'Oracle 2.875% 2031 가산금리' },
+    { key: 'bond:meta', isin: 'US30303M8N52', title: 'Meta 4.95% 2033 가산금리' }
+  ];
+  var BOND_START = '2015-01-01';
+  var BONDTERMINAL_API = 'https://bondterminal.com/api/v1';
+  // 과거 차트는 유료 회원 전용이라 첫 화면 표의 세션 평균을 날마다 쌓는다.
+  var DRAMX_URL = 'https://www.dramexchange.com/';
+  var DRAMX_ITEM = 'DDR5 16Gb (2Gx8) 4800/5600';
+  var MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
   var SERIES_URL = '/reports/market-series.json';
+  var PRIVATE_URL = '/api/market-private';
   var LWC_URL = 'https://cdn.jsdelivr.net/npm/lightweight-charts@5.2.1/dist/lightweight-charts.standalone.production.js';
   var LWC_SRI = 'sha384-KkYqTZlM13Zya6fVUF3IGCBOQ1ehFeJVVgxaVvD/0MebineF9EI8Jkd3NnWNChqN';
   var DAY_MS = 86400000;
@@ -172,7 +188,81 @@
     return rest.concat([merged]).sort(function (a, b) { return a.date < b.date ? -1 : (a.date > b.date ? 1 : 0); });
   }
 
+  // ECOS StatisticSearch 응답 → [[그달 1일, 지수]]. 오류 응답(RESULT)이면 빈 목록이다.
+  function parseEcos(payload) {
+    var rows = (payload && payload.StatisticSearch && payload.StatisticSearch.row) || [];
+    var out = [];
+    rows.forEach(function (r) {
+      var t = String(r.TIME || '');
+      var v = Number(r.DATA_VALUE);
+      if (r.ITEM_CODE2 === ECOS_DRAM.basis && /^\d{6}$/.test(t) && r.DATA_VALUE !== '' && Number.isFinite(v)) {
+        out.push([t.slice(0, 4) + '-' + t.slice(4, 6) + '-01', v]);
+      }
+    });
+    return sortPoints(out);
+  }
+
+  // BondTerminal /bonds/{isin}/history → [[날짜, 가산금리 %p]]. 가산금리는 bp 정수로 온다.
+  function parseBondHistory(payload) {
+    var out = [];
+    ((payload && payload.series) || []).forEach(function (p) {
+      if (p && typeof p.date === 'string' && typeof p.spread === 'number') out.push([p.date, p.spread / 100]);
+    });
+    return sortPoints(out);
+  }
+
+  // DRAMeXchange 첫 화면의 DRAM 현물 표에서 DDR5 16Gb 4800/5600 세션 평균과 표의 갱신 날짜(대만 시각)를 읽는다.
+  function parseDramx(html) {
+    var t = String(html || '');
+    var mark = '<!-- DRAM Spot Price -->';
+    var start = t.indexOf(mark);
+    var end = start < 0 ? -1 : t.indexOf(mark, start + mark.length);
+    if (end < 0) return null;
+    var block = t.slice(start, end);
+    var m = /Last Update:\s*([A-Za-z]{3})[a-z]*\.?\s*(\d{1,2})\s+(\d{4})/.exec(block);
+    var mon = m ? MONTHS.indexOf(m[1].toLowerCase()) : -1;
+    var i = block.indexOf(DRAMX_ITEM);
+    if (mon < 0 || i < 0) return null;
+    var row = block.slice(i, block.indexOf('</tr>', i));
+    var cells = [];
+    var re = /<td[^>]*>([\s\S]*?)<\/td>/g;
+    var c;
+    while ((c = re.exec(row))) cells.push(c[1].replace(/<[^>]+>/g, '').trim());
+    // 품목 이름 칸 뒤의 순서: Daily High, Daily Low, Session High, Session Low, Session Average, Session Change, History
+    var avg = Number(cells[4]);
+    if (cells[4] === undefined || cells[4] === '' || !Number.isFinite(avg) || avg <= 0) return null;
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    return { date: m[3] + '-' + pad(mon + 1) + '-' + pad(Number(m[2])), value: avg };
+  }
+
+  // 날마다 쌓는 점에 새 점 하나를 더한다. 같은 날짜면 새 값으로 바꾼다.
+  function addPoint(points, point) {
+    var pts = (points || []).slice();
+    if (point) pts.push([point.date, point.value]);
+    return sortPoints(pts);
+  }
+
+  // 로그인한 사람에게만 내보내는 시계열. 받지 못한 채권은 직전 선을 그대로 쓴다.
+  function assemblePrivate(input) {
+    var previous = (input.previous && input.previous.series) || {};
+    var series = {};
+    BONDS.forEach(function (b) {
+      var payload = (input.bonds || {})[b.isin];
+      var pts = payload ? parseBondHistory(payload) : [];
+      var line = pts.length ? { id: 'bondterminal', label: 'BondTerminal 국채 대비 가산금리', points: pts }
+        : (((previous[b.key] || {}).lines) || [])[0] || null;
+      if (line) series[b.key] = { title: b.title, kind: 'pct', unit: '%p', lines: [line] };
+    });
+    var dram = input.dram || [];
+    if (dram.length) {
+      series.dram_spot = { title: 'D램 현물가 DDR5 16Gb 4800/5600', kind: 'usd', unit: '$',
+        lines: [{ id: 'dramexchange', label: 'DRAMeXchange 세션 평균', points: dram }] };
+    }
+    return { schema: 'market-private/1', updated_at: input.now, series: series, errors: (input.errors || []).slice() };
+  }
+
   // 서버가 내보내는 시계열. 지표 열쇠는 리포트 표 행의 data-key 와 같다.
+  // 표에 없는 시계열(title 이 있는 것)은 차트만 그린다.
   // 이번에 받지 못한 외부 원천(fred·getdeploying 의 본문이 null)은 직전 시계열(previous)의 선을 그대로 쓴다.
   function assemble(input) {
     var previous = (input.previous && input.previous.series) || {};
@@ -180,6 +270,7 @@
       var lines = (previous[key] && previous[key].lines) || [];
       return lines.filter(function (l) { return l.id === id; })[0] || null;
     }
+    var errors = (input.errors || []).slice();
     var series = {};
     FRED_SERIES.forEach(function (pair) {
       var text = (input.fred || {})[pair[1]];
@@ -204,7 +295,24 @@
       : prevLine('token_blended_price', 'reconstructed');
     if (recon) tokLines.push(recon);
     series.token_blended_price = { lines: tokLines };
-    return { schema: 'market-series/1', updated_at: input.now, series: series, errors: input.errors || [] };
+    // ECOS 키가 없으면 서버가 ecos 를 넘기지 않는다(실패가 아니다). 받았는데 값이 없으면 오류로 적고 직전 선을 쓴다.
+    var ecosPts = input.ecos ? parseEcos(input.ecos) : null;
+    if (ecosPts && !ecosPts.length) errors.push('ECOS: 값이 없다(' + ((input.ecos.RESULT || {}).CODE || '응답 형식') + ')');
+    var ecosLine = ecosPts && ecosPts.length ? { id: 'ecos', label: '한국은행 ECOS 402Y016', points: ecosPts } : prevLine('dram_export_index', 'ecos');
+    if (ecosLine) {
+      series.dram_export_index = { title: 'D램 수출물가지수(달러 기준, 2020=100)', kind: 'index', unit: '', lines: [ecosLine] };
+    }
+    return { schema: 'market-series/1', updated_at: input.now, series: series, errors: errors };
+  }
+
+  function ecosUrl(key, today) {
+    var end = today.slice(0, 4) + today.slice(5, 7);
+    return 'https://ecos.bok.or.kr/api/StatisticSearch/' + encodeURIComponent(key) + '/json/kr/1/1000/' +
+      ECOS_DRAM.table + '/M/' + ECOS_DRAM.start + '/' + end + '/' + ECOS_DRAM.item + '/' + ECOS_DRAM.basis;
+  }
+
+  function bondHistoryUrl(isin, today) {
+    return BONDTERMINAL_API + '/bonds/' + isin + '/history?start=' + BOND_START + '&end=' + today;
   }
 
   function vastUrl(gpu) {
@@ -235,7 +343,9 @@
   }
 
   function valueText(row, value) {
-    return row.kind === 'pct' ? value.toFixed(2) + row.unit : '$' + value.toFixed(2);
+    if (row.kind === 'pct') return value.toFixed(2) + row.unit;
+    if (row.kind === 'index') return value.toFixed(1);
+    return '$' + value.toFixed(2);
   }
 
   function changeText(row, base, now) {
@@ -402,6 +512,52 @@
     bar.hidden = false;
   }
 
+  // 표에 없는 시계열(title 이 있는 것)을 표 행과 같은 모양으로 만든다. 기준일은 표 첫 행(미국채 10년물, 가격 기준일)의 것이다.
+  function extraRows(data, skip, asOf) {
+    return Object.keys(data.series || {}).filter(function (k) {
+      return skip.indexOf(k) < 0 && data.series[k].title;
+    }).map(function (k) {
+      var s = data.series[k];
+      return { key: k, kind: s.kind, unit: s.unit, asOf: asOf, label: s.title };
+    });
+  }
+
+  // 로그인한 사람에게만 보이는 절. 차트 상자 바로 뒤에 한 번만 만든다.
+  function privateBox(doc, box) {
+    var wrap = box.parentNode.querySelector('.mkt-private');
+    if (!wrap) {
+      wrap = doc.createElement('div');
+      wrap.className = 'mkt-private';
+      var h = doc.createElement('h4');
+      h.textContent = '로그인한 사람에게만 보이는 지표';
+      var p = doc.createElement('p');
+      p.className = 'sub';
+      p.textContent = '회사채(BondTerminal)와 D램 현물가(DRAMeXchange)는 원천 약관이 게시를 막아 공개 방문자에게는 보이지 않는다. ' +
+        '회사채는 회사마다 대표 채권 하나의 국채 대비 가산금리(G-spread)다. D램 현물가는 과거 값이 유료라 서버가 날마다 쌓는다.';
+      var c = doc.createElement('div');
+      c.className = 'mkt-charts';
+      wrap.appendChild(h);
+      wrap.appendChild(p);
+      wrap.appendChild(c);
+      box.parentNode.insertBefore(wrap, box.nextSibling);
+    }
+    return wrap;
+  }
+
+  // 로그인하지 않은 방문자는 Access 가 로그인 화면으로 돌려보내 요청이 실패한다. 그때는 비공개 절을 그리지 않는다.
+  function loadPrivate(doc, box, LWC, asOf) {
+    var old = box.parentNode.querySelector('.mkt-private');
+    return getJson(PRIVATE_URL).then(function (priv) {
+      var rows = extraRows(priv, [], asOf);
+      if (!rows.length) throw new Error('empty');
+      var wrap = privateBox(doc, box);
+      return drawCharts(doc, wrap.querySelector('.mkt-charts'), priv, LWC, rows);
+    }).catch(function () {
+      if (old) old.parentNode.removeChild(old);
+      return [];
+    });
+  }
+
   // 기준일 값은 표 행의 data 속성(data-key·data-kind·data-unit·data-base·data-asof)에 있다.
   function wire(doc) {
     var panel = doc.getElementById('market-live');
@@ -422,14 +578,21 @@
       status.textContent = '받는 중이다.';
       Promise.all([getJson(SERIES_URL), loadLwc(doc)]).then(function (res) {
         var data = res[0];
+        var LWC = res[1];
         var filled = fillNow(rows, data);
         charts.forEach(function (c) { c.chart.remove(); });
-        charts = drawCharts(doc, box, data, res[1], rows);
-        rangeBar(doc, bar, function () { return charts; });
-        setRange(charts, RANGES[1][1]);
-        status.textContent = '시계열은 ' + String(data.updated_at || '').slice(0, 16).replace('T', ' ') + '(UTC)에 갱신됐다. ' +
-          rows.length + '개 가운데 ' + filled + '개에 지금 값이 있다.';
-      }, function (e) {
+        var asOf = rows[0].asOf;
+        var keys = rows.map(function (r) { return r.key; });
+        charts = drawCharts(doc, box, data, LWC, rows.concat(extraRows(data, keys, asOf)));
+        return loadPrivate(doc, box, LWC, asOf).then(function (priv) {
+          charts = charts.concat(priv);
+          rangeBar(doc, bar, function () { return charts; });
+          setRange(charts, RANGES[1][1]);
+          status.textContent = '시계열은 ' + String(data.updated_at || '').slice(0, 16).replace('T', ' ') + '(UTC)에 갱신됐다. ' +
+            rows.length + '개 가운데 ' + filled + '개에 지금 값이 있다.' +
+            (priv.length ? ' 로그인한 사람에게만 보이는 지표 ' + priv.length + '개를 더 그렸다.' : '');
+        });
+      }).catch(function (e) {
         status.textContent = failText(e);
       }).then(function () {
         box.style.opacity = '';
@@ -442,7 +605,9 @@
     valueText: valueText, parseFredCsv: parseFredCsv, parseGetDeployingCsv: parseGetDeployingCsv, reconstructTokens: reconstructTokens,
     dailyPoint: dailyPoint, mergeDaily: mergeDaily, assemble: assemble, vastUrl: vastUrl, fredCsvUrl: fredCsvUrl,
     getDeployingUrl: getDeployingUrl, GPU_TYPES: GPU_TYPES, FRED_SERIES: FRED_SERIES, FRED_START: FRED_START,
-    OPENROUTER_URL: OPENROUTER_URL };
+    OPENROUTER_URL: OPENROUTER_URL, parseEcos: parseEcos, parseBondHistory: parseBondHistory, parseDramx: parseDramx,
+    addPoint: addPoint, assemblePrivate: assemblePrivate, ecosUrl: ecosUrl, bondHistoryUrl: bondHistoryUrl,
+    BONDS: BONDS, DRAMX_URL: DRAMX_URL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (root && root.document) {
     if (root.document.readyState === 'loading') root.document.addEventListener('DOMContentLoaded', function () { wire(root.document); });

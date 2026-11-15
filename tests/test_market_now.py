@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -154,6 +155,20 @@ class RenderTest(unittest.TestCase):
         self.assertIn('data-asof="2026-09-30"', html)
         self.assertIn('<div class="mkt-range" role="group" aria-label="차트 기간" hidden></div><div class="mkt-charts"></div>', html)
         self.assertIn('role="status" aria-live="polite"', html)
+
+    def test_token_index_becomes_a_table_row_without_trend_hook(self):
+        """2026-11-15 사용자 결정: 시장 지표 절이 있으면 토큰 단가 지수는 표의 한 줄이고 추이 스크립트가 읽는 data-key 가 없다."""
+        from scorecard.render_html import render_market
+        items = [obs("ust10y_yield", 4.1, "2026-09-25", {"series": "DGS10"})]
+        tok = [{"segment": "broad", "value": 0.97, "as_of": "2026-10-10", "source_id": "SRC-SD", "previous": None, "change": None}]
+        html = render_market(self.ctx(items), tok, "주의 문구.")
+        row = re.search(r"<tr><td class=\"name\"><b>토큰 지출 지수\([^<]+\)</b></td>.*?</tr>", html)
+        self.assertIsNotNone(row)
+        self.assertNotIn("data-key", row.group(0))
+        self.assertIn("$0.97", row.group(0))
+        self.assertIn("과거 값이 유료라 추이를 그리지 않는다. 주의 문구.", html)
+        self.assertEqual(html.count("data-key="), 1)
+        self.assertEqual(render_market(self.ctx([]), tok), "", "시장 지표 관측이 없으면 토큰 줄도 없다(옛 실행은 카드 그대로)")
 
 
 if __name__ == "__main__":

@@ -103,3 +103,69 @@ test('시계열 묶음: 열쇠는 리포트 행과 같고, 받지 못한 외부 
   assert.deepEqual(second.series['gpu_rent_hourly:H100 SXM'].lines[1], h100[1]);
   assert.deepEqual(second.series.token_blended_price.lines[1], first.series.token_blended_price.lines[1]);
 });
+
+test('ECOS D램 지수: 달러 기준 칸만 그달 1일로 읽고, 오류 응답이면 빈 목록이다', () => {
+  const payload = { StatisticSearch: { list_total_count: 3, row: [
+    { TIME: '202602', ITEM_CODE2: 'D', DATA_VALUE: '157.62' },
+    { TIME: '202601', ITEM_CODE2: 'W', DATA_VALUE: '181.78' },
+    { TIME: '202601', ITEM_CODE2: 'D', DATA_VALUE: '147.44' },
+    { TIME: '202603', ITEM_CODE2: 'D', DATA_VALUE: '' }] } };
+  assert.deepEqual(live.parseEcos(payload), [['2026-01-01', 147.44], ['2026-02-01', 157.62]]);
+  assert.deepEqual(live.parseEcos({ RESULT: { CODE: 'INFO-100' } }), []);
+  assert.equal(live.ecosUrl('K', '2026-11-15'),
+    'https://ecos.bok.or.kr/api/StatisticSearch/K/json/kr/1/1000/402Y016/M/201501/202611/30911201AA/D');
+});
+
+test('묶음: ECOS 를 받으면 표 밖 시계열로 싣고, 키가 없으면 싣지 않으며, 빈 응답은 오류로 적고 직전 선을 쓴다', () => {
+  const ecos = { StatisticSearch: { row: [{ TIME: '202601', ITEM_CODE2: 'D', DATA_VALUE: '147.44' }] } };
+  const a = live.assemble({ ecos, daily: [], today: fx.ref, now: 'x' });
+  assert.equal(a.series.dram_export_index.title, 'D램 수출물가지수(달러 기준, 2020=100)');
+  assert.equal(a.series.dram_export_index.kind, 'index');
+  assert.deepEqual(a.series.dram_export_index.lines[0].points, [['2026-01-01', 147.44]]);
+  assert.equal(live.assemble({ daily: [], today: fx.ref, now: 'x' }).series.dram_export_index, undefined);
+  const b = live.assemble({ ecos: { RESULT: { CODE: 'INFO-100' } }, daily: [], today: fx.ref, now: 'x', previous: a, errors: ['다른 원천'] });
+  assert.deepEqual(b.series.dram_export_index.lines, a.series.dram_export_index.lines);
+  assert.deepEqual(b.errors, ['다른 원천', 'ECOS: 값이 없다(INFO-100)']);
+  assert.equal(live.valueText({ kind: 'index' }, 147.44), '147.4');
+});
+
+const DRAMX = `<!-- DRAM Spot Price -->
+<font face="Arial">DRAM Spot Price</font> <span>Last Update: Nov.13 2026 18:10 (GMT+8)</span>
+<table><tr><td class="tab_title">Item</td></tr>
+<tr> <td class="tab_tr_gray2"> <a href="/Price/Dram_Spot"> <img src="/chip.gif"> DDR5 16Gb (2Gx8) 4800/5600 </a> </td>
+<td class="tab_tr_gray">72.50</td> <td class="tab_tr_gray">45.50</td> <td class="tab_tr_gray">72.50</td>
+<td class="tab_tr_gray">45.50</td> <td class="tab_tr_gray">60.267</td> <td class="tab_tr_font9"><img src="/up.gif"><br> 0.06 % </td>
+<td class="tab_tr_gray"><img src="/flash.gif"></td> </tr>
+<tr> <td> DDR5 16Gb (2Gx8) eTT </td> <td>31.50</td> <td>29.70</td> <td>31.50</td> <td>29.70</td> <td>30.1</td> </tr></table>
+<!-- DRAM Spot Price -->
+<!-- Module Spot Price --> Last Update: Nov.2 2026 14:40 (GMT+8)`;
+
+test('DRAMeXchange: DRAM 표의 DDR5 16Gb 4800/5600 세션 평균과 그 표의 갱신 날짜를 읽는다', () => {
+  assert.deepEqual(live.parseDramx(DRAMX), { date: '2026-11-13', value: 60.267 });
+  assert.deepEqual(live.parseDramx(DRAMX.replace('Nov.13', 'Sept.3')), { date: '2026-09-03', value: 60.267 });
+  // 표가 바뀌어 품목이나 값을 못 찾으면 값을 만들지 않는다
+  assert.equal(live.parseDramx(DRAMX.replace('4800/5600', '6400')), null);
+  assert.equal(live.parseDramx(DRAMX.replace('60.267', '-')), null);
+  assert.equal(live.parseDramx('<html></html>'), null);
+  const pts = live.addPoint([['2026-11-12', 59.9], ['2026-11-13', 60.0]], { date: '2026-11-13', value: 60.267 });
+  assert.deepEqual(pts, [['2026-11-12', 59.9], ['2026-11-13', 60.267]]);
+  assert.deepEqual(live.addPoint(pts, null), pts);
+});
+
+test('비공개 묶음: 회사채는 bp 를 %p 로 바꾸고, 받지 못한 채권은 직전 선을 쓰며, D램 현물은 쌓인 점이 있을 때만 싣는다', () => {
+  const [cw, orcl] = live.BONDS;
+  assert.equal(live.bondHistoryUrl(cw.isin, '2026-11-15'),
+    'https://bondterminal.com/api/v1/bonds/US21873SAB43/history?start=2015-01-01&end=2026-11-15');
+  const hist = { isin: cw.isin, series: [{ date: '2026-11-12', price: 87.0, ytw: 14.01, spread: 997 },
+    { date: '2026-11-11', price: 86.5, ytw: 14.2 }, { date: '2026-11-10', spread: 1010 }] };
+  assert.deepEqual(live.parseBondHistory(hist), [['2026-11-10', 10.1], ['2026-11-12', 9.97]]);
+  const a = live.assemblePrivate({ bonds: { [cw.isin]: hist }, dram: [], now: 'x' });
+  assert.deepEqual(Object.keys(a.series), ['bond:coreweave']);
+  assert.equal(a.series['bond:coreweave'].unit, '%p');
+  const b = live.assemblePrivate({ bonds: { [orcl.isin]: { series: [{ date: '2026-11-12', spread: 150 }] } },
+    dram: [['2026-11-13', 60.267]], now: 'y', previous: a, errors: ['BondTerminal CoreWeave: HTTP 429'] });
+  assert.deepEqual(Object.keys(b.series).sort(), ['bond:coreweave', 'bond:oracle', 'dram_spot']);
+  assert.deepEqual(b.series['bond:coreweave'].lines, a.series['bond:coreweave'].lines);
+  assert.equal(b.series.dram_spot.kind, 'usd');
+  assert.deepEqual(b.errors, ['BondTerminal CoreWeave: HTTP 429']);
+});

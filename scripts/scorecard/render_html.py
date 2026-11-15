@@ -1163,8 +1163,11 @@ def _token_hero(ctx: Any, view: dict[str, Any]) -> str:
             f'<div class="kpis">{"".join(cards)}</div><p class="sub">{inline_html(view.get("token_caveat") or "")}</p></div>')
 
 
-def render_regime(ctx: Any, results: dict[str, Any]) -> str:
-    """규칙 v2.1 국면 지표(점수 없음). 초안과 같은 글자를 render_common.regime_view 에서 읽는다. 선언이 없으면 빈 문자열이다."""
+def render_regime(ctx: Any, results: dict[str, Any], hero: bool = True) -> str:
+    """규칙 v2.1 국면 지표(점수 없음). 초안과 같은 글자를 render_common.regime_view 에서 읽는다. 선언이 없으면 빈 문자열이다.
+
+    hero 가 거짓이면(시장 지표 절이 있는 실행) 토큰 단가 지수 카드를 빼고 시장 지표 표의 한 줄로 보인다.
+    """
     view = rc.regime_view(ctx, results)
     if view is None:
         return ""
@@ -1172,7 +1175,7 @@ def render_regime(ctx: Any, results: dict[str, Any]) -> str:
     # 2026-10-13 사용자 지시: 국면 지표는 요약 탭에서 빼 자기 탭에 둔다. 제목은 그 탭의 h2 가 맡는다.
     return ('<section class="regime">'
             f'<p class="sub">{inline_html(view["note"])}</p>'
-            + _token_hero(ctx, view)
+            + (_token_hero(ctx, view) if hero else "")
             + '<h3>설비투자 가속도(AI 컴퓨트를 사는 회사)</h3>'
             + _html_table(view["capex_head"], view["capex_rows"], text_cols={1, 2, 7, 8}) + sub(view["capex_notes"])
             + '<h3>공급자 지원 비중</h3>' + _html_table(view["supplier_head"], view["supplier_rows"], text_cols={8})
@@ -1191,7 +1194,8 @@ MARKET_JS = Path(__file__).with_name("assets") / "market_live.js"
 MARKET_TREND_NOTE = ("추이: 미국채 10년물·무디스 Baa−10년물은 2015년부터, 투자등급·하이일드 스프레드는 FRED 가 내주는 최근 3년이다. "
                      "GPU 임대료와 토큰 단가는 이 리포트 정의로 2026-11-15 부터 매일 쌓는다. 점선은 정의가 다른 참고 선이다. "
                      "GPU 는 GetDeploying 주간 중간값(CC BY 4.0, 공급자 여러 곳의 호가), 토큰은 지금 모델 목록을 과거 날짜에 대입한 재구성이라 "
-                     "그 사이 사라진 모델과 가격 인하가 빠진다. 흰 점은 이 리포트의 기준일 값이다. 차트는 TradingView Lightweight Charts 로 그린다.")
+                     "그 사이 사라진 모델과 가격 인하가 빠진다. D램 수출물가지수는 한국은행 ECOS 의 달러 기준 월별 값(2020=100)으로 2015년부터다. "
+                     "흰 점은 이 리포트의 기준일 값이다. 차트는 TradingView Lightweight Charts 로 그린다.")
 MARKET_CSS = """
 .market{margin:8px 0 28px;--mkt-a:#4f97e6;--mkt-b:#c97a38}
 .mktbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:12px 0}
@@ -1213,11 +1217,14 @@ table.mkt td.mkt-now,table.mkt td.mkt-chg{color:var(--tx2)}
 .mkt-legend .lk{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px}
 .mkt-legend .lk.dash{border-top-style:dashed}
 .mkt-chart{height:220px}
+.mkt-private{margin-top:22px}
+.mkt-private h4{margin:0 0 4px;font-size:var(--fs-md)}
+.mkt-private .sub{margin:0 0 10px}
 @media (prefers-reduced-motion:reduce){.mkt-charts{transition:none}}
 """
 
 
-def render_market(ctx: Any) -> str:
+def render_market(ctx: Any, token_items: list[dict[str, Any]] | None = None, token_caveat: str = "") -> str:
     view = rc.market_view(ctx)
     if view is None:
         return ""
@@ -1230,9 +1237,21 @@ def render_market(ctx: Any) -> str:
                     f'<td class="mono">{esc(r["text"])}<span class="dt">{esc(r["as_of"])}</span></td>'
                     f'<td class="mono mkt-now">—</td><td class="mono mkt-chg">—</td>'
                     f'<td class="text">{esc(r["extra"])}<span class="dt">{esc(r["source_id"])}</span></td></tr>')
+    # 2026-11-15 사용자 결정: 토큰 단가 지수(Silicon Data, 수동 관측)는 큰 카드 대신 이 표의 한 줄로 둔다.
+    # 과거 값이 유료라 추이가 없으므로 data-key 를 달지 않는다(추이 스크립트가 빈 차트를 그리지 않게).
+    for t in token_items or []:
+        seg = rc.TOKEN_SEGMENT_LABELS.get(t["segment"], t["segment"])
+        prev = t.get("previous")
+        change = (f'직전 관측 ${prev["value"]:.2f}({prev["as_of"]}) 대비 {rc._pct_signed(t["change"])}' if prev else "직전 관측 없음")
+        body.append(f'<tr><td class="name"><b>토큰 지출 지수({esc(seg)})</b></td>'
+                    f'<td class="mono">${t["value"]:.2f}<span class="dt">{esc(t["as_of"])}</span></td>'
+                    '<td class="mono">—</td><td class="mono">—</td>'
+                    f'<td class="text">Silicon Data 공개 페이지를 손으로 읽음 · {esc(change)}<span class="dt">{esc(t["source_id"])}</span></td></tr>')
     head = "".join(f'<th class="{c}">{esc(h)}</th>' for c, h in
                    (("name", "지표"), ("", "기준일 값"), ("", "지금 값"), ("", "변화"), ("text", "원천")))
-    notes = "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in view["notes"])
+    extra_notes = ([f"토큰 지출 지수는 $/100만 토큰이고, 과거 값이 유료라 추이를 그리지 않는다. {token_caveat}".strip()]
+                   if token_items else [])
+    notes = "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in [*view["notes"], *extra_notes])
     return ('<section class="market" id="market-live"><h3>시장 지표(기준일 값과 지금 값)</h3>'
             '<div class="mktbar"><button type="button" class="mkt-btn">추이 받기</button>'
             '<p class="mkt-status sub" role="status" aria-live="polite">버튼을 누르면 공개 사이트가 매일 쌓는 시계열을 받아 지금 값과 추이 차트를 보인다. '
@@ -2602,8 +2621,9 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     availability = (f'<h2 id="availability"><span class="num">05</span>자료 확보 현황</h2>{render_availability(avail, ctx, results)}') if avail else ""
     n = 5 if avail else 4
     # 2026-10-13 사용자 지시: 국면 지표(점수 없음)가 순위표를 밀어내지 않게 자기 탭에 둔다. 선언이 없는 옛 실행에는 탭이 없다.
-    market = render_market(ctx)
-    regime = market + render_regime(ctx, results)
+    tokens = rc.regime_view(ctx, results) or {}
+    market = render_market(ctx, tokens.get("token_items"), tokens.get("token_caveat") or "")
+    regime = market + render_regime(ctx, results, hero=not market)
     tabs = (TABS[0], ("regime", "국면 지표"), *TABS[1:]) if regime else TABS
     regime_panel = (f'<section class="tabpanel" id="tab-regime" role="tabpanel" aria-labelledby="tabbtn-regime">\n'
                     f'<h2>국면 지표 — 점수 없음</h2>\n{regime}\n</section>\n') if regime else ""

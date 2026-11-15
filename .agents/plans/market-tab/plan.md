@@ -63,3 +63,25 @@
 - 계산 정의(GPU 가중 중간값, 토큰 모델 고르기)는 하네스 `scripts/scorecard/assets/market_live.js` 하나다. finance 서버는 옆 폴더의 그 파일을 `createRequire` 로 불러 쓴다(`/reports` 가 이미 옆 폴더 clone 에 기대고 있다).
 - 리포트 버튼("추이 받기")은 그 JSON 하나를 받아 지표마다 작은 선 차트를 그린다. 기간 1년·3년·10년, 기준일에 점, 지금 값·변화 칸은 시계열 마지막 점으로 채운다.
 - 하네스 collect --kind market 은 BAA10Y 를 기준일 값으로 더 찍는다(`baa_spread`).
+
+## 회사채·D램·토큰 카드(2026-11-15 3차 결정)
+
+사용자 지시: 회사채는 하이일드 묶음이 아니라 개별 회사(특히 CoreWeave 같은 네오클라우드)의 채권을 본다. D램 현물가 추이도 본다. 국면 탭에 홀로 남은 토큰 단가 지수 카드를 정리한다.
+
+### 원천
+
+| 지표 | 원천 | 기간 | 공개 |
+|---|---|---|---|
+| 개별 회사채 가산금리·수익률 | BondTerminal API `/bonds/{isin}/history`(무료 개인 키, 하루 200 읽기 단위, 한 번 10 단위) | 채권 발행 이후 일별 | 로그인한 사람만 |
+| D램 현물(DDR5 16Gb 4800/5600 하루 평균) | DRAMeXchange 첫 화면 표 | 2026-11-15 부터 매일 쌓는다(과거 차트는 유료 회원 전용) | 로그인한 사람만 |
+| D램 수출물가지수(달러 기준, 2020=100) | 한국은행 ECOS `402Y016` 항목 `30911201AA`·`D` | 2015-01 이후 월별 | 공개 |
+
+- BondTerminal 에 실린 대상은 CoreWeave(선순위채 4종)·Oracle·Meta 뿐이다. Nebius·Applied Digital·IREN·Cipher·TeraWulf·xAI·Meta Hyperion SPV(Beignet)는 없다.
+- 회사마다 대표 채권 하나의 국채 대비 가산금리를 그린다. CoreWeave 9.25% 2030, Oracle 2.875% 2031, Meta 4.95% 2033.
+
+### 구조
+
+- 공개 시계열(`/reports/market-series.json`)에 D램 수출물가지수를 더한다. 표에 없는 시계열은 제목·단위를 JSON 에 실어 차트만 그린다.
+- 게시가 제한된 원천(BondTerminal·DRAMeXchange)은 finance `data/market-private.json` 에 따로 쌓고 `/api/market-private` 로만 낸다. Access 로그인과 서버의 JWT 검증을 둘 다 지나야 한다. 리포트는 그 주소를 불러 보고, 실패하면(로그인하지 않은 방문자) 그 절을 그리지 않는다.
+- 키(`BONDTERMINAL_API_KEY`·`ECOS_API_KEY`)는 사용자가 맥미니 `~/.finance/env` 에 넣는다. 키가 없으면 그 원천만 건너뛰고 실패로 세지 않는다.
+- 토큰 단가 지수(Silicon Data, 수동 관측)는 시장 지표 절이 있는 리포트에서 큰 카드를 없애고 표의 한 줄(기준일 값만)로 넣는다. 시장 지표 관측이 없는 옛 실행은 지금 모양 그대로 둔다.
