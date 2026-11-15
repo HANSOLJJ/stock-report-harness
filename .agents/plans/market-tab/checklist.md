@@ -17,5 +17,5 @@
 - [x] finance: server/lib/market-series.js(매일 수집, data/market-series.json), /reports/market-series.json 경로
 - [x] finance: 로컬에서 수집·경로 확인, node --check, lint(실원천 11곳 실패 0, 라우터 200·없을 때 404)
 - [x] 하네스 렌더 확인(같은 경로로 시계열을 낸 임시 서버), 320px·기간 버튼 44px·10년 범위·폭 바뀜에도 기간 유지
-- [ ] 커밋 두 곳, finance main 푸시, 맥미니 git pull·pm2 restart, 공개 주소에서 JSON 확인
+- [x] 커밋 두 곳, finance main 푸시, 맥미니 git pull·pm2 restart, 공개 주소에서 JSON 확인(2026-11-15 첫 갱신 실패 0건)
 - [~] vast.ai 프록시 허용 목록: 공개 리포트가 /api 를 못 불러 이 방식을 버렸다
