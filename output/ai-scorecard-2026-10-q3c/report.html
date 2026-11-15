@@ -433,6 +433,10 @@ table.mkt td.mkt-now,table.mkt td.mkt-chg{color:var(--tx2)}
 .mkt-legend button{display:inline-flex;align-items:center;min-height:28px;padding:2px 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--tx);font:inherit;font-size:var(--fs-sm);cursor:pointer}
 .mkt-legend button[aria-pressed="false"]{color:var(--tx2);opacity:.55}
 .mkt-legend button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.mkt-mode{margin:4px 0 8px;gap:6px 16px}
+.mkt-group{display:flex;flex-wrap:wrap;gap:6px}
+.mkt-group[hidden],.mkt-sum[hidden]{display:none}
+.mkt-sum{margin:8px 0 2px;color:var(--tx)}
 @media (max-width:640px){.mkt-fig.big .mkt-chart{height:320px}}
 .mkt-private{margin-top:22px}
 .mkt-private h4{margin:0 0 4px;font-size:var(--fs-md)}
@@ -622,8 +626,9 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
   var FRED_FETCH = FRED_SERIES.map(function (p) { return p[1]; }).concat(FRED_YIELDS.map(function (p) { return p[1]; }));
   // 큰 차트의 선 색(dataviz 기본 범주 팔레트의 어두운 화면 값, 리포트 배경 #161a22 에서 검증 통과). 아홉째 선부터는 같은 색의 점선이다.
   var PALETTE = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#0ca30c', '#9085e9', '#e66767'];
-  // 회사채 금리 큰 차트에서 처음에 끈 채권. 선이 열하나라 겹치지 않게 AI 설비투자로 돈을 빌리는 쪽을 먼저 보인다. 범례로 켠다.
-  var BOND_YIELD_HIDDEN = ['bond:apple', 'bond:nvidia', 'bond:alibaba', 'bond:tsmc'];
+  // 금리 한눈에 차트에 붙는 회사별 채권 가운데 처음에 끈 것. 기준선 넷과 합쳐 선이 열넷이라, 신용도가 갈리는
+  // CoreWeave·Oracle·Meta 만 켜 두고 나머지는 범례로 켠다.
+  var BOND_YIELD_HIDDEN = ['bond:microsoft', 'bond:alphabet', 'bond:amazon', 'bond:apple', 'bond:nvidia', 'bond:alibaba', 'bond:tsmc'];
   // GetDeploying 무료 데이터(CC BY 4.0)의 GPU 이름. 공급자 여러 곳의 호가 중간값이라 우리 vast.ai 정의와 다른 숫자다.
   var GETDEPLOYING_SLUGS = { 'H100 SXM': 'nvidia-h100', 'H200': 'nvidia-h200', 'B200': 'nvidia-b200' };
   var TOKEN_RECON_START = '2025-07-07';
@@ -1026,6 +1031,94 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     return (pct > 0 ? '+' : '') + pct.toFixed(1) + '%';
   }
 
+  // ---------------------------------------------------------------- 변화(bp) 보기: 기준일을 0 으로 놓고 엇갈림을 읽는다
+  // 2026-11-15 사용자 요청: 10년물은 내려가는데 회사채는 올라가는 흐름이 이어지는지를 한눈에 보려고 한다.
+
+  var CHANGE_RANGES = [['1개월', 30], ['3개월', 91], ['6개월', 182], ['1년', 365]];
+  // 기준일에 값이 없으면 그 뒤 첫 점을 쓰는데, 주말·연휴만 넘긴다. 자료가 그보다 늦게 시작한 선은 기준이 달라 뺀다.
+  var BASE_SLACK_DAYS = 7;
+  // 이보다 작은 움직임은 방향으로 치지 않는다(bp).
+  var FLAT_BP = 2;
+
+  function round2(v) { return Math.round(v * 100) / 100; }
+
+  // 모든 선의 마지막 날 가운데 가장 늦은 날에서 days 만큼 거슬러 간 날이 기준일이다.
+  // 선마다 기준일 이후 첫 점을 0 으로 놓고 그 뒤를 bp 로 바꾼다. 기준일에서 BASE_SLACK_DAYS 안에 점이 없으면 excluded 다.
+  function changeLines(lines, days) {
+    var end = null;
+    lines.forEach(function (l) {
+      var p = l.points[l.points.length - 1];
+      if (p && (end === null || p[0] > end)) end = p[0];
+    });
+    if (end === null) return { base: null, end: null, lines: [] };
+    var base = addDays(end, -days);
+    var limit = addDays(base, BASE_SLACK_DAYS);
+    return { base: base, end: end, lines: lines.map(function (l) {
+      var i = 0;
+      while (i < l.points.length && l.points[i][0] < base) i += 1;
+      var start = l.points[i];
+      if (!start || start[0] > limit) return { id: l.id, label: l.label, excluded: true, points: [] };
+      var pts = l.points.slice(i).map(function (p) { return [p[0], round2((p[1] - start[1]) * 100)]; });
+      return { id: l.id, label: l.label, excluded: false, from: start[0], points: pts, change: pts[pts.length - 1][1] };
+    }) };
+  }
+
+  function valueAt(points, date) {
+    var v = null;
+    for (var i = 0; i < points.length && points[i][0] <= date; i += 1) v = points[i][1];
+    return v;
+  }
+
+  function dirOf(bp) { return bp >= FLAT_BP ? 1 : (bp <= -FLAT_BP ? -1 : 0); }
+
+  // 첫 선(미국채 10년물)을 기준으로 다른 선의 변화·10년물 대비 차이(gap)를 잰다.
+  // recent 는 마지막 4분의 1 구간(최소 7일)에서 차이가 더 움직인 폭이고, 엇갈림이 이어지는지를 본다.
+  function divergence(view) {
+    var ref = view.lines[0];
+    if (!ref || ref.excluded) return null;
+    var span = Math.round((Date.parse(view.end) - Date.parse(view.base)) / DAY_MS);
+    var recentDays = Math.max(7, Math.round(span / 4));
+    var cut = addDays(view.end, -recentDays);
+    var refCut = valueAt(ref.points, cut);
+    var items = view.lines.slice(1).filter(function (l) { return !l.excluded; }).map(function (l) {
+      var lineCut = valueAt(l.points, cut);
+      var recent = lineCut === null || refCut === null ? null : round2((l.change - lineCut) - (ref.change - refCut));
+      return { id: l.id, label: l.label, change: l.change, gap: round2(l.change - ref.change), recent: recent,
+        opposite: dirOf(l.change) !== 0 && dirOf(ref.change) !== 0 && dirOf(l.change) !== dirOf(ref.change) };
+    });
+    return { base: view.base, ref: { label: ref.label, change: ref.change }, recentDays: recentDays, items: items,
+      excluded: view.lines.filter(function (l) { return l.excluded; }).map(function (l) { return l.label; }) };
+  }
+
+  function bpText(v) {
+    var r = Math.round(v);
+    return (r > 0 ? '+' : '') + r + 'bp';
+  }
+
+  function trendText(item, days) {
+    if (item.recent === null) return '';
+    var g = dirOf(item.gap);
+    var r = dirOf(item.recent);
+    if (g === 0 || r === 0) return ', 최근 ' + days + '일은 거의 그대로';
+    return g === r ? ', 최근 ' + days + '일에도 더 벌어지는 중' : ', 최근 ' + days + '일은 좁혀지는 중';
+  }
+
+  // 10년물과 반대로 움직인 선을 모두 적는다. 없으면 10년물 대비 가장 많이 벌어진 선 하나를 적는다.
+  function divergenceText(d) {
+    if (!d) return '기준일에 미국채 10년물 값이 없어 엇갈림을 읽지 못했다.';
+    var opp = d.items.filter(function (i) { return i.opposite; });
+    var pick = opp.length ? opp : d.items.slice().sort(function (a, b) { return Math.abs(b.gap) - Math.abs(a.gap); }).slice(0, 1);
+    var body = pick.map(function (i) {
+      return i.label + ' ' + bpText(i.change) + '(10년물 대비 ' + bpText(i.gap) + trendText(i, d.recentDays) + ')';
+    }).join(', ');
+    var text = d.base + ' 이후 ' + d.ref.label + '은 ' + bpText(d.ref.change) + ' 움직였다. ';
+    if (opp.length) text += '10년물과 반대로 움직인 선은 ' + body + '이다.';
+    else if (pick.length) text += '10년물과 반대로 움직인 선은 없고, 10년물 대비 가장 많이 벌어진 선은 ' + body + '이다.';
+    else text += '비교할 다른 선이 없다.';
+    if (d.excluded.length) text += ' 기준일에 값이 없는 ' + d.excluded.join('·') + '은 뺐다.';
+    return text;
+  }
+
   // ---------------------------------------------------------------- 브라우저: 지금 값 칸과 추이 차트
 
   var RANGES = [['1년', 365], ['3년', 1095], ['10년', 3650]];
@@ -1088,6 +1181,8 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
       var colorOf = function (i) { return row.big ? PALETTE[i % PALETTE.length] : colors[i % 2]; };
       var dashOf = function (i, l) { return row.big ? i >= PALETTE.length : Boolean(l.dashed); };
       var sers = [];
+      // 변화 보기에서 기준일 값이 없어 뺀 선. 범례로 켜도 그 보기에서는 그리지 않는다.
+      var state = { excluded: [], items: [], names: [] };
       var fig = doc.createElement('figure');
       fig.className = 'mkt-fig' + (row.big ? ' big' : '');
       var cap = doc.createElement('figcaption');
@@ -1106,11 +1201,13 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
             item.addEventListener('click', function () {
               var on = item.getAttribute('aria-pressed') !== 'true';
               item.setAttribute('aria-pressed', on ? 'true' : 'false');
-              if (sers[i]) sers[i].applyOptions({ visible: on });
+              if (sers[i]) sers[i].applyOptions({ visible: on && !state.excluded[i] });
             });
           }
           item.appendChild(lineKey(doc, colorOf(i), dashOf(i, l)));
-          item.appendChild(doc.createTextNode(l.label));
+          state.names[i] = doc.createTextNode(l.label);
+          item.appendChild(state.names[i]);
+          state.items[i] = item;
           legend.appendChild(item);
         });
         cap.appendChild(legend);
@@ -1162,9 +1259,75 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
           }
         }
       });
-      charts.push({ chart: chart, first: first, last: last });
+      var entry = { chart: chart, first: first, last: last, locked: false, days: RANGES[1][1] };
+      if (row.change) wireChange(doc, row, fig, holder, LWC, sers, lines, state, entry);
+      charts.push(entry);
     });
     return charts;
+  }
+
+  function buttonGroup(doc, label, options, current, onPick) {
+    var g = doc.createElement('div');
+    g.className = 'mkt-group';
+    g.setAttribute('role', 'group');
+    g.setAttribute('aria-label', label);
+    options.forEach(function (o) {
+      var b = doc.createElement('button');
+      b.type = 'button';
+      b.textContent = o[0];
+      b.setAttribute('aria-pressed', o[1] === current ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        Array.prototype.forEach.call(g.querySelectorAll('button'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        onPick(o[1]);
+      });
+      g.appendChild(b);
+    });
+    return g;
+  }
+
+  // 수준 / 변화(bp) 전환. 변화 보기는 기간 버튼이 기준일을 정하고, 그 기간만 보인다(끌어도 기준일은 그대로다).
+  // 위쪽 기간 막대(1년·3년·10년)는 수준 보기에만 닿는다.
+  function wireChange(doc, row, fig, holder, LWC, sers, lines, state, entry) {
+    var chart = entry.chart;
+    var mode = 'level';
+    var days = CHANGE_RANGES[1][1];
+    var zero = null;
+    var tools = doc.createElement('div');
+    tools.className = 'mkt-range mkt-mode';
+    var periods = buttonGroup(doc, '변화의 기준 기간', CHANGE_RANGES, days, function (d) { days = d; render(); });
+    tools.appendChild(buttonGroup(doc, '보기 방식', [['수준(%)', 'level'], ['변화(bp)', 'change']], mode, function (m) { mode = m; render(); }));
+    tools.appendChild(periods);
+    fig.insertBefore(tools, holder);
+    var sum = doc.createElement('p');
+    sum.className = 'sub mkt-sum';
+    fig.appendChild(sum);
+    var toData = function (pts) { return pts.map(function (p) { return { time: p[0], value: p[1] }; }); };
+    function render() {
+      var change = mode === 'change';
+      periods.hidden = !change;
+      sum.hidden = !change;
+      if (zero) { sers[0].removePriceLine(zero); zero = null; }
+      var view = change ? changeLines(lines, days) : null;
+      lines.forEach(function (l, i) {
+        var v = view ? view.lines[i] : null;
+        state.excluded[i] = Boolean(v && v.excluded);
+        sers[i].setData(toData(v ? v.points : l.points));
+        if (state.names[i]) state.names[i].nodeValue = l.label + (state.excluded[i] ? ' (기준일 값 없음)' : '');
+        var on = !state.items[i] || state.items[i].getAttribute('aria-pressed') === 'true';
+        sers[i].applyOptions({ visible: on && !state.excluded[i] });
+      });
+      chart.applyOptions({ localization: { locale: 'ko-KR', priceFormatter: change ? bpText : function (v) { return valueText(row, v); } } });
+      entry.locked = change;
+      if (change) {
+        zero = sers[0].createPriceLine({ price: 0, color: token(doc, '--tx2', '#a3abba'), lineWidth: 1, lineStyle: LWC.LineStyle.Dotted, axisLabelVisible: false });
+        chart.timeScale().setVisibleRange({ from: view.base, to: view.end });
+        sum.textContent = divergenceText(divergence(view));
+      } else {
+        applyRange([entry], entry.days);
+      }
+    }
+    sum.hidden = true;
+    periods.hidden = true;
   }
 
   // 차트가 자기 폭을 잡은 뒤에 범위를 정한다. 폭이 0 일 때 맞추면 선이 오른쪽 구석에 몰린다.
@@ -1174,6 +1337,9 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
 
   function applyRange(charts, days) {
     charts.forEach(function (c) {
+      c.days = days;
+      // 변화 보기 중인 차트는 자기 기간 버튼을 따른다.
+      if (c.locked) return;
       var from = addDays(c.last, -days);
       if (from <= c.first) c.chart.timeScale().fitContent();
       else c.chart.timeScale().setVisibleRange({ from: from, to: c.last });
@@ -1222,7 +1388,8 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
       var p = doc.createElement('p');
       p.className = 'sub';
       p.textContent = '회사채(BondTerminal)와 D램 현물가(DRAMeXchange)는 원천 약관이 게시를 막아 공개 방문자에게는 보이지 않는다. ' +
-        '회사채는 회사마다 대표 채권 하나의 국채 대비 가산금리(G-spread)다. D램 현물가는 과거 값이 유료라 서버가 날마다 쌓는다. ' +
+        '회사채는 회사마다 대표 채권 하나의 국채 대비 가산금리(G-spread)이고, 같은 채권의 금리(YTW)는 맨 위 금리 차트에 함께 그린다. ' +
+        'D램 현물가는 과거 값이 유료라 서버가 날마다 쌓는다. ' +
         'Tesla·Palantir·SpaceX-xAI·Anthropic·OpenAI 는 BondTerminal 목록에 채권이 없어 차트가 없다. 공개 시장에서 거래되는 회사채를 ' +
         '찾지 못했다는 뜻이고, 빌린 돈이 없다는 뜻은 아니다(은행 대출·사모 채권·전환사채는 이 목록에 없을 수 있다).';
       var c = doc.createElement('div');
@@ -1235,23 +1402,21 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     return wrap;
   }
 
-  // 로그인하지 않은 방문자는 Access 가 로그인 화면으로 돌려보내 요청이 실패한다. 그때는 비공개 절을 그리지 않는다.
-  function loadPrivate(doc, box, LWC, asOf, pub) {
+  // 로그인하지 않은 방문자는 Access 가 로그인 화면으로 돌려보내 요청이 실패한다. 그때는 null 이고 비공개 지표를 그리지 않는다.
+  function getPrivate() {
+    return getJson(PRIVATE_URL).catch(function () { return null; });
+  }
+
+  // 비공개 절. 회사채 금리(bond_yields)는 맨 위 금리 차트에 합쳐 그리므로 여기서는 뺀다.
+  function drawPrivate(doc, box, LWC, asOf, priv) {
     var old = box.parentNode.querySelector('.mkt-private');
-    return getJson(PRIVATE_URL).then(function (priv) {
-      var rows = bigFirst(extraRows(priv, [], asOf));
-      if (!rows.length) throw new Error('empty');
-      // 회사채 금리 큰 차트 맨 앞에 공개 시계열의 미국채 10년물 선을 붙인다.
-      var ust = ((((pub || {}).series || {}).ust10y_yield || {}).lines || [])[0];
-      rows.forEach(function (r) {
-        if (r.key === 'bond_yields' && ust) r.lines = [{ id: 'ust10y', label: '미국채 10년물', points: ust.points }].concat(priv.series.bond_yields.lines);
-      });
-      var wrap = privateBox(doc, box);
-      return drawCharts(doc, wrap.querySelector('.mkt-charts'), priv, LWC, rows);
-    }).catch(function () {
+    var rows = priv ? extraRows(priv, ['bond_yields'], asOf) : [];
+    if (!rows.length) {
       if (old) old.parentNode.removeChild(old);
       return [];
-    });
+    }
+    var wrap = privateBox(doc, box);
+    return drawCharts(doc, wrap.querySelector('.mkt-charts'), priv, LWC, rows);
   }
 
   // 기준일 값은 표 행의 data 속성(data-key·data-kind·data-unit·data-base·data-asof)에 있다.
@@ -1272,22 +1437,33 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
       button.disabled = true;
       box.style.opacity = charts.length ? '0.5' : '';
       status.textContent = '받는 중이다.';
-      Promise.all([getJson(SERIES_URL), loadLwc(doc)]).then(function (res) {
+      Promise.all([getJson(SERIES_URL), loadLwc(doc), getPrivate()]).then(function (res) {
         var data = res[0];
         var LWC = res[1];
+        var priv = res[2];
         var filled = fillNow(rows, data);
         charts.forEach(function (c) { c.chart.remove(); });
         var asOf = rows[0].asOf;
         var keys = rows.map(function (r) { return r.key; });
-        charts = drawCharts(doc, box, data, LWC, bigFirst(rows.concat(extraRows(data, keys, asOf))));
-        return loadPrivate(doc, box, LWC, asOf, data).then(function (priv) {
-          charts = charts.concat(priv);
-          rangeBar(doc, bar, function () { return charts; });
-          setRange(charts, RANGES[1][1]);
-          status.textContent = '시계열은 ' + String(data.updated_at || '').slice(0, 16).replace('T', ' ') + '(UTC)에 갱신됐다. ' +
-            rows.length + '개 가운데 ' + filled + '개에 지금 값이 있다.' +
-            (priv.length ? ' 로그인한 사람에게만 보이는 지표 ' + priv.length + '개를 더 그렸다.' : '');
+        var all = bigFirst(rows.concat(extraRows(data, keys, asOf)));
+        // 2026-11-15 사용자 요청: 로그인했으면 회사별 채권 금리를 맨 위 금리 차트(미국채 10년물·회사채 지수)에 함께 그린다.
+        var bonds = priv && priv.series && priv.series.bond_yields;
+        all.forEach(function (r) {
+          if (r.key !== 'yields') return;
+          r.change = true;
+          if (!bonds) return;
+          r.lines = (((data.series.yields || {}).lines) || []).concat(bonds.lines);
+          r.label = '금리 한눈에: 미국채 10년물과 회사채(회사별 채권 선은 로그인한 사람에게만)';
         });
+        charts = drawCharts(doc, box, data, LWC, all);
+        var privCharts = drawPrivate(doc, box, LWC, asOf, priv);
+        charts = charts.concat(privCharts);
+        rangeBar(doc, bar, function () { return charts; });
+        setRange(charts, RANGES[1][1]);
+        var privCount = privCharts.length + (bonds ? 1 : 0);
+        status.textContent = '시계열은 ' + String(data.updated_at || '').slice(0, 16).replace('T', ' ') + '(UTC)에 갱신됐다. ' +
+          rows.length + '개 가운데 ' + filled + '개에 지금 값이 있다.' +
+          (privCount ? ' 로그인한 사람에게만 보이는 지표 ' + privCount + '개를 더 그렸다.' : '');
       }).catch(function (e) {
         status.textContent = failText(e);
       }).then(function () {
@@ -1316,6 +1492,7 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     OPENROUTER_URL: OPENROUTER_URL, parseEcos: parseEcos, parseBondHistory: parseBondHistory, parseDramx: parseDramx,
     addPoint: addPoint, assemblePrivate: assemblePrivate, ecosUrl: ecosUrl, bondHistoryUrl: bondHistoryUrl,
     parseBondYield: parseBondYield, FRED_YIELDS: FRED_YIELDS, FRED_FETCH: FRED_FETCH,
+    changeLines: changeLines, divergence: divergence, divergenceText: divergenceText, CHANGE_RANGES: CHANGE_RANGES,
     BONDS: BONDS, DRAMX_URL: DRAMX_URL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (root && root.document) {

@@ -1222,6 +1222,10 @@ table.mkt td.mkt-now,table.mkt td.mkt-chg{color:var(--tx2)}
 .mkt-legend button{display:inline-flex;align-items:center;min-height:28px;padding:2px 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--tx);font:inherit;font-size:var(--fs-sm);cursor:pointer}
 .mkt-legend button[aria-pressed="false"]{color:var(--tx2);opacity:.55}
 .mkt-legend button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.mkt-mode{margin:4px 0 8px;gap:6px 16px}
+.mkt-group{display:flex;flex-wrap:wrap;gap:6px}
+.mkt-group[hidden],.mkt-sum[hidden]{display:none}
+.mkt-sum{margin:8px 0 2px;color:var(--tx)}
 @media (max-width:640px){.mkt-fig.big .mkt-chart{height:320px}}
 .mkt-private{margin-top:22px}
 .mkt-private h4{margin:0 0 4px;font-size:var(--fs-md)}

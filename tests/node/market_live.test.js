@@ -196,3 +196,46 @@ test('비공개 묶음: 회사채는 bp 를 %p 로 바꾸고, 받지 못한 채�
     dram: [], now: 'z', previous: b });
   assert.deepEqual(c.series['bond:coreweave'].lines[0].points, [['2026-11-10', 10.1], ['2026-11-12', 9.9], ['2026-11-13', 9.8]]);
 });
+
+// 변화(bp) 보기: 기준일을 0 으로 놓고 10년물과 엇갈린 선을 고른다
+const ust = { id: 'ust10y', label: '미국채 10년물', points: [['2026-10-10', 5.20], ['2026-10-13', 5.22], ['2026-11-12', 5.10]] };
+const oracle = { id: 'bond:oracle', label: 'Oracle', points: [['2026-10-14', 6.00], ['2026-11-04', 6.40], ['2026-11-12', 6.35]] };
+const meta = { id: 'bond:meta', label: 'Meta', points: [['2026-10-13', 5.50], ['2026-11-12', 5.39]] };
+const late = { id: 'bond:late', label: 'Late', points: [['2026-10-25', 7.0], ['2026-11-12', 7.1]] };
+
+test('변화 보기: 기준일은 마지막 날에서 기간만큼 앞이고, 휴일만 넘겨 첫 점을 0 으로 놓으며, 늦게 시작한 선은 뺀다', () => {
+  const v = live.changeLines([ust, oracle, late], 30);
+  assert.equal(v.base, '2026-10-13');
+  assert.equal(v.end, '2026-11-12');
+  assert.deepEqual(v.lines[0].points, [['2026-10-13', 0], ['2026-11-12', -12]]);
+  assert.equal(v.lines[1].from, '2026-10-14');
+  assert.deepEqual(v.lines[1].points, [['2026-10-14', 0], ['2026-11-04', 40], ['2026-11-12', 35]]);
+  assert.equal(v.lines[2].excluded, true);
+  assert.deepEqual(v.lines[2].points, []);
+});
+
+test('엇갈림: 10년물과 반대로 움직인 선과 최근 구간의 방향을 적고, 뺀 선을 밝힌다', () => {
+  const d = live.divergence(live.changeLines([ust, oracle, meta, late], 30));
+  assert.equal(d.recentDays, 8);
+  const o = d.items.find((i) => i.id === 'bond:oracle');
+  assert.deepEqual([o.change, o.gap, o.recent, o.opposite], [35, 47, 7, true]);
+  assert.equal(d.items.find((i) => i.id === 'bond:meta').opposite, false);
+  const text = live.divergenceText(d);
+  assert.ok(text.startsWith('2026-10-13 이후 미국채 10년물은 -12bp 움직였다.'), text);
+  assert.ok(text.includes('반대로 움직인 선은 Oracle +35bp(10년물 대비 +47bp, 최근 8일에도 더 벌어지는 중)이다.'), text);
+  assert.ok(!text.includes('Meta'), text);
+  assert.ok(text.includes('기준일에 값이 없는 Late은 뺐다.'), text);
+});
+
+test('엇갈림: 최근 구간에 차이가 줄면 좁혀지는 중이고, 반대로 움직인 선이 없으면 가장 벌어진 선 하나를 적는다', () => {
+  const narrowing = { ...oracle, points: [['2026-10-14', 6.00], ['2026-11-04', 6.60], ['2026-11-12', 6.35]] };
+  assert.ok(live.divergenceText(live.divergence(live.changeLines([ust, narrowing], 30))).includes('최근 8일은 좁혀지는 중'));
+  const text = live.divergenceText(live.divergence(live.changeLines([ust, meta], 30)));
+  assert.ok(text.includes('반대로 움직인 선은 없고, 10년물 대비 가장 많이 벌어진 선은 Meta -11bp(10년물 대비 +1bp, 최근 8일은 거의 그대로)이다.'), text);
+});
+
+test('엇갈림: 기준일에 10년물 값이 없으면 읽지 않는다', () => {
+  const d = live.divergence(live.changeLines([late, oracle], 30));
+  assert.equal(d, null);
+  assert.ok(live.divergenceText(d).includes('미국채 10년물 값이 없어'));
+});
