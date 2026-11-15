@@ -92,7 +92,10 @@ test('시계열 묶음: 열쇠는 리포트 행과 같고, 받지 못한 외부 
   const gd = { 'H100 SXM': 'date,billing_type,reservation_months,median_price\n2026-11-09,ON_DEMAND,,4.0\n' };
   const first = live.assemble({ fred, getdeploying: gd, daily, models: fx.models, today: fx.ref, now: '2026-11-15T00:00:00Z' });
   assert.deepEqual(Object.keys(first.series).sort(), ['baa_spread', 'gpu_rent_hourly:B200', 'gpu_rent_hourly:H100 SXM',
-    'gpu_rent_hourly:H200', 'hy_oas', 'ig_oas', 'token_blended_price', 'ust10y_yield']);
+    'gpu_rent_hourly:H200', 'hy_oas', 'ig_oas', 'token_blended_price', 'ust10y_yield', 'yields']);
+  // 금리 한눈에: 미국채 10년물만 받은 날은 그 선 하나다(받지 못한 회사채 금리 계열은 선을 만들지 않는다).
+  assert.equal(first.series.yields.big, true);
+  assert.deepEqual(first.series.yields.lines.map((l) => l.id), ['ust10y']);
   assert.deepEqual(first.series.ig_oas.lines, []);
   const h100 = first.series['gpu_rent_hourly:H100 SXM'].lines;
   assert.deepEqual(h100.map((l) => [l.id, l.points.length, !!l.dashed]), [['ours', 1, false], ['getdeploying', 1, true]]);
@@ -102,6 +105,19 @@ test('시계열 묶음: 열쇠는 리포트 행과 같고, 받지 못한 외부 
   assert.deepEqual(second.series.ust10y_yield.lines, first.series.ust10y_yield.lines);
   assert.deepEqual(second.series['gpu_rent_hourly:H100 SXM'].lines[1], h100[1]);
   assert.deepEqual(second.series.token_blended_price.lines[1], first.series.token_blended_price.lines[1]);
+});
+
+test('금리 한눈에: 미국채 10년물과 회사채 금리 세 계열을 한 축에 싣고, 받지 못한 계열은 직전 선을 쓴다', () => {
+  assert.deepEqual(live.FRED_FETCH, ['DGS10', 'BAA10Y', 'BAMLC0A0CM', 'BAMLH0A0HYM2', 'BAMLC0A0CMEY', 'DBAA', 'BAMLH0A0HYM2EY']);
+  const csv = (id, v) => `observation_date,${id}\n2026-11-12,${v}\n`;
+  const fred = { DGS10: csv('DGS10', 5.10), BAMLC0A0CMEY: csv('BAMLC0A0CMEY', 5.96), DBAA: csv('DBAA', 6.58), BAMLH0A0HYM2EY: csv('BAMLH0A0HYM2EY', 8.16) };
+  const a = live.assemble({ fred, getdeploying: {}, daily: [], models: null, today: '2026-11-15', now: 'x' });
+  assert.deepEqual(a.series.yields.lines.map((l) => [l.id, l.points]),
+    [['ust10y', [['2026-11-12', 5.1]]], ['ig', [['2026-11-12', 5.96]]], ['baa', [['2026-11-12', 6.58]]], ['hy', [['2026-11-12', 8.16]]]]);
+  const b = live.assemble({ fred: { DGS10: csv('DGS10', 5.2) }, getdeploying: {}, daily: [], models: null, today: '2026-11-16', now: 'y', previous: a });
+  assert.deepEqual(b.series.yields.lines.map((l) => l.id), ['ust10y', 'ig', 'baa', 'hy']);
+  assert.deepEqual(b.series.yields.lines[0].points, [['2026-11-12', 5.2]]);
+  assert.deepEqual(b.series.yields.lines[3], a.series.yields.lines[3]);
 });
 
 test('ECOS D램 지수: 달러 기준 칸만 그달 1일로 읽고, 오류 응답이면 빈 목록이다', () => {
@@ -161,11 +177,17 @@ test('비공개 묶음: 회사채는 bp 를 %p 로 바꾸고, 받지 못한 채�
     { date: '2026-11-11', price: 86.5, ytw: 14.2 }, { date: '2026-11-10', spread: 1010 }] };
   assert.deepEqual(live.parseBondHistory(hist), [['2026-11-10', 10.1], ['2026-11-12', 9.97]]);
   const a = live.assemblePrivate({ bonds: { [cw.isin]: hist }, dram: [], now: 'x' });
-  assert.deepEqual(Object.keys(a.series), ['bond:coreweave']);
+  assert.deepEqual(Object.keys(a.series), ['bond:coreweave', 'bond_yields']);
   assert.equal(a.series['bond:coreweave'].unit, '%p');
+  // 채권 금리는 ytw, 없으면 ytm. 값이 둘 다 없는 날은 뺀다.
+  assert.deepEqual(live.parseBondYield(hist), [['2026-11-11', 14.2], ['2026-11-12', 14.01]]);
+  assert.deepEqual(a.series.bond_yields.lines.map((l) => [l.id, l.label, l.hidden]), [['bond:coreweave', 'CoreWeave 9.25% 2030', false]]);
   const b = live.assemblePrivate({ bonds: { [orcl.isin]: { series: [{ date: '2026-11-12', spread: 150 }] } },
     dram: [['2026-11-13', 60.267]], now: 'y', previous: a, errors: ['BondTerminal CoreWeave: HTTP 429'] });
-  assert.deepEqual(Object.keys(b.series).sort(), ['bond:coreweave', 'bond:oracle', 'dram_spot']);
+  assert.deepEqual(Object.keys(b.series).sort(), ['bond:coreweave', 'bond:oracle', 'bond_yields', 'dram_spot']);
+  // 이번에 받지 못한 CoreWeave 금리 선은 직전 선 그대로 남는다.
+  assert.deepEqual(b.series.bond_yields.lines.map((l) => l.id), ['bond:coreweave']);
+  assert.deepEqual(b.series.bond_yields.lines[0].points, a.series.bond_yields.lines[0].points);
   assert.deepEqual(b.series['bond:coreweave'].lines, a.series['bond:coreweave'].lines);
   assert.equal(b.series.dram_spot.kind, 'usd');
   assert.deepEqual(b.errors, ['BondTerminal CoreWeave: HTTP 429']);

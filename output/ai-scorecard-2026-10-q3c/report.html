@@ -421,13 +421,19 @@ table.mkt td.mkt-now,table.mkt td.mkt-chg{color:var(--tx2)}
 .mkt-range button{min-height:44px;min-width:56px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--tx2);font:inherit;font-size:var(--fs-md);font-weight:600;cursor:pointer}
 .mkt-range button[aria-pressed="true"]{color:var(--acc-text);background:var(--acc-soft);border-color:var(--acc-line)}
 .mkt-range button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.mkt-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));gap:12px;transition:opacity .15s}
+.mkt-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(480px,100%),1fr));gap:12px;transition:opacity .15s}
 .mkt-fig{margin:0;padding:12px 12px 8px;border:1px solid var(--line);border-radius:10px;background:var(--bg2);min-width:0}
 .mkt-fig figcaption{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font-size:var(--fs-md);margin-bottom:6px}
 .mkt-legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:var(--fs-sm);color:var(--tx2)}
 .mkt-legend .lk{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px}
 .mkt-legend .lk.dash{border-top-style:dashed}
-.mkt-chart{height:220px}
+.mkt-chart{height:260px}
+.mkt-fig.big{grid-column:1/-1}
+.mkt-fig.big .mkt-chart{height:440px}
+.mkt-legend button{display:inline-flex;align-items:center;min-height:28px;padding:2px 10px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--tx);font:inherit;font-size:var(--fs-sm);cursor:pointer}
+.mkt-legend button[aria-pressed="false"]{color:var(--tx2);opacity:.55}
+.mkt-legend button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media (max-width:640px){.mkt-fig.big .mkt-chart{height:320px}}
 .mkt-private{margin-top:22px}
 .mkt-private h4{margin:0 0 4px;font-size:var(--fs-md)}
 .mkt-private .sub{margin:0 0 10px}
@@ -609,6 +615,15 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
   // FRED 의 ICE BofA OAS 두 계열은 최근 3년만 내준다. 무디스 Baa−10년물은 10년 추이용이다.
   var FRED_SERIES = [['ust10y_yield', 'DGS10'], ['baa_spread', 'BAA10Y'], ['ig_oas', 'BAMLC0A0CM'], ['hy_oas', 'BAMLH0A0HYM2']];
   var FRED_START = '2015-01-01';
+  // 2026-11-15 사용자 요청: 미국채 10년물과 회사채 금리를 한 차트에서 본다. 스프레드가 아니라 금리 수준이라 같은 % 축에 놓인다.
+  // ICE BofA 실효수익률 두 계열은 OAS 와 같이 최근 3년, 무디스 Baa(DBAA)는 2015년부터다.
+  var FRED_YIELDS = [['ig', 'BAMLC0A0CMEY', '투자등급 회사채(ICE 실효수익률)'], ['baa', 'DBAA', '무디스 Baa 회사채'],
+    ['hy', 'BAMLH0A0HYM2EY', '하이일드 회사채(ICE 실효수익률)']];
+  var FRED_FETCH = FRED_SERIES.map(function (p) { return p[1]; }).concat(FRED_YIELDS.map(function (p) { return p[1]; }));
+  // 큰 차트의 선 색(dataviz 기본 범주 팔레트의 어두운 화면 값, 리포트 배경 #161a22 에서 검증 통과). 아홉째 선부터는 같은 색의 점선이다.
+  var PALETTE = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#0ca30c', '#9085e9', '#e66767'];
+  // 회사채 금리 큰 차트에서 처음에 끈 채권. 선이 열하나라 겹치지 않게 AI 설비투자로 돈을 빌리는 쪽을 먼저 보인다. 범례로 켠다.
+  var BOND_YIELD_HIDDEN = ['bond:apple', 'bond:nvidia', 'bond:alibaba', 'bond:tsmc'];
   // GetDeploying 무료 데이터(CC BY 4.0)의 GPU 이름. 공급자 여러 곳의 호가 중간값이라 우리 vast.ai 정의와 다른 숫자다.
   var GETDEPLOYING_SLUGS = { 'H100 SXM': 'nvidia-h100', 'H200': 'nvidia-h200', 'B200': 'nvidia-b200' };
   var TOKEN_RECON_START = '2025-07-07';
@@ -824,6 +839,16 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     return sortPoints(out);
   }
 
+  // 채권 금리(%). 조기상환 조건이 있는 채권은 만기·조기상환 가운데 낮은 쪽 수익률(ytw)이고, 없으면 만기수익률(ytm)이다.
+  function parseBondYield(payload) {
+    var out = [];
+    ((payload && payload.series) || []).forEach(function (p) {
+      var y = p && (typeof p.ytw === 'number' ? p.ytw : p.ytm);
+      if (p && typeof p.date === 'string' && typeof y === 'number') out.push([p.date, y]);
+    });
+    return sortPoints(out);
+  }
+
   // DRAMeXchange 첫 화면의 DRAM 현물 표에서 DDR5 16Gb 4800/5600 세션 평균과 표의 갱신 날짜(대만 시각)를 읽는다.
   function parseDramx(html) {
     var t = String(html || '');
@@ -874,6 +899,19 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
         : prev;
       if (line) series[b.key] = { title: b.title, kind: 'pct', unit: '%p', lines: [line] };
     });
+    // 회사채 금리 큰 차트. 미국채 10년물 선은 공개 시계열에 있어 브라우저가 맨 앞에 붙인다.
+    var prevYields = ((previous.bond_yields || {}).lines) || [];
+    var yieldLines = [];
+    BONDS.forEach(function (b) {
+      var payload = (input.bonds || {})[b.isin];
+      var pts = payload ? parseBondYield(payload) : [];
+      var prev = prevYields.filter(function (l) { return l.id === b.key; })[0] || null;
+      var merged = mergePoints(prev ? prev.points : [], pts);
+      if (merged.length) yieldLines.push({ id: b.key, label: b.title.replace(/ 가산금리$/, ''), points: merged, hidden: BOND_YIELD_HIDDEN.indexOf(b.key) >= 0 });
+    });
+    if (yieldLines.length) {
+      series.bond_yields = { title: '회사채 금리(YTW)와 미국채 10년물', kind: 'pct', unit: '%', big: true, lines: yieldLines };
+    }
     var dram = input.dram || [];
     if (dram.length) {
       series.dram_spot = { title: 'D램 현물가 DDR5 16Gb 4800/5600', kind: 'usd', unit: '$',
@@ -898,6 +936,15 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
       var line = text ? { id: 'fred', label: 'FRED ' + pair[1], points: parseFredCsv(text) } : prevLine(pair[0], 'fred');
       series[pair[0]] = { lines: line ? [line] : [] };
     });
+    // 금리 한눈에: 미국채 10년물과 회사채 금리 세 계열을 같은 % 축에. 받지 못한 계열은 직전 선을 쓴다.
+    var ust = (series.ust10y_yield.lines[0] || null);
+    var yieldLines = ust ? [{ id: 'ust10y', label: '미국채 10년물', points: ust.points }] : [];
+    FRED_YIELDS.forEach(function (y) {
+      var text = (input.fred || {})[y[1]];
+      var line = text ? { id: y[0], label: y[2], points: parseFredCsv(text) } : prevLine('yields', y[0]);
+      if (line && line.points.length) yieldLines.push(line);
+    });
+    if (yieldLines.length) series.yields = { title: '금리 한눈에: 미국채 10년물과 회사채', kind: 'pct', unit: '%', big: true, lines: yieldLines };
     var daily = input.daily || [];
     GPU_TYPES.forEach(function (g) {
       var key = 'gpu_rent_hourly:' + g;
@@ -1036,9 +1083,13 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     var font = root.getComputedStyle(doc.body).fontFamily;
     var charts = [];
     rows.forEach(function (row) {
-      var lines = ((data.series[row.key] || {}).lines || []).filter(function (l) { return l.points.length; });
+      var lines = (row.lines || (data.series[row.key] || {}).lines || []).filter(function (l) { return l.points.length; });
+      // 큰 차트(여러 계열을 한 축에)는 범주 팔레트로 칠하고, 아홉째 선부터 같은 색의 점선이다. 작은 차트는 우리 정의·참고 선 두 색이다.
+      var colorOf = function (i) { return row.big ? PALETTE[i % PALETTE.length] : colors[i % 2]; };
+      var dashOf = function (i, l) { return row.big ? i >= PALETTE.length : Boolean(l.dashed); };
+      var sers = [];
       var fig = doc.createElement('figure');
-      fig.className = 'mkt-fig';
+      fig.className = 'mkt-fig' + (row.big ? ' big' : '');
       var cap = doc.createElement('figcaption');
       var title = doc.createElement('b');
       title.textContent = row.label;
@@ -1047,8 +1098,18 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
         var legend = doc.createElement('span');
         legend.className = 'mkt-legend';
         lines.forEach(function (l, i) {
-          var item = doc.createElement('span');
-          item.appendChild(lineKey(doc, colors[i % 2], l.dashed));
+          // 큰 차트의 범례는 선을 켜고 끄는 버튼이다.
+          var item = doc.createElement(row.big ? 'button' : 'span');
+          if (row.big) {
+            item.type = 'button';
+            item.setAttribute('aria-pressed', l.hidden ? 'false' : 'true');
+            item.addEventListener('click', function () {
+              var on = item.getAttribute('aria-pressed') !== 'true';
+              item.setAttribute('aria-pressed', on ? 'true' : 'false');
+              if (sers[i]) sers[i].applyOptions({ visible: on });
+            });
+          }
+          item.appendChild(lineKey(doc, colorOf(i), dashOf(i, l)));
           item.appendChild(doc.createTextNode(l.label));
           legend.appendChild(item);
         });
@@ -1085,9 +1146,10 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
       var last = null;
       lines.forEach(function (l, i) {
         var ser = chart.addSeries(LWC.LineSeries, {
-          color: colors[i % 2], lineWidth: 2, lineStyle: l.dashed ? LWC.LineStyle.Dashed : LWC.LineStyle.Solid,
-          priceLineVisible: false, pointMarkersVisible: l.points.length < 40
+          color: colorOf(i), lineWidth: 2, lineStyle: dashOf(i, l) ? LWC.LineStyle.Dashed : LWC.LineStyle.Solid,
+          priceLineVisible: false, pointMarkersVisible: l.points.length < 40, visible: !l.hidden
         });
+        sers[i] = ser;
         ser.setData(l.points.map(function (p) { return { time: p[0], value: p[1] }; }));
         if (first === null || l.points[0][0] < first) first = l.points[0][0];
         var end = l.points[l.points.length - 1][0];
@@ -1140,8 +1202,13 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
       return skip.indexOf(k) < 0 && data.series[k].title;
     }).map(function (k) {
       var s = data.series[k];
-      return { key: k, kind: s.kind, unit: s.unit, asOf: asOf, label: s.title };
+      return { key: k, kind: s.kind, unit: s.unit, asOf: asOf, label: s.title, big: Boolean(s.big) };
     });
+  }
+
+  // 큰 차트를 맨 앞에 둔다(화면 폭 전체를 쓴다). 나머지 순서는 그대로다.
+  function bigFirst(rows) {
+    return rows.filter(function (r) { return r.big; }).concat(rows.filter(function (r) { return !r.big; }));
   }
 
   // 로그인한 사람에게만 보이는 절. 차트 상자 바로 뒤에 한 번만 만든다.
@@ -1169,11 +1236,16 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
   }
 
   // 로그인하지 않은 방문자는 Access 가 로그인 화면으로 돌려보내 요청이 실패한다. 그때는 비공개 절을 그리지 않는다.
-  function loadPrivate(doc, box, LWC, asOf) {
+  function loadPrivate(doc, box, LWC, asOf, pub) {
     var old = box.parentNode.querySelector('.mkt-private');
     return getJson(PRIVATE_URL).then(function (priv) {
-      var rows = extraRows(priv, [], asOf);
+      var rows = bigFirst(extraRows(priv, [], asOf));
       if (!rows.length) throw new Error('empty');
+      // 회사채 금리 큰 차트 맨 앞에 공개 시계열의 미국채 10년물 선을 붙인다.
+      var ust = ((((pub || {}).series || {}).ust10y_yield || {}).lines || [])[0];
+      rows.forEach(function (r) {
+        if (r.key === 'bond_yields' && ust) r.lines = [{ id: 'ust10y', label: '미국채 10년물', points: ust.points }].concat(priv.series.bond_yields.lines);
+      });
       var wrap = privateBox(doc, box);
       return drawCharts(doc, wrap.querySelector('.mkt-charts'), priv, LWC, rows);
     }).catch(function () {
@@ -1207,8 +1279,8 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
         charts.forEach(function (c) { c.chart.remove(); });
         var asOf = rows[0].asOf;
         var keys = rows.map(function (r) { return r.key; });
-        charts = drawCharts(doc, box, data, LWC, rows.concat(extraRows(data, keys, asOf)));
-        return loadPrivate(doc, box, LWC, asOf).then(function (priv) {
+        charts = drawCharts(doc, box, data, LWC, bigFirst(rows.concat(extraRows(data, keys, asOf))));
+        return loadPrivate(doc, box, LWC, asOf, data).then(function (priv) {
           charts = charts.concat(priv);
           rangeBar(doc, bar, function () { return charts; });
           setRange(charts, RANGES[1][1]);
@@ -1243,6 +1315,7 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     getDeployingUrl: getDeployingUrl, GPU_TYPES: GPU_TYPES, FRED_SERIES: FRED_SERIES, FRED_START: FRED_START,
     OPENROUTER_URL: OPENROUTER_URL, parseEcos: parseEcos, parseBondHistory: parseBondHistory, parseDramx: parseDramx,
     addPoint: addPoint, assemblePrivate: assemblePrivate, ecosUrl: ecosUrl, bondHistoryUrl: bondHistoryUrl,
+    parseBondYield: parseBondYield, FRED_YIELDS: FRED_YIELDS, FRED_FETCH: FRED_FETCH,
     BONDS: BONDS, DRAMX_URL: DRAMX_URL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (root && root.document) {
