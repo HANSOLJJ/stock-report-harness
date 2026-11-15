@@ -555,7 +555,9 @@
       var p = doc.createElement('p');
       p.className = 'sub';
       p.textContent = '회사채(BondTerminal)와 D램 현물가(DRAMeXchange)는 원천 약관이 게시를 막아 공개 방문자에게는 보이지 않는다. ' +
-        '회사채는 회사마다 대표 채권 하나의 국채 대비 가산금리(G-spread)다. D램 현물가는 과거 값이 유료라 서버가 날마다 쌓는다.';
+        '회사채는 회사마다 대표 채권 하나의 국채 대비 가산금리(G-spread)다. D램 현물가는 과거 값이 유료라 서버가 날마다 쌓는다. ' +
+        'Tesla·Palantir·SpaceX-xAI·Anthropic·OpenAI 는 BondTerminal 목록에 채권이 없어 차트가 없다. 공개 시장에서 거래되는 회사채를 ' +
+        '찾지 못했다는 뜻이고, 빌린 돈이 없다는 뜻은 아니다(은행 대출·사모 채권·전환사채는 이 목록에 없을 수 있다).';
       var c = doc.createElement('div');
       c.className = 'mkt-charts';
       wrap.appendChild(h);
