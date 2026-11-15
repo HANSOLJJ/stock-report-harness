@@ -20,7 +20,17 @@
   var BONDS = [
     { key: 'bond:coreweave', isin: 'US21873SAB43', title: 'CoreWeave 9.25% 2030 가산금리' },
     { key: 'bond:oracle', isin: 'US68389XCE31', title: 'Oracle 2.875% 2031 가산금리' },
-    { key: 'bond:meta', isin: 'US30303M8N52', title: 'Meta 4.95% 2033 가산금리' }
+    { key: 'bond:meta', isin: 'US30303M8N52', title: 'Meta 4.95% 2033 가산금리' },
+    // 2026-11-15 사용자 요청: BondTerminal 에 있는 나머지 채점 대상 회사. 비교가 되게 2031년 만기 고정금리 채권을 고르고,
+    // 2031년물이 목록에 없는 Microsoft 만 가장 가까운 2035년물이다. Tesla·Palantir·SpaceX-xAI·Anthropic·OpenAI 는 목록에 없다.
+    // 한 채권에 하루 10단위라 열 채권이 하루 100단위다(무료 한도 200).
+    { key: 'bond:microsoft', isin: 'US594918BC73', title: 'Microsoft 3.5% 2035 가산금리' },
+    { key: 'bond:alphabet', isin: 'US02079KBK25', title: 'Alphabet 4.1% 2031 가산금리' },
+    { key: 'bond:amazon', isin: 'US023135DD51', title: 'Amazon 4.25% 2031 가산금리' },
+    { key: 'bond:apple', isin: 'US037833FG02', title: 'Apple 4.9% 2031 가산금리' },
+    { key: 'bond:nvidia', isin: 'US67066GAR56', title: 'NVIDIA 4.5% 2031 가산금리' },
+    { key: 'bond:alibaba', isin: 'US01609WAX02', title: 'Alibaba 2.125% 2031 가산금리' },
+    { key: 'bond:tsmc', isin: 'US872898AC52', title: 'TSMC Arizona 2.5% 2031 가산금리' }
   ];
   // 2026-11-15: BondTerminal 은 한 요청의 기간이 730일을 넘으면 400 을 낸다(2015-01-01 부터 한 번에 받던 요청이 전부 실패했다).
   // 매일 최근 729일을 받아 직전 시계열과 날짜로 합치므로 날이 갈수록 2년보다 긴 기록이 쌓인다.
