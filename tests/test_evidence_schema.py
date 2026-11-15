@@ -192,12 +192,14 @@ class ResolveCikCliTest(_RegistrySandbox):
 
         real = {c["company_id"]: c for c in load_json_strict(ROOT / "scorecard" / "companies.json")["companies"]}
         rows = resolve(list(real.values()), load_ticker_map(load_json_strict(TICKERS)))
-        self.assertEqual({r["company_id"]: real[r["company_id"]].get("cik") for r in rows},
-                         {r["company_id"]: r["cik"] for r in rows})
+        # Anthropic 은 티커가 없어 티커 표로 찾을 수 없고, 2026-10-26 공개 제출한 S-1 의 CIK 를 직접 넣었다.
+        by_ticker = [r for r in rows if r["company_id"] != "anthropic"]
+        self.assertEqual({r["company_id"]: real[r["company_id"]].get("cik") for r in by_ticker},
+                         {r["company_id"]: r["cik"] for r in by_ticker})
         self.assertEqual(sum(1 for r in rows if r["status"] == "resolved"), 12)
         self.assertEqual(real["spacex-xai"]["cik"], 1181412)
-        for cid in ("anthropic", "openai"):
-            self.assertNotIn("cik", real[cid])
+        self.assertEqual(real["anthropic"]["cik"], 2130357)
+        self.assertNotIn("cik", real["openai"])
 
 
 class ResultsHashInvariantTest(_RegistrySandbox):
