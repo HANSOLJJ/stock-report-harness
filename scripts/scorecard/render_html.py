@@ -1255,8 +1255,8 @@ def render_market(ctx: Any, token_items: list[dict[str, Any]] | None = None, tok
                    if token_items else [])
     notes = "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in [*view["notes"], *extra_notes])
     return ('<section class="market" id="market-live"><h3>시장 지표(기준일 값과 지금 값)</h3>'
-            '<div class="mktbar"><button type="button" class="mkt-btn">추이 받기</button>'
-            '<p class="mkt-status sub" role="status" aria-live="polite">버튼을 누르면 공개 사이트가 매일 쌓는 시계열을 받아 지금 값과 추이 차트를 보인다. '
+            '<div class="mktbar"><button type="button" class="mkt-btn">다시 받기</button>'
+            '<p class="mkt-status sub" role="status" aria-live="polite">이 절이 화면에 보이면 공개 사이트가 매일 쌓는 시계열을 받아 지금 값과 추이 차트를 보인다. 버튼은 새로 받을 때 쓴다. '
             '받은 값은 이 화면에만 보이고 실행 기록에 남지 않는다.</p></div>'
             f'<div class="tablewrap"><table class="figures mkt"><thead><tr>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></div>'
             f'<p class="sub mt-8">변화는 금리·스프레드가 bp(0.01%p), GPU 임대료·토큰 단가가 % 다.</p>{notes}'
@@ -1289,8 +1289,8 @@ def _market_live_only(as_of: str, token_items: list[dict[str, Any]] | None, toke
     if token_items:
         notes.append(f"토큰 지출 지수는 $/100만 토큰이고, 과거 값이 유료라 추이를 그리지 않는다. {token_caveat}".strip())
     return (f'<section class="market" id="market-live" data-asof="{esc(as_of)}"><h3>시장 지표(지금 값과 추이)</h3>'
-            '<div class="mktbar"><button type="button" class="mkt-btn">추이 받기</button>'
-            '<p class="mkt-status sub" role="status" aria-live="polite">버튼을 누르면 공개 사이트가 매일 쌓는 시계열을 받아 지금 값과 추이 차트를 보인다. '
+            '<div class="mktbar"><button type="button" class="mkt-btn">다시 받기</button>'
+            '<p class="mkt-status sub" role="status" aria-live="polite">이 절이 화면에 보이면 공개 사이트가 매일 쌓는 시계열을 받아 지금 값과 추이 차트를 보인다. 버튼은 새로 받을 때 쓴다. '
             '받은 값은 이 화면에만 보이고 실행 기록에 남지 않는다.</p></div>'
             f'<div class="tablewrap"><table class="figures mkt"><thead><tr>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></div>'
             + "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in notes)

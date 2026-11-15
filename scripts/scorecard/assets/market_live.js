@@ -596,7 +596,7 @@
     });
     if (!button || !status || !bar || !box || !rows.length) return;
     var charts = [];
-    button.addEventListener('click', function () {
+    function load() {
       button.disabled = true;
       box.style.opacity = charts.length ? '0.5' : '';
       status.textContent = '받는 중이다.';
@@ -622,7 +622,19 @@
         box.style.opacity = '';
         button.disabled = false;
       });
-    });
+    }
+    button.addEventListener('click', load);
+    // 2026-11-15 사용자 요청: 탭을 열 때마다 버튼을 누르지 않게, 절이 화면에 처음 보일 때 한 번 저절로 받는다. 버튼은 다시 받을 때 쓴다.
+    // 숨은 탭 안에서는 보이지 않으므로 국면 탭을 열기 전에는 받지 않는다(숨은 상자에 차트를 그리면 폭이 0 이다).
+    if (root.IntersectionObserver) {
+      var seen = new root.IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) {
+          seen.disconnect();
+          load();
+        }
+      });
+      seen.observe(panel);
+    }
   }
 
   var api = { median: median, gpuRent: gpuRent, tokenPicks: tokenPicks, fredLatest: fredLatest, changeText: changeText,
