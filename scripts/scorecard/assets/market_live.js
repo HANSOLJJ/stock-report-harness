@@ -22,7 +22,10 @@
     { key: 'bond:oracle', isin: 'US68389XCE31', title: 'Oracle 2.875% 2031 가산금리' },
     { key: 'bond:meta', isin: 'US30303M8N52', title: 'Meta 4.95% 2033 가산금리' }
   ];
-  var BOND_START = '2015-01-01';
+  // 2026-11-15: BondTerminal 은 한 요청의 기간이 730일을 넘으면 400 을 낸다(2015-01-01 부터 한 번에 받던 요청이 전부 실패했다).
+  // 매일 최근 729일을 받아 직전 시계열과 날짜로 합치므로 날이 갈수록 2년보다 긴 기록이 쌓인다.
+  // var BOND_START = '2015-01-01';
+  var BOND_WINDOW_DAYS = 729;
   var BONDTERMINAL_API = 'https://bondterminal.com/api/v1';
   // 과거 차트는 유료 회원 전용이라 첫 화면 표의 세션 평균을 날마다 쌓는다.
   var DRAMX_URL = 'https://www.dramexchange.com/';
@@ -243,14 +246,22 @@
   }
 
   // 로그인한 사람에게만 내보내는 시계열. 받지 못한 채권은 직전 선을 그대로 쓴다.
+  function mergePoints(old, fresh) {
+    var byDate = {};
+    old.concat(fresh).forEach(function (p) { byDate[p[0]] = p; });
+    return Object.keys(byDate).sort().map(function (d) { return byDate[d]; });
+  }
+
   function assemblePrivate(input) {
     var previous = (input.previous && input.previous.series) || {};
     var series = {};
     BONDS.forEach(function (b) {
       var payload = (input.bonds || {})[b.isin];
       var pts = payload ? parseBondHistory(payload) : [];
-      var line = pts.length ? { id: 'bondterminal', label: 'BondTerminal 국채 대비 가산금리', points: pts }
-        : (((previous[b.key] || {}).lines) || [])[0] || null;
+      var prev = (((previous[b.key] || {}).lines) || [])[0] || null;
+      // 새로 받은 창(최근 729일)을 직전 선과 날짜로 합친다. 같은 날짜는 새 값을 쓴다.
+      var line = pts.length ? { id: 'bondterminal', label: 'BondTerminal 국채 대비 가산금리', points: mergePoints(prev ? prev.points : [], pts) }
+        : prev;
       if (line) series[b.key] = { title: b.title, kind: 'pct', unit: '%p', lines: [line] };
     });
     var dram = input.dram || [];
@@ -312,7 +323,7 @@
   }
 
   function bondHistoryUrl(isin, today) {
-    return BONDTERMINAL_API + '/bonds/' + isin + '/history?start=' + BOND_START + '&end=' + today;
+    return BONDTERMINAL_API + '/bonds/' + isin + '/history?start=' + addDays(today, -BOND_WINDOW_DAYS) + '&end=' + today;
   }
 
   function vastUrl(gpu) {

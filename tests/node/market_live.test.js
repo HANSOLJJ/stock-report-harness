@@ -155,7 +155,8 @@ test('DRAMeXchange: DRAM 표의 DDR5 16Gb 4800/5600 세션 평균과 그 표의 
 test('비공개 묶음: 회사채는 bp 를 %p 로 바꾸고, 받지 못한 채권은 직전 선을 쓰며, D램 현물은 쌓인 점이 있을 때만 싣는다', () => {
   const [cw, orcl] = live.BONDS;
   assert.equal(live.bondHistoryUrl(cw.isin, '2026-11-15'),
-    'https://bondterminal.com/api/v1/bonds/US21873SAB43/history?start=2015-01-01&end=2026-11-15');
+    'https://bondterminal.com/api/v1/bonds/US21873SAB43/history?start=2024-11-16&end=2026-11-15',
+    'BondTerminal 은 한 요청에 730일을 넘으면 400 을 낸다');
   const hist = { isin: cw.isin, series: [{ date: '2026-11-12', price: 87.0, ytw: 14.01, spread: 997 },
     { date: '2026-11-11', price: 86.5, ytw: 14.2 }, { date: '2026-11-10', spread: 1010 }] };
   assert.deepEqual(live.parseBondHistory(hist), [['2026-11-10', 10.1], ['2026-11-12', 9.97]]);
@@ -168,4 +169,8 @@ test('비공개 묶음: 회사채는 bp 를 %p 로 바꾸고, 받지 못한 채�
   assert.deepEqual(b.series['bond:coreweave'].lines, a.series['bond:coreweave'].lines);
   assert.equal(b.series.dram_spot.kind, 'usd');
   assert.deepEqual(b.errors, ['BondTerminal CoreWeave: HTTP 429']);
+  // 다음 날 받은 창은 직전 선과 날짜로 합친다. 창 밖으로 밀려난 옛 점은 남고 같은 날짜는 새 값이다.
+  const c = live.assemblePrivate({ bonds: { [cw.isin]: { series: [{ date: '2026-11-12', spread: 990 }, { date: '2026-11-13', spread: 980 }] } },
+    dram: [], now: 'z', previous: b });
+  assert.deepEqual(c.series['bond:coreweave'].lines[0].points, [['2026-11-10', 10.1], ['2026-11-12', 9.9], ['2026-11-13', 9.8]]);
 });
