@@ -387,16 +387,17 @@
       var lines = (data.series[row.key] || {}).lines || [];
       var pts = lines.length ? lines[0].points : [];
       var nowCell = row.tr.querySelector('.mkt-now');
+      // 시장 관측이 없는 실행의 표에는 변화 칸이 없다.
       var chgCell = row.tr.querySelector('.mkt-chg');
       if (!pts.length) {
         nowCell.textContent = '아직 쌓인 값이 없다';
-        chgCell.textContent = '—';
+        if (chgCell) chgCell.textContent = '—';
         return;
       }
       var last = pts[pts.length - 1];
       filled += 1;
       nowCell.textContent = valueText(row, last[1]) + ' (' + last[0] + ')';
-      chgCell.textContent = changeText(row, row.base, last[1]);
+      if (chgCell) chgCell.textContent = changeText(row, row.base, last[1]);
     });
     return filled;
   }

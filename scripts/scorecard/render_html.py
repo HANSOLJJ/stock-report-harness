@@ -1227,7 +1227,9 @@ table.mkt td.mkt-now,table.mkt td.mkt-chg{color:var(--tx2)}
 def render_market(ctx: Any, token_items: list[dict[str, Any]] | None = None, token_caveat: str = "") -> str:
     view = rc.market_view(ctx)
     if view is None:
-        return ""
+        # 2026-11-15 사용자 결정: 시장 관측이 없는 실행(확인된 옛 실행 포함)도 공개 시계열로 추이를 보인다. 기준일 값 비교 표만 빠진다.
+        run = getattr(ctx, "run", None) or {}
+        return _market_live_only(str(run.get("price_as_of") or run.get("as_of") or ""), token_items, token_caveat)
     body = []
     for r in view["rows"]:
         base = "" if r["value"] is None else repr(float(r["value"]))
@@ -1259,6 +1261,40 @@ def render_market(ctx: Any, token_items: list[dict[str, Any]] | None = None, tok
             f'<div class="tablewrap"><table class="figures mkt"><thead><tr>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></div>'
             f'<p class="sub mt-8">변화는 금리·스프레드가 bp(0.01%p), GPU 임대료·토큰 단가가 % 다.</p>{notes}'
             '<div class="mkt-range" role="group" aria-label="차트 기간" hidden></div><div class="mkt-charts"></div>'
+            f'<p class="sub mt-8">{esc(MARKET_TREND_NOTE)}</p></section>')
+
+
+def _market_live_only(as_of: str, token_items: list[dict[str, Any]] | None, token_caveat: str) -> str:
+    """시장 관측이 없는 실행의 시장 지표 절. 표 행은 기준일 값 없이(data-base 빈 값) 지표 이름·단위만 실어 추이 스크립트가
+    지금 값을 채우고 차트를 그린다. data-asof 는 차트의 흰 점(가격 기준일 값)을 찍는 데 쓴다."""
+    from .market_now import FRED_SERIES
+
+    fred = {m: s for m, s, _n in FRED_SERIES}
+    body = []
+    for metric, gpu, label, kind in rc.MARKET_ROWS:
+        src = (f"FRED {fred[metric]}" if metric in fred else "vast.ai 장터 on-demand 호가 중간값" if metric == "gpu_rent_hourly"
+               else "OpenRouter 정가, 연구소별 최고가 모델 중간값")
+        body.append(f'<tr data-key="{esc(f"{metric}:{gpu}" if gpu else metric)}" data-kind="{esc(kind)}" '
+                    f'data-unit="{esc(rc.MARKET_UNIT_TEXT[metric])}" data-base="" data-asof="{esc(as_of)}">'
+                    f'<td class="name"><b>{esc(label)}</b></td><td class="mono mkt-now">—</td><td class="text">{esc(src)}</td></tr>')
+    for t in token_items or []:
+        seg = rc.TOKEN_SEGMENT_LABELS.get(t["segment"], t["segment"])
+        prev = t.get("previous")
+        change = (f'직전 관측 ${prev["value"]:.2f}({prev["as_of"]}) 대비 {rc._pct_signed(t["change"])}' if prev else "직전 관측 없음")
+        body.append(f'<tr><td class="name"><b>토큰 지출 지수({esc(seg)})</b></td>'
+                    f'<td class="mono">${t["value"]:.2f}<span class="dt">{esc(t["as_of"])}</span></td>'
+                    f'<td class="text">Silicon Data 공개 페이지를 손으로 읽음 · {esc(change)}<span class="dt">{esc(t["source_id"])}</span></td></tr>')
+    head = "".join(f'<th class="{c}">{esc(h)}</th>' for c, h in (("name", "지표"), ("", "지금 값"), ("text", "원천")))
+    notes = ["점수에 쓰지 않는 참고 값이다. 이 실행은 기준일의 시장 지표 값을 기록하지 않아 기준일과 지금을 비교하지 않는다."]
+    if token_items:
+        notes.append(f"토큰 지출 지수는 $/100만 토큰이고, 과거 값이 유료라 추이를 그리지 않는다. {token_caveat}".strip())
+    return (f'<section class="market" id="market-live" data-asof="{esc(as_of)}"><h3>시장 지표(지금 값과 추이)</h3>'
+            '<div class="mktbar"><button type="button" class="mkt-btn">추이 받기</button>'
+            '<p class="mkt-status sub" role="status" aria-live="polite">버튼을 누르면 공개 사이트가 매일 쌓는 시계열을 받아 지금 값과 추이 차트를 보인다. '
+            '받은 값은 이 화면에만 보이고 실행 기록에 남지 않는다.</p></div>'
+            f'<div class="tablewrap"><table class="figures mkt"><thead><tr>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></div>'
+            + "".join(f'<p class="sub mt-8">{esc(x)}</p>' for x in notes)
+            + '<div class="mkt-range" role="group" aria-label="차트 기간" hidden></div><div class="mkt-charts"></div>'
             f'<p class="sub mt-8">{esc(MARKET_TREND_NOTE)}</p></section>')
 
 
@@ -2622,7 +2658,9 @@ def render_document(ctx: Any, results: dict[str, Any], baseline: dict[str, Any] 
     n = 5 if avail else 4
     # 2026-10-13 사용자 지시: 국면 지표(점수 없음)가 순위표를 밀어내지 않게 자기 탭에 둔다. 선언이 없는 옛 실행에는 탭이 없다.
     tokens = rc.regime_view(ctx, results) or {}
-    market = render_market(ctx, tokens.get("token_items"), tokens.get("token_caveat") or "")
+    # 시장 관측이 없는 실행도 국면 탭이 있으면 공개 시계열로 추이를 보인다. 국면 선언도 시장 관측도 없는 옛 실행은 그대로 탭이 없다.
+    market = (render_market(ctx, tokens.get("token_items"), tokens.get("token_caveat") or "")
+              if tokens or rc.market_view(ctx) is not None else "")
     regime = market + render_regime(ctx, results, hero=not market)
     tabs = (TABS[0], ("regime", "국면 지표"), *TABS[1:]) if regime else TABS
     regime_panel = (f'<section class="tabpanel" id="tab-regime" role="tabpanel" aria-labelledby="tabbtn-regime">\n'

@@ -135,10 +135,19 @@ class RenderTest(unittest.TestCase):
     def ctx(self, items: list[dict]) -> SimpleNamespace:
         return SimpleNamespace(observations=items)
 
-    def test_no_snapshot_no_section(self):
+    def test_no_snapshot_draws_live_trend_only(self):
+        """2026-11-15 사용자 결정: 시장 관측이 없는 실행도 지금 값 표와 추이 버튼을 낸다. 기준일 값(data-base)과 변화 칸은 없다."""
         from scorecard.render_html import render_market
         self.assertIsNone(rc.market_view(self.ctx([])))
-        self.assertEqual(render_market(self.ctx([])), "")
+        ctx = SimpleNamespace(observations=[], run={"as_of": "2026-10-27", "price_as_of": "2026-10-26"})
+        html = render_market(ctx)
+        self.assertIn('<button type="button" class="mkt-btn">추이 받기</button>', html)
+        self.assertIn('<div class="mkt-charts"></div>', html)
+        self.assertEqual(html.count("data-key="), len(rc.MARKET_ROWS))
+        self.assertIn('data-key="gpu_rent_hourly:B200" data-kind="usd" data-unit="$/GPU·시간" data-base="" data-asof="2026-10-26"', html)
+        self.assertEqual(html.count('data-base=""'), len(rc.MARKET_ROWS))
+        self.assertNotIn("mkt-chg", html)
+        self.assertIn("FRED BAA10Y", html)
 
     def test_latest_row_per_metric_and_html_hooks(self):
         from scorecard.render_html import render_market
@@ -168,7 +177,11 @@ class RenderTest(unittest.TestCase):
         self.assertIn("$0.97", row.group(0))
         self.assertIn("과거 값이 유료라 추이를 그리지 않는다. 주의 문구.", html)
         self.assertEqual(html.count("data-key="), 1)
-        self.assertEqual(render_market(self.ctx([]), tok), "", "시장 지표 관측이 없으면 토큰 줄도 없다(옛 실행은 카드 그대로)")
+        live = render_market(self.ctx([]), tok)
+        tok_row = re.search(r"<tr><td class=\"name\"><b>토큰 지출 지수\([^<]+\)</b></td>.*?</tr>", live)
+        self.assertIsNotNone(tok_row, "시장 관측이 없어도 토큰 지수는 추이 절의 표 한 줄로 남는다")
+        self.assertIn("$0.97", tok_row.group(0))
+        self.assertNotIn("data-key", tok_row.group(0))
 
 
 if __name__ == "__main__":

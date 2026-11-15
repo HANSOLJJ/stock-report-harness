@@ -33,7 +33,13 @@ def render(slug: str) -> str:
 
 
 def panels(html: str) -> dict[str, str]:
-    return {m.group(1): m.group(2) for m in re.finditer(r'<section class="tabpanel" id="(tab-[a-z]+)"[^>]*>(.*?)</section>', html, re.S)}
+    # 탭 안에 절(<section>)이 여럿 들어가므로 첫 </section> 이 아니라 다음 탭 앞의 마지막 </section> 까지 자른다.
+    out = {}
+    for part in re.split(r'(?=<section class="tabpanel" id=")', html):
+        m = re.match(r'<section class="tabpanel" id="(tab-[a-z]+)"[^>]*>(.*)</section>', part, re.S)
+        if m:
+            out[m.group(1)] = m.group(2)
+    return out
 
 
 class ReportTabsTest(unittest.TestCase):
@@ -176,14 +182,15 @@ class V21LayoutTest(unittest.TestCase):
         self.assertNotIn("설비투자 가속도", got["tab-summary"])
         self.assertNotIn('id="tabbtn-regime"', self.old, "국면 지표 선언이 없는 실행에는 탭이 없다")
 
-    def test_token_index_is_a_hero_card_at_top_of_regime_tab(self):
+    def test_token_index_is_a_market_row_at_top_of_regime_tab(self):
+        """2026-11-15 사용자 결정: 국면 탭에는 늘 시장 지표 절이 있고, 토큰 단가 지수는 카드 대신 그 표의 한 줄이다."""
         tab = panels(self.html)["tab-regime"]
-        hero = re.search(r'<div class="tokhero">(.*?)</div>\s*<p class="sub">', tab, re.S)
-        self.assertIsNotNone(hero, "토큰 단가 카드가 없다")
-        self.assertLess(tab.index('class="tokhero"'), tab.index("설비투자 가속도"), "카드가 국면 지표 탭 맨 위에 있어야 한다")
-        self.assertIn('<div class="v">$0.97<span class="u"> / 100만 토큰</span></div>', tab)
-        self.assertIn('href="https://www.silicondata.com/products/silicon-index/llm-token-expenditure-index"', tab)
-        self.assertEqual(tab.count("토큰 단가 지수</h3>"), 1, "아래쪽의 한 줄 문장 절은 없어졌다")
+        self.assertNotIn('class="tokhero"', tab)
+        row = re.search(r"<tr><td class=\"name\"><b>토큰 지출 지수\([^<]+\)</b></td>.*?</tr>", tab)
+        self.assertIsNotNone(row, "토큰 단가 지수 줄이 없다")
+        self.assertIn("$0.97", row.group(0))
+        self.assertLess(tab.index('id="market-live"'), tab.index("설비투자 가속도"), "시장 지표 절이 국면 지표 탭 맨 위에 있어야 한다")
+        self.assertIn("<h3>트리거 조건</h3>", tab)
 
     def test_ranking_has_no_rank_column(self):
         head = re.search(r'<table id="mainTable"><thead>(.*?)</thead>', self.html, re.S).group(1)
