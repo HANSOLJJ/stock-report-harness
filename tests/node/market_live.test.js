@@ -279,7 +279,8 @@ test('색 장부: 켜진 회사끼리 색이 겹치지 않고, 두 차트가 같
   const book = live.colorBook();
   const a = book.take('bond:oracle');
   const b = book.take('bond:meta');
-  assert.notEqual(a, b);
+  // 켜는 순서대로 팔레트 앞쪽(가장 잘 구별되는) 색을 받는다.
+  assert.deepEqual([a, b], live.PALETTE.slice(0, 2));
   assert.equal(book.take('bond:oracle'), a);
   book.drop('bond:oracle');
   assert.equal(book.color('bond:oracle'), a);
@@ -287,8 +288,14 @@ test('색 장부: 켜진 회사끼리 색이 겹치지 않고, 두 차트가 같
   assert.equal(book.color('bond:oracle'), null);
   assert.equal(book.take('bond:apple'), a);
   assert.equal(book.color('bond:meta'), b);
-  const many = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'].map((id) => book.take(id));
-  assert.equal(new Set([a, b, ...many]).size, live.PALETTE.length);
+  // 열 곳을 켜도 색이 겹치지 않고, 쓰는 색은 팔레트 앞쪽 열 개다.
+  const many = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8'].map((id) => book.take(id));
+  assert.deepEqual(new Set([a, b, ...many]), new Set(live.PALETTE.slice(0, 10)));
+});
+
+test('축 이름표: 기준 선은 짧은 이름, 회사채는 회사 이름만 쓴다', () => {
+  assert.deepEqual(['ust10y', 'hy_oas', 'baa_spread', 'bond:oracle', 'bond:tsmc', 'x'].map(live.shortName),
+    ['10년물', '하이일드', 'Baa−10년', 'Oracle', 'TSMC Arizona', '']);
 });
 
 test('CoreWeave 는 변화 폭이 커서 두 큰 차트에서 처음에 꺼 둔다', () => {

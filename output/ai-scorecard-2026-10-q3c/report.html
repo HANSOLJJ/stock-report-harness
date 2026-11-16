@@ -626,7 +626,13 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     ['hy', 'BAMLH0A0HYM2EY', '하이일드 회사채(ICE 지수, 여러 만기)']];
   var FRED_FETCH = FRED_SERIES.map(function (p) { return p[1]; }).concat(FRED_YIELDS.map(function (p) { return p[1]; }));
   // 큰 차트의 선 색(dataviz 기본 범주 팔레트의 어두운 화면 값, 리포트 배경 #161a22 에서 검증 통과). 아홉째 선부터는 같은 색의 점선이다.
-  var PALETTE = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#0ca30c', '#9085e9', '#e66767'];
+  // var PALETTE = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#0ca30c', '#9085e9', '#e66767'];
+  // 2026-11-16 사용자 지적: 위 여덟 색은 옆에 놓인 색끼리만 구별되게 고른 것이라, 켜는 회사 조합에 따라 주황·연한 빨강처럼
+  // 거의 같은 색이 나란히 나왔다. 아래 스무 색은 정상 색각 기준(OKLab 거리)으로, 앞서 고른 색들과 회색 지수 선에서 가장 먼 색을
+  // 차례로 고른 순서다. 앞에서부터 쓸수록 잘 구별된다(가장 가까운 쌍 ΔE: 4색 28.5, 6색 22.6, 10색 14.7, 20색 7.6).
+  // 모두 차트 배경(#161a22)과 3.9:1 이상이다.
+  var PALETTE = ['#3987e5', '#f5c40d', '#de394b', '#309909', '#fea8f6', '#17eace', '#b24dc8', '#a57710', '#fe7802', '#fc65b6',
+    '#b688fe', '#98b305', '#7ce963', '#13c097', '#19affe', '#8362ed', '#d13d91', '#d29922', '#fd7277', '#20c45f'];
   // 금리 한눈에·가산금리 한눈에 차트에 붙는 회사별 채권 가운데 처음에 끈 것. 지수 선과 합쳐 선이 열셋·열넷이라, 신용도가 갈리는
   // CoreWeave·Oracle·Meta 만 켜 두고 나머지는 범례로 켠다.
   // 2026-11-16 사용자 지적: CoreWeave 는 변화 폭이 다른 선의 몇 배라(3개월 +315bp) 켜 두면 세로축이 늘어나 나머지 선이 바닥에 눌린다.
@@ -665,6 +671,14 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     return b ? b.title.replace(/ 가산금리$/, '').replace(/ (\d{4})$/, ' $1년 만기') : null;
   }
 
+  // 큰 차트의 축 이름표(선 끝 값 옆에 붙는 짧은 이름). 색이 비슷해도 어느 선인지 읽히게 한다.
+  var SHORT_NAMES = { ust10y: '10년물', ig: '투자등급', ig_oas: '투자등급', hy: '하이일드', hy_oas: '하이일드', baa: 'Baa', baa_spread: 'Baa−10년' };
+  function shortName(id) {
+    if (SHORT_NAMES[id]) return SHORT_NAMES[id];
+    var b = BONDS.filter(function (x) { return x.key === id; })[0];
+    return b ? b.title.replace(/ [\d.]+% .*$/, '') : '';
+  }
+
   function withMaturity(lines) {
     return lines.map(function (l) {
       var y = FRED_YIELDS.filter(function (p) { return p[0] === l.id; })[0];
@@ -679,9 +693,9 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     });
   }
 
-  // 큰 차트의 회사 선 색 장부. 회사를 켤 때 다른 켜진 회사가 쓰지 않는 색을 주고, 이미 켜진 선의 색은 바꾸지 않는다.
-  // 두 큰 차트가 장부 하나를 함께 써서 같은 회사는 두 차트에서 같은 색이다. 여덟 곳을 넘게 켤 때만 색이 겹친다.
-  // 회사 열 곳에 고정 색을 주면 어느 조합이든 구별되는 색이 여덟 개를 넘지 못한다(2026-11-16 팔레트 검사).
+  // 큰 차트의 회사 선 색 장부. 회사를 켤 때 다른 켜진 회사가 쓰지 않는 색 가운데 PALETTE 순서로 가장 앞의 색을 주고,
+  // 이미 켜진 선의 색은 바꾸지 않는다. 그래서 몇 곳을 켜든 그 수에서 가장 잘 구별되는 앞쪽 색들이 쓰인다.
+  // 두 큰 차트가 장부 하나를 함께 써서 같은 회사는 두 차트에서 같은 색이다.
   function colorBook() {
     var held = {};
     return {
@@ -1368,7 +1382,8 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
       lines.forEach(function (l, i) {
         var ser = chart.addSeries(LWC.LineSeries, {
           color: colorOf(i), lineWidth: 2, lineStyle: dashOf(i, l) ? LWC.LineStyle.Dashed : LWC.LineStyle.Solid,
-          priceLineVisible: false, pointMarkersVisible: l.points.length < 40, visible: !l.hidden
+          priceLineVisible: false, pointMarkersVisible: l.points.length < 40, visible: !l.hidden,
+          title: row.big ? shortName(l.id) : ''
         });
         sers[i] = ser;
         ser.setData(l.points.map(function (p) { return { time: p[0], value: p[1] }; }));
@@ -1626,7 +1641,7 @@ Our gross margin for the three months ended June 30, 2026 and 2025 was 85% and 8
     parseBondYield: parseBondYield, FRED_YIELDS: FRED_YIELDS, FRED_FETCH: FRED_FETCH,
     changeLines: changeLines, divergence: divergence, divergenceText: divergenceText, CHANGE_RANGES: CHANGE_RANGES,
     spreadSummary: spreadSummary, spreadText: spreadText, spreadRow: spreadRow, withMaturity: withMaturity,
-    colorBook: colorBook, PALETTE: PALETTE,
+    colorBook: colorBook, PALETTE: PALETTE, shortName: shortName,
     BONDS: BONDS, DRAMX_URL: DRAMX_URL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (root && root.document) {
