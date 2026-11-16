@@ -181,7 +181,7 @@ test('비공개 묶음: 회사채는 bp 를 %p 로 바꾸고, 받지 못한 채�
   assert.equal(a.series['bond:coreweave'].unit, '%p');
   // 채권 금리는 ytw, 없으면 ytm. 값이 둘 다 없는 날은 뺀다.
   assert.deepEqual(live.parseBondYield(hist), [['2026-11-11', 14.2], ['2026-11-12', 14.01]]);
-  assert.deepEqual(a.series.bond_yields.lines.map((l) => [l.id, l.label, l.hidden]), [['bond:coreweave', 'CoreWeave 9.25% 2030', false]]);
+  assert.deepEqual(a.series.bond_yields.lines.map((l) => [l.id, l.label, l.hidden]), [['bond:coreweave', 'CoreWeave 9.25% 2030', true]]);
   const b = live.assemblePrivate({ bonds: { [orcl.isin]: { series: [{ date: '2026-11-12', spread: 150 }] } },
     dram: [['2026-11-13', 60.267]], now: 'y', previous: a, errors: ['BondTerminal CoreWeave: HTTP 429'] });
   assert.deepEqual(Object.keys(b.series).sort(), ['bond:coreweave', 'bond:oracle', 'bond_yields', 'dram_spot']);
@@ -273,4 +273,28 @@ test('가산금리 요약: 같은 기간 10년물 변화, 넓어진 선과 좁�
   const text = live.spreadText(s);
   assert.equal(text, '2026-10-13 이후 미국채 10년물은 -12bp 움직였다. 가산금리가 넓어진 선은 Oracle +40bp(최근 8일은 다시 좁혀지는 중), ' +
     '투자등급 OAS +9bp(최근 8일에도 더 넓어지는 중)이다. 좁아진 선은 Meta -10bp(최근 8일에도 더 좁혀지는 중)이다. 기준일에 값이 없는 Late은 뺐다.');
+});
+
+test('색 장부: 켜진 회사끼리 색이 겹치지 않고, 두 차트가 같은 회사에 같은 색을 주며, 한쪽에서만 꺼도 색을 지킨다', () => {
+  const book = live.colorBook();
+  const a = book.take('bond:oracle');
+  const b = book.take('bond:meta');
+  assert.notEqual(a, b);
+  assert.equal(book.take('bond:oracle'), a);
+  book.drop('bond:oracle');
+  assert.equal(book.color('bond:oracle'), a);
+  book.drop('bond:oracle');
+  assert.equal(book.color('bond:oracle'), null);
+  assert.equal(book.take('bond:apple'), a);
+  assert.equal(book.color('bond:meta'), b);
+  const many = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6'].map((id) => book.take(id));
+  assert.equal(new Set([a, b, ...many]).size, live.PALETTE.length);
+});
+
+test('CoreWeave 는 변화 폭이 커서 두 큰 차트에서 처음에 꺼 둔다', () => {
+  const out = live.withMaturity([{ id: 'bond:coreweave', label: 'x', points: [], hidden: false }]);
+  assert.equal(out[0].hidden, true);
+  const pts = [['2026-11-12', 1]];
+  const row = live.spreadRow({ series: {} }, { series: { 'bond:coreweave': { lines: [{ points: pts }] } } }, '2026-10-27');
+  assert.equal(row.lines[0].hidden, true);
 });

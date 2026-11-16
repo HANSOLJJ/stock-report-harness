@@ -19,7 +19,12 @@
   var PALETTE = ['#3987e5', '#d95926', '#199e70', '#c98500', '#d55181', '#0ca30c', '#9085e9', '#e66767'];
   // 금리 한눈에·가산금리 한눈에 차트에 붙는 회사별 채권 가운데 처음에 끈 것. 지수 선과 합쳐 선이 열셋·열넷이라, 신용도가 갈리는
   // CoreWeave·Oracle·Meta 만 켜 두고 나머지는 범례로 켠다.
-  var BOND_YIELD_HIDDEN = ['bond:microsoft', 'bond:alphabet', 'bond:amazon', 'bond:apple', 'bond:nvidia', 'bond:alibaba', 'bond:tsmc'];
+  // 2026-11-16 사용자 지적: CoreWeave 는 변화 폭이 다른 선의 몇 배라(3개월 +315bp) 켜 두면 세로축이 늘어나 나머지 선이 바닥에 눌린다.
+  // 범례로 끈 선은 세로축 계산에서 빠지므로 처음에는 끄고, 요약 줄에는 그대로 적는다.
+  var BOND_YIELD_HIDDEN = ['bond:coreweave', 'bond:microsoft', 'bond:alphabet', 'bond:amazon', 'bond:apple', 'bond:nvidia', 'bond:alibaba', 'bond:tsmc'];
+  // 큰 차트의 기준 선(국채·지수)은 흰색과 회색 단계로 칠해 회사 선과 섞이지 않게 한다. 같은 지수는 두 차트에서 같은 회색이다.
+  // 가장 어두운 회색도 차트 배경(#161a22)과 3:1 을 넘는다.
+  var BENCH_COLORS = { ust10y: '#e6e9ee', ig: '#aeb6c3', ig_oas: '#aeb6c3', hy: '#848d9c', hy_oas: '#848d9c', baa: '#616a7a', baa_spread: '#616a7a' };
   // GetDeploying 무료 데이터(CC BY 4.0)의 GPU 이름. 공급자 여러 곳의 호가 중간값이라 우리 vast.ai 정의와 다른 숫자다.
   var GETDEPLOYING_SLUGS = { 'H100 SXM': 'nvidia-h100', 'H200': 'nvidia-h200', 'B200': 'nvidia-b200' };
   var TOKEN_RECON_START = '2025-07-07';
@@ -58,8 +63,35 @@
       var out = {};
       Object.keys(l).forEach(function (k) { out[k] = l[k]; });
       out.label = name;
+      // 처음에 끌 채권은 서버 파일에 적힌 값이 아니라 지금 목록을 따른다.
+      if (!y) out.hidden = BOND_YIELD_HIDDEN.indexOf(l.id) >= 0;
       return out;
     });
+  }
+
+  // 큰 차트의 회사 선 색 장부. 회사를 켤 때 다른 켜진 회사가 쓰지 않는 색을 주고, 이미 켜진 선의 색은 바꾸지 않는다.
+  // 두 큰 차트가 장부 하나를 함께 써서 같은 회사는 두 차트에서 같은 색이다. 여덟 곳을 넘게 켤 때만 색이 겹친다.
+  // 회사 열 곳에 고정 색을 주면 어느 조합이든 구별되는 색이 여덟 개를 넘지 못한다(2026-11-16 팔레트 검사).
+  function colorBook() {
+    var held = {};
+    return {
+      take: function (id) {
+        if (held[id]) {
+          held[id].n += 1;
+          return held[id].color;
+        }
+        var used = Object.keys(held).map(function (k) { return held[k].color; });
+        var free = PALETTE.filter(function (c) { return used.indexOf(c) < 0; })[0];
+        held[id] = { color: free || PALETTE[used.length % PALETTE.length], n: 1 };
+        return held[id].color;
+      },
+      drop: function (id) {
+        if (!held[id]) return;
+        held[id].n -= 1;
+        if (held[id].n <= 0) delete held[id];
+      },
+      color: function (id) { return held[id] ? held[id].color : null; }
+    };
   }
   // 2026-11-15: BondTerminal 은 한 요청의 기간이 730일을 넘으면 400 을 낸다(2015-01-01 부터 한 번에 받던 요청이 전부 실패했다).
   // 매일 최근 729일을 받아 직전 시계열과 날짜로 합치므로 날이 갈수록 2년보다 긴 기록이 쌓인다.
@@ -646,9 +678,14 @@
     var charts = [];
     rows.forEach(function (row) {
       var lines = (row.lines || (data.series[row.key] || {}).lines || []).filter(function (l) { return l.points.length; });
-      // 큰 차트(여러 계열을 한 축에)는 범주 팔레트로 칠하고, 아홉째 선부터 같은 색의 점선이다. 작은 차트는 우리 정의·참고 선 두 색이다.
-      var colorOf = function (i) { return row.big ? PALETTE[i % PALETTE.length] : colors[i % 2]; };
-      var dashOf = function (i, l) { return row.big ? i >= PALETTE.length : Boolean(l.dashed); };
+      // 큰 차트(여러 계열을 한 축에)는 기준 선을 회색 단계로, 켜진 회사 선을 장부가 준 색으로 칠하고 점선을 쓰지 않는다.
+      // 꺼진 회사 선은 색이 없다(범례 표시는 흐린 회색). 작은 차트는 우리 정의·참고 선 두 색이다.
+      var book = row.big ? (row.book || colorBook()) : null;
+      var idle = token(doc, '--tx3', '#7c8595');
+      var benchOf = function (l) { return BENCH_COLORS[l.id] || null; };
+      if (book) lines.forEach(function (l) { if (!benchOf(l) && !l.hidden) book.take(l.id); });
+      var colorOf = function (i) { return row.big ? benchOf(lines[i]) || book.color(lines[i].id) || idle : colors[i % 2]; };
+      var dashOf = function (i, l) { return row.big ? false : Boolean(l.dashed); };
       var sers = [];
       // 변화 보기에서 기준일 값이 없어 뺀 선. 범례로 켜도 그 보기에서는 그리지 않는다.
       var state = { excluded: [], items: [], names: [] };
@@ -664,16 +701,24 @@
         lines.forEach(function (l, i) {
           // 큰 차트의 범례는 선을 켜고 끄는 버튼이다.
           var item = doc.createElement(row.big ? 'button' : 'span');
+          var key = lineKey(doc, colorOf(i), dashOf(i, l));
           if (row.big) {
             item.type = 'button';
             item.setAttribute('aria-pressed', l.hidden ? 'false' : 'true');
             item.addEventListener('click', function () {
               var on = item.getAttribute('aria-pressed') !== 'true';
               item.setAttribute('aria-pressed', on ? 'true' : 'false');
+              // 회사 선을 켜면 비어 있는 색을 받고, 끄면 색을 돌려준다.
+              if (!benchOf(l)) {
+                if (on) book.take(l.id);
+                else book.drop(l.id);
+                key.style.borderTopColor = colorOf(i);
+                if (sers[i]) sers[i].applyOptions({ color: colorOf(i) });
+              }
               if (sers[i]) sers[i].applyOptions({ visible: on && !state.excluded[i] });
             });
           }
-          item.appendChild(lineKey(doc, colorOf(i), dashOf(i, l)));
+          item.appendChild(key);
           state.names[i] = doc.createTextNode(l.label);
           item.appendChild(state.names[i]);
           state.items[i] = item;
@@ -918,15 +963,19 @@
         var all = bigFirst(rows.concat(extraRows(data, keys, asOf)));
         // 2026-11-15 사용자 요청: 로그인했으면 회사별 채권 금리를 맨 위 금리 차트(미국채 10년물·회사채 지수)에 함께 그린다.
         var bonds = priv && priv.series && priv.series.bond_yields;
+        var book = colorBook();
         all.forEach(function (r) {
           if (r.key !== 'yields') return;
           r.change = true;
+          r.book = book;
           r.lines = withMaturity((((data.series.yields || {}).lines) || []).concat(bonds ? bonds.lines : []));
           r.label = '금리 한눈에: 미국채 10년물과 회사채(회사별 채권 선은 로그인한 사람에게만 보인다)';
         });
         // 2026-11-15 사용자 요청: 금리 수준은 만기가 달라 같은 기준이 아니므로, 같은 만기 국채 대비 가산금리를 금리 차트 바로 뒤에 둔다.
         var at = all.map(function (r) { return r.key; }).indexOf('yields');
-        all.splice(at + 1, 0, spreadRow(data, priv, asOf));
+        var spreads = spreadRow(data, priv, asOf);
+        spreads.book = book;
+        all.splice(at + 1, 0, spreads);
         charts = drawCharts(doc, box, data, LWC, all);
         var privCharts = drawPrivate(doc, box, LWC, asOf, priv);
         charts = charts.concat(privCharts);
@@ -967,6 +1016,7 @@
     parseBondYield: parseBondYield, FRED_YIELDS: FRED_YIELDS, FRED_FETCH: FRED_FETCH,
     changeLines: changeLines, divergence: divergence, divergenceText: divergenceText, CHANGE_RANGES: CHANGE_RANGES,
     spreadSummary: spreadSummary, spreadText: spreadText, spreadRow: spreadRow, withMaturity: withMaturity,
+    colorBook: colorBook, PALETTE: PALETTE,
     BONDS: BONDS, DRAMX_URL: DRAMX_URL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   if (root && root.document) {
